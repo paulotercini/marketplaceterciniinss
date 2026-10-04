@@ -2,6 +2,7 @@
 // etapa 1: leitura · etapa 2: anotação e tarefa · etapa 3: concluir, reagendar
 // e atualizar o caso · etapa 4: documentos do caso · etapa 5: comandos prontos
 // etapa 6: WhatsApp (ler, rascunhar e levar ao caso; enviar fica com gente)
+// etapa 7: completar cadastro e gestão do caso (só preenche o que está vazio)
 //
 // O Claude (ou o ChatGPT) se liga a este endereço como conector personalizado:
 //   https://<projeto>.supabase.co/functions/v1/mcp-crm
@@ -62,7 +63,13 @@ const texto = (o: unknown) => ({ content: [{ type: "text" as const, text: typeof
 
 // colunas que a IA lê de cada tabela (nada de credenciais)
 const COL_CASO = "id,cliente_id,titulo,beneficio,especie,fase,etapa,mover_para,processo,processos,nb,protocolos,der,dib,dcb,prazo,exigencia_prazo,exigencia_descricao,resultado,parceria,importante,urgente";
-const COL_CLIENTE = "id,nome,cpf,dn,telefone,cidade,uf,profissao,estado_civil,sexo,campos,criado_em";
+const COL_CLIENTE = "id,nome,cpf,dn,telefone,cidade,uf,profissao,estado_civil,sexo,campos,criado_em,rg,rg_orgao,nome_mae,pis_nit,logradouro,numero,complemento,bairro,cep";
+// o cadastro civil: coluna própria, com a cópia antiga em campos.civil (o mesmo que civilDe() do app)
+const CIVIS: Record<string, string> = { nome_mae: "nome da mãe", rg: "RG", rg_orgao: "órgão do RG", pis_nit: "PIS/NIT",
+  sexo: "sexo", estado_civil: "estado civil", profissao: "profissão", logradouro: "logradouro", numero: "número",
+  complemento: "complemento", bairro: "bairro", cidade: "cidade", uf: "UF", cep: "CEP" };
+const civil = (c: any) => { const v: Record<string, any> = { ...((c.campos || {}).civil || {}) };
+  for (const k of Object.keys(CIVIS)) if (c[k]) v[k] = c[k]; return v; };
 
 // ── as ferramentas ─────────────────────────────────────────────────────────
 export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?: string }) {
@@ -70,7 +77,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
   // agendadas: lê, anota e cria tarefa, mas não conclui, não reagenda e não
   // altera o caso. Essas decisões ficam com quem é gente.
   const robo = eu.papel === "assistente_ia";
-  const server = new McpServer({ name: "crm-tercini", version: "0.6.0" });
+  const server = new McpServer({ name: "crm-tercini", version: "0.7.0" });
   const leitura = { readOnlyHint: true, openWorldHint: false };
   const escrita = { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false };
   let cols: Map<string, any> | null = null;
@@ -126,6 +133,8 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
       nome: c.nome, cpf: c.cpf, nascimento: c.dn ? `${c.dn.slice(0, 2)}/${c.dn.slice(2, 4)}/${c.dn.slice(4)}` : null,
       telefone: c.telefone, cidade: [c.cidade, c.uf].filter(Boolean).join("/") || null, profissao: c.profissao,
       estado_civil: c.estado_civil ?? campos.civil?.estado_civil ?? null, origem: campos.civil?.origem ?? null,
+      cadastro: civil(c),
+      cadastro_em_branco: [...(c.dn ? [] : ["nascimento"]), ...Object.keys(CIVIS).filter(k => !civil(c)[k] && k !== "complemento").map(k => CIVIS[k])],
       representante_legal: campos.representante ?? null, cliente_desde: br(String(c.criado_em).slice(0, 10)),
       casos: casos.map((k: any) => ({ ...k, der: br(k.der), dib: br(k.dib), dcb: br(k.dcb), prazo_fatal: br(k.prazo),
         exigencia_prazo: br(k.exigencia_prazo), prazo: undefined, cliente_id: undefined })),
@@ -370,9 +379,12 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
   const CAMPOS: Record<string, string> = { etapa: "etapa", resultado: "resultado", decisao_em: "data da decisão",
     exigencia_prazo: "prazo da exigência", exigencia_descricao: "exigência", der: "DER", dib: "DIB", dcb: "DCB", nb: "NB" };
   const DATAS = new Set(["decisao_em", "exigencia_prazo", "der", "dib", "dcb"]);
-  if (!robo) server.registerTool("atualizar_caso", {
+  // o assistente (robo) também usa, mas só PREENCHE campo vazio: o que a
+  // equipe já escreveu ele não troca, só aponta a divergência na resposta
+  server.registerTool("atualizar_caso", {
     title: "Atualizar dados do caso",
-    description: "Altera a etapa, o resultado (deferido, indeferido, acordo, desistencia), a data da decisão, a exigência do INSS (descrição e prazo), DER, DIB, DCB ou NB de um caso. Grava na linha do tempo cada campo com o valor anterior e o novo. Para apagar um campo, mande texto vazio. Fase, prazo fatal e encerramento ficam no CRM. A etapa precisa ser uma das da fase do caso (ficha_cliente mostra a fase).",
+    description: "Altera a etapa, o resultado (deferido, indeferido, acordo, desistencia), a data da decisão, a exigência do INSS (descrição e prazo), DER, DIB, DCB ou NB de um caso. Grava na linha do tempo cada campo com o valor anterior e o novo. Para apagar um campo, mande texto vazio. Fase, prazo fatal e encerramento ficam no CRM. A etapa precisa ser uma das da fase do caso (ficha_cliente mostra a fase)."
+      + (robo ? " Nesta conta só se PREENCHE campo vazio: campo já preenchido não muda, e a divergência volta na resposta para você anotar. Sempre informe o motivo (o documento de onde tirou)." : ""),
     inputSchema: z.object({
       caso_id: ID,
       etapa: z.string().optional(),
@@ -385,7 +397,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
   }, async (args) => {
     const [k] = await db(`casos?select=id,cliente_id,titulo,fase,${Object.keys(CAMPOS).join(",")}&id=eq.${args.caso_id}`);
     if (!k) return texto("Caso não encontrado; nada foi gravado.");
-    const novo: Record<string, unknown> = {}, linhas: string[] = [];
+    const novo: Record<string, unknown> = {}, linhas: string[] = [], divergentes: string[] = [];
     for (const c of Object.keys(CAMPOS)) {
       const v = (args as any)[c];
       if (v === undefined) continue;
@@ -397,16 +409,92 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
         if (!ok.includes(val)) return texto(`A etapa "${val}" não existe na fase ${k.fase}. Use uma destas: ${ok.join(", ") || "(esta fase não tem etapas)"}. Nada foi gravado.`);
       }
       if ((k[c] ?? null) === val) continue;
+      if (robo && (k[c] ?? null) !== null) { divergentes.push(`${CAMPOS[c]} (no CRM: ${DATAS.has(c) ? br(String(k[c])) : k[c]}; informado: ${DATAS.has(c) && val ? br(val) : val ?? "vazio"})`); continue; }
       novo[c] = val;
       const fmtv = (x: any) => x == null || x === "" ? "vazio" : DATAS.has(c) ? br(String(x)) : String(x);
       linhas.push(`${CAMPOS[c]}: ${fmtv(k[c])} → ${fmtv(val)}`);
     }
-    if (!linhas.length) return texto("Nada a mudar: os valores já são esses.");
+    const div = divergentes.length ? ` Não alterado, porque já estava preenchido: ${divergentes.join("; ")}.` : "";
+    if (!linhas.length) return texto((divergentes.length ? "Nada gravado." : "Nada a mudar: os valores já são esses.") + div);
     await db(`casos?id=eq.${args.caso_id}`, novo, "PATCH");
     const cli = (await clientesDe([k.cliente_id])).get(k.cliente_id) || "";
     await anotar(args.caso_id, `✎ Caso atualizado. ${linhas.join("; ")}.` + (args.motivo?.trim() ? ` Fonte: ${args.motivo.trim()}.` : "")
       + (novo.resultado === "deferido" ? " Benefício CONCEDIDO. 🎉" : ""));
-    return texto(`Caso "${k.titulo}" de ${cli} atualizado. ${linhas.join("; ")}. O valor anterior ficou anotado na linha do tempo.`);
+    return texto(`Caso "${k.titulo}" de ${cli} atualizado. ${linhas.join("; ")}. O valor anterior ficou anotado na linha do tempo.${div}`);
+  });
+
+  // ── etapa 7: completar o cadastro e a gestão do caso ─────────────────────
+  // Só PREENCHE: campo que já tem valor não é trocado por aqui (a equipe
+  // corrige no CRM); a divergência volta na resposta e vai para a anotação,
+  // para alguém conferir. Toda mudança diz de onde veio.
+  server.registerTool("completar_cadastro", {
+    title: "Completar o cadastro do cliente",
+    description: "Preenche dados civis do cliente que estão EM BRANCO: nome da mãe, RG e órgão, PIS/NIT, sexo, estado civil, profissão, endereço (logradouro, número, complemento, bairro, cidade, UF, CEP) e nascimento. Campo já preenchido não muda: se o documento diz outra coisa, a divergência volta na resposta e fica anotada para conferência. Informe a fonte (o documento lido, ex.: 'RG na pasta do Drive', 'CNIS de 03/2026'). Grava uma anotação no caso informado (ou no mais recente do cliente).",
+    inputSchema: z.object({
+      cliente_id: ID, caso_id: ID.optional(),
+      fonte: z.string().min(3).max(300),
+      nascimento: DATA.optional(),
+      ...Object.fromEntries(Object.keys(CIVIS).map(k => [k, z.string().max(200).optional()])),
+    }),
+    annotations: escrita,
+  }, async (args: any) => {
+    const [c] = await db(`clientes?select=${COL_CLIENTE}&id=eq.${args.cliente_id}`);
+    if (!c) return texto("Cliente não encontrado; nada foi gravado.");
+    const atual = civil(c), novo: Record<string, unknown> = {}, linhas: string[] = [], divergentes: string[] = [];
+    const norm = (k: string, v: string) => k === "uf" ? v.toUpperCase().slice(0, 2) : k === "cep" ? soDig(v).slice(0, 8)
+      : k === "pis_nit" ? soDig(v) : v.replace(/\s+/g, " ").trim();
+    const igual = (a: any, b: any) => String(a ?? "").toLowerCase().replace(/\W/g, "") === String(b ?? "").toLowerCase().replace(/\W/g, "");
+    for (const k of Object.keys(CIVIS)) {
+      if (args[k] === undefined || !String(args[k]).trim()) continue;
+      const v = norm(k, String(args[k]));
+      if (!v) continue;
+      if (!atual[k]) { novo[k] = v; linhas.push(`${CIVIS[k]}: ${v}`); }
+      else if (!igual(atual[k], v)) divergentes.push(`${CIVIS[k]} (no CRM: ${atual[k]}; no documento: ${v})`);
+    }
+    if (args.nascimento) {
+      const iso = isoDe(args.nascimento);
+      if (!iso) return texto("Data de nascimento inválida; nada foi gravado.");
+      const ddmm = iso.slice(8, 10) + iso.slice(5, 7) + iso.slice(0, 4);      // o app guarda DDMMAAAA
+      if (!c.dn) { novo.dn = ddmm; linhas.push(`nascimento: ${br(iso)}`); }
+      else if (c.dn !== ddmm) divergentes.push(`nascimento (no CRM: ${c.dn.slice(0, 2)}/${c.dn.slice(2, 4)}/${c.dn.slice(4)}; no documento: ${br(iso)})`);
+    }
+    if (linhas.length) await db(`clientes?id=eq.${c.id}`, novo, "PATCH");
+    const caso = args.caso_id || (await db(`casos?select=id&cliente_id=eq.${c.id}&order=criado_em.desc&limit=1`))[0]?.id;
+    const nota = ((linhas.length ? `✎ Cadastro completado: ${linhas.join("; ")}.` : "")
+      + (divergentes.length ? ` Divergência a conferir: ${divergentes.join("; ")}.` : "")).trim();
+    if (nota && caso) await anotar(caso, `${nota} Fonte: ${args.fonte.trim()}.`, divergentes.length ? { importante: true } : {});
+    if (!nota) return texto("Nada a mudar: o cadastro já tem esses dados.");
+    return texto(`${c.nome}: ${nota}${caso ? "" : " (cliente sem caso: a anotação não foi gravada)"}`);
+  });
+
+  const MARCA_CONFERENCIA = "🔎 Conferência de cadastro";
+  server.registerTool("casos_para_completar", {
+    title: "Casos com cadastro ou gestão em branco",
+    description: `Lista casos ativos (fora de 'encerrado') cujo caso ou cliente tem campos em branco (NB, DER, espécie; nascimento, nome da mãe, estado civil, CEP, PIS/NIT, RG), os com mais lacunas primeiro, um caso por cliente. Pula o cliente já conferido nos últimos 90 dias: depois de conferir, grave registrar_anotacao começando com "${MARCA_CONFERENCIA}" dizendo o que foi preenchido e o que não se achou.`,
+    inputSchema: z.object({ limite: z.number().int().min(1).max(50).default(20) }),
+    annotations: leitura,
+  }, async ({ limite }) => {
+    const todas = async (q: string) => { const out: any[] = []; for (let i = 0; ; i += 1000) {
+      const l = await db(`${q}&offset=${i}&limit=1000`); out.push(...l); if (l.length < 1000) return out; } };
+    const casos = await todas("casos?select=id,cliente_id,titulo,fase,nb,der,especie&fase=neq.encerrado&order=id");
+    const desde = somaDias(hojeSP(), -90);
+    const vistos = new Set((await todas(`andamentos?select=caso_id&texto=like.${enc(MARCA_CONFERENCIA)}*&criado_em=gte.${desde}&order=id`)).map((a: any) => a.caso_id));
+    const cliVistos = new Set(casos.filter((k: any) => vistos.has(k.id)).map((k: any) => k.cliente_id));
+    const resta = casos.filter((k: any) => !cliVistos.has(k.cliente_id));
+    const clientes = new Map<string, any>();
+    const ids = [...new Set(resta.map((k: any) => k.cliente_id))] as string[];
+    for (let i = 0; i < ids.length; i += 150)
+      for (const c of await db(`clientes?select=${COL_CLIENTE}&id=in.${lista(ids.slice(i, i + 150))}`)) clientes.set(c.id, c);
+    const lacunas = (k: any) => { const c = clientes.get(k.cliente_id) || {}, v = civil(c);
+      return [...(k.nb ? [] : ["NB"]), ...(k.der ? [] : ["DER"]), ...(k.especie ? [] : ["espécie"]),
+        ...(c.dn ? [] : ["nascimento"]), ...["nome_mae", "estado_civil", "cep", "pis_nit", "rg"].filter(x => !v[x]).map(x => CIVIS[x])]; };
+    const uma = new Map<string, any>();          // um caso por cliente: o de mais lacunas
+    for (const k of resta) { const f = lacunas(k); if (!f.length) continue;
+      const o = uma.get(k.cliente_id); if (!o || f.length > o.faltam.length) uma.set(k.cliente_id, { ...k, faltam: f }); }
+    const fila = [...uma.values()].sort((a, b) => b.faltam.length - a.faltam.length).slice(0, limite);
+    if (!fila.length) return texto("Nenhum caso ativo com lacuna fora dos conferidos nos últimos 90 dias.");
+    return texto(`${uma.size} cliente(s) com lacuna; os ${fila.length} primeiros:\n` + fila.map(k =>
+      `caso_id:${k.id} · cliente_id:${k.cliente_id} · ${clientes.get(k.cliente_id)?.nome || ""} · ${k.titulo} (${k.fase}) · faltam: ${k.faltam.join(", ")}`).join("\n"));
   });
 
   server.registerTool("casos_com_decisao_sem_resultado", {
