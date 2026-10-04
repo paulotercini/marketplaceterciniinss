@@ -24,6 +24,24 @@ t.test("contato com id de privacidade (@lid): vale o número de verdade", () => 
   a.equal(N.foneDaMensagem(msg({ conversation: "oi" }, { key: { remoteJid: "119928724144327@lid", id: "WA3" } })), "119928724144327");
 });
 
+t.test("histórico: só cliente entra, @lid acha o número, ordem por data", () => {
+  const h = (jid, ts, extra = {}) => ({ key: { remoteJid: jid, id: "H" + ts, fromMe: false, ...extra },
+    messageTimestamp: ts, message: { conversation: "msg " + ts } });
+  const chats = [{ id: "2222@lid", pnJid: "5516988887777@s.whatsapp.net" }];
+  const msgs = [
+    h("5516999990000@s.whatsapp.net", 1785000300),
+    h("5516999990000@s.whatsapp.net", 1785000100, { fromMe: true }),
+    h("2222@lid", 1785000200, { fromMe: true, senderPn: "5516981409271@s.whatsapp.net" }),
+    h("5511912345678@s.whatsapp.net", 1785000400),
+    h("1203630@g.us", 1785000500),
+    h("3333@lid", 1785000600),
+  ];
+  const g = N.agruparHistorico(chats, msgs, new Set(["99990000", "88887777"]));
+  a.deepEqual([...g.keys()].sort(), ["5516988887777", "5516999990000"]);
+  a.deepEqual(g.get("5516999990000").map(m => m.messageTimestamp), [1785000100, 1785000300]);
+  a.equal(g.get("5516988887777").length, 1);
+});
+
 t.test("texto simples e texto com citação", () => {
   a.equal(N.textoDaMensagem(msg({ conversation: "Doutor, saiu a perícia?" })),
           "Doutor, saiu a perícia?");
@@ -77,7 +95,8 @@ t.test("mensagem de gente passa", () => {
 
 t.test("nome de arquivo não quebra o Storage", () => {
   // ": " vira UM traço só, não dois: nome de arquivo com buraco duplo é feio
-  a.equal(N.nomeSeguro("laudo do médico: 12/03.pdf"), "laudo_do_médico_12_03.pdf");
+  a.equal(N.nomeSeguro("laudo do médico: 12/03.pdf"), "laudo_do_medico_12_03.pdf");
+  a.equal(N.nomeSeguro("Agendamento_Perícia_Médica.pdf"), "Agendamento_Pericia_Medica.pdf");
   a.equal(N.nomeSeguro("", "audio", "audio/ogg; codecs=opus"), "audio.ogg");
   a.equal(N.nomeSeguro(null, "imagem", "image/jpeg"), "imagem.jpeg");
   a.ok(N.nomeSeguro("x".repeat(200)).length <= 80);

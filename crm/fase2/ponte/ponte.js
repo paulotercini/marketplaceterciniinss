@@ -84,7 +84,7 @@ async function subirMidia(buffer, caminho, mime) {
 }
 
 // ── WhatsApp ──────────────────────────────────────────────────────────────
-let sock = null, ligado = false;
+let sock = null, ligado = false, recuperando = false;
 
 async function conectar() {
   const baileys = require("@whiskeysockets/baileys");
@@ -99,9 +99,10 @@ async function conectar() {
     version, auth: state, logger: pino({ level: "silent" }),
     // aparecer como um navegador comum é o comportamento normal de quem usa
     // o WhatsApp Web; nada aqui manda mensagem sozinho
-    browser: ["CRM Tercini", "Chrome", "121.0.0"],
+    browser: ["CRM Tercini", "Desktop", "121.0.0"],  // Desktop: o WhatsApp manda o histórico inteiro, não só os meses recentes
     markOnlineOnConnect: false,      // não rouba as notificações do celular
-    syncFullHistory: false,          // histórico antigo não interessa
+    // o histórico vem uma vez, ao ler o QR; importarHistorico guarda só o de cliente
+    syncFullHistory: true,
   });
 
   sock.ev.on("creds.update", saveCreds);
@@ -121,6 +122,10 @@ async function conectar() {
       await anotar("zap_qr", "");
       await anotar("zap_status", "ligado");
       log("WhatsApp conectado como", (sock.user && sock.user.id) || "?");
+      if (process.argv.includes("--recuperar-midia") && !recuperando) {
+        recuperando = true;
+        recuperarMidias().catch(e => log("recuperar mídia:", e.message));
+      }
     }
     if (connection === "close") {
       ligado = false;
@@ -138,6 +143,8 @@ async function conectar() {
       conectar().catch(e => log("falhou ao reconectar:", e.message));
     }
   });
+
+  sock.ev.on("messaging-history.set", h => receberHistorico(h, downloadMediaMessage));
 
   sock.ev.on("messages.upsert", async ({ messages, type }) => {
     if (type !== "notify") return;                 // 'append' é histórico velho
@@ -170,26 +177,43 @@ async function entrou(m, baixar) {
   if (N.chaveFone(fone).length < 8) return;
 
   const conversa = await rpc("zap_abrir", { p_telefone: fone, p_nome: m.pushName || null });
+  const linha = await gravar(m, baixar, conversa, "entrada", "entregue");
+  guardarFoto(conversa, m.key.remoteJid);
+  log("←", fone, (linha.texto || `[${linha.tipo}]`).slice(0, 60));
+}
+
+// Uma mensagem do WhatsApp vira uma linha de zap_mensagens, com a mídia no
+// Storage. Serve à mensagem que chega agora e ao histórico.
+async function gravar(m, baixar, conversa, direcao, status) {
   const tipo = N.tipoDaMensagem(m);
   const linha = {
-    conversa_id: conversa, externo_id: m.key.id, direcao: "entrada",
-    tipo, texto: N.textoDaMensagem(m) || null, status: "entregue",
+    conversa_id: conversa, externo_id: m.key.id, direcao,
+    tipo, texto: N.textoDaMensagem(m) || null, status,
     quando_wa: N.quandoWa(m),
   };
 
-  if (["imagem", "audio", "video", "documento", "figurinha"].includes(tipo)) {
-    try {
-      const buf = await baixar(m, "buffer", {}, { reuploadRequest: sock.updateMediaMessage });
-      const c = N.miolo(m);
-      const orig = (c.documentMessage && c.documentMessage.fileName) || "";
-      const mime = (c[Object.keys(c).find(k => c[k] && c[k].mimetype)] || {}).mimetype;
-      const nome = N.nomeSeguro(orig, tipo, mime);
-      linha.midia_url = await subirMidia(buf, `zap/${conversa}/${m.key.id}-${nome}`, mime);
-      linha.midia_nome = nome;
-      linha.midia_mime = mime || null;
-    } catch (e) {
+  // já gravada? Não baixa a mídia de novo; só refaz a que tinha falhado
+  // (é assim que o --recuperar-midia devolve o áudio às mensagens antigas)
+  const [ja] = await sb(`/rest/v1/zap_mensagens?externo_id=eq.${encodeURIComponent(m.key.id)}&select=id,texto,midia_url`);
+  if (ja) {
+    if (MIDIA.includes(tipo) && !ja.midia_url && (ja.texto || "").includes(SEM_MIDIA)) {
+      const md = await baixarMidia(m, baixar, conversa, tipo).catch(e => { log("mídia ainda indisponível:", e.message); return null; });
+      if (md) {
+        // texto vazio de novo: o áudio volta para a fila da transcrição
+        const texto = (ja.texto || "").replace(SEM_MIDIA, "").trim() || null;
+        await sb(`/rest/v1/zap_mensagens?id=eq.${ja.id}`, {
+          method: "PATCH", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ ...md, texto }) });
+        recuperadas++;
+      }
+    }
+    return { ...linha, repetida: true };
+  }
+
+  if (MIDIA.includes(tipo)) {
+    try { Object.assign(linha, await baixarMidia(m, baixar, conversa, tipo)); }
+    catch (e) {
       log("não consegui baixar a mídia:", e.message);
-      linha.texto = (linha.texto || "") + " [mídia não baixada]";
+      linha.texto = ((linha.texto || "") + " " + SEM_MIDIA).trim();
     }
   }
 
@@ -199,8 +223,117 @@ async function entrou(m, baixar) {
     // 23505 = mensagem repetida; reprocessar não pode virar linha dobrada
     if (!String(e.message).includes("23505")) throw e;
   });
-  guardarFoto(conversa, m.key.remoteJid);
-  log("←", fone, (linha.texto || `[${tipo}]`).slice(0, 60));
+  return linha;
+}
+
+const MIDIA = ["imagem", "audio", "video", "documento", "figurinha"];
+const SEM_MIDIA = "[mídia não baixada]";
+let recuperadas = 0;
+
+async function baixarMidia(m, baixar, conversa, tipo) {
+  let buf;
+  try { buf = await baixar(m, "buffer", {}, { reuploadRequest: sock.updateMediaMessage }); }
+  catch (e) {
+    // link vencido: o WhatsApp responde 403, e o Baileys só pede ao celular
+    // que reenvie em 404/410. Pede aqui e tenta de novo, uma vez.
+    if (!/status code 403/.test(e.message)) throw e;
+    m = await sock.updateMediaMessage(m);
+    buf = await baixar(m, "buffer", {}, { reuploadRequest: sock.updateMediaMessage });
+  }
+  const c = N.miolo(m);
+  const orig = (c.documentMessage && c.documentMessage.fileName) || "";
+  const mime = (c[Object.keys(c).find(k => c[k] && c[k].mimetype)] || {}).mimetype;
+  const nome = N.nomeSeguro(orig, tipo, mime);
+  return {
+    midia_url: await subirMidia(buf, `zap/${conversa}/${m.key.id}-${nome}`, mime),
+    midia_nome: orig || nome,          // na tela, o nome como o cliente mandou
+    midia_mime: mime || null,
+  };
+}
+
+// ── histórico: as conversas antigas, gravadas na ficha de cada cliente ────
+// O WhatsApp manda o histórico uma vez, logo depois de ler o QR, em lotes.
+// Só entra conversa de número que é cliente (N.agruparHistorico). Mensagem
+// repetida não dobra (externo_id é único). Um lote por vez: dois zap_abrir
+// do mesmo número ao mesmo tempo brigariam pela mesma conversa.
+let filaHistorico = Promise.resolve();
+function receberHistorico({ chats, messages, syncType }, baixar) {
+  filaHistorico = filaHistorico.then(() => importarHistorico(chats, messages, baixar))
+    .catch(e => log("histórico:", e.message))
+    .then(() => { if (syncType === SOB_PEDIDO && esperandoPagina) esperandoPagina(messages); });
+}
+
+// ── --recuperar-midia: pede de novo ao celular as conversas dos clientes ──
+// A mídia antiga vem com link vencido. Para cada conversa com mídia faltando,
+// pede ao celular as mensagens de novo (de 50 em 50, da mais nova para a mais
+// antiga) até passar da mídia mais antiga que falhou. Cada mensagem que volta
+// passa por gravar(), que refaz só a mídia que faltava.
+const SOB_PEDIDO = require("@whiskeysockets/baileys").proto.HistorySync.HistorySyncType.ON_DEMAND;
+let esperandoPagina = null;
+const pagina = (s, chave, ts) => new Promise(resolve => {
+  const t = setTimeout(() => { esperandoPagina = null; resolve(null); }, 30000);
+  esperandoPagina = msgs => { clearTimeout(t); esperandoPagina = null; resolve(msgs); };
+  s.fetchMessageHistory(50, chave, ts).catch(e => { log("pedido de histórico:", e.message); });
+});
+async function recuperarMidias(s = sock) {
+  const falhas = await sb("/rest/v1/zap_mensagens?select=conversa_id,quando_wa"
+    + `&texto=like.*${encodeURIComponent(SEM_MIDIA)}*&order=quando_wa`);
+  const ate = new Map();               // conversa -> data da mídia mais antiga que falhou
+  for (const f of falhas) if (!ate.has(f.conversa_id)) ate.set(f.conversa_id, f.quando_wa);
+  log(`recuperar mídia: ${falhas.length} mídia(s) em ${ate.size} conversa(s)`);
+  const antes = recuperadas;
+  for (const [conversa, limite] of ate) {
+    const [c] = await sb(`/rest/v1/zap_conversas?id=eq.${conversa}&select=telefone`);
+    let [ancora] = await sb(`/rest/v1/zap_mensagens?conversa_id=eq.${conversa}&externo_id=not.is.null`
+      + "&select=externo_id,direcao,quando_wa&order=quando_wa.desc&limit=1");
+    // o celular guarda a conversa pelo id de privacidade (@lid) ou pelo número:
+    // pergunta pelos dois, e fica com o que ele responder
+    const fone = N.soDigitos(c.telefone);
+    const [w] = await s.onWhatsApp(fone).catch(() => []);
+    let jids = [...new Set([w && w.lid, (w && w.jid) || `${fone}@s.whatsapp.net`].filter(Boolean))];
+    for (let volta = 0; ancora && volta < 40; volta++) {
+      let msgs = null;
+      for (const jid of jids) {
+        msgs = await pagina(s, { remoteJid: jid, id: ancora.externo_id, fromMe: ancora.direcao === "saida" }, Date.parse(ancora.quando_wa));
+        if (msgs && msgs.length) { jids = [jid]; break; }
+      }
+      if (!msgs || !msgs.length) { if (volta === 0) log("recuperar mídia: o celular não respondeu pela conversa de", c.telefone); break; }
+      const velha = msgs.reduce((a, b) => ((N.quandoWa(a) || "") < (N.quandoWa(b) || "") ? a : b));
+      if (!N.quandoWa(velha) || N.quandoWa(velha) <= limite) break;
+      ancora = { externo_id: velha.key.id, direcao: velha.key.fromMe ? "saida" : "entrada", quando_wa: N.quandoWa(velha) };
+    }
+    log(`recuperar mídia: conversa de ${c.telefone} conferida (${recuperadas - antes} recuperada(s) até aqui)`);
+  }
+  log(`recuperar mídia: fim — ${recuperadas - antes} mídia(s) recuperada(s)`);
+}
+async function importarHistorico(chats, messages, baixar) {
+  const clientes = await sb("/rest/v1/clientes?select=telefone&telefone=not.is.null");
+  const chaves = new Set(clientes.map(c => N.chaveFone(c.telefone)).filter(k => k.length === 8));
+  const grupos = N.agruparHistorico(chats, messages, chaves);
+  if (!grupos.size) return;
+  log(`histórico: ${messages.length} mensagem(ns) no lote, ${grupos.size} conversa(s) de cliente`);
+  for (const [fone, msgs] of grupos) {
+    const nome = (msgs.find(m => !m.key.fromMe && m.pushName) || {}).pushName || null;
+    const conversa = await rpc("zap_abrir", { p_telefone: fone, p_nome: nome });
+    let n = 0;
+    for (const m of msgs) {
+      try {
+        await gravar(m, baixar, conversa, m.key.fromMe ? "saida" : "entrada", m.key.fromMe ? "enviada" : "entregue");
+        n++;
+      } catch (e) { log("histórico: não gravei uma mensagem de", fone, "-", e.message); }
+    }
+    // histórico não é novidade: nada fica "não lido" e a prévia volta para a
+    // mensagem mais recente (o lote antigo pode chegar depois de uma nova).
+    // ponytail: zera também o não-lido de mensagem nova que chegou durante a importação; só acontece logo após ler o QR
+    const [ult] = await sb(`/rest/v1/zap_mensagens?conversa_id=eq.${conversa}&direcao=neq.interna`
+      + "&select=texto,tipo,quando_wa,criado_em&order=quando_wa.desc.nullslast&limit=1");
+    await sb(`/rest/v1/zap_conversas?id=eq.${conversa}`, {
+      method: "PATCH", headers: { Prefer: "return=minimal" },
+      body: JSON.stringify({ nao_lidas: 0, ...(ult ? { ultima_em: ult.quando_wa || ult.criado_em,
+        ultimo_texto: (ult.texto || `[${ult.tipo}]`).slice(0, 200) } : {}) }),
+    });
+    log(`histórico: ${n} mensagem(ns) gravada(s) na conversa de ${fone}`);
+  }
 }
 
 // O tipo importa: foto tem de chegar como FOTO, não como arquivo para baixar.
@@ -338,6 +471,9 @@ if (require.main === module) {
   const tchau = async s => { log("saindo por", s); await anotar("zap_status", "parada"); process.exit(0); };
   process.on("SIGINT", () => tchau("SIGINT"));
   process.on("SIGTERM", () => tchau("SIGTERM"));
+  // o Baileys às vezes rejeita uma promessa do socket que já morreu (retry de
+  // mensagem depois de a sessão cair): isso não pode derrubar a ponte inteira
+  process.on("unhandledRejection", e => log("erro solto (seguindo):", (e && e.message) || e));
 }
 
 module.exports = { sb, rpc, enviar, entrou, conteudoDaMensagem };

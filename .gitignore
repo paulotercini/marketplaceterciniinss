@@ -9,6 +9,7 @@ crm/data/
 crm/app.html
 # a ponte do WhatsApp: sessão é credencial, .env tem a service_role
 crm/fase2/ponte/sessao/
+crm/fase2/ponte/sessao-backup/
 crm/fase2/ponte/.env
 crm/fase2/ponte/node_modules/
 # robô do CRPS: perfil é a sessão gov.br, nups/resultado têm dados de cliente

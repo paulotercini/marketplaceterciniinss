@@ -89,7 +89,9 @@ function deveIgnorar(m) {
 
 // Nome de arquivo que não vira dor de cabeça no Storage nem no navegador
 function nomeSeguro(nome, tipo, mime) {
-  let n = String(nome || "").trim().replace(/[/\\?%*:|"<>\s]+/g, "_").slice(0, 80);
+  // o Storage recusa acento no caminho ("Invalid key"): só ASCII
+  let n = String(nome || "").normalize("NFD").replace(/[̀-ͯ]/g, "").trim()
+    .replace(/[^\w.-]+/g, "_").slice(0, 80);
   if (!n) {
     const ext = String(mime || "").split("/")[1] || "bin";
     n = `${tipo || "arquivo"}.${ext.split(";")[0]}`;
@@ -106,6 +108,33 @@ function quandoWa(m) {
   return new Date(s * 1000).toISOString();
 }
 
-module.exports = { soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem,
+// O histórico que o WhatsApp entrega ao conectar traz TODAS as conversas do
+// celular. Só entra o que é de cliente: o resto (fornecedor, família, grupo)
+// não é assunto do CRM. Conversa com id de privacidade (@lid) acha o número
+// pelo pnJid que vem na própria conversa. Devolve Map fone -> mensagens em
+// ordem de data, para a prévia terminar na mais recente.
+function agruparHistorico(chats, mensagens, chavesClientes) {
+  const pn = new Map();
+  for (const c of chats || []) {
+    if (String(c.id).endsWith("@lid") && c.pnJid) pn.set(c.id, c.pnJid);
+    if (c.lidJid && String(c.id).endsWith("@s.whatsapp.net")) pn.set(c.lidJid, c.id);
+  }
+  const grupos = new Map();
+  for (const m of mensagens || []) {
+    if (deveIgnorar(m)) continue;
+    const jid = String(m.key.remoteJid);
+    // senderPn só vale para o que o cliente mandou: no que saiu daqui, é o nosso número
+    const alvo = jid.endsWith("@lid") ? (pn.get(jid) || (!m.key.fromMe && m.key.senderPn)) : jid;
+    if (!alvo || String(alvo).endsWith("@lid")) continue;
+    const fone = jidParaFone(alvo);
+    if (!chavesClientes.has(chaveFone(fone))) continue;
+    if (!grupos.has(fone)) grupos.set(fone, []);
+    grupos.get(fone).push(m);
+  }
+  for (const l of grupos.values()) l.sort((a, b) => (quandoWa(a) || "") < (quandoWa(b) || "") ? -1 : 1);
+  return grupos;
+}
+
+module.exports = { soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem, agruparHistorico,
                    miolo, tipoDaMensagem, textoDaMensagem, deveIgnorar,
                    nomeSeguro, quandoWa };
