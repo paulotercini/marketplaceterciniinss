@@ -86,6 +86,22 @@ async function subirMidia(buffer, caminho, mime) {
 // ── WhatsApp ──────────────────────────────────────────────────────────────
 let sock = null, ligado = false, recuperando = false;
 
+// O aparelho do cliente que não consegue abrir uma mensagem ("Aguardando
+// mensagem") pede para a gente reenviá-la; o Baileys reenvia o que getMessage
+// devolver. Sem isso a mensagem fica presa para sempre no celular dele.
+const enviadas = new Map();          // ponytail: só na memória, os pedidos de reenvio chegam em segundos
+function lembrar(r) {
+  if (!r || !r.key || !r.message) return;
+  enviadas.set(r.key.id, r.message);
+  if (enviadas.size > 500) enviadas.delete(enviadas.keys().next().value);
+}
+async function mensagemParaReenvio(key) {
+  if (enviadas.has(key.id)) return enviadas.get(key.id);
+  // reiniciou no meio: o texto ainda está no banco (mídia não dá para remontar)
+  const [m] = await sb(`/rest/v1/zap_mensagens?select=texto,tipo&externo_id=eq.${encodeURIComponent(key.id)}`).catch(() => []);
+  return m && m.tipo === "texto" && m.texto ? { conversation: m.texto } : undefined;
+}
+
 async function conectar() {
   const baileys = require("@whiskeysockets/baileys");
   const makeWASocket = baileys.default || baileys.makeWASocket;
@@ -103,6 +119,7 @@ async function conectar() {
     markOnlineOnConnect: false,      // não rouba as notificações do celular
     // o histórico vem uma vez, ao ler o QR; importarHistorico guarda só o de cliente
     syncFullHistory: true,
+    getMessage: mensagemParaReenvio,
   });
 
   sock.ev.on("creds.update", saveCreds);
@@ -428,7 +445,7 @@ async function reagir(r, s = sock) {
     if (!m || !m.externo_id || !c) throw new Error("mensagem sem id no WhatsApp");
     const [achado] = await s.onWhatsApp(N.soDigitos(c.telefone));
     if (!achado || !achado.exists) throw new Error("número não tem WhatsApp");
-    await s.sendMessage(achado.jid, { react: { text: r.emoji, key: N.chaveDaMensagem(achado.jid, m) } });
+    lembrar(await s.sendMessage(achado.jid, { react: { text: r.emoji, key: N.chaveDaMensagem(achado.jid, m) } }));
     await sb(`/rest/v1/zap_reacoes?id=eq.${r.id}`, { method: "PATCH", headers: { Prefer: "return=minimal" },
       body: JSON.stringify({ status: "enviada" }) });
   } catch (e) {
@@ -490,6 +507,7 @@ async function enviar(msg, s = sock) {
         opcoes = { quoted: { key: N.chaveDaMensagem(achado.jid, orig), message: { conversation: orig.texto || "" } } };
     }
     const r = await s.sendMessage(achado.jid, await conteudoDaMensagem(msg), opcoes);
+    lembrar(r);
     await s.sendPresenceUpdate("paused", achado.jid);
 
     await sb(`/rest/v1/zap_mensagens?id=eq.${msg.id}`, {
