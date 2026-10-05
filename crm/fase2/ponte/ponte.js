@@ -175,6 +175,8 @@ async function conectar() {
 const lidParaFone = new Map();
 
 async function entrou(m, baixar) {
+  const reacao = N.reacaoDe(m);
+  if (reacao) return guardarReacao(m, reacao);
   if (N.deveIgnorar(m)) return;
   const fone = N.foneDaMensagem(m, lidParaFone);
   if (N.chaveFone(fone).length < 8) return;
@@ -192,6 +194,18 @@ async function entrou(m, baixar) {
   const linha = await gravar(m, baixar, conversa, "entrada", "entregue");
   guardarFoto(conversa, m.key.remoteJid);
   log("←", fone, (linha.texto || `[${linha.tipo}]`).slice(0, 60));
+}
+
+// Reação (do cliente ou dada pelo celular do escritório) a uma mensagem que o
+// CRM conhece: uma por lado, a nova substitui a antiga; emoji vazio = retirada
+async function guardarReacao(m, reacao) {
+  const [alvo] = await sb(`/rest/v1/zap_mensagens?externo_id=eq.${encodeURIComponent(reacao.id)}&select=id`);
+  if (!alvo) return;                               // mensagem antiga, fora do CRM
+  await sb("/rest/v1/zap_reacoes?on_conflict=mensagem_id,de", {
+    method: "POST", headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+    body: JSON.stringify({ mensagem_id: alvo.id, de: m.key.fromMe ? "escritorio" : "cliente",
+                           emoji: reacao.emoji, status: "enviada" }),
+  });
 }
 
 // Uma mensagem do WhatsApp vira uma linha de zap_mensagens, com a mídia no
@@ -219,6 +233,14 @@ async function gravar(m, baixar, conversa, direcao, status) {
       }
     }
     return { ...linha, repetida: true };
+  }
+
+  // respondeu citando: guarda o id do WhatsApp e, se a citada está no CRM, liga as duas
+  const citada = N.citacaoDe(m);
+  if (citada) {
+    linha.responde_externo = citada;
+    const [orig] = await sb(`/rest/v1/zap_mensagens?externo_id=eq.${encodeURIComponent(citada)}&select=id`).catch(() => []);
+    if (orig) linha.responde_a = orig.id;
   }
 
   if (MIDIA.includes(tipo)) {
@@ -360,6 +382,20 @@ async function importarHistorico(chats, messages, baixar) {
 // O tipo importa: foto tem de chegar como FOTO, não como arquivo para baixar.
 // Documento leva o nome original, senão o cliente recebe "arquivo.bin" e não
 // sabe que é a lista de documentos que ele pediu.
+// WebM -> OGG/Opus com o ffmpeg que vem no pacote ffmpeg-static (sem instalar nada no Windows)
+function paraOgg(buf) {
+  return new Promise((ok, falha) => {
+    const p = require("child_process").spawn(require("ffmpeg-static"),
+      ["-loglevel", "error", "-i", "pipe:0", "-vn", "-c:a", "libopus", "-b:a", "32k", "-f", "ogg", "pipe:1"]);
+    const partes = [], erro = [];
+    p.stdout.on("data", d => partes.push(d));
+    p.stderr.on("data", d => erro.push(d));
+    p.on("error", falha);
+    p.on("close", c => c === 0 ? ok(Buffer.concat(partes)) : falha(new Error("ffmpeg: " + Buffer.concat(erro).toString().slice(0, 200))));
+    p.stdin.end(buf);
+  });
+}
+
 async function conteudoDaMensagem(msg) {
   if (!msg.midia_url) return { text: msg.texto || "" };
   const buf = await baixarDoBalde(msg.midia_url);
@@ -368,8 +404,12 @@ async function conteudoDaMensagem(msg) {
   switch (msg.tipo) {
     case "imagem": return { image: buf, caption: legenda };
     case "video":  return { video: buf, caption: legenda };
-    // ptt=true faz aparecer como áudio de voz, e não como arquivo de música
-    case "audio":  return { audio: buf, mimetype: mime, ptt: true };
+    // ptt=true faz aparecer como áudio de voz, e não como arquivo de música.
+    // O áudio gravado no CRM vem em WebM (é o que o Chrome grava) e o WhatsApp
+    // só toca mensagem de voz em OGG/Opus: converte antes de mandar
+    case "audio":
+      if (/webm/i.test(mime)) return { audio: await paraOgg(buf), mimetype: "audio/ogg; codecs=opus", ptt: true };
+      return { audio: buf, mimetype: mime, ptt: true };
     default:       return { document: buf, mimetype: mime,
                             fileName: msg.midia_nome || "arquivo", caption: legenda };
   }
@@ -378,16 +418,44 @@ async function conteudoDaMensagem(msg) {
 // ── fila de saída ─────────────────────────────────────────────────────────
 // O CRM não fala com o WhatsApp: ele escreve na tabela e vai embora. Se a
 // ponte estiver caída, a mensagem espera em vez de sumir.
+let ultimoRelogio = 0;
+
+// reação da equipe (👍 numa mensagem): vai para o WhatsApp como reação de verdade
+async function reagir(r, s = sock) {
+  try {
+    const [m] = await sb(`/rest/v1/zap_mensagens?id=eq.${r.mensagem_id}&select=externo_id,direcao,conversa_id`);
+    const [c] = m ? await sb(`/rest/v1/zap_conversas?id=eq.${m.conversa_id}&select=telefone`) : [];
+    if (!m || !m.externo_id || !c) throw new Error("mensagem sem id no WhatsApp");
+    const [achado] = await s.onWhatsApp(N.soDigitos(c.telefone));
+    if (!achado || !achado.exists) throw new Error("número não tem WhatsApp");
+    await s.sendMessage(achado.jid, { react: { text: r.emoji, key: N.chaveDaMensagem(achado.jid, m) } });
+    await sb(`/rest/v1/zap_reacoes?id=eq.${r.id}`, { method: "PATCH", headers: { Prefer: "return=minimal" },
+      body: JSON.stringify({ status: "enviada" }) });
+  } catch (e) {
+    log("✗ reação:", e.message);
+    await sb(`/rest/v1/zap_reacoes?id=eq.${r.id}`, { method: "PATCH", headers: { Prefer: "return=minimal" },
+      body: JSON.stringify({ status: "erro" }) }).catch(() => {});
+  }
+}
+
 async function rodarFila() {
   for (;;) {
     try {
       if (ligado) {
         // ordem pelo contador, não pelo relógio: duas mensagens gravadas no
         // mesmo instante sairiam em ordem sorteada
+        // a cada ~30 s: agendadas que venceram entram na fila, retornos avisam
+        if (Date.now() - ultimoRelogio > 30000) {
+          ultimoRelogio = Date.now();
+          const n = await rpc("zap_relogio", {}).catch(e => { log("relógio:", e.message); return 0; });
+          if (n) log(`${n} mensagem(ns) agendada(s) liberada(s)`);
+        }
         const fila = await sb("/rest/v1/zap_mensagens?status=eq.fila"
-          + "&select=id,conversa_id,texto,tipo,midia_url,midia_nome,midia_mime,tentativas"
+          + "&select=id,conversa_id,texto,tipo,midia_url,midia_nome,midia_mime,tentativas,responde_a"
           + "&order=seq&limit=5");
         for (const msg of fila || []) await enviar(msg);
+        const reacoes = await sb("/rest/v1/zap_reacoes?status=eq.fila&de=eq.escritorio&select=id,mensagem_id,emoji&limit=5");
+        for (const r of reacoes || []) await reagir(r);
       }
     } catch (e) { log("fila:", e.message); }
     await espera(INTERVALO);
@@ -414,7 +482,14 @@ async function enviar(msg, s = sock) {
     await s.sendPresenceUpdate("composing", achado.jid);
     // um respiro humano entre uma mensagem e outra
     await espera(Number(process.env.PAUSA_ENVIO ?? (700 + Math.floor(Math.random() * 1500))));
-    const r = await s.sendMessage(achado.jid, await conteudoDaMensagem(msg));
+    // resposta citando uma mensagem: o WhatsApp precisa da chave da original
+    let opcoes;
+    if (msg.responde_a) {
+      const [orig] = await sb(`/rest/v1/zap_mensagens?id=eq.${msg.responde_a}&select=externo_id,direcao,texto`);
+      if (orig && orig.externo_id)
+        opcoes = { quoted: { key: N.chaveDaMensagem(achado.jid, orig), message: { conversation: orig.texto || "" } } };
+    }
+    const r = await s.sendMessage(achado.jid, await conteudoDaMensagem(msg), opcoes);
     await s.sendPresenceUpdate("paused", achado.jid);
 
     await sb(`/rest/v1/zap_mensagens?id=eq.${msg.id}`, {
@@ -497,4 +572,4 @@ if (require.main === module) {
   process.on("unhandledRejection", e => log("erro solto (seguindo):", (e && e.message) || e));
 }
 
-module.exports = { sb, rpc, enviar, entrou, conteudoDaMensagem };
+module.exports = { sb, rpc, enviar, entrou, conteudoDaMensagem, paraOgg };

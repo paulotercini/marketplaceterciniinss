@@ -1683,6 +1683,36 @@
   .app.celular .zap-dir{height:70vh;height:70dvh}
   .zap-ping{margin-top:6px;font-size:12px;font-weight:600;color:#0a7d43;background:#eaf7ef;
             border:1px solid #bfe6cf;border-radius:6px;padding:3px 8px;display:inline-block}
+  /* atendimento como no SMBot: setor, etiquetas, citação, reação, ações */
+  .zap-etq{display:inline-block;border-radius:9px;padding:0 7px;font-size:10.5px;font-weight:700;
+           color:#fff;line-height:17px;white-space:nowrap}
+  .zap-setor{display:inline-block;border-radius:5px;padding:0 6px;font-size:10.5px;font-weight:700;
+             border:1px solid currentColor;line-height:16px;white-space:nowrap;background:#fff}
+  .zap-cit{border-left:3px solid #4a9b6f;background:rgba(0,0,0,.05);border-radius:5px;
+           padding:3px 7px;margin-bottom:4px;font-size:12px;color:#3c4a42;cursor:pointer;
+           max-height:3.4em;overflow:hidden}
+  .zap-reac{display:inline-flex;gap:2px;background:#fff;border:1px solid var(--borda);border-radius:10px;
+            padding:0 5px;font-size:13px;margin-top:-2px;align-self:flex-start}
+  .zap-b.saida + .zap-reac, .zap-reac.saida{align-self:flex-end}
+  .zap-acoes{display:inline-flex;gap:2px;opacity:0}
+  .zap-acoes button{border:0;background:none;cursor:pointer;font-size:12px;padding:0 2px;color:var(--cinza)}
+  @media (hover:hover) and (pointer:fine){.zap-b:hover .zap-acoes{opacity:1}}
+  .app.celular .zap-acoes{opacity:1}
+  @media (hover:none){.zap-acoes{opacity:1}}
+  .zap-b.agendada{background:#eef4ff;border:1px dashed #7aa2e3}
+  .zap-resp{display:flex;align-items:center;gap:8px;padding:6px 10px;background:#f1f5f2;
+            border-top:1px solid var(--borda);font-size:12px;color:#3c4a42}
+  .zap-resp .txt{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:3px solid #4a9b6f;padding-left:6px}
+  .zap-sug{position:absolute;bottom:100%;left:8px;right:8px;background:var(--branco);border:1px solid var(--borda);
+           border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.12);max-height:220px;overflow:auto;z-index:5}
+  .zap-sug button{display:block;width:100%;text-align:left;border:0;background:none;padding:6px 10px;
+                  font-size:12.5px;cursor:pointer}
+  .zap-sug button:hover,.zap-sug button.on{background:#eaf1fc}
+  .zap-sug b{color:var(--azul)}
+  .zap-escrever{position:relative}
+  .zap-icone.gravando{background:#fde7e7;border-color:#e57373;animation:piscaRec 1s infinite}
+  @keyframes piscaRec{50%{opacity:.55}}
+  .zap-proto{font-family:monospace;font-size:11.5px;color:var(--cinza);cursor:pointer}
   /* .id-secao só vive dentro do cartão "Ligações do cliente" (F9.2): o rótulo
      segue a mesma régua do rótulo de campo da grade, senão o mesmo cartão
      teria dois tamanhos de etiqueta */
@@ -10000,6 +10030,26 @@ async function leadParaCliente(leadId){
 let zapFiltro = "minhas", zapAberta = null, zapMsgs = [], zapTimer = null, zapConvs = [];
 // modo nota interna: o que for escrito fica só para a equipe
 let zapNota = false;
+// o que veio do SMBot: setores, etiquetas, retornos, reações e o protocolo
+let zapAux = {setores:[], etiquetas:[], convEtq:new Map(), retornos:[]};
+let zapReacoes = new Map(), zapProto = null, zapResponder = null;
+let zapChips = {naoLidas:false, fixadas:false, setor:"", etiqueta:""};
+async function carregarAuxZap(){
+  const [setores, etiquetas, ce, retornos] = await Promise.all([
+    todas("zap_setores","select=*&ativo=eq.true&order=ordem,nome").catch(()=>[]),
+    todas("zap_etiquetas","select=*&order=ordem,texto").catch(()=>[]),
+    todas("zap_conversa_etiquetas","select=conversa_id,etiqueta_id").catch(()=>[]),
+    todas("zap_retornos","select=*&feito_em=is.null&order=quando").catch(()=>[]),
+  ]);
+  const convEtq = new Map();
+  ce.forEach(x=>{ if(!convEtq.has(x.conversa_id)) convEtq.set(x.conversa_id,[]); convEtq.get(x.conversa_id).push(x.etiqueta_id); });
+  zapAux = {setores, etiquetas, convEtq, retornos};
+}
+const setorDe = c => c && c.setor_id && zapAux.setores.find(s=>s.id===c.setor_id);
+const etiquetasDe = c => (zapAux.convEtq.get(c.id)||[]).map(id=>zapAux.etiquetas.find(e=>e.id===id)).filter(Boolean);
+const retornoDe = c => zapAux.retornos.find(r=>r.conversa_id===c.id);
+const chipEtq = e => `<span class="zap-etq" style="background:${esc(e.cor)}">${esc(e.texto)}</span>`;
+const chipSetor = s => `<span class="zap-setor" style="color:${esc(s.cor)}">${esc(s.nome)}</span>`;
 
 function pararZapTimer(){ if(zapTimer){ clearInterval(zapTimer); zapTimer=null; } }
 
@@ -10030,7 +10080,7 @@ async function recarregarZap(silencioso){
     return;
   }
   zapConvs = cs;
-  await assinarFotosZap(cs);
+  await Promise.all([assinarFotosZap(cs), carregarAuxZap()]);
   pintarListaZap();
   if(zapAberta && !silencioso) await abrirConversa(zapAberta);
   else if(zapAberta) await recarregarMsgs();
@@ -10048,26 +10098,43 @@ function estadoPonte(){
   return {cor:"#b00020", txt: morta ? "ponte sem sinal" : st};
 }
 
+// As abas são as do SMBot: Pendentes (ninguém pegou ainda), Atendendo (todas
+// abertas), Retornos ("responder depois" com hora) e Encerradas.
 function pintarListaZap(){
   const meu = c => c.atendente_id===eu.id;
-  const filtros = [["minhas","Minhas"],["sem","Sem dono"],["todas","Todas"],["fim","Resolvidas"]];
-  const cs = zapConvs.filter(c=>
-      zapFiltro==="minhas" ? meu(c) && c.status!=="resolvida"
-    : zapFiltro==="sem"    ? !c.atendente_id && c.status!=="resolvida"
-    : zapFiltro==="fim"    ? c.status==="resolvida"
-    : c.status!=="resolvida");
+  const aberta = c => c.status!=="resolvida";
+  const filtros = [["minhas","Minhas"],["sem","Pendentes"],["todas","Atendendo"],["retornos","⏰ Retornos"],["fim","Encerradas"]];
+  const naAba = (f,c) => f==="minhas" ? meu(c)&&aberta(c) : f==="sem" ? !c.atendente_id&&aberta(c)
+                       : f==="fim" ? !aberta(c) : f==="retornos" ? !!retornoDe(c) : aberta(c);
+  let cs = zapConvs.filter(c=>naAba(zapFiltro,c)
+    && (!zapChips.naoLidas || c.nao_lidas) && (!zapChips.fixadas || c.fixada)
+    && (!zapChips.setor || c.setor_id===zapChips.setor)
+    && (!zapChips.etiqueta || (zapAux.convEtq.get(c.id)||[]).includes(zapChips.etiqueta)));
+  // fixadas no topo; na aba Retornos, pela hora marcada
+  cs = zapFiltro==="retornos"
+    ? cs.sort((a,b)=>(retornoDe(a).quando<retornoDe(b).quando?-1:1))
+    : cs.sort((a,b)=>(b.fixada?1:0)-(a.fixada?1:0));
   const p = estadoPonte();
   document.querySelector(".zap-lado").innerHTML =
     `<div class="zap-estado"><i style="background:${p.cor}"></i>${esc(p.txt)}
        ${cfgApp("zap_qr")?`<button class="btn-mini" onclick="ajudaQR()">como ligar</button>`:""}</div>
      <div class="filtros">${filtros.map(([f,r])=>{
-        const n = zapConvs.filter(c=> f==="minhas" ? meu(c)&&c.status!=="resolvida"
-                                    : f==="sem" ? !c.atendente_id&&c.status!=="resolvida"
-                                    : f==="fim" ? c.status==="resolvida" : c.status!=="resolvida").length;
+        const n = zapConvs.filter(c=>naAba(f,c)).length;
         return `<button class="fchip ${zapFiltro===f?"on":""}" data-zf="${f}">${r} ${n?`(${n})`:""}</button>`;
-      }).join("")}</div>`
+      }).join("")}</div>
+     <div class="filtros">
+       <button class="fchip ${zapChips.naoLidas?"on":""}" data-zch="naoLidas">não lidas</button>
+       <button class="fchip ${zapChips.fixadas?"on":""}" data-zch="fixadas">📌 fixadas</button>
+       ${zapAux.setores.length?`<select id="zf-setor" style="font-size:12px"><option value="">setor: todos</option>
+         ${zapAux.setores.map(s=>`<option value="${s.id}" ${zapChips.setor===s.id?"selected":""}>${esc(s.nome)}</option>`).join("")}</select>`:""}
+       ${zapAux.etiquetas.length?`<select id="zf-etq" style="font-size:12px"><option value="">etiqueta: todas</option>
+         ${zapAux.etiquetas.map(e=>`<option value="${e.id}" ${zapChips.etiqueta===e.id?"selected":""}>${esc(e.texto)}</option>`).join("")}</select>`:""}
+     </div>`
     + (cs.map(c=>cartaoConversa(c)).join("") || `<p class="meio-sub">Nada aqui.</p>`);
   document.querySelectorAll("[data-zf]").forEach(b=>b.onclick=()=>{ zapFiltro=b.dataset.zf; pintarListaZap(); });
+  document.querySelectorAll("[data-zch]").forEach(b=>b.onclick=()=>{ zapChips[b.dataset.zch]=!zapChips[b.dataset.zch]; pintarListaZap(); });
+  const fs = document.getElementById("zf-setor"); if(fs) fs.onchange=()=>{ zapChips.setor=fs.value; pintarListaZap(); };
+  const fe = document.getElementById("zf-etq"); if(fe) fe.onchange=()=>{ zapChips.etiqueta=fe.value; pintarListaZap(); };
   document.querySelectorAll("[data-zc]").forEach(el=>el.onclick=()=>abrirConversa(el.dataset.zc));
 }
 
@@ -10108,10 +10175,14 @@ function cartaoConversa(c){
       <span class="hora">${c.ultima_em?quandoFalou(c.ultima_em):""}</span></div>
     <div class="l2">${esc((c.ultimo_texto||"").slice(0,60))}</div>
     <div class="l3">
+      ${c.fixada?`<span title="fixada">📌</span>`:""}
       ${cli?`<span class="chip neutro">cliente</span>`:`<span class="chip per">prospecto</span>`}
+      ${setorDe(c)?chipSetor(setorDe(c)):""}
+      ${etiquetasDe(c).map(chipEtq).join("")}
+      ${retornoDe(c)?`<span class="chip ben" title="${esc(retornoDe(c).nota||"")}">⏰ ${fmtTS(retornoDe(c).quando)} ${horaSP(retornoDe(c).quando)}</span>`:""}
       ${c.bot_ativo?`<span class="chip ben">🤖 robô</span>`:""}
       ${at?`<span class="eq-ini on" style="--cor-eq:${at.cor}" title="${esc(at.nome)}">${esc(at.inicial)}</span>`
-         :`<span class="chip urg">sem dono</span>`}
+         :`<span class="chip urg">pendente</span>`}
     </div></div>`;
 }
 
@@ -10120,10 +10191,23 @@ const telaVaziaZap = () =>
      <p>À esquerda estão as conversas do escritório. "Sem dono" é a fila de quem
         ainda não foi atendido — é por ali que se começa o dia.</p></div>`;
 
+async function carregarReacoes(){
+  const ids = zapMsgs.map(m=>m.id);
+  zapReacoes = new Map();
+  for(let i=0;i<ids.length;i+=150){
+    const rs = await todas("zap_reacoes",`select=mensagem_id,de,emoji&mensagem_id=in.(${ids.slice(i,i+150).join(",")})`).catch(()=>[]);
+    rs.filter(r=>r.emoji).forEach(r=>{ if(!zapReacoes.has(r.mensagem_id)) zapReacoes.set(r.mensagem_id,[]); zapReacoes.get(r.mensagem_id).push(r); });
+  }
+}
 async function abrirConversa(id){
+  if(zapAberta!==id) zapResponder = null;
   zapAberta = id;
   const c = zapConvs.find(x=>x.id===id); if(!c) return;
   zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${id}&order=seq`).catch(()=>[]);
+  await carregarReacoes();
+  zapProto = c.atendimento_id
+    ? ((await todas("zap_atendimentos",`select=numero&id=eq.${c.atendimento_id}`).catch(()=>[]))[0]||{}).numero
+    : null;
   pintarConversa();
   pintarListaZap();
   if(c.nao_lidas){        // abrir é ler
@@ -10136,7 +10220,9 @@ async function recarregarMsgs(){
   if(!zapAberta) return;
   const antes = zapMsgs.length;
   zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${zapAberta}&order=seq`).catch(()=>zapMsgs);
-  if(zapMsgs.length!==antes) pintarConversa();
+  const reacAntes = JSON.stringify([...zapReacoes]);
+  await carregarReacoes();
+  if(zapMsgs.length!==antes || JSON.stringify([...zapReacoes])!==reacAntes) pintarConversaGuardando();
   else atualizarVistos();
 }
 // só os selos de entrega mudaram: repintar tudo tiraria o texto de quem está
@@ -10146,7 +10232,14 @@ function atualizarVistos(){
                        if(el) el.textContent = seloZap(m); });
 }
 
-const SELO = {rascunho:"✎", fila:"🕓", enviando:"🕓", enviada:"✓", entregue:"✓✓", lida:"✓✓", erro:"⚠"};
+// repintar sem perder o que está sendo escrito (chegou mensagem no meio da frase)
+function pintarConversaGuardando(){
+  const t = document.getElementById("zap-txt"), txt = t ? t.value : "", foco = document.activeElement===t;
+  pintarConversa();
+  const t2 = document.getElementById("zap-txt");
+  if(t2 && txt){ t2.value = txt; if(foco) t2.focus(); }
+}
+const SELO = {rascunho:"✎", agendada:"🗓", fila:"🕓", enviando:"🕓", enviada:"✓", entregue:"✓✓", lida:"✓✓", erro:"⚠"};
 const seloZap = m => m.direcao==="saida" ? (SELO[m.status]||"") : "";
 
 function pintarConversa(){
@@ -10162,30 +10255,48 @@ function pintarConversa(){
             :`<button class="btn-mini" onclick="vincularConversa()">vincular a cliente</button>`}
        ${at?`<span class="eq-ini on" style="--cor-eq:${at.cor}" title="${esc(at.nome)}">${esc(at.inicial)}</span>`
           :`<button class="btn-mini" onclick="assumirConversa()">assumir</button>`}
+       <button class="btn-mini" onclick="escolherSetor()" title="setor da conversa">${setorDe(c)?chipSetor(setorDe(c)):"setor"}</button>
+       <button class="btn-mini" onclick="editarEtiquetas()" title="etiquetas">🏷 ${etiquetasDe(c).map(chipEtq).join(" ")||"etiquetas"}</button>
+       <button class="btn-mini" onclick="alternarFixar()" title="${c.fixada?"desafixar":"fixar no topo da lista"}">📌${c.fixada?" fixada":""}</button>
+       <button class="btn-mini" onclick="novoRetorno()" title="responder depois, com dia e hora">⏰ ${retornoDe(c)?`${fmtTS(retornoDe(c).quando)} ${horaSP(retornoDe(c).quando)}`:"retorno"}</button>
        <button class="btn-mini" onclick="transferirConversa()">transferir</button>
        <button class="btn-mini" onclick="alternarBot()">${c.bot_ativo?"🤖 calar robô":"🤖 religar robô"}</button>
-       <button class="btn-mini" onclick="resolverConversa()">${c.status==="resolvida"?"reabrir":"✔ resolver"}</button>
+       <button class="btn-mini" onclick="${c.status==="resolvida"?"reabrirConversa()":"encerrarConversa()"}">${c.status==="resolvida"?"reabrir":"✔ encerrar"}</button>
+       ${zapProto?`<span class="zap-proto" title="protocolo do atendimento — clique para copiar"
+          onclick="copiar('${zapProto}','Protocolo copiado')">#${zapProto}</span>`:""}
      </div>
      <div class="zap-msgs" id="zap-msgs">${zapMsgs.map(m=>bolhaZap(m,cli)).join("")
         || `<p class="meio-sub" style="padding:12px">Sem mensagens ainda.</p>`}</div>
+     ${zapResponder?`<div class="zap-resp"><span>↩ respondendo</span>
+        <span class="txt">${esc(textoCurto(zapMsgs.find(m=>m.id===zapResponder)))}</span>
+        <button class="btn-mini" onclick="zapResponder=null;pintarConversaGuardando()">✕</button></div>`:""}
      <div class="zap-escrever ${zapNota?"modo-nota":""}">
+       <div class="zap-sug" id="zap-sug" hidden></div>
        <input type="file" id="zap-arq" hidden onchange="mandarArquivoZap()">
        <button class="zap-icone" onclick="document.getElementById('zap-arq').click()"
          title="mandar foto, PDF ou áudio">📎</button>
-       <button class="zap-icone" onclick="frasesZap()" title="mensagens prontas">⚡</button>
+       <button class="zap-icone" onclick="frasesZap()" title="mensagens prontas (ou digite / no campo)">⚡</button>
        <button class="zap-icone ${zapNota?"nota":""}" id="zap-btn-nota" onclick="alternarNota()"
          title="nota interna: fica na conversa, o cliente não vê">🕵</button>
+       <button class="zap-icone" id="zap-rec" onclick="gravarAudioZap()" title="gravar áudio">🎤</button>
        <textarea id="zap-txt" rows="1" placeholder="${zapNota
          ? "Anotação para a equipe — o cliente não vê"
-         : `Escreva para ${esc(nomeDaConversa(c))}…`}"></textarea>
+         : `Escreva para ${esc(nomeDaConversa(c))}… (/ abre as mensagens prontas)`}"></textarea>
+       ${zapNota?"":`<button class="zap-icone" onclick="agendarZap()" title="agendar o envio para outro dia e hora">🗓</button>`}
        <button class="btn-rap" id="zap-enviar" onclick="enviarZap()">${zapNota?"Anotar":"Enviar"}</button>
        ${tel?`<a class="btn-mini" target="_blank" rel="noopener" style="text-decoration:none"
            href="https://wa.me/55${tel}" title="abrir no WhatsApp do seu aparelho">↗</a>`:""}
      </div>`;
   const t = document.getElementById("zap-txt");
-  t.oninput = ()=>{ t.style.height="auto"; t.style.height=Math.min(t.scrollHeight,140)+"px"; };
-  // Enter manda, Shift+Enter pula linha — é o que a mão da equipe já espera
-  t.onkeydown = e=>{ if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); enviarZap(); } };
+  t.oninput = ()=>{ t.style.height="auto"; t.style.height=Math.min(t.scrollHeight,140)+"px"; sugerirFrases(); };
+  // Enter manda, Shift+Enter pula linha — é o que a mão da equipe já espera.
+  // Com as sugestões do "/" abertas, Enter escolhe a primeira
+  t.onkeydown = e=>{
+    const sug = document.getElementById("zap-sug");
+    if(sug && !sug.hidden && (e.key==="Enter" || e.key==="Tab")){ e.preventDefault(); const b=sug.querySelector("button"); if(b) b.click(); return; }
+    if(sug && !sug.hidden && e.key==="Escape"){ sug.hidden = true; return; }
+    if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); enviarZap(); }
+  };
   const cx = document.getElementById("zap-msgs"); cx.scrollTop = cx.scrollHeight;
 }
 
@@ -10200,24 +10311,42 @@ function bolhaZap(m, cli){
         title="registrar no histórico de um processo">↪ andamento</button>`:""}</div></div>`;
   const corpo = m.midia_url
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
-      + (m.texto?`<div>${esc(m.texto)}</div>`:"")
+      + (m.texto?`<div>${m.tipo==="audio"?"🎤 ":""}${esc(m.texto)}</div>`:"")
     : esc(m.texto||`[${m.tipo}]`);
+  // a citada pode estar no CRM (responde_a) ou só ter o id do WhatsApp
+  const citada = m.responde_a ? zapMsgs.find(x=>x.id===m.responde_a)
+               : m.responde_externo ? zapMsgs.find(x=>x.externo_id===m.responde_externo) : null;
+  const reac = zapReacoes.get(m.id)||[];
   return `<div class="zap-b ${m.direcao} ${m.por_bot?"bot":""} ${m.status==="erro"?"ruim":""}
-      ${m.status==="rascunho"?"rascunho":""}">
-    ${quem?`<div class="autor">${esc(m.aviso_chave?"aviso automático":quem)}</div>`:""}
+      ${m.status==="rascunho"?"rascunho":""} ${m.status==="agendada"?"agendada":""}" id="zb-${m.id}">
+    ${quem?`<div class="autor">${esc(m.aviso_chave?"aviso automático":quem)}${m.encaminhada_de?" · ↪ encaminhada":""}</div>`:""}
+    ${citada?`<div class="zap-cit" onclick="irParaMsg('${citada.id}')">${esc(textoCurto(citada))}</div>`
+      : m.responde_a||m.responde_externo?`<div class="zap-cit">mensagem citada (antiga)</div>`:""}
     <div class="txt">${corpo}</div>
     ${m.status==="rascunho"?`<div class="zap-rev">
         <span>escrito pelo sistema — confira antes de mandar</span>
         <button class="btn-mini" onclick="soltarRascunho('${m.id}')">enviar</button>
         <button class="btn-mini" onclick="descartarRascunho('${m.id}')">descartar</button>
       </div>`:""}
-    <div class="pe">${horaSP(m.quando_wa||m.criado_em)}
+    ${m.status==="agendada"?`<div class="zap-rev" style="color:#2d5aa8">
+        <span>🗓 agendada para ${fmtTS(m.enviar_em)} às ${horaSP(m.enviar_em)}</span>
+        <button class="btn-mini" onclick="cancelarAgendada('${m.id}')">cancelar</button>
+      </div>`:""}
+    <div class="pe">
+      ${m.externo_id||m.direcao==="entrada"?`<span class="zap-acoes">
+        <button onclick="responderMsg('${m.id}')" title="responder citando">↩</button>
+        <button onclick="reagirMsg('${m.id}')" title="reagir">😀</button>
+        <button onclick="encaminharMsg('${m.id}')" title="encaminhar para outra conversa">↪</button></span>`:""}
+      ${horaSP(m.quando_wa||m.criado_em)}
       <span id="zs-${m.id}">${seloZap(m)}</span>
       ${m.status==="erro"?`<span title="${esc(m.erro||"")}">não enviou</span>`:""}
       ${cli?`<button class="virar" onclick="virarAndamento('${m.id}')"
          title="registrar no histórico de um processo">↪ andamento</button>`:""}
-    </div></div>`;
+    </div></div>`
+    + (reac.length?`<span class="zap-reac ${m.direcao==="saida"?"saida":""}" title="${esc(reac.map(r=>(r.de==="cliente"?"cliente":"escritório")+" "+r.emoji).join(" · "))}">${reac.map(r=>esc(r.emoji)).join("")}</span>`:"");
 }
+const textoCurto = m => !m ? "" : ((m.tipo&&m.tipo!=="texto"?"["+m.tipo+"] ":"") + (m.texto||"")).replace(/\s+/g," ").slice(0,90);
+function irParaMsg(id){ const el=document.getElementById("zb-"+id); if(el){ el.scrollIntoView({block:"center"}); el.style.outline="2px solid #4a9b6f"; setTimeout(()=>el.style.outline="",1500); } }
 
 // Rascunho é aviso automático que a regra mandou conferir antes. Soltar é
 // virar pedido de envio; descartar apaga — e a chave única impede que o
@@ -10262,7 +10391,8 @@ async function enviarZap(){
       ? {conversa_id:zapAberta, direcao:"interna", autor_id:eu.id,
          texto:txt, status:"interna"}
       : {conversa_id:zapAberta, direcao:"saida", autor_id:eu.id,
-         texto:txt, status:"fila"})});
+         texto:txt, status:"fila", responde_a:zapResponder||null})});
+  zapResponder = null;
   if(!zapNota){
     const c = zapConvs.find(x=>x.id===zapAberta);
     if(c){ c.bot_ativo=false; c.atendente_id = c.atendente_id || eu.id; }
@@ -10379,23 +10509,243 @@ async function mudarConversa(campos){
 const assumirConversa = () => mudarConversa({atendente_id:eu.id, bot_ativo:false});
 const alternarBot = () => { const c=zapConvs.find(x=>x.id===zapAberta);
                             return mudarConversa({bot_ativo:!(c&&c.bot_ativo)}); };
-const resolverConversa = () => { const c=zapConvs.find(x=>x.id===zapAberta);
-  return mudarConversa({status: c&&c.status==="resolvida" ? "aberta" : "resolvida"}); };
+const reabrirConversa = () => mudarConversa({status:"aberta"});   // o banco abre um atendimento novo
+
+// Encerrar como no SMBot: observação opcional, que fica no atendimento (com o
+// protocolo) e, se o cliente tem um processo só, pode ir para o histórico dele
+function encerrarConversa(){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  const cli = c.cliente_id && D.cliPorId.get(c.cliente_id);
+  const ks = cli ? processosDe(D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado") : [];
+  caixa(`<h3>Encerrar o atendimento${zapProto?` #${zapProto}`:""}</h3>
+    <textarea id="ze-obs" rows="3" style="width:100%" placeholder="observação (opcional): o que foi resolvido"></textarea>
+    ${ks.length===1?`<label style="display:block;margin-top:6px;font-size:13px"><input type="checkbox" id="ze-caso">
+       registrar a observação no histórico de ${esc(ks[0].titulo||"processo")}</label>`:""}
+    <div class="form-linha" style="margin-top:10px"><button class="btn-rap" id="ze-ok">✔ encerrar</button></div>`);
+  document.getElementById("ze-ok").onclick = async()=>{
+    const obs = (document.getElementById("ze-obs").value||"").trim();
+    const noCaso = document.getElementById("ze-caso")?.checked;
+    fecharCaixa();
+    const num = await api(`/rest/v1/rpc/zap_encerrar`,{method:"POST",
+      body:JSON.stringify({p_conversa:zapAberta, p_obs:obs||null, p_autor:eu.id})}).catch(e=>{ aviso("Não consegui encerrar: "+e.message); return undefined; });
+    if(num===undefined) return;
+    if(obs && noCaso) await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:ks[0].id, autor_id:eu.id, origem:"whatsapp",
+        texto:`Atendimento pelo WhatsApp${num?` #${num}`:""} encerrado: ${obs}`})}).catch(()=>{});
+    aviso(`Atendimento${num?` #${num}`:""} encerrado ✔`);
+    await recarregarZap();
+  };
+}
+
+function escolherSetor(){
+  if(!zapAux.setores.length) return aviso("Nenhum setor cadastrado ainda");
+  caixa(`<h3>Setor da conversa</h3><div class="form-linha">
+    ${zapAux.setores.map(s=>`<button class="btn-rap" data-zs="${s.id}" style="border-color:${esc(s.cor)};color:${esc(s.cor)}">${esc(s.nome)}</button>`).join("")}
+    <button class="btn-mini" data-zs="">sem setor</button></div>`);
+  document.querySelectorAll("[data-zs]").forEach(b=>b.onclick=()=>{
+    const s = zapAux.setores.find(x=>x.id===b.dataset.zs);
+    fecharCaixa(); mudarConversa({setor_id:s?s.id:null, setor:s?s.nome:null});
+  });
+}
+
+function editarEtiquetas(){
+  if(!zapAux.etiquetas.length) return aviso("Nenhuma etiqueta cadastrada ainda");
+  const tem = new Set(zapAux.convEtq.get(zapAberta)||[]);
+  caixa(`<h3>🏷 Etiquetas</h3><p class="meio-sub">Clique para pôr ou tirar.</p>
+    <div class="form-linha" style="flex-wrap:wrap;gap:6px">${zapAux.etiquetas.map(e=>
+      `<button data-ze="${e.id}" class="zap-etq" style="background:${esc(e.cor)};border:0;cursor:pointer;opacity:${tem.has(e.id)?1:.35};font-size:12px;padding:3px 9px">${tem.has(e.id)?"✓ ":""}${esc(e.texto)}</button>`).join("")}</div>`);
+  document.querySelectorAll("[data-ze]").forEach(b=>b.onclick=async()=>{
+    const id = b.dataset.ze, por = !tem.has(id);
+    if(por) await api(`/rest/v1/zap_conversa_etiquetas`,{method:"POST",headers:{Prefer:"return=minimal,resolution=ignore-duplicates"},
+      body:JSON.stringify({conversa_id:zapAberta, etiqueta_id:id})});
+    else await api(`/rest/v1/zap_conversa_etiquetas?conversa_id=eq.${zapAberta}&etiqueta_id=eq.${id}`,{method:"DELETE",headers:{Prefer:"return=minimal"}});
+    por ? tem.add(id) : tem.delete(id);
+    zapAux.convEtq.set(zapAberta,[...tem]);
+    b.style.opacity = por?1:.35; b.textContent = (por?"✓ ":"")+(zapAux.etiquetas.find(e=>e.id===id)||{}).texto;
+    pintarConversaGuardando(); pintarListaZap();
+  });
+}
+
+const alternarFixar = () => { const c=zapConvs.find(x=>x.id===zapAberta); return mudarConversa({fixada:!(c&&c.fixada)}); };
+
+// "Responder depois": dia, hora e quem; na hora, chega uma menção para essa pessoa
+function novoRetorno(){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  const r = retornoDe(c);
+  const amanha = new Date(Date.now()+864e5); const dia = amanha.toLocaleDateString("sv");
+  caixa(`<h3>⏰ Retorno</h3>
+    ${r?`<p class="meio-sub">Marcado para ${fmtTS(r.quando)} às ${horaSP(r.quando)}${r.nota?` — ${esc(r.nota)}`:""}</p>`:""}
+    <div class="form-linha"><input type="date" id="zr-dia" value="${r?String(r.quando).slice(0,10):dia}">
+      <input type="time" id="zr-hora" value="${r?horaSP(r.quando):"09:00"}">
+      <select id="zr-quem">${equipeAtiva().map(p=>`<option value="${p.id}" ${(r?r.colaborador_id:(c.atendente_id||eu.id))===p.id?"selected":""}>${esc(p.nome)}</option>`).join("")}</select></div>
+    <input id="zr-nota" style="width:100%;margin-top:6px" placeholder="nota (opcional): o que responder" value="${esc(r?r.nota||"":"")}">
+    <div class="form-linha" style="margin-top:10px"><button class="btn-rap" id="zr-ok">${r?"alterar":"marcar"}</button>
+      ${r?`<button class="btn-mini" id="zr-feito">✔ já respondi</button>`:""}</div>`);
+  document.getElementById("zr-ok").onclick = async()=>{
+    const d = document.getElementById("zr-dia").value, h = document.getElementById("zr-hora").value||"09:00";
+    if(!d) return aviso("Escolha o dia");
+    const quando = new Date(`${d}T${h}:00-03:00`).toISOString();
+    const dados = {quando, colaborador_id:document.getElementById("zr-quem").value||null,
+                   nota:(document.getElementById("zr-nota").value||"").trim()||null, avisado_em:null};
+    if(r) await api(`/rest/v1/zap_retornos?id=eq.${r.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(dados)});
+    else await api(`/rest/v1/zap_retornos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({...dados, conversa_id:zapAberta, criado_por:eu.id})});
+    fecharCaixa(); aviso(`Retorno marcado para ${fmtTS(quando)} às ${h} ⏰`);
+    await recarregarZap();
+  };
+  const f = document.getElementById("zr-feito");
+  if(f) f.onclick = async()=>{
+    await api(`/rest/v1/zap_retornos?id=eq.${r.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({feito_em:new Date().toISOString()})});
+    fecharCaixa(); aviso("Retorno concluído ✔"); await recarregarZap();
+  };
+}
+
+// Agendar: o texto do campo sai no dia e hora escolhidos (a ponte libera)
+function agendarZap(){
+  const t = document.getElementById("zap-txt"), txt = (t&&t.value||"").trim();
+  if(!txt) return aviso("Escreva a mensagem antes de agendar");
+  const amanha = new Date(Date.now()+864e5).toLocaleDateString("sv");
+  caixa(`<h3>🗓 Agendar o envio</h3><p class="meio-sub">${esc(txt.slice(0,160))}</p>
+    <div class="form-linha"><input type="date" id="za-dia" value="${amanha}"><input type="time" id="za-hora" value="09:00"></div>
+    <div class="form-linha" style="margin-top:10px"><button class="btn-rap" id="za-ok">agendar</button></div>`);
+  document.getElementById("za-ok").onclick = async()=>{
+    const d = document.getElementById("za-dia").value, h = document.getElementById("za-hora").value||"09:00";
+    const quando = new Date(`${d}T${h}:00-03:00`);
+    if(!d || quando.getTime() < Date.now()+60000) return aviso("Escolha um horário no futuro");
+    fecharCaixa();
+    await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({conversa_id:zapAberta, direcao:"saida", autor_id:eu.id, texto:txt,
+        status:"agendada", enviar_em:quando.toISOString(), responde_a:zapResponder||null})});
+    zapResponder = null; t.value = "";
+    aviso(`Agendada para ${fmtTS(quando.toISOString())} às ${h} 🗓`);
+    await abrirConversa(zapAberta);
+  };
+}
+async function cancelarAgendada(id){
+  if(!await confirmar("Cancelar esta mensagem agendada? Ela não será enviada.")) return;
+  await api(`/rest/v1/zap_mensagens?id=eq.${id}&status=eq.agendada`,{method:"DELETE",headers:{Prefer:"return=minimal"}});
+  await abrirConversa(zapAberta);
+}
+
+function responderMsg(id){ zapResponder = id; pintarConversaGuardando(); const t=document.getElementById("zap-txt"); if(t) t.focus(); }
+
+const EMOJIS_ZAP = ["👍","❤️","😂","😮","😢","🙏","✅"];
+function reagirMsg(id){
+  const minha = (zapReacoes.get(id)||[]).find(r=>r.de==="escritorio");
+  caixa(`<h3>Reagir</h3><div class="form-linha" style="font-size:22px">${EMOJIS_ZAP.map(e=>
+      `<button class="btn-mini" style="font-size:20px" data-zr="${e}">${e}</button>`).join("")}
+    ${minha?`<button class="btn-mini" data-zr="">tirar reação</button>`:""}</div>`);
+  document.querySelectorAll("[data-zr]").forEach(b=>b.onclick=async()=>{
+    fecharCaixa();
+    await api(`/rest/v1/zap_reacoes?on_conflict=mensagem_id,de`,{method:"POST",
+      headers:{Prefer:"resolution=merge-duplicates,return=minimal"},
+      body:JSON.stringify({mensagem_id:id, de:"escritorio", autor_id:eu.id, emoji:b.dataset.zr, status:"fila"})});
+    await carregarReacoes(); pintarConversaGuardando();
+  });
+}
+
+// Encaminhar: copia a mensagem (texto e arquivo, que já está no Storage) para outra conversa
+function encaminharMsg(id){
+  const m = zapMsgs.find(x=>x.id===id); if(!m) return;
+  caixa(`<h3>↪ Encaminhar</h3><p class="meio-sub">${esc(textoCurto(m))}</p>
+    <input id="zf-busca" style="width:100%" placeholder="nome ou telefone de quem vai receber" autocomplete="off">
+    <div id="zf-res" style="margin-top:8px;max-height:300px;overflow:auto"></div>`);
+  const inp = document.getElementById("zf-busca"), res = document.getElementById("zf-res");
+  const pinta = ()=>{
+    const q = (inp.value||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+    const lista = zapConvs.filter(c=>c.id!==zapAberta && (!q || (nomeDaConversa(c)+" "+(c.telefone||"")).toLowerCase()
+      .normalize("NFD").replace(/[̀-ͯ]/g,"").includes(q))).slice(0,15);
+    res.innerHTML = lista.map(c=>`<button class="btn-rap" data-zfw="${c.id}" style="display:block;width:100%;margin:4px 0;text-align:left">
+      ${esc(nomeDaConversa(c))} <span class="meio-sub">· ${esc(c.telefone||"")}</span></button>`).join("") || `<p class="meio-sub">ninguém encontrado</p>`;
+    res.querySelectorAll("[data-zfw]").forEach(b=>b.onclick=async()=>{
+      fecharCaixa();
+      await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({conversa_id:b.dataset.zfw, direcao:"saida", autor_id:eu.id, tipo:m.tipo||"texto",
+          texto:m.texto, midia_url:m.midia_url, midia_nome:m.midia_nome, midia_mime:m.midia_mime,
+          status:"fila", encaminhada_de:m.id})});
+      aviso("Mensagem encaminhada ✔");
+    });
+  };
+  inp.oninput = pinta; pinta(); inp.focus();
+}
+
+// Gravar áudio: o navegador grava (WebM), sobe para o Storage e entra na fila;
+// a ponte converte para OGG e manda como mensagem de voz
+let zapGravador = null;
+async function gravarAudioZap(){
+  const btn = document.getElementById("zap-rec");
+  if(zapGravador){ zapGravador.stop(); return; }
+  if(!navigator.mediaDevices || !window.MediaRecorder) return aviso("Este navegador não grava áudio");
+  let stream;
+  try{ stream = await navigator.mediaDevices.getUserMedia({audio:true}); }
+  catch(e){ return aviso("Sem permissão para usar o microfone"); }
+  const tipo = MediaRecorder.isTypeSupported("audio/webm;codecs=opus") ? "audio/webm;codecs=opus" : "";
+  const rec = new MediaRecorder(stream, tipo?{mimeType:tipo}:undefined), partes = [];
+  const conversa = zapAberta;
+  rec.ondataavailable = e=>{ if(e.data.size) partes.push(e.data); };
+  rec.onstop = async()=>{
+    stream.getTracks().forEach(t=>t.stop());
+    zapGravador = null;
+    const b = document.getElementById("zap-rec"); if(b){ b.classList.remove("gravando"); b.textContent="🎤"; }
+    const blob = new Blob(partes, {type: rec.mimeType||"audio/webm"});
+    if(blob.size < 1500) return aviso("Áudio curto demais");
+    const caminho = `zap/${conversa}/enviados/${Date.now()}-audio.webm`;
+    aviso("Enviando o áudio…", false);
+    try{ await subirArquivo(caminho, new File([blob], "audio.webm", {type: blob.type})); }
+    catch(e){ return aviso("Não consegui subir o áudio: "+e.message); }
+    await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({conversa_id:conversa, direcao:"saida", autor_id:eu.id, tipo:"audio",
+        midia_url:caminho, midia_nome:"audio.webm", midia_mime:blob.type||"audio/webm", status:"fila",
+        responde_a: conversa===zapAberta ? (zapResponder||null) : null})});
+    if(conversa===zapAberta){ zapResponder = null; await abrirConversa(conversa); }
+  };
+  rec.start(); zapGravador = rec;
+  if(btn){ btn.classList.add("gravando"); btn.textContent="⏹"; btn.title="parar e enviar"; }
+}
+
+// "/" no começo do campo abre as mensagens prontas pelo atalho ou pelo título
+function sugerirFrases(){
+  const t = document.getElementById("zap-txt"), sug = document.getElementById("zap-sug");
+  if(!t || !sug) return;
+  const m = /^\/(\S*)$/.exec(t.value||"");
+  if(!m || zapNota){ sug.hidden = true; return; }
+  const q = m[1].toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  const lista = (D.modelos||[]).filter(x=>!q || ((x.atalho||"")+" "+x.titulo).toLowerCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g,"").includes(q)).slice(0,8);
+  if(!lista.length){ sug.hidden = true; return; }
+  sug.innerHTML = lista.map(x=>`<button data-zsg="${x.id}"><b>/${esc(x.atalho||x.titulo)}</b> ${esc(preencheZap(x.texto).slice(0,70))}…</button>`).join("");
+  sug.hidden = false;
+  sug.querySelectorAll("[data-zsg]").forEach(b=>b.onclick=()=>{
+    const x = (D.modelos||[]).find(y=>y.id===b.dataset.zsg); if(!x) return;
+    t.value = preencheZap(x.texto); sug.hidden = true; t.focus(); t.dispatchEvent(new Event("input"));
+  });
+}
 
 async function transferirConversa(){
   const eqs = equipeAtiva().filter(c=>c.id!==eu.id);
-  if(!eqs.length) return aviso("Não há outro colaborador ativo");
+  if(!eqs.length && !zapAux.setores.length) return aviso("Não há outro colaborador ativo");
   caixa(`<h3>Transferir a conversa</h3>
-    <p class="meio-sub">Fica registrado de quem para quem, e por quê.</p>
-    <div class="form-linha">${eqs.map(c=>
+    <p class="meio-sub">Para um setor (o CRM escolhe quem está livre) ou para uma pessoa. Fica registrado de quem para quem, e por quê.</p>
+    ${zapAux.setores.length?`<div class="form-linha">${zapAux.setores.map(s=>
+      `<button class="btn-rap" data-zts="${s.id}" style="border-color:${esc(s.cor)};color:${esc(s.cor)}">${esc(s.nome)}</button>`).join("")}</div>`:""}
+    <div class="form-linha" style="margin-top:6px">${eqs.map(c=>
       `<button class="eq-ini" data-zt="${c.id}" style="--cor-eq:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</button>`).join("")}</div>
     <input id="zt-motivo" placeholder="motivo (opcional): é caso judicial…" style="width:100%;margin-top:10px">`);
+  const motivo = () => (document.getElementById("zt-motivo").value||"").trim();
   document.querySelectorAll("[data-zt]").forEach(b=>b.onclick=async()=>{
-    const motivo=(document.getElementById("zt-motivo").value||"").trim();
-    fecharCaixa();
+    const mt = motivo(); fecharCaixa();
     await api(`/rest/v1/rpc/zap_transferir`,{method:"POST",
-      body:JSON.stringify({p_conversa:zapAberta, p_para:b.dataset.zt, p_motivo:motivo||null})});
+      body:JSON.stringify({p_conversa:zapAberta, p_para:b.dataset.zt, p_motivo:mt||null})});
     aviso("Conversa transferida ✔");
+    await recarregarZap();
+  });
+  document.querySelectorAll("[data-zts]").forEach(b=>b.onclick=async()=>{
+    const s = zapAux.setores.find(x=>x.id===b.dataset.zts), mt = motivo(); fecharCaixa();
+    await api(`/rest/v1/zap_conversas?id=eq.${zapAberta}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({setor_id:s.id, setor:s.nome})});
+    await api(`/rest/v1/rpc/zap_entregar`,{method:"POST",
+      body:JSON.stringify({p_conversa:zapAberta, p_setor:s.nome, p_motivo:mt||null})});
+    aviso(`Conversa transferida para ${s.nome} ✔`);
     await recarregarZap();
   });
 }

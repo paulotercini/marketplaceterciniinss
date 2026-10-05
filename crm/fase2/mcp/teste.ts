@@ -108,8 +108,8 @@ const ini = await rpc("initialize", { protocolVersion: "2025-06-18", capabilitie
 conf("initialize responde com o nome do servidor", ini.corpo?.result?.serverInfo?.name === "crm-tercini");
 const tl = await rpc("tools/list", {}, "tok-bom", 2);
 const nomes = (tl.corpo?.result?.tools || []).map((t: any) => t.name).sort();
-conf(`as vinte e uma ferramentas (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "anotacoes_caso", "atualizar_caso", "buscar_clientes", "casos_com_decisao_sem_resultado", "casos_para_completar", "completar_cadastro", "concluir_tarefa", "conversas_whatsapp", "criar_tarefa", "documentos_caso", "equipe", "ficha_cliente", "ler_conversa_whatsapp", "ler_documento", "novidades", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "tarefas_caso", "whatsapp_para_anotacao"]));
-const ESCREVE = ["atualizar_caso", "completar_cadastro", "concluir_tarefa", "criar_tarefa", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "whatsapp_para_anotacao"];
+conf(`as vinte e duas ferramentas (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "anotacoes_caso", "atualizar_caso", "buscar_clientes", "casos_com_decisao_sem_resultado", "casos_para_completar", "completar_cadastro", "concluir_tarefa", "conversas_whatsapp", "criar_tarefa", "documentos_caso", "equipe", "ficha_cliente", "ler_conversa_whatsapp", "ler_documento", "novidades", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "retorno_whatsapp", "tarefas_caso", "whatsapp_para_anotacao"]));
+const ESCREVE = ["atualizar_caso", "completar_cadastro", "concluir_tarefa", "criar_tarefa", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "retorno_whatsapp", "whatsapp_para_anotacao"];
 conf("leitura marcada só leitura e escrita marcada não destrutiva", (tl.corpo?.result?.tools || []).every((t: any) =>
   ESCREVE.includes(t.name) ? t.annotations?.readOnlyHint === false && t.annotations?.destructiveHint === false : t.annotations?.readOnlyHint));
 
@@ -206,6 +206,11 @@ T.clientes[1].telefone = "(16) 98888-0002";
 const r8 = await call("rascunhar_whatsapp", { cliente_id: CLI2, texto: "Bom dia, falta o comprovante de endereço." });
 conf("cliente que nunca escreveu: abre a conversa pelo telefone da ficha e deixa o rascunho", r8.includes("Nada foi enviado")
   && T.zap_conversas.some((c) => c.chave === "88880002") && T.zap_mensagens.at(-1).status === "rascunho");
+const rt = await call("retorno_whatsapp", { conversa_id: ZAP, dia: "10/01/2030", hora: "08:30", nota: "ver a perícia" });
+const ret = (T.zap_retornos || []).at(-1);
+conf("retorno_whatsapp marca o retorno com dia, hora e nota", rt.includes("Retorno marcado para 10/01/2030 às 08:30")
+  && ret && ret.conversa_id === ZAP && ret.quando === "2030-01-10T11:30:00.000Z" && ret.nota === "ver a perícia" && ret.criado_por === EU);
+conf("retorno no passado é recusado", (await call("retorno_whatsapp", { conversa_id: ZAP, dia: "01/01/2020" })).includes("futuro"));
 T.clientes[1].telefones = [{ numero: "16999990001", obs: "Aurélia (vizinha que cuida do benefício)", zap: false }];
 conf("ler pelo cliente acha a conversa de quem tem o número na lista da ficha",
   (await call("ler_conversa_whatsapp", { cliente_id: CLI2 })).includes("Chegou carta do INSS"));
@@ -230,13 +235,13 @@ await call("registrar_anotacao", { caso_id: CASO, texto: "🔎 Conferência de c
 conf("cliente conferido sai da fila por 90 dias", !(await call("casos_para_completar", {})).includes("Aurélia"));
 
 conf("a escrita só toca andamentos, tarefas, casos, cadastro e rascunho do WhatsApp", pedidos.filter((p) => !p.startsWith("GET")).every((p) =>
-  /^POST \/rest\/v1\/(andamentos|andamento_tarefas|zap_mensagens|rpc\/zap_virar_andamento|rpc\/zap_abrir)$/.test(p) || /^PATCH \/rest\/v1\/(andamento_tarefas|casos|clientes)\?id=eq\./.test(p)));
+  /^POST \/rest\/v1\/(andamentos|andamento_tarefas|zap_mensagens|rpc\/zap_virar_andamento|rpc\/zap_abrir|zap_retornos)$/.test(p) || /^PATCH \/rest\/v1\/(andamento_tarefas|casos|clientes)\?id=eq\./.test(p)));
 
 // a conta do assistente não conclui, não reagenda e não altera o caso
 T.colaboradores[0].papel = "assistente_ia";
 const tlr = await rpc("tools/list", {}, "tok-bom", 8);
 const nr = (tlr.corpo?.result?.tools || []).map((t: any) => t.name);
-conf("a conta do assistente fica sem concluir e reagendar, e mantém anotar, criar tarefa, atualizar e completar", nr.length === 19
+conf("a conta do assistente fica sem concluir e reagendar, e mantém anotar, criar tarefa, atualizar e completar", nr.length === 20
   && !nr.includes("concluir_tarefa") && !nr.includes("reagendar_tarefa") && nr.includes("atualizar_caso") && nr.includes("completar_cadastro")
   && nr.includes("registrar_anotacao") && nr.includes("criar_tarefa"));
 const casoR = T.casos[0], nbAntes = casoR.nb;
