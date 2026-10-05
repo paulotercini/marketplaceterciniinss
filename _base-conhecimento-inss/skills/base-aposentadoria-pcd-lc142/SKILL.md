@@ -37,11 +37,11 @@ LC 142/2013, art. 6º, §§1º e 2º, e Decreto 3.048/99, art. 70-D, §1º. Apro
 
 EC 103/2019, art. 22 (e §2º). Preserva a aposentadoria PCD fora da regra geral.
 
-Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
-Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Tempo de contribuição exigido
 

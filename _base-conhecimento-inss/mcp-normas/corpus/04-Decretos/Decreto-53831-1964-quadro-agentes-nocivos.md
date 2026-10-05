@@ -10,10 +10,10 @@ hash_sha256_pdf_planalto_anexo: 918ebf5d80c556aaa4508ed637168056bc98ed2d05c139fc
 hash_sha256_pdf_ufsm: 21261a3006259c252934360bf6baa0e6a3e524aadc16bf7564ffbd5d3c29c135
 hash_sha256_pdf_ufmg: bdd23122aa569c0c1d6a1e067e174ab233de028e0be4cfac6568985d068b47d4
 formato_origem: HTML (corpo do decreto) + PDF (Quadro Anexo)
-ultima_alteracao_conhecida: Revogado pelo Decreto 62.755/1968. Quadro Anexo mantido aplicável pelas Súmulas 198/TFR, 555/STJ e jurisprudência consolidada.
+ultima_alteracao_conhecida: Revogado pelo Decreto 62.755/1968. Quadro Anexo mantido aplicável pela Súmula 198/TFR e jurisprudência consolidada.
 total_artigos: 6
 total_codigos_quadro_anexo: 30 (1.1.1 a 1.3.2 e 2.1.1 a 2.5.7)
-status: revogado, com Quadro Anexo aplicável para tempo especial até 28/04/1995 (Súmulas 198 TFR e 555 STJ; STJ Tema 422)
+status: revogado, com Quadro Anexo aplicável para tempo especial até 28/04/1995 (Súmula 198 TFR; STJ Tema 422)
 ---
 
 # Decreto nº 53.831, de 25 de março de 1964
@@ -24,7 +24,7 @@ status: revogado, com Quadro Anexo aplicável para tempo especial até 28/04/199
 
 ## CORPO DO DECRETO (parte revogada)
 
-> **Nota:** O Decreto 53.831/1964 foi revogado pelo Decreto 62.755, de 22 de maio de 1968. Contudo, seu **QUADRO ANEXO** continua sendo aplicado para reconhecimento de tempo de serviço especial prestado em condições insalubres, perigosas ou penosas até **28/04/1995** (data da edição da Lei 9.032/95), por força das **Súmulas 198 do TFR e 555 do STJ** e da jurisprudência consolidada do INSS (IN 128/2022, art. 268) e dos Tribunais Regionais Federais.
+> **Nota:** O Decreto 53.831/1964 foi revogado pelo Decreto 62.755, de 22 de maio de 1968. Contudo, seu **QUADRO ANEXO** continua sendo aplicado para reconhecimento de tempo de serviço especial prestado em condições insalubres, perigosas ou penosas até **28/04/1995** (data da edição da Lei 9.032/95), por força das **Súmula 198 do TFR** e da jurisprudência consolidada do INSS (IN 128/2022, art. 268) e dos Tribunais Regionais Federais.
 
 **O PRESIDENTE DA REPÚBLICA**, usando da atribuição que lhe confere o artigo 87, inciso I, da Constituição e tendo em vista o que dispõe o art. 31, da Lei nº 3.807, de 26 de agosto de 1960,
 
@@ -60,7 +60,6 @@ Brasília-DF., em 25 de março de 1964; 143º da Independência e 76º da Repúb
 
 > **IMPORTANTE - JURISPRUDÊNCIA QUE MANTÉM A APLICAÇÃO:** Embora o Decreto 53.831/1964 tenha sido formalmente revogado pelo Decreto 62.755/1968, e este por outros decretos posteriores, o **Quadro Anexo continua sendo aplicável** para enquadramento de atividades especiais exercidas até 28/04/1995, pelos seguintes fundamentos:
 > - **Súmula 198 do TFR**: "Atendidos os demais requisitos, é devida a aposentadoria especial, se perícia judicial constata que a atividade exercida pelo segurado é perigosa, insalubre ou penosa, mesmo não inscrita em Regulamento."
-> - **Súmula 555 do STJ**: "Na hipótese de aposentadoria por idade, a lei aplicável é a vigente na data do requerimento administrativo." (entendimento extensivo de **tempus regit actum**)
 > - **STJ, REsp 1.151.363/MG (Tema 422)**: enquadramento por categoria profissional é admissível até 28/04/1995.
 > - **STJ, REsp 600.277/RS**: o Decreto 53.831/64 e o Decreto 83.080/79 **coexistem** até 05/03/1997, podendo o segurado optar pelo enquadramento mais favorável.
 

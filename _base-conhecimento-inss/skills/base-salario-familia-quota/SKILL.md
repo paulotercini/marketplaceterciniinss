@@ -39,7 +39,7 @@ Portaria anual do Ministério da Previdência. Atualiza o teto de baixa renda e 
 
 EC 103/2019. Não alterou estruturalmente o salário-família.
 
-Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
 ## Requisitos
 

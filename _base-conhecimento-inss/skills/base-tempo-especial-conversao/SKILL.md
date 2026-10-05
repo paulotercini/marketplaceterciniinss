@@ -30,7 +30,7 @@ Lei 9.528/1997. Reforçou a exigência de comprovação por PPP e LTCAT.
 
 Decreto 2.172/1997 e Decreto 3.048/1999. Regulamentos sucessivos dos agentes nocivos.
 
-Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
 ## Marco jurisprudencial
 

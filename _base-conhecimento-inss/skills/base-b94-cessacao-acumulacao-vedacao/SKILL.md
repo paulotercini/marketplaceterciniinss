@@ -23,7 +23,7 @@ Decreto 3.048/99.
 
 IN 128/2022.
 
-Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
 TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefícios acidentários (CF/88, art. 109, I, exclui da competência federal as ações acidentárias entre o INSS e o segurado).
 

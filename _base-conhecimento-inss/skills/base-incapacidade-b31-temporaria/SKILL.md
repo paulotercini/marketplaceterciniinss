@@ -23,9 +23,9 @@ Lei 8.213/91, art. 27-A. Reabertura de qualidade exige 1/2 da carência após no
 
 Lei 8.213/91, art. 61. Fixa a RMI do B31 em 91% do salário de benefício, com a média apurada na forma do art. 26 da EC 103/2019.
 
-Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Requisitos cumulativos
 
