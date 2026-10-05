@@ -1017,8 +1017,19 @@ def subir_rest(mapa):
         for cid in set(list(anot) + list(pedidos) + list(especie)):
             campos = dict(campos_banco.get(cid) or {})
             if cid in anot:
+                # F173 · o bloco completado no To Do chega com outro id: a
+                # versão antiga, que é o começo da nova (mesmo dia e autor),
+                # sai em vez de ficar repetida na ficha
+                def _n(t):
+                    return " ".join(str(t or "").split())
+                novas = [(str(x.get("em") or "")[:10], x.get("quem") or "", _n(x.get("texto")))
+                         for x in anot[cid]]
+                def _engolida(n):
+                    t = _n(n.get("texto"))
+                    return bool(t) and any(d == str(n.get("em") or "")[:10] and q == (n.get("quem") or "")
+                                           and len(u) > len(t) and u.startswith(t) for d, q, u in novas)
                 velhas = [n for n in (campos.get("atendimento") or [])
-                          if n.get("id") not in {x["id"] for x in anot[cid]}]
+                          if n.get("id") not in {x["id"] for x in anot[cid]} and not _engolida(n)]
                 campos["atendimento"] = sorted(
                     velhas + anot[cid], key=lambda n: n.get("em") or "")
             if cid in pedidos:
