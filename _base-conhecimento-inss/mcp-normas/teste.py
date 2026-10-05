@@ -14,13 +14,13 @@ sys.stdout.reconfigure(encoding="utf-8")
 # ---------------------------------------------------------------- 1. tabela de identidade
 
 todos = [p.name for p in __import__("ingestor").arquivos(incluir_fora=True)]
-assert len(todos) == 390, f"o corpus tinha 390 arquivos .md em 04/10/2026, agora tem {len(todos)}"
+assert len(todos) == 399, f"o corpus tinha 399 arquivos .md em 04/10/2026, agora tem {len(todos)}"
 faltam = [n for n in todos if n not in identidade.NORMAS]
 assert not faltam, f"arquivos fora da tabela de identidade: {faltam}"
 sobram = [n for n in identidade.NORMAS if n not in todos]
 assert not sobram, f"tabela de identidade aponta arquivo que não existe: {sobram}"
 assert all(n in identidade.NORMAS for n in identidade.FORA), "FORA cita arquivo fora da tabela"
-assert len({v[0] for v in identidade.NORMAS.values()}) == 382, "382 normas em 390 arquivos"
+assert len({v[0] for v in identidade.NORMAS.values()}) == 391, "391 normas em 399 arquivos"
 try:
     identidade.identidade("Lei-inexistente.md")
     raise SystemExit("arquivo fora da tabela tinha de levantar KeyError")
@@ -245,8 +245,8 @@ except Exception:
 um = lambda s, *a: real.execute(s, a).fetchone()[0]
 
 # medido em 20/09/2026 contra os 55 arquivos ingeridos
-assert um("SELECT count(*) FROM norma") == 381, um("SELECT count(*) FROM norma")
-assert um("SELECT count(*) FROM artigo") == 24083, um("SELECT count(*) FROM artigo")
+assert um("SELECT count(*) FROM norma") == 390, um("SELECT count(*) FROM norma")
+assert um("SELECT count(*) FROM artigo") == 24407, um("SELECT count(*) FROM artigo")
 assert um("SELECT count(*) FROM artigo WHERE vigente=1 AND revogado=1") == 0, \
     "nenhuma versão revogada pode estar marcada como vigente"
 
@@ -306,6 +306,13 @@ for n in ("990", "991", "992", "993", "994", "995", "996"):
 # e trazem o historico de consolidacao, que a fotografia anterior nao tinha
 assert um("SELECT count(*) FROM artigo WHERE norma_id='portaria-dirben-991-2022'"
           " AND alteracao_tipo<>'original'") > 20
+
+# a NR do MTE nao e articulada, o texto e item numerado (15.1, 15.1.1) e vem de PDF, entao
+# entra como trecho buscavel. Sem isso, busca por insalubridade ou periculosidade nao a alcanca.
+assert um("SELECT count(*) FROM norma WHERE id LIKE 'nr-%'") == 9
+assert banco.buscar(real, "insalubridade", norma="nr-15")["total"] > 0
+assert banco.buscar(real, "periculosidade", norma="nr-16")["total"] > 0
+assert banco.buscar(real, "pcmso", norma="nr-7")["total"] > 0
 
 # comportamento previsto, declarado em identidade.py: não derruba a carga e não passa em silêncio
 assert um("SELECT count(*) FROM artigo WHERE norma_id='decreto-2172-1997'"

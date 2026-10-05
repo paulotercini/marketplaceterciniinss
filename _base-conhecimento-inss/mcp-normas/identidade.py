@@ -1195,6 +1195,36 @@ NORMAS = {
     "IN-128-2022-INSS-consolidada-portalin.md": (
         "in-128-2022", "in", "128", 2022,
         "Instrução Normativa PRES/INSS nº 128, de 28 de março de 2022"),
+
+    # --- NR do MTE, 04/10/2026. Nao sao articuladas, o texto e item numerado e vive em
+    # PDF, entao entram como trecho buscavel ---
+    "NR-1.md": (
+        "nr-1", "norma-regulamentadora", "1", 0,
+        "Norma Regulamentadora NR-1, do Ministério do Trabalho e Emprego"),
+    "NR-4.md": (
+        "nr-4", "norma-regulamentadora", "4", 0,
+        "Norma Regulamentadora NR-4, do Ministério do Trabalho e Emprego"),
+    "NR-6.md": (
+        "nr-6", "norma-regulamentadora", "6", 0,
+        "Norma Regulamentadora NR-6, do Ministério do Trabalho e Emprego"),
+    "NR-7.md": (
+        "nr-7", "norma-regulamentadora", "7", 0,
+        "Norma Regulamentadora NR-7, do Ministério do Trabalho e Emprego"),
+    "NR-9.md": (
+        "nr-9", "norma-regulamentadora", "9", 0,
+        "Norma Regulamentadora NR-9, do Ministério do Trabalho e Emprego"),
+    "NR-10.md": (
+        "nr-10", "norma-regulamentadora", "10", 0,
+        "Norma Regulamentadora NR-10, do Ministério do Trabalho e Emprego"),
+    "NR-15.md": (
+        "nr-15", "norma-regulamentadora", "15", 0,
+        "Norma Regulamentadora NR-15, do Ministério do Trabalho e Emprego"),
+    "NR-16.md": (
+        "nr-16", "norma-regulamentadora", "16", 0,
+        "Norma Regulamentadora NR-16, do Ministério do Trabalho e Emprego"),
+    "NR-32.md": (
+        "nr-32", "norma-regulamentadora", "32", 0,
+        "Norma Regulamentadora NR-32, do Ministério do Trabalho e Emprego"),
 }
 
 # arquivo -> motivo de ficar fora do banco. Sai na visão geral, para o vazio ser declarado e
