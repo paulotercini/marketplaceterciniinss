@@ -1041,3 +1041,20 @@ def test_e2_nao_baixa_a_carteira_inteira(monkeypatch):
     assert set(pedido["vivos"]) == {"jud", "nova-cons", "pg", "esc"}
     assert pedido["consultar"] == ["apf"]
     assert set(pedido["sem_numero"]) == {"jud", "nova-cons", "pg", "esc"}
+
+
+def test_sync_nao_apaga_telefone_nem_nascimento_do_crm():
+    # tarefa do To Do sem telefone mandava null e apagava o do CRM (04/10/2026)
+    mapa = {"clientes": [
+        {"id": "a", "nome": "A", "telefone": None, "dn": None},
+        {"id": "b", "nome": "B", "telefone": "16999990000", "dn": "01011960"},
+        {"id": "c", "nome": "C", "telefone": "16988887777", "dn": None},
+    ]}
+    banco = [{"id": "a", "telefone": "16997112233", "dn": "08061968"},
+             {"id": "b", "telefone": "(16) 3242-2908", "dn": None},
+             {"id": "c", "telefone": None, "dn": None}]
+    migrar.manter_dados_do_banco(mapa, banco)
+    a, b, c = mapa["clientes"]
+    assert (a["telefone"], a["dn"]) == ("16997112233", "08061968")   # CRM vence o vazio
+    assert (b["telefone"], b["dn"]) == ("(16) 3242-2908", "01011960") # CRM vence; To Do preenche o vazio
+    assert c["telefone"] == "16988887777"                             # CRM vazio: To Do preenche
