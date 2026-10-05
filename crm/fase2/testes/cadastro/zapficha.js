@@ -97,7 +97,7 @@ const MSGS = [
   await p.waitForFunction(() => zapConvs.length);
   await p.evaluate(id => abrirConversa(id), ZAP_CLI);
   conf("conversa de cliente mostra “abrir ficha” e não “vincular”",
-    (await p.textContent(".zap-topo")).includes("abrir ficha") && !(await p.textContent(".zap-topo")).includes("vincular"));
+    (await p.textContent(".zap-topo")).includes("Abrir a ficha") && !(await p.textContent(".zap-topo")).includes("Vincular"));
 
   // quem cuida do benefício de outro: o número dele na ficha do outro traz a conversa
   await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.telefone = "(16) 99999-0001";
@@ -112,7 +112,7 @@ const MSGS = [
 
   // a conversa solta ganha o vincular, que liga à ficha escolhida
   await p.evaluate(id => abrirConversa(id), ZAP_SOLTA);
-  conf("conversa sem cliente mostra “vincular a cliente”", (await p.textContent(".zap-topo")).includes("vincular a cliente"));
+  conf("conversa sem cliente mostra “vincular a cliente”", (await p.textContent(".zap-topo")).includes("Vincular a um cliente"));
   const nome = await p.evaluate(id => D.cliPorId.get(id).nome, CLI_CHEIO);
   await p.evaluate(() => vincularConversa());
   await p.fill("#zv-busca", nome.split(" ")[0]);
@@ -122,7 +122,7 @@ const MSGS = [
   const pt = patches.find(x => x.u.includes(`zap_conversas?id=eq.${ZAP_SOLTA}`));
   conf("vincular grava o cliente na conversa e limpa o prospecto", pt && pt.b.cliente_id === CLI_CHEIO && pt.b.lead_id === null);
   conf("depois de vincular o cabeçalho passa a “abrir ficha”", await p.waitForFunction(() =>
-    (document.querySelector(".zap-topo")?.textContent || "").includes("abrir ficha"), null, { timeout: 5000 }).then(() => true, () => false));
+    (document.querySelector(".zap-topo")?.textContent || "").includes("Abrir a ficha"), null, { timeout: 5000 }).then(() => true, () => false));
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);
