@@ -19,6 +19,7 @@ function fingirBanco({ pegaAFila = true, conversa = { telefone: "5516999990000" 
     if (m === "PATCH" && u.includes("status=eq.fila"))
       return ok(pegaAFila ? [{ id: "m1" }] : []);
     if (m === "GET" && u.includes("zap_conversas")) return ok(conversa ? [conversa] : []);
+    if (m === "GET" && u.includes("zap_mensagens?id=eq.orig")) return ok([{ externo_id: "WA-ORIG", direcao: "entrada", texto: "pode ser amanhã?" }]);
     return ok(null);
   };
 }
@@ -88,4 +89,21 @@ t.test("conversa sem telefone não derruba a ponte", async () => {
   fingirBanco({ conversa: null });
   await enviar({ id: "m1", conversa_id: "c1", texto: "oi", tentativas: 0 }, zapOk);
   a.equal(patchesFinais()[0].status, "fila");
+});
+
+t.test("resposta citando: sai com a chave da mensagem original (quoted)", async () => {
+  fingirBanco();
+  let opcoes;
+  await enviar({ id: "m1", conversa_id: "c1", texto: "Pode sim", responde_a: "orig" },
+    { ...zapOk, sendMessage: async (jid, conteudo, op) => { opcoes = op; return { key: { id: "WA-NOVA" } }; } });
+  a.deepEqual(opcoes.quoted.key, { remoteJid: "5516999990000@s.whatsapp.net", id: "WA-ORIG", fromMe: false });
+  a.equal(patchesFinais()[0].status, "enviada");
+});
+
+t.test("sem citação, não manda opção de quoted", async () => {
+  fingirBanco();
+  let opcoes = "não chamado";
+  await enviar({ id: "m1", conversa_id: "c1", texto: "oi" },
+    { ...zapOk, sendMessage: async (jid, conteudo, op) => { opcoes = op; return { key: { id: "X" } }; } });
+  a.equal(opcoes, undefined);
 });

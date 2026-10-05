@@ -141,6 +141,28 @@ function agruparHistorico(chats, mensagens, chavesClientes) {
   return grupos;
 }
 
+// A mensagem que esta responde (o id dela no WhatsApp), quando o cliente cita
+function citacaoDe(m) {
+  const c = miolo(m);
+  for (const k of Object.keys(c)) {
+    const id = c[k] && c[k].contextInfo && c[k].contextInfo.stanzaId;
+    if (id) return id;
+  }
+  return null;
+}
+
+// Reação a uma mensagem: { id da mensagem reagida, emoji } ("" = reação retirada)
+function reacaoDe(m) {
+  const r = m && m.message && m.message.reactionMessage;
+  if (!r || !r.key || !r.key.id) return null;
+  return { id: r.key.id, emoji: r.text || "" };
+}
+
+// O que o Baileys precisa para citar (quoted) ou reagir a uma mensagem nossa
+function chaveDaMensagem(jid, original) {
+  return { remoteJid: jid, id: original.externo_id, fromMe: original.direcao !== "entrada" };
+}
+
 module.exports = { soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem, agruparHistorico,
                    miolo, tipoDaMensagem, textoDaMensagem, deveIgnorar,
-                   nomeSeguro, quandoWa };
+                   nomeSeguro, quandoWa, citacaoDe, reacaoDe, chaveDaMensagem };

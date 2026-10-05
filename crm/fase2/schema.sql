@@ -2223,3 +2223,206 @@ begin
   returning id into v_id;
   return v_id;
 end $$;
+
+-- ══ Atendimento pelo CRM (o que o escritório usava no SMBot) ══════════════
+-- Setores com vários atendentes, etiquetas, retornos ("responder depois"),
+-- mensagem agendada, citação, reação, encaminhamento, protocolo por
+-- atendimento e encerramento com observação. Tudo idempotente.
+
+-- setores (departamentos do SMBot): uma pessoa pode estar em vários
+create table if not exists zap_setores (
+  id     uuid primary key default gen_random_uuid(),
+  nome   text not null unique,
+  cor    text not null default '#5b7fd6',
+  ordem  integer not null default 0,
+  ativo  boolean not null default true
+);
+create table if not exists colaborador_setores (
+  colaborador_id uuid not null references colaboradores(id) on delete cascade,
+  setor_id       uuid not null references zap_setores(id) on delete cascade,
+  primary key (colaborador_id, setor_id)
+);
+alter table zap_conversas add column if not exists setor_id uuid references zap_setores(id) on delete set null;
+
+-- etiquetas da conversa (várias por conversa, coloridas)
+create table if not exists zap_etiquetas (
+  id     uuid primary key default gen_random_uuid(),
+  texto  text not null unique,
+  cor    text not null default '#64748b',
+  ordem  integer not null default 0
+);
+create table if not exists zap_conversa_etiquetas (
+  conversa_id uuid not null references zap_conversas(id) on delete cascade,
+  etiqueta_id uuid not null references zap_etiquetas(id) on delete cascade,
+  criado_em   timestamptz not null default now(),
+  primary key (conversa_id, etiqueta_id)
+);
+
+-- retorno: "responder depois", com data, hora e quem
+create table if not exists zap_retornos (
+  id             uuid primary key default gen_random_uuid(),
+  conversa_id    uuid not null references zap_conversas(id) on delete cascade,
+  quando         timestamptz not null,
+  colaborador_id uuid references colaboradores(id) on delete set null,
+  nota           text,
+  criado_por     uuid references colaboradores(id) on delete set null,
+  criado_em      timestamptz not null default now(),
+  avisado_em     timestamptz,                -- a menção "chegou a hora" já saiu
+  feito_em       timestamptz
+);
+create index if not exists zap_retornos_abertos on zap_retornos (quando) where feito_em is null;
+
+-- reação (do cliente, que antes era descartada, e da equipe, que a ponte envia)
+create table if not exists zap_reacoes (
+  id          uuid primary key default gen_random_uuid(),
+  mensagem_id uuid not null references zap_mensagens(id) on delete cascade,
+  de          text not null check (de in ('cliente','escritorio')),
+  autor_id    uuid references colaboradores(id) on delete set null,
+  emoji       text not null,                 -- vazio = reação retirada
+  status      text not null default 'enviada' check (status in ('fila','enviada','erro')),
+  criado_em   timestamptz not null default now()
+);
+create unique index if not exists zap_reacoes_uma on zap_reacoes (mensagem_id, de);
+
+-- atendimento: cada abertura até o encerramento, com número de protocolo
+create table if not exists zap_atendimentos (
+  id             uuid primary key default gen_random_uuid(),
+  numero         bigint generated always as identity unique,
+  conversa_id    uuid not null references zap_conversas(id) on delete cascade,
+  aberto_em      timestamptz not null default now(),
+  encerrado_em   timestamptz,
+  encerrado_por  uuid references colaboradores(id) on delete set null,
+  observacao     text,
+  avaliacao      integer check (avaliacao between 1 and 5)
+);
+create index if not exists zap_atend_conversa on zap_atendimentos (conversa_id, aberto_em desc);
+alter table zap_conversas add column if not exists atendimento_id uuid references zap_atendimentos(id) on delete set null;
+
+-- mensagem: citação, agendamento e encaminhamento
+alter table zap_mensagens add column if not exists responde_a uuid references zap_mensagens(id) on delete set null;
+alter table zap_mensagens add column if not exists responde_externo text;   -- citação de mensagem que não está no CRM
+alter table zap_mensagens add column if not exists enviar_em timestamptz;
+alter table zap_mensagens add column if not exists encaminhada_de uuid references zap_mensagens(id) on delete set null;
+alter table zap_mensagens drop constraint if exists zap_mensagens_status_check;
+alter table zap_mensagens add constraint zap_mensagens_status_check
+  check (status in ('rascunho','agendada','fila','enviando','enviada','entregue','lida','erro','interna'));
+
+-- mensagem pronta com atalho ("/pericia") e setor, como no SMBot
+alter table modelos_mensagem add column if not exists atalho text;
+alter table modelos_mensagem add column if not exists setor_id uuid references zap_setores(id) on delete set null;
+
+-- o atendimento abre com a conversa e reabre quando a resolvida volta
+create or replace function zap_atendimento_ciclo() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare v uuid;
+begin
+  if tg_op = 'INSERT' or (old.status = 'resolvida' and new.status <> 'resolvida') then
+    insert into zap_atendimentos (conversa_id) values (new.id) returning id into v;
+    update zap_conversas set atendimento_id = v where id = new.id;
+  elsif new.status = 'resolvida' and old.status <> 'resolvida' then
+    update zap_atendimentos set encerrado_em = coalesce(encerrado_em, now())
+     where id = new.atendimento_id;
+  end if;
+  return null;
+end $$;
+drop trigger if exists zap_atendimento_ins on zap_conversas;
+create trigger zap_atendimento_ins after insert on zap_conversas
+  for each row execute function zap_atendimento_ciclo();
+drop trigger if exists zap_atendimento_upd on zap_conversas;
+create trigger zap_atendimento_upd after update of status on zap_conversas
+  for each row when (old.status is distinct from new.status) execute function zap_atendimento_ciclo();
+
+-- conversas que já existiam ganham o atendimento corrente
+with novos as (
+  insert into zap_atendimentos (conversa_id, aberto_em, encerrado_em)
+  select c.id, c.criado_em, case when c.status = 'resolvida' then coalesce(c.ultima_em, now()) end
+    from zap_conversas c where c.atendimento_id is null
+  returning id, conversa_id)
+update zap_conversas c set atendimento_id = n.id from novos n where n.conversa_id = c.id;
+
+-- encerrar com observação (o botão do CRM)
+create or replace function zap_encerrar(p_conversa uuid, p_obs text default null, p_autor uuid default null)
+returns bigint
+language plpgsql security definer set search_path = public as $$
+declare v_at uuid; v_num bigint;
+begin
+  select atendimento_id into v_at from zap_conversas where id = p_conversa;
+  update zap_atendimentos set observacao = nullif(trim(p_obs), ''), encerrado_por = p_autor,
+         encerrado_em = coalesce(encerrado_em, now())
+   where id = v_at returning numero into v_num;
+  update zap_conversas set status = 'resolvida', nao_lidas = 0 where id = p_conversa;
+  update zap_retornos set feito_em = now() where conversa_id = p_conversa and feito_em is null;
+  return v_num;
+end $$;
+
+-- a ponte chama a cada volta: agendadas que venceram vão para a fila e
+-- retornos que chegaram viram menção para quem vai responder
+create or replace function zap_relogio() returns integer
+language plpgsql security definer set search_path = public as $$
+declare n integer := 0; r record;
+begin
+  update zap_mensagens set status = 'fila'
+   where status = 'agendada' and enviar_em <= now();
+  get diagnostics n = row_count;
+  for r in select z.id, z.conversa_id, coalesce(z.colaborador_id, c.atendente_id) quem, z.nota,
+                  coalesce(nullif(trim(c.nome_perfil), ''), c.telefone) nome
+             from zap_retornos z join zap_conversas c on c.id = z.conversa_id
+            where z.feito_em is null and z.avisado_em is null and z.quando <= now() loop
+    if r.quem is not null then
+      insert into mencoes (para_id, conversa_id, texto)
+      values (r.quem, r.conversa_id, '⏰ Retorno: responder ' || coalesce(r.nome, 'o contato')
+              || coalesce(' — ' || nullif(trim(r.nota), ''), ''));
+    end if;
+    update zap_retornos set avisado_em = now() where id = r.id;
+  end loop;
+  return n;
+end $$;
+
+-- o atendente do setor: quem é membro do setor (vários), depois o setor antigo
+create or replace function zap_escolher_atendente(p_conversa uuid, p_setor text default null)
+returns uuid
+language plpgsql stable security definer set search_path = public as $$
+declare v_cli uuid; v_id uuid;
+begin
+  select cliente_id into v_cli from zap_conversas where id = p_conversa;
+  if v_cli is not null then
+    select co.id into v_id from colaboradores co
+     where co.ativo and co.atende_zap
+       and (exists (select 1 from atribuicoes a join casos k on k.id = a.caso_id
+                     where a.colaborador_id = co.id and k.cliente_id = v_cli and k.fase <> 'encerrado')
+            or exists (select 1 from andamento_tarefas t join casos k2 on k2.id = t.caso_id
+                        where t.colaborador_id = co.id and k2.cliente_id = v_cli
+                          and t.concluida_em is null and k2.fase <> 'encerrado'))
+     order by (select count(*) from zap_conversas z where z.atendente_id = co.id and z.status <> 'resolvida'), co.nome
+     limit 1;
+    if v_id is not null then return v_id; end if;
+  end if;
+  if p_setor is not null then
+    select co.id into v_id from colaboradores co
+     where co.ativo and co.atende_zap
+       and (co.setor = p_setor
+            or exists (select 1 from colaborador_setores cs join zap_setores s on s.id = cs.setor_id
+                        where cs.colaborador_id = co.id and (s.nome = p_setor or s.id::text = p_setor)))
+     order by (select count(*) from zap_conversas z where z.atendente_id = co.id and z.status <> 'resolvida'), co.nome
+     limit 1;
+    if v_id is not null then return v_id; end if;
+  end if;
+  select co.id into v_id from colaboradores co
+   where co.ativo and co.atende_zap
+   order by (select count(*) from zap_conversas z where z.atendente_id = co.id and z.status <> 'resolvida'), co.nome
+   limit 1;
+  return v_id;
+end $$;
+
+grant execute on function zap_encerrar(uuid, text, uuid) to authenticated;
+grant execute on function zap_relogio() to authenticated;
+
+do $$ declare t text;
+begin
+  foreach t in array array['zap_setores','colaborador_setores','zap_etiquetas','zap_conversa_etiquetas',
+                           'zap_retornos','zap_reacoes','zap_atendimentos'] loop
+    execute format('alter table %I enable row level security', t);
+    execute format('drop policy if exists autenticados on %I', t);
+    execute format('create policy autenticados on %I for all to authenticated using (true) with check (true)', t);
+  end loop;
+end $$;
