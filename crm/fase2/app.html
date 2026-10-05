@@ -10250,7 +10250,9 @@ function pintarConversa(){
   document.getElementById("zap-dir").innerHTML =
     `<div class="zap-topo">
        <span>${avatarZap(c)}<b>${esc(nomeDaConversa(c))}</b>
-         <span style="font-weight:400"> · ${esc(c.telefone||"")}</span></span>
+         <span style="font-weight:400"> · ${esc(c.telefone||"")}</span>
+         ${zapProto?` <span class="zap-proto" title="protocolo do atendimento — clique para copiar"
+            onclick="copiar('${zapProto}','Protocolo copiado')">#${zapProto}</span>`:""}</span>
        ${cli?`<button class="btn-mini" onclick="abrirFicha('${cli.id}')">abrir ficha</button>`
             :`<button class="btn-mini" onclick="vincularConversa()">vincular a cliente</button>`}
        ${at?`<span class="eq-ini on" style="--cor-eq:${at.cor}" title="${esc(at.nome)}">${esc(at.inicial)}</span>`
@@ -10262,8 +10264,6 @@ function pintarConversa(){
        <button class="btn-mini" onclick="transferirConversa()">transferir</button>
        <button class="btn-mini" onclick="alternarBot()">${c.bot_ativo?"🤖 calar robô":"🤖 religar robô"}</button>
        <button class="btn-mini" onclick="${c.status==="resolvida"?"reabrirConversa()":"encerrarConversa()"}">${c.status==="resolvida"?"reabrir":"✔ encerrar"}</button>
-       ${zapProto?`<span class="zap-proto" title="protocolo do atendimento — clique para copiar"
-          onclick="copiar('${zapProto}','Protocolo copiado')">#${zapProto}</span>`:""}
      </div>
      <div class="zap-msgs" id="zap-msgs">${zapMsgs.map(m=>bolhaZap(m,cli)).join("")
         || `<p class="meio-sub" style="padding:12px">Sem mensagens ainda.</p>`}</div>
