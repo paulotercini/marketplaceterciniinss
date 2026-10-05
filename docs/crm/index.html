@@ -3305,7 +3305,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.78</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.79</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -16008,9 +16008,94 @@ function qualidadeAte(comp, recolhe){
   const m = /^(\d{4})-(\d{2})/.exec(comp||""); if(!g || !m) return null;
   return new Date(Date.UTC(+m[1], +m[2]-1 + g + 2, 15)).toISOString().slice(0,10);
 }
-// O leitor do Prévius: espera um PDF de exemplo para saber o layout. Até lá
-// devolve vazio e a análise é preenchida à mão, com o texto lido ao lado.
-function lerPrevius(texto){ return {}; }
+// F177 · O LEITOR DO PRÉVIUS. O relatório tem três partes que interessam:
+// "Períodos Considerados no Cálculo" (cada linha: início, fim, Normal ou
+// Especial, empresa e os tempos), "Análise dos Dados" (tempo e carência na
+// DIB) e "Análise Por Espécie de Benefício" (um bloco por espécie: tempo,
+// carência, situação, RMI, "Maior RMI" e "será/foi atingido em"). Lê linha a
+// linha e devolve só o que achou; o resto o colaborador preenche.
+const PREV_APOS = /^(41|42|46|57)\b/;   // espécies de aposentadoria viram cenário
+// o PDF do Prévius sai com a fonte em Windows-1252 e o PDF.js lê como Mac
+// Roman ("ContribuiÁ„o"): devolve cada letra trocada à certa
+const PREV_ACENTOS = {"™":"ª","∞":"°","∫":"º","¿":"À","¡":"Á","¬":"Â","√":"Ã","«":"Ç","…":"É","Õ":"Í","”":"Ó","‘":"Ô","’":"Õ","⁄":"Ú","‡":"à","·":"á","‚":"â","„":"ã","Á":"ç","È":"é","Í":"ê","Ì":"í","Û":"ó","Ù":"ô","ı":"õ","˙":"ú","¸":"ü"};
+const prevAcentos = t => /[„ı˙∫]|Á„/.test(t) ? t.replace(/[™∞∫¿¡¬√«…Õ”‘’⁄‡·‚„ÁÈÍÌÛÙı˙¸]/g, c=>PREV_ACENTOS[c]) : t;
+// o cabeçalho de cada espécie: "42 - Aposentadoria …"; o PDF.js às vezes
+// põe o parêntese do título antes do número ("(Considerando…)46 - …")
+function cabEspecie(l){
+  const m = l.match(/(\d{2}) - ((?:Aposentadoria|Auxílio|Invalidez|Pensão)[^()]*?)\s*(\(.*\))?\s*$/i);
+  if(!m || /\d{2}\/\d{2}\/\d{4}/.test(l)) return null;
+  const antes = l.slice(0, m.index).trim();
+  return [m[0], m[1], [m[2].trim(), m[3]||antes].filter(Boolean).join(" ")];
+}
+function lerPrevius(texto){
+  texto = prevAcentos(String(texto||""));
+  const iso = d => { const m=String(d||"").match(/(\d{2})\/(\d{2})\/(\d{4})/); return m?`${m[3]}-${m[2]}-${m[1]}`:null; };
+  const num = v => +String(v).replace(/\./g,"").replace(",",".");
+  const linhas = String(texto||"").split(/\n/).map(l=>l.replace(/\s+/g," ").trim()).filter(Boolean);
+  const r = {};
+  // períodos especiais (sem repetir o mesmo intervalo, que a quebra de página duplica)
+  const pe = [], vistos = new Set();
+  let emCalculo = false;
+  for(const l of linhas){
+    if(/^Períodos Considerados no Cálculo/i.test(l)) emCalculo = true;
+    else if(/^(Legenda|Análise dos Dados|Totais)/i.test(l)) emCalculo = emCalculo && !/^Análise/i.test(l);
+    // o PDF.js às vezes põe a data de início depois da empresa, colada nela:
+    // vale a menor e a maior data da linha, e a empresa é o que vem depois de
+    // "Especial" até o primeiro número
+    const datas = l.match(/\d{2}\/\d{2}\/\d{4}/g) || [];
+    if(emCalculo && datas.length===2 && / Especial /.test(" "+l+" ")){
+      const [a,b] = datas.map(iso).sort();
+      const chave = a+b;
+      const empresa = (l.split(/Especial /)[1]||"").replace(/\d{2}\/\d{2}\/\d{4}/g," ").replace(/#/g," ").replace(/\s\d.*$/,"").replace(/\s+/g," ").trim();
+      if(!vistos.has(chave)){ vistos.add(chave); pe.push({inicio:a, fim:b, empresa}); }
+    }
+  }
+  if(pe.length) r.periodos_especiais = pe;
+  // tempo e carência na DIB
+  const idx = linhas.findIndex(l=>/Tempo de Contribuição na D\.?I\.?B/i.test(l));
+  if(idx>=0){ const t = linhas.slice(idx, idx+6).join(" ").match(/(\d+ anos?, \d+ m[eê]s(?:es)? e \d+ dias?)/i); if(t) r.tempo = t[1]; }
+  const ic = linhas.findIndex(l=>/Número de Contribuições na D\.?I\.?B/i.test(l));
+  if(ic>=0){ const c = linhas.slice(ic, ic+5).join(" ").match(/(\d+) contribuições/i); if(c) r.carencia = `${c[1]} contribuições`; }
+  // um bloco por espécie
+  // a DIB do cálculo: quem já atingiu o direito sem data própria, atingiu nela
+  const iDib = linhas.findIndex(l=>/Início do Benefício \(DIB\)/i.test(l));
+  const dib = iDib>=0 ? iso((linhas[iDib+1]||"").match(/\d{2}\/\d{2}\/\d{4}/)) : null;
+  const cen = [];
+  let naAnalise = false;
+  for(let i=0;i<linhas.length;i++){
+    if(/^Análise Por Espécie de Benefício/i.test(linhas[i])){ naAnalise = true; continue; }
+    if(/^(Cálculo d|Relatório d)/i.test(linhas[i])) naAnalise = false;
+    if(!naAnalise) continue;
+    const h = cabEspecie(linhas[i]);
+    if(!h) continue;
+    const bloco = [];
+    for(let j=i+1;j<linhas.length && j<i+12;j++){ if(cabEspecie(linhas[j]) || /^\* As projeções/.test(linhas[j])) break; bloco.push(linhas[j]); }
+    const b = bloco.join(" ");
+    if(!/Necessário|Requisito|Carência/i.test(b)) continue;
+    const rmi = b.match(/R\$ ?([\d.]+,\d{2})/);
+    const quando = b.match(/(será|foi) atingid[oa] em (\d{2}\/\d{2}\/\d{4})/i);
+    const sit = /Não Atingiu/i.test(b) ? "não atingiu" : /Atingiu os Requisitos/i.test(b) ? "atingiu" : /Não Disponível/i.test(b) ? "não disponível" : "";
+    if(!PREV_APOS.test(h[1])) continue;
+    if(sit==="não disponível") continue;
+    const valor = rmi ? num(rmi[1]) : null;
+    cen.push({regra:`${h[1]} · ${h[2]}`.slice(0,120), data: quando ? iso(quando[2]) : (sit==="atingiu" ? dib : null),
+      valor: valor || null, obs: sit || null, maior: /Maior RMI/i.test(b)});
+  }
+  // a aposentadoria por idade possível, quando o relatório a projeta
+  const idade = linhas.join(" ").match(/Possível aposentadoria por idade: (\d{2}\/\d{2}\/\d{4}) \((\d+) anos\)/i);
+  if(idade) cen.push({regra:`Aposentadoria por idade (${idade[2]} anos)`, data:iso(idade[1]), valor:null, obs:"projeção do Prévius"});
+  if(cen.length){
+    // melhor caminho: a maior RMI entre as que atingem o direito; sem isso, a primeira com data
+    const ok = cen.filter(c=>c.obs==="atingiu" && c.valor);
+    const melhor = ok.sort((a,b)=>b.valor-a.valor)[0] || cen.find(c=>c.data) || cen[0];
+    melhor.melhor = true;
+    cen.forEach(c=>delete c.maior);
+    r.cenarios = cen;
+    if(melhor.valor) r.valor = melhor.valor;
+    if(melhor.data) r.data_direito = melhor.data;
+  }
+  return r;
+}
 const adPeriodo = (cls, p, terceiro) => `<div class="ad-per form-linha ${cls}">
     <input type="date" class="adp-ini" aria-label="início" value="${esc(p&&p.inicio||"")}">
     <input type="date" class="adp-fim" aria-label="fim" value="${esc(p&&p.fim||"")}">
@@ -16050,18 +16135,28 @@ async function lerPdfPrevius(cliId, inp){
   const arq=inp&&inp.files&&inp.files[0]; if(!arq) return;
   inp.value="";
   const itens=await pedacosDoPdfOuAviso(arq); if(!itens) return;
-  const linhas=[]; let ult=null;
-  for(const i of itens){
-    if(ult && ult.p===i.p && Math.abs(ult.y-i.y)<=2) linhas[linhas.length-1]+=" "+i.t; else linhas.push(i.t);
-    ult=i;
-  }
-  const texto=linhas.join("\n");
+  // F177 · linhas na ordem da página (por altura e depois da esquerda para a
+  // direita), como o leitor do CNIS: é assim que o leitor do Prévius as espera
+  const texto=linhasDoPdf(itens).map(l=>l.txt).join("\n");
   const box=document.getElementById("ad-previus-box"), pre=document.getElementById("ad-previus-txt");
   if(pre) pre.textContent=texto;
   if(box){ box.hidden=false; }
   const fonte=document.getElementById("ad-fonte"); if(fonte) fonte.value="previus";
   const lido=lerPrevius(texto);
-  for(const [k,v] of Object.entries(lido)){ const e=document.getElementById("ad-f-"+k); if(e && v!=null) e.value=v; }
+  for(const [k,v] of Object.entries(lido)){ const e=document.getElementById("ad-f-"+k); if(e && v!=null && typeof v!=="object") e.value=v; }
+  // períodos especiais e cenários entram como linhas do formulário
+  if(lido.periodos_especiais){
+    const box=document.getElementById("ad-pe"), cont=document.querySelector('#ad-campos [data-campo="periodos_especiais"]');
+    if(box){ box.innerHTML=lido.periodos_especiais.map(p=>adPeriodo("pe", p, "empresa")).join(""); }
+    if(cont) cont.hidden=false;
+  }
+  if(lido.cenarios){
+    const cens=document.getElementById("ad-cens");
+    if(cens) cens.innerHTML=lido.cenarios.map(c=>linhaCenario(c)).join("");
+  }
+  const achou=[lido.tempo&&"tempo", lido.carencia&&"carência", lido.cenarios&&`${lido.cenarios.length} regra(s)`,
+    lido.periodos_especiais&&`${lido.periodos_especiais.length} período(s) especial(is)`].filter(Boolean);
+  if(achou.length) aviso(`Prévius lido: ${achou.join(", ")} — confira antes de registrar`, false);
   try{
     const stamp=new Date().toISOString().replace(/[:.]/g,"-").toLowerCase();
     const caminho=`${cliId}/${stamp}-previus.pdf`;

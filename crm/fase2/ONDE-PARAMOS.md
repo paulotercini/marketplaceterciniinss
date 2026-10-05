@@ -1956,3 +1956,16 @@ Provas novas: `analise178.js` (21/21) e `escritorio178.js` (22/22);
 `analise-direito.js` ajustada ao desenho novo. Suíte: 99/104, falhando só
 as cinco de data já conhecidas (cnj71, extracoes, meudia123, paineis,
 planejado124).
+
+## 10.79 · F177 · o leitor do PDF do Prévius
+
+`lerPrevius(texto)` lê o relatório do Prévius: períodos especiais de "Períodos
+Considerados no Cálculo" (tolera a data de início colada na empresa e o # de
+concomitante), tempo e carência na DIB, e um cenário por espécie de
+aposentadoria (41/42/46/57) em "Análise Por Espécie de Benefício", com a RMI,
+a situação e a data "foi/será atingido em" (quem atingiu sem data atinge na
+DIB), mais a aposentadoria por idade projetada. Melhor caminho = maior RMI
+entre as que atingiram; vira valor e data do direito. O PDF.js lê a fonte do
+Prévius como Mac Roman ("ContribuiÁ„o"): `prevAcentos` conserta. As linhas
+passam a vir de `linhasDoPdf`. Conferido com um PDF real (fora do repositório);
+prova com texto fictício em `previus179.js` (5/5).
