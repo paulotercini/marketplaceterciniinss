@@ -65,6 +65,13 @@ const SUPA = "https://ficticio.supabase.co";
     abaAtiva = 0; subCad = "direito"; repintarFicha(); }), CLI_CHEIO);
   await p.waitForSelector(".ad-q-anot");
   conf("caso na fase Escritório: os andamentos dele entram nas Anotações da Análise", /Aguardando o PPP/.test(await p.textContent(".ad-q-anot")));
+  // F173 · a versão antiga do bloco do To Do (começo da nova) não se repete
+  const sem = await p.evaluate(() => notasSemRepeticao([
+    { id: "a", em: "2026-09-28T12:00:00-03:00", quem: "P", texto: "56 anos.\n12 anos de contribuição." },
+    { id: "b", em: "2026-09-28T12:00:00-03:00", quem: "P", texto: "56 anos.\n12 anos de contribuição.\nFalta relatório médico." },
+    { id: "c", em: "2026-09-29T12:00:00-03:00", quem: "P", texto: "56 anos." },
+    { id: "d", em: "2026-09-28T12:00:00-03:00", quem: "A", texto: "56 anos." }]).map(n => n.id).join(","));
+  conf("F173 · a anotação cortada some e a completa fica; outro dia ou outro autor não somem", sem === "b,c,d");
   for (const [nome, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${nome}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);
   const falhas = ok.filter(([, v]) => !v).length + erros.length;

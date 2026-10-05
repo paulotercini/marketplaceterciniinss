@@ -1909,3 +1909,12 @@ anotações do cadastro e os andamentos dos casos ainda na fase Escritório.
 Cliente sem caso com anotações vindas do To Do (origem "todo", 63 clientes)
 passa a ver a Análise de Direito e abre nela. Prova: `escritorio172.js` (5/5).
 Suíte: 98/102, falhando só as quatro de data.
+
+## 10.77 · F173 · anotação do To Do repetida
+
+Quando o colaborador completava um bloco datado no To Do, a sincronização
+trazia a versão nova com outro id e a antiga ficava: a mesma anotação aparecia
+duas vezes, uma cortada (13 clientes, 23 notas). `notasSemRepeticao` some, na
+leitura, a nota que é começo de outra do mesmo dia e autor; o `migrar.py` deixa
+de guardar a versão antiga. Prova em `escritorio172.js`. meudia123.js falha
+também na 10.76 (data, depois da meia-noite UTC).

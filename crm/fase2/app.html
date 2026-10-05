@@ -3221,7 +3221,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.76</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.77</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4389,6 +4389,8 @@ function montarD(r){
                                 D.tarefasPorCaso.get(t.caso_id).push(t); });
   // F130 · o "#CPF" do título é coisa do To Do; no CRM não aparece nunca
   casos.forEach(k=>{ k.titulo = semCpfTitulo(k.titulo); });
+  clientes.forEach(c=>{ if(c.campos && Array.isArray(c.campos.atendimento))
+    c.campos.atendimento = notasSemRepeticao(c.campos.atendimento); });   // F173
   D.cliPorId = new Map(clientes.map(c=>[c.id,c]));
   D.casoPorId = new Map(casos.map(c=>[c.id,c]));
   D.colPorId = new Map(colaboradores.map(c=>[c.id,c]));
@@ -16093,6 +16095,18 @@ function quadrosDireito(c, ks){
       ${anot.length ? `<ul class="ad-feed">${anot.map(f=>`<li class="anot">${esc(f.texto)}<span class="ad-quem">${f.quem?esc(f.quem):"—"}${f.em?` · ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>`
         : `<p class="meio-sub" style="margin:0">nenhuma anotação ainda</p>`}
     </div>`;
+}
+// F173 · o To Do guarda o bloco datado e, quando o colaborador completa o
+// texto, a sincronização trazia a versão nova COM OUTRO id e a antiga ficava:
+// a mesma anotação aparecia duas vezes, uma cortada. Some a versão que é
+// começo de outra do mesmo dia e do mesmo autor (nada se perde: a longa
+// contém a curta). Vale na leitura; a próxima gravação já sai limpa.
+function notasSemRepeticao(notas){
+  const norm = t => String(t||"").replace(/\s+/g," ").trim();
+  const dia = n => String(n.em||"").slice(0,10);
+  return notas.filter((n,i)=>{ const t=norm(n.texto); if(!t) return true;
+    return !notas.some((m,j)=>{ if(j===i || dia(m)!==dia(n) || (m.quem||"")!==(n.quem||"")) return false;
+      const u=norm(m.texto); return u.length>t.length ? u.startsWith(t) : (u===t && j<i); }); });
 }
 // F172 · o cliente tem anotações vindas do To Do (lista 🙋 Escritório)?
 const notasDoTodo = c => ((c.campos||{}).atendimento||[]).some(n=>n.origem==="todo");
