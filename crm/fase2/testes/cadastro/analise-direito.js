@@ -89,13 +89,16 @@ FIX.lembretes = [{ id: "l0000000-0000-0000-0000-00000000f481", cliente_id: CLI_C
     await p.evaluate(() => !!document.getElementById("ad-novo") && !!document.getElementById("ad-data")));
   // F128 · a idade atual é a primeira coisa; o CNIS fica no canto direito; a
   // explicação saiu (Aurélia nasceu em 14.03.1962)
+  // F174 · a idade virou o primeiro quadro do resumo (desenho aprovado); o
+  // CNIS segue no canto direito da linha de cima
   const topo = await p.evaluate(() => { const t = document.querySelector('.painel[data-p="0"] .ad-topo');
-    const bts = [...t.querySelectorAll("button")]; const idade = t.querySelector(".ad-idade-hoje");
-    return { primeiro: t.firstElementChild === idade, txt: idade ? idade.textContent : "",
+    const bts = [...t.querySelectorAll("button")]; const r = document.querySelector('.painel[data-p="0"] .adr-resumo');
+    const idade = r && r.firstElementChild;
+    return { primeiro: !!idade && /Idade hoje/.test(idade.textContent), txt: idade ? idade.querySelector(".adr-tile-val").textContent : "",
       cnisUltimo: bts.length && /CNIS/.test(bts[bts.length - 1].textContent) };
   });
   const anosHoje = (() => { const h = new Date(); let a = h.getFullYear() - 1962; if (h.getMonth() + 1 < 3 || (h.getMonth() + 1 === 3 && h.getDate() < 14)) a--; return a; })();
-  conf(`a idade atual do segurado é a primeira coisa da Análise de Direito (${topo.txt.slice(0, 12).trim()})`,
+  conf(`F174 · a idade atual do segurado abre o resumo da Análise de Direito (${topo.txt.slice(0, 12).trim()})`,
     topo.primeiro && new RegExp("^" + anosHoje + " anos").test(topo.txt.trim()));
   conf("o botão do CNIS fica no canto direito", topo.cnisUltimo);
   conf("a explicação de rodapé saiu da tela",
@@ -131,8 +134,8 @@ FIX.lembretes = [{ id: "l0000000-0000-0000-0000-00000000f481", cliente_id: CLI_C
     post && post.corpo.data_analise === "2020-05-02" && post.corpo.fonte === "todo" &&
     (post.corpo.cenarios || []).length === 2 && post.corpo.cenarios[0].melhor === true &&
     post.corpo.cenarios[0].valor === 3000);
-  conf("o cartão da análise abre com a idade NA DATA da análise (58 anos em 02.05.2020)",
-    await p.evaluate(() => /Idade na data da análise:\s*58 anos/.test((document.querySelector('.painel[data-p="0"] .ad-analise .ad-idade') || {}).textContent || "")));
+  conf("F174 · a ficha da análise abre com a idade NA DATA da análise (58 anos em 02.05.2020)",
+    await p.evaluate(() => /Idade na data da análise:\s*58 anos/.test((document.querySelector('.painel[data-p="0"] .adr-ficha .ad-idade') || {}).textContent || "")));
   const andPost = escritos.find(x => x.m === "POST" && x.t === "andamentos");
   conf("o comentário vai para TODOS os casos ativos (2), e não para o encerrado",
     andPost && Array.isArray(andPost.corpo) && andPost.corpo.length === 2 &&
@@ -143,17 +146,17 @@ FIX.lembretes = [{ id: "l0000000-0000-0000-0000-00000000f481", cliente_id: CLI_C
     escritos.some(x => x.m === "PATCH" && x.t === "lembretes" &&
       ((x.corpo.detalhes || {}).anotacoes || []).some(n => n.analise_id)));
 
-  // 6) o cartão da análise na régua dos atendimentos
-  conf("o ano grande (2020) abre o cartão da análise",
-    await p.evaluate(() => [...document.querySelectorAll(".ad-ano")].some(x => x.textContent === "2020")));
-  conf("o melhor caminho leva ⭐ e o valor sai em reais",
-    await p.evaluate(() => { const c = document.querySelector(".ad-cen.ad-melhor");
-      return c && /Pontos/.test(c.textContent) && /R\$\s?3\.000,00/.test(c.textContent); }));
-  conf("cenário com data que já passou fica verde: ✓ direito alcançado",
-    await p.evaluate(() => [...document.querySelectorAll(".ad-cen.ad-ok")]
-      .some(c => /direito alcançado/.test(c.textContent))));
-  conf("o cenário futuro oferece o aviso 🎂 de época",
-    await p.evaluate(() => [...document.querySelectorAll(".ad-cen:not(.ad-ok) .btn-mini")]
+  // 6) F174 · as regras da análise: uma linha por cenário, com barra e data
+  conf("F174 · o chip da ficha diz a fonte e a data (To Do · 02.05.2020)",
+    await p.evaluate(() => /To Do · 02\.05\.2020/.test(document.querySelector(".adr-ficha .adr-chip").textContent)));
+  conf("F174 · o melhor caminho vem marcado e o valor sai em reais",
+    await p.evaluate(() => { const c = document.querySelector(".adr-regra.adr-melhor");
+      return c && /Pontos/.test(c.textContent) && /melhor caminho/.test(c.textContent) && /R\$\s?3\.000,00/.test(c.textContent); }));
+  conf("F174 · regra com data que já passou: barra cheia e direito alcançado",
+    await p.evaluate(() => [...document.querySelectorAll(".adr-regra.adr-ok")]
+      .some(c => /direito alcançado/.test(c.textContent) && c.querySelector(".adr-barra > span").style.width === "100%")));
+  conf("F174 · a regra futura oferece o aviso de época",
+    await p.evaluate(() => [...document.querySelectorAll(".adr-regra:not(.adr-ok) button")]
       .some(b => /avisar na época/.test(b.textContent))));
 
   // 7) o aviso 🎂 reusa a máquina das aposentadorias (com lembrar_em)
