@@ -467,6 +467,21 @@ def casos_movidos(mapa, banco, minimo_seguro=50, ja_no_banco=None):
     return adotados, sobrou
 
 
+def manter_dados_do_banco(mapa, banco):
+    """Telefone e nascimento: o CRM vence; a tarefa do To Do só preenche o
+    que está vazio. Antes, tarefa sem telefone no corpo mandava null e apagava
+    o que o app ou a importação do checklist (telefones_todo.py) tinham
+    gravado — em 04/10/2026 foram 628 cadastros em minutos. O lote do
+    PostgREST exige as mesmas chaves em todas as linhas, então o valor do
+    banco entra na linha em vez de a coluna sair dela."""
+    por_id = {c["id"]: c for c in banco or []}
+    for c in mapa.get("clientes", []):
+        b = por_id.get(c.get("id"))
+        for campo in ("telefone", "dn"):
+            if b and b.get(campo):
+                c[campo] = b[campo]
+
+
 def remapear_clientes(mapa, cpf_para_id_existente):
     """[BUG 17.09.2026] Cliente cadastrado NO APP ganha id aleatório. Se a
     mesma pessoa também é tarefa do To Do, a importação seguinte tentava
@@ -798,6 +813,7 @@ def subir_rest(mapa):
         cpf_para_id = {(c.get("cpf") or "").strip(): c["id"]
                        for c in cli_exist if (c.get("cpf") or "").strip()}
     nc = remapear_clientes(mapa, cpf_para_id)
+    manter_dados_do_banco(mapa, _rest_todas(url, chave, "/rest/v1/clientes?select=id,telefone,dn"))
     if nc:
         print(f"  clientes remapeados para ids já existentes: {nc}")
 
