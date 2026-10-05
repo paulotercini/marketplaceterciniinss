@@ -3359,8 +3359,10 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .hon-prox{color:var(--hoje-tinta,#8A5300);background:var(--hoje-fundo,#F8ECD8)}
 .hon-venc{color:var(--venc-tinta,#B3261E);background:var(--venc-fundo,#FBEAE7)}
 .hon-cinza{color:var(--cinza);background:var(--placa)}
-.hon-novo>summary{display:inline-flex;align-items:center;list-style:none;width:max-content}
-.hon-novo>summary::-webkit-details-marker{display:none}
+.hon-novo>summary,.hon-dst>summary{display:inline-flex;align-items:center;list-style:none;width:max-content}
+.hon-novo>summary::-webkit-details-marker,.hon-dst>summary::-webkit-details-marker{display:none}
+.hon-cob-item{margin:0 0 10px;line-height:1.7}
+.hon-assinado label:focus-within{outline:2px solid var(--azul);outline-offset:2px}
 .hon-novo .form-linha{margin-top:10px;align-items:flex-end}
 .hon-novo .adr-campo input{min-height:40px}
 .hon-dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px}
@@ -3401,7 +3403,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.80</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.81</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14580,12 +14582,158 @@ function situacaoPgto(p, proxId){
 }
 function contratoDoCliente(c, ks){
   const pcs = c ? precasosDe(c).filter(pc=>!pc.so_lembrete && pc.especie!==ESPECIE_PAGAMENTOS) : [];
-  const pc = pcs.find(x=>x.honorarios) || pcs[0] || null;
+  const pc = pcs.find(x=>x.honorarios||x.hon) || pcs[0] || null;
   const k = (ks||[]).find(x=>x.fase!=="encerrado") || (ks||[])[0];
   const esp = (pc && pc.especie) || (k && (k.beneficio || nomeDaEspecie(k.especie))) || "";
   if(!pc && !k) return null;
   const vr = variantePorEspecie(esp);
-  return {ajuste: pc && pc.honorarios || "", padrao: HONOR_RESUMO[vr] || "", especie: esp};
+  // F181 · o combinado em campos entra junto; sem pré-caso (já virou caso),
+  // vale o que ficou guardado no cadastro para a variante do contrato
+  const hon = (pc && pc.hon) || honorEstrutDe(c, esp);
+  const livre = (pc && pc.honorarios) || honorAjusteDe(c, esp);
+  return {ajuste: [resumoHon(hon), livre].filter(Boolean).join(" · "), padrao: HONOR_RESUMO[vr] || "", especie: esp};
+}
+// F181 · a cobrança: o lançamento em aberto mais antigo (vencido primeiro)
+function proximaCobranca(abertos){
+  return abertos.filter(p=>p.vencimento).sort((x,y)=>x.vencimento.localeCompare(y.vencimento))[0] || null;
+}
+function origemPgto(p){ return p.descricao && p.descricao!=="Recebimento" ? p.descricao : "honorários"; }
+function primeiroNomeDe(c){
+  const n=((c&&c.nome)||"").trim().split(/\s+/)[0]||"";
+  return n ? n[0].toUpperCase()+n.slice(1).toLowerCase() : "";
+}
+function zapDe(c){
+  const ts=telefonesDe(c||{}), t=ts.find(x=>x.zap)||ts[0];
+  const d=t ? String(t.numero||"").replace(/\D/g,"") : "";
+  return !d ? "" : d.length<=11 ? "55"+d : d;
+}
+function mensagemCobranca(c, p){
+  const venceu = p.vencimento && p.vencimento<hoje();
+  return `Prezado(a) ${primeiroNomeDe(c)},
+
+O escritório Paulo Roberto Tercini Filho — Advocacia Previdenciária informa que a parcela de honorários advocatícios (${origemPgto(p)}), no valor de ${moedaTxt(p.valor)}, ${venceu?"venceu":"vence"} em ${fmtBarra(p.vencimento)}.
+
+O pagamento pode ser feito por [FORMA DE PAGAMENTO]. Caso já o tenha efetuado, pedimos a gentileza de desconsiderar esta mensagem e, se possível, enviar o comprovante.
+
+Permanecemos à disposição.
+Atenciosamente,
+Escritório Paulo Roberto Tercini Filho`;
+}
+function abrirCobranca(pgId){
+  const p=(D.pagamentos||[]).find(x=>x.id===pgId); if(!p) return;
+  const c=D.cliPorId.get(p.cliente_id||clienteAberto)||D.cliPorId.get(clienteAberto);
+  const tel=zapDe(c);
+  caixa(`<h3 style="margin:0 0 8px">Mensagem de cobrança</h3>
+    <p class="adr-nota" style="margin-bottom:8px">Confira e troque o [FORMA DE PAGAMENTO] antes de enviar. Nada sai sozinho.</p>
+    <label class="adr-campo">Texto<textarea id="cob-txt" rows="12" style="width:100%;min-width:min(520px,80vw);font:inherit;font-weight:400;color:var(--texto,#1f1f1f);padding:8px;box-sizing:border-box">${esc(mensagemCobranca(c, p))}</textarea></label>
+    <div class="form-linha" style="margin-top:10px">
+      <button class="adr-bt" onclick="copiar(document.getElementById('cob-txt').value,'Mensagem copiada')">copiar</button>
+      ${tel?`<a class="adr-bt adr-primario cob-zap" style="display:inline-flex;align-items:center;text-decoration:none" target="_blank" rel="noopener"
+        href="https://wa.me/${tel}?text=${encodeURIComponent(mensagemCobranca(c, p))}"
+        onclick="this.href='https://wa.me/${tel}?text='+encodeURIComponent(document.getElementById('cob-txt').value)">abrir no WhatsApp</a>`
+        :`<span class="adr-nota">Sem telefone cadastrado para o WhatsApp.</span>`}
+    </div>`);
+}
+// lembrete "geral" 3 dias antes de cada vencimento em aberto. Os já criados
+// ficam em campos.cobranca.lembretes ({pgto_id: lembrete_id}): o lembrete
+// avisado sai da lista ativa, e o mapa impede que ele renasça
+async function lembretesCobranca(c, quieto){
+  const ks=D.casosDoCliente.get(c.id)||[];
+  const cob={lembrar:true, lembretes:{}, ...(((c.campos||{}).cobranca)||{})};
+  cob.lembretes={...(cob.lembretes||{})};
+  const abertos=(D.pagamentos||[]).filter(p=>(p.cliente_id===c.id || ks.some(k=>k.id===p.caso_id))
+    && p.status==="aberto" && p.vencimento);
+  let novos=0;
+  try{
+    for(const p of abertos){
+      const quando=somaDias(p.vencimento,-3), titulo=`Cobrança: ${origemPgto(p)} ${moedaTxt(p.valor)}`;
+      const lid=cob.lembretes[p.id], l=lid && (D.lembretes||[]).find(x=>x.id===lid);
+      if(lid){
+        if(l && l.ativo!==false && (l.proximo_em!==quando || l.titulo!==titulo)){
+          await api(`/rest/v1/lembretes?id=eq.${l.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+            body:JSON.stringify({proximo_em:quando, titulo})});
+          Object.assign(l, {proximo_em:quando, titulo});
+        }
+        continue;
+      }
+      const r=await api(`/rest/v1/lembretes`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({cliente_id:c.id, tipo:"geral", titulo, detalhes:{origem:"cobranca", pgto_id:p.id},
+          intervalo_meses:null, proximo_em:quando, responsavel_id:null, criado_por:eu.id})});
+      const l2=r&&r[0]; if(!l2) continue;
+      (D.lembretes=D.lembretes||[]).push(l2);
+      cob.lembretes[p.id]=l2.id; novos++;
+    }
+  }catch(e){ aviso("Não consegui criar os lembretes de cobrança — tente de novo"); }
+  await gravarCamposCli(c, {cobranca:cob});
+  if(!quieto) aviso(novos ? `${novos} lembrete(s) de cobrança criado(s), 3 dias antes de cada vencimento`
+                          : "Os vencimentos em aberto já têm lembrete", false);
+  montarSidebar();
+}
+async function alternarLembrarCobranca(cliId, ligar){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  if(ligar) await lembretesCobranca(c);
+  else{
+    const cob={...(((c.campos||{}).cobranca)||{})};
+    // desligar apaga os lembretes ainda ativos; religar cria de novo
+    for(const lid of Object.values(cob.lembretes||{})){
+      const l=(D.lembretes||[]).find(x=>x.id===lid);
+      if(l && l.ativo!==false){
+        await api(`/rest/v1/lembretes?id=eq.${l.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+          body:JSON.stringify({ativo:false})}).catch(()=>{});
+        l.ativo=false;
+      }
+    }
+    await gravarCamposCli(c, {cobranca:{lembrar:false, lembretes:{}}});
+    aviso("Lembretes de cobrança desligados", false);
+    montarSidebar();
+  }
+  repintarFicha();
+}
+async function gravarCamposCli(c, patch){
+  c.campos={...(c.campos||{}), ...patch};
+  try{
+    await api(`/rest/v1/clientes?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos:c.campos})});
+    return true;
+  }catch(e){ aviso("Não consegui guardar — tente de novo"); return false; }
+}
+// F181 · destaque dos honorários (art. 22, §4º, do EAOAB), em campos.contrato
+const DESTAQUE_OPC = [["nao","não pedido",false],["cumprimento","pedir no cumprimento de sentença",false],
+  ["pedido","pedido em",true],["deferido","deferido em",true],["indeferido","indeferido em",true]];
+function textoDestaque(d){
+  const o=DESTAQUE_OPC.find(x=>x[0]===(d&&d.st)) || DESTAQUE_OPC[0];
+  return o[2] ? (d.em ? `${o[1]} ${fmt(d.em)}` : o[1].replace(/ em$/,"")) : o[1];
+}
+async function salvarDestaque(cliId){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const st=document.getElementById("hon-dst").value, em=document.getElementById("hon-dst-em").value;
+  const comData=(DESTAQUE_OPC.find(x=>x[0]===st)||[])[2];
+  const ct={...(((c.campos||{}).contrato)||{}), destaque: comData && em ? {st, em} : {st}};
+  if(await gravarCamposCli(c, {contrato:ct})){ aviso(`Destaque: ${textoDestaque(ct.destaque)}`, false); repintarFicha(); }
+}
+// F181 · o contrato assinado é um anexo do cliente ("Contrato assinado …");
+// o mais novo é o que vale, e trocar é só anexar outro
+function contratoAssinadoDe(c){
+  return (D.anexos||[]).filter(a=>a.cliente_id===c.id && /^Contrato assinado/.test(a.nome||""))
+    .sort((x,y)=>String(y.criado_em||"").localeCompare(String(x.criado_em||"")))[0] || null;
+}
+async function anexarContratoAssinado(cliId, inp){
+  const arq=inp&&inp.files&&inp.files[0]; if(!arq) return;
+  inp.value="";
+  if(!/^(application\/pdf|image\/)/.test(arq.type||"")) return aviso("Anexe um PDF ou uma imagem");
+  try{
+    const stamp=new Date().toISOString().replace(/[:.]/g,"-").toLowerCase();
+    const ext=(arq.name.match(/\.[a-z0-9]+$/i)||[".pdf"])[0].toLowerCase();
+    const caminho=`${cliId}/${stamp}-contrato-assinado${ext}`;
+    await subirArquivo(caminho, arq);
+    const r=await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:null, cliente_id:cliId, autor_id:eu.id,
+        nome:`Contrato assinado ${fmt(hoje())} - ${arq.name}`, caminho, tipo:arq.type, tamanho:arq.size})});
+    const an=(r&&r[0]) || null;
+    if(an) (D.anexos=D.anexos||[]).unshift(an);
+    aviso("Contrato assinado guardado nos anexos do cliente", false);
+  }catch(e){ return aviso("Não consegui guardar o contrato — tente de novo"); }
+  repintarFicha();
 }
 function painelPagamentosFicha(ks, ands, pgs, pagK, c){
   const validos = pgs.filter(p=>p.status!=="cancelado");
@@ -14599,6 +14747,9 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
   const dataDe = p => p.pago_em || p.vencimento || "";
   const linhas = [...pgs].sort((x,y)=>dataDe(x).localeCompare(dataDe(y)));
   const parc = c ? parceriaDe(c, ks) : "";
+  const cct = (c && (c.campos||{}).contrato) || {};
+  const assin = c ? contratoAssinadoDe(c) : null;
+  const cob = proximaCobranca(abertos);
   return `<div class="adr hon">
     <section class="hon-resumo" aria-label="Resumo dos honorários">
       <div class="adr-tile adr-t-texto"><span class="adr-tile-rot">Contratado</span>
@@ -14669,8 +14820,33 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
             <dt>Modalidade</dt><dd>${esc(ct.padrao)}</dd>
             ${ct.ajuste?`<dt>Ajuste combinado</dt><dd>${esc(ct.ajuste)}</dd>`:""}
             <dt>Parceria</dt><dd>${parc?esc(parc):"sem parceria"}</dd>
+            <dt>Destaque</dt><dd class="hon-dst-val">${esc(textoDestaque(cct.destaque))}</dd>
+            <dt>Assinado</dt><dd class="hon-ass-val">${assin?(assin.criado_em?`em ${fmtTS(assin.criado_em)}`:"anexado"):"não anexado"}</dd>
           </dl>` : `<p class="adr-nota">Nenhum caso nem atendimento com espécie: o contrato sai quando houver.</p>`}
+          ${c ? `<details class="hon-dst" style="margin-top:10px"><summary class="adr-bt">alterar o destaque</summary>
+            <div class="form-linha" style="margin-top:8px;align-items:flex-end">
+              <label class="adr-campo">Destaque dos honorários<select id="hon-dst">${DESTAQUE_OPC.map(([v,r,d])=>
+                `<option value="${v}" ${(cct.destaque||{}).st===v?"selected":""}>${d?r+" (data)":r}</option>`).join("")}</select></label>
+              <label class="adr-campo">Data<input type="date" id="hon-dst-em" value="${esc((cct.destaque||{}).em||"")}"></label>
+              <button class="adr-bt adr-primario" onclick="salvarDestaque('${c.id}')">Guardar</button>
+            </div></details>
+          <div class="form-linha hon-assinado" style="margin-top:10px">
+            ${assin?`<button class="adr-bt" onclick="abrirAnexo('${assin.id}')">abrir o contrato assinado</button>`:""}
+            <label class="adr-bt" style="display:inline-flex;align-items:center">${assin?"trocar o arquivo":"anexar contrato assinado"}
+              <input type="file" accept="application/pdf,image/*" class="sr-so" id="hon-ass-arq"
+                onchange="anexarContratoAssinado('${c.id}', this)"></label>
+          </div>` : ""}
         </section>
+        ${c ? `<section class="adr-card hon-cob" aria-labelledby="hon-cob-t">
+          <h3 class="adr-h" id="hon-cob-t">Cobrança</h3>
+          ${cob ? `<p class="hon-cob-item"><b>${esc(origemPgto(cob))}</b> · ${moeda(cob.valor)}<br>
+              <span class="hon-sit hon-${cob.vencimento<hoje()?"venc":"prox"}">${cob.vencimento<hoje()?"venceu":"vence"} em ${fmt(cob.vencimento)}</span></p>
+            <button class="adr-bt adr-primario" style="width:max-content" onclick="abrirCobranca('${cob.id}')">Mensagem de cobrança</button>`
+            : `<p class="adr-nota">Nenhum lançamento em aberto com vencimento.</p>`}
+          <label class="conta-ck hon-cob-lemb" style="display:flex;align-items:center;gap:8px;min-height:40px;margin-top:8px">
+            <input type="checkbox" id="hon-cob-lemb" style="width:20px;height:20px" ${(((c.campos||{}).cobranca)||{}).lembrar?"checked":""}
+              onchange="alternarLembrarCobranca('${c.id}', this.checked)">lembrar 3 dias antes de cada vencimento</label>
+        </section>` : ""}
         ${pagK.map(k=>{
           const ult=ands.filter(a=>a.caso_id===k.id)[0];
           const uco=ult&&D.colPorId.get(ult.autor_id);
@@ -23786,8 +23962,10 @@ function textoContrato(chave, ajuste){
   // F30 · o combinado do atendimento entra no contrato como a disposição
   // expressa em contrário que a própria cláusula já prevê
   if(ajuste) pars.push(`PARÁGRAFO ${v.novoBen?"QUARTO":"TERCEIRO"} — DISPOSIÇÃO EXPRESSA EM CONTRÁRIO: Fica ajustado entre as partes, prevalecendo sobre o padrão desta cláusula no que com ele conflitar: ${ajuste}`);
+  // F181 · a cláusula de honorários é um marcador: preencherModeloDoc põe o
+  // padrão da variante (texto idêntico ao de antes) ou o combinado da mesa
   return `${CONTRATO_PARTES}
-${v.honor}
+<HONORARIOS>
 
 ${pars.join("\n\n")}
 
@@ -23806,6 +23984,89 @@ const HONOR_RESUMO = {
   incapacidade:"deferido no INSS: 20% sobre os 6 primeiros benefícios · em recurso ou judicial: 30% sobre os 6 primeiros + 30% dos atrasados",
   revisao:"3 primeiras diferenças da revisão + 30% dos atrasados (RPV/precatório)",
 };
+
+// F181 · O COMBINADO EM CAMPOS. A mesa guarda, além do texto livre, os
+// honorários em campos (primeiros benefícios, percentual dos atrasados,
+// valor fixo, entrada, parcelas e datas) no pré-caso (pc.hon) e, por
+// variante, em clientes.campos.honor_estrut — sobrevive ao caso, como o
+// honor_ajuste. Dele saem a cláusula do contrato (<HONORARIOS>), o quadro
+// Contratado e os lançamentos das parcelas.
+function honorEstrutDe(c, especie){
+  const h=((((c&&c.campos)||{}).honor_estrut)||{})[variantePorEspecie(especie)];
+  return h && Object.keys(h).length ? h : null;
+}
+const EXT_U=["zero","um","dois","três","quatro","cinco","seis","sete","oito","nove","dez","onze","doze",
+  "treze","quatorze","quinze","dezesseis","dezessete","dezoito","dezenove"];
+const EXT_D=["","","vinte","trinta","quarenta","cinquenta","sessenta","setenta","oitenta","noventa"];
+const EXT_C=["","cento","duzentos","trezentos","quatrocentos","quinhentos","seiscentos","setecentos","oitocentos","novecentos"];
+function porExtenso(n){
+  n=+n; if(!Number.isInteger(n) || n<0 || n>999) return "";
+  if(n===100) return "cem";
+  if(n<20) return EXT_U[n];
+  if(n<100) return EXT_D[Math.floor(n/10)]+(n%10?" e "+EXT_U[n%10]:"");
+  return EXT_C[Math.floor(n/100)]+(n%100?" e "+porExtenso(n%100):"");
+}
+const comExtenso = n => { const e=porExtenso(n); return e ? `${n} (${e})` : String(n); };
+const pctExtenso = n => { const e=porExtenso(n); return `${String(n).replace(".",",")}%${e?` (${e} por cento)`:""}`; };
+// o mesmo dia N meses depois, sem o pulo do 31 (31.01 + 1 mês = fim de fevereiro)
+function mesDepois(iso, m){
+  const [a,ms,d]=iso.split("-").map(Number);
+  const fim=new Date(Date.UTC(a, ms-1+m+1, 0));
+  return new Date(Date.UTC(fim.getUTCFullYear(), fim.getUTCMonth(), Math.min(d, fim.getUTCDate()))).toISOString().slice(0,10);
+}
+// as parcelas do valor fixo: a entrada (se houver) e as N mensais; a última
+// leva o centavo que sobra da divisão
+function parcelasHon(h){
+  if(!h || !(+h.valor>0)) return [];
+  const out=[], ent=Math.min(+h.entrada||0, +h.valor);
+  if(ent>0) out.push({k:"e", desc:"Honorários · entrada", valor:ent, venc:h.entrada_em||h.primeira_em||""});
+  const saldo=Math.round((+h.valor-ent)*100)/100;
+  if(saldo>0){
+    const q=Math.max(1, Math.floor(+h.parcelas||1)), y=Math.floor(Math.round(saldo/q*1e4)/100)/100;
+    for(let i=0;i<q;i++) out.push({k:String(i+1),
+      desc: q>1 ? `Honorários · parcela ${i+1}/${q}` : (ent>0 ? "Honorários · saldo" : "Honorários · valor fixo"),
+      valor: i===q-1 ? Math.round((saldo-y*(q-1))*100)/100 : y,
+      venc: h.primeira_em ? mesDepois(h.primeira_em, i) : ""});
+  }
+  return out;
+}
+const moedaTxt = v => moeda(v).replace(/\s/g," ");
+// a linha curta (quadro Contratado, mesa recolhida)
+function resumoHon(h){
+  if(!h) return "";
+  const p=[], n=+h.nben;
+  if(n) p.push(`${n} primeiro${n>1?"s":""} benefício${n>1?"s":""}`);
+  if(+h.pct) p.push(`${String(h.pct).replace(".",",")}% dos atrasados`);
+  if(+h.valor>0){
+    const ms=parcelasHon(h).filter(x=>x.k!=="e");
+    p.push(`${moedaTxt(+h.valor)}${+h.entrada>0?` (entrada de ${moedaTxt(+h.entrada)})`:""}`
+      + (ms.length>1 ? ` em ${ms.length} parcelas de ${moedaTxt(ms[0].valor)}` : ""));
+  }
+  return p.join(" + ");
+}
+// a cláusula do contrato: o padrão da variante, idêntico ao de antes, ou o
+// combinado da mesa em português de contrato
+function clausulaHonorarios(c, especie){
+  const v=CONTRATO_VARIANTES[variantePorEspecie(especie)]||CONTRATO_VARIANTES.padrao;
+  const h=honorEstrutDe(c, especie);
+  if(!h) return v.honor;
+  const itens=[], dt=iso=>iso?fmtBarra(iso):"data a combinar";
+  if(+h.nben) itens.push(`Os ${comExtenso(+h.nben)} primeiros benefícios, na forma integral e com valor atualizado, após a implantação do benefício, com vencimento na data do recebimento de cada benefício`);
+  if(+h.pct) itens.push(`${pctExtenso(+h.pct)} sobre o valor bruto dos atrasados que serão recebidos por meio de Requisição de Pequeno Valor (RPV) ou Precatório, com vencimento na data do recebimento da RPV ou do Precatório`);
+  if(+h.valor>0){
+    const ps=parcelasHon(h), ent=ps.find(x=>x.k==="e"), ms=ps.filter(x=>x.k!=="e");
+    const soma=ms.reduce((t,x)=>t+x.valor,0);
+    const mensais = ms.length>1
+      ? `em ${comExtenso(ms.length)} parcelas mensais de ${moedaTxt(ms[0].valor)}${ms[ms.length-1].valor!==ms[0].valor?`, sendo a última de ${moedaTxt(ms[ms.length-1].valor)}`:""}, vencendo a primeira em ${dt(ms[0].venc)}`
+      : ms.length ? `com vencimento em ${dt(ms[0].venc)}` : "";
+    let t=`O valor fixo de ${moedaTxt(+h.valor)}`;
+    if(ent) t += `, sendo ${moedaTxt(ent.valor)} de entrada, com vencimento em ${dt(ent.venc)}`
+      + (ms.length ? `, e o saldo de ${moedaTxt(soma)} ${mensais}` : "");
+    else t += ms.length>1 ? ` ${mensais}` : `, ${mensais}`;
+    itens.push(t);
+  }
+  return itens.map((t,i)=>t+(i===itens.length-1?".":i===itens.length-2?"; e,":";")).join("\n\n");
+}
 
 const DOCS_ESCRITORIO = {
   proc_judicial: {rot:"Procuração Judicial", titulo:"PROCURAÇÃO “AD JUDICIA ET EXTRA”", texto:
@@ -23985,6 +24246,7 @@ function preencherModeloDoc(txt, c, especie){
     // F160 · o representante legal entra logo depois do CEP da qualificação,
     // em todos os modelos de uma vez; sem representante, o marcador some
     "<REPRESENTANTE>": fraseRepresentante(c),
+    "<HONORARIOS>": clausulaHonorarios(c, especie),
   };
   txt = txt.split("CEP <CEP>").join("CEP <CEP><REPRESENTANTE>");
   return Object.entries(mapa).reduce((t,[ph,val])=>t.split(ph).join(val), txt);
@@ -24336,6 +24598,70 @@ async function mudarPreCaso(cliId, pcId, campo, valor){
     c.campos = {...(c.campos||{}), honor_ajuste:aj};
   }
   if(await gravarPrecasos(cliId, pcs)) repintarFicha();
+}
+// F181 · guarda o combinado em campos no pré-caso e no cadastro (por
+// variante, para o contrato) e acerta os lançamentos das parcelas
+async function salvarHonEstrut(cliId, pcId, limpar){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const box=document.getElementById("hn-"+pcId);
+  let h=null;
+  if(!limpar && box){
+    h={};
+    box.querySelectorAll("[data-hn]").forEach(e=>{ const v=e.value.trim();
+      if(v && (e.type==="date" || +v>0)) h[e.dataset.hn]= e.type==="date" ? v : +v; });
+    if(!(h.nben || h.pct || h.valor)) return aviso("Preencha os benefícios, o percentual ou o valor fixo");
+    if(h.pct>100) return aviso("O percentual não pode passar de 100%");
+    if(h.entrada && !h.valor) return aviso("A entrada só vale com valor fixo");
+    if(h.entrada>h.valor) return aviso("A entrada não pode passar do valor fixo");
+  }
+  mesaAberta.add(`hon-${pcId}`);
+  const pcs=precasosDe(c).map(p=>{
+    if(p.id!==pcId) return p;
+    const novo={...p, quem:p.quem||eu.id, em:p.em||hoje()};
+    if(h) novo.hon=h; else delete novo.hon;
+    return novo;
+  });
+  const pc=pcs.find(p=>p.id===pcId)||{};
+  const est={...(((c.campos||{}).honor_estrut)||{})}, vr=variantePorEspecie(pc.especie);
+  if(h) est[vr]=h; else delete est[vr];
+  c.campos={...(c.campos||{}), honor_estrut:est};
+  if(!await gravarPrecasos(cliId, pcs)) return;
+  await sincronizarParcelasHon(c, pcId, h);
+  aviso(h ? "Honorários guardados: o contrato e a aba Honorários seguem o combinado"
+          : "Honorários de volta ao padrão do escritório", false);
+  repintarFicha();
+}
+// as parcelas com data viram lançamentos "a receber", marcados em
+// todo_item_id com "hon:<pré-caso>:<n>": guardar de novo atualiza a mesma
+// linha; parcela que saiu do combinado e segue em aberto é removida; o que
+// já foi recebido nunca é tocado
+async function sincronizarParcelasHon(c, pcId, h){
+  const pref=`hon:${pcId}:`;
+  const ja=(D.pagamentos||[]).filter(p=>String(p.todo_item_id||"").startsWith(pref));
+  const ks=D.casosDoCliente.get(c.id)||[];
+  const casoId=(ks.find(k=>k.fase!=="encerrado")||{}).id||null;
+  const novos=parcelasHon(h).filter(x=>x.venc);
+  try{
+    for(const x of novos){
+      const tag=pref+x.k, p=ja.find(y=>y.todo_item_id===tag);
+      const linha={descricao:x.desc, valor:x.valor, vencimento:x.venc};
+      if(!p){
+        const r=await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+          body:JSON.stringify({...linha, caso_id:casoId, cliente_id:c.id, status:"aberto", pago_em:null,
+            conferencias:[], todo_item_id:tag})});
+        if(r && r[0]) D.pagamentos.push(r[0]);
+      }else if(p.status==="aberto" && (+p.valor!==x.valor || p.vencimento!==x.venc || p.descricao!==x.desc)){
+        await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+          body:JSON.stringify(linha)});
+        Object.assign(p, linha);
+      }
+    }
+    for(const p of ja.filter(y=>y.status==="aberto" && !novos.some(x=>pref+x.k===y.todo_item_id))){
+      await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"DELETE"});
+      D.pagamentos=D.pagamentos.filter(y=>y!==p);
+    }
+  }catch(e){ return aviso("Não consegui acertar as parcelas — guarde de novo"); }
+  if(((c.campos||{}).cobranca||{}).lembrar) await lembretesCobranca(c, true);
 }
 async function tirarPreCaso(cliId, pcId){
   if(!await confirmar("Tirar este pré-caso? As anotações dele continuam guardadas — e dá para restaurar pelo ↺ que fica na mesa.")) return;
@@ -25132,8 +25458,8 @@ function caixaAtendimento(c, ks){
     // F55 · honorários é informação, não tarefa: vive recolhido numa linha
     // que já diz o combinado (padrão da casa ou o ajuste); abre só p/ mexer
     return dobra(`hon-${pc.id}`, true,
-      `Honorários${pcsVivos.length>1?` — ${esc(pc.especie||"")}`:""} — ${pc.honorarios
-        ?`combinado diferente: ${esc(pc.honorarios)}`
+      `Honorários${pcsVivos.length>1?` — ${esc(pc.especie||"")}`:""} — ${pc.honorarios||pc.hon
+        ?`combinado diferente: ${esc([resumoHon(pc.hon), pc.honorarios].filter(Boolean).join(" · "))}`
         :`Padrão do escritório: ${esc(HONOR_RESUMO[vr]||"")}${ehIncap(pc.especie)&&pc.via==="adm"?" (via administrativa: 20% sobre as parcelas recebidas)":""}`}`, `
     <div class="mesa-bloco mesa-b5">
       <div class="rotulo-caso">Honorários${pcsVivos.length>1?` — ${esc(pc.especie||"sem espécie")}`:""}</div>
@@ -25147,6 +25473,25 @@ function caixaAtendimento(c, ks){
           onchange="mudarPreCaso('${c.id}','${pc.id}','honorarios',this.value)">
       </div>
       ${pc.honorarios?`<p class="meio-sub" style="color:var(--verde);margin:2px 0 0">✓ o contrato impresso sai com este ajuste na cláusula de honorários</p>`:""}
+      ${/* F181 · o combinado em campos: vira a cláusula do contrato e, com
+           valor fixo e datas, os lançamentos da aba Honorários */""}
+      <div class="hon-estr" id="hn-${pc.id}">
+        <p class="meio-sub" style="margin:10px 0 6px">Combinado em campos — substitui a cláusula padrão no contrato;
+          valor fixo com datas vira lançamento na aba Honorários.</p>
+        <div class="adr-campos">
+          ${[["nben","Primeiros benefícios (nº)","number","1"],["pct","% dos atrasados","number","0.5"],
+             ["valor","Valor fixo (R$)","number","0.01"],["entrada","Entrada (R$)","number","0.01"],
+             ["entrada_em","Data da entrada","date",""],["parcelas","Parcelas mensais (nº)","number","1"],
+             ["primeira_em","1º vencimento","date",""]].map(([k,r,t,st])=>
+            `<label class="adr-campo">${r}<input type="${t}" ${st?`step="${st}" min="0"`:""} data-hn="${k}"
+              value="${esc(String(((pc.hon||{})[k])??""))}"></label>`).join("")}
+        </div>
+        <div class="form-linha" style="margin-top:8px">
+          <button class="adr-bt adr-primario" onclick="salvarHonEstrut('${c.id}','${pc.id}')">Guardar no contrato</button>
+          ${pc.hon?`<button class="adr-bt" onclick="salvarHonEstrut('${c.id}','${pc.id}',true)">voltar ao padrão</button>`:""}
+        </div>
+        ${pc.hon?`<p class="meio-sub hon-estr-ok" style="margin:4px 0 0">O contrato sai com: ${esc(resumoHon(pc.hon))}</p>`:""}
+      </div>
     </div>`);
   };
 

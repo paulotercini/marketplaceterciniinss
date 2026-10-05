@@ -2005,3 +2005,39 @@ Provas novas: `triagem180.js` (17/17), `honorarios180.js` (15/15),
 `identificacao180.js` (17/17). Ajustadas ao desenho novo, com rótulo F180:
 `cadastro2.js` (CPF e senha um embaixo do outro), `interacao.js` (o
 tracejado está no botão) e `endereco.js` ("preencher").
+
+## 10.81 · F181 · honorários da mesa ao contrato, cobrança, destaque e contrato assinado
+
+- A mesa (Honorários do pré-caso) ganhou o combinado em campos: primeiros
+  benefícios (nº), % dos atrasados, valor fixo, entrada e data, parcelas
+  mensais e 1º vencimento, com "Guardar no contrato" e "voltar ao padrão"
+  (`salvarHonEstrut`). Fica em `pc.hon` e, por variante, em
+  `clientes.campos.honor_estrut` (como o `honor_ajuste`, sobrevive ao caso).
+  O texto livre de antes continua como "disposição expressa em contrário".
+- Contrato: a cláusula terceira virou o marcador `<HONORARIOS>`
+  (`textoContrato`), preenchido em `preencherModeloDoc` por
+  `clausulaHonorarios`: sem combinado, o `honor` da variante, texto idêntico
+  ao de antes; com combinado, os termos por extenso ("2 (dois) primeiros
+  benefícios…", "20% (vinte por cento)…", "O valor fixo de R$ 3.000,00,
+  sendo R$ 600,00 de entrada…, e o saldo de R$ 2.400,00 em 3 (três) parcelas
+  mensais de R$ 800,00, vencendo a primeira em DD/MM/AAAA").
+- Aba Honorários: Contratado e o cartão Contrato mostram o combinado
+  (`resumoHon`). Parcelas com data viram lançamentos "a receber" em
+  `pagamentos`, marcados em `todo_item_id` = `hon:<pré-caso>:<e|1..N>`:
+  guardar de novo atualiza a mesma linha, parcela que saiu e segue aberta é
+  removida, recebida nunca é tocada. O `auditoria_todo.py` ignora o prefixo.
+- Cobrança (coluna ao lado): o lançamento aberto mais antigo, "Mensagem de
+  cobrança" (`abrirCobranca`, na `caixa()`), com primeiro nome, valor, data e
+  [FORMA DE PAGAMENTO] (o escritório não tem essa configuração), "copiar" e
+  "abrir no WhatsApp" (telefone marcado zap, senão o primeiro; nada sai
+  sozinho). "lembrar 3 dias antes de cada vencimento" cria lembretes "geral"
+  (`Cobrança: <origem> R$ <valor>`, detalhes {origem:"cobranca", pgto_id});
+  o mapa pgto → lembrete fica em `campos.cobranca`, o que impede recriar o
+  lembrete já avisado; desligar desativa os ativos.
+- Destaque (art. 22, §4º): não pedido, pedir no cumprimento de sentença,
+  pedido/deferido/indeferido em data, em `campos.contrato.destaque`.
+- Contrato assinado: anexo do cliente "Contrato assinado DD.MM.AAAA - …"
+  (mesmo caminho do Prévius); o mais novo vale, "abrir o contrato assinado"
+  usa `abrirAnexo`, e trocar é anexar outro.
+Prova nova: `honorarios181.js` (21/21). Suíte: 104/109, falhando só as cinco
+de data (cnj71, extracoes, meudia123, paineis, planejado124).
