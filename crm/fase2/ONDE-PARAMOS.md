@@ -1918,3 +1918,41 @@ duas vezes, uma cortada (13 clientes, 23 notas). `notasSemRepeticao` some, na
 leitura, a nota que é começo de outra do mesmo dia e autor; o `migrar.py` deixa
 de guardar a versão antiga. Prova em `escritorio172.js`. meudia123.js falha
 também na 10.76 (data, depois da meia-noite UTC).
+
+## 10.78 · F174–F176 · Análise de Direito em quadros, passos do atendimento e cliente em Escritório
+
+- F174 · a Análise de Direito segue o desenho aprovado: quatro quadros de
+  resumo (idade hoje em anos e meses; tempo de contribuição; como recolhe
+  hoje, com a qualidade de segurado para facultativo e CI; atinge o direito,
+  dizendo se já está no Lembretes), a ficha da última análise (serviço, chip
+  fonte · data · autor, só os campos preenchidos, períodos especiais e
+  rurais), as regras de aposentadoria (barra, data, valor, melhor caminho e
+  "avisar na época"), o planejamento das contribuições (só facultativo, CI e
+  MEI; cada data vira lembrete "geral" pelo "levar ao Lembretes"), pendências
+  e documentos (docs_pedidos, data de nascimento, CNIS e a "próxima
+  verificação" lida do "Verificar em DD/MM" da última anotação) e Andamentos
+  (o quadro de anotar, com âncora `#ad-anotar`). Análises mais velhas ficam em
+  "Análises anteriores", no cartão de antes.
+- O formulário ganhou Serviço (espécie e subespécie do catálogo), o PDF do
+  Prévius (vira anexo do cliente e o texto lido aparece numa caixa) e os
+  campos da espécie (`camposDoServico`: comum, PCD, especial, rural). Tudo
+  grava em `analises_direito.detalhes` — coluna nova, no
+  `schema_analise_detalhes.sql`; sem ela, a análise grava sem os detalhes
+  (fallback PGRST204/42703). Data do direito no futuro cria o aviso de época
+  pelo mesmo caminho do "avisar na época" (aposentadorias), uma vez por data.
+- O leitor do Prévius ainda não existe: `lerPrevius(texto)` devolve `{}` até
+  chegar um PDF de exemplo. Qualidade de segurado em versão simples (graça de
+  6 ou 12 meses, sem prorrogações), comentada em `qualidadeAte`.
+- F175 · as Anotações do atendimento abrem com os quatro passos (Serviço, PDF
+  do Prévius, Análise de direito, Destino), lidos do pré-caso. O destino lista
+  INSS, Conselho de Recursos, Judicial, Petições Iniciais e "Manter em
+  Escritório", que só anota "Mantido em Escritório: faltam documentos".
+- F176 · cliente em Escritório (sem caso ativo, caso na fase escritório ou
+  pré-caso vivo) vê no topo de Anotações e da Análise de Direito: Novo
+  andamento, Gerar procurações (procuração administrativa e judicial,
+  declaração de hipossuficiência, contrato) e Criar caso (espécie,
+  subespécie e lista).
+Provas novas: `analise178.js` (21/21) e `escritorio178.js` (22/22);
+`analise-direito.js` ajustada ao desenho novo. Suíte: 99/104, falhando só
+as cinco de data já conhecidas (cnj71, extracoes, meudia123, paineis,
+planejado124).

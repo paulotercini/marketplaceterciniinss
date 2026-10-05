@@ -3209,6 +3209,90 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .aq-tel-atual{font:500 16px var(--f-mono,monospace);margin:0}
 .aq-chip{border:1px solid var(--borda);background:#fff;cursor:pointer}
 @container (max-width:700px){ .aq-faixa{grid-template-columns:repeat(3,minmax(0,1fr))} .aq-leg{display:none} }
+/* F174–F176 · Análise de Direito em quadros, passos do atendimento e a barra
+   do cliente em Escritório (desenho aprovado em 04.10.2026) */
+.sr-so{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.adr{display:flex;flex-direction:column;gap:16px;margin-top:6px}
+.adr [hidden],#ad-novo [hidden]{display:none!important}
+.adr-h{margin:0;font-size:16px;font-weight:600;color:var(--texto)}
+.adr-resumo{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.adr-tile{background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.adr-tile-rot{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro)}
+.adr-tile-val{font-size:24px;font-weight:600;color:var(--texto);line-height:1.2}
+.adr-tile-val small{font-size:14px;font-weight:500;color:var(--cinza)}
+.adr-t-texto .adr-tile-val{font-size:18px}
+.adr-tile-sub{font-size:12.5px;color:var(--cinza)}
+.adr-t-direito{background:var(--azul-fundo,#E6F0EF);border-color:#B9D6D3}
+.adr-t-direito .adr-tile-rot,.adr-t-direito .adr-tile-sub{color:var(--azul-escuro)}
+.adr-card{background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px;padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.adr-cab{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.adr-chip{font-size:12px;font-weight:600;color:var(--sist,#3A6491);background:var(--sist-f,#E9EFF6);border-radius:999px;padding:2px 9px}
+.adr-chip.ok{color:var(--feito,#1B6E38);background:#E8F3EC}
+.adr-acoes{margin-left:auto;display:flex;gap:8px}
+.adr-bt{min-height:40px;padding:0 14px;border:1px solid var(--borda);border-radius:8px;background:var(--branco,#fff);color:var(--azul);font:600 13px var(--f-ui,inherit);cursor:pointer}
+.adr-bt.adr-primario,.adr-primario{background:var(--azul);color:#fff;border-color:var(--azul)}
+.adr-dl{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px 24px}
+.adr-dl dt,.adr-dt{font-size:12px;font-weight:600;color:var(--cinza-claro)}
+.adr-dl dd{margin:0;color:var(--texto)}
+.adr-per ul{margin:4px 0 0;padding:0;list-style:none;font:13px var(--f-mono,monospace)}
+.adr-regras-lista{list-style:none;margin:0;padding:0}
+.adr-regra{display:grid;grid-template-columns:minmax(170px,1.4fr) minmax(120px,2fr) 100px 120px minmax(150px,auto);gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--placa)}
+.adr-regra-nome{display:flex;flex-direction:column}
+.adr-sit{font-size:12px;color:var(--cinza)}
+.adr-melhor .adr-sit,.adr-ok .adr-sit{color:var(--feito,#1B6E38);font-weight:600}
+.adr-barra{height:8px;border-radius:999px;background:var(--placa);overflow:hidden;display:block}
+.adr-barra>span{display:block;height:100%;background:var(--azul);border-radius:999px}
+.adr-ok .adr-barra>span{background:var(--feito,#1B6E38)}
+.adr-data{font:13px var(--f-mono,monospace);color:var(--texto)}
+.adr-valor{text-align:right;font-weight:600}
+.adr-regra-acao{text-align:right}
+.adr-colunas{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.adr-col-larga{flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.adr-col-lado{flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.adr-col-lado .ad-quadro{margin-top:0}
+.adr-nota{margin:0;font-size:13px;color:var(--cinza)}
+.adr-plano-lista,.adr-pend-lista{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.adr-plano-lista li{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:8px 12px;border:1px solid var(--placa);border-radius:10px}
+.adr-plano-txt{flex:1 1 200px;min-width:0}
+.adr-pend-lista li{display:flex;gap:10px;align-items:flex-start}
+.adr-ponto{flex:none;width:10px;height:10px;margin-top:6px;border-radius:50%}
+.adr-ponto.falta{background:var(--venc,#B3261E)}.adr-ponto.ok{background:var(--feito,#1B6E38)}
+.adr-sub{font-size:12.5px;color:var(--cinza)}
+.adr-verif{margin:0;font-size:13px;color:var(--cinza)}.adr-verif.venceu b{color:var(--venc,#B3261E)}
+.ad-q-anot textarea{border:1px solid var(--borda);border-radius:8px;padding:8px 10px;font:14px var(--f-ui,inherit);resize:vertical}
+.ad-q-anot .ad-feed{margin-top:0}
+.adr-anteriores{display:flex;flex-direction:column;gap:4px}
+.adr-form-grupo{border-top:1px dashed var(--borda);margin-top:10px;padding-top:8px;display:flex;flex-direction:column;gap:6px}
+.adr-form-tit{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--cinza-claro)}
+.adr-form-sub{font-size:12.5px;font-weight:600;color:var(--cinza)}
+.adr-campos{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 14px}
+.adr-campo{display:flex;flex-direction:column;gap:3px;font-size:12.5px;font-weight:600;color:var(--cinza)}
+.adr-campo input,.adr-campo select{min-height:40px;font-weight:400}
+.adr-lista-form{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.adr-lista-form>div{width:100%}
+.adr-arq{align-self:flex-start;display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid var(--azul);border-radius:8px;color:var(--azul);font-weight:600;cursor:pointer;background:var(--branco,#fff)}
+.adr-arq input{position:absolute;width:1px;height:1px;opacity:0}
+.adr-arq:focus-within{outline:2px solid var(--azul);outline-offset:2px}
+.adr-pre{white-space:pre-wrap;max-height:260px;overflow:auto;font:12px var(--f-mono,monospace);background:var(--placa);padding:8px 10px;border-radius:8px}
+/* barra do cliente em Escritório */
+.adr-barra-esc{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px;padding:10px 14px;margin:10px 0}
+.adr-barra-esc p{margin:0;font-size:13px;color:var(--cinza);flex:1 1 260px}
+/* passos do atendimento */
+.adr-passos{list-style:none;margin:6px 0 10px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.adr-passo{width:100%;text-align:left;display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:10px;border:1px solid var(--borda);background:var(--branco,#fff);color:var(--texto);min-height:56px;cursor:pointer;font:inherit}
+.adr-passo[aria-current="step"]{border-color:var(--azul);background:var(--azul-fundo,#E6F0EF)}
+.adr-bola{flex:none;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;background:var(--placa);color:var(--cinza)}
+.adr-passo.feito .adr-bola,.adr-passo[aria-current="step"] .adr-bola{background:var(--azul);color:#fff}
+.adr-passo-txt{display:flex;flex-direction:column}
+.adr-passo-txt small{font-size:12px;color:var(--cinza)}
+/* janelas Criar caso e Gerar procurações */
+.adr-modal{display:flex;flex-direction:column;gap:12px;min-width:min(460px,80vw)}
+.adr-modal h3{margin:0;font-size:18px}
+.adr-modal .adr-campo select{min-height:44px}
+.adr-ck{display:flex;gap:10px;align-items:center;min-height:40px;font-size:14px;cursor:pointer}
+.adr-ck input{width:18px;height:18px}
+.adr-modal-bts{display:flex;gap:10px;justify-content:flex-end}
+@media (max-width:760px){ .adr-regra{grid-template-columns:1fr 1fr} .adr-barra{grid-column:1/-1} .adr-valor,.adr-regra-acao{text-align:left} }
 </style>
 </head>
 <body>
@@ -3221,7 +3305,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.77</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.78</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12425,7 +12509,8 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // F171 · Análise de Direito: com caso, com análise já salva, ou no
   // atendimento depois da triagem encerrada (a análise vem depois da triagem e dos documentos)
   vis.direito = !semCaso || analisesDe(c.id).length>0 || (pcsVivos.length>0 && triFechada) || !!adPre
-    || notasDoTodo(c);   // F172 · anotações vindas da lista 🙋 Escritório do To Do
+    || notasDoTodo(c)   // F172 · anotações vindas da lista 🙋 Escritório do To Do
+    || adVisivel.has(c.id) || adAbrir;   // F176 · aberta por atalho (Novo andamento, passos 2 e 3)
   // valores antigos gravados: "atendimento" era o trilho interno de
   // Anotações; "consulta" virou seção do painel Documentos (F31)
   let cd = subCad==="atendimento" ? "anotacoes"
@@ -12445,6 +12530,9 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
         title="abrir um atendimento novo — pode virar caso novo ou só lembrete"
         onclick="novoAtendimento('${c.id}')">+ atendimento</button>` : ""}
     </div>
+    ${/* F176 · cliente mantido em Escritório: as três saídas no topo */""}
+    ${(cd==="anotacoes"||cd==="direito") && (!ks.some(k=>k.fase!=="encerrado") || ks.some(k=>k.fase==="escritorio") || pcsVivos.length>0)
+      ? barraEscritorio(c) : ""}
     ${cd==="triagem" ? painelTriagemFicha(c, ks) : ""}
     ${cd==="documentos" ? caixaDocumentos(c, ks) + catalogoNoCadastro(c, ks) + painelConsulta(c) : ""}
     ${cd==="anotacoes" ? caixaAtendimento(c, ks) : ""}
@@ -15883,9 +15971,122 @@ function linhaCenario(cn){
     <button class="btn-mini" onclick="this.closest('.ad-row').remove()" title="tirar este cenário">${CAD_IC.fechar}</button>
   </div>`;
 }
+// F174 · os campos da análise dependem do SERVIÇO (espécie/subespécie). O
+// mapa é pequeno de propósito: comum a todos, mais o que PCD, especial e
+// rural acrescentam. Para crescer, some uma regra aqui.
+const AD_ROT = {tempo:"Tempo de contribuição", carencia:"Carência", valor:"Valor do benefício",
+  data_direito:"Atinge o direito em", recolhe:"Como recolhe hoje", ultima_contribuicao:"Última contribuição",
+  did:"DID", grau:"Grau da deficiência", periodos_especiais:"Períodos especiais", periodos_rurais:"Períodos rurais"};
+const AD_RECOLHE = [["empregado","Empregado"],["facultativo","Facultativo"],["ci","Contribuinte individual"],
+  ["mei","MEI"],["desempregado","Desempregado"],["outro","Outro"]];
+const rotRecolhe = v => (AD_RECOLHE.find(([k])=>k===v)||[,v||""])[1];
+function camposDoServico(sv){
+  const s=sv||{}, sub=s.sub||"", t=`${sub} ${s.nome||""}`;
+  const pcd = /\.PCD/.test(sub) || /deficiência/i.test(t);
+  const esp = s.cod==="B46" || /\.ESP/.test(sub) || /especia/i.test(t);
+  const rur = /\.RUR/.test(sub) || /rura/i.test(t);
+  return ["tempo","carencia","valor","data_direito","recolhe",
+    ...(pcd?["did","grau"]:[]), ...(pcd||esp?["periodos_especiais"]:[]), ...(rur?["periodos_rurais"]:[])];
+}
+// facultativo e contribuinte individual (o MEI é CI) podem planejar meses sem recolher
+const recolheLivre = r => ["facultativo","ci","mei"].includes(r);
+// como recolhe hoje: o que a análise registrou; sem ela, o vínculo da triagem
+function recolheDe(c, a){
+  const d=(a&&a.detalhes)||{};
+  if(d.recolhe) return {tipo:d.recolhe, de:"analise"};
+  const v=(triagemDe(c).vinculo||{}).tipo;
+  const m={empregado:"empregado", ci:"ci", facultativo:"facultativo", sem:"desempregado", especial:"outro"}[v];
+  return m ? {tipo:m, de:"triagem"} : null;
+}
+// Qualidade de segurado (art. 15, II e §4º, Lei 8.213/91), versão simples:
+// facultativo tem 6 meses de graça, CI (e MEI) 12. A perda acontece no dia
+// seguinte ao vencimento da contribuição do mês posterior ao fim da graça.
+// Conta: competência paga + meses de graça + 1 mês; vence no dia 15 do mês
+// seguinte a esse. Sem prorrogação por desemprego ou 120 contribuições.
+function qualidadeAte(comp, recolhe){
+  const g = recolhe==="facultativo" ? 6 : (recolhe==="ci"||recolhe==="mei") ? 12 : 0;
+  const m = /^(\d{4})-(\d{2})/.exec(comp||""); if(!g || !m) return null;
+  return new Date(Date.UTC(+m[1], +m[2]-1 + g + 2, 15)).toISOString().slice(0,10);
+}
+// O leitor do Prévius: espera um PDF de exemplo para saber o layout. Até lá
+// devolve vazio e a análise é preenchida à mão, com o texto lido ao lado.
+function lerPrevius(texto){ return {}; }
+const adPeriodo = (cls, p, terceiro) => `<div class="ad-per form-linha ${cls}">
+    <input type="date" class="adp-ini" aria-label="início" value="${esc(p&&p.inicio||"")}">
+    <input type="date" class="adp-fim" aria-label="fim" value="${esc(p&&p.fim||"")}">
+    <input class="adp-onde" placeholder="${terceiro}" aria-label="${terceiro}" style="flex:1;min-width:150px" value="${esc(p&&(p.empresa||p.local)||"")}">
+    <button type="button" class="btn-mini" aria-label="tirar este período" onclick="this.closest('.ad-per').remove()">${CAD_IC.fechar}</button></div>`;
+const adPlano = p => `<div class="ad-pl form-linha" data-id="${esc(p&&p.id||"")}">
+    <input type="date" class="adl-data" aria-label="data" value="${esc(p&&p.data||"")}">
+    <input class="adl-txt" placeholder="o que fazer — ex.: pagar a competência 09/2026" aria-label="o que fazer" style="flex:1;min-width:200px" value="${esc(p&&p.texto||"")}">
+    <button type="button" class="btn-mini" aria-label="tirar esta linha" onclick="this.closest('.ad-pl').remove()">${CAD_IC.fechar}</button></div>`;
+// espécie e subespécie do formulário: o pré-caso aberto, a última análise ou o caso
+function servicoInicial(c){
+  const pc=precasosDe(c).find(p=>!p.so_lembrete && p.cod);
+  if(pc) return {cod:pc.cod, sub:pc.sub||pc.cod};
+  const sv=((analisesDe(c.id)[0]||{}).detalhes||{}).servico;
+  if(sv && sv.cod) return {cod:sv.cod, sub:sv.sub||sv.cod};
+  const k=(D.casosDoCliente.get(c.id)||[]).find(x=>x.especie && x.fase!=="encerrado");
+  return k ? {cod:k.especie, sub:k.subespecie||k.especie} : {cod:"", sub:""};
+}
+const opcoesSub = (cod, sel) => subespeciesDe(cod).map(([ch,n])=>`<option value="${esc(ch)}" ${ch===sel?"selected":""}>${esc(n)}</option>`).join("");
+function adTrocarEspecie(){
+  const cod=(document.getElementById("ad-esp")||{}).value||"";
+  const s=document.getElementById("ad-sub"); if(s) s.innerHTML=cod?opcoesSub(cod, cod):"";
+  adMostrarCampos();
+}
+// mostra só os campos do serviço escolhido (os outros ficam no DOM, ocultos,
+// para não perder o que já se digitou ao trocar a espécie)
+function adMostrarCampos(){
+  const cod=(document.getElementById("ad-esp")||{}).value||"", sub=(document.getElementById("ad-sub")||{}).value||"";
+  const ks=camposDoServico({cod, sub, nome:nomeDaSubespecie(sub)||nomeDaEspecie(cod)||""});
+  document.querySelectorAll("#ad-campos [data-campo]").forEach(e=>{ e.hidden=!ks.includes(e.dataset.campo); });
+  const pl=document.getElementById("ad-plano-box");
+  if(pl) pl.hidden=!recolheLivre((document.getElementById("ad-f-recolhe")||{}).value);
+}
+// o PDF do Prévius entra como anexo do cliente e o texto é lido aqui mesmo,
+// com o leitor que o CNIS já usa
+async function lerPdfPrevius(cliId, inp){
+  const arq=inp&&inp.files&&inp.files[0]; if(!arq) return;
+  inp.value="";
+  const itens=await pedacosDoPdfOuAviso(arq); if(!itens) return;
+  const linhas=[]; let ult=null;
+  for(const i of itens){
+    if(ult && ult.p===i.p && Math.abs(ult.y-i.y)<=2) linhas[linhas.length-1]+=" "+i.t; else linhas.push(i.t);
+    ult=i;
+  }
+  const texto=linhas.join("\n");
+  const box=document.getElementById("ad-previus-box"), pre=document.getElementById("ad-previus-txt");
+  if(pre) pre.textContent=texto;
+  if(box){ box.hidden=false; }
+  const fonte=document.getElementById("ad-fonte"); if(fonte) fonte.value="previus";
+  const lido=lerPrevius(texto);
+  for(const [k,v] of Object.entries(lido)){ const e=document.getElementById("ad-f-"+k); if(e && v!=null) e.value=v; }
+  try{
+    const stamp=new Date().toISOString().replace(/[:.]/g,"-").toLowerCase();
+    const caminho=`${cliId}/${stamp}-previus.pdf`;
+    await subirArquivo(caminho, arq);
+    const [an]=await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:null, cliente_id:cliId, autor_id:eu.id,
+        nome:`Prévius ${fmt(hoje())} - ${arq.name}`, caminho, tipo:"application/pdf", tamanho:arq.size})});
+    if(an){ (D.anexos=D.anexos||[]).unshift(an);
+      const h=document.getElementById("ad-previus-anexo"); if(h) h.value=an.id; }
+    aviso("PDF do Prévius lido e guardado nos anexos do cliente", false);
+  }catch(e){ aviso("Li o PDF, mas não consegui guardar o arquivo — tente de novo"); }
+}
+// abre o formulário na próxima pintura (os passos 2 e 3 do atendimento)
+let adAbrir=false;
+const adVisivel=new Set();   // clientes cuja Análise de Direito foi aberta por atalho
 function formAnalise(c){
   const pre=adPre; adPre=null;   // consumo único: os valores passam a viver no DOM
-  return `<details class="lb-novo" id="ad-novo" ${pre?"open":""}>
+  const abrir=adAbrir; adAbrir=false;
+  const ant=(analisesDe(c.id)[0]||{}).detalhes||{};
+  const sv=servicoInicial(c);
+  const rec=(recolheDe(c, analisesDe(c.id)[0])||{}).tipo||"";
+  const vis=camposDoServico({cod:sv.cod, sub:sv.sub, nome:nomeDaSubespecie(sv.sub)||nomeDaEspecie(sv.cod)||""});
+  const oc=k=>vis.includes(k)?"":"hidden";
+  const campo=(k, html)=>`<label class="adr-campo" data-campo="${k}" ${oc(k)}><span>${AD_ROT[k]}</span>${html}</label>`;
+  return `<details class="lb-novo" id="ad-novo" ${pre||abrir?"open":""}>
     <summary>+ registrar análise</summary>
     <div class="form-linha" style="margin-top:6px;align-items:center">
       <label class="meio-sub">feita em <input type="date" id="ad-data" value="${pre&&pre.data||hoje()}" max="${hoje()}"
@@ -15897,6 +16098,49 @@ function formAnalise(c){
       </select>
       <input type="hidden" id="ad-nota" value="${pre?`${pre.lembId}:${pre.i}`:""}">
     </div>
+    <div class="adr-form-grupo">
+      <div class="adr-form-tit">Serviço</div>
+      <div class="form-linha">
+        <label class="adr-campo" style="flex:1 1 260px"><span>Espécie</span>
+          <select id="ad-esp" onchange="adTrocarEspecie()"><option value="">escolha a espécie</option>
+            ${ESPECIES.map(([cod,n])=>`<option value="${esc(cod)}" ${cod===sv.cod?"selected":""}>${esc(cod)} · ${esc(n)}</option>`).join("")}</select></label>
+        <label class="adr-campo" style="flex:1 1 260px"><span>Subespécie</span>
+          <select id="ad-sub" onchange="adMostrarCampos()">${sv.cod?opcoesSub(sv.cod, sv.sub):""}</select></label>
+      </div>
+    </div>
+    <div class="adr-form-grupo" id="ad-previus">
+      <div class="adr-form-tit">PDF do Prévius</div>
+      <label class="adr-arq"><input type="file" accept="application/pdf" id="ad-previus-arq"
+        onchange="lerPdfPrevius('${c.id}', this)">Escolher o PDF do cálculo</label>
+      <span class="meio-sub">Fica nos anexos do cliente. Sem o PDF, preencha à mão.</span>
+      <input type="hidden" id="ad-previus-anexo" value="">
+      <details id="ad-previus-box" hidden><summary class="meio-sub">texto lido do PDF</summary>
+        <pre id="ad-previus-txt" class="adr-pre"></pre></details>
+    </div>
+    <div class="adr-form-grupo" id="ad-campos">
+      <div class="adr-form-tit">Campos da análise</div>
+      <div class="adr-campos">
+        ${campo("tempo", `<input id="ad-f-tempo" placeholder="ex.: 32 anos, 5 meses e 22 dias" value="${esc(ant.tempo||"")}">`)}
+        ${campo("carencia", `<input id="ad-f-carencia" placeholder="ex.: 390 contribuições" value="${esc(ant.carencia||"")}">`)}
+        ${campo("valor", `<input id="ad-f-valor" type="number" step="0.01" min="0" value="${esc(ant.valor??"")}">`)}
+        ${campo("data_direito", `<input id="ad-f-data_direito" type="date" value="${esc(ant.data_direito||"")}">`)}
+        ${campo("did", `<input id="ad-f-did" type="date" value="${esc(ant.did||"")}">`)}
+        ${campo("grau", `<select id="ad-f-grau"><option value="">—</option>${["Leve","Moderada","Grave"].map(g=>`<option ${ant.grau===g?"selected":""}>${g}</option>`).join("")}</select>`)}
+        ${campo("recolhe", `<select id="ad-f-recolhe" onchange="adMostrarCampos()"><option value="">—</option>${AD_RECOLHE.map(([v,r])=>`<option value="${v}" ${rec===v?"selected":""}>${r}</option>`).join("")}</select>`)}
+        <label class="adr-campo" data-campo="recolhe" ${oc("recolhe")}><span>${AD_ROT.ultima_contribuicao}</span>
+          <input id="ad-f-ultima_contribuicao" type="month" value="${esc(ant.ultima_contribuicao||"")}"></label>
+      </div>
+      <div data-campo="periodos_especiais" class="adr-lista-form" ${oc("periodos_especiais")}><span class="adr-form-sub">${AD_ROT.periodos_especiais}</span>
+        <div id="ad-pe">${(ant.periodos_especiais||[]).map(p=>adPeriodo("pe", p, "empresa")).join("")}</div>
+        <button type="button" class="btn-mini" onclick="document.getElementById('ad-pe').insertAdjacentHTML('beforeend', adPeriodo('pe', null, 'empresa'))">+ período especial</button></div>
+      <div data-campo="periodos_rurais" class="adr-lista-form" ${oc("periodos_rurais")}><span class="adr-form-sub">${AD_ROT.periodos_rurais}</span>
+        <div id="ad-pr">${(ant.periodos_rurais||[]).map(p=>adPeriodo("pr", p, "local")).join("")}</div>
+        <button type="button" class="btn-mini" onclick="document.getElementById('ad-pr').insertAdjacentHTML('beforeend', adPeriodo('pr', null, 'local'))">+ período rural</button></div>
+      <div id="ad-plano-box" class="adr-lista-form" ${recolheLivre(rec)?"":"hidden"}><span class="adr-form-sub">Planejamento das contribuições</span>
+        <div id="ad-plano">${(ant.plano||[]).map(adPlano).join("")}</div>
+        <button type="button" class="btn-mini" onclick="document.getElementById('ad-plano').insertAdjacentHTML('beforeend', adPlano())">+ data</button></div>
+    </div>
+
     <textarea id="ad-contexto" placeholder="o que foi visto e combinado com o cliente — ex.: prefere esperar a regra dos pontos; avisar quando faltar 6 meses"
       style="width:100%;min-height:52px;margin-top:6px">${pre?esc(pre.texto||""):""}</textarea>
     <div id="ad-cens" style="margin-top:6px">${linhaCenario()}${linhaCenario()}</div>
@@ -15918,7 +16162,9 @@ async function salvarAnalise(cliId){
     obs:r.querySelector(".ad-obs").value.trim()||null,
     melhor:r.querySelector("input[type=radio]").checked||undefined,
   })).filter(x=>x.regra||x.data||x.valor||x.obs);
-  if(!contexto && !cenarios.length)
+  const detalhes=adColherDetalhes();
+  const temDet=Object.keys(detalhes).some(k=>k!=="servico");
+  if(!contexto && !cenarios.length && !temDet)
     return aviso("Registre pelo menos um cenário ou o que foi conversado");
   // F54 · a resposta da triagem (empregado desde / CI / facultativo) viaja
   // JUNTO com a análise — se o texto não a mencionar, ela é anexada
@@ -15927,10 +16173,14 @@ async function salvarAnalise(cliId){
   if(vinc && !/víncul|vincul/i.test(contexto))
     contextoFinal=(contexto?contexto+"\n":"")+`Vínculo (triagem): ${vinc}.`;
   let a;
+  const corpo={cliente_id:cliId, autor_id:eu.id, data_analise:data,
+    contexto:contextoFinal||null, fonte, cenarios};
+  const postar=b=>api(`/rest/v1/analises_direito`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify(b)});
   try{
-    [a]=await api(`/rest/v1/analises_direito`,{method:"POST",headers:{Prefer:"return=representation"},
-      body:JSON.stringify({cliente_id:cliId, autor_id:eu.id, data_analise:data,
-        contexto:contextoFinal||null, fonte, cenarios})});
+    // F174 · a coluna detalhes vem do schema_analise_detalhes.sql; sem ela, grava sem
+    try{ [a]=await postar(Object.keys(detalhes).length ? {...corpo, detalhes} : corpo); }
+    catch(e){ if(/detalhes|42703|PGRST204/.test(String(e.message||e))) [a]=await postar(corpo); else throw e; }
   }catch(e){ return aviso("Rode o crm/fase2/schema_analise_direito.sql no Supabase — falta a tabela 'analises_direito'"); }
   if(a){
     D.analises=D.analises||[]; D.analises.push(a);
@@ -15979,8 +16229,39 @@ async function salvarAnalise(cliId){
       }catch(e){}
     }
   }
+  // F174 · data do direito no futuro vira o aviso de época (o mesmo do
+  // "avisar na época"), uma vez só por cliente e data
+  const dd=detalhes.data_direito;
+  if(dd && dd>hoje() && !(D.apos||[]).some(x=>x.cliente_id===cliId && x.data===dd))
+    await avisarCenario(cliId, dd, (detalhes.servico||{}).nome||"Aposentadoria");
   aviso("⚖️ Análise registrada", false);
   montarSidebar(); abrirFicha(cliId);
+}
+// lê os campos do formulário; só entra o que foi preenchido e está à vista
+function adColherDetalhes(){
+  const v=id=>{const e=document.getElementById(id);return e?e.value.trim():"";};
+  const visivel=k=>{ const e=document.querySelector(`#ad-campos [data-campo="${k}"]`); return !!e && !e.hidden; };
+  const d={};
+  const cod=v("ad-esp"), sub=v("ad-sub");
+  if(cod) d.servico={cod, sub:sub||cod, nome:nomeDaSubespecie(sub)||nomeDaEspecie(cod)||cod};
+  for(const k of ["tempo","carencia","data_direito","did","grau","recolhe"])
+    if(visivel(k) && v("ad-f-"+k)) d[k]=v("ad-f-"+k);
+  if(visivel("valor") && v("ad-f-valor")) d.valor=+v("ad-f-valor");
+  if(visivel("recolhe") && v("ad-f-ultima_contribuicao")) d.ultima_contribuicao=v("ad-f-ultima_contribuicao");
+  const per=(sel, chave)=>[...document.querySelectorAll(sel)].map(r=>({inicio:r.querySelector(".adp-ini").value||null,
+    fim:r.querySelector(".adp-fim").value||null, [chave]:r.querySelector(".adp-onde").value.trim()||null}))
+    .filter(p=>p.inicio||p.fim||p[chave]);
+  if(visivel("periodos_especiais")){ const pe=per("#ad-pe .ad-per","empresa"); if(pe.length) d.periodos_especiais=pe; }
+  if(visivel("periodos_rurais")){ const pr=per("#ad-pr .ad-per","local"); if(pr.length) d.periodos_rurais=pr; }
+  const box=document.getElementById("ad-plano-box");
+  if(box && !box.hidden){
+    const pl=[...document.querySelectorAll("#ad-plano .ad-pl")].map(r=>({id:r.dataset.id||crypto.randomUUID(),
+      data:r.querySelector(".adl-data").value||null, texto:r.querySelector(".adl-txt").value.trim()}))
+      .filter(p=>p.data||p.texto);
+    if(pl.length) d.plano=pl;
+  }
+  if(v("ad-previus-anexo")) d.previus_anexo_id=v("ad-previus-anexo");
+  return d;
 }
 async function apagarAnalise(id){
   const a=(D.analises||[]).find(x=>x.id===id); if(!a) return;
@@ -16073,29 +16354,6 @@ function feedAnotacoes(c){
     .map(n=>({ts: Date.parse(n.em)||0, texto: n.texto||"", quem: n.quem||"", em: n.em})), ...doEscr]
     .sort((a,b)=>b.ts-a.ts);
 }
-function quadrosDireito(c, ks){
-  const tri = feedTriagem(c, ks), anot = feedAnotacoes(c);
-  const grupo = (cls, tit, itens) => !itens.length ? "" : `<div class="ad-grupo ${cls}">
-    <div class="ad-grupo-tit">${tit}</div>
-    <ul>${itens.map(f=>`<li><b>${esc(f.rot)}:</b> ${esc(f.texto)} <span class="ad-quem">— ${f.quem?esc(f.quem):"—"}${f.em?`, ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>
-  </div>`;
-  const temTri = tri.atencao.length || tri.pendente.length || tri.ok.length;
-  return (temTri ? `<div class="ad-quadro ad-q-tri"><div class="rotulo-caso">Triagem</div>
-      ${grupo("atencao", "Atenção", tri.atencao)}
-      ${grupo("pendente", "Não conferido", tri.pendente)}
-      ${grupo("ok", "Sem pendência", tri.ok)}
-    </div>` : "")
-    // F172 · as anotações do cliente (inclusive as que vieram da lista
-    // 🙋 Escritório do To Do) ficam aqui, e se anota daqui mesmo
-    + `<div class="ad-quadro ad-q-anot"><div class="rotulo-caso">Anotações</div>
-      <div class="form-linha" style="margin:4px 0 8px">
-        <textarea id="ad-anot" rows="2" style="flex:1;min-width:220px" placeholder="anotar sobre este cliente (fica nas Anotações e aqui)"
-          onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();anotarNoDireito('${c.id}');}"></textarea>
-        <button class="btn-mini forte" style="align-self:flex-start" onclick="anotarNoDireito('${c.id}')">anotar</button></div>
-      ${anot.length ? `<ul class="ad-feed">${anot.map(f=>`<li class="anot">${esc(f.texto)}<span class="ad-quem">${f.quem?esc(f.quem):"—"}${f.em?` · ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>`
-        : `<p class="meio-sub" style="margin:0">nenhuma anotação ainda</p>`}
-    </div>`;
-}
 // F173 · o To Do guarda o bloco datado e, quando o colaborador completa o
 // texto, a sincronização trazia a versão nova COM OUTRO id e a antiga ficava:
 // a mesma anotação aparecia duas vezes, uma cortada. Some a versão que é
@@ -16121,38 +16379,212 @@ async function anotarNoDireito(cliId){
   }catch(e){ return aviso("Não consegui guardar a anotação — tente de novo"); }
   c.campos = campos; aviso("Anotação guardada", false); repintarFicha();
 }
+function quadroTriagemDireito(c, ks){
+  const tri = feedTriagem(c, ks);
+  const grupo = (cls, tit, itens) => !itens.length ? "" : `<div class="ad-grupo ${cls}">
+    <div class="ad-grupo-tit">${tit}</div>
+    <ul>${itens.map(f=>`<li><b>${esc(f.rot)}:</b> ${esc(f.texto)} <span class="ad-quem">— ${f.quem?esc(f.quem):"—"}${f.em?`, ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>
+  </div>`;
+  if(!(tri.atencao.length || tri.pendente.length || tri.ok.length)) return "";
+  return `<div class="ad-quadro ad-q-tri"><div class="rotulo-caso">Triagem</div>
+      ${grupo("atencao", "Atenção", tri.atencao)}
+      ${grupo("pendente", "Não conferido", tri.pendente)}
+      ${grupo("ok", "Sem pendência", tri.ok)}
+    </div>`;
+}
+// F172 · as anotações do cliente (inclusive as que vieram da lista 🙋
+// Escritório do To Do) ficam aqui, e se anota daqui mesmo. F174 · o quadro
+// chama-se Andamentos e tem âncora (#ad-anotar) para o "Novo andamento".
+function quadroAndamentos(c){
+  const anot = notasSemRepeticao(feedAnotacoes(c));
+  return `<section class="adr-card ad-q-anot" id="ad-anotar" aria-labelledby="adr-t-anot">
+      <h2 class="adr-h" id="adr-t-anot">Andamentos</h2>
+      <label for="ad-anot" class="sr-so">Novo andamento</label>
+      <textarea id="ad-anot" rows="2" placeholder="Novo andamento"
+        onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();anotarNoDireito('${c.id}');}"></textarea>
+      <button type="button" class="btn-mini forte adr-bt adr-primario" style="align-self:flex-end" onclick="anotarNoDireito('${c.id}')">Anotar</button>
+      ${anot.length ? `<ul class="ad-feed">${anot.map(f=>`<li class="anot">${esc(f.texto)}<span class="ad-quem">${f.quem?esc(f.quem):"—"}${f.em?` · ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>`
+        : `<p class="meio-sub" style="margin:0">nenhuma anotação ainda</p>`}
+    </section>`;
+}
+// ── F174 · a Análise de Direito em quadros: resumo, ficha, regras,
+// planejamento, pendências e andamentos (o desenho aprovado em 04.10.2026)
+function mesesDeVida(dn){
+  const d=dnIso(dn); if(!d) return null;
+  const h=hoje(); let m=(+h.slice(0,4)-+d.slice(0,4))*12 + (+h.slice(5,7)-+d.slice(5,7));
+  if(+h.slice(8,10) < +d.slice(8,10)) m--;
+  return m>=0 ? m : null;
+}
+const tile = (rot, valor, sub, cls="") => `<div class="adr-tile ${cls}">
+    <span class="adr-tile-rot">${rot}</span><span class="adr-tile-val">${valor}</span>
+    ${sub?`<span class="adr-tile-sub">${sub}</span>`:""}</div>`;
+// o aviso de época já existe para esta data? (aposentadorias com lembrete ou
+// lembrete de aposentadoria futura com a mesma data)
+const temAvisoApos = (cliId, data) => (D.apos||[]).some(x=>x.cliente_id===cliId && x.data===data)
+  || lembretesDo(cliId).some(l=>l.tipo==="aposentadoria_futura" && (l.proximo_em===data || (l.detalhes||{}).data===data));
+function resumoDireito(c, ult){
+  const d=(ult&&ult.detalhes)||{};
+  const mv=mesesDeVida(c.dn);
+  const idade = mv==null
+    ? tile("Idade hoje", "—", `data de nascimento faltando — preencher na Identificação`)
+    : tile("Idade hoje", `${Math.floor(mv/12)} <small>anos e</small> ${mv%12} <small>${mv%12===1?"mês":"meses"}</small>`,
+        `${({F:"nascida",M:"nascido"})[civilDe(c).sexo]||"nascido(a)"} em ${esc(fmt(dnIso(c.dn)))}`, "adr-t-idade");
+  const tempo = d.tempo ? tile("Tempo de contribuição", esc(d.tempo), ult.fonte==="previus"?"do cálculo do Prévius":`da análise de ${esc(fmt(ult.data_analise))}`, "adr-t-texto")
+    : tile("Tempo de contribuição", "—", "registre a análise ou leia o CNIS");
+  const r=recolheDe(c, ult);
+  const qa = r && d.ultima_contribuicao ? qualidadeAte(d.ultima_contribuicao, r.tipo) : null;
+  const recolhe = r ? tile("Como recolhe hoje", esc(rotRecolhe(r.tipo)),
+      qa ? `qualidade de segurado até ${esc(fmt(qa))}` : r.de==="triagem" ? "da triagem" : "", "adr-t-texto")
+    : tile("Como recolhe hoje", "—", "responda o vínculo na triagem ou na análise", "adr-t-texto");
+  const m=ult?cenMelhor(ult):null, data=(m&&m.data)||d.data_direito||null;
+  const direito = !data ? tile("Atinge o direito", "—", ult?"sem data projetada":"nenhuma análise registrada")
+    : tile("Atinge o direito", esc(fmt(data)),
+        data<=hoje() ? "direito alcançado" : temAvisoApos(c.id, data) ? "no Lembretes · aviso antes da data"
+          : (n=>n<=1?"falta 1 mês":`faltam ${n} meses`)(mesesAte(data)), "adr-t-direito");
+  return `<section class="adr-resumo" aria-label="Resumo do segurado">${idade}${tempo}${recolhe}${direito}</section>`;
+}
+function fichaDaAnalise(a){
+  const d=a.detalhes||{}, sv=d.servico||{};
+  const co=D.colPorId.get(a.autor_id);
+  const cli=D.cliPorId.get(a.cliente_id)||{};
+  const idade=idadeEm(cli.dn, a.data_analise);
+  const fonte={previus:"Prévius", todo:"To Do"}[a.fonte]||"Manual";
+  const fmtv={valor:moedaBR, data_direito:fmt, did:fmt, recolhe:rotRecolhe,
+    ultima_contribuicao:x=>String(x).split("-").reverse().join("/")};
+  const itens=["did","grau","tempo","carencia","valor","data_direito","recolhe","ultima_contribuicao"]
+    .filter(k=>d[k]!=null && d[k]!=="")
+    .map(k=>`<div><dt>${AD_ROT[k]}</dt><dd>${esc((fmtv[k]||String)(d[k]))}</dd></div>`).join("");
+  const lista=(k, chave)=>(d[k]||[]).length ? `<div class="adr-per"><span class="adr-dt">${AD_ROT[k]}</span><ul>${
+    d[k].map(p=>`<li>${p.inicio?esc(fmt(p.inicio)):"—"} a ${p.fim?esc(fmt(p.fim)):"—"}${p[chave]?` · ${esc(p[chave])}`:""}</li>`).join("")}</ul></div>` : "";
+  return `<section class="adr-card adr-ficha" aria-labelledby="adr-t-ficha">
+    <div class="adr-cab"><h2 class="adr-h" id="adr-t-ficha">${esc(sv.nome||"Análise de direito")}</h2>
+      <span class="adr-chip">${fonte} · ${esc(fmt(a.data_analise))}${co?` · ${esc(co.nome.split(" ")[0])}`:""}</span>
+      <span class="adr-acoes"><button type="button" class="adr-bt" onclick="copiarAnalise('${a.id}')">copiar</button>
+        <button type="button" class="adr-bt" onclick="apagarAnalise('${a.id}')" title="apaga a análise (os comentários já gravados nos casos ficam)">apagar</button></span></div>
+    <div class="ad-idade">${idade==null?"Idade na data da análise: sem data de nascimento na ficha":`Idade na data da análise: <b>${idade} anos</b>`}</div>
+    ${a.contexto?`<div class="ad-contexto">${esc(a.contexto)}</div>`:""}
+    ${itens?`<dl class="adr-dl">${itens}</dl>`:""}
+    ${lista("periodos_especiais","empresa")}${lista("periodos_rurais","local")}
+  </section>`;
+}
+// barra de cada regra: 100% com o direito alcançado; antes, quanto do
+// caminho entre a análise e a data já passou (entre 5% e 95%)
+function pctRegra(cn, desde){
+  if(!cn.data) return 0;
+  if(cn.data<=hoje()) return 100;
+  const total=(+cn.data.slice(0,4)-+desde.slice(0,4))*12 + (+cn.data.slice(5,7)-+desde.slice(5,7));
+  if(total<=0) return 5;
+  return Math.round(Math.min(95, Math.max(5, (1 - mesesAte(cn.data)/total)*100)));
+}
+function regrasDireito(a){
+  const cs=a.cenarios||[]; if(!cs.length) return "";
+  const m=cenMelhor(a);
+  return `<section class="adr-card adr-regras" aria-labelledby="adr-t-regras">
+    <div class="adr-cab"><h2 class="adr-h" id="adr-t-regras">Regras de aposentadoria</h2>
+      <span class="meio-sub">quando cada regra é atingida, e o valor</span></div>
+    <ol class="adr-regras-lista">${cs.map(cn=>{
+      const pct=pctRegra(cn, a.data_analise||hoje()), ok=cn.data && cn.data<=hoje(), n=cn.data?mesesAte(cn.data):null;
+      const sit=!cn.data ? "sem data projetada" : ok ? "direito alcançado" : n<=0 ? "é agora" : n===1 ? "falta 1 mês" : `faltam ${n} meses`;
+      return `<li class="adr-regra${cn===m?" adr-melhor":""}${ok?" adr-ok":""}">
+        <span class="adr-regra-nome"><b>${esc(cn.regra||"—")}</b>
+          <span class="adr-sit">${cn===m?"melhor caminho · ":""}${sit}</span></span>
+        <span class="adr-barra" role="img" aria-label="${esc(cn.regra||"regra")}: ${pct}% do caminho"><span style="width:${pct}%"></span></span>
+        <span class="adr-data">${cn.data?esc(fmt(cn.data)):"—"}</span>
+        <span class="adr-valor">${cn.valor?moedaBR(cn.valor):"—"}</span>
+        <span class="adr-regra-acao">${cn.data && !ok ? (temAvisoApos(a.cliente_id, cn.data)
+          ? `<span class="adr-chip ok">no Lembretes</span>`
+          : `<button type="button" class="adr-bt" title="cria o aviso no Meu Dia ${MESES_AVISO} meses antes da data, para comunicar o cliente"
+            onclick="avisarCenario('${a.cliente_id}','${cn.data}','${escJs(cn.regra||"")}')">avisar na época</button>`) : ""}</span>
+      </li>`; }).join("")}</ol>
+  </section>`;
+}
+function planejamentoDireito(c, ult){
+  const r=recolheDe(c, ult); if(!r || !recolheLivre(r.tipo)) return "";
+  const pl=((ult&&ult.detalhes)||{}).plano||[];
+  const lembs=lembretesDo(c.id);
+  return `<section class="adr-card adr-plano" aria-labelledby="adr-t-plan">
+    <h2 class="adr-h" id="adr-t-plan">Planejamento das contribuições</h2>
+    <p class="adr-nota">Facultativo pode ficar até 6 meses sem recolher; contribuinte individual, até 12, mantendo a qualidade de segurado.</p>
+    ${pl.length ? `<ul class="adr-plano-lista">${pl.slice().sort((x,y)=>(x.data||"")<(y.data||"")?-1:1).map(p=>{
+      const tem=lembs.some(l=>(l.detalhes||{}).plano_item===p.id);
+      return `<li><span class="adr-data">${p.data?esc(fmt(p.data)):"—"}</span><span class="adr-plano-txt">${esc(p.texto||"")}</span>
+        ${tem?`<span class="adr-chip ok">no Lembretes</span>`
+          :p.data?`<button type="button" class="adr-bt" onclick="planoParaLembrete('${c.id}','${ult.id}','${escJs(p.id)}')">levar ao Lembretes</button>`:""}</li>`; }).join("")}</ul>`
+      : `<p class="meio-sub" style="margin:0">Nenhuma data planejada — registre no formulário da análise.</p>`}
+  </section>`;
+}
+async function planoParaLembrete(cliId, analiseId, itemId){
+  const a=(D.analises||[]).find(x=>x.id===analiseId);
+  const p=(((a||{}).detalhes||{}).plano||[]).find(x=>x.id===itemId); if(!p) return;
+  try{
+    const [l]=await api(`/rest/v1/lembretes`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:cliId, tipo:"geral", titulo:`Contribuição: ${(p.texto||"").slice(0,80)}`,
+        detalhes:{origem:"plano", plano_item:p.id, analise_id:analiseId}, proximo_em:p.data,
+        responsavel_id:eu.id, criado_por:eu.id, ativo:true})});
+    if(l) (D.lembretes=D.lembretes||[]).push(l);
+  }catch(e){ return aviso("Não consegui criar o lembrete — tente de novo"); }
+  aviso(`Lembrete criado para ${fmt(p.data)}`, false); repintarFicha();
+}
+// "Verificar em DD/MM" na última anotação: a data seguinte à da anotação
+function proximaVerificacao(c){
+  const n=notasSemRepeticao(feedAnotacoes(c))[0]; if(!n) return null;
+  const ms=[...String(n.texto||"").matchAll(/verificar em (\d{1,2})\/(\d{1,2})/gi)]; if(!ms.length) return null;
+  const [, dd, mm]=ms[ms.length-1], base=String(n.em||hoje()).slice(0,10);
+  let iso=`${base.slice(0,4)}-${mm.padStart(2,"0")}-${dd.padStart(2,"0")}`;
+  if(iso<base) iso=`${+base.slice(0,4)+1}${iso.slice(4)}`;
+  return iso;
+}
+function pendenciasDireito(c){
+  const itens=[];
+  if(!c.dn) itens.push({ok:false, nome:"Data de nascimento", sub:"preencher na Identificação"});
+  const g=cnisDe(c);
+  itens.push(g ? {ok:true, nome:"CNIS", sub:`recebido em ${fmt(g.em)}`} : {ok:false, nome:"CNIS", sub:"inserir na Identificação"});
+  for(const p of ((c.campos||{}).docs_pedidos||[])) for(const it of (p.itens||[]))
+    itens.push({ok:!!it.entregue, nome:String(it.nome||it), sub:it.entregue?`entregue em ${fmt(it.entregue)}`:p.em?`pedido em ${fmt(p.em.slice(0,10))}`:"pedido"});
+  const pv=proximaVerificacao(c);
+  return `<section class="adr-card adr-pend" aria-labelledby="adr-t-pend">
+    <h2 class="adr-h" id="adr-t-pend">Pendências e documentos</h2>
+    ${pv?`<p class="adr-verif${pv<hoje()?" venceu":""}">próxima verificação: <b>${esc(fmt(pv))}</b></p>`:""}
+    <ul class="adr-pend-lista">${itens.map(i=>`<li><span class="adr-ponto ${i.ok?"ok":"falta"}" aria-hidden="true"></span>
+      <span><b>${esc(i.nome)}</b> <span class="sr-so">${i.ok?"(entregue)":"(falta)"}</span><br><span class="adr-sub">${esc(i.sub)}</span></span></li>`).join("")}</ul>
+  </section>`;
+}
 function painelDireito(c){
   if(D.analises===null)
     return `<p class="meio-sub">A tabela desta página ainda não existe no banco — rode o
       <b>crm/fase2/schema_analise_direito.sql</b> no SQL Editor do Supabase e recarregue o CRM.</p>`;
-  const as=analisesDe(c.id);
+  const as=analisesDe(c.id), ult=as[0];
   const ks=D.casosDoCliente.get(c.id)||[];
   const notas=[];
   for(const l of (D.lembretes||[]).filter(x=>x.cliente_id===c.id && x.tipo==="aposentadoria_futura"))
     ((l.detalhes||{}).anotacoes||[]).forEach((n,i)=>{ if(!n.analise_id) notas.push({...n, lembId:l.id, i}); });
-  // F128 · a idade do segurado é a PRIMEIRA coisa da tela; o CNIS fica no
-  // canto direito; a parceria (F127) entre os dois
-  const idade=idadeDe(c.dn);
-  return `
-    <div class="form-linha ad-topo" style="align-items:center;gap:10px;margin-bottom:6px">
-      <div class="ad-idade-hoje">${idade==null
-        ? `<b>Idade</b> <span class="meio-sub">sem data de nascimento na ficha — preencha na Identificação</span>`
-        : `<b>${idade} anos</b> <span class="meio-sub">${({F:"nascida",M:"nascido"})[civilDe(c).sexo]||"nascido(a)"} em ${esc(fmt(dnIso(c.dn)))} · hoje ${esc(fmt(hoje()))}</span>`}</div>
+  const plano=planejamentoDireito(c, ult);
+  const anteriores=as.slice(1);
+  return `<div class="adr">
+    <div class="form-linha ad-topo" style="align-items:center;gap:10px">
       <span class="meio-sub" style="margin-left:auto">parceria</span>${chipParceria(c, ks)}${seletorParceria(c, ks, "parc-sel-ad")}
       ${botaoAbrirCnis(c, false)}
     </div>
+    ${resumoDireito(c, ult)}
+    ${ult ? fichaDaAnalise(ult) : ""}
     ${formAnalise(c)}
-    ${as.length ? as.map(cartaoAnalise).join("") : ""}
-    ${quadrosDireito(c, ks)}
+    ${ult ? regrasDireito(ult) : ""}
+    <div class="adr-colunas">
+      ${plano||anteriores.length ? `<div class="adr-col-larga">${plano}
+        ${anteriores.length?`<section class="adr-anteriores" aria-labelledby="adr-t-ant"><h2 class="adr-h" id="adr-t-ant">Análises anteriores</h2>
+          ${anteriores.map(cartaoAnalise).join("")}</section>`:""}</div>` : ""}
+      <aside class="adr-col-lado">${pendenciasDireito(c)}${quadroAndamentos(c)}${quadroTriagemDireito(c, ks)}</aside>
+    </div>
     ${notas.length?`<div class="caso" style="margin-top:10px;border-left:3px solid var(--roxo)">
-      <div class="rotulo-caso">🗒 Anotações antigas do To Do (lista 🙏 Aposentadorias Futuras)</div>
+      <div class="rotulo-caso">Anotações antigas do To Do (lista Aposentadorias Futuras)</div>
       <p class="meio-sub">O que você anotava para lembrar no futuro. "→ virar análise" traz a anotação
         para cá, já com a data original.</p>
       <ul class="mov-lista" style="margin-top:4px">${notas.map(n=>`<li>
         <span class="mov-data">${n.data?fmt(n.data):"—"}</span>
         <span class="mov-txt">${n.inicial&&n.inicial!=="?"?`<b>${esc(n.inicial)}:</b> `:""}${esc(n.texto||"")}</span>
         <button class="btn-mini" onclick="notaViraAnalise('${n.lembId}',${n.i})">→ virar análise</button>
-      </li>`).join("")}</ul></div>`:""}`;
+      </li>`).join("")}</ul></div>`:""}
+  </div>`;
 }
 // ── a visão global da barra lateral: Análises | Dashboard ─────────────────
 let subDireito = ler("crm_subdireito") || "analises";
@@ -23780,6 +24212,152 @@ async function gerarCasoDoPre(cliId, pcId){
   subCad="documentos"; guardar("crm_subcad","documentos");
   abrirFicha(cliId);
 }
+// ══════════════════════════════════════════════════════════════════════════
+// F175 · os QUATRO PASSOS do atendimento (Serviço, PDF do Prévius, Análise de
+// direito, Destino), lidos do estado do pré-caso — nada novo é gravado
+// ══════════════════════════════════════════════════════════════════════════
+const MANTIDO_ESCR = "Mantido em Escritório: faltam documentos";
+function passosDoAtendimento(c, pc){
+  const desde = String(pc.em||"").slice(0,10);
+  const as = analisesDe(c.id);
+  const previus = (D.anexos||[]).some(a=>(!a.cliente_id || a.cliente_id===c.id) && /pr[eé]vius/i.test(a.nome||""))
+    || as.some(a=>a.fonte==="previus");
+  const mantido = ((c.campos||{}).atendimento||[]).some(n=>String(n.texto||"").startsWith("Mantido em Escritório")
+    && (!n.precaso_id || n.precaso_id===pc.id));
+  return [
+    {n:1, nome:"Serviço", feito:!!pc.especie, sub:pc.especie||"espécie e subespécie"},
+    {n:2, nome:"PDF do Prévius", feito:previus, sub:previus?"PDF guardado":"opcional, preenche a análise"},
+    {n:3, nome:"Análise de direito", feito:as.some(a=>(a.data_analise||"")>=desde), sub:"campos da espécie"},
+    {n:4, nome:"Destino", feito:mantido, sub:mantido?"mantido em Escritório":"lista do caso"},
+  ];
+}
+function passosAtendimentoHtml(c, pc){
+  const ps = passosDoAtendimento(c, pc), atual = (ps.find(p=>!p.feito)||{}).n;
+  return `<ol class="adr-passos" aria-label="Passos do atendimento">${ps.map(p=>`<li>
+    <button type="button" class="adr-passo${p.feito?" feito":""}" ${p.n===atual?`aria-current="step"`:""}
+      onclick="irPassoAtendimento(${p.n},'${c.id}','${pc.id}')">
+      <span class="adr-bola">${p.n}</span>
+      <span class="adr-passo-txt"><b>${p.nome}</b><small>${p.feito&&p.n!==1&&p.n!==4?"feito · ":""}${esc(p.sub)}</small></span>
+    </button></li>`).join("")}</ol>`;
+}
+function irPassoAtendimento(n, cliId, pcId){
+  const ir = sel => { const e=document.querySelector(sel); if(e){ e.scrollIntoView({block:"center"}); if(e.focus) e.focus(); } };
+  if(n===1){
+    const pc=precasosDe(D.cliPorId.get(cliId)||{}).find(p=>p.id===pcId);
+    if(pc && !pc.especie) return escolherEspeciePre(cliId, pcId);
+    mesaAberta.add("b1"); repintarFicha(); return ir(".mesa-b1");
+  }
+  if(n===4) return ir("#pcf-"+pcId);
+  abrirAnaliseForm(cliId, n===2 ? "#ad-previus-arq" : "#ad-esp");
+}
+function abrirAnaliseForm(cliId, foco){
+  adAbrir=true; adVisivel.add(cliId);
+  abaAtiva=0; subCad="direito"; guardar("crm_subcad","direito"); repintarFicha();
+  const e=document.querySelector(foco||"#ad-novo");
+  if(e){ e.scrollIntoView({block:"center"}); if(e.focus) e.focus(); }
+}
+// o botão da decisão: lista escolhida gera o caso; "Manter em Escritório"
+// só registra a anotação e o pré-caso continua
+function destinoDoPre(cliId, pcId){
+  const v=(document.getElementById("pcf-"+pcId)||{}).value;
+  return v==="escritorio" ? manterEmEscritorio(cliId, pcId) : gerarCasoDoPre(cliId, pcId);
+}
+async function manterEmEscritorio(cliId, pcId){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const nota={id:crypto.randomUUID(), em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0],
+    autor_id:eu.id, texto:MANTIDO_ESCR, origem:"app", ...(pcId?{precaso_id:pcId}:{})};
+  const campos={...(c.campos||{}), atendimento:[...((c.campos||{}).atendimento||[]), nota]};
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos})});
+  }catch(e){ return aviso("Não consegui guardar — tente de novo"); }
+  c.campos=campos; aviso("Cliente mantido em Escritório", false); repintarFicha();
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F176 · CLIENTE EM ESCRITÓRIO: novo andamento, procurações e criar caso
+// ══════════════════════════════════════════════════════════════════════════
+const semEmoji = l => String(l).replace(/^[^\p{L}\p{N}]+/u, "");
+function barraEscritorio(c){
+  return `<section class="adr-barra-esc" aria-label="Ações do cliente em Escritório">
+    <p>Cliente mantido em <b>Escritório</b>. O acompanhamento corre pela Análise de Direito e pelos Lembretes.</p>
+    <button type="button" class="adr-bt" onclick="novoAndamentoDireito('${c.id}')">+ Novo andamento</button>
+    <button type="button" class="adr-bt" onclick="modalProcuracoes('${c.id}')">Gerar procurações</button>
+    <button type="button" class="adr-bt adr-primario" onclick="modalCriarCaso('${c.id}')">Criar caso</button>
+  </section>`;
+}
+function novoAndamentoDireito(cliId){
+  adVisivel.add(cliId);
+  abaAtiva=0; subCad="direito"; guardar("crm_subcad","direito"); repintarFicha();
+  const ta=document.getElementById("ad-anot");
+  if(ta){ ta.scrollIntoView({block:"center"}); ta.focus(); }
+}
+const PROC_MODELOS = ["proc_adm","proc_judicial","pobreza","contrato"];
+function modalProcuracoes(cliId){
+  caixa(`<div class="adr-modal" role="dialog" aria-labelledby="adr-t-proc">
+    <h3 id="adr-t-proc">Gerar procurações</h3>
+    <p class="meio-sub" style="margin:0">Saem preenchidas com os dados da Identificação, prontas para imprimir.</p>
+    ${PROC_MODELOS.map(ch=>`<label class="adr-ck"><input type="checkbox" class="proc-ck" value="${ch}" ${ch.startsWith("proc_")?"checked":""}>
+      ${esc(DOCS_ESCRITORIO[ch].rot)}</label>`).join("")}
+    <div class="adr-modal-bts">
+      <button type="button" class="adr-bt" onclick="fecharCaixa()">Cancelar</button>
+      <button type="button" class="adr-bt adr-primario" onclick="imprimirProcuracoes('${cliId}')">Imprimir</button>
+    </div></div>`);
+}
+function imprimirProcuracoes(cliId){
+  const chaves=[...document.querySelectorAll(".proc-ck:checked")].map(x=>x.value);
+  if(!chaves.length) return aviso("Marque ao menos um documento");
+  fecharCaixa();
+  gerarTodosDocs(cliId, chaves);   // uma janela, uma folha por documento
+}
+const LISTAS_CRIAR = () => LISTAS_MOVER.filter(([,f])=>f!=="aposentadoria_futura" && f!=="pagamento");
+function modalCriarCaso(cliId){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const sv=servicoInicial(c);
+  caixa(`<div class="adr-modal" role="dialog" aria-labelledby="adr-t-caso">
+    <h3 id="adr-t-caso">Criar caso</h3>
+    <label class="adr-campo"><span>Espécie</span>
+      <select id="cc-esp" onchange="document.getElementById('cc-sub').innerHTML=this.value?opcoesSub(this.value,this.value):''">
+        <option value="">escolha a espécie</option>
+        ${ESPECIES.map(([cod,n])=>`<option value="${esc(cod)}" ${cod===sv.cod?"selected":""}>${esc(cod)} · ${esc(n)}</option>`).join("")}</select></label>
+    <label class="adr-campo"><span>Subespécie</span>
+      <select id="cc-sub">${sv.cod?opcoesSub(sv.cod, sv.sub):""}</select></label>
+    <label class="adr-campo"><span>Lista</span>
+      <select id="cc-lista">${LISTAS_CRIAR().map(([l,f])=>`<option value="${f}" ${f==="inss"?"selected":""}>${esc(semEmoji(l))}</option>`).join("")}</select></label>
+    <div class="adr-modal-bts">
+      <button type="button" class="adr-bt" onclick="fecharCaixa()">Cancelar</button>
+      <button type="button" class="adr-bt adr-primario" onclick="criarCasoEscritorio('${cliId}')">Criar caso</button>
+    </div></div>`);
+}
+async function criarCasoEscritorio(cliId){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const v=id=>(document.getElementById(id)||{}).value||"";
+  const cod=v("cc-esp"), chave=v("cc-sub"), fase=v("cc-lista")||"inss";
+  if(!cod) return aviso("Escolha a espécie");
+  const nome=nomeDaSubespecie(chave)||nomeDaEspecie(cod)||cod;
+  const lista=(LISTAS_MOVER.find(([,f])=>f===fase)||["🙋 Escritório"])[0];
+  const sub=chave && chave!==cod ? chave : null;
+  // o mesmo caminho do gerarCasoDoPre: sem a coluna subespecie, vai sem
+  const base={cliente_id:cliId, titulo:c.nome, beneficio:nome, fase, especie:cod, origem_lista:lista};
+  const criar=corpo=>api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify(corpo)});
+  let k;
+  try{
+    try{ [k]=await criar(sub ? {...base, subespecie:sub} : base); }
+    catch(e){ if(sub && /subespecie|42703|PGRST204/.test(String(e.message||e))) [k]=await criar(base); else throw e; }
+  }catch(e){ return aviso("Não consegui criar o caso — tente de novo"); }
+  if(!k) return aviso("Não consegui criar o caso — tente de novo");
+  fecharCaixa();
+  D.casos.push(k); D.casoPorId.set(k.id,k);
+  if(!D.casosDoCliente.has(cliId)) D.casosDoCliente.set(cliId,[]);
+  D.casosDoCliente.get(cliId).push(k);
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
+      texto:`[DECISÃO] Caso criado a partir do Escritório: ${nome} · lista ${semEmoji(lista)}.`})}).catch(()=>{});
+  reindexarCliente(c); plim();
+  await avisarCasoNovo(k.id, cliId, "criado a partir do Escritório");
+  aviso(`Caso criado — ${nome}`, false);
+  montarSidebar(); casoSel=k.id; abaAtiva=2; abrirFicha(cliId);
+}
 // anexo do pré-caso: o arquivo do cliente que ainda não tem caso
 async function anexarPreCaso(cliId, inpId){
   const inp=document.getElementById(inpId||"pc-arq"), arq=inp&&inp.files&&inp.files[0];
@@ -24281,9 +24859,12 @@ function caixaAtendimento(c, ks){
       <p class="meio-sub" style="margin:2px 0 6px"><b>O caso será gerado somente quando o cliente assinar a
         procuração.</b> Gerar o caso abre o botão de documentos com as procurações e o contrato para imprimir.</p>
       <div class="form-linha pc-acao">
-        <select id="pcf-${pc.id}">${["inss","conselho","judicial","peticao_inicial","outro"]
-          .map(f=>`<option value="${f}" ${(pc.via==="adm"&&f==="inss")||(pc.via==="jud"&&f==="peticao_inicial")?"selected":""}>${NOME_FASE[f]}</option>`).join("")}</select>
-        <button onclick="gerarCasoDoPre('${c.id}','${pc.id}')" ${trava?`disabled title="${esc(trava)}"`:""}
+        ${/* F175 · o destino: as listas do caso, ou manter em Escritório */""}
+        <select id="pcf-${pc.id}" aria-label="destino" onchange="const b=document.getElementById('pcb-${pc.id}');if(b)b.textContent=this.value==='escritorio'?'Manter em Escritório':'Gerar o caso'">${
+          LISTAS_MOVER.filter(([,f])=>["inss","conselho","judicial","peticao_inicial"].includes(f))
+          .map(([l,f])=>`<option value="${f}" ${(pc.via==="adm"&&f==="inss")||(pc.via==="jud"&&f==="peticao_inicial")?"selected":""}>${esc(semEmoji(l))}</option>`).join("")}
+          <option value="escritorio">Manter em Escritório</option></select>
+        <button id="pcb-${pc.id}" onclick="destinoDoPre('${c.id}','${pc.id}')" ${trava?`disabled title="${esc(trava)}"`:""}
           title="a procuração assinada gera o caso; as anotações viram andamentos com data e autor originais">
           Gerar o caso</button>
         <span class="pc-ou">ou</span>
@@ -24307,6 +24888,7 @@ function caixaAtendimento(c, ks){
   return `<div class="caso caixa-atend" style="margin-bottom:12px;border-left:3px solid var(--azul)">
     <div class="rotulo-caso" style="display:flex;align-items:center;gap:10px">Atendimento${semCaso?` — ${esc(c.nome.split(" ")[0])} ainda não tem caso`:""}
       <span style="margin-left:auto">${botaoAbrirCnis(c, false)}</span></div>
+    ${pcsVivos.length ? passosAtendimentoHtml(c, pcsVivos[0]) : ""}
     ${tA?`<div class="tri-resumo-anot" style="border:1px solid var(--borda);border-left:3px solid var(--verde);border-radius:8px;padding:8px 12px;margin:6px 0 10px;font-size:13px">
       <b>Triagem encerrada</b> em ${fmt(tA.em)}${(q=>q?` por ${esc(q.nome.split(" ")[0])}`:"")(D.colPorId.get(tA.quem)||null)}
       — ${tA.conferidos} de ${tA.passos} passos conferidos.
