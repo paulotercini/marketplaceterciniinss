@@ -14611,7 +14611,7 @@ function mensagemCobranca(c, p){
   const venceu = p.vencimento && p.vencimento<hoje();
   return `Prezado(a) ${primeiroNomeDe(c)},
 
-O escritório Paulo Roberto Tercini Filho — Advocacia Previdenciária informa que a parcela de honorários advocatícios (${origemPgto(p)}), no valor de ${moedaTxt(p.valor)}, ${venceu?"venceu":"vence"} em ${fmtBarra(p.vencimento)}.
+O escritório de advocacia previdenciária Paulo Roberto Tercini Filho informa que a parcela de honorários advocatícios (${origemPgto(p)}), no valor de ${moedaTxt(p.valor)}, ${venceu?"venceu":"vence"} em ${fmtBarra(p.vencimento)}.
 
 O pagamento pode ser feito por [FORMA DE PAGAMENTO]. Caso já o tenha efetuado, pedimos a gentileza de desconsiderar esta mensagem e, se possível, enviar o comprovante.
 
