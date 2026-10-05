@@ -168,7 +168,9 @@ def comparar(dados, ext):
         elif b[0] != p["status"]:
             diverge("💵 Pagamentos", "parcela_situacao", no_todo=p["status"], no_crm=b[0], **ids)
     for iid, (status, cid) in parc.items():
-        if iid not in do_todo:
+        # F181 · "hon:<pré-caso>:<n>" são parcelas que o CRM lança sozinho
+        # a partir dos honorários combinados na mesa: não vêm do To Do
+        if iid not in do_todo and not str(iid).startswith("hon:"):
             diverge("💵 Pagamentos", "parcela_a_mais", no_crm=status, cliente_id=cid)
     resumo["parcelas_abertas_de_tarefa_concluida"] = concluidas_abertas
 
