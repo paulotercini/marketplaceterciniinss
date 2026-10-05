@@ -1969,3 +1969,39 @@ entre as que atingiram; vira valor e data do direito. O PDF.js lê a fonte do
 Prévius como Mac Roman ("ContribuiÁ„o"): `prevAcentos` conserta. As linhas
 passam a vir de `linhasDoPdf`. Conferido com um PDF real (fora do repositório);
 prova com texto fictício em `previus179.js` (5/5).
+
+## 10.80 · F178–F180 · Triagem, Honorários e Identificação no novo estilo
+
+As três telas passam a falar a língua da Análise de Direito (quadros `adr-`,
+cartões brancos, pontos de cor), seguindo o desenho aprovado em 04.10.2026.
+
+- F178 · Triagem: no topo, "Triagem · N de M respondidos", a barra e a
+  contagem por cor (sem pendência, atenção, não conferidos), tiradas do estado
+  gravado de cada passo. Duas colunas que se dobram no estreito: a lista dos
+  passos (ponto `.tri-etapa` na cor da resposta, nome e estado; o atual com
+  `aria-current="step"`) e o cartão do passo (Passo X de M, título, a pergunta,
+  a caixa "O que o CRM já sabe" com a leitura automática, os controles
+  próprios do passo, as três respostas em botões grandes com linha de apoio,
+  Observação, Anterior / Próximo passo). As perguntas moram na terceira coluna
+  de `TRIAGEM_PASSOS`. Conclusão, encerrar e reabrir não mudaram.
+- F179 · Honorários (aba 4): quatro quadros (Contratado: ajuste do pré-caso
+  ou o padrão do escritório da espécie, senão "—"; Recebido; A receber;
+  Próximo vencimento, em âmbar), a tabela dos lançamentos com a situação
+  (recebido, vence em N dias, vencido há N dias, a vencer) e, ao lado, o
+  cartão Contrato e os casos em recebimento (Lembrar em e Fase). Os gatilhos
+  são os de antes (`data-recebe`, `data-confere`, `novoPgto`, `data-prazo`,
+  `data-fase`). O resumo usa `.hon-resumo`: o painel 4 é pintado mesmo
+  escondido e um segundo `.adr-resumo` confundia a prova da Análise.
+  Cobrança ficou de fora: não há ação de cobrança de honorários para reusar.
+- F180 · Identificação: no topo, "Cadastro N% completo" (sobre `CAD_PRECISA`)
+  com um chip vermelho por campo de `cadFaltando`, que rola até o campo e
+  abre o editor (`abrirCampoFaltando`). O nome segue como na F163. Os campos
+  viram linhas em três cartões (Documentos e acesso, Dados pessoais,
+  Contato); campo vazio mostra o botão tracejado "preencher" ("cadastrar" na
+  senha). Os ids e editores de antes ficaram. Parentes ou amigos segue
+  recolhido no ＋.
+
+Provas novas: `triagem180.js` (17/17), `honorarios180.js` (15/15),
+`identificacao180.js` (17/17). Ajustadas ao desenho novo, com rótulo F180:
+`cadastro2.js` (CPF e senha um embaixo do outro), `interacao.js` (o
+tracejado está no botão) e `endereco.js` ("preencher").
