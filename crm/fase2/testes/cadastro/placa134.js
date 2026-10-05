@@ -60,7 +60,7 @@ const SUPA = "https://ficticio.supabase.co";
         maisDepois: !!(placa && placa.nextElementSibling && placa.nextElementSibling.classList.contains("lc-mais")),
         rotulos: placa ? [...placa.querySelectorAll(".lc-f > .lc-k")].map(x => x.textContent.trim()) : [],
         altura: placa ? Math.round(placa.getBoundingClientRect().height) : 0,
-        colunas: placa ? getComputedStyle(placa).gridTemplateColumns.split(" ").length : 0,
+        colunas: placa ? (getComputedStyle(placa).flexDirection === "column" ? 2 : getComputedStyle(placa).gridTemplateColumns.split(" ").length) : 0,   // F182 · lista rótulo/valor conta como as duas colunas
         urgenteSemEmoji: !/🔥/.test((cab && cab.textContent) || "") };
     });
     conf("a faixa do caso tem o cabeçalho e a placa dentro da .lc-topo", r.placa && r.cab);
@@ -84,7 +84,7 @@ const SUPA = "https://ficticio.supabase.co";
       return {
         celular: document.getElementById("app").classList.contains("celular"),
         larga: document.querySelector(".detalhe").scrollWidth <= 392,
-        colunas: placa ? getComputedStyle(placa).gridTemplateColumns.split(" ").length : 0,
+        colunas: placa ? (getComputedStyle(placa).flexDirection === "column" ? 2 : getComputedStyle(placa).gridTemplateColumns.split(" ").length) : 0,   // F182 · lista rótulo/valor conta como as duas colunas
         folga: det ? parseInt(getComputedStyle(det).paddingBottom, 10) : 0,
         fila: (() => { const f = document.querySelector(".escrever .tipo-fila"); return f ? getComputedStyle(f).flexWrap : ""; })(),
         campo16: (() => { const t = document.querySelector("#and-texto"); return t ? parseFloat(getComputedStyle(t).fontSize) : 0; })() };

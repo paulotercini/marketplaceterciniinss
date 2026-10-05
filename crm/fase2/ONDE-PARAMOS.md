@@ -2068,3 +2068,18 @@ Só no tema v10; fora dele nada muda.
   ficou só com os vistos de leitura.
 Prova nova: `caso182.js` (16/16); `linha102.js` e `gestao160.js` ajustadas.
 Suíte: 106/110, falhando só as de data (cnj71, extracoes, paineis, planejado124).
+
+## 10.83 · F182 · ajuste fino ao canvas (pedido do Paulo, 05.10.2026)
+- Aba Casos com chão #F8F8F6 e cartões brancos com borda (caso, prazos,
+  outras abas, compositor e cada anotação).
+- Cartão do caso: sobretítulo "espécie · tramitação" (`.lc-sobre`), nome em
+  Plex 18px, placa em linhas rótulo/valor (sem o quadro cinza).
+- "Prazos e compromissos" (`.fp-tit`) com linhas tingidas: prazo fatal e
+  vencido em vermelho claro com fio vermelho, até 3 dias (`.pz-perto`) e
+  "do To Do" em âmbar, o resto em cinza claro.
+- Anotação: o dia vira rótulo acima dos cartões (sem a coluna de 120px), o
+  texto vai até a borda; avatar, autor e data no cabeçalho, vistos de
+  leitura no canto do cabeçalho; ciente, ⭐ e ⚡ (só aceso ou no passar do
+  mouse) e ✕ (no passar do mouse) no fim da barra; respostas em caixa cinza.
+Provas ajustadas: linha102, harmonia138, placa134 (a placa é lista); suíte
+106/110, falhando só as de data.
