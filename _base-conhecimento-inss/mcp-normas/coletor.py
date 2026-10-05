@@ -160,9 +160,17 @@ def coletar(normas, conferir=False, destino=None):
             falhas.append((rotulo, f"conversão: {type(e).__name__}: {e}"))
             continue
         arts = fm["total_artigos_aprox"]
-        if arts == 0:
+        # A NR do MTE e a portaria que a aprova nao sao articuladas: o texto e item numerado,
+        # 1.1, 1.2, e nao "Art. N". Entram assim mesmo, e o ingestor as grava como trecho
+        # buscavel, do mesmo jeito que os Anexos do Decreto 3.048.
+        if arts == 0 and not n.get("sem_artigo"):
             falhas.append((rotulo, f"zero artigo extraído de {len(bruto)} bytes"))
             continue
+        if arts == 0:
+            if len(texto) < 2000:
+                falhas.append((rotulo, f"sem artigo E com só {len(texto)} chars de texto"))
+                continue
+            print(f"  (sem artigo, entra como trecho) ", end="")
         alvo = destino / n["arquivo"]
         if not conferir:
             alvo.parent.mkdir(parents=True, exist_ok=True)

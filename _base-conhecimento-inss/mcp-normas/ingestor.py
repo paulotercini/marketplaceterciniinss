@@ -77,6 +77,8 @@ def trechos(corpo, arquivo, tamanho=1800):
     linhas = []
     for l in corpo.split(chr(10)):
         l = l.strip()
+        if l.startswith("#"):      # o H1 do titulo nao e texto da norma
+            continue
         while len(l) > tamanho:
             corte = l.rfind(" ", 0, tamanho) or tamanho
             linhas.append(l[:corte]); l = l[corte:].lstrip()
