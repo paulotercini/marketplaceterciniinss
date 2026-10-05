@@ -83,19 +83,21 @@ const SUPA = "https://ficticio.supabase.co";
   });
   conf("senha existente: mascarada com copiar/ver/trocar",
     senha && /•/.test(senha.txt) && /copiar/.test(senha.txt) && /ver/.test(senha.txt) && /trocar/.test(senha.txt));
-  // F127 · o campo preenchido é CINZA (rgb 241,242,244), nunca amarelo
-  conf("senha NÃO está em fundo amarelo", senha && senha.amarelo === "rgb(241, 242, 244)");
+  // F127 · nunca amarelo; F180 · a linha do cartão não tem fundo próprio
+  conf("F180 · senha NÃO está em fundo amarelo", senha && /rgba\(0, 0, 0, 0\)|rgb\(241, 242, 244\)/.test(senha.amarelo));
 
   // 4. sem senha: convite tracejado e o clique abre o prompt e grava
   await abrir(CLI_VAZIO);
   const vazia = await p.evaluate(() => {
     const cx = [...document.querySelectorAll('.painel[data-p="0"].ativo .cad-campo')]
       .find(x => /SENHA MEU INSS/i.test(x.innerText));
-    return cx ? { txt: cx.innerText.replace(/\n/g, " "), tracejado: getComputedStyle(cx).borderStyle,
+    // F180 · o tracejado mora no botão "cadastrar" da linha
+    const bt = cx && cx.querySelector(".cad-preencher");
+    return cx ? { txt: cx.innerText.replace(/\n/g, " "), tracejado: getComputedStyle(bt || cx).borderStyle,
                   clicavel: getComputedStyle(cx).cursor } : null;
   });
-  conf("sem senha: convida a cadastrar", vazia && /clique para cadastrar/.test(vazia.txt));
-  conf("sem senha: borda tracejada", vazia && vazia.tracejado === "dashed");
+  conf("F180 · sem senha: convida a cadastrar", vazia && /cadastrar/.test(vazia.txt));
+  conf("F180 · sem senha: botão tracejado", vazia && vazia.tracejado === "dashed");
   conf("sem senha: cartão clicável", vazia && vazia.clicavel === "pointer");
   await p.evaluate(() => {
     const cx = [...document.querySelectorAll('.painel[data-p="0"].ativo .cad-campo')]

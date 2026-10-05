@@ -65,8 +65,8 @@ const VIACEP = {                       // resposta fictícia, formato do serviç
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
   await abrir(CLI_CHEIO);
-  conf("endereço vazio ainda convida a preencher",
-    /clique para preencher/.test(await p.innerText("#campo-endereco")));
+  conf("F180 · endereço vazio ainda convida a preencher",
+    /preencher/.test(await p.innerText("#campo-endereco")));
 
   // abre o editor pelo rótulo (o valor pode ter botão no meio)
   await p.click('.painel[data-p="0"].ativo .cad-campo:has(#campo-endereco) label');

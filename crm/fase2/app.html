@@ -3215,7 +3215,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .adr{display:flex;flex-direction:column;gap:16px;margin-top:6px}
 .adr [hidden],#ad-novo [hidden]{display:none!important}
 .adr-h{margin:0;font-size:16px;font-weight:600;color:var(--texto)}
-.adr-resumo{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.adr-resumo,.hon-resumo{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
 .adr-tile{background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
 .adr-tile-rot{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro)}
 .adr-tile-val{font-size:24px;font-weight:600;color:var(--texto);line-height:1.2}
@@ -3292,6 +3292,102 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .adr-ck{display:flex;gap:10px;align-items:center;min-height:40px;font-size:14px;cursor:pointer}
 .adr-ck input{width:18px;height:18px}
 .adr-modal-bts{display:flex;gap:10px;justify-content:flex-end}
+/* F178–F180 · Triagem, Honorários e Identificação na língua visual da
+   Análise de Direito (desenho aprovado em 04.10.2026) */
+.cad-cartao.tri-novo,.cad-cartao.idf{background:none;border:0;box-shadow:none;padding:0;display:flex;flex-direction:column;gap:16px}
+.tri-topo,.idf-comp{background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px;padding:14px 20px;display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center}
+.tri-topo-n{display:flex;flex-direction:column;gap:2px;flex:1 1 220px}
+.tri-topo .cad-cont,.idf-comp .cad-cont{margin:0;background:none;padding:0;font-size:20px;font-weight:600;color:var(--texto);text-transform:none;letter-spacing:0}
+.tri-topo-barra{flex:3 1 340px;display:flex;flex-direction:column;gap:6px}
+.tri-cores{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--cinza)}
+.tri-cores>span{display:inline-flex;align-items:center;gap:6px}
+.tri-bola{flex:none;display:inline-block;width:10px;height:10px;border-radius:50%;background:#C9C6BE}
+.tri-bola.ok{background:var(--feito,#1B6E38)}.tri-bola.atencao{background:#B7791F}
+.tri-cols{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.tri-trilho.tri-nav{display:block;margin:0;flex:1 1 250px;min-width:0;background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px;padding:8px}
+.tri-nav ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.tri-item{width:100%;display:flex;gap:10px;align-items:center;text-align:left;border:0;border-radius:8px;padding:8px 12px;min-height:44px;background:transparent;color:var(--texto);font:500 13.5px var(--f-ui,inherit);cursor:pointer}
+.tri-item.on{background:var(--azul-fundo,#E6F0EF);font-weight:600}
+@media (hover:hover) and (pointer:fine){.tri-item:not(.on):hover{background:var(--placa)}}
+.tri-item:focus-visible{outline:2px solid var(--azul);outline-offset:1px}
+.tri-item .tri-etapa{flex:none;width:10px;height:10px;padding:0;border:0;border-radius:50%;background:#C9C6BE;box-shadow:none}
+.tri-item .tri-etapa.ok{background:var(--feito,#1B6E38)}
+.tri-item .tri-etapa.atencao{background:#B7791F}
+.tri-item .tri-etapa.on{box-shadow:0 0 0 3px #fff,0 0 0 4px var(--azul)}
+.tri-item-nome{flex:1 1 auto;min-width:0}
+.tri-item-est{font-size:12px;color:var(--cinza-claro);font-weight:500}
+.tri-novo .tri-lista.tri-um{flex:999 1 500px;min-width:0}
+.tri-novo .tri-um .tri-passo{border:1px solid var(--borda);border-radius:12px;padding:20px 22px;background:var(--branco,#fff);display:flex;flex-direction:column;gap:14px}
+.tri-pn{font-size:12px;font-weight:600;color:var(--cinza-claro)}
+.tri-novo .tri-tit b{font-size:19px}
+.tri-perg{margin:2px 0 0;color:var(--cinza);font-size:14px}
+.tri-sabe{background:var(--fundo);border:1px solid var(--placa);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.tri-sabe-rot{font-size:12px;font-weight:600;color:var(--cinza-claro)}
+.tri-novo .tri-sabe .tri-leitura{margin:0;color:var(--texto);font-size:13.5px}
+.tri-novo .tri-sabe .tri-leitura.alerta{color:var(--texto)}
+.tri-novo .tri-bt{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.tri-novo .tri-e{min-height:56px;border-radius:10px;border:1.5px solid var(--borda);background:var(--branco,#fff);color:var(--texto);display:flex;gap:10px;align-items:center;padding:8px 14px;text-align:left;font:inherit;font-size:14px}
+.tri-novo .tri-e span{display:flex;flex-direction:column}
+.tri-novo .tri-e small{font-size:12px;color:var(--cinza);font-weight:400}
+.tri-novo .tri-e.on,.tri-novo .tri-e.ok.on,.tri-novo .tri-e.atencao.on,.tri-novo .tri-e.pendente.on{border-color:var(--azul);background:var(--azul-fundo,#E6F0EF);color:var(--texto)}
+.tri-novo .tri-e:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+.tri-obs{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:600;color:var(--cinza)}
+.tri-novo .tri-nota{margin:0;max-width:100%;font-size:14px;font-weight:400;padding:9px 12px}
+.tri-novo .tri-assin,.tri-novo .tri-prox{margin-left:0}
+.tri-novo .tri-prox-bt{display:flex;justify-content:space-between;gap:10px;margin:0}
+.tri-novo .tri-prox-bt .cad-mini{min-height:44px;padding:0 16px;font-size:13.5px;color:var(--texto);border-radius:8px}
+.tri-novo .tri-prox-bt .principal{min-height:44px;padding:0 20px;margin-left:auto}
+.tri-novo .tri-fecho .cad-mini,.tri-novo .tri-p{min-height:40px}
+.tri-novo .tri-fecho,.tri-novo .tri-mais-q{margin-top:0}
+/* Honorários */
+.hon-t-rec .adr-tile-val{color:var(--feito,#1B6E38)}
+.hon-t-prox{background:var(--hoje-fundo,#F8ECD8);border-color:#EED6A8}
+.hon-t-prox .adr-tile-rot,.hon-t-prox .adr-tile-sub{color:var(--hoje-tinta,#8A5300)}
+.hon-tab-cx{overflow-x:auto}
+.hon .hon-lanc{flex-basis:660px}
+.hon-tab{width:100%;border-collapse:collapse;min-width:560px}
+.hon-tab th{text-align:left;font-size:12px;font-weight:600;color:var(--cinza-claro);padding:8px 10px;border-bottom:1px solid var(--borda)}
+.hon-tab td{padding:10px;border-bottom:1px solid var(--placa);vertical-align:middle}
+.hon-tab tr.pgto{display:table-row;padding:0}
+.hon-tab .hon-num{text-align:right;font-weight:600;white-space:nowrap}
+.hon-data{font:13px var(--f-mono,monospace);white-space:nowrap}
+.hon-vinc{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}
+.hon-vinc:empty{display:none}
+.hon-acao{text-align:right}
+.hon-sit{display:inline-block;font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.hon-ok{color:var(--feito,#1B6E38);background:#E8F3EC}
+.hon-prox{color:var(--hoje-tinta,#8A5300);background:var(--hoje-fundo,#F8ECD8)}
+.hon-venc{color:var(--venc-tinta,#B3261E);background:var(--venc-fundo,#FBEAE7)}
+.hon-cinza{color:var(--cinza);background:var(--placa)}
+.hon-novo>summary{display:inline-flex;align-items:center;list-style:none;width:max-content}
+.hon-novo>summary::-webkit-details-marker{display:none}
+.hon-novo .form-linha{margin-top:10px;align-items:flex-end}
+.hon-novo .adr-campo input{min-height:40px}
+.hon-dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px}
+.hon-dl dt{font-size:12.5px;font-weight:600;color:var(--cinza-claro)}
+.hon-dl dd{margin:0}
+.hon-receb .adr-campo input,.hon-receb .adr-campo select{min-height:40px}
+/* Identificação */
+.idf-comp .adr-barra{flex:3 1 260px}
+.idf-chips{flex:1 1 100%;display:flex;flex-wrap:wrap;gap:8px}
+.idf-chip{min-height:40px;padding:0 14px;border:0;border-radius:999px;background:#FDECEC;color:#9B3B3B;font:600 13px var(--f-ui,inherit);cursor:pointer}
+.idf-chip:focus-visible{outline:2px solid #9B3B3B;outline-offset:2px}
+.cad-grade.idf-grade{grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}
+.idf-card .cad-tel{flex-wrap:wrap}
+.idf-grade>.idf-nome{grid-column:1/-1;background:var(--branco,#fff);border-radius:12px;padding:14px 20px}
+.idf-card{background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;min-width:0}
+.idf-card .adr-h{margin-bottom:6px}
+.idf-card .cad-campo{display:grid;grid-template-columns:118px minmax(0,1fr);gap:4px 10px;align-items:center;min-height:48px;padding:6px 0;border:0;border-bottom:1px solid var(--placa);border-radius:0;background:none}
+.idf-card .cad-campo:last-child{border-bottom:0}
+.idf-card .cad-campo label{margin:0;font-size:12.5px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--cinza-claro)}
+.idf-card .cad-v{font-size:14px;font-weight:500;min-width:0}
+.idf-card .cad-campo.vazio{background:none;border-style:none none solid}
+.idf-card .cad-campo.vazio .cad-v{color:var(--texto)}
+.idf-card .cad-campo.idf-bloco{display:flex;flex-direction:column;align-items:stretch}
+.cad-preencher{flex:1 1 auto;width:100%;text-align:left;min-height:40px;border:1px dashed #F0B4B4;border-radius:8px;background:#FDECEC;color:#9B3B3B;padding:0 10px;font:inherit;font-size:13.5px;cursor:pointer}
+.cad-preencher:focus-visible{outline:2px solid #9B3B3B;outline-offset:2px}
+.idf-card .cad-mini{min-height:40px}
+.idf-card .cad-tel .cad-lap{min-width:40px;min-height:40px;justify-content:center;align-items:center}
 @media (max-width:760px){ .adr-regra{grid-template-columns:1fr 1fr} .adr-barra{grid-column:1/-1} .adr-valor,.adr-regra-acao{text-align:left} }
 </style>
 </head>
@@ -3305,7 +3401,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.79</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.80</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12301,7 +12397,7 @@ function pintarFicha(){
   </div>
 
   <div class="painel ${abaAtiva===4?"ativo":""}" data-p="4">
-    ${painelPagamentosFicha(ks, ands, pgs, pagK)}
+    ${painelPagamentosFicha(ks, ands, pgs, pagK, c)}
   </div>
 
 
@@ -12653,16 +12749,17 @@ function irSubAnot(qual){ irSubCad(qual==="atendimento" ? "anotacoes" : qual); }
 // 20.09): o que o extrato responde vem primeiro, e as explicações saíram — a
 // tela mostra UM passo por vez, limpa.
 const TRIAGEM_PASSOS = [
-  ["cnis",       "CNIS",                     ""],
-  ["indicadores","Indicadores",              ""],
-  ["beneficio",  "Benefício ativo",          ""],
-  ["vinculo",    "Vínculo com a Previdência hoje", ""],
-  ["parentes",   "Parentes ou amigos",       ""],
-  ["judicial",   "Ação judicial anterior",   ""],
-  ["crps",       "Recurso no CRPS",          ""],
-  ["cadunico",   "CadÚnico",                 ""],
-  ["requerimento","Requerimentos anteriores",""],
-  ["conclusao",  "Conclusão",                ""],
+  // F178 · a terceira coluna é a pergunta que o cartão do passo mostra
+  ["cnis",       "CNIS",                     "O extrato está completo e legível?"],
+  ["indicadores","Indicadores",              "Há indicador que exige acerto antes do pedido?"],
+  ["beneficio",  "Benefício ativo",          "O cliente recebe algum benefício hoje?"],
+  ["vinculo",    "Vínculo com a Previdência hoje", "Como o cliente contribui hoje?"],
+  ["parentes",   "Parentes ou amigos",       "Há parente ou amigo que já é cliente?"],
+  ["judicial",   "Ação judicial anterior",   "Existe ação anterior sobre o mesmo pedido?"],
+  ["crps",       "Recurso no CRPS",          "Há recurso administrativo em curso?"],
+  ["cadunico",   "CadÚnico",                 "O cadastro está atualizado?"],
+  ["requerimento","Requerimentos anteriores","Quais pedidos já foram feitos, e a DER de cada um?"],
+  ["conclusao",  "Conclusão",                "O que a triagem decide?"],
 ];
 // ══════════════════════════════════════════════════════════════════════════
 // F17 · O QUE A ESPÉCIE EXIGE — as skills do escritório dentro da triagem
@@ -12876,6 +12973,8 @@ async function tirarPerguntaEscritorio(chave){
   repintarFicha();
 }
 const TRIAGEM_ESTADOS = [["ok","sem pendência"],["atencao","atenção"],["pendente","não conferido"]];
+// F178 · a linha de apoio de cada resposta, no botão grande
+const TRIAGEM_ESTADOS_SUB = {ok:"segue o atendimento", atencao:"precisa de providência", pendente:"voltar depois"};
 const TRIAGEM_PROXIMO = [["inicial","Pronto para a inicial judicial"],
                          ["inss","Pronto para o protocolo no INSS"],
                          ["aguardando","Aguardando (falta o que está anotado acima)"]];
@@ -14009,9 +14108,24 @@ function painelTriagemFicha(c, ks){
   const balcao = (!(ks||[]).length && !triagemFechada(c))
     ? ((c.campos||{}).atendimento||[]).slice(-3) : [];
   const especie = especieDoCliente(c, ks) || (porta && porta.especie) || "";
-  return `<div class="cad-cartao">
-    <div class="cad-tit"><span class="cad-ic">${CAD_IC.doc}</span>Triagem do cliente
-      <span class="cad-cont${feitos===PASSOS.length?" cad-ok":""}">${feitos} de ${PASSOS.length} respondidos</span></div>
+  // F178 · as cores do topo: o estado gravado de cada passo respondido
+  const estDe = k => { const q = t[k]||{}; return (q.feito||(q.estado&&!q.auto)) ? (q.estado||"pendente") : ""; };
+  const nOk = PASSOS.filter(([k])=>estDe(k)==="ok").length;
+  const nAt = PASSOS.filter(([k])=>estDe(k)==="atencao").length;
+  const pct = Math.round(feitos*100/PASSOS.length);
+  return `<div class="cad-cartao tri-novo">
+    <section class="tri-topo" aria-label="Andamento da triagem">
+      <div class="tri-topo-n"><span class="adr-tile-rot">Triagem</span>
+        <span class="cad-cont${feitos===PASSOS.length?" cad-ok":""}">${feitos} de ${PASSOS.length} respondidos</span></div>
+      <div class="tri-topo-barra">
+        <span class="adr-barra" role="progressbar" aria-label="passos respondidos" aria-valuemin="0" aria-valuemax="${PASSOS.length}" aria-valuenow="${feitos}"><span style="width:${pct}%"></span></span>
+        <span class="tri-cores">
+          <span data-cor="ok"><i class="tri-bola ok"></i>${nOk} sem pendência</span>
+          <span data-cor="atencao"><i class="tri-bola atencao"></i>${nAt} atenção</span>
+          <span data-cor="pendente"><i class="tri-bola"></i>${PASSOS.length-nOk-nAt} não conferidos</span>
+        </span>
+      </div>
+    </section>
     <div class="cnis-faixa">
       ${botaoAbrirCnis(c, true)}
       <span class="meio-sub">${cnisDe(c)&&cnisDe(c).caminho ? "abre em outra aba; o CRM já leu vínculos, indicadores e benefícios" : "a recepção insere o CNIS no cadastro (Identificação)"}</span>
@@ -14040,24 +14154,30 @@ function painelTriagemFicha(c, ks){
           </span>`}
       </div>`}
     </div>
-    ${/* F129 · o trilho sem números: um ponto por pergunta, na cor da
-         resposta; o clique volta à pergunta (o nome fica no title) */""}
-    <div class="tri-trilho">${PASSOS.map(([k,r],j)=>{
-      const q = t[k]||{};
-      const cls = j===i ? "on" : (q.feito||(q.estado&&!q.auto)) ? (q.estado||"pendente") : "";
-      return `<button class="tri-etapa tri-ponto ${cls}" onclick="irPassoTriagem('${c.id}',${j})" title="${esc(r)}"></button>`;
-    }).join("")}</div>
+    ${/* F178 · duas colunas: à esquerda a lista dos passos (ponto na cor da
+         resposta, nome e estado; o atual em destaque), à direita o cartão do
+         passo aberto. O ponto continua sendo o .tri-etapa, sem texto. */""}
+    <div class="tri-cols">
+    <nav class="tri-trilho tri-nav" aria-label="Passos da triagem"><ol>${PASSOS.map(([k,r],j)=>{
+      const e = estDe(k);
+      return `<li><button type="button" class="tri-item${j===i?" on":""}" ${j===i?`aria-current="step"`:""}
+        onclick="irPassoTriagem('${c.id}',${j})"><span class="tri-etapa ${e}${j===i?" on":""}" title="${esc(r)}" aria-hidden="true"></span>
+        <span class="tri-item-nome">${esc(r)}</span><span class="tri-item-est">${e?esc((TRIAGEM_ESTADOS.find(([x])=>x===e)||[,""])[1]):""}</span></button></li>`;
+    }).join("")}</ol></nav>
     <div class="tri-lista tri-um">
-      <div class="tri-passo${p.feito?" feito":""}">
+      <section class="tri-passo${p.feito?" feito":""}" aria-labelledby="tri-passo-tit">
         <div class="tri-cab">
-          <div class="tri-tit"><span class="tri-tit-l"><b>${esc(rot)}</b>${
+          <div class="tri-tit"><span class="tri-pn">Passo ${i+1} de ${PASSOS.length}</span>
+            <span class="tri-tit-l" id="tri-passo-tit"><b>${esc(rot)}</b>${
             dona?`<span class="tri-de${dona==="escritório"?" tri-de-esc":""}">${esc(dona)}</span>`:""}${
             dona==="escritório"?`<button class="cad-lap" title="tirar esta pergunta de TODOS os clientes"
-              onclick="event.stopPropagation();tirarPerguntaEscritorio('${chave}')">${CAD_IC.fechar}</button>`:""}</span></div>
+              onclick="event.stopPropagation();tirarPerguntaEscritorio('${chave}')">${CAD_IC.fechar}</button>`:""}</span>
+            ${PASSOS[i][2]?`<p class="tri-perg">${esc(PASSOS[i][2])}</p>`:""}</div>
         </div>
-        ${l.txt?`<div class="tri-leitura ${l.cor}">${esc(l.txt)}${
+        ${l.txt||l.legenda?`<div class="tri-sabe"><span class="tri-sabe-rot">O que o CRM já sabe</span>
+          ${l.txt?`<div class="tri-leitura ${l.cor}">${esc(l.txt)}${
           l.det?`<span class="tri-det">${esc(l.det)}</span>`:""}</div>`:""}
-        ${l.legenda ? legendaIndicadores(l.legenda) : ""}
+          ${l.legenda ? legendaIndicadores(l.legenda) : ""}</div>`:""}
         ${chave==="cnis" ? blocoVidaContributiva(c) : ""}
         ${chave==="parentes" ? blocoParentes(c, null, "tri") : ""}
         ${botaoPdfTriagem(c.id, chave)}
@@ -14079,19 +14199,22 @@ function painelTriagemFicha(c, ks){
           ${TRIAGEM_PROXIMO.map(([v,r])=>`<button class="tri-p${prox===v?" on":""}"
             onclick="marcarProximo('${c.id}','${v}')">${r}</button>`).join("")}
         </div>`:""}
+        ${/* F178 · as três respostas viram botões grandes, com a linha de apoio */""}
+        <div class="tri-bt" role="group" aria-label="Resposta">${TRIAGEM_ESTADOS.map(([e,r])=>
+          `<button type="button" class="tri-e ${e}${estadoMarcado===e?" on":""}" aria-pressed="${estadoMarcado===e}"
+            onclick="marcarTriagem('${c.id}','${chave}','${e}')"><i class="tri-bola ${e==="pendente"?"":e}" aria-hidden="true"></i>
+            <span><b>${r}</b><small>${TRIAGEM_ESTADOS_SUB[e]}</small></span></button>`).join("")}</div>
+        <label class="tri-obs">Observação
         <textarea class="tri-nota" id="tri-${chave}" rows="2"
-          placeholder="${chave==="conclusao"?"o que foi decidido e por quê":"anotação, se quiser"}"
-          onblur="salvarNotaTriagem('${c.id}','${chave}')">${esc(p.nota||"")}</textarea>
+          placeholder="${chave==="conclusao"?"o que foi decidido e por quê":"o que foi visto neste passo"}"
+          onblur="salvarNotaTriagem('${c.id}','${chave}')">${esc(p.nota||"")}</textarea></label>
         ${p.feito?`<div class="tri-assin">respondido por ${quem?esc(quem.nome):"alguém"} · ${fmt(p.em)}</div>`:""}
-        ${/* F129 · as respostas e a navegação numa linha só, no rodapé */""}
         <div class="tri-prox-bt">
-          <div class="tri-bt">${TRIAGEM_ESTADOS.map(([e,r])=>
-            `<button class="tri-e ${e}${estadoMarcado===e?" on":""}"
-              onclick="marcarTriagem('${c.id}','${chave}','${e}')">${r}</button>`).join("")}</div>
-          ${i>0?`<button class="cad-mini" style="margin-left:auto" onclick="irPassoTriagem('${c.id}',${i-1})">‹ anterior</button>`:""}
-          <button class="principal" style="${i>0?"margin-left:0":""}" onclick="proximaTriagem('${c.id}','${chave}')">${i===PASSOS.length-1?"Encerrar a triagem":"Próxima ›"}</button>
+          ${i>0?`<button class="cad-mini" onclick="irPassoTriagem('${c.id}',${i-1})">Anterior</button>`:""}
+          <button class="principal" onclick="proximaTriagem('${c.id}','${chave}')">${i===PASSOS.length-1?"Encerrar a triagem":"Próximo passo"}</button>
         </div>
-      </div>
+      </section>
+    </div>
     </div>
     ${/* F49 · o elo triagem → análise: quem está triando vê na hora se a
          análise de direito deste cliente já existe, e onde registrá-la */""}
@@ -14441,68 +14564,133 @@ async function vincularPgto(pgId, casoId){
   aviso(k?`Pagamento vinculado a ${tituloCaso(k)}`:"Vínculo removido", false);
   repintarFicha();
 }
-function painelPagamentosFicha(ks, ands, pgs, pagK){
-  return `
-    ${(()=>{
-      if(!pagK.length) return "";
-      return `<p class="meio-sub">Casos em <strong>recebimento</strong> — já venceram as fases; falta o dinheiro entrar:</p>`
-        + pagK.map(k=>{
-        const ult=ands.filter(a=>a.caso_id===k.id)[0];
-        const uco=ult&&D.colPorId.get(ult.autor_id);
-        const lan=pgs.filter(p=>p.caso_id===k.id);
-        return `<div class="caso" style="border-left:3px solid var(--verde)">
-        <div class="rotulo-caso">💰 Em recebimento · lista ${esc(listaDe(k))} do To Do</div>
-        <div class="cab" style="margin-top:2px">
-          <span class="titulo-caso">${esc(tituloCaso(k))}</span>
-          ${k.nb?`<span class="chip neutro">NB ${esc(k.nb)}</span>`:""}
-          ${k.processo?`<span class="chip neutro">proc. ${esc(k.processo)}</span>`:""}
-          ${k.resultado?`<span class="chip fase">${esc(k.resultado)}</span>`:""}
-        </div>
-        <div class="form-linha" style="align-items:center">
-          <span class="lembrar-caixa" title="quando conferir se o pagamento saiu">🗓 Lembrar em
-            <input type="date" value="${k.prazo||""}" data-prazo="${k.id}"></span>
-          <label style="font-size:12px;color:var(--cinza)">Fase:
-          <select data-fase="${k.id}">${Object.entries(NOME_FASE).map(([f,n])=>`<option value="${f}" ${k.fase===f?"selected":""}>${n}</option>`).join("")}</select></label>
-          ${lan.length?"":`<span style="font-size:12px;color:var(--cinza)">nenhum valor lançado — lance abaixo ↓</span>`}
-        </div>
-        ${ult?`<div class="ult-and">Último andamento: ${fmtTS(ult.criado_em)}${uco?" ("+esc(uco.nome)+")":""} — ${esc(ult.texto.slice(0,110))}${ult.texto.length>110?"…":""}</div>`:""}
-        </div>`;}).join("")
-        + `<p class="meio-sub" style="margin-top:12px">Lançamentos (RPV, precatório, honorários…):</p>`;
-    })()}
-    ${pgs.map(p=>{
-      const cfs=p.conferencias||[];
-      const jaConferi=cfs.some(cf=>cf.c===eu.id);
-      return `<div class="pgto">
-      <span class="desc"><strong>${p.pago_em?fmt(p.pago_em):p.vencimento?"vence "+fmt(p.vencimento):"—"}</strong>${p.descricao&&p.descricao!=="Recebimento"?" · "+esc(p.descricao):""}</span>
-      ${vinculoDaParcela(p, ks)}
-      <span class="valor">${moeda(p.valor)}</span>
-      <span class="cadeia">${cfs.map((cf,i)=>{const co=D.colPorId.get(cf.c);
-        return `<span class="conf-et" title="${co?esc(co.nome):"?"} ${i===0?"recebeu":"conferiu"} em ${fmtTS(cf.em)}">
-          <span class="avatar mini" style="background:${co?co.cor:"#a19f9d"}">${co?esc(co.inicial):"·"}</span>
-          <small>${i===0?"recebeu":"conferiu"} ${fmtTS(cf.em).slice(0,5)}</small></span>`;}).join(`<span class="conf-seta">→</span>`)}</span>
-      ${p.status==="aberto"?`<button class="btn-mini" data-recebe="${p.id}">💵 recebi</button>`:
-        !jaConferi?`<button class="btn-mini" data-confere="${p.id}">✔ conferi</button>`:""}
-      </div>`;}).join("")
-      ||"<p class='meio-sub'>Nenhum recebimento registrado ainda.</p>"}
-    <div class="form-linha" style="align-items:center">
-      ${(()=>{
-        // com mais de um caso o lançamento pergunta de qual benefício é —
-        // sem isso, o dinheiro entrava sempre no primeiro da lista
-        const casos=ks.filter(k=>k.fase!=="pagamento");
-        if(casos.length>1)
-          return `<select id="np-caso" class="pg-caso" style="max-width:230px" title="benefício/serviço deste pagamento">
-            <option value="">— de qual benefício? (opcional) —</option>
-            ${casos.map(k=>`<option value="${k.id}">${esc(tituloCaso(k))}</option>`).join("")}</select>`;
-        return `<input type="hidden" id="np-caso" value="${(pagK[0]||casos.find(k=>k.fase!=="encerrado")||casos[0]||{}).id||""}">`;
-      })()}
-      <input type="date" id="np-data" value="${hoje()}">
-      <input id="np-valor" type="number" step="0.01" placeholder="R$ valor" style="width:120px">
-      <input id="np-desc" placeholder="observação (opcional — RPV, honorários…)" style="flex:1;min-width:160px">
-      <button onclick="novoPgto()">💵 Registrar</button>
+// F179 · Honorários no estilo da Análise de Direito: quatro quadros de
+// resumo, a tabela dos lançamentos com a situação de cada um, e ao lado o
+// contrato (o que o pré-caso ou a espécie dizem) e os casos em recebimento.
+// Os gatilhos são os de antes: data-recebe, data-confere, novoPgto,
+// data-prazo e data-fase.
+function situacaoPgto(p, proxId){
+  if(p.status==="cancelado") return ["cancelado", "cinza"];
+  if(p.status!=="aberto") return ["recebido", "ok"];
+  if(!p.vencimento) return ["a vencer", "cinza"];
+  const d = diasAte(p.vencimento);
+  if(d < 0) return [`vencido há ${-d} dia${d===-1?"":"s"}`, "venc"];
+  if(p.id===proxId) return [d===0 ? "vence hoje" : `vence em ${d} dia${d===1?"":"s"}`, "prox"];
+  return ["a vencer", "cinza"];
+}
+function contratoDoCliente(c, ks){
+  const pcs = c ? precasosDe(c).filter(pc=>!pc.so_lembrete && pc.especie!==ESPECIE_PAGAMENTOS) : [];
+  const pc = pcs.find(x=>x.honorarios) || pcs[0] || null;
+  const k = (ks||[]).find(x=>x.fase!=="encerrado") || (ks||[])[0];
+  const esp = (pc && pc.especie) || (k && (k.beneficio || nomeDaEspecie(k.especie))) || "";
+  if(!pc && !k) return null;
+  const vr = variantePorEspecie(esp);
+  return {ajuste: pc && pc.honorarios || "", padrao: HONOR_RESUMO[vr] || "", especie: esp};
+}
+function painelPagamentosFicha(ks, ands, pgs, pagK, c){
+  const validos = pgs.filter(p=>p.status!=="cancelado");
+  const recebidos = validos.filter(p=>p.status!=="aberto");
+  const abertos = validos.filter(p=>p.status==="aberto");
+  const soma = l => l.reduce((t,p)=>t+(Number(p.valor)||0), 0);
+  const prox = abertos.filter(p=>p.vencimento && p.vencimento>=hoje())
+    .sort((x,y)=>x.vencimento.localeCompare(y.vencimento))[0]
+    || abertos.filter(p=>p.vencimento).sort((x,y)=>x.vencimento.localeCompare(y.vencimento))[0];
+  const ct = contratoDoCliente(c, ks);
+  const dataDe = p => p.pago_em || p.vencimento || "";
+  const linhas = [...pgs].sort((x,y)=>dataDe(x).localeCompare(dataDe(y)));
+  const parc = c ? parceriaDe(c, ks) : "";
+  return `<div class="adr hon">
+    <section class="hon-resumo" aria-label="Resumo dos honorários">
+      <div class="adr-tile adr-t-texto"><span class="adr-tile-rot">Contratado</span>
+        <span class="adr-tile-val">${ct ? (ct.ajuste ? "Ajuste combinado" : "Padrão do escritório") : "—"}</span>
+        <span class="adr-tile-sub">${ct ? esc(ct.ajuste || ct.padrao) : "sem contrato registrado"}</span></div>
+      <div class="adr-tile hon-t-rec"><span class="adr-tile-rot">Recebido</span>
+        <span class="adr-tile-val">${moeda(soma(recebidos))}</span>
+        <span class="adr-tile-sub">${recebidos.length} de ${validos.length} lançamento${validos.length===1?"":"s"}</span></div>
+      <div class="adr-tile"><span class="adr-tile-rot">A receber</span>
+        <span class="adr-tile-val">${moeda(soma(abertos))}</span>
+        <span class="adr-tile-sub">${abertos.length} em aberto</span></div>
+      <div class="adr-tile hon-t-prox"><span class="adr-tile-rot">Próximo vencimento</span>
+        <span class="adr-tile-val">${prox ? fmt(prox.vencimento) : "—"}</span>
+        <span class="adr-tile-sub">${prox ? `${esc(prox.descricao&&prox.descricao!=="Recebimento"?prox.descricao:"lançamento")} · ${moeda(prox.valor)}` : "nada em aberto com data"}</span></div>
+    </section>
+    <div class="adr-colunas">
+      <section class="adr-card adr-col-larga hon-lanc" aria-labelledby="hon-lanc-t">
+        <div class="adr-cab"><h3 class="adr-h" id="hon-lanc-t">Lançamentos</h3></div>
+        ${linhas.length ? `<div class="hon-tab-cx"><table class="hon-tab">
+          <thead><tr><th scope="col">Data</th><th scope="col">Origem</th><th scope="col" class="hon-num">Valor</th>
+            <th scope="col">Situação</th><th scope="col"><span class="sr-so">Ação</span></th></tr></thead>
+          <tbody>${linhas.map(p=>{
+            const cfs=p.conferencias||[];
+            const jaConferi=cfs.some(cf=>cf.c===eu.id);
+            const [sit, cor] = situacaoPgto(p, prox && prox.id);
+            return `<tr class="pgto" data-pg="${p.id}">
+              <td class="hon-data">${dataDe(p) ? fmt(dataDe(p)) : "—"}</td>
+              <td class="desc">${p.descricao&&p.descricao!=="Recebimento"?esc(p.descricao):"Recebimento"}
+                <div class="hon-vinc">${vinculoDaParcela(p, ks)}
+                <span class="cadeia">${cfs.map((cf,i)=>{const co=D.colPorId.get(cf.c);
+                  return `<span class="conf-et" title="${co?esc(co.nome):"?"} ${i===0?"recebeu":"conferiu"} em ${fmtTS(cf.em)}">
+                    <span class="avatar mini" style="background:${co?co.cor:"#a19f9d"}">${co?esc(co.inicial):"·"}</span>
+                    <small>${i===0?"recebeu":"conferiu"} ${fmtTS(cf.em).slice(0,5)}</small></span>`;}).join(`<span class="conf-seta">→</span>`)}</span></div></td>
+              <td class="valor hon-num">${moeda(p.valor)}</td>
+              <td><span class="hon-sit hon-${cor}">${sit}</span></td>
+              <td class="hon-acao">${p.status==="aberto"?`<button class="adr-bt" data-recebe="${p.id}">recebido</button>`:
+                p.status!=="cancelado" && !jaConferi?`<button class="adr-bt" data-confere="${p.id}">conferi</button>`:""}</td>
+            </tr>`;}).join("")}</tbody></table></div>`
+          : "<p class='meio-sub'>Nenhum recebimento registrado ainda.</p>"}
+        <details class="hon-novo" ${linhas.length?"":"open"}>
+          <summary class="adr-bt adr-primario">+ lançamento</summary>
+          <div class="form-linha" style="align-items:center">
+          ${(()=>{
+            // com mais de um caso o lançamento pergunta de qual benefício é —
+            // sem isso, o dinheiro entrava sempre no primeiro da lista
+            const casos=ks.filter(k=>k.fase!=="pagamento");
+            if(casos.length>1)
+              return `<select id="np-caso" class="pg-caso" style="max-width:230px" title="benefício/serviço deste pagamento">
+                <option value="">— de qual benefício? (opcional) —</option>
+                ${casos.map(k=>`<option value="${k.id}">${esc(tituloCaso(k))}</option>`).join("")}</select>`;
+            return `<input type="hidden" id="np-caso" value="${(pagK[0]||casos.find(k=>k.fase!=="encerrado")||casos[0]||{}).id||""}">`;
+          })()}
+            <label class="adr-campo">Data<input type="date" id="np-data" value="${hoje()}"></label>
+            <label class="adr-campo">Valor<input id="np-valor" type="number" step="0.01" placeholder="R$" style="width:120px"></label>
+            <label class="adr-campo" style="flex:1;min-width:160px">Origem<input id="np-desc" placeholder="RPV, honorários, 1ª parcela…"></label>
+            <button class="adr-bt adr-primario" onclick="novoPgto()">Registrar</button>
+          </div>
+          <p class="adr-nota">Data de hoje ou passada = dinheiro <strong>recebido</strong> (você entra como quem recebeu).
+            Data futura = <strong>a receber</strong> (vencimento). Quem pegar o dinheiro depois clica <strong>conferi</strong>:
+            a corrente mostra quem recebeu e quem conferiu, com a data de cada um.</p>
+        </details>
+      </section>
+      <aside class="adr-col-lado">
+        <section class="adr-card" aria-labelledby="hon-ct-t">
+          <h3 class="adr-h" id="hon-ct-t">Contrato</h3>
+          ${ct ? `<dl class="hon-dl">
+            ${ct.especie?`<dt>Serviço</dt><dd>${esc(ct.especie)}</dd>`:""}
+            <dt>Modalidade</dt><dd>${esc(ct.padrao)}</dd>
+            ${ct.ajuste?`<dt>Ajuste combinado</dt><dd>${esc(ct.ajuste)}</dd>`:""}
+            <dt>Parceria</dt><dd>${parc?esc(parc):"sem parceria"}</dd>
+          </dl>` : `<p class="adr-nota">Nenhum caso nem atendimento com espécie: o contrato sai quando houver.</p>`}
+        </section>
+        ${pagK.map(k=>{
+          const ult=ands.filter(a=>a.caso_id===k.id)[0];
+          const uco=ult&&D.colPorId.get(ult.autor_id);
+          const lan=pgs.filter(p=>p.caso_id===k.id);
+          return `<section class="adr-card hon-receb" aria-label="Em recebimento: ${esc(tituloCaso(k))}">
+            <div class="adr-cab"><h3 class="adr-h">Em recebimento</h3><span class="adr-chip">${esc(listaDe(k))}</span></div>
+            <div><b>${esc(tituloCaso(k))}</b>
+              ${k.nb?`<span class="chip neutro">NB ${esc(k.nb)}</span>`:""}
+              ${k.processo?`<span class="chip neutro">proc. ${esc(k.processo)}</span>`:""}
+              ${k.resultado?`<span class="chip fase">${esc(k.resultado)}</span>`:""}</div>
+            <p class="adr-nota">Já venceram as fases; falta o dinheiro entrar.${lan.length?"":" Nenhum valor lançado ainda."}</p>
+            <label class="adr-campo lembrar-caixa" title="quando conferir se o pagamento saiu">Lembrar em
+              <input type="date" value="${k.prazo||""}" data-prazo="${k.id}"></label>
+            <label class="adr-campo">Fase
+              <select data-fase="${k.id}">${Object.entries(NOME_FASE).map(([f,n])=>`<option value="${f}" ${k.fase===f?"selected":""}>${n}</option>`).join("")}</select></label>
+            ${ult?`<div class="ult-and">Último andamento: ${fmtTS(ult.criado_em)}${uco?" ("+esc(uco.nome)+")":""} — ${esc(ult.texto.slice(0,110))}${ult.texto.length>110?"…":""}</div>`:""}
+          </section>`;}).join("")}
+      </aside>
     </div>
-    <p style="font-size:12px;color:var(--cinza)">Data de hoje ou passada = dinheiro <strong>recebido</strong> (você entra como quem recebeu).
-      Data futura = <strong>a receber</strong> (vencimento). Quem pegar o dinheiro depois clica <strong>✔ conferi</strong> —
-      a corrente mostra quem recebeu e quem conferiu, com a data de cada um.</p>`;
+  </div>`;
 }
 
 // aba 5 da ficha — extraída da pintarFicha (era um literal de 22 linhas)
@@ -22692,9 +22880,20 @@ function rotuloValor(campo, v){
   return (cfg.ops.find(([k])=>k===v)||[null,v])[1];
 }
 // quais campos das peças estão em branco — o contador do título e o title
+function cadFaltandoChaves(c){ return CAD_PRECISA.filter(k=>!valCli(c,k)); }
 function cadFaltando(c){
-  return CAD_PRECISA.filter(k=>!valCli(c,k))
+  return cadFaltandoChaves(c)
     .map(k=>ROT_CAMPO[k] || ((CAD_CAMPOS[k]||{}).rot||k).toLowerCase());
+}
+// F180 · o chip vermelho do topo leva ao campo e já abre o editor dele
+function abrirCampoFaltando(campo, cliId){
+  const alvo = document.getElementById(({cpf:"campo-cpf", dn:"campo-dn", nome:"campo-nome", endereco:"campo-endereco"})[campo] || "cad-"+campo);
+  if(!alvo) return;
+  const linha = alvo.closest(".cad-campo") || alvo;
+  if(linha.scrollIntoView) linha.scrollIntoView({block:"center", behavior:"smooth"});
+  if(campo==="endereco") editarEndereco(cliId);
+  else if(["cpf","dn","nome"].includes(campo)) editarCampo(campo, cliId);
+  else editarCad(campo, cliId);
 }
 // grava na coluna; banco sem a coluna (PGRST204/42703) cai em campos.civil
 async function salvarCliCampo(cliId, campo, valor){
@@ -22821,7 +23020,7 @@ function cadCampo(c, campo, colunas, conteudo, opcoes){
   return `<div class="cad-campo cad-c${colunas}${vazio?" vazio":""}"
       ${o.editavel===false?"":`onclick="if(!this.querySelector('#cad-ed'))editarCad('${campo}','${c.id}')" style="cursor:pointer"`}>
     <label>${esc(rot)}${o.editavel===false?"":`<button class="cad-lap" title="alterar">${CAD_IC.lapis}</button>`}</label>
-    <div class="cad-v${o.grande?" grande":""}" id="cad-${campo}">${vazio?"clique para preencher":v}</div>
+    <div class="cad-v${o.grande?" grande":""}" id="cad-${campo}">${vazio?'<button type="button" class="cad-preencher">preencher</button>':v}</div>
   </div>`;
 }
 // RG e órgão emissor: um campo na tela, duas colunas no banco
@@ -22884,7 +23083,7 @@ function cadCampoEndereco(c){
       onclick="if(!this.querySelector('#end-cep'))editarEndereco('${c.id}')" style="cursor:pointer">
     <label>Endereço <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
     <div class="cad-v" id="campo-endereco" style="font-weight:500;font-size:14px">${
-      linha?esc(linha):"clique para preencher"}</div>
+      linha?esc(linha):'<button type="button" class="cad-preencher">preencher</button>'}</div>
   </div>`;
 }
 // sete campos no lugar, sem sair da grade — o mesmo caminho que o RG já usa
@@ -23174,7 +23373,7 @@ function cadCampoSenha(c, tipo, rot, cr, colunas, extra){
       <button class="cad-mini" title="copiar — fica registrado quem copiou" onclick="copiarCred('${cr.id}')">${CAD_IC.copiar}copiar</button>
       <button class="cad-mini" title="ver — fica registrado" onclick="verCred('${cr.id}')">${CAD_IC.olho}ver</button>
       <button class="cad-mini" title="guardar uma senha nova no lugar desta" onclick="trocarSenha('${c.id}','${tipo}','${cr.id}')">${CAD_IC.lapis}trocar</button>`
-    :"clique para cadastrar"}</div>
+    :'<button type="button" class="cad-preencher">cadastrar</button>'}</div>
   </div>`;
 }
 // a pasta do cliente fecha a grade: é onde o documento assinado vai parar
@@ -23290,24 +23489,28 @@ function cadCampoCnis(c){
 }
 const parentesAbertos = new Set();   // F164 · clientes com o cartão Parentes ou amigos aberto
 function fichaIdentificacao(c, creds){
-  const falta = cadFaltando(c);
+  const falta = cadFaltandoChaves(c);
+  const rotFalta = cadFaltando(c);
+  const pct = Math.round((CAD_PRECISA.length - falta.length) * 100 / CAD_PRECISA.length);
   const tels = telefonesDe(c);
   const idade = idadeDe(c.dn);
   const credInss = (creds||[]).find(cr=>cr.tipo==="meu_inss");
   const outrasCreds = (creds||[]).filter(cr=>cr.tipo!=="meu_inss");
   const ks = D.casosDoCliente.get(c.id) || [];
-  return `<div class="cad-cartao">
-    <div class="cad-tit"><span class="cad-ic">${CAD_IC.pessoa}</span>Dados civis
-      ${falta.length?`<span class="cad-cont" title="faltam: ${esc(falta.join(", "))}">${
-        falta.length} campo${falta.length>1?"s":""} em branco</span>`
-      :`<span class="cad-cont cad-ok">completo</span>`}</div>
-    <div class="cad-grade">
-      ${/* O nome ganha a linha inteira, e a linha seguinte junta o que mais se
-           copia num atendimento: CPF, senha do Meu INSS e nascimento, lado a
-           lado. Antes a senha era o penúltimo campo do cartão, e entrar no Meu
-           INSS pedia copiar em cima, rolar até o fim e copiar de novo. */""}
+  // F180 · o topo diz quanto do cadastro está pronto para as peças; cada
+  // chip vermelho é um campo em branco e leva ao editor dele. Os campos se
+  // agrupam em três cartões (Documentos e acesso, Dados pessoais, Contato),
+  // uma linha por campo: rótulo à esquerda, valor ou ação à direita.
+  return `<div class="cad-cartao idf">
+    <section class="idf-comp" aria-label="Cadastro completo?">
+      <span class="cad-cont${falta.length?"":" cad-ok"}">${falta.length?`Cadastro ${pct}% completo`:"Cadastro completo"}</span>
+      <span class="adr-barra" role="progressbar" aria-label="cadastro preenchido" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><span style="width:${pct}%"></span></span>
+      ${falta.length?`<span class="idf-chips">${falta.map((k,i)=>`<button type="button" class="idf-chip" data-falta="${k}"
+        onclick="abrirCampoFaltando('${k}','${c.id}')">${esc(rotFalta[i])}</button>`).join("")}</span>`:""}
+    </section>
+    <div class="cad-grade idf-grade">
       ${/* F127 · a parceria em VERDE ao lado do nome, com a lista para trocar */""}
-      <div class="cad-campo cad-c12" onclick="if(!this.querySelector('#ed-campo'))editarCampo('nome','${c.id}')" style="cursor:pointer">
+      <div class="cad-campo cad-c12 idf-nome" onclick="if(!this.querySelector('#ed-campo'))editarCampo('nome','${c.id}')" style="cursor:pointer">
         <label>Nome completo <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
         <div class="cad-v grande" id="campo-nome">${esc(c.nome)}
           ${representanteDe(c)?"":`<button class="cad-mini" title="inserir o representante legal (curador, mãe, tutor)"
@@ -23316,58 +23519,62 @@ function fichaIdentificacao(c, creds){
           <span class="cad-parc">${chipParceria(c, ks)}${seletorParceria(c, ks, "parc-sel-id")}</span></div>
         ${cadLinhaRepresentante(c)}
       </div>
-      ${/* CPF e nascimento pediam o lápis; o resto da grade aceita clique no
-           cartão inteiro. Alvo de 4px contra alvo de 240px, na mesma tela. */""}
-      <div class="cad-campo cad-c4${c.cpf?"":" vazio"}"
-        onclick="if(!this.querySelector('#ed-campo'))editarCampo('cpf','${c.id}')" style="cursor:pointer">
-        <label>CPF <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
-        <div class="cad-v" id="campo-cpf">${c.cpf?fmtCpf(c.cpf):"clique para preencher"}
-          ${c.cpf?`<button class="cad-mini" onclick="event.stopPropagation();copiar('${c.cpf}','CPF copiado')">${CAD_IC.copiar}copiar</button>`:""}</div>
-      </div>
-      ${cadCampoSenha(c, "meu_inss", "Senha Meu INSS", credInss, 4)}
 
-      <div class="cad-campo cad-c4${c.dn?"":" vazio"}"
-        onclick="if(!this.querySelector('#ed-campo'))editarCampo('dn','${c.id}')" style="cursor:pointer">
-        <label>Nascimento <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
-        <div class="cad-v" id="campo-dn">${c.dn?`${c.dn.slice(0,2)}.${c.dn.slice(2,4)}.${c.dn.slice(4)}
-          ${idade==null?"":`<span class="cad-apoio">${idade} anos</span>`}`:"clique para preencher"}</div>
-      </div>
-      ${cadCampo(c, "sexo", 4)}
-      ${cadCampo(c, "estado_civil", 4)}
-      ${cadCampo(c, "profissao", 4)}
-
-      <div class="cad-campo cad-c6${tels.length?"":" vazio"}">
-        <label>Telefones</label>
-        ${tels.map((t,i)=>`<div class="cad-tel">
-          <span class="cad-tel-n">${esc(t.numero||"")}</span>
-          ${t.zap?`<span class="cad-tag">WhatsApp</span>`
-            :`<button class="cad-mini" title="marcar como o WhatsApp do cliente" onclick="marcarZap('${c.id}',${i})">${CAD_IC.zap}é o WhatsApp</button>`}
-          ${t.obs?`<span class="cad-tel-obs">${esc(t.obs)}</span>`:""}
-          <a class="cad-mini" style="margin-left:auto;text-decoration:none" target="_blank" rel="noopener"
-            href="https://wa.me/55${String(t.numero||"").replace(/\D/g,"")}">abrir conversa</a>
-          <button class="cad-lap" title="remover" onclick="removerTelefone('${c.id}',${i})">${CAD_IC.fechar}</button>
-        </div>`).join("") || `<div class="cad-v">nenhum telefone anotado</div>`}
-        <div class="cad-linha">
-          <input id="cad-tel-novo" placeholder="(16) 99999-0000" style="width:130px"
-            onkeydown="if(event.key==='Enter'){event.preventDefault();novoTelefone('${c.id}');}">
-          <input id="cad-tel-obs" placeholder="de quem é (recado, filha…)" style="flex:1;min-width:110px"
-            onkeydown="if(event.key==='Enter'){event.preventDefault();novoTelefone('${c.id}');}">
-          <button class="cad-mini" onclick="novoTelefone('${c.id}')">${CAD_IC.mais}acrescentar</button>
+      <section class="idf-card" aria-labelledby="idf-doc">
+        <h3 class="adr-h" id="idf-doc">Documentos e acesso</h3>
+        <div class="cad-campo cad-c4${c.cpf?"":" vazio"}"
+          onclick="if(!this.querySelector('#ed-campo'))editarCampo('cpf','${c.id}')" style="cursor:pointer">
+          <label>CPF <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
+          <div class="cad-v" id="campo-cpf">${c.cpf?fmtCpf(c.cpf):'<button type="button" class="cad-preencher">preencher</button>'}
+            ${c.cpf?`<button class="cad-mini" onclick="event.stopPropagation();copiar('${c.cpf}','CPF copiado')">${CAD_IC.copiar}copiar</button>`:""}</div>
         </div>
-        ${ultimoZap()}
-      </div>
+        ${cadCampoSenha(c, "meu_inss", "Senha Meu INSS", credInss, 4)}
+        ${cadCampo(c, "pis_nit", 4, undefined, {rot:"PIS / NIT (todos)"})}
+        ${cadCampoCnis(c)}
+        ${outrasCreds.map(cr=>cadCampoSenha(c, cr.tipo, "Senha "+esc(cr.tipo.replace("_"," ")), cr)).join("")}
+        ${cadCampoPasta(c)}
+      </section>
 
-      ${cadCampoEndereco(c)}
+      <section class="idf-card" aria-labelledby="idf-pes">
+        <h3 class="adr-h" id="idf-pes">Dados pessoais</h3>
+        <div class="cad-campo cad-c4${c.dn?"":" vazio"}"
+          onclick="if(!this.querySelector('#ed-campo'))editarCampo('dn','${c.id}')" style="cursor:pointer">
+          <label>Nascimento <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
+          <div class="cad-v" id="campo-dn">${c.dn?`${c.dn.slice(0,2)}.${c.dn.slice(2,4)}.${c.dn.slice(4)}
+            ${idade==null?"":`<span class="cad-apoio">${idade} anos</span>`}`:'<button type="button" class="cad-preencher">preencher</button>'}</div>
+        </div>
+        ${cadCampo(c, "sexo", 4)}
+        ${cadCampo(c, "estado_civil", 4)}
+        ${cadCampo(c, "profissao", 4)}
+        ${cadCampo(c, "nome_mae", 4)}
+        ${/* F163 · o representante legal subiu para o cartão do nome */""}
+        ${cadCampo(c, "origem", 4)}
+      </section>
 
-      ${cadCampo(c, "nome_mae", 4)}
-      ${cadCampo(c, "pis_nit", 4, undefined, {rot:"PIS / NIT (todos)"})}
-      ${cadCampoCnis(c)}
-
-      ${/* F163 · o representante legal subiu para o cartão do nome */""}
-      ${cadCampo(c, "origem", 4)}
-
-      ${outrasCreds.map(cr=>cadCampoSenha(c, cr.tipo, "Senha "+esc(cr.tipo.replace("_"," ")), cr)).join("")}
-      ${cadCampoPasta(c)}
+      <section class="idf-card" aria-labelledby="idf-con">
+        <h3 class="adr-h" id="idf-con">Contato</h3>
+        <div class="cad-campo cad-c6 idf-bloco${tels.length?"":" vazio"}">
+          <label>Telefones</label>
+          ${tels.map((t,i)=>`<div class="cad-tel">
+            <span class="cad-tel-n">${esc(t.numero||"")}</span>
+            ${t.zap?`<span class="cad-tag">WhatsApp</span>`
+              :`<button class="cad-mini" title="marcar como o WhatsApp do cliente" onclick="marcarZap('${c.id}',${i})">${CAD_IC.zap}é o WhatsApp</button>`}
+            ${t.obs?`<span class="cad-tel-obs">${esc(t.obs)}</span>`:""}
+            <a class="cad-mini" style="margin-left:auto;text-decoration:none" target="_blank" rel="noopener"
+              href="https://wa.me/55${String(t.numero||"").replace(/\D/g,"")}">abrir conversa</a>
+            <button class="cad-lap" title="remover" aria-label="remover ${esc(t.numero||"")}" onclick="removerTelefone('${c.id}',${i})">${CAD_IC.fechar}</button>
+          </div>`).join("") || `<div class="cad-v">nenhum telefone anotado</div>`}
+          <div class="cad-linha">
+            <input id="cad-tel-novo" placeholder="(16) 99999-0000" aria-label="telefone novo" style="width:130px"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();novoTelefone('${c.id}');}">
+            <input id="cad-tel-obs" placeholder="de quem é (recado, filha…)" aria-label="de quem é o telefone" style="flex:1;min-width:110px"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();novoTelefone('${c.id}');}">
+            <button class="cad-mini" onclick="novoTelefone('${c.id}')">${CAD_IC.mais}telefone</button>
+          </div>
+          ${ultimoZap()}
+        </div>
+        ${cadCampoEndereco(c)}
+      </section>
     </div>
   </div>`;
 }

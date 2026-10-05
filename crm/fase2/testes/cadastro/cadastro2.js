@@ -146,7 +146,7 @@ FIX.credenciais = [{ id: "cr1", cliente_id: CLI_CHEIO, tipo: "meu_inss",
   await p.evaluate(() => { subCad = "identificacao"; pintarFicha(); });
   await p.waitForTimeout(400);
   const pos = await p.evaluate(() => {
-    const campos = [...document.querySelectorAll('.painel[data-p="0"].ativo .cad-grade > .cad-campo')];
+    const campos = [...document.querySelectorAll('.painel[data-p="0"].ativo .cad-grade .cad-campo')];
     return campos.map(x => { const r = x.getBoundingClientRect();
       const l = x.querySelector("label");
       // innerText ignora texto de elemento cujo estilo o esconde; textContent
@@ -157,10 +157,12 @@ FIX.credenciais = [{ id: "cr1", cliente_id: CLI_CHEIO, tipo: "meu_inss",
   const acha = rx => pos.find(c => rx.test(c.rot));
   const cpf = acha(/^CPF/), senha = acha(/Senha Meu INSS/), nome = acha(/Nome completo/);
   conf(`os três campos existem (${pos.length} campos na grade)`, cpf && senha && nome);
-  conf(`CPF e senha estão na MESMA linha (y ${cpf && cpf.y} e ${senha && senha.y})`,
-    cpf && senha && Math.abs(cpf.y - senha.y) <= 4);
-  conf(`e são vizinhos, sem nada entre eles (${senha && cpf && senha.x - (cpf.x + cpf.w)}px de distância)`,
-    cpf && senha && senha.x > cpf.x && senha.x - (cpf.x + cpf.w) < 20);
+  // F180 · os campos viraram linhas do cartão Documentos e acesso: a senha
+  // fica logo abaixo do CPF, na mesma coluna
+  conf(`F180 · CPF e senha na mesma coluna (x ${cpf && cpf.x} e ${senha && senha.x})`,
+    cpf && senha && Math.abs(cpf.x - senha.x) <= 4);
+  conf(`F180 · e a senha vem logo abaixo do CPF (posições ${pos.indexOf(cpf)} e ${pos.indexOf(senha)})`,
+    cpf && senha && senha.y > cpf.y && pos.indexOf(senha) === pos.indexOf(cpf) + 1);
   conf(`o nome ficou acima dos dois, com a largura inteira (${nome && nome.w}px)`,
     nome && cpf && nome.y < cpf.y && nome.w > cpf.w * 2);
   conf("os dois têm botão de copiar",
@@ -173,7 +175,7 @@ FIX.credenciais = [{ id: "cr1", cliente_id: CLI_CHEIO, tipo: "meu_inss",
   // no celular a grade vira uma coluna: os dois continuam um embaixo do outro
   const cel = await p.evaluate(() => {
     document.getElementById("app").classList.add("celular");
-    const cs = [...document.querySelectorAll('.painel[data-p="0"].ativo .cad-grade > .cad-campo')];
+    const cs = [...document.querySelectorAll('.painel[data-p="0"].ativo .cad-grade .cad-campo')];
     const idx = r => cs.findIndex(x => r.test((x.querySelector("label") || {}).textContent || ""));
     const a = idx(/^CPF/), b = idx(/Senha Meu INSS/);
     document.getElementById("app").classList.remove("celular");
