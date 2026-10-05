@@ -49,7 +49,7 @@ A Portaria DPMF/DIRBEN não pode reduzir o alcance da Lei nem de precedente vinc
 
 Toda exigência da Portaria que extrapole a Lei é argumento de derrotabilidade em recurso ou ação.
 
-## 4. Portaria DPMF/INSS 990/2022. Acerto de CNIS, indicadores e RAC
+## 4. Portaria DIRBEN/INSS 990/2022. Acerto de CNIS, indicadores e RAC
 
 Disciplina os procedimentos de acerto do Cadastro Nacional de Informações Sociais (CNIS), os indicadores que sinalizam pendências e os formulários de Requerimento de Atualização Cadastral (RAC).
 
@@ -79,7 +79,7 @@ Portaria 1316/2025. Alterações pontuais.
 
 Aplicação transversal. Todo análise de benefício envolve verificação prévia do CNIS, identificação de indicadores e eventual acerto via RAC.
 
-## 5. Portaria DPMF/INSS 991/2022. Concessão e revisão administrativa de benefícios
+## 5. Portaria DIRBEN/INSS 991/2022. Concessão e revisão administrativa de benefícios
 
 Disciplina os procedimentos de concessão e revisão administrativa de benefícios.
 
@@ -95,7 +95,7 @@ Arts. 61 a 100. Diretrizes específicas por espécie de benefício.
 
 Aplicação transversal. Toda análise de benefício é orientada pela Portaria 991.
 
-## 6. Portaria DPMF/INSS 992/2022. Manutenção de Benefícios e Serviços (Livro III)
+## 6. Portaria DIRBEN/INSS 992/2022. Manutenção de Benefícios e Serviços (Livro III)
 
 CORREÇÃO. A Portaria 992/2022 NÃO trata de cálculo de RMI. Aprova o Livro III da regulamentação consolidada da IN 128/2022, com tema MANUTENÇÃO de benefícios e serviços. 330 artigos.
 
@@ -193,9 +193,9 @@ Aplicação. Análise do BPC para PCD. Detalhamento em `base-bpc-impedimento-lon
 
 | Tema | Portaria | Skill detalhada |
 |---|---|---|
-| CNIS, indicadores, RAC | DPMF/INSS 990/2022 (e alterações) | cnis-acerto-indicadores |
-| Concessão e revisão administrativa | DPMF/INSS 991/2022 | aplicação transversal |
-| Manutenção de benefícios (folha, descontos, suspensão, cessação) | DPMF/INSS 992/2022 (Livro III) | (transversal) |
+| CNIS, indicadores, RAC | DIRBEN/INSS 990/2022 (e alterações) | cnis-acerto-indicadores |
+| Concessão e revisão administrativa | DIRBEN/INSS 991/2022 | aplicação transversal |
+| Manutenção de benefícios (folha, descontos, suspensão, cessação) | DIRBEN/INSS 992/2022 (Livro III) | (transversal) |
 | Cálculo da RMI | IN 128/2022 e Portaria 991/2022 (Livro II - Reconhecimento) | base-calculo-rmi-ec103 |
 | Indicação de Erro Administrativo (IEA) | DIRBEN 1056, 1231, 1309, 1318 | base-erro-administrativo-iea-13975 |
 | Reabilitação Profissional | DIRBEN 1310/2025, 1333/2026 | base-reabilitacao-profissional-portaria-1310-1333 |
@@ -204,7 +204,7 @@ Aplicação. Análise do BPC para PCD. Detalhamento em `base-bpc-impedimento-lon
 | Análise Documental B91 | Conjunta MPS/INSS 14/2026 | analise-documental-incapacidade |
 | Análise Documental B94 | Conjunta MPS/INSS 15/2026 | analise-documental-incapacidade |
 | Teleperícia | DPMF/INSS 19/2026 | analise-documental-incapacidade |
-| Autodeclaração rural | DPMF/INSS 990 arts. 92-94 (e alterações) | base-segurado-especial-autodeclaracao-arts-92-93-94 |
+| Autodeclaração rural | DIRBEN/INSS 990 arts. 92-94 (e alterações) | base-segurado-especial-autodeclaracao-arts-92-93-94 |
 | EPI (CA) | MTP 672/2021 | base-especial-epi, base-tema383-tnu-fundacentro-epi-biologicos |
 | PCMSO | MTP 6734/2020 | (transversal em saúde ocupacional) |
 | IF-BrA aposentadoria PCD | Interministerial 1/2014 (auditoria 03/10/2026) | base-pcd-if-bra-metodologia |

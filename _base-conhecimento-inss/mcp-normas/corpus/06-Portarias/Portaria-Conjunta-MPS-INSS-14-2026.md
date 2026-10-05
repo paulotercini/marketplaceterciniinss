@@ -1,0 +1,26 @@
+---
+fonte_oficial: https://www.in.gov.br/web/dou/-/portaria-conjunta-mps/inss-n-14-de-23-de-marco-de-2026-694772597
+data_download: 2026-10-04
+hash_sha256: dd719ad750665ba5ffb0675bf31a959e34b8d768e7ea86569caf339b5f8219c2
+metodo_captura: coletor.py, HTTP com User-Agent de navegador
+ultima_alteracao_conhecida: não identificada (sem marcador de alteração no texto)
+total_artigos_aprox: 3
+---
+
+# Portaria Conjunta MPS/INSS nº 14, de 23/03/2026
+
+PORTARIA CONJUNTA MPS/INSS Nº 14, DE 23 DE MARÇO DE 2026
+
+Autoriza, em caráter excepcional e transitório, a ampliação do prazo máximo de duração do auxílio por incapacidade temporária concedido por meio de análise documental.
+
+O MINISTRO DE ESTADO DA PREVIDÊNCIA SOCIAL e o PRESIDENTE DO INSTITUTO NACIONAL DO SEGURO SOCIAL, no uso das atribuições que lhes conferem, respectivamente, o art. 87, parágrafo único, inciso II, da Constituição da República, o Decreto nº 11.356, de 1º de janeiro de 2023, e o Decreto nº 10.995, de 14 de março de 2022, tendo em vista o disposto no art. 60, § 11-I, da Lei nº 8.213, de 24 de julho de 1991, bem como o contido nos Processos nº 35014.060869/2026-86 e nº 10128.003950/2026-51, resolvem:
+
+Art. 1º Esta Portaria Conjunta autoriza, em caráter excepcional e transitório, a ampliação do prazo máximo de duração do auxílio por incapacidade temporária concedido por meio de análise documental, conforme previsto no art. 60, § 11-I, da Lei nº 8.213, de 24 de julho de 1991.
+
+Art. 2º Os beneficiários que tiverem auxílios por incapacidade temporária concedidos por meio de análise documental, ainda que de forma não consecutiva, não poderão ter a soma de duração dos respectivos benefícios superior a 90 (noventa) dias.
+
+Parágrafo único. A ampliação a que se refere esta Portaria Conjunta terá vigência por 180 (cento e oitenta) dias.
+
+Art. 3º Esta Portaria Conjunta entra em vigor na data de sua publicação.
+
+WOLNEY QUEIROZ MACIEL

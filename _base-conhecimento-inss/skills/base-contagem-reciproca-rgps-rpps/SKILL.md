@@ -23,7 +23,7 @@ IN 128/2022. Regras operacionais sobre CTC, desaverbação e cômputo.
 
 EC 103/2019. Regras de transição específicas para servidores públicos federais e teto.
 
-Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
 ## Marco jurisprudencial
 
