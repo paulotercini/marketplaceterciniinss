@@ -95,7 +95,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       nivel1: !!r.querySelector(".lc-numeros"), semRegua: !document.querySelector(".regua-caso"), semCartaoFora: !document.querySelector(".painel[data-p='2'] > .fatos-processo"),
       semPrazoFatalSolto: !/Prazo fatal do caso/.test(document.querySelector(".painel[data-p='2']").textContent) };
   });
-  conf("uma linha só: o nome do pedido (sem o código), DER em dd/mm/aaaa, tramitação e verificação", /^Aposentadoria por idade/.test(lc.txt) && !/^B41/.test(lc.txt) && /DER 12\/05\/2024/.test(lc.txt) && /TRAMITAÇÃO INSS/i.test(lc.txt) && /VERIFICAÇÃO Manual/i.test(lc.txt));
+  conf("uma linha só: o nome do pedido (sem o código), DER em dd/mm/aaaa, tramitação e verificação", /^(B41 · INSS )?Aposentadoria por idade/.test(lc.txt) && /DER 12\/05\/2024/.test(lc.txt) && /TRAMITAÇÃO INSS/i.test(lc.txt) && /VERIFICAÇÃO Manual/i.test(lc.txt));
   // ── F113 · a espécie pela janela, com subespécies e pedido à mão ─────────
   conf("a canetinha ao lado do nome abre a janela das espécies", await p.evaluate(() => /escolherEspecie/.test((document.querySelector(".lc-topo .lc-ben + .lapis") || {}).getAttribute("onclick") || "")));
   await p.evaluate((id) => escolherEspecie(id), CASO1); await p.waitForTimeout(150);
@@ -201,8 +201,10 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       pin: (b => b && getComputedStyle(b).opacity)(document.querySelector('.timeline button[onclick^="abrirSeguimento"]')) };
   });
   // F143 · papel quente: cabeçalho em pedra clara (#EFEEEB) e compositor em #F3F2EE
-  conf("a ficha é branca e só o cabeçalho do cliente tem cor própria", ff.chao === "rgb(255, 255, 255)" && ff.topo === "rgb(239, 238, 235)");
-  conf("o compositor é um bloco leve, sem borda e sem o rótulo 'Hoje' (F112)", ff.escrever && ff.escrever.borda === "none" && ff.escrever.fundo === "rgb(243, 242, 238)" && !/Hoje/.test(ff.escrever.hoje));
+  // F182 · na aba Casos o chão é cinza (#F8F8F6) e os cartões são brancos, como no canvas
+  conf("a ficha tem chão próprio e só o cabeçalho do cliente tem cor própria", /rgb\((255, 255, 255|248, 248, 246)\)/.test(ff.chao) && ff.topo === "rgb(239, 238, 235)");
+  // F182 · o compositor virou cartão branco com borda, como no canvas
+  conf("o compositor é um cartão branco, sem o rótulo 'Hoje' (F112/F182)", ff.escrever && ff.escrever.fundo === "rgb(255, 255, 255)" && !/Hoje/.test(ff.escrever.hoje));
   // F112 · fechado: só tipos + Sugestões e o campo; aberto: prazo com Lembrar em ao lado, Atribuir para com as ferramentas e o Registrar
   const VIS = 'const vis = sel => { const e = document.querySelector(sel); return !!e && getComputedStyle(e).display !== "none" && e.getBoundingClientRect().height > 0; };';
   const fechado = await p.evaluate(`(() => { ${VIS}

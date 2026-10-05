@@ -15,7 +15,7 @@ const T1 = "t1820000-0000-0000-0000-000000000001";
 const DADOS = {
   ...FIX,
   colaboradores: [...FIX.colaboradores, { id: OUTRA, auth_id: "bbbb", nome: "Amanda Ficta", inicial: "A", cor: "#8A5300", papel: "colaborador", ativo: true }],
-  casos: FIX.casos.map(k => ({ ...k, etapa: "aguardando perícia" })),
+  casos: FIX.casos.map(k => ({ ...k, etapa: "aguardando perícia", prazo: d(20) })),
   andamentos: [
     { id: A1, caso_id: CASO1, autor_id: EU, origem: "app", texto: "⏰ [PRAZO " + d(20).split("-").reverse().join(".") + "] [EXIGÊNCIA] O que o INSS exigiu: declaração do empregador", criado_em: new Date(Date.now() - 3600e3).toISOString(), andamentos_lidos: [{ colaborador_id: EU }] },
     { id: A2, caso_id: CASO1, autor_id: OUTRA, origem: "app", texto: "Cliente avisado sobre a perícia.", criado_em: new Date(Date.now() - 7200e3).toISOString(), andamentos_lidos: [{ colaborador_id: EU }] },
