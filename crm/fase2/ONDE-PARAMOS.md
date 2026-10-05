@@ -2041,3 +2041,30 @@ tracejado está no botão) e `endereco.js` ("preencher").
   usa `abrirAnexo`, e trocar é anexar outro.
 Prova nova: `honorarios181.js` (21/21). Suíte: 104/109, falhando só as cinco
 de data (cnj71, extracoes, meudia123, paineis, planejado124).
+
+## 10.82 · F182 · Casos e anotações (canvas aprovado em 05.10.2026)
+Só no tema v10; fora dele nada muda.
+- Coluna do caso: `trilhaEtapas(k)` põe a trilha das etapas da fase
+  (`ETAPAS_POR_FASE`) entre o nome do pedido e a placa; clicar numa etapa
+  grava (`gravarEtapa`). `painelOutrasAbas(k)` ("Nas outras abas") mostra,
+  quando existem, a próxima perícia, a data do direito da última análise, os
+  documentos pendentes e o próximo honorário em aberto; `irOutraAba` leva à
+  aba (Perícias, Cadastro › Análise de Direito/Documentos, Honorários).
+- Compositor (`.esc-v12`): três chaves, Tarefa e Lembrete (as naturezas da
+  F116, `.tf-nt`, uma exclui a outra; clicar na acesa desliga e a anotação vai
+  sem tarefa) e Prazo fatal (o `#and-prazo-ck` dentro do rótulo, `pzToggle`).
+  Quem faz mostra o primeiro nome; Quando ganhou +3 dias (`tfDia` aceita
+  qualquer número de dias). A frase "Ao registrar" (`fraseRegistro`/
+  `pintarFrase`) acompanha cada clique e letra. Trava: chaves desligadas =
+  sem tarefa; lembrete sem pessoa é para quem escreve.
+- Cartão da anotação (`comentarioV12`): cabeçalho com autor, hora, tipo e o
+  chip "prazo fatal dd/mm" (o carimbo `⏰ [PRAZO …]` sai do texto); faixa de
+  cada tarefa (`tarefasCartao`, com o círculo `.tf-ok` para a sua); barra
+  Responder, Concluir tarefa, + prazo, Reagendar e ＋ tarefa. A resposta abre
+  no cartão (`caixaRespInline`): "concluir a tarefa ao responder" usa
+  `concluirDeVez` (com desfazer e baixa do prazo fatal), e o prazo adicional
+  (+5, +15, data) vira a próxima rodada; sem concluir, muda a data da tarefa
+  aberta ou, sem tarefa, cria uma para quem respondeu. Em v10, `vistos()`
+  ficou só com os vistos de leitura.
+Prova nova: `caso182.js` (16/16); `linha102.js` e `gestao160.js` ajustadas.
+Suíte: 106/110, falhando só as de data (cnj71, extracoes, paineis, planejado124).

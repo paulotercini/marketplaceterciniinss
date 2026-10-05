@@ -943,7 +943,7 @@
   /* o azul cheio é só dos botões SEM classe própria (ex.: "Registrar
      exigência"). Sem o :not, ele pintava também os chips claros da barra —
      texto branco em fundo branco, botão invisível. */
-  .escrever button:not(.btn-rap):not(.eq-ini):not(.esc-ic):not(.esc-reg):not(.fx-av):not(.sug-abrir):not(.tipo-ch){
+  .escrever button:not(.btn-rap):not(.eq-ini):not(.esc-ic):not(.esc-reg):not(.fx-av):not(.sug-abrir):not(.tipo-ch):not(.esc-tg):not(.esc-pill){
     padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
   /* Os chips claros da barra (Hoje, Amanhã, Escolher a data, sem lembrete).
      A regra nasceu para ⭐/🔥 em emoji — que não obedecem cor do CSS — e
@@ -3391,6 +3391,81 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .idf-card .cad-mini{min-height:40px}
 .idf-card .cad-tel .cad-lap{min-width:40px;min-height:40px;justify-content:center;align-items:center}
 @media (max-width:760px){ .adr-regra{grid-template-columns:1fr 1fr} .adr-barra{grid-column:1/-1} .adr-valor,.adr-regra-acao{text-align:left} }
+/* ══ F182 · Casos e anotações (canvas aprovado em 05.10.2026) ══ */
+html[data-tema="v10"] .lc-trilha{list-style:none;margin:10px 0 4px;padding:0;display:flex;flex-wrap:wrap;gap:8px 4px;align-items:flex-start;align-content:flex-start;white-space:normal;height:auto;min-height:0;flex:none}
+html[data-tema="v10"] .lc-trilha > li{flex:1 1 96px}
+html[data-tema="v10"] .lc-trilha li{margin:0;padding:0;min-height:0;height:auto;border:0;background:none;display:block}
+html[data-tema="v10"] .lc-trilha button{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:4px;width:100%}
+html[data-tema="v10"] .lc-trilha .lt-barra{display:block;height:4px;border-radius:999px;background:var(--borda)}
+html[data-tema="v10"] .lc-trilha small{font-size:11px;line-height:1.25;color:var(--cinza-claro);overflow-wrap:break-word}
+html[data-tema="v10"] .lc-trilha li.feita .lt-barra,html[data-tema="v10"] .lc-trilha li.atual .lt-barra{background:var(--azul)}
+html[data-tema="v10"] .lc-trilha li.feita small{color:var(--cinza)}
+html[data-tema="v10"] .lc-trilha li.atual small{color:var(--texto);font-weight:600}
+html[data-tema="v10"] .lc-trilha button:focus-visible{outline:2px solid var(--azul);outline-offset:2px;border-radius:4px}
+html[data-tema="v10"] .outras-abas{background:#FFFFFF;border:1px solid var(--borda);border-radius:12px;padding:14px 14px 6px;margin-top:12px}
+html[data-tema="v10"] .outras-abas h3{margin:0 0 4px;font-size:14px;font-family:var(--f-ui)}
+html[data-tema="v10"] .oa-linha{all:unset;cursor:pointer;box-sizing:border-box;display:flex;gap:10px;align-items:center;width:100%;min-height:46px;padding:6px 4px;border-top:1px solid var(--placa);color:var(--texto)}
+html[data-tema="v10"] .oa-linha svg{flex:none;color:var(--cinza-claro);transition:transform .15s}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .oa-linha:hover svg{transform:translateX(2px);color:var(--azul)}}
+html[data-tema="v10"] .oa-linha:focus-visible{outline:2px solid var(--azul);outline-offset:-2px;border-radius:6px}
+html[data-tema="v10"] .oa-ponto{flex:none;width:8px;height:8px;border-radius:50%}
+html[data-tema="v10"] .oa-txt{flex:1 1 auto;display:flex;flex-direction:column;min-width:0}
+html[data-tema="v10"] .oa-txt small{font-size:11.5px;font-weight:600;color:var(--cinza-claro)}
+html[data-tema="v10"] .oa-txt span{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* compositor */
+html[data-tema="v10"] .esc-v12 .esc-tgs{gap:8px}
+html[data-tema="v10"] .esc-v12 .esc-tg{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:8px;border:1px solid #D6D4CE;background:#FFFFFF;color:var(--texto);font-weight:600;font-size:13px;cursor:pointer;transition:background .15s,border-color .15s}
+html[data-tema="v10"] .esc-v12 .esc-tg.on{background:var(--azul-fundo);border-color:var(--azul);color:var(--azul-escuro)}
+html[data-tema="v10"] .esc-v12 .esc-tg-pz input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+html[data-tema="v10"] .esc-v12 .esc-tg-pz.on{background:#FBEAE7;border-color:var(--venc);color:#8B1D16}
+html[data-tema="v10"] .esc-v12 .esc-tg:focus-within,html[data-tema="v10"] .esc-v12 .esc-tg:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+html[data-tema="v10"] .esc-v12 .esc-pnl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;border-radius:10px;background:#F8F8F6}
+html[data-tema="v10"] .esc-v12 .esc-pnl[hidden]{display:none}
+html[data-tema="v10"] .esc-v12 .esc-pnl .rotulo-rap{font-size:12px;text-transform:none;letter-spacing:0;font-weight:600;color:var(--cinza)}
+html[data-tema="v10"] .esc-v12 .esc-quando{margin-left:8px}
+html[data-tema="v10"] .esc-v12 .esc-pill{min-height:32px;padding:0 12px;border-radius:999px;border:1px solid #D6D4CE;background:#FFFFFF;color:var(--texto);font-weight:600;font-size:12.5px;width:auto;height:auto;margin:0;cursor:pointer}
+html[data-tema="v10"] .esc-v12 .esc-pill.on,html[data-tema="v10"] .esc-v12 .esc-pill.tf-eq.on{background:var(--azul);border-color:var(--azul);color:#FFFFFF}
+html[data-tema="v10"] .esc-v12 .esc-pnl-pz{background:#FBEAE7;color:#8B1D16;font-size:12.5px;font-weight:600}
+html[data-tema="v10"] .esc-v12 .esc-pnl-pz label{display:inline-flex;gap:8px;align-items:center}
+html[data-tema="v10"] .esc-v12 .esc-pnl-pz input[type=date]{min-height:34px;border:1px solid #E8B4AE;border-radius:8px;padding:0 8px;flex:none}
+html[data-tema="v10"] .esc-v12 .esc-pz-cat{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap}
+html[data-tema="v10"] .esc-v12 .esc-fim{justify-content:space-between;gap:12px;padding-top:8px;border-top:1px solid var(--placa)}
+html[data-tema="v10"] .esc-v12 .esc-frase{flex:1 1 280px;font-size:12.5px;color:var(--cinza)}
+html[data-tema="v10"] .esc-v12 .esc-frase b{color:var(--texto);font-weight:600}
+html[data-tema="v10"] .esc-v12 .esc-reg{height:40px;padding:0 22px}
+/* cartão da anotação */
+html[data-tema="v10"] .timeline .tl-cab{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+html[data-tema="v10"] .timeline .tl-cab .tipo-tl{margin:0}
+html[data-tema="v10"] .timeline .tl-pz-chip{background:#FBEAE7;color:#8B1D16;font-weight:600}
+html[data-tema="v10"] .timeline .tl-corpo{display:block;margin-top:3px;white-space:pre-line}
+html[data-tema="v10"] .tl-tarefas{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+html[data-tema="v10"] .tl-tarefa{display:flex;gap:8px;align-items:center;padding:6px 10px;border-radius:8px;background:var(--prox-f);color:var(--prox);font-size:12.5px;font-weight:600}
+html[data-tema="v10"] .tl-tarefa.atras{background:#FBEAE7;color:#8B1D16}
+html[data-tema="v10"] .tl-tarefa.feita{background:#E8F3EC;color:var(--feito)}
+html[data-tema="v10"] .tl-tarefa .tl-tf-bola,html[data-tema="v10"] .tl-tarefa .tf-ok{flex:none;width:16px;height:16px;border-radius:50%;border:2px solid currentColor;background:transparent;padding:0;margin:0}
+html[data-tema="v10"] .tl-tarefa.feita .tl-tf-bola{background:currentColor}
+html[data-tema="v10"] .tl-tarefa .tf-ok{cursor:pointer}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .tl-tarefa .tf-ok:hover{background:currentColor}}
+html[data-tema="v10"] .tl-barra{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--placa)}
+html[data-tema="v10"] .tl-bt{min-height:32px;padding:0 11px;border-radius:8px;border:1px solid #D6D4CE;background:#FFFFFF;color:var(--texto);font-weight:600;font-size:12.5px;font-family:var(--f-ui);cursor:pointer}
+html[data-tema="v10"] .tl-bt.resp-liga{color:var(--azul)}
+html[data-tema="v10"] .tl-bt-ok{color:var(--feito)}
+html[data-tema="v10"] .tl-bt-ic{color:var(--cinza)}
+html[data-tema="v10"] .tl-bt.forte{background:var(--azul);border-color:var(--azul);color:#FFFFFF}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .tl-bt:hover{border-color:var(--azul)}}
+html[data-tema="v10"] .tl-bt:active{transform:scale(.97)}
+html[data-tema="v10"] .tl-resp-box{display:flex;flex-direction:column;gap:8px;margin-top:8px;padding:10px 12px;border-radius:10px;background:#F3F8F7;border:1px solid #B9D6D3}
+html[data-tema="v10"] .tl-resp-box.foco-prazo{border-color:var(--azul);box-shadow:0 0 0 3px rgba(14,92,88,.12)}
+html[data-tema="v10"] .tl-resp-box textarea{width:100%;box-sizing:border-box;border:1px solid #D6D4CE;border-radius:8px;padding:8px 10px;font:inherit;font-size:13.5px;resize:vertical;background:#FFFFFF}
+html[data-tema="v10"] .tl-resp-ops{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+html[data-tema="v10"] .tl-resp-ck{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;min-height:32px}
+html[data-tema="v10"] .tl-resp-rot{font-size:12px;font-weight:600;color:var(--cinza)}
+html[data-tema="v10"] .tl-pill{position:relative;display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border-radius:999px;border:1px solid #D6D4CE;background:#FFFFFF;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--f-ui);color:var(--texto)}
+html[data-tema="v10"] .tl-pill.on{background:var(--azul);border-color:var(--azul);color:#FFFFFF}
+html[data-tema="v10"] .tl-pill{white-space:nowrap;line-height:1;height:30px;box-sizing:border-box;margin:0}
+html[data-tema="v10"] .tl-pill input[type=date]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;min-height:0;padding:0;margin:0;border:0}
+html[data-tema="v10"] .tl-resp-fim{margin-left:auto;display:inline-flex;gap:6px}
+@media (prefers-reduced-motion:reduce){html[data-tema="v10"] .tl-bt:active{transform:none}html[data-tema="v10"] .oa-linha svg{transition:none}}
 </style>
 </head>
 <body>
@@ -3403,7 +3478,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.81</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.82</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11568,9 +11643,12 @@ function vistos(a){
   const comTarefa = new Set(ts.map(t=>t.colaborador_id));
   const ls = lidosDe(a).filter(l=>!comTarefa.has(l.colaborador_id))
     .sort((x,y)=>(x.lido_em||"")<(y.lido_em||"")?-1:1);
-  const minha = ts.find(t=>t.colaborador_id===eu.id && !t.concluida_em);
+  // F182 · no tema v10 a tarefa tem faixa própria no cartão (tarefasCartao) e
+  // os botões dela moram na barra de ações: aqui ficam só os vistos de leitura
+  const v12 = temaV10();
+  const minha = !v12 && ts.find(t=>t.colaborador_id===eu.id && !t.concluida_em);
   return `<span class="vistos" id="visto-${a.id}">
-    ${ts.map(t=>{ const c=D.colPorId.get(t.colaborador_id); if(!c) return "";
+    ${v12?"":ts.map(t=>{ const c=D.colPorId.get(t.colaborador_id); if(!c) return "";
       const atras = !t.concluida_em && t.lembrar_em < hoje();
       const rev = t.papel==="revisa";   // F160 · o revisor leva a marca no chip
       return `<span class="tf-chip ${t.concluida_em?"feita":atras?"atras":""}${rev?" rev":""}"
@@ -11595,8 +11673,8 @@ function vistos(a){
       title="${meu ? `Você leu em ${horaLocal(meu.lido_em)} — clique para desfazer`
                    : "marcar que você leu"}">✓</button>`
      )(lidosDe(a).find(l=>l.colaborador_id===eu.id))}
-    <button class="visto-bt tf-mais" onclick="novaTarefaComentario('${a.id}','${a.caso_id}')"
-      title="mais uma tarefa neste comentário — outra pessoa, outra data">＋</button>
+    ${v12?"":`<button class="visto-bt tf-mais" onclick="novaTarefaComentario('${a.id}','${a.caso_id}')"
+      title="mais uma tarefa neste comentário — outra pessoa, outra data">＋</button>`}
   </span>`;
 }
 
@@ -12382,7 +12460,7 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${linhaCaso(k)}${botaoFixar(k)}${faixaPrazos(k)}</aside>
+        ? `${faixaFixo(k)}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${linhaCaso(k)}${botaoFixar(k)}${faixaPrazos(k)}${painelOutrasAbas(k)}</aside>
            <div class="caso-dir">${composerCaso(k)}${menu}${painelDaAba()}</div></div>`
         : `${menu}${blocoFatos(k)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
@@ -12486,6 +12564,9 @@ function pintarFicha(){
       campoAnd.addEventListener("focus", abrirEsc);
       // 150ms: tempo de o clique terminar (mouseup + click) antes de decidir
       cxEsc.addEventListener("focusout", ()=>setTimeout(fecharEsc, 150));
+      // F182 · a frase "Ao registrar" acompanha cada clique e cada letra
+      ["click","input","change"].forEach(ev=>cxEsc.addEventListener(ev, ()=>setTimeout(pintarFrase)));
+      pintarFrase();
     }
     const kAtual=(casoSel&&D.casoPorId.get(casoSel)) || (ks.length===1?ks[0]:null);
     if(kAtual){
@@ -18740,6 +18821,7 @@ function linhaCaso(k){
       ${k.urgente?`<span class="chip urg">Urgente</span>`:""}
       <button class="lc-claude" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)">✦ Claude</button>
       </div>
+      ${trilhaEtapas(k)}
       <div class="lc-placa">
       <span class="lc-f"><span class="lc-k">DER</span>${k.der
         ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar">${fmtBarra(k.der)}</span>`
@@ -18766,6 +18848,50 @@ function linhaCaso(k){
     </div>
     ${n>=1?lcNumeros(k):""}
     ${n>=2?lcGestao(k):""}
+  </section>`;
+}
+// F182 · a trilha das etapas da fase no alto do caso (canvas Casos e
+// anotações): o que já passou em verde-petróleo, a etapa atual em negrito.
+// Clicar numa etapa grava a etapa, como o ✎ da placa.
+function trilhaEtapas(k){
+  const et = etapasDaFase(k); if(!et.length) return "";
+  const i = et.indexOf(k.etapa||"");
+  return `<ol class="lc-trilha" aria-label="Etapa do caso" style="--n:${et.length}">${et.map((e,n)=>
+    `<li class="${n<i?"feita":n===i?"atual":""}"${n===i?' aria-current="step"':""}><button onclick="gravarEtapa('${k.id}','${escJs(e)}')" title="marcar a etapa: ${esc(e)}"><span class="lt-barra"></span><small>${esc(e)}</small></button></li>`).join("")}</ol>`;
+}
+// F182 · "Nas outras abas": o que o caso tem nas demais divisões da ficha,
+// com o dado que importa e o atalho. Só entra a linha que tem o que mostrar.
+function irOutraAba(qual){
+  if(qual==="pericias") abaAtiva=3;
+  else if(qual==="honorarios") abaAtiva=4;
+  else { abaAtiva=0; subCad=qual; guardar("crm_subcad", qual); }
+  repintarFicha();
+}
+function painelOutrasAbas(k){
+  const c = D.cliPorId.get(k.cliente_id); if(!c) return "";
+  const hj = hoje(), ks = D.casosDoCliente.get(c.id)||[k], linhas = [];
+  const ev = (D.eventos||[]).filter(e=>ks.some(x=>x.id===e.caso_id) && e.status!=="cancelada" && dataSP(e.data_hora)>=hj)
+    .sort((a,b)=>a.data_hora<b.data_hora?-1:1)[0];
+  if(ev) linhas.push(["pericias","Perícias",`${fmtBarra(dataSP(ev.data_hora)).slice(0,5)} às ${horaSP(ev.data_hora)}${ev.local?` · ${ev.local}`:""}`,"#B7791F"]);
+  const an = analisesDe(c.id).slice().sort((a,b)=>(a.data_analise||"")<(b.data_analise||"")?1:-1)[0];
+  if(an){
+    const m = cenMelhor(an), dd = (m&&m.data) || (an.detalhes||{}).data_direito;
+    linhas.push(["direito","Análise de Direito", dd ? (dd<=hj?"direito alcançado":`atinge o direito em ${fmtBarra(dd)}`)
+      : `análise de ${fmtBarra(an.data_analise)}`, "var(--azul)"]);
+  }
+  const docs = docsPendentes(c.id, k.id).length ? docsPendentes(c.id, k.id) : docsPendentes(c.id);
+  if(docs.length) linhas.push(["documentos","Documentos",
+    `${docs.length} ${docs.length===1?"pendente":"pendentes"} · ${docs.slice(0,2).map(d=>d.nome).join(", ")}`, "var(--venc)"]);
+  const pg = (D.pagamentos||[]).filter(p=>p.status==="aberto" && (p.cliente_id===c.id || ks.some(x=>x.id===p.caso_id)))
+    .sort((a,b)=>(a.vencimento||"9")<(b.vencimento||"9")?-1:1)[0];
+  if(pg) linhas.push(["honorarios","Honorários",
+    `${pg.vencimento?`próximo vencimento ${fmtBarra(pg.vencimento).slice(0,5)}`:"a receber"} · ${moedaBR(pg.valor)}`, "var(--feito)"]);
+  if(!linhas.length) return "";
+  return `<section class="outras-abas" aria-label="Nas outras abas"><h3>Nas outras abas</h3>
+    ${linhas.map(([q,aba,txt,cor])=>`<button class="oa-linha" onclick="irOutraAba('${q}')">
+      <span class="oa-ponto" style="background:${cor}"></span>
+      <span class="oa-txt"><small>${aba}</small><span>${esc(txt)}</span></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`).join("")}
   </section>`;
 }
 function lcNovoNb(casoId){
@@ -19155,7 +19281,7 @@ function composerCaso(k){
             title="solicitar documentos no meio do atendimento: marca na lista do benefício, entra na anotação e vira checklist — sem apagar o que você já digitou"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 3.5H7A1.8 1.8 0 0 0 5.2 5.3v13.4A1.8 1.8 0 0 0 7 20.5h10a1.8 1.8 0 0 0 1.8-1.8V8.8l-5.3-5.3Z"/><path d="M13.5 3.5V9h5.3M9 13.5h6M9 17h4"/></svg></button>
           <button class="esc-ic imp ${k.importante?"on":""}" onclick="toggleImp('${k.id}')" title="marcar o processo como importante"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.3 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.5l5.9-.8L12 3.3Z"/></svg></button>
           <button class="esc-ic urg ${k.urgente?"on":""}" onclick="toggleUrg('${k.id}')" title="marcar o processo como urgente"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c.4 2.6-1 4.1-2.3 5.6C8.4 10.6 7.5 12.1 7.5 14a4.5 4.5 0 0 0 9 0c0-1.6-.7-3-1.7-4.2-.2 1.1-.8 2-1.8 2.5.6-2.6-.1-5.6-1-8.8Z"/></svg></button>
-          <button class="esc-reg" onclick="novoAndamento('${k.id}')">Registrar</button>
+          ${v10?"":`<button class="esc-reg" onclick="novoAndamento('${k.id}')">Registrar</button>`}
         </span>`;
   // F38 · a anotação que É prazo processual: marca, dá a data fatal, e o
   // caso move para 🗓 Tarefas com Prazo. F104 · prazo sem anotação de origem
@@ -19188,13 +19314,39 @@ function composerCaso(k){
           <button onclick="novaExigencia()">Registrar exigência</button>
         </div>
       </div>`;
+  // F182 · canvas "Casos e anotações": três chaves (Tarefa, Prazo fatal,
+  // Lembrete), cada uma abre o seu quadro, e a frase "Ao registrar" diz antes
+  // do clique o que vai nascer. Tarefa e Lembrete são as duas naturezas da
+  // F116 (uma exclui a outra); desligadas as duas, a anotação vai sem tarefa.
+  const tg = (nat, rot, dica) => `<button class="esc-tg tf-nt ${tfNatureza===nat?"on":""}" data-nat="${nat}"
+          aria-pressed="${tfNatureza===nat}" onclick="tfNat('${nat}',this)" title="${dica}">${rot}</button>`;
+  const prazoTg = listaDe(k)!=="🗓 Tarefas com Prazo"
+    ? `<label class="esc-tg esc-tg-pz" title="prazo fatal: o dia em que o direito morre. O caso vai para 🗓 Tarefas com Prazo, ordenado pela data fatal">
+          <input type="checkbox" id="and-prazo-ck" onchange="pzToggle(this)">Prazo fatal</label>`
+    : prazoRow;
+  const pessoas = `${equipeAtiva().map(co=>`<button class="esc-pill fx-av tf-eq"
+          data-tfp="${co.id}" style="--cor-eq:${co.cor}" title="${esc(co.nome)}"
+          onclick="tfPessoa('${co.id}',this)">${esc(co.nome.split(" ")[0])}</button>`).join("")}
+        <button class="esc-pill tf-todos" id="tf-todos" onclick="tfTodos()" title="a equipe inteira: uma tarefa para cada colaborador ativo">todos</button>
+        ${seletorRevisor("tf-rev")}`;
+  const quando = [["hoje","Hoje"],["amanha","Amanhã"],["3","+3 dias"],["7","+7 dias"]].map(([q,r])=>
+          `<button class="esc-pill btn-rap tf-dt" data-tfd="${q}" onclick="tfDia('${q}',this)">${r}</button>`).join("")
+        + `<button class="esc-pill btn-rap tf-dt" id="tf-escolher" onclick="tfEscolherData(this)" title="escolher a data no calendário">Escolher</button>
+        <input type="date" class="tf-data" id="tf-data" style="display:none" onchange="tfDia(this.value,this)">`;
   const escrever = v10
-    ? `<div class="escrever">
+    ? `<div class="escrever esc-v12">
       <div class="tipo-fila" id="tipo-fila">${chips}${sugBt}</div>
       ${area}
       <div class="esc-barra" id="tf-box">
-        <div class="esc-linha">${prazoRow}<span class="esc-lembrar">${natChips}<span class="rotulo-rap">EM</span>${lembrar}</span></div>
-        <div class="esc-linha"><span class="rotulo-rap">ATRIBUIR PARA</span>${atribuir}${ferr}</div>
+        <div class="esc-linha esc-tgs">${tg("compromisso","Tarefa","trabalho marcado para alguém num dia")}${prazoTg}${tg("lembrete","Lembrete","só um aviso no dia, por padrão para você")}${ferr}</div>
+        <div class="esc-pnl esc-pnl-tf" id="esc-pnl-tf"${tfNatureza?"":" hidden"}>
+          <span class="rotulo-rap">Quem faz</span>${pessoas}
+          <span class="rotulo-rap esc-quando">Quando</span>${quando}</div>
+        ${listaDe(k)!=="🗓 Tarefas com Prazo" ? `<div class="esc-pnl esc-pnl-pz" id="esc-pnl-pz" hidden>
+          <label>Prazo fatal <input type="date" id="and-prazo-data" min="${hoje()}" title="a data fatal do prazo"></label>
+          <span id="and-prazo-mais" class="esc-pz-cat">ou pelo catálogo ${catalogoPrazoHtml("and","and-prazo-data")}</span></div>` : ""}
+        <div class="esc-linha esc-fim"><span class="esc-frase" id="esc-frase"></span>
+          <button class="esc-reg" onclick="novoAndamento('${k.id}')">Registrar</button></div>
       </div>
       <div id="and-prazo-chip"></div>
       ${caixas}
@@ -19638,8 +19790,9 @@ function sinaisCnjHtml(k, chave, txt, q){
   </span>`;
 }
 
-function comentario(a, resposta, reacoes){
+function comentario(a, resposta, reacoes, raiz){
   const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
+  if(temaV10()) return comentarioV12(a, resposta, reacoes, raiz, co, cor);
   const tp = tipoDoComentario(a.texto);
   const chipsReacao = (reacoes&&reacoes.length)
     ? `<span class="tl-reacoes">${[...reacoes.reduce((m,r)=>{
@@ -19655,6 +19808,137 @@ function comentario(a, resposta, reacoes){
       <button class="apaga" title="👍 ciente — um toque, sem texto" onclick="reagir('${a.id}','${a.caso_id}')">👍</button>
       <button class="apaga resp-liga" title="responder a este comentário — a resposta fica grudada nele na linha do tempo"
         onclick="armarResposta('${a.id}')">↩</button>
+      ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}
+    </span>`;
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F182 · O CARTÃO DA ANOTAÇÃO (canvas "Casos e anotações")
+// ══════════════════════════════════════════════════════════════════════════
+// Cabeçalho com autor, hora, tipo e prazo fatal; o texto; a faixa de cada
+// tarefa (quem, quando, estado); as respostas; e a barra de ações: Responder,
+// Concluir tarefa, + prazo e Reagendar. A resposta abre DENTRO do cartão, com
+// "concluir a tarefa ao responder" e o prazo adicional (+5, +15, data).
+const RX_PRAZO_AND = /^⏰ \[PRAZO ([^\]]+)\]\s*/;
+let respInline = null, riPrazo = null, riFocoPrazo = false;
+function diaTarefa(iso){
+  const hj = hoje();
+  return !iso ? "sem data" : iso===hj ? "hoje" : iso===maisDias(1) && iso>hj ? "amanhã"
+    : iso<hj ? `atrasada desde ${fmtBarra(iso).slice(0,5)}` : fmtBarra(iso).slice(0,5);
+}
+function tarefasCartao(a){
+  const ts = tarefasDe(a); if(!ts.length) return "";
+  return `<span class="tl-tarefas">${ts.map(t=>{
+    const c = D.colPorId.get(t.colaborador_id); if(!c) return "";
+    const feita = !!t.concluida_em, atras = !feita && t.lembrar_em && t.lembrar_em < hoje();
+    const nome = c.nome.split(" ")[0];
+    const rot = feita ? `Concluída · ${nome} · ${horaLocal(t.concluida_em)}`
+      : `${nome} · ${diaTarefa(t.lembrar_em)} · ${t.papel==="revisa"?"revisa":t.natureza==="lembrete"?"lembrete":"tarefa"}`;
+    const bola = (!feita && t.colaborador_id===eu.id)
+      ? `<button class="tf-ok" onclick="concluirDeVez('${t.id}')" title="concluir agora — dá para desfazer logo depois" aria-label="concluir a sua tarefa"></button>`
+      : `<span class="tl-tf-bola" aria-hidden="true"></span>`;
+    return `<span class="tl-tarefa ${feita?"feita":atras?"atras":""}">${bola}<span>${esc(rot)}</span></span>`;
+  }).join("")}</span>`;
+}
+function caixaRespInline(a){
+  if(respInline!==a.id) return "";
+  const ts = tarefasDe(a).filter(t=>!t.concluida_em);
+  const alvo = ts.find(t=>t.colaborador_id===eu.id) || ts[0];
+  const dono = alvo && ((D.colPorId.get(alvo.colaborador_id)||{}).nome||"").split(" ")[0];
+  const pill = (q, rot) => `<button class="tl-pill ${riPrazo&&riPrazo===maisDias(q)?"on":""}" onclick="riDia(${q})">${rot}</button>`;
+  const escolhida = riPrazo && riPrazo!==maisDias(5) && riPrazo!==maisDias(15);
+  return `<span class="tl-resp-box${riFocoPrazo?" foco-prazo":""}" id="ri-box">
+    <textarea id="ri-txt" rows="2" placeholder="Resposta"></textarea>
+    <span class="tl-resp-ops">
+      ${alvo?`<label class="tl-resp-ck"><input type="checkbox" id="ri-concluir"${alvo.colaborador_id===eu.id?" checked":""}> concluir a tarefa${alvo.colaborador_id===eu.id?"":` de ${esc(dono)}`} ao responder</label>`:""}
+      <span class="tl-resp-rot">Prazo adicional</span>
+      ${pill(5,"+5 dias")}${pill(15,"+15 dias")}
+      <label class="tl-pill ${escolhida?"on":""}">${escolhida?fmtBarra(riPrazo).slice(0,5):"escolher data"}
+        <input type="date" min="${hoje()}" onchange="riDia(this.value)"></label>
+      <span class="tl-resp-fim">
+        <button class="tl-bt" onclick="fecharRespInline()">Cancelar</button>
+        <button class="tl-bt forte" onclick="responderInline('${a.id}')">Responder</button></span>
+    </span></span>`;
+}
+function abrirRespInline(andId, prazo){
+  respInline = respInline===andId && !prazo ? null : andId;
+  riPrazo = null; riFocoPrazo = !!prazo;
+  repintarFicha();
+  setTimeout(()=>{ const t=document.getElementById("ri-txt"); if(t && !prazo) t.focus();
+    document.getElementById("ri-box")?.scrollIntoView({block:"nearest"}); });
+}
+function fecharRespInline(){ respInline = null; riPrazo = null; repintarFicha(); }
+function riDia(q){
+  const d = /^\d{1,3}$/.test(String(q)) ? maisDias(+q) : q;
+  riPrazo = riPrazo===d ? null : (d||null);
+  const txt = (document.getElementById("ri-txt")||{}).value||"";
+  const ck = (document.getElementById("ri-concluir")||{}).checked;
+  repintarFicha();
+  const t = document.getElementById("ri-txt"); if(t) t.value = txt;
+  const c = document.getElementById("ri-concluir"); if(c && ck!==undefined) c.checked = ck;
+}
+async function responderInline(andId){
+  const a = (D._andsFicha||[]).find(x=>x.id===andId); if(!a) return;
+  const txt = ((document.getElementById("ri-txt")||{}).value||"").trim();
+  const ts = tarefasDe(a).filter(t=>!t.concluida_em);
+  const alvo = ts.find(t=>t.colaborador_id===eu.id) || ts[0];
+  const concluir = !!(alvo && (document.getElementById("ri-concluir")||{}).checked);
+  const prazo = riPrazo;
+  if(!txt && !concluir && !prazo) return aviso("Escreva a resposta, conclua a tarefa ou dê um prazo adicional");
+  respInline = null; riPrazo = null;
+  // concluir pela resposta é a conclusão de sempre (desfazer, baixa do prazo
+  // fatal ligado a ela); o prazo adicional vira a próxima rodada
+  if(concluir){ ctRep = prazo || null; return concluirDeVez(alvo.id, txt); }
+  const corpo = (txt || "Prazo adicional") + (prazo ? ` · prazo adicional até ${fmtBarra(prazo)}` : "");
+  let and;
+  try{
+    [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:a.caso_id, autor_id:eu.id, texto:corpo, responde_a:andId})});
+  }catch(e){ return aviso("Não consegui registrar a resposta: "+String(e.message||e).slice(0,120)); }
+  if(and) await api(`/rest/v1/andamentos_lidos`,{method:"POST",
+    headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
+    body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
+  if(prazo){
+    try{
+      if(alvo){   // a tarefa aberta ganha a data nova
+        await api(`/rest/v1/andamento_tarefas?id=eq.${alvo.id}`,{method:"PATCH",
+          headers:{Prefer:"return=minimal"}, body:JSON.stringify({lembrar_em:prazo})});
+        alvo.lembrar_em = prazo;
+        const ab = (D.tarefasPorCaso.get(alvo.caso_id)||[]).find(x=>x.id===alvo.id); if(ab) ab.lembrar_em = prazo;
+      }else if(and){   // sem tarefa aberta, o prazo vira tarefa de quem respondeu
+        tarefaNaMemoria(await criarTarefa({andamento_id:and.id, caso_id:a.caso_id, colaborador_id:eu.id,
+          atribuido_por:eu.id, lembrar_em:prazo}));
+      }
+    }catch(e){ aviso("⚠ o prazo adicional não gravou: "+String(e.message||e).slice(0,80)); }
+  }
+  if(txt && and) await criarMencoes(txt, a.caso_id, and.id, []).catch(()=>{});
+  aviso(prazo ? `Respondido · prazo até ${fmtBarra(prazo)} 🗓` : "Respondido ✔", false);
+  if(clienteAberto) abrirFicha(clienteAberto);
+}
+function comentarioV12(a, resposta, reacoes, raiz, co, cor){
+  const pz = RX_PRAZO_AND.exec(a.texto||"");
+  const corpo = pz ? a.texto.slice(pz[0].length) : (a.texto||"");
+  const tp = tipoDoComentario(corpo);
+  const chipsReacao = (reacoes&&reacoes.length)
+    ? `<span class="tl-reacoes">${[...reacoes.reduce((m,r)=>{
+        const e=String(r.texto).trim(); if(!m.has(e)) m.set(e,[]);
+        m.get(e).push((D.colPorId.get(r.autor_id)||{}).inicial||"?"); return m;
+      },new Map())].map(([e,quem])=>`<span class="chip" title="${esc(quem.join(", "))}">${e} ${quem.join(" ")}</span>`).join("")}</span>`
+    : "";
+  const abertas = tarefasDe(a).filter(t=>!t.concluida_em);
+  const minha = abertas.find(t=>t.colaborador_id===eu.id), alvo = minha || abertas[0];
+  const barra = raiz ? `<span class="tl-barra">
+      <button class="tl-bt resp-liga" onclick="abrirRespInline('${a.id}')" title="responder a este comentário — a resposta fica grudada nele">Responder</button>
+      ${minha?`<button class="tl-bt tl-bt-ok tf-acao" onclick="concluirDeVez('${minha.id}')" title="concluir a sua tarefa — dá para desfazer logo depois">Concluir tarefa</button>`:""}
+      <button class="tl-bt" onclick="abrirRespInline('${a.id}',1)" title="responder dando prazo adicional">+ prazo</button>
+      ${alvo?`<button class="tl-bt tf-acao" onclick="adiarTarefa('${alvo.id}')" title="mudar a data da tarefa">Reagendar</button>`:""}
+      <button class="tl-bt tl-bt-ic" onclick="novaTarefaComentario('${a.id}','${a.caso_id}')" title="mais uma tarefa neste comentário — outra pessoa, outra data">＋ tarefa</button>
+    </span>` : "";
+  return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
+    <span class="texto"><span class="tl-cab"><b class="autor-nome" style="color:${cor}">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${horaSP(a.criado_em)}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}</span><span class="tl-corpo">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${tarefasCartao(a)}${chipsReacao}${resposta||""}${barra}${raiz?caixaRespInline(a):""}</span>
+    ${sinaisHtml(a)}
+    ${vistos(a)}
+    <span class="tl-acoes">
+      <button class="apaga" title="👍 ciente — um toque, sem texto" onclick="reagir('${a.id}','${a.caso_id}')">👍</button>
       ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}
     </span>`;
 }
@@ -19674,10 +19958,12 @@ function armarResposta(andId){
         <button class="btn-mini" onclick="desarmarResposta()" title="cancelar a resposta">✕</button></div>`);
     inp.focus();
   }
+  pintarFrase();
 }
 function desarmarResposta(){
   respondeA=null;
   document.getElementById("resp-chip")?.remove();
+  pintarFrase();
 }
 // F41 · o @ com menu: descoberta da menção sem decorar nome — o clique
 // insere @Primeiro no texto e a menção nasce no Registrar (criarMencoes)
@@ -19741,7 +20027,7 @@ function linhaDoTempo(ands){
       `<span class="resp-item">${comentario(f)}</span>`).join("")}</span>` : "";
     if(ehEventoSistema(a) && !filhas.length)
       return `<li class="tl-sys"><span class="texto" title="${esc(fmtTS(a.criado_em))} às ${esc(horaSP(a.criado_em))}">${esc(a.origem==="pat"?limparHtmlPat(a.texto):a.texto)}</span></li>`;
-    return `<li class="${naoLi(a)?"tl-nao-lida":""}${clsSinal(a)}">${comentario(a, sub, reacoes)}</li>`;
+    return `<li class="${naoLi(a)?"tl-nao-lida":""}${clsSinal(a)}">${comentario(a, sub, reacoes, true)}</li>`;
   };
   // a linha do tempo vem do mais novo para o mais velho: os dias separam a
   // leitura, e a fronteira do "não lido" mostra até onde você precisa descer
@@ -21744,8 +22030,49 @@ let tfQuem = null, tfData;
 // marcado; lembrete é aviso. O prazo fatal não passa por aqui, ele tem o ⏰.
 let tfNatureza = "compromisso";
 function tfNat(v, bt){
-  tfNatureza = v;
-  document.querySelectorAll(".tf-nt").forEach(b=>b.classList.toggle("on", b===bt));
+  // F182 · no compositor novo as naturezas são chaves: clicar na acesa desliga,
+  // e a anotação vai sem tarefa (ninguém, sem data)
+  const chave = !!document.getElementById("esc-pnl-tf");
+  if(chave && tfNatureza===v){
+    tfNatureza = null; tfQuem = []; tfData = null;
+    document.querySelectorAll("#tf-box .tf-eq.on,#tf-box .tf-dt.on").forEach(b=>b.classList.remove("on"));
+  }else{
+    if(chave && tfNatureza===null){ tfQuem = null; tfData = undefined; }
+    tfNatureza = v;
+  }
+  document.querySelectorAll(".tf-nt").forEach(b=>{ const on = b.dataset.nat===tfNatureza;
+    b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
+  const pnl = document.getElementById("esc-pnl-tf"); if(pnl) pnl.hidden = !tfNatureza;
+  pintarFrase();
+}
+// F182 · o Prazo fatal do compositor novo é uma chave que abre o quadro da data
+function pzToggle(ck){
+  const pnl = document.getElementById("esc-pnl-pz"); if(pnl) pnl.hidden = !ck.checked;
+  ck.closest(".esc-tg")?.classList.toggle("on", ck.checked);
+  const d = document.getElementById("and-prazo-data");
+  if(ck.checked && d && prazoDetectado && !d.value) d.value = prazoDetectado;
+  pintarFrase();
+}
+// a frase "Ao registrar": o que o clique em Registrar vai criar, dito antes
+function fraseRegistro(){
+  const t = ((document.getElementById("and-texto")||{}).value||"").trim();
+  const m = RX_TIPO_ANOT.exec(t);
+  const nomes = ids => ids.map(id=>((D.colPorId.get(id)||{}).nome||"").split(" ")[0]).filter(Boolean);
+  const lista = xs => xs.length>1 ? xs.slice(0,-1).join(", ")+" e "+xs[xs.length-1] : xs[0]||"";
+  const dia = tfData ? fmtBarra(tfData).slice(0,5) : "";
+  const p = [respondeA ? "responde ao comentário marcado" : m ? `anota como ${m[1].toLowerCase()}` : "anota no Escritório"];
+  if(tfNatureza==="compromisso")
+    p.push(tfQuem&&tfQuem.length ? `cria tarefa para ${lista(nomes(tfQuem))}${dia?` em ${dia}`:" (falta quando)"}` : "cria tarefa (falta quem faz)");
+  if(tfNatureza==="lembrete")
+    p.push(`agenda lembrete para ${tfQuem&&tfQuem.length?lista(nomes(tfQuem)):"você"}${dia?` em ${dia}`:" (falta quando)"}`);
+  const ck = document.getElementById("and-prazo-ck"), pd = (document.getElementById("and-prazo-data")||{}).value;
+  if(ck && ck.checked) p.push(pd ? `marca prazo fatal em ${fmtBarra(pd)}` : "marca prazo fatal (falta a data)");
+  else if(!tfNatureza && prazoDetectado && !prazoCancelado) p.push(`lembra você em ${fmtBarra(prazoDetectado).slice(0,5)}`);
+  return p.join(", ");
+}
+function pintarFrase(){
+  const el = document.getElementById("esc-frase");
+  if(el) el.innerHTML = `Ao registrar: <b>${esc(fraseRegistro())}</b>`;
 }
 function proxDiaUtil(iso){
   const d=new Date(iso+"T12:00:00");
@@ -21903,7 +22230,7 @@ function tfDia(qual, el){
   tfData = qual==="sem" ? null
          : qual==="hoje" ? hoje()
          : qual==="amanha" ? maisDias(1)
-         : qual==="7" ? maisDias(7)
+         : /^\d{1,3}$/.test(qual) ? maisDias(+qual)   // "7", e o "+3 dias" da F182
          : qual;                                   // veio do input de data
   if(el && el.classList && el.classList.contains("tf-dt")) el.classList.add("on");
   // veio do calendário: quem fica aceso é o botão "Escolher a data"
@@ -21992,6 +22319,13 @@ async function novoAndamento(casoUnico){
   const texto=inp.value.trim();
   // a escolha é OBRIGATÓRIA — mas só onde a caixa de escolha existe
   if(document.getElementById("tf-box")){
+    // F182 · chaves desligadas = sem tarefa; lembrete sem pessoa é para quem escreve
+    if(document.getElementById("esc-pnl-tf")){
+      if(tfNatureza===null){ tfQuem = []; tfData = null; }
+      else if(tfNatureza==="lembrete" && tfQuem===null) tfQuem = [];
+      if(tfQuem===null) return aviso("Escolha quem faz a tarefa — ou desligue a chave Tarefa");
+      if(tfData===undefined || (tfData===null && tfNatureza)) return aviso("Escolha quando — ou desligue a chave "+(tfNatureza==="lembrete"?"Lembrete":"Tarefa"));
+    }
     if(tfQuem===null)
       return aviso("Diga para quem é a tarefa — ou marque \"ninguém\"");
     if(tfData===undefined)

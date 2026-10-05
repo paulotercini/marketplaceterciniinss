@@ -215,10 +215,12 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     const y = el => { const r = el.getBoundingClientRect(); return r.top + r.height / 2; };
     const mesmaLinha = (a, b) => Math.abs(y(document.querySelector(a)) - y(document.querySelector(b))) < 10;
     return { barra: vis("#tf-box"), linhas: linhas.length,
-      l1: linhas[0] && /PRAZO FATAL/.test(linhas[0].textContent) && linhas[0].querySelectorAll(".tf-nt").length === 2,   // F145 · na coluna da direita a linha pode quebrar
-      l2: linhas[1] && /ATRIBUIR PARA/i.test(linhas[1].textContent) && !!linhas[1].querySelector(".esc-reg"),
+      // F182 · linha 1 = as chaves Tarefa, Prazo fatal e Lembrete com as ferramentas; linha 2 = a frase "Ao registrar" e o Registrar
+      l1: linhas[0] && /Prazo fatal/.test(linhas[0].textContent) && linhas[0].querySelectorAll(".tf-nt").length === 2 && !!linhas[0].querySelector(".esc-ic"),
+      l2: linhas[1] && /^Ao registrar/.test(linhas[1].textContent.trim()) && !!linhas[1].querySelector(".esc-reg"),
+      quem: vis("#esc-pnl-tf"),
       icone: getComputedStyle(document.querySelector(".esc-ic svg")).width }; })()`);
-  conf("aberto: linha 1 = prazo e Lembrar em; linha 2 = Atribuir para e as ferramentas com o Registrar", aberto.barra && aberto.linhas === 2 && aberto.l1 && aberto.l2);
+  conf("aberto: linha 1 = as chaves e as ferramentas; o quadro Quem faz/Quando aberto pela Tarefa; linha 2 = Ao registrar e o Registrar", aberto.barra && aberto.linhas === 2 && aberto.l1 && aberto.l2 && aberto.quem);
   conf("os ícones das ferramentas cresceram (19px)", aberto.icone === "19px");
   await p.evaluate(() => { document.getElementById("and-texto").blur(); document.body.click(); }); await p.waitForTimeout(400);
   conf("a conversa vira blocos por dia: um bloco por dia, cada um com a data e seus registros, nada solto", ff.blocos >= 1 && ff.soltos === 0 && ff.itensPorBloco.every(n => n >= 1) && ff.dias.every(Boolean));
@@ -424,7 +426,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   // ── F116 · prazo fatal, compromisso e lembrete ──────────────────────────
   await p.waitForTimeout(250);
   conf("o compositor separa as três naturezas: o ⏰ é o PRAZO FATAL, e ao lado se escolhe compromisso ou lembrete", await p.evaluate(() =>
-    /PRAZO FATAL/.test(document.querySelector(".esc-linha .conta-ck").textContent)
+    /Prazo fatal/.test(document.querySelector(".esc-linha .esc-tg-pz").textContent)
     && [...document.querySelectorAll(".tf-nt")].map(b => b.dataset.nat).join("|") === "compromisso|lembrete"
     && document.querySelector('.tf-nt[data-nat="compromisso"]').classList.contains("on")));
   await p.evaluate(() => document.querySelector('.tf-nt[data-nat="lembrete"]').click());

@@ -147,8 +147,9 @@ FIX.leads = [{ id: "l1", nome: "Prospecto Fictício Alves", telefone: "(16) 9999
   semPapel = false;
 
   // ── 6. o chip do revisor na linha do tempo ───────────────────────────────
-  const chip = await p.evaluate(([and, t1, t2]) => { D.tarefasFicha = [t1, t2]; return vistos(and); }, [AND, FIX.andamento_tarefas[0], FIX.andamento_tarefas[1]]);
-  conf("na linha do tempo o revisor tem pastilha própria, com a palavra revisa", /tf-chip\s[^"]*rev"/.test(chip) && /<small>revisa<\/small>/.test(chip));
+  // F182 · no tema v10 a tarefa tem faixa própria no cartão (tarefasCartao)
+  const chip = await p.evaluate(([and, t1, t2]) => { D.tarefasFicha = [t1, t2]; return temaV10() ? tarefasCartao(and) : vistos(and); }, [AND, FIX.andamento_tarefas[0], FIX.andamento_tarefas[1]]);
+  conf("na linha do tempo o revisor tem pastilha própria, com a palavra revisa", (/tf-chip\s[^"]*rev"/.test(chip) && /<small>revisa<\/small>/.test(chip)) || /class="tl-tarefa[^"]*">[\s\S]*?· revisa</.test(chip));
 
   // ── 7. o representante legal: campo, gravação e procuração ───────────────
   await p.evaluate(id => abrirFicha(id), CLI_CHEIO);
