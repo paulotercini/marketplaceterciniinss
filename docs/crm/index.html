@@ -10385,6 +10385,11 @@ function pintarConexaoZap(){
   const p = estadoPonte(), visto = cfgApp("zap_visto_em"), qr = cfgApp("zap_qr");
   const morta = !visto || (Date.now() - new Date(visto).getTime() > 120000);
   const pedido = String(cfgApp("zap_comando")||"").split("|")[0];
+  // repinta só quando algo muda: redesenhar o QR a cada 6 s faz a câmera do
+  // celular perder o código no meio da leitura
+  const chave = [p.txt, qr, pedido, morta, visto && visto.slice(0,16)].join("|");
+  if(el.dataset.chave===chave) return;
+  el.dataset.chave = chave;
   el.innerHTML = `<h3>Conexão do WhatsApp</h3>
     <p class="zx-estado"><i style="background:${p.cor}"></i><b>${esc(p.txt==="ponte ligada"?"Conectado":p.txt)}</b>
       ${visto?`<span class="meio-sub">· sinal de vida ${diaZap(visto)} às ${horaSP(visto)}</span>`:""}</p>
