@@ -51,6 +51,20 @@
     throw new Error('o e-SAJ seguiu travando "consultas simultâneas" — feche outras abas do e-SAJ e clique de novo');
   }
 
+  // a extensão recarregada no meio da rodada deixa este código órfão: sem
+  // chrome.storage nem mensagem ao CRM. Diz isso, em vez de "reading 'local'"
+  function vivo() {
+    if (!(globalThis.chrome && chrome.runtime && chrome.runtime.id))
+      throw new Error('a extensão foi recarregada no meio da rodada — dê F5 nesta aba e clique de novo (os lotes já entregues ficaram no CRM)');
+  }
+  async function noNavegador(obj) { try { vivo(); await chrome.storage.local.set(obj); } catch (e) { console.warn('[CRM]', e.message); } }
+  const paraEntrega = p => ({ numero: p.numero, classe: p.classe, partes: p.partes, orgao: p.orgao, assunto: p.assunto || null,
+    distribuido: p.distribuido || null, situacao: p.situacao, codigo: p.codigo, link: p.link,
+    principal: p.principal || null, tipo: p.tipo || null,
+    movimento: p.movimento, movimentos: p.movimentos || null,
+    pasta: p.pasta || null,                       // F186 · a pasta digital: sem ela o CRM não sabe de quem é cada PDF
+    id: null, ca: null });
+
   async function oabLogada() {
     const r = await fetch('/tarefas-adv/api/usuario', { credentials: 'include' });
     if (!r.ok) return null;
@@ -157,7 +171,10 @@
       }
       return new Response(await doc.save(), { headers: { 'content-type': 'application/pdf' } });
     };
-    await CRM.guardarDocs('esaj', out.numero, docs, { baixar: baixarDoc });
+    let existentes = null;
+    try { existentes = new Set((await CRM.pedir({ tipo: 'crm', acao: 'docs-existentes',
+      prefixo: `esaj/${String(out.numero).replace(/\D/g, '')}/` })).nomes); } catch (e) {}
+    await CRM.guardarDocs('esaj', out.numero, docs, { baixar: baixarDoc, existentes });
     return docs.filter(d => d.caminho).map(({ id, nome, data, hora, caminho }) => ({ id, nome, data, hora, caminho }));
   }
 
@@ -233,7 +250,17 @@
       const pulados = todos.length - fila.length;
       faixa(`${todos.length} processos do TJSP (${resumoFontes})${pulados ? `; ${pulados} arquivados ficam para a rodada semanal` : ''}`);
 
-      const lidos = [];
+      const lidos = [], lote = [], entregues = new Set();
+      const entregar = async (lista, extra) => {
+        vivo();
+        const q = (extra && extra.quando) || new Date().toISOString();
+        for (const grau of Object.keys(GRAUS)) {
+          const processos = lista.filter(p => p.grau === grau).map(paraEntrega);
+          if (processos.length)
+            await CRM.enviar('pje', { versao: 1, fonte: 'pje-acervo', sistema: 'esaj', tribunal: 'TJSP', grau, host, oab, quando: q,
+                                      parcial: !!(extra && (extra.parcial || extra.lote)), pulados: (extra && extra.pulados) || 0, processos });
+        }
+      };
       const vistos = new Set();                    // o mesmo processo pode vir de favorito E de ficha
       let falhas = 0;
       for (let i = 0; i < fila.length; i++) {
@@ -249,6 +276,13 @@
           const k = x.grau + ':' + (x.codigo || x.numero);
           if (vistos.has(k)) continue;
           vistos.add(k); lidos.push(x);
+          // F186 · ENTREGA EM LOTES: a rodada com a pasta digital leva horas, e
+          // tudo só ia ao CRM no fim — uma queda perdia a rodada inteira. A cada
+          // 5 processos com pasta, o lote já vai (o CRM não duplica nada)
+          if (x.pasta && x.pasta.length) {
+            lote.push(x);
+            if (lote.length >= 5) { const l = lote.splice(0); await entregar(l, { lote: true }); l.forEach(p => entregues.add(p)); }
+          }
           // [03.10.2026] os incidentes que a ficha lista (cumprimento de
           // sentença, RPV) entram no fim da fila, se a rodada ainda não os
           // tem — antes só os favoritados eram lidos
@@ -265,26 +299,16 @@
         await espera(1200);
         try { falhas += await lerRecursosDoNumero(comRecurso[i], vistos, lidos); } catch (e) { falhas++; }
       }
-      await chrome.storage.local.set({ [ARQ]: arq });
+      await noNavegador({ [ARQ]: arq });
       if (!lidos.length) { faixaErr(`nenhum processo lido (${falhas} falharam) — o e-SAJ está respondendo?`); return { erro: 'vazio' }; }
 
       // MESMO formato do PJe (fonte pje-acervo), uma coleta por grau: a tela
       // 📥 Importar casa pelo número; `sistema` diz de onde veio e `link`
       // abre a ficha no e-SAJ
       const quando = new Date().toISOString();
-      for (const grau of Object.keys(GRAUS)) {
-        const processos = lidos.filter(p => p.grau === grau)
-          .map(p => ({ numero: p.numero, classe: p.classe, partes: p.partes, orgao: p.orgao, assunto: p.assunto || null,
-                       distribuido: p.distribuido || null, situacao: p.situacao, codigo: p.codigo, link: p.link,
-                       principal: p.principal || null, tipo: p.tipo || null,
-                       movimento: p.movimento, movimentos: p.movimentos || null,
-                       pasta: p.pasta || null,             // F186 · a pasta digital: sem ela o CRM não sabe de quem é cada PDF
-                       id: null, ca: null }));
-        if (!processos.length) continue;
-        await CRM.enviar('pje', { versao: 1, fonte: 'pje-acervo', sistema: 'esaj', tribunal: 'TJSP', grau, host, oab, quando,
-                                  parcial: falhas > 0, pulados, processos });
-      }
-      await chrome.storage.local.set({ ultima_esaj: quando, ...(rapido ? {} : { ultima_esaj_full: quando }) });
+      // a pasta de quem já foi entregue num lote não viaja de novo
+      await entregar(lidos.map(p => entregues.has(p) ? { ...p, pasta: null } : p), { parcial: falhas > 0, pulados, quando });
+      await noNavegador({ ultima_esaj: quando, ...(rapido ? {} : { ultima_esaj_full: quando }) });
       faixaOk(`✔ ${lidos.length} processos do e-SAJ entregues ao CRM${falhas ? ` (${falhas} sem ficha ou sem resposta)` : ''}${rapido ? ' (modo rápido)' : ''} — confira em 📥 Importar.`);
       someFaixa(15000);
       return { ok: lidos.length, falhas };

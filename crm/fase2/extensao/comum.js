@@ -38,14 +38,16 @@ window.CRM = window.CRM || {
   // pausa: o portal é do tribunal, e derrubar a sessão custa a coleta inteira.
   // `baixar(doc)` → Response, para o portal que precisa de cabeçalho próprio.
   // Falha num documento não derruba a coleta: o andamento vai sem ele.
-  async guardarDocs(origem, processo, docs, { todos = false, baixar, pausaMs = 600 } = {}) {
+  async guardarDocs(origem, processo, docs, { todos = false, baixar, pausaMs = 600, existentes = null } = {}) {
     const R = window.DOCS_REGRAS;
     let n = 0;
     for (const d of docs || []) {
       if (!d || (!d.url && !baixar) || (!todos && !R.vaiBaixar(d.nome))) continue;
       const caminho = R.caminhoDoc(origem, processo, d);
       try {
-        if (!(await CRM.pedir({ tipo: 'crm', acao: 'doc-existe', caminho })).existe) {
+        // `existentes` (a pasta listada de uma vez) poupa uma ida ao banco por documento
+        const jaTem = existentes ? existentes.has(caminho) : (await CRM.pedir({ tipo: 'crm', acao: 'doc-existe', caminho })).existe;
+        if (!jaTem) {
           const r = baixar ? await baixar(d)
             : await fetch(new URL(d.url, location.href), { credentials: 'include' });
           if (!r || !r.ok) continue;

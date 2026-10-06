@@ -198,7 +198,7 @@ function rodada(favoritos, situacao1g) {
   const nada = () => {};
   const ctx = { location: { host: 'esaj.tjsp.jus.br' }, fetch, ESAJ_REGRAS: R, Math, Date, Promise,
     setTimeout: f => { f(); return 0; }, faixa: nada, faixaOk: nada, faixaErr: nada, someFaixa: nada,
-    chrome: { storage: { local: { get: async () => ({}), set: async () => {} } } },
+    chrome: { runtime: { id: 'teste' }, storage: { local: { get: async () => ({}), set: async () => {} } } },
     CRM: { guardarDocs: async () => 0, favoritosEsaj: async () => ({ favoritos }), processosTjsp: async () => ({ numeros: [NUM], fichas: 1 }),
            enviar: async (fonte, dados) => { enviados.push(dados); return true; } } };
   ctx.window = ctx; ctx.top = ctx;           // o quadro de cima: num iframe o coletor não sobe
