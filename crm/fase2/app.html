@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.93</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.94</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18334,7 +18334,7 @@ function documentosDoCaso(k){
   for(const b of crpsBlocos(k)) for(const e of (b.eventos||[])) for(const f of (e.arquivos||[]))
     if(f.storage && !docs.some(d=>d.caminho===f.storage))
       docs.push({ nome:f.nome||"acórdão", caminho:f.storage, tipo:"application/pdf", tamanho:f.bytes||null,
-                  texto:null, origem:"crps", data:dataParaISO(e.data)||e.data||null });
+                  texto:null, origem:"crps", data:isoCrps(e.data)||e.data||null });
   return docs.sort((a,b)=>String(b.data||"").localeCompare(String(a.data||"")));
 }
 // F185 · cada aba mostra os SEUS documentos (Judicial: PJe/eproc/e-SAJ; INSS:
