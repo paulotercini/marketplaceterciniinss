@@ -195,7 +195,10 @@
     }
     if (!tl) { faixaErr('não achei a Cronologia — abra essa aba na página e clique de novo'); return { erro: 'sem cronologia' }; }
     let antes = -1, quietos = 0, morreuNoMeio = false;
-    for (let i = 0; i < 80 && quietos < 3; i++) {
+    // F184 · 3 rodadas quietas cortaram o começo da cronologia (a inicial e
+    // seus documentos sumiram numa coleta real): o PJe às vezes demora mais
+    // de 3 s para trazer a página seguinte
+    for (let i = 0; i < 120 && quietos < 6; i++) {
       if (paginaMorreu()) { morreuNoMeio = true; break; }   // entrega o que carregou
       const n = tl.querySelectorAll('.media').length;
       if (n === antes) quietos++;
@@ -204,7 +207,7 @@
       tl.scrollTop = tl.scrollHeight;
       const fim = tl.querySelector('.media:last-child');
       if (fim) fim.scrollIntoView({ block: 'end' });
-      await pausa(900);
+      await pausa(1200);
     }
     if (morreuNoMeio) faixa('⚠ o PJe derrubou a conversa durante a rolagem — entrego o que já carregou');
     const itens = REG.lerTimelineHtml(tl.outerHTML);
