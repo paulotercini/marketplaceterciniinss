@@ -18,3 +18,10 @@ t.test("WebM gravado no navegador vira OGG/Opus para mensagem de voz", async () 
 t.test("lixo no lugar de áudio falha com erro, não trava", async () => {
   await a.rejects(paraOgg(Buffer.from("isto não é áudio")), /ffmpeg/);
 });
+
+t.test("assinatura como no SMBot: nome em negrito e linha em branco; sem nome, texto puro", () => {
+  const { assinar } = require("../ponte");
+  a.strictEqual(assinar("Bom dia!", "Dr. Paulo Tercini"), "*Dr. Paulo Tercini:*\n\nBom dia!");
+  a.strictEqual(assinar("Bom dia!", null), "Bom dia!");
+  a.strictEqual(assinar("", "Ingrid"), "");
+});

@@ -127,6 +127,14 @@ const T = {
   const rc = escritas.find(e => /zap_reacoes/.test(e.u));
   conf("reagir põe a reação do escritório na fila da ponte", rc && rc.b.emoji === "👍" && rc.b.status === "fila" && rc.b.de === "escritorio");
 
+  // F188 · áudio gravado não sai sozinho: fica a prévia com Enviar áudio
+  const antesAudio = escritas.length;
+  await p.evaluate(() => { zapAudio = { blob: new Blob(["x"], { type: "audio/webm" }), conversa: zapAberta, url: "blob:teste" }; pintarConversaGuardando(); });
+  conf("áudio gravado mostra a prévia com Enviar áudio e não grava nada sozinho",
+    (await p.textContent(".zap-audio-prev")).includes("Enviar áudio") && escritas.length === antesAudio);
+  await p.evaluate(() => { descartarAudioZap(); pintarConversaGuardando(); });
+  conf("descartar some com a prévia", !(await p.$(".zap-audio-prev")));
+
   // encerrar com observação
   await p.evaluate(() => encerrarConversa());
   await p.fill("#ze-obs", "Perícia confirmada para dia 10");

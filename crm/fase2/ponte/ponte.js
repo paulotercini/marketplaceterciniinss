@@ -433,10 +433,25 @@ function paraOgg(buf) {
   });
 }
 
+// F188 · como no SMBot, o cliente vê quem respondeu: "*Dr. Paulo Tercini:*"
+// e uma linha em branco antes do texto. Robô e aviso automático não assinam.
+const assinaturas = new Map();
+async function assinaturaDe(msg) {
+  if (!msg.autor_id || msg.por_bot || msg.aviso_chave) return null;
+  if (!assinaturas.has(msg.autor_id)) {
+    const [c] = await sb(`/rest/v1/colaboradores?select=nome,assinatura_zap&id=eq.${msg.autor_id}`).catch(() => []);
+    assinaturas.set(msg.autor_id, c ? (c.assinatura_zap || c.nome || "").trim() || null : null);
+    setTimeout(() => assinaturas.delete(msg.autor_id), 600000);   // muda na Configuração: vale em 10 min
+  }
+  return assinaturas.get(msg.autor_id);
+}
+const assinar = (texto, quem) => quem && texto ? `*${quem}:*\n\n${texto}` : texto;
+
 async function conteudoDaMensagem(msg) {
-  if (!msg.midia_url) return { text: msg.texto || "" };
+  const quem = await assinaturaDe(msg);
+  if (!msg.midia_url) return { text: assinar(msg.texto || "", quem) };
   const buf = await baixarDoBalde(msg.midia_url);
-  const legenda = (msg.texto || "").trim() || undefined;
+  const legenda = assinar((msg.texto || "").trim(), quem) || undefined;
   const mime = msg.midia_mime || "application/octet-stream";
   switch (msg.tipo) {
     case "imagem": return { image: buf, caption: legenda };
@@ -488,7 +503,7 @@ async function rodarFila() {
           if (n) log(`${n} mensagem(ns) agendada(s) liberada(s)`);
         }
         const fila = await sb("/rest/v1/zap_mensagens?status=eq.fila"
-          + "&select=id,conversa_id,texto,tipo,midia_url,midia_nome,midia_mime,tentativas,responde_a"
+          + "&select=id,conversa_id,texto,tipo,midia_url,midia_nome,midia_mime,tentativas,responde_a,autor_id,por_bot,aviso_chave"
           + "&order=seq&limit=5");
         for (const msg of fila || []) await enviar(msg);
         const reacoes = await sb("/rest/v1/zap_reacoes?status=eq.fila&de=eq.escritorio&select=id,mensagem_id,emoji&limit=5");
@@ -657,4 +672,4 @@ if (require.main === module) {
   process.on("unhandledRejection", e => log("erro solto (seguindo):", (e && e.message) || e));
 }
 
-module.exports = { sb, rpc, enviar, entrou, conteudoDaMensagem, paraOgg };
+module.exports = { sb, rpc, enviar, entrou, conteudoDaMensagem, paraOgg, assinar };
