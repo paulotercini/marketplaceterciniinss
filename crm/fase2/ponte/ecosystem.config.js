@@ -8,8 +8,10 @@
 // das variáveis de ambiente do Windows, como quando roda no terminal.
 module.exports = {
   apps: [
+    // a ponte SAI de propósito quando a conexão cai (ou o CRM pede para
+    // reconectar), para voltar com uma conexão só: o pm2 nunca pode desistir dela
     { name: "ponte-zap", script: "ponte.js", cwd: __dirname, time: true,
-      restart_delay: 10000 },
+      restart_delay: 10000, max_restarts: 100000, min_uptime: 5000 },
     // uv no PATH do Windows; o Python certo e o Whisper ele mesmo resolve
     { name: "transcricao-audios", script: "uv", args: "run transcrever.py", interpreter: "none",
       cwd: __dirname, time: true, restart_delay: 30000 },
