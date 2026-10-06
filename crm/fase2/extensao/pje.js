@@ -211,7 +211,7 @@
     if (!itens.length) { faixaErr('a cronologia estava vazia na tela'); return { erro: 'vazio' }; }
     // F184 · as decisões vão junto: o CRM passa a dizer O QUE foi decidido
     const docs = itens.flatMap(i => i.docs || []);
-    if (docs.some(d => DOCS_REGRAS.ehDecisao(d.nome))) faixa(`processo ${cab.numero}: guardando as decisões no CRM…`);
+    if (docs.some(d => DOCS_REGRAS.vaiBaixar(d.nome))) faixa(`processo ${cab.numero}: guardando as peças no CRM (as já guardadas são puladas)…`);
     // o PJe só libera o download do documento ABERTO no visualizador (medido
     // ao vivo: o não aberto responde 404) — então se clica nele na
     // cronologia, como a pessoa faria, e se espera o PJe sossegar
