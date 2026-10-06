@@ -242,3 +242,33 @@ export async function docsExistentes(prefixo) {
     if (lista.length < 1000) return { nomes };
   }
 }
+
+// F187 · os processos do PJe para completar: o endereço dos "Autos Digitais"
+// (id + ca) sai das últimas coletas do acervo, e só entra processo que tem
+// caso aberto no CRM — sem caso, os documentos não teriam onde morar
+export async function acervoPje() {
+  const { url } = await config();
+  const cab = await cabecalhos();
+  const r = await fetchTeimoso(`${url}/rest/v1/coletas?select=dados&fonte=eq.pje&order=criado_em.desc&limit=40`, { headers: cab });
+  if (!r.ok) throw new Error(`não consegui ler as coletas do PJe (${r.status})`);
+  const rc = await fetchTeimoso(`${url}/rest/v1/casos?select=processo,processos&encerrado_em=is.null&limit=5000`, { headers: cab });
+  if (!rc.ok) throw new Error(`não consegui ler os casos (${rc.status})`);
+  const dig = v => String(v == null ? '' : v).replace(/\D/g, '');
+  const doCrm = new Set();
+  for (const k of await rc.json()) {
+    if (dig(k.processo)) doCrm.add(dig(k.processo));
+    for (const p of (Array.isArray(k.processos) ? k.processos : [])) if (dig(p && (p.numero || p))) doCrm.add(dig(p.numero || p));
+  }
+  const vistos = new Map();
+  for (const c of await r.json()) {
+    const d = c.dados || {};
+    if (d.sistema || !/pje[12]g\.trf3\.jus\.br/.test(d.host || '')) continue;      // só o PJe do TRF3
+    for (const p of (d.processos || [])) {
+      const chave = d.host + ':' + dig(p.numero);
+      if (p.id && p.ca && doCrm.has(dig(p.numero)) && !vistos.has(chave))
+        vistos.set(chave, { numero: p.numero, host: d.host,
+          url: `https://${d.host}/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompletoAdvogado.seam?id=${p.id}&ca=${p.ca}` });
+    }
+  }
+  return [...vistos.values()];
+}

@@ -98,6 +98,48 @@
     return { ok: itens.length };
   }
 
+  // ── F187 · COMPLETAR PROCESSOS: os eventos e os documentos de TODOS os
+  // processos da relação, um por vez, por trás (o link da relação abre o
+  // processo na sessão, e só o processo aberto libera os seus documentos —
+  // por isso nada em paralelo, e ninguém mexendo no eproc enquanto roda).
+  // Entrega em lotes de 5 processos por coleta ('pje-processo' com `lote`).
+  async function coletarCompleto(processos) {
+    const pausa = ms => new Promise(r => setTimeout(r, ms));
+    const lote = [];
+    let feitos = 0, falhas = 0, docs = 0;
+    const entregar = async l => {
+      if (!l.length) return;
+      await CRM.enviar('pje-processo', { versao: 1, fonte: 'pje-processo', sistema: 'eproc', tribunal: 'TJSP', grau, host,
+                                         quando: new Date().toISOString(), qtd: l.length, lote: l });
+    };
+    for (let i = 0; i < processos.length; i++) {
+      const p = processos[i];
+      if (!p.link) continue;
+      faixa(`${sistema}: completando ${i + 1} de ${processos.length} — ${p.numero}…`);
+      try {
+        const html = await baixar(p.link);
+        if (!logadoNoHtml(html)) throw new Error('a sessão do eproc caiu — faça login de novo e clique outra vez');
+        const cab = REG.lerCabecalhoProcesso(html) || { numero: p.numero };
+        const itens = REG.lerEventosHtml(html);
+        let existentes = null;
+        try { existentes = new Set((await CRM.pedir({ tipo: 'crm', acao: 'docs-existentes',
+          prefixo: `eproc/${String(cab.numero).replace(/\D/g, '')}/` })).nomes); } catch (e) {}
+        docs += await CRM.guardarDocs('eproc', cab.numero, itens.flatMap(it => it.docs || []), { existentes });
+        lote.push({ versao: 1, fonte: 'pje-processo', sistema: 'eproc', tribunal: 'TJSP', grau, host,
+                    quando: new Date().toISOString(), numero: cab.numero, classe: cab.classe || p.classe || null,
+                    orgao: cab.orgao || null, link: p.link, itens });
+        feitos++;
+        if (lote.length >= 5) await entregar(lote.splice(0));
+      } catch (e) {
+        if (/sess[ãa]o/.test(e.message)) { await entregar(lote.splice(0)); throw e; }
+        falhas++; console.warn('[CRM] processo não completado:', p.numero, e);
+      }
+      await pausa(800);
+    }
+    await entregar(lote);
+    return { feitos, falhas, docs };
+  }
+
   // fora da relação (painel, consulta...), o coletor vai até ela sozinho e
   // recomeça quando a página abrir — o sinal vive no sessionStorage
   const RETOMAR = 'crm_eproc_retomar';
@@ -109,18 +151,25 @@
       // F97 · o "atualizar tudo" (opts.acervo) quer a relação inteira, mesmo
       // com um processo aberto na aba; o clique manual coleta o processo
       if (document.getElementById('tblEventos') && /acao=processo_selecionar/.test(location.search)
-          && !(opts && opts.acervo))
+          && !(opts && (opts.acervo || opts.completo)))
         return await coletarProcessoAberto();
       if (!formLista()) {
         const l = linkRelacao();
         if (!l) { faixaErr('abra a Relação de Processos (menu Relatórios) e clique de novo'); return { erro: 'fora da relação' }; }
-        sessionStorage.setItem(RETOMAR, '1');
+        sessionStorage.setItem(RETOMAR, opts && opts.completo ? 'completo' : '1');
         faixa('abrindo a Relação de Processos…');
         location.href = l.href;
         return { erro: 'retomando' };
       }
       faixa(`${sistema}: lendo a relação de processos…`);
       const { processos, total } = await coletarRelacao();
+      if (opts && opts.completo) {
+        const r = await coletarCompleto(processos);
+        await chrome.storage.local.set({ ultima_eproc_completo: new Date().toISOString() });
+        faixaOk(`✔ ${sistema}: ${r.feitos} processo(s) completados, ${r.docs} documento(s) guardados${r.falhas ? ` (${r.falhas} falharam)` : ''} — confira em 📥 Importar.`);
+        someFaixa(15000);
+        return { ok: r.feitos, falhas: r.falhas };
+      }
       if (!processos.length) {
         faixaOk(total === 0 ? `${sistema}: nenhum processo ativo neste eproc — nada a entregar.`
                             : `${sistema}: nenhum processo lido — a relação estava vazia na tela?`);
@@ -141,7 +190,8 @@
   };
 
   if (sessionStorage.getItem(RETOMAR) && formLista()) {
+    const completo = sessionStorage.getItem(RETOMAR) === 'completo';
     sessionStorage.removeItem(RETOMAR);
-    setTimeout(() => window.crmRodar && window.crmRodar(), 800);
+    setTimeout(() => window.crmRodar && window.crmRodar(null, completo ? { completo: true } : undefined), 800);
   }
 })();
