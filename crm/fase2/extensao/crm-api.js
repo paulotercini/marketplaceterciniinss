@@ -218,3 +218,12 @@ export async function guardarDoc(caminho, tipo, b64) {
   if (r.status === 409 || /already exists|Duplicate/i.test(t)) return { caminho, bytes: bin.length };
   throw new Error(`o CRM recusou o documento (${r.status}): ${t.slice(0, 120)}`);
 }
+
+// F186 · o crachá para o content script subir o arquivo DIRETO ao Storage:
+// a mensagem entre partes da extensão tem teto de 64 MiB (e o base64 ainda
+// soma um terço), e um "Documentos Diversos" escaneado do e-SAJ passou disso.
+// O crachá vai só para o mundo isolado da extensão, não para a página.
+export async function acessoStorage() {
+  const { url, chave } = await config();
+  return { url, chave, token: await cracha() };
+}
