@@ -76,9 +76,17 @@ window.CRM = window.CRM || {
               buf = new TextEncoder().encode(html);
             }
           }
-          let s = '';
-          for (let i = 0; i < buf.length; i += 8192) s += String.fromCharCode.apply(null, buf.subarray(i, i + 8192));
-          await CRM.pedir({ tipo: 'crm', acao: 'guardar-doc', caminho, tipoDoc, b64: btoa(s) });
+          // sobe DIRETO ao Storage (sem o teto de 64 MiB da mensagem interna)
+          const { url, chave, token } = await CRM.pedir({ tipo: 'crm', acao: 'acesso-storage' });
+          const up = await fetch(`${url}/storage/v1/object/anexos/${caminho}`, { method: 'POST', body: buf,
+            headers: { apikey: chave, Authorization: 'Bearer ' + token, 'Content-Type': tipoDoc, 'x-upsert': 'false' } });
+          if (!up.ok) {
+            const t = await up.text();
+            if (!(up.status === 409 || /already exists|Duplicate/i.test(t))) {
+              console.warn('[CRM] o Storage recusou', d.nome, `(${Math.round(buf.length / 1048576)} MB):`, up.status, t.slice(0, 120));
+              continue;                                // grande demais ou recusado: segue para o próximo
+            }
+          }
           await new Promise(res => setTimeout(res, pausaMs));
         }
         d.caminho = caminho; n++;
