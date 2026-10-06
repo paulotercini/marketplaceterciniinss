@@ -39,7 +39,8 @@ test('desce tudo, menos o expediente', () => {
                    'Sentença tipo B', 'Laudo Pericial', 'INIC1', 'PET1', 'CONT1', 'SENT1', 'Documento de Identificação (RG E CPF)'])
     assert.ok(R.vaiBaixar(n), n);
   for (const n of ['Certidão', 'Certidão Trânsito em Julgado', 'Ato Ordinatório', 'Intimação', 'Mandado', 'Comprovante de protocolo',
-                   'Certidão de Publicação Expedida', 'Remessa', 'Conclusão', 'CERT1', 'ATOORD1', 'INTM2', 'AR1'])
+                   'Certidão de Publicação Expedida', 'Remessa', 'Conclusão', 'CERT1', 'ATOORD1', 'INTM2', 'AR1',
+                   'Decurso de Prazo', 'DEPRE Ciência de Recebimento no Portal'])
     assert.ok(!R.vaiBaixar(n), n);
 });
 

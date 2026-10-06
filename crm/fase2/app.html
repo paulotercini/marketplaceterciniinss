@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.97</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.98</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8076,7 +8076,9 @@ async function gravarDocsDaColeta(docs){
       const ja = await api(`/rest/v1/anexos?select=id&caminho=eq.${encodeURIComponent(d.caminho)}`);
       if(ja && ja.length) continue;
       let [an] = d.andamento_oid ? (await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem_id=eq.${encodeURIComponent(d.andamento_oid)}&limit=1`) || []) : [];
-      if(!an && d.momento)
+      // o e-SAJ não dá hora (00:00): vários movimentos no mesmo dia, e o momento
+      // ligaria a peça ao primeiro deles — aí só vale a chave exata
+      if(!an && d.momento && !/T00:00$/.test(d.momento))
         [an] = await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem=eq.pje&origem_id=like.${encodeURIComponent(`*:${d.momento}*`)}&order=criado_em.asc&limit=1`) || [];
       let lido = { tipo:null, tamanho:null, texto:null };
       try{ lido = await textoDoDocumento(d.caminho); }catch(e){ console.warn("texto do documento:", d.caminho, e); }
