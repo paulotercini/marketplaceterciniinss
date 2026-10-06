@@ -3715,7 +3715,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.00</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.01</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6379,7 +6379,7 @@ let coletasPendentes = [];
 async function buscarColetas(){
   try{
     coletasPendentes = await api(
-      `/rest/v1/coletas?select=id,fonte,criado_em,numero:dados->>numero,host:dados->>host,grau:dados->>grau,sistema:dados->>sistema&aplicada_em=is.null&order=criado_em.desc`) || [];
+      `/rest/v1/coletas?select=id,fonte,criado_em,numero:dados->>numero,host:dados->>host,grau:dados->>grau,sistema:dados->>sistema,parcial:dados->>parcial,qtd:dados->>qtd&aplicada_em=is.null&order=criado_em.desc`) || [];
   }catch(e){ coletasPendentes = []; }   // sem a tabela, a tela do arquivo continua
 }
 // SÓ A MAIS NOVA DE CADA PORTAL INTERESSA. Cada clique no botão da extensão
@@ -6395,7 +6395,11 @@ function coletasPorFonte(){
     // do PJe, os quatro eprocs e os dois graus do e-SAJ (mesmo host) chegam
     // todos como fonte "pje", e a coleta de um não pode engolir a de outro
     // como se fosse repetição
+    // F187 · o LOTE (entrega parcial de uma rodada longa: a pasta digital do
+    // e-SAJ, o "completar processos") é fila própria — cada lote tem
+    // processos diferentes, e tratá-lo como repetição escondia 5 de 6
     const chave = c.fonte==="pje-processo" ? `${c.fonte}:${c.numero||c.id}`
+                : c.fonte==="pje" && c.parcial==="true" ? `${c.fonte}:lote:${c.id}`
                 : c.fonte==="pje" ? `${c.fonte}:${c.host||""}:${c.grau||""}` : c.fonte;
     if(!nova[chave]) nova[chave] = c; else velhas.push(c);
   }
@@ -6544,8 +6548,8 @@ function telaImportarPat(){
         ou solte um arquivo aqui embaixo.</p>`;
       return `<div class="id-grid" style="grid-template-columns:1fr;gap:6px;margin:10px 0">
       ${novas.map(c=>`<div class="id-card destaque" style="display:flex;align-items:center;gap:10px">
-        <strong>${c.fonte==="pat"?"🌻 INSS":c.fonte==="pje"?`${rotuloSistemaPje(c)}${c.grau?` · ${esc(c.grau)}`:""}`
-          :c.fonte==="pje-processo"?`⚖️ Processo completo${c.numero?` ${esc(c.numero)}`:""}`:"🖥 Recursos"}</strong>
+        <strong>${c.fonte==="pat"?"🌻 INSS":c.fonte==="pje"?`${rotuloSistemaPje(c)}${c.grau?` · ${esc(c.grau)}`:""}${c.parcial==="true"?` · lote de ${new Date(c.criado_em).toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}`:""}`
+          :c.fonte==="pje-processo"?`⚖️ Processo completo${c.numero?` ${esc(c.numero)}`:c.qtd?` — lote de ${esc(c.qtd)} processos`:""}`:"🖥 Recursos"}</strong>
         <span class="u-papel" style="text-transform:none">chegou ${esc(dataRelativa(dataSP(c.criado_em)))} às ${esc(horaSP(c.criado_em))}</span>
         <button class="btn-mini" style="margin-left:auto" onclick="${
           c.fonte==="crps"?`conferirCrps('${c.id}')`:c.fonte==="pje"?`conferirPje('${c.id}')`
@@ -6635,7 +6639,8 @@ function telaImportarPat(){
         onclick="aplicarPje('${planoPjeAtual.coleta_id}')">Aplicar ${q.movimentos} movimento(s)</button>`; })()}
     ${!planoPjeProcAtual ? "" : (()=>{ const q = planoPjeProcAtual.resumo, p = planoPjeProcAtual; return `
       <h3 class="secao">⚖️ Processo completo ${esc(p.numero)}${p.grau?` · ${esc(p.grau)}`:""} — a cronologia inteira</h3>
-      ${!p.caso_id?`<div class="exig"><strong>Esse número não tem caso no CRM.</strong>
+      ${p.caso_id && (p.semCaso||[]).length?`<p class="meio-sub">${p.semCaso.length} processo(s) deste lote sem caso no CRM ficam de fora: ${esc(p.semCaso.join(", "))}</p>`:""}
+      ${!p.caso_id?`<div class="exig"><strong>${(p.semCaso||[]).length>1?"Nenhum desses processos tem caso no CRM.":"Esse número não tem caso no CRM."}</strong>
         Preencha o campo "Processo (CNJ)" na ficha do cliente (lápis ✎) — ou vincule pela
         coleta do acervo — e clique em conferir de novo.</div>`:`
       <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
@@ -8136,17 +8141,27 @@ async function conferirPjeProc(coletaId){
   try{
     const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
     if(!c) return aviso("Não achei essa coleta");
-    const dados = c.dados || {};
-    const dig = soDig(dados.numero);
-    const k = D.casos.find(x=>soDig(x.processo)===dig) || null;
-    const plano = { coleta_id: coletaId, numero: dados.numero||"?", grau: dados.grau||"",
-                    caso_id: k?k.id:null, fichas: [], andamentos: [], docs: [],
-                    resumo: { itens:(dados.itens||[]).length, movimentos:0, conhecidos:0, docs:0 } };
-    if(!k){ planoPjeProcAtual = plano; render(); return; }
+    const c0 = c.dados || {};
+    // F187 · o LOTE da rodada "completar processos" (PJe e eproc): vários
+    // processos abertos numa coleta só; o de um processo é um lote de um
+    const lote = Array.isArray(c0.lote) ? c0.lote : [c0];
+    // o caso pelo número principal OU por qualquer processo da lista da ficha
+    const casoDe = dig => D.casos.find(x=>soDig(x.processo)===dig
+      || (Array.isArray(x.processos) && x.processos.some(q=>soDig(q && (q.numero||q))===dig))) || null;
+    const plano = { coleta_id: coletaId, numero: lote.length>1 ? `${lote.length} processos` : (c0.numero||"?"),
+                    grau: lote.length>1 ? "" : (c0.grau||""), caso_id: null, semCaso: [],
+                    fichas: [], andamentos: [], docs: [],
+                    resumo: { itens:0, movimentos:0, conhecidos:0, docs:0 } };
     const bancoPje = await todas("andamentos",
       "select=origem_id,texto&origem=eq.pje&origem_id=not.is.null").catch(()=>[]);
     const vistos = new Set(bancoPje.map(a=>a.origem_id));
     const momentos = momentosPje(bancoPje);
+    for(const dados of lote){
+    const dig = soDig(dados.numero);
+    const k = casoDe(dig);
+    plano.resumo.itens += (dados.itens||[]).length;
+    if(!k){ plano.semCaso.push(dados.numero); continue; }
+    plano.caso_id = plano.caso_id || k.id;
     const campos={};
     if(dados.classe && !k.classe_judicial) campos.classe_judicial=dados.classe;
     if(dados.orgao && !k.orgao_judicial) campos.orgao_judicial=dados.orgao;
@@ -8166,6 +8181,7 @@ async function conferirPjeProc(coletaId){
         texto:`${prefixoPje(dados)}${dados.grau?` (${dados.grau})`:""}: ${texto}${
           it.data?` — em ${fmt(it.data)}${it.hora?" "+it.hora:""}`:""} — ${dados.classe||"processo"} ${dados.numero}` });
       plano.resumo.movimentos++;
+    }
     }
     planoPjeProcAtual = plano;
     render();
@@ -10305,17 +10321,37 @@ let zapNota = false;
 // o que veio do SMBot: setores, etiquetas, retornos, reações e o protocolo
 let zapAux = {setores:[], etiquetas:[], convEtq:new Map(), retornos:[]};
 let zapReacoes = new Map(), zapProto = null, zapResponder = null, zapHist = [];
-let zapChips = {naoLidas:false, fixadas:false, setor:"", etiqueta:""};
+let zapChips = {naoLidas:false, fixadas:false, setor:"", etiqueta:"", atendente:""};
 async function carregarAuxZap(){
-  const [setores, etiquetas, ce, retornos] = await Promise.all([
+  const [setores, etiquetas, ce, retornos, colabSetores, mencs] = await Promise.all([
     todas("zap_setores","select=*&ativo=eq.true&order=ordem,nome").catch(()=>[]),
     todas("zap_etiquetas","select=*&order=ordem,texto").catch(()=>[]),
     todas("zap_conversa_etiquetas","select=conversa_id,etiqueta_id").catch(()=>[]),
     todas("zap_retornos","select=*&feito_em=is.null&order=quando").catch(()=>[]),
+    todas("colaborador_setores","select=colaborador_id,setor_id").catch(()=>[]),
+    todas("mencoes",`select=conversa_id&para_id=eq.${eu.id}&lida_em=is.null&conversa_id=not.is.null`).catch(()=>[]),
   ]);
   const convEtq = new Map();
   ce.forEach(x=>{ if(!convEtq.has(x.conversa_id)) convEtq.set(x.conversa_id,[]); convEtq.get(x.conversa_id).push(x.etiqueta_id); });
-  zapAux = {setores, etiquetas, convEtq, retornos};
+  zapAux = {setores, etiquetas, convEtq, retornos, colabSetores,
+            mencionado: new Set(mencs.map(m=>m.conversa_id))};
+}
+// F187 · gestor vê e mexe em tudo; atendente vê as suas, as pendentes dos seus
+// setores e aquelas em que foi chamado com @. O banco confere as ações
+// (zap_guarda_*), aqui é o que cada um enxerga.
+const zapGestor = () => !visaoColab();
+const meusSetoresZap = () => zapAux.colabSetores.filter(x=>x.colaborador_id===eu.id).map(x=>x.setor_id);
+function zapVisivel(c){
+  if(zapGestor() || c.atendente_id===eu.id || zapAux.mencionado.has(c.id)) return true;
+  if(c.atendente_id) return false;
+  const meus = meusSetoresZap();
+  return !c.setor_id || !meus.length || meus.includes(c.setor_id);
+}
+const podeAgirZap = c => !!c && (zapGestor() || !c.atendente_id || c.atendente_id===eu.id);
+// o banco explica a recusa em "message": é isso que vai para o aviso
+function msgErro(e){
+  try{ const j = JSON.parse(String(e.message).replace(/^\d+:\s*/,"")); return j.message || e.message; }
+  catch(_){ return e.message; }
 }
 const setorDe = c => c && c.setor_id && zapAux.setores.find(s=>s.id===c.setor_id);
 const etiquetasDe = c => (zapAux.convEtq.get(c.id)||[]).map(id=>zapAux.etiquetas.find(e=>e.id===id)).filter(Boolean);
@@ -10479,11 +10515,16 @@ let zapBusca = "";
 function pintarListaZap(){
   const meu = c => c.atendente_id===eu.id;
   const aberta = c => c.status!=="resolvida";
-  const filtros = [["minhas","Minhas"],["sem","Pendentes"],["todas","Todas"],["retornos","Retornos"]];
+  const gestor = zapGestor();
+  const filtros = gestor ? [["minhas","Minhas"],["sem","Pendentes"],["todas","Todas"],["retornos","Retornos"]]
+                         : [["minhas","Minhas"],["sem","Pendentes"],["retornos","Retornos"]];
+  if(!gestor && zapFiltro==="todas") zapFiltro = "minhas";
   const naAba = (f,c) => f==="minhas" ? meu(c)&&aberta(c) : f==="sem" ? !c.atendente_id&&aberta(c)
                        : f==="fim" ? !aberta(c) : f==="retornos" ? !!retornoDe(c) : aberta(c);
   const q = dsa(zapBusca.trim()), qd = zapBusca.replace(/\D/g,"");
-  let cs = zapConvs.filter(c=>naAba(zapFiltro,c)
+  const visiveis = zapConvs.filter(zapVisivel);
+  let cs = visiveis.filter(c=>naAba(zapFiltro,c)
+    && (!zapChips.atendente || c.atendente_id===zapChips.atendente)
     && (!q || dsa(nomeDaConversa(c)).includes(q) || (qd.length>=4 && String(c.telefone||"").includes(qd)))
     && (!zapChips.naoLidas || c.nao_lidas)
     && (!zapChips.setor || c.setor_id===zapChips.setor)
@@ -10513,15 +10554,17 @@ function pintarListaZap(){
            zapComProblema()?(cfgApp("zap_qr")?"Ler QR code":"Corrigir conexão"):"conectado"}</button></div>
        <label class="zl-busca">${zic("busca")}<input type="search" id="zl-busca" value="${esc(zapBusca)}"
          placeholder="Buscar nome ou telefone" aria-label="Buscar conversa"></label>
-       <div class="zl-filas" role="tablist" aria-label="Filas">${filtros.map(([f,r])=>{
-          const n = zapConvs.filter(c=>naAba(f,c)).length;
+       <div class="zl-filas" role="tablist" aria-label="Filas" style="grid-template-columns:repeat(${filtros.length},minmax(0,1fr))">${filtros.map(([f,r])=>{
+          const n = visiveis.filter(c=>naAba(f,c)).length;
           return `<button role="tab" aria-selected="${zapFiltro===f}" class="${zapFiltro===f?"on":""} ${f}" data-zf="${f}">${r}${n?` <span class="n">${n}</span>`:""}</button>`;
         }).join("")}</div>
        <div class="zl-chips">
          <button class="zl-chip ${zapChips.naoLidas?"on":""}" data-zch="naoLidas" aria-pressed="${zapChips.naoLidas}">Não lidas</button>
          ${zapAux.setores.length?sel("zf-setor","Setor",zapAux.setores.map(s=>[s.id,s.nome]),zapChips.setor):""}
          ${zapAux.etiquetas.length?sel("zf-etq","Etiqueta",zapAux.etiquetas.map(e=>[e.id,e.texto]),zapChips.etiqueta):""}
+         ${gestor?sel("zf-atend","Atendente",equipeAtiva().map(c=>[c.id,c.nome]),zapChips.atendente):""}
          <button class="zl-link ${zapFiltro==="fim"?"on":""}" data-zf="fim">Encerradas${zapFiltro==="fim"?` (${cs.length})`:""}</button>
+         ${gestor?`<button class="zl-link ${zapPainelAberto?"on":""}" onclick="abrirPainelZap()">Painel da equipe</button>`:""}
        </div>
      </div>
      <div class="zl-lista">${lista || `<p class="meio-sub" style="padding:8px 6px">Nenhuma conversa aqui.</p>`}</div>`;
@@ -10529,6 +10572,7 @@ function pintarListaZap(){
   document.querySelectorAll("[data-zch]").forEach(b=>b.onclick=()=>{ zapChips[b.dataset.zch]=!zapChips[b.dataset.zch]; pintarListaZap(); });
   const fs = document.getElementById("zf-setor"); if(fs) fs.onchange=()=>{ zapChips.setor=fs.value; pintarListaZap(); };
   const fe = document.getElementById("zf-etq"); if(fe) fe.onchange=()=>{ zapChips.etiqueta=fe.value; pintarListaZap(); };
+  const fa = document.getElementById("zf-atend"); if(fa) fa.onchange=()=>{ zapChips.atendente=fa.value; if(fa.value) zapFiltro="todas"; pintarListaZap(); };
   const b2 = document.getElementById("zl-busca");
   b2.oninput = ()=>{ zapBusca=b2.value; pintarListaZap(); };
   // a lista repinta a cada 6 s: quem está digitando a busca não pode perder o cursor
@@ -10656,6 +10700,10 @@ function pintarConversa(){
   const at = c.atendente_id && D.colPorId.get(c.atendente_id);
   const tel = (c.telefone||"").replace(/\D/g,"");
   const s = setorDe(c), r = retornoDe(c), fim = c.status==="resolvida";
+  // F187 · conversa de outro atendente: o atendente só lê e anota (nota interna
+  // com @nome chama quem atende); o gestor pode tirar para si
+  const pode = podeAgirZap(c), deOutro = !!at && at.id!==eu.id;
+  if(!pode) zapNota = true;
   // F183 · duas linhas: quem é e o que se faz (Retorno, Transferir, Encerrar)
   // em cima; embaixo o que classifica a conversa. O que se usa pouco (fixar,
   // robô, abrir no aparelho) mora no "⋯"
@@ -10671,17 +10719,18 @@ function pintarConversa(){
                 onclick="copiar('${zapProto}','Protocolo copiado')">Protocolo ${zapProto}</button>`:""}
              ${at?`<span>Atendendo: <b>${esc(at.nome)}</b></span>`
                  :`<button class="zl-link" onclick="assumirConversa()">Assumir a conversa</button>`}
+             ${deOutro && zapGestor()?`<button class="zl-link" onclick="assumirConversa()">Assumir (tirar de ${esc(at.nome)})</button>`:""}
            </div>
          </div>
          <div class="zt-acoes">
-           ${fim?"":`<button class="zt-btn" onclick="novoRetorno()" title="responder depois, com dia e hora" aria-label="Retorno">${zic("relogio")}<span class="lbl">Retorno</span></button>
+           ${fim||!pode?"":`<button class="zt-btn" onclick="novoRetorno()" title="responder depois, com dia e hora" aria-label="Retorno">${zic("relogio")}<span class="lbl">Retorno</span></button>
            <button class="zt-btn" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
-           <button class="zt-btn pri" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}Encerrar`}</button>
+           ${pode?`<button class="zt-btn pri" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}Encerrar`}</button>`:""}
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
              <div class="zt-menu">
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
-               <button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>
+               ${pode?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>`:""}
                ${cli?`<button onclick="abrirFicha('${cli.id}')">Abrir a ficha do cliente</button>`
                     :`<button onclick="vincularConversa()">Vincular a um cliente</button>`}
                ${tel?`<a href="https://wa.me/55${tel}" target="_blank" rel="noopener">Abrir no WhatsApp do aparelho</a>`:""}
@@ -10708,8 +10757,10 @@ function pintarConversa(){
         <button class="btn-mini" onclick="zapResponder=null;pintarConversaGuardando()">✕</button></div>`:""}
      <div class="zap-escrever ${zapNota?"modo-nota":""}">
        <div class="zap-sug" id="zap-sug" hidden></div>
+       ${pode?"":`<p class="ze-so-leitura">Esta conversa está com ${esc(at.nome)}. Você pode ler e escrever nota interna;
+          escreva @${esc(at.nome.split(" ")[0])} para chamar quem atende.</p>`}
        <div class="ze-modos" role="tablist" aria-label="Para quem é o texto">
-         <button role="tab" aria-selected="${!zapNota}" class="${zapNota?"":"on"}" onclick="${zapNota?"alternarNota()":""}">Responder ao cliente</button>
+         ${pode?`<button role="tab" aria-selected="${!zapNota}" class="${zapNota?"":"on"}" onclick="${zapNota?"alternarNota()":""}">Responder ao cliente</button>`:""}
          <button role="tab" aria-selected="${zapNota}" class="${zapNota?"on nota":""}" id="zap-btn-nota"
            onclick="${zapNota?"":"alternarNota()"}" title="fica na conversa, o cliente não vê">Nota interna</button>
        </div>
@@ -11036,7 +11087,14 @@ async function mudarConversa(campos){
   Object.assign(zapConvs.find(x=>x.id===zapAberta)||{}, campos);
   pintarConversa(); pintarListaZap();
 }
-const assumirConversa = () => mudarConversa({atendente_id:eu.id, bot_ativo:false});
+async function assumirConversa(){
+  if(!zapAberta) return;
+  try{ await api(`/rest/v1/rpc/zap_assumir`,{method:"POST", body:JSON.stringify({p_conversa:zapAberta})}); }
+  catch(e){ return aviso(msgErro(e)); }
+  zapNota = false;
+  aviso("A conversa agora é sua ✔", false);
+  await recarregarZap();
+}
 const alternarBot = () => { const c=zapConvs.find(x=>x.id===zapAberta);
                             return mudarConversa({bot_ativo:!(c&&c.bot_ativo)}); };
 const reabrirConversa = () => mudarConversa({status:"aberta"});   // o banco abre um atendimento novo
@@ -11255,29 +11313,25 @@ async function transferirConversa(){
   const eqs = equipeAtiva().filter(c=>c.id!==eu.id);
   if(!eqs.length && !zapAux.setores.length) return aviso("Não há outro colaborador ativo");
   caixa(`<h3>Transferir a conversa</h3>
-    <p class="meio-sub">Para um setor (o CRM escolhe quem está livre) ou para uma pessoa. Fica registrado de quem para quem, e por quê.</p>
-    ${zapAux.setores.length?`<div class="form-linha">${zapAux.setores.map(s=>
+    <p class="meio-sub">Para uma pessoa, ou para um setor (o CRM escolhe quem está livre nele). Quem recebe
+       ganha um aviso em Menções, e fica uma nota na conversa dizendo de quem para quem e por quê.</p>
+    <p class="zx-rot">Pessoa</p>
+    <div class="form-linha">${eqs.map(c=>
+      `<button class="btn-rap" data-zt="${c.id}">${esc(c.nome)}</button>`).join("")}</div>
+    ${zapAux.setores.length?`<p class="zx-rot">Setor</p><div class="form-linha">${zapAux.setores.map(s=>
       `<button class="btn-rap" data-zts="${s.id}" style="border-color:${esc(s.cor)};color:${esc(s.cor)}">${esc(s.nome)}</button>`).join("")}</div>`:""}
-    <div class="form-linha" style="margin-top:6px">${eqs.map(c=>
-      `<button class="eq-ini" data-zt="${c.id}" style="--cor-eq:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</button>`).join("")}</div>
     <input id="zt-motivo" placeholder="motivo (opcional): é caso judicial…" style="width:100%;margin-top:10px">`);
-  const motivo = () => (document.getElementById("zt-motivo").value||"").trim();
-  document.querySelectorAll("[data-zt]").forEach(b=>b.onclick=async()=>{
-    const mt = motivo(); fecharCaixa();
-    await api(`/rest/v1/rpc/zap_transferir`,{method:"POST",
-      body:JSON.stringify({p_conversa:zapAberta, p_para:b.dataset.zt, p_motivo:mt||null})});
-    aviso("Conversa transferida ✔");
+  const enviar = async (para, setor) => {
+    const mt = (document.getElementById("zt-motivo").value||"").trim(); fecharCaixa();
+    try{
+      await api(`/rest/v1/rpc/zap_transferir`,{method:"POST",
+        body:JSON.stringify({p_conversa:zapAberta, p_para:para||null, p_setor:setor||null, p_motivo:mt||null})});
+    }catch(e){ return aviso(msgErro(e)); }
+    aviso("Conversa transferida ✔ — quem recebe foi avisado");
     await recarregarZap();
-  });
-  document.querySelectorAll("[data-zts]").forEach(b=>b.onclick=async()=>{
-    const s = zapAux.setores.find(x=>x.id===b.dataset.zts), mt = motivo(); fecharCaixa();
-    await api(`/rest/v1/zap_conversas?id=eq.${zapAberta}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({setor_id:s.id, setor:s.nome})});
-    await api(`/rest/v1/rpc/zap_entregar`,{method:"POST",
-      body:JSON.stringify({p_conversa:zapAberta, p_setor:s.nome, p_motivo:mt||null})});
-    aviso(`Conversa transferida para ${s.nome} ✔`);
-    await recarregarZap();
-  });
+  };
+  document.querySelectorAll("[data-zt]").forEach(b=>b.onclick=()=>enviar(b.dataset.zt, null));
+  document.querySelectorAll("[data-zts]").forEach(b=>b.onclick=()=>enviar(null, b.dataset.zts));
 }
 
 // A mensagem NÃO vira andamento sozinha: se virasse, o histórico do processo
