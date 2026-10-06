@@ -59,7 +59,39 @@
     return null;
   }
 
-  const API = { ehDecisao, vaiBaixar, caminhoDoc, tipoDoConteudo, nomeSeguro };
+  // A PÁGINA DO VISUALIZADOR NÃO É O DOCUMENTO (medido ao vivo, 05.10.2026):
+  // o link do eproc devolve uma página com o documento num <iframe>, e o do
+  // e-SAJ abre a "pasta digital", que pede o PDF por script a
+  //   /pastadigital/getPDF.do?<parametros>
+  // com um nó por página em `var requestScope = [...]`. Daqui sai o endereço
+  // do documento de verdade, ou null quando a página já é o documento.
+  function enderecoDoMiolo(html) {
+    const h = String(html || '');
+    const rs = h.match(/var requestScope\s*=\s*(\[[\s\S]*?\]);\s*var /);
+    if (rs) {
+      const nos = [];
+      const andar = lista => { for (const x of lista || []) {
+        if (x && x.data && x.data.parametros) nos.push(x.data.parametros);
+        if (x && x.children) andar(x.children);
+      } };
+      try { andar(JSON.parse(rs[1])); } catch (e) { return null; }
+      if (!nos.length) return null;
+      // uma chamada só, da primeira à última página do documento
+      const num = (p, k) => +((p.match(new RegExp('(?:^|&)' + k + '=(\\d+)')) || [])[1] || NaN);
+      const ini = Math.min(...nos.map(p => num(p, 'numInicial')).filter(n => n >= 0));
+      const fim = Math.max(...nos.map(p => num(p, 'numFinal')).filter(n => n >= 0));
+      let p = nos[0];
+      if (isFinite(ini)) p = p.replace(/(^|&)numInicial=\d+/, `$1numInicial=${ini}`);
+      if (isFinite(fim)) p = p.replace(/(^|&)numFinal=\d+/, `$1numFinal=${fim}`);
+      return '/pastadigital/getPDF.do?' + p;
+    }
+    const src = (h.match(/<iframe[^>]*\ssrc\s*=\s*["']([^"']+)["']/i) || [])[1];
+    if (src && !/^(about:|javascript:)|processando\.html/i.test(src)) return desEntidade(src);
+    return null;
+  }
+  const desEntidade = s => String(s).replace(/&amp;/g, '&');
+
+  const API = { ehDecisao, vaiBaixar, caminhoDoc, tipoDoConteudo, nomeSeguro, enderecoDoMiolo };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.DOCS_REGRAS = raiz.DOCS_REGRAS || API;
 })(typeof window !== 'undefined' ? window : globalThis);

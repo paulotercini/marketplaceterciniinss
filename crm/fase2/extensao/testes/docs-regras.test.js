@@ -40,3 +40,16 @@ test('desce tudo, menos o expediente', () => {
                    'Certidão de Publicação Expedida', 'Remessa', 'Conclusão', 'CERT1', 'ATOORD1', 'INTM2', 'AR1'])
     assert.ok(!R.vaiBaixar(n), n);
 });
+
+test('o visualizador não é o documento: segue o iframe do eproc e monta o getPDF do e-SAJ', () => {
+  const eproc = `<html><body><iframe id="conteudoIframe" src="controlador.php?acao=acessar_documento_implementacao&amp;doc=61&amp;key=ab"></iframe></body></html>`;
+  assert.equal(R.enderecoDoMiolo(eproc), 'controlador.php?acao=acessar_documento_implementacao&doc=61&key=ab');
+  const esaj = `<script>var requestScope = [{"data":{"title":"Sentença"},"children":[
+    {"data":{"title":"Página 10","parametros":"nuSeqRecurso=00000&nuProcesso=1&cdDocumento=9&numInicial=10&numFinal=10&nuPagina=0"}},
+    {"data":{"title":"Página 11","parametros":"nuSeqRecurso=00000&nuProcesso=1&cdDocumento=9&numInicial=11&numFinal=11&nuPagina=1"}},
+    {"data":{"title":"Página 12","parametros":"nuSeqRecurso=00000&nuProcesso=1&cdDocumento=9&numInicial=12&numFinal=12&nuPagina=2"}}]}]; var requestScopeArvoreSigilosos = [];</script><iframe src="processando.html"></iframe>`;
+  assert.equal(R.enderecoDoMiolo(esaj),
+    '/pastadigital/getPDF.do?nuSeqRecurso=00000&nuProcesso=1&cdDocumento=9&numInicial=10&numFinal=12&nuPagina=0');
+  assert.equal(R.enderecoDoMiolo('<html><body>Vistos. JULGO PROCEDENTE.</body></html>'), null, 'documento já é o documento');
+  assert.equal(R.enderecoDoMiolo('<iframe src="processando.html"></iframe>'), null);
+});
