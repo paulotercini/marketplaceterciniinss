@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.95</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.96</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7626,6 +7626,13 @@ async function conferirPje(coletaId){
       const desde = ultimas.get(`${soDig(p.numero)}${sufixo}`)
         || new Date(Date.now()-7*864e5).toISOString().slice(0,10);
       let novos = 0;
+      // F185 · o DOCUMENTO entra de toda movimentação coletada, e não só das
+      // novas: a peça de um movimento já conhecido também tem que chegar
+      // (22 de 23 PDFs do e-SAJ ficavam no bucket sem entrar no caso)
+      for(const m of movs)
+        docsDoMovimento(plano.docs, k, dados.sistema||"pje", m.docs,
+          `mov:${soDig(p.numero)}${sufixo}:${m.data}T${m.hora}:${hashDjb(dsa(m.texto||""))}`,
+          `${soDig(p.numero)}${sufixo}:${m.data}T${m.hora}`);
       for(const m of movs.filter((m, i) => i===0 || (m.data && m.data>=desde)).reverse()){
         // [24.09.2026] o e-SAJ não dá hora (vem 00:00) e o eproc nem sempre dá:
         // dois movimentos no mesmo dia caíam na MESMA chave e o segundo sumia
@@ -7635,7 +7642,6 @@ async function conferirPje(coletaId){
         // gravado com a chave antiga continua reconhecido pelo texto (momentos)
         const oid = `mov:${soDig(p.numero)}${sufixo}:${m.data}T${m.hora}:${hashDjb(dsa(m.texto||""))}`;
         const momento = `${soDig(p.numero)}${sufixo}:${m.data}T${m.hora}`;
-        docsDoMovimento(plano.docs, k, dados.sistema||"pje", m.docs, oid, momento);
         if(vistos.has(oid) || momentoConhecido(momentos, momento, m.texto)) continue;
         vistos.add(oid); marcarMomento(momentos, momento, m.texto);
         // criado_em fica em branco de propósito: o banco carimba AGORA e o

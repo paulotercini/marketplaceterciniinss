@@ -64,7 +64,7 @@ async function baixarAnexoPat(protocolo, d, cracha) {
   let b64 = (await r.text()).trim();
   if (b64.startsWith('"')) b64 = JSON.parse(b64);
   const bin = Uint8Array.from(atob(b64.replace(/\s+/g, '')), c => c.charCodeAt(0));
-  const ext = (String(d.nome).match(/\.(\w+)$/) || [])[1];
+  const ext = (String(d.arquivo || d.nome).match(/\.(\w+)$/) || [])[1];
   return new Response(bin, { headers: { 'content-type': TIPO_POR_EXT[String(ext).toLowerCase()] || 'application/octet-stream' } });
 }
 async function guardarAnexosPat(detalhes, cracha) {
@@ -72,7 +72,9 @@ async function guardarAnexosPat(detalhes, cracha) {
   for (const det of detalhes) {
     const p = String(det.protocolo || '').replace(/\D/g, '');
     const docs = (det.anexos || []).filter(a => a && a.id)
-      .map(a => ({ id: String(a.id), nome: a.nomeArquivo || a.descricaoArquivo || 'anexo' }));
+      // o nome do arquivo + o que o INSS diz que ele é ("Documento Médico")
+      .map(a => ({ id: String(a.id), arquivo: a.nomeArquivo || '',
+                   nome: [a.nomeArquivo, a.descricaoArquivo && `(${a.descricaoArquivo})`].filter(Boolean).join(' ') || 'anexo' }));
     if (!p || !docs.length) continue;
     faixa(`guardando os anexos do INSS no CRM (${n} até aqui)…`);
     n += await CRM.guardarDocs('pat', p, docs, { todos: true, pausaMs: 3000,
