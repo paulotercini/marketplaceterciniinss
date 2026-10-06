@@ -1724,7 +1724,7 @@
   .zl-cab{padding:14px 14px 10px;display:flex;flex-direction:column;gap:10px}
   .zl-topo{display:flex;align-items:center;gap:8px}
   .zl-topo h2{margin:0;font:600 20px var(--f-tit,inherit);color:var(--texto)}
-  .zl-topo .zap-estado{margin:0;font-weight:500;font-size:11.5px;flex:1;min-width:0;
+  .zl-topo .zap-estado{margin:0 0 0 auto;font-weight:500;font-size:11.5px;max-width:170px;min-width:0;
                        white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .zl-busca{display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;background:var(--branco);
             border:1px solid var(--borda);border-radius:8px;color:var(--cinza-claro,var(--cinza))}
@@ -1805,6 +1805,41 @@
   .zp-etapa{display:flex;align-items:center;gap:8px;background:var(--sist-f,#e9eff6);color:var(--sist,#3a6491);border-radius:8px;padding:7px 10px;font-size:12.5px;margin-bottom:4px}
   .zp-etapa i{width:7px;height:7px;border-radius:50%;background:currentColor}
   @media (prefers-reduced-motion:reduce){.zt-btn:active{transform:none}}
+  /* F183 · acabamento igual ao desenho aprovado */
+  .app:not(.celular) .meio.zap-v .meio-topo,.app:not(.celular) .meio.zap-v #sub-lista{display:none}
+  .app:not(.celular) .meio.zap-v .zap-tela{height:calc(100vh - 40px);height:calc(100dvh - 40px)}
+  .zap-lado{flex-basis:330px}
+  .zap-av.t-on{background:var(--azul-fundo,#e6f0ef);color:var(--azul)}
+  .zap-av.t-nova{background:var(--sist-f,#e9eff6);color:var(--sist,#3a6491)}
+  .zap-av.t-sem{background:var(--prox-f,#fbf1e0);color:var(--prox,#8f5400)}
+  .zap-av.t-neutro{background:var(--placa,#efeeeb);color:var(--cinza)}
+  .zt-l1{flex-wrap:nowrap}
+  .zt-id{min-width:0}
+  .zt-id h2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .zt-acoes{flex-wrap:nowrap}
+  .app.celular .zt-l1,.app.celular .zt-acoes{flex-wrap:wrap}
+  .zap-dia{align-self:center;font-size:11.5px;color:var(--cinza-claro,var(--cinza));background:var(--branco);
+           border:1px solid var(--borda);border-radius:10px;padding:2px 10px;margin:4px 0}
+  .zap-b .autor{font-size:11px;font-weight:600;color:var(--cinza);text-transform:none;margin-bottom:2px}
+  .zap-b.saida .autor{color:var(--azul)}
+  .zap-b .pe{font-size:11px;color:var(--cinza-claro,var(--cinza));margin-top:3px}
+  .zap-b.saida .pe span[id^="zs-"]{color:var(--azul)}
+  .zap-b.interna{align-self:center;max-width:70%;background:#fbf1e0;border:1px dashed #d9b36c;border-left:1px dashed #d9b36c;
+                 border-radius:10px;padding:7px 12px;font-size:12.5px}
+  .zap-b.interna .txt{color:#5c3d00}
+  .zap-b.interna .txt b{font-weight:600}
+  .zap-b.agendada{background:var(--branco);border:1px dashed var(--sist,#3a6491);color:var(--sist,#3a6491)}
+  .zap-ag{display:flex;align-items:center;gap:6px;font-size:12px;margin-bottom:3px;flex-wrap:wrap}
+  .zap-ag .zl-link{margin-left:auto;font-size:11.5px}
+  .zap-reac{border-radius:10px;font-size:12px;padding:0 6px;margin-left:8px;margin-top:-6px}
+  .zap-reac.saida{margin-left:0;margin-right:8px}
+  .zp-tarefa{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;padding:3px 0;cursor:pointer}
+  .zp-tarefa input{margin-top:2px}
+  .zp-tarefa b{font-weight:600}
+  .zp-tarefa .prox{color:var(--prox,#8f5400)}.zp-tarefa .venc{color:var(--venc,#b3261e)}
+  .zp-nova{margin-top:6px;height:28px;font-size:12px}
+  /* tela estreita: Retorno e Transferir ficam só com o ícone, para o nome caber inteiro */
+  @media (max-width:1700px){.zt-acoes .zt-btn:not(.pri) .lbl{display:none}.zt-acoes .zt-btn:not(.pri){width:32px;padding:0;justify-content:center}}
   /* .id-secao só vive dentro do cartão "Ligações do cliente" (F9.2): o rótulo
      segue a mesma régua do rótulo de campo da grade, senão o mesmo cartão
      teria dois tamanhos de etiqueta */
@@ -5221,7 +5256,7 @@ function tituloLista(rot){
   const h = document.getElementById("titulo-lista");
   // F144 · o que a agenda do v10 põe no topo sai ao trocar de tela
   const tx = document.getElementById("topo-extra"); if(tx) tx.innerHTML = "";
-  const me = document.querySelector(".meio"); if(me) me.classList.remove("ag-v10");
+  const me = document.querySelector(".meio"); if(me) me.classList.remove("ag-v10","zap-v");
   const i = rot.indexOf(" ");
   const ic = i>0 ? svgIc(rot.slice(0,i), 19) : null;
   if(ic) h.innerHTML = `<span class="ic" aria-hidden="true">${ic}</span><span class="h1-txt">${esc(rot.slice(i+1))}</span>`;
@@ -10149,6 +10184,7 @@ async function renderWhats(){
   tituloLista("💬 WhatsApp");
   document.getElementById("sub-lista").textContent=
     "As conversas do escritório. Quem responde assume a conversa — e o robô se cala na hora.";
+  document.querySelector(".meio").classList.add("zap-v");
   // F183 · três colunas: quem está falando, a conversa e, ao lado, o cliente
   // (caso, etapa, prazo) — atender sem sair da tela para abrir a ficha
   document.getElementById("conteudo-meio").innerHTML =
@@ -10209,6 +10245,22 @@ const ZIC = {
 };
 const zic = (n, t=16) => `<svg class="zic" width="${t}" height="${t}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ZIC[n]}</svg>`;
 
+// datas da conversa como se fala: "hoje", "amanhã", "06/10"
+function diaZap(ts){
+  const d = dataSP(ts), hj = hoje();
+  const am = dataSP(new Date(Date.now()+864e5).toISOString()), on = dataSP(new Date(Date.now()-864e5).toISOString());
+  return d===hj ? "hoje" : d===am ? "amanhã" : d===on ? "ontem" : `${d.slice(8,10)}/${d.slice(5,7)}`;
+}
+const dmaZap = iso => iso ? `${iso.slice(8,10)}/${iso.slice(5,7)}/${iso.slice(0,4)}` : "";
+// 5516999990001 -> (16) 99999-0001
+function foneZap(t){
+  const d = String(t||"").replace(/\D/g,"").replace(/^55(?=\d{10,11}$)/,"");
+  return d.length===11 ? `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`
+       : d.length===10 ? `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}` : (t||"");
+}
+// chip na cor do setor/etiqueta, clarinho, sem perder a leitura do texto
+const tintaZap = cor => `color:color-mix(in srgb, ${cor} 82%, #000);background:color-mix(in srgb, ${cor} 9%, #fff);border-color:color-mix(in srgb, ${cor} 28%, #fff)`;
+
 // As filas são as do SMBot: Minhas, Pendentes (ninguém pegou ainda), Todas as
 // abertas e Retornos ("responder depois" com hora); Encerradas fica à parte.
 let zapBusca = "";
@@ -10244,8 +10296,8 @@ function pintarListaZap(){
       ${itens.map(([v,t])=>`<option value="${v}" ${atual===v?"selected":""}>${esc(t)}</option>`).join("")}</select>${zic("baixo",12)}</label>`;
   document.querySelector(".zap-lado").innerHTML =
     `<div class="zl-cab">
-       <div class="zl-topo">
-         <span class="zap-estado" title="${esc(p.txt)}"><i style="background:${p.cor}"></i>${esc(p.txt)}</span>
+       <div class="zl-topo"><h2>WhatsApp</h2>
+         <span class="zap-estado" title="${esc(p.txt)}"><i style="background:${p.cor}"></i>${esc(p.txt==="ponte ligada"?"conectado":p.txt)}</span>
          ${cfgApp("zap_qr")?`<button class="btn-mini" onclick="ajudaQR()">como ligar</button>`:""}</div>
        <label class="zl-busca">${zic("busca")}<input type="search" id="zl-busca" value="${esc(zapBusca)}"
          placeholder="Buscar nome ou telefone" aria-label="Buscar conversa"></label>
@@ -10279,8 +10331,11 @@ let zapFotos = new Map();
 function avatarZap(c){
   const u = zapFotos.get(c.foto_url);
   const ini = (nomeDaConversa(c)||"?").trim()[0].toUpperCase();
+  // sem foto, a cor diz o estado: aberta (petróleo), não lida (azul-aço),
+  // número sem cliente (âmbar), o resto em cinza
+  const tom = zapAberta===c.id ? "t-on" : !c.cliente_id ? "t-sem" : c.nao_lidas ? "t-nova" : "t-neutro";
   return u ? `<img class="zap-av" src="${esc(u)}" alt="">`
-           : `<span class="zap-av vazio">${esc(ini)}</span>`;
+           : `<span class="zap-av vazio ${tom}">${esc(c.cliente_id||c.lead_id||c.nome_perfil?ini:"?")}</span>`;
 }
 async function assinarFotosZap(cs){
   const faltam = [...new Set(cs.map(c=>c.foto_url).filter(u=>u && !zapFotos.has(u)))];
@@ -10314,16 +10369,13 @@ function cartaoConversa(c){
       <div class="l2">${esc((c.ultimo_texto||"").slice(0,80))}</div>
       <div class="l3">
         ${s?`<span class="zc-setor"><i style="background:${esc(s.cor)}"></i>${esc(s.nome)}</span>`:""}
-        ${etq.slice(0,2).map(e=>`<span class="zc-etq" style="color:${esc(e.cor)}">${esc(e.texto)}</span>`).join("")}
+        ${etq.slice(0,2).map(e=>`<span class="zc-etq" style="color:color-mix(in srgb, ${esc(e.cor)} 85%, #000)">${esc(e.texto)}</span>`).join("")}
         ${etq.length>2?`<span class="zc-etq" title="${esc(etq.slice(2).map(e=>e.texto).join(", "))}">+${etq.length-2}</span>`:""}
-        ${!cli?`<span class="zc-alerta">sem cliente vinculado</span>`:""}
-        ${r?`<span class="zc-ret" title="${esc(r.nota||"")}">Retorno ${fmtTS(r.quando).slice(0,5)} ${horaSP(r.quando)}</span>`:""}
-        ${c.bot_ativo?`<span class="zc-etq">robô</span>`:""}
-        <span class="zc-fim">
-          ${at?`<span class="eq-ini on" style="--cor-eq:${at.cor}" title="atendendo: ${esc(at.nome)}">${esc(at.inicial)}</span>`
-             :c.status!=="resolvida"?`<span class="zc-pend">pendente</span>`:""}
-          ${c.nao_lidas?`<span class="bolha" aria-label="${c.nao_lidas} não lidas">${c.nao_lidas}</span>`:""}
-        </span>
+        ${!cli?`<span class="zc-alerta">Sem cliente vinculado</span>`:""}
+        ${!at&&c.status!=="resolvida"?`<span>Pendente</span>`:""}
+        ${r?`<span class="zc-ret" title="${esc(r.nota||"")}">Retorno ${diaZap(r.quando)} ${horaSP(r.quando)}</span>`:""}
+        ${c.bot_ativo?`<span>Robô</span>`:""}
+        ${c.nao_lidas?`<span class="bolha zc-fim" aria-label="${c.nao_lidas} não lidas">${c.nao_lidas}</span>`:""}
       </div>
     </div></div>`;
 }
@@ -10383,7 +10435,7 @@ function pintarConversaGuardando(){
   const t2 = document.getElementById("zap-txt");
   if(t2 && txt){ t2.value = txt; if(foco) t2.focus(); }
 }
-const SELO = {rascunho:"✎", agendada:"🗓", fila:"🕓", enviando:"🕓", enviada:"✓", entregue:"✓✓", lida:"✓✓", erro:"⚠"};
+const SELO = {rascunho:"rascunho", agendada:"agendada", fila:"na fila", enviando:"enviando", enviada:"enviada", entregue:"entregue", lida:"lida", erro:"não enviou"};
 const seloZap = m => m.direcao==="saida" ? (SELO[m.status]||"") : "";
 
 function pintarConversa(){
@@ -10402,7 +10454,7 @@ function pintarConversa(){
          <div class="zt-id">
            <h2>${esc(nomeDaConversa(c))}</h2>
            <div class="zt-sub">
-             <span class="mono">${esc(c.telefone||"")}</span>
+             <span class="mono">${esc(foneZap(c.telefone))}</span>
              ${zapProto?`<button class="zap-proto" title="protocolo do atendimento — clique para copiar"
                 onclick="copiar('${zapProto}','Protocolo copiado')">Protocolo ${zapProto}</button>`:""}
              ${at?`<span>Atendendo: <b>${esc(at.nome)}</b></span>`
@@ -10410,8 +10462,8 @@ function pintarConversa(){
            </div>
          </div>
          <div class="zt-acoes">
-           ${fim?"":`<button class="zt-btn" onclick="novoRetorno()" title="responder depois, com dia e hora">${zic("relogio")}Retorno</button>
-           <button class="zt-btn" onclick="transferirConversa()">${zic("seta")}Transferir</button>`}
+           ${fim?"":`<button class="zt-btn" onclick="novoRetorno()" title="responder depois, com dia e hora" aria-label="Retorno">${zic("relogio")}<span class="lbl">Retorno</span></button>
+           <button class="zt-btn" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
            <button class="zt-btn pri" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}Encerrar`}</button>
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
@@ -10426,14 +10478,18 @@ function pintarConversa(){
          </div>
        </div>
        <div class="zt-l2">
-         <button class="zt-chip" onclick="escolherSetor()" title="setor da conversa">${s
+         <button class="zt-chip" onclick="escolherSetor()" title="setor da conversa" ${s?`style="${tintaZap(esc(s.cor))}"`:""}>${s
            ?`<i style="background:${esc(s.cor)}"></i>${esc(s.nome)}`:"Escolher setor"}</button>
-         ${etiquetasDe(c).map(e=>`<button class="zt-chip" style="color:${esc(e.cor)}" onclick="editarEtiquetas()">${esc(e.texto)}</button>`).join("")}
+         ${etiquetasDe(c).map(e=>`<button class="zt-chip" style="${tintaZap(esc(e.cor))}" onclick="editarEtiquetas()">${esc(e.texto)}</button>`).join("")}
          <button class="zt-chip novo" onclick="editarEtiquetas()">+ etiqueta</button>
-         ${r?`<button class="zt-ret" onclick="novoRetorno()" title="mudar o retorno">${zic("relogio",14)}Retorno ${fmtTS(r.quando).slice(0,5)}, ${horaSP(r.quando)}${r.nota?` · ${esc(r.nota)}`:""}</button>`:""}
+         ${r?`<button class="zt-ret" onclick="novoRetorno()" title="mudar o retorno">${zic("relogio",14)}Retorno ${diaZap(r.quando)}, ${horaSP(r.quando)}${r.nota?` · ${esc(r.nota)}`:""}</button>`:""}
        </div>
      </div>
-     <div class="zap-msgs" id="zap-msgs">${zapMsgs.map(m=>bolhaZap(m,cli)).join("")
+     <div class="zap-msgs" id="zap-msgs">${zapMsgs.map((m,i)=>{
+        // a data entra entre as mensagens quando o dia muda, como no aparelho
+        const d = dataSP(m.quando_wa||m.criado_em), ant = i && dataSP(zapMsgs[i-1].quando_wa||zapMsgs[i-1].criado_em);
+        const dia = d!==ant ? `<div class="zap-dia">${(t=>t==="hoje"?"Hoje":t==="ontem"?"Ontem":dmaZap(d))(diaZap(m.quando_wa||m.criado_em))}</div>` : "";
+        return dia + bolhaZap(m,cli); }).join("")
         || `<p class="meio-sub" style="padding:12px">Sem mensagens ainda.</p>`}</div>
      ${zapResponder?`<div class="zap-resp"><span>↩ respondendo</span>
         <span class="txt">${esc(textoCurto(zapMsgs.find(m=>m.id===zapResponder)))}</span>
@@ -10449,7 +10505,7 @@ function pintarConversa(){
          <div class="ze-caixa">
            <textarea id="zap-txt" rows="2" placeholder="${zapNota
              ? "Anotação para a equipe. O cliente não vê."
-             : `Escreva para ${esc(nomeDaConversa(c))}…  digite / para mensagens prontas`}"></textarea>
+             : `Escreva para ${esc(c.cliente_id?nomeDaConversa(c).split(" ")[0]:nomeDaConversa(c))}…  digite / para mensagens prontas`}"></textarea>
            <div class="ze-ferr">
              <input type="file" id="zap-arq" hidden onchange="mandarArquivoZap()">
              ${zapNota?"":`<button class="zap-icone" onclick="document.getElementById('zap-arq').click()"
@@ -10484,7 +10540,7 @@ function pintarPainelZap(c){
   const cli = c && c.cliente_id && D.cliPorId.get(c.cliente_id);
   const hist = zapHist.length ? `<section class="zp-card"><h4>Atendimentos anteriores</h4>
       ${zapHist.map(a=>`<div class="zp-kv"><span class="mono">${a.numero}</span>
-        <span>${fmtTS(a.aberto_em).slice(0,5)}${a.observacao?` · ${esc(a.observacao)}`:""}</span></div>`).join("")}</section>` : "";
+        <span>${diaZap(a.aberto_em)}${a.observacao?` · ${esc(a.observacao)}`:""}</span></div>`).join("")}</section>` : "";
   if(!c){ el.innerHTML = ""; return; }
   if(!cli){
     el.innerHTML = `<section class="zp-card"><h3>Sem cliente vinculado</h3>
@@ -10495,33 +10551,70 @@ function pintarPainelZap(c){
   const ks = (D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado");
   const chave = String(c.telefone||"").replace(/\D/g,"").slice(-8);
   const outros = telefonesDe(cli).filter(t=>String(t.numero||"").replace(/\D/g,"").slice(-8)!==chave);
-  const idade = cli.dn ? idadeDe(cli.dn) : null;
+  const nasc = cli.dn ? dnIso(cli.dn) : null, idade = nasc ? idadeDe(cli.dn) : null;
   const caso = k => {
     const resp = (D.atrDoCaso.get(k.id)||[]).map(id=>D.colPorId.get(id)).filter(Boolean);
     const lemb = (D.tarefasPorCaso.get(k.id)||[]).map(t=>t.lembrar_em).sort()[0];
     const ev = (D.eventos||[]).filter(e=>e.caso_id===k.id && e.status==="agendada" && dataSP(e.data_hora)>=hoje())
                  .sort((a,b)=>a.data_hora<b.data_hora?-1:1)[0];
-    const prox = [k.prazo, lemb].filter(Boolean).sort()[0];
+    // o próximo prazo é a data mais perto: perícia/audiência, prazo do caso ou lembrete
+    const datas = [ev&&[dataSP(ev.data_hora), String(ev.tipo||"").toLowerCase()], k.prazo&&[k.prazo, k.lembrar_motivo||""],
+                   lemb&&[lemb, "lembrete"]].filter(Boolean).sort((a,b)=>a[0]<b[0]?-1:1);
+    const prox = datas[0];
+    const lista = listaDe(k)==="—" ? "" : listaDe(k).replace(/^\S+\s/, "");
     return `<section class="zp-card"><h4>Caso</h4>
       <div class="zp-tit">${esc(k.beneficio||k.titulo||"Caso")}</div>
-      ${listaDe(k)!=="—"?`<div class="zp-sub">${esc(listaDe(k))}</div>`:""}
-      ${k.etapa?`<div class="zp-etapa"><i></i>${esc(k.etapa)}</div>`:""}
-      ${ev?`<div class="zp-kv"><span>${esc(ev.tipo||"Evento")}</span><b class="prox">${fmtTS(ev.data_hora).slice(0,5)} ${horaSP(ev.data_hora)}</b></div>`:""}
-      ${prox?`<div class="zp-kv"><span>Próximo lembrete</span><b class="${prox<hoje()?"venc":"prox"}">${fmt(prox)}</b></div>`:""}
+      ${lista?`<div class="zp-sub">Lista ${esc(lista)}</div>`:""}
+      ${k.etapa?`<div class="zp-etapa"><i></i>Etapa: ${esc(k.etapa)}</div>`:""}
+      ${prox?`<div class="zp-kv"><span>Próximo prazo</span><b class="${prox[0]<hoje()?"venc":"prox"}">${dmaZap(prox[0]).slice(0,5)}${prox[1]?` · ${esc(prox[1])}`:""}</b></div>`:""}
       ${resp.length?`<div class="zp-kv"><span>Responsável</span><span>${esc(resp.map(x=>x.nome).join(", "))}</span></div>`:""}
     </section>`;
   };
-  const tarefas = (D.tarefas||[]).filter(t=>!t.concluida && ks.some(k=>k.id===t.caso_id)).slice(0,4);
+  const tarefas = (D.tarefas||[]).filter(t=>!t.concluida && (t.cliente_id===cli.id || ks.some(k=>k.id===t.caso_id)));
   el.innerHTML = `<section class="zp-card">
-      <div class="zp-cab"><h3>${esc(cli.nome)}</h3><button class="zl-link" onclick="abrirFicha('${cli.id}')">Abrir ficha</button></div>
+      <div class="zp-cab"><h3>Ficha do cliente</h3><button class="zl-link" onclick="abrirFicha('${cli.id}')">Abrir ficha</button></div>
+      <div class="zp-kv"><span>Nome</span><span>${esc(cli.nome)}</span></div>
       <div class="zp-kv"><span>CPF</span><span class="mono">${esc(cpfMascarado(cli.cpf))}</span></div>
-      ${cli.dn?`<div class="zp-kv"><span>Nascimento</span><span>${esc(fmt(dnIso(cli.dn))||"")}${idade!=null?` · ${idade} anos`:""}</span></div>`:""}
-      ${outros.map(t=>`<div class="zp-kv"><span>Outro número</span><span>${esc(t.numero)}${t.obs&&t.obs!=="principal"?` · ${esc(t.obs)}`:""}</span></div>`).join("")}
+      ${nasc?`<div class="zp-kv"><span>Nascimento</span><span>${dmaZap(nasc)}${idade!=null?` · ${idade} anos`:""}</span></div>`:""}
+      ${outros.length?`<div class="zp-kv"><span>Outros números</span><span>${outros.map(t=>esc(foneZap(t.numero))+(t.obs&&t.obs!=="principal"?` · ${esc(t.obs)}`:"")).join("<br>")}</span></div>`:""}
     </section>
     ${ks.length ? ks.slice(0,3).map(caso).join("") : `<section class="zp-card"><h4>Caso</h4><p class="zp-sub">Nenhum caso aberto.</p></section>`}
-    ${tarefas.length?`<section class="zp-card"><h4>Tarefas abertas</h4>${tarefas.map(t=>`<div class="zp-kv"><span>${esc(t.titulo||"")}</span>
-      ${t.prazo?`<b class="${t.prazo<hoje()?"venc":"prox"}">${fmt(t.prazo)}</b>`:""}</div>`).join("")}</section>`:""}
+    <section class="zp-card"><h4>Tarefas abertas</h4>
+      ${tarefas.slice(0,5).map(t=>`<label class="zp-tarefa"><input type="checkbox" onchange="concluirTarefaZap('${t.id}')">
+        <span>${esc(t.titulo||"")}${t.prazo?` <b class="${t.prazo<hoje()?"venc":"prox"}">${dmaZap(t.prazo).slice(0,5)}</b>`:""}</span></label>`).join("")
+        || `<p class="zp-sub">Nenhuma tarefa aberta.</p>`}
+      <button class="zt-btn zp-nova" onclick="novaTarefaZap()">Nova tarefa</button>
+    </section>
     ${hist}`;
+}
+async function concluirTarefaZap(id){
+  const t = (D.tarefas||[]).find(x=>x.id===id); if(!t) return;
+  t.concluida = true; t.concluida_em = new Date().toISOString();
+  await api(`/rest/v1/tarefas?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({concluida:true, concluida_em:t.concluida_em})});
+  plim(); pintarPainelZap(zapConvs.find(x=>x.id===zapAberta));
+}
+function novaTarefaZap(){
+  const c = zapConvs.find(x=>x.id===zapAberta), cli = c && c.cliente_id && D.cliPorId.get(c.cliente_id); if(!cli) return;
+  const ks = (D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado");
+  caixa(`<h3>Nova tarefa de ${esc(cli.nome)}</h3>
+    <input id="zt-tit" style="width:100%" placeholder="O que fazer (entende 'amanhã', 'sexta', 'dia 15')">
+    <div class="form-linha" style="margin-top:8px"><input type="date" id="zt-prazo">
+      ${ks.length>1?`<select id="zt-caso">${ks.map(k=>`<option value="${k.id}">${esc(k.beneficio||k.titulo||"caso")}</option>`).join("")}</select>`:""}</div>
+    <div class="form-linha" style="margin-top:10px"><button class="btn-rap" id="zt-ok">Criar tarefa</button></div>`);
+  const ti = document.getElementById("zt-tit"); ti.focus();
+  const criar = async()=>{
+    if(!ti.value.trim()) return;
+    const nat = dataNatural(ti.value.trim()), pz = document.getElementById("zt-prazo").value;
+    const sel = document.getElementById("zt-caso");
+    const [linha] = await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({titulo:nat.titulo, prazo:pz||nat.prazo||null, cliente_id:cli.id,
+        caso_id: sel ? sel.value : (ks[0]||{}).id || null})});
+    D.tarefas.push(linha); fecharCaixa(); aviso("Tarefa criada ✔");
+    pintarPainelZap(c);
+  };
+  document.getElementById("zt-ok").onclick = criar;
+  ti.onkeydown = e=>{ if(e.key==="Enter") criar(); };
 }
 // o "⋯" é um <details>: fecha ao clicar fora, como qualquer menu
 document.addEventListener("click", e=>{
@@ -10532,8 +10625,7 @@ function bolhaZap(m, cli){
   const quem = m.por_bot ? "🤖 robô"
             : m.autor_id ? (D.colPorId.get(m.autor_id)||{}).nome || "escritório" : "";
   if(m.direcao==="interna") return `<div class="zap-b interna">
-    <div class="autor">🕵 ${esc(quem)} · só a equipe vê</div>
-    <div class="txt">${esc(m.texto||"")}</div>
+    <div class="txt"><b>Nota interna · ${esc(quem)}:</b> ${esc(m.texto||"")}</div>
     <div class="pe">${horaSP(m.criado_em)}
       ${cli?`<button class="virar" onclick="virarAndamento('${m.id}')"
         title="registrar no histórico de um processo">↪ andamento</button>`:""}</div></div>`;
@@ -10550,15 +10642,13 @@ function bolhaZap(m, cli){
     ${quem?`<div class="autor">${esc(m.aviso_chave?"aviso automático":quem)}${m.encaminhada_de?" · ↪ encaminhada":""}</div>`:""}
     ${citada?`<div class="zap-cit" onclick="irParaMsg('${citada.id}')">${esc(textoCurto(citada))}</div>`
       : m.responde_a||m.responde_externo?`<div class="zap-cit">mensagem citada (antiga)</div>`:""}
+    ${m.status==="agendada"?`<div class="zap-ag">${zic("agenda",14)}Agendada para ${diaZap(m.enviar_em)}, ${horaSP(m.enviar_em)}
+        <button class="zl-link" onclick="cancelarAgendada('${m.id}')">cancelar</button></div>`:""}
     <div class="txt">${corpo}</div>
     ${m.status==="rascunho"?`<div class="zap-rev">
         <span>escrito pelo sistema — confira antes de mandar</span>
         <button class="btn-mini" onclick="soltarRascunho('${m.id}')">enviar</button>
         <button class="btn-mini" onclick="descartarRascunho('${m.id}')">descartar</button>
-      </div>`:""}
-    ${m.status==="agendada"?`<div class="zap-rev" style="color:#2d5aa8">
-        <span>🗓 agendada para ${fmtTS(m.enviar_em)} às ${horaSP(m.enviar_em)}</span>
-        <button class="btn-mini" onclick="cancelarAgendada('${m.id}')">cancelar</button>
       </div>`:""}
     <div class="pe">
       ${m.externo_id||m.direcao==="entrada"?`<span class="zap-acoes">
