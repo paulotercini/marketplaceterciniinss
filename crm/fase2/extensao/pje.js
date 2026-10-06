@@ -212,7 +212,14 @@
     // F184 · as decisões vão junto: o CRM passa a dizer O QUE foi decidido
     const docs = itens.flatMap(i => i.docs || []);
     if (docs.some(d => DOCS_REGRAS.ehDecisao(d.nome))) faixa(`processo ${cab.numero}: guardando as decisões no CRM…`);
-    await CRM.guardarDocs('pje', cab.numero, docs);
+    // o PJe só libera o download do documento ABERTO no visualizador (medido
+    // ao vivo: o não aberto responde 404) — então se clica nele na
+    // cronologia, como a pessoa faria, e se espera o PJe sossegar
+    await CRM.guardarDocs('pje', cab.numero, docs, { baixar: async d => {
+      const a = [...tl.querySelectorAll('a')].find(x => x.textContent.trim().startsWith(d.id + ' -'));
+      if (a) { a.click(); await pausa(700); await esperarLivre(); await esperarQuieto(700, 8000); }
+      return fetch(d.url, { credentials: 'include' });
+    } });
     const OUT = { versao: 1, fonte: 'pje-processo', grau, host: location.host,
                   quando: new Date().toISOString(), numero: cab.numero,
                   classe: cab.classe || null, orgao: cab.orgao || null,

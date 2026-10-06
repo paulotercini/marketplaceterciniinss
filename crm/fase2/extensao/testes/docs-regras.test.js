@@ -7,7 +7,8 @@ test('decide: sentença, decisão, despacho, acórdão, monocrática, laudo — 
   for (const n of ['Sentença', 'Decisão', 'Despacho', 'Acórdão', 'Decisão Monocrática', 'Laudo Pericial',
                    'DESPADEC1', 'SENT1', 'ACOR2', 'LAUDO1', 'Julgada Procedente a Ação', 'Homologada a Transação'])
     assert.ok(R.ehDecisao(n), n);
-  for (const n of ['Petição Inicial', 'PET1', 'PROC2', 'Procuração', 'Contestação', 'CERT1', 'INIC1', 'Certidão'])
+  for (const n of ['Petição Inicial', 'PET1', 'PROC2', 'Procuração', 'Contestação', 'CERT1', 'INIC1', 'Certidão',
+                   'Certidão Trânsito em Julgado', 'Certidão de Julgamento — sentença publicada'])
     assert.ok(!R.ehDecisao(n), n);
 });
 
