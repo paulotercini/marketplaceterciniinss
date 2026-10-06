@@ -1805,6 +1805,19 @@
   .zp-etapa{display:flex;align-items:center;gap:8px;background:var(--sist-f,#e9eff6);color:var(--sist,#3a6491);border-radius:8px;padding:7px 10px;font-size:12.5px;margin-bottom:4px}
   .zp-etapa i{width:7px;height:7px;border-radius:50%;background:currentColor}
   @media (prefers-reduced-motion:reduce){.zt-btn:active{transform:none}}
+  /* F185 · conexão do WhatsApp corrigida de dentro do CRM */
+  .zl-topo .zap-estado{border:0;background:none;cursor:pointer;font:inherit;font-size:11.5px;color:var(--cinza);padding:2px 0}
+  .zl-topo .zap-estado.ruim{background:var(--prox-f,#fbf1e0);color:var(--prox,#8f5400);font-weight:600;border-radius:12px;padding:3px 10px}
+  .zx h3{margin:0 0 6px}
+  .zx-estado{display:flex;align-items:center;gap:8px;margin:0 0 10px}
+  .zx-estado i{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .zx-aviso{background:var(--prox-f,#fbf1e0);color:#5c3d00;border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:10px}
+  .zx-qr{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:6px 0 12px}
+  .zx-qr #zx-qrimg{background:#fff;padding:10px;border:1px solid var(--borda);border-radius:10px;width:262px;height:262px;box-sizing:border-box}
+  .zx-qr ol{margin:0;padding-left:18px;font-size:13px;line-height:1.6;max-width:300px}
+  .zx-pedido{font-size:13px;color:var(--azul);font-weight:600}
+  .zx-bts{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+  .zx-bts .zt-btn:disabled{opacity:.5;cursor:not-allowed}
   /* F183 · acabamento igual ao desenho aprovado */
   .app:not(.celular) .meio.zap-v .meio-topo,.app:not(.celular) .meio.zap-v #sub-lista{display:none}
   .app:not(.celular) .meio.zap-v .zap-tela{height:calc(100vh - 40px);height:calc(100dvh - 40px)}
@@ -10343,11 +10356,73 @@ async function recarregarZap(silencioso){
     return;
   }
   zapConvs = cs;
-  await Promise.all([assinarFotosZap(cs), carregarAuxZap()]);
+  await Promise.all([assinarFotosZap(cs), carregarAuxZap(), atualizarEstadoZap()]);
   pintarListaZap();
   if(zapAberta && !silencioso) await abrirConversa(zapAberta);
   else if(zapAberta) await recarregarMsgs();
   else if(!silencioso){ document.getElementById("zap-dir").innerHTML = telaVaziaZap(); pintarPainelZap(null); }
+}
+
+// o estado da ponte muda o tempo todo (sinal de vida a cada 30 s, QR a cada
+// 20 s): relê do banco a cada volta da lista, em vez do que veio no login
+async function atualizarEstadoZap(){
+  const rs = await todas("config_app","select=chave,valor&chave=like.zap_*").catch(()=>[]);
+  rs.forEach(r=>(D.config=D.config||new Map()).set(r.chave, r.valor));
+  if(document.getElementById("zx-painel")) pintarConexaoZap();
+}
+const zapComProblema = () => estadoPonte().txt!=="ponte ligada";
+
+// F185 · Corrigir a conexão de dentro do CRM. O CRM não fala com o WhatsApp:
+// grava o pedido em zap_comando e a ponte (que lê a cada 10 s) obedece.
+// Reconectar recomeça a ponte; Novo QR desfaz o aparelho e mostra o código
+// aqui mesmo, desenhado no navegador (o código não sai para site nenhum).
+function abrirConexaoZap(){
+  caixa(`<div id="zx-painel" class="zx"></div>`);
+  pintarConexaoZap();
+}
+function pintarConexaoZap(){
+  const el = document.getElementById("zx-painel"); if(!el) return;
+  const p = estadoPonte(), visto = cfgApp("zap_visto_em"), qr = cfgApp("zap_qr");
+  const morta = !visto || (Date.now() - new Date(visto).getTime() > 120000);
+  const pedido = String(cfgApp("zap_comando")||"").split("|")[0];
+  el.innerHTML = `<h3>Conexão do WhatsApp</h3>
+    <p class="zx-estado"><i style="background:${p.cor}"></i><b>${esc(p.txt==="ponte ligada"?"Conectado":p.txt)}</b>
+      ${visto?`<span class="meio-sub">· sinal de vida ${diaZap(visto)} às ${horaSP(visto)}</span>`:""}</p>
+    ${morta?`<div class="zx-aviso">A ponte não dá sinal há mais de 2 minutos. Ela roda no computador do escritório:
+        confira se ele está ligado e com internet. Quando o computador volta, a ponte volta sozinha.
+        Os botões abaixo só funcionam com a ponte dando sinal.</div>`:""}
+    ${qr?`<div class="zx-qr"><div id="zx-qrimg" aria-label="QR code para conectar o WhatsApp"></div>
+        <ol><li>No celular do escritório, abra o WhatsApp.</li>
+          <li>Toque em <b>⋮ › Aparelhos conectados › Conectar um aparelho</b>.</li>
+          <li>Aponte a câmera para este código. Ele se renova sozinho a cada 20 segundos.</li></ol></div>`:""}
+    ${pedido?`<p class="zx-pedido">Pedido enviado à ponte: ${pedido==="novo_qr"?"gerar novo QR code":"reconectar"}. Aguarde alguns segundos…</p>`:""}
+    <div class="zx-bts">
+      <button class="zt-btn" onclick="comandoZap('reconectar')" ${morta||pedido?"disabled":""}>Reconectar agora</button>
+      <button class="zt-btn" onclick="comandoZap('novo_qr')" ${morta||pedido?"disabled":""}>Gerar novo QR code</button>
+    </div>
+    <p class="meio-sub">Reconectar resolve a maioria das quedas e não pede QR. Use o novo QR code só se o celular
+      mostrar o aparelho como desconectado, ou se a reconexão não resolver.</p>`;
+  if(qr) desenharQR(document.getElementById("zx-qrimg"), qr);
+}
+async function comandoZap(c){
+  if(c==="novo_qr" && !await confirmar("Gerar um novo QR code? A conexão atual será desfeita e alguém precisa ler o código com o celular do escritório."))
+    return;
+  await guardarCfgApp("zap_comando", `${c}|${new Date().toISOString()}`);
+  aviso(c==="novo_qr" ? "Pedido enviado: o QR code aparece aqui em instantes" : "Pedido enviado: a ponte reconecta em instantes");
+  pintarConexaoZap();
+}
+// QR desenhado no próprio navegador (qrcodejs do cdnjs, carregado só aqui)
+let libQR = null;
+async function desenharQR(el, texto){
+  if(!el) return;
+  try{
+    libQR = libQR || new Promise((ok, erro)=>{ const s=document.createElement("script");
+      s.src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"; s.onload=ok; s.onerror=erro; document.head.appendChild(s); });
+    await libQR;
+    if(el.dataset.qr===texto) return;          // mesmo código: não redesenha (evita piscar)
+    el.innerHTML = ""; el.dataset.qr = texto;
+    new QRCode(el, {text:texto, width:240, height:240, correctLevel:QRCode.CorrectLevel.L});
+  }catch(e){ libQR = null; el.textContent = "Não consegui desenhar o QR code. Atualize a página e tente de novo."; }
 }
 
 function estadoPonte(){
@@ -10429,8 +10504,8 @@ function pintarListaZap(){
   document.querySelector(".zap-lado").innerHTML =
     `<div class="zl-cab">
        <div class="zl-topo"><h2>WhatsApp</h2>
-         <span class="zap-estado" title="${esc(p.txt)}"><i style="background:${p.cor}"></i>${esc(p.txt==="ponte ligada"?"conectado":p.txt)}</span>
-         ${cfgApp("zap_qr")?`<button class="btn-mini" onclick="ajudaQR()">como ligar</button>`:""}</div>
+         <button class="zap-estado ${zapComProblema()?"ruim":""}" onclick="abrirConexaoZap()" title="conexão do WhatsApp: ${esc(p.txt)}"><i style="background:${p.cor}"></i>${
+           zapComProblema()?(cfgApp("zap_qr")?"Ler QR code":"Corrigir conexão"):"conectado"}</button></div>
        <label class="zl-busca">${zic("busca")}<input type="search" id="zl-busca" value="${esc(zapBusca)}"
          placeholder="Buscar nome ou telefone" aria-label="Buscar conversa"></label>
        <div class="zl-filas" role="tablist" aria-label="Filas">${filtros.map(([f,r])=>{
@@ -11324,20 +11399,7 @@ function vincularConversa(){
   };
 }
 
-function ajudaQR(){
-  // O código do QR é a credencial da sessão. Mandá-lo para um gerador de
-  // imagem de terceiros seria entregar o WhatsApp do escritório a um site
-  // qualquer — então ele se lê no terminal da máquina da ponte, e ponto.
-  caixa(`<h3>A ponte está esperando o QR code</h3>
-    <p>Na máquina onde a ponte roda, o QR aparece no terminal:</p>
-    <pre style="background:var(--fundo);padding:10px;border-radius:8px">cd ponte
-node ponte.js</pre>
-    <p class="meio-sub">Se ela roda como serviço:
-      <code>sudo journalctl -u ponte-zap -f</code> (Linux) ou
-      <code>pm2 logs ponte-zap</code> (Windows).</p>
-    <p class="meio-sub">O passo a passo completo está em
-      <code>crm/fase2/ponte/PASSO-A-PASSO.md</code>.</p>`);
-}
+function ajudaQR(){ abrirConexaoZap(); }
 
 
 // ── 💰 Quando o benefício cai na conta ────────────────────────────────────

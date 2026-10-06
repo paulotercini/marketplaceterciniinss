@@ -135,6 +135,14 @@ const T = {
   const enc = escritas.find(e => /rpc\/zap_encerrar/.test(e.u));
   conf("encerrar chama zap_encerrar com a observação", enc && enc.b.p_obs === "Perícia confirmada para dia 10" && enc.b.p_conversa === Z1);
 
+  // F185 · corrigir a conexão pelo CRM: o pedido vai para zap_comando
+  conf("sem sinal da ponte, a lista oferece Corrigir conexão", (await p.textContent(".zl-topo .zap-estado")).includes("Corrigir conexão"));
+  await p.evaluate(() => { D.config.set("zap_status", "ligado"); D.config.set("zap_visto_em", new Date().toISOString()); abrirConexaoZap(); });
+  await p.click('#zx-painel button:has-text("Reconectar agora")');
+  await p.waitForTimeout(300);
+  const cmd = escritas.find(e => /config_app/.test(e.u) && e.b && e.b.chave === "zap_comando");
+  conf("Reconectar grava o pedido para a ponte (zap_comando)", cmd && /^reconectar\|/.test(cmd.b.valor));
+
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);
   const falhas = ok.filter(([, v]) => !v).length + erros.length;

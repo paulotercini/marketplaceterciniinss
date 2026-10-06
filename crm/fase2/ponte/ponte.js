@@ -86,6 +86,21 @@ async function subirMidia(buffer, caminho, mime) {
 // ── WhatsApp ──────────────────────────────────────────────────────────────
 let sock = null, ligado = false, recuperando = false;
 
+function fecharSocket(s) {
+  if (!s) return;
+  try { s.ev.removeAllListeners(); } catch {}
+  try { s.end(undefined); } catch {}
+}
+// Sob o pm2, recomeçar é sair: ele sobe a ponte de novo em 10 s (restart_delay
+// no ecosystem.config.js), com uma conexão só e a memória limpa
+async function reiniciar(motivo) {
+  log("reiniciando a ponte:", motivo);
+  ligado = false;
+  await anotar("zap_status", "reconectando").catch(() => {});
+  fecharSocket(sock);
+  process.exit(1);
+}
+
 // O aparelho do cliente que não consegue abrir uma mensagem ("Aguardando
 // mensagem") pede para a gente reenviá-la; o Baileys reenvia o que getMessage
 // devolver. Sem isso a mensagem fica presa para sempre no celular dele.
@@ -156,6 +171,11 @@ async function conectar() {
         // sessão morta: apagar as credenciais, senão ele tenta para sempre
         fs.rmSync(PASTA, { recursive: true, force: true });
       }
+      // Duas conexões com a mesma sessão embaralham a criptografia ("Bad MAC"
+      // em massa, mensagem que chega e não se lê). Por isso a velha é fechada
+      // antes, e com o pm2 o programa recomeça do zero, que é o mais limpo.
+      fecharSocket(sock);
+      if (process.env.pm_id !== undefined) return reiniciar(deslogado ? "sessão encerrada" : "conexão caiu");
       await espera(deslogado ? 2000 : 4000);
       conectar().catch(e => log("falhou ao reconectar:", e.message));
     }
@@ -569,10 +589,56 @@ async function rodarAvisos() {
 // Sem isso, ninguém no escritório sabe a diferença entre "ninguém escreveu"
 // e "a ponte morreu às 3 da manhã".
 async function baterPonto() {
+  for (let i = 0; ; i++) {
+    if (i % 3 === 0) {
+      await anotar("zap_visto_em", agora());
+      if (!ligado) await anotar("zap_status", "desligado");
+    }
+    await ouvirComando().catch(e => log("comando:", e.message));
+    await espera(10000);
+  }
+}
+
+// ── comandos do CRM ──────────────────────────────────────────────────────
+// O botão "Corrigir conexão" do CRM grava zap_comando = "reconectar|<quando>"
+// ou "novo_qr|<quando>". A ponte lê a cada 10 s, apaga o pedido e obedece.
+async function ouvirComando() {
+  const [c] = await sb("/rest/v1/config_app?select=valor&chave=eq.zap_comando");
+  const pedido = String((c && c.valor) || "").split("|")[0];
+  if (!pedido) return;
+  await anotar("zap_comando", "");
+  if (pedido === "reconectar") return reiniciar("pedido do CRM");
+  if (pedido === "novo_qr") {
+    // desfaz o aparelho no celular e apaga a sessão: ao subir, vem QR novo
+    try { if (sock && ligado) await Promise.race([sock.logout(), espera(8000)]); } catch {}
+    fecharSocket(sock);
+    fs.rmSync(PASTA, { recursive: true, force: true });
+    return reiniciar("novo QR pedido pelo CRM");
+  }
+}
+
+// ── vigia ─────────────────────────────────────────────────────────────────
+// A conexão pode morrer calada: "conectada", sem cair, e sem receber nada
+// (aconteceu em 05/10, das 17h16 às 21h34). A cada 2 minutos a ponte pergunta
+// ao WhatsApp pelo próprio número; duas perguntas sem resposta, ela recomeça.
+async function vigiar() {
+  let falhas = 0;
   for (;;) {
-    await anotar("zap_visto_em", agora());
-    if (!ligado) await anotar("zap_status", "desligado");
-    await espera(30000);
+    await espera(120000);
+    if (!ligado || !sock || !sock.user) { falhas = 0; continue; }
+    try {
+      const eu = N.jidParaFone(sock.user.id);
+      await Promise.race([sock.onWhatsApp(eu), espera(30000).then(() => { throw new Error("sem resposta"); })]);
+      falhas = 0;
+    } catch (e) {
+      falhas++;
+      log(`vigia: o WhatsApp não respondeu (${falhas}/2):`, e.message);
+      if (falhas >= 2) {
+        if (process.env.pm_id !== undefined) return reiniciar("conexão muda");
+        fecharSocket(sock); falhas = 0;
+        conectar().catch(err => log("falhou ao reconectar:", err.message));
+      }
+    }
   }
 }
 
@@ -582,6 +648,7 @@ if (require.main === module) {
   rodarFila();
   rodarAvisos();
   baterPonto();
+  vigiar();
   const tchau = async s => { log("saindo por", s); await anotar("zap_status", "parada"); process.exit(0); };
   process.on("SIGINT", () => tchau("SIGINT"));
   process.on("SIGTERM", () => tchau("SIGTERM"));
