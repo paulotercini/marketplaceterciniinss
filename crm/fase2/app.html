@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.87</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.88</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -13279,7 +13279,10 @@ function pintarFicha(){
           // histórico não some quando a etapa acaba.
           const visiveis = abasVisiveis(k, andsVis);
           const {inss:temINSS, crps:temCRPS, cnj:temCNJ} = visiveis;
-          const aba = visiveis[subAba] ? subAba : "escritorio";
+          // F185 · Documentos aparece quando o caso tem algum (fora do
+          // abasVisiveis, que é regra pura testada sem o resto do app)
+          const nDocs = documentosDoCaso(k).length;
+          const aba = visiveis[subAba] || (subAba==="docs" && nDocs) ? subAba : "escritorio";
           // a etiqueta da aba diz o estado sem abrir: ✔ quando a fase foi
           // encerrada à mão, 🗄 quando TODOS os processos daquela fonte estão
           // arquivados (um só arquivado não marca a aba — o outro segue vivo),
@@ -13298,7 +13301,7 @@ function pintarFicha(){
           ${temINSS?`<button class="${cls("inss",faseEncerrada(k,"pat"))}" onclick="irSubAba('inss')">${v10?"INSS":"Andamentos INSS"}${rot(comentariosPat(andsVis).length, abaPatArquivada(k), faseEncerrada(k,"pat"))}</button>`:""}
           ${temCRPS?`<button class="${cls("crps",faseEncerrada(k,"crps"))}" onclick="irSubAba('crps')">Recurso (CRPS)${rot(crpsTotalEventos(k), abaCrpsArquivada(k), faseEncerrada(k,"crps"))}</button>`:""}
           ${temCNJ?`<button class="${cls("cnj",faseEncerrada(k,"cnj"))}" onclick="irSubAba('cnj')">${v10?"Judicial":"Andamentos do CNJ"}${rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k), faseEncerrada(k,"cnj"))}</button>`:""}
-          ${visiveis.docs?`<button class="${aba==="docs"?"on":""}" onclick="irSubAba('docs')" title="as peças e os anexos do caso, por origem">Documentos (${documentosDoCaso(k).length})</button>`:""}
+          ${nDocs?`<button class="${aba==="docs"?"on":""}" onclick="irSubAba('docs')" title="as peças e os anexos do caso, por origem">Documentos (${nDocs})</button>`:""}
           <button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
             title="todas as fontes juntas, em ordem cronológica">${v10?"Caso Completo":"Caso completo"}</button>
         </div>`;
@@ -21079,7 +21082,6 @@ function abasVisiveis(k, ands){
     cnj:  !!(k.processo
       || (k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length))
       || andamentosPje(ands).length || faseEncerrada(k,"cnj")),
-    docs: documentosDoCaso(k).length > 0,                       // F185
     tudo: true,
   };
 }
