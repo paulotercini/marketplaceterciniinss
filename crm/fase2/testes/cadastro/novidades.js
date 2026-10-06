@@ -12,7 +12,7 @@ const SUPA = "https://ficticio.supabase.co";
 
 // datas RELATIVAS (a suíte roda todo dia): julgamento num dia útil de seg a
 // qui, alguns dias à frente — assim o "dia seguinte útil" é o dia corrido
-const iso = d => d.toISOString().slice(0, 10);
+const iso = d => d.toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 const mais = n => { const d = new Date(); d.setDate(d.getDate() + n); return d; };
 const br = d => iso(d).split("-").reverse().join(".");
 let SALTO = 3; while ([0, 5, 6].includes(mais(SALTO).getDay())) SALTO++;

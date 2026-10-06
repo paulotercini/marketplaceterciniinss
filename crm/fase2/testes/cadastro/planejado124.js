@@ -7,7 +7,7 @@ const fs = require("fs");
 const path = require("path");
 const { FIX, SESSAO, EU, CLI_CHEIO, CASO1 } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
-const dia = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);
+const dia = n => new Date(Date.now() + n * 864e5).toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 
 const TUDO = {
   ...FIX,
@@ -92,7 +92,7 @@ const TUDO = {
   await p.waitForTimeout(300);
   const t2 = await tela();
   conf("o filtro Hoje corta tarefa e lembrete junto com o caso",
-    /1 data\(s\)/.test(t2.sub) && !/Escrever a petição/.test(t2.txt)
+    /^1 data\b/.test(t2.sub) && !/Escrever a petição/.test(t2.txt)
     && !/Aposentadoria futura/.test(t2.txt));
 
   await p.evaluate(() => { filtroPlan = "todas"; filtroPlanColab = "11111111-1111-1111-1111-111111111111"; render(); });

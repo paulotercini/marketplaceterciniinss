@@ -10,7 +10,7 @@ const { FIX, SESSAO, CLI_CHEIO, CLI_VAZIO, CASO1, EU } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 
 // datas relativas a hoje (o teste não pode apodrecer)
-const D0 = new Date(); const iso = d => d.toISOString().slice(0, 10);
+const D0 = new Date(); const iso = d => d.toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 const mais = n => { const d = new Date(D0); d.setDate(d.getDate() + n); return iso(d); };
 const ONTEM5 = mais(-5), ONTEM2 = mais(-2), DAQUI3 = mais(3), DAQUI9 = mais(9);
 
