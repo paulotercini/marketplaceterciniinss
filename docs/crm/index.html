@@ -5356,7 +5356,9 @@ function montarSidebar(){
     // F131 · ordem do Paulo: Minhas Tarefas e Organizacional entram nas
     // Listas do escritório, antes das fases; Visões some inteira
     const fasesColab = ["prazo","escritorio","inss","conselho","judicial","peticao_inicial"];
-    document.getElementById("grupo-dinamicas").innerHTML = din
+    // F187 · o WhatsApp mora em Visões (que some para o colaborador): aqui ele
+    // entra nas listas, porque é onde o atendente trabalha
+    document.getElementById("grupo-dinamicas").innerHTML = [...din, ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null]]
       .filter(([id])=>LISTAS_COLAB.includes(id) && !["particulares","rotinas"].includes(id))
       .map(([id,rot,n])=>`<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
         (id==="meudia"&&nVenc)?`<span class="cont venc">${n||nVenc}</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("");
