@@ -227,3 +227,18 @@ export async function acessoStorage() {
   const { url, chave } = await config();
   return { url, chave, token: await cracha() };
 }
+
+// F186 · o que já está guardado numa pasta do bucket, de uma vez: perguntar
+// documento por documento eram 1.400 idas ao banco numa rodada do e-SAJ
+export async function docsExistentes(prefixo) {
+  const { url } = await config();
+  const nomes = [];
+  for (let offset = 0; ; offset += 1000) {
+    const r = await fetchTeimoso(`${url}/storage/v1/object/list/anexos`, { method: 'POST',
+      headers: await cabecalhos(), body: JSON.stringify({ prefix: prefixo, limit: 1000, offset }) });
+    if (!r.ok) throw new Error(`não consegui listar ${prefixo} (${r.status})`);
+    const lista = await r.json();
+    for (const o of lista) if (o && o.name && o.id) nomes.push(prefixo + o.name);
+    if (lista.length < 1000) return { nomes };
+  }
+}

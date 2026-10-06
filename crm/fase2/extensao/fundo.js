@@ -165,6 +165,7 @@ chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
       if (msg.acao === 'favoritos-esaj') return responder(await favoritosEsaj());
       if (msg.acao === 'enviar') { await API.enviar(msg.fonte, msg.dados); return responder({ ok: true }); }
       if (msg.acao === 'doc-existe') return responder({ existe: await API.docExiste(msg.caminho) });
+      if (msg.acao === 'docs-existentes') return responder(await API.docsExistentes(msg.prefixo));
       if (msg.acao === 'acesso-storage') return responder(await API.acessoStorage());
       if (msg.acao === 'guardar-doc') return responder(await API.guardarDoc(msg.caminho, msg.tipoDoc, msg.b64));
       if (msg.acao === 'entrar') return responder({ quem: await API.entrar(msg.email, msg.senha) });
