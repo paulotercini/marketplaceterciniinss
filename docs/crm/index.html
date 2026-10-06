@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.91</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.92</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8071,7 +8071,7 @@ async function gravarDocsDaColeta(docs){
       if(ja && ja.length) continue;
       let [an] = d.andamento_oid ? (await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem_id=eq.${encodeURIComponent(d.andamento_oid)}&limit=1`) || []) : [];
       if(!an && d.momento)
-        [an] = await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem=eq.pje&origem_id=like.${encodeURIComponent(`*:${d.momento}:*`)}&order=criado_em.asc&limit=1`) || [];
+        [an] = await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem=eq.pje&origem_id=like.${encodeURIComponent(`*:${d.momento}*`)}&order=criado_em.asc&limit=1`) || [];
       let lido = { tipo:null, tamanho:null, texto:null };
       try{ lido = await textoDoDocumento(d.caminho); }catch(e){ console.warn("texto do documento:", d.caminho, e); }
       await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=minimal"},
@@ -18379,7 +18379,10 @@ function salvarBlob(nome, blob){
 function rotuloDoCaso(k){
   const c = D.cliPorId.get(k.cliente_id) || {};
   // o título do caso costuma ser o próprio nome do cliente: não repete
-  const tit = k.titulo && dsa(k.titulo)!==dsa(c.nome||"") ? k.titulo : (k.especie||k.beneficio||"");
+  // "Davi Valentim da Silva #B87" → "#B87"
+  let tit = String(k.titulo||"").trim();
+  if(c.nome && dsa(tit).startsWith(dsa(c.nome))) tit = tit.slice(c.nome.length).replace(/^[\s—–\-:·]+/, "");
+  tit = tit || k.especie || k.beneficio || "";
   return { cliente:c.nome||"cliente", titulo:tit, arquivo:nomeSeguro(tit ? `${c.nome||"cliente"}-${tit}` : (c.nome||"cliente")) };
 }
 async function baixarDocsZip(casoId){
@@ -18458,8 +18461,13 @@ async function pacoteClaude(casoId){
     ...(semTexto.length ? ["## Documentos sem texto (digitalizados)", "", ...semTexto.map(p=>`- doc ${p.i} · ${rotDoc(p)}`), ""] : []),
     "## Índice", "",
     ...partes.map(p=>`${p.i}. ${rotDoc(p)}${p.texto?"":" — DIGITALIZADO, sem texto"}`), "",
-    ...partes.filter(p=>p.texto).flatMap(p=>[
-      `---`, "", `## ${p.i}. ${p.d.nome}${p.d.evento?` — ${p.d.evento}`:""}`, "", `*${String(p.d.data||"").slice(0,10)} · ${ORIGEM_DOC[p.d.origem]||p.d.origem}*`, "", p.texto.trim(), ""]),
+    ...(()=>{ const visto = new Map();      // o mesmo arquivo juntado duas vezes (acontece no PJe) entra uma vez
+      return partes.filter(p=>p.texto).flatMap(p=>{
+        const ch = p.texto.trim(), igual = visto.get(ch);
+        if(!igual) visto.set(ch, p.i);
+        return [`---`, "", `## ${p.i}. ${p.d.nome}${p.d.evento?` — ${p.d.evento}`:""}`, "", `*${String(p.d.data||"").slice(0,10)} · ${ORIGEM_DOC[p.d.origem]||p.d.origem}*`, "",
+                igual ? `*(mesmo conteúdo do doc ${igual} — o arquivo foi juntado de novo)*` : ch, ""];
+      }); })(),
   ].join("\n");
   salvarBlob(`${arquivo}-para-o-claude.md`, new Blob([md], {type:"text/markdown;charset=utf-8"}));
   aviso(semTexto.length
