@@ -50,7 +50,7 @@ async function esperarAba(tabId, tetoMs = 20000) {
 // `ativar`, a aba ATIVA vem primeiro — no PJe, com um processo aberto na
 // frente, o clique coleta o histórico completo DELE — e a aba vem para a
 // frente. Sem `ativar` (o "atualizar tudo"), roda em segundo plano.
-async function rodarFonte(fonte, { aba = null, ativar = true } = {}) {
+async function rodarFonte(fonte, { aba = null, ativar = true, extra = null } = {}) {
   const dominios = DOMINIOS[fonte];
   if (!aba && ativar) {
     const [ativa] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -83,7 +83,7 @@ async function rodarFonte(fonte, { aba = null, ativar = true } = {}) {
       target: { tabId: usar.id, allFrames: true },
       func: (desde, opts) => window.crmRodar ? window.crmRodar(desde, opts)
                                      : { erro: 'a página ainda não terminou de abrir — dê F5 e tente de novo' },
-      args: [ultima_pat || null, { acervo: !ativar }],
+      args: [ultima_pat || null, { acervo: !ativar && !(extra && extra.completo), ...(extra || {}) }],
     });
     // a resposta que vale é a do QUADRO DE CIMA (frameId 0): os iframes do
     // painel devolvem "a página ainda não terminou de abrir" e, vindo antes na
@@ -150,6 +150,67 @@ async function rodarTudo() {
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-tudo') return;
   rodarTudo().then(responder, e => responder({ erro: String(e.message || e) }));
+  return true;
+});
+
+// ══════════════════════════════════════════════════════════════════════════
+// F187 · COMPLETAR PROCESSOS (PJe e eproc): os documentos de TODOS os
+// processos, e não só do que estiver aberto na tela.
+// - eproc: o próprio coletor percorre a Relação de Processos por trás.
+// - PJe: o documento só desce depois de aberto no visualizador, então não há
+//   atalho: este worker abre cada processo (o endereço dos Autos Digitais vem
+//   das coletas do acervo, só os que têm caso no CRM) numa JANELA DE TRABALHO,
+//   roda ali a coleta do processo aberto e entrega em lotes de 5. A janela
+//   fica normal (não minimizada): o Chrome freia página escondida, e a
+//   rolagem da cronologia e os cliques param de andar.
+// O que já está no CRM é pulado: só a primeira rodada é longa.
+// ══════════════════════════════════════════════════════════════════════════
+async function completarPje() {
+  const lista = await API.acervoPje();
+  if (!lista.length) return { rotulo: 'PJe', erro: 'nenhum processo do acervo com caso no CRM — rode antes o ⚖️ PJe (acervo)' };
+  // o worker do MV3 dorme sem atividade: um pulso a cada 20 s o mantém
+  const pulso = setInterval(() => chrome.runtime.getPlatformInfo(() => {}), 20000);
+  const janela = await chrome.windows.create({ url: lista[0].url, focused: false, state: 'normal', width: 1200, height: 900 });
+  const tabId = janela.tabs[0].id;
+  const lote = [];
+  let feitos = 0, falhas = 0;
+  const entregar = async () => {
+    if (!lote.length) return;
+    const l = lote.splice(0);
+    await API.enviar('pje-processo', { versao: 1, fonte: 'pje-processo', sistema: 'pje', quando: new Date().toISOString(), qtd: l.length, lote: l });
+  };
+  try {
+    for (let i = 0; i < lista.length; i++) {
+      const p = lista[i];
+      await chrome.storage.local.set({ completar_pje: { i: i + 1, total: lista.length, numero: p.numero, feitos, falhas } });
+      try {
+        if (i > 0) await chrome.tabs.update(tabId, { url: p.url });
+        await esperarAba(tabId, 30000);
+        await chrome.scripting.executeScript({ target: { tabId, allFrames: true }, files: ARQUIVOS.pje });
+        const res = await chrome.scripting.executeScript({ target: { tabId },
+          func: () => window.crmRodar ? window.crmRodar(null, { completo: true }) : { erro: 'o coletor não subiu' } });
+        const r = res && res[0] && res[0].result;
+        if (r && r.out) { lote.push(r.out); feitos++; } else { falhas++; console.warn('[CRM] PJe não completado:', p.numero, r && r.erro); }
+        if (lote.length >= 5) await entregar();
+      } catch (e) { falhas++; console.warn('[CRM] PJe não completado:', p.numero, e.message); }
+    }
+    await entregar();
+  } finally {
+    clearInterval(pulso);
+    await chrome.storage.local.set({ completar_pje: { i: lista.length, total: lista.length, feitos, falhas, fim: new Date().toISOString() } });
+    try { await chrome.windows.remove(janela.id); } catch (e) {}
+  }
+  return { rotulo: 'PJe', ok: feitos, falhas };
+}
+async function completarEproc() {
+  const abas = await chrome.tabs.query({ url: DOMINIOS.eproc });
+  const r = await rodarFonte('eproc', { aba: abaPreferida(abas) || null, ativar: false, extra: { completo: true } });
+  return { rotulo: 'eproc', ...r };
+}
+chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
+  if (msg.tipo !== 'rodar-completo') return;
+  Promise.all([completarEproc(), completarPje()])
+    .then(feitos => responder({ feitos }), e => responder({ erro: String(e.message || e) }));
   return true;
 });
 
