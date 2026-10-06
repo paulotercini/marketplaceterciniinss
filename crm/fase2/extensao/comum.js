@@ -50,7 +50,8 @@ window.CRM = window.CRM || {
             : await fetch(new URL(d.url, location.href), { credentials: 'include' });
           if (!r || !r.ok) continue;
           let buf = new Uint8Array(await r.arrayBuffer());
-          let tipoDoc = R.tipoDoConteudo(buf, r.headers.get('content-type'));
+          let ctype = r.headers.get('content-type');
+          let tipoDoc = R.tipoDoConteudo(buf, ctype);
           // a página do visualizador (eproc, e-SAJ) embrulha o documento: segue
           // até ele, no máximo dois andares
           for (let andar = 0, base = r.url || location.href; tipoDoc === 'text/html' && andar < 2; andar++) {
@@ -59,9 +60,22 @@ window.CRM = window.CRM || {
             const r2 = await fetch(new URL(miolo, base), { credentials: 'include' });
             if (!r2.ok) { tipoDoc = null; break; }
             base = r2.url; buf = new Uint8Array(await r2.arrayBuffer());
-            tipoDoc = R.tipoDoConteudo(buf, r2.headers.get('content-type'));
+            ctype = r2.headers.get('content-type');
+            tipoDoc = R.tipoDoConteudo(buf, ctype);
           }
           if (!tipoDoc) continue;                      // tela de login ou erro, não documento
+          // HTML em outro charset (o eproc é ISO-8859-1) vai ao bucket em UTF-8
+          if (tipoDoc === 'text/html') {
+            const cs = R.charsetDoHtml(buf, ctype);
+            let jaUtf8 = true;
+            try { new TextDecoder('utf-8', { fatal: true }).decode(buf); } catch (e) { jaUtf8 = false; }
+            if (!jaUtf8 && !/^utf-?8$/.test(cs)) {
+              let html = new TextDecoder(cs).decode(buf);
+              html = html.replace(/<meta[^>]*charset[^>]*>/gi, '').replace(/<head[^>]*>/i, m => m + '<meta charset="utf-8">');
+              if (!/charset="utf-8"/.test(html)) html = '<meta charset="utf-8">' + html;
+              buf = new TextEncoder().encode(html);
+            }
+          }
           let s = '';
           for (let i = 0; i < buf.length; i += 8192) s += String.fromCharCode.apply(null, buf.subarray(i, i + 8192));
           await CRM.pedir({ tipo: 'crm', acao: 'guardar-doc', caminho, tipoDoc, b64: btoa(s) });

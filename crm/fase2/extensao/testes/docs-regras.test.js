@@ -55,3 +55,12 @@ test('o visualizador não é o documento: segue o iframe do eproc e monta o getP
   assert.equal(R.enderecoDoMiolo('<html><body>Vistos. JULGO PROCEDENTE.</body></html>'), null, 'documento já é o documento');
   assert.equal(R.enderecoDoMiolo('<iframe src="processando.html"></iframe>'), null);
 });
+
+test('eproc em HTML: segue o $.ajax do visualizador; o charset do HTML é lido do cabeçalho ou do <meta>', () => {
+  const pag = `<html><head><meta charset="iso-8859-1"><title>Evento 94 - DESPADEC1</title></head><body><div id="divdochtml"></div>
+    <script>function start() { $.ajax({ url: "controlador.php?acao=acessar_documento_implementacao&amp;doc=61&amp;key=ab", success: f }); }</script></body></html>`;
+  assert.equal(R.enderecoDoMiolo(pag), 'controlador.php?acao=acessar_documento_implementacao&doc=61&key=ab');
+  assert.equal(R.charsetDoHtml(Buffer.from(pag), 'text/html'), 'iso-8859-1');
+  assert.equal(R.charsetDoHtml(Buffer.from(pag), 'text/html; charset=windows-1252'), 'windows-1252');
+  assert.equal(R.charsetDoHtml(Buffer.from('<html><body>x</body></html>'), 'text/html'), 'utf-8');
+});
