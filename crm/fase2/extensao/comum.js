@@ -49,8 +49,18 @@ window.CRM = window.CRM || {
           const r = baixar ? await baixar(d)
             : await fetch(new URL(d.url, location.href), { credentials: 'include' });
           if (!r || !r.ok) continue;
-          const buf = new Uint8Array(await r.arrayBuffer());
-          const tipoDoc = R.tipoDoConteudo(buf, r.headers.get('content-type'));
+          let buf = new Uint8Array(await r.arrayBuffer());
+          let tipoDoc = R.tipoDoConteudo(buf, r.headers.get('content-type'));
+          // a página do visualizador (eproc, e-SAJ) embrulha o documento: segue
+          // até ele, no máximo dois andares
+          for (let andar = 0, base = r.url || location.href; tipoDoc === 'text/html' && andar < 2; andar++) {
+            const miolo = R.enderecoDoMiolo(new TextDecoder().decode(buf));
+            if (!miolo) break;
+            const r2 = await fetch(new URL(miolo, base), { credentials: 'include' });
+            if (!r2.ok) { tipoDoc = null; break; }
+            base = r2.url; buf = new Uint8Array(await r2.arrayBuffer());
+            tipoDoc = R.tipoDoConteudo(buf, r2.headers.get('content-type'));
+          }
           if (!tipoDoc) continue;                      // tela de login ou erro, não documento
           let s = '';
           for (let i = 0; i < buf.length; i += 8192) s += String.fromCharCode.apply(null, buf.subarray(i, i + 8192));
