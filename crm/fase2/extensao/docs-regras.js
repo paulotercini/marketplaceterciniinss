@@ -14,8 +14,10 @@
 
   // nomes do PJe ("Sentença", "Decisão"), do eproc ("SENT1", "DESPADEC1",
   // "ACOR2", "LAUDO1") e do e-SAJ ("Julgada Procedente a Ação")
-  const RE_DECIDE = /senten[cç]|decis[aã]|despach|ac[oó]rd[aã]|monocr[aá]tic|laudo|julgad[oa]|homologa|DESPADEC|\bSENT\d|\bACOR\d|\bDEC\d|\bVOTO\d/i;
-  const ehDecisao = nome => RE_DECIDE.test(String(nome || ''));
+  const RE_DECIDE = /senten[cç]|decis[aã]|despach|ac[oó]rd[aã]|monocr[aá]tic|laudo|julgad[oa] (?:procedente|improcedente|parcial|extint|prejudicad)|homologa|DESPADEC|\bSENT\d|\bACOR\d|\bDEC\d|\bVOTO\d/i;
+  // certidão não decide, mesmo falando de "julgado" (a do trânsito em julgado
+  // entrou assim na primeira coleta ao vivo, 05.10.2026)
+  const ehDecisao = nome => RE_DECIDE.test(String(nome || '')) && !/^\s*certid/i.test(String(nome || ''));
 
   // o mesmo nomeSeguro do robo-crps/ingerir.js — o CRPS mantém o caminho de lá
   function nomeSeguro(s) {
