@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.99</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.00</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8075,8 +8075,12 @@ async function textoDoDocumento(caminho){
   return { tipo, tamanho:blob.size, texto: texto.length>=50 ? texto : null };
 }
 async function gravarDocsDaColeta(docs){
-  let n = 0;
+  let n = 0, i = 0;
+  const total = (docs||[]).length;
   for(const d of (docs||[])){
+    // a primeira coleta da pasta digital traz centenas de PDFs: o texto de cada
+    // um sai aqui, um por vez — sem o contador a tela parecia travada
+    if(total > 10 && (++i % 5 === 1 || i === total)) aviso(`Documentos: ${i} de ${total} (lendo o texto de cada um)…`, false);
     try{
       const ja = await api(`/rest/v1/anexos?select=id&caminho=eq.${encodeURIComponent(d.caminho)}`);
       if(ja && ja.length) continue;

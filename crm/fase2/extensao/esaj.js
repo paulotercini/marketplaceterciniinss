@@ -277,7 +277,9 @@
           .map(p => ({ numero: p.numero, classe: p.classe, partes: p.partes, orgao: p.orgao, assunto: p.assunto || null,
                        distribuido: p.distribuido || null, situacao: p.situacao, codigo: p.codigo, link: p.link,
                        principal: p.principal || null, tipo: p.tipo || null,
-                       movimento: p.movimento, movimentos: p.movimentos || null, id: null, ca: null }));
+                       movimento: p.movimento, movimentos: p.movimentos || null,
+                       pasta: p.pasta || null,             // F186 · a pasta digital: sem ela o CRM não sabe de quem é cada PDF
+                       id: null, ca: null }));
         if (!processos.length) continue;
         await CRM.enviar('pje', { versao: 1, fonte: 'pje-acervo', sistema: 'esaj', tribunal: 'TJSP', grau, host, oab, quando,
                                   parcial: falhas > 0, pulados, processos });
