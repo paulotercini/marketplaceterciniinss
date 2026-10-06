@@ -27571,7 +27571,10 @@ function pintarFluxo(){
     const dispP = agq.cache[f.prof];
     const lista = ((dispP||agq.disp||{}).profissionais) || [];
     const dias = (dispP&&dispP.dias||[]).filter(d=>!d.bloqueado);
-    if(dias.length && (!f.data || !dias.some(d=>d.data===f.data))) f.data = (dias.find(d=>(d.livres[f.tipo]||[]).length)||dias[0]||{}).data;
+    // dia sem vaga (hoje depois do expediente, ou lotado) não serve de ponto de
+    // partida: o fluxo abre no primeiro dia que tem horário livre
+    if(dias.length && (!f.data || !dias.some(d=>d.data===f.data && (d.livres[f.tipo]||[]).length)))
+      f.data = (dias.find(d=>(d.livres[f.tipo]||[]).length)||dias[0]||{}).data;
     const dia = dias.find(d=>d.data===f.data);
     const livres = dia ? (dia.livres[f.tipo]||[]) : [];
     const grupo = (tit, l) => l.length ? `<h4>${tit}</h4><div class="aq-horarios">${l.map(s=>`<button class="${s.inicio===f.inicio?"on":""}${f.sugerir&&s.inicio===f.sugerir.depoisDe?" sugerido":""}" data-aqhora="${s.inicio}">${s.inicio}</button>`).join("")}</div>` : "";

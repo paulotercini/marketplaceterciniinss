@@ -9,7 +9,7 @@ const path = require("path");
 const { FIX, SESSAO, CLI_CHEIO, CASO1, EU } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 const OUTRA = "22222222-2222-2222-2222-222222222222";
-const d = n => { const x = new Date(); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
+const d = n => { const x = new Date(); x.setDate(x.getDate() + n); return x.toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" }); };
 const A1 = "a1820000-0000-0000-0000-000000000001", A2 = "a1820000-0000-0000-0000-000000000002";
 const T1 = "t1820000-0000-0000-0000-000000000001";
 const DADOS = {
