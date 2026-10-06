@@ -222,6 +222,8 @@ function resumoDaLista(t) {
 // propósito: são laudo médico, relato de doença e dado do interessado. O CRM
 // guarda o link para o portal, não a cópia — é a mesma regra que vale para a
 // ficha pública do cliente, e vale mais ainda aqui.
+// F184 · o ANEXO passou a ter cópia no CRM (decisão do Paulo, 05.10.2026):
+// bucket privado, linha em `anexos`, sem nada para o portal do cliente.
 // F98 · quem é o requerente, do jeito que o cadastro do CRM guarda: o PAT
 // traz em `interessados` nome, CPF, nome da mãe, nascimento e celular —
 // tudo que a ficha pede. É o que permite cadastrar quem não tem ficha na
@@ -262,8 +264,9 @@ function resumoDoDetalhe(d) {
     unidade: det.nomeUnidade || null,
     canal: det.tipoCanalAtendimento || null,
     quem_protocolou: CANAIS[limpo(det.tipoCanalAtendimento)] || null,
-    // O ANEXO CONTINUA SENDO SÓ CONTAGEM: é laudo médico, e o CRM guarda o
-    // link do portal, não a cópia. O COMENTÁRIO, NÃO — ele é a mensagem do
+    // O ANEXO AQUI É SÓ CONTAGEM. F184 · a cópia agora vem por outro caminho:
+    // a extensão guarda o arquivo no bucket privado (det.arquivos) e a
+    // importação o põe no caso, interno. O COMENTÁRIO, NÃO — ele é a mensagem do
     // INSS sobre o processo ("apresentar PPP", "exigência cumprida"), e é
     // exatamente o que responde "o que mudou?". Sem ele, a importação avisa
     // que algo aconteceu e não diz o quê.

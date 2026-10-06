@@ -124,8 +124,14 @@
       const dh = texto(c[1] || '').match(RE_DATA_HORA);
       const desc = (m[2].match(/infraEventoDescricao[^>]*>([\s\S]*?)<\/label>/i) || [])[1];
       const textos = [texto(desc || c[2] || '')].filter(Boolean);
-      const docs = [...m[2].matchAll(/<a[^>]*infraLinkDocumento[^>]*>([\s\S]*?)<\/a>/gi)]
-        .map(d => ({ id: m[1], nome: texto(d[1]) })).filter(d => d.nome);
+      // F184 · o href é o que deixa baixar o documento; `doc=` é o id estável
+      // dele no eproc (a chave `key=` muda com a sessão, por isso não é o id)
+      const docs = [...m[2].matchAll(/<a([^>]*infraLinkDocumento[^>]*)>([\s\S]*?)<\/a>/gi)]
+        .map(d => {
+          const url = desHtml((d[1].match(/href="([^"]*)"/i) || [])[1] || '') || null;
+          const doc = url && (url.match(/[?&]doc=([^&]+)/) || [])[1];
+          return { id: doc || `${m[1]}:${texto(d[2])}`, nome: texto(d[2]), url };
+        }).filter(d => d.nome);
       if (!textos.length && !docs.length) continue;
       itens.push({ evento: +m[1], data: dataIso(dh), hora: dh && dh[4] ? dh[4] : null, textos, docs });
     }

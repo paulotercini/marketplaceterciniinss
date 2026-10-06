@@ -20,11 +20,11 @@ const DOMINIOS = {
   esaj: ['https://esaj.tjsp.jus.br/*'],
 };
 const ARQUIVOS = {
-  pat: ['tela.js', 'comum.js', 'ponte-pat.js'],
-  crps: ['tela.js', 'comum.js', 'crps.js'],
-  pje: ['tela.js', 'comum.js', 'pje-regras.js', 'pje.js'],
-  eproc: ['tela.js', 'comum.js', 'eproc-regras.js', 'eproc.js'],
-  esaj: ['tela.js', 'comum.js', 'esaj-regras.js', 'esaj.js'],
+  pat: ['tela.js', 'comum.js', 'docs-regras.js', 'ponte-pat.js'],
+  crps: ['tela.js', 'comum.js', 'docs-regras.js', 'crps.js'],
+  pje: ['tela.js', 'comum.js', 'docs-regras.js', 'pje-regras.js', 'pje.js'],
+  eproc: ['tela.js', 'comum.js', 'docs-regras.js', 'eproc-regras.js', 'eproc.js'],
+  esaj: ['tela.js', 'comum.js', 'docs-regras.js', 'esaj-regras.js', 'esaj.js'],
 };
 const casa = (url, dominios) => dominios.some(d =>
   new RegExp('^' + d.replace(/[.]/g, '\\.').replace(/\*/g, '.*')).test(url || ''));
@@ -164,6 +164,8 @@ chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
       if (msg.acao === 'processos-tjsp') return responder(await API.processosTjsp());
       if (msg.acao === 'favoritos-esaj') return responder(await favoritosEsaj());
       if (msg.acao === 'enviar') { await API.enviar(msg.fonte, msg.dados); return responder({ ok: true }); }
+      if (msg.acao === 'doc-existe') return responder({ existe: await API.docExiste(msg.caminho) });
+      if (msg.acao === 'guardar-doc') return responder(await API.guardarDoc(msg.caminho, msg.tipoDoc, msg.b64));
       if (msg.acao === 'entrar') return responder({ quem: await API.entrar(msg.email, msg.senha) });
       if (msg.acao === 'sair')   { await API.sair(); return responder({ ok: true }); }
       if (msg.acao === 'conferir') { await API.cracha(); return responder({ ok: true }); }

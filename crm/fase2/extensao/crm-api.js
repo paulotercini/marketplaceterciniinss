@@ -191,3 +191,30 @@ export async function diagnostico() {
   const { nups: lista, fichas } = await nups();
   return { quem: quem || null, fichas, recursos: lista.length };
 }
+
+// ── F184 · os DOCUMENTOS dos andamentos, no bucket privado "anexos" ────────
+// O caminho é determinístico (docs-regras.js): perguntar se o arquivo já está
+// lá é o que poupa baixar de novo a mesma sentença a cada coleta.
+export async function docExiste(caminho) {
+  const { url } = await config();
+  const r = await fetchTeimoso(`${url}/storage/v1/object/info/authenticated/anexos/${caminho}`,
+    { headers: await cabecalhos() });
+  return r.ok;
+}
+
+// sobe o arquivo (vem em base64 do content script: mensagem entre partes da
+// extensão só leva JSON). Já existir não é erro — é a mesma sentença de antes.
+export async function guardarDoc(caminho, tipo, b64) {
+  const { url } = await config();
+  const bin = Uint8Array.from(atob(b64 || ''), c => c.charCodeAt(0));
+  if (!bin.length) throw new Error('documento vazio');
+  const r = await fetchTeimoso(`${url}/storage/v1/object/anexos/${caminho}`, {
+    method: 'POST',
+    headers: { ...await cabecalhos(), 'Content-Type': tipo || 'application/octet-stream', 'x-upsert': 'false' },
+    body: bin,
+  });
+  if (r.ok) return { caminho, bytes: bin.length };
+  const t = await r.text();
+  if (r.status === 409 || /already exists|Duplicate/i.test(t)) return { caminho, bytes: bin.length };
+  throw new Error(`o CRM recusou o documento (${r.status}): ${t.slice(0, 120)}`);
+}

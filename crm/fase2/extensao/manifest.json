@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CRM Tercini — atualizar",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "Traz para o CRM o que mudou no INSS (PAT/GERID), nos recursos (e-Recursos), no PJe do TRF3 e no eproc e e-SAJ do TJSP (1º e 2º grau), pela sua própria sessão logada.",
   "permissions": [
     "storage",
@@ -35,6 +35,7 @@
       "js": [
         "tela.js",
         "comum.js",
+        "docs-regras.js",
         "ponte-pat.js"
       ],
       "run_at": "document_start",
@@ -47,6 +48,7 @@
       "js": [
         "tela.js",
         "comum.js",
+        "docs-regras.js",
         "crps.js"
       ],
       "run_at": "document_idle",
@@ -62,6 +64,7 @@
       "js": [
         "tela.js",
         "comum.js",
+        "docs-regras.js",
         "pje-regras.js",
         "pje.js"
       ],
@@ -75,6 +78,7 @@
       "js": [
         "tela.js",
         "comum.js",
+        "docs-regras.js",
         "eproc-regras.js",
         "eproc.js"
       ],
@@ -88,6 +92,7 @@
       "js": [
         "tela.js",
         "comum.js",
+        "docs-regras.js",
         "esaj-regras.js",
         "esaj.js"
       ],

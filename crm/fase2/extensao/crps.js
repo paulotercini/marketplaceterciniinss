@@ -149,7 +149,17 @@
         for (const sis of ordem) {
           try {
             const r = await consultar(sis, fila[i], modo);
-            if (r.ok) { OUT.itens[`${fila[i]}_${sis}`] = await r.json(); seguidas = 0; await pausa(2500); break; }
+            if (r.ok) {
+              const j = await r.json();
+              // F184 · acórdão e monocrática descem na hora, com o mesmo crachá
+              // da consulta, para o caminho que o robo-crps/ingerir.js usava
+              const docs = ((j && j.eventos) || []).flatMap(ev => ev.documentos || [])
+                .filter(d => d && d.path && /ac[oó]rd[aã]o|monocr[aá]tic/i.test(d.nome || ''));
+              await CRM.guardarDocs('crps', fila[i], docs, { todos: true,
+                baixar: d => fetch('/api/v1' + String(d.path).split('?')[0], { credentials: 'include',
+                  headers: Object.assign({ Accept: 'application/pdf' }, modo ? { Authorization: 'Bearer ' + modo } : {}) }) });
+              OUT.itens[`${fila[i]}_${sis}`] = j; seguidas = 0; await pausa(2500); break;
+            }
             else if (r.status !== 404) {
               OUT.falhas.push({ nup: fila[i], sis, status: r.status });
               if (++seguidas >= 6) { faixaErr(`o portal parou (${r.status}) — clique de novo mais tarde`); abortou = true; i = fila.length; break; }

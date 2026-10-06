@@ -199,7 +199,7 @@ function rodada(favoritos, situacao1g) {
   const ctx = { location: { host: 'esaj.tjsp.jus.br' }, fetch, ESAJ_REGRAS: R, Math, Date, Promise,
     setTimeout: f => { f(); return 0; }, faixa: nada, faixaOk: nada, faixaErr: nada, someFaixa: nada,
     chrome: { storage: { local: { get: async () => ({}), set: async () => {} } } },
-    CRM: { favoritosEsaj: async () => ({ favoritos }), processosTjsp: async () => ({ numeros: [NUM], fichas: 1 }),
+    CRM: { guardarDocs: async () => 0, favoritosEsaj: async () => ({ favoritos }), processosTjsp: async () => ({ numeros: [NUM], fichas: 1 }),
            enviar: async (fonte, dados) => { enviados.push(dados); return true; } } };
   ctx.window = ctx; ctx.top = ctx;           // o quadro de cima: num iframe o coletor não sobe
   vm.createContext(ctx);
@@ -246,4 +246,13 @@ test('rodada: o 1º grau que não está em recurso não faz consulta no 2º grau
   assert.equal(pedidos.filter(u => u.startsWith('/cposg/') && /NUMPROC/.test(u)).length, 0);
   assert.deepStrictEqual(enviados.map(e => e.grau), ['1º grau']);
   assert.equal(pedidos.filter(u => u.startsWith(`/cpopg/show.do?processo.codigo=${CS}`)).length, 1, 'o cumprimento da ficha é lido uma vez');
+});
+
+test('F184 · a movimentação com documento leva o link para baixar; o ícone sem href não vira documento', () => {
+  const html = `<table><tr class="fundoClaro containerMovimentacao"><td class="dataMovimentacao">02/10/2026</td><td><a class="linkMovVincProc" href="/cpopg/abrirDocumentoVinculadoMovimentacao.do?processo.codigo=A8Z05033C0000&amp;cdDocumento=987654&amp;nmRecursoAcessado=Senten%C3%A7a"><img></a></td><td class="descricaoMovimentacao"><a class="linkMovVincProc">Julgada Procedente a A&ccedil;&atilde;o</a></td></tr></table>`;
+  const [m] = R.lerMovimentacoesHtml(html);
+  assert.equal(m.texto, 'Julgada Procedente a Ação');
+  assert.deepStrictEqual(m.docs, [{ id: '987654', nome: 'Julgada Procedente a Ação',
+    url: '/cpopg/abrirDocumentoVinculadoMovimentacao.do?processo.codigo=A8Z05033C0000&cdDocumento=987654&nmRecursoAcessado=Senten%C3%A7a' }]);
+  assert.equal(R.lerMovimentacoesHtml(MOVS_SG)[0].docs, undefined);
 });

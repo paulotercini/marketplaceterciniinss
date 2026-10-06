@@ -122,7 +122,15 @@
       const detalhe = texto((desc.match(/<span[^>]*>([\s\S]*?)<\/span>/i) || [])[1] || '');
       const titulo = texto(desc.replace(/<span[\s\S]*?<\/span>/gi, '').replace(/<a[^>]*>\s*<img[^>]*>\s*<\/a>/gi, ''));
       if (!titulo && !detalhe) continue;
-      itens.push({ data: dataIso(data), hora: null, texto: titulo, detalhe: detalhe || null });
+      const it = { data: dataIso(data), hora: null, texto: titulo, detalhe: detalhe || null };
+      // F184 · o documento da movimentação (abrirDocumentoVinculadoMovimentacao.do):
+      // só existe quando a linha tem link de verdade — o ícone sem href é enfeite
+      const href = desHtml((tr.match(/<a[^>]*href="([^"#][^"]*abrirDocumento[^"]*)"/i) || [])[1] || '');
+      if (href) {
+        const id = (href.match(/cdDocumento=([^&]+)/) || [])[1] || href;
+        it.docs = [{ id, nome: titulo || detalhe, url: href }];
+      }
+      itens.push(it);
     }
     return itens;
   }

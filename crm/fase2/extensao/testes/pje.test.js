@@ -84,7 +84,8 @@ test('a cronologia sai com data do grupo, hora, textos e anexos de cada item', (
   assert.equal(itens[1].textos.length, 2);
   assert.match(itens[1].textos[1], /Negado monocraticamente/);
   assert.deepStrictEqual(itens[1].docs,
-    [{ id: '900000001', nome: 'Decisão Monocrática' }]);
+    [{ id: '900000001', nome: 'Decisão Monocrática',
+       url: '/pje/seam/resource/rest/pje-legacy/documento/download/900000001' }]);
 });
 
 test('o cabeçalho do processo dá número, classe e órgão julgador', () => {

@@ -193,6 +193,8 @@ function traduzirEvento(ev) {
     nome: limpar(d.nome || ''),
     path: d.path || '',
     decide: ehArquivoDeDecisao(d.nome),
+    // F184 · a extensão já baixou e guardou no bucket: vem o caminho pronto
+    ...(d.caminho ? { storage: d.caminho } : {}),
   })).filter(a => a.id || a.path);
   return {
     data: ev.data || '',
