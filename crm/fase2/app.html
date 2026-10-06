@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.89</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.90</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18346,6 +18346,7 @@ function painelDocumentos(k, origens){
       <div class="rotulo-caso" style="flex:1">📂 ${docs.length} documento(s)${total?` · ${tamArq(total)}`:""}</div>
       <button class="btn-mini" onclick="baixarDocsZip('${k.id}')" title="os arquivos originais do caso inteiro (judicial, INSS, recurso e escritório), em pastas por origem">⬇ Baixar tudo do caso (.zip)</button>
       <button class="btn-mini" onclick="pacoteClaude('${k.id}')" title="um arquivo .md com o texto de todos os documentos do caso — arraste para uma conversa do Claude">🤖 Pacote do caso para o Claude</button>
+      <button class="btn-mini" onclick="digitalizadosClaude('${k.id}')" title="os documentos sem texto (scan, foto) num PDF só, numerados como no pacote — o Claude os lê pela imagem">📎 Digitalizados para o Claude</button>
     </div>
     ${[...grupos].map(([o, ds])=>`<div style="margin-top:10px">
       <div class="meio-sub" style="font-weight:600;margin-bottom:4px">${esc(ORIGEM_DOC[o]||o)} (${ds.length})</div>
@@ -18398,33 +18399,118 @@ async function baixarDocsZip(casoId){
   }catch(e){ aviso("Não consegui montar o zip: "+e.message); }
 }
 // O PACOTE PARA O CLAUDE: um .md único (o formato que ele lê inteiro de uma
-// vez), com o caso no topo, o índice e o texto de cada documento em ordem
-// cronológica. O que não tem texto (digitalizado) entra só no índice, avisado.
-async function pacoteClaude(casoId){
-  const k = D.casoPorId.get(casoId); if(!k) return;
+// vez), com o caso no topo, os LIMITES do que está ali, o índice e o texto de
+// cada documento em ordem cronológica. É cópia literal da camada de texto do
+// documento — nada resumido nem reescrito —, mas o que não tem texto
+// (digitalizado) entra só no índice, e tabela pode sair com a ordem trocada.
+// A numeração do índice é a mesma do PDF dos digitalizados: "doc 7" é o
+// mesmo documento nos dois arquivos.
+async function partesDoPacote(k){
   const docs = documentosDoCaso(k).slice().reverse();          // do mais antigo ao mais novo
-  const {cliente, arquivo} = rotuloDoCaso(k);
-  aviso(`Montando o pacote com ${docs.length} documento(s)…`, false);
   const partes = [];
   for(const [i, d] of docs.entries()){
     let texto = d.texto;
-    if(!texto && d.origem==="crps"){ try{ texto = (await textoDoDocumento(d.caminho)).texto; }catch(e){} }
+    // o acórdão do CRPS e o anexo da equipe não passaram pela importação:
+    // o texto sai agora (imagem é digitalizada por definição)
+    if(!texto && (d.origem==="crps" || d.origem==="escritorio") && /pdf|^text\//.test(d.tipo||"")){
+      try{ texto = (await textoDoDocumento(d.caminho)).texto; }catch(e){}
+    }
     partes.push({ i:i+1, d, texto });
   }
+  return partes;
+}
+const rotDoc = p => `${String(p.d.data||"").slice(0,10)} · ${ORIGEM_DOC[p.d.origem]||p.d.origem} · ${p.d.nome}`;
+async function pacoteClaude(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const {cliente, arquivo} = rotuloDoCaso(k);
+  aviso(`Montando o pacote…`, false);
+  const partes = await partesDoPacote(k);
+  const semTexto = partes.filter(p=>!p.texto);
   const proc = processosDoCaso(k).map(p=>p.numero).join(", ");
   const md = [
     `# ${cliente} — ${k.titulo||k.especie||"caso"}`, "",
     `- Espécie: ${k.especie||"—"}  `, `- Benefício: ${k.beneficio||"—"}  `,
     `- Processo(s): ${proc||"—"}  `, `- Protocolo(s) INSS: ${(k.protocolos||[]).join(", ")||"—"}  `,
     `- Gerado pelo CRM em ${new Date().toLocaleString("pt-BR")}`, "",
-    "> Documentos do caso em ordem cronológica. Os marcados como DIGITALIZADO não têm texto aqui: peça o PDF original se precisar dele.", "",
+    "## Como ler este pacote", "",
+    "- O texto de cada documento é **cópia literal** da camada de texto do arquivo original (nada foi resumido ou reescrito). Ainda assim, confira no original qualquer ponto decisivo antes de usá-lo em peça.",
+    "- **Tabelas** (CNIS, PPP, planilhas de cálculo) podem aparecer com a ordem das colunas trocada: valores, datas e competências devem ser conferidos no PDF.",
+    "- PDF de scan que já veio com OCR do tribunal carrega os erros desse OCR.",
+    "- A data do índice é a do movimento no sistema (ou da importação), não necessariamente a da assinatura.",
+    "- Não estão aqui: certidões, intimações e demais atos de expediente; no e-SAJ, peças anteriores às 5 movimentações mais recentes; no CRPS, o que não é acórdão ou decisão monocrática.",
+    semTexto.length
+      ? `- **${semTexto.length} documento(s) DIGITALIZADO(S), sem texto neste arquivo** (lista abaixo). Eles vão no PDF "digitalizados" gerado pelo CRM, com a mesma numeração; se não foi enviado junto, peça-o antes de concluir qualquer ponto que dependa deles.`
+      : "- Todos os documentos têm texto neste arquivo.", "",
+    ...(semTexto.length ? ["## Documentos sem texto (digitalizados)", "", ...semTexto.map(p=>`- doc ${p.i} · ${rotDoc(p)}`), ""] : []),
     "## Índice", "",
-    ...partes.map(p=>`${p.i}. ${String(p.d.data||"").slice(0,10)} · ${ORIGEM_DOC[p.d.origem]||p.d.origem} · ${p.d.nome}${p.texto?"":" — DIGITALIZADO, sem texto"}`), "",
+    ...partes.map(p=>`${p.i}. ${rotDoc(p)}${p.texto?"":" — DIGITALIZADO, sem texto"}`), "",
     ...partes.filter(p=>p.texto).flatMap(p=>[
       `---`, "", `## ${p.i}. ${p.d.nome}`, "", `*${String(p.d.data||"").slice(0,10)} · ${ORIGEM_DOC[p.d.origem]||p.d.origem}*`, "", p.texto.trim(), ""]),
   ].join("\n");
   salvarBlob(`${arquivo}-para-o-claude.md`, new Blob([md], {type:"text/markdown;charset=utf-8"}));
-  aviso(`🤖 Pacote pronto — arraste o arquivo para uma conversa do Claude`);
+  aviso(semTexto.length
+    ? `🤖 Pacote pronto — ${semTexto.length} documento(s) digitalizado(s) estão no 📎 Digitalizados; arraste os dois para o Claude`
+    : `🤖 Pacote pronto — arraste o arquivo para uma conversa do Claude`);
+}
+// 📎 OS DIGITALIZADOS PARA O CLAUDE. O Claude lê PDF escaneado e imagem
+// olhando a página — mas não abre .zip. Então os documentos sem texto viram UM
+// PDF, com uma folha de rosto por documento ("doc 7 · data · origem · nome",
+// a mesma numeração do .md). Passando de ~90 páginas ou ~25 MB (o Claude lê
+// até 100 páginas / 32 MB por PDF), divide em partes.
+async function digitalizadosClaude(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  aviso("Separando os documentos digitalizados…", false);
+  const semTexto = (await partesDoPacote(k)).filter(p=>!p.texto);
+  if(!semTexto.length) return aviso("Este caso não tem documento digitalizado: o 🤖 Pacote já leva tudo.");
+  try{
+    if(!window.PDFLib) await new Promise((ok, erro)=>{
+      const s = document.createElement("script");
+      s.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js";
+      s.onload = ok; s.onerror = ()=>erro(new Error("não consegui carregar o montador de PDF"));
+      document.head.appendChild(s);
+    });
+    const {PDFDocument, StandardFonts, rgb} = window.PDFLib;
+    const {arquivo} = rotuloDoCaso(k);
+    // Helvetica só escreve Latin-1: o resto vira "?"
+    const latin1 = t => String(t||"").replace(/[–—]/g,"-").replace(/[“”]/g,'"').replace(/[‘’]/g,"'").replace(/[^\x20-\xFF]/g,"?");
+    const LIM_PAG = 90, LIM_BYTES = 25*1048576;
+    let doc = null, fonte = null, bytes = 0, falhas = 0;
+    const arquivos = [];
+    const fechar = async () => { if(doc && doc.getPageCount()) arquivos.push(await doc.save()); doc = null; };
+    const abrir = async () => { doc = await PDFDocument.create(); fonte = await doc.embedFont(StandardFonts.Helvetica); bytes = 0; };
+    for(const p of semTexto){
+      const tipo = p.d.tipo||"";
+      let bin;
+      try{
+        const r = await fetch(await linkArquivo(p.d.caminho, 300));
+        if(!r.ok) throw new Error(r.status);
+        bin = new Uint8Array(await r.arrayBuffer());
+      }catch(e){ falhas++; continue; }
+      let origem = null, nPag = 1;
+      if(/pdf/.test(tipo)){ try{ origem = await PDFDocument.load(bin, {ignoreEncryption:true}); nPag = origem.getPageCount(); }catch(e){ falhas++; continue; } }
+      else if(!/jpe?g|png/.test(tipo)){ falhas++; continue; }
+      if(!doc || (doc.getPageCount() && (doc.getPageCount()+nPag+1 > LIM_PAG || bytes+bin.length > LIM_BYTES))){ await fechar(); await abrir(); }
+      // a folha de rosto: é ela que deixa o Claude dizer "o doc 7 diz…"
+      const capa = doc.addPage([595, 842]);
+      capa.drawText(latin1(`doc ${p.i}`), {x:60, y:740, size:28, font:fonte, color:rgb(0.1,0.1,0.1)});
+      (latin1(rotDoc(p)).match(/.{1,70}(\s|$)/g)||[]).forEach((l,n)=>capa.drawText(l.trim(), {x:60, y:700-n*18, size:13, font:fonte}));
+      capa.drawText(latin1("Documento digitalizado (sem texto no pacote .md) - leia pela imagem."), {x:60, y:640, size:10, font:fonte, color:rgb(0.4,0.4,0.4)});
+      if(origem){
+        for(const pg of await doc.copyPages(origem, origem.getPageIndices())) doc.addPage(pg);
+      }else{
+        const img = /png/.test(tipo) ? await doc.embedPng(bin) : await doc.embedJpg(bin);
+        const f = Math.min(555/img.width, 802/img.height, 1);
+        const pg = doc.addPage([595, 842]);
+        pg.drawImage(img, {x:20, y:842-20-img.height*f, width:img.width*f, height:img.height*f});
+      }
+      bytes += bin.length;
+    }
+    await fechar();
+    if(!arquivos.length) return aviso("Não consegui montar o PDF dos digitalizados.");
+    arquivos.forEach((b, n)=>salvarBlob(`${arquivo}-digitalizados${arquivos.length>1?`-parte${n+1}`:""}.pdf`, new Blob([b], {type:"application/pdf"})));
+    aviso(`📎 ${semTexto.length-falhas} digitalizado(s) em ${arquivos.length} PDF${arquivos.length>1?"s":""}`
+      + `${falhas?` — ${falhas} não entraram (formato que não abre)`:""} — arraste junto com o 🤖 Pacote`);
+  }catch(e){ aviso("Não consegui montar o PDF: "+e.message); }
 }
 function caixaArquivos(k){
   // F185 · aqui fica só o que a equipe anexou; o que veio dos portais tem a aba Documentos
