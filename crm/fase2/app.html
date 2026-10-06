@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.94</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.95</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18321,13 +18321,21 @@ function eventoDoAndamento(and){
   const e = m ? m[1].replace(/^📎.*/, "").trim() : "";
   return e && e.length <= 120 ? e : "";
 }
+// a data do MOVIMENTO, e não a da gravação: o andamento do acervo nasce com
+// criado_em = hora da importação (de propósito, para entrar nas Novidades), e
+// a data verdadeira mora na chave — mov:processo:2026-08-12T13:44
+function dataDoMovimento(and){
+  if(!and) return "";
+  const m = String(and.origem_id||"").match(/:(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/);
+  return m ? `${m[1]}T${m[2]}:00` : (and.criado_em || "");
+}
 function documentosDoCaso(k){
   const andPorId = new Map((D._andsFicha||[]).map(a=>[a.id, a]));
   const docs = (D.anexos||[]).filter(a=>a.caso_id===k.id).map(a=>({
     id:a.id, nome:a.nome, caminho:a.caminho, tipo:a.tipo, tamanho:a.tamanho, texto:a.texto,
     origem:a.origem||"escritorio",
     // a data do MOVIMENTO, quando o documento é de um; senão a do upload
-    data:((a.andamento_id && andPorId.get(a.andamento_id)) || a).criado_em,
+    data:dataDoMovimento(a.andamento_id && andPorId.get(a.andamento_id)) || a.criado_em,
     // o que o movimento diz ("Despacho/Decisão", "Distribuído por sorteio"):
     // no eproc o nome do arquivo é só código (DESPADEC1, COMP6)
     evento:eventoDoAndamento(a.andamento_id && andPorId.get(a.andamento_id)) }));
