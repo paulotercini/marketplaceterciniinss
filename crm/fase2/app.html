@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.88</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.89</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3998,7 +3998,7 @@ let subCad = ler("crm_subcad") || "";   // divisão aberta do Cadastro
 // qual PROCESSO do caso está sendo olhado (número, "" = o principal) e de que
 // FONTE: a consulta oficial do CNJ ou a coleta do PJe. Duas listas de
 // movimentos uma embaixo da outra não se lia — agora é escolha, não pilha.
-let procSel = "", fonteCnj = "", nupSel = "";   // F71: "" = sem escolha (PJe é o padrão)
+let procSel = "", fonteCnj = "", nupSel = "", fontePat = "";   // F185: fontePat "docs" = Documentos do INSS   // F71: "" = sem escolha (PJe é o padrão)
 
 // som de retorno, como no To Do (gerado na hora — sem arquivo de áudio).
 // "plim" duplo ao concluir; tique curto nos avisos. 🔔 na lateral silencia.
@@ -13060,7 +13060,7 @@ async function abrirFicha(cliId){
         : (pcsA.some(p=>!p.so_lembrete)||!pcsA.length) ? "anotacoes" : "identificacao";
     }
     instSel = 0; tudoSoMarcos = false;    // escolhas do cliente ANTERIOR não vazam
-    procSel = ""; nupSel = ""; fonteCnj = "";   // idem: processo e fonte (F71: PJe padrão)
+    procSel = ""; nupSel = ""; fonteCnj = ""; fontePat = "";   // idem: processo e fonte (F71: PJe padrão)
     subAba = "escritorio";   // F166 · abrir um caso é abrir os andamentos do Escritório (era o Caso completo, F45)
   }
   clienteAberto = cliId;
@@ -13279,10 +13279,7 @@ function pintarFicha(){
           // histórico não some quando a etapa acaba.
           const visiveis = abasVisiveis(k, andsVis);
           const {inss:temINSS, crps:temCRPS, cnj:temCNJ} = visiveis;
-          // F185 · Documentos aparece quando o caso tem algum (fora do
-          // abasVisiveis, que é regra pura testada sem o resto do app)
-          const nDocs = documentosDoCaso(k).length;
-          const aba = visiveis[subAba] || (subAba==="docs" && nDocs) ? subAba : "escritorio";
+          const aba = visiveis[subAba] ? subAba : "escritorio";
           // a etiqueta da aba diz o estado sem abrir: ✔ quando a fase foi
           // encerrada à mão, 🗄 quando TODOS os processos daquela fonte estão
           // arquivados (um só arquivado não marca a aba — o outro segue vivo),
@@ -13301,7 +13298,6 @@ function pintarFicha(){
           ${temINSS?`<button class="${cls("inss",faseEncerrada(k,"pat"))}" onclick="irSubAba('inss')">${v10?"INSS":"Andamentos INSS"}${rot(comentariosPat(andsVis).length, abaPatArquivada(k), faseEncerrada(k,"pat"))}</button>`:""}
           ${temCRPS?`<button class="${cls("crps",faseEncerrada(k,"crps"))}" onclick="irSubAba('crps')">Recurso (CRPS)${rot(crpsTotalEventos(k), abaCrpsArquivada(k), faseEncerrada(k,"crps"))}</button>`:""}
           ${temCNJ?`<button class="${cls("cnj",faseEncerrada(k,"cnj"))}" onclick="irSubAba('cnj')">${v10?"Judicial":"Andamentos do CNJ"}${rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k), faseEncerrada(k,"cnj"))}</button>`:""}
-          ${nDocs?`<button class="${aba==="docs"?"on":""}" onclick="irSubAba('docs')" title="as peças e os anexos do caso, por origem">Documentos (${nDocs})</button>`:""}
           <button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
             title="todas as fontes juntas, em ordem cronológica">${v10?"Caso Completo":"Caso completo"}</button>
         </div>`;
@@ -13315,7 +13311,7 @@ function pintarFicha(){
            <div class="caso-dir">${composerCaso(k)}${menu}${painelDaAba()}</div></div>`
         : `${menu}${blocoFatos(k)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
-            : aba==="inss" ? painelINSS(k, andsVis) : aba==="docs" ? painelDocumentos(k)
+            : aba==="inss" ? painelINSS(k, andsVis)
             : aba==="tudo" ? painelTudo(k, andsVis) : painelEscritorio(k, andsVis); }
         })()}
       <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
@@ -18330,18 +18326,26 @@ function documentosDoCaso(k){
                   texto:null, origem:"crps", data:dataParaISO(e.data)||e.data||null });
   return docs.sort((a,b)=>String(b.data||"").localeCompare(String(a.data||"")));
 }
-function painelDocumentos(k){
-  const docs = documentosDoCaso(k);
-  if(!docs.length) return `<div class="caso"><p class="meio-sub">Nenhum documento neste caso ainda.
-    As peças chegam pela extensão (abra o processo no portal e clique nela) e os anexos da equipe, pelo 📎 da aba Escritório.</p></div>`;
+// F185 · cada aba mostra os SEUS documentos (Judicial: PJe/eproc/e-SAJ; INSS:
+// PAT); os botões de levar para fora pegam o caso inteiro
+const DOCS_JUDICIAIS = ["pje","eproc","esaj"];
+const docsDaOrigem = (k, origens) => documentosDoCaso(k).filter(d=>!origens || origens.includes(d.origem));
+function botaoDocs(k, origens, ativo, onclick){
+  const n = docsDaOrigem(k, origens).length;
+  return n ? `<button class="${ativo?"on":""}" onclick="${onclick}" title="as peças guardadas no CRM — abrir, baixar ou levar para o Claude">📂 Documentos (${n})</button>` : "";
+}
+function painelDocumentos(k, origens){
+  const docs = docsDaOrigem(k, origens);
+  if(!docs.length) return `<div class="caso"><p class="meio-sub">Nenhum documento aqui ainda.
+    As peças chegam pela extensão: abra o processo no portal e clique nela.</p></div>`;
   const grupos = new Map();
   for(const d of docs){ if(!grupos.has(d.origem)) grupos.set(d.origem, []); grupos.get(d.origem).push(d); }
   const total = docs.reduce((s,d)=>s+(+d.tamanho||0),0);
   return `<div class="caso">
     <div class="form-linha" style="align-items:center;gap:8px;flex-wrap:wrap">
       <div class="rotulo-caso" style="flex:1">📂 ${docs.length} documento(s)${total?` · ${tamArq(total)}`:""}</div>
-      <button class="btn-mini" onclick="baixarDocsZip('${k.id}')" title="os arquivos originais, em pastas por origem">⬇ Baixar tudo (.zip)</button>
-      <button class="btn-mini" onclick="pacoteClaude('${k.id}')" title="um arquivo .md com o texto de todos os documentos — arraste para uma conversa do Claude">🤖 Pacote para o Claude</button>
+      <button class="btn-mini" onclick="baixarDocsZip('${k.id}')" title="os arquivos originais do caso inteiro (judicial, INSS, recurso e escritório), em pastas por origem">⬇ Baixar tudo do caso (.zip)</button>
+      <button class="btn-mini" onclick="pacoteClaude('${k.id}')" title="um arquivo .md com o texto de todos os documentos do caso — arraste para uma conversa do Claude">🤖 Pacote do caso para o Claude</button>
     </div>
     ${[...grupos].map(([o, ds])=>`<div style="margin-top:10px">
       <div class="meio-sub" style="font-weight:600;margin-bottom:4px">${esc(ORIGEM_DOC[o]||o)} (${ds.length})</div>
@@ -21161,7 +21165,16 @@ function painelINSS(k, ands){
   const coms = comentariosPat(ands);
   // F103 · no tema, o compositor acompanha toda aba de andamentos: a
   // anotação nasce do mesmo lugar, esteja-se lendo o INSS, o Recurso ou o Judicial
-  const comp = composerNoPainel(k);
+  const comp0 = composerNoPainel(k);
+  // F185 · o submenu do INSS: os comentários e os anexos do requerimento
+  const temDocs = docsDaOrigem(k, ["pat"]).length > 0;
+  const verDocs = fontePat==="docs" && temDocs;
+  const menu = temDocs ? `<div class="sub-menu fontes" style="width:100%">
+    <button class="${verDocs?"":"on"}" onclick="fontePat='';repintarFicha()">🌻 Comentários (${coms.length})</button>
+    ${botaoDocs(k, ["pat"], verDocs, "fontePat='docs';repintarFicha()")}
+  </div>` : "";
+  if(verDocs) return comp0 + menu + painelDocumentos(k, ["pat"]);
+  const comp = comp0 + menu;
   if(!coms.length)
     return comp + `<div class="caso">
       <div style="display:flex;align-items:center;gap:8px">
@@ -22363,11 +22376,14 @@ function painelCNJTodos(k, ands, cabec){
   const pjeMovs = andamentosPje(ands);
   const ofic = ps.map(p=>({p, t:datajudDe(k, p.numero)})).filter(x=>x.t && (x.t.ultimo || (x.t.instancias||[]).length));
   const temPje = pjeMovs.length>0, temOficial = ofic.length>0;
-  const fonte = temPje ? (fonteCnj==="oficial" && temOficial ? "oficial" : "pje") : "oficial";
-  const menuFonte = (temPje || temOficial) ? `<div class="sub-menu fontes" style="width:100%">
+  const temDocs = docsDaOrigem(k, DOCS_JUDICIAIS).length > 0;
+  const fonte = fonteCnj==="docs" && temDocs ? "docs" : temPje ? (fonteCnj==="oficial" && temOficial ? "oficial" : "pje") : "oficial";
+  const menuFonte = (temPje || temOficial || temDocs) ? `<div class="sub-menu fontes" style="width:100%">
     ${temPje?`<button class="${fonte==="pje"?"on":""}" onclick="fonteCnj='pje';repintarFicha()">⚡ Coleta do ${nomeDaColeta(pjeMovs)} (${pjeMovs.length})</button>`:""}
     ${temOficial?`<button class="${fonte==="oficial"?"on":""}" onclick="fonteCnj='oficial';repintarFicha()">⚖️ Coleta oficial (CNJ)</button>`:""}
+    ${botaoDocs(k, DOCS_JUDICIAIS, fonte==="docs", "fonteCnj='docs';repintarFicha()")}
   </div>` : "";
+  if(fonte==="docs") return `${cabec}${menuFonte}${painelDocumentos(k, DOCS_JUDICIAIS)}${gerenciaProcessos(k)}`;
   if(fonte==="pje") return `${cabec}${menuFonte}${caixaPje(k, pjeMovs)}${gerenciaProcessos(k)}`;
   if(!temOficial) return `${cabec}${menuFonte}<div class="caso"><p class="meio-sub">Sem andamento oficial para estes processos na base do CNJ.</p></div>${gerenciaProcessos(k)}`;
   const itens = ofic.flatMap(({p, t}) => cnjInstancias(k, t).flatMap(inst => (inst.historico||[]).map(m => {
@@ -22413,17 +22429,21 @@ function painelCNJ(k, ands){
   // duas fontes, dois botões — nunca mais uma lista embaixo da outra.
   // F71 · a Coleta do PJe vem PRIMEIRO e é a fonte padrão (pedido do Paulo);
   // o menu aparece sempre que houver qualquer fonte, no topo dos andamentos
-  const fonte = temPje ? (fonteCnj==="oficial" && temOficial ? "oficial" : "pje") : "oficial";
-  const menuFonte = (temPje || temOficial) ? `<div class="sub-menu fontes" style="width:100%">
+  const temDocs = docsDaOrigem(k, DOCS_JUDICIAIS).length > 0;
+  const fonte = fonteCnj==="docs" && temDocs ? "docs" : temPje ? (fonteCnj==="oficial" && temOficial ? "oficial" : "pje") : "oficial";
+  const menuFonte = (temPje || temOficial || temDocs) ? `<div class="sub-menu fontes" style="width:100%">
     ${temPje?`<button class="${fonte==="pje"?"on":""}" onclick="fonteCnj='pje';repintarFicha()"
       title="o que a extensão trouxe do tribunal na sua sessão">⚡ Coleta do ${nomeDaColeta(pjeMovs)} (${pjeMovs.length})</button>`:""}
     ${temOficial?`<button class="${fonte==="oficial"?"on":""}" onclick="fonteCnj='oficial';repintarFicha()"
       title="consulta pública do CNJ (DataJud), atualizada todo dia útil">⚖️ Coleta oficial (CNJ)</button>`:""}
+    ${botaoDocs(k, DOCS_JUDICIAIS, fonte==="docs", "fonteCnj='docs';repintarFicha()")}
   </div>` : "";
   const barraFase = `<div class="form-linha" style="justify-content:flex-end;margin-bottom:6px">
     ${botaoFaseAba(k, "cnj")}</div>`;
   const cabec = barraFase + menuProc + menuFonte;
   const pjeBox = fonte==="pje" ? caixaPje(k, pjeMovs) : "";
+  if(fonte==="docs")
+    return comp + `${cabec}${painelDocumentos(k, DOCS_JUDICIAIS)}${gerenciaProcessos(k)}`;
   if(fonte==="pje")
     return comp + `${cabec}${pjeBox}${gerenciaProcessos(k)}`;
   // judicial sem número: a aba existe justamente para dizer o que falta
