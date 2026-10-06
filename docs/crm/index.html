@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.84</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.85</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4122,7 +4122,20 @@ async function abrirAnexo(id){
   const a=(D.anexos||[]).find(x=>x.id===id); if(!a) return;
   const guia=window.open("", "_blank");            // abrir agora: o navegador
   try{                                             // bloqueia janela tardia
-    const url=await linkArquivo(a.caminho);
+    let url=await linkArquivo(a.caminho);
+    // F184 · o despacho/sentença do PJe é HTML, e o Storage do Supabase o
+    // entrega como text/plain (de propósito: HTML servido de lá rodaria
+    // script). Abre num visualizador próprio, com o documento num iframe
+    // SANDBOX — o script que o PJe embute não roda, e nada dele alcança o CRM
+    if(/^text\//.test(a.tipo||"")){
+      const html = await (await fetch(url)).text();
+      if(/^\s*</.test(html)){
+        const pag = `<!doctype html><meta charset="utf-8"><title>${esc(a.nome||"documento")}</title>`
+          + `<style>html,body{margin:0;height:100%}iframe{border:0;width:100%;height:100%}</style>`
+          + `<iframe sandbox srcdoc="${html.replace(/&/g,"&amp;").replace(/"/g,"&quot;")}"></iframe>`;
+        url = URL.createObjectURL(new Blob([pag], {type:"text/html"}));
+      }
+    }
     if(guia) guia.location=url; else window.location=url;
   }catch(e){ if(guia) guia.close(); aviso("Não consegui abrir o arquivo"); }
 }
@@ -7622,7 +7635,7 @@ async function conferirPje(coletaId){
         // gravado com a chave antiga continua reconhecido pelo texto (momentos)
         const oid = `mov:${soDig(p.numero)}${sufixo}:${m.data}T${m.hora}:${hashDjb(dsa(m.texto||""))}`;
         const momento = `${soDig(p.numero)}${sufixo}:${m.data}T${m.hora}`;
-        docsDoMovimento(plano.docs, k, dados.sistema||"pje", m.docs, oid);
+        docsDoMovimento(plano.docs, k, dados.sistema||"pje", m.docs, oid, momento);
         if(vistos.has(oid) || momentoConhecido(momentos, momento, m.texto)) continue;
         vistos.add(oid); marcarMomento(momentos, momento, m.texto);
         // criado_em fica em branco de propósito: o banco carimba AGORA e o
@@ -8016,10 +8029,12 @@ let planoPjeProcAtual = null;
 // decidido?" sem abrir o portal. Documento de movimento já conhecido também
 // entra: as coletas antigas não traziam documento nenhum.
 // ══════════════════════════════════════════════════════════════════════════
-function docsDoMovimento(lista, k, origem, docs, oid){
+// `momento` (processo:dataThora): o andamento gravado por coleta antiga tem
+// outra chave (o texto mudou), e é pelo momento que ele é achado
+function docsDoMovimento(lista, k, origem, docs, oid, momento){
   for(const d of (docs||[])) if(d && d.caminho)
     lista.push({caso_id:k.id, cliente_id:k.cliente_id||null, origem, caminho:d.caminho,
-                nome:d.nome||"documento", andamento_oid:oid});
+                nome:d.nome||"documento", andamento_oid:oid, momento:momento||null});
 }
 // o texto do documento guardado: PDF pelo pdf.js (linhas na ordem da folha),
 // HTML pelo próprio navegador. PDF digitalizado devolve null — sem OCR.
@@ -8028,9 +8043,13 @@ async function textoDoDocumento(caminho){
   if(!r.ok) throw new Error("HTTP "+r.status);
   const tipo = (r.headers.get("content-type")||"").split(";")[0];
   const blob = await r.blob();
-  if(/html/.test(tipo)){
+  // o Storage devolve HTML como text/plain: reconhece pelo conteúdo, e tira
+  // script e estilo antes de ler (o despacho do PJe embute os dois)
+  if(/^text\//.test(tipo)){
     const doc = new DOMParser().parseFromString(await blob.text(), "text/html");
-    return { tipo, tamanho:blob.size, texto:((doc.body&&doc.body.textContent)||"").replace(/\s+\n/g,"\n").trim()||null };
+    doc.querySelectorAll("script,style,noscript").forEach(x=>x.remove());
+    const texto = ((doc.body&&doc.body.textContent)||"").replace(/[ \t]+/g," ").replace(/\s*\n\s*/g,"\n").trim();
+    return { tipo, tamanho:blob.size, texto: texto.length>=50 ? texto : null };
   }
   if(!/pdf/.test(tipo)) return { tipo, tamanho:blob.size, texto:null };
   const linhas = new Map();
@@ -8050,7 +8069,9 @@ async function gravarDocsDaColeta(docs){
     try{
       const ja = await api(`/rest/v1/anexos?select=id&caminho=eq.${encodeURIComponent(d.caminho)}`);
       if(ja && ja.length) continue;
-      const [an] = d.andamento_oid ? (await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem_id=eq.${encodeURIComponent(d.andamento_oid)}&limit=1`) || []) : [];
+      let [an] = d.andamento_oid ? (await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem_id=eq.${encodeURIComponent(d.andamento_oid)}&limit=1`) || []) : [];
+      if(!an && d.momento)
+        [an] = await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem=eq.pje&origem_id=like.${encodeURIComponent(`*:${d.momento}:*`)}&order=criado_em.asc&limit=1`) || [];
       let lido = { tipo:null, tamanho:null, texto:null };
       try{ lido = await textoDoDocumento(d.caminho); }catch(e){ console.warn("texto do documento:", d.caminho, e); }
       await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=minimal"},
@@ -8104,7 +8125,7 @@ async function conferirPjeProc(coletaId){
       plano.resumo.docs += (it.docs||[]).length;
       const oid=`hist:${dig}:${it.data||"s-d"}T${it.hora||"00:00"}:${hashDjb(texto)}`;
       const momento=it.data&&it.hora?`${dig}:${it.data}T${it.hora}`:null;
-      docsDoMovimento(plano.docs, k, dados.sistema||"pje", it.docs, oid);
+      docsDoMovimento(plano.docs, k, dados.sistema||"pje", it.docs, oid, momento);
       if(vistos.has(oid) || momentoConhecido(momentos, momento, texto)){ plano.resumo.conhecidos++; continue; }
       vistos.add(oid); marcarMomento(momentos, momento, texto);   // dentro da própria coleta também
       plano.andamentos.push({ caso_id:k.id, origem_id:oid,
