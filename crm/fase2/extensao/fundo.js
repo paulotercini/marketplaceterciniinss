@@ -24,7 +24,7 @@ const ARQUIVOS = {
   crps: ['tela.js', 'comum.js', 'docs-regras.js', 'crps.js'],
   pje: ['tela.js', 'comum.js', 'docs-regras.js', 'pje-regras.js', 'pje.js'],
   eproc: ['tela.js', 'comum.js', 'docs-regras.js', 'eproc-regras.js', 'eproc.js'],
-  esaj: ['tela.js', 'comum.js', 'docs-regras.js', 'esaj-regras.js', 'esaj.js'],
+  esaj: ['tela.js', 'comum.js', 'docs-regras.js', 'esaj-regras.js', 'vendor/pdf-lib.min.js', 'esaj.js'],
 };
 const casa = (url, dominios) => dominios.some(d =>
   new RegExp('^' + d.replace(/[.]/g, '\\.').replace(/\*/g, '.*')).test(url || ''));

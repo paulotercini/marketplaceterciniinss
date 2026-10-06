@@ -256,3 +256,18 @@ test('F184 · a movimentação com documento leva o link para baixar; o ícone s
     url: '/cpopg/abrirDocumentoVinculadoMovimentacao.do?processo.codigo=A8Z05033C0000&cdDocumento=987654&nmRecursoAcessado=Senten%C3%A7a' }]);
   assert.equal(R.lerMovimentacoesHtml(MOVS_SG)[0].docs, undefined);
 });
+
+test('F186 · a pasta digital: o endereço da pasta e os documentos com as páginas, a data e o código', () => {
+  const curta = `<html><body>https://esaj.tjsp.jus.br/pastadigital/abrirPastaProcessoDigital.do?nuProcesso=1000087-72.2018.8.26.0368&amp;cdProcesso=A8&amp;cdForo=368</body></html>`;
+  assert.equal(R.urlDaPasta(curta), 'https://esaj.tjsp.jus.br/pastadigital/abrirPastaProcessoDigital.do?nuProcesso=1000087-72.2018.8.26.0368&cdProcesso=A8&cdForo=368');
+  const pasta = `<script>var requestScope = [{"data":{"title":"Petição (Outras)","cdDocumento":"21186678","dtInclusao":"15/01/2018 21:10:14","flPeticaoInicial":"true"},"children":[
+    {"data":{"title":"Página 1","parametros":"nuSeqRecurso=00000&cdDocumento=21186678&numInicial=1&numFinal=1"}},
+    {"data":{"title":"Página 2","parametros":"nuSeqRecurso=00000&cdDocumento=21186678&numInicial=2&numFinal=2"}}]},
+    {"data":{"title":"Volume 1"},"children":[{"data":{"title":"Sentença","cdDocumento":"999","dtInclusao":"02/03/2020 10:00:00"},"children":[
+      {"data":{"title":"Página 80","parametros":"cdDocumento=999&numInicial=80&numFinal=80"}}]}]}]; var requestScopeArvoreSigilosos = [];</script>`;
+  assert.deepStrictEqual(R.docsDaPasta(pasta), [
+    { id: '21186678', nome: 'Petição (Outras)', data: '2018-01-15', hora: '21:10',
+      paginas: ['nuSeqRecurso=00000&cdDocumento=21186678&numInicial=1&numFinal=1', 'nuSeqRecurso=00000&cdDocumento=21186678&numInicial=2&numFinal=2'] },
+    { id: '999', nome: 'Sentença', data: '2020-03-02', hora: '10:00', paginas: ['cdDocumento=999&numInicial=80&numFinal=80'] }]);
+  assert.deepStrictEqual(R.docsDaPasta('<html>sem pasta</html>'), []);
+});
