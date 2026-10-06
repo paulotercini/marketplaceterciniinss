@@ -119,8 +119,11 @@
     // anda mais de um passo (os embargos de um caso tiveram "Julgado
     // virtualmente", "Acórdão registrado" e "Expedido Certidão" em dois dias),
     // e o CRM grava só as que ainda não conhece
+    // F184 · a sentença/decisão destas cinco desce junto e vai com o caminho
+    await CRM.guardarDocs('esaj', out.numero, mv.slice(0, 5).flatMap(m => m.docs || []));
     out.movimentos = mv.slice(0, 5).map(m => ({ data: m.data, hora: '00:00',
-      texto: m.detalhe ? `${m.texto} — ${m.detalhe}` : m.texto }));
+      texto: m.detalhe ? `${m.texto} — ${m.detalhe}` : m.texto,
+      ...((m.docs || []).some(d => d.caminho) ? { docs: m.docs.filter(d => d.caminho) } : {}) }));
     out.movimento = out.movimentos[0] || null;
     return out;
   }

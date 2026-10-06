@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.83</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.84</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5719,6 +5719,8 @@ function traduzirEvento(ev) {
     nome: limpar(d.nome || ''),
     path: d.path || '',
     decide: ehArquivoDeDecisao(d.nome),
+    // F184 · a extensão já baixou e guardou no bucket: vem o caminho pronto
+    ...(d.caminho ? { storage: d.caminho } : {}),
   })).filter(a => a.id || a.path);
   return {
     data: ev.data || '',
@@ -6028,8 +6030,9 @@ function resumoDoDetalhe(d) {
     unidade: det.nomeUnidade || null,
     canal: det.tipoCanalAtendimento || null,
     quem_protocolou: CANAIS[limpo(det.tipoCanalAtendimento)] || null,
-    // O ANEXO CONTINUA SENDO SÓ CONTAGEM: é laudo médico, e o CRM guarda o
-    // link do portal, não a cópia. O COMENTÁRIO, NÃO — ele é a mensagem do
+    // O ANEXO AQUI É SÓ CONTAGEM. F184 · a cópia agora vem por outro caminho:
+    // a extensão guarda o arquivo no bucket privado (det.arquivos) e a
+    // importação o põe no caso, interno. O COMENTÁRIO, NÃO — ele é a mensagem do
     // INSS sobre o processo ("apresentar PPP", "exigência cumprida"), e é
     // exatamente o que responde "o que mudou?". Sem ele, a importação avisa
     // que algo aconteceu e não diz o quê.
@@ -6785,6 +6788,20 @@ async function aplicarPatDeVerdade(){
         origem_id:`atualizacao:${at.protocolo}:${String(at.ts).replace(/\D/g,"")}`, publico:false,
         texto:`INSS · Movimentação no protocolo ${at.protocolo}${at.situacao?` — situação: ${at.situacao}`:""} (portal atualizado em ${at.ts}).`})}));
 
+  // F184 · os anexos que a extensão guardou no bucket (todos, inclusive os
+  // médicos — continuam internos) entram no caso do protocolo, com o texto
+  let docsPat = 0;
+  if(planoPat.coleta_id) try{
+    const [c] = await api(`/rest/v1/coletas?select=dados&id=eq.${planoPat.coleta_id}`) || [];
+    const docs = [];
+    for(const det of ((c&&c.dados&&c.dados.detalhes)||[])){
+      const p = String(det.protocolo||"").replace(/\D/g,"");
+      const k = p && D.casos.find(x=>(x.protocolos||[]).some(y=>String(y).replace(/\D/g,"")===p));
+      if(k) docsDoMovimento(docs, k, "pat", det.arquivos, null);
+    }
+    docsPat = await gravarDocsDaColeta(docs);
+  }catch(e){ falhas.push(`anexos do INSS: ${String(e.message||e).slice(0,120)}`); }
+
   // a coleta usada sai da fila: a mesma não pode ser oferecida duas vezes
   if(planoPat.coleta_id)
     await api(`/rest/v1/coletas?id=eq.${planoPat.coleta_id}`,{method:"PATCH",
@@ -6793,7 +6810,7 @@ async function aplicarPatDeVerdade(){
   planoPat = null;
   await buscarColetas();
   await carregar(); montarSidebar(); render();
-  if(!falhas.length) return aviso(`✔ ${feitos} gravação(ões)`);
+  if(!falhas.length) return aviso(`✔ ${feitos} gravação(ões)${docsPat?` · ${docsPat} anexo(s) do INSS com o texto`:""}`);
   aviso(recadoDeFalhas(feitos, falhas));
   console.warn("falhas da importação:", falhas);
 }
@@ -7519,7 +7536,7 @@ async function conferirPje(coletaId){
     }
     const plano = { coleta_id: coletaId, grau: dados.grau||"", host: dados.host||"",
                     sistema: dados.sistema||"", andamentos: [], semCaso: [],
-                    fichas: [],
+                    fichas: [], docs: [],
                     resumo: { lidos:(dados.processos||[]).length, movimentos:0,
                               sem_caso:0, sem_mudanca:0, vinculaveis:0, fichas:0, ignorados:0 } };
     // processos marcados como "não é caso nosso" (instrumental, de terceiro
@@ -7605,6 +7622,7 @@ async function conferirPje(coletaId){
         // gravado com a chave antiga continua reconhecido pelo texto (momentos)
         const oid = `mov:${soDig(p.numero)}${sufixo}:${m.data}T${m.hora}:${hashDjb(dsa(m.texto||""))}`;
         const momento = `${soDig(p.numero)}${sufixo}:${m.data}T${m.hora}`;
+        docsDoMovimento(plano.docs, k, dados.sistema||"pje", m.docs, oid);
         if(vistos.has(oid) || momentoConhecido(momentos, momento, m.texto)) continue;
         vistos.add(oid); marcarMomento(momentos, momento, m.texto);
         // criado_em fica em branco de propósito: o banco carimba AGORA e o
@@ -7990,6 +8008,76 @@ function ultimasDatasPje(momentos){
 // 📣 Novidades em vez de inundá-la — só o que de fato aconteceu neste mês
 // aparece lá. A dedupe conversa com a do acervo pelos MOMENTOS (ver acima).
 let planoPjeProcAtual = null;
+// ══════════════════════════════════════════════════════════════════════════
+// F184 · O CONTEÚDO DO ANDAMENTO. A extensão (1.13) baixa, na sessão logada,
+// a sentença/decisão/despacho/acórdão/laudo e guarda no bucket privado; a
+// coleta traz o `caminho`. Aqui ele vira linha em `anexos`, presa ao caso e ao
+// andamento, com o TEXTO extraído — é o texto que responde "o que foi
+// decidido?" sem abrir o portal. Documento de movimento já conhecido também
+// entra: as coletas antigas não traziam documento nenhum.
+// ══════════════════════════════════════════════════════════════════════════
+function docsDoMovimento(lista, k, origem, docs, oid){
+  for(const d of (docs||[])) if(d && d.caminho)
+    lista.push({caso_id:k.id, cliente_id:k.cliente_id||null, origem, caminho:d.caminho,
+                nome:d.nome||"documento", andamento_oid:oid});
+}
+// o texto do documento guardado: PDF pelo pdf.js (linhas na ordem da folha),
+// HTML pelo próprio navegador. PDF digitalizado devolve null — sem OCR.
+async function textoDoDocumento(caminho){
+  const r = await fetch(await linkArquivo(caminho, 300));
+  if(!r.ok) throw new Error("HTTP "+r.status);
+  const tipo = (r.headers.get("content-type")||"").split(";")[0];
+  const blob = await r.blob();
+  if(/html/.test(tipo)){
+    const doc = new DOMParser().parseFromString(await blob.text(), "text/html");
+    return { tipo, tamanho:blob.size, texto:((doc.body&&doc.body.textContent)||"").replace(/\s+\n/g,"\n").trim()||null };
+  }
+  if(!/pdf/.test(tipo)) return { tipo, tamanho:blob.size, texto:null };
+  const linhas = new Map();
+  for(const i of await itensDoPdf(blob)){
+    const ch=`${i.p}:${i.y}`;
+    if(!linhas.has(ch)) linhas.set(ch, []);
+    linhas.get(ch).push(i);
+  }
+  const texto = [...linhas.values()]
+    .sort((a,b)=>a[0].p-b[0].p || a[0].y-b[0].y)
+    .map(l=>l.sort((a,b)=>a.x-b.x).map(i=>i.t).join(" ")).join("\n").trim();
+  return { tipo, tamanho:blob.size, texto: texto.length>=50 ? texto : null };
+}
+async function gravarDocsDaColeta(docs){
+  let n = 0;
+  for(const d of (docs||[])){
+    try{
+      const ja = await api(`/rest/v1/anexos?select=id&caminho=eq.${encodeURIComponent(d.caminho)}`);
+      if(ja && ja.length) continue;
+      const [an] = d.andamento_oid ? (await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem_id=eq.${encodeURIComponent(d.andamento_oid)}&limit=1`) || []) : [];
+      let lido = { tipo:null, tamanho:null, texto:null };
+      try{ lido = await textoDoDocumento(d.caminho); }catch(e){ console.warn("texto do documento:", d.caminho, e); }
+      await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:d.caso_id, cliente_id:d.cliente_id, autor_id:eu.id,
+          nome:d.nome, caminho:d.caminho, tipo:lido.tipo, tamanho:lido.tamanho,
+          origem:d.origem, andamento_id:an?an.id:null, texto:lido.texto})});
+      n++;
+    }catch(e){ console.warn("documento da coleta não gravado:", d.caminho, e); }
+  }
+  return n;
+}
+// ponytail: o DISPOSITIVO por regex — do último "ante o exposto", "julgo",
+// "nego provimento"… até ~700 caracteres; classificar o resultado
+// (procedente/improcedente) fica com o MCP (ler_documento) sobre o mesmo texto
+// o "ante o exposto" abre o dispositivo; sem ele, o próprio comando decisório
+const RE_DISPOSITIVO = [/ante o exposto|diante do exposto|pelo exposto|isto posto|posto isso|em face do exposto/gi,
+  /julgo (?:procedente|improcedente|parcialmente|extinto)|nego provimento|dou (?:parcial )?provimento|homologo|defiro|indefiro/gi];
+function dispositivoDe(texto){
+  const t = String(texto||"").replace(/\s+/g," ").trim();
+  if(!t) return "";
+  const ultimo = re => { const a=[...t.matchAll(re)]; return a.length ? a[a.length-1].index : -1; };
+  let ini = ultimo(RE_DISPOSITIVO[0]);
+  if(ini<0) ini = ultimo(RE_DISPOSITIVO[1]);
+  if(ini<0) ini = Math.max(0, t.length-600);
+  const trecho = t.slice(ini);
+  return trecho.length>700 ? trecho.slice(0,700)+"…" : trecho;
+}
 async function conferirPjeProc(coletaId){
   try{
     const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
@@ -7998,7 +8086,7 @@ async function conferirPjeProc(coletaId){
     const dig = soDig(dados.numero);
     const k = D.casos.find(x=>soDig(x.processo)===dig) || null;
     const plano = { coleta_id: coletaId, numero: dados.numero||"?", grau: dados.grau||"",
-                    caso_id: k?k.id:null, fichas: [], andamentos: [],
+                    caso_id: k?k.id:null, fichas: [], andamentos: [], docs: [],
                     resumo: { itens:(dados.itens||[]).length, movimentos:0, conhecidos:0, docs:0 } };
     if(!k){ planoPjeProcAtual = plano; render(); return; }
     const bancoPje = await todas("andamentos",
@@ -8016,6 +8104,7 @@ async function conferirPjeProc(coletaId){
       plano.resumo.docs += (it.docs||[]).length;
       const oid=`hist:${dig}:${it.data||"s-d"}T${it.hora||"00:00"}:${hashDjb(texto)}`;
       const momento=it.data&&it.hora?`${dig}:${it.data}T${it.hora}`:null;
+      docsDoMovimento(plano.docs, k, dados.sistema||"pje", it.docs, oid);
       if(vistos.has(oid) || momentoConhecido(momentos, momento, texto)){ plano.resumo.conhecidos++; continue; }
       vistos.add(oid); marcarMomento(momentos, momento, texto);   // dentro da própria coleta também
       plano.andamentos.push({ caso_id:k.id, origem_id:oid,
@@ -8053,6 +8142,7 @@ async function aplicarPjeProc(coletaId){
       feitos++;
     }catch(e){ falhas.push(String(e.message||e).slice(0,90)); }
   }
+  const docsGravados = await gravarDocsDaColeta(planoPjeProcAtual.docs);
   await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",
     headers:{Prefer:"return=minimal"},
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
@@ -8062,8 +8152,8 @@ async function aplicarPjeProc(coletaId){
   if(falhas.length){
     console.warn("falhas do histórico PJe:", falhas);
     aviso(`${feitos} gravados; ${falhas.length} falharam — se o banco recusou a origem 'pje', rode o schema_por_em_dia.sql`);
-  }else aviso(feitos||fichas
-    ?`✔ histórico do processo na ficha: ${feitos} movimento(s)${fichas?`, ficha completada (classe/órgão)`:""} — o que é antigo NÃO passa pelas Novidades`
+  }else aviso(feitos||fichas||docsGravados
+    ?`✔ histórico do processo na ficha: ${feitos} movimento(s)${docsGravados?`, ${docsGravados} decisão(ões) com o texto`:""}${fichas?`, ficha completada (classe/órgão)`:""} — o que é antigo NÃO passa pelas Novidades`
     :"Nada novo a gravar — a ficha já tinha essa história");
 }
 async function aplicarPje(coletaId){
@@ -8089,6 +8179,7 @@ async function aplicarPje(coletaId){
       feitos++;
     }catch(e){ falhas.push(`${a.numero}: ${String(e.message||e).slice(0,90)}`); }
   }
+  const docsGravados = await gravarDocsDaColeta(planoPjeAtual.docs);
   await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",
     headers:{Prefer:"return=minimal"},
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
@@ -21881,6 +21972,17 @@ async function removerCrpsNup(casoId, nup){
 
 // o quadro dos movimentos que a extensão colheu no painel do PJe — andamento
 // oficial tanto quanto o DataJud, só que mais fresco (chega na hora da coleta)
+// F184 · a decisão por trás do movimento: o arquivo e o dispositivo, à vista
+function docsDoAndamentoHtml(andId){
+  return (D.anexos||[]).filter(x=>x.andamento_id===andId).map(x=>{
+    const disp = dispositivoDe(x.texto);
+    return `<div style="margin:4px 0 6px;padding:6px 9px;border-left:3px solid #BFDCC2;background:#F5FAF6;border-radius:6px">
+      <button class="btn-mini" onclick="abrirAnexo('${x.id}')" title="abre o documento guardado (link que vence)">📄 ver ${esc(x.nome||"documento")}</button>
+      ${disp ? `<div class="meio-sub" style="margin-top:4px">⚖️ ${esc(disp)}</div>`
+        : /pdf/.test(x.tipo||"") ? `<span class="meio-sub">digitalizado, sem texto — abra o PDF</span>` : ""}
+    </div>`;
+  }).join("");
+}
 function caixaPje(k, movs){
   if(!movs || !movs.length) return "";
   // F45 · o mesmo esqueleto da conversa do Escritório
@@ -21893,7 +21995,7 @@ function caixaPje(k, movs){
       // F146 · o sistema de cada movimento sai do número CNJ, não do rótulo da coleta
       rot: sisCurtoDoMov(a),
       em: temaV10() ? iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sisCurtoDoMov(a)]) : "⚖️",
-      html: `${seguimentoHtml((D._andsFicha||[]).filter(x=>x.responde_a===a.id), tarefasDe)}<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, a.texto||"", a.id))}
+      html: `${docsDoAndamentoHtml(a.id)}${seguimentoHtml((D._andsFicha||[]).filter(x=>x.responde_a===a.id), tarefasDe)}<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, a.texto||"", a.id))}
         <button class="btn-mini" onclick="pjeForaDoCaso('${a.id}','${k.id}')"
           title="movimento de outro processo que caiu aqui por engano — remove e aponta a causa">⚠ não é deste caso</button></span>`
     })))}</div>`;

@@ -84,6 +84,10 @@
     if (!cab) { faixaErr('não achei o número do processo na capa'); return { erro: 'sem número' }; }
     const itens = REG.lerEventosHtml(html);
     if (!itens.length) { faixaErr('a lista de eventos estava vazia na tela'); return { erro: 'vazio' }; }
+    // F184 · as decisões vão junto: o CRM passa a dizer O QUE foi decidido
+    const docs = itens.flatMap(i => i.docs || []);
+    if (docs.some(d => DOCS_REGRAS.ehDecisao(d.nome))) faixa(`processo ${cab.numero}: guardando as decisões no CRM…`);
+    await CRM.guardarDocs('eproc', cab.numero, docs);
     const OUT = { versao: 1, fonte: 'pje-processo', sistema: 'eproc', tribunal: 'TJSP', grau, host,
                   quando: new Date().toISOString(), numero: cab.numero,
                   classe: cab.classe || null, orgao: cab.orgao || null,

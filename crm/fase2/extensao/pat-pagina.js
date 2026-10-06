@@ -138,7 +138,8 @@
     esperando = false;
     OUT.quando = new Date().toISOString();
     diga('entregando', OUT.detalhes.length, 'detalhe(s) à extensão.');
-    dizer('entregar', { dados: OUT, quando: OUT.quando, quantos: OUT.detalhes.length });
+    // F184 · o crachá vai junto: é com ele que a ponte baixa os anexos
+    dizer('entregar', { dados: OUT, quando: OUT.quando, quantos: OUT.detalhes.length, cracha });
   }
 
   // ── recados que vêm da ponte ────────────────────────────────────────────

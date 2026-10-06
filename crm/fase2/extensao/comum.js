@@ -31,6 +31,36 @@ window.CRM = window.CRM || {
   processosTjsp: () => CRM.pedir({ tipo: 'crm', acao: 'processos-tjsp' }),
   // devolve { favoritos }: os links de processo do e-SAJ nas pastas "X a Y" dos favoritos
   favoritosEsaj: () => CRM.pedir({ tipo: 'crm', acao: 'favoritos-esaj' }),
+
+  // F184 · baixa (nesta sessão logada) e guarda no CRM os documentos que
+  // decidem; marca `caminho` em cada um que ficou guardado. Um por vez, com
+  // pausa: o portal é do tribunal, e derrubar a sessão custa a coleta inteira.
+  // `baixar(doc)` → Response, para o portal que precisa de cabeçalho próprio.
+  // Falha num documento não derruba a coleta: o andamento vai sem ele.
+  async guardarDocs(origem, processo, docs, { todos = false, baixar, pausaMs = 600 } = {}) {
+    const R = window.DOCS_REGRAS;
+    let n = 0;
+    for (const d of docs || []) {
+      if (!d || (!d.url && !baixar) || (!todos && !R.ehDecisao(d.nome))) continue;
+      const caminho = R.caminhoDoc(origem, processo, d);
+      try {
+        if (!(await CRM.pedir({ tipo: 'crm', acao: 'doc-existe', caminho })).existe) {
+          const r = baixar ? await baixar(d)
+            : await fetch(new URL(d.url, location.href), { credentials: 'include' });
+          if (!r || !r.ok) continue;
+          const buf = new Uint8Array(await r.arrayBuffer());
+          const tipoDoc = R.tipoDoConteudo(buf, r.headers.get('content-type'));
+          if (!tipoDoc) continue;                      // tela de login ou erro, não documento
+          let s = '';
+          for (let i = 0; i < buf.length; i += 8192) s += String.fromCharCode.apply(null, buf.subarray(i, i + 8192));
+          await CRM.pedir({ tipo: 'crm', acao: 'guardar-doc', caminho, tipoDoc, b64: btoa(s) });
+          await new Promise(res => setTimeout(res, pausaMs));
+        }
+        d.caminho = caminho; n++;
+      } catch (e) { console.warn('[CRM] documento não guardado:', d.nome, e); }
+    }
+    return n;
+  },
 };
 
 // PROVA DE VIDA. O console do navegador nem sempre mostra o que a extensão

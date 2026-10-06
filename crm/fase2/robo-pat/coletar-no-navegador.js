@@ -237,8 +237,9 @@
       unidade: det.nomeUnidade || null,
       canal: det.tipoCanalAtendimento || null,
       quem_protocolou: CANAIS[limpo(det.tipoCanalAtendimento)] || null,
-      // O ANEXO CONTINUA SENDO SÓ CONTAGEM: é laudo médico, e o CRM guarda o
-      // link do portal, não a cópia. O COMENTÁRIO, NÃO — ele é a mensagem do
+      // O ANEXO AQUI É SÓ CONTAGEM. F184 · a cópia agora vem por outro caminho:
+      // a extensão guarda o arquivo no bucket privado (det.arquivos) e a
+      // importação o põe no caso, interno. O COMENTÁRIO, NÃO — ele é a mensagem do
       // INSS sobre o processo ("apresentar PPP", "exigência cumprida"), e é
       // exatamente o que responde "o que mudou?". Sem ele, a importação avisa
       // que algo aconteceu e não diz o quê.
