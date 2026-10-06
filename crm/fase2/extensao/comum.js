@@ -32,8 +32,9 @@ window.CRM = window.CRM || {
   // devolve { favoritos }: os links de processo do e-SAJ nas pastas "X a Y" dos favoritos
   favoritosEsaj: () => CRM.pedir({ tipo: 'crm', acao: 'favoritos-esaj' }),
 
-  // F184 · baixa (nesta sessão logada) e guarda no CRM os documentos que
-  // decidem; marca `caminho` em cada um que ficou guardado. Um por vez, com
+  // F184 · baixa (nesta sessão logada) e guarda no CRM as peças e os
+  // documentos (tudo menos expediente — docs-regras.js); marca `caminho`
+  // em cada um que ficou guardado. Um por vez, com
   // pausa: o portal é do tribunal, e derrubar a sessão custa a coleta inteira.
   // `baixar(doc)` → Response, para o portal que precisa de cabeçalho próprio.
   // Falha num documento não derruba a coleta: o andamento vai sem ele.
@@ -41,7 +42,7 @@ window.CRM = window.CRM || {
     const R = window.DOCS_REGRAS;
     let n = 0;
     for (const d of docs || []) {
-      if (!d || (!d.url && !baixar) || (!todos && !R.ehDecisao(d.nome))) continue;
+      if (!d || (!d.url && !baixar) || (!todos && !R.vaiBaixar(d.nome))) continue;
       const caminho = R.caminhoDoc(origem, processo, d);
       try {
         if (!(await CRM.pedir({ tipo: 'crm', acao: 'doc-existe', caminho })).existe) {

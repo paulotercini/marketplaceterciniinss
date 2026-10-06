@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.85</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.86</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -21996,11 +21996,15 @@ async function removerCrpsNup(casoId, nup){
 // F184 · a decisão por trás do movimento: o arquivo e o dispositivo, à vista
 function docsDoAndamentoHtml(andId){
   return (D.anexos||[]).filter(x=>x.andamento_id===andId).map(x=>{
-    const disp = dispositivoDe(x.texto);
+    // o trecho "o que foi decidido" é de decisão e laudo; petição, contestação
+    // e documento só ganham o botão (o fim de uma petição não é dispositivo)
+    const decide = /senten[cç]|decis[aã]|despach|ac[oó]rd[aã]|monocr|laudo|julgad[oa] |homologa|DESPADEC|\bSENT\d|\bACOR\d|\bLAUDO\d/i.test(x.nome||"")
+                   && !/^\s*certid/i.test(x.nome||"");
+    const disp = decide ? dispositivoDe(x.texto) : "";
     return `<div style="margin:4px 0 6px;padding:6px 9px;border-left:3px solid #BFDCC2;background:#F5FAF6;border-radius:6px">
       <button class="btn-mini" onclick="abrirAnexo('${x.id}')" title="abre o documento guardado (link que vence)">📄 ver ${esc(x.nome||"documento")}</button>
       ${disp ? `<div class="meio-sub" style="margin-top:4px">⚖️ ${esc(disp)}</div>`
-        : /pdf/.test(x.tipo||"") ? `<span class="meio-sub">digitalizado, sem texto — abra o PDF</span>` : ""}
+        : !x.texto && /pdf/.test(x.tipo||"") ? `<span class="meio-sub">digitalizado, sem texto — abra o PDF</span>` : ""}
     </div>`;
   }).join("");
 }
