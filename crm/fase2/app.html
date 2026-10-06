@@ -1836,6 +1836,8 @@
   .zg-bola.on{background:var(--feito,#1b6e38)}
   .ze-so-leitura{margin:0;font-size:12.5px;color:#5c3d00;background:#fbf1e0;border-radius:8px;padding:7px 10px}
   .zx-rot{margin:10px 0 4px;font-size:12px;font-weight:600;color:var(--cinza)}
+  .zap-audio-prev{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 12px;border-top:1px solid var(--borda);background:var(--azul-fundo,#e6f0ef);font-size:12.5px}
+  .zap-audio-prev audio{height:34px;flex:1;min-width:200px}
   /* F183 · acabamento igual ao desenho aprovado */
   .app:not(.celular) .meio.zap-v .meio-topo,.app:not(.celular) .meio.zap-v #sub-lista{display:none}
   .app:not(.celular) .meio.zap-v .zap-tela{height:calc(100vh - 40px);height:calc(100dvh - 40px)}
@@ -10706,11 +10708,13 @@ async function abrirConversa(id){
 }
 async function recarregarMsgs(){
   if(!zapAberta) return;
-  const antes = zapMsgs.length;
+  const antes = zapMsgs.length, comTexto = zapMsgs.filter(m=>m.texto).length;
   zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${zapAberta}&order=seq`).catch(()=>zapMsgs);
   const reacAntes = JSON.stringify([...zapReacoes]);
   await carregarReacoes();
-  if(zapMsgs.length!==antes || JSON.stringify([...zapReacoes])!==reacAntes) pintarConversaGuardando();
+  // a transcrição do áudio chega segundos depois: um texto novo também repinta
+  if(zapMsgs.length!==antes || zapMsgs.filter(m=>m.texto).length!==comTexto
+     || JSON.stringify([...zapReacoes])!==reacAntes) pintarConversaGuardando();
   else atualizarVistos();
 }
 // só os selos de entrega mudaram: repintar tudo tiraria o texto de quem está
@@ -10791,6 +10795,11 @@ function pintarConversa(){
      ${zapResponder?`<div class="zap-resp"><span>↩ respondendo</span>
         <span class="txt">${esc(textoCurto(zapMsgs.find(m=>m.id===zapResponder)))}</span>
         <button class="btn-mini" onclick="zapResponder=null;pintarConversaGuardando()">✕</button></div>`:""}
+     ${zapAudio && zapAudio.conversa===c.id?`<div class="zap-audio-prev">
+        <span>Áudio gravado — ouça antes de enviar</span>
+        <audio controls src="${zapAudio.url}"></audio>
+        <button class="btn-mini" onclick="descartarAudioZap();pintarConversaGuardando()">Descartar</button>
+        <button class="btn-rap ze-enviar" onclick="enviarAudioZap()">Enviar áudio</button></div>`:""}
      <div class="zap-escrever ${zapNota?"modo-nota":""}">
        <div class="zap-sug" id="zap-sug" hidden></div>
        ${pode?"":`<p class="ze-so-leitura">Esta conversa está com ${esc(at.nome)}. Você pode ler e escrever nota interna;
@@ -11380,18 +11389,32 @@ async function gravarAudioZap(){
     const b = document.getElementById("zap-rec"); if(b){ b.classList.remove("gravando"); b.innerHTML=zic("mic"); }
     const blob = new Blob(partes, {type: rec.mimeType||"audio/webm"});
     if(blob.size < 1500) return aviso("Áudio curto demais");
-    const caminho = `zap/${conversa}/enviados/${Date.now()}-audio.webm`;
-    aviso("Enviando o áudio…", false);
-    try{ await subirArquivo(caminho, new File([blob], "audio.webm", {type: blob.type})); }
-    catch(e){ return aviso("Não consegui subir o áudio: "+e.message); }
+    // F188 · nada sai sem querer: o áudio fica para ouvir, e só vai no "Enviar áudio"
+    descartarAudioZap();
+    zapAudio = {blob, conversa, url: URL.createObjectURL(blob)};
+    if(conversa===zapAberta) pintarConversaGuardando();
+  };
+  rec.start(); zapGravador = rec;
+  if(btn){ btn.classList.add("gravando"); btn.textContent="Parar"; btn.title="parar a gravação (o envio é depois, no botão Enviar áudio)"; }
+}
+let zapAudio = null;
+function descartarAudioZap(){
+  if(zapAudio){ URL.revokeObjectURL(zapAudio.url); zapAudio = null; }
+}
+async function enviarAudioZap(){
+  if(!zapAudio) return;
+  const {blob, conversa} = zapAudio;
+  descartarAudioZap(); pintarConversaGuardando();
+  const caminho = `zap/${conversa}/enviados/${Date.now()}-audio.webm`;
+  aviso("Enviando o áudio…", false);
+  try{
+    await subirArquivo(caminho, new File([blob], "audio.webm", {type: blob.type}));
     await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({conversa_id:conversa, direcao:"saida", autor_id:eu.id, tipo:"audio",
         midia_url:caminho, midia_nome:"audio.webm", midia_mime:blob.type||"audio/webm", status:"fila",
         responde_a: conversa===zapAberta ? (zapResponder||null) : null})});
-    if(conversa===zapAberta){ zapResponder = null; await abrirConversa(conversa); }
-  };
-  rec.start(); zapGravador = rec;
-  if(btn){ btn.classList.add("gravando"); btn.textContent="Parar e enviar"; btn.title="parar e enviar"; }
+  }catch(e){ return aviso("Não enviei o áudio: "+msgErro(e)); }
+  if(conversa===zapAberta){ zapResponder = null; await abrirConversa(conversa); }
 }
 
 // "/" no começo do campo abre as mensagens prontas pelo atalho ou pelo título
@@ -11679,6 +11702,8 @@ async function renderConfig(){
           </select>
           <span class="cfg-sets">${setAtivos.map(st=>`<label class="cfg-ck" title="faz parte do setor ${esc(st.nome)}">
             <input type="checkbox" data-cs="${c.id}|${st.id}" ${ehMembro(c.id, st.id)?"checked":""}>${esc(st.nome)}</label>`).join("")}</span>
+          <input data-assin="${c.id}" value="${esc(c.assinatura_zap||"")}" placeholder="assina como (ex.: Dr. Paulo)"
+            title="o nome que o cliente vê em cima da mensagem no WhatsApp; vazio usa o nome" style="min-width:150px">
           <input type="email" data-email="${c.id}" value="${esc(c.email||"")}" placeholder="e-mail de login"
             title="o mesmo e-mail cadastrado em Authentication → Users no Supabase; ao criar o usuário lá, o CRM liga sozinho"
             style="min-width:200px">
@@ -11860,6 +11885,15 @@ function ligarConfig(){
     }catch(e){ return aviso("Não gravou — só o administrador altera a equipe."); }
     if(c) c.email = email;
     aviso("E-mail guardado ✔ — crie o usuário com esse e-mail no Supabase (Authentication → Users) e o login liga sozinho", false);
+  });
+  // F188 · como a pessoa assina no WhatsApp ("*Dr. Paulo Tercini:*")
+  guarda("[data-assin]", el => el.onchange = async ()=>{
+    const c = D.colPorId.get(el.dataset.assin), v = (el.value||"").trim() || null;
+    try{ await api(`/rest/v1/colaboradores?id=eq.${el.dataset.assin}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({assinatura_zap:v})}); }
+    catch(e){ return aviso("Não gravou — só o gestor altera a equipe."); }
+    if(c) c.assinatura_zap = v;
+    aviso(`Assinatura guardada ✔ — o cliente verá "${v || (c&&c.nome)}:" em cima das mensagens`, false);
   });
   guarda("[data-cargo]", el => el.onchange = async ()=>{
     const c = D.colPorId.get(el.dataset.cargo);

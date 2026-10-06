@@ -2672,3 +2672,8 @@ end $$;
 
 grant execute on function eu_colab(), zap_assumir(uuid), zap_transferir(uuid, uuid, uuid, text, uuid),
   zap_presenca(), zap_painel(), zap_nome_colab(uuid), zap_gestor() to authenticated;
+
+-- F188 · assinatura no WhatsApp, como no SMBot: o cliente vê quem respondeu
+-- ("*Dr. Paulo Tercini:*" em cima da mensagem). A ponte põe na hora de enviar;
+-- no CRM o texto fica limpo. Vazio = usa o nome.
+alter table colaboradores add column if not exists assinatura_zap text;
