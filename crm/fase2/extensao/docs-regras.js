@@ -91,11 +91,26 @@
     }
     const src = (h.match(/<iframe[^>]*\ssrc\s*=\s*["']([^"']+)["']/i) || [])[1];
     if (src && !/^(about:|javascript:)|processando\.html/i.test(src)) return desEntidade(src);
+    // o despacho/carta que o eproc gera em HTML não vem em iframe: a página
+    // o carrega por script, $.ajax({ url: "...acessar_documento_implementacao..." })
+    const ajax = (h.match(/url\s*:\s*["']([^"']*acao=acessar_documento_implementacao[^"']*)["']/i) || [])[1];
+    if (ajax) return desEntidade(ajax);
     return null;
+  }
+
+  // o HTML do eproc vem em ISO-8859-1, e o CRM lê o que está no bucket como
+  // UTF-8 (o Storage não guarda o charset): guarda-se já em UTF-8, com o
+  // <meta> dizendo isso, senão "Justiça" vira "Justi�a"
+  function charsetDoHtml(bytes, contentType) {
+    const ct = (String(contentType || '').match(/charset=([\w-]+)/i) || [])[1];
+    if (ct) return ct.toLowerCase();
+    let s = '';
+    for (let i = 0; i < Math.min((bytes || []).length, 3000); i++) s += String.fromCharCode(bytes[i]);
+    return ((s.match(/<meta[^>]*charset\s*=\s*["']?([\w-]+)/i) || [])[1] || 'utf-8').toLowerCase();
   }
   const desEntidade = s => String(s).replace(/&amp;/g, '&');
 
-  const API = { ehDecisao, vaiBaixar, caminhoDoc, tipoDoConteudo, nomeSeguro, enderecoDoMiolo };
+  const API = { ehDecisao, vaiBaixar, caminhoDoc, tipoDoConteudo, nomeSeguro, enderecoDoMiolo, charsetDoHtml };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.DOCS_REGRAS = raiz.DOCS_REGRAS || API;
 })(typeof window !== 'undefined' ? window : globalThis);
