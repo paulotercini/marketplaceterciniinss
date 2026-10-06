@@ -237,7 +237,39 @@
       : `/cpopg/search.do?conversationId=&cbPesquisa=NUMPROC&numeroDigitoAnoUnificado=${nd}.${ano}&foroNumeroUnificado=${foro}&dadosConsulta.valorConsultaNuUnificado=${n}&dadosConsulta.valorConsultaNuUnificado=UNIFICADO&dadosConsulta.valorConsulta=&dadosConsulta.tipoNuProcesso=UNIFICADO`;
   }
 
-  const API = { lerLinhaLista, lerListaHtml, totalRegistros, totalPaginas, bloqueado, pedeLogin, lerMovimentacoesHtml,
+  // ── F186 · A PASTA DIGITAL INTEIRA ───────────────────────────────────────
+  // Medido ao vivo em 06.10.2026: /cpopg/abrirPastaDigital.do?processo.codigo=X
+  // (com a ficha aberta antes na sessão) devolve uma página curta cujo corpo é
+  // o endereço da pasta (/pastadigital/abrirPastaProcessoDigital.do?...); a
+  // pasta traz `var requestScope = [...]`, a árvore dos documentos: cada nó
+  // de documento tem title, cdDocumento e dtInclusao ("15/01/2018 21:10:14"),
+  // e um filho por PÁGINA com `parametros` para /pastadigital/getPDF.do. O
+  // getPDF devolve UMA página (pedir o intervalo inteiro não adianta), então o
+  // documento se monta juntando as páginas.
+  function urlDaPasta(html) {
+    const u = (String(html || '').match(/https?:\/\/[^"'\s<]+\/pastadigital\/[^"'\s<]+/) || [])[0];
+    return u ? desHtml(u) : null;
+  }
+  function docsDaPasta(html) {
+    const m = String(html || '').match(/var requestScope\s*=\s*(\[[\s\S]*?\]);\s*var /);
+    if (!m) return [];
+    let arv; try { arv = JSON.parse(m[1]); } catch (e) { return []; }
+    const docs = [];
+    const andar = lista => { for (const x of lista || []) {
+      const pags = (x && x.children || []).filter(c => c && c.data && c.data.parametros);
+      if (pags.length && x.data) {
+        const dh = String(x.data.dtInclusao || '').match(/(\d{2})\/(\d{2})\/(\d{4})(?:\s+(\d{2}:\d{2}))?/);
+        docs.push({ id: String(x.data.cdDocumento || (pags[0].data.parametros.match(/cdDocumento=(\d+)/) || [])[1] || ''),
+                    nome: String(x.data.title || 'documento').trim(),
+                    data: dh ? `${dh[3]}-${dh[2]}-${dh[1]}` : null, hora: dh && dh[4] || null,
+                    paginas: pags.map(c => c.data.parametros) });
+      } else if (x && x.children) andar(x.children);
+    } };
+    andar(arv);
+    return docs.filter(d => d.id);
+  }
+
+  const API = { urlDaPasta, docsDaPasta, lerLinhaLista, lerListaHtml, totalRegistros, totalPaginas, bloqueado, pedeLogin, lerMovimentacoesHtml,
                 ehFicha, codigoDaUrl, lerFichaHtml, lerSelecaoHtml, lerIncidentesFicha, arquivado, urlBuscaNumero };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.ESAJ_REGRAS = raiz.ESAJ_REGRAS || API;

@@ -125,7 +125,40 @@
       texto: m.detalhe ? `${m.texto} — ${m.detalhe}` : m.texto,
       ...((m.docs || []).some(d => d.caminho) ? { docs: m.docs.filter(d => d.caminho) } : {}) }));
     out.movimento = out.movimentos[0] || null;
+    try { out.pasta = await guardarPasta(out, rot); }
+    catch (e) { console.warn('[CRM] pasta digital:', out.numero, e); }
     return out;
+  }
+
+  // F186 · A PASTA DIGITAL INTEIRA: a inicial de 2018, a contestação, o laudo
+  // e a sentença, e não só as 5 movimentações recentes. A ficha já está
+  // aberta na sessão (é o que arma a pasta). Página a página pelo getPDF, um
+  // PDF por documento (pdf-lib, em vendor/); o que já está no CRM é pulado
+  // antes de baixar, então só a primeira rodada é longa.
+  async function guardarPasta(out, rot) {
+    const base = out.grau === '2º grau' ? '/cposg' : '/cpopg';
+    const r0 = await baixarComPaciencia(`${base}/abrirPastaDigital.do?processo.codigo=${out.codigo}`, rot);
+    const url = REG.urlDaPasta(r0.html);
+    if (!url) return null;
+    await espera(600);
+    const docs = REG.docsDaPasta((await baixarComPaciencia(url.replace(/^https:\/\/[^/]+/, ''), rot)).html);
+    if (!docs.length) return null;
+    let feitos = 0;
+    const baixarDoc = async d => {
+      faixa(`${rot} ${out.numero}: pasta digital — ${++feitos} de ${docs.length} (${d.nome}, ${d.paginas.length} pág.)…`);
+      const doc = await PDFLib.PDFDocument.create();
+      for (const p of d.paginas) {
+        const r = await fetch('/pastadigital/getPDF.do?' + p, { credentials: 'include' });
+        const b = new Uint8Array(await r.arrayBuffer());
+        if (!r.ok || !DOCS_REGRAS.tipoDoConteudo(b, r.headers.get('content-type'))) return new Response(null, { status: 502 });
+        const pg = await PDFLib.PDFDocument.load(b, { ignoreEncryption: true });
+        for (const x of await doc.copyPages(pg, pg.getPageIndices())) doc.addPage(x);
+        await espera(250);
+      }
+      return new Response(await doc.save(), { headers: { 'content-type': 'application/pdf' } });
+    };
+    await CRM.guardarDocs('esaj', out.numero, docs, { baixar: baixarDoc });
+    return docs.filter(d => d.caminho).map(({ id, nome, data, hora, caminho }) => ({ id, nome, data, hora, caminho }));
   }
 
   // [02.10.2026] OS RECURSOS DENTRO DO RECURSO. No 2º grau, os embargos de

@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.98</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.99</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7611,6 +7611,11 @@ async function conferirPje(coletaId){
       }
       if(Object.keys(campos).length){ plano.fichas.push({caso_id:k.id, campos}); plano.resumo.fichas++; }
       const movs = (Array.isArray(p.movimentos) && p.movimentos.length ? p.movimentos : [p.movimento]).filter(Boolean);
+      // F186 · a PASTA DIGITAL do e-SAJ (extensão 1.15): todo documento do
+      // processo, com a data em que entrou nos autos. Sem andamento a ligar
+      // (a hora fica 00:00 de propósito): a data vai no próprio anexo
+      for(const d of (p.pasta||[]))
+        docsDoMovimento(plano.docs, k, dados.sistema||"esaj", [d], null, `${soDig(p.numero)}:${d.data||"s-d"}T00:00`);
       if(!movs.length){ plano.resumo.sem_mudanca++; continue; }
       const sufixo = incidente ? `:${p.codigo}` : "";
       // [02.10.2026] o e-SAJ entrega as cinco movimentações mais recentes
