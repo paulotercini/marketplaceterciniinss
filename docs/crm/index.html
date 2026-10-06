@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.96</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.97</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8083,7 +8083,10 @@ async function gravarDocsDaColeta(docs){
       await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=minimal"},
         body:JSON.stringify({caso_id:d.caso_id, cliente_id:d.cliente_id, autor_id:eu.id,
           nome:d.nome, caminho:d.caminho, tipo:lido.tipo, tamanho:lido.tamanho,
-          origem:d.origem, andamento_id:an?an.id:null, texto:lido.texto})});
+          origem:d.origem, andamento_id:an?an.id:null, texto:lido.texto,
+          // sem andamento (movimento antigo que nunca virou andamento), a data
+          // do documento é a do movimento, lida do momento (processo:dataThora)
+          ...(!an && /:(\d{4}-\d{2}-\d{2})T/.test(d.momento||"") ? {criado_em:`${d.momento.match(/:(\d{4}-\d{2}-\d{2})T/)[1]}T12:00:00-03:00`} : {})})});
       n++;
     }catch(e){ console.warn("documento da coleta não gravado:", d.caminho, e); }
   }
