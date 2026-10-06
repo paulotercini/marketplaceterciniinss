@@ -3702,7 +3702,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.86</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.87</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -13298,6 +13298,7 @@ function pintarFicha(){
           ${temINSS?`<button class="${cls("inss",faseEncerrada(k,"pat"))}" onclick="irSubAba('inss')">${v10?"INSS":"Andamentos INSS"}${rot(comentariosPat(andsVis).length, abaPatArquivada(k), faseEncerrada(k,"pat"))}</button>`:""}
           ${temCRPS?`<button class="${cls("crps",faseEncerrada(k,"crps"))}" onclick="irSubAba('crps')">Recurso (CRPS)${rot(crpsTotalEventos(k), abaCrpsArquivada(k), faseEncerrada(k,"crps"))}</button>`:""}
           ${temCNJ?`<button class="${cls("cnj",faseEncerrada(k,"cnj"))}" onclick="irSubAba('cnj')">${v10?"Judicial":"Andamentos do CNJ"}${rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k), faseEncerrada(k,"cnj"))}</button>`:""}
+          ${visiveis.docs?`<button class="${aba==="docs"?"on":""}" onclick="irSubAba('docs')" title="as peças e os anexos do caso, por origem">Documentos (${documentosDoCaso(k).length})</button>`:""}
           <button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
             title="todas as fontes juntas, em ordem cronológica">${v10?"Caso Completo":"Caso completo"}</button>
         </div>`;
@@ -13311,7 +13312,7 @@ function pintarFicha(){
            <div class="caso-dir">${composerCaso(k)}${menu}${painelDaAba()}</div></div>`
         : `${menu}${blocoFatos(k)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
-            : aba==="inss" ? painelINSS(k, andsVis)
+            : aba==="inss" ? painelINSS(k, andsVis) : aba==="docs" ? painelDocumentos(k)
             : aba==="tudo" ? painelTudo(k, andsVis) : painelEscritorio(k, andsVis); }
         })()}
       <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
@@ -18301,8 +18302,126 @@ async function apagarAnexo(id){
 }
 const tamArq = n => n==null ? "" : n>=1048576 ? (n/1048576).toFixed(1).replace(".",",")+" MB"
                                               : Math.max(1,Math.round(n/1024))+" KB";
+// ══════════════════════════════════════════════════════════════════════════
+// F185 · A ABA DOCUMENTOS. As peças que a extensão traz (PJe, eproc, e-SAJ,
+// PAT) e os acórdãos do CRPS moram aqui, por origem e em ordem de data — e não
+// mais na caixa de arquivos do Escritório, que volta a ser só o que a equipe
+// anexou à mão. Dois botões levam o caso inteiro para fora: o .zip com os
+// originais e o PACOTE PARA O CLAUDE, um .md único com o texto de tudo.
+// ══════════════════════════════════════════════════════════════════════════
+const ORIGEM_DOC = { pje:"Judicial · PJe", eproc:"Judicial · eproc", esaj:"Judicial · e-SAJ",
+                     pat:"INSS", crps:"Recurso (CRPS)", escritorio:"Escritório" };
+// todos os documentos do caso, num formato só: {nome, caminho, tipo, tamanho,
+// texto, data, origem, id?} — id existe para os de `anexos`; o acórdão do
+// CRPS mora em casos.crps e abre pelo caminho
+function documentosDoCaso(k){
+  const andPorId = new Map((D._andsFicha||[]).map(a=>[a.id, a]));
+  const docs = (D.anexos||[]).filter(a=>a.caso_id===k.id).map(a=>({
+    id:a.id, nome:a.nome, caminho:a.caminho, tipo:a.tipo, tamanho:a.tamanho, texto:a.texto,
+    origem:a.origem||"escritorio",
+    // a data do MOVIMENTO, quando o documento é de um; senão a do upload
+    data:((a.andamento_id && andPorId.get(a.andamento_id)) || a).criado_em }));
+  for(const b of crpsBlocos(k)) for(const e of (b.eventos||[])) for(const f of (e.arquivos||[]))
+    if(f.storage && !docs.some(d=>d.caminho===f.storage))
+      docs.push({ nome:f.nome||"acórdão", caminho:f.storage, tipo:"application/pdf", tamanho:f.bytes||null,
+                  texto:null, origem:"crps", data:dataParaISO(e.data)||e.data||null });
+  return docs.sort((a,b)=>String(b.data||"").localeCompare(String(a.data||"")));
+}
+function painelDocumentos(k){
+  const docs = documentosDoCaso(k);
+  if(!docs.length) return `<div class="caso"><p class="meio-sub">Nenhum documento neste caso ainda.
+    As peças chegam pela extensão (abra o processo no portal e clique nela) e os anexos da equipe, pelo 📎 da aba Escritório.</p></div>`;
+  const grupos = new Map();
+  for(const d of docs){ if(!grupos.has(d.origem)) grupos.set(d.origem, []); grupos.get(d.origem).push(d); }
+  const total = docs.reduce((s,d)=>s+(+d.tamanho||0),0);
+  return `<div class="caso">
+    <div class="form-linha" style="align-items:center;gap:8px;flex-wrap:wrap">
+      <div class="rotulo-caso" style="flex:1">📂 ${docs.length} documento(s)${total?` · ${tamArq(total)}`:""}</div>
+      <button class="btn-mini" onclick="baixarDocsZip('${k.id}')" title="os arquivos originais, em pastas por origem">⬇ Baixar tudo (.zip)</button>
+      <button class="btn-mini" onclick="pacoteClaude('${k.id}')" title="um arquivo .md com o texto de todos os documentos — arraste para uma conversa do Claude">🤖 Pacote para o Claude</button>
+    </div>
+    ${[...grupos].map(([o, ds])=>`<div style="margin-top:10px">
+      <div class="meio-sub" style="font-weight:600;margin-bottom:4px">${esc(ORIGEM_DOC[o]||o)} (${ds.length})</div>
+      ${ds.map(d=>`<div class="arq-it">
+        <button class="arq-abrir" onclick="${d.id?`abrirAnexo('${d.id}')`:`abrirDecisao('${esc(d.caminho)}')`}" title="abrir o documento">
+          ${(d.tipo||"").startsWith("image/")?"🖼":"📄"} ${esc(d.nome||"documento")}</button>
+        <span class="meio-sub">${d.data?fmt(String(d.data).slice(0,10)):""}${d.tamanho?" · "+tamArq(d.tamanho):""}${
+          d.origem==="escritorio"||d.origem==="crps" ? "" : d.texto ? " · com texto" : " · digitalizado"}</span>
+      </div>`).join("")}
+    </div>`).join("")}
+  </div>`;
+}
+function salvarBlob(nome, blob){
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = nome;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 60000);
+}
+function rotuloDoCaso(k){
+  const c = D.cliPorId.get(k.cliente_id) || {};
+  return { cliente:c.nome||"cliente", arquivo:nomeSeguro(`${c.nome||"cliente"}-${k.titulo||k.especie||"caso"}`) };
+}
+async function baixarDocsZip(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const docs = documentosDoCaso(k);
+  aviso(`Juntando ${docs.length} documento(s)…`, false);
+  try{
+    if(!window.JSZip) await new Promise((ok, erro)=>{
+      const s = document.createElement("script");
+      s.src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js";
+      s.onload = ok; s.onerror = ()=>erro(new Error("não consegui carregar o compactador"));
+      document.head.appendChild(s);
+    });
+    const zip = new JSZip(), usados = new Set();
+    let falhas = 0;
+    for(const d of docs){
+      try{
+        const r = await fetch(await linkArquivo(d.caminho, 300));
+        if(!r.ok) throw new Error(r.status);
+        const ext = /pdf/.test(d.tipo||"") ? ".pdf" : /^text\//.test(d.tipo||"") ? ".html"
+                  : /jpe?g/.test(d.tipo||"") ? ".jpg" : /png/.test(d.tipo||"") ? ".png" : "";
+        let nome = `${ORIGEM_DOC[d.origem]||d.origem}/${String(d.data||"").slice(0,10)} ${nomeSeguro(d.nome).replace(/\.(pdf|html?|jpe?g|png)$/i,"")}${ext}`;
+        for(let i=2; usados.has(nome); i++) nome = nome.replace(/( \(\d+\))?(\.\w+)?$/, ` (${i})$2`);
+        usados.add(nome);
+        zip.file(nome, await r.blob());
+      }catch(e){ falhas++; }
+    }
+    salvarBlob(`${rotuloDoCaso(k).arquivo}.zip`, await zip.generateAsync({type:"blob"}));
+    aviso(falhas ? `⬇ zip pronto — ${falhas} documento(s) não baixaram` : "⬇ zip pronto");
+  }catch(e){ aviso("Não consegui montar o zip: "+e.message); }
+}
+// O PACOTE PARA O CLAUDE: um .md único (o formato que ele lê inteiro de uma
+// vez), com o caso no topo, o índice e o texto de cada documento em ordem
+// cronológica. O que não tem texto (digitalizado) entra só no índice, avisado.
+async function pacoteClaude(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const docs = documentosDoCaso(k).slice().reverse();          // do mais antigo ao mais novo
+  const {cliente, arquivo} = rotuloDoCaso(k);
+  aviso(`Montando o pacote com ${docs.length} documento(s)…`, false);
+  const partes = [];
+  for(const [i, d] of docs.entries()){
+    let texto = d.texto;
+    if(!texto && d.origem==="crps"){ try{ texto = (await textoDoDocumento(d.caminho)).texto; }catch(e){} }
+    partes.push({ i:i+1, d, texto });
+  }
+  const proc = processosDoCaso(k).map(p=>p.numero).join(", ");
+  const md = [
+    `# ${cliente} — ${k.titulo||k.especie||"caso"}`, "",
+    `- Espécie: ${k.especie||"—"}  `, `- Benefício: ${k.beneficio||"—"}  `,
+    `- Processo(s): ${proc||"—"}  `, `- Protocolo(s) INSS: ${(k.protocolos||[]).join(", ")||"—"}  `,
+    `- Gerado pelo CRM em ${new Date().toLocaleString("pt-BR")}`, "",
+    "> Documentos do caso em ordem cronológica. Os marcados como DIGITALIZADO não têm texto aqui: peça o PDF original se precisar dele.", "",
+    "## Índice", "",
+    ...partes.map(p=>`${p.i}. ${String(p.d.data||"").slice(0,10)} · ${ORIGEM_DOC[p.d.origem]||p.d.origem} · ${p.d.nome}${p.texto?"":" — DIGITALIZADO, sem texto"}`), "",
+    ...partes.filter(p=>p.texto).flatMap(p=>[
+      `---`, "", `## ${p.i}. ${p.d.nome}`, "", `*${String(p.d.data||"").slice(0,10)} · ${ORIGEM_DOC[p.d.origem]||p.d.origem}*`, "", p.texto.trim(), ""]),
+  ].join("\n");
+  salvarBlob(`${arquivo}-para-o-claude.md`, new Blob([md], {type:"text/markdown;charset=utf-8"}));
+  aviso(`🤖 Pacote pronto — arraste o arquivo para uma conversa do Claude`);
+}
 function caixaArquivos(k){
-  const as=(D.anexos||[]).filter(a=>a.caso_id===k.id);
+  // F185 · aqui fica só o que a equipe anexou; o que veio dos portais tem a aba Documentos
+  const as=(D.anexos||[]).filter(a=>a.caso_id===k.id && !a.origem);
   if(!as.length) return "";
   return `<div class="caso caso-arq">
     <div class="rotulo-caso">📎 Arquivos deste processo (${as.length})</div>
@@ -20960,6 +21079,7 @@ function abasVisiveis(k, ands){
     cnj:  !!(k.processo
       || (k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length))
       || andamentosPje(ands).length || faseEncerrada(k,"cnj")),
+    docs: documentosDoCaso(k).length > 0,                       // F185
     tudo: true,
   };
 }
