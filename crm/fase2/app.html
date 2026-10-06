@@ -1818,6 +1818,24 @@
   .zx-pedido{font-size:13px;color:var(--azul);font-weight:600}
   .zx-bts{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
   .zx-bts .zt-btn:disabled{opacity:.5;cursor:not-allowed}
+  /* F187 · gestor e equipe: painel, só leitura, rótulos da transferência */
+  .zg{padding:18px 20px;overflow:auto;flex:1}
+  .zg-cab{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .zg-cab h2{margin:0;font:600 20px var(--f-tit,inherit)}
+  .zg-cartoes{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:18px}
+  .zg-cartao{background:var(--lateral,#f3f2ee);border:1px solid var(--borda);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+  .zg-cartao span{font-size:12px;color:var(--cinza)}
+  .zg-cartao b,.zg-cartao .zg-num{font:600 24px var(--f-tit,inherit);color:var(--texto);text-align:left}
+  .zg-tit{font-size:13px;font-weight:600;color:var(--cinza);margin:14px 0 6px}
+  .zg-tab{width:100%;border-collapse:collapse;font-size:13px}
+  .zg-tab th{text-align:left;font-weight:600;font-size:12px;color:var(--cinza);padding:6px 8px;border-bottom:1px solid var(--borda)}
+  .zg-tab td{padding:6px 8px;border-bottom:1px solid var(--borda)}
+  .zg-num{border:0;background:none;padding:0 4px;font:inherit;font-weight:600;color:var(--azul);cursor:pointer;border-radius:4px}
+  @media (hover:hover) and (pointer:fine){.zg-num:hover{background:var(--azul-fundo,#e6f0ef)}}
+  .zg-bola{display:inline-block;width:8px;height:8px;border-radius:50%;background:#c9c7c0;margin-right:7px}
+  .zg-bola.on{background:var(--feito,#1b6e38)}
+  .ze-so-leitura{margin:0;font-size:12.5px;color:#5c3d00;background:#fbf1e0;border-radius:8px;padding:7px 10px}
+  .zx-rot{margin:10px 0 4px;font-size:12px;font-weight:600;color:var(--cinza)}
   /* F183 · acabamento igual ao desenho aprovado */
   .app:not(.celular) .meio.zap-v .meio-topo,.app:not(.celular) .meio.zap-v #sub-lista{display:none}
   .app:not(.celular) .meio.zap-v .zap-tela{height:calc(100vh - 40px);height:calc(100dvh - 40px)}
@@ -4302,7 +4320,12 @@ async function iniciar(){
   const digitandoNoMeio = document.querySelector("#conteudo-meio :is(input,textarea,select):focus");
   if(!digitandoNoMeio && !["novocliente","config"].includes(visao)) render();
   if(!vigiaLigada){ vigiaLigada = true; setInterval(vigiarMudancas, VIGIA_MS); }
+  // F187 · "online agora" no painel do gestor: um ponto por minuto
+  if(!presencaLigada){ presencaLigada = true;
+    const ponto = () => api(`/rest/v1/rpc/zap_presenca`,{method:"POST", body:"{}"}).catch(()=>{});
+    ponto(); setInterval(ponto, 60000); }
 }
+let presencaLigada = false;
 
 // Ajuste do ESCRITÓRIO, não do navegador de cada um: o endereço do painel do
 // SMBot vale para todo mundo, e quem trocar de máquina não reconfigura nada.
@@ -8818,7 +8841,8 @@ const souAdmin = () => !!eu && eu.papel==="admin";
 // F131 · a barra do colaborador é a do To Do: só as listas que a equipe já
 // conhece. O admin vê a mesma barra ligando "ver como colaborador".
 const visaoColab = () => !souAdmin() || ler("crm_ver_como")==="colab";
-const LISTAS_COLAB = ["meudia","calendario","planejado","agendaq","importante","particulares","rotinas",
+// F187 · o atendente precisa do WhatsApp e das Menções (aviso de transferência e @)
+const LISTAS_COLAB = ["meudia","mencoes","whatsapp","calendario","planejado","agendaq","importante","particulares","rotinas",
   "fase:prazo","fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial",
   "novocliente"];
 function alternarVerComo(){
@@ -9975,10 +9999,16 @@ function renderMencoes(){
         ${c?`<span class="chip fase">${esc(c.nome)}</span>`:""}</div>
       <div class="texto">${esc(m.texto)}</div>
       <div class="acoes">
+        ${m.conversa_id?`<button class="btn-mini" onclick="abrirConversaDaMencao('${m.conversa_id}')">abrir conversa</button>`:""}
         ${c?`<button class="btn-mini" onclick="abrirFicha('${c.id}')">abrir ficha</button>`:""}
         <button class="btn-mini" onclick="lerMencao('${m.id}')">✔ resolvida</button>
       </div></div>`;
   }).join("") || "<p class='meio-sub'>Caixa vazia — nada pendente para você. 🎉</p>";
+}
+// F187 · o aviso de transferência (ou @ na nota) leva direto à conversa
+function abrirConversaDaMencao(conversaId){
+  zapAberta = conversaId; zapPainelAberto = false;
+  visao = "whatsapp"; render();
 }
 async function lerMencao(id){
   await api(`/rest/v1/mencoes?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
@@ -9986,7 +10016,7 @@ async function lerMencao(id){
   D.mencoes=D.mencoes.filter(m=>m.id!==id);
   montarSidebar(); render();
 }
-async function criarMencoes(texto, casoId, andamentoId, extras){
+async function criarMencoes(texto, casoId, andamentoId, extras, conversaId){
   const ids=new Set((extras||[]).filter(id=>id!==eu.id));
   const casados=new Set();
   equipeAtiva().forEach(co=>{ if(co.id===eu.id) return;
@@ -10003,7 +10033,7 @@ async function criarMencoes(texto, casoId, andamentoId, extras){
   for(const co of alvos)
     await api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({de_id:eu.id, para_id:co.id, caso_id:casoId,
-        andamento_id:andamentoId, texto})});
+        andamento_id:andamentoId, texto, ...(conversaId?{conversa_id:conversaId}:{})})});
   if(alvos.length) aviso("📥 "+alvos.map(a=>a.nome).join(", ")+" será(ão) avisado(s)");
 }
 
@@ -10320,7 +10350,7 @@ let zapFiltro = "minhas", zapAberta = null, zapMsgs = [], zapTimer = null, zapCo
 let zapNota = false;
 // o que veio do SMBot: setores, etiquetas, retornos, reações e o protocolo
 let zapAux = {setores:[], etiquetas:[], convEtq:new Map(), retornos:[]};
-let zapReacoes = new Map(), zapProto = null, zapResponder = null, zapHist = [];
+let zapReacoes = new Map(), zapProto = null, zapResponder = null, zapHist = [], zapTransf = [], zapPainelAberto = false;
 let zapChips = {naoLidas:false, fixadas:false, setor:"", etiqueta:"", atendente:""};
 async function carregarAuxZap(){
   const [setores, etiquetas, ce, retornos, colabSetores, mencs] = await Promise.all([
@@ -10394,7 +10424,8 @@ async function recarregarZap(silencioso){
   zapConvs = cs;
   await Promise.all([assinarFotosZap(cs), carregarAuxZap(), atualizarEstadoZap()]);
   pintarListaZap();
-  if(zapAberta && !silencioso) await abrirConversa(zapAberta);
+  if(zapPainelAberto) await abrirPainelZap(true);
+  else if(zapAberta && !silencioso) await abrirConversa(zapAberta);
   else if(zapAberta) await recarregarMsgs();
   else if(!silencioso){ document.getElementById("zap-dir").innerHTML = telaVaziaZap(); pintarPainelZap(null); }
 }
@@ -10650,7 +10681,8 @@ async function carregarReacoes(){
   }
 }
 async function abrirConversa(id){
-  if(zapAberta!==id) zapResponder = null;
+  if(zapAberta!==id){ zapResponder = null; zapNota = false; }
+  zapPainelAberto = false;
   zapAberta = id;
   const c = zapConvs.find(x=>x.id===id); if(!c) return;
   zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${id}&order=seq`).catch(()=>[]);
@@ -10658,6 +10690,8 @@ async function abrirConversa(id){
   zapProto = c.atendimento_id
     ? ((await todas("zap_atendimentos",`select=numero&id=eq.${c.atendimento_id}`).catch(()=>[]))[0]||{}).numero
     : null;
+  zapTransf = await todas("zap_transferencias",
+    `select=de_id,para_id,motivo,tipo,setor_id,por,em&conversa_id=eq.${id}&order=em.desc&limit=8`).catch(()=>[]);
   zapHist = await todas("zap_atendimentos",
     `select=numero,aberto_em,observacao&conversa_id=eq.${id}&encerrado_em=not.is.null&order=aberto_em.desc&limit=5`).catch(()=>[]);
   pintarConversa();
@@ -10804,11 +10838,20 @@ function pintarPainelZap(c){
   const hist = zapHist.length ? `<section class="zp-card"><h4>Atendimentos anteriores</h4>
       ${zapHist.map(a=>`<div class="zp-kv"><span class="mono">${a.numero}</span>
         <span>${diaZap(a.aberto_em)}${a.observacao?` · ${esc(a.observacao)}`:""}</span></div>`).join("")}</section>` : "";
+  const nm = id => id ? ((D.colPorId.get(id)||{}).nome || "alguém") : null;
+  const transf = zapTransf.length ? `<section class="zp-card"><h4>Transferências</h4>
+      ${zapTransf.map(t=>{
+        const st = t.setor_id && (zapAux.setores.find(x=>x.id===t.setor_id)||{}).nome;
+        const quem = t.tipo==="robo" ? "Robô" : (nm(t.por) || "Claude");
+        const txt = t.tipo==="assumiu" ? `${quem} assumiu${t.de_id?` (estava com ${nm(t.de_id)})`:""}`
+                  : `${quem} → ${nm(t.para_id) || (st?`setor ${st}`:"pendente")}${t.para_id&&st?` (${st})`:""}`;
+        return `<div class="zp-kv"><span>${diaZap(t.em)} ${horaSP(t.em)}</span><span>${esc(txt)}${t.motivo?` · ${esc(t.motivo)}`:""}</span></div>`;
+      }).join("")}</section>` : "";
   if(!c){ el.innerHTML = ""; return; }
   if(!cli){
     el.innerHTML = `<section class="zp-card"><h3>Sem cliente vinculado</h3>
         <p class="zp-sub">Este número não está na ficha de nenhum cliente. Vincule para ver o caso aqui.</p>
-        <button class="zt-btn" onclick="vincularConversa()">Vincular a um cliente</button></section>${hist}`;
+        <button class="zt-btn" onclick="vincularConversa()">Vincular a um cliente</button></section>${transf}${hist}`;
     return;
   }
   const ks = (D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado");
@@ -10848,7 +10891,7 @@ function pintarPainelZap(c){
         || `<p class="zp-sub">Nenhuma tarefa aberta.</p>`}
       <button class="zt-btn zp-nova" onclick="novaTarefaZap()">Nova tarefa</button>
     </section>
-    ${hist}`;
+    ${transf}${hist}`;
 }
 async function concluirTarefaZap(id){
   const t = (D.tarefas||[]).find(x=>x.id===id); if(!t) return;
@@ -10879,6 +10922,55 @@ function novaTarefaZap(){
   document.getElementById("zt-ok").onclick = criar;
   ti.onkeydown = e=>{ if(e.key==="Enter") criar(); };
 }
+// F187 · Painel da equipe (só o gestor), como o do SMBot: totais, por setor e
+// por atendente. Clicar num número filtra a lista à esquerda.
+async function abrirPainelZap(silencioso){
+  let d;
+  try{ d = await api(`/rest/v1/rpc/zap_painel`,{method:"POST", body:"{}"}); }
+  catch(e){ if(!silencioso) aviso(msgErro(e)); return; }
+  zapPainelAberto = true; zapAberta = null;
+  pintarPainelZap(null);
+  const t = d.totais || {};
+  const num = (v, attrs) => `<button class="zg-num" ${attrs}>${v||0}</button>`;
+  const cartao = (rot, v, attrs) => `<div class="zg-cartao"><span>${rot}</span>${attrs?num(v, attrs):`<b>${v||0}</b>`}</div>`;
+  document.getElementById("zap-dir").innerHTML = `<div class="zg">
+    <div class="zg-cab"><h2>Painel da equipe</h2><span class="meio-sub">atualiza sozinho a cada poucos segundos</span></div>
+    <div class="zg-cartoes">
+      ${cartao("Online agora", t.online)}
+      ${cartao("Com mensagem nova", t.novas, 'data-zgf="todas" data-zgn="1"')}
+      ${cartao("Em atendimento", t.ativos, 'data-zgf="todas"')}
+      ${cartao("Pendentes (sem dono)", t.pendentes, 'data-zgf="sem"')}
+      ${cartao("Retornos marcados", t.retornos, 'data-zgf="retornos"')}
+      ${cartao("Encerrados hoje", t.encerrados_hoje)}
+    </div>
+    <h3 class="zg-tit">Por setor</h3>
+    <table class="zg-tab"><thead><tr><th>Setor</th><th>Novas</th><th>Ativos</th><th>Pendentes</th><th>Retornos</th></tr></thead><tbody>
+      ${(d.setores||[]).map(x=>`<tr><td><i class="zg-bola" style="background:${esc(x.cor)}"></i>${esc(x.nome)}</td>
+        <td>${num(x.novas, `data-zgf="todas" data-zgn="1" data-zgs="${x.id}"`)}</td>
+        <td>${num(x.ativos, `data-zgf="todas" data-zgs="${x.id}"`)}</td>
+        <td>${num(x.pendentes, `data-zgf="sem" data-zgs="${x.id}"`)}</td>
+        <td>${num(x.retornos, `data-zgf="retornos" data-zgs="${x.id}"`)}</td></tr>`).join("")}
+    </tbody></table>
+    <h3 class="zg-tit">Por atendente</h3>
+    <table class="zg-tab"><thead><tr><th>Atendente</th><th>Novas</th><th>Ativos</th><th>Retornos</th><th>Encerrados hoje</th><th>1ª resposta (média hoje)</th></tr></thead><tbody>
+      ${(d.atendentes||[]).map(x=>`<tr><td><i class="zg-bola ${x.online?"on":""}" title="${x.online?"online":"fora"}"></i>${esc(x.nome)}</td>
+        <td>${num(x.novas, `data-zgf="todas" data-zgn="1" data-zga="${x.id}"`)}</td>
+        <td>${num(x.ativos, `data-zgf="todas" data-zga="${x.id}"`)}</td>
+        <td>${num(x.retornos, `data-zgf="retornos" data-zga="${x.id}"`)}</td>
+        <td>${x.encerrados_hoje||0}</td>
+        <td>${x.resposta_min!=null?`${String(x.resposta_min).replace(".",",")} min`:"—"}</td></tr>`).join("")}
+    </tbody></table>
+    <p class="meio-sub">Bola verde: com o CRM aberto agora. A 1ª resposta conta, em cada vez que o cliente volta a
+       escrever hoje, quanto tempo até alguém da equipe responder.</p></div>`;
+  document.querySelectorAll("[data-zgf]").forEach(b=>b.onclick=()=>{
+    zapFiltro = b.dataset.zgf;
+    zapChips.setor = b.dataset.zgs || ""; zapChips.atendente = b.dataset.zga || "";
+    zapChips.naoLidas = !!b.dataset.zgn;
+    pintarListaZap();
+  });
+  pintarListaZap();
+}
+
 // o "⋯" é um <details>: fecha ao clicar fora, como qualquer menu
 document.addEventListener("click", e=>{
   document.querySelectorAll(".zt-mais[open]").forEach(d=>{ if(!d.contains(e.target)) d.open = false; });
@@ -10967,12 +11059,19 @@ async function enviarZap(){
   t.value=""; t.style.height="auto";
   // nota interna nasce com direcao E status 'interna' — o banco recusa
   // qualquer nota que tente entrar na fila de envio
-  await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify(zapNota
-      ? {conversa_id:zapAberta, direcao:"interna", autor_id:eu.id,
-         texto:txt, status:"interna"}
-      : {conversa_id:zapAberta, direcao:"saida", autor_id:eu.id,
-         texto:txt, status:"fila", responde_a:zapResponder||null})});
+  try{
+    await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify(zapNota
+        ? {conversa_id:zapAberta, direcao:"interna", autor_id:eu.id,
+           texto:txt, status:"interna"}
+        : {conversa_id:zapAberta, direcao:"saida", autor_id:eu.id,
+           texto:txt, status:"fila", responde_a:zapResponder||null})});
+  }catch(e){ t.value = txt; return aviso(msgErro(e)); }
+  // F187 · @Fulano na nota chama a pessoa: aviso em Menções que abre a conversa
+  if(zapNota && /@\p{L}/u.test(txt)){
+    const c = zapConvs.find(x=>x.id===zapAberta);
+    await criarMencoes(`💬 Nota na conversa com ${c?nomeDaConversa(c):"cliente"}: ${txt}`, null, null, [], zapAberta).catch(()=>{});
+  }
   zapResponder = null;
   if(!zapNota){
     const c = zapConvs.find(x=>x.id===zapAberta);
@@ -11082,8 +11181,10 @@ function msgDocumentos(d){
 
 async function mudarConversa(campos){
   if(!zapAberta) return;
-  await api(`/rest/v1/zap_conversas?id=eq.${zapAberta}`,{method:"PATCH",
-    headers:{Prefer:"return=minimal"}, body:JSON.stringify(campos)});
+  try{
+    await api(`/rest/v1/zap_conversas?id=eq.${zapAberta}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify(campos)});
+  }catch(e){ return aviso(msgErro(e)); }
   Object.assign(zapConvs.find(x=>x.id===zapAberta)||{}, campos);
   pintarConversa(); pintarListaZap();
 }
@@ -11530,9 +11631,8 @@ async function salvarFaixaRenda(casoId, acima){
 // Tudo aqui é do ESCRITÓRIO, não de cada um: quem mexe, mexe para todo mundo.
 // Está tudo numa tela só de propósito — são as coisas que se ajustam uma vez
 // e se esquece, e caçá-las espalhadas pelo sistema seria pior.
-const SETORES = ["triagem","inss","judicial","financeiro"];
 const DIAS_CFG = [["1","seg"],["2","ter"],["3","qua"],["4","qui"],["5","sex"],["6","sáb"],["7","dom"]];
-let cfgAvisos = [], cfgPassos = [];
+let cfgAvisos = [], cfgPassos = [], cfgSetores = [], cfgColabSet = [];
 
 async function renderConfig(){
   tituloLista("⚙️ Configurações");
@@ -11540,10 +11640,14 @@ async function renderConfig(){
     "Quem atende, o que o robô diz e quando os avisos saem. Vale para o escritório inteiro.";
   const meio = document.getElementById("conteudo-meio");
   meio.innerHTML = `<p class="meio-sub">carregando…</p>`;
-  [cfgAvisos, cfgPassos] = await Promise.all([
+  [cfgAvisos, cfgPassos, cfgSetores, cfgColabSet] = await Promise.all([
     todas("zap_avisos","select=*&order=ordem").catch(()=>[]),
     todas("zap_bot_passos","select=*&order=ordem").catch(()=>[]),
+    todas("zap_setores","select=*&order=ordem,nome").catch(()=>[]),
+    todas("colaborador_setores","select=colaborador_id,setor_id").catch(()=>[]),
   ]);
+  const setAtivos = cfgSetores.filter(x=>x.ativo);
+  const ehMembro = (c, st) => cfgColabSet.some(x=>x.colaborador_id===c && x.setor_id===st);
   const p = estadoPonte();
   const dias = (cfgApp("zap_dias_uteis")||"1,2,3,4,5").split(",");
 
@@ -11566,10 +11670,13 @@ async function renderConfig(){
           <label class="cfg-ck" title="recebe uma menção sempre que um caso novo é criado na tela">
             <input type="checkbox" data-casonovo="${c.id}"
               ${quemAvisaCasoNovo().some(x=>x.id===c.id)?"checked":""}> caso novo</label>
-          <select data-setor="${c.id}" ${c.atende_zap?"":"disabled"}>
-            <option value="">setor…</option>
-            ${SETORES.map(s=>`<option ${c.setor===s?"selected":""}>${s}</option>`).join("")}
+          ${/* F187 · papel no WhatsApp e setores de que a pessoa faz parte */""}
+          <select data-papel="${c.id}" title="Gestor vê e mexe em todas as conversas e tem o painel da equipe">
+            <option value="colaborador" ${c.papel!=="admin"?"selected":""}>atendente</option>
+            <option value="admin" ${c.papel==="admin"?"selected":""}>gestor</option>
           </select>
+          <span class="cfg-sets">${setAtivos.map(st=>`<label class="cfg-ck" title="faz parte do setor ${esc(st.nome)}">
+            <input type="checkbox" data-cs="${c.id}|${st.id}" ${ehMembro(c.id, st.id)?"checked":""}>${esc(st.nome)}</label>`).join("")}</span>
           <input type="email" data-email="${c.id}" value="${esc(c.email||"")}" placeholder="e-mail de login"
             title="o mesmo e-mail cadastrado em Authentication → Users no Supabase; ao criar o usuário lá, o CRM liga sozinho"
             style="min-width:200px">
@@ -11581,6 +11688,19 @@ async function renderConfig(){
           </select>
         </div>`).join("")}</div>`
 
+    // ── F187 · setores do WhatsApp ───────────────────────────────────────
+    + `<h3 class="secao">🏷 Setores do WhatsApp</h3>
+       <p class="meio-sub">Os setores da transferência e da fila. Quem faz parte do setor (marcado acima)
+          vê as conversas pendentes dele e recebe o aviso quando chega uma.</p>
+       <div class="cfg-cx">${cfgSetores.map(st=>`<div class="cfg-linha">
+           <input type="color" data-stcor="${st.id}" value="${esc(st.cor||"#5b7fd6")}" title="cor">
+           <input data-stnome="${st.id}" value="${esc(st.nome)}" style="min-width:160px">
+           <label class="cfg-ck">ordem <input type="number" data-stordem="${st.id}" value="${st.ordem||0}" style="width:60px"></label>
+           <label class="cfg-ck"><input type="checkbox" data-stativo="${st.id}" ${st.ativo?"checked":""}> ativo</label>
+         </div>`).join("")}
+         <div class="cfg-linha"><input id="cf-setor-novo" placeholder="novo setor (ex.: Perícias)" style="min-width:220px">
+           <button class="btn-mini" id="cf-setor-criar">＋ criar setor</button></div>
+       </div>`
     // ── horário e interruptores ──────────────────────────────────────────
     + `<h3 class="secao">🕗 Horário e interruptores</h3>
        <div class="cfg-cx">
@@ -11718,8 +11838,6 @@ function ligarConfig(){
     await api(`/rest/v1/colaboradores?id=eq.${el.dataset.atende}`,{method:"PATCH",
       headers:{Prefer:"return=minimal"}, body:JSON.stringify({atende_zap:el.checked})});
     if(c) c.atende_zap = el.checked;
-    const sel = document.querySelector(`[data-setor="${el.dataset.atende}"]`);
-    if(sel) sel.disabled = !el.checked;
     aviso(el.checked?"Passa a receber conversas 💬":"Deixa de receber conversas", false);
   });
   // quem é avisado de caso novo: a lista inteira vai para uma chave só, para
@@ -11748,13 +11866,46 @@ function ligarConfig(){
     if(c) c.cargo = el.value||null;
     aviso("Cargo guardado ✔", false);
   });
-  guarda("[data-setor]", el => el.onchange = async ()=>{
-    const c = D.colPorId.get(el.dataset.setor);
-    await api(`/rest/v1/colaboradores?id=eq.${el.dataset.setor}`,{method:"PATCH",
-      headers:{Prefer:"return=minimal"}, body:JSON.stringify({setor:el.value||null})});
-    if(c) c.setor = el.value||null;
-    aviso("Setor guardado ✔", false);
+  // F187 · papel (gestor/atendente) e setores de cada pessoa
+  guarda("[data-papel]", el => el.onchange = async ()=>{
+    const c = D.colPorId.get(el.dataset.papel);
+    if(c && c.id===eu.id && el.value!=="admin"
+       && !await confirmar("Tirar o seu próprio papel de gestor? Você deixa de ver todas as conversas e perde as Configurações.")){
+      el.value = "admin"; return; }
+    try{
+      await api(`/rest/v1/colaboradores?id=eq.${el.dataset.papel}`,{method:"PATCH",
+        headers:{Prefer:"return=minimal"}, body:JSON.stringify({papel:el.value})});
+    }catch(e){ el.value = c ? c.papel : el.value; return aviso("Não gravou — só o gestor altera a equipe."); }
+    if(c) c.papel = el.value;
+    aviso(el.value==="admin" ? `${c?c.nome:"A pessoa"} agora é gestor ✔` : `${c?c.nome:"A pessoa"} agora é atendente ✔`, false);
   });
+  guarda("[data-cs]", el => el.onchange = async ()=>{
+    const [colab, setor] = el.dataset.cs.split("|");
+    try{
+      if(el.checked) await api(`/rest/v1/colaborador_setores`,{method:"POST",
+        headers:{Prefer:"resolution=ignore-duplicates,return=minimal"}, body:JSON.stringify({colaborador_id:colab, setor_id:setor})});
+      else await api(`/rest/v1/colaborador_setores?colaborador_id=eq.${colab}&setor_id=eq.${setor}`,{method:"DELETE",
+        headers:{Prefer:"return=minimal"}});
+    }catch(e){ el.checked = !el.checked; return aviso(msgErro(e)); }
+    aviso(el.checked ? "Entrou no setor ✔" : "Saiu do setor", false);
+  });
+  const mudarSetor = async (id, campos) => {
+    try{ await api(`/rest/v1/zap_setores?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(campos)}); }
+    catch(e){ return aviso(msgErro(e)); }
+    aviso("Setor guardado ✔", false);
+  };
+  guarda("[data-stnome]", el => el.onchange = ()=> el.value.trim() && mudarSetor(el.dataset.stnome, {nome:el.value.trim()}));
+  guarda("[data-stcor]", el => el.onchange = ()=> mudarSetor(el.dataset.stcor, {cor:el.value}));
+  guarda("[data-stordem]", el => el.onchange = ()=> mudarSetor(el.dataset.stordem, {ordem:Number(el.value)||0}));
+  guarda("[data-stativo]", el => el.onchange = ()=> mudarSetor(el.dataset.stativo, {ativo:el.checked}));
+  const btSetor = document.getElementById("cf-setor-criar");
+  if(btSetor) btSetor.onclick = async ()=>{
+    const nome = (document.getElementById("cf-setor-novo").value||"").trim(); if(!nome) return;
+    try{ await api(`/rest/v1/zap_setores`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({nome, ordem:cfgSetores.length+1})}); }
+    catch(e){ return aviso(msgErro(e)); }
+    aviso(`Setor ${nome} criado ✔`); renderConfig();
+  };
   // horário e interruptores
   const cfgSalva = (id, chave, valor) => {
     const el = document.getElementById(id); if(!el) return;

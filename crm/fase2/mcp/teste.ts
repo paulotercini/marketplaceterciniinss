@@ -108,8 +108,8 @@ const ini = await rpc("initialize", { protocolVersion: "2025-06-18", capabilitie
 conf("initialize responde com o nome do servidor", ini.corpo?.result?.serverInfo?.name === "crm-tercini");
 const tl = await rpc("tools/list", {}, "tok-bom", 2);
 const nomes = (tl.corpo?.result?.tools || []).map((t: any) => t.name).sort();
-conf(`as vinte e duas ferramentas (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "anotacoes_caso", "atualizar_caso", "buscar_clientes", "casos_com_decisao_sem_resultado", "casos_para_completar", "completar_cadastro", "concluir_tarefa", "conversas_whatsapp", "criar_tarefa", "documentos_caso", "equipe", "ficha_cliente", "ler_conversa_whatsapp", "ler_documento", "novidades", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "retorno_whatsapp", "tarefas_caso", "whatsapp_para_anotacao"]));
-const ESCREVE = ["atualizar_caso", "completar_cadastro", "concluir_tarefa", "criar_tarefa", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "retorno_whatsapp", "whatsapp_para_anotacao"];
+conf(`as vinte e três ferramentas (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "anotacoes_caso", "atualizar_caso", "buscar_clientes", "casos_com_decisao_sem_resultado", "casos_para_completar", "completar_cadastro", "concluir_tarefa", "conversas_whatsapp", "criar_tarefa", "documentos_caso", "equipe", "ficha_cliente", "ler_conversa_whatsapp", "ler_documento", "novidades", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "retorno_whatsapp", "tarefas_caso", "transferir_whatsapp", "whatsapp_para_anotacao"]));
+const ESCREVE = ["atualizar_caso", "completar_cadastro", "concluir_tarefa", "criar_tarefa", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "retorno_whatsapp", "transferir_whatsapp", "whatsapp_para_anotacao"];
 conf("leitura marcada só leitura e escrita marcada não destrutiva", (tl.corpo?.result?.tools || []).every((t: any) =>
   ESCREVE.includes(t.name) ? t.annotations?.readOnlyHint === false && t.annotations?.destructiveHint === false : t.annotations?.readOnlyHint));
 
@@ -241,7 +241,7 @@ conf("a escrita só toca andamentos, tarefas, casos, cadastro e rascunho do What
 T.colaboradores[0].papel = "assistente_ia";
 const tlr = await rpc("tools/list", {}, "tok-bom", 8);
 const nr = (tlr.corpo?.result?.tools || []).map((t: any) => t.name);
-conf("a conta do assistente fica sem concluir e reagendar, e mantém anotar, criar tarefa, atualizar e completar", nr.length === 20
+conf("a conta do assistente fica sem concluir e reagendar, e mantém anotar, criar tarefa, atualizar e completar", nr.length === 21
   && !nr.includes("concluir_tarefa") && !nr.includes("reagendar_tarefa") && nr.includes("atualizar_caso") && nr.includes("completar_cadastro")
   && nr.includes("registrar_anotacao") && nr.includes("criar_tarefa"));
 const casoR = T.casos[0], nbAntes = casoR.nb;
