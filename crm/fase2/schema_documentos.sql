@@ -13,3 +13,10 @@ alter table anexos add column if not exists texto     text;   -- null = PDF digi
 -- o mesmo documento do portal entra uma vez só: o caminho no bucket é
 -- determinístico (extensao/docs-regras.js) e `caminho` já é unique
 create index if not exists anexos_por_andamento on anexos (andamento_id) where andamento_id is not null;
+
+-- F188 · as PÁGINAS que são imagem: o PDF escaneado com algumas folhas de
+-- texto (o processo administrativo do INSS juntado no PJe) passava por "com
+-- texto". A extração conta página por página; o PDF dos digitalizados leva só
+-- as que não têm conteúdo (tarja de assinatura e "Página X de Y" não contam).
+alter table anexos add column if not exists paginas int;              -- null = ainda não analisado
+alter table anexos add column if not exists paginas_imagem int[];     -- números das páginas sem texto

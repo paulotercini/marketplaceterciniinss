@@ -3735,7 +3735,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.02</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.03</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8108,16 +8108,49 @@ async function textoDoDocumento(caminho){
     return { tipo, tamanho:blob.size, texto: texto.length>=50 ? texto : null };
   }
   if(!/pdf/.test(tipo)) return { tipo, tamanho:blob.size, texto:null };
-  const linhas = new Map();
-  for(const i of await itensDoPdf(blob)){
-    const ch=`${i.p}:${i.y}`;
-    if(!linhas.has(ch)) linhas.set(ch, []);
-    linhas.get(ch).push(i);
+  const lido = await lerPdfPorPagina(blob);
+  return { tipo, tamanho:blob.size, texto: lido.texto.length>=50 ? lido.texto : null,
+           paginas: lido.paginas, paginas_imagem: lido.imagem };
+}
+// F188 · PÁGINA SEM CONTEÚDO. O PDF escaneado que o PJe carimba traz, em cada
+// folha, a tarja "Assinado eletronicamente por… Num. 123 - Pág. 4" e o
+// endereço de conferência; o do INSS, "Página 4 de 55". Isso é texto, mas não
+// é o documento: tirado o carimbo, folha com menos de 150 letras é imagem.
+function paginaSemConteudo(txt){
+  const miolo = String(txt||"")
+    .replace(/Assinado eletronicamente por:?[^\n]*/gi, " ")
+    .replace(/Num\.?\s*\d+\s*-\s*P[áa]g\.?\s*\d+/gi, " ")
+    .replace(/https?:\/\/\S+/gi, " ")
+    .replace(/P[áa]gina\s+\d+\s+de\s+\d+/gi, " ")
+    .replace(/(Este documento foi (gerado|assinado)|Documento assinado digitalmente|N[úu]mero do documento:?)[^\n]*/gi, " ")
+    .replace(/\d{2}\/\d{2}\/\d{4}\s+\d{2}:\d{2}(:\d{2})?/g, " ");
+  return (miolo.match(/[A-Za-zÀ-ÿ]/g)||[]).length < 150;
+}
+// o texto do PDF, página por página, e quais páginas são só imagem
+async function lerPdfPorPagina(blob){
+  const lib = await carregarPdfJs();
+  const doc = await lib.getDocument({data:new Uint8Array(await blob.arrayBuffer()), isEvalSupported:false}).promise;
+  const textos = [], imagem = [];
+  for(let p=1; p<=doc.numPages; p++){
+    const pag = await doc.getPage(p);
+    const vp = pag.getViewport({scale:1});
+    const linhas = new Map();
+    for(const i of (await pag.getTextContent()).items){
+      const t = (i.str||"").trim(); if(!t) continue;
+      const [x, y] = vp.convertToViewportPoint(i.transform[4], i.transform[5]);
+      const ch = Math.round(y);
+      if(!linhas.has(ch)) linhas.set(ch, []);
+      linhas.get(ch).push({x, t});
+    }
+    const txt = [...linhas.entries()].sort((a,b)=>a[0]-b[0])
+      .map(([,l])=>l.sort((a,b)=>a.x-b.x).map(i=>i.t).join(" ")).join("\n");
+    textos.push(txt);
+    if(paginaSemConteudo(txt)) imagem.push(p);
+    try{ pag.cleanup(); }catch(e){}
   }
-  const texto = [...linhas.values()]
-    .sort((a,b)=>a[0].p-b[0].p || a[0].y-b[0].y)
-    .map(l=>l.sort((a,b)=>a.x-b.x).map(i=>i.t).join(" ")).join("\n").trim();
-  return { tipo, tamanho:blob.size, texto: texto.length>=50 ? texto : null };
+  const paginas = doc.numPages;
+  try{ await doc.destroy(); }catch(e){}
+  return { texto: textos.join("\n").trim(), paginas, imagem };
 }
 async function gravarDocsDaColeta(docs){
   let n = 0, i = 0;
@@ -8140,6 +8173,7 @@ async function gravarDocsDaColeta(docs){
         body:JSON.stringify({caso_id:d.caso_id, cliente_id:d.cliente_id, autor_id:eu.id,
           nome:d.nome, caminho:d.caminho, tipo:lido.tipo, tamanho:lido.tamanho,
           origem:d.origem, andamento_id:an?an.id:null, texto:lido.texto,
+          ...(lido.paginas ? {paginas:lido.paginas, paginas_imagem:lido.paginas_imagem||[]} : {}),
           // sem andamento (movimento antigo que nunca virou andamento), a data
           // do documento é a do movimento, lida do momento (processo:dataThora)
           ...(!an && /:(\d{4}-\d{2}-\d{2})T/.test(d.momento||"") ? {criado_em:`${d.momento.match(/:(\d{4}-\d{2}-\d{2})T/)[1]}T12:00:00-03:00`} : {})})});
@@ -18661,6 +18695,7 @@ function documentosDoCaso(k){
   const andPorId = new Map((D._andsFicha||[]).map(a=>[a.id, a]));
   const docs = (D.anexos||[]).filter(a=>a.caso_id===k.id).map(a=>({
     id:a.id, nome:a.nome, caminho:a.caminho, tipo:a.tipo, tamanho:a.tamanho, texto:a.texto,
+    paginas:a.paginas, paginas_imagem:a.paginas_imagem,
     origem:a.origem||"escritorio",
     // a data do MOVIMENTO, quando o documento é de um; senão a do upload
     data:dataDoMovimento(a.andamento_id && andPorId.get(a.andamento_id)) || a.criado_em,
@@ -18701,7 +18736,7 @@ function painelDocumentos(k, origens){
         <button class="arq-abrir" onclick="${d.id?`abrirAnexo('${d.id}')`:`abrirDecisao('${esc(d.caminho)}')`}" title="abrir o documento">
           ${(d.tipo||"").startsWith("image/")?"🖼":"📄"} ${esc(d.nome||"documento")}</button>
         <span class="meio-sub">${d.data?fmt(String(d.data).slice(0,10)):""}${d.tamanho?" · "+tamArq(d.tamanho):""}${
-          d.origem==="escritorio"||d.origem==="crps" ? "" : !d.texto ? " · digitalizado" : quaseSoImagem(d, d.texto) ? " · parcialmente digitalizado" : " · com texto"}</span>
+          d.origem==="escritorio"||d.origem==="crps" ? "" : !d.texto ? " · digitalizado" : (paginasImagem(d)||[]).length ? ` · ${paginasImagem(d).length} de ${d.paginas} pág. em imagem` : " · com texto"}</span>
       </div>`).join("")}
     </div>`).join("")}
   </div>`;
@@ -18757,8 +18792,8 @@ async function baixarDocsZip(casoId){
 // (digitalizado) entra só no índice, e tabela pode sair com a ordem trocada.
 // A numeração do índice é a mesma do PDF dos digitalizados: "doc 7" é o
 // mesmo documento nos dois arquivos.
-const quaseSoImagem = (d, texto) => !!texto && /pdf/.test(d.tipo||"") && (+d.tamanho||0) > 300*1024
-                                   && (+d.tamanho)/texto.length > 500;
+// as páginas que são imagem: [] = nenhuma; null = não se sabe (não analisado)
+const paginasImagem = d => Array.isArray(d.paginas_imagem) ? d.paginas_imagem : null;
 async function partesDoPacote(k){
   const docs = documentosDoCaso(k).slice().reverse();          // do mais antigo ao mais novo
   const partes = [];
@@ -18766,7 +18801,24 @@ async function partesDoPacote(k){
     let texto = d.texto;
     // o acórdão do CRPS e o anexo da equipe não passaram pela importação:
     // o texto sai agora (imagem é digitalizada por definição)
-    if(!texto && (d.origem==="crps" || d.origem==="escritorio") && /pdf|^text\//.test(d.tipo||"")){
+    // PDF com texto e ainda sem a contagem de páginas (importado antes da
+    // F188), ou que não passou pela importação (acórdão do CRPS, anexo da
+    // equipe): lê agora, página por página, e guarda — só na primeira vez
+    if(/pdf/.test(d.tipo||"") && (d.texto ? !Array.isArray(d.paginas_imagem) : (d.origem==="crps" || d.origem==="escritorio"))){
+      aviso(`Conferindo as páginas: documento ${i+1} de ${docs.length}…`, false);
+      try{
+        const lido = await textoDoDocumento(d.caminho);
+        texto = texto || lido.texto;
+        d.paginas = lido.paginas; d.paginas_imagem = lido.paginas_imagem;
+        if(d.id && lido.paginas){
+          await api(`/rest/v1/anexos?id=eq.${d.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+            body:JSON.stringify({paginas:lido.paginas, paginas_imagem:lido.paginas_imagem||[]})}).catch(()=>{});
+          const a = (D.anexos||[]).find(x=>x.id===d.id);
+          if(a){ a.paginas = lido.paginas; a.paginas_imagem = lido.paginas_imagem; }
+        }
+      }catch(e){}
+    }
+    if(!texto && d.origem==="escritorio" && /^text\//.test(d.tipo||"")){
       try{ texto = (await textoDoDocumento(d.caminho)).texto; }catch(e){}
     }
     // F188 · PDF ESCANEADO COM UM POUCO DE TEXTO. O processo administrativo do
@@ -18776,12 +18828,23 @@ async function partesDoPacote(k){
     // escaneado. ponytail: bytes por caractere (500) e tamanho (300 kB) são
     // chute medido num caso real (PA: 1.150 e 3.180; peças: até 140); o certo
     // seria contar as páginas sem texto na extração
-    partes.push({ i:i+1, d, texto, escaneado: quaseSoImagem(d, texto) });
+    // `imagem`: as páginas que vão para o PDF dos digitalizados (todas, se não há texto)
+    const pi = paginasImagem(d);
+    const imagem = !texto ? null : (pi && pi.length ? pi : []);
+    partes.push({ i:i+1, d, texto, imagem, escaneado: !!(imagem && imagem.length) });
   }
   return partes;
 }
-// o que vai no PDF dos digitalizados: sem texto nenhum, ou quase só imagem
+// o que vai no PDF dos digitalizados: sem texto nenhum, ou com páginas que são imagem
 const paraImagem = p => !p.texto || p.escaneado;
+// "páginas 3, 7 a 12" — para o .md e a folha de rosto
+function faixasDePaginas(lista){
+  const n = [...new Set(lista||[])].sort((a,b)=>a-b), out = [];
+  for(let i=0; i<n.length; i++){ let j=i; while(j+1<n.length && n[j+1]===n[j]+1) j++; out.push(i===j?`${n[i]}`:`${n[i]} a ${n[j]}`); i=j; }
+  return out.join(", ");
+}
+const notaImagem = p => p.escaneado
+  ? `${p.imagem.length === p.d.paginas ? "todas as" : p.imagem.length} de ${p.d.paginas} página(s) são imagem (${faixasDePaginas(p.imagem)})` : "";
 const rotDoc = p => `${String(p.d.data||"").slice(0,10)} · ${ORIGEM_DOC[p.d.origem]||p.d.origem} · ${p.d.nome}${p.d.evento?` (movimento: ${p.d.evento})`:""}`;
 async function pacoteClaude(casoId){
   const k = D.casoPorId.get(casoId); if(!k) return;
@@ -18803,17 +18866,17 @@ async function pacoteClaude(casoId){
     "- No eproc o nome do documento é um código: INIC = petição inicial, EMENDAINIC = emenda à inicial, PROC = procuração, COMP = documento comprobatório, END = comprovante de endereço, DESPADEC = despacho ou decisão, SENT = sentença, PET = petição, OUT = outros documentos, ANEXO = anexo da petição do mesmo movimento, CON_EXT_SISBA e IMP_SISB = resultado do SISBAJUD. O número no fim é a ordem dentro do movimento.",
     "- Não estão aqui: certidões, intimações e demais atos de expediente; no e-SAJ, peças anteriores às 5 movimentações mais recentes; no CRPS, o que não é acórdão ou decisão monocrática.",
     semTexto.length
-      ? `- **${semTexto.length} documento(s) DIGITALIZADO(S)** — sem texto, ou com texto só em poucas folhas (lista abaixo). Eles vão no PDF "digitalizados" gerado pelo CRM, com a mesma numeração; se não foi enviado junto, peça-o antes de concluir qualquer ponto que dependa deles.`
+      ? `- **${semTexto.length} documento(s) com páginas DIGITALIZADAS** — sem texto, ou com algumas páginas que são só imagem (lista abaixo, com as páginas). Eles vão no PDF "digitalizados" gerado pelo CRM, com a mesma numeração; se não foi enviado junto, peça-o antes de concluir qualquer ponto que dependa deles.`
       : "- Todos os documentos têm texto neste arquivo.", "",
-    ...(semTexto.length ? ["## Documentos digitalizados (leia pelo PDF)", "", ...semTexto.map(p=>`- doc ${p.i} · ${rotDoc(p)}${p.escaneado?" — parcialmente digitalizado":""}`), ""] : []),
+    ...(semTexto.length ? ["## Documentos digitalizados (leia pelo PDF)", "", ...semTexto.map(p=>`- doc ${p.i} · ${rotDoc(p)}${p.escaneado?` — ${notaImagem(p)}`:" — inteiro"}`), ""] : []),
     "## Índice", "",
-    ...partes.map(p=>`${p.i}. ${rotDoc(p)}${!p.texto?" — DIGITALIZADO, sem texto":p.escaneado?" — PARCIALMENTE DIGITALIZADO":""}`), "",
+    ...partes.map(p=>`${p.i}. ${rotDoc(p)}${!p.texto?" — DIGITALIZADO, sem texto":p.escaneado?` — ${notaImagem(p)}`:""}`), "",
     ...(()=>{ const visto = new Map();      // o mesmo arquivo juntado duas vezes (acontece no PJe) entra uma vez
       return partes.filter(p=>p.texto).flatMap(p=>{
         const ch = p.texto.trim(), igual = visto.get(ch);
         if(!igual) visto.set(ch, p.i);
         return [`---`, "", `## ${p.i}. ${p.d.nome}${p.d.evento?` — ${p.d.evento}`:""}`, "", `*${String(p.d.data||"").slice(0,10)} · ${ORIGEM_DOC[p.d.origem]||p.d.origem}*`, "",
-                ...(p.escaneado ? ["> PARCIALMENTE DIGITALIZADO — a maior parte das páginas é imagem; o texto abaixo é só o das folhas que têm texto. O documento inteiro está no PDF dos digitalizados, com a mesma numeração.", ""] : []),
+                ...(p.escaneado ? [`> ATENÇÃO: ${notaImagem(p)}. O texto abaixo é só o das outras páginas; as que são imagem estão no PDF dos digitalizados, com a mesma numeração.`, ""] : []),
                 igual ? `*(mesmo conteúdo do doc ${igual} — o arquivo foi juntado de novo)*` : ch, ""];
       }); })(),
   ].join("\n");
@@ -18864,17 +18927,20 @@ async function digitalizadosClaude(casoId){
         const c = doc.addPage([595, 842]);
         c.drawText(latin1(`doc ${p.i}${partes>1?` (parte ${parte} de ${partes})`:""}`), {x:60, y:740, size:28, font:fonte, color:rgb(0.1,0.1,0.1)});
         (latin1(rotDoc(p)).match(/.{1,70}(\s|$)/g)||[]).forEach((l,n)=>c.drawText(l.trim(), {x:60, y:700-n*18, size:13, font:fonte}));
-        c.drawText(latin1(p.escaneado ? "Documento parcialmente digitalizado - no pacote .md so ha o texto de poucas folhas; leia pela imagem."
+        c.drawText(latin1(p.escaneado ? `Paginas ${faixasDePaginas(p.imagem)} de ${p.d.paginas} - sao imagem; as demais tem texto no pacote .md.`
                                       : "Documento digitalizado (sem texto no pacote .md) - leia pela imagem."), {x:60, y:640, size:10, font:fonte, color:rgb(0.4,0.4,0.4)});
       };
       if(origem){
         // documento maior que uma parte (o PA de 100 páginas) se divide: o
         // Claude lê até 100 páginas por PDF
-        const idx = origem.getPageIndices(), porParte = LIM_PAG - 1;
+        // só as páginas que são imagem; documento sem texto vai inteiro
+        const todas = origem.getPageIndices();
+        const idx = p.escaneado ? p.imagem.map(n=>n-1).filter(n=>n>=0 && n<todas.length) : todas;
+        const porParte = LIM_PAG - 1;
         const pedacos = Math.ceil(idx.length / porParte);
         for(let j = 0; j < pedacos; j++){
           const fatia = idx.slice(j*porParte, (j+1)*porParte);
-          const pesoFatia = bin.length * fatia.length / idx.length;
+          const pesoFatia = bin.length * fatia.length / todas.length;
           if(!doc || (doc.getPageCount() && (doc.getPageCount()+fatia.length+1 > LIM_PAG || bytes+pesoFatia > LIM_BYTES))){ await fechar(); await abrir(); }
           capa(j+1, pedacos);
           for(const pg of await doc.copyPages(origem, fatia)) doc.addPage(pg);
