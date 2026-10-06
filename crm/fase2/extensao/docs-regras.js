@@ -54,6 +54,10 @@
       let s = '';
       for (let i = 0; i < Math.min(b.length, 6000); i++) s += String.fromCharCode(b[i]);
       if (/type=["']?password|kc-form-login|Sua sess[aã]o foi encerrada/i.test(s)) return null;
+      // a tela do próprio sistema não é documento: o eproc, quando o link do
+      // documento não vale mais (outro processo aberto na mesma sessão),
+      // devolve o Painel do Advogado — e ele entrava 64 vezes como "documento"
+      if (/<title>\s*::\s*eproc\b|Painel do Advogado|Consulta Processual - Detalhes/i.test(s)) return null;
       return b.length > 200 ? 'text/html' : null;
     }
     return null;

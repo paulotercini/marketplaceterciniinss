@@ -29,6 +29,8 @@ test('conteúdo: PDF pelos bytes; HTML de login não é documento', () => {
   const doc = Buffer.from('<html><body>' + 'JULGO PROCEDENTE o pedido. '.repeat(20) + '</body></html>');
   assert.equal(R.tipoDoConteudo(doc, 'text/html'), 'text/html');
   assert.equal(R.tipoDoConteudo(Buffer.from('{"erro":1}'), 'application/json'), null);
+  const painel = Buffer.from('<html><head><title>:: eproc  - Painel do Advogado ::</title></head><body>' + 'x'.repeat(500) + '</body></html>');
+  assert.equal(R.tipoDoConteudo(painel, 'text/html'), null, 'o painel do eproc não é documento');
 });
 
 test('desce tudo, menos o expediente', () => {
