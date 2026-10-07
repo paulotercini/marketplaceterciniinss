@@ -3833,7 +3833,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.04</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.05</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -20479,10 +20479,13 @@ function linhaCaso(k){
 // a etapa ATUAL também grava casos.etapa com a palavra antiga equivalente
 // (PUB_TRILHA), que é a que o portal e o resto do CRM já entendem.
 // Etapa: "Grupo|Nome" abre grupo; "*" na frente = só se houver; "#" = execução.
+// F184 · as quatro fases são UMA escala que escurece e esfria rumo ao verde-petróleo
+// da casa: o caso "amadurece" do Escritório ao Judicial. Nenhuma fase usa vermelho
+// nem âmbar, que no CRM querem dizer prazo fatal e prazo perto.
 const COR_FASE = {
-  escritorio:{n:"Escritório", c:"#A0503F", f:"#F6E9E4", t:"#7A3426"},   // tijolo: o vermelho fica para prazo e atraso
-  inss:      {n:"INSS",       c:"#B7791F", f:"#FBF1DA", t:"#6E4200"},
-  conselho:  {n:"Conselho",   c:"#3B7BD0", f:"#E8F0FB", t:"#1F4E8C"},
+  escritorio:{n:"Escritório", c:"#7C8DA6", f:"#EEF1F6", t:"#3E4F68"},
+  inss:      {n:"INSS",       c:"#4F78B0", f:"#E9F0F8", t:"#2B4C7A"},
+  conselho:  {n:"Conselho",   c:"#2C7A93", f:"#E4F1F4", t:"#1C5568"},
   judicial:  {n:"Judicial",   c:"#0E5C58", f:"#E6F0EF", t:"#0B4744"}};
 const COR_EXEC = {c:"#A5187F", f:"#FDF2F9", t:"#7E1260"};
 const DOCS_AGUARDO = ["relatório médico","PPP e LTCAT da empresa","prontuário médico","documento do RH ou empregador",

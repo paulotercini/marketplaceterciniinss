@@ -2121,3 +2121,9 @@ Prova nova: `trilha183.js` (9/9); `caso182.js` ajustada. Suíte: só as falhas d
   End andam entre as etapas. A rolagem da ficha é preservada (trRepintar).
 - Celular: as quatro abas numa linha, ✓ nas cumpridas e risco no "não houve".
 Prova: `trilha183.js` (15/15). Suíte: só as falhas de data.
+
+## 11.05 · F184 · as cores das fases viram uma escala de evolução
+Escritório #7C8DA6 (ardósia), INSS #4F78B0 (azul), Conselho #2C7A93
+(azul-petróleo) e Judicial #0E5C58 (o verde-petróleo da casa): a cor escurece
+e esfria conforme o caso avança. Nenhuma fase usa vermelho nem âmbar, que no
+CRM são prazo fatal e prazo perto; a Execução segue em roxo. Só `COR_FASE`.
