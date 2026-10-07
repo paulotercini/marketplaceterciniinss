@@ -140,3 +140,15 @@ test('uma rodada renova o crachá uma vez só', async () => {
   assert.match(pedidos[2].url, /\/rest\/v1\/coletas$/);
   assert.equal(pedidos[2].opcoes.headers.Authorization, 'Bearer jwt-novo');
 });
+
+test('F184 · o documento sobe ao bucket privado com o crachá; já existir não é erro', async () => {
+  const { api, pedidos } = await carregar({
+    guardado: { refresh: 'r1' },
+    respostas: [CRACHA_OK, { ok: false, status: 409, corpo: { error: 'Duplicate' } }],
+  });
+  const r = await api.guardarDoc('pje/123/9', 'application/pdf', Buffer.from('%PDF-1').toString('base64'));
+  assert.deepStrictEqual(r, { caminho: 'pje/123/9', bytes: 6 });
+  assert.equal(pedidos[1].url, 'https://x.supabase.co/storage/v1/object/anexos/pje/123/9');
+  assert.equal(pedidos[1].opcoes.headers.Authorization, 'Bearer jwt-novo');
+  assert.equal(pedidos[1].opcoes.headers['x-upsert'], 'false', 'sobrescrever trocaria a sentença guardada');
+});

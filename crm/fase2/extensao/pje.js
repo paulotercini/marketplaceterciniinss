@@ -185,7 +185,7 @@
   // aqui rolamos até ela parar de crescer e lemos tudo com as regras puras.
   // Entrega como fonte 'pje-processo' — a tela de importação casa pelo número
   // e grava o histórico com a DATA DE CADA MOVIMENTO, sem inundar as Novidades.
-  async function coletarProcessoAberto() {
+  async function coletarProcessoAberto({ entregar = true } = {}) {
     const cab = REG.lerCabecalhoProcesso(document.documentElement.outerHTML);
     if (!cab) { faixaErr('não achei o número do processo no topo — a página terminou de abrir?'); return { erro: 'sem número' }; }
     let tl = document.getElementById('divTimeLine');
@@ -195,7 +195,10 @@
     }
     if (!tl) { faixaErr('não achei a Cronologia — abra essa aba na página e clique de novo'); return { erro: 'sem cronologia' }; }
     let antes = -1, quietos = 0, morreuNoMeio = false;
-    for (let i = 0; i < 80 && quietos < 3; i++) {
+    // F184 · 3 rodadas quietas cortaram o começo da cronologia (a inicial e
+    // seus documentos sumiram numa coleta real): o PJe às vezes demora mais
+    // de 3 s para trazer a página seguinte
+    for (let i = 0; i < 120 && quietos < 6; i++) {
       if (paginaMorreu()) { morreuNoMeio = true; break; }   // entrega o que carregou
       const n = tl.querySelectorAll('.media').length;
       if (n === antes) quietos++;
@@ -204,15 +207,33 @@
       tl.scrollTop = tl.scrollHeight;
       const fim = tl.querySelector('.media:last-child');
       if (fim) fim.scrollIntoView({ block: 'end' });
-      await pausa(900);
+      await pausa(1200);
     }
     if (morreuNoMeio) faixa('⚠ o PJe derrubou a conversa durante a rolagem — entrego o que já carregou');
     const itens = REG.lerTimelineHtml(tl.outerHTML);
     if (!itens.length) { faixaErr('a cronologia estava vazia na tela'); return { erro: 'vazio' }; }
+    // F184 · as decisões vão junto: o CRM passa a dizer O QUE foi decidido
+    const docs = itens.flatMap(i => i.docs || []);
+    if (docs.some(d => DOCS_REGRAS.vaiBaixar(d.nome))) faixa(`processo ${cab.numero}: guardando as peças no CRM (as já guardadas são puladas)…`);
+    // o PJe só libera o download do documento ABERTO no visualizador (medido
+    // ao vivo: o não aberto responde 404) — então se clica nele na
+    // cronologia, como a pessoa faria, e se espera o PJe sossegar
+    // o que já está no CRM, de uma vez: só se clica no que falta
+    let existentes = null;
+    try { existentes = new Set((await CRM.pedir({ tipo: 'crm', acao: 'docs-existentes',
+      prefixo: `pje/${String(cab.numero).replace(/\D/g, '')}/` })).nomes); } catch (e) {}
+    await CRM.guardarDocs('pje', cab.numero, docs, { existentes, baixar: async d => {
+      const a = [...tl.querySelectorAll('a')].find(x => x.textContent.trim().startsWith(d.id + ' -'));
+      if (a) { a.click(); await pausa(700); await esperarLivre(); await esperarQuieto(700, 8000); }
+      return fetch(d.url, { credentials: 'include' });
+    } });
     const OUT = { versao: 1, fonte: 'pje-processo', grau, host: location.host,
                   quando: new Date().toISOString(), numero: cab.numero,
                   classe: cab.classe || null, orgao: cab.orgao || null,
                   link: location.href.split('#')[0], itens };
+    // F187 · na rodada "completar processos" quem entrega (em lotes) é o
+    // service worker: aqui só se devolve o processo lido
+    if (!entregar) return { ok: itens.length, out: OUT };
     await CRM.enviar('pje-processo', OUT);
     faixaOk(`✔ ${itens.length} itens do processo ${cab.numero} entregues ao CRM — confira em 📥 Importar.`);
     someFaixa();
@@ -246,7 +267,8 @@
       // na janela de um processo aberto, o CLIQUE coleta o histórico COMPLETO
       // dele. F97 · o "atualizar tudo" (opts.acervo) quer o acervo: vai ao
       // Painel e recomeça de lá, como já se faz quando a conversa cai.
-      if (noProcesso && !(opts && opts.acervo)) return await coletarProcessoAberto();
+      if (noProcesso && !(opts && opts.acervo))
+        return await coletarProcessoAberto(opts && opts.completo ? { entregar: false } : undefined);
       if (!new RegExp(PAINEL.replace(/\./g, '\\.')).test(location.pathname)) {
         if (agendarRetomada()) {
           faixa('indo ao Painel do Advogado para ler o acervo…');

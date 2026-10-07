@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 const { FIX, SESSAO, CLI_CHEIO, CASO1 } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
-const dia = n => { const d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+const dia = n => { const d = new Date(); d.setDate(d.getDate() + n); return d.toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" }); };
 FIX.casos[0].prazo = dia(-3);
 for (let i = 0; i < 3; i++) {
   const cid = `c2000000-0000-0000-0000-00000000000${i}`;

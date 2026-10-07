@@ -40,9 +40,9 @@ LC 146/2014. Estende a estabilidade provisória da gestante (ADCT, art. 10, II, 
 
 EC 103/2019. Não alterou estruturalmente o salário-maternidade.
 
-Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Hipóteses do salário-maternidade (espécie única B80; não existem B81, B82 ou B83 para este benefício)
 

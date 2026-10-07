@@ -52,6 +52,18 @@ t.test("histórico: só cliente entra, @lid acha o número, ordem por data", () 
   a.equal(g.get("5516988887777").length, 1);
 });
 
+t.test("citação e reação do cliente, e a chave para citar ou reagir", () => {
+  const citando = msg({ extendedTextMessage: { text: "isso mesmo", contextInfo: { stanzaId: "ORIG1" } } });
+  a.equal(N.citacaoDe(citando), "ORIG1");
+  a.equal(N.citacaoDe(msg({ conversation: "oi" })), null);
+  const reage = { key: { remoteJid: "5516999990000@s.whatsapp.net", id: "R1" }, message: { reactionMessage: { key: { id: "ORIG1" }, text: "👍" } } };
+  a.deepEqual(N.reacaoDe(reage), { id: "ORIG1", emoji: "👍" });
+  a.deepEqual(N.reacaoDe({ key: {}, message: { reactionMessage: { key: { id: "ORIG1" }, text: "" } } }), { id: "ORIG1", emoji: "" });
+  a.equal(N.reacaoDe(msg({ conversation: "oi" })), null);
+  a.deepEqual(N.chaveDaMensagem("x@s.whatsapp.net", { externo_id: "E", direcao: "entrada" }), { remoteJid: "x@s.whatsapp.net", id: "E", fromMe: false });
+  a.equal(N.chaveDaMensagem("x", { externo_id: "E", direcao: "saida" }).fromMe, true);
+});
+
 t.test("texto simples e texto com citação", () => {
   a.equal(N.textoDaMensagem(msg({ conversation: "Doutor, saiu a perícia?" })),
           "Doutor, saiu a perícia?");

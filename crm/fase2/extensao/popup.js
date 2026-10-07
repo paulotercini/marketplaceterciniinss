@@ -82,6 +82,24 @@ document.getElementById('b-tudo').onclick = () => {
       + (r.pat && r.pat.esperando ? 'tela pronta — clique em "Buscar"' : (r.pat && r.pat.erro) || 'ok');
   });
 };
+// F187 · completar processos: roda no service worker (o popup pode fechar);
+// o andamento do PJe fica no storage e aparece aqui quando o popup abre
+document.getElementById('b-completo').onclick = () => {
+  res.style.color = '#5B6069';
+  res.textContent = 'completando — o eproc corre na aba dele e o PJe numa janela de trabalho; não mexa nos dois enquanto roda';
+  chrome.runtime.sendMessage({ tipo: 'rodar-completo' }, r => {
+    if (!r) return;
+    if (r.erro) { res.style.color = '#B3261E'; res.textContent = r.erro; return; }
+    res.style.color = r.feitos.some(f => f.erro) ? '#B4530A' : '#1E6F50';
+    res.textContent = r.feitos.map(f => `${f.rotulo}: ${f.erro ? '⚠ ' + f.erro : '✔ ' + f.ok + (f.falhas ? ` (${f.falhas} falharam)` : '')}`).join(' · ');
+  });
+};
+chrome.storage.local.get(['completar_pje'], ({ completar_pje: c }) => {
+  if (!c) return;
+  document.getElementById('q-completo').textContent = c.fim
+    ? `PJe completado em ${new Date(c.fim).toLocaleString('pt-BR')}: ${c.feitos} processo(s)${c.falhas ? `, ${c.falhas} falharam` : ''}`
+    : `PJe: processo ${c.i} de ${c.total} (${c.numero || ''})…`;
+});
 document.getElementById('b-pat').onclick  = () => rodar('pat');
 document.getElementById('b-crps').onclick = () => rodar('crps');
 document.getElementById('b-pje').onclick  = () => rodar('pje');

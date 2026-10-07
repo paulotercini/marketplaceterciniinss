@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Dossiê do cliente — Tercini",
+  "version": "0.2.2",
+  "description": "Na sessão gov.br já logada do cliente, baixa num clique os documentos do Meu INSS, do e-Recursos e do Emprega Brasil (CTPS, RAIS, CAGED) para Downloads/Dossie/<Nome CPF>/ e para a ficha no CRM.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "downloads",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "https://meu.inss.gov.br/*",
+    "https://vip-pmeuinss-api.inss.gov.br/*",
+    "https://vip-pmeuinss-arq.inss.gov.br/*",
+    "https://consultaprocessos.inss.gov.br/*",
+    "https://servicos.mte.gov.br/*",
+    "https://mte.api.dataprev.gov.br/*",
+    "https://*.supabase.co/*"
+  ],
+  "background": {
+    "service_worker": "fundo.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Dossiê do cliente"
+  },
+  "options_page": "config.html"
+}

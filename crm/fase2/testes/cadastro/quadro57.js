@@ -8,7 +8,7 @@ const path = require("path");
 const { FIX, SESSAO, CLI_CHEIO, CASO1, EU } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 
-const D0 = new Date(); const iso = d => d.toISOString().slice(0, 10);
+const D0 = new Date(); const iso = d => d.toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 const mais = n => { const d = new Date(D0); d.setDate(d.getDate() + n); return iso(d); };
 const ONTEM3 = mais(-3), DAQUI2 = mais(2), DAQUI10 = mais(10), DAQUI20 = mais(20);
 

@@ -32,9 +32,9 @@ Lei 8.213/91, art. 118. Estabilidade provisória de 12 meses após a cessação 
 
 ADI 3931 (STF). Reconhece a constitucionalidade do NTEP como regra de inversão do ônus da prova em favor do segurado.
 
-Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefícios acidentários (CF/88, art. 109, I, exclui da competência federal as ações acidentárias entre o INSS e o segurado).
 

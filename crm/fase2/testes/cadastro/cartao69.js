@@ -9,7 +9,7 @@ const path = require("path");
 const { FIX, SESSAO, CLI_CHEIO, CLI_VAZIO, CASO1 } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 
-const D0 = new Date(); const iso = d => d.toISOString().slice(0, 10);
+const D0 = new Date(); const iso = d => d.toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 const mais = n => { const d = new Date(D0); d.setDate(d.getDate() + n); return iso(d); };
 FIX.casos[0].prazo = mais(3);   // um prazo fatal FUTURO — o destaque não depende de vencer
 

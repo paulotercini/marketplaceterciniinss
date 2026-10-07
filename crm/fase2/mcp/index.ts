@@ -589,7 +589,23 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
   // muda o status de 'rascunho' para 'fila' e a ponte leva. O rascunho vai
   // com por_bot=true: assim não dispara zap_humano_assumiu, que calaria o bot
   // da conversa por uma mensagem que talvez nunca saia.
-  const COL_ZAP = "id,telefone,nome_perfil,cliente_id,lead_id,atendente_id,status,nao_lidas,ultima_em,ultimo_texto,bot_ativo";
+  const COL_ZAP = "id,telefone,nome_perfil,cliente_id,lead_id,atendente_id,status,nao_lidas,ultima_em,ultimo_texto,bot_ativo,setor_id,atendimento_id";
+  // setor, etiquetas, protocolo e retorno aberto: o que a tela do CRM mostra no cabeçalho
+  const contextoZap = async (c: any) => {
+    const [setor] = c.setor_id ? await db(`zap_setores?select=nome&id=eq.${c.setor_id}`) : [];
+    const etq = await db(`zap_conversa_etiquetas?select=zap_etiquetas(texto)&conversa_id=eq.${c.id}`).catch(() => []);
+    const [at] = c.atendimento_id ? await db(`zap_atendimentos?select=numero&id=eq.${c.atendimento_id}`) : [];
+    const [ret] = await db(`zap_retornos?select=quando,nota&conversa_id=eq.${c.id}&feito_em=is.null&order=quando&limit=1`).catch(() => []);
+    // F187 · com quem está e por onde passou
+    const tr = await db(`zap_transferencias?select=de_id,para_id,motivo,tipo,em&conversa_id=eq.${c.id}&order=em.desc&limit=3`).catch(() => []);
+    const trs = await Promise.all(tr.map(async (t: any) => `${hora(t.em)} ${t.tipo === "assumiu" ? `${await nomeCol(t.para_id)} assumiu`
+      : `${(await nomeCol(t.de_id)) || "fila"} → ${(await nomeCol(t.para_id)) || "setor"}`}${t.motivo ? ` (${t.motivo})` : ""}`));
+    return [at ? `protocolo #${at.numero}` : "", setor ? `setor ${setor.nome}` : "",
+      c.atendente_id ? `com ${await nomeCol(c.atendente_id)}` : "sem atendente (pendente)",
+      trs.length ? `transferências: ${trs.join("; ")}` : "",
+      etq.length ? `etiquetas: ${etq.map((e: any) => e.zap_etiquetas?.texto).filter(Boolean).join(", ")}` : "",
+      ret ? `retorno marcado para ${hora(ret.quando)}${ret.nota ? ` (${ret.nota})` : ""}` : ""].filter(Boolean).join(" · ");
+  };
   const hora = (iso?: string | null) => iso ? new Date(iso).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "short", timeStyle: "short" }) : "";
   const conversaDe = async (a: { conversa_id?: string; cliente_id?: string; telefone?: string }) => {
     const filtro = a.conversa_id ? `id=eq.${a.conversa_id}` : a.cliente_id ? `cliente_id=eq.${a.cliente_id}`
@@ -650,8 +666,52 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
     const linhas = await Promise.all(msgs.map(async (m: any) => `[${hora(m.quando_wa || m.criado_em)}] ${await quem(m)}`
       + (m.status === "rascunho" ? " (RASCUNHO, não enviado)" : m.status === "erro" ? " (NÃO ENVIOU)" : "")
       + `: ${m.texto?.trim() || `[${m.tipo}]`}${m.midia_nome ? ` 📎 ${m.midia_nome}` : ""} · mensagem_id:${m.id}`));
+    const ctx = await contextoZap(c);
     return texto(`Conversa ${c.id} com ${cli || c.nome_perfil || "sem nome"} (${c.telefone})`
-      + (c.cliente_id ? `, cliente_id:${c.cliente_id}` : ", sem cliente vinculado") + `, ${c.status}.\n\n${linhas.join("\n") || "Sem mensagens."}`);
+      + (c.cliente_id ? `, cliente_id:${c.cliente_id}` : ", sem cliente vinculado") + `, ${c.status}.`
+      + (ctx ? ` ${ctx}.` : "") + `\n\n${linhas.join("\n") || "Sem mensagens."}`);
+  });
+
+  server.registerTool("retorno_whatsapp", {
+    title: "Marcar retorno no WhatsApp",
+    description: "Marca um retorno (\"responder depois\") numa conversa do WhatsApp, com dia, hora e nota, como o botão ⏰ do CRM. Na hora marcada, quem vai responder recebe um aviso no CRM. Não manda nada ao cliente.",
+    inputSchema: z.object({ ...QUAL_CONVERSA, dia: DATA, hora: z.string().regex(/^\d{1,2}:\d{2}$/, "HH:MM").default("09:00"),
+      nota: z.string().max(500).optional(), para: z.string().optional().describe("inicial ou nome de quem vai responder; padrão: o atendente da conversa") }),
+    annotations: escrita,
+  }, async ({ dia, hora: hh, nota, para, ...qual }) => {
+    const c = await conversaDe(qual);
+    if (!c) return texto("Conversa não encontrada; nada foi gravado.");
+    const iso = isoDe(dia);
+    if (!iso) return texto("Data inválida; nada foi gravado.");
+    const quando = new Date(`${iso}T${hh.padStart(5, "0")}:00-03:00`);
+    if (quando.getTime() < Date.now()) return texto("O retorno precisa ser no futuro; nada foi gravado.");
+    const quem = para ? await acharCol(para) : null;
+    if (para && !quem) return texto(`Não achei o colaborador "${para}"; nada foi gravado.`);
+    await db("zap_retornos", { conversa_id: c.id, quando: quando.toISOString(), nota: nota?.trim() || null,
+      colaborador_id: quem?.id || c.atendente_id || null, criado_por: eu.id });
+    return texto(`Retorno marcado para ${br(iso)} às ${hh} na conversa com ${c.nome_perfil || c.telefone}${quem ? `, para ${quem.nome}` : ""}.`);
+  });
+
+  server.registerTool("transferir_whatsapp", {
+    title: "Transferir conversa do WhatsApp",
+    description: "Passa a conversa para uma pessoa da equipe ou para um setor (o CRM escolhe quem está livre nele), como o botão Transferir do CRM. Quem recebe ganha um aviso em Menções e fica uma nota na conversa. Não manda nada ao cliente.",
+    inputSchema: z.object({ ...QUAL_CONVERSA, para: z.string().optional().describe("inicial ou nome de quem vai atender"),
+      setor: z.string().optional().describe("nome do setor, ex.: Jurídico"), motivo: z.string().max(300).optional() }),
+    annotations: escrita,
+  }, async ({ para, setor, motivo, ...qual }) => {
+    if (!para && !setor) return texto("Diga para quem (para) ou para qual setor (setor); nada foi feito.");
+    const c = await conversaDe(qual);
+    if (!c) return texto("Conversa não encontrada; nada foi feito.");
+    const quem = para ? await acharCol(para) : null;
+    if (para && !quem) return texto(`Não achei o colaborador "${para}"; nada foi feito.`);
+    const setores = setor ? await db(`zap_setores?select=id,nome&ativo=eq.true`) : [];
+    const st = setor ? setores.find((x: any) => x.nome.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+      === setor.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")) : null;
+    if (setor && !st) return texto(`Não achei o setor "${setor}". Setores: ${setores.map((x: any) => x.nome).join(", ")}. Nada foi feito.`);
+    const destino = await db("rpc/zap_transferir", { p_conversa: c.id, p_para: quem?.id || null, p_setor: st?.id || null,
+      p_motivo: motivo?.trim() || null, p_por: eu.id });
+    const nome = quem?.nome || (destino ? await nomeCol(destino) : null);
+    return texto(`Conversa com ${c.nome_perfil || c.telefone} transferida para ${nome || `o setor ${st?.nome} (ninguém livre: ficou pendente no setor)`}${motivo ? ` — ${motivo}` : ""}. Quem recebe foi avisado.`);
   });
 
   server.registerTool("rascunhar_whatsapp", {

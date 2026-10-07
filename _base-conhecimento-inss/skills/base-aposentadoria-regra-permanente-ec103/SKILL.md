@@ -19,11 +19,11 @@ Lei 8.213/91, art. 48. Idade rural mantida em 60 anos (homem) e 55 anos (mulher)
 
 Lei 8.213/91, art. 25, II. Carência de 180 contribuições para aposentadoria por idade.
 
-Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
-Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Dois ramos da regra permanente
 

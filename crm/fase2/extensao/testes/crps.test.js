@@ -17,7 +17,8 @@ function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [] } = {}) {
     if (lista.test(u)) return resp(200, [{ proc: NUP1, nb: '123' }, { proc: NUP2, nb: '456' }]);
     if (/^\/api\/v1\/[a-z]+\/$/.test(u)) return resp(404, {});
     const m = u.match(/^\/api\/v1\/([a-z]+)\/(\d+)$/);
-    if (m) return m[1] === sistemaQueLista && [NUP1, NUP2].includes(m[2]) ? resp(200, { nup: m[2], andamento: 'x' }) : resp(404, {});
+    if (m) return m[1] === sistemaQueLista && [NUP1, NUP2].includes(m[2]) ? resp(200, { nup: m[2], andamento: 'x',
+      eventos: [{ status: 'Julgado', documentos: [{ id: 7, nome: 'Acórdão.pdf', path: '/doc/7' }, { id: 8, nome: 'CNIS.pdf', path: '/doc/8' }] }] }) : resp(404, {});
     throw new Error('pedido inesperado ' + u);
   };
   const nada = () => {};
@@ -26,6 +27,8 @@ function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [] } = {}) {
     localStorage: { getItem: k => k === 'ifs_auth' ? 'token-cru' : null },
     chrome: { storage: { local: { get: async () => ({}), set: async () => {} } } },
     CRM: { nupsDoCrm: async () => ({ nups: nupsDoCrm, arquivados: [], fichas: 10 }),
+           // F184 · só o acórdão desce; o caminho volta marcado no documento
+           guardarDocs: async (origem, nup, docs) => { docs.forEach(d => { d.caminho = `${origem}/${nup}/${d.id}`; }); return docs.length; },
            enviar: async (fonte, dados) => { enviados.push(dados); return true; } } };
   ctx.window = ctx; ctx.top = ctx;
   vm.createContext(ctx);
@@ -48,4 +51,11 @@ test('recurso que o portal não lista mas o CRM conhece ainda é procurado nos d
   const doTerceiro = pedidos.filter(u => u.endsWith('/' + NUP3));
   assert.deepStrictEqual(doTerceiro, [`/api/v1/recben/${NUP3}`, `/api/v1/esisrec/${NUP3}`], 'o sistema que listou vem primeiro; o outro só depois do 404');
   assert.equal(enviados[0].falhas.length, 0, '404 não é falha');
+});
+
+test('F184 · o acórdão desce junto e volta com o caminho; o CNIS não', async () => {
+  const { enviados } = await rodada();
+  const docs = enviados[0].itens[`${NUP1}_esisrec`].eventos[0].documentos;
+  assert.equal(docs[0].caminho, `crps/${NUP1}/7`);
+  assert.equal(docs[1].caminho, undefined);
 });
