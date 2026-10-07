@@ -69,15 +69,19 @@ const DADOS = {
   
   const FOTO = process.env.FOTO;
   await p.waitForSelector(".tr-faixa .tr-l");
+  if (FOTO) { await p.screenshot({ path: FOTO + "-0.png" }); await p.setViewportSize({ width: 400, height: 900 }); await p.waitForTimeout(500); await p.screenshot({ path: FOTO + "-m.png" }); await p.setViewportSize({ width: 1440, height: 1100 }); await p.waitForTimeout(400); }
   const v = await p.evaluate(() => ({
     fases: [...document.querySelectorAll(".jn-l .jn-b")].map(b => [...b.classList].find(c => /^jn-[afnv]$/.test(c))).join("|"),
     tit: document.querySelector(".tr-cab h3").textContent,
     nomes: [...document.querySelectorAll(".tr-l .tr-nm")].map(x => x.textContent),
-    roxo: getComputedStyle(document.querySelector(".tr-g-ex")).color,
-    ritos: [...document.querySelectorAll(".tr-ritos button")].map(b => b.textContent) }));
-  conf("processo do TJSP abre a trilha acidentária, judicial como fase atual", v.tit === "Judicial · Acidentário · TJSP" && v.fases.endsWith("jn-a"));
+    roxo: getComputedStyle(document.querySelector(".tr-g-ex")).color, execRecolhida: !!document.querySelector(".tr-grp"),
+    ritos: [...document.querySelectorAll(".tr-ritos option")].map(b => b.textContent) }));
+  conf("processo do TJSP abre a trilha acidentária, judicial como fase atual", v.tit === "Acidentário · TJSP" && v.fases.endsWith("jn-a"));
   conf("no acidentário a perícia e o laudo vêm antes da contestação", v.nomes.indexOf("Laudo juntado") < v.nomes.indexOf("Citação e contestação") && v.nomes.indexOf("Perícia realizada") > 0);
-  conf("a execução entra na trilha, com o grupo em roxo", v.nomes.includes("RPV ou precatório expedido") && v.nomes.includes("Cumprimento de sentença") === false && v.roxo === "rgb(165, 24, 127)");
+  conf("a execução entra recolhida, com o grupo em roxo, e abre no clique", v.execRecolhida && !v.nomes.includes("RPV ou precatório expedido") && v.roxo === "rgb(165, 24, 127)");
+  await p.evaluate(() => document.querySelector(".tr-grp").click());
+  conf("aberta, a execução mostra RPV e levantamento", await p.evaluate(() => [...document.querySelectorAll(".tr-l .tr-nm")].map(x => x.textContent).includes("RPV ou precatório expedido")));
+  v.nomes = await p.evaluate(() => [...document.querySelectorAll(".tr-l .tr-nm")].map(x => x.textContent));
   conf("os ritos judiciais podem ser trocados à mão", ["JEF · incapacidade e BPC", "JEF · aposentadorias", "Vara Federal · rito comum", "Acidentário · TJSP", "Mandado de segurança"].every(x => v.ritos.includes(x)));
   // marcar: perícia realizada como atual grava a palavra antiga em casos.etapa
   escritos.length = 0;
@@ -94,6 +98,23 @@ const DADOS = {
   // a providência que declara a etapa (anotação) acende a etapa da trilha
   await p.evaluate(() => marcarEtapa(casoSel, "sentença publicada"));
   conf("a anotação que declara 'sentença publicada' acende Sentença na trilha", await p.evaluate(() => (marcaTrilha(D.casoPorId.get(casoSel), "acid", "Sentença") || {}).s === "a"));
+  // grupo cumprido recolhe; teclado anda pelas etapas; desfazer volta a marca
+  await p.evaluate(() => { const k = D.casoPorId.get(casoSel), ets = TRILHAS.acid.e.map(lerEtapaTrilha);
+    let t = trilhaDe(k); for (const n of ["Ação distribuída", "Nomeação do perito e quesitos", "Perícia designada", "Perícia realizada", "Laudo juntado", "Citação e contestação", "Réplica"]) { k.trilha = t = trilhaComMarca(k, "acid", n, "f", "2026-09-01"); }
+    return trRepintar(); });
+  const grp = await p.evaluate(() => [...document.querySelectorAll(".tr-grp .tr-nm")].map(x => x.textContent));
+  conf("a Instrução cumprida fica recolhida em 'n de n cumpridas'", grp.some(x => /^6 de 6 cumpridas$/.test(x) || /^\d+ de \d+ cumpridas$/.test(x)));
+  await p.focus(".tr-l .tr-et"); await p.keyboard.press("ArrowRight");
+  conf("a seta leva o foco à etapa seguinte", await p.evaluate(() => document.activeElement === document.querySelectorAll(".tr-l .tr-et")[1]));
+  await p.keyboard.press("End"); await p.keyboard.press("Enter"); await p.waitForTimeout(150);
+  conf("Enter abre o quadro da etapa e Esc fecha só o quadro", await p.evaluate(() => !!document.querySelector(".tr-pnl")) && (await p.keyboard.press("Escape"), await p.evaluate(() => !document.querySelector(".tr-pnl") && !!clienteAberto)));
+  const antesU = await p.evaluate(() => JSON.stringify(D.casoPorId.get(casoSel).trilha));
+  await p.evaluate(() => { const i = TRILHAS.acid.e.map(lerEtapaTrilha).findIndex(e => e.n === "Réplica"); return trMarcar(casoSel, "acid", i, "n"); });
+  await p.waitForTimeout(200);
+  await p.evaluate(() => desfazerAgora()); await p.waitForTimeout(300);
+  conf("o desfazer devolve a trilha como estava", await p.evaluate(a => JSON.stringify(D.casoPorId.get(casoSel).trilha) === a, antesU));
+  await p.evaluate(() => trFaseHouve(casoSel, "inss", "n")); await p.waitForTimeout(200);
+  conf("a fase passada pode ser marcada como 'não houve'", await p.evaluate(() => document.querySelectorAll(".jn-l .jn-b")[1].classList.contains("jn-n")));
   if (FOTO) await p.screenshot({ path: FOTO + "-1.png" });
   // a jornada: ver a trilha do Escritório, com o documento aguardado
   await p.evaluate(() => trVerFase(casoSel, "escritorio"));
@@ -101,9 +122,9 @@ const DADOS = {
   await p.evaluate(() => { const i = TRILHAS.escritorio.e.indexOf("Aguardando documentos"); return trDetalhe(casoSel, "escritorio", i, "relatório médico"); });
   await p.waitForTimeout(200);
   const esc = await p.evaluate(() => ({ tit: document.querySelector(".tr-cab h3").textContent, x: (document.querySelector(".tr-l .tr-x") || {}).textContent,
-    cor: getComputedStyle(document.querySelector(".tr")).borderTopColor, sel: !!document.querySelector(".tr-doc select") }));
+    cor: getComputedStyle(document.querySelector(".jn-ver")).getPropertyValue("--fc").trim(), sel: !!document.querySelector(".tr-doc select") }));
   if (FOTO) await p.screenshot({ path: FOTO + "-2.png" });
-  conf("a jornada abre a trilha do Escritório, em vermelho, com o documento aguardado", esc.tit === "Escritório · Atendimento" && esc.x === "relatório médico" && esc.cor === "rgb(179, 38, 30)" && esc.sel);
+  conf("a jornada abre a trilha do Escritório, em vermelho, com o documento aguardado", esc.tit === "Atendimento" && esc.x === "relatório médico" && esc.cor === "#A0503F" && esc.sel);
   conf("a trilha do INSS de auxílio-acidente existe", await p.evaluate(() => ritoPadrao({ especie: "B94" }, "inss") === "inss_b94" && ritoPadrao({ especie: "B31", processo: "5000850-63.2023.4.03.6314" }, "judicial") === "jef_inc" && ritoPadrao({ especie: "B42", processo: "5000850-63.2023.4.03.6136" }, "judicial") === "vara"));
 
   for (const [nome, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${nome}`);

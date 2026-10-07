@@ -81,7 +81,7 @@ const DADOS = {
       txt: (document.querySelector(".outras-abas") || {}).textContent || "" };
   });
   // F183 · a trilha subiu para o alto do caso: jornada por cor e trilha do rito
-  conf("a jornada mostra as quatro fases, o INSS como atual", esq.fases === "Escritório:jn-f|INSS:jn-a|Conselho:jn-v|Judicial:jn-v" && /^INSS · Aposentadorias e pensão$/.test(esq.trilha) && esq.passos === 7);
+  conf("a jornada mostra as quatro fases, o INSS como atual", esq.fases === "Escritório:jn-f|INSS:jn-a|Conselho:jn-v|Judicial:jn-v" && /^Aposentadorias e pensão$/.test(esq.trilha) && esq.passos === 7);
   conf("Nas outras abas traz Perícias e Honorários com o dado de cada uma", esq.abas.includes("Perícias") && esq.abas.includes("Honorários") && /APS Fictícia/.test(esq.txt) && /próximo vencimento/.test(esq.txt));
   await p.evaluate(() => document.querySelector(".oa-linha").click());
   conf("o atalho leva à aba (Perícias)", await p.evaluate(() => abaAtiva === 3));
