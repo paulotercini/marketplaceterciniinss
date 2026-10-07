@@ -31,6 +31,71 @@ window.CRM = window.CRM || {
   processosTjsp: () => CRM.pedir({ tipo: 'crm', acao: 'processos-tjsp' }),
   // devolve { favoritos }: os links de processo do e-SAJ nas pastas "X a Y" dos favoritos
   favoritosEsaj: () => CRM.pedir({ tipo: 'crm', acao: 'favoritos-esaj' }),
+
+  // F184 · baixa (nesta sessão logada) e guarda no CRM as peças e os
+  // documentos (tudo menos expediente — docs-regras.js); marca `caminho`
+  // em cada um que ficou guardado. Um por vez, com
+  // pausa: o portal é do tribunal, e derrubar a sessão custa a coleta inteira.
+  // `baixar(doc)` → Response, para o portal que precisa de cabeçalho próprio.
+  // Falha num documento não derruba a coleta: o andamento vai sem ele.
+  async guardarDocs(origem, processo, docs, { todos = false, baixar, pausaMs = 600, existentes = null } = {}) {
+    const R = window.DOCS_REGRAS;
+    let n = 0;
+    for (const d of docs || []) {
+      if (!d || (!d.url && !baixar) || (!todos && !R.vaiBaixar(d.nome))) continue;
+      const caminho = R.caminhoDoc(origem, processo, d);
+      try {
+        // `existentes` (a pasta listada de uma vez) poupa uma ida ao banco por documento
+        const jaTem = existentes ? existentes.has(caminho) : (await CRM.pedir({ tipo: 'crm', acao: 'doc-existe', caminho })).existe;
+        if (!jaTem) {
+          const r = baixar ? await baixar(d)
+            : await fetch(new URL(d.url, location.href), { credentials: 'include' });
+          if (!r || !r.ok) continue;
+          let buf = new Uint8Array(await r.arrayBuffer());
+          let ctype = r.headers.get('content-type');
+          let tipoDoc = R.tipoDoConteudo(buf, ctype);
+          // a página do visualizador (eproc, e-SAJ) embrulha o documento: segue
+          // até ele, no máximo dois andares
+          for (let andar = 0, base = r.url || location.href; tipoDoc === 'text/html' && andar < 2; andar++) {
+            const miolo = R.enderecoDoMiolo(new TextDecoder().decode(buf));
+            if (!miolo) break;
+            const r2 = await fetch(new URL(miolo, base), { credentials: 'include' });
+            if (!r2.ok) { tipoDoc = null; break; }
+            base = r2.url; buf = new Uint8Array(await r2.arrayBuffer());
+            ctype = r2.headers.get('content-type');
+            tipoDoc = R.tipoDoConteudo(buf, ctype);
+          }
+          if (!tipoDoc) continue;                      // tela de login ou erro, não documento
+          // HTML em outro charset (o eproc é ISO-8859-1) vai ao bucket em UTF-8
+          if (tipoDoc === 'text/html') {
+            const cs = R.charsetDoHtml(buf, ctype);
+            let jaUtf8 = true;
+            try { new TextDecoder('utf-8', { fatal: true }).decode(buf); } catch (e) { jaUtf8 = false; }
+            if (!jaUtf8 && !/^utf-?8$/.test(cs)) {
+              let html = new TextDecoder(cs).decode(buf);
+              html = html.replace(/<meta[^>]*charset[^>]*>/gi, '').replace(/<head[^>]*>/i, m => m + '<meta charset="utf-8">');
+              if (!/charset="utf-8"/.test(html)) html = '<meta charset="utf-8">' + html;
+              buf = new TextEncoder().encode(html);
+            }
+          }
+          // sobe DIRETO ao Storage (sem o teto de 64 MiB da mensagem interna)
+          const { url, chave, token } = await CRM.pedir({ tipo: 'crm', acao: 'acesso-storage' });
+          const up = await fetch(`${url}/storage/v1/object/anexos/${caminho}`, { method: 'POST', body: buf,
+            headers: { apikey: chave, Authorization: 'Bearer ' + token, 'Content-Type': tipoDoc, 'x-upsert': 'false' } });
+          if (!up.ok) {
+            const t = await up.text();
+            if (!(up.status === 409 || /already exists|Duplicate/i.test(t))) {
+              console.warn('[CRM] o Storage recusou', d.nome, `(${Math.round(buf.length / 1048576)} MB):`, up.status, t.slice(0, 120));
+              continue;                                // grande demais ou recusado: segue para o próximo
+            }
+          }
+          await new Promise(res => setTimeout(res, pausaMs));
+        }
+        d.caminho = caminho; n++;
+      } catch (e) { console.warn('[CRM] documento não guardado:', d.nome, e); }
+    }
+    return n;
+  },
 };
 
 // PROVA DE VIDA. O console do navegador nem sempre mostra o que a extensão

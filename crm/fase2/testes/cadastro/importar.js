@@ -79,7 +79,7 @@ const PLANILHA = [
   await p.fill("#imp-txt", PLANILHA);
   await p.click('button:has-text("Conferir")');
   await p.waitForTimeout(400);
-  conf("nada foi gravado só por conferir", gravados.length === 0);
+  conf("nada foi gravado só por conferir", gravados.filter(g => g.tabela !== "rpc").length === 0);  // rpc: o ponto de presença (F187)
 
   const estados = await p.evaluate(() => _impEnd.map(l => l.estado));
   conf(`o cabeçalho não vira linha (${estados.length} linhas lidas de 6)`, estados.length === 5);

@@ -18,10 +18,10 @@ class LayoutMudou(Exception):
 # "Art. 21-A" e "Art. 6º-F". Exige A maiúsculo, porque "art. 5º da Constituição" em início de
 # linha são 328 referências cruzadas no corpus, não artigos.
 RE_ARTIGO = re.compile(
-    r'^[ \t]*(?:\*\*)?[ \t]*Art\.?[ \t]*'
+    r'^[ \t\f\v ]*(?:\*\*)?[ \t]*Art\.?[ \t]*'   # \f é a quebra de página do PDF
     r'(\d{1,3}(?:\.\d{3})?)'                     # 11 | 1.046
     r'[ \t]*[ºo°]?'                              # 1º | 1 o
-    r'[ \t]*(?:-[ \t]*([A-Z])(?![a-zà-ÿ]))?'     # -A, e não "-Anexo"
+    r'(?:-([A-Z])(?![a-zà-ÿ]))?'                 # -A colado, e não "-Anexo"
     r'[ \t]*\.?')
 
 # Marcador de alteração. O fecho é opcional porque a origem às vezes trunca o parêntese.
@@ -38,7 +38,10 @@ NIVEL = {"LIVRO": 0, "TITULO": 1, "CAPITULO": 2, "SECAO": 3, "SUBSECAO": 4}
 
 # Dispositivos internos. O § é procurado em qualquer posição porque o Decreto 3.048 achata o
 # parágrafo dentro da linha do caput. Inciso e alínea só em início de linha.
-RE_PARAGRAFO = re.compile(r'§[ \t]*(\d+)[ \t]*[ºo°]?')
+# O § abre dispositivo em começo de linha ou depois de ponto final, nunca no meio da frase:
+# "observado o disposto no § 5º" é remissão interna, e tratá-la como abertura partia o § 1º do
+# art. 86 da Lei 8.213 em dois. O sufixo com letra existe, são 18 no art. 60 (§ 11-A a § 11-I).
+RE_PARAGRAFO = re.compile(r'(?:^|(?<=[.;])[ \t]*)§[ \t]*(\d+)[ \t]*[ºo°]?(?:[ \t]*-[ \t]*([A-Z])\b)?', re.M)
 RE_PAR_UNICO = re.compile(r'Par[áa]grafo[ \t]+[úu]nico', re.I)
 RE_INCISO = re.compile(r'^[ \t]*(?:\*\*)?[ \t]*([IVXLC]{1,7})[ \t]*[-–—]', re.M)
 RE_ALINEA = re.compile(r'^[ \t]*(?:\*\*)?[ \t]*([a-z])\)', re.M)
@@ -163,7 +166,8 @@ def dispositivos(texto):
     Não monta a árvore: em 60 arquivos de cinco convenções, a árvore erra em silêncio."""
     achados = []
     for m in RE_PARAGRAFO.finditer(texto):
-        achados.append(("paragrafo", f"§ {m.group(1)}º", m.start()))
+        rotulo = "§ " + m.group(1) + "º" + ("-" + m.group(2) if m.group(2) else "")
+        achados.append(("paragrafo", rotulo, max(0, m.start(1) - 2)))
     for m in RE_PAR_UNICO.finditer(texto):
         achados.append(("paragrafo_unico", "Parágrafo único", m.start()))
     for m in RE_INCISO.finditer(texto):
@@ -311,7 +315,8 @@ def ler_arquivo(texto, arquivo, contexto_inicial=None, parte_inicial="principal"
     artigos = []
     for j, (i, m, contexto, parte_marcada) in enumerate(cabecalhos):
         fim = cabecalhos[j + 1][0] if j + 1 < len(cabecalhos) else len(linhas)
-        primeira = _limpo(linhas[i][m.end():])
+        # "Art. 11 - A vedação..." deixa o travessão na frente do caput
+        primeira = re.sub(r"^[-–—]\s*", "", _limpo(linhas[i][m.end():]))
         linhas_art = reagrupar([primeira] + sem_cabecalhos(linhas[i + 1:fim]))
         texto_art = "\n".join(linhas_art)
         cabeca = linhas_art[0] if linhas_art else ""
@@ -330,7 +335,9 @@ def ler_arquivo(texto, arquivo, contexto_inicial=None, parte_inicial="principal"
     canonica["compilado"] = 1 if any(a["alteracao_tipo"] != "original" for a in artigos) else 0
     return {"meta": canonica, "artigos": artigos, "contexto_final": pilha, "arquivo": arquivo,
             "parte_final": artigos[-1]["parte"] if artigos else parte_inicial,
-            "preambulo": "\n".join(reagrupar(preambulo))[:20000]}
+            # sem teto: no arquivo sem artigo o preâmbulo é o documento inteiro, e é dele que
+            # o ingestor faz os trechos buscáveis do quadro de agentes nocivos
+            "preambulo": "\n".join(reagrupar(preambulo))}
 
 
 def conteudo_id(norma_id, parte, chave, versao):

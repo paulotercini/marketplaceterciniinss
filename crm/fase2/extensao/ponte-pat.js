@@ -36,6 +36,7 @@ if (!window.__crmPontePat) {
     if (m.tipo === 'faixa') { faixa(m.texto, m.cor); if (/✔/.test(m.texto)) someFaixa(); }
     if (m.tipo === 'entregar') {
       try {
+        await guardarAnexosPat(m.dados.detalhes || [], m.cracha);
         await CRM.enviar('pat', m.dados);
         await chrome.storage.local.set({ ultima_pat: m.quando });
         window.postMessage({ de: 'crm-ponte', tipo: 'entregue', quantos: m.quantos }, '*');
@@ -44,6 +45,43 @@ if (!window.__crmPontePat) {
       }
     }
   });
+}
+
+// F184 · TODOS OS ANEXOS DO REQUERIMENTO vão para o bucket privado (decisão do
+// Paulo, 05.10.2026 — inclusive laudo médico: no CRM eles continuam internos,
+// nunca atravessam para o portal do cliente). O portal devolve o arquivo em
+// BASE64 no corpo (medido ao vivo: "JVBE…" = "%PDF"), por
+//   GET /apis/arquivosPortalApi/tarefa/{protocolo}/anexo/{id}
+// com o mesmo crachá da lista. Três segundos entre downloads: é o limite de
+// velocidade do portal, o mesmo do detalhe. (`var`: este arquivo é
+// reinjetado a cada clique, e `const` declarado duas vezes derruba o arquivo)
+var TIPO_POR_EXT = { pdf: 'application/pdf', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png' };
+async function baixarAnexoPat(protocolo, d, cracha) {
+  const tok = localStorage.getItem('ifs_auth');
+  const r = await fetch(`/apis/arquivosPortalApi/tarefa/${protocolo}/anexo/${d.id}`, {
+    credentials: 'include', headers: cracha || (tok ? { Authorization: 'Bearer ' + tok } : {}) });
+  if (!r.ok) return r;
+  let b64 = (await r.text()).trim();
+  if (b64.startsWith('"')) b64 = JSON.parse(b64);
+  const bin = Uint8Array.from(atob(b64.replace(/\s+/g, '')), c => c.charCodeAt(0));
+  const ext = (String(d.arquivo || d.nome).match(/\.(\w+)$/) || [])[1];
+  return new Response(bin, { headers: { 'content-type': TIPO_POR_EXT[String(ext).toLowerCase()] || 'application/octet-stream' } });
+}
+async function guardarAnexosPat(detalhes, cracha) {
+  let n = 0;
+  for (const det of detalhes) {
+    const p = String(det.protocolo || '').replace(/\D/g, '');
+    const docs = (det.anexos || []).filter(a => a && a.id)
+      // o nome do arquivo + o que o INSS diz que ele é ("Documento Médico")
+      .map(a => ({ id: String(a.id), arquivo: a.nomeArquivo || '',
+                   nome: [a.nomeArquivo, a.descricaoArquivo && `(${a.descricaoArquivo})`].filter(Boolean).join(' ') || 'anexo' }));
+    if (!p || !docs.length) continue;
+    faixa(`guardando os anexos do INSS no CRM (${n} até aqui)…`);
+    n += await CRM.guardarDocs('pat', p, docs, { todos: true, pausaMs: 3000,
+                                                 baixar: d => baixarAnexoPat(p, d, cracha) });
+    det.arquivos = docs.filter(d => d.caminho);
+  }
+  return n;
 }
 
 // o botão do popup chama isto. Espera o coletor se anunciar — quando a

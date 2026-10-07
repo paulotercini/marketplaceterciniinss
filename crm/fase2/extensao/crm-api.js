@@ -191,3 +191,84 @@ export async function diagnostico() {
   const { nups: lista, fichas } = await nups();
   return { quem: quem || null, fichas, recursos: lista.length };
 }
+
+// ── F184 · os DOCUMENTOS dos andamentos, no bucket privado "anexos" ────────
+// O caminho é determinístico (docs-regras.js): perguntar se o arquivo já está
+// lá é o que poupa baixar de novo a mesma sentença a cada coleta.
+export async function docExiste(caminho) {
+  const { url } = await config();
+  const r = await fetchTeimoso(`${url}/storage/v1/object/info/authenticated/anexos/${caminho}`,
+    { headers: await cabecalhos() });
+  return r.ok;
+}
+
+// sobe o arquivo (vem em base64 do content script: mensagem entre partes da
+// extensão só leva JSON). Já existir não é erro — é a mesma sentença de antes.
+export async function guardarDoc(caminho, tipo, b64) {
+  const { url } = await config();
+  const bin = Uint8Array.from(atob(b64 || ''), c => c.charCodeAt(0));
+  if (!bin.length) throw new Error('documento vazio');
+  const r = await fetchTeimoso(`${url}/storage/v1/object/anexos/${caminho}`, {
+    method: 'POST',
+    headers: { ...await cabecalhos(), 'Content-Type': tipo || 'application/octet-stream', 'x-upsert': 'false' },
+    body: bin,
+  });
+  if (r.ok) return { caminho, bytes: bin.length };
+  const t = await r.text();
+  if (r.status === 409 || /already exists|Duplicate/i.test(t)) return { caminho, bytes: bin.length };
+  throw new Error(`o CRM recusou o documento (${r.status}): ${t.slice(0, 120)}`);
+}
+
+// F186 · o crachá para o content script subir o arquivo DIRETO ao Storage:
+// a mensagem entre partes da extensão tem teto de 64 MiB (e o base64 ainda
+// soma um terço), e um "Documentos Diversos" escaneado do e-SAJ passou disso.
+// O crachá vai só para o mundo isolado da extensão, não para a página.
+export async function acessoStorage() {
+  const { url, chave } = await config();
+  return { url, chave, token: await cracha() };
+}
+
+// F186 · o que já está guardado numa pasta do bucket, de uma vez: perguntar
+// documento por documento eram 1.400 idas ao banco numa rodada do e-SAJ
+export async function docsExistentes(prefixo) {
+  const { url } = await config();
+  const nomes = [];
+  for (let offset = 0; ; offset += 1000) {
+    const r = await fetchTeimoso(`${url}/storage/v1/object/list/anexos`, { method: 'POST',
+      headers: await cabecalhos(), body: JSON.stringify({ prefix: prefixo, limit: 1000, offset }) });
+    if (!r.ok) throw new Error(`não consegui listar ${prefixo} (${r.status})`);
+    const lista = await r.json();
+    for (const o of lista) if (o && o.name && o.id) nomes.push(prefixo + o.name);
+    if (lista.length < 1000) return { nomes };
+  }
+}
+
+// F187 · os processos do PJe para completar: o endereço dos "Autos Digitais"
+// (id + ca) sai das últimas coletas do acervo, e só entra processo que tem
+// caso aberto no CRM — sem caso, os documentos não teriam onde morar
+export async function acervoPje() {
+  const { url } = await config();
+  const cab = await cabecalhos();
+  const r = await fetchTeimoso(`${url}/rest/v1/coletas?select=dados&fonte=eq.pje&order=criado_em.desc&limit=40`, { headers: cab });
+  if (!r.ok) throw new Error(`não consegui ler as coletas do PJe (${r.status})`);
+  const rc = await fetchTeimoso(`${url}/rest/v1/casos?select=processo,processos&encerrado_em=is.null&limit=5000`, { headers: cab });
+  if (!rc.ok) throw new Error(`não consegui ler os casos (${rc.status})`);
+  const dig = v => String(v == null ? '' : v).replace(/\D/g, '');
+  const doCrm = new Set();
+  for (const k of await rc.json()) {
+    if (dig(k.processo)) doCrm.add(dig(k.processo));
+    for (const p of (Array.isArray(k.processos) ? k.processos : [])) if (dig(p && (p.numero || p))) doCrm.add(dig(p.numero || p));
+  }
+  const vistos = new Map();
+  for (const c of await r.json()) {
+    const d = c.dados || {};
+    if (d.sistema || !/pje[12]g\.trf3\.jus\.br/.test(d.host || '')) continue;      // só o PJe do TRF3
+    for (const p of (d.processos || [])) {
+      const chave = d.host + ':' + dig(p.numero);
+      if (p.id && p.ca && doCrm.has(dig(p.numero)) && !vistos.has(chave))
+        vistos.set(chave, { numero: p.numero, host: d.host,
+          url: `https://${d.host}/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompletoAdvogado.seam?id=${p.id}&ca=${p.ca}` });
+    }
+  }
+  return [...vistos.values()];
+}

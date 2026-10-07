@@ -23,7 +23,7 @@ EC 103/2019. Alíquotas progressivas.
 
 Portaria Interministerial anual. Teto e alíquotas.
 
-Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
 ## Limites
 

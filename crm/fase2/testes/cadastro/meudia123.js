@@ -9,11 +9,11 @@ const fs = require("fs");
 const path = require("path");
 const { FIX, SESSAO, EU, CLI_CHEIO } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
-const hoje = new Date().toISOString().slice(0, 10);
+const hoje = new Date().toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 
 // o que esta prova acrescenta ao cenário: um lembrete vencido, um aviso de
 // aposentadoria que já chegou a hora e uma rotina de todo dia
-const ONTEM = new Date(Date.now() - 864e5).toISOString().slice(0, 10);
+const ONTEM = new Date(Date.now() - 864e5).toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 const EXTRA = {
   lembretes: [{ id: "l0000000-0000-0000-0000-000000000001", cliente_id: CLI_CHEIO,
     tipo: "geral", titulo: "Ligar sobre a perícia", intervalo_meses: 6,

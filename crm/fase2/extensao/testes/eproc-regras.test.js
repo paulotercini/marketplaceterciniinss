@@ -54,7 +54,7 @@ const CAPA = `<input type="search" id='txtNumProcesso' placeholder="Nº de proce
   + `<span id=txtClasse tabindex="0"> CUMPRIMENTO DE SENTENÇA</span>`
   + `<span id="txtOrgaoJulgador" class="x" onmouseover="return infraTooltipMostrar(\'<div>Fone: (16) 3221</div>\',\'Órgão\');">Juízo Titular I - Vara do Juizado Especial Cível e Criminal da Comarca de Matão</span>`
   + `<table id="tblEventos"><tr><th>Evento</th></tr><tr id="trEvento73" class="infraTrClara"><td><span>73</span></td><td>12/09/2026 06:01:25</td><td><label class="infraEventoDescricao">Decorrido prazo - Refer. ao Evento: 70</label></td><td>SECFP</td><td>Evento não gerou documento</td></tr>`
-  + `<tr id="trEvento69"><td>69</td><td>08/09/2026 13:31:54</td><td><label class="infraEventoDescricao">Despacho</label></td><td>J12796</td><td><a class="infraLinkDocumento" href="x">DESPADEC1</a> <a class="infraLinkDocumento" href="y">PLANILHA2</a></td></tr></table>`;
+  + `<tr id="trEvento69"><td>69</td><td>08/09/2026 13:31:54</td><td><label class="infraEventoDescricao">Despacho</label></td><td>J12796</td><td><a class="infraLinkDocumento" href="controlador.php?acao=acessar_documento&amp;doc=731&amp;evento=69&amp;key=ab">DESPADEC1</a> <a class="infraLinkDocumento" href="y">PLANILHA2</a></td></tr></table>`;
 
 test('a capa do processo: número, classe e órgão julgador, apesar do id repetido e do tooltip no atributo', () => {
   assert.deepStrictEqual(R.lerCabecalhoProcesso(CAPA), {
@@ -66,5 +66,7 @@ test('a lista de eventos: um item por trEvento, com data, hora, descrição e do
   const ev = R.lerEventosHtml(CAPA);
   assert.equal(ev.length, 2);
   assert.deepStrictEqual(ev[0], { evento: 73, data: '2026-09-12', hora: '06:01', textos: ['Decorrido prazo - Refer. ao Evento: 70'], docs: [] });
-  assert.deepStrictEqual(ev[1].docs, [{ id: '69', nome: 'DESPADEC1' }, { id: '69', nome: 'PLANILHA2' }]);
+  assert.deepStrictEqual(ev[1].docs, [
+    { id: '731', nome: 'DESPADEC1', url: 'controlador.php?acao=acessar_documento&doc=731&evento=69&key=ab' },
+    { id: '69:PLANILHA2', nome: 'PLANILHA2', url: 'y' }]);
 });

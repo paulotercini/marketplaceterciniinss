@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 const { FIX, SESSAO, CLI_CHEIO, CASO1 } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
-const dia = n => { const d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+const dia = n => { const d = new Date(); d.setDate(d.getDate() + n); return d.toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" }); };
 
 // 2.600 tarefas: 3 páginas de 1.000; 120 delas vencidas, para o Planejado
 FIX.tarefas = [];

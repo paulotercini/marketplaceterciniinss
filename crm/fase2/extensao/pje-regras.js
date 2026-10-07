@@ -96,7 +96,11 @@
       const docs = [];
       const anexos = peda.slice(Math.max(0, peda.indexOf('class="anexos"')));
       for (const m of anexos.matchAll(/>\s*(\d{6,})\s*-\s*([^<]+?)\s*<\/span>/g))
-        docs.push({ id: m[1], nome: desHtml(m[2]).replace(/\s+/g, ' ') });
+        docs.push({ id: m[1], nome: desHtml(m[2]).replace(/\s+/g, ' '),
+                    // F184 · o mesmo endereço que o visualizador do PJe chama ao
+                    // clicar no anexo (medido ao vivo em 05.10.2026): devolve o
+                    // documento — HTML para despacho/sentença, PDF para anexo
+                    url: `/pje/seam/resource/rest/pje-legacy/documento/download/${m[1]}` });
       if (!textos.length && !docs.length) continue;
       itens.push({
         data: dia,

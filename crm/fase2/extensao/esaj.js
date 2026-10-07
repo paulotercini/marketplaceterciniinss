@@ -51,6 +51,20 @@
     throw new Error('o e-SAJ seguiu travando "consultas simultâneas" — feche outras abas do e-SAJ e clique de novo');
   }
 
+  // a extensão recarregada no meio da rodada deixa este código órfão: sem
+  // chrome.storage nem mensagem ao CRM. Diz isso, em vez de "reading 'local'"
+  function vivo() {
+    if (!(globalThis.chrome && chrome.runtime && chrome.runtime.id))
+      throw new Error('a extensão foi recarregada no meio da rodada — dê F5 nesta aba e clique de novo (os lotes já entregues ficaram no CRM)');
+  }
+  async function noNavegador(obj) { try { vivo(); await chrome.storage.local.set(obj); } catch (e) { console.warn('[CRM]', e.message); } }
+  const paraEntrega = p => ({ numero: p.numero, classe: p.classe, partes: p.partes, orgao: p.orgao, assunto: p.assunto || null,
+    distribuido: p.distribuido || null, situacao: p.situacao, codigo: p.codigo, link: p.link,
+    principal: p.principal || null, tipo: p.tipo || null,
+    movimento: p.movimento, movimentos: p.movimentos || null,
+    pasta: p.pasta || null,                       // F186 · a pasta digital: sem ela o CRM não sabe de quem é cada PDF
+    id: null, ca: null });
+
   async function oabLogada() {
     const r = await fetch('/tarefas-adv/api/usuario', { credentials: 'include' });
     if (!r.ok) return null;
@@ -119,10 +133,49 @@
     // anda mais de um passo (os embargos de um caso tiveram "Julgado
     // virtualmente", "Acórdão registrado" e "Expedido Certidão" em dois dias),
     // e o CRM grava só as que ainda não conhece
+    // F184 · a sentença/decisão destas cinco desce junto e vai com o caminho
+    await CRM.guardarDocs('esaj', out.numero, mv.slice(0, 5).flatMap(m => m.docs || []));
     out.movimentos = mv.slice(0, 5).map(m => ({ data: m.data, hora: '00:00',
-      texto: m.detalhe ? `${m.texto} — ${m.detalhe}` : m.texto }));
+      texto: m.detalhe ? `${m.texto} — ${m.detalhe}` : m.texto,
+      ...((m.docs || []).some(d => d.caminho) ? { docs: m.docs.filter(d => d.caminho) } : {}) }));
     out.movimento = out.movimentos[0] || null;
+    try { out.pasta = await guardarPasta(out, rot); }
+    catch (e) { console.warn('[CRM] pasta digital:', out.numero, e); }
     return out;
+  }
+
+  // F186 · A PASTA DIGITAL INTEIRA: a inicial de 2018, a contestação, o laudo
+  // e a sentença, e não só as 5 movimentações recentes. A ficha já está
+  // aberta na sessão (é o que arma a pasta). Página a página pelo getPDF, um
+  // PDF por documento (pdf-lib, em vendor/); o que já está no CRM é pulado
+  // antes de baixar, então só a primeira rodada é longa.
+  async function guardarPasta(out, rot) {
+    const base = out.grau === '2º grau' ? '/cposg' : '/cpopg';
+    const r0 = await baixarComPaciencia(`${base}/abrirPastaDigital.do?processo.codigo=${out.codigo}`, rot);
+    const url = REG.urlDaPasta(r0.html);
+    if (!url) return null;
+    await espera(600);
+    const docs = REG.docsDaPasta((await baixarComPaciencia(url.replace(/^https:\/\/[^/]+/, ''), rot)).html);
+    if (!docs.length) return null;
+    let feitos = 0;
+    const baixarDoc = async d => {
+      faixa(`${rot} ${out.numero}: pasta digital — ${++feitos} de ${docs.length} (${d.nome}, ${d.paginas.length} pág.)…`);
+      const doc = await PDFLib.PDFDocument.create();
+      for (const p of d.paginas) {
+        const r = await fetch('/pastadigital/getPDF.do?' + p, { credentials: 'include' });
+        const b = new Uint8Array(await r.arrayBuffer());
+        if (!r.ok || !DOCS_REGRAS.tipoDoConteudo(b, r.headers.get('content-type'))) return new Response(null, { status: 502 });
+        const pg = await PDFLib.PDFDocument.load(b, { ignoreEncryption: true });
+        for (const x of await doc.copyPages(pg, pg.getPageIndices())) doc.addPage(x);
+        await espera(250);
+      }
+      return new Response(await doc.save(), { headers: { 'content-type': 'application/pdf' } });
+    };
+    let existentes = null;
+    try { existentes = new Set((await CRM.pedir({ tipo: 'crm', acao: 'docs-existentes',
+      prefixo: `esaj/${String(out.numero).replace(/\D/g, '')}/` })).nomes); } catch (e) {}
+    await CRM.guardarDocs('esaj', out.numero, docs, { baixar: baixarDoc, existentes });
+    return docs.filter(d => d.caminho).map(({ id, nome, data, hora, caminho }) => ({ id, nome, data, hora, caminho }));
   }
 
   // [02.10.2026] OS RECURSOS DENTRO DO RECURSO. No 2º grau, os embargos de
@@ -197,7 +250,17 @@
       const pulados = todos.length - fila.length;
       faixa(`${todos.length} processos do TJSP (${resumoFontes})${pulados ? `; ${pulados} arquivados ficam para a rodada semanal` : ''}`);
 
-      const lidos = [];
+      const lidos = [], lote = [], entregues = new Set();
+      const entregar = async (lista, extra) => {
+        vivo();
+        const q = (extra && extra.quando) || new Date().toISOString();
+        for (const grau of Object.keys(GRAUS)) {
+          const processos = lista.filter(p => p.grau === grau).map(paraEntrega);
+          if (processos.length)
+            await CRM.enviar('pje', { versao: 1, fonte: 'pje-acervo', sistema: 'esaj', tribunal: 'TJSP', grau, host, oab, quando: q,
+                                      parcial: !!(extra && (extra.parcial || extra.lote)), pulados: (extra && extra.pulados) || 0, processos });
+        }
+      };
       const vistos = new Set();                    // o mesmo processo pode vir de favorito E de ficha
       let falhas = 0;
       for (let i = 0; i < fila.length; i++) {
@@ -213,6 +276,13 @@
           const k = x.grau + ':' + (x.codigo || x.numero);
           if (vistos.has(k)) continue;
           vistos.add(k); lidos.push(x);
+          // F186 · ENTREGA EM LOTES: a rodada com a pasta digital leva horas, e
+          // tudo só ia ao CRM no fim — uma queda perdia a rodada inteira. A cada
+          // 5 processos com pasta, o lote já vai (o CRM não duplica nada)
+          if (x.pasta && x.pasta.length) {
+            lote.push(x);
+            if (lote.length >= 5) { const l = lote.splice(0); await entregar(l, { lote: true }); l.forEach(p => entregues.add(p)); }
+          }
           // [03.10.2026] os incidentes que a ficha lista (cumprimento de
           // sentença, RPV) entram no fim da fila, se a rodada ainda não os
           // tem — antes só os favoritados eram lidos
@@ -229,24 +299,16 @@
         await espera(1200);
         try { falhas += await lerRecursosDoNumero(comRecurso[i], vistos, lidos); } catch (e) { falhas++; }
       }
-      await chrome.storage.local.set({ [ARQ]: arq });
+      await noNavegador({ [ARQ]: arq });
       if (!lidos.length) { faixaErr(`nenhum processo lido (${falhas} falharam) — o e-SAJ está respondendo?`); return { erro: 'vazio' }; }
 
       // MESMO formato do PJe (fonte pje-acervo), uma coleta por grau: a tela
       // 📥 Importar casa pelo número; `sistema` diz de onde veio e `link`
       // abre a ficha no e-SAJ
       const quando = new Date().toISOString();
-      for (const grau of Object.keys(GRAUS)) {
-        const processos = lidos.filter(p => p.grau === grau)
-          .map(p => ({ numero: p.numero, classe: p.classe, partes: p.partes, orgao: p.orgao, assunto: p.assunto || null,
-                       distribuido: p.distribuido || null, situacao: p.situacao, codigo: p.codigo, link: p.link,
-                       principal: p.principal || null, tipo: p.tipo || null,
-                       movimento: p.movimento, movimentos: p.movimentos || null, id: null, ca: null }));
-        if (!processos.length) continue;
-        await CRM.enviar('pje', { versao: 1, fonte: 'pje-acervo', sistema: 'esaj', tribunal: 'TJSP', grau, host, oab, quando,
-                                  parcial: falhas > 0, pulados, processos });
-      }
-      await chrome.storage.local.set({ ultima_esaj: quando, ...(rapido ? {} : { ultima_esaj_full: quando }) });
+      // a pasta de quem já foi entregue num lote não viaja de novo
+      await entregar(lidos.map(p => entregues.has(p) ? { ...p, pasta: null } : p), { parcial: falhas > 0, pulados, quando });
+      await noNavegador({ ultima_esaj: quando, ...(rapido ? {} : { ultima_esaj_full: quando }) });
       faixaOk(`✔ ${lidos.length} processos do e-SAJ entregues ao CRM${falhas ? ` (${falhas} sem ficha ou sem resposta)` : ''}${rapido ? ' (modo rápido)' : ''} — confira em 📥 Importar.`);
       someFaixa(15000);
       return { ok: lidos.length, falhas };

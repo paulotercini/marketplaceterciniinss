@@ -21,7 +21,7 @@ Lei 3.552/1959. Nova organização das escolas técnicas federais.
 
 IN 128/2022. Regras administrativas do INSS sobre cômputo de tempo de contribuição.
 
-Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
 ## Marco jurisprudencial
 

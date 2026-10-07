@@ -14,7 +14,7 @@ const SUPA = "https://ficticio.supabase.co";
 
 const NUM = "0001234-56.2025.8.26.0368", DIG = "00012345620258260368";
 const AP = "RI00ABCDE0000", ED = "RI00ABCDF12KW";
-const dia = n => new Date(Date.now() - n * 864e5).toISOString().slice(0, 10);
+const dia = n => new Date(Date.now() - n * 864e5).toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 const mv = (n, texto) => ({ data: dia(n), hora: "00:00", texto });
 const LINK = c => `https://esaj.tjsp.jus.br/cposg/show.do?processo.codigo=${c}`;
 const apelacao = movimentos => ({ numero: NUM, classe: "Apelação Cível", orgao: "3ª Câmara de Direito Público",

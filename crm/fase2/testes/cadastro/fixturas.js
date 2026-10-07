@@ -5,7 +5,7 @@ const CLI_CHEIO = "c0000000-0000-0000-0000-000000000001";
 const CLI_VAZIO = "c0000000-0000-0000-0000-000000000002";
 const CASO1 = "k0000000-0000-0000-0000-000000000001".replace(/^k/, "b");
 
-const hoje = new Date().toISOString().slice(0, 10);
+const hoje = new Date().toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 
 const FIX = {
   colaboradores: [
