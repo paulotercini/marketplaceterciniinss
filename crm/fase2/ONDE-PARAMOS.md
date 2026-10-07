@@ -2083,3 +2083,25 @@ Suíte: 106/110, falhando só as de data (cnj71, extracoes, paineis, planejado12
   mouse) e ✕ (no passar do mouse) no fim da barra; respostas em caixa cinza.
 Provas ajustadas: linha102, harmonia138, placa134 (a placa é lista); suíte
 106/110, falhando só as de data.
+
+## 10.84 · F183 · jornada por cor e trilha do rito (canvas "Trilha de etapas", 07.10.2026)
+- No alto do caso (tema v10), antes das duas colunas: `faixaTrilha(k)`. A
+  JORNADA mostra Escritório (vermelho), INSS (amarelo), Conselho (azul) e
+  Judicial (verde): concluída, atual (borda grossa), não houve (tracejada) ou
+  a vir; clicar numa fase mostra a trilha dela (`trVerFase`).
+- A TRILHA vem do rito (`TRILHAS`, `ritoPadrao`): escritório (atendimento,
+  petição inicial, aposentadoria futura); INSS (aposentadorias e pensão,
+  incapacidade, auxílio-acidente, BPC e PCD); Conselho (Junta, Câmara);
+  Judicial (JEF incapacidade e BPC, JEF aposentadorias, Vara Federal,
+  acidentário TJSP, mandado de segurança). O rito sai da espécie e do número
+  do processo (8.26 = TJSP; 4.03.61 = Vara; senão JEF) e pode ser trocado à
+  mão (casos.trilha.ritos). A execução (trânsito ao levantamento) entra no fim
+  das trilhas judiciais, em roxo.
+- Cada etapa é marcada por si em casos.trilha.m["rito:etapa"] = {s, d, x}:
+  cumprida (f, com data), atual (a), não houve (n). "Aguardando documentos"
+  guarda qual documento (x). A atual grava também casos.etapa com a palavra
+  antiga (`PUB_TRILHA`), a que o portal já publica; e marcarEtapa,
+  gravarEtapa e andarEtapa acendem a etapa equivalente (`trilhaSegueEtapa`).
+- Banco: `schema_trilha.sql` (coluna casos.trilha jsonb), já aplicada.
+- A trilha antiga de dentro do cartão do caso (`trilhaEtapas`) saiu.
+Prova nova: `trilha183.js` (9/9); `caso182.js` ajustada. Suíte: só as falhas de data.

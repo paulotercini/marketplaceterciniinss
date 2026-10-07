@@ -3533,6 +3533,67 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item>.quando{display:n
 html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item>.texto{display:block;white-space:normal}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-av{width:20px;height:20px;font-size:10px}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-top:2px;font-size:13.5px}
+/* F183 · jornada por cor e trilha do rito, no alto do caso */
+html[data-tema="v10"] .tr-faixa{display:flex;flex-direction:column;gap:12px;margin:0 0 16px}
+html[data-tema="v10"] .tr-faixa h3{margin:0;font-family:var(--f-ui)}
+html[data-tema="v10"] .jn{background:#FFFFFF;border:1px solid var(--borda);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+html[data-tema="v10"] .jn-cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+html[data-tema="v10"] .jn-cab h3{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#686660}
+html[data-tema="v10"] .jn-cab span{font-size:13px;color:#4A4944}
+html[data-tema="v10"] .jn-l{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+html[data-tema="v10"] .jn-b{all:unset;cursor:pointer;box-sizing:border-box;width:100%;min-height:52px;border-radius:10px;padding:9px 12px;display:flex;flex-direction:column;gap:2px;background:var(--ff);border:1px solid var(--ff);color:var(--ft)}
+html[data-tema="v10"] .jn-b.jn-a{border:2px solid var(--fc)}
+html[data-tema="v10"] .jn-b.jn-n{background:#FFFFFF;border:1.5px dashed #C9C6BE;color:#686660}
+html[data-tema="v10"] .jn-b.jn-v{background:#FFFFFF;border:1px solid var(--borda);color:#686660}
+html[data-tema="v10"] .jn-b.jn-ver{box-shadow:0 0 0 3px rgba(18,18,18,.08)}
+html[data-tema="v10"] .jn-b:focus-visible{outline:2px solid #121212;outline-offset:2px}
+html[data-tema="v10"] .jn-nome{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500}
+html[data-tema="v10"] .jn-nome i{width:10px;height:10px;border-radius:50%;background:var(--fc);flex:none}
+html[data-tema="v10"] .jn-n .jn-nome i{background:transparent;border:1.5px dashed #A9A69E;box-sizing:border-box}
+html[data-tema="v10"] .jn-st{font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html[data-tema="v10"] .tr{background:#FFFFFF;border:1px solid var(--borda);border-top:4px solid var(--tc);border-radius:12px;padding:14px 18px 16px;display:flex;flex-direction:column;gap:12px}
+html[data-tema="v10"] .tr-cab{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+html[data-tema="v10"] .tr-cab h3{font-size:15px;font-weight:500;color:var(--tt)}
+html[data-tema="v10"] .tr-agora{font-size:13px}
+html[data-tema="v10"] .tr-ritos{margin-left:auto;display:flex;flex-wrap:wrap;gap:4px}
+html[data-tema="v10"] .tr-ritos button{min-height:32px;padding:0 10px;border-radius:999px;border:1px solid #D6D4CE;background:#FFFFFF;color:#4A4944;font-size:12.5px;font-weight:500;font-family:var(--f-ui);cursor:pointer}
+html[data-tema="v10"] .tr-ritos button.on{border-color:var(--tc);background:var(--tf);color:var(--tt)}
+html[data-tema="v10"] .tr-rol{overflow-x:auto;padding-bottom:2px}
+html[data-tema="v10"] .tr-l{list-style:none;margin:0;padding:0;min-width:calc(var(--n) * 96px);display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:0 4px}
+html[data-tema="v10"] .tr-l>li{min-width:0;display:flex;flex-direction:column;gap:4px}
+html[data-tema="v10"] .tr-g{font-size:10.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#8A8780;min-height:15px;white-space:nowrap}
+html[data-tema="v10"] .tr-g-ex{color:#A5187F}
+html[data-tema="v10"] .tr-et{all:unset;cursor:pointer;box-sizing:border-box;min-height:64px;display:flex;flex-direction:column;gap:5px;padding:4px 4px 6px;border-radius:8px}
+html[data-tema="v10"] .tr-et:focus-visible{outline:2px solid #121212;outline-offset:1px}
+html[data-tema="v10"] .tr-et.tr-sel{background:#F3F2EE}
+html[data-tema="v10"] .tr-b{display:block;height:8px;border-radius:999px;background:#E7E6E1;box-sizing:border-box}
+html[data-tema="v10"] .tr-sf .tr-b{background:var(--tc)}
+html[data-tema="v10"] .tr-sa .tr-b{background:var(--tc);box-shadow:0 0 0 2px #FFFFFF,0 0 0 4px var(--tc)}
+html[data-tema="v10"] .tr-so .tr-b{background:transparent;border:1.5px dotted #A9A69E}
+html[data-tema="v10"] .tr-sn .tr-b{background:transparent;border:1.5px dashed #A9A69E}
+html[data-tema="v10"] .tr-et .tr-nm{font-size:12px;line-height:1.3;color:#8A8780}
+html[data-tema="v10"] .tr-sf .tr-nm{color:#121212}
+html[data-tema="v10"] .tr-sa .tr-nm{color:var(--tt);font-weight:500}
+html[data-tema="v10"] .tr-et.tr-sn .tr-nm{text-decoration:line-through}
+html[data-tema="v10"] .tr-x{font-size:11px;color:var(--tt);line-height:1.25}
+html[data-tema="v10"] .tr-d{font-family:var(--f-mono);font-size:11px;color:#686660}
+html[data-tema="v10"] .tr-pnl{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 12px;border-radius:10px;background:#F8F8F6;font-size:13px}
+html[data-tema="v10"] .tr-esp{flex:1 1 auto}
+html[data-tema="v10"] .tr-doc{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:#4A4944}
+html[data-tema="v10"] .tr-doc select{max-width:220px;min-height:32px;border:1px solid #D6D4CE;border-radius:8px;padding:0 8px;font:inherit}
+html[data-tema="v10"] .tr-bt{min-height:36px;padding:0 12px;border-radius:8px;border:1px solid #D6D4CE;background:#FFFFFF;color:#4A4944;font-weight:500;font-size:13px;font-family:var(--f-ui);cursor:pointer}
+html[data-tema="v10"] .tr-bt.forte{border-color:var(--tc);background:var(--tc);color:#FFFFFF}
+html[data-tema="v10"] .tr-bt-n{border-style:dashed;border-color:#A9A69E}
+html[data-tema="v10"] .tr-leg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:#4A4944}
+html[data-tema="v10"] .tr-leg span{display:inline-flex;align-items:center;gap:6px}
+html[data-tema="v10"] .tr-leg i{width:22px;height:8px;border-radius:999px;box-sizing:border-box}
+html[data-tema="v10"] .tr-lf{background:var(--tc)}
+html[data-tema="v10"] .tr-la{background:var(--tc);box-shadow:0 0 0 2px #FFFFFF,0 0 0 4px var(--tc)}
+html[data-tema="v10"] .tr-lv{background:#E7E6E1}
+html[data-tema="v10"] .tr-lo{border:1.5px dotted #A9A69E}
+html[data-tema="v10"] .tr-ln{border:1.5px dashed #A9A69E}
+html[data-tema="v10"] .tr-lx{background:#A5187F}
+html[data-tema="v10"] .app.celular .jn-l{grid-template-columns:repeat(2,minmax(0,1fr))}
 </style>
 </head>
 <body>
@@ -3545,7 +3606,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.83</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.84</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4982,7 +5043,8 @@ async function gravarEtapa(casoId, etapa){
   const nova = (etapa||"").trim() || null;
   if(nova === (k.etapa||null)) return fecharCaixa();
   k.etapa = nova;
-  try{ await patchCaso(casoId, {etapa:nova}); }
+  const trG = trilhaSegueEtapa(k, nova);   // F183
+  try{ await patchCaso(casoId, {etapa:nova, ...(trG?{trilha:trG}:{})}); if(trG) k.trilha = trG; }
   catch(e){ return aviso("Não gravou — rode o crm/fase2/schema_prazos.sql no Supabase"); }
   fecharCaixa(); aviso(nova?`Etapa: ${nova} ✔`:"Etapa retirada", false);
   montarSidebar(); render(); if(clienteAberto) repintarFicha();
@@ -4991,7 +5053,9 @@ async function gravarEtapa(casoId, etapa){
 async function marcarEtapa(casoId, etapa){
   const k = D.casoPorId.get(casoId); if(!k || !etapa || k.etapa===etapa) return false;
   k.etapa = etapa;
+  const trM = trilhaSegueEtapa(k, etapa);   // F183
   try{ await patchCaso(casoId, {etapa}); }catch(e){ return false; }
+  if(trM) try{ await patchCaso(casoId, {trilha:trM}); k.trilha = trM; }catch(e){}
   return true;
 }
 async function andarEtapa(casoId, lista, motivo, etapa){
@@ -5007,6 +5071,8 @@ async function andarEtapa(casoId, lista, motivo, etapa){
   k.fase = fase; k.mover_para = lista; k.etapa = nova;
   try{ await patchCaso(casoId, {fase, mover_para:lista, etapa:nova}); }
   catch(e){ Object.assign(k, antes); return false; }
+  const trA = trilhaSegueEtapa(k, nova);   // F183
+  if(trA) try{ await patchCaso(casoId, {trilha:trA}); k.trilha = trA; }catch(e){}
   montarSidebar(); render(); if(clienteAberto) repintarFicha();
   avisoDesfazer(`Caso movido para ${lista}${k.etapa?`, ${k.etapa}`:""} · ${motivo}`, async ()=>{
     Object.assign(k, antes);
@@ -12527,7 +12593,7 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${linhaCaso(k)}${botaoFixar(k)}${faixaPrazos(k)}${painelOutrasAbas(k)}</aside>
+        ? `${faixaFixo(k)}${faixaTrilha(k)}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${linhaCaso(k)}${botaoFixar(k)}${faixaPrazos(k)}${painelOutrasAbas(k)}</aside>
            <div class="caso-dir">${composerCaso(k)}${menu}${painelDaAba()}</div></div>`
         : `${menu}${blocoFatos(k)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
@@ -18890,7 +18956,6 @@ function linhaCaso(k){
       ${k.urgente?`<span class="chip urg">Urgente</span>`:""}
       <button class="lc-claude" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)">✦ Claude</button>
       </div>
-      ${trilhaEtapas(k)}
       <div class="lc-placa">
       <span class="lc-f"><span class="lc-k">DER</span>${k.der
         ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar">${fmtBarra(k.der)}</span>`
@@ -18919,14 +18984,203 @@ function linhaCaso(k){
     ${n>=2?lcGestao(k):""}
   </section>`;
 }
-// F182 · a trilha das etapas da fase no alto do caso (canvas Casos e
-// anotações): o que já passou em verde-petróleo, a etapa atual em negrito.
-// Clicar numa etapa grava a etapa, como o ✎ da placa.
-function trilhaEtapas(k){
-  const et = etapasDaFase(k); if(!et.length) return "";
-  const i = et.indexOf(k.etapa||"");
-  return `<ol class="lc-trilha" aria-label="Etapa do caso" style="--n:${et.length}">${et.map((e,n)=>
-    `<li class="${n<i?"feita":n===i?"atual":""}"${n===i?' aria-current="step"':""}><button onclick="gravarEtapa('${k.id}','${escJs(e)}')" title="marcar a etapa: ${esc(e)}"><span class="lt-barra"></span><small>${esc(e)}</small></button></li>`).join("")}</ol>`;
+// ══════════════════════════════════════════════════════════════════════════
+// F183 · A JORNADA E A TRILHA DO RITO (canvas "Trilha de etapas", 06.10.2026)
+// ══════════════════════════════════════════════════════════════════════════
+// No alto do caso, de ponta a ponta: a JORNADA (Escritório vermelho, INSS
+// amarelo, Conselho azul, Judicial verde) e, abaixo, a TRILHA da fase com as
+// etapas do rito daquele caso. Cada etapa é marcada por si (cumprida com data,
+// atual, não houve), e não pela posição: no JEF de incapacidade e no
+// acidentário a perícia vem antes da contestação, e a trilha diz isso.
+// A execução (trânsito ao levantamento) fica em roxo dentro da judicial.
+// As marcas moram em casos.trilha = {rito, m:{"<rito>:<etapa>":{s,d,x}}};
+// a etapa ATUAL também grava casos.etapa com a palavra antiga equivalente
+// (PUB_TRILHA), que é a que o portal e o resto do CRM já entendem.
+// Etapa: "Grupo|Nome" abre grupo; "*" na frente = só se houver; "#" = execução.
+const COR_FASE = {
+  escritorio:{n:"Escritório", c:"#B3261E", f:"#FBEAE7", t:"#8B1D16"},
+  inss:      {n:"INSS",       c:"#D9A21B", f:"#FBF1DA", t:"#6E4200"},
+  conselho:  {n:"Conselho",   c:"#3B7BD0", f:"#E8F0FB", t:"#1F4E8C"},
+  judicial:  {n:"Judicial",   c:"#0E5C58", f:"#E6F0EF", t:"#0B4744"}};
+const COR_EXEC = {c:"#A5187F", f:"#FDF2F9", t:"#7E1260"};
+const DOCS_AGUARDO = ["relatório médico","PPP e LTCAT da empresa","prontuário médico","documento do RH ou empregador",
+  "cópia do processo administrativo","CTPS e carnês","documentos pessoais","acesso gov.br"];
+const EXEC_TRILHA = ["#Execução|Trânsito em julgado","#Implantação do benefício","#Cálculos (contadoria ou INSS)",
+  "#Manifestação sobre os cálculos","#*Impugnação do INSS","#Cálculos homologados","#RPV ou precatório expedido",
+  "#RPV paga","#Levantamento","#Honorários recebidos"];
+const TRILHAS = {
+  escritorio:{fase:"escritorio", nome:"Atendimento", e:["Primeiro contato","Atendimento presencial","Triagem",
+    "Análise de direito","Aguardando documentos","Documentos completos","Contrato e procurações assinados","Pronto para protocolar"]},
+  peticao:{fase:"escritorio", nome:"Petição inicial", e:["A redigir","Redigida","Revisão","A protocolar"]},
+  futura:{fase:"escritorio", nome:"Aposentadoria futura", e:["Monitorando","*Contribuição orientada","Documentação em dia","Pronto para protocolar"]},
+  inss_apos:{fase:"inss", nome:"Aposentadorias e pensão", e:["Requerimento protocolado","Em análise","*Em exigência",
+    "*Exigência cumprida","*Justificação administrativa","Decisão","Carta de concessão"]},
+  inss_inc:{fase:"inss", nome:"Incapacidade", e:["Requerimento protocolado","*Análise documental (Atestmed)","Perícia agendada",
+    "Perícia realizada","Decisão","*Pedido de prorrogação","DCB"]},
+  inss_b94:{fase:"inss", nome:"Auxílio-acidente", e:["Requerimento protocolado","*Em exigência","Perícia agendada",
+    "Perícia realizada","Decisão","Carta de concessão"]},
+  inss_bpc:{fase:"inss", nome:"BPC e aposentadoria PCD", e:["Requerimento protocolado","CadÚnico conferido",
+    "Avaliação social agendada","Avaliação social realizada","Perícia médica agendada","Perícia médica realizada","*Em exigência","Decisão"]},
+  crps_junta:{fase:"conselho", nome:"Junta de Recursos", e:["Recurso ordinário protocolado","*Contrarrazões do INSS",
+    "Encaminhado à Junta","Distribuído ao relator","*Diligência ou parecer médico","Pautado","Acórdão da Junta","*Embargos de declaração"]},
+  crps_camara:{fase:"conselho", nome:"Câmara de Julgamento", e:["Recurso especial protocolado","*Contrarrazões",
+    "Encaminhado à Câmara","Distribuído ao relator","Pautado","Acórdão da Câmara","*Embargos de declaração","Cumprimento pelo INSS"]},
+  jef_inc:{fase:"judicial", nome:"JEF · incapacidade e BPC", e:["Ajuizamento|Ação distribuída","Instrução|Perícia médica designada",
+    "Perícia realizada","Laudo juntado","Manifestação sobre o laudo","*Avaliação social","Citação e contestação","*Proposta de acordo",
+    "Sentença|Sentença","*Embargos de declaração","Recurso|Recurso inominado","Contrarrazões","Acórdão da Turma Recursal",
+    "*Pedido de uniformização", ...EXEC_TRILHA]},
+  jef_apos:{fase:"judicial", nome:"JEF · aposentadorias", e:["Ajuizamento|Ação distribuída","Instrução|Citação e contestação","Réplica",
+    "*Audiência e testemunhas","*Cálculo da contadoria","Sentença|Sentença","*Embargos de declaração","Recurso|Recurso inominado",
+    "Contrarrazões","Acórdão da Turma Recursal","*Pedido de uniformização", ...EXEC_TRILHA]},
+  vara:{fase:"judicial", nome:"Vara Federal · rito comum", e:["Ajuizamento|Ação distribuída","Instrução|Citação e contestação","Réplica",
+    "Especificação de provas","*Perícia técnica ou audiência","*Alegações finais","Sentença|Sentença","*Embargos de declaração",
+    "Recurso|Apelação","Contrarrazões","Acórdão do TRF3","*Recurso especial ou extraordinário", ...EXEC_TRILHA]},
+  acid:{fase:"judicial", nome:"Acidentário · TJSP", e:["Ajuizamento|Ação distribuída","Instrução|Nomeação do perito e quesitos",
+    "Perícia designada","Perícia realizada","Laudo juntado","*Esclarecimentos do perito","Citação e contestação","Réplica",
+    "Sentença|Sentença","Recurso|Apelação ou remessa necessária","Acórdão do TJSP","*Recurso especial ou extraordinário", ...EXEC_TRILHA]},
+  ms:{fase:"judicial", nome:"Mandado de segurança", e:["Ajuizamento|Impetração","Liminar|Decisão da liminar",
+    "Instrução|Informações da autoridade","Parecer do MPF","Sentença|Sentença","Fim|Ordem cumprida pelo INSS",
+    "*Remessa necessária ao TRF3","Trânsito em julgado"]},
+};
+// a palavra antiga (casos.etapa) de cada etapa, para o portal e os filtros
+const PUB_TRILHA = {"Primeiro contato":"em atendimento","Atendimento presencial":"em atendimento","Triagem":"em atendimento",
+  "Análise de direito":"análise de direito","Aguardando documentos":"reunindo documentos","Documentos completos":"reunindo documentos",
+  "Contrato e procurações assinados":"aguardando o cliente","A redigir":"a redigir","Redigida":"redigida","Revisão":"redigida",
+  "A protocolar":"a protocolar","Monitorando":"monitorando","Documentação em dia":"documentação em dia",
+  "Pronto para protocolar":"pronto para protocolar","Requerimento protocolado":"requerimento protocolado",
+  "Em análise":"aguardando análise","Em exigência":"em exigência","Exigência cumprida":"aguardando análise",
+  "Perícia agendada":"aguardando perícia","Perícia médica agendada":"aguardando perícia","Avaliação social agendada":"aguardando perícia",
+  "Perícia realizada":"perícia realizada","Perícia médica realizada":"perícia realizada","Avaliação social realizada":"perícia realizada",
+  "Decisão":"decidido","Carta de concessão":"decidido","Recurso ordinário protocolado":"recurso protocolado",
+  "Recurso especial protocolado":"recurso protocolado","Encaminhado à Junta":"aguardando distribuição",
+  "Encaminhado à Câmara":"aguardando distribuição","Diligência ou parecer médico":"em diligência","Pautado":"em pauta",
+  "Acórdão da Junta":"julgado","Acórdão da Câmara":"julgado","Ação distribuída":"ação distribuída",
+  "Impetração":"ação distribuída","Citação e contestação":"contestação apresentada","Perícia médica designada":"perícia designada",
+  "Perícia designada":"perícia designada","Laudo juntado":"perícia realizada","Sentença":"sentença publicada",
+  "Recurso inominado":"em recurso","Apelação":"em recurso","Apelação ou remessa necessária":"em recurso",
+  "Acórdão da Turma Recursal":"em recurso","Acórdão do TRF3":"em recurso","Acórdão do TJSP":"em recurso",
+  "Implantação do benefício":"aguardando implantação","Cálculos (contadoria ou INSS)":"aguardando RPV",
+  "RPV ou precatório expedido":"RPV expedida","RPV paga":"recebido"};
+const lerEtapaTrilha = x => { const ex = x.startsWith("#"); x = ex ? x.slice(1) : x;
+  const op = x.startsWith("*"); x = op ? x.slice(1) : x;
+  const [g, n] = x.includes("|") ? x.split("|") : ["", x];
+  return {g, n, op, ex}; };
+const FASE_TRILHA = {escritorio:"escritorio", peticao_inicial:"escritorio", aposentadoria_futura:"escritorio",
+  inss:"inss", conselho:"conselho", judicial:"judicial", pagamento:"judicial"};
+function faseDaTrilha(k){
+  if(k.fase==="outro"){ const de=(k.ronda||{}).prazo_de||k.origem_lista||"";
+    return /INSS/.test(de)?"inss":/Conselho/.test(de)?"conselho":/Judicial|Peti/.test(de)?"judicial":"escritorio"; }
+  return FASE_TRILHA[k.fase] || null;
+}
+// o rito que o caso pede, pela fase, pela espécie e pelo número do processo
+function ritoPadrao(k, fase){
+  const esp = k.especie || "", inc = /^B(31|32|91|92|87|88)$/.test(esp);
+  if(fase==="escritorio") return k.fase==="peticao_inicial" ? "peticao" : k.fase==="aposentadoria_futura" ? "futura" : "escritorio";
+  if(fase==="inss") return /^B(31|32|91|92)$/.test(esp) ? "inss_inc" : esp==="B94" ? "inss_b94"
+    : /^B(87|88)$/.test(esp) ? "inss_bpc" : "inss_apos";
+  if(fase==="conselho") return k.re_protocolado_em ? "crps_camara" : "crps_junta";
+  const proc = String(k.processo||""), procs = (()=>{ try{ return processosDoCaso(k)||[]; }catch(e){ return []; } })();
+  if(procs.length && procs.every(p=>p.papel==="ms")) return "ms";
+  if(/\.8\.26\./.test(proc) || (esp==="B94" && !/\.4\.03\./.test(proc) && /\.8\./.test(proc))) return "acid";
+  if(/\.4\.03\.61/.test(proc)) return "vara";
+  return (inc || esp==="B94") ? "jef_inc" : "jef_apos";
+}
+const trilhaDe = k => (k.trilha && typeof k.trilha==="object") ? k.trilha : {};
+function ritoDe(k, fase){
+  const t = trilhaDe(k), r = (t.ritos||{})[fase];
+  return TRILHAS[r] && TRILHAS[r].fase===fase ? r : ritoPadrao(k, fase);
+}
+const marcaTrilha = (k, rito, nome) => (trilhaDe(k).m||{})[rito+":"+nome] || null;
+let trVer = {}, trSel = {};   // fase em vista e etapa escolhida, por caso
+function jornadaFases(k){
+  const atual = faseDaTrilha(k), ordem = ["escritorio","inss","conselho","judicial"], ia = ordem.indexOf(atual);
+  const houve = {escritorio:true, inss:!!((k.protocolos||[]).length || k.nb || k.der),
+    conselho:!!((k.crps_nups||[]).length), judicial:!!k.processo};
+  return ordem.map((f,i)=>({f, st: i===ia ? "a" : i<ia ? (houve[f] ? "f" : "n") : "v"}));
+}
+function faixaTrilha(k){
+  const faseAt = faseDaTrilha(k); if(!faseAt) return "";
+  const ver = trVer[k.id] || faseAt, C = COR_FASE[ver], rito = ritoDe(k, ver), T = TRILHAS[rito];
+  const ets = T.e.map(lerEtapaTrilha);
+  const at = ets.findIndex(e=>(marcaTrilha(k,rito,e.n)||{}).s==="a");
+  const sel = trSel[k.id+":"+rito] ?? (at>=0 ? at : 0), es = ets[sel] || ets[0], ms = marcaTrilha(k,rito,es.n)||{};
+  const ritoAt = ritoDe(k, faseAt), atNome = (TRILHAS[ritoAt].e.map(lerEtapaTrilha).find(e=>(marcaTrilha(k,ritoAt,e.n)||{}).s==="a")||{}).n;
+  const jorn = jornadaFases(k).map(({f,st})=>{
+    const c = COR_FASE[f], txt = st==="a" ? (atNome || k.etapa || "em curso") : st==="f" ? "concluído" : st==="n" ? "não houve" : "a vir";
+    return `<li><button class="jn-b jn-${st}${ver===f?" jn-ver":""}" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}" onclick="trVerFase('${k.id}','${f}')"
+      title="ver a trilha de ${c.n}"><span class="jn-nome"><i></i>${c.n}</span><span class="jn-st">${esc(txt)}</span></button></li>`; }).join("");
+  const alt = Object.entries(TRILHAS).filter(([,t])=>t.fase===ver);
+  const chips = alt.length>1 ? `<span class="tr-ritos" role="radiogroup" aria-label="Rito">${alt.map(([id,t])=>
+    `<button role="radio" aria-checked="${id===rito}" class="${id===rito?"on":""}" onclick="trRito('${k.id}','${ver}','${id}')">${esc(t.nome)}</button>`).join("")}</span>` : "";
+  const passos = ets.map((e,i)=>{
+    const m = marcaTrilha(k,rito,e.n)||{}, cor = e.ex ? COR_EXEC : C;
+    return `<li style="--tc:${cor.c};--tt:${cor.t}"><span class="tr-g${e.ex?" tr-g-ex":""}">${esc(e.g)}</span>
+      <button class="tr-et tr-s${m.s||(e.op?"o":"v")}${i===sel?" tr-sel":""}" onclick="trEscolher('${k.id}','${rito}',${i})" aria-pressed="${i===sel}"
+        title="${esc(e.n)}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"agora":"")}</span></button></li>`; }).join("");
+  const est = ms.s==="f" ? `cumprida${ms.d?` em ${fmtBarra(ms.d)}`:""}` : ms.s==="a" ? "etapa atual" : ms.s==="n" ? "não houve" : es.op ? "só se houver" : "a vir";
+  const docSel = es.n==="Aguardando documentos" ? `<label class="tr-doc">qual documento <select onchange="trDetalhe('${k.id}','${rito}',${sel},this.value)">
+      <option value="">escolher</option>${DOCS_AGUARDO.map(d=>`<option ${ms.x===d?"selected":""}>${esc(d)}</option>`).join("")}</select></label>` : "";
+  const q = `'${k.id}','${rito}',${sel}`;
+  return `<section class="tr-faixa" aria-label="Jornada e trilha do caso">
+    <div class="jn"><div class="jn-cab"><h3>Jornada do caso</h3><span>cada cor é uma fase; a de borda grossa é a atual</span></div>
+      <ol class="jn-l">${jorn}</ol></div>
+    <div class="tr" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}">
+      <div class="tr-cab"><h3>${esc(C.n)} · ${esc(T.nome)}</h3><span class="tr-agora">Agora: <b>${at>=0?esc(ets[at].n):"a definir"}</b></span>${chips}</div>
+      <div class="tr-rol"><ol class="tr-l" style="--n:${ets.length}">${passos}</ol></div>
+      <div class="tr-pnl"><span><b>${esc(es.n)}</b> · ${est}</span>${docSel}<span class="tr-esp"></span>
+        <button class="tr-bt" onclick="trMarcar(${q},'f')">Cumprida hoje</button>
+        <button class="tr-bt forte" onclick="trMarcar(${q},'a')">É a etapa atual</button>
+        <button class="tr-bt tr-bt-n" onclick="trMarcar(${q},'n')">Não houve</button>
+        <button class="tr-bt" onclick="trMarcar(${q},'')">Desmarcar</button></div>
+      <div class="tr-leg"><span><i class="tr-lf"></i>cumprida</span><span><i class="tr-la"></i>atual</span><span><i class="tr-lv"></i>a vir</span>
+        <span><i class="tr-lo"></i>só se houver</span><span><i class="tr-ln"></i><s>não houve</s></span>${ver==="judicial"?`<span><i class="tr-lx"></i>execução</span>`:""}
+        <span>· a data vem da anotação que cumpriu a etapa</span></div>
+    </div></section>`;
+}
+function trVerFase(casoId, f){ trVer[casoId] = f; repintarFicha(); }
+function trEscolher(casoId, rito, i){ trSel[casoId+":"+rito] = i; repintarFicha(); }
+async function trGravar(k, t, etapa){
+  const antes = {trilha:k.trilha, etapa:k.etapa};
+  k.trilha = t; if(etapa!==undefined) k.etapa = etapa;
+  try{ await patchCaso(k.id, {trilha:t, ...(etapa!==undefined?{etapa}:{})}); }
+  catch(e){ Object.assign(k, antes); aviso("Não gravou — rode o crm/fase2/schema_trilha.sql no Supabase"); return false; }
+  return true;
+}
+async function trRito(casoId, fase, rito){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const t = {...trilhaDe(k)}; t.ritos = {...(t.ritos||{}), [fase]:rito};
+  if(await trGravar(k, t)) repintarFicha();
+}
+// marca uma etapa: f cumprida (hoje), a atual (a antiga atual vira cumprida),
+// n não houve, '' desmarca. A atual leva casos.etapa junto.
+function trilhaComMarca(k, rito, nome, st, d){
+  const t = {...trilhaDe(k)}, m = {...(t.m||{})}, chave = rito+":"+nome, hj = d || hoje();
+  if(st==="a") for(const c of Object.keys(m)) if(c.startsWith(rito+":") && m[c].s==="a") m[c] = {...m[c], s:"f", d:m[c].d||hj};
+  if(st) m[chave] = {...(m[chave]||{}), s:st, ...(st==="f"||st==="a" ? {d:(m[chave]||{}).d||hj} : {})};
+  else delete m[chave];
+  t.m = m; return t;
+}
+async function trMarcar(casoId, rito, i, st){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const e = lerEtapaTrilha(TRILHAS[rito].e[i]);
+  const t = trilhaComMarca(k, rito, e.n, st);
+  const etapa = st==="a" ? (PUB_TRILHA[e.n] || k.etapa || null) : undefined;
+  if(await trGravar(k, t, etapa)){ aviso(st==="a"?`Etapa atual: ${e.n} ✔`:st==="f"?`${e.n}: cumprida ✔`:st==="n"?`${e.n}: não houve`:"Etapa desmarcada", false);
+    if(st==="a"){ montarSidebar(); render(); } repintarFicha(); }
+}
+async function trDetalhe(casoId, rito, i, x){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const e = lerEtapaTrilha(TRILHAS[rito].e[i]), t = {...trilhaDe(k)}, m = {...(t.m||{})}, c = rito+":"+e.n;
+  m[c] = {...(m[c]||{s:"a", d:hoje()}), x:x||undefined}; t.m = m;
+  if(await trGravar(k, t)) repintarFicha();
+}
+// a etapa que a providência declara (marcarEtapa/gravarEtapa, palavra antiga)
+// acende a etapa equivalente da trilha, com a data de hoje: é a data da anotação
+function trilhaSegueEtapa(k, etapa){
+  const fase = faseDaTrilha(k); if(!fase || !etapa) return null;
+  const rito = ritoDe(k, fase), alvo = TRILHAS[rito].e.map(lerEtapaTrilha)
+    .find(e=>(PUB_TRILHA[e.n]===etapa || e.n.toLowerCase()===String(etapa).toLowerCase()) && (marcaTrilha(k,rito,e.n)||{}).s!=="f");
+  return alvo ? trilhaComMarca(k, rito, alvo.n, "a") : null;
 }
 // F182 · "Nas outras abas": o que o caso tem nas demais divisões da ficha,
 // com o dado que importa e o atalho. Só entra a linha que tem o que mostrar.

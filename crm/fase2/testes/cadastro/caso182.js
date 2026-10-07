@@ -64,7 +64,7 @@ const DADOS = {
   await p.waitForSelector("#app.logado");
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(([cli, id]) => { abrirFicha(cli); casoSel = id; abaAtiva = 2; subAba = "escritorio"; }, [CLI_CHEIO, CASO1]);
-  await p.waitForSelector(".caso-esq .lc-trilha");
+  await p.waitForSelector(".tr-faixa .jn-l");
   await p.evaluate(() => repintarFicha());
   await p.waitForSelector(".timeline .tl-barra");
 
@@ -74,13 +74,14 @@ const DADOS = {
     await p.screenshot({ path: FOTO + "-2.png", fullPage: false }); await p.evaluate(() => fecharRespInline()); await p.waitForSelector(".timeline .tl-barra"); }
   // ── coluna do caso ───────────────────────────────────────────────────────
   const esq = await p.evaluate(() => {
-    const li = [...document.querySelectorAll(".lc-trilha li")];
-    return { n: li.length, atual: (document.querySelector(".lc-trilha li.atual") || {}).textContent || "",
-      feitas: document.querySelectorAll(".lc-trilha li.feita").length,
+    const jn = [...document.querySelectorAll(".jn-l .jn-b")];
+    return { fases: jn.map(b => b.querySelector(".jn-nome").textContent.trim() + ":" + [...b.classList].find(c => /^jn-[afnv]$/.test(c))).join("|"),
+      trilha: (document.querySelector(".tr-cab h3") || {}).textContent || "", passos: document.querySelectorAll(".tr-l .tr-et").length,
       abas: [...document.querySelectorAll(".outras-abas .oa-linha small")].map(x => x.textContent),
       txt: (document.querySelector(".outras-abas") || {}).textContent || "" };
   });
-  conf("a trilha mostra as etapas da fase e acende a atual", esq.n === 6 && /aguardando perícia/.test(esq.atual) && esq.feitas === 1);
+  // F183 · a trilha subiu para o alto do caso: jornada por cor e trilha do rito
+  conf("a jornada mostra as quatro fases, o INSS como atual", esq.fases === "Escritório:jn-f|INSS:jn-a|Conselho:jn-v|Judicial:jn-v" && /^INSS · Aposentadorias e pensão$/.test(esq.trilha) && esq.passos === 7);
   conf("Nas outras abas traz Perícias e Honorários com o dado de cada uma", esq.abas.includes("Perícias") && esq.abas.includes("Honorários") && /APS Fictícia/.test(esq.txt) && /próximo vencimento/.test(esq.txt));
   await p.evaluate(() => document.querySelector(".oa-linha").click());
   conf("o atalho leva à aba (Perícias)", await p.evaluate(() => abaAtiva === 3));
