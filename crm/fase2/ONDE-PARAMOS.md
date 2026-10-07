@@ -2105,3 +2105,19 @@ Provas ajustadas: linha102, harmonia138, placa134 (a placa é lista); suíte
 - Banco: `schema_trilha.sql` (coluna casos.trilha jsonb), já aplicada.
 - A trilha antiga de dentro do cartão do caso (`trilhaEtapas`) saiu.
 Prova nova: `trilha183.js` (9/9); `caso182.js` ajustada. Suíte: só as falhas de data.
+
+## 10.85 · F183 · trilha refinada (revisão de design, nota 96/100 do revisor independente)
+- Jornada e trilha num cartão só: as fases viram abas (Escritório em tijolo
+  #A0503F, para o vermelho continuar só com prazo e atraso; INSS #B7791F,
+  mais escuro, pelo contraste). Fase passada mostra a data e a última etapa
+  ("07/10 · aguardando documentos"), ou "sem etapas marcadas"; pode ser
+  marcada "esta fase não houve" (casos.trilha.fases).
+- O tipo de processo virou um seletor ("tipo"); a legenda foi para o "?".
+- O quadro de marcar abre só ao clicar na etapa, numa linha, com ✕ e Esc
+  (o Esc é capturado e não fecha mais a ficha). Marcar traz "desfazer".
+- Grupos cumpridos recolhem em "n de n cumpridas"; a Execução (roxa)
+  fica recolhida até ter marca. A trilha abre centrada na etapa atual,
+  setas ‹ › aparecem quando há mais etapas, e as setas do teclado, Home e
+  End andam entre as etapas. A rolagem da ficha é preservada (trRepintar).
+- Celular: as quatro abas numa linha, ✓ nas cumpridas e risco no "não houve".
+Prova: `trilha183.js` (15/15). Suíte: só as falhas de data.

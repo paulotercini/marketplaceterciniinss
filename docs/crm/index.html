@@ -3533,58 +3533,89 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item>.quando{display:n
 html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item>.texto{display:block;white-space:normal}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-av{width:20px;height:20px;font-size:10px}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item .tl-corpo{margin-top:2px;font-size:13.5px}
-/* F183 · jornada por cor e trilha do rito, no alto do caso */
-html[data-tema="v10"] .tr-faixa{display:flex;flex-direction:column;gap:12px;margin:0 0 16px}
+/* F183 · jornada por cor e trilha do rito, no alto do caso (abas da fase + trilha num cartão só) */
+html[data-tema="v10"] .tr-faixa{margin:0 0 16px;background:#FFFFFF;border:1px solid var(--borda);border-radius:12px;overflow:hidden}
 html[data-tema="v10"] .tr-faixa h3{margin:0;font-family:var(--f-ui)}
-html[data-tema="v10"] .jn{background:#FFFFFF;border:1px solid var(--borda);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
-html[data-tema="v10"] .jn-cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
-html[data-tema="v10"] .jn-cab h3{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#686660}
-html[data-tema="v10"] .jn-cab span{font-size:13px;color:#4A4944}
-html[data-tema="v10"] .jn-l{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
-html[data-tema="v10"] .jn-b{all:unset;cursor:pointer;box-sizing:border-box;width:100%;min-height:52px;border-radius:10px;padding:9px 12px;display:flex;flex-direction:column;gap:2px;background:var(--ff);border:1px solid var(--ff);color:var(--ft)}
-html[data-tema="v10"] .jn-b.jn-a{border:2px solid var(--fc)}
-html[data-tema="v10"] .jn-b.jn-n{background:#FFFFFF;border:1.5px dashed #C9C6BE;color:#686660}
-html[data-tema="v10"] .jn-b.jn-v{background:#FFFFFF;border:1px solid var(--borda);color:#686660}
-html[data-tema="v10"] .jn-b.jn-ver{box-shadow:0 0 0 3px rgba(18,18,18,.08)}
-html[data-tema="v10"] .jn-b:focus-visible{outline:2px solid #121212;outline-offset:2px}
-html[data-tema="v10"] .jn-nome{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500}
-html[data-tema="v10"] .jn-nome i{width:10px;height:10px;border-radius:50%;background:var(--fc);flex:none}
-html[data-tema="v10"] .jn-n .jn-nome i{background:transparent;border:1.5px dashed #A9A69E;box-sizing:border-box}
-html[data-tema="v10"] .jn-st{font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-html[data-tema="v10"] .tr{background:#FFFFFF;border:1px solid var(--borda);border-top:4px solid var(--tc);border-radius:12px;padding:14px 18px 16px;display:flex;flex-direction:column;gap:12px}
-html[data-tema="v10"] .tr-cab{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
-html[data-tema="v10"] .tr-cab h3{font-size:15px;font-weight:500;color:var(--tt)}
+html[data-tema="v10"] .jn-l{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-bottom:1px solid var(--borda);background:#FBFBFA}
+html[data-tema="v10"] .jn-b{all:unset;cursor:pointer;box-sizing:border-box;min-height:46px;padding:7px 14px 7px;display:flex;flex-direction:column;justify-content:center;gap:1px;border-right:1px solid var(--borda);color:#686660;position:relative;transition:background-color .15s ease}
+html[data-tema="v10"] .jn-b:last-child{border-right:0}
+html[data-tema="v10"] .jn-b::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
+html[data-tema="v10"] .jn-b.jn-f,html[data-tema="v10"] .jn-b.jn-a{background:var(--ff);color:var(--ft)}
+html[data-tema="v10"] .jn-b.jn-a .jn-nome::after{content:"atual";margin-left:6px;font-size:10.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--fc);border-radius:999px;padding:0 6px;line-height:16px}
+html[data-tema="v10"] .jn-b.jn-n{background:repeating-linear-gradient(135deg,#FFFFFF 0 7px,#F7F6F3 7px 9px);color:#5F5D57}
+html[data-tema="v10"] .jn-b.jn-ver{background:#FFFFFF;color:var(--ft)}
+html[data-tema="v10"] .jn-b.jn-ver::after{background:var(--fc)}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .jn-b:not(.jn-ver):hover{background:#F3F2EE}}
+html[data-tema="v10"] .jn-b:focus-visible{outline:2px solid #121212;outline-offset:-2px}
+html[data-tema="v10"] .jn-nome{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500}
+html[data-tema="v10"] .jn-nome i{width:9px;height:9px;border-radius:50%;background:var(--fc);flex:none}
+html[data-tema="v10"] .jn-n .jn-nome i,html[data-tema="v10"] .jn-v .jn-nome i{background:transparent;border:1.5px solid var(--fc);box-sizing:border-box}
+html[data-tema="v10"] .jn-n .jn-nome i{border-style:dashed;border-color:#A9A69E}
+html[data-tema="v10"] .jn-st{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html[data-tema="v10"] .tr-corpo{padding:12px 18px 14px;display:flex;flex-direction:column;gap:10px}
+html[data-tema="v10"] .tr-cab{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+html[data-tema="v10"] .tr-cab h3{font-size:14.5px;font-weight:500;color:var(--tt)}
 html[data-tema="v10"] .tr-agora{font-size:13px}
-html[data-tema="v10"] .tr-ritos{margin-left:auto;display:flex;flex-wrap:wrap;gap:4px}
-html[data-tema="v10"] .tr-ritos button{min-height:32px;padding:0 10px;border-radius:999px;border:1px solid #D6D4CE;background:#FFFFFF;color:#4A4944;font-size:12.5px;font-weight:500;font-family:var(--f-ui);cursor:pointer}
+html[data-tema="v10"] .tr-ritos{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#686660}
+html[data-tema="v10"] .tr-ritos select{min-height:32px;max-width:230px;border:1px solid #D6D4CE;border-radius:8px;padding:0 8px;background:#FFFFFF;color:var(--tt);font:inherit;font-size:12.5px;font-weight:500}
+html[data-tema="v10"] .tr-ritos button,html[data-tema="v10"] .tr-houve{min-height:30px;padding:0 10px;border-radius:999px;border:1px solid #D6D4CE;background:#FFFFFF;color:#4A4944;font-size:12px;font-weight:500;font-family:var(--f-ui);cursor:pointer}
 html[data-tema="v10"] .tr-ritos button.on{border-color:var(--tc);background:var(--tf);color:var(--tt)}
-html[data-tema="v10"] .tr-rol{overflow-x:auto;padding-bottom:2px}
-html[data-tema="v10"] .tr-l{list-style:none;margin:0;padding:0;min-width:calc(var(--n) * 96px);display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:0 4px}
-html[data-tema="v10"] .tr-l>li{min-width:0;display:flex;flex-direction:column;gap:4px}
-html[data-tema="v10"] .tr-g{font-size:10.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#8A8780;min-height:15px;white-space:nowrap}
+html[data-tema="v10"] .tr-houve{border-style:dashed}
+html[data-tema="v10"] .tr-ajuda{width:30px;height:30px;border-radius:50%;border:1px solid #D6D4CE;background:#FFFFFF;color:#4A4944;font-weight:500;font-family:var(--f-ui);cursor:pointer}
+html[data-tema="v10"] .tr-cab:not(:has(.tr-ritos)) .tr-ajuda{margin-left:auto}
+html[data-tema="v10"] .app.celular .tr-cab .tr-ajuda{margin-left:auto}
+html[data-tema="v10"] .tr-ajuda[aria-expanded="true"]{background:#121212;border-color:#121212;color:#FFFFFF}
+html[data-tema="v10"] .tr-rol{position:relative;overflow-x:auto;padding-bottom:2px;scroll-behavior:smooth;scrollbar-width:thin}
+html[data-tema="v10"] .tr-rol-box{position:relative}
+html[data-tema="v10"] .tr-seta{display:none;position:absolute;top:22px;z-index:2;width:30px;height:30px;border-radius:50%;border:1px solid #D6D4CE;background:#FFFFFF;color:#121212;font-size:18px;line-height:1;cursor:pointer;box-shadow:0 2px 6px rgba(18,18,18,.12)}
+html[data-tema="v10"] .tr-seta-esq{left:-6px}
+html[data-tema="v10"] .tr-seta-dir{right:-6px}
+html[data-tema="v10"] .tr-mais-esq>.tr-seta-esq,html[data-tema="v10"] .tr-mais-dir>.tr-seta-dir{display:block}
+html[data-tema="v10"] .tr-rol-box.tr-mais-dir::after,html[data-tema="v10"] .tr-rol-box.tr-mais-esq::before{content:"";position:absolute;top:0;bottom:0;width:56px;pointer-events:none;z-index:1}
+html[data-tema="v10"] .tr-rol-box.tr-mais-dir::after{right:-2px;background:linear-gradient(to right,rgba(255,255,255,0),#FFFFFF 55%)}
+html[data-tema="v10"] .tr-rol-box.tr-mais-esq::before{left:-2px;background:linear-gradient(to left,rgba(255,255,255,0),#FFFFFF 55%)}
+html[data-tema="v10"] .tr-l{padding-right:8px}
+html[data-tema="v10"] .jn-nome{min-width:0}
+html[data-tema="v10"] .jn-txt{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html[data-tema="v10"] .app.celular .jn-f .jn-nome::after{content:"✓";flex:none;margin-left:-2px;font-size:11px}
+html[data-tema="v10"] .app.celular .jn-n .jn-txt{text-decoration:line-through}
+html[data-tema="v10"] .app.celular .jn-b{padding:6px 6px}
+html[data-tema="v10"] .tr-l li[data-ex] .tr-sv .tr-b{background:#F3DDEC}
+html[data-tema="v10"] .tr-l{list-style:none;margin:0;padding:0;min-width:calc(var(--n) * 106px);display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:0 4px}
+html[data-tema="v10"] .tr-l>li{min-width:0;display:flex;flex-direction:column;gap:3px}
+html[data-tema="v10"] .tr-g{font-size:10.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#8A8780;height:15px;line-height:15px;white-space:nowrap;overflow:visible;display:flex;align-items:center;gap:4px}
 html[data-tema="v10"] .tr-g-ex{color:#A5187F}
-html[data-tema="v10"] .tr-et{all:unset;cursor:pointer;box-sizing:border-box;min-height:64px;display:flex;flex-direction:column;gap:5px;padding:4px 4px 6px;border-radius:8px}
+html[data-tema="v10"] .tr-rec{margin:0;font-size:10.5px;line-height:15px;height:15px;display:inline-flex;align-items:center;text-underline-offset:2px;text-transform:none;letter-spacing:0;color:#686660}
+html[data-tema="v10"] .tr-et{all:unset;cursor:pointer;box-sizing:border-box;min-height:60px;display:flex;flex-direction:column;gap:5px;padding:4px 5px 6px;border-radius:8px;transition:background-color .15s ease}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .tr-et:hover{background:#F6F5F2}}
 html[data-tema="v10"] .tr-et:focus-visible{outline:2px solid #121212;outline-offset:1px}
-html[data-tema="v10"] .tr-et.tr-sel{background:#F3F2EE}
-html[data-tema="v10"] .tr-b{display:block;height:8px;border-radius:999px;background:#E7E6E1;box-sizing:border-box}
+html[data-tema="v10"] .tr-et.tr-sel{background:#F0EFEB}
+html[data-tema="v10"] .tr-b{display:block;height:8px;border-radius:999px;background:#E7E6E1;box-sizing:border-box;transition:background-color .2s ease,box-shadow .2s ease}
 html[data-tema="v10"] .tr-sf .tr-b{background:var(--tc)}
 html[data-tema="v10"] .tr-sa .tr-b{background:var(--tc);box-shadow:0 0 0 2px #FFFFFF,0 0 0 4px var(--tc)}
 html[data-tema="v10"] .tr-so .tr-b{background:transparent;border:1.5px dotted #A9A69E}
 html[data-tema="v10"] .tr-sn .tr-b{background:transparent;border:1.5px dashed #A9A69E}
-html[data-tema="v10"] .tr-et .tr-nm{font-size:12px;line-height:1.3;color:#8A8780}
+html[data-tema="v10"] .tr-grp.tr-sv .tr-b{background:transparent;border:1.5px dashed var(--tc)}
+html[data-tema="v10"] .tr-et .tr-nm{font-size:12px;line-height:1.3;color:#67655F}
 html[data-tema="v10"] .tr-sf .tr-nm{color:#121212}
 html[data-tema="v10"] .tr-sa .tr-nm{color:var(--tt);font-weight:500}
 html[data-tema="v10"] .tr-et.tr-sn .tr-nm{text-decoration:line-through}
+html[data-tema="v10"] .tr-grp .tr-nm{color:var(--tt)}
 html[data-tema="v10"] .tr-x{font-size:11px;color:var(--tt);line-height:1.25}
 html[data-tema="v10"] .tr-d{font-family:var(--f-mono);font-size:11px;color:#686660}
-html[data-tema="v10"] .tr-pnl{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 12px;border-radius:10px;background:#F8F8F6;font-size:13px}
-html[data-tema="v10"] .tr-esp{flex:1 1 auto}
+html[data-tema="v10"] .tr-pnl{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 12px;border-radius:10px;background:#F8F8F6;border:1px solid var(--borda);font-size:13px;animation:tr-entra .18s ease-out}
+@keyframes tr-entra{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+html[data-tema="v10"] .tr-pnl-info{flex:1 1 auto}
+html[data-tema="v10"] .tr-acoes{display:inline-flex;flex-wrap:nowrap;align-items:center;gap:6px;margin-left:auto}
 html[data-tema="v10"] .tr-doc{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:#4A4944}
-html[data-tema="v10"] .tr-doc select{max-width:220px;min-height:32px;border:1px solid #D6D4CE;border-radius:8px;padding:0 8px;font:inherit}
+html[data-tema="v10"] .tr-doc select{max-width:170px;min-height:32px;border:1px solid #D6D4CE;border-radius:8px;padding:0 8px;font:inherit}
 html[data-tema="v10"] .tr-bt{min-height:36px;padding:0 12px;border-radius:8px;border:1px solid #D6D4CE;background:#FFFFFF;color:#4A4944;font-weight:500;font-size:13px;font-family:var(--f-ui);cursor:pointer}
+html[data-tema="v10"] .tr-bt:active{transform:scale(.97)}
 html[data-tema="v10"] .tr-bt.forte{border-color:var(--tc);background:var(--tc);color:#FFFFFF}
 html[data-tema="v10"] .tr-bt-n{border-style:dashed;border-color:#A9A69E}
-html[data-tema="v10"] .tr-leg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:#4A4944}
+html[data-tema="v10"] .tr-x-bt{width:32px;height:32px;border:0;border-radius:8px;background:transparent;color:#686660;cursor:pointer;font-family:var(--f-ui)}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .tr-x-bt:hover{background:#EFEEEB}}
+html[data-tema="v10"] .tr-leg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:#4A4944;padding:8px 10px;border-radius:8px;background:#F8F8F6}
 html[data-tema="v10"] .tr-leg span{display:inline-flex;align-items:center;gap:6px}
 html[data-tema="v10"] .tr-leg i{width:22px;height:8px;border-radius:999px;box-sizing:border-box}
 html[data-tema="v10"] .tr-lf{background:var(--tc)}
@@ -3593,7 +3624,13 @@ html[data-tema="v10"] .tr-lv{background:#E7E6E1}
 html[data-tema="v10"] .tr-lo{border:1.5px dotted #A9A69E}
 html[data-tema="v10"] .tr-ln{border:1.5px dashed #A9A69E}
 html[data-tema="v10"] .tr-lx{background:#A5187F}
-html[data-tema="v10"] .app.celular .jn-l{grid-template-columns:repeat(2,minmax(0,1fr))}
+html[data-tema="v10"] .app.celular .jn-b{min-height:40px;padding:6px 8px}
+html[data-tema="v10"] .app.celular .jn-nome{font-size:12.5px;gap:5px}
+html[data-tema="v10"] .app.celular .jn-st,html[data-tema="v10"] .app.celular .jn-b.jn-a .jn-nome::after{display:none}
+html[data-tema="v10"] .app.celular .tr-corpo{padding:10px 12px 12px}
+html[data-tema="v10"] .app.celular .tr-ritos{margin-left:0}
+html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
+@media (prefers-reduced-motion:reduce){html[data-tema="v10"] .tr-pnl{animation:none}html[data-tema="v10"] .tr-rol{scroll-behavior:auto}html[data-tema="v10"] .tr-b,html[data-tema="v10"] .tr-et,html[data-tema="v10"] .jn-b{transition:none}html[data-tema="v10"] .tr-bt:active{transform:none}}
 </style>
 </head>
 <body>
@@ -3606,7 +3643,7 @@ html[data-tema="v10"] .app.celular .jn-l{grid-template-columns:repeat(2,minmax(0
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.84</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.85</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12723,6 +12760,7 @@ function pintarFicha(){
     }
   }
   folgaComposer();
+  trCentrar();   // F183 · a etapa atual no meio da trilha
 
   document.querySelectorAll("[data-fase]").forEach(s=>s.onchange=async()=>{
     const k=D.casoPorId.get(s.dataset.fase);
@@ -18998,8 +19036,8 @@ function linhaCaso(k){
 // (PUB_TRILHA), que é a que o portal e o resto do CRM já entendem.
 // Etapa: "Grupo|Nome" abre grupo; "*" na frente = só se houver; "#" = execução.
 const COR_FASE = {
-  escritorio:{n:"Escritório", c:"#B3261E", f:"#FBEAE7", t:"#8B1D16"},
-  inss:      {n:"INSS",       c:"#D9A21B", f:"#FBF1DA", t:"#6E4200"},
+  escritorio:{n:"Escritório", c:"#A0503F", f:"#F6E9E4", t:"#7A3426"},   // tijolo: o vermelho fica para prazo e atraso
+  inss:      {n:"INSS",       c:"#B7791F", f:"#FBF1DA", t:"#6E4200"},
   conselho:  {n:"Conselho",   c:"#3B7BD0", f:"#E8F0FB", t:"#1F4E8C"},
   judicial:  {n:"Judicial",   c:"#0E5C58", f:"#E6F0EF", t:"#0B4744"}};
 const COR_EXEC = {c:"#A5187F", f:"#FDF2F9", t:"#7E1260"};
@@ -19091,54 +19129,142 @@ function ritoDe(k, fase){
   return TRILHAS[r] && TRILHAS[r].fase===fase ? r : ritoPadrao(k, fase);
 }
 const marcaTrilha = (k, rito, nome) => (trilhaDe(k).m||{})[rito+":"+nome] || null;
-let trVer = {}, trSel = {};   // fase em vista e etapa escolhida, por caso
+let trVer = {}, trSel = {}, trAbre = {}, trAjuda = false;   // fase em vista, etapa aberta, grupos abertos, legenda
 function jornadaFases(k){
   const atual = faseDaTrilha(k), ordem = ["escritorio","inss","conselho","judicial"], ia = ordem.indexOf(atual);
+  const marcou = (trilhaDe(k).fases)||{};
   const houve = {escritorio:true, inss:!!((k.protocolos||[]).length || k.nb || k.der),
     conselho:!!((k.crps_nups||[]).length), judicial:!!k.processo};
-  return ordem.map((f,i)=>({f, st: i===ia ? "a" : i<ia ? (houve[f] ? "f" : "n") : "v"}));
+  return ordem.map((f,i)=>({f, st: i===ia ? "a" : i<ia ? (marcou[f] || (houve[f] ? "f" : "n")) : "v"}));
+}
+// o que a fase concluída diz: a última etapa cumprida e a data
+function resumoFase(k, f){
+  const rito = ritoDe(k, f), ets = TRILHAS[rito].e.map(lerEtapaTrilha);
+  let ult = null;
+  for(const e of ets){ const m = marcaTrilha(k, rito, e.n); if(m && (m.s==="f"||m.s==="a") && (!ult || (m.d||"")>=(ult.m.d||""))) ult = {e, m}; }
+  if(f==="inss" && k.resultado && !ult) return k.resultado==="deferido" ? "concedido" : String(k.resultado);
+  // a data vem na frente: é ela que some primeiro quando a aba aperta
+  return ult ? `${ult.m.d?`${fmtBarra(ult.m.d).slice(0,5)} · `:""}${ult.e.n.toLowerCase()}` : "sem etapas marcadas";
+}
+// os grupos da trilha (Ajuizamento, Instrução...); trilha sem grupo = um só
+function gruposTrilha(ets){
+  const gs = [];
+  ets.forEach((e,i)=>{ if(e.g || !gs.length) gs.push({g:e.g, ex:e.ex, ix:[]}); gs[gs.length-1].ix.push(i); });
+  return gs;
 }
 function faixaTrilha(k){
   const faseAt = faseDaTrilha(k); if(!faseAt) return "";
   const ver = trVer[k.id] || faseAt, C = COR_FASE[ver], rito = ritoDe(k, ver), T = TRILHAS[rito];
-  const ets = T.e.map(lerEtapaTrilha);
-  const at = ets.findIndex(e=>(marcaTrilha(k,rito,e.n)||{}).s==="a");
-  const sel = trSel[k.id+":"+rito] ?? (at>=0 ? at : 0), es = ets[sel] || ets[0], ms = marcaTrilha(k,rito,es.n)||{};
+  // fase que já passou: a etapa que ficou "atual" nela foi a última cumprida
+  const ets = T.e.map(lerEtapaTrilha), mk = e => { const m = marcaTrilha(k,rito,e.n)||{}; return (ver!==faseAt && m.s==="a") ? {...m, s:"f"} : m; };
+  const at = ets.findIndex(e=>mk(e).s==="a");
+  const selK = k.id+":"+rito, sel = trSel[selK];
   const ritoAt = ritoDe(k, faseAt), atNome = (TRILHAS[ritoAt].e.map(lerEtapaTrilha).find(e=>(marcaTrilha(k,ritoAt,e.n)||{}).s==="a")||{}).n;
-  const jorn = jornadaFases(k).map(({f,st})=>{
-    const c = COR_FASE[f], txt = st==="a" ? (atNome || k.etapa || "em curso") : st==="f" ? "concluído" : st==="n" ? "não houve" : "a vir";
-    return `<li><button class="jn-b jn-${st}${ver===f?" jn-ver":""}" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}" onclick="trVerFase('${k.id}','${f}')"
-      title="ver a trilha de ${c.n}"><span class="jn-nome"><i></i>${c.n}</span><span class="jn-st">${esc(txt)}</span></button></li>`; }).join("");
+  const fases = jornadaFases(k), stVer = (fases.find(x=>x.f===ver)||{}).st;
+  const abas = fases.map(({f,st})=>{
+    const c = COR_FASE[f], txt = st==="a" ? (atNome || k.etapa || "em curso") : st==="f" ? resumoFase(k, f) : st==="n" ? "não houve" : "a vir";
+    return `<button role="tab" aria-selected="${ver===f}" class="jn-b jn-${st}${ver===f?" jn-ver":""}" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}"
+      onclick="trVerFase('${k.id}','${f}')"><span class="jn-nome"><i></i><span class="jn-txt">${c.n}</span></span><span class="jn-st">${esc(txt)}</span></button>`; }).join("");
   const alt = Object.entries(TRILHAS).filter(([,t])=>t.fase===ver);
-  const chips = alt.length>1 ? `<span class="tr-ritos" role="radiogroup" aria-label="Rito">${alt.map(([id,t])=>
-    `<button role="radio" aria-checked="${id===rito}" class="${id===rito?"on":""}" onclick="trRito('${k.id}','${ver}','${id}')">${esc(t.nome)}</button>`).join("")}</span>` : "";
-  const passos = ets.map((e,i)=>{
-    const m = marcaTrilha(k,rito,e.n)||{}, cor = e.ex ? COR_EXEC : C;
-    return `<li style="--tc:${cor.c};--tt:${cor.t}"><span class="tr-g${e.ex?" tr-g-ex":""}">${esc(e.g)}</span>
-      <button class="tr-et tr-s${m.s||(e.op?"o":"v")}${i===sel?" tr-sel":""}" onclick="trEscolher('${k.id}','${rito}',${i})" aria-pressed="${i===sel}"
-        title="${esc(e.n)}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"agora":"")}</span></button></li>`; }).join("");
-  const est = ms.s==="f" ? `cumprida${ms.d?` em ${fmtBarra(ms.d)}`:""}` : ms.s==="a" ? "etapa atual" : ms.s==="n" ? "não houve" : es.op ? "só se houver" : "a vir";
-  const docSel = es.n==="Aguardando documentos" ? `<label class="tr-doc">qual documento <select onchange="trDetalhe('${k.id}','${rito}',${sel},this.value)">
-      <option value="">escolher</option>${DOCS_AGUARDO.map(d=>`<option ${ms.x===d?"selected":""}>${esc(d)}</option>`).join("")}</select></label>` : "";
-  const q = `'${k.id}','${rito}',${sel}`;
-  return `<section class="tr-faixa" aria-label="Jornada e trilha do caso">
-    <div class="jn"><div class="jn-cab"><h3>Jornada do caso</h3><span>cada cor é uma fase; a de borda grossa é a atual</span></div>
-      <ol class="jn-l">${jorn}</ol></div>
-    <div class="tr" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}">
-      <div class="tr-cab"><h3>${esc(C.n)} · ${esc(T.nome)}</h3><span class="tr-agora">Agora: <b>${at>=0?esc(ets[at].n):"a definir"}</b></span>${chips}</div>
-      <div class="tr-rol"><ol class="tr-l" style="--n:${ets.length}">${passos}</ol></div>
-      <div class="tr-pnl"><span><b>${esc(es.n)}</b> · ${est}</span>${docSel}<span class="tr-esp"></span>
-        <button class="tr-bt" onclick="trMarcar(${q},'f')">Cumprida hoje</button>
-        <button class="tr-bt forte" onclick="trMarcar(${q},'a')">É a etapa atual</button>
-        <button class="tr-bt tr-bt-n" onclick="trMarcar(${q},'n')">Não houve</button>
-        <button class="tr-bt" onclick="trMarcar(${q},'')">Desmarcar</button></div>
-      <div class="tr-leg"><span><i class="tr-lf"></i>cumprida</span><span><i class="tr-la"></i>atual</span><span><i class="tr-lv"></i>a vir</span>
-        <span><i class="tr-lo"></i>só se houver</span><span><i class="tr-ln"></i><s>não houve</s></span>${ver==="judicial"?`<span><i class="tr-lx"></i>execução</span>`:""}
-        <span>· a data vem da anotação que cumpriu a etapa</span></div>
+  // o tipo de processo é uma escolha rara: um seletor, e não cinco pílulas
+  const chips = alt.length>1 ? `<label class="tr-ritos">tipo <select onchange="trRito('${k.id}','${ver}',this.value)" aria-label="Tipo de processo">${alt.map(([id,t])=>
+    `<option value="${id}" ${id===rito?"selected":""}>${esc(t.nome)}</option>`).join("")}</select></label>` : "";
+  // fase passada: dá para dizer que não houve (ou que houve)
+  const houveBt = (stVer==="f"||stVer==="n") ? `<button class="tr-houve" onclick="trFaseHouve('${k.id}','${ver}','${stVer==="n"?"f":"n"}')">${stVer==="n"?"esta fase houve":"esta fase não houve"}</button>` : "";
+  // os grupos cumpridos (e a execução ainda não começada) ficam recolhidos
+  const itens = [];
+  for(const G of gruposTrilha(ets)){
+    const ms = G.ix.map(i=>({i, e:ets[i], m:mk(ets[i])}));
+    const feito = ms.length>1 && ms.some(x=>x.m.s==="f") && ms.every(x=>x.m.s==="f" || x.m.s==="n" || (x.e.op && !x.m.s));
+    const execVazia = G.ex && ms.every(x=>!x.m.s);
+    const chave = k.id+":"+rito+":"+G.g;
+    if(G.g && (feito || execVazia) && !trAbre[chave] && !ms.some(x=>x.i===sel)){
+      const n = ms.filter(x=>x.m.s==="f").length, tot = ms.filter(x=>!x.e.op || x.m.s==="f").length;
+      itens.push(`<li style="--tc:${(G.ex?COR_EXEC:C).c};--tt:${(G.ex?COR_EXEC:C).t}"><span class="tr-g${G.ex?" tr-g-ex":""}">${esc(G.g)}</span>
+        <button class="tr-et tr-grp ${feito?"tr-sf":"tr-sv"}" aria-expanded="false" onclick="trGrupo('${chave}')"
+          title="mostrar as etapas de ${esc(G.g)}"><span class="tr-b"></span><span class="tr-nm">${feito?`${n} de ${tot} cumpridas`:`${ms.length} etapas · a vir`}</span><span class="tr-d">mostrar ›</span></button></li>`);
+      continue;
+    }
+    ms.forEach(({i,e,m},n)=>{
+      const cor = e.ex ? COR_EXEC : C;
+      const rot = n===0 && G.g ? `<span class="tr-g${e.ex?" tr-g-ex":""}">${esc(G.g)}${(feito||execVazia)&&trAbre[chave]?` <a href="#" onclick="trGrupo('${chave}');return false" class="tr-rec">recolher</a>`:""}</span>` : `<span class="tr-g"></span>`;
+      itens.push(`<li style="--tc:${cor.c};--tt:${cor.t}"${e.ex?" data-ex":""}>${rot}
+        <button class="tr-et tr-s${m.s||(e.op?"o":"v")}${i===sel?" tr-sel":""}" data-tri="${i}" onclick="trEscolher('${k.id}','${rito}',${i})" aria-pressed="${i===sel}"
+          title="${esc(e.n)}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"agora":"")}</span></button></li>`);
+    });
+  }
+  let pnl = "";
+  if(sel!=null && ets[sel]){
+    const es = ets[sel], ms = mk(es), q = `'${k.id}','${rito}',${sel}`;
+    const est = ms.s==="f" ? `cumprida${ms.d?` em ${fmtBarra(ms.d)}`:""}` : ms.s==="a" ? "etapa atual" : ms.s==="n" ? "não houve" : es.op ? "só se houver" : "a vir";
+    const docSel = es.n==="Aguardando documentos" ? `<label class="tr-doc"><select aria-label="Qual documento falta" onchange="trDetalhe(${q},this.value)">
+      <option value="">qual documento?</option>${DOCS_AGUARDO.map(d=>`<option ${ms.x===d?"selected":""}>${esc(d)}</option>`).join("")}</select></label>` : "";
+    pnl = `<div class="tr-pnl" role="group" aria-label="Marcar a etapa ${esc(es.n)}"><span class="tr-pnl-info"><b>${esc(es.n)}</b> · ${est}</span>${docSel}<span class="tr-acoes">
+      ${ms.s!=="f"?`<button class="tr-bt" onclick="trMarcar(${q},'f')">Cumprida hoje</button>`:""}
+      ${ms.s!=="a" && ver===faseAt?`<button class="tr-bt forte" onclick="trMarcar(${q},'a')">É a etapa atual</button>`:""}
+      ${ms.s!=="n"?`<button class="tr-bt tr-bt-n" onclick="trMarcar(${q},'n')">Não houve</button>`:""}
+      ${ms.s?`<button class="tr-bt" onclick="trMarcar(${q},'')">Desmarcar</button>`:""}
+      <button class="tr-x-bt" aria-label="fechar" title="fechar" onclick="trEscolher('${k.id}','${rito}',null)">✕</button></span></div>`;
+  }
+  const leg = trAjuda ? `<div class="tr-leg" id="tr-leg"><span><i class="tr-lf"></i>cumprida</span><span><i class="tr-la"></i>atual</span><span><i class="tr-lv"></i>a vir</span>
+      <span><i class="tr-lo"></i>só se houver</span><span><i class="tr-ln"></i><s>não houve</s></span>${ver==="judicial"?`<span><i class="tr-lx"></i>execução</span>`:""}
+      <span>A data vem da anotação que cumpriu a etapa. Grupos cumpridos ficam recolhidos; clique para abrir.</span></div>` : "";
+  return `<section class="tr-faixa tr" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}" aria-label="Jornada e trilha do caso">
+    <div class="jn-l" role="tablist" aria-label="Fases do caso">${abas}</div>
+    <div class="tr-corpo">
+      <div class="tr-cab"><h3>${esc(T.nome)}</h3><span class="tr-agora">${ver===faseAt?`Agora: <b>${at>=0?esc(ets[at].n):"a definir"}</b>`:`<span class="meio-sub">${stVer==="v"?"fase ainda não alcançada":"fase anterior"}</span>`}</span>
+        ${houveBt}${chips}<button class="tr-ajuda" aria-expanded="${trAjuda}" aria-controls="tr-leg" title="o que cada marca quer dizer" onclick="trAjuda=!trAjuda;trRepintar()">?</button></div>
+      ${leg}
+      <div class="tr-rol-box"><button class="tr-seta tr-seta-esq" aria-label="etapas anteriores" tabindex="-1" onclick="trRolar(-1)">‹</button>
+        <div class="tr-rol" onscroll="trSombra(this)"><ol class="tr-l" style="--n:${itens.length}">${itens.join("")}</ol></div>
+        <button class="tr-seta tr-seta-dir" aria-label="próximas etapas" tabindex="-1" onclick="trRolar(1)">›</button></div>
+      ${pnl}
     </div></section>`;
 }
-function trVerFase(casoId, f){ trVer[casoId] = f; repintarFicha(); }
-function trEscolher(casoId, rito, i){ trSel[casoId+":"+rito] = i; repintarFicha(); }
+// repinta sem perder a rolagem da ficha e põe a etapa atual no meio da trilha
+function trRepintar(){
+  const rol = document.querySelector(".det-rolagem"), y = rol ? rol.scrollTop : 0;
+  const tr = document.querySelector(".tr-rol"), x = tr ? tr.scrollLeft : null;
+  repintarFicha();
+  const rol2 = document.querySelector(".det-rolagem"); if(rol2) rol2.scrollTop = y;
+  trCentrar(x);
+}
+function trCentrar(x){
+  const tr = document.querySelector(".tr-rol"); if(!tr) return;
+  if(x!=null) tr.scrollLeft = x;
+  else { const a = tr.querySelector(".tr-sel") || tr.querySelector(".tr-sa");
+    if(a){ const sb = tr.style.scrollBehavior; tr.style.scrollBehavior = "auto";
+      tr.scrollLeft = a.offsetLeft - tr.clientWidth/2 + a.offsetWidth/2; tr.style.scrollBehavior = sb; } }
+  trSombra(tr);
+}
+// a borda esmaecida diz que a trilha continua para o lado
+function trSombra(tr){
+  const box = tr && tr.parentElement; if(!box) return;
+  box.classList.toggle("tr-mais-esq", tr.scrollLeft > 4);
+  box.classList.toggle("tr-mais-dir", tr.scrollLeft + tr.clientWidth < tr.scrollWidth - 4);
+}
+function trRolar(dir){ const tr = document.querySelector(".tr-rol"); if(tr) tr.scrollBy({left: dir*tr.clientWidth*0.7}); }
+function trVerFase(casoId, f){ trVer[casoId] = f; trRepintar(); trCentrar(); }
+function trEscolher(casoId, rito, i){
+  const c = casoId+":"+rito; trSel[c] = (i==null || trSel[c]===i) ? null : i; trRepintar();
+  if(trSel[c]!=null) document.querySelector(`.tr-et[data-tri="${i}"]`)?.focus({preventScroll:true});
+}
+function trGrupo(chave){ trAbre[chave] = !trAbre[chave]; trRepintar(); }
+// setas percorrem as etapas; Esc fecha o quadro da etapa
+document.addEventListener("keydown", e=>{
+  const b = e.target && e.target.closest && e.target.closest(".tr-l .tr-et");
+  // Esc fecha só o quadro da etapa: sem o stop, o Esc da ficha a fechava junto
+  if(e.key==="Escape" && document.querySelector(".tr-pnl")){ e.preventDefault(); e.stopImmediatePropagation(); document.querySelector(".tr-x-bt")?.click(); return; }
+  if(!b || !["ArrowRight","ArrowLeft","Home","End"].includes(e.key)) return;
+  const todos = [...b.closest(".tr-l").querySelectorAll(".tr-et")], i = todos.indexOf(b);
+  const j = e.key==="Home" ? 0 : e.key==="End" ? todos.length-1 : Math.max(0, Math.min(todos.length-1, i + (e.key==="ArrowRight"?1:-1)));
+  e.preventDefault(); todos[j].focus(); todos[j].scrollIntoView({block:"nearest", inline:"nearest"});
+}, true);   // captura: roda antes do Esc que fecha a ficha
+async function trFaseHouve(casoId, f, st){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const t = {...trilhaDe(k)}; t.fases = {...(t.fases||{}), [f]:st};
+  if(await trGravar(k, t)) trRepintar();
+}
 async function trGravar(k, t, etapa){
   const antes = {trilha:k.trilha, etapa:k.etapa};
   k.trilha = t; if(etapa!==undefined) k.etapa = etapa;
@@ -19149,7 +19275,7 @@ async function trGravar(k, t, etapa){
 async function trRito(casoId, fase, rito){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const t = {...trilhaDe(k)}; t.ritos = {...(t.ritos||{}), [fase]:rito};
-  if(await trGravar(k, t)) repintarFicha();
+  if(await trGravar(k, t)){ trRepintar(); trCentrar(); }
 }
 // marca uma etapa: f cumprida (hoje), a atual (a antiga atual vira cumprida),
 // n não houve, '' desmarca. A atual leva casos.etapa junto.
@@ -19163,16 +19289,22 @@ function trilhaComMarca(k, rito, nome, st, d){
 async function trMarcar(casoId, rito, i, st){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const e = lerEtapaTrilha(TRILHAS[rito].e[i]);
+  const antes = {trilha:k.trilha||null, etapa:k.etapa||null};
   const t = trilhaComMarca(k, rito, e.n, st);
   const etapa = st==="a" ? (PUB_TRILHA[e.n] || k.etapa || null) : undefined;
-  if(await trGravar(k, t, etapa)){ aviso(st==="a"?`Etapa atual: ${e.n} ✔`:st==="f"?`${e.n}: cumprida ✔`:st==="n"?`${e.n}: não houve`:"Etapa desmarcada", false);
-    if(st==="a"){ montarSidebar(); render(); } repintarFicha(); }
+  if(await trGravar(k, t, etapa)){
+    trSel[casoId+":"+rito] = null;
+    if(st==="a"){ montarSidebar(); render(); }
+    trRepintar();
+    avisoDesfazer(st==="a"?`Etapa atual: ${e.n}`:st==="f"?`${e.n}: cumprida`:st==="n"?`${e.n}: não houve`:`${e.n}: desmarcada`, async()=>{
+      if(await trGravar(k, antes.trilha, antes.etapa)){ montarSidebar(); render(); trRepintar(); } });
+  }
 }
 async function trDetalhe(casoId, rito, i, x){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const e = lerEtapaTrilha(TRILHAS[rito].e[i]), t = {...trilhaDe(k)}, m = {...(t.m||{})}, c = rito+":"+e.n;
   m[c] = {...(m[c]||{s:"a", d:hoje()}), x:x||undefined}; t.m = m;
-  if(await trGravar(k, t)) repintarFicha();
+  if(await trGravar(k, t)) trRepintar();
 }
 // a etapa que a providência declara (marcarEtapa/gravarEtapa, palavra antiga)
 // acende a etapa equivalente da trilha, com a data de hoje: é a data da anotação
