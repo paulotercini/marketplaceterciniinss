@@ -9449,22 +9449,32 @@ function renderNovidades(){
 }
 
 async function liNaFicha(id){
-  await marcarLidas([id]);
+  if(!await marcarLidas([id])) return;
   const a=(D._andsFicha||[]).find(x=>x.id===id);
   if(a) a.andamentos_lidos=[...(a.andamentos_lidos||[]),{colaborador_id:eu.id}];
   repintarFicha();
 }
+// devolve true quando o lido ficou gravado
 async function marcarLidas(ids){
-  if(!ids.length) return;
+  if(!ids.length) return false;
   try{
     await api(`/rest/v1/andamentos_lidos`,{method:"POST",
       headers:{Prefer:"return=minimal,resolution=ignore-duplicates"},
       body:JSON.stringify(ids.map(id=>({andamento_id:id, colaborador_id:eu.id})))});
-    const marcados = new Set(ids);
-    (D.novid||[]).forEach(a=>{ if(marcados.has(a.id))
-      a.andamentos_lidos = [...(a.andamentos_lidos||[]), {colaborador_id:eu.id}]; });
-    montarSidebar(); render();
-  }catch(e){ aviso("Não consegui marcar como lido: "+e.message); }
+  }catch(e){ aviso("Não consegui marcar como lido: "+e.message); return false; }
+  // GRAVOU, ESTÁ LIDO (07.10.2026). A repintura da barra, quando falhava, caía
+  // no catch da gravação: o lido ficava no banco, a linha ficava na tela, o
+  // aviso dizia "não consegui marcar" e o segundo clique regravava o mesmo.
+  // A lista vem primeiro (é dela que a linha sai) e cada repintura falha
+  // sozinha, com o motivo verdadeiro no aviso e a pilha no console.
+  const marcados = new Set(ids);
+  (D.novid||[]).forEach(a=>{ if(marcados.has(a.id))
+    a.andamentos_lidos = [...(a.andamentos_lidos||[]), {colaborador_id:eu.id}]; });
+  let falha = null;
+  for(const repintar of [render, montarSidebar])
+    try{ repintar(); }catch(e){ falha = falha || e; console.error("[lido] repintura:", e); }
+  if(falha) aviso(`Marcado como lido, mas a tela não se atualizou por inteiro: ${falha.message}`);
+  return true;
 }
 
 // ── 🧹 Cuidar do acervo ───────────────────────────────────────────────────
@@ -21902,8 +21912,7 @@ function ehEventoSistema(a){
 async function liTudoNaFicha(casoId){
   const ids=(D._andsFicha||[]).filter(a=>a.caso_id===casoId && !a.excluir
     && !euLi(a) && a.autor_id!==eu.id).map(a=>a.id);
-  if(!ids.length) return;
-  await marcarLidas(ids);
+  if(!ids.length || !await marcarLidas(ids)) return;
   for(const a of (D._andsFicha||[])) if(ids.includes(a.id))
     a.andamentos_lidos=[...(a.andamentos_lidos||[]),{colaborador_id:eu.id}];
   repintarFicha();
