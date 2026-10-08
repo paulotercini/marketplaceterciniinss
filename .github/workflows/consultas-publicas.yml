@@ -53,6 +53,14 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: python crm/datajud.py
 
+      - name: Rito pelos dados, com a classe do DataJud (condução estratégica)
+        if: always() && steps.seg.outputs.tem == 'true'
+        continue-on-error: true
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python crm/conducao.py
+
       - name: Justiça em Números (CNJ) -> orgao_producao (velocidade do órgão)
         if: always() && steps.seg.outputs.tem == 'true'
         env:

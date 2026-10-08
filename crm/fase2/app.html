@@ -3746,6 +3746,8 @@ html[data-tema="v10"] .tr-corpo{padding:12px 18px 14px;display:flex;flex-directi
 html[data-tema="v10"] .tr-cab{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
 html[data-tema="v10"] .tr-cab h3{font-size:14.5px;font-weight:500;color:var(--tt)}
 html[data-tema="v10"] .tr-agora{font-size:13px}
+.tr-prov{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#6B4E16}
+.tr-prov + .tr-ritos{margin-left:6px!important}
 html[data-tema="v10"] .tr-ritos{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#686660}
 html[data-tema="v10"] .tr-ritos select{min-height:32px;max-width:230px;border:1px solid #D6D4CE;border-radius:8px;padding:0 8px;background:#FFFFFF;color:var(--tt);font:inherit;font-size:12.5px;font-weight:500}
 html[data-tema="v10"] .tr-ritos button,html[data-tema="v10"] .tr-houve{min-height:30px;padding:0 10px;border-radius:999px;border:1px solid #D6D4CE;background:#FFFFFF;color:#4A4944;font-size:12px;font-weight:500;font-family:var(--f-ui);cursor:pointer}
@@ -20533,6 +20535,9 @@ const TRILHAS = {
   acid:{fase:"judicial", nome:"Acidentário · TJSP", e:["Ajuizamento|Ação distribuída","Instrução|Nomeação do perito e quesitos",
     "Perícia designada","Perícia realizada","Laudo juntado","*Esclarecimentos do perito","Citação e contestação","Réplica",
     "Sentença|Sentença","Recurso|Apelação ou remessa necessária","Acórdão do TJSP","*Recurso especial ou extraordinário", ...EXEC_TRILHA]},
+  delegada:{fase:"judicial", nome:"Competência delegada · TJSP", e:["Ajuizamento|Ação distribuída","Instrução|Citação e contestação","Réplica",
+    "Especificação de provas","*Perícia técnica ou audiência","*Alegações finais","Sentença|Sentença","*Embargos de declaração",
+    "Recurso|Apelação","Contrarrazões","Acórdão do TRF3","*Recurso especial ou extraordinário", ...EXEC_TRILHA]},
   ms:{fase:"judicial", nome:"Mandado de segurança", e:["Ajuizamento|Impetração","Liminar|Decisão da liminar",
     "Instrução|Informações da autoridade","Parecer do MPF","Sentença|Sentença","Fim|Ordem cumprida pelo INSS",
     "*Remessa necessária ao TRF3","Trânsito em julgado"]},
@@ -20563,6 +20568,11 @@ const lerEtapaTrilha = x => { const ex = x.startsWith("#"); x = ex ? x.slice(1) 
 const FASE_TRILHA = {escritorio:"escritorio", peticao_inicial:"escritorio", aposentadoria_futura:"escritorio",
   inss:"inss", conselho:"conselho", judicial:"judicial", pagamento:"judicial"};
 function faseDaTrilha(k){
+  // F189 · lista sem processo previdenciário (tarefas pessoais) não tem trilha,
+  // nem Pagamentos sem processo: a trilha inventada ali só confundia
+  const temPrev = k.processo || (k.protocolos||[]).length || k.especie || k.beneficio;
+  if(k.fase==="outro" && !temPrev) return null;
+  if(k.fase==="pagamento" && !k.processo) return null;
   if(k.fase==="outro"){ const de=(k.ronda||{}).prazo_de||k.origem_lista||"";
     return /INSS/.test(de)?"inss":/Conselho/.test(de)?"conselho":/Judicial|Peti/.test(de)?"judicial":"escritorio"; }
   return FASE_TRILHA[k.fase] || null;
@@ -20581,9 +20591,13 @@ function ritoPadrao(k, fase){
   return (inc || esp==="B94") ? "jef_inc" : "jef_apos";
 }
 const trilhaDe = k => (k.trilha && typeof k.trilha==="object") ? k.trilha : {};
+// F189 · o rito que a rotina crm/conducao.py tirou dos dados, com motivo e confiança
+const ritoDados = (k, fase) => { const x = ((k.conducao||{}).ritos||{})[fase];
+  return x && TRILHAS[x.r] && TRILHAS[x.r].fase===fase ? x : null; };
+const ritoManual = (k, fase) => { const r = (trilhaDe(k).ritos||{})[fase];
+  return TRILHAS[r] && TRILHAS[r].fase===fase ? r : null; };
 function ritoDe(k, fase){
-  const t = trilhaDe(k), r = (t.ritos||{})[fase];
-  return TRILHAS[r] && TRILHAS[r].fase===fase ? r : ritoPadrao(k, fase);
+  return ritoManual(k, fase) || (ritoDados(k, fase)||{}).r || ritoPadrao(k, fase);
 }
 const marcaTrilha = (k, rito, nome) => (trilhaDe(k).m||{})[rito+":"+nome] || null;
 let trVer = {}, trSel = {}, trAbre = {}, trAjuda = false;   // fase em vista, etapa aberta, grupos abertos, legenda
@@ -20624,7 +20638,11 @@ function faixaTrilha(k){
       onclick="trVerFase('${k.id}','${f}')"><span class="jn-nome"><i></i><span class="jn-txt">${c.n}</span></span><span class="jn-st">${esc(txt)}</span></button>`; }).join("");
   const alt = Object.entries(TRILHAS).filter(([,t])=>t.fase===ver);
   // o tipo de processo é uma escolha rara: um seletor, e não cinco pílulas
-  const chips = alt.length>1 ? `<label class="tr-ritos">tipo <select onchange="trRito('${k.id}','${ver}',this.value)" aria-label="Tipo de processo">${alt.map(([id,t])=>
+  const dd = ritoManual(k, ver) ? null : ritoDados(k, ver);
+  const porQue = ritoManual(k, ver) ? "escolhido pela equipe" : dd ? `pelos dados: ${dd.por}` : "pela espécie";
+  const confirma = dd && dd.c==="baixa" ? `<span class="tr-prov" title="sem sinal firme nos dados: ${esc(dd.por)}">provável
+    <button class="tr-bt" onclick="trRito('${k.id}','${ver}','${rito}')">confirmar</button></span>` : "";
+  const chips = alt.length>1 ? `${confirma}<label class="tr-ritos" title="${esc(porQue)}">tipo <select onchange="trRito('${k.id}','${ver}',this.value)" aria-label="Tipo de processo">${alt.map(([id,t])=>
     `<option value="${id}" ${id===rito?"selected":""}>${esc(t.nome)}</option>`).join("")}</select></label>` : "";
   // fase passada: dá para dizer que não houve (ou que houve)
   const houveBt = (stVer==="f"||stVer==="n") ? `<button class="tr-houve" onclick="trFaseHouve('${k.id}','${ver}','${stVer==="n"?"f":"n"}')">${stVer==="n"?"esta fase houve":"esta fase não houve"}</button>` : "";
