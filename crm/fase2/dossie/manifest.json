@@ -1,14 +1,16 @@
 {
   "manifest_version": 3,
   "name": "Dossiê do cliente — Tercini",
-  "version": "0.2.2",
-  "description": "Na sessão gov.br já logada do cliente, baixa num clique os documentos do Meu INSS, do e-Recursos e do Emprega Brasil (CTPS, RAIS, CAGED) para Downloads/Dossie/<Nome CPF>/ e para a ficha no CRM.",
+  "version": "0.4.2",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApwpdm3Rkep2+q0uvkaWGpli7AxXkxIXdSSiaMqjyCv7wuP0qgQo3N4TQiFf/ySe8WanC0QQ5k/b01SA4WHPm6QnBQEsy9WwbnIjDbd37kxp8KxdkZHNsx6X321iPLwtgngoFrcPAHdONRlXrWN33xu1E03GqEZAvPoIOfDRQkFP5uxbjPRetGQFBZfrJp6GERiQTwuLQJ9Cmqw+7SZZyqXHC+MPgNEXUFWwKrlOLkSs26Y5hSL1fWkEC1PEpufoLK3s/ax88PGi0uJwZ8H+FlBteP9soC4jA/5hCyCaXo83AK09gkZZHU7EphImSECAocXbUqcbWO3UljPslAVa4CQIDAQAB",
+  "description": "Na sessão gov.br já logada do cliente, baixa num clique os documentos do Meu INSS, do e-Recursos, do Emprega Brasil (CTPS, RAIS, CAGED) e do HC Ribeirão (exames de imagem, internações, relatórios) para a pasta do cliente em G:\\Meu Drive\\Processos e para a ficha no CRM.",
   "permissions": [
     "activeTab",
     "scripting",
     "storage",
     "downloads",
-    "offscreen"
+    "offscreen",
+    "nativeMessaging"
   ],
   "host_permissions": [
     "https://meu.inss.gov.br/*",
@@ -17,6 +19,7 @@
     "https://consultaprocessos.inss.gov.br/*",
     "https://servicos.mte.gov.br/*",
     "https://mte.api.dataprev.gov.br/*",
+    "https://appiris.hcrp.usp.br/*",
     "https://*.supabase.co/*"
   ],
   "background": {

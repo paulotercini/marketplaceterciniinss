@@ -266,3 +266,26 @@ async function favoritosEsaj() {
   for (const raiz of await chrome.bookmarks.getTree()) anda(raiz, false, '');
   return { favoritos: fora };
 }
+
+// Vigia (1.17.0): enquanto houver aba do PAT ou do e-SAJ aberta, toca o portal
+// a cada 4 min para a sessão não cair por inatividade. Sem aba, nada — a
+// sessão não fica viva à toa. `fetch` do worker, e não injeção na aba, porque
+// com host_permissions o Chrome manda os cookies mesmo com a aba descartada
+// pelo Economia de memória. shortcut: o PAT vive de token bearer, não só de
+// cookie; se o teste mostrar que ele cai mesmo assim, tocar a API de dentro
+// da página com o `cracha` que pat-pagina.js já captura.
+const VIGIA = {
+  pat: 'https://atendimento.inss.gov.br/tarefas',
+  esaj: 'https://esaj.tjsp.jus.br/esaj/portal.do',
+};
+const armarVigia = () => chrome.alarms.create('vigia', { periodInMinutes: 4 });
+chrome.runtime.onInstalled.addListener(armarVigia);
+chrome.runtime.onStartup.addListener(armarVigia);
+chrome.alarms.onAlarm.addListener(async a => {
+  if (a.name !== 'vigia') return;
+  for (const fonte of Object.keys(VIGIA)) {
+    if (!(await chrome.tabs.query({ url: DOMINIOS[fonte] })).length) continue;
+    try { await fetch(VIGIA[fonte], { credentials: 'include', cache: 'no-store' }); }
+    catch (e) { console.warn('[vigia]', fonte, e.message); }
+  }
+});

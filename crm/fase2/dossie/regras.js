@@ -87,7 +87,12 @@
     return { nups: [...fora], filtrouPorCpf: comCpf.length > 0 };
   }
 
-  const API = { nomeSeguro, slug, pastaCliente, jwt, comoPdf, mensagemDoPortal, b64, janela12Meses, nupsDaLista };
+  // HC Ribeirão: exame de imagem e de método (laudo), não exame de sangue/laboratório.
+  // ponytail: lista por palavra; exame que não casar fica de fora — some aqui o nome que faltar
+  const IMAGEM = /RADIOGRAF|\bRX\b|RAIO[\s-]?X|TOMOGRAF|RESSON[AÂ]NCIA|\bRNM\b|ULTRA[\s-]?SSON|ULTRA[\s-]?SON|ECOGRAF|ECOCARDIO|DOPPLER|DUPLEX|MAMOGRAF|DENSITOMETR|CINTILOGRAF|\bPET\b|ANGIO|ARTERIOGRAF|FLEBOGRAF|UROGRAF|FLUOROSCOP|ESOFAGOGRAF|ENEMA|ENDOSCOP|COLONOSCOP|BRONCOSCOP|NEUROMIOGRAF|ELETROCARDIO|ELETROENCEFALO|\bECG\b|\bEEG\b|HOLTER|\bMAPA\b|ERGOMETR|AUDIOMETR|IMITANCIOMETR|ESPIROMETR|POLISSONOGRAF|CAMPIMETR|RETINOGRAF|BIOPSIA|ANATOMO/i;
+  const ehExameDeImagem = nome => IMAGEM.test(semAcento(nome || ''));
+
+  const API = { nomeSeguro, slug, pastaCliente, jwt, comoPdf, mensagemDoPortal, ehExameDeImagem, b64, janela12Meses, nupsDaLista };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.DOSSIE_REGRAS = API;
 })(typeof window !== 'undefined' ? window : globalThis);
