@@ -179,6 +179,12 @@ quando a publicada na `main` é outra. Para atualizar: na pasta do repositório
 no computador, `git pull`; depois, em `chrome://extensions`, o botão ↻ da
 extensão (ou "Atualizar"). Não precisa reinstalar nem entrar de novo no CRM.
 
+## 🕰 Sessão que não cai — desde 1.17.0
+
+Enquanto uma aba do PAT ou do e-SAJ estiver aberta, a extensão toca o site a
+cada 4 min para a sessão não cair por inatividade. Fechou a aba, para. Não
+segura token que expira por tempo fixo (gov.br/CAS): aí é relogar mesmo.
+
 ## 🔁 Atualizar tudo — desde 1.9.0
 
 Um clique roda e-Recursos, PJe, eproc e e-SAJ ao mesmo tempo, cada um na
