@@ -159,10 +159,14 @@
     if (!docs.length) return null;
     let feitos = 0;
     const baixarDoc = async d => {
-      faixa(`${rot} ${out.numero}: pasta digital — ${++feitos} de ${docs.length} (${d.nome}, ${d.paginas.length} pág.)…`);
+      ++feitos;
       const doc = await PDFLib.PDFDocument.create();
-      for (const p of d.paginas) {
-        const r = await fetch('/pastadigital/getPDF.do?' + p, { credentials: 'include' });
+      for (const [i, p] of d.paginas.entries()) {
+        // a faixa anda por PÁGINA: documento de 213 páginas parecia travado
+        if (i % 5 === 0) faixa(`${rot} ${out.numero}: pasta digital — documento ${feitos} de ${docs.length} (${d.nome}, página ${i + 1} de ${d.paginas.length})…`);
+        // página que o e-SAJ não devolve em 1 min derruba só este documento
+        // (o guardarDocs segue para o próximo), em vez de prender a rodada para sempre
+        const r = await fetch('/pastadigital/getPDF.do?' + p, { credentials: 'include', signal: AbortSignal.timeout(60000) });
         const b = new Uint8Array(await r.arrayBuffer());
         if (!r.ok || !DOCS_REGRAS.tipoDoConteudo(b, r.headers.get('content-type'))) return new Response(null, { status: 502 });
         const pg = await PDFLib.PDFDocument.load(b, { ignoreEncryption: true });

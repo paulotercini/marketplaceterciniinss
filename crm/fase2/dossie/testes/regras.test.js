@@ -63,3 +63,12 @@ test('comoPdf: base64 dentro de objeto e com prefixo data: (Emprega Brasil)', ()
   assert.deepEqual([...R.comoPdf(enc(JSON.stringify('data:application/pdf;base64,' + b64)))], [...PDF]);
   assert.equal(R.comoPdf(enc('{"mensagem":"Não há registros"}')), null);
 });
+
+test('HC: exame de imagem/método entra, exame de sangue fica de fora', () => {
+  for (const n of ['RADIOGRAFIA SIMPLES - TORAX', 'ULTRA-SONOGRAFIA - JOELHO DIREITO', 'TOMOGRAFIA COMPUTADORIZADA DE CRANIO',
+                   'RESSONÂNCIA MAGNÉTICA COLUNA LOMBAR', 'ELETRONEUROMIOGRAFIA', 'DENSITOMETRIA ÓSSEA', 'ECOCARDIOGRAMA'])
+    assert.ok(R.ehExameDeImagem(n), n);
+  for (const n of ['GLICOSIMETRIA', 'HEMOGRAMA COMPLETO', 'CREATININA', 'TIPAGEM ABO/RH', 'SOROLOGIA PARA HEPATITES',
+                   'TP (TEMPO DE PROTROMBINA)', 'COOMBS DIRETO (POLIESPECIFICO)'])
+    assert.ok(!R.ehExameDeImagem(n), n);
+});
