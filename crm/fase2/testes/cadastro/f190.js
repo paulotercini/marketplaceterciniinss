@@ -165,6 +165,13 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   conf("texto de várias linhas não quebra a Mensagem ao cliente", t3.msgOk);
   conf("o botão de prazos sugeridos filtra só os prazos", await p.evaluate(() => { [...document.querySelectorAll(".cc-acao-n")].find(b => /prazo/.test(b.textContent)).click();
     const cs = [...document.querySelectorAll('.painel[data-p="2"] li.tl-card')]; const ok = filtroTudo === "prazo" && cs.length > 0 && cs.every(l => l.querySelector(".tl-prazo-sug")); filtroTudo = "tudo"; repintarFicha(); return ok; }));
+  // perícias: o que não é perícia sai da tela
+  conf("evento com data de lembrete, manifestação ou atendimento não é perícia", await p.evaluate(() => [
+      "perícia. Ver o resultado em 12/10", "Perícia desfavorável. Fazer manifestação em 15/10", "perícia médica de Auxílio-Acidente. Prazo 20/10",
+      "perícia agendada e agenda atendimento para o dia 03/10", "periciais no valor de R$300,00. Verificar em 08/10", "perícia for marcada. Verificar em 05/11",
+      "Perícia médica foi realizada. Em 30/10"].every(o => eventoFalso({ obs: o }))
+    && ["Perícia agendada para o dia 12/10/2026 às 14h30", "perícia em 15/10", "Perícia remarcada para o dia 20.10.2026 as 09:00",
+      "Perícia em Matão agendada para o dia 22/10 às 07h40", "avaliação social para o dia 29/10/2026 às 13:00", ""].every(o => !eventoFalso({ obs: o }))));
   // ⋯: Esc fecha e devolve o foco
   conf("Esc fecha o ⋯, devolve o foco e não fecha a ficha", await p.evaluate(() => { const d = document.querySelector("li.tl-oficial details.tl-mais"); d.open = true;
     d.querySelector("summary").dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true })); return !d.open && document.activeElement === d.querySelector("summary") && !!document.querySelector(".linha-caso"); }));
