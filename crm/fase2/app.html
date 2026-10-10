@@ -2677,8 +2677,8 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item{background:#FFFFF
 html[data-tema="v10"] .painel[data-p="2"] .fase-b{background:transparent;border-top-color:var(--borda)}
 html[data-tema="v10"] .painel[data-p="2"] .fase-b .fase-c{padding:0}
 /* o "dar seguimento" de cada registro: fantasma até o mouse chegar */
-html[data-tema="v10"] .painel[data-p="2"] .timeline button[onclick^="abrirSeguimento"]{border-color:transparent;background:transparent;color:var(--cinza-claro);opacity:0;padding:2px 5px}
-html[data-tema="v10"] .painel[data-p="2"] .timeline li:hover button[onclick^="abrirSeguimento"],html[data-tema="v10"] .painel[data-p="2"] .timeline li:focus-within button[onclick^="abrirSeguimento"]{opacity:1;color:var(--azul-escuro)}
+html[data-tema="v10"] .painel[data-p="2"] .timeline button[onclick^="abrirSeguimento"]:not(.tl-bt){border-color:transparent;background:transparent;color:var(--cinza-claro);opacity:0;padding:2px 5px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li:hover button[onclick^="abrirSeguimento"]:not(.tl-bt),html[data-tema="v10"] .painel[data-p="2"] .timeline li:focus-within button[onclick^="abrirSeguimento"]:not(.tl-bt){opacity:1;color:var(--azul-escuro)}
 /* quadros e faixas na mesma forma dos blocos */
 html[data-tema="v10"] .pz{border-radius:10px}
 html[data-tema="v10"] .pz.pz-lembrete{background:#F3F2EE;border:none}
@@ -3705,6 +3705,44 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-imp{box-shadow
 html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card>.quando{display:none}
 html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-oficial{background:#F6F7F4!important}
 html[data-tema="v10"] .tl-barra-of>span[style]{margin-left:0!important}
+/* F190 · o cartão do andamento oficial */
+html[data-tema="v10"] .tl-novo{margin-left:auto;font-size:11px;font-weight:500;padding:3px 8px;border-radius:999px;background:var(--azul-fundo);color:var(--azul-escuro)}
+html[data-tema="v10"] .tl-doc{display:flex;align-items:center;gap:10px;margin-top:10px;padding:8px 10px;border:1px solid var(--borda);border-radius:10px;background:#FFFFFF}
+html[data-tema="v10"] .tl-doc-ic{color:var(--cinza);display:inline-flex}
+html[data-tema="v10"] .tl-doc-nome{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+html[data-tema="v10"] .tl-doc-nome b{font-weight:500;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html[data-tema="v10"] .tl-doc-nome small{font-family:var(--f-mono);font-size:11.5px;color:var(--cinza-claro)}
+html[data-tema="v10"] .tl-doc .tl-bt{display:inline-flex;align-items:center;gap:5px}
+html[data-tema="v10"] .tl-disp{display:block;margin-top:6px;padding-left:10px;border-left:2px solid #BFDCC2;font-size:13px;line-height:1.5;color:var(--cinza)}
+html[data-tema="v10"] .tl-prazo-sug{display:flex;align-items:center;gap:10px;margin-top:10px;padding:8px 10px;border-radius:10px;background:var(--prox-f);color:#6B3F00;font-size:13px}
+html[data-tema="v10"] .tl-prazo-sug>span{flex:1}
+html[data-tema="v10"] .tl-feitos{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+html[data-tema="v10"] .tl-feito{font-size:11.5px;font-weight:500;padding:4px 8px;border-radius:999px;background:var(--prox-f);color:#6B3F00}
+html[data-tema="v10"] .tl-feito.ok{background:#E3F1E7;color:var(--feito)}
+html[data-tema="v10"] .tl-feito.prazo{background:#FBEAE7;color:var(--venc)}
+html[data-tema="v10"] .tl-link{display:inline-flex;align-items:center;gap:5px;text-decoration:none}
+html[data-tema="v10"] .tl-mais{position:relative;display:inline-flex}
+html[data-tema="v10"] .tl-mais>summary{list-style:none;display:inline-flex;align-items:center;justify-content:center}
+html[data-tema="v10"] .tl-mais>summary::-webkit-details-marker{display:none}
+html[data-tema="v10"] .tl-mais-menu{position:absolute;right:0;bottom:calc(100% + 6px);z-index:30;min-width:220px;display:flex;flex-direction:column;padding:6px;background:#FFFFFF;border:1px solid var(--borda);border-radius:10px;box-shadow:0 10px 28px rgba(18,18,18,.12)}
+html[data-tema="v10"] .tl-mais-it{text-align:left;font:500 13px/1.2 var(--f-ui);padding:9px 10px;border:0;border-radius:6px;background:transparent;color:var(--texto);cursor:pointer}
+html[data-tema="v10"] .tl-mais-it:hover,html[data-tema="v10"] .tl-mais-it:focus-visible{background:var(--placa)}
+html[data-tema="v10"] .tl-mais-it.perigo{color:var(--venc)}
+html[data-tema="v10"] li.tl-rotina{list-style:none}
+.docs-sel-barra{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 0;padding:8px 10px;border-radius:10px;background:var(--azul-fundo,#E6F0EF)}
+.arq-it .doc-ck{width:16px;height:16px;flex:none;accent-color:var(--azul)}
+.arq-it .doc-claude{margin-left:auto}
+html[data-tema="v10"] .docs-painel .tl-bt{display:inline-flex;align-items:center;gap:5px}
+html[data-tema="v10"] .docs-sel-barra{background:var(--texto);color:#FFFFFF}
+html[data-tema="v10"] .docs-sel-barra .tl-bt:not(.forte){background:transparent;color:#FFFFFF;border-color:#4A4944}
+html[data-tema="v10"] .docs-sel-barra .tl-bt.forte{background:#FFFFFF;color:var(--azul-escuro);border-color:#FFFFFF}
+html[data-tema="v10"] .cc-filtros{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+html[data-tema="v10"] .cc-filtro{font:500 12.5px/1 var(--f-ui);min-height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--borda);background:#FFFFFF;color:var(--cinza);cursor:pointer}
+html[data-tema="v10"] .cc-filtro.on{background:var(--texto);border-color:var(--texto);color:#FFFFFF}
+html[data-tema="v10"] .cc-lertodos{margin-left:auto;color:var(--azul)}
+html[data-tema="v10"] li.tl-rotina>details>summary{cursor:pointer;font-size:12.5px;color:var(--cinza);padding:10px 14px;border:1px dashed #D9D7D1;border-radius:10px;list-style:none}
+html[data-tema="v10"] li.tl-rotina>details>summary::-webkit-details-marker{display:none}
+html[data-tema="v10"] .tl-rotina-itens{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
 html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card>.texto{display:block;max-width:none;width:100%;white-space:normal;padding:0}
 html[data-tema="v10"] .timeline .tl-cab .tl-av{width:28px;height:28px;font-size:12px;flex:none}
 html[data-tema="v10"] .timeline .tl-cab .autor-nome{color:var(--texto);font-weight:500}
@@ -8985,7 +9023,7 @@ function segRegistrar(casoId, texto, andId, deNovidade){
 // F107 · no tema o alfinete é um glifo de linha (o emoji vermelho pesava em
 // toda linha da conversa); sem o tema segue o 📌 de sempre
 const ICO_PIN = `<svg class="ico-pin" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5M9 3h6l-1 7 3 3H7l3-3-1-7Z"/></svg>`;
-const segBtnHtml = (i, rot) => `<button class="btn-mini" onclick="abrirSeguimento(${i})"
+const segBtnHtml = (i, rot, cls) => `<button class="${cls||"btn-mini"}" onclick="abrirSeguimento(${i})"
   title="dar seguimento: anotar, atribuir a alguém com data, marcar prazo processual — e, se houver perícia/audiência/julgamento com data no texto, agendar">${rot||(temaV10()?ICO_PIN:"📌")}</button>`;
 
 // F51 · o responsável padrão do escritório: o admin ativo (o Paulo) — é
@@ -13469,7 +13507,8 @@ function menuClaude(casoId){
   const onde = ler("crm_claude_onde") || "web";
   caixa(`<h3 style="margin:0 0 4px">✦ Claude <small class="meio-sub">· ${esc(tituloCaso(k))}</small></h3>
     <p class="meio-sub" style="margin:0">Abre o Claude com o pedido escrito. Revise e envie; nada é gravado no CRM sem a sua confirmação.</p>
-    <div class="esp-lista">${CLAUDE_ACOES.map(([id,rot])=>`<button class="esp-it" onclick="abrirClaude('${casoId}','${id}')">${esc(rot)}</button>`).join("")}</div>
+    <div class="esp-lista">${CLAUDE_ACOES.map(([id,rot])=>`<button class="esp-it" onclick="abrirClaude('${casoId}','${id}')">${esc(rot)}</button>`).join("")}
+      ${documentosDoCaso(k).length?`<button class="esp-it" onclick="menuClaudeDocs('${casoId}',[])">Pedir a partir dos documentos do caso…</button>`:""}</div>
     <div class="cl-onde" role="radiogroup" aria-label="onde abrir">
       <label><input type="radio" name="cl-onde" value="web" ${onde==="web"?"checked":""} onchange="guardar('crm_claude_onde','web')"> no navegador</label>
       <label><input type="radio" name="cl-onde" value="app" ${onde==="app"?"checked":""} onchange="guardar('crm_claude_onde','app')"> no aplicativo de mesa</label>
@@ -13548,7 +13587,7 @@ async function abrirFicha(cliId){
         : !triagemFechada(c) ? "triagem"
         : (pcsA.some(p=>!p.so_lembrete)||!pcsA.length) ? "anotacoes" : "identificacao";
     }
-    instSel = 0; tudoSoMarcos = false;    // escolhas do cliente ANTERIOR não vazam
+    instSel = 0; tudoSoMarcos = false; filtroTudo = "tudo"; docsSel.clear();    // escolhas do cliente ANTERIOR não vazam
     procSel = ""; nupSel = ""; fonteCnj = ""; fontePat = ""; fonteCrps = "";   // idem: processo e fonte (F71: PJe padrão)
     subAba = "escritorio";   // F166 · abrir um caso é abrir os andamentos do Escritório (era o Caso completo, F45)
   }
@@ -18842,6 +18881,75 @@ function botaoDocs(k, origens, ativo, onclick){
   const n = docsDaOrigem(k, origens).length;
   return n ? `<button class="${ativo?"on":""}" onclick="${onclick}" title="as peças guardadas no CRM — abrir, baixar ou levar para o Claude">📂 Documentos (${n})</button>` : "";
 }
+// F190 · a seleção de documentos: o que vai para o .zip, o pacote e o Claude.
+// A chave é a mesma que o conector do CRM entende (documentos_caso/ler_documento).
+const docsSel = new Set();
+const chaveDoc = d => d.id ? `anexo:${d.id}` : `crps:${d.caminho}`;
+const docsEscolhidos = (k, soSel) => documentosDoCaso(k).filter(d=>!soSel || docsSel.has(chaveDoc(d)));
+function marcarDoc(ch, on){ on ? docsSel.add(ch) : docsSel.delete(ch); repintarFicha(); }
+async function pacoteSelecionados(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  await pacoteClaude(casoId, true);
+  if(docsEscolhidos(k, true).some(d=>!d.texto || (Array.isArray(d.paginas_imagem) && d.paginas_imagem.length)))
+    await digitalizadosClaude(casoId, true);
+}
+// O QUE PEDIR AO CLAUDE com os documentos: o pedido sai escrito, com a lista
+// dos documentos pelo identificador do conector; o Claude os lê pelo CRM.
+const PEDIDOS_DOCS = [
+  ["resumo",   "Ler e resumir",                          "Leia e resuma: o que cada documento decide ou pede, os prazos que abre e o próximo passo do escritório."],
+  ["laudo",    "Manifestação sobre o laudo pericial",    "Redija a manifestação sobre o laudo pericial: aponte as falhas técnicas, os quesitos não respondidos e a contradição com os documentos médicos do caso."],
+  ["recurso",  "Recurso ou contrarrazões da decisão",    "Analise a decisão e minute a peça cabível (recurso, contrarrazões ou embargos de declaração), dizendo o prazo e o fundamento."],
+  ["exigencia","Cumprimento de exigência do INSS",       "Prepare o cumprimento da exigência do INSS: o que foi pedido, quais documentos do cliente atendem e o texto da resposta."],
+  ["crps",     "Recurso ao CRPS",                        "Minute o recurso ao CRPS contra a decisão, com os fundamentos de fato e de direito."],
+  ["cliente",  "Resumo para o cliente",                  "Escreva um resumo para o cliente, em linguagem simples, pronto para enviar pelo WhatsApp."],
+];
+let _docsClaude = null;
+function menuClaudeDocs(casoId, chaves){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const todos = documentosDoCaso(k);
+  const lista = (chaves && chaves.length) ? todos.filter(d=>chaves.includes(chaveDoc(d))) : todos;
+  _docsClaude = {casoId, chaves: lista.map(chaveDoc)};
+  const semTexto = lista.filter(d=>!d.texto && !["crps","escritorio"].includes(d.origem));
+  const onde = ler("crm_claude_onde") || "web";
+  caixa(`<h3 style="margin:0 0 4px">Pedir ao Claude</h3>
+    <p class="meio-sub" style="margin:0 0 8px">${lista.length===1?`Documento: <b>${esc(lista[0].nome||"documento")}</b>.`:`${lista.length} documento(s) do caso.`}
+      O Claude lê pelo conector do CRM. Revise o pedido antes de enviar; nada volta ao CRM sem a sua confirmação.</p>
+    ${semTexto.length?`<p class="meio-sub" style="margin:0 0 8px;color:var(--prox)">${semTexto.length} digitalizado(s), sem texto: o CRM baixa o PDF deles para você anexar na conversa.</p>`:""}
+    <div class="esp-lista">${PEDIDOS_DOCS.map(([id,rot])=>`<button class="esp-it" onclick="abrirClaudeDocs('${id}')">${esc(rot)}</button>`).join("")}</div>
+    <label class="meio-sub" style="display:block;margin-top:10px">Pergunta livre sobre os documentos
+      <textarea id="cl-livre" rows="2" style="width:100%;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px;margin-top:4px" placeholder="ex.: o laudo responde ao quesito sobre a data de início da incapacidade?"></textarea></label>
+    <div class="form-linha" style="margin-top:8px">
+      <span class="cl-onde" role="radiogroup" aria-label="onde abrir">
+        <label><input type="radio" name="cl-onde" value="web" ${onde==="web"?"checked":""} onchange="guardar('crm_claude_onde','web')"> no navegador</label>
+        <label><input type="radio" name="cl-onde" value="app" ${onde==="app"?"checked":""} onchange="guardar('crm_claude_onde','app')"> no aplicativo de mesa</label>
+      </span>
+      <button class="tl-bt forte" style="margin-left:auto" onclick="abrirClaudeDocs('livre')">Perguntar</button>
+    </div>`);
+}
+function pedidoClaudeDocs(k, chaves, instrucao){
+  return `Use o conector CRM Tercini. No caso ${k.id} (cliente_id ${k.cliente_id}), leia com ler_documento (caso_id ${k.id}) estes documentos: ${chaves.join("; ")}. `
+    + `Se precisar, consulte ficha_cliente e anotacoes_caso. Documento digitalizado sem texto vai anexado nesta conversa, quando houver.
+
+${instrucao}
+
+${CLAUDE_ESTILO}`;
+}
+async function abrirClaudeDocs(pedido){
+  const s = _docsClaude; if(!s) return;
+  const k = D.casoPorId.get(s.casoId); if(!k) return;
+  const instr = pedido==="livre" ? ((document.getElementById("cl-livre")||{}).value||"").trim()
+    : (PEDIDOS_DOCS.find(x=>x[0]===pedido)||[])[2];
+  if(!instr) return aviso("Escreva a pergunta");
+  const onde = ler("crm_claude_onde") || "web";
+  const url = (onde==="app" ? "claude://claude.ai/new?q=" : "https://claude.ai/new?q=") + encodeURIComponent(pedidoClaudeDocs(k, s.chaves, instr));
+  fecharCaixa();
+  if(onde==="app") location.href = url; else window.open(url, "_blank", "noopener");
+  const semTexto = documentosDoCaso(k).filter(d=>s.chaves.includes(chaveDoc(d)) && !d.texto && !["crps","escritorio"].includes(d.origem));
+  if(semTexto.length){
+    const antes = new Set(docsSel); docsSel.clear(); s.chaves.forEach(c=>docsSel.add(c));
+    try{ await digitalizadosClaude(s.casoId, true); } finally { docsSel.clear(); antes.forEach(c=>docsSel.add(c)); }
+  }
+}
 function painelDocumentos(k, origens){
   const docs = docsDaOrigem(k, origens);
   if(!docs.length) return `<div class="caso"><p class="meio-sub">Nenhum documento aqui ainda.
@@ -18849,20 +18957,33 @@ function painelDocumentos(k, origens){
   const grupos = new Map();
   for(const d of docs){ if(!grupos.has(d.origem)) grupos.set(d.origem, []); grupos.get(d.origem).push(d); }
   const total = docs.reduce((s,d)=>s+(+d.tamanho||0),0);
-  return `<div class="caso">
-    <div class="form-linha" style="align-items:center;gap:8px;flex-wrap:wrap">
-      <div class="rotulo-caso" style="flex:1">📂 ${docs.length} documento(s)${total?` · ${tamArq(total)}`:""}</div>
-      <button class="btn-mini" onclick="baixarDocsZip('${k.id}')" title="os arquivos originais do caso inteiro (judicial, INSS, recurso e escritório), em pastas por origem">⬇ Baixar tudo do caso (.zip)</button>
-      <button class="btn-mini" onclick="pacoteClaude('${k.id}')" title="um arquivo .md com o texto de todos os documentos do caso — arraste para uma conversa do Claude">🤖 Pacote do caso para o Claude</button>
-      <button class="btn-mini" onclick="digitalizadosClaude('${k.id}')" title="os documentos sem texto (scan, foto) num PDF só, numerados como no pacote — o Claude os lê pela imagem">📎 Digitalizados para o Claude</button>
+  // F190 · no tema, os botões do quadro seguem o cartão: contorno para o que
+  // baixa, cheio só para pedir ao Claude
+  const bt = temaV10() ? "tl-bt" : "btn-mini";
+  return `<div class="caso docs-painel">
+    <div class="rotulo-caso">${temaV10()?"":"📂 "}${docs.length} documento${docs.length>1?"s":""}${total?` · ${tamArq(total)}`:""}</div>
+    <div class="form-linha docs-acoes" style="align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px">
+      <button class="${bt}" onclick="baixarDocsZip('${k.id}')" title="os arquivos originais do caso inteiro (judicial, INSS, recurso e escritório), em pastas por origem">${temaV10()?"":"⬇ "}Baixar tudo (.zip)</button>
+      <button class="${bt}" onclick="pacoteClaude('${k.id}')" title="um arquivo .md com o texto de todos os documentos do caso — arraste para uma conversa do Claude">${temaV10()?"":"🤖 "}Pacote para o Claude (.md)</button>
+      <button class="${bt}" onclick="digitalizadosClaude('${k.id}')" title="os documentos sem texto (scan, foto) num PDF só, numerados como no pacote — o Claude os lê pela imagem">${temaV10()?"":"📎 "}Digitalizados para o Claude (PDF)</button>
+      <button class="${temaV10()?"tl-bt forte":"btn-mini"}" style="margin-left:auto" onclick="menuClaudeDocs('${k.id}',[])" title="abre o Claude com um pedido pronto sobre todos os documentos do caso">${IC_SVG.claude} Pedir ao Claude</button>
     </div>
+    ${(n=>n?`<div class="docs-sel-barra" role="region" aria-label="documentos selecionados">
+      <b>${n} selecionado${n>1?"s":""}</b>
+      <button class="${bt}" onclick="baixarDocsZip('${k.id}',true)">Baixar (.zip)</button>
+      <button class="${bt}" onclick="pacoteSelecionados('${k.id}')" title="o .md com o texto e, se houver digitalizado, o PDF dele">Pacote dos selecionados (.md + PDF)</button>
+      <button class="${temaV10()?"tl-bt forte":"btn-mini"}" style="margin-left:auto" onclick="menuClaudeDocs('${k.id}',[...docsSel])">Pedir ao Claude com estes</button>
+      <button class="${bt}" onclick="docsSel.clear();repintarFicha()">Limpar</button></div>`:"")(documentosDoCaso(k).filter(d=>docsSel.has(chaveDoc(d))).length)}
     ${[...grupos].map(([o, ds])=>`<div style="margin-top:10px">
       <div class="meio-sub" style="font-weight:600;margin-bottom:4px">${esc(ORIGEM_DOC[o]||o)} (${ds.length})</div>
       ${ds.map(d=>`<div class="arq-it">
+        <input type="checkbox" class="doc-ck" aria-label="selecionar ${esc(d.nome||"documento")}" ${docsSel.has(chaveDoc(d))?"checked":""}
+          onchange="marcarDoc('${esc(chaveDoc(d))}', this.checked)">
         <button class="arq-abrir" onclick="${d.id?`abrirAnexo('${d.id}')`:`abrirDecisao('${esc(d.caminho)}')`}" title="abrir o documento">
           ${(d.tipo||"").startsWith("image/")?"🖼":"📄"} ${esc(d.nome||"documento")}</button>
         <span class="meio-sub">${d.data?fmt(String(d.data).slice(0,10)):""}${d.tamanho?" · "+tamArq(d.tamanho):""}${
           d.origem==="escritorio"||d.origem==="crps" ? "" : !d.texto ? " · digitalizado" : (paginasImagem(d)||[]).length ? ` · ${paginasImagem(d).length} de ${d.paginas} pág. em imagem` : " · com texto"}</span>
+        <button class="${bt} doc-claude" onclick="menuClaudeDocs('${k.id}',['${esc(chaveDoc(d))}'])">${temaV10()?IC_SVG.claude+" ":"✦ "}Ler com Claude</button>
       </div>`).join("")}
     </div>`).join("")}
   </div>`;
@@ -18882,9 +19003,9 @@ function rotuloDoCaso(k){
   tit = tit || k.especie || k.beneficio || "";
   return { cliente:c.nome||"cliente", titulo:tit, arquivo:nomeSeguro(tit ? `${c.nome||"cliente"}-${tit}` : (c.nome||"cliente")) };
 }
-async function baixarDocsZip(casoId){
+async function baixarDocsZip(casoId, soSel){
   const k = D.casoPorId.get(casoId); if(!k) return;
-  const docs = documentosDoCaso(k);
+  const docs = docsEscolhidos(k, soSel);
   aviso(`Juntando ${docs.length} documento(s)…`, false);
   try{
     if(!window.JSZip) await new Promise((ok, erro)=>{
@@ -18920,8 +19041,8 @@ async function baixarDocsZip(casoId){
 // mesmo documento nos dois arquivos.
 // as páginas que são imagem: [] = nenhuma; null = não se sabe (não analisado)
 const paginasImagem = d => Array.isArray(d.paginas_imagem) ? d.paginas_imagem : null;
-async function partesDoPacote(k){
-  const docs = documentosDoCaso(k).slice().reverse();          // do mais antigo ao mais novo
+async function partesDoPacote(k, soSel){
+  const docs = docsEscolhidos(k, soSel).slice().reverse();          // do mais antigo ao mais novo
   const partes = [];
   for(const [i, d] of docs.entries()){
     let texto = d.texto;
@@ -18972,11 +19093,11 @@ function faixasDePaginas(lista){
 const notaImagem = p => p.escaneado
   ? `${p.imagem.length === p.d.paginas ? "todas as" : p.imagem.length} de ${p.d.paginas} página(s) são imagem (${faixasDePaginas(p.imagem)})` : "";
 const rotDoc = p => `${String(p.d.data||"").slice(0,10)} · ${ORIGEM_DOC[p.d.origem]||p.d.origem} · ${p.d.nome}${p.d.evento?` (movimento: ${p.d.evento})`:""}`;
-async function pacoteClaude(casoId){
+async function pacoteClaude(casoId, soSel){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const {cliente, titulo, arquivo} = rotuloDoCaso(k);
   aviso(`Montando o pacote…`, false);
-  const partes = await partesDoPacote(k);
+  const partes = await partesDoPacote(k, soSel);
   const semTexto = partes.filter(paraImagem);
   const proc = processosDoCaso(k).map(p=>p.numero).join(", ");
   const md = [
@@ -19016,10 +19137,10 @@ async function pacoteClaude(casoId){
 // PDF, com uma folha de rosto por documento ("doc 7 · data · origem · nome",
 // a mesma numeração do .md). Passando de ~90 páginas ou ~25 MB (o Claude lê
 // até 100 páginas / 32 MB por PDF), divide em partes.
-async function digitalizadosClaude(casoId){
+async function digitalizadosClaude(casoId, soSel){
   const k = D.casoPorId.get(casoId); if(!k) return;
   aviso("Separando os documentos digitalizados…", false);
-  const semTexto = (await partesDoPacote(k)).filter(paraImagem);
+  const semTexto = (await partesDoPacote(k, soSel)).filter(paraImagem);
   if(!semTexto.length) return aviso("Este caso não tem documento digitalizado: o 🤖 Pacote já leva tudo.");
   try{
     if(!window.PDFLib) await new Promise((ok, erro)=>{
@@ -21388,12 +21509,169 @@ function painelEscritorio(k, ands){
 // registro oficial (sem vistos/tarefas: registro não se responde); os botões
 // de cada aba entram prontos pelo campo html.
 // item: {q:"AAAA-MM-DD[THH:MM]", em:emoji, rot:fonte, texto, forte, cls, html}
+// ══════════════════════════════════════════════════════════════════════════
+// F190 · O CARTÃO DO ANDAMENTO OFICIAL (canvas "Andamentos e documentos do
+// caso", aprovado pelo Paulo em 10.10.2026). Um só desenho para INSS, CRPS,
+// PJe, e-SAJ e eproc, em qualquer aba: cabeçalho com a fonte, o texto, o
+// documento que veio com o movimento (Abrir · Ler com Claude), o prazo que o
+// ato sugere e a barra. Na barra, o botão cheio é "Criar tarefa ou prazo" (a
+// ação mais usada); ao lado, abrir no portal e mensagem ao cliente; no fim,
+// ✓ lido, ⭐, ⚡ e o ⋯ com o que é raro (perícia, copiar, não é deste caso).
+// ══════════════════════════════════════════════════════════════════════════
+const ORIGENS_OFICIAIS = ["pat","pje","crps"];
+const IC_SVG = {
+  ok:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>`,
+  mais:`<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg>`,
+  ir:`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>`,
+  doc:`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>`,
+  claude:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>`,
+  relogio:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
+  ciente:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M7 11v9H4v-9zM7 11l4-8a2 2 0 0 1 2 2v4h6a2 2 0 0 1 2 2.3l-1.4 7A2 2 0 0 1 17.6 20H7"/></svg>`,
+};
+const ehOficial = a => !!(a && ORIGENS_OFICIAIS.includes(a.origem));
+// expedição, juntada, conclusão… — o que não pede leitura nem ação
+const RX_ROTINA = /^(expedi[çc][ãa]o|juntada|conclus|remetid|recebid|certid|publica|disponibiliza|decorrid|ato ordinat|mandado|intima[çc][ãa]o|comunica|confirmada a intima|redistribu|arquivad|desarquivad|documento juntado|transitad[oa] em julgado em|baixa definitiva)/i;
+const RX_NAO_ROTINA = /laudo|senten|decis|ac[óo]rd|per[ií]cia|audi[êe]n|contesta|alvar|rpv|precat|julg|tutela|liminar/i;
+function ehRotina(x){
+  const a = x && x.and;
+  if(!a || a.origem!=="pje" || x.forte || a.importante || a.urgente) return false;
+  const t = String(x.texto||"");
+  if(!RX_ROTINA.test(t) || RX_NAO_ROTINA.test(t)) return false;
+  if((D.anexos||[]).some(an=>an.andamento_id===a.id)) return false;
+  return !(D._andsFicha||[]).some(f=>f.responde_a===a.id && !f.excluir);
+}
+// o portal de onde o movimento veio, para abrir em um clique
+function portalDoAndamento(a, k){
+  k = k || {};
+  if(a.origem==="pje"){ const l = linkPjeDoAndamento(a, k); return l ? {href:l, rot:nomeSistemaDoLink(l)} : null; }
+  if(a.origem==="crps"){
+    const n = nupNoTexto(a.texto) || soDig(String(a.origem_id||"").split("|")[0]) || crpsNups(k)[0];
+    return {href:linkERecursos(n), rot:"e-SISREC"};
+  }
+  if(a.origem==="pat"){
+    const prot = (String(a.origem_id||"").match(/:(\d{6,})/)||[])[1] || soDig((k.protocolos||[])[0]||"");
+    const href = k.processo_link || (prot ? PAT_TAREFA+prot : null);
+    return href ? {href, rot:"PAT"} : null;
+  }
+  return null;
+}
+// o prazo que o ato sugere (F159), só enquanto ninguém marcou prazo para ele
+function prazoSugeridoHtml(a, segI){
+  if(a.origem!=="pje" && a.origem!=="crps") return "";
+  const sg = proximoPassoDoMovimento(a.texto); if(!sg) return "";
+  if((D._andsFicha||[]).some(f=>f.responde_a===a.id && !f.excluir && /\[PRAZO /.test(f.texto||""))) return "";
+  const item = PRAZOS_CATALOGO.find(x=>x.id===sg.cat);
+  const fatal = sg.prazo || (item ? contarPrazo(sg.de, item) : "");
+  if(!fatal || fatal < hoje()) return "";
+  return `<span class="tl-prazo-sug" title="contado da data do movimento (${fmt(sg.de)}); confira a data da intimação ao criar">${IC_SVG.relogio}
+    <span>Prazo sugerido: <b>${esc(item ? item.rot : "prazo citado no texto")}</b> · vence <b>${fmt(fatal)}</b></span>
+    <button class="tl-bt forte" onclick="abrirSeguimento(${segI})">Criar prazo</button></span>`;
+}
+// o documento que veio com o movimento, dentro do cartão
+function docsDoCartao(a){
+  return (D.anexos||[]).filter(x=>x.andamento_id===a.id).map(x=>{
+    const decide = /senten[cç]|decis[aã]|despach|ac[oó]rd[aã]|monocr|laudo|julgad[oa] |homologa|DESPADEC|\bSENT\d|\bACOR\d|\bLAUDO\d/i.test(x.nome||"")
+                   && !/^\s*certid/i.test(x.nome||"");
+    const disp = decide ? dispositivoDe(x.texto) : "";
+    const pi = Array.isArray(x.paginas_imagem) ? x.paginas_imagem : null;
+    const leitura = !x.texto && /pdf|image/.test(x.tipo||"") ? "digitalizado" : pi && pi.length ? `${pi.length} pág. em imagem` : x.texto ? "com texto" : "";
+    return `<span class="tl-doc"><span class="tl-doc-ic">${IC_SVG.doc}</span>
+      <span class="tl-doc-nome"><b>${esc(x.nome||"documento")}</b><small>${x.paginas?`${x.paginas} pág. · `:""}${esc(leitura)}</small></span>
+      <button class="tl-bt" onclick="abrirAnexo('${x.id}')">Abrir</button>
+      <button class="tl-bt" onclick="menuClaudeDocs('${a.caso_id}',['anexo:${x.id}'])">${IC_SVG.claude}Ler com Claude</button></span>
+      ${disp ? `<span class="tl-disp">${esc(disp)}</span>` : ""}`;
+  }).join("");
+}
+// o que já se fez a partir do movimento, em pastilhas: "Tarefa · Amanda · até 13.10"
+function feitoDoCartao(a){
+  const fs = (D._andsFicha||[]).filter(x=>x.responde_a===a.id && !x.excluir);
+  const out = [];
+  for(const f of fs){
+    const pz = /\[PRAZO (\d{2})\.(\d{2})\.(\d{4})\]\s*([^—.]*)/.exec(f.texto||"");
+    if(pz) out.push(`<span class="tl-feito prazo">Prazo ${pz[1]}.${pz[2]}${pz[4].trim()?` · ${esc(pz[4].trim().slice(0,40))}`:""}</span>`);
+    for(const tf of tarefasDe(f)){
+      const c = D.colPorId.get(tf.colaborador_id) || {};
+      out.push(`<span class="tl-feito${tf.concluida_em?" ok":""}">${tf.concluida_em?"Feita":"Tarefa"} · ${esc((c.nome||"?").split(" ")[0])} · ${tf.concluida_em?fmt(dataSP(tf.concluida_em)).slice(0,5):`até ${fmt(tf.lembrar_em).slice(0,5)}`}</span>`);
+    }
+    if(!pz && !tarefasDe(f).length) out.push(`<span class="tl-feito">Anotado · ${esc(((D.colPorId.get(f.autor_id)||{}).nome||"").split(" ")[0])}</span>`);
+  }
+  return out.length ? `<span class="tl-feitos">${out.join("")}</span>` : "";
+}
+// o ⋯ : o que é raro fica fora da vista, mas a um clique
+function menuMais(itens){
+  const vivos = itens.filter(Boolean); if(!vivos.length) return "";
+  return `<details class="tl-mais"><summary class="tl-bt tl-bt-ic" aria-label="Mais ações" title="mais ações">${IC_SVG.mais}</summary>
+    <span class="tl-mais-menu" role="menu">${vivos.join("")}</span></details>`;
+}
+document.addEventListener("click", e=>{
+  document.querySelectorAll("details.tl-mais[open]").forEach(d=>{ if(!d.contains(e.target)) d.open=false; });
+});
+function msgAndamento(andId){
+  const a = (D._andsFicha||[]).find(x=>x.id===andId); if(!a) return;
+  const k = D.casoPorId.get(a.caso_id) || {}, c = D.cliPorId.get(k.cliente_id) || {};
+  const l = andLimpo(a, k), fonte = {pat:"INSS", crps:"recurso no Conselho de Recursos", pje:"processo judicial"}[a.origem] || "processo";
+  const txt = `Olá, ${(c.nome||"").split(" ")[0]}! Novidade no seu ${fonte}${l.q?` em ${fmt(l.q.slice(0,10))}`:""}: ${l.texto.replace(/\.$/,"")}. Qualquer dúvida, estamos à disposição. Escritório Tercini.`;
+  const tel = soDig(c.telefone||"");
+  caixa(`<h3 style="margin:0 0 6px">Mensagem ao cliente</h3>
+    <p class="meio-sub" style="margin:0 0 8px">Confira e ajuste antes de enviar.</p>
+    <textarea id="msg-and" rows="5" style="width:100%;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px">${esc(txt)}</textarea>
+    <div class="form-linha" style="margin-top:10px">
+      <button class="btn-rap" onclick="fecharCaixa()">cancelar</button>
+      ${tel?`<a class="btn-mini" style="margin-left:auto;text-decoration:none" target="_blank" rel="noopener"
+        onclick="this.href='https://wa.me/55${tel}?text='+encodeURIComponent(document.getElementById('msg-and').value)">Abrir no WhatsApp</a>`:""}
+      <button class="tl-bt forte" ${tel?"":`style="margin-left:auto"`} onclick="copiar(document.getElementById('msg-and').value,'Mensagem copiada');fecharCaixa()">Copiar</button>
+    </div>`);
+}
+function cartaoTl(x){
+  const d=(x.q||"").slice(0,10), hora=(x.q||"").length>=16 ? (x.q||"").slice(11,16) : "";
+  const a = x.and, of = ehOficial(a);
+  const cab = `<span class="tl-cab"><span class="avatar mini tl-av${x.corAv?"":" av-fonte"}"${x.corAv?` style="background:${x.corAv}"`:""}>${x.em||"·"}</span><b class="autor-nome">${esc(x.rot||"")}</b><span class="tl-hora">${d?fmt(d).slice(0,5):"—"}${hora?` · ${hora}`:""}</span>${of && !euLi(a)?`<span class="tl-novo">Novo · não lido</span>`:""}</span>`;
+  const corpo = `<span class="tl-corpo">${x.forte?`<b>${esc(x.texto||"")}</b>`:esc(x.texto||"")}</span>`;
+  const cls = `tl-card tl-of${x.corAv?"":" tl-oficial"} ${x.cls||""}${x.forte?" tudo-marco":""}${clsSinal(a)}`;
+  if(!of){
+    const sin = sinaisHtml(a);
+    return `<li class="${cls}"><span class="texto">${cab}${corpo}
+      ${(x.html||sin)?`<span class="tl-barra tl-barra-of">${x.html||""}<span class="tl-barra-fim">${sin}</span></span>`:""}</span></li>`;
+  }
+  const k = D.casoPorId.get(a.caso_id) || {};
+  const i = segRegistrar(a.caso_id, a.texto, a.id);
+  const portal = portalDoAndamento(a, k), ev = eventoNoTexto(a.texto);
+  const barra = `<span class="tl-barra tl-barra-of">
+      <button class="tl-bt forte" onclick="abrirSeguimento(${i})" title="anotar, atribuir a alguém com data ou marcar prazo processual a partir deste movimento">Criar tarefa ou prazo</button>
+      ${portal?`<a class="tl-bt tl-link" href="${urlOk(portal.href)}" target="_blank" rel="noopener" title="abrir no ${esc(portal.rot)}">Abrir no ${esc(portal.rot)} ${IC_SVG.ir}</a>`:""}
+      <button class="tl-bt" onclick="msgAndamento('${a.id}')" title="mensagem pronta sobre este movimento">Mensagem ao cliente</button>
+      <span class="tl-barra-fim">
+        ${euLi(a)?"":`<button class="tl-bt tl-bt-ic" onclick="liNaFicha('${a.id}')" aria-label="Marcar como lido" title="marcar como lido (sai das Novidades)">${IC_SVG.ok}</button>`}
+        ${sinaisHtml(a)}
+        ${menuMais([
+          ev ? `<button class="tl-mais-it" onclick="periciaRapida(${i})">Agendar ${esc(ev.tipo.toLowerCase())} com aviso</button>` : "",
+          `<button class="tl-mais-it" onclick="copiar(${esc(JSON.stringify(x.texto||""))},'Texto copiado')">Copiar o texto</button>`,
+          a.origem==="pje" ? `<button class="tl-mais-it perigo" onclick="pjeForaDoCaso('${a.id}','${a.caso_id}')">Não é deste caso</button>` : "",
+        ])}
+      </span></span>`;
+  return `<li class="${cls}"><span class="texto">${cab}${corpo}${docsDoCartao(a)}${prazoSugeridoHtml(a, i)}${feitoDoCartao(a)}${barra}</span></li>`;
+}
 function tlOficial(itens, vazio){
   if(!(itens||[]).length)
     return `<p class="meio-sub" style="padding:8px 12px">${vazio||"Sem movimentos."}</p>`;
-  let corpo="", diaAtual=null;
+  let corpo="", diaAtual=null, rotina=[];
+  // F190 · movimentos de rotina do mesmo dia (expedição, juntada, conclusão)
+  // dobram numa linha; dois ou mais, senão o cartão sai normal
+  const soltarRotina = () => {
+    if(rotina.length>1){
+      const nl = rotina.filter(x=>x.and && !euLi(x.and)).length;
+      corpo += `<li class="tl-rotina"><details><summary>+ ${rotina.length} movimentos de rotina (${esc([...new Set(rotina.map(x=>String(x.texto||"").split(/[ .,(]/)[0].toLowerCase()))].slice(0,3).join(", "))})${nl?` · ${nl} não lido${nl>1?"s":""}`:""}</summary>
+        <ul class="tl-rotina-itens">${rotina.map(cartaoTl).join("")}</ul></details></li>`;
+    } else corpo += rotina.map(cartaoTl).join("");
+    rotina = [];
+  };
   for(const x of itens){
     const d=(x.q||"").slice(0,10);
+    if(temaV10() && ehRotina(x)){
+      if(d && d!==diaAtual){ soltarRotina(); if(diaAtual!==null) corpo+=fecharDia(); corpo+=abrirDia(dataRelativa(d)); diaAtual=d; }
+      rotina.push(x); continue;
+    }
+    if(temaV10()) soltarRotina();
     if(d && d!==diaAtual){ if(diaAtual!==null) corpo+=fecharDia(); corpo+=abrirDia(dataRelativa(d)); diaAtual=d; }
     const hora=(x.q||"").length>=16 ? (x.q||"").slice(11,16) : "";
     // F46 · registro do escritório leva o avatar COLORIDO do colaborador
@@ -21405,14 +21683,7 @@ function tlOficial(itens, vazio){
     // propósito: o selo da fonte no lugar do avatar e fundo próprio, e sem
     // responder, editar ou apagar, porque reproduz o portal. A resposta da
     // equipe nasce pelo 📌 dar seguimento.
-    if(temaV10()){
-      const sin = sinaisHtml(x.and);
-      corpo+=`<li class="tl-card tl-of${x.corAv?"":" tl-oficial"} ${x.cls||""}${x.forte?" tudo-marco":""}${clsSinal(x.and)}">
-        <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av${x.corAv?"":" av-fonte"}"${x.corAv?` style="background:${x.corAv}"`:""}>${x.em||"·"}</span><b class="autor-nome">${esc(x.rot||"")}</b><span class="tl-hora">${d?fmt(d).slice(0,5):"—"}${hora?` · ${hora}`:""}</span></span>
-        <span class="tl-corpo">${x.forte?`<b>${esc(x.texto||"")}</b>`:esc(x.texto||"")}</span>
-        ${(x.html||sin)?`<span class="tl-barra tl-barra-of">${x.html||""}<span class="tl-barra-fim">${sin}</span></span>`:""}</span></li>`;
-      continue;
-    }
+    if(temaV10()){ corpo+=cartaoTl(x); continue; }
     corpo+=`<li class="tl-of ${x.cls||""}${x.forte?" tudo-marco":""}${clsSinal(x.and)}">
       <span class="quando" title="${esc(x.rot||"")}"><span class="avatar mini${x.corAv?`" style="background:${x.corAv}`:` av-fonte`}">${x.em||"·"}</span><span class="q-dt">${d?fmt(d):"—"}</span></span>
       <span class="texto"><b class="autor-nome">${esc(x.rot||"")}</b>${hora?`<span class="tl-hora">${hora}</span>`:""}<br>${x.forte?`<b>${esc(x.texto||"")}</b>`:esc(x.texto||"")}</span>
@@ -21421,6 +21692,7 @@ function tlOficial(itens, vazio){
       <span class="tl-fim">${x.html||""}${sinaisHtml(x.and)}</span>
     </li>`;
   }
+  if(temaV10()) soltarRotina();
   if(diaAtual!==null) corpo+=fecharDia();
   return `<ul class="timeline">${corpo}</ul>`;
 }
@@ -21946,10 +22218,15 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
       ${minha?`<button class="tl-bt tl-bt-ok tf-acao" onclick="concluirDeVez('${minha.id}')" title="concluir a sua tarefa — dá para desfazer logo depois">Concluir tarefa</button>`:""}
       <button class="tl-bt" onclick="abrirRespInline('${a.id}',1)" title="responder dando prazo adicional">+ prazo</button>
       ${alvo?`<button class="tl-bt tf-acao" onclick="adiarTarefa('${alvo.id}')" title="mudar a data da tarefa">Reagendar</button>`:""}
-      <button class="tl-bt tl-bt-ic" onclick="novaTarefaComentario('${a.id}','${a.caso_id}')" title="mais uma tarefa neste comentário — outra pessoa, outra data" aria-label="mais uma tarefa">＋</button>
       <span class="tl-barra-fim">
-        <button class="tl-bt tl-bt-ic" title="ciente — um toque, sem texto" aria-label="ciente" onclick="reagir('${a.id}','${a.caso_id}')">👍</button>
-        ${apagar}${sinaisHtml(a)}</span>
+        <button class="tl-bt tl-bt-ic" title="ciente — um toque, sem texto" aria-label="ciente" onclick="reagir('${a.id}','${a.caso_id}')">${IC_SVG.ciente}</button>
+        ${sinaisHtml(a)}
+        ${/* F190 · o raro sai da vista: mais uma tarefa e apagar vão para o ⋯ */""}
+        ${menuMais([
+          `<button class="tl-mais-it" onclick="novaTarefaComentario('${a.id}','${a.caso_id}')">Mais uma tarefa neste comentário</button>`,
+          `<button class="tl-mais-it" onclick="copiar(${esc(JSON.stringify(corpo))},'Texto copiado')">Copiar o texto</button>`,
+          a.autor_id===eu.id&&a.origem==="app" ? `<button class="tl-mais-it perigo" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">Apagar este comentário</button>` : "",
+        ])}</span>
     </span>` : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
     <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${fmtTS(a.criado_em).slice(0,5)} · ${horaSP(a.criado_em)}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}<span class="tl-cab-fim">${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${tarefasCartao(a)}${chipsReacao}${resposta||""}${barra}${raiz?caixaRespInline(a):""}</span>`;
@@ -22036,6 +22313,12 @@ function linhaDoTempo(ands){
     const filhas = filhasTodas.filter(f=>!ehReacao(f));
     const sub = filhas.length ? `<span class="resp">${filhas.map(f=>
       `<span class="resp-item">${comentario(f)}</span>`).join("")}</span>` : "";
+    // F190 · o movimento do portal que cai aqui (CRPS, situação do INSS) sai no
+    // cartão oficial, igual às outras abas, e não como anotação sem autor
+    if(temaV10() && (a.origem==="crps" || (a.origem==="pat" && !ehEventoSistema(a))) && !filhas.length){
+      const l = andLimpo(a, D.casoPorId.get(a.caso_id));
+      return cartaoTl({q:l.q, em:iconeFonte(a.origem==="crps"?"crps":"inss"), rot:a.origem==="crps"?"Recurso":"INSS", texto:l.texto, and:a});
+    }
     if(ehEventoSistema(a) && !filhas.length)
       return `<li class="tl-sys"><span class="texto" title="${esc(fmtTS(a.criado_em))} às ${esc(horaSP(a.criado_em))}">${esc(a.origem==="pat"?limparHtmlPat(a.texto):a.texto)}</span></li>`;
     return `<li class="${temaV10()?"tl-card ":""}${naoLi(a)?"tl-nao-lida":""}${clsSinal(a)}">${comentario(a, sub, reacoes, true)}</li>`;
@@ -22264,6 +22547,20 @@ const RE_MARCO_TUDO = new RegExp("\\b(senten[çc]a|ac[óo]rd[ãa]o|monocr[áa]ti
   +"deferid\\w*|indeferid\\w*|concedid\\w*|concess[ãa]o|implantad\\w*|"
   +"cessad\\w*|cessa[çc][ãa]o|exig[êe]ncia|recurso (?:provido|improvido|desprovido))\\b","i");
 let tudoSoMarcos=false;
+// F190 · os filtros do Caso completo: por fonte, o que pede ação e o que tem documento
+let filtroTudo="tudo";
+const FILTROS_TUDO = [["tudo","Tudo"],["escritorio","Escritório"],["inss","INSS"],["recurso","Recurso"],["judicial","Judicial"],["acao","Pede ação"],["docs","Com documento"]];
+function fonteFiltro(x){
+  const c = x.chip||"";
+  return /Escrit/.test(c) ? "escritorio" : /INSS/.test(c) ? "inss" : /Recurso/.test(c) ? "recurso" : /PJe|CNJ/.test(c) ? "judicial" : "outro";
+}
+function passaFiltro(x, f){
+  if(f==="tudo") return true;
+  const a = x.and;
+  if(f==="acao") return !!(a && ehOficial(a) && (!euLi(a) || (["pje","crps"].includes(a.origem) && prazoSugeridoHtml(a, -1))));
+  if(f==="docs") return !!(a && (D.anexos||[]).some(an=>an.andamento_id===a.id));
+  return fonteFiltro(x)===f;
+}
 // timestamp -> "AAAA-MM-DDTHH:MM" DE BRASÍLIA: o corte do ISO cru pegava a
 // data UTC e todo registro feito depois das 21h aparecia (e era copiado para
 // petição) com a data do dia seguinte; e a ordenação misturava formatos
@@ -22393,7 +22690,14 @@ function painelTudo(k, ands){
     return composerNoPainel(k) + `<div class="caso"><p class="meio-sub">Ainda não há nada registrado
       neste caso — em nenhuma das fontes.</p></div>`;
   const marcos=itens.filter(x=>x.marco);
-  const mostra=(tudoSoMarcos && marcos.length) ? marcos : itens;
+  const filtro = temaV10() ? filtroTudo : "tudo";
+  const base=(tudoSoMarcos && marcos.length) ? marcos : itens;
+  const mostra=base.filter(x=>passaFiltro(x, filtro));
+  const naoLidos=itens.filter(x=>x.and && ehOficial(x.and) && !euLi(x.and)).length;
+  const chipsFiltro = temaV10() ? `<div class="cc-filtros" role="group" aria-label="filtrar os registros">${FILTROS_TUDO.map(([f,r])=>{
+      const n = base.filter(x=>passaFiltro(x, f)).length;
+      return (f==="tudo"||n) ? `<button class="cc-filtro${filtro===f?" on":""}" aria-pressed="${filtro===f}" onclick="filtroTudo='${f}';repintarFicha()">${r} · ${n}</button>` : "";
+    }).join("")}${naoLidos?`<button class="cc-filtro cc-lertodos" onclick="liTudoNaFicha('${k.id}')" title="marcar como lidos todos os andamentos dos portais deste caso">Marcar ${naoLidos} como lido${naoLidos>1?"s":""}</button>`:""}</div>` : "";
   // F45 · a MESMA estrutura da conversa do Escritório, com a fonte no lugar
   // do autor — o chip "🌻 INSS" vira selo + nome do cartão
   const linhas = mostra.map(x=>{
@@ -22414,7 +22718,7 @@ function painelTudo(k, ands){
         ? `${FONTES_SIS[fk].n} · CNJ` : /PJe/.test(x.chip||"")&&fk ? FONTES_SIS[fk].n : (resto.join(" ")||em)),
       corAv: identidade?x.avCor:null, texto: x.texto, and: x.and,
       forte: x.marco, cls: x.resposta?"tl-resposta":"",
-      html: `<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, x.texto, x.id||null))}</span>`
+      html: `<span style="margin-left:6px;vertical-align:middle">${temaV10()&&!nosso?segBtnHtml(segRegistrar(k.id, x.texto, x.id||null), "Criar tarefa ou prazo", "tl-bt forte"):segBtnHtml(segRegistrar(k.id, x.texto, x.id||null))}</span>`
         // F86 · quem do escritório já leu o que o robô trouxe: o mesmo ✔ li da
         // aba INSS, agora também no Caso completo (só no tema v10)
         + ((temaV10() && x.and && x.and.origem && x.and.origem!=="app")
@@ -22436,7 +22740,8 @@ function painelTudo(k, ands){
           title="a linha do tempo inteira em texto — para colar numa petição, num e-mail ou numa IA">copiar em texto</button>
       </span>
     </div>
-    ${temaV10() ? casoCompletoPorFase(k, linhas, mostra) : tlOficial(linhas)}
+    ${chipsFiltro}
+    ${!mostra.length ? `<p class="meio-sub" style="padding:8px 12px">Nada neste filtro.</p>` : temaV10() ? casoCompletoPorFase(k, linhas, mostra) : tlOficial(linhas)}
     <div class="fatos-pe" style="justify-content:flex-end">
       <span class="meio-sub">${temaV10()?`<i class="cc-ponto"></i> marco do caso`:"fundo âmbar = marco do caso"} · leitura, não edição — cada registro se corrige na aba de origem</span>
     </div>
@@ -22633,7 +22938,9 @@ function itemRecurso(t, e, casoId){
           <button class="tl-sinal urg ${e.urgente?"on":""}" onclick="toggleSinalCrps(${alv},'urgente')"
             title="${e.urgente?"tirar a urgência desta movimentação":"marcar ESTA movimentação como urgente"}">${IC_RAIO}</button>
         </span>
-        ${segBtnHtml(segRegistrar(casoId, String(e.resumo||e.bruto||""), null))}
+        ${temaV10()?segBtnHtml(segRegistrar(casoId, String(e.resumo||e.bruto||""), null), "Criar tarefa ou prazo", "tl-bt forte")
+          +`<a class="tl-bt tl-link" href="${urlOk(linkERecursos(t.nup))}" target="_blank" rel="noopener">Abrir no e-SISREC ${IC_SVG.ir}</a>`
+          :segBtnHtml(segRegistrar(casoId, String(e.resumo||e.bruto||""), null))}
         ${guardados.map(a=>`<button class="crps-pdf" title="${esc(a.nome)}"
           onclick="abrirDecisao('${esc(a.storage)}')">📄 abrir ${/monocr/i.test(a.nome)?"decisão":"acórdão"}</button>`).join("")}
         ${e.docs?`<span class="meio-sub">📎 ${e.docs} documento${e.docs>1?"s":""}</span>`:""}
@@ -23491,7 +23798,7 @@ function painelCNJTodos(k, ands, cabec){
       rot: `CNJ · ${rotuloProcesso(k, p)}${inst.rotulo&&cnjInstancias(k, t).length>1?` · ${inst.rotulo}`:""}`,
       cls: `${s.importante?"tl-imp":""}${s.urgente?" tl-urg":""}`,
       html: `${m.claro?`<span class="meio-sub" style="display:block">${esc(m.claro)}</span>`:""}
-        <span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, txt, null))}</span>
+        <span style="margin-left:6px;vertical-align:middle">${temaV10()?segBtnHtml(segRegistrar(k.id, txt, null), "Criar tarefa ou prazo", "tl-bt forte"):segBtnHtml(segRegistrar(k.id, txt, null))}</span>
         ${sinaisCnjHtml(k, ch, txt, m.data||"")}` };
   })));
   itens.sort((a,b)=>a.q<b.q?1:-1);
@@ -23593,7 +23900,7 @@ function painelCNJ(k, ands){
       q: m.data||"", em: "⚖️", rot: "CNJ", forte: !!m.decisao, texto: txt,
       cls: `${s.importante?"tl-imp":""}${s.urgente?" tl-urg":""}`,
       html: `${m.claro?`<span class="meio-sub" style="display:block">${esc(m.claro)}</span>`:""}
-        <span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, txt, null))}</span>
+        <span style="margin-left:6px;vertical-align:middle">${temaV10()?segBtnHtml(segRegistrar(k.id, txt, null), "Criar tarefa ou prazo", "tl-bt forte"):segBtnHtml(segRegistrar(k.id, txt, null))}</span>
         ${sinaisCnjHtml(k, ch, txt, m.data||"")}` };
     }), "Sem movimentos.")}
   </div>

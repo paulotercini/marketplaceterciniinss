@@ -75,10 +75,10 @@ FIX.andamentos = [
   conf("o Caso completo NÃO inventa uma fase 'Ação judicial'", !fases.some(f => /Ação judicial/.test(f)));
   conf("o caso segue em duas fases: Conselho (atual) e INSS", fases.length === 2 && /Recurso no Conselho/.test(fases[0]));
   const liInfo = await p.evaluate(() => {
-    const b = [...document.querySelectorAll(".timeline .tl-li")];
+    const b = [...document.querySelectorAll('.timeline button[aria-label="Marcar como lido"]')];
     return { n: b.length, onclick: b[0] ? b[0].getAttribute("onclick") : "" };
   });
-  conf("o que o robô trouxe (INSS) ganha o ✔ li no Caso completo", liInfo.n === 1 && /liNaFicha/.test(liInfo.onclick));
+  conf("o que o robô trouxe (INSS) ganha o ✓ lido no cartão do Caso completo", liInfo.n === 1 && /liNaFicha/.test(liInfo.onclick));
   const tel = await p.evaluate(() => {
     const e = [...document.querySelectorAll(".det-topo .resumo .id-min")].find(x => /Telefone/.test(x.textContent));
     return e ? { txt: e.textContent.replace(/\s+/g, " ").trim(), copia: !!e.querySelector("button[onclick^='copiar']") } : null;

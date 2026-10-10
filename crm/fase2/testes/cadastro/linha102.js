@@ -198,7 +198,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       fundos: blocos.map(b => getComputedStyle(b).backgroundColor),
       fios: blocos.map(b => getComputedStyle(b).borderTopWidth),
       soltos: tl ? tl.querySelectorAll(":scope > li:not(.dia-bloco)").length : -1,
-      pin: (b => b && getComputedStyle(b).opacity)(document.querySelector('.timeline button[onclick^="abrirSeguimento"]')) };
+      pin: (b => b && getComputedStyle(b).opacity)(document.querySelector('.timeline li.tl-oficial .tl-barra button.tl-bt.forte[onclick^="abrirSeguimento"]')) };
   });
   // F143 · papel quente: cabeçalho em pedra clara (#EFEEEB) e compositor em #F3F2EE
   // F182 · na aba Casos o chão é cinza (#F8F8F6) e os cartões são brancos, como no canvas
@@ -229,7 +229,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   // F138 · a zebra cinza/branco saiu: os dias ficam sobre o mesmo fundo,
   // separados por um fio, e o primeiro não tem fio em cima
   conf("os dias não alternam fundo e se separam por um fio", ff.fundos.every(f => f === "rgba(0, 0, 0, 0)") && ff.fios[0] === "0px" && ff.fios.slice(1).every(w => w === "1px"));
-  conf("o 'dar seguimento' de cada registro fica invisível até o mouse chegar", ff.pin === "0");
+  conf("no andamento oficial, 'Criar tarefa ou prazo' é o botão principal, sempre à vista (F190)", ff.pin === "1");
 
   // ── F104 · os quadros ────────────────────────────────────────────────────
   const cards = await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({ tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent, onclick: c.querySelector(".pz-mais").getAttribute("onclick") })));
