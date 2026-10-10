@@ -58,6 +58,17 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   conf("a tela não repete PJe (1º grau) nem o número", !/1º grau\)|5000850|ProceComCiv/.test(html));
   conf("o 2º grau continua indicado no rótulo", /PJe · 2º grau/.test(html));
 
+  // o mesmo padrão para INSS e CRPS
+  const ii = await p.evaluate(() => [
+    andLimpo({ origem: "pat", texto: "INSS · Movimentação no protocolo 1234567890 — situação: Em análise (portal atualizado em 2026-09-01T10:15:00).", criado_em: "2026-10-10T09:00:00Z" }, { protocolos: ["1234567890"] }),
+    andLimpo({ origem: "pat", texto: "INSS · Situação registrada: Em exigência", criado_em: "2026-10-10T09:00:00Z" }, { protocolos: ["1"] }),
+    andLimpo({ origem: "pat", texto: "INSS · Movimentação no protocolo 111 — situação: Concluída", criado_em: "2026-10-10T09:00:00Z" }, { protocolos: ["111", "222"] }),
+    andLimpo({ origem: "crps", texto: "🖥 CRPS · 01/10/2026 — 📥 Protocolo recebido no INSS", criado_em: "2026-10-10T09:00:00Z" }, {}) ]);
+  conf("INSS: só a situação, datada pelo portal", ii[0].texto === "Situação: Em análise" && ii[0].q === "2026-09-01T10:15");
+  conf("INSS: situação registrada no mesmo padrão", ii[1].texto === "Situação: Em exigência");
+  conf("INSS com dois protocolos: o número fica", ii[2].texto === "Protocolo 111 · situação: Concluída");
+  conf("CRPS: sem o prefixo e a data repetida", ii[3].texto === "📥 Protocolo recebido no INSS" && ii[3].q === "2026-10-01");
+
   console.log("=== PJe limpo na aba Judicial ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
   console.log("erros de página:", erros.length ? erros : "nenhum");
