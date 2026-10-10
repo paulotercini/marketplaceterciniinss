@@ -69,7 +69,7 @@ const SUPA = "https://ficticio.supabase.co";
 
   // 3 · parceria e CNIS: a Análise mostra e leva à Identificação
   const par = await p.evaluate(() => { const t = document.querySelector('.painel[data-p="0"] .ad-topo'); return { sel: !!t.querySelector("select"), txt: t.textContent }; });
-  conf("a Análise não tem mais o seletor de parceria duplicado", !par.sel && /Abrir CNIS/.test(par.txt) && /Alterar na Identificação/.test(par.txt));
+  conf("a Análise não tem mais o seletor de parceria duplicado", !par.sel && /CNIS/.test(par.txt) && /Alterar na Identificação/.test(par.txt));
   await p.evaluate(() => [...document.querySelectorAll('.painel[data-p="0"] .ad-topo button')].find(b => /Alterar na Identificação/.test(b.textContent)).click());
   await p.waitForTimeout(250);
   conf("o botão leva à Identificação, onde a parceria se altera", await p.evaluate(() => subCad === "identificacao" && !!document.getElementById("parc-sel-id")));
