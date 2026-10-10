@@ -39,6 +39,8 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
       AND(6, "pje", `PJe (1º grau): Conclusos para despacho — em ${br} 15:20 — PJEC ${NUM}`, { origem_id: `mov:${NUM}:${hj}T15:20` }),
       AND(7, "app", "Tarefa: conferir a exigência.", { responde_a: "f0000000-0000-0000-0000-000000000002" }),
       AND(8, "crps", "🖥 CRPS · 01/10/2026 — 📥 Protocolo recebido no INSS", { origem_id: "44233139765202537|2026-10-01T10" }),
+      AND(9, "pje", `PJe (1º grau): Intimação eletrônica — prazo de 15 dias — em ${br} 16:00 — PJEC ${NUM}`, { origem_id: `mov:${NUM}:${hj}T16:00` }),
+      AND(10, "pje", `PJe (1º grau): Expedição de Outros documentos. — em 02.10.2026 09:00 — PJEC ${NUM}`, { origem_id: `mov:${NUM}:2026-10-02T09:00`, criado_em: "2026-10-02T12:00:00Z" }),
     ],
     anexos: [{ id: "a0000000-0000-0000-0000-000000000001", cliente_id: CLI_CHEIO, caso_id: CASO1, andamento_id: "f0000000-0000-0000-0000-000000000003",
       nome: "Sentença", caminho: "x/sentenca.pdf", tipo: "application/pdf", tamanho: 1000, origem: "pje", paginas: 6, paginas_imagem: [],
@@ -47,7 +49,9 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
       nome: "Carta de exigência", caminho: "x/exig.pdf", tipo: "application/pdf", tamanho: 1000, origem: "pat", texto: null, criado_em: hj + "T11:00:00Z" }],
     andamento_tarefas: [{ id: "t0000000-0000-0000-0000-000000000001".replace(/^t/, "c"), andamento_id: "f0000000-0000-0000-0000-000000000007", caso_id: CASO1,
       colaborador_id: FIX.colaboradores[0].id, lembrar_em: hj, concluida_em: null, papel: "faz", natureza: "compromisso" }],
-    casos: [caso({ processo: NUM, crps_nups: ["44233139765202537"], protocolos: ["1234567890"], processo_link: "https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/1234567890", pje_links: { "1º grau": "https://pje1g.trf3.jus.br/x1" } })] };
+    casos: [caso({ processo: NUM, crps_nups: ["44233139765202537"],
+      crps: [{ nup: "44233139765202537", status: "Julgado", eventos: [{ data: "01/10/2026", resumo: "Acórdão: recurso conhecido e provido em parte", tipo: "decisao",
+        arquivos: [{ nome: "Acórdão 1.pdf", storage: "crps/fic'tício<x>/acordao.pdf" }] }] }], protocolos: ["1234567890"], processo_link: "https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/1234567890", pje_links: { "1º grau": "https://pje1g.trf3.jus.br/x1" } })] };
   await ctx.route(SUPA + "/**", rota => {
     const q = rota.request(), u = q.url(), m = q.method();
     if (/\/auth\/v1\//.test(u)) return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(SESSAO) });
@@ -99,7 +103,7 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   conf("três movimentos de rotina dobram numa linha", /\+ 3 movimentos de rotina/.test(await txt(P + "li.tl-rotina summary")));
   // filtros
   const filtros = await p.evaluate(q => [...document.querySelectorAll(q + ".cc-filtro")].map(b => b.textContent.trim()), P);
-  conf(`os filtros contam por fonte (${filtros.join(" | ")})`, filtros.some(f => /^INSS · 1$/.test(f)) && filtros.some(f => /^Judicial · 4$/.test(f)) && filtros.some(f => /^Com documento · 1$/.test(f)));
+  conf(`os filtros contam por fonte (${filtros.join(" | ")})`, filtros.some(f => /^INSS · 1$/.test(f)) && filtros.some(f => /^Judicial · 6$/.test(f)) && filtros.some(f => /^Com documento · 1$/.test(f)));
   await p.evaluate(() => { filtroTudo = "docs"; repintarFicha(); }); await p.waitForTimeout(200);
   conf("Com documento mostra só a sentença", await sel(P + "li.tl-card") === 1);
   await p.evaluate(() => { filtroTudo = "acao"; repintarFicha(); }); await p.waitForTimeout(200);
@@ -117,8 +121,43 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   conf("na aba Escritório, o movimento do CRPS sai no cartão oficial, sem Responder", await p.evaluate(() => { subAba = "escritorio"; repintarFicha();
     const l = [...document.querySelectorAll('.painel[data-p="2"] li.tl-card')].find(x => /Protocolo recebido/.test(x.textContent));
     return !!l && l.classList.contains("tl-oficial") && !/Responder/.test(l.textContent) && !/CRPS · 01\/10/.test(l.textContent); }));
+  // F190 · segunda rodada (revisão independente)
+  await p.evaluate(() => { subAba = "tudo"; filtroTudo = "tudo"; repintarFicha(); }); await p.waitForTimeout(250);
+  conf("a intimação com prazo não dobra na rotina", await p.evaluate(() => [...document.querySelectorAll('.painel[data-p="2"] li.tl-card')].some(l => /Intimação eletrônica/.test(l.textContent) && !l.closest(".tl-rotina"))));
+  conf("um movimento de rotina sozinho no dia não dobra", await p.evaluate(() => [...document.querySelectorAll('.painel[data-p="2"] li.tl-card')].some(l => /Expedição/.test(l.textContent) && /02\.10/.test(l.textContent) && !l.closest(".tl-rotina"))));
+  const pa = await p.evaluate(() => { const s2 = document.querySelector(".cc-acao"); return s2 ? s2.textContent.replace(/\s+/g, " ") : ""; });
+  conf(`o painel Pede ação conta e filtra (${pa.trim().slice(0, 90)})`, /Pede ação/.test(pa) && /prazo/.test(pa) && /Claude sobre o caso/.test(pa));
+  conf("Pede ação não conta a rotina", await p.evaluate(() => { filtroTudo = "acao"; repintarFicha(); return ![...document.querySelectorAll('.painel[data-p="2"] li.tl-card')].some(l => /Conclusos para despacho/.test(l.textContent)); }));
+  await p.evaluate(() => { filtroTudo = "tudo"; repintarFicha(); });
+  // o evento do e-SISREC com acórdão: cartão oficial inteiro, caminho com aspas escapado
+  await p.evaluate(() => { irSubAba("crps"); }); await p.waitForTimeout(250);
+  const cr = await p.evaluate(() => { const l = [...document.querySelectorAll('.painel[data-p="2"] li.tl-oficial')].find(x => /provido em parte/.test(x.textContent));
+    if (!l) return null; const b2 = [...l.querySelectorAll(".tl-doc button")].map(b => b.getAttribute("onclick"));
+    return { bar: l.querySelector(".tl-barra").textContent.replace(/\s+/g, " "), docs: b2, link: (l.querySelector(".tl-link") || {}).href || "" }; });
+  conf("o acórdão do e-SISREC sai no cartão oficial, com documento, portal e mensagem", cr && /Criar tarefa ou prazo/.test(cr.bar) && /Mensagem ao cliente/.test(cr.bar) && /e\/p\/44233139765202537/.test(cr.link) && cr.docs.length === 2);
+  conf("o caminho do acórdão com aspas e < não quebra o clique", cr && cr.docs.every(o => { try { new Function(o); return true; } catch (e) { return false; } }) && /fic\\'tício/.test(cr.docs[1]));
+  await p.evaluate(() => { const b2 = [...document.querySelectorAll('.painel[data-p="2"] li.tl-oficial .tl-barra button')].find(b => /Mensagem ao cliente/.test(b.textContent)); b2.click(); }); await p.waitForTimeout(200);
+  conf("a mensagem do CRPS sai pronta, com WhatsApp alcançável pelo teclado", /provido em parte/.test(await p.evaluate(() => document.getElementById("msg-and").value)) && await p.evaluate(() => /^https:\/\/wa\.me\/55/.test(document.getElementById("msg-wa").getAttribute("href") || "")));
+  await p.evaluate(() => fecharCaixa());
+  // o cartão do CNJ (espelho do DataJud) também é oficial
+  conf("o histórico do CNJ vira cartão oficial com portal e mensagem", await p.evaluate(id => { const k = D.casoPorId.get(id);
+    const h = cartaoTl({ q: "2026-10-05", em: "⚖️", rot: "CNJ", texto: "Conclusos para julgamento", ofic: oficCnj(k, "Conclusos para julgamento", { data: "2026-10-05" }, "x") });
+    return /tl-oficial/.test(h) && /Criar tarefa ou prazo/.test(h) && /Abrir no PJe/.test(h) && /msgCliente/.test(h); }, CASO1));
+  // Criar prazo abre o seguimento já preenchido pelo catálogo
+  await p.evaluate(() => { subAba = "tudo"; repintarFicha(); document.querySelector(".tl-prazo-sug button").click(); }); await p.waitForTimeout(250);
+  conf("Criar prazo abre com o prazo do catálogo e a data já preenchidos", await p.evaluate(() => !!(document.getElementById("seg-cat") || {}).value && !!(document.getElementById("seg-prazo") || {}).value));
+  await p.evaluate(() => fecharCaixa());
+  conf("todo cartão oficial tem respiro interno, em toda aba", await p.evaluate(() => { const r = [];
+    for (const a of ["tudo", "inss", "crps", "cnj"]) { if (a === "crps") irSubAba("crps"); else { subAba = a; fonteCnj = "pje"; repintarFicha(); }
+      for (const l of document.querySelectorAll('.painel[data-p="2"] li.tl-oficial')) { if (!l.offsetParent) continue; r.push(parseFloat(getComputedStyle(l).paddingLeft)); } }
+    subAba = "tudo"; repintarFicha(); return r.length > 0 && r.every(v => v >= 12); }));
+  // ⋯: Esc fecha e devolve o foco
+  conf("Esc fecha o ⋯, devolve o foco e não fecha a ficha", await p.evaluate(() => { const d = document.querySelector("li.tl-oficial details.tl-mais"); d.open = true;
+    d.querySelector("summary").dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true })); return !d.open && document.activeElement === d.querySelector("summary") && !!document.querySelector(".linha-caso"); }));
+  conf("clicar fora fecha o ⋯", await p.evaluate(() => { const d = document.querySelector("li.tl-oficial details.tl-mais"); d.open = true; document.querySelector(".cc-acao-tit").click(); return !d.open; }));
+  conf("os itens do ⋯ são itens de menu", await p.evaluate(() => [...document.querySelectorAll(".tl-mais-it")].every(b => b.getAttribute("role") === "menuitem")));
   // documentos e Claude
-  await p.evaluate(() => { subAba = "cnj"; fonteCnj = "docs"; repintarFicha(); }); await p.waitForTimeout(200);
+  await p.evaluate(() => { subAba = "cnj"; fonteCnj = "docs"; procSel = ""; repintarFicha(); }); await p.waitForTimeout(200);
   conf("a lista de documentos tem seleção e Ler com Claude", await sel(".arq-it .doc-ck") >= 1 && await sel(".arq-it .doc-claude") >= 1);
   await p.evaluate(() => { const c = document.querySelector(".arq-it .doc-ck"); c.checked = true; c.dispatchEvent(new Event("change")); }); await p.waitForTimeout(200);
   conf("marcar abre a barra dos selecionados", /1 selecionado/.test(await txt(".docs-sel-barra")) && /Pedir ao Claude com estes/.test(await txt(".docs-sel-barra")));
@@ -129,6 +168,20 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   conf("o pedido leva o identificador do documento para o conector", /ler_documento/.test(url) && /anexo:a0000000-0000-0000-0000-000000000001/.test(url) && !/a0000000-0000-0000-0000-000000000002/.test(url));
   const chaves = await p.evaluate(id => docsEscolhidos(D.casoPorId.get(id), true).map(chaveDoc), CASO1);
   conf("o pacote dos selecionados leva só o marcado", chaves.length === 1 && /a0000000-0000-0000-0000-000000000001/.test(chaves[0]));
+  // o digitalizado sem texto baixa o PDF quando vai para o Claude
+  conf("pedir ao Claude com um digitalizado baixa o PDF dele", await p.evaluate(async id => { let chamou = null; const orig = window.digitalizadosClaude; const antes = docsSel.size;
+    window.digitalizadosClaude = async (c, so) => { chamou = [c, so, [...docsSel]]; };
+    menuClaudeDocs(id, ["anexo:a0000000-0000-0000-0000-000000000002"]); await abrirClaudeDocs("resumo"); window.digitalizadosClaude = orig;
+    return !!chamou && chamou[1] === true && chamou[2].length === 1 && /000000000002/.test(chamou[2][0]) && docsSel.size === antes; }, CASO1));
+  // trocar de cliente zera filtro e seleção
+  conf("trocar de cliente zera o filtro e a seleção", await p.evaluate(async ([a1, b1]) => { filtroTudo = "docs"; docsSel.add("anexo:x"); await abrirFicha(b1); const ok1 = filtroTudo === "tudo" && docsSel.size === 0; await abrirFicha(a1); return ok1; }, [CLI_CHEIO, "c0000000-0000-0000-0000-000000000002"]));
+  await p.evaluate(id => { casoSel = id; abaAtiva = 2; subAba = "tudo"; repintarFicha(); }, CASO1);
+  // celular: sem rolagem lateral e alvos de toque de 44px
+  await p.setViewportSize({ width: 390, height: 844 }); await p.waitForTimeout(400);
+  const cel = await p.evaluate(() => { const b = document.querySelector("li.tl-oficial .tl-bt.forte"); return { sobra: document.documentElement.scrollWidth - window.innerWidth, alto: b ? Math.round(b.getBoundingClientRect().height) : 0 }; });
+  conf(`no celular não há rolagem lateral e o botão tem 44px (${cel.sobra}, ${cel.alto})`, cel.sobra <= 0 && cel.alto >= 44);
+  if (process.env.SHOTS) { const c = await p.$("li.tl-oficial:has(.tl-doc)"); if (c) await c.screenshot({ path: path.join(process.env.SHOTS, "celular-cartao.png") }); }
+  await p.setViewportSize({ width: 1440, height: 1100 }); await p.waitForTimeout(300);
   // visual
   await p.evaluate(() => { subAba = "tudo"; filtroTudo = "tudo"; docsSel.clear(); repintarFicha(); }); await p.waitForTimeout(400);
   const el = await p.$('.painel[data-p="2"]'); if (el) await el.screenshot({ path: path.join(__dirname, "f190-completo.png") });
@@ -141,6 +194,8 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
     const D2 = process.env.SHOTS;
     const tira = async (nome, prep) => { await p.evaluate(prep); await p.waitForTimeout(350); const e = await p.$('.painel[data-p="2"]'); if (e) await e.screenshot({ path: path.join(D2, nome) }); };
     await tira("inss.png", () => { subAba = "inss"; repintarFicha(); });
+    await tira("recurso.png", () => { irSubAba("crps"); });
+    await tira("completo.png", () => { subAba = "tudo"; filtroTudo = "tudo"; repintarFicha(); });
     await tira("escritorio.png", () => { subAba = "escritorio"; repintarFicha(); const d = document.querySelector('.painel[data-p="2"] li.tl-card details.tl-mais'); if (d) d.open = true; });
     await tira("judicial.png", () => { subAba = "cnj"; fonteCnj = "pje"; repintarFicha(); });
     await tira("rotina-aberta.png", () => { subAba = "tudo"; repintarFicha(); const d = document.querySelector("li.tl-rotina details"); if (d) d.open = true; });
