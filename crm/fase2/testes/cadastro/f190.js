@@ -158,10 +158,10 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
     const crps = cs.find(l => /provido em parte/.test(l.textContent) && l.classList.contains("tl-oficial"));
     const per = cs.find(l => /Perícia médica/.test(l.textContent));
     return { crpsDoc: !!(crps && crps.querySelector(".tl-doc")), crpsSin: !!(crps && crps.querySelector(".tl-sinal")),
-      perAcao: !!(per && per.querySelector('.tl-barra button[onclick^="abrirSeguimento"]')),
+      perAcao: !!(per && per.classList.contains("tl-pericia") && per.querySelector('.tl-barra .tl-bt.forte')),
       msgOk: (() => { const b2 = crps && [...crps.querySelectorAll(".tl-barra button")].find(b => /Mensagem/.test(b.textContent)); try { new Function(b2.getAttribute("onclick")); return true; } catch (e) { return false; } })() }; });
   conf("no Caso completo, o cartão do e-SISREC tem o acórdão e os sinais, como na aba Recurso", t3.crpsDoc && t3.crpsSin);
-  conf("a perícia agendada no Caso completo continua com ação", t3.perAcao);
+  conf("a perícia agendada no Caso completo é o cartão da perícia, com a ação do momento", t3.perAcao);
   conf("texto de várias linhas não quebra a Mensagem ao cliente", t3.msgOk);
   conf("o botão de prazos sugeridos filtra só os prazos", await p.evaluate(() => { [...document.querySelectorAll(".cc-acao-n")].find(b => /prazo/.test(b.textContent)).click();
     const cs = [...document.querySelectorAll('.painel[data-p="2"] li.tl-card')]; const ok = filtroTudo === "prazo" && cs.length > 0 && cs.every(l => l.querySelector(".tl-prazo-sug")); filtroTudo = "tudo"; repintarFicha(); return ok; }));

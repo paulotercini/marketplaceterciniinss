@@ -3746,6 +3746,24 @@ html[data-tema="v10"] .cc-acao-fim{margin-left:auto;display:inline-flex;gap:6px;
 html[data-tema="v10"] .cc-acao-fim .tl-bt{display:inline-flex;align-items:center;gap:5px}
 html[data-tema="v10"] .fase-c li.tl-card,html[data-tema="v10"] .painel[data-p="2"] .fatos .timeline li.tl-card,html[data-tema="v10"] .painel[data-p="2"] .caso .timeline li.tl-card{padding:14px 16px}
 @media (max-width:760px){html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card{padding:12px}}
+/* integração, etapa 2 · a aba Perícias usa o cartão do andamento oficial */
+html[data-tema="v10"] .timeline.tl-per{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+html[data-tema="v10"] .timeline.tl-per::before{display:none}
+html[data-tema="v10"] .tl-per li.tl-card{display:block;background:#F6F7F4;border:1px solid var(--borda);border-radius:12px;padding:14px 16px;margin:0}
+html[data-tema="v10"] .tl-per li.tl-card>.texto{display:block;width:100%;max-width:none;white-space:normal;padding:0}
+html[data-tema="v10"] li.tl-pericia .tl-cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+html[data-tema="v10"] .per-est{margin-left:auto;font-size:11px;font-weight:500;padding:3px 8px;border-radius:999px;background:var(--azul-fundo);color:var(--azul-escuro)}
+html[data-tema="v10"] .per-est.prox{background:var(--prox-f);color:var(--prox)}
+html[data-tema="v10"] .per-est.venc{background:#FBEAE7;color:var(--venc)}
+html[data-tema="v10"] .per-est.ok{background:#E3F1E7;color:var(--feito)}
+html[data-tema="v10"] .per-est.cinza{background:#EFEEEB;color:var(--cinza)}
+html[data-tema="v10"] li.tl-pericia.per-cancelada .tl-corpo,html[data-tema="v10"] li.tl-pericia.per-cancelada .autor-nome{color:var(--cinza-claro);text-decoration:line-through}
+html[data-tema="v10"] .per-topo{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap}
+html[data-tema="v10"] .per-topo .cc-conta{margin:6px 0 0;font-size:14px;font-weight:500}
+html[data-tema="v10"] .per-novo{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+html[data-tema="v10"] .per-novo>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center}
+html[data-tema="v10"] .per-novo>summary::-webkit-details-marker{display:none}
+html[data-tema="v10"] .per-novo[open]{flex-basis:100%}
 html[data-tema="v10"] .tl-barra-of .tl-sinal{color:var(--cinza)}
 html[data-tema="v10"] .tl-doc-bts{display:inline-flex;gap:6px;flex-wrap:wrap}
 html[data-tema="v10"] .tl-rotina-itens li.tl-card{padding:10px 14px}
@@ -9269,7 +9287,7 @@ async function salvarSeguimento(){
   const carimbo = carimboCatalogo("seg", prazo);
   if(prazo && !nota && !carimbo) nota = "Prazo processual anotado a partir da novidade do portal.";
   if(prazo) nota = `⏰ [PRAZO ${fmt(prazo)}] ${carimbo}${nota}`.trim();
-  if(!nota && !agendar) return aviso("Escreva a anotação — ou marque o agendamento");
+  if(!nota && !agendar && !s.prep) return aviso("Escreva a anotação — ou marque o agendamento");
   if(pessoas.length && !dia) return aviso("Tarefa para alguém precisa de data — escolha quando lembrar");
   if(pessoas.length && !nota) return aviso("Tarefa para alguém precisa da anotação do que fazer");
   // sem pessoa mas com data: o lembrete é de quem registrou (regra da casa)
@@ -9303,7 +9321,7 @@ async function salvarSeguimento(){
       // no CRPS não há presença nem preparação; o que importa é o resultado,
       // e a tarefa de conferir já nasce do texto pré-preenchido + dia seguinte
       if(s.ev.tipo!=="Julgamento") feito.push(...await gravarRoteiroPericia(s));
-    }
+    } else if(s.prep && s.ev && s.ev.tipo!=="Julgamento") feito.push(...await gravarRoteiroPericia(s));
     if(s.andId && novo) (segNovidades.get(s.andId)||segNovidades.set(s.andId,[]).get(s.andId)).push(novo);
     if(s.deNovidade && s.andId) await marcarLidas([s.andId]);
     fecharCaixa(); segAberto=null;
@@ -16003,6 +16021,21 @@ function painelConsulta(c){
 
 // aba 3 da ficha — extraída da pintarFicha (era um literal de 22 linhas)
 function painelPericiasFicha(c, ks, evs){
+  const form = `<div class="form-linha">
+      <select id="ne-tipo"><option>Perícia</option><option>Audiência</option><option>Avaliação social</option></select>
+      <select id="ne-caso">${ks.map(k=>`<option value="${k.id}">${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>
+      <input type="date" id="ne-data"><input type="time" id="ne-hora" value="09:00">
+      <input id="ne-local" placeholder="local"><button onclick="novoEvento()">Agendar</button>
+    </div>`;
+  if(temaV10()){
+    // as futuras primeiro (a mais próxima no alto), depois as passadas (a mais recente no alto)
+    const h = hoje(), fut = evs.filter(e=>dataSP(e.data_hora)>=h).sort((x,y)=>x.data_hora<y.data_hora?-1:1),
+      pas = evs.filter(e=>dataSP(e.data_hora)<h).sort((x,y)=>x.data_hora<y.data_hora?1:-1);
+    return `<div class="per-topo"><h3 class="cc-conta">${fut.filter(e=>e.status==="agendada").length} agendada${fut.filter(e=>e.status==="agendada").length===1?"":"s"} · ${pas.length} anterior${pas.length===1?"":"es"}</h3>
+        <details class="per-novo"${evs.length?"":" open"}><summary class="tl-bt forte">+ perícia</summary>${form}</details></div>
+      ${fut.length?`<ul class="timeline tl-per">${fut.map(cartaoPericia).join("")}</ul>`:`<p class="meio-sub">Nenhuma perícia ou audiência marcada.</p>`}
+      ${pas.length?`<h3 class="cc-conta" style="margin-top:14px">Anteriores</h3><ul class="timeline tl-per">${pas.map(cartaoPericia).join("")}</ul>`:""}`;
+  }
   return `
     ${evs.map(e=>`<div class="evento ${dataSP(e.data_hora)<hoje()?"passado":"futuro"}">
       <div class="data-box">${fmtTS(e.data_hora).slice(0,5)}<small>${dataSP(e.data_hora).slice(0,4)}</small><small>${horaSP(e.data_hora)}</small></div>
@@ -21687,9 +21720,9 @@ function msgAndamento(andId){
   const l = andLimpo(a, D.casoPorId.get(a.caso_id));
   msgCliente(a.caso_id, {pat:"INSS", crps:"recurso no Conselho de Recursos", pje:"processo judicial"}[a.origem] || "processo", l.texto, (l.q||"").slice(0,10));
 }
-function msgCliente(casoId, fonte, texto, data){
+function msgCliente(casoId, fonte, texto, data, pronto){
   const k = D.casoPorId.get(casoId) || {}, c = D.cliPorId.get(k.cliente_id) || {};
-  const txt = `Olá, ${(c.nome||"").split(" ")[0]}! Novidade no seu ${fonte}${data?` em ${fmt(data)}`:""}: ${String(texto||"").replace(/\.$/,"")}. Qualquer dúvida, estamos à disposição. Escritório Tercini.`;
+  const txt = pronto || `Olá, ${(c.nome||"").split(" ")[0]}! Novidade no seu ${fonte}${data?` em ${fmt(data)}`:""}: ${String(texto||"").replace(/\.$/,"")}. Qualquer dúvida, estamos à disposição. Escritório Tercini.`;
   const tel = soDig(c.telefone||"");
   const wa = t => `https://wa.me/55${tel}?text=${encodeURIComponent(t)}`;
   caixa(`<h3 style="margin:0 0 6px">Mensagem ao cliente</h3>
@@ -21739,6 +21772,70 @@ function oficDoItem(k, x){
     portal: k.fase==="judicial" ? (l=>l?{href:l, rot:nomeSistemaDoLink(l)}:null)(linkPjeMaisAlto(k)) : null};
   return null;
 }
+// ══════════════════════════════════════════════════════════════════════════
+// Integração, etapa 2 · A PERÍCIA NO MESMO CARTÃO DOS ANDAMENTOS. Selo 🩺,
+// data, hora e local; na barra, a ação do momento cheia (avisar o cliente,
+// depois preparar; passada a data, compareceu), o portal do processo e a
+// mensagem de lembrete; no ⋯, Google Agenda, copiar e cancelar. Quando o
+// laudo chega ao processo, o cartão mostra o laudo e o prazo que ele abre.
+// ══════════════════════════════════════════════════════════════════════════
+const RX_LAUDO = /\blaudo|parecer m[ée]dico conclu|avalia[çc][ãa]o social conclu/i;
+// o laudo é da perícia válida mais recente antes dele (cancelada não tem laudo)
+function laudoDaPericia(e){
+  if(e.status==="cancelada") return null;
+  const d = dataSP(e.data_hora);
+  const vivas = (D.eventos||[]).filter(x=>x.caso_id===e.caso_id && x.status!=="cancelada");
+  return (D._andsFicha||[]).filter(a=>a.caso_id===e.caso_id && !a.excluir && ehOficial(a)
+      && RX_LAUDO.test(a.texto||"") && dataSP(a.criado_em)>=d
+      && !vivas.some(x=>x.id!==e.id && dataSP(x.data_hora)>d && dataSP(x.data_hora)<=dataSP(a.criado_em)))
+    .sort((x,y)=>String(x.criado_em).localeCompare(String(y.criado_em)))[0] || null;
+}
+const evAvisado = e => /📞 avisado/.test(e.obs||"");
+function portalDaPericia(k){
+  if(k.fase==="judicial" || k.fase==="pagamento"){ const l = linkPjeMaisAlto(k); return l ? {href:l, rot:nomeSistemaDoLink(l)} : null; }
+  const prot = soDig((k.protocolos||[])[0]||"");
+  const href = k.processo_link || (prot ? PAT_TAREFA+prot : null);
+  return href ? {href, rot:"PAT"} : null;
+}
+// "Preparar" abre o seguimento com o roteiro da perícia (F89) já calculado
+function prepararPericia(evId){
+  const e = D.eventos.find(x=>x.id===evId); if(!e) return;
+  const t = `${e.tipo||"Perícia"} agendada para ${fmt(dataSP(e.data_hora)).replace(/\./g,"/")} às ${horaSP(e.data_hora)}${e.local?` — ${e.local}`:""}`;
+  segItens.push({casoId:e.caso_id, texto:t, andId:null, prep:true});
+  abrirSeguimento(segItens.length-1);
+}
+function msgPericia(evId){
+  const l = lembreteDoEvento(evId), e = D.eventos.find(x=>x.id===evId); if(!l || !e) return;
+  msgCliente(e.caso_id, "", "", "", l.texto);
+}
+function cartaoPericia(e){
+  const k = D.casoPorId.get(e.caso_id) || {}, c = D.cliPorId.get(k.cliente_id) || {};
+  const d = dataSP(e.data_hora), futura = d >= hoje(), ag = e.status==="agendada";
+  const estado = e.status==="cancelada" ? ["cancelada","cinza"] : e.status==="realizada" ? ["compareceu","ok"]
+    : !futura ? ["passou · confirmar","venc"] : evAvisado(e) ? ["cliente avisado","ok"] : ["avisar o cliente","prox"];
+  const cab = `<span class="tl-cab"><span class="avatar mini tl-av av-fonte">${svgIc("🩺",12)||"🩺"}</span><b class="autor-nome">${esc(e.tipo||"Perícia")}</b>
+    <span class="tl-hora">${fmt(d)} · ${horaSP(e.data_hora)}</span><span class="per-est ${estado[1]}">${estado[0]}</span></span>`;
+  const corpo = `<span class="tl-corpo">${esc([e.local, tituloCaso(k)].filter(Boolean).join(" · "))}</span>`;
+  const la = laudoDaPericia(e);
+  const laudo = la ? `<span class="tl-disp per-laudo"><b>Laudo juntado em ${fmt(dataSP(la.criado_em))}</b> · ${esc(andLimpo(la, k).texto.slice(0,140))}</span>`
+      + docsDoCartao(la) + prazoSugeridoHtml(la, segRegistrar(la.caso_id, la.texto, la.id)) + feitoDoCartao(la) : "";
+  const portal = portalDaPericia(k);
+  const bt = (rot, js, forte, tit) => `<button class="tl-bt${forte?" forte":""}" onclick="${js}"${tit?` title="${esc(tit)}"`:""}>${rot}</button>`;
+  let acoes = "";
+  if(ag && futura) acoes = (evAvisado(e) ? "" : bt("Avisar cliente", `janelaAvisado('${e.id}')`, true, "registrar que o cliente foi avisado e se marcou o atendimento de preparação"))
+      + bt("Preparar", `prepararPericia('${e.id}')`, evAvisado(e), "roteiro da perícia: quesitos, atendimento de preparação, lembrete da véspera e estudo do processo");
+  else if(ag) acoes = bt("Compareceu", `compareceuEvento('${e.id}')`, true, "a perícia aconteceu: fecha a pendência");
+  if(e.status!=="cancelada"){
+    if(portal) acoes += `<a class="tl-bt tl-link" href="${urlOk(portal.href)}" target="_blank" rel="noopener">Abrir no ${esc(portal.rot)} ${IC_SVG.ir}</a>`;
+    if(ag && futura) acoes += bt("Mensagem ao cliente", `msgPericia('${e.id}')`, false, "o lembrete pronto, para conferir e enviar");
+  }
+  const menu = menuMais([
+    ag && futura ? `<a class="tl-mais-it" role="menuitem" target="_blank" rel="noopener" href="${gcal((e.tipo||"Perícia")+" — "+esc(c.nome||""), d, horaSP(e.data_hora), 90, "", e.local||"")}">Google Agenda</a>` : "",
+    ag && futura ? `<button class="tl-mais-it" role="menuitem" onclick="copiarLembrete('${e.id}')">Copiar o lembrete</button>` : "",
+    ag ? `<button class="tl-mais-it perigo" role="menuitem" onclick="cancelarEvento('${e.id}')">Cancelar ${evFem(e.tipo)?"a":"o"} ${esc((e.tipo||"perícia").toLowerCase())}</button>` : ""]);
+  const barra = (acoes||menu) ? `<span class="tl-barra tl-barra-of">${acoes}<span class="tl-barra-fim">${menu}</span></span>` : "";
+  return `<li class="tl-card tl-of tl-oficial tl-pericia${e.status==="cancelada"?" per-cancelada":""}" data-ev="${e.id}"><span class="texto">${cab}${corpo}${laudo}${barra}</span></li>`;
+}
 // o que o cartão oficial precisa saber, venha de uma linha de `andamentos`
 // (PAT, PJe, e-SAJ, eproc, aviso do CRPS) ou de um espelho sem linha (evento
 // do e-SISREC, histórico do CNJ), que chega pronto em x.ofic
@@ -21762,6 +21859,7 @@ function infoOficial(x){
     msg: `msgCliente(${esc(JSON.stringify(o.casoId))},${esc(JSON.stringify(o.fonte||"processo"))},${esc(JSON.stringify(x.texto||""))},${esc(JSON.stringify((x.q||"").slice(0,10)))})`, menu: o.menu||[] };
 }
 function cartaoTl(x){
+  if(x.ev) return cartaoPericia(x.ev);
   const d=(x.q||"").slice(0,10), hora=(x.q||"").length>=16 ? (x.q||"").slice(11,16) : "";
   const a = x.and, inf = x.corAv ? null : infoOficial(x);
   const cab = `<span class="tl-cab"><span class="avatar mini tl-av${x.corAv?"":" av-fonte"}"${x.corAv?` style="background:${x.corAv}"`:""}>${x.em||"·"}</span><b class="autor-nome">${esc(x.rot||"")}</b><span class="tl-hora">${d?fmt(d).slice(0,5):"—"}${hora?` · ${hora}`:""}</span>${inf && inf.lido===false?`<span class="tl-novo">Novo · não lido</span>`:""}</span>`;
@@ -22695,6 +22793,7 @@ function fonteFiltro(x){
 // o que pede ação: movimento dos portais não lido (menos a rotina), prazo
 // sugerido sem prazo marcado, e o que alguém marcou importante ou urgente
 function pedeAcao(x){
+  if(x.ev) return x.ev.status==="agendada" && (!evAvisado(x.ev) || dataSP(x.ev.data_hora)<hoje());
   const a = x.and; if(!a) return !!(x.crpsE && (x.crpsE.importante || x.crpsE.urgente));
   if(a.importante || a.urgente) return true;
   if(!ehOficial(a)) return false;
@@ -22757,7 +22856,7 @@ function fatosDoCasoTodo(k, ands){
   // F66 · cancelada NÃO conta a história aqui: sai do Caso completo (a aba
   // Perícias continua guardando o histórico completo, canceladas incluídas)
   for(const e of D.eventos.filter(e=>e.caso_id===k.id && e.status!=="cancelada"))
-    itens.push({q:qSP(e.data_hora), chip:"🩺 "+(e.tipo||"Perícia").split(" ")[0], cor:"per",
+    itens.push({q:qSP(e.data_hora), chip:"🩺 "+(e.tipo||"Perícia").split(" ")[0], cor:"per", ev:e,
       texto:`${e.tipo||"Perícia"} ${e.status==="agendada"?"marcada":e.status==="realizada"?"— compareceu ✔":e.status||""}${e.local?` — ${e.local}`:""}`});
   for(const x of itens)
     x.marco = !!x.forte || x.chip.startsWith("🩺") || RE_MARCO_TUDO.test(x.texto);
@@ -22882,7 +22981,7 @@ function painelTudo(k, ands){
       // o DataJud diz em que sistema o processo corre: o nome dele vem primeiro
       rot: nosso?(x.quem||resto.join(" ")):(/CNJ/.test(x.chip||"")&&fk&&fk!=="cnj"
         ? `${FONTES_SIS[fk].n} · CNJ` : /PJe/.test(x.chip||"")&&fk ? FONTES_SIS[fk].n : (resto.join(" ")||em)),
-      corAv: identidade?x.avCor:null, texto: x.texto, and: x.and,
+      corAv: identidade?x.avCor:null, texto: x.texto, and: x.and, ev: temaV10() ? x.ev : null,
       forte: x.marco, cls: x.resposta?"tl-resposta":"",
       // F190 · o espelho do e-SISREC e do CNJ também vira cartão oficial
       ofic: ofi,
@@ -25460,8 +25559,11 @@ function lembreteDoEvento(evId){
   const e=D.eventos.find(x=>x.id===evId); if(!e) return null;
   const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
   const ctx = e.tipo.toLowerCase().includes("aud") ? "audiencia" : "pericia";
-  const m = modeloPor(ctx) || D.modelos[0];
-  return {texto: preencher(m.texto, c, e, null), cli: c};
+  const m = modeloPor(ctx) || (D.modelos||[])[0];
+  // sem modelo cadastrado, um lembrete mínimo em vez de quebrar o botão
+  const txt = m ? preencher(m.texto, c, e, null)
+    : `Olá, ${((c&&c.nome)||"").split(" ")[0]}! Lembrete: ${e.tipo.toLowerCase()} em ${fmt(dataSP(e.data_hora))} às ${horaSP(e.data_hora)}${e.local?`, ${e.local}`:""}. Leve documento com foto e os exames e relatórios médicos. Escritório Tercini.`;
+  return {texto: txt, cli: c};
 }
 async function copiarLembrete(evId){
   const l=lembreteDoEvento(evId);
