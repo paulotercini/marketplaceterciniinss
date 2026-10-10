@@ -45,7 +45,7 @@ A revisão segue esta sequência, sem pular etapa e sem inverter a ordem. Cada e
 
 Etapa 1. Regra Zero, cascata de verificação de toda citação (Níveis 1 a 5). Lote de três ou mais citações não confirmadas vai ao `verificador-precedentes`.
 Etapa 2. `analista-cnis`, só em peça cuja causa de pedir dependa de tempo, carência, qualidade de segurado ou salário-de-benefício. Fixa os números antes de qualquer tese.
-Etapa 3. Camadas 1 a 5 desta skill, formal, normativa, fática, argumentativa e integridade probatória.
+Etapa 3. Camadas 1 a 5 desta skill, formal, normativa, fática, argumentativa e integridade probatória, e a cadeia de cada pedido (Camada 5-A).
 Etapa 4. Juristas Conferentes, de um a três pelo tema, mais o transversal quando cabível, disparados em paralelo.
 Etapa 5. Processualistas Conferentes, de um a três pela fase, disparados na mesma mensagem da Etapa 4.
 Etapa 6. `red-team-peticao`, a contestação do INSS.
@@ -293,7 +293,7 @@ Avalia força persuasiva e técnica argumentativa. Catálogo de 22 anti-patterns
 Critérios principais (ver detalhamento exaustivo no catálogo):
 
 1. Fundamentação principiológica sem ancoragem fática.
-2. Pedidos sem correspondência com fatos narrados.
+2. Pedidos sem correspondência com fatos narrados. A conferência completa, pedido a pedido, é a da Camada 5-A.
 3. Argumentação repetitiva.
 4. Ausência de confronto direto entre prova e tese.
 5. Argumentação genérica (Regra Tipografia Jurídica).
@@ -337,6 +337,10 @@ Esta camada é especialmente crítica em.
 - Reconhecimento de tempo rural (início de prova material + testemunhas).
 - Reconhecimento de união estável (prova material + temporalidade).
 - Incapacidade B31/B32/B91/B92/B94 (laudos médicos + análise documental Portarias 13-15/2026).
+
+### Camada 5-A - Cadeia de cada pedido (Onda 176, complemento)
+
+Cada pedido é conferido sozinho, pela ligação entre o pedido, os fatos, as provas, o cálculo, o valor ou o critério, quando houver, e a conclusão jurídica. O teste é o do leitor sem retorno, que parte do pedido e encontra cada elo sem procurar informação dispersa e sem refazer conta ou raciocínio. Os defeitos são cinco, lacuna, salto lógico, fundamento genérico, prova não relacionada de forma explícita e cálculo sem demonstração. O protocolo, o que cada tipo de pedido exige, a severidade e o modelo do bloco do relatório estão em `references/CADEIA-DO-PEDIDO.md`. O elo que falta é buscado nos autos antes de ser apontado como lacuna.
 
 ### Camada 6 - Orçamento de Extensão e Legibilidade (Onda 120)
 
@@ -480,6 +484,8 @@ Estrutura padrão entregue após apresentação do .docx.
 **Resumo executivo.** Duas a três frases indicando o resultado geral, com contagem de achados por severidade. Se houver BLOQUEANTES, destacar no topo com selo "PEÇA NÃO DEVE SER PROTOCOLADA".
 
 **Painel de extensão.** Linha única com o tipo de peça, o orçamento, as páginas aferidas antes do corte, as páginas depois do corte e o percentual reduzido. Exemplo, "Petição inicial. Orçamento 7 páginas. Antes 11. Depois 8. Redução de 27%. Excesso de 1 página justificado pela cumulação de tempo especial e reafirmação da DER."
+
+**Cadeia dos pedidos (Onda 176).** Bloco CADEIA DOS PEDIDOS, uma linha por pedido com o veredito e a localização, seguido de O QUE ESCLARECER, CONECTAR OU REORGANIZAR, pedido a pedido, conforme `references/CADEIA-DO-PEDIDO.md`. Vício já reportado no bloco não se repete nas camadas.
 
 **Achados por camada.** Ordem (Formal → Normativa → Fática → Argumentativa → Integridade Probatória → Extensão e Legibilidade). Dentro de cada camada, ordenados por severidade decrescente (Bloqueante → Crítico → Importante → Menor).
 

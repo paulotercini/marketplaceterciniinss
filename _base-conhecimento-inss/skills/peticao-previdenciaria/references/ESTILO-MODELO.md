@@ -83,6 +83,10 @@ O ato do próprio INSS serve de premissa sempre que existir, como o reconhecimen
 
 Em embargos, réplica e recurso, a resposta segue ponto a ponto, como o juízo responde aos embargos. Cada ponto ganha uma subseção com título nominal e três informações: onde o ponto foi suscitado (ID), o que a decisão disse ou deixou de dizer e por que o ponto muda o resultado. A omissão se demonstra pelo art. 1.022, parágrafo único, II, combinado com o art. 489, § 1º, IV, do CPC, que considera não fundamentada a decisão que deixa de "enfrentar todos os argumentos deduzidos no processo capazes de, em tese, infirmar a conclusão adotada pelo julgador". Sem essas três informações, o juízo tende a ler os embargos como rediscussão.
 
+## A cadeia do pedido
+
+Cada pedido fecha uma cadeia de cinco elos, o pedido, os fatos, as provas, o cálculo ou critério, quando houver, e a conclusão jurídica. A seção que fundamenta o pedido traz os cinco elos em sequência, e o pedido parcial da seção só vem depois do número que o sustenta. Nenhum elo fica em outra seção sem remissão expressa à seção e ao ID. O juiz lê o pedido e encontra, sem procurar e sem refazer contas, o fato, o documento, a soma e a norma que o justificam. A conferência é a da `base-revisao-peticao-aprofundada`, em `references/CADEIA-DO-PEDIDO.md`.
+
 ## Títulos
 
 O título começa por DO, DA, DOS ou DAS. Segue-se o instituto técnico, depois a especificação e, quando houver, um particípio ou complemento técnico. Pode trazer, em algarismos, o número que mede o objeto, como "60 DIAS". Não traz data, ID, valor em reais, oração adjetiva desenvolvida, verbo coloquial nem adjetivo valorativo.
@@ -113,7 +117,7 @@ A peça só sai depois de dez conferências, feitas em silêncio, com só o resu
 3. as frases estão claras e sem palavras dispensáveis;
 4. os conectores são naturais e necessários;
 5. há continuidade lógica entre os parágrafos;
-6. os argumentos estão ligados aos fatos, às provas e ao direito;
+6. os argumentos estão ligados aos fatos, às provas e ao direito, e cada pedido fecha a sua cadeia;
 7. não há repetição, explicação óbvia ou fundamentação excessiva;
 8. a leitura é fluida e o argumento convence;
 9. a peça não pode ser reduzida sem perda de conteúdo;
