@@ -181,9 +181,13 @@ extensão (ou "Atualizar"). Não precisa reinstalar nem entrar de novo no CRM.
 
 ## 🕰 Sessão que não cai — desde 1.17.0
 
-Enquanto uma aba do PAT ou do e-SAJ estiver aberta, a extensão toca o site a
-cada 4 min para a sessão não cair por inatividade. Fechou a aba, para. Não
-segura token que expira por tempo fixo (gov.br/CAS): aí é relogar mesmo.
+Enquanto uma aba do PAT, do e-SAJ, do PJe, do eproc ou do e-Recursos estiver
+aberta, a extensão toca o site a cada 4 min para a sessão não cair por
+inatividade. Fechou a aba, para. PJe e eproc são tocados no endereço da própria
+aba (o eproc derruba a sessão com link sem assinatura); o e-Recursos, de dentro
+da aba, com o token da página. Durante o "📚 Completar processos" o PJe não é
+tocado. Não segura login que expira por tempo fixo (gov.br/CAS, o PJe depois de
+~8 h de uso): aí é relogar mesmo.
 
 ## 🔁 Atualizar tudo — desde 1.9.0
 
