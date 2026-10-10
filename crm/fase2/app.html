@@ -3750,8 +3750,8 @@ html[data-tema="v10"] .tl-barra-of .tl-sinal{color:var(--cinza)}
 html[data-tema="v10"] .tl-doc-bts{display:inline-flex;gap:6px;flex-wrap:wrap}
 html[data-tema="v10"] .tl-rotina-itens li.tl-card{padding:10px 14px}
 @media (hover:hover) and (pointer:fine){
-  html[data-tema="v10"] .tl-rotina-itens li.tl-card .tl-barra{display:none}
-  html[data-tema="v10"] .tl-rotina-itens li.tl-card:is(:hover,:focus-within) .tl-barra{display:flex}
+  html[data-tema="v10"] .tl-rotina-itens li.tl-card .tl-barra{opacity:.6;transition:opacity .15s}
+  html[data-tema="v10"] .tl-rotina-itens li.tl-card:is(:hover,:focus-within) .tl-barra{opacity:1}
 }
 @media (max-width:760px), (pointer:coarse){
   html[data-tema="v10"] .tl-bt, html[data-tema="v10"] .cc-filtro, html[data-tema="v10"] .cc-acao-n{min-height:44px}
@@ -4148,7 +4148,8 @@ const digitosCpf = c => (c||"").replace(/\D/g,"");
 // basta (o HTML devolve o apóstrofo antes de virar JS) — lá é escJs.
 const esc = s => (s??"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;")
   .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
-const escJs = s => esc((s??"").toString().replace(/\\/g,"\\\\").replace(/'/g,"\\'"));
+const escJs = s => esc((s??"").toString().replace(/\\/g,"\\\\").replace(/'/g,"\\'")
+  .replace(/\r/g,"\\r").replace(/\n/g,"\\n").replace(/\u2028|\u2029/g," "));
 // href só de verdade: link de coleta (PAT/PJe) sem https na frente não entra
 const urlOk = u => /^https?:\/\//i.test(u||"") ? esc(u) : "#";
 const dsa = s => (s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
@@ -16508,7 +16509,7 @@ function inssFilaCaso(k){
     de ${esc(nomes||"benefício")} esperando análise · metade já espera há mais de
     <b>${f.dias_mediana} dias</b>${f.dias_p90?` (9 em cada 10, até ${f.dias_p90} dias)`:""}
     <span class="meio-sub">— retrato oficial de ${fmt(f.referencia)}; é a régua da fila, não a data deste pedido</span>
-    <div style="margin-top:4px"><button class="btn-mini" onclick="copiarInssFila('${k.id}')">💬 copiar mensagem ao cliente</button></div>
+    <div style="margin-top:4px"><button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarInssFila('${k.id}')">${temaV10()?"":"💬 "}Copiar situação para o cliente</button></div>
   </div>`;
 }
 function copiarInssFila(casoId){
@@ -21691,6 +21692,18 @@ function oficCrps(t, e, casoId, selo, guardados, alv){
       <button class="tl-sinal urg ${e.urgente?"on":""}" onclick="toggleSinalCrps(${alv},'urgente')" aria-label="urgente"
         title="${e.urgente?"tirar a urgência desta movimentação":"marcar ESTA movimentação como urgente"}">${IC_RAIO}</button></span>` };
 }
+// o espelho no Caso completo: e-SISREC (o mesmo cartão da aba Recurso, com o
+// acórdão), CNJ e perícia/audiência agendada
+function oficDoItem(k, x){
+  if(x.crpsT && x.crpsE){
+    const t = x.crpsT, e = x.crpsE, guardados = (e.arquivos||[]).filter(a=>a.storage);
+    const alv = `'${escJs(k.id)}','${escJs(t.nup||"")}',${(t.eventos||[]).indexOf(e)}`;
+    return oficCrps(t, e, k.id, decideOCaso(e) ? seloOrgao(e, guardados[0]) : "", guardados, alv);
+  }
+  if(/CNJ/.test(x.chip||"")) return {casoId:k.id, segTexto:x.texto, fonte:"processo judicial", portal:(l=>l?{href:l, rot:nomeSistemaDoLink(l)}:null)(linkPjeMaisAlto(k))};
+  if(String(x.chip||"").startsWith("🩺")) return {casoId:k.id, segTexto:x.texto, fonte:"processo", portal:null};
+  return null;
+}
 // o que o cartão oficial precisa saber, venha de uma linha de `andamentos`
 // (PAT, PJe, e-SAJ, eproc, aviso do CRPS) ou de um espelho sem linha (evento
 // do e-SISREC, histórico do CNJ), que chega pronto em x.ofic
@@ -21705,10 +21718,13 @@ function infoOficial(x){
       menu: [ ev ? `<button class="tl-mais-it" role="menuitem" onclick="periciaRapida(${i})">Agendar ${esc(ev.tipo.toLowerCase())} com aviso</button>` : "",
               a.origem==="pje" ? `<button class="tl-mais-it perigo" role="menuitem" onclick="pjeForaDoCaso('${a.id}','${a.caso_id}')">Não é deste caso</button>` : "" ] };
   }
+  // o e-SISREC e o CNJ não têm "lido" por pessoa: o cartão deles não leva o
+  // selo de não lido nem o ✓ (lido = null); o aviso do CRPS que vira linha
+  // de `andamentos` leva, pelo caminho de cima
   const o = x.ofic; if(!o) return null;
   const i = segRegistrar(o.casoId, o.segTexto||x.texto||"", null);
   return { i, lido: null, portal: o.portal||null, sinais: o.sinais||"", antes: o.antes||"", docs: o.docs||"", prazo: "", feito: "",
-    msg: `msgCliente('${o.casoId}','${escJs(o.fonte||"processo")}','${escJs(x.texto||"")}','${escJs((x.q||"").slice(0,10))}')`, menu: o.menu||[] };
+    msg: `msgCliente(${esc(JSON.stringify(o.casoId))},${esc(JSON.stringify(o.fonte||"processo"))},${esc(JSON.stringify(x.texto||""))},${esc(JSON.stringify((x.q||"").slice(0,10)))})`, menu: o.menu||[] };
 }
 function cartaoTl(x){
   const d=(x.q||"").slice(0,10), hora=(x.q||"").length>=16 ? (x.q||"").slice(11,16) : "";
@@ -22635,7 +22651,8 @@ const RE_MARCO_TUDO = new RegExp("\\b(senten[çc]a|ac[óo]rd[ãa]o|monocr[áa]ti
 let tudoSoMarcos=false;
 // F190 · os filtros do Caso completo: por fonte, o que pede ação e o que tem documento
 let filtroTudo="tudo";
-const FILTROS_TUDO = [["tudo","Tudo"],["escritorio","Escritório"],["inss","INSS"],["recurso","Recurso"],["judicial","Judicial"],["acao","Pede ação"],["docs","Com documento"]];
+const FILTROS_TUDO = [["tudo","Tudo"],["escritorio","Escritório"],["inss","INSS"],["recurso","Recurso"],["judicial","Judicial"],["acao","Pede ação"],["prazo","Prazo sugerido"],["docs","Com documento"]];
+const temPrazoSugerido = x => !!(x.and && ["pje","crps"].includes(x.and.origem) && prazoSugeridoHtml(x.and, -1));
 function fonteFiltro(x){
   const c = x.chip||"";
   return /Escrit/.test(c) ? "escritorio" : /INSS/.test(c) ? "inss" : /Recurso/.test(c) ? "recurso" : /PJe|CNJ/.test(c) ? "judicial" : c.startsWith("🩺") ? "pericia" : "outro";
@@ -22653,6 +22670,7 @@ function passaFiltro(x, f){
   if(f==="tudo") return true;
   const a = x.and;
   if(f==="acao") return pedeAcao(x);
+  if(f==="prazo") return temPrazoSugerido(x);
   if(f==="docs") return !!(a && (D.anexos||[]).some(an=>an.andamento_id===a.id));
   const fo = fonteFiltro(x);
   // perícia e audiência entram tanto no INSS quanto no Judicial
@@ -22690,7 +22708,7 @@ function fatosDoCasoTodo(k, ands){
   for(const b of crpsBlocos(k))
     for(const e of (b.eventos||[])){
       if(e.tipo==="ruido") continue;
-      itens.push({q:isoCrps(e.data), chip:"🖥 Recurso", cor:"fase",
+      itens.push({q:isoCrps(e.data), chip:"🖥 Recurso", cor:"fase", crpsT:b, crpsE:e,
         forte:decideOCaso(e), texto:String(e.resumo||e.bruto||"")});
     }
   if(k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length))
@@ -22794,13 +22812,13 @@ function painelTudo(k, ands){
   // F190 · o painel "Pede ação": o que espera alguém, em números que filtram,
   // e o Claude sobre o caso. A ficha é estreita: fica no alto, não ao lado.
   const nAcao = itens.filter(pedeAcao).length;
-  const nPrazo = itens.filter(x=>x.and && ["pje","crps"].includes(x.and.origem) && prazoSugeridoHtml(x.and, -1)).length;
+  const nPrazo = itens.filter(temPrazoSugerido).length;
   const nDocNovo = itens.filter(x=>x.and && !euLi(x.and) && (D.anexos||[]).some(an=>an.andamento_id===x.and.id)).length;
   const temDocs = documentosDoCaso(k).length > 0;
   const painelAcao = temaV10() ? `<section class="cc-acao" aria-label="o que pede ação neste caso">
       <span class="cc-acao-tit">Pede ação</span>
       <button class="cc-acao-n${nAcao?"":" zero"}" onclick="filtroTudo='acao';repintarFicha()" ${nAcao?"":"disabled"}><b>${nAcao}</b> ${nAcao===1?"registro":"registros"}</button>
-      <button class="cc-acao-n${nPrazo?" prazo":" zero"}" onclick="filtroTudo='acao';repintarFicha()" ${nPrazo?"":"disabled"}><b>${nPrazo}</b> prazo${nPrazo===1?"":"s"} sugerido${nPrazo===1?"":"s"}</button>
+      <button class="cc-acao-n${nPrazo?" prazo":" zero"}" onclick="filtroTudo='prazo';repintarFicha()" ${nPrazo?"":"disabled"}><b>${nPrazo}</b> prazo${nPrazo===1?"":"s"} sugerido${nPrazo===1?"":"s"}</button>
       <button class="cc-acao-n${nDocNovo?"":" zero"}" onclick="filtroTudo='docs';repintarFicha()" ${nDocNovo?"":"disabled"}><b>${nDocNovo}</b> documento${nDocNovo===1?"":"s"} novo${nDocNovo===1?"":"s"}</button>
       <span class="cc-acao-fim">
         ${naoLidos?`<button class="tl-bt" onclick="liTudoNaFicha('${k.id}')" title="marcar como lidos todos os andamentos dos portais deste caso">Marcar ${naoLidos} como lido${naoLidos>1?"s":""}</button>`:""}
@@ -22831,10 +22849,8 @@ function painelTudo(k, ands){
       corAv: identidade?x.avCor:null, texto: x.texto, and: x.and,
       forte: x.marco, cls: x.resposta?"tl-resposta":"",
       // F190 · o espelho do e-SISREC e do CNJ também vira cartão oficial
-      ofic: temaV10() && !x.and && !nosso && /Recurso|CNJ/.test(x.chip||"") ? (/Recurso/.test(x.chip) ? {casoId:k.id, segTexto:x.texto, fonte:"recurso no Conselho de Recursos",
-          portal: crpsNups(k)[0] ? {href:linkERecursos(crpsNups(k)[0]), rot:"e-SISREC"} : null}
-        : {casoId:k.id, segTexto:x.texto, fonte:"processo judicial", portal:(l=>l?{href:l, rot:nomeSistemaDoLink(l)}:null)(linkPjeMaisAlto(k))}) : null,
-      html: (temaV10() && (x.and ? ehOficial(x.and) : !nosso)) ? "" : `<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, x.texto, x.id||null))}</span>`
+      ofic: temaV10() && !x.and && !nosso ? oficDoItem(k, x) : null,
+      html: (temaV10() && (x.and ? ehOficial(x.and) : (!nosso && oficDoItem(k, x)))) ? "" : `<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, x.texto, x.id||null))}</span>`
         // F86 · quem do escritório já leu o que o robô trouxe: o mesmo ✔ li da
         // aba INSS, agora também no Caso completo (só no tema v10)
         + ((temaV10() && x.and && x.and.origem && x.and.origem!=="app")
@@ -23085,7 +23101,7 @@ function blocoRecurso(t, casoId){
     </div>
     ${tlOficial(cheios.map(linha), "Sem andamentos.")}
     ${ruido.length?`<details class="crps-ruido"><summary>+ ${ruido.length} movimentação interna (encaminhamentos automáticos, cadastro)</summary>
-      ${tlOficial(ruido.map(linha))}</details>`:""}
+      ${tlOficial(ruido.map(e=>temaV10() ? {...linha(e), ofic:null, html:""} : linha(e)))}</details>`:""}
     <div class="fatos-pe" style="justify-content:flex-end">
       <span class="meio-sub">consulta de ${t.consultado_em?fmt(dataSP(t.consultado_em)):"—"}</span>
     </div>
@@ -24041,7 +24057,7 @@ function previsaoBox(k){
         : `ritmo observado de ~${p.ritmo_mes} posições/mês nos últimos ${p.base_dias} dias`}</div>`:""}
     ${p&&p.dias_medios?`<div class="meio-sub">⏱️ tempo médio de julgamento neste órgão: ${p.dias_medios} dias (indicador oficial do CNJ)</div>`:""}
     <div class="form-linha" style="margin-top:6px">
-      <button class="btn-mini" onclick="copiarTrf3('${k.id}')">💬 copiar posição na fila</button>
+      <button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarTrf3('${k.id}')">${temaV10()?"":"💬 "}Copiar posição na fila</button>
       ${p?`<button class="btn-mini" onclick="copiarPrevisao('${k.id}')">📈 copiar previsão estimada</button>`:""}
     </div>
   </div>`;
@@ -24073,7 +24089,7 @@ function marcoCaso(k){
     <span class="meio-sub">(movimento oficial “${esc(m.nome||"")}”)</span>
     ${cobrar?`<span class="chip urg" style="background:#FFF4D6;color:#8A6100;border-color:#E9B44C">💰 honorários a cobrar</span>`:""}
     <div style="margin-top:4px">
-      <button class="btn-mini" onclick="copiarMarco('${k.id}')">💬 copiar mensagem ao cliente</button>
+      <button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarMarco('${k.id}')">${temaV10()?"":"💬 "}Copiar situação para o cliente</button>
       ${cobrar?`<button class="btn-mini" onclick="moverFase('${k.id}','pagamento')">💰 mover para Pagamentos</button>`:""}
     </div>
   </div>`;
@@ -24141,7 +24157,7 @@ function trf3Caso(k){
     · consulta de ${fmt(t.consultado_em)}
     ${projecaoTrf3(t)}
     <div style="margin-top:4px">
-      <button class="btn-mini" onclick="copiarTrf3('${k.id}')">💬 copiar mensagem ao cliente</button>
+      <button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarTrf3('${k.id}')">${temaV10()?"":"💬 "}Copiar situação para o cliente</button>
       ${t.projecao?`<button class="btn-mini" onclick="copiarPrevisao('${k.id}')">📈 copiar previsão estimada</button>`:""}
     </div>
   </div>`;

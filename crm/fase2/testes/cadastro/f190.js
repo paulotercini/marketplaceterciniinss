@@ -47,10 +47,11 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
       texto: "Relatório dispensado. Fundamentação. Ante o exposto, JULGO PROCEDENTE o pedido para condenar o INSS a conceder o benefício.", criado_em: hj + "T12:00:00Z" },
       { id: "a0000000-0000-0000-0000-000000000002", cliente_id: CLI_CHEIO, caso_id: CASO1, andamento_id: null,
       nome: "Carta de exigência", caminho: "x/exig.pdf", tipo: "application/pdf", tamanho: 1000, origem: "pat", texto: null, criado_em: hj + "T11:00:00Z" }],
+    eventos: [{ id: "e1000000-0000-0000-0000-000000000001", caso_id: CASO1, cliente_id: CLI_CHEIO, tipo: "Perícia médica", status: "agendada", data_hora: hj + "T13:00:00Z", local: "JEF" }],
     andamento_tarefas: [{ id: "t0000000-0000-0000-0000-000000000001".replace(/^t/, "c"), andamento_id: "f0000000-0000-0000-0000-000000000007", caso_id: CASO1,
       colaborador_id: FIX.colaboradores[0].id, lembrar_em: hj, concluida_em: null, papel: "faz", natureza: "compromisso" }],
     casos: [caso({ processo: NUM, crps_nups: ["44233139765202537"],
-      crps: [{ nup: "44233139765202537", status: "Julgado", eventos: [{ data: "01/10/2026", resumo: "Acórdão: recurso conhecido e provido em parte", tipo: "decisao",
+      crps: [{ nup: "44233139765202537", status: "Julgado", eventos: [{ data: "01/10/2026", resumo: "Acórdão: recurso conhecido\ne provido em parte", tipo: "decisao",
         arquivos: [{ nome: "Acórdão 1.pdf", storage: "crps/fic'tício<x>/acordao.pdf" }] }] }], protocolos: ["1234567890"], processo_link: "https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/1234567890", pje_links: { "1º grau": "https://pje1g.trf3.jus.br/x1" } })] };
   await ctx.route(SUPA + "/**", rota => {
     const q = rota.request(), u = q.url(), m = q.method();
@@ -82,7 +83,7 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   await p.evaluate(() => { subAba = "tudo"; filtroTudo = "tudo"; repintarFicha(); }); await p.waitForTimeout(300);
   const P = '.painel[data-p="2"] ';
   // cartão oficial
-  const sent = P + 'li.tl-oficial:has(.tl-doc)';
+  const sent = P + 'li.tl-oficial:has(.tl-disp)';
   conf("a sentença é cartão oficial com o documento dentro", await sel(sent) === 1);
   conf("o documento tem Abrir e Ler com Claude", /Abrir/.test(await txt(sent + " .tl-doc")) && /Ler com Claude/.test(await txt(sent + " .tl-doc")));
   conf("o trecho decisivo aparece abaixo do documento", /JULGO PROCEDENTE/.test(await txt(sent + " .tl-disp")));
@@ -103,7 +104,7 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   conf("três movimentos de rotina dobram numa linha", /\+ 3 movimentos de rotina/.test(await txt(P + "li.tl-rotina summary")));
   // filtros
   const filtros = await p.evaluate(q => [...document.querySelectorAll(q + ".cc-filtro")].map(b => b.textContent.trim()), P);
-  conf(`os filtros contam por fonte (${filtros.join(" | ")})`, filtros.some(f => /^INSS · 1$/.test(f)) && filtros.some(f => /^Judicial · 6$/.test(f)) && filtros.some(f => /^Com documento · 1$/.test(f)));
+  conf(`os filtros contam por fonte (${filtros.join(" | ")})`, filtros.some(f => /^INSS · 2$/.test(f)) && filtros.some(f => /^Judicial · 7$/.test(f)) && filtros.some(f => /^Com documento · 1$/.test(f)));
   await p.evaluate(() => { filtroTudo = "docs"; repintarFicha(); }); await p.waitForTimeout(200);
   conf("Com documento mostra só a sentença", await sel(P + "li.tl-card") === 1);
   await p.evaluate(() => { filtroTudo = "acao"; repintarFicha(); }); await p.waitForTimeout(200);
@@ -151,6 +152,19 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
     for (const a of ["tudo", "inss", "crps", "cnj"]) { if (a === "crps") irSubAba("crps"); else { subAba = a; fonteCnj = "pje"; repintarFicha(); }
       for (const l of document.querySelectorAll('.painel[data-p="2"] li.tl-oficial')) { if (!l.offsetParent) continue; r.push(parseFloat(getComputedStyle(l).paddingLeft)); } }
     subAba = "tudo"; repintarFicha(); return r.length > 0 && r.every(v => v >= 12); }));
+  // terceira rodada
+  const t3 = await p.evaluate(() => { subAba = "tudo"; filtroTudo = "tudo"; repintarFicha();
+    const cs = [...document.querySelectorAll('.painel[data-p="2"] li.tl-card')];
+    const crps = cs.find(l => /provido em parte/.test(l.textContent) && l.classList.contains("tl-oficial"));
+    const per = cs.find(l => /Perícia médica/.test(l.textContent));
+    return { crpsDoc: !!(crps && crps.querySelector(".tl-doc")), crpsSin: !!(crps && crps.querySelector(".tl-sinal")),
+      perAcao: !!(per && per.querySelector('.tl-barra button[onclick^="abrirSeguimento"]')),
+      msgOk: (() => { const b2 = crps && [...crps.querySelectorAll(".tl-barra button")].find(b => /Mensagem/.test(b.textContent)); try { new Function(b2.getAttribute("onclick")); return true; } catch (e) { return false; } })() }; });
+  conf("no Caso completo, o cartão do e-SISREC tem o acórdão e os sinais, como na aba Recurso", t3.crpsDoc && t3.crpsSin);
+  conf("a perícia agendada no Caso completo continua com ação", t3.perAcao);
+  conf("texto de várias linhas não quebra a Mensagem ao cliente", t3.msgOk);
+  conf("o botão de prazos sugeridos filtra só os prazos", await p.evaluate(() => { [...document.querySelectorAll(".cc-acao-n")].find(b => /prazo/.test(b.textContent)).click();
+    const cs = [...document.querySelectorAll('.painel[data-p="2"] li.tl-card')]; const ok = filtroTudo === "prazo" && cs.length > 0 && cs.every(l => l.querySelector(".tl-prazo-sug")); filtroTudo = "tudo"; repintarFicha(); return ok; }));
   // ⋯: Esc fecha e devolve o foco
   conf("Esc fecha o ⋯, devolve o foco e não fecha a ficha", await p.evaluate(() => { const d = document.querySelector("li.tl-oficial details.tl-mais"); d.open = true;
     d.querySelector("summary").dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true })); return !d.open && document.activeElement === d.querySelector("summary") && !!document.querySelector(".linha-caso"); }));
@@ -180,14 +194,14 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   await p.setViewportSize({ width: 390, height: 844 }); await p.waitForTimeout(400);
   const cel = await p.evaluate(() => { const b = document.querySelector("li.tl-oficial .tl-bt.forte"); return { sobra: document.documentElement.scrollWidth - window.innerWidth, alto: b ? Math.round(b.getBoundingClientRect().height) : 0 }; });
   conf(`no celular não há rolagem lateral e o botão tem 44px (${cel.sobra}, ${cel.alto})`, cel.sobra <= 0 && cel.alto >= 44);
-  if (process.env.SHOTS) { const c = await p.$("li.tl-oficial:has(.tl-doc)"); if (c) await c.screenshot({ path: path.join(process.env.SHOTS, "celular-cartao.png") }); }
+  if (process.env.SHOTS) { const c = await p.$("li.tl-oficial:has(.tl-disp)"); if (c) await c.screenshot({ path: path.join(process.env.SHOTS, "celular-cartao.png") }); }
   await p.setViewportSize({ width: 1440, height: 1100 }); await p.waitForTimeout(300);
   // visual
   await p.evaluate(() => { subAba = "tudo"; filtroTudo = "tudo"; docsSel.clear(); repintarFicha(); }); await p.waitForTimeout(400);
   const el = await p.$('.painel[data-p="2"]'); if (el) await el.screenshot({ path: path.join(__dirname, "f190-completo.png") });
   await p.evaluate(() => { subAba = "cnj"; fonteCnj = "docs"; docsSel.add(chaveDoc(documentosDoCaso(D.casoPorId.get(casoSel))[0])); repintarFicha(); }); await p.waitForTimeout(300);
   const el2 = await p.$('.painel[data-p="2"]'); if (el2) await el2.screenshot({ path: path.join(__dirname, "f190-docs.png") });
-  await p.evaluate(() => { subAba = "tudo"; repintarFicha(); const d = document.querySelector('li.tl-oficial:has(.tl-doc) details.tl-mais'); d.open = true; }); await p.waitForTimeout(200);
+  await p.evaluate(() => { subAba = "tudo"; repintarFicha(); const d = document.querySelector('li.tl-oficial:has(.tl-disp) details.tl-mais'); d.open = true; }); await p.waitForTimeout(200);
   const card = await p.$('li.tl-oficial:has(.tl-doc)'); if (card) await card.screenshot({ path: path.join(__dirname, "f190-cartao.png") });
 
   if (process.env.SHOTS) {
