@@ -51,6 +51,8 @@ O PPP documenta a história laboral em períodos distintos, cada um com seus pr�
 
 **5. EPI e EPC (CAMPOS 15.6 e 15.7)** — Analisar as declarações sobre eficácia de equipamentos de proteção. Aplicar o Tema 555/STF (ARE 664.335). Identificar preenchimento ambíguo (asteriscos, campos em branco, "N.A." sem justificativa).
 
+**5-A. Agentes biológicos em ambiente hospitalar (Tema 383/TNU, julgado em 24/09/2026)** — Ler juntos o setor (campo 13.3), a profissiografia (campo 14.2), o código de ocorrência da GFIP (campo 13.7) e o campo 15.9. Setor crítico, ala infectocontagiosa ou procedimento gerador de aerossol atrai o item I, e o EPI eficaz do campo 15.7 deixa de obstar a especialidade. Código 04 no campo 13.7 é declaração da empregadora de exposição com aposentadoria aos 25 anos, contraditória com o EPI eficaz. Fora do item I, apontar os fundamentos de impugnação específica do Tema 213/TNU (item II). Setor ou procedimento omitido gera o pedido P8 da `retificacao-ppp`. Roteiro em `base-tema383-tnu-fundacentro-epi-biologicos`, seção 0.
+
 **6. Base documental (LTCAT/PPRA/PGR)** — Identificar qual documento ambiental embasa o PPP para cada período. Verificar retroatividade, lacunas temporais e coerência entre o programa ambiental declarado e o período coberto.
 
 **7. Responsável técnico (CAMPO 16)** — Verificar habilitação profissional, registro no conselho de classe e coerência do período de responsabilidade com o período analisado.

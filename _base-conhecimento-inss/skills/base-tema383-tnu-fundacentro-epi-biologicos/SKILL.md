@@ -1,9 +1,40 @@
 ---
 name: base-tema383-tnu-fundacentro-epi-biologicos
-description: "Tema 383/TNU sobre EPI e agentes biológicos, ancorado nos Pareceres nº 2/2025/SLEP/CAP/DPA e nº 3/2025/SATP/DPA da Fundacentro (Ofício 221/2025/PRES de 30/10/2025). Use SEMPRE que mencionar Tema 383 TNU, agentes biológicos aposentadoria especial, EPI biológico, EPI eficaz biológico, Parecer Fundacentro 2/2025, Parecer Fundacentro 3/2025, SLEP, SATP, FPA, FPMR, N95 PFF2, ensaio vedação respirador, Lenhart 2004 opinião especialistas, ALARP NBR IEC 31010, hierarquia controle NIOSH, eficácia versus efetividade EPI, Portaria MTP 672/2021, PPR Fundacentro 2016, NR-32, Cartilha ANVISA 2009, TIAN 2022 metanálise, VIMIEIRO 2025, ARAÚJO 2023 hepatites, BELLINI 2022, profissional saúde, ACS Aedes aegypti, Covid frente saúde. Cruza com base-especial-agentes-biologicos, base-especial-epi, defesa-probatoria-especial, auditoria-ppp, peticao-previdenciaria, precedentes-previdenciarios."
+description: "Tema 383/TNU sobre EPI e agentes biológicos, JULGADO em 24/09/2026 (tese literal, campos 13.3, 13.7, 14.2 e 15.9 do PPP, notificação e ação trabalhista com pedido certo, prova sem PPP), ancorado nos Pareceres nº 2/2025/SLEP/CAP/DPA e nº 3/2025/SATP/DPA da Fundacentro (Ofício 221/2025/PRES de 30/10/2025). Use SEMPRE que mencionar Tema 383 TNU, agentes biológicos aposentadoria especial, EPI biológico, EPI eficaz biológico, Parecer Fundacentro 2/2025, Parecer Fundacentro 3/2025, SLEP, SATP, FPA, FPMR, N95 PFF2, ensaio vedação respirador, Lenhart 2004 opinião especialistas, ALARP NBR IEC 31010, hierarquia controle NIOSH, eficácia versus efetividade EPI, Portaria MTP 672/2021, PPR Fundacentro 2016, NR-32, Cartilha ANVISA 2009, TIAN 2022 metanálise, VIMIEIRO 2025, ARAÚJO 2023 hepatites, BELLINI 2022, profissional saúde, ACS Aedes aegypti, Covid frente saúde. Cruza com base-especial-agentes-biologicos, base-especial-epi, defesa-probatoria-especial, auditoria-ppp, peticao-previdenciaria, precedentes-previdenciarios."
 ---
 
 # Tema 383/TNU. Pareceres Fundacentro sobre EPI e Agentes Biológicos
+
+## 0. Tese firmada (Onda 177)
+
+Tese literal conferida em 10/10/2026 na página oficial do tema no CJF [CONFERIDO], https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/turma-nacional-de-uniformizacao/temas-representativos/tema-383. PEDILEF 1004356-32.2019.4.01.3802/MG, relatora Juíza Federal Lilian Oliveira da Costa Tourinho, relator para o acórdão Juiz Federal Rodrigo Rigamonte Fonseca. Afetado em 25/06/2025, julgado em 24/09/2026 e acórdão publicado em 28/09/2026. A página não registrava trânsito em julgado na conferência.
+
+> "I - A informação de equipamento de proteção individual (EPI) eficaz constante do Perfil Profissiográfico Previdenciário (PPP) não obsta o reconhecimento da especialidade do trabalho dos profissionais de saúde, como médicos, enfermeiros, técnicos e auxiliares de enfermagem, fisioterapeutas e farmacêuticos que, no exercício habitual de suas atribuições, em ambiente hospitalar, realizem ou auxiliem diretamente procedimentos geradores de aerossol (intubação orotraqueal, ventilação não invasiva, aspiração de vias aéreas, reanimação cardiopulmonar, traqueostomia, broncoscopia e similares), prestem atendimento em caráter de urgência ou emergência em setores críticos (CTI/UTI, pronto-socorro e centro cirúrgico) ou atuem em setores/alas destinadas a pacientes com suspeita ou confirmação de doenças infectocontagiosas."
+
+> "II - Quanto aos profissionais de saúde em ambiente hospitalar, com exposição habitual e permanente a agentes biológicos (Temas 205 e 211/TNU) fora das hipóteses do item I, a informação de eficácia do EPI no PPP somente pode ser desconsiderada mediante impugnação específica e fundamentada, nos termos dos temas 213 da Turma Nacional de Uniformização e 1090 do Superior Tribunal de Justiça."
+
+**Leitura.** O item I traz três hipóteses em que o EPI eficaz do PPP não obsta a especialidade, o procedimento gerador de aerossol, o atendimento de urgência ou emergência em setor crítico e a atuação em setor ou ala de doença infectocontagiosa. O rol de profissionais é exemplificativo ("como médicos, enfermeiros [...]"). Fora dessas hipóteses, o item II mantém o EPI eficaz até a impugnação específica e fundamentada do Tema 213/TNU e do Tema 1090/STJ, de modo que a variante de impugnação do EPI continua obrigatória. Os dois itens tratam de profissional de saúde em ambiente hospitalar. Agente comunitário, laboratório externo, UBS, consultório e coleta de resíduos ficam nos Temas 205, 211 e 213/TNU e no Tema 1090/STJ, sem a presunção do item I. Fora do JEF, no rito ordinário do TRF3, o tema entra como precedente persuasivo, ao lado do Tema 1090/STJ.
+
+### 0.1. Onde a prova do item I tem de estar
+
+O item I depende de fato que o PPP costuma omitir, e a prova se procura nesta ordem.
+
+1. **Campo 13.3 (setor).** CTI/UTI, pronto-socorro, centro cirúrgico, ala de isolamento ou de doenças infectocontagiosas, com o nome do setor e o período.
+2. **Campo 14.2 (profissiografia).** Os procedimentos do item I com o verbo do próprio tema ("realiza ou auxilia diretamente" intubação orotraqueal, ventilação não invasiva, aspiração de vias aéreas, reanimação cardiopulmonar, traqueostomia ou broncoscopia), ou o atendimento de urgência e emergência.
+3. **Campo 13.7 (código de ocorrência da GFIP).** O código 04 é a declaração da própria empregadora de exposição a agente nocivo com aposentadoria especial aos 25 anos, base do adicional do art. 57, § 6º, da Lei 8.213/91. Ele contradiz o EPI eficaz do campo 15.7 e sustenta a dúvida razoável do item II.
+4. **Campo 15.9 (requisitos das NR-06 e NR-09 sobre funcionamento, validade, troca e higienização).** A marcação negativa ou em branco abre o fundamento (iii) do Tema 213/TNU. A positiva não prevalece sobre o que os campos 13 e 14 descrevem.
+5. **Observações do PPP e LTCAT.** Quando a empregadora não altera os campos, pede-se a inclusão das hipóteses do item I nas observações, e confere-se se o LTCAT nomeia o setor e os procedimentos.
+6. **Fora do PPP.** Escala de plantão, declaração da chefia de enfermagem, ficha de lotação e registro de procedimentos sem dado de paciente.
+
+A numeração é a do PPP em formulário. No PPP eletrônico do eSocial a numeração muda, e a correspondência se confere no documento do caso.
+
+### 0.2. Notificação, retificação e ação trabalhista
+
+A notificação à empregadora pede o setor no campo 13.3 e os procedimentos no campo 14.2, por período, ou a inclusão nas observações, e a cópia do LTCAT (`retificacao-ppp`, pedido P8). Na ação trabalhista de retificação, o pedido é certo e determinado e nomeia o campo, o período, o setor e o procedimento do item I. Pedido genérico produz sentença que manda "retificar conforme a perícia" sem fixar o fato de que o segurado precisa.
+
+### 0.3. Sem PPP adequado, na Justiça Federal
+
+A inicial requer prova oral e pericial dirigida aos fatos do item I e demonstra por que o PPP não basta (`especificacao-provas`). Indeferida a prova e julgado o pedido pela insuficiência do PPP, o recurso argui o cerceamento de defesa e impugna especificamente esse fundamento da sentença (`base-cpc-nulidades-cerceamento`). Questão probatória não suscitada no momento próprio preclui, e o cerceamento não se demonstra depois.
 
 ## 1. Quando acionar esta skill
 
@@ -243,7 +274,7 @@ Sétimo, sempre cite a hierarquia de controle NIOSH 2024 e o critério ALARP (NB
 
 Oitavo, em Tema 383/TNU, o parecer é manifestação oficial. Sustente que a Fundacentro é órgão técnico vinculante.
 
-Nono, observe que o Tema 383 ainda está em julgamento. Verifique se houve fixação da tese antes de impetrar. Em caso de tese pró-segurado fixada, invoque-a também.
+Nono, o Tema 383 foi julgado em 24/09/2026 (seção 0). Nas hipóteses do item I, cite a tese. Fora delas, impugne o EPI de forma específica, pelo item II.
 
 ## 10. Doutrina de apoio
 

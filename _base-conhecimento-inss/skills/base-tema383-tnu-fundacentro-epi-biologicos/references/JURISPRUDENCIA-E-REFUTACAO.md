@@ -8,7 +8,7 @@ Trata da repercussão do EPI declarado eficaz no PPP para fins de caracterizaç�
 
 A juíza relatora Lílian Oliveira da Costa Tourinho, mediante despacho/decisão nº 900000298676, requereu manifestação técnica oficial à Fundacentro. A Fundacentro emitiu os Pareceres nº 2/2025/SLEP/CAP/DPA e nº 3/2025/SATP/DPA, encaminhados em 30/10/2025 pelo Ofício Eletrônico nº 221/2025/PRES-FUNDACENTRO.
 
-A manifestação técnica oficial pró-segurado constitui fundamento robusto para a fixação de tese pró-segurado pela TNU.
+JULGADO em 24/09/2026, acórdão publicado em 28/09/2026, relator para o acórdão Juiz Federal Rodrigo Rigamonte Fonseca. Tese literal e roteiro de prova na seção 0 da SKILL.md, conferidos na página oficial do CJF em 10/10/2026 [CONFERIDO].
 
 ## 2. Tema 555/STF. RE 664.335
 
