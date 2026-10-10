@@ -1,45 +1,122 @@
 # Estilo-modelo das peças do escritório
 
-Onda 163, 29/09/2026. Calibragem aprovada pelo titular, que pediu texto compreensível, humano, formal e jurídico, no registro fluido que ele aprecia nas peças produzidas pelo ChatGPT e pelo Manus. Esta referência é lida ANTES de redigir qualquer peça, e os parágrafos abaixo são o padrão a imitar em extensão, ritmo e encadeamento. Os casos são fictícios e servem apenas ao estilo.
+Onda 176, 10/10/2026. Manual de Redação Jurídica do Escritório Tercini, aprovado pelo titular. Substitui a calibragem da Onda 163, que continua valendo onde não for contrariada.
 
-**Onda 174, 04/10/2026.** A estrutura, as fórmulas e a voz das peças passaram a ser as do `METODO-PETICAO-TERCINI.md`, extraído do modelo do próprio titular, que prevalece sobre esta referência em caso de diferença. Daqui continuam valendo as medidas, as transições e as vedações. Nos exemplos abaixo, a peça entregue escreve "a Parte Autora" e, depois da primeira menção na seção, "a Autarquia Federal", e o documento é citado por ID nas peças intermediárias e "em anexo" na petição inicial.
+## O princípio
+
+O juízo de Catanduva tem um único juiz titular, de modo que toda peça do escritório é lida por ele. Por isso a peça usa a linguagem dele, com o vocabulário, os conectores e a sequência do raciocínio que ele usa ao sentenciar. Assim, o juiz lê na petição o modo como ele próprio escreve, e a leitura fica fácil. A regra vale para a linguagem e não para a formatação. O padrão visual (Onda 140) e a estrutura e as fórmulas do método do titular (`METODO-PETICAO-TERCINI.md`, Onda 174) não mudam.
+
+O manual foi extraído de nove decisões da Vara Federal e do JEF de Catanduva, medidas em 10/10/2026. Os exemplos abaixo vêm delas, sem nome de parte, processo, empregador ou dado que identifique o caso. Da linguagem do juiz, a peça adota o vocabulário, os conectores, a frase em ordem direta, o parágrafo de um passo e o fecho com número. A peça não adota a primeira pessoa do julgador, a doutrina, as citações dentro de parênteses nem as fórmulas de relatório.
 
 ## As medidas
 
-O parágrafo tem de quatro a cinco linhas, com teto de seis, o que no papel do escritório corresponde a 40 a 55 palavras, com teto de 65. A frase tem de 15 a 35 palavras e passa de 45 só em citação literal. Cada parágrafo desenvolve uma ideia em três ou quatro frases ligadas entre si, e cada parágrafo, a partir do segundo da seção, abre retomando o anterior. O acervo do escritório, medido em 20/09/2026, tem mediana de 42 palavras por parágrafo e percentil 90 de 75, de modo que a nova medida corresponde ao que o titular já escrevia.
+A frase tem de 15 a 30 palavras, chega a 40 quando preciso e só passa disso com transcrição. O parágrafo tem um raciocínio, de duas a quatro frases e de 30 a 55 palavras, ou seja, de três a cinco linhas. O teto é de 65 palavras, cerca de seis linhas. Nas decisões medidas, o parágrafo mediano vai de 28,5 a 33 palavras, e de 80% a 89% dos parágrafos têm até 65 palavras. A frase mediana vai de 15 a 27 palavras.
 
-## As transições
+## Vocabulário do juízo
 
-Para acrescentar, além disso, soma-se a isso, também. Para dar a causa, porque, uma vez que, já que, isso porque. Para tirar a consequência, por isso, por essa razão, de modo que, assim. Para contrapor, ocorre que, todavia, ainda assim, mesmo diante disso. Para refutar, nem se diga que, tampouco procede. Para concluir, desse modo, portanto. Para marcar o tempo, na sequência, a partir de então, três meses depois.
+As peças adotam os termos que o juízo usa, porque são os que ele lê sem esforço. São eles enquadramento especial e caracterização especial do período, intervalo, períodos e atividades laborais, sujeição a agentes nocivos ou a fatores de risco, de modo habitual e permanente, qualidade de segurado, período de graça, data de início da incapacidade, incapacidade temporária ou permanente, requerimento administrativo, reafirmação da DER, efeitos financeiros e montante. O termo técnico vem completo na primeira menção e não muda até o fim. O documento sempre leva o qualificador ("laudo pericial", "carta de concessão"), e, fora de transcrição, o benefício leva a denominação vigente.
 
-A transição é escolhida pela relação lógica entre as frases, e nunca por ornamento. A mesma transição não se repete em parágrafos seguidos.
+| Evitar | Usar |
+|---|---|
+| em apertada síntese; é, em síntese, o conteúdo | (cortar) |
+| em cujo bojo; nada obstante | na qual; embora |
+| posto que (causal) | porque; haja vista |
+| Como se sabe; Vale ressaltar; Importante mencionar | (cortar e dizer o fato) |
+| inconteste; absolutamente; terminantemente; sem dúvida | (cortar) |
+| lançou; deu entrada; tempo estadual; exposição | computou; requereu; tempo de contribuição estadual; sujeição |
+| o (a) autor (a); o segurado (na ação) | a Parte Autora |
+| o segurado (no CRPS, no MS, no cumprimento) | Recorrente; Impetrante; Exequente |
+| tão-somente; NCPC | tão somente; CPC |
 
-## O que continua vedado e o que foi liberado
+## A frase
 
-Continuam vedados o adjetivo de intensidade (manifestamente, flagrante, absurdo, cristalino, obviamente, claramente), o travessão como separador, a miniconclusão abrindo o parágrafo, a frase-decreto repetida no mesmo texto, a construção "não é X, é Y" e o título que não seja formal e nominal.
+A frase segue a ordem sujeito, verbo e complemento. Não há vírgula isolada entre o verbo e o complemento ("determinei, a citação"), e cabe no máximo uma inserção entre vírgulas. Cada frase traz uma informação nova, ligada à anterior. A data vem em dd/mm/aaaa no corpo, e por extenso só na idade e no fecho.
 
-Foram liberados os dois-pontos antes de citação literal e de enumeração de pedidos ou requisitos, as fórmulas próprias do registro forense, como "data venia", "com o devido respeito" e "não há que se falar", usadas com moderação, e os termos técnicos que a lista anterior tratava como adjetivo, como decisão teratológica, fato notório, ciência inequívoca e pedido inadmissível. A regra "uma ideia por frase" foi substituída por "uma ideia por parágrafo", e o corte fixo de 20% deu lugar à retirada do que não decide.
+> **Na sentença.** "Salienta, em apertada síntese, que, em [data], deu entrada, no INSS, em requerimento de aposentadoria por tempo de contribuição, e que, assim, desde então, está aposentado como segurado do RGPS."
 
-## Exemplo 1, aposentadoria especial por ruído
+> **Na peça.** "Em [dd/mm/aaaa], a Parte Autora requereu ao INSS a aposentadoria por tempo de contribuição, concedida desde aquela data."
 
-> O autor trabalhou como operador de prensa hidráulica na Metalúrgica Alfa Ltda. de 03/03/2005 a 10/08/2023, exposto durante toda a jornada a ruído de 89 dB(A), conforme o Perfil Profissiográfico Previdenciário emitido pela empregadora (ID 4521). Ainda assim, o INSS deixou de enquadrar o período como especial e indeferiu o pedido em 12/03/2025, sem apontar qualquer falha no documento (ID 4530).
+## O parágrafo
 
-> Ocorre que o limite de tolerância ao ruído, desde 19/11/2003, é de 85 dB(A), e o nível registrado no Perfil Profissiográfico Previdenciário o supera em quatro decibéis durante todo o período. Por essa razão, o documento apresentado ao INSS já bastava para o reconhecimento da atividade especial, de modo que a decisão administrativa deixou de aplicar o critério que a própria autarquia adota.
+Cada parágrafo dá um passo do raciocínio. A abertura varia pelo elemento que move o argumento, que pode ser fato, data, documento, norma ou consequência, e nunca é uma conclusão curta seguida de explicação ("Assiste razão ao INSS. Explico."). O primeiro parágrafo de cada seção retoma o resultado da anterior, e o último conclui por conector e razão.
 
-> Nem se diga que o fornecimento de protetor auricular afastaria a especialidade. No Tema 555, o Supremo Tribunal Federal fixou que a declaração de eficácia do equipamento de proteção individual não descaracteriza o tempo especial quando o agente é o ruído acima do limite. Por isso, a anotação feita pela empregadora no Perfil Profissiográfico Previdenciário não altera a conclusão.
+A sentença de conversão em aposentadoria especial é o modelo de sequência, com sete parágrafos curtos. Eles abrem por "Consta da CTPS", "Constato, também, pela leitura dos autos administrativos", "Contudo, ele, em [data], já havia requerido", "Por meio do referido documento", "Daí, consequentemente, o próprio INSS haver reconhecido", "Entendo, assim, que tem direito" e "Desta forma, o autor, na DER, passa a somar". Na peça, a sequência é a mesma, e a primeira pessoa do juiz dá lugar ao documento e ao ato do INSS como sujeito.
 
-## Exemplo 2, auxílio por incapacidade temporária
+## Os conectores
 
-> A autora exerce a função de costureira industrial desde 2012 e, em 04/02/2025, foi afastada pelo ortopedista assistente em razão de síndrome do túnel do carpo bilateral, confirmada por eletroneuromiografia (ID 7710). Três meses depois, o INSS indeferiu o benefício sob o fundamento de ausência de incapacidade, sem examinar o exame apresentado (ID 7722).
+| Função | Conectores | Uso |
+|---|---|---|
+| Oposição | Contudo; Entretanto; Ocorre que; Em que pese | Abrir a refutação da tese do INSS |
+| Retomada e soma | Como visto; Por sua vez; Além disso; Ademais | Abrir parágrafo que acrescenta prova ou retoma a seção anterior |
+| Causa | Isso porque; na medida em que; haja vista; porque | Explicar dentro do parágrafo |
+| Consequência | Desta forma; Assim; Daí; Portanto; razão pela qual | Tirar a consequência jurídica do fato |
+| Delimitação | No ponto; Especificamente; No caso concreto; ou seja | Trazer a norma geral ao caso, uma vez por seção |
+| Refutação antecipada | Nem se diga que; Tampouco procede | Enfrentar a defesa previsível |
+| Fecho | Por fim; Sendo assim; Deste modo, Excelência | Encerrar a seção (a última é a fórmula do titular) |
 
-> Ocorre que a costura industrial exige movimentos repetitivos de pinça e de flexão do punho durante toda a jornada, justamente os gestos que a compressão do nervo mediano impede, conforme descreve o relatório médico (ID 7715). Por isso, a incapacidade deve ser aferida diante da atividade habitual da segurada, como exige o art. 59 da Lei 8.213/1991, e não em abstrato.
+Entretanto, Ocorre que, Nem se diga que, Tampouco procede, Sendo assim e Deste modo, Excelência vêm do método do titular. Os demais foram medidos nas decisões do juízo. O mesmo conector não se repete em parágrafos seguidos, e cada um expressa a relação lógica real entre as ideias.
 
-## Por que esses parágrafos funcionam
+## Fatos e documentos
 
-Cada um abre por um elemento diferente, fato, norma ou objeção, e nenhum começa por uma miniconclusão. As frases se ligam por transições que mostram a relação lógica, e o leitor não precisa costurar sozinho o raciocínio. O dado decisivo aparece com número, data e ID, e a força do texto vem da precisão, não do adjetivo.
+O fato segue a ordem data, autor do ato, documento com emitente e data, trecho decisivo literal e qualificação jurídica. Sempre que houver, o fato traz um número, que pode ser tempo, contribuições, valor ou data-limite. Na petição inicial e no mandado de segurança o documento segue "em anexo", e nas demais peças, por ID.
 
-O texto antigo, que o medidor passa a reprovar, era este. "O autor trabalhou na Metalúrgica Alfa. Operava prensa hidráulica. Havia ruído de 89 dB(A). O PPP comprova (ID 4521). O INSS não enquadrou o período." As mesmas informações, sem transição e em frases soltas, obrigam o julgador a reconstruir o raciocínio.
+> **Na sentença.** "Por meio do referido documento, devidamente embasado em laudo técnico, o trabalhador se sujeitara a contato manual, de modo habitual e permanente, [...] a hidrocarbonetos aromáticos ([agentes])."
 
-## Aferição
+> **Na peça.** "O formulário emitido pela empregadora em [dd/mm/aaaa], com base em laudo técnico, registra que a Parte Autora se sujeitou, de modo habitual e permanente, a hidrocarbonetos aromáticos ([agentes]): ***"[trecho literal]"***"
 
-O `scripts/medir_peca.py` confere as medidas. Parágrafo acima de 65 palavras e sequência de três frases com menos de doze palavras são achados IMPORTANTES. Frase acima de 45 palavras e parágrafo de três ou mais frases sem nenhuma transição são achados MENORES.
+## A norma
+
+O dispositivo que decide o caso continua transcrito em bloco, como no método da Onda 174. O dispositivo acessório entra na própria frase, como faz o juízo, com o trecho operativo entre aspas e um verbo que diga a sua função ("dispõe", "estipula", "assegura", "veda"). Não se cita doutrina, e nenhuma citação vai dentro de parênteses.
+
+> **Na peça.** "O auxílio-acidente é devido "a partir do dia seguinte ao da cessação do auxílio-doença" (art. 86, § 2º, da Lei 8.213/91), de modo que o termo inicial, no caso, é [dd/mm/aaaa], dia seguinte à cessação do benefício anterior."
+
+## O argumento
+
+Cada ponto controvertido é desenvolvido em quatro tempos:
+
+1. o que o INSS decidiu, com as palavras do próprio INSS;
+2. o fato e a prova que o contradizem;
+3. a norma que incide;
+4. a consequência, com número.
+
+O ato do próprio INSS serve de premissa sempre que existir, como o reconhecimento anterior de um período ou o cálculo da Autarquia. A defesa previsível é enfrentada em parágrafo próprio, aberto por "Nem se diga que". Quando há controvérsia, a pergunta da seção vem em uma frase, formulada pelo critério legal ("A questão, portanto, é saber se [...]"), como o juízo faz com o "Resta saber, assim, [...] se [...]".
+
+Em embargos, réplica e recurso, a resposta segue ponto a ponto, como o juízo responde aos embargos. Cada ponto ganha uma subseção com título nominal e três informações: onde o ponto foi suscitado (ID), o que a decisão disse ou deixou de dizer e por que o ponto muda o resultado. A omissão se demonstra pelo art. 1.022, parágrafo único, II, combinado com o art. 489, § 1º, IV, do CPC, que considera não fundamentada a decisão que deixa de "enfrentar todos os argumentos deduzidos no processo capazes de, em tese, infirmar a conclusão adotada pelo julgador". Sem essas três informações, o juízo tende a ler os embargos como rediscussão.
+
+## Títulos
+
+O título começa por DO, DA, DOS ou DAS. Segue-se o instituto técnico, depois a especificação e, quando houver, um particípio ou complemento técnico. Pode trazer, em algarismos, o número que mede o objeto, como "60 DIAS". Não traz data, ID, valor em reais, oração adjetiva desenvolvida, verbo coloquial nem adjetivo valorativo.
+
+| Antes | Depois |
+|---|---|
+| 2. DOS SESSENTA DIAS DO TEMPO ESTADUAL QUE A REVISÃO NÃO LANÇOU | 2. DO PERÍODO DE 60 DIAS DE TEMPO DE CONTRIBUIÇÃO ESTADUAL NÃO COMPUTADO NA REVISÃO |
+| DO LAUDO SEM CORRELAÇÃO COM A PROVA | DA AUSÊNCIA DE CORRELAÇÃO ENTRE O LAUDO PERICIAL E A PROVA DOCUMENTAL |
+| DA NÃO DESCARACTERIZAÇÃO DO REGIME DE ECONOMIA FAMILIAR | DA CARACTERIZAÇÃO DO REGIME DE ECONOMIA FAMILIAR |
+
+## Critérios de corte
+
+1. A frase repete o que o título ou o parágrafo anterior já disse? Sai.
+2. O adjetivo ou o advérbio sai sem perda de informação? Sai.
+3. A transcrição da lei tem parágrafo que não decide o caso? O parágrafo sai.
+4. O precedente não muda o resultado? Vai para o banco de teses.
+5. Há vírgula isolada entre o verbo e o complemento? A frase é reordenada.
+6. O parágrafo passa de 65 palavras? Divide-se no ponto em que muda o passo lógico.
+7. O conector se repete em parágrafos seguidos? Troca-se pelo que expressa a relação real.
+8. A conclusão vem antes da explicação no mesmo parágrafo? A ordem se inverte.
+
+## Auditoria antes de entregar
+
+A peça só sai depois de dez conferências, feitas em silêncio, com só o resultado no relatório:
+
+1. a peça reproduz este padrão;
+2. cada parágrafo desenvolve uma ideia identificável;
+3. as frases estão claras e sem palavras dispensáveis;
+4. os conectores são naturais e necessários;
+5. há continuidade lógica entre os parágrafos;
+6. os argumentos estão ligados aos fatos, às provas e ao direito;
+7. não há repetição, explicação óbvia ou fundamentação excessiva;
+8. a leitura é fluida e o argumento convence;
+9. a peça não pode ser reduzida sem perda de conteúdo;
+10. não há erro jurídico, probatório ou argumentativo.
+
+O `scripts/medir_peca.py` confere as medidas, os conectores, o vocabulário vedado e os títulos. A vírgula isolada entre verbo e complemento, a ideia do parágrafo e os pontos 5 a 10 ficam com a `base-revisao-peticao-aprofundada`.

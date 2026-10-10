@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Medidor mecânico de peça previdenciária. Onda 140 (16/09/2026), ajustado na Onda 174 ao método do titular (REQUERIMENTOS, documento "em anexo" na inicial, linha "# " do nome da ação).
+"""Medidor mecânico de peça previdenciária. Onda 140 (16/09/2026), ajustado na Onda 174 ao método do titular (REQUERIMENTOS, documento "em anexo" na inicial, linha "# " do nome da ação) e na Onda 176 à linguagem do juízo de Catanduva (references/ESTILO-MODELO.md).
 
 Lê a peça em Markdown e devolve PASSA ou FALHA com a lista exata do que
 está fora do padrão de escrita do escritório. A skill NÃO entrega peça
@@ -16,17 +16,18 @@ Saída: relatório no stdout, código 0 se PASSA e 1 se FALHA.
 import re, sys, argparse
 
 PAL_LINHA = 10                       # calibrado
-PARAG_MIN, PARAG_MAX = 20, 65        # Onda 163, alvo 4 a 5 linhas (40 a 55), teto 6 linhas (65). Acervo do escritório, mediana 42 e p90 75
-FRASE_LONGA = 45                     # frase acima de 45 palavras pesa a leitura (Onda 163)
+PARAG_MIN, PARAG_MAX = 20, 65        # Onda 176, alvo 3 a 5 linhas (30 a 55), teto 6 linhas (65). Decisões do juízo, mediana 28,5 a 33
+FRASE_LONGA = 40                     # Onda 176, frase de 15 a 30, até 40; acima disso só com transcrição
 FRASE_CURTA = 12                     # frase com menos de 12 palavras (Onda 157, alinhado ao PADRAO-DE-ESCRITA)
 SEQ_CURTAS = 3                       # 3 seguidas = truncamento
 PAGINAS = {'inicial':7,'inominado':4,'laudo':3,'crps':3,'embargos':2,'comum':2,'memorial':2,'ms':5}
 PAL_PAGINA = 300                     # ~30 linhas úteis x 10 palavras, descontando títulos
 
-ADJ_VEDADOS = r'\b(manifestamente|flagrante(?:mente)?|absurd[oa]|basilares?|induvidos[oa](?:mente)?|escancarad[oa]|gritante|esdr[úu]xul[oa]|desesperador[a]?|abandonad[oa] à pr[óo]pria sorte|cristalin[oa]|patente(?:mente)?|evidentemente|obviamente|claramente)\b'
-FORMULAS_VAZIAS = r'(?i)\b(é cediço|é de se ver|como se sabe|insta salientar|cumpre ressaltar|mister se faz|resta claro|resta evidente|à luz dos mais comezinhos|os mais basilares|princípios de justiça)\b'
+ADJ_VEDADOS = r'\b(inconteste|terminantemente|absolutamente(?!\s+incapaz)|manifestamente|flagrante(?:mente)?|absurd[oa]|basilares?|induvidos[oa](?:mente)?|escancarad[oa]|gritante|esdr[úu]xul[oa]|desesperador[a]?|abandonad[oa] à pr[óo]pria sorte|cristalin[oa]|patente(?:mente)?|evidentemente|obviamente|claramente)\b'
+FORMULAS_VAZIAS = r'(?i)\b(é cediço|é de se ver|como se sabe|vale ressaltar|importante mencionar|em apertada síntese|sem dúvida|insta salientar|cumpre ressaltar|mister se faz|resta claro|resta evidente|à luz dos mais comezinhos|os mais basilares|princípios de justiça)\b'
+VOCAB_TROCAR = [(r'(?i)\bposto que\b', 'posto que é concessivo; para causa, porque ou haja vista'), (r'(?i)\btão-somente\b', 'tão somente'), (r'\bNCPC\b', 'CPC'), (r'(?i)\bo \(a\) autor \(a\)', 'a Parte Autora'), (r'\bExplico\.', 'conclusão curta seguida de explicação; inverter a ordem')]
 ART_RX = r'\b(art(?:igo)?s?\.?\s*\d+[º°]?(?:[-\.]?[A-Z])?)'
-CONECTIVO_RX = r'(?i)\b(além disso|soma-se a isso|também|porque|uma vez que|já que|visto que|por isso|por essa razão|por esse motivo|de modo que|assim|dessa forma|desse modo|portanto|logo|ocorre que|todavia|contudo|entretanto|no entanto|ainda assim|mesmo diante|nem se diga|tampouco|na sequência|a partir de então|em seguida|nesse contexto|nesse ponto|com efeito|isso porque|de fato|embora|pois|razão pela qual|diante disso)\b'
+CONECTIVO_RX = r'(?i)\b(além disso|soma-se a isso|também|porque|uma vez que|já que|visto que|por isso|por essa razão|por esse motivo|de modo que|assim|dessa forma|desse modo|portanto|logo|ocorre que|todavia|contudo|entretanto|no entanto|ainda assim|mesmo diante|nem se diga|tampouco|na sequência|a partir de então|em seguida|nesse contexto|nesse ponto|com efeito|isso porque|de fato|embora|pois|razão pela qual|diante disso|desta forma|deste modo|como visto|no ponto|daí|haja vista|na medida em que|em que pesem?|ou seja|por sua vez|especificamente|no caso concreto|ademais|nesse sentido|sendo assim|por fim)\b'
 EXPLICA_RX = r'(?i)(porque|pois|uma vez que|na medida em que|de modo que|razão pela qual|o que significa|isto é|ou seja|aplica-se|incide|toma como referência|exige|exigid|prevê|previst|estabelece|assegura|garante|dispõe|disposto|determina|haja vista|a seguir|declara)'   # Onda 174, a transcrição anunciada (a seguir demonstrados) é a explicação no método do titular
 
 def paragrafos(md):
@@ -42,8 +43,9 @@ def paragrafos(md):
         out.append((sec, ' '.join(b.split())))
     return out
 
-TITULO_MAX = 12                      # palavras no título de seção (Onda 162)
+TITULO_MAX = 16                      # palavras no título de seção (Onda 162; Onda 176, o exemplo do titular tem 14)
 TITULO_DADO_RX = r'(?<![/\d.])\b(19|20)\d{2}\b|\b\d{1,2}/\d{1,2}(/\d{2,4})?\b|\bID\s*\d|\d\s*dB|\d\s*%|R\$'
+TITULO_ORACAO_RX = r'(?i)\b(que|onde|qual|quais|cuj[oa]s?)\b|\blan[çc]\w*'   # Onda 176, oração adjetiva desenvolvida e verbo coloquial (o particípio técnico, como NÃO COMPUTADO, passa)
 TITULO_VALOR_RX = r'(?i)\b(comprovad[oa]s?|demonstrad[oa]s?|indevid[oa]s?|ilega(l|is)|abusiv[oa]s?|equivocad[oa]s?|err[ôo]ne[oa]s?|desde|arbitr[áa]ri[oa]s?|flagrante|manifest[oa]|inequ[íi]voc[oa]|evidente|absurd[oa]|injust[oa]|mantid[oa]|total e permanente)\b'
 
 def titulos(md):
@@ -86,7 +88,7 @@ def medir(md, tipo):
         if re.search(LISTA_RX, sec): continue
         fs=frases(p)
         for f in fs:
-            if len(f.split())>FRASE_LONGA:
+            if len(f.split())>FRASE_LONGA and not re.search(r'["“]', f):   # com transcrição, a frase pode passar de 40 (Onda 176)
                 achados.append(('MENOR', f'Frase com {len(f.split())} palavras em "{sec}". Acima de {FRASE_LONGA}, dividir em duas ligadas por conectivo.', f[:110])); break
         if len(fs)>=3 and not re.search(CONECTIVO_RX, ' '.join(fs[1:])):
             achados.append(('MENOR', f'Parágrafo de {len(fs)} frases sem transição em "{sec}". Ligar as frases por conectivo (por isso, ocorre que, além disso, de modo que).', p[:110]))
@@ -96,6 +98,9 @@ def medir(md, tipo):
             achados.append(('IMPORTANTE', f'Adjetivo de intensidade "{m.group(0)}" em "{sec}". Trocar pela descrição precisa do erro e da consequência.', p[:110]))
         for m in re.finditer(FORMULAS_VAZIAS, p):
             achados.append(('MENOR', f'Fórmula vazia "{m.group(0)}" em "{sec}". Cortar.', p[:110]))
+        for rx,troca in VOCAB_TROCAR:
+            m=re.search(rx, p)
+            if m: achados.append(('MENOR', f'"{m.group(0)}" em "{sec}". Vocabulário do manual (Onda 176), {troca}.', p[:110]))
     # 4. artigos sem explicacao, por secao
     por_sec={}
     for sec,p in ps:
@@ -121,7 +126,9 @@ def medir(md, tipo):
         erros=[]
         if not re.match(r'(?i)^D(A|O|AS|OS)\s', t) and not re.match(r'(?i)^(REQUERIMENTOS|QUESITOS)$', t): erros.append('não começa por DA, DO, DOS ou DAS')
         if len(t.split())>TITULO_MAX: erros.append(f'{len(t.split())} palavras, teto {TITULO_MAX}')
-        if re.search(TITULO_DADO_RX, t): erros.append('traz ano, data, número, valor ou ID')
+        if re.search(TITULO_DADO_RX, t): erros.append('traz ano, data, medida, valor ou ID')
+        o=re.search(TITULO_ORACAO_RX, t)
+        if o: erros.append(f'oração adjetiva ou verbo coloquial "{o.group(0)}" (use o particípio técnico, como NÃO COMPUTADO NA REVISÃO)')
         v=re.search(TITULO_VALOR_RX, t)
         if v: erros.append(f'termo valorativo "{v.group(0)}"')
         if erros:

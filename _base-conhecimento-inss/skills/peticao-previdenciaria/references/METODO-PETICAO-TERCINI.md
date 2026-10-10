@@ -1,6 +1,6 @@
 # Método Tercini de petição
 
-Onda 174, 04/10/2026. Método extraído do modelo de petição inicial de benefícios por incapacidade redigido pelo titular (arquivo Word, revisão 8, salvo em 22/07/2024) e fixado por ele como padrão de TODAS as peças do escritório, em todos os temas previdenciários. Esta referência prevalece sobre `ESTILO-MODELO.md` na estrutura, nas fórmulas e na voz. As medidas de parágrafo e frase da Onda 163 continuam valendo, porque o modelo do titular já cabe nelas.
+Onda 174, 04/10/2026. Método extraído do modelo de petição inicial de benefícios por incapacidade redigido pelo titular (arquivo Word, revisão 8, salvo em 22/07/2024) e fixado por ele como padrão de TODAS as peças do escritório, em todos os temas previdenciários. Esta referência prevalece na estrutura e nas fórmulas. O vocabulário, a construção da frase e do parágrafo e as medidas seguem o `ESTILO-MODELO.md` (Onda 176), que reproduz a linguagem do juízo de Catanduva.
 
 O método tem quatro marcas. A peça segue uma ordem fixa de seções, conhecida do julgador. Cada fato vem com o documento que o prova, descrito pelo emitente, pela data e pelo trecho literal. A lei é transcrita, e não apenas citada, antes de ser aplicada ao caso. E a fundamentação é legal e documental, com precedente só quando a tese depende dele.
 
@@ -100,7 +100,7 @@ A autora ou o autor é sempre "a Parte Autora", com iniciais maiúsculas, e o IN
 
 As transições são as do titular, escolhidas pela relação lógica e sem repetição em parágrafos seguidos. Para contrapor, "Entretanto" e "Ocorre que". Para remeter à prova, "Conforme é possível observar na documentação em anexo" e "senão vejamos". Para encadear, "Por sua vez", "Já o", "Do mesmo modo". Para concluir, "Deste modo", "Sendo assim", "Posto isto". Para o subsidiário, "Caso não seja este o entendimento, ainda assim". Para fechar o direito, "como medida de direito e de justiça".
 
-O registro é formal, simples e afirmativo. A frase diz o que aconteceu e onde está a prova, sem adjetivo de intensidade e sem acusação. O parágrafo tem de duas a cinco frases, e as medidas da Onda 163 (40 a 55 palavras, teto 65) continuam sendo o alvo, com tolerância ao parágrafo curto de documento transcrito.
+O registro é formal, simples e afirmativo. A frase diz o que aconteceu e onde está a prova, sem adjetivo de intensidade e sem acusação. O parágrafo tem de duas a quatro frases e de 30 a 55 palavras, com teto de 65, e a frase tem de 15 a 30 palavras, até 40 quando preciso (Onda 176), com tolerância ao parágrafo curto de documento transcrito. O vocabulário e os conectores são os do juízo de Catanduva, listados no `ESTILO-MODELO.md`, porque o juiz titular lê melhor o texto escrito como ele escreve.
 
 Os campos a preencher ficam entre colchetes, e as instruções ao redator ficam entre colchetes começando por verbo ("[Utilizar se ...]", "[Somente a conclusão do exame]"). Nenhum colchete sobrevive na peça entregue.
 
@@ -108,7 +108,7 @@ Os campos a preencher ficam entre colchetes, e as instruções ao redator ficam 
 
 **Documento.** Na petição inicial o documento é referido como "em anexo", porque ainda não há ID. Nas demais peças, por ID do PJe. O nome do documento leva sempre o qualificador ("Relatório Médico", "laudo pericial", "Perfil Profissiográfico Previdenciário", "carta de concessão"), e o trecho decisivo é transcrito literalmente, em negrito e itálico, entre aspas.
 
-**Lei.** A transcrição é literal, em recuo, com rótulos em negrito, e se limita ao que decide o caso. O parágrafo seguinte aplica a norma ao fato. Lei transcrita sem aplicação e aplicação sem a lei são, ambas, falhas do método.
+**Lei.** A transcrição é literal, em recuo, com rótulos em negrito, e se limita ao que decide o caso. O parágrafo seguinte aplica a norma ao fato. O dispositivo acessório, que não decide o caso, entra na própria frase com o trecho operativo entre aspas, como faz o juízo (Onda 176). Lei transcrita sem aplicação e aplicação sem a lei são, ambas, falhas do método.
 
 **Precedente.** O modelo do titular não cita precedente na inicial de incapacidade, porque a lei e a prova bastam. Nas demais espécies o precedente entra só quando a tese depende dele (como o Tema 555/STF no ruído, o Tema 1007/STJ na híbrida, o Tema 27/STF na renda do BPC), uma única vez, com a tese literal em recuo e a marcação [CONFERIDO] apenas se constar do catálogo da base. Os bancos de teses dos Modelos Ouro guardam o restante para réplica e recurso.
 
