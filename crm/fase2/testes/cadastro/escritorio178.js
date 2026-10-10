@@ -79,13 +79,13 @@ const SUPA = "https://ficticio.supabase.co";
   // Gerar procurações
   await p.click(".adr-barra-esc >> text=Gerar procurações");
   const rots = await p.$$eval("#modal .adr-ck", ls => ls.map(l => l.textContent.trim()));
-  conf("Gerar procurações lista os quatro modelos",
-    rots.length === 4 && /Procuração Administrativa/.test(rots.join("|")) && /Procuração Judicial/.test(rots.join("|")));
+  conf("Gerar procurações lista os seis modelos, com o termo e a declaração de não recebimento",
+    rots.length === 6 && /Termo de Representação/.test(rots.join("|")) && /Não Recebimento/.test(rots.join("|")) && /Procuração Administrativa/.test(rots.join("|")) && /Procuração Judicial/.test(rots.join("|")));
   await p.evaluate(() => { window.__docs = []; gerarTodosDocs = (cli, ch) => window.__docs.push(ch); });
-  await p.evaluate(() => { const ck = document.querySelectorAll("#modal .proc-ck"); ck[2].checked = true; });
+  await p.evaluate(() => { const ck = document.querySelectorAll("#modal .proc-ck"); ck[4].checked = true; });
   await p.click("#modal .adr-modal-bts button.adr-primario");
   conf("Imprimir leva os modelos marcados ao gerador de documentos",
-    await p.evaluate(() => JSON.stringify(window.__docs) === JSON.stringify([["proc_adm", "proc_judicial", "pobreza"]])));
+    await p.evaluate(() => JSON.stringify(window.__docs) === JSON.stringify([["proc_adm", "proc_judicial", "termo", "beneficiario", "pobreza"]])));
 
   // Criar caso
   await p.click(".adr-barra-esc >> text=Criar caso");

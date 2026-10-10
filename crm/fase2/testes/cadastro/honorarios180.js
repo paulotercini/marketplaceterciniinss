@@ -85,7 +85,7 @@ const PG = [
   conf("o + lançamento continua com os campos de antes",
     await p.evaluate(() => /\+ lançamento/.test(document.querySelector(".hon-novo summary").textContent)
       && ["np-caso", "np-data", "np-valor", "np-desc"].every(id => document.getElementById(id))));
-  conf("o cartão Contrato diz a modalidade", /Contrato/.test(await p.textContent(".adr-col-lado")) && /Modalidade/.test(await p.textContent(".adr-col-lado")));
+  conf("o cartão Contrato diz o serviço, sem repetir a modalidade do quadro", /Serviço/.test(await p.textContent(".adr-col-lado")) && !/Modalidade/.test(await p.textContent(".adr-col-lado")));
   if (RETRATO) await p.screenshot({ path: path.join(RETRATO, "honorarios180.png"), fullPage: true });
 
   escritos.length = 0;
