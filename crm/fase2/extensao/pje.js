@@ -269,6 +269,12 @@
       // Painel e recomeça de lá, como já se faz quando a conversa cai.
       if (noProcesso && !(opts && opts.acervo))
         return await coletarProcessoAberto(opts && opts.completo ? { entregar: false } : undefined);
+      // F187 · no "completar processos" a página TEM de ser o processo: se o
+      // PJe mandou para o Painel ou para o login (sessão vencida), é falha —
+      // coletar o acervo aqui encheu a fila de coletas repetidas e escondeu o erro
+      if (opts && opts.completo)
+        return { erro: /login|sso\./i.test(location.href) ? 'a sessão do PJe caiu (tela de login)'
+                                                         : 'o processo não abriu (o PJe mandou para ' + location.pathname + ')' };
       if (!new RegExp(PAINEL.replace(/\./g, '\\.')).test(location.pathname)) {
         if (agendarRetomada()) {
           faixa('indo ao Painel do Advogado para ler o acervo…');

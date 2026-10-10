@@ -173,7 +173,7 @@ async function completarPje() {
   const janela = await chrome.windows.create({ url: lista[0].url, focused: false, state: 'normal', width: 1200, height: 900 });
   const tabId = janela.tabs[0].id;
   const lote = [];
-  let feitos = 0, falhas = 0;
+  let feitos = 0, falhas = 0, seguidas = 0, parou = null;
   const entregar = async () => {
     if (!lote.length) return;
     const l = lote.splice(0);
@@ -190,17 +190,21 @@ async function completarPje() {
         const res = await chrome.scripting.executeScript({ target: { tabId },
           func: () => window.crmRodar ? window.crmRodar(null, { completo: true }) : { erro: 'o coletor não subiu' } });
         const r = res && res[0] && res[0].result;
-        if (r && r.out) { lote.push(r.out); feitos++; } else { falhas++; console.warn('[CRM] PJe não completado:', p.numero, r && r.erro); }
+        if (r && r.out) { lote.push(r.out); feitos++; seguidas = 0; }
+        else { falhas++; seguidas++; console.warn('[CRM] PJe não completado:', p.numero, r && r.erro); }
         if (lote.length >= 5) await entregar();
-      } catch (e) { falhas++; console.warn('[CRM] PJe não completado:', p.numero, e.message); }
+      } catch (e) { falhas++; seguidas++; console.warn('[CRM] PJe não completado:', p.numero, e.message); }
+      // 5 seguidas é a sessão do PJe vencida (horas de rodada), não azar: insistir
+      // nos que faltam só gera falha. Para, e a rodada seguinte pula o que já foi
+      if (seguidas >= 5) { parou = `parou no processo ${i + 1} de ${lista.length}: o PJe não abre mais os processos — entre de novo no PJe e clique outra vez (o que já foi guardado é pulado)`; break; }
     }
     await entregar();
   } finally {
     clearInterval(pulso);
-    await chrome.storage.local.set({ completar_pje: { i: lista.length, total: lista.length, feitos, falhas, fim: new Date().toISOString() } });
+    await chrome.storage.local.set({ completar_pje: { i: lista.length, total: lista.length, feitos, falhas, parou, fim: new Date().toISOString() } });
     try { await chrome.windows.remove(janela.id); } catch (e) {}
   }
-  return { rotulo: 'PJe', ok: feitos, falhas };
+  return parou ? { rotulo: 'PJe', erro: parou, ok: feitos, falhas } : { rotulo: 'PJe', ok: feitos, falhas };
 }
 async function completarEproc() {
   const abas = await chrome.tabs.query({ url: DOMINIOS.eproc });
