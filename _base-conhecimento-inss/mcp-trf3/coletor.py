@@ -86,6 +86,10 @@ class Cjf:
         # as duas datas são os únicos campos j_idtNN_input do formulário avançado, na ordem início e fim
         datas = list(dict.fromkeys(re.findall(r'name="(formulario:j_idt\d+_input)"', self.ultima)))
         if not trib or len(datas) != 2:
+            if tentativa < 3:          # o CJF às vezes devolve a página sem os campos; tenta outra sessão
+                print(f"    formulário do CJF veio sem campos {datas}, abrindo outra sessão em 60 s", flush=True)
+                time.sleep(60)
+                return self.pesquisar(acervo, ini, fim, tentativa + 1)
             raise SystemExit(f"formulário do CJF sem o seletor de tribunal ou sem as duas datas: {datas}")
         if acervo == "recursais":                 # o seletor de região só existe no servidor depois deste passo
             self.estado["formulario:trMarcado_input"] = "on"
@@ -189,11 +193,15 @@ if __name__ == "__main__":
     ap.add_argument("--acervo", choices=["trf3", "recursais"], action="append")
     ap.add_argument("--meses", type=int, default=120)
     ap.add_argument("--paginas", type=int, help="teste: só as N primeiras páginas de cada mês, sem fechar o mês")
+    ap.add_argument("--acentos", action="store_true",
+                    help="refaz o dicionário que a busca usa para achar palavras sem a letra acentuada nas Recursais")
     ap.add_argument("--reprocessar", action="store_true",
                     help="relê as páginas brutas já baixadas e atualiza os campos de relator, sem ir ao CJF")
     a = ap.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
     con = banco.abrir()
+    if a.acentos:
+        raise SystemExit(f"{banco.construir_acento(con)} palavras no dicionário de acentos")
     if a.reprocessar:
         n = 0
         for arq in sorted((banco.DADOS / "bruto").glob("*/*/p*.xml.gz")):
@@ -209,8 +217,12 @@ if __name__ == "__main__":
     # dos acórdãos, enquanto 2023 e 2025 vinham inteiros. Por isso confere o maior mês fechado de CADA ano; se
     # algum vier bem abaixo do gravado, o índice está incompleto e coletar agora gravaria meses pela metade.
     # Sai com código 3, e o supervisor espera meia hora.
-    amostra = con.execute("""SELECT acervo, mes, max(documentos) FROM progresso
-                             GROUP BY acervo, substr(mes, 1, 4)""").fetchall()
+    alvos = a.acervo or ["trf3", "recursais"]
+    # só os acervos desta rodada, senão um mês que o CJF perdeu de forma permanente em um acervo
+    # travaria para sempre a coleta do outro
+    amostra = con.execute(f"""SELECT acervo, mes, max(documentos) FROM progresso
+                              WHERE acervo IN ({','.join('?' * len(alvos))})
+                              GROUP BY acervo, substr(mes, 1, 4)""", alvos).fetchall()
     for acervo_s, mes_s, gravado in ([] if a.paginas else amostra):
         ini = datetime.date.fromisoformat(mes_s + "-01")
         fim = (ini.replace(day=28) + datetime.timedelta(days=4)).replace(day=1) - datetime.timedelta(days=1)
@@ -220,7 +232,7 @@ if __name__ == "__main__":
                   flush=True)
             sys.exit(3)
     # o TRF3 inteiro antes das Recursais; dentro de cada acervo, do mês mais recente para o mais antigo
-    for acervo in a.acervo or ["trf3", "recursais"]:
+    for acervo in alvos:
         for ini, fim in meses(a.meses):
             try:
                 coletar_mes(cjf, con, acervo, ini, fim, a.paginas)
