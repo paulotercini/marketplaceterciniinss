@@ -88,6 +88,25 @@ p = banco.perfil(con, "relator", "fulano")
 assert p["por_polo_recorrente"]["inss"] == {"negado": 1, "taxa_provimento": 0.0}, p
 assert banco.buscar(con, "", relator="ciclana")["total"] == 1, "relator titular também é filtro"
 
+
+# Recursais: o CJF apaga a letra acentuada ("ruído" chega como "rudo"), e a busca precisa achar as duas formas
+c2 = banco.abrir(":memory:")
+rec = dict(parser.extrair(resposta, "trf3", so_previdenciario=False)[0], id="REC1", acervo="recursais",
+           ementa_texto="Aposentadoria especial. Exposio a rudo acima do limite. Benefcio concedido.",
+           inteiro_teor="Exposio a rudo. Contribuio previdenciria.", e_razoes=None, e_dispositivo=None)
+tf = dict(rec, id="TRF1", acervo="trf3", ementa_texto="Exposição a ruído. Benefício concedido.",
+          inteiro_teor="Exposição a ruído. Contribuição previdenciária.")
+banco.gravar(c2, [rec, tf])
+assert banco.buscar(c2, "ruido")["total"] == 1, "sem o dicionário só o TRF3 acha"
+c2.executemany("INSERT INTO acento VALUES (?, ?)", [("ruido", "rudo"), ("beneficio", "benefcio"),
+                                                       ("exposicao", "exposio"), ("contribuicao", "contribuio")])
+banco._ACENTO.clear()
+assert banco.buscar(c2, "ruido")["total"] == 2, "com o dicionário acha as duas formas"
+assert banco.buscar(c2, '"exposicao a ruido"')["total"] == 2, "frase também"
+assert banco.buscar(c2, "ruido -beneficio")["total"] == 0, "exclusão vale para as duas formas"
+assert banco.buscar(c2, "ruído", acervo="recursais")["total"] == 1, "digitado com acento acha a forma das Recursais"
+print("busca nas Recursais ok")
+
 # regressão sobre página real, quando existir
 reais = sorted((banco.DADOS / "bruto" / "trf3").glob("*/p0001.xml.gz"))
 if reais:
