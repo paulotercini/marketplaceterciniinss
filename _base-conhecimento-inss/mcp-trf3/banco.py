@@ -2,7 +2,7 @@
 
 Tudo que o servidor responde sai daqui, para ser testável sem o SDK do MCP.
 """
-import os, pathlib, re, sqlite3, statistics
+import os, pathlib, re, sqlite3, statistics, time, unicodedata
 
 DADOS = pathlib.Path(os.environ.get("TRF3_DADOS", r"C:\Users\VAIO\trf3-jurisprudencia"))
 TETO_CONTAGEM = 10000
@@ -51,6 +51,10 @@ CREATE TRIGGER IF NOT EXISTS documento_ad AFTER DELETE ON documento BEGIN
   VALUES ('delete', old.rowid, old.ementa_texto, old.e_razoes, old.e_dispositivo, old.inteiro_teor);
 END;
 
+CREATE TABLE IF NOT EXISTS acento (      -- palavra sem acento -> como o CJF a entrega nas Recursais
+  base TEXT PRIMARY KEY, perdida TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS progresso (   -- retomada da coleta
   acervo TEXT, orgao TEXT, mes TEXT, paginas INTEGER, documentos INTEGER, concluido_em TEXT,
   PRIMARY KEY (acervo, orgao, mes)
@@ -64,8 +68,9 @@ AVISOS = [
     "O CJF não tem todos os acórdãos que o portal do TRF3 tem em alguns meses. Medido em 22/09/2026, abril de "
     "2025 tem 1.519 no CJF contra 9.122 no portal, e setembro de 2024 tem 1.555 contra 8.506. Veja "
     "meses_com_cobertura_parcial_no_cjf antes de concluir que um julgado não existe.",
-    "Fonte: Jurisprudência Unificada do CJF. Nas recursais o texto vem da fonte sem os caracteres acentuados, e "
-    "registros antigos sem ementa nem decisão ficam de fora. Citação em peça exige conferência no portal do TRF3.",
+    "Fonte: Jurisprudência Unificada do CJF. Nas recursais o texto vem da fonte com a letra acentuada apagada (rudo, no lugar de ruído), e a busca "
+    "compensa isso com um dicionário montado do texto do TRF3. Palavra que o dicionário não tem é procurada só "
+    "como digitada. Registros antigos sem ementa nem decisão ficam de fora. Citação em peça exige conferência no portal do TRF3.",
 ]
 
 
@@ -94,24 +99,94 @@ def abrir(caminho=None, leitura=False):
     return con
 
 
-def gravar(con, docs):
-    """INSERT OR IGNORE pelo id da fonte. Devolve quantos eram novos."""
-    novos = 0                                   # total_changes contaria também o gatilho do FTS
-    for d in docs:
-        cols = ", ".join(d)
-        novos += con.execute(f"INSERT OR IGNORE INTO documento ({cols}) VALUES ({', '.join('?' * len(d))})",
-                             list(d.values())).rowcount
+def gravar(con, docs, tentativas=5):
+    """INSERT OR IGNORE pelo id da fonte. Devolve quantos eram novos.
+
+    Mesmo em WAL o banco de 12 GB às vezes devolve "database is locked" durante o checkpoint,
+    e perder a página coletada por isso seria desperdício. Espera e repete antes de desistir.
+    """
+    for i in range(tentativas):
+        try:
+            novos = 0                           # total_changes contaria também o gatilho do FTS
+            for d in docs:
+                cols = ", ".join(d)
+                novos += con.execute(f"INSERT OR IGNORE INTO documento ({cols}) VALUES ({', '.join('?' * len(d))})",
+                                     list(d.values())).rowcount
+            con.commit()
+            return novos
+        except sqlite3.OperationalError as e:
+            if "locked" not in str(e) or i == tentativas - 1:
+                raise
+            con.rollback()
+            time.sleep(10 * (i + 1))
+
+
+def _sem_acento(w):
+    return "".join(c for c in unicodedata.normalize("NFKD", w) if not unicodedata.combining(c))
+
+
+def _perdida(w):
+    """Como o CJF entrega a palavra nas Turmas Recursais, que descarta a letra acentuada em vez de trocá-la."""
+    return "".join(c for c in w if _sem_acento(c) == c)
+
+
+def construir_acento(con, amostra=6000):
+    """Monta o dicionário palavra-sem-acento -> palavra-como-vem-nas-Recursais a partir do texto do TRF3, que
+    chega com acento. As Recursais não servem de fonte, porque nelas a informação já foi apagada."""
+    cont = {}
+    ids = [r[0] for r in con.execute(
+        "SELECT rowid FROM documento WHERE acervo = 'trf3' AND rowid % 61 = 0 LIMIT ?", (amostra,))]
+    for i in range(0, len(ids), 500):
+        marcas = ",".join("?" * len(ids[i:i + 500]))
+        for (t,) in con.execute(f"SELECT ementa_texto || ' ' || substr(inteiro_teor, 1, 4000) FROM documento "
+                                f"WHERE rowid IN ({marcas})", ids[i:i + 500]):
+            for w in re.findall(r"\w+", (t or "").lower()):
+                base = _sem_acento(w)
+                if base != w and len(base) > 3:
+                    d = cont.setdefault(base, {})
+                    d[_perdida(w)] = d.get(_perdida(w), 0) + 1
+    con.execute("DELETE FROM acento")
+    con.executemany("INSERT INTO acento VALUES (?, ?)",
+                    [(b, max(v, key=v.get)) for b, v in cont.items() if max(v, key=v.get) and max(v, key=v.get) != b])
     con.commit()
-    return novos
+    return len(cont)
 
 
-def para_fts(consulta):
+_ACENTO = {}
+
+
+def _dicionario(con):
+    if con is not None and id(con) not in _ACENTO:
+        try:
+            _ACENTO[id(con)] = dict(con.execute("SELECT base, perdida FROM acento").fetchall())
+        except sqlite3.OperationalError:          # base antiga, sem o dicionário
+            _ACENTO[id(con)] = {}
+    return _ACENTO.get(id(con), {})
+
+
+def _termo(termo, dic, acervo=""):
+    """O termo como digitado OU como vem das Recursais. Sem isso, "ruido" acha 1.750 acórdãos delas e "rudo"
+    acha 50.813, e a busca ignora 96% do acervo. Com o acervo já filtrado só a forma dele entra, o que
+    também evita varrer o outro acervo à toa."""
+    alt = " ".join(dic.get(_sem_acento(w.lower()), _perdida(w) if _sem_acento(w) != w else w)
+                   for w in termo.split())
+    if alt.lower() == termo.lower():
+        return f'"{termo}"'
+    if acervo == "recursais":
+        return f'"{alt}"'
+    if acervo in ("trf3", "sumulas"):
+        return f'"{_sem_acento(termo)}"'
+    return f'("{termo}" OR "{alt}")'
+
+
+def para_fts(consulta, con=None, acervo=""):
     """Consulta do usuário -> sintaxe FTS5. Aspas = expressão exata, -palavra = exclui, resto = E."""
+    dic = _dicionario(con)
     pos, neg = [], []
     for menos, frase, palavra in re.findall(r'(-?)(?:"([^"]+)"|([^\s"]+))', consulta or ""):
         termo = (frase or palavra).replace('"', "").strip()
         if termo and termo.lower() not in ("e", "and"):
-            (neg if menos else pos).append(f'"{termo}"')
+            (neg if menos else pos).append(_termo(termo, dic, acervo))
     if not pos:
         return None
     return " AND ".join(pos) + "".join(f" NOT {n}" for n in neg)
@@ -134,8 +209,8 @@ def _filtros(f):
     return sql, args
 
 
-def _de_onde(consulta, filtros):
-    fts = para_fts(consulta)
+def _de_onde(consulta, filtros, con=None):
+    fts = para_fts(consulta, con, filtros.get("acervo", ""))
     sql, args = _filtros(filtros)
     if fts:
         return ("documento_fts JOIN documento d ON d.rowid = documento_fts.rowid",
@@ -144,18 +219,27 @@ def _de_onde(consulta, filtros):
 
 
 def buscar(con, consulta="", pagina=1, **filtros):
-    de, sql, args, ordem = _de_onde(consulta, filtros)
+    de, sql, args, ordem = _de_onde(consulta, filtros, con)
     onde = " WHERE " + " AND ".join(sql) if sql else ""
     total = con.execute(f"SELECT count(*) FROM (SELECT 1 FROM {de}{onde} LIMIT {TETO_CONTAGEM + 1})",
                         args).fetchone()[0]
+    ampla = total > TETO_CONTAGEM
+    if ampla and "documento_fts" in de:
+        # classificar centenas de milhares de acórdãos por relevância leva minutos e o cliente desiste antes.
+        # Consulta ampla vem na ordem do índice, sem relevância, e com o aviso para refinar.
+        ordem = "documento_fts.rowid DESC"
     linhas = con.execute(
         f"""SELECT d.id, d.acervo, d.numero_cnj, d.classe_sigla, d.orgao_julgador, d.relator, d.relator_titular, d.relator_acordao,
                    d.data_julgamento, d.data_publicacao, d.polo_recorrente, d.resultado,
                    substr(coalesce(d.e_dispositivo, d.ementa_texto), 1, 600) AS ementa_resumo
             FROM {de}{onde} ORDER BY {ordem} LIMIT 10 OFFSET ?""",
         args + [(max(pagina, 1) - 1) * 10]).fetchall()
-    return {"total": min(total, TETO_CONTAGEM), "total_aproximado": total > TETO_CONTAGEM,
-            "pagina": pagina, "resultado_e_inferido": True, "resultados": [dict(l) for l in linhas]}
+    r = {"total": min(total, TETO_CONTAGEM), "total_aproximado": ampla,
+         "pagina": pagina, "resultado_e_inferido": True, "resultados": [dict(l) for l in linhas]}
+    if ampla:
+        r["consulta_pesada"] = ("Mais de 10.000 resultados, sem ordenação por relevância. Acrescente uma "
+                                "expressão entre aspas, o acervo, o órgão, o relator ou o período.")
+    return r
 
 
 def obter(con, id_, max_caracteres=40000):
@@ -192,7 +276,7 @@ def visao_geral(con):
 def perfil(con, campo, nome, consulta="", **filtros):
     """Distribuição resultado x polo de um relator ou órgão. Taxa só sobre mérito (providos + negados)."""
     assert campo in ("relator", "orgao_julgador")
-    de, sql, args, _ = _de_onde(consulta, {**filtros, campo: nome})
+    de, sql, args, _ = _de_onde(consulta, {**filtros, campo: nome}, con)
     linhas = con.execute(f"""SELECT d.polo_recorrente, d.resultado, count(*) FROM {de}
                              WHERE {' AND '.join(sql)} GROUP BY 1, 2""", args).fetchall()
     tab = {}

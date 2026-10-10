@@ -13,8 +13,9 @@ import banco
 mcp = MCPServer("trf3", instructions=(
     "Jurisprudência previdenciária do TRF3 (7ª a 10ª Turmas e 3ª Seção) e das Turmas Recursais de SP e MS, "
     "e as Súmulas do TRF3, em base local coletada da Jurisprudência Unificada do CJF. Sem monocráticas. Nas recursais o CJF entrega o "
-    "texto SEM os caracteres acentuados ('contribuio', 'Seo Judiciria'), então busque ali por palavras sem acento "
-    "no original, como ruido, PPP, EPI, LOAS. Comece por visao_geral_trf3. Busque antes de obter, porque o id "
+    "texto com a letra acentuada APAGADA ('contribuio', 'Seo Judiciria', 'rudo'), e a busca já procura as duas "
+    "formas sozinha, então digite a palavra normalmente, com ou sem acento. Consulta com mais de 10.000 "
+    "resultados volta sem ordenação por relevância e com o aviso consulta_pesada: refine. Comece por visao_geral_trf3. Busque antes de obter, porque o id "
     "sai da busca. A busca ignora acentuação, aceita aspas para expressão exata e -palavra para excluir. "
     "'provido' NÃO quer dizer favorável ao segurado, verifique polo_recorrente. O campo resultado é inferido."))
 
