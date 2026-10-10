@@ -2677,8 +2677,8 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item{background:#FFFFF
 html[data-tema="v10"] .painel[data-p="2"] .fase-b{background:transparent;border-top-color:var(--borda)}
 html[data-tema="v10"] .painel[data-p="2"] .fase-b .fase-c{padding:0}
 /* o "dar seguimento" de cada registro: fantasma até o mouse chegar */
-html[data-tema="v10"] .painel[data-p="2"] .timeline button[onclick^="abrirSeguimento"]{border-color:transparent;background:transparent;color:var(--cinza-claro);opacity:0;padding:2px 5px}
-html[data-tema="v10"] .painel[data-p="2"] .timeline li:hover button[onclick^="abrirSeguimento"],html[data-tema="v10"] .painel[data-p="2"] .timeline li:focus-within button[onclick^="abrirSeguimento"]{opacity:1;color:var(--azul-escuro)}
+html[data-tema="v10"] .painel[data-p="2"] .timeline button[onclick^="abrirSeguimento"]:not(.tl-bt){border-color:transparent;background:transparent;color:var(--cinza-claro);opacity:0;padding:2px 5px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li:hover button[onclick^="abrirSeguimento"]:not(.tl-bt),html[data-tema="v10"] .painel[data-p="2"] .timeline li:focus-within button[onclick^="abrirSeguimento"]:not(.tl-bt){opacity:1;color:var(--azul-escuro)}
 /* quadros e faixas na mesma forma dos blocos */
 html[data-tema="v10"] .pz{border-radius:10px}
 html[data-tema="v10"] .pz.pz-lembrete{background:#F3F2EE;border:none}
@@ -2826,6 +2826,10 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
 html[data-tema="v10"] .linha-caso{background:#FFFFFF}
 html[data-tema="v10"] .lc-topo{display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:14px 22px;min-height:0}
 html[data-tema="v10"] .lc-cab{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0}
+.lc-acessos{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 2px}
+.lc-acesso{font:600 12px/1 inherit;padding:5px 9px;border-radius:6px;border:1px solid var(--borda);background:var(--fundo-card,#fff);color:var(--azul-escuro,#1d3f8a);text-decoration:none;cursor:pointer;white-space:nowrap}
+.lc-acesso:hover{border-color:var(--azul,#2564cf);background:var(--azul-fundo,#eef3fc)}
+.chip.lc-sem-grat{background:#FCE8E6;color:#A50E0E;border:1px solid #F1B6B0;font-weight:700}
 html[data-tema="v10"] .lc-cab .lc-ben{font-size:20px;letter-spacing:-.005em}
 html[data-tema="v10"] .lc-cab .lc-mais{margin-left:auto}
 html[data-tema="v10"] .lc-cab .chip.urg{font-weight:600;border-radius:4px}
@@ -3406,6 +3410,12 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .adr [hidden],#ad-novo [hidden]{display:none!important}
 .adr-h{margin:0;font-size:16px;font-weight:600;color:var(--texto)}
 .adr-resumo,.hon-resumo{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+/* Honorários mais leve: ações da tabela e do contrato no tamanho de botão de linha */
+.hon-tab .adr-bt{padding:4px 12px;min-height:30px;font-size:12.5px}
+.hon-ct-acoes{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;margin-top:12px}
+.hon-ct-acoes .hon-assinado{display:flex;gap:8px;flex-wrap:wrap}
+.hon-ct-acoes .hon-dst[open]{flex-basis:100%}
+.hon-ct-acoes .adr-bt{padding:5px 12px;min-height:32px;font-size:12.5px}
 .adr-tile{background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
 .adr-tile-rot{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro)}
 .adr-tile-val{font-size:24px;font-weight:600;color:var(--texto);line-height:1.2}
@@ -3693,6 +3703,131 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card{display:block;bac
 html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-nao-lida{border-color:var(--azul);box-shadow:inset 3px 0 0 var(--azul)}
 html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-imp{box-shadow:inset 3px 0 0 var(--prox)}
 html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card>.quando{display:none}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-oficial{background:#F6F7F4!important}
+html[data-tema="v10"] .tl-barra-of>span[style]{margin-left:0!important}
+/* F190 · o cartão do andamento oficial */
+html[data-tema="v10"] .tl-novo{margin-left:auto;font-size:11px;font-weight:500;padding:3px 8px;border-radius:999px;background:var(--azul-fundo);color:var(--azul-escuro)}
+html[data-tema="v10"] .tl-doc{display:flex;align-items:center;gap:10px;margin-top:10px;padding:8px 10px;border:1px solid var(--borda);border-radius:10px;background:#FFFFFF}
+html[data-tema="v10"] .tl-doc-ic{color:var(--cinza);display:inline-flex}
+html[data-tema="v10"] .tl-doc-nome{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+html[data-tema="v10"] .tl-doc-nome b{font-weight:500;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html[data-tema="v10"] .tl-doc-nome small{font-family:var(--f-mono);font-size:11.5px;color:var(--cinza-claro)}
+html[data-tema="v10"] .tl-doc .tl-bt{display:inline-flex;align-items:center;gap:5px}
+html[data-tema="v10"] .tl-disp{display:block;margin-top:6px;padding-left:10px;border-left:2px solid #BFDCC2;font-size:13px;line-height:1.5;color:var(--cinza)}
+html[data-tema="v10"] .tl-prazo-sug{display:flex;align-items:center;gap:10px;margin-top:10px;padding:8px 10px;border-radius:10px;background:var(--prox-f);color:#6B3F00;font-size:13px}
+html[data-tema="v10"] .tl-prazo-sug>span{flex:1}
+html[data-tema="v10"] .tl-feitos{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+html[data-tema="v10"] .tl-feito{font-size:11.5px;font-weight:500;padding:4px 8px;border-radius:999px;background:var(--prox-f);color:#6B3F00}
+html[data-tema="v10"] .tl-feito.ok{background:#E3F1E7;color:var(--feito)}
+html[data-tema="v10"] .tl-feito.prazo{background:#FBEAE7;color:var(--venc)}
+html[data-tema="v10"] .tl-link{display:inline-flex;align-items:center;gap:5px;text-decoration:none}
+html[data-tema="v10"] .tl-mais{position:relative;display:inline-flex}
+html[data-tema="v10"] .tl-mais>summary{list-style:none;display:inline-flex;align-items:center;justify-content:center}
+html[data-tema="v10"] .tl-mais>summary::-webkit-details-marker{display:none}
+html[data-tema="v10"] .tl-mais-menu{position:absolute;right:0;bottom:calc(100% + 6px);z-index:30;min-width:220px;display:flex;flex-direction:column;padding:6px;background:#FFFFFF;border:1px solid var(--borda);border-radius:10px;box-shadow:0 10px 28px rgba(18,18,18,.12)}
+html[data-tema="v10"] .tl-mais-it{text-align:left;font:500 13px/1.2 var(--f-ui);padding:9px 10px;border:0;border-radius:6px;background:transparent;color:var(--texto);cursor:pointer}
+html[data-tema="v10"] .tl-mais-it:hover,html[data-tema="v10"] .tl-mais-it:focus-visible{background:var(--placa)}
+html[data-tema="v10"] .tl-mais-it.perigo{color:var(--venc)}
+html[data-tema="v10"] li.tl-rotina{list-style:none}
+.docs-sel-barra{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 0;padding:8px 10px;border-radius:10px;background:var(--azul-fundo,#E6F0EF)}
+.arq-it .doc-ck{width:16px;height:16px;flex:none;accent-color:var(--azul)}
+.arq-it .doc-claude{margin-left:auto}
+html[data-tema="v10"] .docs-painel .tl-bt{display:inline-flex;align-items:center;gap:5px}
+html[data-tema="v10"] .docs-sel-barra{background:var(--texto);color:#FFFFFF}
+html[data-tema="v10"] .docs-sel-barra .tl-bt:not(.forte){background:transparent;color:#FFFFFF;border-color:#4A4944}
+html[data-tema="v10"] .docs-sel-barra .tl-bt.forte{background:#FFFFFF;color:var(--azul-escuro);border-color:#FFFFFF}
+html[data-tema="v10"] .cc-acao{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px;padding:10px 12px;border:1px solid var(--borda);border-radius:12px;background:#FFFFFF}
+html[data-tema="v10"] .cc-acao-tit{font-weight:500;font-size:13.5px;margin-right:4px}
+html[data-tema="v10"] .cc-acao-n{font:500 12.5px/1 var(--f-ui);min-height:32px;padding:0 10px;border-radius:8px;border:1px solid var(--borda);background:var(--placa);color:var(--texto);cursor:pointer}
+html[data-tema="v10"] .cc-acao-n b{font-weight:600}
+html[data-tema="v10"] .cc-acao-n.prazo{background:var(--prox-f);border-color:#EBD3A8;color:#6B3F00}
+html[data-tema="v10"] .cc-acao-n.zero{opacity:.55;cursor:default}
+html[data-tema="v10"] .cc-acao-fim{margin-left:auto;display:inline-flex;gap:6px;flex-wrap:wrap}
+html[data-tema="v10"] .cc-acao-fim .tl-bt{display:inline-flex;align-items:center;gap:5px}
+html[data-tema="v10"] .fase-c li.tl-card,html[data-tema="v10"] .painel[data-p="2"] .fatos .timeline li.tl-card,html[data-tema="v10"] .painel[data-p="2"] .caso .timeline li.tl-card{padding:14px 16px}
+@media (max-width:760px){html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card{padding:12px}}
+/* integração, etapa 3 · uma régua para a ficha inteira: a faixa do caso, os
+   títulos de seção, dois tamanhos de botão (40px na seção, 32px no cartão) e
+   as fontes do processo como filtro, não como mais um nível de abas */
+html[data-tema="v10"] .faixa-caso{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-width:0}
+html[data-tema="v10"] .fc-rot{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro)}
+html[data-tema="v10"] .fc-caso{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 12px;border:1px solid var(--borda);border-radius:8px;background:#FFFFFF;color:var(--texto);font:500 13px var(--f-ui);cursor:pointer;text-align:left;max-width:100%;transition:border-color 160ms ease-out,transform 160ms ease-out}
+html[data-tema="v10"] .fc-caso:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .fc-caso:hover{border-color:var(--azul)}}
+html[data-tema="v10"] .fc-esp{font:500 11.5px var(--f-mono);color:var(--azul-escuro);background:var(--azul-fundo);border-radius:4px;padding:2px 6px}
+html[data-tema="v10"] .fc-tit{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html[data-tema="v10"] .fc-fase{font-size:12px;color:var(--cinza);white-space:nowrap}
+html[data-tema="v10"] .adr>.faixa-caso,html[data-tema="v10"] .painel[data-p="3"]>.faixa-caso{margin-bottom:2px}
+html[data-tema="v10"] .ad-topo{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+html[data-tema="v10"] .ad-topo-fim{margin-left:auto;display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px}
+html[data-tema="v10"] .tl-bt.tl-quieto{border-color:transparent;background:transparent;color:var(--azul)}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .tl-bt.tl-quieto:hover{background:var(--placa);border-color:transparent}}
+html[data-tema="v10"] .tl-bt.tl-falta{border-color:#F0B4B4;background:#FDF2F1;color:var(--venc)}
+html[data-tema="v10"] .adr-link{border:0;background:none;padding:0;font:inherit;font-size:12.5px;color:var(--azul);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+html[data-tema="v10"] .adr-bt{min-height:40px;padding:0 14px;border-color:#D6D4CE;color:var(--texto);font-weight:500;transition:border-color 160ms ease-out,transform 160ms ease-out}
+html[data-tema="v10"] .adr-bt.adr-primario,html[data-tema="v10"] .adr-primario{color:#FFFFFF;border-color:var(--azul)}
+html[data-tema="v10"] .adr-bt:active,html[data-tema="v10"] .fc-caso:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .adr-bt:not(.adr-primario):hover{border-color:var(--azul)}}
+html[data-tema="v10"] body .sub-menu .trilho-mais.atend-novo{min-height:36px;padding:0 14px;border-radius:8px;font:500 13px var(--f-ui);margin-bottom:4px;white-space:nowrap}
+html[data-tema="v10"] .idf-card .cad-mini{min-height:40px;border-radius:8px;border-color:#D6D4CE;font-weight:500;color:var(--texto)}
+html[data-tema="v10"] .caso-esq .fp-tit,html[data-tema="v10"] .outras-abas h3{font-size:15px;font-weight:500;font-family:var(--f-ui);color:var(--texto)}
+html[data-tema="v10"] .per-topo .adr-sub{font-size:12.5px;color:var(--cinza)}
+html[data-tema="v10"] .faixa-caso+.per-topo{margin-top:16px}
+html[data-tema="v10"] .per-topo .adr-h{margin-bottom:2px}
+html[data-tema="v10"] .per-sub{margin:18px 0 0;font:600 11px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro)}
+html[data-tema="v10"] .hon-lanc{position:relative}
+html[data-tema="v10"] .hon-lanc>.hon-novo>summary{position:absolute;top:12px;right:20px;list-style:none;display:inline-flex;align-items:center}
+html[data-tema="v10"] .hon-lanc>.hon-novo>summary::-webkit-details-marker{display:none}
+html[data-tema="v10"] .painel .sub-menu.fontes{margin:0 0 12px;padding:0;width:100%;border:0;background:none;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+html[data-tema="v10"] .painel .sub-menu.fontes::before{content:none}
+html[data-tema="v10"] .painel .sub-menu.fontes>button{font:500 12.5px/1 var(--f-ui);min-height:32px;padding:0 12px;margin:0;border-radius:999px;border:1px solid var(--borda);background:#FFFFFF;color:var(--cinza)}
+html[data-tema="v10"] .painel .sub-menu.fontes>button.on{background:var(--texto);border-color:var(--texto);color:#FFFFFF;font-weight:500}
+html[data-tema="v10"] .sub-menu.fontes .fontes-fim{margin-left:auto;display:inline-flex;gap:6px;align-items:center}
+html[data-tema="v10"] .caixa-pje{margin-top:2px}
+@media (max-width:760px){html[data-tema="v10"] .ad-topo-fim{margin-left:0}html[data-tema="v10"] .fc-caso{min-height:44px}html[data-tema="v10"] .hon-lanc>.hon-novo>summary{position:static;margin-top:4px}}
+/* integração, etapa 2 · a aba Perícias usa o cartão do andamento oficial */
+html[data-tema="v10"] .timeline.tl-per{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+html[data-tema="v10"] .timeline.tl-per::before{display:none}
+html[data-tema="v10"] .tl-per li.tl-card{display:block;background:#F6F7F4;border:1px solid var(--borda);border-radius:12px;padding:14px 16px;margin:0}
+html[data-tema="v10"] .tl-per li.tl-card>.texto{display:block;width:100%;max-width:none;white-space:normal;padding:0}
+html[data-tema="v10"] li.tl-pericia .tl-cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+html[data-tema="v10"] .per-est{margin-left:auto;font-size:11px;font-weight:500;padding:3px 8px;border-radius:999px;background:var(--azul-fundo);color:var(--azul-escuro)}
+html[data-tema="v10"] .per-est.prox{background:var(--prox-f);color:var(--prox)}
+html[data-tema="v10"] .per-est.venc{background:#FBEAE7;color:var(--venc)}
+html[data-tema="v10"] .per-est.ok{background:#E3F1E7;color:var(--feito)}
+html[data-tema="v10"] .per-est.cinza{background:#EFEEEB;color:var(--cinza)}
+html[data-tema="v10"] li.tl-pericia.per-cancelada .tl-corpo,html[data-tema="v10"] li.tl-pericia.per-cancelada .autor-nome{color:var(--cinza-claro);text-decoration:line-through}
+html[data-tema="v10"] .per-topo{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap}
+html[data-tema="v10"] .per-topo .cc-conta{margin:6px 0 0;font-size:14px;font-weight:500}
+html[data-tema="v10"] .per-novo{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+html[data-tema="v10"] .per-novo>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center}
+html[data-tema="v10"] .per-novo>summary::-webkit-details-marker{display:none}
+html[data-tema="v10"] .per-novo[open]{flex-basis:100%}
+html[data-tema="v10"] .tl-barra-of .tl-sinal{color:var(--cinza)}
+html[data-tema="v10"] .tl-doc-bts{display:inline-flex;gap:6px;flex-wrap:wrap}
+html[data-tema="v10"] .tl-rotina-itens li.tl-card{padding:10px 14px}
+@media (hover:hover) and (pointer:fine){
+  html[data-tema="v10"] .tl-rotina-itens li.tl-card .tl-barra{opacity:.6;transition:opacity .15s}
+  html[data-tema="v10"] .tl-rotina-itens li.tl-card:is(:hover,:focus-within) .tl-barra{opacity:1}
+}
+@media (max-width:760px), (pointer:coarse){
+  html[data-tema="v10"] .tl-bt, html[data-tema="v10"] .cc-filtro, html[data-tema="v10"] .cc-acao-n{min-height:44px}
+  html[data-tema="v10"] .tl-barra-fim .tl-sinal, html[data-tema="v10"] .tl-barra-fim .tl-bt-ic, html[data-tema="v10"] .tl-mais>summary{width:44px;height:44px}
+  html[data-tema="v10"] .tl-doc{flex-wrap:wrap}
+  html[data-tema="v10"] .tl-doc-bts{flex-basis:100%}
+  html[data-tema="v10"] .tl-prazo-sug{flex-wrap:wrap}
+  html[data-tema="v10"] .tl-prazo-sug .tl-bt{flex-basis:100%}
+  html[data-tema="v10"] .tl-mais-it{min-height:44px}
+  .arq-it .doc-ck{width:22px;height:22px}
+  html[data-tema="v10"] .cc-acao-fim{margin-left:0}
+}
+html[data-tema="v10"] .cc-filtros{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+html[data-tema="v10"] .cc-filtro{font:500 12.5px/1 var(--f-ui);min-height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--borda);background:#FFFFFF;color:var(--cinza);cursor:pointer}
+html[data-tema="v10"] .cc-filtro.on{background:var(--texto);border-color:var(--texto);color:#FFFFFF}
+
+html[data-tema="v10"] li.tl-rotina>details>summary{cursor:pointer;font-size:12.5px;color:var(--cinza);padding:10px 14px;border:1px dashed #D9D7D1;border-radius:10px;list-style:none}
+html[data-tema="v10"] li.tl-rotina>details>summary::-webkit-details-marker{display:none}
+html[data-tema="v10"] .tl-rotina-itens{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
 html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card>.texto{display:block;max-width:none;width:100%;white-space:normal;padding:0}
 html[data-tema="v10"] .timeline .tl-cab .tl-av{width:28px;height:28px;font-size:12px;flex:none}
 html[data-tema="v10"] .timeline .tl-cab .autor-nome{color:var(--texto);font-weight:500}
@@ -3746,6 +3881,8 @@ html[data-tema="v10"] .tr-corpo{padding:12px 18px 14px;display:flex;flex-directi
 html[data-tema="v10"] .tr-cab{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
 html[data-tema="v10"] .tr-cab h3{font-size:14.5px;font-weight:500;color:var(--tt)}
 html[data-tema="v10"] .tr-agora{font-size:13px}
+.tr-prov{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#6B4E16}
+.tr-prov + .tr-ritos{margin-left:6px!important}
 html[data-tema="v10"] .tr-ritos{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#686660}
 html[data-tema="v10"] .tr-ritos select{min-height:32px;max-width:230px;border:1px solid #D6D4CE;border-radius:8px;padding:0 8px;background:#FFFFFF;color:var(--tt);font:inherit;font-size:12.5px;font-weight:500}
 html[data-tema="v10"] .tr-ritos button,html[data-tema="v10"] .tr-houve{min-height:30px;padding:0 10px;border-radius:999px;border:1px solid #D6D4CE;background:#FFFFFF;color:#4A4944;font-size:12px;font-weight:500;font-family:var(--f-ui);cursor:pointer}
@@ -3833,7 +3970,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.06</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.07</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4068,7 +4205,8 @@ const digitosCpf = c => (c||"").replace(/\D/g,"");
 // basta (o HTML devolve o apóstrofo antes de virar JS) — lá é escJs.
 const esc = s => (s??"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;")
   .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
-const escJs = s => esc((s??"").toString().replace(/\\/g,"\\\\").replace(/'/g,"\\'"));
+const escJs = s => esc((s??"").toString().replace(/\\/g,"\\\\").replace(/'/g,"\\'")
+  .replace(/\r/g,"\\r").replace(/\n/g,"\\n").replace(/\u2028|\u2029/g," "));
 // href só de verdade: link de coleta (PAT/PJe) sem https na frente não entra
 const urlOk = u => /^https?:\/\//i.test(u||"") ? esc(u) : "#";
 const dsa = s => (s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
@@ -4778,13 +4916,30 @@ async function dispararAuditoria(){
 // de 30 dias...). Com `cedo`, a tela aparece assim que a primeira chega, e a
 // segunda só PREENCHE os campos dela em D, sem refazer o que a pessoa já mexeu.
 // Sem `cedo`, é a carga de sempre: tudo, e só então D.
+// [10.10.2026] o evento que o leitor do To Do criou com a data errada: entre
+// "perícia" e a data havia "Ver o resultado em", "Fazer manifestação em",
+// "Prazo", "atendimento para o dia", "valor de R$"… A mesma regra do
+// crm/sync_todo.py (_data_e_do_evento), aplicada ao trecho guardado em obs,
+// tira da tela o que já está no banco. Evento do PAT (obs vazia) não passa aqui.
+const RX_EV_PALAVRA = /per[íi]cia|audi[êe]ncia|avalia[çc][ãa]o social/i;
+const RX_EV_NAO = /verific|resultado|manifest|prazo|desfavor|favor[aá]vel|r\$|valor|ap[oó]s|for marcad|aguard|atendimento|precisa ser|seja agendad|laudo|proposta|decis[aã]o/i;
+function eventoFalso(e){
+  const t = String((e && e.obs) || ""); if(!t) return false;
+  const k = RX_EV_PALAVRA.exec(t); if(!k) return false;
+  const resto = t.slice(k.index + k[0].length), d = /\b\d{1,2}[./]\d{1,2}/.exec(resto);
+  if(!d) return false;
+  const meio = resto.slice(0, d.index);
+  if(RX_EV_NAO.test(meio)) return true;
+  const partes = meio.split(/[.;!?]\s/);
+  return partes.length > 1 && !/agend|marcad|design|remarc/i.test(partes[partes.length-1]);
+}
 const CARGA_1 = {
     colaboradores: ()=>todas("colaboradores","select=*&order=nome"),
     clientes: ()=>todas("clientes","select=*&order=nome"),
     casos: ()=>todas("casos","select=*"),
     atribuicoes: ()=>todas("atribuicoes","select=*"),
     tarefas: ()=>todas("tarefas","select=*"),
-    eventos: ()=>todas("eventos","select=*&order=data_hora"),
+    eventos: ()=>todas("eventos","select=*&order=data_hora").then(l=>l.filter(e=>!eventoFalso(e))),
     pagamentos: ()=>todas("pagamentos","select=*"),
     meudia: ()=>todas("meu_dia",`select=*&dia=eq.${hoje()}`),
     mencoes: ()=>todas("mencoes",`select=*&para_id=eq.${eu.id}&lida_em=is.null&order=criado_em.desc`),
@@ -4862,7 +5017,7 @@ const INCREMENTAIS = {
   clientes:   {t:"clientes",   sel:"select=*", ord:ordPor("nome")},
   casos:      {t:"casos",      sel:"select=*"},
   tarefas:    {t:"tarefas",    sel:"select=*"},
-  eventos:    {t:"eventos",    sel:"select=*", ord:ordPor("data_hora")},
+  eventos:    {t:"eventos",    sel:"select=*", ord:ordPor("data_hora"), fica:e=>!eventoFalso(e)},
   pagamentos: {t:"pagamentos", sel:"select=*"},
   // a carga completa traz só os ativos; a incremental traz também o que foi
   // desligado, para tirar da cópia
@@ -8971,7 +9126,7 @@ function segRegistrar(casoId, texto, andId, deNovidade){
 // F107 · no tema o alfinete é um glifo de linha (o emoji vermelho pesava em
 // toda linha da conversa); sem o tema segue o 📌 de sempre
 const ICO_PIN = `<svg class="ico-pin" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5M9 3h6l-1 7 3 3H7l3-3-1-7Z"/></svg>`;
-const segBtnHtml = (i, rot) => `<button class="btn-mini" onclick="abrirSeguimento(${i})"
+const segBtnHtml = (i, rot, cls) => `<button class="${cls||"btn-mini"}" onclick="abrirSeguimento(${i})"
   title="dar seguimento: anotar, atribuir a alguém com data, marcar prazo processual — e, se houver perícia/audiência/julgamento com data no texto, agendar">${rot||(temaV10()?ICO_PIN:"📌")}</button>`;
 
 // F51 · o responsável padrão do escritório: o admin ativo (o Paulo) — é
@@ -9171,7 +9326,7 @@ async function salvarSeguimento(){
   const carimbo = carimboCatalogo("seg", prazo);
   if(prazo && !nota && !carimbo) nota = "Prazo processual anotado a partir da novidade do portal.";
   if(prazo) nota = `⏰ [PRAZO ${fmt(prazo)}] ${carimbo}${nota}`.trim();
-  if(!nota && !agendar) return aviso("Escreva a anotação — ou marque o agendamento");
+  if(!nota && !agendar && !s.prep) return aviso("Escreva a anotação — ou marque o agendamento");
   if(pessoas.length && !dia) return aviso("Tarefa para alguém precisa de data — escolha quando lembrar");
   if(pessoas.length && !nota) return aviso("Tarefa para alguém precisa da anotação do que fazer");
   // sem pessoa mas com data: o lembrete é de quem registrou (regra da casa)
@@ -9205,7 +9360,7 @@ async function salvarSeguimento(){
       // no CRPS não há presença nem preparação; o que importa é o resultado,
       // e a tarefa de conferir já nasce do texto pré-preenchido + dia seguinte
       if(s.ev.tipo!=="Julgamento") feito.push(...await gravarRoteiroPericia(s));
-    }
+    } else if(s.prep && s.ev && s.ev.tipo!=="Julgamento") feito.push(...await gravarRoteiroPericia(s));
     if(s.andId && novo) (segNovidades.get(s.andId)||segNovidades.set(s.andId,[]).get(s.andId)).push(novo);
     if(s.deNovidade && s.andId) await marcarLidas([s.andId]);
     fecharCaixa(); segAberto=null;
@@ -11284,7 +11439,7 @@ function preencheZap(txt){
   const map = {
     "{nome}": nome, "{primeiro_nome}": (nome||"").trim().split(/\s+/)[0]||"",
     "{data}": fmt(hoje()),
-    "{beneficio}": (k&&k.beneficio)||"", "{processo}": (k&&k.processo)||"", "{nb}": (k&&k.nb)||"",
+    "{beneficio}": especieDoCaso(k), "{processo}": (k&&k.processo)||"", "{nb}": (k&&k.nb)||"",
   };
   return Object.entries(map).reduce((t,[a,v])=>v?t.split(a).join(v):t, txt);
 }
@@ -13455,7 +13610,8 @@ function menuClaude(casoId){
   const onde = ler("crm_claude_onde") || "web";
   caixa(`<h3 style="margin:0 0 4px">✦ Claude <small class="meio-sub">· ${esc(tituloCaso(k))}</small></h3>
     <p class="meio-sub" style="margin:0">Abre o Claude com o pedido escrito. Revise e envie; nada é gravado no CRM sem a sua confirmação.</p>
-    <div class="esp-lista">${CLAUDE_ACOES.map(([id,rot])=>`<button class="esp-it" onclick="abrirClaude('${casoId}','${id}')">${esc(rot)}</button>`).join("")}</div>
+    <div class="esp-lista">${CLAUDE_ACOES.map(([id,rot])=>`<button class="esp-it" onclick="abrirClaude('${casoId}','${id}')">${esc(rot)}</button>`).join("")}
+      ${documentosDoCaso(k).length?`<button class="esp-it" onclick="menuClaudeDocs('${casoId}',[])">Pedir a partir dos documentos do caso…</button>`:""}</div>
     <div class="cl-onde" role="radiogroup" aria-label="onde abrir">
       <label><input type="radio" name="cl-onde" value="web" ${onde==="web"?"checked":""} onchange="guardar('crm_claude_onde','web')"> no navegador</label>
       <label><input type="radio" name="cl-onde" value="app" ${onde==="app"?"checked":""} onchange="guardar('crm_claude_onde','app')"> no aplicativo de mesa</label>
@@ -13534,7 +13690,7 @@ async function abrirFicha(cliId){
         : !triagemFechada(c) ? "triagem"
         : (pcsA.some(p=>!p.so_lembrete)||!pcsA.length) ? "anotacoes" : "identificacao";
     }
-    instSel = 0; tudoSoMarcos = false;    // escolhas do cliente ANTERIOR não vazam
+    instSel = 0; tudoSoMarcos = false; filtroTudo = "tudo"; docsSel.clear();    // escolhas do cliente ANTERIOR não vazam
     procSel = ""; nupSel = ""; fonteCnj = ""; fontePat = ""; fonteCrps = "";   // idem: processo e fonte (F71: PJe padrão)
     subAba = "escritorio";   // F166 · abrir um caso é abrir os andamentos do Escritório (era o Caso completo, F45)
   }
@@ -14008,6 +14164,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     // pré-caso recém-removido: as Anotações ficam, porque o ↺ restaurar mora na mesa
     vis.anotacoes = !!(c.campos||{}).pc_lixeira;
   }
+  if(triVisivel.has(c.id)) vis.triagem = true;   // etapa 3 · reaberta pela Análise
   // F171 · Análise de Direito: com caso, com análise já salva, ou no
   // atendimento depois da triagem encerrada (a análise vem depois da triagem e dos documentos)
   vis.direito = !semCaso || analisesDe(c.id).length>0 || (pcsVivos.length>0 && triFechada) || !!adPre
@@ -15904,6 +16061,23 @@ function painelConsulta(c){
 
 // aba 3 da ficha — extraída da pintarFicha (era um literal de 22 linhas)
 function painelPericiasFicha(c, ks, evs){
+  const form = `<div class="form-linha">
+      <select id="ne-tipo"><option>Perícia</option><option>Audiência</option><option>Avaliação social</option></select>
+      <select id="ne-caso">${ks.map(k=>`<option value="${k.id}">${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>
+      <input type="date" id="ne-data"><input type="time" id="ne-hora" value="09:00">
+      <input id="ne-local" placeholder="local"><button onclick="novoEvento()">Agendar</button>
+    </div>`;
+  if(temaV10()){
+    // as futuras primeiro (a mais próxima no alto), depois as passadas (a mais recente no alto)
+    const h = hoje(), fut = evs.filter(e=>dataSP(e.data_hora)>=h).sort((x,y)=>x.data_hora<y.data_hora?-1:1),
+      pas = evs.filter(e=>dataSP(e.data_hora)<h).sort((x,y)=>x.data_hora<y.data_hora?1:-1);
+    const nAg = fut.filter(e=>e.status==="agendada").length;
+    return `${faixaDoCaso(ks)}<div class="per-topo"><div><h2 class="adr-h">Perícias e audiências</h2>
+        <span class="adr-sub">${nAg} agendada${nAg===1?"":"s"} · ${pas.length} anterior${pas.length===1?"":"es"}</span></div>
+        <details class="per-novo"${evs.length?"":" open"}><summary class="adr-bt adr-primario">+ perícia</summary>${form}</details></div>
+      ${fut.length?`<ul class="timeline tl-per">${fut.map(cartaoPericia).join("")}</ul>`:`<p class="meio-sub">Nenhuma perícia ou audiência marcada.</p>`}
+      ${pas.length?`<h3 class="per-sub">Anteriores</h3><ul class="timeline tl-per">${pas.map(cartaoPericia).join("")}</ul>`:""}`;
+  }
   return `
     ${evs.map(e=>`<div class="evento ${dataSP(e.data_hora)<hoje()?"passado":"futuro"}">
       <div class="data-box">${fmtTS(e.data_hora).slice(0,5)}<small>${dataSP(e.data_hora).slice(0,4)}</small><small>${horaSP(e.data_hora)}</small></div>
@@ -15943,8 +16117,8 @@ function vinculoDaParcela(p, ks){
   if(!casos.length) return "";
   if(casos.length===1){
     const k=casos[0];
-    return p.caso_id===k.id
-      ? `<span class="chip neutro" title="benefício/serviço deste pagamento">${esc(tituloCaso(k))}</span>`
+    // um caso só: dizer o benefício em toda linha só repetia o título do caso
+    return p.caso_id===k.id ? ""
       : `<button class="btn-mini" title="vincular este pagamento ao caso do cliente"
            onclick="vincularPgto('${p.id}','${k.id}')">vincular a ${esc(tituloCaso(k))}</button>`;
   }
@@ -15988,7 +16162,7 @@ function contratoDoCliente(c, ks){
   const pcs = c ? precasosDe(c).filter(pc=>!pc.so_lembrete && pc.especie!==ESPECIE_PAGAMENTOS) : [];
   const pc = pcs.find(x=>x.honorarios||x.hon) || pcs[0] || null;
   const k = (ks||[]).find(x=>x.fase!=="encerrado") || (ks||[])[0];
-  const esp = (pc && pc.especie) || (k && (k.beneficio || nomeDaEspecie(k.especie))) || "";
+  const esp = (pc && pc.especie) || especieDoCaso(k) || "";
   if(!pc && !k) return null;
   const vr = variantePorEspecie(esp);
   // F181 · o combinado em campos entra junto; sem pré-caso (já virou caso),
@@ -16154,7 +16328,7 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
   const cct = (c && (c.campos||{}).contrato) || {};
   const assin = c ? contratoAssinadoDe(c) : null;
   const cob = proximaCobranca(abertos);
-  return `<div class="adr hon">
+  return `<div class="adr hon">${faixaDoCaso(ks)}
     <section class="hon-resumo" aria-label="Resumo dos honorários">
       <div class="adr-tile adr-t-texto"><span class="adr-tile-rot">Contratado</span>
         <span class="adr-tile-val">${ct ? (ct.ajuste ? "Ajuste combinado" : "Padrão do escritório") : "—"}</span>
@@ -16165,7 +16339,7 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
       <div class="adr-tile"><span class="adr-tile-rot">A receber</span>
         <span class="adr-tile-val">${moeda(soma(abertos))}</span>
         <span class="adr-tile-sub">${abertos.length} em aberto</span></div>
-      <div class="adr-tile hon-t-prox"><span class="adr-tile-rot">Próximo vencimento</span>
+      <div class="adr-tile${prox?" hon-t-prox":""}"><span class="adr-tile-rot">Próximo vencimento</span>
         <span class="adr-tile-val">${prox ? fmt(prox.vencimento) : "—"}</span>
         <span class="adr-tile-sub">${prox ? `${esc(prox.descricao&&prox.descricao!=="Recebimento"?prox.descricao:"lançamento")} · ${moeda(prox.valor)}` : "nada em aberto com data"}</span></div>
     </section>
@@ -16221,25 +16395,23 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
           <h3 class="adr-h" id="hon-ct-t">Contrato</h3>
           ${ct ? `<dl class="hon-dl">
             ${ct.especie?`<dt>Serviço</dt><dd>${esc(ct.especie)}</dd>`:""}
-            <dt>Modalidade</dt><dd>${esc(ct.padrao)}</dd>
-            ${ct.ajuste?`<dt>Ajuste combinado</dt><dd>${esc(ct.ajuste)}</dd>`:""}
             <dt>Parceria</dt><dd>${parc?esc(parc):"sem parceria"}</dd>
             <dt>Destaque</dt><dd class="hon-dst-val">${esc(textoDestaque(cct.destaque))}</dd>
             <dt>Assinado</dt><dd class="hon-ass-val">${assin?(assin.criado_em?`em ${fmtTS(assin.criado_em)}`:"anexado"):"não anexado"}</dd>
           </dl>` : `<p class="adr-nota">Nenhum caso nem atendimento com espécie: o contrato sai quando houver.</p>`}
-          ${c ? `<details class="hon-dst" style="margin-top:10px"><summary class="adr-bt">alterar o destaque</summary>
+          ${c ? `<div class="hon-ct-acoes"><details class="hon-dst"><summary class="adr-bt">alterar o destaque</summary>
             <div class="form-linha" style="margin-top:8px;align-items:flex-end">
               <label class="adr-campo">Destaque dos honorários<select id="hon-dst">${DESTAQUE_OPC.map(([v,r,d])=>
                 `<option value="${v}" ${(cct.destaque||{}).st===v?"selected":""}>${d?r+" (data)":r}</option>`).join("")}</select></label>
               <label class="adr-campo">Data<input type="date" id="hon-dst-em" value="${esc((cct.destaque||{}).em||"")}"></label>
               <button class="adr-bt adr-primario" onclick="salvarDestaque('${c.id}')">Guardar</button>
             </div></details>
-          <div class="form-linha hon-assinado" style="margin-top:10px">
+          <div class="hon-assinado">
             ${assin?`<button class="adr-bt" onclick="abrirAnexo('${assin.id}')">abrir o contrato assinado</button>`:""}
             <label class="adr-bt" style="display:inline-flex;align-items:center">${assin?"trocar o arquivo":"anexar contrato assinado"}
               <input type="file" accept="application/pdf,image/*" class="sr-so" id="hon-ass-arq"
                 onchange="anexarContratoAssinado('${c.id}', this)"></label>
-          </div>` : ""}
+          </div></div>` : ""}
         </section>
         ${c ? `<section class="adr-card hon-cob" aria-labelledby="hon-cob-t">
           <h3 class="adr-h" id="hon-cob-t">Cobrança</h3>
@@ -16429,7 +16601,7 @@ function inssFilaCaso(k){
     de ${esc(nomes||"benefício")} esperando análise · metade já espera há mais de
     <b>${f.dias_mediana} dias</b>${f.dias_p90?` (9 em cada 10, até ${f.dias_p90} dias)`:""}
     <span class="meio-sub">— retrato oficial de ${fmt(f.referencia)}; é a régua da fila, não a data deste pedido</span>
-    <div style="margin-top:4px"><button class="btn-mini" onclick="copiarInssFila('${k.id}')">💬 copiar mensagem ao cliente</button></div>
+    <div style="margin-top:4px"><button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarInssFila('${k.id}')">${temaV10()?"":"💬 "}Copiar situação para o cliente</button></div>
   </div>`;
 }
 function copiarInssFila(casoId){
@@ -18210,7 +18382,7 @@ function feedAnotacoes(c){
   // F172 · junto das anotações do cadastro, os andamentos dos casos que ainda
   // estão na fase Escritório (a lista 🙋 Escritório do To Do de antes da 08.99)
   const doEscr = (D._andsFicha||[]).filter(a=>{ const k=D.casoPorId.get(a.caso_id);
-      return k && k.cliente_id===c.id && k.fase==="escritorio" && a.texto; })
+      return k && k.cliente_id===c.id && a.texto && (k.fase==="escritorio" || /^⚖️ Análise/.test(a.texto)); })
     .map(a=>({ts: Date.parse(a.criado_em)||0, texto: a.texto, em: a.criado_em,
       quem: ((D.colPorId.get(a.autor_id)||{}).nome||"").split(" ")[0]}));
   return [...((c.campos||{}).atendimento||[])
@@ -18234,6 +18406,19 @@ const notasDoTodo = c => ((c.campos||{}).atendimento||[]).some(n=>n.origem==="to
 async function anotarNoDireito(cliId){
   const c = D.cliPorId.get(cliId), ta = document.getElementById("ad-anot"); if(!c || !ta) return;
   const texto = (ta.value||"").trim(); if(!texto) return aviso("Escreva a anotação");
+  // integração · com caso ativo, o andamento da Análise vai para o caso (com
+  // a marca "⚖️ Análise ·"), onde a equipe o lê; sem caso, segue no cadastro
+  const vivos = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
+  const k = vivos.find(x=>x.id===casoSel) || vivos[0];
+  if(k){
+    let and;
+    try{
+      [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:k.id, autor_id:eu.id, origem:"app", publico:false, texto:`⚖️ Análise · ${texto}`})})||[];
+    }catch(e){ return aviso("Não consegui guardar o andamento — tente de novo"); }
+    if(and){ and.andamentos_lidos=[{colaborador_id:eu.id}]; (D._andsFicha=D._andsFicha||[]).unshift(and); }
+    aviso(`Andamento guardado no caso ${tituloCaso(k)}`, false); return repintarFicha();
+  }
   const nota = {id: crypto.randomUUID(), em: new Date().toISOString(), quem: (eu.nome||"").split(" ")[0], texto, origem: "app"};
   const campos = {...(c.campos||{}), atendimento: [...((c.campos||{}).atendimento||[]), nota]};
   try{
@@ -18242,18 +18427,28 @@ async function anotarNoDireito(cliId){
   }catch(e){ return aviso("Não consegui guardar a anotação — tente de novo"); }
   c.campos = campos; aviso("Anotação guardada", false); repintarFicha();
 }
+const triVisivel = new Set();   // clientes com caso cuja Triagem foi reaberta pela Análise
+function abrirTriagemDoCaso(cliId){ triVisivel.add(cliId); irSubCad("triagem"); }
 function quadroTriagemDireito(c, ks){
   const tri = feedTriagem(c, ks);
+  const t = triagemDe(c), passos = (ks||[]).length ? triagemPassosDe(c, ks) : [];
+  const faltam = passos.filter(([k])=>{ const p = t[k]||{}; return !p.feito && !(p.estado && !p.auto); }).length;
+  const responder = faltam && (ks||[]).length ? `<p class="adr-sub" style="margin:0">${faltam} ${faltam===1?"ponto":"pontos"} sem resposta
+      <button type="button" class="adr-link" onclick="abrirTriagemDoCaso('${c.id}')">Responder na triagem</button></p>` : "";
   const grupo = (cls, tit, itens) => !itens.length ? "" : `<div class="ad-grupo ${cls}">
     <div class="ad-grupo-tit">${tit}</div>
     <ul>${itens.map(f=>`<li><b>${esc(f.rot)}:</b> ${esc(f.texto)} <span class="ad-quem">— ${f.quem?esc(f.quem):"—"}${f.em?`, ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>
   </div>`;
-  if(!(tri.atencao.length || tri.pendente.length || tri.ok.length)) return "";
-  return `<div class="ad-quadro ad-q-tri"><div class="rotulo-caso">Triagem</div>
+  if(!(tri.atencao.length || tri.pendente.length || tri.ok.length)) return responder
+    ? `<section class="adr-card ad-q-tri" aria-labelledby="adr-t-tri"><h2 class="adr-h" id="adr-t-tri">O que se apurou na triagem</h2>${responder}</section>` : "";
+  // integração · leitura: fica na Análise mesmo depois que a aba Triagem some
+  return `<section class="adr-card ad-q-tri" aria-labelledby="adr-t-tri">
+      <h2 class="adr-h" id="adr-t-tri">O que se apurou na triagem</h2>
       ${grupo("atencao", "Atenção", tri.atencao)}
       ${grupo("pendente", "Não conferido", tri.pendente)}
       ${grupo("ok", "Sem pendência", tri.ok)}
-    </div>`;
+      ${responder}
+    </section>`;
 }
 // F172 · as anotações do cliente (inclusive as que vieram da lista 🙋
 // Escritório do To Do) ficam aqui, e se anota daqui mesmo. F174 · o quadro
@@ -18298,7 +18493,7 @@ function resumoDireito(c, ult){
   const qa = r && d.ultima_contribuicao ? qualidadeAte(d.ultima_contribuicao, r.tipo) : null;
   const recolhe = r ? tile("Como recolhe hoje", esc(rotRecolhe(r.tipo)),
       qa ? `qualidade de segurado até ${esc(fmt(qa))}` : r.de==="triagem" ? "da triagem" : "", "adr-t-texto")
-    : tile("Como recolhe hoje", "—", "responda o vínculo na triagem ou na análise", "adr-t-texto");
+    : tile("Como recolhe hoje", "—", "responda o vínculo na análise", "adr-t-texto");
   const m=ult?cenMelhor(ult):null, data=(m&&m.data)||d.data_direito||null;
   const direito = !data ? tile("Atinge o direito", "—", ult?"sem data projetada":"nenhuma análise registrada")
     : tile("Atinge o direito", esc(fmt(data)),
@@ -18399,9 +18594,9 @@ function proximaVerificacao(c){
 }
 function pendenciasDireito(c){
   const itens=[];
-  if(!c.dn) itens.push({ok:false, nome:"Data de nascimento", sub:"preencher na Identificação"});
+  if(!c.dn) itens.push({ok:false, nome:"Data de nascimento", sub:"preencher na Identificação", ir:"identificacao"});
   const g=cnisDe(c);
-  itens.push(g ? {ok:true, nome:"CNIS", sub:`recebido em ${fmt(g.em)}`} : {ok:false, nome:"CNIS", sub:"inserir na Identificação"});
+  itens.push(g ? {ok:true, nome:"CNIS", sub:`recebido em ${fmt(g.em)}`} : {ok:false, nome:"CNIS", sub:"inserir na Identificação", ir:"identificacao"});
   for(const p of ((c.campos||{}).docs_pedidos||[])) for(const it of (p.itens||[]))
     itens.push({ok:!!it.entregue, nome:String(it.nome||it), sub:it.entregue?`entregue em ${fmt(it.entregue)}`:p.em?`pedido em ${fmt(p.em.slice(0,10))}`:"pedido"});
   const pv=proximaVerificacao(c);
@@ -18409,7 +18604,7 @@ function pendenciasDireito(c){
     <h2 class="adr-h" id="adr-t-pend">Pendências e documentos</h2>
     ${pv?`<p class="adr-verif${pv<hoje()?" venceu":""}">próxima verificação: <b>${esc(fmt(pv))}</b></p>`:""}
     <ul class="adr-pend-lista">${itens.map(i=>`<li><span class="adr-ponto ${i.ok?"ok":"falta"}" aria-hidden="true"></span>
-      <span><b>${esc(i.nome)}</b> <span class="sr-so">${i.ok?"(entregue)":"(falta)"}</span><br><span class="adr-sub">${esc(i.sub)}</span></span></li>`).join("")}</ul>
+      <span><b>${esc(i.nome)}</b> <span class="sr-so">${i.ok?"(entregue)":"(falta)"}</span><br>${i.ir?`<button type="button" class="adr-link" onclick="irSubCad('${i.ir}')">${esc(i.sub)}</button>`:`<span class="adr-sub">${esc(i.sub)}</span>`}</span></li>`).join("")}</ul>
   </section>`;
 }
 function painelDireito(c){
@@ -18424,9 +18619,12 @@ function painelDireito(c){
   const plano=planejamentoDireito(c, ult);
   const anteriores=as.slice(1);
   return `<div class="adr">
-    <div class="form-linha ad-topo" style="align-items:center;gap:10px">
-      <span class="meio-sub" style="margin-left:auto">parceria</span>${chipParceria(c, ks)}${seletorParceria(c, ks, "parc-sel-ad")}
-      ${botaoAbrirCnis(c, false)}
+    <div class="ad-topo">${faixaDoCaso(ks)}
+      <span class="ad-topo-fim">${chipParceria(c, ks)}
+      <button type="button" class="tl-bt tl-quieto" onclick="irSubCad('identificacao')"
+        title="a parceria e o CNIS se alteram na Identificação">Alterar na Identificação</button>
+      ${cnisDe(c)&&cnisDe(c).caminho?`<button type="button" class="tl-bt" onclick="abrirCnis('${c.id}')" title="abre o extrato guardado em outra aba (CNIS de ${esc(fmt(cnisDe(c).em))})">Abrir CNIS</button>`
+        :`<button type="button" class="tl-bt tl-falta" onclick="irSubCad('identificacao')" title="o CNIS ainda não foi inserido: insira na Identificação">Inserir CNIS</button>`}</span>
     </div>
     ${resumoDireito(c, ult)}
     ${ult ? fichaDaAnalise(ult) : ""}
@@ -18828,7 +19026,76 @@ const DOCS_JUDICIAIS = ["pje","eproc","esaj"];
 const docsDaOrigem = (k, origens) => documentosDoCaso(k).filter(d=>!origens || origens.includes(d.origem));
 function botaoDocs(k, origens, ativo, onclick){
   const n = docsDaOrigem(k, origens).length;
-  return n ? `<button class="${ativo?"on":""}" onclick="${onclick}" title="as peças guardadas no CRM — abrir, baixar ou levar para o Claude">📂 Documentos (${n})</button>` : "";
+  return n ? `<button class="${ativo?"on":""}" onclick="${onclick}" title="as peças guardadas no CRM — abrir, baixar ou levar para o Claude">${temaV10()?"":"📂 "}Documentos (${n})</button>` : "";
+}
+// F190 · a seleção de documentos: o que vai para o .zip, o pacote e o Claude.
+// A chave é a mesma que o conector do CRM entende (documentos_caso/ler_documento).
+const docsSel = new Set();
+const chaveDoc = d => d.id ? `anexo:${d.id}` : `crps:${d.caminho}`;
+const docsEscolhidos = (k, soSel) => documentosDoCaso(k).filter(d=>!soSel || docsSel.has(chaveDoc(d)));
+function marcarDoc(ch, on){ on ? docsSel.add(ch) : docsSel.delete(ch); repintarFicha(); }
+async function pacoteSelecionados(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  await pacoteClaude(casoId, true);
+  if(docsEscolhidos(k, true).some(d=>!d.texto || (Array.isArray(d.paginas_imagem) && d.paginas_imagem.length)))
+    await digitalizadosClaude(casoId, true);
+}
+// O QUE PEDIR AO CLAUDE com os documentos: o pedido sai escrito, com a lista
+// dos documentos pelo identificador do conector; o Claude os lê pelo CRM.
+const PEDIDOS_DOCS = [
+  ["resumo",   "Ler e resumir",                          "Leia e resuma: o que cada documento decide ou pede, os prazos que abre e o próximo passo do escritório."],
+  ["laudo",    "Manifestação sobre o laudo pericial",    "Redija a manifestação sobre o laudo pericial: aponte as falhas técnicas, os quesitos não respondidos e a contradição com os documentos médicos do caso."],
+  ["recurso",  "Recurso ou contrarrazões da decisão",    "Analise a decisão e minute a peça cabível (recurso, contrarrazões ou embargos de declaração), dizendo o prazo e o fundamento."],
+  ["exigencia","Cumprimento de exigência do INSS",       "Prepare o cumprimento da exigência do INSS: o que foi pedido, quais documentos do cliente atendem e o texto da resposta."],
+  ["crps",     "Recurso ao CRPS",                        "Minute o recurso ao CRPS contra a decisão, com os fundamentos de fato e de direito."],
+  ["cliente",  "Resumo para o cliente",                  "Escreva um resumo para o cliente, em linguagem simples, pronto para enviar pelo WhatsApp."],
+];
+let _docsClaude = null;
+function menuClaudeDocs(casoId, chaves){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const todos = documentosDoCaso(k);
+  const lista = (chaves && chaves.length) ? todos.filter(d=>chaves.includes(chaveDoc(d))) : todos;
+  _docsClaude = {casoId, chaves: lista.map(chaveDoc)};
+  const semTexto = lista.filter(d=>!d.texto && !["crps","escritorio"].includes(d.origem));
+  const onde = ler("crm_claude_onde") || "web";
+  caixa(`<h3 style="margin:0 0 4px">Pedir ao Claude</h3>
+    <p class="meio-sub" style="margin:0 0 8px">${lista.length===1?`Documento: <b>${esc(lista[0].nome||"documento")}</b>.`:`${lista.length} documento${lista.length>1?"s":""} do caso.`}
+      O Claude lê pelo conector do CRM. Revise o pedido antes de enviar; nada volta ao CRM sem a sua confirmação.</p>
+    ${semTexto.length?`<p class="meio-sub" style="margin:0 0 8px;color:var(--prox)">${semTexto.length===1?"1 documento digitalizado, sem texto: o CRM baixa o PDF dele":`${semTexto.length} documentos digitalizados, sem texto: o CRM baixa o PDF deles`} para você anexar na conversa.</p>`:""}
+    <div class="esp-lista">${PEDIDOS_DOCS.map(([id,rot])=>`<button class="esp-it" onclick="abrirClaudeDocs('${id}')">${esc(rot)}</button>`).join("")}</div>
+    <label class="meio-sub" style="display:block;margin-top:10px">Pergunta livre sobre os documentos
+      <textarea id="cl-livre" rows="2" style="width:100%;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px;margin-top:4px" placeholder="ex.: o laudo responde ao quesito sobre a data de início da incapacidade?"></textarea></label>
+    <div class="form-linha" style="margin-top:8px">
+      <span class="cl-onde" role="radiogroup" aria-label="onde abrir">
+        <label><input type="radio" name="cl-onde" value="web" ${onde==="web"?"checked":""} onchange="guardar('crm_claude_onde','web')"> no navegador</label>
+        <label><input type="radio" name="cl-onde" value="app" ${onde==="app"?"checked":""} onchange="guardar('crm_claude_onde','app')"> no aplicativo de mesa</label>
+      </span>
+      <button class="tl-bt forte" style="margin-left:auto" onclick="abrirClaudeDocs('livre')">Perguntar</button>
+    </div>`);
+}
+function pedidoClaudeDocs(k, chaves, instrucao){
+  return `Use o conector CRM Tercini. No caso ${k.id} (cliente_id ${k.cliente_id}), leia com ler_documento (caso_id ${k.id}) estes documentos: ${chaves.join("; ")}. `
+    + `Se precisar, consulte ficha_cliente e anotacoes_caso. Documento digitalizado sem texto vai anexado nesta conversa, quando houver.
+
+${instrucao}
+
+${CLAUDE_ESTILO}`;
+}
+async function abrirClaudeDocs(pedido){
+  const s = _docsClaude; if(!s) return;
+  const k = D.casoPorId.get(s.casoId); if(!k) return;
+  const instr = pedido==="livre" ? ((document.getElementById("cl-livre")||{}).value||"").trim()
+    : (PEDIDOS_DOCS.find(x=>x[0]===pedido)||[])[2];
+  if(!instr) return aviso("Escreva a pergunta");
+  const onde = ler("crm_claude_onde") || "web";
+  const url = (onde==="app" ? "claude://claude.ai/new?q=" : "https://claude.ai/new?q=") + encodeURIComponent(pedidoClaudeDocs(k, s.chaves, instr));
+  fecharCaixa();
+  if(onde==="app") location.href = url; else window.open(url, "_blank", "noopener");
+  const semTexto = documentosDoCaso(k).filter(d=>s.chaves.includes(chaveDoc(d)) && !d.texto && !["crps","escritorio"].includes(d.origem));
+  if(semTexto.length){
+    const antes = new Set(docsSel); docsSel.clear(); s.chaves.forEach(c=>docsSel.add(c));
+    try{ await digitalizadosClaude(s.casoId, true); } finally { docsSel.clear(); antes.forEach(c=>docsSel.add(c)); }
+  }
 }
 function painelDocumentos(k, origens){
   const docs = docsDaOrigem(k, origens);
@@ -18837,20 +19104,33 @@ function painelDocumentos(k, origens){
   const grupos = new Map();
   for(const d of docs){ if(!grupos.has(d.origem)) grupos.set(d.origem, []); grupos.get(d.origem).push(d); }
   const total = docs.reduce((s,d)=>s+(+d.tamanho||0),0);
-  return `<div class="caso">
-    <div class="form-linha" style="align-items:center;gap:8px;flex-wrap:wrap">
-      <div class="rotulo-caso" style="flex:1">📂 ${docs.length} documento(s)${total?` · ${tamArq(total)}`:""}</div>
-      <button class="btn-mini" onclick="baixarDocsZip('${k.id}')" title="os arquivos originais do caso inteiro (judicial, INSS, recurso e escritório), em pastas por origem">⬇ Baixar tudo do caso (.zip)</button>
-      <button class="btn-mini" onclick="pacoteClaude('${k.id}')" title="um arquivo .md com o texto de todos os documentos do caso — arraste para uma conversa do Claude">🤖 Pacote do caso para o Claude</button>
-      <button class="btn-mini" onclick="digitalizadosClaude('${k.id}')" title="os documentos sem texto (scan, foto) num PDF só, numerados como no pacote — o Claude os lê pela imagem">📎 Digitalizados para o Claude</button>
+  // F190 · no tema, os botões do quadro seguem o cartão: contorno para o que
+  // baixa, cheio só para pedir ao Claude
+  const bt = temaV10() ? "tl-bt" : "btn-mini";
+  return `<div class="caso docs-painel">
+    <div class="rotulo-caso">${temaV10()?"":"📂 "}${docs.length} documento${docs.length>1?"s":""}${total?` · ${tamArq(total)}`:""}</div>
+    <div class="form-linha docs-acoes" style="align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px">
+      <button class="${bt}" onclick="baixarDocsZip('${k.id}')" title="os arquivos originais do caso inteiro (judicial, INSS, recurso e escritório), em pastas por origem">${temaV10()?"":"⬇ "}Baixar tudo (.zip)</button>
+      <button class="${bt}" onclick="pacoteClaude('${k.id}')" title="um arquivo .md com o texto de todos os documentos do caso — arraste para uma conversa do Claude">${temaV10()?"":"🤖 "}Pacote para o Claude (.md)</button>
+      <button class="${bt}" onclick="digitalizadosClaude('${k.id}')" title="os documentos sem texto (scan, foto) num PDF só, numerados como no pacote — o Claude os lê pela imagem">${temaV10()?"":"📎 "}Digitalizados para o Claude (PDF)</button>
+      <button class="${temaV10()?"tl-bt forte":"btn-mini"}" style="margin-left:auto" onclick="menuClaudeDocs('${k.id}',[])" title="abre o Claude com um pedido pronto sobre todos os documentos do caso">${IC_SVG.claude} Pedir ao Claude</button>
     </div>
+    ${(n=>n?`<div class="docs-sel-barra" role="region" aria-label="documentos selecionados">
+      <b>${n} selecionado${n>1?"s":""}${(m=>m!==n?` no caso · ${m} nesta aba`:"")(docs.filter(d=>docsSel.has(chaveDoc(d))).length)}</b>
+      <button class="${bt}" onclick="baixarDocsZip('${k.id}',true)">Baixar (.zip)</button>
+      <button class="${bt}" onclick="pacoteSelecionados('${k.id}')" title="o .md com o texto e, se houver digitalizado, o PDF dele">Pacote dos selecionados (.md + PDF)</button>
+      <button class="${temaV10()?"tl-bt forte":"btn-mini"}" style="margin-left:auto" onclick="menuClaudeDocs('${k.id}',[...docsSel])">Pedir ao Claude com estes</button>
+      <button class="${bt}" onclick="docsSel.clear();repintarFicha()">Limpar</button></div>`:"")(documentosDoCaso(k).filter(d=>docsSel.has(chaveDoc(d))).length)}
     ${[...grupos].map(([o, ds])=>`<div style="margin-top:10px">
       <div class="meio-sub" style="font-weight:600;margin-bottom:4px">${esc(ORIGEM_DOC[o]||o)} (${ds.length})</div>
       ${ds.map(d=>`<div class="arq-it">
-        <button class="arq-abrir" onclick="${d.id?`abrirAnexo('${d.id}')`:`abrirDecisao('${esc(d.caminho)}')`}" title="abrir o documento">
+        <input type="checkbox" class="doc-ck" aria-label="selecionar ${esc(d.nome||"documento")}" ${docsSel.has(chaveDoc(d))?"checked":""}
+          onchange="marcarDoc('${escJs(chaveDoc(d))}', this.checked)">
+        <button class="arq-abrir" onclick="${d.id?`abrirAnexo('${escJs(d.id)}')`:`abrirDecisao('${escJs(d.caminho)}')`}" title="abrir o documento">
           ${(d.tipo||"").startsWith("image/")?"🖼":"📄"} ${esc(d.nome||"documento")}</button>
         <span class="meio-sub">${d.data?fmt(String(d.data).slice(0,10)):""}${d.tamanho?" · "+tamArq(d.tamanho):""}${
           d.origem==="escritorio"||d.origem==="crps" ? "" : !d.texto ? " · digitalizado" : (paginasImagem(d)||[]).length ? ` · ${paginasImagem(d).length} de ${d.paginas} pág. em imagem` : " · com texto"}</span>
+        <button class="${bt} doc-claude" onclick="menuClaudeDocs('${k.id}',['${escJs(chaveDoc(d))}'])">${temaV10()?IC_SVG.claude+" ":"✦ "}Ler com Claude</button>
       </div>`).join("")}
     </div>`).join("")}
   </div>`;
@@ -18870,9 +19150,9 @@ function rotuloDoCaso(k){
   tit = tit || k.especie || k.beneficio || "";
   return { cliente:c.nome||"cliente", titulo:tit, arquivo:nomeSeguro(tit ? `${c.nome||"cliente"}-${tit}` : (c.nome||"cliente")) };
 }
-async function baixarDocsZip(casoId){
+async function baixarDocsZip(casoId, soSel){
   const k = D.casoPorId.get(casoId); if(!k) return;
-  const docs = documentosDoCaso(k);
+  const docs = docsEscolhidos(k, soSel);
   aviso(`Juntando ${docs.length} documento(s)…`, false);
   try{
     if(!window.JSZip) await new Promise((ok, erro)=>{
@@ -18908,8 +19188,8 @@ async function baixarDocsZip(casoId){
 // mesmo documento nos dois arquivos.
 // as páginas que são imagem: [] = nenhuma; null = não se sabe (não analisado)
 const paginasImagem = d => Array.isArray(d.paginas_imagem) ? d.paginas_imagem : null;
-async function partesDoPacote(k){
-  const docs = documentosDoCaso(k).slice().reverse();          // do mais antigo ao mais novo
+async function partesDoPacote(k, soSel){
+  const docs = docsEscolhidos(k, soSel).slice().reverse();          // do mais antigo ao mais novo
   const partes = [];
   for(const [i, d] of docs.entries()){
     let texto = d.texto;
@@ -18960,11 +19240,11 @@ function faixasDePaginas(lista){
 const notaImagem = p => p.escaneado
   ? `${p.imagem.length === p.d.paginas ? "todas as" : p.imagem.length} de ${p.d.paginas} página(s) são imagem (${faixasDePaginas(p.imagem)})` : "";
 const rotDoc = p => `${String(p.d.data||"").slice(0,10)} · ${ORIGEM_DOC[p.d.origem]||p.d.origem} · ${p.d.nome}${p.d.evento?` (movimento: ${p.d.evento})`:""}`;
-async function pacoteClaude(casoId){
+async function pacoteClaude(casoId, soSel){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const {cliente, titulo, arquivo} = rotuloDoCaso(k);
   aviso(`Montando o pacote…`, false);
-  const partes = await partesDoPacote(k);
+  const partes = await partesDoPacote(k, soSel);
   const semTexto = partes.filter(paraImagem);
   const proc = processosDoCaso(k).map(p=>p.numero).join(", ");
   const md = [
@@ -19004,10 +19284,10 @@ async function pacoteClaude(casoId){
 // PDF, com uma folha de rosto por documento ("doc 7 · data · origem · nome",
 // a mesma numeração do .md). Passando de ~90 páginas ou ~25 MB (o Claude lê
 // até 100 páginas / 32 MB por PDF), divide em partes.
-async function digitalizadosClaude(casoId){
+async function digitalizadosClaude(casoId, soSel){
   const k = D.casoPorId.get(casoId); if(!k) return;
   aviso("Separando os documentos digitalizados…", false);
-  const semTexto = (await partesDoPacote(k)).filter(paraImagem);
+  const semTexto = (await partesDoPacote(k, soSel)).filter(paraImagem);
   if(!semTexto.length) return aviso("Este caso não tem documento digitalizado: o 🤖 Pacote já leva tudo.");
   try{
     if(!window.PDFLib) await new Promise((ok, erro)=>{
@@ -19524,6 +19804,12 @@ function linhasDeDatas(cliId){
         rot:`<b>Pedir a prorrogação</b>
              <small class="qd-de">Cessação marcada para ${fmt(x.dcb)}${x.dcb_prorrogar_em?"":` · lembrete automático, ${DIAS_PRORROG} dias antes`} · ${esc(tituloCaso(x))}</small>`,
         edita:"", acao:`<button class="btn-mini" onclick="salvarProrrog('${x.id}',true)" title="a prorrogação já foi pedida — desliga o alarme">✔ prorrogação pedida</button>`});
+      // etapa 3 · o honorário em aberto com vencimento é compromisso do caso
+      const so = ((D.casosDoCliente.get(cliId))||[]).filter(y=>y.fase!=="encerrado").length===1;
+      (D.pagamentos||[]).filter(pg=>pg.status==="aberto" && pg.vencimento && (pg.caso_id===x.id || (!pg.caso_id && so && pg.cliente_id===cliId)))
+        .forEach(pg=>linhas.push({data:pg.vencimento, ico:"💰", natureza:"compromisso", casoId:x.id, cru:true, rotulo:"Honorários",
+          rot:`<b>Honorários · ${moedaBR(pg.valor)}</b> <small class="qd-de">${esc(origemPgto(pg))} · ${esc(tituloCaso(x))}</small>`,
+          clique:`onclick="abaAtiva=4;repintarFicha()"`, edita:"", acao:""}));
       // F102 · o comentário fixo com data lembra na data
       if(x.fixo && x.fixo.texto && x.fixo.lembrar_em) linhas.push({data:x.fixo.lembrar_em, ico:"📌", natureza:"lembrete", casoId:x.id, cru:true,
         rot:`<b>${esc(x.fixo.texto.slice(0,110))}</b> <small class="qd-de">Comentário fixo · ${esc(tituloCaso(x))}</small>`,
@@ -20210,6 +20496,8 @@ function lcNumeros(k){
       j&&j.orgao?`<span class="lc-vazio" title="${esc(tituloOrgao(j.orgao)||j.orgao)}">${esc(String(tituloOrgao(j.orgao)||j.orgao).split(" - ")[0])}</span>`:"",
       botoesPjeDoCaso(k, "btn-mini", ' style="text-decoration:none"')
     ], `lcNovoProc('${k.id}')`, "acrescentar outro processo"));
+  const outros = acessosDoCaso(k).outros;
+  if(outros.length) partes.push(`<div class="lc-linha"><span class="lc-k">Acessos</span>${outros.join("")}</div>`);
   const falta = [["NB","lcNovoNb",!nbs.length],["E-SisREC","lcNovoNup",!nups.length],["Judicial","lcNovoProc",!procs.length]].filter(x=>x[2]);
   if(falta.length) partes.push(`<div class="lc-linha"><span class="lc-k">Incluir</span>${
     falta.map(([r,f])=>`<button class="btn-mini" onclick="${f}('${k.id}')">+ ${r}</button>`).join("")}</div>`);
@@ -20268,6 +20556,10 @@ function lcGestao(k){
         title="o portal/robô acompanha sozinho — não precisa de checagem">Automática</button>
       <button class="btn-mini" onclick="checarAcomp('${k.id}')" title="registra que você verificou o caso agora">✓ verifiquei agora</button>
       <span class="lc-vazio">${k.checado_em?`última: ${quem?esc(quem.nome.split(" ")[0]):"?"} · ${fmtBarra(dataSP(k.checado_em))}`:"ninguém verificou ainda"}</span></div>
+    ${(k.fase==="judicial"||k.fase==="pagamento")?`<div class="lc-linha"><span class="lc-k">Gratuidade</span>
+      <button class="chip-acomp ${k.gratuidade==="concedida"?"on":""}" onclick="mudarGratuidade('${k.id}','concedida')" title="a justiça gratuita foi deferida">Concedida</button>
+      <button class="chip-acomp ${k.gratuidade==="negada"?"on":""}" onclick="mudarGratuidade('${k.id}','negada')" title="indeferida ou não pedida: a linha do caso passa a mostrar Sem gratuidade, em vermelho">Não concedida</button>
+      <span class="lc-vazio">${k.gratuidade?"clique de novo para limpar":"não informada"}</span></div>`:""}
     <div class="lc-linha"><span class="lc-k">Comentário fixo</span>${fx.texto
       ? `<span class="lc-fixo-txt">${esc(fx.texto)}</span>${fx.lembrar_em?`<span class="lc-papel">lembrar ${fmtBarra(fx.lembrar_em)}</span>`:""}
          <button class="btn-mini" onclick="lcEditarFixo('${k.id}')">✎ editar</button>`
@@ -20430,6 +20722,56 @@ function filaTrf3(k){
     <span class="lc-k">Fila</span><b class="lc-fila">${t.ordem}º</b><small class="lc-jan">${esc(tot)}</small>
     ${t.prioridade==="S"?`<small class="lc-jan ok" title="o processo tramita com prioridade">prioridade</small>`:""}</span>`;
 }
+// ── ACESSOS DO CASO (pedido do Paulo, 10.10.2026) ──────────────────────
+// Um clique leva ao portal onde o caso está. Fica à vista só o da fase atual
+// (INSS: PAT, ou Meu INSS quando o pedido não está no PAT; Conselho:
+// e-SISREC; Judicial: o grau mais alto do processo). Os demais aparecem no +
+// da linha do caso. O PAT abre pela tarefa do protocolo; o Meu INSS não tem
+// endereço por pedido conhecido, por isso abre a página inicial e deixa o
+// protocolo copiado. O eproc só tem link quando a coleta o trouxe (o endereço
+// leva o hash da sessão).
+const PAT_TAREFA = "https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/";
+const MEU_INSS = "https://meu.inss.gov.br/";
+function abrirMeuInss(prot){
+  if(prot) copiar(prot, "Protocolo copiado — cole na consulta de pedidos do Meu INSS");
+  window.open(MEU_INSS, "_blank", "noopener");
+}
+function acessosDoCaso(k){
+  const a = (href, rot, tit) => `<a class="lc-acesso" href="${urlOk(href)}" target="_blank" rel="noopener" title="${esc(tit)}">${esc(rot)} ↗</a>`;
+  const prots = (k.protocolos||[]).map(x=>soDig(x)).filter(Boolean);
+  const inss = [];
+  if(k.processo_link) inss.push(a(k.processo_link, "PAT", "abrir a tarefa no PAT"));
+  else if(prots.length) inss.push(`<button class="lc-acesso" onclick="abrirMeuInss('${prots[0]}')"
+      title="o pedido não está no PAT: abre o Meu INSS e copia o protocolo ${prots[0]}">Meu INSS ↗</button>`);
+  // protocolo com tarefa no PAT, além do que já tem link
+  prots.filter(x=>!String(k.processo_link||"").endsWith(x)).slice(0, k.processo_link?3:0)
+    .forEach(x=>inss.push(a(PAT_TAREFA+x, `PAT ${x}`, `abrir a tarefa ${x} no PAT`)));
+  const conselho = crpsNups(k).map(n=>a(linkERecursos(n), crpsNups(k).length>1?`e-SISREC ${formatarNup(n)}`:"e-SISREC",
+    `abrir o recurso ${formatarNup(n)} no e-SISREC`));
+  // judicial: um por grau, o mais alto primeiro
+  const m = linksPjeDoCaso(k), graus = Object.keys(m).filter(g=>m[g]).sort().reverse();
+  let jud = graus.map(g=>a(m[g], `${nomeSistemaDoLink(m[g])} · ${g}`, `abrir os autos do ${g} na sua sessão do ${nomeSistemaDoLink(m[g])}`));
+  if(!jud.length && k.pje_link) jud = [a(k.pje_link, nomeSistemaDoLink(k.pje_link), "abrir os autos digitais")];
+  if(!jud.length && justicaDoNumeroCnj(k.processo)==="estadual"){
+    const l = linkEsajPorNumero("1º grau", k.processo);
+    if(l) jud = [a(l, "e-SAJ · 1º grau", "abrir a consulta do processo no e-SAJ")];
+  }
+  const ordem = k.fase==="inss" ? [inss, conselho, jud]
+    : k.fase==="conselho" ? [conselho, inss, jud]
+    : (k.fase==="judicial" || k.fase==="pagamento") ? [jud, conselho, inss] : [[], inss, conselho, jud];
+  const [atual, ...resto] = ordem;
+  // no Judicial só o grau mais alto fica à vista; o outro grau vai para o +
+  return { atual: atual.slice(0,1), outros: [...atual.slice(1), ...resto.flat()] };
+}
+// a gratuidade só fala quando foi negada (pedido do Paulo, 10.10.2026)
+const semGratuidade = k => (k.fase==="judicial" || k.fase==="pagamento") && k.gratuidade==="negada";
+async function mudarGratuidade(casoId, v){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const novo = k.gratuidade===v ? null : v;
+  try{ await patchCaso(casoId, {gratuidade: novo}); }
+  catch(e){ return aviso("Não gravou — rode o crm/fase2/schema_gratuidade.sql no Supabase"); }
+  k.gratuidade = novo; repintarFicha();
+}
 function linhaCaso(k){
   const n = lcNivel(k.id);
   const tram = TRAMITA[k.fase] || NOME_FASE[k.fase] || k.fase || "";
@@ -20446,8 +20788,10 @@ function linhaCaso(k){
       <button class="lapis" title="trocar a espécie ou o pedido deste caso" onclick="escolherEspecie('${k.id}')">✎</button>
       ${k.natureza?`<span class="chip nat-chip" title="natureza do pedido">${esc(rotNatureza(k.natureza))}</span>`:""}
       ${k.urgente?`<span class="chip urg">Urgente</span>`:""}
+      ${semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo — custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:""}
       <button class="lc-claude" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)">✦ Claude</button>
       </div>
+      ${(ac=>ac.atual.length?`<div class="lc-acessos">${ac.atual.join("")}</div>`:"")(acessosDoCaso(k))}
       <div class="lc-placa">
       <span class="lc-f"><span class="lc-k">DER</span>${k.der
         ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar">${fmtBarra(k.der)}</span>`
@@ -20533,6 +20877,9 @@ const TRILHAS = {
   acid:{fase:"judicial", nome:"Acidentário · TJSP", e:["Ajuizamento|Ação distribuída","Instrução|Nomeação do perito e quesitos",
     "Perícia designada","Perícia realizada","Laudo juntado","*Esclarecimentos do perito","Citação e contestação","Réplica",
     "Sentença|Sentença","Recurso|Apelação ou remessa necessária","Acórdão do TJSP","*Recurso especial ou extraordinário", ...EXEC_TRILHA]},
+  delegada:{fase:"judicial", nome:"Competência delegada · TJSP", e:["Ajuizamento|Ação distribuída","Instrução|Citação e contestação","Réplica",
+    "Especificação de provas","*Perícia técnica ou audiência","*Alegações finais","Sentença|Sentença","*Embargos de declaração",
+    "Recurso|Apelação","Contrarrazões","Acórdão do TRF3","*Recurso especial ou extraordinário", ...EXEC_TRILHA]},
   ms:{fase:"judicial", nome:"Mandado de segurança", e:["Ajuizamento|Impetração","Liminar|Decisão da liminar",
     "Instrução|Informações da autoridade","Parecer do MPF","Sentença|Sentença","Fim|Ordem cumprida pelo INSS",
     "*Remessa necessária ao TRF3","Trânsito em julgado"]},
@@ -20563,6 +20910,11 @@ const lerEtapaTrilha = x => { const ex = x.startsWith("#"); x = ex ? x.slice(1) 
 const FASE_TRILHA = {escritorio:"escritorio", peticao_inicial:"escritorio", aposentadoria_futura:"escritorio",
   inss:"inss", conselho:"conselho", judicial:"judicial", pagamento:"judicial"};
 function faseDaTrilha(k){
+  // F189 · lista sem processo previdenciário (tarefas pessoais) não tem trilha,
+  // nem Pagamentos sem processo: a trilha inventada ali só confundia
+  const temPrev = k.processo || (k.protocolos||[]).length || k.especie || k.beneficio;
+  if(k.fase==="outro" && !temPrev) return null;
+  if(k.fase==="pagamento" && !k.processo) return null;
   if(k.fase==="outro"){ const de=(k.ronda||{}).prazo_de||k.origem_lista||"";
     return /INSS/.test(de)?"inss":/Conselho/.test(de)?"conselho":/Judicial|Peti/.test(de)?"judicial":"escritorio"; }
   return FASE_TRILHA[k.fase] || null;
@@ -20581,9 +20933,13 @@ function ritoPadrao(k, fase){
   return (inc || esp==="B94") ? "jef_inc" : "jef_apos";
 }
 const trilhaDe = k => (k.trilha && typeof k.trilha==="object") ? k.trilha : {};
+// F189 · o rito que a rotina crm/conducao.py tirou dos dados, com motivo e confiança
+const ritoDados = (k, fase) => { const x = ((k.conducao||{}).ritos||{})[fase];
+  return x && TRILHAS[x.r] && TRILHAS[x.r].fase===fase ? x : null; };
+const ritoManual = (k, fase) => { const r = (trilhaDe(k).ritos||{})[fase];
+  return TRILHAS[r] && TRILHAS[r].fase===fase ? r : null; };
 function ritoDe(k, fase){
-  const t = trilhaDe(k), r = (t.ritos||{})[fase];
-  return TRILHAS[r] && TRILHAS[r].fase===fase ? r : ritoPadrao(k, fase);
+  return ritoManual(k, fase) || (ritoDados(k, fase)||{}).r || ritoPadrao(k, fase);
 }
 const marcaTrilha = (k, rito, nome) => (trilhaDe(k).m||{})[rito+":"+nome] || null;
 let trVer = {}, trSel = {}, trAbre = {}, trAjuda = false;   // fase em vista, etapa aberta, grupos abertos, legenda
@@ -20624,7 +20980,11 @@ function faixaTrilha(k){
       onclick="trVerFase('${k.id}','${f}')"><span class="jn-nome"><i></i><span class="jn-txt">${c.n}</span></span><span class="jn-st">${esc(txt)}</span></button>`; }).join("");
   const alt = Object.entries(TRILHAS).filter(([,t])=>t.fase===ver);
   // o tipo de processo é uma escolha rara: um seletor, e não cinco pílulas
-  const chips = alt.length>1 ? `<label class="tr-ritos">tipo <select onchange="trRito('${k.id}','${ver}',this.value)" aria-label="Tipo de processo">${alt.map(([id,t])=>
+  const dd = ritoManual(k, ver) ? null : ritoDados(k, ver);
+  const porQue = ritoManual(k, ver) ? "escolhido pela equipe" : dd ? `pelos dados: ${dd.por}` : "pela espécie";
+  const confirma = dd && dd.c==="baixa" ? `<span class="tr-prov" title="sem sinal firme nos dados: ${esc(dd.por)}">provável
+    <button class="tr-bt" onclick="trRito('${k.id}','${ver}','${rito}')">confirmar</button></span>` : "";
+  const chips = alt.length>1 ? `${confirma}<label class="tr-ritos" title="${esc(porQue)}">tipo <select onchange="trRito('${k.id}','${ver}',this.value)" aria-label="Tipo de processo">${alt.map(([id,t])=>
     `<option value="${id}" ${id===rito?"selected":""}>${esc(t.nome)}</option>`).join("")}</select></label>` : "";
   // fase passada: dá para dizer que não houve (ou que houve)
   const houveBt = (stVer==="f"||stVer==="n") ? `<button class="tr-houve" onclick="trFaseHouve('${k.id}','${ver}','${stVer==="n"?"f":"n"}')">${stVer==="n"?"esta fase houve":"esta fase não houve"}</button>` : "";
@@ -20773,6 +21133,17 @@ function trilhaSegueEtapa(k, etapa){
 }
 // F182 · "Nas outras abas": o que o caso tem nas demais divisões da ficha,
 // com o dado que importa e o atalho. Só entra a linha que tem o que mostrar.
+// integração, etapa 3 · a faixa do caso: no alto da Análise, das Perícias e
+// dos Honorários, diz de que caso a parte está falando e leva até ele
+function faixaDoCaso(ks){
+  const vivos = (ks||[]).filter(k=>k.fase!=="encerrado");
+  if(!vivos.length) return "";
+  return `<nav class="faixa-caso" aria-label="${vivos.length>1?"Casos":"Caso"} do cliente"><span class="fc-rot">${vivos.length>1?"Casos":"Caso"}</span>
+    ${vivos.map(k=>`<button type="button" class="fc-caso" onclick="irAoCaso('${k.id}')" title="abrir o caso">
+      ${k.especie?`<span class="fc-esp">${esc(k.especie)}</span>`:""}<span class="fc-tit">${esc(tituloCaso(k))}</span>
+      <span class="fc-fase">${esc(NOME_FASE[k.fase]||k.fase||"")}${k.etapa?` · ${esc(k.etapa)}`:""}</span></button>`).join("")}</nav>`;
+}
+function irAoCaso(id){ casoSel=id; abaAtiva=2; repintarFicha(); }
 function irOutraAba(qual){
   if(qual==="pericias") abaAtiva=3;
   else if(qual==="honorarios") abaAtiva=4;
@@ -21302,18 +21673,319 @@ function painelEscritorio(k, ands){
 // registro oficial (sem vistos/tarefas: registro não se responde); os botões
 // de cada aba entram prontos pelo campo html.
 // item: {q:"AAAA-MM-DD[THH:MM]", em:emoji, rot:fonte, texto, forte, cls, html}
+// ══════════════════════════════════════════════════════════════════════════
+// F190 · O CARTÃO DO ANDAMENTO OFICIAL (canvas "Andamentos e documentos do
+// caso", aprovado pelo Paulo em 10.10.2026). Um só desenho para INSS, CRPS,
+// PJe, e-SAJ e eproc, em qualquer aba: cabeçalho com a fonte, o texto, o
+// documento que veio com o movimento (Abrir · Ler com Claude), o prazo que o
+// ato sugere e a barra. Na barra, o botão cheio é "Criar tarefa ou prazo" (a
+// ação mais usada); ao lado, abrir no portal e mensagem ao cliente; no fim,
+// ✓ lido, ⭐, ⚡ e o ⋯ com o que é raro (perícia, copiar, não é deste caso).
+// ══════════════════════════════════════════════════════════════════════════
+const ORIGENS_OFICIAIS = ["pat","pje","crps"];
+const IC_SVG = {
+  ok:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>`,
+  mais:`<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg>`,
+  ir:`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>`,
+  doc:`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>`,
+  claude:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>`,
+  relogio:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
+  ciente:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M7 11v9H4v-9zM7 11l4-8a2 2 0 0 1 2 2v4h6a2 2 0 0 1 2 2.3l-1.4 7A2 2 0 0 1 17.6 20H7"/></svg>`,
+};
+const ehOficial = a => !!(a && ORIGENS_OFICIAIS.includes(a.origem));
+// expedição, juntada, conclusão… — o que não pede leitura nem ação
+const RX_ROTINA = /^(expedi[çc][ãa]o|juntada|conclus|remetid|recebid|certid|decorrid|ato ordinat|mandado|confirmada a intima|redistribu|arquivad|desarquivad|documento juntado|baixa definitiva)/i;
+const RX_NAO_ROTINA = /laudo|senten|decis|ac[óo]rd|per[ií]cia|audi[êe]n|contesta|alvar|rpv|precat|julg|tutela|liminar|prazo|intima|cita[çc]/i;
+function ehRotina(x){
+  const a = x && x.and;
+  if(!a || a.origem!=="pje" || x.forte || a.importante || a.urgente) return false;
+  const t = String(x.texto||"");
+  if(!RX_ROTINA.test(t) || RX_NAO_ROTINA.test(t)) return false;
+  if((D.anexos||[]).some(an=>an.andamento_id===a.id)) return false;
+  if(prazoSugeridoHtml(a, -1)) return false;
+  return !(D._andsFicha||[]).some(f=>f.responde_a===a.id && !f.excluir);
+}
+// o portal de onde o movimento veio, para abrir em um clique
+function portalDoAndamento(a, k){
+  k = k || {};
+  if(a.origem==="pje"){ const l = linkPjeDoAndamento(a, k); return l ? {href:l, rot:nomeSistemaDoLink(l)} : null; }
+  if(a.origem==="crps"){
+    const n = nupNoTexto(a.texto) || soDig(String(a.origem_id||"").split("|")[0]) || crpsNups(k)[0];
+    return {href:linkERecursos(n), rot:"e-SISREC"};
+  }
+  if(a.origem==="pat"){
+    const prot = (String(a.origem_id||"").match(/:(\d{6,})/)||[])[1] || soDig((k.protocolos||[])[0]||"");
+    const href = k.processo_link || (prot ? PAT_TAREFA+prot : null);
+    return href ? {href, rot:"PAT"} : null;
+  }
+  return null;
+}
+// o prazo que o ato sugere (F159), só enquanto ninguém marcou prazo para ele
+function prazoSugeridoHtml(a, segI){
+  if(a.origem!=="pje" && a.origem!=="crps") return "";
+  const sg = proximoPassoDoMovimento(a.texto); if(!sg) return "";
+  if((D._andsFicha||[]).some(f=>f.responde_a===a.id && !f.excluir && /\[PRAZO /.test(f.texto||""))) return "";
+  const item = PRAZOS_CATALOGO.find(x=>x.id===sg.cat);
+  const fatal = sg.prazo || (item ? contarPrazo(sg.de, item) : "");
+  if(!fatal || fatal < hoje()) return "";
+  return `<span class="tl-prazo-sug" title="contado da data do movimento (${fmt(sg.de)}); confira a data da intimação ao criar">${IC_SVG.relogio}
+    <span>Prazo sugerido: <b>${esc(item ? item.rot : "prazo citado no texto")}</b> · vence <b>${fmt(fatal)}</b></span>
+    <button class="tl-bt forte" onclick="abrirSeguimento(${segI})">Criar prazo</button></span>`;
+}
+// uma linha de documento dentro do cartão: nome, páginas e leitura, Abrir e Ler com Claude
+function docRow(nome, sub, abrirJs, claudeJs){
+  return `<span class="tl-doc"><span class="tl-doc-ic">${IC_SVG.doc}</span>
+      <span class="tl-doc-nome"><b>${esc(nome||"documento")}</b>${sub?`<small>${esc(sub)}</small>`:""}</span>
+      <span class="tl-doc-bts"><button class="tl-bt" onclick="${abrirJs}">Abrir</button>
+      <button class="tl-bt" onclick="${claudeJs}">${IC_SVG.claude}Ler com Claude</button></span></span>`;
+}
+// o documento que veio com o movimento, dentro do cartão
+function docsDoCartao(a){
+  return (D.anexos||[]).filter(x=>x.andamento_id===a.id).map(x=>{
+    const decide = /senten[cç]|decis[aã]|despach|ac[oó]rd[aã]|monocr|laudo|julgad[oa] |homologa|DESPADEC|\bSENT\d|\bACOR\d|\bLAUDO\d/i.test(x.nome||"")
+                   && !/^\s*certid/i.test(x.nome||"");
+    const disp = decide ? dispositivoDe(x.texto) : "";
+    const pi = Array.isArray(x.paginas_imagem) ? x.paginas_imagem : null;
+    const leitura = !x.texto && /pdf|image/.test(x.tipo||"") ? "digitalizado" : pi && pi.length ? `${pi.length} pág. em imagem` : x.texto ? "com texto" : "";
+    return docRow(x.nome, `${x.paginas?`${x.paginas} pág. · `:""}${leitura}`, `abrirAnexo('${escJs(x.id)}')`, `menuClaudeDocs('${escJs(a.caso_id)}',['anexo:${escJs(x.id)}'])`)
+      + (disp ? `<span class="tl-disp">${esc(disp)}</span>` : "");
+  }).join("");
+}
+// o que já se fez a partir do movimento, em pastilhas: "Tarefa · Amanda · até 13.10"
+function feitoDoCartao(a){
+  const fs = (D._andsFicha||[]).filter(x=>x.responde_a===a.id && !x.excluir);
+  const out = [];
+  for(const f of fs){
+    const pz = /\[PRAZO (\d{2})\.(\d{2})\.(\d{4})\]\s*([^—.]*)/.exec(f.texto||"");
+    if(pz) out.push(`<span class="tl-feito prazo">Prazo ${pz[1]}.${pz[2]}${pz[4].trim()?` · ${esc(pz[4].trim().slice(0,40))}`:""}</span>`);
+    for(const tf of tarefasDe(f)){
+      const c = D.colPorId.get(tf.colaborador_id) || {};
+      out.push(`<span class="tl-feito${tf.concluida_em?" ok":""}">${tf.concluida_em?"Feita":"Tarefa"} · ${esc((c.nome||"?").split(" ")[0])} · ${tf.concluida_em?fmt(dataSP(tf.concluida_em)).slice(0,5):`até ${fmt(tf.lembrar_em).slice(0,5)}`}</span>`);
+    }
+    if(!pz && !tarefasDe(f).length) out.push(`<span class="tl-feito">Anotado · ${esc(((D.colPorId.get(f.autor_id)||{}).nome||"").split(" ")[0])}</span>`);
+  }
+  return out.length ? `<span class="tl-feitos">${out.join("")}</span>` : "";
+}
+// o ⋯ : o que é raro fica fora da vista, mas a um clique
+function menuMais(itens){
+  const vivos = itens.filter(Boolean); if(!vivos.length) return "";
+  return `<details class="tl-mais"><summary class="tl-bt tl-bt-ic" aria-label="Mais ações" title="mais ações">${IC_SVG.mais}</summary>
+    <span class="tl-mais-menu" role="menu">${vivos.join("")}</span></details>`;
+}
+document.addEventListener("click", e=>{
+  document.querySelectorAll("details.tl-mais[open]").forEach(d=>{ if(!d.contains(e.target)) d.open=false; });
+});
+// Esc fecha o ⋯ e devolve o foco ao botão que o abriu
+// (na captura e engolindo a tecla: o Esc da ficha não pode fechar o cliente junto)
+document.addEventListener("keydown", e=>{
+  if(e.key!=="Escape") return;
+  const d = document.querySelector("details.tl-mais[open]"); if(!d) return;
+  e.stopImmediatePropagation(); e.preventDefault();
+  d.open = false; const sm = d.querySelector("summary"); if(sm) sm.focus();
+}, true);
+function msgAndamento(andId){
+  const a = (D._andsFicha||[]).find(x=>x.id===andId); if(!a) return;
+  const l = andLimpo(a, D.casoPorId.get(a.caso_id));
+  msgCliente(a.caso_id, {pat:"INSS", crps:"recurso no Conselho de Recursos", pje:"processo judicial"}[a.origem] || "processo", l.texto, (l.q||"").slice(0,10));
+}
+function msgCliente(casoId, fonte, texto, data, pronto){
+  const k = D.casoPorId.get(casoId) || {}, c = D.cliPorId.get(k.cliente_id) || {};
+  const txt = pronto || `Olá, ${(c.nome||"").split(" ")[0]}! Novidade no seu ${fonte}${data?` em ${fmt(data)}`:""}: ${String(texto||"").replace(/\.$/,"")}. Qualquer dúvida, estamos à disposição. Escritório Tercini.`;
+  const tel = soDig(c.telefone||"");
+  const wa = t => `https://wa.me/55${tel}?text=${encodeURIComponent(t)}`;
+  caixa(`<h3 style="margin:0 0 6px">Mensagem ao cliente</h3>
+    <p class="meio-sub" style="margin:0 0 8px">Confira e ajuste antes de enviar.</p>
+    <label class="sr-so" for="msg-and">texto da mensagem</label>
+    <textarea id="msg-and" rows="5" style="width:100%;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px"
+      ${tel?`oninput="document.getElementById('msg-wa').href='https://wa.me/55${tel}?text='+encodeURIComponent(this.value)"`:""}>${esc(txt)}</textarea>
+    <div class="form-linha" style="margin-top:10px">
+      <button class="tl-bt" onclick="fecharCaixa()">Cancelar</button>
+      ${tel?`<a class="tl-bt tl-link" id="msg-wa" style="margin-left:auto" target="_blank" rel="noopener" href="${esc(wa(txt))}">Abrir no WhatsApp ${IC_SVG.ir}</a>`:""}
+      <button class="tl-bt forte" ${tel?"":`style="margin-left:auto"`} onclick="copiar(document.getElementById('msg-and').value,'Mensagem copiada');fecharCaixa()">Copiar</button>
+    </div>`);
+  const ta = document.getElementById("msg-and"); if(ta) ta.focus();
+}
+// F190 · os espelhos sem linha de `andamentos` entram no mesmo cartão
+// o link do processo no grau mais alto que a coleta já trouxe
+const linkPjeMaisAlto = k => linkPjeDoCaso(k, Object.keys(linksPjeDoCaso(k)).filter(g=>linksPjeDoCaso(k)[g]).sort().pop());
+function oficCnj(k, txt, m, ch){
+  const l = linkPjeMaisAlto(k);
+  return { casoId:k.id, segTexto:txt, fonte:"processo judicial",
+    portal: l ? {href:l, rot:nomeSistemaDoLink(l)} : null,
+    antes: m.claro ? `<span class="tl-disp">${esc(m.claro)}</span>` : "",
+    sinais: sinaisCnjHtml(k, ch, txt, m.data||"") };
+}
+function oficCrps(t, e, casoId, selo, guardados, alv){
+  return { casoId, segTexto:String(e.resumo||e.bruto||""), fonte:"recurso no Conselho de Recursos",
+    portal: {href:linkERecursos(t.nup), rot:"e-SISREC"},
+    antes: (selo||"") + (e.docs ? `<span class="meio-sub" style="display:block;margin-top:4px">${e.docs} documento${e.docs>1?"s":""} no e-SISREC</span>` : ""),
+    docs: guardados.map(a => docRow(a.nome || (/monocr/i.test(a.nome||"")?"Decisão":"Acórdão"), /monocr/i.test(a.nome||"") ? "decisão monocrática" : "acórdão",
+        `abrirDecisao('${escJs(a.storage)}')`, `menuClaudeDocs('${escJs(casoId)}',['crps:${escJs(a.storage)}'])`) + caixaResumo(casoId, t.nup, a)).join(""),
+    sinais: `<span class="tl-sinais">
+      <button class="tl-sinal imp ${e.importante?"on":""}" onclick="toggleSinalCrps(${alv},'importante')" aria-label="importante"
+        title="${e.importante?"tirar o destaque desta movimentação":"destacar esta movimentação — acende o ⭐ do processo"}">${IC_ESTRELA}</button>
+      <button class="tl-sinal urg ${e.urgente?"on":""}" onclick="toggleSinalCrps(${alv},'urgente')" aria-label="urgente"
+        title="${e.urgente?"tirar a urgência desta movimentação":"marcar ESTA movimentação como urgente"}">${IC_RAIO}</button></span>` };
+}
+// o espelho no Caso completo: e-SISREC (o mesmo cartão da aba Recurso, com o
+// acórdão), CNJ e perícia/audiência agendada
+function oficDoItem(k, x){
+  if(x.crpsT && x.crpsE){
+    const t = x.crpsT, e = x.crpsE, guardados = (e.arquivos||[]).filter(a=>a.storage);
+    const alv = `'${escJs(k.id)}','${escJs(t.nup||"")}',${(t.eventos||[]).indexOf(e)}`;
+    return oficCrps(t, e, k.id, decideOCaso(e) ? seloOrgao(e, guardados[0]) : "", guardados, alv);
+  }
+  if(/CNJ/.test(x.chip||"")) return {casoId:k.id, segTexto:x.texto, fonte:"processo judicial", portal:(l=>l?{href:l, rot:nomeSistemaDoLink(l)}:null)(linkPjeMaisAlto(k))};
+  if(String(x.chip||"").startsWith("🩺")) return {casoId:k.id, segTexto:x.texto, fonte:/audi/i.test(x.texto||"")?"processo (audiência)":"processo (perícia)",
+    portal: k.fase==="judicial" ? (l=>l?{href:l, rot:nomeSistemaDoLink(l)}:null)(linkPjeMaisAlto(k)) : null};
+  return null;
+}
+// ══════════════════════════════════════════════════════════════════════════
+// Integração, etapa 2 · A PERÍCIA NO MESMO CARTÃO DOS ANDAMENTOS. Selo 🩺,
+// data, hora e local; na barra, a ação do momento cheia (avisar o cliente,
+// depois preparar; passada a data, compareceu), o portal do processo e a
+// mensagem de lembrete; no ⋯, Google Agenda, copiar e cancelar. Quando o
+// laudo chega ao processo, o cartão mostra o laudo e o prazo que ele abre.
+// ══════════════════════════════════════════════════════════════════════════
+const RX_LAUDO = /\blaudo|parecer m[ée]dico conclu|avalia[çc][ãa]o social conclu/i;
+// o laudo é da perícia válida mais recente antes dele (cancelada não tem laudo)
+function laudoDaPericia(e){
+  if(e.status==="cancelada") return null;
+  const d = dataSP(e.data_hora);
+  const vivas = (D.eventos||[]).filter(x=>x.caso_id===e.caso_id && x.status!=="cancelada");
+  return (D._andsFicha||[]).filter(a=>a.caso_id===e.caso_id && !a.excluir && ehOficial(a)
+      && RX_LAUDO.test(a.texto||"") && dataSP(a.criado_em)>=d
+      && !vivas.some(x=>x.id!==e.id && dataSP(x.data_hora)>d && dataSP(x.data_hora)<=dataSP(a.criado_em)))
+    .sort((x,y)=>String(x.criado_em).localeCompare(String(y.criado_em)))[0] || null;
+}
+const evAvisado = e => /📞 avisado/.test(e.obs||"");
+function portalDaPericia(k){
+  if(k.fase==="judicial" || k.fase==="pagamento"){ const l = linkPjeMaisAlto(k); return l ? {href:l, rot:nomeSistemaDoLink(l)} : null; }
+  const prot = soDig((k.protocolos||[])[0]||"");
+  const href = k.processo_link || (prot ? PAT_TAREFA+prot : null);
+  return href ? {href, rot:"PAT"} : null;
+}
+// "Preparar" abre o seguimento com o roteiro da perícia (F89) já calculado
+function prepararPericia(evId){
+  const e = D.eventos.find(x=>x.id===evId); if(!e) return;
+  const t = `${e.tipo||"Perícia"} agendada para ${fmt(dataSP(e.data_hora)).replace(/\./g,"/")} às ${horaSP(e.data_hora)}${e.local?` — ${e.local}`:""}`;
+  segItens.push({casoId:e.caso_id, texto:t, andId:null, prep:true});
+  abrirSeguimento(segItens.length-1);
+}
+function msgPericia(evId){
+  const l = lembreteDoEvento(evId), e = D.eventos.find(x=>x.id===evId); if(!l || !e) return;
+  msgCliente(e.caso_id, "", "", "", l.texto);
+}
+function cartaoPericia(e){
+  const k = D.casoPorId.get(e.caso_id) || {}, c = D.cliPorId.get(k.cliente_id) || {};
+  const d = dataSP(e.data_hora), futura = d >= hoje(), ag = e.status==="agendada";
+  const estado = e.status==="cancelada" ? ["cancelada","cinza"] : e.status==="realizada" ? ["compareceu","ok"]
+    : !futura ? ["passou · confirmar","venc"] : evAvisado(e) ? ["cliente avisado","ok"] : ["avisar o cliente","prox"];
+  const cab = `<span class="tl-cab"><span class="avatar mini tl-av av-fonte">${svgIc("🩺",12)||"🩺"}</span><b class="autor-nome">${esc(e.tipo||"Perícia")}</b>
+    <span class="tl-hora">${fmt(d)} · ${horaSP(e.data_hora)}</span><span class="per-est ${estado[1]}">${estado[0]}</span></span>`;
+  const corpo = `<span class="tl-corpo">${esc([e.local, tituloCaso(k)].filter(Boolean).join(" · "))}</span>`;
+  const la = laudoDaPericia(e);
+  const laudo = la ? `<span class="tl-disp per-laudo"><b>Laudo juntado em ${fmt(dataSP(la.criado_em))}</b> · ${esc(andLimpo(la, k).texto.slice(0,140))}</span>`
+      + docsDoCartao(la) + prazoSugeridoHtml(la, segRegistrar(la.caso_id, la.texto, la.id)) + feitoDoCartao(la) : "";
+  const portal = portalDaPericia(k);
+  const bt = (rot, js, forte, tit) => `<button class="tl-bt${forte?" forte":""}" onclick="${js}"${tit?` title="${esc(tit)}"`:""}>${rot}</button>`;
+  let acoes = "";
+  if(ag && futura) acoes = (evAvisado(e) ? "" : bt("Avisar cliente", `janelaAvisado('${e.id}')`, true, "registrar que o cliente foi avisado e se marcou o atendimento de preparação"))
+      + bt("Preparar", `prepararPericia('${e.id}')`, evAvisado(e), "roteiro da perícia: quesitos, atendimento de preparação, lembrete da véspera e estudo do processo");
+  else if(ag) acoes = bt("Compareceu", `compareceuEvento('${e.id}')`, true, "a perícia aconteceu: fecha a pendência");
+  if(e.status!=="cancelada"){
+    if(portal) acoes += `<a class="tl-bt tl-link" href="${urlOk(portal.href)}" target="_blank" rel="noopener">Abrir no ${esc(portal.rot)} ${IC_SVG.ir}</a>`;
+    if(ag && futura) acoes += bt("Mensagem ao cliente", `msgPericia('${e.id}')`, false, "o lembrete pronto, para conferir e enviar");
+  }
+  const menu = menuMais([
+    ag && futura ? `<a class="tl-mais-it" role="menuitem" target="_blank" rel="noopener" href="${gcal((e.tipo||"Perícia")+" — "+esc(c.nome||""), d, horaSP(e.data_hora), 90, "", e.local||"")}">Google Agenda</a>` : "",
+    ag && futura ? `<button class="tl-mais-it" role="menuitem" onclick="copiarLembrete('${e.id}')">Copiar o lembrete</button>` : "",
+    ag ? `<button class="tl-mais-it perigo" role="menuitem" onclick="cancelarEvento('${e.id}')">Cancelar ${evFem(e.tipo)?"a":"o"} ${esc((e.tipo||"perícia").toLowerCase())}</button>` : ""]);
+  const barra = (acoes||menu) ? `<span class="tl-barra tl-barra-of">${acoes}<span class="tl-barra-fim">${menu}</span></span>` : "";
+  return `<li class="tl-card tl-of tl-oficial tl-pericia${e.status==="cancelada"?" per-cancelada":""}" data-ev="${e.id}"><span class="texto">${cab}${corpo}${laudo}${barra}</span></li>`;
+}
+// o que o cartão oficial precisa saber, venha de uma linha de `andamentos`
+// (PAT, PJe, e-SAJ, eproc, aviso do CRPS) ou de um espelho sem linha (evento
+// do e-SISREC, histórico do CNJ), que chega pronto em x.ofic
+function infoOficial(x){
+  const a = x.and;
+  if(a && ehOficial(a)){
+    const k = D.casoPorId.get(a.caso_id) || {};
+    const i = segRegistrar(a.caso_id, a.texto, a.id), ev = eventoNoTexto(a.texto);
+    return { i, lido: euLi(a), andId: a.id, portal: portalDoAndamento(a, k),
+      msg: `msgAndamento('${a.id}')`, sinais: sinaisHtml(a),
+      antes: "", docs: docsDoCartao(a), prazo: prazoSugeridoHtml(a, i), feito: feitoDoCartao(a),
+      menu: [ ev ? `<button class="tl-mais-it" role="menuitem" onclick="periciaRapida(${i})">Agendar ${esc(ev.tipo.toLowerCase())} com aviso</button>` : "",
+              a.origem==="pje" ? `<button class="tl-mais-it perigo" role="menuitem" onclick="pjeForaDoCaso('${a.id}','${a.caso_id}')">Não é deste caso</button>` : "" ] };
+  }
+  // o e-SISREC e o CNJ não têm "lido" por pessoa: o cartão deles não leva o
+  // selo de não lido nem o ✓ (lido = null); o aviso do CRPS que vira linha
+  // de `andamentos` leva, pelo caminho de cima
+  const o = x.ofic; if(!o) return null;
+  const i = segRegistrar(o.casoId, o.segTexto||x.texto||"", null);
+  return { i, lido: null, portal: o.portal||null, sinais: o.sinais||"", antes: o.antes||"", docs: o.docs||"", prazo: "", feito: "",
+    msg: `msgCliente(${esc(JSON.stringify(o.casoId))},${esc(JSON.stringify(o.fonte||"processo"))},${esc(JSON.stringify(x.texto||""))},${esc(JSON.stringify((x.q||"").slice(0,10)))})`, menu: o.menu||[] };
+}
+function cartaoTl(x){
+  if(x.ev) return cartaoPericia(x.ev);
+  const d=(x.q||"").slice(0,10), hora=(x.q||"").length>=16 ? (x.q||"").slice(11,16) : "";
+  const a = x.and, inf = x.corAv ? null : infoOficial(x);
+  const cab = `<span class="tl-cab"><span class="avatar mini tl-av${x.corAv?"":" av-fonte"}"${x.corAv?` style="background:${x.corAv}"`:""}>${x.em||"·"}</span><b class="autor-nome">${esc(x.rot||"")}</b><span class="tl-hora">${d?fmt(d).slice(0,5):"—"}${hora?` · ${hora}`:""}</span>${inf && inf.lido===false?`<span class="tl-novo">Novo · não lido</span>`:""}</span>`;
+  const corpo = `<span class="tl-corpo">${x.forte?`<b>${esc(x.texto||"")}</b>`:esc(x.texto||"")}</span>`;
+  const cls = `tl-card tl-of${x.corAv?"":" tl-oficial"} ${x.cls||""}${x.forte?" tudo-marco":""}${clsSinal(a)}`;
+  if(!inf){
+    const sin = sinaisHtml(a);
+    return `<li class="${cls}"><span class="texto">${cab}${corpo}
+      ${(x.html||sin)?`<span class="tl-barra tl-barra-of">${x.html||""}<span class="tl-barra-fim">${sin}</span></span>`:""}</span></li>`;
+  }
+  const barra = `<span class="tl-barra tl-barra-of">
+      <button class="tl-bt forte" onclick="abrirSeguimento(${inf.i})" title="anotar, atribuir a alguém com data ou marcar prazo processual a partir deste movimento">Criar tarefa ou prazo</button>
+      ${inf.portal?`<a class="tl-bt tl-link" href="${urlOk(inf.portal.href)}" target="_blank" rel="noopener" title="abrir no ${esc(inf.portal.rot)}">Abrir no ${esc(inf.portal.rot)} ${IC_SVG.ir}</a>`:""}
+      <button class="tl-bt" onclick="${inf.msg}" title="mensagem pronta sobre este movimento">Mensagem ao cliente</button>
+      <span class="tl-barra-fim">
+        ${inf.lido===false?`<button class="tl-bt tl-bt-ic" onclick="liNaFicha('${inf.andId}')" aria-label="Marcar como lido" title="marcar como lido (sai das Novidades)">${IC_SVG.ok}</button>`:""}
+        ${inf.sinais}
+        ${menuMais([
+          inf.menu[0]||"",
+          `<button class="tl-mais-it" role="menuitem" onclick="copiar(${esc(JSON.stringify(x.texto||""))},'Texto copiado')">Copiar o texto</button>`,
+          ...inf.menu.slice(1),
+        ])}
+      </span></span>`;
+  return `<li class="${cls}"><span class="texto">${cab}${corpo}${inf.antes}${inf.docs}${inf.prazo}${inf.feito}${barra}</span></li>`;
+}
 function tlOficial(itens, vazio){
   if(!(itens||[]).length)
     return `<p class="meio-sub" style="padding:8px 12px">${vazio||"Sem movimentos."}</p>`;
-  let corpo="", diaAtual=null;
+  let corpo="", diaAtual=null, rotina=[];
+  // F190 · movimentos de rotina do mesmo dia (expedição, juntada, conclusão)
+  // dobram numa linha; dois ou mais, senão o cartão sai normal
+  const soltarRotina = () => {
+    if(rotina.length>1){
+      const nl = rotina.filter(x=>x.and && !euLi(x.and)).length;
+      corpo += `<li class="tl-rotina"><details><summary>+ ${rotina.length} movimentos de rotina (${esc([...new Set(rotina.map(x=>String(x.texto||"").split(/[ .,(]/)[0].toLowerCase()))].slice(0,3).join(", "))})${nl?` · ${nl} não lido${nl>1?"s":""}`:""}</summary>
+        <ul class="tl-rotina-itens">${rotina.map(cartaoTl).join("")}</ul></details></li>`;
+    } else corpo += rotina.map(cartaoTl).join("");
+    rotina = [];
+  };
   for(const x of itens){
     const d=(x.q||"").slice(0,10);
+    if(temaV10() && ehRotina(x)){
+      if(d && d!==diaAtual){ soltarRotina(); if(diaAtual!==null) corpo+=fecharDia(); corpo+=abrirDia(dataRelativa(d)); diaAtual=d; }
+      rotina.push(x); continue;
+    }
+    if(temaV10()) soltarRotina();
     if(d && d!==diaAtual){ if(diaAtual!==null) corpo+=fecharDia(); corpo+=abrirDia(dataRelativa(d)); diaAtual=d; }
     const hora=(x.q||"").length>=16 ? (x.q||"").slice(11,16) : "";
     // F46 · registro do escritório leva o avatar COLORIDO do colaborador
     // (corAv), não o selo neutro de fonte — a autoria salta como na conversa
     // x.and = a linha de `andamentos` por trás do item, quando existe uma.
     // Espelho de jsonb (Recurso, CNJ) não tem — e sem linha não há o que marcar.
+    // Tema v10: o andamento do processo vira o MESMO cartão da anotação do
+    // escritório (pedido do Paulo, 10.10.2026), com duas diferenças de
+    // propósito: o selo da fonte no lugar do avatar e fundo próprio, e sem
+    // responder, editar ou apagar, porque reproduz o portal. A resposta da
+    // equipe nasce pelo 📌 dar seguimento.
+    if(temaV10()){ corpo+=cartaoTl(x); continue; }
     corpo+=`<li class="tl-of ${x.cls||""}${x.forte?" tudo-marco":""}${clsSinal(x.and)}">
       <span class="quando" title="${esc(x.rot||"")}"><span class="avatar mini${x.corAv?`" style="background:${x.corAv}`:` av-fonte`}">${x.em||"·"}</span><span class="q-dt">${d?fmt(d):"—"}</span></span>
       <span class="texto"><b class="autor-nome">${esc(x.rot||"")}</b>${hora?`<span class="tl-hora">${hora}</span>`:""}<br>${x.forte?`<b>${esc(x.texto||"")}</b>`:esc(x.texto||"")}</span>
@@ -21322,6 +21994,7 @@ function tlOficial(itens, vazio){
       <span class="tl-fim">${x.html||""}${sinaisHtml(x.and)}</span>
     </li>`;
   }
+  if(temaV10()) soltarRotina();
   if(diaAtual!==null) corpo+=fecharDia();
   return `<ul class="timeline">${corpo}</ul>`;
 }
@@ -21847,10 +22520,15 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
       ${minha?`<button class="tl-bt tl-bt-ok tf-acao" onclick="concluirDeVez('${minha.id}')" title="concluir a sua tarefa — dá para desfazer logo depois">Concluir tarefa</button>`:""}
       <button class="tl-bt" onclick="abrirRespInline('${a.id}',1)" title="responder dando prazo adicional">+ prazo</button>
       ${alvo?`<button class="tl-bt tf-acao" onclick="adiarTarefa('${alvo.id}')" title="mudar a data da tarefa">Reagendar</button>`:""}
-      <button class="tl-bt tl-bt-ic" onclick="novaTarefaComentario('${a.id}','${a.caso_id}')" title="mais uma tarefa neste comentário — outra pessoa, outra data" aria-label="mais uma tarefa">＋</button>
       <span class="tl-barra-fim">
-        <button class="tl-bt tl-bt-ic" title="ciente — um toque, sem texto" aria-label="ciente" onclick="reagir('${a.id}','${a.caso_id}')">👍</button>
-        ${apagar}${sinaisHtml(a)}</span>
+        <button class="tl-bt tl-bt-ic" title="ciente — um toque, sem texto" aria-label="ciente" onclick="reagir('${a.id}','${a.caso_id}')">${IC_SVG.ciente}</button>
+        ${sinaisHtml(a)}
+        ${/* F190 · o raro sai da vista: mais uma tarefa e apagar vão para o ⋯ */""}
+        ${menuMais([
+          `<button class="tl-mais-it" role="menuitem" onclick="novaTarefaComentario('${a.id}','${a.caso_id}')">Mais uma tarefa neste comentário</button>`,
+          `<button class="tl-mais-it" role="menuitem" onclick="copiar(${esc(JSON.stringify(corpo))},'Texto copiado')">Copiar o texto</button>`,
+          a.autor_id===eu.id&&a.origem==="app" ? `<button class="tl-mais-it perigo" role="menuitem" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">Apagar este comentário</button>` : "",
+        ])}</span>
     </span>` : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
     <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${fmtTS(a.criado_em).slice(0,5)} · ${horaSP(a.criado_em)}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}<span class="tl-cab-fim">${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${tarefasCartao(a)}${chipsReacao}${resposta||""}${barra}${raiz?caixaRespInline(a):""}</span>`;
@@ -21937,6 +22615,12 @@ function linhaDoTempo(ands){
     const filhas = filhasTodas.filter(f=>!ehReacao(f));
     const sub = filhas.length ? `<span class="resp">${filhas.map(f=>
       `<span class="resp-item">${comentario(f)}</span>`).join("")}</span>` : "";
+    // F190 · o movimento do portal que cai aqui (CRPS, situação do INSS) sai no
+    // cartão oficial, igual às outras abas, e não como anotação sem autor
+    if(temaV10() && (a.origem==="crps" || (a.origem==="pat" && !ehEventoSistema(a))) && !filhas.length){
+      const l = andLimpo(a, D.casoPorId.get(a.caso_id));
+      return cartaoTl({q:l.q, em:iconeFonte(a.origem==="crps"?"crps":"inss"), rot:a.origem==="crps"?"Recurso":"INSS", texto:l.texto, and:a});
+    }
     if(ehEventoSistema(a) && !filhas.length)
       return `<li class="tl-sys"><span class="texto" title="${esc(fmtTS(a.criado_em))} às ${esc(horaSP(a.criado_em))}">${esc(a.origem==="pat"?limparHtmlPat(a.texto):a.texto)}</span></li>`;
     return `<li class="${temaV10()?"tl-card ":""}${naoLi(a)?"tl-nao-lida":""}${clsSinal(a)}">${comentario(a, sub, reacoes, true)}</li>`;
@@ -22043,11 +22727,12 @@ async function alternarFaseAba(casoId, qual){
 // o botão, no cabeçalho de cada painel
 function botaoFaseAba(k, qual){
   const a = arqInfo(k, "aba:"+qual), co = a && D.colPorId.get(a.por);
+  const cls = temaV10() ? "tl-bt tl-quieto" : "btn-mini";
   return a
     ? `<span class="chip neutro" title="fase encerrada${co?" por "+esc(co.nome):""} em ${fmtTS(a.em)}">✔ fase encerrada${co?` por ${esc(co.inicial)}`:""}</span>
-       <button class="btn-mini" onclick="alternarFaseAba('${k.id}','${qual}')"
+       <button class="${cls}" onclick="alternarFaseAba('${k.id}','${qual}')"
          title="voltar a tratar esta fase como em andamento">↩ reabrir</button>`
-    : `<button class="btn-mini" onclick="alternarFaseAba('${k.id}','${qual}')"
+    : `<button class="${cls}" onclick="alternarFaseAba('${k.id}','${qual}')"
         title="esta etapa terminou e o caso seguiu para a próxima — a aba fica em cinza, sem perder nada. Não use por causa de mandado de segurança: o MS não encerra o recurso.">✔ fase encerrada</button>`;
 }
 function chaveCnj(inst, n){
@@ -22106,7 +22791,7 @@ function painelINSS(k, ands){
   const temDocs = docsDaOrigem(k, ["pat"]).length > 0;
   const verDocs = fontePat==="docs" && temDocs;
   const menu = temDocs ? `<div class="sub-menu fontes" style="width:100%">
-    <button class="${verDocs?"":"on"}" onclick="fontePat='';repintarFicha()">🌻 Comentários (${coms.length})</button>
+    <button class="${verDocs?"":"on"}" onclick="fontePat='';repintarFicha()">${temaV10()?"":"🌻 "}Comentários (${coms.length})</button>
     ${botaoDocs(k, ["pat"], verDocs, "fontePat='docs';repintarFicha()")}
   </div>` : "";
   if(verDocs) return comp0 + menu + painelDocumentos(k, ["pat"]);
@@ -22127,13 +22812,15 @@ function painelINSS(k, ands){
     // limpar de novo na saída: comentário gravado antes da limpeza de entrada
     // ainda carrega "<p>" e "&aacute;" no banco
     const jaLi=(a.andamentos_lidos||[]).some(l=>l.colaborador_id===eu.id);
-    return { q: qSP(a.criado_em), em: doInss?"🌻":"🏢", and: a,
+    const l = andLimpo(a, k);
+    return { q: l.q, em: doInss?"🌻":"🏢", and: a,
       rot: doInss?"INSS":"Escritório (no portal)",
-      texto: limparHtmlPat(m ? a.texto.slice(m[0].length) : a.texto),
-      html: `<span style="display:inline-flex;gap:4px;margin-left:6px;vertical-align:middle">
+      texto: l.texto,
+      // F190 · no tema o cartão oficial monta a barra sozinho
+      html: temaV10() ? "" : `<span style="display:inline-flex;gap:4px;margin-left:6px;vertical-align:middle">
         ${jaLi?"":`<button class="btn-mini" onclick="liNaFicha('${a.id}')" title="marcar como lido (sai das 📣 Novidades)">✔ li</button>`}
         ${segBtnHtml(segRegistrar(k.id, a.texto, a.id))}</span>` };
-  });
+  }).sort((x,y)=>x.q<y.q?1:-1);   // a data do portal pode não seguir a ordem da coleta
   return comp + `<div class="fatos" style="margin-bottom:12px">
     <div class="fatos-topo">
       <h3 style="font-size:14px">Comentários do processo no INSS</h3>
@@ -22164,6 +22851,34 @@ const RE_MARCO_TUDO = new RegExp("\\b(senten[çc]a|ac[óo]rd[ãa]o|monocr[áa]ti
   +"deferid\\w*|indeferid\\w*|concedid\\w*|concess[ãa]o|implantad\\w*|"
   +"cessad\\w*|cessa[çc][ãa]o|exig[êe]ncia|recurso (?:provido|improvido|desprovido))\\b","i");
 let tudoSoMarcos=false;
+// F190 · os filtros do Caso completo: por fonte, o que pede ação e o que tem documento
+let filtroTudo="tudo";
+const FILTROS_TUDO = [["tudo","Tudo"],["escritorio","Escritório"],["inss","INSS"],["recurso","Recurso"],["judicial","Judicial"],["acao","Pede ação"],["prazo","Prazo sugerido"],["docs","Com documento"]];
+const temPrazoSugerido = x => !!(x.and && ["pje","crps"].includes(x.and.origem) && prazoSugeridoHtml(x.and, -1));
+function fonteFiltro(x){
+  const c = x.chip||"";
+  return /Escrit/.test(c) ? "escritorio" : /INSS/.test(c) ? "inss" : /Recurso/.test(c) ? "recurso" : /PJe|CNJ/.test(c) ? "judicial" : c.startsWith("🩺") ? "pericia" : "outro";
+}
+// o que pede ação: movimento dos portais não lido (menos a rotina), prazo
+// sugerido sem prazo marcado, e o que alguém marcou importante ou urgente
+function pedeAcao(x){
+  if(x.ev) return x.ev.status==="agendada" && (!evAvisado(x.ev) || dataSP(x.ev.data_hora)<hoje());
+  const a = x.and; if(!a) return !!(x.crpsE && (x.crpsE.importante || x.crpsE.urgente));
+  if(a.importante || a.urgente) return true;
+  if(!ehOficial(a)) return false;
+  if(["pje","crps"].includes(a.origem) && prazoSugeridoHtml(a, -1)) return true;
+  return !euLi(a) && !ehRotina(x);
+}
+function passaFiltro(x, f){
+  if(f==="tudo") return true;
+  const a = x.and;
+  if(f==="acao") return pedeAcao(x);
+  if(f==="prazo") return temPrazoSugerido(x);
+  if(f==="docs") return !!(a && (D.anexos||[]).some(an=>an.andamento_id===a.id));
+  const fo = fonteFiltro(x);
+  // perícia e audiência entram tanto no INSS quanto no Judicial
+  return fo===f || (fo==="pericia" && (f==="inss" || f==="judicial"));
+}
 // timestamp -> "AAAA-MM-DDTHH:MM" DE BRASÍLIA: o corte do ISO cru pegava a
 // data UTC e todo registro feito depois das 21h aparecia (e era copiado para
 // petição) com a data do dia seguinte; e a ordenação misturava formatos
@@ -22171,13 +22886,16 @@ const qSP = ts => ts ? dataSP(ts)+"T"+horaSP(ts) : "";
 function fatosDoCasoTodo(k, ands){
   const itens=[];
   for(const a of (ands||[]).filter(x=>!x.excluir)){
-    if(ehComentarioPat(a)){
-      const m=/^(INSS|Escritório)\s*·\s*/.exec(a.texto||"");
-      itens.push({q:qSP(a.criado_em), chip:"🌻 INSS", cor:"per", id:a.id, and:a,
-        texto:limparHtmlPat(m?a.texto.slice(m[0].length):a.texto)
-          + (m&&m[1]==="Escritório"?" (comentário nosso no portal)":"")});
+    if(a.origem==="pat"){
+      const m=/^(INSS|Escritório)\s*·\s*/.exec(a.texto||""), l=andLimpo(a, k);
+      itens.push({q:l.q, chip:"🌻 INSS", cor:"per", id:a.id, and:a,
+        texto:l.texto + (m&&m[1]==="Escritório"?" (comentário nosso no portal)":"")});
     }else if(a.origem==="pje"){
-      itens.push({q:qSP(a.criado_em), chip:"⚖️ PJe", cor:"neutro", id:a.id, and:a, texto:(a.texto||"")});
+      const l=andLimpo(a, k);
+      itens.push({q:l.q, chip:"⚖️ PJe", cor:"neutro", id:a.id, and:a, texto:l.texto});
+    }else if(a.origem==="crps"){
+      const l=andLimpo(a, k);
+      itens.push({q:l.q, chip:"🖥 Recurso", cor:"fase", id:a.id, and:a, texto:l.texto});
     }else{
       // F46 · quem escreveu aparece com NOME e COR (avatar do colaborador),
       // não mais "P:" espremido no texto — a autoria vai nos campos próprios
@@ -22193,7 +22911,7 @@ function fatosDoCasoTodo(k, ands){
   for(const b of crpsBlocos(k))
     for(const e of (b.eventos||[])){
       if(e.tipo==="ruido") continue;
-      itens.push({q:isoCrps(e.data), chip:"🖥 Recurso", cor:"fase",
+      itens.push({q:isoCrps(e.data), chip:"🖥 Recurso", cor:"fase", crpsT:b, crpsE:e,
         forte:decideOCaso(e), texto:String(e.resumo||e.bruto||"")});
     }
   if(k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length))
@@ -22207,7 +22925,7 @@ function fatosDoCasoTodo(k, ands){
   // F66 · cancelada NÃO conta a história aqui: sai do Caso completo (a aba
   // Perícias continua guardando o histórico completo, canceladas incluídas)
   for(const e of D.eventos.filter(e=>e.caso_id===k.id && e.status!=="cancelada"))
-    itens.push({q:qSP(e.data_hora), chip:"🩺 "+(e.tipo||"Perícia").split(" ")[0], cor:"per",
+    itens.push({q:qSP(e.data_hora), chip:"🩺 "+(e.tipo||"Perícia").split(" ")[0], cor:"per", ev:e,
       texto:`${e.tipo||"Perícia"} ${e.status==="agendada"?"marcada":e.status==="realizada"?"— compareceu ✔":e.status||""}${e.local?` — ${e.local}`:""}`});
   for(const x of itens)
     x.marco = !!x.forte || x.chip.startsWith("🩺") || RE_MARCO_TUDO.test(x.texto);
@@ -22290,7 +23008,29 @@ function painelTudo(k, ands){
     return composerNoPainel(k) + `<div class="caso"><p class="meio-sub">Ainda não há nada registrado
       neste caso — em nenhuma das fontes.</p></div>`;
   const marcos=itens.filter(x=>x.marco);
-  const mostra=(tudoSoMarcos && marcos.length) ? marcos : itens;
+  const filtro = temaV10() ? filtroTudo : "tudo";
+  const base=(tudoSoMarcos && marcos.length) ? marcos : itens;
+  const mostra=base.filter(x=>passaFiltro(x, filtro));
+  const naoLidos=itens.filter(x=>x.and && ehOficial(x.and) && !euLi(x.and)).length;
+  // F190 · o painel "Pede ação": o que espera alguém, em números que filtram,
+  // e o Claude sobre o caso. A ficha é estreita: fica no alto, não ao lado.
+  const nAcao = itens.filter(pedeAcao).length;
+  const nPrazo = itens.filter(temPrazoSugerido).length;
+  const nDocNovo = itens.filter(x=>x.and && !euLi(x.and) && (D.anexos||[]).some(an=>an.andamento_id===x.and.id)).length;
+  const temDocs = documentosDoCaso(k).length > 0;
+  const painelAcao = temaV10() ? `<section class="cc-acao" aria-label="o que pede ação neste caso">
+      <span class="cc-acao-tit">Pede ação</span>
+      <button class="cc-acao-n${nAcao?"":" zero"}" onclick="filtroTudo='acao';repintarFicha()" ${nAcao?"":"disabled"}><b>${nAcao}</b> ${nAcao===1?"registro":"registros"}</button>
+      <button class="cc-acao-n${nPrazo?" prazo":" zero"}" onclick="filtroTudo='prazo';repintarFicha()" ${nPrazo?"":"disabled"}><b>${nPrazo}</b> prazo${nPrazo===1?"":"s"} sugerido${nPrazo===1?"":"s"}</button>
+      <button class="cc-acao-n${nDocNovo?"":" zero"}" onclick="filtroTudo='docs';repintarFicha()" ${nDocNovo?"":"disabled"}><b>${nDocNovo}</b> documento${nDocNovo===1?"":"s"} novo${nDocNovo===1?"":"s"}</button>
+      <span class="cc-acao-fim">
+        ${naoLidos?`<button class="tl-bt" onclick="liTudoNaFicha('${k.id}')" title="marcar como lidos todos os andamentos dos portais deste caso">Marcar ${naoLidos} como lido${naoLidos>1?"s":""}</button>`:""}
+        <button class="tl-bt" onclick="${temDocs?`menuClaudeDocs('${k.id}',[])`:`menuClaude('${k.id}')`}">${IC_SVG.claude} Claude sobre o caso</button>
+      </span></section>` : "";
+  const chipsFiltro = temaV10() ? `${painelAcao}<div class="cc-filtros" role="group" aria-label="filtrar os registros">${FILTROS_TUDO.map(([f,r])=>{
+      const n = base.filter(x=>passaFiltro(x, f)).length;
+      return (f==="tudo"||n) ? `<button class="cc-filtro${filtro===f?" on":""}" aria-pressed="${filtro===f}" onclick="filtroTudo='${f}';repintarFicha()">${r} · ${n}</button>` : "";
+    }).join("")}</div>` : "";
   // F45 · a MESMA estrutura da conversa do Escritório, com a fonte no lugar
   // do autor — o chip "🌻 INSS" vira selo + nome do cartão
   const linhas = mostra.map(x=>{
@@ -22305,13 +23045,16 @@ function painelTudo(k, ands){
     // F141 · a bolinha da fonte mostra o símbolo do sistema de onde o registro
     // veio (PJe, e-SAJ, eproc, INSS, e-Sisrec, CNJ); a ⭐ fica só para importante
     const fk = fonteDoItem(x);
+    const ofi = temaV10() && !x.and && !nosso ? oficDoItem(k, x) : null;   // uma vez por repintura
     return { q: x.q, em: identidade?esc(x.avIni):(iconeFonte(fk)||(temaV10()?(svgIc(em,12)||em):em)),
       // o DataJud diz em que sistema o processo corre: o nome dele vem primeiro
       rot: nosso?(x.quem||resto.join(" ")):(/CNJ/.test(x.chip||"")&&fk&&fk!=="cnj"
         ? `${FONTES_SIS[fk].n} · CNJ` : /PJe/.test(x.chip||"")&&fk ? FONTES_SIS[fk].n : (resto.join(" ")||em)),
-      corAv: identidade?x.avCor:null, texto: x.texto, and: x.and,
+      corAv: identidade?x.avCor:null, texto: x.texto, and: x.and, ev: temaV10() ? x.ev : null,
       forte: x.marco, cls: x.resposta?"tl-resposta":"",
-      html: `<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, x.texto, x.id||null))}</span>`
+      // F190 · o espelho do e-SISREC e do CNJ também vira cartão oficial
+      ofic: ofi,
+      html: (temaV10() && (x.and ? ehOficial(x.and) : !!ofi)) ? "" : `<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, x.texto, x.id||null))}</span>`
         // F86 · quem do escritório já leu o que o robô trouxe: o mesmo ✔ li da
         // aba INSS, agora também no Caso completo (só no tema v10)
         + ((temaV10() && x.and && x.and.origem && x.and.origem!=="app")
@@ -22333,7 +23076,8 @@ function painelTudo(k, ands){
           title="a linha do tempo inteira em texto — para colar numa petição, num e-mail ou numa IA">copiar em texto</button>
       </span>
     </div>
-    ${temaV10() ? casoCompletoPorFase(k, linhas, mostra) : tlOficial(linhas)}
+    ${chipsFiltro}
+    ${!mostra.length ? `<p class="meio-sub" style="padding:8px 12px">Nada neste filtro.</p>` : temaV10() ? casoCompletoPorFase(k, linhas, mostra) : tlOficial(linhas)}
     <div class="fatos-pe" style="justify-content:flex-end">
       <span class="meio-sub">${temaV10()?`<i class="cc-ponto"></i> marco do caso`:"fundo âmbar = marco do caso"} · leitura, não edição — cada registro se corrige na aba de origem</span>
     </div>
@@ -22520,6 +23264,8 @@ function itemRecurso(t, e, casoId){
     // ⭐ por movimentação: o que o robô traz é muito, e nem tudo pede ação.
     const i = evs.indexOf(e);
     const alv = `'${casoId}','${esc(t.nup||"")}',${i}`;
+    if(temaV10()) return { q: isoCrps(e.data), em: iconeFonte("crps")||"🖥", rot: "Recurso", texto: txt, forte,
+      cls: `${e.importante?"crps-imp":""}${e.urgente?" tl-urg":""}`, ofic: oficCrps(t, e, casoId, selo, guardados, alv) };
     return { q: isoCrps(e.data), em: e.icone||"🖥", rot: "Recurso", texto: txt, forte,
       cls: `${e.importante?"crps-imp":""}${e.urgente?" tl-urg":""}`,
       html: ` ${selo}
@@ -22559,7 +23305,7 @@ function blocoRecurso(t, casoId){
     </div>
     ${tlOficial(cheios.map(linha), "Sem andamentos.")}
     ${ruido.length?`<details class="crps-ruido"><summary>+ ${ruido.length} movimentação interna (encaminhamentos automáticos, cadastro)</summary>
-      ${tlOficial(ruido.map(linha))}</details>`:""}
+      ${tlOficial(ruido.map(e=>temaV10() ? {...linha(e), ofic:null, html:""} : linha(e)))}</details>`:""}
     <div class="fatos-pe" style="justify-content:flex-end">
       <span class="meio-sub">consulta de ${t.consultado_em?fmt(dataSP(t.consultado_em)):"—"}</span>
     </div>
@@ -22604,7 +23350,7 @@ function menuDocsCrps(k){
   if(!docsDaOrigem(k, ["crps"]).length) return "";
   const ver = fonteCrps==="docs";
   return `<div class="sub-menu fontes" style="width:100%">
-    <button class="${ver?"":"on"}" onclick="fonteCrps='';repintarFicha()">⚖️ Andamentos do recurso</button>
+    <button class="${ver?"":"on"}" onclick="fonteCrps='';repintarFicha()">${temaV10()?"":"⚖️ "}Andamentos do recurso</button>
     ${botaoDocs(k, ["crps"], ver, "fonteCrps='docs';repintarFicha()")}
   </div>`;
 }
@@ -22660,7 +23406,7 @@ function painelCRPS(k){
   </div>` : "";
   return `${composerNoPainel(k)}${menuDocsCrps(k)}${avisoJuntos(k)}${menuNup}
     ${comEventos.length?`<div class="form-linha" style="margin-bottom:8px">
-      <button class="btn-mini" onclick="copiarCrps('${k.id}')">💬 copiar mensagem ao cliente</button></div>`:""}
+      <button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarCrps('${k.id}')" title="a situação do processo inteiro, pronta para o cliente">${temaV10()?"":"💬 "}Copiar situação para o cliente</button></div>`:""}
     ${juntos ? blocoRecursosJuntos(comEventos, k) + manuais.map(b=>quadroManual(b, k)).join("")
       : escolhido ? (escolhido.manual ? quadroManual(escolhido, k) : blocoRecurso(escolhido, k.id)) : ""}
     ${gerNups}`;
@@ -23091,19 +23837,67 @@ function docsDoAndamentoHtml(andId){
     </div>`;
   }).join("");
 }
+// o movimento como se lê: sem "PJe (1º grau):", sem "— em 08.10.2026 14:23"
+// e sem "— ProceComCiv 5000850-63.2023.4.03.6136", que a coleta repete em
+// toda linha. A data e a hora do texto são as do movimento no tribunal e
+// passam a datar a linha (a hora da coleta não diz nada ao leitor).
+const RX_CNJ_FIM = /\s+—\s+(?:[A-Za-zÀ-ÿ]+\s+)?\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}\s*$/;
+const RX_EM_DATA = /\s+—\s+em\s+(\d{2})[./](\d{2})[./](\d{4})(?:\s+(\d{2}:\d{2}))?/;
+function movPjeLimpo(a){
+  const t = String((a && a.texto) || "");
+  const sis = /^(?:PJe|eproc TJSP|e-SAJ TJSP)\s*\(([^)]+)\)\s*:\s*/.exec(t);
+  let s = sis ? t.slice(sis[0].length) : t;
+  const em = RX_EM_DATA.exec(s);
+  const num = /\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}/.exec(s.match(RX_CNJ_FIM)?.[0] || "");
+  s = s.replace(RX_EM_DATA, "").replace(RX_CNJ_FIM, "").trim();
+  const chave = /:(\d{4}-\d{2}-\d{2}T\d{2}:\d{2})/.exec(String((a && a.origem_id) || ""));
+  const q = em ? `${em[3]}-${em[2]}-${em[1]}${em[4]?`T${em[4]}`:""}` : chave ? chave[1] : qSP(a && a.criado_em);
+  return { texto: s || t, grau: sis ? sis[1].trim() : null, numero: num ? num[0] : null, q };
+}
+// O MESMO PADRÃO PARA TODA FONTE (pedido do Paulo, 10.10.2026): a linha diz
+// só o que aconteceu. A fonte já está no rótulo; o número do protocolo só
+// aparece quando o caso tem mais de um; a data do portal data a linha.
+//   "INSS · Movimentação no protocolo 123 — situação: Em análise (portal atualizado em 2026-09-01T10:00:00)."
+//     → "Situação: Em análise"
+//   "🖥 CRPS · 01/10/2026 — 📥 Protocolo recebido no INSS" → "📥 Protocolo recebido no INSS"
+function andLimpo(a, k){
+  if(!a) return {texto:"", q:""};
+  if(a.origem==="pje"){ const l = movPjeLimpo(a); return {texto:l.texto, q:l.q}; }
+  let t = String(a.texto||""), q = qSP(a.criado_em);
+  if(a.origem==="crps"){
+    const m = /^🖥\s*CRPS\s*·\s*(\d{2})\/(\d{2})\/(\d{4})\s*—\s*/.exec(t);
+    if(m){ t = t.slice(m[0].length); q = `${m[3]}-${m[2]}-${m[1]}`; }
+    return {texto:t, q};
+  }
+  if(a.origem!=="pat") return {texto:t, q};
+  t = limparHtmlPat(t.replace(/^(INSS|Escritório)\s*·\s*/, ""));
+  const port = /\s*\(portal atualizado em (\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})[^)]*\)\.?/.exec(t);
+  if(port){ q = `${port[1]}T${port[2]}`; t = t.replace(port[0], ""); }
+  const varios = new Set(((k&&k.protocolos)||[]).map(x=>soDig(x)).filter(Boolean)).size > 1;
+  t = t.replace(/^Movimentação no protocolo (\d+)\s*—\s*situação:\s*/i, (_, n) => varios ? `Protocolo ${n} · situação: ` : "Situação: ")
+       .replace(/^Situação registrada:\s*/i, "Situação: ")
+       .replace(/^Protocolo (\d+) juntado/i, (x, n) => varios ? x : "Protocolo juntado");
+  return {texto:t.trim(), q};
+}
 function caixaPje(k, movs){
   if(!movs || !movs.length) return "";
+  const limpos = movs.map(a=>({a, l:movPjeLimpo(a)})).sort((x,y)=>x.l.q<y.l.q?1:-1);
+  // o número só aparece quando a coleta mistura processos (visão "todos")
+  const varios = new Set(limpos.map(x=>soDig(x.l.numero||"")).filter(Boolean)).size > 1;
   // F45 · o mesmo esqueleto da conversa do Escritório
   // F71 · "⚠ não é deste caso": a saída para o movimento intruso (caso real:
   // andamento de um processo caiu na ficha de outro cliente)
-  return `<div class="caso" style="margin-bottom:10px">
-    <div class="rotulo-caso">⚡ coletas do ${nomeDaColeta(movs)} (${movs.length})</div>
-    ${tlOficial(movs.map(a=>({
-      q: qSP(a.criado_em), texto: a.texto||"", and: a,
-      // F146 · o sistema de cada movimento sai do número CNJ, não do rótulo da coleta
-      rot: sisCurtoDoMov(a),
+  // etapa 3 · no tema a fonte já está no filtro: sem a caixa cinza e sem o rótulo repetido
+  return `<div class="${temaV10()?"caixa-pje":"caso"}" style="margin-bottom:10px">
+    <div class="rotulo-caso${temaV10()?" sr-so":""}">⚡ coletas do ${nomeDaColeta(movs)} (${movs.length})</div>
+    ${tlOficial(limpos.map(({a, l})=>({
+      q: l.q, texto: l.texto, and: a,
+      // F146 · o sistema de cada movimento sai do número CNJ, não do rótulo da coleta;
+      // o grau só aparece quando não é o 1º
+      rot: sisCurtoDoMov(a) + (l.grau && !/^1/.test(l.grau) ? ` · ${l.grau}` : "")
+        + (varios && l.numero ? ` · ${rotuloProcesso(k, processosDoCaso(k).find(x=>soDig(x.numero)===soDig(l.numero)) || {numero:l.numero})}` : ""),
       em: temaV10() ? iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sisCurtoDoMov(a)]) : "⚖️",
-      html: `${docsDoAndamentoHtml(a.id)}${seguimentoHtml((D._andsFicha||[]).filter(x=>x.responde_a===a.id), tarefasDe)}<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, a.texto||"", a.id))}
+      html: temaV10() ? "" : `${docsDoAndamentoHtml(a.id)}${seguimentoHtml((D._andsFicha||[]).filter(x=>x.responde_a===a.id), tarefasDe)}<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, a.texto||"", a.id))}
         <button class="btn-mini" onclick="pjeForaDoCaso('${a.id}','${k.id}')"
           title="movimento de outro processo que caiu aqui por engano — remove e aponta a causa">⚠ não é deste caso</button></span>`
     })))}</div>`;
@@ -23327,8 +24121,8 @@ function painelCNJTodos(k, ands, cabec){
   const temDocs = docsDaOrigem(k, DOCS_JUDICIAIS).length > 0;
   const fonte = fonteCnj==="docs" && temDocs ? "docs" : temPje ? (fonteCnj==="oficial" && temOficial ? "oficial" : "pje") : "oficial";
   const menuFonte = (temPje || temOficial || temDocs) ? `<div class="sub-menu fontes" style="width:100%">
-    ${temPje?`<button class="${fonte==="pje"?"on":""}" onclick="fonteCnj='pje';repintarFicha()">⚡ Coleta do ${nomeDaColeta(pjeMovs)} (${pjeMovs.length})</button>`:""}
-    ${temOficial?`<button class="${fonte==="oficial"?"on":""}" onclick="fonteCnj='oficial';repintarFicha()">⚖️ Coleta oficial (CNJ)</button>`:""}
+    ${temPje?`<button class="${fonte==="pje"?"on":""}" onclick="fonteCnj='pje';repintarFicha()">${temaV10()?"":"⚡ "}Coleta do ${nomeDaColeta(pjeMovs)} (${pjeMovs.length})</button>`:""}
+    ${temOficial?`<button class="${fonte==="oficial"?"on":""}" onclick="fonteCnj='oficial';repintarFicha()">${temaV10()?"":"⚖️ "}Coleta oficial (CNJ)</button>`:""}
     ${botaoDocs(k, DOCS_JUDICIAIS, fonte==="docs", "fonteCnj='docs';repintarFicha()")}
   </div>` : "";
   if(fonte==="docs") return `${cabec}${menuFonte}${painelDocumentos(k, DOCS_JUDICIAIS)}${gerenciaProcessos(k)}`;
@@ -23340,7 +24134,8 @@ function painelCNJTodos(k, ands, cabec){
     return { q: m.data||"", em: "⚖️", forte: !!m.decisao, texto: txt,
       rot: `CNJ · ${rotuloProcesso(k, p)}${inst.rotulo&&cnjInstancias(k, t).length>1?` · ${inst.rotulo}`:""}`,
       cls: `${s.importante?"tl-imp":""}${s.urgente?" tl-urg":""}`,
-      html: `${m.claro?`<span class="meio-sub" style="display:block">${esc(m.claro)}</span>`:""}
+      ofic: temaV10() ? oficCnj(k, txt, m, ch) : null,
+      html: temaV10() ? "" : `${m.claro?`<span class="meio-sub" style="display:block">${esc(m.claro)}</span>`:""}
         <span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, txt, null))}</span>
         ${sinaisCnjHtml(k, ch, txt, m.data||"")}` };
   })));
@@ -23381,12 +24176,14 @@ function painelCNJ(k, ands){
   const fonte = fonteCnj==="docs" && temDocs ? "docs" : temPje ? (fonteCnj==="oficial" && temOficial ? "oficial" : "pje") : "oficial";
   const menuFonte = (temPje || temOficial || temDocs) ? `<div class="sub-menu fontes" style="width:100%">
     ${temPje?`<button class="${fonte==="pje"?"on":""}" onclick="fonteCnj='pje';repintarFicha()"
-      title="o que a extensão trouxe do tribunal na sua sessão">⚡ Coleta do ${nomeDaColeta(pjeMovs)} (${pjeMovs.length})</button>`:""}
+      title="o que a extensão trouxe do tribunal na sua sessão">${temaV10()?"":"⚡ "}Coleta do ${nomeDaColeta(pjeMovs)} (${pjeMovs.length})</button>`:""}
     ${temOficial?`<button class="${fonte==="oficial"?"on":""}" onclick="fonteCnj='oficial';repintarFicha()"
-      title="consulta pública do CNJ (DataJud), atualizada todo dia útil">⚖️ Coleta oficial (CNJ)</button>`:""}
+      title="consulta pública do CNJ (DataJud), atualizada todo dia útil">${temaV10()?"":"⚖️ "}Coleta oficial (CNJ)</button>`:""}
     ${botaoDocs(k, DOCS_JUDICIAIS, fonte==="docs", "fonteCnj='docs';repintarFicha()")}
+    ${temaV10()?`<span class="fontes-fim">${botaoFaseAba(k, "cnj")}</span>`:""}
   </div>` : "";
-  const barraFase = `<div class="form-linha" style="justify-content:flex-end;margin-bottom:6px">
+  // etapa 3 · no tema, o "fase encerrada" mora na linha das fontes: uma linha a menos
+  const barraFase = temaV10() && menuFonte ? "" : `<div class="form-linha" style="justify-content:flex-end;margin-bottom:6px">
     ${botaoFaseAba(k, "cnj")}</div>`;
   const cabec = barraFase + menuProc + menuFonte;
   const pjeBox = fonte==="pje" ? caixaPje(k, pjeMovs) : "";
@@ -23426,7 +24223,7 @@ function painelCNJ(k, ands){
       ${inst.decisao.claro?`<div class="meio-sub" style="margin-top:2px">${esc(inst.decisao.claro)}</div>`:""}
     </div>`:""}
     <div class="form-linha" style="margin-top:8px">
-      <button class="btn-mini" onclick="copiarDatajud('${k.id}')">💬 copiar mensagem ao cliente</button>
+      <button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarDatajud('${k.id}')" title="a situação do processo inteiro, pronta para o cliente">${temaV10()?"":"💬 "}Copiar situação para o cliente</button>
       ${botoesPjeDoCaso(k, "btn-mini")}
       <span class="meio-sub">consulta de ${fmt(t.consultado_em)}${inst.ajuizado_em?` · ajuizado em ${fmt(inst.ajuizado_em)}`:""}</span>
     </div>
@@ -23442,7 +24239,8 @@ function painelCNJ(k, ands){
       return {
       q: m.data||"", em: "⚖️", rot: "CNJ", forte: !!m.decisao, texto: txt,
       cls: `${s.importante?"tl-imp":""}${s.urgente?" tl-urg":""}`,
-      html: `${m.claro?`<span class="meio-sub" style="display:block">${esc(m.claro)}</span>`:""}
+      ofic: temaV10() ? oficCnj(k, txt, m, ch) : null,
+      html: temaV10() ? "" : `${m.claro?`<span class="meio-sub" style="display:block">${esc(m.claro)}</span>`:""}
         <span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, txt, null))}</span>
         ${sinaisCnjHtml(k, ch, txt, m.data||"")}` };
     }), "Sem movimentos.")}
@@ -23466,7 +24264,7 @@ function previsaoBox(k){
         : `ritmo observado de ~${p.ritmo_mes} posições/mês nos últimos ${p.base_dias} dias`}</div>`:""}
     ${p&&p.dias_medios?`<div class="meio-sub">⏱️ tempo médio de julgamento neste órgão: ${p.dias_medios} dias (indicador oficial do CNJ)</div>`:""}
     <div class="form-linha" style="margin-top:6px">
-      <button class="btn-mini" onclick="copiarTrf3('${k.id}')">💬 copiar posição na fila</button>
+      <button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarTrf3('${k.id}')">${temaV10()?"":"💬 "}Copiar posição na fila</button>
       ${p?`<button class="btn-mini" onclick="copiarPrevisao('${k.id}')">📈 copiar previsão estimada</button>`:""}
     </div>
   </div>`;
@@ -23498,7 +24296,7 @@ function marcoCaso(k){
     <span class="meio-sub">(movimento oficial “${esc(m.nome||"")}”)</span>
     ${cobrar?`<span class="chip urg" style="background:#FFF4D6;color:#8A6100;border-color:#E9B44C">💰 honorários a cobrar</span>`:""}
     <div style="margin-top:4px">
-      <button class="btn-mini" onclick="copiarMarco('${k.id}')">💬 copiar mensagem ao cliente</button>
+      <button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarMarco('${k.id}')">${temaV10()?"":"💬 "}Copiar situação para o cliente</button>
       ${cobrar?`<button class="btn-mini" onclick="moverFase('${k.id}','pagamento')">💰 mover para Pagamentos</button>`:""}
     </div>
   </div>`;
@@ -23535,7 +24333,7 @@ function datajudCaso(k){
     </div>`:""}
     <div style="margin-top:4px">
       ${recentes.length?`<button class="btn-mini" onclick="const e=document.getElementById('dj-mais-${k.id}');e.style.display=e.style.display==='none'?'block':'none';this.textContent=e.style.display==='none'?'📖 ver últimos movimentos':'🔽 esconder';">📖 ver últimos movimentos</button>`:""}
-      <button class="btn-mini" onclick="copiarDatajud('${k.id}')">💬 copiar mensagem ao cliente</button>
+      <button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarDatajud('${k.id}')" title="a situação do processo inteiro, pronta para o cliente">${temaV10()?"":"💬 "}Copiar situação para o cliente</button>
       <span class="meio-sub">consulta de ${fmt(t.consultado_em)}</span>
     </div>
   </div>`;
@@ -23566,7 +24364,7 @@ function trf3Caso(k){
     · consulta de ${fmt(t.consultado_em)}
     ${projecaoTrf3(t)}
     <div style="margin-top:4px">
-      <button class="btn-mini" onclick="copiarTrf3('${k.id}')">💬 copiar mensagem ao cliente</button>
+      <button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarTrf3('${k.id}')">${temaV10()?"":"💬 "}Copiar situação para o cliente</button>
       ${t.projecao?`<button class="btn-mini" onclick="copiarPrevisao('${k.id}')">📈 copiar previsão estimada</button>`:""}
     </div>
   </div>`;
@@ -24833,8 +25631,11 @@ function lembreteDoEvento(evId){
   const e=D.eventos.find(x=>x.id===evId); if(!e) return null;
   const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
   const ctx = e.tipo.toLowerCase().includes("aud") ? "audiencia" : "pericia";
-  const m = modeloPor(ctx) || D.modelos[0];
-  return {texto: preencher(m.texto, c, e, null), cli: c};
+  const m = modeloPor(ctx) || (D.modelos||[])[0];
+  // sem modelo cadastrado, um lembrete mínimo em vez de quebrar o botão
+  const txt = m ? preencher(m.texto, c, e, null)
+    : `Olá, ${((c&&c.nome)||"").split(" ")[0]}! Lembrete: ${e.tipo.toLowerCase()} em ${fmt(dataSP(e.data_hora))} às ${horaSP(e.data_hora)}${e.local?`, ${e.local}`:""}. Leve documento com foto e os exames e relatórios médicos. Escritório Tercini.`;
+  return {texto: txt, cli: c};
 }
 async function copiarLembrete(evId){
   const l=lembreteDoEvento(evId);
@@ -25096,7 +25897,7 @@ async function fundirCasos(absorvidoId, destinoId){
   // campos: o destino manda; só o vazio herda. Listas se somam.
   const corpo={};
   for(const f of ["nb","processo","especie","beneficio","der","dib","dii","dat","dcb",
-                  "parceria","processo_link","situacao_inss","cadunico","resultado"])
+                  "parceria","processo_link","situacao_inss","cadunico","resultado","gratuidade"])
     if(!d[f] && a[f]) corpo[f]=a[f];
   corpo.protocolos=[...new Set([...(d.protocolos||[]),...(a.protocolos||[])])];
   const nups=[...new Set([...nupsDoCaso(d),...nupsDoCaso(a)])];
@@ -26388,7 +27189,7 @@ Assim sendo, requeiro os benefícios da Justiça Gratuita, de acordo com os disp
 ______________________________________
 <NOMESEGURADO>`},
 
-  beneficiario: {rot:"Declaração de Beneficiário", titulo:"DECLARAÇÃO DE RECEBIMENTO DE PENSÃO OU APOSENTADORIA EM OUTRO REGIME DE PREVIDÊNCIA", texto:
+  beneficiario: {rot:"Declaração de Não Recebimento de Benefício", titulo:"DECLARAÇÃO DE RECEBIMENTO DE PENSÃO OU APOSENTADORIA EM OUTRO REGIME DE PREVIDÊNCIA", texto:
 `ANEXO XXIV — INSTRUÇÃO NORMATIVA PRES/INSS Nº 128, DE 28 DE MARÇO DE 2022
 
 Eu, <NOMESEGURADO>, portador(a) do CPF nº <CPF>, declaro, sob as penas do art. 299 do Código Penal, que:
@@ -26542,9 +27343,17 @@ function preencherModeloDoc(txt, c, especie){
 }
 // a espécie que manda no contrato e no termo: a do caso escolhido; sem caso,
 // a que o atendimento anotou no cadastro
-function especieDoCliente(c, ks){
+// integração · o contrato e o termo leem a espécie do CASO (a
+// mesma do título); o benefício escrito à mão só vale sem espécie
+const especieDoContrato = (c, ks) => especieDoCliente(c, ks, true);
+function especieDoCaso(k){
+  return k ? ((k.especie||k.subespecie) ? tituloCaso(k) : (k.beneficio||"")) : "";
+}
+function especieDoCliente(c, ks, doc){
   const k = (casoSel && D.casoPorId.get(casoSel)) || (ks||[]).find(x=>x.fase!=="encerrado") || (ks||[])[0];
-  if(k && k.beneficio) return k.beneficio;
+  // a triagem lê o benefício escrito (ele diz "rural", "híbrida"…); o contrato
+  // e o termo leem a espécie do caso (especieDoContrato)
+  if(k && (doc ? especieDoCaso(k) : k.beneficio)) return doc ? especieDoCaso(k) : k.beneficio;
   // F31 · sem caso, a espécie do PRÉ-CASO vivo responde: a procuração e o
   // contrato impressos no fluxo saem da variante certa
   const pcs = precasosDe(c).filter(p=>p.especie && !p.so_lembrete);
@@ -26560,14 +27369,33 @@ function corpoDoDoc(chave, c, especie){
 // do escritório e com o endereço para onde a intimação volta
 const DOC_TIMBRE = `<div class="timbre"><b>Paulo Roberto Tercini Filho</b>
   <span>Advocacia Previdenciária · OAB/SP 331.110</span></div>`;
+// a folha sai com a forma do modelo do escritório: rótulos (OUTORGANTE:,
+// CLÁUSULA PRIMEIRA…) e nomes em negrito, parágrafo com recuo, data à
+// direita, assinatura e quem assina centralizados
+const DOC_ADVOGADOS = ["Paulo Roberto Tercini Filho","Marcos Henrique de Pádua Amorim","Amanda Cristiane Carneiro Garcez"];
+const MAI = "A-ZÁÉÍÓÚÂÊÔÃÕÇÀ";
+const RX_CAIXA_ALTA = new RegExp(`(?<![\\wÀ-ÿ])([${MAI}][${MAI}.]+(?:\\s+(?:DE|DA|DO|DOS|DAS|E|[${MAI}][${MAI}.]+)){2,})(?![\\wÀ-ÿ])`, "g");
+const RX_ROTULO = new RegExp(`^((?:CLÁUSULA|PARÁGRAFO|§\\s?\\d+º)[^:.]*[:.]|[${MAI}][${MAI} ]{3,}:)`);
+function negritoDoc(t, c){
+  const m=t.match(RX_ROTULO), rot=m?m[1]:"";
+  let resto=esc(t.slice(rot.length)).replace(RX_CAIXA_ALTA,"<b>$1</b>");
+  [...DOC_ADVOGADOS, c&&c.nome].filter(Boolean).forEach(n=>{ resto=resto.split(esc(n)).join(`<b>${esc(n)}</b>`); });
+  return (rot?`<b>${esc(rot)}</b>`:"") + resto;
+}
 function folhaDoc(d, c){
-  return `<section>${DOC_TIMBRE}<h1>${esc(d.titulo)}</h1>
-    ${d.corpo.split("\n").map(l=>{
-      const t=l.trim();
-      if(!t) return "<p class='vazio'></p>";
-      if(/^_{4,}/.test(t)) return `<p class="assin">${esc(t)}</p>`;
-      return `<p>${esc(t)}</p>`;
-    }).join("")}
+  let assin=false;
+  const linhas=d.corpo.split("\n").map(l=>{
+    const t=l.trim();
+    if(!t){ assin=false; return "<p class='vazio'></p>"; }
+    if(/^_{4,}/.test(t)){ assin=true; return `<p class="assin">${esc(t)}</p>`; }
+    if(assin) return `<p class="quem">${esc(t)}</p>`;
+    if(/^Monte Alto - SP,/.test(t)) return `<p class="data">${esc(t)}</p>`;
+    if(t.length<120 && t===t.toUpperCase() && /[A-Z]/.test(t)) return `<p class="sub">${esc(t)}</p>`;
+    // linha curta de formulário ou item ( X ), a), I -: sem recuo nem justificação
+    if(t.length<110 || /^(\(|-|\*|[a-z]\)|[IVX]+ -)/.test(t)) return `<p class="item">${negritoDoc(t, c)}</p>`;
+    return `<p>${negritoDoc(t, c)}</p>`;
+  });
+  return `<section>${DOC_TIMBRE}<h1>${esc(d.titulo)}</h1>${linhas.join("")}
     <div class="rodape">${esc(ESCRITORIO_RODAPE)}</div></section>`;
 }
 function janelaImpressao(titulo, folhas){
@@ -26579,20 +27407,30 @@ function janelaImpressao(titulo, folhas){
        12, espaçamento 1,5. Georgia fica de reserva para quem abrir num
        aparelho sem a fonte instalada. */
     body{font-family:"Bookman Old Style", Bookman, Georgia, serif;color:#111;
-      font-size:12pt;line-height:1.5;max-width:170mm;margin:0 auto;padding:14mm 0}
-    section{page-break-after:always;position:relative}
+      font-size:12pt;line-height:1.5;margin:0;padding:10mm 0;background:#e7e7e4}
+    /* na tela, cada documento é uma folha A4; na impressão, a folha é o papel */
+    section{page-break-after:always;position:relative;background:#fff;width:210mm;
+      box-sizing:border-box;min-height:297mm;margin:0 auto 10mm;padding:20mm 18mm 16mm;
+      box-shadow:0 1px 3px rgba(0,0,0,.18)}
     section:last-child{page-break-after:auto}
     .timbre{text-align:center;border-bottom:1.2pt solid #111;padding-bottom:6pt;margin-bottom:16pt}
     .timbre b{display:block;font-size:13pt;letter-spacing:.6pt;text-transform:uppercase}
     .timbre span{font-size:9pt;letter-spacing:.2pt}
     h1{font-size:12pt;font-weight:bold;text-align:center;text-transform:uppercase;
       letter-spacing:.5pt;margin:0 0 16pt}
-    p{margin:0 0 7pt;text-align:justify;text-indent:0}
+    p{margin:0 0 7pt;text-align:justify;text-indent:12.5mm}
+    p.item{text-align:left;text-indent:0;white-space:pre-wrap}
     p.vazio{margin:0 0 7pt;height:2pt}
-    p.assin{text-align:center;margin-top:20pt}
+    p.data{text-align:right;text-indent:0;margin-top:10pt}
+    p.sub{text-align:center;text-indent:0;font-weight:bold;margin-top:12pt}
+    p.assin{text-align:center;text-indent:0;margin:26pt 0 0}
+    p.quem{text-align:center;text-indent:0;margin:0}
+    b{font-weight:bold}
     .rodape{margin-top:20pt;padding-top:5pt;border-top:.6pt solid #999;
       font-size:8.5pt;text-align:center;color:#333;line-height:1.3}
-    @media print{ body{padding:0;max-width:none} @page{margin:20mm 18mm} }
+    @media print{ body{padding:0;background:none}
+      section{width:auto;min-height:0;margin:0;padding:0;box-shadow:none}
+      @page{size:A4;margin:20mm 18mm} }
   </style></head><body>${folhas}
   <script>window.print()<\/script></body></html>`);
   w.document.close();
@@ -26638,7 +27476,7 @@ async function irPreencherCadastro(cliId){
 function imprimirDocsEscritorio(cliId, chaves, falta){
   const c=D.cliPorId.get(cliId); if(!c) return;
   const ks=D.casosDoCliente.get(cliId)||[];
-  const esp=especieDoCliente(c, ks);
+  const esp=especieDoContrato(c, ks);
   const docs=(chaves||[]).map(ch=>corpoDoDoc(ch, c, esp)).filter(Boolean);
   if(!docs.length) return;
   janelaImpressao(docs.length===1 ? `${docs[0].rot} — ${c.nome}` : `Documentos — ${c.nome}`,
@@ -26662,7 +27500,7 @@ async function registrarDocGerado(cliId, rots, falta){
   }catch(e){ /* impressão não pode falhar por causa do registro */ }
 }
 function caixaDocumentos(c, ks){
-  const esp=especieDoCliente(c, ks);
+  const esp=especieDoContrato(c, ks);
   const vr=CONTRATO_VARIANTES[variantePorEspecie(esp)];
   const falta=faltaParaDocs(c);
   const bt=(ch)=>`<button class="btn-mini" onclick="gerarDocEscritorio('${ch}','${c.id}')"><span class="ic-bt">${CAD_IC.doc}</span>${DOCS_ESCRITORIO[ch].rot}</button>`;
@@ -27208,12 +28046,14 @@ function novoAndamentoDireito(cliId){
   const ta=document.getElementById("ad-anot");
   if(ta){ ta.scrollIntoView({block:"center"}); ta.focus(); }
 }
-const PROC_MODELOS = ["proc_adm","proc_judicial","pobreza","contrato"];
+// termo de representação e declaração de não recebimento acompanham a
+// procuração administrativa no INSS: saem marcados junto com as procurações
+const PROC_MODELOS = ["proc_adm","proc_judicial","termo","beneficiario","pobreza","contrato"];
 function modalProcuracoes(cliId){
   caixa(`<div class="adr-modal" role="dialog" aria-labelledby="adr-t-proc">
     <h3 id="adr-t-proc">Gerar procurações</h3>
     <p class="meio-sub" style="margin:0">Saem preenchidas com os dados da Identificação, prontas para imprimir.</p>
-    ${PROC_MODELOS.map(ch=>`<label class="adr-ck"><input type="checkbox" class="proc-ck" value="${ch}" ${ch.startsWith("proc_")?"checked":""}>
+    ${PROC_MODELOS.map(ch=>`<label class="adr-ck"><input type="checkbox" class="proc-ck" value="${ch}" ${/^(proc_|termo|beneficiario)/.test(ch)?"checked":""}>
       ${esc(DOCS_ESCRITORIO[ch].rot)}</label>`).join("")}
     <div class="adr-modal-bts">
       <button type="button" class="adr-bt" onclick="fecharCaixa()">Cancelar</button>
