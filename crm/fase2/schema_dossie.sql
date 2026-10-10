@@ -1,0 +1,15 @@
+-- ── Dossiê do cliente · o que CADA PORTAL tem e não tem ─────────────────────
+-- A extensão "Dossiê do cliente" (crm/fase2/dossie) baixa os documentos da
+-- sessão gov.br e os anexa à ficha (anexos.origem = 'dossie'). O PDF que veio
+-- já fica em `anexos`; o que o portal disse que NÃO EXISTE (sem CTC, sem CAT,
+-- sem PPP, benefício sem laudo, "não possui deficiência") só aparecia na faixa
+-- da página e sumia. Aqui fica o resumo de cada rodada, por portal, para a
+-- ficha mostrar "sem CTC", "sem PPP" sem ninguém abrir o Meu INSS de novo.
+--
+-- {
+--   "meuinss":  {"em": "2026-10-10T14:03:00Z", "baixados": ["CNIS · CNIS completo", …],
+--                "inexistentes": ["CTC: sem protocolo", …], "falhas": []},
+--   "mte":      {…}, "recursos": {…}, "hc": {…}
+-- }
+-- Uma chave por portal; a rodada nova substitui só a do portal que rodou.
+alter table clientes add column if not exists dossie jsonb;

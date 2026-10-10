@@ -83,7 +83,7 @@ async function rodarHc(tabId) {
   const info = await noHc(tabId, 'info', st.cliente || null);
   if (!info || info.erro) { await noHc(tabId, 'fim', (info && info.erro) || 'não consegui ler o HC'); return; }
   const { cliente, links } = info;
-  let ok = 0; const falhas = [], inexistentes = [];
+  let ok = 0; const falhas = [], inexistentes = [], porTela = {};
   for (const [tela, rotulo] of [['exames', 'exames'], ['internacoes', 'internações'], ['relatorios', 'relatórios']]) {
     if (!links[tela]) { falhas.push(`${rotulo}: link não encontrado no menu`); continue; }
     const pronto = carregou(tabId);
@@ -95,6 +95,7 @@ async function rodarHc(tabId) {
       r = await noHc(tabId, tela);
     }
     if (!r) { falhas.push(`${rotulo}: a tela não respondeu`); continue; }
+    porTela[rotulo] = r;
     falhas.push(...r.falhas.map(f => `${rotulo} · ${f}`));
     inexistentes.push(...r.inexistentes.map(f => `${rotulo} · ${f}`));
     for (const a of r.arquivos || []) {
@@ -102,17 +103,27 @@ async function rodarHc(tabId) {
       catch (e) { falhas.push(`${a.arquivo}: ${e.message || e}`); }
     }
   }
+  const baixados = [];
+  for (const [tela, r] of Object.entries(porTela)) for (const a of r.arquivos || []) baixados.push(`${tela} · ${a.arquivo}`);
+  const res = await resumo({ cpf: cliente.cpf, portal: 'hc', baixados, inexistentes, falhas });
   // falha primeiro: é o que pede ação, e não pode sumir atrás da lista de "sem resultado"
-  await noHc(tabId, 'fim', `${ok} documento(s) do HC`
+  await noHc(tabId, 'fim', `${ok} documento(s) do HC${res.crm && res.crm !== 'ok' ? ` (resumo no CRM: ${res.crm})` : ''}`
     + (falhas.length ? `\n${falhas.length} falharam:\n• ${falhas.slice(0, 6).join('\n• ')}` : '')
     + (inexistentes.length ? `\n${inexistentes.length} sem resultado no HC (imagem sem laudo ainda):\n• ${inexistentes.slice(0, 4).join('\n• ')}`
       + (inexistentes.length > 4 ? `\n• … e mais ${inexistentes.length - 4}` : '') : ''));
 }
 
+// o resumo da rodada (o que veio, o que o portal diz que não existe, o que
+// falhou) vai para clientes.dossie — é o que deixa a ficha dizer "sem CTC"
+const resumo = m => CRM.guardarResumo({ cpf: m.cpf, portal: m.portal,
+  resumo: { baixados: m.baixados || [], inexistentes: m.inexistentes || [], falhas: m.falhas || [] } })
+  .then(crm => ({ ok: true, crm }), e => ({ ok: false, crm: String(e.message || e) }));
+
 chrome.runtime.onMessage.addListener((m, _de, responder) => {
   if (!m || m.tipo === 'blob') return false;                // é para o offscreen
   if (m.tipo === 'hc') { rodarHc(m.tabId).catch(() => {}); responder({ ok: true }); return false; }
   const tarefa = m.tipo === 'salvar' ? salvar(m)
+    : m.tipo === 'resumo' ? resumo(m)
     : m.tipo === 'crm' && m.acao === 'entrar' ? CRM.entrar(m.email, m.senha).then(quem => ({ quem }))
     : m.tipo === 'crm' && m.acao === 'sair' ? CRM.sair().then(() => ({ ok: true }))
     : null;
