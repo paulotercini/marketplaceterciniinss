@@ -3410,6 +3410,12 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .adr [hidden],#ad-novo [hidden]{display:none!important}
 .adr-h{margin:0;font-size:16px;font-weight:600;color:var(--texto)}
 .adr-resumo,.hon-resumo{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+/* Honorários mais leve: ações da tabela e do contrato no tamanho de botão de linha */
+.hon-tab .adr-bt{padding:4px 12px;min-height:30px;font-size:12.5px}
+.hon-ct-acoes{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;margin-top:12px}
+.hon-ct-acoes .hon-assinado{display:flex;gap:8px;flex-wrap:wrap}
+.hon-ct-acoes .hon-dst[open]{flex-basis:100%}
+.hon-ct-acoes .adr-bt{padding:5px 12px;min-height:32px;font-size:12.5px}
 .adr-tile{background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
 .adr-tile-rot{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro)}
 .adr-tile-val{font-size:24px;font-weight:600;color:var(--texto);line-height:1.2}
@@ -15949,8 +15955,8 @@ function vinculoDaParcela(p, ks){
   if(!casos.length) return "";
   if(casos.length===1){
     const k=casos[0];
-    return p.caso_id===k.id
-      ? `<span class="chip neutro" title="benefício/serviço deste pagamento">${esc(tituloCaso(k))}</span>`
+    // um caso só: dizer o benefício em toda linha só repetia o título do caso
+    return p.caso_id===k.id ? ""
       : `<button class="btn-mini" title="vincular este pagamento ao caso do cliente"
            onclick="vincularPgto('${p.id}','${k.id}')">vincular a ${esc(tituloCaso(k))}</button>`;
   }
@@ -16227,25 +16233,23 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
           <h3 class="adr-h" id="hon-ct-t">Contrato</h3>
           ${ct ? `<dl class="hon-dl">
             ${ct.especie?`<dt>Serviço</dt><dd>${esc(ct.especie)}</dd>`:""}
-            <dt>Modalidade</dt><dd>${esc(ct.padrao)}</dd>
-            ${ct.ajuste?`<dt>Ajuste combinado</dt><dd>${esc(ct.ajuste)}</dd>`:""}
             <dt>Parceria</dt><dd>${parc?esc(parc):"sem parceria"}</dd>
             <dt>Destaque</dt><dd class="hon-dst-val">${esc(textoDestaque(cct.destaque))}</dd>
             <dt>Assinado</dt><dd class="hon-ass-val">${assin?(assin.criado_em?`em ${fmtTS(assin.criado_em)}`:"anexado"):"não anexado"}</dd>
           </dl>` : `<p class="adr-nota">Nenhum caso nem atendimento com espécie: o contrato sai quando houver.</p>`}
-          ${c ? `<details class="hon-dst" style="margin-top:10px"><summary class="adr-bt">alterar o destaque</summary>
+          ${c ? `<div class="hon-ct-acoes"><details class="hon-dst"><summary class="adr-bt">alterar o destaque</summary>
             <div class="form-linha" style="margin-top:8px;align-items:flex-end">
               <label class="adr-campo">Destaque dos honorários<select id="hon-dst">${DESTAQUE_OPC.map(([v,r,d])=>
                 `<option value="${v}" ${(cct.destaque||{}).st===v?"selected":""}>${d?r+" (data)":r}</option>`).join("")}</select></label>
               <label class="adr-campo">Data<input type="date" id="hon-dst-em" value="${esc((cct.destaque||{}).em||"")}"></label>
               <button class="adr-bt adr-primario" onclick="salvarDestaque('${c.id}')">Guardar</button>
             </div></details>
-          <div class="form-linha hon-assinado" style="margin-top:10px">
+          <div class="hon-assinado">
             ${assin?`<button class="adr-bt" onclick="abrirAnexo('${assin.id}')">abrir o contrato assinado</button>`:""}
             <label class="adr-bt" style="display:inline-flex;align-items:center">${assin?"trocar o arquivo":"anexar contrato assinado"}
               <input type="file" accept="application/pdf,image/*" class="sr-so" id="hon-ass-arq"
                 onchange="anexarContratoAssinado('${c.id}', this)"></label>
-          </div>` : ""}
+          </div></div>` : ""}
         </section>
         ${c ? `<section class="adr-card hon-cob" aria-labelledby="hon-cob-t">
           <h3 class="adr-h" id="hon-cob-t">Cobrança</h3>
