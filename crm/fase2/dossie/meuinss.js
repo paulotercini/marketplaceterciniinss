@@ -70,6 +70,10 @@
     // ── Declaração de beneficiário (nada consta) ────────────────────────────
     await pdf('Declaracao', 'Declaracao de beneficiario', `${API}declaracaoBeneficioServices/declaracaoBeneficioPdf/${cpf}`);
 
+    // ── Certificado da Pessoa com Deficiência (BPC, aposentadoria PCD, auxílio-inclusão):
+    // quem não tem recebe {"result": "...não possui deficiência..."} → "não existe no INSS"
+    await pdf('Declaracao', 'Certificado da pessoa com deficiencia', `${API}certificadoDeficienciaServices/certificadoDeficienciaPdf/${cpf}`);
+
     // ── Por benefício: carta de concessão e laudo médico ────────────────────
     let nbs = [];
     try {
@@ -77,10 +81,39 @@
       const lb = JSON.parse((mi && mi.nbsJson) || '{}').listaBeneficios || [];
       nbs = [...new Set(lb.map(b => String(b.numero || '').replace(/\D/g, '')).filter(Boolean))];
     } catch (e) {}
+    // Extrato de informações do benefício ("dossiê previdenciário"): a tela
+    // POSTa o formData do Redux com as opções marcadas — aqui vai tudo marcado
+    // (valor, pagamento, instituidor, dependentes, revisões, procurador,
+    // representante, perícias e reclusão, todas as datas). Mapeado pelo código
+    // em 10.10.2026; ainda não visto ao vivo — conta sem benefício.
+    const dossieTudo = { todos: true, valorBenef: true, pgtoBenef: true, instBenef: true, depBenef: true, revBenef: true,
+      procBenef: true, reprLegal: true, perMedica: true, compReclusao: true, dadosGerais: true,
+      dtIniPer: null, dtFimPer: null, dtIniRecl: null, dtFimRecl: null };
     for (const nb of nbs) {
       await pdf('Cartas de concessao', `Carta de concessao NB ${nb}`, `${API}calculoBeneficioServices/concalPdf/${nb}`);
       await pdf('Laudos', `Laudo medico NB ${nb}`, `${API}laudomedicoservices/pdf/${nb}`);
+      await pdf('Extrato do beneficio', `Extrato de informacoes do beneficio NB ${nb}`, `${API}formDinServices/gerarDossie/${nb}`,
+        { method: 'POST', headers: Object.assign({}, cab, { 'Content-Type': 'application/json' }), body: JSON.stringify(dossieTudo) });
     }
+
+    // ── Declaração de atividade (tipo de segurado cadastrado) ────────────────
+    await pdf('Declaracao', 'Declaracao de atividade', `${API}declaracaoAtividadeServices/declaracaoAtividadePdf/${cpf}`);
+
+    // ── CTC: só quem já pediu uma. `protocolos` devolve o protocolo ativo
+    // (ou vazio); a certidão sai por cpf + protocolo ────────────────────────
+    let ctc = 0;
+    try {
+      const rp = await pedir(`${API}ctcServices/protocolos`);
+      const tp = rp.ok ? await rp.text() : '';              // sem CTC o INSS responde 204 vazio (10.10.2026)
+      const jp = tp.trim() ? JSON.parse(tp) : null;
+      const protos = [].concat(jp && typeof jp === 'object' && !Array.isArray(jp) ? Object.values(jp) : jp || [])
+        .flatMap(x => (x && typeof x === 'object') ? Object.values(x) : [x])
+        .map(x => String(x == null ? '' : x).replace(/\D/g, '')).filter(d => d.length >= 8);
+      for (const p of [...new Set(protos)]) {
+        await pdf('CTC', `Certidao de tempo de contribuicao ${p}`, `${API}ctcServices/certidoes/${cpf}/${p}`);
+        ctc++;
+      }
+    } catch (e) { falhas.push(`CTC: ${e.message || e}`); }
 
     // ── Extrato de pagamento: últimos 12 meses (é por CPF, não por NB) ──────
     if (nbs.length) {
@@ -116,10 +149,11 @@
     }
 
     const resumo = `${ok.length} documento(s) baixado(s)`
-      + ` · ${nbs.length} benefício(s) · ${tarefas.length} pedido(s) · ${vinculos.length} vínculo(s) PPP · ${cats.length} CAT`
+      + ` · ${nbs.length} benefício(s) · ${tarefas.length} pedido(s) · ${vinculos.length} vínculo(s) PPP · ${cats.length} CAT · ${ctc} CTC`
       + (inexistentes.length ? `\n${inexistentes.length} não existem no INSS:\n• ${inexistentes.slice(0, 8).join('\n• ')}` : '')
       + (falhas.length ? `\n${falhas.length} falharam:\n• ${falhas.slice(0, 8).join('\n• ')}` : '');
-    D.faixa(resumo, falhas.length ? '#9A6700' : '#1E6F50');
+    const avisoCrm = await D.resumo(cliente, 'meuinss', { baixados: ok, inexistentes, falhas });
+    D.faixa(resumo + avisoCrm, falhas.length ? '#9A6700' : '#1E6F50');
     return { ok: ok.length, falhas };
   };
 })();

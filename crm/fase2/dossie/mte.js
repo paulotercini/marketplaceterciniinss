@@ -89,9 +89,10 @@
     await pdf('Extrato RAIS', `v1/caged/relatorio/rais/nit/${pis}/dataNascimento/${nasc}`);
     await pdf('Extrato CAGED', `v1/caged/relatorio/nit/${pis}/dataNascimento/${nasc}`);
 
+    const avisoCrm = await D.resumo(cliente, 'mte', { baixados: ok, inexistentes, falhas });
     D.faixa(`${ok.length} documento(s) do Emprega Brasil · ${contratos.length} contrato(s) na CTPS`
       + (inexistentes.length ? `\n${inexistentes.length} não existem:\n• ${inexistentes.join('\n• ')}` : '')
-      + (falhas.length ? `\n${falhas.length} falharam:\n• ${falhas.join('\n• ')}` : ''),
+      + (falhas.length ? `\n${falhas.length} falharam:\n• ${falhas.join('\n• ')}` : '') + avisoCrm,
       falhas.length ? '#9A6700' : '#1E6F50');
     return { ok: ok.length, falhas };
   };

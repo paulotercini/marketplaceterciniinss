@@ -72,3 +72,13 @@ test('HC: exame de imagem/método entra, exame de sangue fica de fora', () => {
                    'TP (TEMPO DE PROTROMBINA)', 'COOMBS DIRETO (POLIESPECIFICO)'])
     assert.ok(!R.ehExameDeImagem(n), n);
 });
+
+// o CLAUDE.md é como o CRM (e as outras sessões) ficam sabendo o que esta
+// extensão entrega: subir a versão sem atualizar a seção quebra aqui
+test('CLAUDE.md descreve esta versão da extensão', () => {
+  const fs = require('node:fs'), path = require('node:path');
+  const versao = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'manifest.json'), 'utf8')).version;
+  const md = fs.readFileSync(path.join(__dirname, '..', '..', '..', '..', 'CLAUDE.md'), 'utf8');
+  assert.ok(md.includes(`dossie-versao: ${versao}`), `CLAUDE.md ainda fala da versão antiga — atualize a seção "Dossiê do cliente" para ${versao}`);
+  assert.ok(md.includes(`(versão **${versao}**)`), 'o número visível da versão no CLAUDE.md não bate com o manifest');
+});
