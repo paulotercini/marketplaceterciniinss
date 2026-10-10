@@ -30,6 +30,8 @@
 
 **Correção.** Revisar pedido para corresponder à narrativa fática ou refazer narrativa para sustentar o pedido.
 
+**Conferência completa.** A ligação de cada pedido com fatos, provas, cálculo e conclusão é conferida pela cadeia do pedido (`CADEIA-DO-PEDIDO.md`, Onda 176).
+
 ## 3. Argumentação Repetitiva
 
 **Definição.** Mesmo fundamento jurídico ou fático apresentado mais de uma vez com palavras diferentes, inflando a peça.
