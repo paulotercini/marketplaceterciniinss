@@ -26,6 +26,50 @@ Sistema do escritório de advocacia previdenciária Paulo R. Tercini Filho, com 
 
 A fonte de dados dos geradores é o **Microsoft To Do** (Graph API, conta pessoal), onde cada tarefa é um cliente: título `Nome #CPF`, corpo com blocos datados `DD.MM.AAAA (Autor): texto` (mais novo no topo), checklist com aniversário.
 
+## Dossiê do cliente (crm/fase2/dossie) — o que chega ao CRM
+
+<!-- dossie-versao: 0.5.1 — ao mudar manifest.json da extensão, atualize esta seção e este número;
+     tests em crm/fase2/dossie/testes/regras.test.js conferem que batem. -->
+
+Extensão de navegador (versão **0.5.1**). Com o gov.br do cliente logado, um clique baixa os documentos
+do portal aberto na aba. Não faz login, não resolve captcha e não decide nada: coleta e entrega.
+
+**De onde coleta**
+- **Meu INSS**: CNIS completo, resumido e ano civil · declaração de beneficiário · certificado da pessoa
+  com deficiência · declaração de atividade · por benefício: carta de concessão, laudo médico e extrato
+  de informações do benefício (dossiê) · extrato de pagamento dos últimos 12 meses · cópia integral de
+  todos os pedidos administrativos (todos os anos) · PPP eletrônico por vínculo · CAT · CTC (se houver protocolo).
+- **e-Recursos (CRPS)**: todos os documentos de cada recurso do cliente.
+- **Emprega Brasil (MTE)**: CTPS digital e de outros vínculos, extratos RAIS e CAGED.
+- **HC Ribeirão**: exames de imagem e de método de todo o período (sem exame de sangue), internações,
+  relatórios médicos e multiprofissionais.
+
+**Onde entrega** (os três ao mesmo tempo)
+1. **Drive**: `G:\Meu Drive\Processos\<Letra>\<Nome #CPF>\Dossie\<fonte>\<arquivo>.pdf`. Pasta existente
+   vence (busca por `#CPF`, depois por nome sem acento); cliente novo ganha pasta capitalizada com `#CPF`.
+   Fontes: `CNIS`, `Declaracao`, `Cartas de concessao`, `Laudos`, `Extrato do beneficio`,
+   `Extrato de pagamento`, `Processos administrativos`, `PPP`, `CAT`, `CTC`, `Recursos\<NUP>`,
+   `CTPS RAIS CAGED`, `HC Ribeirao\Exames|Internacoes|Relatorios`. Gravado pelo programa `host/dossie_host.py`
+   (native messaging); sem ele, cai em `Downloads/Dossie/`.
+2. **Tabela `anexos`**, uma linha por PDF presa ao **cliente** (`cliente_id` pelo CPF; sem caso nem
+   andamento): `origem='dossie'`, `nome="<fonte> · <arquivo>"`, `caminho="dossie/<cpf>/<fonte>/<arquivo>"`
+   no bucket privado `anexos`, `tipo=application/pdf`. Caminho determinístico: rodar de novo substitui
+   (upsert), não duplica. `texto` fica vazio — a extensão **não extrai texto**; é o pipeline do CRM
+   (`textoDoDocumento`) que lê.
+3. **`clientes.dossie` (jsonb, `schema_dossie.sql`)**: resumo de cada rodada, uma chave por portal
+   (`meuinss`, `mte`, `recursos`, `hc`), e rodar um portal substitui só a chave dele:
+   `{"em": ISO, "baixados": [...], "inexistentes": [...], "falhas": [...]}`.
+   `inexistentes` é o que o portal **disse que não existe** (sem CTC, sem CAT, sem PPP, benefício sem laudo,
+   "não possui deficiência") — fato negativo para a triagem; `falhas` é erro técnico, pede rodada nova.
+   A ficha mostra isso na caixa "📂 Dossiê — o que os portais têm" (`caixaDossie` em `app.html`).
+
+**O que o CRM pode fazer**: ler os `anexos` com `origem='dossie'` (CNIS, PPP, cópia do processo e carta
+já estão no bucket para os agentes que leem CNIS/PPP); usar `clientes.dossie.<portal>.inexistentes` como
+fato negativo sem reabrir o portal; usar `.em` para saber a idade do dossiê.
+
+**Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
+Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
+
 ## Comandos
 
 ```bash

@@ -54,7 +54,7 @@
     }
 
     const ordem = [achado.sis, ...SISTEMAS.filter(s => s !== achado.sis)];
-    let ok = 0; const falhas = [];
+    const ok = [], falhas = [];
     for (const [i, nup] of achado.nups.entries()) {
       D.faixa(`recurso ${i + 1} de ${achado.nups.length}…`);
       let j = null;
@@ -75,13 +75,14 @@
           const u8 = r.ok ? R.comoPdf(await r.arrayBuffer()) : null;
           if (!u8) { falhas.push(`${nup} · ${nome}: ${r.ok ? 'não é PDF' : 'HTTP ' + r.status}`); continue; }
           await D.salvar(cliente, `Recursos/${nup}`, nome, u8);
-          ok++;
+          ok.push(`${nup} · ${nome}`);
         } catch (e) { falhas.push(`${nup} · ${nome}: ${e.message || e}`); }
       }
     }
-    D.faixa(`${ok} documento(s) de ${achado.nups.length} recurso(s)`
-      + (falhas.length ? `\n${falhas.length} não vieram:\n• ${falhas.slice(0, 8).join('\n• ')}` : ''),
+    const avisoCrm = await D.resumo(cliente, 'recursos', { baixados: ok, inexistentes: [], falhas });
+    D.faixa(`${ok.length} documento(s) de ${achado.nups.length} recurso(s)`
+      + (falhas.length ? `\n${falhas.length} não vieram:\n• ${falhas.slice(0, 8).join('\n• ')}` : '') + avisoCrm,
       falhas.length ? '#9A6700' : '#1E6F50');
-    return { ok, falhas };
+    return { ok: ok.length, falhas };
   };
 })();
