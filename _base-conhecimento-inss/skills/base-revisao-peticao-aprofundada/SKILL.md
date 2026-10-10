@@ -235,6 +235,7 @@ Itens auditados:
 - Documentos referenciados por ID nas peças intermediárias, e "em anexo" na petição inicial e no mandado de segurança, sempre com emitente, data e trecho decisivo em negrito e itálico (Onda 174).
 - Estrutura do Método Tercini (`peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md`, Onda 174). Na petição inicial, endereçamento, qualificação copiada da procuração, nome da ação centralizado, 1. DA INEXISTÊNCIA DE AÇÃO JUDICIAL COM O MESMO OBJETO, 2. DOS FATOS com a subseção do fato decisivo, 3. DO [BENEFÍCIO] com a lei transcrita antes de aplicada, seções adicionais, REQUERIMENTOS na ordem do método, valor da causa pelo art. 292 do CPC, fecho "Termos em que," e "Pede deferimento." e QUESITOS quando houver perícia. Nas demais peças, o esqueleto da seção 4 do método. Desvio de ordem ou de fórmula é achado IMPORTANTE.
 - Voz do titular. "a Parte Autora", "a Autarquia Federal" depois da primeira menção na seção, virada "Entretanto, está equivocado o entendimento da Autarquia Federal" e fecho do direito "Deste modo, Excelência".
+- Linguagem do juízo (Onda 176, `peticao-previdenciaria/references/ESTILO-MODELO.md`). O juízo de Catanduva tem um único juiz titular, e a peça usa o vocabulário, os conectores e a sequência de raciocínio dele. Conferir, em silêncio, os dez pontos da auditoria do manual (padrão reproduzido, uma ideia por parágrafo, frase clara, conectores necessários, continuidade, vínculo entre fato, prova e direito, ausência de repetição, fluidez, possibilidade de redução e erro jurídico ou probatório), e reportar só o resultado. A vírgula isolada entre verbo e complemento é conferida aqui, porque o medidor não a detecta.
 
 ### Camada 2 - Conformidade Normativa
 
@@ -382,13 +383,13 @@ Essa regra é o freio direto do efeito aditivo dos Conferentes. O retorno deles 
 
 #### Medição mecânica, primeiro (Onda 140)
 
-Antes da amostragem, rodar `python3 peticao-previdenciaria/scripts/medir_peca.py peca.md --tipo <tipo>` sobre o Markdown da peça. O script aplica o padrão calibrado, parágrafo de 20 a 65 palavras, frase de até 45 palavras, transição entre as frases, sem sequência de frases curtas, sem adjetivo de intensidade nem fórmula vazia, dispositivo citado com explicação, documento com ID e orçamento de páginas. Cada linha da saída é um achado desta camada, com a severidade que o script atribui. Peça que FALHA no script volta para a redação antes de qualquer outra camada, porque revisar prosa fora da medida é revisar o que vai ser reescrito. A amostragem abaixo cobre o que o script não mede.
+Antes da amostragem, rodar `python3 peticao-previdenciaria/scripts/medir_peca.py peca.md --tipo <tipo>` sobre o Markdown da peça. O script aplica o padrão calibrado, parágrafo de 20 a 65 palavras (alvo de 30 a 55), frase de até 40 palavras fora de transcrição, transição entre as frases, vocabulário do manual da Onda 176, títulos, sem sequência de frases curtas, sem adjetivo de intensidade nem fórmula vazia, dispositivo citado com explicação, documento com ID e orçamento de páginas. Cada linha da saída é um achado desta camada, com a severidade que o script atribui. Peça que FALHA no script volta para a redação antes de qualquer outra camada, porque revisar prosa fora da medida é revisar o que vai ser reescrito. A amostragem abaixo cobre o que o script não mede.
 
 #### Amostragem de legibilidade
 
 Extensão dentro do orçamento não garante leitura fácil. Sortear três parágrafos do miolo, um da fundamentação de fato, um da de direito e um do confronto, e conferir cada um contra quatro pontos.
 
-1. O parágrafo tem de 4 a 6 linhas e suas frases se ligam por transições (Onda 163).
+1. O parágrafo tem de 3 a 5 linhas, com teto de 6, e suas frases se ligam pelos conectores do juízo (Onda 176, `peticao-previdenciaria/references/ESTILO-MODELO.md`).
 2. A primeira linha não resume o que as seguintes explicam (proibição do parágrafo-modelo).
 3. A abertura não é frase-decreto, e varia entre fato, data, documento por ID, norma ou consequência do parágrafo anterior.
 4. Termo técnico indispensável aparece definido em meia frase na primeira ocorrência.

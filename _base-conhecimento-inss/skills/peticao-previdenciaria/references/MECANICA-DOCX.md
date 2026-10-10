@@ -133,7 +133,7 @@ Nas peças intermediárias o parágrafo de qualificação é "**[NOME DA PARTE A
 - `4. DA REAFIRMAÇÃO DA DER`
 - `5. REQUERIMENTOS` (título literal do titular, sem DA/DO, como QUESITOS)
 
-**Regra de títulos formais (Onda 162, 29/09/2026, determinação do titular para TODAS as peças).** O título de seção é formal, jurídico, numerado e nominal. Começa por DA, DO, DOS ou DAS e nomeia o instituto, o requisito, o vício ou o pedido, como os exemplos reais acima, em no máximo doze palavras e de preferência em uma linha da tabela preta. O título não traz fato, data, número, valor, ID, nome de documento do caso, adjetivo, advérbio nem juízo de valor, e não antecipa a conclusão.
+**Regra de títulos formais (Onda 162, 29/09/2026, determinação do titular para TODAS as peças).** O título de seção é formal, jurídico, numerado e nominal. Começa por DA, DO, DOS ou DAS e nomeia o instituto, o requisito, o vício ou o pedido, como os exemplos reais acima, em no máximo dezesseis palavras e de preferência em uma linha da tabela preta. O título não traz fato, data, valor, ID, nome de documento do caso, adjetivo, advérbio nem juízo de valor, e não antecipa a conclusão. Desde a Onda 176, o título pode trazer em algarismos o número que mede o objeto, usa o vocabulário técnico do juízo e troca a oração adjetiva desenvolvida e o verbo coloquial pelo particípio técnico. O exemplo do titular é "2. DO PERÍODO DE 60 DIAS DE TEMPO DE CONTRIBUIÇÃO ESTADUAL NÃO COMPUTADO NA REVISÃO", e não "2. DOS SESSENTA DIAS DO TEMPO ESTADUAL QUE A REVISÃO NÃO LANÇOU".
 
 - Certo, "2. DA INCAPACIDADE LABORATIVA". Errado, "2. DA INCAPACIDADE TOTAL E PERMANENTE COMPROVADA DESDE MARÇO DE 2024".
 - Certo, "2. DA ATIVIDADE ESPECIAL POR EXPOSIÇÃO A RUÍDO". Errado, "2. DA EXPOSIÇÃO HABITUAL E PERMANENTE A RUÍDO DE 89 dB(A) NO PERÍODO DE 2005 A 2023".
@@ -142,7 +142,7 @@ Nas peças intermediárias o parágrafo de qualificação é "**[NOME DA PARTE A
 
 A persuasão que antes ia no título passa para a primeira frase da seção, que apresenta o dado decisivo com número, data e ID. O título delimita o capítulo, e o texto convence. A regra de títulos persuasivos das versões anteriores está revogada, inclusive a distinção que a Onda 157 fazia entre cortes superiores e demais peças.
 
-O `scripts/medir_peca.py` confere os títulos e aponta como achado IMPORTANTE o título que não começa por DA, DO, DOS ou DAS, que passa de doze palavras, que traz ano, data, número ou ID, ou que usa termo valorativo como "comprovada", "indevido", "ilegal", "equivocado" ou "desde".
+O `scripts/medir_peca.py` confere os títulos e aponta como achado IMPORTANTE o título que não começa por DA, DO, DOS ou DAS, que passa de dezesseis palavras, que traz ano, data, medida em dB ou %, valor ou ID, que tem oração adjetiva desenvolvida (QUE, ONDE, QUAL, CUJO) ou verbo coloquial (LANÇAR), ou que usa termo valorativo como "comprovada", "indevido", "ilegal", "equivocado" ou "desde".
 
 ### Fechamento e Assinatura
 
