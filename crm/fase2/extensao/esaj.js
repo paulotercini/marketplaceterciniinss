@@ -179,7 +179,11 @@
     try { existentes = new Set((await CRM.pedir({ tipo: 'crm', acao: 'docs-existentes',
       prefixo: `esaj/${String(out.numero).replace(/\D/g, '')}/` })).nomes); } catch (e) {}
     await CRM.guardarDocs('esaj', out.numero, docs, { baixar: baixarDoc, existentes });
-    return docs.filter(d => d.caminho).map(({ id, nome, data, hora, caminho }) => ({ id, nome, data, hora, caminho }));
+    // F189 · só vai ao CRM o que desceu NESTA rodada: entregar a pasta inteira
+    // toda vez enchia a fila de coletas sem nada novo (227 em 5 dias). Sem a
+    // lista do que já existia (falhou a consulta), vai tudo, como antes
+    const novo = d => d.caminho && !(existentes && existentes.has(d.caminho));
+    return docs.filter(novo).map(({ id, nome, data, hora, caminho }) => ({ id, nome, data, hora, caminho }));
   }
 
   // [02.10.2026] OS RECURSOS DENTRO DO RECURSO. No 2º grau, os embargos de
