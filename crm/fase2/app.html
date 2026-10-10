@@ -4859,13 +4859,30 @@ async function dispararAuditoria(){
 // de 30 dias...). Com `cedo`, a tela aparece assim que a primeira chega, e a
 // segunda só PREENCHE os campos dela em D, sem refazer o que a pessoa já mexeu.
 // Sem `cedo`, é a carga de sempre: tudo, e só então D.
+// [10.10.2026] o evento que o leitor do To Do criou com a data errada: entre
+// "perícia" e a data havia "Ver o resultado em", "Fazer manifestação em",
+// "Prazo", "atendimento para o dia", "valor de R$"… A mesma regra do
+// crm/sync_todo.py (_data_e_do_evento), aplicada ao trecho guardado em obs,
+// tira da tela o que já está no banco. Evento do PAT (obs vazia) não passa aqui.
+const RX_EV_PALAVRA = /per[íi]cia|audi[êe]ncia|avalia[çc][ãa]o social/i;
+const RX_EV_NAO = /verific|resultado|manifest|prazo|desfavor|favor[aá]vel|r\$|valor|ap[oó]s|for marcad|aguard|atendimento|precisa ser|seja agendad|laudo|proposta|decis[aã]o/i;
+function eventoFalso(e){
+  const t = String((e && e.obs) || ""); if(!t) return false;
+  const k = RX_EV_PALAVRA.exec(t); if(!k) return false;
+  const resto = t.slice(k.index + k[0].length), d = /\b\d{1,2}[./]\d{1,2}/.exec(resto);
+  if(!d) return false;
+  const meio = resto.slice(0, d.index);
+  if(RX_EV_NAO.test(meio)) return true;
+  const partes = meio.split(/[.;!?]\s/);
+  return partes.length > 1 && !/agend|marcad|design|remarc/i.test(partes[partes.length-1]);
+}
 const CARGA_1 = {
     colaboradores: ()=>todas("colaboradores","select=*&order=nome"),
     clientes: ()=>todas("clientes","select=*&order=nome"),
     casos: ()=>todas("casos","select=*"),
     atribuicoes: ()=>todas("atribuicoes","select=*"),
     tarefas: ()=>todas("tarefas","select=*"),
-    eventos: ()=>todas("eventos","select=*&order=data_hora"),
+    eventos: ()=>todas("eventos","select=*&order=data_hora").then(l=>l.filter(e=>!eventoFalso(e))),
     pagamentos: ()=>todas("pagamentos","select=*"),
     meudia: ()=>todas("meu_dia",`select=*&dia=eq.${hoje()}`),
     mencoes: ()=>todas("mencoes",`select=*&para_id=eq.${eu.id}&lida_em=is.null&order=criado_em.desc`),
@@ -4943,7 +4960,7 @@ const INCREMENTAIS = {
   clientes:   {t:"clientes",   sel:"select=*", ord:ordPor("nome")},
   casos:      {t:"casos",      sel:"select=*"},
   tarefas:    {t:"tarefas",    sel:"select=*"},
-  eventos:    {t:"eventos",    sel:"select=*", ord:ordPor("data_hora")},
+  eventos:    {t:"eventos",    sel:"select=*", ord:ordPor("data_hora"), fica:e=>!eventoFalso(e)},
   pagamentos: {t:"pagamentos", sel:"select=*"},
   // a carga completa traz só os ativos; a incremental traz também o que foi
   // desligado, para tirar da cópia
