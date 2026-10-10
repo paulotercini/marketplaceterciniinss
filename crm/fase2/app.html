@@ -11382,7 +11382,7 @@ function preencheZap(txt){
   const map = {
     "{nome}": nome, "{primeiro_nome}": (nome||"").trim().split(/\s+/)[0]||"",
     "{data}": fmt(hoje()),
-    "{beneficio}": (k&&k.beneficio)||"", "{processo}": (k&&k.processo)||"", "{nb}": (k&&k.nb)||"",
+    "{beneficio}": especieDoCaso(k), "{processo}": (k&&k.processo)||"", "{nb}": (k&&k.nb)||"",
   };
   return Object.entries(map).reduce((t,[a,v])=>v?t.split(a).join(v):t, txt);
 }
@@ -16087,7 +16087,7 @@ function contratoDoCliente(c, ks){
   const pcs = c ? precasosDe(c).filter(pc=>!pc.so_lembrete && pc.especie!==ESPECIE_PAGAMENTOS) : [];
   const pc = pcs.find(x=>x.honorarios||x.hon) || pcs[0] || null;
   const k = (ks||[]).find(x=>x.fase!=="encerrado") || (ks||[])[0];
-  const esp = (pc && pc.especie) || (k && (k.beneficio || nomeDaEspecie(k.especie))) || "";
+  const esp = (pc && pc.especie) || especieDoCaso(k) || "";
   if(!pc && !k) return null;
   const vr = variantePorEspecie(esp);
   // F181 · o combinado em campos entra junto; sem pré-caso (já virou caso),
@@ -18307,7 +18307,7 @@ function feedAnotacoes(c){
   // F172 · junto das anotações do cadastro, os andamentos dos casos que ainda
   // estão na fase Escritório (a lista 🙋 Escritório do To Do de antes da 08.99)
   const doEscr = (D._andsFicha||[]).filter(a=>{ const k=D.casoPorId.get(a.caso_id);
-      return k && k.cliente_id===c.id && k.fase==="escritorio" && a.texto; })
+      return k && k.cliente_id===c.id && a.texto && (k.fase==="escritorio" || /^⚖️ Análise/.test(a.texto)); })
     .map(a=>({ts: Date.parse(a.criado_em)||0, texto: a.texto, em: a.criado_em,
       quem: ((D.colPorId.get(a.autor_id)||{}).nome||"").split(" ")[0]}));
   return [...((c.campos||{}).atendimento||[])
@@ -18331,6 +18331,19 @@ const notasDoTodo = c => ((c.campos||{}).atendimento||[]).some(n=>n.origem==="to
 async function anotarNoDireito(cliId){
   const c = D.cliPorId.get(cliId), ta = document.getElementById("ad-anot"); if(!c || !ta) return;
   const texto = (ta.value||"").trim(); if(!texto) return aviso("Escreva a anotação");
+  // integração · com caso ativo, o andamento da Análise vai para o caso (com
+  // a marca "⚖️ Análise ·"), onde a equipe o lê; sem caso, segue no cadastro
+  const vivos = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
+  const k = vivos.find(x=>x.id===casoSel) || vivos[0];
+  if(k){
+    let and;
+    try{
+      [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:k.id, autor_id:eu.id, origem:"app", publico:false, texto:`⚖️ Análise · ${texto}`})})||[];
+    }catch(e){ return aviso("Não consegui guardar o andamento — tente de novo"); }
+    if(and){ and.andamentos_lidos=[{colaborador_id:eu.id}]; (D._andsFicha=D._andsFicha||[]).unshift(and); }
+    aviso(`Andamento guardado no caso ${tituloCaso(k)}`, false); return repintarFicha();
+  }
   const nota = {id: crypto.randomUUID(), em: new Date().toISOString(), quem: (eu.nome||"").split(" ")[0], texto, origem: "app"};
   const campos = {...(c.campos||{}), atendimento: [...((c.campos||{}).atendimento||[]), nota]};
   try{
@@ -18346,11 +18359,13 @@ function quadroTriagemDireito(c, ks){
     <ul>${itens.map(f=>`<li><b>${esc(f.rot)}:</b> ${esc(f.texto)} <span class="ad-quem">— ${f.quem?esc(f.quem):"—"}${f.em?`, ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>
   </div>`;
   if(!(tri.atencao.length || tri.pendente.length || tri.ok.length)) return "";
-  return `<div class="ad-quadro ad-q-tri"><div class="rotulo-caso">Triagem</div>
+  // integração · leitura: fica na Análise mesmo depois que a aba Triagem some
+  return `<section class="adr-card ad-q-tri" aria-labelledby="adr-t-tri">
+      <h2 class="adr-h" id="adr-t-tri">O que se apurou na triagem</h2>
       ${grupo("atencao", "Atenção", tri.atencao)}
       ${grupo("pendente", "Não conferido", tri.pendente)}
       ${grupo("ok", "Sem pendência", tri.ok)}
-    </div>`;
+    </section>`;
 }
 // F172 · as anotações do cliente (inclusive as que vieram da lista 🙋
 // Escritório do To Do) ficam aqui, e se anota daqui mesmo. F174 · o quadro
@@ -18395,7 +18410,7 @@ function resumoDireito(c, ult){
   const qa = r && d.ultima_contribuicao ? qualidadeAte(d.ultima_contribuicao, r.tipo) : null;
   const recolhe = r ? tile("Como recolhe hoje", esc(rotRecolhe(r.tipo)),
       qa ? `qualidade de segurado até ${esc(fmt(qa))}` : r.de==="triagem" ? "da triagem" : "", "adr-t-texto")
-    : tile("Como recolhe hoje", "—", "responda o vínculo na triagem ou na análise", "adr-t-texto");
+    : tile("Como recolhe hoje", "—", "responda o vínculo na análise", "adr-t-texto");
   const m=ult?cenMelhor(ult):null, data=(m&&m.data)||d.data_direito||null;
   const direito = !data ? tile("Atinge o direito", "—", ult?"sem data projetada":"nenhuma análise registrada")
     : tile("Atinge o direito", esc(fmt(data)),
@@ -18522,7 +18537,9 @@ function painelDireito(c){
   const anteriores=as.slice(1);
   return `<div class="adr">
     <div class="form-linha ad-topo" style="align-items:center;gap:10px">
-      <span class="meio-sub" style="margin-left:auto">parceria</span>${chipParceria(c, ks)}${seletorParceria(c, ks, "parc-sel-ad")}
+      <span style="margin-left:auto"></span>${chipParceria(c, ks)}
+      <button type="button" class="btn-mini adr-bt" onclick="irSubCad('identificacao')"
+        title="a parceria e o CNIS se alteram na Identificação">Alterar na Identificação</button>
       ${botaoAbrirCnis(c, false)}
     </div>
     ${resumoDireito(c, ult)}
@@ -27152,9 +27169,17 @@ function preencherModeloDoc(txt, c, especie){
 }
 // a espécie que manda no contrato e no termo: a do caso escolhido; sem caso,
 // a que o atendimento anotou no cadastro
-function especieDoCliente(c, ks){
+// integração · o contrato e o termo leem a espécie do CASO (a
+// mesma do título); o benefício escrito à mão só vale sem espécie
+const especieDoContrato = (c, ks) => especieDoCliente(c, ks, true);
+function especieDoCaso(k){
+  return k ? ((k.especie||k.subespecie) ? tituloCaso(k) : (k.beneficio||"")) : "";
+}
+function especieDoCliente(c, ks, doc){
   const k = (casoSel && D.casoPorId.get(casoSel)) || (ks||[]).find(x=>x.fase!=="encerrado") || (ks||[])[0];
-  if(k && k.beneficio) return k.beneficio;
+  // a triagem lê o benefício escrito (ele diz "rural", "híbrida"…); o contrato
+  // e o termo leem a espécie do caso (especieDoContrato)
+  if(k && (doc ? especieDoCaso(k) : k.beneficio)) return doc ? especieDoCaso(k) : k.beneficio;
   // F31 · sem caso, a espécie do PRÉ-CASO vivo responde: a procuração e o
   // contrato impressos no fluxo saem da variante certa
   const pcs = precasosDe(c).filter(p=>p.especie && !p.so_lembrete);
@@ -27277,7 +27302,7 @@ async function irPreencherCadastro(cliId){
 function imprimirDocsEscritorio(cliId, chaves, falta){
   const c=D.cliPorId.get(cliId); if(!c) return;
   const ks=D.casosDoCliente.get(cliId)||[];
-  const esp=especieDoCliente(c, ks);
+  const esp=especieDoContrato(c, ks);
   const docs=(chaves||[]).map(ch=>corpoDoDoc(ch, c, esp)).filter(Boolean);
   if(!docs.length) return;
   janelaImpressao(docs.length===1 ? `${docs[0].rot} — ${c.nome}` : `Documentos — ${c.nome}`,
@@ -27301,7 +27326,7 @@ async function registrarDocGerado(cliId, rots, falta){
   }catch(e){ /* impressão não pode falhar por causa do registro */ }
 }
 function caixaDocumentos(c, ks){
-  const esp=especieDoCliente(c, ks);
+  const esp=especieDoContrato(c, ks);
   const vr=CONTRATO_VARIANTES[variantePorEspecie(esp)];
   const falta=faltaParaDocs(c);
   const bt=(ch)=>`<button class="btn-mini" onclick="gerarDocEscritorio('${ch}','${c.id}')"><span class="ic-bt">${CAD_IC.doc}</span>${DOCS_ESCRITORIO[ch].rot}</button>`;
