@@ -21701,7 +21701,8 @@ function oficDoItem(k, x){
     return oficCrps(t, e, k.id, decideOCaso(e) ? seloOrgao(e, guardados[0]) : "", guardados, alv);
   }
   if(/CNJ/.test(x.chip||"")) return {casoId:k.id, segTexto:x.texto, fonte:"processo judicial", portal:(l=>l?{href:l, rot:nomeSistemaDoLink(l)}:null)(linkPjeMaisAlto(k))};
-  if(String(x.chip||"").startsWith("🩺")) return {casoId:k.id, segTexto:x.texto, fonte:"processo", portal:null};
+  if(String(x.chip||"").startsWith("🩺")) return {casoId:k.id, segTexto:x.texto, fonte:/audi/i.test(x.texto||"")?"processo (audiência)":"processo (perícia)",
+    portal: k.fase==="judicial" ? (l=>l?{href:l, rot:nomeSistemaDoLink(l)}:null)(linkPjeMaisAlto(k)) : null};
   return null;
 }
 // o que o cartão oficial precisa saber, venha de uma linha de `andamentos`
@@ -22660,7 +22661,7 @@ function fonteFiltro(x){
 // o que pede ação: movimento dos portais não lido (menos a rotina), prazo
 // sugerido sem prazo marcado, e o que alguém marcou importante ou urgente
 function pedeAcao(x){
-  const a = x.and; if(!a) return false;
+  const a = x.and; if(!a) return !!(x.crpsE && (x.crpsE.importante || x.crpsE.urgente));
   if(a.importante || a.urgente) return true;
   if(!ehOficial(a)) return false;
   if(["pje","crps"].includes(a.origem) && prazoSugeridoHtml(a, -1)) return true;
@@ -22842,6 +22843,7 @@ function painelTudo(k, ands){
     // F141 · a bolinha da fonte mostra o símbolo do sistema de onde o registro
     // veio (PJe, e-SAJ, eproc, INSS, e-Sisrec, CNJ); a ⭐ fica só para importante
     const fk = fonteDoItem(x);
+    const ofi = temaV10() && !x.and && !nosso ? oficDoItem(k, x) : null;   // uma vez por repintura
     return { q: x.q, em: identidade?esc(x.avIni):(iconeFonte(fk)||(temaV10()?(svgIc(em,12)||em):em)),
       // o DataJud diz em que sistema o processo corre: o nome dele vem primeiro
       rot: nosso?(x.quem||resto.join(" ")):(/CNJ/.test(x.chip||"")&&fk&&fk!=="cnj"
@@ -22849,8 +22851,8 @@ function painelTudo(k, ands){
       corAv: identidade?x.avCor:null, texto: x.texto, and: x.and,
       forte: x.marco, cls: x.resposta?"tl-resposta":"",
       // F190 · o espelho do e-SISREC e do CNJ também vira cartão oficial
-      ofic: temaV10() && !x.and && !nosso ? oficDoItem(k, x) : null,
-      html: (temaV10() && (x.and ? ehOficial(x.and) : (!nosso && oficDoItem(k, x)))) ? "" : `<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, x.texto, x.id||null))}</span>`
+      ofic: ofi,
+      html: (temaV10() && (x.and ? ehOficial(x.and) : !!ofi)) ? "" : `<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, x.texto, x.id||null))}</span>`
         // F86 · quem do escritório já leu o que o robô trouxe: o mesmo ✔ li da
         // aba INSS, agora também no Caso completo (só no tema v10)
         + ((temaV10() && x.and && x.and.origem && x.and.origem!=="app")
