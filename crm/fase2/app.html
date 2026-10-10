@@ -23109,17 +23109,39 @@ function docsDoAndamentoHtml(andId){
     </div>`;
   }).join("");
 }
+// o movimento como se lê: sem "PJe (1º grau):", sem "— em 08.10.2026 14:23"
+// e sem "— ProceComCiv 5000850-63.2023.4.03.6136", que a coleta repete em
+// toda linha. A data e a hora do texto são as do movimento no tribunal e
+// passam a datar a linha (a hora da coleta não diz nada ao leitor).
+const RX_CNJ_FIM = /\s+—\s+(?:[A-Za-zÀ-ÿ]+\s+)?\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}\s*$/;
+const RX_EM_DATA = /\s+—\s+em\s+(\d{2})[./](\d{2})[./](\d{4})(?:\s+(\d{2}:\d{2}))?/;
+function movPjeLimpo(a){
+  const t = String((a && a.texto) || "");
+  const sis = /^(?:PJe|eproc TJSP|e-SAJ TJSP)\s*\(([^)]+)\)\s*:\s*/.exec(t);
+  let s = sis ? t.slice(sis[0].length) : t;
+  const em = RX_EM_DATA.exec(s);
+  const num = /\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}/.exec(s.match(RX_CNJ_FIM)?.[0] || "");
+  s = s.replace(RX_EM_DATA, "").replace(RX_CNJ_FIM, "").trim();
+  const chave = /:(\d{4}-\d{2}-\d{2}T\d{2}:\d{2})/.exec(String((a && a.origem_id) || ""));
+  const q = em ? `${em[3]}-${em[2]}-${em[1]}${em[4]?`T${em[4]}`:""}` : chave ? chave[1] : qSP(a && a.criado_em);
+  return { texto: s || t, grau: sis ? sis[1].trim() : null, numero: num ? num[0] : null, q };
+}
 function caixaPje(k, movs){
   if(!movs || !movs.length) return "";
+  const limpos = movs.map(a=>({a, l:movPjeLimpo(a)})).sort((x,y)=>x.l.q<y.l.q?1:-1);
+  // o número só aparece quando a coleta mistura processos (visão "todos")
+  const varios = new Set(limpos.map(x=>soDig(x.l.numero||"")).filter(Boolean)).size > 1;
   // F45 · o mesmo esqueleto da conversa do Escritório
   // F71 · "⚠ não é deste caso": a saída para o movimento intruso (caso real:
   // andamento de um processo caiu na ficha de outro cliente)
   return `<div class="caso" style="margin-bottom:10px">
     <div class="rotulo-caso">⚡ coletas do ${nomeDaColeta(movs)} (${movs.length})</div>
-    ${tlOficial(movs.map(a=>({
-      q: qSP(a.criado_em), texto: a.texto||"", and: a,
-      // F146 · o sistema de cada movimento sai do número CNJ, não do rótulo da coleta
-      rot: sisCurtoDoMov(a),
+    ${tlOficial(limpos.map(({a, l})=>({
+      q: l.q, texto: l.texto, and: a,
+      // F146 · o sistema de cada movimento sai do número CNJ, não do rótulo da coleta;
+      // o grau só aparece quando não é o 1º
+      rot: sisCurtoDoMov(a) + (l.grau && !/^1/.test(l.grau) ? ` · ${l.grau}` : "")
+        + (varios && l.numero ? ` · ${rotuloProcesso(k, processosDoCaso(k).find(x=>soDig(x.numero)===soDig(l.numero)) || {numero:l.numero})}` : ""),
       em: temaV10() ? iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sisCurtoDoMov(a)]) : "⚖️",
       html: `${docsDoAndamentoHtml(a.id)}${seguimentoHtml((D._andsFicha||[]).filter(x=>x.responde_a===a.id), tarefasDe)}<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, a.texto||"", a.id))}
         <button class="btn-mini" onclick="pjeForaDoCaso('${a.id}','${k.id}')"
@@ -26406,7 +26428,7 @@ Assim sendo, requeiro os benefícios da Justiça Gratuita, de acordo com os disp
 ______________________________________
 <NOMESEGURADO>`},
 
-  beneficiario: {rot:"Declaração de Beneficiário", titulo:"DECLARAÇÃO DE RECEBIMENTO DE PENSÃO OU APOSENTADORIA EM OUTRO REGIME DE PREVIDÊNCIA", texto:
+  beneficiario: {rot:"Declaração de Não Recebimento de Benefício", titulo:"DECLARAÇÃO DE RECEBIMENTO DE PENSÃO OU APOSENTADORIA EM OUTRO REGIME DE PREVIDÊNCIA", texto:
 `ANEXO XXIV — INSTRUÇÃO NORMATIVA PRES/INSS Nº 128, DE 28 DE MARÇO DE 2022
 
 Eu, <NOMESEGURADO>, portador(a) do CPF nº <CPF>, declaro, sob as penas do art. 299 do Código Penal, que:
@@ -26578,14 +26600,33 @@ function corpoDoDoc(chave, c, especie){
 // do escritório e com o endereço para onde a intimação volta
 const DOC_TIMBRE = `<div class="timbre"><b>Paulo Roberto Tercini Filho</b>
   <span>Advocacia Previdenciária · OAB/SP 331.110</span></div>`;
+// a folha sai com a forma do modelo do escritório: rótulos (OUTORGANTE:,
+// CLÁUSULA PRIMEIRA…) e nomes em negrito, parágrafo com recuo, data à
+// direita, assinatura e quem assina centralizados
+const DOC_ADVOGADOS = ["Paulo Roberto Tercini Filho","Marcos Henrique de Pádua Amorim","Amanda Cristiane Carneiro Garcez"];
+const MAI = "A-ZÁÉÍÓÚÂÊÔÃÕÇÀ";
+const RX_CAIXA_ALTA = new RegExp(`(?<![\\wÀ-ÿ])([${MAI}][${MAI}.]+(?:\\s+(?:DE|DA|DO|DOS|DAS|E|[${MAI}][${MAI}.]+)){2,})(?![\\wÀ-ÿ])`, "g");
+const RX_ROTULO = new RegExp(`^((?:CLÁUSULA|PARÁGRAFO|§\\s?\\d+º)[^:.]*[:.]|[${MAI}][${MAI} ]{3,}:)`);
+function negritoDoc(t, c){
+  const m=t.match(RX_ROTULO), rot=m?m[1]:"";
+  let resto=esc(t.slice(rot.length)).replace(RX_CAIXA_ALTA,"<b>$1</b>");
+  [...DOC_ADVOGADOS, c&&c.nome].filter(Boolean).forEach(n=>{ resto=resto.split(esc(n)).join(`<b>${esc(n)}</b>`); });
+  return (rot?`<b>${esc(rot)}</b>`:"") + resto;
+}
 function folhaDoc(d, c){
-  return `<section>${DOC_TIMBRE}<h1>${esc(d.titulo)}</h1>
-    ${d.corpo.split("\n").map(l=>{
-      const t=l.trim();
-      if(!t) return "<p class='vazio'></p>";
-      if(/^_{4,}/.test(t)) return `<p class="assin">${esc(t)}</p>`;
-      return `<p>${esc(t)}</p>`;
-    }).join("")}
+  let assin=false;
+  const linhas=d.corpo.split("\n").map(l=>{
+    const t=l.trim();
+    if(!t){ assin=false; return "<p class='vazio'></p>"; }
+    if(/^_{4,}/.test(t)){ assin=true; return `<p class="assin">${esc(t)}</p>`; }
+    if(assin) return `<p class="quem">${esc(t)}</p>`;
+    if(/^Monte Alto - SP,/.test(t)) return `<p class="data">${esc(t)}</p>`;
+    if(t.length<120 && t===t.toUpperCase() && /[A-Z]/.test(t)) return `<p class="sub">${esc(t)}</p>`;
+    // linha curta de formulário ou item ( X ), a), I -: sem recuo nem justificação
+    if(t.length<110 || /^(\(|-|\*|[a-z]\)|[IVX]+ -)/.test(t)) return `<p class="item">${negritoDoc(t, c)}</p>`;
+    return `<p>${negritoDoc(t, c)}</p>`;
+  });
+  return `<section>${DOC_TIMBRE}<h1>${esc(d.titulo)}</h1>${linhas.join("")}
     <div class="rodape">${esc(ESCRITORIO_RODAPE)}</div></section>`;
 }
 function janelaImpressao(titulo, folhas){
@@ -26597,20 +26638,30 @@ function janelaImpressao(titulo, folhas){
        12, espaçamento 1,5. Georgia fica de reserva para quem abrir num
        aparelho sem a fonte instalada. */
     body{font-family:"Bookman Old Style", Bookman, Georgia, serif;color:#111;
-      font-size:12pt;line-height:1.5;max-width:170mm;margin:0 auto;padding:14mm 0}
-    section{page-break-after:always;position:relative}
+      font-size:12pt;line-height:1.5;margin:0;padding:10mm 0;background:#e7e7e4}
+    /* na tela, cada documento é uma folha A4; na impressão, a folha é o papel */
+    section{page-break-after:always;position:relative;background:#fff;width:210mm;
+      box-sizing:border-box;min-height:297mm;margin:0 auto 10mm;padding:20mm 18mm 16mm;
+      box-shadow:0 1px 3px rgba(0,0,0,.18)}
     section:last-child{page-break-after:auto}
     .timbre{text-align:center;border-bottom:1.2pt solid #111;padding-bottom:6pt;margin-bottom:16pt}
     .timbre b{display:block;font-size:13pt;letter-spacing:.6pt;text-transform:uppercase}
     .timbre span{font-size:9pt;letter-spacing:.2pt}
     h1{font-size:12pt;font-weight:bold;text-align:center;text-transform:uppercase;
       letter-spacing:.5pt;margin:0 0 16pt}
-    p{margin:0 0 7pt;text-align:justify;text-indent:0}
+    p{margin:0 0 7pt;text-align:justify;text-indent:12.5mm}
+    p.item{text-align:left;text-indent:0;white-space:pre-wrap}
     p.vazio{margin:0 0 7pt;height:2pt}
-    p.assin{text-align:center;margin-top:20pt}
+    p.data{text-align:right;text-indent:0;margin-top:10pt}
+    p.sub{text-align:center;text-indent:0;font-weight:bold;margin-top:12pt}
+    p.assin{text-align:center;text-indent:0;margin:26pt 0 0}
+    p.quem{text-align:center;text-indent:0;margin:0}
+    b{font-weight:bold}
     .rodape{margin-top:20pt;padding-top:5pt;border-top:.6pt solid #999;
       font-size:8.5pt;text-align:center;color:#333;line-height:1.3}
-    @media print{ body{padding:0;max-width:none} @page{margin:20mm 18mm} }
+    @media print{ body{padding:0;background:none}
+      section{width:auto;min-height:0;margin:0;padding:0;box-shadow:none}
+      @page{size:A4;margin:20mm 18mm} }
   </style></head><body>${folhas}
   <script>window.print()<\/script></body></html>`);
   w.document.close();
@@ -27226,12 +27277,14 @@ function novoAndamentoDireito(cliId){
   const ta=document.getElementById("ad-anot");
   if(ta){ ta.scrollIntoView({block:"center"}); ta.focus(); }
 }
-const PROC_MODELOS = ["proc_adm","proc_judicial","pobreza","contrato"];
+// termo de representação e declaração de não recebimento acompanham a
+// procuração administrativa no INSS: saem marcados junto com as procurações
+const PROC_MODELOS = ["proc_adm","proc_judicial","termo","beneficiario","pobreza","contrato"];
 function modalProcuracoes(cliId){
   caixa(`<div class="adr-modal" role="dialog" aria-labelledby="adr-t-proc">
     <h3 id="adr-t-proc">Gerar procurações</h3>
     <p class="meio-sub" style="margin:0">Saem preenchidas com os dados da Identificação, prontas para imprimir.</p>
-    ${PROC_MODELOS.map(ch=>`<label class="adr-ck"><input type="checkbox" class="proc-ck" value="${ch}" ${ch.startsWith("proc_")?"checked":""}>
+    ${PROC_MODELOS.map(ch=>`<label class="adr-ck"><input type="checkbox" class="proc-ck" value="${ch}" ${/^(proc_|termo|beneficiario)/.test(ch)?"checked":""}>
       ${esc(DOCS_ESCRITORIO[ch].rot)}</label>`).join("")}
     <div class="adr-modal-bts">
       <button type="button" class="adr-bt" onclick="fecharCaixa()">Cancelar</button>
