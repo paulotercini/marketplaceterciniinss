@@ -172,7 +172,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   conf("Escritório · INSS · Recurso (CRPS) · Caso Completo — Judicial só existe com número", menu.botoes.join("|").replace(/ \(sem dados\)/g, "") === "Escritório|INSS|Recurso (CRPS)|Caso Completo");
   conf("o Caso Completo abre por padrão", /Caso Completo/.test(menu.on || ""));
   const idTudo = await p.evaluate(() => { const li = [...document.querySelectorAll(".painel[data-p='2'] .timeline li.tl-of")].find(l => /Contestar o laudo/.test(l.textContent));
-    const av = li && li.querySelector(".quando .avatar"); return av && { ini: av.textContent.trim(), cor: av.style.background, fonte: av.classList.contains("av-fonte"), marco: li.classList.contains("tudo-marco") }; });
+    const av = li && li.querySelector(".tl-cab .avatar"); return av && { ini: av.textContent.trim(), cor: av.style.background, fonte: av.classList.contains("av-fonte"), marco: li.classList.contains("tudo-marco") }; });
   conf("no Caso completo quem escreveu aparece com a bolinha da sua cor, mesmo sendo marco", idTudo && idTudo.ini === "P" && /rgb\(37, 100, 207\)|#2564cf/i.test(idTudo.cor) && !idTudo.fonte);
   await p.evaluate(() => irSubAba("crps")); await p.waitForTimeout(300);
   const crps = await p.evaluate(() => ({ menu: [...document.querySelectorAll(".sub-menu.instancias button")].map(b => b.textContent.replace(/\s+/g, " ").trim()),

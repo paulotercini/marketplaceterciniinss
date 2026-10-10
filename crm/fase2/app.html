@@ -3703,6 +3703,8 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card{display:block;bac
 html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-nao-lida{border-color:var(--azul);box-shadow:inset 3px 0 0 var(--azul)}
 html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-imp{box-shadow:inset 3px 0 0 var(--prox)}
 html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card>.quando{display:none}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-oficial{background:#F6F7F4!important}
+html[data-tema="v10"] .tl-barra-of>span[style]{margin-left:0!important}
 html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card>.texto{display:block;max-width:none;width:100%;white-space:normal;padding:0}
 html[data-tema="v10"] .timeline .tl-cab .tl-av{width:28px;height:28px;font-size:12px;flex:none}
 html[data-tema="v10"] .timeline .tl-cab .autor-nome{color:var(--texto);font-weight:500}
@@ -21398,6 +21400,19 @@ function tlOficial(itens, vazio){
     // (corAv), não o selo neutro de fonte — a autoria salta como na conversa
     // x.and = a linha de `andamentos` por trás do item, quando existe uma.
     // Espelho de jsonb (Recurso, CNJ) não tem — e sem linha não há o que marcar.
+    // Tema v10: o andamento do processo vira o MESMO cartão da anotação do
+    // escritório (pedido do Paulo, 10.10.2026), com duas diferenças de
+    // propósito: o selo da fonte no lugar do avatar e fundo próprio, e sem
+    // responder, editar ou apagar, porque reproduz o portal. A resposta da
+    // equipe nasce pelo 📌 dar seguimento.
+    if(temaV10()){
+      const sin = sinaisHtml(x.and);
+      corpo+=`<li class="tl-card tl-of${x.corAv?"":" tl-oficial"} ${x.cls||""}${x.forte?" tudo-marco":""}${clsSinal(x.and)}">
+        <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av${x.corAv?"":" av-fonte"}"${x.corAv?` style="background:${x.corAv}"`:""}>${x.em||"·"}</span><b class="autor-nome">${esc(x.rot||"")}</b><span class="tl-hora">${d?fmt(d).slice(0,5):"—"}${hora?` · ${hora}`:""}</span></span>
+        <span class="tl-corpo">${x.forte?`<b>${esc(x.texto||"")}</b>`:esc(x.texto||"")}</span>
+        ${(x.html||sin)?`<span class="tl-barra tl-barra-of">${x.html||""}<span class="tl-barra-fim">${sin}</span></span>`:""}</span></li>`;
+      continue;
+    }
     corpo+=`<li class="tl-of ${x.cls||""}${x.forte?" tudo-marco":""}${clsSinal(x.and)}">
       <span class="quando" title="${esc(x.rot||"")}"><span class="avatar mini${x.corAv?`" style="background:${x.corAv}`:` av-fonte`}">${x.em||"·"}</span><span class="q-dt">${d?fmt(d):"—"}</span></span>
       <span class="texto"><b class="autor-nome">${esc(x.rot||"")}</b>${hora?`<span class="tl-hora">${hora}</span>`:""}<br>${x.forte?`<b>${esc(x.texto||"")}</b>`:esc(x.texto||"")}</span>
