@@ -125,6 +125,11 @@ Usar quando a empresa declarar EPI como eficaz (S) sem informar o número do CA 
 Fundamentar que a declaração de eficácia sem CA é inverificável.
 Solicitar a inclusão do número do CA ou a retificação do campo 15.7 para "N".
 
+### P8. Setor e procedimentos do Tema 383/TNU (campos 13.3 e 14.2), agentes biológicos
+Usar para profissional de saúde em ambiente hospitalar quando o PPP declara EPI eficaz e omite o setor ou os procedimentos.
+Solicitar, por período, o nome do setor no campo 13.3 (CTI/UTI, pronto-socorro, centro cirúrgico, ala de isolamento ou de doenças infectocontagiosas) e, no campo 14.2, os procedimentos que o trabalhador realiza ou auxilia diretamente (intubação orotraqueal, ventilação não invasiva, aspiração de vias aéreas, reanimação cardiopulmonar, traqueostomia, broncoscopia) ou o atendimento de urgência e emergência. Se a empregadora não alterar os campos, pedir a mesma informação no campo Observações, junto com o P5, e a cópia do LTCAT que a registre.
+Fundamentar com o item I da tese do Tema 383/TNU, julgado em 24/09/2026, e com a exatidão do PPP. Pedir só o que a atividade real comprova. Tese literal em `base-tema383-tnu-fundacentro-epi-biologicos`, seção 0.
+
 ## Regras de Seleção de Pedidos
 
 A seleção dos pedidos deve seguir a lógica da auditoria de PPP. Não incluir pedidos desnecessários.
@@ -132,6 +137,8 @@ A seleção dos pedidos deve seguir a lógica da auditoria de PPP. Não incluir 
 O pedido P5 (Declaração no campo Observações) deve ser incluído em TODA solicitação de retificação, como último pedido.
 
 Os pedidos P2 e P3 são mutuamente exclusivos em muitos casos. Se o PPP indica apenas "NR-15" sem NEN (Cenário A do Comunicado CRPS 99/2025), usar P2 (inclusão do NEN) e P3 (correção da técnica). Se o PPP indica "NHO-01" junto com "NR-15" e o campo 15.4 já tem NEN, usar P3-A (remoção da NR-15).
+
+O pedido P8 entra em toda notificação de profissional de saúde em ambiente hospitalar exposto a agentes biológicos.
 
 O pedido P1 (inclusão de agentes) é estrategicamente o mais importante, pois agentes cancerígenos (sílica, benzeno, etc.) dispensam toda a discussão sobre metodologia de medição de ruído.
 

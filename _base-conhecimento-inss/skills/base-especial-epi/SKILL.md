@@ -44,7 +44,7 @@ A Fundacentro adota o critério ALARP (NBR IEC 31010:2021) e a hierarquia de con
 
 Conclusão da Fundacentro. "Os EPIs constantes do PPP, se utilizados isoladamente como única medida de proteção, são incapazes de eliminar ou neutralizar a exposição nociva ou minimizar o risco a um nível aceitável, impossibilitando a descaracterização da atividade como especial".
 
-Detalhamento completo em `base-tema383-tnu-fundacentro-epi-biologicos`.
+O Tema 383/TNU foi julgado em 24/09/2026. O EPI eficaz do PPP não obsta a especialidade do profissional de saúde em ambiente hospitalar que realiza ou auxilia procedimento gerador de aerossol, atende urgência ou emergência em setor crítico ou atua em ala de doença infectocontagiosa (item I). Fora dessas hipóteses, vale a impugnação específica do Tema 213/TNU e do Tema 1090/STJ (item II). Detalhamento completo, com a tese literal e os campos do PPP, em `base-tema383-tnu-fundacentro-epi-biologicos`.
 
 ## Regras rígidas de redação
 
