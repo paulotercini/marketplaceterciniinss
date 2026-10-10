@@ -2826,6 +2826,10 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
 html[data-tema="v10"] .linha-caso{background:#FFFFFF}
 html[data-tema="v10"] .lc-topo{display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:14px 22px;min-height:0}
 html[data-tema="v10"] .lc-cab{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0}
+.lc-acessos{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 2px}
+.lc-acesso{font:600 12px/1 inherit;padding:5px 9px;border-radius:6px;border:1px solid var(--borda);background:var(--fundo-card,#fff);color:var(--azul-escuro,#1d3f8a);text-decoration:none;cursor:pointer;white-space:nowrap}
+.lc-acesso:hover{border-color:var(--azul,#2564cf);background:var(--azul-fundo,#eef3fc)}
+.chip.lc-sem-grat{background:#FCE8E6;color:#A50E0E;border:1px solid #F1B6B0;font-weight:700}
 html[data-tema="v10"] .lc-cab .lc-ben{font-size:20px;letter-spacing:-.005em}
 html[data-tema="v10"] .lc-cab .lc-mais{margin-left:auto}
 html[data-tema="v10"] .lc-cab .chip.urg{font-weight:600;border-radius:4px}
@@ -20212,6 +20216,8 @@ function lcNumeros(k){
       j&&j.orgao?`<span class="lc-vazio" title="${esc(tituloOrgao(j.orgao)||j.orgao)}">${esc(String(tituloOrgao(j.orgao)||j.orgao).split(" - ")[0])}</span>`:"",
       botoesPjeDoCaso(k, "btn-mini", ' style="text-decoration:none"')
     ], `lcNovoProc('${k.id}')`, "acrescentar outro processo"));
+  const outros = acessosDoCaso(k).outros;
+  if(outros.length) partes.push(`<div class="lc-linha"><span class="lc-k">Acessos</span>${outros.join("")}</div>`);
   const falta = [["NB","lcNovoNb",!nbs.length],["E-SisREC","lcNovoNup",!nups.length],["Judicial","lcNovoProc",!procs.length]].filter(x=>x[2]);
   if(falta.length) partes.push(`<div class="lc-linha"><span class="lc-k">Incluir</span>${
     falta.map(([r,f])=>`<button class="btn-mini" onclick="${f}('${k.id}')">+ ${r}</button>`).join("")}</div>`);
@@ -20270,6 +20276,10 @@ function lcGestao(k){
         title="o portal/robô acompanha sozinho — não precisa de checagem">Automática</button>
       <button class="btn-mini" onclick="checarAcomp('${k.id}')" title="registra que você verificou o caso agora">✓ verifiquei agora</button>
       <span class="lc-vazio">${k.checado_em?`última: ${quem?esc(quem.nome.split(" ")[0]):"?"} · ${fmtBarra(dataSP(k.checado_em))}`:"ninguém verificou ainda"}</span></div>
+    ${(k.fase==="judicial"||k.fase==="pagamento")?`<div class="lc-linha"><span class="lc-k">Gratuidade</span>
+      <button class="chip-acomp ${k.gratuidade==="concedida"?"on":""}" onclick="mudarGratuidade('${k.id}','concedida')" title="a justiça gratuita foi deferida">Concedida</button>
+      <button class="chip-acomp ${k.gratuidade==="negada"?"on":""}" onclick="mudarGratuidade('${k.id}','negada')" title="indeferida ou não pedida: a linha do caso passa a mostrar Sem gratuidade, em vermelho">Não concedida</button>
+      <span class="lc-vazio">${k.gratuidade?"clique de novo para limpar":"não informada"}</span></div>`:""}
     <div class="lc-linha"><span class="lc-k">Comentário fixo</span>${fx.texto
       ? `<span class="lc-fixo-txt">${esc(fx.texto)}</span>${fx.lembrar_em?`<span class="lc-papel">lembrar ${fmtBarra(fx.lembrar_em)}</span>`:""}
          <button class="btn-mini" onclick="lcEditarFixo('${k.id}')">✎ editar</button>`
@@ -20432,6 +20442,56 @@ function filaTrf3(k){
     <span class="lc-k">Fila</span><b class="lc-fila">${t.ordem}º</b><small class="lc-jan">${esc(tot)}</small>
     ${t.prioridade==="S"?`<small class="lc-jan ok" title="o processo tramita com prioridade">prioridade</small>`:""}</span>`;
 }
+// ── ACESSOS DO CASO (pedido do Paulo, 10.10.2026) ──────────────────────
+// Um clique leva ao portal onde o caso está. Fica à vista só o da fase atual
+// (INSS: PAT, ou Meu INSS quando o pedido não está no PAT; Conselho:
+// e-SISREC; Judicial: o grau mais alto do processo). Os demais aparecem no +
+// da linha do caso. O PAT abre pela tarefa do protocolo; o Meu INSS não tem
+// endereço por pedido conhecido, por isso abre a página inicial e deixa o
+// protocolo copiado. O eproc só tem link quando a coleta o trouxe (o endereço
+// leva o hash da sessão).
+const PAT_TAREFA = "https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/";
+const MEU_INSS = "https://meu.inss.gov.br/";
+function abrirMeuInss(prot){
+  if(prot) copiar(prot, "Protocolo copiado — cole na consulta de pedidos do Meu INSS");
+  window.open(MEU_INSS, "_blank", "noopener");
+}
+function acessosDoCaso(k){
+  const a = (href, rot, tit) => `<a class="lc-acesso" href="${urlOk(href)}" target="_blank" rel="noopener" title="${esc(tit)}">${esc(rot)} ↗</a>`;
+  const prots = (k.protocolos||[]).map(x=>soDig(x)).filter(Boolean);
+  const inss = [];
+  if(k.processo_link) inss.push(a(k.processo_link, "PAT", "abrir a tarefa no PAT"));
+  else if(prots.length) inss.push(`<button class="lc-acesso" onclick="abrirMeuInss('${prots[0]}')"
+      title="o pedido não está no PAT: abre o Meu INSS e copia o protocolo ${prots[0]}">Meu INSS ↗</button>`);
+  // protocolo com tarefa no PAT, além do que já tem link
+  prots.filter(x=>!String(k.processo_link||"").endsWith(x)).slice(0, k.processo_link?3:0)
+    .forEach(x=>inss.push(a(PAT_TAREFA+x, `PAT ${x}`, `abrir a tarefa ${x} no PAT`)));
+  const conselho = crpsNups(k).map(n=>a(linkERecursos(n), crpsNups(k).length>1?`e-SISREC ${formatarNup(n)}`:"e-SISREC",
+    `abrir o recurso ${formatarNup(n)} no e-SISREC`));
+  // judicial: um por grau, o mais alto primeiro
+  const m = linksPjeDoCaso(k), graus = Object.keys(m).filter(g=>m[g]).sort().reverse();
+  let jud = graus.map(g=>a(m[g], `${nomeSistemaDoLink(m[g])} · ${g}`, `abrir os autos do ${g} na sua sessão do ${nomeSistemaDoLink(m[g])}`));
+  if(!jud.length && k.pje_link) jud = [a(k.pje_link, nomeSistemaDoLink(k.pje_link), "abrir os autos digitais")];
+  if(!jud.length && justicaDoNumeroCnj(k.processo)==="estadual"){
+    const l = linkEsajPorNumero("1º grau", k.processo);
+    if(l) jud = [a(l, "e-SAJ · 1º grau", "abrir a consulta do processo no e-SAJ")];
+  }
+  const ordem = k.fase==="inss" ? [inss, conselho, jud]
+    : k.fase==="conselho" ? [conselho, inss, jud]
+    : (k.fase==="judicial" || k.fase==="pagamento") ? [jud, conselho, inss] : [[], inss, conselho, jud];
+  const [atual, ...resto] = ordem;
+  // no Judicial só o grau mais alto fica à vista; o outro grau vai para o +
+  return { atual: atual.slice(0,1), outros: [...atual.slice(1), ...resto.flat()] };
+}
+// a gratuidade só fala quando foi negada (pedido do Paulo, 10.10.2026)
+const semGratuidade = k => (k.fase==="judicial" || k.fase==="pagamento") && k.gratuidade==="negada";
+async function mudarGratuidade(casoId, v){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const novo = k.gratuidade===v ? null : v;
+  try{ await patchCaso(casoId, {gratuidade: novo}); }
+  catch(e){ return aviso("Não gravou — rode o crm/fase2/schema_gratuidade.sql no Supabase"); }
+  k.gratuidade = novo; repintarFicha();
+}
 function linhaCaso(k){
   const n = lcNivel(k.id);
   const tram = TRAMITA[k.fase] || NOME_FASE[k.fase] || k.fase || "";
@@ -20448,8 +20508,10 @@ function linhaCaso(k){
       <button class="lapis" title="trocar a espécie ou o pedido deste caso" onclick="escolherEspecie('${k.id}')">✎</button>
       ${k.natureza?`<span class="chip nat-chip" title="natureza do pedido">${esc(rotNatureza(k.natureza))}</span>`:""}
       ${k.urgente?`<span class="chip urg">Urgente</span>`:""}
+      ${semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo — custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:""}
       <button class="lc-claude" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)">✦ Claude</button>
       </div>
+      ${(ac=>ac.atual.length?`<div class="lc-acessos">${ac.atual.join("")}</div>`:"")(acessosDoCaso(k))}
       <div class="lc-placa">
       <span class="lc-f"><span class="lc-k">DER</span>${k.der
         ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar">${fmtBarra(k.der)}</span>`
@@ -25136,7 +25198,7 @@ async function fundirCasos(absorvidoId, destinoId){
   // campos: o destino manda; só o vazio herda. Listas se somam.
   const corpo={};
   for(const f of ["nb","processo","especie","beneficio","der","dib","dii","dat","dcb",
-                  "parceria","processo_link","situacao_inss","cadunico","resultado"])
+                  "parceria","processo_link","situacao_inss","cadunico","resultado","gratuidade"])
     if(!d[f] && a[f]) corpo[f]=a[f];
   corpo.protocolos=[...new Set([...(d.protocolos||[]),...(a.protocolos||[])])];
   const nups=[...new Set([...nupsDoCaso(d),...nupsDoCaso(a)])];
