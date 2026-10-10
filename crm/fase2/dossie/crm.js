@@ -141,3 +141,22 @@ export async function guardarNoCrm({ cpf, caminho, nome, bytes }) {
   if (!ln.ok) throw new Error(`anexo recusado (${ln.status})`);
   return 'ok';
 }
+
+// o resumo da rodada de UM portal entra em clientes.dossie (schema_dossie.sql),
+// sem apagar o dos outros portais: lê o que há, troca só a chave do portal
+export async function guardarResumo({ cpf, portal, resumo }) {
+  const st = await chrome.storage.local.get(['refresh', 'url']);
+  if (!st.refresh || !st.url) return 'sem login';
+  const clienteId = await idDoCliente(cpf);
+  if (!clienteId) return 'cliente fora do CRM';
+  const { url } = await config();
+  const cab = await cabecalhos();
+  const r = await fetchTeimoso(`${url}/rest/v1/clientes?select=dossie&id=eq.${clienteId}`, { headers: cab });
+  if (!r.ok) throw new Error(r.status === 400 ? 'rode o schema_dossie.sql no Supabase' : `CRM recusou a leitura (${r.status})`);
+  const atual = (((await r.json())[0] || {}).dossie) || {};
+  const p = await fetchTeimoso(`${url}/rest/v1/clientes?id=eq.${clienteId}`, { method: 'PATCH',
+    headers: Object.assign({}, cab, { Prefer: 'return=minimal' }),
+    body: JSON.stringify({ dossie: Object.assign({}, atual, { [portal]: Object.assign({ em: new Date().toISOString() }, resumo) }) }) });
+  if (!p.ok) throw new Error(`resumo recusado (${p.status})`);
+  return 'ok';
+}
