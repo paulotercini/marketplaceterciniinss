@@ -3746,6 +3746,45 @@ html[data-tema="v10"] .cc-acao-fim{margin-left:auto;display:inline-flex;gap:6px;
 html[data-tema="v10"] .cc-acao-fim .tl-bt{display:inline-flex;align-items:center;gap:5px}
 html[data-tema="v10"] .fase-c li.tl-card,html[data-tema="v10"] .painel[data-p="2"] .fatos .timeline li.tl-card,html[data-tema="v10"] .painel[data-p="2"] .caso .timeline li.tl-card{padding:14px 16px}
 @media (max-width:760px){html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card{padding:12px}}
+/* integração, etapa 3 · uma régua para a ficha inteira: a faixa do caso, os
+   títulos de seção, dois tamanhos de botão (40px na seção, 32px no cartão) e
+   as fontes do processo como filtro, não como mais um nível de abas */
+html[data-tema="v10"] .faixa-caso{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-width:0}
+html[data-tema="v10"] .fc-rot{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro)}
+html[data-tema="v10"] .fc-caso{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 12px;border:1px solid var(--borda);border-radius:8px;background:#FFFFFF;color:var(--texto);font:500 13px var(--f-ui);cursor:pointer;text-align:left;max-width:100%;transition:border-color 160ms ease-out,transform 160ms ease-out}
+html[data-tema="v10"] .fc-caso:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .fc-caso:hover{border-color:var(--azul)}}
+html[data-tema="v10"] .fc-esp{font:500 11.5px var(--f-mono);color:var(--azul-escuro);background:var(--azul-fundo);border-radius:4px;padding:2px 6px}
+html[data-tema="v10"] .fc-tit{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html[data-tema="v10"] .fc-fase{font-size:12px;color:var(--cinza);white-space:nowrap}
+html[data-tema="v10"] .adr>.faixa-caso,html[data-tema="v10"] .painel[data-p="3"]>.faixa-caso{margin-bottom:2px}
+html[data-tema="v10"] .ad-topo{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+html[data-tema="v10"] .ad-topo-fim{margin-left:auto;display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px}
+html[data-tema="v10"] .tl-bt.tl-quieto{border-color:transparent;background:transparent;color:var(--azul)}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .tl-bt.tl-quieto:hover{background:var(--placa);border-color:transparent}}
+html[data-tema="v10"] .tl-bt.tl-falta{border-color:#F0B4B4;background:#FDF2F1;color:var(--venc)}
+html[data-tema="v10"] .adr-link{border:0;background:none;padding:0;font:inherit;font-size:12.5px;color:var(--azul);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+html[data-tema="v10"] .adr-bt{min-height:40px;padding:0 14px;border-color:#D6D4CE;color:var(--texto);font-weight:500;transition:border-color 160ms ease-out,transform 160ms ease-out}
+html[data-tema="v10"] .adr-bt.adr-primario,html[data-tema="v10"] .adr-primario{color:#FFFFFF;border-color:var(--azul)}
+html[data-tema="v10"] .adr-bt:active,html[data-tema="v10"] .fc-caso:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .adr-bt:not(.adr-primario):hover{border-color:var(--azul)}}
+html[data-tema="v10"] body .sub-menu .trilho-mais.atend-novo{min-height:36px;padding:0 14px;border-radius:8px;font:500 13px var(--f-ui);margin-bottom:4px;white-space:nowrap}
+html[data-tema="v10"] .idf-card .cad-mini{min-height:40px;border-radius:8px;border-color:#D6D4CE;font-weight:500;color:var(--texto)}
+html[data-tema="v10"] .caso-esq .fp-tit,html[data-tema="v10"] .outras-abas h3{font-size:15px;font-weight:500;font-family:var(--f-ui);color:var(--texto)}
+html[data-tema="v10"] .per-topo .adr-sub{font-size:12.5px;color:var(--cinza)}
+html[data-tema="v10"] .faixa-caso+.per-topo{margin-top:16px}
+html[data-tema="v10"] .per-topo .adr-h{margin-bottom:2px}
+html[data-tema="v10"] .per-sub{margin:18px 0 0;font:600 11px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro)}
+html[data-tema="v10"] .hon-lanc{position:relative}
+html[data-tema="v10"] .hon-lanc>.hon-novo>summary{position:absolute;top:12px;right:20px;list-style:none;display:inline-flex;align-items:center}
+html[data-tema="v10"] .hon-lanc>.hon-novo>summary::-webkit-details-marker{display:none}
+html[data-tema="v10"] .painel .sub-menu.fontes{margin:0 0 12px;padding:0;width:100%;border:0;background:none;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+html[data-tema="v10"] .painel .sub-menu.fontes::before{content:none}
+html[data-tema="v10"] .painel .sub-menu.fontes>button{font:500 12.5px/1 var(--f-ui);min-height:32px;padding:0 12px;margin:0;border-radius:999px;border:1px solid var(--borda);background:#FFFFFF;color:var(--cinza)}
+html[data-tema="v10"] .painel .sub-menu.fontes>button.on{background:var(--texto);border-color:var(--texto);color:#FFFFFF;font-weight:500}
+html[data-tema="v10"] .sub-menu.fontes .fontes-fim{margin-left:auto;display:inline-flex;gap:6px;align-items:center}
+html[data-tema="v10"] .caixa-pje{margin-top:2px}
+@media (max-width:760px){html[data-tema="v10"] .ad-topo-fim{margin-left:0}html[data-tema="v10"] .fc-caso{min-height:44px}html[data-tema="v10"] .hon-lanc>.hon-novo>summary{position:static;margin-top:4px}}
 /* integração, etapa 2 · a aba Perícias usa o cartão do andamento oficial */
 html[data-tema="v10"] .timeline.tl-per{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
 html[data-tema="v10"] .timeline.tl-per::before{display:none}
@@ -14125,6 +14164,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     // pré-caso recém-removido: as Anotações ficam, porque o ↺ restaurar mora na mesa
     vis.anotacoes = !!(c.campos||{}).pc_lixeira;
   }
+  if(triVisivel.has(c.id)) vis.triagem = true;   // etapa 3 · reaberta pela Análise
   // F171 · Análise de Direito: com caso, com análise já salva, ou no
   // atendimento depois da triagem encerrada (a análise vem depois da triagem e dos documentos)
   vis.direito = !semCaso || analisesDe(c.id).length>0 || (pcsVivos.length>0 && triFechada) || !!adPre
@@ -16031,10 +16071,12 @@ function painelPericiasFicha(c, ks, evs){
     // as futuras primeiro (a mais próxima no alto), depois as passadas (a mais recente no alto)
     const h = hoje(), fut = evs.filter(e=>dataSP(e.data_hora)>=h).sort((x,y)=>x.data_hora<y.data_hora?-1:1),
       pas = evs.filter(e=>dataSP(e.data_hora)<h).sort((x,y)=>x.data_hora<y.data_hora?1:-1);
-    return `<div class="per-topo"><h3 class="cc-conta">${fut.filter(e=>e.status==="agendada").length} agendada${fut.filter(e=>e.status==="agendada").length===1?"":"s"} · ${pas.length} anterior${pas.length===1?"":"es"}</h3>
-        <details class="per-novo"${evs.length?"":" open"}><summary class="tl-bt forte">+ perícia</summary>${form}</details></div>
+    const nAg = fut.filter(e=>e.status==="agendada").length;
+    return `${faixaDoCaso(ks)}<div class="per-topo"><div><h2 class="adr-h">Perícias e audiências</h2>
+        <span class="adr-sub">${nAg} agendada${nAg===1?"":"s"} · ${pas.length} anterior${pas.length===1?"":"es"}</span></div>
+        <details class="per-novo"${evs.length?"":" open"}><summary class="adr-bt adr-primario">+ perícia</summary>${form}</details></div>
       ${fut.length?`<ul class="timeline tl-per">${fut.map(cartaoPericia).join("")}</ul>`:`<p class="meio-sub">Nenhuma perícia ou audiência marcada.</p>`}
-      ${pas.length?`<h3 class="cc-conta" style="margin-top:14px">Anteriores</h3><ul class="timeline tl-per">${pas.map(cartaoPericia).join("")}</ul>`:""}`;
+      ${pas.length?`<h3 class="per-sub">Anteriores</h3><ul class="timeline tl-per">${pas.map(cartaoPericia).join("")}</ul>`:""}`;
   }
   return `
     ${evs.map(e=>`<div class="evento ${dataSP(e.data_hora)<hoje()?"passado":"futuro"}">
@@ -16286,7 +16328,7 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
   const cct = (c && (c.campos||{}).contrato) || {};
   const assin = c ? contratoAssinadoDe(c) : null;
   const cob = proximaCobranca(abertos);
-  return `<div class="adr hon">
+  return `<div class="adr hon">${faixaDoCaso(ks)}
     <section class="hon-resumo" aria-label="Resumo dos honorários">
       <div class="adr-tile adr-t-texto"><span class="adr-tile-rot">Contratado</span>
         <span class="adr-tile-val">${ct ? (ct.ajuste ? "Ajuste combinado" : "Padrão do escritório") : "—"}</span>
@@ -16297,7 +16339,7 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
       <div class="adr-tile"><span class="adr-tile-rot">A receber</span>
         <span class="adr-tile-val">${moeda(soma(abertos))}</span>
         <span class="adr-tile-sub">${abertos.length} em aberto</span></div>
-      <div class="adr-tile hon-t-prox"><span class="adr-tile-rot">Próximo vencimento</span>
+      <div class="adr-tile${prox?" hon-t-prox":""}"><span class="adr-tile-rot">Próximo vencimento</span>
         <span class="adr-tile-val">${prox ? fmt(prox.vencimento) : "—"}</span>
         <span class="adr-tile-sub">${prox ? `${esc(prox.descricao&&prox.descricao!=="Recebimento"?prox.descricao:"lançamento")} · ${moeda(prox.valor)}` : "nada em aberto com data"}</span></div>
     </section>
@@ -18385,19 +18427,27 @@ async function anotarNoDireito(cliId){
   }catch(e){ return aviso("Não consegui guardar a anotação — tente de novo"); }
   c.campos = campos; aviso("Anotação guardada", false); repintarFicha();
 }
+const triVisivel = new Set();   // clientes com caso cuja Triagem foi reaberta pela Análise
+function abrirTriagemDoCaso(cliId){ triVisivel.add(cliId); irSubCad("triagem"); }
 function quadroTriagemDireito(c, ks){
   const tri = feedTriagem(c, ks);
+  const t = triagemDe(c), passos = (ks||[]).length ? triagemPassosDe(c, ks) : [];
+  const faltam = passos.filter(([k])=>{ const p = t[k]||{}; return !p.feito && !(p.estado && !p.auto); }).length;
+  const responder = faltam && (ks||[]).length ? `<p class="adr-sub" style="margin:0">${faltam} ${faltam===1?"ponto":"pontos"} sem resposta
+      <button type="button" class="adr-link" onclick="abrirTriagemDoCaso('${c.id}')">Responder na triagem</button></p>` : "";
   const grupo = (cls, tit, itens) => !itens.length ? "" : `<div class="ad-grupo ${cls}">
     <div class="ad-grupo-tit">${tit}</div>
     <ul>${itens.map(f=>`<li><b>${esc(f.rot)}:</b> ${esc(f.texto)} <span class="ad-quem">— ${f.quem?esc(f.quem):"—"}${f.em?`, ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>
   </div>`;
-  if(!(tri.atencao.length || tri.pendente.length || tri.ok.length)) return "";
+  if(!(tri.atencao.length || tri.pendente.length || tri.ok.length)) return responder
+    ? `<section class="adr-card ad-q-tri" aria-labelledby="adr-t-tri"><h2 class="adr-h" id="adr-t-tri">O que se apurou na triagem</h2>${responder}</section>` : "";
   // integração · leitura: fica na Análise mesmo depois que a aba Triagem some
   return `<section class="adr-card ad-q-tri" aria-labelledby="adr-t-tri">
       <h2 class="adr-h" id="adr-t-tri">O que se apurou na triagem</h2>
       ${grupo("atencao", "Atenção", tri.atencao)}
       ${grupo("pendente", "Não conferido", tri.pendente)}
       ${grupo("ok", "Sem pendência", tri.ok)}
+      ${responder}
     </section>`;
 }
 // F172 · as anotações do cliente (inclusive as que vieram da lista 🙋
@@ -18544,9 +18594,9 @@ function proximaVerificacao(c){
 }
 function pendenciasDireito(c){
   const itens=[];
-  if(!c.dn) itens.push({ok:false, nome:"Data de nascimento", sub:"preencher na Identificação"});
+  if(!c.dn) itens.push({ok:false, nome:"Data de nascimento", sub:"preencher na Identificação", ir:"identificacao"});
   const g=cnisDe(c);
-  itens.push(g ? {ok:true, nome:"CNIS", sub:`recebido em ${fmt(g.em)}`} : {ok:false, nome:"CNIS", sub:"inserir na Identificação"});
+  itens.push(g ? {ok:true, nome:"CNIS", sub:`recebido em ${fmt(g.em)}`} : {ok:false, nome:"CNIS", sub:"inserir na Identificação", ir:"identificacao"});
   for(const p of ((c.campos||{}).docs_pedidos||[])) for(const it of (p.itens||[]))
     itens.push({ok:!!it.entregue, nome:String(it.nome||it), sub:it.entregue?`entregue em ${fmt(it.entregue)}`:p.em?`pedido em ${fmt(p.em.slice(0,10))}`:"pedido"});
   const pv=proximaVerificacao(c);
@@ -18554,7 +18604,7 @@ function pendenciasDireito(c){
     <h2 class="adr-h" id="adr-t-pend">Pendências e documentos</h2>
     ${pv?`<p class="adr-verif${pv<hoje()?" venceu":""}">próxima verificação: <b>${esc(fmt(pv))}</b></p>`:""}
     <ul class="adr-pend-lista">${itens.map(i=>`<li><span class="adr-ponto ${i.ok?"ok":"falta"}" aria-hidden="true"></span>
-      <span><b>${esc(i.nome)}</b> <span class="sr-so">${i.ok?"(entregue)":"(falta)"}</span><br><span class="adr-sub">${esc(i.sub)}</span></span></li>`).join("")}</ul>
+      <span><b>${esc(i.nome)}</b> <span class="sr-so">${i.ok?"(entregue)":"(falta)"}</span><br>${i.ir?`<button type="button" class="adr-link" onclick="irSubCad('${i.ir}')">${esc(i.sub)}</button>`:`<span class="adr-sub">${esc(i.sub)}</span>`}</span></li>`).join("")}</ul>
   </section>`;
 }
 function painelDireito(c){
@@ -18569,11 +18619,12 @@ function painelDireito(c){
   const plano=planejamentoDireito(c, ult);
   const anteriores=as.slice(1);
   return `<div class="adr">
-    <div class="form-linha ad-topo" style="align-items:center;gap:10px">
-      <span style="margin-left:auto"></span>${chipParceria(c, ks)}
-      <button type="button" class="btn-mini adr-bt" onclick="irSubCad('identificacao')"
+    <div class="ad-topo">${faixaDoCaso(ks)}
+      <span class="ad-topo-fim">${chipParceria(c, ks)}
+      <button type="button" class="tl-bt tl-quieto" onclick="irSubCad('identificacao')"
         title="a parceria e o CNIS se alteram na Identificação">Alterar na Identificação</button>
-      ${botaoAbrirCnis(c, false)}
+      ${cnisDe(c)&&cnisDe(c).caminho?`<button type="button" class="tl-bt" onclick="abrirCnis('${c.id}')" title="abre o extrato guardado em outra aba (CNIS de ${esc(fmt(cnisDe(c).em))})">Abrir CNIS</button>`
+        :`<button type="button" class="tl-bt tl-falta" onclick="irSubCad('identificacao')" title="o CNIS ainda não foi inserido: insira na Identificação">Inserir CNIS</button>`}</span>
     </div>
     ${resumoDireito(c, ult)}
     ${ult ? fichaDaAnalise(ult) : ""}
@@ -18975,7 +19026,7 @@ const DOCS_JUDICIAIS = ["pje","eproc","esaj"];
 const docsDaOrigem = (k, origens) => documentosDoCaso(k).filter(d=>!origens || origens.includes(d.origem));
 function botaoDocs(k, origens, ativo, onclick){
   const n = docsDaOrigem(k, origens).length;
-  return n ? `<button class="${ativo?"on":""}" onclick="${onclick}" title="as peças guardadas no CRM — abrir, baixar ou levar para o Claude">📂 Documentos (${n})</button>` : "";
+  return n ? `<button class="${ativo?"on":""}" onclick="${onclick}" title="as peças guardadas no CRM — abrir, baixar ou levar para o Claude">${temaV10()?"":"📂 "}Documentos (${n})</button>` : "";
 }
 // F190 · a seleção de documentos: o que vai para o .zip, o pacote e o Claude.
 // A chave é a mesma que o conector do CRM entende (documentos_caso/ler_documento).
@@ -19753,6 +19804,12 @@ function linhasDeDatas(cliId){
         rot:`<b>Pedir a prorrogação</b>
              <small class="qd-de">Cessação marcada para ${fmt(x.dcb)}${x.dcb_prorrogar_em?"":` · lembrete automático, ${DIAS_PRORROG} dias antes`} · ${esc(tituloCaso(x))}</small>`,
         edita:"", acao:`<button class="btn-mini" onclick="salvarProrrog('${x.id}',true)" title="a prorrogação já foi pedida — desliga o alarme">✔ prorrogação pedida</button>`});
+      // etapa 3 · o honorário em aberto com vencimento é compromisso do caso
+      const so = ((D.casosDoCliente.get(cliId))||[]).filter(y=>y.fase!=="encerrado").length===1;
+      (D.pagamentos||[]).filter(pg=>pg.status==="aberto" && pg.vencimento && (pg.caso_id===x.id || (!pg.caso_id && so && pg.cliente_id===cliId)))
+        .forEach(pg=>linhas.push({data:pg.vencimento, ico:"💰", natureza:"compromisso", casoId:x.id, cru:true, rotulo:"Honorários",
+          rot:`<b>Honorários · ${moedaBR(pg.valor)}</b> <small class="qd-de">${esc(origemPgto(pg))} · ${esc(tituloCaso(x))}</small>`,
+          clique:`onclick="abaAtiva=4;repintarFicha()"`, edita:"", acao:""}));
       // F102 · o comentário fixo com data lembra na data
       if(x.fixo && x.fixo.texto && x.fixo.lembrar_em) linhas.push({data:x.fixo.lembrar_em, ico:"📌", natureza:"lembrete", casoId:x.id, cru:true,
         rot:`<b>${esc(x.fixo.texto.slice(0,110))}</b> <small class="qd-de">Comentário fixo · ${esc(tituloCaso(x))}</small>`,
@@ -21076,6 +21133,17 @@ function trilhaSegueEtapa(k, etapa){
 }
 // F182 · "Nas outras abas": o que o caso tem nas demais divisões da ficha,
 // com o dado que importa e o atalho. Só entra a linha que tem o que mostrar.
+// integração, etapa 3 · a faixa do caso: no alto da Análise, das Perícias e
+// dos Honorários, diz de que caso a parte está falando e leva até ele
+function faixaDoCaso(ks){
+  const vivos = (ks||[]).filter(k=>k.fase!=="encerrado");
+  if(!vivos.length) return "";
+  return `<nav class="faixa-caso" aria-label="${vivos.length>1?"Casos":"Caso"} do cliente"><span class="fc-rot">${vivos.length>1?"Casos":"Caso"}</span>
+    ${vivos.map(k=>`<button type="button" class="fc-caso" onclick="irAoCaso('${k.id}')" title="abrir o caso">
+      ${k.especie?`<span class="fc-esp">${esc(k.especie)}</span>`:""}<span class="fc-tit">${esc(tituloCaso(k))}</span>
+      <span class="fc-fase">${esc(NOME_FASE[k.fase]||k.fase||"")}${k.etapa?` · ${esc(k.etapa)}`:""}</span></button>`).join("")}</nav>`;
+}
+function irAoCaso(id){ casoSel=id; abaAtiva=2; repintarFicha(); }
 function irOutraAba(qual){
   if(qual==="pericias") abaAtiva=3;
   else if(qual==="honorarios") abaAtiva=4;
@@ -22659,11 +22727,12 @@ async function alternarFaseAba(casoId, qual){
 // o botão, no cabeçalho de cada painel
 function botaoFaseAba(k, qual){
   const a = arqInfo(k, "aba:"+qual), co = a && D.colPorId.get(a.por);
+  const cls = temaV10() ? "tl-bt tl-quieto" : "btn-mini";
   return a
     ? `<span class="chip neutro" title="fase encerrada${co?" por "+esc(co.nome):""} em ${fmtTS(a.em)}">✔ fase encerrada${co?` por ${esc(co.inicial)}`:""}</span>
-       <button class="btn-mini" onclick="alternarFaseAba('${k.id}','${qual}')"
+       <button class="${cls}" onclick="alternarFaseAba('${k.id}','${qual}')"
          title="voltar a tratar esta fase como em andamento">↩ reabrir</button>`
-    : `<button class="btn-mini" onclick="alternarFaseAba('${k.id}','${qual}')"
+    : `<button class="${cls}" onclick="alternarFaseAba('${k.id}','${qual}')"
         title="esta etapa terminou e o caso seguiu para a próxima — a aba fica em cinza, sem perder nada. Não use por causa de mandado de segurança: o MS não encerra o recurso.">✔ fase encerrada</button>`;
 }
 function chaveCnj(inst, n){
@@ -22722,7 +22791,7 @@ function painelINSS(k, ands){
   const temDocs = docsDaOrigem(k, ["pat"]).length > 0;
   const verDocs = fontePat==="docs" && temDocs;
   const menu = temDocs ? `<div class="sub-menu fontes" style="width:100%">
-    <button class="${verDocs?"":"on"}" onclick="fontePat='';repintarFicha()">🌻 Comentários (${coms.length})</button>
+    <button class="${verDocs?"":"on"}" onclick="fontePat='';repintarFicha()">${temaV10()?"":"🌻 "}Comentários (${coms.length})</button>
     ${botaoDocs(k, ["pat"], verDocs, "fontePat='docs';repintarFicha()")}
   </div>` : "";
   if(verDocs) return comp0 + menu + painelDocumentos(k, ["pat"]);
@@ -23281,7 +23350,7 @@ function menuDocsCrps(k){
   if(!docsDaOrigem(k, ["crps"]).length) return "";
   const ver = fonteCrps==="docs";
   return `<div class="sub-menu fontes" style="width:100%">
-    <button class="${ver?"":"on"}" onclick="fonteCrps='';repintarFicha()">⚖️ Andamentos do recurso</button>
+    <button class="${ver?"":"on"}" onclick="fonteCrps='';repintarFicha()">${temaV10()?"":"⚖️ "}Andamentos do recurso</button>
     ${botaoDocs(k, ["crps"], ver, "fonteCrps='docs';repintarFicha()")}
   </div>`;
 }
@@ -23818,8 +23887,9 @@ function caixaPje(k, movs){
   // F45 · o mesmo esqueleto da conversa do Escritório
   // F71 · "⚠ não é deste caso": a saída para o movimento intruso (caso real:
   // andamento de um processo caiu na ficha de outro cliente)
-  return `<div class="caso" style="margin-bottom:10px">
-    <div class="rotulo-caso">⚡ coletas do ${nomeDaColeta(movs)} (${movs.length})</div>
+  // etapa 3 · no tema a fonte já está no filtro: sem a caixa cinza e sem o rótulo repetido
+  return `<div class="${temaV10()?"caixa-pje":"caso"}" style="margin-bottom:10px">
+    <div class="rotulo-caso${temaV10()?" sr-so":""}">⚡ coletas do ${nomeDaColeta(movs)} (${movs.length})</div>
     ${tlOficial(limpos.map(({a, l})=>({
       q: l.q, texto: l.texto, and: a,
       // F146 · o sistema de cada movimento sai do número CNJ, não do rótulo da coleta;
@@ -24051,8 +24121,8 @@ function painelCNJTodos(k, ands, cabec){
   const temDocs = docsDaOrigem(k, DOCS_JUDICIAIS).length > 0;
   const fonte = fonteCnj==="docs" && temDocs ? "docs" : temPje ? (fonteCnj==="oficial" && temOficial ? "oficial" : "pje") : "oficial";
   const menuFonte = (temPje || temOficial || temDocs) ? `<div class="sub-menu fontes" style="width:100%">
-    ${temPje?`<button class="${fonte==="pje"?"on":""}" onclick="fonteCnj='pje';repintarFicha()">⚡ Coleta do ${nomeDaColeta(pjeMovs)} (${pjeMovs.length})</button>`:""}
-    ${temOficial?`<button class="${fonte==="oficial"?"on":""}" onclick="fonteCnj='oficial';repintarFicha()">⚖️ Coleta oficial (CNJ)</button>`:""}
+    ${temPje?`<button class="${fonte==="pje"?"on":""}" onclick="fonteCnj='pje';repintarFicha()">${temaV10()?"":"⚡ "}Coleta do ${nomeDaColeta(pjeMovs)} (${pjeMovs.length})</button>`:""}
+    ${temOficial?`<button class="${fonte==="oficial"?"on":""}" onclick="fonteCnj='oficial';repintarFicha()">${temaV10()?"":"⚖️ "}Coleta oficial (CNJ)</button>`:""}
     ${botaoDocs(k, DOCS_JUDICIAIS, fonte==="docs", "fonteCnj='docs';repintarFicha()")}
   </div>` : "";
   if(fonte==="docs") return `${cabec}${menuFonte}${painelDocumentos(k, DOCS_JUDICIAIS)}${gerenciaProcessos(k)}`;
@@ -24106,12 +24176,14 @@ function painelCNJ(k, ands){
   const fonte = fonteCnj==="docs" && temDocs ? "docs" : temPje ? (fonteCnj==="oficial" && temOficial ? "oficial" : "pje") : "oficial";
   const menuFonte = (temPje || temOficial || temDocs) ? `<div class="sub-menu fontes" style="width:100%">
     ${temPje?`<button class="${fonte==="pje"?"on":""}" onclick="fonteCnj='pje';repintarFicha()"
-      title="o que a extensão trouxe do tribunal na sua sessão">⚡ Coleta do ${nomeDaColeta(pjeMovs)} (${pjeMovs.length})</button>`:""}
+      title="o que a extensão trouxe do tribunal na sua sessão">${temaV10()?"":"⚡ "}Coleta do ${nomeDaColeta(pjeMovs)} (${pjeMovs.length})</button>`:""}
     ${temOficial?`<button class="${fonte==="oficial"?"on":""}" onclick="fonteCnj='oficial';repintarFicha()"
-      title="consulta pública do CNJ (DataJud), atualizada todo dia útil">⚖️ Coleta oficial (CNJ)</button>`:""}
+      title="consulta pública do CNJ (DataJud), atualizada todo dia útil">${temaV10()?"":"⚖️ "}Coleta oficial (CNJ)</button>`:""}
     ${botaoDocs(k, DOCS_JUDICIAIS, fonte==="docs", "fonteCnj='docs';repintarFicha()")}
+    ${temaV10()?`<span class="fontes-fim">${botaoFaseAba(k, "cnj")}</span>`:""}
   </div>` : "";
-  const barraFase = `<div class="form-linha" style="justify-content:flex-end;margin-bottom:6px">
+  // etapa 3 · no tema, o "fase encerrada" mora na linha das fontes: uma linha a menos
+  const barraFase = temaV10() && menuFonte ? "" : `<div class="form-linha" style="justify-content:flex-end;margin-bottom:6px">
     ${botaoFaseAba(k, "cnj")}</div>`;
   const cabec = barraFase + menuProc + menuFonte;
   const pjeBox = fonte==="pje" ? caixaPje(k, pjeMovs) : "";
