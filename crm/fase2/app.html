@@ -22211,13 +22211,14 @@ function painelINSS(k, ands){
     // limpar de novo na saída: comentário gravado antes da limpeza de entrada
     // ainda carrega "<p>" e "&aacute;" no banco
     const jaLi=(a.andamentos_lidos||[]).some(l=>l.colaborador_id===eu.id);
-    return { q: qSP(a.criado_em), em: doInss?"🌻":"🏢", and: a,
+    const l = andLimpo(a, k);
+    return { q: l.q, em: doInss?"🌻":"🏢", and: a,
       rot: doInss?"INSS":"Escritório (no portal)",
-      texto: limparHtmlPat(m ? a.texto.slice(m[0].length) : a.texto),
+      texto: l.texto,
       html: `<span style="display:inline-flex;gap:4px;margin-left:6px;vertical-align:middle">
         ${jaLi?"":`<button class="btn-mini" onclick="liNaFicha('${a.id}')" title="marcar como lido (sai das 📣 Novidades)">✔ li</button>`}
         ${segBtnHtml(segRegistrar(k.id, a.texto, a.id))}</span>` };
-  });
+  }).sort((x,y)=>x.q<y.q?1:-1);   // a data do portal pode não seguir a ordem da coleta
   return comp + `<div class="fatos" style="margin-bottom:12px">
     <div class="fatos-topo">
       <h3 style="font-size:14px">Comentários do processo no INSS</h3>
@@ -22255,13 +22256,16 @@ const qSP = ts => ts ? dataSP(ts)+"T"+horaSP(ts) : "";
 function fatosDoCasoTodo(k, ands){
   const itens=[];
   for(const a of (ands||[]).filter(x=>!x.excluir)){
-    if(ehComentarioPat(a)){
-      const m=/^(INSS|Escritório)\s*·\s*/.exec(a.texto||"");
-      itens.push({q:qSP(a.criado_em), chip:"🌻 INSS", cor:"per", id:a.id, and:a,
-        texto:limparHtmlPat(m?a.texto.slice(m[0].length):a.texto)
-          + (m&&m[1]==="Escritório"?" (comentário nosso no portal)":"")});
+    if(a.origem==="pat"){
+      const m=/^(INSS|Escritório)\s*·\s*/.exec(a.texto||""), l=andLimpo(a, k);
+      itens.push({q:l.q, chip:"🌻 INSS", cor:"per", id:a.id, and:a,
+        texto:l.texto + (m&&m[1]==="Escritório"?" (comentário nosso no portal)":"")});
     }else if(a.origem==="pje"){
-      itens.push({q:qSP(a.criado_em), chip:"⚖️ PJe", cor:"neutro", id:a.id, and:a, texto:(a.texto||"")});
+      const l=andLimpo(a, k);
+      itens.push({q:l.q, chip:"⚖️ PJe", cor:"neutro", id:a.id, and:a, texto:l.texto});
+    }else if(a.origem==="crps"){
+      const l=andLimpo(a, k);
+      itens.push({q:l.q, chip:"🖥 Recurso", cor:"fase", id:a.id, and:a, texto:l.texto});
     }else{
       // F46 · quem escreveu aparece com NOME e COR (avatar do colaborador),
       // não mais "P:" espremido no texto — a autoria vai nos campos próprios
@@ -23191,6 +23195,31 @@ function movPjeLimpo(a){
   const chave = /:(\d{4}-\d{2}-\d{2}T\d{2}:\d{2})/.exec(String((a && a.origem_id) || ""));
   const q = em ? `${em[3]}-${em[2]}-${em[1]}${em[4]?`T${em[4]}`:""}` : chave ? chave[1] : qSP(a && a.criado_em);
   return { texto: s || t, grau: sis ? sis[1].trim() : null, numero: num ? num[0] : null, q };
+}
+// O MESMO PADRÃO PARA TODA FONTE (pedido do Paulo, 10.10.2026): a linha diz
+// só o que aconteceu. A fonte já está no rótulo; o número do protocolo só
+// aparece quando o caso tem mais de um; a data do portal data a linha.
+//   "INSS · Movimentação no protocolo 123 — situação: Em análise (portal atualizado em 2026-09-01T10:00:00)."
+//     → "Situação: Em análise"
+//   "🖥 CRPS · 01/10/2026 — 📥 Protocolo recebido no INSS" → "📥 Protocolo recebido no INSS"
+function andLimpo(a, k){
+  if(!a) return {texto:"", q:""};
+  if(a.origem==="pje"){ const l = movPjeLimpo(a); return {texto:l.texto, q:l.q}; }
+  let t = String(a.texto||""), q = qSP(a.criado_em);
+  if(a.origem==="crps"){
+    const m = /^🖥\s*CRPS\s*·\s*(\d{2})\/(\d{2})\/(\d{4})\s*—\s*/.exec(t);
+    if(m){ t = t.slice(m[0].length); q = `${m[3]}-${m[2]}-${m[1]}`; }
+    return {texto:t, q};
+  }
+  if(a.origem!=="pat") return {texto:t, q};
+  t = limparHtmlPat(t.replace(/^(INSS|Escritório)\s*·\s*/, ""));
+  const port = /\s*\(portal atualizado em (\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})[^)]*\)\.?/.exec(t);
+  if(port){ q = `${port[1]}T${port[2]}`; t = t.replace(port[0], ""); }
+  const varios = new Set(((k&&k.protocolos)||[]).map(x=>soDig(x)).filter(Boolean)).size > 1;
+  t = t.replace(/^Movimentação no protocolo (\d+)\s*—\s*situação:\s*/i, (_, n) => varios ? `Protocolo ${n} · situação: ` : "Situação: ")
+       .replace(/^Situação registrada:\s*/i, "Situação: ")
+       .replace(/^Protocolo (\d+) juntado/i, (x, n) => varios ? x : "Protocolo juntado");
+  return {texto:t.trim(), q};
 }
 function caixaPje(k, movs){
   if(!movs || !movs.length) return "";
