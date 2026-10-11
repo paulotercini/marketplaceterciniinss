@@ -993,6 +993,54 @@
   .dossie-fatos li>span:first-child{flex:1 1 220px}
   .dossie-orig{font-size:12px;color:var(--cinza-claro,#6b7280)}
   .dossie-fatos li.alerta>span:first-child{color:var(--vermelho);font-weight:500}
+  /* onda 2b · o mapa do dossiê: espécie → ramos → fatos, com as flechas em CSS */
+  .mapa{margin-top:10px}
+  .mapa-topo{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:16px}
+  .mapa-lentes{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 420px}
+  .mapa-arvore{display:grid;grid-template-columns:170px minmax(220px,320px) minmax(0,1fr);column-gap:38px;row-gap:12px;align-items:start}
+  .mapa-raiz{grid-column:1;align-self:center;position:relative;display:flex;flex-direction:column;gap:3px;text-align:center;
+    border:2px solid var(--borda);border-radius:10px;padding:14px 10px;background:var(--branco)}
+  .mapa-raiz b{font-size:15px}
+  .mapa-raiz span,.mapa-raiz small{font-size:12.5px;color:var(--cinza)}
+  .mapa-raiz::after{content:"";position:absolute;right:-21px;top:50%;width:19px;border-top:1.5px solid var(--cinza-claro)}
+  .mapa-ramo{grid-column:2;position:relative;align-self:stretch}
+  .mapa-ramo::before{content:"";position:absolute;left:-19px;top:-7px;bottom:-7px;border-left:1.5px solid var(--cinza-claro)}
+  .mapa-ramo.primeiro::before{top:27px}
+  .mapa-ramo.ultimo::before{bottom:auto;height:34px}
+  .mapa-ramo.primeiro.ultimo::before{display:none}
+  .mapa-no{position:relative;display:grid;grid-template-columns:1fr auto;gap:2px 10px;width:100%;text-align:left;padding:9px 12px;
+    border-radius:10px;border:1.5px solid var(--borda);background:var(--branco);cursor:pointer;font:inherit;color:var(--texto)}
+  .mapa-no b{font-size:14px;font-weight:600}
+  .mapa-no span{grid-column:1;font-size:12.5px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .mapa-no i{grid-column:2;grid-row:1 / span 2;align-self:center;font-style:normal;width:22px;height:22px;border-radius:50%;
+    border:1.25px solid var(--cinza-claro);display:grid;place-items:center;font-size:14px;line-height:1}
+  .mapa-no::before{content:"";position:absolute;left:-19px;top:27px;width:12px;border-top:1.5px solid var(--cinza-claro)}
+  .mapa-no::after{content:"";position:absolute;left:-8px;top:22.5px;border:4.5px solid transparent;border-left:6px solid var(--cinza-claro)}
+  .mapa-ramo.aberto>.mapa-no{border-width:2px;box-shadow:var(--sombra-hover)}
+  .mapa-ramo.est-crit>.mapa-no{border-color:var(--vermelho);background:var(--vermelho-f)}
+  .mapa-ramo.est-warn>.mapa-no{border-color:var(--laranja);background:var(--laranja-f)}
+  .mapa-ramo.est-ok>.mapa-no{border-color:var(--verde);background:var(--verde-f)}
+  .mapa-ramo.est-pend>.mapa-no{border-color:var(--laranja);border-style:dashed}
+  .mapa-fatos{grid-column:3;position:relative;border:1.5px solid var(--borda);border-radius:10px;padding:10px 14px;background:var(--branco)}
+  .mapa-fatos::before{content:"";position:absolute;left:-40px;top:27px;width:32px;border-top:1.5px solid var(--cinza-claro)}
+  .mapa-fatos::after{content:"";position:absolute;left:-10px;top:22.5px;border:4.5px solid transparent;border-left:6px solid var(--cinza-claro)}
+  .mapa-dica{margin:0 0 6px}
+  .mapa-lista{list-style:none;margin:0 0 8px;padding:0}
+  .mapa-lista li{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;padding:7px 0;border-top:1px solid var(--borda-suave);font-size:13.5px}
+  .mapa-lista li:first-child{border-top:0}
+  .mapa-lista li>span:first-of-type{flex:1 1 240px}
+  .mapa-bola{width:9px;height:9px;border-radius:50%;background:var(--borda);flex:0 0 auto}
+  .mapa-lista li.est-crit .mapa-bola{background:var(--vermelho)}
+  .mapa-lista li.est-warn .mapa-bola{background:var(--laranja)}
+  .mapa-lista li.est-ok .mapa-bola{background:var(--verde)}
+  .mapa-resp{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+  .mapa-fora{margin-top:18px;font-size:13px;color:var(--cinza)}
+  .mapa-fora ul{margin:6px 0 0 16px;padding:0;line-height:1.5}
+  @media (max-width:900px){
+    .mapa-arvore{grid-template-columns:minmax(0,1fr)}
+    .mapa-raiz,.mapa-ramo,.mapa-fatos{grid-column:1;grid-row:auto !important}
+    .mapa-raiz::after,.mapa-ramo::before,.mapa-no::before,.mapa-no::after,.mapa-fatos::before,.mapa-fatos::after{display:none}
+  }
   .tri-dossie .ad-q-dossie{margin-top:8px}
   .apos-cab{display:flex;align-items:center;gap:10px;margin-bottom:6px}
   .apos-cab strong{font-size:13px;color:var(--verde);flex:1}
@@ -14202,6 +14250,8 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   vis.direito = !semCaso || analisesDe(c.id).length>0 || (pcsVivos.length>0 && triFechada) || !!adPre
     || notasDoTodo(c)   // F172 · anotações vindas da lista 🙋 Escritório do To Do
     || adVisivel.has(c.id) || adAbrir;   // F176 · aberta por atalho (Novo andamento, passos 2 e 3)
+  // onda 2b · o mapa existe quando há o que mapear: documento do dossiê ou CNIS lido
+  vis.mapa = docsDoDossie(c.id).length>0 || !!cnisDe(c);
   // valores antigos gravados: "atendimento" era o trilho interno de
   // Anotações; "consulta" virou seção do painel Documentos (F31)
   let cd = subCad==="atendimento" ? "anotacoes"
@@ -14228,6 +14278,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     ${cd==="documentos" ? caixaDocumentos(c, ks) + catalogoNoCadastro(c, ks) + painelConsulta(c) : ""}
     ${cd==="anotacoes" ? caixaAtendimento(c, ks) : ""}
     ${cd==="mensagens" ? painelMensagensFicha(c, ks, evs) : ""}
+    ${cd==="mapa" ? painelMapa(c, ks) : ""}
     ${cd==="direito" ? painelDireito(c) : ""}
     ${cd!=="identificacao" ? "" : `
     ${/* a aposentadoria provável mudou-se para a aba 🔔 Lembretes: é aviso de
@@ -14316,6 +14367,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
 // menos no trilho, e o painel traz documentos, catálogo e consulta juntos
 const SUB_CAD = [["identificacao","Identificação"],["triagem","Triagem"],
                  ["anotacoes","Anotações"],["documentos","Documentos"],
+                 ["mapa","Mapa do dossiê"],
                  ["direito","Análise de Direito"],["mensagens","Mensagens"]];
 const SUB_ANOT = [["atendimento","Atendimento"],
                   ["consulta","Consulta"],["mensagens","Mensagens"]];
@@ -19383,7 +19435,179 @@ function quadroDossie(c, ks){
     <ul class="dossie-fatos">${its.map(x=>`<li data-fato="${x.id}"${x.alerta?' class="alerta"':""}><span>${esc(x.texto)}</span>
       <span class="dossie-orig">${esc(x.fonte)}${x.anexo?` <button type="button" class="adr-link" onclick="abrirAnexo('${x.anexo}')">ver</button>`:""}</span>
       ${x.acao?`<button type="button" class="tl-bt" onclick="${x.acao.js}">${esc(x.acao.rot)}</button>`:""}</li>`).join("")}</ul>
+    <button type="button" class="adr-link" onclick="irSubCad('mapa')">Abrir o mapa do dossiê</button>
   </section>`;
+}
+// ═══════════════════════════════════════════════════════════════════════
+// ONDA 2b · O MAPA DO DOSSIÊ — o funil por espécie, em organograma
+// ═══════════════════════════════════════════════════════════════════════
+// Estudo "Mapa do dossiê: o funil por espécie" (10.10.2026). O mapa abre na
+// família da espécie do caso (PONTOS_ESPECIE) e mostra só o que ela usa: os
+// prazos abertos à frente, os pontos da família como ramos e, no pé,
+// recolhido, o que a espécie não usa. A anotação de cada ramo é a nota do
+// ponto na triagem, e por isso já aparece na Análise de Direito com o nome de
+// quem escreveu. MAPA_FUNIL é a matriz do estudo (D decide, A ajuda; grupo
+// fora das duas fica fora do mapa) e MAPA_PONTOS diz que grupo de fatos
+// alimenta cada ponto.
+const MAPA_FUNIL = {
+  tempo:        {D:"idade contrib minimo vinculo", A:"beneficios processo ppp rural cadunico ctc"},
+  rural:        {D:"idade contrib rural", A:"minimo vinculo beneficios processo"},
+  especial:     {D:"idade contrib vinculo ppp", A:"minimo beneficios processo"},
+  incapacidade: {D:"contrib minimo qualidade laudo medicos processo", A:"idade vinculo beneficios carta ppp cat rural cadunico"},
+  b94:          {D:"qualidade beneficios laudo medicos processo cat", A:"contrib vinculo carta ppp rural"},
+  pensao:       {D:"idade beneficios certidoes", A:"processo rural"},
+  bpc:          {D:"idade beneficios cadunico laudo medicos", A:"contrib vinculo processo"},
+  maternidade:  {D:"qualidade certidoes", A:"contrib minimo vinculo beneficios processo rural cadunico"},
+  revisao:      {D:"contrib carta", A:"idade minimo vinculo beneficios processo ppp rural ctc"},
+  cnis:         {D:"contrib minimo vinculo", A:"qualidade beneficios processo ppp rural cadunico ctc"},
+  crps:         {D:"processo", A:"idade contrib minimo vinculo qualidade beneficios laudo medicos carta ppp cat rural certidoes cadunico ctc"},
+};
+const MAPA_PONTOS = {
+  bpc_renda:"cadunico contrib vinculo", bpc_grupo:"cadunico certidoes", bpc_cadunico:"cadunico", bpc_avaliacao:"laudo medicos",
+  crp_prazo:"processo", crp_motivo:"processo",
+  esp_ppp:"ppp", esp_epi:"ppp", esp_ltcat:"ppp", esp_conversao:"idade contrib vinculo",
+  inc_dii:"laudo medicos", inc_carencia:"contrib minimo", inc_qualidade:"qualidade vinculo", inc_pericia:"processo",
+  b94_sequela:"laudo medicos", b94_nexo:"cat ppp", b94_acumulacao:"beneficios",
+  rur_prova:"rural", rur_auto:"rural", rur_genero:"certidoes rural",
+  dep_prova:"certidoes", dep_cota:"idade beneficios",
+  apo_der:"idade contrib", apo_minimo:"minimo", apo_reciproca:"ctc",
+  mat_qualidade:"qualidade vinculo", mat_carencia:"contrib", mat_rural:"rural",
+  rev_decadencia:"carta", rev_tese:"beneficios", rev_calculo:"contrib",
+  cni_indicador:"vinculo", cni_prova:"vinculo",
+};
+// os fatos que o CRM já lê, cada um com o grupo da matriz e o estado:
+// crit (prazo ou impedimento), warn (atenção), ok (cumprido), info
+function fatosDoMapa(c, ks){
+  const GRUPO = {recurso:"processo", exigencia:"processo", pericia:"processo", dcb:"processo", vinculos:"vinculo", nb:"beneficios", laudo:"laudo", decadencia:"carta"};
+  const out = itensDoDossie(c, ks).map(x=>({...x, grupo:GRUPO[x.id]||"processo", prazo:["recurso","exigencia","pericia"].includes(x.id),
+    est: x.id==="recurso"||x.id==="exigencia" ? "crit" : x.id==="decadencia" ? (x.alerta?"crit":"info")
+      : x.id==="laudo" ? (/não reconhecida/.test(x.texto) ? "warn" : /reconhecida/.test(x.texto) ? "ok" : "info")
+      : x.id==="nb" ? "info" : "warn"}));
+  const ul = fontesDoDossie(c.id).laudos.slice().sort((a,b)=>isoBr(b.exame).localeCompare(isoBr(a.exame)))[0];
+  if(ul && ul.isencao==="Sim") out.push({grupo:"contrib", est:"ok", fonte:"Laudo médico", anexo:ul.anexo.id,
+    texto:`O laudo médico de ${ul.exame} marca a isenção de carência`});
+  const nasc = dnIso(c.dn), anos = idadeDe(c.dn);
+  if(anos!=null) out.push({grupo:"idade", est:"info", fonte:"Ficha", texto:`${anos} anos, nascimento em ${fmtBarra(nasc)}`});
+  const g = cnisDe(c), an = g && g.analise;
+  if(an && (an.abaixo||[]).length) out.push({grupo:"minimo", est:"warn", fonte:"CNIS",
+    texto:`${an.abaixo.length} competência${an.abaixo.length>1?"s":""} abaixo do mínimo (${an.abaixo.slice(0,3).map(x=>x.comp).join(", ")}${an.abaixo.length>3?" e outras":""}), fora da conta sem complementação`});
+  const lei = p => triagemLeitura(p, c, ks);
+  const ind = lei("indicadores");
+  if(ind.estado==="atencao") out.push({grupo:"vinculo", est:"warn", fonte:"CNIS", texto:ind.txt});
+  const ben = lei("beneficio");
+  if(ben.estado) out.push({grupo:"beneficios", est: ben.estado==="atencao" ? "warn" : "ok", fonte:"CNIS", texto:ben.txt});
+  const vin = lei("vinculo");
+  if(vin.estado) out.push({grupo:"qualidade", est: vin.estado==="atencao" ? "warn" : "ok", fonte:"CNIS", texto:vin.txt});
+  const gr = g && (g.vinculos||[]).length ? calcularGraca(g.vinculos, g.competencias||0, !!(triagemDe(c).graca||{}).desempregado) : null;
+  if(gr) out.push({grupo:"qualidade", est: gr.semLimite ? "ok" : gr.vencida ? "crit" : "ok", fonte:"CNIS",
+    texto: gr.semLimite ? "Qualidade mantida sem limite de prazo, porque há benefício em manutenção"
+      : `Período de graça até ${gr.fim}, ${gr.vencida ? "já vencido" : "em curso"} (${gr.base} meses a partir de ${gr.ultima})`});
+  const cad = lei("cadunico");
+  if(cad.cor==="ok" || cad.cor==="alerta") out.push({grupo:"cadunico", est: cad.cor==="ok" ? "ok" : "warn", fonte:"CRM", texto:cad.txt});
+  return out;
+}
+const _mapaLente = new Map(), _mapaAberto = new Map();
+function familiaDoMapa(c, ks){
+  const ch = _mapaLente.get(c.id);
+  return (ch && PONTOS_ESPECIE.find(f=>f.chave===ch)) || familiaDaTriagem(c, ks);
+}
+const MAPA_ORDEM = {crit:0, warn:1, pend:2, ok:3, info:4};
+function ramosDoMapa(c, ks, fam){
+  const f = MAPA_FUNIL[fam.chave] || {D:"", A:""};
+  const usa = new Set(`${f.D} ${f.A}`.split(/\s+/).filter(Boolean));
+  const fatos = fatosDoMapa(c, ks).sort((a,b)=>MAPA_ORDEM[a.est]-MAPA_ORDEM[b.est]);
+  const pior = fs => fs.length ? fs[0].est : "info";
+  const t = triagemDe(c), usados = new Set(), ramos = [];
+  const prazos = fatos.filter(x=>x.prazo);
+  prazos.forEach(x=>usados.add(x));
+  if(prazos.length) ramos.push({id:"prazos", rot:"Prazos", fatos:prazos, est:pior(prazos)});
+  for(const [id, rot, dica] of fam.pontos){
+    const gs = String(MAPA_PONTOS[id]||"").split(/\s+/);
+    const fs = fatos.filter(x=>!x.prazo && gs.includes(x.grupo));
+    fs.forEach(x=>usados.add(x));
+    const resp = t[id] || {};
+    // a resposta de quem atende vale sobre a leitura; sem ela, o fato que não
+    // é só informação decide a cor, e o ponto sem fato fica a conferir
+    const est = resp.estado==="ok" ? "ok" : resp.estado==="atencao" ? "warn"
+      : fs.some(x=>x.est!=="info") ? pior(fs) : "pend";
+    ramos.push({id, rot, dica, ponto:true, fatos:fs, est, resp});
+  }
+  const outros = fatos.filter(x=>!usados.has(x) && usa.has(x.grupo));
+  if(outros.length) ramos.push({id:"outros", rot:"Outros fatos que a espécie usa", fatos:outros, est:pior(outros)});
+  return {ramos, fora: fatos.filter(x=>!usados.has(x) && !usa.has(x.grupo))};
+}
+const curtoMapa = t => { const s = String(t||"").split("\n")[0]; return s.length>110 ? s.slice(0, 107).replace(/\s+\S*$/, "")+"…" : s; };
+function fraseDoRamo(r){
+  if(r.resp && (r.resp.estado==="ok" || r.resp.estado==="atencao"))
+    return (r.resp.estado==="ok" ? "sem pendência" : "atenção") + (r.resp.nota ? `: ${curtoMapa(r.resp.nota)}` : ", conferido na triagem");
+  return r.fatos.length ? curtoMapa(r.fatos[0].texto) : "a conferir";
+}
+function painelMapa(c, ks){
+  const fam = familiaDoMapa(c, ks);
+  const lentes = `<div class="mapa-lentes" role="group" aria-label="Espécie do mapa">${PONTOS_ESPECIE.map(f=>
+    `<button type="button" class="tri-p${fam && f.chave===fam.chave ? " on" : ""}" aria-pressed="${!!fam && f.chave===fam.chave}"
+      onclick="mapaLente('${c.id}','${f.chave}')">${esc(f.rot)}</button>`).join("")}</div>`;
+  if(!fam) return `<div class="mapa"><div class="mapa-topo">${lentes}</div>
+    <p class="meio-sub">Escolha a espécie: o mapa mostra só o que ela usa do dossiê.</p></div>`;
+  const {ramos, fora} = ramosDoMapa(c, ks, fam);
+  const n = ramos.length, ab = _mapaAberto.has(c.id) ? _mapaAberto.get(c.id)
+    : ((ramos.find(r=>r.est==="crit"||r.est==="warn")||{}).id || "");
+  const nDocs = docsDoDossie(c.id).length;
+  const iAb = ramos.findIndex(r=>r.id===ab);
+  const fatos = r => `<div class="mapa-fatos" style="grid-row:${iAb+1} / span ${n-iAb}">
+      ${r.dica ? `<p class="meio-sub mapa-dica">${esc(r.dica)}</p>` : ""}
+      ${r.fatos.length ? `<ul class="mapa-lista">${r.fatos.map(x=>`<li class="est-${x.est}"><i class="mapa-bola" aria-hidden="true"></i>
+        <span>${esc(x.texto)}</span>
+        <span class="dossie-orig">${esc(x.fonte||"")}${x.anexo?` <button type="button" class="adr-link" onclick="abrirAnexo('${x.anexo}')">ver</button>`:""}</span>
+        ${x.acao?`<button type="button" class="tl-bt" onclick="${x.acao.js}">${esc(x.acao.rot)}</button>`:""}</li>`).join("")}</ul>`
+        : `<p class="meio-sub">O dossiê ainda não traz fato para este ponto.</p>`}
+      ${r.ponto ? `<div class="mapa-resp" role="group" aria-label="Resposta">${TRIAGEM_ESTADOS.slice(0, 2).map(([e, rot])=>
+          `<button type="button" class="tri-p${r.resp.estado===e ? " on" : ""}" aria-pressed="${r.resp.estado===e}"
+            onclick="marcarTriagem('${c.id}','${r.id}','${e}')">${rot}</button>`).join("")}</div>
+        <label class="tri-obs">Anotação, que vai para a Análise de Direito
+          <textarea class="tri-nota" id="tri-${r.id}" rows="2" placeholder="o que foi visto neste ponto"
+            onblur="salvarNotaTriagem('${c.id}','${r.id}')">${esc(r.resp.nota||"")}</textarea></label>` : ""}
+      ${r.fatos.some(x=>x.anexo) ? `<button type="button" class="tl-bt" onclick="mapaClaude('${c.id}','${r.id}')">Pedir ao Claude com os documentos deste ramo</button>` : ""}
+    </div>`;
+  return `<div class="mapa">
+    <div class="mapa-topo">${lentes}
+      <button type="button" class="tl-bt forte" onclick="mapaParaAnalise('${c.id}')">Levar à Análise de Direito</button></div>
+    <div class="mapa-arvore">
+      <div class="mapa-raiz" style="grid-row:1 / span ${n||1}"><b>${esc(fam.rot)}</b>
+        <span>${esc(especieDoCliente(c, ks) || "espécie não anotada no caso")}</span>
+        <small>${nDocs} documento${nDocs===1?"":"s"} no dossiê</small></div>
+      ${ramos.map((r, i)=>`<div class="mapa-ramo est-${r.est}${r.id===ab?" aberto":""}${i===0?" primeiro":""}${i===n-1?" ultimo":""}" data-ramo="${r.id}" style="grid-row:${i+1}">
+        <button type="button" class="mapa-no" aria-expanded="${r.id===ab}" onclick="mapaAbrir('${c.id}','${r.id}')">
+          <b>${esc(r.rot)}</b><span>${esc(fraseDoRamo(r))}</span><i aria-hidden="true">${r.id===ab?"−":"+"}</i></button></div>
+        ${r.id===ab ? fatos(r) : ""}`).join("")}
+    </div>
+    ${fora.length ? `<details class="mapa-fora"><summary>Fora do mapa de ${esc(fam.rot.toLowerCase())} (${fora.length})</summary>
+      <ul>${fora.map(x=>`<li>${esc(x.texto)} <span class="dossie-orig">${esc(x.fonte||"")}</span></li>`).join("")}</ul></details>` : ""}
+  </div>`;
+}
+function mapaLente(cliId, chave){ _mapaLente.set(cliId, chave); _mapaAberto.delete(cliId); repintarFicha(); }
+function mapaAbrir(cliId, ramo){ _mapaAberto.set(cliId, _mapaAberto.get(cliId)===ramo ? "" : ramo); repintarFicha(); }
+function mapaClaude(cliId, ramoId){
+  const c = D.cliPorId.get(cliId), ks = D.casosDoCliente.get(cliId) || [];
+  const fam = c && familiaDoMapa(c, ks); if(!fam) return;
+  const r = ramosDoMapa(c, ks, fam).ramos.find(x=>x.id===ramoId); if(!r) return;
+  const k = ks.find(x=>x.fase!=="encerrado") || ks[0];
+  if(!k) return aviso("O pedido ao Claude parte de um caso: abra o caso do cliente primeiro");
+  menuClaudeDocs(k.id, [...new Set(r.fatos.filter(x=>x.anexo).map(x=>`anexo:${x.anexo}`))]);
+  const t = document.getElementById("cl-livre");
+  if(t) t.value = `Com as skills ${fam.skill}, examine o ponto "${r.rot}" nestes documentos e diga o que está provado, o que falta provar e o risco principal.`;
+}
+// a passagem à Análise de Direito: o formulário abre preenchido com o mapa,
+// e só grava no clique de Registrar análise
+function mapaParaAnalise(cliId){
+  const c = D.cliPorId.get(cliId), ks = D.casosDoCliente.get(cliId) || [];
+  const fam = c && familiaDoMapa(c, ks); if(!fam) return aviso("Escolha a espécie do mapa");
+  const EST = {crit:"prazo ou impedimento", warn:"atenção", ok:"cumprido", pend:"a conferir", info:"informação"};
+  const txt = `Mapa do dossiê, ${fam.rot}.\n` + ramosDoMapa(c, ks, fam).ramos.map(r=>`${r.rot} (${EST[r.est]}): `
+    + (r.fatos.length ? r.fatos.map(x=>x.texto).join("; ") : "sem fato no dossiê") + (r.resp && r.resp.nota ? `. Anotação: ${r.resp.nota}` : "") + ".").join("\n");
+  adAbrir = true; adVisivel.add(cliId); irSubCad("direito");
+  const el = document.getElementById("ad-contexto");
+  if(el){ el.value = (el.value ? el.value + "\n" : "") + txt; el.focus(); }
 }
 function caixaApos(cli){
   const lista=aposDoCliente(cli);
