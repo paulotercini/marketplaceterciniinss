@@ -280,6 +280,16 @@ Caso real, conferido em 19/09/2026. Acórdão da 9ª Turma do TRF3, ApCiv 534747
 
 **Regra.** Todo tema, súmula ou norma que chegar por dentro de uma ementa passa por este catálogo antes de ser reproduzido, e o que não constar aqui vai ao `verificador-precedentes`. O acórdão segue aproveitável pela RATIO, e o que não se reproduz é a cadeia de citações que ele carrega.
 
+## Ordem de consulta entre os MCPs superiores e trf3 (11/10/2026)
+
+Os dois servidores funcionam interligados, e a ordem é fixa. O TRF3 só se pesquisa depois de saber o que o STF e o STJ decidiram.
+
+**Primeiro passo, no `superiores`.** Antes de qualquer pesquisa no TRF3, verifique se o STF ou o STJ já decidiu a matéria. Rode `buscar_temas` com a expressão da tese e `previdenciario=true`, e depois `obter_tema` no tema encontrado, para ler a tese literal, a situação, o leading case e o tema vinculado do outro tribunal. Não havendo tema, procure em `buscar_decisoes_superiores` os acórdãos do STJ sobre a matéria. Não havendo tema nem acórdão, registre "Não localizado" nos tribunais superiores, e só então vá ao TRF3 e à TNU.
+
+**Segundo passo, no `trf3`, que só começa depois do primeiro.** Havendo tema ou julgado superior, a pergunta passa a ser como o TRF3 e as Turmas Recursais o interpretam e aplicam. Busque nos acervos `trf3` e `recursais` pelo número do tema nas duas grafias, porque os acórdãos escrevem das duas formas e a busca não tem operador OU. No Tema 1124 do STJ, por exemplo, "tema 1124" e "tema 1.124" trazem conjuntos diferentes. Combine o número com a expressão da tese para reduzir o volume. Classifique o que o TRF3 faz com o tema, se aplica, se faz distinção, se sobrestá o processo à espera do julgamento ou se decide contra a tese. Siga a regra de escolher o acórdão pela data de julgamento e de revisitar os demais acórdãos do mesmo processo. Confira o `polo_recorrente`, porque "provido" não quer dizer favorável ao segurado.
+
+**Resultado.** O relatório de pesquisa apresenta, nesta ordem, a tese do tribunal superior, com a situação e o `link_oficial`, e depois a leitura que o TRF3 e as Turmas Recursais fazem dela, com dois ou três acórdãos representativos. Se o TRF3 decide contra a tese vinculante, isso aparece como argumento de reforma, com fundamento no art. 927 do CPC, e não como jurisprudência a seguir. Nada vai para a peça sem a conferência do tema no `link_oficial` e do acórdão do TRF3 no portal.
+
 ## MCPs da casa
 
 Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
