@@ -979,6 +979,11 @@
   .dossie-portal{font-size:13px;margin-top:6px}
   .dossie-lista{margin:2px 0 0 14px;padding:0;font-size:12px;line-height:1.45;color:var(--cinza)}
   .dossie-lista.falha{color:#9A6700}
+  .dossie-docs{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .dossie-sem{margin:6px 0 0;font-size:12.5px}
+  .tri-dossie{margin:8px 0}
+  .tri-dossie .apos-cx,.idf-dossie .apos-cx{max-width:none}
+  .idf-dossie{grid-column:1/-1}
   .apos-cab{display:flex;align-items:center;gap:10px;margin-bottom:6px}
   .apos-cab strong{font-size:13px;color:var(--verde);flex:1}
   .apos-mais{border:1px solid #9CC7A4;background:var(--branco);color:var(--verde);border-radius:8px;
@@ -13737,6 +13742,7 @@ async function abrirFicha(cliId){
     D._andsFicha = ands;
     D._ficha = { cliId, creds, vincs };   // o que a pintura usa além do D global
     pintarFicha();
+    lerTextoDoDossie(cliId);               // onda 0 · em segundo plano, sem esperar
   }catch(e){
     console.error("abrirFicha:", e);
     const det=document.getElementById("detalhe");
@@ -15707,6 +15713,8 @@ function painelTriagemFicha(c, ks){
       ${botaoAbrirCnis(c, true)}
       <span class="meio-sub">${cnisDe(c)&&cnisDe(c).caminho ? "abre em outra aba; o CRM já leu vínculos, indicadores e benefícios" : "a recepção insere o CNIS no cadastro (Identificação)"}</span>
     </div>
+    ${/* onda 0 · o dossiê aparece onde ele serve, no começo da triagem */""}
+    ${(h=>h?`<div class="tri-dossie">${h}</div>`:"")(caixaDossie(c))}
     <div class="tri-balcao" style="border:1px solid var(--borda);border-left:3px solid #E9B44C;border-radius:8px;padding:8px 12px;margin:8px 0;font-size:13px">
       <b>O que a recepção registrou</b>
       <div style="margin-top:4px">Espécie: ${especie ? `<span class="chip ben">${esc(especie)}</span>` : `<span class="meio-sub">não informada</span>`}
@@ -18761,20 +18769,85 @@ function dashDireito(){
 // portal disse que não existe ("sem CTC", "não possui deficiência", benefício
 // sem laudo) e o que falhou. Os PDFs estão em anexos; aqui é a NEGATIVA, que
 // antes só vivia na faixa da página e sumia.
+// Onda 0 · os PDFs do dossiê são do CLIENTE (anexos sem caso, origem dossie);
+// o nome é "<fonte> · <arquivo>", como a extensão grava
+const docsDoDossie = cliId => (D.anexos||[]).filter(a=>a.cliente_id===cliId && a.origem==="dossie");
+const fonteDoDossie = a => { const [f, ...r] = String(a.nome||"").split(" · "); return r.length ? [f, r.join(" · ")] : ["Dossiê", f]; };
 function caixaDossie(cli){
-  const d = cli.dossie; if(!d || typeof d!=="object") return "";
+  const d = (cli.dossie && typeof cli.dossie==="object") ? cli.dossie : {};
   const NOME = {meuinss:"Meu INSS", mte:"Emprega Brasil (CTPS/RAIS/CAGED)", recursos:"e-Recursos", hc:"HC Ribeirão"};
   const portais = Object.keys(NOME).filter(k=>d[k]);
-  if(!portais.length) return "";
+  const docs = docsDoDossie(cli.id);
+  if(!portais.length && !docs.length) return "";
   const lista = (itens, cls) => itens.length
     ? `<ul class="dossie-lista ${cls}">${itens.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>` : "";
+  const comTexto = docs.filter(a=>a.texto).length, imagem = docs.filter(a=>a.paginas!=null && !a.texto).length;
+  const fila = docs.length - comTexto - imagem;
   return `<div class="apos-cx dossie-cx">
     <div class="apos-cab"><strong>📂 Dossiê — o que os portais têm</strong></div>
-    ${portais.map(k=>{ const p=d[k]; const em=p.em?fmtTS(p.em):"";
-      return `<div class="dossie-portal"><b>${NOME[k]}</b> <span class="meio-sub">${em?`rodado em ${em} · `:""}${(p.baixados||[]).length} doc(s) em 📎 Anexos</span>
+    ${portais.map(k=>{ const p=d[k]; const em=p.em?fmtTS(p.em):""; const n=(p.baixados||[]).length;
+      return `<div class="dossie-portal"><b>${NOME[k]}</b> <span class="meio-sub">${em?`rodado em ${em} · `:""}${n} documento${n===1?"":"s"}</span>
         ${lista((p.inexistentes||[]).map(x=>"✗ "+x), "nao")}
         ${lista((p.falhas||[]).map(x=>"⚠ "+x), "falha")}</div>`; }).join("")}
+    ${portais.length ? "" : `<p class="meio-sub dossie-sem">O resumo dos portais não foi gravado nesta coleta.
+      Rode o dossiê de novo para registrar o que cada portal não tem.</p>`}
+    ${docs.length ? `<div class="dossie-docs"><span class="meio-sub">${docs.length} documento${docs.length===1?"":"s"} · ${comTexto} com texto${
+      imagem?` · ${imagem} digitalizado${imagem===1?"":"s"}`:""}${fila?` · ${fila} em leitura`:""}</span>
+      <button class="cad-mini" onclick="verDocsDossie('${cli.id}')">Ver documentos</button></div>` : ""}
   </div>`;
+}
+// a lista do dossiê por fonte, com o caminho para o Claude pelo caso do cliente
+let _dossieChaves = [];
+function verDocsDossie(cliId){
+  const docs = docsDoDossie(cliId);
+  const grupos = new Map();
+  for(const a of docs){ const [f, arq] = fonteDoDossie(a); if(!grupos.has(f)) grupos.set(f, []); grupos.get(f).push([a, arq]); }
+  const ks = D.casosDoCliente.get(cliId) || [];
+  const k = ks.find(x=>x.fase!=="encerrado") || ks[0];
+  _dossieChaves = docs.map(a=>`anexo:${a.id}`);
+  caixa(`<h3 style="margin:0 0 4px">Documentos do dossiê</h3>
+    <p class="meio-sub" style="margin:0 0 8px">${docs.length} documento${docs.length===1?"":"s"} baixado${docs.length===1?"":"s"} dos portais.
+      O CRM lê o texto de cada um ao abrir a ficha.</p>
+    ${k ? `<button class="tl-bt forte" onclick="menuClaudeDocs('${k.id}', _dossieChaves)">Pedir ao Claude com o dossiê</button>` : ""}
+    ${[...grupos].map(([f, ds])=>`<div style="margin-top:10px">
+      <div class="meio-sub" style="font-weight:600;margin-bottom:4px">${esc(f)} (${ds.length})</div>
+      ${ds.map(([a, arq])=>`<div class="arq-it">
+        <button class="arq-abrir" onclick="abrirAnexo('${a.id}')" title="abrir o documento">📄 ${esc(arq)}</button>
+        <span class="meio-sub">${a.texto ? "com texto" : a.paginas!=null ? "digitalizado" : "em leitura"}</span></div>`).join("")}
+    </div>`).join("")}`);
+}
+// Onda 0 · a extensão entrega o PDF sem texto. A ficha lê o texto de cada
+// um uma vez, em segundo plano e um por vez, e o guarda no anexo (texto,
+// páginas e páginas em imagem): o pacote, o conector e os leitores das ondas
+// seguintes partem dele. O digitalizado fica com páginas e sem texto, e não é
+// relido a cada abertura.
+let _lendoDossie = null;
+async function lerTextoDoDossie(cliId){
+  if(_lendoDossie) return 0;
+  const fila = docsDoDossie(cliId).filter(a=>a.paginas==null && a.caminho);
+  if(!fila.length) return 0;
+  _lendoDossie = cliId;
+  let n = 0;
+  try{
+    for(const a of fila){
+      if(clienteAberto!==cliId) break;
+      let lido;
+      try{ lido = await textoDoDocumento(a.caminho); }catch(e){ console.warn("dossiê sem leitura:", a.nome, e); continue; }
+      const corpo = { texto: lido.texto || null, paginas: lido.paginas || 0, paginas_imagem: lido.paginas_imagem || [] };
+      try{
+        await api(`/rest/v1/anexos?id=eq.${a.id}`, {method:"PATCH", headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)});
+        Object.assign(a, corpo); n++;
+      }catch(e){ console.warn("dossiê: texto não gravado", a.nome, e); }
+    }
+  } finally { _lendoDossie = null; }
+  if(n && clienteAberto===cliId) repintarSeLivre();
+  return n;
+}
+// repinta a ficha sem tirar o campo de quem está digitando
+function repintarSeLivre(){
+  const f = document.activeElement;
+  if(f && f.matches && f.matches("input,textarea,select,[contenteditable]")) return;
+  repintarFicha();
 }
 function caixaApos(cli){
   const lista=aposDoCliente(cli);
@@ -19017,7 +19090,7 @@ const tamArq = n => n==null ? "" : n>=1048576 ? (n/1048576).toFixed(1).replace("
 // originais e o PACOTE PARA O CLAUDE, um .md único com o texto de tudo.
 // ══════════════════════════════════════════════════════════════════════════
 const ORIGEM_DOC = { pje:"Judicial · PJe", eproc:"Judicial · eproc", esaj:"Judicial · e-SAJ",
-                     pat:"INSS", crps:"Recurso (CRPS)", escritorio:"Escritório" };
+                     pat:"INSS", crps:"Recurso (CRPS)", escritorio:"Escritório", dossie:"Dossiê do cliente" };
 // todos os documentos do caso, num formato só: {nome, caminho, tipo, tamanho,
 // texto, data, origem, id?} — id existe para os de `anexos`; o acórdão do
 // CRPS mora em casos.crps e abre pelo caminho
@@ -19039,7 +19112,9 @@ function dataDoMovimento(and){
 }
 function documentosDoCaso(k){
   const andPorId = new Map((D._andsFicha||[]).map(a=>[a.id, a]));
-  const docs = (D.anexos||[]).filter(a=>a.caso_id===k.id).map(a=>({
+  // onda 0 do dossiê · o documento preso ao CLIENTE (dossiê, anexo do pré-caso)
+  // vale para todo caso dele: entra no .zip, no pacote e no pedido ao Claude
+  const docs = (D.anexos||[]).filter(a=>a.caso_id===k.id || (!a.caso_id && a.cliente_id===k.cliente_id)).map(a=>({
     id:a.id, nome:a.nome, caminho:a.caminho, tipo:a.tipo, tamanho:a.tamanho, texto:a.texto,
     paginas:a.paginas, paginas_imagem:a.paginas_imagem,
     origem:a.origem||"escritorio",
@@ -26875,6 +26950,8 @@ function fichaIdentificacao(c, creds){
         </div>
         ${cadCampoEndereco(c)}
       </section>
+      ${/* onda 0 · o dossiê também na Identificação, que está sempre à vista */""}
+      ${(h=>h?`<div class="idf-dossie">${h}</div>`:"")(caixaDossie(c))}
     </div>
   </div>`;
 }
@@ -27971,8 +28048,9 @@ async function gerarCasoDoPre(cliId, pcId){
       if(tf){ D.tarefas.push(tf); docs++; }
     }catch(e){}
   }
-  // o anexo que entrou no pré-caso passa a pertencer ao caso
-  for(const a of (D.anexos||[]).filter(x=>!x.caso_id)){
+  // o anexo que entrou no pré-caso passa a pertencer ao caso; o do dossiê
+  // continua do cliente, porque serve a todos os casos dele
+  for(const a of (D.anexos||[]).filter(x=>!x.caso_id && x.origem!=="dossie")){
     await api(`/rest/v1/anexos?id=eq.${a.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({caso_id:k.id})}).catch(()=>{});
     a.caso_id = k.id;
