@@ -97,7 +97,9 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   conf("a exigência e a perícia trazem a ação e o documento de origem", (await p.$$(".mapa-fatos .mapa-lista li button.tl-bt")).length === 2
     && (await p.$$(".mapa-fatos .mapa-lista .adr-link")).length === 2);
   const r = id => rs.find(x => x.id === id) || {};
-  conf("o laudo que reconhece a incapacidade deixa o ramo da DII verde", r("inc_dii").est === "est-ok" && /Laudo médico de/.test(r("inc_dii").t));
+  // onda 5 · o laudo reconhece a incapacidade, mas sem relatório médico no
+  // dossiê o ramo fica em atenção: é o que falta para a próxima perícia
+  conf("sem relatório médico para a perícia, o ramo da DII fica em atenção", r("inc_dii").est === "est-warn" && /Nenhum relatório médico no dossiê/.test(r("inc_dii").t));
   conf("a competência abaixo do mínimo deixa a carência em atenção", r("inc_carencia").est === "est-warn" && /abaixo do mínimo/.test(r("inc_carencia").t));
   conf("o emprego em curso e o período de graça deixam a qualidade verde", r("inc_qualidade").est === "est-ok");
   conf("a DCB do laudo fica no ramo da perícia", r("inc_pericia").est === "est-warn" && /DCB em/.test(r("inc_pericia").t));

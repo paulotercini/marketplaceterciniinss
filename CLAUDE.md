@@ -63,9 +63,13 @@ do portal aberto na aba. Não faz login, não resolve captcha e não decide nada
    "não possui deficiência") — fato negativo para a triagem; `falhas` é erro técnico, pede rodada nova.
    A ficha mostra isso na caixa "📂 Dossiê — o que os portais têm" (`caixaDossie` em `app.html`).
 
-**O que o CRM pode fazer**: ler os `anexos` com `origem='dossie'` (CNIS, PPP, cópia do processo e carta
-já estão no bucket para os agentes que leem CNIS/PPP); usar `clientes.dossie.<portal>.inexistentes` como
-fato negativo sem reabrir o portal; usar `.em` para saber a idade do dossiê.
+**O que o CRM faz com isso**: lê o `texto` uma vez (onda 0) e passa por leitores puros (`lerCnisPdf`,
+`lerCagedTexto`, `lerRaisTexto`, `lerLaudosTexto`, `lerCartaTexto`, `lerExtratoPagTexto`, `lerProcessoTexto`,
+`lerResumoInssTexto`, `lerCatTexto`, `lerPppTexto`, `itemClinico`), agrupados por `fontesDoDossie()`.
+A aba **Mapa do dossiê** (`painelMapa`) afunila os fatos por espécie (`MAPA_FUNIL`, `MAPA_PONTOS`): cada
+ramo é um ponto da triagem, a nota do ramo é a nota da triagem e vai à Análise de Direito. Fato mostra a
+fonte e o botão "ver"; o que muda o caso (DCB, prazo, perícia, desemprego) só com clique e gera andamento
+com a fonte. `clientes.dossie.<portal>.inexistentes` é fato negativo; `.em`, a idade do dossiê.
 
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
