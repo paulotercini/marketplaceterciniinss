@@ -10,7 +10,7 @@ Ele é um LOCALIZADOR rápido, e nada mais. Três limitações vêm declaradas p
 
 Primeiro, o campo `resultado` é inferido por heurística sobre o dispositivo, e não é dado oficial. Segundo, "provido" não significa favorável ao segurado, porque o recorrente costuma ser o INSS, o que se confere em `polo_recorrente`. Terceiro, a base tem corte temporal e recorte previdenciário, de modo que ausência no MCP não é ausência no TRF3.
 
-Nas Turmas Recursais o CJF entrega o texto SEM acentuação, e por isso a busca ali usa palavras sem acento, como `ruido`, `contribuicao` ou `Secao Judiciaria`.
+Nas Turmas Recursais o CJF apaga a letra acentuada, e não só o acento, de modo que "ruído" chega como "rudo". A busca do MCP `trf3` já procura as duas formas, e por isso a palavra se digita normalmente, com acento. Digitar sem acento, como `ruido`, não acha o texto mutilado. Consulta com mais de 10.000 resultados volta com o aviso `consulta_pesada` e sem ordenação por relevância. Nesse caso, acrescente termo ou filtro (órgão, acervo, datas) antes de ler a lista.
 
 ## A regra
 
