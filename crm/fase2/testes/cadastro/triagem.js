@@ -123,13 +123,17 @@ FIX.casos.push(
   // um extrato lido, em memória: vínculo em aberto, erro de empregador,
   // competência abaixo do mínimo, dois indicadores e um benefício ativo
   await p.evaluate(cli => {
-    const lido = { paginas: 5, vinculos: 3, nits: ["123.45678.90-1"], filiado: { nit: "123.45678.90-1", cpf: "", mae: "" },
+    const d = new Date(); d.setMonth(d.getMonth() - 1);
+    const mesAnt = `${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
+    const lido = { paginas: 5, vinculos: 4, nits: ["123.45678.90-1"], filiado: { nit: "123.45678.90-1", cpf: "", mae: "" },
       indicadores: [{ codigo: "PREC-MENOR-MIN", descricao: "Recolhimento abaixo do valor mínimo", ocorrencias: 1 },
                     { codigo: "IEAN", descricao: "Exposição a agente nocivo informada pelo empregador", ocorrencias: 2 },
                     { codigo: "AVRC-DEF", descricao: "Acerto confirmado pelo INSS", ocorrencias: 1 }],
       linhaDoTempo: [
         { seq: 1, nit: "123.45678.90-1", tipo: "Empregado", origem: "FAZENDA FICTICIA LTDA", inicio: "01/03/2015", fim: "", aberto: true, indicadores: ["PEMP-CAD"],
-          comps: [{ c: "03/2015", v: 300 }, { c: "12/2019", v: 500 }, { c: "01/2020", v: 1045 }, { c: "05/2021", v: 1100 }] },
+          comps: [{ c: "03/2015", v: 300 }, { c: "12/2019", v: 500 }, { c: "01/2020", v: 1045 }, { c: "05/2021", v: 1100 }, { c: mesAnt, v: 2500 }] },
+        { seq: 4, nit: "123.45678.90-1", tipo: "Empregado", origem: "SITIO ANTIGO FICTICIO", inicio: "01/02/2001", fim: "", ultRemun: "06/2002", aberto: true, indicadores: [],
+          comps: [{ c: "06/2002", v: 300 }] },
         { seq: 2, nit: "123.45678.90-1", tipo: "Contribuinte Individual", origem: "RECOLHIMENTO", inicio: "01/01/2010", fim: "31/12/2010", aberto: false, indicadores: [],
           comps: [{ c: "06/2010", v: 400 }, { c: "07/2010", v: 510 }] },
         { seq: 3, nit: "123.45678.90-1", tipo: "Benefício", especie: "31", origem: "AUXÍLIO POR INCAPACIDADE TEMPORÁRIA", nb: "1234567890", inicio: "10/02/2024", fim: "", situacao: "ATIVO", aberto: true },
@@ -138,8 +142,9 @@ FIX.casos.push(
   }, CLI_CHEIO2);
   await p.waitForTimeout(700);
   a = await aberto();
-  conf(`o passo CNIS lê o vínculo sem data fim (${JSON.stringify(a.leitura.slice(0, 60))})`,
-    /1 vínculo\(s\) sem data fim/.test(a.leitura) && /FAZENDA FICTICIA/.test(a.leitura));
+  conf(`o passo CNIS encerra o vínculo sem saída na última remuneração e deixa o em curso de fora (${JSON.stringify(a.leitura.slice(0, 60))})`,
+    /1 vínculo\(s\) sem data de saída, encerrado\(s\) pelo CRM no último dia do mês da última remuneração/.test(a.leitura)
+    && /SITIO ANTIGO FICTICIO \(Empregado, desde 01\/02\/2001, fim presumido em 30\/06\/2002\)/.test(a.leitura) && !/FAZENDA FICTICIA LTDA \(Empregado/.test(a.leitura));
   conf("aponta o erro no cadastro do empregador", /Erro no cadastro do empregador/.test(a.leitura) && /PEMP-CAD/.test(a.leitura));
   const abaixo = (a.leitura.match(/\d+ competência\(s\) abaixo do salário mínimo:[^·]*/) || [""])[0];
   conf(`lista a competência abaixo do mínimo, e só a partir de 11/2019 para o empregado (${JSON.stringify(abaixo.slice(0, 60))})`,
@@ -159,7 +164,7 @@ FIX.casos.push(
   const g1 = gravados.filter(x => x.tabela === "clientes").pop();
   const t1 = (g1.corpo.triagem || (g1.corpo.campos || {}).triagem || {});
   conf(`Próxima grava o passo com estado, texto, quem e quando (${JSON.stringify((t1.cnis || {}).estado)})`,
-    t1.cnis && t1.cnis.estado === "atencao" && t1.cnis.quem === EU && !!t1.cnis.feito && /vínculo\(s\) sem data fim/.test(t1.cnis.texto || ""));
+    t1.cnis && t1.cnis.estado === "atencao" && t1.cnis.quem === EU && !!t1.cnis.feito && /vínculo\(s\) sem data de saída/.test(t1.cnis.texto || ""));
   a = await aberto();
   conf(`e abre o passo seguinte, Indicadores (${a.tit})`, a.tit === "Indicadores");
   conf(`com a contagem por tipo (${JSON.stringify(a.leitura.slice(0, 70))})`,
@@ -198,7 +203,7 @@ FIX.casos.push(
     feed.length === 3 && (await p.evaluate(() => /Atenção/.test(document.querySelector('.painel[data-p="0"] .ad-q-tri .ad-grupo.atencao .ad-grupo-tit').textContent))));
   conf("do mais novo para o mais velho", /Benefício ativo/.test(feed[0]) && /Indicadores/.test(feed[1]) && /CNIS/.test(feed[2]));
   conf("cada linha traz o texto explícito e quem respondeu, sem repetir a cor em cada item",
-    /vínculo\(s\) sem data fim/.test(feed[2]) && !/— atenção\./.test(feed[2]) && /Paulo/.test(feed[2]));
+    /vínculo\(s\) sem data de saída/.test(feed[2]) && !/— atenção\./.test(feed[2]) && /Paulo/.test(feed[2]));
   conf("o quadro da triagem é separado do das anotações",
     await p.evaluate(() => !!document.querySelector('.painel[data-p="0"] .ad-q-tri') && !document.querySelector('.painel[data-p="0"] .ad-q-tri .ad-feed')));
   conf("a Análise de Direito tem o botão de abrir o CNIS",
