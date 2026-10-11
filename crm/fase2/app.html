@@ -992,6 +992,7 @@
   .dossie-fatos li:first-child{border-top:0}
   .dossie-fatos li>span:first-child{flex:1 1 220px}
   .dossie-orig{font-size:12px;color:var(--cinza-claro,#6b7280)}
+  .dossie-fatos li.alerta>span:first-child{color:var(--vermelho);font-weight:500}
   .tri-dossie .ad-q-dossie{margin-top:8px}
   .apos-cab{display:flex;align-items:center;gap:10px;margin-bottom:6px}
   .apos-cab strong{font-size:13px;color:var(--verde);flex:1}
@@ -9406,7 +9407,7 @@ async function aplicarPericia(s){
   const nome1 = (c.nome||"").split(" ")[0]||"cliente";
   const [evn]=await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({caso_id:s.casoId, tipo:ev.tipo, status:"agendada",
-      data_hora:`${ev.data}T${ev.hora}:00-03:00`, local:null})})||[];
+      data_hora:`${ev.data}T${ev.hora}:00-03:00`, local:s.local||null})})||[];
   if(evn) D.eventos.push(evn);
   // DOIS lembretes por perícia (pedido do Paulo): avisar o cliente LOGO que
   // agendou (tarefa para hoje — o registro do aviso é o 📞 na aba 🩺) e a
@@ -18947,6 +18948,144 @@ function lerRaisTexto(txt){
   });
   return out.filter(x=>x.raiz || x.admissao);
 }
+// Onda 2 · "11 de Junho de 2026" → "11/06/2026"
+function dataPorExtenso(s){
+  const m = String(s||"").match(/(\d{1,2})\s+de\s+([a-zà-ú]+)\s+de\s+(\d{4})/i);
+  const i = m ? MESES_NOME.indexOf(m[2].toLowerCase()) : -1;
+  return i<0 ? "" : `${m[1].padStart(2,"0")}/${String(i+1).padStart(2,"0")}/${m[3]}`;
+}
+const isoBr = br => dataIso(br) || "";
+// LAUDO MÉDICO PERICIAL · o da Perícia Médica Federal e o antigo do SABI (uma
+// página por perícia). No SABI os valores saem uma linha ACIMA dos rótulos: a
+// DCB vem junto do nome do benefício, na linha de cima de "Cessação do
+// Benefício", e a data do exame na linha de baixo da do "Sexo:".
+function lerLaudosTexto(txt){
+  const ls = linhasDoTexto(txt);
+  const ini = ls.map((l, i)=>/^SABI - Sistema de Administração de Benefícios por Incapacidade$/i.test(l)
+    || (/^PERÍCIA MÉDICA FEDERAL$/.test(l) && /^Perícia Médica de Benefício/i.test(ls[i+1]||"")) ? i : -1).filter(i=>i>=0);
+  return ini.map((i, j)=>{
+    let b = ls.slice(i, j+1<ini.length ? ini[j+1] : ls.length);
+    const fim = b.findIndex(l=>/^(Você pode conferir a autenticidade|O INSS poderá rever a qualquer tempo)/i.test(l));
+    if(fim>0) b = b.slice(0, fim);
+    return /^SABI/.test(ls[i]) ? laudoSabi(b) : laudoPmf(b);
+  }).filter(x=>x.dcb || x.dii || x.resultado);
+}
+function laudoPmf(b){
+  const t = b.join("\n"), pega = rx => (t.match(rx)||[])[1] || "";
+  const cid = t.match(/^CID Principal[ \t]+([A-Z]\d{2}(?:\.?\d)?)[ \t]*-[ \t]*(.+)$/m);
+  const cap = pega(/Capacidade Laborativa[ \t]+(Não houve|Houve) comprovação/i) || pega(/Considerações Médico Periciais:[ \t]*(Incapaz|Capaz)/i);
+  return {sistema:"PMF", tipo: pega(/Avaliação Médico Pericial[ \t]+BI[ \t]*-[ \t]*(.+)/i).trim(),
+    nb: soDig(pega(/Espécie\/NB:[ \t]*\S*?\/([\d.\-]{10,13})/)),
+    exame: dataPorExtenso(pega(/^[^,\n]+ - [A-Z]{2},[ \t]*(\d{1,2} de \S+ de \d{4})\.?$/m)),
+    did: pega(/^DID[ \t]+(\d{2}\/\d{2}\/\d{4})$/m), dii: pega(/^DII[ \t]+(\d{2}\/\d{2}\/\d{4})$/m),
+    dcb: pega(/^DCB[ \t]+(\d{2}\/\d{2}\/\d{4})$/m) || pega(/\(DCB\)[ \t]+(\d{2}\/\d{2}\/\d{4})/),
+    cid: cid ? cid[1] : "", cidDesc: cid ? cid[2].trim() : "",
+    resultado: !cap ? "" : /^(Não|Capaz)/i.test(cap) ? "capaz" : "incapaz",
+    grau: pega(/^(?:Tipo de Grau de Incapacidade[ \t]+)?((?:Total|Parcial) e (?:temporária|permanente|definitiva))$/mi),
+    isencao: pega(/Doença isenta de carência\?[ \t]*(Sim|Não)/i)};
+}
+function laudoSabi(b){
+  const t = b.join("\n"), pega = rx => (t.match(rx)||[])[1] || "";
+  const vizinha = (rx, d) => { const i = b.findIndex(l=>rx.test(l)); return i<0 ? "" : (b[i+d]||""); };
+  const cid = ((t.match(/\bCID:([^\n]*)/)||[])[1]||"").match(/^[ \t]*([A-Z]\d{2}(?:\.?\d)?)\b/);
+  const res = pega(/Resultado:[ \t]*([^\n]*)/), ordem = pega(/Ordem:[ \t]*(\d+)/);
+  return {sistema:"SABI", tipo: ordem ? `${ordem}ª perícia do benefício` : "", nb: soDig(pega(/NB:[ \t]*([\d.\-]{10,13})/)),
+    exame: pega(/Dt Exame:[ \t]*(\d{2}\/\d{2}\/\d{4})/) || (vizinha(/^Sexo:/, 1).match(/^[\d.\-\s]*?(\d{2}\/\d{2}\/\d{4})$/)||[])[1] || "",
+    did: pega(/Início da Doença:[ \t]*(\d{2}\/\d{2}\/\d{4})/), dii: pega(/Início da Incapacidade:[ \t]*(\d{2}\/\d{2}\/\d{4})/),
+    dcb: pega(/Cessação do Benefício:[ \t]*(\d{2}\/\d{2}\/\d{4})/) || (vizinha(/^Cessação do\b/, -1).match(/^[^:]*?(\d{2}\/\d{2}\/\d{4})$/)||[])[1] || "",
+    cid: cid ? cid[1] : "", cidDesc: "",
+    resultado: /Não existe incapacidade/i.test(res) ? "capaz" : /Existe incapacidade/i.test(res) ? "incapaz" : "",
+    grau: "", isencao: pega(/Isenção de Carência:[ \t]*(Sim|Não)/i)};
+}
+// CARTA DE CONCESSÃO · a de hoje ("CARTA DE / CONCESSÃO", com o NB e a renda na
+// linha de baixo dos rótulos) e a antiga ("Carta de Concessão / Memória de
+// Cálculo"), em que os dados vêm num parágrafo
+function lerCartaTexto(txt){
+  const ls = linhasDoTexto(txt);
+  const abaixo = rx => { const i = ls.findIndex(l=>rx.test(l));
+    for(let j=i+1; i>=0 && j<=i+3; j++){ const d = (ls[j]||"").match(/\d{2}\/\d{2}\/\d{4}/g); if(d) return d; } return []; };
+  if(ls.includes("CARTA DE") && ls.includes("CONCESSÃO")){
+    const nb = (ls[ls.findIndex(l=>/^NÚMERO DO BENEFÍCIO/i.test(l))+1]||"").match(/^([\d.\-]{10,13})\s+R\$\s*([\d.]+,\d{2})/);
+    if(!nb) return null;
+    const iEsp = ls.findIndex(l=>/^Comunicamos que foi concedido/i.test(l));
+    const [der, concessao] = abaixo(/^Solicitado em\b/i), [dib, dip] = abaixo(/^Início do benefício\b/i);
+    return {nb: soDig(nb[1]), especie: iEsp>=0 ? (ls[iEsp+1]||"") : "", rmi: nb[2], der: der||"", concessao: concessao||"", dib: dib||"", dip: dip||""};
+  }
+  if(!ls.some(l=>/Carta de Concessão\s*\/\s*Memória de Cálculo/i.test(l))) return null;
+  const p = ls.join(" ").replace(/(\d{2}\/\d{2})\s+\/(\d{4})/g, "$1/$2"), pega = rx => (p.match(rx)||[])[1] || "";
+  const nb = soDig(pega(/Número do Benefício:\s*([\d.\-]{10,13})/i));
+  return !nb ? null : {nb, especie: pega(/concedido\s+(.+?)\s+\(\d+\)\s+número/i), rmi: pega(/renda mensal de R\$\s*([\d.]+,\d{2})/i),
+    der: pega(/requerido em\s+(\d{2}\/\d{2}\/\d{4})/i), concessao: pega(/Data de Concessão do Benefício:\s*(\d{2}\/\d{2}\/\d{4})/i),
+    dib: pega(/início de vigência a partir de\s+(\d{2}\/\d{2}\/\d{4})/i), dip: ""};
+}
+// EXTRATO DE PAGAMENTO · "Histórico de Créditos": um bloco por benefício, com
+// DIB, DCB e DIP no cabeçalho e uma linha por crédito (competência, período,
+// valor líquido, meio e situação, previsão e data do pagamento)
+function lerExtratoPagTexto(txt){
+  const ls = linhasDoTexto(txt);
+  if(!ls.some(l=>/^Histórico de Créditos$/i.test(l))) return [];
+  const out = []; let b = null, m;
+  for(const l of ls){
+    if((m = l.match(/^NB:\s*([\d.\-]{10,13})/))){ b = {nb:soDig(m[1]), especie:"", dib:"", dcb:"", dip:"", mr:"", creditos:[]}; out.push(b); continue; }
+    if(!b) continue;
+    if((m = l.match(/^Espécie:\s*(.+)$/))) b.especie = m[1].trim();
+    for(const [k, rx] of [["dib",/\(DIB\):\s*(\d{2}\/\d{2}\/\d{4})/], ["dcb",/\(DCB\):\s*(\d{2}\/\d{2}\/\d{4})/],
+                          ["dip",/\(DIP\):\s*(\d{2}\/\d{2}\/\d{4})/], ["mr",/\bMR:\s*R\$\s*([\d.]+,\d{2})/]])
+      if((m = l.match(rx))) b[k] = m[1];
+    if((m = l.match(/^(\d{2}\/\d{4})\s+\d{2}\/\d{2}\/\d{4}\s+R\$\s*([\d.]+,\d{2})\s+(.*?)\s+(\d{2}\/\d{2}\/\d{4})(?:\s+(\d{2}\/\d{2}\/\d{4}))?/)))
+      b.creditos.push({comp:m[1], valor:m[2], pago: /\bPago\b/i.test(m[3]) && !/Não Pago/i.test(m[3]), previsao:m[4], pagoEm:m[5]||""});
+  }
+  return out;
+}
+// CÓPIA DO PROCESSO (PAP do Meu INSS) · a tarefa, os despachos com a data de
+// envio e as comunicações de decisão. O despacho quebra a data no meio ("16/05"
+// e "/2025" em linhas seguidas) e é juntado antes de ler.
+function lerProcessoTexto(txt){
+  const ls = linhasDoTexto(txt);
+  if(!ls.includes("PROTOCOLO DE REQUERIMENTO") || !ls.some(l=>/^Despacho \(\d+\)/.test(l))) return null;
+  const junta = xs => xs.join(" ").replace(/(\d{2}\/\d{2})\s+\/(\d{4})/g, "$1/$2").replace(/\s+/g, " ").trim();
+  const frase1 = t => t.replace(/^Prezad[oa](?:\(a\))?\s+Sr\.?\s*(?:\(a\))?,?\s*/i, "").split(/(?<=\.)\s/)[0].slice(0, 180).replace(/\.$/, "");
+  const iS = ls.findIndex(l=>/^Serviço\s+Status\s+Prioridade$/i.test(l));
+  const sv = (ls[iS+1]||"").match(/^(.+?)\s+(Concluída|Pendente|Cancelada|Em análise|Em exigência|Exigência|Aguardando .+?)\s+\S+$/i);
+  const iNb = ls.indexOf("NB"), tudo = ls.join("\n");
+  const nb = soDig(((iNb>=0 && /^[\d.\-]{10,13}$/.test(ls[iNb+1]||"")) ? ls[iNb+1] : "")
+    || (tudo.match(/^NB\s+([\d.\-]{10,13})$/m)||[])[1] || (tudo.match(/Número do Benefício:\s*([\d.\-]{10,13})/)||[])[1] || "");
+  const desp = []; let d = null, m;
+  for(const l of ls){
+    if(/^Despacho \(\d+\)/.test(l)){ d = {em:"", linhas:[]}; desp.push(d); continue; }
+    if(!d) continue;
+    if(!d.em && (m = l.match(/^Enviado em\s+(\d{2}\/\d{2}\/\d{4})/))){ d.em = m[1]; continue; }
+    if(/^(Emitido em:|Página \d+ de \d+|Anexos de Perícias|PROTOCOLO DE REQUERIMENTO|INSTITUTO NACIONAL DO SEGURO SOCIAL|INSS - Instituto|Este documento foi gerado)/i.test(l)){ d = null; continue; }
+    d.linhas.push(l);
+  }
+  const despachos = desp.filter(x=>x.em).map(x=>({em:x.em, texto:junta(x.linhas)}))
+    .sort((a,b)=>isoBr(a.em).localeCompare(isoBr(b.em)));
+  const comunicacoes = [];
+  ls.forEach((l, i)=>{
+    if(l!=="COMUNICAÇÃO DE DECISÃO") return;
+    const t = junta(ls.slice(i+1, i+30)), dec = (t.match(/Decisão:\s*(.+?)\.?\s+Motivo:/i)||[])[1];
+    if(dec) comunicacoes.push({nb: soDig((t.match(/Número do Benefício:\s*([\d.\-]{10,13})/)||[])[1]||""), decisao: dec.trim(),
+      motivo: ((t.match(/Motivo:\s*(.+?)\.?\s+(?:Fundamentação|Em atenção|A perícia)/i)||[])[1]||"").trim()});
+  });
+  const pericias = [], exigencias = [], decisoes = [];
+  despachos.forEach((x, i)=>{
+    const t = x.texto;
+    if((m = t.match(/Agendamento de perícia realizad[oa] com sucesso.*?data e hora agendada:\s*(\d{2}\/\d{2}\/\d{4})\s+(\d{2}:\d{2})(?:.*?unidade:\s*(?:\(\d+\)\s*-\s*)?([^)]+)\))?/i)))
+      pericias.push({em:x.em, data:m[1], hora:m[2], local:(m[3]||"").trim()});
+    else if(/exig[êe]ncia/i.test(t) && !/foi efetuado|foi cumprida/i.test(t) && (m = t.match(/em até (\d+)\s*(?:\([^)]*\)\s*)?dias/i)))
+      exigencias.push({em:x.em, dias:+m[1], texto: /necessário agendar a perícia/i.test(t) ? "agendar a perícia médica" : frase1(t),
+        cumprida: despachos.slice(i+1).some(y=>/exigência (?:foi )?(?:efetuad|cumprid)|cumprimento da exigência|Agendamento de perícia realizad|reconheceu a sua incapacidade|indeferid|concedid/i.test(y.texto))});
+    else if(/reconheceu a sua incapacidade|indeferid|foi concedid|foi prorrogad/i.test(t)){
+      const contra = /não reconheceu|indeferid|não foi prorrogad/i.test(t);
+      const c = comunicacoes.find(c=>/INDEFER|NEGAD/i.test(c.decisao)===contra);
+      decisoes.push({em:x.em, contra, texto: frase1(t), decisao: c ? c.decisao : "", motivo: c ? c.motivo : "",
+        dcb: (t.match(/cessação do (?:seu )?benefício(?: será| continua sendo)? em\s+(\d{2}\/\d{2}\/\d{4})/i) || t.match(/Data da cessação do benefício:\s*(\d{2}\/\d{2}\/\d{4})/i) || [])[1] || "",
+        nb: soDig((t.match(/(?:benefício|nº)\s+([\d.\-]{10,13})\b/i)||[])[1]||"")});
+    }
+  });
+  return {servico: sv ? sv[1] : (ls[iS+1]||""), status: sv ? sv[2] : "", nb,
+    entrada: (tudo.match(/Data de entrada:\s*(\d{2}\/\d{2}\/\d{4})/)||[])[1]||"", despachos, pericias, exigencias, decisoes, comunicacoes};
+}
 // as fontes lidas do dossiê de um cliente; o anexo vai junto, para a origem
 // aparecer ao lado do fato. A leitura se guarda pelo anexo e pelo tamanho do
 // texto, porque a ficha repinta muitas vezes e o texto só muda numa coleta nova.
@@ -18957,12 +19096,20 @@ function lidoDoAnexo(a, leitor, chave){
   return _leituraCache.get(k);
 }
 function fontesDoDossie(cliId){
-  const caged = [], rais = [];
+  const f = {caged:[], rais:[], laudos:[], cartas:[], extratos:[], processos:[]};
+  // o mesmo laudo vem sozinho e dentro da cópia do processo; a mesma carta, em dois PDFs
+  const visto = new Set(), novo = k => !visto.has(k) && visto.add(k);
   for(const a of docsDoDossie(cliId).filter(x=>x.texto)){
-    if(/Relação de vínculos do trabalhador/i.test(a.texto)) lidoDoAnexo(a, lerCagedTexto, "caged").forEach(x=>caged.push({...x, anexo:a}));
-    if(/RELAÇÃO ANUAL DE INFORMAÇÕES SOCIAIS/i.test(a.texto)) lidoDoAnexo(a, lerRaisTexto, "rais").forEach(x=>rais.push({...x, anexo:a}));
+    const t = a.texto;
+    if(/Relação de vínculos do trabalhador/i.test(t)) lidoDoAnexo(a, lerCagedTexto, "caged").forEach(x=>f.caged.push({...x, anexo:a}));
+    if(/RELAÇÃO ANUAL DE INFORMAÇÕES SOCIAIS/i.test(t)) lidoDoAnexo(a, lerRaisTexto, "rais").forEach(x=>f.rais.push({...x, anexo:a}));
+    if(/SABI - Sistema de Administração|Perícia Médica de Benefício de Incapacidade/i.test(t))
+      lidoDoAnexo(a, lerLaudosTexto, "laudo").forEach(x=>{ if(novo(["laudo", x.exame, x.dii, x.dcb, x.resultado].join("|"))) f.laudos.push({...x, anexo:a}); });
+    if(/CONCESSÃO|Carta de Concessão/.test(t)){ const x = lidoDoAnexo(a, lerCartaTexto, "carta"); if(x && novo("carta|"+x.nb)) f.cartas.push({...x, anexo:a}); }
+    if(/Histórico de Créditos/i.test(t)) lidoDoAnexo(a, lerExtratoPagTexto, "hiscre").forEach(x=>f.extratos.push({...x, anexo:a}));
+    if(/PROTOCOLO DE REQUERIMENTO/.test(t)){ const x = lidoDoAnexo(a, lerProcessoTexto, "pa"); if(x) f.processos.push({...x, anexo:a}); }
   }
-  return {caged, rais};
+  return f;
 }
 // Onda 1 · o vínculo que o CNIS deixou sem data de saída termina no ÚLTIMO
 // DIA DO MÊS DA ÚLTIMA REMUNERAÇÃO (regra do escritório, 10.10.2026), para não
@@ -19104,13 +19251,118 @@ async function gravarNbDoDossie(casoId, nb){
     body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:`NB ${nb} gravado no caso, lido da declaração de benefícios do dossiê.`})}); }catch(e){}
   aviso(`NB ${nb} gravado no caso`, false); repintarFicha();
 }
+// Onda 2 · o caso de um documento: o do mesmo NB; sem NB no documento ou sem
+// caso com ele, o caso aberto que ainda não tem NB
+function casoDoNb(ks, nb){
+  const d = soDig(nb);
+  return (d && ks.find(k=>nbsDoCaso(k).some(x=>soDig(x)===d))) || ks.find(k=>k.fase!=="encerrado" && !nbsDoCaso(k).length) || null;
+}
+// a DCB mais nova que o dossiê conhece para o caso: a da decisão ou do laudo
+// mais recente; o extrato de pagamento só quando nada mais a traz
+function dcbDoDossie(f, k, ks){
+  const outros = new Set(ks.filter(x=>x!==k).flatMap(x=>nbsDoCaso(x).map(soDig)));
+  const meu = nb => { const d = soDig(nb); return nbsDoCaso(k).some(x=>soDig(x)===d) || (!nbsDoCaso(k).length && !outros.has(d)); };
+  const c = [];
+  f.laudos.forEach(l=>{ if(l.dcb && meu(l.nb)) c.push({dcb:l.dcb, em:l.exame, onde:`no laudo médico de ${l.exame}`, fonte:"Laudo médico", anexo:l.anexo}); });
+  f.processos.forEach(p=>p.decisoes.forEach(d=>{ if(d.dcb && meu(d.nb||p.nb)) c.push({dcb:d.dcb, em:d.em, onde:`na decisão de ${d.em} da cópia do processo`, fonte:"Cópia do processo", anexo:p.anexo}); }));
+  f.extratos.forEach(e=>{ if(e.dcb && meu(e.nb)) c.push({dcb:e.dcb, em:"", onde:"no extrato de pagamento", fonte:"Extrato de pagamento", anexo:e.anexo}); });
+  return c.sort((a,b)=>isoBr(b.em).localeCompare(isoBr(a.em)) || isoBr(b.dcb).localeCompare(isoBr(a.dcb)))[0] || null;
+}
+// decadência da revisão (art. 103 da Lei 8.213/91): dez anos do dia 1º do mês
+// seguinte ao da primeira prestação recebida. Sem o extrato que a mostra, conta
+// do mês da concessão, que é o mais cedo possível; a data devolvida é o último
+// dia em que a revisão ainda pode ser pedida.
+function decadenciaDe(ca, extratos){
+  const e = (extratos||[]).find(x=>x.nb===ca.nb), mes = (ca.dip || ca.dib || "").slice(3);
+  const pago = e && e.creditos.filter(x=>x.pago && x.pagoEm && x.comp===mes).map(x=>x.pagoEm)
+    .sort((a,b)=>isoBr(a).localeCompare(isoBr(b)))[0];
+  const ref = pago || ca.concessao || ca.dib;
+  if(!ref) return null;
+  const [, m, a] = ref.split("/");
+  return {ate: isoBr(fimDoMes(`${m}/${+a+10}`)), base: pago ? `primeiro pagamento em ${pago}` : `concessão em ${ref}, sem o extrato do primeiro pagamento`};
+}
+// as ações do quadro: cada uma grava no caso e deixa o andamento com a origem
+async function andamentoDoDossie(casoId, texto){
+  try{ await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})}); }catch(e){}
+}
+async function gravarDcbDoDossie(casoId, iso, onde){
+  try{ await salvarDCB(casoId, iso); }catch(e){ return aviso("Não consegui gravar a DCB — tente de novo"); }
+  await andamentoDoDossie(casoId, `DCB ${fmt(iso)} gravada no caso, lida ${onde} do dossiê.`);
+}
+async function marcarPrazoDoDossie(casoId, fatal, texto){
+  await marcarTarefaComPrazo(casoId, fatal);
+  await andamentoDoDossie(casoId, `⏰ Prazo fatal ${fmt(fatal)}: ${texto}, lido da cópia do processo do dossiê.`);
+  repintarFicha();
+}
+async function agendarPericiaDoDossie(casoId, iso, hora, local){
+  const r = await aplicarPericia({casoId, texto:`Perícia agendada para ${fmtBarra(iso)} às ${hora}`, local})
+    .catch(e=>{ aviso("Não consegui agendar: "+e.message); return null; });
+  if(r==="já agendada") aviso("🩺 Essa perícia já está na aba Perícias", false);
+  else if(r){ plim(); aviso(`🩺 Perícia lida do dossiê: ${r}`, false); }
+  repintarFicha();
+}
+// os fatos dos laudos, das cartas, do extrato e da cópia do processo
+function itensDaOnda2(f, ks){
+  const out = [], hj = hoje(), uma = new Set();
+  const nbTxt = nb => nb ? ` do NB ${fmtNb(nb)}` : "";
+  for(const p of f.processos){
+    const k = casoDoNb(ks, p.nb);
+    // a decisão contrária mais nova abre o recurso, se nada a favor veio depois
+    const ult = p.decisoes[p.decisoes.length-1];
+    if(k && ult && ult.contra){
+      const fatal = contarPrazo(isoBr(ult.em), PRAZOS_CATALOGO.find(x=>x.id==="crps"));
+      const minusc = t => t.charAt(0).toLowerCase() + t.slice(1);
+      if(fatal>=hj && k.prazo!==fatal) out.push({id:"recurso", alerta:true, anexo:p.anexo.id, fonte:"Cópia do processo",
+        texto:`Decisão de ${ult.em}${nbTxt(ult.nb||p.nb)}: ${ult.decisao ? minusc(ult.decisao.toLowerCase()) + (ult.motivo ? ", " + minusc(ult.motivo) : "") : minusc(ult.texto)}. `
+          + `Recurso ao CRPS até ${fmtBarra(fatal)}, 30 dias corridos contados do despacho`,
+        acao:{rot:"Marcar prazo do recurso", js:`marcarPrazoDoDossie('${k.id}','${fatal}','${escJs(`recurso ao CRPS contra a decisão de ${ult.em}`)}')`}});
+    }
+    if(k && !/conclu|cancel/i.test(p.status)) for(const e of p.exigencias.filter(e=>!e.cumprida)){
+      const fatal = contarPrazo(isoBr(e.em), {n:e.dias, uteis:false});
+      if(fatal>=hj && k.prazo!==fatal) out.push({id:"exigencia", alerta:true, anexo:p.anexo.id, fonte:"Cópia do processo",
+        texto:`Exigência de ${e.em}${p.servico?` no ${p.servico}`:""}: ${e.texto}. Vence em ${fmtBarra(fatal)}`,
+        acao:{rot:"Marcar prazo fatal", js:`marcarPrazoDoDossie('${k.id}','${fatal}','${escJs(`exigência de ${e.em} (${e.texto})`)}')`}});
+    }
+    // o agendamento mais novo vale (o remarcado substitui o anterior)
+    const pe = p.pericias[p.pericias.length-1], iso = pe && isoBr(pe.data);
+    if(k && pe && iso>=hj && !evJaAgendado(k.id, iso) && !uma.has(k.id+iso)){
+      uma.add(k.id+iso);
+      out.push({id:"pericia", anexo:p.anexo.id, fonte:"Cópia do processo",
+        texto:`Perícia agendada para ${pe.data} às ${pe.hora}${pe.local?`, ${pe.local}`:""} (despacho de ${pe.em}); não está no calendário`,
+        acao:{rot:"Agendar no calendário", js:`agendarPericiaDoDossie('${k.id}','${iso}','${pe.hora}','${escJs(pe.local)}')`}});
+    }
+  }
+  // a DCB só entra no caso enquanto vale: a que já passou é assunto do recurso ou de pedido novo
+  for(const k of ks.filter(k=>k.fase!=="encerrado" && ehIncapacidade(k))){
+    const x = dcbDoDossie(f, k, ks), iso = x && isoBr(x.dcb);
+    if(x && iso>=hj && iso!==k.dcb) out.push({id:"dcb", anexo:x.anexo.id, fonte:x.fonte,
+      texto:`DCB em ${x.dcb}, fixada ${x.onde}; ${k.dcb ? `o caso está com ${fmtBarra(k.dcb)}` : "o caso ainda não tem DCB"}. A prorrogação pode ser pedida a partir de ${fmtBarra(somaDias(iso, -DIAS_PRORROG))}`,
+      acao:{rot:"Gravar DCB no caso", js:`gravarDcbDoDossie('${k.id}','${iso}','${escJs(x.onde)}')`}});
+  }
+  for(const ca of f.cartas){
+    const dec = decadenciaDe(ca, f.extratos); if(!dec) continue;
+    const dias = diasAte(dec.ate);
+    out.push({id:"decadencia", alerta: dias>=0 && dias<=365, anexo:ca.anexo.id, fonte:"Carta de concessão",
+      texto:`Carta de concessão${nbTxt(ca.nb)}${ca.especie?`, ${ca.especie.toLowerCase()}`:""}: DIB ${ca.dib||"não lida"}${ca.rmi?`, RMI R$ ${ca.rmi}`:""}. `
+        + (dias<0 ? `A revisão do ato de concessão decaiu em ${fmtBarra(dec.ate)}` : `A revisão do ato de concessão pode ser pedida até ${fmtBarra(dec.ate)}`)
+        + ` (art. 103 da Lei 8.213/91; ${dec.base})`});
+  }
+  const ul = f.laudos.slice().sort((a,b)=>isoBr(b.exame).localeCompare(isoBr(a.exame)))[0];
+  if(ul) out.push({id:"laudo", anexo:ul.anexo.id, fonte: ul.sistema==="SABI" ? "Laudo do SABI" : "Laudo da Perícia Médica Federal",
+    texto:`Laudo médico de ${ul.exame||"data não lida"}${ul.tipo?` (${ul.tipo.toLowerCase()})`:""}: `
+      + (ul.resultado==="incapaz" ? "incapacidade reconhecida" : ul.resultado==="capaz" ? "incapacidade não reconhecida" : "resultado não lido")
+      + `${ul.cid?`, CID ${ul.cid}${ul.cidDesc?` (${ul.cidDesc.toLowerCase()})`:""}`:""}${ul.dii?`, DII ${ul.dii}`:""}${ul.dcb?`, DCB ${ul.dcb}`:""}`});
+  return out;
+}
 // O QUE O DOSSIÊ JÁ DIZ: o quadro da Análise de Direito e da triagem. Cada
 // linha traz o fato e o documento de origem; o botão é o que muda o caso.
 function itensDoDossie(c, ks){
-  const out = [];
+  ks = ks || [];
+  const f = fontesDoDossie(c.id);
+  const out = itensDaOnda2(f, ks);
   const vs = vinculosSemSaida(cnisDe(c)).filter(v=>!v.emCurso);
   if(vs.length){
-    const f = fontesDoDossie(c.id);
     const fechados = vs.filter(v=>fechoDoVinculo(v, f)).length;
     out.push({id:"vinculos", texto:`${vs.length} vínculo${vs.length>1?"s":""} sem data de saída no CNIS, encerrado${vs.length>1?"s":""} pelo CRM na última remuneração`
         + (fechados ? `; o CAGED ou a RAIS do dossiê fecha${fechados>1?"m":""} ${fechados}` : "; nenhuma fonte do dossiê traz o desligamento"),
@@ -19119,15 +19371,17 @@ function itensDoDossie(c, ks){
   const nb = nbSugeridoDoDossie(c, ks);
   if(nb) out.push({id:"nb", texto:`NB ${nb.nb}${nb.situacao?` (${nb.situacao.toLowerCase()})`:""} lido da declaração de benefícios; o caso ainda não tem NB`,
     fonte:"Declaração de benefícios", acao:{rot:"Gravar NB no caso", js:`gravarNbDoDossie('${nb.k.id}','${escJs(nb.nb)}')`}});
-  return out;
+  // o prazo que corre primeiro; o que só informa por último
+  const ORDEM = ["recurso", "exigencia", "pericia", "dcb", "decadencia", "vinculos", "nb", "laudo"];
+  return out.sort((a,b)=>(ORDEM.indexOf(a.id) + (a.id==="decadencia" && !a.alerta ? 3 : 0)) - (ORDEM.indexOf(b.id) + (b.id==="decadencia" && !b.alerta ? 3 : 0)));
 }
 function quadroDossie(c, ks){
   const its = itensDoDossie(c, ks);
   if(!its.length) return "";
   return `<section class="adr-card ad-q-dossie" aria-labelledby="adr-t-dossie">
     <h2 class="adr-h" id="adr-t-dossie">O que o dossiê já diz</h2>
-    <ul class="dossie-fatos">${its.map(x=>`<li data-fato="${x.id}"><span>${esc(x.texto)}</span>
-      <span class="dossie-orig">${esc(x.fonte)}</span>
+    <ul class="dossie-fatos">${its.map(x=>`<li data-fato="${x.id}"${x.alerta?' class="alerta"':""}><span>${esc(x.texto)}</span>
+      <span class="dossie-orig">${esc(x.fonte)}${x.anexo?` <button type="button" class="adr-link" onclick="abrirAnexo('${x.anexo}')">ver</button>`:""}</span>
       ${x.acao?`<button type="button" class="tl-bt" onclick="${x.acao.js}">${esc(x.acao.rot)}</button>`:""}</li>`).join("")}</ul>
   </section>`;
 }
