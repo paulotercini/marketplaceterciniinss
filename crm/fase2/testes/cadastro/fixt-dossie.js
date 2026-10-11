@@ -373,5 +373,43 @@ const PPP_TEXTO = [
   "16 - RESPONSÁVEL PELOS REGISTROS AMBIENTAIS:",
 ].join("\n");
 
+// ── Onda 5 · os documentos do hospital: o exame com a conclusão legível, o
+// relatório com a hipótese na fonte deslocada (cada letra 29 posições abaixo,
+// o espaço no código 3, como sai o PDF real) e a autorização de internação
+// com o diagnóstico principal
+const cifraHc = t => [...t].map(ch=>String.fromCharCode(ch.charCodeAt(0) - 29)).join("");
+const HC_EXAME_TEXTO = [
+  "HOSPITAL DAS CLÍNICAS DA FACULDADE DE MEDICINA FMRP USP",
+  "Paciente: AURELIA FICTA DE SOUZA",
+  "Data de Realização: 30/05/2026 13:21:00",
+  "TOMOGRAFIA COMPUTADORIZADA / PELVE",
+  "Descrição do Laudo:",
+  "Cortes axiais da pelve, antes e depois do contraste.",
+  "Conclusão do Laudo:",
+  "Seguimento de sarcoma operado no fêmur esquerdo, sem lesões",
+  "secundárias na pelve.",
+  "Emissor: 12345 - MEDICO FICTICIO",
+].join("\n");
+const HC_RELATORIO_TEXTO = [
+  cifraHc("HOSPITAL DAS CLINICAS DA FACULDADE DE"),
+  "MEDICINA FMRP USP",
+  "RELATORIO MEDICO",
+  "Paciente = 1234567K - AURELIA FICTA DE SOUZA",
+  "A AUTORIDADE COMPETENTE:",
+  "HD:",
+  "MEMBRO INFERIOR ESQUERDO:",
+  cifraHc("FRATURA DE FEMUR DISTAL ESQUERDO"),
+  "CID: S72.4",
+  "PO 12/05/2024: FIXADOR EXTERNO NO JOELHO ESQUERDO",
+  "(16)3602-1000",
+].join("\n");
+const HC_AIH_TEXTO = [
+  "Paciente: AURELIA FICTA DE SOUZA Registro: 1234567K",
+  "Procedimento Realizado: TRATAMENTO C/ CIRURGIAS MULTIPLAS",
+  "PRINCIPAL FRATURA DA DIAFISE DO FEMUR",
+  "SECUNDARIO OCUPANTE DE AUTOMOVEL TRAUMATIZADO EM ACIDENTE DE TRANSITO",
+].join("\n");
+
 module.exports = { CAGED_TEXTO, RAIS_TEXTO, itensDeLinhas, laudoPmf, LAUDO_SABI_TEXTO, cartaNova, CARTA_ANTIGA_TEXTO, extratoPag,
-  processo, EXIGENCIA_AGENDAR, agendamento, comunicacaoIndeferimento, RESUMO_INSS_TEXTO, blocoRais, CAT_TEXTO, PPP_TEXTO };
+  processo, EXIGENCIA_AGENDAR, agendamento, comunicacaoIndeferimento, RESUMO_INSS_TEXTO, blocoRais, CAT_TEXTO, PPP_TEXTO,
+  cifraHc, HC_EXAME_TEXTO, HC_RELATORIO_TEXTO, HC_AIH_TEXTO };

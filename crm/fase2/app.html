@@ -4038,7 +4038,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.08</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.09</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19256,6 +19256,79 @@ function lerProcessoTexto(txt){
   return {servico: sv ? sv[1] : (ls[iS+1]||""), status: sv ? sv[2] : "", nb,
     entrada: (tudo.match(/Data de entrada:\s*(\d{2}\/\d{2}\/\d{4})/)||[])[1]||"", despachos, pericias, exigencias, decisoes, comunicacoes};
 }
+// ═══ Onda 5 · A CLÍNICA: a linha do tempo dos documentos médicos do dossiê ═══
+// A data e o tipo saem do nome do arquivo, que o portal do hospital já traz
+// ("21-JUN-2024 16h31m35 RELATÓRIO MÉDICO", "30-05-2026 TOMOGRAFIA…",
+// "Internacao 11-05-2024 - 22-06-2024"); do texto saem a conclusão do exame,
+// o diagnóstico principal da internação, a hipótese do relatório e o CID.
+const RX_FONTE_CLINICA = /^HC\b|hospital|cl[íi]nica|m[ée]dic|exame|sa[úu]de|\bubs\b|\bupa\b/i;
+// a lista das doenças que dispensam a carência (art. 26, II, da Lei 8.213/91 e
+// Portaria Interministerial MTP/MS 22/2022): o termo ou o CID é só um sinal,
+// que se confere no documento
+const RX_DOENCA_GRAVE = /neoplasia maligna|c[âa]ncer|carcinoma|sarcoma|linfoma|leucemia|mieloma|met[áa]stase|tuberculose|hansen[íi]ase|esclerose m[úu]ltipla|parkinson|cardiopatia grave|nefropatia grave|hepatopatia grave|cegueira|paralisia irrevers[íi]vel|espondilite anquilosante|espondiloartrose anquilosante|doen[çc]a de paget|oste[íi]te deformante|\baids\b|\bhiv\b|aliena[çc][ãa]o mental|acidente vascular (?:cerebral|encef[áa]lico)|abdome agudo/i;
+const RX_CID_GRAVE = /^(C\d{2}|A1[5-9]|A30|G35|G20|B2[0-4]|M45|M88|H54\.?0)/;
+// o PDF do hospital sai com parte do texto em fonte deslocada (o "H" vira "+",
+// o "O" vira "2"): a palavra feita quase toda desses sinais volta somando 29 ao
+// código de cada um. Data, telefone e número ficam como estão.
+function desfazFonteHc(t){
+  return String(t||"").replace(/\S{4,}/g, w=>{
+    const cs = [...w].map(ch=>ch.charCodeAt(0));
+    const sinais = cs.filter(n=>(n>=36 && n<=44) || (n>=59 && n<=61)).length, digitos = cs.filter(n=>n>=48 && n<=57).length;
+    if(sinais < 2 || digitos/cs.length >= 0.5 || cs.filter(n=>n>=36 && n<=93).length/cs.length < 0.6) return w;
+    // o espaço vira o código 3 e o hífen o 16: voltam pelo mesmo deslocamento
+    return cs.map(n=>String.fromCharCode((n>=1 && n<=31) || (n>=36 && n<=93) ? n+29 : n)).join("");
+  });
+}
+const MES_ABREV = {JAN:1,FEV:2,FEB:2,MAR:3,ABR:4,APR:4,MAI:5,MAY:5,JUN:6,JUL:7,AGO:8,AUG:8,SET:9,SEP:9,OUT:10,OCT:10,NOV:11,DEZ:12,DEC:12};
+function dataDoNomeClinico(nome){
+  const m = String(nome||"").match(/(\d{2})-([A-Za-z]{3})-(\d{4})/), n = m && MES_ABREV[m[2].toUpperCase()];
+  if(n) return `${m[3]}-${String(n).padStart(2,"0")}-${m[1]}`;
+  const d = String(nome||"").match(/(\d{2})[-_.](\d{2})[-_.](\d{4})/);
+  return d && +d[2]>=1 && +d[2]<=12 ? `${d[3]}-${d[2]}-${d[1]}` : "";
+}
+function itemClinico(a, txt){
+  const [fonte, arq] = fonteDoDossie(a), nome = arq.replace(/\.pdf$/i, "");
+  const t = /^HC\b/i.test(fonte) || /HOSPITAL DAS CL/i.test(txt||"") ? desfazFonteHc(txt) : String(txt||"");
+  const tipo = /interna[çc]|\bAIH\b/i.test(`${nome} ${fonte}`) ? "Internação" : /relat[óo]rio|atestado|declara[çc]/i.test(nome) ? "Relatório"
+    : /tomografia|resson|radiograf|raio|ultrass|ecograf|exame|eletroneuro|densitom|bi[óo]psia|anatomo|mamograf|endoscop|audiometr|campimetr|espirometr/i.test(`${nome} ${fonte}`) ? "Exame" : "Documento médico";
+  const data = dataDoNomeClinico(nome) || isoBr((t.match(/Data de Realiza[çc][ãa]o:\s*(\d{2}\/\d{2}\/\d{4})/i)||[])[1]) || String(a.criado_em||"").slice(0, 10);
+  const int = nome.match(/Interna[çc]ao\s+(\d{2})-(\d{2})-(\d{4})\s*-\s*(\d{2})-(\d{2})-(\d{4})/i);
+  const titulo = int ? `internação de ${int[1]}/${int[2]}/${int[3]} a ${int[4]}/${int[5]}/${int[6]}`
+    : nome.replace(/^\d{2}[-_.][A-Za-z0-9]{2,3}[-_.]\d{4}\s*(\d{2}h\d{2}m\d{2}\s*)?/, "").replace(/^\d{2}\s*-\s*/, "").trim() || nome;
+  const concl = (t.match(/Conclus[ãa]o(?: do Laudo)?:\s*([\s\S]{0,400}?)(?:\n(?:Emissor|Revisor|ASSINATURA|Exame \()|$)/i)||[])[1];
+  const princ = (t.match(/^PRINCIPAL\s+(.+)$/m)||[])[1];
+  const hd = (t.match(/\bHD:\s*\n?((?:[^\n]*\n?){1,3})/)||[])[1];
+  const resumo = String(concl || (princ ? `diagnóstico principal: ${princ.toLowerCase()}` : hd ? `hipótese: ${hd}` : ""))
+    .replace(/[\u0000-\u001f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
+  const cids = [...new Set([...t.matchAll(/\bCID(?:-?10)?\s*[:=]?\s*([A-TV-Z]\d{2}(?:\.?\d)?)\b/gi)].map(m=>m[1].toUpperCase()))];
+  const g = `${t} ${nome}`.match(RX_DOENCA_GRAVE), gc = cids.find(x=>RX_CID_GRAVE.test(x));
+  return {data, tipo, titulo, resumo, cids, grave: g ? g[0].toLowerCase() : gc ? `o CID ${gc}` : "", fonte};
+}
+function linhaClinica(cliId){
+  return docsDoDossie(cliId)
+    .filter(a=>RX_FONTE_CLINICA.test(fonteDoDossie(a)[0]) && !/SABI - Sistema|Perícia Médica de Benefício|PROTOCOLO DE REQUERIMENTO/.test(a.texto||""))
+    .map(a=>({...lidoDoAnexo(a, t=>itemClinico(a, t), "clin"), anexo:a}))
+    .sort((x, y)=>String(y.data).localeCompare(String(x.data)));
+}
+// a área médica que os documentos pedem, para o agente da base que lê cada uma
+const AREAS_CLINICAS = [
+  [/^M(4\d|5[0-4])/, /coluna|lombar|cervical|h[ée]rnia de disco|discopatia|lombalgia|ci[áa]tic/i, "medico-coluna", "coluna"],
+  [/^M75/, /ombro|manguito|supraespinh/i, "medico-ombro", "ombro"],
+  [/^(G56|M65|M70|M77|S[56]\d)/, /punho|\bm[ãa]o\b|dedo|t[úu]nel do carpo|epicondil|tenossinov/i, "medico-membro-superior", "mão, punho e cotovelo"],
+  [/^(M1[67]|M2[23]|M72|S[789]\d)/, /joelho|quadril|tornozelo|f[êe]mur|t[íi]bia|menisco/i, "medico-membro-inferior", "membro inferior"],
+  [/^F([2-4]\d)/, /depress|ansiedade|bipolar|esquizo|p[âa]nico|psiqui/i, "medico-psiquiatra", "psiquiatria"],
+  [/^(M0[56]|M15|M32|M79\.?7)/, /fibromialgia|artrite reumat|l[úu]pus/i, "medico-reumatologista", "reumatologia"],
+  [/^H(1[6-9]|[2-5]\d|9[0-3])/, /vis[ãa]o|cegueira|glaucoma|catarata|surdez|perda auditiva|audiometria/i, "medico-sensorial", "visão e audição"],
+  [RX_CID_GRAVE, RX_DOENCA_GRAVE, "medico-doencas-graves", "doenças graves"],
+];
+function areaClinica(itens){
+  let melhor = null;
+  for(const [rxCid, rxTxt, agente, rot] of AREAS_CLINICAS){
+    const n = itens.filter(x=>x.cids.some(cd=>rxCid.test(cd)) || rxTxt.test(`${x.titulo} ${x.resumo}`)).length;
+    if(n && (!melhor || n > melhor.n)) melhor = {n, agente, rot};
+  }
+  return melhor;
+}
 // as fontes lidas do dossiê de um cliente; o anexo vai junto, para a origem
 // aparecer ao lado do fato. A leitura se guarda pelo anexo e pelo tamanho do
 // texto, porque a ficha repinta muitas vezes e o texto só muda numa coleta nova.
@@ -19683,6 +19756,24 @@ function fatosDoMapa(c, ks, fam){
     texto:`CAT ${ca.tipoCat ? ca.tipoCat.toLowerCase()+" " : ""}de acidente ${(ca.tipo||"não lido").toLowerCase()} em ${ca.data||"data não lida"}`
       + `${ca.cid ? `, CID ${ca.cid}${ca.cidDesc ? ` (${ca.cidDesc.toLowerCase()})` : ""}` : ""}${ca.cnae ? `, CNAE ${ca.cnae}` : ""}`
       + `; o nexo pelo NTEP se confere na Lista C do Anexo II do Decreto 3.048/99`});
+  // onda 5 · a clínica: a linha do tempo, o sinal de doença que dispensa a
+  // carência, a área médica dos documentos e o relatório recente para a perícia
+  const clin = linhaClinica(c.id);
+  clin.slice(0, 8).forEach(x=>out.push({grupo:"medicos", est:"info", fonte:x.fonte, anexo:x.anexo.id,
+    texto:`${x.data ? fmtBarra(x.data) : "sem data"}, ${x.tipo.toLowerCase()}: ${x.titulo}${x.resumo ? `; ${x.resumo}` : ""}${x.cids.length ? `; CID ${x.cids.join(", ")}` : ""}`}));
+  if(clin.length > 8) out.push({grupo:"medicos", est:"info", fonte:"Dossiê", texto:`E mais ${clin.length-8} documentos médicos, na lista do dossiê`});
+  const grave = clin.find(x=>x.grave);
+  if(grave) out.push({grupo:"contrib", est:"info", fonte:grave.fonte, anexo:grave.anexo.id,
+    texto:`O ${grave.tipo.toLowerCase()} de ${grave.data ? fmtBarra(grave.data) : "data não lida"} menciona ${grave.grave}, da lista de doenças que dispensam a carência (art. 26, II, da Lei 8.213/91): conferir no documento`});
+  const area = clin.length ? areaClinica(clin) : null;
+  if(area) out.push({grupo:"medicos", est:"info", fonte:"Dossiê", texto:`Os documentos médicos são da área de ${area.rot}; o pedido ao Claude leva o agente ${area.agente} da base`});
+  if(["incapacidade", "b94", "bpc"].includes(chave)){
+    const rel = clin.find(x=>x.tipo==="Relatório" && x.data), dias = rel ? -diasAte(rel.data) : null;
+    out.push({grupo:"medicos", est: rel && dias<=90 ? "ok" : "warn", fonte: rel ? rel.fonte : "Dossiê", anexo: rel ? rel.anexo.id : undefined,
+      texto: !rel ? "Nenhum relatório médico no dossiê: pedir relatório atualizado para a perícia"
+        : dias<=90 ? `Relatório médico recente, de ${fmtBarra(rel.data)}, para levar à perícia`
+        : `O relatório médico mais recente é de ${fmtBarra(rel.data)}, com mais de 90 dias: pedir relatório atualizado para a perícia`});
+  }
   for(const r of fd.resumos){
     const nosso = ct && r.der ? mesesContadosAte(ct.periodos, isoBr(r.der).slice(0, 7)) : null;
     const dif = nosso!=null && r.carencia!=null ? nosso - r.carencia : null, longe = dif!=null && Math.abs(dif) > 2;
@@ -19782,7 +19873,9 @@ function mapaClaude(cliId, ramoId){
   if(!k) return aviso("O pedido ao Claude parte de um caso: abra o caso do cliente primeiro");
   menuClaudeDocs(k.id, [...new Set(r.fatos.filter(x=>x.anexo).map(x=>`anexo:${x.anexo}`))]);
   const t = document.getElementById("cl-livre");
-  if(t) t.value = `Com as skills ${fam.skill}, examine o ponto "${r.rot}" nestes documentos e diga o que está provado, o que falta provar e o risco principal.`;
+  const area = r.fatos.some(x=>x.grupo==="medicos" || x.grupo==="laudo") ? areaClinica(linhaClinica(cliId)) : null;
+  if(t) t.value = `Com as skills ${fam.skill}, examine o ponto "${r.rot}" nestes documentos e diga o que está provado, o que falta provar e o risco principal.`
+    + (area ? ` Para os documentos médicos, use o agente base-conhecimento-inss:${area.agente}.` : "");
 }
 // a passagem à Análise de Direito: o formulário abre preenchido com o mapa,
 // e só grava no clique de Registrar análise
