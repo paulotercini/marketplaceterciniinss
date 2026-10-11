@@ -19,6 +19,8 @@ Acionar `coisa-julgada-previdenciaria` para mapear os limites objetivos e subjet
 
 Quando houver coisa julgada progressiva (parcela transitada e parcela pendente), acionar `base-cpc-coisa-julgada-progressiva`.
 
+Quando o título remeter o termo inicial dos efeitos financeiros ao cumprimento de sentença por causa do Tema 1124/STJ, despachar o agente `conferente-tema-1124` antes do cálculo (Onda 178). No TRF3, o que o título afirmou sobre a prova decide a execução, e a tese se aplica sem esperar o trânsito no STJ. O PPP apresentado ao INSS com defeito e sem carta de exigência sustenta a DER também nessa fase.
+
 ### Passo 2. Cotejo com o CNIS
 
 Acionar `cnis-acerto-indicadores` para conferir o CNIS atualizado contra a planilha do INSS. Identificar vínculos não computados, salários de contribuição divergentes, indicadores PEXT que ainda bloqueiem implementação.

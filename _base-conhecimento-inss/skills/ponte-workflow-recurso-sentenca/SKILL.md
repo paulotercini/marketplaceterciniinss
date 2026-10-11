@@ -40,6 +40,8 @@ Transformar o Passo 2 da auditoria em tópicos de erro de julgamento. Cada tópi
 
 Para cada fundamento determinante da decisão, opor o precedente vinculante que o contraria, na ordem STF, STJ, TNU, Enunciado do CRPS e Súmula da TRU3. Acionar `base-precedentes-catalogo-vinculantes` e `precedentes-previdenciarios`. Conferir cada tese na fonte. Só entra citação [CONFERIDO].
 
+Quando a sentença ou o recurso do INSS tocar o termo inicial dos efeitos financeiros, despachar o agente `conferente-tema-1124` (Onda 178). Nas contrarrazões, se o recurso do INSS não impugnou o termo inicial, dizer expressamente que o capítulo não foi devolvido, porque há Turma do TRF3 que aplica o Tema 1124 de ofício.
+
 ### Passo 7. Recurso parcial e capítulos
 
 Quando a decisão tiver capítulos autônomos, atacar só o capítulo gravoso e executar desde logo o incontroverso. Acionar `base-cpc-teoria-capitulos-sentenca`. Cuidar da vedação à reformatio in pejus quando o recurso for exclusivo do segurado.

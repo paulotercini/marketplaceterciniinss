@@ -28,7 +28,7 @@ O fundamento processual está no art. 319, III e IV, do CPC, que exige "o fato e
 
 - **Concessão ou restabelecimento.** Cada requisito legal com o seu fato, o seu documento e o seu número (carência, qualidade de segurado, idade, tempo ou incapacidade).
 - **Reconhecimento de período.** O período em dd/mm/aaaa, o documento de cada período, o enquadramento e o tempo resultante, e a soma final que alcança a regra invocada.
-- **DIB e efeitos financeiros.** O marco (DER, DCB ou citação), o fato que o fixa e, na concessão, a indicação de que a prova que fixa a DIB na DER foi apresentada no processo administrativo (Tema 1124/STJ, gatilho 5.1 do escritório).
+- **DIB e efeitos financeiros.** O marco (DER, DCB ou citação), o fato que o fixa e, na concessão, a indicação de que a prova que fixa a DIB na DER foi apresentada no processo administrativo (Tema 1124/STJ, gatilho 5.1 do escritório). O elo se confere pelo agente `conferente-tema-1124`, que classifica cada documento pelo item da tese.
 - **Reafirmação da DER.** A data reafirmada, as contribuições posteriores pelo CNIS e a soma que completa o requisito.
 - **Revisão.** O ato revisado, o erro, o valor correto e a data da concessão, que fixa a decadência do art. 103 da Lei 8.213/91.
 - **Atrasados e valor da causa.** O termo inicial, o termo final, a base (RMI ou salário mínimo) e a planilha por ID. No JEF, a soma das vencidas com doze vincendas frente ao teto de sessenta salários mínimos (art. 292, §§ 1º e 2º, do CPC).

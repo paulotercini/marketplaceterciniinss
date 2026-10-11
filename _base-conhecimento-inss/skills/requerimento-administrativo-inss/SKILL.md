@@ -109,6 +109,12 @@ O protocolo operacional completo (distinção DIS/DID/DII, análise retroativa d
 
 O texto final da autodeclaração deve ser fornecido à cliente em formato pronto para copiar e colar, acompanhado da data exata a ser inserida no campo formal.
 
+### Campos do formulário do Meu INSS e o Tema 1124 (Onda 178)
+
+O formulário eletrônico pergunta se há tempo especial, tempo rural, atividade de professor e outros dados que definem o que o INSS vai analisar. Resposta "não" em campo que o caso exige pode ser lida como indeferimento forçado. A TNU já tratou assim o "não" em período especial, e a 14ª e a 9ª Turmas Recursais de SP mantiveram extinções mesmo com PPP anexado e pedido escrito no corpo do requerimento. A 1ª Turma Recursal de SP e a 9ª Turma do TRF4 decidiram em sentido contrário, e os embargos de declaração do Tema 1124 vedaram o indeferimento automático sem oportunidade de complementação. A divergência existe e o risco é do segurado, de modo que a regra é não depender dela.
+
+Regras do escritório. Responder "sim" em todo campo que corresponda a período ou condição que o caso vai pedir. Repetir o pedido no corpo do requerimento, com a lista dos períodos e dos documentos. Anexar os documentos no próprio protocolo. Pedir expressamente a justificação administrativa quando faltar documento. Guardar o comprovante do protocolo e a tela de resumo do formulário. Antes do protocolo, o advogado confere o formulário campo a campo e nunca deixa o cliente preencher sozinho. Julgados em `tema-1124-instrucao-administrativa/references/APLICACAO-TRF3-TEMA-1124.md`.
+
 ## Integração com Skills Complementares
 
 Antes de redigir qualquer requerimento administrativo, consultar as seguintes skills conforme o caso.
