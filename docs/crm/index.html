@@ -3782,6 +3782,35 @@ html[data-tema="v10"] .tl-doc-nome b{font-weight:500;font-size:13px;overflow:hid
 html[data-tema="v10"] .tl-doc-nome small{font-family:var(--f-mono);font-size:11.5px;color:var(--cinza-claro)}
 html[data-tema="v10"] .tl-doc .tl-bt{display:inline-flex;align-items:center;gap:5px}
 html[data-tema="v10"] .tl-disp{display:block;margin-top:6px;padding-left:10px;border-left:2px solid #BFDCC2;font-size:13px;line-height:1.5;color:var(--cinza)}
+/* F191 · o conteúdo do movimento: a linha do ato, a prévia ao passar o mouse e a leitura inteira */
+html[data-tema="v10"] .tl-ato{display:flex;align-items:center;gap:8px;width:100%;margin-top:8px;padding:7px 10px;border:1px dashed #CFCDC6;border-radius:10px;background:transparent;color:var(--cinza);font:400 13px/1.4 var(--f-ui);text-align:left;cursor:pointer}
+html[data-tema="v10"] .tl-ato>svg{flex:none;width:15px;height:15px;color:var(--cinza-claro)}
+html[data-tema="v10"] .tl-ato b{font-weight:500;color:var(--texto)}
+html[data-tema="v10"] .tl-ato-ler{margin-left:auto;font-size:12px;font-weight:500;color:var(--azul)}
+html[data-tema="v10"] .tl-ato.sem{cursor:default;border-style:dotted}
+html[data-tema="v10"] .tl-doc-ler{display:block;max-width:100%;min-width:0;padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+html[data-tema="v10"] .tl-doc-ler b{display:block}
+html[data-tema="v10"] .tl-ato:focus-visible,html[data-tema="v10"] .tl-doc-ler:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+@media (hover:hover) and (pointer:fine){
+  html[data-tema="v10"] button.tl-ato:hover{border-style:solid;border-color:var(--azul);background:var(--azul-fundo)}
+  html[data-tema="v10"] .tl-doc-ler:hover b{text-decoration:underline;text-underline-offset:2px}
+}
+#pop-ato{position:fixed;z-index:80;display:flex;flex-direction:column;gap:6px;max-height:min(380px,60vh);overflow:hidden;padding:12px 14px;background:#FFFFFF;border:1px solid var(--borda);border-radius:12px;box-shadow:0 12px 32px rgba(18,18,18,.16);pointer-events:none;color:var(--texto);font-size:13px;line-height:1.5}
+#pop-ato[hidden]{display:none}
+#pop-ato .pop-ato-tit{font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--cinza)}
+#pop-ato .pop-ato-txt{white-space:pre-line;overflow:hidden;display:-webkit-box;-webkit-line-clamp:13;-webkit-box-orient:vertical}
+#pop-ato small{font-size:11.5px;color:var(--cinza-claro)}
+@media (prefers-reduced-motion:no-preference){#pop-ato:not([hidden]){animation:surgir .14s ease-out}}
+.modal-cx:has(.leitura-ato){width:min(760px,96vw)}
+/* no celular o compositor (65) e a barra de baixo (70) ficavam por cima da caixa (60);
+   o ✕ sai da coluna para o texto ganhar a largura toda */
+.modal-fundo:has(.leitura-ato){z-index:85;padding:10px}
+.modal-cx:has(.leitura-ato) .modal-cab{position:relative}
+.modal-cx:has(.leitura-ato) .modal-cab>.btn-mini{position:absolute;top:0;right:0}
+.leitura-ato h3{margin:0 0 4px;padding-right:44px}
+.leitura-ato .meio-sub{margin:0 0 10px}
+.leitura-txt{white-space:pre-line;max-height:60vh;max-height:60dvh;overflow-y:auto;padding:14px 16px;border:1px solid var(--borda);border-radius:10px;background:#FBFBFA;font-size:14.5px;line-height:1.65;color:var(--texto)}
+.leitura-bts{margin-top:12px;gap:8px;flex-wrap:wrap}
 html[data-tema="v10"] .tl-prazo-sug{display:flex;align-items:center;gap:10px;margin-top:10px;padding:8px 10px;border-radius:10px;background:var(--prox-f);color:#6B3F00;font-size:13px}
 html[data-tema="v10"] .tl-prazo-sug>span{flex:1}
 html[data-tema="v10"] .tl-feitos{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
@@ -4038,7 +4067,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.09</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.10</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -22889,9 +22918,11 @@ function prazoSugeridoHtml(a, segI){
     <button class="tl-bt forte" onclick="abrirSeguimento(${segI})">Criar prazo</button></span>`;
 }
 // uma linha de documento dentro do cartão: nome, páginas e leitura, Abrir e Ler com Claude
-function docRow(nome, sub, abrirJs, claudeJs){
+// F191 · documento com texto (lerId): o nome lê, como a linha do conteúdo
+function docRow(nome, sub, abrirJs, claudeJs, lerId){
+  const n = `<b>${esc(nome||"documento")}</b>`;
   return `<span class="tl-doc"><span class="tl-doc-ic">${IC_SVG.doc}</span>
-      <span class="tl-doc-nome"><b>${esc(nome||"documento")}</b>${sub?`<small>${esc(sub)}</small>`:""}</span>
+      <span class="tl-doc-nome">${lerId?`<button type="button" class="tl-doc-ler" data-ato="anexo:${esc(lerId)}" onclick="lerAto('anexo:${escJs(lerId)}')">${n}</button>`:n}${sub?`<small>${esc(sub)}</small>`:""}</span>
       <span class="tl-doc-bts"><button class="tl-bt" onclick="${abrirJs}">Abrir</button>
       <button class="tl-bt" onclick="${claudeJs}">${IC_SVG.claude}Ler com Claude</button></span></span>`;
 }
@@ -22900,12 +22931,185 @@ function docsDoCartao(a){
   return (D.anexos||[]).filter(x=>x.andamento_id===a.id).map(x=>{
     const decide = /senten[cç]|decis[aã]|despach|ac[oó]rd[aã]|monocr|laudo|julgad[oa] |homologa|DESPADEC|\bSENT\d|\bACOR\d|\bLAUDO\d/i.test(x.nome||"")
                    && !/^\s*certid/i.test(x.nome||"");
-    const disp = decide ? dispositivoDe(x.texto) : "";
+    const disp = decide ? dispositivoDe(doTribunal(x) ? miolDoAto(x.texto) : x.texto) : "";
     const pi = Array.isArray(x.paginas_imagem) ? x.paginas_imagem : null;
     const leitura = !x.texto && /pdf|image/.test(x.tipo||"") ? "digitalizado" : pi && pi.length ? `${pi.length} pág. em imagem` : x.texto ? "com texto" : "";
-    return docRow(x.nome, `${x.paginas?`${x.paginas} pág. · `:""}${leitura}`, `abrirAnexo('${escJs(x.id)}')`, `menuClaudeDocs('${escJs(a.caso_id)}',['anexo:${escJs(x.id)}'])`)
+    return docRow(x.nome, `${x.paginas?`${x.paginas} pág. · `:""}${leitura}`, `abrirAnexo('${escJs(x.id)}')`, `menuClaudeDocs('${escJs(a.caso_id)}',['anexo:${escJs(x.id)}'])`, x.texto ? x.id : null)
       + (disp ? `<span class="tl-disp">${esc(disp)}</span>` : "");
   }).join("");
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F191 · O CONTEÚDO DO MOVIMENTO (pedido do Paulo, 11.10.2026). "Expedida/
+// certificada a intimação eletrônica", "Expedição de Outros documentos" e
+// "Disponibilizado no DJ Eletrônico" dizem que houve comunicação, não o que se
+// comunicou, e obrigavam a abrir o processo. O que se comunica é o ATO mais
+// recente do mesmo processo: na cronologia real do PJe ele é juntado no mesmo
+// minuto ou dias antes (medido nas coletas de 11.10.2026). O cartão ganha uma
+// linha com esse ato; passar o mouse mostra o texto, clicar abre a leitura
+// inteira. Nada se grava: tudo sai do que a ficha já carregou.
+// ══════════════════════════════════════════════════════════════════════════
+const RX_COMUNICA = /expedida\/certificada a intima|expedi[çc][ãa]o de|disponibilizad[oa] no d|publicad[oa] .{0,60}\bem \d{2}\/\d{2}\/\d{4}|certid[ãa]o de publica|remetid[oa] ao dje?\b|confirmada a intima|intima[çc][ãa]o eletr/i;
+// é ato o documento ("Despacho", "DESPADEC1") ou o movimento ("Despacho
+// Proferido" do e-SAJ, "Juntada de ato ordinatório" do PJe) que decide ou ordena
+const RX_ATO = /senten[cç]|decis[aã]o|despach|ac[oó]rd[aã]o|monocr[aá]tic|julgad[oa] |homologad|ato ordinat|\b(?:concedid|deferid|indeferid|denegad|negad|extint|revogad|acolhid|rejeitad)[oa]|DESPADEC|\bSENT\d|\bACOR\d|\bDEC\d|\bVOTO\d|\bATOORD\d/i;
+// "Conclusos para decisão", "Transitado em julgado", "Evoluída a classe para
+// cumprimento de sentença" e as juntadas de parte citam o ato, mas não são ato
+const RX_NAO_ATO = /^\s*(?:certid|conclus|transitad|evolu|remetid|recebid|redistribu|arquivad|desarquivad|decorrid|distribu|autuad|juntada de (?:peti|comprovante|certid|ar\b|aviso|mandado|documento|laudo|contesta|manifesta))/i;
+const ehAto = s => RX_ATO.test(s||"") && !RX_NAO_ATO.test(s||"") && !RX_COMUNICA.test(s||"");
+function tipoDoAto(s){
+  const t = String(s||"");
+  return /ato ordinat|ATOORD/i.test(t) ? "ato ordinatório" : /DESPADEC/i.test(t) ? "despacho ou decisão"
+    : /despach/i.test(t) ? "despacho" : /monocr/i.test(t) ? "decisão monocrática" : /decis[aã]o|\bDEC\d/i.test(t) ? "decisão"
+    : /ac[oó]rd[aã]o|\bACOR\d|\bVOTO\d/i.test(t) ? "acórdão" : /senten|\bSENT\d|julgad|homolog/i.test(t) ? "sentença" : "ato";
+}
+const casaTipo = (x, y) => x===y || x.includes(y) || y.includes(x);
+const capital = s => String(s||"").charAt(0).toUpperCase() + String(s||"").slice(1);
+// texto em UTF-8 lido como Latin-1 ("CÃVEL", "1Âª") volta ao acento.
+// shortcut: só a faixa Latin-1; maiúscula vinda por Windows-1252 fica como veio
+const consertarAcentos = s => /Ã[\u0080-¿]|Â[ -¿]/.test(s)
+  ? s.replace(/Ã([\u0080-¿])/g, (_, c)=>String.fromCharCode(c.charCodeAt(0)+64)).replace(/Â([ -¿])/g, "$1") : s;
+// o miolo do ato: sem o cabeçalho (tribunal, vara, partes, advogados) e sem o
+// rodapé da assinatura, que são o que a leitura rápida não precisa
+const RX_TITULO_ATO = /^(?:d\s?e\s?s\s?p\s?a\s?c\s?h\s?o|d\s?e\s?c\s?i\s?s\s?[ãa]\s?o|s\s?e\s?n\s?t\s?e\s?n\s?[çc]\s?a|ato ordinat[óo]rio|ac[óo]rd[ãa]o|despacho\s*\/\s*decis[ãa]o|termo de audi[êe]ncia)\b.{0,40}$/i;
+const RX_PARTE_ATO = /^(?:autor|r[ée]u|impetrante|impetrad[oa]|recorrente|recorrid[oa]|requerente|requerid[oa]|exequente|executad[oa]|interessad[oa]|apelante|apelad[oa]|agravante|agravad[oa]|embargante|embargad[oa]|advogad[oa]|processo|classe|assunto|ju[ií]z)[^:\n]{0,40}:/i;
+const RX_FIM_ATO = /data da assinatura eletr|^\(?assinad[oa] (?:eletr|digit)|^documento assinado|^n[úu]mero do documento/i;
+const RX_MARGEM = /^(?:este documento [ée] c[óo]pia do original|para conferir o original|fls\.\s*\d+\s*$)/i;
+function miolDoAto(texto){
+  const ls = consertarAcentos(String(texto||"")).split(/\n+/).map(s=>s.trim()).filter(s=>s && !RX_MARGEM.test(s));
+  const topo = ls.slice(0, 40);
+  let ini = topo.findIndex(s=>RX_TITULO_ATO.test(s));
+  if(ini<0) ini = topo.reduce((u, s, i)=>RX_PARTE_ATO.test(s) ? i : u, -1);
+  let corpo = ls.slice(ini+1);
+  while(corpo.length>1 && RX_PARTE_ATO.test(corpo[0])) corpo.shift();
+  const fim = corpo.findIndex(s=>RX_FIM_ATO.test(s));
+  if(fim>0) corpo = corpo.slice(0, fim);
+  const t = corpo.join("\n").trim();
+  return t.length>=20 ? t : ls.join("\n");
+}
+const doTribunal = x => /^(pje|eproc|esaj)\//.test((x && x.caminho) || "");
+// o processo do movimento: o último número CNJ do texto (a classe do e-SAJ tem
+// várias palavras, "Procedimento Comum Cível", e escapa do RX_CNJ_FIM)
+const numDoMov = y => { const ns = String((y && y.texto) || "").match(/\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}/g); return ns ? soDig(ns[ns.length-1]) : ""; };
+const RX_CLASSE_FIM = /\s+—\s+[^—]*\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}\s*$/;
+// os atos de um processo do caso: os documentos (com texto, quando veio) e os
+// movimentos que são ato sem documento (o ato ordinatório que não desceu, o
+// despacho do e-SAJ, cujo teor vem no próprio movimento)
+function atosDoProcesso(casoId, dig){
+  const ands = (D._andsFicha||[]).filter(y=>y.caso_id===casoId && y.origem==="pje" && !y.excluir);
+  const porId = new Map(ands.map(y=>[y.id, y])), comDoc = new Set(), out = [];
+  for(const x of (D.anexos||[])){
+    if(x.caso_id!==casoId || !ehAto(x.nome)) continue;
+    const y = x.andamento_id ? porId.get(x.andamento_id) : null;
+    const seg = String(x.caminho||"").split("/");
+    if((y ? numDoMov(y) : doTribunal(x) ? seg[1] : "") !== dig) continue;
+    if(y) comDoc.add(y.id);
+    // sem andamento, o documento só sabe o dia (gravarDocsDaColeta o data ao meio-dia)
+    out.push({q: y ? movPjeLimpo(y).q : qSP(x.criado_em).slice(0,10), nome:x.nome,
+              texto: doTribunal(x) ? miolDoAto(x.texto) : String(x.texto||"").trim(), anexo:x, and:y});
+  }
+  for(const y of ands){
+    if(comDoc.has(y.id)) continue;
+    if(numDoMov(y)!==dig) continue;
+    const l = movPjeLimpo(y), i = l.texto.indexOf(" — "), titulo = i>0 ? l.texto.slice(0, i) : l.texto;
+    const ato = titulo.split(" · ").map(s=>s.replace(/^📎\s*/, "")).find(ehAto);
+    if(!ato) continue;
+    const teor = i>0 ? l.texto.slice(i+3).replace(RX_CLASSE_FIM, "").trim() : "";
+    out.push({q:l.q, nome:ato, texto: teor.length>=60 ? teor : "", and:y});
+  }
+  return out;
+}
+// o ato que o movimento de comunicação comunica: o mais recente do mesmo
+// processo, até 30 dias antes; "Publicado Despacho em…" diz o tipo
+function atoDoMovimento(a){
+  if(!a || a.origem!=="pje" || (D.anexos||[]).some(x=>x.andamento_id===a.id)) return null;
+  const l = movPjeLimpo(a), i = l.texto.indexOf(" — "), titulo = i>0 ? l.texto.slice(0, i) : l.texto;
+  const segs = titulo.split(" · ").map(s=>s.replace(/^📎\s*/, ""));
+  // o e-SAJ que já traz o teor no próprio movimento não precisa de nada
+  if(!segs.some(s=>RX_COMUNICA.test(s)) || segs.some(ehAto) || /teor do ato/i.test(l.texto)) return null;
+  const dig = numDoMov(a), dia = l.q.slice(0,10), hora = l.q.slice(11,16);
+  if(!dig || !dia) return null;
+  const pub = /publicad[oa]\s+(.+?)\s+em\s+\d{2}\/\d{2}\/\d{4}/i.exec(titulo);
+  const tipo = pub ? tipoDoAto(pub[1]) : null, desde = somaDias(dia, -30);
+  const cs = atosDoProcesso(a.caso_id, dig).filter(o=>{
+    const d = o.q.slice(0,10), h = o.q.slice(11,16);
+    if(!d || d<desde || d>dia || (d===dia && h && hora && h>hora)) return false;
+    return !tipo || casaTipo(tipoDoAto(o.nome), tipo);
+  }).sort((x,y)=>y.q.localeCompare(x.q));     // o mais novo; no dia, o que tem hora antes do que só tem a data
+  const o = cs[0];
+  if(!o || o.texto) return o || null;
+  // o ato do dia sem texto e o documento do mesmo dia, sem andamento, costumam ser um só
+  return cs.find(x=>x.texto && x.q.slice(0,10)===o.q.slice(0,10) && casaTipo(tipoDoAto(x.nome), tipoDoAto(o.nome))) || o;
+}
+function atoDoCartaoHtml(a){
+  const o = atoDoMovimento(a); if(!o) return "";
+  const rot = `${capital(tipoDoAto(o.nome))} de ${fmt(o.q.slice(0,10)).slice(0,5)}`;
+  if(!o.texto) return `<span class="tl-ato sem">${IC_SVG.doc}<span>Conteúdo: <b>${esc(rot)}</b>, sem o texto no CRM</span></span>`;
+  return `<button type="button" class="tl-ato" data-ato="and:${esc(a.id)}" onclick="lerAto('and:${escJs(a.id)}')">${IC_SVG.doc}<span>Conteúdo: <b>${esc(rot)}</b></span> <span class="tl-ato-ler">ler</span></button>`;
+}
+// "and:<andamento>" é o ato que o movimento comunica; "anexo:<id>", o próprio documento
+function atoPelaChave(ch){
+  const [tipo, id] = String(ch||"").split(":");
+  if(tipo==="and") return atoDoMovimento((D._andsFicha||[]).find(x=>x.id===id));
+  const x = (D.anexos||[]).find(y=>y.id===id); if(!x) return null;
+  const y = x.andamento_id ? (D._andsFicha||[]).find(z=>z.id===x.andamento_id) : null;
+  return {q: y && y.origem==="pje" ? movPjeLimpo(y).q : qSP(y ? y.criado_em : x.criado_em), nome:x.nome,
+          texto: doTribunal(x) ? miolDoAto(x.texto) : String(x.texto||"").trim(), anexo:x, and:y};
+}
+// a prévia: o ato curto inteiro; o longo, pelo dispositivo, ou começo e fim
+function previaDoAto(t){
+  t = String(t||"").trim();
+  if(t.length<=1000) return t;
+  if(RE_DISPOSITIVO.some(re=>t.search(re)>=0)) return "[…] " + dispositivoDe(t);
+  return `${t.slice(0, 520).trim()} […] ${t.slice(-380).trim()}`;
+}
+let _popAto = null, _popT = 0;
+const _hoverFino = matchMedia("(hover:hover) and (pointer:fine)");
+function mostrarPopAto(el){
+  const o = atoPelaChave(el.dataset.ato); if(!o || !o.texto) return;
+  if(!_popAto){ _popAto = document.createElement("div"); _popAto.id = "pop-ato"; _popAto.setAttribute("role", "tooltip"); }
+  if(!_popAto.isConnected) document.body.appendChild(_popAto);
+  _popAto.innerHTML = `<b class="pop-ato-tit">${esc(capital(tipoDoAto(o.nome)))} · ${esc(fmt(o.q.slice(0,10)))}</b>
+    <span class="pop-ato-txt">${esc(previaDoAto(o.texto))}</span><small>Clique para ler o texto inteiro</small>`;
+  _popAto.hidden = false;
+  const r = el.getBoundingClientRect(), w = Math.min(460, innerWidth - 24);
+  _popAto.style.width = w + "px";
+  _popAto.style.left = Math.max(12, Math.min(r.left, innerWidth - w - 12)) + "px";
+  const h = _popAto.offsetHeight;
+  _popAto.style.top = (r.bottom + 8 + h <= innerHeight - 8 ? r.bottom + 8 : Math.max(8, r.top - 8 - h)) + "px";
+  el.setAttribute("aria-describedby", "pop-ato");
+}
+function esconderPopAto(){ clearTimeout(_popT); if(_popAto) _popAto.hidden = true; }
+// só onde há mouse: no toque, o clique já abre a leitura
+document.addEventListener("pointerover", e=>{
+  const el = e.target.closest && e.target.closest("[data-ato]");
+  if(!el || !_hoverFino.matches) return;
+  clearTimeout(_popT); _popT = setTimeout(()=>mostrarPopAto(el), 250);
+});
+document.addEventListener("pointerout", e=>{
+  const el = e.target.closest && e.target.closest("[data-ato]");
+  if(el && !el.contains(e.relatedTarget)) esconderPopAto();
+});
+// pelo teclado, o foco mostra a prévia como o mouse
+document.addEventListener("focusin", e=>{
+  const el = e.target.closest && e.target.closest("[data-ato]");
+  if(el && el.matches(":focus-visible")) mostrarPopAto(el); else esconderPopAto();
+});
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") esconderPopAto(); });
+document.addEventListener("scroll", esconderPopAto, true);
+// a leitura inteira, na caixa: o texto limpo, copiar, o original e o Claude
+function lerAto(ch){
+  esconderPopAto();
+  const o = atoPelaChave(ch); if(!o || !o.texto) return;
+  const x = o.anexo;
+  caixa(`<div class="leitura-ato">
+    <h3>${esc(capital(tipoDoAto(o.nome)))} · ${esc(fmt(o.q.slice(0,10)))}</h3>
+    <p class="meio-sub">${esc(x ? x.nome : o.nome)}</p>
+    <div class="leitura-txt" tabindex="0">${esc(o.texto)}</div>
+    <div class="form-linha leitura-bts">
+      <button class="tl-bt" onclick="copiar(document.querySelector('.leitura-txt').textContent,'Texto copiado')">Copiar</button>
+      ${x ? `<button class="tl-bt" onclick="abrirAnexo('${escJs(x.id)}')">Abrir o original</button>
+      <button class="tl-bt" onclick="fecharCaixa();menuClaudeDocs('${escJs(x.caso_id)}',['anexo:${escJs(x.id)}'])">${IC_SVG.claude}Ler com Claude</button>` : ""}
+    </div></div>`);
 }
 // o que já se fez a partir do movimento, em pastilhas: "Tarefa · Amanda · até 13.10"
 function feitoDoCartao(a){
@@ -23070,7 +23274,7 @@ function infoOficial(x){
     const i = segRegistrar(a.caso_id, a.texto, a.id), ev = eventoNoTexto(a.texto);
     return { i, lido: euLi(a), andId: a.id, portal: portalDoAndamento(a, k),
       msg: `msgAndamento('${a.id}')`, sinais: sinaisHtml(a),
-      antes: "", docs: docsDoCartao(a), prazo: prazoSugeridoHtml(a, i), feito: feitoDoCartao(a),
+      antes: atoDoCartaoHtml(a), docs: docsDoCartao(a), prazo: prazoSugeridoHtml(a, i), feito: feitoDoCartao(a),
       menu: [ ev ? `<button class="tl-mais-it" role="menuitem" onclick="periciaRapida(${i})">Agendar ${esc(ev.tipo.toLowerCase())} com aviso</button>` : "",
               a.origem==="pje" ? `<button class="tl-mais-it perigo" role="menuitem" onclick="pjeForaDoCaso('${a.id}','${a.caso_id}')">Não é deste caso</button>` : "" ] };
   }
@@ -24985,7 +25189,7 @@ function docsDoAndamentoHtml(andId){
     // e documento só ganham o botão (o fim de uma petição não é dispositivo)
     const decide = /senten[cç]|decis[aã]|despach|ac[oó]rd[aã]|monocr|laudo|julgad[oa] |homologa|DESPADEC|\bSENT\d|\bACOR\d|\bLAUDO\d/i.test(x.nome||"")
                    && !/^\s*certid/i.test(x.nome||"");
-    const disp = decide ? dispositivoDe(x.texto) : "";
+    const disp = decide ? dispositivoDe(doTribunal(x) ? miolDoAto(x.texto) : x.texto) : "";
     return `<div style="margin:4px 0 6px;padding:6px 9px;border-left:3px solid #BFDCC2;background:#F5FAF6;border-radius:6px">
       <button class="btn-mini" onclick="abrirAnexo('${x.id}')" title="abre o documento guardado (link que vence)">📄 ver ${esc(x.nome||"documento")}</button>
       ${disp ? `<div class="meio-sub" style="margin-top:4px">⚖️ ${esc(disp)}</div>`
