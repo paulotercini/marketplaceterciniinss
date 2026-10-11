@@ -14742,9 +14742,11 @@ function triagemLeitura(passo, c, ks){
     if(an.abaixo.length)
       probs.push(`${an.abaixo.length} competência(s) abaixo do salário mínimo: `
         + an.abaixo.map(x=>`${x.comp} (${moedaBR(x.valor)} de ${moedaBR(x.minimo)}, ${x.tipo}${x.origem?` ${x.origem}`:""})`).join("; ") + ".");
+    // onda 3 · a contagem do extrato, na mesma leitura
+    const ct = an.contagem, conta = ct ? `Carência pelo CNIS: ${ct.carencia} contribuições; tempo de ${ct.anos} anos e ${ct.meses} meses, contado por competência.` : "";
     if(!probs.length)
-      return {cor:"ok", estado:"ok", txt:`CNIS lido em ${fmt(g.em)}: ${g.paginas} página(s). Sem erros.`};
-    return {cor:"alerta", estado:"atencao", txt:`CNIS lido em ${fmt(g.em)}: ${g.paginas} página(s).\n` + probs.join("\n")};
+      return {cor:"ok", estado:"ok", txt:`CNIS lido em ${fmt(g.em)}: ${g.paginas} página(s). Sem erros.${conta?" "+conta:""}`};
+    return {cor:"alerta", estado:"atencao", txt:`CNIS lido em ${fmt(g.em)}: ${g.paginas} página(s).\n` + probs.join("\n") + (conta?"\n"+conta:"")};
   }
   if(passo==="indicadores"){
     const g = cnisDe(c);
@@ -15598,8 +15600,39 @@ function analisarCnis(lido, ref){
   const benefAtivos = bens.filter(v=>!/INDEFER|CESSAD|SUSPENS/i.test(v.situacao||"") && (!v.fim || /ATIVO/i.test(v.situacao||"")))
     .map(v=>({especie:v.especie, origem:v.origem, nb:v.nb, inicio:v.inicio, situacao:v.situacao}));
   return {abertos, errosEmp, abaixo, mesAnt, agora, benefAtivos,
-    qtComps: vs.reduce((n,v)=>n+((v.comps||[]).length),0)};
+    qtComps: vs.reduce((n,v)=>n+((v.comps||[]).length),0), contagem: contagemCnis(vs, abaixo)};
 }
+// Onda 3 · a contagem do CNIS por competência: cada mês de vínculo de
+// empregado (da admissão à saída, ou à última remuneração quando falta a
+// saída) e cada mês de contribuição de individual ou facultativo conta uma
+// vez; a competência abaixo do mínimo fica fora até a complementação. Os meses
+// contados se guardam em períodos ("AAAA-MM" a "AAAA-MM"), para a conta até
+// uma data qualquer, como a DER de uma contagem do INSS.
+function contagemCnis(vs, abaixo){
+  const meses = new Set(), fora = new Set((abaixo||[]).map(x=>chaveComp(x.comp)));
+  const mesDe = d => { const m = String(d||"").match(/(\d{2})\/(\d{4})$/); return m ? `${m[2]}-${m[1]}` : ""; };
+  for(const v of vs){
+    const comps = (v.comps||[]).filter(x=>+String(x.c).slice(0,2)<=12).map(x=>chaveComp(x.c)).sort();
+    if(!TIPO_REMUN.test(v.tipo||"")){ comps.forEach(k=>meses.add(k)); continue; }
+    const a = mesDe(v.inicio), b = v.fim ? mesDe(v.fim) : (comps[comps.length-1] || chaveComp(v.ultRemun||""));
+    if(!a || !b || b < a){ comps.forEach(k=>meses.add(k)); continue; }
+    let [y, m] = a.split("-").map(Number);
+    for(let k = a; k <= b; k = `${y}-${String(m).padStart(2,"0")}`){ meses.add(k); if(++m > 12){ m = 1; y++; } }
+  }
+  const conta = [...meses].filter(k=>!fora.has(k)).sort(), periodos = [];
+  for(const k of conta){
+    const ult = periodos[periodos.length-1];
+    if(ult && chaveComp(competenciaMais(ult[1].split("-").reverse().join("/"), 1)) === k) ult[1] = k; else periodos.push([k, k]);
+  }
+  return {carencia: conta.length, anos: Math.floor(conta.length/12), meses: conta.length % 12, periodos,
+    foraMinimo: [...meses].filter(k=>fora.has(k)).length};
+}
+// os meses contados até uma competência "AAAA-MM", inclusive
+const mesesContadosAte = (periodos, ate) => (periodos||[]).reduce((n, [a, b])=>{
+  if(a > ate) return n;
+  const fim = b < ate ? b : ate, [ya, ma] = a.split("-").map(Number), [yb, mb] = fim.split("-").map(Number);
+  return n + (yb - ya) * 12 + (mb - ma) + 1;
+}, 0);
 // ── o que fica gravado ───────────────────────────────────────────────────
 // A leitura grava o extrato (o arquivo e o que foi lido) e as respostas
 // PRÉ-PRONTAS dos passos que o CNIS responde. Quem atende confirma passo a
@@ -19070,6 +19103,19 @@ function lerCartaTexto(txt){
     der: pega(/requerido em\s+(\d{2}\/\d{2}\/\d{4})/i), concessao: pega(/Data de Concessão do Benefício:\s*(\d{2}\/\d{2}\/\d{4})/i),
     dib: pega(/início de vigência a partir de\s+(\d{2}\/\d{2}\/\d{4})/i), dip: ""};
 }
+// Onda 3 · RESUMO DE DOCUMENTOS PARA CÁLCULO DE TEMPO DE CONTRIBUIÇÃO: a
+// contagem do INSS na DER, com o tempo, a carência considerada, o que falta e
+// os períodos especiais não enquadrados
+function lerResumoInssTexto(txt){
+  const t = String(txt||"");
+  if(!/RESUMO DE DOCUMENTOS PARA C[AÁ]LCULO DE TEMPO DE CONTRIBUI[CÇ][AÃ]O/i.test(t)) return null;
+  const pega = rx => (t.match(rx)||[])[1] || "";
+  const tempo = t.match(/TEMPO DE CONTRIBUI[CÇ][AÃ]O COMUM[^:\n]*:\s*(\d+)\s*ANOS?\s*(\d+)\s*MES(?:ES)?\s*(\d+)\s*DIAS?/i);
+  const car = pega(/TOTAL DE CAR[EÊ]NCIA CONSIDERADA\.*:\s*(\d+)/i) || pega(/TOTAL DE CAR[EÊ]NCIA EM CONTRIBUI[CÇ][OÕ]ES\.*:\s*(\d+)/i);
+  return {nb: soDig(pega(/NB\.+:\s*([\d.\-]{10,13})/)), especie: pega(/ESPECIE\.+:\s*(\d+)/i), der: pega(/DER\.+:\s*(\d{2}\/\d{2}\/\d{4})/),
+    tempo: tempo ? {anos:+tempo[1], meses:+tempo[2], dias:+tempo[3]} : null, carencia: car ? +car : null,
+    aCumprir: pega(/TEMPO A CUMPRIR\s*:\s*([^\n]+)/).trim(), naoEnquadrados: (t.match(/N[AÃ]O ENQUADRADO/gi)||[]).length};
+}
 // EXTRATO DE PAGAMENTO · "Histórico de Créditos": um bloco por benefício, com
 // DIB, DCB e DIP no cabeçalho e uma linha por crédito (competência, período,
 // valor líquido, meio e situação, previsão e data do pagamento)
@@ -19148,7 +19194,7 @@ function lidoDoAnexo(a, leitor, chave){
   return _leituraCache.get(k);
 }
 function fontesDoDossie(cliId){
-  const f = {caged:[], rais:[], laudos:[], cartas:[], extratos:[], processos:[]};
+  const f = {caged:[], rais:[], laudos:[], cartas:[], extratos:[], processos:[], resumos:[]};
   // o mesmo laudo vem sozinho e dentro da cópia do processo; a mesma carta, em dois PDFs
   const visto = new Set(), novo = k => !visto.has(k) && visto.add(k);
   for(const a of docsDoDossie(cliId).filter(x=>x.texto)){
@@ -19160,6 +19206,7 @@ function fontesDoDossie(cliId){
     if(/CONCESSÃO|Carta de Concessão/.test(t)){ const x = lidoDoAnexo(a, lerCartaTexto, "carta"); if(x && novo("carta|"+x.nb)) f.cartas.push({...x, anexo:a}); }
     if(/Histórico de Créditos/i.test(t)) lidoDoAnexo(a, lerExtratoPagTexto, "hiscre").forEach(x=>f.extratos.push({...x, anexo:a}));
     if(/PROTOCOLO DE REQUERIMENTO/.test(t)){ const x = lidoDoAnexo(a, lerProcessoTexto, "pa"); if(x) f.processos.push({...x, anexo:a}); }
+    if(/RESUMO DE DOCUMENTOS PARA C/i.test(t)){ const x = lidoDoAnexo(a, lerResumoInssTexto, "resumo"); if(x && novo(`resumo|${x.nb}|${x.der}`)) f.resumos.push({...x, anexo:a}); }
   }
   return f;
 }
@@ -19477,7 +19524,7 @@ const MAPA_PONTOS = {
 };
 // os fatos que o CRM já lê, cada um com o grupo da matriz e o estado:
 // crit (prazo ou impedimento), warn (atenção), ok (cumprido), info
-function fatosDoMapa(c, ks){
+function fatosDoMapa(c, ks, fam){
   const GRUPO = {recurso:"processo", exigencia:"processo", pericia:"processo", dcb:"processo", vinculos:"vinculo", nb:"beneficios", laudo:"laudo", decadencia:"carta"};
   const out = itensDoDossie(c, ks).map(x=>({...x, grupo:GRUPO[x.id]||"processo", prazo:["recurso","exigencia","pericia"].includes(x.id),
     est: x.id==="recurso"||x.id==="exigencia" ? "crit" : x.id==="decadencia" ? (x.alerta?"crit":"info")
@@ -19504,6 +19551,35 @@ function fatosDoMapa(c, ks){
       : `Período de graça até ${gr.fim}, ${gr.vencida ? "já vencido" : "em curso"} (${gr.base} meses a partir de ${gr.ultima})`});
   const cad = lei("cadunico");
   if(cad.cor==="ok" || cad.cor==="alerta") out.push({grupo:"cadunico", est: cad.cor==="ok" ? "ok" : "warn", fonte:"CRM", texto:cad.txt});
+  // onda 3 · a contagem do CNIS, o requisito da espécie e a contagem do INSS ao lado.
+  // A carência de 180 só decide na aposentadoria programável; na incapacidade
+  // ela se confere na DII, depois da última perda da qualidade (art. 27-A)
+  const ct = an && an.contagem, chave = fam && fam.chave;
+  if(ct){
+    const exig = chave==="tempo" ? 180 : 0, falta = exig - ct.carencia;
+    const contribui = an.agora && an.agora.tipo!=="sem";
+    out.push({grupo:"contrib", est: exig ? (falta<=0 ? "ok" : "warn") : "info", fonte:"CNIS",
+      texto:`Carência pelo CNIS: ${ct.carencia} contribuições`
+        + (exig ? (falta<=0 ? `, as ${exig} cumpridas` : `; faltam ${falta} para as ${exig}${contribui ? `, completas em ${competenciaMais(compHoje(), falta)} se contribuir todo mês` : ""}`) : "")
+        + `; tempo de ${ct.anos} anos e ${ct.meses} meses, contado por competência`
+        + (ct.foraMinimo ? `; ${ct.foraMinimo} ${ct.foraMinimo>1?"meses":"mês"} abaixo do mínimo fora da conta` : "")});
+  }
+  if(chave==="tempo" || chave==="rural"){
+    const sexo = sexoDe(c), nasc = dnIso(c.dn);
+    if(sexo && nasc){
+      const req = chave==="rural" ? (sexo==="F" ? 55 : 60) : IDADE_APOS[sexo], em = somarAnos(nasc, req);
+      out.push({grupo:"idade", est: em<=hoje() ? "ok" : "info", fonte:"Ficha",
+        texto:`${em<=hoje() ? "Completou" : "Completa"} ${req} anos em ${fmtBarra(em)}, a idade da aposentadoria por idade${chave==="rural" ? " rural" : ""}`});
+    }
+  }
+  for(const r of fontesDoDossie(c.id).resumos){
+    const nosso = ct && r.der ? mesesContadosAte(ct.periodos, isoBr(r.der).slice(0, 7)) : null;
+    const dif = nosso!=null && r.carencia!=null ? nosso - r.carencia : null, longe = dif!=null && Math.abs(dif) > 2;
+    out.push({grupo:"contrib", est: longe ? "warn" : "info", fonte:"Contagem do INSS", anexo:r.anexo.id,
+      texto:`Na DER de ${r.der || "data não lida"}, o INSS contou ${r.tempo ? `${r.tempo.anos} anos, ${r.tempo.meses} meses e ${r.tempo.dias} dias` : "tempo não lido"} e carência de ${r.carencia ?? "número não lido"}`
+        + (longe ? `; o CNIS de hoje dá ${nosso} até a mesma data, ${Math.abs(dif)} ${dif>0 ? "a mais" : "a menos"}: conferir os períodos que ficaram fora` : "")
+        + (r.naoEnquadrados ? `; ${r.naoEnquadrados} ${r.naoEnquadrados>1 ? "períodos especiais não enquadrados" : "período especial não enquadrado"}` : "")});
+  }
   return out;
 }
 const _mapaLente = new Map(), _mapaAberto = new Map();
@@ -19515,7 +19591,7 @@ const MAPA_ORDEM = {crit:0, warn:1, pend:2, ok:3, info:4};
 function ramosDoMapa(c, ks, fam){
   const f = MAPA_FUNIL[fam.chave] || {D:"", A:""};
   const usa = new Set(`${f.D} ${f.A}`.split(/\s+/).filter(Boolean));
-  const fatos = fatosDoMapa(c, ks).sort((a,b)=>MAPA_ORDEM[a.est]-MAPA_ORDEM[b.est]);
+  const fatos = fatosDoMapa(c, ks, fam).sort((a,b)=>MAPA_ORDEM[a.est]-MAPA_ORDEM[b.est]);
   const pior = fs => fs.length ? fs[0].est : "info";
   const t = triagemDe(c), usados = new Set(), ramos = [];
   const prazos = fatos.filter(x=>x.prazo);
@@ -19606,6 +19682,11 @@ function mapaParaAnalise(cliId){
   const txt = `Mapa do dossiê, ${fam.rot}.\n` + ramosDoMapa(c, ks, fam).ramos.map(r=>`${r.rot} (${EST[r.est]}): `
     + (r.fatos.length ? r.fatos.map(x=>x.texto).join("; ") : "sem fato no dossiê") + (r.resp && r.resp.nota ? `. Anotação: ${r.resp.nota}` : "") + ".").join("\n");
   adAbrir = true; adVisivel.add(cliId); irSubCad("direito");
+  const ct = ((cnisDe(c)||{}).analise||{}).contagem;
+  const ul = fontesDoDossie(cliId).laudos.slice().sort((a,b)=>isoBr(b.exame).localeCompare(isoBr(a.exame)))[0];
+  const vazio = (id, v) => { const e = document.getElementById(id); if(e && !e.value && v) e.value = v; };
+  if(ct){ vazio("ad-f-carencia", `${ct.carencia} contribuições (CNIS, contagem do CRM)`); vazio("ad-f-tempo", `${ct.anos} anos e ${ct.meses} meses (CNIS, por competência)`); }
+  if(ul && ul.did) vazio("ad-f-did", isoBr(ul.did));
   const el = document.getElementById("ad-contexto");
   if(el){ el.value = (el.value ? el.value + "\n" : "") + txt; el.focus(); }
 }
@@ -19667,6 +19748,8 @@ function caixaApos(cli){
      : (!sexo && dnIso(cli.dn) && !temIdadeManual)
        ? `<div class="apos-nota">Não consegui deduzir pelo nome se é
           <span class="apos-sexo">${botoesSexo}</span></div>` : ""}
+    ${(ct=>ct && cli.aposentado!==true ? `<div class="apos-nota apos-carencia">Carência pelo CNIS: <b>${ct.carencia} de 180</b> contribuições${
+      ct.carencia>=180 ? ", cumprida" : `; faltam ${180-ct.carencia}`}. Tempo de ${ct.anos} anos e ${ct.meses} meses, contado por competência.</div>` : "")(((cnisDe(cli)||{}).analise||{}).contagem)}
     <div id="apos-form"></div>
   </div>`;
 }
