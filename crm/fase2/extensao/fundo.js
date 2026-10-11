@@ -230,6 +230,9 @@ async function rodarPrazos() {
         for (let t = 0; t < 10 * 60000; t += 5000) {
           await pausa(5000);
           if ((await chrome.storage.local.get([chave]))[chave] !== antes) { r = { ok: 'feito' }; break; }
+          // sessão vencida: o PJe manda o Painel para o login e a retomada nunca chega
+          const tab = aba && await chrome.tabs.get(aba.id).catch(() => null);
+          if (tab && /sso\.|auth\/realms|login\.seam/i.test(tab.url || '')) { r = { erro: 'a sessão caiu (tela de login) — entre de novo e clique outra vez' }; break; }
         }
       }
       return { rotulo, ...r };
