@@ -93,4 +93,225 @@ const RAIS_TEXTO = [
 // proporcional ao texto — o bastante para palavrasDoPdf e linhasDoPdf
 const itensDeLinhas = (linhas, p = 1) => linhas.map((t, i) => ({ t, x: 30, y: 60 + i * 14, w: t.length * 5, p }));
 
-module.exports = { CAGED_TEXTO, RAIS_TEXTO, itensDeLinhas };
+// ── Onda 2 · laudo, carta de concessão, extrato de pagamento e cópia do
+// processo. Os casos de layout vistos nos documentos reais em 10.10.2026:
+//   laudo da PMF · os rótulos e os valores na mesma linha no quadro da
+//           Conclusão; a data do exame por extenso ("CIDADE - UF, 11 de Junho
+//           de 2025."); o CID do médico assistente na história clínica, antes
+//           do CID Principal.
+//   laudo do SABI · os valores UMA LINHA ACIMA dos rótulos (a DCB junto do nome
+//           do benefício, acima de "Cessação do Benefício:"; a data do exame
+//           abaixo da linha do "Sexo:"); página de perícia sem nenhum valor.
+//   carta · a de hoje (rótulos em cima, valores em baixo) e a antiga ("Carta de
+//           Concessão / Memória de Cálculo", os dados num parágrafo).
+//   cópia do processo · a data do despacho quebrada no meio ("16/05" e "/2025"
+//           em linhas seguidas); despachos de mais de uma tarefa; a comunicação
+//           de decisão com a data da EMISSÃO da cópia, não da decisão.
+const MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+const porExtenso = br => { const [d, m, a] = br.split("/"); return `${+d} de ${MESES[+m - 1]} de ${a}`; };
+const AUT = ["Você pode conferir a autenticidade do documento em https://meu.inss.gov.br/#", "/autenticidade com o código abaixo", "1234567ABCDE12"];
+
+const laudoPmf = ({ nb, exame, did, dii, dcb }) => [
+  "PERÍCIA MÉDICA FEDERAL",
+  "Perícia Médica de Benefício de Incapacidade",
+  "Avaliação Médico Pericial BI - Perícia de Prorrogação",
+  "Dados Cadastrais",
+  `Protocolo INSS: 123456789 Protocolo PMF: 987654321 Espécie/NB: --/${nb}`,
+  "Nome do Requerente: AURELIA FICTA DE SOUZA",
+  "Nome Social:",
+  "Data de Nascimento: 14/03/1962 - 64 anos",
+  "NIT: 123.45678.90-1 CPF: 529.982.247-25",
+  "História Clínica",
+  "Costureira autônoma. Dor lombar irradiada, declaração do médico assistente com CID:M545, datada de 02/09/2026.",
+  "Diagnóstico",
+  "CIDs",
+  "CID Principal M51.1 - Transtornos de discos lombares com radiculopatia",
+  "CID Secundário Não existe CID Secundário",
+  `${exame} 08:50 Página 1 de 3`,
+  "Avaliado: AURELIA FICTA DE SOUZA",
+  "Capacidade Laborativa",
+  "X SIM NÃO",
+  "Houve/Há comprovação da incapacidade?",
+  "Considerações Médico Periciais: Incapaz",
+  "Data do Início da Doença (DID)",
+  did,
+  "DID",
+  "Data do Início da Incapacidade (DII)",
+  `DII ${dii}`,
+  "Classificação da Incapacidade",
+  "Tipo de Grau de Incapacidade Total e temporária",
+  `Data de Cessação do Benefício (DCB) ${dcb}`,
+  "Conclusão",
+  "Dados Técnicos",
+  "CID Principal M51.1 - Transtornos de discos lombares com radiculopatia",
+  "Doença isenta de carência? Não",
+  "Capacidade Laborativa Houve comprovação da incapacidade",
+  `DID ${did}`,
+  `DII ${dii}`,
+  "Total e temporária",
+  `DCB ${dcb}`,
+  "Nexo Técnico Não",
+  "Perito Médico",
+  "CADMED 1234567",
+  `CIDADE INVENTADA - SP, ${porExtenso(exame)}.`,
+  ...AUT,
+  `${exame} 08:50 Página 2 de 3`,
+].join("\n");
+
+const LAUDO_SABI_TEXTO = [
+  "INSS - INSTITUTO NACIONAL DO SEGURO SOCIAL",
+  "SABI - Sistema de Administração de Benefícios por Incapacidade",
+  "Laudo Médico",
+  "Requerente: AURELIA FICTA DE SOUZA NB: 6001234567",
+  "Sexo: Feminino Nasc: 14/03/1962 Nº Requer: 123456789",
+  "123456789 26/03/2019",
+  "Est. Civil: RG: Emissão: Dt Exame:",
+  "Ocupação: Ordem: 2.0",
+  "CADMED: 7654321",
+  "Benefício: Início da Doença: 06/03/2019",
+  "Auxílio - Doença 28/07/2019",
+  "Cessação do Benefício:",
+  "História: Início da Incapacidade: 06/03/2019",
+  "Ax1 - costureira; BI anterior; refere dor lombar a CID: M545",
+  "irradiada; atestado do médico assistente, CID: M51, pede 90 dias",
+  "Considerações:",
+  "Resultado: Existe incapacidade laborativa.",
+  "Exame Físico:",
+  "Lasègue positivo à direita.",
+  "Ac do Trabalho: Não Reab. Profissional: Não",
+  "Espécie de Nexo: Sem Nexo",
+  "Isenção de Carência: Não",
+  "Auxílio Acidente: Não Apos. por Invalidez: Não",
+  "Vistoria Técnica:",
+  "O INSS poderá rever a qualquer tempo as informações constantes neste extrato, conforme art. 19, § 3° do Decreto 3.048/99.",
+  "26/03/2019 23:33 Página 1 de 2",
+  "INSS - INSTITUTO NACIONAL DO SEGURO SOCIAL",
+  "SABI - Sistema de Administração de Benefícios por Incapacidade",
+  "Laudo Médico",
+  "Requerente: AURELIA FICTA DE SOUZA NB: 6001234567",
+  "Sexo: Feminino Nasc: 14/03/1962 Nº Requer: 123456780",
+  "123456789 14/01/2019",
+  "Est. Civil: RG: Emissão: Dt Exame:",
+  "Ocupação: Ordem: 1.0",
+  "Benefício: Início da Doença:",
+  "Auxílio - Doença",
+  "Cessação do",
+  "Benefício:",
+  "História:",
+  "Início da Incapacidade:",
+  "Ax1 - sem condição de segurada; refere dor lombar",
+  "CID:",
+  "Considerações:",
+  "Resultado:",
+  "O INSS poderá rever a qualquer tempo as informações constantes neste extrato, conforme art. 19, § 3° do Decreto 3.048/99.",
+  "14/01/2019 16:00 Página 2 de 2",
+].join("\n");
+
+const cartaNova = ({ nb, der, concessao, dib, dip, rmi }) => [
+  "Instituto Nacional do Seguro Social",
+  "07/10/2026 11:03:22",
+  "CARTA DE",
+  "CONCESSÃO",
+  "TITULAR: AURELIA FICTA DE SOUZA",
+  "CPF: 529.982.247-25",
+  "Comunicamos que foi concedido seu benefício:",
+  "APOSENTADORIA POR IDADE",
+  "NÚMERO DO BENEFÍCIO VALOR DO BENEFÍCIO*",
+  `${nb} R$ ${rmi}`,
+  "Solicitado em Concedido em",
+  "DATA DE PAGAMENTO",
+  `${der} ${concessao}`,
+  "2° dia útil do mês **",
+  "Início do benefício Início do pagamento",
+  `${dib} ${dip}`,
+  "Local de Pagamento",
+  "DESISTÊNCIA DO BENEFÍCIO Banco: BANCO FICTICIO",
+  "1 / 3",
+  "Instituto Nacional do Seguro Social",
+  "REGRAS DE",
+  "DIREITO AO BENEFÍCIO",
+  "Valor do Benefício Regra",
+  "Artigo 18 da EC 103/2019 - Idade Mínima + Tempo de Contribuição",
+].join("\n");
+
+const CARTA_ANTIGA_TEXTO = [
+  "Página 1 de 2",
+  "INSS - INSTITUTO NACIONAL DO SEGURO SOCIAL",
+  "Carta de Concessão / Memória de Cálculo do Benefício",
+  "30/01/2026 10:57:12",
+  "Nome: AURELIA FICTA DE SOUZA",
+  "Nit: 1234567890-1",
+  "Aps: 21.0.22.999 - AGÊNCIA DA PREVIDÊNCIA SOCIAL CIDADE INVENTADA",
+  "Número do Benefício: 180123456-0",
+  "Data de Concessão do Benefício: 20/10/2016",
+  "Comunicamos que lhe foi concedido APOSENTADORIA POR IDADE (41) número 180123456-0",
+  "requerido em 20/10/2016 com renda mensal de R$ 1.181,28 , calculada conforme abaixo, com início de vigência a partir de",
+  "17/04/2016 .",
+  "Dados do Pagamento do Benefício",
+  "Seq. Data Salário Índice Sal. Corrigido Observação",
+  "001 03/2016 3.131,64 1,0018 3.137,27",
+].join("\n");
+
+const extratoPag = ({ nb, dib, dip, credito }) => [
+  "Página 1 de 1",
+  "INSS - INSTITUTO NACIONAL DO SEGURO SOCIAL",
+  "Histórico de Créditos",
+  "08/10/2026 08:10:35",
+  "Identificação do Filiado",
+  "NIT: 123.45678.90-1 CPF: 529.982.247-25 Data de Nascimento: 14/03/1962",
+  "Nome: AURELIA FICTA DE SOUZA",
+  "Créditos do Benefício",
+  `NB: ${nb}`,
+  "Espécie: 41 - APOSENTADORIA POR IDADE",
+  "APS: 21022999 - AGÊNCIA DA PREVIDÊNCIA SOCIAL CIDADE INVENTADA",
+  `Data de Início do Benefício (DIB): ${dib} Data de Cessação do Benefício (DCB):`,
+  `Data de Início do Pagamento (DIP): ${dip} MR: R$ 1.518,00`,
+  "Valor Previsão do Data do Crédito",
+  "Competência Período Meio de Pagamento Status Isento IR",
+  "Líquido Pagamento Pagamento Invalidado",
+  `${credito.comp} ${dip} R$ 1.212,00 CMG - CARTAO Pago ${credito.previsao} ${credito.pagoEm} Não Sim`,
+  "a MAGNETICO",
+  credito.fimPeriodo,
+  "Banco: 999 - BANCO FICTICIO OP: 12345 - CIDADE INVENTADA SP Ocorrência: Pagamento efetivado",
+].join("\n");
+
+// cópia do processo: cabeçalho da tarefa e despachos ([data de envio, linhas])
+const processo = ({ protocolo, servico, status, entrada, nb, despachos, comunicacao }) => [
+  "Página 1 de 3",
+  "INSS - Instituto Nacional do Seguro Social",
+  "PROTOCOLO DE REQUERIMENTO",
+  "Portal de Atendimento INSS",
+  protocolo,
+  "Informações da Tarefa",
+  `Data de entrada: ${entrada} - Central de Serviços -`,
+  "Dados Básicos",
+  "Serviço Status Prioridade",
+  `${servico} ${status} Normal`,
+  "Dados Informados Pelo Solicitante",
+  "NB",
+  nb,
+  "Emitido em: 09/10/2026 08:51",
+  ...despachos.flatMap(([em, linhas], i) => [`Página ${i + 2} de 3`, `Despacho (${900000000 + i})`, `Enviado em ${em} 10:44:11`, ...linhas, "Emitido em: 09/10/2026 08:51"]),
+  ...(comunicacao || []),
+].join("\n");
+const EXIGENCIA_AGENDAR = ["Prezado(a) Sr.(a),",
+  "Para dar continuidade ao seu pedido de Benefício por Incapacidade, é necessário agendar a perícia médica .",
+  "No pedido solicitado, vá em 'Cumprir Exigência' e selecione 'Agendar';",
+  "Atenção! O agendamento deve ser feito em até 30 (trinta) dias. Depois desse prazo, o pedido será concluído",
+  "por desistência."];
+// a data agendada quebra no meio, como no documento real
+const agendamento = (solicitacao, data, hora) => {
+  const [dm, a] = [data.slice(0, 5), data.slice(6)];
+  return [`Agendamento de perícia realizado com sucesso (protocolo: 3344556677 - data e hora da solicitação: ${solicitacao} 12:53 - data e hora agendada: ${dm}`,
+    `/${a} ${hora} (horário de Brasília) - unidade: (21022999) -`, "AGÊNCIA DA PREVIDÊNCIA SOCIAL CIDADE INVENTADA)"];
+};
+const comunicacaoIndeferimento = (nbFmt, mantido) => ["Página 1 de 1", "INSTITUTO NACIONAL DO SEGURO SOCIAL", "COMUNICAÇÃO DE DECISÃO",
+  "NIT: 123.45678.90-1 CPF: 529.982.247-25", `Número do Benefício: ${nbFmt} Espécie: 31`, "Ao Sr. (a): AURELIA FICTA DE SOUZA",
+  "Assunto: Requerimento de Pedido de Prorrogação.", "Decisão: INDEFERIDO.", "Motivo: Não constatação da incapacidade laborativa.",
+  "Fundamentação Legal:", "A perícia médica não reconheceu a sua incapacidade para o trabalho ou atividade habitual e o seu benefício não foi",
+  "prorrogado.", `O pagamento do benefício será mantido até ${mantido}.`,
+  "Se não concordar com a decisão, é possível entrar com Recurso, em até 30 dias, após receber este comunicado. Para",
+  "isso, acesse o Meu INSS ou ligue para a Central 135.", "Data: 9 de outubro de 2026."];
+
+module.exports = { CAGED_TEXTO, RAIS_TEXTO, itensDeLinhas, laudoPmf, LAUDO_SABI_TEXTO, cartaNova, CARTA_ANTIGA_TEXTO, extratoPag,
+  processo, EXIGENCIA_AGENDAR, agendamento, comunicacaoIndeferimento };
