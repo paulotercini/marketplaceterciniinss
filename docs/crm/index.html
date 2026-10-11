@@ -8512,7 +8512,14 @@ async function lerPdfPorPagina(blob){
   const lib = await carregarPdfJs();
   const doc = await lib.getDocument({data:new Uint8Array(await blob.arrayBuffer()), isEvalSupported:false}).promise;
   const textos = [], imagem = [];
+  // F193 · TETO POR DOCUMENTO (11.10.2026: a importação travou a aba por
+  // horas num processo enorme). Lê no máximo 2 minutos por PDF e devolve a
+  // vez à página a cada folha; o arquivo continua inteiro no bucket, só o
+  // texto das folhas além do teto fica sem ler.
+  const t0 = Date.now();
   for(let p=1; p<=doc.numPages; p++){
+    if(Date.now()-t0 > 120000) break;
+    await new Promise(r=>setTimeout(r,0));
     const pag = await doc.getPage(p);
     const vp = pag.getViewport({scale:1});
     const linhas = new Map();
@@ -8549,7 +8556,10 @@ async function gravarDocsDaColeta(docs){
       if(!an && d.momento && !/T00:00$/.test(d.momento))
         [an] = await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem=eq.pje&origem_id=like.${encodeURIComponent(`*:${d.momento}*`)}&order=criado_em.asc&limit=1`) || [];
       let lido = { tipo:null, tamanho:null, texto:null };
-      try{ lido = await textoDoDocumento(d.caminho); }catch(e){ console.warn("texto do documento:", d.caminho, e); }
+      // o worker do pdf.js que não responde não pode prender a fila inteira
+      try{ lido = await Promise.race([textoDoDocumento(d.caminho),
+        new Promise((_,erro)=>setTimeout(()=>erro(new Error("leitura passou de 3 min")), 180000))]); }
+      catch(e){ console.warn("texto do documento:", d.caminho, e); }
       await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=minimal"},
         body:JSON.stringify({caso_id:d.caso_id, cliente_id:d.cliente_id, autor_id:eu.id,
           nome:d.nome, caminho:d.caminho, tipo:lido.tipo, tamanho:lido.tamanho,
