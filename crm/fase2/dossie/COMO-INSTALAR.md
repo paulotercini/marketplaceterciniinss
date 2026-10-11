@@ -28,8 +28,10 @@ cada PDF também é anexado ao cliente (origem `dossie`).
 ## Usar
 
 1. **Meu INSS** (`meu.inss.gov.br`, logado como o cliente) → ícone → **Baixar tudo desta aba**.
-   Desce: CNIS completo, resumido e ano civil · declaração de beneficiário · carta de concessão e laudo
-   de cada benefício · extrato de pagamento dos últimos 12 meses · **cópia integral de todos os pedidos**
+   Desce: CNIS completo, resumido e ano civil · declaração de beneficiário · certificado da pessoa com
+   deficiência (quem tem BPC/aposentadoria PCD) · declaração de atividade · carta de concessão, laudo
+   e extrato de informações do benefício (dossiê, com todas as opções) de cada benefício · CTC (quem já
+   pediu uma) · extrato de pagamento dos últimos 12 meses · **cópia integral de todos os pedidos**
    (não só os do ano) · PPP eletrônico de cada vínculo · CAT.
 2. **e-Recursos** (`consultaprocessos.inss.gov.br`) → mesmo botão → todos os documentos de cada recurso.
    Rode o Meu INSS antes: é dele que vem o CPF que separa os recursos do cliente quando a lista é do
@@ -68,3 +70,12 @@ O progresso aparece na faixa azul no rodapé da página; no fim ela diz o que ve
   pagamento, PPP e CAT.
 
 Testes: `node --test testes/regras.test.js`
+
+## O que o portal NÃO tem — na ficha do CRM (desde 0.5.1)
+
+Além dos PDFs (📎 Anexos), cada rodada grava em `clientes.dossie` o resumo do portal:
+o que baixou, o que o portal disse que **não existe** (sem CTC, sem CAT, "não possui
+deficiência", benefício sem laudo) e o que falhou. A ficha do cliente mostra isso na
+caixa **📂 Dossiê — o que os portais têm**, na mesma aba da aposentadoria provável.
+Precisa rodar `schema_dossie.sql` no Supabase uma vez; sem isso a faixa avisa
+"resumo no CRM: rode o schema_dossie.sql".

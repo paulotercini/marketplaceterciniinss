@@ -123,6 +123,16 @@ jobs:
           SENHA_PADRAO_MEUINSS: ${{ secrets.SENHA_PADRAO_MEUINSS }}
         run: python crm/fase2/migrar.py
 
+      # F189 · o rito de cada caso pelos dados (casos.conducao). Falha aqui não
+      # pode derrubar a sincronização: o próximo ciclo tenta de novo.
+      - name: Rito pelos dados (condução estratégica)
+        if: steps.seg.outputs.tem == 'true'
+        continue-on-error: true
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python crm/conducao.py
+
       # E4 · auditoria To Do × CRM (a rodada das 06h50 e o botão do CRM):
       # compara a leitura desta rodada com o banco e grava as diferenças em
       # todo_auditoria. O repositório é público, então o log só tem números;

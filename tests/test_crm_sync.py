@@ -192,3 +192,33 @@ def test_evento_nao_nasce_de_data_colada_no_cabecalho_do_bloco():
     # a data completa continua valendo
     ev = st.eventos_de("perícia marcada para 14/10/2026 às 9h", datetime.date(2026, 8, 12))
     assert ev and ev[0]["data"] == "2026-10-14"
+
+
+def test_data_de_lembrete_manifestacao_ou_atendimento_nao_vira_pericia():
+    # [10.10.2026] casos reais (textos fictícios no mesmo formato): a data do
+    # "verificar", da manifestação, do prazo, do atendimento ou do pagamento
+    # dos honorários periciais nascia como perícia agendada
+    import datetime
+    d = datetime.date(2026, 10, 1)
+    for txt in ["Aguardando a perícia. Ver o resultado em 12/10",
+                "Perícia desfavorável. Fazer manifestação em 15/10",
+                "Agendada a perícia médica de Auxílio-Acidente. Prazo 20/10",
+                "Foi agendada a perícia e agenda atendimento para o dia 03/10",
+                "Honorários periciais no valor de R$ 300,00. Verificar em 08/10",
+                "Pediu que a perícia seja agendada após o dia 25/10",
+                "Perícia médica foi realizada. Em 30/10",
+                "Avisar quando a perícia for marcada. Verificar em 05/11"]:
+        assert sync_todo.eventos_de(txt, d) == [], txt
+
+
+def test_pericia_agendada_de_verdade_continua_virando_evento():
+    import datetime
+    d = datetime.date(2026, 10, 1)
+    for txt, data in [("Perícia agendada para o dia 12/10/2026 às 14h30", "2026-10-12"),
+                      ("perícia em 15/10", "2026-10-15"),
+                      ("Perícia remarcada para o dia 20.10.2026 as 09:00", "2026-10-20"),
+                      ("Perícia em Matão agendada para o dia 22/10 às 07h40", "2026-10-22"),
+                      ("perícia de prorrogação foi agendada para o dia 27/10 às 10:00", "2026-10-27"),
+                      ("avaliação social para o dia 29/10/2026 às 13:00", "2026-10-29")]:
+        evs = sync_todo.eventos_de(txt, d)
+        assert evs and evs[0]["data"] == data, txt

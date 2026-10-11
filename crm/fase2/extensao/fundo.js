@@ -173,7 +173,7 @@ async function completarPje() {
   const janela = await chrome.windows.create({ url: lista[0].url, focused: false, state: 'normal', width: 1200, height: 900 });
   const tabId = janela.tabs[0].id;
   const lote = [];
-  let feitos = 0, falhas = 0;
+  let feitos = 0, falhas = 0, seguidas = 0, parou = null;
   const entregar = async () => {
     if (!lote.length) return;
     const l = lote.splice(0);
@@ -182,7 +182,7 @@ async function completarPje() {
   try {
     for (let i = 0; i < lista.length; i++) {
       const p = lista[i];
-      await chrome.storage.local.set({ completar_pje: { i: i + 1, total: lista.length, numero: p.numero, feitos, falhas } });
+      await chrome.storage.local.set({ completar_pje: { i: i + 1, total: lista.length, numero: p.numero, feitos, falhas, em: Date.now() } });
       try {
         if (i > 0) await chrome.tabs.update(tabId, { url: p.url });
         await esperarAba(tabId, 30000);
@@ -190,17 +190,21 @@ async function completarPje() {
         const res = await chrome.scripting.executeScript({ target: { tabId },
           func: () => window.crmRodar ? window.crmRodar(null, { completo: true }) : { erro: 'o coletor não subiu' } });
         const r = res && res[0] && res[0].result;
-        if (r && r.out) { lote.push(r.out); feitos++; } else { falhas++; console.warn('[CRM] PJe não completado:', p.numero, r && r.erro); }
+        if (r && r.out) { lote.push(r.out); feitos++; seguidas = 0; }
+        else { falhas++; seguidas++; console.warn('[CRM] PJe não completado:', p.numero, r && r.erro); }
         if (lote.length >= 5) await entregar();
-      } catch (e) { falhas++; console.warn('[CRM] PJe não completado:', p.numero, e.message); }
+      } catch (e) { falhas++; seguidas++; console.warn('[CRM] PJe não completado:', p.numero, e.message); }
+      // 5 seguidas é a sessão do PJe vencida (horas de rodada), não azar: insistir
+      // nos que faltam só gera falha. Para, e a rodada seguinte pula o que já foi
+      if (seguidas >= 5) { parou = `parou no processo ${i + 1} de ${lista.length}: o PJe não abre mais os processos — entre de novo no PJe e clique outra vez (o que já foi guardado é pulado)`; break; }
     }
     await entregar();
   } finally {
     clearInterval(pulso);
-    await chrome.storage.local.set({ completar_pje: { i: lista.length, total: lista.length, feitos, falhas, fim: new Date().toISOString() } });
+    await chrome.storage.local.set({ completar_pje: { i: lista.length, total: lista.length, feitos, falhas, parou, fim: new Date().toISOString() } });
     try { await chrome.windows.remove(janela.id); } catch (e) {}
   }
-  return { rotulo: 'PJe', ok: feitos, falhas };
+  return parou ? { rotulo: 'PJe', erro: parou, ok: feitos, falhas } : { rotulo: 'PJe', ok: feitos, falhas };
 }
 async function completarEproc() {
   const abas = await chrome.tabs.query({ url: DOMINIOS.eproc });
@@ -267,7 +271,7 @@ async function favoritosEsaj() {
   return { favoritos: fora };
 }
 
-// Vigia (1.17.0): enquanto houver aba do PAT ou do e-SAJ aberta, toca o portal
+// Vigia (1.17.0; PJe, eproc e e-Recursos na 1.17.2): enquanto houver aba do portal aberta, toca o portal
 // a cada 4 min para a sessão não cair por inatividade. Sem aba, nada — a
 // sessão não fica viva à toa. `fetch` do worker, e não injeção na aba, porque
 // com host_permissions o Chrome manda os cookies mesmo com a aba descartada
@@ -287,5 +291,35 @@ chrome.alarms.onAlarm.addListener(async a => {
     if (!(await chrome.tabs.query({ url: DOMINIOS[fonte] })).length) continue;
     try { await fetch(VIGIA[fonte], { credentials: 'include', cache: 'no-store' }); }
     catch (e) { console.warn('[vigia]', fonte, e.message); }
+  }
+  // F189 · PJe e eproc: o toque é no ENDEREÇO DA PRÓPRIA ABA (um por host). O
+  // eproc encerra a sessão com link sem assinatura (hash), e endereço fixo não
+  // tem hash; o da aba aberta tem, e é desta sessão. Durante o "completar
+  // processos" o PJe fica de fora: a janela de trabalho já o mantém ativo, e um
+  // pedido no meio atropela a conversa do JSF.
+  const { completar_pje } = await chrome.storage.local.get(['completar_pje']);
+  // rodada que morreu no meio não tem `fim`: só conta como rodando com progresso há menos de 15 min
+  const pjeRodando = completar_pje && !completar_pje.fim && Date.now() - (completar_pje.em || 0) < 15 * 60000;
+  for (const fonte of ['pje', 'eproc']) {
+    if (fonte === 'pje' && pjeRodando) continue;
+    const porHost = new Map();
+    for (const t of await chrome.tabs.query({ url: DOMINIOS[fonte] }))
+      if (t.url && !porHost.has(new URL(t.url).host)) porHost.set(new URL(t.url).host, t.url);
+    for (const url of porHost.values()) {
+      try { await fetch(url, { credentials: 'include', cache: 'no-store' }); }
+      catch (e) { console.warn('[vigia]', fonte, e.message); }
+    }
+  }
+  // e-Recursos: o login é um token na página (ifs_auth), não cookie — o toque
+  // sai de dentro da aba, na mesma API da coleta (o crachá cru, como em crps.js).
+  // shortcut: se o token vencer por tempo máximo, nenhum toque o renova
+  const [crps] = await chrome.tabs.query({ url: DOMINIOS.crps });
+  if (crps) {
+    try {
+      await chrome.scripting.executeScript({ target: { tabId: crps.id }, func: async () => {
+        const t = localStorage.getItem('ifs_auth');
+        if (t) await fetch('/api/v1/esisrec/', { credentials: 'include', headers: { Authorization: 'Bearer ' + t } });
+      } });
+    } catch (e) { console.warn('[vigia] crps', e.message); }
   }
 });

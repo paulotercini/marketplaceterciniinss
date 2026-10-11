@@ -130,10 +130,10 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
     const bl = [...document.querySelectorAll('.painel[data-p="2"] .timeline li.dia-bloco')];
     const lis = [...document.querySelectorAll('.painel[data-p="2"] .timeline li.tl-of')];
     return { blocos: bl.length, semZebra: bl.every(b => getComputedStyle(b).backgroundColor === "rgba(0, 0, 0, 0)"),
-      coluna: lis.length > 0 && lis.every(li => li.lastElementChild && li.lastElementChild.classList.contains("tl-fim")) };
+      coluna: lis.length > 0 && lis.every(li => !li.querySelector(".tl-sinal") || li.querySelector(".tl-barra .tl-sinal")) };
   });
   conf(`os dias do Caso completo não alternam fundo (${tl.blocos} dias)`, tl.blocos >= 2 && tl.semZebra);
-  conf("os botões de cada registro ficam numa coluna própria, no fim da linha", tl.coluna);
+  conf("os botões de cada registro ficam na barra de baixo do cartão, como na anotação", tl.coluna);
 
   // F139 · uma fonte só na ficha: a regra * {font-family:"Segoe UI"} do começo
   // do arquivo fixava a fonte em todo elemento e o tema não chegava neles
@@ -195,7 +195,7 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
   const sj = await p.evaluate(() => {
     const li = [...document.querySelectorAll('.painel[data-p="2"] .timeline li.tl-of')].find(l => /Certidão de Publicação/.test(l.textContent));
     const ic = li && li.querySelector(".av-fonte"), el = ic && ic.querySelector(".fonte-ic,.fonte-mono");
-    const autor = document.querySelector('.painel[data-p="2"] .timeline .quando .avatar:not(.av-fonte)');
+    const autor = document.querySelector('.painel[data-p="2"] .timeline .tl-cab .tl-av:not(.av-fonte)');
     return { rot: li && li.querySelector(".autor-nome").textContent, alt: el && (el.alt || el.title),
       w: ic && Math.round(ic.getBoundingClientRect().width), wa: autor && Math.round(autor.getBoundingClientRect().width),
       wi: el && el.classList.contains("fonte-ic") ? Math.round(el.getBoundingClientRect().width) : null };

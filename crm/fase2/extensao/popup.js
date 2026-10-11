@@ -97,7 +97,7 @@ document.getElementById('b-completo').onclick = () => {
 chrome.storage.local.get(['completar_pje'], ({ completar_pje: c }) => {
   if (!c) return;
   document.getElementById('q-completo').textContent = c.fim
-    ? `PJe completado em ${new Date(c.fim).toLocaleString('pt-BR')}: ${c.feitos} processo(s)${c.falhas ? `, ${c.falhas} falharam` : ''}`
+    ? `PJe ${c.parou ? 'interrompido' : 'completado'} em ${new Date(c.fim).toLocaleString('pt-BR')}: ${c.feitos} processo(s)${c.falhas ? `, ${c.falhas} falharam` : ''}${c.parou ? ` — ${c.parou}` : ''}`
     : `PJe: processo ${c.i} de ${c.total} (${c.numero || ''})…`;
 });
 document.getElementById('b-pat').onclick  = () => rodar('pat');
