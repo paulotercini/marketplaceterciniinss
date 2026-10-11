@@ -984,6 +984,15 @@
   .tri-dossie{margin:8px 0}
   .tri-dossie .apos-cx,.idf-dossie .apos-cx{max-width:none}
   .idf-dossie{grid-column:1/-1}
+  .dossie-acerto{border:1px solid var(--borda);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:13px}
+  .dossie-acerto ul{margin:6px 0 8px 16px;padding:0;line-height:1.5}
+  .dossie-fecho{color:var(--feito,#1C7C54);font-weight:500}
+  .dossie-fatos{list-style:none;margin:0;padding:0}
+  .dossie-fatos li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:8px 0;border-top:1px solid var(--borda);font-size:13.5px}
+  .dossie-fatos li:first-child{border-top:0}
+  .dossie-fatos li>span:first-child{flex:1 1 220px}
+  .dossie-orig{font-size:12px;color:var(--cinza-claro,#6b7280)}
+  .tri-dossie .ad-q-dossie{margin-top:8px}
   .apos-cab{display:flex;align-items:center;gap:10px;margin-bottom:6px}
   .apos-cab strong{font-size:13px;color:var(--verde);flex:1}
   .apos-mais{border:1px solid #9CC7A4;background:var(--branco);color:var(--verde);border-radius:8px;
@@ -13742,7 +13751,9 @@ async function abrirFicha(cliId){
     D._andsFicha = ands;
     D._ficha = { cliId, creds, vincs };   // o que a pintura usa além do D global
     pintarFicha();
-    lerTextoDoDossie(cliId);               // onda 0 · em segundo plano, sem esperar
+    // ondas 0 e 1 · em segundo plano, sem esperar: o texto do dossiê e,
+    // depois, o CNIS e a declaração pelos leitores do CRM
+    lerTextoDoDossie(cliId).then(()=>lerLeitoresDoDossie(cliId)).catch(e=>console.warn("dossiê:", e));
   }catch(e){
     console.error("abrirFicha:", e);
     const det=document.getElementById("detalhe");
@@ -14663,8 +14674,16 @@ function triagemLeitura(passo, c, ks){
     const an = g.analise;
     if(!an) return {cor:"neutro", txt:`CNIS lido em ${fmt(g.em)}: ${g.paginas} página(s). Insira de novo para a conferência automática.`};
     const probs = [];
-    if(an.abertos.length)
-      probs.push(`${an.abertos.length} vínculo(s) sem data fim: ` + an.abertos.map(v=>`${v.origem||"?"} (${v.tipo}, desde ${v.inicio||"?"}${v.ultRemun?`, última remuneração ${v.ultRemun}`:""})`).join("; ") + ".");
+    // onda 1 · o vínculo sem saída termina na última remuneração; o em curso
+    // (remuneração recente) não é problema, e o CAGED ou a RAIS do dossiê,
+    // quando têm o desligamento, já dizem a data que falta
+    const semSaida = vinculosSemSaida(g).filter(v=>!v.emCurso);
+    if(semSaida.length){
+      const f = fontesDoDossie(c.id);
+      probs.push(`${semSaida.length} vínculo(s) sem data de saída, encerrado(s) pelo CRM no último dia do mês da última remuneração até o acerto: `
+        + semSaida.map(v=>{ const fe = fechoDoVinculo(v, f);
+          return `${v.origem||"?"} (${v.tipo}, desde ${v.inicio||"?"}, ${v.fimPresumido?`fim presumido em ${v.fimPresumido}`:"sem remuneração informada"}${fe?`; ${fe.fonte} do dossiê mostra desligamento em ${fe.data}`:""})`; }).join("; ") + ".");
+    }
     if(an.errosEmp.length)
       probs.push(`Erro no cadastro do empregador: ` + [...new Set(an.errosEmp.map(e=>`${e.cod} em ${e.origem||"?"}`))].join("; ") + ".");
     if(an.abaixo.length)
@@ -15215,10 +15234,14 @@ function lerVinculosCnis(itens){
 
     // período de benefício: o CNIS traz o benefício como se fosse vínculo, e
     // é dele que sai a história de B31 sem precisar da Declaração
-    const b = resto.match(/^(\d{9,11})\s+Benefício\s+(\d+)\s*-\s*(.+?)\s+(\d{2}\/\d{2}\/\d{4})(?:\s+(\d{2}\/\d{2}\/\d{4}))?(?:\s+(\d+)\s*-\s*([A-ZÇÃÕÁÉÍÓÚ]+))?\s*$/);
+    // [onda 1 do dossiê, 10.10.2026] o benefício INDEFERIDO vem sem data
+    // nenhuma ("42 - APOSENTADORIA POR TEMPO DE 99 - INDEFERIDO"): as datas são
+    // opcionais, e o indeferido não fica "em aberto" nem conta como ativo
+    const b = resto.match(/^(\d{9,11})\s+Benefício\s+(\d+)\s*-\s*(.+?)(?:\s+(\d{2}\/\d{2}\/\d{4}))?(?:\s+(\d{2}\/\d{2}\/\d{4}))?(?:\s+(\d+)\s*-\s*([A-ZÇÃÕÁÉÍÓÚ]+))?\s*$/);
     if(b){
+      const situacao = b[7] || SIT_BEN[b[6]] || "";
       out.push({seq:+seq, nit, tipo:"Benefício", especie:b[2], origem:b[3].trim(),
-        nb:b[1], inicio:b[4], fim:b[5]||"", situacao:b[7] || SIT_BEN[b[6]] || "", aberto:!b[5]});
+        nb:b[1], inicio:b[4]||"", fim:b[5]||"", situacao, aberto:!b[5] && !!b[4] && !/INDEFER|CESSAD/i.test(situacao)});
       return;
     }
     // vínculo comum: acha o tipo de filiado, o mais longo que casar
@@ -15479,8 +15502,12 @@ const chaveComp = c => String(c||"").split("/").reverse().join("-");   // MM/AAA
 function analisarCnis(lido, ref){
   const vs = (lido.linhaDoTempo||[]).filter(v=>v.tipo!=="Benefício");
   const bens = (lido.linhaDoTempo||[]).filter(v=>v.tipo==="Benefício");
-  const abertos = vs.filter(v=>v.aberto).map(v=>({tipo:v.tipo, origem:v.origem, inicio:v.inicio,
-    ultRemun: (v.comps||[]).map(x=>x.c).sort((a,b)=>chaveComp(a).localeCompare(chaveComp(b))).pop()||v.ultRemun||""}));
+  // onda 1 · o vínculo sem data de saída termina no último dia do mês da
+  // última remuneração (vinculosSemSaida); aqui ele leva o fim presumido junto
+  const abertos = vs.filter(v=>v.aberto).map(v=>{
+    const ultRemun = (v.comps||[]).map(x=>x.c).sort((a,b)=>chaveComp(a).localeCompare(chaveComp(b))).pop()||v.ultRemun||"";
+    return {tipo:v.tipo, origem:v.origem, inicio:v.inicio, codigo:v.codigo||"", ultRemun, fimPresumido:fimDoMes(ultRemun)};
+  });
   const errosEmp = [];
   vs.forEach(v=>(v.indicadores||[]).forEach(i=>{ if(RX_ERRO_EMPREGADOR.test(i)) errosEmp.push({cod:i, origem:v.origem}); }));
   // competência abaixo do mínimo: empregado só a partir de 11/2019 (EC 103);
@@ -15503,13 +15530,19 @@ function analisarCnis(lido, ref){
   }
   const tipoCurto = t => /Facultativo/.test(t) ? "facultativo" : /Individual|Empregador/.test(t) ? "ci"
                        : /Segurado Especial/.test(t) ? "especial" : "empregado";
-  const abertoEmp = abertos.find(v=>TIPO_REMUN.test(v.tipo));
+  // [onda 1, 10.10.2026] o vínculo hoje é o aberto com remuneração nos três
+  // meses anteriores, e o mais recente deles; o primeiro aberto da lista podia
+  // ser um vínculo de 2002 que o empregador nunca fechou
+  const d3 = new Date((ref||hoje()) + "T12:00:00"); d3.setMonth(d3.getMonth()-3);
+  const recente = `${String(d3.getMonth()+1).padStart(2,"0")}/${d3.getFullYear()}`;
+  const abertoEmp = abertos.filter(v=>TIPO_REMUN.test(v.tipo) && v.ultRemun && chaveComp(v.ultRemun) >= chaveComp(recente))
+    .sort((a,b)=>chaveComp(b.ultRemun).localeCompare(chaveComp(a.ultRemun)))[0];
   const noMes = vs.find(v=>(v.comps||[]).some(cp=>cp.c===mesAnt));
   const agora = abertoEmp
     ? {tipo:"empregado", origem:abertoEmp.origem, desde:abertoEmp.inicio, ultRemun:abertoEmp.ultRemun, aberto:true}
     : noMes ? {tipo:tipoCurto(noMes.tipo), origem:noMes.origem, comp:mesAnt}
     : {tipo:"sem", ultima};
-  const benefAtivos = bens.filter(v=>!v.fim || /ATIVO/i.test(v.situacao||""))
+  const benefAtivos = bens.filter(v=>!/INDEFER|CESSAD|SUSPENS/i.test(v.situacao||"") && (!v.fim || /ATIVO/i.test(v.situacao||"")))
     .map(v=>({especie:v.especie, origem:v.origem, nb:v.nb, inicio:v.inicio, situacao:v.situacao}));
   return {abertos, errosEmp, abaixo, mesAnt, agora, benefAtivos,
     qtComps: vs.reduce((n,v)=>n+((v.comps||[]).length),0)};
@@ -15518,14 +15551,17 @@ function analisarCnis(lido, ref){
 // A leitura grava o extrato (o arquivo e o que foi lido) e as respostas
 // PRÉ-PRONTAS dos passos que o CNIS responde. Quem atende confirma passo a
 // passo; até lá o estado fica marcado como automático.
-async function gravarCnisLido(cliId, lido, anexo){
+async function gravarCnisLido(cliId, lido, anexo, opc={}){
   const c = D.cliPorId.get(cliId); if(!c) return;
   const t = {...triagemDe(c)};
   const an = analisarCnis(lido, hoje());
   t.pdf = {...(t.pdf||{}), cnis:{em:hoje(), quem:eu.id, paginas:lido.paginas,
     qtVinculos:lido.vinculos, nits:lido.nits||[],
     indicadores:lido.indicadores.map(i=>({codigo:i.codigo, descricao:i.descricao, ocorrencias:i.ocorrencias})),
-    vinculos:(lido.linhaDoTempo||[]).map(({comps, ...v})=>v),
+    // a última remuneração fica no vínculo mesmo quando só as competências a
+    // trazem: é dela que sai o fim presumido do vínculo sem data de saída
+    vinculos:(lido.linhaDoTempo||[]).map(({comps, ...v})=>({...v,
+      ultRemun: v.ultRemun || (comps||[]).map(x=>x.c).sort((a,b)=>chaveComp(a).localeCompare(chaveComp(b))).pop() || ""})),
     analise:an,
     anexo_id: anexo ? anexo.id : ((t.pdf||{}).cnis||{}).anexo_id || null,
     caminho:  anexo ? anexo.caminho : ((t.pdf||{}).cnis||{}).caminho || null}};
@@ -15566,15 +15602,15 @@ async function gravarCnisLido(cliId, lido, anexo){
       }catch(e2){}
     }
   }
-  await lancarNoCaso(cliId, `CNIS inserido no CRM: ${lido.paginas} página(s), ${lido.vinculos} vínculo(s), `
+  await lancarNoCaso(cliId, `${opc.dossie?"CNIS do dossiê lido pelo CRM":"CNIS inserido no CRM"}: ${lido.paginas} página(s), ${lido.vinculos} vínculo(s), `
     + (lido.indicadores.length
         ? `indicadores ${lido.indicadores.map(i=>i.codigo+(i.ocorrencias?`(${i.ocorrencias})`:"")).join(", ")}.`
         : "nenhum indicador na legenda."));
   if(clienteAberto===cliId) repintarFicha();
-  aviso(`CNIS inserido — ${lido.indicadores.length} indicador(es), ${lido.vinculos} vínculo(s)${
+  aviso(`${opc.dossie?"CNIS do dossiê lido":"CNIS inserido"} — ${lido.indicadores.length} indicador(es), ${lido.vinculos} vínculo(s)${
     preencheu?` · mãe/NIT preenchidos na Identificação`:""} ✔`);
 }
-async function gravarDeclaracaoLida(cliId, lido){
+async function gravarDeclaracaoLida(cliId, lido, opc={}){
   const c = D.cliPorId.get(cliId); if(!c) return;
   const t = {...triagemDe(c)};
   const linhas = lido.beneficios.map(b=>
@@ -15589,7 +15625,8 @@ async function gravarDeclaracaoLida(cliId, lido){
   t.beneficio = {...(t.beneficio||{}), nota: juntarNota((t.beneficio||{}).nota, texto),
                  em:hoje(), quem:eu.id};
   t.pdf = {...(t.pdf||{}), declaracao:{em:hoje(), quem:eu.id,
-    beneficios:lido.beneficios.map(b=>({nb:b.nb, situacao:b.situacao}))}};
+    beneficios:lido.beneficios.map(b=>({nb:b.nb, situacao:b.situacao})),
+    ...(opc.auto ? {auto:true, anexo_id:(opc.anexo||{}).id||null} : {})}};
   if(!await salvarTriagem(cliId, t)) return aviso("Li o PDF, mas não consegui guardar");
 
   // o NB entra no caso quando o caso ainda não tem NB nenhum, e só então
@@ -15597,7 +15634,9 @@ async function gravarDeclaracaoLida(cliId, lido){
   const sel = casoSel && ks.find(x=>x.id===casoSel);
   const k = sel || ks.find(x=>x.fase!=="encerrado") || ks[0];
   let escreveu = "";
-  if(k && !k.nb && lido.beneficios.length){
+  // onda 1 · lida do dossiê, sem ninguém subir o PDF, o NB vira sugestão
+  // no quadro "O que o dossiê já diz" e só entra no caso com o clique
+  if(k && !k.nb && lido.beneficios.length && !opc.auto){
     const alvo = ativos[0] || lido.beneficios[0];
     try{
       await patchCaso(k.id, {nb:alvo.nb});
@@ -15605,7 +15644,7 @@ async function gravarDeclaracaoLida(cliId, lido){
       escreveu = ` NB ${alvo.nb} gravado no caso.`;
     }catch(e){ escreveu = " Não consegui gravar o NB no caso."; }
   }
-  await lancarNoCaso(cliId, `Declaração de Benefícios lida no CRM: ${lido.beneficios.length} benefício(s), `
+  await lancarNoCaso(cliId, `Declaração de Benefícios ${opc.auto?"do dossiê lida pelo CRM":"lida no CRM"}: ${lido.beneficios.length} benefício(s), `
     + `${ativos.length} em manutenção. ` + linhas.join(" | ") + "." + escreveu);
   repintarFicha();
   aviso(`Declaração lida — ${lido.beneficios.length} benefício(s) ✔`);
@@ -15714,7 +15753,7 @@ function painelTriagemFicha(c, ks){
       <span class="meio-sub">${cnisDe(c)&&cnisDe(c).caminho ? "abre em outra aba; o CRM já leu vínculos, indicadores e benefícios" : "a recepção insere o CNIS no cadastro (Identificação)"}</span>
     </div>
     ${/* onda 0 · o dossiê aparece onde ele serve, no começo da triagem */""}
-    ${(h=>h?`<div class="tri-dossie">${h}</div>`:"")(caixaDossie(c))}
+    ${(h=>h?`<div class="tri-dossie">${h}</div>`:"")(caixaDossie(c) + quadroDossie(c, ks))}
     <div class="tri-balcao" style="border:1px solid var(--borda);border-left:3px solid #E9B44C;border-radius:8px;padding:8px 12px;margin:8px 0;font-size:13px">
       <b>O que a recepção registrou</b>
       <div style="margin-top:4px">Espécie: ${especie ? `<span class="chip ben">${esc(especie)}</span>` : `<span class="meio-sub">não informada</span>`}
@@ -15763,7 +15802,7 @@ function painelTriagemFicha(c, ks){
           ${l.txt?`<div class="tri-leitura ${l.cor}">${esc(l.txt)}${
           l.det?`<span class="tri-det">${esc(l.det)}</span>`:""}</div>`:""}
           ${l.legenda ? legendaIndicadores(l.legenda) : ""}</div>`:""}
-        ${chave==="cnis" ? blocoVidaContributiva(c) : ""}
+        ${chave==="cnis" ? blocoVidaContributiva(c) + blocoAcertoVinculos(c) : ""}
         ${chave==="parentes" ? blocoParentes(c, null, "tri") : ""}
         ${botaoPdfTriagem(c.id, chave)}
         ${chave==="vinculo" ? (v=>`<div class="form-linha" style="margin-top:8px;align-items:center">
@@ -17476,8 +17515,8 @@ const compMenor = (a,b) => (a.slice(3)+a.slice(0,2)) <= (b.slice(3)+b.slice(0,2)
 function calcularGraca(vs, nContribs, desempregado){
   const r = {premissas:[], fonte:GRACA_FONTE};
   if(!vs || !vs.length) return null;
-  const emGozo = vs.some(v=>v.tipo==="Benefício" && !v.fim
-    && !/acidente/i.test(v.origem||""));
+  const emGozo = vs.some(v=>v.tipo==="Benefício" && !v.fim && v.inicio
+    && !/INDEFER|CESSAD/i.test(v.situacao||"") && !/acidente/i.test(v.origem||""));
   if(emGozo){
     r.semLimite = true;
     r.premissas.push("há benefício em manutenção no extrato, e o art. 15, I mantém a qualidade sem limite de prazo enquanto durar");
@@ -17489,13 +17528,12 @@ function calcularGraca(vs, nContribs, desempregado){
   for(const v of vs){
     if(v.fim) comps.push(v.fim.slice(3,5)+"/"+v.fim.slice(6));
     if(v.ultRemun) comps.push(v.ultRemun);
-    if(v.aberto && !v.fim && v.tipo!=="Benefício") comps.push(compHoje());
   }
   if(!comps.length) return null;
   const ultima = comps.reduce((a,b)=> compMenor(a,b) ? b : a);
   r.ultima = ultima;
-  if(vs.some(v=>v.aberto && !v.fim && v.tipo!=="Benefício") && ultima===compHoje())
-    r.premissas.push("há vínculo sem data-fim no extrato, e a conta assume que ele continua até hoje — se acabou, a data de saída muda tudo");
+  if(vs.some(v=>v.aberto && !v.fim && v.tipo!=="Benefício"))
+    r.premissas.push("há vínculo sem data de saída no extrato: a conta o encerra no último dia do mês da última remuneração, até o acerto do CNIS");
   // qual foi o ÚLTIMO registro, e de que tipo: facultativo tem metade do prazo
   const doFim = vs.filter(v=>{
     const c = v.fim ? v.fim.slice(3,5)+"/"+v.fim.slice(6) : v.ultRemun;
@@ -18656,7 +18694,7 @@ function painelDireito(c){
       ${plano||anteriores.length ? `<div class="adr-col-larga">${plano}
         ${anteriores.length?`<section class="adr-anteriores" aria-labelledby="adr-t-ant"><h2 class="adr-h" id="adr-t-ant">Análises anteriores</h2>
           ${anteriores.map(cartaoAnalise).join("")}</section>`:""}</div>` : ""}
-      <aside class="adr-col-lado">${pendenciasDireito(c)}${quadroAndamentos(c)}${quadroTriagemDireito(c, ks)}</aside>
+      <aside class="adr-col-lado">${quadroDossie(c, ks)}${pendenciasDireito(c)}${quadroAndamentos(c)}${quadroTriagemDireito(c, ks)}</aside>
     </div>
     ${notas.length?`<div class="caso" style="margin-top:10px;border-left:3px solid var(--roxo)">
       <div class="rotulo-caso">Anotações antigas do To Do (lista Aposentadorias Futuras)</div>
@@ -18848,6 +18886,250 @@ function repintarSeLivre(){
   const f = document.activeElement;
   if(f && f.matches && f.matches("input,textarea,select,[contenteditable]")) return;
   repintarFicha();
+}
+// ═══════════════════════════════════════════════════════════════════════
+// LEITURA DO DOSSIÊ — o que os PDFs já dizem, com a origem ao lado
+// ═══════════════════════════════════════════════════════════════════════
+// Cada leitor é função pura sobre o TEXTO que a onda 0 guardou no anexo (as
+// linhas na ordem da folha, como textoDoDocumento as monta). O que só informa
+// aparece com o documento de origem; o que muda o caso (NB, DCB, prazo,
+// perícia, serviço novo) espera o clique de quem confere.
+const linhasDoTexto = t => String(t||"").split("\n").map(s=>s.trim()).filter(Boolean);
+const raizCnpj = s => { const d = String(s||"").replace(/\D/g,""); return d.length>=8 ? d.slice(0,8) : ""; };
+// "08/2011" → "31/08/2011"
+function fimDoMes(comp){
+  const [m, a] = String(comp||"").split("/").map(Number);
+  if(!m || !a || m>12) return "";
+  return `${String(new Date(Date.UTC(a, m, 0)).getUTCDate()).padStart(2,"0")}/${String(m).padStart(2,"0")}/${a}`;
+}
+// CAGED · "Relação de vínculos do trabalhador": uma linha por vínculo, com o
+// código do empregador (CNPJ inteiro, ou só a raiz quando a fonte é o
+// eSocial), a razão social, a admissão, o desligamento quando houve, a
+// situação e a fonte. Razão social longa quebra em duas linhas, uma acima e
+// outra abaixo da linha das datas; colada à data quando não cabe.
+const RX_CAGED = /^(\d{2}\.\d{3}\.\d{3}(?:\/\d{4}-\d{2})?|\d{11,14})\s+(.*?)\s*(\d{2}\/\d{2}\/\d{4})\s+(?:(\d{2}\/\d{2}\/\d{4})\s+)?(Aberto|Fechado)\s+(\S+)\s*$/;
+const RX_CAGED_CAB = /^(Cod\. Empregador|VÍNCULOS|DADOS DO|Nome:|CPF:|PIS\/PASEP|Total de Vínculos|Autenticidade|Chave|Consulta realizada|Brasília|A autenticidade|a chave acima|https?:|Relação de vínculos|MINISTÉRIO|Secretaria|Subsecretaria|Coordenação)/i;
+function lerCagedTexto(txt){
+  const ls = linhasDoTexto(txt);
+  if(!ls.some(l=>/Relação de vínculos do trabalhador/i.test(l))) return [];
+  const solta = l => l && !RX_CAGED.test(l) && !RX_CAGED_CAB.test(l) && !/^\d+$/.test(l) && !/^[\d.]+-\d$|^\d{3}\.\d{5}\.\d{2}-\d/.test(l);
+  const out = [];
+  ls.forEach((l, i)=>{
+    const m = l.match(RX_CAGED); if(!m) return;
+    const nome = m[2].trim() || [ls[i-1], ls[i+1]].filter(solta).join(" ");
+    out.push({cod:m[1], raiz:raizCnpj(m[1]), nome, admissao:m[3], desligamento:m[4]||"", situacao:m[5], fonte:m[6]});
+  });
+  return out;
+}
+// RAIS · "Relatório Completo do Trabalhador": um bloco por vínculo e por
+// ano-base. O desligamento é a linha "Data dd/mm/aaaa" (só "Data" quando não
+// houve), a causa vem logo abaixo e as remunerações vêm por mês, duas por linha.
+function lerRaisTexto(txt){
+  const ls = linhasDoTexto(txt);
+  const out = []; let b = null, m;
+  ls.forEach((l, i)=>{
+    if((m = l.match(/RAIS\s*-\s*Ano-Base:\s*(\d{4})/i))){
+      b = {ano:m[1], cnpj:"", raiz:"", nome:"", admissao:"", desligamento:"", causa:"", avisoPrevio:0, remuneracoes:{}};
+      out.push(b); return;
+    }
+    if(!b) return;
+    if(/^CNPJ\s+Razão Social$/i.test(l)){
+      const x = (ls[i+1]||"").match(/^([\d.\/-]{11,18})\s+(.+)$/);
+      if(x){ b.cnpj = x[1]; b.raiz = raizCnpj(x[1]); b.nome = x[2].trim(); }
+      return;
+    }
+    if(/^Data Admissão/i.test(l)){ const x = (ls[i+1]||"").match(/^(\d{2}\/\d{2}\/\d{4})/); if(x) b.admissao = x[1]; return; }
+    if((m = l.match(/^Data\s+(\d{2}\/\d{2}\/\d{4})$/))){ b.desligamento = m[1]; return; }
+    if((m = l.match(/^Causa\s+(\d+\s*-\s*.+)$/))){ b.causa = m[1].trim(); return; }
+    if((m = l.match(/^Valor aviso prévio\s+([\d.]+,\d{2})/i))){ b.avisoPrevio = +m[1].replace(/\./g,"").replace(",","."); return; }
+    for(const x of l.matchAll(/(Janeiro|Fevereiro|Março|Abril|Maio|Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro)\s+([\d.]+,\d{2})/g))
+      b.remuneracoes[String(MESES_NOME.indexOf(x[1].toLowerCase())+1).padStart(2,"0")] = +x[2].replace(/\./g,"").replace(",",".");
+  });
+  return out.filter(x=>x.raiz || x.admissao);
+}
+// as fontes lidas do dossiê de um cliente; o anexo vai junto, para a origem
+// aparecer ao lado do fato. A leitura se guarda pelo anexo e pelo tamanho do
+// texto, porque a ficha repinta muitas vezes e o texto só muda numa coleta nova.
+const _leituraCache = new Map();
+function lidoDoAnexo(a, leitor, chave){
+  const k = `${chave}:${a.id}:${(a.texto||"").length}`;
+  if(!_leituraCache.has(k)) _leituraCache.set(k, leitor(a.texto));
+  return _leituraCache.get(k);
+}
+function fontesDoDossie(cliId){
+  const caged = [], rais = [];
+  for(const a of docsDoDossie(cliId).filter(x=>x.texto)){
+    if(/Relação de vínculos do trabalhador/i.test(a.texto)) lidoDoAnexo(a, lerCagedTexto, "caged").forEach(x=>caged.push({...x, anexo:a}));
+    if(/RELAÇÃO ANUAL DE INFORMAÇÕES SOCIAIS/i.test(a.texto)) lidoDoAnexo(a, lerRaisTexto, "rais").forEach(x=>rais.push({...x, anexo:a}));
+  }
+  return {caged, rais};
+}
+// Onda 1 · o vínculo que o CNIS deixou sem data de saída termina no ÚLTIMO
+// DIA DO MÊS DA ÚLTIMA REMUNERAÇÃO (regra do escritório, 10.10.2026), para não
+// correr até hoje; a ficha avisa que o fim foi presumido até o acerto. Com a
+// última remuneração nos três meses anteriores à leitura, o vínculo está em
+// curso (o empregador informa a remuneração no mês seguinte).
+function vinculosSemSaida(g){
+  const ref = (g && g.em) || hoje();
+  const d = new Date(ref+"T12:00:00"); d.setMonth(d.getMonth()-3);
+  const limite = `${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}`;
+  // leitura antiga sem a última remuneração no vínculo: vale a da análise
+  const daAnalise = v => ((g.analise||{}).abertos||[]).find(a=>a.origem===v.origem && a.inicio===v.inicio) || {};
+  return ((g && g.vinculos) || []).filter(v=>v.aberto && v.tipo!=="Benefício" && TIPO_REMUN.test(v.tipo||""))
+    .map(v=>{ const ultRemun = v.ultRemun || daAnalise(v).ultRemun || "";
+      return {...v, ultRemun, fimPresumido: fimDoMes(ultRemun), emCurso: !!ultRemun && chaveComp(ultRemun) >= chaveComp(limite)}; });
+}
+// a data que fecha o vínculo: o CAGED ou a RAIS do mesmo empregador (raiz do
+// CNPJ) com a mesma admissão e um desligamento
+function fechoDoVinculo(v, f){
+  const r = raizCnpj(v.codigo); if(!r) return null;
+  const mesmo = x => x.raiz===r && x.desligamento && (!v.inicio || !x.admissao || x.admissao===v.inicio);
+  const c = f.caged.find(mesmo);
+  if(c) return {data:c.desligamento, fonte:"CAGED", anexo:c.anexo, causa:""};
+  const ra = f.rais.find(mesmo);
+  if(ra) return {data:ra.desligamento, fonte:`RAIS de ${ra.ano}`, anexo:ra.anexo, causa:ra.causa};
+  return null;
+}
+// o quadro do vínculo sem saída, no passo do CNIS da triagem
+function blocoAcertoVinculos(c){
+  const vs = vinculosSemSaida(cnisDe(c)).filter(v=>!v.emCurso);
+  if(!vs.length) return "";
+  const f = fontesDoDossie(c.id);
+  return `<div class="dossie-acerto">
+    <b>Vínculos sem data de saída no CNIS</b>
+    <p class="meio-sub">O CRM encerra cada um no último dia do mês da última remuneração, até o acerto.</p>
+    <ul>${vs.map(v=>{ const fe = fechoDoVinculo(v, f);
+      return `<li>${esc(v.origem||"empregador não lido")} · admissão ${esc(v.inicio||"?")} · ${
+        v.fimPresumido ? `fim presumido em ${esc(v.fimPresumido)}` : "sem remuneração informada"} · ${
+        fe ? `<span class="dossie-fecho">${esc(fe.fonte)} mostra desligamento em ${esc(fe.data)}</span>
+          <button type="button" class="adr-link" onclick="abrirAnexo('${fe.anexo.id}')">ver</button>`
+           : `<span class="meio-sub">nenhuma fonte do dossiê traz o desligamento</span>`}</li>`; }).join("")}</ul>
+    <button type="button" class="tl-bt forte" onclick="abrirAcertoCnis('${c.id}')">Abrir atendimento de acerto de CNIS</button>
+  </div>`;
+}
+// o serviço de acerto de CNIS: um atendimento (pré-caso CNIS) com a anotação
+// do que falta e da prova que o dossiê já tem
+async function abrirAcertoCnis(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const vs = vinculosSemSaida(cnisDe(c)).filter(v=>!v.emCurso);
+  if(!vs.length) return aviso("O CNIS lido não tem vínculo sem data de saída");
+  const pcs = [...precasosDe(c)];
+  let pc = pcs.find(p=>!p.so_lembrete && /^(CNIS|Acerto de CNIS)$/i.test(String(p.especie||"").trim()));
+  const atend = (c.campos||{}).atendimento || [];
+  if(pc && atend.some(n=>n.precaso_id===pc.id && /^Acerto de CNIS proposto pela leitura do dossiê/.test(n.texto||""))){
+    aviso("O atendimento de acerto de CNIS já está aberto", false);
+    return irSubCad("anotacoes");
+  }
+  if(!pc){ pc = {id:"pc_"+Date.now().toString(36), especie:"CNIS", natureza:"", marc:{}, honorarios:"", quem:eu.id, em:hoje()}; pcs.push(pc); }
+  const f = fontesDoDossie(cliId);
+  const texto = "Acerto de CNIS proposto pela leitura do dossiê. " + vs.map(v=>{ const fe = fechoDoVinculo(v, f);
+    return `${v.origem||"Empregador"}, admissão em ${v.inicio||"?"}: o CNIS não tem data de saída (o CRM a presume em ${v.fimPresumido||"?"}); `
+      + (fe ? `o ${fe.fonte} mostra desligamento em ${fe.data}${fe.causa?`, causa ${fe.causa}`:""}.`
+            : "nenhuma fonte do dossiê traz o desligamento, e a prova sai da CTPS, do termo de rescisão ou do extrato analítico do FGTS."); }).join(" ");
+  const nota = {id:crypto.randomUUID(), em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0],
+    autor_id:eu.id, texto, origem:"app", precaso_id:pc.id};
+  const campos = {...(c.campos||{}), precasos:pcs, atendimento:[...atend, nota]};
+  if(pcs.some(p=>p.id==="legado")) delete campos.especie;
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos})});
+  }catch(e){ return aviso("Não consegui abrir o atendimento — tente de novo"); }
+  c.campos = campos;
+  aviso("Atendimento de acerto de CNIS aberto, com os vínculos e a prova do dossiê", false);
+  irSubCad("anotacoes");
+}
+// Onda 1 · o CNIS e a declaração de benefícios do dossiê passam pelos
+// leitores que o CRM já tem, uma vez por anexo, sem ninguém subir o PDF. O
+// do dossiê só substitui o CNIS lido quando é mais novo; o CPF do documento é
+// conferido com o da ficha antes de gravar.
+async function pdfDoAnexo(a){
+  const r = await fetch(await linkArquivo(a.caminho, 300));
+  if(!r.ok) throw new Error("HTTP "+r.status);
+  return r.blob();
+}
+let _lendoLeitores = null;
+const _leitoresTentados = new Set();
+async function lerLeitoresDoDossie(cliId){
+  if(_lendoLeitores) return;
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const docs = docsDoDossie(cliId).slice().sort((a,b)=>String(b.criado_em||"").localeCompare(String(a.criado_em||"")));
+  const arq = a => fonteDoDossie(a)[1];
+  const cnis = docs.find(a=>/^CNIS$/i.test(fonteDoDossie(a)[0]) && /completo/i.test(arq(a)));
+  const decl = docs.find(a=>/declara[çc][ãa]o de benefici/i.test(arq(a)));
+  const pdf = triagemDe(c).pdf || {};
+  const dia = a => String(a.criado_em||"").slice(0,10);
+  const novo = (a, lido) => a && !_leitoresTentados.has(a.id) && (!lido || (lido.anexo_id!==a.id && dia(a) >= (lido.em||"")));
+  if(!novo(cnis, pdf.cnis) && !novo(decl, pdf.declaracao)) return;
+  _lendoLeitores = cliId;
+  try{
+    if(novo(cnis, pdf.cnis)){
+      _leitoresTentados.add(cnis.id);
+      try{
+        const lido = lerCnisPdf(await itensDoPdf(await pdfDoAnexo(cnis)));
+        const conf = conferePdfComCliente(lido, c);
+        if(!(lido.indicadores.length || lido.filiado.nit || lido.ehExtrato)) console.warn("dossiê: CNIS não reconhecido", cnis.nome);
+        else if(!conf.ok) aviso("CNIS do dossiê: " + conf.aviso, true);
+        else await gravarCnisLido(cliId, lido, cnis, {dossie:true});
+      }catch(e){ console.warn("dossiê: CNIS não lido", e); }
+    }
+    const pdf2 = triagemDe(D.cliPorId.get(cliId)).pdf || {};
+    if(novo(decl, pdf2.declaracao)){
+      _leitoresTentados.add(decl.id);
+      try{
+        const lido = lerDeclaracaoPdf(await itensDoPdf(await pdfDoAnexo(decl)));
+        const conf = conferePdfComCliente(lido, c);
+        if(!(lido.beneficios.length || lido.cpf)) console.warn("dossiê: declaração não reconhecida", decl.nome);
+        else if(!conf.ok) aviso("Declaração do dossiê: " + conf.aviso, true);
+        else await gravarDeclaracaoLida(cliId, lido, {auto:true, anexo:decl});
+      }catch(e){ console.warn("dossiê: declaração não lida", e); }
+    }
+  } finally { _lendoLeitores = null; }
+}
+// o NB lido da declaração de benefícios, quando o caso ainda não tem NB:
+// sugestão, porque ninguém subiu o PDF à mão
+function nbSugeridoDoDossie(c, ks){
+  const dec = (triagemDe(c).pdf||{}).declaracao;
+  if(!dec || !dec.auto || !(dec.beneficios||[]).length) return null;
+  const k = (ks||[]).find(x=>x.fase!=="encerrado") || (ks||[])[0];
+  if(!k || k.nb) return null;
+  const ativos = dec.beneficios.filter(b=>!/CESSAD|SUSPENS|INDEFER/i.test(b.situacao||""));
+  const alvo = ativos[0] || dec.beneficios[0];
+  return alvo && alvo.nb ? {k, nb:alvo.nb, situacao:alvo.situacao||""} : null;
+}
+async function gravarNbDoDossie(casoId, nb){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  try{ await patchCaso(casoId, {nb}); }catch(e){ return aviso("Não consegui gravar o NB — tente de novo"); }
+  k.nb = nb;
+  try{ await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:`NB ${nb} gravado no caso, lido da declaração de benefícios do dossiê.`})}); }catch(e){}
+  aviso(`NB ${nb} gravado no caso`, false); repintarFicha();
+}
+// O QUE O DOSSIÊ JÁ DIZ: o quadro da Análise de Direito e da triagem. Cada
+// linha traz o fato e o documento de origem; o botão é o que muda o caso.
+function itensDoDossie(c, ks){
+  const out = [];
+  const vs = vinculosSemSaida(cnisDe(c)).filter(v=>!v.emCurso);
+  if(vs.length){
+    const f = fontesDoDossie(c.id);
+    const fechados = vs.filter(v=>fechoDoVinculo(v, f)).length;
+    out.push({id:"vinculos", texto:`${vs.length} vínculo${vs.length>1?"s":""} sem data de saída no CNIS, encerrado${vs.length>1?"s":""} pelo CRM na última remuneração`
+        + (fechados ? `; o CAGED ou a RAIS do dossiê fecha${fechados>1?"m":""} ${fechados}` : "; nenhuma fonte do dossiê traz o desligamento"),
+      fonte:"CNIS", acao:{rot:"Abrir atendimento de acerto de CNIS", js:`abrirAcertoCnis('${c.id}')`}});
+  }
+  const nb = nbSugeridoDoDossie(c, ks);
+  if(nb) out.push({id:"nb", texto:`NB ${nb.nb}${nb.situacao?` (${nb.situacao.toLowerCase()})`:""} lido da declaração de benefícios; o caso ainda não tem NB`,
+    fonte:"Declaração de benefícios", acao:{rot:"Gravar NB no caso", js:`gravarNbDoDossie('${nb.k.id}','${escJs(nb.nb)}')`}});
+  return out;
+}
+function quadroDossie(c, ks){
+  const its = itensDoDossie(c, ks);
+  if(!its.length) return "";
+  return `<section class="adr-card ad-q-dossie" aria-labelledby="adr-t-dossie">
+    <h2 class="adr-h" id="adr-t-dossie">O que o dossiê já diz</h2>
+    <ul class="dossie-fatos">${its.map(x=>`<li data-fato="${x.id}"><span>${esc(x.texto)}</span>
+      <span class="dossie-orig">${esc(x.fonte)}</span>
+      ${x.acao?`<button type="button" class="tl-bt" onclick="${x.acao.js}">${esc(x.acao.rot)}</button>`:""}</li>`).join("")}</ul>
+  </section>`;
 }
 function caixaApos(cli){
   const lista=aposDoCliente(cli);
