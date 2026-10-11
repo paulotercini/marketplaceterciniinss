@@ -313,5 +313,26 @@ const comunicacaoIndeferimento = (nbFmt, mantido) => ["Página 1 de 1", "INSTITU
   "Se não concordar com a decisão, é possível entrar com Recurso, em até 30 dias, após receber este comunicado. Para",
   "isso, acesse o Meu INSS ou ligue para a Central 135.", "Data: 9 de outubro de 2026."];
 
+// ── Onda 3 · o resumo de documentos para cálculo de tempo de contribuição,
+// no layout do sistema antigo do INSS (cabeçalho repetido por página, os
+// totais no fim, o período especial não enquadrado)
+const RESUMO_INSS_TEXTO = [
+  "21.023.999 - APS CIDADE INVENTADA * RESUMO DE DOCUMENTOS PARA CALCULO DE TEMPO DE CONTRIBUICAO * 04/03/2020 * PAG. 1",
+  "****************** ATE 10/09/2019 **********************",
+  "NB..........: 194.803.283-7 ESPECIE..: 42 DER.........: 10/09/2019 DIB........: 10/09/2019",
+  "SEGURADO....: AURELIA FICTA DE SOUZA DATA NASC...: 14/03/1962 DAT........:",
+  "P E R I O D O S D O S D O C U M E N T O S",
+  "ND NP DATA INI. DATA FIM TBC A TP RA FF SP/RD ANO MES DIA CARENCIA D TC 1a DIA EMPREGADOR",
+  "01 0001 03/01/2000 30/06/2010 30 TS 2 1 10 05 28 FABRICA FICTICIA LTDA",
+  "10 05 28 120",
+  "04 0002 03/01/2000 30/06/2010 25 4 TS 2 1 10 05 28 FABRICA FICTICIA LTDA",
+  "CODIGO ANEXO 2.0.1 00 00 00",
+  "NAO ENQUADRADO Motivo 00 (*)",
+  "TEMPO DE CONTRIBUICAO COMUM ( BASE CONSIDERADA 30 ANOS ) : 10 ANOS 05 MESES 28 DIAS",
+  "TOTAL DE CARENCIA EM CONTRIBUICOES.......................................: 126",
+  "TOTAL DE CARENCIA CONSIDERADA............................................: 120",
+  "TEMPO A CUMPRIR : 19 ANOS 06 MESES 02 DIAS",
+].join("\n");
+
 module.exports = { CAGED_TEXTO, RAIS_TEXTO, itensDeLinhas, laudoPmf, LAUDO_SABI_TEXTO, cartaNova, CARTA_ANTIGA_TEXTO, extratoPag,
-  processo, EXIGENCIA_AGENDAR, agendamento, comunicacaoIndeferimento };
+  processo, EXIGENCIA_AGENDAR, agendamento, comunicacaoIndeferimento, RESUMO_INSS_TEXTO };
