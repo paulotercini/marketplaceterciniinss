@@ -21,11 +21,13 @@
 
   // O QUE DESCE: tudo, menos o EXPEDIENTE (decisão do Paulo, 05.10.2026) —
   // inicial e documentos, contestação, réplica, manifestações, recursos,
-  // pareceres, laudos e decisões. Certidão, ato ordinatório, intimação,
-  // mandado, comprovante de protocolo e aviso ficam: muito arquivo, nada a ler.
+  // pareceres, laudos e decisões. Certidão, intimação, mandado, comprovante
+  // de protocolo e aviso ficam: muito arquivo, nada a ler. O ATO ORDINATÓRIO
+  // desce desde a 1.18.0 (F191, 11.10.2026): é ele o conteúdo da maioria das
+  // intimações do JEF, e o CRM mostra esse conteúdo no cartão da intimação.
   // Nomes do PJe ("Ato Ordinatório"), do eproc ("CERT1", "ATOORD1", "INTM1")
   // e do e-SAJ (o título da movimentação: "Certidão de Publicação Expedida")
-  const RE_EXPEDIENTE = /^\s*(?:certid|ato ordinat|intima[cç]|mandado|comprovante de protocolo|aviso|expedi[cç][aã]o de|publica[cç][aã]o|remessa|recebimento(?! de of[ií]cio)|conclus[aã]o|decurso de prazo|movimento processual|depre\b|ci[eê]ncia de recebimento|juntada de (?:ar|aviso|mandado|certid))|^\s*(?:CERT|ATOORD|INTM|INTIM|MAND|AR)\d+\s*$/i;
+  const RE_EXPEDIENTE = /^\s*(?:certid|intima[cç]|mandado|comprovante de protocolo|aviso|expedi[cç][aã]o de|publica[cç][aã]o|remessa|recebimento(?! de of[ií]cio)|conclus[aã]o|decurso de prazo|movimento processual|depre\b|ci[eê]ncia de recebimento|juntada de (?:ar|aviso|mandado|certid))|^\s*(?:CERT|INTM|INTIM|MAND|AR)\d+\s*$/i;
   const vaiBaixar = nome => !RE_EXPEDIENTE.test(String(nome || ''));
 
   // o mesmo nomeSeguro do robo-crps/ingerir.js — o CRPS mantém o caminho de lá
