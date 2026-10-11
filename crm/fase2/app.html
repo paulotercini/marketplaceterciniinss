@@ -16318,6 +16318,33 @@ function contratoDoCliente(c, ks){
   const livre = (pc && pc.honorarios) || honorAjusteDe(c, esp);
   return {ajuste: [resumoHon(hon), livre].filter(Boolean).join(" · "), padrao: HONOR_RESUMO[vr] || "", especie: esp};
 }
+// Onda 4 · o que o dossiê diz para os honorários: a renda do extrato de
+// pagamento (ou a RMI da carta) e a conta pelo padrão da variante do contrato.
+// Com ajuste combinado, a conta pelo padrão não vale e o quadro diz isso.
+function quadroHonorDossie(c, ks){
+  const f = fontesDoDossie(c.id), ct = contratoDoCliente(c, ks);
+  const valor = s => +String(s||"").replace(/\./g, "").replace(",", ".") || 0;
+  const vr = variantePorEspecie(ct ? ct.especie : especieDoCliente(c, ks));
+  const linhas = [];
+  const conta = (base, de) => ct && ct.ajuste ? "Há ajuste combinado no contrato: a conta pelo padrão não vale."
+    : vr==="incapacidade" ? `Pelo padrão, 20% sobre 6 benefícios dá ${moeda(base*1.2)} na concessão pelo INSS; 30% sobre 6 dá ${moeda(base*1.8)} em recurso ou judicial, mais 30% dos atrasados.`
+    : vr==="revisao" ? "Na revisão, os honorários saem das 3 primeiras diferenças, que o documento não mostra."
+    : `Pelo padrão, os 3 primeiros benefícios integrais somam ${moeda(base*3)}, pela ${de}.`;
+  for(const e of f.extratos){
+    const mr = valor(e.mr), pagos = e.creditos.filter(x=>x.pago && x.pagoEm).sort((a,b)=>isoBr(a.pagoEm).localeCompare(isoBr(b.pagoEm)));
+    if(!mr) continue;
+    linhas.push(`<li><span>Extrato de pagamento do NB ${esc(fmtNb(e.nb))}: renda mensal de ${moeda(mr)}${pagos.length ? `, ${pagos.length} crédito${pagos.length>1?"s":""} pago${pagos.length>1?"s":""}, o primeiro em ${esc(pagos[0].pagoEm)}` : ""}. ${esc(conta(mr, "renda do extrato"))}</span>
+      <button type="button" class="adr-link" onclick="abrirAnexo('${e.anexo.id}')">ver</button></li>`);
+  }
+  for(const ca of f.cartas.filter(x=>!f.extratos.some(e=>e.nb===x.nb && valor(e.mr)))){
+    const rmi = valor(ca.rmi); if(!rmi) continue;
+    linhas.push(`<li><span>Carta de concessão do NB ${esc(fmtNb(ca.nb))}: RMI de ${moeda(rmi)}, DIB ${esc(ca.dib||"não lida")}. ${esc(conta(rmi, "RMI da carta, sem o valor atualizado"))}</span>
+      <button type="button" class="adr-link" onclick="abrirAnexo('${ca.anexo.id}')">ver</button></li>`);
+  }
+  return linhas.length ? `<section class="adr-card hon-dossie" aria-labelledby="hon-dos-t">
+    <h3 class="adr-h" id="hon-dos-t">O que o dossiê diz para os honorários</h3>
+    <ul class="dossie-fatos">${linhas.join("")}</ul></section>` : "";
+}
 // F181 · a cobrança: o lançamento em aberto mais antigo (vencido primeiro)
 function proximaCobranca(abertos){
   return abertos.filter(p=>p.vencimento).sort((x,y)=>x.vencimento.localeCompare(y.vencimento))[0] || null;
@@ -16538,6 +16565,7 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
         </details>
       </section>
       <aside class="adr-col-lado">
+        ${c ? quadroHonorDossie(c, ks) : ""}
         <section class="adr-card" aria-labelledby="hon-ct-t">
           <h3 class="adr-h" id="hon-ct-t">Contrato</h3>
           ${ct ? `<dl class="hon-dl">
@@ -19116,6 +19144,50 @@ function lerResumoInssTexto(txt){
     tempo: tempo ? {anos:+tempo[1], meses:+tempo[2], dias:+tempo[3]} : null, carencia: car ? +car : null,
     aCumprir: pega(/TEMPO A CUMPRIR\s*:\s*([^\n]+)/).trim(), naoEnquadrados: (t.match(/N[AÃ]O ENQUADRADO/gi)||[]).length};
 }
+// Onda 4 · CAT do Meu INSS: emitente, tipo, a data e o tipo do acidente, o
+// CNAE do empregador (na linha de baixo do rótulo, depois do CNPJ) e o CID
+function lerCatTexto(txt){
+  const ls = linhasDoTexto(txt);
+  if(!ls.some(l=>/^CAT - Comunica[çc][ãa]o de Acidente de Trabalho$/i.test(l))) return null;
+  const t = ls.join("\n"), pega = rx => ((t.match(rx)||[])[1] || "").trim();
+  const abaixo = rx => { const i = ls.findIndex(l=>rx.test(l)); return i<0 ? "" : (ls[i+1]||""); };
+  const acid = abaixo(/^19 - Data do Acidente:/).match(/^(\d{2}\/\d{2}\/\d{4})(?:\s+\S+){0,2}\s+(Típico|Trajeto|Doença)\b/i);
+  const cnae = abaixo(/^10 - CNAE:/).match(/(\d{2}\.\d{2,3}(?:-\d)?(?:\/\d{2})?)\s*$/);
+  const cid = abaixo(/^47 - CID-10:/).match(/^([A-Z]\d{2,3})\s*-\s*(.+)$/);
+  return {numero: /^\d{4}-\d{6}-\d\/\d{2}$/.test(ls[1]||"") ? ls[1] : "", tipoCat: pega(/2 - Tipo de CAT:\s*([^\n]+)/), emitente: pega(/1 - Emitente:\s*([^\n]+)/),
+    data: acid ? acid[1] : "", tipo: acid ? acid[2] : "", cnae: cnae ? cnae[1] : "", cid: cid ? cid[1] : "", cidDesc: cid ? cid[2].trim() : "",
+    parte: (abaixo(/^31 - Parte do corpo atingida/).match(/-\s*(.+)$/)||[])[1] || ""};
+}
+// Onda 4 · PPP do eSocial (Meu INSS): um bloco por fator de risco, com a
+// intensidade na linha do fator e o período logo abaixo ("dd/mm/aaaa a" e a
+// data final na linha seguinte); o último campo da linha do fator é o EPI eficaz
+function lerPppTexto(txt){
+  const ls = linhasDoTexto(txt);
+  if(!ls.some(l=>/^Perfil Profissiogr[áa]fico Previdenci[áa]rio/i.test(l))) return null;
+  const iE = ls.findIndex(l=>/^1 - CNPJ do Domic/i.test(l));
+  const emp = (ls[iE+1]||"").match(/^([\d.\/-]{8,18})\s+(.+?)\s+(\d{4}-\d\/\d{2})$/);
+  const FATOR = /^([FQBEMA])\s+(\d{2}\.\d{2}\.\d{3})\s*-\s*(.+)$/, riscos = [];
+  ls.forEach((l, i)=>{
+    const m = l.match(FATOR); if(!m) return;
+    let ini = "", fim = "";
+    for(let j = i+1; j < Math.min(ls.length, i+14) && !fim && !FATOR.test(ls[j]); j++){
+      const a = ls[j].match(/^(\d{2}\/\d{2}\/\d{4})\s+a(?:\s+(\d{2}\/\d{2}\/\d{4}))?$/);
+      if(a){ ini = a[1]; fim = a[2] || ""; }
+      else if(ini && /^\d{2}\/\d{2}\/\d{4}$/.test(ls[j])) fim = ls[j];
+    }
+    const db = m[3].match(/Ru[íi]do\s+([\d.,]+)\s*decibel/i), toks = m[3].trim().split(/\s+/);
+    riscos.push({tipo:m[1], codigo:m[2], fator: m[3].replace(/\s+[\d.,]+\s+(decibel|metro|grau|ppm|mg|f\/cm).*$/i, "").replace(/(\s+(NA|SIM|N[ÃA]O)){2,}$/, "").trim(),
+      db: db ? +db[1].replace(",", ".") : null, epi: toks[toks.length-1], ini, fim});
+  });
+  return {empresa: emp ? emp[2] : "", cnpj: emp ? emp[1] : "", riscos};
+}
+// o ruído contra o limite de cada época (Decretos 53.831/64, 2.172/97 e
+// 4.882/2003): 80 dB(A) até 05/03/1997, 90 até 18/11/2003 e 85 depois
+function ruidoNoPeriodo(db, ini, fim){
+  const a = isoBr(ini) || "0000-01-01", b = isoBr(fim) || hoje();
+  return [["0000-01-01","1997-03-05",80],["1997-03-06","2003-11-18",90],["2003-11-19","9999-12-31",85]]
+    .filter(([x, y])=>a<=y && b>=x).map(([, , lim])=>({lim, acima: db > lim}));
+}
 // EXTRATO DE PAGAMENTO · "Histórico de Créditos": um bloco por benefício, com
 // DIB, DCB e DIP no cabeçalho e uma linha por crédito (competência, período,
 // valor líquido, meio e situação, previsão e data do pagamento)
@@ -19194,7 +19266,7 @@ function lidoDoAnexo(a, leitor, chave){
   return _leituraCache.get(k);
 }
 function fontesDoDossie(cliId){
-  const f = {caged:[], rais:[], laudos:[], cartas:[], extratos:[], processos:[], resumos:[]};
+  const f = {caged:[], rais:[], laudos:[], cartas:[], extratos:[], processos:[], resumos:[], cats:[], ppps:[]};
   // o mesmo laudo vem sozinho e dentro da cópia do processo; a mesma carta, em dois PDFs
   const visto = new Set(), novo = k => !visto.has(k) && visto.add(k);
   for(const a of docsDoDossie(cliId).filter(x=>x.texto)){
@@ -19207,6 +19279,8 @@ function fontesDoDossie(cliId){
     if(/Histórico de Créditos/i.test(t)) lidoDoAnexo(a, lerExtratoPagTexto, "hiscre").forEach(x=>f.extratos.push({...x, anexo:a}));
     if(/PROTOCOLO DE REQUERIMENTO/.test(t)){ const x = lidoDoAnexo(a, lerProcessoTexto, "pa"); if(x) f.processos.push({...x, anexo:a}); }
     if(/RESUMO DE DOCUMENTOS PARA C/i.test(t)){ const x = lidoDoAnexo(a, lerResumoInssTexto, "resumo"); if(x && novo(`resumo|${x.nb}|${x.der}`)) f.resumos.push({...x, anexo:a}); }
+    if(/Comunica[çc][ãa]o de Acidente de Trabalho/i.test(t)){ const x = lidoDoAnexo(a, lerCatTexto, "cat"); if(x && novo(`cat|${x.numero||x.data}`)) f.cats.push({...x, anexo:a}); }
+    if(/Perfil Profissiogr[áa]fico Previdenci[áa]rio/i.test(t)){ const x = lidoDoAnexo(a, lerPppTexto, "ppp"); if(x && x.riscos.length) f.ppps.push({...x, anexo:a}); }
   }
   return f;
 }
@@ -19572,7 +19646,44 @@ function fatosDoMapa(c, ks, fam){
         texto:`${em<=hoje() ? "Completou" : "Completa"} ${req} anos em ${fmtBarra(em)}, a idade da aposentadoria por idade${chave==="rural" ? " rural" : ""}`});
     }
   }
-  for(const r of fontesDoDossie(c.id).resumos){
+  // onda 4 · o que o CAGED e a RAIS têm e o CNIS não; o desemprego
+  // involuntário da última dispensa; o ruído do PPP contra o limite da época; a CAT
+  const fd = fontesDoDossie(c.id), vcn = (g && g.vinculos) || [];
+  const noCnis = x => vcn.some(v=>raizCnpj(v.codigo)===x.raiz && (!x.admissao || !v.inicio || v.inicio===x.admissao));
+  const semCnis = g ? fd.caged.filter(x=>x.raiz && !noCnis(x)) : [];
+  if(semCnis.length) out.push({grupo:"vinculo", est:"warn", fonte:"CAGED", anexo:semCnis[0].anexo.id,
+    texto:`O CAGED tem ${semCnis.length} vínculo${semCnis.length>1?"s":""} que o CNIS não traz: `
+      + semCnis.slice(0, 3).map(x=>`${x.nome||x.cod} (${x.admissao}${x.desligamento?` a ${x.desligamento}`:""})`).join("; ") + (semCnis.length>3 ? " e outros" : "")});
+  if(ct){
+    const contado = k => (ct.periodos||[]).some(([a, b])=>k>=a && k<=b), sobra = new Map();
+    for(const r of fd.rais) for(const [mm, v] of Object.entries(r.remuneracoes||{}))
+      if(v>0 && !contado(`${r.ano}-${mm}`)){ const k = r.nome||r.cnpj; if(!sobra.has(k)) sobra.set(k, {anexo:r.anexo, ms:[]}); sobra.get(k).ms.push(`${mm}/${r.ano}`); }
+    for(const [nome, {anexo, ms}] of sobra) out.push({grupo:"vinculo", est:"warn", fonte:"RAIS", anexo:anexo.id,
+      texto:`A RAIS mostra remuneração de ${nome} em ${ms.length} ${ms.length>1?"meses":"mês"} que o CNIS não conta: ${ms.slice(0, 4).join(", ")}${ms.length>4?" e outros":""}`});
+  }
+  const dem = fd.rais.filter(x=>x.desligamento).sort((a,b)=>isoBr(b.desligamento).localeCompare(isoBr(a.desligamento)))[0];
+  const ultMes = ct && (ct.periodos||[]).length ? ct.periodos[ct.periodos.length-1][1] : "";
+  if(dem && /^11\b/.test(dem.causa||"") && (!ultMes || chaveComp(competenciaMais(dem.desligamento.slice(3), 1)) >= ultMes)){
+    const marcado = !!(triagemDe(c).graca||{}).desempregado;
+    out.push({grupo:"qualidade", est: marcado ? "ok" : "warn", fonte:`RAIS de ${dem.ano}`, anexo:dem.anexo.id,
+      texto:`A RAIS de ${dem.ano} mostra dispensa sem justa causa por ${dem.nome||"empregador"} em ${dem.desligamento}: o desemprego involuntário estende a graça em 12 meses (art. 15, § 2º, da Lei 8.213/91)${marcado ? ", já marcado na conta" : ""}`,
+      acao: marcado ? null : {rot:"Marcar o desemprego na conta da graça", js:`marcarDesemprego('${c.id}',true)`}});
+  }
+  for(const pp of fd.ppps) for(const r of pp.riscos){
+    const per = `de ${r.ini||"data não lida"} a ${r.fim||"data não lida"}`;
+    if(r.db==null){ out.push({grupo:"ppp", est:"info", fonte:"PPP", anexo:pp.anexo.id,
+      texto:`PPP de ${pp.empresa||"empresa não lida"}: ${r.fator} ${per}${r.epi==="SIM" ? ", com EPI declarado eficaz" : ""}`}); continue; }
+    const tr = ruidoNoPeriodo(r.db, r.ini, r.fim), todos = tr.every(x=>x.acima), algum = tr.some(x=>x.acima), lims = tr.map(x=>x.lim).join(" e ");
+    out.push({grupo:"ppp", est: todos ? "ok" : "warn", fonte:"PPP", anexo:pp.anexo.id,
+      texto:`PPP de ${pp.empresa||"empresa não lida"}: ruído de ${String(r.db).replace(".", ",")} dB(A) ${per}, `
+        + (todos ? `acima do limite de ${lims} dB(A) da época` : algum ? "acima do limite da época só em parte do período" : `abaixo do limite de ${lims} dB(A) da época`)
+        + (algum && r.epi==="SIM" ? "; o EPI declarado eficaz não afasta o ruído acima do limite (Tema 555 do STF)" : "")});
+  }
+  for(const ca of fd.cats) out.push({grupo:"cat", est:"info", fonte:"CAT", anexo:ca.anexo.id,
+    texto:`CAT ${ca.tipoCat ? ca.tipoCat.toLowerCase()+" " : ""}de acidente ${(ca.tipo||"não lido").toLowerCase()} em ${ca.data||"data não lida"}`
+      + `${ca.cid ? `, CID ${ca.cid}${ca.cidDesc ? ` (${ca.cidDesc.toLowerCase()})` : ""}` : ""}${ca.cnae ? `, CNAE ${ca.cnae}` : ""}`
+      + `; o nexo pelo NTEP se confere na Lista C do Anexo II do Decreto 3.048/99`});
+  for(const r of fd.resumos){
     const nosso = ct && r.der ? mesesContadosAte(ct.periodos, isoBr(r.der).slice(0, 7)) : null;
     const dif = nosso!=null && r.carencia!=null ? nosso - r.carencia : null, longe = dif!=null && Math.abs(dif) > 2;
     out.push({grupo:"contrib", est: longe ? "warn" : "info", fonte:"Contagem do INSS", anexo:r.anexo.id,

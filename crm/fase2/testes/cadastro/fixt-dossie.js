@@ -334,5 +334,44 @@ const RESUMO_INSS_TEXTO = [
   "TEMPO A CUMPRIR : 19 ANOS 06 MESES 02 DIAS",
 ].join("\n");
 
+// ── Onda 4 · a CAT e o PPP do eSocial, como o Meu INSS os gera: na CAT, o
+// valor na linha de baixo do rótulo (o CNAE depois do CNPJ, a data e o tipo
+// do acidente na mesma linha); no PPP, um bloco por fator de risco, com a
+// intensidade na linha do fator e o período quebrado em duas linhas
+const CAT_TEXTO = [
+  "CAT - Comunicação de Acidente de Trabalho",
+  "2025-123456-7/01",
+  "I - DADOS DE IDENTIFICAÇÃO",
+  "1 - Emitente: Empregador",
+  "2 - Tipo de CAT: Inicial",
+  "II - EMITENTE",
+  "7 - Razão Social/Nome: TRANSPORTADORA ILUSORIA LTDA",
+  "8 - Tipo: 9 - Número de inscrição:",
+  "10 - CNAE:",
+  "CNPJ 66.777.888/0001-11 49.302",
+  "ACIDENTE OU DOENÇA",
+  "19 - Data do Acidente: 20 - Hora do Acidente: 21 - Após quantas horas de trabalho? 22 - Tipo:",
+  "12/03/2025 09:15 02:00 Típico",
+  "31 - Parte do corpo atingida no acidente:",
+  "753000000 - Mão (exceto punho ou dedos)",
+  "47 - CID-10:",
+  "S626 - Fratura de outros dedos",
+  "1 / 2",
+].join("\n");
+const riscoPpp = (linha, ini, fim) => [linha, "12345", "15.9 - Atendimento aos requisitos das NR-06 e NR-01 do MTP", `${ini} a`, "pelos EPIs informados (*)", fim,
+  "Medida de Condição de Prazo de", "SIM SIM SIM SIM"];
+const PPP_TEXTO = [
+  "Perfil Profissiográfico Previdenciário - PPP",
+  "29/09/2026 05:28:14",
+  "DADOS ADMINISTRATIVOS",
+  "1 - CNPJ do Domicílio Tributário/CEI/CAEPF/CNO 2 - Nome Empresarial 3 - CNAE",
+  "77.888.999 FUNDICAO IMAGINARIA LTDA 2451-2/00",
+  "15 - EXPOSIÇÃO A FATORES DE RISCOS:",
+  ...riscoPpp("F 02.01.001 - Ruído 88.0 decibel (A) NR-15 - NA SIM", "01/01/1995", "31/12/1998"),
+  ...riscoPpp("F 02.01.001 - Ruído 92.4 decibel (A) NR-15 - NA SIM", "01/01/2004", "31/12/2006"),
+  ...riscoPpp("Q 01.18.001 - Sílica livre NA NA NA SIM", "01/01/2004", "31/12/2006"),
+  "16 - RESPONSÁVEL PELOS REGISTROS AMBIENTAIS:",
+].join("\n");
+
 module.exports = { CAGED_TEXTO, RAIS_TEXTO, itensDeLinhas, laudoPmf, LAUDO_SABI_TEXTO, cartaNova, CARTA_ANTIGA_TEXTO, extratoPag,
-  processo, EXIGENCIA_AGENDAR, agendamento, comunicacaoIndeferimento, RESUMO_INSS_TEXTO };
+  processo, EXIGENCIA_AGENDAR, agendamento, comunicacaoIndeferimento, RESUMO_INSS_TEXTO, blocoRais, CAT_TEXTO, PPP_TEXTO };
