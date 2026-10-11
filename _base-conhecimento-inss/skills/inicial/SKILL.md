@@ -56,6 +56,11 @@ final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
   e as `base-especial-*`/`defesa-probatoria` pertinentes. Reforce a peca contra cada
   fragilidade encontrada. Citacao suspeita apontada pelo red-team segue ao agente
   `verificador-precedentes` para conferencia em fonte oficial.
+- Na mesma rodada, despache ao agente `base-conhecimento-inss:conferente-tema-1124`
+  (Onda 178) a peca, a copia do processo administrativo, a carta de exigencia e o
+  orgao que vai julgar. Ele confronta o termo inicial pedido com a tese do Tema 1124,
+  com os 17 acordaos do STJ e com a tendencia do orgao julgador, e classifica cada
+  documento pelo item da tese.
 
 ## 5. Coerencia fato x prova x valor
 - Toda alegacao de fato e o valor da causa devem estar amparados por um documento

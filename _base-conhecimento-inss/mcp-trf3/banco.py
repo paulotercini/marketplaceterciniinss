@@ -70,7 +70,9 @@ AVISOS = [
     "meses_com_cobertura_parcial_no_cjf antes de concluir que um julgado não existe.",
     "Fonte: Jurisprudência Unificada do CJF. Nas recursais o texto vem da fonte com a letra acentuada apagada (rudo, no lugar de ruído), e a busca "
     "compensa isso com um dicionário montado do texto do TRF3. Palavra que o dicionário não tem é procurada só "
-    "como digitada. Registros antigos sem ementa nem decisão ficam de fora. Citação em peça exige conferência no portal do TRF3.",
+    "como digitada. Registros antigos sem ementa nem decisão ficam de fora, e nas Recursais isso tira 3.456 "
+    "acórdãos de outubro e novembro de 2021 que o portal do TRF3 tem com texto (conferido em 11/10/2026, fora por "
+    "decisão do titular). Citação em peça exige conferência no portal do TRF3.",
 ]
 
 

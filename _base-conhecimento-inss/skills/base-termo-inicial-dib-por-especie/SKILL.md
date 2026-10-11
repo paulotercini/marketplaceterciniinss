@@ -41,6 +41,10 @@ O INSS desconsidera afastamento em auxílio-doença. Refute com prova médica.
 
 A defesa pró-segurado pivota em pedido expresso de DIB favorável, prova do afastamento ou óbito, e fundamentação no art. específico. Combinar com `peticao-previdenciaria`, `pensao-por-morte` e `base-incapacidade-b31-temporaria`.
 
+## 5-A. Prova levada a juízo e o Tema 1124 (Onda 178)
+
+Quando a DIB pedida depende de prova que não passou pelo INSS, a regra da espécie não basta para fixar a data. Vale o Tema 1124/STJ, e a peça passa pelo agente `conferente-tema-1124`. As datas legais dos arts. 49, 54, 57, § 2º, 60, 74 e 80 da Lei 8.213/91 continuam valendo quando o requerimento apto foi formulado dentro das hipóteses legais. Parte do TRF3 fixa a DIB na DER e os atrasados desde a citação, e por isso a peça pede que a DIB e os efeitos financeiros coincidam. Matriz em `tema-1124-instrucao-administrativa`.
+
 ## 6. Documentos essenciais
 
 DER. Prova de afastamento. Atestado médico. Certidão de óbito. CTPS. CNIS.

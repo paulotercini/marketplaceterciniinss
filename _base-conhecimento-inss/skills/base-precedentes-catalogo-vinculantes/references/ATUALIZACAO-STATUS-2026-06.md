@@ -6,7 +6,7 @@ As teses literais completas estão nos catálogos CATALOGO-TEMAS-STJ.md e CATALO
 
 ## STJ - TEMAS JULGADOS (datas da página oficial do tema)
 
-- **Tema 1124/STJ.** Julgado em 08/10/2025. Acórdão publicado em 06/11/2025. Rel. Min. Paulo Sérgio Domingues. REsp 1.913.152/SP, 1.905.830/SP e 1.912.784/SP (origem TRF3). Tese em 10 itens no catálogo. Central para interesse de agir e efeitos financeiros.
+- **Tema 1124/STJ.** Julgado em 08/10/2025. Acórdão publicado em 06/11/2025. Relator para o acórdão o Min. Paulo Sérgio Domingues (Min. Benedito Gonçalves no REsp 1.912.784). REsp 1.913.152/SP, 1.905.830/SP e 1.912.784/SP (origem TRF3). Oito embargos de declaração julgados em 09/09/2026 (DJEN 21/09/2026), conferidos em 11/10/2026. Tese em 10 itens no catálogo. Central para interesse de agir e efeitos financeiros.
 
 - **Tema 1140/STJ.** Julgado em 14/08/2024. Acórdão publicado em 27/08/2024. Situação oficial "Acórdão Publicado - RE Pendente". Readequação aos tetos das EC 20/98 e 41/2003 com aplicação dos limitadores da época (menor e maior valor-teto).
 
