@@ -2,6 +2,16 @@
 
 Testado em 19/09/2026 nas duas bases, com as consultas citadas abaixo. Complementa `MCP-TRF3-E-CONFERENCIA-NO-PORTAL.md`, que trata da conferência no portal do TRF3, e não a repete.
 
+## Ordem de consulta entre os MCPs superiores e trf3 (11/10/2026)
+
+Os dois servidores funcionam interligados, e a ordem é fixa. O TRF3 só se pesquisa depois de saber o que o STF e o STJ decidiram.
+
+**Primeiro passo, no `superiores`.** Antes de qualquer pesquisa no TRF3, verifique se o STF ou o STJ já decidiu a matéria. Rode `buscar_temas` com a expressão da tese e `previdenciario=true`, e depois `obter_tema` no tema encontrado, para ler a tese literal, a situação, o leading case e o tema vinculado do outro tribunal. Não havendo tema, procure em `buscar_decisoes_superiores` os acórdãos do STJ sobre a matéria. Não havendo tema nem acórdão, registre "Não localizado" nos tribunais superiores, e só então vá ao TRF3 e à TNU.
+
+**Segundo passo, no `trf3`, que só começa depois do primeiro.** Havendo tema ou julgado superior, a pergunta passa a ser como o TRF3 e as Turmas Recursais o interpretam e aplicam. Busque nos acervos `trf3` e `recursais` pelo número do tema nas duas grafias, porque os acórdãos escrevem das duas formas e a busca não tem operador OU. No Tema 1124 do STJ, por exemplo, "tema 1124" e "tema 1.124" trazem conjuntos diferentes. Combine o número com a expressão da tese para reduzir o volume. Classifique o que o TRF3 faz com o tema, se aplica, se faz distinção, se sobrestá o processo à espera do julgamento ou se decide contra a tese. Siga a regra de escolher o acórdão pela data de julgamento e de revisitar os demais acórdãos do mesmo processo. Confira o `polo_recorrente`, porque "provido" não quer dizer favorável ao segurado.
+
+**Resultado.** O relatório de pesquisa apresenta, nesta ordem, a tese do tribunal superior, com a situação e o `link_oficial`, e depois a leitura que o TRF3 e as Turmas Recursais fazem dela, com dois ou três acórdãos representativos. Se o TRF3 decide contra a tese vinculante, isso aparece como argumento de reforma, com fundamento no art. 927 do CPC, e não como jurisprudência a seguir. Nada vai para a peça sem a conferência do tema no `link_oficial` e do acórdão do TRF3 no portal.
+
 ## Qual base para qual pergunta
 
 O MCP `trf3` responde o que decidem a 7ª à 10ª Turma e a 3ª Seção do TRF3 e as Turmas Recursais de SP e MS, com a TRU3 dentro delas. O MCP `iurisprudencia` tem duas bases. A da TNU cobre de 18/01/2019 a 28/08/2026, com 9.550 acórdãos e 3.392 decisões monocráticas. A do CRPS cobre de 03/01/2022 a 15/09/2026, com 2.128.502 acórdãos das Juntas e das Câmaras.
