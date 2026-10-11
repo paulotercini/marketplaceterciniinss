@@ -3975,7 +3975,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.07</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.08</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7848,11 +7848,15 @@ async function conferirPje(coletaId){
     // F131 · o caso casa pelo número principal E pelos números anexos
     // (casos.processos, onde o cumprimento de sentença entra à mão)
     const porProcesso = new Map();
-    for(const k of D.casos){
+    // F189 · o mesmo número em vários casos (o processo de 2007 tinha 4, 3
+    // encerrados): os encerrados entram primeiro e o aberto passa por cima
+    const fechado = k => !!k.encerrado_em;
+    for(const k of [...D.casos].sort((a,b)=>fechado(b)-fechado(a))){
       const dig = soDig(k.processo);
       if(dig) porProcesso.set(dig, k);
       for(const px of (Array.isArray(k.processos)?k.processos:[])){
-        const d2 = soDig(px && (px.numero||px)); if(d2 && !porProcesso.has(d2)) porProcesso.set(d2, k);
+        const d2 = soDig(px && (px.numero||px));
+        if(d2 && (!porProcesso.has(d2) || fechado(porProcesso.get(d2)))) porProcesso.set(d2, k);
       }
     }
     const plano = { coleta_id: coletaId, grau: dados.grau||"", host: dados.host||"",
@@ -8367,11 +8371,14 @@ async function textoDoDocumento(caminho){
   if(/^text\//.test(tipo)){
     const doc = new DOMParser().parseFromString(await blob.text(), "text/html");
     doc.querySelectorAll("script,style,noscript").forEach(x=>x.remove());
-    const texto = ((doc.body&&doc.body.textContent)||"").replace(/[ \t]+/g," ").replace(/\s*\n\s*/g,"\n").trim();
+    const texto = ((doc.body&&doc.body.textContent)||"").replace(/\u0000/g,"").replace(/[ \t]+/g," ").replace(/\s*\n\s*/g,"\n").trim();
     return { tipo, tamanho:blob.size, texto: texto.length>=50 ? texto : null };
   }
   if(!/pdf/.test(tipo)) return { tipo, tamanho:blob.size, texto:null };
   const lido = await lerPdfPorPagina(blob);
+  // F189 · o Postgres recusa o caractere nulo (\u0000), que alguns PDFs do e-SAJ
+  // trazem no texto: a gravação falhava inteira e 148 documentos ficaram fora
+  lido.texto = lido.texto.replace(/\u0000/g, "");
   return { tipo, tamanho:blob.size, texto: lido.texto.length>=50 ? lido.texto : null,
            paginas: lido.paginas, paginas_imagem: lido.imagem };
 }
@@ -8470,8 +8477,10 @@ async function conferirPjeProc(coletaId){
     // processos abertos numa coleta só; o de um processo é um lote de um
     const lote = Array.isArray(c0.lote) ? c0.lote : [c0];
     // o caso pelo número principal OU por qualquer processo da lista da ficha
-    const casoDe = dig => D.casos.find(x=>soDig(x.processo)===dig
-      || (Array.isArray(x.processos) && x.processos.some(q=>soDig(q && (q.numero||q))===dig))) || null;
+    const casaNum = (x, dig) => soDig(x.processo)===dig
+      || (Array.isArray(x.processos) && x.processos.some(q=>soDig(q && (q.numero||q))===dig));
+    // o caso aberto antes do encerrado com o mesmo número
+    const casoDe = dig => D.casos.find(x=>!x.encerrado_em && casaNum(x, dig)) || D.casos.find(x=>casaNum(x, dig)) || null;
     const plano = { coleta_id: coletaId, numero: lote.length>1 ? `${lote.length} processos` : (c0.numero||"?"),
                     grau: lote.length>1 ? "" : (c0.grau||""), caso_id: null, semCaso: [],
                     fichas: [], andamentos: [], docs: [],
