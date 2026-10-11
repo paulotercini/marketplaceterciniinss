@@ -22,6 +22,17 @@
         "PYTHONIOENCODING": "utf-8"
       }
     },
+    "superiores": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--script",
+        "${CLAUDE_PLUGIN_ROOT}/mcp-superiores/servidor.py"
+      ],
+      "env": {
+        "PYTHONIOENCODING": "utf-8"
+      }
+    },
     "acervo": {
       "command": "uv",
       "args": [

@@ -1,21 +1,23 @@
 ---
 name: tema-1124-instrucao-administrativa
-description: "Skill do Tema 1124/STJ (REsp 1.905.830/SP, mérito publicado em 06/11/2025, embargos de declaração julgados em 09/09/2026 e publicados em 21/09/2026) sobre interesse de agir, instrução administrativa e efeitos financeiros. Use SEMPRE que mencionar Tema 1124, interesse de agir, requerimento administrativo, requerimento apto, indeferimento forçado, carta de exigência, indeferimento automático, robô do INSS, justificação administrativa, PPP não apresentado ao INSS, novo PPP em juízo, prova nova em juízo, perícia judicial confirmatória, efeitos financeiros DER ou citação, reafirmação da DER, Tema 350/STF, Tema 995/STJ, benefício diverso do requerido, formulário preenchido errado, restabelecimento de auxílio por incapacidade, alta programada, auxílio-acidente após perícia, revisão com fato novo, modulação do Tema 1124, arts. 176 e 176-E do Decreto 3.048/99, art. 347, § 4º, do Decreto 3.048/99. Use OBRIGATORIAMENTE com a skill peticao-previdenciaria para petições de concessão ou revisão, e com decadencia-revisao-previdenciaria quando a extinção sem mérito exigir retorno à via administrativa. SEMPRE alertar quando documentos essenciais não foram apresentados ao INSS."
+description: "Skill do Tema 1124/STJ (REsps 1.913.152/SP, 1.905.830/SP e 1.912.784/SP, mérito publicado em 06/11/2025, oito embargos publicados em 21/09/2026, 17 acórdãos conferidos no STJ em 11/10/2026) sobre interesse de agir, instrução administrativa e termo inicial dos efeitos financeiros, com o mapa de aplicação no TRF3 e nas Turmas Recursais. Use SEMPRE que mencionar Tema 1124, interesse de agir, requerimento apto, indeferimento forçado, carta de exigência, indeferimento automático, campo marcado não no Meu INSS, justificação administrativa, PPP novo ou retificado em juízo, prova nova, perícia judicial confirmatória, efeitos financeiros na DER ou na citação, DIB na DER com atrasados da citação, reafirmação da DER, Tema 350/STF, Tema 995/STJ, revisão com fato novo, aplicação de ofício ou título que diferiu o termo inicial. Use com peticao-previdenciaria em concessão ou revisão e despache o agente conferente-tema-1124 em toda peça que fixe termo inicial."
 ---
 
 # Tema 1124/STJ, instrução administrativa, interesse de agir e efeitos financeiros
 
 ## Finalidade
 
-Esta skill consolida o Tema 1124/STJ sobre interesse de agir em ações previdenciárias e sobre o termo inicial dos efeitos financeiros quando há prova não submetida ao INSS. A Onda 161 (27/09/2026) substituiu a paráfrase anterior da tese, que trazia a numeração dos itens 1.1 a 1.6 trocada, pela tese literal, e incorporou os quatro acórdãos dos embargos de declaração, que esclareceram as hipóteses de enquadramento.
+Esta skill consolida o Tema 1124/STJ sobre interesse de agir em ações previdenciárias e sobre o termo inicial dos efeitos financeiros quando há prova não submetida ao INSS. A Onda 161 (27/09/2026) substituiu a paráfrase anterior da tese, que trazia a numeração dos itens 1.1 a 1.6 trocada, pela tese literal, e incorporou os embargos de declaração, que esclareceram as hipóteses de enquadramento. A Onda 178 (11/10/2026) conferiu no site oficial do STJ os 17 acórdãos do tema, levantou a aplicação no TRF3 e nas Turmas Recursais de SP e MS e criou o agente `conferente-tema-1124`, que confronta o termo inicial pedido em cada peça com a tese e com o órgão que vai julgar.
 
 ## Fontes primárias
 
-**Mérito.** REsp 1.905.830/SP, Primeira Seção, julgado em 08/10/2025, relator para o acórdão o Ministro Paulo Sérgio Domingues, vencida a relatora Ministra Maria Thereza de Assis Moura quanto à redação da tese, acórdão publicado no DJEN de 06/11/2025. O caso concreto teve os efeitos financeiros fixados na data da contestação, que precedeu a juntada do mandado de citação, porque a CTC do regime próprio só foi apresentada com a petição inicial.
+**Mérito.** Três recursos especiais do TRF3, afetados em conjunto (DJe de 17/12/2021) e redelimitados por questão de ordem de 22/05/2024 (DJe de 29/05/2024), foram julgados pela Primeira Seção em 08/10/2025, com acórdãos publicados no DJEN de 06/11/2025. A tese foi aprovada por maioria, vencida a relatora, Ministra Maria Thereza de Assis Moura. O relator para o acórdão foi o Ministro Paulo Sérgio Domingues nos REsps 1.913.152/SP e 1.905.830/SP, e o Ministro Benedito Gonçalves no REsp 1.912.784/SP, porque o primeiro estava impedido nesse caso concreto. [CONFERIDO em 11/10/2026]
 
-**Embargos de declaração.** Quatro acórdãos da Primeira Seção, relator o Ministro Paulo Sérgio Domingues, julgados por unanimidade em 09/09/2026 e publicados no DJEN de 21/09/2026. Os do IBDP (Pet 1109666/2025) e da autora Sueli de Freitas Pedroso (Pet 1111895/2025) foram parcialmente acolhidos, sem efeitos infringentes, apenas para esclarecer o item 1.4 quanto ao indeferimento automático. Os do INSS (Pet 1124016/2025) foram rejeitados. Os da CUT (Pet 1112497/2025) não foram conhecidos, porque o amicus curiae não tem legitimidade para defender o interesse particular da parte no caso concreto.
+**Os três casos concretos.** No REsp 1.913.152, a perícia judicial confirmou os PPPs já apresentados ao INSS, e a DIB ficou na DER pelos itens 2.1 e 2.2. É o caso mais útil ao segurado, porque os embargos do INSS foram rejeitados com a constatação de que não havia "nenhuma alegação ou comprovação de que o INSS ofertou ao segurado a possibilidade de produzir outras provas" (p. 10). No REsp 1.905.830, a CTC do regime próprio só veio com a petição inicial, e os efeitos foram fixados na data da contestação, apresentada antes da juntada do mandado de citação (item 2.3). No REsp 1.912.784, o recurso do INSS não foi conhecido por falta de interesse recursal, e a DIB ficou na DER.
 
-Os arquivos em PDF dos cinco acórdãos estão com o titular. A ementa dos embargos do INSS menciona "Tema 955 do STJ", mas o corpo do voto trata do Tema 995, e a referência correta é o Tema 995/STJ.
+**Embargos de declaração.** Oito acórdãos da Primeira Seção, relator o Ministro Paulo Sérgio Domingues, julgados por unanimidade em 09/09/2026 e publicados no DJEN de 21/09/2026. Os do IBDP, IEPREV e IAP, opostos nos três recursos, e os da segurada no REsp 1.905.830 foram parcialmente acolhidos, sem efeitos modificativos, só para esclarecer o item 1.4 quanto ao indeferimento automático. Os do INSS, nos três recursos, foram rejeitados. Os da CUT, no REsp 1.905.830, não foram conhecidos, porque o amicus curiae não tem legitimidade para defender o interesse da parte no caso concreto. [CONFERIDO em 11/10/2026]
+
+Fichas, íntegras oficiais, extratos com página e ementas dos 17 acórdãos estão em `references/STJ-ACORDAOS-TEMA-1124.md`. A tese se cita pelo dispositivo do acórdão de mérito, porque a ementa do REsp 1.912.784 traz a tese em redação de rascunho, diferente da aprovada. O "Tema 955" que aparece nas ementas dos embargos e no voto dos embargos do INSS é erro material, e a referência correta é o Tema 995/STJ.
 
 ## ALERTA OBRIGATÓRIO DE INSTRUÇÃO
 
@@ -23,13 +25,13 @@ SEMPRE que o usuário informar dados de um caso concreto para ajuizamento de aç
 
 **ALERTA VERMELHO, instrução insuficiente.** O segurado não apresentou ao INSS documento essencial ao direito (PPP, LTCAT, CTC, laudo médico, prova rural, certidão). O ajuizamento pode terminar em extinção sem mérito por falta de interesse de agir, e a extinção pode consumar a decadência da revisão. O caminho é o novo requerimento administrativo com o documento.
 
-**ALERTA LARANJA, instrução parcial.** O requerimento era apto, mas incompleto, e o INSS indeferiu sem carta de exigência ou sem oferecer justificação administrativa. O caso se enquadra no item 2.2, com DIB na DER, e o indeferimento sem exigência é conduta vedada pelo item 1.4, conforme os embargos de declaração.
+**ALERTA LARANJA, instrução parcial.** O requerimento era apto, mas incompleto, e o INSS indeferiu sem carta de exigência ou sem oferecer justificação administrativa. O caso se enquadra no item 2.2, que permite ao juiz fixar a DIB na DER, e o indeferimento sem exigência é conduta vedada pelo item 1.4, conforme os embargos de declaração. Como o item 2.2 é faculdade ("poderá"), a peça prova a omissão com o ID do processo administrativo.
 
-**SEM ALERTA, instrução adequada.** Toda a documentação relevante foi apresentada ao INSS. O caso segue o item 2.1, com DIB na DER.
+**SEM ALERTA, instrução adequada.** Toda a documentação relevante foi apresentada ao INSS. O caso segue o item 2.1, com DIB na DER, ou na data posterior em que os requisitos se completaram (Tema 995/STJ).
 
 **Dados mínimos para a verificação.** Cópia do processo administrativo ou descrição do que foi apresentado, lista dos documentos que fundamentam a ação, identificação dos que estavam e dos que não estavam no processo administrativo, existência de carta de exigência e seu cumprimento. Faltando esses dados, pedir antes de redigir.
 
-## TESE LITERAL (acórdão de mérito, conferida no PDF do DJEN de 06/11/2025)
+## TESE LITERAL (dispositivo dos três acórdãos de mérito, conferida no site oficial do STJ em 11/10/2026)
 
 **1) Configuração do interesse de agir para a propositura da ação judicial previdenciária.**
 
@@ -59,13 +61,13 @@ SEMPRE que o usuário informar dados de um caso concreto para ajuizamento de aç
 
 A tese não pretende abranger todas as situações, e a ementa dos embargos (item 3) qualifica as situações descritas no voto como exemplos, com valor de obiter dictum. A exceção é o esclarecimento do item 1.4, sobre o indeferimento automático, que é a parte acolhida dos embargos e integra o julgado. Na peça, o exemplo desfavorável do voto se enfrenta como obiter, e o favorável se usa como reforço da tese, nunca como a tese. A matriz abaixo reúne os exemplos do item 5 do voto condutor e os esclarecimentos de 09/09/2026, e cada linha deve ser conferida contra o caso concreto.
 
-**DIB na DER, item 2.1.** O PPP ou a CTPS apresentados ao INSS bastavam, e o juiz apenas os valorou de outra forma. A perícia judicial confirmou o que o PPP apresentado ao INSS já descrevia. A perícia médica judicial reconheceu a incapacidade desde a DER, sem agravamento nem doença nova. Os embargos acrescentaram que a prova técnica judicial, seja médica, social ou ambiental, que confirma fatos já comprovados por documento hábil na via administrativa leva a DIB à DER quando o INSS não ofertou ou negou a complementação da prova.
+**DIB na DER, item 2.1.** O PPP ou a CTPS apresentados ao INSS bastavam, e o juiz apenas os valorou de outra forma. A perícia judicial confirmou o que o PPP apresentado ao INSS já descrevia. A perícia médica judicial reconheceu a incapacidade desde a DER, sem agravamento nem doença nova. Os embargos acrescentaram que a prova técnica judicial, seja médica, social ou ambiental, que confirma fatos já comprovados por documento hábil na via administrativa leva a DIB à DER quando o INSS não ofertou ou negou a complementação da prova. Os embargos do INSS acrescentam a condição de que a prova em juízo solucione a controvérsia sobre o fato (p. 9). O voto condutor, por sua vez, limita a colaboração do INSS à perícia médica, sem alcançar a perícia de especialidade (p. 41). Os embargos, posteriores e específicos, dizem que o tema não diferenciou a prova médica, a social e a ambiental (p. 14), e são eles que a peça invoca.
 
 **DIB na DER, item 2.2.** Requerimento apto e incompleto, indeferido sem carta de exigência ou sem oferta de justificação administrativa. Os embargos declararam **vedado o indeferimento automático, por servidor ou por ferramenta automatizada, sem oportunidade de complementar a prova ou de oferecer justificação administrativa**, quando a documentação de contribuições, vínculos e qualidade de segurado foi anexada e só precisa ser esclarecida ou complementada. A reafirmação da DER para data anterior à citação é possível, inclusive no curso do processo administrativo (art. 577, II, da IN 128/2022).
 
-**DIB na citação, item 2.3.** Prova surgida depois da propositura da ação ou impossível de obter antes, como a perícia judicial que reconhece atividade especial sem PPP prévio, o PPP ou LTCAT emitido depois do ajuizamento, o vínculo ou o trabalho rural reconhecido por prova surgida no curso da ação, a incapacidade ou o agravamento surgido no curso do processo e a mudança do grupo familiar depois do ajuizamento. Se a incapacidade constatada surgiu depois da citação, a DIB é a data em que surgiu.
+**DIB na citação, item 2.3.** Prova surgida depois da propositura da ação ou impossível de obter antes, como a perícia judicial que reconhece atividade especial sem PPP prévio, o PPP ou LTCAT emitido depois do ajuizamento, o vínculo ou o trabalho rural reconhecido por prova surgida no curso da ação, a incapacidade ou o agravamento surgido no curso do processo e a mudança do grupo familiar depois do ajuizamento. Se a incapacidade constatada surgiu depois da citação, a DIB é a data em que surgiu. O voto condutor (item 5.3) inclui a CTPS que não foi ao processo administrativo e o PPP ou LTCAT surgido só em juízo, e ressalva que períodos trazidos só em juízo levam à falta de interesse de agir (p. 34 e 35).
 
-**Extinção sem mérito, item 1.6.** Os embargos foram expressos em dizer que **a juntada, na ação, de documento novo que existia e não foi levado ao INSS, como um novo PPP, afasta o interesse de agir**, e o processo deve ser extinto para que o documento seja apresentado em novo requerimento. A mesma consequência atinge o fato novo e o formulário eletrônico preenchido com pedido diverso do pretendido. O voto dos embargos também afirmou ser impossível a fungibilidade de pedidos entre a via administrativa e a judicial, mas a afirmação é obiter, e entre BPC e benefício por incapacidade o Tema 217/TNU segue invocável, com o risco declarado (ver `base-fungibilidade-previdenciaria`).
+**Extinção sem mérito, item 1.6.** Os embargos foram expressos em dizer que **a juntada, na ação, de documento novo que existia e não foi levado ao INSS, como um novo PPP, afasta o interesse de agir**, e o processo deve ser extinto para que o documento seja apresentado em novo requerimento. Os embargos do INSS situam a extinção no caso em que a prova não foi produzida porque a parte não a requereu ou não atendeu às intimações (p. 9). A mesma consequência atinge o fato novo e o formulário eletrônico preenchido com pedido diverso do pretendido. O voto dos embargos também afirmou ser impossível a fungibilidade de pedidos entre a via administrativa e a judicial, mas a afirmação é obiter, e entre BPC e benefício por incapacidade o Tema 217/TNU segue invocável, com o risco declarado (ver `base-fungibilidade-previdenciaria`).
 
 **Exceção da prova complementar, final do item 1.6.** Documento não essencial, que apenas reforça prova administrativa já suficiente por si, não afasta o interesse de agir nem desloca a DIB. O voto condutor cita os recibos de despesas comuns na união estável e os contracheques que reforçam vínculo anotado em CTPS, e admite a DIB na DER quando o início de prova material apresentado ao INSS bastava, ainda que o segurado não tenha levado testemunhas na via administrativa.
 
@@ -77,15 +79,27 @@ A tese não pretende abranger todas as situações, e a ementa dos embargos (ite
 
 **Justificação administrativa.** O INSS deve oferecê-la para prova oral suplementar ou substitutiva de documento quando legalmente possível. Quando o documento não existe ou não está disponível, cabe ao segurado informar a ausência e pedir a justificação (art. 108 da Lei 8.213/1991 e art. 570 da IN 128/2022), e o pedido deve constar do processo administrativo.
 
-**Modulação.** Não houve modulação. A Primeira Seção a negou no mérito, por considerar que o julgado consolidou a jurisprudência do STJ e do STF, e rejeitou o pedido nos embargos. A tese se aplica aos processos pendentes cuja discussão sobre a DIB não esteja preclusa, e a aplicação imediata vale tanto para os deveres do segurado quanto para os do INSS.
+**Modulação.** Não houve modulação. A Primeira Seção a negou no mérito, por considerar que o julgado consolidou a jurisprudência do STJ e do STF, e rejeitou o pedido nos embargos. A tese se aplica aos processos pendentes cuja discussão sobre a DIB não esteja preclusa, e a aplicação imediata vale tanto para os deveres do segurado quanto para os do INSS. Para tutelas, execuções e perícias já realizadas, a diretriz geral se aplica "de forma subsidiária" (embargos do IBDP, p. 21).
 
 **Benefícios com DIB legal.** As datas de início previstas nos arts. 49, 54, 57, § 2º, 60, 74 e 80 da Lei 8.213/1991 continuam valendo, desde que o requerimento apto tenha sido formulado dentro das hipóteses legais.
 
+## APLICAÇÃO NO TRF3 E NAS TURMAS RECURSAIS (Onda 178)
+
+Retrato de 11/10/2026, montado com 63 acórdãos do TRF3, das Turmas Recursais de SP e MS e da TRU lidos em inteiro teor, mais seis da TNU e três do TRF4. Números, datas e trechos estão em `references/APLICACAO-TRF3-TEMA-1124.md`, cada julgado com a sua marca. No tribunal, a disputa é sobre a data. Nas Turmas Recursais, é sobre a porta de entrada, e a extinção sem mérito foi o desfecho mais frequente entre os acórdãos lidos.
+
+A DER vem quando a prova judicial só confirma documento do processo administrativo, quando o PPP com defeito foi corrigido depois sem que o INSS tivesse exigido a correção, e no rural em que as testemunhas confirmam o início de prova material apresentado ao INSS. A TNU equipara à omissão a carta de exigência que não pede o documento decisivo.
+
+A citação vem quando a perícia judicial decide a especialidade, inclusive a indireta e a por similaridade, e quando o documento rural só foi levado a juízo. A tese da "natureza meramente declaratória" da perícia foi rejeitada pela 8ª e pela 10ª Turmas. A omissão da empregadora em fornecer o PPP não é posta na conta do INSS pela TNU.
+
+Quatro divergências mudam a estratégia. A 7ª e a 8ª Turmas usam, em parte dos casos, a fórmula "DIB na DER e atrasados desde a citação". A 9ª Turma veda aplicar o tema de ofício ao capítulo não devolvido, e a 10ª o aplica em recurso só do INSS. A 7ª Turma não extingue processo em curso pelo item 1.6 e só desloca os efeitos, enquanto a 10ª Turma e a 14ª Turma Recursal de SP extinguem até depois da instrução. O campo "não" do formulário do Meu INSS cede ao conjunto documental na 1ª Turma Recursal de SP e vincula na 9ª e na 14ª, na linha de acórdão da TNU.
+
+Na TRU e na TNU, o interesse de agir é tratado como matéria processual (Súmula 43/TNU), e a divergência entre Turmas Recursais sobre a extinção não chega à uniformização. No cumprimento de sentença, o que o título disse sobre a prova decide o termo inicial, e a premissa de que a prova só veio em juízo faz coisa julgada. Por isso essa premissa se ataca ainda na fase de conhecimento.
+
 ## Uso ofensivo na peça
 
-O item 1.4, com o esclarecimento dos embargos, é o fundamento mais forte do escritório. Todo indeferimento de requerimento apto sem carta de exigência ou sem oferta de justificação administrativa deve ser apontado na inicial com o ID do processo administrativo, porque configura o interesse de agir e leva a DIB à DER pelo item 2.2. A objeção previsível do INSS, de que a prova é nova, deve ser nomeada e refutada em parágrafo próprio, com a demonstração de que a prova judicial apenas confirma o documento já apresentado, o que prepara os embargos por omissão se a sentença não enfrentar o ponto.
+O item 1.4, com o esclarecimento dos embargos, é o fundamento mais forte do escritório. Todo indeferimento de requerimento apto sem carta de exigência ou sem oferta de justificação administrativa deve ser apontado na inicial com o ID do processo administrativo, porque configura o interesse de agir e leva a DIB à DER pelo item 2.2. A objeção previsível do INSS, de que a prova é nova, deve ser nomeada e refutada em parágrafo próprio, com a demonstração de que a prova judicial apenas confirma o documento já apresentado, o que prepara os embargos por omissão se a sentença não enfrentar o ponto. Antes da entrega, a peça passa pelo agente `conferente-tema-1124`.
 
-A distinção entre ausência de prova e valoração de prova existente, adotada pelo TRF4 (5ª Turma, Apelação Cível 5015397-63.2023.4.04.7112, j. 25/11/2025) [NÃO CONFIRMADO], converge com os embargos, mas o fundamento a citar é o próprio Tema 1124, itens 2.1 e 2.2 e o esclarecimento de 09/09/2026, e não o precedente regional.
+A distinção entre ausência de prova e valoração de prova existente, adotada pelo TRF4 (5ª Turma, Apelação Cível 5015397-63.2023.4.04.7112, j. 25/11/2025, persuasivo de outra Região) [CONFERIDO em 11/10/2026 quanto a número, órgão, relator e data], converge com os embargos, mas o fundamento a citar é o próprio Tema 1124, itens 2.1 e 2.2 e o esclarecimento de 09/09/2026, e não o precedente regional.
 
 ## DPR nas revisões, art. 347, § 4º, do Decreto 3.048/99
 
@@ -115,8 +129,8 @@ Se o segurado ajuíza revisão com documento apresentado só em juízo e o juiz 
 
 | Fonte | Conteúdo |
 |---|---|
-| Tema 1124/STJ, REsp 1.905.830/SP (mérito j. 08/10/2025, DJEN 06/11/2025) | Interesse de agir e efeitos financeiros |
-| EDcl no REsp 1.905.830/SP (j. 09/09/2026, DJEN 21/09/2026) | Vedação do indeferimento automático sem exigência, matriz de enquadramento, ausência de modulação |
+| Tema 1124/STJ, REsps 1.913.152/SP, 1.905.830/SP e 1.912.784/SP (mérito j. 08/10/2025, DJEN 06/11/2025) | Interesse de agir e efeitos financeiros |
+| Oito EDcl nos três REsps (j. 09/09/2026, DJEN 21/09/2026) | Vedação do indeferimento automático sem exigência, matriz de enquadramento, ausência de modulação |
 | Tema 350/STF (RE 631.240) e RE 1.553.134 | Prévio requerimento e mesmo conjunto probatório |
 | Tema 995/STJ | Reafirmação da DER |
 | Tema 1.196/STF | Prazo estimado do auxílio por incapacidade temporária |
@@ -132,6 +146,8 @@ Os dispositivos da Lei 8.213/1991, do Decreto 3.048/99 e da IN 128/2022 foram tr
 
 ## INTERAÇÃO COM OUTRAS SKILLS
 
+**conferente-tema-1124 (agente, Onda 178).** Confronta o termo inicial pedido com a tese, com os 17 acórdãos do STJ e com a tendência do órgão que vai julgar. Despachar em toda peça que fixe ou discuta o termo inicial, na revisão aprofundada, nas contrarrazões e recursos sobre efeitos financeiros e no cumprimento de sentença que tenha recebido o termo inicial diferido.
+
 **peticao-previdenciaria.** Consultar esta skill antes de toda petição de concessão ou revisão, e redigir a seção "DOS EFEITOS FINANCEIROS" com o item aplicável da tese.
 
 **base-efeito-translativo-tema-1124-defesa.** Defesa contra a aplicação de ofício do Tema 1124 em grau recursal, sem o argumento de modulação, que o STJ afastou.
@@ -142,7 +158,7 @@ Os dispositivos da Lei 8.213/1991, do Decreto 3.048/99 e da IN 128/2022 foram tr
 
 **base-documentos-comprobatorios-in128.** Conferir quais documentos eram exigíveis do segurado e quais dependiam de providência do INSS, como pesquisa externa e justificação administrativa.
 
-**requerimento-administrativo-inss.** Acionar quando faltar requerimento, quando o requerimento foi inapto ou quando a extinção exigir novo pedido, que deve trazer toda a documentação e o pedido expresso de justificação administrativa se faltar documento.
+**requerimento-administrativo-inss.** Acionar quando faltar requerimento, quando o requerimento foi inapto ou quando a extinção exigir novo pedido, que deve trazer toda a documentação e o pedido expresso de justificação administrativa se faltar documento. O formulário do Meu INSS se confere campo a campo, porque o "não" em tempo especial, rural ou de professor já levou à extinção (seção própria naquela skill).
 
 **analise-documental-incapacidade.** Nos benefícios por incapacidade, o restabelecimento depois da alta programada exige novo requerimento.
 
