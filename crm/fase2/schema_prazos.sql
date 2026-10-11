@@ -24,3 +24,8 @@ exception when duplicate_object then null; end $$;
 -- "aguardando sentença". É o estado que o escritório DECLARA, e é ele que um
 -- dia o cliente vai ler no portal, no lugar da frase deduzida do último evento.
 alter table casos add column if not exists etapa text;
+
+-- F192 · OS PRAZOS DOS TRIBUNAIS (PJe expedientes, eproc prazo em aberto e
+-- decurso, e-SAJ intimações), lidos pela extensão. A importação troca os itens
+-- do mesmo sistema+host a cada coleta: o que sumiu da tela foi respondido.
+alter table casos add column if not exists prazos_tribunal jsonb not null default '[]'::jsonb;

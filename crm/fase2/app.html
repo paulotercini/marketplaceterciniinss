@@ -4067,7 +4067,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.10</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.11</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6782,7 +6782,8 @@ function coletasPorFonte(){
     // processos diferentes, e tratá-lo como repetição escondia 5 de 6
     const chave = c.fonte==="pje-processo" ? `${c.fonte}:${c.numero||c.id}`
                 : c.fonte==="pje" && c.parcial==="true" ? `${c.fonte}:lote:${c.id}`
-                : c.fonte==="pje" ? `${c.fonte}:${c.host||""}:${c.grau||""}` : c.fonte;
+                : c.fonte==="pje" ? `${c.fonte}:${c.host||""}:${c.grau||""}`
+                : c.fonte==="prazos" ? `prazos:${c.sistema||""}:${c.host||""}` : c.fonte;
     if(!nova[chave]) nova[chave] = c; else velhas.push(c);
   }
   return { novas: Object.values(nova), velhas };
@@ -6931,11 +6932,13 @@ function telaImportarPat(){
       return `<div class="id-grid" style="grid-template-columns:1fr;gap:6px;margin:10px 0">
       ${novas.map(c=>`<div class="id-card destaque" style="display:flex;align-items:center;gap:10px">
         <strong>${c.fonte==="pat"?"🌻 INSS":c.fonte==="pje"?`${rotuloSistemaPje(c)}${c.grau?` · ${esc(c.grau)}`:""}${c.parcial==="true"?` · lote de ${new Date(c.criado_em).toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}`:""}`
-          :c.fonte==="pje-processo"?`⚖️ Processo completo${c.numero?` ${esc(c.numero)}`:c.qtd?` — lote de ${esc(c.qtd)} processos`:""}`:"🖥 Recursos"}</strong>
+          :c.fonte==="pje-processo"?`⚖️ Processo completo${c.numero?` ${esc(c.numero)}`:c.qtd?` — lote de ${esc(c.qtd)} processos`:""}`
+          :c.fonte==="prazos"?`⏰ Prazos · ${rotuloSistemaPje(c)}${c.grau?` · ${esc(c.grau)}`:""}`:"🖥 Recursos"}</strong>
         <span class="u-papel" style="text-transform:none">chegou ${esc(dataRelativa(dataSP(c.criado_em)))} às ${esc(horaSP(c.criado_em))}</span>
         <button class="btn-mini" style="margin-left:auto" onclick="${
           c.fonte==="crps"?`conferirCrps('${c.id}')`:c.fonte==="pje"?`conferirPje('${c.id}')`
-          :c.fonte==="pje-processo"?`conferirPjeProc('${c.id}')`:`usarColeta('${c.id}')`}">conferir</button>
+          :c.fonte==="pje-processo"?`conferirPjeProc('${c.id}')`
+          :c.fonte==="prazos"?`aplicarPrazos('${c.id}')`:`usarColeta('${c.id}')`}">${c.fonte==="prazos"?"gravar":"conferir"}</button>
       </div>`).join("")}
       ${velhas.length?`<div class="meio-sub" style="display:flex;align-items:center;gap:8px">
         ${velhas.length} coleta(s) anterior(es) da mesma origem — a mais nova já contém o que elas tinham.
@@ -7200,6 +7203,22 @@ async function aplicarPatDeVerdade(){
       body:JSON.stringify({caso_id:at.caso_id, autor_id:eu.id, origem:"pat",
         origem_id:`atualizacao:${at.protocolo}:${String(at.ts).replace(/\D/g,"")}`, publico:false,
         texto:`INSS · Movimentação no protocolo ${at.protocolo}${at.situacao?` — situação: ${at.situacao}`:""} (portal atualizado em ${at.ts}).`})}));
+
+  // F192 · exigência sem prazo anotado ganha o prazo contado da data do ato;
+  // o prazo anotado à mão (ou o de uma importação anterior) não é tocado
+  for(const det of ((arquivoPat&&arquivoPat.detalhes)||[])){
+    if(!(det.em_exigencia || det.situacao==="Em exigência")) continue;
+    const p = digitos(det.protocolo);
+    const k = p && D.casos.find(x=>!x.exigencia_prazo && (x.protocolos||[]).some(y=>digitos(y)===p));
+    const ato = k && atoDaExigencia(det);
+    if(!ato) continue;
+    const prazo = prazoDaExigencia(ato.data);
+    const desc = `${ato.texto?ato.texto.replace(/\s+/g," ").slice(0,240)+" · ":""}prazo estimado: 30 dias do ato de ${fmt(ato.data)} no PAT (a ciência não vem do portal)`;
+    await tentar(`prazo da exigência ${p}`, async () => {
+      await patchCaso(k.id, {exigencia_prazo:prazo, exigencia_descricao:desc});
+      k.exigencia_prazo = prazo; k.exigencia_descricao = desc;
+    });
+  }
 
   // F184 · os anexos que a extensão guardou no bucket (todos, inclusive os
   // médicos — continuam internos) entram no caso do protocolo, com o texto
@@ -8894,6 +8913,14 @@ async function aplicarCrps(coletaId){
       body:JSON.stringify({caso_id:a.caso_id, autor_id:eu.id, texto:a.texto,
         origem:"crps", origem_id:a.origem_id, publico:false,
         ...(a.quando?{criado_em:a.quando+"T12:00:00"}:{})})}));
+  // F192 · a decisão do CRPS conta o recurso (30 dias, art. 77 do Regimento)
+  // da data do evento no e-Recursos; decisão mais nova substitui a anterior
+  for(const a of p.andamentos){
+    const k = a.decisao && a.quando && D.casoPorId.get(a.caso_id);
+    if(!k || a.quando <= (k.decisao_em||"")) continue;
+    await tentar(`decisão ${a.nup}`, async () => {
+      await patchCaso(k.id, {decisao_em:a.quando}); k.decisao_em = a.quando; });
+  }
 
   await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",
     headers:{Prefer:"return=minimal"},
@@ -8907,6 +8934,64 @@ async function aplicarCrps(coletaId){
     ? recadoDeFalhas(feitos, falhas)
     : `✔ ${p.resumo.movimentos} movimento(s) novo(s)${d?`, ${d} com decisão`:""}; ${p.blocos.length} recurso(s) com o quadro atualizado`);
   if(falhas.length) console.warn("falhas do CRPS:", falhas);
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// F192 · OS PRAZOS DOS TRIBUNAIS. A extensão lê a tela de prazos de cada
+// portal (PJe: Expedientes; eproc: prazo em aberto e decurso; e-SAJ:
+// intimações) e o CRM guarda a lista no caso (`prazos_tribunal`), trocando a
+// do mesmo sistema+host a cada coleta: o que sumiu da tela foi respondido.
+// Não move caso de lista nem troca o prazo do escritório sozinho — o quadro
+// mostra o prazo do tribunal e um clique o faz prazo fatal do caso.
+// ══════════════════════════════════════════════════════════════════════════
+const ROT_PRAZO = {pje:"PJe", eproc:"eproc", esaj:"e-SAJ"};
+// a data que cobra ação: o fim do prazo; sem ele, a ciência tácita (10 dias
+// da disponibilização, art. 5º, § 3º, da Lei 11.419/2006), quando o prazo começa
+const dataDoPrazo = it => it.fim || (it.expedido_em ? somaDias(it.expedido_em, 10) : null);
+async function aplicarPrazos(coletaId){
+  const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
+  if(!c) return aviso("Não achei essa coleta");
+  const d = c.dados || {};
+  const origem = `${d.sistema||""}:${d.host||""}`;
+  const soDig = x => String(x||"").replace(/\D/g,"");
+  const casaNum = (x, dig) => soDig(x.processo)===dig
+    || (Array.isArray(x.processos) && x.processos.some(q=>soDig(q && (q.numero||q))===dig));
+  const casoDe = dig => D.casos.find(x=>!x.encerrado_em && casaNum(x, dig)) || D.casos.find(x=>casaNum(x, dig)) || null;
+  const porCaso = new Map(); let semCaso = 0;
+  for(const it of (d.itens||[])){
+    const k = casoDe(soDig(it.numero));
+    if(!k){ semCaso++; continue; }
+    if(!porCaso.has(k.id)) porCaso.set(k.id, []);
+    porCaso.get(k.id).push({...it, sistema:d.sistema, origem, lido_em:d.quando||c.criado_em});
+  }
+  const falhas = []; let feitos = 0, novos = 0;
+  // o caso que tinha prazo desta origem e não tem mais também é regravado (respondido)
+  const alvos = D.casos.filter(k => porCaso.has(k.id) || (k.prazos_tribunal||[]).some(p=>p.origem===origem));
+  const chave = p => `${p.numero}|${p.ato_id||p.ato}|${p.expedido_em||""}`;
+  for(const k of alvos){
+    const antes = (k.prazos_tribunal||[]).filter(p=>p.origem===origem);
+    const agora = porCaso.get(k.id)||[];
+    const lista = [...(k.prazos_tribunal||[]).filter(p=>p.origem!==origem), ...agora];
+    try{
+      await patchCaso(k.id, {prazos_tribunal:lista}); k.prazos_tribunal = lista; feitos++;
+      // o prazo novo é novidade em 📣 (o índice único de origem_id não deixa repetir)
+      for(const p of agora.filter(p=>!antes.some(a=>chave(a)===chave(p)))){
+        novos++;
+        await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+          body:JSON.stringify({caso_id:k.id, autor_id:eu.id, origem:"pje", publico:false,
+            origem_id:`prazo:${chave(p)}`,
+            texto:`⏰ Prazo no ${ROT_PRAZO[p.sistema]||p.sistema}: ${p.ato||"intimação"}${p.dias?` (${p.dias} dias)`:""} — `
+              + (p.situacao==="findo" ? `venceu em ${fmt(p.fim)} sem resposta.`
+                : p.fim ? `vence em ${fmt(p.fim)}.`
+                : `aguardando ciência (tácita em ${fmt(dataDoPrazo(p))}).`)})}).catch(()=>{});
+      }
+    }catch(e){ falhas.push(`${tituloCaso(k)}: ${String(e.message||e).slice(0,100)}`); }
+  }
+  await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
+  await buscarColetas(); await carregar(); montarSidebar(); render();
+  aviso(falhas.length ? recadoDeFalhas(feitos, falhas)
+    : `✔ ${(d.itens||[]).length} prazo(s) do ${ROT_PRAZO[d.sistema]||d.sistema}: ${novos} novo(s) em ${porCaso.size} caso(s)${semCaso?` · ${semCaso} sem caso no CRM`:""}`);
 }
 
 // O QUE DIZER QUANDO A GRAVAÇÃO FALHA.
@@ -20840,6 +20925,23 @@ function dadosJudiciais(k){
 }
 // prazo de recurso: 30 dias da decisão (o escritório adota a data em que ela
 // foi proferida como a da ciência). Cai em fim de semana? vai para o dia útil.
+// F192 · O PRAZO FATAL DO INSS E DO CRPS (decisão do Paulo, 11.10.2026).
+// Nem o PAT nem o e-Recursos dizem o prazo ou a data da ciência: conta-se
+// da DATA DO ATO no portal. Vence antes do prazo real, nunca depois.
+// Exigência: o comentário mais novo do INSS que fala da exigência (sem ele,
+// o mais novo; sem comentário, a última atualização do protocolo).
+function atoDaExigencia(det){
+  const coms = ((det&&det.comentarios)||[]).filter(c=>c && c.quando && c.do_inss!==false)
+    .sort((a,b)=>String(b.quando).localeCompare(String(a.quando)));
+  const c = coms.find(x=>/exig|apresent|anex|document/i.test(x.texto||"")) || coms[0];
+  if(c) return {data:String(c.quando).slice(0,10), texto:c.texto||""};
+  const ts = String((det&&det.atualizado_em)||"");
+  const iso = (ts.match(/^\d{4}-\d{2}-\d{2}/)||[])[0]
+    || ((m=>m?`${m[3]}-${m[2]}-${m[1]}`:null)(ts.match(/^(\d{2})\/(\d{2})\/(\d{4})/)));
+  return iso ? {data:iso, texto:""} : null;
+}
+// 30 dias corridos (art. 574, § 4º, II, da IN 128/2022), vencimento em dia sem expediente vai ao dia útil
+const prazoDaExigencia = ato => ato ? proxDiaUtil(somaDias(ato, 30)) : null;
 function recorrerAte(k){
   const d = somaDias(k.decisao_em, 30);
   return d ? proxDiaUtil(d) : null;
@@ -21000,6 +21102,18 @@ function linhasDeDatas(cliId){
         rot:`<b>${esc(x.fixo.texto.slice(0,110))}</b> <small class="qd-de">Comentário fixo · ${esc(tituloCaso(x))}</small>`,
         clique:`onclick="lcEditarFixo('${x.id}')"`, edita:"", acao:""});
     }
+    // F192 · o prazo do tribunal: vencido sem resposta fica vermelho; o que
+    // não bate com o prazo fatal do caso oferece virar o prazo do caso
+    (x.prazos_tribunal||[]).forEach(p=>{
+      const dt = dataDoPrazo(p); if(!dt) return;
+      const noControle = p.fim && x.prazo===p.fim;
+      linhas.push({data:dt, ico:p.situacao==="findo"?"🚨":"⏰", ehPrazo:!!p.fim, natureza:p.fim?"fatal":"compromisso", casoId:x.id, cru:true,
+        rotulo:`Prazo no ${ROT_PRAZO[p.sistema]||p.sistema}`,
+        rot:`<b>${p.situacao==="findo"?"Venceu sem resposta — ":p.fim?"":"Ciência tácita — "}${esc(p.ato||"intimação")}${p.dias?` · ${p.dias} dias`:""}</b>
+             <small class="qd-de">Prazo do ${esc(ROT_PRAZO[p.sistema]||p.sistema)} · ${esc(p.numero)}${p.texto?` · ${esc(p.texto.slice(0,120))}`:""} · lido em ${fmt(String(p.lido_em||"").slice(0,10))}${noControle?" · ✔ é o prazo do caso":""}</small>`,
+        edita:"", acao: p.fim && p.situacao!=="findo" && !noControle
+          ? `<button class="btn-mini" onclick="marcarTarefaComPrazo('${x.id}','${p.fim}')" title="grava esta data como prazo fatal do caso e o leva a 🗓 Tarefas com Prazo">⏰ é o prazo do caso</button>` : ""});
+    });
     if(x.prazo){
       // F85 · o rótulo diz DE QUE é o prazo (o comentário que o criou), e o
       // clique leva até ele. Sem origem, a linha convida a explicar.

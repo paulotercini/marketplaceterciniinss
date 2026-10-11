@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CRM Tercini — atualizar",
-  "version": "1.18.0",
+  "version": "1.19.0",
   "description": "Traz para o CRM o que mudou no INSS (PAT/GERID), nos recursos (e-Recursos), no PJe do TRF3 e no eproc e e-SAJ do TJSP (1º e 2º grau), pela sua própria sessão logada.",
   "permissions": [
     "storage",
@@ -67,6 +67,7 @@
         "comum.js",
         "docs-regras.js",
         "pje-regras.js",
+        "prazos-regras.js",
         "pje.js"
       ],
       "run_at": "document_idle",
@@ -81,6 +82,7 @@
         "comum.js",
         "docs-regras.js",
         "eproc-regras.js",
+        "prazos-regras.js",
         "eproc.js"
       ],
       "run_at": "document_idle",
@@ -95,6 +97,7 @@
         "comum.js",
         "docs-regras.js",
         "esaj-regras.js",
+        "prazos-regras.js",
         "vendor/pdf-lib.min.js",
         "esaj.js"
       ],

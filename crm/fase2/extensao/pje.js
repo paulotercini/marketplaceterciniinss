@@ -241,6 +241,80 @@
   }
 
   const PAINEL = '/pje/Painel/painel_usuario/advogado.seam';
+
+  // ── F192 · OS PRAZOS: a aba EXPEDIENTES do Painel do Advogado (medido ao
+  // vivo, 11.10.2026). A árvore tem os grupos ("Pendentes de ciência ou de
+  // resposta", "Cujo prazo findou nos últimos 10 dias - sem resposta"…); o
+  // grupo abre as jurisdições, e a jurisdição enche formExpedientes:tbExpedientes
+  // com todas as caixas dela. O clique do RichFaces só anda com mousedown/up/click
+  // (o .click() sozinho não dispara). Um grupo aberto fecha os outros.
+  const RETOMAR_PRAZOS = 'crm_pje_prazos';
+  const GRUPOS_PRAZO = [/^\s*Pendentes de ci[êe]ncia ou de resposta/i, /prazo findou/i];
+  const clicar = el => { for (const t of ['mousedown', 'mouseup', 'click'])
+    el.dispatchEvent(new MouseEvent(t, { bubbles: true, cancelable: true, view: window })); };
+  const tabelaExp = () => document.getElementById('formExpedientes:tbExpedientes');
+  async function depoisDoClique(el, mudou) {
+    await esperarLivre(); clicar(el);
+    for (let i = 0; i < 30 && !mudou(); i++) await pausa(400);
+    await esperarLivre(); await esperarQuieto(800);
+    if (paginaMorreu()) throw new Error('a conversa do PJe caiu — dê F5 no Painel e clique de novo');
+  }
+  function lerExpedientes(grupo, mapa) {
+    const t = tabelaExp(); if (!t) return;
+    for (const tr of t.querySelectorAll('tbody > tr')) {
+      if (!tr.cells || tr.cells.length < 2) continue;
+      const it = PRAZOS_REGRAS.lerExpedientePje(tr.cells[1].innerText, grupo);
+      if (it) mapa.set(`${it.numero}|${it.ato_id || it.ato}|${it.expedido_em}`, it);
+    }
+  }
+  async function coletarPrazos() {
+    sessionStorage.removeItem(RETOMAR_PRAZOS);
+    if (!location.pathname.includes(PAINEL)) {
+      sessionStorage.setItem(RETOMAR_PRAZOS, '1');
+      faixa('indo ao Painel do Advogado para ler os expedientes…');
+      setTimeout(() => { location.href = PAINEL; }, 600);
+      return { erro: 'retomando' };
+    }
+    const grupoLinks = () => [...document.querySelectorAll('[id^="formAbaExpediente:listaAgrSitExp:"][id$="linhaN1"] a[onclick]')];
+    if (!grupoLinks().length) {
+      const aba = document.getElementById('tabExpedientes_shifted') || document.getElementById('tabExpedientes_lbl');
+      if (aba) await depoisDoClique(aba, () => grupoLinks().length);
+    }
+    if (!grupoLinks().length) throw new Error('não achei a aba Expedientes no Painel do Advogado');
+    const mapa = new Map();
+    for (const re of GRUPOS_PRAZO) {
+      const g = grupoLinks().find(a => re.test(a.innerText));
+      if (!g) continue;
+      const rot = g.innerText.replace(/\s+/g, ' ').trim();
+      const i = (g.id.match(/listaAgrSitExp:(\d+):/) || [])[1];
+      const jurs = () => [...document.querySelectorAll(`a[id*="listaAgrSitExp:${i}:trPend:"]`)].filter(a => /Np$/.test(a.id));
+      if (!jurs().length) await depoisDoClique(g, () => jurs().length);
+      const n = jurs().length;
+      for (let k = 0; k < n; k++) {
+        const a = jurs()[k]; if (!a) break;
+        faixa(`PJe ${grau}: expedientes — ${rot.replace(/\s*\d+$/, '')} · jurisdição ${k + 1} de ${n}…`);
+        const antes = (tabelaExp() || {}).innerHTML;
+        await depoisDoClique(a, () => tabelaExp() && tabelaExp().innerHTML !== antes);
+        lerExpedientes(rot, mapa);
+        // shortcut: o scroller nunca apareceu (15 linhas numa jurisdição, 11.10.2026); se aparecer, vira as páginas
+        for (let pg = 0; pg < 30; pg++) {
+          const prox = [...document.querySelectorAll('[id^="formExpedientes"] .rich-datascr-button')]
+            .find(el => /»|>>|next/i.test(el.textContent + (el.getAttribute('onclick') || '')) && !/dsbld/.test(el.className));
+          if (!prox) break;
+          const a2 = tabelaExp().innerHTML;
+          await depoisDoClique(prox, () => tabelaExp() && tabelaExp().innerHTML !== a2);
+          lerExpedientes(rot, mapa);
+        }
+      }
+    }
+    const itens = [...mapa.values()];
+    const quando = new Date().toISOString();
+    await CRM.enviar('prazos', { versao: 1, fonte: 'prazos', sistema: 'pje', tribunal: 'TRF3', grau, host: location.host, quando, itens });
+    await chrome.storage.local.set({ ultima_prazos_pje: quando });
+    faixaOk(`✔ PJe ${grau}: ${itens.length} expediente(s) com prazo entregues ao CRM — confira em 📥 Importar.`);
+    someFaixa();
+    return { ok: itens.length };
+  }
   // a página acabou de abrir (aba criada pelo "atualizar tudo", ou F5): a aba
   // Acervo ainda não existe no DOM e o coletor respondia "sem acervo" na hora
   async function esperarPainelPronto() {
@@ -263,6 +337,7 @@
     try {
       if (!REG) { faixaErr('pje-regras.js não subiu — recarregue a página (F5)'); return { erro: 'sem regras' }; }
       await esperarPainelPronto();
+      if (opts && opts.prazos) return await coletarPrazos();
       const noProcesso = /\/pje\/Processo\/ConsultaProcesso\/Detalhe\/listProcessoCompletoAdvogado\.seam/.test(location.pathname);
       // na janela de um processo aberto, o CLIQUE coleta o histórico COMPLETO
       // dele. F97 · o "atualizar tudo" (opts.acervo) quer o acervo: vai ao
@@ -382,6 +457,10 @@
       return { ok: mapa.size, parcial: !inteira };
     } catch (e) { faixaErr(e.message); return { erro: String(e.message || e) }; }
   }
+
+  // F192 · a retomada dos prazos: foi ao Painel por nossa conta
+  if (sessionStorage.getItem(RETOMAR_PRAZOS) && /\/pje\/Painel\/painel_usuario\/advogado\.seam/.test(location.pathname))
+    setTimeout(() => window.crmRodar && window.crmRodar(null, { prazos: true }), 3000);
 
   // a outra ponta da retomada: a página recarregou por nossa conta — quando
   // ela assentar, a coleta recomeça sem ninguém clicar. Só no painel: se o

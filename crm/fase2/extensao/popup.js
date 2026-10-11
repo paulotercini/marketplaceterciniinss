@@ -100,6 +100,17 @@ chrome.storage.local.get(['completar_pje'], ({ completar_pje: c }) => {
     ? `PJe ${c.parou ? 'interrompido' : 'completado'} em ${new Date(c.fim).toLocaleString('pt-BR')}: ${c.feitos} processo(s)${c.falhas ? `, ${c.falhas} falharam` : ''}${c.parou ? ` — ${c.parou}` : ''}`
     : `PJe: processo ${c.i} de ${c.total} (${c.numero || ''})…`;
 });
+// F192 · os prazos: as três telas de prazo, cada uma na aba do seu portal
+document.getElementById('b-prazos').onclick = () => {
+  res.style.color = '#5B6069';
+  res.textContent = 'lendo os prazos — o PJe vai ao Painel (aba Expedientes); não mexa nas abas enquanto roda';
+  chrome.runtime.sendMessage({ tipo: 'rodar-prazos' }, r => {
+    if (!r) return;
+    if (r.erro) { res.style.color = '#B3261E'; res.textContent = r.erro; return; }
+    res.style.color = r.feitos.some(f => f.erro) ? '#B4530A' : '#1E6F50';
+    res.textContent = r.feitos.map(f => `${f.rotulo}: ${f.erro ? '⚠ ' + f.erro : '✔ ' + f.ok}`).join(' · ') + ' — confira em 📥 Importar';
+  });
+};
 document.getElementById('b-pat').onclick  = () => rodar('pat');
 document.getElementById('b-crps').onclick = () => rodar('crps');
 document.getElementById('b-pje').onclick  = () => rodar('pje');
