@@ -215,30 +215,44 @@ async function completarEproc() {
 // por host (os dois graus do PJe, os hosts do eproc); sem aba, abre a padrão.
 // O PJe vai ao Painel e responde "retomando": o fim é a data no storage.
 async function rodarPrazos() {
-  const tarefas = [];
-  for (const [fonte, nome] of [['pje', 'PJe'], ['eproc', 'eproc'], ['esaj', 'e-SAJ']]) {
-    const abas = await chrome.tabs.query({ url: DOMINIOS[fonte] });
-    const porHost = new Map();
-    for (const a of abas) { const h = new URL(a.url).host; if (!porHost.has(h)) porHost.set(h, []); porHost.get(h).push(a); }
-    const alvos = porHost.size ? [...porHost].map(([h, l]) => [abaPreferida(l), `${nome} ${h.split('.')[0]}`]) : [[null, nome]];
-    for (const [aba, rotulo] of alvos) tarefas.push((async () => {
-      const chave = 'ultima_prazos_' + fonte;
-      const antes = (await chrome.storage.local.get([chave]))[chave];
-      let r = await rodarFonte(fonte, { aba, ativar: false, extra: { prazos: true, acervo: false } });
-      if (r && r.erro === 'retomando') {
-        r = { erro: 'não terminou no tempo — veja a faixa na aba' };
-        for (let t = 0; t < 10 * 60000; t += 5000) {
-          await pausa(5000);
-          if ((await chrome.storage.local.get([chave]))[chave] !== antes) { r = { ok: 'feito' }; break; }
-          // sessão vencida: o PJe manda o Painel para o login e a retomada nunca chega
-          const tab = aba && await chrome.tabs.get(aba.id).catch(() => null);
-          if (tab && /sso\.|auth\/realms|login\.seam/i.test(tab.url || '')) { r = { erro: 'a sessão caiu (tela de login) — entre de novo e clique outra vez' }; break; }
-        }
+  const um = async (fonte, aba, rotulo, frente) => {
+    const chave = 'ultima_prazos_' + fonte;
+    const antes = (await chrome.storage.local.get([chave]))[chave];
+    if (frente && aba) await chrome.windows.update(aba.windowId, { focused: true }).catch(() => {});
+    let r = await rodarFonte(fonte, { aba, ativar: !!frente, extra: { prazos: true, acervo: false } });
+    if (r && r.erro === 'retomando') {
+      r = { erro: 'não terminou no tempo — veja a faixa na aba' };
+      for (let t = 0; t < 10 * 60000; t += 5000) {
+        await pausa(5000);
+        if ((await chrome.storage.local.get([chave]))[chave] !== antes) { r = { ok: 'feito' }; break; }
+        // sessão vencida: o PJe manda o Painel para o login e a retomada nunca chega
+        const tab = aba && await chrome.tabs.get(aba.id).catch(() => null);
+        if (tab && /sso\.|auth\/realms|login\.seam/i.test(tab.url || '')) { r = { erro: 'a sessão caiu (tela de login) — entre de novo e clique outra vez' }; break; }
+        if (tab && fonte === 'pje' && /\/home\.seam/.test(tab.url || '') && t > 30000) { r = { erro: 'o PJe voltou para a página inicial no meio da leitura — clique outra vez' }; break; }
       }
-      return { rotulo, ...r };
-    })());
-  }
-  return { feitos: await Promise.all(tarefas) };
+    }
+    return { rotulo, ...r };
+  };
+  const alvos = async (fonte, nome) => {
+    const porHost = new Map();
+    for (const a of await chrome.tabs.query({ url: DOMINIOS[fonte] })) {
+      const h = new URL(a.url).host; if (!porHost.has(h)) porHost.set(h, []); porHost.get(h).push(a);
+    }
+    return porHost.size ? [...porHost].map(([h, l]) => [abaPreferida(l), `${nome} ${h.split('.')[0]}`]) : [[null, nome]];
+  };
+  // eproc e e-SAJ leem por fetch: correm juntos, por trás. O PJe opera a
+  // tela (cliques na árvore) e o Chrome freia o relógio da aba escondida —
+  // a rodada de 11.10.2026 parou meia hora numa jurisdição. Por isso cada
+  // aba do PJe vem para a frente, uma de cada vez.
+  const tarefas = [];
+  for (const [fonte, nome] of [['eproc', 'eproc'], ['esaj', 'e-SAJ']])
+    for (const [aba, rotulo] of await alvos(fonte, nome)) tarefas.push(um(fonte, aba, rotulo, false));
+  tarefas.push((async () => {
+    const feitos = [];
+    for (const [aba, rotulo] of await alvos('pje', 'PJe')) feitos.push(await um('pje', aba, rotulo, true));
+    return feitos;
+  })());
+  return { feitos: (await Promise.all(tarefas)).flat() };
 }
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-prazos') return;

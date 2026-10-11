@@ -8971,7 +8971,10 @@ async function aplicarPrazos(coletaId){
   for(const k of alvos){
     const antes = (k.prazos_tribunal||[]).filter(p=>p.origem===origem);
     const agora = porCaso.get(k.id)||[];
-    const lista = [...(k.prazos_tribunal||[]).filter(p=>p.origem!==origem), ...agora];
+    // coleta com jurisdição que o PJe não abriu (d.faltou): o que não veio
+    // não foi respondido, só não foi lido — fica o que já estava
+    const ficam = (d.faltou||[]).length ? antes.filter(a=>!agora.some(p=>chave(p)===chave(a))) : [];
+    const lista = [...(k.prazos_tribunal||[]).filter(p=>p.origem!==origem), ...ficam, ...agora];
     try{
       await patchCaso(k.id, {prazos_tribunal:lista}); k.prazos_tribunal = lista; feitos++;
       // o prazo novo é novidade em 📣 (o índice único de origem_id não deixa repetir)
@@ -8991,7 +8994,7 @@ async function aplicarPrazos(coletaId){
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
   await buscarColetas(); await carregar(); montarSidebar(); render();
   aviso(falhas.length ? recadoDeFalhas(feitos, falhas)
-    : `✔ ${(d.itens||[]).length} prazo(s) do ${ROT_PRAZO[d.sistema]||d.sistema}: ${novos} novo(s) em ${porCaso.size} caso(s)${semCaso?` · ${semCaso} sem caso no CRM`:""}`);
+    : `✔ ${(d.itens||[]).length} prazo(s) do ${ROT_PRAZO[d.sistema]||d.sistema}: ${novos} novo(s) em ${porCaso.size} caso(s)${semCaso?` · ${semCaso} sem caso no CRM`:""}${(d.faltou||[]).length?` · ⚠ o portal não abriu: ${d.faltou.join("; ")}`:""}`);
 }
 
 // O QUE DIZER QUANDO A GRAVAÇÃO FALHA.
