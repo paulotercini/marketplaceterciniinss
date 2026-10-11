@@ -974,6 +974,11 @@
   .apos-faixa{display:flex;justify-content:flex-end;margin-bottom:12px}
   .apos-cx{border:1px solid #CBE3CE;background:#F1F8F2;border-radius:10px;padding:10px 12px;
     min-width:min(330px,100%);max-width:520px}
+  .dossie-cx{border-color:#CBD6E3;background:#F3F6FA}
+  .dossie-cx .apos-cab strong{color:var(--azul,#2B5FC7)}
+  .dossie-portal{font-size:13px;margin-top:6px}
+  .dossie-lista{margin:2px 0 0 14px;padding:0;font-size:12px;line-height:1.45;color:var(--cinza)}
+  .dossie-lista.falha{color:#9A6700}
   .apos-cab{display:flex;align-items:center;gap:10px;margin-bottom:6px}
   .apos-cab strong{font-size:13px;color:var(--verde);flex:1}
   .apos-mais{border:1px solid #9CC7A4;background:var(--branco);color:var(--verde);border-radius:8px;
@@ -3970,7 +3975,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.07</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.08</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7843,11 +7848,15 @@ async function conferirPje(coletaId){
     // F131 · o caso casa pelo número principal E pelos números anexos
     // (casos.processos, onde o cumprimento de sentença entra à mão)
     const porProcesso = new Map();
-    for(const k of D.casos){
+    // F189 · o mesmo número em vários casos (o processo de 2007 tinha 4, 3
+    // encerrados): os encerrados entram primeiro e o aberto passa por cima
+    const fechado = k => !!k.encerrado_em;
+    for(const k of [...D.casos].sort((a,b)=>fechado(b)-fechado(a))){
       const dig = soDig(k.processo);
       if(dig) porProcesso.set(dig, k);
       for(const px of (Array.isArray(k.processos)?k.processos:[])){
-        const d2 = soDig(px && (px.numero||px)); if(d2 && !porProcesso.has(d2)) porProcesso.set(d2, k);
+        const d2 = soDig(px && (px.numero||px));
+        if(d2 && (!porProcesso.has(d2) || fechado(porProcesso.get(d2)))) porProcesso.set(d2, k);
       }
     }
     const plano = { coleta_id: coletaId, grau: dados.grau||"", host: dados.host||"",
@@ -8362,11 +8371,14 @@ async function textoDoDocumento(caminho){
   if(/^text\//.test(tipo)){
     const doc = new DOMParser().parseFromString(await blob.text(), "text/html");
     doc.querySelectorAll("script,style,noscript").forEach(x=>x.remove());
-    const texto = ((doc.body&&doc.body.textContent)||"").replace(/[ \t]+/g," ").replace(/\s*\n\s*/g,"\n").trim();
+    const texto = ((doc.body&&doc.body.textContent)||"").replace(/\u0000/g,"").replace(/[ \t]+/g," ").replace(/\s*\n\s*/g,"\n").trim();
     return { tipo, tamanho:blob.size, texto: texto.length>=50 ? texto : null };
   }
   if(!/pdf/.test(tipo)) return { tipo, tamanho:blob.size, texto:null };
   const lido = await lerPdfPorPagina(blob);
+  // F189 · o Postgres recusa o caractere nulo (\u0000), que alguns PDFs do e-SAJ
+  // trazem no texto: a gravação falhava inteira e 148 documentos ficaram fora
+  lido.texto = lido.texto.replace(/\u0000/g, "");
   return { tipo, tamanho:blob.size, texto: lido.texto.length>=50 ? lido.texto : null,
            paginas: lido.paginas, paginas_imagem: lido.imagem };
 }
@@ -8465,8 +8477,10 @@ async function conferirPjeProc(coletaId){
     // processos abertos numa coleta só; o de um processo é um lote de um
     const lote = Array.isArray(c0.lote) ? c0.lote : [c0];
     // o caso pelo número principal OU por qualquer processo da lista da ficha
-    const casoDe = dig => D.casos.find(x=>soDig(x.processo)===dig
-      || (Array.isArray(x.processos) && x.processos.some(q=>soDig(q && (q.numero||q))===dig))) || null;
+    const casaNum = (x, dig) => soDig(x.processo)===dig
+      || (Array.isArray(x.processos) && x.processos.some(q=>soDig(q && (q.numero||q))===dig));
+    // o caso aberto antes do encerrado com o mesmo número
+    const casoDe = dig => D.casos.find(x=>!x.encerrado_em && casaNum(x, dig)) || D.casos.find(x=>casaNum(x, dig)) || null;
     const plano = { coleta_id: coletaId, numero: lote.length>1 ? `${lote.length} processos` : (c0.numero||"?"),
                     grau: lote.length>1 ? "" : (c0.grau||""), caso_id: null, semCaso: [],
                     fichas: [], andamentos: [], docs: [],
@@ -17607,7 +17621,7 @@ function painelLembretes(c){
   // ordem pedida pelo Paulo: aposentadoria provável no topo, os lembretes,
   // um botão só para criar, e as contas no pé. A aba é sobre DATA QUE CHEGA, e
   // tudo o que não é data que chega ficou de fora para a página não pesar.
-  return `<div class="apos-faixa" style="justify-content:flex-start">${caixaApos(c)}</div>
+  return `<div class="apos-faixa" style="justify-content:flex-start">${caixaApos(c)}${caixaDossie(c)}</div>
     ${notasAqui.length?`<div class="caso" style="border-left:3px solid var(--verde)">
       <div class="rotulo-caso">Anotações do atendimento que virou lembrete</div>
       <ul class="mov-lista" style="margin-top:4px">${notasAqui.slice().reverse().map(n=>`<li>
@@ -18742,6 +18756,26 @@ function dashDireito(){
       forem registradas.</p>`:""}`;
 }
 
+// ── O que cada portal TEM e NÃO TEM (clientes.dossie, schema_dossie.sql) ──
+// A extensão "Dossiê do cliente" grava, por portal, o que baixou, o que o
+// portal disse que não existe ("sem CTC", "não possui deficiência", benefício
+// sem laudo) e o que falhou. Os PDFs estão em anexos; aqui é a NEGATIVA, que
+// antes só vivia na faixa da página e sumia.
+function caixaDossie(cli){
+  const d = cli.dossie; if(!d || typeof d!=="object") return "";
+  const NOME = {meuinss:"Meu INSS", mte:"Emprega Brasil (CTPS/RAIS/CAGED)", recursos:"e-Recursos", hc:"HC Ribeirão"};
+  const portais = Object.keys(NOME).filter(k=>d[k]);
+  if(!portais.length) return "";
+  const lista = (itens, cls) => itens.length
+    ? `<ul class="dossie-lista ${cls}">${itens.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>` : "";
+  return `<div class="apos-cx dossie-cx">
+    <div class="apos-cab"><strong>📂 Dossiê — o que os portais têm</strong></div>
+    ${portais.map(k=>{ const p=d[k]; const em=p.em?fmtTS(p.em):"";
+      return `<div class="dossie-portal"><b>${NOME[k]}</b> <span class="meio-sub">${em?`rodado em ${em} · `:""}${(p.baixados||[]).length} doc(s) em 📎 Anexos</span>
+        ${lista((p.inexistentes||[]).map(x=>"✗ "+x), "nao")}
+        ${lista((p.falhas||[]).map(x=>"⚠ "+x), "falha")}</div>`; }).join("")}
+  </div>`;
+}
 function caixaApos(cli){
   const lista=aposDoCliente(cli);
   const auto=lista.find(a=>a.automatica);
