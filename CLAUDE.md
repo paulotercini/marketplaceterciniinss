@@ -28,10 +28,10 @@ A fonte de dados dos geradores é o **Microsoft To Do** (Graph API, conta pessoa
 
 ## Dossiê do cliente (crm/fase2/dossie) — o que chega ao CRM
 
-<!-- dossie-versao: 0.5.1 — ao mudar manifest.json da extensão, atualize esta seção e este número;
+<!-- dossie-versao: 0.6.2 — ao mudar manifest.json da extensão, atualize esta seção e este número;
      tests em crm/fase2/dossie/testes/regras.test.js conferem que batem. -->
 
-Extensão de navegador (versão **0.5.1**). Com o gov.br do cliente logado, um clique baixa os documentos
+Extensão de navegador (versão **0.6.2**). Com o gov.br do cliente logado, um clique baixa os documentos
 do portal aberto na aba. Não faz login, não resolve captcha e não decide nada: coleta e entrega.
 
 **De onde coleta**
@@ -40,7 +40,9 @@ do portal aberto na aba. Não faz login, não resolve captcha e não decide nada
   de informações do benefício (dossiê) · extrato de pagamento dos últimos 12 meses · cópia integral de
   todos os pedidos administrativos (todos os anos) · PPP eletrônico por vínculo · CAT · CTC (se houver protocolo).
 - **e-Recursos (CRPS)**: todos os documentos de cada recurso do cliente.
-- **Emprega Brasil (MTE)**: CTPS digital e de outros vínculos, extratos RAIS e CAGED.
+- **Emprega Brasil (MTE)**: CTPS digital e de outros vínculos, extratos RAIS e CAGED · **seguro-desemprego**
+  (requerimentos, vínculo e parcelas com datas — `.txt` legível + JSON cru; a data da última parcela é o marco
+  da prorrogação do período de graça, art. 15 §2º) · informe de rendimentos MTE por ano (PDF).
 - **HC Ribeirão**: exames de imagem e de método de todo o período (sem exame de sangue), internações,
   relatórios médicos e multiprofissionais.
 
@@ -53,7 +55,7 @@ do portal aberto na aba. Não faz login, não resolve captcha e não decide nada
    (native messaging); sem ele, cai em `Downloads/Dossie/`.
 2. **Tabela `anexos`**, uma linha por PDF presa ao **cliente** (`cliente_id` pelo CPF; sem caso nem
    andamento): `origem='dossie'`, `nome="<fonte> · <arquivo>"`, `caminho="dossie/<cpf>/<fonte>/<arquivo>"`
-   no bucket privado `anexos`, `tipo=application/pdf`. Caminho determinístico: rodar de novo substitui
+   no bucket privado `anexos`, `tipo=application/pdf` (ou `text/plain` para o `.txt` do seguro-desemprego). Caminho determinístico: rodar de novo substitui
    (upsert), não duplica. `texto` fica vazio — a extensão **não extrai texto**; é o pipeline do CRM
    (`textoDoDocumento`) que lê.
 3. **`clientes.dossie` (jsonb, `schema_dossie.sql`)**: resumo de cada rodada, uma chave por portal

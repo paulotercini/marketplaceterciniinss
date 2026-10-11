@@ -55,7 +55,7 @@ async function salvar(m) {
   try {
     const bytes = Uint8Array.from(atob(m.b64), c => c.charCodeAt(0));
     const caminho = `dossie/${m.cpf}/${fonte.split('/').map(R.slug).join('/')}/${R.slug(m.arquivo)}`;
-    crm = await CRM.guardarNoCrm({ cpf: m.cpf, caminho, nome: `${fonte} · ${m.arquivo}`, bytes });
+    crm = await CRM.guardarNoCrm({ cpf: m.cpf, caminho, nome: `${fonte} · ${m.arquivo}`, bytes, mime: m.mime || 'application/pdf' });
   } catch (e) { crm = String(e.message || e); }
   return { ok: true, crm, drive: !!local };
 }

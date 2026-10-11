@@ -17,6 +17,7 @@
   if (window !== window.top) return;
   const R = window.DOSSIE_REGRAS, D = window.DOSSIE;
   const API = 'https://mte.api.dataprev.gov.br/apis/ectpsservices/';
+  const SD = 'https://mte.api.dataprev.gov.br/apis/sdservices-v2';     // seguro-desemprego e informe de rendimentos
 
   window.dossieRodar = async () => {
     const tok = sessionStorage.getItem('access-token');
@@ -88,6 +89,66 @@
     // ── RAIS e CAGED ─────────────────────────────────────────────────────────
     await pdf('Extrato RAIS', `v1/caged/relatorio/rais/nit/${pis}/dataNascimento/${nasc}`);
     await pdf('Extrato CAGED', `v1/caged/relatorio/nit/${pis}/dataNascimento/${nasc}`);
+
+    // ── SEGURO-DESEMPREGO: os requerimentos com as parcelas ──────────────────
+    // Mapeado pelo código em 11.10.2026 (API sdservices-v2, a mesma tela
+    // "Seguro-Desemprego"); ainda não rodou numa sessão logada. O portal só
+    // dá JSON, não PDF: vai como .txt legível (data do requerimento, vínculo,
+    // parcelas com data de pagamento) + o JSON cru embaixo. Importa para a
+    // qualidade de segurado: o recebimento do SD estende o período de graça
+    // (art. 15, §2º, Lei 8.213/91), e a data da última parcela é o marco.
+    D.faixa('seguro-desemprego: requerimentos…');
+    try {
+      // sem as modalidades na URL o portal responde 400 (medido em 11.10.2026); é o
+      // mesmo conjunto que a tela manda — todas, inclusive a de resgatado
+      const modalidades = 'consultarRequerimentosModalidadeFormal=true&consultarRequerimentosModalidadeBolsa=true'
+        + '&consultarRequerimentosModalidadeDomestico=true&consultarRequerimentosModalidadePescador=true&consultarRequerimentosModalidadeResgatado=true';
+      const rs = await fetch(`${SD}/portal/requerimento/consultarRequerimentosPeloCpf/${cpf}?${modalidades}`, { headers: cab });
+      await D.pausa(1500);
+      const txt = rs.ok ? await rs.text() : '';
+      let lista = [];
+      try { const j = JSON.parse(txt || 'null'); lista = Array.isArray(j) ? j : (j && typeof j === 'object' ? (Object.values(j).find(Array.isArray) || []) : []); } catch (e) {}
+      if (!rs.ok) falhas.push(`Seguro-desemprego: HTTP ${rs.status}${R.mensagemDoPortal(new TextEncoder().encode(txt)) ? ' — ' + R.mensagemDoPortal(new TextEncoder().encode(txt)) : ''}`);
+      else if (!lista.length) inexistentes.push('Seguro-desemprego: nenhum requerimento');
+      else {
+        // a lista é só o cabeçalho (nº, data, empregador, admissão, dispensa): as
+        // PARCELAS estão no detalhe, por modalidade (medido em 11.10.2026)
+        const ROTA = { 0: 'formal', 1: 'domestico', 3: 'bolsa', 4: 'pescador' };
+        for (const [i, req] of lista.entries()) {
+          const cod = req.modalidade && typeof req.modalidade === 'object' ? req.modalidade.codigo : req.modalidade;
+          const rota = ROTA[cod];
+          const num = req.numeroRequerimento || req.numero;
+          if (!rota || !num) continue;
+          D.faixa(`seguro-desemprego: requerimento ${i + 1} de ${lista.length}…`);
+          try {
+            const rd = await fetch(`${SD}/requerimento/${rota}${rota === 'bolsa' ? '/obterpornumero' : ''}/${num}`, { headers: cab });
+            await D.pausa(1500);
+            if (rd.ok) Object.assign(req, { detalhe: await rd.json() });
+            else req.detalhe_erro = `HTTP ${rd.status}`;
+          } catch (e) { req.detalhe_erro = String(e.message || e); }
+        }
+        const texto = R.textoSeguroDesemprego(lista);
+        await D.salvar(cliente, 'CTPS RAIS CAGED', 'Seguro-desemprego requerimentos e parcelas', new TextEncoder().encode(texto), 'text/plain');
+        ok.push(`Seguro-desemprego (${lista.length} requerimento(s))`);
+      }
+    } catch (e) { falhas.push(`Seguro-desemprego: ${e.message || e}`); }
+
+    // ── INFORME DE RENDIMENTOS dos benefícios do MTE (SD/abono), um PDF por ano
+    try {
+      const re = await fetch(`${SD}/informesrendimentos/v1/exercicios`, { headers: cab });
+      await D.pausa(1500);
+      const anos = re.ok ? [].concat(await re.json().catch(() => [])).map(a => String(typeof a === 'object' ? (a.ano || a.exercicio || a.valor || '') : a).replace(/\D/g, '')).filter(a => a.length === 4) : [];
+      for (const ano of anos) {
+        D.faixa(`informe de rendimentos ${ano}…`);
+        const r = await fetch(`${SD}/informesrendimentos/v1/${cpf}/ano/${ano}`, { headers: cab });
+        await D.pausa(1500);
+        const buf = await r.arrayBuffer();
+        const u8 = r.ok ? R.comoPdf(buf) : null;
+        if (u8) { await D.salvar(cliente, 'CTPS RAIS CAGED', `Informe de rendimentos MTE ${ano}`, u8); ok.push(`Informe de rendimentos ${ano}`); }
+        else if (r.status === 404 || r.status === 204 || (r.ok && !buf.byteLength)) inexistentes.push(`Informe de rendimentos ${ano}: sem informe`);
+        else falhas.push(`Informe de rendimentos ${ano}: HTTP ${r.status}`);
+      }
+    } catch (e) { falhas.push(`Informe de rendimentos: ${e.message || e}`); }
 
     const avisoCrm = await D.resumo(cliente, 'mte', { baixados: ok, inexistentes, falhas });
     D.faixa(`${ok.length} documento(s) do Emprega Brasil · ${contratos.length} contrato(s) na CTPS`
