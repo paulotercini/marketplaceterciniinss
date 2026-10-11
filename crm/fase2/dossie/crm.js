@@ -124,7 +124,7 @@ async function idDoCliente(cpf) {
 }
 
 // devolve 'ok' | 'sem login' | 'cliente fora do CRM'
-export async function guardarNoCrm({ cpf, caminho, nome, bytes }) {
+export async function guardarNoCrm({ cpf, caminho, nome, bytes, mime = 'application/pdf' }) {
   const st = await chrome.storage.local.get(['refresh', 'url']);
   if (!st.refresh || !st.url) return 'sem login';
   const clienteId = await idDoCliente(cpf);
@@ -133,11 +133,11 @@ export async function guardarNoCrm({ cpf, caminho, nome, bytes }) {
   const cab = await cabecalhos();
   // x-upsert: rodar o dossiê de novo substitui o PDF (o CNIS muda de um mês para outro)
   const up = await fetchTeimoso(`${url}/storage/v1/object/anexos/${caminho}`, { method: 'POST', body: bytes,
-    headers: { apikey: cab.apikey, Authorization: cab.Authorization, 'Content-Type': 'application/pdf', 'x-upsert': 'true' } });
+    headers: { apikey: cab.apikey, Authorization: cab.Authorization, 'Content-Type': mime, 'x-upsert': 'true' } });
   if (!up.ok) throw new Error(`upload recusado (${up.status})`);
   const ln = await fetchTeimoso(`${url}/rest/v1/anexos?on_conflict=caminho`, { method: 'POST',
     headers: Object.assign({}, cab, { Prefer: 'resolution=ignore-duplicates,return=minimal' }),
-    body: JSON.stringify({ cliente_id: clienteId, nome, caminho, tipo: 'application/pdf', tamanho: bytes.length, origem: 'dossie' }) });
+    body: JSON.stringify({ cliente_id: clienteId, nome, caminho, tipo: mime, tamanho: bytes.length, origem: 'dossie' }) });
   if (!ln.ok) throw new Error(`anexo recusado (${ln.status})`);
   return 'ok';
 }
