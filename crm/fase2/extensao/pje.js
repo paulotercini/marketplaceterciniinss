@@ -253,11 +253,18 @@
   const clicar = el => { for (const t of ['mousedown', 'mouseup', 'click'])
     el.dispatchEvent(new MouseEvent(t, { bubbles: true, cancelable: true, view: window })); };
   const tabelaExp = () => document.getElementById('formExpedientes:tbExpedientes');
-  async function depoisDoClique(el, mudou) {
-    await esperarLivre(); clicar(el);
-    for (let i = 0; i < 30 && !mudou(); i++) await pausa(400);
-    await esperarLivre(); await esperarQuieto(800);
-    if (paginaMorreu()) throw new Error('a conversa do PJe caiu — dê F5 no Painel e clique de novo');
+  // devolve se a tela mudou: o PJe às vezes engole o clique e fica no
+  // carregando (2º grau, 11.10.2026) — tenta mais uma vez antes de desistir
+  async function depoisDoClique(el, mudou, alvo) {
+    for (let tent = 0; tent < 2; tent++) {
+      await esperarLivre();
+      clicar(tent && alvo ? (alvo() || el) : el);
+      for (let i = 0; i < 30 && !mudou(); i++) await pausa(400);
+      await esperarLivre(); await esperarQuieto(800);
+      if (paginaMorreu()) throw new Error('a conversa do PJe caiu — dê F5 no Painel e clique de novo');
+      if (mudou()) return true;
+    }
+    return false;
   }
   function lerExpedientes(grupo, mapa) {
     const t = tabelaExp(); if (!t) return;
@@ -268,10 +275,15 @@
     }
   }
   async function coletarPrazos() {
+    // SEMPRE NUM PAINEL RECÉM-ABERTO: a aba parada perde a conversa (cid) do
+    // PJe, e o primeiro clique na árvore a joga para home.seam (11.10.2026,
+    // uma vez em cada grau). O sinal diz que esta página já é a recarregada.
+    const fresco = sessionStorage.getItem(RETOMAR_PRAZOS);
     sessionStorage.removeItem(RETOMAR_PRAZOS);
-    if (!location.pathname.includes(PAINEL)) {
-      sessionStorage.setItem(RETOMAR_PRAZOS, '1');
-      faixa('indo ao Painel do Advogado para ler os expedientes…');
+    if (!fresco || !location.pathname.includes(PAINEL)) {
+      if (fresco === '2') throw new Error('o PJe não abriu o Painel do Advogado — entre de novo no PJe e clique outra vez');
+      sessionStorage.setItem(RETOMAR_PRAZOS, fresco ? '2' : '1');
+      faixa('abrindo o Painel do Advogado para ler os expedientes…');
       setTimeout(() => { location.href = PAINEL; }, 600);
       return { erro: 'retomando' };
     }
@@ -281,20 +293,26 @@
       if (aba) await depoisDoClique(aba, () => grupoLinks().length);
     }
     if (!grupoLinks().length) throw new Error('não achei a aba Expedientes no Painel do Advogado');
-    const mapa = new Map();
+    const mapa = new Map(), faltou = [];
     for (const re of GRUPOS_PRAZO) {
       const g = grupoLinks().find(a => re.test(a.innerText));
       if (!g) continue;
       const rot = g.innerText.replace(/\s+/g, ' ').trim();
       const i = (g.id.match(/listaAgrSitExp:(\d+):/) || [])[1];
       const jurs = () => [...document.querySelectorAll(`a[id*="listaAgrSitExp:${i}:trPend:"]`)].filter(a => /Np$/.test(a.id));
-      if (!jurs().length) await depoisDoClique(g, () => jurs().length);
+      if (!jurs().length) await depoisDoClique(g, () => jurs().length,
+        () => grupoLinks().find(a => re.test(a.innerText)));
       const n = jurs().length;
       for (let k = 0; k < n; k++) {
         const a = jurs()[k]; if (!a) break;
+        const nome = a.innerText.replace(/\s+\d+\s*$/, '').trim();
         faixa(`PJe ${grau}: expedientes — ${rot.replace(/\s*\d+$/, '')} · jurisdição ${k + 1} de ${n}…`);
         const antes = (tabelaExp() || {}).innerHTML;
-        await depoisDoClique(a, () => tabelaExp() && tabelaExp().innerHTML !== antes);
+        // tabela que não trocou é a da jurisdição anterior: lê-la poria os
+        // expedientes de lá com o rótulo deste grupo
+        if (!await depoisDoClique(a, () => tabelaExp() && tabelaExp().innerHTML !== antes, () => jurs()[k])) {
+          faltou.push(`${rot.replace(/\s*\d+$/, '')} · ${nome}`); continue;
+        }
         lerExpedientes(rot, mapa);
         // shortcut: o scroller nunca apareceu (15 linhas numa jurisdição, 11.10.2026); se aparecer, vira as páginas
         for (let pg = 0; pg < 30; pg++) {
@@ -309,11 +327,11 @@
     }
     const itens = [...mapa.values()];
     const quando = new Date().toISOString();
-    await CRM.enviar('prazos', { versao: 1, fonte: 'prazos', sistema: 'pje', tribunal: 'TRF3', grau, host: location.host, quando, itens });
+    await CRM.enviar('prazos', { versao: 1, fonte: 'prazos', sistema: 'pje', tribunal: 'TRF3', grau, host: location.host, quando, itens, faltou });
     await chrome.storage.local.set({ ultima_prazos_pje: quando });
-    faixaOk(`✔ PJe ${grau}: ${itens.length} expediente(s) com prazo entregues ao CRM — confira em 📥 Importar.`);
-    someFaixa();
-    return { ok: itens.length };
+    if (faltou.length) faixaErr(`PJe ${grau}: ${itens.length} expediente(s) entregues, mas o PJe não abriu ${faltou.join('; ')} — dê F5 no Painel e clique de novo`);
+    else { faixaOk(`✔ PJe ${grau}: ${itens.length} expediente(s) com prazo entregues ao CRM — confira em 📥 Importar.`); someFaixa(); }
+    return faltou.length ? { ok: itens.length, erro: `faltou ${faltou.length} jurisdição(ões)` } : { ok: itens.length };
   }
   // a página acabou de abrir (aba criada pelo "atualizar tudo", ou F5): a aba
   // Acervo ainda não existe no DOM e o coletor respondia "sem acervo" na hora
@@ -459,7 +477,7 @@
   }
 
   // F192 · a retomada dos prazos: foi ao Painel por nossa conta
-  if (sessionStorage.getItem(RETOMAR_PRAZOS) && /\/pje\/Painel\/painel_usuario\/advogado\.seam/.test(location.pathname))
+  if (sessionStorage.getItem(RETOMAR_PRAZOS) && /^\/pje\//.test(location.pathname))
     setTimeout(() => window.crmRodar && window.crmRodar(null, { prazos: true }), 3000);
 
   // a outra ponta da retomada: a página recarregou por nossa conta — quando
