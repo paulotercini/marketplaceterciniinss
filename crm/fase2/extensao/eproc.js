@@ -140,6 +140,40 @@
     return { feitos, falhas, docs };
   }
 
+  // ── F192 · OS PRAZOS: o quadro Citações/Intimações do Painel do Advogado.
+  // O painel carrega o quadro por ajax (data-urlAssinadaCarregamento), e o
+  // JSON devolve os links ASSINADOS de cada lista — link sem hash derruba a
+  // sessão, então só se segue o que o próprio eproc entregou.
+  async function coletarPrazos() {
+    let doc = document;
+    if (!doc.getElementById('fldCitacaoIntimacao')) {
+      const a = document.querySelector('a[href*="acao=painel_advogado_listar"]');
+      if (!a) throw new Error('não achei o Painel do Advogado no menu — abra o painel e clique de novo');
+      doc = new DOMParser().parseFromString(await baixar(a.href), 'text/html');
+    }
+    const fs = doc.getElementById('fldCitacaoIntimacao');
+    if (!fs) throw new Error('o painel não trouxe o quadro de Citações/Intimações');
+    const j = JSON.parse(await baixar(new URL(fs.getAttribute('data-urlAssinadaCarregamento'), location.href).href));
+    const listas = [['intimacaoAberto', 'aberto'], ['intimacaoAbertoUrgente', 'aberto'], ['decursoPrazo', 'findo'],
+                    ['intimacaoPendente', 'sem_ciencia'], ['intimacaoPendenteUrgente', 'sem_ciencia']];
+    const vistos = new Map();
+    for (const u of (j.usuarios || [])) for (const [chave, sit] of listas) {
+      const l = (u.links || {})[chave];
+      if (!l) continue;
+      faixa(`${sistema}: lendo os prazos (${sit})…`);
+      for (const it of PRAZOS_REGRAS.lerPrazosEproc(await baixar(new URL(l, location.href).href), sit))
+        vistos.set(`${it.numero}|${it.ato}|${it.fim}|${it.expedido_em}`, it);
+      await pausa(300);
+    }
+    const itens = [...vistos.values()];
+    const quando = new Date().toISOString();
+    await CRM.enviar('prazos', { versao: 1, fonte: 'prazos', sistema: 'eproc', tribunal: 'TJSP', grau, host, quando, itens });
+    await chrome.storage.local.set({ ultima_prazos_eproc: quando });
+    faixaOk(`✔ ${sistema}: ${itens.length} prazo(s) entregues ao CRM — confira em 📥 Importar.`);
+    someFaixa();
+    return { ok: itens.length };
+  }
+
   // fora da relação (painel, consulta...), o coletor vai até ela sozinho e
   // recomeça quando a página abrir — o sinal vive no sessionStorage
   const RETOMAR = 'crm_eproc_retomar';
@@ -148,6 +182,7 @@
     try {
       if (!REG) { faixaErr('eproc-regras.js não subiu — recarregue a página (F5)'); return { erro: 'sem regras' }; }
       if (!logado()) { faixaErr('faça login no eproc (certificado ou senha) e clique de novo'); return { erro: 'sem login' }; }
+      if (opts && opts.prazos) return await coletarPrazos();
       // F97 · o "atualizar tudo" (opts.acervo) quer a relação inteira, mesmo
       // com um processo aberto na aba; o clique manual coleta o processo
       if (document.getElementById('tblEventos') && /acao=processo_selecionar/.test(location.search)

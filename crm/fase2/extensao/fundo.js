@@ -22,9 +22,9 @@ const DOMINIOS = {
 const ARQUIVOS = {
   pat: ['tela.js', 'comum.js', 'docs-regras.js', 'ponte-pat.js'],
   crps: ['tela.js', 'comum.js', 'docs-regras.js', 'crps.js'],
-  pje: ['tela.js', 'comum.js', 'docs-regras.js', 'pje-regras.js', 'pje.js'],
-  eproc: ['tela.js', 'comum.js', 'docs-regras.js', 'eproc-regras.js', 'eproc.js'],
-  esaj: ['tela.js', 'comum.js', 'docs-regras.js', 'esaj-regras.js', 'vendor/pdf-lib.min.js', 'esaj.js'],
+  pje: ['tela.js', 'comum.js', 'docs-regras.js', 'pje-regras.js', 'prazos-regras.js', 'pje.js'],
+  eproc: ['tela.js', 'comum.js', 'docs-regras.js', 'eproc-regras.js', 'prazos-regras.js', 'eproc.js'],
+  esaj: ['tela.js', 'comum.js', 'docs-regras.js', 'esaj-regras.js', 'prazos-regras.js', 'vendor/pdf-lib.min.js', 'esaj.js'],
 };
 const casa = (url, dominios) => dominios.some(d =>
   new RegExp('^' + d.replace(/[.]/g, '\\.').replace(/\*/g, '.*')).test(url || ''));
@@ -211,6 +211,38 @@ async function completarEproc() {
   const r = await rodarFonte('eproc', { aba: abaPreferida(abas) || null, ativar: false, extra: { completo: true } });
   return { rotulo: 'eproc', ...r };
 }
+// F192 · OS PRAZOS DOS TRIBUNAIS: a tela de prazos de cada portal, uma aba
+// por host (os dois graus do PJe, os hosts do eproc); sem aba, abre a padrão.
+// O PJe vai ao Painel e responde "retomando": o fim é a data no storage.
+async function rodarPrazos() {
+  const tarefas = [];
+  for (const [fonte, nome] of [['pje', 'PJe'], ['eproc', 'eproc'], ['esaj', 'e-SAJ']]) {
+    const abas = await chrome.tabs.query({ url: DOMINIOS[fonte] });
+    const porHost = new Map();
+    for (const a of abas) { const h = new URL(a.url).host; if (!porHost.has(h)) porHost.set(h, []); porHost.get(h).push(a); }
+    const alvos = porHost.size ? [...porHost].map(([h, l]) => [abaPreferida(l), `${nome} ${h.split('.')[0]}`]) : [[null, nome]];
+    for (const [aba, rotulo] of alvos) tarefas.push((async () => {
+      const chave = 'ultima_prazos_' + fonte;
+      const antes = (await chrome.storage.local.get([chave]))[chave];
+      let r = await rodarFonte(fonte, { aba, ativar: false, extra: { prazos: true, acervo: false } });
+      if (r && r.erro === 'retomando') {
+        r = { erro: 'não terminou no tempo — veja a faixa na aba' };
+        for (let t = 0; t < 10 * 60000; t += 5000) {
+          await pausa(5000);
+          if ((await chrome.storage.local.get([chave]))[chave] !== antes) { r = { ok: 'feito' }; break; }
+        }
+      }
+      return { rotulo, ...r };
+    })());
+  }
+  return { feitos: await Promise.all(tarefas) };
+}
+chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
+  if (msg.tipo !== 'rodar-prazos') return;
+  rodarPrazos().then(responder, e => responder({ erro: String(e.message || e) }));
+  return true;
+});
+
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-completo') return;
   Promise.all([completarEproc(), completarPje()])

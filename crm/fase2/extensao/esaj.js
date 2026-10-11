@@ -213,11 +213,36 @@
     return falhas;
   }
 
-  window.crmRodar = async () => {
+  // F192 · OS PRAZOS: as intimações do painel (/tarefas-adv/api/intimacoes).
+  // A API dá o código interno do processo, não o número: a ficha resolve.
+  async function coletarPrazos() {
+    const r = await fetch('/tarefas-adv/api/intimacoes', { credentials: 'include' });
+    if (!r.ok) throw new Error(`o e-SAJ não entregou as intimações (${r.status})`);
+    const lista = await r.json();
+    const num = new Map();
+    for (const i of (Array.isArray(lista) ? lista : [])) {
+      if (!i.cdProcesso || num.has(i.cdProcesso)) continue;
+      faixa(`e-SAJ: lendo as intimações (${num.size + 1})…`);
+      const base = i.instancia === 'SG' ? '/cposg' : '/cpopg';
+      try { num.set(i.cdProcesso, (REG.lerFichaHtml((await baixarComPaciencia(`${base}/show.do?processo.codigo=${i.cdProcesso}`, 'intimações')).html) || {}).numero || null); }
+      catch (e) { num.set(i.cdProcesso, null); }
+      await pausa(400);
+    }
+    const itens = PRAZOS_REGRAS.lerIntimacoesEsaj(lista, cd => num.get(cd));
+    const quando = new Date().toISOString();
+    await CRM.enviar('prazos', { versao: 1, fonte: 'prazos', sistema: 'esaj', tribunal: 'TJSP', host: location.host, quando, itens });
+    await chrome.storage.local.set({ ultima_prazos_esaj: quando });
+    faixaOk(`✔ e-SAJ: ${itens.length} intimação(ões) entregues ao CRM — confira em 📥 Importar.`);
+    someFaixa();
+    return { ok: itens.length };
+  }
+
+  window.crmRodar = async (_desde, opts) => {
     try {
       if (!REG) { faixaErr('esaj-regras.js não subiu — recarregue a página (F5)'); return { erro: 'sem regras' }; }
       const oab = await oabLogada();
       if (!oab) { faixaErr('faça login no e-SAJ (painel do advogado) e clique de novo'); return { erro: 'sem login' }; }
+      if (opts && opts.prazos) return await coletarPrazos();
 
       // a lista-mãe: os favoritos do navegador (pastas "A a J", "I a Z"), que
       // é como o escritório acompanha os ativos do TJSP. Chave: o CÓDIGO, e
