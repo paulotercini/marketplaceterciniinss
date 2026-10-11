@@ -19,7 +19,14 @@ window.DOSSIE = window.DOSSIE || {
     el.textContent = '📂 Dossiê · ' + texto;
   },
 
-  // um PDF por vez: o SW grava em Downloads/Dossie/<Nome CPF>/<fonte>/ e no CRM
+  // no fim da rodada: o resumo do portal vai para clientes.dossie no CRM;
+  // devolve o aviso a pôr na faixa quando não gravou (sem login, cliente fora do CRM)
+  async resumo(cliente, portal, { baixados, inexistentes, falhas }) {
+    const r = await chrome.runtime.sendMessage({ tipo: 'resumo', cpf: cliente.cpf, portal, baixados, inexistentes, falhas });
+    return r && r.crm && r.crm !== 'ok' ? `\n(resumo no CRM: ${r.crm})` : '';
+  },
+
+  // um PDF por vez: o SW grava na pasta do cliente e no CRM
   async salvar(cliente, fonte, arquivo, u8) {
     const R = window.DOSSIE_REGRAS;
     const r = await chrome.runtime.sendMessage({ tipo: 'salvar', cpf: cliente.cpf, nome: cliente.nome,
