@@ -124,17 +124,19 @@ A proteção é obrigatória porque o Tema 1124/STJ condiciona o termo inicial d
 
    a) **Já apresentado ao INSS na DER** — documento que integrava o processo administrativo desde o requerimento. Enquadra o caso no cenário 2.1 do Tema 1124 (DIB na DER)
 
-   b) **Complementar a prova já existente** — documento não essencial ou prova técnica judicial que apenas confirma, detalha ou reforça o conjunto probatório já suficiente na via administrativa. Enquadra o caso no item 2.1 do Tema 1124 e na exceção final do item 1.6, com DIB na DER. Os embargos de declaração de 09/09/2026 confirmaram que a perícia judicial que confirma o PPP apresentado ao INSS leva a DIB à DER quando o INSS não ofertou a complementação da prova
+   b) **Complementar a prova já existente** — documento não essencial ou prova técnica judicial que apenas confirma, detalha ou reforça o conjunto probatório já suficiente na via administrativa. Enquadra o caso no item 2.1 do Tema 1124 e na exceção final do item 1.6, com DIB na DER. Os embargos de declaração de 09/09/2026 confirmaram que a perícia judicial que confirma o PPP apresentado ao INSS leva a DIB à DER quando o INSS não ofertou a complementação da prova, desde que a prova em juízo solucione a controvérsia sobre o fato. No TRF3, a perícia que decide a especialidade sem documento do processo administrativo que já indicasse o agente tende a levar à citação, e por isso a peça aponta esse documento
 
    c) **Surgido depois do ajuizamento ou impossível de obter antes** — documento que só pôde existir em juízo. Enquadra o caso no item 2.3, com DIB na citação, e exige a demonstração da impossibilidade material. O documento que já existia e não foi levado ao INSS, como um novo PPP, NÃO entra nesta categoria, porque os embargos de 09/09/2026 determinam a extinção sem mérito nesse caso, e o caminho é o novo requerimento antes da ação
 
-2. Fundamentar expressamente que a DIB deve ser fixada na DER (ou na data do preenchimento dos requisitos, se posterior à DER), invocando o cenário aplicável do Tema 1124/STJ
+2. Fundamentar expressamente que a DIB deve ser fixada na DER (ou na data do preenchimento dos requisitos, se posterior à DER), invocando o cenário aplicável do Tema 1124/STJ, e pedir que a DIB e os efeitos financeiros coincidam, porque parte do TRF3 fixa a DIB na DER e os atrasados desde a citação
 
-3. Se o INSS não emitiu carta de exigência nem ofereceu justificação administrativa quando deveria, fundamentar a omissão do dever legal (art. 88 da Lei 8.213/1991 e arts. 176 e 176-E do Decreto 3.048/99, conferidos no MCP `normas`) e enquadrar no item 2.2 do Tema 1124, citando o esclarecimento dos embargos de declaração de 09/09/2026, que vedou o indeferimento automático, por servidor ou por ferramenta automatizada, de requerimento apto sem essa oportunidade
+3. Se o INSS não emitiu carta de exigência nem ofereceu justificação administrativa quando deveria, fundamentar a omissão do dever legal (art. 88 da Lei 8.213/1991 e arts. 176 e 176-E do Decreto 3.048/99, conferidos no MCP `normas`) e enquadrar no item 2.2 do Tema 1124, citando o esclarecimento dos embargos de declaração de 09/09/2026, que vedou o indeferimento automático, por servidor ou por ferramenta automatizada, de requerimento apto sem essa oportunidade. O item 2.2 é faculdade do juiz ("poderá"), e por isso a omissão vem provada com o ID do processo administrativo, e não só afirmada
 
 4. Se houver duas ou mais DERs, demonstrar a continuidade do conjunto probatório entre elas, indicando que os documentos da DER posterior "apenas confirmaram" o acervo já existente, para preservar os efeitos financeiros desde a DER mais antiga
 
 **Posição na petição.** Como seção adicional, depois da seção do benefício (por exemplo, "3. DA APOSENTADORIA ESPECIAL") e de eventual DA REAFIRMAÇÃO DA DER, sempre a última antes dos REQUERIMENTOS.
+
+**Conferência obrigatória (Onda 178).** Antes da entrega, a seção DOS EFEITOS FINANCEIROS e o pedido de termo inicial passam pelo agente `conferente-tema-1124`, que confronta o pedido com a tese, com os 17 acórdãos do STJ e com a tendência do órgão que vai julgar. Quando toda a prova integrou o processo administrativo e não há a seção adicional, a conferência recai sobre DOS FATOS e sobre o item do termo inicial nos REQUERIMENTOS.
 
 **Exceções.** Não incluir esta seção em embargos de declaração, agravos internos, recursos ao CRPS (salvo quando o mérito recursal envolver efeitos financeiros) ou mandados de segurança.
 

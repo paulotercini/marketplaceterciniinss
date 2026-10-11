@@ -187,7 +187,7 @@ Achado se paráfrase apresentada entre aspas. IMPORTANTE.
 Casos clássicos de modulação a atentar.
 
 - **Tema 1102/STF** (Revisão da Vida Toda) teve modulação em 2024 que limitou efeitos.
-- **Tema 1124/STJ** (prévio requerimento administrativo em concessão de benefícios) com modulação aplicável.
+- **Tema 1124/STJ** (interesse de agir e termo inicial dos efeitos financeiros). SEM modulação, negada no mérito e nos embargos de declaração. Aplica-se aos processos pendentes cuja discussão sobre a DIB não esteja preclusa (Onda 178).
 - **Tema 942/STF** (RE 1.014.286, conversão de tempo especial de servidor; auditoria 25/07/2026).
 - **Tema 709/STF** (RE 791.961, vedação de permanência ou retorno à atividade especial; auditoria 25/07/2026).
 

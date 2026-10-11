@@ -39,13 +39,13 @@ A solução pelo CPC/2015 é a observância do contraditório prévio, mesmo nas
 
 ### 3.1. Tese fixada no Tema 1124
 
-Distinção essencial: a exigência de PRÉVIO REQUERIMENTO ADMINISTRATIVO como condição da ação é o Tema 350/STF (RE 631.240), com suas exceções. O Tema 1124/STJ (REsp 1.905.830) trata do TERMO INICIAL DOS EFEITOS FINANCEIROS do benefício concedido ou revisado judicialmente com base em prova não submetida ao INSS: DER quando a prova já constava do processo administrativo; citação quando a prova é genuinamente nova.
+Distinção essencial: a exigência de PRÉVIO REQUERIMENTO ADMINISTRATIVO como condição da ação é o Tema 350/STF (RE 631.240), com suas exceções. O Tema 1124/STJ (REsps 1.913.152, 1.905.830 e 1.912.784) trata, desde a questão de ordem de 22/05/2024, do interesse de agir (itens 1.1 a 1.6) e do TERMO INICIAL DOS EFEITOS FINANCEIROS do benefício concedido ou revisado judicialmente com base em prova não submetida ao INSS (itens 2.1 a 2.4). A DER vale quando a prova já constava do processo administrativo ou quando o INSS deixou de oportunizar a complementação. A citação vale quando a prova surgiu depois da ação ou era materialmente impossível antes.
 
 ### 3.2. Aplicação pelo tribunal
 
-Frequente aplicação do Tema 1124 de ofício pelo tribunal de segunda instância, com extinção sem mérito da ação.
+Os 17 acórdãos do STJ não tratam da aplicação da tese de ofício nem do efeito translativo (Não localizado na leitura de 11/10/2026). O que dizem é que a tese vale para os processos pendentes cuja discussão sobre a DIB não esteja preclusa.
 
-A aplicação ocorre mesmo quando o INSS não arguiu a preliminar na contestação.
+No TRF3 há divergência entre Turmas. A 9ª Turma vedou aplicar o tema para reformar o capítulo do termo inicial que o recurso do INSS não impugnou, porque o precedente superveniente não amplia o objeto devolvido (ApCiv 5782722-52.2019.4.03.9999, embargos julgados em 06/10/2026) [CONFERIDO em 11/10/2026]. A 10ª Turma aplicou o tema de ofício em recurso só do INSS, por entender a aplicação obrigatória e independente de provocação (ApCiv 5015421-22.2025.4.03.9999, j. 11/02/2026) [CONFERIDO em 11/10/2026], e extinguiu pelo item 1.6 processo já instruído (ApCiv 5008321-91.2020.4.03.6183, acórdão de 13/05/2026, mantido nos embargos julgados em 07/10/2026) [CONFERIDO em 11/10/2026]. No JEF, a 14ª Turma Recursal de SP extinguiu, em recurso do INSS, processo de 2021 já sentenciado com procedência (RecInoCiv 0004118-63.2021.4.03.6337, j. 18/09/2026) [CONFERIDO em 11/10/2026]. Detalhe em `tema-1124-instrucao-administrativa/references/APLICACAO-TRF3-TEMA-1124.md`.
 
 ### 3.3. Crítica pró-segurado
 
@@ -221,7 +221,7 @@ PUIL com paradigma da TNU sobre vedação à decisão surpresa.
 
 Quadro. Sentença concede o benefício. INSS apela apenas sobre o mérito. Tribunal aplica Tema 1124 de ofício e extingue sem mérito.
 
-Estratégia. Embargos de declaração com fundamento nos arts. 9º, 10 e 489, § 1º, CPC. Em caso de improvimento, REsp ou PUIL.
+Estratégia. Embargos de declaração com fundamento nos arts. 9º, 10 e 489, § 1º, CPC. Em caso de improvimento, REsp ou PUIL. A primeira defesa é a da 9ª Turma do TRF3, para a qual o precedente superveniente não amplia o objeto devolvido nem autoriza reformar capítulo não impugnado. Nas contrarrazões, dizer expressamente que o capítulo do termo inicial não foi devolvido.
 
 ### 11.2. Cenário B. Tribunal levanta a questão na pauta
 
@@ -245,7 +245,7 @@ Estratégia. Aplicação da exceção do Tema 350/STF, com o limite dos embargos
 
 Quadro. Ação ajuizada antes do julgamento do Tema 1124 e extinta ou com DIB deslocada em grau recursal.
 
-Estratégia. O STJ negou a modulação no mérito e nos embargos de declaração de 09/09/2026, de modo que o argumento temporal não serve. A defesa é a preclusão da DIB já decidida, o enquadramento no item 2.2 quando o INSS não emitiu carta de exigência e o enquadramento no item 2.1 ou na exceção do item 1.6 quando a prova judicial só confirmou a administrativa.
+Estratégia. O STJ negou a modulação no mérito e nos embargos de declaração de 09/09/2026, de modo que o argumento temporal não serve. A defesa é a preclusão da DIB já decidida, o enquadramento no item 2.2 quando o INSS não emitiu carta de exigência e o enquadramento no item 2.1 ou na exceção do item 1.6 quando a prova judicial só confirmou a administrativa. Na 7ª Turma do TRF3, a prova nova em processo em curso desloca os efeitos para a citação sem extinguir o processo (ApelRemNec 5003872-37.2023.4.03.6102, j. 31/08/2026) [CONFERIDO em 11/10/2026], e esse é o pedido subsidiário quando a extinção for arguida.
 
 ## 12. Pedidos típicos em embargos de declaração
 
@@ -314,6 +314,8 @@ Cruzamento com `pedilef-cotejo-analitico-tnu`.
 `mandado-seguranca-previdenciario` para o MS.
 
 `base-portarias-dpmf-inss-hub` para Portarias DPMF.
+
+Agente `conferente-tema-1124` (Onda 178). Confere o termo inicial pedido e a defesa contra a aplicação de ofício em contrarrazões e recursos. Despachar antes de protocolar.
 
 ## 16. Cruzamento com Onda 26
 
