@@ -3573,6 +3573,22 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .ad-datas button{border:1px solid #E7E6E1;background:#fff;border-radius:10px;padding:8px 12px;font:inherit;cursor:pointer;text-align:left}
 .ad-datas button.on{border-color:#0E5C58;box-shadow:0 0 0 2px rgba(14,92,88,.15)}
 .ad-datas small{display:block;color:#686660}
+.adx-grade{display:flex;gap:16px;align-items:flex-start;margin:0 0 14px}.adx-main{flex:1 1 0;min-width:0}
+.adx-lado{flex:0 0 340px;position:sticky;top:8px;max-height:calc(100vh - 16px);overflow:auto;display:flex;flex-direction:column;gap:12px}
+@media (max-width:980px){.adx-grade{flex-direction:column}.adx-lado{position:static;flex:auto;max-height:none;width:100%}}
+.adx-sec{background:#fff;border:1px solid #E7E6E1;border-radius:12px;padding:14px 16px;margin:0 0 12px}.adx-sec h3{margin:0 0 10px;font-size:15px}
+.adx-lado .adx-sec{margin:0}.adx-lado .pa-na-ad{margin:0}
+.adx-abas{display:flex;gap:6px;align-items:center;margin:0 0 8px}.adx-abas button[role=tab]{border:1px solid #E7E6E1;background:#fff;border-radius:8px;padding:5px 12px;font:inherit;cursor:pointer}
+.adx-abas button.on{border-color:#0E5C58;color:#0E5C58;font-weight:600}
+.adx-tab tr.div td:first-child{box-shadow:inset 3px 0 0 #8F5400}.adx-verm{color:#B3261E;font-weight:600}.adx-verde{color:#1B6E38;font-weight:700}.adx-sem{color:#8F5400;font-style:italic}
+.adx-kpis{display:flex;flex-wrap:wrap;gap:16px;margin:0 0 10px}.adx-kpis b{font-size:18px}
+.adx-faixa{position:relative;height:22px;background:#F3F2EE;border-radius:6px;margin:6px 0}
+.adx-seg{position:absolute;top:3px;height:16px;border-radius:4px;display:inline-block}.adx-leg .adx-seg,.adx-leg .adx-re{position:static;width:14px;height:10px;vertical-align:middle;margin-right:4px}
+.adx-seg.contrib{background:#3A6491}.adx-seg.graca{background:#9CC3A8}.adx-seg.perda{background:#E7B4AE}
+.adx-re{position:absolute;top:0;width:3px;height:22px;background:#0E5C58;display:inline-block}
+.adx-leg{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:#4A4944;margin:0 0 8px}
+.adx-hist{margin:6px 0;padding-left:18px;font-size:13px}.adx-hist li{margin:3px 0}.adx-hist li.perda{color:#B3261E}.adx-hist li.reingresso{color:#0E5C58;font-weight:600}
+.adx-cnpjs{list-style:none;padding:0;margin:0}.adx-cnpjs li{padding:8px 0;border-bottom:1px solid #E7E6E1}.adx-acoes{display:flex;gap:6px;margin-top:6px}.adx-ws{font-size:13px;margin-top:4px}
 .pa-na-ad{margin:0 0 12px}.pa-trab-ad{max-width:none!important}.pa-trab-ad .pa-cartoes{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
 .pa-tabela{width:100%;border-collapse:collapse;font-size:12.5px;margin:4px 0 10px}.pa-tabela th,.pa-tabela td{text-align:left;padding:6px 8px;border-bottom:1px solid #E7E6E1;vertical-align:top}
 .pa-tabela th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#686660}.pa-tabela .alerta{color:#8F5400;font-weight:600}
@@ -4197,7 +4213,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.36</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.37</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15763,10 +15779,11 @@ const SIT_BEN = {"1":"CESSADO","2":"ATIVO","3":"SUSPENSO"};
 function competenciasDaLinha(txt){
   const out = []; let atual = null;
   for(const tok of String(txt||"").split(/\s+/)){
-    if(/^\d{2}\/\d{4}$/.test(tok)){ atual = {c:tok, vals:[]}; out.push(atual); continue; }
+    if(/^\d{2}\/\d{4}$/.test(tok)){ atual = {c:tok, vals:[], ind:[]}; out.push(atual); continue; }
     if(atual && /^[\d.]+,\d{2}$/.test(tok)) atual.vals.push(+tok.replace(/\./g,"").replace(",","."));
+    else if(atual && /^[A-Z]{3,}(?:-[A-Z0-9]{2,})+$/.test(tok)) atual.ind.push(tok);   // F214 · o indicador da competência
   }
-  return out.filter(x=>x.vals.length).map(x=>({c:x.c, v:Math.max(...x.vals)}));
+  return out.filter(x=>x.vals.length).map(x=>({c:x.c, v:Math.max(...x.vals), ...(x.ind.length ? {ind:x.ind} : {})}));
 }
 function lerVinculosCnis(itens){
   const linhas = linhasDoPdf(palavrasDoPdf(itens));
@@ -19491,7 +19508,8 @@ function painelDireito(c){
       ${cnisDe(c)&&cnisDe(c).caminho?`<button type="button" class="tl-bt" onclick="abrirCnis('${c.id}')" title="abre o extrato guardado em outra aba (CNIS de ${esc(fmt(cnisDe(c).em))})">Abrir CNIS</button>`
         :`<button type="button" class="tl-bt tl-falta" onclick="irSubCad('identificacao')" title="o CNIS ainda não foi inserido: insira na Identificação">Inserir CNIS</button>`}</span>
     </div>
-    ${painelTrabalhos(c, ks)}
+    ${(ex => ex || painelTrabalhos(c, ks) ? `<div class="adx-grade"><div class="adx-main">${ex}${caixaConsideracoes(c)}</div>
+      <aside class="adx-lado">${listaConsideracoes(c)}${painelTrabalhos(c, ks)}</aside></div>` : "")(exploracaoDireito(c, ks))}
     ${resumoDireito(c, ult)}
     ${datas}
     ${sel ? fichaDaAnalise(sel) : ""}
@@ -20840,6 +20858,169 @@ async function usarNomeCnis(cliId){
   catch(e){ return aviso("Não consegui guardar — tente de novo"); }
   c.nome = v; reindexarCliente(c); aviso("Nome atualizado pelo CNIS ✔");
   montarSidebar(); abrirFicha(cliId); irSubCad("pa");
+}
+// ═══════════════════════════════════════════════════════════════════════
+// F214 · A EXPLORAÇÃO NA ANÁLISE DE DIREITO. O que o Primeiro atendimento
+// leva (os blocos ligados) abre aqui com mais fundo: a qualidade de segurado
+// em painel, com as perdas e os reingressos; o CNIS ao lado da RAIS e do
+// CAGED, em vínculos e em remunerações; os CNPJs com a consulta e o inteiro
+// teor. Embaixo, as considerações de quem analisa, que ficam à direita junto
+// dos trabalhos possíveis.
+// ═══════════════════════════════════════════════════════════════════════
+const _adxAba = new Map(), _adxDiv = new Map(), _cnisComps = new Map();
+// as competências do CNIS (com os indicadores) só existem no PDF: lidas uma vez, na sessão
+async function carregarCnisComps(c){
+  if(_cnisComps.has(c.id)) return;
+  _cnisComps.set(c.id, {carregando:true});
+  const g = cnisDe(c), an = docsDoDossie(c.id).find(a=>/^CNIS · CNIS completo/i.test(a.nome||"")) || (g && g.caminho ? {caminho:g.caminho} : null);
+  let vs = null;
+  try{ if(an) vs = lerCnisPdf(await itensDoPdf(await pdfDoAnexo(an))).linhaDoTempo || []; }catch(e){ console.warn("CNIS: remunerações não lidas", e); }
+  _cnisComps.set(c.id, {vs: vs || [], erro: !vs});
+  if(clienteAberto===c.id) repintarSeLivre();
+}
+const _raiz = x => soDig(x).slice(0, 8);
+// os vínculos dos três sistemas lado a lado, um por empregador e admissão
+function vinculosComparados(c, fd){
+  const g = cnisDe(c), m = new Map();
+  const linha = (raiz, adm, nome) => { const k = `${raiz}|${adm}`; if(!m.has(k)) m.set(k, {raiz, adm, nome, cnis:null, rais:null, caged:null, lic:[]}); const r = m.get(k); if(!r.nome) r.nome = nome; return r; };
+  for(const v of ((g && g.vinculos) || []).filter(v=>v.tipo!=="Benefício"))
+    linha(_raiz(v.codigo) || v.origem, v.inicio || "", v.origem).cnis = v;
+  for(const x of fd.rais||[]){ const r = linha(x.raiz || _raiz(x.cnpj), x.admissao || "", x.nome);
+    r.rais = r.rais ? {...r.rais, desligamento: r.rais.desligamento || x.desligamento, anos:[...r.rais.anos, x.ano]} : {...x, anos:[x.ano]}; }
+  for(const x of fd.caged||[]) linha(x.raiz, x.admissao || "", x.nome).caged = x;
+  // a mesma admissão escrita só num sistema: junta pelo empregador quando há uma linha só dele
+  const porRaiz = new Map(); for(const r of m.values()){ const l = porRaiz.get(r.raiz) || []; l.push(r); porRaiz.set(r.raiz, l); }
+  for(const l of licencasDaRais(fd.rais)){ const r = [...m.values()].find(r=>r.nome===l.nome || (r.rais && r.rais.nome===l.nome)); if(r) r.lic.push(l); }
+  return [...m.values()].map(r=>{
+    const ini = [r.cnis && r.cnis.inicio, r.rais && r.rais.admissao, r.caged && r.caged.admissao].filter(Boolean);
+    const fim = [r.cnis && (r.cnis.fim || ""), r.rais && (r.rais.desligamento || ""), r.caged && (r.caged.desligamento || "")].filter(x=>x!=null && x!==false);
+    const sistemas = [r.cnis, r.rais, r.caged].filter(Boolean).length;
+    r.div = sistemas < 2 || new Set(ini).size > 1 || new Set(fim).size > 1 || r.lic.length > 0;
+    return r;
+  }).sort((a,b)=>isoBr(b.adm||"").localeCompare(isoBr(a.adm||"")));
+}
+function tabelaVinculos(c, fd, soDiv){
+  const vs = vinculosComparados(c, fd).filter(r=>!soDiv || r.div);
+  const per = (a, b) => a ? `${esc(a)} a ${esc(b || "em aberto")}` : "—";
+  return `<table class="pa-tabela adx-tab"><thead><tr><th>Empregador</th><th>CNIS</th><th>RAIS</th><th>CAGED</th><th>Indicadores</th><th>Licença sem remuneração</th></tr></thead><tbody>
+    ${vs.map(r=>`<tr class="${r.div?"div":""}"><td>${esc(r.nome||"—")}</td>
+      <td class="mono">${r.cnis ? per(r.cnis.inicio, r.cnis.fim) : `<span class="adx-sem">não consta</span>`}</td>
+      <td class="mono">${r.rais ? per(r.rais.admissao, r.rais.desligamento) + ` <span class="meio-sub">(${esc(r.rais.anos.sort().join(", "))})</span>` : `<span class="adx-sem">não consta</span>`}</td>
+      <td class="mono">${r.caged ? per(r.caged.admissao, r.caged.desligamento) : `<span class="adx-sem">não consta</span>`}</td>
+      <td>${esc(((r.cnis||{}).indicadores||[]).join(", ") || "—")}</td>
+      <td class="${r.lic.length?"adx-verm":""}">${r.lic.length ? esc(r.lic.map(l=>`${l.de} a ${l.ate} (${l.dias} dias)`).join("; ")) : "—"}</td></tr>`).join("")
+      || `<tr><td colspan="6" class="meio-sub">${soDiv ? "Nenhum vínculo divergente." : "Nenhum vínculo lido."}</td></tr>`}</tbody></table>`;
+}
+// as remunerações mês a mês: CNIS e RAIS lado a lado, o maior em verde quando
+// divergem, o abaixo do mínimo em vermelho e a falta de remuneração apontada
+function remuneracoesComparadas(c, fd){
+  const st = _cnisComps.get(c.id); if(!st || st.carregando) return null;
+  const linhas = new Map(), k = (raiz, comp) => `${raiz}|${chaveComp(comp)}`;
+  const pega = (raiz, comp, nome) => { const kk = k(raiz, comp); if(!linhas.has(kk)) linhas.set(kk, {raiz, comp, nome, cnis:null, rais:null, ind:[]}); return linhas.get(kk); };
+  for(const v of (st.vs||[]).filter(v=>v.tipo!=="Benefício")) for(const cp of v.comps||[]){
+    const l = pega(_raiz(v.codigo) || v.origem, cp.c, v.origem); l.cnis = cp.v; l.ind = cp.ind || []; }
+  for(const r of fd.rais||[]) for(const [mm, val] of Object.entries(r.remuneracoes||{})){
+    const l = pega(r.raiz || _raiz(r.cnpj), `${mm}/${r.ano}`, r.nome); l.rais = val; }
+  return [...linhas.values()].map(l=>{
+    const sm = salarioMinimo(l.comp);
+    l.sem = (l.cnis==null || l.cnis===0) || (l.rais!=null && l.rais===0);
+    l.div = (l.cnis!=null && l.rais!=null && Math.abs(l.cnis - l.rais) >= 0.01) || l.cnis==null || l.rais==null || l.ind.length > 0 || (sm && ((l.cnis!=null && l.cnis < sm) || (l.rais!=null && l.rais > 0 && l.rais < sm)));
+    l.sm = sm; return l;
+  }).sort((a,b)=>chaveComp(b.comp).localeCompare(chaveComp(a.comp)));
+}
+function tabelaRemuneracoes(c, fd, soDiv){
+  const ls = remuneracoesComparadas(c, fd);
+  if(!ls){ carregarCnisComps(c); return `<p class="meio-sub">Lendo as remunerações do CNIS…</p>`; }
+  const st = _cnisComps.get(c.id);
+  const val = (x, outro, sm) => x==null ? `<span class="adx-sem">sem remuneração</span>`
+    : `<span class="${sm && x>0 && x<sm ? "adx-verm" : outro!=null && x>outro+0.009 ? "adx-verde" : ""}">${x.toLocaleString("pt-BR",{minimumFractionDigits:2})}</span>`;
+  const vis = ls.filter(l=>!soDiv || l.div);
+  return `${st.erro ? `<p class="meio-sub">O PDF do CNIS não pôde ser lido; aparecem só as remunerações da RAIS.</p>` : ""}
+  <table class="pa-tabela adx-tab"><thead><tr><th>Competência</th><th>Empregador</th><th>CNIS</th><th>RAIS</th><th>Mínimo</th><th>Indicadores</th></tr></thead><tbody>
+    ${vis.slice(0, 400).map(l=>`<tr class="${l.div?"div":""}"><td class="mono">${esc(l.comp)}</td><td>${esc(l.nome||"—")}</td>
+      <td class="mono">${val(l.cnis, l.rais, l.sm)}</td><td class="mono">${val(l.rais, l.cnis, l.sm)}</td>
+      <td class="mono meio-sub">${l.sm ? l.sm.toLocaleString("pt-BR",{minimumFractionDigits:2}) : "—"}</td><td>${esc(l.ind.join(", ") || "—")}</td></tr>`).join("")
+      || `<tr><td colspan="6" class="meio-sub">${soDiv ? "Nenhuma competência divergente." : "Nenhuma remuneração lida."}</td></tr>`}</tbody></table>
+  ${vis.length > 400 ? `<p class="meio-sub">Mostrando as 400 competências mais recentes de ${vis.length}.</p>` : ""}`;
+}
+// a qualidade de segurado ao longo do tempo: cada período contribuído, a graça
+// que veio depois, a perda e o reingresso. O último trecho é o da conta do CRM
+// (calcularGraca); os anteriores são estimados pelo art. 15 da Lei 8.213/91.
+function historiaQualidade(c, d){
+  const ct = d.ct, gr = d.gr; if(!ct || !(ct.periodos||[]).length) return [];
+  const ps = ct.periodos.map(([a, b])=>({a, b})), out = []; let acum = 0;
+  const mes = (ym, n) => { const [y, m] = ym.split("-").map(Number), t = y*12 + (m-1) + n; return `${Math.floor(t/12)}-${String(t%12+1).padStart(2,"0")}`; };
+  const meses = (a, b) => { const [y1, m1] = a.split("-").map(Number), [y2, m2] = b.split("-").map(Number); return (y2-y1)*12 + (m2-m1) + 1; };
+  ps.forEach((p, i)=>{
+    acum += meses(p.a, p.b);
+    const prox = ps[i+1], g = acum > 120 ? 24 : 12, perda = `${mes(p.b, g + 2)}-16`;
+    out.push({tipo:"contrib", de:p.a, ate:p.b, txt:`${meses(p.a, p.b)} meses de contribuição`});
+    if(!prox){ out.push({tipo: gr && gr.vencida ? "perda" : "graca", de:mes(p.b, 1), ate:(gr && (gr.mantidaAte||"").slice(0,7)) || mes(p.b, g),
+      txt: gr && gr.semLimite ? "benefício em manutenção: qualidade sem limite" : gr ? (gr.vencida ? `perdida em ${fmtBarra(gr.perda)}` : `mantida até ${fmtBarra(gr.mantidaAte)}`) : ""}); return; }
+    if(`${prox.a}-01` < perda){ out.push({tipo:"graca", de:mes(p.b, 1), ate:mes(prox.a, -1), txt:"sem perda: voltou a contribuir dentro da graça"}); }
+    else { out.push({tipo:"perda", de:mes(p.b, 1), ate:mes(prox.a, -1), txt:`graça de ${g} meses; perda estimada em ${fmtBarra(perda)}`});
+      out.push({tipo:"reingresso", de:prox.a, ate:prox.a, txt:`reingresso em ${prox.a.split("-").reverse().join("/")}`}); acum = 0; }
+  });
+  return out;
+}
+function painelQualidade(c, d){
+  const h = historiaQualidade(c, d); if(!h.length) return `<p class="meio-sub">O CNIS ainda não foi lido.</p>`;
+  const t0 = Date.parse(`${h[0].de}-01`), t1 = Math.max(Date.parse(hoje()), Date.parse(`${h[h.length-1].ate}-28`));
+  const pos = ym => Math.max(0, Math.min(100, (Date.parse(`${ym}-01`) - t0) / (t1 - t0) * 100));
+  const nPerda = h.filter(x=>x.tipo==="perda").length, nRe = h.filter(x=>x.tipo==="reingresso").length;
+  return `<div class="adx-kpis"><span><b>${nPerda}</b> ${nPerda===1?"perda":"perdas"} da qualidade</span><span><b>${nRe}</b> ${nRe===1?"reingresso":"reingressos"}</span>
+      <span>${esc((h[h.length-1]||{}).txt||"")}</span></div>
+    <div class="adx-faixa" role="img" aria-label="Qualidade de segurado ao longo do tempo">${h.filter(x=>x.tipo!=="reingresso").map(x=>
+      `<span class="adx-seg ${x.tipo}" style="left:${pos(x.de)}%;width:${Math.max(0.5, pos(x.ate) - pos(x.de))}%" title="${esc(x.de)} a ${esc(x.ate)}: ${esc(x.txt)}"></span>`).join("")}
+      ${h.filter(x=>x.tipo==="reingresso").map(x=>`<span class="adx-re" style="left:${pos(x.de)}%" title="${esc(x.txt)}"></span>`).join("")}</div>
+    <div class="adx-leg"><span><i class="adx-seg contrib"></i>Contribuição</span><span><i class="adx-seg graca"></i>Graça</span><span><i class="adx-seg perda"></i>Sem qualidade</span><span><i class="adx-re"></i>Reingresso</span></div>
+    <ol class="adx-hist">${h.map(x=>`<li class="${x.tipo}"><span class="mono">${esc(x.de.split("-").reverse().join("/"))}${x.ate!==x.de ? ` a ${esc(x.ate.split("-").reverse().join("/"))}` : ""}</span> ${esc(x.txt)}</li>`).join("")}</ol>
+    <p class="meio-sub">Os trechos anteriores ao último são estimados pelo art. 15 da Lei 8.213/91 (12 meses, ou 24 com mais de 120 contribuições sem perda), sem o acréscimo do desemprego; o último segue a conta da Identificação.</p>`;
+}
+function painelCnpjs(c, fd){
+  if(!(fd.cnpjs||[]).length) return `<p class="meio-sub">${fd.redesim ? "A Redesim não traz CNPJ no CPF." : "A Redesim não foi consultada."}</p>`;
+  return `<ul class="adx-cnpjs">${fd.cnpjs.map(e=>{ const d = soDig(e.cnpj), w = _cnpjWs.get(d) || {};
+    return `<li><b class="mono">${esc(e.cnpj)}</b> ${esc(e.nome||"")}<div class="meio-sub">${esc([e.situacao, e.vinculo, e.qualificacao, e.municipio].filter(Boolean).join(" · "))}</div>
+      ${w.dados ? `<div class="adx-ws">${esc(resumoCnpjWs(w.dados))}</div>` : w.erro ? `<div class="meio-sub">${esc(w.erro)}</div>` : ""}
+      <span class="adx-acoes"><button type="button" class="btn-mini" ${w.carregando?"disabled":""} onclick="consultarCnpjWs('${d}')">${w.carregando ? "Consultando…" : "Consultar"}</button>
+      ${e.anexo ? `<button type="button" class="btn-mini" onclick="abrirAnexo('${e.anexo.id}')">Inteiro teor</button>` : ""}</span></li>`; }).join("")}</ul>`;
+}
+function exploracaoDireito(c, ks){
+  if(!(docsDoDossie(c.id).length || cnisDe(c))) return "";
+  const d = paDados(c, ks), vai = b => paVai(c.id, b), sec = [];
+  const aba = _adxAba.get(c.id) || "vinculos", soDiv = !!_adxDiv.get(c.id);
+  if(vai("qual")) sec.push(["Qualidade de segurado", painelQualidade(c, d)]);
+  if(vai("cnis") || vai("rais") || vai("car")) sec.push(["CNIS, RAIS e CAGED", `<div class="adx-abas" role="tablist">
+      <button type="button" role="tab" aria-selected="${aba==="vinculos"}" class="${aba==="vinculos"?"on":""}" onclick="_adxAba.set('${c.id}','vinculos');repintarFicha()">Vínculos</button>
+      <button type="button" role="tab" aria-selected="${aba==="remun"}" class="${aba==="remun"?"on":""}" onclick="_adxAba.set('${c.id}','remun');repintarFicha()">Remunerações</button>
+      <button type="button" class="pa-levar-bt pa-sw${soDiv?" on":""}" role="switch" aria-checked="${soDiv}" style="margin-left:auto" onclick="_adxDiv.set('${c.id}',${!soDiv});repintarFicha()"><i></i>Só o divergente</button></div>
+    ${aba==="vinculos" ? tabelaVinculos(c, d.fd, soDiv) : tabelaRemuneracoes(c, d.fd, soDiv)}`]);
+  if(vai("cnpj")) sec.push(["CNPJs do titular", painelCnpjs(c, d.fd)]);
+  const outros = blocosDoPA(d).filter(([b])=>vai(b) && !["qual","car","cnis","rais","cnpj","falta"].includes(b) && d.grupos[b].length);
+  for(const [b, rot] of outros) sec.push([rot, `<ul class="mapa-lista pa-fatos">${d.grupos[b].map(x=>`<li class="est-${x.est}"><i class="mapa-bola" aria-hidden="true"></i><span>${esc(x.texto)}</span>
+    <span class="dossie-orig">${esc(x.fonte||"")}${x.anexo ? ` · <button type="button" class="adr-link" onclick="abrirAnexo('${x.anexo}')">ver</button>` : ""}</span></li>`).join("")}</ul>`]);
+  if(!sec.length) return "";
+  return sec.map(([t, h])=>`<section class="adx-sec"><h3>${esc(t)}</h3>${h}</section>`).join("");
+}
+// as considerações de quem analisa: gravadas na ficha (campos.consideracoes)
+function consideracoesDe(c){ return ((c.campos||{}).consideracoes)||[]; }
+async function addConsideracao(cliId){
+  const c = D.cliPorId.get(cliId), el = document.getElementById("adx-cons"); if(!c || !el) return;
+  const texto = el.value.trim(); if(!texto) return aviso("Escreva a consideração");
+  const campos = {...(c.campos||{}), consideracoes:[...consideracoesDe(c), {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], texto}]};
+  try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos})}); }
+  catch(e){ return aviso("Não consegui guardar — tente de novo"); }
+  c.campos = campos; el.value = ""; repintarFicha();
+}
+function caixaConsideracoes(c){
+  return `<section class="adx-sec"><h3>Minhas considerações</h3>
+    <textarea id="adx-cons" rows="3" placeholder="O que a leitura dos documentos mostrou, o que conferir, o que pedir ao cliente…" style="width:100%"></textarea>
+    <div class="form-linha" style="justify-content:flex-end"><button type="button" onclick="addConsideracao('${c.id}')">Adicionar consideração</button></div></section>`;
+}
+function listaConsideracoes(c){
+  const cs = consideracoesDe(c);
+  return `<section class="adx-sec adx-lado-cons"><h3>Considerações</h3>${cs.length ? `<ol class="adx-hist">${cs.slice().reverse().map(x=>
+    `<li><span class="mono">${esc(fmtBarra(String(x.em).slice(0,10)))}</span> <b>${esc(x.quem||"")}</b> ${esc(x.texto)}</li>`).join("")}</ol>` : `<p class="meio-sub">Nenhuma ainda.</p>`}</section>`;
 }
 // F213 · os trabalhos possíveis moraram no Primeiro atendimento e passaram à
 // Análise de Direito: lá se escolhe o que levar, a partir do que o dossiê mostra

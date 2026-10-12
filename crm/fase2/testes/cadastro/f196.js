@@ -166,6 +166,33 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   await (await p.$(".pa")).screenshot({ path: process.env.FOTO || "/tmp/f196-pa.png" });
   await p.evaluate(() => irSubCad("direito")); await p.waitForSelector(".pa-trab-ad");
   conf("F213 · os trabalhos possíveis estão na Análise de Direito", !!(await p.$(".pa-trab-ad .pa-cartao")) && /\d+ de \d+ blocos/.test(await p.textContent(".pa-levar-box")));
+  const adx = await p.evaluate(async () => {
+    const c = D.cliPorId.get(clienteAberto);
+    const fora0 = _paForaBl.get(c.id); _paForaBl.delete(c.id);
+    _cnisComps.set(c.id, { vs: [{ tipo: "Empregado", codigo: "11.444.777/0001-61", origem: "CONFECCOES FICTICIAS LTDA", inicio: "01/02/2011", fim: "30/09/2019",
+      comps: [{ c: "01/2016", v: 1500 }, { c: "02/2016", v: 700, ind: ["PREC-MENOR-MIN"] }, { c: "08/2016", v: 1400 }] }] });
+    repintarFicha(); await new Promise(x => setTimeout(x, 150));
+    const r = { secs: [...document.querySelectorAll(".adx-sec h3")].map(h => h.textContent), vinc: document.querySelector(".adx-tab").textContent };
+    _adxAba.set(c.id, "remun"); repintarFicha(); await new Promise(x => setTimeout(x, 150));
+    const t = document.querySelector(".adx-tab");
+    r.remun = t.textContent; r.verde = [...t.querySelectorAll(".adx-verde")].map(x => x.textContent); r.verm = [...t.querySelectorAll(".adx-verm")].map(x => x.textContent);
+    r.todas = t.querySelectorAll("tbody tr").length;
+    _adxDiv.set(c.id, true); repintarFicha(); await new Promise(x => setTimeout(x, 150));
+    r.div = document.querySelectorAll(".adx-tab tbody tr").length;
+    _adxDiv.set(c.id, false); _adxAba.set(c.id, "vinculos"); repintarFicha(); await new Promise(x => setTimeout(x, 150));
+    document.getElementById("adx-cons").value = "Conferir a licença de 2016 com o empregador"; await addConsideracao(c.id); await new Promise(x => setTimeout(x, 150));
+    r.cons = document.querySelector(".adx-lado-cons").textContent;
+    r.lado = !!document.querySelector(".adx-lado .pa-trab-ad");
+    if (fora0) _paForaBl.set(c.id, fora0); repintarFicha(); await new Promise(x => setTimeout(x, 100));
+    return r;
+  });
+  conf(`F214 · a Análise de Direito explora o que o Primeiro atendimento levou (${adx.secs.join(", ")})`, adx.secs.includes("Qualidade de segurado") && adx.secs.includes("CNIS, RAIS e CAGED") && adx.secs.includes("Minhas considerações"));
+  conf("F214 · vínculos: CNIS, RAIS e CAGED lado a lado, com a licença sem remuneração", /CONFECCOES FICTICIAS/.test(adx.vinc) && /01\/06\/2016 a 31\/07\/2016/.test(adx.vinc));
+  conf(`F214 · remunerações: o maior em verde, abaixo do mínimo em vermelho, sem remuneração apontado (${adx.verde} | ${adx.verm})`,
+    adx.verde.length > 0 && adx.verm.includes("700,00") && /sem remuneração/.test(adx.remun) && /PREC-MENOR-MIN/.test(adx.remun));
+  conf("F214 · a chave mostra só o divergente", adx.div > 0 && adx.div < adx.todas);
+  conf("F214 · a consideração vai ao quadro fixo da direita, junto dos trabalhos", /Conferir a licença de 2016/.test(adx.cons) && adx.lado);
+  await (await p.$(".adx-grade")).screenshot({ path: "/tmp/f196-adx.png" });
   await p.click(".pa-cartao-bt"); await p.waitForTimeout(100);
   conf("clicar no cartão o destaca", !!(await p.$(".pa-cartao.sel")));
   const marcados = await p.$$eval(".pa-levar input", is => is.filter(i => i.checked).length);
