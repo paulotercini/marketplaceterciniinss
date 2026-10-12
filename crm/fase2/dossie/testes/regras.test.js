@@ -89,10 +89,14 @@ test('seguro-desemprego: JSON do MTE vira texto legível com parcelas e datas', 
     dataRequerimento: '2024-03-10', tipoInscricao: { codigo: 1, descricao: 'CNPJ' }, inscricao: 12345678000199,
     razaoSocial: 'EMPRESA X', dataAdmissao: '2020-01-02', dataDispensa: '2024-02-28',
     detalhe: { situacao: { descricao: 'DEFERIDO' },
-      parcelas: [{ numeroParcela: 1, dataLiberacao: '2024-04-10', dataPagamento: '2024-04-12', valorParcela: 1412, situacaoParcela: 'PAGA' }] } }]);
+      vinculos: [{ nomeEmpresa: 'EMPRESA X', dataAdmissao: '2020-01-02', dataDemissao: '2024-02-28' }],
+      parcelas: [{ numero: 1, dataProgramada: '2024-04-10', dataPagamento: '2024-04-12', valorPagamento: '1412.00', situacaoParcela: 'Paga', tipoParcela: 'NORMAL' },
+                 { numero: 2, dataProgramada: '2024-05-10', dataPagamento: '2024-05-12', valorPagamento: '1412.00', situacaoParcela: 'Paga', tipoParcela: 'NORMAL' }] } }]);
   assert.match(t, /Requerimento 123 · modalidade Trabalhador Formal · situação DEFERIDO/);
   assert.match(t, /Data do requerimento: 10\/03\/2024/);
   assert.match(t, /Empregador: EMPRESA X \(CNPJ 12345678000199\) · admissão 02\/01\/2020 · dispensa 28\/02\/2024/);
-  assert.match(t, /Parcela 1: liberação 10\/04\/2024 · pagamento 12\/04\/2024 · valor 1412 · PAGA/);
+  assert.match(t, /Vínculo: EMPRESA X · admissão 02\/01\/2020 · demissão 28\/02\/2024/);
+  assert.match(t, /Parcela 1: programada 10\/04\/2024 · paga em 12\/04\/2024 · R\$ 1412.00 · Paga/);
+  assert.match(t, /Última parcela paga em 12\/05\/2024/);
   assert.match(t, /dados brutos/);
 });

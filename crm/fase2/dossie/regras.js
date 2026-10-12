@@ -110,10 +110,16 @@
         linhas.push(`  Empregador: ${campo(r, 'razaoSocial') || '?'} (${rot(r.tipoInscricao) || ''} ${campo(r, 'inscricao', 'numeroInscricao') || ''}) · admissão ${dataBr(r.dataAdmissao)} · dispensa ${dataBr(campo(r, 'dataDispensa', 'dataDemissao'))}`);
       if (r.dataInicioSuspensao || r.dataFimSuspensao)
         linhas.push(`  Suspensão do contrato: ${dataBr(r.dataInicioSuspensao)} a ${dataBr(r.dataFimSuspensao)}`);
+      // campos do detalhe como o MTE devolveu em 12.10.2026: vinculos[{nomeEmpresa, dataAdmissao,
+      // dataDemissao}], parcelas[{numero, dataProgramada, dataPagamento, valorPagamento, situacaoParcela, tipoParcela}]
       const v = [].concat(campo(d, 'vinculos', 'vinculo') || campo(r, 'vinculos') || []);
-      for (const x of v) linhas.push(`  Vínculo: ${campo(x, 'nomeEmpregador', 'empregador', 'razaoSocial') || '?'} · admissão ${dataBr(campo(x, 'dataAdmissao', 'admissao'))} · demissão ${dataBr(campo(x, 'dataDemissao', 'dataDesligamento', 'dataDispensa', 'demissao'))}`);
+      for (const x of v) linhas.push(`  Vínculo: ${campo(x, 'nomeEmpresa', 'nomeEmpregador', 'empregador', 'razaoSocial') || '?'} · admissão ${dataBr(campo(x, 'dataAdmissao', 'admissao'))} · demissão ${dataBr(campo(x, 'dataDemissao', 'dataDesligamento', 'dataDispensa', 'demissao'))}`);
       const p = [].concat(campo(d, 'parcelas') || campo(r, 'parcelas') || []);
-      for (const x of p) linhas.push(`  Parcela ${campo(x, 'numeroParcela', 'numero', 'parcela') || '?'}: liberação ${dataBr(campo(x, 'dataLiberacao'))} · pagamento ${dataBr(campo(x, 'dataPagamento', 'dataEmissao'))} · valor ${campo(x, 'valorParcela', 'valor') || '-'} · ${rot(campo(x, 'situacaoParcela', 'situacao')) || ''}`);
+      for (const x of p) linhas.push(`  Parcela ${campo(x, 'numero', 'numeroParcela', 'parcela') || '?'}: programada ${dataBr(campo(x, 'dataProgramada', 'dataLiberacao'))} · paga em ${dataBr(campo(x, 'dataPagamento', 'dataEmissao'))} · R$ ${campo(x, 'valorPagamento', 'valorProgramado', 'valorParcela', 'valor') || '-'} · ${rot(campo(x, 'situacaoParcela', 'situacao')) || ''}${x.tipoParcela && x.tipoParcela !== 'NORMAL' ? ` (${x.tipoParcela})` : ''}`);
+      const ultima = p.map(x => campo(x, 'dataPagamento')).filter(Boolean).sort().pop();
+      // a parcela recebida dentro da graça prova o desemprego e acresce 12 meses; o prazo segue
+      // contado da última competência, não da parcela (IN 128, art. 184, §§ 2º e 5º)
+      if (ultima) linhas.push(`  Última parcela paga em ${dataBr(ultima)} — recebida dentro do período de graça, prova o desemprego e acresce 12 meses (contados da última competência, IN 128 art. 184 §§2º e 5º)`);
       if (!p.length) linhas.push(r.detalhe_erro ? `  (parcelas: o portal não devolveu o detalhe — ${r.detalhe_erro})` : '  (sem parcelas informadas)');
       linhas.push('');
     }
