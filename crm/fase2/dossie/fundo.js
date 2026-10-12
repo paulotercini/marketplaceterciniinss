@@ -81,7 +81,7 @@ async function noHc(tabId, metodo, arg) {
 async function rodarHc(tabId) {
   const st = await chrome.storage.local.get(['cliente']);
   const info = await noHc(tabId, 'info', st.cliente || null);
-  if (!info || info.erro) { await noHc(tabId, 'fim', (info && info.erro) || 'não consegui ler o HC'); return; }
+  if (!info || info.erro) { const e = (info && info.erro) || 'não consegui ler o HC'; await noHc(tabId, 'fim', e); return { erro: e }; }
   const { cliente, links } = info;
   let ok = 0; const falhas = [], inexistentes = [], porTela = {};
   for (const [tela, rotulo] of [['exames', 'exames'], ['internacoes', 'internações'], ['relatorios', 'relatórios']]) {
@@ -111,6 +111,99 @@ async function rodarHc(tabId) {
     + (falhas.length ? `\n${falhas.length} falharam:\n• ${falhas.slice(0, 6).join('\n• ')}` : '')
     + (inexistentes.length ? `\n${inexistentes.length} sem resultado no HC (imagem sem laudo ainda):\n• ${inexistentes.slice(0, 4).join('\n• ')}`
       + (inexistentes.length > 4 ? `\n• … e mais ${inexistentes.length - 4}` : '') : ''));
+  return { ok, falhas };
+}
+
+// ── RODAR TUDO ───────────────────────────────────────────────────────────
+// Um clique percorre os portais, um por vez, cada um na sua aba: a aba que já
+// está aberta é usada (é onde o login está); Meu INSS, e-Recursos e Redesim
+// são abertos se faltarem (mesmo gov.br); Emprega Brasil e HC só rodam se a
+// aba estiver aberta, porque o login deles é por aba/portal. A Redesim fica
+// por último e vem para a frente: é onde sobra o clique humano (captcha).
+// Portal sem login responde "sem sessão" e a rodada segue; o relato fica em
+// chrome.storage (ultima_rodada) e o popup mostra.
+const PORTAIS = [
+  { chave: 'meuinss', nome: 'Meu INSS', url: 'https://meu.inss.gov.br/#/', padrao: 'https://meu.inss.gov.br/*', arquivo: 'meuinss.js' },
+  { chave: 'recursos', nome: 'e-Recursos', url: 'https://consultaprocessos.inss.gov.br/', padrao: 'https://consultaprocessos.inss.gov.br/*', arquivo: 'recursos.js' },
+  { chave: 'mte', nome: 'Emprega Brasil', url: 'https://servicos.mte.gov.br/spme-v2/#/login', padrao: 'https://servicos.mte.gov.br/*', arquivo: 'mte.js', soSeAberto: true },
+  { chave: 'hc', nome: 'HC Ribeirão', url: 'https://appiris.hcrp.usp.br/apex/r/iris/nossohcribeirao/login', padrao: 'https://appiris.hcrp.usp.br/*', hc: true, soSeAberto: true },
+  { chave: 'redesim', nome: 'Redesim', url: 'https://consultacnpj.redesim.gov.br/minhas-empresas', padrao: 'https://consultacnpj.redesim.gov.br/*', redesim: true },
+];
+// abre em abas os portais que ainda não estão abertos — a pessoa entra em cada
+// um (o login é dela) e depois clica em "Rodar todos os portais"
+async function abrirTudo() {
+  let abertos = 0;
+  for (const p of PORTAIS) {
+    const [aba] = await chrome.tabs.query({ url: p.padrao });
+    if (!aba) { await chrome.tabs.create({ url: p.url, active: false }); abertos++; }
+  }
+  return { abertos };
+}
+let rodandoTudo = false;
+// recarregar (↻) ou abrir o navegador mata qualquer rodada em curso: o
+// "rodando…" que sobrou no storage é lixo e prenderia o botão do popup
+const zerarRodada = () => chrome.storage.local.set({ rodada_andamento: null, rodada_desde: null });
+chrome.runtime.onInstalled.addListener(zerarRodada);
+chrome.runtime.onStartup.addListener(zerarRodada);
+async function rodarTudo() {
+  if (rodandoTudo) throw new Error('já há uma rodada em curso — se ela travou, recarregue a extensão (↻ em chrome://extensions)');
+  rodandoTudo = true;
+  const relato = [];
+  const anotar = (p, x) => relato.push(`${p.nome}: ${x && x.erro ? x.erro
+    : `${(x && x.ok) || 0} doc(s)${x && x.falhas && x.falhas.length ? `, ${x.falhas.length} falha(s)` : ''}`}`);
+  try {
+    await chrome.storage.local.set({ rodada_desde: Date.now() });
+    for (const p of PORTAIS) {
+      await chrome.storage.local.set({ rodada_andamento: `${p.nome}…` });
+      let [aba] = await chrome.tabs.query({ url: p.padrao });
+      if (!aba) {
+        if (p.soSeAberto) { relato.push(`${p.nome}: sem aba aberta — abra, entre e rode de novo`); continue; }
+        aba = await chrome.tabs.create({ url: p.url, active: false });
+        await carregou(aba.id); await pausa(3000);
+      }
+      // portal sem sessão manda a aba para o login do gov.br (sso.acesso.gov.br),
+      // onde a extensão não entra: é "entre e rode de novo", não erro
+      const atual = await chrome.tabs.get(aba.id).catch(() => null);
+      const host = (p.padrao.match(/^https:\/\/([^/]+)/) || [])[1];
+      if (!atual || !atual.url || !atual.url.startsWith(`https://${host}/`)) {
+        relato.push(`${p.nome}: a aba foi para o login — entre com o gov.br nela e rode de novo`);
+        continue;
+      }
+      try {
+        if (p.hc) anotar(p, await rodarHc(aba.id));
+        else if (p.redesim) {
+          await chrome.scripting.executeScript({ target: { tabId: aba.id }, files: ['regras.js', 'pagina.js', 'redesim-ponte.js'] });
+          await chrome.scripting.executeScript({ target: { tabId: aba.id }, world: 'MAIN', files: ['redesim.js'] });
+          await chrome.tabs.update(aba.id, { active: true });
+          relato.push(`${p.nome}: aberta — falta o seu clique em PESQUISAR`);
+        } else {
+          await chrome.scripting.executeScript({ target: { tabId: aba.id }, files: ['regras.js', 'pagina.js', p.arquivo] });
+          // dispara e ACOMPANHA em consultas curtas: uma chamada que fica minutos
+          // pendente deixa o service worker ser encerrado pelo Chrome no meio da
+          // rodada (foi o que prendeu o popup em "rodando: Meu INSS…", 11.10.2026)
+          await chrome.scripting.executeScript({ target: { tabId: aba.id }, func: () => {
+            window.__dossieResultado = null;
+            Promise.resolve().then(() => window.dossieRodar())
+              .then(r => { window.__dossieResultado = r || { ok: 0 }; }, e => { window.__dossieResultado = { erro: String(e && e.message || e) }; });
+          } });
+          let x = null;
+          for (let t = 0; t < 40 * 60000 && !x; t += 3000) {       // teto de 40 min por portal
+            await pausa(3000);
+            await chrome.storage.local.set({ rodada_andamento: `${p.nome}… (${Math.round(t / 60000)} min)` });
+            const [r] = await chrome.scripting.executeScript({ target: { tabId: aba.id }, func: () => window.__dossieResultado })
+              .catch(() => [null]);                                  // aba fechou ou navegou: segue esperando
+            x = r && r.result;
+          }
+          anotar(p, x || { erro: 'não terminou em 40 min — veja a faixa na aba' });
+        }
+      } catch (e) { relato.push(`${p.nome}: ${e.message || e}`); }
+    }
+  } catch (e) {
+    relato.push(`a rodada parou: ${e.message || e}`);       // erro fora do laço (abas, storage): fica visível no popup
+  } finally {
+    rodandoTudo = false;
+    await chrome.storage.local.set({ ultima_rodada: { em: new Date().toISOString(), relato }, rodada_andamento: null, rodada_desde: null });
+  }
 }
 
 // o resumo da rodada (o que veio, o que o portal diz que não existe, o que
@@ -122,8 +215,15 @@ const resumo = m => CRM.guardarResumo({ cpf: m.cpf, portal: m.portal,
 chrome.runtime.onMessage.addListener((m, _de, responder) => {
   if (!m || m.tipo === 'blob') return false;                // é para o offscreen
   if (m.tipo === 'hc') { rodarHc(m.tabId).catch(() => {}); responder({ ok: true }); return false; }
+  if (m.tipo === 'tudo') {
+    // responde na hora (a rodada leva minutos); o que falha ANTES de começar volta ao popup
+    try { rodarTudo().catch(e => chrome.storage.local.set({ ultima_rodada: { em: new Date().toISOString(), relato: [`a rodada não começou: ${e.message || e}`] } })); responder({ ok: true }); }
+    catch (e) { responder({ erro: String(e.message || e) }); }
+    return false;
+  }
   const tarefa = m.tipo === 'salvar' ? salvar(m)
     : m.tipo === 'resumo' ? resumo(m)
+    : m.tipo === 'abrir' ? abrirTudo()
     : m.tipo === 'crm' && m.acao === 'entrar' ? CRM.entrar(m.email, m.senha).then(quem => ({ quem }))
     : m.tipo === 'crm' && m.acao === 'sair' ? CRM.sair().then(() => ({ ok: true }))
     : null;
