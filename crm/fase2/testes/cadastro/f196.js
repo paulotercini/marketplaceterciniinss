@@ -89,6 +89,27 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
     const h = civilDoDossieCaixa(c); D.anexos.pop();
     return /estado civil Casado\(a\)/.test(h) && !/profissão/.test(h) && civilDoDossieCaixa({ ...c, estado_civil: "casado" }) === "";
   }));
+  const partes = await p.evaluate(async () => {
+    const cid = clienteAberto, lidos = [], t0 = textoDoDocumento, api0 = api, rp0 = repintarSeLivre, lL0 = lerLeitoresDoDossie;
+    const mk = (n, nome, tam) => ({ id: "dz-" + n, cliente_id: cid, origem: "dossie", nome, caminho: "dz/" + n, tamanho: tam, paginas: null, texto: null });
+    const extra = [mk(1, "HC Ribeirao · exame.pdf", 10), mk(2, "Processos administrativos · pedido.pdf", 50), mk(3, "CNIS · CNIS completo.pdf", 900),
+      mk(4, "Cadastro · Dados cadastrais (CNIS).txt", 5), mk(5, "Cartas de concessao · carta.pdf", 20)];
+    D.anexos.push(...extra);
+    textoDoDocumento = async c => { lidos.push(c); return { texto: c === "dz/2" ? "Estado Civil: CASADO(A)\nX" : "texto ficticio " + c, paginas: 1, paginas_imagem: [] }; };
+    api = async (u, o) => (o && o.method === "PATCH" && /anexos/.test(u)) ? null : api0(u, o);
+    repintarSeLivre = () => {}; lerLeitoresDoDossie = async () => {};
+    const c = D.cliPorId.get(cid), civ = c.estado_civil; c.estado_civil = null;
+    _dossieTudo.delete(cid);
+    try {
+      await lerTextoDoDossie(cid); const ident = lidos.join(",");
+      _dossieTudo.add(cid); await lerTextoDoDossie(cid); const tudo = lidos.join(",");
+      return ident + " | " + tudo;
+    } finally { textoDoDocumento = t0; api = api0; repintarSeLivre = rp0; lerLeitoresDoDossie = lL0; c.estado_civil = civ;
+      D.anexos = D.anexos.filter(x => !String(x.id).startsWith("dz-")); }
+  });
+  conf(`F203 · a ficha lê primeiro só o da Identificação, e o resto quando abre o Primeiro atendimento (${partes})`,
+    partes.split(" | ")[0].startsWith("dz/4,dz/3,") && partes.split(" | ")[0].includes("dz/2") && !partes.split(" | ")[0].includes("dz/1")
+    && !partes.split(" | ")[0].includes("dz/5") && /dz\/1,dz\/5$|dz\/1.*dz\/5$/.test(partes.split(" | ")[1]));
   conf("a situação tem os seis blocos do desenho", pa.blocos.join("|") === "Qualidade de segurado|Carência|CNIS e RAIS|CNPJs do titular|Pedidos ao INSS|Planejamento prévio");
   conf(`os trabalhos possíveis saem do dossiê (${pa.cartoes.join(", ")})`, pa.cartoes.length > 0);
   conf("a carência mostra a contagem do CNIS", /^104 de 180$/.test(pa.car.trim()));
