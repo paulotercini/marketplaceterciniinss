@@ -8,7 +8,7 @@ A Análise de Direito pedia os mesmos campos para qualquer espécie, e o tempo d
 
 A solução tem três peças:
 
-1. **Faixa "Benefícios em análise"** (`faixaBeneficios`), no Primeiro atendimento e na Análise de Direito. Onze chips, um por família de `PONTOS_ESPECIE`. O chip ligado abre a ramificação da família (as opções). A família com sinal no dossiê vem primeiro e já nasce ligada, com a opção padrão escolhida pela idade e pelo dossiê (`benefPadrao`).
+1. **Faixa "Benefícios em análise"** (`faixaBeneficios`), no Primeiro atendimento e na Análise de Direito. Onze chips, um por família de `PONTOS_ESPECIE`, com o nome do benefício no chip (`BENEF_ROT`: "Pensão por morte e auxílio-reclusão", "Aposentadoria por idade ou tempo"). O chip ligado abre a ramificação da família (as opções). A família com sinal no dossiê vem primeiro e já nasce ligada, com a opção padrão escolhida pela idade e pelo dossiê (`benefPadrao`).
 2. **Catálogo benefício → módulos** (`BENEF`, `MOD_AD`). Cada opção aponta a espécie e a subespécie do catálogo do escritório (`SUBESPECIES`) e a lista de módulos. A Análise de Direito monta um quadro por módulo, na ordem fixa de `MOD_ORDEM`, e cada quadro diz para que benefícios serve.
 3. **Quadro "Tempos de contribuição"** (`caixaTempos`). Uma linha por período (de, até, onde, natureza, detalhe da natureza, prova), com "+ tempo", "×" e "Trazer do CNIS". Conta por natureza pelo calendário, converte o especial anterior a 13/11/2019 e dá o total para tempo comum e o tempo em 13/11/2019, que as regras de transição usam.
 
@@ -23,7 +23,7 @@ A escolha e o que se digita ficam na ficha (`clientes.campos.ad_modulos`, gravad
 | | Acidentário · B91/B92 | B91 | qualidade, incapacidade, acidente e nexo |
 | Auxílio-acidente | Acidentário · B94 | B94 | qualidade, acidente e nexo, incapacidade |
 | | Previdenciário · B36 | B36 | qualidade, acidente e nexo, incapacidade |
-| Aposentadoria programável | Por idade urbana · B41 | B41 | idade, carência, tempos |
+| Aposentadoria por idade ou tempo | Por idade urbana · B41 | B41 | idade, carência, tempos |
 | | Tempo de contribuição e transição · B42 | B42 | tempos, carência, idade, transição EC 103 |
 | | Professor · B57 | B57 | tempos, carência, idade, magistério |
 | | Pessoa com deficiência, LC 142 | B42 · B42.PCD | tempos, carência, deficiência |
@@ -33,7 +33,7 @@ A escolha e o que se digita ficam na ficha (`clientes.campos.ad_modulos`, gravad
 | | Híbrida · B41 | B41 · B41.HIBRIDA | idade, carência, rural, tempos |
 | BPC/LOAS | Pessoa com deficiência · B87 | B87 | deficiência, renda |
 | | Idoso · B88 | B88 | idade, renda |
-| Dependentes | Pensão por morte · B21 | B21 | qualidade, dependentes |
+| Pensão por morte e auxílio-reclusão | Pensão por morte · B21 | B21 | qualidade, dependentes |
 | | Auxílio-reclusão · B25 | B25 | qualidade, carência, dependentes |
 | Salário-maternidade | Urbana · B80 | B80 | qualidade, maternidade |
 | | Rural · B80 | B80 · B80.RURAL | rural, maternidade |
