@@ -16,7 +16,9 @@ window.DOSSIE = window.DOSSIE || {
       document.body.appendChild(el);
     }
     el.style.background = cor || '#2B5FC7';
-    el.textContent = '📂 Dossiê · ' + texto;
+    // a faixa final fica na tela de propósito (é a prova de que rodou): diz que acabou
+    const fim = cor === '#1E6F50' ? '✔ CONCLUÍDO · ' : cor === '#9A6700' ? '✔ CONCLUÍDO COM RESSALVAS · ' : '';
+    el.textContent = '📂 Dossiê · ' + fim + texto;
   },
 
   // no fim da rodada: o resumo do portal vai para clientes.dossie no CRM;
