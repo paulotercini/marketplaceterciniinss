@@ -4194,7 +4194,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.33</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.34</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14724,7 +14724,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // qualquer tempo (e fechar registra na Análise de Direito o que foi preenchido)
   // só na aba Cadastro e só depois do + atendimento (ou Abrir atendimento)
   const tela = abaAtiva===0 && pcsVivos.length>0 && _atendAberto.has(c.id) && (ATEND_SUBS.has(cd) || cd==="identificacao");
-  queueMicrotask(()=>{ const d = document.getElementById("detalhe"); if(d){ d.classList.toggle("atend-tela", tela); d.classList.toggle("id-bege", abaAtiva===0 && cd==="identificacao"); } });
+  queueMicrotask(()=>{ const d = document.getElementById("detalhe"); if(d){ d.classList.toggle("atend-tela", tela); d.classList.toggle("id-bege", abaAtiva===0 && ["identificacao","direito","documentos"].includes(cd)); } });
   if(tela) for(const v of Object.keys(vis)) if(v!=="identificacao" && !ATEND_SUBS.has(v)) vis[v] = false;
   return `
     ${tela ? cabecalhoAtendimento(c, cd, vis) : ""}
