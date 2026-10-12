@@ -81,7 +81,7 @@ async function noHc(tabId, metodo, arg) {
 async function rodarHc(tabId) {
   const st = await chrome.storage.local.get(['cliente']);
   const info = await noHc(tabId, 'info', st.cliente || null);
-  if (!info || info.erro) { const e = (info && info.erro) || 'não consegui ler o HC'; await noHc(tabId, 'fim', e); return { erro: e }; }
+  if (!info || info.erro) { const e = (info && info.erro) || 'não consegui ler o HC'; await noHc(tabId, 'fim', { texto: e, cor: '#B3261E' }); return { erro: e }; }
   const { cliente, links } = info;
   let ok = 0; const falhas = [], inexistentes = [], porTela = {};
   for (const [tela, rotulo] of [['exames', 'exames'], ['internacoes', 'internações'], ['relatorios', 'relatórios']]) {
@@ -107,10 +107,11 @@ async function rodarHc(tabId) {
   for (const [tela, r] of Object.entries(porTela)) for (const a of r.arquivos || []) baixados.push(`${tela} · ${a.arquivo}`);
   const res = await resumo({ cpf: cliente.cpf, portal: 'hc', baixados, inexistentes, falhas });
   // falha primeiro: é o que pede ação, e não pode sumir atrás da lista de "sem resultado"
-  await noHc(tabId, 'fim', `${ok} documento(s) do HC${res.crm && res.crm !== 'ok' ? ` (resumo no CRM: ${res.crm})` : ''}`
+  await noHc(tabId, 'fim', { cor: falhas.length ? '#9A6700' : '#1E6F50',
+    texto: `${ok} documento(s) do HC${res.crm && res.crm !== 'ok' ? ` (resumo no CRM: ${res.crm})` : ''}`
     + (falhas.length ? `\n${falhas.length} falharam:\n• ${falhas.slice(0, 6).join('\n• ')}` : '')
     + (inexistentes.length ? `\n${inexistentes.length} sem resultado no HC (imagem sem laudo ainda):\n• ${inexistentes.slice(0, 4).join('\n• ')}`
-      + (inexistentes.length > 4 ? `\n• … e mais ${inexistentes.length - 4}` : '') : ''));
+      + (inexistentes.length > 4 ? `\n• … e mais ${inexistentes.length - 4}` : '') : '') });
   return { ok, falhas };
 }
 
@@ -205,6 +206,13 @@ async function rodarTudo() {
     await chrome.storage.local.set({ ultima_rodada: { em: new Date().toISOString(), relato }, rodada_andamento: null, rodada_desde: null });
   }
 }
+
+// o PDF da consulta da Redesim já foi capturado na página (redesim.js): o
+// download que o portal dispara em seguida é o mesmo arquivo em dobro
+chrome.downloads.onCreated.addListener(d => {
+  if (/^blob:https:\/\/consultacnpj\.redesim\.gov\.br\//.test(d.url || ''))
+    chrome.downloads.cancel(d.id).then(() => chrome.downloads.erase({ id: d.id })).catch(() => {});
+});
 
 // o resumo da rodada (o que veio, o que o portal diz que não existe, o que
 // falhou) vai para clientes.dossie — é o que deixa a ficha dizer "sem CTC"

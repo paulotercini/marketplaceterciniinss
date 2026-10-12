@@ -27,7 +27,9 @@
       document.body.appendChild(el);
     }
     el.style.background = cor || '#2B5FC7';
-    el.textContent = '📂 Dossiê · ' + texto;
+    // a faixa final fica na tela de propósito (é a prova de que rodou): diz que acabou
+    const fim = cor === '#1E6F50' ? '✔ CONCLUÍDO · ' : cor === '#9A6700' ? '✔ CONCLUÍDO COM RESSALVAS · ' : '';
+    el.textContent = '📂 Dossiê · ' + fim + texto;
   };
 
   const dataBr = v => { const m = String(v || '').match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : String(v || ''); };
@@ -77,6 +79,28 @@
     } catch (e) { faixa('não consegui ler a resposta: ' + (e.message || e), '#B3261E'); }
     return r;
   };
+
+  // O PDF DA CONSULTA: o botão "Gerar PDF" monta o PDF no navegador (jsPDF,
+  // sem captcha) e o salva por URL.createObjectURL — o gancho abaixo lê o blob
+  // e o entrega; o download duplicado é cancelado no service worker. Quando a
+  // lista aparece (o botão existe), a extensão clica nele sozinha: é um clique
+  // sem captcha, e é o que deixa o PDF vir mesmo se o gancho do fetch falhar.
+  const createObjectURL0 = URL.createObjectURL.bind(URL);
+  URL.createObjectURL = function (obj) {
+    try {
+      if (obj instanceof Blob && obj.type === 'application/pdf') {
+        obj.arrayBuffer().then(buf => window.postMessage({ dossieRedesimPdf: { buf } }, location.origin));
+        faixa('PDF da consulta capturado — gravando…');
+      }
+    } catch (e) {}
+    return createObjectURL0(obj);
+  };
+  let pdfPedido = false;
+  setInterval(() => {
+    if (pdfPedido) return;
+    const b = [...document.querySelectorAll('button')].find(x => /Gerar PDF/i.test(x.innerText || ''));
+    if (b) { pdfPedido = true; setTimeout(() => b.click(), 800); }
+  }, 500);
 
   if (!/\/minhas-empresas/.test(location.pathname)) {
     faixa('abrindo "Minhas Empresas"…');
