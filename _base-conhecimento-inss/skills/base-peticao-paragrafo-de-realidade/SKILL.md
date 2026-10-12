@@ -38,7 +38,8 @@ Passo 4, costurar com a tese. A última frase liga a vida provada ao requisito j
 5. A última frase sempre conecta ao requisito legal em disputa. Sem essa costura o parágrafo é decorativo.
 6. Jamais inventar, arredondar ou presumir dado pessoal. Idade, datas, valores e diagnósticos saem do documento, nunca da memória.
 7. O parágrafo coroa a fundamentação técnica. Nunca a substitui. Peça sem tese não se salva com biografia.
-8. Verificar se algum dado abre flanco, como vínculo recente no CNIS, renda não declarada ou contradição com o laudo. Dado que enfraquece a tese não entra no parágrafo, entra na análise estratégica do caso, e se o julgador o encontrará nos autos é enfrentado na fundamentação pela refutação antecipada, porque omitir prova contrária relevante viola o dever de veracidade (arts. 77, I, e 80, II, do CPC).
+8. Verificar se algum dado fragiliza a tese, como vínculo recente no CNIS, renda não declarada ou contradição com o laudo. Dado que enfraquece a tese não entra no parágrafo, entra na análise estratégica do caso, e se o julgador o encontrará nos autos é enfrentado na fundamentação pela refutação antecipada, porque omitir prova contrária relevante viola o dever de veracidade (arts. 77, I, e 80, II, do CPC).
+9. Registro jurídico formal, como no restante da peça. A secura não autoriza linguagem coloquial. Escreve-se "iniciou o trabalho rural", e não "começou na roça"; "hipótese em que a regra dos pontos afasta o fator", e não "o caso que a regra dos pontos livra do fator". A régua completa está em `peticao-previdenciaria/references/ESTILO-MODELO.md`, seção Registro formal.
 
 ## Exemplo aprovado
 

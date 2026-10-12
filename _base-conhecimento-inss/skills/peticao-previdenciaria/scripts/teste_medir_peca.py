@@ -19,3 +19,9 @@ print('ok')
 # termo técnico "absolutamente incapaz" não é intensificador
 assert not any('Adjetivo' in a for a in achados('A prescrição não corre contra o dependente absolutamente incapaz, nos termos do art. 198, I, do Código Civil, de modo que o termo inicial é a data do óbito.'))
 print('ok 2')
+# registro formal (12/10/2026): coloquialismo cai, a forma corrigida pelo titular passa
+for col in ['Na revisão discutiram-se só os salários de contribuição.', 'A matéria ficou nos motivos da sentença.', 'A soma chega a 85 pontos.', 'A razão social mostra a atividade.', 'O agente está fora do rol.', 'A Parte Autora levou ao INSS os mesmos formulários.', 'A Parte Autora começou na roça.', 'É o caso que a regra dos pontos livra do fator.']:
+    assert any('coloquial' in a for a in achados(col)), col
+for formal in ['Na revisão discutiram-se apenas os salários de contribuição.', 'A matéria constou apenas dos motivos da sentença.', 'A soma alcança 85 pontos.', 'A razão social indica a atividade.', 'O agente não integra o rol.', 'A Parte Autora apresentou ao INSS os mesmos formulários.', 'A Parte Autora iniciou o trabalho rural.', 'É hipótese em que a regra dos pontos afasta o fator.']:
+    assert not any('coloquial' in a for a in achados(formal)), formal
+print('ok 3')

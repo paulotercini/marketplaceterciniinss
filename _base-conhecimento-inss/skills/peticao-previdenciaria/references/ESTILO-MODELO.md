@@ -28,6 +28,24 @@ As peças adotam os termos que o juízo usa, porque são os que ele lê sem esfo
 | o segurado (no CRPS, no MS, no cumprimento) | Recorrente; Impetrante; Exequente |
 | tão-somente; NCPC | tão somente; CPC |
 
+## Registro formal
+
+A peça não usa coloquialismo nem palavra informal, em nenhuma seção, incluído o Parágrafo de Realidade (determinação do titular de 12/10/2026). O verbo de uso cotidiano em sentido figurado, como chegar, mostrar, ficar, levar, usar e livrar, cede lugar ao verbo técnico. O advérbio "só" cede lugar a "apenas". A coisa não pratica o ato, e o sujeito é o período, o documento ou a parte que o pratica. As correções abaixo são do titular e servem de régua para casos análogos.
+
+| Evitar | Usar |
+|---|---|
+| discutiram-se só; reconhecida só parte | discutiram-se apenas; reconhecida apenas parte |
+| ficou nos motivos | constou apenas dos motivos |
+| a nova DIB usa contribuições | a nova DIB considera contribuições |
+| a razão social mostra | a razão social indica |
+| está fora do rol | não integra o rol |
+| a usina acrescenta | o período da usina acrescenta |
+| chega a 85 pontos; os requisitos chegam em 18/01/2016 | alcança 85 pontos; os requisitos completam-se em 18/01/2016 |
+| levou ao INSS os mesmos formulários e pedido | apresentou ao INSS os mesmos formulários e o mesmo pedido |
+| começou na roça | iniciou o trabalho rural |
+| o caso que a regra dos pontos livra do fator | hipótese em que a regra dos pontos afasta o fator |
+| nem são devolvidos os valores recebidos | tampouco são restituíveis os valores recebidos |
+
 ## A frase
 
 A frase segue a ordem sujeito, verbo e complemento. Não há vírgula isolada entre o verbo e o complemento ("determinei, a citação"), e cabe no máximo uma inserção entre vírgulas. Cada frase traz uma informação nova, ligada à anterior. A data vem em dd/mm/aaaa no corpo, e por extenso só na idade e no fecho.
