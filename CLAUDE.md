@@ -92,7 +92,7 @@ A aba **Primeiro atendimento** (`painelPA`, F196) é o painel do protótipo apro
 (espécies com fato próprio no dossiê, `PA_GATILHO`), seis blocos da situação (`paDados`) com detalhe, fonte e linha do
 tempo (`paLinhaDoTempo`), e o botão que leva os trabalhos marcados e os blocos levados à Análise de Direito
 (`paIrAnalise`, `_paAnalise`, nav `.ad-trab`). Só lê; a escolha vale na sessão.
-O **Novo Cliente** tem duas etapas (F197, `_ncl`): a 1 pede nome, CPF (único obrigatório), senha e telefone e abre os
+O **Novo Cliente** tem duas etapas (F197, `_ncl`): a 1 pede só CPF (único obrigatório), senha e telefone (F201: o nome vem do CNIS na etapa 2, ou do PAT em `_ncl.nomePat`) e abre os
 portais do dossiê (`NCL_PORTAIS`); abrir um portal, o botão "Abrir as quatro guias" (`nclTodosPortais`) ou seguir cria a ficha (`nclEtapa1`), porque a extensão só prende o
 dossiê a cliente que já existe pelo CPF. A 2 confere o que o dossiê trouxe (`nclPreencher`) e completa o cadastro;
 concluir (`criarCliente`) leva à lista Escritório e avisa Amanda e Paulo (`quemAvisaClienteNovo`).
