@@ -93,7 +93,7 @@ A aba **Primeiro atendimento** (`painelPA`, F196) é o painel do protótipo apro
 tempo (`paLinhaDoTempo`), e o botão que leva os trabalhos marcados e os blocos levados à Análise de Direito
 (`paIrAnalise`, `_paAnalise`, nav `.ad-trab`). Só lê; a escolha vale na sessão.
 O **Novo Cliente** tem duas etapas (F197, `_ncl`): a 1 pede nome, CPF (único obrigatório), senha e telefone e abre os
-portais do dossiê (`NCL_PORTAIS`); abrir um portal ou seguir cria a ficha (`nclEtapa1`), porque a extensão só prende o
+portais do dossiê (`NCL_PORTAIS`); abrir um portal, o botão "Abrir as quatro guias" (`nclTodosPortais`) ou seguir cria a ficha (`nclEtapa1`), porque a extensão só prende o
 dossiê a cliente que já existe pelo CPF. A 2 confere o que o dossiê trouxe (`nclPreencher`) e completa o cadastro;
 concluir (`criarCliente`) leva à lista Escritório e avisa Amanda e Paulo (`quemAvisaClienteNovo`).
 O leitor do seguro-desemprego aceita as parcelas nos dois formatos da extensão ("liberação · pagamento · valor" e
