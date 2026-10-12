@@ -193,6 +193,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
 
   // 6 · na aba Lembretes, a conta mostra o seguro e dispensa a marca manual
   await p.evaluate(([cli, caso]) => { casoSel = caso; const m = document.getElementById("modal"); if (m) m.innerHTML = ""; pintarFicha(); }, [CLI_CHEIO, CASO1]);
+  await p.evaluate(() => { _atendAberto.clear(); subCad = "identificacao"; repintarFicha(); });   // F208 · sai do modo atendimento
   await p.waitForSelector('button.mt[data-vv="9"]');
   await p.click('button.mt[data-vv="9"]');
   await p.waitForSelector(".conta-cx .conta-linha.sd");

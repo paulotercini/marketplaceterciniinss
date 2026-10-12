@@ -75,7 +75,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   await p.waitForFunction(() => D._ficha && D._ficha.cliId && !_lendoDossie && !_lendoLeitores, null, { timeout: 10000 });
   await p.evaluate(() => { abaAtiva = 0; irSubCad("pa"); });
   await p.waitForSelector(".pa .pa-blocos");
-  const pa = await p.evaluate(() => ({ passos: [...document.querySelectorAll(".pa-passo b")].map(b => b.textContent),
+  const pa = await p.evaluate(() => ({ passos: [...document.querySelectorAll(".atend-passos .pa-passo b")].map(b => b.textContent),
     blocos: [...document.querySelectorAll(".pa-bloco .pa-bloco-rot")].map(b => b.textContent.trim()),
     cartoes: [...document.querySelectorAll(".pa-cartao-bt > b")].map(b => b.textContent.trim()),
     car: document.querySelector(".pa-bloco:nth-child(2) .pa-bloco-val").textContent, tl: !!document.querySelector(".pa-tl"),
@@ -115,7 +115,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
     partes.split(" | ")[0].startsWith("dz/4,dz/3,") && partes.split(" | ")[0].includes("dz/2") && !partes.split(" | ")[0].includes("dz/1")
     && !partes.split(" | ")[0].includes("dz/5") && /dz\/1,dz\/5$|dz\/1.*dz\/5$/.test(partes.split(" | ")[1]));
   conf("F206 · com atendimento aberto, o Primeiro atendimento abre em tela cheia, com Fechar atendimento e só as quatro abas",
-    await p.evaluate(() => document.getElementById("detalhe").classList.contains("atend-tela") && /Fechar atendimento/.test(document.querySelector(".atend-cab").textContent)
+    await p.evaluate(() => document.getElementById("detalhe").classList.contains("atend-tela") && /Sair do modo atendimento/.test(document.querySelector(".atend-cab").textContent) && getComputedStyle(document.querySelector(".det-topo")).display === "none"
       && [...[...document.querySelectorAll(".sub-menu")].find(m => /Identificação/.test(m.textContent)).querySelectorAll("button:not(.trilho-mais)")].every(b => /Identificação|Primeiro atendimento|Mapa|Análise|Documentos/.test(b.textContent))));
   conf("a situação tem os seis blocos do desenho", pa.blocos.join("|").startsWith("Qualidade de segurado|Carência|CNIS e RAIS|CNPJs do titular|Pedidos ao INSS|Planejamento prévio"));
   conf(`os trabalhos possíveis saem do dossiê (${pa.cartoes.join(", ")})`, pa.cartoes.length > 0);
