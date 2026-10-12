@@ -20398,7 +20398,7 @@ function paLinhaDoTempo(c, d){
   const pos = iso => Math.max(0, Math.min(100, (Date.parse(iso) - t0) / (t1 - t0) * 100));
   const bar = (a, b, cls, txt, tit) => { const l = pos(a), w = Math.max(0.6, pos(b) - l);
     return `<span class="pa-tl-bar ${cls}" style="left:${l}%;width:${w}%" ${tit?`title="${esc(tit)}"`:""}>${txt?esc(txt):""}</span>`; };
-  const pto = (a, cls, txt) => `<span class="pa-tl-pto ${cls}" style="left:${pos(a)}%"></span>${txt?`<span class="pa-tl-rot" style="left:calc(${pos(a)}% + 8px)">${esc(txt)}</span>`:""}`;
+  const pto = (a, cls, txt) => `<span class="pa-tl-pto ${cls}" style="left:${pos(a)}%" ${txt?`title="${esc(txt)}"`:""}></span>`;
   const fimMes = s => { const d0 = new Date(Date.parse(ym(s))); d0.setMonth(d0.getMonth()+1); d0.setDate(0); return d0.toISOString().slice(0,10); };
   const contrib = (ct ? ct.periodos : []).map(([a, b])=>bar(ym(a), fimMes(b), "contrib", "", `${a} a ${b}`)).join("")
     + ((an && an.abaixo)||[]).map(x=>comp(x.comp) ? bar(comp(x.comp), fimMes(comp(x.comp).slice(0,7)), "abaixo", "", `${x.comp} abaixo do mínimo`) : "").join("")
@@ -20430,7 +20430,7 @@ function painelPA(c, ks){
   const ab = _paBloco.has(c.id) ? _paBloco.get(c.id) : "qual", sel = _paCartao.get(c.id) || "";
   const dz = c.dossie || {}, ems = Object.values(dz).map(x=>x&&x.em).filter(Boolean).sort(), nDocs = docsDoDossie(c.id).length;
   const PORT = {meuinss:"Meu INSS", mte:"Emprega Brasil", recursos:"e-Recursos", hc:"HC Ribeirão", redesim:"Redesim"};
-  const inex = [...new Set(Object.values(dz).flatMap(x=>(x&&x.inexistentes)||[]))];
+  const inex = [...new Set(Object.values(dz).flatMap(x=>(x&&x.inexistentes)||[]).map(x=>String(x).split(/[:(]/)[0].trim()).filter(Boolean))];
   const relSel = sel ? new Set(((d.trabalhos.find(t=>t.f.chave===sel)||{}).ramos||[]).flatMap(r=>r.fatos.map(x=>x.grupo))) : null;
   const pesa = b => !relSel || d.grupos[b].some(x=>relSel.has(x.grupo));
   const nEsc = d.trabalhos.filter(t=>esc0.has(t.f.chave)).length, nLev = PA_BLOCOS.filter(([b])=>paVai(c.id, b)).length;
