@@ -97,6 +97,7 @@ portais do dossiê (`NCL_PORTAIS`); abrir um portal, o botão "Abrir as quatro g
 dossiê a cliente que já existe pelo CPF. A 2 confere o que o dossiê trouxe (`nclPreencher`) e completa o cadastro;
 concluir (`criarCliente`) leva à lista Escritório e avisa Amanda e Paulo (`quemAvisaClienteNovo`).
 O Primeiro atendimento avisa quando o nome do CRM difere do nome do CNIS (`nomeDoCnis`, `nomeIgual`, F198), com o botão "Usar o nome do CNIS", que grava só no clique; `gravarCnisLido` passou a guardar `cnis.nome`, e a ficha antiga lê o nome do texto do CNIS do dossiê. No Novo Cliente, o telefone já vem com o DDD 16, o celular que começa com 9 sem nove dígitos gera aviso (`telRecado`), e o botão "Senha padrão" (`nclSenhaPadrao`) preenche a senha guardada no navegador, porque o CRM é página pública e a senha não entra no código.
+A etapa 2 se preenche pelo dossiê (`cadastroDoDossie`, F199): nome e nascimento do CNIS, estado civil da qualificação do pedido ou do laudo, profissão pela ocupação (CBO) da RAIS mais recente; documento ainda sem texto é lido na hora. Rua e cidade em caixa alta passam a caixa normal e o número colado na rua vai ao campo do número (`enderecoArrumado`); `dnIso` aceita também a data gravada em AAAA-MM-DD.
 O leitor do seguro-desemprego aceita as parcelas nos dois formatos da extensão ("liberação · pagamento · valor" e
 "programada · paga em · R$").
 Da cópia do processo administrativo, `lerProcessoTexto` lê **só** a folha de interposição (pedido, data de
