@@ -64,7 +64,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
 
   // ── A · a faixa no Primeiro atendimento ───────────────────────────────
   const chips = await p.evaluate(() => [...document.querySelectorAll(".pa .ben .ben-chip")].map(b => ({ fam: b.dataset.fam, on: b.classList.contains("on"), sinal: !!b.querySelector(".pa-bola"), pressed: b.getAttribute("aria-pressed") })));
-  conf(5, "A1 onze famílias em chips, as com sinal do dossiê primeiro", chips.length === 11 && chips[0].sinal && chips.every(c => c.pressed === String(c.on)));
+  conf(4, "A1 onze famílias em chips, as com sinal do dossiê primeiro", chips.length === 11 && chips[0].sinal && chips.every(c => c.pressed === String(c.on)));
   const ligados = chips.filter(c => c.on).map(c => c.fam);
   conf(5, "A2 a família com sinal já nasce marcada, com a opção padrão aberta sob ela",
     ligados.includes("tempo") && (await n(".pa .ben-ramo[data-fam=tempo] .ben-opc")) === 4 && (await n(".pa .ben-ramo[data-fam=tempo] .ben-opc.on")) === 1);
@@ -90,7 +90,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   await p.evaluate(cli => { admSalvar(cli, a => { a.beneficios = { bpc: ["def"] }; }); irSubCad("direito"); }, CLI_CHEIO);
   await p.waitForSelector(".adr .adm[data-mod]");
   const mBpc = await mods();
-  conf(6, "B1 BPC do deficiente abre deficiência e renda, sem tempo especial nem rural", mBpc.join(",") === "defic,renda");
+  conf(5, "B1 BPC do deficiente abre deficiência e renda, sem tempo especial nem rural", mBpc.join(",") === "defic,renda");
   await p.evaluate(cli => { admSalvar(cli, a => { a.beneficios = { b94: ["b94"] }; }); repintarFicha(); }, CLI_CHEIO);
   await p.waitForFunction(() => document.querySelector(".adr .adm[data-mod=acid]"));
   const mB94 = await mods();
@@ -119,7 +119,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   await p.selectOption(`${linha(0)} select[data-k=nat]`, "comum");
   await p.waitForTimeout(100);
   const tot1 = (await texto(".adm[data-mod=tempos] .adm-tot")).join(" ");
-  conf(5, "C3 o período conta pelo calendário: 6 anos, 0 meses e 0 dias, e vale como tempo comum", /Comum\s*6 anos, 0 meses e 0 dias/.test(tot1) && /Total para tempo comum\s*6 anos, 0 meses e 0 dias/.test(tot1));
+  conf(4, "C3 o período conta pelo calendário: 6 anos, 0 meses e 0 dias, e vale como tempo comum", /Comum\s*6 anos, 0 meses e 0 dias/.test(tot1) && /Total para tempo comum\s*6 anos, 0 meses e 0 dias/.test(tot1));
   await p.click("button:has-text('Trazer do CNIS')");
   await p.waitForFunction(() => document.querySelectorAll("#adm-tempos tbody tr").length === 2);
   const doCnis = await p.evaluate(() => { const r = document.querySelector('#adm-tempos tbody tr[data-i="1"]'); return { de: r.querySelector("[data-k=de]").value, ate: r.querySelector("[data-k=ate]").value, onde: r.querySelector("[data-k=onde]").value, prova: r.querySelector("[data-k=prova]").value }; });
@@ -137,7 +137,18 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   await p.selectOption(`${linha(1)} select[data-k=nat]`, "especial");
   await p.waitForTimeout(100);
   const tot2 = (await texto(".adm[data-mod=tempos] .adm-tot")).join(" ");
-  conf(5, "C6 o especial até 13/11/2019 converte por 1,20 (mulher): 5 anos viram 6", /Especial\s*5 anos, 0 meses e 0 dias/.test(tot2) && /Especial convertido \(×1,20 até 13\/11\/2019\)\s*6 anos, 0 meses e 0 dias/.test(tot2) && /Total para tempo comum\s*12 anos, 0 meses e 0 dias/.test(tot2));
+  conf(4, "C6 o especial até 13/11/2019 converte por 1,20 (mulher): 5 anos viram 6", /Especial\s*5 anos, 0 meses e 0 dias/.test(tot2) && /Especial convertido \(×1,20 até 13\/11\/2019\)\s*6 anos, 0 meses e 0 dias/.test(tot2) && /Total para tempo comum\s*12 anos, 0 meses e 0 dias/.test(tot2));
+
+  // caso-ouro do teste real de 12.10.2026: 48 vínculos do CNIS sobrepostos somavam 47 anos
+  await p.click(".adm-mais");
+  await p.waitForFunction(() => document.querySelectorAll("#adm-tempos tbody tr").length === 3);
+  await p.fill(`${linha(2)} input[data-k=de]`, "2008-01-01");
+  await p.fill(`${linha(2)} input[data-k=ate]`, "2012-12-31");
+  await p.waitForTimeout(100);
+  const tot3 = (await texto(".adm[data-mod=tempos] .adm-tot")).join(" ");
+  conf(4, "C7 períodos sobrepostos contam uma vez: 2005–2010 com 2008–2012 dá 8 anos, e o total 14", /Comum\s*8 anos, 0 meses e 0 dias/.test(tot3) && /Total para tempo comum\s*14 anos, 0 meses e 0 dias/.test(tot3));
+  await p.click(`${linha(2)} .adm-x`);
+  await p.waitForFunction(() => document.querySelectorAll("#adm-tempos tbody tr").length === 2);
 
   // ── D · os quadros calculam com a ficha, o CNIS e as linhas ───────────
   const hoje = new Date(), idade = hoje.getFullYear() - 1962 - ((hoje.getMonth() + 1 < 3 || (hoje.getMonth() + 1 === 3 && hoje.getDate() < 14)) ? 1 : 0);
