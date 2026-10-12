@@ -3559,6 +3559,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .ncl-passos span{padding-bottom:6px;border-bottom:3px solid var(--borda)}.ncl-passos .cur{color:var(--texto);border-bottom-color:#0E5C58}.ncl-passos .feito{color:#0E5C58;border-bottom-color:#B5D3CF}
 .ncl-dossie{margin:8px 0 12px;padding:10px 12px;border-radius:8px;background:var(--placa);font-size:13px;line-height:1.5}
 .ncl-portal{display:inline-flex;align-items:center;text-decoration:none}
+.ncl-todos{font-weight:600}
 /* F196 · painel do primeiro atendimento, o desenho aprovado */
 .pa{--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-warn:#8F5400;--pa-ok:#1B6E38;--pa-info:#3A6491;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660;color:#121212;font-size:13px;line-height:1.45}
 .pa .mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-weight:500}
@@ -4174,7 +4175,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.15</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.16</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10376,7 +10377,7 @@ function renderNovoCliente(){
       <div class="ncl-dossie">
         <b>Baixe o dossiê:</b> com o gov.br do segurado logado, clique para abrir cada portal numa guia nova e rode a extensão
         do dossiê (🔁 Rodar todos os portais). O dossiê traz CNIS, RAIS, CAGED, seguro-desemprego, pedidos, laudos, exames e CNPJs, e a etapa 2 vira só conferência.
-        <div class="form-linha" style="margin-top:8px;flex-wrap:wrap">${NCL_PORTAIS.map(([r,u])=>
+        <div class="form-linha" style="margin-top:8px;flex-wrap:wrap"><button type="button" class="ncl-todos" onclick="nclTodosPortais()">Abrir as quatro guias</button>${NCL_PORTAIS.map(([r,u])=>
           `<a class="cad-mini ncl-portal" href="${u}" target="_blank" rel="noopener" onclick="return nclPortal()">Abrir ${r}</a>`).join("")}</div>
         <span class="meio-sub" id="ncl-ficha-recado">${_ncl.id ? "Ficha criada ✔ — o dossiê baixado agora se prende a ela." : "O primeiro portal aberto já cria a ficha pelo CPF, para o dossiê se prender a ela. Sem a senha do gov.br, siga direto para a etapa 2."}</span>
       </div>
@@ -10548,6 +10549,14 @@ function nclPortal(){
   if(!_ncl.id) nclEtapa1(false);
   return true;
 }
+// um clique abre as quatro guias; o navegador só deixa a primeira abrir sem a
+// permissão de pop-up do CRM, e o recado diz como dar essa permissão uma vez
+function nclTodosPortais(){
+  if(!nclPortal()) return;
+  const abertas = NCL_PORTAIS.map(([, u])=>window.open(u, "_blank", "noopener")).filter(Boolean).length;
+  const r = document.getElementById("ncl-ficha-recado");
+  if(r && abertas < NCL_PORTAIS.length) r.innerHTML = `O navegador bloqueou ${NCL_PORTAIS.length - abertas} das ${NCL_PORTAIS.length} guias. Clique no ícone de pop-up bloqueado, no fim da barra de endereço, escolha <b>Sempre permitir</b> para o CRM e clique de novo em Abrir as quatro guias.`;
+}
 async function nclEtapa1(seguir=true){
   if(_ncl.id){ if(seguir){ _ncl.etapa=2; renderNovoCliente(); } return; }
   const nome=document.getElementById("ncl-nome").value.trim();
@@ -10574,7 +10583,7 @@ async function nclEtapa1(seguir=true){
     body:JSON.stringify({cliente_id:cli.id, tipo:"meu_inss", valor:senha})}).catch(()=>
       aviso("O cliente gravou, mas a senha não — cadastre de novo pela ficha"));
   _ncl = {etapa: seguir ? 2 : 1, id:cli.id};
-  if(!seguir){ const r=document.getElementById("ncl-ficha-recado"); if(r) r.textContent="Ficha criada ✔ — o dossiê baixado agora se prende a ela."; aviso("Ficha criada ✔ — rode a extensão do dossiê", false); return; }
+  if(!seguir){ const r=document.getElementById("ncl-ficha-recado"); if(r && !/bloqueou/.test(r.textContent)) r.textContent="Ficha criada ✔ — o dossiê baixado agora se prende a ela."; aviso("Ficha criada ✔ — rode a extensão do dossiê", false); return; }
   aviso("Ficha criada ✔ — agora a etapa 2", false);
   renderNovoCliente();
 }

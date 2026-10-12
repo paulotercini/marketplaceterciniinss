@@ -111,6 +111,11 @@ FIX.colaboradores = [...FIX.colaboradores,
   await p.waitForTimeout(300);
   conf("F197 · sem CPF a etapa 1 não grava", !escritos.some(x => x.m === "POST"));
   conf("F197 · sem CPF válido o portal não abre", await p.evaluate(() => nclPortal() === false));
+  conf("F197 · o botão único tenta as quatro guias e explica o bloqueio de pop-up",
+    await p.evaluate(async () => { const urls = []; window.open = (u) => { urls.push(u); return urls.length === 1 ? {} : null; };
+      document.getElementById("ncl-cpf").value = "52998224725"; nclTodosPortais(); await new Promise(x => setTimeout(x, 400));
+      const ok = urls.length === 4 && /bloqueou 3 das 4 guias/.test(document.getElementById("ncl-ficha-recado").textContent);
+      _ncl = {etapa:1, id:null}; document.getElementById("ncl-cpf").value = ""; window.open = () => { window._abriu++; }; return ok; }));
   await p.fill("#ncl-cpf", cpfNovo());
   escritos.length = 0;
   conf("F197 · com CPF válido, abrir o portal cria a ficha antes, sem sair da etapa 1",
