@@ -316,6 +316,7 @@ Critérios principais (ver detalhamento exaustivo no catálogo):
 20. **Petição sem seção de Efeitos Financeiros** (Tema 1124/STJ).
 21. **Discussão de matéria processual em PUIL** (novo, derivado da Onda 30 - Súmula 43/TNU).
 22. **Citação de norma sem leitura do arquivo verificado** (novo, anti-pattern anti-alucinação).
+23. **Coloquialismo ou palavra informal no corpo da peça**, incluído o Parágrafo de Realidade ("só", "chega a", "mostra", "ficou nos motivos", "está fora do rol", "na roça"). Severidade MENOR, com a troca da tabela Registro formal de `peticao-previdenciaria/references/ESTILO-MODELO.md`; o `medir_peca.py` aponta as formas já corrigidas pelo titular (12/10/2026).
 
 ### Camada 5 - Integridade Probatória (NOVA)
 
@@ -473,6 +474,7 @@ Exemplos.
 - Repetição argumentativa.
 - Excesso de destaques por página (Von Restorff).
 - Título argumentativo, narrativo ou informal, fora do padrão formal e nominal (Onda 162).
+- Coloquialismo ou palavra informal no corpo da peça (registro formal, 12/10/2026).
 - Excesso de jurisprudência transcrita por extenso.
 
 ## FORMATO DO RELATÓRIO
