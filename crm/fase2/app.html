@@ -1601,6 +1601,7 @@
   /* laranja, não amarelo: amarelo neste sistema quer dizer prazo de peça */
   .conta-linha.alerta{background:var(--laranja-f);color:var(--laranja)}
   .conta-linha span{font-size:12.5px;font-weight:600}
+  .conta-linha.sd{margin-top:6px;background:var(--placa);color:var(--texto)}
   .conta-prem{margin:8px 0 0;padding-left:18px;font-size:12.5px;color:var(--cinza);line-height:1.5}
   .conta-prem li{padding:1px 0}
   .conta-acao{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:9px}
@@ -17805,8 +17806,9 @@ const compMenor = (a,b) => (a.slice(3)+a.slice(0,2)) <= (b.slice(3)+b.slice(0,2)
 // perda (contribSemPerda); `desempregado` é decisão de quem atende, porque a
 // prova do desemprego não está no extrato; `abaixo`, as competências abaixo
 // do mínimo, que não abrem a graça sem complementação; `contados`, os períodos
-// da contagem ("AAAA-MM"), para o recuo não parar num mês sem contribuição
-function calcularGraca(vs, nContribs, desempregado, abaixo, contados){
+// da contagem ("AAAA-MM"), para o recuo não parar num mês sem contribuição;
+// `seguros`, os requerimentos do seguro-desemprego lidos do dossiê
+function calcularGraca(vs, nContribs, desempregado, abaixo, contados, seguros){
   const r = {premissas:[], fonte:GRACA_FONTE};
   if(!vs || !vs.length) return null;
   const emGozo = vs.some(v=>v.tipo==="Benefício" && !v.fim && v.inicio
@@ -17855,14 +17857,26 @@ function calcularGraca(vs, nContribs, desempregado, abaixo, contados){
   }else if(r.mais120 && facultativo){
     r.premissas.push(`o extrato traz ${nContribs} contribuições sem perda, mas o §1º prorroga o prazo do inciso II, e o facultativo está no inciso VI`);
   }
-  if(desempregado){
+  // IN 128, art. 184, § 5º: o seguro-desemprego RECEBIDO dentro da graça prova
+  // o desemprego e acresce 12 meses ao prazo do inciso II, que continua contado
+  // da última competência (§ 2º), e não da última parcela
+  const iniG = competenciaMais(ultima, 1);
+  r.janela = {ini: iniG, ate: perdaDaQualidade(competenciaMais(ultima, r.base)).mantidaAte};
+  r.facultativo = facultativo;
+  const naGraca = p => { const d = isoBr(p.pagamento); return d >= `${iniG.slice(3)}-${iniG.slice(0,2)}-01` && d <= r.janela.ate; };
+  const sd = facultativo ? null : (seguros||[]).map(s=>({...s, dentro: s.parcelas.filter(p=>parcelaRecebida(p) && naGraca(p))})).find(s=>s.dentro.length);
+  if(sd){
+    r.base += 12;
+    r.seguro = sd;
+    r.premissas.push(`mais 12 meses do §2º, pelo desemprego: o seguro-desemprego ${sd.dispensa ? `da dispensa de ${sd.dispensa}` : `requerido em ${sd.data}`} teve parcela recebida em ${sd.dentro[0].pagamento}, dentro da graça (IN 128, art. 184, § 5º)`);
+  }else if(desempregado){
     r.base += 12;
     r.premissas.push("mais 12 meses do §2º, pelo desemprego — a prova é do escritório, não está no extrato");
   }
   r.fim = competenciaMais(ultima, r.base);
   Object.assign(r, perdaDaQualidade(r.fim));
   r.vencida = hoje() >= r.perda;
-  r.desempregado = !!desempregado;
+  r.desempregado = !!desempregado || !!sd;
   // a competência abaixo do mínimo depois da última válida: complementada,
   // ela leva a graça adiante (Decreto 3.048/99, art. 19-E, § 1º)
   const depois = [...fora].filter(c=>!compMenor(c, ultima)).sort((a,b)=>chaveComp(a).localeCompare(chaveComp(b))).pop();
@@ -17874,6 +17888,20 @@ function calcularGraca(vs, nContribs, desempregado, abaixo, contados){
   return r;
 }
 
+// o seguro-desemprego ao lado da qualidade: o que prova, ou por que não prova
+function fatoSeguro(gr, seguros){
+  const quem = s => s.dispensa ? `da dispensa de ${s.dispensa}${s.empregador ? ` por ${s.empregador}` : ""}` : `requerido em ${s.data || "data não lida"}`;
+  const de = ps => `${ps.length} parcela${ps.length>1?"s":""} recebida${ps.length>1?"s":""}, de ${ps[0].pagamento} a ${ps[ps.length-1].pagamento}`;
+  const s = gr && gr.seguro;
+  if(s) return {est:"ok", anexo:s.anexo.id, texto:`Seguro-desemprego ${quem(s)}: ${de(s.dentro)}, dentro da graça; prova o desemprego e acresce 12 meses (art. 15, § 2º, da Lei 8.213/91, e IN 128, art. 184, § 5º)`};
+  const u = (seguros||[]).slice().sort((a,b)=>isoBr(b.data||b.dispensa).localeCompare(isoBr(a.data||a.dispensa)))[0];
+  if(!u) return null;
+  const rec = u.parcelas.filter(parcelaRecebida);
+  const conta = !gr || gr.semLimite ? ""
+    : gr.facultativo ? "; o último registro é de facultativo, e o § 5º do art. 184 da IN 128 acresce só o prazo do inciso II"
+    : rec.length ? `; fora da graça desta conta, que corre de ${gr.janela.ini} a ${fmtBarra(gr.janela.ate)}, e não acresce os 12 meses` : "; não prova o desemprego";
+  return {est:"info", anexo:u.anexo.id, texto:`Seguro-desemprego ${quem(u)}: ${rec.length ? de(rec) : `nenhuma parcela recebida${u.situacao ? `, situação ${u.situacao.toLowerCase()}` : ""}`}${conta}`};
+}
 // ── o bloco de contas, no pé da aba de Lembretes ────────────────────────
 // "Questões pertinentes do site interno", pedido do Paulo. Só entra o que
 // muda decisão de prazo, porque esta aba é sobre data que chega. A conta
@@ -17881,13 +17909,16 @@ function calcularGraca(vs, nContribs, desempregado, abaixo, contados){
 function blocoContas(c){
   const g = ((triagemDe(c).pdf||{}).cnis||{});
   const vs = g.vinculos || [];
-  const desemp = !!(triagemDe(c).graca||{}).desempregado;
-  const r = vs.length ? calcularGraca(vs, contribSemPerda(g), desemp, (g.analise||{}).abaixo, ((g.analise||{}).contagem||{}).periodos) : null;
+  const desemp = !!(triagemDe(c).graca||{}).desempregado, seguros = fontesDoDossie(c.id).seguros;
+  const r = vs.length ? calcularGraca(vs, contribSemPerda(g), desemp, (g.analise||{}).abaixo, ((g.analise||{}).contagem||{}).periodos, seguros) : null;
+  const fs = fatoSeguro(r, seguros);
+  const sdLinha = fs ? `<div class="conta-linha sd"><span>${esc(fs.texto)}</span>
+      <button type="button" class="adr-link" onclick="abrirAnexo('${fs.anexo}')">ver</button></div>` : "";
   const cabeca = `<div class="cad-tit"><span class="cad-ic">${CAD_IC.doc}</span>Contas deste cliente
       <span class="cad-tit-sub">o que decide prazo, calculado do CNIS que você já leu</span></div>`;
   if(!r) return `<div class="cad-cartao conta-cx">${cabeca}
     <p class="cad-nota" style="margin:0">Leia o CNIS na aba <b>Cadastro → Triagem</b> e a qualidade de
-      segurado é calculada aqui, com as premissas à vista.</p></div>`;
+      segurado é calculada aqui, com as premissas à vista.</p>${sdLinha}</div>`;
   const corpo = r.semLimite
     ? `<div class="conta-linha ok"><b>Qualidade mantida sem limite de prazo</b>
         <span>há benefício em manutenção</span></div>`
@@ -17895,12 +17926,12 @@ function blocoContas(c){
         <b>Qualidade mantida até ${fmtBarra(r.mantidaAte)}</b>
         <span>${r.vencida?"perdida":"perda"} em ${fmtBarra(r.perda)} · ${r.base} meses a partir de ${esc(r.ultima)}, até a competência ${esc(r.fim)}</span></div>`;
   return `<div class="cad-cartao conta-cx">${cabeca}
-    ${corpo}
+    ${corpo}${sdLinha}
     <ul class="conta-prem">${(r.premissas||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
     <div class="conta-acao">
-      <label class="conta-ck"><input type="checkbox" ${desemp?"checked":""}
+      ${r.seguro ? "" : `<label class="conta-ck"><input type="checkbox" ${desemp?"checked":""}
         onchange="marcarDesemprego('${c.id}',this.checked)">
-        segurado desempregado (§2º, mais 12 meses — a prova é do escritório)</label>
+        segurado desempregado (§2º, mais 12 meses — a prova é do escritório)</label>`}
       <a class="tri-ferr" href="https://advprevidenciaria.netlify.app/" target="_blank" rel="noopener">
         Contribuições e qualidade de segurado ↗</a>
     </div>
@@ -19257,6 +19288,51 @@ function lerRaisTexto(txt){
   });
   return out.filter(x=>x.raiz || x.admissao);
 }
+// SEGURO-DESEMPREGO · o .txt que a extensão monta do Emprega Brasil (dossiê
+// 0.6.2, textoSeguroDesemprego): um bloco por requerimento, com a dispensa e
+// as parcelas datadas. O JSON cru do pé fica de fora.
+function lerSeguroDesempregoTexto(txt){
+  const ls = linhasDoTexto(String(txt||"").split("--- dados brutos do portal ---")[0]);
+  if(!/^SEGURO-DESEMPREGO/.test(ls[0]||"")) return [];
+  const data = s => (String(s||"").match(/\d{2}\/\d{2}\/\d{4}/)||[])[0] || "";
+  const out = []; let r = null, m;
+  for(const l of ls){
+    if((m = l.match(/^Requerimento\s+(\S+)\s+·\s+modalidade\s+(.+?)(?:\s+·\s+situação\s+(.+))?$/))){
+      r = {numero:m[1], modalidade:m[2], situacao:m[3]||"", data:"", empregador:"", admissao:"", dispensa:"", parcelas:[]};
+      out.push(r);
+    }else if(!r) continue;
+    else if((m = l.match(/^Data do requerimento:\s*(.*)$/))) r.data = data(m[1]);
+    else if((m = l.match(/^Empregador:\s*(.*?)\s+\(.*?\)\s+·\s+admissão\s+(\S+)\s+·\s+dispensa\s+(\S+)/)))
+      Object.assign(r, {empregador: m[1]==="?" ? "" : m[1], admissao:data(m[2]), dispensa:data(m[3])});
+    else if((m = l.match(/^Vínculo:\s*(.*?)\s+·\s+admissão\s+(\S+)\s+·\s+demissão\s+(\S+)/)) && !r.dispensa)
+      Object.assign(r, {empregador: r.empregador || (m[1]==="?" ? "" : m[1]), admissao: r.admissao || data(m[2]), dispensa:data(m[3])});
+    else if((m = l.match(/^Parcela\s+(\S+):\s+liberação\s+(\S+)\s+·\s+pagamento\s+(\S+)\s+·\s+valor\s+(\S+)\s+·?\s*(.*)$/)))
+      r.parcelas.push({n:m[1], liberacao:data(m[2]), pagamento:data(m[3]), valor:m[4], situacao:m[5].trim()});
+  }
+  return out;
+}
+// a parcela que chegou ao segurado: com data e sem situação de bloqueio
+const parcelaRecebida = p => !!p.pagamento && !/CANCEL|BLOQUE|SUSPEN|N[ÃA]O\s*PAG|DEVOLV|RESTITU|PENDEN|A EMITIR/i.test(p.situacao||"");
+// REDESIM · o .txt dos CNPJs vinculados ao CPF (dossiê 0.7.1, redesim.js): um
+// bloco por CNPJ, com a situação e o vínculo do CPF. Sem a data de abertura,
+// que só a consulta ao CNPJ traz (consultarCnpjWs)
+function lerCnpjsTexto(txt){
+  const ls = linhasDoTexto(String(txt||"").split("--- dados brutos do portal ---")[0]);
+  if(!/^CNPJs VINCULADOS AO CPF/.test(ls[0]||"")) return null;
+  const out = {consulta: (ls.join("\n").match(/Consulta em (\d{2}\/\d{2}\/\d{4})/)||[])[1] || "", cnpjs:[]};
+  const sem = v => v==="?" ? "" : (v||"");
+  let e = null, m;
+  for(const l of ls){
+    if((m = l.match(/^CNPJ\s+([\d./-]{14,18})\s+·\s+(.*?)(?:\s+\(fantasia:\s*(.*)\))?$/))){
+      e = {cnpj:m[1], razao:sem(m[2]), fantasia:m[3]||"", situacao:"", matriz:"", local:"", vinculo:"", qualificacao:"", capital:""};
+      out.cnpjs.push(e);
+    }else if(!e) continue;
+    else if((m = l.match(/^Situação cadastral:\s*(.*)$/))){ const [s, mt, lc] = m[1].split(/\s*·\s*/); Object.assign(e, {situacao:sem(s), matriz:mt||"", local:(lc||"").replace(/^\/$/, "")}); }
+    else if((m = l.match(/^Vínculo do CPF:\s*(.*)$/))){ const [v, q] = m[1].split(/\s*·\s*qualificação:\s*/); Object.assign(e, {vinculo:sem(v), qualificacao:q||""}); }
+    else if((m = l.match(/^Capital social:\s*(.+)$/))) e.capital = m[1];
+  }
+  return out;
+}
 // Onda 2 · "11 de Junho de 2026" → "11/06/2026"
 function dataPorExtenso(s){
   const m = String(s||"").match(/(\d{1,2})\s+de\s+([a-zà-ú]+)\s+de\s+(\d{4})/i);
@@ -19518,7 +19594,7 @@ function lidoDoAnexo(a, leitor, chave){
   return _leituraCache.get(k);
 }
 function fontesDoDossie(cliId){
-  const f = {caged:[], rais:[], laudos:[], cartas:[], extratos:[], processos:[], resumos:[], cats:[], ppps:[]};
+  const f = {caged:[], rais:[], laudos:[], cartas:[], extratos:[], processos:[], resumos:[], cats:[], ppps:[], seguros:[], cnpjs:[], redesim:null};
   // o mesmo laudo vem sozinho e dentro da cópia do processo; a mesma carta, em dois PDFs
   const visto = new Set(), novo = k => !visto.has(k) && visto.add(k);
   for(const a of docsDoDossie(cliId).filter(x=>x.texto)){
@@ -19533,6 +19609,9 @@ function fontesDoDossie(cliId){
     if(/RESUMO DE DOCUMENTOS PARA C/i.test(t)){ const x = lidoDoAnexo(a, lerResumoInssTexto, "resumo"); if(x && novo(`resumo|${x.nb}|${x.der}`)) f.resumos.push({...x, anexo:a}); }
     if(/Comunica[çc][ãa]o de Acidente de Trabalho/i.test(t)){ const x = lidoDoAnexo(a, lerCatTexto, "cat"); if(x && novo(`cat|${x.numero||x.data}`)) f.cats.push({...x, anexo:a}); }
     if(/Perfil Profissiogr[áa]fico Previdenci[áa]rio/i.test(t)){ const x = lidoDoAnexo(a, lerPppTexto, "ppp"); if(x && x.riscos.length) f.ppps.push({...x, anexo:a}); }
+    if(/^SEGURO-DESEMPREGO/.test(t)) lidoDoAnexo(a, lerSeguroDesempregoTexto, "sd").forEach(x=>{ if(novo("sd|"+x.numero)) f.seguros.push({...x, anexo:a}); });
+    if(/^CNPJs VINCULADOS AO CPF/.test(t)){ const x = lidoDoAnexo(a, lerCnpjsTexto, "cnpj");
+      if(x){ f.redesim = {consulta:x.consulta, anexo:a}; x.cnpjs.forEach(e=>{ if(novo("cnpj|"+soDig(e.cnpj))) f.cnpjs.push({...e, anexo:a}); }); } }
   }
   return f;
 }
@@ -19806,31 +19885,60 @@ function quadroDossie(c, ks){
 // fora das duas fica fora do mapa) e MAPA_PONTOS diz que grupo de fatos
 // alimenta cada ponto.
 const MAPA_FUNIL = {
-  tempo:        {D:"idade contrib minimo vinculo", A:"beneficios processo ppp rural cadunico ctc"},
-  rural:        {D:"idade contrib rural", A:"minimo vinculo beneficios processo"},
+  tempo:        {D:"idade contrib minimo vinculo", A:"beneficios processo ppp rural cadunico ctc cnpj"},
+  rural:        {D:"idade contrib rural cnpj", A:"minimo vinculo beneficios processo"},
   especial:     {D:"idade contrib vinculo ppp", A:"minimo beneficios processo"},
-  incapacidade: {D:"contrib minimo qualidade laudo medicos processo", A:"idade vinculo beneficios carta ppp cat rural cadunico"},
-  b94:          {D:"qualidade beneficios laudo medicos processo cat", A:"contrib vinculo carta ppp rural"},
+  incapacidade: {D:"contrib minimo qualidade laudo medicos processo", A:"idade vinculo beneficios carta ppp cat rural cadunico cnpj"},
+  b94:          {D:"qualidade beneficios laudo medicos processo cat", A:"contrib vinculo carta ppp rural cnpj"},
   pensao:       {D:"idade beneficios certidoes", A:"processo rural"},
-  bpc:          {D:"idade beneficios cadunico laudo medicos", A:"contrib vinculo processo"},
-  maternidade:  {D:"qualidade certidoes", A:"contrib minimo vinculo beneficios processo rural cadunico"},
+  bpc:          {D:"idade beneficios cadunico laudo medicos", A:"contrib vinculo processo cnpj"},
+  maternidade:  {D:"qualidade certidoes", A:"contrib minimo vinculo beneficios processo rural cadunico cnpj"},
   revisao:      {D:"contrib carta", A:"idade minimo vinculo beneficios processo ppp rural ctc"},
-  cnis:         {D:"contrib minimo vinculo", A:"qualidade beneficios processo ppp rural cadunico ctc"},
-  crps:         {D:"processo", A:"idade contrib minimo vinculo qualidade beneficios laudo medicos carta ppp cat rural certidoes cadunico ctc"},
+  cnis:         {D:"contrib minimo vinculo", A:"qualidade beneficios processo ppp rural cadunico ctc cnpj"},
+  crps:         {D:"processo", A:"idade contrib minimo vinculo qualidade beneficios laudo medicos carta ppp cat rural certidoes cadunico ctc cnpj"},
 };
+// o CNPJ no CPF: descaracteriza o segurado especial e indica renda no BPC
 const MAPA_PONTOS = {
-  bpc_renda:"cadunico contrib vinculo", bpc_grupo:"cadunico certidoes", bpc_cadunico:"cadunico", bpc_avaliacao:"laudo medicos",
+  bpc_renda:"cadunico contrib vinculo cnpj", bpc_grupo:"cadunico certidoes", bpc_cadunico:"cadunico", bpc_avaliacao:"laudo medicos",
   crp_prazo:"processo", crp_motivo:"processo",
   esp_ppp:"ppp", esp_epi:"ppp", esp_ltcat:"ppp", esp_conversao:"idade contrib vinculo",
   inc_dii:"laudo medicos", inc_carencia:"contrib minimo", inc_qualidade:"qualidade vinculo", inc_pericia:"processo",
   b94_sequela:"laudo medicos", b94_nexo:"cat ppp", b94_acumulacao:"beneficios",
-  rur_prova:"rural", rur_auto:"rural", rur_genero:"certidoes rural",
+  rur_prova:"rural cnpj", rur_auto:"rural", rur_genero:"certidoes rural",
   dep_prova:"certidoes", dep_cota:"idade beneficios",
   apo_der:"idade contrib", apo_minimo:"minimo", apo_reciproca:"ctc",
   mat_qualidade:"qualidade vinculo", mat_carencia:"contrib", mat_rural:"rural",
   rev_decadencia:"carta", rev_tese:"beneficios", rev_calculo:"contrib",
   cni_indicador:"vinculo", cni_prova:"vinculo",
 };
+// CONSULTA DO CNPJ · a base pública do CNPJ.ws, a mesma do site interno (aba
+// CNPJ): a abertura, a situação com a data, o MEI e o CNAE, que a lista da
+// Redesim não traz. Sai só o número do CNPJ, um por clique de quem atende (a
+// base limita as consultas por minuto), e a resposta fica só nesta sessão.
+const _cnpjWs = new Map();
+async function consultarCnpjWs(cnpj){
+  const d = soDig(cnpj);
+  if(d.length!==14 || (_cnpjWs.get(d)||{}).carregando) return;
+  _cnpjWs.set(d, {carregando:true}); repintarSeLivre();
+  let x;
+  try{
+    const r = await fetch("https://publica.cnpj.ws/cnpj/"+d);
+    x = r.status===429 ? {erro:"a base pública limitou as consultas; tente de novo em um minuto"}
+      : r.status===404 ? {erro:"o CNPJ não está na base pública"}
+      : !r.ok ? {erro:`a consulta falhou (HTTP ${r.status})`} : {dados: await r.json()};
+  }catch(e){ x = {erro:"a base pública não respondeu"}; }
+  _cnpjWs.set(d, x); repintarSeLivre();
+}
+// o que decide no previdenciário, na ordem: abertura, situação, MEI, atividade
+function resumoCnpjWs(j){
+  const e = j.estabelecimento||{}, s = j.simples||{}, at = e.atividade_principal||{};
+  const mei = s.data_opcao_simei ? `MEI desde ${fmtBarra(s.data_opcao_simei)}${s.data_exclusao_simei ? `, excluído em ${fmtBarra(s.data_exclusao_simei)}` : ", sem exclusão"}`
+    : (s.simei===true || /^sim$/i.test(s.simei||"")) ? "MEI" : "sem opção pelo MEI";
+  return [e.data_inicio_atividade ? `aberto em ${fmtBarra(e.data_inicio_atividade)}` : "",
+    e.situacao_cadastral ? `situação ${String(e.situacao_cadastral).toLowerCase()}${e.data_situacao_cadastral ? ` desde ${fmtBarra(e.data_situacao_cadastral)}` : ""}` : "",
+    mei, (at.subclasse||at.id) ? `CNAE ${at.subclasse||at.id}${at.descricao ? ` (${at.descricao.toLowerCase()})` : ""}` : "",
+    ((j.natureza_juridica||{}).descricao||"").toLowerCase()].filter(Boolean).join("; ");
+}
 // os fatos que o CRM já lê, cada um com o grupo da matriz e o estado:
 // crit (prazo ou impedimento), warn (atenção), ok (cumprido), info
 function fatosDoMapa(c, ks, fam){
@@ -19854,11 +19962,14 @@ function fatosDoMapa(c, ks, fam){
   if(ben.estado) out.push({grupo:"beneficios", est: ben.estado==="atencao" ? "warn" : "ok", fonte:"CNIS", texto:ben.txt});
   const vin = lei("vinculo");
   if(vin.estado) out.push({grupo:"qualidade", est: vin.estado==="atencao" ? "warn" : "ok", fonte:"CNIS", texto:vin.txt});
-  const gr = g && (g.vinculos||[]).length ? calcularGraca(g.vinculos, contribSemPerda(g), !!(triagemDe(c).graca||{}).desempregado, an && an.abaixo, an && an.contagem && an.contagem.periodos) : null;
+  const fd = fontesDoDossie(c.id);
+  const gr = g && (g.vinculos||[]).length ? calcularGraca(g.vinculos, contribSemPerda(g), !!(triagemDe(c).graca||{}).desempregado, an && an.abaixo, an && an.contagem && an.contagem.periodos, fd.seguros) : null;
   if(gr) out.push({grupo:"qualidade", est: gr.semLimite ? "ok" : gr.vencida ? "crit" : "ok", fonte:"CNIS",
     texto: gr.semLimite ? "Qualidade mantida sem limite de prazo, porque há benefício em manutenção"
       : `Qualidade mantida até ${fmtBarra(gr.mantidaAte)}, ${gr.vencida ? "perdida" : "com perda"} em ${fmtBarra(gr.perda)} (${gr.base} meses a partir de ${gr.ultima})`
         + (gr.complementar ? `; complementada a competência ${gr.complementar.comp}, iria até ${fmtBarra(gr.complementar.mantidaAte)}` : "")});
+  const fs = fatoSeguro(gr, fd.seguros);
+  if(fs) out.push({grupo:"qualidade", fonte:"Seguro-desemprego", ...fs});
   const cad = lei("cadunico");
   if(cad.cor==="ok" || cad.cor==="alerta") out.push({grupo:"cadunico", est: cad.cor==="ok" ? "ok" : "warn", fonte:"CRM", texto:cad.txt});
   // onda 3 · a contagem do CNIS, o requisito da espécie e a contagem do INSS ao lado.
@@ -19884,7 +19995,7 @@ function fatosDoMapa(c, ks, fam){
   }
   // onda 4 · o que o CAGED e a RAIS têm e o CNIS não; o desemprego
   // involuntário da última dispensa; o ruído do PPP contra o limite da época; a CAT
-  const fd = fontesDoDossie(c.id), vcn = (g && g.vinculos) || [];
+  const vcn = (g && g.vinculos) || [];
   const noCnis = x => vcn.some(v=>raizCnpj(v.codigo)===x.raiz && (!x.admissao || !v.inicio || v.inicio===x.admissao));
   const semCnis = g ? fd.caged.filter(x=>x.raiz && !noCnis(x)) : [];
   if(semCnis.length) out.push({grupo:"vinculo", est:"warn", fonte:"CAGED", anexo:semCnis[0].anexo.id,
@@ -19900,9 +20011,9 @@ function fatosDoMapa(c, ks, fam){
   const dem = fd.rais.filter(x=>x.desligamento).sort((a,b)=>isoBr(b.desligamento).localeCompare(isoBr(a.desligamento)))[0];
   const ultMes = ct && (ct.periodos||[]).length ? ct.periodos[ct.periodos.length-1][1] : "";
   if(dem && /^11\b/.test(dem.causa||"") && (!ultMes || chaveComp(competenciaMais(dem.desligamento.slice(3), 1)) >= ultMes)){
-    const marcado = !!(triagemDe(c).graca||{}).desempregado;
+    const marcado = !!(triagemDe(c).graca||{}).desempregado || !!(gr && gr.seguro);
     out.push({grupo:"qualidade", est: marcado ? "ok" : "warn", fonte:`RAIS de ${dem.ano}`, anexo:dem.anexo.id,
-      texto:`A RAIS de ${dem.ano} mostra dispensa sem justa causa por ${dem.nome||"empregador"} em ${dem.desligamento}: o desemprego involuntário estende a graça em 12 meses (art. 15, § 2º, da Lei 8.213/91)${marcado ? ", já marcado na conta" : ""}`,
+      texto:`A RAIS de ${dem.ano} mostra dispensa sem justa causa por ${dem.nome||"empregador"} em ${dem.desligamento}: o desemprego involuntário estende a graça em 12 meses (art. 15, § 2º, da Lei 8.213/91)${gr && gr.seguro ? ", já provado pelo seguro-desemprego" : marcado ? ", já marcado na conta" : ""}`,
       acao: marcado ? null : {rot:"Marcar o desemprego na conta da graça", js:`marcarDesemprego('${c.id}',true)`}});
   }
   for(const pp of fd.ppps) for(const r of pp.riscos){
@@ -19919,6 +20030,16 @@ function fatosDoMapa(c, ks, fam){
     texto:`CAT ${ca.tipoCat ? ca.tipoCat.toLowerCase()+" " : ""}de acidente ${(ca.tipo||"não lido").toLowerCase()} em ${ca.data||"data não lida"}`
       + `${ca.cid ? `, CID ${ca.cid}${ca.cidDesc ? ` (${ca.cidDesc.toLowerCase()})` : ""}` : ""}${ca.cnae ? `, CNAE ${ca.cnae}` : ""}`
       + `; o nexo pelo NTEP se confere na Lista C do Anexo II do Decreto 3.048/99`});
+  // os CNPJs em nome do cliente (Redesim), com a consulta à base pública no clique
+  for(const e of fd.cnpjs){
+    const d = soDig(e.cnpj), ws = _cnpjWs.get(d) || {};
+    out.push({grupo:"cnpj", est: /^ATIVA$/i.test(e.situacao) ? "warn" : "info", fonte:"Redesim", anexo:e.anexo.id,
+      texto:`CNPJ ${e.cnpj}${e.razao ? `, ${e.razao}` : ""}: ${(e.situacao||"situação não lida").toLowerCase()}${e.local ? `, em ${e.local}` : ""}; o CPF é ${(e.vinculo||"vinculado").toLowerCase()}${e.qualificacao ? ` (${e.qualificacao.toLowerCase()})` : ""}`
+        + (ws.dados ? `; ${resumoCnpjWs(ws.dados)}` : ws.erro ? `; ${ws.erro}` : ""),
+      acao: ws.dados ? null : {rot: ws.carregando ? "Consultando…" : ws.erro ? "Consultar de novo" : "Consultar abertura, MEI e CNAE", js:`consultarCnpjWs('${d}')`}});
+  }
+  if(fd.redesim && !fd.cnpjs.length) out.push({grupo:"cnpj", est:"ok", fonte:"Redesim", anexo:fd.redesim.anexo.id,
+    texto:`Nenhum CNPJ vinculado ao CPF na consulta à Redesim de ${fd.redesim.consulta || "data não lida"}`});
   // onda 5 · a clínica: a linha do tempo, o sinal de doença que dispensa a
   // carência, a área médica dos documentos e o relatório recente para a perícia.
   // A DII se ancora no registro mais antigo, que por isso fica fixo no topo e
