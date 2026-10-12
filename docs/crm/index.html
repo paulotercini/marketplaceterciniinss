@@ -3537,6 +3537,24 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .adr-campos{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 14px}
 .adr-campo{display:flex;flex-direction:column;gap:3px;font-size:12.5px;font-weight:600;color:var(--cinza)}
 .adr-campo input,.adr-campo select{min-height:40px;font-weight:400}
+.ad-est{font-style:normal;font-size:11px;font-weight:600;margin-left:4px;color:var(--cinza-claro)}
+.adr-campo[data-est="falta"] .ad-est{color:var(--laranja)}
+.adr-campo[data-est="pre"] .ad-est{color:var(--azul)}
+.adr-campo[data-est="ok"] .ad-est{color:var(--verde)}
+.adr-campo[data-est="falta"] input,.adr-campo[data-est="falta"] select{border-color:var(--laranja)}
+.ad-vai{font-size:11.5px;font-weight:400;color:var(--cinza-claro)}
+.ad-tz{border:1px solid var(--borda);border-radius:8px;padding:0 10px;background:var(--branco)}
+.ad-tz>summary{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;min-height:38px;cursor:pointer;font-size:13px}
+.ad-tz>summary b{font-weight:600;color:var(--texto)}
+.ad-tz>summary span{color:var(--cinza);font-size:12.5px;font-weight:400}
+.adr-form-tit .meio-sub{text-transform:none;letter-spacing:0;font-weight:400}
+.ad-tz.est-crit .mapa-bola{background:var(--vermelho)}.ad-tz.est-warn .mapa-bola,.ad-tz.est-pend .mapa-bola{background:var(--laranja)}
+.ad-tz.est-ok .mapa-bola{background:var(--verde)}
+.ad-tz.fora{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;min-height:38px;background:transparent;border-style:dashed;font-size:13px}
+.ad-tz.fora .btn-mini{margin-left:auto}
+.mapa-fora-tag{grid-column:1;font-size:11px;font-weight:600;color:var(--cinza-claro)}
+.mapa-levar.on{border-color:var(--verde);color:var(--verde)}
+.docs-ad{margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--placa)}
 .adr-lista-form{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
 .adr-lista-form>div{width:100%}
 .adr-arq{align-self:flex-start;display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid var(--azul);border-radius:8px;color:var(--azul);font-weight:600;cursor:pointer;background:var(--branco,#fff)}
@@ -4068,7 +4086,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.12</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.13</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18532,7 +18550,8 @@ function formAnalise(c){
   const rec=(recolheDe(c, analisesDe(c.id)[0])||{}).tipo||"";
   const vis=camposDoServico({cod:sv.cod, sub:sv.sub, nome:nomeDaSubespecie(sv.sub)||nomeDaEspecie(sv.cod)||""});
   const oc=k=>vis.includes(k)?"":"hidden";
-  const campo=(k, html)=>`<label class="adr-campo" data-campo="${k}" ${oc(k)}><span>${AD_ROT[k]}</span>${html}</label>`;
+  const campo=(k, html)=>`<label class="adr-campo" data-campo="${k}" ${oc(k)}><span>${AD_ROT[k]} <em class="ad-est"></em></span>${html}<small class="ad-vai">vai para ${AD_VAI[k]}</small></label>`;
+  setTimeout(adEstados, 0);
   return `<details class="lb-novo" id="ad-novo" ${pre||abrir?"open":""}>
     <summary>+ registrar análise</summary>
     <div class="form-linha" style="margin-top:6px;align-items:center">
@@ -18564,8 +18583,9 @@ function formAnalise(c){
       <details id="ad-previus-box" hidden><summary class="meio-sub">texto lido do PDF</summary>
         <pre id="ad-previus-txt" class="adr-pre"></pre></details>
     </div>
-    <div class="adr-form-grupo" id="ad-campos">
-      <div class="adr-form-tit">Campos da análise</div>
+    ${adTrazido(c)}
+    <div class="adr-form-grupo" id="ad-campos" oninput="adEstados()" onchange="adEstados()">
+      <div class="adr-form-tit">O que falta você informar <span class="meio-sub" id="ad-falta"></span></div>
       <div class="adr-campos">
         ${campo("tempo", `<input id="ad-f-tempo" placeholder="ex.: 32 anos, 5 meses e 22 dias" value="${esc(ant.tempo||"")}">`)}
         ${campo("carencia", `<input id="ad-f-carencia" placeholder="ex.: 390 contribuições" value="${esc(ant.carencia||"")}">`)}
@@ -18574,8 +18594,8 @@ function formAnalise(c){
         ${campo("did", `<input id="ad-f-did" type="date" value="${esc(ant.did||"")}">`)}
         ${campo("grau", `<select id="ad-f-grau"><option value="">—</option>${["Leve","Moderada","Grave"].map(g=>`<option ${ant.grau===g?"selected":""}>${g}</option>`).join("")}</select>`)}
         ${campo("recolhe", `<select id="ad-f-recolhe" onchange="adMostrarCampos()"><option value="">—</option>${AD_RECOLHE.map(([v,r])=>`<option value="${v}" ${rec===v?"selected":""}>${r}</option>`).join("")}</select>`)}
-        <label class="adr-campo" data-campo="recolhe" ${oc("recolhe")}><span>${AD_ROT.ultima_contribuicao}</span>
-          <input id="ad-f-ultima_contribuicao" type="month" value="${esc(ant.ultima_contribuicao||"")}"></label>
+        <label class="adr-campo" data-campo="recolhe" ${oc("recolhe")}><span>${AD_ROT.ultima_contribuicao} <em class="ad-est"></em></span>
+          <input id="ad-f-ultima_contribuicao" type="month" value="${esc(ant.ultima_contribuicao||"")}"><small class="ad-vai">vai para ${AD_VAI.ultima_contribuicao}</small></label>
       </div>
       <div data-campo="periodos_especiais" class="adr-lista-form" ${oc("periodos_especiais")}><span class="adr-form-sub">${AD_ROT.periodos_especiais}</span>
         <div id="ad-pe">${(ant.periodos_especiais||[]).map(p=>adPeriodo("pe", p, "empresa")).join("")}</div>
@@ -18687,6 +18707,45 @@ async function salvarAnalise(cliId){
   montarSidebar(); abrirFicha(cliId);
 }
 // lê os campos do formulário; só entra o que foi preenchido e está à vista
+// F195 · para onde vai cada campo da análise, e o estado dele no formulário
+const AD_VAI = {tempo:"o resumo da análise e Documentos", carencia:"a ficha da análise e Documentos", valor:"a ficha da análise e Documentos",
+  data_direito:"o resumo e o aviso de época no Lembretes", did:"a ficha da análise e Documentos", grau:"a ficha da análise e Documentos",
+  recolhe:"o resumo, com a qualidade de segurado, e o planejamento", ultima_contribuicao:"a qualidade de segurado no resumo"};
+function adEstados(){
+  const ls = [...document.querySelectorAll("#ad-campos .adr-campo[data-campo]")].filter(l=>!l.hidden);
+  let falta = 0;
+  for(const l of ls){
+    const e = l.querySelector("input,select"), em = l.querySelector(".ad-est"); if(!e || !em) continue;
+    const v = (e.value||"").trim(), est = !v ? "falta" : e.dataset.pre && e.dataset.pre===v ? "pre" : "ok";
+    if(est==="falta") falta++;
+    em.textContent = {falta:"falta informar", pre:"do dossiê · confira", ok:"informado"}[est];
+    l.dataset.est = est;
+  }
+  const s = document.getElementById("ad-falta");
+  if(s) s.textContent = !ls.length ? "" : falta ? `${falta} de ${ls.length} a informar` : "tudo informado";
+}
+// F195 · o que veio do mapa do dossiê: os pontos levados, com os fatos, e os
+// tirados com o botão de levar de volta
+function adTrazido(c){
+  const ks = D.casosDoCliente.get(c.id) || [];
+  if(!(docsDoDossie(c.id).length || cnisDe(c))) return "";
+  const fam = familiaDoMapa(c, ks); if(!fam) return "";
+  const {ramos} = ramosDoMapa(c, ks, fam), lev = ramos.filter(r=>mapaVai(c.id, r.id));
+  return `<div class="adr-form-grupo ad-trazido" id="ad-trazido">
+    <div class="adr-form-tit">Do primeiro atendimento <span class="meio-sub">mapa de ${esc(fam.rot.toLowerCase())} · ${lev.length} de ${ramos.length} pontos levados</span></div>
+    ${ramos.map(r=> mapaVai(c.id, r.id)
+      ? `<details class="ad-tz est-${r.est}"><summary><i class="mapa-bola" aria-hidden="true"></i><b>${esc(r.rot)}</b> <span>${esc(fraseDoRamo(r))}</span></summary>
+          ${r.fatos.length ? `<ul class="mapa-lista">${r.fatos.map(x=>`<li class="est-${x.est}"><i class="mapa-bola" aria-hidden="true"></i><span>${esc(x.texto)}</span><span class="dossie-orig">${esc(x.fonte||"")}</span></li>`).join("")}</ul>`
+            : `<p class="meio-sub">O dossiê ainda não traz fato para este ponto.</p>`}</details>`
+      : `<div class="ad-tz fora"><b>${esc(r.rot)}</b> <span class="meio-sub">fora da análise</span>
+          <button type="button" class="btn-mini" onclick="mapaLevar('${c.id}','${r.id}'); adTrazidoTrocar('${c.id}')">Levar à análise</button></div>`).join("")}
+  </div>`;
+}
+// troca só o quadro, sem repintar a ficha, para não perder o que já se digitou
+function adTrazidoTrocar(cliId){
+  const el = document.getElementById("ad-trazido"), c = D.cliPorId.get(cliId);
+  if(el && c) el.outerHTML = adTrazido(c);
+}
 function adColherDetalhes(){
   const v=id=>{const e=document.getElementById(id);return e?e.value.trim():"";};
   const visivel=k=>{ const e=document.querySelector(`#ad-campos [data-campo="${k}"]`); return !!e && !e.hidden; };
@@ -20115,6 +20174,12 @@ function fatosDoMapa(c, ks, fam){
   return out;
 }
 const _mapaLente = new Map(), _mapaAberto = new Map();
+// F195 · cada ponto do mapa vai à Análise de Direito, salvo o que se tirar
+const _mapaFora = new Map();
+const mapaVai = (cliId, ramo) => !(_mapaFora.get(cliId)||new Set()).has(ramo);
+function mapaLevar(cliId, ramo){
+  const s = new Set(_mapaFora.get(cliId)||[]); s.has(ramo) ? s.delete(ramo) : s.add(ramo); _mapaFora.set(cliId, s);
+}
 function familiaDoMapa(c, ks){
   const ch = _mapaLente.get(c.id);
   return (ch && PONTOS_ESPECIE.find(f=>f.chave===ch)) || familiaDaTriagem(c, ks);
@@ -20176,17 +20241,20 @@ function painelMapa(c, ks){
           <textarea class="tri-nota" id="tri-${r.id}" rows="2" placeholder="o que foi visto neste ponto"
             onblur="salvarNotaTriagem('${c.id}','${r.id}')">${esc(r.resp.nota||"")}</textarea></label>` : ""}
       ${r.fatos.some(x=>x.anexo) ? `<button type="button" class="tl-bt" onclick="mapaClaude('${c.id}','${r.id}')">Pedir ao Claude com os documentos deste ramo</button>` : ""}
+      <button type="button" class="tl-bt mapa-levar${mapaVai(c.id, r.id) ? " on" : ""}" aria-pressed="${mapaVai(c.id, r.id)}"
+        onclick="mapaLevar('${c.id}','${r.id}'); repintarFicha()">${mapaVai(c.id, r.id) ? "Levado à análise" : "Levar à análise"}</button>
     </div>`;
   return `<div class="mapa">
     <div class="mapa-topo">${lentes}
-      <button type="button" class="tl-bt forte" onclick="mapaParaAnalise('${c.id}')">Levar à Análise de Direito</button></div>
+      <button type="button" class="tl-bt forte" onclick="mapaParaAnalise('${c.id}')">Levar à Análise de Direito${
+        ramos.filter(r=>mapaVai(c.id, r.id)).length<n ? ` (${ramos.filter(r=>mapaVai(c.id, r.id)).length} de ${n} pontos)` : ""}</button></div>
     <div class="mapa-arvore">
       <div class="mapa-raiz" style="grid-row:1 / span ${n||1}"><b>${esc(fam.rot)}</b>
         <span>${esc(especieDoCliente(c, ks) || "espécie não anotada no caso")}</span>
         <small>${nDocs} documento${nDocs===1?"":"s"} no dossiê</small></div>
       ${ramos.map((r, i)=>`<div class="mapa-ramo est-${r.est}${r.id===ab?" aberto":""}${i===0?" primeiro":""}${i===n-1?" ultimo":""}" data-ramo="${r.id}" style="grid-row:${i+1}">
         <button type="button" class="mapa-no" aria-expanded="${r.id===ab}" onclick="mapaAbrir('${c.id}','${r.id}')">
-          <b>${esc(r.rot)}</b><span>${esc(fraseDoRamo(r))}</span><i aria-hidden="true">${r.id===ab?"−":"+"}</i></button></div>
+          <b>${esc(r.rot)}</b><span>${esc(fraseDoRamo(r))}</span>${mapaVai(c.id, r.id) ? "" : `<small class="mapa-fora-tag">fora da análise</small>`}<i aria-hidden="true">${r.id===ab?"−":"+"}</i></button></div>
         ${r.id===ab ? fatos(r) : ""}`).join("")}
     </div>
     ${fora.length ? `<details class="mapa-fora"><summary>Fora do mapa de ${esc(fam.rot.toLowerCase())} (${fora.length})</summary>
@@ -20213,12 +20281,13 @@ function mapaParaAnalise(cliId){
   const c = D.cliPorId.get(cliId), ks = D.casosDoCliente.get(cliId) || [];
   const fam = c && familiaDoMapa(c, ks); if(!fam) return aviso("Escolha a espécie do mapa");
   const EST = {crit:"prazo ou impedimento", warn:"atenção", ok:"cumprido", pend:"a conferir", info:"informação"};
-  const txt = `Mapa do dossiê, ${fam.rot}.\n` + ramosDoMapa(c, ks, fam).ramos.map(r=>`${r.rot} (${EST[r.est]}): `
+  const txt = `Mapa do dossiê, ${fam.rot}.\n` + ramosDoMapa(c, ks, fam).ramos.filter(r=>mapaVai(cliId, r.id)).map(r=>`${r.rot} (${EST[r.est]}): `
     + (r.fatos.length ? r.fatos.map(x=>x.texto).join("; ") : "sem fato no dossiê") + (r.resp && r.resp.nota ? `. Anotação: ${r.resp.nota}` : "") + ".").join("\n");
   adAbrir = true; adVisivel.add(cliId); irSubCad("direito");
   const ct = ((cnisDe(c)||{}).analise||{}).contagem;
   const ul = fontesDoDossie(cliId).laudos.slice().sort((a,b)=>isoBr(b.exame).localeCompare(isoBr(a.exame)))[0];
-  const vazio = (id, v) => { const e = document.getElementById(id); if(e && !e.value && v) e.value = v; };
+  // o que vem do dossiê fica marcado, para a análise pedir conferência
+  const vazio = (id, v) => { const e = document.getElementById(id); if(e && !e.value && v){ e.value = v; e.dataset.pre = v; } };
   // a licença sem remuneração da RAIS vai junto da contagem, que ainda a inclui
   const lic = licencasDaRais(fontesDoDossie(cliId).rais), diasLic = lic.reduce((t, l)=>t + (l.dias||0), 0);
   const notaLic = lic.length ? `; a RAIS mostra ${diasLic ? `${diasLic} dias de ` : ""}licença sem remuneração, que o INSS tem descontado` : "";
@@ -20226,6 +20295,7 @@ function mapaParaAnalise(cliId){
   if(ul && ul.did) vazio("ad-f-did", isoBr(ul.did));
   const el = document.getElementById("ad-contexto");
   if(el){ el.value = (el.value ? el.value + "\n" : "") + txt; el.focus(); }
+  adEstados();
 }
 function caixaApos(cli){
   const lista=aposDoCliente(cli);
@@ -29215,8 +29285,24 @@ function caixaDocumentos(c, ks){
     </div>
     ${falta.length?`<p class="meio-sub" style="margin-top:6px"><b>Faltam no cadastro:</b> ${esc(falta.join(", "))} —
       sai <b>____</b> no lugar.</p>`:""}
+    ${docsDaAnalise(c)}
   </div>`;
 }
+// F195 · o que a Análise de Direito já deu aos documentos, e o que falta
+// informar nela para a espécie, com o caminho de volta ao formulário
+function docsDaAnalise(c){
+  const a = analisesDe(c.id)[0], d = (a&&a.detalhes)||{}, sv = d.servico;
+  const ir = `<button class="btn-mini" onclick="docsInformar('${c.id}')">Informar na análise</button>`;
+  if(!a) return `<div class="docs-ad form-linha" style="flex-wrap:wrap"><span class="meio-sub" style="flex:1 1 260px"><b>Análise de Direito:</b> nenhuma registrada; os documentos saem só com o cadastro.</span>${ir}</div>`;
+  const ks = camposDoServico(sv||{}).filter(k=>AD_ROT[k] && !/^periodos_/.test(k));
+  const falta = ks.filter(k=>d[k]==null || d[k]==="");
+  const nome = (sv&&sv.nome) || "serviço não escolhido";
+  return `<div class="docs-ad form-linha" style="flex-wrap:wrap"><span class="meio-sub" style="flex:1 1 260px"><b>Análise de Direito de ${esc(fmt(a.data_analise))}, ${esc(nome)}:</b> ${
+    !sv ? "sem espécie escolhida; escolha na análise para saber o que ela pede."
+    : falta.length ? `falta informar ${esc(falta.map(k=>AD_ROT[k].toLowerCase()).join(", "))}.`
+    : `pronta, com ${ks.length===1?"o campo":"os "+ks.length+" campos"} que a espécie pede.`}</span>${!sv||falta.length?ir:""}</div>`;
+}
+function docsInformar(cliId){ adAbrir = true; adVisivel.add(cliId); abaAtiva = 0; irSubCad("direito"); }
 
 // ── O QUADRO DO ATENDIMENTO ───────────────────────────────────────────────
 // Cliente sem caso anotado: é aqui que o atendimento vive até virar caso.
