@@ -18321,13 +18321,24 @@ const AD_ROT = {tempo:"Tempo de contribuição", carencia:"Carência", valor:"Va
 const AD_RECOLHE = [["empregado","Empregado"],["facultativo","Facultativo"],["ci","Contribuinte individual"],
   ["mei","MEI"],["desempregado","Desempregado"],["outro","Outro"]];
 const rotRecolhe = v => (AD_RECOLHE.find(([k])=>k===v)||[,v||""])[1];
+// F194 · A ANÁLISE PEDE POUCO, E O CERTO (pedido do Paulo, 11.10.2026): por
+// espécie, só o que muda o direito ou o valor. O benefício por incapacidade
+// não pede tempo nem data do direito; o acidentário e o auxílio-acidente não
+// pedem carência (art. 26, I e II, da Lei 8.213/91); o BPC não pede valor. O
+// resto do formulário fica a um clique, em "mostrar os outros campos".
+const AD_CAMPOS_ESPECIE = {
+  B31:["carencia","valor","recolhe"], B32:["tempo","carencia","valor","recolhe"], B91:["valor","recolhe"], B92:["valor","recolhe"],
+  B36:["valor","recolhe"], B94:["valor","recolhe"], B21:["valor"], B93:["valor"], B25:["carencia","valor"], B26:["carencia","valor"],
+  B80:["carencia","valor","recolhe"], B87:["recolhe"], B88:["recolhe"],
+};
 function camposDoServico(sv){
   const s=sv||{}, sub=s.sub||"", t=`${sub} ${s.nome||""}`;
   const pcd = /\.PCD/.test(sub) || /deficiência/i.test(t);
   const esp = s.cod==="B46" || /\.ESP/.test(sub) || /especia/i.test(t);
   const rur = /\.RUR/.test(sub) || /rura/i.test(t);
-  return ["tempo","carencia","valor","data_direito","recolhe",
-    ...(pcd?["did","grau"]:[]), ...(pcd||esp?["periodos_especiais"]:[]), ...(rur?["periodos_rurais"]:[])];
+  const proprio = AD_CAMPOS_ESPECIE[s.cod];
+  return [...(proprio || ["tempo","carencia","valor","data_direito","recolhe"]),
+    ...(pcd?["did","grau"]:[]), ...(!proprio && (pcd||esp)?["periodos_especiais"]:[]), ...(rur?["periodos_rurais"]:[])];
 }
 // facultativo e contribuinte individual (o MEI é CI) podem planejar meses sem recolher
 const recolheLivre = r => ["facultativo","ci","mei"].includes(r);
@@ -18575,6 +18586,8 @@ function formAnalise(c){
       <div id="ad-plano-box" class="adr-lista-form" ${recolheLivre(rec)?"":"hidden"}><span class="adr-form-sub">Planejamento das contribuições</span>
         <div id="ad-plano">${(ant.plano||[]).map(adPlano).join("")}</div>
         <button type="button" class="btn-mini" onclick="document.getElementById('ad-plano').insertAdjacentHTML('beforeend', adPlano())">+ data</button></div>
+      <button type="button" class="btn-mini" id="ad-outros" onclick="document.querySelectorAll('#ad-campos [data-campo]').forEach(e=>{ e.hidden=false; })"
+        title="a espécie escolhida pede só os campos acima">mostrar os outros campos</button>
     </div>
 
     <textarea id="ad-contexto" placeholder="o que foi visto e combinado com o cliente — ex.: prefere esperar a regra dos pontos; avisar quando faltar 6 meses"
@@ -19265,15 +19278,25 @@ function lerCagedTexto(txt){
 // RAIS · "Relatório Completo do Trabalhador": um bloco por vínculo e por
 // ano-base. O desligamento é a linha "Data dd/mm/aaaa" (só "Data" quando não
 // houve), a causa vem logo abaixo e as remunerações vêm por mês, duas por linha.
+// Os afastamentos vêm numerados sob "De Até Motivo" ("1) 0 - null" quando não
+// houve), com o código e a descrição do motivo, e a data sem o ano quando o
+// portal a abrevia: o ano é o do ano-base.
+const _dataDaRais = (tok, ano) => { const m = String(tok).match(/^(\d{2})\/?(\d{2})(?:\/(\d{4}))?$/); return m ? `${m[1]}/${m[2]}/${m[3]||ano}` : ""; };
 function lerRaisTexto(txt){
   const ls = linhasDoTexto(txt);
   const out = []; let b = null, m;
   ls.forEach((l, i)=>{
     if((m = l.match(/RAIS\s*-\s*Ano-Base:\s*(\d{4})/i))){
-      b = {ano:m[1], cnpj:"", raiz:"", nome:"", admissao:"", desligamento:"", causa:"", avisoPrevio:0, remuneracoes:{}};
+      b = {ano:m[1], cnpj:"", raiz:"", nome:"", admissao:"", desligamento:"", causa:"", avisoPrevio:0, remuneracoes:{}, afastamentos:[], diasAfastados:0};
       out.push(b); return;
     }
     if(!b) return;
+    if((m = l.match(/^\d\)\s*(.*?)\s*(\d{1,3})\s*-\s*(.+)$/)) && m[2]!=="0"){
+      const ds = (m[1].match(/\d{2}\/\d{2}\/\d{4}|\d{2}\/\d{2}|\d{4}/g)||[]).map(x=>_dataDaRais(x, b.ano)).filter(Boolean);
+      b.afastamentos.push({de:ds[0]||"", ate:ds[1]||"", codigo:m[2], motivo:m[3].trim()});
+      return;
+    }
+    if((m = l.match(/^Quantidade de dias afastados:\s*(\d+)/i))){ b.diasAfastados = +m[1]; return; }
     if(/^CNPJ\s+Razão Social$/i.test(l)){
       const x = (ls[i+1]||"").match(/^([\d.\/-]{11,18})\s+(.+)$/);
       if(x){ b.cnpj = x[1]; b.raiz = raizCnpj(x[1]); b.nome = x[2].trim(); }
@@ -19313,6 +19336,20 @@ function lerSeguroDesempregoTexto(txt){
 }
 // a parcela que chegou ao segurado: com data e sem situação de bloqueio
 const parcelaRecebida = p => !!p.pagamento && !/CANCEL|BLOQUE|SUSPEN|N[ÃA]O\s*PAG|DEVOLV|RESTITU|PENDEN|A EMITIR/i.test(p.situacao||"");
+// as licenças sem remuneração dos blocos da RAIS (motivo 70 do afastamento),
+// uma vez cada: o mesmo afastamento sai na RAIS de cada vínculo e ano
+function licencasDaRais(rais){
+  const visto = new Set(), out = [];
+  for(const r of rais||[]) for(const a of r.afastamentos||[]){
+    if(a.codigo!=="70" && !/sem\s+(vencimento|remunera)/i.test(a.motivo)) continue;
+    const k = [r.raiz, a.de, a.ate].join("|"); if(visto.has(k)) continue; visto.add(k);
+    const d0 = isoBr(a.de), d1 = isoBr(a.ate);
+    const dias = d0 && d1 ? Math.round((new Date(d1+"T12:00:00") - new Date(d0+"T12:00:00"))/864e5) + 1
+      : (r.afastamentos.length===1 ? r.diasAfastados : 0);
+    out.push({ano:r.ano, nome:r.nome, de:a.de, ate:a.ate, dias, anexo:r.anexo});
+  }
+  return out;
+}
 // REDESIM · o .txt dos CNPJs vinculados ao CPF (dossiê 0.7.1, redesim.js): um
 // bloco por CNPJ, com a situação e o vínculo do CPF. Sem a data de abertura,
 // que só a consulta ao CNPJ traz (consultarCnpjWs)
@@ -20016,6 +20053,10 @@ function fatosDoMapa(c, ks, fam){
       texto:`A RAIS de ${dem.ano} mostra dispensa sem justa causa por ${dem.nome||"empregador"} em ${dem.desligamento}: o desemprego involuntário estende a graça em 12 meses (art. 15, § 2º, da Lei 8.213/91)${gr && gr.seguro ? ", já provado pelo seguro-desemprego" : marcado ? ", já marcado na conta" : ""}`,
       acao: marcado ? null : {rot:"Marcar o desemprego na conta da graça", js:`marcarDesemprego('${c.id}',true)`}});
   }
+  // a licença sem remuneração da RAIS: o CNIS conta o mês, e o INSS tem
+  // descontado o período do tempo de contribuição (pedido do Paulo, 11.10.2026)
+  for(const l of licencasDaRais(fd.rais)) out.push({grupo:"contrib", est:"warn", fonte:`RAIS de ${l.ano}`, anexo:l.anexo.id,
+    texto:`A RAIS de ${l.ano} registra licença sem remuneração${l.nome ? ` na ${l.nome}` : ""}${l.de ? `, de ${l.de}${l.ate ? ` a ${l.ate}` : ""}` : ""}${l.dias ? ` (${l.dias} dias)` : ""}: o INSS tem descontado esse período do tempo de contribuição, e a contagem do CNIS ainda o inclui`});
   for(const pp of fd.ppps) for(const r of pp.riscos){
     const per = `de ${r.ini||"data não lida"} a ${r.fim||"data não lida"}`;
     if(r.db==null){ out.push({grupo:"ppp", est:"info", fonte:"PPP", anexo:pp.anexo.id,
@@ -20178,7 +20219,10 @@ function mapaParaAnalise(cliId){
   const ct = ((cnisDe(c)||{}).analise||{}).contagem;
   const ul = fontesDoDossie(cliId).laudos.slice().sort((a,b)=>isoBr(b.exame).localeCompare(isoBr(a.exame)))[0];
   const vazio = (id, v) => { const e = document.getElementById(id); if(e && !e.value && v) e.value = v; };
-  if(ct){ vazio("ad-f-carencia", `${ct.carencia} contribuições (CNIS, contagem do CRM)`); vazio("ad-f-tempo", `${ct.anos} anos e ${ct.meses} meses (CNIS, por competência)`); }
+  // a licença sem remuneração da RAIS vai junto da contagem, que ainda a inclui
+  const lic = licencasDaRais(fontesDoDossie(cliId).rais), diasLic = lic.reduce((t, l)=>t + (l.dias||0), 0);
+  const notaLic = lic.length ? `; a RAIS mostra ${diasLic ? `${diasLic} dias de ` : ""}licença sem remuneração, que o INSS tem descontado` : "";
+  if(ct){ vazio("ad-f-carencia", `${ct.carencia} contribuições (CNIS, contagem do CRM)${notaLic}`); vazio("ad-f-tempo", `${ct.anos} anos e ${ct.meses} meses (CNIS, por competência)${notaLic}`); }
   if(ul && ul.did) vazio("ad-f-did", isoBr(ul.did));
   const el = document.getElementById("ad-contexto");
   if(el){ el.value = (el.value ? el.value + "\n" : "") + txt; el.focus(); }
