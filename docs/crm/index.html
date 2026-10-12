@@ -3612,7 +3612,12 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .pa-bloco-rot{display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--pa-c2)}
 .pa-bloco-val{font-size:18px;font-weight:600;line-height:1.2}.pa-bloco-val.mono{font-family:'IBM Plex Mono',monospace;font-weight:500}.pa-bloco-val.crit{color:var(--pa-crit)}
 .pa-bloco-nota{font-size:12px;color:var(--pa-c1);line-height:1.4}
-.pa-bloco-vai{margin-top:auto;display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--pa-c2)}
+.pa-bloco-vai i,.pa-sw i{position:relative;width:26px!important;height:15px!important;border-radius:999px!important;background:#CFCDC6;flex:none;transition:background 160ms ease}
+.pa-bloco-vai i::after,.pa-sw i::after{content:"";position:absolute;top:2px;left:2px;width:11px;height:11px;border-radius:50%;background:#fff;transition:transform 160ms ease}
+.pa-bloco-vai.on i::after,.pa-sw.on i::after{transform:translateX(11px)}
+.pa-bloco-vai.on i,.pa-sw.on i{background:var(--pa-t)!important}
+.pa-sw{display:inline-flex;align-items:center;gap:7px}
+.pa-bloco-vai{cursor:pointer;display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--pa-c2)}
 .pa-bloco-vai i{width:6px;height:6px;border-radius:2px;background:#CFCDC6}.pa-bloco-vai.on{color:var(--pa-t)}.pa-bloco-vai.on i{background:var(--pa-t)}
 .pa-det-caixa{margin-top:12px;background:#fff;border:1px solid var(--pa-b);border-radius:12px}
 .pa-det-vazio{margin:0;padding:16px 18px}.pa-det{padding:16px 18px 18px}
@@ -4183,7 +4188,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.27</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.28</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19058,7 +19063,7 @@ function adTrazido(c){
   const pa = _paAnalise.get(c.id);
   if(pa){
     const d = paDados(c, ks), fu = MAPA_FUNIL[pa.atual] || {D:"", A:""}, usa = new Set(`${fu.D} ${fu.A}`.split(/\s+/).filter(Boolean));
-    const bs = PA_BLOCOS.filter(([b])=>b==="qual" || b==="car" || d.grupos[b].some(x=>usa.has(x.grupo)));
+    const bs = blocosDoPA(d).filter(([b])=>b==="qual" || b==="car" || d.grupos[b].some(x=>usa.has(x.grupo)));
     const lev = bs.filter(([b])=>paVai(c.id, b));
     const trab = pa.trabalhos.map(k=>(d.trabalhos.find(t=>t.f.chave===k)||{f:PONTOS_ESPECIE.find(f=>f.chave===k)})).filter(t=>t&&t.f);
     return `<div class="adr-form-grupo ad-trazido" id="ad-trazido">
@@ -20624,12 +20629,28 @@ const PA_BLOCOS = [
   ["qual", "Qualidade de segurado"], ["car", "Carência"], ["cnis", "CNIS e RAIS"],
   ["cnpj", "CNPJs do titular"], ["ped", "Pedidos ao INSS"], ["plan", "Planejamento prévio"],
 ];
+// F207 · blocos que só nascem quando o dossiê traz o documento deles
+const PA_BLOCOS_EXTRA = [
+  ["ben", "Benefícios", ["beneficios","carta"]], ["saude", "Saúde", ["medicos"]], ["esp", "PPP e CAT", ["ppp","cat"]],
+  ["cad", "CadÚnico", ["cadunico"]],
+];
+const blocosDoPA = d => [...PA_BLOCOS, ...PA_BLOCOS_EXTRA.filter(([b])=>d.grupos[b] && d.grupos[b].length)];
 // o código da espécie que a análise abre para cada trabalho
 const PA_COD = {bpc:"B87", incapacidade:"B31", b94:"B94", especial:"B46", tempo:"B42", rural:"B41", pensao:"B21", maternidade:"B80", cnis:"", crps:"", revisao:""};
 // o trabalho só vira cartão quando o dossiê traz o fato que é dele, e não só idade ou qualidade
 const PA_GATILHO = {bpc:"cadunico", incapacidade:"laudo medicos", b94:"cat laudo", especial:"ppp", rural:"rural",
   pensao:"certidoes", maternidade:"certidoes", revisao:"carta", cnis:"vinculo minimo", crps:"processo", tempo:"contrib"};
-const PA_SELO = {risco:["Requisito em risco","crit"], crit:["Prazo correndo","crit"], warn:["Falta um dado","warn"], pend:["Falta um dado","warn"], ok:["Requisitos à vista","ok"], info:["A conferir","info"]};
+const PA_SELO = {imped:["Impedido","info"], risco:["Requisito em risco","crit"], crit:["Prazo correndo","crit"], warn:["Falta um dado","warn"], pend:["Falta um dado","warn"], ok:["Requisitos à vista","ok"], info:["A conferir","info"]};
+const PA_IMPEDE = new Set(["incapacidade","tempo","especial","rural","b94","bpc"]);
+const PA_IMPEDE_POR = {incapacidade:"não acumula com auxílio por incapacidade", tempo:"não acumula com outra aposentadoria",
+  especial:"não acumula com outra aposentadoria", rural:"não acumula com outra aposentadoria", b94:"não acumula com auxílio-acidente", bpc:"não acumula com o BPC"};
+// a aposentadoria em manutenção, pela declaração de benefícios ou pelo CNIS lido
+function aposentadoriaAtiva(c){
+  const pdf = triagemDe(c).pdf || {}, ativo = b => !/CESSAD|INDEFER|SUSPENS|ENCERRAD/i.test(b.situacao||"");
+  const todos = [...(((pdf.declaracao||{}).beneficios)||[]), ...((((pdf.cnis||{}).analise||{}).benefAtivos)||[])];
+  const b = todos.find(b=>ativo(b) && /aposentadoria|\bB?(4[1-6]|57)\b/i.test(String(b.especie||"")));
+  return b ? {especie: /aposentadoria/i.test(b.especie) ? String(b.especie).replace(/^\d+\s*-\s*/,"") : "Aposentadoria", nb: b.nb||""} : null;
+}
 const paVai = (cliId, b) => !(_paForaBl.get(cliId)||new Set()).has(b);
 function paDados(c, ks){
   const fam = familiaDoMapa(c, ks);
@@ -20644,6 +20665,7 @@ function paDados(c, ks){
     cnpj: fatos.filter(x=>x.grupo==="cnpj"),
     ped: fatos.filter(x=>["processo","beneficios","carta","laudo"].includes(x.grupo)),
     plan: fatos.filter(x=>x.grupo==="idade"),
+    ...Object.fromEntries(PA_BLOCOS_EXTRA.map(([b,,gs])=>[b, fatos.filter(x=>gs.includes(x.grupo))])),
   };
   const ap = (aposDoCliente(c)||[]).filter(a=>a.data).sort((a,b)=>a.data<b.data?-1:1)[0];
   if(ap) grupos.plan.push({grupo:"idade", est:"info", fonte:"Lembretes", texto:`${ap.especie||"Aposentadoria"} prevista para ${fmtBarra(ap.data)}`});
@@ -20661,7 +20683,12 @@ function paDados(c, ks){
     ped: [(n=>n ? `${n} ${n===1?"registro":"registros"}` : "nenhum")(grupos.ped.length), false,
       grupos.ped.length ? curtoMapa((grupos.ped.find(x=>x.prazo)||grupos.ped[0]).texto) : "nenhum pedido no dossiê", pior(grupos.ped)],
     plan: [ap ? fmtBarra(ap.data) : "—", true, ap ? (ap.especie||"aposentadoria") : "sem aposentadoria prevista nos Lembretes", "info"],
+    ...Object.fromEntries(PA_BLOCOS_EXTRA.map(([b])=>[b, [(n=>`${n} ${n===1?"registro":"registros"}`)(grupos[b].length), false,
+      grupos[b].length ? curtoMapa(grupos[b][0].texto) : "", grupos[b].length ? pior(grupos[b]) : "info"]])),
   };
+  // F207 · quem já recebe aposentadoria não acumula outra nem auxílio por
+  // incapacidade (art. 124, I e II, da Lei 8.213/91), nem auxílio-acidente (art. 86, § 2º) ou BPC
+  const apos = aposentadoriaAtiva(c);
   // os trabalhos: cada espécie em que o dossiê tem fato num ponto da triagem
   const trabalhos = PONTOS_ESPECIE.map(f=>{
     const {ramos} = ramosDoMapa(c, ks, f), comFato = ramos.filter(r=>r.ponto && r.fatos.length);
@@ -20671,12 +20698,14 @@ function paDados(c, ks){
     const forte = comFato.slice().sort((a,b)=>MAPA_ORDEM[a.est]-MAPA_ORDEM[b.est])[0];
     const falta = ramos.filter(r=>r.ponto && r.est==="pend").map(r=>r.rot);
     const prazo = (ramos.find(r=>r.id==="prazos")||{fatos:[]}).fatos[0];
+    if(apos && PA_IMPEDE.has(f.chave))
+      return {f, est:"info", selo:"imped", forte, falta:[], prazo:null, ramos, impedido:`Já recebe ${apos.especie.toLowerCase()}${apos.nb ? ` (NB ${apos.nb})` : ""}: ${PA_IMPEDE_POR[f.chave]}.`};
     return {f, est, selo: est==="crit" && !prazo ? "risco" : est, forte, falta, prazo, ramos};
-  }).filter(Boolean).sort((a,b)=>MAPA_ORDEM[a.est]-MAPA_ORDEM[b.est]);
+  }).filter(Boolean).sort((a,b)=>(a.impedido?1:0)-(b.impedido?1:0) || MAPA_ORDEM[a.est]-MAPA_ORDEM[b.est]);
   return {fam, fatos, grupos, BL, gr, ct, fd, g, an, trabalhos};
 }
 function paEscolhidos(cliId, trabalhos){
-  if(!_paEsc.has(cliId)) _paEsc.set(cliId, new Set(trabalhos.filter(t=>t.est!=="ok").slice(0, 4).map(t=>t.f.chave)));
+  if(!_paEsc.has(cliId)) _paEsc.set(cliId, new Set(trabalhos.filter(t=>t.est!=="ok" && !t.impedido).slice(0, 4).map(t=>t.f.chave)));
   return _paEsc.get(cliId);
 }
 // a linha do tempo da qualidade: contribuições, seguro, qualidade, saúde e pedidos
@@ -20740,13 +20769,14 @@ function painelPA(c, ks){
   const inex = [...new Set(Object.values(dz).flatMap(x=>(x&&x.inexistentes)||[]).map(x=>String(x).split(/[:(]/)[0].trim()).filter(Boolean))];
   const relSel = sel ? new Set(((d.trabalhos.find(t=>t.f.chave===sel)||{}).ramos||[]).flatMap(r=>r.fatos.map(x=>x.grupo))) : null;
   const pesa = b => !relSel || d.grupos[b].some(x=>relSel.has(x.grupo));
-  const nEsc = d.trabalhos.filter(t=>esc0.has(t.f.chave)).length, nLev = PA_BLOCOS.filter(([b])=>paVai(c.id, b)).length;
+  const nEsc = d.trabalhos.filter(t=>esc0.has(t.f.chave)).length, nLev = blocosDoPA(d).filter(([b])=>paVai(c.id, b)).length, nBl = blocosDoPA(d).length;
   const cartao = t => { const k = t.f.chave, on = esc0.has(k), [selo, cls] = PA_SELO[t.selo];
     return `<li><div class="pa-cartao${sel===k?" sel":""}">
       <button type="button" class="pa-cartao-bt" aria-pressed="${sel===k}" onclick="paCartao('${c.id}','${k}')">
         <span class="pa-cartao-topo"><span class="pa-selo ${cls}"><i></i>${selo}</span>${t.prazo ? `<span class="pa-cartao-data crit">${esc(curtoMapa(t.prazo.texto).slice(0, 40))}</span>` : ""}</span>
         <b>${esc(t.f.rot)}${PA_COD[k] ? ` <small>${PA_COD[k]}</small>` : ""}</b>
         <span>${esc(curtoMapa(t.forte.fatos[0].texto))}</span>
+        ${t.impedido ? `<span class="pa-falta"><b>Impedimento</b> ${esc(t.impedido)}</span>` : ""}
         ${t.falta.length ? `<span class="pa-falta"><b>Falta</b> ${esc(t.falta.slice(0, 2).join("; ").toLowerCase())}.</span>` : ""}
       </button>
       <label class="pa-levar${on?" on":""}"><input type="checkbox" ${on?"checked":""} onchange="paEscolher('${c.id}','${k}')">Levar à Análise de Direito</label>
@@ -20756,17 +20786,18 @@ function painelPA(c, ks){
       <span class="pa-bloco-rot"><i class="pa-bola ${est}"></i>${rot}</span>
       <span class="pa-bloco-val${mono?" mono":""}${est==="crit"?" crit":""}">${esc(valor)}</span>
       <span class="pa-bloco-nota">${esc(nota)}</span>
-      <span class="pa-bloco-vai${vai?" on":""}"><i></i>${vai ? "Vai à análise" : "Fora da análise"}</span></button>`; };
+      <span class="pa-bloco-vai${vai?" on":""}" role="switch" aria-checked="${vai}" tabindex="0" title="${vai ? "vai à Análise de Direito; clique para deixar fora" : "fora da Análise de Direito; clique para levar"}"
+        onclick="event.stopPropagation();paLevarBloco('${c.id}','${b}')" onkeydown="if(event.key===' '||event.key==='Enter'){event.preventDefault();event.stopPropagation();paLevarBloco('${c.id}','${b}')}"><i></i>Análise de Direito</span></button>`; };
   const fatoLi = x => `<li class="est-${x.est}"><i class="mapa-bola" aria-hidden="true"></i><span>${esc(x.texto)}</span>
     <span class="dossie-orig">${esc(x.fonte||"")}${x.anexo ? ` · <button type="button" class="adr-link" onclick="abrirAnexo('${x.anexo}')">ver</button>` : ""}</span>
     ${x.acao ? `<button type="button" class="tl-bt" onclick="${x.acao.js}">${esc(x.acao.rot)}</button>` : ""}</li>`;
   const det = b => { if(!b) return `<p class="meio-sub pa-det-vazio">Escolha um bloco para ver o detalhe e a fonte de cada dado.</p>`;
-    const rot = PA_BLOCOS.find(x=>x[0]===b)[1], vai = paVai(c.id, b), fs = d.grupos[b];
+    const rot = blocosDoPA(d).find(x=>x[0]===b)[1], vai = paVai(c.id, b), fs = d.grupos[b];
     const para = d.trabalhos.filter(t=>esc0.has(t.f.chave) && t.ramos.some(r=>r.fatos.some(x=>fs.includes(x)))).map(t=>t.f.rot);
     return `<section class="pa-det tela" aria-label="${esc(rot)}">
       <div class="pa-det-cab"><h4>${esc(rot)}</h4>
         <span class="pa-det-dir"><span class="meio-sub">${!vai ? "fica só no primeiro atendimento" : para.length ? `vai para ${esc(para.join(", "))}` : "vai à análise"}</span>
-        <button type="button" class="pa-levar-bt${vai?" on":""}" aria-pressed="${vai}" onclick="paLevarBloco('${c.id}','${b}')">${vai ? "Levado à análise" : "Levar à análise"}</button></span></div>
+        <button type="button" class="pa-levar-bt pa-sw${vai?" on":""}" role="switch" aria-checked="${vai}" onclick="paLevarBloco('${c.id}','${b}')"><i></i>Análise de Direito</button></span></div>
       ${b==="qual" ? paLinhaDoTempo(c, d) : ""}
       ${fs.length ? `<ul class="mapa-lista pa-fatos">${fs.map(fatoLi).join("")}</ul>` : `<p class="meio-sub">O dossiê ainda não traz fato para este bloco.</p>`}
     </section>`; };
@@ -20784,19 +20815,19 @@ function painelPA(c, ks){
       <button type="button" class="btn-mini" onclick="irSubCad('mapa')">Mapa do dossiê</button></div>
     ${(n => n && !nomeIgual(n, c.nome) ? `<p class="pa-nome-dif" role="alert"><b>Nome diferente do CNIS.</b> No CRM consta <b>${esc(c.nome||"")}</b>, e no CNIS consta <b>${esc(n)}</b>. <button type="button" class="btn-mini" onclick="usarNomeCnis('${c.id}')">Usar o nome do CNIS</button></p>` : "")(nomeDoCnis(c))}
     <div class="pa-corpo">
+      <section class="pa-sit" aria-labelledby="pa-t-sit">
+        <div class="pa-sit-cab"><h3 id="pa-t-sit">Situação ${({F:"da cliente",M:"do cliente"})[civilDe(c).sexo]||"do cliente"}</h3><span class="meio-sub">o que os documentos dizem, com a fonte de cada dado</span>
+          ${sel ? `<span class="pa-chip">Destacando ${esc((d.trabalhos.find(t=>t.f.chave===sel)||{f:{rot:""}}).f.rot)}<button type="button" aria-label="Mostrar tudo" onclick="paCartao('${c.id}','${sel}')">×</button></span>` : ""}</div>
+        <div class="pa-blocos">${blocosDoPA(d).map(bloco).join("")}</div>
+        <div class="pa-det-caixa">${det(ab)}</div>
+      </section>
       <section class="pa-trab" aria-labelledby="pa-t-trab">
         <div class="pa-trab-cab"><h3 id="pa-t-trab">Trabalhos possíveis</h3><span class="meio-sub">${d.trabalhos.length} com sinal · por urgência</span></div>
         <p class="meio-sub">O sinal indica o que os documentos mostram, não o direito. Clique num cartão para destacar, na situação, o que pesa nele.</p>
         <ul class="pa-legenda"><li><i class="pa-bola crit"></i>Prazo correndo ou requisito em risco</li><li><i class="pa-bola ok"></i>Requisitos à vista</li><li><i class="pa-bola warn"></i>Falta um dado</li></ul>
         <ol class="pa-cartoes">${d.trabalhos.map(cartao).join("") || `<li class="meio-sub">O dossiê não traz sinal para nenhuma espécie.</li>`}</ol>
-        <div class="pa-levar-box"><p>${nEsc ? `Ao levar: ${nEsc} ${nEsc===1?"trabalho":"trabalhos"} na Análise de Direito. Da situação, ${nLev===6?"os 6 blocos vão":`${nLev} de 6 blocos vão`} junto.` : "Marque ao menos um trabalho para levar à Análise de Direito."}</p>
+        <div class="pa-levar-box"><p>${nEsc ? `Ao levar: ${nEsc} ${nEsc===1?"trabalho":"trabalhos"} na Análise de Direito. Da situação, ${nLev===nBl?`os ${nBl} blocos vão`:`${nLev} de ${nBl} blocos vão`} junto.` : "Marque ao menos um trabalho para levar à Análise de Direito."}</p>
           <button type="button" class="pa-prim" ${nEsc?"":"disabled"} onclick="paIrAnalise('${c.id}')">${nEsc>1 ? `Levar ${nEsc} trabalhos à análise` : "Levar à análise"} →</button></div>
-      </section>
-      <section class="pa-sit" aria-labelledby="pa-t-sit">
-        <div class="pa-sit-cab"><h3 id="pa-t-sit">Situação ${({F:"da cliente",M:"do cliente"})[civilDe(c).sexo]||"do cliente"}</h3><span class="meio-sub">o que os documentos dizem, com a fonte de cada dado</span>
-          ${sel ? `<span class="pa-chip">Destacando ${esc((d.trabalhos.find(t=>t.f.chave===sel)||{f:{rot:""}}).f.rot)}<button type="button" aria-label="Mostrar tudo" onclick="paCartao('${c.id}','${sel}')">×</button></span>` : ""}</div>
-        <div class="pa-blocos">${PA_BLOCOS.map(bloco).join("")}</div>
-        <div class="pa-det-caixa">${det(ab)}</div>
       </section>
     </div>
   </div>`;
@@ -20827,7 +20858,7 @@ function paAnaliseTrabalho(cliId, k, primeira){
   const d = paDados(c, ks), f = PONTOS_ESPECIE.find(x=>x.chave===k);
   const el = document.getElementById("ad-contexto");
   if(el && f){
-    const txt = `Primeiro atendimento, ${f.rot}.\n` + PA_BLOCOS.filter(([b])=>paVai(cliId, b) && d.grupos[b].length)
+    const txt = `Primeiro atendimento, ${f.rot}.\n` + blocosDoPA(d).filter(([b])=>paVai(cliId, b) && d.grupos[b].length)
       .map(([b, rot])=>`${rot} (${d.BL[b][0]}): ${d.grupos[b].map(x=>x.texto).join("; ")}.`).join("\n");
     if(primeira || !el.value || /^Primeiro atendimento, /.test(el.value)) el.value = txt;
   }

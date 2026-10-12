@@ -117,14 +117,21 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   conf("F206 · com atendimento aberto, o Primeiro atendimento abre em tela cheia, com Fechar atendimento e só as quatro abas",
     await p.evaluate(() => document.getElementById("detalhe").classList.contains("atend-tela") && /Fechar atendimento/.test(document.querySelector(".atend-cab").textContent)
       && [...[...document.querySelectorAll(".sub-menu")].find(m => /Identificação/.test(m.textContent)).querySelectorAll("button:not(.trilho-mais)")].every(b => /Identificação|Primeiro atendimento|Mapa|Análise|Documentos/.test(b.textContent))));
-  conf("a situação tem os seis blocos do desenho", pa.blocos.join("|") === "Qualidade de segurado|Carência|CNIS e RAIS|CNPJs do titular|Pedidos ao INSS|Planejamento prévio");
+  conf("a situação tem os seis blocos do desenho", pa.blocos.join("|").startsWith("Qualidade de segurado|Carência|CNIS e RAIS|CNPJs do titular|Pedidos ao INSS|Planejamento prévio"));
   conf(`os trabalhos possíveis saem do dossiê (${pa.cartoes.join(", ")})`, pa.cartoes.length > 0);
   conf("a carência mostra a contagem do CNIS", /^104 de 180$/.test(pa.car.trim()));
   conf("a qualidade abre com a linha do tempo e a licença da RAIS marcada", pa.tl && pa.lic);
   await p.click('.pa-bloco:has-text("CNIS e RAIS")'); await p.waitForTimeout(100);
   conf("o bloco CNIS e RAIS traz a licença sem remuneração, com a fonte", /licença sem remuneração/.test(await p.textContent(".pa-det")) && /RAIS de 2016/.test(await p.textContent(".pa-det")));
   await p.click(".pa-det .pa-levar-bt"); await p.waitForTimeout(100);
-  conf("tirado da análise, o bloco diz que fica fora", /Fora da análise/.test(await p.textContent('.pa-bloco:has-text("CNIS e RAIS")')) && /5 de 6 blocos/.test(await p.textContent(".pa-levar-box")));
+  conf("tirado da análise, o bloco diz que fica fora", (await p.getAttribute('.pa-bloco:has-text("CNIS e RAIS") .pa-bloco-vai', "aria-checked")) === "false" && /\d+ de \d+ blocos/.test(await p.textContent(".pa-levar-box")));
+  conf("F207 · a situação fica à esquerda e os trabalhos à direita", await p.evaluate(() => document.querySelector(".pa-sit").getBoundingClientRect().left < document.querySelector(".pa-trab").getBoundingClientRect().left));
+  conf("F207 · quem já é aposentado tem incapacidade e aposentadorias marcadas como impedidas", await p.evaluate(() => {
+    const c = D.clientes[0], t0 = c.triagem; c.triagem = { ...t0, pdf: { ...(t0.pdf||{}), declaracao: { beneficios: [{ nb: "1234567890", especie: "APOSENTADORIA POR IDADE", situacao: "ATIVO" }] } } };
+    const d = paDados(c, D.casosDoCliente.get(c.id) || []); c.triagem = t0;
+    const imp = d.trabalhos.filter(t => t.impedido).map(t => t.f.chave);
+    return imp.length > 0 && imp.every(k => ["incapacidade","tempo","especial","rural","b94","bpc"].includes(k)) && /aposentadoria por idade/.test(d.trabalhos.find(t=>t.impedido).impedido);
+  }));
   await p.click(".pa-cartao-bt"); await p.waitForTimeout(100);
   conf("clicar no cartão destaca a situação", !!(await p.$(".pa-cartao.sel")) && !!(await p.$(".pa-chip")));
   await (await p.$(".pa")).screenshot({ path: process.env.FOTO || "/tmp/f196-pa.png" });
