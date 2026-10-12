@@ -4176,7 +4176,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.19</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.20</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10363,7 +10363,6 @@ function renderNovoCliente(){
       <p style="font-size:12px;color:var(--cinza);margin-top:8px">O cliente vai à lista Escritório, com a menção a Amanda e Paulo para a triagem, e vira tarefa no To Do na próxima sincronização (título Nome #CPF).</p>
     </div>` : `
     <div class="caso ncl-larga">${passos}
-      <div class="form-linha"><input id="ncl-nome" placeholder="Nome completo" style="flex:1;min-width:320px;font-size:16px"></div>
       <div class="form-linha">
         <input id="ncl-cpf" placeholder="CPF (só números) *" maxlength="14" oninput="conferirCpfNovo()">
         <input id="ncl-senha" placeholder="Senha Meu INSS" autocomplete="off"
@@ -10482,8 +10481,8 @@ async function conferirCpfNovo(){
   const achado = nomeConhecidoPeloCpf(d);
   // o nome entra sozinho no campo vazio, e o recado diz de onde ele veio
   if(achado && achado.pat){
-    const nm=document.getElementById("ncl-nome");
-    if(nm && !nm.value.trim()) nm.value=achado.nome;
+    // a etapa 1 não pede nome: o do PAT vai à ficha, e a etapa 2 o mostra para conferir
+    _ncl.nomePat = achado.nome;
     el.innerHTML=`<span style="color:var(--verde)">✓ <b>${esc(achado.nome)}</b> —
       nome trazido do ${esc(achado.de)}. Confira antes de cadastrar.</span>`;
     return;
@@ -10616,7 +10615,7 @@ function nclTodosPortais(){
 }
 async function nclEtapa1(seguir=true){
   if(_ncl.id){ if(seguir){ _ncl.etapa=2; renderNovoCliente(); } return; }
-  const nome=document.getElementById("ncl-nome").value.trim();
+  const nome=_ncl.nomePat||"";
   const cpf=document.getElementById("ncl-cpf").value.replace(/\D/g,"");
   if(!cpf) return aviso("Preencha o CPF: é ele que prende o dossiê à ficha");
   // F32 · CPF digitado errado não entra: a base se organiza pelo CPF

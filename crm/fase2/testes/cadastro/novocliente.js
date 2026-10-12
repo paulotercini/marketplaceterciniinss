@@ -92,16 +92,16 @@ FIX.colaboradores = [...FIX.colaboradores,
   // a etapa 1 com o que se pede nela, e a etapa 2 aberta para o resto
   const etapa2 = async (nome, senha) => {
     await abrirTela();
-    if (nome) await p.fill("#ncl-nome", nome);
     await p.fill("#ncl-cpf", cpfNovo());
     if (senha) await p.fill("#ncl-senha", senha);
     await p.evaluate(() => nclEtapa1());
     await p.waitForSelector("#ncl-caso");
+    if (nome) await p.fill("#ncl-nome", nome);
     await p.evaluate(() => { _ncl.id && D.cliPorId.set(_ncl.id, { ...(D.cliPorId.get(_ncl.id) || {}), id: _ncl.id }); });
   };
   await abrirTela();
-  conf("F197 · a etapa 1 pede nome, CPF, senha e telefone, com o CPF obrigatório",
-    await p.evaluate(() => document.getElementById("ncl-cpf").placeholder.includes("*") && !document.getElementById("ncl-nome").placeholder.includes("*")
+  conf("F201 · a etapa 1 pede só CPF, senha e telefone, com o CPF obrigatório; o nome fica para a etapa 2",
+    await p.evaluate(() => document.getElementById("ncl-cpf").placeholder.includes("*") && !document.getElementById("ncl-nome")
       && !!document.getElementById("ncl-senha") && !!document.getElementById("ncl-tel") && !document.getElementById("ncl-sexo") && !document.getElementById("ncl-rua")));
   conf("F197 · e abre os quatro portais do dossiê em guias novas",
     await p.evaluate(() => [...document.querySelectorAll(".ncl-portal")].map(a => a.textContent + "|" + a.target).join()
@@ -341,7 +341,7 @@ FIX.colaboradores = [...FIX.colaboradores,
   await p.fill("#ncl-cpf", "529.982.247-25");
   await p.evaluate(() => conferirCpfNovo());
   conf("CPF de requerimento do PAT preenche o nome sozinho",
-    await p.evaluate(() => document.getElementById("ncl-nome").value === "Fulano Vindo do PAT"));
+    await p.evaluate(() => _ncl.nomePat === "Fulano Vindo do PAT"));
   conf("e o recado diz de onde o nome veio, para conferência",
     /PAT/.test(await rec()) && /Confira/.test(await rec()));
   await p.evaluate(() => { planoPat = null; });
@@ -353,7 +353,6 @@ FIX.colaboradores = [...FIX.colaboradores,
     await p.evaluate(() => cpfValido("12345678909") && cpfValido("52998224725")));
   // cadastrar com CPF inválido é barrado
   escritos.length = 0;
-  await p.fill("#ncl-nome", "Zenaide Ficta Ramos");
   await p.evaluate(() => nclEtapa1());
   await p.waitForTimeout(500);
   conf("cadastrar com CPF inválido é barrado antes de gravar",
@@ -362,7 +361,6 @@ FIX.colaboradores = [...FIX.colaboradores,
   // ── 4. CPF repetido continua barrado ────────────────────────────────────
   await abrirTela();
   escritos.length = 0;
-  await p.fill("#ncl-nome", "Aurélia Digitada Errado");
   await p.fill("#ncl-cpf", "123.456.789-09");
   await p.evaluate(() => nclEtapa1());
   await p.waitForTimeout(700);
