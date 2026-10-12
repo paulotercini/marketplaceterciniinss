@@ -140,6 +140,20 @@ FIX.colaboradores = [...FIX.colaboradores,
     pre === "Otilia Ficticia de Souza|1961-03-05|viuvo|Empregado Domestico nos Servicos Gerais|Rua dos Lirios|245|Monte Alto|Do dossiê: estado civil Viúvo(a), profissão Empregado Domestico nos Servicos Gerais.");
   await p.evaluate(() => { _ncl = {etapa:1, id:null}; });
   await etapa2("");
+  const preCad = await p.evaluate(async () => {
+    const api0 = api, txt = "DADOS CADASTRAIS (CNIS / Meu INSS)\n\nNome: BENEDITO FICTICIO DOS ANJOS\n\n--- dados brutos do portal ---\n"
+      + JSON.stringify({ filiadoTO: { nome: "BENEDITO FICTICIO DOS ANJOS", sexo: "MASCULINO", dataNascimentoAsString: "07/09/1958",
+        enderecoPrincipalTO: { logradouro: "RUA DAS FLORES FICTICIAS 88", bairro: "VILA FICTICIA", cep: "15910000", municipio: "MONTE ALTO", siglaUf: "SP" } } });
+    api = async (u, o) => /\/anexos\?/.test(u) ? [{ nome: "Cadastro · Dados cadastrais (CNIS).txt", caminho: "c", texto: txt }]
+      : /clientes\?select=\*/.test(u) ? [{ id: _ncl.id, nome: "Cliente 123.456.789-09", cpf: "12345678909" }] : api0(u, o);
+    try { await nclPreencher(); } finally { api = api0; }
+    const v = id => document.getElementById(id).value;
+    return [v("ncl-nome"), v("ncl-dn"), v("ncl-sexo"), v("ncl-rua"), v("ncl-num"), v("ncl-cidade"), _ncl.cad.bairro, _ncl.cad.cep].join("|");
+  });
+  conf(`F202 · a etapa 2 lê primeiro o Cadastro do Meu INSS, sem PDF (${preCad})`,
+    preCad === "Benedito Ficticio dos Anjos|1958-09-07|M|Rua das Flores Ficticias|88|Monte Alto|VILA FICTICIA|15910000");
+  await p.evaluate(() => { _ncl = {etapa:1, id:null}; });
+  await etapa2("");
   const post0 = escritos.find(x => x.m === "POST" && x.t === "clientes");
   conf("F197 · com só o CPF a ficha nasce, com nome provisório, e a etapa 2 se abre",
     post0 && /^Cliente \d{3}\.\d{3}\.\d{3}-\d{2}$/.test(post0.corpo.nome) && await p.evaluate(() => _ncl.etapa === 2 && !!document.getElementById("ncl-sexo")));

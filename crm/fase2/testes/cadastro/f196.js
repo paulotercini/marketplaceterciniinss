@@ -83,6 +83,12 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   conf("a aba Primeiro atendimento existe e abre o painel com os quatro passos", pa.aba && pa.passos.join("|") === "Identificação|Primeiro atendimento|Análise de Direito|Documentos");
   conf("o nome diferente do CNIS aparece no primeiro atendimento", /Nome diferente do CNIS/.test(await p.textContent(".pa")) && /Fulana Ficticia de Tal Souza/.test(await p.textContent(".pa-nome-dif")));
   conf("nome igual, com acento e caixa diferentes, não gera aviso", await p.evaluate(() => nomeIgual("José  da SILVA", "jose da silva") && !nomeIgual("Jose Silva", "Jose da Silva")));
+  conf("F202 · a Identificação sugere o estado civil que o dossiê traz e falta no cadastro", await p.evaluate(() => {
+    const c = { ...D.clientes[0], estado_civil: null, profissao: "Lavrador", campos: {} };
+    D.anexos.push({ id: "a9-civ", cliente_id: c.id, origem: "dossie", nome: "Processos administrativos · pedido.pdf", texto: "Estado Civil: CASADO(A)\nEscolaridade" });
+    const h = civilDoDossieCaixa(c); D.anexos.pop();
+    return /estado civil Casado\(a\)/.test(h) && !/profissão/.test(h) && civilDoDossieCaixa({ ...c, estado_civil: "casado" }) === "";
+  }));
   conf("a situação tem os seis blocos do desenho", pa.blocos.join("|") === "Qualidade de segurado|Carência|CNIS e RAIS|CNPJs do titular|Pedidos ao INSS|Planejamento prévio");
   conf(`os trabalhos possíveis saem do dossiê (${pa.cartoes.join(", ")})`, pa.cartoes.length > 0);
   conf("a carência mostra a contagem do CNIS", /^104 de 180$/.test(pa.car.trim()));
