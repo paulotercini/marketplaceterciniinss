@@ -4176,7 +4176,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.20</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.21</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10403,6 +10403,41 @@ function cadastroDoDossie(docs){
   if(rais[0]) r.profissao = tituloOrgao(rais[0].cbo.replace(/\s+(de|da|do|das|dos|e)$/i,""));
   return r;
 }
+// DADOS CADASTRAIS · o .txt que a extensão monta do Meu INSS (Cadastro · Dados
+// cadastrais (CNIS).txt): texto curto, sem PDF, por isso é a primeira leitura
+// do Novo Cliente. O JSON do pé (filiadoTO) é a fonte; o texto de cima, a reserva.
+function lerCadastroTexto(txt){
+  const [cima, bruto] = String(txt||"").split("--- dados brutos do portal ---");
+  let f = {}; try{ f = (JSON.parse(bruto||"{}").filiadoTO)||{}; }catch(e){}
+  const e = f.enderecoPrincipalTO || {}, lin = re => ((cima||"").match(re)||[])[1] || "";
+  const sx = String(f.sexo || lin(/^Sexo:\s*(\S+)/m)).trim().toUpperCase();
+  return { nome: f.nome || lin(/^Nome:\s*(.+?)\s*$/m),
+    nascimento: f.dataNascimentoAsString || lin(/^Nascimento:\s*(\d{2}\/\d{2}\/\d{4})/m),
+    sexo: /^F/.test(sx) ? "F" : /^M/.test(sx) ? "M" : "",
+    logradouro: e.logradouro || "", bairro: e.bairro || "", cep: String(e.cep||"").replace(/\D/g,""),
+    cidade: e.municipio || "", uf: e.siglaUf || e.uf || "" };
+}
+// F202 · na Identificação, o estado civil e a profissão que faltam saem das
+// outras peças do dossiê (pedido, laudo, RAIS), já lidas pelo CRM; grava no clique
+function civilDoDossieCaixa(c){
+  const v = civilDe(c); if(v.estado_civil && v.profissao) return "";
+  const r = cadastroDoDossie(docsDoDossie(c.id).map(a=>({fonte:String(a.nome||"").split(" · ")[0], texto:a.texto||""})));
+  const civil = !v.estado_civil && r.civil, prof = !v.profissao && r.profissao;
+  if(!civil && !prof) return "";
+  const rot = ((CAD_CAMPOS.estado_civil.ops.find(o=>o[0]===civil)||[])[1]) || "";
+  return `<p class="pa-nome-dif" style="background:color-mix(in srgb,var(--verde,#1f6f5c) 8%,transparent);border-color:color-mix(in srgb,var(--verde,#1f6f5c) 30%,transparent)">
+    <b>Do dossiê:</b> ${esc([civil && `estado civil ${rot}`, prof && `profissão ${prof}`].filter(Boolean).join(", "))}.
+    <button type="button" class="btn-mini" onclick="usarCivilDoDossie('${c.id}')">Usar no cadastro</button></p>`;
+}
+async function usarCivilDoDossie(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const v = civilDe(c), r = cadastroDoDossie(docsDoDossie(cliId).map(a=>({fonte:String(a.nome||"").split(" · ")[0], texto:a.texto||""})));
+  const corpo = {}; if(!v.estado_civil && r.civil) corpo.estado_civil = r.civil; if(!v.profissao && r.profissao) corpo.profissao = r.profissao;
+  if(!Object.keys(corpo).length) return;
+  try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(corpo)}); }
+  catch(e){ return aviso("Não consegui guardar — tente de novo"); }
+  Object.assign(c, corpo); aviso("Estado civil e profissão gravados pelo dossiê ✔"); repintarFicha();
+}
 // rua em caixa alta vira "Rua Sete de Setembro", e o número que veio colado na
 // rua passa ao campo do número
 function enderecoArrumado(rua, num){
@@ -10418,28 +10453,30 @@ async function nclPreencher(){
   const cli = c || D.cliPorId.get(id); if(!cli) return;
   if(c){ const v = D.cliPorId.get(id); if(v) Object.assign(v, c); }
   const cv = civilDe(cli), pre = (k, v) => { const e = document.getElementById(k); if(e && v && !e.value) e.value = v; };
-  // o texto do dossiê: o já lido e, do que ainda não foi lido, só o que dá cadastro
+  // F202 · a primeira leitura é a do Cadastro (.txt de 4 KB, sem PDF): nome,
+  // nascimento, sexo e endereço. O resto do dossiê fica para a Identificação.
   const docs = (await api(`/rest/v1/anexos?select=nome,caminho,texto&origem=eq.dossie&cliente_id=eq.${id}`).catch(()=>[]) || [])
     .map(a=>({fonte:String(a.nome||"").split(" · ")[0], arq:String(a.nome||"").split(" · ")[1]||"", caminho:a.caminho, texto:a.texto||""}));
-  for(const [re, arq] of [[/^CNIS/, /./], [/^Processos administrativos/, /./], [/^CTPS RAIS CAGED/, /RAIS/i]]){
-    const doFonte = docs.filter(x=>re.test(x.fonte) && arq.test(x.arq)), d = doFonte.find(x=>!x.texto);
-    if(d && !doFonte.some(x=>x.texto)) d.texto = ((await textoDoDocumento(d.caminho).catch(()=>null))||{}).texto || "";
-  }
+  const dc = docs.find(x=>x.fonte==="Cadastro" && /\.txt$/i.test(x.arq));
+  if(dc && !dc.texto) dc.texto = await fetch(await linkArquivo(dc.caminho, 60)).then(r=>r.ok ? r.text() : "").catch(()=>"");
   if(_ncl.id!==id || !document.getElementById("ncl-nome")) return;
-  const dz0 = cadastroDoDossie(docs);
+  const cad = dc && dc.texto ? lerCadastroTexto(dc.texto) : {}, dz0 = cadastroDoDossie(docs);
+  _ncl.cad = cad;
   const nomeFicha = cli.nome && !/^Cliente \d{3}\./.test(cli.nome) ? cli.nome : "";
-  pre("ncl-nome", nomeFicha || tituloOrgao(dz0.nome||""));
-  pre("ncl-dn", dnIso(cli.dn) || dnIso(dz0.nascimento)); mostrarIdadeNovo();
-  pre("ncl-sexo", cv.sexo);
+  pre("ncl-nome", nomeFicha || tituloOrgao(cad.nome || dz0.nome || ""));
+  pre("ncl-dn", dnIso(cli.dn) || dnIso(cad.nascimento) || dnIso(dz0.nascimento)); mostrarIdadeNovo();
+  pre("ncl-sexo", cv.sexo || cad.sexo);
   // estado civil e profissão só pelo dossiê: não há campo para digitar
   _ncl.dz = {civil:dz0.civil||"", profissao:dz0.profissao||""};
   const rotCivil = ((CAD_CAMPOS.estado_civil.ops.find(o=>o[0]===dz0.civil)||[])[1]) || "";
   document.getElementById("ncl-civprof").textContent = rotCivil || dz0.profissao
     ? `Do dossiê: ${[rotCivil && `estado civil ${rotCivil}`, dz0.profissao && `profissão ${dz0.profissao}`].filter(Boolean).join(", ")}.`
     : "Estado civil e profissão vêm do dossiê; ele ainda não os trouxe.";
-  const [rua, num] = enderecoArrumado(cv.logradouro, cv.numero);
-  pre("ncl-rua", rua); pre("ncl-num", num); if(cv.cidade){ document.getElementById("ncl-cidade").value = tituloOrgao(cv.cidade); }
-  if(cv.uf) document.getElementById("ncl-uf").value = cv.uf;
+  const doCad = !cv.logradouro && cad.logradouro;
+  const [rua, num] = doCad ? enderecoArrumado(cad.logradouro, "") : enderecoArrumado(cv.logradouro, cv.numero);
+  const cid = doCad ? cad.cidade : cv.cidade, uf = doCad ? cad.uf : cv.uf;
+  pre("ncl-rua", rua); pre("ncl-num", num); if(cid){ document.getElementById("ncl-cidade").value = tituloOrgao(cid); }
+  if(uf) document.getElementById("ncl-uf").value = uf;
   const PORT = {meuinss:"Meu INSS", mte:"Emprega Brasil", recursos:"e-Recursos", hc:"HC Ribeirão", redesim:"Redesim"};
   const dz = cli.dossie || {}, ks = Object.keys(dz);
   const el = document.getElementById("ncl-dossie");
@@ -10675,12 +10712,14 @@ async function criarCliente(){
   // procuração); rua da lista traz CEP, bairro e Monte Alto/SP de brinde
   const rua=ruaNovoAchada(), ruaTxt=document.getElementById("ncl-rua").value.trim();
   const num=document.getElementById("ncl-num").value.trim();
+  const mesmaRuaCad = !!(_ncl.cad && _ncl.cad.logradouro) && nomeIgual(enderecoArrumado(_ncl.cad.logradouro, "")[0], ruaTxt);
   const cidTxt=document.getElementById("ncl-cidade").value.trim();
   const ufTxt=document.getElementById("ncl-uf").value;
   if(rua||ruaTxt) await gravarEnderecoCli(id, {
     logradouro: rua?rua[1]:ruaTxt.split("—")[0].trim(), numero:num, complemento:"",
-    bairro: rua?rua[2]:"", cidade: rua?"Monte Alto":cidTxt, uf: rua?"SP":ufTxt,
-    cep: rua?soDigitos(rua[0]):""});
+    // rua digitada fora da lista: bairro e CEP do Cadastro do Meu INSS, se é a mesma rua
+    bairro: rua?rua[2]:(mesmaRuaCad ? tituloOrgao(_ncl.cad.bairro||"") : ""), cidade: rua?"Monte Alto":cidTxt, uf: rua?"SP":ufTxt,
+    cep: rua?soDigitos(rua[0]):(mesmaRuaCad ? _ncl.cad.cep||"" : "")});
   const avisados=await avisarClienteNovo(id);
   // F127 · o CNIS escolhido no cadastro é lido agora, já com o cliente gravado
   const cnisArq=(document.getElementById("ncl-cnis")||{}).files; const cnis=cnisArq&&cnisArq[0];
@@ -14650,6 +14689,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     ${cd!=="identificacao" ? "" : `
     ${/* a aposentadoria provável mudou-se para a aba 🔔 Lembretes: é aviso de
          data que chega, não dado de cadastro (pedido do Paulo) */""}
+    ${civilDoDossieCaixa(c)}
     ${fichaIdentificacao(c, creds)}
     ${(()=>{
       const prots = [...new Set(ks.flatMap(k=>k.protocolos||[]))];
