@@ -4194,7 +4194,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.34</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.35</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14855,7 +14855,7 @@ function cabecalhoAtendimento(c, cd, vis){
         ${dn ? `· ${esc(fmt(dn))}, ${idadeDe(c.dn)} anos` : ""} ${c.telefone ? `· ${esc(c.telefone)}` : ""}
         <span class="meio-sub">${cr ? `· Meu INSS com senha guardada <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button><button class="olho" title="ver (fica registrado)" onclick="verCred('${cr.id}')">👁</button>` : "· Meu INSS sem senha"}</span></div></div>
     <span class="atend-acoes">${zap ? `<button type="button" class="btn-mini" onclick="${zap}" title="${(D.zapFicha||[]).length ? "ler o histórico do WhatsApp" : "abrir o WhatsApp"}">WhatsApp</button>` : ""}
-      <button type="button" class="btn-mini" onclick="fecharAtendimento('${c.id}')">Sair do modo atendimento</button></span>
+      <button type="button" class="btn-mini" onclick="sairModoAtendimento('${c.id}')">Sair do modo atendimento</button></span>
   </div>
   <nav class="pa-passos atend-passos" aria-label="Passos do atendimento">
     ${passo("1","identificacao","Identificação","dados do cliente")}${passo("2","pa","Primeiro atendimento","situação e trabalhos")}
@@ -14865,7 +14865,7 @@ function cabecalhoAtendimento(c, cd, vis){
 const _atendAberto = new Set();
 const ATEND_SUBS = new Set(["pa","mapa","direito","documentos"]);
 // fechar a tela de atendimento: o que foi escrito na Análise de Direito é registrado antes
-async function fecharAtendimento(cliId){
+async function sairModoAtendimento(cliId){
   const ctx = document.getElementById("ad-contexto");
   if(ctx){
     const cen = [...document.querySelectorAll("#ad-cens .ad-row")].some(r=>[...r.querySelectorAll("input,select,textarea")].some(e=>e.type!=="radio" && String(e.value||"").trim()));
