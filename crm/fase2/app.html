@@ -4246,7 +4246,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.42</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.43</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -21518,11 +21518,19 @@ function admTempo(cliId, i, el){
 }
 function admTempoMais(cliId){ admSalvar(cliId, a=>{ if(!a.tempos.length) a.tempos.push({}); a.tempos.push({}); }); admTemposPintar(cliId); }
 function admTempoTirar(cliId, i){ admSalvar(cliId, a=>{ a.tempos.splice(i, 1); }); admTemposPintar(cliId); }
-// os vínculos do CNIS viram linhas comuns, sem repetir os que já estão lá
+// os vínculos do CNIS viram linhas comuns, sem repetir os que já estão lá.
+// O benefício que o CNIS lista como vínculo fica de fora (não é contribuição:
+// no teste real de 12.10.2026 a aposentadoria em manutenção somou 16 anos), e
+// o vínculo sem data de saída termina no mês da última remuneração, como a
+// Identificação já presume (vinculosSemSaida), salvo se ainda está em curso.
 function admTemposDoCnis(cliId){
   const c = D.cliPorId.get(cliId), g = c && cnisDe(c); if(!g) return;
   admSalvar(cliId, a=>{ const tem = new Set(a.tempos.map(r=>`${r.de}|${r.onde}`));
-    for(const v of g.vinculos||[]){ const de = isoBr(v.inicio||""); if(!de) continue; const r = {de, ate: isoBr(v.fim||"") || "", onde: v.origem||"", nat:"comum", prova:"CNIS"};
+    for(const v of g.vinculos||[]){ if(/benef/i.test(v.tipo||"")) continue; const de = isoBr(v.inicio||""); if(!de) continue;
+      let ate = isoBr(v.fim||"") || "", prova = "CNIS";
+      const m = /^(\d{2})\/(\d{4})$/.exec(v.ultRemun||"");
+      if(!ate && m && !v.aberto){ ate = new Date(Date.UTC(+m[2], +m[1], 0)).toISOString().slice(0,10); prova = "CNIS, fim presumido pela última remuneração"; }
+      const r = {de, ate, onde: v.origem||"", nat:"comum", prova};
       if(!tem.has(`${r.de}|${r.onde}`)) a.tempos.push(r); }
     a.tempos = a.tempos.filter(r=>r.de||r.ate||r.onde); });
   admTemposPintar(cliId);

@@ -77,6 +77,7 @@ O pedido mandou concluir sem perguntas, e as respostas ficam aqui para confirma�
 | A natureza do tempo é propriedade da linha, não um tipo de quadro ("tempo rural", "tempo especial", "aposentadoria especial") | um quadro por natureza | o mesmo cliente tem rural, comum e especial em sequência; na linha, a natureza abre só o detalhe que ela pede e os totais saem por natureza |
 | "Aposentadoria especial" não é natureza de tempo; é a família Aposentadoria especial, que abre o quadro Tempo especial | natureza "aposentadoria especial" na linha | a natureza da linha é "especial"; a aposentadoria especial é o benefício que soma essas linhas sem converter |
 | O especial converte só até 13/11/2019 (×1,40 H, ×1,20 F, base de 25 anos) e depois conta 1 para 1 | converter tudo | art. 25, § 2º, da EC 103, como lê a skill base-aposentadoria-especial-transicao-ec103 |
+| "Trazer do CNIS" deixa de fora o benefício que o CNIS lista como vínculo e fecha o vínculo sem saída no mês da última remuneração (salvo em curso) | importar tudo | no teste real a aposentadoria em manutenção, aberta desde 2010, somou 16 anos de tempo que não existem; o benefício não é contribuição, e o fim presumido é a mesma regra da Identificação (`vinculosSemSaida`) |
 | Períodos sobrepostos contam uma vez (`uniaoDias`: união dos intervalos, por natureza e no total), e a soma usa ano de 365 dias e mês de 30 | somar cada linha; contagem por competência | o teste real de 12.10.2026 somou 47 anos em 48 vínculos sobrepostos de um CNIS que conta 29 anos e 8 meses; o tempo de contribuição é tempo de calendário, e a conta oficial segue sendo a do Prévius |
 | A carência do salário-maternidade entra como linha informativa, não como requisito | exigir 10 contribuições | a base registra a inexigibilidade (ADI 2110; Enunciado 19 do CRPS) |
 | A escolha vive na ficha (`campos.ad_modulos`) e a análise registrada recebe uma cópia | guardar só na sessão | o atendimento se interrompe e volta; a cópia na análise congela o que se decidiu naquele dia |
@@ -88,7 +89,7 @@ Reference lock (refero): o sistema de desenho do próprio CRM. Preservado: canva
 
 ## 5. Régua de teste (`testes/cadastro/f217.js`)
 
-A entrega exige mais de 95 pontos de 100. Resultado em 12.10.2026: **100/100**, repetido depois do teste real no navegador (CRM 11.42).
+A entrega exige mais de 95 pontos de 100. Resultado em 12.10.2026: **100/100**, repetido depois do teste real no navegador (CRM 11.43).
 
 | Bloco | Peso | O que se mede |
 |---|---|---|

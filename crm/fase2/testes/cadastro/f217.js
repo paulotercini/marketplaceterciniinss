@@ -11,7 +11,9 @@ const SUPA = "https://ficticio.supabase.co";
 
 const CNIS = { em: "2026-10-08", nome: "Aurélia Ficta de Souza", paginas: 3, qtVinculos: 1, nits: [], indicadores: [], contribSemPerda: 104,
   vinculos: [{ seq: 1, tipo: "Empregado", origem: "CONFECCOES FICTICIAS LTDA", codigo: "11.444.777/0001-61", inicio: "01/02/2011", fim: "30/09/2019",
-    ultRemun: "09/2019", aberto: false, indicadores: [] }],
+    ultRemun: "09/2019", aberto: false, indicadores: [] },
+    // caso-ouro do teste real de 12.10.2026: o benefício listado como vínculo não é tempo
+    { seq: 2, tipo: "Benefício", origem: "APOSENTADORIA POR TEMPO DE CONTRIBUICAO", especie: "42", nb: "0000000000", inicio: "28/05/2010", fim: "", situacao: "ATIVO", aberto: true, ultRemun: "", indicadores: [] }],
   analise: { abertos: [], errosEmp: [], abaixo: [], mesAnt: "09/2026", agora: { tipo: "sem", ultima: { comp: "09/2019", tipo: "Empregado" } },
     benefAtivos: [], qtComps: 104, contagem: { periodos: [["2011-02", "2019-09"]], carencia: 104, anos: 8, meses: 8 } } };
 FIX.anexos = [];
@@ -123,7 +125,8 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   await p.click("button:has-text('Trazer do CNIS')");
   await p.waitForFunction(() => document.querySelectorAll("#adm-tempos tbody tr").length === 2);
   const doCnis = await p.evaluate(() => { const r = document.querySelector('#adm-tempos tbody tr[data-i="1"]'); return { de: r.querySelector("[data-k=de]").value, ate: r.querySelector("[data-k=ate]").value, onde: r.querySelector("[data-k=onde]").value, prova: r.querySelector("[data-k=prova]").value }; });
-  conf(5, "C4 Trazer do CNIS lança o vínculo com datas, empregador e prova", doCnis.de === "2011-02-01" && doCnis.ate === "2019-09-30" && /CONFECCOES/.test(doCnis.onde) && doCnis.prova === "CNIS");
+  const semBenef = await p.evaluate(() => ![...document.querySelectorAll("#adm-tempos tbody tr [data-k=de]")].some(i => i.value === "2010-05-28"));
+  conf(5, "C4 Trazer do CNIS lança o vínculo com datas, empregador e prova, e deixa o benefício de fora", doCnis.de === "2011-02-01" && doCnis.ate === "2019-09-30" && /CONFECCOES/.test(doCnis.onde) && doCnis.prova === "CNIS" && semBenef);
   await p.click("button:has-text('Trazer do CNIS')");
   await p.waitForTimeout(200);
   conf(0, "C4b trazer de novo não repete o vínculo", (await n("#adm-tempos tbody tr")) === 2);
