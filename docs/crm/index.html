@@ -3555,6 +3555,90 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .mapa-fora-tag{grid-column:1;font-size:11px;font-weight:600;color:var(--cinza-claro)}
 .mapa-levar.on{border-color:var(--verde);color:var(--verde)}
 .docs-ad{margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--placa)}
+/* F196 · painel do primeiro atendimento, o desenho aprovado */
+.pa{--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-warn:#8F5400;--pa-ok:#1B6E38;--pa-info:#3A6491;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660;color:#121212;font-size:13px;line-height:1.45}
+.pa .mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-weight:500}
+.pa-passos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--pa-b);margin-bottom:14px}
+.pa-passo{display:flex;align-items:center;gap:10px;padding:10px 4px 12px;border:0;border-bottom:3px solid #E7E6E1;background:none;text-align:left;cursor:pointer;font:inherit;color:var(--pa-c1)}
+.pa-passo i{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid #CFCDC6;display:grid;place-items:center;font-style:normal;font-size:12px;color:var(--pa-c2)}
+.pa-passo span{display:flex;flex-direction:column}.pa-passo b{font-size:13.5px;font-weight:600;color:#121212}.pa-passo small{font-size:11.5px;color:var(--pa-c2)}
+.pa-passo.cur{border-bottom-color:var(--pa-t)}.pa-passo.cur i{background:var(--pa-t);border-color:var(--pa-t);color:#fff}
+.pa-passo:first-child{border-bottom-color:#B5D3CF}.pa-passo:first-child i{border-color:var(--pa-t);color:var(--pa-t)}
+.pa-cab{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px}
+.pa-cab h2{margin:0;font-family:'Zilla Slab',Georgia,serif;font-weight:600;font-size:22px}.pa-cab p{margin:4px 0 0;color:var(--pa-c1)}
+.pa-corpo{display:flex;flex-wrap:wrap;align-items:flex-start;gap:20px;margin-top:18px}
+.pa-trab{flex:1 1 300px;max-width:380px;min-width:0}.pa-sit{flex:999 1 620px;min-width:0}
+.pa-trab-cab,.pa-sit-cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.pa-trab h3,.pa-sit h3{margin:0;font-family:'Zilla Slab',Georgia,serif;font-weight:600;font-size:18px}
+.pa-legenda{list-style:none;display:flex;flex-wrap:wrap;gap:4px 12px;margin:8px 0 0;padding:0;font-size:11.5px;color:var(--pa-c1)}
+.pa-legenda li{display:inline-flex;align-items:center;gap:5px}
+.pa-bola{display:inline-block;flex:none;width:8px;height:8px;border-radius:50%;background:#CFCDC6}
+.pa-bola.crit{background:var(--pa-crit)}.pa-bola.warn,.pa-bola.pend{background:var(--pa-warn)}.pa-bola.ok{background:var(--pa-ok)}.pa-bola.info{background:var(--pa-info)}
+.pa-cartoes{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.pa-cartao{background:#fff;border:1px solid var(--pa-b);border-radius:10px;overflow:hidden;transition:box-shadow 180ms ease,border-color 160ms ease}
+.pa-cartao.sel{border-color:var(--pa-t);box-shadow:0 0 0 1px var(--pa-t),0 8px 20px rgba(18,18,18,.07)}
+.pa-cartao-bt{width:100%;text-align:left;background:none;border:0;padding:12px 14px 10px;display:flex;flex-direction:column;gap:6px;font:inherit;color:#121212;cursor:pointer}
+.pa-cartao-bt>b{font-size:15px;font-weight:600}.pa-cartao.sel .pa-cartao-bt>b{color:var(--pa-t)}.pa-cartao-bt>b small{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:500;color:var(--pa-c2)}
+.pa-cartao-topo{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.pa-cartao-data{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--pa-c1)}.pa-cartao-data.crit{color:var(--pa-crit)}
+.pa-selo{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:999px;font-size:11.5px;font-weight:600}
+.pa-selo i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.pa-selo.crit{background:#FBE9E8;color:var(--pa-crit)}.pa-selo.warn{background:#FBF1E0;color:var(--pa-warn)}.pa-selo.ok{background:#E4F1EA;color:var(--pa-ok)}.pa-selo.info{background:#E9EFF6;color:var(--pa-info)}
+.pa-falta{color:var(--pa-c1)}.pa-falta b{color:#121212}
+.pa-levar{display:flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-top:1px solid #F0EFEC;background:#FBFBFA;color:var(--pa-c1);font-size:13px;font-weight:600;cursor:pointer}
+.pa-levar.on{background:#F4F8F7;color:var(--pa-t)}.pa-levar input{width:18px;height:18px;margin:0;accent-color:var(--pa-t)}
+.pa-levar-box{margin-top:12px;padding:12px 14px;border-radius:10px;background:#fff;border:1px solid var(--pa-b);display:flex;flex-direction:column;gap:10px}.pa-levar-box p{margin:0;color:var(--pa-c1)}
+.pa-prim{min-height:40px;padding:0 16px;border-radius:8px;border:1px solid var(--pa-t);background:var(--pa-t);color:#fff;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
+.pa-prim:disabled{opacity:.45;cursor:not-allowed}
+.pa-chip{margin-left:auto;display:inline-flex;align-items:center;gap:4px;padding:2px 2px 2px 10px;border-radius:999px;background:#E6F0EF;color:var(--pa-t);font-size:12px;font-weight:600}
+.pa-chip button{width:28px;height:28px;border:0;border-radius:999px;background:none;color:var(--pa-t);cursor:pointer;font-size:15px}
+.pa-blocos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+@media (max-width:640px){.pa-blocos{grid-template-columns:repeat(2,minmax(0,1fr))}.pa-passos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pa-bloco{min-height:118px;text-align:left;display:flex;flex-direction:column;gap:5px;padding:12px 13px;border-radius:10px;border:1px solid var(--pa-b);background:#fff;font:inherit;color:#121212;cursor:pointer;transition:opacity 220ms ease,border-color 160ms ease,box-shadow 180ms ease,transform 160ms cubic-bezier(.23,1,.32,1)}
+.pa-bloco.aberto{border-color:var(--pa-t);box-shadow:0 0 0 1px var(--pa-t),0 6px 16px rgba(14,92,88,.08)}.pa-bloco.longe{opacity:.38}
+.pa-bloco-rot{display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--pa-c2)}
+.pa-bloco-val{font-size:18px;font-weight:600;line-height:1.2}.pa-bloco-val.mono{font-family:'IBM Plex Mono',monospace;font-weight:500}.pa-bloco-val.crit{color:var(--pa-crit)}
+.pa-bloco-nota{font-size:12px;color:var(--pa-c1);line-height:1.4}
+.pa-bloco-vai{margin-top:auto;display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--pa-c2)}
+.pa-bloco-vai i{width:6px;height:6px;border-radius:2px;background:#CFCDC6}.pa-bloco-vai.on{color:var(--pa-t)}.pa-bloco-vai.on i{background:var(--pa-t)}
+.pa-det-caixa{margin-top:12px;background:#fff;border:1px solid var(--pa-b);border-radius:12px}
+.pa-det-vazio{margin:0;padding:16px 18px}.pa-det{padding:16px 18px 18px}
+.pa-det-cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}.pa-det-cab h4{margin:0;font-family:'Zilla Slab',Georgia,serif;font-weight:600;font-size:17px}
+.pa-det-dir{margin-left:auto;display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:4px 10px}
+.pa-levar-bt{min-height:32px;padding:0 10px;border-radius:8px;border:1px solid #CFCDC6;background:#fff;color:#121212;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.pa-levar-bt.on{border-color:var(--pa-t);background:#E6F0EF;color:var(--pa-t)}
+.pa-fatos{margin-top:12px;border-top:1px solid #F0EFEC}
+.pa-tl{position:relative;margin:14px 0 0;overflow-x:auto}
+.pa-tl-linha{display:flex;min-width:620px;height:38px;border-bottom:1px solid #F0EFEC}
+.pa-tl-nome{flex:none;width:104px;margin-right:12px;display:flex;align-items:center;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--pa-c2);line-height:1.2}
+.pa-tl-trilho{position:relative;flex:1 1 auto}
+.pa-tl-eixo{height:24px;border-bottom-color:#D9D7D0}.pa-tl-eixo .pa-tl-trilho span{position:absolute;bottom:4px;padding-left:3px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--pa-c2);border-left:1px solid #D9D7D0}
+.pa-tl-eixo .pa-tl-hoje{transform:translateX(-50%);border:0!important;font-family:inherit!important;font-weight:600;color:#121212!important;padding:0!important}
+.pa-tl-bar{position:absolute;top:10px;height:18px;box-sizing:border-box;border-radius:4px;font-size:11px;font-weight:600;line-height:16px;padding:0 6px;white-space:nowrap;overflow:hidden}
+.pa-tl-bar.contrib{border:1px solid var(--pa-info);background:#E9EFF6;color:var(--pa-info)}
+.pa-tl-bar.abaixo{border:1px solid var(--pa-warn);background:repeating-linear-gradient(135deg,#8F5400 0 1.5px,#FBF1E0 1.5px 4px);min-width:6px}
+.pa-tl-lic{position:absolute;top:30px;height:5px;min-width:6px;box-sizing:border-box;border:1px solid var(--pa-warn);border-radius:2px;background:repeating-linear-gradient(135deg,#8F5400 0 1.5px,#FBF1E0 1.5px 3.5px)}
+.pa-tl-bar.seguro{top:12px;height:14px;background:var(--pa-info);color:#fff;min-width:6px;line-height:12px}
+.pa-tl-bar.graca{background:repeating-linear-gradient(135deg,#A8A59C 0 1.5px,#F3F2EE 1.5px 4.5px);border:1px solid #CFCDC6;color:#121212;font-family:'IBM Plex Mono',monospace;font-weight:500}
+.pa-tl-bar.qual{background:#DCDAD3;color:#121212}
+.pa-tl-bar.compl{top:9px;height:20px;border:1.5px dashed var(--pa-t);background:#E6F0EF;color:var(--pa-t);opacity:.9}
+.pa-tl-pto{position:absolute;top:14px;width:9px;height:9px;transform:translateX(-50%) rotate(45deg);background:#4A4944}
+.pa-tl-pto.intern{transform:translateX(-50%);border-radius:2px;width:7px;height:10px;background:var(--pa-t)}
+.pa-tl-pto.ped{transform:translateX(-50%);border-radius:50%;background:var(--pa-info)}.pa-tl-pto.indef{transform:translateX(-50%);border-radius:50%;background:var(--pa-crit)}
+.pa-tl-rot{position:absolute;top:11px;font-size:11px;white-space:nowrap;color:#121212}
+.pa-tl-vazio{position:absolute;left:2%;top:11px;font-size:11px;font-style:italic;color:var(--pa-c2)}
+.pa-tl-agora{position:absolute;top:20px;bottom:44px;width:0;border-left:1.5px solid #4A4944;pointer-events:none}
+.pa-tl figcaption{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:12px;padding-top:10px;border-top:1px solid #F0EFEC;font-size:11.5px;color:var(--pa-c1)}
+.pa-tl figcaption span{display:inline-flex;align-items:center;gap:6px}
+.pa-lg{display:inline-block;width:16px;height:10px;border-radius:2px;box-sizing:border-box}
+.pa-lg.contrib{border:1px solid var(--pa-info);background:#E9EFF6}.pa-lg.abaixo,.pa-lg.lic{border:1px solid var(--pa-warn);background:repeating-linear-gradient(135deg,#8F5400 0 1.5px,#FBF1E0 1.5px 4px)}.pa-lg.lic{height:5px}
+.pa-lg.seguro{height:8px;background:var(--pa-info)}.pa-lg.graca{border:1px solid #CFCDC6;background:repeating-linear-gradient(135deg,#A8A59C 0 1.5px,#F3F2EE 1.5px 4.5px)}
+.pa-lg.compl{border:1.5px dashed var(--pa-t);background:#E6F0EF}.pa-lg.clin{width:8px;height:8px;background:#4A4944;transform:rotate(45deg)}.pa-lg.ped{width:8px;height:8px;border-radius:50%;background:var(--pa-info)}
+.ad-trab{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.ad-trab button{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 12px;border-radius:10px;border:1px solid #E7E6E1;background:#fff;font:inherit;font-size:13.5px;cursor:pointer;color:#121212}
+.ad-trab button small{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#686660}
+.ad-trab button[aria-current="page"]{border-color:#0E5C58;box-shadow:0 0 0 1px #0E5C58}
+.ad-tz .mono{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px}
 .adr-lista-form{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
 .adr-lista-form>div{width:100%}
 .adr-arq{align-self:flex-start;display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid var(--azul);border-radius:8px;color:var(--azul);font-weight:600;cursor:pointer;background:var(--branco,#fff)}
@@ -4086,7 +4170,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.13</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.14</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14398,6 +14482,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     || adVisivel.has(c.id) || adAbrir;   // F176 · aberta por atalho (Novo andamento, passos 2 e 3)
   // onda 2b · o mapa existe quando há o que mapear: documento do dossiê ou CNIS lido
   vis.mapa = docsDoDossie(c.id).length>0 || !!cnisDe(c);
+  vis.pa = vis.mapa;   // F196 · o painel do primeiro atendimento lê o mesmo dossiê
   // valores antigos gravados: "atendimento" era o trilho interno de
   // Anotações; "consulta" virou seção do painel Documentos (F31)
   let cd = subCad==="atendimento" ? "anotacoes"
@@ -14424,6 +14509,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     ${cd==="documentos" ? caixaDocumentos(c, ks) + catalogoNoCadastro(c, ks) + painelConsulta(c) : ""}
     ${cd==="anotacoes" ? caixaAtendimento(c, ks) : ""}
     ${cd==="mensagens" ? painelMensagensFicha(c, ks, evs) : ""}
+    ${cd==="pa" ? painelPA(c, ks) : ""}
     ${cd==="mapa" ? painelMapa(c, ks) : ""}
     ${cd==="direito" ? painelDireito(c) : ""}
     ${cd!=="identificacao" ? "" : `
@@ -14513,7 +14599,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
 // menos no trilho, e o painel traz documentos, catálogo e consulta juntos
 const SUB_CAD = [["identificacao","Identificação"],["triagem","Triagem"],
                  ["anotacoes","Anotações"],["documentos","Documentos"],
-                 ["mapa","Mapa do dossiê"],
+                 ["pa","Primeiro atendimento"],["mapa","Mapa do dossiê"],
                  ["direito","Análise de Direito"],["mensagens","Mensagens"]];
 const SUB_ANOT = [["atendimento","Atendimento"],
                   ["consulta","Consulta"],["mensagens","Mensagens"]];
@@ -18729,6 +18815,25 @@ function adEstados(){
 function adTrazido(c){
   const ks = D.casosDoCliente.get(c.id) || [];
   if(!(docsDoDossie(c.id).length || cnisDe(c))) return "";
+  const pa = _paAnalise.get(c.id);
+  if(pa){
+    const d = paDados(c, ks), fu = MAPA_FUNIL[pa.atual] || {D:"", A:""}, usa = new Set(`${fu.D} ${fu.A}`.split(/\s+/).filter(Boolean));
+    const bs = PA_BLOCOS.filter(([b])=>b==="qual" || b==="car" || d.grupos[b].some(x=>usa.has(x.grupo)));
+    const lev = bs.filter(([b])=>paVai(c.id, b));
+    const trab = pa.trabalhos.map(k=>(d.trabalhos.find(t=>t.f.chave===k)||{f:PONTOS_ESPECIE.find(f=>f.chave===k)})).filter(t=>t&&t.f);
+    return `<div class="adr-form-grupo ad-trazido" id="ad-trazido">
+      <nav class="ad-trab" aria-label="Trabalhos da análise">${trab.map(t=>`<button type="button" data-k="${t.f.chave}" aria-current="${t.f.chave===pa.atual?"page":"false"}"
+        onclick="paAnaliseTrabalho('${c.id}','${t.f.chave}')"><i class="pa-bola ${t.est||"info"}"></i><b>${esc(t.f.rot)}</b>${PA_COD[t.f.chave]?` <small>${PA_COD[t.f.chave]}</small>`:""}</button>`).join("")}</nav>
+      <div class="adr-form-tit">Do primeiro atendimento <span class="meio-sub">${lev.length===bs.length ? `${lev.length} blocos levados` : `${lev.length} de ${bs.length} blocos levados`}</span></div>
+      ${bs.map(([b, rot])=>{ const [valor, , nota, est] = d.BL[b];
+        return paVai(c.id, b)
+        ? `<details class="ad-tz est-${est}"><summary><i class="mapa-bola" aria-hidden="true"></i><b>${esc(rot)}</b> <b class="mono">${esc(valor)}</b> <span>${esc(nota)}</span></summary>
+            ${d.grupos[b].length ? `<ul class="mapa-lista">${d.grupos[b].map(x=>`<li class="est-${x.est}"><i class="mapa-bola" aria-hidden="true"></i><span>${esc(x.texto)}</span><span class="dossie-orig">${esc(x.fonte||"")}</span></li>`).join("")}</ul>`
+              : `<p class="meio-sub">O dossiê ainda não traz fato para este bloco.</p>`}</details>`
+        : `<div class="ad-tz fora"><b>${esc(rot)}</b> <span class="meio-sub">fora da análise: leve o bloco para usar os dados dele neste trabalho</span>
+            <button type="button" class="btn-mini" onclick="paLevarBlocoAd('${c.id}','${b}')">Levar à análise</button></div>`; }).join("")}
+    </div>`;
+  }
   const fam = familiaDoMapa(c, ks); if(!fam) return "";
   const {ramos} = ramosDoMapa(c, ks, fam), lev = ramos.filter(r=>mapaVai(c.id, r.id));
   return `<div class="adr-form-grupo ad-trazido" id="ad-trazido">
@@ -18741,6 +18846,7 @@ function adTrazido(c){
           <button type="button" class="btn-mini" onclick="mapaLevar('${c.id}','${r.id}'); adTrazidoTrocar('${c.id}')">Levar à análise</button></div>`).join("")}
   </div>`;
 }
+function paLevarBlocoAd(cliId, b){ const s = new Set(_paForaBl.get(cliId)||[]); s.delete(b); _paForaBl.set(cliId, s); adTrazidoTrocar(cliId); }
 // troca só o quadro, sem repintar a ficha, para não perder o que já se digitou
 function adTrazidoTrocar(cliId){
   const el = document.getElementById("ad-trazido"), c = D.cliPorId.get(cliId);
@@ -20215,6 +20321,213 @@ function fraseDoRamo(r){
     return (r.resp.estado==="ok" ? "sem pendência" : "atenção") + (r.resp.nota ? `: ${curtoMapa(r.resp.nota)}` : ", conferido na triagem");
   return r.fatos.length ? curtoMapa(r.fatos[0].texto) : "a conferir";
 }
+// ══════════════════════════════════════════════════════════════════════════
+// F196 · PAINEL DO PRIMEIRO ATENDIMENTO (o desenho aprovado em 12.10.2026)
+// ══════════════════════════════════════════════════════════════════════════
+// Os trabalhos possíveis à esquerda, a situação em seis blocos à direita,
+// com a linha do tempo e o detalhe de cada bloco, fato a fato, com a fonte.
+// Cada bloco vai à Análise de Direito, salvo o que se tirar; os trabalhos
+// marcados viram a lista de trabalhos da análise. Só lê: nada se grava aqui.
+const _paBloco = new Map(), _paForaBl = new Map(), _paEsc = new Map(), _paCartao = new Map();
+const PA_BLOCOS = [
+  ["qual", "Qualidade de segurado"], ["car", "Carência"], ["cnis", "CNIS e RAIS"],
+  ["cnpj", "CNPJs do titular"], ["ped", "Pedidos ao INSS"], ["plan", "Planejamento prévio"],
+];
+// o código da espécie que a análise abre para cada trabalho
+const PA_COD = {bpc:"B87", incapacidade:"B31", b94:"B94", especial:"B46", tempo:"B42", rural:"B41", pensao:"B21", maternidade:"B80", cnis:"", crps:"", revisao:""};
+// o trabalho só vira cartão quando o dossiê traz o fato que é dele, e não só idade ou qualidade
+const PA_GATILHO = {bpc:"cadunico", incapacidade:"laudo medicos", b94:"cat laudo", especial:"ppp", rural:"rural",
+  pensao:"certidoes", maternidade:"certidoes", revisao:"carta", cnis:"vinculo minimo", crps:"processo", tempo:"contrib"};
+const PA_SELO = {risco:["Requisito em risco","crit"], crit:["Prazo correndo","crit"], warn:["Falta um dado","warn"], pend:["Falta um dado","warn"], ok:["Requisitos à vista","ok"], info:["A conferir","info"]};
+const paVai = (cliId, b) => !(_paForaBl.get(cliId)||new Set()).has(b);
+function paDados(c, ks){
+  const fam = familiaDoMapa(c, ks);
+  const fatos = fatosDoMapa(c, ks, fam || PONTOS_ESPECIE[0]);
+  const g = cnisDe(c), an = g && g.analise, ct = an && an.contagem, fd = fontesDoDossie(c.id);
+  const gr = g && (g.vinculos||[]).length ? calcularGraca(g.vinculos, contribSemPerda(g), !!(triagemDe(c).graca||{}).desempregado, an && an.abaixo, ct && ct.periodos, fd.seguros) : null;
+  const deRais = x => /^RAIS/.test(x.fonte||"");
+  const grupos = {
+    qual: fatos.filter(x=>x.grupo==="qualidade"),
+    car: fatos.filter(x=>x.grupo==="contrib" && !deRais(x)),
+    cnis: fatos.filter(x=>x.grupo==="vinculo" || x.grupo==="minimo" || (x.grupo==="contrib" && deRais(x))),
+    cnpj: fatos.filter(x=>x.grupo==="cnpj"),
+    ped: fatos.filter(x=>["processo","beneficios","carta","laudo"].includes(x.grupo)),
+    plan: fatos.filter(x=>x.grupo==="idade"),
+  };
+  const ap = (aposDoCliente(c)||[]).filter(a=>a.data).sort((a,b)=>a.data<b.data?-1:1)[0];
+  if(ap) grupos.plan.push({grupo:"idade", est:"info", fonte:"Lembretes", texto:`${ap.especie||"Aposentadoria"} prevista para ${fmtBarra(ap.data)}`});
+  const pior = fs => fs.reduce((p, x)=>MAPA_ORDEM[x.est] < MAPA_ORDEM[p] ? x.est : p, "info");
+  const ativos = grupos.cnpj.filter(x=>!/^Nenhum/.test(x.texto));
+  const BL = {
+    qual: [!gr ? "—" : gr.semLimite ? "sem limite" : `até ${fmtBarra(gr.mantidaAte)}`, true,
+      !gr ? "o CNIS não foi lido" : gr.semLimite ? "benefício em manutenção" : gr.complementar ? `complementada ${gr.complementar.comp}, iria até ${fmtBarra(gr.complementar.mantidaAte)}` : gr.vencida ? `perdida em ${fmtBarra(gr.perda)}` : `perda em ${fmtBarra(gr.perda)}`,
+      !gr ? "pend" : gr.vencida && !gr.complementar ? "crit" : gr.vencida ? "warn" : "ok"],
+    car: [ct ? `${ct.carencia} de 180` : "—", true, ct ? `${ct.anos} anos e ${ct.meses} meses de tempo pelo CNIS` : "o CNIS não foi lido", ct ? pior(grupos.car) : "pend"],
+    cnis: [(n=>n ? `${n} ${n===1?"ponto":"pontos"}` : "sem pendência")(grupos.cnis.filter(x=>x.est!=="info"&&x.est!=="ok").length), false,
+      grupos.cnis.length ? curtoMapa(grupos.cnis[0].texto) : "nenhum indicador nem afastamento lido", pior(grupos.cnis)],
+    cnpj: [ativos.length ? `${ativos.length} ${ativos.length===1?"CNPJ":"CNPJs"}` : "nenhum", false,
+      ativos.length ? curtoMapa(ativos[0].texto) : grupos.cnpj.length ? "a Redesim não traz CNPJ no CPF" : "a Redesim não foi consultada", ativos.length ? "warn" : "info"],
+    ped: [(n=>n ? `${n} ${n===1?"registro":"registros"}` : "nenhum")(grupos.ped.length), false,
+      grupos.ped.length ? curtoMapa((grupos.ped.find(x=>x.prazo)||grupos.ped[0]).texto) : "nenhum pedido no dossiê", pior(grupos.ped)],
+    plan: [ap ? fmtBarra(ap.data) : "—", true, ap ? (ap.especie||"aposentadoria") : "sem aposentadoria prevista nos Lembretes", "info"],
+  };
+  // os trabalhos: cada espécie em que o dossiê tem fato num ponto da triagem
+  const trabalhos = PONTOS_ESPECIE.map(f=>{
+    const {ramos} = ramosDoMapa(c, ks, f), comFato = ramos.filter(r=>r.ponto && r.fatos.length);
+    const gat = String(PA_GATILHO[f.chave]||"").split(" ");
+    if(!comFato.length || (f.chave!==(fam||{}).chave && !ramos.some(r=>r.fatos.some(x=>gat.includes(x.grupo) && x.est!=="info")))) return null;
+    const est = ramos.some(r=>r.est==="crit") ? "crit" : ramos.some(r=>r.est==="warn"||r.est==="pend") ? "warn" : "ok";
+    const forte = comFato.slice().sort((a,b)=>MAPA_ORDEM[a.est]-MAPA_ORDEM[b.est])[0];
+    const falta = ramos.filter(r=>r.ponto && r.est==="pend").map(r=>r.rot);
+    const prazo = (ramos.find(r=>r.id==="prazos")||{fatos:[]}).fatos[0];
+    return {f, est, selo: est==="crit" && !prazo ? "risco" : est, forte, falta, prazo, ramos};
+  }).filter(Boolean).sort((a,b)=>MAPA_ORDEM[a.est]-MAPA_ORDEM[b.est]);
+  return {fam, fatos, grupos, BL, gr, ct, fd, g, an, trabalhos};
+}
+function paEscolhidos(cliId, trabalhos){
+  if(!_paEsc.has(cliId)) _paEsc.set(cliId, new Set(trabalhos.filter(t=>t.est!=="ok").slice(0, 4).map(t=>t.f.chave)));
+  return _paEsc.get(cliId);
+}
+// a linha do tempo da qualidade: contribuições, seguro, qualidade, saúde e pedidos
+function paLinhaDoTempo(c, d){
+  const {ct, gr, fd, an} = d, hj = hoje();
+  const comp = s => { const m = /^(\d{2})\/(\d{4})$/.exec(s||""); return m ? `${m[2]}-${m[1]}-01` : null; };
+  const ym = s => s && /^\d{4}-\d{2}$/.test(s) ? s + "-01" : s;
+  const ini = Math.max(+(ct && ct.periodos[0] ? ct.periodos[0][0].slice(0,4) : hj.slice(0,4)), +hj.slice(0,4) - 11);
+  const t0 = Date.parse(`${ini}-01-01`), t1 = Date.parse(`${+hj.slice(0,4)+2}-01-01`);
+  const pos = iso => Math.max(0, Math.min(100, (Date.parse(iso) - t0) / (t1 - t0) * 100));
+  const bar = (a, b, cls, txt, tit) => { const l = pos(a), w = Math.max(0.6, pos(b) - l);
+    return `<span class="pa-tl-bar ${cls}" style="left:${l}%;width:${w}%" ${tit?`title="${esc(tit)}"`:""}>${txt?esc(txt):""}</span>`; };
+  const pto = (a, cls, txt) => `<span class="pa-tl-pto ${cls}" style="left:${pos(a)}%"></span>${txt?`<span class="pa-tl-rot" style="left:calc(${pos(a)}% + 8px)">${esc(txt)}</span>`:""}`;
+  const fimMes = s => { const d0 = new Date(Date.parse(ym(s))); d0.setMonth(d0.getMonth()+1); d0.setDate(0); return d0.toISOString().slice(0,10); };
+  const contrib = (ct ? ct.periodos : []).map(([a, b])=>bar(ym(a), fimMes(b), "contrib", "", `${a} a ${b}`)).join("")
+    + ((an && an.abaixo)||[]).map(x=>comp(x.comp) ? bar(comp(x.comp), fimMes(comp(x.comp).slice(0,7)), "abaixo", "", `${x.comp} abaixo do mínimo`) : "").join("")
+    + licencasDaRais(fd.rais).map(l=>l.de && l.ate ? `<span class="pa-tl-lic" style="left:${pos(isoBr(l.de))}%;width:${Math.max(0.6, pos(isoBr(l.ate))-pos(isoBr(l.de)))}%" title="licença sem remuneração de ${esc(l.de)} a ${esc(l.ate)}"></span>` : "").join("");
+  const parcelas = (fd.seguros||[]).flatMap(s=>s.parcelas.filter(parcelaRecebida)).map(p=>isoBr(p.pagamento)).filter(Boolean).sort();
+  const seguro = parcelas.length ? bar(parcelas[0], parcelas[parcelas.length-1], "seguro", `${parcelas.length} parcelas`) : `<span class="pa-tl-vazio">nenhum no dossiê</span>`;
+  const qual = !gr ? "" : gr.semLimite ? bar(hj.slice(0,4)+"-01-01", hj, "qual", "sem limite")
+    : bar(comp(gr.ultima) || hj, gr.mantidaAte, "graca", `até ${fmtBarra(gr.mantidaAte)}`)
+      + (gr.complementar ? bar(comp(gr.complementar.comp) || hj, gr.complementar.mantidaAte, "compl", `se complementada, até ${fmtBarra(gr.complementar.mantidaAte)}`) : "");
+  const clin = linhaClinica(c.id).filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x.data||"")).slice(0, 12)
+    .map(x=>pto(x.data, x.tipo==="Internação" ? "intern" : "clin", "")).join("");
+  const peds = (fd.processos||[]).filter(p=>p.entrada).map(p=>pto(isoBr(p.entrada), /indefer/i.test(JSON.stringify(p.comunicacoes||"")) ? "indef" : "ped", curtoMapa(p.servico).slice(0, 34))).join("");
+  const anos = []; for(let y = ini; y <= +hj.slice(0,4)+1; y += (+hj.slice(0,4)+2-ini > 8 ? 2 : 1)) anos.push(y);
+  const linha = (rot, html) => `<div class="pa-tl-linha"><span class="pa-tl-nome">${rot}</span><div class="pa-tl-trilho">${html}</div></div>`;
+  return `<figure class="pa-tl" aria-label="Linha do tempo da qualidade de segurado">
+    <div class="pa-tl-linha pa-tl-eixo"><span class="pa-tl-nome"></span><div class="pa-tl-trilho">${anos.map(y=>`<span style="left:${pos(`${y}-01-01`)}%">${y}</span>`).join("")}
+      <span class="pa-tl-hoje" style="left:${pos(hj)}%">hoje</span></div></div>
+    ${linha("Contribuições", contrib)}${linha("Seguro-desemprego", seguro)}${linha("Qualidade de segurado", qual)}
+    ${linha("Saúde", clin)}${linha("Pedidos ao INSS", peds)}
+    <span class="pa-tl-agora" style="left:calc(116px + (100% - 116px) * ${pos(hj)/100})" aria-hidden="true"></span>
+    <figcaption><span><i class="pa-lg contrib"></i>Contribuição no CNIS</span><span><i class="pa-lg abaixo"></i>Abaixo do mínimo</span>
+      <span><i class="pa-lg lic"></i>Licença sem remuneração, na RAIS</span><span><i class="pa-lg seguro"></i>Parcelas do seguro-desemprego</span>
+      <span><i class="pa-lg graca"></i>Qualidade e graça</span><span><i class="pa-lg compl"></i>Se complementada</span>
+      <span><i class="pa-lg clin"></i>Registro clínico</span><span><i class="pa-lg ped"></i>Pedido ao INSS</span></figcaption>
+  </figure>`;
+}
+function painelPA(c, ks){
+  const d = paDados(c, ks), esc0 = paEscolhidos(c.id, d.trabalhos);
+  const ab = _paBloco.has(c.id) ? _paBloco.get(c.id) : "qual", sel = _paCartao.get(c.id) || "";
+  const dz = c.dossie || {}, ems = Object.values(dz).map(x=>x&&x.em).filter(Boolean).sort(), nDocs = docsDoDossie(c.id).length;
+  const PORT = {meuinss:"Meu INSS", mte:"Emprega Brasil", recursos:"e-Recursos", hc:"HC Ribeirão", redesim:"Redesim"};
+  const inex = [...new Set(Object.values(dz).flatMap(x=>(x&&x.inexistentes)||[]))];
+  const relSel = sel ? new Set(((d.trabalhos.find(t=>t.f.chave===sel)||{}).ramos||[]).flatMap(r=>r.fatos.map(x=>x.grupo))) : null;
+  const pesa = b => !relSel || d.grupos[b].some(x=>relSel.has(x.grupo));
+  const nEsc = d.trabalhos.filter(t=>esc0.has(t.f.chave)).length, nLev = PA_BLOCOS.filter(([b])=>paVai(c.id, b)).length;
+  const cartao = t => { const k = t.f.chave, on = esc0.has(k), [selo, cls] = PA_SELO[t.selo];
+    return `<li><div class="pa-cartao${sel===k?" sel":""}">
+      <button type="button" class="pa-cartao-bt" aria-pressed="${sel===k}" onclick="paCartao('${c.id}','${k}')">
+        <span class="pa-cartao-topo"><span class="pa-selo ${cls}"><i></i>${selo}</span>${t.prazo ? `<span class="pa-cartao-data crit">${esc(curtoMapa(t.prazo.texto).slice(0, 40))}</span>` : ""}</span>
+        <b>${esc(t.f.rot)}${PA_COD[k] ? ` <small>${PA_COD[k]}</small>` : ""}</b>
+        <span>${esc(curtoMapa(t.forte.fatos[0].texto))}</span>
+        ${t.falta.length ? `<span class="pa-falta"><b>Falta</b> ${esc(t.falta.slice(0, 2).join("; ").toLowerCase())}.</span>` : ""}
+      </button>
+      <label class="pa-levar${on?" on":""}"><input type="checkbox" ${on?"checked":""} onchange="paEscolher('${c.id}','${k}')">Levar à Análise de Direito</label>
+    </div></li>`; };
+  const bloco = ([b, rot]) => { const [valor, mono, nota, est] = d.BL[b], vai = paVai(c.id, b);
+    return `<button type="button" class="pa-bloco${ab===b?" aberto":""}${pesa(b)?"":" longe"}" aria-expanded="${ab===b}" onclick="paAbrir('${c.id}','${b}')">
+      <span class="pa-bloco-rot"><i class="pa-bola ${est}"></i>${rot}</span>
+      <span class="pa-bloco-val${mono?" mono":""}${est==="crit"?" crit":""}">${esc(valor)}</span>
+      <span class="pa-bloco-nota">${esc(nota)}</span>
+      <span class="pa-bloco-vai${vai?" on":""}"><i></i>${vai ? "Vai à análise" : "Fora da análise"}</span></button>`; };
+  const fatoLi = x => `<li class="est-${x.est}"><i class="mapa-bola" aria-hidden="true"></i><span>${esc(x.texto)}</span>
+    <span class="dossie-orig">${esc(x.fonte||"")}${x.anexo ? ` · <button type="button" class="adr-link" onclick="abrirAnexo('${x.anexo}')">ver</button>` : ""}</span>
+    ${x.acao ? `<button type="button" class="tl-bt" onclick="${x.acao.js}">${esc(x.acao.rot)}</button>` : ""}</li>`;
+  const det = b => { if(!b) return `<p class="meio-sub pa-det-vazio">Escolha um bloco para ver o detalhe e a fonte de cada dado.</p>`;
+    const rot = PA_BLOCOS.find(x=>x[0]===b)[1], vai = paVai(c.id, b), fs = d.grupos[b];
+    const para = d.trabalhos.filter(t=>esc0.has(t.f.chave) && t.ramos.some(r=>r.fatos.some(x=>fs.includes(x)))).map(t=>t.f.rot);
+    return `<section class="pa-det tela" aria-label="${esc(rot)}">
+      <div class="pa-det-cab"><h4>${esc(rot)}</h4>
+        <span class="pa-det-dir"><span class="meio-sub">${!vai ? "fica só no primeiro atendimento" : para.length ? `vai para ${esc(para.join(", "))}` : "vai à análise"}</span>
+        <button type="button" class="pa-levar-bt${vai?" on":""}" aria-pressed="${vai}" onclick="paLevarBloco('${c.id}','${b}')">${vai ? "Levado à análise" : "Levar à análise"}</button></span></div>
+      ${b==="qual" ? paLinhaDoTempo(c, d) : ""}
+      ${fs.length ? `<ul class="mapa-lista pa-fatos">${fs.map(fatoLi).join("")}</ul>` : `<p class="meio-sub">O dossiê ainda não traz fato para este bloco.</p>`}
+    </section>`; };
+  const passo = (n, rot, sub, cur, js) => `<button type="button" class="pa-passo${cur?" cur":""}" ${cur?'aria-current="step"':""} onclick="${js}"><i>${n}</i><span><b>${rot}</b><small>${esc(sub)}</small></span></button>`;
+  return `<div class="pa">
+    <nav class="pa-passos" aria-label="Passos do atendimento">
+      ${passo("✓", "Identificação", "conferida", false, "irSubCad('identificacao')")}
+      ${passo(2, "Primeiro atendimento", "situação e trabalhos", true, "")}
+      ${passo(3, "Análise de Direito", nEsc ? `${nEsc} ${nEsc===1?"trabalho":"trabalhos"}` : "nenhum trabalho", false, `paIrAnalise('${c.id}')`)}
+      ${passo(4, "Documentos", "pedido, guias e geração", false, "irSubCad('documentos')")}
+    </nav>
+    <div class="pa-cab"><div><h2>Primeiro atendimento</h2>
+      <p>Dossiê baixado em <span class="mono">${ems.length ? esc(fmtBarra(ems[ems.length-1].slice(0,10))) : "—"}</span> · ${nDocs} ${nDocs===1?"documento":"documentos"} · ${esc(Object.keys(dz).map(k=>PORT[k]||k).join(", ")||"nenhum portal")}${inex.length ? `. Os portais informaram que não existem ${esc(inex.slice(0, 4).join(", "))}` : ""}.</p></div>
+      <button type="button" class="btn-mini" onclick="irSubCad('mapa')">Mapa do dossiê</button></div>
+    <div class="pa-corpo">
+      <section class="pa-trab" aria-labelledby="pa-t-trab">
+        <div class="pa-trab-cab"><h3 id="pa-t-trab">Trabalhos possíveis</h3><span class="meio-sub">${d.trabalhos.length} com sinal · por urgência</span></div>
+        <p class="meio-sub">O sinal indica o que os documentos mostram, não o direito. Clique num cartão para destacar, na situação, o que pesa nele.</p>
+        <ul class="pa-legenda"><li><i class="pa-bola crit"></i>Prazo correndo ou requisito em risco</li><li><i class="pa-bola ok"></i>Requisitos à vista</li><li><i class="pa-bola warn"></i>Falta um dado</li></ul>
+        <ol class="pa-cartoes">${d.trabalhos.map(cartao).join("") || `<li class="meio-sub">O dossiê não traz sinal para nenhuma espécie.</li>`}</ol>
+        <div class="pa-levar-box"><p>${nEsc ? `Ao levar: ${nEsc} ${nEsc===1?"trabalho":"trabalhos"} na Análise de Direito. Da situação, ${nLev===6?"os 6 blocos vão":`${nLev} de 6 blocos vão`} junto.` : "Marque ao menos um trabalho para levar à Análise de Direito."}</p>
+          <button type="button" class="pa-prim" ${nEsc?"":"disabled"} onclick="paIrAnalise('${c.id}')">${nEsc>1 ? `Levar ${nEsc} trabalhos à análise` : "Levar à análise"} →</button></div>
+      </section>
+      <section class="pa-sit" aria-labelledby="pa-t-sit">
+        <div class="pa-sit-cab"><h3 id="pa-t-sit">Situação ${({F:"da cliente",M:"do cliente"})[civilDe(c).sexo]||"do cliente"}</h3><span class="meio-sub">o que os documentos dizem, com a fonte de cada dado</span>
+          ${sel ? `<span class="pa-chip">Destacando ${esc((d.trabalhos.find(t=>t.f.chave===sel)||{f:{rot:""}}).f.rot)}<button type="button" aria-label="Mostrar tudo" onclick="paCartao('${c.id}','${sel}')">×</button></span>` : ""}</div>
+        <div class="pa-blocos">${PA_BLOCOS.map(bloco).join("")}</div>
+        <div class="pa-det-caixa">${det(ab)}</div>
+      </section>
+    </div>
+  </div>`;
+}
+function paAbrir(cliId, b){ _paBloco.set(cliId, _paBloco.get(cliId)===b ? "" : b); repintarFicha(); }
+function paCartao(cliId, k){ _paCartao.set(cliId, _paCartao.get(cliId)===k ? "" : k); repintarFicha(); }
+function paEscolher(cliId, k){ const s = _paEsc.get(cliId) || new Set(); s.has(k) ? s.delete(k) : s.add(k); _paEsc.set(cliId, s); repintarFicha(); }
+function paLevarBloco(cliId, b){ const s = new Set(_paForaBl.get(cliId)||[]); s.has(b) ? s.delete(b) : s.add(b); _paForaBl.set(cliId, s); repintarFicha(); }
+// leva à Análise de Direito: o primeiro trabalho marcado abre a espécie, e o
+// texto do contexto leva os blocos marcados, fato a fato, com a fonte
+function paIrAnalise(cliId){
+  const c = D.cliPorId.get(cliId), ks = D.casosDoCliente.get(cliId) || []; if(!c) return;
+  const d = paDados(c, ks), esc0 = paEscolhidos(cliId, d.trabalhos), ts = d.trabalhos.filter(t=>esc0.has(t.f.chave));
+  if(!ts.length) return aviso("Marque ao menos um trabalho");
+  _paAnalise.set(cliId, {trabalhos: ts.map(t=>t.f.chave), atual: ts[0].f.chave});
+  if(ts[0].f.chave) _mapaLente.set(cliId, ts[0].f.chave);
+  adAbrir = true; adVisivel.add(cliId); irSubCad("direito");
+  paAnaliseTrabalho(cliId, ts[0].f.chave, true);
+}
+const _paAnalise = new Map();
+// troca o trabalho da análise: escolhe a espécie e preenche o contexto com os blocos levados
+function paAnaliseTrabalho(cliId, k, primeira){
+  const pa = _paAnalise.get(cliId); if(pa) pa.atual = k;
+  _mapaLente.set(cliId, k);
+  const sel = document.getElementById("ad-esp"), cod = PA_COD[k];
+  if(sel && cod){ sel.value = cod; adTrocarEspecie(); }
+  const c = D.cliPorId.get(cliId), ks = D.casosDoCliente.get(cliId) || [];
+  const d = paDados(c, ks), f = PONTOS_ESPECIE.find(x=>x.chave===k);
+  const el = document.getElementById("ad-contexto");
+  if(el && f){
+    const txt = `Primeiro atendimento, ${f.rot}.\n` + PA_BLOCOS.filter(([b])=>paVai(cliId, b) && d.grupos[b].length)
+      .map(([b, rot])=>`${rot} (${d.BL[b][0]}): ${d.grupos[b].map(x=>x.texto).join("; ")}.`).join("\n");
+    if(primeira || !el.value || /^Primeiro atendimento, /.test(el.value)) el.value = txt;
+  }
+  const ct = d.ct, vazio = (id, v) => { const e = document.getElementById(id); if(e && !e.value && v){ e.value = v; e.dataset.pre = v; } };
+  if(ct){ vazio("ad-f-carencia", `${ct.carencia} contribuições (CNIS, contagem do CRM)`); vazio("ad-f-tempo", `${ct.anos} anos e ${ct.meses} meses (CNIS, por competência)`); }
+  const tz = document.getElementById("ad-trazido"); if(tz) tz.outerHTML = adTrazido(c);
+  document.querySelectorAll(".ad-trab button").forEach(b=>b.setAttribute("aria-current", b.dataset.k===k ? "page" : "false"));
+  adEstados();
+}
 function painelMapa(c, ks){
   const fam = familiaDoMapa(c, ks);
   const lentes = `<div class="mapa-lentes" role="group" aria-label="Espécie do mapa">${PONTOS_ESPECIE.map(f=>
@@ -20283,6 +20596,7 @@ function mapaParaAnalise(cliId){
   const EST = {crit:"prazo ou impedimento", warn:"atenção", ok:"cumprido", pend:"a conferir", info:"informação"};
   const txt = `Mapa do dossiê, ${fam.rot}.\n` + ramosDoMapa(c, ks, fam).ramos.filter(r=>mapaVai(cliId, r.id)).map(r=>`${r.rot} (${EST[r.est]}): `
     + (r.fatos.length ? r.fatos.map(x=>x.texto).join("; ") : "sem fato no dossiê") + (r.resp && r.resp.nota ? `. Anotação: ${r.resp.nota}` : "") + ".").join("\n");
+  _paAnalise.delete(cliId);
   adAbrir = true; adVisivel.add(cliId); irSubCad("direito");
   const ct = ((cnisDe(c)||{}).analise||{}).contagem;
   const ul = fontesDoDossie(cliId).laudos.slice().sort((a,b)=>isoBr(b.exame).localeCompare(isoBr(a.exame)))[0];
