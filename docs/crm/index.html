@@ -3562,7 +3562,12 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .ncl-todos{font-weight:600}
 /* F196 · painel do primeiro atendimento, o desenho aprovado */
 #detalhe.atend-tela{position:fixed;inset:0;z-index:60;max-width:none;width:auto;overflow:auto;background:var(--fundo,#fff);padding:14px 22px}
-.atend-cab{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 8px;font-size:15px}
+.atend-cab{display:flex;align-items:center;gap:12px;margin:0 0 10px;font-size:13px}
+.atend-cab .avatar{width:40px;height:40px;font-size:18px}
+.atend-nome{font-size:20px;font-weight:600}.atend-chip{font-size:11px;padding:2px 8px;border-radius:999px;background:#E6F0EF;color:#0E5C58;vertical-align:middle}
+.atend-dados{margin-top:3px;color:#4A4944}.atend-acoes{margin-left:auto;display:flex;gap:8px}
+.atend-passos{--pa-t:#0E5C58;--pa-c1:#4A4944;--pa-c2:#686660;--pa-b:#E7E6E1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:12px}
+#detalhe.atend-tela .det-topo,#detalhe.atend-tela .painel[data-p="0"] .sub-menu,#detalhe.atend-tela .pa > .pa-passos{display:none!important}
 .ad-datas{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
 .ad-datas button{border:1px solid #E7E6E1;background:#fff;border-radius:10px;padding:8px 12px;font:inherit;cursor:pointer;text-align:left}
 .ad-datas button.on{border-color:#0E5C58;box-shadow:0 0 0 2px rgba(14,92,88,.15)}
@@ -4188,7 +4193,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.28</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.29</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14711,12 +14716,12 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // F206 · a TELA DE ATENDIMENTO: com atendimento aberto, Primeiro atendimento,
   // Mapa, Análise de Direito e Documentos abrem em tela cheia, que se fecha a
   // qualquer tempo (e fechar registra na Análise de Direito o que foi preenchido)
-  const tela = pcsVivos.length>0 && ATEND_SUBS.has(cd);
+  if(pcsVivos.length && ATEND_SUBS.has(cd)) _atendAberto.add(c.id);
+  const tela = pcsVivos.length>0 && (ATEND_SUBS.has(cd) || (cd==="identificacao" && _atendAberto.has(c.id)));
   queueMicrotask(()=>{ const d = document.getElementById("detalhe"); if(d) d.classList.toggle("atend-tela", tela); });
   if(tela) for(const v of Object.keys(vis)) if(v!=="identificacao" && !ATEND_SUBS.has(v)) vis[v] = false;
   return `
-    ${tela ? `<div class="atend-cab"><b>Atendimento · ${esc(c.nome||"")}</b>
-      <button type="button" class="btn-mini" onclick="fecharAtendimento('${c.id}')">Fechar atendimento</button></div>` : ""}
+    ${tela ? cabecalhoAtendimento(c, cd, vis) : ""}
     <div class="sub-menu" style="width:100%">
       ${SUB_CAD.filter(([v])=>vis[v])
         .map(([v,r])=>`<button class="${cd===v?"on":""}" onclick="irSubCad('${v}')">${r}${
@@ -14831,6 +14836,27 @@ const SUB_CAD = [["identificacao","Identificação"],["triagem","Triagem"],
 const SUB_ANOT = [["atendimento","Atendimento"],
                   ["consulta","Consulta"],["mensagens","Mensagens"]];
 let subAnot = ler("crm_subanot") || "atendimento";
+// F208 · o topo da tela de atendimento, como no protótipo: nome, CPF, nascimento
+// e idade, telefone, senha do Meu INSS, WhatsApp e os quatro passos
+function cabecalhoAtendimento(c, cd, vis){
+  const cr = ((D._ficha||{}).creds||[]).find(x=>x.tipo==="meu_inss"), dn = dnIso(c.dn), tel = String(c.telefone||"").replace(/\D/g,"");
+  const zap = (D.zapFicha||[]).length ? `verZapCliente('${c.id}')` : tel ? `window.open('https://wa.me/55${tel}','_blank','noopener')` : "";
+  const passo = (n, v, rot, sub) => vis[v]===false ? "" : `<button type="button" class="pa-passo${cd===v?" cur":""}" ${cd===v?'aria-current="step"':""} onclick="irSubCad('${v}')"><i>${n}</i><span><b>${rot}</b><small>${esc(sub)}</small></span></button>`;
+  return `<div class="atend-cab">
+    <span class="avatar" style="--av:${corDoNome(c.nome)}">${esc((c.nome||"?")[0])}</span>
+    <div class="atend-id"><div><b class="atend-nome">${esc(c.nome||"")}</b> <span class="atend-chip">Modo atendimento</span></div>
+      <div class="atend-dados mono">CPF ${c.cpf ? `<span class="cop" data-cop="${esc(c.cpf)}" data-cop-msg="CPF copiado" title="clique para copiar">${fmtCpf(c.cpf)}</span>` : "—"}
+        ${dn ? `· ${esc(fmt(dn))}, ${idadeDe(c.dn)} anos` : ""} ${c.telefone ? `· ${esc(c.telefone)}` : ""}
+        <span class="meio-sub">${cr ? `· Meu INSS com senha guardada <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button><button class="olho" title="ver (fica registrado)" onclick="verCred('${cr.id}')">👁</button>` : "· Meu INSS sem senha"}</span></div></div>
+    <span class="atend-acoes">${zap ? `<button type="button" class="btn-mini" onclick="${zap}" title="${(D.zapFicha||[]).length ? "ler o histórico do WhatsApp" : "abrir o WhatsApp"}">WhatsApp</button>` : ""}
+      <button type="button" class="btn-mini" onclick="fecharAtendimento('${c.id}')">Sair do modo atendimento</button></span>
+  </div>
+  <nav class="pa-passos atend-passos" aria-label="Passos do atendimento">
+    ${passo("1","identificacao","Identificação","dados do cliente")}${passo("2","pa","Primeiro atendimento","situação e trabalhos")}
+    ${passo("3","direito","Análise de Direito","trabalhos e planejamento")}${passo("4","documentos","Documentos","pedido, guias e geração")}
+  </nav>`;
+}
+const _atendAberto = new Set();
 const ATEND_SUBS = new Set(["pa","mapa","direito","documentos"]);
 // fechar a tela de atendimento: o que foi escrito na Análise de Direito é registrado antes
 async function fecharAtendimento(cliId){
@@ -14843,6 +14869,7 @@ async function fecharAtendimento(cliId){
       await salvarAnalise(cliId);
     }
   }
+  _atendAberto.delete(cliId);
   irSubCad("identificacao");
 }
 function irSubCad(qual){
