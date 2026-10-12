@@ -4176,7 +4176,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.18</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.19</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10329,11 +10329,7 @@ function renderNovoCliente(){
         <select id="ncl-sexo" title="entra no cálculo da data da aposentadoria">
           <option value="">sexo…</option><option value="M">Masculino</option><option value="F">Feminino</option>
         </select>
-        <select id="ncl-civil" title="a procuração e o contrato precisam do estado civil">
-          <option value="">estado civil…</option>
-          ${CAD_CAMPOS.estado_civil.ops.map(([v,r])=>`<option value="${v}">${r}</option>`).join("")}
-        </select>
-        <input id="ncl-prof" placeholder="Profissão" style="flex:1;min-width:140px">
+        <span id="ncl-civprof" class="meio-sub" style="align-self:center" title="o estado civil e a profissão só se preenchem pelo dossiê">Estado civil e profissão vêm do dossiê.</span>
       </div>
       <div class="form-linha">
         <input id="ncl-rua" placeholder="Endereço — comece a digitar a rua (lista de Monte Alto)"
@@ -10435,7 +10431,13 @@ async function nclPreencher(){
   const nomeFicha = cli.nome && !/^Cliente \d{3}\./.test(cli.nome) ? cli.nome : "";
   pre("ncl-nome", nomeFicha || tituloOrgao(dz0.nome||""));
   pre("ncl-dn", dnIso(cli.dn) || dnIso(dz0.nascimento)); mostrarIdadeNovo();
-  pre("ncl-sexo", cv.sexo); pre("ncl-civil", cv.estado_civil || dz0.civil); pre("ncl-prof", cv.profissao || dz0.profissao);
+  pre("ncl-sexo", cv.sexo);
+  // estado civil e profissão só pelo dossiê: não há campo para digitar
+  _ncl.dz = {civil:dz0.civil||"", profissao:dz0.profissao||""};
+  const rotCivil = ((CAD_CAMPOS.estado_civil.ops.find(o=>o[0]===dz0.civil)||[])[1]) || "";
+  document.getElementById("ncl-civprof").textContent = rotCivil || dz0.profissao
+    ? `Do dossiê: ${[rotCivil && `estado civil ${rotCivil}`, dz0.profissao && `profissão ${dz0.profissao}`].filter(Boolean).join(", ")}.`
+    : "Estado civil e profissão vêm do dossiê; ele ainda não os trouxe.";
   const [rua, num] = enderecoArrumado(cv.logradouro, cv.numero);
   pre("ncl-rua", rua); pre("ncl-num", num); if(cv.cidade){ document.getElementById("ncl-cidade").value = tituloOrgao(cv.cidade); }
   if(cv.uf) document.getElementById("ncl-uf").value = cv.uf;
@@ -10663,9 +10665,9 @@ async function criarCliente(){
   // triagem e gera o caso quando sair a procuração com o contrato
   if(especie) campos.precasos=[...(campos.precasos||[]), {id:"pc_"+Date.now().toString(36), especie,
     natureza:"", marc:{}, honorarios:"", quem:eu.id, em:hoje()}];
-  const corpo={campos, sexo:document.getElementById("ncl-sexo").value||null,
-    estado_civil:document.getElementById("ncl-civil").value||null,
-    profissao:document.getElementById("ncl-prof").value.trim()||null};
+  const corpo={campos, sexo:document.getElementById("ncl-sexo").value||null};
+  if((_ncl.dz||{}).civil) corpo.estado_civil = _ncl.dz.civil;
+  if((_ncl.dz||{}).profissao) corpo.profissao = _ncl.dz.profissao;
   if(nome) corpo.nome=nome;
   if(dnIsoV) corpo.dn=fmt(dnIsoV).replace(/\./g,"");
   try{ await api(`/rest/v1/clientes?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}); Object.assign(cli, corpo); }
