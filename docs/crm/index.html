@@ -4193,7 +4193,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.31</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.32</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14513,7 +14513,10 @@ function pintarFicha(){
   </div>`;
 
   document.querySelectorAll(".mt[data-vv]").forEach(el=>el.onclick=()=>{
-    abaAtiva=+el.dataset.vv; repintarFicha();
+    abaAtiva=+el.dataset.vv;
+    // F211 · o Cadastro abre sempre a Identificação normal; a tela cheia só pelo + atendimento
+    if(abaAtiva===0){ _atendAberto.delete(cliId); subCad = "identificacao"; }
+    repintarFicha();
   });
   // com o menu dinâmico o botão Casos pode nem existir (cliente sem caso)
   const btnProc=document.getElementById("btn-processos");
@@ -14705,7 +14708,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // atendimento, o Mapa e a Análise de Direito nascem do "+ atendimento"
   if(!pcsVivos.length){ vis.pa = vis.mapa = false; }
   // F209 · no modo atendimento os quatro passos sempre abrem, e abrem na tela cheia
-  else if(_atendAberto.has(c.id) || ATEND_SUBS.has(subCad)){ vis.direito = vis.documentos = true; }
+  else if(_atendAberto.has(c.id)){ vis.direito = vis.documentos = true; }
   // valores antigos gravados: "atendimento" era o trilho interno de
   // Anotações; "consulta" virou seção do painel Documentos (F31)
   let cd = subCad==="atendimento" ? "anotacoes"
@@ -14718,9 +14721,8 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // F206 · a TELA DE ATENDIMENTO: com atendimento aberto, Primeiro atendimento,
   // Mapa, Análise de Direito e Documentos abrem em tela cheia, que se fecha a
   // qualquer tempo (e fechar registra na Análise de Direito o que foi preenchido)
-  if(pcsVivos.length && ATEND_SUBS.has(cd)) _atendAberto.add(c.id);
-  // só na aba Cadastro: com um caso aberto, a ficha volta ao normal (o topo com as abas não pode sumir)
-  const tela = abaAtiva===0 && pcsVivos.length>0 && (ATEND_SUBS.has(cd) || (cd==="identificacao" && _atendAberto.has(c.id)));
+  // só na aba Cadastro e só depois do + atendimento (ou Abrir atendimento)
+  const tela = abaAtiva===0 && pcsVivos.length>0 && _atendAberto.has(c.id) && (ATEND_SUBS.has(cd) || cd==="identificacao");
   queueMicrotask(()=>{ const d = document.getElementById("detalhe"); if(d) d.classList.toggle("atend-tela", tela); });
   if(tela) for(const v of Object.keys(vis)) if(v!=="identificacao" && !ATEND_SUBS.has(v)) vis[v] = false;
   return `
@@ -14734,7 +14736,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
         title="abrir um atendimento novo — pode virar caso novo ou só lembrete"
         onclick="novoAtendimento('${c.id}')">+ atendimento</button>`
         : !tela ? `<button class="trilho-mais atend-novo" style="align-self:center;margin-left:auto"
-        title="abre a tela do atendimento em curso" onclick="irSubCad('${vis.pa?"pa":"direito"}')">Abrir atendimento</button>` : ""}
+        title="abre a tela do atendimento em curso" onclick="_atendAberto.add('${c.id}');irSubCad('${vis.pa?"pa":"direito"}')">Abrir atendimento</button>` : ""}
     </div>
     ${/* F176 · cliente mantido em Escritório: as três saídas no topo */""}
     ${(cd==="anotacoes"||cd==="direito") && (!ks.some(k=>k.fase!=="encerrado") || ks.some(k=>k.fase==="escritorio") || pcsVivos.length>0)
@@ -30033,6 +30035,7 @@ async function novoPreCaso(cliId){
 // lembrete): abre um pré-caso limpo e leva direto para a mesa
 async function novoAtendimento(cliId){
   await novoPreCaso(cliId);
+  _atendAberto.add(cliId);
   // F205 · com dossiê, o atendimento abre no painel do Primeiro atendimento
   irSubCad(docsDoDossie(cliId).length || cnisDe(D.cliPorId.get(cliId)) ? "pa" : "anotacoes");
 }
