@@ -4176,7 +4176,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.23</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.24</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10358,8 +10358,8 @@ function renderNovoCliente(){
         <span id="ncl-cnis-nome" class="meio-sub"></span>
         <span class="meio-sub">sem o dossiê, o extrato lido aqui fica guardado na ficha</span>
       </div>
-      <div class="form-linha"><button onclick="criarCliente()">Concluir cadastro</button>
-        <button class="btn-mini" onclick="nclRecomecar()">Cadastrar outro cliente</button></div>
+      <div class="form-linha" style="justify-content:space-between"><button class="btn-mini" onclick="_ncl.etapa=1;renderNovoCliente()">Voltar</button>
+        <button onclick="criarCliente()">Concluir cadastro</button></div>
       <p style="font-size:12px;color:var(--cinza);margin-top:8px">O cliente vai à lista Escritório, com a menção a Amanda e Paulo para a triagem, e vira tarefa no To Do na próxima sincronização (título Nome #CPF).</p>
     </div>` : `
     <div class="caso ncl-larga">${passos}
