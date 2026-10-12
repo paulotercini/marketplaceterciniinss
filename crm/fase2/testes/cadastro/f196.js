@@ -117,6 +117,12 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   conf("F206 · com atendimento aberto, o Primeiro atendimento abre em tela cheia, com Fechar atendimento e só as quatro abas",
     await p.evaluate(() => document.getElementById("detalhe").classList.contains("atend-tela") && /Sair do modo atendimento/.test(document.querySelector(".atend-cab").textContent) && getComputedStyle(document.querySelector(".det-topo")).display === "none"
       && [...[...document.querySelectorAll(".sub-menu")].find(m => /Identificação/.test(m.textContent)).querySelectorAll("button:not(.trilho-mais)")].every(b => /Identificação|Primeiro atendimento|Mapa|Análise|Documentos/.test(b.textContent))));
+  conf("F209 · no modo atendimento, Identificação, Análise de Direito e Documentos continuam em tela cheia", await p.evaluate(async () => {
+    const r = [];
+    for (const v of ["identificacao", "direito", "documentos", "pa"]) { irSubCad(v); await new Promise(x => setTimeout(x, 150));
+      r.push(subCad === v && document.getElementById("detalhe").classList.contains("atend-tela") && !!document.querySelector(".atend-cab")); }
+    return r.every(Boolean);
+  }));
   conf("a situação tem os seis blocos do desenho", pa.blocos.join("|").startsWith("Qualidade de segurado|Carência|CNIS e RAIS|CNPJs do titular|Pedidos ao INSS|Planejamento prévio"));
   conf(`os trabalhos possíveis saem do dossiê (${pa.cartoes.join(", ")})`, pa.cartoes.length > 0);
   conf("a carência mostra a contagem do CNIS", /^104 de 180$/.test(pa.car.trim()));

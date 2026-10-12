@@ -4193,7 +4193,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.29</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.30</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14704,6 +14704,8 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // F205 · sem atendimento aberto a ficha mostra só a Identificação: o Primeiro
   // atendimento, o Mapa e a Análise de Direito nascem do "+ atendimento"
   if(!pcsVivos.length){ vis.pa = vis.mapa = false; }
+  // F209 · no modo atendimento os quatro passos sempre abrem, e abrem na tela cheia
+  else if(_atendAberto.has(c.id) || ATEND_SUBS.has(subCad)){ vis.direito = vis.documentos = true; }
   // valores antigos gravados: "atendimento" era o trilho interno de
   // Anotações; "consulta" virou seção do painel Documentos (F31)
   let cd = subCad==="atendimento" ? "anotacoes"
