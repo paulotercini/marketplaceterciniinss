@@ -4176,7 +4176,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.22</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.23</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10455,6 +10455,7 @@ async function nclPreencher(){
   const cv = civilDe(cli), pre = (k, v) => { const e = document.getElementById(k); if(e && v && !e.value) e.value = v; };
   // F202 · a primeira leitura é a do Cadastro (.txt de 4 KB, sem PDF): nome,
   // nascimento, sexo e endereço. O resto do dossiê fica para a Identificação.
+  if(await adotarDossie(id, cli.cpf)) cli.dossie = (D.cliPorId.get(id)||{}).dossie || cli.dossie;
   const docs = (await api(`/rest/v1/anexos?select=nome,caminho,texto&origem=eq.dossie&cliente_id=eq.${id}`).catch(()=>[]) || [])
     .map(a=>({fonte:String(a.nome||"").split(" · ")[0], arq:String(a.nome||"").split(" · ")[1]||"", caminho:a.caminho, texto:a.texto||""}));
   const dc = docs.find(x=>x.fonte==="Cadastro" && /\.txt$/i.test(x.arq));
@@ -14125,13 +14126,35 @@ function fecharEscolha(){
 // ── ficha do cliente ──────────────────────────────────────────────────────
 // F150 · os seis pedidos da ficha, num lugar só: a abertura e o
 // pré-carregamento usam a mesma busca
+// F204 · O DOSSIÊ É DO CPF. A extensão grava cada PDF em dossie/<cpf>/… e, rodada
+// de novo, não troca o dono da linha: a ficha refeita (ou a antiga que perdeu o
+// CPF) ficava com os documentos e a nova, sem nada. Abrir a ficha adota o que é
+// do CPF dela e, se ela não tem o resumo dos portais, traz o da ficha anterior.
+async function adotarDossie(cliId, cpf){
+  cpf = digitosCpf(cpf);
+  if(cpf.length!==11) return 0;
+  const orf = (await todas("anexos", `select=id,cliente_id,caminho&origem=eq.dossie&caminho=like.dossie/${cpf}/*&cliente_id=neq.${cliId}&order=criado_em.desc`).catch(()=>[]))
+    .filter(a=>a.cliente_id!==cliId && String(a.caminho||"").startsWith(`dossie/${cpf}/`));
+  if(!orf.length) return 0;
+  try{ await api(`/rest/v1/anexos?id=in.(${orf.map(a=>a.id).join(",")})`, {method:"PATCH", headers:{Prefer:"return=minimal"}, body:JSON.stringify({cliente_id:cliId})}); }
+  catch(e){ console.warn("dossiê: não adotado", e); return 0; }
+  const c = D.cliPorId.get(cliId);
+  if(c && !Object.keys(c.dossie||{}).length){
+    const [ant] = await api(`/rest/v1/clientes?select=dossie&id=eq.${orf[0].cliente_id}`).catch(()=>[]) || [];
+    if(ant && ant.dossie && Object.keys(ant.dossie).length){
+      await api(`/rest/v1/clientes?id=eq.${cliId}`, {method:"PATCH", headers:{Prefer:"return=minimal"}, body:JSON.stringify({dossie:ant.dossie})}).catch(()=>{});
+      c.dossie = ant.dossie;
+    }
+  }
+  return orf.length;
+}
 function buscarFicha(cliId, ids){
   return Promise.all([
       ids?todas("andamentos",`select=*,andamentos_lidos(colaborador_id,lido_em)&caso_id=in.(${ids})&order=criado_em.desc`)
           .catch(()=>todas("andamentos",`select=*&caso_id=in.(${ids})&order=criado_em.desc`).catch(()=>[])):[],
       todas("credenciais",`select=id,tipo,cliente_id&cliente_id=eq.${cliId}`).catch(()=>[]),
       todas("vinculos",`select=*&or=(cliente_id.eq.${cliId},ligado_a.eq.${cliId})`).catch(()=>[]),
-      todas("anexos",`select=*&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
+      adotarDossie(cliId, (D.cliPorId.get(cliId)||{}).cpf).then(()=>todas("anexos",`select=*&cliente_id=eq.${cliId}&order=criado_em.desc`)).catch(()=>[]),
       todas("conversas",`select=criado_em,texto,de_cliente&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
       ids?todas("andamento_tarefas",`select=*&caso_id=in.(${ids})`).catch(()=>[]):[],
       // a conversa é de um cliente só, mas quem cuida do benefício de outro

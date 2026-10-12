@@ -109,6 +109,8 @@ ramo é um ponto da triagem, a nota do ramo é a nota da triagem e vai à Análi
 fonte e o botão "ver"; o que muda o caso (DCB, prazo, perícia, desemprego) só com clique e gera andamento
 com a fonte. `clientes.dossie.<portal>.inexistentes` é fato negativo; `.em`, a idade do dossiê.
 
+A ficha **adota o dossiê do seu CPF** (`adotarDossie`, F204): ao abrir a ficha ou a etapa 2, os anexos `dossie/<cpf>/…` presos a outra ficha (refeita ou sem CPF) passam a ela, e o resumo `clientes.dossie` da ficha anterior vem junto quando ela não tem o seu, porque a extensão, rodada de novo, não troca o dono da linha.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
