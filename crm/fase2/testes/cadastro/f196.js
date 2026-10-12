@@ -123,6 +123,11 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
       r.push(subCad === v && document.getElementById("detalhe").classList.contains("atend-tela") && !!document.querySelector(".atend-cab")); }
     return r.every(Boolean);
   }));
+  conf("F210 · ao ir para um caso, a tela cheia sai e o topo da ficha volta", await p.evaluate(async () => {
+    abaAtiva = 2; repintarFicha(); await new Promise(x => setTimeout(x, 150));
+    const ok = !document.getElementById("detalhe").classList.contains("atend-tela") && getComputedStyle(document.querySelector(".det-topo")).display !== "none";
+    abaAtiva = 0; irSubCad("pa"); await new Promise(x => setTimeout(x, 150)); return ok;
+  }));
   conf("a situação tem os seis blocos do desenho", pa.blocos.join("|").startsWith("Qualidade de segurado|Carência|CNIS e RAIS|CNPJs do titular|Pedidos ao INSS|Planejamento prévio"));
   conf(`os trabalhos possíveis saem do dossiê (${pa.cartoes.join(", ")})`, pa.cartoes.length > 0);
   conf("a carência mostra a contagem do CNIS", /^104 de 180$/.test(pa.car.trim()));
