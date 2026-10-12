@@ -56,6 +56,17 @@ cada PDF também é anexado ao cliente (origem `dossie`).
    botão → a extensão abre "Minhas Empresas" e pede: **clique em PESQUISAR** (o portal exige hCaptcha, que
    só o seu clique gera). A lista de CNPJs vinculados ao CPF é gravada em `CNPJ\` como `.txt`.
 
+**🗂 Abrir todos os portais** (desde 0.8.3): abre em abas os cinco portais que faltarem, para você entrar em
+cada um (gov.br; HC com o login do paciente). Depois, **🔁 Rodar todos os portais**.
+
+**🔁 Rodar todos os portais** (desde 0.8.0): um clique percorre Meu INSS → e-Recursos → Emprega Brasil →
+HC → Redesim, cada um na sua aba. Usa a aba que já está aberta (é onde está o login); abre as do gov.br
+que faltarem (Meu INSS, e-Recursos, Redesim); Emprega Brasil e HC só rodam se a aba logada já estiver
+aberta, porque o login deles é por aba/portal. Portal sem login responde "sem sessão" e a rodada segue.
+No fim a Redesim vem para a frente: é onde sobra o seu clique em PESQUISAR. O relato da rodada aparece
+no popup. Para o menor número de cliques: entre no gov.br pelo Meu INSS, abra o Emprega Brasil e o HC
+já logados, e clique em Rodar.
+
 O progresso aparece na faixa azul no rodapé da página; no fim ela diz o que veio e o que faltou.
 
 ## O que ela não faz
