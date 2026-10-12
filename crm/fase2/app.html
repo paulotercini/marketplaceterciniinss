@@ -3569,6 +3569,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .pa-passo span{display:flex;flex-direction:column}.pa-passo b{font-size:13.5px;font-weight:600;color:#121212}.pa-passo small{font-size:11.5px;color:var(--pa-c2)}
 .pa-passo.cur{border-bottom-color:var(--pa-t)}.pa-passo.cur i{background:var(--pa-t);border-color:var(--pa-t);color:#fff}
 .pa-passo:first-child{border-bottom-color:#B5D3CF}.pa-passo:first-child i{border-color:var(--pa-t);color:var(--pa-t)}
+.pa-nome-dif{margin:0 0 12px;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--vermelho,#c0392b) 10%,transparent);border:1px solid color-mix(in srgb,var(--vermelho,#c0392b) 35%,transparent);font-size:13px}
 .pa-cab{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px}
 .pa-cab h2{margin:0;font-family:'Zilla Slab',Georgia,serif;font-weight:600;font-size:22px}.pa-cab p{margin:4px 0 0;color:var(--pa-c1)}
 .pa-corpo{display:flex;flex-wrap:wrap;align-items:flex-start;gap:20px;margin-top:18px}
@@ -4175,7 +4176,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.16</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.17</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10326,7 +10327,7 @@ function renderNovoCliente(){
         <input id="ncl-dn" type="date" title="data de nascimento" onchange="mostrarIdadeNovo()"><span id="ncl-idade" class="meio-sub"></span></div>
       <div class="form-linha">
         <select id="ncl-sexo" title="entra no cálculo da data da aposentadoria">
-          <option value="">sexo…</option><option value="F">Mulher</option><option value="M">Homem</option>
+          <option value="">sexo…</option><option value="M">Masculino</option><option value="F">Feminino</option>
         </select>
         <select id="ncl-civil" title="a procuração e o contrato precisam do estado civil">
           <option value="">estado civil…</option>
@@ -10371,9 +10372,11 @@ function renderNovoCliente(){
         <input id="ncl-cpf" placeholder="CPF (só números) *" maxlength="14" oninput="conferirCpfNovo()">
         <input id="ncl-senha" placeholder="Senha Meu INSS" autocomplete="off"
           title="fica guardada com registro de quem copia ou vê, como na ficha">
-        <input id="ncl-tel" placeholder="Telefone/WhatsApp">
+        <button type="button" class="btn-mini" onclick="nclSenhaPadrao()" title="preenche a senha padrão do escritório, guardada neste computador">Senha padrão</button>
+        <input id="ncl-tel" placeholder="Telefone/WhatsApp" value="(16) " oninput="nclConferirTel()" title="o DDD 16 é o padrão do escritório; troque-o se o número for de outra região">
       </div>
       <p id="ncl-cpf-recado" class="meio-sub" style="margin:0 0 6px"></p>
+      <p id="ncl-tel-recado" class="meio-sub" style="margin:0 0 6px;color:var(--vermelho,#c0392b)"></p>
       <div class="ncl-dossie">
         <b>Baixe o dossiê:</b> com o gov.br do segurado logado, clique para abrir cada portal numa guia nova e rode a extensão
         do dossiê (🔁 Rodar todos os portais). O dossiê traz CNIS, RAIS, CAGED, seguro-desemprego, pedidos, laudos, exames e CNPJs, e a etapa 2 vira só conferência.
@@ -10381,7 +10384,7 @@ function renderNovoCliente(){
           `<a class="cad-mini ncl-portal" href="${u}" target="_blank" rel="noopener" onclick="return nclPortal()">Abrir ${r}</a>`).join("")}</div>
         <span class="meio-sub" id="ncl-ficha-recado">${_ncl.id ? "Ficha criada ✔ — o dossiê baixado agora se prende a ela." : "O primeiro portal aberto já cria a ficha pelo CPF, para o dossiê se prender a ela. Sem a senha do gov.br, siga direto para a etapa 2."}</span>
       </div>
-      <div class="form-linha"><button onclick="nclEtapa1()">Gravar e seguir para a etapa 2</button></div>
+      <div class="form-linha" style="justify-content:flex-end"><button onclick="nclEtapa1()">Gravar e seguir para a etapa 2</button></div>
     </div>`;
   if(e2) nclPreencher();
 }
@@ -10551,6 +10554,21 @@ function nclPortal(){
 }
 // um clique abre as quatro guias; o navegador só deixa a primeira abrir sem a
 // permissão de pop-up do CRM, e o recado diz como dar essa permissão uma vez
+// a senha padrão não vai no código, porque o CRM é publicado em página pública:
+// fica guardada no computador de quem a digitou uma vez.
+// shortcut: guardada por navegador, e não no banco; troca-se com esquecer("crm_senha_padrao") no console.
+// celular começa com 9 e tem nove dígitos depois do DDD
+function telRecado(t){
+  const n = String(t||"").replace(/\D/g,"").slice(2);
+  return n.startsWith("9") && n.length!==9 ? `O número começa com 9, que é de celular, e tem ${n.length} ${n.length===1?"dígito":"dígitos"} depois do DDD; o celular tem 9.` : "";
+}
+function nclConferirTel(){ document.getElementById("ncl-tel-recado").textContent = telRecado(document.getElementById("ncl-tel").value); }
+function nclSenhaPadrao(){
+  const i = document.getElementById("ncl-senha"), r = document.getElementById("ncl-cpf-recado"), p = ler("crm_senha_padrao");
+  if(p){ i.value = p; r.textContent = "Senha padrão preenchida."; return; }
+  if(!i.value.trim()){ r.textContent = "Digite a senha padrão no campo e clique de novo: ela fica guardada neste computador."; i.focus(); return; }
+  guardar("crm_senha_padrao", i.value.trim()); r.textContent = "Senha padrão guardada neste computador; o próximo clique já a preenche.";
+}
 function nclTodosPortais(){
   if(!nclPortal()) return;
   const abertas = NCL_PORTAIS.map(([, u])=>window.open(u, "_blank", "noopener")).filter(Boolean).length;
@@ -10574,7 +10592,7 @@ async function nclEtapa1(seguir=true){
   if(jaTem) return avisoCpfRepetido(jaTem, nome);
   const campos={atendimento:[{em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], texto:"Cliente cadastrado na recepção."}]};
   const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({nome: nome || `Cliente ${fmtCpf(cpf)}`, cpf, telefone:document.getElementById("ncl-tel").value.trim()||null, campos})});
+    body:JSON.stringify({nome: nome || `Cliente ${fmtCpf(cpf)}`, cpf, telefone:(t => t.replace(/\D/g,"").length > 2 ? t : null)(document.getElementById("ncl-tel").value.trim()), campos})});
   D.clientes.push(cli); D.cliPorId.set(cli.id, cli);
   // a senha do Meu INSS entra pelo MESMO caminho da ficha (credenciais,
   // com registro de quem copia ou vê)
@@ -15954,6 +15972,7 @@ async function gravarCnisLido(cliId, lido, anexo, opc={}){
     analise:an,
     // a base do § 1º do art. 15: contribuições seguidas, sem perda da qualidade
     contribSemPerda: contarSemPerda(mesesDoCnisLido(lido.linhaDoTempo, an.abaixo)),
+    nome: (lido.filiado||{}).nome || "",
     anexo_id: anexo ? anexo.id : ((t.pdf||{}).cnis||{}).anexo_id || null,
     caminho:  anexo ? anexo.caminho : ((t.pdf||{}).cnis||{}).caminho || null}};
   // as respostas pré-prontas: só onde ninguém respondeu à mão
@@ -20507,6 +20526,22 @@ function paLinhaDoTempo(c, d){
       <span><i class="pa-lg clin"></i>Registro clínico</span><span><i class="pa-lg ped"></i>Pedido ao INSS</span></figcaption>
   </figure>`;
 }
+// o nome do titular no CNIS: o gravado na leitura e, nas fichas lidas antes de
+// ele ser gravado, o do texto do CNIS baixado pelo dossiê
+function nomeDoCnis(c){
+  const n = (cnisDe(c)||{}).nome; if(n) return n;
+  const a = docsDoDossie(c.id).find(x=>/^CNIS\b/i.test(x.nome||"") && x.texto);
+  const m = a && a.texto.match(/Nome:\s*(.+?)\s*$/m);
+  return m ? m[1] : "";
+}
+const nomeIgual = (a, b) => { const n = s => dsa(s).replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim(); return n(a)===n(b); };
+async function usarNomeCnis(cliId){
+  const c = D.cliPorId.get(cliId), v = c && nomeDoCnis(c).trim(); if(!v) return;
+  try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({nome:v})}); }
+  catch(e){ return aviso("Não consegui guardar — tente de novo"); }
+  c.nome = v; reindexarCliente(c); aviso("Nome atualizado pelo CNIS ✔");
+  montarSidebar(); abrirFicha(cliId); irSubCad("pa");
+}
 function painelPA(c, ks){
   const d = paDados(c, ks), esc0 = paEscolhidos(c.id, d.trabalhos);
   const ab = _paBloco.has(c.id) ? _paBloco.get(c.id) : "qual", sel = _paCartao.get(c.id) || "";
@@ -20556,6 +20591,7 @@ function painelPA(c, ks){
     <div class="pa-cab"><div><h2>Primeiro atendimento</h2>
       <p>Dossiê baixado em <span class="mono">${ems.length ? esc(fmtBarra(ems[ems.length-1].slice(0,10))) : "—"}</span> · ${nDocs} ${nDocs===1?"documento":"documentos"} · ${esc(Object.keys(dz).map(k=>PORT[k]||k).join(", ")||"nenhum portal")}${inex.length ? `. Os portais informaram que não existem ${esc(inex.slice(0, 4).join(", "))}` : ""}.</p></div>
       <button type="button" class="btn-mini" onclick="irSubCad('mapa')">Mapa do dossiê</button></div>
+    ${(n => n && !nomeIgual(n, c.nome) ? `<p class="pa-nome-dif" role="alert"><b>Nome diferente do CNIS.</b> No CRM consta <b>${esc(c.nome||"")}</b>, e no CNIS consta <b>${esc(n)}</b>. <button type="button" class="btn-mini" onclick="usarNomeCnis('${c.id}')">Usar o nome do CNIS</button></p>` : "")(nomeDoCnis(c))}
     <div class="pa-corpo">
       <section class="pa-trab" aria-labelledby="pa-t-trab">
         <div class="pa-trab-cab"><h3 id="pa-t-trab">Trabalhos possíveis</h3><span class="meio-sub">${d.trabalhos.length} com sinal · por urgência</span></div>
