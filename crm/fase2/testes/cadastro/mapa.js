@@ -36,7 +36,7 @@ const CNIS = { em: "2026-10-10", paginas: 4, qtVinculos: 1, nits: [], indicadore
   analise: { abertos: [], errosEmp: [], abaixo: [{ comp: "03/2024", valor: 1000, minimo: 1412, tipo: "Contribuinte individual", origem: "" }],
     mesAnt: comp(-1), agora: { tipo: "empregado", aberto: true, origem: "FABRICA FICTICIA", desde: "01/02/2020", ultRemun: comp(-1) },
     benefAtivos: [], qtComps: 130 } };
-FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725", dossie: {}, triagem: { pdf: { cnis: CNIS } } };
+FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725", dossie: {}, triagem: { pdf: { cnis: CNIS } }, campos: { ...(FIX.clientes[0].campos || {}), precasos: [{ id: "pc_m", especie: "", marc: {}, em: "2026-10-12" }] } };
 FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária", beneficio: "Auxílio por incapacidade temporária",
   especie: "B31", nb: NB, dcb: null, prazo: null };
 

@@ -3561,7 +3561,13 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .ncl-portal{display:inline-flex;align-items:center;text-decoration:none}
 .ncl-todos{font-weight:600}
 /* F196 · painel do primeiro atendimento, o desenho aprovado */
-.pa{--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-warn:#8F5400;--pa-ok:#1B6E38;--pa-info:#3A6491;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660;color:#121212;font-size:13px;line-height:1.45}
+#detalhe.atend-tela{position:fixed;inset:0;z-index:60;max-width:none;width:auto;overflow:auto;background:var(--fundo,#fff);padding:14px 22px}
+.atend-cab{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 8px;font-size:15px}
+.ad-datas{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.ad-datas button{border:1px solid #E7E6E1;background:#fff;border-radius:10px;padding:8px 12px;font:inherit;cursor:pointer;text-align:left}
+.ad-datas button.on{border-color:#0E5C58;box-shadow:0 0 0 2px rgba(14,92,88,.15)}
+.ad-datas small{display:block;color:#686660}
+.pa{background:#F3F2EE;padding:18px;border-radius:14px;--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-warn:#8F5400;--pa-ok:#1B6E38;--pa-info:#3A6491;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660;color:#121212;font-size:13px;line-height:1.45}
 .pa .mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-weight:500}
 .pa-passos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--pa-b);margin-bottom:14px}
 .pa-passo{display:flex;align-items:center;gap:10px;padding:10px 4px 12px;border:0;border-bottom:3px solid #E7E6E1;background:none;text-align:left;cursor:pointer;font:inherit;color:var(--pa-c1)}
@@ -3581,6 +3587,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .pa-bola{display:inline-block;flex:none;width:8px;height:8px;border-radius:50%;background:#CFCDC6}
 .pa-bola.crit{background:var(--pa-crit)}.pa-bola.warn,.pa-bola.pend{background:var(--pa-warn)}.pa-bola.ok{background:var(--pa-ok)}.pa-bola.info{background:var(--pa-info)}
 .pa-cartoes{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.pa-det,.pa-passos,.pa-tl{background:#fff;border-radius:10px}
 .pa-cartao{background:#fff;border:1px solid var(--pa-b);border-radius:10px;overflow:hidden;transition:box-shadow 180ms ease,border-color 160ms ease}
 .pa-cartao.sel{border-color:var(--pa-t);box-shadow:0 0 0 1px var(--pa-t),0 8px 20px rgba(18,18,18,.07)}
 .pa-cartao-bt{width:100%;text-align:left;background:none;border:0;padding:12px 14px 10px;display:flex;flex-direction:column;gap:6px;font:inherit;color:#121212;cursor:pointer}
@@ -4176,7 +4183,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.25</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.27</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14255,6 +14262,7 @@ function repintarFicha(){
   else if(clienteAberto) abrirFicha(clienteAberto);
 }
 function pintarFicha(){
+  { const d = document.getElementById("detalhe"); if(d) d.classList.remove("atend-tela"); }   // F206 · o Cadastro religa
   respondeA=null;               // repintou = o chip de resposta se foi com o DOM
   atQuem=[];                    // e a seleção de responsáveis da anotação também
   const cliId = clienteAberto;
@@ -14367,7 +14375,6 @@ function pintarFicha(){
            a primeira — é assim que o histórico começa a existir */""}
       ${/* F171 · a Análise de Direito mudou-se para dentro do Cadastro */""}
       ${/* F127 · o CNIS abre em outra aba de qualquer lugar da ficha */""}
-      ${cnisDe(c)&&cnisDe(c).caminho?`<button class="mt" onclick="abrirCnis('${cliId}')" title="abre o extrato guardado em outra aba">Abrir CNIS ↗</button>`:""}
       ${/* o menu tem só as cinco divisões do cliente (pedido do Paulo):
            Cadastro, Lembretes, Casos, Perícias e Honorários. O caso escolhido
            aparece no cartão de fatos, não no rótulo da aba. */""}
@@ -14684,6 +14691,9 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // onda 2b · o mapa existe quando há o que mapear: documento do dossiê ou CNIS lido
   vis.mapa = docsDoDossie(c.id).length>0 || !!cnisDe(c);
   vis.pa = vis.mapa;   // F196 · o painel do primeiro atendimento lê o mesmo dossiê
+  // F205 · sem atendimento aberto a ficha mostra só a Identificação: o Primeiro
+  // atendimento, o Mapa e a Análise de Direito nascem do "+ atendimento"
+  if(!pcsVivos.length){ vis.pa = vis.mapa = false; }
   // valores antigos gravados: "atendimento" era o trilho interno de
   // Anotações; "consulta" virou seção do painel Documentos (F31)
   let cd = subCad==="atendimento" ? "anotacoes"
@@ -14693,15 +14703,25 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   if(!vis[cd]) cd = cd==="triagem" ? (vis.anotacoes?"anotacoes":"identificacao")
               : cd==="anotacoes" ? (vis.triagem?"triagem":"identificacao")
               : "identificacao";
+  // F206 · a TELA DE ATENDIMENTO: com atendimento aberto, Primeiro atendimento,
+  // Mapa, Análise de Direito e Documentos abrem em tela cheia, que se fecha a
+  // qualquer tempo (e fechar registra na Análise de Direito o que foi preenchido)
+  const tela = pcsVivos.length>0 && ATEND_SUBS.has(cd);
+  queueMicrotask(()=>{ const d = document.getElementById("detalhe"); if(d) d.classList.toggle("atend-tela", tela); });
+  if(tela) for(const v of Object.keys(vis)) if(v!=="identificacao" && !ATEND_SUBS.has(v)) vis[v] = false;
   return `
+    ${tela ? `<div class="atend-cab"><b>Atendimento · ${esc(c.nome||"")}</b>
+      <button type="button" class="btn-mini" onclick="fecharAtendimento('${c.id}')">Fechar atendimento</button></div>` : ""}
     <div class="sub-menu" style="width:100%">
       ${SUB_CAD.filter(([v])=>vis[v])
         .map(([v,r])=>`<button class="${cd===v?"on":""}" onclick="irSubCad('${v}')">${r}${
         v==="direito"&&analisesDe(c.id).length?` (${analisesDe(c.id).length})`:""}${
         v==="anotacoes"&&semCaso?` <span class="meio-sub">•</span>`:""}</button>`).join("")}
-      ${!pcsVivos.length ? `<button class="trilho-mais atend-novo" style="align-self:center"
+      ${!pcsVivos.length ? `<button class="trilho-mais atend-novo" style="align-self:center;margin-left:auto"
         title="abrir um atendimento novo — pode virar caso novo ou só lembrete"
-        onclick="novoAtendimento('${c.id}')">+ atendimento</button>` : ""}
+        onclick="novoAtendimento('${c.id}')">+ atendimento</button>`
+        : !tela ? `<button class="trilho-mais atend-novo" style="align-self:center;margin-left:auto"
+        title="abre a tela do atendimento em curso" onclick="irSubCad('${vis.pa?"pa":"direito"}')">Abrir atendimento</button>` : ""}
     </div>
     ${/* F176 · cliente mantido em Escritório: as três saídas no topo */""}
     ${(cd==="anotacoes"||cd==="direito") && (!ks.some(k=>k.fase!=="encerrado") || ks.some(k=>k.fase==="escritorio") || pcsVivos.length>0)
@@ -14806,6 +14826,20 @@ const SUB_CAD = [["identificacao","Identificação"],["triagem","Triagem"],
 const SUB_ANOT = [["atendimento","Atendimento"],
                   ["consulta","Consulta"],["mensagens","Mensagens"]];
 let subAnot = ler("crm_subanot") || "atendimento";
+const ATEND_SUBS = new Set(["pa","mapa","direito","documentos"]);
+// fechar a tela de atendimento: o que foi escrito na Análise de Direito é registrado antes
+async function fecharAtendimento(cliId){
+  const ctx = document.getElementById("ad-contexto");
+  if(ctx){
+    const cen = [...document.querySelectorAll("#ad-cens .ad-row")].some(r=>[...r.querySelectorAll("input,select,textarea")].some(e=>e.type!=="radio" && String(e.value||"").trim()));
+    const det = Object.keys(adColherDetalhes()).some(k=>k!=="servico");
+    if(ctx.value.trim() || cen || det){
+      const d = document.getElementById("ad-data"); if(d && !d.value) d.value = hoje();
+      await salvarAnalise(cliId);
+    }
+  }
+  irSubCad("identificacao");
+}
 function irSubCad(qual){
   if(qual==="atendimento") qual="anotacoes";   // nome antigo do trilho interno
   if(qual==="consulta") qual="documentos";     // F31: a Consulta mora em Documentos
@@ -19392,6 +19426,7 @@ function pendenciasDireito(c){
       <span><b>${esc(i.nome)}</b> <span class="sr-so">${i.ok?"(entregue)":"(falta)"}</span><br>${i.ir?`<button type="button" class="adr-link" onclick="irSubCad('${i.ir}')">${esc(i.sub)}</button>`:`<span class="adr-sub">${esc(i.sub)}</span>`}</span></li>`).join("")}</ul>
   </section>`;
 }
+const _adSel = new Map();
 function painelDireito(c){
   if(D.analises===null)
     return `<p class="meio-sub">A tabela desta página ainda não existe no banco — rode o
@@ -19402,7 +19437,11 @@ function painelDireito(c){
   for(const l of (D.lembretes||[]).filter(x=>x.cliente_id===c.id && x.tipo==="aposentadoria_futura"))
     ((l.detalhes||{}).anotacoes||[]).forEach((n,i)=>{ if(!n.analise_id) notas.push({...n, lembId:l.id, i}); });
   const plano=planejamentoDireito(c, ult);
-  const anteriores=as.slice(1);
+  // F206 · mais de uma análise: as datas em quadrados, e o clique mostra aquela análise inteira
+  const sel = as.find(a=>a.id===_adSel.get(c.id)) || ult;
+  const datas = as.length>1 ? `<nav class="ad-datas" aria-label="Análises de Direito">${as.map(a=>`<button type="button" class="${a===sel?"on":""}"
+    aria-pressed="${a===sel}" onclick="_adSel.set('${c.id}','${a.id}');repintarFicha()">${esc(fmt(a.data_analise))}<small>${esc(a.fonte||"manual")}</small></button>`).join("")}</nav>` : "";
+  const anteriores = datas ? [] : as.slice(1);
   return `<div class="adr">
     <div class="ad-topo">${faixaDoCaso(ks)}
       <span class="ad-topo-fim">${chipParceria(c, ks)}
@@ -19412,7 +19451,8 @@ function painelDireito(c){
         :`<button type="button" class="tl-bt tl-falta" onclick="irSubCad('identificacao')" title="o CNIS ainda não foi inserido: insira na Identificação">Inserir CNIS</button>`}</span>
     </div>
     ${resumoDireito(c, ult)}
-    ${ult ? fichaDaAnalise(ult) : ""}
+    ${datas}
+    ${sel ? fichaDaAnalise(sel) : ""}
     ${formAnalise(c)}
     ${ult ? regrasDireito(ult) : ""}
     <div class="adr-colunas">
@@ -26978,6 +27018,7 @@ function dataNatural(texto){
 }
 
 function fecharFicha(rerender=true){
+  { const d = document.getElementById("detalhe"); if(d) d.classList.remove("atend-tela"); }
   clienteAberto=null; abaAtiva=2;
   menuFichaSessao=null;   // a exceção do ☰ morre com a ficha
   document.getElementById("app").classList.remove("detalhe-aberto","ficha-tudo");
@@ -29931,7 +29972,8 @@ async function novoPreCaso(cliId){
 // lembrete): abre um pré-caso limpo e leva direto para a mesa
 async function novoAtendimento(cliId){
   await novoPreCaso(cliId);
-  irSubCad("anotacoes");
+  // F205 · com dossiê, o atendimento abre no painel do Primeiro atendimento
+  irSubCad(docsDoDossie(cliId).length || cnisDe(D.cliPorId.get(cliId)) ? "pa" : "anotacoes");
 }
 
 // ══════════════════════════════════════════════════════════════════════════

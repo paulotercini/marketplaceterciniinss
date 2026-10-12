@@ -21,7 +21,7 @@ FIX.anexos = [
   AN(3, "HC Ribeirao/Internacoes · Internacao 11-05-2024 - 22-06-2024 UE.pdf", HC_AIH_TEXTO),
   AN(4, "HC Ribeirao/Exames · 10-01-2025 RESSONANCIA MAGNETICA - JOELHO.pdf", null),
 ];
-FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725", dossie: {} };
+FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725", dossie: {}, campos: { ...(FIX.clientes[0].campos || {}), precasos: [{ id: "pc_m", especie: "", marc: {}, em: "2026-10-12" }] } };
 FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária", beneficio: "Auxílio por incapacidade temporária", especie: "B31", nb: null };
 
 (async () => {
