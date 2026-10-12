@@ -114,6 +114,19 @@ FIX.clientes[0] = { ...FIX.clientes[0], dossie: {} };
   await p.waitForTimeout(200);
   conf("o pedido ao Claude leva as três chaves do dossiê", await p.evaluate(() => _docsClaude && _docsClaude.chaves.length === 3));
 
+  const adota = await p.evaluate(async () => {
+    const api0 = api, todas0 = todas, chamadas = [], cid = "c0000000-0000-0000-0000-0000000adota";
+    D.cliPorId.set(cid, { id: cid, cpf: "529.982.247-25", dossie: null });
+    todas = async (t, f) => { chamadas.push("GET " + t + "?" + f); return t === "anexos" ? [{ id: "x1", cliente_id: "velha", caminho: "dossie/52998224725/CNIS/a.pdf" }, { id: "x2", cliente_id: "velha", caminho: "dossie/52998224725/Laudos/b.pdf" }] : []; };
+    api = async (u, o) => { chamadas.push((o && o.method || "GET") + " " + u + (o && o.body ? " " + o.body : ""));
+      return /select=dossie/.test(u) ? [{ dossie: { meuinss: { em: "2026-10-12" } } }] : null; };
+    try { const n = await adotarDossie(cid, "529.982.247-25"); return { n, chamadas, dz: D.cliPorId.get(cid).dossie }; }
+    finally { api = api0; todas = todas0; D.cliPorId.delete(cid); }
+  });
+  conf("F204 · a ficha adota os PDFs do dossiê do seu CPF presos a uma ficha anterior, e o resumo dos portais",
+    adota.n === 2 && adota.chamadas.some(c => /caminho=like\.dossie\/52998224725\/\*/.test(c))
+    && adota.chamadas.some(c => /PATCH \/rest\/v1\/anexos\?id=in\.\(x1,x2\).*cliente_id/.test(c)) && adota.dz && adota.dz.meuinss);
+  conf("F204 · sem CPF não adota nada", await p.evaluate(() => adotarDossie("qualquer", "")) === 0);
   for (const [nome, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${nome}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);
   const falhas = ok.filter(([, v]) => !v).length + erros.length;
