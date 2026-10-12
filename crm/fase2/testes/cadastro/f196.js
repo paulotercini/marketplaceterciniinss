@@ -133,6 +133,18 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
     const ok = subCad === "identificacao" && !document.getElementById("detalhe").classList.contains("atend-tela");
     _atendAberto.add(clienteAberto); irSubCad("pa"); await new Promise(x => setTimeout(x, 150)); return ok;
   }));
+  conf("F212 · Sair do modo atendimento sai da tela cheia, de qualquer passo", await p.evaluate(async () => {
+    const r = [];
+    for (const v of ["pa", "direito", "documentos", "identificacao"]) {
+      _atendAberto.add(clienteAberto); irSubCad(v); await new Promise(x => setTimeout(x, 150));
+      const bt = [...document.querySelectorAll(".atend-cab button")].find(b => /Sair do modo/.test(b.textContent));
+      if (!bt) { r.push(v + ":sem botão"); continue; }
+      bt.click(); await new Promise(x => setTimeout(x, 400));
+      r.push(document.getElementById("detalhe").classList.contains("atend-tela") ? v + ":ficou" : "ok");
+    }
+    window.__sair = r.join(","); _atendAberto.add(clienteAberto); irSubCad("pa"); await new Promise(x => setTimeout(x, 150));
+    return r.every(x => x === "ok");
+  }));
   conf("a situação tem os seis blocos do desenho", pa.blocos.join("|").startsWith("Qualidade de segurado|Carência|CNIS e RAIS|CNPJs do titular|Pedidos ao INSS|Planejamento prévio"));
   conf(`os trabalhos possíveis saem do dossiê (${pa.cartoes.join(", ")})`, pa.cartoes.length > 0);
   conf("a carência mostra a contagem do CNIS", /^104 de 180$/.test(pa.car.trim()));
