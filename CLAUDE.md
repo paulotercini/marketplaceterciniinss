@@ -28,10 +28,10 @@ A fonte de dados dos geradores é o **Microsoft To Do** (Graph API, conta pessoa
 
 ## Dossiê do cliente (crm/fase2/dossie) — o que chega ao CRM
 
-<!-- dossie-versao: 0.6.2 — ao mudar manifest.json da extensão, atualize esta seção e este número;
+<!-- dossie-versao: 0.7.1 — ao mudar manifest.json da extensão, atualize esta seção e este número;
      tests em crm/fase2/dossie/testes/regras.test.js conferem que batem. -->
 
-Extensão de navegador (versão **0.6.2**). Com o gov.br do cliente logado, um clique baixa os documentos
+Extensão de navegador (versão **0.7.1**). Com o gov.br do cliente logado, um clique baixa os documentos
 do portal aberto na aba. Não faz login, não resolve captcha e não decide nada: coleta e entrega.
 
 **De onde coleta**
@@ -45,13 +45,17 @@ do portal aberto na aba. Não faz login, não resolve captcha e não decide nada
   da prorrogação do período de graça, art. 15 §2º) · informe de rendimentos MTE por ano (PDF).
 - **HC Ribeirão**: exames de imagem e de método de todo o período (sem exame de sangue), internações,
   relatórios médicos e multiprofissionais.
+- **Redesim (Minhas Empresas)**: os CNPJs em que o CPF é sócio/titular/responsável, em `.txt` (por CNPJ:
+  nome empresarial, situação cadastral, matriz/filial, município/UF, vínculo do CPF, qualificação, capital
+  social; sem data de abertura — ela só vem no comprovante) + JSON cru. A consulta exige hCaptcha: a extensão abre a tela e **a pessoa clica em PESQUISAR**;
+  o comprovante de cada CNPJ também é protegido por captcha e fica de fora.
 
 **Onde entrega** (os três ao mesmo tempo)
 1. **Drive**: `G:\Meu Drive\Processos\<Letra>\<Nome #CPF>\Dossie\<fonte>\<arquivo>.pdf`. Pasta existente
    vence (busca por `#CPF`, depois por nome sem acento); cliente novo ganha pasta capitalizada com `#CPF`.
    Fontes: `CNIS`, `Declaracao`, `Cartas de concessao`, `Laudos`, `Extrato do beneficio`,
    `Extrato de pagamento`, `Processos administrativos`, `PPP`, `CAT`, `CTC`, `Recursos\<NUP>`,
-   `CTPS RAIS CAGED`, `HC Ribeirao\Exames|Internacoes|Relatorios`. Gravado pelo programa `host/dossie_host.py`
+   `CTPS RAIS CAGED`, `HC Ribeirao\Exames|Internacoes|Relatorios`, `CNPJ`. Gravado pelo programa `host/dossie_host.py`
    (native messaging); sem ele, cai em `Downloads/Dossie/`.
 2. **Tabela `anexos`**, uma linha por PDF presa ao **cliente** (`cliente_id` pelo CPF; sem caso nem
    andamento): `origem='dossie'`, `nome="<fonte> · <arquivo>"`, `caminho="dossie/<cpf>/<fonte>/<arquivo>"`
@@ -59,7 +63,7 @@ do portal aberto na aba. Não faz login, não resolve captcha e não decide nada
    (upsert), não duplica. `texto` fica vazio — a extensão **não extrai texto**; é o pipeline do CRM
    (`textoDoDocumento`) que lê.
 3. **`clientes.dossie` (jsonb, `schema_dossie.sql`)**: resumo de cada rodada, uma chave por portal
-   (`meuinss`, `mte`, `recursos`, `hc`), e rodar um portal substitui só a chave dele:
+   (`meuinss`, `mte`, `recursos`, `hc`, `redesim`), e rodar um portal substitui só a chave dele:
    `{"em": ISO, "baixados": [...], "inexistentes": [...], "falhas": [...]}`.
    `inexistentes` é o que o portal **disse que não existe** (sem CTC, sem CAT, sem PPP, benefício sem laudo,
    "não possui deficiência") — fato negativo para a triagem; `falhas` é erro técnico, pede rodada nova.
