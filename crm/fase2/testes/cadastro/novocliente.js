@@ -134,10 +134,10 @@ FIX.colaboradores = [...FIX.colaboradores,
       : api0(u, o);
     try { await nclPreencher(); } finally { api = api0; }
     const v = id => document.getElementById(id).value;
-    return [v("ncl-nome"), v("ncl-dn"), v("ncl-civil"), v("ncl-prof"), v("ncl-rua"), v("ncl-num"), v("ncl-cidade")].join("|");
+    return [v("ncl-nome"), v("ncl-dn"), _ncl.dz.civil, _ncl.dz.profissao, v("ncl-rua"), v("ncl-num"), v("ncl-cidade"), document.getElementById("ncl-civprof").textContent].join("|");
   });
   conf(`F199 · a etapa 2 se preenche pelo dossiê, com rua e cidade em caixa normal e o número separado (${pre})`,
-    pre === "Otilia Ficticia de Souza|1961-03-05|viuvo|Empregado Domestico nos Servicos Gerais|Rua dos Lirios|245|Monte Alto");
+    pre === "Otilia Ficticia de Souza|1961-03-05|viuvo|Empregado Domestico nos Servicos Gerais|Rua dos Lirios|245|Monte Alto|Do dossiê: estado civil Viúvo(a), profissão Empregado Domestico nos Servicos Gerais.");
   await p.evaluate(() => { _ncl = {etapa:1, id:null}; });
   await etapa2("");
   const post0 = escritos.find(x => x.m === "POST" && x.t === "clientes");
@@ -165,17 +165,12 @@ FIX.colaboradores = [...FIX.colaboradores,
       const ops = [...document.querySelectorAll("#ncl-sexo option")].map(o => o.value);
       return ops.includes("F") && ops.includes("M");
     }));
-  conf("a etapa 2 colhe estado civil, profissão, cidade e UF",
-    await p.evaluate(() => !!(document.getElementById("ncl-civil") && document.getElementById("ncl-prof")
-      && document.getElementById("ncl-cidade") && document.getElementById("ncl-uf"))));
+  conf("F200 · a etapa 2 não pede estado civil nem profissão, que vêm só do dossiê",
+    await p.evaluate(() => !document.getElementById("ncl-civil") && !document.getElementById("ncl-prof") && !!document.getElementById("ncl-civprof")
+      && !!document.getElementById("ncl-cidade") && !!document.getElementById("ncl-uf")));
   conf("a cidade nasce Monte Alto e a UF nasce SP (o foco do escritório)",
     await p.evaluate(() => document.getElementById("ncl-cidade").value === "Monte Alto"
       && document.getElementById("ncl-uf").value === "SP"));
-  conf("o estado civil traz as opções da ficha (casado, união estável…)",
-    await p.evaluate(() => {
-      const ops = [...document.querySelectorAll("#ncl-civil option")].map(o => o.value);
-      return ops.includes("casado") && ops.includes("uniao") && ops.includes("viuvo");
-    }));
   conf("a lista de ruas carrega os 1.048 CEPs de Monte Alto",
     (await p.evaluate(() => document.querySelectorAll("#lista-ruas option").length)) === 1048);
   conf("rua escolhida da lista mostra CEP, bairro e cidade na hora",
@@ -300,13 +295,11 @@ FIX.colaboradores = [...FIX.colaboradores,
   // ── F29: senha do Meu INSS, estado civil e profissão ────────────────────
   escritos.length = 0;
   await etapa2("Olavo Fictício Dias", "senha-ficticia-123");
-  await p.selectOption("#ncl-civil", "casado");
-  await p.fill("#ncl-prof", "lavrador");
-  await p.evaluate(() => criarCliente());
+  await p.evaluate(() => { _ncl.dz = { civil: "casado", profissao: "Lavrador" }; criarCliente(); });
   await p.waitForTimeout(900);
   const postOlavo = escritos.find(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.campos);
-  conf("estado civil e profissão gravam no cadastro (a procuração precisa)",
-    postOlavo && postOlavo.corpo.estado_civil === "casado" && postOlavo.corpo.profissao === "lavrador");
+  conf("estado civil e profissão do dossiê gravam no cadastro (a procuração precisa)",
+    postOlavo && postOlavo.corpo.estado_civil === "casado" && postOlavo.corpo.profissao === "Lavrador");
   const postCred = escritos.find(x => x.m === "POST" && x.t === "credenciais");
   conf("a senha do Meu INSS grava pelo caminho das credenciais, como na ficha",
     postCred && postCred.corpo.tipo === "meu_inss" && postCred.corpo.valor === "senha-ficticia-123"
