@@ -3555,6 +3555,10 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .mapa-fora-tag{grid-column:1;font-size:11px;font-weight:600;color:var(--cinza-claro)}
 .mapa-levar.on{border-color:var(--verde);color:var(--verde)}
 .docs-ad{margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--placa)}
+.ncl-passos{display:flex;gap:18px;margin:0 0 12px;font-size:13px;font-weight:600;color:var(--cinza-claro)}
+.ncl-passos span{padding-bottom:6px;border-bottom:3px solid var(--borda)}.ncl-passos .cur{color:var(--texto);border-bottom-color:#0E5C58}.ncl-passos .feito{color:#0E5C58;border-bottom-color:#B5D3CF}
+.ncl-dossie{margin:8px 0 12px;padding:10px 12px;border-radius:8px;background:var(--placa);font-size:13px;line-height:1.5}
+.ncl-portal{display:inline-flex;align-items:center;text-decoration:none}
 /* F196 · painel do primeiro atendimento, o desenho aprovado */
 .pa{--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-warn:#8F5400;--pa-ok:#1B6E38;--pa-info:#3A6491;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660;color:#121212;font-size:13px;line-height:1.45}
 .pa .mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-weight:500}
@@ -4170,7 +4174,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.14</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.15</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10298,22 +10302,27 @@ const CEPS_MONTE_ALTO=[["15910-001","Rua dos Lirios","Centro"],["15910-003","Rua
 // contrato assinado (decisão do Paulo, F25). O cliente entra 🟡 em
 // atendimento na lista Escritório, com o relato como primeira anotação, e a
 // advogada assume pela ficha.
+// F197 · O CADASTRO EM DUAS ETAPAS (pedido do Paulo, 12.10.2026). Etapa 1:
+// nome, CPF (o único obrigatório), senha do Meu INSS e telefone, e as guias
+// dos portais para baixar o dossiê. A ficha nasce aqui, porque a extensão só
+// prende o dossiê a cliente que já existe pelo CPF. Etapa 2: o resto do
+// cadastro, que confere o que o dossiê trouxe ou preenche o que falta; ao
+// concluir, o cliente vai à lista Escritório com a menção a Amanda e Paulo.
+let _ncl = {etapa:1, id:null};
+const NCL_PORTAIS = [["Meu INSS","https://meu.inss.gov.br/#/"], ["Emprega Brasil","https://servicos.mte.gov.br/spme-v2/#/login"],
+  ["HC Ribeirão","https://appiris.hcrp.usp.br/apex/r/iris/nossohcribeirao/login"], ["Redesim","https://consultacnpj.redesim.gov.br/minhas-empresas"]];
 function renderNovoCliente(){
   tituloLista("➕ Novo Cliente");
-  document.getElementById("sub-lista").textContent=
-    "A tela da recepção: só o nome é obrigatório. O cliente entra em atendimento na lista Escritório e a advogada assume pela ficha.";
-  document.getElementById("conteudo-meio").innerHTML=`
-    <div class="caso ncl-larga">
-      <div class="form-linha"><input id="ncl-nome" placeholder="Nome completo *" style="flex:1;min-width:320px;font-size:16px"></div>
-      <div class="form-linha">
-        <input id="ncl-cpf" placeholder="CPF (só números)" maxlength="14" oninput="conferirCpfNovo()">
-        <input id="ncl-senha" placeholder="Senha Meu INSS" autocomplete="off"
-          title="fica guardada com registro de quem copia ou vê, como na ficha">
-        <input id="ncl-dn" type="date" title="data de nascimento"
-          onchange="mostrarIdadeNovo()"><span id="ncl-idade" class="meio-sub"></span>
-        <input id="ncl-tel" placeholder="Telefone/WhatsApp">
-      </div>
-      <p id="ncl-cpf-recado" class="meio-sub" style="margin:0 0 6px"></p>
+  const e2 = _ncl.etapa===2 && _ncl.id;
+  document.getElementById("sub-lista").textContent = e2
+    ? "Etapa 2 de 2: confira o que o dossiê trouxe ou preencha o restante. Ao concluir, o cliente entra na lista Escritório e Amanda e Paulo são avisados."
+    : "Etapa 1 de 2: só o CPF é obrigatório. Com a ficha criada, abra os portais e baixe o dossiê; sem a senha do gov.br, siga para a etapa 2.";
+  const passos = `<div class="ncl-passos"><span class="${e2?"feito":"cur"}">1 · Identificação e dossiê</span><span class="${e2?"cur":""}">2 · Cadastro e atendimento</span></div>`;
+  document.getElementById("conteudo-meio").innerHTML = e2 ? `
+    <div class="caso ncl-larga">${passos}
+      <div id="ncl-dossie" class="ncl-dossie meio-sub">Lendo o que já chegou do dossiê…</div>
+      <div class="form-linha"><input id="ncl-nome" placeholder="Nome completo" style="flex:1;min-width:320px;font-size:16px">
+        <input id="ncl-dn" type="date" title="data de nascimento" onchange="mostrarIdadeNovo()"><span id="ncl-idade" class="meio-sub"></span></div>
       <div class="form-linha">
         <select id="ncl-sexo" title="entra no cálculo da data da aposentadoria">
           <option value="">sexo…</option><option value="F">Mulher</option><option value="M">Homem</option>
@@ -10337,25 +10346,64 @@ function renderNovoCliente(){
       <div class="form-linha">
         <input id="ncl-caso" placeholder="Benefício — só se a pessoa já souber dizer (opcional)" list="lista-beneficios" style="flex:1;min-width:240px">
       </div>
-      ${/* F127 · o CNIS entra no cadastro: lido depois de gravar o cliente,
-           preenche mãe e NITs e já responde os primeiros passos da triagem */""}
+      <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
+      <div class="form-linha">
+        <textarea id="ncl-relato" rows="3" style="flex:1;min-width:240px;border:1px solid var(--borda);border-radius:8px;padding:8px;font:inherit;font-size:13px;color:var(--texto);resize:vertical"
+          placeholder="O que a pessoa veio buscar, do jeito que ela contou — vira a primeira anotação do atendimento"></textarea>
+      </div>
+      ${/* F127 · sem dossiê, o CNIS em PDF ainda entra por aqui */""}
       <div class="form-linha" style="align-items:center">
         <input type="file" id="ncl-cnis" accept="application/pdf" style="display:none"
           onchange="document.getElementById('ncl-cnis-nome').textContent=this.files[0]?this.files[0].name:''">
         <button class="cad-mini" onclick="document.getElementById('ncl-cnis').click()"
           title="o Extrato Previdenciário (CNIS) do Meu INSS, em PDF">Inserir o CNIS (PDF)</button>
         <span id="ncl-cnis-nome" class="meio-sub"></span>
-        <span class="meio-sub">lido aqui no navegador; o extrato fica guardado na ficha para abrir depois</span>
+        <span class="meio-sub">sem o dossiê, o extrato lido aqui fica guardado na ficha</span>
       </div>
-      <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
+      <div class="form-linha"><button onclick="criarCliente()">Concluir cadastro</button>
+        <button class="btn-mini" onclick="nclRecomecar()">Cadastrar outro cliente</button></div>
+      <p style="font-size:12px;color:var(--cinza);margin-top:8px">O cliente vai à lista Escritório, com a menção a Amanda e Paulo para a triagem, e vira tarefa no To Do na próxima sincronização (título Nome #CPF).</p>
+    </div>` : `
+    <div class="caso ncl-larga">${passos}
+      <div class="form-linha"><input id="ncl-nome" placeholder="Nome completo" style="flex:1;min-width:320px;font-size:16px"></div>
       <div class="form-linha">
-        <textarea id="ncl-relato" rows="3" style="flex:1;min-width:240px;border:1px solid var(--borda);border-radius:8px;padding:8px;font:inherit;font-size:13px;color:var(--texto);resize:vertical"
-          placeholder="O que a pessoa veio buscar, do jeito que ela contou — vira a primeira anotação do atendimento"></textarea>
+        <input id="ncl-cpf" placeholder="CPF (só números) *" maxlength="14" oninput="conferirCpfNovo()">
+        <input id="ncl-senha" placeholder="Senha Meu INSS" autocomplete="off"
+          title="fica guardada com registro de quem copia ou vê, como na ficha">
+        <input id="ncl-tel" placeholder="Telefone/WhatsApp">
       </div>
-      <p style="font-size:12px;color:var(--verde)">✓ Não precisa identificar o caso — isso é conversa da advogada, na triagem. Se o benefício vier da lista, a ficha já nasce com a lista de documentos para o cliente levar para casa.</p>
-      <div class="form-linha"><button onclick="criarCliente()">Cadastrar</button></div>
-      <p style="font-size:12px;color:var(--cinza);margin-top:8px">O cliente também vira tarefa no To Do na próxima sincronização (título Nome #CPF), então quem estiver lá continua vendo.</p>
+      <p id="ncl-cpf-recado" class="meio-sub" style="margin:0 0 6px"></p>
+      <div class="ncl-dossie">
+        <b>Baixe o dossiê:</b> com o gov.br do segurado logado, clique para abrir cada portal numa guia nova e rode a extensão
+        do dossiê (🔁 Rodar todos os portais). O dossiê traz CNIS, RAIS, CAGED, seguro-desemprego, pedidos, laudos, exames e CNPJs, e a etapa 2 vira só conferência.
+        <div class="form-linha" style="margin-top:8px;flex-wrap:wrap">${NCL_PORTAIS.map(([r,u])=>
+          `<a class="cad-mini ncl-portal" href="${u}" target="_blank" rel="noopener" onclick="return nclPortal()">Abrir ${r}</a>`).join("")}</div>
+        <span class="meio-sub" id="ncl-ficha-recado">${_ncl.id ? "Ficha criada ✔ — o dossiê baixado agora se prende a ela." : "O primeiro portal aberto já cria a ficha pelo CPF, para o dossiê se prender a ela. Sem a senha do gov.br, siga direto para a etapa 2."}</span>
+      </div>
+      <div class="form-linha"><button onclick="nclEtapa1()">Gravar e seguir para a etapa 2</button></div>
     </div>`;
+  if(e2) nclPreencher();
+}
+function nclRecomecar(){ _ncl = {etapa:1, id:null}; renderNovoCliente(); }
+// a etapa 2 abre com o que a ficha já tem: o que o dossiê leu e o que a recepção digitou
+async function nclPreencher(){
+  const id = _ncl.id;
+  const [c] = await api(`/rest/v1/clientes?select=*&id=eq.${id}`).catch(()=>[]) || [];
+  if(_ncl.id!==id || !document.getElementById("ncl-nome")) return;
+  const cli = c || D.cliPorId.get(id); if(!cli) return;
+  if(c){ const v = D.cliPorId.get(id); if(v) Object.assign(v, c); }
+  const cv = civilDe(cli), pre = (k, v) => { const e = document.getElementById(k); if(e && v && !e.value) e.value = v; };
+  if(cli.nome && !/^Cliente \d{3}\./.test(cli.nome)) pre("ncl-nome", cli.nome);
+  const dn = dnIso(cli.dn); pre("ncl-dn", dn); mostrarIdadeNovo();
+  pre("ncl-sexo", cv.sexo); pre("ncl-civil", cv.estado_civil); pre("ncl-prof", cv.profissao);
+  pre("ncl-rua", cv.logradouro); pre("ncl-num", cv.numero); if(cv.cidade){ document.getElementById("ncl-cidade").value = cv.cidade; }
+  if(cv.uf) document.getElementById("ncl-uf").value = cv.uf;
+  const PORT = {meuinss:"Meu INSS", mte:"Emprega Brasil", recursos:"e-Recursos", hc:"HC Ribeirão", redesim:"Redesim"};
+  const dz = cli.dossie || {}, ks = Object.keys(dz);
+  const el = document.getElementById("ncl-dossie");
+  if(el) el.innerHTML = ks.length
+    ? `<b>Dossiê:</b> ${esc(ks.map(k=>`${PORT[k]||k} em ${fmtBarra(String((dz[k]||{}).em||"").slice(0,10))}`).join("; "))}. Confira os campos abaixo, que vieram da ficha. <button class="btn-mini" onclick="nclPreencher()">Conferir de novo</button>`
+    : `<b>Dossiê:</b> nenhum portal baixado até agora; preencha o cadastro. Se o dossiê for baixado depois, ele se prende à ficha pelo CPF. <button class="btn-mini" onclick="nclPreencher()">Conferir de novo</button>`;
 }
 // F32 · o CPF é a CHAVE da organização: mesmo com o nome escrito errado, é
 // ele que vincula o cliente. O dígito verificador (módulo 11, regra pública
@@ -10444,7 +10492,7 @@ function conferirRuaNovo(){
 // avisa. A menção nasce sem caso (ainda não existe), presa ao cliente.
 async function avisarClienteNovo(cliId){
   const c=D.cliPorId.get(cliId);
-  const alvos=quemAvisaCasoNovo().filter(x=>x.id!==eu.id);
+  const alvos=quemAvisaClienteNovo().filter(x=>x.id!==eu.id);
   const texto=`Cliente novo na recepção: ${(c&&c.nome)||"cliente"} — dar seguimento na triagem`;
   for(const co of alvos)
     await api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
@@ -10492,41 +10540,32 @@ function mostrarIdadeNovo(){
   const i=v ? idadeDe(v.slice(8,10)+v.slice(5,7)+v.slice(0,4)) : null;
   el.textContent = i==null ? "" : `${i} anos`;
 }
-async function criarCliente(){
+// etapa 1: grava a ficha com o que houver, para o dossiê se prender a ela pelo CPF
+// abrir um portal cria a ficha antes, para a extensão prender o dossiê a ela pelo CPF
+function nclPortal(){
+  const cpf=((document.getElementById("ncl-cpf")||{}).value||"").replace(/\D/g,"");
+  if(!_ncl.id && !cpfValido(cpf)){ aviso("Preencha um CPF válido antes de abrir os portais: é ele que prende o dossiê à ficha"); return false; }
+  if(!_ncl.id) nclEtapa1(false);
+  return true;
+}
+async function nclEtapa1(seguir=true){
+  if(_ncl.id){ if(seguir){ _ncl.etapa=2; renderNovoCliente(); } return; }
   const nome=document.getElementById("ncl-nome").value.trim();
-  if(!nome) return aviso("Preencha ao menos o nome");
-  const cpf=document.getElementById("ncl-cpf").value.replace(/\D/g,"")||null;
+  const cpf=document.getElementById("ncl-cpf").value.replace(/\D/g,"");
+  if(!cpf) return aviso("Preencha o CPF: é ele que prende o dossiê à ficha");
   // F32 · CPF digitado errado não entra: a base se organiza pelo CPF
-  if(cpf && !cpfValido(cpf))
-    return aviso("CPF inválido — confira os números (ou apague o campo e cadastre sem CPF)");
-  if(cpf){
-    // procura na memória e confirma no banco: outro colaborador pode ter
-    // cadastrado o mesmo cliente enquanto esta tela estava aberta
-    let jaTem = D.clientes.find(c=>digitosCpf(c.cpf)===cpf);
-    if(!jaTem){
-      const achados = await api(`/rest/v1/clientes?select=*&cpf=eq.${cpf}`).catch(()=>[]);
-      if(achados && achados.length){ jaTem=achados[0];
-        D.clientes.push(jaTem); D.cliPorId.set(jaTem.id, jaTem); }
-    }
-    if(jaTem) return avisoCpfRepetido(jaTem, nome);
+  if(!cpfValido(cpf)) return aviso("CPF inválido — confira os números");
+  // procura na memória e confirma no banco: outro colaborador pode ter
+  // cadastrado o mesmo cliente enquanto esta tela estava aberta
+  let jaTem = D.clientes.find(c=>digitosCpf(c.cpf)===cpf);
+  if(!jaTem){
+    const achados = await api(`/rest/v1/clientes?select=*&cpf=eq.${cpf}`).catch(()=>[]);
+    if(achados && achados.length){ jaTem=achados[0]; D.clientes.push(jaTem); D.cliPorId.set(jaTem.id, jaTem); }
   }
-  const dnIso=document.getElementById("ncl-dn").value;
-  const especie=document.getElementById("ncl-caso").value.trim();
-  const relato=((document.getElementById("ncl-relato")||{}).value||"").trim();
-  // rastro de quem cadastrou: o relato (ou a marca do cadastro) é a primeira
-  // anotação do atendimento — é ela que põe o cliente na seção 🟡 da lista
-  const campos={atendimento:[{em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0],
-    texto: relato || "Cliente cadastrado na recepção."}]};
-  // benefício conhecido vira PRÉ-CASO (não caso): a advogada confere na
-  // triagem e gera o caso quando sair a procuração com o contrato
-  if(especie) campos.precasos=[{id:"pc_"+Date.now().toString(36), especie,
-    natureza:"", marc:{}, honorarios:"", quem:eu.id, em:hoje()}];
+  if(jaTem) return avisoCpfRepetido(jaTem, nome);
+  const campos={atendimento:[{em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], texto:"Cliente cadastrado na recepção."}]};
   const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({nome, cpf, dn:dnIso?fmt(dnIso).replace(/\./g,""):null,
-      telefone:document.getElementById("ncl-tel").value.trim()||null,
-      sexo:document.getElementById("ncl-sexo").value||null,
-      estado_civil:document.getElementById("ncl-civil").value||null,
-      profissao:document.getElementById("ncl-prof").value.trim()||null, campos})});
+    body:JSON.stringify({nome: nome || `Cliente ${fmtCpf(cpf)}`, cpf, telefone:document.getElementById("ncl-tel").value.trim()||null, campos})});
   D.clientes.push(cli); D.cliPorId.set(cli.id, cli);
   // a senha do Meu INSS entra pelo MESMO caminho da ficha (credenciais,
   // com registro de quem copia ou vê)
@@ -10534,28 +10573,59 @@ async function criarCliente(){
   if(senha) await api(`/rest/v1/credenciais`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({cliente_id:cli.id, tipo:"meu_inss", valor:senha})}).catch(()=>
       aviso("O cliente gravou, mas a senha não — cadastre de novo pela ficha"));
+  _ncl = {etapa: seguir ? 2 : 1, id:cli.id};
+  if(!seguir){ const r=document.getElementById("ncl-ficha-recado"); if(r) r.textContent="Ficha criada ✔ — o dossiê baixado agora se prende a ela."; aviso("Ficha criada ✔ — rode a extensão do dossiê", false); return; }
+  aviso("Ficha criada ✔ — agora a etapa 2", false);
+  renderNovoCliente();
+}
+// os avisos do cliente novo vão a Amanda e Paulo, além de quem a configuração indicar
+function quemAvisaClienteNovo(){
+  const ativos = equipeAtiva(), vistos = new Set(), out = [];
+  for(const co of [...ativos.filter(c=>/^(amanda|paulo)\b/i.test(dsa(c.nome||""))), ...quemAvisaCasoNovo()])
+    if(!vistos.has(co.id)){ vistos.add(co.id); out.push(co); }
+  return out;
+}
+// etapa 2: completa a ficha, leva à lista Escritório e avisa Amanda e Paulo
+async function criarCliente(){
+  const id=_ncl.id, cli=id && D.cliPorId.get(id);
+  if(!cli) return aviso("Comece pela etapa 1");
+  const nome=document.getElementById("ncl-nome").value.trim();
+  const dnIsoV=document.getElementById("ncl-dn").value;
+  const especie=document.getElementById("ncl-caso").value.trim();
+  const relato=((document.getElementById("ncl-relato")||{}).value||"").trim();
+  const campos={...(cli.campos||{})};
+  if(relato) campos.atendimento=[...(campos.atendimento||[]), {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], texto:relato}];
+  // benefício conhecido vira PRÉ-CASO (não caso): a advogada confere na
+  // triagem e gera o caso quando sair a procuração com o contrato
+  if(especie) campos.precasos=[...(campos.precasos||[]), {id:"pc_"+Date.now().toString(36), especie,
+    natureza:"", marc:{}, honorarios:"", quem:eu.id, em:hoje()}];
+  const corpo={campos, sexo:document.getElementById("ncl-sexo").value||null,
+    estado_civil:document.getElementById("ncl-civil").value||null,
+    profissao:document.getElementById("ncl-prof").value.trim()||null};
+  if(nome) corpo.nome=nome;
+  if(dnIsoV) corpo.dn=fmt(dnIsoV).replace(/\./g,"");
+  try{ await api(`/rest/v1/clientes?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}); Object.assign(cli, corpo); }
+  catch(e){ return aviso("Não consegui gravar a etapa 2 — tente de novo"); }
   // o endereço grava pelo MESMO caminho da ficha (colunas + espelho da
-  // procuração); rua da lista traz CEP, bairro e Monte Alto/SP de brinde,
-  // e cliente de outra cidade grava a cidade que a recepção escreveu
+  // procuração); rua da lista traz CEP, bairro e Monte Alto/SP de brinde
   const rua=ruaNovoAchada(), ruaTxt=document.getElementById("ncl-rua").value.trim();
   const num=document.getElementById("ncl-num").value.trim();
   const cidTxt=document.getElementById("ncl-cidade").value.trim();
   const ufTxt=document.getElementById("ncl-uf").value;
-  if(rua||ruaTxt) await gravarEnderecoCli(cli.id, {
+  if(rua||ruaTxt) await gravarEnderecoCli(id, {
     logradouro: rua?rua[1]:ruaTxt.split("—")[0].trim(), numero:num, complemento:"",
     bairro: rua?rua[2]:"", cidade: rua?"Monte Alto":cidTxt, uf: rua?"SP":ufTxt,
     cep: rua?soDigitos(rua[0]):""});
-  const avisados=await avisarClienteNovo(cli.id);
+  const avisados=await avisarClienteNovo(id);
   // F127 · o CNIS escolhido no cadastro é lido agora, já com o cliente gravado
   const cnisArq=(document.getElementById("ncl-cnis")||{}).files; const cnis=cnisArq&&cnisArq[0];
+  _ncl = {etapa:1, id:null};
   await carregar(); montarSidebar();
-  if(cnis) await processarCnis(cli.id, cnis);
-  aviso(`Cliente cadastrado ✔ — em atendimento${avisados?` · ${avisados} advogado(s) avisado(s) para a triagem`:""}`);
+  if(cnis) await processarCnis(id, cnis);
+  aviso(`Cadastro concluído ✔ — na lista Escritório${avisados?` · ${avisados} avisado(s) para a triagem`:""}`);
   visao="fase:escritorio"; render();
-  // a ficha abre na TRIAGEM: é o próximo passo — as Anotações só se abrem
-  // depois que a triagem se encerra (pedido do Paulo, F29)
   subCad="triagem";
-  await abrirFicha(cli.id);
+  await abrirFicha(id);
 }
 
 // ── visão 🤖 Claude (sugestões com aprovação humana) ─────────────────────
@@ -19495,6 +19565,9 @@ function lerSeguroDesempregoTexto(txt){
     else if((m = l.match(/^Vínculo:\s*(.*?)\s+·\s+admissão\s+(\S+)\s+·\s+demissão\s+(\S+)/)) && !r.dispensa)
       Object.assign(r, {empregador: r.empregador || (m[1]==="?" ? "" : m[1]), admissao: r.admissao || data(m[2]), dispensa:data(m[3])});
     else if((m = l.match(/^Parcela\s+(\S+):\s+liberação\s+(\S+)\s+·\s+pagamento\s+(\S+)\s+·\s+valor\s+(\S+)\s+·?\s*(.*)$/)))
+      r.parcelas.push({n:m[1], liberacao:data(m[2]), pagamento:data(m[3]), valor:m[4], situacao:m[5].trim()});
+    // a extensão 0.8.6 escreve "programada · paga em · R$"; a leitura aceita os dois formatos
+    else if((m = l.match(/^Parcela\s+(\S+):\s+programada\s+(\S+)\s+·\s+paga em\s+(\S+)\s+·\s+R\$\s+(\S+)\s+·?\s*(.*)$/)))
       r.parcelas.push({n:m[1], liberacao:data(m[2]), pagamento:data(m[3]), valor:m[4], situacao:m[5].trim()});
   }
   return out;
