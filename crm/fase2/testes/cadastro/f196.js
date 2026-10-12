@@ -114,6 +114,9 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   conf(`F203 · a ficha lê primeiro só o da Identificação, e o resto quando abre o Primeiro atendimento (${partes})`,
     partes.split(" | ")[0].startsWith("dz/4,dz/3,") && partes.split(" | ")[0].includes("dz/2") && !partes.split(" | ")[0].includes("dz/1")
     && !partes.split(" | ")[0].includes("dz/5") && /dz\/1,dz\/5$|dz\/1.*dz\/5$/.test(partes.split(" | ")[1]));
+  conf("F206 · com atendimento aberto, o Primeiro atendimento abre em tela cheia, com Fechar atendimento e só as quatro abas",
+    await p.evaluate(() => document.getElementById("detalhe").classList.contains("atend-tela") && /Fechar atendimento/.test(document.querySelector(".atend-cab").textContent)
+      && [...[...document.querySelectorAll(".sub-menu")].find(m => /Identificação/.test(m.textContent)).querySelectorAll("button:not(.trilho-mais)")].every(b => /Identificação|Primeiro atendimento|Mapa|Análise|Documentos/.test(b.textContent))));
   conf("a situação tem os seis blocos do desenho", pa.blocos.join("|") === "Qualidade de segurado|Carência|CNIS e RAIS|CNPJs do titular|Pedidos ao INSS|Planejamento prévio");
   conf(`os trabalhos possíveis saem do dossiê (${pa.cartoes.join(", ")})`, pa.cartoes.length > 0);
   conf("a carência mostra a contagem do CNIS", /^104 de 180$/.test(pa.car.trim()));

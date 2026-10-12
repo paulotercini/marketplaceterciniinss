@@ -208,8 +208,8 @@ FIX.casos.push(
     await p.evaluate(() => !!document.querySelector('.painel[data-p="0"] .ad-q-tri') && !document.querySelector('.painel[data-p="0"] .ad-q-tri .ad-feed')));
   conf("a Análise de Direito tem o botão de abrir o CNIS",
     await p.evaluate(() => /Abrir CNIS/.test(document.querySelector('.painel[data-p="0"]').textContent)));
-  conf("a aba da ficha também",
-    await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].some(b => /Abrir CNIS/.test(b.textContent))));
+  conf("F205 · a aba da ficha não tem mais o Abrir CNIS ao lado do Cadastro",
+    await p.evaluate(() => ![...document.querySelectorAll(".menu-topo .mt")].some(b => /Abrir CNIS/.test(b.textContent))));
   conf("sem a explicação embaixo",
     !(await p.evaluate(() => /memória do escritório para a próxima conversa/.test(document.querySelector('.painel[data-p="0"]').textContent))));
   await p.evaluate(() => { abaAtiva = 0; repintarFicha(); });

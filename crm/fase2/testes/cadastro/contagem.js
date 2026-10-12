@@ -21,7 +21,7 @@ const CNIS = { em: "2026-10-10", paginas: 3, qtVinculos: 1, nits: [], indicadore
   vinculos: [{ seq: 1, tipo: "Empregado", origem: "FABRICA FICTICIA", inicio: "03/01/2000", fim: "30/06/2012", ultRemun: "06/2012", aberto: false, indicadores: [] }],
   analise: { abertos: [], errosEmp: [], abaixo: [], mesAnt: "09/2026", agora: { tipo: "ci", comp: "09/2026" }, benefAtivos: [], qtComps: 150,
     contagem: { carencia: 150, anos: 12, meses: 6, periodos: [["2000-01", "2012-06"]], foraMinimo: 0 } } };
-FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725", dossie: {}, sexo: "F", triagem: { pdf: { cnis: CNIS } } };
+FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725", dossie: {}, campos: { ...(FIX.clientes[0].campos || {}), precasos: [{ id: "pc_m", especie: "", marc: {}, em: "2026-10-12" }] }, sexo: "F", triagem: { pdf: { cnis: CNIS } } };
 FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: "Aposentadoria por idade", especie: "B41", nb: null };
 
 (async () => {

@@ -111,6 +111,8 @@ com a fonte. `clientes.dossie.<portal>.inexistentes` é fato negativo; `.em`, a 
 
 A ficha **adota o dossiê do seu CPF** (`adotarDossie`, F204): ao abrir a ficha ou a etapa 2, os anexos `dossie/<cpf>/…` presos a outra ficha (refeita ou sem CPF) passam a ela, e o resumo `clientes.dossie` da ficha anterior vem junto quando ela não tem o seu, porque a extensão, rodada de novo, não troca o dono da linha.
 
+Sem atendimento aberto, a ficha não mostra Primeiro atendimento nem Mapa (F205); o "+ atendimento", à direita, abre o atendimento já no Primeiro atendimento. Com atendimento aberto, Primeiro atendimento, Mapa, Análise de Direito e Documentos abrem em **tela cheia** (`ATEND_SUBS`, `#detalhe.atend-tela`, F206), com "Fechar atendimento" (`fecharAtendimento`), que registra na Análise de Direito o que foi preenchido. Com mais de uma análise, as datas aparecem em quadrados (`_adSel`). O painel do Primeiro atendimento tem fundo bege (#F3F2EE) com os quadros em branco.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

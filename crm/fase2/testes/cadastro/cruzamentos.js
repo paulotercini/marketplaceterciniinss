@@ -33,7 +33,7 @@ const CNIS = { em: "2026-10-10", paginas: 3, qtVinculos: 3, nits: [], indicadore
     VINC("TRANSPORTADORA ILUSORIA", "66.777.888/0001-11", "03/02/2025")],
   analise: { abertos: [], errosEmp: [], abaixo: [], mesAnt: "09/2026", agora: { tipo: "sem", ultima: { comp: "06/2026", tipo: "Empregado" } },
     benefAtivos: [], qtComps: 200, contagem: { carencia: 200, anos: 16, meses: 8, periodos: [["2010-01", "2026-06"]], foraMinimo: 0 } } };
-FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725", dossie: {}, triagem: { pdf: { cnis: CNIS } } };
+FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725", dossie: {}, campos: { ...(FIX.clientes[0].campos || {}), precasos: [{ id: "pc_m", especie: "", marc: {}, em: "2026-10-12" }] }, triagem: { pdf: { cnis: CNIS } } };
 FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária", beneficio: "Auxílio por incapacidade temporária", especie: "B31", nb: null };
 
 (async () => {
