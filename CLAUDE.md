@@ -41,8 +41,9 @@ do portal aberto na aba. Não faz login, não resolve captcha e não decide nada
   todos os pedidos administrativos (todos os anos) · PPP eletrônico por vínculo · CAT · CTC (se houver protocolo).
 - **e-Recursos (CRPS)**: todos os documentos de cada recurso do cliente.
 - **Emprega Brasil (MTE)**: CTPS digital e de outros vínculos, extratos RAIS e CAGED · **seguro-desemprego**
-  (requerimentos, vínculo e parcelas com datas — `.txt` legível + JSON cru; a data da última parcela é o marco
-  da prorrogação do período de graça, art. 15 §2º) · informe de rendimentos MTE por ano (PDF).
+  (requerimentos, vínculo e parcelas com datas — `.txt` legível + JSON cru; a parcela **recebida dentro da graça**
+  prova o desemprego e acresce 12 meses, mas o prazo continua contado da última competência, e não da última
+  parcela: IN 128, art. 184, §§ 2º e 5º) · informe de rendimentos MTE por ano (PDF).
 - **HC Ribeirão**: exames de imagem e de método de todo o período (sem exame de sangue), internações,
   relatórios médicos e multiprofissionais.
 - **Redesim (Minhas Empresas)**: os CNPJs em que o CPF é sócio/titular/responsável, em `.txt` (por CNPJ:
@@ -71,7 +72,11 @@ do portal aberto na aba. Não faz login, não resolve captcha e não decide nada
 
 **O que o CRM faz com isso**: lê o `texto` uma vez (onda 0) e passa por leitores puros (`lerCnisPdf`,
 `lerCagedTexto`, `lerRaisTexto`, `lerLaudosTexto`, `lerCartaTexto`, `lerExtratoPagTexto`, `lerProcessoTexto`,
-`lerResumoInssTexto`, `lerCatTexto`, `lerPppTexto`, `itemClinico`), agrupados por `fontesDoDossie()`.
+`lerResumoInssTexto`, `lerCatTexto`, `lerPppTexto`, `itemClinico`, `lerSeguroDesempregoTexto`, `lerCnpjsTexto`),
+agrupados por `fontesDoDossie()`. O seguro-desemprego entra em `calcularGraca` (6º parâmetro) e aparece junto da
+qualidade de segurado, no mapa e na conta dos Lembretes (`fatoSeguro`). Os CNPJs da Redesim viram o grupo `cnpj`
+do mapa; a abertura, o MEI e o CNAE vêm da base pública `publica.cnpj.ws` (a mesma do site interno), só no clique
+de "Consultar", só com o número do CNPJ no caminho, e a resposta fica na memória da sessão (`_cnpjWs`).
 Da cópia do processo administrativo, `lerProcessoTexto` lê **só** a folha de interposição (pedido, data de
 entrada, situação, NB, última atualização) e a comunicação de decisão (decisão, motivo, cessação). Despachos e
 páginas em imagem não se leem, porque geram fato falso. A "Data:" da comunicação é a da **emissão da cópia**, e

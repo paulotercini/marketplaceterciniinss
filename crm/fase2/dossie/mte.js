@@ -96,7 +96,8 @@
     // dá JSON, não PDF: vai como .txt legível (data do requerimento, vínculo,
     // parcelas com data de pagamento) + o JSON cru embaixo. Importa para a
     // qualidade de segurado: o recebimento do SD estende o período de graça
-    // (art. 15, §2º, Lei 8.213/91), e a data da última parcela é o marco.
+    // (art. 15, §2º, Lei 8.213/91) quando há parcela recebida dentro da graça;
+    // o prazo segue contado da última competência (IN 128, art. 184, §§ 2º e 5º).
     D.faixa('seguro-desemprego: requerimentos…');
     try {
       // sem as modalidades na URL o portal responde 400 (medido em 11.10.2026); é o
