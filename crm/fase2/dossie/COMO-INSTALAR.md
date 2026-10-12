@@ -39,7 +39,8 @@ cada PDF também é anexado ao cliente (origem `dossie`).
 
 3. **Emprega Brasil** (`servicos.mte.gov.br/spme-v2`) → **Entrar com gov.br** → espere abrir a área do
    trabalhador → mesmo botão. Desce: CTPS Digital e CTPS de outros vínculos (com todos os dados),
-   extrato RAIS e extrato CAGED, na subpasta `CTPS RAIS CAGED`.
+   extrato RAIS e extrato CAGED, seguro-desemprego (requerimentos e parcelas, em `.txt`) e informe de
+   rendimentos por ano, na subpasta `CTPS RAIS CAGED`.
 
 4. **HC Ribeirão** (`appiris.hcrp.usp.br`, logado — de preferência por **Entrar com gov.br**, que é
    de onde vem o CPF; com login pelo registro HC, vale o CPF do último dossiê do Meu INSS) → mesmo
@@ -50,6 +51,10 @@ cada PDF também é anexado ao cliente (origem `dossie`).
      "Em processamento" ainda não tem laudo e aparece em "sem resultado".
    - **Internações**: a autorização/resumo de cada internação.
    - **Relatórios**: todos os relatórios médicos e multiprofissionais.
+
+5. **Redesim · Minhas Empresas** (`consultacnpj.redesim.gov.br`, logado com o gov.br do cliente) → mesmo
+   botão → a extensão abre "Minhas Empresas" e pede: **clique em PESQUISAR** (o portal exige hCaptcha, que
+   só o seu clique gera). A lista de CNPJs vinculados ao CPF é gravada em `CNPJ\` como `.txt`.
 
 O progresso aparece na faixa azul no rodapé da página; no fim ela diz o que veio e o que faltou.
 

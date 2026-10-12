@@ -92,7 +92,36 @@
   const IMAGEM = /RADIOGRAF|\bRX\b|RAIO[\s-]?X|TOMOGRAF|RESSON[AÂ]NCIA|\bRNM\b|ULTRA[\s-]?SSON|ULTRA[\s-]?SON|ECOGRAF|ECOCARDIO|DOPPLER|DUPLEX|MAMOGRAF|DENSITOMETR|CINTILOGRAF|\bPET\b|ANGIO|ARTERIOGRAF|FLEBOGRAF|UROGRAF|FLUOROSCOP|ESOFAGOGRAF|ENEMA|ENDOSCOP|COLONOSCOP|BRONCOSCOP|NEUROMIOGRAF|ELETROCARDIO|ELETROENCEFALO|\bECG\b|\bEEG\b|HOLTER|\bMAPA\b|ERGOMETR|AUDIOMETR|IMITANCIOMETR|ESPIROMETR|POLISSONOGRAF|CAMPIMETR|RETINOGRAF|BIOPSIA|ANATOMO/i;
   const ehExameDeImagem = nome => IMAGEM.test(semAcento(nome || ''));
 
-  const API = { nomeSeguro, slug, pastaCliente, jwt, comoPdf, mensagemDoPortal, ehExameDeImagem, b64, janela12Meses, nupsDaLista };
+  // Seguro-desemprego: o JSON do portal vira texto que uma pessoa e o CRM leem.
+  // Nome de campo do MTE pode mudar: cada linha pega o primeiro campo que
+  // existir; o JSON cru vai embaixo para nada se perder.
+  const dataBr = v => { const m = String(v || '').match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : String(v || '-'); };
+  const campo = (o, ...ks) => { for (const k of ks) if (o && o[k] != null && o[k] !== '') return o[k]; return ''; };
+  function textoSeguroDesemprego(lista) {
+    const linhas = ['SEGURO-DESEMPREGO — requerimentos (Portal Emprega Brasil, MTE)', ''];
+    // objeto {codigo, descricao} (modalidade, tipoInscricao, situação) → a descrição
+    const rot = v => (v && typeof v === 'object') ? (v.descricao || v.nome || v.codigo || '') : (v == null ? '' : v);
+    for (const r of lista) {
+      const d = r.detalhe || {};
+      linhas.push(`Requerimento ${campo(r, 'numeroRequerimento', 'numero', 'codigo') || '?'} · modalidade ${rot(campo(r, 'modalidade', 'tipo')) || '?'}`
+        + `${rot(campo(d, 'situacao', 'situacaoRequerimento', 'status')) ? ` · situação ${rot(campo(d, 'situacao', 'situacaoRequerimento', 'status'))}` : ''}`);
+      linhas.push(`  Data do requerimento: ${dataBr(campo(r, 'dataRequerimento', 'dataCadastro', 'data'))}`);
+      if (campo(r, 'razaoSocial', 'dataAdmissao', 'dataDispensa'))
+        linhas.push(`  Empregador: ${campo(r, 'razaoSocial') || '?'} (${rot(r.tipoInscricao) || ''} ${campo(r, 'inscricao', 'numeroInscricao') || ''}) · admissão ${dataBr(r.dataAdmissao)} · dispensa ${dataBr(campo(r, 'dataDispensa', 'dataDemissao'))}`);
+      if (r.dataInicioSuspensao || r.dataFimSuspensao)
+        linhas.push(`  Suspensão do contrato: ${dataBr(r.dataInicioSuspensao)} a ${dataBr(r.dataFimSuspensao)}`);
+      const v = [].concat(campo(d, 'vinculos', 'vinculo') || campo(r, 'vinculos') || []);
+      for (const x of v) linhas.push(`  Vínculo: ${campo(x, 'nomeEmpregador', 'empregador', 'razaoSocial') || '?'} · admissão ${dataBr(campo(x, 'dataAdmissao', 'admissao'))} · demissão ${dataBr(campo(x, 'dataDemissao', 'dataDesligamento', 'dataDispensa', 'demissao'))}`);
+      const p = [].concat(campo(d, 'parcelas') || campo(r, 'parcelas') || []);
+      for (const x of p) linhas.push(`  Parcela ${campo(x, 'numeroParcela', 'numero', 'parcela') || '?'}: liberação ${dataBr(campo(x, 'dataLiberacao'))} · pagamento ${dataBr(campo(x, 'dataPagamento', 'dataEmissao'))} · valor ${campo(x, 'valorParcela', 'valor') || '-'} · ${rot(campo(x, 'situacaoParcela', 'situacao')) || ''}`);
+      if (!p.length) linhas.push(r.detalhe_erro ? `  (parcelas: o portal não devolveu o detalhe — ${r.detalhe_erro})` : '  (sem parcelas informadas)');
+      linhas.push('');
+    }
+    linhas.push('', '--- dados brutos do portal ---', JSON.stringify(lista, null, 2));
+    return linhas.join('\n');
+  }
+
+  const API = { nomeSeguro, slug, pastaCliente, jwt, comoPdf, mensagemDoPortal, ehExameDeImagem, textoSeguroDesemprego, b64, janela12Meses, nupsDaLista };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.DOSSIE_REGRAS = API;
 })(typeof window !== 'undefined' ? window : globalThis);
