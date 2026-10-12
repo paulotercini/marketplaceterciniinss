@@ -1601,6 +1601,7 @@
   /* laranja, não amarelo: amarelo neste sistema quer dizer prazo de peça */
   .conta-linha.alerta{background:var(--laranja-f);color:var(--laranja)}
   .conta-linha span{font-size:12.5px;font-weight:600}
+  .conta-linha.sd{margin-top:6px;background:var(--placa);color:var(--texto)}
   .conta-prem{margin:8px 0 0;padding-left:18px;font-size:12.5px;color:var(--cinza);line-height:1.5}
   .conta-prem li{padding:1px 0}
   .conta-acao{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:9px}
@@ -4067,7 +4068,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.11</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.12</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15344,16 +15345,8 @@ function lerCnisPdf(itens){
   // F127 · um cliente pode ter VÁRIOS NITs: o do cabeçalho e o de cada
   // vínculo. Todos, sem repetir, na ordem em que aparecem.
   r.nits = [...new Set([r.filiado.nit, ...r.linhaDoTempo.map(v=>v.nit)].filter(Boolean))];
-  // competências com remuneração (MM/AAAA seguido de valor) e com contribuição
-  // (MM/AAAA seguido da data de pagamento). É a base do §1º do art. 15, os
-  // "mais de 120". Distintas, porque a mesma competência em dois vínculos
-  // continua sendo um mês só.
-  const comps = new Set();
-  for(const l of linhas){
-    for(const m of l.txt.matchAll(/(\d{2}\/\d{4})\s+(?:[\d.]+,\d{2}|\d{2}\/\d{2}\/\d{4})/g))
-      comps.add(m[1]);
-  }
-  r.competencias = comps.size;
+  // a base do § 1º do art. 15 (os "mais de 120") é contarSemPerda, gravada
+  // em gravarCnisLido: contagem seguida, que zera na perda da qualidade
   return r;
 }
 // ── a vida contributiva, como o CNIS a escreve ──────────────────────────
@@ -15776,6 +15769,8 @@ async function gravarCnisLido(cliId, lido, anexo, opc={}){
     vinculos:(lido.linhaDoTempo||[]).map(({comps, ...v})=>({...v,
       ultRemun: v.ultRemun || (comps||[]).map(x=>x.c).sort((a,b)=>chaveComp(a).localeCompare(chaveComp(b))).pop() || ""})),
     analise:an,
+    // a base do § 1º do art. 15: contribuições seguidas, sem perda da qualidade
+    contribSemPerda: contarSemPerda(mesesDoCnisLido(lido.linhaDoTempo, an.abaixo)),
     anexo_id: anexo ? anexo.id : ((t.pdf||{}).cnis||{}).anexo_id || null,
     caminho:  anexo ? anexo.caminho : ((t.pdf||{}).cnis||{}).caminho || null}};
   // as respostas pré-prontas: só onde ninguém respondeu à mão
@@ -17740,10 +17735,66 @@ function msgLembrete(l, c){
 //     vencimento da contribuição do contribuinte individual relativa ao mês
 //     imediatamente posterior ao término daqueles prazos"
 //
-// O DIA exato depende do vencimento da contribuição do contribuinte
-// individual, que não conferi em fonte primária. Por isso a tela entrega a
-// COMPETÊNCIA-limite e transcreve a regra, em vez de cravar uma data.
-const GRACA_FONTE = "Lei 8.213/91, art. 15, e Decreto 3.048/99, arts. 13 e 14";
+// O DIA (conferido em 11.10.2026): o vencimento da contribuição do contribuinte
+// individual é o dia 15 do mês seguinte ao da competência, prorrogado para o
+// dia útil seguinte quando não há expediente bancário (Decreto 3.048/99, art.
+// 216, II; Lei 8.212/91, art. 30, II). A perda é no dia seguinte a ele.
+//   IN PRES/INSS 128/2022, art. 184: a graça corre da última competência com
+//   salário de contribuição no mínimo (§ 2º), e os 24 meses pedem 120 NOVAS
+//   contribuições depois de uma perda da qualidade (§ 4º)
+const GRACA_FONTE = "Lei 8.213/91, art. 15, e Decreto 3.048/99, arts. 13, 14 e 216, II";
+// o dia em que a qualidade se perde, para a competência-limite da graça
+const diaBancario = iso => { const w = new Date(iso+"T12:00:00").getDay(); return w!==0 && w!==6 && !feriadosNacionais(+iso.slice(0,4)).has(iso); };
+function perdaDaQualidade(fimComp){
+  const c = competenciaMais(fimComp, 2);   // vence no mês seguinte ao da competência fim+1
+  let d = `${c.slice(3)}-${c.slice(0,2)}-15`;
+  while(!diaBancario(d)) d = somaDias(d, 1);
+  return {mantidaAte: d, perda: somaDias(d, 1)};
+}
+// § 1º do art. 15 e IN 128, art. 184, § 4º: as contribuições seguidas, sem
+// intervalo maior que a graça da época; o mês de benefício mantém a qualidade
+// sem somar, e a perda zera a conta. `mes` é um Map "AAAA-MM" → {conta, fac}.
+const _idxMes = k => { const [y, m] = k.split("-").map(Number); return y*12 + m; };
+function percorrerMeses(a, b, f){
+  if(!a || !b || b < a) return;
+  for(let i = _idxMes(a), fim = _idxMes(b); i <= fim; i++) f(`${Math.floor((i-1)/12)}-${String((i-1)%12+1).padStart(2,"0")}`);
+}
+function contarSemPerda(mes){
+  let n = 0, ant = null, antFac = false;
+  for(const k of [...mes.keys()].sort()){
+    const graca = antFac ? 6 : n > 120 ? 24 : 12;
+    if(ant && _idxMes(k) - _idxMes(ant) - 1 > graca) n = 0;
+    const x = mes.get(k);
+    if(x.conta) n++;
+    ant = k; antFac = x.conta && x.fac;
+  }
+  return n;
+}
+const _mesDeData = d => { const m = String(d||"").match(/(\d{2})\/(\d{4})$/); return m ? `${m[2]}-${m[1]}` : ""; };
+function marcarBeneficios(mes, vs){
+  for(const v of (vs||[]).filter(v=>v.tipo==="Benefício" && v.inicio))
+    percorrerMeses(_mesDeData(v.inicio), v.fim ? _mesDeData(v.fim) : hoje().slice(0,7), k=>{ if(!mes.has(k)) mes.set(k, {conta:false, fac:false}); });
+}
+// da leitura do PDF, com cada competência e o tipo de filiado
+function mesesDoCnisLido(linha, abaixo){
+  const mes = new Map(), fora = new Set((abaixo||[]).map(x=>chaveComp(x.comp)));
+  const marca = (k, fac) => { const x = mes.get(k); mes.set(k, {conta:true, fac: x && x.conta ? x.fac && fac : fac}); };
+  for(const v of (linha||[]).filter(v=>v.tipo!=="Benefício")){
+    const comps = (v.comps||[]).filter(x=>+String(x.c).slice(0,2)<=12).map(x=>chaveComp(x.c)).sort();
+    if(TIPO_REMUN.test(v.tipo||"")) percorrerMeses(_mesDeData(v.inicio), v.fim ? _mesDeData(v.fim) : (comps[comps.length-1] || chaveComp(v.ultRemun||"")), k=>{ if(!fora.has(k)) marca(k, false); });
+    else comps.forEach(k=>{ if(!fora.has(k)) marca(k, /Facultativo/.test(v.tipo||"")); });
+  }
+  marcarBeneficios(mes, linha);
+  return mes;
+}
+// do CNIS gravado antes desta conta existir: os períodos da contagem
+function mesesDoCnisGravado(g){
+  const mes = new Map();
+  for(const [a, b] of (((g.analise||{}).contagem||{}).periodos||[])) percorrerMeses(a, b, k=>mes.set(k, {conta:true, fac:false}));
+  marcarBeneficios(mes, g.vinculos);
+  return mes;
+}
+const contribSemPerda = g => g ? (g.contribSemPerda ?? contarSemPerda(mesesDoCnisGravado(g))) : 0;
 function competenciaMais(comp, meses){
   const [m, a] = comp.split("/").map(Number);
   const t = (a*12 + (m-1)) + meses;
@@ -17751,9 +17802,13 @@ function competenciaMais(comp, meses){
 }
 const compHoje = () => { const h = hoje(); return h.slice(5,7)+"/"+h.slice(0,4); };
 const compMenor = (a,b) => (a.slice(3)+a.slice(0,2)) <= (b.slice(3)+b.slice(0,2));
-// a conta. `vs` é a linha do tempo do CNIS; `desempregado` é decisão de quem
-// atende, porque a prova do desemprego não está no extrato.
-function calcularGraca(vs, nContribs, desempregado){
+// a conta. `vs` é a linha do tempo do CNIS; `nContribs`, as contribuições sem
+// perda (contribSemPerda); `desempregado` é decisão de quem atende, porque a
+// prova do desemprego não está no extrato; `abaixo`, as competências abaixo
+// do mínimo, que não abrem a graça sem complementação; `contados`, os períodos
+// da contagem ("AAAA-MM"), para o recuo não parar num mês sem contribuição;
+// `seguros`, os requerimentos do seguro-desemprego lidos do dossiê
+function calcularGraca(vs, nContribs, desempregado, abaixo, contados, seguros){
   const r = {premissas:[], fonte:GRACA_FONTE};
   if(!vs || !vs.length) return null;
   const emGozo = vs.some(v=>v.tipo==="Benefício" && !v.fim && v.inicio
@@ -17764,22 +17819,29 @@ function calcularGraca(vs, nContribs, desempregado){
     return r;
   }
   // a última competência "dentro": fim de vínculo, fim de benefício ou a
-  // última remuneração de um vínculo ainda aberto
-  const comps = [];
+  // última remuneração de um vínculo ainda aberto, recuando a que ficou
+  // abaixo do mínimo (IN 128, art. 184, § 2º)
+  const fora = new Set((abaixo||[]).map(x=>x.comp)), cands = [];
+  const contado = c => !(contados||[]).length || contados.some(([a, b])=>chaveComp(c)>=a && chaveComp(c)<=b);
   for(const v of vs){
-    if(v.fim) comps.push(v.fim.slice(3,5)+"/"+v.fim.slice(6));
-    if(v.ultRemun) comps.push(v.ultRemun);
+    let c = v.fim ? v.fim.slice(3,5)+"/"+v.fim.slice(6) : v.ultRemun;
+    if(!c) continue;
+    if(v.tipo!=="Benefício" && fora.has(c)){
+      const ini = v.inicio ? v.inicio.slice(3,5)+"/"+v.inicio.slice(6) : "";
+      // recua mês a mês, dentro do vínculo, até o último mês contado (o
+      // contribuinte individual pode ter lacuna antes da competência abaixo)
+      for(let n = 0; c && (fora.has(c) || !contado(c)); n++)
+        c = n > 600 || (ini && !compMenor(ini, competenciaMais(c, -1))) ? null : competenciaMais(c, -1);
+    }
+    if(c) cands.push({c, v});
   }
-  if(!comps.length) return null;
-  const ultima = comps.reduce((a,b)=> compMenor(a,b) ? b : a);
+  if(!cands.length) return null;
+  const ultima = cands.map(x=>x.c).reduce((a,b)=> compMenor(a,b) ? b : a);
   r.ultima = ultima;
   if(vs.some(v=>v.aberto && !v.fim && v.tipo!=="Benefício"))
     r.premissas.push("há vínculo sem data de saída no extrato: a conta o encerra no último dia do mês da última remuneração, até o acerto do CNIS");
   // qual foi o ÚLTIMO registro, e de que tipo: facultativo tem metade do prazo
-  const doFim = vs.filter(v=>{
-    const c = v.fim ? v.fim.slice(3,5)+"/"+v.fim.slice(6) : v.ultRemun;
-    return c === ultima;
-  });
+  const doFim = cands.filter(x=>x.c===ultima).map(x=>x.v);
   const facultativo = doFim.length>0 && doFim.every(v=>v.tipo==="Facultativo");
   const porBeneficio = doFim.some(v=>v.tipo==="Benefício");
   r.base = facultativo ? 6 : 12;
@@ -17791,20 +17853,55 @@ function calcularGraca(vs, nContribs, desempregado){
   r.mais120 = nContribs > 120;
   if(r.mais120 && !facultativo){
     r.base = 24;
-    r.premissas.push(`o extrato traz ${nContribs} competências, mais de 120, e o §1º prorroga para até 24 meses — a prorrogação exige que não tenha havido interrupção com perda da qualidade, e isso ninguém lê sozinho`);
+    r.premissas.push(`o extrato traz ${nContribs} contribuições seguidas, sem perda da qualidade, mais de 120, e o §1º prorroga para até 24 meses (IN 128, art. 184, § 4º)`);
   }else if(r.mais120 && facultativo){
-    r.premissas.push(`o extrato traz ${nContribs} competências, mas o §1º prorroga o prazo do inciso II, e o facultativo está no inciso VI`);
+    r.premissas.push(`o extrato traz ${nContribs} contribuições sem perda, mas o §1º prorroga o prazo do inciso II, e o facultativo está no inciso VI`);
   }
-  if(desempregado){
+  // IN 128, art. 184, § 5º: o seguro-desemprego RECEBIDO dentro da graça prova
+  // o desemprego e acresce 12 meses ao prazo do inciso II, que continua contado
+  // da última competência (§ 2º), e não da última parcela
+  const iniG = competenciaMais(ultima, 1);
+  r.janela = {ini: iniG, ate: perdaDaQualidade(competenciaMais(ultima, r.base)).mantidaAte};
+  r.facultativo = facultativo;
+  const naGraca = p => { const d = isoBr(p.pagamento); return d >= `${iniG.slice(3)}-${iniG.slice(0,2)}-01` && d <= r.janela.ate; };
+  const sd = facultativo ? null : (seguros||[]).map(s=>({...s, dentro: s.parcelas.filter(p=>parcelaRecebida(p) && naGraca(p))})).find(s=>s.dentro.length);
+  if(sd){
+    r.base += 12;
+    r.seguro = sd;
+    r.premissas.push(`mais 12 meses do §2º, pelo desemprego: o seguro-desemprego ${sd.dispensa ? `da dispensa de ${sd.dispensa}` : `requerido em ${sd.data}`} teve parcela recebida em ${sd.dentro[0].pagamento}, dentro da graça (IN 128, art. 184, § 5º)`);
+  }else if(desempregado){
     r.base += 12;
     r.premissas.push("mais 12 meses do §2º, pelo desemprego — a prova é do escritório, não está no extrato");
   }
   r.fim = competenciaMais(ultima, r.base);
-  r.vencida = compMenor(r.fim, compHoje());
-  r.desempregado = !!desempregado;
+  Object.assign(r, perdaDaQualidade(r.fim));
+  r.vencida = hoje() >= r.perda;
+  r.desempregado = !!desempregado || !!sd;
+  // a competência abaixo do mínimo depois da última válida: complementada,
+  // ela leva a graça adiante (Decreto 3.048/99, art. 19-E, § 1º)
+  const depois = [...fora].filter(c=>!compMenor(c, ultima)).sort((a,b)=>chaveComp(a).localeCompare(chaveComp(b))).pop();
+  if(depois){
+    const fimC = competenciaMais(depois, r.base);
+    r.complementar = {comp: depois, fim: fimC, ...perdaDaQualidade(fimC)};
+    r.premissas.push(`a competência ${depois} ficou abaixo do mínimo e só conta complementada; complementada, a qualidade vai até ${fmtBarra(r.complementar.mantidaAte)}`);
+  }
   return r;
 }
 
+// o seguro-desemprego ao lado da qualidade: o que prova, ou por que não prova
+function fatoSeguro(gr, seguros){
+  const quem = s => s.dispensa ? `da dispensa de ${s.dispensa}${s.empregador ? ` por ${s.empregador}` : ""}` : `requerido em ${s.data || "data não lida"}`;
+  const de = ps => `${ps.length} parcela${ps.length>1?"s":""} recebida${ps.length>1?"s":""}, de ${ps[0].pagamento} a ${ps[ps.length-1].pagamento}`;
+  const s = gr && gr.seguro;
+  if(s) return {est:"ok", anexo:s.anexo.id, texto:`Seguro-desemprego ${quem(s)}: ${de(s.dentro)}, dentro da graça; prova o desemprego e acresce 12 meses (art. 15, § 2º, da Lei 8.213/91, e IN 128, art. 184, § 5º)`};
+  const u = (seguros||[]).slice().sort((a,b)=>isoBr(b.data||b.dispensa).localeCompare(isoBr(a.data||a.dispensa)))[0];
+  if(!u) return null;
+  const rec = u.parcelas.filter(parcelaRecebida);
+  const conta = !gr || gr.semLimite ? ""
+    : gr.facultativo ? "; o último registro é de facultativo, e o § 5º do art. 184 da IN 128 acresce só o prazo do inciso II"
+    : rec.length ? `; fora da graça desta conta, que corre de ${gr.janela.ini} a ${fmtBarra(gr.janela.ate)}, e não acresce os 12 meses` : "; não prova o desemprego";
+  return {est:"info", anexo:u.anexo.id, texto:`Seguro-desemprego ${quem(u)}: ${rec.length ? de(rec) : `nenhuma parcela recebida${u.situacao ? `, situação ${u.situacao.toLowerCase()}` : ""}`}${conta}`};
+}
 // ── o bloco de contas, no pé da aba de Lembretes ────────────────────────
 // "Questões pertinentes do site interno", pedido do Paulo. Só entra o que
 // muda decisão de prazo, porque esta aba é sobre data que chega. A conta
@@ -17812,32 +17909,35 @@ function calcularGraca(vs, nContribs, desempregado){
 function blocoContas(c){
   const g = ((triagemDe(c).pdf||{}).cnis||{});
   const vs = g.vinculos || [];
-  const desemp = !!(triagemDe(c).graca||{}).desempregado;
-  const r = vs.length ? calcularGraca(vs, g.competencias||0, desemp) : null;
+  const desemp = !!(triagemDe(c).graca||{}).desempregado, seguros = fontesDoDossie(c.id).seguros;
+  const r = vs.length ? calcularGraca(vs, contribSemPerda(g), desemp, (g.analise||{}).abaixo, ((g.analise||{}).contagem||{}).periodos, seguros) : null;
+  const fs = fatoSeguro(r, seguros);
+  const sdLinha = fs ? `<div class="conta-linha sd"><span>${esc(fs.texto)}</span>
+      <button type="button" class="adr-link" onclick="abrirAnexo('${fs.anexo}')">ver</button></div>` : "";
   const cabeca = `<div class="cad-tit"><span class="cad-ic">${CAD_IC.doc}</span>Contas deste cliente
       <span class="cad-tit-sub">o que decide prazo, calculado do CNIS que você já leu</span></div>`;
   if(!r) return `<div class="cad-cartao conta-cx">${cabeca}
     <p class="cad-nota" style="margin:0">Leia o CNIS na aba <b>Cadastro → Triagem</b> e a qualidade de
-      segurado é calculada aqui, com as premissas à vista.</p></div>`;
+      segurado é calculada aqui, com as premissas à vista.</p>${sdLinha}</div>`;
   const corpo = r.semLimite
     ? `<div class="conta-linha ok"><b>Qualidade mantida sem limite de prazo</b>
         <span>há benefício em manutenção</span></div>`
     : `<div class="conta-linha ${r.vencida?"alerta":"ok"}">
-        <b>Período de graça até ${esc(r.fim)}</b>
-        <span>${r.vencida?"já venceu":"em curso"} · ${r.base} meses a partir de ${esc(r.ultima)}</span></div>`;
+        <b>Qualidade mantida até ${fmtBarra(r.mantidaAte)}</b>
+        <span>${r.vencida?"perdida":"perda"} em ${fmtBarra(r.perda)} · ${r.base} meses a partir de ${esc(r.ultima)}, até a competência ${esc(r.fim)}</span></div>`;
   return `<div class="cad-cartao conta-cx">${cabeca}
-    ${corpo}
+    ${corpo}${sdLinha}
     <ul class="conta-prem">${(r.premissas||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
     <div class="conta-acao">
-      <label class="conta-ck"><input type="checkbox" ${desemp?"checked":""}
+      ${r.seguro ? "" : `<label class="conta-ck"><input type="checkbox" ${desemp?"checked":""}
         onchange="marcarDesemprego('${c.id}',this.checked)">
-        segurado desempregado (§2º, mais 12 meses — a prova é do escritório)</label>
+        segurado desempregado (§2º, mais 12 meses — a prova é do escritório)</label>`}
       <a class="tri-ferr" href="https://advprevidenciaria.netlify.app/" target="_blank" rel="noopener">
         Contribuições e qualidade de segurado ↗</a>
     </div>
     <p class="cad-nota" style="margin:8px 0 0">Fonte: ${esc(GRACA_FONTE)}, conferidos no Planalto.
-      O <b>dia</b> da perda depende do vencimento da contribuição do contribuinte individual
-      (art. 14 do Decreto 3.048/99); por isso aqui vai a competência, não a data.
+      A perda ocorre no dia seguinte ao vencimento da contribuição do contribuinte individual
+      do mês seguinte ao fim do prazo (art. 14 do Decreto 3.048/99), dia 15 ou o dia útil seguinte.
       Conta de apoio: quem conclui é você.</p>
   </div>`;
 }
@@ -18221,13 +18321,24 @@ const AD_ROT = {tempo:"Tempo de contribuição", carencia:"Carência", valor:"Va
 const AD_RECOLHE = [["empregado","Empregado"],["facultativo","Facultativo"],["ci","Contribuinte individual"],
   ["mei","MEI"],["desempregado","Desempregado"],["outro","Outro"]];
 const rotRecolhe = v => (AD_RECOLHE.find(([k])=>k===v)||[,v||""])[1];
+// F194 · A ANÁLISE PEDE POUCO, E O CERTO (pedido do Paulo, 11.10.2026): por
+// espécie, só o que muda o direito ou o valor. O benefício por incapacidade
+// não pede tempo nem data do direito; o acidentário e o auxílio-acidente não
+// pedem carência (art. 26, I e II, da Lei 8.213/91); o BPC não pede valor. O
+// resto do formulário fica a um clique, em "mostrar os outros campos".
+const AD_CAMPOS_ESPECIE = {
+  B31:["carencia","valor","recolhe"], B32:["tempo","carencia","valor","recolhe"], B91:["valor","recolhe"], B92:["valor","recolhe"],
+  B36:["valor","recolhe"], B94:["valor","recolhe"], B21:["valor"], B93:["valor"], B25:["carencia","valor"], B26:["carencia","valor"],
+  B80:["carencia","valor","recolhe"], B87:["recolhe"], B88:["recolhe"],
+};
 function camposDoServico(sv){
   const s=sv||{}, sub=s.sub||"", t=`${sub} ${s.nome||""}`;
   const pcd = /\.PCD/.test(sub) || /deficiência/i.test(t);
   const esp = s.cod==="B46" || /\.ESP/.test(sub) || /especia/i.test(t);
   const rur = /\.RUR/.test(sub) || /rura/i.test(t);
-  return ["tempo","carencia","valor","data_direito","recolhe",
-    ...(pcd?["did","grau"]:[]), ...(pcd||esp?["periodos_especiais"]:[]), ...(rur?["periodos_rurais"]:[])];
+  const proprio = AD_CAMPOS_ESPECIE[s.cod];
+  return [...(proprio || ["tempo","carencia","valor","data_direito","recolhe"]),
+    ...(pcd?["did","grau"]:[]), ...(!proprio && (pcd||esp)?["periodos_especiais"]:[]), ...(rur?["periodos_rurais"]:[])];
 }
 // facultativo e contribuinte individual (o MEI é CI) podem planejar meses sem recolher
 const recolheLivre = r => ["facultativo","ci","mei"].includes(r);
@@ -18475,6 +18586,8 @@ function formAnalise(c){
       <div id="ad-plano-box" class="adr-lista-form" ${recolheLivre(rec)?"":"hidden"}><span class="adr-form-sub">Planejamento das contribuições</span>
         <div id="ad-plano">${(ant.plano||[]).map(adPlano).join("")}</div>
         <button type="button" class="btn-mini" onclick="document.getElementById('ad-plano').insertAdjacentHTML('beforeend', adPlano())">+ data</button></div>
+      <button type="button" class="btn-mini" id="ad-outros" onclick="document.querySelectorAll('#ad-campos [data-campo]').forEach(e=>{ e.hidden=false; })"
+        title="a espécie escolhida pede só os campos acima">mostrar os outros campos</button>
     </div>
 
     <textarea id="ad-contexto" placeholder="o que foi visto e combinado com o cliente — ex.: prefere esperar a regra dos pontos; avisar quando faltar 6 meses"
@@ -19054,7 +19167,7 @@ const docsDoDossie = cliId => (D.anexos||[]).filter(a=>a.cliente_id===cliId && a
 const fonteDoDossie = a => { const [f, ...r] = String(a.nome||"").split(" · "); return r.length ? [f, r.join(" · ")] : ["Dossiê", f]; };
 function caixaDossie(cli){
   const d = (cli.dossie && typeof cli.dossie==="object") ? cli.dossie : {};
-  const NOME = {meuinss:"Meu INSS", mte:"Emprega Brasil (CTPS/RAIS/CAGED)", recursos:"e-Recursos", hc:"HC Ribeirão"};
+  const NOME = {meuinss:"Meu INSS", mte:"Emprega Brasil (CTPS/RAIS/CAGED)", recursos:"e-Recursos", hc:"HC Ribeirão", redesim:"Redesim (CNPJs)"};
   const portais = Object.keys(NOME).filter(k=>d[k]);
   const docs = docsDoDossie(cli.id);
   if(!portais.length && !docs.length) return "";
@@ -19165,15 +19278,25 @@ function lerCagedTexto(txt){
 // RAIS · "Relatório Completo do Trabalhador": um bloco por vínculo e por
 // ano-base. O desligamento é a linha "Data dd/mm/aaaa" (só "Data" quando não
 // houve), a causa vem logo abaixo e as remunerações vêm por mês, duas por linha.
+// Os afastamentos vêm numerados sob "De Até Motivo" ("1) 0 - null" quando não
+// houve), com o código e a descrição do motivo, e a data sem o ano quando o
+// portal a abrevia: o ano é o do ano-base.
+const _dataDaRais = (tok, ano) => { const m = String(tok).match(/^(\d{2})\/?(\d{2})(?:\/(\d{4}))?$/); return m ? `${m[1]}/${m[2]}/${m[3]||ano}` : ""; };
 function lerRaisTexto(txt){
   const ls = linhasDoTexto(txt);
   const out = []; let b = null, m;
   ls.forEach((l, i)=>{
     if((m = l.match(/RAIS\s*-\s*Ano-Base:\s*(\d{4})/i))){
-      b = {ano:m[1], cnpj:"", raiz:"", nome:"", admissao:"", desligamento:"", causa:"", avisoPrevio:0, remuneracoes:{}};
+      b = {ano:m[1], cnpj:"", raiz:"", nome:"", admissao:"", desligamento:"", causa:"", avisoPrevio:0, remuneracoes:{}, afastamentos:[], diasAfastados:0};
       out.push(b); return;
     }
     if(!b) return;
+    if((m = l.match(/^\d\)\s*(.*?)\s*(\d{1,3})\s*-\s*(.+)$/)) && m[2]!=="0"){
+      const ds = (m[1].match(/\d{2}\/\d{2}\/\d{4}|\d{2}\/\d{2}|\d{4}/g)||[]).map(x=>_dataDaRais(x, b.ano)).filter(Boolean);
+      b.afastamentos.push({de:ds[0]||"", ate:ds[1]||"", codigo:m[2], motivo:m[3].trim()});
+      return;
+    }
+    if((m = l.match(/^Quantidade de dias afastados:\s*(\d+)/i))){ b.diasAfastados = +m[1]; return; }
     if(/^CNPJ\s+Razão Social$/i.test(l)){
       const x = (ls[i+1]||"").match(/^([\d.\/-]{11,18})\s+(.+)$/);
       if(x){ b.cnpj = x[1]; b.raiz = raizCnpj(x[1]); b.nome = x[2].trim(); }
@@ -19187,6 +19310,65 @@ function lerRaisTexto(txt){
       b.remuneracoes[String(MESES_NOME.indexOf(x[1].toLowerCase())+1).padStart(2,"0")] = +x[2].replace(/\./g,"").replace(",",".");
   });
   return out.filter(x=>x.raiz || x.admissao);
+}
+// SEGURO-DESEMPREGO · o .txt que a extensão monta do Emprega Brasil (dossiê
+// 0.6.2, textoSeguroDesemprego): um bloco por requerimento, com a dispensa e
+// as parcelas datadas. O JSON cru do pé fica de fora.
+function lerSeguroDesempregoTexto(txt){
+  const ls = linhasDoTexto(String(txt||"").split("--- dados brutos do portal ---")[0]);
+  if(!/^SEGURO-DESEMPREGO/.test(ls[0]||"")) return [];
+  const data = s => (String(s||"").match(/\d{2}\/\d{2}\/\d{4}/)||[])[0] || "";
+  const out = []; let r = null, m;
+  for(const l of ls){
+    if((m = l.match(/^Requerimento\s+(\S+)\s+·\s+modalidade\s+(.+?)(?:\s+·\s+situação\s+(.+))?$/))){
+      r = {numero:m[1], modalidade:m[2], situacao:m[3]||"", data:"", empregador:"", admissao:"", dispensa:"", parcelas:[]};
+      out.push(r);
+    }else if(!r) continue;
+    else if((m = l.match(/^Data do requerimento:\s*(.*)$/))) r.data = data(m[1]);
+    else if((m = l.match(/^Empregador:\s*(.*?)\s+\(.*?\)\s+·\s+admissão\s+(\S+)\s+·\s+dispensa\s+(\S+)/)))
+      Object.assign(r, {empregador: m[1]==="?" ? "" : m[1], admissao:data(m[2]), dispensa:data(m[3])});
+    else if((m = l.match(/^Vínculo:\s*(.*?)\s+·\s+admissão\s+(\S+)\s+·\s+demissão\s+(\S+)/)) && !r.dispensa)
+      Object.assign(r, {empregador: r.empregador || (m[1]==="?" ? "" : m[1]), admissao: r.admissao || data(m[2]), dispensa:data(m[3])});
+    else if((m = l.match(/^Parcela\s+(\S+):\s+liberação\s+(\S+)\s+·\s+pagamento\s+(\S+)\s+·\s+valor\s+(\S+)\s+·?\s*(.*)$/)))
+      r.parcelas.push({n:m[1], liberacao:data(m[2]), pagamento:data(m[3]), valor:m[4], situacao:m[5].trim()});
+  }
+  return out;
+}
+// a parcela que chegou ao segurado: com data e sem situação de bloqueio
+const parcelaRecebida = p => !!p.pagamento && !/CANCEL|BLOQUE|SUSPEN|N[ÃA]O\s*PAG|DEVOLV|RESTITU|PENDEN|A EMITIR/i.test(p.situacao||"");
+// as licenças sem remuneração dos blocos da RAIS (motivo 70 do afastamento),
+// uma vez cada: o mesmo afastamento sai na RAIS de cada vínculo e ano
+function licencasDaRais(rais){
+  const visto = new Set(), out = [];
+  for(const r of rais||[]) for(const a of r.afastamentos||[]){
+    if(a.codigo!=="70" && !/sem\s+(vencimento|remunera)/i.test(a.motivo)) continue;
+    const k = [r.raiz, a.de, a.ate].join("|"); if(visto.has(k)) continue; visto.add(k);
+    const d0 = isoBr(a.de), d1 = isoBr(a.ate);
+    const dias = d0 && d1 ? Math.round((new Date(d1+"T12:00:00") - new Date(d0+"T12:00:00"))/864e5) + 1
+      : (r.afastamentos.length===1 ? r.diasAfastados : 0);
+    out.push({ano:r.ano, nome:r.nome, de:a.de, ate:a.ate, dias, anexo:r.anexo});
+  }
+  return out;
+}
+// REDESIM · o .txt dos CNPJs vinculados ao CPF (dossiê 0.7.1, redesim.js): um
+// bloco por CNPJ, com a situação e o vínculo do CPF. Sem a data de abertura,
+// que só a consulta ao CNPJ traz (consultarCnpjWs)
+function lerCnpjsTexto(txt){
+  const ls = linhasDoTexto(String(txt||"").split("--- dados brutos do portal ---")[0]);
+  if(!/^CNPJs VINCULADOS AO CPF/.test(ls[0]||"")) return null;
+  const out = {consulta: (ls.join("\n").match(/Consulta em (\d{2}\/\d{2}\/\d{4})/)||[])[1] || "", cnpjs:[]};
+  const sem = v => v==="?" ? "" : (v||"");
+  let e = null, m;
+  for(const l of ls){
+    if((m = l.match(/^CNPJ\s+([\d./-]{14,18})\s+·\s+(.*?)(?:\s+\(fantasia:\s*(.*)\))?$/))){
+      e = {cnpj:m[1], razao:sem(m[2]), fantasia:m[3]||"", situacao:"", matriz:"", local:"", vinculo:"", qualificacao:"", capital:""};
+      out.cnpjs.push(e);
+    }else if(!e) continue;
+    else if((m = l.match(/^Situação cadastral:\s*(.*)$/))){ const [s, mt, lc] = m[1].split(/\s*·\s*/); Object.assign(e, {situacao:sem(s), matriz:mt||"", local:(lc||"").replace(/^\/$/, "")}); }
+    else if((m = l.match(/^Vínculo do CPF:\s*(.*)$/))){ const [v, q] = m[1].split(/\s*·\s*qualificação:\s*/); Object.assign(e, {vinculo:sem(v), qualificacao:q||""}); }
+    else if((m = l.match(/^Capital social:\s*(.+)$/))) e.capital = m[1];
+  }
+  return out;
 }
 // Onda 2 · "11 de Junho de 2026" → "11/06/2026"
 function dataPorExtenso(s){
@@ -19334,54 +19516,37 @@ function lerExtratoPagTexto(txt){
   }
   return out;
 }
-// CÓPIA DO PROCESSO (PAP do Meu INSS) · a tarefa, os despachos com a data de
-// envio e as comunicações de decisão. O despacho quebra a data no meio ("16/05"
-// e "/2025" em linhas seguidas) e é juntado antes de ler.
+// CÓPIA DO PROCESSO (PAP do Meu INSS) · só a folha de interposição (o
+// PROTOCOLO DE REQUERIMENTO: serviço, situação, NB, data de entrada e última
+// atualização) e a COMUNICAÇÃO DE DECISÃO (decisão, motivo e cessação). O resto
+// da cópia não se lê: traz páginas em imagem e despachos que podem gerar fato
+// falso (decisão do Paulo, 11.10.2026). A "Data:" da comunicação não se lê,
+// porque a cópia a regera com a data da EMISSÃO da cópia, e não com a da
+// decisão. A data quebra no meio ("16/05" e "/2025" em linhas seguidas) e é
+// juntada antes de ler.
 function lerProcessoTexto(txt){
   const ls = linhasDoTexto(txt);
-  if(!ls.includes("PROTOCOLO DE REQUERIMENTO") || !ls.some(l=>/^Despacho \(\d+\)/.test(l))) return null;
+  if(!ls.includes("PROTOCOLO DE REQUERIMENTO")) return null;
   const junta = xs => xs.join(" ").replace(/(\d{2}\/\d{2})\s+\/(\d{4})/g, "$1/$2").replace(/\s+/g, " ").trim();
-  const frase1 = t => t.replace(/^Prezad[oa](?:\(a\))?\s+Sr\.?\s*(?:\(a\))?,?\s*/i, "").split(/(?<=\.)\s/)[0].slice(0, 180).replace(/\.$/, "");
   const iS = ls.findIndex(l=>/^Serviço\s+Status\s+Prioridade$/i.test(l));
   const sv = (ls[iS+1]||"").match(/^(.+?)\s+(Concluída|Pendente|Cancelada|Em análise|Em exigência|Exigência|Aguardando .+?)\s+\S+$/i);
   const iNb = ls.indexOf("NB"), tudo = ls.join("\n");
   const nb = soDig(((iNb>=0 && /^[\d.\-]{10,13}$/.test(ls[iNb+1]||"")) ? ls[iNb+1] : "")
     || (tudo.match(/^NB\s+([\d.\-]{10,13})$/m)||[])[1] || (tudo.match(/Número do Benefício:\s*([\d.\-]{10,13})/)||[])[1] || "");
-  const desp = []; let d = null, m;
-  for(const l of ls){
-    if(/^Despacho \(\d+\)/.test(l)){ d = {em:"", linhas:[]}; desp.push(d); continue; }
-    if(!d) continue;
-    if(!d.em && (m = l.match(/^Enviado em\s+(\d{2}\/\d{2}\/\d{4})/))){ d.em = m[1]; continue; }
-    if(/^(Emitido em:|Página \d+ de \d+|Anexos de Perícias|PROTOCOLO DE REQUERIMENTO|INSTITUTO NACIONAL DO SEGURO SOCIAL|INSS - Instituto|Este documento foi gerado)/i.test(l)){ d = null; continue; }
-    d.linhas.push(l);
-  }
-  const despachos = desp.filter(x=>x.em).map(x=>({em:x.em, texto:junta(x.linhas)}))
-    .sort((a,b)=>isoBr(a.em).localeCompare(isoBr(b.em)));
+  // cada comunicação vai até a próxima, ou 45 linhas
   const comunicacoes = [];
   ls.forEach((l, i)=>{
     if(l!=="COMUNICAÇÃO DE DECISÃO") return;
-    const t = junta(ls.slice(i+1, i+30)), dec = (t.match(/Decisão:\s*(.+?)\.?\s+Motivo:/i)||[])[1];
-    if(dec) comunicacoes.push({nb: soDig((t.match(/Número do Benefício:\s*([\d.\-]{10,13})/)||[])[1]||""), decisao: dec.trim(),
-      motivo: ((t.match(/Motivo:\s*(.+?)\.?\s+(?:Fundamentação|Em atenção|A perícia)/i)||[])[1]||"").trim()});
-  });
-  const pericias = [], exigencias = [], decisoes = [];
-  despachos.forEach((x, i)=>{
-    const t = x.texto;
-    if((m = t.match(/Agendamento de perícia realizad[oa] com sucesso.*?data e hora agendada:\s*(\d{2}\/\d{2}\/\d{4})\s+(\d{2}:\d{2})(?:.*?unidade:\s*(?:\(\d+\)\s*-\s*)?([^)]+)\))?/i)))
-      pericias.push({em:x.em, data:m[1], hora:m[2], local:(m[3]||"").trim()});
-    else if(/exig[êe]ncia/i.test(t) && !/foi efetuado|foi cumprida/i.test(t) && (m = t.match(/em até (\d+)\s*(?:\([^)]*\)\s*)?dias/i)))
-      exigencias.push({em:x.em, dias:+m[1], texto: /necessário agendar a perícia/i.test(t) ? "agendar a perícia médica" : frase1(t),
-        cumprida: despachos.slice(i+1).some(y=>/exigência (?:foi )?(?:efetuad|cumprid)|cumprimento da exigência|Agendamento de perícia realizad|reconheceu a sua incapacidade|indeferid|concedid/i.test(y.texto))});
-    else if(/reconheceu a sua incapacidade|indeferid|foi concedid|foi prorrogad/i.test(t)){
-      const contra = /não reconheceu|indeferid|não foi prorrogad/i.test(t);
-      const c = comunicacoes.find(c=>/INDEFER|NEGAD/i.test(c.decisao)===contra);
-      decisoes.push({em:x.em, contra, texto: frase1(t), decisao: c ? c.decisao : "", motivo: c ? c.motivo : "",
-        dcb: (t.match(/cessação do (?:seu )?benefício(?: será| continua sendo)? em\s+(\d{2}\/\d{2}\/\d{4})/i) || t.match(/Data da cessação do benefício:\s*(\d{2}\/\d{2}\/\d{4})/i) || [])[1] || "",
-        nb: soDig((t.match(/(?:benefício|nº)\s+([\d.\-]{10,13})\b/i)||[])[1]||"")});
-    }
+    const prox = ls.indexOf("COMUNICAÇÃO DE DECISÃO", i+1);
+    const t = junta(ls.slice(i+1, prox>i ? Math.min(prox, i+45) : i+45)), dec = (t.match(/Decisão:\s*(.+?)\.?\s+Motivo:/i)||[])[1];
+    if(dec) comunicacoes.push({nb: soDig((t.match(/Número do Benefício:\s*([\d.\-]{10,13})/)||[])[1]||"") || nb, decisao: dec.trim(),
+      contra: /INDEFER|NEGAD|NÃO RECONHEC/i.test(dec),
+      motivo: ((t.match(/Motivo:\s*(.+?)\.?\s+(?:Fundamentação|Em atenção|A perícia)/i)||[])[1]||"").trim(),
+      dcb: (t.match(/(?:será mantido até|Data da cessação(?: do benefício)?:?)\s*(\d{2}\/\d{2}\/\d{4})/i)||[])[1]||""});
   });
   return {servico: sv ? sv[1] : (ls[iS+1]||""), status: sv ? sv[2] : "", nb,
-    entrada: (tudo.match(/Data de entrada:\s*(\d{2}\/\d{2}\/\d{4})/)||[])[1]||"", despachos, pericias, exigencias, decisoes, comunicacoes};
+    entrada: (tudo.match(/Data de entrada:\s*(\d{2}\/\d{2}\/\d{4})/)||[])[1]||"",
+    atualizado: (tudo.match(/Última atualização\s*(\d{2}\/\d{2}\/\d{4})/)||[])[1]||"", comunicacoes};
 }
 // ═══ Onda 5 · A CLÍNICA: a linha do tempo dos documentos médicos do dossiê ═══
 // A data e o tipo saem do nome do arquivo, que o portal do hospital já traz
@@ -19466,7 +19631,7 @@ function lidoDoAnexo(a, leitor, chave){
   return _leituraCache.get(k);
 }
 function fontesDoDossie(cliId){
-  const f = {caged:[], rais:[], laudos:[], cartas:[], extratos:[], processos:[], resumos:[], cats:[], ppps:[]};
+  const f = {caged:[], rais:[], laudos:[], cartas:[], extratos:[], processos:[], resumos:[], cats:[], ppps:[], seguros:[], cnpjs:[], redesim:null};
   // o mesmo laudo vem sozinho e dentro da cópia do processo; a mesma carta, em dois PDFs
   const visto = new Set(), novo = k => !visto.has(k) && visto.add(k);
   for(const a of docsDoDossie(cliId).filter(x=>x.texto)){
@@ -19481,6 +19646,9 @@ function fontesDoDossie(cliId){
     if(/RESUMO DE DOCUMENTOS PARA C/i.test(t)){ const x = lidoDoAnexo(a, lerResumoInssTexto, "resumo"); if(x && novo(`resumo|${x.nb}|${x.der}`)) f.resumos.push({...x, anexo:a}); }
     if(/Comunica[çc][ãa]o de Acidente de Trabalho/i.test(t)){ const x = lidoDoAnexo(a, lerCatTexto, "cat"); if(x && novo(`cat|${x.numero||x.data}`)) f.cats.push({...x, anexo:a}); }
     if(/Perfil Profissiogr[áa]fico Previdenci[áa]rio/i.test(t)){ const x = lidoDoAnexo(a, lerPppTexto, "ppp"); if(x && x.riscos.length) f.ppps.push({...x, anexo:a}); }
+    if(/^SEGURO-DESEMPREGO/.test(t)) lidoDoAnexo(a, lerSeguroDesempregoTexto, "sd").forEach(x=>{ if(novo("sd|"+x.numero)) f.seguros.push({...x, anexo:a}); });
+    if(/^CNPJs VINCULADOS AO CPF/.test(t)){ const x = lidoDoAnexo(a, lerCnpjsTexto, "cnpj");
+      if(x){ f.redesim = {consulta:x.consulta, anexo:a}; x.cnpjs.forEach(e=>{ if(novo("cnpj|"+soDig(e.cnpj))) f.cnpjs.push({...e, anexo:a}); }); } }
   }
   return f;
 }
@@ -19637,7 +19805,8 @@ function dcbDoDossie(f, k, ks){
   const meu = nb => { const d = soDig(nb); return nbsDoCaso(k).some(x=>soDig(x)===d) || (!nbsDoCaso(k).length && !outros.has(d)); };
   const c = [];
   f.laudos.forEach(l=>{ if(l.dcb && meu(l.nb)) c.push({dcb:l.dcb, em:l.exame, onde:`no laudo médico de ${l.exame}`, fonte:"Laudo médico", anexo:l.anexo}); });
-  f.processos.forEach(p=>p.decisoes.forEach(d=>{ if(d.dcb && meu(d.nb||p.nb)) c.push({dcb:d.dcb, em:d.em, onde:`na decisão de ${d.em} da cópia do processo`, fonte:"Cópia do processo", anexo:p.anexo}); }));
+  f.processos.forEach(p=>p.comunicacoes.forEach(d=>{ if(d.dcb && meu(d.nb||p.nb)) c.push({dcb:d.dcb, em:p.atualizado,
+    onde:`na comunicação de decisão${p.entrada ? ` do pedido de ${p.entrada}` : ""}`, fonte:"Comunicação de decisão", anexo:p.anexo}); }));
   f.extratos.forEach(e=>{ if(e.dcb && meu(e.nb)) c.push({dcb:e.dcb, em:"", onde:"no extrato de pagamento", fonte:"Extrato de pagamento", anexo:e.anexo}); });
   return c.sort((a,b)=>isoBr(b.em).localeCompare(isoBr(a.em)) || isoBr(b.dcb).localeCompare(isoBr(a.dcb)))[0] || null;
 }
@@ -19668,43 +19837,25 @@ async function marcarPrazoDoDossie(casoId, fatal, texto){
   await andamentoDoDossie(casoId, `⏰ Prazo fatal ${fmt(fatal)}: ${texto}, lido da cópia do processo do dossiê.`);
   repintarFicha();
 }
-async function agendarPericiaDoDossie(casoId, iso, hora, local){
-  const r = await aplicarPericia({casoId, texto:`Perícia agendada para ${fmtBarra(iso)} às ${hora}`, local})
-    .catch(e=>{ aviso("Não consegui agendar: "+e.message); return null; });
-  if(r==="já agendada") aviso("🩺 Essa perícia já está na aba Perícias", false);
-  else if(r){ plim(); aviso(`🩺 Perícia lida do dossiê: ${r}`, false); }
-  repintarFicha();
-}
-// os fatos dos laudos, das cartas, do extrato e da cópia do processo
+// os fatos dos laudos, das cartas, do extrato e da comunicação de decisão
 function itensDaOnda2(f, ks){
-  const out = [], hj = hoje(), uma = new Set();
+  const out = [], hj = hoje();
   const nbTxt = nb => nb ? ` do NB ${fmtNb(nb)}` : "";
+  const minusc = t => t.charAt(0).toLowerCase() + t.slice(1);
   for(const p of f.processos){
-    const k = casoDoNb(ks, p.nb);
-    // a decisão contrária mais nova abre o recurso, se nada a favor veio depois
-    const ult = p.decisoes[p.decisoes.length-1];
-    if(k && ult && ult.contra){
-      const fatal = contarPrazo(isoBr(ult.em), PRAZOS_CATALOGO.find(x=>x.id==="crps"));
-      const minusc = t => t.charAt(0).toLowerCase() + t.slice(1);
-      if(fatal>=hj && k.prazo!==fatal) out.push({id:"recurso", alerta:true, anexo:p.anexo.id, fonte:"Cópia do processo",
-        texto:`Decisão de ${ult.em}${nbTxt(ult.nb||p.nb)}: ${ult.decisao ? minusc(ult.decisao.toLowerCase()) + (ult.motivo ? ", " + minusc(ult.motivo) : "") : minusc(ult.texto)}. `
-          + `Recurso ao CRPS até ${fmtBarra(fatal)}, 30 dias corridos contados do despacho`,
-        acao:{rot:"Marcar prazo do recurso", js:`marcarPrazoDoDossie('${k.id}','${fatal}','${escJs(`recurso ao CRPS contra a decisão de ${ult.em}`)}')`}});
-    }
-    if(k && !/conclu|cancel/i.test(p.status)) for(const e of p.exigencias.filter(e=>!e.cumprida)){
-      const fatal = contarPrazo(isoBr(e.em), {n:e.dias, uteis:false});
-      if(fatal>=hj && k.prazo!==fatal) out.push({id:"exigencia", alerta:true, anexo:p.anexo.id, fonte:"Cópia do processo",
-        texto:`Exigência de ${e.em}${p.servico?` no ${p.servico}`:""}: ${e.texto}. Vence em ${fmtBarra(fatal)}`,
-        acao:{rot:"Marcar prazo fatal", js:`marcarPrazoDoDossie('${k.id}','${fatal}','${escJs(`exigência de ${e.em} (${e.texto})`)}')`}});
-    }
-    // o agendamento mais novo vale (o remarcado substitui o anterior)
-    const pe = p.pericias[p.pericias.length-1], iso = pe && isoBr(pe.data);
-    if(k && pe && iso>=hj && !evJaAgendado(k.id, iso) && !uma.has(k.id+iso)){
-      uma.add(k.id+iso);
-      out.push({id:"pericia", anexo:p.anexo.id, fonte:"Cópia do processo",
-        texto:`Perícia agendada para ${pe.data} às ${pe.hora}${pe.local?`, ${pe.local}`:""} (despacho de ${pe.em}); não está no calendário`,
-        acao:{rot:"Agendar no calendário", js:`agendarPericiaDoDossie('${k.id}','${iso}','${pe.hora}','${escJs(pe.local)}')`}});
-    }
+    // a última comunicação da cópia, se contrária, abre o recurso. O prazo
+    // conta da última atualização do pedido concluído, que é o mais cedo que a
+    // ciência pode ter ocorrido; a "Data:" da comunicação é a da emissão da cópia
+    const k = casoDoNb(ks, p.nb), d = p.comunicacoes[p.comunicacoes.length-1];
+    if(!k || !d || !d.contra) continue;
+    const conc = /^Conclu/i.test(p.status) ? p.atualizado : "";
+    const fatal = conc ? contarPrazo(isoBr(conc), PRAZOS_CATALOGO.find(x=>x.id==="crps")) : "";
+    if(fatal && (fatal<hj || k.prazo===fatal)) continue;
+    const dec = `${p.servico || "Pedido"}${p.entrada ? ` de ${p.entrada}` : ""}${nbTxt(d.nb||p.nb)}: ${minusc(d.decisao.toLowerCase())}${d.motivo ? ", " + minusc(d.motivo) : ""}`;
+    out.push({id:"recurso", alerta:!!fatal, anexo:p.anexo.id, fonte:"Comunicação de decisão",
+      texto: fatal ? `${dec}, pedido concluído em ${conc}. Recurso ao CRPS até ${fmtBarra(fatal)}, 30 dias corridos contados da conclusão, a data mais cedo da ciência`
+        : `${dec}. A cópia não traz a data da conclusão do pedido: conferir a ciência no Meu INSS para contar o recurso ao CRPS`,
+      acao: fatal ? {rot:"Marcar prazo do recurso", js:`marcarPrazoDoDossie('${k.id}','${fatal}','${escJs(`recurso ao CRPS contra a decisão do pedido concluído em ${conc}`)}')`} : null});
   }
   // a DCB só entra no caso enquanto vale: a que já passou é assunto do recurso ou de pedido novo
   for(const k of ks.filter(k=>k.fase!=="encerrado" && ehIncapacidade(k))){
@@ -19745,7 +19896,7 @@ function itensDoDossie(c, ks){
   if(nb) out.push({id:"nb", texto:`NB ${nb.nb}${nb.situacao?` (${nb.situacao.toLowerCase()})`:""} lido da declaração de benefícios; o caso ainda não tem NB`,
     fonte:"Declaração de benefícios", acao:{rot:"Gravar NB no caso", js:`gravarNbDoDossie('${nb.k.id}','${escJs(nb.nb)}')`}});
   // o prazo que corre primeiro; o que só informa por último
-  const ORDEM = ["recurso", "exigencia", "pericia", "dcb", "decadencia", "vinculos", "nb", "laudo"];
+  const ORDEM = ["recurso", "dcb", "decadencia", "vinculos", "nb", "laudo"];
   return out.sort((a,b)=>(ORDEM.indexOf(a.id) + (a.id==="decadencia" && !a.alerta ? 3 : 0)) - (ORDEM.indexOf(b.id) + (b.id==="decadencia" && !b.alerta ? 3 : 0)));
 }
 function quadroDossie(c, ks){
@@ -19771,37 +19922,66 @@ function quadroDossie(c, ks){
 // fora das duas fica fora do mapa) e MAPA_PONTOS diz que grupo de fatos
 // alimenta cada ponto.
 const MAPA_FUNIL = {
-  tempo:        {D:"idade contrib minimo vinculo", A:"beneficios processo ppp rural cadunico ctc"},
-  rural:        {D:"idade contrib rural", A:"minimo vinculo beneficios processo"},
+  tempo:        {D:"idade contrib minimo vinculo", A:"beneficios processo ppp rural cadunico ctc cnpj"},
+  rural:        {D:"idade contrib rural cnpj", A:"minimo vinculo beneficios processo"},
   especial:     {D:"idade contrib vinculo ppp", A:"minimo beneficios processo"},
-  incapacidade: {D:"contrib minimo qualidade laudo medicos processo", A:"idade vinculo beneficios carta ppp cat rural cadunico"},
-  b94:          {D:"qualidade beneficios laudo medicos processo cat", A:"contrib vinculo carta ppp rural"},
+  incapacidade: {D:"contrib minimo qualidade laudo medicos processo", A:"idade vinculo beneficios carta ppp cat rural cadunico cnpj"},
+  b94:          {D:"qualidade beneficios laudo medicos processo cat", A:"contrib vinculo carta ppp rural cnpj"},
   pensao:       {D:"idade beneficios certidoes", A:"processo rural"},
-  bpc:          {D:"idade beneficios cadunico laudo medicos", A:"contrib vinculo processo"},
-  maternidade:  {D:"qualidade certidoes", A:"contrib minimo vinculo beneficios processo rural cadunico"},
+  bpc:          {D:"idade beneficios cadunico laudo medicos", A:"contrib vinculo processo cnpj"},
+  maternidade:  {D:"qualidade certidoes", A:"contrib minimo vinculo beneficios processo rural cadunico cnpj"},
   revisao:      {D:"contrib carta", A:"idade minimo vinculo beneficios processo ppp rural ctc"},
-  cnis:         {D:"contrib minimo vinculo", A:"qualidade beneficios processo ppp rural cadunico ctc"},
-  crps:         {D:"processo", A:"idade contrib minimo vinculo qualidade beneficios laudo medicos carta ppp cat rural certidoes cadunico ctc"},
+  cnis:         {D:"contrib minimo vinculo", A:"qualidade beneficios processo ppp rural cadunico ctc cnpj"},
+  crps:         {D:"processo", A:"idade contrib minimo vinculo qualidade beneficios laudo medicos carta ppp cat rural certidoes cadunico ctc cnpj"},
 };
+// o CNPJ no CPF: descaracteriza o segurado especial e indica renda no BPC
 const MAPA_PONTOS = {
-  bpc_renda:"cadunico contrib vinculo", bpc_grupo:"cadunico certidoes", bpc_cadunico:"cadunico", bpc_avaliacao:"laudo medicos",
+  bpc_renda:"cadunico contrib vinculo cnpj", bpc_grupo:"cadunico certidoes", bpc_cadunico:"cadunico", bpc_avaliacao:"laudo medicos",
   crp_prazo:"processo", crp_motivo:"processo",
   esp_ppp:"ppp", esp_epi:"ppp", esp_ltcat:"ppp", esp_conversao:"idade contrib vinculo",
   inc_dii:"laudo medicos", inc_carencia:"contrib minimo", inc_qualidade:"qualidade vinculo", inc_pericia:"processo",
   b94_sequela:"laudo medicos", b94_nexo:"cat ppp", b94_acumulacao:"beneficios",
-  rur_prova:"rural", rur_auto:"rural", rur_genero:"certidoes rural",
+  rur_prova:"rural cnpj", rur_auto:"rural", rur_genero:"certidoes rural",
   dep_prova:"certidoes", dep_cota:"idade beneficios",
   apo_der:"idade contrib", apo_minimo:"minimo", apo_reciproca:"ctc",
   mat_qualidade:"qualidade vinculo", mat_carencia:"contrib", mat_rural:"rural",
   rev_decadencia:"carta", rev_tese:"beneficios", rev_calculo:"contrib",
   cni_indicador:"vinculo", cni_prova:"vinculo",
 };
+// CONSULTA DO CNPJ · a base pública do CNPJ.ws, a mesma do site interno (aba
+// CNPJ): a abertura, a situação com a data, o MEI e o CNAE, que a lista da
+// Redesim não traz. Sai só o número do CNPJ, um por clique de quem atende (a
+// base limita as consultas por minuto), e a resposta fica só nesta sessão.
+const _cnpjWs = new Map();
+async function consultarCnpjWs(cnpj){
+  const d = soDig(cnpj);
+  if(d.length!==14 || (_cnpjWs.get(d)||{}).carregando) return;
+  _cnpjWs.set(d, {carregando:true}); repintarSeLivre();
+  let x;
+  try{
+    const r = await fetch("https://publica.cnpj.ws/cnpj/"+d);
+    x = r.status===429 ? {erro:"a base pública limitou as consultas; tente de novo em um minuto"}
+      : r.status===404 ? {erro:"o CNPJ não está na base pública"}
+      : !r.ok ? {erro:`a consulta falhou (HTTP ${r.status})`} : {dados: await r.json()};
+  }catch(e){ x = {erro:"a base pública não respondeu"}; }
+  _cnpjWs.set(d, x); repintarSeLivre();
+}
+// o que decide no previdenciário, na ordem: abertura, situação, MEI, atividade
+function resumoCnpjWs(j){
+  const e = j.estabelecimento||{}, s = j.simples||{}, at = e.atividade_principal||{};
+  const mei = s.data_opcao_simei ? `MEI desde ${fmtBarra(s.data_opcao_simei)}${s.data_exclusao_simei ? `, excluído em ${fmtBarra(s.data_exclusao_simei)}` : ", sem exclusão"}`
+    : (s.simei===true || /^sim$/i.test(s.simei||"")) ? "MEI" : "sem opção pelo MEI";
+  return [e.data_inicio_atividade ? `aberto em ${fmtBarra(e.data_inicio_atividade)}` : "",
+    e.situacao_cadastral ? `situação ${String(e.situacao_cadastral).toLowerCase()}${e.data_situacao_cadastral ? ` desde ${fmtBarra(e.data_situacao_cadastral)}` : ""}` : "",
+    mei, (at.subclasse||at.id) ? `CNAE ${at.subclasse||at.id}${at.descricao ? ` (${at.descricao.toLowerCase()})` : ""}` : "",
+    ((j.natureza_juridica||{}).descricao||"").toLowerCase()].filter(Boolean).join("; ");
+}
 // os fatos que o CRM já lê, cada um com o grupo da matriz e o estado:
 // crit (prazo ou impedimento), warn (atenção), ok (cumprido), info
 function fatosDoMapa(c, ks, fam){
-  const GRUPO = {recurso:"processo", exigencia:"processo", pericia:"processo", dcb:"processo", vinculos:"vinculo", nb:"beneficios", laudo:"laudo", decadencia:"carta"};
-  const out = itensDoDossie(c, ks).map(x=>({...x, grupo:GRUPO[x.id]||"processo", prazo:["recurso","exigencia","pericia"].includes(x.id),
-    est: x.id==="recurso"||x.id==="exigencia" ? "crit" : x.id==="decadencia" ? (x.alerta?"crit":"info")
+  const GRUPO = {recurso:"processo", dcb:"processo", vinculos:"vinculo", nb:"beneficios", laudo:"laudo", decadencia:"carta"};
+  const out = itensDoDossie(c, ks).map(x=>({...x, grupo:GRUPO[x.id]||"processo", prazo:x.id==="recurso",
+    est: x.id==="recurso" ? (x.alerta?"crit":"warn") : x.id==="decadencia" ? (x.alerta?"crit":"info")
       : x.id==="laudo" ? (/não reconhecida/.test(x.texto) ? "warn" : /reconhecida/.test(x.texto) ? "ok" : "info")
       : x.id==="nb" ? "info" : "warn"}));
   const ul = fontesDoDossie(c.id).laudos.slice().sort((a,b)=>isoBr(b.exame).localeCompare(isoBr(a.exame)))[0];
@@ -19819,10 +19999,14 @@ function fatosDoMapa(c, ks, fam){
   if(ben.estado) out.push({grupo:"beneficios", est: ben.estado==="atencao" ? "warn" : "ok", fonte:"CNIS", texto:ben.txt});
   const vin = lei("vinculo");
   if(vin.estado) out.push({grupo:"qualidade", est: vin.estado==="atencao" ? "warn" : "ok", fonte:"CNIS", texto:vin.txt});
-  const gr = g && (g.vinculos||[]).length ? calcularGraca(g.vinculos, g.competencias||0, !!(triagemDe(c).graca||{}).desempregado) : null;
+  const fd = fontesDoDossie(c.id);
+  const gr = g && (g.vinculos||[]).length ? calcularGraca(g.vinculos, contribSemPerda(g), !!(triagemDe(c).graca||{}).desempregado, an && an.abaixo, an && an.contagem && an.contagem.periodos, fd.seguros) : null;
   if(gr) out.push({grupo:"qualidade", est: gr.semLimite ? "ok" : gr.vencida ? "crit" : "ok", fonte:"CNIS",
     texto: gr.semLimite ? "Qualidade mantida sem limite de prazo, porque há benefício em manutenção"
-      : `Período de graça até ${gr.fim}, ${gr.vencida ? "já vencido" : "em curso"} (${gr.base} meses a partir de ${gr.ultima})`});
+      : `Qualidade mantida até ${fmtBarra(gr.mantidaAte)}, ${gr.vencida ? "perdida" : "com perda"} em ${fmtBarra(gr.perda)} (${gr.base} meses a partir de ${gr.ultima})`
+        + (gr.complementar ? `; complementada a competência ${gr.complementar.comp}, iria até ${fmtBarra(gr.complementar.mantidaAte)}` : "")});
+  const fs = fatoSeguro(gr, fd.seguros);
+  if(fs) out.push({grupo:"qualidade", fonte:"Seguro-desemprego", ...fs});
   const cad = lei("cadunico");
   if(cad.cor==="ok" || cad.cor==="alerta") out.push({grupo:"cadunico", est: cad.cor==="ok" ? "ok" : "warn", fonte:"CRM", texto:cad.txt});
   // onda 3 · a contagem do CNIS, o requisito da espécie e a contagem do INSS ao lado.
@@ -19848,7 +20032,7 @@ function fatosDoMapa(c, ks, fam){
   }
   // onda 4 · o que o CAGED e a RAIS têm e o CNIS não; o desemprego
   // involuntário da última dispensa; o ruído do PPP contra o limite da época; a CAT
-  const fd = fontesDoDossie(c.id), vcn = (g && g.vinculos) || [];
+  const vcn = (g && g.vinculos) || [];
   const noCnis = x => vcn.some(v=>raizCnpj(v.codigo)===x.raiz && (!x.admissao || !v.inicio || v.inicio===x.admissao));
   const semCnis = g ? fd.caged.filter(x=>x.raiz && !noCnis(x)) : [];
   if(semCnis.length) out.push({grupo:"vinculo", est:"warn", fonte:"CAGED", anexo:semCnis[0].anexo.id,
@@ -19864,11 +20048,15 @@ function fatosDoMapa(c, ks, fam){
   const dem = fd.rais.filter(x=>x.desligamento).sort((a,b)=>isoBr(b.desligamento).localeCompare(isoBr(a.desligamento)))[0];
   const ultMes = ct && (ct.periodos||[]).length ? ct.periodos[ct.periodos.length-1][1] : "";
   if(dem && /^11\b/.test(dem.causa||"") && (!ultMes || chaveComp(competenciaMais(dem.desligamento.slice(3), 1)) >= ultMes)){
-    const marcado = !!(triagemDe(c).graca||{}).desempregado;
+    const marcado = !!(triagemDe(c).graca||{}).desempregado || !!(gr && gr.seguro);
     out.push({grupo:"qualidade", est: marcado ? "ok" : "warn", fonte:`RAIS de ${dem.ano}`, anexo:dem.anexo.id,
-      texto:`A RAIS de ${dem.ano} mostra dispensa sem justa causa por ${dem.nome||"empregador"} em ${dem.desligamento}: o desemprego involuntário estende a graça em 12 meses (art. 15, § 2º, da Lei 8.213/91)${marcado ? ", já marcado na conta" : ""}`,
+      texto:`A RAIS de ${dem.ano} mostra dispensa sem justa causa por ${dem.nome||"empregador"} em ${dem.desligamento}: o desemprego involuntário estende a graça em 12 meses (art. 15, § 2º, da Lei 8.213/91)${gr && gr.seguro ? ", já provado pelo seguro-desemprego" : marcado ? ", já marcado na conta" : ""}`,
       acao: marcado ? null : {rot:"Marcar o desemprego na conta da graça", js:`marcarDesemprego('${c.id}',true)`}});
   }
+  // a licença sem remuneração da RAIS: o CNIS conta o mês, e o INSS tem
+  // descontado o período do tempo de contribuição (pedido do Paulo, 11.10.2026)
+  for(const l of licencasDaRais(fd.rais)) out.push({grupo:"contrib", est:"warn", fonte:`RAIS de ${l.ano}`, anexo:l.anexo.id,
+    texto:`A RAIS de ${l.ano} registra licença sem remuneração${l.nome ? ` na ${l.nome}` : ""}${l.de ? `, de ${l.de}${l.ate ? ` a ${l.ate}` : ""}` : ""}${l.dias ? ` (${l.dias} dias)` : ""}: o INSS tem descontado esse período do tempo de contribuição, e a contagem do CNIS ainda o inclui`});
   for(const pp of fd.ppps) for(const r of pp.riscos){
     const per = `de ${r.ini||"data não lida"} a ${r.fim||"data não lida"}`;
     if(r.db==null){ out.push({grupo:"ppp", est:"info", fonte:"PPP", anexo:pp.anexo.id,
@@ -19883,11 +20071,26 @@ function fatosDoMapa(c, ks, fam){
     texto:`CAT ${ca.tipoCat ? ca.tipoCat.toLowerCase()+" " : ""}de acidente ${(ca.tipo||"não lido").toLowerCase()} em ${ca.data||"data não lida"}`
       + `${ca.cid ? `, CID ${ca.cid}${ca.cidDesc ? ` (${ca.cidDesc.toLowerCase()})` : ""}` : ""}${ca.cnae ? `, CNAE ${ca.cnae}` : ""}`
       + `; o nexo pelo NTEP se confere na Lista C do Anexo II do Decreto 3.048/99`});
+  // os CNPJs em nome do cliente (Redesim), com a consulta à base pública no clique
+  for(const e of fd.cnpjs){
+    const d = soDig(e.cnpj), ws = _cnpjWs.get(d) || {};
+    out.push({grupo:"cnpj", est: /^ATIVA$/i.test(e.situacao) ? "warn" : "info", fonte:"Redesim", anexo:e.anexo.id,
+      texto:`CNPJ ${e.cnpj}${e.razao ? `, ${e.razao}` : ""}: ${(e.situacao||"situação não lida").toLowerCase()}${e.local ? `, em ${e.local}` : ""}; o CPF é ${(e.vinculo||"vinculado").toLowerCase()}${e.qualificacao ? ` (${e.qualificacao.toLowerCase()})` : ""}`
+        + (ws.dados ? `; ${resumoCnpjWs(ws.dados)}` : ws.erro ? `; ${ws.erro}` : ""),
+      acao: ws.dados ? null : {rot: ws.carregando ? "Consultando…" : ws.erro ? "Consultar de novo" : "Consultar abertura, MEI e CNAE", js:`consultarCnpjWs('${d}')`}});
+  }
+  if(fd.redesim && !fd.cnpjs.length) out.push({grupo:"cnpj", est:"ok", fonte:"Redesim", anexo:fd.redesim.anexo.id,
+    texto:`Nenhum CNPJ vinculado ao CPF na consulta à Redesim de ${fd.redesim.consulta || "data não lida"}`});
   // onda 5 · a clínica: a linha do tempo, o sinal de doença que dispensa a
-  // carência, a área médica dos documentos e o relatório recente para a perícia
+  // carência, a área médica dos documentos e o relatório recente para a perícia.
+  // A DII se ancora no registro mais antigo, que por isso fica fixo no topo e
+  // não cai no corte de oito; o mais recente vem logo abaixo, e o resto depois
   const clin = linhaClinica(c.id);
-  clin.slice(0, 8).forEach(x=>out.push({grupo:"medicos", est:"info", fonte:x.fonte, anexo:x.anexo.id,
-    texto:`${x.data ? fmtBarra(x.data) : "sem data"}, ${x.tipo.toLowerCase()}: ${x.titulo}${x.resumo ? `; ${x.resumo}` : ""}${x.cids.length ? `; CID ${x.cids.join(", ")}` : ""}`}));
+  const datados = clin.filter(x=>x.data), antigo = datados[datados.length-1], recente = datados[0];
+  const fixos = antigo ? (recente!==antigo ? [antigo, recente] : [antigo]) : [];
+  const rotClin = x => x===antigo ? "Primeiro registro clínico em " : x===recente ? "Último registro clínico em " : "";
+  [...fixos, ...clin.filter(x=>!fixos.includes(x))].slice(0, 8).forEach(x=>out.push({grupo:"medicos", est:"info", fonte:x.fonte, anexo:x.anexo.id,
+    texto:`${rotClin(x)}${x.data ? fmtBarra(x.data) : "sem data"}, ${x.tipo.toLowerCase()}: ${x.titulo}${x.resumo ? `; ${x.resumo}` : ""}${x.cids.length ? `; CID ${x.cids.join(", ")}` : ""}`}));
   if(clin.length > 8) out.push({grupo:"medicos", est:"info", fonte:"Dossiê", texto:`E mais ${clin.length-8} documentos médicos, na lista do dossiê`});
   const grave = clin.find(x=>x.grave);
   if(grave) out.push({grupo:"contrib", est:"info", fonte:grave.fonte, anexo:grave.anexo.id,
@@ -20016,7 +20219,10 @@ function mapaParaAnalise(cliId){
   const ct = ((cnisDe(c)||{}).analise||{}).contagem;
   const ul = fontesDoDossie(cliId).laudos.slice().sort((a,b)=>isoBr(b.exame).localeCompare(isoBr(a.exame)))[0];
   const vazio = (id, v) => { const e = document.getElementById(id); if(e && !e.value && v) e.value = v; };
-  if(ct){ vazio("ad-f-carencia", `${ct.carencia} contribuições (CNIS, contagem do CRM)`); vazio("ad-f-tempo", `${ct.anos} anos e ${ct.meses} meses (CNIS, por competência)`); }
+  // a licença sem remuneração da RAIS vai junto da contagem, que ainda a inclui
+  const lic = licencasDaRais(fontesDoDossie(cliId).rais), diasLic = lic.reduce((t, l)=>t + (l.dias||0), 0);
+  const notaLic = lic.length ? `; a RAIS mostra ${diasLic ? `${diasLic} dias de ` : ""}licença sem remuneração, que o INSS tem descontado` : "";
+  if(ct){ vazio("ad-f-carencia", `${ct.carencia} contribuições (CNIS, contagem do CRM)${notaLic}`); vazio("ad-f-tempo", `${ct.anos} anos e ${ct.meses} meses (CNIS, por competência)${notaLic}`); }
   if(ul && ul.did) vazio("ad-f-did", isoBr(ul.did));
   const el = document.getElementById("ad-contexto");
   if(el){ el.value = (el.value ? el.value + "\n" : "") + txt; el.focus(); }
