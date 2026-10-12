@@ -6,6 +6,7 @@ const COLETORES = {
   'consultaprocessos.inss.gov.br': { arquivo: 'recursos.js', rotulo: 'e-Recursos: todos os documentos de cada recurso.' },
   'servicos.mte.gov.br': { arquivo: 'mte.js', rotulo: 'Emprega Brasil: CTPS completa (digital e outros vínculos), extrato RAIS e extrato CAGED.' },
   'appiris.hcrp.usp.br': { hc: true, rotulo: 'HC Ribeirão: exames de imagem (todo o período), internações e relatórios. A aba vai passar sozinha pelas três telas.' },
+  'consultacnpj.redesim.gov.br': { redesim: true, rotulo: 'Redesim · Minhas Empresas: os CNPJs em que o CPF é sócio ou titular. Você clica em PESQUISAR (captcha); a lista é gravada sozinha.' },
 };
 
 (async () => {
@@ -34,6 +35,12 @@ const COLETORES = {
     $('baixar').textContent = 'baixando — acompanhe na faixa azul da página';
     // o HC anda por três páginas: quem conduz é o service worker, que sobrevive à troca de página
     if (c.hc) { await chrome.runtime.sendMessage({ tipo: 'hc', tabId: aba.id }); setTimeout(() => window.close(), 1200); return; }
+    // Redesim: o gancho no fetch precisa do mundo da página; a gravação, do mundo da extensão
+    if (c.redesim) {
+      await chrome.scripting.executeScript({ target: { tabId: aba.id }, files: ['regras.js', 'pagina.js', 'redesim-ponte.js'] });
+      await chrome.scripting.executeScript({ target: { tabId: aba.id }, world: 'MAIN', files: ['redesim.js'] });
+      setTimeout(() => window.close(), 1200); return;
+    }
     await chrome.scripting.executeScript({ target: { tabId: aba.id }, files: ['regras.js', 'pagina.js', c.arquivo] });
     // não espera: a rodada leva minutos e o popup fecha sozinho; o progresso fica na página
     chrome.scripting.executeScript({ target: { tabId: aba.id }, func: () => window.dossieRodar() });

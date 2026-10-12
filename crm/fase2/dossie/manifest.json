@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Dossiê do cliente — Tercini",
-  "version": "0.5.1",
+  "version": "0.7.1",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApwpdm3Rkep2+q0uvkaWGpli7AxXkxIXdSSiaMqjyCv7wuP0qgQo3N4TQiFf/ySe8WanC0QQ5k/b01SA4WHPm6QnBQEsy9WwbnIjDbd37kxp8KxdkZHNsx6X321iPLwtgngoFrcPAHdONRlXrWN33xu1E03GqEZAvPoIOfDRQkFP5uxbjPRetGQFBZfrJp6GERiQTwuLQJ9Cmqw+7SZZyqXHC+MPgNEXUFWwKrlOLkSs26Y5hSL1fWkEC1PEpufoLK3s/ax88PGi0uJwZ8H+FlBteP9soC4jA/5hCyCaXo83AK09gkZZHU7EphImSECAocXbUqcbWO3UljPslAVa4CQIDAQAB",
-  "description": "Na sessão gov.br já logada do cliente, baixa num clique os documentos do Meu INSS, do e-Recursos, do Emprega Brasil (CTPS, RAIS, CAGED) e do HC Ribeirão (exames de imagem, internações, relatórios) para a pasta do cliente em G:\\Meu Drive\\Processos e para a ficha no CRM.",
+  "description": "Na sessão gov.br já logada do cliente, baixa num clique os documentos do Meu INSS, do e-Recursos, do Emprega Brasil (CTPS, RAIS, CAGED) do HC Ribeirão (exames de imagem, internações, relatórios) e da Redesim (CNPJs vinculados ao CPF) para a pasta do cliente em G:\\Meu Drive\\Processos e para a ficha no CRM.",
   "permissions": [
     "activeTab",
     "scripting",
@@ -20,6 +20,7 @@
     "https://servicos.mte.gov.br/*",
     "https://mte.api.dataprev.gov.br/*",
     "https://appiris.hcrp.usp.br/*",
+    "https://consultacnpj.redesim.gov.br/*",
     "https://*.supabase.co/*"
   ],
   "background": {

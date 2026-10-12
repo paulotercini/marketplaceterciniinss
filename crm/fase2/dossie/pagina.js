@@ -27,10 +27,13 @@ window.DOSSIE = window.DOSSIE || {
   },
 
   // um PDF por vez: o SW grava na pasta do cliente e no CRM
-  async salvar(cliente, fonte, arquivo, u8) {
+  // `mime` text/plain grava .txt (o CRM lê texto direto, sem OCR): é como o
+  // seguro-desemprego, que o portal só dá em JSON, chega legível à ficha
+  async salvar(cliente, fonte, arquivo, u8, mime = 'application/pdf') {
     const R = window.DOSSIE_REGRAS;
-    const r = await chrome.runtime.sendMessage({ tipo: 'salvar', cpf: cliente.cpf, nome: cliente.nome,
-      fonte, arquivo: R.nomeSeguro(arquivo).replace(/(\.pdf)?$/i, '.pdf'), b64: R.b64(u8) });
+    const ext = mime === 'text/plain' ? '.txt' : '.pdf';
+    const r = await chrome.runtime.sendMessage({ tipo: 'salvar', cpf: cliente.cpf, nome: cliente.nome, mime,
+      fonte, arquivo: R.nomeSeguro(arquivo).replace(/(\.pdf|\.txt)?$/i, '') + ext, b64: R.b64(u8) });
     if (!r || r.erro) throw new Error((r && r.erro) || 'a extensão não respondeu — recarregue a página (F5)');
     return r;
   },

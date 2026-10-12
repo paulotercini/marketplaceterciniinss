@@ -82,3 +82,17 @@ test('CLAUDE.md descreve esta versão da extensão', () => {
   assert.ok(md.includes(`dossie-versao: ${versao}`), `CLAUDE.md ainda fala da versão antiga — atualize a seção "Dossiê do cliente" para ${versao}`);
   assert.ok(md.includes(`(versão **${versao}**)`), 'o número visível da versão no CLAUDE.md não bate com o manifest');
 });
+
+test('seguro-desemprego: JSON do MTE vira texto legível com parcelas e datas', () => {
+  // o cabeçalho é o que a lista do MTE devolve (medido em 11.10.2026); o detalhe traz as parcelas
+  const t = R.textoSeguroDesemprego([{ numeroRequerimento: 123, modalidade: { codigo: 0, descricao: 'Trabalhador Formal' },
+    dataRequerimento: '2024-03-10', tipoInscricao: { codigo: 1, descricao: 'CNPJ' }, inscricao: 12345678000199,
+    razaoSocial: 'EMPRESA X', dataAdmissao: '2020-01-02', dataDispensa: '2024-02-28',
+    detalhe: { situacao: { descricao: 'DEFERIDO' },
+      parcelas: [{ numeroParcela: 1, dataLiberacao: '2024-04-10', dataPagamento: '2024-04-12', valorParcela: 1412, situacaoParcela: 'PAGA' }] } }]);
+  assert.match(t, /Requerimento 123 · modalidade Trabalhador Formal · situação DEFERIDO/);
+  assert.match(t, /Data do requerimento: 10\/03\/2024/);
+  assert.match(t, /Empregador: EMPRESA X \(CNPJ 12345678000199\) · admissão 02\/01\/2020 · dispensa 28\/02\/2024/);
+  assert.match(t, /Parcela 1: liberação 10\/04\/2024 · pagamento 12\/04\/2024 · valor 1412 · PAGA/);
+  assert.match(t, /dados brutos/);
+});
