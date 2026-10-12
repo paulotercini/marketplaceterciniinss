@@ -87,7 +87,11 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
     const c = { ...D.clientes[0], estado_civil: null, profissao: "Lavrador", campos: {} };
     D.anexos.push({ id: "a9-civ", cliente_id: c.id, origem: "dossie", nome: "Processos administrativos · pedido.pdf", texto: "Estado Civil: CASADO(A)\nEscolaridade" });
     const h = civilDoDossieCaixa(c); D.anexos.pop();
-    return /estado civil Casado\(a\)/.test(h) && !/profissão/.test(h) && civilDoDossieCaixa({ ...c, estado_civil: "casado" }) === "";
+    D.anexos.push({ id: "a9-cad", cliente_id: c.id, origem: "dossie", nome: "Cadastro · Dados cadastrais (CNIS).pdf", texto: "Sexo MASCULINO Estado Civil\nData de Nascimento 01/01/1960" },
+      { id: "a9-txt", cliente_id: c.id, origem: "dossie", nome: "Cadastro · Dados cadastrais (CNIS).txt", texto: "x\n--- dados brutos do portal ---\n{\"filiadoTO\":{\"sexo\":\"MASCULINO\"}}" });
+    const h2 = civilDoDossieCaixa({ ...c, sexo: null, estado_civil: null, profissao: "Lavrador" }); D.anexos.splice(-2);
+    window.__h2 = h2;
+    return /sexo masculino/.test(h2) && !/estado civil/.test(h2) && /estado civil Casado\(a\)/.test(h) && !/profissão/.test(h) && civilDoDossieCaixa({ ...c, estado_civil: "casado" }) === "";
   }));
   const partes = await p.evaluate(async () => {
     const cid = clienteAberto, lidos = [], t0 = textoDoDocumento, api0 = api, rp0 = repintarSeLivre, lL0 = lerLeitoresDoDossie;

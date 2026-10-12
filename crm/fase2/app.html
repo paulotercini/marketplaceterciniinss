@@ -4176,7 +4176,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.24</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.25</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10395,11 +10395,14 @@ function cadastroDoDossie(docs){
     r.nome = r.nome || ((d.texto.match(/Nome:\s*(.+?)\s*$/m)||[])[1]||"");
     r.nascimento = r.nascimento || ((d.texto.match(/Data de nascimento:?\s*(\d{2}\/\d{2}\/\d{4})/i)||[])[1]||"");
   }
-  for(const d of de(/^(Processos administrativos|Laudos)/)){
-    const m = d.texto.match(/Estado Civil:?\s+([A-ZÀ-Úa-zà-ú]+)/); if(!m) continue;
+  // o estado civil na mesma linha do rótulo: em branco no cadastro, a linha seguinte não conta
+  for(const d of de(/^(Cadastro|Processos administrativos|Laudos)/)){
+    const m = d.texto.match(/Estado Civil:?[ \t]+([A-ZÀ-Úa-zà-ú]+)/); if(!m) continue;
     const c = CIVIL_INSS.find(([re])=>re.test(dsa(m[1]))); if(c){ r.civil = c[1]; break; }
   }
   const rais = de(/^CTPS RAIS CAGED/).flatMap(d=>lerRaisTexto(d.texto)).filter(b=>b.cbo).sort((a,b)=>b.ano.localeCompare(a.ano));
+  const cad = de(/^Cadastro/).find(d=>/dados brutos do portal/.test(d.texto));
+  if(cad) r.sexo = lerCadastroTexto(cad.texto).sexo;
   if(rais[0]) r.profissao = tituloOrgao(rais[0].cbo.replace(/\s+(de|da|do|das|dos|e)$/i,""));
   return r;
 }
@@ -10420,23 +10423,23 @@ function lerCadastroTexto(txt){
 // F202 · na Identificação, o estado civil e a profissão que faltam saem das
 // outras peças do dossiê (pedido, laudo, RAIS), já lidas pelo CRM; grava no clique
 function civilDoDossieCaixa(c){
-  const v = civilDe(c); if(v.estado_civil && v.profissao) return "";
+  const v = civilDe(c); if(v.estado_civil && v.profissao && v.sexo) return "";
   const r = cadastroDoDossie(docsDoDossie(c.id).map(a=>({fonte:String(a.nome||"").split(" · ")[0], texto:a.texto||""})));
-  const civil = !v.estado_civil && r.civil, prof = !v.profissao && r.profissao;
-  if(!civil && !prof) return "";
+  const civil = !v.estado_civil && r.civil, prof = !v.profissao && r.profissao, sexo = !v.sexo && r.sexo;
+  if(!civil && !prof && !sexo) return "";
   const rot = ((CAD_CAMPOS.estado_civil.ops.find(o=>o[0]===civil)||[])[1]) || "";
   return `<p class="pa-nome-dif" style="background:color-mix(in srgb,var(--verde,#1f6f5c) 8%,transparent);border-color:color-mix(in srgb,var(--verde,#1f6f5c) 30%,transparent)">
-    <b>Do dossiê:</b> ${esc([civil && `estado civil ${rot}`, prof && `profissão ${prof}`].filter(Boolean).join(", "))}.
+    <b>Do dossiê:</b> ${esc([sexo && `sexo ${sexo==="F"?"feminino":"masculino"}`, civil && `estado civil ${rot}`, prof && `profissão ${prof}`].filter(Boolean).join(", "))}.
     <button type="button" class="btn-mini" onclick="usarCivilDoDossie('${c.id}')">Usar no cadastro</button></p>`;
 }
 async function usarCivilDoDossie(cliId){
   const c = D.cliPorId.get(cliId); if(!c) return;
   const v = civilDe(c), r = cadastroDoDossie(docsDoDossie(cliId).map(a=>({fonte:String(a.nome||"").split(" · ")[0], texto:a.texto||""})));
-  const corpo = {}; if(!v.estado_civil && r.civil) corpo.estado_civil = r.civil; if(!v.profissao && r.profissao) corpo.profissao = r.profissao;
+  const corpo = {}; if(!v.sexo && r.sexo) corpo.sexo = r.sexo; if(!v.estado_civil && r.civil) corpo.estado_civil = r.civil; if(!v.profissao && r.profissao) corpo.profissao = r.profissao;
   if(!Object.keys(corpo).length) return;
   try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(corpo)}); }
   catch(e){ return aviso("Não consegui guardar — tente de novo"); }
-  Object.assign(c, corpo); aviso("Estado civil e profissão gravados pelo dossiê ✔"); repintarFicha();
+  Object.assign(c, corpo); aviso("Cadastro completado pelo dossiê ✔"); repintarFicha();
 }
 // rua em caixa alta vira "Rua Sete de Setembro", e o número que veio colado na
 // rua passa ao campo do número
@@ -19591,10 +19594,10 @@ const _dossieTudo = new Set(), _dossieFalhou = new Set();
 const SUB_DOSSIE_TUDO = new Set(["pa","mapa","direito"]);
 // o estado civil ainda falta: nem no cadastro, nem no que o dossiê já leu
 const civilFalta = c => !civilDe(c).estado_civil
-  && !docsDoDossie(c.id).some(x=>/^(Laudos|Processos administrativos)$/i.test(fonteDoDossie(x)[0]) && /Estado Civil:?\s+[A-Z]/.test(x.texto||""));
+  && !docsDoDossie(c.id).some(x=>/^(Cadastro|Laudos|Processos administrativos)$/i.test(fonteDoDossie(x)[0]) && /Estado Civil:?[ \t]+[A-Z]/.test(x.texto||""));
 function dossieDaIdentificacao(a, c, falta = civilFalta(c)){
   const [f, arq] = fonteDoDossie(a);
-  if(/^Cadastro$/i.test(f)) return 1;
+  if(/^Cadastro$/i.test(f)) return 1;   // o .txt e o PDF dos dados cadastrais
   if(/^CNIS$/i.test(f) && /completo/i.test(arq)) return 2;
   if(/declara[çc][ãa]o de benefici/i.test(arq)) return 3;
   if(/^CTPS RAIS CAGED$/i.test(f) && /RAIS/i.test(arq)) return 4;
