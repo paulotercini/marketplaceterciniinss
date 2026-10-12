@@ -4246,7 +4246,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.40</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.41</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -21242,7 +21242,9 @@ const IDADE_EXIG = {idade:[65,62], hibrida:[65,62], idade_rural:[60,55], idoso:[
 const CAR_EXIG = {idade:180, transicao:180, professor:180, pcd:180, b46:180, hibrida:180, idade_rural:180, b31:12, b32:12, reclusao:24};
 const SM_2026 = 1621;   // salário mínimo da base (bpc-renda-grupo-familiar); 1/4 = 405,25
 const EC103 = "2019-11-13";
-const benefRot = fam => (PONTOS_ESPECIE.find(f=>f.chave===fam)||{rot:fam}).rot;
+// o chip diz o benefício pelo nome: "Dependentes" escondia a pensão e o auxílio-reclusão
+const BENEF_ROT = {pensao:"Pensão por morte e auxílio-reclusão", tempo:"Aposentadoria por idade ou tempo"};
+const benefRot = fam => BENEF_ROT[fam] || (PONTOS_ESPECIE.find(f=>f.chave===fam)||{rot:fam}).rot;
 const benefOpcao = (fam, o) => (BENEF[fam]||[]).find(x=>x[0]===o);
 function admDe(c){ const a = ((c||{}).campos||{}).ad_modulos||{}; return {valores:a.valores||{}, tempos:a.tempos||[], beneficios:a.beneficios}; }
 // a opção que a família abre sozinha: a idade e o dossiê decidem

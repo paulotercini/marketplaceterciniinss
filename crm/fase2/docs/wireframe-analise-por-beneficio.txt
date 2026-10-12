@@ -17,13 +17,13 @@ TELA 1 · PRIMEIRO ATENDIMENTO (modo atendimento, fundo bege, quadros brancos)
 +------------------------------------------------------------------------------------------+
 | card (ben · Benefícios em análise)                                                       |
 | [h3: Benefícios em análise] [t2: 2 famílias · a escolha abre os quadros da Análise]      |
-| [btn2: [ico:bola] Incapacidade] [btn: [ico:bola] Aposentadoria programável]              |
+| [btn2: [ico:bola] Incapacidade] [btn: [ico:bola] Aposentadoria por idade ou tempo]              |
 | [btn2: Auxílio-acidente] [btn: Aposentadoria especial] [btn2: Rural e híbrida]           |
-| [btn2: BPC/LOAS] [btn2: Dependentes] [btn2: Salário-maternidade] [btn2: Revisão]         |
-| [btn2: Acerto de CNIS] [btn2: Recurso no CRPS]                                           |
+| [btn2: BPC/LOAS] [btn2: Pensão por morte e auxílio-reclusão] [btn2: Salário-maternidade] |
+| [btn2: Revisão] [btn2: Acerto de CNIS] [btn2: Recurso no CRPS]                           |
 |   +--------------------------------------------------------------------------------+     |
 |   | card2 (ben-ramo · ramificação da família ligada)                               |     |
-|   | [t3: APOSENTADORIA PROGRAMÁVEL] [btn3: Por idade urbana · B41]                 |     |
+|   | [t3: APOSENTADORIA POR IDADE OU TEMPO] [btn3: Por idade urbana · B41]                 |     |
 |   | [btn: Tempo de contribuição e transição · B42] [btn3: Professor · B57]         |     |
 |   | [btn3: Pessoa com deficiência, LC 142 · B42/B41]                               |     |
 |   +--------------------------------------------------------------------------------+     |
@@ -61,7 +61,7 @@ TELA 2 · ANÁLISE DE DIREITO (modo atendimento, fundo bege, quadros brancos)
 | +-----------------------------------------------------------+ | | card (Trabalhos      | |
 | | card (ben · Benefícios em análise, a mesma faixa da tela 1| | |  possíveis, F213)    | |
 | | [h3: Benefícios em análise] [btn: ...] [btn2: ...]        | | | [h3: Trabalhos       | |
-| | [t3: APOSENTADORIA PROGRAMÁVEL] [btn: ... B42] [btn3: ...]| | |  possíveis]          | |
+| | [t3: APOSENTADORIA POR IDADE OU TEMPO] [btn: ... B42] [btn3: ...]| | |  possíveis]          | |
 | | [t2: Quadros que abrem: Tempos · Idade · Carência · ...]  | | | +------------------+ | |
 | +-----------------------------------------------------------+ | | | card2 (pa-cartao)| | |
 | +-----------------------------------------------------------+ | | | [t3: Falta um    | | |
