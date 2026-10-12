@@ -3581,6 +3581,21 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .adx-abas{display:flex;gap:6px;align-items:center;margin:0 0 8px}.adx-abas button[role=tab]{border:1px solid #E7E6E1;background:#fff;border-radius:8px;padding:5px 12px;font:inherit;cursor:pointer}
 .adx-abas button.on{border-color:#0E5C58;color:#0E5C58;font-weight:600}
 .adx-tab tr.div td:first-child{box-shadow:inset 3px 0 0 #8F5400}.adx-verm{color:#B3261E;font-weight:600}.adx-verde{color:#1B6E38;font-weight:700}.adx-sem{color:#8F5400;font-style:italic}
+.adx-chave{margin-left:auto;display:inline-flex;align-items:center;gap:8px;min-height:34px;padding:0 14px;border-radius:999px;border:1.5px solid #686660;background:#fff;color:#121212;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.adx-chave i{position:relative;width:30px;height:17px;border-radius:999px;background:#B9B7B0;flex:none}.adx-chave i::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;transition:transform 160ms ease}
+.adx-chave.on{border-color:#0E5C58;background:#E6F0EF;color:#0E5C58}.adx-chave.on i{background:#0E5C58}.adx-chave.on i::after{transform:translateX(13px)}
+.adx-sec-cab{display:flex;align-items:center;gap:10px;margin:0 0 8px}.adx-sec-cab h3{margin:0}.adx-meses{margin:0;line-height:1.7;font-size:12.5px}
+.adx-qual{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 28px;margin:0 0 10px}.adx-qual small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#686660}.adx-qual b{font-size:20px}.adx-qual .btn-mini{margin-left:auto}
+.adx-graf{margin:8px 0 6px;padding:0}.adx-graf-linha{position:relative;height:44px;background:#F3F2EE;border-radius:8px;margin-top:20px}
+.adx-bar{position:absolute;top:8px;height:28px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;overflow:hidden;white-space:nowrap}
+.adx-bar.contrib{background:#3A6491}.adx-bar.graca{background:#6FA884}.adx-bar.perda{background:#C2554A}
+.adx-pino{position:absolute;top:-6px;bottom:-6px;width:2px;background:#0E5C58}.adx-pino i{position:absolute;top:-16px;left:-14px;font-style:normal;font-size:10.5px;color:#0E5C58;font-weight:600;white-space:nowrap}
+.adx-hoje{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed #121212}.adx-hoje i{position:absolute;bottom:-17px;left:-10px;font-style:normal;font-size:10.5px}
+.adx-eixo{position:relative;height:20px;margin-top:4px}.adx-eixo span{position:absolute;transform:translateX(-50%);font-size:11px;color:#686660}
+.adx-leg .adx-bar{position:static;width:16px;height:10px;vertical-align:middle;margin-right:4px;display:inline-block}.adx-pino-lg{display:inline-block;width:2px;height:12px;background:#0E5C58;margin-right:6px;vertical-align:middle}
+.adx-peds{list-style:none;padding:0;margin:0}.adx-peds li{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #E7E6E1}
+.adx-res{flex:none;width:11px;height:11px;border-radius:50%;margin-top:5px;background:#B9B7B0}.adx-res.deferido{background:#1B6E38}.adx-res.indeferido{background:#B3261E}
+.adx-ped-dados{font-size:12.5px;margin-top:2px}.adx-ped-desc{font-size:13px;margin-top:3px}.adx-ped-laudo{font-size:12.5px;margin-top:3px;padding-left:8px;border-left:2px solid #E7E6E1}
 .adx-kpis{display:flex;flex-wrap:wrap;gap:16px;margin:0 0 10px}.adx-kpis b{font-size:18px}
 .adx-faixa{position:relative;height:22px;background:#F3F2EE;border-radius:6px;margin:6px 0}
 .adx-seg{position:absolute;top:3px;height:16px;border-radius:4px;display:inline-block}.adx-leg .adx-seg,.adx-leg .adx-re{position:static;width:14px;height:10px;vertical-align:middle;margin-right:4px}
@@ -4213,7 +4228,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.37</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.39</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14287,8 +14302,22 @@ async function abrirFicha(cliId){
 // para voltar à rede: as 6 consultas já foram feitas quando a ficha abriu, e
 // no 4G cada clique de aba custava segundos. A navegação chama isto; quem
 // GRAVA alguma coisa continua chamando abrirFicha() (que rebusca).
+// F215 · repintar na mesma tela (um botão, uma chave) não volta ao topo: a
+// rolagem fica onde estava; trocar de aba, de passo ou de cliente começa no topo
+let _repintChave = "", _rolPend = null;
 function repintarFicha(){
-  if(D._ficha && D._ficha.cliId===clienteAberto && clienteAberto) pintarFicha();
+  if(D._ficha && D._ficha.cliId===clienteAberto && clienteAberto){
+    const chave = [clienteAberto, abaAtiva, subCad].join("|"), mesma = chave===_repintChave; _repintChave = chave;
+    const det = document.getElementById("detalhe"), rol = document.querySelector(".det-rolagem");
+    // duas repinturas seguidas: vale a rolagem de antes da primeira
+    const y = (mesma && _rolPend) || [det ? det.scrollTop : 0, rol ? rol.scrollTop : 0, window.scrollY];
+    // e o que estava aberto (o formulário da análise, um detalhe) continua aberto
+    const abertos = mesma ? [...document.querySelectorAll("#detalhe details[id][open]")].map(x=>x.id) : [];
+    pintarFicha();
+    for(const id of abertos){ const e = document.getElementById(id); if(e) e.open = true; }
+    if(mesma){ _rolPend = y; requestAnimationFrame(()=>{ const d = document.getElementById("detalhe"), r = document.querySelector(".det-rolagem");
+      if(d) d.scrollTop = y[0]; if(r) r.scrollTop = y[1]; window.scrollTo(0, y[2]); _rolPend = null; }); }
+  }
   else if(clienteAberto) abrirFicha(clienteAberto);
 }
 function pintarFicha(){
@@ -15783,7 +15812,9 @@ function competenciasDaLinha(txt){
     if(atual && /^[\d.]+,\d{2}$/.test(tok)) atual.vals.push(+tok.replace(/\./g,"").replace(",","."));
     else if(atual && /^[A-Z]{3,}(?:-[A-Z0-9]{2,})+$/.test(tok)) atual.ind.push(tok);   // F214 · o indicador da competência
   }
-  return out.filter(x=>x.vals.length).map(x=>({c:x.c, v:Math.max(...x.vals), ...(x.ind.length ? {ind:x.ind} : {})}));
+  // F215 · com contribuição e salário na linha, a razão dá a alíquota (5, 11 ou 20 %)
+  return out.filter(x=>x.vals.length).map(x=>({c:x.c, v:Math.max(...x.vals), ...(x.ind.length ? {ind:x.ind} : {}),
+    ...(x.vals.length > 1 && Math.max(...x.vals) > 0 ? {aliq: Math.round(Math.min(...x.vals) / Math.max(...x.vals) * 100)} : {})}));
 }
 function lerVinculosCnis(itens){
   const linhas = linhasDoPdf(palavrasDoPdf(itens));
@@ -20686,7 +20717,7 @@ const PA_BLOCOS = [
 ];
 // F207 · blocos que só nascem quando o dossiê traz o documento deles
 const PA_BLOCOS_EXTRA = [
-  ["ben", "Benefícios", ["beneficios","carta"]], ["saude", "Saúde", ["medicos"]], ["esp", "PPP e CAT", ["ppp","cat"]],
+  ["ben", "Benefícios", ["beneficios","carta"]], ["saude", "Documentação HCRP", ["medicos"]], ["esp", "PPP eletrônico e CAT", ["ppp","cat"]],
   ["cad", "CadÚnico", ["cadunico"]],
 ];
 const blocosDoPA = d => [...PA_BLOCOS, ...PA_BLOCOS_EXTRA.filter(([b])=>d.grupos[b] && d.grupos[b].length)];
@@ -20743,8 +20774,10 @@ function paDados(c, ks){
       grupos.falta.length ? curtoMapa(grupos.falta[0].texto) : "o dossiê tem os documentos de cada portal", grupos.falta.length ? "warn" : "ok"],
     cnpj: [ativos.length ? `${ativos.length} ${ativos.length===1?"CNPJ":"CNPJs"}` : "nenhum", false,
       ativos.length ? curtoMapa(ativos[0].texto) : grupos.cnpj.length ? "a Redesim não traz CNPJ no CPF" : "a Redesim não foi consultada", ativos.length ? "warn" : "info"],
-    ped: [(n=>n ? `${n} ${n===1?"registro":"registros"}` : "nenhum")(grupos.ped.length), false,
-      grupos.ped.length ? curtoMapa((grupos.ped.find(x=>x.prazo)||grupos.ped[0]).texto) : "nenhum pedido no dossiê", pior(grupos.ped)],
+    ped: (ps=>{ const ni = ps.filter(p=>p.res==="indeferido").length, pr = grupos.ped.find(x=>x.prazo);
+      return [ps.length ? `${ps.length} ${ps.length===1?"pedido":"pedidos"}` : "nenhum", false,
+        pr ? curtoMapa(pr.texto) : ps.length ? `${ni} ${ni===1?"indeferido":"indeferidos"}, ${ps.length-ni} ${ps.length-ni===1?"outro":"outros"}` : "nenhum pedido no dossiê",
+        pr ? pior(grupos.ped) : ni ? "warn" : ps.length ? "ok" : "info"]; })(pedidosAoInss(c, fd)),
     plan: [ap ? fmtBarra(ap.data) : "—", true, ap ? (ap.especie||"aposentadoria") : "sem aposentadoria prevista nos Lembretes", "info"],
     ...Object.fromEntries(PA_BLOCOS_EXTRA.map(([b])=>[b, [(n=>`${n} ${n===1?"registro":"registros"}`)(grupos[b].length), false,
       grupos[b].length ? curtoMapa(grupos[b][0].texto) : "", grupos[b].length ? pior(grupos[b]) : "info"]])),
@@ -20867,11 +20900,12 @@ async function usarNomeCnis(cliId){
 // teor. Embaixo, as considerações de quem analisa, que ficam à direita junto
 // dos trabalhos possíveis.
 // ═══════════════════════════════════════════════════════════════════════
-const _adxAba = new Map(), _adxDiv = new Map(), _cnisComps = new Map();
+const _adxAba = new Map(), _adxDiv = new Map(), _cnisComps = new Map(), _adxTab = new Map(), _adxHist = new Set();
 // as competências do CNIS (com os indicadores) só existem no PDF: lidas uma vez, na sessão
 async function carregarCnisComps(c){
   if(_cnisComps.has(c.id)) return;
   _cnisComps.set(c.id, {carregando:true});
+  await new Promise(r=>setTimeout(r, 0));   // nunca repinta de dentro da pintura que a pediu
   const g = cnisDe(c), an = docsDoDossie(c.id).find(a=>/^CNIS · CNIS completo/i.test(a.nome||"")) || (g && g.caminho ? {caminho:g.caminho} : null);
   let vs = null;
   try{ if(an) vs = lerCnisPdf(await itensDoPdf(await pdfDoAnexo(an))).linhaDoTempo || []; }catch(e){ console.warn("CNIS: remunerações não lidas", e); }
@@ -20921,7 +20955,7 @@ function remuneracoesComparadas(c, fd){
     const l = pega(_raiz(v.codigo) || v.origem, cp.c, v.origem); l.cnis = cp.v; l.ind = cp.ind || []; }
   for(const r of fd.rais||[]) for(const [mm, val] of Object.entries(r.remuneracoes||{})){
     const l = pega(r.raiz || _raiz(r.cnpj), `${mm}/${r.ano}`, r.nome); l.rais = val; }
-  return [...linhas.values()].map(l=>{
+  return [...linhas.values()].filter(l=>chaveComp(l.comp) >= "1994-07").map(l=>{   // F215 · do Plano Real em diante
     const sm = salarioMinimo(l.comp);
     l.sem = (l.cnis==null || l.cnis===0) || (l.rais!=null && l.rais===0);
     l.div = (l.cnis!=null && l.rais!=null && Math.abs(l.cnis - l.rais) >= 0.01) || l.cnis==null || l.rais==null || l.ind.length > 0 || (sm && ((l.cnis!=null && l.cnis < sm) || (l.rais!=null && l.rais > 0 && l.rais < sm)));
@@ -20943,6 +20977,83 @@ function tabelaRemuneracoes(c, fd, soDiv){
       || `<tr><td colspan="6" class="meio-sub">${soDiv ? "Nenhuma competência divergente." : "Nenhuma remuneração lida."}</td></tr>`}</tbody></table>
   ${vis.length > 400 ? `<p class="meio-sub">Mostrando as 400 competências mais recentes de ${vis.length}.</p>` : ""}`;
 }
+// F216 · PEDIDOS AO INSS: protocolos, NBs e laudos médicos numa lista só. Cada
+// pedido traz a espécie, a DER, o número e o resultado (deferido em verde,
+// indeferido em vermelho); o laudo médico pericial vai junto do NB dele.
+function pedidosAoInss(c, fd){
+  const m = new Map(), pega = (nb, chave) => { const k = nb ? "nb:"+nb : chave; if(!m.has(k)) m.set(k, {nb:nb||"", especie:"", der:"", protocolo:"", res:"", desc:"", fontes:new Set(), laudos:[], anexo:null}); return m.get(k); };
+  const resDe = t => /indefer|negad|não reconhec|nao reconhec/i.test(t||"") ? "indeferido" : /defer|concedid|ativo|cessad|reconhecid|mantid/i.test(t||"") ? "deferido" : "";
+  for(const p of fd.processos||[]){
+    const dec = (p.comunicacoes||[]).slice(-1)[0] || {};
+    const x = pega(p.nb || dec.nb, "pa:"+(p.entrada||"")+p.servico);
+    x.especie = x.especie || p.servico || ""; x.der = x.der || p.entrada || ""; x.fontes.add("pedido administrativo"); x.anexo = x.anexo || (p.anexo||{}).id;
+    const r = resDe(dec.decisao) || resDe(p.status); if(r) x.res = r; if(dec.decisao) x.desc = dec.decisao + (dec.motivo ? `: ${dec.motivo}` : "");
+    else if(p.status) x.desc = p.status;
+  }
+  for(const k of fd.cartas||[]){ const x = pega(k.nb, "ct:"+k.nb); x.especie = x.especie || k.especie; x.der = x.der || k.der; x.res = "deferido"; x.fontes.add("carta de concessão"); x.anexo = x.anexo || (k.anexo||{}).id; }
+  const pdf = triagemDe(c).pdf || {};
+  for(const b of [...(((pdf.declaracao||{}).beneficios)||[]), ...((((pdf.cnis||{}).analise||{}).benefAtivos)||[])]){
+    if(!b.nb) continue; const x = pega(soDig(b.nb), ""); x.especie = x.especie || b.especie || ""; x.der = x.der || b.inicio || "";
+    if(!x.res) x.res = resDe(b.situacao); x.fontes.add(b.situacao ? `benefício ${String(b.situacao).toLowerCase()}` : "benefício"); }
+  for(const v of ((cnisDe(c)||{}).vinculos||[]).filter(v=>v.tipo==="Benefício" && v.nb)){
+    const x = pega(soDig(v.nb), ""); x.especie = x.especie || [v.especie, v.origem].filter(Boolean).join(" - "); x.der = x.der || v.inicio || "";
+    if(!x.res) x.res = resDe(v.situacao) || (v.inicio ? "deferido" : ""); x.fontes.add("CNIS"); }
+  for(const l of fd.laudos||[]){ const x = pega(l.nb, "ld:"+l.exame); x.laudos.push(l); x.fontes.add("laudo médico pericial");
+    if(!x.res && l.resultado) x.res = l.resultado==="incapaz" ? "deferido" : "indeferido"; }
+  return [...m.values()].map(x=>({...x, fontes:[...x.fontes]})).sort((a,b)=>isoBr(b.der||"").localeCompare(isoBr(a.der||"")));
+}
+const _pedSoIndef = new Set();
+function painelPedidos(c, fd){
+  const ps = pedidosAoInss(c, fd), so = _pedSoIndef.has(c.id), vis = ps.filter(p=>!so || p.res==="indeferido");
+  if(!ps.length) return `<p class="meio-sub">O dossiê não traz pedido, NB nem laudo médico pericial.</p>`;
+  const nInd = ps.filter(p=>p.res==="indeferido").length;
+  return `<div class="adx-sec-cab"><span class="meio-sub">${ps.length} ${ps.length===1?"pedido":"pedidos"} · ${nInd} ${nInd===1?"indeferido":"indeferidos"}</span>
+      <button type="button" class="adx-chave${so?" on":""}" role="switch" aria-checked="${so}" onclick="${so ? `_pedSoIndef.delete('${c.id}')` : `_pedSoIndef.add('${c.id}')`};repintarFicha()"><i></i>${so ? "Só os indeferidos" : "Todos os pedidos"}</button></div>
+    <ul class="adx-peds">${vis.map(p=>`<li><i class="adx-res ${p.res||"nd"}" title="${p.res||"sem resultado no dossiê"}"></i>
+      <div><b>${esc(p.especie || "Pedido sem espécie lida")}</b> <span class="meio-sub">${esc(p.res || "sem resultado no dossiê")}</span>
+        <div class="mono adx-ped-dados">${p.der ? `DER ${esc(p.der)}` : "DER não lida"}${p.nb ? ` · NB ${esc(p.nb)}` : ""}</div>
+        ${p.desc ? `<div class="adx-ped-desc">${esc(p.desc)}</div>` : ""}
+        ${p.laudos.map(l=>`<div class="adx-ped-laudo">Laudo médico pericial${l.exame ? ` de ${esc(l.exame)}` : ""}: ${esc(l.resultado || "sem conclusão lida")}${l.dii ? ` · DII ${esc(l.dii)}` : ""}${l.dcb ? ` · DCB ${esc(l.dcb)}` : ""}${l.anexo ? ` · <button type="button" class="adr-link" onclick="abrirAnexo('${l.anexo.id}')">ver</button>` : ""}</div>`).join("")}
+        <div class="meio-sub">${esc(p.fontes.join(", "))}${p.anexo ? ` · <button type="button" class="adr-link" onclick="abrirAnexo('${p.anexo}')">ver</button>` : ""}</div></div></li>`).join("")
+      || `<li class="meio-sub">Nenhum indeferido.</li>`}</ul>`;
+}
+// F215 · as contribuições por categoria: facultativo de baixa renda (5 %),
+// MEI (5 % do contribuinte individual) e facultativo ou individual a 11 %.
+// Primeiro só os meses; a chave abre a tabela com valor e indicadores.
+const CAT_CONTRIB = [
+  ["baixa", "Facultativo de baixa renda (5 %)", (v, cp)=>/Facultativo/.test(v.tipo||"") && (cp.aliq===5 || (cp.ind||[]).some(i=>/FBR|BAIXA/i.test(i)))],
+  ["mei", "MEI (5 %)", (v, cp)=>/MEI|Microempreendedor/i.test(v.origem||"") || (cp.ind||[]).some(i=>/MEI/.test(i)) || (/Contribuinte Individual/.test(v.tipo||"") && cp.aliq===5)],
+  ["onze", "Facultativo ou individual a 11 %", (v, cp)=>/Facultativo|Contribuinte Individual/.test(v.tipo||"") && cp.aliq===11],
+];
+function contribuicoesPorCategoria(c){
+  const st = _cnisComps.get(c.id); if(!st || st.carregando) return null;
+  const out = Object.fromEntries(CAT_CONTRIB.map(([k])=>[k, []]));
+  for(const v of (st.vs||[]).filter(v=>v.tipo!=="Benefício")) for(const cp of v.comps||[]){
+    const cat = CAT_CONTRIB.find(([, , f])=>f(v, cp)); if(cat) out[cat[0]].push({...cp, tipo:v.tipo});
+  }
+  for(const k in out) out[k].sort((a,b)=>chaveComp(a.c).localeCompare(chaveComp(b.c)));
+  return out;
+}
+// os meses em faixas: 01/2020 a 06/2020, 09/2020
+function faixasDeMeses(cs){
+  const ks = cs.map(x=>chaveComp(x.c)), out = [];
+  const prox = k => { const [y, m] = k.split("-").map(Number); return m===12 ? `${y+1}-01` : `${y}-${String(m+1).padStart(2,"0")}`; };
+  const br = k => k.split("-").reverse().join("/");
+  for(let i = 0; i < ks.length; ){ let j = i; while(j+1 < ks.length && ks[j+1]===prox(ks[j])) j++;
+    out.push(i===j ? br(ks[i]) : `${br(ks[i])} a ${br(ks[j])}`); i = j+1; }
+  return out.join(", ");
+}
+function painelCategorias(c){
+  const cat = contribuicoesPorCategoria(c);
+  if(!cat){ carregarCnisComps(c); return ""; }
+  return CAT_CONTRIB.filter(([k])=>cat[k].length).map(([k, rot])=>{ const cs = cat[k], tab = _adxTab.get(c.id+k);
+    return `<section class="adx-sec"><div class="adx-sec-cab"><h3>${esc(rot)} · ${cs.length} ${cs.length===1?"mês":"meses"}</h3>
+      <button type="button" class="adx-chave${tab?" on":""}" role="switch" aria-checked="${!!tab}" onclick="_adxTab.set('${c.id}${k}',${!tab});repintarFicha()"><i></i>${tab ? "Em tabela" : "Só os meses"}</button></div>
+      ${tab ? `<table class="pa-tabela"><thead><tr><th>Competência</th><th>Salário de contribuição</th><th>Alíquota</th><th>Indicadores</th></tr></thead><tbody>
+        ${cs.map(x=>`<tr><td class="mono">${esc(x.c)}</td><td class="mono${salarioMinimo(x.c) && x.v < salarioMinimo(x.c) ? " adx-verm" : ""}">${x.v.toLocaleString("pt-BR",{minimumFractionDigits:2})}</td>
+          <td class="mono">${x.aliq!=null ? x.aliq+" %" : "—"}</td><td>${esc((x.ind||[]).join(", ") || "—")}</td></tr>`).join("")}</tbody></table>`
+        : `<p class="adx-meses mono">${esc(faixasDeMeses(cs))}</p>`}</section>`; }).join("");
+}
 // a qualidade de segurado ao longo do tempo: cada período contribuído, a graça
 // que veio depois, a perda e o reingresso. O último trecho é o da conta do CRM
 // (calcularGraca); os anteriores são estimados pelo art. 15 da Lei 8.213/91.
@@ -20955,8 +21066,11 @@ function historiaQualidade(c, d){
     acum += meses(p.a, p.b);
     const prox = ps[i+1], g = acum > 120 ? 24 : 12, perda = `${mes(p.b, g + 2)}-16`;
     out.push({tipo:"contrib", de:p.a, ate:p.b, txt:`${meses(p.a, p.b)} meses de contribuição`});
-    if(!prox){ out.push({tipo: gr && gr.vencida ? "perda" : "graca", de:mes(p.b, 1), ate:(gr && (gr.mantidaAte||"").slice(0,7)) || mes(p.b, g),
-      txt: gr && gr.semLimite ? "benefício em manutenção: qualidade sem limite" : gr ? (gr.vencida ? `perdida em ${fmtBarra(gr.perda)}` : `mantida até ${fmtBarra(gr.mantidaAte)}`) : ""}); return; }
+    if(!prox){
+      const ate = (gr && (gr.mantidaAte||"").slice(0,7)) || mes(p.b, g);
+      out.push({tipo:"graca", de:mes(p.b, 1), ate, txt: gr && gr.semLimite ? "benefício em manutenção: qualidade sem limite" : `graça, qualidade mantida até ${gr ? fmtBarra(gr.mantidaAte) : ate}`});
+      if(gr && gr.vencida && !gr.semLimite) out.push({tipo:"perda", de:(gr.perda||"").slice(0,7) || mes(ate, 1), ate:hoje().slice(0,7), txt:`sem qualidade desde ${fmtBarra(gr.perda)}`});
+      return; }
     if(`${prox.a}-01` < perda){ out.push({tipo:"graca", de:mes(p.b, 1), ate:mes(prox.a, -1), txt:"sem perda: voltou a contribuir dentro da graça"}); }
     else { out.push({tipo:"perda", de:mes(p.b, 1), ate:mes(prox.a, -1), txt:`graça de ${g} meses; perda estimada em ${fmtBarra(perda)}`});
       out.push({tipo:"reingresso", de:prox.a, ate:prox.a, txt:`reingresso em ${prox.a.split("-").reverse().join("/")}`}); acum = 0; }
@@ -20964,16 +21078,31 @@ function historiaQualidade(c, d){
   return out;
 }
 function painelQualidade(c, d){
-  const h = historiaQualidade(c, d); if(!h.length) return `<p class="meio-sub">O CNIS ainda não foi lido.</p>`;
+  const gr = d.gr, h = historiaQualidade(c, d);
+  if(!gr && !h.length) return `<p class="meio-sub">O CNIS ainda não foi lido.</p>`;
+  const aberto = _adxHist.has(c.id);
+  const ultima = gr && gr.ultima ? gr.ultima : "—";
+  const ate = !gr ? "—" : gr.semLimite ? "sem limite (benefício em manutenção)" : fmtBarra(gr.mantidaAte);
+  const resumo = `<div class="adx-qual"><div><small>Última contribuição ou benefício</small><b class="mono">${esc(ultima)}</b></div>
+      <div><small>Qualidade mantida até</small><b class="mono${gr && gr.vencida ? " adx-verm" : ""}">${esc(ate)}</b></div>
+      ${gr && gr.vencida && !gr.semLimite ? `<div><small>Perda</small><b class="mono adx-verm">${esc(fmtBarra(gr.perda))}</b></div>` : ""}
+      <button type="button" class="btn-mini" aria-expanded="${aberto}" onclick="${aberto ? `_adxHist.delete('${c.id}')` : `_adxHist.add('${c.id}')`};repintarFicha()">${aberto ? "Fechar o histórico" : "Ver todo o histórico"}</button></div>`;
+  if(!aberto || !h.length) return resumo;
   const t0 = Date.parse(`${h[0].de}-01`), t1 = Math.max(Date.parse(hoje()), Date.parse(`${h[h.length-1].ate}-28`));
   const pos = ym => Math.max(0, Math.min(100, (Date.parse(`${ym}-01`) - t0) / (t1 - t0) * 100));
+  const y0 = +h[0].de.slice(0,4), y1 = +hoje().slice(0,4), passo = Math.max(1, Math.ceil((y1 - y0) / 12)), anos = [];
+  for(let y = y0; y <= y1; y += passo) anos.push(y);
   const nPerda = h.filter(x=>x.tipo==="perda").length, nRe = h.filter(x=>x.tipo==="reingresso").length;
-  return `<div class="adx-kpis"><span><b>${nPerda}</b> ${nPerda===1?"perda":"perdas"} da qualidade</span><span><b>${nRe}</b> ${nRe===1?"reingresso":"reingressos"}</span>
-      <span>${esc((h[h.length-1]||{}).txt||"")}</span></div>
-    <div class="adx-faixa" role="img" aria-label="Qualidade de segurado ao longo do tempo">${h.filter(x=>x.tipo!=="reingresso").map(x=>
-      `<span class="adx-seg ${x.tipo}" style="left:${pos(x.de)}%;width:${Math.max(0.5, pos(x.ate) - pos(x.de))}%" title="${esc(x.de)} a ${esc(x.ate)}: ${esc(x.txt)}"></span>`).join("")}
-      ${h.filter(x=>x.tipo==="reingresso").map(x=>`<span class="adx-re" style="left:${pos(x.de)}%" title="${esc(x.txt)}"></span>`).join("")}</div>
-    <div class="adx-leg"><span><i class="adx-seg contrib"></i>Contribuição</span><span><i class="adx-seg graca"></i>Graça</span><span><i class="adx-seg perda"></i>Sem qualidade</span><span><i class="adx-re"></i>Reingresso</span></div>
+  const ROT = {contrib:"Contribuição", graca:"Graça", perda:"Sem qualidade"};
+  return resumo + `<div class="adx-kpis"><span><b>${nPerda}</b> ${nPerda===1?"perda":"perdas"} da qualidade</span><span><b>${nRe}</b> ${nRe===1?"reingresso":"reingressos"}</span></div>
+    <figure class="adx-graf" aria-label="Qualidade de segurado ao longo do tempo">
+      <div class="adx-graf-linha">${h.filter(x=>x.tipo!=="reingresso").map(x=>{ const w = Math.max(0.6, pos(x.ate) - pos(x.de));
+        return `<span class="adx-bar ${x.tipo}" style="left:${pos(x.de)}%;width:${w}%" title="${esc(x.de.split("-").reverse().join("/"))} a ${esc(x.ate.split("-").reverse().join("/"))}: ${esc(x.txt)}">${w > 9 ? esc(ROT[x.tipo]) : ""}</span>`; }).join("")}
+        ${h.filter(x=>x.tipo==="reingresso").map(x=>`<span class="adx-pino" style="left:${pos(x.de)}%" title="${esc(x.txt)}"><i>${esc(x.de.slice(5)+"/"+x.de.slice(0,4))}</i></span>`).join("")}
+        <span class="adx-hoje" style="left:${pos(hoje().slice(0,7))}%"><i>hoje</i></span></div>
+      <div class="adx-eixo">${anos.map(y=>`<span style="left:${pos(`${y}-01`)}%">${y}</span>`).join("")}</div>
+      <figcaption class="adx-leg"><span><i class="adx-bar contrib"></i>Contribuição</span><span><i class="adx-bar graca"></i>Graça</span><span><i class="adx-bar perda"></i>Sem qualidade</span><span><i class="adx-pino-lg"></i>Reingresso</span></figcaption>
+    </figure>
     <ol class="adx-hist">${h.map(x=>`<li class="${x.tipo}"><span class="mono">${esc(x.de.split("-").reverse().join("/"))}${x.ate!==x.de ? ` a ${esc(x.ate.split("-").reverse().join("/"))}` : ""}</span> ${esc(x.txt)}</li>`).join("")}</ol>
     <p class="meio-sub">Os trechos anteriores ao último são estimados pelo art. 15 da Lei 8.213/91 (12 meses, ou 24 com mais de 120 contribuições sem perda), sem o acréscimo do desemprego; o último segue a conta da Identificação.</p>`;
 }
@@ -20988,19 +21117,21 @@ function painelCnpjs(c, fd){
 function exploracaoDireito(c, ks){
   if(!(docsDoDossie(c.id).length || cnisDe(c))) return "";
   const d = paDados(c, ks), vai = b => paVai(c.id, b), sec = [];
-  const aba = _adxAba.get(c.id) || "vinculos", soDiv = !!_adxDiv.get(c.id);
+  const aba = _adxAba.get(c.id) || "vinculos", soDiv = _adxDiv.has(c.id) ? !!_adxDiv.get(c.id) : true;
   if(vai("qual")) sec.push(["Qualidade de segurado", painelQualidade(c, d)]);
   if(vai("cnis") || vai("rais") || vai("car")) sec.push(["CNIS, RAIS e CAGED", `<div class="adx-abas" role="tablist">
       <button type="button" role="tab" aria-selected="${aba==="vinculos"}" class="${aba==="vinculos"?"on":""}" onclick="_adxAba.set('${c.id}','vinculos');repintarFicha()">Vínculos</button>
       <button type="button" role="tab" aria-selected="${aba==="remun"}" class="${aba==="remun"?"on":""}" onclick="_adxAba.set('${c.id}','remun');repintarFicha()">Remunerações</button>
-      <button type="button" class="pa-levar-bt pa-sw${soDiv?" on":""}" role="switch" aria-checked="${soDiv}" style="margin-left:auto" onclick="_adxDiv.set('${c.id}',${!soDiv});repintarFicha()"><i></i>Só o divergente</button></div>
+      <button type="button" class="adx-chave${soDiv?" on":""}" role="switch" aria-checked="${soDiv}" onclick="_adxDiv.set('${c.id}',${!soDiv});repintarFicha()"><i></i>${soDiv ? "Mostrando só o divergente" : "Mostrando tudo"}</button></div>
     ${aba==="vinculos" ? tabelaVinculos(c, d.fd, soDiv) : tabelaRemuneracoes(c, d.fd, soDiv)}`]);
   if(vai("cnpj")) sec.push(["CNPJs do titular", painelCnpjs(c, d.fd)]);
-  const outros = blocosDoPA(d).filter(([b])=>vai(b) && !["qual","car","cnis","rais","cnpj","falta"].includes(b) && d.grupos[b].length);
+  if(vai("ped")) sec.push(["Pedidos ao INSS", painelPedidos(c, d.fd)]);
+  const cats = (vai("cnis") || vai("car")) ? painelCategorias(c) : "";
+  const outros = blocosDoPA(d).filter(([b])=>vai(b) && !["qual","car","cnis","rais","cnpj","falta","ped"].includes(b) && d.grupos[b].length);
   for(const [b, rot] of outros) sec.push([rot, `<ul class="mapa-lista pa-fatos">${d.grupos[b].map(x=>`<li class="est-${x.est}"><i class="mapa-bola" aria-hidden="true"></i><span>${esc(x.texto)}</span>
     <span class="dossie-orig">${esc(x.fonte||"")}${x.anexo ? ` · <button type="button" class="adr-link" onclick="abrirAnexo('${x.anexo}')">ver</button>` : ""}</span></li>`).join("")}</ul>`]);
-  if(!sec.length) return "";
-  return sec.map(([t, h])=>`<section class="adx-sec"><h3>${esc(t)}</h3>${h}</section>`).join("");
+  if(!sec.length && !cats) return "";
+  return sec.map(([t, h])=>`<section class="adx-sec"><h3>${esc(t)}</h3>${h}</section>`).join("") + cats;
 }
 // as considerações de quem analisa: gravadas na ficha (campos.consideracoes)
 function consideracoesDe(c){ return ((c.campos||{}).consideracoes)||[]; }

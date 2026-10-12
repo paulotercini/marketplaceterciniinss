@@ -170,13 +170,20 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
     const c = D.cliPorId.get(clienteAberto);
     const fora0 = _paForaBl.get(c.id); _paForaBl.delete(c.id);
     _cnisComps.set(c.id, { vs: [{ tipo: "Empregado", codigo: "11.444.777/0001-61", origem: "CONFECCOES FICTICIAS LTDA", inicio: "01/02/2011", fim: "30/09/2019",
-      comps: [{ c: "01/2016", v: 1500 }, { c: "02/2016", v: 700, ind: ["PREC-MENOR-MIN"] }, { c: "08/2016", v: 1400 }] }] });
+      comps: [{ c: "05/1994", v: 90 }, { c: "01/2016", v: 1500 }, { c: "02/2016", v: 700, ind: ["PREC-MENOR-MIN"] }, { c: "08/2016", v: 1400 }] },
+      { tipo: "Facultativo", codigo: "", origem: "", inicio: "01/03/2020", fim: "", comps: [{ c: "03/2020", v: 1045, aliq: 5 }, { c: "04/2020", v: 1045, aliq: 5 }, { c: "06/2020", v: 1045, aliq: 5 }] },
+      { tipo: "Contribuinte Individual", codigo: "", origem: "", inicio: "01/01/2021", fim: "", comps: [{ c: "01/2021", v: 1100, aliq: 11 }] }] });
+    _adxDiv.delete(c.id);
     repintarFicha(); await new Promise(x => setTimeout(x, 150));
     const r = { secs: [...document.querySelectorAll(".adx-sec h3")].map(h => h.textContent), vinc: document.querySelector(".adx-tab").textContent };
-    _adxAba.set(c.id, "remun"); repintarFicha(); await new Promise(x => setTimeout(x, 150));
+    r.qual = document.querySelector(".adx-qual").textContent; r.semHist = !document.querySelector(".adx-graf");
+    [...document.querySelectorAll(".adx-qual button")][0].click(); await new Promise(x => setTimeout(x, 150)); r.comHist = !!document.querySelector(".adx-graf");
+    r.cats = [...document.querySelectorAll(".adx-sec-cab h3")].map(h => h.textContent); r.meses = document.querySelector(".adx-meses") ? document.querySelector(".adx-meses").textContent : "";
+    r.chaveDiv = document.querySelector(".adx-chave").getAttribute("aria-checked");
+    _adxAba.set(c.id, "remun"); _adxDiv.set(c.id, false); repintarFicha(); await new Promise(x => setTimeout(x, 150));
     const t = document.querySelector(".adx-tab");
     r.remun = t.textContent; r.verde = [...t.querySelectorAll(".adx-verde")].map(x => x.textContent); r.verm = [...t.querySelectorAll(".adx-verm")].map(x => x.textContent);
-    r.todas = t.querySelectorAll("tbody tr").length;
+    r.todas = t.querySelectorAll("tbody tr").length; r.antigo = /05\/1994/.test(t.textContent);
     _adxDiv.set(c.id, true); repintarFicha(); await new Promise(x => setTimeout(x, 150));
     r.div = document.querySelectorAll(".adx-tab tbody tr").length;
     _adxDiv.set(c.id, false); _adxAba.set(c.id, "vinculos"); repintarFicha(); await new Promise(x => setTimeout(x, 150));
@@ -190,8 +197,33 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   conf("F214 · vínculos: CNIS, RAIS e CAGED lado a lado, com a licença sem remuneração", /CONFECCOES FICTICIAS/.test(adx.vinc) && /01\/06\/2016 a 31\/07\/2016/.test(adx.vinc));
   conf(`F214 · remunerações: o maior em verde, abaixo do mínimo em vermelho, sem remuneração apontado (${adx.verde} | ${adx.verm})`,
     adx.verde.length > 0 && adx.verm.includes("700,00") && /sem remuneração/.test(adx.remun) && /PREC-MENOR-MIN/.test(adx.remun));
-  conf("F214 · a chave mostra só o divergente", adx.div > 0 && adx.div < adx.todas);
+  conf("F214 · a chave mostra só o divergente, e abre ligada", adx.div > 0 && adx.div < adx.todas && adx.chaveDiv === "true");
+  conf("F215 · as remunerações começam em 07/1994", !adx.antigo);
+  conf(`F215 · a qualidade mostra primeiro a última contribuição e até quando se mantém; o histórico abre no botão (${adx.qual.slice(0,80)})`, /Última contribuição/.test(adx.qual) && /mantida até/i.test(adx.qual) && adx.semHist && adx.comHist);
+  conf(`F215 · baixa renda e 11 % em quadros próprios, com os meses (${adx.cats.join(" | ")} · ${adx.meses})`, adx.cats.some(t => /baixa renda.*3 meses/.test(t)) && adx.cats.some(t => /11 %/.test(t)) && /03\/2020 a 04\/2020, 06\/2020/.test(adx.meses));
   conf("F214 · a consideração vai ao quadro fixo da direita, junto dos trabalhos", /Conferir a licença de 2016/.test(adx.cons) && adx.lado);
+  conf("F215 · clicar numa chave não volta ao topo da página", await p.evaluate(async () => {
+    const box = [document.getElementById("detalhe"), document.querySelector(".det-rolagem")].find(e => e && e.scrollHeight > e.clientHeight + 300);
+    if (!box) return true;
+    box.scrollTop = 300; const y = box.scrollTop; repintarFicha(); repintarFicha(); await new Promise(x => setTimeout(x, 120));
+    const b2 = [document.getElementById("detalhe"), document.querySelector(".det-rolagem")].find(e => e && e.scrollHeight > e.clientHeight + 300);
+    return Math.abs(b2.scrollTop - y) < 5;
+  }));
+  await p.evaluate(async () => { _adxHist.add(clienteAberto); repintarFicha(); await new Promise(x => setTimeout(x, 100)); });
+  const ped = await p.evaluate(() => {
+    const c = { ...D.clientes[0], triagem: { pdf: {} } };
+    const fd = { processos: [{ servico: "Auxílio por Incapacidade Temporária", entrada: "14/03/2024", status: "Concluída", nb: "7123456789",
+        comunicacoes: [{ nb: "7123456789", decisao: "Indeferido", motivo: "não constatação de incapacidade" }] }],
+      cartas: [{ nb: "1429743198", especie: "Aposentadoria por tempo de contribuição", der: "28/05/2010" }],
+      laudos: [{ nb: "7123456789", exame: "20/03/2024", resultado: "capaz", dii: "", dcb: "" }] };
+    const ps = pedidosAoInss(c, fd);
+    const h1 = painelPedidos(c, fd); _pedSoIndef.add(c.id); const h2 = painelPedidos(c, fd); _pedSoIndef.delete(c.id);
+    return { n: ps.length, ind: ps.find(p => p.nb === "7123456789"), def: ps.find(p => p.nb === "1429743198"),
+      todos: (h1.match(/<li>/g) || []).length, so: (h2.match(/<li>/g) || []).length };
+  });
+  conf("F216 · pedidos ao INSS juntam protocolo, NB e laudo médico pericial, com DER e resultado", ped.n === 2 && ped.ind.res === "indeferido" && ped.ind.der === "14/03/2024"
+    && ped.ind.laudos.length === 1 && ped.def.res === "deferido");
+  conf("F216 · a lista abre com todos, e a chave deixa só os indeferidos", ped.todos === 2 && ped.so === 1);
   await (await p.$(".adx-grade")).screenshot({ path: "/tmp/f196-adx.png" });
   await p.click(".pa-cartao-bt"); await p.waitForTimeout(100);
   conf("clicar no cartão o destaca", !!(await p.$(".pa-cartao.sel")));
