@@ -3562,6 +3562,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .ncl-todos{font-weight:600}
 /* F196 · painel do primeiro atendimento, o desenho aprovado */
 #detalhe.atend-tela{position:fixed;inset:0;z-index:60;max-width:none;width:auto;overflow:auto;background:var(--fundo,#fff);padding:14px 22px}
+#detalhe.id-bege .painel[data-p="0"]{background:#F3F2EE;padding:16px 18px;border-radius:14px}
 .atend-cab{display:flex;align-items:center;gap:12px;margin:0 0 10px;font-size:13px}
 .atend-cab .avatar{width:40px;height:40px;font-size:18px}
 .atend-nome{font-size:20px;font-weight:600}.atend-chip{font-size:11px;padding:2px 8px;border-radius:999px;background:#E6F0EF;color:#0E5C58;vertical-align:middle}
@@ -4193,7 +4194,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.32</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.33</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14272,7 +14273,7 @@ function repintarFicha(){
   else if(clienteAberto) abrirFicha(clienteAberto);
 }
 function pintarFicha(){
-  { const d = document.getElementById("detalhe"); if(d) d.classList.remove("atend-tela"); }   // F206 · o Cadastro religa
+  { const d = document.getElementById("detalhe"); if(d) d.classList.remove("atend-tela","id-bege"); }   // F206 · o Cadastro religa
   respondeA=null;               // repintou = o chip de resposta se foi com o DOM
   atQuem=[];                    // e a seleção de responsáveis da anotação também
   const cliId = clienteAberto;
@@ -14723,7 +14724,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // qualquer tempo (e fechar registra na Análise de Direito o que foi preenchido)
   // só na aba Cadastro e só depois do + atendimento (ou Abrir atendimento)
   const tela = abaAtiva===0 && pcsVivos.length>0 && _atendAberto.has(c.id) && (ATEND_SUBS.has(cd) || cd==="identificacao");
-  queueMicrotask(()=>{ const d = document.getElementById("detalhe"); if(d) d.classList.toggle("atend-tela", tela); });
+  queueMicrotask(()=>{ const d = document.getElementById("detalhe"); if(d){ d.classList.toggle("atend-tela", tela); d.classList.toggle("id-bege", abaAtiva===0 && cd==="identificacao"); } });
   if(tela) for(const v of Object.keys(vis)) if(v!=="identificacao" && !ATEND_SUBS.has(v)) vis[v] = false;
   return `
     ${tela ? cabecalhoAtendimento(c, cd, vis) : ""}
