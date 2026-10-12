@@ -52,6 +52,10 @@ cada PDF também é anexado ao cliente (origem `dossie`).
    - **Internações**: a autorização/resumo de cada internação.
    - **Relatórios**: todos os relatórios médicos e multiprofissionais.
 
+5. **Redesim · Minhas Empresas** (`consultacnpj.redesim.gov.br`, logado com o gov.br do cliente) → mesmo
+   botão → a extensão abre "Minhas Empresas" e pede: **clique em PESQUISAR** (o portal exige hCaptcha, que
+   só o seu clique gera). A lista de CNPJs vinculados ao CPF é gravada em `CNPJ\` como `.txt`.
+
 O progresso aparece na faixa azul no rodapé da página; no fim ela diz o que veio e o que faltou.
 
 ## O que ela não faz

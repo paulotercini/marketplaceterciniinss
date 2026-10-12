@@ -19054,7 +19054,7 @@ const docsDoDossie = cliId => (D.anexos||[]).filter(a=>a.cliente_id===cliId && a
 const fonteDoDossie = a => { const [f, ...r] = String(a.nome||"").split(" · "); return r.length ? [f, r.join(" · ")] : ["Dossiê", f]; };
 function caixaDossie(cli){
   const d = (cli.dossie && typeof cli.dossie==="object") ? cli.dossie : {};
-  const NOME = {meuinss:"Meu INSS", mte:"Emprega Brasil (CTPS/RAIS/CAGED)", recursos:"e-Recursos", hc:"HC Ribeirão"};
+  const NOME = {meuinss:"Meu INSS", mte:"Emprega Brasil (CTPS/RAIS/CAGED)", recursos:"e-Recursos", hc:"HC Ribeirão", redesim:"Redesim (CNPJs)"};
   const portais = Object.keys(NOME).filter(k=>d[k]);
   const docs = docsDoDossie(cli.id);
   if(!portais.length && !docs.length) return "";
