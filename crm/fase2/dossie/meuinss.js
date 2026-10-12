@@ -92,8 +92,24 @@
     for (const nb of nbs) {
       await pdf('Cartas de concessao', `Carta de concessao NB ${nb}`, `${API}calculoBeneficioServices/concalPdf/${nb}`);
       await pdf('Laudos', `Laudo medico NB ${nb}`, `${API}laudomedicoservices/pdf/${nb}`);
+      // Benefício antigo/cessado: com TODAS as opções o INSS responde 500 "parâmetros
+      // informados" (5 de 7 NBs em 12.10.2026, justo os sem carta). Segunda tentativa
+      // só com os dados gerais (o padrão da tela); se ainda não vier, é "não existe".
+      const antesF = falhas.length;
       await pdf('Extrato do beneficio', `Extrato de informacoes do beneficio NB ${nb}`, `${API}formDinServices/gerarDossie/${nb}`,
         { method: 'POST', headers: Object.assign({}, cab, { 'Content-Type': 'application/json' }), body: JSON.stringify(dossieTudo) });
+      if (falhas.length > antesF && /HTTP 500/.test(falhas[falhas.length - 1])) {
+        falhas.pop();
+        const antesF2 = falhas.length;
+        await pdf('Extrato do beneficio', `Extrato de informacoes do beneficio NB ${nb} (dados gerais)`, `${API}formDinServices/gerarDossie/${nb}`,
+          { method: 'POST', headers: Object.assign({}, cab, { 'Content-Type': 'application/json' }),
+            body: JSON.stringify(Object.assign({}, dossieTudo, { todos: false, valorBenef: false, pgtoBenef: false, instBenef: false,
+              depBenef: false, revBenef: false, procBenef: false, reprLegal: false, perMedica: false, compReclusao: false })) });
+        if (falhas.length > antesF2 && /HTTP 500/.test(falhas[falhas.length - 1])) {
+          falhas.pop();
+          inexistentes.push(`Extrato do beneficio · NB ${nb}: o INSS não gera extrato para este benefício (antigo/cessado)`);
+        }
+      }
     }
 
     // ── Declaração de atividade (tipo de segurado cadastrado) ────────────────

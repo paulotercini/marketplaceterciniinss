@@ -28,10 +28,10 @@ A fonte de dados dos geradores é o **Microsoft To Do** (Graph API, conta pessoa
 
 ## Dossiê do cliente (crm/fase2/dossie) — o que chega ao CRM
 
-<!-- dossie-versao: 0.8.3 — ao mudar manifest.json da extensão, atualize esta seção e este número;
+<!-- dossie-versao: 0.8.6 — ao mudar manifest.json da extensão, atualize esta seção e este número;
      tests em crm/fase2/dossie/testes/regras.test.js conferem que batem. -->
 
-Extensão de navegador (versão **0.8.3**). Com o gov.br do cliente logado, um clique baixa os documentos
+Extensão de navegador (versão **0.8.6**). Com o gov.br do cliente logado, um clique baixa os documentos
 do portal aberto na aba; **🔁 Rodar todos os portais** percorre Meu INSS → e-Recursos → Emprega Brasil → HC →
 Redesim, cada um na sua aba (abre as do gov.br que faltarem; Emprega Brasil e HC só se a aba logada já
 estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha e não decide nada: coleta e entrega.
@@ -48,7 +48,8 @@ estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha 
   parcela: IN 128, art. 184, §§ 2º e 5º) · informe de rendimentos MTE por ano (PDF).
 - **HC Ribeirão**: exames de imagem e de método de todo o período (sem exame de sangue), internações,
   relatórios médicos e multiprofissionais.
-- **Redesim (Minhas Empresas)**: os CNPJs em que o CPF é sócio/titular/responsável, em `.txt` (por CNPJ:
+- **Redesim (Minhas Empresas)**: os CNPJs em que o CPF é sócio/titular/responsável, em **PDF da consulta**
+  (o "Gerar PDF" do portal, montado no navegador sem captcha — a extensão o aciona) e em `.txt` (por CNPJ:
   nome empresarial, situação cadastral, matriz/filial, município/UF, vínculo do CPF, qualificação, capital
   social; sem data de abertura — ela só vem no comprovante) + JSON cru. A consulta exige hCaptcha: a extensão abre a tela e **a pessoa clica em PESQUISAR**;
   o comprovante de cada CNPJ também é protegido por captcha e fica de fora.
