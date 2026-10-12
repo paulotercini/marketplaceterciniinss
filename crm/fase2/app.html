@@ -3607,6 +3607,24 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .pa-na-ad{margin:0 0 12px}.pa-trab-ad{max-width:none!important}.pa-trab-ad .pa-cartoes{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
 .pa-tabela{width:100%;border-collapse:collapse;font-size:12.5px;margin:4px 0 10px}.pa-tabela th,.pa-tabela td{text-align:left;padding:6px 8px;border-bottom:1px solid #E7E6E1;vertical-align:top}
 .pa-tabela th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#686660}.pa-tabela .alerta{color:#8F5400;font-weight:600}
+/* F217 · benefícios em análise (chips que ramificam) e quadros por módulo */
+.ben{background:#fff;border:1px solid #E7E6E1;border-radius:12px;padding:14px 16px;margin:0 0 12px}.ben-cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin:0 0 10px}.ben-cab h3{margin:0;font-size:15px}
+.ben-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ben-chip,.ben-opc{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:0 14px;border-radius:999px;border:1.5px solid #CFCDC6;background:#fff;color:#121212;font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:background-color 160ms cubic-bezier(.23,1,.32,1),border-color 160ms cubic-bezier(.23,1,.32,1),color 160ms cubic-bezier(.23,1,.32,1),transform 160ms cubic-bezier(.23,1,.32,1)}
+.ben-chip:hover,.ben-opc:hover{border-color:#686660}.ben-chip:active,.ben-opc:active{transform:scale(.97)}.ben-chip:focus-visible,.ben-opc:focus-visible{outline:2px solid #0E5C58;outline-offset:2px}
+.ben-chip.on{border-color:#0E5C58;background:#0E5C58;color:#fff}.ben-chip.on .pa-bola{box-shadow:0 0 0 2px #fff}.ben-chip small{font-size:11px;font-weight:700;background:rgba(255,255,255,.25);border-radius:999px;padding:1px 7px}
+.ben-ramo{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 0 12px;padding:2px 0 2px 14px;border-left:2px solid #B5D3CF}.ben-ramo-rot{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#686660;margin-right:4px}
+.ben-opc{min-height:30px;padding:0 12px;font-weight:500;font-size:12.5px}.ben-opc.on{border-color:#0E5C58;background:#E6F0EF;color:#0E5C58;font-weight:600}
+.ben-quadros{margin:10px 0 0}
+.adm-cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin:0 0 8px}.adm-cab h3{margin:0}.adm-para{display:flex;flex-wrap:wrap;gap:4px}.adm-para small{font-size:11px;padding:2px 8px;border-radius:999px;background:#E6F0EF;color:#0E5C58;font-weight:600}
+.adm-calc{margin:0 0 10px}.adm-calc ul{list-style:none;margin:0;padding:0}.adm-calc li{display:flex;gap:8px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #F3F2EE;font-size:13px}.adm-calc li .mapa-bola{margin-top:5px}.adm-calc li:last-child{border-bottom:0}.adm-calc li.est-info .mapa-bola{background:#3A6491}
+.adm-campos{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px 12px}.adm-campo{display:flex;flex-direction:column;gap:3px;font-size:12px;color:#4A4944}.adm-campo input,.adm-campo select{font:inherit;font-size:13px;padding:6px 8px;border:1px solid #CFCDC6;border-radius:6px;background:#fff;color:#121212}
+.adm-tempos input,.adm-tempos select{font:inherit;font-size:12.5px;padding:5px 6px;border:1px solid #CFCDC6;border-radius:6px;width:100%;box-sizing:border-box;background:#fff;color:#121212}.adm-tempos td{padding:4px 4px}
+.adm-x{border:0;background:none;color:#686660;font-size:18px;cursor:pointer;line-height:1;padding:4px 6px;border-radius:6px}.adm-x:hover{background:#F3F2EE;color:#B3261E}
+.adm-tempos-bt{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:6px 0 10px}
+.adm-tot{display:flex;flex-wrap:wrap;gap:12px 24px;margin:0 0 8px}.adm-tot small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#686660}.adm-tot b{font-size:15px}
+.adm-nota{margin:0 0 12px}.adr-modulos ul{margin:2px 0 0;padding-left:18px}
+@media (prefers-reduced-motion:reduce){.ben-chip,.ben-opc{transition:none}.ben-chip:active,.ben-opc:active{transform:none}}
 .pa{background:#F3F2EE;padding:18px;border-radius:14px;--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-warn:#8F5400;--pa-ok:#1B6E38;--pa-info:#3A6491;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660;color:#121212;font-size:13px;line-height:1.45}
 .pa .mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-weight:500}
 .pa-passos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--pa-b);margin-bottom:14px}
@@ -4228,7 +4246,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.39</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.40</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14906,8 +14924,8 @@ function cabecalhoAtendimento(c, cd, vis){
       <button type="button" class="btn-mini" onclick="sairModoAtendimento('${c.id}')">Sair do modo atendimento</button></span>
   </div>
   <nav class="pa-passos atend-passos" aria-label="Passos do atendimento">
-    ${passo("1","identificacao","Identificação","dados do cliente")}${passo("2","pa","Primeiro atendimento","situação e trabalhos")}
-    ${passo("3","direito","Análise de Direito","trabalhos e planejamento")}${passo("4","documentos","Documentos","pedido, guias e geração")}
+    ${passo("1","identificacao","Identificação","dados do cliente")}${passo("2","pa","Primeiro atendimento","situação e benefícios")}
+    ${passo("3","direito","Análise de Direito",(n=>n ? `${n} ${n===1?"benefício":"benefícios"} em análise` : "trabalhos e planejamento")(Object.keys(benefSel(c)).length))}${passo("4","documentos","Documentos","pedido, guias e geração")}
   </nav>`;
 }
 const _atendAberto = new Set();
@@ -19204,6 +19222,7 @@ function adColherDetalhes(){
     if(pl.length) d.plano=pl;
   }
   if(v("ad-previus-anexo")) d.previus_anexo_id=v("ad-previus-anexo");
+  const cAd = D.cliPorId.get(clienteAberto), snap = cAd && admSnapshot(cAd); if(snap) d.modulos = snap;   // F217
   return d;
 }
 async function apagarAnalise(id){
@@ -19431,6 +19450,9 @@ function fichaDaAnalise(a){
     ${a.contexto?`<div class="ad-contexto">${esc(a.contexto)}</div>`:""}
     ${itens?`<dl class="adr-dl">${itens}</dl>`:""}
     ${lista("periodos_especiais","empresa")}${lista("periodos_rurais","local")}
+    ${d.modulos ? `<div class="adr-per adr-modulos"><span class="adr-dt">Análise por benefício</span><ul>
+      <li>${esc(Object.entries(d.modulos.beneficios||{}).flatMap(([f, os])=>os.map(o=>(benefOpcao(f, o)||[,o])[1])).join("; ") || "sem benefício marcado")}</li>
+      ${d.modulos.tempos && d.modulos.tempos.length ? `<li>${d.modulos.tempos.length} ${d.modulos.tempos.length===1?"período":"períodos"} de tempo · total para tempo comum ${esc(tempoFmt((d.modulos.totais||{}).comum||0))}</li>` : ""}</ul></div>` : ""}
   </section>`;
 }
 // barra de cada regra: 100% com o direito alcançado; antes, quanto do
@@ -19539,8 +19561,8 @@ function painelDireito(c){
       ${cnisDe(c)&&cnisDe(c).caminho?`<button type="button" class="tl-bt" onclick="abrirCnis('${c.id}')" title="abre o extrato guardado em outra aba (CNIS de ${esc(fmt(cnisDe(c).em))})">Abrir CNIS</button>`
         :`<button type="button" class="tl-bt tl-falta" onclick="irSubCad('identificacao')" title="o CNIS ainda não foi inserido: insira na Identificação">Inserir CNIS</button>`}</span>
     </div>
-    ${(ex => ex || painelTrabalhos(c, ks) ? `<div class="adx-grade"><div class="adx-main">${ex}${caixaConsideracoes(c)}</div>
-      <aside class="adx-lado">${listaConsideracoes(c)}${painelTrabalhos(c, ks)}</aside></div>` : "")(exploracaoDireito(c, ks))}
+    <div class="adx-grade"><div class="adx-main">${exploracaoDireito(c, ks)}${modulosDireito(c)}${caixaConsideracoes(c)}</div>
+      <aside class="adx-lado">${listaConsideracoes(c)}${painelTrabalhos(c, ks)}</aside></div>
     ${resumoDireito(c, ult)}
     ${datas}
     ${sel ? fichaDaAnalise(sel) : ""}
@@ -21153,6 +21175,358 @@ function listaConsideracoes(c){
   return `<section class="adx-sec adx-lado-cons"><h3>Considerações</h3>${cs.length ? `<ol class="adx-hist">${cs.slice().reverse().map(x=>
     `<li><span class="mono">${esc(fmtBarra(String(x.em).slice(0,10)))}</span> <b>${esc(x.quem||"")}</b> ${esc(x.texto)}</li>`).join("")}</ol>` : `<p class="meio-sub">Nenhuma ainda.</p>`}</section>`;
 }
+// ══════════════════════════════════════════════════════════════════════════
+// F217 · ANÁLISE POR BENEFÍCIO: o que se marca no Primeiro atendimento abre
+// os quadros da Análise de Direito
+// ══════════════════════════════════════════════════════════════════════════
+// Cada família de PONTOS_ESPECIE ramifica em benefícios [opção, rótulo,
+// espécie, subespécie, módulos]. O módulo é um quadro da Análise de Direito:
+// o BPC do deficiente abre deficiência e renda, e não abre tempo especial nem
+// rural; o auxílio-acidente abre acidente e nexo, e não abre tempo. Os números
+// de requisito vêm da base de conhecimento (skills base-*), sem conferência em
+// fonte oficial, e a tela diz isso. A escolha e o que se digita vivem na ficha
+// (campos.ad_modulos) e entram, em cópia, em cada análise registrada.
+const BENEF = {
+  incapacidade: [["b31","Auxílio temporário · B31","B31","B31",["qualidade","carencia","incap"]],
+                 ["b32","Aposentadoria permanente · B32","B32","B32",["qualidade","carencia","incap"]],
+                 ["acid","Acidentário · B91/B92","B91","B91",["qualidade","incap","acid"]]],
+  b94: [["b94","Acidentário · B94","B94","B94",["qualidade","acid","incap"]],
+        ["b36","Previdenciário · B36","B36","B36",["qualidade","acid","incap"]]],
+  tempo: [["idade","Por idade urbana · B41","B41","B41",["idade","carencia","tempos"]],
+          ["transicao","Tempo de contribuição e transição · B42","B42","B42",["tempos","carencia","idade","transicao"]],
+          ["professor","Professor · B57","B57","B57",["tempos","carencia","idade","magisterio"]],
+          ["pcd","Pessoa com deficiência, LC 142 · B42/B41","B42","B42.PCD",["tempos","carencia","defic"]]],
+  especial: [["b46","Aposentadoria especial · B46","B46","B46",["tempos","especial","carencia"]],
+             ["conv","Conversão de tempo especial","B46","B46.CONV",["tempos","especial"]]],
+  rural: [["idade_rural","Por idade rural · B41","B41","B41.RURAL",["idade","rural","tempos"]],
+          ["hibrida","Híbrida · B41","B41","B41.HIBRIDA",["idade","carencia","rural","tempos"]]],
+  bpc: [["def","Pessoa com deficiência · B87","B87","B87",["defic","renda"]],
+        ["idoso","Idoso · B88","B88","B88",["idade","renda"]]],
+  pensao: [["morte","Pensão por morte · B21","B21","B21",["qualidade","dependentes"]],
+           ["reclusao","Auxílio-reclusão · B25","B25","B25",["qualidade","carencia","dependentes"]]],
+  maternidade: [["urb","Urbana · B80","B80","B80",["qualidade","maternidade"]],
+                ["rur","Rural · B80","B80","B80.RURAL",["rural","maternidade"]]],
+  revisao: [["rev","Revisão de benefício","REV","REV",["revisao"]]],
+  cnis: [["acerto","Acerto de CNIS","CNIS","CNIS",["cnis_acerto"]]],
+  crps: [["crps","Recurso ao CRPS","","",["crps"]]],
+};
+const BENEF_ORDEM = ["incapacidade","b94","tempo","especial","rural","bpc","pensao","maternidade","revisao","cnis","crps"];
+const MOD_ORDEM = ["tempos","idade","carencia","qualidade","transicao","especial","magisterio","rural","defic","incap","acid","renda","dependentes","maternidade","revisao","cnis_acerto","crps"];
+const SN = ["","Não","Sim"];
+// os quadros: rótulo e os campos que o advogado informa (chave, rótulo, tipo, opções)
+const MOD_AD = {
+  tempos: {rot:"Tempos de contribuição", campos:[]},
+  idade: {rot:"Idade", campos:[]},
+  carencia: {rot:"Carência", campos:[["car_cumprida","Contribuições para carência","number"],["car_reingresso","Reingresso após perda da qualidade (art. 27-A)","select",SN]]},
+  qualidade: {rot:"Qualidade de segurado", campos:[["qua_fato","Data do fato (DII, óbito, prisão, acidente)","date"],["qua_desemprego","Desemprego comprovado","select",SN]]},
+  transicao: {rot:"Regras de transição da EC 103", campos:[]},
+  especial: {rot:"Tempo especial", campos:[["esp_anos","Tempo exigido para o agente","select",["","15","20","25"]],["esp_ppp","PPP no dossiê ou com o cliente","select",SN],["esp_ltcat","LTCAT ou laudo de base","select",SN],["esp_epi","EPI declarado eficaz no PPP","select",SN],["esp_continua","Continua na atividade nociva (Tema 709)","select",SN]]},
+  magisterio: {rot:"Magistério", campos:[["mag_funcao","Função predominante","select",["","Regência","Direção","Coordenação","Assessoramento pedagógico","Educação infantil"]],["mag_nivel","Nível de ensino","select",["","Infantil","Fundamental","Médio","Superior"]],["mag_regime","Regime","select",["","RGPS","RPPS","Ambos"]]]},
+  rural: {rot:"Trabalho rural", campos:[["rur_regime","Regime","select",["","Segurado especial","Empregado rural","Boia-fria ou diarista","CI rural"]],["rur_prova","Início de prova material","text"],["rur_auto","Autodeclaração feita","select",SN],["rur_imovel","Imóvel e área em módulos fiscais","text"],["rur_renda","Outra renda do grupo familiar","text"]]},
+  defic: {rot:"Deficiência", campos:[["def_tipo","Tipo","select",["","Física","Mental","Intelectual","Sensorial","Múltipla"]],["def_did","Início da deficiência (DID)","date"],["def_grau","Grau (LC 142)","select",["","Leve","Moderada","Grave"]],["def_longo","Impedimento de longo prazo (2 anos)","select",SN],["def_cid","CID","text"],["def_laudo","Laudo com domínios e barreiras","select",SN]]},
+  incap: {rot:"Incapacidade", campos:[["inc_dii","Início da incapacidade (DII)","date"],["inc_tipo","Tipo","select",["","Temporária","Permanente","Parcial"]],["inc_cid","CID","text"],["inc_pericia","Última perícia","date"],["inc_dcb","DCB","date"],["inc_trat","Em tratamento","select",SN]]},
+  acid: {rot:"Acidente e nexo", campos:[["aci_data","Data do acidente ou da doença","date"],["aci_cat","CAT emitida","select",SN],["aci_nexo","Nexo","select",["","CAT","NTEP","Perícia","Sem nexo"]],["aci_categoria","Categoria na data","select",["","Empregado","Avulso","Segurado especial","Contribuinte individual","Facultativo"]],["aci_sequela","Sequela consolidada","select",SN]]},
+  renda: {rot:"Renda do grupo familiar", campos:[["ren_pessoas","Pessoas no grupo familiar","number"],["ren_total","Renda bruta mensal do grupo (R$)","number"],["ren_saude","Gastos com saúde, fralda e dieta (R$)","number"],["ren_cad","CadÚnico atualizado (até 24 meses)","select",SN],["ren_trabalha","Exerce atividade remunerada","select",SN]]},
+  dependentes: {rot:"Dependentes", campos:[["dep_instituidor","Instituidor (nome, NB ou CPF)","text"],["dep_fato","Data do óbito ou da prisão","date"],["dep_classe","Dependente","select",["","Cônjuge","Companheiro(a)","Filho menor","Filho inválido ou com deficiência","Menor sob guarda","Pais","Irmão"]],["dep_nasc","Nascimento do dependente","date"],["dep_uniao","Casamento ou união desde","date"],["dep_contrib","Contribuições do instituidor","number"],["dep_prova","Prova da dependência","text"],["dep_regime","Regime da prisão","select",["","Fechado","Semiaberto","Aberto"]]]},
+  maternidade: {rot:"Salário-maternidade", campos:[["mat_fato","Fato gerador","select",["","Parto","Adoção ou guarda","Aborto não criminoso","Natimorto"]],["mat_data","Data","date"],["mat_situacao","Situação da segurada","select",["","Empregada","CI ou facultativa","Desempregada em graça","Segurada especial"]]]},
+  revisao: {rot:"Revisão", campos:[["rev_nb","NB","text"],["rev_dib","DIB","date"],["rev_primeiro","Primeiro pagamento","date"],["rev_tese","Tese","select",()=>["",...(SUBESPECIES.REV||[]).slice(1).map(x=>x[1].replace(/^Revisão (pelo |por |do |da )?/, ""))]]]},
+  cnis_acerto: {rot:"Acerto de CNIS", campos:[["cn_vinculo","Vínculo ou período a acertar","text"],["cn_pendencia","Pendência ou indicador","text"],["cn_prova","Prova (CTPS, GPS, RAIS, reclamatória)","text"]]},
+  crps: {rot:"Recurso ao CRPS", campos:[["crp_ciencia","Ciência da decisão","date"],["crp_motivo","Motivo exato do indeferimento","text"],["crp_enunciado","Enunciado do CRPS aplicável","text"]]},
+};
+const NAT_TEMPO = [["comum","Comum"],["rural","Rural"],["especial","Especial"],["defic","Com deficiência"],["magisterio","Magistério"],["rpps","RPPS (CTC)"],["militar","Militar"],["aprendiz","Aluno-aprendiz"]];
+// o detalhe que cada natureza pede na linha: [rótulo, opções ou texto livre]
+const NAT_DET = {rural:["Regime",["Segurado especial","Empregado rural","Boia-fria ou diarista","CI rural"]], especial:["Agente, PPP e EPI",null], defic:["Grau",["Leve","Moderada","Grave"]],
+  magisterio:["Função",["Regência","Direção","Coordenação","Assessoramento","Educação infantil"]], rpps:["CTC (número e data)",null], militar:["Documento",null], aprendiz:["Escola e certidão",null]};
+// os requisitos numéricos da base de conhecimento, por opção: idade [H, F] e carência
+const IDADE_EXIG = {idade:[65,62], hibrida:[65,62], idade_rural:[60,55], idoso:[65,65], pcd:[60,55], professor:[60,57]};
+const CAR_EXIG = {idade:180, transicao:180, professor:180, pcd:180, b46:180, hibrida:180, idade_rural:180, b31:12, b32:12, reclusao:24};
+const SM_2026 = 1621;   // salário mínimo da base (bpc-renda-grupo-familiar); 1/4 = 405,25
+const EC103 = "2019-11-13";
+const benefRot = fam => (PONTOS_ESPECIE.find(f=>f.chave===fam)||{rot:fam}).rot;
+const benefOpcao = (fam, o) => (BENEF[fam]||[]).find(x=>x[0]===o);
+function admDe(c){ const a = ((c||{}).campos||{}).ad_modulos||{}; return {valores:a.valores||{}, tempos:a.tempos||[], beneficios:a.beneficios}; }
+// a opção que a família abre sozinha: a idade e o dossiê decidem
+function benefPadrao(c, fam){
+  const id = idadeDe(c.dn), sx = sexoDe(c)==="F" ? "F" : "M";
+  if(fam==="tempo") return id!=null && id >= IDADE_APOS[sx] ? "idade" : "transicao";
+  if(fam==="bpc") return id!=null && id >= 65 ? "idoso" : "def";
+  if(fam==="incapacidade") return (fontesDoDossie(c.id).cats||[]).length ? "acid" : "b31";
+  return BENEF[fam][0][0];
+}
+// os benefícios marcados: o que a ficha guarda; antes do primeiro clique, o que
+// os trabalhos possíveis já marcaram no Primeiro atendimento
+function benefSel(c){
+  const g = admDe(c).beneficios; if(g) return g;
+  const ks = D.casosDoCliente.get(c.id) || [];
+  if(!_paEsc.has(c.id) && (docsDoDossie(c.id).length || cnisDe(c))) paEscolhidos(c.id, paDados(c, ks).trabalhos);
+  return Object.fromEntries([...(_paEsc.get(c.id)||[])].filter(k=>BENEF[k]).map(k=>[k, [benefPadrao(c, k)]]));
+}
+const opcoesSel = c => Object.entries(benefSel(c)).flatMap(([fam, os])=>os.map(o=>benefOpcao(fam, o)).filter(Boolean).map(([o, rot, cod, sub, mods])=>({fam, o, rot, cod, sub, mods})));
+const modulosDe = c => { const ops = opcoesSel(c); return MOD_ORDEM.filter(m=>ops.some(o=>o.mods.includes(m))); };
+// grava a ficha com atraso, para não disparar um PATCH por tecla
+const _admTimer = new Map();
+function admSalvar(cliId, muda){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const adm = admDe(c); muda(adm);
+  c.campos = {...(c.campos||{}), ad_modulos: adm};
+  clearTimeout(_admTimer.get(cliId));
+  _admTimer.set(cliId, setTimeout(async ()=>{
+    try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}); }
+    catch(e){ aviso("Não consegui guardar a análise por benefício — tente de novo"); }
+  }, 600));
+}
+function benefFam(cliId, fam){
+  const c = D.cliPorId.get(cliId); if(!c || !BENEF[fam]) return;
+  const sel = {...benefSel(c)}, s = new Set(_paEsc.get(cliId)||[]);
+  if(sel[fam]){ delete sel[fam]; s.delete(fam); } else { sel[fam] = [benefPadrao(c, fam)]; s.add(fam); }
+  _paEsc.set(cliId, s);
+  admSalvar(cliId, a=>{ a.beneficios = sel; }); repintarFicha();
+}
+function benefOpc(cliId, fam, o){
+  const c = D.cliPorId.get(cliId); if(!c || !benefOpcao(fam, o)) return;
+  const sel = {...benefSel(c)}, os = new Set(sel[fam]||[]); os.has(o) ? os.delete(o) : os.add(o);
+  if(os.size) sel[fam] = [...os]; else delete sel[fam];
+  const s = new Set(_paEsc.get(cliId)||[]); os.size ? s.add(fam) : s.delete(fam); _paEsc.set(cliId, s);
+  admSalvar(cliId, a=>{ a.beneficios = sel; }); repintarFicha();
+}
+// a faixa de chips: a família, e sob ela as opções; vive no Primeiro atendimento e na Análise de Direito
+function faixaBeneficios(c, d){
+  const sel = benefSel(c), sinal = new Map(((d||{}).trabalhos||[]).map(t=>[t.f.chave, t]));
+  const fams = BENEF_ORDEM.slice().sort((a, b)=>(sinal.has(b)?1:0)-(sinal.has(a)?1:0)), nSel = Object.keys(sel).length;
+  const chip = fam => { const on = !!sel[fam], t = sinal.get(fam);
+    return `<button type="button" class="ben-chip${on?" on":""}" aria-pressed="${on}" data-fam="${fam}" onclick="benefFam('${c.id}','${fam}')">${t ? `<i class="pa-bola ${t.est}" aria-hidden="true"></i>` : ""}${esc(benefRot(fam))}${on && sel[fam].length>1 ? ` <small>${sel[fam].length}</small>` : ""}</button>`; };
+  const ramo = fam => `<div class="ben-ramo" data-fam="${fam}"><span class="ben-ramo-rot">${esc(benefRot(fam))}</span>${BENEF[fam].map(([o, rot, cod, sub, mods])=>{ const on = (sel[fam]||[]).includes(o);
+    return `<button type="button" class="ben-opc${on?" on":""}" aria-pressed="${on}" data-opc="${fam}.${o}" title="abre: ${esc(mods.map(m=>MOD_AD[m].rot).join(", "))}" onclick="benefOpc('${c.id}','${fam}','${o}')">${esc(rot)}</button>`; }).join("")}</div>`;
+  const mods = modulosDe(c);
+  return `<section class="ben" aria-labelledby="ben-t-${c.id.slice(0,8)}"><div class="ben-cab"><h3 id="ben-t-${c.id.slice(0,8)}">Benefícios em análise</h3>
+      <span class="meio-sub">${nSel ? `${nSel} ${nSel===1?"família":"famílias"} · a escolha abre os quadros da Análise de Direito` : "marque o que entra na análise; cada benefício abre os quadros que ele pede"}</span></div>
+    <div class="ben-chips">${fams.map(chip).join("")}</div>
+    ${fams.filter(f=>sel[f]).map(ramo).join("")}
+    ${mods.length ? `<p class="ben-quadros meio-sub">Quadros que abrem: ${esc(mods.map(m=>MOD_AD[m].rot).join(" · "))}</p>` : ""}</section>`;
+}
+// ── a contagem das linhas de tempo ───────────────────────────────────────
+// Cada período vira anos, meses e dias pelo calendário (do início ao dia
+// seguinte ao fim) e a soma carrega 30 dias no mês e 12 meses no ano, como o
+// INSS soma. Para converter e comparar, o tempo vira dias (ano 365, mês 30).
+// shortcut: sem descontar concomitância; a conta oficial é a do Prévius
+function durCal(de, ate){
+  const a = de.split("-").map(Number), f = new Date(Date.parse(ate+"T12:00:00") + 86400000), b = [f.getUTCFullYear(), f.getUTCMonth()+1, f.getUTCDate()];
+  let y = b[0]-a[0], m = b[1]-a[1], d = b[2]-a[2];
+  if(d < 0){ m--; d += 30; } if(m < 0){ y--; m += 12; }
+  return y < 0 ? null : {y, m, d};
+}
+const durSoma = (p, q) => { let d = p.d + q.d, m = p.m + q.m + Math.floor(d/30), y = p.y + q.y + Math.floor(m/12); return {y, m: m%12, d: d%30}; };
+const durDias = p => p.y*365 + p.m*30 + p.d;
+const fmtDur = p => `${p.y} ${p.y===1?"ano":"anos"}, ${p.m} ${p.m===1?"mês":"meses"} e ${p.d} ${p.d===1?"dia":"dias"}`;
+function tempoFmt(dias){ dias = Math.max(0, Math.round(dias)); const y = Math.floor(dias/365), r = dias%365; return fmtDur({y, m: Math.floor(r/30), d: r%30}); }
+const anosDe = dias => dias/365;
+function admTotais(c){
+  const sx = sexoDe(c)==="F" ? "F" : "M", fator = sx==="F" ? 1.2 : 1.4, hj = hoje();
+  const tot = {porNat:{}, comum:0, comum2019:0, especial:0, convertido:0, linhas:0, semData:0, aberto:0};
+  for(const r of admDe(c).tempos){
+    if(!r.de || (r.ate && r.ate < r.de)){ if(r.de||r.ate||r.onde) tot.semData++; continue; }
+    const ate = r.ate || hj, nat = r.nat || "comum", p = durCal(r.de, ate); if(!p) continue;
+    if(!r.ate) tot.aberto++;
+    tot.linhas++; tot.porNat[nat] = durSoma(tot.porNat[nat] || {y:0,m:0,d:0}, p);
+    const d = durDias(p), d2019 = r.de <= EC103 ? durDias(durCal(r.de, ate < EC103 ? ate : EC103)) : 0;
+    if(nat==="especial"){ tot.especial += d; tot.convertido += d2019*fator + (d - d2019); tot.comum += d2019*fator + (d - d2019); tot.comum2019 += d2019*fator; }
+    else { tot.comum += d; tot.comum2019 += d2019; }
+  }
+  return tot;
+}
+// o contexto que todo quadro usa: sexo, idade, contagem do CNIS, graça, tempos
+function admCtx(c, ks){
+  const temDossie = !!(docsDoDossie(c.id).length || cnisDe(c)), d = temDossie ? paDados(c, ks) : null;
+  const dn = dnIso(c.dn), idade = idadeDe(c.dn), sx = sexoDe(c)==="F" ? "F" : "M";
+  return {d, dn, idade, sx, i: sx==="F" ? 1 : 0, ct: d && d.ct, gr: d && d.gr, fd: d ? d.fd : fontesDoDossie(c.id), v: admDe(c).valores, tempos: admDe(c).tempos, tot: admTotais(c), ops: opcoesSel(c)};
+}
+const admLi = (est, txt) => `<li class="est-${est}"><i class="mapa-bola" aria-hidden="true"></i><span>${txt}</span></li>`;
+const admUl = ls => ls.length ? `<ul class="mapa-lista">${ls.join("")}</ul>` : "";
+const admFalta = (tem, exig, unid) => tem >= exig ? ["ok", "cumprido"] : ["warn", `falta ${unid(exig - tem)}`];
+const anosTxt = a => tempoFmt(a*365);
+// cada quadro diz o que o dossiê e as linhas já respondem; o resto é campo
+const ADM_CALC = {
+  tempos(c, x){ const t = x.tot, nat = Object.entries(t.porNat);
+    if(!t.linhas) return `<p class="meio-sub">Nenhum período ainda. Lance um por linha ou traga os vínculos do CNIS.</p>`;
+    return `<div class="adm-tot">${nat.map(([n, p])=>`<div><small>${esc((NAT_TEMPO.find(z=>z[0]===n)||[n,n])[1])}</small><b>${fmtDur(p)}</b></div>`).join("")}
+      ${t.especial ? `<div><small>Especial convertido (×${x.sx==="F"?"1,20":"1,40"} até 13/11/2019)</small><b>${tempoFmt(t.convertido)}</b></div>` : ""}
+      <div><small>Total para tempo comum</small><b>${tempoFmt(t.comum)}</b></div>
+      <div><small>Em 13/11/2019</small><b>${tempoFmt(t.comum2019)}</b></div></div>
+      ${t.aberto ? `<p class="meio-sub">${t.aberto===1?"Um período sem data de fim conta":`${t.aberto} períodos sem data de fim contam`} até hoje.</p>` : ""}
+      ${t.semData ? `<p class="meio-sub">${t.semData===1?"Uma linha":`${t.semData} linhas`} sem data de início, fora da conta.</p>` : ""}`; },
+  idade(c, x){ if(x.idade==null) return admUl([admLi("warn", `Sem data de nascimento na ficha: preencha na Identificação.`)]);
+    const ls = [admLi("info", `Hoje: <b>${x.idade} anos</b> (${fmtBarra(x.dn)}, ${x.sx==="F"?"mulher":"homem"}).`)];
+    for(const o of x.ops){ const e = IDADE_EXIG[o.o]; if(!e) continue; const ex = e[x.i];
+      ls.push(admLi(x.idade >= ex ? "ok" : "warn", `${esc(o.rot)}: exige ${ex} anos${x.idade >= ex ? ", cumprida" : `, atinge em <b>${fmtBarra(somarAnos(x.dn, ex))}</b>`}.`)); }
+    return admUl(ls); },
+  carencia(c, x){ const cum = +x.v.car_cumprida || (x.ct ? x.ct.carencia : null), re = x.v.car_reingresso==="Sim", ls = [];
+    ls.push(admLi(cum!=null ? "info" : "warn", cum!=null ? `Cumprida: <b>${cum}</b> ${cum===1?"contribuição":"contribuições"}${+x.v.car_cumprida ? "" : " (CNIS, contagem do CRM)"}.` : "O CNIS não foi lido: informe as contribuições."));
+    for(const o of x.ops){ let ex = CAR_EXIG[o.o];
+      if(["acid","b94","b36"].includes(o.o)) ls.push(admLi("ok", `${esc(o.rot)}: sem carência (art. 26, I e II, da Lei 8.213/91).`));
+      else if(o.o==="urb") ls.push(admLi("info", `${esc(o.rot)}: 10 contribuições para CI e facultativa, inexigíveis pela ADI 2110 e pelo Enunciado 19 do CRPS; empregada e desempregada em graça não têm carência.`));
+      else if(o.o==="morte") ls.push(admLi("info", `${esc(o.rot)}: sem carência; 18 contribuições e 2 anos de casamento ou união só mudam a duração da cota.`));
+      else if(ex){ if(re && (o.o==="b31"||o.o==="b32"||o.o==="reclusao")) ex = ex/2;
+        const [est, txt] = cum!=null ? admFalta(cum, ex, n=>`${n} ${n===1?"contribuição":"contribuições"}`) : ["warn", "a conferir"];
+        ls.push(admLi(est, `${esc(o.rot)}: exige <b>${ex}</b>${re && ex!==CAR_EXIG[o.o] ? " (metade, art. 27-A)" : ""}, ${txt}.`)); } }
+    return admUl(ls); },
+  qualidade(c, x){ const g = x.gr, ls = [];
+    if(!g) ls.push(admLi("warn", "O CNIS não foi lido: a qualidade não foi calculada."));
+    else ls.push(admLi(g.semLimite ? "ok" : g.vencida ? "crit" : "ok", g.semLimite ? "Benefício em manutenção: qualidade sem limite." : `${g.vencida ? "Perdida em" : "Mantida até"} <b>${fmtBarra(g.vencida ? g.perda : g.mantidaAte)}</b>${g.complementar ? `; complementada em ${g.complementar.comp}, iria até ${fmtBarra(g.complementar.mantidaAte)}` : ""}.`));
+    if(x.v.qua_fato && g && !g.semLimite) ls.push(admLi(x.v.qua_fato <= g.mantidaAte ? "ok" : "crit", `Na data do fato (${fmtBarra(x.v.qua_fato)}) a qualidade ${x.v.qua_fato <= g.mantidaAte ? "estava mantida" : "já se perdera"}.`));
+    if(x.v.qua_desemprego==="Sim") ls.push(admLi("info", "Desemprego comprovado acresce 12 meses à graça (art. 15, § 2º); o prazo conta da última competência."));
+    return admUl(ls); },
+  transicao(c, x){ if(x.idade==null) return admUl([admLi("warn", "Sem data de nascimento não há como medir as regras.")]);
+    const t = anosDe(x.tot.comum), t19 = anosDe(x.tot.comum2019), T = [35,30][x.i], ano = +hoje().slice(0,4), id = (Date.parse(hoje()+"T12:00:00")-Date.parse(x.dn+"T12:00:00"))/86400000/365.25;
+    const pts = Math.min([105,100][x.i], [96,86][x.i] + (ano-2019)), idProg = Math.min([65,62][x.i], [61,56][x.i] + 0.5*(ano-2019));
+    const regra = (rot, ok, txt) => admLi(ok ? "ok" : "warn", `<b>${rot}</b>: ${txt}.`);
+    const ft = n => n <= 0 ? "" : ` (faltam ${anosTxt(n)})`;
+    return admUl([
+      regra("Direito adquirido até 13/11/2019", t19 >= T, `${T} anos de tempo na data; tinha ${anosTxt(t19)}${ft(T - t19)}`),
+      regra(`Pontos (art. 15), ${ano}`, t >= T && id + t >= pts, `${T} anos e ${pts} pontos; tem ${(id + t).toFixed(1).replace('.', ',')} pontos e ${anosTxt(t)} de tempo${ft(T - t)}`),
+      regra(`Idade progressiva (art. 16), ${ano}`, t >= T && id >= idProg, `${T} anos e idade ${Math.floor(idProg)}a${idProg%1 ? "6m" : ""}; tem ${x.idade} anos e ${anosTxt(t)}${ft(T - t)}`),
+      regra("Pedágio de 50 % (art. 17)", t19 >= T-2 && t >= T + 0.5*Math.max(0, T - t19), t19 >= T-2 ? `exige ${anosTxt(T + 0.5*Math.max(0, T - t19))}${ft(T + 0.5*Math.max(0, T - t19) - t)}; com fator previdenciário` : `só para quem tinha ${T-2} anos em 13/11/2019; tinha ${anosTxt(t19)}`),
+      regra("Pedágio de 100 % (art. 20)", id >= [60,57][x.i] && t >= T + Math.max(0, T - t19), `idade ${[60,57][x.i]} e ${anosTxt(T + Math.max(0, T - t19))} de tempo${ft(T + Math.max(0, T - t19) - t)}`),
+      regra("Regra permanente (art. 19)", id >= [65,62][x.i] && t >= [20,15][x.i], `idade ${[65,62][x.i]} e ${[20,15][x.i]} anos de tempo, com 180 de carência`),
+    ]) + `<p class="meio-sub">Pontos e idade progressiva sobem a cada ano; a conta usa o tempo das linhas acima.</p>`; },
+  especial(c, x){ const esp = anosDe(x.tot.especial), ex = +x.v.esp_anos || 25, pts = {15:66, 20:76, 25:86}[ex], tot = anosDe(x.tot.comum), ls = [];
+    ls.push(admLi(...(esp >= ex ? ["ok", `Tempo especial: <b>${tempoFmt(x.tot.especial)}</b>, cumpridos os ${ex} anos.`] : ["warn", `Tempo especial: <b>${tempoFmt(x.tot.especial)}</b>; exige ${ex} anos, faltam ${anosTxt(ex - esp)}.`])));
+    if(x.idade!=null) ls.push(admLi(x.idade + tot >= pts ? "ok" : "warn", `Transição por pontos (art. 21 da EC 103): ${pts} pontos; tem ${(x.idade + tot).toFixed(1).replace('.', ',')} (idade e tempo).`));
+    ls.push(admLi("info", `A ADI 6309 afastou as idades mínimas de 55, 58 e 60 anos; o PPP do dossiê: ${(x.fd.ppps||[]).length ? `${(x.fd.ppps||[]).length} ${(x.fd.ppps||[]).length===1?"vínculo":"vínculos"}` : "nenhum"}.`));
+    if(x.v.esp_epi==="Sim") ls.push(admLi("warn", "EPI eficaz não afasta o ruído acima do limite (Tema 555/STF); nos demais agentes, exigir a prova da eficácia real."));
+    if(x.v.esp_continua==="Sim") ls.push(admLi("crit", "Permanecer na atividade nociva cessa o benefício (Tema 709/STF)."));
+    return admUl(ls); },
+  magisterio(c, x){ const pm = x.tot.porNat.magisterio || {y:0,m:0,d:0}, m = anosDe(durDias(pm)), ex = [30,25][x.i];
+    return admUl([admLi(m >= ex ? "ok" : "warn", `Magistério nas linhas: <b>${fmtDur(pm)}</b>; as transições exigem ${ex} anos, a regra permanente 25${m >= ex ? ", cumpridos" : `, faltam ${anosTxt(Math.max(0, ex - m))}`}.`),
+      admLi("info", "Direção, coordenação e assessoramento pedagógico contam como magistério (Lei 11.301/2006), com prova; tempo fora do magistério entra só nos pontos.")]); },
+  rural(c, x){ const r = x.tot.porNat.rural, ls = [admLi(r ? "info" : "warn", r ? `Tempo rural nas linhas: <b>${fmtDur(r)}</b>.` : "Nenhuma linha de natureza rural ainda.")];
+    for(const o of x.ops){ if(o.o==="idade_rural") ls.push(admLi("info", "Exige 180 meses de atividade rural, contados por mês de atividade, e a prova material do período; a autodeclaração vem antes."));
+      if(o.o==="hibrida") ls.push(admLi("info", "Soma tempo rural e urbano para os 180 meses; o rural anterior a 11/1991 entra sem contribuição.")); }
+    if(x.v.rur_regime && !x.v.rur_prova) ls.push(admLi("warn", "Falta o início de prova material: prova só testemunhal não basta (Súmula 149/STJ)."));
+    const cn = (x.fd.cnpjs||[]).length; if(cn) ls.push(admLi("warn", `A Redesim traz ${cn} ${cn===1?"CNPJ":"CNPJs"} no CPF: o INSS usa para descaracterizar o segurado especial.`));
+    return admUl(ls); },
+  defic(c, x){ const ls = [], g = x.v.def_grau, exig = {Grave:[25,20], Moderada:[29,24], Leve:[33,28]}[g];
+    for(const o of x.ops){ if(o.o==="def") ls.push(admLi(x.v.def_longo==="Sim" ? "ok" : "warn", `${esc(o.rot)}: impedimento de longo prazo de 2 anos${x.v.def_longo==="Sim" ? ", informado" : ", a demonstrar no laudo"}; a avaliação é biopsicossocial (IFBrM).`));
+      if(o.o==="pcd"){ const t = anosDe(x.tot.comum); ls.push(admLi(exig ? (t >= exig[x.i] ? "ok" : "warn") : "warn", exig ? `LC 142, grau ${g.toLowerCase()}: ${exig[x.i]} anos de tempo como pessoa com deficiência; tem ${anosTxt(t)} nas linhas${t >= exig[x.i] ? "" : `, faltam ${anosTxt(exig[x.i] - t)}`}.` : "LC 142: escolha o grau para saber o tempo exigido (grave 25/20, moderada 29/24, leve 33/28 anos).")); } }
+    if(x.v.def_did) ls.push(admLi("info", `DID em ${fmtBarra(x.v.def_did)}: só o tempo a partir dela conta como tempo de pessoa com deficiência.`));
+    return admUl(ls); },
+  incap(c, x){ const ls = [], g = x.gr, n = x.d ? (x.d.grupos.saude||[]).length : 0;
+    ls.push(admLi(n ? "info" : "warn", n ? `Documentação HCRP no dossiê: ${n} ${n===1?"item":"itens"}.` : "Sem documentação médica no dossiê."));
+    if(x.v.inc_dii && g && !g.semLimite) ls.push(admLi(x.v.inc_dii <= g.mantidaAte ? "ok" : "crit", `DII em ${fmtBarra(x.v.inc_dii)}, ${x.v.inc_dii <= g.mantidaAte ? "dentro" : "fora"} da qualidade de segurado.`));
+    if(x.v.inc_dcb) ls.push(admLi(x.v.inc_dcb >= hoje() ? "info" : "warn", `DCB em ${fmtBarra(x.v.inc_dcb)}${x.v.inc_dcb < hoje() ? ": o pedido de prorrogação cabe nos 15 dias anteriores; depois, novo requerimento" : ""}.`));
+    return admUl(ls); },
+  acid(c, x){ const cat = (x.fd.cats||[]).length, ls = [admLi(cat ? "ok" : "info", cat ? `CAT no dossiê: ${cat}.` : "Sem CAT no dossiê; o nexo pode vir do NTEP ou da perícia.")];
+    for(const o of x.ops){ if(o.o==="b94"||o.o==="acid") ls.push(admLi(["Empregado","Avulso","Segurado especial"].includes(x.v.aci_categoria) ? "ok" : x.v.aci_categoria ? "crit" : "warn", `${esc(o.rot)}: só empregado, avulso e segurado especial têm a espécie acidentária${x.v.aci_categoria ? `; informado ${x.v.aci_categoria.toLowerCase()}` : ""}.`));
+      if(o.o==="b94"||o.o==="b36") ls.push(admLi(x.v.aci_sequela==="Sim" ? "ok" : "warn", `${esc(o.rot)}: sequela consolidada com redução da capacidade (Anexo III do Decreto 3.048/99); 50 % do salário de benefício, sem carência.`)); }
+    return admUl(ls); },
+  renda(c, x){ const p = +x.v.ren_pessoas, t = +x.v.ren_total, s = +x.v.ren_saude||0, lim = SM_2026/4, ls = [];
+    if(p && t>=0 && x.v.ren_total!==""){ const pc = t/p, pcs = Math.max(0, t - s)/p;
+      ls.push(admLi(pc <= lim ? "ok" : pcs <= lim ? "warn" : "crit", `Renda per capita: <b>${moedaBR(pc)}</b>${s ? `, ${moedaBR(pcs)} descontados os gastos com saúde` : ""}; o limite é 1/4 do salário mínimo, ${moedaBR(lim)}${pc > lim ? "; acima disso, provar a miserabilidade pelo gasto" : ""}.`)); }
+    else ls.push(admLi("warn", "Informe as pessoas do grupo e a renda bruta para medir o 1/4 do salário mínimo."));
+    const cad = x.d ? (x.d.grupos.cad||[]).length : 0; ls.push(admLi(x.v.ren_cad==="Sim" || cad ? "ok" : "warn", cad ? `CadÚnico no dossiê: ${cad}.` : x.v.ren_cad==="Sim" ? "CadÚnico atualizado." : "CadÚnico atualizado nos últimos 24 meses é obrigatório."));
+    if(x.v.ren_trabalha==="Sim") ls.push(admLi("warn", "Atividade remunerada suspende o BPC (art. 21-A da LOAS); ver o auxílio-inclusão."));
+    return admUl(ls); },
+  dependentes(c, x){ const ls = [], f = x.v.dep_fato, cl = x.v.dep_classe;
+    for(const o of x.ops){ if(o.o==="reclusao") ls.push(admLi(x.v.dep_regime==="Fechado" ? "ok" : x.v.dep_regime ? "crit" : "warn", "Auxílio-reclusão: só regime fechado desde 18/01/2019, com 24 contribuições e baixa renda do segurado.")); }
+    if(f && /Cônjuge|Companheiro/.test(cl||"")){ const un = x.v.dep_uniao, ctb = +x.v.dep_contrib;
+      const curta = (un && (new Date(f) - new Date(un))/86400000 < 730) || (x.v.dep_contrib!=="" && !isNaN(ctb) && ctb < 18);
+      const id = x.v.dep_nasc ? idadeEm(x.v.dep_nasc, f) : null;
+      const tab = f >= "2021-01-01" ? [[22,"3 anos"],[28,"6 anos"],[31,"10 anos"],[42,"15 anos"],[45,"20 anos"]] : [[21,"3 anos"],[27,"6 anos"],[30,"10 anos"],[41,"15 anos"],[44,"20 anos"]];
+      const dur = id==null ? null : (tab.find(([lim])=>id < lim)||[0,"vitalícia"])[1];
+      ls.push(admLi(curta ? "warn" : "info", curta ? "Cota de 4 meses: casamento ou união com menos de 2 anos, ou instituidor com menos de 18 contribuições (salvo óbito por acidente ou doença do trabalho)." : dur ? `Duração da cota pela idade na data do óbito (${id} anos): <b>${dur}</b>.` : "Informe o nascimento do dependente para a duração da cota."));
+      if(cl==="Companheiro(a)" && f >= "2019-01-18") ls.push(admLi("warn", "União estável: início de prova material dos 24 meses anteriores ao óbito (art. 16, § 5º)."));
+    }
+    if(cl==="Pais" || cl==="Irmão") ls.push(admLi("warn", "Classe II e III: a dependência econômica se prova, não se presume."));
+    return admUl(ls); },
+  maternidade(c, x){ const ls = [], s = x.v.mat_situacao;
+    ls.push(admLi("info", `${x.v.mat_fato==="Aborto não criminoso" ? "14 dias" : "120 dias"} de benefício${x.v.mat_data ? `, a contar de ${fmtBarra(x.v.mat_data)}` : ""}.`));
+    if(s==="CI ou facultativa") ls.push(admLi("info", "As 10 contribuições de carência são inexigíveis (ADI 2110 e Enunciado 19 do CRPS); pedir e recorrer se o INSS exigir."));
+    if(s==="Segurada especial") ls.push(admLi("info", "Exige 10 meses de atividade rural antes do parto, com prova material."));
+    if(s==="Desempregada em graça") ls.push(admLi("info", "Cabe dentro do período de graça, pago pelo INSS."));
+    return admUl(ls); },
+  revisao(c, x){ const ls = [], p = x.v.rev_primeiro || x.v.rev_dib;
+    if(p){ const d = new Date(p+"T12:00:00"); const ini = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth()+1, 1)); const lim = new Date(Date.UTC(ini.getUTCFullYear()+10, ini.getUTCMonth(), 1)).toISOString().slice(0,10);
+      const meses = mesesAte(lim); ls.push(admLi(lim < hoje() ? "crit" : meses < 12 ? "crit" : "ok", `Decadência (art. 103 da Lei 8.213/91): 10 anos do 1º dia do mês seguinte ao primeiro pagamento, em <b>${fmtBarra(lim)}</b>${lim < hoje() ? ", já consumada" : meses < 12 ? `, faltam ${meses} meses` : ""}.`)); }
+    else ls.push(admLi("warn", "Informe a DIB ou o primeiro pagamento para contar a decadência."));
+    ls.push(admLi("info", "Atrasados: só as parcelas dos 5 anos anteriores ao pedido (prescrição quinquenal)."));
+    return admUl(ls); },
+  cnis_acerto(c, x){ const g = cnisDe(c), ind = g ? (g.indicadores||[]).length : 0;
+    return admUl([admLi(g ? (ind ? "warn" : "ok") : "warn", g ? `${ind ? `${ind} ${ind===1?"indicador":"indicadores"} no CNIS` : "Nenhum indicador no CNIS"}; o acerto se pede pelo Meu INSS com o documento do vínculo.` : "O CNIS não foi lido.")]); },
+  crps(c, x){ const ci = x.v.crp_ciencia; if(!ci) return admUl([admLi("warn", "Informe a ciência da decisão: o recurso tem 30 dias.")]);
+    const lim = new Date(Date.parse(ci+"T12:00:00") + 30*86400000).toISOString().slice(0,10);
+    return admUl([admLi(lim < hoje() ? "crit" : "warn", `Recurso ordinário até <b>${fmtBarra(lim)}</b>${lim < hoje() ? ", prazo vencido" : ""}; a Junta decide por norma e por enunciado, e o recurso ataca o motivo escrito.`)]); },
+};
+const admCalcHtml = (m, c, x) => { try{ return ADM_CALC[m] ? ADM_CALC[m](c, x) : ""; }catch(e){ return `<p class="meio-sub">Não consegui calcular este quadro.</p>`; } };
+function camposModulo(c, m){
+  const v = admDe(c).valores, cs = MOD_AD[m].campos; if(!cs.length) return "";
+  return `<div class="adm-campos">${cs.map(([k, rot, tipo, ops])=>`<label class="adm-campo"><span>${esc(rot)}</span>${tipo==="select"
+    ? `<select data-adm="${k}" onchange="admCampo('${c.id}',this)">${(typeof ops==="function" ? ops() : ops).map(o=>`<option value="${esc(o)}" ${(v[k]||"")===o?"selected":""}>${esc(o||"—")}</option>`).join("")}</select>`
+    : `<input type="${tipo}" data-adm="${k}" value="${esc(v[k]??"")}" ${tipo==="number"?'min="0" step="0.01"':""} onchange="admCampo('${c.id}',this)">`}</label>`).join("")}</div>`;
+}
+function admCampo(cliId, el){ const k = el.dataset.adm, val = el.value; admSalvar(cliId, a=>{ a.valores[k] = val; }); admRecalc(cliId); }
+// recalcula só as linhas de cada quadro, para não repintar os campos em edição
+function admRecalc(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const x = admCtx(c, D.casosDoCliente.get(cliId)||[]);
+  document.querySelectorAll(".adm-calc[data-mod]").forEach(e=>{ e.innerHTML = admCalcHtml(e.dataset.mod, c, x); });
+}
+// ── a caixa dos tempos: uma linha por período, a natureza abre o detalhe ──
+function detTempo(c, i, r){
+  const d = NAT_DET[r.nat||"comum"]; if(!d) return `<span class="meio-sub">—</span>`;
+  return d[1] ? `<select data-k="det" aria-label="${esc(d[0])}" onchange="admTempo('${c.id}',${i},this)"><option value="">${esc(d[0])}</option>${d[1].map(o=>`<option ${r.det===o?"selected":""}>${esc(o)}</option>`).join("")}</select>`
+    : `<input data-k="det" value="${esc(r.det||"")}" placeholder="${esc(d[0])}" onchange="admTempo('${c.id}',${i},this)">`;
+}
+function caixaTempos(c){
+  const rows = admDe(c).tempos.length ? admDe(c).tempos : [{}];
+  const campo = (i, k, r, tipo, ph) => `<input type="${tipo}" data-k="${k}" value="${esc(r[k]||"")}" ${ph?`placeholder="${ph}"`:""} onchange="admTempo('${c.id}',${i},this)">`;
+  const linha = (r, i) => `<tr class="adm-tr" data-i="${i}">
+    <td>${campo(i, "de", r, "date")}</td><td>${campo(i, "ate", r, "date")}</td>
+    <td>${campo(i, "onde", r, "text", "empregador ou local")}</td>
+    <td><select data-k="nat" aria-label="Natureza" onchange="admTempo('${c.id}',${i},this)">${NAT_TEMPO.map(([k, rot])=>`<option value="${k}" ${(r.nat||"comum")===k?"selected":""}>${rot}</option>`).join("")}</select></td>
+    <td class="adm-det">${detTempo(c, i, r)}</td>
+    <td>${campo(i, "prova", r, "text", "CNIS, CTPS, PPP, CTC…")}</td>
+    <td><button type="button" class="adm-x" aria-label="Tirar este período" title="tirar" onclick="admTempoTirar('${c.id}',${i})">×</button></td></tr>`;
+  const g = cnisDe(c);
+  return `<div id="adm-tempos-box"><table class="pa-tabela adm-tempos" id="adm-tempos"><thead><tr><th>De</th><th>Até</th><th>Onde</th><th>Natureza</th><th>Detalhe</th><th>Prova</th><th></th></tr></thead>
+    <tbody>${rows.map(linha).join("")}</tbody></table>
+    <div class="adm-tempos-bt"><button type="button" class="btn-mini adm-mais" onclick="admTempoMais('${c.id}')">+ tempo</button>
+      ${g && (g.vinculos||[]).length ? `<button type="button" class="btn-mini" onclick="admTemposDoCnis('${c.id}')">Trazer do CNIS</button>` : ""}
+      <span class="meio-sub">contagem simplificada (ano de 365 dias, mês de 30), sem descontar concomitância; a conta oficial é a do Prévius</span></div></div>`;
+}
+function admTemposPintar(cliId){ const c = D.cliPorId.get(cliId), el = document.getElementById("adm-tempos-box"); if(c && el) el.outerHTML = caixaTempos(c); admRecalc(cliId); }
+function admTempo(cliId, i, el){
+  const k = el.dataset.k, val = el.value;
+  admSalvar(cliId, a=>{ while(a.tempos.length <= i) a.tempos.push({}); a.tempos[i] = {...a.tempos[i], [k]: val}; if(k==="nat") delete a.tempos[i].det; });
+  if(k==="nat"){ const c = D.cliPorId.get(cliId), td = el.closest("tr").querySelector(".adm-det"); if(td) td.innerHTML = detTempo(c, i, admDe(c).tempos[i]); }
+  admRecalc(cliId);
+}
+function admTempoMais(cliId){ admSalvar(cliId, a=>{ if(!a.tempos.length) a.tempos.push({}); a.tempos.push({}); }); admTemposPintar(cliId); }
+function admTempoTirar(cliId, i){ admSalvar(cliId, a=>{ a.tempos.splice(i, 1); }); admTemposPintar(cliId); }
+// os vínculos do CNIS viram linhas comuns, sem repetir os que já estão lá
+function admTemposDoCnis(cliId){
+  const c = D.cliPorId.get(cliId), g = c && cnisDe(c); if(!g) return;
+  admSalvar(cliId, a=>{ const tem = new Set(a.tempos.map(r=>`${r.de}|${r.onde}`));
+    for(const v of g.vinculos||[]){ const de = isoBr(v.inicio||""); if(!de) continue; const r = {de, ate: isoBr(v.fim||"") || "", onde: v.origem||"", nat:"comum", prova:"CNIS"};
+      if(!tem.has(`${r.de}|${r.onde}`)) a.tempos.push(r); }
+    a.tempos = a.tempos.filter(r=>r.de||r.ate||r.onde); });
+  admTemposPintar(cliId);
+}
+// os quadros da Análise de Direito, na ordem fixa, cada um dizendo para que benefícios serve
+function modulosDireito(c){
+  const ks = D.casosDoCliente.get(c.id)||[], x = admCtx(c, ks), mods = modulosDe(c), faixa = faixaBeneficios(c, x.d);
+  if(!mods.length) return faixa;
+  return faixa + mods.map(m=>`<section class="adx-sec adm" id="adm-${m}" data-mod="${m}"><div class="adm-cab"><h3>${esc(MOD_AD[m].rot)}</h3>
+      <span class="adm-para">${x.ops.filter(o=>o.mods.includes(m)).map(o=>`<small>${esc(o.rot)}</small>`).join("")}</span></div>
+    ${m==="tempos" ? caixaTempos(c) : ""}
+    <div class="adm-calc" data-mod="${m}">${admCalcHtml(m, c, x)}</div>
+    ${camposModulo(c, m)}</section>`).join("")
+    + `<p class="meio-sub adm-nota">Os requisitos numéricos vêm da base de conhecimento do escritório e não foram conferidos na fonte oficial nesta tela.</p>`;
+}
+// a cópia que entra na análise registrada
+function admSnapshot(c){
+  const a = admDe(c), t = admTotais(c);
+  if(!a.beneficios && !Object.keys(a.valores).length && !a.tempos.length) return null;
+  return {beneficios: benefSel(c), valores: a.valores, tempos: a.tempos, totais: {comum: t.comum, comum2019: t.comum2019, especial: t.especial, convertido: t.convertido, porNat: t.porNat}};
+}
 // F213 · os trabalhos possíveis moraram no Primeiro atendimento e passaram à
 // Análise de Direito: lá se escolhe o que levar, a partir do que o dossiê mostra
 function painelTrabalhos(c, ks){
@@ -21188,18 +21562,7 @@ function painelPA(c, ks){
   const inex = [...new Set(Object.values(dz).flatMap(x=>(x&&x.inexistentes)||[]).map(x=>String(x).split(/[:(]/)[0].trim()).filter(Boolean))];
   const relSel = sel ? new Set(((d.trabalhos.find(t=>t.f.chave===sel)||{}).ramos||[]).flatMap(r=>r.fatos.map(x=>x.grupo))) : null;
   const pesa = b => !relSel || d.grupos[b].some(x=>relSel.has(x.grupo));
-  const nEsc = d.trabalhos.filter(t=>esc0.has(t.f.chave)).length, nLev = blocosDoPA(d).filter(([b])=>paVai(c.id, b)).length, nBl = blocosDoPA(d).length;
-  const cartao = t => { const k = t.f.chave, on = esc0.has(k), [selo, cls] = PA_SELO[t.selo];
-    return `<li><div class="pa-cartao${sel===k?" sel":""}">
-      <button type="button" class="pa-cartao-bt" aria-pressed="${sel===k}" onclick="paCartao('${c.id}','${k}')">
-        <span class="pa-cartao-topo"><span class="pa-selo ${cls}"><i></i>${selo}</span>${t.prazo ? `<span class="pa-cartao-data crit">${esc(curtoMapa(t.prazo.texto).slice(0, 40))}</span>` : ""}</span>
-        <b>${esc(t.f.rot)}${PA_COD[k] ? ` <small>${PA_COD[k]}</small>` : ""}</b>
-        <span>${esc(curtoMapa(t.forte.fatos[0].texto))}</span>
-        ${t.impedido ? `<span class="pa-falta"><b>Impedimento</b> ${esc(t.impedido)}</span>` : ""}
-        ${t.falta.length ? `<span class="pa-falta"><b>Falta</b> ${esc(t.falta.slice(0, 2).join("; ").toLowerCase())}.</span>` : ""}
-      </button>
-      <label class="pa-levar${on?" on":""}"><input type="checkbox" ${on?"checked":""} onchange="paEscolher('${c.id}','${k}')">Levar à Análise de Direito</label>
-    </div></li>`; };
+  const nEsc = Object.keys(benefSel(c)).length, nLev = blocosDoPA(d).filter(([b])=>paVai(c.id, b)).length, nBl = blocosDoPA(d).length;
   const bloco = ([b, rot]) => { const [valor, mono, nota, est] = d.BL[b], vai = paVai(c.id, b);
     return `<button type="button" class="pa-bloco${ab===b?" aberto":""}${pesa(b)?"":" longe"}" aria-expanded="${ab===b}" onclick="paAbrir('${c.id}','${b}')">
       <span class="pa-bloco-rot"><i class="pa-bola ${est}"></i>${rot}</span>
@@ -21226,7 +21589,7 @@ function painelPA(c, ks){
     <nav class="pa-passos" aria-label="Passos do atendimento">
       ${passo("✓", "Identificação", "conferida", false, "irSubCad('identificacao')")}
       ${passo(2, "Primeiro atendimento", "situação e trabalhos", true, "")}
-      ${passo(3, "Análise de Direito", nEsc ? `${nEsc} ${nEsc===1?"trabalho":"trabalhos"}` : "nenhum trabalho", false, `paIrAnalise('${c.id}')`)}
+      ${passo(3, "Análise de Direito", nEsc ? `${nEsc} ${nEsc===1?"benefício":"benefícios"}` : "nenhum benefício", false, `paIrAnalise('${c.id}')`)}
       ${passo(4, "Documentos", "pedido, guias e geração", false, "irSubCad('documentos')")}
     </nav>
     <div class="pa-cab"><div><h2>Primeiro atendimento</h2>
@@ -21234,6 +21597,7 @@ function painelPA(c, ks){
       <p>Dossiê baixado em <span class="mono">${ems.length ? esc(fmtBarra(ems[ems.length-1].slice(0,10))) : "—"}</span> · ${nDocs} ${nDocs===1?"documento":"documentos"} · ${esc(Object.keys(dz).map(k=>PORT[k]||k).join(", ")||"nenhum portal")}${inex.length ? `. Os portais informaram que não existem ${esc(inex.slice(0, 4).join(", "))}` : ""}.</p></div>
       <button type="button" class="btn-mini" onclick="irSubCad('mapa')">Mapa do dossiê</button></div>
     ${(n => n && !nomeIgual(n, c.nome) ? `<p class="pa-nome-dif" role="alert"><b>Nome diferente do CNIS.</b> No CRM consta <b>${esc(c.nome||"")}</b>, e no CNIS consta <b>${esc(n)}</b>. <button type="button" class="btn-mini" onclick="usarNomeCnis('${c.id}')">Usar o nome do CNIS</button></p>` : "")(nomeDoCnis(c))}
+    ${faixaBeneficios(c, d)}
     <div class="pa-corpo">
       <section class="pa-sit" aria-labelledby="pa-t-sit">
         <div class="pa-sit-cab"><h3 id="pa-t-sit">Situação ${({F:"da cliente",M:"do cliente"})[civilDe(c).sexo]||"do cliente"}</h3><span class="meio-sub">o que os documentos dizem, com a fonte de cada dado</span>
@@ -21246,14 +21610,14 @@ function painelPA(c, ks){
 }
 function paAbrir(cliId, b){ _paBloco.set(cliId, _paBloco.get(cliId)===b ? "" : b); repintarFicha(); }
 function paCartao(cliId, k){ _paCartao.set(cliId, _paCartao.get(cliId)===k ? "" : k); repintarFicha(); }
-function paEscolher(cliId, k){ const s = _paEsc.get(cliId) || new Set(); s.has(k) ? s.delete(k) : s.add(k); _paEsc.set(cliId, s); repintarFicha(); }
+function paEscolher(cliId, k){ benefFam(cliId, k); }   // F217 · o cartão e o chip são a mesma escolha
 function paLevarBloco(cliId, b){ const s = new Set(_paForaBl.get(cliId)||[]); s.has(b) ? s.delete(b) : s.add(b); _paForaBl.set(cliId, s); repintarFicha(); }
 // leva à Análise de Direito: o primeiro trabalho marcado abre a espécie, e o
 // texto do contexto leva os blocos marcados, fato a fato, com a fonte
 function paIrAnalise(cliId){
   const c = D.cliPorId.get(cliId), ks = D.casosDoCliente.get(cliId) || []; if(!c) return;
-  const d = paDados(c, ks), esc0 = paEscolhidos(cliId, d.trabalhos), ts = d.trabalhos.filter(t=>esc0.has(t.f.chave));
-  if(!ts.length) return aviso("Marque ao menos um trabalho");
+  const d = paDados(c, ks), ts = Object.keys(benefSel(c)).map(k=>d.trabalhos.find(t=>t.f.chave===k) || {f:PONTOS_ESPECIE.find(f=>f.chave===k)}).filter(t=>t.f);
+  if(!ts.length) return aviso("Marque ao menos um benefício");
   _paAnalise.set(cliId, {trabalhos: ts.map(t=>t.f.chave), atual: ts[0].f.chave});
   if(ts[0].f.chave) _mapaLente.set(cliId, ts[0].f.chave);
   adAbrir = true; adVisivel.add(cliId); irSubCad("direito");
@@ -21264,9 +21628,9 @@ const _paAnalise = new Map();
 function paAnaliseTrabalho(cliId, k, primeira){
   const pa = _paAnalise.get(cliId); if(pa) pa.atual = k;
   _mapaLente.set(cliId, k);
-  const sel = document.getElementById("ad-esp"), cod = PA_COD[k];
-  if(sel && cod){ sel.value = cod; adTrocarEspecie(); }
   const c = D.cliPorId.get(cliId), ks = D.casosDoCliente.get(cliId) || [];
+  const sel = document.getElementById("ad-esp"), op = opcoesSel(c).find(o=>o.fam===k), cod = op ? op.cod : PA_COD[k];
+  if(sel && cod){ sel.value = cod; adTrocarEspecie(); const sb = document.getElementById("ad-sub"); if(sb && op && op.sub){ sb.value = op.sub; adMostrarCampos(); } }
   const d = paDados(c, ks), f = PONTOS_ESPECIE.find(x=>x.chave===k);
   const el = document.getElementById("ad-contexto");
   if(el && f){

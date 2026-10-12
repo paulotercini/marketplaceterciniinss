@@ -1,0 +1,132 @@
+WIREFRAME · ANÁLISE POR BENEFÍCIO (CRM 11.40, F217)
+format=ascii · brief: Primeiro atendimento com a faixa "Benefícios em análise" (chips com
+opções) e Análise de Direito com os quadros por benefício, inclusive "Tempos de contribuição"
+com linhas e botão +. Planta estrutural, sem medida de pixel.
+
+TELA 1 · PRIMEIRO ATENDIMENTO (modo atendimento, fundo bege, quadros brancos)
++------------------------------------------------------------------------------------------+
+| nav (atend-cab)                                                                          |
+| [av:A] [h1: Nome da cliente] [t3: Modo atendimento]        [btn2: WhatsApp] [btn2: Sair] |
+| [t2: CPF 000.000.000-00 · 14/03/1962, 64 anos · (16) 9 0000-0000 · Meu INSS com senha]   |
+| [lnk: 1 Identificação] [btn: 2 Primeiro atendimento] [lnk: 3 Análise de Direito]         |
+| [t3: dados do cliente] [t3: situação e benefícios] [t3: 2 benefícios em análise]         |
++------------------------------------------------------------------------------------------+
+| section (pa-cab)                                                                         |
+| [h2: Primeiro atendimento]                                        [btn3: Mapa do dossiê] |
+| [t2: Dossiê baixado em 08/10/2026 · 14 documentos · Meu INSS, Emprega Brasil]            |
++------------------------------------------------------------------------------------------+
+| card (ben · Benefícios em análise)                                                       |
+| [h3: Benefícios em análise] [t2: 2 famílias · a escolha abre os quadros da Análise]      |
+| [btn2: [ico:bola] Incapacidade] [btn: [ico:bola] Aposentadoria programável]              |
+| [btn2: Auxílio-acidente] [btn: Aposentadoria especial] [btn2: Rural e híbrida]           |
+| [btn2: BPC/LOAS] [btn2: Dependentes] [btn2: Salário-maternidade] [btn2: Revisão]         |
+| [btn2: Acerto de CNIS] [btn2: Recurso no CRPS]                                           |
+|   +--------------------------------------------------------------------------------+     |
+|   | card2 (ben-ramo · ramificação da família ligada)                               |     |
+|   | [t3: APOSENTADORIA PROGRAMÁVEL] [btn3: Por idade urbana · B41]                 |     |
+|   | [btn: Tempo de contribuição e transição · B42] [btn3: Professor · B57]         |     |
+|   | [btn3: Pessoa com deficiência, LC 142 · B42/B41]                               |     |
+|   +--------------------------------------------------------------------------------+     |
+|   +--------------------------------------------------------------------------------+     |
+|   | card2 (ben-ramo)                                                               |     |
+|   | [t3: APOSENTADORIA ESPECIAL] [btn: Aposentadoria especial · B46]               |     |
+|   | [btn3: Conversão de tempo especial]                                            |     |
+|   +--------------------------------------------------------------------------------+     |
+| [t2: Quadros que abrem: Tempos de contribuição · Idade · Carência · Regras de transição  |
+|      da EC 103 · Tempo especial]                                                         |
++------------------------------------------------------------------------------------------+
+| section (pa-sit · Situação da cliente)                                                   |
+| [h3: Situação da cliente] [t2: o que os documentos dizem, com a fonte de cada dado]      |
+| +---------------------------+ +---------------------------+ +---------------------------+|
+| | card3 (pa-bloco)          | | card3                     | | card3                     ||
+| | [t3: QUALIDADE DE SEGURADO| | [t3: CARÊNCIA]            | | [t3: CNIS]                ||
+| | [h2: até 16/11/2020]      | | [h2: 104 de 180]          | | [h2: sem pendência]       ||
+| | [t2: perdida em 17/11/20] | | [t2: 8 anos e 8 meses]    | | [t2: nenhum indicador]    ||
+| | [btn3: [ico:sw] Análise]  | | [btn3: [ico:sw] Análise]  | | [btn3: [ico:sw] Análise]  ||
+| +---------------------------+ +---------------------------+ +---------------------------+|
+| (RAIS e CAGED · CNPJs · Pedidos · Planejamento · Não encontrado · Benefícios, iguais)    |
++------------------------------------------------------------------------------------------+
+
+TELA 2 · ANÁLISE DE DIREITO (modo atendimento, fundo bege, quadros brancos)
++------------------------------------------------------------------------------------------+
+| nav (atend-cab, igual à tela 1, passo 3 ativo: [btn: 3 Análise de Direito])              |
++---------------------------------------------------------------+--------------------------+
+| section (adx-main)                                            | rail (adx-lado, fixo)    |
+| +-----------------------------------------------------------+ | +----------------------+ |
+| | card (adx-sec · Qualidade de segurado, F214, já existia)  | | | card (Considerações) | |
+| +-----------------------------------------------------------+ | | [h3: Considerações]  | |
+| +-----------------------------------------------------------+ | | [t2: Nenhuma ainda.] | |
+| | card (adx-sec · CNIS, RAIS e CAGED, F214, já existia)     | | +----------------------+ |
+| +-----------------------------------------------------------+ | +----------------------+ |
+| +-----------------------------------------------------------+ | | card (Trabalhos      | |
+| | card (ben · Benefícios em análise, a mesma faixa da tela 1| | |  possíveis, F213)    | |
+| | [h3: Benefícios em análise] [btn: ...] [btn2: ...]        | | | [h3: Trabalhos       | |
+| | [t3: APOSENTADORIA PROGRAMÁVEL] [btn: ... B42] [btn3: ...]| | |  possíveis]          | |
+| | [t2: Quadros que abrem: Tempos · Idade · Carência · ...]  | | | +------------------+ | |
+| +-----------------------------------------------------------+ | | | card2 (pa-cartao)| | |
+| +-----------------------------------------------------------+ | | | [t3: Falta um    | | |
+| | card (adm · Tempos de contribuição)                       | | | |  dado]           | | |
+| | [h3: Tempos de contribuição] [t3: B42] [t3: B46]          | | | | [h3: Aposentadoria| | |
+| | [t3: DE] [t3: ATÉ] [t3: ONDE] [t3: NATUREZA] [t3: DETALHE]| | | |  programável B42]| | |
+| | [t3: PROVA]                                               | | | | [t2: Carência    | | |
+| | [in: 01/01/2005] [in: 31/12/2010] [in: Metalúrgica]       | | | |  pelo CNIS: 104] | | |
+| |   [in: Comum v] [t2: —] [in: CNIS, CTPS, PPP] [btn3: ×]   | | | | [btn3: [ico:cb]  | | |
+| | [in: 01/01/2000] [in: 31/12/2004] [in: empregador ou local| | | |  Levar à Análise]| | |
+| |   [in: Especial v] [in: Agente, PPP e EPI] [in: prova] [×]| | | +------------------+ | |
+| | [btn3: + tempo] [btn3: Trazer do CNIS]                    | | | [btn: Levar 2        | |
+| | [t3: contagem simplificada (ano 365, mês 30), sem         | | |  trabalhos à análise]| |
+| |      descontar concomitância; a conta oficial é do Prévius| | +----------------------+ |
+| | [t3: COMUM] [h3: 6 anos, 0 meses e 0 dias]                | |                          |
+| | [t3: ESPECIAL] [h3: 5 anos, 0 meses e 0 dias]             | |                          |
+| | [t3: ESPECIAL CONVERTIDO (×1,20 ATÉ 13/11/2019)] [h3: 6 a]| |                          |
+| | [t3: TOTAL PARA TEMPO COMUM] [h3: 12 anos, 0 meses e 0 d] | |                          |
+| | [t3: EM 13/11/2019] [h3: 12 anos, 0 meses e 0 dias]       | |                          |
+| +-----------------------------------------------------------+ |                          |
+| +-----------------------------------------------------------+ |                          |
+| | card (adm · Idade)  [t3: B42]                             | |                          |
+| | [ico:bola] [t1: Hoje: 64 anos (14/03/1962, mulher).]      | |                          |
+| | [ico:bola] [t1: Por idade urbana · B41: exige 62 anos,    | |                          |
+| |            cumprida.]                                     | |                          |
+| +-----------------------------------------------------------+ |                          |
+| +-----------------------------------------------------------+ |                          |
+| | card (adm · Carência)  [t3: B42] [t3: B46]                | |                          |
+| | [ico:bola] [t1: Cumprida: 104 contribuições (CNIS).]      | |                          |
+| | [ico:bola] [t1: B42: exige 180, falta 76 contribuições.]  | |                          |
+| | [t3: Contribuições para carência] [in: ]                  | |                          |
+| | [t3: Reingresso após perda (art. 27-A)] [in: — v]         | |                          |
+| +-----------------------------------------------------------+ |                          |
+| +-----------------------------------------------------------+ |                          |
+| | card (adm · Regras de transição da EC 103)  [t3: B42]     | |                          |
+| | [ico:bola] [t1: Direito adquirido até 13/11/2019: ...]    | |                          |
+| | [ico:bola] [t1: Pontos (art. 15), 2026: 30 anos e 93 ...] | |                          |
+| | [ico:bola] [t1: Idade progressiva (art. 16), 2026: ...]   | |                          |
+| | [ico:bola] [t1: Pedágio de 50 % (art. 17): ...]           | |                          |
+| | [ico:bola] [t1: Pedágio de 100 % (art. 20): ...]          | |                          |
+| | [ico:bola] [t1: Regra permanente (art. 19): ...]          | |                          |
+| | [t3: Pontos e idade progressiva sobem a cada ano ...]     | |                          |
+| +-----------------------------------------------------------+ |                          |
+| +-----------------------------------------------------------+ |                          |
+| | card (adm · Tempo especial)  [t3: B46]                    | |                          |
+| | [ico:bola] [t1: Tempo especial: 5 anos ...; exige 25 ...] | |                          |
+| | [ico:bola] [t1: Transição por pontos (art. 21): 86 ...]   | |                          |
+| | [t3: Tempo exigido para o agente] [in: 25 v]              | |                          |
+| | [t3: PPP no dossiê] [in: — v] [t3: LTCAT] [in: — v]       | |                          |
+| | [t3: EPI eficaz] [in: — v] [t3: Continua na atividade]    | |                          |
+| +-----------------------------------------------------------+ |                          |
+| [t3: Os requisitos numéricos vêm da base de conhecimento do   |                          |
+|      escritório e não foram conferidos na fonte oficial.]     |                          |
+| +-----------------------------------------------------------+ |                          |
+| | card (adx-sec · Minhas considerações, F214)               | |                          |
+| | [in: O que a leitura dos documentos mostrou...]           | |                          |
+| |                              [btn: Adicionar consideração]| |                          |
+| +-----------------------------------------------------------+ |                          |
++---------------------------------------------------------------+--------------------------+
+| section (resumo da análise, F49/F206: tiles, datas em quadrados, ficha da análise, form) |
+| [t3: ANÁLISE POR BENEFÍCIO] [t1: Tempo de contribuição e transição · B42; ... · B46]     |
+| [t1: 2 períodos de tempo · total para tempo comum 12 anos, 0 meses e 0 dias]             |
++------------------------------------------------------------------------------------------+
+
+Legenda das regiões novas: ben = faixa de chips (família); ben-ramo = opções da família
+ligada; adm = quadro por módulo, com cabeçalho (título + benefícios que o usam), linhas
+calculadas (bola de estado + frase) e campos do advogado. Um benefício sem módulo de tempo
+(BPC, auxílio-acidente) não mostra o card "Tempos de contribuição".
