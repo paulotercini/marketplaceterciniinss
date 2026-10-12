@@ -8,6 +8,10 @@
 //   4. CPF repetido continua barrado pela janela de aviso
 //   5. cliente cujo único conteúdo é um pré-caso também aparece na lista
 //
+// F197 · o cadastro em duas etapas: a 1 pede o CPF (o único obrigatório),
+// nome, senha e telefone, cria a ficha e abre os portais do dossiê; a 2 completa
+// o cadastro e avisa Amanda e Paulo. Os testes de antes passam pelas duas.
+//
 // F28 somou: sexo (entra na data da aposentadoria), endereço pela lista de
 // CEPs de Monte Alto (rua escolhida traz CEP, bairro e cidade, gravados
 // pelas colunas + espelho da procuração) e menção aos advogados a cada
@@ -62,6 +66,8 @@ FIX.colaboradores = [...FIX.colaboradores,
     let corpo = FIX[t] || [];
     const f = u.match(/cpf=eq\.(\d+)/);
     if (f) corpo = corpo.filter(x => x.cpf === f[1]);
+    const fi = u.match(/[?&]id=eq\.([0-9a-z-]+)/);
+    if (fi) corpo = corpo.filter(x => x.id === fi[1]);
     return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(corpo) });
   });
   const p = await ctx.newPage();
@@ -74,16 +80,52 @@ FIX.colaboradores = [...FIX.colaboradores,
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
   const abrirTela = async () => {
-    await p.evaluate(() => { visao = "novocliente"; render(); });
-    await p.waitForSelector("#ncl-nome");
+    await p.evaluate(() => { _ncl = {etapa:1, id:null}; visao = "novocliente"; render(); });
+    await p.waitForSelector("#ncl-cpf");
     // agendamento não existe mais — se algo ainda chamar window.open, conta
     await p.evaluate(() => { window._abriu = 0; window.open = () => { window._abriu++; }; });
   };
+  // um CPF válido e novo a cada cadastro (o eco do POST fica na memória)
+  let nCpf = 100000000;
+  const cpfNovo = () => { const b = String(++nCpf).padStart(9, "0").split("").map(Number);
+    for (const n of [9, 10]) { let s = 0; for (let i = 0; i < n; i++) s += b[i] * (n + 1 - i); b.push((s * 10) % 11 % 10); } return b.join(""); };
+  // a etapa 1 com o que se pede nela, e a etapa 2 aberta para o resto
+  const etapa2 = async (nome, senha) => {
+    await abrirTela();
+    if (nome) await p.fill("#ncl-nome", nome);
+    await p.fill("#ncl-cpf", cpfNovo());
+    if (senha) await p.fill("#ncl-senha", senha);
+    await p.evaluate(() => nclEtapa1());
+    await p.waitForSelector("#ncl-caso");
+    await p.evaluate(() => { _ncl.id && D.cliPorId.set(_ncl.id, { ...(D.cliPorId.get(_ncl.id) || {}), id: _ncl.id }); });
+  };
   await abrirTela();
+  conf("F197 · a etapa 1 pede nome, CPF, senha e telefone, com o CPF obrigatório",
+    await p.evaluate(() => document.getElementById("ncl-cpf").placeholder.includes("*") && !document.getElementById("ncl-nome").placeholder.includes("*")
+      && !!document.getElementById("ncl-senha") && !!document.getElementById("ncl-tel") && !document.getElementById("ncl-sexo") && !document.getElementById("ncl-rua")));
+  conf("F197 · e abre os quatro portais do dossiê em guias novas",
+    await p.evaluate(() => [...document.querySelectorAll(".ncl-portal")].map(a => a.textContent + "|" + a.target).join()
+      === "Abrir Meu INSS|_blank,Abrir Emprega Brasil|_blank,Abrir HC Ribeirão|_blank,Abrir Redesim|_blank"));
+  escritos.length = 0;
+  await p.evaluate(() => nclEtapa1());
+  await p.waitForTimeout(300);
+  conf("F197 · sem CPF a etapa 1 não grava", !escritos.some(x => x.m === "POST"));
+  conf("F197 · sem CPF válido o portal não abre", await p.evaluate(() => nclPortal() === false));
+  await p.fill("#ncl-cpf", cpfNovo());
+  escritos.length = 0;
+  conf("F197 · com CPF válido, abrir o portal cria a ficha antes, sem sair da etapa 1",
+    await p.evaluate(async () => { const r = nclPortal(); await new Promise(x => setTimeout(x, 400)); return r && _ncl.etapa === 1 && !!_ncl.id; })
+    && escritos.filter(x => x.m === "POST" && x.t === "clientes").length === 1);
+  await p.evaluate(() => nclEtapa1()); await p.waitForSelector("#ncl-caso");
+  conf("F197 · e seguir para a etapa 2 não grava de novo", escritos.filter(x => x.m === "POST" && x.t === "clientes").length === 1);
+  await etapa2("");
+  const post0 = escritos.find(x => x.m === "POST" && x.t === "clientes");
+  conf("F197 · com só o CPF a ficha nasce, com nome provisório, e a etapa 2 se abre",
+    post0 && /^Cliente \d{3}\.\d{3}\.\d{3}-\d{2}$/.test(post0.corpo.nome) && await p.evaluate(() => _ncl.etapa === 2 && !!document.getElementById("ncl-sexo")));
 
   // ── 1. a tela da recepção ───────────────────────────────────────────────
-  conf("só o nome carrega o asterisco de obrigatório",
-    await p.evaluate(() => document.getElementById("ncl-nome").placeholder.includes("*")
+  conf("na etapa 2, nada carrega asterisco de obrigatório",
+    await p.evaluate(() => !document.getElementById("ncl-nome").placeholder.includes("*")
       && !document.getElementById("ncl-caso").placeholder.includes("*")));
   conf("o benefício se declara opcional no próprio campo",
     /opcional/.test(await p.evaluate(() => document.getElementById("ncl-caso").placeholder)));
@@ -102,9 +144,8 @@ FIX.colaboradores = [...FIX.colaboradores,
       const ops = [...document.querySelectorAll("#ncl-sexo option")].map(o => o.value);
       return ops.includes("F") && ops.includes("M");
     }));
-  conf("a tela colhe senha do Meu INSS, estado civil, profissão, cidade e UF",
-    await p.evaluate(() => !!(document.getElementById("ncl-senha")
-      && document.getElementById("ncl-civil") && document.getElementById("ncl-prof")
+  conf("a etapa 2 colhe estado civil, profissão, cidade e UF",
+    await p.evaluate(() => !!(document.getElementById("ncl-civil") && document.getElementById("ncl-prof")
       && document.getElementById("ncl-cidade") && document.getElementById("ncl-uf"))));
   conf("a cidade nasce Monte Alto e a UF nasce SP (o foco do escritório)",
     await p.evaluate(() => document.getElementById("ncl-cidade").value === "Monte Alto"
@@ -141,13 +182,13 @@ FIX.colaboradores = [...FIX.colaboradores,
     }));
 
   // ── 2. cadastrar só com o nome: cliente sem caso, com a marca do balcão ─
-  await abrirTela();
   escritos.length = 0;
-  await p.fill("#ncl-nome", "Ondina Fictícia Prado");
+  await etapa2("Ondina Fictícia Prado");
   await p.evaluate(() => document.getElementById("ncl-dn").value = "");
   await p.evaluate(() => criarCliente());
   await p.waitForTimeout(900);
   const postCli = escritos.find(x => x.m === "POST" && x.t === "clientes");
+  const patCli = escritos.find(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.campos);
   const nota = postCli && (postCli.corpo.campos.atendimento || [])[0];
   conf("o cliente grava com a primeira anotação do atendimento",
     nota && /cadastrado na recepção/i.test(nota.texto));
@@ -156,7 +197,7 @@ FIX.colaboradores = [...FIX.colaboradores,
   conf("NENHUM caso é criado pela recepção",
     !escritos.some(x => x.m === "POST" && x.t === "casos"));
   conf("sem benefício, nenhum pré-caso inventado",
-    postCli && !postCli.corpo.campos.precasos);
+    patCli && !patCli.corpo.campos.precasos);
   conf("nada abre o Google Agenda",
     (await p.evaluate(() => window._abriu)) === 0);
   conf("a tela leva para a lista Escritório, onde o 🟡 mora",
@@ -175,9 +216,8 @@ FIX.colaboradores = [...FIX.colaboradores,
 
   // ── 3. benefício conhecido vira pré-caso, nunca caso — e o cadastro
   //       completo grava sexo e endereço da lista de CEPs ─────────────────
-  await abrirTela();
   escritos.length = 0;
-  await p.fill("#ncl-nome", "Teodoro Fictício Braga");
+  await etapa2("Teodoro Fictício Braga");
   await p.selectOption("#ncl-sexo", "M");
   await p.fill("#ncl-rua", "Rua dos Lirios — Jardim Califórnia");
   await p.fill("#ncl-num", "245");
@@ -185,7 +225,7 @@ FIX.colaboradores = [...FIX.colaboradores,
   await p.fill("#ncl-relato", "Trabalhou na roça a vida toda, quer se aposentar.");
   await p.evaluate(() => criarCliente());
   await p.waitForTimeout(900);
-  const postCli2 = escritos.find(x => x.m === "POST" && x.t === "clientes");
+  const postCli2 = escritos.find(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.campos);
   const pc = postCli2 && (postCli2.corpo.campos.precasos || [])[0];
   conf("o sexo grava no cliente (homem/mulher — entra na data da aposentadoria)",
     postCli2 && postCli2.corpo.sexo === "M");
@@ -199,16 +239,15 @@ FIX.colaboradores = [...FIX.colaboradores,
   conf("o benefício vira pré-caso com a espécie",
     pc && pc.especie === "Aposentadoria por idade rural");
   conf("com autor e data no pré-caso", pc && pc.quem === EU && /^\d{4}-\d{2}-\d{2}$/.test(pc.em));
-  conf("o relato do balcão é a primeira anotação",
-    /roça a vida toda/.test(((postCli2.corpo.campos.atendimento || [])[0] || {}).texto || ""));
+  conf("o relato do balcão entra nas anotações do atendimento",
+    (postCli2.corpo.campos.atendimento || []).some(n => /roça a vida toda/.test(n.texto)));
   conf("e MESMO com benefício, caso não nasce na recepção",
     !escritos.some(x => x.m === "POST" && x.t === "casos"));
 
   // rua de fora da lista (mas em Monte Alto): grava como digitada, com a
   // cidade padrão e sem CEP inventado
-  await abrirTela();
   escritos.length = 0;
-  await p.fill("#ncl-nome", "Vicência Ficta Moraes");
+  await etapa2("Vicência Ficta Moraes");
   await p.fill("#ncl-rua", "Rua do Sítio Alheio");
   await p.fill("#ncl-num", "10");
   await p.evaluate(() => criarCliente());
@@ -220,9 +259,8 @@ FIX.colaboradores = [...FIX.colaboradores,
     && patFora.corpo.endereco === "Rua do Sítio Alheio, nº 10");
 
   // ── F29: cliente de OUTRA cidade ────────────────────────────────────────
-  await abrirTela();
   escritos.length = 0;
-  await p.fill("#ncl-nome", "Genoveva Ficta Andrade");
+  await etapa2("Genoveva Ficta Andrade");
   await p.fill("#ncl-cidade", "Jaboticabal");
   await p.fill("#ncl-rua", "Rua dos Lirios — Centro");
   await p.fill("#ncl-num", "77");
@@ -239,15 +277,13 @@ FIX.colaboradores = [...FIX.colaboradores,
     && !patOutra.corpo.cep && /Rua dos Lirios/.test(patOutra.corpo.logradouro));
 
   // ── F29: senha do Meu INSS, estado civil e profissão ────────────────────
-  await abrirTela();
   escritos.length = 0;
-  await p.fill("#ncl-nome", "Olavo Fictício Dias");
-  await p.fill("#ncl-senha", "senha-ficticia-123");
+  await etapa2("Olavo Fictício Dias", "senha-ficticia-123");
   await p.selectOption("#ncl-civil", "casado");
   await p.fill("#ncl-prof", "lavrador");
   await p.evaluate(() => criarCliente());
   await p.waitForTimeout(900);
-  const postOlavo = escritos.find(x => x.m === "POST" && x.t === "clientes");
+  const postOlavo = escritos.find(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.campos);
   conf("estado civil e profissão gravam no cadastro (a procuração precisa)",
     postOlavo && postOlavo.corpo.estado_civil === "casado" && postOlavo.corpo.profissao === "lavrador");
   const postCred = escritos.find(x => x.m === "POST" && x.t === "credenciais");
@@ -304,7 +340,7 @@ FIX.colaboradores = [...FIX.colaboradores,
   // cadastrar com CPF inválido é barrado
   escritos.length = 0;
   await p.fill("#ncl-nome", "Zenaide Ficta Ramos");
-  await p.evaluate(() => criarCliente());
+  await p.evaluate(() => nclEtapa1());
   await p.waitForTimeout(500);
   conf("cadastrar com CPF inválido é barrado antes de gravar",
     !escritos.some(x => x.m === "POST"));
@@ -314,7 +350,7 @@ FIX.colaboradores = [...FIX.colaboradores,
   escritos.length = 0;
   await p.fill("#ncl-nome", "Aurélia Digitada Errado");
   await p.fill("#ncl-cpf", "123.456.789-09");
-  await p.evaluate(() => criarCliente());
+  await p.evaluate(() => nclEtapa1());
   await p.waitForTimeout(700);
   conf("a janela avisa que o CPF já tem cadastro",
     /CPF já tem cadastro/.test(await p.evaluate(() =>
@@ -393,7 +429,7 @@ FIX.colaboradores = [...FIX.colaboradores,
   const form = await p.$(".caso");
   if (form) await form.screenshot({ path: path.join(__dirname, "f28-recepcao.png") });
 
-  console.log("=== Novo Cliente = tela da recepção (F27+F28) ===");
+  console.log("=== Novo Cliente = tela da recepção (F27+F28+F197) ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
   console.log("erros de console:", erros.length ? erros : "nenhum");
   const ruins = ok.filter(x => !x[1]).length;
