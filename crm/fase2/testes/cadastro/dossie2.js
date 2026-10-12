@@ -1,8 +1,9 @@
 // Dossiê, onda 2 — laudo médico (PMF e SABI), carta de concessão (a de hoje e
 // a antiga), extrato de pagamento e cópia do processo lidos do texto do
-// dossiê; no quadro "O que o dossiê já diz": a DCB a gravar, a perícia a
-// agendar, a exigência e o recurso com o prazo contado, a decadência da
-// revisão e o último laudo. Dados fictícios, datas contadas a partir de hoje.
+// dossiê; da cópia, só a folha de interposição e a comunicação de decisão,
+// sem os despachos. No quadro "O que o dossiê já diz": a DCB a gravar, o
+// recurso com o prazo contado da conclusão do pedido, a decadência da revisão
+// e o último laudo. Dados fictícios, datas contadas a partir de hoje.
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
@@ -19,7 +20,9 @@ const mes = (n, d) => { const x = new Date(); x.setDate(1); x.setMonth(x.getMont
 const iso = b => b.split("/").reverse().join("-");
 
 const NB = "7001234567", NB_APOS = "1801234560";
-const PA_CONCEDIDO = processo({ protocolo: "1122334455", servico: "Benefício por Incapacidade", status: "Concluída", entrada: dia(-70), nb: NB,
+// os despachos ficam na cópia, como no documento real, e não podem virar fato
+const PA_CONCEDIDO = processo({ protocolo: "1122334455", servico: "Benefício por Incapacidade", status: "Concluída", entrada: dia(-70),
+  atualizado: dia(-19), nb: NB,
   despachos: [[dia(-60), EXIGENCIA_AGENDAR], [dia(-59), agendamento(dia(-59), dia(-50), "10:20")],
     [dia(-19), ["A perícia médica reconheceu a sua incapacidade para o trabalho ou atividade habitual e o AUXÍLIO POR",
       `INCAPACIDADE TEMPORÁRIA PREVIDENCIÁRIO nº ${NB} foi concedido.`, `A cessação do seu benefício será em ${dia(40)}.`]]] });
@@ -28,11 +31,16 @@ const PA_PRORROG = processo({ protocolo: "5566778899", servico: "Pedido de Prorr
   despachos: [[dia(-5), agendamento(dia(-5), dia(20), "07:00")],
     [dia(-3), ["Prezado(a) Sr.(a), para dar continuidade ao pedido, apresente o relatório médico atualizado em 'Cumprir Exigência'.",
       "O documento deve ser enviado em até 30 (trinta) dias, sob pena de conclusão do pedido."]]] });
+// a comunicação sai com "Data: 9 de outubro de 2026", a emissão da cópia: o
+// prazo do recurso conta da última atualização do pedido concluído
 const PA_INDEFERIDO = processo({ protocolo: "6677889900", servico: "Pedido de Prorrogação de Benefício por Incapacidade", status: "Concluída",
-  entrada: dia(-30), nb: NB,
+  entrada: dia(-30), atualizado: dia(-10), nb: NB,
   despachos: [[dia(-10), ["A perícia médica não reconheceu a sua incapacidade para o trabalho ou atividade habitual e o benefício",
     `${NB} não foi prorrogado.`, `A cessação do seu benefício continua sendo em ${dia(-12)}.`]]],
-  comunicacao: comunicacaoIndeferimento("700.123.456-7", dia(-10)) });
+  comunicacao: comunicacaoIndeferimento("700.123.456-7", dia(-12)) });
+// a cópia sem a última atualização: o recurso pede a ciência, sem prazo contado
+const PA_SEM_DATA = processo({ protocolo: "7788990011", servico: "Benefício por Incapacidade", status: "Concluída", entrada: dia(-40), nb: NB,
+  despachos: [], comunicacao: comunicacaoIndeferimento("700.123.456-7", dia(-35)) });
 // a aposentadoria concedida há quase dez anos: a revisão está perto de decair
 const CONC = mes(-116, 10), DIB = mes(-117, 14), PAGO = mes(-115, 8);
 const CARTA = cartaNova({ nb: "180.123.456-0", der: DIB, concessao: CONC, dib: DIB, dip: DIB, rmi: "1.744,88" });
@@ -115,17 +123,18 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   conf("o extrato de pagamento traz o benefício e o crédito pago", ex.length === 1 && ex[0].nb === NB_APOS && ex[0].dib === DIB
     && ex[0].creditos.length === 1 && ex[0].creditos[0].pago && ex[0].creditos[0].pagoEm === PAGO && ex[0].creditos[0].comp === DIB.slice(3));
   const pr = await p.evaluate(t => lerProcessoTexto(t), PA_PRORROG);
-  conf("a perícia agendada sai com a data quebrada na linha, a hora e a agência", pr && pr.pericias.length === 1 && pr.pericias[0].data === dia(20)
-    && pr.pericias[0].hora === "07:00" && pr.pericias[0].local === "AGÊNCIA DA PREVIDÊNCIA SOCIAL CIDADE INVENTADA" && pr.nb === NB && pr.status === "Pendente");
-  conf("a exigência aberta sai com o prazo do despacho, sem a saudação", pr.exigencias.length === 1 && pr.exigencias[0].dias === 30
-    && !pr.exigencias[0].cumprida && /^para dar continuidade ao pedido, apresente o relatório médico/.test(pr.exigencias[0].texto));
+  conf("a folha de interposição traz o pedido, a data do pedido, a situação e o NB", pr && pr.servico === "Pedido de Prorrogação de Benefício por Incapacidade"
+    && pr.entrada === dia(-6) && pr.status === "Pendente" && pr.nb === NB && pr.atualizado === "");
+  conf("os despachos ficam fora da leitura: nem perícia, nem exigência, nem decisão", pr.comunicacoes.length === 0
+    && ["despachos", "pericias", "exigencias", "decisoes"].every(k => !(k in pr)));
   const pc = await p.evaluate(t => lerProcessoTexto(t), PA_CONCEDIDO);
-  conf("a exigência de agendar a perícia fica cumprida pelo agendamento", pc.exigencias.length === 1 && pc.exigencias[0].cumprida
-    && pc.exigencias[0].texto === "agendar a perícia médica");
-  conf("a concessão traz a DCB e o NB", pc.decisoes.length === 1 && !pc.decisoes[0].contra && pc.decisoes[0].dcb === dia(40) && pc.decisoes[0].nb === NB);
+  conf("a concessão lida só na folha: concluída, com a última atualização, e a DCB do despacho não entra", pc.status === "Concluída"
+    && pc.atualizado === dia(-19) && pc.comunicacoes.length === 0);
   const pi = await p.evaluate(t => lerProcessoTexto(t), PA_INDEFERIDO);
-  conf("o indeferimento traz a decisão e o motivo da comunicação", pi.decisoes.length === 1 && pi.decisoes[0].contra && pi.decisoes[0].decisao === "INDEFERIDO"
-    && pi.decisoes[0].motivo === "Não constatação da incapacidade laborativa" && pi.decisoes[0].dcb === dia(-12));
+  const ci = pi.comunicacoes[0] || {};
+  conf("o indeferimento traz decisão, motivo, NB e cessação da comunicação", pi.comunicacoes.length === 1 && ci.contra && ci.decisao === "INDEFERIDO"
+    && ci.motivo === "Não constatação da incapacidade laborativa" && ci.dcb === dia(-12) && ci.nb === NB);
+  conf("a data da comunicação, que é a da emissão da cópia, não é lida", !("em" in ci) && pi.atualizado === dia(-10));
   conf("a data por extenso vira data", await p.evaluate(() => dataPorExtenso("CIDADE - SP, 11 de Março de 2026.") === "11/03/2026"));
   const dec = await p.evaluate(([c, e]) => [decadenciaDe(c, []), decadenciaDe(c, e)], [cn, ex]);
   conf("sem o extrato, a decadência conta do mês da concessão; com ele, do primeiro pagamento",
@@ -140,16 +149,10 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   const fatos = () => p.$$eval(".ad-q-dossie li", ls => ls.map(l => ({ id: l.dataset.fato, alerta: l.classList.contains("alerta"), t: l.textContent.replace(/\s+/g, " ").trim() })));
   let q = await fatos();
   const ids = q.map(x => x.id).join(",");
-  conf("o quadro traz exigência, perícia, DCB, decadência e laudo, nesta ordem", ids === "exigencia,pericia,dcb,decadencia,laudo");
-  const fatalExig = await p.evaluate(d => contarPrazo(d, { n: 30, uteis: false }), iso(dia(-3)));
-  const qx = q.find(x => x.id === "exigencia") || {};
-  conf("a exigência vem com o vencimento contado e em destaque", qx.alerta && qx.t.includes(`Vence em ${fatalExig.split("-").reverse().join("/")}`)
-    && /Exigência de .* no Pedido de Prorrogação de Benefício por Incapacidade: para dar continuidade/.test(qx.t));
-  const qp = q.find(x => x.id === "pericia") || {};
-  conf("a perícia que o calendário não tem aparece com o local", qp.t && qp.t.includes(`Perícia agendada para ${dia(20)} às 07:00, AGÊNCIA DA PREVIDÊNCIA SOCIAL CIDADE INVENTADA`));
+  conf("o quadro traz DCB, decadência e laudo, nesta ordem, sem nada dos despachos", ids === "dcb,decadencia,laudo");
   const qd = q.find(x => x.id === "dcb") || {};
-  conf("a DCB mais nova é a da decisão de concessão, com a janela da prorrogação",
-    qd.t && qd.t.includes(`DCB em ${dia(40)}, fixada na decisão de ${dia(-19)} da cópia do processo; o caso ainda não tem DCB`)
+  conf("a DCB vem do laudo, com a janela da prorrogação",
+    qd.t && qd.t.includes(`DCB em ${dia(40)}, fixada no laudo médico de ${dia(-20)}; o caso ainda não tem DCB`)
     && qd.t.includes(`a partir de ${dia(25)}`));
   const qc = q.find(x => x.id === "decadencia") || {};
   conf("a decadência perto do fim fica em destaque, com o primeiro pagamento", qc.alerta && /A revisão do ato de concessão pode ser pedida até/.test(qc.t)
@@ -157,7 +160,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   const ql = q.find(x => x.id === "laudo") || {};
   conf("o último laudo é o da PMF, com CID, DII e DCB", ql.t && ql.t.includes(`Laudo médico de ${dia(-20)} (perícia de prorrogação): incapacidade reconhecida, CID M51.1`)
     && ql.t.includes(`DCB ${dia(40)}`) && /Laudo da Perícia Médica Federal/.test(ql.t));
-  conf("cada fato abre o documento de origem", (await p.$$(".ad-q-dossie li .dossie-orig .adr-link")).length === 5);
+  conf("cada fato abre o documento de origem", (await p.$$(".ad-q-dossie li .dossie-orig .adr-link")).length === 3);
   conf("nada do dossiê entrou no caso sem o clique", !escritos.some(e => /\/rest\/v1\/(casos|eventos)/.test(e.u)));
 
   // 3 · os cliques gravam no caso, com o andamento que diz a origem
@@ -166,45 +169,38 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   await p.waitForTimeout(400);
   const pd = escritos.find(e => e.m === "PATCH" && /\/rest\/v1\/casos\?id=eq\./.test(e.u));
   conf("a DCB vai ao caso e rearma o lembrete da prorrogação", pd && pd.corpo.dcb === iso(dia(40)) && pd.corpo.dcb_prorrogar_em === iso(dia(25)));
-  conf("o andamento diz de onde a DCB veio", escritos.some(e => e.m === "POST" && /andamentos/.test(e.u) && /gravada no caso, lida na decisão de .* da cópia do processo do dossiê/.test(e.corpo.texto || "")));
+  conf("o andamento diz de onde a DCB veio", escritos.some(e => e.m === "POST" && /andamentos/.test(e.u) && /gravada no caso, lida no laudo médico de .* do dossiê/.test(e.corpo.texto || "")));
   await p.evaluate(() => { abaAtiva = 0; subCad = "direito"; repintarFicha(); });
   await p.waitForSelector(".ad-q-dossie");
   conf("gravada, a DCB sai do quadro", !(await fatos()).some(x => x.id === "dcb"));
 
-  escritos.length = 0;
-  await p.click('.ad-q-dossie li[data-fato="pericia"] button.tl-bt');
-  await p.waitForTimeout(500);
-  const ev = escritos.find(e => e.m === "POST" && /\/rest\/v1\/eventos/.test(e.u));
-  conf("a perícia vai ao calendário com a agência", ev && ev.corpo.tipo === "Perícia" && ev.corpo.data_hora === `${iso(dia(20))}T07:00:00-03:00`
-    && ev.corpo.local === "AGÊNCIA DA PREVIDÊNCIA SOCIAL CIDADE INVENTADA");
-  conf("com os dois lembretes da casa, avisar hoje e a véspera", escritos.filter(e => e.m === "POST" && /andamento_tarefas/.test(e.u)).length === 2);
-  await p.waitForSelector(".ad-q-dossie");
-  conf("agendada, a perícia sai do quadro", !(await fatos()).some(x => x.id === "pericia"));
-
-  escritos.length = 0;
-  await p.click('.ad-q-dossie li[data-fato="exigencia"] button.tl-bt');
-  await p.waitForTimeout(400);
-  const pz = escritos.find(e => e.m === "PATCH" && /\/rest\/v1\/casos\?id=eq\./.test(e.u));
-  conf("a exigência vira prazo fatal do caso", pz && pz.corpo.prazo === fatalExig && pz.corpo.mover_para === "🗓 Tarefas com Prazo");
-  conf("o andamento do prazo diz de que é e de onde veio", escritos.some(e => e.m === "POST" && /andamentos/.test(e.u)
-    && /^⏰ Prazo fatal .*: exigência de .* \(para dar continuidade ao pedido.*\), lido da cópia do processo do dossiê\.$/.test(e.corpo.texto || "")));
-
-  // 4 · chega a cópia do indeferimento: abre o recurso, e a DCB que passou não volta
+  // 4 · chega a cópia do indeferimento: abre o recurso, contado da conclusão do
+  // pedido e não da data de emissão da cópia, e a DCB que passou não volta
   await p.evaluate(a => { D.anexos.push(a); abaAtiva = 0; subCad = "direito"; repintarFicha(); },
     AN(7, "Processos · Prorrogacao indeferida.pdf", PA_INDEFERIDO));
   await p.waitForSelector('.ad-q-dossie li[data-fato="recurso"]');
   q = await fatos();
   const fatalRec = await p.evaluate(d => contarPrazo(d, PRAZOS_CATALOGO.find(x => x.id === "crps")), iso(dia(-10)));
   const qr = q.find(x => x.id === "recurso") || {};
-  conf("o recurso vem primeiro, com a decisão, o motivo e o prazo", q[0].id === "recurso" && qr.alerta
-    && qr.t.includes(`Decisão de ${dia(-10)} do NB 700.123.456-7: indeferido, não constatação da incapacidade laborativa`)
-    && qr.t.includes(`Recurso ao CRPS até ${fatalRec.split("-").reverse().join("/")}`));
+  conf("o recurso vem primeiro, com o pedido, a data, a conclusão e o prazo", q[0].id === "recurso" && qr.alerta
+    && qr.t.includes(`Pedido de Prorrogação de Benefício por Incapacidade de ${dia(-30)} do NB 700.123.456-7: indeferido, não constatação da incapacidade laborativa, pedido concluído em ${dia(-10)}`)
+    && qr.t.includes(`Recurso ao CRPS até ${fatalRec.split("-").reverse().join("/")}, 30 dias corridos contados da conclusão`));
   conf("a DCB da decisão mais nova já passou e não é oferecida", !q.some(x => x.id === "dcb"));
   escritos.length = 0;
   await p.click('.ad-q-dossie li[data-fato="recurso"] button.tl-bt');
   await p.waitForTimeout(400);
   const pr2 = escritos.find(e => e.m === "PATCH" && /\/rest\/v1\/casos\?id=eq\./.test(e.u));
-  conf("o prazo do recurso vai ao caso", pr2 && pr2.corpo.prazo === fatalRec);
+  conf("o prazo do recurso vai ao caso", pr2 && pr2.corpo.prazo === fatalRec && pr2.corpo.mover_para === "🗓 Tarefas com Prazo");
+  conf("o andamento do prazo diz de que é e de onde veio", escritos.some(e => e.m === "POST" && /andamentos/.test(e.u)
+    && /^⏰ Prazo fatal .*: recurso ao CRPS contra a decisão do pedido concluído em .*, lido da cópia do processo do dossiê\.$/.test(e.corpo.texto || "")));
+
+  // 5 · a cópia sem a última atualização: o fato fica, sem prazo contado
+  const semData = await p.evaluate(([t, casoId]) => {
+    const x = lerProcessoTexto(t), f = { processos: [{ ...x, anexo: { id: "z" } }], laudos: [], cartas: [], extratos: [] };
+    return itensDaOnda2(f, [{ ...D.casoPorId.get(casoId), prazo: null }]).find(i => i.id === "recurso");
+  }, [PA_SEM_DATA, CASO1]);
+  conf("sem a data da conclusão, o recurso pede a ciência e não conta prazo", semData && !semData.alerta && !semData.acao
+    && /: indeferido, não constatação da incapacidade laborativa\. A cópia não traz a data da conclusão do pedido: conferir a ciência no Meu INSS/.test(semData.texto));
 
   for (const [nome, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${nome}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);

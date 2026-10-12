@@ -66,6 +66,10 @@ do portal aberto na aba. Não faz login, não resolve captcha e não decide nada
 **O que o CRM faz com isso**: lê o `texto` uma vez (onda 0) e passa por leitores puros (`lerCnisPdf`,
 `lerCagedTexto`, `lerRaisTexto`, `lerLaudosTexto`, `lerCartaTexto`, `lerExtratoPagTexto`, `lerProcessoTexto`,
 `lerResumoInssTexto`, `lerCatTexto`, `lerPppTexto`, `itemClinico`), agrupados por `fontesDoDossie()`.
+Da cópia do processo administrativo, `lerProcessoTexto` lê **só** a folha de interposição (pedido, data de
+entrada, situação, NB, última atualização) e a comunicação de decisão (decisão, motivo, cessação). Despachos e
+páginas em imagem não se leem, porque geram fato falso. A "Data:" da comunicação é a da **emissão da cópia**, e
+não a da decisão: o prazo do recurso conta da última atualização do pedido concluído.
 A aba **Mapa do dossiê** (`painelMapa`) afunila os fatos por espécie (`MAPA_FUNIL`, `MAPA_PONTOS`): cada
 ramo é um ponto da triagem, a nota do ramo é a nota da triagem e vai à Análise de Direito. Fato mostra a
 fonte e o botão "ver"; o que muda o caso (DCB, prazo, perícia, desemprego) só com clique e gera andamento

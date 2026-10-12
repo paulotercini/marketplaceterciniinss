@@ -104,9 +104,10 @@ const itensDeLinhas = (linhas, p = 1) => linhas.map((t, i) => ({ t, x: 30, y: 60
 //           abaixo da linha do "Sexo:"); página de perícia sem nenhum valor.
 //   carta · a de hoje (rótulos em cima, valores em baixo) e a antiga ("Carta de
 //           Concessão / Memória de Cálculo", os dados num parágrafo).
-//   cópia do processo · a data do despacho quebrada no meio ("16/05" e "/2025"
-//           em linhas seguidas); despachos de mais de uma tarefa; a comunicação
-//           de decisão com a data da EMISSÃO da cópia, não da decisão.
+//   cópia do processo · a folha de interposição com a "Última atualização" na
+//           linha de baixo; despachos que o CRM não lê (decisão de 11.10.2026);
+//           a comunicação de decisão com a data da EMISSÃO da cópia, não da
+//           decisão (conferido na cópia real coletada em 09.10.2026).
 const MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 const porExtenso = br => { const [d, m, a] = br.split("/"); return `${+d} de ${MESES[+m - 1]} de ${a}`; };
 const AUT = ["Você pode conferir a autenticidade do documento em https://meu.inss.gov.br/#", "/autenticidade com o código abaixo", "1234567ABCDE12"];
@@ -275,8 +276,9 @@ const extratoPag = ({ nb, dib, dip, credito }) => [
   "Banco: 999 - BANCO FICTICIO OP: 12345 - CIDADE INVENTADA SP Ocorrência: Pagamento efetivado",
 ].join("\n");
 
-// cópia do processo: cabeçalho da tarefa e despachos ([data de envio, linhas])
-const processo = ({ protocolo, servico, status, entrada, nb, despachos, comunicacao }) => [
+// cópia do processo: a folha de interposição, os despachos ([data de envio,
+// linhas]), que ficam na cópia como no documento real, e a comunicação
+const processo = ({ protocolo, servico, status, entrada, atualizado, nb, despachos, comunicacao }) => [
   "Página 1 de 3",
   "INSS - Instituto Nacional do Seguro Social",
   "PROTOCOLO DE REQUERIMENTO",
@@ -287,6 +289,9 @@ const processo = ({ protocolo, servico, status, entrada, nb, despachos, comunica
   "Dados Básicos",
   "Serviço Status Prioridade",
   `${servico} ${status} Normal`,
+  "Unidade de Protocolo Data de entrada do requerimento Canal de atendimento",
+  `SETOR TÉCNICO-ADMINISTRATIVO ${entrada} Central de Serviços - Internet`,
+  ...(atualizado ? ["Última atualização", atualizado] : []),
   "Dados Informados Pelo Solicitante",
   "NB",
   nb,

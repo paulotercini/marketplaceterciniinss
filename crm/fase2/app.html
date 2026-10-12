@@ -15334,16 +15334,8 @@ function lerCnisPdf(itens){
   // F127 · um cliente pode ter VÁRIOS NITs: o do cabeçalho e o de cada
   // vínculo. Todos, sem repetir, na ordem em que aparecem.
   r.nits = [...new Set([r.filiado.nit, ...r.linhaDoTempo.map(v=>v.nit)].filter(Boolean))];
-  // competências com remuneração (MM/AAAA seguido de valor) e com contribuição
-  // (MM/AAAA seguido da data de pagamento). É a base do §1º do art. 15, os
-  // "mais de 120". Distintas, porque a mesma competência em dois vínculos
-  // continua sendo um mês só.
-  const comps = new Set();
-  for(const l of linhas){
-    for(const m of l.txt.matchAll(/(\d{2}\/\d{4})\s+(?:[\d.]+,\d{2}|\d{2}\/\d{2}\/\d{4})/g))
-      comps.add(m[1]);
-  }
-  r.competencias = comps.size;
+  // a base do § 1º do art. 15 (os "mais de 120") é contarSemPerda, gravada
+  // em gravarCnisLido: contagem seguida, que zera na perda da qualidade
   return r;
 }
 // ── a vida contributiva, como o CNIS a escreve ──────────────────────────
@@ -15766,6 +15758,8 @@ async function gravarCnisLido(cliId, lido, anexo, opc={}){
     vinculos:(lido.linhaDoTempo||[]).map(({comps, ...v})=>({...v,
       ultRemun: v.ultRemun || (comps||[]).map(x=>x.c).sort((a,b)=>chaveComp(a).localeCompare(chaveComp(b))).pop() || ""})),
     analise:an,
+    // a base do § 1º do art. 15: contribuições seguidas, sem perda da qualidade
+    contribSemPerda: contarSemPerda(mesesDoCnisLido(lido.linhaDoTempo, an.abaixo)),
     anexo_id: anexo ? anexo.id : ((t.pdf||{}).cnis||{}).anexo_id || null,
     caminho:  anexo ? anexo.caminho : ((t.pdf||{}).cnis||{}).caminho || null}};
   // as respostas pré-prontas: só onde ninguém respondeu à mão
@@ -17730,10 +17724,66 @@ function msgLembrete(l, c){
 //     vencimento da contribuição do contribuinte individual relativa ao mês
 //     imediatamente posterior ao término daqueles prazos"
 //
-// O DIA exato depende do vencimento da contribuição do contribuinte
-// individual, que não conferi em fonte primária. Por isso a tela entrega a
-// COMPETÊNCIA-limite e transcreve a regra, em vez de cravar uma data.
-const GRACA_FONTE = "Lei 8.213/91, art. 15, e Decreto 3.048/99, arts. 13 e 14";
+// O DIA (conferido em 11.10.2026): o vencimento da contribuição do contribuinte
+// individual é o dia 15 do mês seguinte ao da competência, prorrogado para o
+// dia útil seguinte quando não há expediente bancário (Decreto 3.048/99, art.
+// 216, II; Lei 8.212/91, art. 30, II). A perda é no dia seguinte a ele.
+//   IN PRES/INSS 128/2022, art. 184: a graça corre da última competência com
+//   salário de contribuição no mínimo (§ 2º), e os 24 meses pedem 120 NOVAS
+//   contribuições depois de uma perda da qualidade (§ 4º)
+const GRACA_FONTE = "Lei 8.213/91, art. 15, e Decreto 3.048/99, arts. 13, 14 e 216, II";
+// o dia em que a qualidade se perde, para a competência-limite da graça
+const diaBancario = iso => { const w = new Date(iso+"T12:00:00").getDay(); return w!==0 && w!==6 && !feriadosNacionais(+iso.slice(0,4)).has(iso); };
+function perdaDaQualidade(fimComp){
+  const c = competenciaMais(fimComp, 2);   // vence no mês seguinte ao da competência fim+1
+  let d = `${c.slice(3)}-${c.slice(0,2)}-15`;
+  while(!diaBancario(d)) d = somaDias(d, 1);
+  return {mantidaAte: d, perda: somaDias(d, 1)};
+}
+// § 1º do art. 15 e IN 128, art. 184, § 4º: as contribuições seguidas, sem
+// intervalo maior que a graça da época; o mês de benefício mantém a qualidade
+// sem somar, e a perda zera a conta. `mes` é um Map "AAAA-MM" → {conta, fac}.
+const _idxMes = k => { const [y, m] = k.split("-").map(Number); return y*12 + m; };
+function percorrerMeses(a, b, f){
+  if(!a || !b || b < a) return;
+  for(let i = _idxMes(a), fim = _idxMes(b); i <= fim; i++) f(`${Math.floor((i-1)/12)}-${String((i-1)%12+1).padStart(2,"0")}`);
+}
+function contarSemPerda(mes){
+  let n = 0, ant = null, antFac = false;
+  for(const k of [...mes.keys()].sort()){
+    const graca = antFac ? 6 : n > 120 ? 24 : 12;
+    if(ant && _idxMes(k) - _idxMes(ant) - 1 > graca) n = 0;
+    const x = mes.get(k);
+    if(x.conta) n++;
+    ant = k; antFac = x.conta && x.fac;
+  }
+  return n;
+}
+const _mesDeData = d => { const m = String(d||"").match(/(\d{2})\/(\d{4})$/); return m ? `${m[2]}-${m[1]}` : ""; };
+function marcarBeneficios(mes, vs){
+  for(const v of (vs||[]).filter(v=>v.tipo==="Benefício" && v.inicio))
+    percorrerMeses(_mesDeData(v.inicio), v.fim ? _mesDeData(v.fim) : hoje().slice(0,7), k=>{ if(!mes.has(k)) mes.set(k, {conta:false, fac:false}); });
+}
+// da leitura do PDF, com cada competência e o tipo de filiado
+function mesesDoCnisLido(linha, abaixo){
+  const mes = new Map(), fora = new Set((abaixo||[]).map(x=>chaveComp(x.comp)));
+  const marca = (k, fac) => { const x = mes.get(k); mes.set(k, {conta:true, fac: x && x.conta ? x.fac && fac : fac}); };
+  for(const v of (linha||[]).filter(v=>v.tipo!=="Benefício")){
+    const comps = (v.comps||[]).filter(x=>+String(x.c).slice(0,2)<=12).map(x=>chaveComp(x.c)).sort();
+    if(TIPO_REMUN.test(v.tipo||"")) percorrerMeses(_mesDeData(v.inicio), v.fim ? _mesDeData(v.fim) : (comps[comps.length-1] || chaveComp(v.ultRemun||"")), k=>{ if(!fora.has(k)) marca(k, false); });
+    else comps.forEach(k=>{ if(!fora.has(k)) marca(k, /Facultativo/.test(v.tipo||"")); });
+  }
+  marcarBeneficios(mes, linha);
+  return mes;
+}
+// do CNIS gravado antes desta conta existir: os períodos da contagem
+function mesesDoCnisGravado(g){
+  const mes = new Map();
+  for(const [a, b] of (((g.analise||{}).contagem||{}).periodos||[])) percorrerMeses(a, b, k=>mes.set(k, {conta:true, fac:false}));
+  marcarBeneficios(mes, g.vinculos);
+  return mes;
+}
+const contribSemPerda = g => g ? (g.contribSemPerda ?? contarSemPerda(mesesDoCnisGravado(g))) : 0;
 function competenciaMais(comp, meses){
   const [m, a] = comp.split("/").map(Number);
   const t = (a*12 + (m-1)) + meses;
@@ -17741,9 +17791,12 @@ function competenciaMais(comp, meses){
 }
 const compHoje = () => { const h = hoje(); return h.slice(5,7)+"/"+h.slice(0,4); };
 const compMenor = (a,b) => (a.slice(3)+a.slice(0,2)) <= (b.slice(3)+b.slice(0,2));
-// a conta. `vs` é a linha do tempo do CNIS; `desempregado` é decisão de quem
-// atende, porque a prova do desemprego não está no extrato.
-function calcularGraca(vs, nContribs, desempregado){
+// a conta. `vs` é a linha do tempo do CNIS; `nContribs`, as contribuições sem
+// perda (contribSemPerda); `desempregado` é decisão de quem atende, porque a
+// prova do desemprego não está no extrato; `abaixo`, as competências abaixo
+// do mínimo, que não abrem a graça sem complementação; `contados`, os períodos
+// da contagem ("AAAA-MM"), para o recuo não parar num mês sem contribuição
+function calcularGraca(vs, nContribs, desempregado, abaixo, contados){
   const r = {premissas:[], fonte:GRACA_FONTE};
   if(!vs || !vs.length) return null;
   const emGozo = vs.some(v=>v.tipo==="Benefício" && !v.fim && v.inicio
@@ -17754,22 +17807,29 @@ function calcularGraca(vs, nContribs, desempregado){
     return r;
   }
   // a última competência "dentro": fim de vínculo, fim de benefício ou a
-  // última remuneração de um vínculo ainda aberto
-  const comps = [];
+  // última remuneração de um vínculo ainda aberto, recuando a que ficou
+  // abaixo do mínimo (IN 128, art. 184, § 2º)
+  const fora = new Set((abaixo||[]).map(x=>x.comp)), cands = [];
+  const contado = c => !(contados||[]).length || contados.some(([a, b])=>chaveComp(c)>=a && chaveComp(c)<=b);
   for(const v of vs){
-    if(v.fim) comps.push(v.fim.slice(3,5)+"/"+v.fim.slice(6));
-    if(v.ultRemun) comps.push(v.ultRemun);
+    let c = v.fim ? v.fim.slice(3,5)+"/"+v.fim.slice(6) : v.ultRemun;
+    if(!c) continue;
+    if(v.tipo!=="Benefício" && fora.has(c)){
+      const ini = v.inicio ? v.inicio.slice(3,5)+"/"+v.inicio.slice(6) : "";
+      // recua mês a mês, dentro do vínculo, até o último mês contado (o
+      // contribuinte individual pode ter lacuna antes da competência abaixo)
+      for(let n = 0; c && (fora.has(c) || !contado(c)); n++)
+        c = n > 600 || (ini && !compMenor(ini, competenciaMais(c, -1))) ? null : competenciaMais(c, -1);
+    }
+    if(c) cands.push({c, v});
   }
-  if(!comps.length) return null;
-  const ultima = comps.reduce((a,b)=> compMenor(a,b) ? b : a);
+  if(!cands.length) return null;
+  const ultima = cands.map(x=>x.c).reduce((a,b)=> compMenor(a,b) ? b : a);
   r.ultima = ultima;
   if(vs.some(v=>v.aberto && !v.fim && v.tipo!=="Benefício"))
     r.premissas.push("há vínculo sem data de saída no extrato: a conta o encerra no último dia do mês da última remuneração, até o acerto do CNIS");
   // qual foi o ÚLTIMO registro, e de que tipo: facultativo tem metade do prazo
-  const doFim = vs.filter(v=>{
-    const c = v.fim ? v.fim.slice(3,5)+"/"+v.fim.slice(6) : v.ultRemun;
-    return c === ultima;
-  });
+  const doFim = cands.filter(x=>x.c===ultima).map(x=>x.v);
   const facultativo = doFim.length>0 && doFim.every(v=>v.tipo==="Facultativo");
   const porBeneficio = doFim.some(v=>v.tipo==="Benefício");
   r.base = facultativo ? 6 : 12;
@@ -17781,17 +17841,26 @@ function calcularGraca(vs, nContribs, desempregado){
   r.mais120 = nContribs > 120;
   if(r.mais120 && !facultativo){
     r.base = 24;
-    r.premissas.push(`o extrato traz ${nContribs} competências, mais de 120, e o §1º prorroga para até 24 meses — a prorrogação exige que não tenha havido interrupção com perda da qualidade, e isso ninguém lê sozinho`);
+    r.premissas.push(`o extrato traz ${nContribs} contribuições seguidas, sem perda da qualidade, mais de 120, e o §1º prorroga para até 24 meses (IN 128, art. 184, § 4º)`);
   }else if(r.mais120 && facultativo){
-    r.premissas.push(`o extrato traz ${nContribs} competências, mas o §1º prorroga o prazo do inciso II, e o facultativo está no inciso VI`);
+    r.premissas.push(`o extrato traz ${nContribs} contribuições sem perda, mas o §1º prorroga o prazo do inciso II, e o facultativo está no inciso VI`);
   }
   if(desempregado){
     r.base += 12;
     r.premissas.push("mais 12 meses do §2º, pelo desemprego — a prova é do escritório, não está no extrato");
   }
   r.fim = competenciaMais(ultima, r.base);
-  r.vencida = compMenor(r.fim, compHoje());
+  Object.assign(r, perdaDaQualidade(r.fim));
+  r.vencida = hoje() >= r.perda;
   r.desempregado = !!desempregado;
+  // a competência abaixo do mínimo depois da última válida: complementada,
+  // ela leva a graça adiante (Decreto 3.048/99, art. 19-E, § 1º)
+  const depois = [...fora].filter(c=>!compMenor(c, ultima)).sort((a,b)=>chaveComp(a).localeCompare(chaveComp(b))).pop();
+  if(depois){
+    const fimC = competenciaMais(depois, r.base);
+    r.complementar = {comp: depois, fim: fimC, ...perdaDaQualidade(fimC)};
+    r.premissas.push(`a competência ${depois} ficou abaixo do mínimo e só conta complementada; complementada, a qualidade vai até ${fmtBarra(r.complementar.mantidaAte)}`);
+  }
   return r;
 }
 
@@ -17803,7 +17872,7 @@ function blocoContas(c){
   const g = ((triagemDe(c).pdf||{}).cnis||{});
   const vs = g.vinculos || [];
   const desemp = !!(triagemDe(c).graca||{}).desempregado;
-  const r = vs.length ? calcularGraca(vs, g.competencias||0, desemp) : null;
+  const r = vs.length ? calcularGraca(vs, contribSemPerda(g), desemp, (g.analise||{}).abaixo, ((g.analise||{}).contagem||{}).periodos) : null;
   const cabeca = `<div class="cad-tit"><span class="cad-ic">${CAD_IC.doc}</span>Contas deste cliente
       <span class="cad-tit-sub">o que decide prazo, calculado do CNIS que você já leu</span></div>`;
   if(!r) return `<div class="cad-cartao conta-cx">${cabeca}
@@ -17813,8 +17882,8 @@ function blocoContas(c){
     ? `<div class="conta-linha ok"><b>Qualidade mantida sem limite de prazo</b>
         <span>há benefício em manutenção</span></div>`
     : `<div class="conta-linha ${r.vencida?"alerta":"ok"}">
-        <b>Período de graça até ${esc(r.fim)}</b>
-        <span>${r.vencida?"já venceu":"em curso"} · ${r.base} meses a partir de ${esc(r.ultima)}</span></div>`;
+        <b>Qualidade mantida até ${fmtBarra(r.mantidaAte)}</b>
+        <span>${r.vencida?"perdida":"perda"} em ${fmtBarra(r.perda)} · ${r.base} meses a partir de ${esc(r.ultima)}, até a competência ${esc(r.fim)}</span></div>`;
   return `<div class="cad-cartao conta-cx">${cabeca}
     ${corpo}
     <ul class="conta-prem">${(r.premissas||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
@@ -17826,8 +17895,8 @@ function blocoContas(c){
         Contribuições e qualidade de segurado ↗</a>
     </div>
     <p class="cad-nota" style="margin:8px 0 0">Fonte: ${esc(GRACA_FONTE)}, conferidos no Planalto.
-      O <b>dia</b> da perda depende do vencimento da contribuição do contribuinte individual
-      (art. 14 do Decreto 3.048/99); por isso aqui vai a competência, não a data.
+      A perda ocorre no dia seguinte ao vencimento da contribuição do contribuinte individual
+      do mês seguinte ao fim do prazo (art. 14 do Decreto 3.048/99), dia 15 ou o dia útil seguinte.
       Conta de apoio: quem conclui é você.</p>
   </div>`;
 }
@@ -19324,54 +19393,37 @@ function lerExtratoPagTexto(txt){
   }
   return out;
 }
-// CÓPIA DO PROCESSO (PAP do Meu INSS) · a tarefa, os despachos com a data de
-// envio e as comunicações de decisão. O despacho quebra a data no meio ("16/05"
-// e "/2025" em linhas seguidas) e é juntado antes de ler.
+// CÓPIA DO PROCESSO (PAP do Meu INSS) · só a folha de interposição (o
+// PROTOCOLO DE REQUERIMENTO: serviço, situação, NB, data de entrada e última
+// atualização) e a COMUNICAÇÃO DE DECISÃO (decisão, motivo e cessação). O resto
+// da cópia não se lê: traz páginas em imagem e despachos que podem gerar fato
+// falso (decisão do Paulo, 11.10.2026). A "Data:" da comunicação não se lê,
+// porque a cópia a regera com a data da EMISSÃO da cópia, e não com a da
+// decisão. A data quebra no meio ("16/05" e "/2025" em linhas seguidas) e é
+// juntada antes de ler.
 function lerProcessoTexto(txt){
   const ls = linhasDoTexto(txt);
-  if(!ls.includes("PROTOCOLO DE REQUERIMENTO") || !ls.some(l=>/^Despacho \(\d+\)/.test(l))) return null;
+  if(!ls.includes("PROTOCOLO DE REQUERIMENTO")) return null;
   const junta = xs => xs.join(" ").replace(/(\d{2}\/\d{2})\s+\/(\d{4})/g, "$1/$2").replace(/\s+/g, " ").trim();
-  const frase1 = t => t.replace(/^Prezad[oa](?:\(a\))?\s+Sr\.?\s*(?:\(a\))?,?\s*/i, "").split(/(?<=\.)\s/)[0].slice(0, 180).replace(/\.$/, "");
   const iS = ls.findIndex(l=>/^Serviço\s+Status\s+Prioridade$/i.test(l));
   const sv = (ls[iS+1]||"").match(/^(.+?)\s+(Concluída|Pendente|Cancelada|Em análise|Em exigência|Exigência|Aguardando .+?)\s+\S+$/i);
   const iNb = ls.indexOf("NB"), tudo = ls.join("\n");
   const nb = soDig(((iNb>=0 && /^[\d.\-]{10,13}$/.test(ls[iNb+1]||"")) ? ls[iNb+1] : "")
     || (tudo.match(/^NB\s+([\d.\-]{10,13})$/m)||[])[1] || (tudo.match(/Número do Benefício:\s*([\d.\-]{10,13})/)||[])[1] || "");
-  const desp = []; let d = null, m;
-  for(const l of ls){
-    if(/^Despacho \(\d+\)/.test(l)){ d = {em:"", linhas:[]}; desp.push(d); continue; }
-    if(!d) continue;
-    if(!d.em && (m = l.match(/^Enviado em\s+(\d{2}\/\d{2}\/\d{4})/))){ d.em = m[1]; continue; }
-    if(/^(Emitido em:|Página \d+ de \d+|Anexos de Perícias|PROTOCOLO DE REQUERIMENTO|INSTITUTO NACIONAL DO SEGURO SOCIAL|INSS - Instituto|Este documento foi gerado)/i.test(l)){ d = null; continue; }
-    d.linhas.push(l);
-  }
-  const despachos = desp.filter(x=>x.em).map(x=>({em:x.em, texto:junta(x.linhas)}))
-    .sort((a,b)=>isoBr(a.em).localeCompare(isoBr(b.em)));
+  // cada comunicação vai até a próxima, ou 45 linhas
   const comunicacoes = [];
   ls.forEach((l, i)=>{
     if(l!=="COMUNICAÇÃO DE DECISÃO") return;
-    const t = junta(ls.slice(i+1, i+30)), dec = (t.match(/Decisão:\s*(.+?)\.?\s+Motivo:/i)||[])[1];
-    if(dec) comunicacoes.push({nb: soDig((t.match(/Número do Benefício:\s*([\d.\-]{10,13})/)||[])[1]||""), decisao: dec.trim(),
-      motivo: ((t.match(/Motivo:\s*(.+?)\.?\s+(?:Fundamentação|Em atenção|A perícia)/i)||[])[1]||"").trim()});
-  });
-  const pericias = [], exigencias = [], decisoes = [];
-  despachos.forEach((x, i)=>{
-    const t = x.texto;
-    if((m = t.match(/Agendamento de perícia realizad[oa] com sucesso.*?data e hora agendada:\s*(\d{2}\/\d{2}\/\d{4})\s+(\d{2}:\d{2})(?:.*?unidade:\s*(?:\(\d+\)\s*-\s*)?([^)]+)\))?/i)))
-      pericias.push({em:x.em, data:m[1], hora:m[2], local:(m[3]||"").trim()});
-    else if(/exig[êe]ncia/i.test(t) && !/foi efetuado|foi cumprida/i.test(t) && (m = t.match(/em até (\d+)\s*(?:\([^)]*\)\s*)?dias/i)))
-      exigencias.push({em:x.em, dias:+m[1], texto: /necessário agendar a perícia/i.test(t) ? "agendar a perícia médica" : frase1(t),
-        cumprida: despachos.slice(i+1).some(y=>/exigência (?:foi )?(?:efetuad|cumprid)|cumprimento da exigência|Agendamento de perícia realizad|reconheceu a sua incapacidade|indeferid|concedid/i.test(y.texto))});
-    else if(/reconheceu a sua incapacidade|indeferid|foi concedid|foi prorrogad/i.test(t)){
-      const contra = /não reconheceu|indeferid|não foi prorrogad/i.test(t);
-      const c = comunicacoes.find(c=>/INDEFER|NEGAD/i.test(c.decisao)===contra);
-      decisoes.push({em:x.em, contra, texto: frase1(t), decisao: c ? c.decisao : "", motivo: c ? c.motivo : "",
-        dcb: (t.match(/cessação do (?:seu )?benefício(?: será| continua sendo)? em\s+(\d{2}\/\d{2}\/\d{4})/i) || t.match(/Data da cessação do benefício:\s*(\d{2}\/\d{2}\/\d{4})/i) || [])[1] || "",
-        nb: soDig((t.match(/(?:benefício|nº)\s+([\d.\-]{10,13})\b/i)||[])[1]||"")});
-    }
+    const prox = ls.indexOf("COMUNICAÇÃO DE DECISÃO", i+1);
+    const t = junta(ls.slice(i+1, prox>i ? Math.min(prox, i+45) : i+45)), dec = (t.match(/Decisão:\s*(.+?)\.?\s+Motivo:/i)||[])[1];
+    if(dec) comunicacoes.push({nb: soDig((t.match(/Número do Benefício:\s*([\d.\-]{10,13})/)||[])[1]||"") || nb, decisao: dec.trim(),
+      contra: /INDEFER|NEGAD|NÃO RECONHEC/i.test(dec),
+      motivo: ((t.match(/Motivo:\s*(.+?)\.?\s+(?:Fundamentação|Em atenção|A perícia)/i)||[])[1]||"").trim(),
+      dcb: (t.match(/(?:será mantido até|Data da cessação(?: do benefício)?:?)\s*(\d{2}\/\d{2}\/\d{4})/i)||[])[1]||""});
   });
   return {servico: sv ? sv[1] : (ls[iS+1]||""), status: sv ? sv[2] : "", nb,
-    entrada: (tudo.match(/Data de entrada:\s*(\d{2}\/\d{2}\/\d{4})/)||[])[1]||"", despachos, pericias, exigencias, decisoes, comunicacoes};
+    entrada: (tudo.match(/Data de entrada:\s*(\d{2}\/\d{2}\/\d{4})/)||[])[1]||"",
+    atualizado: (tudo.match(/Última atualização\s*(\d{2}\/\d{2}\/\d{4})/)||[])[1]||"", comunicacoes};
 }
 // ═══ Onda 5 · A CLÍNICA: a linha do tempo dos documentos médicos do dossiê ═══
 // A data e o tipo saem do nome do arquivo, que o portal do hospital já traz
@@ -19627,7 +19679,8 @@ function dcbDoDossie(f, k, ks){
   const meu = nb => { const d = soDig(nb); return nbsDoCaso(k).some(x=>soDig(x)===d) || (!nbsDoCaso(k).length && !outros.has(d)); };
   const c = [];
   f.laudos.forEach(l=>{ if(l.dcb && meu(l.nb)) c.push({dcb:l.dcb, em:l.exame, onde:`no laudo médico de ${l.exame}`, fonte:"Laudo médico", anexo:l.anexo}); });
-  f.processos.forEach(p=>p.decisoes.forEach(d=>{ if(d.dcb && meu(d.nb||p.nb)) c.push({dcb:d.dcb, em:d.em, onde:`na decisão de ${d.em} da cópia do processo`, fonte:"Cópia do processo", anexo:p.anexo}); }));
+  f.processos.forEach(p=>p.comunicacoes.forEach(d=>{ if(d.dcb && meu(d.nb||p.nb)) c.push({dcb:d.dcb, em:p.atualizado,
+    onde:`na comunicação de decisão${p.entrada ? ` do pedido de ${p.entrada}` : ""}`, fonte:"Comunicação de decisão", anexo:p.anexo}); }));
   f.extratos.forEach(e=>{ if(e.dcb && meu(e.nb)) c.push({dcb:e.dcb, em:"", onde:"no extrato de pagamento", fonte:"Extrato de pagamento", anexo:e.anexo}); });
   return c.sort((a,b)=>isoBr(b.em).localeCompare(isoBr(a.em)) || isoBr(b.dcb).localeCompare(isoBr(a.dcb)))[0] || null;
 }
@@ -19658,43 +19711,25 @@ async function marcarPrazoDoDossie(casoId, fatal, texto){
   await andamentoDoDossie(casoId, `⏰ Prazo fatal ${fmt(fatal)}: ${texto}, lido da cópia do processo do dossiê.`);
   repintarFicha();
 }
-async function agendarPericiaDoDossie(casoId, iso, hora, local){
-  const r = await aplicarPericia({casoId, texto:`Perícia agendada para ${fmtBarra(iso)} às ${hora}`, local})
-    .catch(e=>{ aviso("Não consegui agendar: "+e.message); return null; });
-  if(r==="já agendada") aviso("🩺 Essa perícia já está na aba Perícias", false);
-  else if(r){ plim(); aviso(`🩺 Perícia lida do dossiê: ${r}`, false); }
-  repintarFicha();
-}
-// os fatos dos laudos, das cartas, do extrato e da cópia do processo
+// os fatos dos laudos, das cartas, do extrato e da comunicação de decisão
 function itensDaOnda2(f, ks){
-  const out = [], hj = hoje(), uma = new Set();
+  const out = [], hj = hoje();
   const nbTxt = nb => nb ? ` do NB ${fmtNb(nb)}` : "";
+  const minusc = t => t.charAt(0).toLowerCase() + t.slice(1);
   for(const p of f.processos){
-    const k = casoDoNb(ks, p.nb);
-    // a decisão contrária mais nova abre o recurso, se nada a favor veio depois
-    const ult = p.decisoes[p.decisoes.length-1];
-    if(k && ult && ult.contra){
-      const fatal = contarPrazo(isoBr(ult.em), PRAZOS_CATALOGO.find(x=>x.id==="crps"));
-      const minusc = t => t.charAt(0).toLowerCase() + t.slice(1);
-      if(fatal>=hj && k.prazo!==fatal) out.push({id:"recurso", alerta:true, anexo:p.anexo.id, fonte:"Cópia do processo",
-        texto:`Decisão de ${ult.em}${nbTxt(ult.nb||p.nb)}: ${ult.decisao ? minusc(ult.decisao.toLowerCase()) + (ult.motivo ? ", " + minusc(ult.motivo) : "") : minusc(ult.texto)}. `
-          + `Recurso ao CRPS até ${fmtBarra(fatal)}, 30 dias corridos contados do despacho`,
-        acao:{rot:"Marcar prazo do recurso", js:`marcarPrazoDoDossie('${k.id}','${fatal}','${escJs(`recurso ao CRPS contra a decisão de ${ult.em}`)}')`}});
-    }
-    if(k && !/conclu|cancel/i.test(p.status)) for(const e of p.exigencias.filter(e=>!e.cumprida)){
-      const fatal = contarPrazo(isoBr(e.em), {n:e.dias, uteis:false});
-      if(fatal>=hj && k.prazo!==fatal) out.push({id:"exigencia", alerta:true, anexo:p.anexo.id, fonte:"Cópia do processo",
-        texto:`Exigência de ${e.em}${p.servico?` no ${p.servico}`:""}: ${e.texto}. Vence em ${fmtBarra(fatal)}`,
-        acao:{rot:"Marcar prazo fatal", js:`marcarPrazoDoDossie('${k.id}','${fatal}','${escJs(`exigência de ${e.em} (${e.texto})`)}')`}});
-    }
-    // o agendamento mais novo vale (o remarcado substitui o anterior)
-    const pe = p.pericias[p.pericias.length-1], iso = pe && isoBr(pe.data);
-    if(k && pe && iso>=hj && !evJaAgendado(k.id, iso) && !uma.has(k.id+iso)){
-      uma.add(k.id+iso);
-      out.push({id:"pericia", anexo:p.anexo.id, fonte:"Cópia do processo",
-        texto:`Perícia agendada para ${pe.data} às ${pe.hora}${pe.local?`, ${pe.local}`:""} (despacho de ${pe.em}); não está no calendário`,
-        acao:{rot:"Agendar no calendário", js:`agendarPericiaDoDossie('${k.id}','${iso}','${pe.hora}','${escJs(pe.local)}')`}});
-    }
+    // a última comunicação da cópia, se contrária, abre o recurso. O prazo
+    // conta da última atualização do pedido concluído, que é o mais cedo que a
+    // ciência pode ter ocorrido; a "Data:" da comunicação é a da emissão da cópia
+    const k = casoDoNb(ks, p.nb), d = p.comunicacoes[p.comunicacoes.length-1];
+    if(!k || !d || !d.contra) continue;
+    const conc = /^Conclu/i.test(p.status) ? p.atualizado : "";
+    const fatal = conc ? contarPrazo(isoBr(conc), PRAZOS_CATALOGO.find(x=>x.id==="crps")) : "";
+    if(fatal && (fatal<hj || k.prazo===fatal)) continue;
+    const dec = `${p.servico || "Pedido"}${p.entrada ? ` de ${p.entrada}` : ""}${nbTxt(d.nb||p.nb)}: ${minusc(d.decisao.toLowerCase())}${d.motivo ? ", " + minusc(d.motivo) : ""}`;
+    out.push({id:"recurso", alerta:!!fatal, anexo:p.anexo.id, fonte:"Comunicação de decisão",
+      texto: fatal ? `${dec}, pedido concluído em ${conc}. Recurso ao CRPS até ${fmtBarra(fatal)}, 30 dias corridos contados da conclusão, a data mais cedo da ciência`
+        : `${dec}. A cópia não traz a data da conclusão do pedido: conferir a ciência no Meu INSS para contar o recurso ao CRPS`,
+      acao: fatal ? {rot:"Marcar prazo do recurso", js:`marcarPrazoDoDossie('${k.id}','${fatal}','${escJs(`recurso ao CRPS contra a decisão do pedido concluído em ${conc}`)}')`} : null});
   }
   // a DCB só entra no caso enquanto vale: a que já passou é assunto do recurso ou de pedido novo
   for(const k of ks.filter(k=>k.fase!=="encerrado" && ehIncapacidade(k))){
@@ -19735,7 +19770,7 @@ function itensDoDossie(c, ks){
   if(nb) out.push({id:"nb", texto:`NB ${nb.nb}${nb.situacao?` (${nb.situacao.toLowerCase()})`:""} lido da declaração de benefícios; o caso ainda não tem NB`,
     fonte:"Declaração de benefícios", acao:{rot:"Gravar NB no caso", js:`gravarNbDoDossie('${nb.k.id}','${escJs(nb.nb)}')`}});
   // o prazo que corre primeiro; o que só informa por último
-  const ORDEM = ["recurso", "exigencia", "pericia", "dcb", "decadencia", "vinculos", "nb", "laudo"];
+  const ORDEM = ["recurso", "dcb", "decadencia", "vinculos", "nb", "laudo"];
   return out.sort((a,b)=>(ORDEM.indexOf(a.id) + (a.id==="decadencia" && !a.alerta ? 3 : 0)) - (ORDEM.indexOf(b.id) + (b.id==="decadencia" && !b.alerta ? 3 : 0)));
 }
 function quadroDossie(c, ks){
@@ -19789,9 +19824,9 @@ const MAPA_PONTOS = {
 // os fatos que o CRM já lê, cada um com o grupo da matriz e o estado:
 // crit (prazo ou impedimento), warn (atenção), ok (cumprido), info
 function fatosDoMapa(c, ks, fam){
-  const GRUPO = {recurso:"processo", exigencia:"processo", pericia:"processo", dcb:"processo", vinculos:"vinculo", nb:"beneficios", laudo:"laudo", decadencia:"carta"};
-  const out = itensDoDossie(c, ks).map(x=>({...x, grupo:GRUPO[x.id]||"processo", prazo:["recurso","exigencia","pericia"].includes(x.id),
-    est: x.id==="recurso"||x.id==="exigencia" ? "crit" : x.id==="decadencia" ? (x.alerta?"crit":"info")
+  const GRUPO = {recurso:"processo", dcb:"processo", vinculos:"vinculo", nb:"beneficios", laudo:"laudo", decadencia:"carta"};
+  const out = itensDoDossie(c, ks).map(x=>({...x, grupo:GRUPO[x.id]||"processo", prazo:x.id==="recurso",
+    est: x.id==="recurso" ? (x.alerta?"crit":"warn") : x.id==="decadencia" ? (x.alerta?"crit":"info")
       : x.id==="laudo" ? (/não reconhecida/.test(x.texto) ? "warn" : /reconhecida/.test(x.texto) ? "ok" : "info")
       : x.id==="nb" ? "info" : "warn"}));
   const ul = fontesDoDossie(c.id).laudos.slice().sort((a,b)=>isoBr(b.exame).localeCompare(isoBr(a.exame)))[0];
@@ -19809,10 +19844,11 @@ function fatosDoMapa(c, ks, fam){
   if(ben.estado) out.push({grupo:"beneficios", est: ben.estado==="atencao" ? "warn" : "ok", fonte:"CNIS", texto:ben.txt});
   const vin = lei("vinculo");
   if(vin.estado) out.push({grupo:"qualidade", est: vin.estado==="atencao" ? "warn" : "ok", fonte:"CNIS", texto:vin.txt});
-  const gr = g && (g.vinculos||[]).length ? calcularGraca(g.vinculos, g.competencias||0, !!(triagemDe(c).graca||{}).desempregado) : null;
+  const gr = g && (g.vinculos||[]).length ? calcularGraca(g.vinculos, contribSemPerda(g), !!(triagemDe(c).graca||{}).desempregado, an && an.abaixo, an && an.contagem && an.contagem.periodos) : null;
   if(gr) out.push({grupo:"qualidade", est: gr.semLimite ? "ok" : gr.vencida ? "crit" : "ok", fonte:"CNIS",
     texto: gr.semLimite ? "Qualidade mantida sem limite de prazo, porque há benefício em manutenção"
-      : `Período de graça até ${gr.fim}, ${gr.vencida ? "já vencido" : "em curso"} (${gr.base} meses a partir de ${gr.ultima})`});
+      : `Qualidade mantida até ${fmtBarra(gr.mantidaAte)}, ${gr.vencida ? "perdida" : "com perda"} em ${fmtBarra(gr.perda)} (${gr.base} meses a partir de ${gr.ultima})`
+        + (gr.complementar ? `; complementada a competência ${gr.complementar.comp}, iria até ${fmtBarra(gr.complementar.mantidaAte)}` : "")});
   const cad = lei("cadunico");
   if(cad.cor==="ok" || cad.cor==="alerta") out.push({grupo:"cadunico", est: cad.cor==="ok" ? "ok" : "warn", fonte:"CRM", texto:cad.txt});
   // onda 3 · a contagem do CNIS, o requisito da espécie e a contagem do INSS ao lado.
@@ -19874,10 +19910,15 @@ function fatosDoMapa(c, ks, fam){
       + `${ca.cid ? `, CID ${ca.cid}${ca.cidDesc ? ` (${ca.cidDesc.toLowerCase()})` : ""}` : ""}${ca.cnae ? `, CNAE ${ca.cnae}` : ""}`
       + `; o nexo pelo NTEP se confere na Lista C do Anexo II do Decreto 3.048/99`});
   // onda 5 · a clínica: a linha do tempo, o sinal de doença que dispensa a
-  // carência, a área médica dos documentos e o relatório recente para a perícia
+  // carência, a área médica dos documentos e o relatório recente para a perícia.
+  // A DII se ancora no registro mais antigo, que por isso fica fixo no topo e
+  // não cai no corte de oito; o mais recente vem logo abaixo, e o resto depois
   const clin = linhaClinica(c.id);
-  clin.slice(0, 8).forEach(x=>out.push({grupo:"medicos", est:"info", fonte:x.fonte, anexo:x.anexo.id,
-    texto:`${x.data ? fmtBarra(x.data) : "sem data"}, ${x.tipo.toLowerCase()}: ${x.titulo}${x.resumo ? `; ${x.resumo}` : ""}${x.cids.length ? `; CID ${x.cids.join(", ")}` : ""}`}));
+  const datados = clin.filter(x=>x.data), antigo = datados[datados.length-1], recente = datados[0];
+  const fixos = antigo ? (recente!==antigo ? [antigo, recente] : [antigo]) : [];
+  const rotClin = x => x===antigo ? "Primeiro registro clínico em " : x===recente ? "Último registro clínico em " : "";
+  [...fixos, ...clin.filter(x=>!fixos.includes(x))].slice(0, 8).forEach(x=>out.push({grupo:"medicos", est:"info", fonte:x.fonte, anexo:x.anexo.id,
+    texto:`${rotClin(x)}${x.data ? fmtBarra(x.data) : "sem data"}, ${x.tipo.toLowerCase()}: ${x.titulo}${x.resumo ? `; ${x.resumo}` : ""}${x.cids.length ? `; CID ${x.cids.join(", ")}` : ""}`}));
   if(clin.length > 8) out.push({grupo:"medicos", est:"info", fonte:"Dossiê", texto:`E mais ${clin.length-8} documentos médicos, na lista do dossiê`});
   const grave = clin.find(x=>x.grave);
   if(grave) out.push({grupo:"contrib", est:"info", fonte:grave.fonte, anexo:grave.anexo.id,
