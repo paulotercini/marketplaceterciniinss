@@ -87,6 +87,10 @@ Cada ponto do mapa vai à Análise de Direito salvo se tirado (`_mapaFora`, `map
 mostra os pontos levados em "Do primeiro atendimento" (`adTrazido`), marca cada campo como falta, do dossiê ou
 informado (`adEstados`, `data-pre`) e diz para onde vai (`AD_VAI`); Documentos mostra o que falta na última
 análise para a espécie (`docsDaAnalise`) com o botão de volta ao formulário.
+A aba **Primeiro atendimento** (`painelPA`, F196) é o painel do protótipo aprovado: passos, trabalhos possíveis
+(espécies com fato próprio no dossiê, `PA_GATILHO`), seis blocos da situação (`paDados`) com detalhe, fonte e linha do
+tempo (`paLinhaDoTempo`), e o botão que leva os trabalhos marcados e os blocos levados à Análise de Direito
+(`paIrAnalise`, `_paAnalise`, nav `.ad-trab`). Só lê; a escolha vale na sessão.
 Da cópia do processo administrativo, `lerProcessoTexto` lê **só** a folha de interposição (pedido, data de
 entrada, situação, NB, última atualização) e a comunicação de decisão (decisão, motivo, cessação). Despachos e
 páginas em imagem não se leem, porque geram fato falso. A "Data:" da comunicação é a da **emissão da cópia**, e
