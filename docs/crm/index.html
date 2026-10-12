@@ -4176,7 +4176,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.21</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.22</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14206,6 +14206,7 @@ async function abrirFicha(cliId){
     pintarFicha();
     // ondas 0 e 1 · em segundo plano, sem esperar: o texto do dossiê e,
     // depois, o CNIS e a declaração pelos leitores do CRM
+    if(SUB_DOSSIE_TUDO.has(subCad)) _dossieTudo.add(cliId);
     lerTextoDoDossie(cliId).then(()=>lerLeitoresDoDossie(cliId)).catch(e=>console.warn("dossiê:", e));
   }catch(e){
     console.error("abrirFicha:", e);
@@ -14783,6 +14784,7 @@ function irSubCad(qual){
   if(qual==="atendimento") qual="anotacoes";   // nome antigo do trilho interno
   if(qual==="consulta") qual="documentos";     // F31: a Consulta mora em Documentos
   subCad = qual; guardar("crm_subcad", qual); repintarFicha();
+  if(SUB_DOSSIE_TUDO.has(qual)) lerDossieTodo(clienteAberto);
 }
 // compatibilidade: o trilho interno de Anotações acabou na F30 — Consulta,
 // Mensagens e Documentos são botões do trilho principal agora
@@ -19557,25 +19559,66 @@ function verDocsDossie(cliId){
 // seguintes partem dele. O digitalizado fica com páginas e sem texto, e não é
 // relido a cada abertura.
 let _lendoDossie = null;
+// F203 · LEITURA EM PARTES. Abrir a ficha lê só o que a Identificação usa: os
+// dados cadastrais, o CNIS completo, a declaração de beneficiário, a RAIS (a
+// profissão) e, enquanto o estado civil faltar, laudo e pedido administrativo.
+// O resto do dossiê só é lido quando se abre o Primeiro atendimento (ou o Mapa
+// e a Análise de Direito, que partem dele), em ordem do menor para o maior.
+const _dossieTudo = new Set(), _dossieFalhou = new Set();
+const SUB_DOSSIE_TUDO = new Set(["pa","mapa","direito"]);
+// o estado civil ainda falta: nem no cadastro, nem no que o dossiê já leu
+const civilFalta = c => !civilDe(c).estado_civil
+  && !docsDoDossie(c.id).some(x=>/^(Laudos|Processos administrativos)$/i.test(fonteDoDossie(x)[0]) && /Estado Civil:?\s+[A-Z]/.test(x.texto||""));
+function dossieDaIdentificacao(a, c, falta = civilFalta(c)){
+  const [f, arq] = fonteDoDossie(a);
+  if(/^Cadastro$/i.test(f)) return 1;
+  if(/^CNIS$/i.test(f) && /completo/i.test(arq)) return 2;
+  if(/declara[çc][ãa]o de benefici/i.test(arq)) return 3;
+  if(/^CTPS RAIS CAGED$/i.test(f) && /RAIS/i.test(arq)) return 4;
+  if(/^(Laudos|Processos administrativos)$/i.test(f) && falta)
+    return /^Laudos$/i.test(f) ? 5 : 6;
+  return 0;
+}
+function proximoDoDossie(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return null;
+  const tudo = _dossieTudo.has(cliId), falta = civilFalta(c);
+  const fila = docsDoDossie(cliId).filter(a=>a.paginas==null && a.caminho && !_dossieFalhou.has(a.id))
+    .map(a=>({a, p:dossieDaIdentificacao(a, c, falta) || (tudo ? 9 : 0)})).filter(x=>x.p)
+    .sort((x,y)=>x.p-y.p || (x.a.tamanho||0)-(y.a.tamanho||0));
+  return fila.length ? fila[0].a : null;
+}
+// quantos documentos do dossiê faltam ler para o Primeiro atendimento
+const dossieFaltaLer = cliId => docsDoDossie(cliId).filter(a=>a.paginas==null && a.caminho && !_dossieFalhou.has(a.id)).length;
+function lerDossieTodo(cliId){
+  if(!cliId || _dossieTudo.has(cliId)) return;
+  _dossieTudo.add(cliId); lerTextoDoDossie(cliId).catch(e=>console.warn("dossiê:", e));
+}
 async function lerTextoDoDossie(cliId){
   if(_lendoDossie) return 0;
-  const fila = docsDoDossie(cliId).filter(a=>a.paginas==null && a.caminho);
-  if(!fila.length) return 0;
   _lendoDossie = cliId;
-  let n = 0;
+  let n = 0, desde = 0, identPronta = false;
   try{
-    for(const a of fila){
-      if(clienteAberto!==cliId) break;
+    for(let a; clienteAberto===cliId && (a = proximoDoDossie(cliId)); ){
+      const ident = !!dossieDaIdentificacao(a, D.cliPorId.get(cliId));
       let lido;
-      try{ lido = await textoDoDocumento(a.caminho); }catch(e){ console.warn("dossiê sem leitura:", a.nome, e); continue; }
+      try{ lido = await textoDoDocumento(a.caminho); }catch(e){ console.warn("dossiê sem leitura:", a.nome, e); _dossieFalhou.add(a.id); continue; }
       const corpo = { texto: lido.texto || null, paginas: lido.paginas || 0, paginas_imagem: lido.paginas_imagem || [] };
       try{
         await api(`/rest/v1/anexos?id=eq.${a.id}`, {method:"PATCH", headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)});
-        Object.assign(a, corpo); n++;
-      }catch(e){ console.warn("dossiê: texto não gravado", a.nome, e); }
+        Object.assign(a, corpo); n++; desde++;
+      }catch(e){ console.warn("dossiê: texto não gravado", a.nome, e); _dossieFalhou.add(a.id); continue; }
+      // a Identificação aparece assim que a parte dela termina, sem esperar o resto
+      const prox = proximoDoDossie(cliId);
+      if(!identPronta && (!prox || !dossieDaIdentificacao(prox, D.cliPorId.get(cliId)))){
+        identPronta = true; desde = 0;
+        await lerLeitoresDoDossie(cliId).catch(e=>console.warn("dossiê:", e));
+        if(clienteAberto===cliId) repintarSeLivre();
+      } else if(!ident && desde >= 5 && clienteAberto===cliId){ desde = 0; repintarSeLivre(); }
     }
   } finally { _lendoDossie = null; }
-  if(n && clienteAberto===cliId) repintarSeLivre();
+  if(desde && clienteAberto===cliId) repintarSeLivre();
+  // trocou de cliente no meio: a leitura do que está aberto começa agora
+  if(clienteAberto && clienteAberto!==cliId) lerTextoDoDossie(clienteAberto).catch(()=>{});
   return n;
 }
 // repinta a ficha sem tirar o campo de quem está digitando
@@ -20670,6 +20713,7 @@ function painelPA(c, ks){
       ${passo(4, "Documentos", "pedido, guias e geração", false, "irSubCad('documentos')")}
     </nav>
     <div class="pa-cab"><div><h2>Primeiro atendimento</h2>
+      ${(n => n ? `<p class="meio-sub" role="status">Lendo o dossiê: faltam ${n} ${n===1?"documento":"documentos"}; o painel se completa sozinho.</p>` : "")(dossieFaltaLer(c.id))}
       <p>Dossiê baixado em <span class="mono">${ems.length ? esc(fmtBarra(ems[ems.length-1].slice(0,10))) : "—"}</span> · ${nDocs} ${nDocs===1?"documento":"documentos"} · ${esc(Object.keys(dz).map(k=>PORT[k]||k).join(", ")||"nenhum portal")}${inex.length ? `. Os portais informaram que não existem ${esc(inex.slice(0, 4).join(", "))}` : ""}.</p></div>
       <button type="button" class="btn-mini" onclick="irSubCad('mapa')">Mapa do dossiê</button></div>
     ${(n => n && !nomeIgual(n, c.nome) ? `<p class="pa-nome-dif" role="alert"><b>Nome diferente do CNIS.</b> No CRM consta <b>${esc(c.nome||"")}</b>, e no CNIS consta <b>${esc(n)}</b>. <button type="button" class="btn-mini" onclick="usarNomeCnis('${c.id}')">Usar o nome do CNIS</button></p>` : "")(nomeDoCnis(c))}

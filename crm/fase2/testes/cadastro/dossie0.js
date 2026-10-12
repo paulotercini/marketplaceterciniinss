@@ -71,6 +71,11 @@ FIX.clientes[0] = { ...FIX.clientes[0], dossie: {} };
   // a troca vale a partir daqui
   await p.evaluate(() => { textoDoDocumento = window.__textoFicticio; });
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
+  await p.waitForFunction(() => window.__lidos.length >= 1 && !_lendoDossie, null, { timeout: 5000 });
+  // F203 · ao abrir a ficha, só a parte da Identificação (o CNIS); o HC espera o Primeiro atendimento
+  const soIdent = await p.evaluate(() => window.__lidos.slice());
+  conf("F203 · abrir a ficha lê só o CNIS, e o relatório do HC fica para o Primeiro atendimento", soIdent.length === 1 && /CNIS/.test(soIdent[0]));
+  await p.evaluate(cli => lerDossieTodo(cli), CLI_CHEIO);
   await p.waitForFunction(() => window.__lidos.length >= 2 && !_lendoDossie, null, { timeout: 5000 });
 
   // 1 · a leitura em segundo plano: só o que nunca foi lido, um de cada vez

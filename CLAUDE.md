@@ -73,7 +73,7 @@ estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha 
    "não possui deficiência") — fato negativo para a triagem; `falhas` é erro técnico, pede rodada nova.
    A ficha mostra isso na caixa "📂 Dossiê — o que os portais têm" (`caixaDossie` em `app.html`).
 
-**O que o CRM faz com isso**: lê o `texto` uma vez (onda 0) e passa por leitores puros (`lerCnisPdf`,
+**O que o CRM faz com isso**: lê o `texto` uma vez (onda 0), **em partes** (F203): abrir a ficha lê só o que a Identificação usa (`dossieDaIdentificacao`: Cadastro, CNIS completo, declaração de beneficiário, RAIS e, enquanto faltar o estado civil, laudo e pedido); o resto só ao abrir Primeiro atendimento, Mapa ou Análise de Direito (`SUB_DOSSIE_TUDO`, `lerDossieTodo`), do menor para o maior, e passa por leitores puros (`lerCnisPdf`,
 `lerCagedTexto`, `lerRaisTexto`, `lerLaudosTexto`, `lerCartaTexto`, `lerExtratoPagTexto`, `lerProcessoTexto`,
 `lerResumoInssTexto`, `lerCatTexto`, `lerPppTexto`, `itemClinico`, `lerSeguroDesempregoTexto`, `lerCnpjsTexto`),
 agrupados por `fontesDoDossie()`. O seguro-desemprego entra em `calcularGraca` (6º parâmetro) e aparece junto da
