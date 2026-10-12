@@ -4246,7 +4246,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.41</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.42</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -21310,30 +21310,45 @@ function faixaBeneficios(c, d){
 // Cada período vira anos, meses e dias pelo calendário (do início ao dia
 // seguinte ao fim) e a soma carrega 30 dias no mês e 12 meses no ano, como o
 // INSS soma. Para converter e comparar, o tempo vira dias (ano 365, mês 30).
-// shortcut: sem descontar concomitância; a conta oficial é a do Prévius
+// shortcut: ano de 365 dias e mês de 30 na soma; a conta oficial é a do Prévius
 function durCal(de, ate){
   const a = de.split("-").map(Number), f = new Date(Date.parse(ate+"T12:00:00") + 86400000), b = [f.getUTCFullYear(), f.getUTCMonth()+1, f.getUTCDate()];
   let y = b[0]-a[0], m = b[1]-a[1], d = b[2]-a[2];
   if(d < 0){ m--; d += 30; } if(m < 0){ y--; m += 12; }
   return y < 0 ? null : {y, m, d};
 }
-const durSoma = (p, q) => { let d = p.d + q.d, m = p.m + q.m + Math.floor(d/30), y = p.y + q.y + Math.floor(m/12); return {y, m: m%12, d: d%30}; };
 const durDias = p => p.y*365 + p.m*30 + p.d;
 const fmtDur = p => `${p.y} ${p.y===1?"ano":"anos"}, ${p.m} ${p.m===1?"mês":"meses"} e ${p.d} ${p.d===1?"dia":"dias"}`;
 function tempoFmt(dias){ dias = Math.max(0, Math.round(dias)); const y = Math.floor(dias/365), r = dias%365; return fmtDur({y, m: Math.floor(r/30), d: r%30}); }
 const anosDe = dias => dias/365;
+// os períodos sobrepostos contam uma vez (o tempo de contribuição é tempo de
+// calendário): a união dos intervalos, em dias, por natureza e no total
+const diaSeguinte = iso => new Date(Date.parse(iso+"T12:00:00") + 86400000).toISOString().slice(0,10);
+function uniaoDias(ivs){
+  const s = ivs.filter(x=>x[0] && x[1] && x[1] >= x[0]).sort((p, q)=>p[0] < q[0] ? -1 : 1);
+  let tot = 0, cur = null;
+  for(const [de, ate] of s){
+    if(cur && de <= diaSeguinte(cur[1])){ if(ate > cur[1]) cur[1] = ate; }
+    else { if(cur) tot += durDias(durCal(cur[0], cur[1])); cur = [de, ate]; }
+  }
+  if(cur) tot += durDias(durCal(cur[0], cur[1]));
+  return tot;
+}
 function admTotais(c){
   const sx = sexoDe(c)==="F" ? "F" : "M", fator = sx==="F" ? 1.2 : 1.4, hj = hoje();
   const tot = {porNat:{}, comum:0, comum2019:0, especial:0, convertido:0, linhas:0, semData:0, aberto:0};
+  const ivs = [], ivs2019 = [], porNat = {}; let bonus = 0, bonus2019 = 0;
   for(const r of admDe(c).tempos){
     if(!r.de || (r.ate && r.ate < r.de)){ if(r.de||r.ate||r.onde) tot.semData++; continue; }
-    const ate = r.ate || hj, nat = r.nat || "comum", p = durCal(r.de, ate); if(!p) continue;
+    const ate = r.ate || hj, nat = r.nat || "comum"; if(!durCal(r.de, ate)) continue;
     if(!r.ate) tot.aberto++;
-    tot.linhas++; tot.porNat[nat] = durSoma(tot.porNat[nat] || {y:0,m:0,d:0}, p);
-    const d = durDias(p), d2019 = r.de <= EC103 ? durDias(durCal(r.de, ate < EC103 ? ate : EC103)) : 0;
-    if(nat==="especial"){ tot.especial += d; tot.convertido += d2019*fator + (d - d2019); tot.comum += d2019*fator + (d - d2019); tot.comum2019 += d2019*fator; }
-    else { tot.comum += d; tot.comum2019 += d2019; }
+    tot.linhas++; (porNat[nat] = porNat[nat] || []).push([r.de, ate]); ivs.push([r.de, ate]);
+    if(r.de <= EC103){ const a19 = ate < EC103 ? ate : EC103; ivs2019.push([r.de, a19]);
+      if(nat==="especial"){ const extra = durDias(durCal(r.de, a19)) * (fator - 1); bonus += extra; bonus2019 += extra; } }
   }
+  for(const [n, l] of Object.entries(porNat)) tot.porNat[n] = uniaoDias(l);
+  tot.especial = tot.porNat.especial || 0; tot.convertido = tot.especial + bonus;
+  tot.comum = uniaoDias(ivs) + bonus; tot.comum2019 = uniaoDias(ivs2019) + bonus2019;
   return tot;
 }
 // o contexto que todo quadro usa: sexo, idade, contagem do CNIS, graça, tempos
@@ -21350,7 +21365,7 @@ const anosTxt = a => tempoFmt(a*365);
 const ADM_CALC = {
   tempos(c, x){ const t = x.tot, nat = Object.entries(t.porNat);
     if(!t.linhas) return `<p class="meio-sub">Nenhum período ainda. Lance um por linha ou traga os vínculos do CNIS.</p>`;
-    return `<div class="adm-tot">${nat.map(([n, p])=>`<div><small>${esc((NAT_TEMPO.find(z=>z[0]===n)||[n,n])[1])}</small><b>${fmtDur(p)}</b></div>`).join("")}
+    return `<div class="adm-tot">${nat.map(([n, d])=>`<div><small>${esc((NAT_TEMPO.find(z=>z[0]===n)||[n,n])[1])}</small><b>${tempoFmt(d)}</b></div>`).join("")}
       ${t.especial ? `<div><small>Especial convertido (×${x.sx==="F"?"1,20":"1,40"} até 13/11/2019)</small><b>${tempoFmt(t.convertido)}</b></div>` : ""}
       <div><small>Total para tempo comum</small><b>${tempoFmt(t.comum)}</b></div>
       <div><small>Em 13/11/2019</small><b>${tempoFmt(t.comum2019)}</b></div></div>
@@ -21397,10 +21412,10 @@ const ADM_CALC = {
     if(x.v.esp_epi==="Sim") ls.push(admLi("warn", "EPI eficaz não afasta o ruído acima do limite (Tema 555/STF); nos demais agentes, exigir a prova da eficácia real."));
     if(x.v.esp_continua==="Sim") ls.push(admLi("crit", "Permanecer na atividade nociva cessa o benefício (Tema 709/STF)."));
     return admUl(ls); },
-  magisterio(c, x){ const pm = x.tot.porNat.magisterio || {y:0,m:0,d:0}, m = anosDe(durDias(pm)), ex = [30,25][x.i];
-    return admUl([admLi(m >= ex ? "ok" : "warn", `Magistério nas linhas: <b>${fmtDur(pm)}</b>; as transições exigem ${ex} anos, a regra permanente 25${m >= ex ? ", cumpridos" : `, faltam ${anosTxt(Math.max(0, ex - m))}`}.`),
+  magisterio(c, x){ const pm = x.tot.porNat.magisterio || 0, m = anosDe(pm), ex = [30,25][x.i];
+    return admUl([admLi(m >= ex ? "ok" : "warn", `Magistério nas linhas: <b>${tempoFmt(pm)}</b>; as transições exigem ${ex} anos, a regra permanente 25${m >= ex ? ", cumpridos" : `, faltam ${anosTxt(Math.max(0, ex - m))}`}.`),
       admLi("info", "Direção, coordenação e assessoramento pedagógico contam como magistério (Lei 11.301/2006), com prova; tempo fora do magistério entra só nos pontos.")]); },
-  rural(c, x){ const r = x.tot.porNat.rural, ls = [admLi(r ? "info" : "warn", r ? `Tempo rural nas linhas: <b>${fmtDur(r)}</b>.` : "Nenhuma linha de natureza rural ainda.")];
+  rural(c, x){ const r = x.tot.porNat.rural || 0, ls = [admLi(r ? "info" : "warn", r ? `Tempo rural nas linhas: <b>${tempoFmt(r)}</b>.` : "Nenhuma linha de natureza rural ainda.")];
     for(const o of x.ops){ if(o.o==="idade_rural") ls.push(admLi("info", "Exige 180 meses de atividade rural, contados por mês de atividade, e a prova material do período; a autodeclaração vem antes."));
       if(o.o==="hibrida") ls.push(admLi("info", "Soma tempo rural e urbano para os 180 meses; o rural anterior a 11/1991 entra sem contribuição.")); }
     if(x.v.rur_regime && !x.v.rur_prova) ls.push(admLi("warn", "Falta o início de prova material: prova só testemunhal não basta (Súmula 149/STJ)."));
@@ -21492,7 +21507,7 @@ function caixaTempos(c){
     <tbody>${rows.map(linha).join("")}</tbody></table>
     <div class="adm-tempos-bt"><button type="button" class="btn-mini adm-mais" onclick="admTempoMais('${c.id}')">+ tempo</button>
       ${g && (g.vinculos||[]).length ? `<button type="button" class="btn-mini" onclick="admTemposDoCnis('${c.id}')">Trazer do CNIS</button>` : ""}
-      <span class="meio-sub">contagem simplificada (ano de 365 dias, mês de 30), sem descontar concomitância; a conta oficial é a do Prévius</span></div></div>`;
+      <span class="meio-sub">períodos sobrepostos contam uma vez; ano de 365 dias e mês de 30; a conta oficial é a do Prévius</span></div></div>`;
 }
 function admTemposPintar(cliId){ const c = D.cliPorId.get(cliId), el = document.getElementById("adm-tempos-box"); if(c && el) el.outerHTML = caixaTempos(c); admRecalc(cliId); }
 function admTempo(cliId, i, el){
