@@ -124,6 +124,22 @@ FIX.colaboradores = [...FIX.colaboradores,
   await p.evaluate(() => nclEtapa1()); await p.waitForSelector("#ncl-caso");
   conf("F197 · e seguir para a etapa 2 não grava de novo", escritos.filter(x => x.m === "POST" && x.t === "clientes").length === 1);
   await etapa2("");
+  const pre = await p.evaluate(async () => {
+    const api0 = api;
+    api = async (u, o) => /\/anexos\?/.test(u) ? [
+        { nome: "CNIS · CNIS completo.pdf", caminho: "x", texto: "Nome: OTILIA FICTICIA DE SOUZA\nData de nascimento: 05/03/1961" },
+        { nome: "Processos administrativos · pedido.pdf", caminho: "y", texto: "Estado Civil: VIUVO(A)\nEscolaridade" },
+        { nome: "CTPS RAIS CAGED · Extrato RAIS.pdf", caminho: "z", texto: "RAIS - Ano-Base: 2020\nCNPJ Razão Social\n11.444.777/0001-61 EMPRESA FICTICIA\nCBO\n1 - Mensal 44 535,00 512105 - EMPREGADO DOMESTICO NOS SERVICOS GERAIS" }]
+      : /clientes\?select=\*/.test(u) ? [{ id: _ncl.id, nome: "Cliente 123.456.789-09", cpf: "12345678909", dn: "1961-03-05", logradouro: "RUA DOS LIRIOS 245", cidade: "MONTE ALTO", uf: "SP" }]
+      : api0(u, o);
+    try { await nclPreencher(); } finally { api = api0; }
+    const v = id => document.getElementById(id).value;
+    return [v("ncl-nome"), v("ncl-dn"), v("ncl-civil"), v("ncl-prof"), v("ncl-rua"), v("ncl-num"), v("ncl-cidade")].join("|");
+  });
+  conf(`F199 · a etapa 2 se preenche pelo dossiê, com rua e cidade em caixa normal e o número separado (${pre})`,
+    pre === "Otilia Ficticia de Souza|1961-03-05|viuvo|Empregado Domestico nos Servicos Gerais|Rua dos Lirios|245|Monte Alto");
+  await p.evaluate(() => { _ncl = {etapa:1, id:null}; });
+  await etapa2("");
   const post0 = escritos.find(x => x.m === "POST" && x.t === "clientes");
   conf("F197 · com só o CPF a ficha nasce, com nome provisório, e a etapa 2 se abre",
     post0 && /^Cliente \d{3}\.\d{3}\.\d{3}-\d{2}$/.test(post0.corpo.nome) && await p.evaluate(() => _ncl.etapa === 2 && !!document.getElementById("ncl-sexo")));
