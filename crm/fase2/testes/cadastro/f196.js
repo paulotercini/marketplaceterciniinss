@@ -73,7 +73,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
 
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   await p.waitForFunction(() => D._ficha && D._ficha.cliId && !_lendoDossie && !_lendoLeitores, null, { timeout: 10000 });
-  await p.evaluate(() => { abaAtiva = 0; irSubCad("pa"); });
+  await p.evaluate(() => { abaAtiva = 0; _atendAberto.add(clienteAberto); irSubCad("pa"); });
   await p.waitForSelector(".pa .pa-blocos");
   const pa = await p.evaluate(() => ({ passos: [...document.querySelectorAll(".atend-passos .pa-passo b")].map(b => b.textContent),
     blocos: [...document.querySelectorAll(".pa-bloco .pa-bloco-rot")].map(b => b.textContent.trim()),
@@ -127,6 +127,11 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
     abaAtiva = 2; repintarFicha(); await new Promise(x => setTimeout(x, 150));
     const ok = !document.getElementById("detalhe").classList.contains("atend-tela") && getComputedStyle(document.querySelector(".det-topo")).display !== "none";
     abaAtiva = 0; irSubCad("pa"); await new Promise(x => setTimeout(x, 150)); return ok;
+  }));
+  conf("F211 · clicar em Cadastro volta à Identificação normal, sem tela cheia", await p.evaluate(async () => {
+    document.querySelector('.mt[data-vv="0"]').click(); await new Promise(x => setTimeout(x, 200));
+    const ok = subCad === "identificacao" && !document.getElementById("detalhe").classList.contains("atend-tela");
+    _atendAberto.add(clienteAberto); irSubCad("pa"); await new Promise(x => setTimeout(x, 150)); return ok;
   }));
   conf("a situação tem os seis blocos do desenho", pa.blocos.join("|").startsWith("Qualidade de segurado|Carência|CNIS e RAIS|CNPJs do titular|Pedidos ao INSS|Planejamento prévio"));
   conf(`os trabalhos possíveis saem do dossiê (${pa.cartoes.join(", ")})`, pa.cartoes.length > 0);
