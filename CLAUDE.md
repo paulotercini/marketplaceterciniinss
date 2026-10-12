@@ -83,6 +83,10 @@ Da RAIS, `lerRaisTexto` lê também os afastamentos numerados sob "De Até Motiv
 (motivo 70) vira fato do grupo `contrib` (`licencasDaRais`), porque o CNIS conta o mês e o INSS tem descontado
 o período, e a passagem do mapa à Análise de Direito leva a nota junto do tempo e da carência. A Análise de Direito
 pede, por espécie, só os campos de `AD_CAMPOS_ESPECIE`; os demais ficam em "mostrar os outros campos".
+Cada ponto do mapa vai à Análise de Direito salvo se tirado (`_mapaFora`, `mapaLevar`, só na sessão); o formulário
+mostra os pontos levados em "Do primeiro atendimento" (`adTrazido`), marca cada campo como falta, do dossiê ou
+informado (`adEstados`, `data-pre`) e diz para onde vai (`AD_VAI`); Documentos mostra o que falta na última
+análise para a espécie (`docsDaAnalise`) com o botão de volta ao formulário.
 Da cópia do processo administrativo, `lerProcessoTexto` lê **só** a folha de interposição (pedido, data de
 entrada, situação, NB, última atualização) e a comunicação de decisão (decisão, motivo, cessação). Despachos e
 páginas em imagem não se leem, porque geram fato falso. A "Data:" da comunicação é a da **emissão da cópia**, e
