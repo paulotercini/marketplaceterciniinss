@@ -13,7 +13,30 @@ const COLETORES = {
   const [aba] = await chrome.tabs.query({ active: true, currentWindow: true });
   const host = aba && aba.url ? new URL(aba.url).host : '';
   const c = COLETORES[host];
-  const st = await chrome.storage.local.get(['quem']);
+  const st = await chrome.storage.local.get(['quem', 'ultima_rodada', 'rodada_andamento', 'rodada_desde']);
+  // "Rodar tudo": percorre Meu INSS → e-Recursos → Emprega Brasil → HC → Redesim, cada um na sua aba.
+  // "rodando" com mais de 3 h é rodada que morreu (service worker encerrado): libera o botão
+  const viva = st.rodada_andamento && st.rodada_desde && (Date.now() - st.rodada_desde) < 3 * 3600000;
+  if (viva) { $('tudo').disabled = true; $('tudo').textContent = `rodando: ${st.rodada_andamento}`; }
+  else if (st.ultima_rodada) $('rodada').textContent = `última rodada ${new Date(st.ultima_rodada.em).toLocaleString('pt-BR')}:\n• ${st.ultima_rodada.relato.join('\n• ')}`;
+  $('abrir').onclick = async () => {
+    const r = await chrome.runtime.sendMessage({ tipo: 'abrir' }).catch(() => null);
+    $('rodada').className = 'meio';
+    $('rodada').textContent = r && !r.erro
+      ? `${r.abertos} aba(s) aberta(s). Entre em cada portal (gov.br; HC com o login do paciente) e depois clique em Rodar.`
+      : (r && r.erro) || 'a extensão não respondeu';
+  };
+  $('tudo').onclick = async () => {
+    $('tudo').disabled = true; $('tudo').textContent = 'rodando — acompanhe nas abas dos portais';
+    const r = await chrome.runtime.sendMessage({ tipo: 'tudo' }).catch(e => ({ erro: String(e.message || e) }));
+    if (!r || r.erro) {                      // não fecha: o motivo tem de ficar na tela
+      $('tudo').disabled = false; $('tudo').textContent = '🔁 Rodar todos os portais';
+      $('rodada').className = 'meio erro';
+      $('rodada').textContent = (r && r.erro) || 'a extensão não respondeu — recarregue-a (↻ em chrome://extensions) e tente de novo';
+      return;
+    }
+    setTimeout(() => window.close(), 1200);
+  };
   $('crm').textContent = st.quem ? `CRM: ${st.quem}` : 'CRM: não conectado.';
   chrome.runtime.sendNativeMessage('br.tercini.dossie', { acao: 'ping' }, r => {
     const linha = document.createElement('p');
