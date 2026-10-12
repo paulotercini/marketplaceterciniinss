@@ -77,6 +77,10 @@ agrupados por `fontesDoDossie()`. O seguro-desemprego entra em `calcularGraca` (
 qualidade de segurado, no mapa e na conta dos Lembretes (`fatoSeguro`). Os CNPJs da Redesim viram o grupo `cnpj`
 do mapa; a abertura, o MEI e o CNAE vêm da base pública `publica.cnpj.ws` (a mesma do site interno), só no clique
 de "Consultar", só com o número do CNPJ no caminho, e a resposta fica na memória da sessão (`_cnpjWs`).
+Da RAIS, `lerRaisTexto` lê também os afastamentos numerados sob "De Até Motivo"; a licença sem remuneração
+(motivo 70) vira fato do grupo `contrib` (`licencasDaRais`), porque o CNIS conta o mês e o INSS tem descontado
+o período, e a passagem do mapa à Análise de Direito leva a nota junto do tempo e da carência. A Análise de Direito
+pede, por espécie, só os campos de `AD_CAMPOS_ESPECIE`; os demais ficam em "mostrar os outros campos".
 Da cópia do processo administrativo, `lerProcessoTexto` lê **só** a folha de interposição (pedido, data de
 entrada, situação, NB, última atualização) e a comunicação de decisão (decisão, motivo, cessação). Despachos e
 páginas em imagem não se leem, porque geram fato falso. A "Data:" da comunicação é a da **emissão da cópia**, e
