@@ -145,24 +145,29 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
     window.__sair = r.join(","); _atendAberto.add(clienteAberto); irSubCad("pa"); await new Promise(x => setTimeout(x, 150));
     return r.every(x => x === "ok");
   }));
-  conf("a situação tem os seis blocos do desenho", pa.blocos.join("|").startsWith("Qualidade de segurado|Carência|CNIS e RAIS|CNPJs do titular|Pedidos ao INSS|Planejamento prévio"));
-  conf(`os trabalhos possíveis saem do dossiê (${pa.cartoes.join(", ")})`, pa.cartoes.length > 0);
+  conf("a situação tem os seis blocos do desenho", pa.blocos.join("|").startsWith("Qualidade de segurado|Carência|CNIS|RAIS e CAGED|CNPJs do titular|Pedidos ao INSS|Planejamento prévio|Não encontrado no dossiê"));
+  conf("os trabalhos possíveis saem do dossiê", await p.evaluate(() => paDados(D.clientes[0], D.casosDoCliente.get(D.clientes[0].id) || []).trabalhos.length > 0));
   conf("a carência mostra a contagem do CNIS", /^104 de 180$/.test(pa.car.trim()));
   conf("a qualidade abre com a linha do tempo e a licença da RAIS marcada", pa.tl && pa.lic);
-  await p.click('.pa-bloco:has-text("CNIS e RAIS")'); await p.waitForTimeout(100);
-  conf("o bloco CNIS e RAIS traz a licença sem remuneração, com a fonte", /licença sem remuneração/.test(await p.textContent(".pa-det")) && /RAIS de 2016/.test(await p.textContent(".pa-det")));
+  await p.click('.pa-bloco:has-text("RAIS e CAGED")'); await p.waitForTimeout(100);
+  conf("F213 · o bloco RAIS e CAGED traz a tabela dos vínculos e a licença sem remuneração, com a fonte", /licença sem remuneração/.test(await p.textContent(".pa-det")) && /RAIS de 2016/.test(await p.textContent(".pa-det"))
+    && !!(await p.$(".pa-det .pa-tabela")) && /licença sem remuneração de 01\/06\/2016/.test(await p.textContent(".pa-tabela")));
+  await (await p.$(".pa")).screenshot({ path: "/tmp/f196-rais.png" });
   await p.click(".pa-det .pa-levar-bt"); await p.waitForTimeout(100);
-  conf("tirado da análise, o bloco diz que fica fora", (await p.getAttribute('.pa-bloco:has-text("CNIS e RAIS") .pa-bloco-vai', "aria-checked")) === "false" && /\d+ de \d+ blocos/.test(await p.textContent(".pa-levar-box")));
-  conf("F207 · a situação fica à esquerda e os trabalhos à direita", await p.evaluate(() => document.querySelector(".pa-sit").getBoundingClientRect().left < document.querySelector(".pa-trab").getBoundingClientRect().left));
+  conf("tirado da análise, o bloco diz que fica fora", (await p.getAttribute('.pa-bloco:has-text("RAIS e CAGED") .pa-bloco-vai', "aria-checked")) === "false");
+  conf("F213 · o bloco Não encontrado orienta o que o dossiê não trouxe", /Nenhum laudo médico|não foi consultad/.test(await p.evaluate(() => paDados(D.clientes[0], []).grupos.falta.map(x => x.texto).join(" | "))));
+  conf("F213 · o Primeiro atendimento não tem mais os trabalhos possíveis", !(await p.$(".pa .pa-trab")));
   conf("F207 · quem já é aposentado tem incapacidade e aposentadorias marcadas como impedidas", await p.evaluate(() => {
     const c = D.clientes[0], t0 = c.triagem; c.triagem = { ...t0, pdf: { ...(t0.pdf||{}), declaracao: { beneficios: [{ nb: "1234567890", especie: "APOSENTADORIA POR IDADE", situacao: "ATIVO" }] } } };
     const d = paDados(c, D.casosDoCliente.get(c.id) || []); c.triagem = t0;
     const imp = d.trabalhos.filter(t => t.impedido).map(t => t.f.chave);
     return imp.length > 0 && imp.every(k => ["incapacidade","tempo","especial","rural","b94","bpc"].includes(k)) && /aposentadoria por idade/.test(d.trabalhos.find(t=>t.impedido).impedido);
   }));
-  await p.click(".pa-cartao-bt"); await p.waitForTimeout(100);
-  conf("clicar no cartão destaca a situação", !!(await p.$(".pa-cartao.sel")) && !!(await p.$(".pa-chip")));
   await (await p.$(".pa")).screenshot({ path: process.env.FOTO || "/tmp/f196-pa.png" });
+  await p.evaluate(() => irSubCad("direito")); await p.waitForSelector(".pa-trab-ad");
+  conf("F213 · os trabalhos possíveis estão na Análise de Direito", !!(await p.$(".pa-trab-ad .pa-cartao")) && /\d+ de \d+ blocos/.test(await p.textContent(".pa-levar-box")));
+  await p.click(".pa-cartao-bt"); await p.waitForTimeout(100);
+  conf("clicar no cartão o destaca", !!(await p.$(".pa-cartao.sel")));
   const marcados = await p.$$eval(".pa-levar input", is => is.filter(i => i.checked).length);
   if (!marcados) { await p.click(".pa-levar input"); await p.waitForTimeout(100); }
   await p.click(".pa-prim"); await p.waitForSelector("#ad-novo[open] .ad-trab");

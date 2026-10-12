@@ -3573,6 +3573,9 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .ad-datas button{border:1px solid #E7E6E1;background:#fff;border-radius:10px;padding:8px 12px;font:inherit;cursor:pointer;text-align:left}
 .ad-datas button.on{border-color:#0E5C58;box-shadow:0 0 0 2px rgba(14,92,88,.15)}
 .ad-datas small{display:block;color:#686660}
+.pa-na-ad{margin:0 0 12px}.pa-trab-ad{max-width:none!important}.pa-trab-ad .pa-cartoes{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.pa-tabela{width:100%;border-collapse:collapse;font-size:12.5px;margin:4px 0 10px}.pa-tabela th,.pa-tabela td{text-align:left;padding:6px 8px;border-bottom:1px solid #E7E6E1;vertical-align:top}
+.pa-tabela th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#686660}.pa-tabela .alerta{color:#8F5400;font-weight:600}
 .pa{background:#F3F2EE;padding:18px;border-radius:14px;--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-warn:#8F5400;--pa-ok:#1B6E38;--pa-info:#3A6491;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660;color:#121212;font-size:13px;line-height:1.45}
 .pa .mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-weight:500}
 .pa-passos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--pa-b);margin-bottom:14px}
@@ -4194,7 +4197,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.35</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.36</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19488,6 +19491,7 @@ function painelDireito(c){
       ${cnisDe(c)&&cnisDe(c).caminho?`<button type="button" class="tl-bt" onclick="abrirCnis('${c.id}')" title="abre o extrato guardado em outra aba (CNIS de ${esc(fmt(cnisDe(c).em))})">Abrir CNIS</button>`
         :`<button type="button" class="tl-bt tl-falta" onclick="irSubCad('identificacao')" title="o CNIS ainda não foi inserido: insira na Identificação">Inserir CNIS</button>`}</span>
     </div>
+    ${painelTrabalhos(c, ks)}
     ${resumoDireito(c, ult)}
     ${datas}
     ${sel ? fichaDaAnalise(sel) : ""}
@@ -20659,8 +20663,8 @@ function fraseDoRamo(r){
 // marcados viram a lista de trabalhos da análise. Só lê: nada se grava aqui.
 const _paBloco = new Map(), _paForaBl = new Map(), _paEsc = new Map(), _paCartao = new Map();
 const PA_BLOCOS = [
-  ["qual", "Qualidade de segurado"], ["car", "Carência"], ["cnis", "CNIS e RAIS"],
-  ["cnpj", "CNPJs do titular"], ["ped", "Pedidos ao INSS"], ["plan", "Planejamento prévio"],
+  ["qual", "Qualidade de segurado"], ["car", "Carência"], ["cnis", "CNIS"], ["rais", "RAIS e CAGED"],
+  ["cnpj", "CNPJs do titular"], ["ped", "Pedidos ao INSS"], ["plan", "Planejamento prévio"], ["falta", "Não encontrado no dossiê"],
 ];
 // F207 · blocos que só nascem quando o dossiê traz o documento deles
 const PA_BLOCOS_EXTRA = [
@@ -20694,7 +20698,9 @@ function paDados(c, ks){
   const grupos = {
     qual: fatos.filter(x=>x.grupo==="qualidade"),
     car: fatos.filter(x=>x.grupo==="contrib" && !deRais(x)),
-    cnis: fatos.filter(x=>x.grupo==="vinculo" || x.grupo==="minimo" || (x.grupo==="contrib" && deRais(x))),
+    cnis: fatos.filter(x=>(x.grupo==="vinculo" || x.grupo==="minimo") && !deRais(x)),
+    rais: fatos.filter(x=>deRais(x) || /^CAGED/.test(x.fonte||"")),
+    falta: paFaltas(c, fd).map(t=>({grupo:"falta", est:"warn", texto:t, fonte:"dossiê"})),
     cnpj: fatos.filter(x=>x.grupo==="cnpj"),
     ped: fatos.filter(x=>["processo","beneficios","carta","laudo"].includes(x.grupo)),
     plan: fatos.filter(x=>x.grupo==="idade"),
@@ -20710,7 +20716,13 @@ function paDados(c, ks){
       !gr ? "pend" : gr.vencida && !gr.complementar ? "crit" : gr.vencida ? "warn" : "ok"],
     car: [ct ? `${ct.carencia} de 180` : "—", true, ct ? `${ct.anos} anos e ${ct.meses} meses de tempo pelo CNIS` : "o CNIS não foi lido", ct ? pior(grupos.car) : "pend"],
     cnis: [(n=>n ? `${n} ${n===1?"ponto":"pontos"}` : "sem pendência")(grupos.cnis.filter(x=>x.est!=="info"&&x.est!=="ok").length), false,
-      grupos.cnis.length ? curtoMapa(grupos.cnis[0].texto) : "nenhum indicador nem afastamento lido", pior(grupos.cnis)],
+      grupos.cnis.length ? curtoMapa(grupos.cnis[0].texto) : "nenhum indicador lido", pior(grupos.cnis)],
+    rais: (vs=>{ const al = vs.filter(v=>v.alertas.length).length;
+      return [vs.length ? `${vs.length} ${vs.length===1?"vínculo":"vínculos"}` : "—", false,
+        !vs.length ? "o Emprega Brasil não trouxe RAIS nem CAGED" : al ? `${al} com ponto a conferir (vínculo em aberto ou licença)` : "nenhum vínculo em aberto nem licença",
+        !vs.length ? "pend" : al ? "warn" : "ok"]; })(vinculosRaisCaged(fd)),
+    falta: [(n=>n ? `${n} ${n===1?"item":"itens"}` : "nada")(grupos.falta.length), false,
+      grupos.falta.length ? curtoMapa(grupos.falta[0].texto) : "o dossiê tem os documentos de cada portal", grupos.falta.length ? "warn" : "ok"],
     cnpj: [ativos.length ? `${ativos.length} ${ativos.length===1?"CNPJ":"CNPJs"}` : "nenhum", false,
       ativos.length ? curtoMapa(ativos[0].texto) : grupos.cnpj.length ? "a Redesim não traz CNPJ no CPF" : "a Redesim não foi consultada", ativos.length ? "warn" : "info"],
     ped: [(n=>n ? `${n} ${n===1?"registro":"registros"}` : "nenhum")(grupos.ped.length), false,
@@ -20736,6 +20748,41 @@ function paDados(c, ks){
     return {f, est, selo: est==="crit" && !prazo ? "risco" : est, forte, falta, prazo, ramos};
   }).filter(Boolean).sort((a,b)=>(a.impedido?1:0)-(b.impedido?1:0) || MAPA_ORDEM[a.est]-MAPA_ORDEM[b.est]);
   return {fam, fatos, grupos, BL, gr, ct, fd, g, an, trabalhos};
+}
+// F213 · os vínculos da RAIS e do CAGED juntos, um por empregador e admissão,
+// com o que pede conferência: vínculo sem saída e licença sem remuneração
+function vinculosRaisCaged(fd){
+  const m = new Map(), chave = (raiz, adm) => `${raiz}|${adm||""}`;
+  const pega = (raiz, adm, nome) => { const k = chave(raiz, adm); if(!m.has(k)) m.set(k, {nome, admissao:adm||"", desligamento:"", causa:"", fontes:new Set(), anos:[], alertas:[]}); return m.get(k); };
+  for(const x of fd.caged||[]){ const v = pega(x.raiz, x.admissao, x.nome); v.fontes.add("CAGED"); if(x.desligamento) v.desligamento = x.desligamento; }
+  for(const x of fd.rais||[]){ const v = pega(x.raiz, x.admissao, x.nome); v.fontes.add("RAIS"); v.anos.push(x.ano);
+    if(x.desligamento) v.desligamento = x.desligamento; if(x.causa) v.causa = x.causa; }
+  for(const l of licencasDaRais(fd.rais)){ const v = [...m.values()].find(v=>v.nome===l.nome); if(v) v.alertas.push(`licença sem remuneração de ${l.de} a ${l.ate}`); }
+  const ano = +hoje().slice(0,4);
+  for(const v of m.values()) if(!v.desligamento){ const ult = Math.max(0, ...v.anos.map(Number));
+    if(!ult || ult < ano - 1) v.alertas.unshift(`sem data de saída${ult ? `; última RAIS de ${ult}` : ""}`); }
+  return [...m.values()].sort((a,b)=>isoBr(b.admissao||"")>isoBr(a.admissao||"")?1:-1);
+}
+function tabelaRaisCaged(fd){
+  const vs = vinculosRaisCaged(fd); if(!vs.length) return "";
+  return `<table class="pa-tabela"><thead><tr><th>Empregador</th><th>Admissão</th><th>Saída</th><th>Fonte</th><th>A conferir</th></tr></thead><tbody>
+    ${vs.map(v=>`<tr><td>${esc(v.nome||"—")}</td><td class="mono">${esc(v.admissao||"—")}</td><td class="mono">${esc(v.desligamento||"—")}</td>
+      <td>${esc([...v.fontes].join(" e "))}${v.anos.length ? ` <span class="meio-sub">(${esc(v.anos.sort().join(", "))})</span>` : ""}</td>
+      <td class="${v.alertas.length?"alerta":""}">${esc(v.alertas.join("; ") || "—")}</td></tr>`).join("")}</tbody></table>`;
+}
+// F213 · o que o dossiê NÃO trouxe, para orientar: o que o portal disse que não
+// existe e o que falta porque o portal não foi consultado ou não tinha nada
+function paFaltas(c, fd){
+  const dz = c.dossie || {}, docs = docsDoDossie(c.id), tem = re => docs.some(a=>re.test(a.nome||""));
+  const out = [...new Set(Object.values(dz).flatMap(x=>(x&&x.inexistentes)||[]).map(x=>String(x).split(/[:(]/)[0].trim()).filter(Boolean))]
+    .map(x=>`${x}: o portal informou que não existe`);
+  if(!fd.laudos.length && !tem(/^HC Ribeirao|^Laudos/i)) out.push("Nenhum laudo médico nem relatório médico: pedir ao cliente os documentos médicos atuais");
+  if(!dz.mte && !fd.rais.length && !fd.caged.length) out.push("Sem CTPS, RAIS e CAGED: o Emprega Brasil não foi consultado");
+  if(!dz.hc && !tem(/^HC Ribeirao/i)) out.push("Sem prontuário do HC Ribeirão: o portal não foi consultado");
+  if(!dz.redesim && !fd.redesim) out.push("Sem a consulta de CNPJs: a Redesim não foi consultada");
+  if(!fd.ppps.length && !tem(/^PPP/i)) out.push("Nenhum PPP: se houve atividade especial, pedir ao empregador");
+  if(!fd.processos.length && !tem(/^Processos administrativos/i)) out.push("Nenhuma cópia de pedido administrativo no dossiê");
+  return out;
 }
 function paEscolhidos(cliId, trabalhos){
   if(!_paEsc.has(cliId)) _paEsc.set(cliId, new Set(trabalhos.filter(t=>t.est!=="ok" && !t.impedido).slice(0, 4).map(t=>t.f.chave)));
@@ -20794,6 +20841,33 @@ async function usarNomeCnis(cliId){
   c.nome = v; reindexarCliente(c); aviso("Nome atualizado pelo CNIS ✔");
   montarSidebar(); abrirFicha(cliId); irSubCad("pa");
 }
+// F213 · os trabalhos possíveis moraram no Primeiro atendimento e passaram à
+// Análise de Direito: lá se escolhe o que levar, a partir do que o dossiê mostra
+function painelTrabalhos(c, ks){
+  if(!(docsDoDossie(c.id).length || cnisDe(c)) || _paAnalise.has(c.id)) return "";
+  const d = paDados(c, ks), esc0 = paEscolhidos(c.id, d.trabalhos), sel = _paCartao.get(c.id) || "";
+  const nEsc = d.trabalhos.filter(t=>esc0.has(t.f.chave)).length, nLev = blocosDoPA(d).filter(([b])=>paVai(c.id, b)).length, nBl = blocosDoPA(d).length;
+  const cartao = t => { const k = t.f.chave, on = esc0.has(k), [selo, cls] = PA_SELO[t.selo];
+    return `<li><div class="pa-cartao${sel===k?" sel":""}">
+      <button type="button" class="pa-cartao-bt" aria-pressed="${sel===k}" onclick="paCartao('${c.id}','${k}')">
+        <span class="pa-cartao-topo"><span class="pa-selo ${cls}"><i></i>${selo}</span>${t.prazo ? `<span class="pa-cartao-data crit">${esc(curtoMapa(t.prazo.texto).slice(0, 40))}</span>` : ""}</span>
+        <b>${esc(t.f.rot)}${PA_COD[k] ? ` <small>${PA_COD[k]}</small>` : ""}</b>
+        <span>${esc(curtoMapa(t.forte.fatos[0].texto))}</span>
+        ${t.impedido ? `<span class="pa-falta"><b>Impedimento</b> ${esc(t.impedido)}</span>` : ""}
+        ${t.falta.length ? `<span class="pa-falta"><b>Falta</b> ${esc(t.falta.slice(0, 2).join("; ").toLowerCase())}.</span>` : ""}
+      </button>
+      <label class="pa-levar${on?" on":""}"><input type="checkbox" ${on?"checked":""} onchange="paEscolher('${c.id}','${k}')">Levar à Análise de Direito</label>
+    </div></li>`; };
+  return `<div class="pa pa-na-ad">      <section class="pa-trab pa-trab-ad" aria-labelledby="pa-t-trab">
+        <div class="pa-trab-cab"><h3 id="pa-t-trab">Trabalhos possíveis</h3><span class="meio-sub">${d.trabalhos.length} com sinal · por urgência</span></div>
+        <p class="meio-sub">O sinal indica o que os documentos mostram, não o direito. Marque os que vão à análise; a situação do cliente está no Primeiro atendimento.</p>
+        <ul class="pa-legenda"><li><i class="pa-bola crit"></i>Prazo correndo ou requisito em risco</li><li><i class="pa-bola ok"></i>Requisitos à vista</li><li><i class="pa-bola warn"></i>Falta um dado</li></ul>
+        <ol class="pa-cartoes">${d.trabalhos.map(cartao).join("") || `<li class="meio-sub">O dossiê não traz sinal para nenhuma espécie.</li>`}</ol>
+        <div class="pa-levar-box"><p>${nEsc ? `Ao levar: ${nEsc} ${nEsc===1?"trabalho":"trabalhos"} na Análise de Direito. Da situação, ${nLev===nBl?`os ${nBl} blocos vão`:`${nLev} de ${nBl} blocos vão`} junto.` : "Marque ao menos um trabalho para levar à Análise de Direito."}</p>
+          <button type="button" class="pa-prim" ${nEsc?"":"disabled"} onclick="paIrAnalise('${c.id}')">${nEsc>1 ? `Levar ${nEsc} trabalhos à análise` : "Levar à análise"} →</button></div>
+      </section>
+</div>`;
+}
 function painelPA(c, ks){
   const d = paDados(c, ks), esc0 = paEscolhidos(c.id, d.trabalhos);
   const ab = _paBloco.has(c.id) ? _paBloco.get(c.id) : "qual", sel = _paCartao.get(c.id) || "";
@@ -20832,6 +20906,7 @@ function painelPA(c, ks){
         <span class="pa-det-dir"><span class="meio-sub">${!vai ? "fica só no primeiro atendimento" : para.length ? `vai para ${esc(para.join(", "))}` : "vai à análise"}</span>
         <button type="button" class="pa-levar-bt pa-sw${vai?" on":""}" role="switch" aria-checked="${vai}" onclick="paLevarBloco('${c.id}','${b}')"><i></i>Análise de Direito</button></span></div>
       ${b==="qual" ? paLinhaDoTempo(c, d) : ""}
+      ${b==="rais" ? tabelaRaisCaged(d.fd) : ""}
       ${fs.length ? `<ul class="mapa-lista pa-fatos">${fs.map(fatoLi).join("")}</ul>` : `<p class="meio-sub">O dossiê ainda não traz fato para este bloco.</p>`}
     </section>`; };
   const passo = (n, rot, sub, cur, js) => `<button type="button" class="pa-passo${cur?" cur":""}" ${cur?'aria-current="step"':""} onclick="${js}"><i>${n}</i><span><b>${rot}</b><small>${esc(sub)}</small></span></button>`;
@@ -20853,14 +20928,6 @@ function painelPA(c, ks){
           ${sel ? `<span class="pa-chip">Destacando ${esc((d.trabalhos.find(t=>t.f.chave===sel)||{f:{rot:""}}).f.rot)}<button type="button" aria-label="Mostrar tudo" onclick="paCartao('${c.id}','${sel}')">×</button></span>` : ""}</div>
         <div class="pa-blocos">${blocosDoPA(d).map(bloco).join("")}</div>
         <div class="pa-det-caixa">${det(ab)}</div>
-      </section>
-      <section class="pa-trab" aria-labelledby="pa-t-trab">
-        <div class="pa-trab-cab"><h3 id="pa-t-trab">Trabalhos possíveis</h3><span class="meio-sub">${d.trabalhos.length} com sinal · por urgência</span></div>
-        <p class="meio-sub">O sinal indica o que os documentos mostram, não o direito. Clique num cartão para destacar, na situação, o que pesa nele.</p>
-        <ul class="pa-legenda"><li><i class="pa-bola crit"></i>Prazo correndo ou requisito em risco</li><li><i class="pa-bola ok"></i>Requisitos à vista</li><li><i class="pa-bola warn"></i>Falta um dado</li></ul>
-        <ol class="pa-cartoes">${d.trabalhos.map(cartao).join("") || `<li class="meio-sub">O dossiê não traz sinal para nenhuma espécie.</li>`}</ol>
-        <div class="pa-levar-box"><p>${nEsc ? `Ao levar: ${nEsc} ${nEsc===1?"trabalho":"trabalhos"} na Análise de Direito. Da situação, ${nLev===nBl?`os ${nBl} blocos vão`:`${nLev} de ${nBl} blocos vão`} junto.` : "Marque ao menos um trabalho para levar à Análise de Direito."}</p>
-          <button type="button" class="pa-prim" ${nEsc?"":"disabled"} onclick="paIrAnalise('${c.id}')">${nEsc>1 ? `Levar ${nEsc} trabalhos à análise` : "Levar à análise"} →</button></div>
       </section>
     </div>
   </div>`;
