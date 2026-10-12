@@ -17,7 +17,7 @@ FIX.anexos = [{ id: "a4000000-0000-0000-0000-000000000001", cliente_id: CLI_CHEI
   tamanho: 1000, texto: RESUMO_INSS_TEXTO, paginas: 1, paginas_imagem: [], criado_em: "2026-10-08T12:00:00Z" }];
 // o CNIS já lido, com a contagem gravada pela leitura: 150 contribuições
 // entre 01/2000 e 06/2012, e contribuinte individual hoje
-const CNIS = { em: "2026-10-10", paginas: 3, qtVinculos: 1, nits: [], indicadores: [], competencias: 150,
+const CNIS = { em: "2026-10-10", paginas: 3, qtVinculos: 1, nits: [], indicadores: [], contribSemPerda: 150,
   vinculos: [{ seq: 1, tipo: "Empregado", origem: "FABRICA FICTICIA", inicio: "03/01/2000", fim: "30/06/2012", ultRemun: "06/2012", aberto: false, indicadores: [] }],
   analise: { abertos: [], errosEmp: [], abaixo: [], mesAnt: "09/2026", agora: { tipo: "ci", comp: "09/2026" }, benefAtivos: [], qtComps: 150,
     contagem: { carencia: 150, anos: 12, meses: 6, periodos: [["2000-01", "2012-06"]], foraMinimo: 0 } } };

@@ -123,9 +123,58 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725" };
     /Lei 8\.213\/91, art\. 15/.test(await p.evaluate(() => GRACA_FONTE))
     && /Decreto 3\.048\/99/.test(await p.evaluate(() => GRACA_FONTE)));
 
-  // a competência-limite, não a data: o dia depende de regra não conferida
-  conf("a conta entrega COMPETÊNCIA (MM/AAAA), não data cravada",
+  // a competência-limite e o DIA: a perda é no dia seguinte ao vencimento da
+  // contribuição da competência seguinte ao fim do prazo (art. 15, § 4º, da Lei
+  // 8.213/91 e art. 14 do Decreto 3.048/99), dia 15 ou o dia útil bancário seguinte
+  conf("a conta entrega a competência-limite (MM/AAAA)",
     Object.values(c).every(x => !x.fim || /^\d{2}\/\d{4}$/.test(x.fim)));
+  conf(`empregado: mantida até ${c.empregado.mantidaAte}, perda em ${c.empregado.perda}`,
+    c.empregado.mantidaAte === "2025-05-15" && c.empregado.perda === "2025-05-16" && c.empregado.vencida === true);
+  conf(`facultativo: mantida até ${c.facultativo.mantidaAte}`, c.facultativo.mantidaAte === "2025-01-15" && c.facultativo.perda === "2025-01-16");
+  conf(`24 meses: mantida até ${c.mais120.mantidaAte}`, c.mais120.mantidaAte === "2026-05-15" && c.mais120.perda === "2026-05-16");
+  const perdas = await p.evaluate(() => ["07/2024", "12/2024", "09/2023", "12/2020"].map(x => perdaDaQualidade(x)));
+  conf(`dia 15 no domingo passa à segunda (${perdas[0].mantidaAte})`, perdas[0].mantidaAte === "2024-09-16" && perdas[0].perda === "2024-09-17");
+  conf(`dia 15 no sábado passa à segunda (${perdas[1].mantidaAte})`, perdas[1].mantidaAte === "2025-02-17" && perdas[1].perda === "2025-02-18");
+  conf(`dia 15 no feriado nacional passa ao dia útil seguinte (${perdas[2].mantidaAte})`, perdas[2].mantidaAte === "2023-11-16" && perdas[2].perda === "2023-11-17");
+  conf(`dia 15 na segunda de carnaval passa à quarta de cinzas (${perdas[3].mantidaAte})`, perdas[3].mantidaAte === "2021-02-17" && perdas[3].perda === "2021-02-18");
+
+  // § 1º: as mais de 120 contribuições contam sem perda da qualidade no meio
+  // (IN 128, art. 184, § 4º); o benefício mantém a qualidade sem somar
+  const seguidas = await p.evaluate(() => {
+    const m = pares => new Map(pares.map(([k, conta, fac]) => [k, { conta, fac: !!fac }]));
+    const meses = (a, b, conta, fac) => { const xs = []; percorrerMeses(a, b, k => xs.push([k, conta, fac])); return xs; };
+    return {
+      lacuna: contarSemPerda(m([...meses("2010-01", "2010-12", true), ...meses("2012-06", "2012-08", true)])),
+      noPrazo: contarSemPerda(m([...meses("2010-01", "2010-12", true), ...meses("2012-01", "2012-03", true)])),
+      beneficio: contarSemPerda(m([...meses("2010-01", "2010-06", true), ...meses("2010-07", "2013-06", false), ...meses("2013-07", "2013-09", true)])),
+      facLonge: contarSemPerda(m([...meses("2015-01", "2015-03", true, true), ...meses("2015-11", "2015-12", true)])),
+      facPerto: contarSemPerda(m([...meses("2015-01", "2015-03", true, true), ...meses("2015-10", "2015-12", true)])),
+      mais120: contarSemPerda(m([...meses("2000-01", "2010-01", true), ...meses("2011-10", "2011-12", true)])),
+    };
+  });
+  conf(`a lacuna maior que a graça zera a conta (${seguidas.lacuna})`, seguidas.lacuna === 3);
+  conf(`a lacuna de 12 meses ainda está na graça (${seguidas.noPrazo})`, seguidas.noPrazo === 15);
+  conf(`o benefício mantém a qualidade sem somar (${seguidas.beneficio})`, seguidas.beneficio === 9);
+  conf(`depois do facultativo, a graça é de 6 meses (${seguidas.facLonge} e ${seguidas.facPerto})`, seguidas.facLonge === 2 && seguidas.facPerto === 6);
+  conf(`com mais de 120, a lacuna de 20 meses não zera (${seguidas.mais120})`, seguidas.mais120 === 124);
+
+  // § 2º da IN 128, art. 184: a competência abaixo do mínimo não abre a graça;
+  // complementada (art. 19-E do Decreto), leva a graça adiante
+  const abx = await p.evaluate(() => calcularGraca([{ tipo: "Empregado ou Agente Público", origem: "X", inicio: "01/01/2020", fim: "15/03/2024" }],
+    40, false, [{ comp: "03/2024", valor: 1000, minimo: 1412 }]));
+  conf(`a competência abaixo do mínimo recua a graça (${abx.ultima}, mantida até ${abx.mantidaAte})`,
+    abx.ultima === "02/2024" && abx.mantidaAte === "2025-04-15" && abx.perda === "2025-04-16");
+  // o contribuinte individual com lacuna: o recuo para no último mês contado,
+  // e não no mês vazio logo antes da competência abaixo do mínimo
+  const ci = await p.evaluate(() => {
+    const vs = [{ tipo: "Contribuinte Individual", origem: "RECOLHIMENTO", inicio: "01/01/2020", fim: "30/06/2020" }];
+    const abaixo = [{ comp: "06/2020", valor: 500, minimo: 1045 }];
+    return [calcularGraca(vs, 10, false, abaixo, [["2020-01", "2020-02"]]).ultima, calcularGraca(vs, 10, false, abaixo).ultima];
+  });
+  conf(`com lacuna, o recuo vai ao último mês contado (${ci[0]}; sem a contagem, ${ci[1]})`, ci[0] === "02/2020" && ci[1] === "05/2020");
+  conf(`e a complementação leva até ${abx.complementar && abx.complementar.mantidaAte}`,
+    abx.complementar && abx.complementar.comp === "03/2024" && abx.complementar.mantidaAte === "2025-05-15"
+    && abx.premissas.some(x => /03\/2024 ficou abaixo do mínimo e só conta complementada; complementada, a qualidade vai até 15\/05\/2025/.test(x)));
 
   // aritmética de competência na virada do ano
   const vira = await p.evaluate(() => [competenciaMais("11/2024", 12), competenciaMais("12/2024", 1),
@@ -183,14 +232,14 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725" };
   await p.waitForTimeout(800);
   await p.waitForTimeout(300);
   const comCnis = await p.innerText(".conta-cx");
-  conf(`com o CNIS lido, a conta aparece (${JSON.stringify((comCnis.match(/Período de graça até \d{2}\/\d{4}/) || [""])[0])})`,
-    /Período de graça até \d{2}\/\d{4}/.test(comCnis));
+  conf(`com o CNIS lido, a conta aparece (${JSON.stringify((comCnis.match(/Qualidade mantida até \d{2}\/\d{2}\/\d{4}/) || [""])[0])})`,
+    /Qualidade mantida até \d{2}\/\d{2}\/\d{4}/.test(comCnis) && /(perda|perdida) em \d{2}\/\d{2}\/\d{4} · \d+ meses a partir de \d{2}\/\d{4}, até a competência \d{2}\/\d{4}/.test(comCnis));
   conf("com as premissas listadas, uma a uma",
     (await p.evaluate(() => document.querySelectorAll(".conta-prem li").length)) >= 1);
   conf("e a fonte conferida, nomeada no rodapé",
     /Lei 8\.213\/91, art\. 15/.test(comCnis) && /conferidos no Planalto/.test(comCnis));
-  conf("a tela avisa que o DIA depende de regra do Decreto, e entrega a competência",
-    /art\. 14 do Decreto 3\.048\/99/.test(comCnis) && /competência, não a data/.test(comCnis));
+  conf("a tela explica o DIA da perda pelo art. 14 do Decreto",
+    /art\. 14 do Decreto 3\.048\/99/.test(comCnis) && /dia 15 ou o dia útil seguinte/.test(comCnis));
   conf("e diz que a conclusão é de quem atende", /quem conclui é você/.test(comCnis));
   conf("tem a ligação para a calculadora do site interno",
     await p.$('.conta-acao a[href*="advprevidenciaria"]'));

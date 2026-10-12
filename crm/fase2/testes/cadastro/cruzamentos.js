@@ -28,7 +28,7 @@ FIX.anexos = [
 ];
 // o CNIS lido: só dois dos cinco vínculos do CAGED, e a conta até 06/2026
 const VINC = (origem, codigo, inicio) => ({ tipo: "Empregado", origem, codigo, inicio, fim: "", ultRemun: "06/2026", aberto: true, indicadores: [] });
-const CNIS = { em: "2026-10-10", paginas: 3, qtVinculos: 3, nits: [], indicadores: [], competencias: 200,
+const CNIS = { em: "2026-10-10", paginas: 3, qtVinculos: 3, nits: [], indicadores: [], contribSemPerda: 200,
   vinculos: [VINC("EVENTOS FICTICIOS", "33.444.555/0001-90", "11/11/2000"), VINC("INDUSTRIA FICTICIA", "11.222.333/0001-44", "15/04/2024"),
     VINC("TRANSPORTADORA ILUSORIA", "66.777.888/0001-11", "03/02/2025")],
   analise: { abertos: [], errosEmp: [], abaixo: [], mesAnt: "09/2026", agora: { tipo: "sem", ultima: { comp: "06/2026", tipo: "Empregado" } },

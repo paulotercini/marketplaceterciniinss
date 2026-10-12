@@ -8,7 +8,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const { FIX, SESSAO, CLI_CHEIO } = require("./fixturas");
-const { laudoPmf, cartaNova, processo, agendamento } = require("./fixt-dossie");
+const { laudoPmf, cartaNova, processo, agendamento, comunicacaoIndeferimento } = require("./fixt-dossie");
 const SUPA = "https://ficticio.supabase.co";
 
 const br = d => d.toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
@@ -23,14 +23,14 @@ const AN = (n, nome, texto) => ({ id: `a3000000-0000-0000-0000-00000000000${n}`,
 FIX.anexos = [
   AN(1, "Laudos · Laudo medico pericial.pdf", laudoPmf({ nb: NB, exame: dia(-20), did: "02/09/2025", dii: dia(-35), dcb: dia(40) })),
   AN(2, "Meu INSS · Carta de concessao.pdf", cartaNova({ nb: "180.123.456-0", der: mes(-117, 14), concessao: mes(-116, 10), dib: mes(-117, 14), dip: mes(-117, 14), rmi: "1.744,88" })),
+  // o pedido de prorrogação indeferido; os despachos da cópia não entram no mapa
   AN(3, "Processos · Pedido de prorrogacao.pdf", processo({ protocolo: "5566778899", servico: "Pedido de Prorrogação de Benefício por Incapacidade",
-    status: "Pendente", entrada: dia(-6), nb: NB,
-    despachos: [[dia(-5), agendamento(dia(-5), dia(20), "07:00")],
-      [dia(-3), ["Prezado(a) Sr.(a), para dar continuidade ao pedido, apresente o relatório médico atualizado em 'Cumprir Exigência'.",
-        "O documento deve ser enviado em até 30 (trinta) dias, sob pena de conclusão do pedido."]]] })),
+    status: "Concluída", entrada: dia(-15), atualizado: dia(-5), nb: NB,
+    despachos: [[dia(-12), agendamento(dia(-12), dia(-6), "07:00")]],
+    comunicacao: comunicacaoIndeferimento("700.123.456-7", dia(40)) })),
 ];
 // o CNIS já lido: emprego em curso e uma competência abaixo do mínimo
-const CNIS = { em: "2026-10-10", paginas: 4, qtVinculos: 1, nits: [], indicadores: [], competencias: 130,
+const CNIS = { em: "2026-10-10", paginas: 4, qtVinculos: 1, nits: [], indicadores: [], contribSemPerda: 130,
   vinculos: [{ seq: 1, tipo: "Empregado", origem: "FABRICA FICTICIA", codigo: "11.222.333/0001-44", inicio: "01/02/2020", fim: "",
     ultRemun: comp(-1), aberto: true, indicadores: [] }],
   analise: { abertos: [], errosEmp: [], abaixo: [{ comp: "03/2024", valor: 1000, minimo: 1412, tipo: "Contribuinte individual", origem: "" }],
@@ -92,10 +92,11 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   let rs = await ramos();
   conf("a raiz é a incapacidade, com a espécie do caso", /Incapacidade/.test(await p.textContent(".mapa-raiz")) && /Auxílio por incapacidade temporária/.test(await p.textContent(".mapa-raiz")));
   conf("os prazos vêm primeiro, depois os quatro pontos da incapacidade e os outros fatos", rs.map(r => r.id).join(",") === "prazos,inc_dii,inc_carencia,inc_qualidade,inc_pericia,outros");
-  conf("o ramo dos prazos é vermelho e já abre, com a exigência e a perícia", rs[0].est === "est-crit" && rs[0].aberto
-    && /Exigência de/.test(await p.textContent(".mapa-fatos")) && /Perícia agendada para/.test(await p.textContent(".mapa-fatos")));
-  conf("a exigência e a perícia trazem a ação e o documento de origem", (await p.$$(".mapa-fatos .mapa-lista li button.tl-bt")).length === 2
-    && (await p.$$(".mapa-fatos .mapa-lista .adr-link")).length === 2);
+  const fxPrazos = await p.textContent(".mapa-fatos");
+  conf("o ramo dos prazos é vermelho e já abre, com o recurso contado da conclusão", rs[0].est === "est-crit" && rs[0].aberto
+    && /Recurso ao CRPS até/.test(fxPrazos) && /pedido concluído em/.test(fxPrazos) && !/Perícia agendada/.test(fxPrazos));
+  conf("o recurso traz a ação e o documento de origem", (await p.$$(".mapa-fatos .mapa-lista li button.tl-bt")).length === 1
+    && (await p.$$(".mapa-fatos .mapa-lista .adr-link")).length === 1);
   const r = id => rs.find(x => x.id === id) || {};
   // onda 5 · o laudo reconhece a incapacidade, mas sem relatório médico no
   // dossiê o ramo fica em atenção: é o que falta para a próxima perícia
@@ -155,7 +156,8 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   await p.waitForSelector("#ad-novo[open] #ad-contexto");
   const ctxto = await p.inputValue("#ad-contexto");
   conf("o formulário da análise abre com o mapa, ramo a ramo, e a anotação", /^Mapa do dossiê, Incapacidade\./.test(ctxto)
-    && /Prazos \(prazo ou impedimento\): Exigência de/.test(ctxto) && /Anotação: complementar a competência de 03\/2024/.test(ctxto));
+    && /Prazos \(prazo ou impedimento\): Pedido de Prorrogação de Benefício por Incapacidade de .*: indeferido/.test(ctxto)
+    && /Anotação: complementar a competência de 03\/2024/.test(ctxto));
   conf("levar o mapa não grava a análise sem o clique", !escritos.some(e => /analises_direito/.test(e.u)));
   // a foto do mapa, para quem confere a tela: MAPA_FOTO=<pasta> node mapa.js
   if (process.env.MAPA_FOTO) {

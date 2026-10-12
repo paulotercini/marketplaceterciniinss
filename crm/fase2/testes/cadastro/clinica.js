@@ -85,6 +85,9 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   let fx = await p.textContent(".mapa-fatos");
   conf("o ramo da DII traz a linha do tempo clínica", /30\/05\/2026, exame: TOMOGRAFIA COMPUTADORIZADA - PELVE; Seguimento de sarcoma/.test(fx)
     && /11\/05\/2024, internação: internação de 11\/05\/2024 a 22\/06\/2024; diagnóstico principal/.test(fx));
+  const clin = await p.$$eval(".mapa-fatos .mapa-lista li", ls => ls.map(l => l.textContent.replace(/\s+/g, " ").trim()).filter(t => /registro clínico em/.test(t)));
+  conf("o registro mais antigo fica fixo no topo da linha clínica, e o mais recente logo abaixo", clin.length === 2
+    && /^Primeiro registro clínico em 11\/05\/2024, internação/.test(clin[0]) && /^Último registro clínico em 30\/05\/2026, exame/.test(clin[1]));
   conf("o relatório antigo pede um novo para a perícia", /O relatório médico mais recente é de 21\/06\/2024, com mais de 90 dias: pedir relatório atualizado para a perícia/.test(fx)
     && await p.$eval('.mapa-ramo[data-ramo="inc_dii"]', e => e.classList.contains("est-warn")));
   conf("a área médica aparece com o agente da base", /área de membro inferior; o pedido ao Claude leva o agente medico-membro-inferior/.test(fx));
