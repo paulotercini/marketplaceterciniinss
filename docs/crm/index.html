@@ -4246,7 +4246,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.43</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.44</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -21369,6 +21369,7 @@ const ADM_CALC = {
       ${t.especial ? `<div><small>Especial convertido (×${x.sx==="F"?"1,20":"1,40"} até 13/11/2019)</small><b>${tempoFmt(t.convertido)}</b></div>` : ""}
       <div><small>Total para tempo comum</small><b>${tempoFmt(t.comum)}</b></div>
       <div><small>Em 13/11/2019</small><b>${tempoFmt(t.comum2019)}</b></div></div>
+      ${x.ct ? `<p class="meio-sub">Pelo CNIS, por competência: ${x.ct.anos} anos e ${x.ct.meses} meses${x.ct.foraMinimo ? `, fora ${x.ct.foraMinimo} ${x.ct.foraMinimo===1?"competência":"competências"} abaixo do mínimo sem complementação (art. 29 da EC 103)` : ""}; as linhas contam o calendário do vínculo.</p>` : ""}
       ${t.aberto ? `<p class="meio-sub">${t.aberto===1?"Um período sem data de fim conta":`${t.aberto} períodos sem data de fim contam`} até hoje.</p>` : ""}
       ${t.semData ? `<p class="meio-sub">${t.semData===1?"Uma linha":`${t.semData} linhas`} sem data de início, fora da conta.</p>` : ""}`; },
   idade(c, x){ if(x.idade==null) return admUl([admLi("warn", `Sem data de nascimento na ficha: preencha na Identificação.`)]);
