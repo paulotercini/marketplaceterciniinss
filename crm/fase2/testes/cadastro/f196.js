@@ -29,7 +29,7 @@ const RAIS = [
 const AN = (n, nome, texto) => ({ id: `a9000000-0000-0000-0000-00000000000${n}`, cliente_id: CLI_CHEIO, caso_id: null, origem: "dossie", nome,
   caminho: `dossie/52998224725/${n}.pdf`, tipo: "application/pdf", tamanho: 1000, texto, paginas: 3, paginas_imagem: [], criado_em: "2026-10-08T12:00:00Z" });
 FIX.anexos = [AN(1, "CTPS RAIS CAGED · Extrato RAIS.pdf", RAIS)];
-const CNIS = { em: "2026-10-08", paginas: 3, qtVinculos: 1, nits: [], indicadores: [], contribSemPerda: 104,
+const CNIS = { em: "2026-10-08", nome: "Fulana Ficticia de Tal Souza", paginas: 3, qtVinculos: 1, nits: [], indicadores: [], contribSemPerda: 104,
   vinculos: [{ seq: 1, tipo: "Empregado", origem: "CONFECCOES FICTICIAS LTDA", codigo: "11.444.777/0001-61", inicio: "01/02/2011", fim: "30/09/2019",
     ultRemun: "09/2019", aberto: false, indicadores: [] }],
   analise: { abertos: [], errosEmp: [], abaixo: [], mesAnt: "09/2026", agora: { tipo: "sem", ultima: { comp: "09/2019", tipo: "Empregado" } },
@@ -81,6 +81,8 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
     car: document.querySelector(".pa-bloco:nth-child(2) .pa-bloco-val").textContent, tl: !!document.querySelector(".pa-tl"),
     lic: !!document.querySelector(".pa-tl-lic"), aba: [...document.querySelectorAll(".sub-menu button")].some(b => /Primeiro atendimento/.test(b.textContent)) }));
   conf("a aba Primeiro atendimento existe e abre o painel com os quatro passos", pa.aba && pa.passos.join("|") === "Identificação|Primeiro atendimento|Análise de Direito|Documentos");
+  conf("o nome diferente do CNIS aparece no primeiro atendimento", /Nome diferente do CNIS/.test(await p.textContent(".pa")) && /Fulana Ficticia de Tal Souza/.test(await p.textContent(".pa-nome-dif")));
+  conf("nome igual, com acento e caixa diferentes, não gera aviso", await p.evaluate(() => nomeIgual("José  da SILVA", "jose da silva") && !nomeIgual("Jose Silva", "Jose da Silva")));
   conf("a situação tem os seis blocos do desenho", pa.blocos.join("|") === "Qualidade de segurado|Carência|CNIS e RAIS|CNPJs do titular|Pedidos ao INSS|Planejamento prévio");
   conf(`os trabalhos possíveis saem do dossiê (${pa.cartoes.join(", ")})`, pa.cartoes.length > 0);
   conf("a carência mostra a contagem do CNIS", /^104 de 180$/.test(pa.car.trim()));
