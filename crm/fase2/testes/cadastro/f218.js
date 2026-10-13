@@ -24,7 +24,7 @@ FIX.lembretes = [
     anotacoes: [{ data: "2024-02-01", inicial: "P", texto: "Só aposenta por idade em 02/2027 se mantiver as contribuições." },
       { data: "2026-05-18", inicial: "P", texto: "Revisto: aposentadoria possível em 10/12/2030 na regra do pedágio." }] } }),
   // 3 · sem data em lugar nenhum, lembrete além de um ano
-  L("l1000000-0000-0000-0000-000000000003", CLI_VAZIO, { titulo: "Acerto de CNIS", proximo_em: em(900), detalhes: { todo_task_id: "t3", beneficio: "Acerto de CNIS", checklist: [], anotacoes: [{ data: "2025-01-01", inicial: "A", texto: "Conferir o CNIS em 2027." }] } }),
+  L("l1000000-0000-0000-0000-000000000003", CLI_VAZIO, { titulo: "Acerto de CNIS", proximo_em: em(900), detalhes: { todo_task_id: "t3", beneficio: "Acerto de CNIS", checklist: [], anotacoes: [{ data: "2025-01-01", inicial: "A", texto: "Conferir o CNIS em 2027." }, { data: "2025-06-01", inicial: "P", texto: "Aposentou por idade em 01/04/2021 e quer revisar." }] } }),
 ];
 FIX.clientes[1] = { ...FIX.clientes[1], campos: { ...(FIX.clientes[1].campos || {}), triagem: { atendimento: { em: "2026-01-01" } } } };
 
@@ -69,7 +69,7 @@ FIX.clientes[1] = { ...FIX.clientes[1], campos: { ...(FIX.clientes[1].campos || 
   const l1 = lidas.find(x => x.id === "1"), l2 = lidas.find(x => x.id === "2"), l3 = lidas.find(x => x.id === "3");
   conf("1 a data provável sai do checklist, e o aniversário não é lida como data", l1.dd && l1.dd.data === "2029-03-15" && l1.dd.fonte === "checklist do To Do");
   conf("2 sem checklist, a data vem da anotação mais recente que fala em aposentar", l2.dd && l2.dd.data === "2030-12-10" && /anotação de 18\.05\.2026/.test(l2.dd.fonte));
-  conf("3 sem data em lugar nenhum, o card diz que não tem", l3.dd === null);
+  conf("3 sem data em lugar nenhum, o card diz que não tem; a data anterior à anotação não é a do direito", l3.dd === null);
   conf("4 a etapa: lembrete vencido é pronto para protocolar; o resto, monitorando", l2.et === "pronto" && l1.et === "monitorando" && l3.et === "monitorando");
   conf("5 o horizonte: 40 dias é até 90; vencido; 900 dias é depois", l1.h === "90" && l2.h === "vencido" && l3.h === "depois");
 
