@@ -3625,6 +3625,13 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .adm-tot{display:flex;flex-wrap:wrap;gap:12px 24px;margin:0 0 8px}.adm-tot small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#686660}.adm-tot b{font-size:15px}
 .adm-nota{margin:0 0 12px}.adr-modulos ul{margin:2px 0 0;padding-left:18px}
 @media (prefers-reduced-motion:reduce){.ben-chip,.ben-opc{transition:none}.ben-chip:active,.ben-opc:active{transform:none}}
+/* F218 · o card da aposentadoria futura */
+.card-apos-cab{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:6px 0 4px;padding:8px 10px;background:var(--fundo);border-radius:8px}
+.card-direito{font-size:13px}.card-direito small{color:var(--cinza)}.card-direito .lembrar-caixa{margin-left:8px}.card-acoes{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto;align-items:center}
+.card-arquivar{font:inherit;font-size:12px;padding:3px 6px;border:1px solid var(--borda);border-radius:6px;background:#fff;color:var(--cinza)}
+.card-etapa.et-pronto{background:#FBEBD0;color:#8F5400}.card-etapa.et-atendimento,.card-etapa.et-analisado{background:#E6F0EF;color:#0E5C58}.card-etapa.et-monitorando{background:var(--azul-fundo);color:var(--azul-escuro)}.card-etapa.et-caso{background:#E6F0EF;color:#0E5C58}
+.card-check{list-style:none;margin:4px 0 0;padding:0;width:100%;font-size:12.5px;columns:2;column-gap:16px}.card-check li{break-inside:avoid;padding:1px 0}.card-check li.feito{color:var(--cinza)}
+.cartao.card-apos{cursor:pointer}.cartao.card-apos .meta{flex-wrap:wrap;white-space:normal;row-gap:3px}
 .pa{background:#F3F2EE;padding:18px;border-radius:14px;--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-warn:#8F5400;--pa-ok:#1B6E38;--pa-info:#3A6491;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660;color:#121212;font-size:13px;line-height:1.45}
 .pa .mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-weight:500}
 .pa-passos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--pa-b);margin-bottom:14px}
@@ -4246,7 +4253,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.44</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.45</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5955,7 +5962,7 @@ function montarSidebar(){
       + item("minhas","👤 Atribuídas a mim",dd.minhas[2]);
     const visiveis = ["escritorio","inss","conselho","judicial","peticao_inicial","aposentadoria_futura"];
     const rotV = {conselho:"🖥 Conselho de Recursos", peticao_inicial:"💡 Petições iniciais", aposentadoria_futura:"🙏 Aposentadorias futuras"};
-    const nFase = f => casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
+    const nFase = f => f==="aposentadoria_futura" ? cardsApos().length : casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);   // F218
     document.getElementById("grupo-fases").innerHTML = ordemDasFases().filter(([f])=>visiveis.includes(f))
       .map(([f,rot])=>item("fase:"+f, rotV[f]||rot, nFase(f))).join("");
     // o que já estava montado em Visões vai inteiro para o "Mais", menos as duas da vista
@@ -7828,6 +7835,7 @@ function render(){
   }
   if(visao==="direito") return renderDireito();
   if(visao==="dashboard") return renderDash();
+  if(visao==="fase:aposentadoria_futura") return renderCardsApos();   // F218 · os cards, não os casos da fase
   if(visao==="agenda") return renderAgenda();
   if(visao==="calendario") return renderCalendario();
   if(visao==="particulares") return renderParticulares();
@@ -18400,6 +18408,151 @@ async function marcarDesemprego(cliId, ligado){
   repintarFicha();
 }
 
+// ══════════════════════════════════════════════════════════════════════════
+// F218 · O CARD DA APOSENTADORIA FUTURA (onda 1 da integração do atendimento)
+// ══════════════════════════════════════════════════════════════════════════
+// O acervo (404 cards ativos em 12.10.2026) nasce do To Do e já traz a
+// análise feita: a data provável da aposentadoria no checklist e o próximo
+// lembrete na data da tarefa. A sincronização substitui `detalhes` a cada
+// rodada, e por isso o que o CRM grava no card vive na coluna `crm`
+// (schema_lembretes_crm.sql): etapa, data do direito confirmada, pré-caso e
+// análise ligados, motivo do arquivamento. A data provável vem, nesta
+// ordem, do que o CRM gravou, do checklist do To Do e da anotação mais
+// recente que fala em aposentar numa data.
+const APOS_ETAPAS = [["monitorando","Monitorando"],["atendimento","Em atendimento"],["analisado","Analisado"],["pronto","Pronto para protocolar"],["caso","Virou caso"],["arquivado","Arquivado"]];
+const APOS_MOTIVOS = ["Sem direito","Desistiu","Não voltou","Já aposentado","Outro"];
+const cardCrm = l => (l && l.crm && typeof l.crm==="object") ? l.crm : {};
+const ehCardApos = l => !!l && l.tipo==="aposentadoria_futura";
+const cardsApos = () => (D.lembretes||[]).filter(l=>ehCardApos(l) && l.ativo!==false);
+const rotEtapaCard = e => (APOS_ETAPAS.find(x=>x[0]===e)||[e,e])[1];
+// dd/mm/aaaa ou mm/aaaa, de 2013 em diante, em ISO; a data de nascimento fica de fora
+function dataFuturaNoTexto(s){
+  let m = /(\d{2})\/(\d{2})\/(20[1-6]\d)/.exec(s||"");
+  if(m && +m[3] >= 2013 && +m[2] >= 1 && +m[2] <= 12) return `${m[3]}-${m[2]}-${m[1]}`;
+  m = /(?:^|[^\d\/])(\d{2})\/(20[1-6]\d)(?!\d)/.exec(s||"");
+  if(m && +m[2] >= 2013 && +m[1] >= 1 && +m[1] <= 12) return `${m[2]}-${m[1]}-01`;
+  return null;
+}
+function dataDireitoDoCard(l){
+  const crm = cardCrm(l);
+  if(crm.data_direito) return {data: crm.data_direito, fonte: crm.data_fonte || "informada no CRM", crm: true};
+  const d = l.detalhes||{};
+  const itens = (d.checklist||[]).filter(i=>!/anivers|nascim/i.test(i.texto||"")).map(i=>({i, data: dataFuturaNoTexto(i.texto)})).filter(x=>x.data);
+  const pref = itens.find(x=>/aposent|direito|idade|tempo|data|regra|pontos|ped[áa]gio/i.test(x.i.texto)) || itens[0];
+  if(pref) return {data: pref.data, fonte: "checklist do To Do"};
+  for(const a of (d.anotacoes||[]).slice().sort((p, q)=>(q.data||"") < (p.data||"") ? -1 : 1)){
+    const m = /(aposent\w*|direito|ped[áa]gio|pontos|regra|idade)[^.;\n]{0,80}?(\d{2}\/\d{2}\/20[1-6]\d|(?:^|[^\d\/])\d{2}\/20[1-6]\d(?!\d))/i.exec(a.texto||"");
+    if(m){ const data = dataFuturaNoTexto(m[2]); if(data) return {data, fonte: `anotação de ${fmt(a.data)}`}; }
+  }
+  return null;
+}
+function etapaDoCard(l){
+  const crm = cardCrm(l); if(crm.etapa) return crm.etapa;
+  if(crm.analise_id) return "analisado";
+  if(crm.precaso_id) return "atendimento";
+  return l.proximo_em && l.proximo_em <= hoje() ? "pronto" : "monitorando";
+}
+function horizonteDoCard(l){
+  const h = hoje(), p = l.proximo_em; if(!p) return "sem";
+  return p < h ? "vencido" : p <= maisDiasISO(h, 90) ? "90" : p <= maisDiasISO(h, 365) ? "ano" : "depois";
+}
+const especieDoCard = l => /^aposentadoria futura$/i.test(String(l.titulo||"").trim()) ? "" : String(l.titulo||"").trim();
+// grava só a coluna crm (e o que vier em extra): detalhes é do To Do
+async function cardGravar(lid, muda, extra){
+  const l = (D.lembretes||[]).find(x=>x.id===lid); if(!l) return false;
+  const crm = {...cardCrm(l)}; muda(crm);
+  try{ await api(`/rest/v1/lembretes?id=eq.${lid}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({crm, ...(extra||{})})}); }
+  catch(e){ aviso(/\bcrm\b|42703|PGRST204/.test(String(e.message||e)) ? "Rode o crm/fase2/schema_lembretes_crm.sql no Supabase — falta a coluna 'crm' em lembretes" : "Não consegui guardar o card — tente de novo"); return false; }
+  l.crm = crm; Object.assign(l, extra||{}); return true;
+}
+async function cardDataDireito(lid, v){
+  if(!v) return;
+  if(await cardGravar(lid, c=>{ c.data_direito = v; c.data_fonte = "informada no CRM"; })){ aviso(`Direito provável em ${fmt(v)} ✔`, false); repintarFicha(); }
+}
+async function arquivarCard(lid, motivo){
+  if(!motivo) return;
+  if(!await cardGravar(lid, c=>{ c.etapa = "arquivado"; c.motivo = motivo; c.em = hoje(); c.quem = eu.id; }, {ativo:false})) return;
+  D.lembretes = (D.lembretes||[]).filter(l=>l.ativo!==false);
+  aviso(`Card arquivado: ${motivo}`, false);
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto); else render();
+}
+// o atendimento nasce do card: o pré-caso fica ligado a ele e a ficha abre na Identificação, em tela cheia
+async function abrirAtendimentoDoCard(cliId, lid){
+  const c = D.cliPorId.get(cliId), l = (D.lembretes||[]).find(x=>x.id===lid); if(!c || !l) return;
+  let pc = precasosDe(c).find(p=>p.lembrete_id===lid && !p.so_lembrete);
+  if(!pc){
+    pc = {id:"pc_"+Date.now().toString(36), especie:especieDoCard(l), natureza:"", marc:{}, honorarios:"", quem:eu.id, em:hoje(), lembrete_id:lid};
+    if(!await gravarPrecasos(cliId, [...precasosDe(c), pc])) return;
+  }
+  await cardGravar(lid, x=>{ x.precaso_id = pc.id; if(!x.etapa || x.etapa==="monitorando" || x.etapa==="pronto") x.etapa = "atendimento"; });
+  _atendAberto.add(cliId); abaAtiva = 0; subCad = "identificacao"; guardar("crm_subcad","identificacao");
+  repintarFicha();
+}
+// gera o caso de um card do To Do: escolhe a espécie no catálogo, o pré-caso
+// nasce ligado ao card, o caso sai por gerarCasoDoPre e o card se desliga
+function gerarCasoDoCard(cliId, lid){
+  const c = D.cliPorId.get(cliId), l = (D.lembretes||[]).find(x=>x.id===lid); if(!c || !l) return;
+  const pcL = precasosDe(c).find(p=>p.lembrete_id===lid);
+  if(pcL && pcL.especie) return gerarCasoDoPreECard(cliId, pcL.id, lid);
+  abrirCatalogoEspecies(l.titulo||"aposentadoria futura", {}, async (cod, chave, livre)=>{
+    let corpo;
+    if(cod){ const nome = (chave && nomeDaSubespecie(chave)) || nomeDaEspecie(cod); corpo = {especie:nome, cod, sub:(chave && chave!==cod) ? chave : null}; }
+    else { const nome = String(livre||"").trim(); if(!nome) return aviso("Escreva o nome do pedido"); corpo = {especie:nome, cod:null, sub:null}; }
+    fecharCaixa();
+    const pc = pcL ? {...pcL, ...corpo} : {id:"pc_"+Date.now().toString(36), ...corpo, natureza:"", marc:{}, honorarios:"", quem:eu.id, em:hoje(), lembrete_id:lid};
+    const pcs = pcL ? precasosDe(c).map(p=>p.id===pcL.id ? pc : p) : [...precasosDe(c), pc];
+    if(!await gravarPrecasos(cliId, pcs)) return;
+    await gerarCasoDoPreECard(cliId, pc.id, lid);
+  });
+}
+async function gerarCasoDoPreECard(cliId, pcId, lid){
+  const antes = (D.casosDoCliente.get(cliId)||[]).length;
+  await gerarCasoDoPre(cliId, pcId);
+  const ks = D.casosDoCliente.get(cliId)||[]; if(ks.length <= antes) return;   // o gerar avisou o que faltou
+  await cardGravar(lid, x=>{ x.etapa = "caso"; x.precaso_id = pcId; x.caso_id = ks[ks.length-1].id; x.em = hoje(); x.quem = eu.id; }, {ativo:false});
+  D.lembretes = (D.lembretes||[]).filter(l=>l.ativo!==false);
+  montarSidebar();
+}
+// o cabeçalho do card na aba Lembretes: etapa, data provável com a fonte, ações e o checklist do To Do
+function cabCard(l, c){
+  if(!ehCardApos(l)) return "";
+  const dd = dataDireitoDoCard(l), et = etapaDoCard(l), crm = cardCrm(l), d = l.detalhes||{}, cl = d.checklist||[];
+  const pcLig = crm.precaso_id && precasosDe(c).find(p=>p.id===crm.precaso_id);
+  return `<div class="card-apos-cab" data-lemb="${l.id}">
+    <span class="chip card-etapa et-${et}">${esc(rotEtapaCard(et))}</span>
+    <span class="card-direito">${dd ? `Direito provável em <b>${fmt(dd.data)}</b> <small>(${esc(dd.fonte)})</small>` : `<b>Sem data provável</b> <small>nem no checklist nem nas anotações</small>`}
+      <label class="lembrar-caixa">corrigir <input type="date" value="${esc(dd && dd.crm ? dd.data : "")}" onchange="cardDataDireito('${l.id}',this.value)"></label></span>
+    <span class="card-acoes">
+      ${et!=="caso" ? `<button class="btn-mini" onclick="abrirAtendimentoDoCard('${c.id}','${l.id}')" title="abre o atendimento ligado a este card, na Identificação em tela cheia">${pcLig ? "Continuar o atendimento" : "Abrir atendimento"}</button>` : ""}
+      ${d.origem!=="precaso" ? `<button class="btn-mini" onclick="gerarCasoDoCard('${c.id}','${l.id}')" title="escolhe a espécie no catálogo, cria o caso e desliga este card">Gerar o caso</button>` : ""}
+      <select class="card-arquivar" aria-label="Arquivar o card" onchange="if(this.value){arquivarCard('${l.id}',this.value)}"><option value="">Arquivar…</option>${APOS_MOTIVOS.map(m=>`<option>${m}</option>`).join("")}</select>
+    </span>
+    ${cl.length ? `<ul class="card-check">${cl.map(i=>`<li class="${i.feito?"feito":""}">${i.feito?"☑":"☐"} ${esc(i.texto)}</li>`).join("")}</ul>` : ""}
+  </div>`;
+}
+// a lista lateral "Aposentadorias futuras": os cards ativos por horizonte do lembrete e por etapa
+let _cardsFiltro = "90";
+function cartaoApos(l){
+  const c = D.cliPorId.get(l.cliente_id); if(!c) return "";
+  const dd = dataDireitoDoCard(l), venc = l.proximo_em && l.proximo_em < hoje();
+  return `<div class="cartao card-apos" data-lemb="${l.id}" onclick="abrirCardApos('${c.id}')">
+    <span class="check" style="border-color:var(--verde)"></span>
+    <div class="info"><div class="nome">${esc(c.nome)}</div>
+      <div class="meta"><span class="chip fase">${esc(l.titulo||"Aposentadoria futura")}</span>
+        <span>${dd ? `direito em <b>${fmt(dd.data)}</b>` : "sem data provável"}</span>
+        <span class="chip ${venc?"urg":"neutro"}">${l.proximo_em ? (venc ? "⏰ venceu " : "lembrete ") + fmt(l.proximo_em) : "sem lembrete"}</span></div></div></div>`;
+}
+async function abrirCardApos(cliId){ await abrirFicha(cliId); abaAtiva = 9; repintarFicha(); }
+function renderCardsApos(){
+  tituloLista("🙏 Aposentadorias futuras");
+  const todos = cardsApos(), hs = [["vencido","Vencidos"],["90","Até 90 dias"],["ano","Até um ano"],["depois","Depois"],["sem","Sem data"],["todos","Todos"]];
+  const n = Object.fromEntries(hs.map(([h])=>[h, h==="todos" ? todos.length : todos.filter(l=>horizonteDoCard(l)===h).length]));
+  const sel = _cardsFiltro, lista = (sel==="todos" ? todos : todos.filter(l=>horizonteDoCard(l)===sel)).slice().sort((a, b)=>String(a.proximo_em||"9999").localeCompare(String(b.proximo_em||"9999")));
+  document.getElementById("sub-lista").textContent = `${todos.length} cards ativos, mantidos pela sincronização com o To Do; o card abre a ficha na aba Lembretes`;
+  const porEtapa = APOS_ETAPAS.map(([e, rot])=>[e, rot, lista.filter(l=>etapaDoCard(l)===e)]).filter(x=>x[2].length);
+  document.getElementById("conteudo-meio").innerHTML = `<div class="filtros">${hs.map(([h, rot])=>`<button class="fchip${sel===h?" on":""}" data-horiz="${h}" onclick="_cardsFiltro='${h}';render()">${rot} (${n[h]})</button>`).join("")}</div>`
+    + (porEtapa.map(([e, rot, ls])=>`<h3 class="secao">${esc(rot)} (${ls.length})</h3>${ls.map(cartaoApos).join("")}`).join("") || "<p class='meio-sub'>Nenhum card neste horizonte.</p>");
+}
 function painelLembretes(c){
   const ls = lembretesDo(c.id).sort((a,b)=>(a.proximo_em||"9999")<(b.proximo_em||"9999")?-1:1);
   const apos = aposDoCliente(c);
@@ -18427,6 +18580,7 @@ function painelLembretes(c){
         <span class="chip ${venc?"urg":"neutro"}">${l.proximo_em?(venc?"⏰ venceu em ":"próximo: ")+fmt(l.proximo_em):"sem data"}</span>
         ${resp?`<span class="avatar mini" style="background:${resp.cor}" title="responsável: ${esc(resp.nome)}">${esc(resp.inicial)}</span>`:""}
       </div>
+      ${cabCard(l, c)}
       ${l.tipo==="contribuicao"&&(d.codigo||d.valor)?`<div class="meio-sub" style="margin-top:3px">GPS ${d.codigo?`código ${esc(d.codigo)}`:""}${d.valor?` · R$ ${esc(String(d.valor))}`:""} · vence dia ${esc(String(d.dia||15))}</div>`:""}
       <div class="form-linha" style="margin-top:6px;align-items:center">
         <button class="btn-mini" onclick="lembreteAvisado('${l.id}','manual')"

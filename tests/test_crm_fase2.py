@@ -455,6 +455,23 @@ def test_aposentadoria_futura_checklist_soh_dados_de_cliente():
     assert m["casos"] == []
 
 
+def test_aposentadoria_futura_checklist_vai_ao_card_sem_senha_cpf_e_telefone():
+    # F218 · a data provável da aposentadoria mora no checklist do To Do
+    m = migrar.mapear(crm_json([
+        t("🙏 Aposentadorias Futuras", "Ciclana #00000000353", cpf="00000000353",
+          checklist=[{"texto": "(16) 99999-0000", "feito": False},
+                     {"texto": "Senha: abc123", "feito": False},
+                     {"texto": "000.000.003-53", "feito": True},
+                     {"texto": "Aposentadoria provável 15/03/2029", "feito": False},
+                     {"texto": "Pagar GPS trimestral", "feito": True},
+                     {"texto": "", "feito": False}]),
+    ]))
+    (l,) = m["lembretes"]
+    assert l["detalhes"]["checklist"] == [
+        {"texto": "Aposentadoria provável 15/03/2029", "feito": False},
+        {"texto": "Pagar GPS trimestral", "feito": True}]
+
+
 def test_aposentadoria_futura_lembrete_id_deterministico():
     dados = crm_json([t("🙏 Aposentadorias Futuras", "Ciclana #00000000353",
                         cpf="00000000353", id="ap1")])

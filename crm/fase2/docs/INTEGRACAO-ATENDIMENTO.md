@@ -108,6 +108,10 @@ Consequências para o projeto:
 2. O card continua nascendo do To Do enquanto a equipe usar a lista; o CRM passa a enriquecê-lo. Card criado no CRM (desfecho da análise) não tem `todo_task_id` e a sincronização não o toca.
 3. Quando o card vira caso, o CRM desliga o lembrete (`ativo=false`, que o merge respeita) e a tarefa do To Do deve ser concluída à mão, ou pelo `escrever_todo.py` se for ligado. É a única ponte de volta que falta decidir.
 
+### 4.2.1 O que o conteúdo mostrou (conferido em 12.10.2026)
+
+Os cards do To Do já trazem a análise feita: 328 dos 356 ativos com anotação falam de direito ou aposentadoria, 190 escrevem a data provável no texto ("Aposentadoria possível em 29/05/2044", "só se aposenta por idade em 29/04/2039", "Aposenta em 05/2031 se continuar na Prefeitura"), e `proximo_em` é o lembrete marcado um a três meses antes dessa data (206 cards com lembrete além de três anos). O checklist, onde o Paulo anota a data provável, não chegava ao banco; desde a onda 1 chega em `detalhes.checklist`. Portanto, para o card que vem do To Do não se faz Análise de Direito: o card lê a data provável, e a etapa começa em Monitorando; a análise no CRM é opcional, quando o colaborador abre o atendimento pelo card.
+
 ### 4.3 As etapas do card
 
 | Etapa | Entra quando | O que o card mostra | Sai quando |
@@ -167,7 +171,7 @@ Começa pelo card, porque é onde o acervo está (404 ativos, nenhum analisado) 
 
 | Onda | Entrega | Tamanho | Depende de |
 |---|---|---|---|
-| 1 | `lembretes.crm` (schema), o card com etapas na aba Lembretes, a lista lateral "Aposentadorias futuras" lendo `lembretes`, as filas do Meu Dia (vencidos e 90 dias) e o botão "Abrir atendimento", que cria o pré-caso ligado ao card | média | nada; a sincronização continua igual |
+| 1 · **entregue em 12.10.2026 (CRM 11.45, F218)** | `lembretes.crm` (schema aplicado), o checklist do To Do no card (`migrar.py`), o card com etapas e data provável na aba Lembretes, a lista lateral "Aposentadorias futuras" lendo `lembretes` por horizonte, "Abrir atendimento" (pré-caso ligado ao card), "Gerar o caso" e "Arquivar" | média | nada; a sincronização continua igual |
 | 2 | `etapas` e `desfecho` no pré-caso; "Concluir e passar adiante" nas quatro telas; cabeçalho com quem e quando; `salvarAnalise` devolve espécie, análise e data do direito ao pré-caso e ao card (`crm.analise_id`, `crm.data_direito`, linha de `aposentadorias`) | média | onda 1 |
 | 3 | quadro "Desfecho" na Análise de Direito e em Documentos: lembrete (card novo ou etapa 3 do card existente), caso (`gerarCasoDoPre`, desligando o card) ou arquivamento | média | onda 2 |
 | 4 | Documentos em seis quadros, catálogo filtrado pelos benefícios e cruzado com o dossiê, documentos gerados guardados em `anexos` | média | onda 2 |
