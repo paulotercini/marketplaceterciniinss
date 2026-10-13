@@ -69,6 +69,8 @@ FIX.documentos_beneficio = [
   await p.waitForSelector("#app.logado");
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(() => { window.open = () => ({ document: { write() {}, close() {} } }); const av = window.aviso; window._avisos = []; window.aviso = (m, s) => { _avisos.push(String(m)); return av(m, s); }; });
+  // o corpo do upload é lido na página: o Chromium instalado pela CI não entrega ao route o corpo de um Blob
+  await p.evaluate(() => { const s0 = subirArquivo; window.__subidos = []; subirArquivo = async (c, b) => { try { window.__subidos.push({ c, t: await b.text() }); } catch (e) {} return s0(c, b); }; });
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   await p.waitForFunction(() => D._ficha && D._ficha.cliId && !_lendoDossie && !_lendoLeitores, null, { timeout: 30000 });
   await p.evaluate(() => { abaAtiva = 0; _atendAberto.add(clienteAberto); irSubCad("identificacao"); });
@@ -174,10 +176,11 @@ FIX.documentos_beneficio = [
   await esperar(async () => reg.slice(regG).some(x => x.t === "storage" && /\/object\/anexos\/gerados\//.test(x.u))
     && reg.slice(regG).some(x => x.t === "anexos" && x.m === "POST") && (await texto("#dq-gerados .mov-lista li")).some(t => /reimprimir/.test(t)), 10000);
   const up = reg.slice(regG).find(x => x.t === "storage" && /\/object\/anexos\/gerados\//.test(x.u));
+  const upCorpo = (up && typeof up.corpo === "string" && up.corpo) || await p.evaluate(() => (window.__subidos || []).filter(x => /^gerados\//.test(x.c)).map(x => x.t).pop() || "");
   const an = reg.slice(regG).filter(x => x.t === "anexos" && x.m === "POST").map(x => x.corpo).pop() || {};
   const gerados = await texto("#dq-gerados .mov-lista li");
   conf(6, "C5 a folha gerada fica guardada no bucket e em anexos (origem gerado, com as lacunas) e aparece em Gerados com reimprimir",
-    up && /PROCURAÇÃO/.test(up.corpo || "") && /Aurélia Ficta/.test(up.corpo || "") && an.origem === "gerado" && an.tipo === "text/html" && /lacunas: CEP/.test(an.nome) && gerados.some(t => /reimprimir/.test(t)));
+    up && /PROCURAÇÃO/.test(upCorpo) && /Aurélia Ficta/.test(upCorpo) && an.origem === "gerado" && an.tipo === "text/html" && /lacunas: CEP/.test(an.nome) && gerados.some(t => /reimprimir/.test(t)));
   await p.evaluate(() => { abaAtiva = 0; irSubCad("anotacoes"); });
   await p.waitForSelector(".caixa-atend");
   const mesa = await p.evaluate(() => ({ novo: !!document.querySelector(".mesa-novo"), b2: !!document.querySelector(".caixa-atend .mesa-b2 #at-docs"), dec: [...document.querySelectorAll(".caixa-atend .rotulo-caso")].some(e => /E agora\?/.test(e.textContent)), b3: !!document.querySelector(".caixa-atend .mesa-b3") }));
