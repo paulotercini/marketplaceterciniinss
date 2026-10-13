@@ -18,7 +18,7 @@ Fontes.
   djen          Diário de Justiça Eletrônico Nacional do CNJ, STJ com o INSS como parte, de 2026 em diante
   jt            Jurisprudência em Teses, a partir do texto que o navegador gravou em bruto/jt/<edição>.txt
 """
-import argparse, datetime, io, json, pathlib, re, sys, time, urllib.error, urllib.parse, urllib.request, zipfile
+import argparse, datetime, http.client, io, json, pathlib, re, sys, time, urllib.error, urllib.parse, urllib.request, zipfile
 
 import banco, parser
 
@@ -41,7 +41,7 @@ def baixar(url, tentativas=6, dados=None, cab=None):
             req = urllib.request.Request(url, data=dados, headers={**UA, **(cab or {})})
             with urllib.request.urlopen(req, timeout=180) as r:
                 return r.read()
-        except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+        except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.IncompleteRead) as e:
             if isinstance(e, urllib.error.HTTPError) and e.code in (403, 404):
                 raise
             if i == tentativas - 1:
@@ -161,8 +161,11 @@ def stf_acordaos(con, a):
         docs = []
         for peca in parser.stf_pecas_acordao(aba):
             time.sleep(PAUSA)
-            pdf = pypdf.PdfReader(io.BytesIO(baixar(f"{STF}/processos/downloadPeca.asp?id={peca}&ext=.pdf")))
-            texto = "\n".join(p.extract_text() or "" for p in pdf.pages)
+            try:
+                pdf = pypdf.PdfReader(io.BytesIO(baixar(f"{STF}/processos/downloadPeca.asp?id={peca}&ext=.pdf")))
+                texto = "\n".join(p.extract_text() or "" for p in pdf.pages)
+            except pypdf.errors.PyPdfError as e:          # peça vazia ou corrompida no portal não para o processo
+                log("  peça ilegível", proc, peca, repr(e)); continue
             if len(texto.strip()) > 200:                       # PDF de imagem não vira texto e fica de fora
                 docs.append(parser.stf_acordao(proc, peca, texto, tema, agora()))
         banco.gravar(con, "documento", docs)
