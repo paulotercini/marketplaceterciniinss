@@ -24,6 +24,12 @@ def test_lista_do_site_tira_o_detalhe_depois_do_travessao():
     assert dc.lista_do_site({"itens": ["RG, CNH ou CIN — Original e cópia", "CPF"]}) == ["RG, CNH ou CIN", "CPF"]
 
 
+def test_lista_do_site_completa_com_os_extras_ate_oito():
+    l = dc.lista_do_site({"itens": ["RG — x", "CPF", "Biometria — confira", "Cônjuge"],
+                          "extras": ["CTPS", "CNIS", "FGTS", "TRCT", "GPS", "DAS", "PPP", "LTCAT"]})
+    assert l == ["RG", "CPF", "CTPS", "CNIS", "FGTS", "TRCT", "GPS", "DAS"]
+
+
 def test_sem_aplicar_nada_e_gravado(tmp_path, monkeypatch):
     antes = {f.name: f.read_text(encoding="utf-8") for f in dc.SITE.glob("*.json")}
     dc.main([])

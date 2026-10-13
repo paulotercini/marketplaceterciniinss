@@ -109,14 +109,14 @@
     }
   ],
   "documentos": [
-    "Documento de identidade e CPF",
-    "Número do CNIS ou extrato de contribuições do INSS",
-    "Certidão de nascimento da criança ou documento do parto",
-    "Termo de guarda ou sentença de adoção, quando for o caso",
-    "Atestado médico, em caso de antecipação por gravidez de risco, aborto não criminoso ou natimorto",
-    "Carteira de trabalho e comprovantes de vínculos ou recolhimentos",
-    "Documentos de atividade rural (autodeclaração, DAP/CAF, CCIR, ITR), para a segurada especial",
-    "Comprovante do requerimento administrativo (DER) e da carta de indeferimento, se houver"
+    "RG, CNH ou CIN",
+    "CPF",
+    "Após o parto, certidão de nascimento",
+    "Se ainda gestante, declaração médica com previsão de parto (DPP)",
+    "Em caso de adoção, termo de guarda com destinação à adoção ou nova certidão de nascimento",
+    "Carteira de Trabalho (CTPS)",
+    "Declaração da empresa confirmando o afastamento",
+    "Comprovantes das últimas contribuições ao INSS"
   ],
   "faq": [
     {

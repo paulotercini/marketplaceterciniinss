@@ -42,15 +42,15 @@ const SUPA = "https://ficticio.supabase.co";
   await p.waitForSelector("#app.logado");
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
-  await p.evaluate(cli => abrirFicha(cli).then(() => { abaAtiva = 0; subCad = "documentos"; repintarFicha(); }), CLI_CHEIO);
-  await p.waitForSelector("#campo-nome");
+  await p.evaluate(cli => abrirFicha(cli).then(() => { abaAtiva = 0; subCad = "mensagens"; repintarFicha(); }), CLI_CHEIO);
+  await p.waitForSelector("#campo-nome");   // Mensagens escondida: a ficha cai na Identificação
   const t = await p.evaluate(cli => ({
     temCaso: (D.casosDoCliente.get(cli) || []).length > 0, vivos: precasosDe(D.cliPorId.get(cli)).filter(x => !x.so_lembrete).length,
     abas: [...[...document.querySelectorAll(".sub-menu")].find(m => /Identificação/.test(m.textContent)).querySelectorAll("button:not(.trilho-mais)")].map(b => b.textContent.trim()),
     atend: (() => { const b = document.querySelector(".sub-menu .atend-novo"); return b ? getComputedStyle(b).color : ""; })(),
     cartao: [...document.querySelectorAll(".cad-tit")].some(x => /Parentes ou Amigos/i.test(x.textContent)),
     botaoPar: [...document.querySelectorAll("button.cad-mini")].some(b => /Parentes ou amigos/.test(b.textContent)) }), CLI_CHEIO);
-  conf("cliente com caso e sem atendimento vê Identificação e Análise de Direito, sem Triagem, Documentos e Mensagens", t.temCaso && !t.vivos && t.abas.join("|") === "Identificação|Análise de Direito");   // F171: com caso, a análise fica à mão
+  conf("cliente com caso e sem atendimento vê Identificação, Documentos e Análise de Direito, sem Triagem e Mensagens", t.temCaso && !t.vivos && t.abas.join("|") === "Identificação|Documentos|Análise de Direito");   // F171: com caso, a análise fica à mão; F220: e os documentos do caso
   conf("o + atendimento aparece em destaque, com letra branca", t.atend === "rgb(255, 255, 255)");
   conf("Parentes ou amigos fica recolhido num ＋", !t.cartao && t.botaoPar);
   await p.evaluate(() => [...document.querySelectorAll("button.cad-mini")].find(b => /Parentes ou amigos/.test(b.textContent)).click());

@@ -103,14 +103,14 @@
     }
   ],
   "documentos": [
-    "Documento de identidade e CPF",
-    "Carta de concessão e memória de cálculo do benefício",
-    "Número do CNIS ou extrato de contribuições do INSS",
-    "Comprovante da data de início do benefício (DIB)",
-    "Carteira de trabalho e comprovantes de todos os vínculos, inclusive simultâneos",
-    "Comprovantes de contribuição como autônomo, cooperado, sócio ou em Câmara Municipal, quando houver",
-    "Histórico salarial e comprovantes de remuneração da época da concessão",
-    "Documentos de eventual ação judicial ou requerimento administrativo já existente sobre o benefício"
+    "RG, CNH ou CIN",
+    "CPF",
+    "Comprovante de residência",
+    "Carta de Concessão do benefício",
+    "Histórico de Crédito (HISCRE)",
+    "CNIS atualizado",
+    "Memorial de cálculo da concessão",
+    "Histórico de Pagamentos (HISBEN)"
   ],
   "faq": [
     {

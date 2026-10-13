@@ -68,8 +68,8 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   const chips = await p.evaluate(() => [...document.querySelectorAll(".pa .ben .ben-chip")].map(b => ({ fam: b.dataset.fam, on: b.classList.contains("on"), sinal: !!b.querySelector(".pa-bola"), pressed: b.getAttribute("aria-pressed") })));
   conf(4, "A1 onze famílias em chips, as com sinal do dossiê primeiro", chips.length === 11 && chips[0].sinal && chips.every(c => c.pressed === String(c.on)));
   const ligados = chips.filter(c => c.on).map(c => c.fam);
-  conf(5, "A2 a família com sinal já nasce marcada, com a opção padrão aberta sob ela",
-    ligados.includes("tempo") && (await n(".pa .ben-ramo[data-fam=tempo] .ben-opc")) === 4 && (await n(".pa .ben-ramo[data-fam=tempo] .ben-opc.on")) === 1);
+  conf(5, "A2 a família com sinal já nasce marcada, com as cinco opções (F220: PcD por idade) e a padrão aberta",
+    ligados.includes("tempo") && (await n(".pa .ben-ramo[data-fam=tempo] .ben-opc")) === 5 && (await n(".pa .ben-ramo[data-fam=tempo] .ben-opc.on")) === 1);
   const padraoTempo = await p.evaluate(() => (document.querySelector(".pa .ben-ramo[data-fam=tempo] .ben-opc.on") || {}).dataset.opc);
   conf(0, "A2b a opção padrão da aposentadoria é por idade (64 anos, mulher)", padraoTempo === "tempo.idade");
   await p.click(".pa .ben-chip[data-fam=bpc]");

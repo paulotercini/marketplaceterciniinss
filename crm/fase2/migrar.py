@@ -473,6 +473,68 @@ def casos_movidos(mapa, banco, minimo_seguro=50, ja_no_banco=None):
     return adotados, sobrou
 
 
+def respeitar_movidos(mapa, movidos):
+    """F220 · o caso movido no CRM não volta à fase da lista antiga.
+
+    Com a escrita no To Do desligada, a tarefa fica na lista de onde o caso
+    saiu, e o upsert devolvia o caso à fase dela a cada rodada. Enquanto o To
+    Do não alcança o CRM, vale a fase do mover_para; quando a tarefa chega à
+    lista, ou é concluída, o mover_para sai. Devolve os ids a limpar."""
+    por_id = {m["id"]: m for m in movidos or [] if m.get("mover_para")}
+    limpar = []
+    for k in mapa.get("casos") or []:
+        m = por_id.get(k.get("id"))
+        if not m:
+            continue
+        if k.get("fase") == "encerrado" or k.get("origem_lista") == m["mover_para"]:
+            limpar.append(k["id"])
+            continue
+        k["fase"] = LISTA_FASE.get(m["mover_para"]) or m.get("fase") or k.get("fase")
+    return limpar
+
+
+def _dig(v):
+    return re.sub(r"\D", "", str(v or ""))
+
+
+def aplicar_marcas_do_crm(mapa, marcados):
+    """F220 · as marcas que o CRM grava em casos.arquivados valem sobre o To Do.
+
+    "fundido": o caso foi incorporado a outro e fica encerrado, mesmo com a
+    tarefa aberta no To Do. "mov:nb|proc|prot:<dígitos>": o número foi levado a
+    outro caso e não volta a este. "add:prot:<dígitos>": protocolo acrescentado
+    no CRM, que a tarefa do To Do não cita e o upsert apagava. Devolve quantas
+    marcas mudaram alguma linha."""
+    por_id = {m["id"]: m.get("arquivados") or {} for m in marcados or []
+              if isinstance(m.get("arquivados"), dict) and m.get("arquivados")}
+    mudou = 0
+    for k in mapa.get("casos") or []:
+        arq = por_id.get(k.get("id"))
+        if not arq:
+            continue
+        antes = (k.get("fase"), k.get("nb"), k.get("processo"), list(k.get("protocolos") or []))
+        fus = arq.get("fundido")
+        if fus and k.get("fase") != "encerrado":
+            k["fase"] = "encerrado"
+            k["encerrado_em"] = k.get("encerrado_em") or (fus.get("em") if isinstance(fus, dict) else None)
+        for chave_m in arq:
+            partes = str(chave_m).split(":")
+            if len(partes) != 3 or not partes[2]:
+                continue
+            acao, tipo, d = partes
+            if acao == "mov" and tipo == "nb" and _dig(k.get("nb")) == d:
+                k["nb"] = None
+            elif acao == "mov" and tipo == "proc" and _dig(k.get("processo")) == d:
+                k["processo"] = None
+            elif acao == "mov" and tipo == "prot":
+                k["protocolos"] = [p for p in k.get("protocolos") or [] if _dig(p) != d]
+            elif acao == "add" and tipo == "prot" and d not in {_dig(p) for p in k.get("protocolos") or []}:
+                k["protocolos"] = sorted((k.get("protocolos") or []) + [d])
+        if antes != (k.get("fase"), k.get("nb"), k.get("processo"), list(k.get("protocolos") or [])):
+            mudou += 1
+    return mudou
+
+
 def manter_dados_do_banco(mapa, banco):
     """Telefone e nascimento: o CRM vence; a tarefa do To Do só preenche o
     que está vazio. Antes, tarefa sem telefone no corpo mandava null e apagava
@@ -1188,6 +1250,21 @@ def subir_rest(mapa):
             enviar(tabela, conflito, res, linhas[:meio])
             enviar(tabela, conflito, res, linhas[meio:])
 
+    # F220 · o que o CRM decidiu sobre o caso vale sobre o To Do: o caso movido
+    # (mover_para) não volta à lista antiga, o fundido continua encerrado e o
+    # número levado a outro caso não volta ao caso de onde saiu
+    try:
+        marcados = _rest(url, chave, "GET",
+                         "/rest/v1/casos?or=(mover_para.not.is.null,arquivados.not.is.null)"
+                         "&select=id,mover_para,fase,arquivados") or []
+    except Exception as e:                      # noqa: BLE001 — sem a leitura, o comportamento antigo
+        marcados = []
+        print(f"  aviso: não li as marcas do CRM nos casos ({e})")
+    limpar_mover = respeitar_movidos(mapa, marcados)
+    n_marcas = aplicar_marcas_do_crm(mapa, marcados)
+    if n_marcas:
+        print(f"  números e fusões decididos no CRM mantidos: {n_marcas}")
+
     for chave_mapa, tabela, res, conflito in ordem:
         linhas = resolver(mapa.get(chave_mapa, []))
         antes = len(recusadas)
@@ -1199,6 +1276,15 @@ def subir_rest(mapa):
         else:
             print(f"  {chave_mapa}: {len(linhas) - caiu} linhas enviadas"
                   + (f", {caiu} recusada(s)" if caiu else ""))
+
+    # o To Do alcançou o CRM (ou a tarefa foi concluída): o mover_para cumpriu o papel
+    if limpar_mover:
+        try:
+            _rest(url, chave, "PATCH", "/rest/v1/casos?id=in.(" + ",".join(limpar_mover) + ")",
+                  {"mover_para": None}, prefer="return=minimal")
+            print(f"  casos movidos no CRM que o To Do alcançou: {len(limpar_mover)}")
+        except Exception as e:                  # noqa: BLE001
+            print(f"  aviso: não limpei o mover_para de {len(limpar_mover)} caso(s): {e}")
 
     # 3. os casos abertos que sobraram na fase aposentadoria_futura vindos do
     # To Do: encerra (o lembrete acima é quem carrega a obrigação agora).

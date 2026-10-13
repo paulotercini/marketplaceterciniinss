@@ -87,14 +87,14 @@
     }
   ],
   "documentos": [
-    "Documento de identidade e CPF",
+    "RG, CNH ou CIN",
+    "CPF",
     "Comprovante de residência",
-    "Extrato do CNIS (Cadastro Nacional de Informações Sociais)",
-    "Carteira de Trabalho (CTPS) e contratos de trabalho no magistério",
-    "Declarações das escolas com função exercida e períodos de magistério",
-    "Documentos de funções de direção, coordenação ou assessoramento pedagógico",
-    "Certidão de tempo de magistério, se houver tempo em regime próprio (RPPS)",
-    "Cartas de indeferimento ou concessão anteriores do INSS"
+    "Carteira de Trabalho (CTPS)",
+    "Contratos de trabalho e termos de rescisão",
+    "Extratos do FGTS",
+    "Extrato do CNIS atualizado",
+    "Diploma de licenciatura ou pedagogia"
   ],
   "faq": [
     {

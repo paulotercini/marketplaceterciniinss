@@ -105,7 +105,9 @@ FIX.casos[0].prazo = DAQUI3;
   // pelo + atendimento (que já leva às Anotações)
   await p.evaluate(async () => { const c = D.cliPorId.get(clienteAberto);
     c.triagem = { ...(c.triagem || {}), atendimento: { em: hoje(), quem: eu.id, passos: 8, conferidos: 8 } };
-    await novoAtendimento(clienteAberto); });
+    await novoAtendimento(clienteAberto);
+    // F220 · o + atendimento abre a tela cheia; a mesa fica fora dela
+    _atendAberto.delete(clienteAberto); irSubCad("anotacoes"); });
   await p.waitForTimeout(500);
   conf("a nota futura abre a linha com 📅 volta em azul",
     await p.evaluate(() => [...document.querySelectorAll('[data-p="0"] .chip.volta-chip')]

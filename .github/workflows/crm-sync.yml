@@ -109,6 +109,18 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: python crm/fase2/escrever_todo.py
 
+      # F220 · a ponte ESTREITA: só o card de aposentadoria futura que virou
+      # caso ou foi arquivado no CRM conclui a tarefa dele no To Do, com uma
+      # linha datada no corpo. Ligada por padrão; desliga com a variável de
+      # repositório PONTE_CARDS = 0. Falha aqui não derruba a sincronização.
+      - name: Cards decididos no CRM -> concluir no To Do
+        if: steps.seg.outputs.tem == 'true' && vars.PONTE_CARDS != '0'
+        continue-on-error: true
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python crm/fase2/ponte_cards.py
+
       - name: To Do -> espelho (crawl completo das listas)
         if: steps.seg.outputs.tem == 'true'
         run: python crm/sync_todo.py

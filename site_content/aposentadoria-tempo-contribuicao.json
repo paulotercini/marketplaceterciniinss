@@ -94,14 +94,14 @@
     }
   ],
   "documentos": [
-    "Documento de identidade e CPF",
+    "RG, CNH ou CIN",
+    "CPF",
     "Comprovante de residência",
-    "Extrato do CNIS (Cadastro Nacional de Informações Sociais)",
-    "Carteira de Trabalho (CTPS) e contratos de trabalho",
-    "Carnês de contribuição (contribuinte individual ou facultativo)",
-    "PPP e laudos, se houve atividade especial a ser convertida",
-    "Documentos de eventual atividade rural anterior a 1991",
-    "Cartas de indeferimento ou concessão anteriores do INSS"
+    "Carteira de Trabalho (CTPS)",
+    "Extratos do FGTS",
+    "Termos de rescisão (TRCT) ou comprovante de rescisão contratual",
+    "Contrato individual de trabalho",
+    "Ficha de Registro de Empregados ou Livro de Registro"
   ],
   "faq": [
     {

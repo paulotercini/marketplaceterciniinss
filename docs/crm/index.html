@@ -1164,6 +1164,8 @@
   .form-linha{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .form-linha input,.form-linha select{padding:8px;border:1px solid var(--borda);border-radius:8px;font-size:13px}
   .form-linha button{padding:8px 14px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
+  /* F220 · o botão secundário da linha (Voltar, Inserir o CNIS) não disputa com o principal */
+  .form-linha button.btn-sec{background:var(--branco,#fff);color:var(--texto);border:1px solid var(--borda);font-weight:500}
   /* ⚖️ F48 · Análise de Direito — a régua dos atendimentos: o ANO grande na
      lateral conta a história (2020 → 2023 → 2025), e cada cenário é um
      cartão onde a DATA e o VALOR são o que se lê primeiro, porque são os
@@ -1322,7 +1324,8 @@
   .cnis-abrir{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:9px;
     border:1px solid #BFD3EA;background:#EAF2FB;color:var(--azul);font-weight:700;font-size:14px;cursor:pointer;font-family:inherit}
   @media (hover:hover) and (pointer:fine){.cnis-abrir:hover{background:#DCE9F8}}
-  .cnis-abrir.sem{background:#FDECEC;border-color:#F0B4B4;color:#9B3B3B}
+  /* F220 · sem CNIS é falta a suprir, não erro: tracejado neutro em vez do rosa de alarme */
+  .cnis-abrir.sem{background:#FFFFFF;border:1px dashed #C9C5BC;color:var(--cinza)}
   .cnis-faixa{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 10px}
   .cnis-faixa .meio-sub{font-size:12px}
   /* F127 · a triagem UM PASSO POR VEZ: o trilho de etapas em cima, o passo
@@ -3565,9 +3568,19 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 #detalhe.id-bege .painel[data-p="0"]{background:#F3F2EE;padding:16px 18px;border-radius:14px}
 .atend-cab{display:flex;align-items:center;gap:12px;margin:0 0 10px;font-size:13px}
 .atend-cab .avatar{width:40px;height:40px;font-size:18px}
-.atend-nome{font-size:20px;font-weight:600}.atend-chip{font-size:11px;padding:2px 8px;border-radius:999px;background:#E6F0EF;color:#0E5C58;vertical-align:middle}
+.atend-nome{font-size:20px;font-weight:600}.atend-chip{font-size:11px;padding:2px 8px;border-radius:999px;background:#E6F0EF;color:#0E5C58;vertical-align:middle;white-space:nowrap;display:inline-block}
 .atend-dados{margin-top:3px;color:#4A4944}.atend-acoes{margin-left:auto;display:flex;gap:8px}
 .atend-passos{--pa-t:#0E5C58;--pa-c1:#4A4944;--pa-c2:#686660;--pa-b:#E7E6E1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:12px}
+/* F220 · no celular o cabeçalho quebra em linhas: nome e dados em cima, as ações embaixo, e os passos em duas colunas */
+@media (max-width:720px){
+  #detalhe.atend-tela{padding:12px 16px}
+  .atend-cab{flex-wrap:wrap;align-items:flex-start}
+  .atend-id{flex:1 1 calc(100% - 56px);min-width:0}
+  .atend-nome{font-size:18px}
+  .atend-dados{overflow-wrap:anywhere}
+  .atend-acoes{margin-left:0;flex:1 1 100%;flex-wrap:wrap}
+  .atend-passos{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:6px}
+}
 #detalhe.atend-tela .det-topo,#detalhe.atend-tela .painel[data-p="0"] .sub-menu,#detalhe.atend-tela .pa > .pa-passos{display:none!important}
 .ad-datas{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
 .ad-datas button{border:1px solid #E7E6E1;background:#fff;border-radius:10px;padding:8px 12px;font:inherit;cursor:pointer;text-align:left}
@@ -3608,7 +3621,8 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .pa-tabela{width:100%;border-collapse:collapse;font-size:12.5px;margin:4px 0 10px}.pa-tabela th,.pa-tabela td{text-align:left;padding:6px 8px;border-bottom:1px solid #E7E6E1;vertical-align:top}
 .pa-tabela th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#686660}.pa-tabela .alerta{color:#8F5400;font-weight:600}
 /* F217 · benefícios em análise (chips que ramificam) e quadros por módulo */
-.ben{background:#fff;border:1px solid #E7E6E1;border-radius:12px;padding:14px 16px;margin:0 0 12px}.ben-cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin:0 0 10px}.ben-cab h3{margin:0;font-size:15px}
+/* F220 · section.ben: o .ben solto pegava o .chip.ben de todo o CRM e virava cartão sobre o texto */
+section.ben{background:#fff;border:1px solid #E7E6E1;border-radius:12px;padding:14px 16px;margin:0 0 12px}.ben-cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin:0 0 10px}.ben-cab h3{margin:0;font-size:15px}
 .ben-chips{display:flex;flex-wrap:wrap;gap:8px}
 .ben-chip,.ben-opc{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:0 14px;border-radius:999px;border:1.5px solid #CFCDC6;background:#fff;color:#121212;font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:background-color 160ms cubic-bezier(.23,1,.32,1),border-color 160ms cubic-bezier(.23,1,.32,1),color 160ms cubic-bezier(.23,1,.32,1),transform 160ms cubic-bezier(.23,1,.32,1)}
 .ben-chip:hover,.ben-opc:hover{border-color:#686660}.ben-chip:active,.ben-opc:active{transform:scale(.97)}.ben-chip:focus-visible,.ben-opc:focus-visible{outline:2px solid #0E5C58;outline-offset:2px}
@@ -3657,6 +3671,15 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .doc-catalogo summary{cursor:pointer;font-weight:600;font-size:13px}
 @media (prefers-reduced-motion:reduce){.atend-concluir{transition:none}.atend-concluir:active{transform:none}}
 .pa-passo:first-child{border-bottom-color:#B5D3CF}.pa-passo:first-child i{border-color:var(--pa-t);color:var(--pa-t)}
+.atend-conversa{margin:16px 0 0;border:1px solid var(--borda);border-radius:12px;background:#FFFFFF;padding:10px 14px}
+.atend-conversa summary{cursor:pointer;font-weight:600;font-size:14px;min-height:32px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.atend-conv-corpo{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.atend-nota{margin:0;font-size:13.5px;line-height:1.5;border-left:3px solid #E3DED3;padding-left:10px}
+.atend-conv-nova{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+.atend-conv-nova textarea{flex:1 1 320px;box-sizing:border-box;padding:9px 12px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:14px;resize:vertical}
+.pa-sem-dz{margin:0 0 12px;padding:10px 12px;border-radius:10px;background:#FFFFFF;border:1px dashed #CFCBC2;font-size:13px;display:flex;flex-direction:column;gap:8px}
+.pa-sem-dz p{margin:0;line-height:1.5}
+.pa-relato{display:flex;flex-direction:column;gap:4px;border-top:1px solid #ECE9E2;padding-top:8px}
 .pa-nome-dif{margin:0 0 12px;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--vermelho,#c0392b) 10%,transparent);border:1px solid color-mix(in srgb,var(--vermelho,#c0392b) 35%,transparent);font-size:13px}
 .pa-cab{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px}
 .pa-cab h2{margin:0;font-family:'Zilla Slab',Georgia,serif;font-weight:600;font-size:22px}.pa-cab p{margin:4px 0 0;color:var(--pa-c1)}
@@ -3763,6 +3786,31 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .adr-ck{display:flex;gap:10px;align-items:center;min-height:40px;font-size:14px;cursor:pointer}
 .adr-ck input{width:18px;height:18px}
 .adr-modal-bts{display:flex;gap:10px;justify-content:flex-end}
+/* F220 · organizar os casos do cliente: a janela larga, as sugestões em cima e um cartão por caso */
+.modal-cx:has(.org-casos){width:min(1080px,96vw)}
+.org-casos{display:flex;flex-direction:column;gap:12px}
+.org-casos h3{margin:0;font-size:18px}
+.org-casos .adr-modal-bts{align-items:center;flex-wrap:wrap}
+.org-sug{border:1px solid #E7C98F;background:#FFF8EB;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.org-sug h4{margin:0;font-size:14px}
+.org-s{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between;border-top:1px solid #F0E2C2;padding-top:8px}
+.org-s:first-of-type{border-top:0;padding-top:0}
+.org-s p{margin:0;flex:1 1 320px;font-size:13.5px;line-height:1.45}
+.org-acoes{display:flex;flex-wrap:wrap;gap:6px}
+.org-acoes .adr-bt{min-height:34px;font-size:12.5px}
+.org-ign{color:var(--cinza)}
+.org-ok{margin:0;font-size:13px;color:var(--feito,#2E7D4F)}
+.org-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.org-caso{border:1px solid var(--borda);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;background:var(--branco,#fff)}
+.org-caso header{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.org-caso header b{font-size:14px;flex:1 1 100%}
+.org-nums{margin:0;display:flex;flex-direction:column;gap:6px}
+.org-nums dt{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--cinza)}
+.org-nums dd{margin:2px 0 0;display:flex;flex-direction:column;align-items:stretch;gap:4px}
+.org-nums select,.org-caso footer select{min-height:34px;border:1px solid var(--borda);border-radius:8px;padding:0 8px;font:inherit;font-size:12.5px;max-width:100%}
+.org-caso footer{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:auto}
+.org-caso footer .adr-bt{min-height:34px;font-size:12.5px}
+.proc-org{display:flex;justify-content:flex-end;margin-top:4px}
 /* F178–F180 · Triagem, Honorários e Identificação na língua visual da
    Análise de Direito (desenho aprovado em 04.10.2026) */
 .cad-cartao.tri-novo,.cad-cartao.idf{background:none;border:0;box-shadow:none;padding:0;display:flex;flex-direction:column;gap:16px}
@@ -4270,7 +4318,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.47</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.48</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5691,7 +5739,7 @@ async function moverCaso(casoId, lista){
   k.mover_para=lista; if(fase) k.fase=fase; if(limpaEtapa) k.etapa=null;
   await patchCaso(casoId, {mover_para:lista, ...(fase?{fase}:{}), ...(limpaEtapa?{etapa:null}:{})});
   fecharMenuMover();
-  aviso(`Movido para ${lista} — o To Do acompanha na próxima sincronização`);
+  aviso(`Movido para ${lista} — a sincronização do To Do não desfaz a mudança`);
   montarSidebar(); render();
 }
 
@@ -5915,18 +5963,22 @@ function montarSidebar(){
   if(visaoColab()){
     // F131 · ordem do Paulo: Minhas Tarefas e Organizacional entram nas
     // Listas do escritório, antes das fases; Visões some inteira
-    const fasesColab = ["prazo","escritorio","inss","conselho","judicial","peticao_inicial"];
+    // F220 · as listas e as fases dependem do cargo (listasDoColab)
+    const pode = listasDoColab();
+    const fasesColab = ["prazo","escritorio","inss","conselho","judicial","peticao_inicial","aposentadoria_futura"].filter(f=>pode.includes("fase:"+f));
     // F187 · o WhatsApp mora em Visões (que some para o colaborador): aqui ele
     // entra nas listas, porque é onde o atendente trabalha
-    document.getElementById("grupo-dinamicas").innerHTML = [...din, ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null]]
-      .filter(([id])=>LISTAS_COLAB.includes(id) && !["particulares","rotinas"].includes(id))
+    document.getElementById("grupo-dinamicas").innerHTML = [...din, ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
+        ["direito","⚖️ Análise de Direito", direitoAlcancado().length||null],
+        ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && dataSP(e.data_hora)>=hoje()).length]]
+      .filter(([id])=>pode.includes(id) && !["particulares","rotinas"].includes(id))
       .map(([id,rot,n])=>`<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
         (id==="meudia"&&nVenc)?`<span class="cont venc">${n||nVenc}</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("");
     document.getElementById("grupo-fases").innerHTML =
       din.filter(([id])=>["particulares","rotinas"].includes(id)).map(([id,rot,n])=>
         `<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n==="🔒"?`<span class="priv">🔒 só você</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("")
-      + fasesColab.map(f=>{ const rot=FASES.find(x=>x[0]===f)[1];
-          const n = casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
+      + fasesColab.map(f=>{ const rot=(FASES.find(x=>x[0]===f)||[f,"🙏 Aposentadorias futuras"])[1];
+          const n = f==="aposentadoria_futura" ? cardsApos().length : casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
           return `<div class="lista-item" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`; }).join("");
     document.getElementById("grupo-visoes").innerHTML = "";
     document.getElementById("grupo-visoes").parentElement.style.display = "none";
@@ -7343,9 +7395,7 @@ async function aplicarPatDeVerdade(){
 
   for(const a of planoPat.atualizar) await tentar(a.protocolo, async () => {
     const k = D.casoPorId.get(a.caso_id); if(!k) return;
-    const campos = { ...a.mudancas, situacao_inss: a.situacao };
-    if(!(k.protocolos||[]).includes(a.protocolo))
-      campos.protocolos = [...(k.protocolos||[]), a.protocolo];
+    const campos = { ...a.mudancas, situacao_inss: a.situacao, ...(corpoProtocolos(k, [a.protocolo])||{}) };
     await patchCaso(k.id, campos);
     Object.assign(k, campos);
     if(a.andamento)
@@ -7551,7 +7601,7 @@ const resumoIngestao = r => (r.coms||r.evs)
 // o miolo de juntar, sem aviso nem redesenho: serve ao clique e ao lote
 async function juntarUm(n){
   const k = D.casoPorId.get(n.caso_id); if(!k) return;
-  const campos = { protocolos:[...(k.protocolos||[]), n.protocolo], situacao_inss:n.situacao,
+  const campos = { ...(corpoProtocolos(k, [n.protocolo])||{}), situacao_inss:n.situacao,
     processo_link:n.link, ...(k.der?{}:{der:n.der}), ...(k.especie?{}:{especie:n.especie}) };
   await patchCaso(k.id, campos);
   Object.assign(k, campos);
@@ -7826,7 +7876,7 @@ function ligarCartoes(){
 let vistaAnimada="";
 function render(){
   aplicarTema(); marcarBarraCel();
-  if(visaoColab() && !LISTAS_COLAB.includes(visao)) visao="meudia";
+  if(visaoColab() && !listasDoColab().includes(visao)) visao="meudia";
   // o fade só quando a VISTA muda (trocar de lista, pesquisar) — render()
   // também roda em clique de chip/estrela e piscaria a cada toque
   const chaveVista=visao+"|"+(buscaTxt||"");
@@ -9549,9 +9599,18 @@ const visaoColab = () => !souAdmin() || ler("crm_ver_como")==="colab";
 const LISTAS_COLAB = ["meudia","mencoes","whatsapp","calendario","planejado","agendaq","importante","particulares","rotinas",
   "fase:prazo","fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial",
   "novocliente"];
+// F220 · a barra por CARGO: o "Atribuídas a mim" é de todos (é por ele que a
+// divisão de tarefas chega a quem faz); o advogado vê também as aposentadorias
+// futuras, a Análise de Direito e as perícias; a recepção vê o que atende
+// (cadastro, Escritório, agenda, perícias), sem as listas de processo
+const LISTAS_POR_CARGO = {
+  advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "direito", "agenda"],
+  recepcao: ["meudia","mencoes","whatsapp","calendario","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente"],
+};
+const listasDoColab = () => LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
 function alternarVerComo(){
   guardar("crm_ver_como", visaoColab() ? "" : "colab");
-  if(visaoColab() && !LISTAS_COLAB.includes(visao)) visao="meudia";
+  if(visaoColab() && !listasDoColab().includes(visao)) visao="meudia";
   montarSidebar(); render();
 }
 let segAberto = null;
@@ -10054,7 +10113,7 @@ function renderAcervo(){
   document.getElementById("sub-lista").textContent =
     "O trabalho sem data marcada: rotina, conferências e processos parados. Nada aqui vence hoje.";
   const corpo = blocoRotinas() + blocoCrpsManual() + blocoCadunico()
-    + blocoRevisao() + blocoSemAcao() + blocoSemEndereco();
+    + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos();
   document.getElementById("conteudo-meio").innerHTML = corpo
     || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
@@ -10448,14 +10507,14 @@ function renderNovoCliente(){
       <div class="form-linha" style="align-items:center">
         <input type="file" id="ncl-cnis" accept="application/pdf" style="display:none"
           onchange="document.getElementById('ncl-cnis-nome').textContent=this.files[0]?this.files[0].name:''">
-        <button class="cad-mini" onclick="document.getElementById('ncl-cnis').click()"
+        <button class="cad-mini btn-sec" onclick="document.getElementById('ncl-cnis').click()"
           title="o Extrato Previdenciário (CNIS) do Meu INSS, em PDF">Inserir o CNIS (PDF)</button>
         <span id="ncl-cnis-nome" class="meio-sub"></span>
         <span class="meio-sub">sem o dossiê, o extrato lido aqui fica guardado na ficha</span>
       </div>
-      <div class="form-linha" style="justify-content:space-between"><button class="btn-mini" onclick="_ncl.etapa=1;renderNovoCliente()">Voltar</button>
+      <div class="form-linha" style="justify-content:space-between"><button class="btn-mini btn-sec" onclick="_ncl.etapa=1;renderNovoCliente()">Voltar</button>
         <button onclick="criarCliente()">Concluir cadastro</button></div>
-      <p style="font-size:12px;color:var(--cinza);margin-top:8px">O cliente vai à lista Escritório, com a menção a Amanda e Paulo para a triagem, e vira tarefa no To Do na próxima sincronização (título Nome #CPF).</p>
+      <p style="font-size:12px;color:var(--cinza);margin-top:8px">O cliente vai à lista Escritório e ${esc(quemAvisaClienteNovo().map(x=>x.nome.split(" ")[0]).join(", ")||"os advogados")} recebem a menção para abrir o atendimento.</p>
     </div>` : `
     <div class="caso ncl-larga">${passos}
       <div class="form-linha">
@@ -10672,7 +10731,7 @@ function conferirRuaNovo(){
 async function avisarClienteNovo(cliId, textoDado){
   const c=D.cliPorId.get(cliId);
   const alvos=quemAvisaClienteNovo().filter(x=>x.id!==eu.id);
-  const texto=textoDado||`Cliente novo na recepção: ${(c&&c.nome)||"cliente"} — dar seguimento na triagem`;
+  const texto=textoDado||`Cliente novo na recepção: ${(c&&c.nome)||"cliente"} — abrir o atendimento (Primeiro atendimento e Análise de Direito)`;
   for(const co of alvos)
     await api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({de_id:eu.id, para_id:co.id, cliente_id:cliId, texto})})
@@ -10876,7 +10935,7 @@ async function decidirSugestao(id, status){
 function renderMencoes(){
   tituloLista("📥 Menções");
   document.getElementById("sub-lista").textContent=
-    "Pendências em que alguém citou você: @ num andamento, caso novo ou cliente novo da recepção aguardando triagem.";
+    "Pendências em que alguém citou você: @ num andamento, caso novo ou cliente novo da recepção aguardando o primeiro atendimento.";
   document.getElementById("conteudo-meio").innerHTML = D.mencoes.map(m=>{
     const de=D.colPorId.get(m.de_id), k=m.caso_id&&D.casoPorId.get(m.caso_id),
           c=(k&&D.cliPorId.get(k.cliente_id)) || (m.cliente_id&&D.cliPorId.get(m.cliente_id)) || null;
@@ -10887,6 +10946,9 @@ function renderMencoes(){
       <div class="texto">${esc(m.texto)}</div>
       <div class="acoes">
         ${m.conversa_id?`<button class="btn-mini" onclick="abrirConversaDaMencao('${m.conversa_id}')">abrir conversa</button>`:""}
+        ${/* F220 · a menção leva ao lugar do trabalho: o caso citado ou o atendimento do cliente novo */""}
+        ${k?`<button class="btn-mini forte" onclick="abrirCasoDaMencao('${k.cliente_id}','${k.id}','${m.andamento_id||""}')">abrir o caso</button>`
+          : c && !(D.casosDoCliente.get(c.id)||[]).some(x=>x.fase!=="encerrado") ? `<button class="btn-mini forte" onclick="abrirAtendimentoDe('${c.id}')">abrir o atendimento</button>` : ""}
         ${c?`<button class="btn-mini" onclick="abrirFicha('${c.id}')">abrir ficha</button>`:""}
         <button class="btn-mini" onclick="lerMencao('${m.id}')">✔ resolvida</button>
       </div></div>`;
@@ -12593,7 +12655,7 @@ async function renderConfig(){
           <span class="meio-sub" title="${c.auth_id?"login ligado":"sem login ainda"}">${c.auth_id?"🔑":"—"}</span>
           <select data-cargo="${c.id}">
             <option value="">cargo…</option>
-            ${[["advogado","advogado(a)"],["estagiario","estagiário(a)"],["assistente","assistente (IA)"]]
+            ${[["advogado","advogado(a)"],["estagiario","estagiário(a)"],["recepcao","recepção"],["assistente","assistente (IA)"]]
               .map(([v,r])=>`<option value="${v}" ${c.cargo===v?"selected":""}>${r}</option>`).join("")}
           </select>
         </div>`).join("")}</div>`
@@ -13855,10 +13917,8 @@ async function concluirDeVez(id, txt, prot){
     body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
   // o protocolo digitado aqui é o que ninguém pode esquecer: vai para a ficha
   const k=D.casoPorId.get(t.caso_id);
-  if(prot.length>=6 && k && !(k.protocolos||[]).includes(prot)){
-    k.protocolos=[...(k.protocolos||[]), prot];
-    await patchCaso(t.caso_id, {protocolos:k.protocolos});
-  }
+  const cpT = prot.length>=6 && k && corpoProtocolos(k, [prot]);
+  if(cpT){ await patchCaso(t.caso_id, cpT); Object.assign(k, cpT); }
   // F64 · concluir a tarefa que nasceu do prazo fatal baixa o prazo JUNTO —
   // ninguém precisa clicar em ✔ feito de novo na linha do prazo. A certidão do
   // vínculo é o carimbo [PRAZO dd.mm.aaaa] no comentário de origem batendo com
@@ -14127,13 +14187,18 @@ function escolherProcesso(cliId, ativos){
             <div class="meio-sub">Escolha em qual você vai trabalhar — é nele que o andamento será registrado.</div></div>
           <button class="btn-mini" onclick="fecharEscolha()" title="voltar para a lista">✕</button>
         </div>
-        ${ativos.map(k=>`<button class="proc-op" onclick="escolhido('${cliId}','${k.id}')">
+        ${ativos.map(k=>{ const n = numerosDoCaso(k);
+          // F220 · todos os números do caso, para se saber qual é qual antes de abrir
+          const nums = Object.keys(TIPO_NUM).flatMap(t=>n[t].map(d=>`${t==="proc"?"proc.":t==="nup"?"recurso":t==="prot"?"protocolo":"NB"} ${fmtNum(t, d)}`));
+          return `<button class="proc-op" onclick="escolhido('${cliId}','${k.id}')">
           <span class="proc-lista">${esc(listaDe(k))}</span>
           <span class="proc-nome">${esc(tituloCaso(k))}</span>
-          <span class="proc-sub">${k.processo?`proc. ${esc(k.processo)} · `:""}${k.nb?`NB ${esc(k.nb)} · `:""}${esc(ultimo(k))}</span>
+          <span class="proc-sub">${nums.length?esc(nums.join(" · "))+" · ":"sem número · "}${esc(ultimo(k))}</span>
           ${k.prazo?`<span class="proc-prazo">🗓 ${fmt(k.prazo)}${k.lembrar_motivo?` — ${esc(k.lembrar_motivo.length>40?k.lembrar_motivo.slice(0,40)+"…":k.lembrar_motivo)}`:""}</span>`:""}
           ${k.urgente?`<span class="chip urg">🔥 URGENTE</span>`:""}${chipExig(k)}
-        </button>`).join("")}
+        </button>`; }).join("")}
+        <div class="proc-org"><button class="btn-mini" onclick="fecharEscolha();abrirOrganizar('${cliId}')"
+          title="levar NB, protocolo, recurso e processo ao caso certo, ou juntar os casos que são o mesmo benefício">⇄ Organizar os números destes casos</button></div>
       </div>
     </div>`;
   document.getElementById("modal").style.display="block";
@@ -14289,7 +14354,9 @@ async function abrirFicha(cliId){
       // F172 · sem atendimento aberto e com anotações (lista 🙋 Escritório),
       // a ficha abre na Análise de Direito, onde elas estão
       const temNotas=notasDoTodo(c), vivosA=pcsA.some(p=>!p.so_lembrete);
+      // F220 · atendimento em curso: a ficha abre na Identificação, onde está o "Abrir atendimento"
       subCad = (temNotas && !vivosA) ? "direito"
+        : vivosA ? "identificacao"
         : !triagemFechada(c) ? "triagem"
         : (pcsA.some(p=>!p.so_lembrete)||!pcsA.length) ? "anotacoes" : "identificacao";
     }
@@ -14784,7 +14851,10 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // sem caso): Anotações, Triagem, Documentos e Mensagens surgem quando se
   // abre o + atendimento — é o fluxo que o colaborador segue
   if(!pcsVivos.length){
-    vis.triagem = vis.documentos = vis.mensagens = false;
+    vis.triagem = vis.mensagens = false;
+    // F220 · com caso em andamento, Documentos fica: é onde estão a procuração,
+    // o contrato e o que falta ao caso, e o "Nas outras abas" do caso leva até lá
+    vis.documentos = ks.some(k=>k.fase!=="encerrado");
     // pré-caso recém-removido: as Anotações ficam, porque o ↺ restaurar mora na mesa
     vis.anotacoes = !!(c.campos||{}).pc_lixeira;
   }
@@ -14801,7 +14871,8 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // atendimento, o Mapa e a Análise de Direito nascem do "+ atendimento"
   if(!pcsVivos.length){ vis.pa = vis.mapa = false; }
   // F209 · no modo atendimento os quatro passos sempre abrem, e abrem na tela cheia
-  else if(_atendAberto.has(c.id)){ vis.direito = vis.documentos = true; }
+  // F220 · e o Primeiro atendimento abre mesmo sem dossiê: é onde se escolhe o benefício
+  else if(_atendAberto.has(c.id)){ vis.direito = vis.documentos = vis.pa = true; }
   // valores antigos gravados: "atendimento" era o trilho interno de
   // Anotações; "consulta" virou seção do painel Documentos (F31)
   let cd = subCad==="atendimento" ? "anotacoes"
@@ -14829,10 +14900,11 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
         title="abrir um atendimento novo — pode virar caso novo ou só lembrete"
         onclick="novoAtendimento('${c.id}')">+ atendimento</button>`
         : !tela ? `<button class="trilho-mais atend-novo" style="align-self:center;margin-left:auto"
-        title="abre a tela do atendimento em curso" onclick="_atendAberto.add('${c.id}');irSubCad('${vis.pa?"pa":"direito"}')">Abrir atendimento</button>` : ""}
+        title="abre a tela do atendimento em curso" onclick="_atendAberto.add('${c.id}');irSubCad('pa')">Abrir atendimento</button>` : ""}
     </div>
     ${/* F176 · cliente mantido em Escritório: as três saídas no topo */""}
-    ${(cd==="anotacoes"||cd==="direito") && (!ks.some(k=>k.fase!=="encerrado") || ks.some(k=>k.fase==="escritorio") || pcsVivos.length>0)
+    ${/* F220 · na tela de atendimento o Desfecho e a Documentos fazem o papel da barra */""}
+    ${!tela && (cd==="anotacoes"||cd==="direito") && (!ks.some(k=>k.fase!=="encerrado") || ks.some(k=>k.fase==="escritorio") || pcsVivos.length>0)
       ? barraEscritorio(c) : ""}
     ${cd==="triagem" ? painelTriagemFicha(c, ks) : ""}
     ${cd==="documentos" ? painelDocumentosAtend(c, ks) : ""}
@@ -14841,6 +14913,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     ${cd==="pa" ? painelPA(c, ks) : ""}
     ${cd==="mapa" ? painelMapa(c, ks) : ""}
     ${cd==="direito" ? painelDireito(c) : ""}
+    ${tela && cd!=="identificacao" ? conversaAtendimento(c) : ""}
     ${cd!=="identificacao" ? "" : `
     ${/* a aposentadoria provável mudou-se para a aba 🔔 Lembretes: é aviso de
          data que chega, não dado de cadastro (pedido do Paulo) */""}
@@ -14962,6 +15035,40 @@ function cabecalhoAtendimento(c, cd, vis){
 }
 const _atendAberto = new Set();
 const ATEND_SUBS = new Set(["pa","mapa","direito","documentos"]);
+// F220 · a conversa da equipe dentro da tela de atendimento: as mesmas
+// anotações do atendimento (campos.atendimento), com @nome que vira menção,
+// sem sair da tela. Gerado o caso, elas viram andamentos dele, como sempre.
+function conversaAtendimento(c){
+  const pc = preCasoAberto(c);
+  const ns = ((c.campos||{}).atendimento||[]).filter(n=>!pc || !n.precaso_id || n.precaso_id===pc.id).slice(-6).reverse();
+  return `<details class="atend-conversa" id="atend-conversa" ${ns.length?"open":""}>
+    <summary>Conversa da equipe${ns.length?` (${ns.length})`:""} <span class="meio-sub">anotações deste atendimento · @nome avisa a pessoa</span></summary>
+    <div class="atend-conv-corpo">
+      ${ns.map(n=>`<p class="atend-nota"><b>${esc(n.quem||"")}</b> <span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span><br>${destacarMencoes(esc(String(n.texto||"")))}</p>`).join("")
+        || `<p class="meio-sub">Nenhuma anotação ainda neste atendimento.</p>`}
+      <div class="atend-conv-nova"><textarea id="atend-nota" rows="2" placeholder="Anote para a equipe; @Amanda avisa a Amanda"></textarea>
+        <button type="button" class="adr-bt adr-primario" onclick="notaDoAtendimento('${c.id}')">Anotar</button></div>
+    </div></details>`;
+}
+async function notaDoAtendimento(cliId){
+  const c = D.cliPorId.get(cliId), ta = document.getElementById("atend-nota"); if(!c || !ta) return;
+  const t = (ta.value||"").trim(); if(!t) return aviso("Escreva a anotação");
+  const pc = preCasoAberto(c);
+  const nota = {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], autor_id:eu.id, texto:t, ...(pc?{precaso_id:pc.id}:{})};
+  const campos = {...(c.campos||{}), atendimento:[...((c.campos||{}).atendimento||[]), nota]};
+  try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos})}); }
+  catch(e){ return aviso("Não consegui guardar a anotação — tente de novo"); }
+  c.campos = campos; ta.value = "";
+  // @nome vira menção presa ao cliente (sem a coluna cliente_id, vai sem ela)
+  const alvos = equipeAtiva().filter(co=>co.id!==eu.id && new RegExp("@"+(co.nome||"").split(" ")[0]+"\\b","i").test(t));
+  for(const co of alvos){
+    const corpo = {de_id:eu.id, para_id:co.id, cliente_id:cliId, texto:`${c.nome}: ${t.slice(0,200)}`};
+    await api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify(corpo)})
+      .catch(()=>{ delete corpo.cliente_id; return api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify(corpo)}).catch(()=>{}); });
+  }
+  aviso(`Anotação guardada${alvos.length?` — ${alvos.map(x=>x.nome.split(" ")[0]).join(", ")} avisado(s)`:""}`, false);
+  repintarFicha();
+}
 // fechar a tela de atendimento: o que foi escrito na Análise de Direito é registrado antes
 async function sairModoAtendimento(cliId){
   await salvarAnaliseSePreenchida(cliId);
@@ -16721,22 +16828,24 @@ const SITE_INTERNO = "https://advprevidenciaria.netlify.app/";
 // deu: o CPF desta ficha indo junto para a consulta externa, e os anexos da
 // IN 128 a um clique de quem está fazendo a triagem. O resto abre em aba
 // própria, sem fingir que está integrado.
+// F220 · o terceiro campo é o artigo da IN 128 consolidada que cita o anexo
+// (conferido em 13.10.2026); I-A, I-F e XXVII não têm artigo localizado
 const ANEXOS_IN128 = [
-  ["RAC Completo (Anexo I)", "AnexoI.docx"],
-  ["RAC Acerto de Dados (Anexo I-A)", "AnexoI-A-2.1.docx"],
-  ["RAC Vínculos (Anexo I-B)", "AnexoI-B-2.2.docx"],
-  ["RAC Remunerações CI (Anexo I-D)", "AnexoI-D-2.4.docx"],
-  ["RAC Reconhecimento (Anexo I-E)", "AnexoI-E-2.5.docx"],
-  ["RAC Acerto de Contribuições (Anexo I-F)", "AnexoI-F-2.6.docx"],
-  ["DTC (Anexo IV)", "AnexoIV.docx"],
-  ["Relação de Remunerações (Anexo V)", "AnexoV.docx"],
-  ["Cálculo em Atraso (Anexo VII)", "AnexoVII.docx"],
-  ["Autodeclaração Rural (Anexo VIII)", "AnexoVIII.docx"],
-  ["PPP (Anexo XVII)", "AnexoXVII.docx"],
-  ["Procuração (Anexo XXII)", "AnexoXXII.docx"],
-  ["Declaração de Pensão (Anexo XXIV)", "AnexoXXIV.docx"],
-  ["Termo de Responsabilidade (Anexo XXVII)", "AnexoXXVII.docx"],
-  ["Termo de Compromisso (Anexo XXIX)", "AnexoXXIX.docx"],
+  ["RAC Completo (Anexo I)", "AnexoI.docx", "art. 12, § 1º"],
+  ["RAC Acerto de Dados (Anexo I-A)", "AnexoI-A-2.1.docx", ""],
+  ["RAC Vínculos (Anexo I-B)", "AnexoI-B-2.2.docx", "art. 12, § 2º, I: empregado e doméstico"],
+  ["RAC Remunerações CI (Anexo I-D)", "AnexoI-D-2.4.docx", "art. 12, § 2º, III: contribuinte individual prestador de serviço"],
+  ["RAC Reconhecimento (Anexo I-E)", "AnexoI-E-2.5.docx", "art. 12, § 2º, IV: reconhecimento de filiação"],
+  ["RAC Acerto de Contribuições (Anexo I-F)", "AnexoI-F-2.6.docx", ""],
+  ["DTC (Anexo IV)", "AnexoIV.docx", "art. 69"],
+  ["Relação de Remunerações (Anexo V)", "AnexoV.docx", "art. 69, § 2º"],
+  ["Cálculo em Atraso (Anexo VII)", "AnexoVII.docx", "art. 105"],
+  ["Autodeclaração Rural (Anexo VIII)", "AnexoVIII.docx", "art. 115, § 1º"],
+  ["PPP (Anexo XVII)", "AnexoXVII.docx", "art. 281"],
+  ["Procuração (Anexo XXII)", "AnexoXXII.docx", "art. 534, § 1º, I: procuração com a declaração de ausência"],
+  ["Benefício em outro regime (Anexo XXIV)", "AnexoXXIV.docx", "art. 669: declaração de recebimento de benefício em outro regime"],
+  ["Termo de Responsabilidade (Anexo XXVII)", "AnexoXXVII.docx", ""],
+  ["Termo de Compromisso (Anexo XXIX)", "AnexoXXIX.docx", "art. 527, § 7º: administrador provisório"],
 ];
 const IN128_BASE = "https://portalin.inss.gov.br/assets/anexos/in/";
 // as ferramentas que continuam morando no site interno, cada uma com o que
@@ -16789,8 +16898,8 @@ function painelConsulta(c){
       <p class="cad-nota" style="margin:0 0 9px">O acerto do CNIS tem um anexo certo para cada
         tipo de erro. Baixar o errado devolve a exigência semanas depois.</p>
       <div class="form-linha" style="flex-wrap:wrap">
-        ${ANEXOS_IN128.map(([rot,arq])=>`<a class="cad-mini" style="text-decoration:none"
-          href="${IN128_BASE}${arq}" target="_blank" rel="noopener">${esc(rot)}</a>`).join("")}
+        ${ANEXOS_IN128.map(([rot,arq,art])=>`<a class="cad-mini" style="text-decoration:none"
+          href="${IN128_BASE}${arq}" target="_blank" rel="noopener" title="${esc(art ? "IN 128, "+art : "sem artigo da IN 128 localizado que cite este anexo")}">${esc(rot)}</a>`).join("")}
       </div>
       <p class="cad-nota"><a href="https://portalin.inss.gov.br/anexos" target="_blank"
         rel="noopener">Ver todos os anexos no portal</a></p>
@@ -17274,12 +17383,13 @@ function menuProcessos(ev, ks){
   // clicar no nome. Caso sem lista de origem cai no nome da fase.
   const item=k=>`<div class="mp-it ${casoSel===k.id?"sel":""} ${k.fase==="encerrado"?"enc":""}" data-mp="${k.id}" style="${k.fase==="encerrado"?"opacity:.55":""}">
     <b>${k.urgente?"🔥 ":""}${esc(tituloCaso(k))}</b>
-    <small>${k.fase==="encerrado"?"✔ Encerrado":esc(listaDe(k)!=="—"?listaDe(k):(NOME_FASE[k.fase]||""))}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠ exigência":""}${k.nb?" · NB "+esc(k.nb):((k.protocolos||[]).length?" · 📄 "+(k.protocolos||[]).slice(-1)[0]:"")}</small>
+    <small>${k.fase==="encerrado"?"✔ Encerrado":esc(listaDe(k)!=="—"?listaDe(k):(NOME_FASE[k.fase]||""))}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠ exigência":""}${(n=>esc(Object.keys(TIPO_NUM).flatMap(t=>n[t].slice(0,1).map(d=>` · ${t==="proc"?"proc.":t==="nup"?"recurso":t==="prot"?"📄":"NB"} ${fmtNum(t,d)}`)).join("")))(numerosDoCaso(k))}</small>
   </div>`;
   m.innerHTML =
     ks.filter(k=>k.fase!=="encerrado").map(item).join("")
     + (ks.length>1?`<div class="mp-it ${!casoSel?"sel":""}" data-mp=""><b>📚 Todos os processos</b><small>andamentos juntos</small></div>`:"")
     + ks.filter(k=>k.fase==="encerrado").map(item).join("")
+    + (ks.filter(k=>k.fase!=="encerrado").length>1 ? `<div class="mp-it mp-novo" data-mp="__org__">⇄ Organizar os casos</div>` : "")
     + `<div class="mp-it mp-novo" data-mp="__novo__">＋ Novo processo</div>`;
   document.body.appendChild(m);
   const r=ev.currentTarget.getBoundingClientRect(), W=m.offsetWidth||300, H=m.offsetHeight||200;
@@ -17288,6 +17398,7 @@ function menuProcessos(ev, ks){
   m.querySelectorAll("[data-mp]").forEach(it=>it.onclick=()=>{
     const v=it.dataset.mp;
     fecharMenuProcessos();
+    if(v==="__org__") return organizarCasos(clienteAberto);
     if(v==="__novo__"){ abaAtiva=7; }
     else { casoSel=v||null; abaAtiva=2; subAba="escritorio"; }   // F166
     repintarFicha();
@@ -21369,8 +21480,9 @@ async function addConsideracao(cliId){
 }
 function caixaConsideracoes(c){
   return `<section class="adx-sec"><h3>Minhas considerações</h3>
-    <textarea id="adx-cons" rows="3" placeholder="O que a leitura dos documentos mostrou, o que conferir, o que pedir ao cliente…" style="width:100%"></textarea>
-    <div class="form-linha" style="justify-content:flex-end"><button type="button" onclick="addConsideracao('${c.id}')">Adicionar consideração</button></div></section>`;
+    <textarea id="adx-cons" rows="3" placeholder="O que a leitura dos documentos mostrou, o que conferir, o que pedir ao cliente…"
+      style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:14px;line-height:1.5;resize:vertical;background:var(--branco,#fff)"></textarea>
+    <div class="form-linha" style="justify-content:flex-end"><button type="button" class="adr-bt adr-primario" onclick="addConsideracao('${c.id}')">Adicionar consideração</button></div></section>`;
 }
 function listaConsideracoes(c){
   const cs = consideracoesDe(c);
@@ -21397,7 +21509,8 @@ const BENEF = {
   tempo: [["idade","Por idade urbana · B41","B41","B41",["idade","carencia","tempos"]],
           ["transicao","Tempo de contribuição e transição · B42","B42","B42",["tempos","carencia","idade","transicao"]],
           ["professor","Professor · B57","B57","B57",["tempos","carencia","idade","magisterio"]],
-          ["pcd","Pessoa com deficiência, LC 142 · B42/B41","B42","B42.PCD",["tempos","carencia","defic"]]],
+          ["pcd","PcD por tempo, LC 142 · B42","B42","B42.PCD",["tempos","carencia","defic"]],
+          ["pcd_idade","PcD por idade, LC 142 · B41","B41","B41.PCD",["idade","tempos","carencia","defic"]]],
   especial: [["b46","Aposentadoria especial · B46","B46","B46",["tempos","especial","carencia"]],
              ["conv","Conversão de tempo especial","B46","B46.CONV",["tempos","especial"]]],
   rural: [["idade_rural","Por idade rural · B41","B41","B41.RURAL",["idade","rural","tempos"]],
@@ -21429,7 +21542,8 @@ const MOD_AD = {
   incap: {rot:"Incapacidade", campos:[["inc_dii","Início da incapacidade (DII)","date"],["inc_tipo","Tipo","select",["","Temporária","Permanente","Parcial"]],["inc_cid","CID","text"],["inc_pericia","Última perícia","date"],["inc_dcb","DCB","date"],["inc_trat","Em tratamento","select",SN]]},
   acid: {rot:"Acidente e nexo", campos:[["aci_data","Data do acidente ou da doença","date"],["aci_cat","CAT emitida","select",SN],["aci_nexo","Nexo","select",["","CAT","NTEP","Perícia","Sem nexo"]],["aci_categoria","Categoria na data","select",["","Empregado","Avulso","Segurado especial","Contribuinte individual","Facultativo"]],["aci_sequela","Sequela consolidada","select",SN]]},
   renda: {rot:"Renda do grupo familiar", campos:[["ren_pessoas","Pessoas no grupo familiar","number"],["ren_total","Renda bruta mensal do grupo (R$)","number"],["ren_saude","Gastos com saúde, fralda e dieta (R$)","number"],["ren_cad","CadÚnico atualizado (até 24 meses)","select",SN],["ren_trabalha","Exerce atividade remunerada","select",SN]]},
-  dependentes: {rot:"Dependentes", campos:[["dep_instituidor","Instituidor (nome, NB ou CPF)","text"],["dep_fato","Data do óbito ou da prisão","date"],["dep_classe","Dependente","select",["","Cônjuge","Companheiro(a)","Filho menor","Filho inválido ou com deficiência","Menor sob guarda","Pais","Irmão"]],["dep_nasc","Nascimento do dependente","date"],["dep_uniao","Casamento ou união desde","date"],["dep_contrib","Contribuições do instituidor","number"],["dep_prova","Prova da dependência","text"],["dep_regime","Regime da prisão","select",["","Fechado","Semiaberto","Aberto"]]]},
+  dependentes: {rot:"Dependentes", campos:[["dep_instituidor","Instituidor (nome, NB ou CPF)","text"],["dep_fato","Data do óbito ou da prisão","date"],["dep_classe","Dependente","select",["","Cônjuge","Companheiro(a)","Filho menor","Filho inválido ou com deficiência","Menor sob guarda","Pais","Irmão"]],["dep_nasc","Nascimento do dependente","date"],["dep_uniao","Casamento ou união desde","date"],["dep_contrib","Contribuições do instituidor","number"],["dep_prova","Prova da dependência","text"],["dep_regime","Regime da prisão","select",["","Fechado","Semiaberto","Aberto"],["reclusao"]],
+    ["dep_media12","Média dos salários de contribuição dos 12 meses antes da prisão (R$)","number",null,["reclusao"]],["dep_teto","Limite da Portaria na data da prisão (R$)","number",null,["reclusao"]]]},
   maternidade: {rot:"Salário-maternidade", campos:[["mat_fato","Fato gerador","select",["","Parto","Adoção ou guarda","Aborto não criminoso","Natimorto"]],["mat_data","Data","date"],["mat_situacao","Situação da segurada","select",["","Empregada","CI ou facultativa","Desempregada em graça","Segurada especial"]]]},
   revisao: {rot:"Revisão", campos:[["rev_nb","NB","text"],["rev_dib","DIB","date"],["rev_primeiro","Primeiro pagamento","date"],["rev_tese","Tese","select",()=>["",...(SUBESPECIES.REV||[]).slice(1).map(x=>x[1].replace(/^Revisão (pelo |por |do |da )?/, ""))]]]},
   cnis_acerto: {rot:"Acerto de CNIS", campos:[["cn_vinculo","Vínculo ou período a acertar","text"],["cn_pendencia","Pendência ou indicador","text"],["cn_prova","Prova (CTPS, GPS, RAIS, reclamatória)","text"]]},
@@ -21440,8 +21554,9 @@ const NAT_TEMPO = [["comum","Comum"],["rural","Rural"],["especial","Especial"],[
 const NAT_DET = {rural:["Regime",["Segurado especial","Empregado rural","Boia-fria ou diarista","CI rural"]], especial:["Agente, PPP e EPI",null], defic:["Grau",["Leve","Moderada","Grave"]],
   magisterio:["Função",["Regência","Direção","Coordenação","Assessoramento","Educação infantil"]], rpps:["CTC (número e data)",null], militar:["Documento",null], aprendiz:["Escola e certidão",null]};
 // os requisitos numéricos da base de conhecimento, por opção: idade [H, F] e carência
-const IDADE_EXIG = {idade:[65,62], hibrida:[65,62], idade_rural:[60,55], idoso:[65,65], pcd:[60,55], professor:[60,57]};
-const CAR_EXIG = {idade:180, transicao:180, professor:180, pcd:180, b46:180, hibrida:180, idade_rural:180, b31:12, b32:12, reclusao:24};
+const IDADE_EXIG = {idade:[65,62], hibrida:[65,62], idade_rural:[60,55], idoso:[65,65], pcd_idade:[60,55], professor:[60,57]};
+// F220 · conferidos na IN 128 consolidada: 180 (art. 199, II), 12 (art. 196, I), 24 (art. 198, II), PcD por idade 60/55 (art. 311)
+const CAR_EXIG = {idade:180, transicao:180, professor:180, pcd:180, pcd_idade:180, b46:180, hibrida:180, idade_rural:180, b31:12, b32:12, reclusao:24};
 const SM_2026 = 1621;   // salário mínimo da base (bpc-renda-grupo-familiar); 1/4 = 405,25
 const EC103 = "2019-11-13";
 // o chip diz o benefício pelo nome: "Dependentes" escondia a pensão e o auxílio-reclusão
@@ -21463,7 +21578,23 @@ function benefSel(c){
   const g = admDe(c).beneficios; if(g) return g;
   const ks = D.casosDoCliente.get(c.id) || [];
   if(!_paEsc.has(c.id) && (docsDoDossie(c.id).length || cnisDe(c))) paEscolhidos(c.id, paDados(c, ks).trabalhos);
-  return Object.fromEntries([...(_paEsc.get(c.id)||[])].filter(k=>BENEF[k]).map(k=>[k, [benefPadrao(c, k)]]));
+  const sel = Object.fromEntries([...(_paEsc.get(c.id)||[])].filter(k=>BENEF[k]).map(k=>[k, [benefPadrao(c, k)]]));
+  if(Object.keys(sel).length) return sel;
+  // F220 · sem escolha gravada e sem sinal do dossiê, vale o benefício que a
+  // recepção registrou no pré-caso ou que a última análise decidiu
+  const pc = preCasoAberto(c), a = analisesDe(c.id)[0], sv = a && (a.detalhes||{}).servico;
+  const x = [pc && pc.sub, pc && pc.cod, pc && pc.especie, sv && sv.sub, sv && sv.cod, (c.campos||{}).especie].map(opcaoDe).find(Boolean);
+  return x ? {[x.fam]:[x.o]} : {};
+}
+// a opção de benefício de um código (B41, B41.RURAL) ou de um nome do catálogo ("Apos. por Idade")
+function opcaoDe(x){
+  if(!x) return null;
+  const s = String(x), todas = BENEF_ORDEM.flatMap(fam=>BENEF[fam].map(op=>({fam, op})));
+  const porSub = todas.find(({op})=>op[3]===s); if(porSub) return {fam:porSub.fam, o:porSub.op[0]};
+  const nome = Object.entries(DOC_CAT).find(([, n])=>n===s), porNome = nome && todas.find(({op})=>op[0]===nome[0]);
+  if(porNome) return {fam:porNome.fam, o:porNome.op[0]};
+  const porCod = todas.find(({op})=>op[2] && op[2]===s);
+  return porCod ? {fam:porCod.fam, o:porCod.op[0]} : null;
 }
 const opcoesSel = c => Object.entries(benefSel(c)).flatMap(([fam, os])=>os.map(o=>benefOpcao(fam, o)).filter(Boolean).map(([o, rot, cod, sub, mods])=>({fam, o, rot, cod, sub, mods})));
 const modulosDe = c => { const ops = opcoesSel(c); return MOD_ORDEM.filter(m=>ops.some(o=>o.mods.includes(m))); };
@@ -21584,10 +21715,15 @@ const ADM_CALC = {
     for(const o of x.ops){ let ex = CAR_EXIG[o.o];
       if(["acid","b94","b36"].includes(o.o)) ls.push(admLi("ok", `${esc(o.rot)}: sem carência (art. 26, I e II, da Lei 8.213/91).`));
       else if(o.o==="urb") ls.push(admLi("info", `${esc(o.rot)}: 10 contribuições para CI e facultativa, inexigíveis pela ADI 2110 e pelo Enunciado 19 do CRPS; empregada e desempregada em graça não têm carência.`));
-      else if(o.o==="morte") ls.push(admLi("info", `${esc(o.rot)}: sem carência; 18 contribuições e 2 anos de casamento ou união só mudam a duração da cota.`));
+      else if(o.o==="morte") ls.push(admLi("info", `${esc(o.rot)}: sem carência (art. 195, III, da IN 128); 18 contribuições e 2 anos de casamento ou união só mudam a duração da cota.`));
+      else if(o.o==="idade_rural") ls.push(admLi("info", `${esc(o.rot)}: 180 meses de atividade rural, com prova material do período (art. 199, II, da IN 128); as contribuições do CNIS não medem esse tempo.`));
+      else if(o.o==="pcd_idade" || o.o==="idade" || o.o==="hibrida"){ const [est, txt] = cum!=null ? admFalta(cum, 180, n=>`${n} ${n===1?"contribuição":"contribuições"}`) : ["warn", "a conferir"];
+        ls.push(admLi(est, `${esc(o.rot)}: exige <b>180</b> (art. 199, II, da IN 128; inscrito até 24/07/1991 segue a tabela do art. 142 da Lei 8.213/91), ${txt}.`)); }
       else if(ex){ if(re && (o.o==="b31"||o.o==="b32"||o.o==="reclusao")) ex = ex/2;
         const [est, txt] = cum!=null ? admFalta(cum, ex, n=>`${n} ${n===1?"contribuição":"contribuições"}`) : ["warn", "a conferir"];
-        ls.push(admLi(est, `${esc(o.rot)}: exige <b>${ex}</b>${re && ex!==CAR_EXIG[o.o] ? " (metade, art. 27-A)" : ""}, ${txt}.`)); } }
+        ls.push(admLi(est, `${esc(o.rot)}: exige <b>${ex}</b>${re && ex!==CAR_EXIG[o.o] ? " (metade, art. 27-A)" : ""}, ${txt}.`));
+        if(o.o==="b31" || o.o==="b32") ls.push(admLi("info", "Sem carência no acidente de qualquer natureza, na doença profissional ou do trabalho e nas doenças da lista do art. 30, III, do RPS (art. 196, II, da IN 128)."));
+        if(o.o==="reclusao") ls.push(admLi("info", "As 24 contribuições valem para a prisão a partir de 18/01/2019; antes, sem carência (art. 198 da IN 128).")); } }
     return admUl(ls); },
   qualidade(c, x){ const g = x.gr, ls = [];
     if(!g) ls.push(admLi("warn", "O CNIS não foi lido: a qualidade não foi calculada."));
@@ -21611,7 +21747,8 @@ const ADM_CALC = {
   especial(c, x){ const esp = anosDe(x.tot.especial), ex = +x.v.esp_anos || 25, pts = {15:66, 20:76, 25:86}[ex], tot = anosDe(x.tot.comum), ls = [];
     ls.push(admLi(...(esp >= ex ? ["ok", `Tempo especial: <b>${tempoFmt(x.tot.especial)}</b>, cumpridos os ${ex} anos.`] : ["warn", `Tempo especial: <b>${tempoFmt(x.tot.especial)}</b>; exige ${ex} anos, faltam ${anosTxt(ex - esp)}.`])));
     if(x.idade!=null) ls.push(admLi(x.idade + tot >= pts ? "ok" : "warn", `Transição por pontos (art. 21 da EC 103): ${pts} pontos; tem ${(x.idade + tot).toFixed(1).replace('.', ',')} (idade e tempo).`));
-    ls.push(admLi("info", `A ADI 6309 afastou as idades mínimas de 55, 58 e 60 anos; o PPP do dossiê: ${(x.fd.ppps||[]).length ? `${(x.fd.ppps||[]).length} ${(x.fd.ppps||[]).length===1?"vínculo":"vínculos"}` : "nenhum"}.`));
+    ls.push(admLi("info", `IN 128: direito adquirido até 13/11/2019 sem idade (art. 261); filiado até 13/11/2019, ${pts} pontos (art. 262); filiado depois, idade de 55, 58 ou 60 anos (art. 260). A ADI 6309 declarou inconstitucional a idade mínima (STF, 6 a 5, julgada em 03/06/2026, acórdão publicado em 02/10/2026, segundo o IBDP; não conferido no portal do STF), e o art. 260 continua no texto consolidado da IN.`));
+    ls.push(admLi("info", `PPP no dossiê: ${(x.fd.ppps||[]).length ? `${(x.fd.ppps||[]).length} ${(x.fd.ppps||[]).length===1?"vínculo":"vínculos"}` : "nenhum"}. A conversão em tempo comum vale só até 13/11/2019 (art. 269, § 2º).`));
     if(x.v.esp_epi==="Sim") ls.push(admLi("warn", "EPI eficaz não afasta o ruído acima do limite (Tema 555/STF); nos demais agentes, exigir a prova da eficácia real."));
     if(x.v.esp_continua==="Sim") ls.push(admLi("crit", "Permanecer na atividade nociva cessa o benefício (Tema 709/STF)."));
     return admUl(ls); },
@@ -21626,7 +21763,9 @@ const ADM_CALC = {
     return admUl(ls); },
   defic(c, x){ const ls = [], g = x.v.def_grau, exig = {Grave:[25,20], Moderada:[29,24], Leve:[33,28]}[g];
     for(const o of x.ops){ if(o.o==="def") ls.push(admLi(x.v.def_longo==="Sim" ? "ok" : "warn", `${esc(o.rot)}: impedimento de longo prazo de 2 anos${x.v.def_longo==="Sim" ? ", informado" : ", a demonstrar no laudo"}; a avaliação é biopsicossocial (IFBrM).`));
-      if(o.o==="pcd"){ const t = anosDe(x.tot.comum); ls.push(admLi(exig ? (t >= exig[x.i] ? "ok" : "warn") : "warn", exig ? `LC 142, grau ${g.toLowerCase()}: ${exig[x.i]} anos de tempo como pessoa com deficiência; tem ${anosTxt(t)} nas linhas${t >= exig[x.i] ? "" : `, faltam ${anosTxt(exig[x.i] - t)}`}.` : "LC 142: escolha o grau para saber o tempo exigido (grave 25/20, moderada 29/24, leve 33/28 anos).")); } }
+      if(o.o==="pcd"){ const t = anosDe(x.tot.comum); ls.push(admLi(exig ? (t >= exig[x.i] ? "ok" : "warn") : "warn", exig ? `LC 142, grau ${g.toLowerCase()}: ${exig[x.i]} anos de tempo como pessoa com deficiência; tem ${anosTxt(t)} nas linhas${t >= exig[x.i] ? "" : `, faltam ${anosTxt(exig[x.i] - t)}`}.` : "LC 142: escolha o grau para saber o tempo exigido (grave 25/20, moderada 29/24, leve 33/28 anos).")); }
+      if(o.o==="pcd_idade"){ const t = anosDe(x.tot.porNat.defic || x.tot.comum), ok = t >= 15;
+        ls.push(admLi(ok ? "ok" : "warn", `${esc(o.rot)}: 15 anos de contribuição na condição de pessoa com deficiência, qualquer grau (art. 311 da IN 128); tem ${anosTxt(t)} nas linhas${ok ? "" : `, faltam ${anosTxt(15 - t)}`}.`)); } }
     if(x.v.def_did) ls.push(admLi("info", `DID em ${fmtBarra(x.v.def_did)}: só o tempo a partir dela conta como tempo de pessoa com deficiência.`));
     return admUl(ls); },
   incap(c, x){ const ls = [], g = x.gr, n = x.d ? (x.d.grupos.saude||[]).length : 0;
@@ -21646,7 +21785,11 @@ const ADM_CALC = {
     if(x.v.ren_trabalha==="Sim") ls.push(admLi("warn", "Atividade remunerada suspende o BPC (art. 21-A da LOAS); ver o auxílio-inclusão."));
     return admUl(ls); },
   dependentes(c, x){ const ls = [], f = x.v.dep_fato, cl = x.v.dep_classe;
-    for(const o of x.ops){ if(o.o==="reclusao") ls.push(admLi(x.v.dep_regime==="Fechado" ? "ok" : x.v.dep_regime ? "crit" : "warn", "Auxílio-reclusão: só regime fechado desde 18/01/2019, com 24 contribuições e baixa renda do segurado.")); }
+    for(const o of x.ops){ if(o.o!=="reclusao") continue;
+      ls.push(admLi(x.v.dep_regime==="Fechado" ? "ok" : x.v.dep_regime ? "crit" : "warn", "Auxílio-reclusão: regime fechado, baixa renda e 24 contribuições do instituidor (art. 383 da IN 128)."));
+      const md = x.v.dep_media12, tt = +x.v.dep_teto;
+      if(md!==undefined && md!=="" && tt) ls.push(admLi(+md <= tt ? "ok" : "crit", `Baixa renda: média de ${moedaBR(+md)} nos 12 meses antes da prisão, ${+md <= tt ? "dentro" : "acima"} do limite de ${moedaBR(tt)} da Portaria da data (art. 383, § 2º).`));
+      else ls.push(admLi("warn", "Baixa renda: informe a média dos salários de contribuição dos 12 meses anteriores ao mês da prisão e o limite da Portaria vigente na data; sem salário de contribuição no período, é baixa renda (art. 383, §§ 2º e 5º).")); }
     if(f && /Cônjuge|Companheiro/.test(cl||"")){ const un = x.v.dep_uniao, ctb = +x.v.dep_contrib;
       const curta = (un && (new Date(f) - new Date(un))/86400000 < 730) || (x.v.dep_contrib!=="" && !isNaN(ctb) && ctb < 18);
       const id = x.v.dep_nasc ? idadeEm(x.v.dep_nasc, f) : null;
@@ -21677,7 +21820,8 @@ const ADM_CALC = {
 };
 const admCalcHtml = (m, c, x) => { try{ return ADM_CALC[m] ? ADM_CALC[m](c, x) : ""; }catch(e){ return `<p class="meio-sub">Não consegui calcular este quadro.</p>`; } };
 function camposModulo(c, m){
-  const v = admDe(c).valores, cs = MOD_AD[m].campos; if(!cs.length) return "";
+  // F220 · o 5º elemento do campo diz de que opções ele é (o regime da prisão e a baixa renda são do auxílio-reclusão)
+  const opsSel = opcoesSel(c).map(o=>o.o), v = admDe(c).valores, cs = MOD_AD[m].campos.filter(f=>!f[4] || f[4].some(o=>opsSel.includes(o))); if(!cs.length) return "";
   return `<div class="adm-campos">${cs.map(([k, rot, tipo, ops])=>`<label class="adm-campo"><span>${esc(rot)}</span>${tipo==="select"
     ? `<select data-adm="${k}" onchange="admCampo('${c.id}',this)">${(typeof ops==="function" ? ops() : ops).map(o=>`<option value="${esc(o)}" ${(v[k]||"")===o?"selected":""}>${esc(o||"—")}</option>`).join("")}</select>`
     : `<input type="${tipo}" data-adm="${k}" value="${esc(v[k]??"")}" ${tipo==="number"?'min="0" step="0.01"':""} onchange="admCampo('${c.id}',this)">`}</label>`).join("")}</div>`;
@@ -21783,7 +21927,9 @@ function painelTrabalhos(c, ks){
 </div>`;
 }
 function painelPA(c, ks){
-  const d = paDados(c, ks), esc0 = paEscolhidos(c.id, d.trabalhos);
+  // F220 · sem dossiê não há sinal para escolher trabalho: a escolha fica com a recepção e com quem atende
+  const semDz = !docsDoDossie(c.id).length && !cnisDe(c);
+  const d = paDados(c, ks), esc0 = semDz ? new Set() : paEscolhidos(c.id, d.trabalhos);
   const ab = _paBloco.has(c.id) ? _paBloco.get(c.id) : "qual", sel = _paCartao.get(c.id) || "";
   const dz = c.dossie || {}, ems = Object.values(dz).map(x=>x&&x.em).filter(Boolean).sort(), nDocs = docsDoDossie(c.id).length;
   const PORT = {meuinss:"Meu INSS", mte:"Emprega Brasil", recursos:"e-Recursos", hc:"HC Ribeirão", redesim:"Redesim"};
@@ -21822,10 +21968,15 @@ function painelPA(c, ks){
     </nav>
     <div class="pa-cab"><div><h2>Primeiro atendimento</h2>
       ${(n => n ? `<p class="meio-sub" role="status">Lendo o dossiê: faltam ${n} ${n===1?"documento":"documentos"}; o painel se completa sozinho.</p>` : "")(dossieFaltaLer(c.id))}
-      <p>Dossiê baixado em <span class="mono">${ems.length ? esc(fmtBarra(ems[ems.length-1].slice(0,10))) : "—"}</span> · ${nDocs} ${nDocs===1?"documento":"documentos"} · ${esc(Object.keys(dz).map(k=>PORT[k]||k).join(", ")||"nenhum portal")}${inex.length ? `. Os portais informaram que não existem ${esc(inex.slice(0, 4).join(", "))}` : ""}.</p></div>
+      ${semDz ? "" : `<p>Dossiê baixado em <span class="mono">${ems.length ? esc(fmtBarra(ems[ems.length-1].slice(0,10))) : "—"}</span> · ${nDocs} ${nDocs===1?"documento":"documentos"} · ${esc(Object.keys(dz).map(k=>PORT[k]||k).join(", ")||"nenhum portal")}${inex.length ? `. Os portais informaram que não existem ${esc(inex.slice(0, 4).join(", "))}` : ""}.</p>`}</div>
       <button type="button" class="btn-mini" onclick="irSubCad('mapa')">Mapa do dossiê</button></div>
     ${(n => n && !nomeIgual(n, c.nome) ? `<p class="pa-nome-dif" role="alert"><b>Nome diferente do CNIS.</b> No CRM consta <b>${esc(c.nome||"")}</b>, e no CNIS consta <b>${esc(n)}</b>. <button type="button" class="btn-mini" onclick="usarNomeCnis('${c.id}')">Usar o nome do CNIS</button></p>` : "")(nomeDoCnis(c))}
-    ${faixaBeneficios(c, d)}
+    ${/* F220 · sem dossiê o passo continua: o relato da recepção e a escolha do benefício */""}
+    ${!nDocs && !cnisDe(c) ? `<section class="pa-sem-dz" aria-label="Sem dossiê">
+      <p><b>O dossiê ainda não foi baixado.</b> Os blocos da situação se completam quando a extensão trouxer os documentos dos portais com o gov.br do cliente. Até lá, escolha o benefício abaixo e siga para a Análise de Direito.</p>
+      ${(ns=>ns.length ? `<div class="pa-relato"><span class="meio-sub">O que a recepção registrou</span>${ns.map(n=>`<p><b>${esc(n.quem||"")}</b> <span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span> ${esc(String(n.texto||"").slice(0,400))}</p>`).join("")}</div>` : "")(((c.campos||{}).atendimento||[]).slice(-3))}
+    </section>` : ""}
+    ${faixaBeneficios(c, semDz ? null : d)}
     <div class="pa-corpo">
       <section class="pa-sit" aria-labelledby="pa-t-sit">
         <div class="pa-sit-cab"><h3 id="pa-t-sit">Situação ${({F:"da cliente",M:"do cliente"})[civilDe(c).sexo]||"do cliente"}</h3><span class="meio-sub">o que os documentos dizem, com a fonte de cada dado</span>
@@ -22890,7 +23041,25 @@ function atoDaExigencia(det){
 }
 // 30 dias corridos (art. 574, § 4º, II, da IN 128/2022), vencimento em dia sem expediente vai ao dia útil
 const prazoDaExigencia = ato => ato ? proxDiaUtil(somaDias(ato, 30)) : null;
+// F220 · os prazos de análise do acordo homologado no RE 1.171.152 (relatório
+// oficial do INSS de acompanhamento do acordo): aposentadorias 90 dias, pensão
+// 60, auxílio-reclusão 60, salário-maternidade 30, BPC 90. Os benefícios por
+// incapacidade não constam do relatório e ficam de fora. Com exigência em
+// aberto, o prazo não corre e a linha some; decidido o pedido, também.
+const MORA_DIAS = {B41:90, B42:90, B46:90, B57:90, B21:60, B25:60, B80:30, B87:90, B88:90};
+function prazoMora(k){
+  if(!k || k.fase!=="inss" || !k.der || k.exigencia_prazo || k.resultado==="deferido" || (k.decisao_em && k.decisao_em >= k.der)) return null;
+  const dias = MORA_DIAS[String(k.especie||"").toUpperCase().slice(0,3)]; if(!dias) return null;
+  const data = somaDias(k.der, dias);
+  return data ? {data, dias, vencido: data < hoje()} : null;
+}
+// F220 · os 30 dias são do recurso administrativo: só nas fases INSS e
+// Conselho, e o prazo sai quando o recurso foi protocolado depois da decisão
+// ou a última decisão foi favorável. No judicial vale o prazo do tribunal.
 function recorrerAte(k){
+  if(!k || !k.decisao_em || !["inss","conselho"].includes(k.fase) || k.resultado==="deferido") return null;
+  const rec = [k.ro_protocolado_em, k.re_protocolado_em, k.ed_protocolado_em].filter(Boolean).sort().pop();
+  if(rec && rec >= k.decisao_em) return null;
   const d = somaDias(k.decisao_em, 30);
   return d ? proxDiaUtil(d) : null;
 }
@@ -23019,13 +23188,18 @@ function linhasDeDatas(cliId){
     // moravam só em chips do cartão entram aqui como linhas, com a mesma
     // régua de cor — exigência do INSS, prazo de recurso e DCB
     if(temaV10()){
-      if(x.exigencia_prazo) linhas.push({data:x.exigencia_prazo, ico:"⚠", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true,
+      if(x.exigencia_prazo) linhas.push({data:x.exigencia_prazo, ico:"⚠", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true, rotulo:"Exigência do INSS",
         rot:`<b>Exigência do INSS${x.exigencia_descricao?` — ${esc(String(x.exigencia_descricao).slice(0,110))}`:""}</b>
              <small class="qd-de">Prazo da exigência · ${esc(tituloCaso(x))}</small>`, edita:"",
         acao:`<button class="btn-mini" onclick="copiarMsgExigencia('${x.id}')" title="mensagem pronta ao cliente sobre a exigência">💬 msg ao cliente</button>
               <button class="btn-mini" onclick="cumprirExigencia('${x.id}')" title="registra a exigência como cumprida">✔ cumprida</button>`});
+      // F220 · o prazo de análise do INSS pelo acordo do RE 1.171.152: vencido, cabe o MS por mora
+      const mora=prazoMora(x);
+      if(mora) linhas.push({data:mora.data, ico:"⌛", natureza:"compromisso", casoId:x.id, cru:true, rotulo:mora.vencido?"Mora do INSS":"Prazo de análise do INSS",
+        rot:`<b>${mora.vencido?"Análise do INSS vencida — avalie o mandado de segurança por mora":"Prazo do INSS para decidir o pedido"}</b>
+             <small class="qd-de">${mora.dias} dias da DER de ${fmt(x.der)} (acordo do RE 1.171.152) · ${esc(tituloCaso(x))}</small>`, edita:"", acao:""});
       const rec=recorrerAte(x);
-      if(rec && x.fase!=="pagamento") linhas.push({data:rec, ico:"⚖️", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true,
+      if(rec) linhas.push({data:rec, ico:"⚖️", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true, rotulo:x.fase==="conselho"?"Recurso especial":"Recurso ordinário",
         rot:`<b>Recorrer até</b> <small class="qd-de">Prazo recursal · 30 dias da decisão de ${fmt(x.decisao_em)} · ${esc(tituloCaso(x))}</small>`,
         edita:"", acao:""});
       // F118 · a DCB é PRAZO FATAL e tem quadro próprio (pedido do Paulo,
@@ -23748,6 +23922,9 @@ function lcNumeros(k){
   const falta = [["NB","lcNovoNb",!nbs.length],["E-SisREC","lcNovoNup",!nups.length],["Judicial","lcNovoProc",!procs.length]].filter(x=>x[2]);
   if(falta.length) partes.push(`<div class="lc-linha"><span class="lc-k">Incluir</span>${
     falta.map(([r,f])=>`<button class="btn-mini" onclick="${f}('${k.id}')">+ ${r}</button>`).join("")}</div>`);
+  // F220 · com mais de um caso aberto, o número que está no caso errado vai ao certo daqui
+  if(casosParaOrganizar(k.cliente_id).length>1) partes.push(`<div class="lc-linha"><span class="lc-k">Outros casos</span>
+    <button class="btn-mini" onclick="organizarCasos('${k.cliente_id}')" title="levar NB, protocolo, recurso e processo ao caso certo, ou juntar os casos que são o mesmo benefício">⇄ organizar os números dos casos</button></div>`);
   return `<div class="lc-numeros" id="lc-numeros-${k.id}">${partes.join("")}
     <button class="lc-mais lc-mais2" onclick="lcAbrir('${k.id}',${lcNivel(k.id)===2?1:2})"
       title="protocolos, verificação, comentário fixo e ações do caso">${lcNivel(k.id)===2?"− gestão do caso":"+ gestão do caso"}</button></div>`;
@@ -24193,8 +24370,10 @@ let trVer = {}, trSel = {}, trAbre = {}, trAjuda = false;   // fase em vista, et
 function jornadaFases(k){
   const atual = faseDaTrilha(k), ordem = ["escritorio","inss","conselho","judicial"], ia = ordem.indexOf(atual);
   const marcou = (trilhaDe(k).fases)||{};
+  // F220 · o recurso protocolado e a ação ajuizada também dizem que a fase houve, sem o número
   const houve = {escritorio:true, inss:!!((k.protocolos||[]).length || k.nb || k.der),
-    conselho:!!((k.crps_nups||[]).length), judicial:!!k.processo};
+    conselho:!!((k.crps_nups||[]).length || k.ro_protocolado_em || k.re_protocolado_em),
+    judicial:!!(k.processo || (k.processos||[]).length || k.ajuizado_em)};
   return ordem.map((f,i)=>({f, st: i===ia ? "a" : i<ia ? (marcou[f] || (houve[f] ? "f" : "n")) : "v"}));
 }
 // o que a fase concluída diz: a última etapa cumprida e a data
@@ -24749,9 +24928,9 @@ async function guardarProtocolo(casoId){
   const v = ((document.getElementById("lc-prot-inp")||{}).value||"").replace(/\D/g,"");
   fecharCaixa();
   if(!v) return;
-  const lista = [...new Set([...(k.protocolos||[]), v])];
-  k.protocolos = lista;
-  await patchCaso(casoId, {protocolos:lista});
+  const cp = corpoProtocolos(k, [v]);
+  if(!cp) return aviso("Este protocolo já está no caso", false);
+  await patchCaso(casoId, cp); Object.assign(k, cp);
   aviso("Protocolo guardado ✔", false); abrirFicha(clienteAberto);
 }
 
@@ -25552,7 +25731,10 @@ const POPS_ANOTACAO = {
       {id:"der", rot:"DER", tipo:"date"}],
     // "Protocolo … 1234567890" é o que o Registrar guarda na ficha (linha do caso)
     texto:v=>`[PROTOCOLO] Número: ${soDig(v.num)}\nO que foi protocolado: ${v.oque||"—"}\nDER: ${v.der?fmtBarra(v.der):"—"}`,
-    efeito:async(k,v)=>{ if(v.der && !k.der){ k.der=v.der; await patchCaso(k.id,{der:v.der}); } }},
+    efeito:async(k,v)=>{ if(v.der && !k.der){ k.der=v.der; await patchCaso(k.id,{der:v.der}); }
+      // F220 · protocolado o requerimento, o caso sai do Escritório e vai ao INSS
+      if(k.fase==="escritorio") await andarEtapa(k.id, "🌻 INSS", `requerimento protocolado${v.der?` em ${fmtBarra(v.der)}`:""}`, "requerimento protocolado");
+      else if(k.fase==="inss" && !k.etapa) await marcarEtapa(k.id, "requerimento protocolado"); }},
   peticao:{rot:"Petição", cor:"ben", campos:[
       {id:"onde", rot:"Onde", tipo:"select", opts:["INSS","CRPS","Judicial"]},
       {id:"qual", rot:"Petição", tipo:"select", dependeDe:"onde", optsPor:{
@@ -25573,14 +25755,28 @@ const POPS_ANOTACAO = {
         await andarEtapa(k.id, "👪 Judicial", `ação distribuída em ${fmtBarra(v.data)}`, "ação distribuída");
       else if(v.onde==="INSS" && v.qual==="Requerimento")
         await andarEtapa(k.id, "🌻 INSS", `requerimento protocolado em ${fmtBarra(v.data)}`, "requerimento protocolado");
-      else if(v.onde==="INSS" && v.qual==="Cumprimento de exigência") await marcarEtapa(k.id, "aguardando análise"); }},
+      else if(v.onde==="INSS" && v.qual==="Cumprimento de exigência"){
+        // F220 · cumprida a exigência, o prazo dela sai dos quadros
+        if(k.exigencia_prazo){ k.exigencia_prazo=null; k.exigencia_descricao=null;
+          await patchCaso(k.id,{exigencia_prazo:null, exigencia_descricao:null}); }
+        await marcarEtapa(k.id, "aguardando análise"); } }},
   decisao:{rot:"Decisão", cor:"ben", campos:[
       {id:"res", rot:"Resultado", tipo:"select", opts:["Benefício concedido","Benefício indeferido","Recurso provido","Recurso improvido","Sentença procedente","Sentença improcedente","Parcialmente procedente","Outra"]},
       {id:"data", rot:"Data da decisão", tipo:"date", req:true},
       {id:"motivo", rot:"Motivo / fundamento", tipo:"text", larga:true}],
     texto:v=>`[DECISÃO] ${v.res} em ${fmtBarra(v.data)}.${v.motivo?` Motivo: ${v.motivo}`:""}`,
     // decisão contrária arma o "Recorrer até" (30 dias) nos quadros de prazo
-    efeito:async(k,v)=>{ if(/indeferid|improvid|improcedente|parcial/i.test(v.res)){ k.decisao_em=v.data; await patchCaso(k.id,{decisao_em:v.data}); }
+    // F220 · a decisão encerra a exigência e grava o resultado; a favorável
+    // desliga o "Recorrer até" que a contrária anterior tinha armado
+    efeito:async(k,v)=>{
+      const contra = /indeferid|improvid|improcedente|parcial/i.test(v.res), favor = /concedido|provido|procedente/i.test(v.res) && !contra;
+      // a contrária não grava "indeferido" no resultado: ele é o desfecho do
+      // caso e entra na taxa de êxito do painel, e o caso ainda vai recorrer
+      const muda = {};
+      if(contra){ muda.decisao_em = v.data; if(k.resultado==="deferido") muda.resultado = null; }
+      else if(favor){ muda.decisao_em = v.data; muda.resultado = "deferido"; }
+      if(k.exigencia_prazo){ muda.exigencia_prazo = null; muda.exigencia_descricao = null; }
+      if(Object.keys(muda).length){ Object.assign(k, muda); await patchCaso(k.id, muda); }
       await marcarEtapa(k.id, k.fase==="judicial" ? "sentença publicada" : k.fase==="conselho" ? "julgado" : "decidido"); }},
   contato:{rot:"Contato", cor:"neutro", campos:[
       {id:"canal", rot:"Canal", tipo:"select", opts:["WhatsApp","Telefone","Presencial","E-mail"]},
@@ -28591,9 +28787,9 @@ async function novoAndamento(casoUnico){
   }
   // protocolo citado entra na ficha e vira pesquisável ("protocolo 210...")
   const prot=texto.match(/protocolo\D{0,12}(\d{6,})/i);
-  if(prot && k && !(k.protocolos||[]).includes(prot[1])){
-    k.protocolos=[...(k.protocolos||[]), prot[1]];
-    await patchCaso(casoId, {protocolos:k.protocolos});
+  const cpA = prot && k && corpoProtocolos(k, [prot[1]]);
+  if(cpA){
+    await patchCaso(casoId, cpA); Object.assign(k, cpA);
     const cli=D.cliPorId.get(k.cliente_id);
     if(cli) cli._ix += " " + prot[1];
   }
@@ -28624,7 +28820,7 @@ async function novoAndamento(casoUnico){
       aviso(`🩺 Agendado: ${nomes} — 💡 criei no checklist: agendar atendimento presencial antes${sufixoDocs}`);
     } else aviso(`🩺 Agendado automaticamente: ${nomes}!${sufixoDocs}`);
   }
-  else aviso((prot?"Andamento registrado — protocolo 📄 guardado na ficha":"Andamento registrado — será replicado no To Do")+sufixoDocs+lembrou);
+  else aviso((prot?"Andamento registrado — protocolo 📄 guardado na ficha":"Andamento registrado no caso")+sufixoDocs+lembrou);
   abrirFicha(clienteAberto);
 }
 
@@ -29291,7 +29487,7 @@ async function fundirCasos(absorvidoId, destinoId){
   if(!await confirmar(`Fundir "${tituloCaso(a)}" para dentro de "${tituloCaso(d)}"?\n\n`
     +`Todo o histórico passa para o destino. `
     +(a.todo_task_id
-      ?"O caso incorporado fica como casca encerrada — CONCLUA a tarefa dele no To Do, senão a sincronização o reabre."
+      ?"O caso incorporado fica como casca encerrada, e a sincronização do To Do não o reabre."
       :"O caso incorporado (criado no CRM) será removido."))) return;
   const falhas=[];
   const t=async(rotulo,f)=>{ try{ await f(); }catch(e){ falhas.push(rotulo); } };
@@ -29323,6 +29519,15 @@ async function fundirCasos(absorvidoId, destinoId){
                   "parceria","processo_link","situacao_inss","cadunico","resultado","gratuidade"])
     if(!d[f] && a[f]) corpo[f]=a[f];
   corpo.protocolos=[...new Set([...(d.protocolos||[]),...(a.protocolos||[])])];
+  // F220 · os NBs e os processos do incorporado não se perdem quando o destino
+  // já tem os seus, e o protocolo que só ele tinha ganha a marca que a
+  // sincronização respeita (a tarefa do destino no To Do não o cita)
+  const nbsNovos = nbsDoCaso(a).filter(n=>!nbsDoCaso(d).some(x=>soDig(x)===soDig(n)) && soDig(n)!==soDig(corpo.nb));
+  if(nbsNovos.length) corpo.nbs=[...(Array.isArray(d.nbs)?d.nbs:[]), ...nbsNovos];
+  const procsD = processosDoCaso(d), procsNovos = processosDoCaso(a).filter(p=>!procsD.some(x=>soDig(x.numero)===soDig(p.numero)));
+  if(procsNovos.length) corpo.processos=[...procsD, ...procsNovos].map(p=>({numero:p.numero, nosso:p.nosso!==false, acompanhar:p.acompanhar!==false,
+    ...(p.rotulo?{rotulo:p.rotulo}:{}), ...(p.papelFixo?{papel:p.papelFixo}:{}), ...(p.classe?{classe:p.classe}:{}), ...(p.orgao?{orgao:p.orgao}:{}), ...(p.ajuizado?{ajuizado:p.ajuizado}:{})}));
+  if(a.datajud_multi) corpo.datajud_multi={...a.datajud_multi, ...(d.datajud_multi||{})};
   const nups=[...new Set([...nupsDoCaso(d),...nupsDoCaso(a)])];
   if(nups.length){ corpo.crps_nups=nups; corpo.crps_nup=null; }
   const blocos=[...blocosDoCaso(d)];
@@ -29335,7 +29540,10 @@ async function fundirCasos(absorvidoId, destinoId){
   if(a.importante && !d.importante) corpo.importante=true;
   if(!d.datajud && a.datajud) corpo.datajud=a.datajud;
   if(!d.trf3 && a.trf3) corpo.trf3=a.trf3;
-  corpo.arquivados={...(a.arquivados||{}),...(d.arquivados||{})};
+  // as marcas de número levado ("mov:") e de fusão são do incorporado, não do destino
+  const arqA = Object.fromEntries(Object.entries(a.arquivados||{}).filter(([ch])=>!/^mov:/.test(ch) && ch!=="fundido"));
+  corpo.arquivados={...arqA,...(d.arquivados||{})};
+  for(const p of protocolosDoCaso(a)) if(!protocolosDoCaso(d).includes(p)) corpo.arquivados[`add:prot:${p}`]={de:a.id, por:eu.id, em:new Date().toISOString()};
   try{
     await patchCaso(destinoId, corpo);
   }catch(e){
@@ -29348,22 +29556,293 @@ async function fundirCasos(absorvidoId, destinoId){
 
   // o incorporado: apagar (nasceu no CRM) ou virar casca encerrada (To Do)
   if(a.todo_task_id){
-    const cs={fase:"encerrado", encerrado_em:new Date().toISOString(), encerrado_por:eu.id};
+    // F220 · a marca "fundido" faz a sincronização manter a casca encerrada
+    const agora=new Date().toISOString();
+    const cs={fase:"encerrado", encerrado_em:agora, encerrado_por:eu.id,
+      arquivados:{...(a.arquivados||{}), fundido:{para:d.id, por:eu.id, em:agora}}};
     try{ await patchCaso(a.id, cs); }
     catch(e){ delete cs.encerrado_por;
       await t("casca", ()=>patchCaso(a.id, cs)); }
     await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({caso_id:a.id, autor_id:eu.id,
-        texto:`⇄ Caso fundido com "${tituloCaso(d)}" — o histórico foi movido para lá. CONCLUA a tarefa correspondente no To Do; sem isso a sincronização reabre esta casca.`})}).catch(()=>{});
+        texto:`⇄ Caso fundido com "${tituloCaso(d)}" — o histórico foi movido para lá. A sincronização mantém esta casca encerrada; a tarefa do To Do pode ser concluída quando convier.`})}).catch(()=>{});
   }else{
     await t("remover", ()=>api(`/rest/v1/casos?id=eq.${a.id}`,{method:"DELETE"}));
   }
 
-  aviso(`⇄ Fundido em "${tituloCaso(d)}"${a.todo_task_id?" — conclua a tarefa antiga no To Do":""}${falhas.length?` (atenção: falhou em ${falhas.join(", ")})`:""}`);
+  aviso(`⇄ Fundido em "${tituloCaso(d)}"${falhas.length?` (atenção: falhou em ${falhas.join(", ")})`:""}`);
   await carregar();
   montarSidebar(); casoSel=destinoId; abaAtiva=2;
-  abrirFicha(d.cliente_id);
+  await abrirFicha(d.cliente_id);
+  if(_orgReabrir===d.cliente_id) organizarCasos(d.cliente_id);
 }
+
+// ══════════════════════════════════════════════════════════════════════════
+// F220 · ORGANIZAR OS CASOS DO CLIENTE. Cada lista do To Do virou um caso, e
+// quem passou pelo INSS, pelo CRPS e pela Justiça ficou com o NB, o protocolo,
+// o recurso e o processo espalhados por fichas diferentes (102 clientes com
+// mais de um caso aberto em 13.10.2026). Cada caso deve juntar o pedido no
+// INSS, o recurso no CRPS e o processo judicial do MESMO benefício. A janela
+// mostra os números de cada caso, leva um número com os andamentos dele a
+// outro caso e junta os casos que são o mesmo benefício. As sugestões saem
+// dos próprios textos: petição, recurso e documento que citam o NB de outro
+// caso, e o mesmo número gravado em dois casos. A marca fica em
+// casos.arquivados ("mov:<tipo>:<dígitos>", "add:prot:<dígitos>", "fundido")
+// e o migrar.py a respeita, para a sincronização do To Do não desfazer.
+// ══════════════════════════════════════════════════════════════════════════
+const TIPO_NUM = {nb:"NB", prot:"Protocolo INSS", nup:"Recurso CRPS", proc:"Processo judicial"};
+let _orgReabrir = null;                       // cliente cujo organizador volta a abrir depois da ação
+const _orgIgnorar = new Set();                // sugestões dispensadas nesta sessão
+function protocolosDoCaso(k){ return [...new Set(((k&&k.protocolos)||[]).map(x=>soDig(x)).filter(Boolean))]; }
+// o protocolo acrescentado no CRM leva a marca "add:prot", porque o upsert da
+// sincronização reescreve casos.protocolos só com o que a tarefa do To Do cita
+function corpoProtocolos(k, novos){
+  const ja = protocolosDoCaso(k), add = [...new Set((novos||[]).map(soDig).filter(d=>d && !ja.includes(d)))];
+  if(!add.length) return null;
+  const arq = {...(k.arquivados||{})}, em = new Date().toISOString();
+  for(const d of add){ arq[`add:prot:${d}`] = {por:eu.id, em}; delete arq[`mov:prot:${d}`]; }
+  return {protocolos:[...(k.protocolos||[]), ...add], arquivados:arq};
+}
+function numerosDoCaso(k){
+  return {nb:nbsDoCaso(k).map(soDig).filter(Boolean), prot:protocolosDoCaso(k), nup:crpsNups(k),
+          proc:processosDoCaso(k).map(p=>soDig(p.numero)).filter(Boolean)};
+}
+const fmtNum = (tipo, d) => tipo==="nb" ? fmtNb(d) : tipo==="nup" ? formatarNup(d) : tipo==="proc" ? fmtProc(d) : d;
+// o NB citado: "123.456.789-0", ou os 10 dígitos logo depois de "NB" ou "benefício"
+const RX_NB_FMT = /(?<![\d.])(\d{3})\.(\d{3})\.(\d{3})-(\d)(?![\d-])/g;
+const RX_NB_ROT = /\b(?:NB|benef[ií]cio(?:\s+previdenci[áa]rio)?)\s*(?:n[ºo°.]*\s*)?:?\s*(\d{10})(?!\d)/gi;
+function nbsCitados(txt){
+  const s = String(txt||""), out = new Set();
+  for(const m of s.matchAll(RX_NB_FMT)) out.add(m.slice(1,5).join(""));
+  for(const m of s.matchAll(RX_NB_ROT)) out.add(m[1]);
+  return [...out];
+}
+const RX_NUP = /(?<!\d)(\d{5})\.?(\d{6})\/?(\d{4})-?(\d{2})(?!\d)/;
+// de onde vem cada texto do cliente: o caso e, quando se sabe, o número a que ele pertence
+function textosDoCliente(ks){
+  const ids = new Set(ks.map(k=>k.id)), out = [];
+  const dono = (tipo, d) => ks.find(k=>numerosDoCaso(k)[tipo].includes(d));
+  const numDoAnd = a => {
+    const oid = String(a.origem_id||"");
+    if(a.origem==="pje"){ const n = soDig(movPjeLimpo(a).numero) || (oid.match(/\d{20}/)||[])[0]; return n ? {tipo:"proc", d:n} : null; }
+    if(a.origem==="crps"){ const n = (oid.match(/^(\d{17})\|/)||[])[1]; return n ? {tipo:"nup", d:n} : null; }
+    if(a.origem==="pat"){ const n = (oid.match(/:(\d{6,})/)||[])[1]; return n ? {tipo:"prot", d:n} : null; }
+    return null;
+  };
+  const ands = (D._andsFicha||[]).filter(a=>ids.has(a.caso_id)), porId = new Map(ands.map(a=>[a.id,a]));
+  for(const a of ands) out.push({casoId:a.caso_id, num:numDoAnd(a), txt:a.texto, fonte:"andamento de "+fmtTS(a.criado_em)});
+  for(const x of (D.anexos||[])){
+    const a = x.andamento_id && porId.get(x.andamento_id);
+    const m = RX_NUP.exec(String(x.nome||"")), nup = m ? m.slice(1,5).join("") : null;
+    const num = a ? numDoAnd(a) : nup ? {tipo:"nup", d:nup} : null;
+    const k = (a && D.casoPorId.get(a.caso_id)) || (x.caso_id && ids.has(x.caso_id) && D.casoPorId.get(x.caso_id)) || (num && dono(num.tipo, num.d));
+    if(k) out.push({casoId:k.id, num, txt:`${x.nome||""} ${x.texto||""}`, fonte:"documento "+String(x.nome||"").slice(0,60)});
+  }
+  for(const k of ks) for(const b of crpsBlocos(k))
+    out.push({casoId:k.id, num:{tipo:"nup", d:soDig(b.nup)}, fonte:"recurso "+formatarNup(b.nup),
+      txt:(b.eventos||[]).map(e=>`${e.resumo||""} ${e.bruto||""}`).join(" ")});
+  return out;
+}
+function casosParaOrganizar(cliId){
+  return (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado" && k.fase!=="pagamento");
+}
+function sugestoesOrganizar(cliId){
+  const ks = casosParaOrganizar(cliId), nums = new Map(ks.map(k=>[k.id, numerosDoCaso(k)]));
+  const sug = [], visto = new Set();
+  const add = s => { if(!visto.has(s.chave) && !_orgIgnorar.has(s.chave)){ visto.add(s.chave); sug.push(s); } };
+  // 1 · o mesmo número gravado em dois casos
+  for(const tipo of Object.keys(TIPO_NUM)){
+    const por = new Map();
+    for(const k of ks) for(const d of nums.get(k.id)[tipo]) por.set(d, [...(por.get(d)||[]), k.id]);
+    for(const [d, cs] of por) if(cs.length>1) add({chave:`dup:${tipo}:${d}`, tipo:"duplicado", num:{tipo, d}, casos:cs,
+      txt:`${TIPO_NUM[tipo]} ${fmtNum(tipo, d)} está gravado em ${cs.length} casos`});
+  }
+  // 2 · o texto de um caso cita o NB de outro caso (ou o caso não tem NB nenhum)
+  for(const t of textosDoCliente(ks)){
+    const n = nums.get(t.casoId); if(!n) continue;
+    for(const nb of nbsCitados(t.txt)){
+      if(n.nb.includes(nb)) continue;
+      const donos = ks.filter(k=>nums.get(k.id).nb.includes(nb));
+      if(donos.length===1){
+        const alvo = donos[0];
+        if(t.num && n[t.num.tipo].includes(t.num.d))
+          add({chave:`mov:${t.num.tipo}:${t.num.d}:${alvo.id}`, tipo:"mover", num:t.num, de:t.casoId, para:alvo.id, nb, fonte:t.fonte,
+            txt:`${TIPO_NUM[t.num.tipo]} ${fmtNum(t.num.tipo, t.num.d)} cita o NB ${fmtNb(nb)}, que está em outro caso`});
+        else add({chave:`fun:${t.casoId}:${alvo.id}`, tipo:"fundir", de:t.casoId, para:alvo.id, nb, fonte:t.fonte,
+            txt:`Um texto deste caso cita o NB ${fmtNb(nb)}, que está em outro caso`});
+      } else if(!donos.length && !n.nb.length)
+        add({chave:`nb:${t.casoId}:${nb}`, tipo:"nb", para:t.casoId, nb, fonte:t.fonte,
+          txt:`O caso não tem NB, e um texto dele cita o NB ${fmtNb(nb)}`});
+    }
+  }
+  return sug;
+}
+const rotCurtoCaso = k => `${NOME_FASE[k.fase]||k.fase||""} · ${[k.especie, k.beneficio].filter(Boolean).join(" ") || tituloCaso(k)}`.slice(0, 70);
+function organizarCasos(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  _orgReabrir = cliId;
+  const ks = casosParaOrganizar(cliId);
+  const outros = k => ks.filter(x=>x.id!==k.id);
+  const opcoes = k => outros(k).map(x=>`<option value="${x.id}">${esc(rotCurtoCaso(x))}</option>`).join("");
+  const sug = sugestoesOrganizar(cliId);
+  const bt = (rot, fn, prim) => `<button type="button" class="adr-bt${prim?" adr-primario":""}" onclick="${fn}">${rot}</button>`;
+  const linhaSug = s => {
+    const de = s.de && D.casoPorId.get(s.de), para = s.para && D.casoPorId.get(s.para);
+    const acoes = s.tipo==="duplicado"
+      ? s.casos.map(id=>{ const k = D.casoPorId.get(id); return bt(`Deixar só em ${esc(rotCurtoCaso(k))}`,
+          `deixarSo('${s.num.tipo}','${s.num.d}','${id}','${s.casos.join(",")}')`); }).join("")
+      : s.tipo==="mover" ? bt(`Levar ao caso ${esc(rotCurtoCaso(para))}`, `moverNumero('${s.num.tipo}','${s.num.d}','${s.de}','${s.para}')`, true)
+          + bt("Juntar os dois casos", `juntarCasos('${s.de}','${s.para}')`) + bt(`Só anotar o NB ${fmtNb(s.nb)} aqui`, `anotarNbNoCaso('${s.de}','${s.nb}')`)
+      : s.tipo==="fundir" ? bt(`Juntar ao caso ${esc(rotCurtoCaso(para))}`, `juntarCasos('${s.de}','${s.para}')`, true)
+          + bt(`Só anotar o NB ${fmtNb(s.nb)} aqui`, `anotarNbNoCaso('${s.de}','${s.nb}')`)
+      : bt(`Acrescentar o NB ${fmtNb(s.nb)}`, `anotarNbNoCaso('${s.para}','${s.nb}')`, true);
+    return `<div class="org-s"><p><b>${esc(s.txt)}</b>${de && s.tipo!=="duplicado" ? ` <span class="meio-sub">· caso ${esc(rotCurtoCaso(de))}</span>` : ""}${
+      s.fonte ? `<br><small class="meio-sub">fonte: ${esc(s.fonte)}</small>` : ""}</p>
+      <div class="org-acoes">${acoes}<button type="button" class="adr-bt org-ign" onclick="_orgIgnorar.add('${escJs(s.chave)}');organizarCasos('${cliId}')" title="dispensar esta sugestão até recarregar o CRM">Ignorar</button></div></div>`;
+  };
+  const cartao = k => {
+    const n = numerosDoCaso(k), tem = Object.values(n).some(x=>x.length);
+    return `<article class="org-caso" data-caso="${k.id}">
+      <header><b>${esc(tituloCaso(k))}</b><span class="chip neutro">${esc(listaDe(k)!=="—"?semEmoji(listaDe(k)):(NOME_FASE[k.fase]||k.fase))}</span>${k.etapa?`<span class="meio-sub">${esc(k.etapa)}</span>`:""}</header>
+      ${tem ? `<dl class="org-nums">${Object.keys(TIPO_NUM).filter(t=>n[t].length).map(t=>`<div><dt>${TIPO_NUM[t]}</dt>${n[t].map(d=>`<dd>
+          <span class="lc-num">${esc(fmtNum(t, d))}</span>${outros(k).length ? `<select aria-label="levar ${esc(TIPO_NUM[t])} ${esc(fmtNum(t,d))} a outro caso"
+            onchange="if(this.value)moverNumero('${t}','${d}','${k.id}',this.value)"><option value="">levar a…</option>${opcoes(k)}</select>` : ""}</dd>`).join("")}</div>`).join("")}</dl>`
+        : `<p class="meio-sub">Sem NB, protocolo, recurso ou processo. Se for o mesmo benefício de outro caso, junte-os.</p>`}
+      <footer>${outros(k).length ? `<select aria-label="juntar este caso a outro" onchange="if(this.value)juntarCasos('${k.id}',this.value)"><option value="">juntar a…</option>${opcoes(k)}</select>` : ""}
+        <button type="button" class="adr-bt" onclick="fecharCaixa();_orgReabrir=null;escolhido('${cliId}','${k.id}')">Abrir o caso</button></footer>
+    </article>`;
+  };
+  const org = (c.campos||{}).casos_org;
+  caixa(`<div class="org-casos" role="dialog" aria-labelledby="org-t">
+    <h3 id="org-t">Organizar os casos de ${esc(c.nome)}</h3>
+    <p class="meio-sub">Cada caso junta o pedido no INSS (protocolo e NB), o recurso no CRPS e o processo judicial do mesmo benefício.
+      Leve cada número ao caso certo: ele leva junto os andamentos dele, e a sincronização do To Do não desfaz a mudança.
+      Casos que são o mesmo benefício se juntam num só.</p>
+    ${sug.length ? `<section class="org-sug" aria-label="O que os documentos indicam"><h4>O que os documentos indicam (${sug.length})</h4>${sug.map(linhaSug).join("")}</section>`
+      : `<p class="org-ok">Nenhum número repetido e nenhum documento citando o NB de outro caso.</p>`}
+    <div class="org-grade">${ks.map(cartao).join("") || `<p class="meio-sub">Nenhum caso em andamento.</p>`}</div>
+    <div class="adr-modal-bts">${org ? `<span class="meio-sub">marcado como organizado em ${fmt(String(org.em).slice(0,10))}</span>` : ""}
+      ${bt("Pronto, os casos estão organizados", `casosOrganizados('${cliId}')`, true)}</div>
+  </div>`);
+}
+async function moverNumero(tipo, d, deId, paraId){
+  const de = D.casoPorId.get(deId), para = D.casoPorId.get(paraId);
+  if(!de || !para || de.id===para.id || !TIPO_NUM[tipo]) return;
+  const agora = new Date().toISOString();
+  const mDe = {...(de.arquivados||{}), [`mov:${tipo}:${d}`]:{para:paraId, por:eu.id, em:agora}}, mPara = {...(para.arquivados||{})};
+  delete mPara[`mov:${tipo}:${d}`];             // voltou a este caso: a marca antiga sai
+  const cDe = {arquivados:mDe}, cPara = {arquivados:mPara};
+  const lista = v => Array.isArray(v) ? v : [];
+  let ands = [];
+  if(tipo==="nb"){
+    const orig = nbsDoCaso(de).find(n=>soDig(n)===d) || d, resto = lista(de.nbs).filter(n=>soDig(n)!==d);
+    if(soDig(de.nb)===d){ cDe.nb = resto[0]||null; cDe.nbs = resto.slice(1); } else cDe.nbs = resto;
+    if(!nbsDoCaso(para).some(n=>soDig(n)===d)){ if(!para.nb) cPara.nb = orig; else cPara.nbs = [...lista(para.nbs), orig]; }
+  } else if(tipo==="prot"){
+    cDe.protocolos = (de.protocolos||[]).filter(p=>soDig(p)!==d); delete mDe[`add:prot:${d}`];
+    cPara.protocolos = [...new Set([...(para.protocolos||[]), d])]; mPara[`add:prot:${d}`] = {de:deId, por:eu.id, em:agora};
+    ands = (D._andsFicha||[]).filter(a=>a.caso_id===deId && a.origem==="pat" && String(a.origem_id||"").includes(":"+d));
+  } else if(tipo==="nup"){
+    const bloco = crpsBlocos(de).find(b=>soDig(b.nup)===d);
+    Object.assign(cDe, {crps_nups:crpsNups(de).filter(n=>n!==d), crps_nup:null, crps:crpsBlocos(de).filter(b=>soDig(b.nup)!==d)});
+    Object.assign(cPara, {crps_nups:[...new Set([...crpsNups(para), d])], crps_nup:null});
+    if(bloco && !crpsBlocos(para).some(b=>soDig(b.nup)===d)) cPara.crps = [...crpsBlocos(para), bloco];
+    if(mDe["crps:"+d]){ mPara["crps:"+d] = mDe["crps:"+d]; delete mDe["crps:"+d]; }
+    ands = (D._andsFicha||[]).filter(a=>a.caso_id===deId && a.origem==="crps" && String(a.origem_id||"").startsWith(d+"|"));
+  } else {
+    const p = processosDoCaso(de).find(x=>soDig(x.numero)===d); if(!p) return;
+    const multi = {...(de.datajud_multi||{})}, dj = multi[d] || (soDig(de.processo)===d ? de.datajud : null);
+    delete multi[d]; cDe.datajud_multi = multi;
+    if(dj) cPara.datajud_multi = {...(para.datajud_multi||{}), [d]:dj};
+    if(!para.processo && dj) cPara.datajud = dj;
+    const pt = (de.prazos_tribunal||[]).filter(x=>soDig(x.numero)===d);
+    if(pt.length){ cDe.prazos_tribunal = de.prazos_tribunal.filter(x=>soDig(x.numero)!==d); cPara.prazos_tribunal = [...(para.prazos_tribunal||[]), ...pt]; }
+    ands = (D._andsFicha||[]).filter(a=>a.caso_id===deId && a.origem==="pje" && (String(a.origem_id||"").includes(d) || soDig(movPjeLimpo(a).numero)===d));
+  }
+  try{
+    await patchCaso(deId, cDe); Object.assign(de, cDe);
+    await patchCaso(paraId, cPara); Object.assign(para, cPara);
+    if(tipo==="proc"){
+      const p = processosDoCaso(de).find(x=>soDig(x.numero)===d);
+      await salvarProcessos(deId, processosDoCaso(de).filter(x=>soDig(x.numero)!==d));
+      if(!processosDoCaso(para).some(x=>soDig(x.numero)===d)) await salvarProcessos(paraId, [...processosDoCaso(para), {...p, principal:false}]);
+    }
+  }catch(e){ return aviso("Não consegui levar o número — rode o crm/fase2/schema_por_em_dia.sql no Supabase se faltar coluna"); }
+  // os andamentos do número vão com ele, e os documentos e as tarefas desses andamentos também;
+  // o que o caso de destino já tem (mesma origem, mesmo origem_id, que o banco não deixa repetir) sai do de origem
+  const noDestino = new Set((D._andsFicha||[]).filter(a=>a.caso_id===paraId && a.origem_id).map(a=>a.origem+"|"+a.origem_id));
+  const repetidos = ands.filter(a=>noDestino.has(a.origem+"|"+a.origem_id)).map(a=>a.id);
+  if(repetidos.length) await api(`/rest/v1/andamentos?id=in.(${repetidos.join(",")})`,{method:"DELETE"}).catch(()=>{});
+  const ids = ands.map(a=>a.id).filter(id=>!repetidos.includes(id));
+  for(let i=0; i<ids.length; i+=80){
+    const lote = ids.slice(i, i+80).join(",");
+    await api(`/rest/v1/andamentos?id=in.(${lote})`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:paraId})}).catch(()=>{});
+    await api(`/rest/v1/anexos?andamento_id=in.(${lote})`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:paraId})}).catch(()=>{});
+    await api(`/rest/v1/andamento_tarefas?andamento_id=in.(${lote})`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:paraId})}).catch(()=>{});
+  }
+  const rot = `${TIPO_NUM[tipo]} ${fmtNum(tipo, d)}`;
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify([
+    {caso_id:deId, autor_id:eu.id, texto:`⇄ ${rot} foi levado ao caso "${tituloCaso(para)}"${ids.length?`, com ${ids.length} andamento(s)`:""}.`},
+    {caso_id:paraId, autor_id:eu.id, texto:`⇄ ${rot} veio do caso "${tituloCaso(de)}"${ids.length?`, com ${ids.length} andamento(s)`:""}.`}])}).catch(()=>{});
+  aviso(`${rot} levado ao caso ${rotCurtoCaso(para)} ✔`, false);
+  await abrirFicha(de.cliente_id);
+  if(_orgReabrir===de.cliente_id) organizarCasos(de.cliente_id);
+}
+// o NB citado entra no caso como mais um NB (o principal, se o caso não tiver)
+async function anotarNbNoCaso(casoId, nb){
+  const k = D.casoPorId.get(casoId); if(!k || nbsDoCaso(k).some(n=>soDig(n)===soDig(nb))) return;
+  const corpo = k.nb ? {nbs:[...(Array.isArray(k.nbs)?k.nbs:[]), fmtNb(nb)]} : {nb:fmtNb(nb)};
+  try{ await patchCaso(casoId, corpo); }catch(e){ return aviso("Não gravou — rode o crm/fase2/schema_linha_caso.sql no Supabase"); }
+  Object.assign(k, corpo);
+  aviso(`NB ${fmtNb(nb)} anotado no caso ✔`, false);
+  await abrirFicha(k.cliente_id);
+  if(_orgReabrir===k.cliente_id) organizarCasos(k.cliente_id);
+}
+// o número repetido fica só no caso escolhido: sai dos outros, um de cada vez
+async function deixarSo(tipo, d, manterId, idsCsv){
+  for(const id of idsCsv.split(",").filter(x=>x && x!==manterId)) await moverNumero(tipo, d, id, manterId);
+}
+// juntar = a fusão de sempre: o histórico do primeiro passa ao segundo
+function juntarCasos(absorvidoId, destinoId){ fecharCaixa(); fundirCasos(absorvidoId, destinoId); }
+async function casosOrganizados(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  c.campos = {...(c.campos||{}), casos_org:{em:new Date().toISOString(), por:eu.id}};
+  try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}); }
+  catch(e){ return aviso("Não gravou — tente de novo"); }
+  _orgReabrir = null; fecharCaixa();
+  aviso("Casos marcados como organizados ✔", false);
+  if(visao==="acervo") render();
+}
+// no 🧹 Cuidar do acervo: quem tem mais de um caso aberto, com o número repetido primeiro
+function blocoVariosCasos(){
+  const por = new Map();
+  for(const k of ativos()) if(k.fase!=="pagamento") por.set(k.cliente_id, [...(por.get(k.cliente_id)||[]), k]);
+  const linhas = [];
+  for(const [cid, ks] of por){
+    if(ks.length<2) continue;
+    const c = D.cliPorId.get(cid); if(!c) continue;
+    const org = (c.campos||{}).casos_org;
+    if(org && !ks.some(k=>(k.criado_em||"")>org.em)) continue;   // organizado, e nenhum caso novo desde então
+    const conta = {};
+    for(const k of ks) for(const [t, ds] of Object.entries(numerosDoCaso(k))) for(const d of ds) conta[t+d] = (conta[t+d]||0)+1;
+    const rep = Object.values(conta).filter(n=>n>1).length, semNum = ks.filter(k=>!Object.values(numerosDoCaso(k)).some(x=>x.length)).length;
+    linhas.push({c, ks, rep, semNum});
+  }
+  if(!linhas.length) return "";
+  linhas.sort((a,b)=>b.rep-a.rep || b.semNum-a.semNum || b.ks.length-a.ks.length || (a.c.nome<b.c.nome?-1:1));
+  const mostra = linhas.slice(0, 40);
+  return `<details class="sem-acao neutro" id="acervo-varios"><summary>Clientes com mais de um caso aberto (${linhas.length}) — cada caso deve juntar NB, recurso e processo do mesmo benefício</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">Os de número repetido vêm primeiro. O botão abre a ficha com a janela de organizar; marcado como organizado, o cliente sai daqui até ganhar caso novo.</p>
+    ${mostra.map(({c, ks, rep, semNum})=>`<div class="caso" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <span class="titulo-caso" style="cursor:pointer" onclick="abrirFicha('${c.id}')" title="abrir a ficha">${esc(c.nome)}</span>
+      <span class="meio-sub">${ks.length} casos · ${esc([...new Set(ks.map(k=>NOME_FASE[k.fase]||k.fase))].join(" + "))}</span>
+      ${rep?`<span class="chip urg" title="o mesmo número gravado em mais de um caso">${rep} número${rep>1?"s":""} repetido${rep>1?"s":""}</span>`:""}
+      ${semNum?`<span class="chip neutro">${semNum} sem número</span>`:""}
+      <button class="btn-mini" style="margin-left:auto" onclick="abrirOrganizar('${c.id}')">organizar</button></div>`).join("")}
+    ${linhas.length>mostra.length?`<p class="meio-sub">…e mais ${linhas.length-mostra.length}. A lista encurta conforme os clientes são organizados.</p>`:""}
+  </details>`;
+}
+async function abrirOrganizar(cliId){ await abrirFicha(cliId); organizarCasos(cliId); }
 
 // ── catálogo de documentos (espelho do site interno) ──────────────────────
 function docPorNome(nome){ return D.docs.find(d=>d.beneficio===nome); }
@@ -31029,7 +31508,7 @@ async function concluirEtapa(cliId, sub){
   if(sub==="direito") await salvarAnaliseSePreenchida(cliId);
   const extra = sub==="identificacao" ? {faltam: faltaParaDocs(c).length} : sub==="pa" ? {beneficios: benefSel(c)} : {};
   if(!await mudarPreCasoCampos(cliId, pc.id, p=>{ p.etapas = {...(p.etapas||{}), [k]:{...((p.etapas||{})[k]||{}), ...extra, em:hoje(), quem:eu.id}}; })) return;
-  const rot = Object.fromEntries(SUB_CAD), seq = ["identificacao", (docsDoDossie(cliId).length || cnisDe(c)) ? "pa" : null, "direito", "documentos"].filter(Boolean);
+  const rot = Object.fromEntries(SUB_CAD), seq = ["identificacao", "pa", "direito", "documentos"];   // F220 · o Primeiro atendimento existe sem dossiê
   const prox = seq[seq.indexOf(sub)+1];
   await avisarClienteNovo(cliId, `${rot[sub]} concluída no atendimento de ${c.nome}${prox ? ` — próximo passo: ${rot[prox]}` : " — pronto para o desfecho"}`);
   aviso(`${rot[sub]} concluída ✔`, false);
@@ -31054,8 +31533,19 @@ function baseDesfecho(c, a){
   const especie = (d.servico||{}).nome || pc.especie || (opcoesSel(c)[0]||{}).rot || "Aposentadoria futura";
   const imed = pc.natureza==="revisao" ? DESF_IMEDIATO.rev : pc.natureza==="acerto" ? DESF_IMEDIATO.acerto : (opcoesSel(c).map(o=>DESF_IMEDIATO[o.o]).find(Boolean) || "");
   const sug = imed ? "caso" : data ? (data <= hj ? "caso" : "lembrete") : "";
-  const motivo = imed ? `${imed}: o ato não espera data futura` : data ? (data <= hj ? `direito desde ${fmt(data)} (${fonte})` : `direito em ${fmt(data)} (${fonte})`) : "sem data de direito nem ato a praticar: complete a análise ou arquive";
+  // F220 · idade já alcançada sem data na análise: diz o que falta conferir, em vez de "sem data"
+  const al = !imed && !data ? idadeAlcancadaEm(c) : null;
+  const motivo = imed ? `${imed}: o ato não espera data futura` : data ? (data <= hj ? `direito desde ${fmt(data)} (${fonte})` : `direito em ${fmt(data)} (${fonte})`)
+    : al ? `idade exigida (${al.anos} anos) alcançada em ${fmt(al.data)}; confira ${al.car ? `a carência de ${al.car} contribuições` : "os demais requisitos"} na Análise de Direito e registre a data do direito`
+    : "sem data de direito nem ato a praticar: complete a análise ou arquive";
   return {pc, a, data, fonte, especie, imed, sug, motivo};
+}
+// a idade exigida pela opção marcada, quando já foi alcançada: a data, os anos e a carência da opção
+function idadeAlcancadaEm(c){
+  const dn = dnIso(c.dn), id = idadeDe(c.dn); if(!dn || id==null) return null;
+  const i = sexoDe(c)==="F" ? 1 : 0;
+  const op = opcoesSel(c).find(o=>IDADE_EXIG[o.o] && id >= IDADE_EXIG[o.o][i]);
+  return op ? {data:somarAnos(dn, IDADE_EXIG[op.o][i]), anos:IDADE_EXIG[op.o][i], car:CAR_EXIG[op.o]||null} : null;
 }
 // a análise registrada atualiza o card: etapa Analisado, data do direito, aviso D-90 (aposentadorias) e lembrete D-60
 async function cardDaAnalise(cliId, lid, a, b){
@@ -31107,12 +31597,38 @@ async function desfechoLembrete(cliId){
   _atendAberto.delete(cliId); subCad = "identificacao"; guardar("crm_subcad","identificacao"); abaAtiva = 9;
   montarSidebar(); abrirFicha(cliId);
 }
-async function desfechoCaso(cliId){
+// F220 · a procuração e o contrato do cliente já gerados no CRM (quadro Gerados e assinados)
+function docsGeradosDo(cliId){
+  const ds = (D.anexos||[]).filter(a=>a.cliente_id===cliId && /^(gerado|assinado)$/.test(a.origem||""));
+  return {proc:ds.some(a=>/procura/i.test(a.nome||"")), contr:ds.some(a=>/contrato/i.test(a.nome||""))};
+}
+async function desfechoCaso(cliId, forcar){
   const c = D.cliPorId.get(cliId), pc = c && preCasoAberto(c); if(!pc) return;
+  // o caso nasce com a procuração e o contrato: sem eles, pergunta antes
+  const g = docsGeradosDo(cliId);
+  if(!forcar && !(g.proc && g.contr)){
+    const falta = [!g.proc && "a procuração", !g.contr && "o contrato"].filter(Boolean).join(" e ");
+    return caixa(`<div class="adr-modal" role="dialog" aria-labelledby="desf-sem"><h3 id="desf-sem">Gerar o caso sem ${falta}?</h3>
+      <p class="meio-sub" style="margin:0">Falta gerar ${falta} em Documentos, no primeiro quadro. O caso nasce com eles assinados.</p>
+      <div class="adr-modal-bts"><button type="button" class="adr-bt adr-primario" onclick="fecharCaixa();irSubCad('documentos');setTimeout(()=>{const q=document.getElementById('dq-assinar');if(q)q.scrollIntoView({block:'start'})},60)">Gerar os documentos</button>
+      <button type="button" class="adr-bt" onclick="fecharCaixa();desfechoCaso('${cliId}',true)">Gerar o caso assim mesmo</button></div></div>`);
+  }
   const a = analisesDe(cliId)[0], sv = a && (a.detalhes||{}).servico;
   if(!pc.especie && sv) await mudarPreCasoCampos(cliId, pc.id, p=>{ p.especie = sv.nome; p.cod = sv.cod; p.sub = sv.sub && sv.sub!==sv.cod ? sv.sub : null; });
+  // F220 · incapacidade pede a via; a mesa onde ela se escolhia não aparece na tela de atendimento
+  const pcA = preCasoAberto(c) || pc;
+  if(/incapacidade|auxilio doenca|invalidez/.test(dsa(pcA.especie||"")) && !pcA.via)
+    return caixa(`<div class="adr-modal" role="dialog" aria-labelledby="desf-via"><h3 id="desf-via">Por qual via segue o caso?</h3>
+      <p class="meio-sub" style="margin:0">Benefício por incapacidade: o caso nasce na lista da via escolhida.</p>
+      <div class="adr-modal-bts"><button type="button" class="adr-bt" onclick="fecharCaixa();viaDoDesfecho('${cliId}','jud')">Judicial</button>
+        <button type="button" class="adr-bt adr-primario" onclick="fecharCaixa();viaDoDesfecho('${cliId}','adm')">Administrativa (INSS)</button></div></div>`);
   if(pc.lembrete_id) return gerarCasoDoPreECard(cliId, pc.id, pc.lembrete_id);
   return gerarCasoDoPre(cliId, pc.id);
+}
+async function viaDoDesfecho(cliId, via){
+  const c = D.cliPorId.get(cliId), pc = c && preCasoAberto(c); if(!pc) return;
+  if(!await mudarPreCasoCampos(cliId, pc.id, p=>{ p.via = via; })) return;
+  return desfechoCaso(cliId, true);
 }
 // arquivar: o pré-caso sai da mesa para campos.pc_arquivados, com o motivo, e a anotação registra; o card ligado arquiva junto
 async function desfechoArquivar(cliId, motivo){
@@ -31129,7 +31645,7 @@ async function desfechoArquivar(cliId, motivo){
 }
 // ── Documentos em seis quadros ───────────────────────────────────────────
 // o benefício marcado na análise → o nome do catálogo documentos_beneficio (espelho do site interno)
-const DOC_CAT = {idade:"Apos. por Idade", transicao:"Apos. Tempo de Contribuição", professor:"Apos. do Professor", pcd:"Apos. Tempo — Pessoa com Deficiência",
+const DOC_CAT = {idade:"Apos. por Idade", transicao:"Apos. Tempo de Contribuição", professor:"Apos. do Professor", pcd:"Apos. Tempo — Pessoa com Deficiência", pcd_idade:"Apos. Idade — Pessoa com Deficiência",
   b46:"Apos. Especial", conv:"Apos. Especial", idade_rural:"Rural", hibrida:"Apos. por Idade Híbrida", def:"BPC/LOAS", idoso:"BPC/LOAS — Idoso",
   morte:"Pensão por Morte", reclusao:"Auxílio-Reclusão", b31:"Aux. Incapacidade Temporária", b32:"Apos. por Incapacidade Permanente",
   acid:"Aux. Incapacidade Temporária Acidentária (B91)", b94:"Aux. Acidente", b36:"Aux. Acidente", urb:"Salário-Maternidade", rur:"Salário-Maternidade",
@@ -31141,7 +31657,7 @@ const DOC_CAT = {idade:"Apos. por Idade", transicao:"Apos. Tempo de Contribuiç�
 const DOC_FONTE = [
   {rx:/do falecido|do preso|pelo preso|com o preso|de cada dependente|do dependente|de cada filho|de todos|dos moradores|de cada morador|dos parentes|de quem trabalha|anteriores? a prisao|antes da prisao|outro idoso|pcd da familia|do cuidador|\bdecore\b/, classe:"C", quem:"de terceiro: o dossiê é só do CPF do cliente"},
   {rx:/^rg(,| e |\/| )|^cpf$|^rg$/, classe:"B", tem:c=>!!(civilDe(c).rg && c.cpf)},
-  {rx:/comprovante de residencia/, classe:"B?", quem:"o endereço está na ficha, a conta o cliente traz"},
+  {rx:/comprovante de residencia/, classe:"B?", quem:"o endereço está na ficha e o INSS o aceita por declaração (art. 32, § 2º, III, da IN 128); a conta em nome do cliente serve à ação judicial"},
   {rx:/biometria/, classe:"C", quem:"o cliente confere no TRE"},
   {rx:/^se ainda gestante|declaracao (da|de) empresa|declaracao medica|^laudo do medico do trabalho|carta da empresa/, classe:"C"},
   {rx:/holerite|contracheque|extrato de pagamento de cooperativa|recibos de pagamento/, classe:"C", nota:"o CNIS completo traz as remunerações desde 07/1994"},
@@ -31218,13 +31734,14 @@ const GUIA_RAC = ["RAC Completo (Anexo I)","RAC Acerto de Dados (Anexo I-A)","RA
 const NOTA_FORM = "RAC só se o CNIS tiver indicador: requerer com o CNIS limpo. No formulário, responder sim a todo período que o caso pede.";
 const GUIAS_ESPECIE = {
   idade:{anexos:GUIA_RAC, servico:"Pedir Aposentadoria (todas as modalidades urbanas) — Meu INSS", nota:NOTA_FORM},
-  transicao:{anexos:[...GUIA_RAC, "CTC do RPPS (Anexo XV e XXIII) se houver tempo em regime próprio"], servico:"Pedir Aposentadoria (todas as modalidades urbanas) — Meu INSS", nota:NOTA_FORM},
+  transicao:{anexos:[...GUIA_RAC, "CTC do RPPS (Anexo IX da Portaria MTP 1.467/2022) com a Relação das Bases de Cálculo (Anexo X)"], servico:"Pedir Aposentadoria (todas as modalidades urbanas) — Meu INSS", nota:NOTA_FORM+" Tempo em regime próprio entra pela CTC do Anexo IX da Portaria MTP 1.467/2022, com a Relação das Bases de Cálculo do Anexo X para o período posterior a 06/1994 (art. 70 da IN 128, redação da IN 167/2024)."},
   professor:{anexos:[], servico:"Pedir Aposentadoria (todas as modalidades urbanas) — Meu INSS", nota:"Sem anexo próprio na base: atestado da escola e CTPS com função de magistério; responder sim a professor no formulário."},
   pcd:{anexos:[], servico:"Emitir Certificado da Pessoa com Deficiência; Aposentadoria da PCD por Tempo ou por Idade — Meu INSS", nota:"Sem anexo da IN 128 na base; avaliação biopsicossocial com a documentação pretérita desde a DID."},
-  b46:{anexos:["PPP (Anexo XVII)"], servico:"Pedir Aposentadoria (Aposentadoria Especial) — Meu INSS", nota:"PPP obrigatório desde 01/01/2004; SB-40, DISES BE 5235 e DSS-8030 para períodos até 2003; LTCAT; responder sim a tempo especial."},
+  pcd_idade:{anexos:[], servico:"Emitir Certificado da Pessoa com Deficiência; Aposentadoria da PCD por Idade — Meu INSS", nota:"60 anos (homem) ou 55 (mulher) e 15 anos de contribuição na condição de pessoa com deficiência (art. 311 da IN 128); avaliação biopsicossocial com a documentação desde a DID."},
+  b46:{anexos:["PPP (Anexo XVII)"], servico:"Pedir Aposentadoria (Aposentadoria Especial) — Meu INSS", nota:"PPP para os períodos desde 01/01/2004 e PPP emitido a partir de 18/07/2002 também para os anteriores; os antigos formulários (SB-40, DISES BE 5235, DSS-8030) até 31/12/2003, com LTCAT para ruído (arts. 272 e 274 da IN 128); o enquadramento segue o Anexo XVI (art. 269); responder sim a tempo especial."},
   conv:{anexos:["PPP (Anexo XVII)"], servico:"Pedir Aposentadoria (todas as modalidades urbanas) — Meu INSS", nota:"PPP por vínculo especial; a conversão vale só até 13/11/2019; responder sim a tempo especial."},
-  idade_rural:{anexos:["Autodeclaração do segurado especial (art. 115 da IN 128)","RAC Reconhecimento (Anexo I-E)","RAC Acerto de Contribuições (Anexo I-F)"], servico:"Aposentadoria Rural — Meu INSS (pode exigir agendamento presencial)", nota:"Autodeclaração com o maior número de documentos do art. 116; entrevista rural depois do protocolo. O número do anexo da autodeclaração não foi localizado na base."},
-  hibrida:{anexos:["Autodeclaração do segurado especial (art. 115 da IN 128)","RAC Reconhecimento (Anexo I-E)"], servico:"Aposentadoria Rural — Meu INSS (pode exigir agendamento presencial)", nota:"O trecho rural segue a autodeclaração; responder sim a tempo rural no formulário."},
+  idade_rural:{anexos:["Autodeclaração Rural (Anexo VIII)","RAC Reconhecimento (Anexo I-E)","RAC Acerto de Contribuições (Anexo I-F)"], servico:"Aposentadoria Rural — Meu INSS (pode exigir agendamento presencial)", nota:"Autodeclaração do segurado especial (Anexo VIII, art. 115, § 1º, da IN 128) com o maior número de documentos do art. 116; entrevista rural depois do protocolo."},
+  hibrida:{anexos:["Autodeclaração Rural (Anexo VIII)","RAC Reconhecimento (Anexo I-E)"], servico:"Aposentadoria Rural — Meu INSS (pode exigir agendamento presencial)", nota:"O trecho rural segue a autodeclaração; responder sim a tempo rural no formulário."},
   def:{anexos:["Termo de Compromisso (Anexo XXIX)"], servico:"Pedir BPC à Pessoa com Deficiência — Meu INSS (avaliação social presencial)", nota:"Anexo XXIX só quando o requerente não tem tutela, curatela ou guarda; CadÚnico atualizado em até 24 meses."},
   idoso:{anexos:["Termo de Compromisso (Anexo XXIX)"], servico:"Pedir BPC ao Idoso — Meu INSS", nota:"Anexo XXIX só quando o requerente não tem tutela, curatela ou guarda; CadÚnico atualizado em até 24 meses."},
   b31:{anexos:[], servico:"Pedir Auxílio por Incapacidade Temporária (Atestmed) — Meu INSS", nota:"Sem anexo; campos vinculantes do formulário: Data de início dos sintomas e Descrição dos sintomas."},
@@ -31232,8 +31749,8 @@ const GUIAS_ESPECIE = {
   acid:{anexos:[], servico:"Cadastrar CAT e Pedir Auxílio por Incapacidade — Meu INSS", nota:"Sem CAT da empresa, requerer a CAT equiparada (art. 22, § 2º, da Lei 8.213/91)."},
   b94:{anexos:[], servico:"Pedir Auxílio-Acidente — Meu INSS ou 135 (a base diverge sobre o canal)", nota:"Análise documental prévia obrigatória; conferir o canal antes de orientar o cliente."},
   b36:{anexos:[], servico:"Pedir Auxílio-Acidente — Meu INSS ou 135 (a base diverge sobre o canal)", nota:"Análise documental prévia obrigatória; conferir o canal antes de orientar o cliente."},
-  morte:{anexos:[], servico:"Pedir Pensão por Morte — Meu INSS ou 135", nota:"Sem anexo da IN 128 na base; a Declaração de Pensão (Anexo XXIV) do CRM não tem lastro na base."},
-  reclusao:{anexos:[], servico:"Solicitar Auxílio-Reclusão — Meu INSS ou 135", nota:"Atestado trimestral de permanência na prisão para a manutenção."},
+  morte:{anexos:["Benefício em outro regime (Anexo XXIV)"], servico:"Pedir Pensão por Morte — Meu INSS ou 135", nota:"Sem carência (art. 195, III, da IN 128). O Anexo XXIV é a declaração de recebimento de benefício em outro regime (art. 669), para a acumulação."},
+  reclusao:{anexos:[], servico:"Solicitar Auxílio-Reclusão — Meu INSS ou 135", nota:"Regime fechado, baixa renda pela média dos salários de contribuição dos 12 meses anteriores ao mês da prisão até o valor da Portaria da data, e 24 contribuições do instituidor (arts. 383 e 198 da IN 128); atestado trimestral de permanência na prisão para a manutenção."},
   urb:{anexos:[], servico:"Pedir Salário-Maternidade (urbano) — Meu INSS", nota:"Empregada CLT recebe pela empresa."},
   rur:{anexos:[], servico:"Pedir Salário-Maternidade (rural) — Meu INSS (pode exigir agendamento)", nota:"Usa a autodeclaração do segurado especial."},
   rev:{anexos:[], servico:"Solicitar Recurso de Benefício (revisão administrativa) — Meu INSS", nota:"Documentos do benefício original (CONCAL, CONBAS, CONPRI); não cabe reafirmação da DER em revisão."},
@@ -31302,7 +31819,7 @@ function quadroProvidenciar(c){
 function quadroGuias(c){
   const gs = opcoesSel(c).map(o=>({o, g:GUIAS_ESPECIE[o.o]})).filter(x=>x.g);
   const link = rot => { const a = ANEXOS_IN128.find(x=>x[0]===rot);
-    return a ? `<a class="cad-mini" style="text-decoration:none" href="${IN128_BASE}${a[1]}" target="_blank" rel="noopener">${esc(rot)}</a>`
+    return a ? `<a class="cad-mini" style="text-decoration:none" href="${IN128_BASE}${a[1]}" target="_blank" rel="noopener" title="${esc(a[2] ? "IN 128, "+a[2] : "sem artigo da IN 128 localizado")}">${esc(rot)}</a>`
              : `<a class="cad-mini" style="text-decoration:none" href="${PORTAL_ANEXOS}" target="_blank" rel="noopener" title="localizar na página de anexos do portal">${esc(rot)} ↗</a>`; };
   return `<section class="doc-quadro" id="dq-guias"><div class="rotulo-caso">Guias e formulários do INSS <span class="meio-sub">${gs.length ? "por benefício em análise" : "marque um benefício na Análise de Direito"}</span></div>
     ${gs.map(({o, g})=>`<div class="doc-guia"><b>${esc(o.rot)}</b> <span class="meio-sub">${esc(g.servico)}</span>
@@ -31319,7 +31836,7 @@ function quadroGerados(c){
       <button class="btn-mini" onclick="abrirAnexo('${a.id}')">${a.origem==="assinado"?"abrir":"abrir e reimprimir"}</button></li>`).join("")}</ul>`
       : `<p class="meio-sub">Nada gerado ainda. Cada documento gerado no primeiro quadro fica guardado aqui, com as lacunas que saíram em branco.</p>`}
     <div class="form-linha" style="margin-top:6px;align-items:center">
-      <label class="cad-mini" style="cursor:pointer" title="o PDF ou a foto do documento assinado pelo cliente"><input type="file" id="doc-assinado" accept="image/*,application/pdf" style="display:none" onchange="anexarAssinado('${c.id}','doc-assinado')">📎 anexar o assinado</label>
+      <label class="cad-mini" style="cursor:pointer" title="o PDF ou a foto do documento assinado pelo cliente"><input type="file" id="doc-assinado" accept="image/*,application/pdf" style="display:none" onchange="anexarAssinado('${c.id}','doc-assinado')">Anexar o assinado</label>
       <span class="meio-sub">${temProc && temContr ? "procuração e contrato gerados: o caso pode nascer" : "o caso nasce com a procuração e o contrato gerados e assinados"}</span></div></section>`;
 }
 
@@ -31366,10 +31883,29 @@ async function novoPreCaso(cliId){
 // F30 · o atendimento novo de quem já resolveu o anterior (caso gerado ou
 // lembrete): abre um pré-caso limpo e leva direto para a mesa
 async function novoAtendimento(cliId){
+  // F220 · o atendimento é do cliente, não de um caso: sem a escolha do processo por cima
+  abaAtiva = 0; if(casoSel==="__auto__") casoSel = null;
+  const m = document.getElementById("modal"); if(m) m.style.display = "none";
   await novoPreCaso(cliId);
   _atendAberto.add(cliId);
-  // F205 · com dossiê, o atendimento abre no painel do Primeiro atendimento
-  irSubCad(docsDoDossie(cliId).length || cnisDe(D.cliPorId.get(cliId)) ? "pa" : "anotacoes");
+  // F205 · o atendimento abre no painel do Primeiro atendimento
+  // F220 · com ou sem dossiê: sem ele, o painel mostra o relato e a escolha do benefício
+  abaAtiva = 0; irSubCad("pa");
+}
+// F220 · da menção ou da lista direto ao atendimento: abre o que existe ou começa um
+async function abrirAtendimentoDe(cliId){
+  await abrirFicha(cliId);
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  document.getElementById("modal").style.display = "none";
+  if(casoSel==="__auto__") casoSel = null;
+  if(!precasosDe(c).some(p=>!p.so_lembrete)) return novoAtendimento(cliId);
+  abaAtiva = 0; _atendAberto.add(cliId); irSubCad("pa");
+}
+async function abrirCasoDaMencao(cliId, casoId, andId){
+  await abrirFicha(cliId);
+  document.getElementById("modal").style.display = "none";   // a escolha do processo, quando o cliente tem vários
+  casoSel = casoId; abaAtiva = 2; subAba = "escritorio"; repintarFicha();
+  if(andId) setTimeout(()=>qdIrParaAndamento(casoId, andId), 120);
 }
 
 // ══════════════════════════════════════════════════════════════════════════
@@ -31718,7 +32254,7 @@ async function gerarCasoDoPre(cliId, pcId){
         + (pc.via?` · via ${pc.via==="adm"?"administrativa":"judicial"}`:"")
         + (marcas.length?` · envolve ${marcas.join(", ")}`:"")
         + (pc.honorarios?` · honorários combinados: ${pc.honorarios}`:"")
-        + ` · procuração gerada e contrato assinado.`})}).catch(()=>{});
+        + ((g=>g.proc && g.contr ? ` · procuração e contrato gerados no CRM.` : ` · procuração e contrato a gerar em Documentos.`)(docsGeradosDo(cliId)))})}).catch(()=>{});
   // as anotações DESTE pré-caso (e as sem dono, quando ele é o único)
   const notas = ((c.campos||{}).atendimento||[]);
   const unico = pcs.length===1;
@@ -31762,7 +32298,7 @@ async function gerarCasoDoPre(cliId, pcId){
   }
   D.lembretes=(D.lembretes||[]).filter(l=>l.ativo!==false);
   reindexarCliente(c); plim();
-  await avisarCasoNovo(k.id, cliId, "o pré-caso virou caso (procuração e contrato assinados)");
+  await avisarCasoNovo(k.id, cliId, (g=>g.proc && g.contr ? "o pré-caso virou caso (procuração e contrato gerados)" : "o pré-caso virou caso (procuração e contrato a gerar)")(docsGeradosDo(cliId)));
   aviso(`Caso criado — ${vao.length} anotação(ões) viraram andamentos${docs?`, ${docs} documento(s) no checklist`:""}. Imprima a procuração e o contrato em Documentos.`, false);
   // F30 · gerado o caso, o botão Documentos aparece — e a ficha JÁ abre nele,
   // com as procurações e o contrato para imprimir e colher a assinatura

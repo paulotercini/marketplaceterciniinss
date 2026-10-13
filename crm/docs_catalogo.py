@@ -8,8 +8,9 @@ crm/fase2/schema.sql, espelho do site interno) é a fonte. O site institucional
     python3 crm/docs_catalogo.py            # compara e mostra o que mudaria
     python3 crm/docs_catalogo.py --aplicar  # grava os itens-base do catálogo no site_content
 
-Só os itens-base (coluna itens) vão ao site, sem o detalhe depois do " — "; os
-extras por atividade ficam no CRM. Sem --aplicar nada é gravado.
+Vão ao site os itens-base e, depois, os primeiros da lista complementar, sem o
+detalhe depois do " — ", até oito documentos (F220); o catálogo inteiro fica
+no CRM. Sem --aplicar nada é gravado.
 """
 import json
 import re
@@ -59,8 +60,33 @@ def catalogo(schema_txt):
     return out
 
 
+def catalogo_bruto(schema_txt):
+    """As linhas como a tabela as guarda (com os cabeçalhos "▸"), para semear testes."""
+    i = schema_txt.index("insert into documentos_beneficio (beneficio, itens, extras, observacoes) values")
+    j = schema_txt.index("on conflict", i)
+    return [{"beneficio": _txt(b), "itens": _txt(it), "extras": _txt(ex), "observacoes": _txt(ob)}
+            for b, it, ex, ob in re.findall(r"\(\s*" + _STR + r"\s*,\s*" + _STR + r"\s*,\s*" + _STR + r"\s*,\s*" + _STR + r"\s*\)",
+                                           schema_txt[i:j])]
+
+
+# o que não é documento a levar: a conferência da biometria e os rótulos de
+# dependente que o catálogo usa como subtítulo dentro dos itens
+_FORA_DO_SITE = re.compile(r"^(biometria|c[oô]njuge|companheiro\(a\)|filhos?( inv[aá]lido.*)?|pais( \(classe 2\))?|irm[aã]o.*)$", re.I)
+MAX_SITE = 8
+
+
 def lista_do_site(cat_ben):
-    return [x.split(" — ")[0].strip() for x in cat_ben["itens"]]
+    """F220 · a lista pública: os itens-base e, depois, os primeiros da lista
+    complementar, sem o detalhe depois do " — ", até oito documentos."""
+    out = []
+    for x in list(cat_ben.get("itens") or []) + list(cat_ben.get("extras") or []):
+        nome = x.split(" — ")[0].strip()
+        if not nome or nome.startswith("▸") or _FORA_DO_SITE.match(nome) or nome in out:
+            continue
+        out.append(nome)
+        if len(out) == MAX_SITE:
+            break
+    return out
 
 
 def diferencas(cat, site_dir=SITE):
@@ -77,6 +103,9 @@ def diferencas(cat, site_dir=SITE):
 
 
 def main(argv):
+    if "--json" in argv:
+        print(json.dumps(catalogo_bruto(SCHEMA.read_text(encoding="utf-8")), ensure_ascii=False))
+        return 0
     cat = catalogo(SCHEMA.read_text(encoding="utf-8"))
     aplicar = "--aplicar" in argv
     mudou = 0

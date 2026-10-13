@@ -94,6 +94,13 @@ FIX.colaboradores.push({ id: COL2, nome: "Amanda Ficticia", inicial: "A", cor: "
   await p.click(".sub-menu .atend-novo");
   await p.waitForTimeout(500);
   const escritosMais = [...escritos];   // o pré-caso nasce aqui (seção 3)
+  // F220 · o + atendimento abre a tela cheia no Primeiro atendimento; fora
+  // dela, a ficha mostra a mesa com o trilho completo
+  conf("o + atendimento abre a tela do atendimento no Primeiro atendimento",
+    await p.evaluate(() => document.getElementById("detalhe").classList.contains("atend-tela") && subCad === "pa"));
+  await p.click('button:has-text("Sair do modo atendimento")');
+  await p.click('.sub-menu button:has-text("Anotações")');
+  await p.waitForTimeout(300);
   const divisoes = await lerTrilho();
   conf(`o trilho do cliente triado sem caso, com atendimento (${divisoes.join(" · ")})`,
     /Identificação/.test(divisoes[0]) && divisoes.some(x => /Anotações/.test(x))

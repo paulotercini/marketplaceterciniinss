@@ -110,14 +110,14 @@
     }
   ],
   "documentos": [
-    "Documento de identidade e CPF",
-    "Comprovantes de vínculos e de recolhimentos ao INSS",
-    "Laudos, relatórios e atestados médicos detalhando a incapacidade e o prognóstico",
-    "Exames complementares e histórico de internações e tratamentos",
-    "Relatórios de médicos especialistas que acompanham o caso",
-    "Documentação que comprove a necessidade de assistência permanente, no caso de grande invalidez",
-    "Comunicação de Acidente de Trabalho (CAT) e documentos da empresa, quando houver caráter acidentário",
-    "Comprovante de requerimento e carta de indeferimento ou de cessação do INSS (se houver)"
+    "RG, CNH ou CIN",
+    "CPF",
+    "Comprovante de residência",
+    "Laudo do médico que acompanha",
+    "Exames de imagem, laboratoriais e laudos",
+    "Histórico de internações e cirurgias",
+    "Receitas médicas antigas",
+    "Relatórios de especialistas"
   ],
   "faq": [
     {

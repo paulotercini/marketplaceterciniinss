@@ -78,6 +78,10 @@ FIX.documentos_beneficio.push(
   conf(`F165 · triado sem atendimento: só Identificação e + atendimento (${t0.join(" · ")})`,
     t0.length === 2 && /^Identificação/.test(t0[0]) && /\+ atendimento/.test(t0[1]));
   await p.click(".sub-menu .atend-novo");
+  // F220 · o + atendimento abre a tela cheia no Primeiro atendimento; a mesa
+  // fica na ficha, ao sair do modo atendimento
+  await p.click('button:has-text("Sair do modo atendimento")');
+  await p.click('.sub-menu button:has-text("Anotações")');
   await p.waitForSelector(".caixa-atend");
   await p.waitForTimeout(300);
 
@@ -257,18 +261,23 @@ FIX.documentos_beneficio.push(
   // F165 · com caso e sem atendimento em curso, o trilho também é só a
   // Identificação e o + atendimento
   // (F171: com caso, a Análise de Direito também fica no trilho)
-  conf(`F165 · com caso e sem atendimento: Identificação, Análise de Direito e + atendimento (${tCheio.join(" · ")})`,
-    tCheio.length === 3 && /^Identificação/.test(tCheio[0]) && /^Análise de Direito/.test(tCheio[1])
-    && /\+ atendimento/.test(tCheio[2]));
+  // (F220: e Documentos, onde estão a procuração e o que falta ao caso)
+  conf(`F165 · com caso e sem atendimento: Identificação, Documentos, Análise de Direito e + atendimento (${tCheio.join(" · ")})`,
+    tCheio.length === 4 && /^Identificação/.test(tCheio[0]) && /^Documentos/.test(tCheio[1])
+    && /^Análise de Direito/.test(tCheio[2]) && /\+ atendimento/.test(tCheio[3]));
   await p.evaluate(() => { const b = [...document.querySelectorAll('.painel[data-p="0"].ativo .sub-menu button')]
     .find(x => /\+ atendimento/.test(x.innerText)); if (b) b.click(); });
   await p.waitForTimeout(600);
   const tAt = await trilho();
-  conf(`o + atendimento abre a mesa também para quem já tem caso (${tAt.join(" · ")})`,
-    await p.evaluate(() => !!document.querySelector(".caixa-atend"))
-    && tAt.some(x => /Anotações/.test(x)));
-  conf("F165 · e com ele surgem Triagem e Documentos",
-    tAt.some(x => /Triagem/.test(x)) && tAt.some(x => /Documentos/.test(x)));
+  // F220 · o + atendimento abre a tela do atendimento, no Primeiro atendimento
+  conf(`o + atendimento abre a tela do atendimento também para quem já tem caso (${tAt.join(" · ")})`,
+    await p.evaluate(() => document.getElementById("detalhe").classList.contains("atend-tela") && subCad === "pa")
+    && tAt.some(x => /Primeiro atendimento/.test(x)));
+  await p.click('button:has-text("Sair do modo atendimento")');
+  await p.waitForTimeout(300);
+  const tSai = await trilho();
+  conf(`F165 · e, fora da tela, a mesa tem Anotações, Triagem e Documentos (${tSai.join(" · ")})`,
+    tSai.some(x => /Anotações/.test(x)) && tSai.some(x => /Triagem/.test(x)) && tSai.some(x => /Documentos/.test(x)));
 
   // ── 7. F31: o menu Documentos incorporou a Consulta ─────────────────────
   conf("o botão Consulta saiu do trilho",

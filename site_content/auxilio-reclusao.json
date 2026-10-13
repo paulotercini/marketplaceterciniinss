@@ -111,14 +111,14 @@
     }
   ],
   "documentos": [
-    "Documento de identidade e CPF dos dependentes",
-    "Certidão judicial que comprove a prisão e o regime fechado",
-    "Atestado de recolhimento à prisão, atualizado periodicamente",
-    "Número do CNIS ou extrato de contribuições do segurado",
-    "Comprovantes dos salários-de-contribuição anteriores à prisão",
-    "Documentos que comprovem a condição de dependente (certidão de casamento, união estável, nascimento dos filhos)",
-    "Comprovante de residência da família",
-    "Comprovante do requerimento administrativo (DER) e da carta de indeferimento, se houver"
+    "RG e CPF do preso",
+    "Carteira de Trabalho (CTPS) do preso",
+    "Extrato CNIS ou comprovantes de contribuição ao INSS",
+    "Último contracheque ou documento de renda do preso",
+    "Certidão de Cárcere (Declaração de Reclusão)",
+    "Sentença condenatória ou mandado de prisão",
+    "RG/CIN e CPF de cada dependente",
+    "Comprovante de residência do dependente"
   ],
   "faq": [
     {
