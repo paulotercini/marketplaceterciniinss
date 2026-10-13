@@ -535,6 +535,35 @@ def aplicar_marcas_do_crm(mapa, marcados):
     return mudou
 
 
+def redirecionar_fundidos(mapa, marcados):
+    """F221 · a tarefa do To Do do caso fundido continua aberta: o que ela trouxer
+    (anotação, perícia, tarefa, pagamento) vai ao caso de destino, seguindo a
+    cadeia de fusões, e não à casca encerrada. Sem isso a perícia anotada no
+    To Do entrava de novo na casca, ao lado da que a fusão levou ao destino, e a
+    tarefa voltava à casca a cada rodada. Devolve quantas linhas mudaram de caso."""
+    para = {}
+    for m in marcados or []:
+        arq = m.get("arquivados") if isinstance(m.get("arquivados"), dict) else {}
+        fus = arq.get("fundido")
+        if isinstance(fus, dict) and fus.get("para"):
+            para[m["id"]] = fus["para"]
+
+    def destino(k):
+        vistos = set()
+        while k in para and k not in vistos:
+            vistos.add(k)
+            k = para[k]
+        return k
+
+    n = 0
+    for chave in ("andamentos", "eventos", "tarefas", "tarefas_docs", "pagamentos"):
+        for linha in mapa.get(chave) or []:
+            if linha.get("caso_id") in para:
+                linha["caso_id"] = destino(linha["caso_id"])
+                n += 1
+    return n
+
+
 def manter_dados_do_banco(mapa, banco):
     """Telefone e nascimento: o CRM vence; a tarefa do To Do só preenche o
     que está vazio. Antes, tarefa sem telefone no corpo mandava null e apagava
@@ -1264,6 +1293,9 @@ def subir_rest(mapa):
     n_marcas = aplicar_marcas_do_crm(mapa, marcados)
     if n_marcas:
         print(f"  números e fusões decididos no CRM mantidos: {n_marcas}")
+    n_fus = redirecionar_fundidos(mapa, marcados)
+    if n_fus:
+        print(f"  anotações, eventos e tarefas de casos fundidos levados ao destino: {n_fus}")
 
     for chave_mapa, tabela, res, conflito in ordem:
         linhas = resolver(mapa.get(chave_mapa, []))
