@@ -28,16 +28,21 @@ A fonte de dados dos geradores é o **Microsoft To Do** (Graph API, conta pessoa
 
 ## Dossiê do cliente (crm/fase2/dossie) — o que chega ao CRM
 
-<!-- dossie-versao: 0.8.6 — ao mudar manifest.json da extensão, atualize esta seção e este número;
+<!-- dossie-versao: 0.11.0 — ao mudar manifest.json da extensão, atualize esta seção e este número;
      tests em crm/fase2/dossie/testes/regras.test.js conferem que batem. -->
 
-Extensão de navegador (versão **0.8.6**). Com o gov.br do cliente logado, um clique baixa os documentos
+Extensão de navegador (versão **0.11.0**). Com o gov.br do cliente logado, um clique baixa os documentos
 do portal aberto na aba; **🔁 Rodar todos os portais** percorre Meu INSS → e-Recursos → Emprega Brasil → HC →
 Redesim, cada um na sua aba (abre as do gov.br que faltarem; Emprega Brasil e HC só se a aba logada já
 estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha e não decide nada: coleta e entrega.
 
 **De onde coleta**
-- **Meu INSS**: CNIS completo, resumido e ano civil · declaração de beneficiário · certificado da pessoa
+- **Meu INSS**: **dados cadastrais do CNIS** (PDF da tela "Dados Cadastrais" + `.txt`, e os campos já com o nome
+  das colunas de `clientes` em `clientes.dossie.meuinss.cadastro`: `nome, cpf, dn, nome_mae, sexo, pis_nit, rg,
+  rg_orgao, ctps[], titulo_eleitor, logradouro, bairro, cep, cidade, uf, naturalidade, nacionalidade, grau_instrucao,
+  atualizado_no_cnis_em`. A própria extensão completa na ficha os campos **vazios** de `clientes` (dn, nome_mae,
+  sexo, pis_nit, rg, rg_orgao, logradouro, bairro, cidade, uf, cep), como a F29 faz ao ler o PDF do CNIS, e nunca
+  sobrescreve o digitado; telefone, e-mail e estado civil não vêm do CNIS; número/complemento vêm dentro de `logradouro`) · CNIS completo, resumido e ano civil · declaração de beneficiário · certificado da pessoa
   com deficiência · declaração de atividade · por benefício: carta de concessão, laudo médico e extrato
   de informações do benefício (dossiê) · extrato de pagamento dos últimos 12 meses · cópia integral de
   todos os pedidos administrativos (todos os anos) · PPP eletrônico por vínculo · CAT · CTC (se houver protocolo).
@@ -53,13 +58,34 @@ estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha 
   nome empresarial, situação cadastral, matriz/filial, município/UF, vínculo do CPF, qualificação, capital
   social; sem data de abertura — ela só vem no comprovante) + JSON cru. A consulta exige hCaptcha: a extensão abre a tela e **a pessoa clica em PESQUISAR**;
   o comprovante de cada CNPJ também é protegido por captcha e fica de fora.
+- **CadÚnico (Meu CadÚnico, gov.br)**: a **ficha completa** da família (PDF "exportar consulta completa"), o
+  comprovante de cadastro e um `.txt` legível (estado cadastral, datas, renda total e per capita com faixa,
+  integrantes com parentesco/nascimento/CPF/NIS, situação de rua, pendências) em `CadUnico\`. O resumo vai a
+  `clientes.dossie.cadunico.familia` (`numero_familiar, estado_cadastral, condicao, municipio, cadastrada_em,
+  atualizada_em, renda_total, renda_por_pessoa, faixa_renda_total, faixa_renda_por_pessoa, integrantes,
+  pessoas_no_calculo_da_renda, situacao_de_rua, pendencias, membros[{id, nome, parentesco, nascimento, cpf, nis,
+  responsavel, obito, estado}], beneficios_pagos[{tipo, especie, beneficiario, primeira_competencia, ultima_competencia,
+  meses, valor_ultimo}]` (extrato do portal desde 2004: Bolsa Família, BPC, auxílios), `tarifa_social_energia,
+  consignacoes, pendencias_detalhe, despesas{energia, aguaesgoto, gas, alimentacao, transporte, aluguel, medicamentos},
+  renda_cnis[{nome, possui_remuneracao, competencia_referencia, beneficios_inss[{nb, especie, valor, dib}],
+  total_beneficios, remuneracao_ultimo_mes, seguro_desemprego, outras_fontes, declarado{…}}]`) — é o grupo
+  familiar, a renda per capita e o que cada integrante recebe (INSS, trabalho, SD) para o BPC, sem redigitar.
+  Conferido ao vivo em 13.10.2026 (BPC Idoso de R$ 1.621 desde 04/2025, benefício do INSS com espécie e DIB).
+- **Portal da Transparência (API de dados abertos, sem login, chave gratuita em ⚙)**: no fim do CadÚnico, para
+  **cada integrante** (CPF/NIS do CadÚnico): BPC (com "concedido judicialmente" e representante legal), Bolsa
+  Família novo e antigo, Auxílio Brasil, Auxílio Emergencial, Garantia-Safra, Seguro-Defeso — `.txt` em
+  `Transparencia\` e `clientes.dossie.transparencia.pessoas[{nome, cpf, nis, programas[{programa, rotulo, meses,
+  primeira_competencia, ultima_competencia, valor_ultimo, total, concedido_judicialmente, representante_legal,
+  municipio}]}]`. Complementa o CadÚnico (histórico de pagamentos) e vale para quem ainda não tem o gov.br:
+  o popup tem **🔎 Portal da Transparência (sem login)** — o colaborador digita o CPF/NIS e a extensão consulta
+  a pessoa (e os integrantes que a ficha do CRM já conhecer, de `dossie.cadunico.familia.membros`).
 
 **Onde entrega** (os três ao mesmo tempo)
 1. **Drive**: `G:\Meu Drive\Processos\<Letra>\<Nome #CPF>\Dossie\<fonte>\<arquivo>.pdf`. Pasta existente
    vence (busca por `#CPF`, depois por nome sem acento); cliente novo ganha pasta capitalizada com `#CPF`.
-   Fontes: `CNIS`, `Declaracao`, `Cartas de concessao`, `Laudos`, `Extrato do beneficio`,
+   Fontes: `Cadastro`, `CNIS`, `Declaracao`, `Cartas de concessao`, `Laudos`, `Extrato do beneficio`,
    `Extrato de pagamento`, `Processos administrativos`, `PPP`, `CAT`, `CTC`, `Recursos\<NUP>`,
-   `CTPS RAIS CAGED`, `HC Ribeirao\Exames|Internacoes|Relatorios`, `CNPJ`. Gravado pelo programa `host/dossie_host.py`
+   `CTPS RAIS CAGED`, `HC Ribeirao\Exames|Internacoes|Relatorios`, `CNPJ`, `CadUnico`, `Transparencia`. Gravado pelo programa `host/dossie_host.py`
    (native messaging); sem ele, cai em `Downloads/Dossie/`.
 2. **Tabela `anexos`**, uma linha por PDF presa ao **cliente** (`cliente_id` pelo CPF; sem caso nem
    andamento): `origem='dossie'`, `nome="<fonte> · <arquivo>"`, `caminho="dossie/<cpf>/<fonte>/<arquivo>"`
@@ -67,7 +93,7 @@ estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha 
    (upsert), não duplica. `texto` fica vazio — a extensão **não extrai texto**; é o pipeline do CRM
    (`textoDoDocumento`) que lê.
 3. **`clientes.dossie` (jsonb, `schema_dossie.sql`)**: resumo de cada rodada, uma chave por portal
-   (`meuinss`, `mte`, `recursos`, `hc`, `redesim`), e rodar um portal substitui só a chave dele:
+   (`meuinss`, `mte`, `recursos`, `hc`, `redesim`, `cadunico`, `transparencia`), e rodar um portal substitui só a chave dele:
    `{"em": ISO, "baixados": [...], "inexistentes": [...], "falhas": [...]}`.
    `inexistentes` é o que o portal **disse que não existe** (sem CTC, sem CAT, sem PPP, benefício sem laudo,
    "não possui deficiência") — fato negativo para a triagem; `falhas` é erro técnico, pede rodada nova.

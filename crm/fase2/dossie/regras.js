@@ -127,7 +127,181 @@
     return linhas.join('\n');
   }
 
-  const API = { nomeSeguro, slug, pastaCliente, jwt, comoPdf, mensagemDoPortal, ehExameDeImagem, textoSeguroDesemprego, b64, janela12Meses, nupsDaLista };
+  // Dados cadastrais do CNIS (extratocnisservices/dadoscompletos, 12.10.2026) → os
+  // campos com o NOME DAS COLUNAS de `clientes` no CRM, para o cadastro da
+  // etapa 2 e a identificação do cliente serem preenchidos sem redigitar.
+  // Telefone e e-mail não vêm do CNIS. O endereço do CNIS traz número e
+  // complemento dentro do logradouro: vai inteiro em `logradouro`.
+  function cadastroDoCnis(j) {
+    const f = (j && j.filiadoTO) || {};
+    const d = v => { const m = String(v || '').match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[1]}-${m[2]}-${m[3]}` : null; };
+    const rg = ((f.listaIdentidadeTO || [])[0]) || {};
+    const end = f.enderecoPrincipalTO || {};
+    const sx = String(f.sexo || '').toUpperCase();
+    const cad = {
+      nome: f.nome || null,
+      cpf: String(f.cpf || '').replace(/\D/g, '').padStart(11, '0') || null,
+      dn: d(f.dataNascimento),
+      nome_mae: f.nomeMae || null,
+      sexo: sx.startsWith('F') ? 'F' : sx.startsWith('M') ? 'M' : null,
+      pis_nit: f.nitFormatado || (f.nit ? String(f.nit) : null),
+      rg: rg.numero ? String(rg.numero) : null,
+      rg_orgao: [rg.orgaoEmissorIdentidade, rg.uf].filter(Boolean).join('/') || null,
+      ctps: (f.listaCtpsTO || []).map(c => [c.numero, c.serie, c.uf].filter(Boolean).join(' ')).filter(Boolean),
+      titulo_eleitor: f.numeroTitulo || (f.tituloEleitorTO && f.tituloEleitorTO.numero) || null,
+      logradouro: end.logradouro || null,
+      bairro: end.bairro || null,
+      cep: end.cep ? String(end.cep).padStart(8, '0') : null,
+      cidade: end.municipio || null,
+      uf: end.siglaUf || end.uf || null,
+      naturalidade: [f.municipioOrigem, f.ufOrigem].filter(Boolean).join('/') || null,
+      nacionalidade: f.nacionalidade || null,
+      grau_instrucao: f.grauInstrucao || null,
+      atualizado_no_cnis_em: d(f.dataUltimaAtualizacao),
+    };
+    const br = v => v ? v.split('-').reverse().join('/') : '-';
+    const texto = ['DADOS CADASTRAIS (CNIS / Meu INSS)', '',
+      `Nome: ${cad.nome || '-'}`, `CPF: ${cad.cpf || '-'}`, `Nascimento: ${br(cad.dn)}`, `Nome da mãe: ${cad.nome_mae || '-'}`,
+      `Sexo: ${cad.sexo || '-'}`, `NIT/PIS: ${cad.pis_nit || '-'}`, `RG: ${cad.rg || '-'} ${cad.rg_orgao || ''}`.trim(),
+      `CTPS: ${cad.ctps.join('; ') || '-'}`, `Título de eleitor: ${cad.titulo_eleitor || '-'}`,
+      `Endereço: ${cad.logradouro || '-'}${cad.bairro ? ', ' + cad.bairro : ''} — ${cad.cidade || '-'}/${cad.uf || '-'} CEP ${cad.cep || '-'}`,
+      `Naturalidade: ${cad.naturalidade || '-'} · Nacionalidade: ${cad.nacionalidade || '-'} · Instrução: ${cad.grau_instrucao || '-'}`,
+      `Última atualização no CNIS: ${br(cad.atualizado_no_cnis_em)}`,
+      '', '--- dados brutos do portal ---', JSON.stringify(j, null, 2)].join('\n');
+    return { cadastro: cad, texto };
+  }
+
+  // CadÚnico (perfil de pessoa/{cpf}/tipos-perfil + familia/{nf}/membros, 13.10.2026):
+  // o .txt legível e o resumo da família que vai a clientes.dossie.cadunico.familia
+  // — renda per capita, faixa, integrantes e estado cadastral são o que o BPC pede.
+  function textoCadunico(perfil, membros, renda, extra) {
+    const p = perfil || {}, nome = v => (v && typeof v === 'object') ? (v.nome || v.descricao || v.codigo || '') : (v == null ? '' : String(v));
+    const dBr = v => { const m = String(v || '').match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : String(v || '-'); };
+    const brl = v => (v == null || v === '') ? '-' : 'R$ ' + Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+    const integrantes = ((membros && membros.integranteFamiliaDTOs) || []).map(i => {
+      const d = i.pessoaDadosCadastroDTO || {};
+      return { id: i.identificador != null ? String(i.identificador) : null, nome: d.nomePessoa || '', parentesco: nome(i.tipoRelacaoParentescoRF), nascimento: d.dataNascimentoPessoa || null,
+        cpf: d.numeroCpfPessoa ? String(d.numeroCpfPessoa).padStart(11, '0') : null, nis: d.numeroNisPisPasepPessoa ? String(d.numeroNisPisPasepPessoa) : null,
+        responsavel: !!i.isResponsavelFamiliar, obito: !!i.obito, estado: nome(d.tipoEstadoCadastralMembro) };
+    });
+    const familia = {
+      numero_familiar: String(p.numeroFamiliar || ''), estado_cadastral: nome(p.tipoEstadoCadastralFamilia), condicao: nome(p.tipoCondicaoCadastroFamiliar),
+      municipio: [p.municipio, p.uf].filter(Boolean).join('/'), cadastrada_em: p.dataCadastroFamilia || null, atualizada_em: p.dataAtualizacaoFamilia || null,
+      renda_total: p.rendaFamiliarTotal ?? null, renda_por_pessoa: p.rendaFamiliarPorPessoa ?? null,
+      faixa_renda_total: p.faixaRendaFamiliarTotal || null, faixa_renda_por_pessoa: p.faixaRendaFamiliarPorPessoa || null,
+      integrantes: p.quantidadeIntegrantes ?? integrantes.length, pessoas_no_calculo_da_renda: p.qtPessoasCalculoRenda ?? null,
+      situacao_de_rua: nome(p.familiaEmSituacaoDeRua) || null, pendencias: p.quantidadePendencias ?? null, membros: integrantes,
+    };
+    const linhas = [`CADÚNICO — família ${familia.numero_familiar} (Meu CadÚnico, consulta em ${new Date().toLocaleDateString('pt-BR')})`, '',
+      `Titular da consulta: ${p.nome || '-'} · perfil ${nome(p.tipoPerfil) || '-'}`,
+      `Estado cadastral: ${familia.estado_cadastral || '-'} · ${familia.condicao || ''} · ${familia.municipio}`,
+      `Cadastrada em ${dBr(familia.cadastrada_em)} · última atualização ${dBr(familia.atualizada_em)}`,
+      `Renda familiar total: ${brl(familia.renda_total)} (${familia.faixa_renda_total || '-'})`,
+      `Renda por pessoa: ${brl(familia.renda_por_pessoa)} (${familia.faixa_renda_por_pessoa || '-'}) · ${familia.integrantes} integrante(s)${familia.pessoas_no_calculo_da_renda != null ? `, ${familia.pessoas_no_calculo_da_renda} no cálculo da renda` : ''}`,
+      `Situação de rua: ${familia.situacao_de_rua || '-'} · pendências: ${familia.pendencias ?? '-'}`, '', 'INTEGRANTES'];
+    for (const m of integrantes)
+      linhas.push(`  ${m.responsavel ? '★ ' : ''}${m.nome} · ${m.parentesco || '-'} · nasc. ${dBr(m.nascimento)} · CPF ${m.cpf || '-'} · NIS ${m.nis || '-'} · ${m.estado || ''}${m.obito ? ' · ÓBITO' : ''}`);
+
+    // ── o que mais o portal dá (extra, opcional): extrato de benefícios pagos
+    // (Bolsa Família, BPC…), tarifa social, consignações, renda CNIS por
+    // integrante (benefício do INSS com espécie e DIB, remuneração, SD),
+    // trabalho e renda declarados, pendências e despesas (13.10.2026)
+    const x = extra || {};
+    const comp = c => { const s = String(c || ''); return /^\d{6}$/.test(s) ? `${s.slice(4)}/${s.slice(0, 4)}` : (s.match(/^(\d{4})-(\d{2})/) ? `${s.slice(5, 7)}/${s.slice(0, 4)}` : s || '-'); };
+    const pagos = {};
+    for (const e of [].concat(x.extrato || [])) {
+      const k = `${nome(e.tipoExtrato) || '?'} · ${e.nomeEspecie || '?'} · ${e.nomeBeneficiario || ''}`.trim();
+      const g = pagos[k] || (pagos[k] = { tipo: nome(e.tipoExtrato) || null, especie: e.nomeEspecie || null, beneficiario: e.nomeBeneficiario || null, competencias: [], valores: [] });
+      g.competencias.push(String(e.numeroCompetencia || '')); g.valores.push(e.valorBeneficio);
+    }
+    familia.beneficios_pagos = Object.values(pagos).map(g => { const cs = g.competencias.filter(Boolean).sort(); return { tipo: g.tipo, especie: g.especie, beneficiario: g.beneficiario,
+      primeira_competencia: cs[0] || null, ultima_competencia: cs[cs.length - 1] || null, meses: cs.length, valor_ultimo: g.valores[0] ?? null }; });
+    const ts = x.tipos && x.tipos.tarifaSocialEnergiaEletrica;
+    familia.tarifa_social_energia = ts ? { competencia: String(ts.numeroCompetencia || ''), desconto: ts.valorDesconto ?? null } : null;
+    familia.consignacoes = [].concat(x.consignacoes || []).length;
+    familia.pendencias_detalhe = x.pendencias ? { familia: [].concat(x.pendencias.pendenciasOcorrenciasFamilia || []).length, pessoas: [].concat(x.pendencias.pendenciasOcorrenciasPessoas || []).length } : null;
+    const desp = x.info && x.info.familiaDespesaDTO;
+    familia.despesas = desp ? Object.fromEntries(Object.entries(desp).map(([k, v]) => [k.replace(/^valorDespesas/, '').toLowerCase(), v])) : null;
+    familia.renda_cnis = [];
+    for (const m of integrantes) {
+      const r = (x.rendas || {})[m.id || ''] || (x.rendas || {})[m.nis || ''] || null;
+      if (!r) continue;
+      const rb = (r.renda && r.renda.rendasBeneficios) || {};
+      familia.renda_cnis.push({ nome: m.nome, possui_remuneracao: r.renda ? !!r.renda.possuiAlgumaRemuneracao : null, competencia_referencia: (r.renda && r.renda.competenciaReferencia) || null,
+        beneficios_inss: [].concat(rb.beneficios || []).map(b => ({ nb: b.nb ? String(b.nb) : null, especie: nome(b.especie), valor: b.valor ?? null, dib: b.dataInicioPagamento || null })),
+        total_beneficios: rb.total ?? null, remuneracao_ultimo_mes: r.renda && r.renda.remuneracaoUltimoMes ? (r.renda.remuneracaoUltimoMes.valor ?? r.renda.remuneracaoUltimoMes) : null,
+        seguro_desemprego: !!(r.renda && r.renda.rendasSeguroDesemprego), outras_fontes: !!(r.renda && r.renda.rendasOutrasFontes),
+        declarado: r.trabalho ? { trabalhou_semana_anterior: nome(r.trabalho.trabalhouSemanaAnteriorAEntrevista) || null, remuneracao_mes_anterior: r.trabalho.remuneracaoTrabalhoMesAnteriorEntrevista ?? null,
+          aposentadoria_pensao_bpc: r.trabalho.valorAposentadoriaPensaoBpcLoas ?? null, seguro_desemprego: r.trabalho.valorSeguroDesemprego ?? null, pensao_alimenticia: r.trabalho.valorPensaoAlimenticia ?? null, outras: r.trabalho.outrasRendas ?? null } : null });
+    }
+    if (familia.beneficios_pagos.length) {
+      linhas.push('', 'BENEFÍCIOS PAGOS (extrato do portal)');
+      for (const b of familia.beneficios_pagos) linhas.push(`  ${b.tipo} · ${b.especie}${b.beneficiario ? ' · ' + b.beneficiario : ''} · ${comp(b.primeira_competencia)} a ${comp(b.ultima_competencia)} (${b.meses} mês/meses) · último ${brl(b.valor_ultimo)}`);
+    } else if (x.extrato) linhas.push('', 'BENEFÍCIOS PAGOS (extrato do portal): nenhum no período consultado');
+    if (familia.tarifa_social_energia) linhas.push(`  Tarifa Social de Energia Elétrica: desconto ${brl(familia.tarifa_social_energia.desconto)} (competência ${comp(familia.tarifa_social_energia.competencia)})`);
+    if (x.consignacoes) linhas.push(`  Consignações no benefício: ${familia.consignacoes}`);
+    if (familia.renda_cnis.length) {
+      linhas.push('', 'RENDA POR INTEGRANTE (CNIS, via CadÚnico)');
+      for (const r of familia.renda_cnis) {
+        linhas.push(`  ${r.nome} · referência ${comp(r.competencia_referencia)} · ${r.possui_remuneracao ? 'tem remuneração/benefício' : 'sem remuneração'}`);
+        for (const b of r.beneficios_inss) linhas.push(`    Benefício INSS NB ${b.nb || '?'} · ${b.especie || '?'} · ${brl(b.valor)} · início ${dBr(b.dib)}`);
+        if (r.remuneracao_ultimo_mes != null && typeof r.remuneracao_ultimo_mes !== 'object') linhas.push(`    Remuneração do último mês: ${brl(r.remuneracao_ultimo_mes)}`);
+        if (r.seguro_desemprego) linhas.push('    Tem seguro-desemprego no período');
+        if (r.declarado) linhas.push(`    Declarado no CadÚnico: trabalho mês anterior ${brl(r.declarado.remuneracao_mes_anterior)} · aposentadoria/pensão/BPC ${brl(r.declarado.aposentadoria_pensao_bpc)} · SD ${brl(r.declarado.seguro_desemprego)} · pensão alimentícia ${brl(r.declarado.pensao_alimenticia)} · outras ${brl(r.declarado.outras)}`);
+      }
+    }
+    if (familia.pendencias_detalhe) linhas.push('', `PENDÊNCIAS: ${familia.pendencias_detalhe.familia} da família, ${familia.pendencias_detalhe.pessoas} de pessoas`);
+    if (familia.despesas) linhas.push('', 'DESPESAS DECLARADAS: ' + Object.entries(familia.despesas).map(([k, v]) => `${k} ${brl(v)}`).join(' · '));
+    linhas.push('', '--- dados brutos do portal ---', JSON.stringify({ perfil, membros, renda, extra: x }, null, 2));
+    return { familia, texto: linhas.join('\n') };
+  }
+
+  // Portal da Transparência (API de dados abertos, 13.10.2026): os pagamentos de
+  // BPC, Bolsa Família (novo e antigo), Auxílio Brasil, Auxílio Emergencial,
+  // Garantia-Safra e Seguro-Defeso de cada integrante da família → .txt + resumo.
+  // `resultados` = { [cpfOuNis]: { pessoa, programas: { bpc: [...], novo_bolsa_familia: [...], … } } }
+  const PROGRAMAS = { bpc: 'BPC', novo_bolsa_familia: 'Bolsa Família (novo, desde 03/2023)', bolsa_familia: 'Bolsa Família (até 2021)',
+    auxilio_brasil: 'Auxílio Brasil (2021–2023)', auxilio_emergencial: 'Auxílio Emergencial', safra: 'Garantia-Safra', seguro_defeso: 'Seguro-Defeso' };
+  function textoTransparencia(pessoas, resultados) {
+    const brl = v => (v == null || v === '') ? '-' : 'R$ ' + Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+    // competência: BPC/Bolsa mandam AAAAMM; o Auxílio Emergencial manda MM/AAAA (13.10.2026)
+    const comp = v => { const s = String(v || '').replace(/\D/g, ''); if (s.length < 6) return v || '-';
+      return Number(s.slice(0, 4)) >= 1990 ? `${s.slice(4, 6)}/${s.slice(0, 4)}` : `${s.slice(0, 2)}/${s.slice(2, 6)}`; };
+    const linhas = [`PORTAL DA TRANSPARÊNCIA — benefícios pagos a cada integrante (consulta em ${new Date().toLocaleDateString('pt-BR')})`, ''];
+    const resumo = [];
+    for (const p of pessoas) {
+      const chave = p.cpf || p.nis; const r = (resultados || {})[chave] || {};
+      const prog = r.programas || {};
+      const linhaPessoa = { nome: p.nome, cpf: p.cpf || null, nis: p.nis || null, erro: r.erro || null, programas: [] };
+      linhas.push(`${p.nome || '?'} · CPF ${p.cpf || '-'} · NIS ${p.nis || '-'}${r.erro ? ` · ERRO: ${r.erro}` : ''}`);
+      let algum = false;
+      for (const [k, rot] of Object.entries(PROGRAMAS)) {
+        const itens = [].concat(prog[k] || []);
+        if (!itens.length) continue;
+        algum = true;
+        const comps = itens.map(i => String(i.dataMesCompetencia || i.dataMesReferencia || i.mesDisponibilizacao || '').replace(/\D/g, '')).filter(Boolean).sort();
+        const valores = itens.map(i => i.valor ?? i.valorSaque).filter(v => v != null);
+        const ult = itens.find(i => String(i.dataMesCompetencia || i.dataMesReferencia || i.mesDisponibilizacao || '').replace(/\D/g, '') === comps[comps.length - 1]) || itens[0];
+        const judicial = itens.some(i => i.concedidoJudicialmente === true || /sim/i.test(String(i.concedidoJudicialmente || '')));
+        // representante legal só quando é outra pessoa (o portal repete o próprio beneficiário)
+        const rl0 = (ult.beneficiario && ult.beneficiario.nomeRepresentanteLegal) || null;
+        const rl = rl0 && rl0.trim().toUpperCase() !== String(p.nome || '').trim().toUpperCase() ? rl0 : null;
+        const item = { programa: k, rotulo: rot, meses: itens.length, primeira_competencia: comps[0] || null, ultima_competencia: comps[comps.length - 1] || null,
+          valor_ultimo: ult.valor ?? ult.valorSaque ?? null, total: valores.reduce((a, b) => a + Number(b || 0), 0), concedido_judicialmente: judicial || null, representante_legal: rl,
+          municipio: ult.municipio ? `${ult.municipio.nomeIBGE || ''}/${(ult.municipio.uf || {}).sigla || ''}` : null };
+        linhaPessoa.programas.push(item);
+        linhas.push(`  ${rot}: ${comp(item.primeira_competencia)} a ${comp(item.ultima_competencia)} · ${item.meses} pagamento(s) · último ${brl(item.valor_ultimo)} · total ${brl(item.total)}`
+          + `${judicial ? ' · CONCEDIDO JUDICIALMENTE' : ''}${rl ? ` · representante legal: ${rl}` : ''}${item.municipio ? ` · ${item.municipio}` : ''}`);
+      }
+      if (!algum && !r.erro) linhas.push('  nenhum pagamento encontrado no Portal da Transparência');
+      resumo.push(linhaPessoa);
+      linhas.push('');
+    }
+    linhas.push('', '--- dados brutos do portal ---', JSON.stringify(resultados, null, 2));
+    return { pessoas: resumo, texto: linhas.join('\n') };
+  }
+
+  const API = { nomeSeguro, slug, pastaCliente, jwt, comoPdf, mensagemDoPortal, ehExameDeImagem, textoSeguroDesemprego, cadastroDoCnis, textoCadunico, textoTransparencia, b64, janela12Meses, nupsDaLista };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.DOSSIE_REGRAS = API;
 })(typeof window !== 'undefined' ? window : globalThis);

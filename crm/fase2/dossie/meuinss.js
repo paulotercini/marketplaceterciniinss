@@ -62,6 +62,26 @@
     const lista = j => Array.isArray(j) ? j
       : (j && typeof j === 'object' ? Object.values(j).find(v => Array.isArray(v) && v.some(x => x && typeof x === 'object')) || [] : []);
 
+    // ── CADASTRO: os dados cadastrais do CNIS (JSON → campos do CRM + .txt) e o PDF
+    // da tela "Dados Cadastrais" (botão Baixar Documento = dadoscompletosPdf)
+    let cadastro = null;
+    try {
+      const rc = await pedir(`${API}extratocnisservices/dadoscompletos/${cpf}?timestamp=${Date.now()}`);
+      const jc = rc.ok ? await rc.json() : null;
+      if (jc && jc.filiadoTO) {
+        const c = R.cadastroDoCnis(jc);
+        cadastro = c.cadastro;
+        if (cadastro.nome) { cliente.nome = cadastro.nome; await chrome.storage.local.set({ cliente }); }
+        await D.salvar(cliente, 'Cadastro', 'Dados cadastrais (CNIS)', new TextEncoder().encode(c.texto), 'text/plain');
+        ok.push('Cadastro · Dados cadastrais (CNIS)');
+        // vai ao CRM AGORA, antes dos outros downloads: a ficha fica preenchida em
+        // segundos, sem esperar os minutos da rodada (o resumo final regrava tudo)
+        const av = await D.resumo(cliente, 'meuinss', { baixados: ok, inexistentes, falhas, cadastro });
+        D.faixa(`cadastro gravado no CRM${av ? av.replace(/\n\(resumo no CRM: (.*)\)/, ' — $1') : ''} — seguindo com os documentos…`);
+      } else falhas.push(`Cadastro: o CNIS não devolveu os dados (HTTP ${rc.status})`);
+    } catch (e) { falhas.push(`Cadastro: ${e.message || e}`); }
+    await pdf('Cadastro', 'Dados cadastrais (CNIS)', `${API}extratocnisservices/dadoscompletosPdf/${cpf}`);
+
     // ── CNIS: os três extratos da tela ──────────────────────────────────────
     await pdf('CNIS', 'CNIS completo (com remuneracoes)', `${API}extratocnisservices/v2/remuneracoesPdf/${cpf}`);
     await pdf('CNIS', 'CNIS resumido (vinculos)', `${API}extratocnisservices/v2/vinculosPdf/${cpf}`);
@@ -168,7 +188,7 @@
       + ` · ${nbs.length} benefício(s) · ${tarefas.length} pedido(s) · ${vinculos.length} vínculo(s) PPP · ${cats.length} CAT · ${ctc} CTC`
       + (inexistentes.length ? `\n${inexistentes.length} não existem no INSS:\n• ${inexistentes.slice(0, 8).join('\n• ')}` : '')
       + (falhas.length ? `\n${falhas.length} falharam:\n• ${falhas.slice(0, 8).join('\n• ')}` : '');
-    const avisoCrm = await D.resumo(cliente, 'meuinss', { baixados: ok, inexistentes, falhas });
+    const avisoCrm = await D.resumo(cliente, 'meuinss', { baixados: ok, inexistentes, falhas, cadastro });
     D.faixa(resumo + avisoCrm, falhas.length ? '#9A6700' : '#1E6F50');
     return { ok: ok.length, falhas };
   };

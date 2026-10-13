@@ -123,6 +123,20 @@ async function idDoCliente(cpf) {
   return id;
 }
 
+// nome e CPF/NIS dos integrantes que a ficha já conhece (para a consulta sem
+// login na Transparência: o colaborador digita só o CPF do cliente)
+export async function clienteDoCpf(cpf) {
+  const st = await chrome.storage.local.get(['refresh', 'url']);
+  if (!st.refresh || !st.url) return null;
+  const { url } = await config();
+  const r = await fetchTeimoso(`${url}/rest/v1/clientes?select=id,nome,dossie&cpf=eq.${cpf}&limit=1`, { headers: await cabecalhos() });
+  if (!r.ok) return null;
+  const c = (await r.json())[0];
+  if (!c) return null;
+  const fam = c.dossie && c.dossie.cadunico && c.dossie.cadunico.familia;
+  return { id: c.id, nome: c.nome, membros: (fam && fam.membros) || [] };
+}
+
 // devolve 'ok' | 'sem login' | 'cliente fora do CRM'
 export async function guardarNoCrm({ cpf, caminho, nome, bytes, mime = 'application/pdf' }) {
   const st = await chrome.storage.local.get(['refresh', 'url']);
@@ -134,7 +148,13 @@ export async function guardarNoCrm({ cpf, caminho, nome, bytes, mime = 'applicat
   // x-upsert: rodar o dossiê de novo substitui o PDF (o CNIS muda de um mês para outro)
   const up = await fetchTeimoso(`${url}/storage/v1/object/anexos/${caminho}`, { method: 'POST', body: bytes,
     headers: { apikey: cab.apikey, Authorization: cab.Authorization, 'Content-Type': mime, 'x-upsert': 'true' } });
-  if (!up.ok) throw new Error(`upload recusado (${up.status})`);
+  if (!up.ok) {
+    // banco sem a policy de update (schema_dossie.sql): o PDF que já está lá fica como está
+    const t = await up.text().catch(() => '');
+    const jaExiste = up.status === 409 || /already exists|Duplicate/i.test(t)
+      || (up.status === 400 && (await fetchTeimoso(`${url}/storage/v1/object/info/authenticated/anexos/${caminho}`, { headers: cab })).ok);
+    if (!jaExiste) throw new Error(`upload recusado (${up.status})`);
+  }
   const ln = await fetchTeimoso(`${url}/rest/v1/anexos?on_conflict=caminho`, { method: 'POST',
     headers: Object.assign({}, cab, { Prefer: 'resolution=ignore-duplicates,return=minimal' }),
     body: JSON.stringify({ cliente_id: clienteId, nome, caminho, tipo: mime, tamanho: bytes.length, origem: 'dossie' }) });
@@ -158,5 +178,26 @@ export async function guardarResumo({ cpf, portal, resumo }) {
     headers: Object.assign({}, cab, { Prefer: 'return=minimal' }),
     body: JSON.stringify({ dossie: Object.assign({}, atual, { [portal]: Object.assign({ em: new Date().toISOString() }, resumo) }) }) });
   if (!p.ok) throw new Error(`resumo recusado (${p.status})`);
+  // Meu INSS: os dados cadastrais do CNIS completam a Identificação — SÓ os
+  // campos vazios, como o CRM já faz ao ler o PDF do CNIS (F29); o que foi
+  // digitado à mão não é tocado. Banco sem as colunas (schema_f9_cadastro.sql):
+  // o PATCH dá 400 e o dado fica em dossie.meuinss.cadastro mesmo assim.
+  if (resumo.cadastro) {
+    const n = await completarCadastro(url, cab, clienteId, resumo.cadastro).catch(() => 0);
+    return n ? `ok · cadastro: ${n} campo(s) preenchido(s)` : 'ok';
+  }
   return 'ok';
+}
+
+const CAMPOS_CADASTRO = ['dn', 'nome_mae', 'sexo', 'pis_nit', 'rg', 'rg_orgao', 'logradouro', 'bairro', 'cidade', 'uf', 'cep'];
+async function completarCadastro(url, cab, clienteId, cad) {
+  const r = await fetchTeimoso(`${url}/rest/v1/clientes?select=${CAMPOS_CADASTRO.join(',')}&id=eq.${clienteId}`, { headers: cab });
+  if (!r.ok) return 0;
+  const atual = (await r.json())[0] || {};
+  const novo = {};
+  for (const k of CAMPOS_CADASTRO) if (!atual[k] && cad[k]) novo[k] = cad[k];
+  if (!Object.keys(novo).length) return 0;
+  const p = await fetchTeimoso(`${url}/rest/v1/clientes?id=eq.${clienteId}`, { method: 'PATCH',
+    headers: Object.assign({}, cab, { Prefer: 'return=minimal' }), body: JSON.stringify(novo) });
+  return p.ok ? Object.keys(novo).length : 0;
 }
