@@ -3811,6 +3811,52 @@ section.ben{background:#fff;border:1px solid #E7E6E1;border-radius:12px;padding:
 .org-caso footer{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:auto}
 .org-caso footer .adr-bt{min-height:34px;font-size:12.5px}
 .proc-org{display:flex;justify-content:flex-end;margin-top:4px}
+/* F221 · o plano automático, o lote, o repasse em um clique e a linha da incapacidade */
+.org-plano{border:1px solid var(--borda);background:var(--branco,#fff);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.org-plano h4,.org-duv h4{margin:0;font-size:14px}
+.org-plano ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px;font-size:13.5px;line-height:1.45}
+.org-plano .org-acoes{align-items:center}
+.org-log{margin:0;font-size:13px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;color:var(--cinza)}
+.org-log .adr-bt{min-height:34px;font-size:12.5px}
+.modal-cx:has(.org-lote){width:min(860px,96vw)}
+.org-lote{display:flex;flex-direction:column;gap:10px}
+.org-lote h3{margin:0;font-size:18px}
+.org-lote progress{width:100%;height:8px;accent-color:var(--azul)}
+.org-lote-lista{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;max-height:46vh;overflow:auto}
+.org-lote-lista>li{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;border-top:1px solid var(--borda-suave,#EEE);padding-top:6px;font-size:13.5px}
+.org-lote-lista>li:first-child{border-top:0;padding-top:0}
+.org-lote-lista label{display:inline-flex;gap:8px;align-items:center;cursor:pointer;flex:1 1 260px}
+.org-lote-lista details{flex:1 1 100%;font-size:13px}
+.org-lote-lista details ol{margin:4px 0 0;padding-left:20px}
+.org-lote-sem summary{cursor:pointer;font-size:13px;color:var(--cinza)}
+.sel-levar{min-height:30px;border:1px solid var(--borda);border-radius:8px;padding:0 8px;font:inherit;font-size:12.5px;max-width:100%;background:var(--branco,#fff)}
+.nb-num{font-variant-numeric:tabular-nums}
+.proc-l3{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
+.num-fora{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;margin:0 0 10px;padding:8px 12px;border-radius:10px;background:#FFF4D6;color:#5C4100;font-size:13.5px;line-height:1.45}
+.num-fora span{flex:1 1 260px}
+.incap-prox .alerta{color:#B42318}
+.incap{margin:0 0 16px;background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px}
+.incap>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;padding:10px 14px;min-height:44px;box-sizing:border-box}
+.incap>summary::-webkit-details-marker{display:none}
+.incap>summary::before{content:"▸";color:var(--cinza);transition:transform .16s ease-out}
+.incap[open]>summary::before{transform:rotate(90deg)}
+.incap-tit{font-weight:600;font-size:14px}
+.incap-res{font-size:13px;color:var(--cinza)}
+.incap-lista{list-style:none;margin:0;padding:0 14px 12px;display:flex;flex-direction:column;gap:8px}
+.incap-it{border-left:3px solid var(--borda);padding:6px 0 6px 12px;display:flex;flex-direction:column;gap:5px}
+.incap-it.atual{border-left-color:var(--azul)}
+.incap-it.passado{opacity:.78}
+.incap-l1{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;font-size:13.5px}
+.incap-per{font-variant-numeric:tabular-nums;color:var(--texto)}
+.incap-sit{color:var(--cinza)}
+.incap-l2{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px}
+.incap-caso{min-height:30px;border:1px solid var(--borda);border-radius:999px;padding:0 10px;background:var(--branco,#fff);color:var(--azul);font:600 12.5px var(--f-ui,inherit);cursor:pointer}
+.incap-caso.on{background:var(--azul);color:#fff;border-color:var(--azul)}
+.incap-num{display:inline-flex;gap:4px;align-items:center;padding:2px 8px;border-radius:999px;background:var(--placa,#F4F4F2);font-variant-numeric:tabular-nums}
+.incap-num.fora{background:#FFF4D6;color:#8A6100}
+.incap-prox{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;font-weight:600;color:var(--texto)}
+@media (prefers-reduced-motion:reduce){.incap>summary::before{transition:none}}
+@media (max-width:720px){.incap-l1,.incap-l2{font-size:13px}.incap>summary{padding:10px 12px}}
 /* F178–F180 · Triagem, Honorários e Identificação na língua visual da
    Análise de Direito (desenho aprovado em 04.10.2026) */
 .cad-cartao.tri-novo,.cad-cartao.idf{background:none;border:0;box-shadow:none;padding:0;display:flex;flex-direction:column;gap:16px}
@@ -4318,7 +4364,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.48</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.49</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14626,7 +14672,7 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}${faixaTrilha(k)}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${linhaCaso(k)}${botaoFixar(k)}${faixaPrazos(k)}${painelOutrasAbas(k)}</aside>
+        ? `${faixaFixo(k)}${faixaTrilha(k)}${faixaIncapacidade(k)}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${linhaCaso(k)}${botaoFixar(k)}${faixaPrazos(k)}${painelOutrasAbas(k)}</aside>
            <div class="caso-dir">${composerCaso(k)}${menu}${painelDaAba()}</div></div>`
         : `${menu}${blocoFatos(k)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
@@ -23041,17 +23087,54 @@ function atoDaExigencia(det){
 }
 // 30 dias corridos (art. 574, § 4º, II, da IN 128/2022), vencimento em dia sem expediente vai ao dia útil
 const prazoDaExigencia = ato => ato ? proxDiaUtil(somaDias(ato, 30)) : null;
-// F220 · os prazos de análise do acordo homologado no RE 1.171.152 (relatório
-// oficial do INSS de acompanhamento do acordo): aposentadorias 90 dias, pensão
-// 60, auxílio-reclusão 60, salário-maternidade 30, BPC 90. Os benefícios por
-// incapacidade não constam do relatório e ficam de fora. Com exigência em
-// aberto, o prazo não corre e a linha some; decidido o pedido, também.
-const MORA_DIAS = {B41:90, B42:90, B46:90, B57:90, B21:60, B25:60, B80:30, B87:90, B88:90};
+// F220/F221 · os prazos de análise do acordo homologado no RE 1.171.152 (STF,
+// Plenário, 08.02.2021), conferidos no acórdão: cláusula 1ª, aposentadorias
+// 90 dias, aposentadoria por invalidez comum e acidentária 45, auxílio-doença
+// comum e acidentário 45, auxílio-acidente 60, pensão 60, auxílio-reclusão 60,
+// salário-maternidade 30, BPC 90; cláusula 2ª, o prazo corre do fim da
+// instrução, que para incapacidade, auxílio-acidente e BPC é a perícia (e a
+// avaliação social) e para os demais é o requerimento; cláusula 5ª, a
+// exigência suspende a contagem, que recomeça no fim do prazo dado ou na
+// entrega dos documentos, o que vier primeiro, com pelo menos 30 dias restantes.
+// Exigência em aberto: a linha some (o prazo está parado); decidido, também.
+const MORA_DIAS = {B41:90, B42:90, B46:90, B57:90, B21:60, B25:60, B80:30, B87:90, B88:90,
+  B31:45, B91:45, B32:45, B92:45, B36:60, B94:60};
+const MORA_PERICIA = new Set(["B31","B91","B32","B92","B36","B94","B87","B88"]);
+const diasEntreIso = (a, b) => Math.round((new Date(b+"T12:00:00") - new Date(a+"T12:00:00"))/864e5);
+// as exigências do caso já cumpridas, pelas anotações: quando parou e quando recomeçou
+function suspensoesDoCaso(k){
+  const ands = (D._andsFicha||[]).filter(a=>a.caso_id===k.id).sort((a,b)=>String(a.criado_em).localeCompare(String(b.criado_em)));
+  const dataTxt = (t, rx) => { const m = String(t||"").match(rx); return m ? dataIso(m[1].replace(/\./g,"/")) : null; };
+  const out = [];
+  for(const a of ands){
+    if(!/^\s*(\[EXIG[ÊE]NCIA\]|⚠ Exig[êe]ncia do INSS)/i.test(a.texto||"")) continue;
+    const inicio = dataSP(a.criado_em), prazo = dataTxt(a.texto, /Prazo (?:para cumprir|final para cumprimento):\s*(\d{2}[\/.]\d{2}[\/.]\d{4})/i);
+    const fim = ands.find(b=>dataSP(b.criado_em)>=inicio && b.id!==a.id && /cumprimento de exig[êe]ncia|exig[êe]ncia cumprida/i.test(b.texto||""));
+    const entregue = fim ? (dataTxt(fim.texto, /protocolada em\s*(\d{2}[\/.]\d{2}[\/.]\d{4})/i) || dataSP(fim.criado_em)) : null;
+    const reinicio = [prazo, entregue].filter(Boolean).sort()[0];
+    if(reinicio && reinicio>=inicio) out.push({inicio, reinicio});
+  }
+  return out;
+}
 function prazoMora(k){
   if(!k || k.fase!=="inss" || !k.der || k.exigencia_prazo || k.resultado==="deferido" || (k.decisao_em && k.decisao_em >= k.der)) return null;
-  const dias = MORA_DIAS[String(k.especie||"").toUpperCase().slice(0,3)]; if(!dias) return null;
-  const data = somaDias(k.der, dias);
-  return data ? {data, dias, vencido: data < hoje()} : null;
+  const esp = String(k.especie||"").toUpperCase().slice(0,3), dias = MORA_DIAS[esp]; if(!dias) return null;
+  let ini = k.der;
+  if(MORA_PERICIA.has(esp)){
+    // sem perícia (ou avaliação social) feita, a instrução não acabou e o prazo não corre
+    const per = (D.eventos||[]).filter(e=>e.caso_id===k.id && e.status!=="cancelada" && /per[ií]cia|avalia[çc][ãa]o social/i.test(e.tipo||""))
+      .map(e=>dataSP(e.data_hora)).filter(d=>d && d>=k.der && d<=hoje()).sort().pop();
+    if(!per) return null;
+    ini = per;
+  }
+  let base = ini, resta = dias;
+  for(const s of suspensoesDoCaso(k)){
+    if(s.inicio<base) continue;
+    const usado = diasEntreIso(base, s.inicio); if(usado>=resta) break;   // venceu antes da exigência
+    resta = Math.max(resta-usado, 30); base = s.reinicio;
+  }
+  const data = somaDias(base, resta);
+  return data ? {data, dias, vencido: data < hoje(), desde:ini, pericia: ini!==k.der, suspenso: base!==ini} : null;
 }
 // F220 · os 30 dias são do recurso administrativo: só nas fases INSS e
 // Conselho, e o prazo sai quando o recurso foi protocolado depois da decisão
@@ -23197,7 +23280,7 @@ function linhasDeDatas(cliId){
       const mora=prazoMora(x);
       if(mora) linhas.push({data:mora.data, ico:"⌛", natureza:"compromisso", casoId:x.id, cru:true, rotulo:mora.vencido?"Mora do INSS":"Prazo de análise do INSS",
         rot:`<b>${mora.vencido?"Análise do INSS vencida — avalie o mandado de segurança por mora":"Prazo do INSS para decidir o pedido"}</b>
-             <small class="qd-de">${mora.dias} dias da DER de ${fmt(x.der)} (acordo do RE 1.171.152) · ${esc(tituloCaso(x))}</small>`, edita:"", acao:""});
+             <small class="qd-de">${mora.dias} dias ${mora.pericia?`da perícia de ${fmt(mora.desde)}`:`da DER de ${fmt(x.der)}`}${mora.suspenso?", com a pausa da exigência":""} (acordo do RE 1.171.152) · ${esc(tituloCaso(x))}</small>`, edita:"", acao:""});
       const rec=recorrerAte(x);
       if(rec) linhas.push({data:rec, ico:"⚖️", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true, rotulo:x.fase==="conselho"?"Recurso especial":"Recurso ordinário",
         rot:`<b>Recorrer até</b> <small class="qd-de">Prazo recursal · 30 dias da decisão de ${fmt(x.decisao_em)} · ${esc(tituloCaso(x))}</small>`,
@@ -23205,11 +23288,13 @@ function linhasDeDatas(cliId){
       // F118 · a DCB é PRAZO FATAL e tem quadro próprio (pedido do Paulo,
       // 18.09): o dia em que o benefício cessa fica à vista ao lado do dia em
       // que ainda dá para pedir a prorrogação
+      // F221 · aberta a janela da prorrogação, o pedido vai até a DCB: a linha do pedido não "vence" no primeiro dia dela
+      const pe = prorrogarEm(x), janela = !!pe && pe<=hoje() && x.dcb>=hoje();
       if(x.dcb && !x.dcb_prorrogacao_pedida && x.fase!=="encerrado") linhas.push({data:x.dcb, ico:"🩸", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true, rotulo:"DCB, o benefício cessa",
-        rot:`<b>DCB, o benefício cessa</b>
+        rot:`<b>DCB, o benefício cessa${janela?" — peça a prorrogação até este dia":""}</b>
              <small class="qd-de">Sem prorrogação pedida até aqui, o pagamento para · ${esc(tituloCaso(x))}</small>`,
         edita:"", acao:`<button class="btn-mini" onclick="salvarProrrog('${x.id}',true)" title="a prorrogação já foi pedida — desliga o alarme">✔ prorrogação pedida</button>`});
-      if(prorrogarEm(x)) linhas.push({data:prorrogarEm(x), ico:"🩺", ehPrazo:true, natureza:"compromisso", casoId:x.id, cru:true, rotulo:"Pedir a prorrogação",
+      if(pe && pe>hoje()) linhas.push({data:pe, ico:"🩺", ehPrazo:true, natureza:"compromisso", casoId:x.id, cru:true, rotulo:"Pedir a prorrogação",
         rot:`<b>Pedir a prorrogação</b>
              <small class="qd-de">Cessação marcada para ${fmt(x.dcb)}${x.dcb_prorrogar_em?"":` · lembrete automático, ${DIAS_PRORROG} dias antes`} · ${esc(tituloCaso(x))}</small>`,
         edita:"", acao:`<button class="btn-mini" onclick="salvarProrrog('${x.id}',true)" title="a prorrogação já foi pedida — desliga o alarme">✔ prorrogação pedida</button>`});
@@ -25517,6 +25602,7 @@ function infoOficial(x){
       msg: `msgAndamento('${a.id}')`, sinais: sinaisHtml(a),
       antes: atoDoCartaoHtml(a), docs: docsDoCartao(a), prazo: prazoSugeridoHtml(a, i), feito: feitoDoCartao(a),
       menu: [ ev ? `<button class="tl-mais-it" role="menuitem" onclick="periciaRapida(${i})">Agendar ${esc(ev.tipo.toLowerCase())} com aviso</button>` : "",
+              itemLevarAndamento(a),
               a.origem==="pje" ? `<button class="tl-mais-it perigo" role="menuitem" onclick="pjeForaDoCaso('${a.id}','${a.caso_id}')">Não é deste caso</button>` : "" ] };
   }
   // o e-SISREC e o CNJ não têm "lido" por pessoa: o cartão deles não leva o
@@ -26145,6 +26231,7 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
         ${menuMais([
           `<button class="tl-mais-it" role="menuitem" onclick="novaTarefaComentario('${a.id}','${a.caso_id}')">Mais uma tarefa neste comentário</button>`,
           `<button class="tl-mais-it" role="menuitem" onclick="copiar(${esc(JSON.stringify(corpo))},'Texto copiado')">Copiar o texto</button>`,
+          itemLevarAndamento(a),
           a.autor_id===eu.id&&a.origem==="app" ? `<button class="tl-mais-it perigo" role="menuitem" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">Apagar este comentário</button>` : "",
         ])}</span>
     </span>` : "";
@@ -26404,7 +26491,7 @@ function painelINSS(k, ands){
   const coms = comentariosPat(ands);
   // F103 · no tema, o compositor acompanha toda aba de andamentos: a
   // anotação nasce do mesmo lugar, esteja-se lendo o INSS, o Recurso ou o Judicial
-  const comp0 = composerNoPainel(k);
+  const comp0 = composerNoPainel(k) + avisoNumeroFora(k, "prot");
   // F185 · o submenu do INSS: os comentários e os anexos do requerimento
   const temDocs = docsDaOrigem(k, ["pat"]).length > 0;
   const verDocs = fontePat==="docs" && temDocs;
@@ -26974,7 +27061,7 @@ function menuDocsCrps(k){
 }
 function painelCRPS(k){
   if(fonteCrps==="docs" && docsDaOrigem(k, ["crps"]).length)
-    return `${composerNoPainel(k)}${menuDocsCrps(k)}${painelDocumentos(k, ["crps"])}`;
+    return `${composerNoPainel(k)}${avisoNumeroFora(k, "nup")}${menuDocsCrps(k)}${painelDocumentos(k, ["crps"])}`;
   const nups = crpsNups(k), blocos = crpsBlocos(k);
   const manual = n => crpsBlocos(k).find(b=>soDig(b.nup)===soDig(n) && b.manual);
   // gerência dos números: lista com remover + campo para acrescentar
@@ -26991,6 +27078,7 @@ function painelCRPS(k){
         : `<button class="btn-mini" onclick="crpsManual('${k.id}','${n}')"
              title="o robô não enxerga este recurso — alguém consulta no site">🔎 consulta manual</button>`}
       <button class="btn-mini" onclick="removerCrpsNup('${k.id}','${n}')" title="tirar este número">✕</button>
+      ${chipNbNumero(k, "nup", n)}${selLevarNumero(k, "nup", n)}
     </div>`).join("")}
     <div class="form-linha" style="margin-top:8px">
       <input id="crps-nup-${k.id}" placeholder="＋ número do recurso (ex.: 44233.139765/2025-37)" style="flex:1"
@@ -27000,7 +27088,7 @@ function painelCRPS(k){
   const comEventos = blocos.filter(b=>(b.eventos||[]).length);
   const manuais = blocos.filter(b=>b.manual);
   if(!comEventos.length && !manuais.length){
-    return `${composerNoPainel(k)}${menuDocsCrps(k)}${avisoJuntos(k)}<div class="caso">
+    return `${composerNoPainel(k)}${avisoNumeroFora(k, "nup")}${menuDocsCrps(k)}${avisoJuntos(k)}<div class="caso">
       <p class="meio-sub">${nups.length
         ? "Número guardado. O robô do CRPS vai consultar na próxima rodada e o histórico aparece aqui."
         : "Sem recurso vinculado. Cole o número do processo de recurso (o da URL do e-Recursos) para o robô acompanhar."}</p>
@@ -27022,7 +27110,7 @@ function painelCRPS(k){
         <small>${b.manual?"consulta manual":ult&&ult.data?fmt(isoCrps(ult.data)):"—"}</small></button>`;
     }).join("")}
   </div>` : "";
-  return `${composerNoPainel(k)}${menuDocsCrps(k)}${avisoJuntos(k)}${menuNup}
+  return `${composerNoPainel(k)}${avisoNumeroFora(k, "nup")}${menuDocsCrps(k)}${avisoJuntos(k)}${menuNup}
     ${comEventos.length?`<div class="form-linha" style="margin-bottom:8px">
       <button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarCrps('${k.id}')" title="a situação do processo inteiro, pronta para o cliente">${temaV10()?"":"💬 "}Copiar situação para o cliente</button></div>`:""}
     ${juntos ? blocoRecursosJuntos(comEventos, k) + manuais.map(b=>quadroManual(b, k)).join("")
@@ -27704,7 +27792,7 @@ function gerenciaProcessos(k){
         : `<span class="chip neutro" title="processo do cliente com outro advogado — acompanhamos, não trabalhamos nele">🔭 só acompanho</span>
            <button class="btn-mini" onclick="alternarNossoProcesso('${k.id}','${esc(p.numero)}')">é nosso</button>`}
       <button class="btn-mini" onclick="removerProcesso('${k.id}','${esc(p.numero)}')" title="tirar este processo do caso">✕</button>
-    </div></div>`).join("") || `<p class="meio-sub">Nenhum processo judicial neste caso.</p>`}
+    </div>${(nb=>nb ? `<div class="proc-l3">${nb}</div>` : "")(chipNbNumero(k, "proc", soDig(p.numero)) + selLevarNumero(k, "proc", soDig(p.numero)))}</div>`).join("") || `<p class="meio-sub">Nenhum processo judicial neste caso.</p>`}
     <div class="form-linha" style="margin-top:8px">
       <input id="proc-novo-${k.id}" placeholder="＋ número do processo (CNJ), 20 dígitos" style="flex:1"
         onkeydown="if(event.key==='Enter')acrescentarProcesso('${k.id}')">
@@ -27765,7 +27853,7 @@ function painelCNJTodos(k, ands, cabec){
 }
 function painelCNJ(k, ands){
   const ps = processosDoCaso(k);
-  const comp = composerNoPainel(k);
+  const comp = composerNoPainel(k) + avisoNumeroFora(k, "proc");
   // F103 · com mais de um processo e nenhum escolhido, a visão é a de todos
   const juntos = ps.length>1 && !ps.some(x=>soDig(x.numero)===soDig(procSel));
   // qual processo está sendo olhado: o escolhido, senão o principal
@@ -29481,16 +29569,21 @@ function janelaFundir(destinoId){
   };
   document.getElementById("fd-nao").onclick=fecharJanela;
 }
-async function fundirCasos(absorvidoId, destinoId){
+// F221 · {quieto}: no lote, sem confirmar, sem recarregar e sem repintar; devolve o
+// registro do que passou ao destino (ids por tabela), que é o que permite desfazer
+async function fundirCasos(absorvidoId, destinoId, opts={}){
   const a=D.casoPorId.get(absorvidoId), d=D.casoPorId.get(destinoId);
-  if(!a || !d || a.id===d.id) return;
-  if(!await confirmar(`Fundir "${tituloCaso(a)}" para dentro de "${tituloCaso(d)}"?\n\n`
+  if(!a || !d || a.id===d.id) return null;
+  if(!opts.quieto && !await confirmar(`Fundir "${tituloCaso(a)}" para dentro de "${tituloCaso(d)}"?\n\n`
     +`Todo o histórico passa para o destino. `
     +(a.todo_task_id
       ?"O caso incorporado fica como casca encerrada, e a sincronização do To Do não o reabre."
-      :"O caso incorporado (criado no CRM) será removido."))) return;
+      :"O caso incorporado (criado no CRM) será removido."))) return null;
   const falhas=[];
   const t=async(rotulo,f)=>{ try{ await f(); }catch(e){ falhas.push(rotulo); } };
+  const registro = {de:a.id, para:d.id, fase:a.fase, ids:{}};
+  for(const tab of ["andamentos","tarefas","pagamentos","andamento_tarefas","meu_dia","eventos"])
+    registro.ids[tab] = ((await api(`/rest/v1/${tab}?caso_id=eq.${absorvidoId}&select=id`).catch(()=>[]))||[]).map(r=>r.id);
 
   // filhos em lote (id preservado — a sincronização não duplica depois)
   for(const tab of ["andamentos","tarefas","pagamentos","andamento_tarefas","meu_dia"])
@@ -29544,6 +29637,12 @@ async function fundirCasos(absorvidoId, destinoId){
   const arqA = Object.fromEntries(Object.entries(a.arquivados||{}).filter(([ch])=>!/^mov:/.test(ch) && ch!=="fundido"));
   corpo.arquivados={...arqA,...(d.arquivados||{})};
   for(const p of protocolosDoCaso(a)) if(!protocolosDoCaso(d).includes(p)) corpo.arquivados[`add:prot:${p}`]={de:a.id, por:eu.id, em:new Date().toISOString()};
+  // F221 · o que a fusão pôs no destino, para o desfazer tirar (campos herdados e itens somados às listas)
+  const fora = (x, y) => (x||[]).filter(v=>!(y||[]).includes(v));
+  registro.volta = {herdou:Object.keys(corpo).filter(f=>!["protocolos","nbs","processos","datajud_multi","crps_nups","crps_nup","crps","marcadores","arquivados"].includes(f)),
+    prot:fora(protocolosDoCaso(a), protocolosDoCaso(d)), nbs:nbsNovos.map(soDig), proc:procsNovos.map(p=>soDig(p.numero)),
+    dj:fora(Object.keys(a.datajud_multi||{}), Object.keys(d.datajud_multi||{})), nup:fora(nupsDoCaso(a), nupsDoCaso(d)).map(soDig),
+    marc:fora(a.marcadores, d.marcadores), arq:fora(Object.keys(corpo.arquivados), Object.keys(d.arquivados||{}))};
   try{
     await patchCaso(destinoId, corpo);
   }catch(e){
@@ -29570,11 +29669,47 @@ async function fundirCasos(absorvidoId, destinoId){
     await t("remover", ()=>api(`/rest/v1/casos?id=eq.${a.id}`,{method:"DELETE"}));
   }
 
+  if(opts.quieto){
+    Object.assign(d, corpo);
+    if(a.todo_task_id) Object.assign(a, {fase:"encerrado", encerrado_em:new Date().toISOString(), arquivados:{...(a.arquivados||{}), fundido:{para:d.id, por:eu.id}}});
+    for(const x of (D._andsFicha||[])) if(x.caso_id===a.id) x.caso_id = d.id;
+    return a.todo_task_id ? registro : null;
+  }
   aviso(`⇄ Fundido em "${tituloCaso(d)}"${falhas.length?` (atenção: falhou em ${falhas.join(", ")})`:""}`);
   await carregar();
   montarSidebar(); casoSel=destinoId; abaAtiva=2;
   await abrirFicha(d.cliente_id);
   if(_orgReabrir===d.cliente_id) organizarCasos(d.cliente_id);
+  return a.todo_task_id ? registro : null;
+}
+// F221 · desfaz uma fusão da organização automática: as linhas voltam ao caso
+// de origem e a casca reabre na fase em que estava
+async function desfazerFusao(r){
+  if(!r || !r.de || !r.ids) return false;
+  for(const [tab, ids] of Object.entries(r.ids))
+    for(let i=0; i<ids.length; i+=80)
+      await api(`/rest/v1/${tab}?id=in.(${ids.slice(i, i+80).join(",")})`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:r.de})}).catch(()=>{});
+  const a = D.casoPorId.get(r.de) || {};
+  const arq = {...(a.arquivados||{})}; delete arq.fundido;
+  await patchCaso(r.de, {fase:r.fase||"inss", encerrado_em:null, encerrado_por:null, arquivados:arq}).catch(()=>{});
+  Object.assign(a, {fase:r.fase||"inss", encerrado_em:null, encerrado_por:null, arquivados:arq});
+  // o destino devolve o que herdou: o campo só volta a vazio se ainda tem o valor que veio da fusão
+  const k = D.casoPorId.get(r.para), v = r.volta;
+  if(k && v){
+    const c = {}, tira = (lista, chaves, f=x=>soDig(x)) => (Array.isArray(lista)?lista:[]).filter(x=>!chaves.includes(f(x)));
+    for(const f of v.herdou||[]) if(JSON.stringify(k[f]??null)===JSON.stringify(a[f]??null)) c[f] = (f==="urgente"||f==="importante") ? false : null;
+    if((v.prot||[]).length) c.protocolos = tira(k.protocolos, v.prot);
+    if((v.nbs||[]).length) c.nbs = tira(k.nbs, v.nbs);
+    if((v.proc||[]).length) c.processos = tira(k.processos, v.proc, p=>soDig(p.numero||p));
+    if((v.nup||[]).length){ c.crps_nups = tira(k.crps_nups, v.nup); c.crps = tira(k.crps, v.nup, b=>soDig(b.nup)); }
+    if((v.marc||[]).length) c.marcadores = tira(k.marcadores, v.marc, x=>x);
+    if((v.dj||[]).length){ c.datajud_multi = {...(k.datajud_multi||{})}; for(const x of v.dj) delete c.datajud_multi[x]; }
+    if((v.arq||[]).length){ c.arquivados = {...(k.arquivados||{})}; for(const x of v.arq) delete c.arquivados[x]; }
+    if(Object.keys(c).length){ try{ await patchCaso(k.id, c); Object.assign(k, c); }catch(e){} }
+  }
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:r.de, autor_id:eu.id, texto:"↺ Fusão desfeita: o histórico voltou a este caso."})}).catch(()=>{});
+  return true;
 }
 
 // ══════════════════════════════════════════════════════════════════════════
@@ -29618,6 +29753,62 @@ function nbsCitados(txt){
   return [...out];
 }
 const RX_NUP = /(?<!\d)(\d{5})\.?(\d{6})\/?(\d{4})-?(\d{2})(?!\d)/;
+// ══════════════════════════════════════════════════════════════════════════
+// F221 · O NB DE CADA NÚMERO. Processo, recurso e protocolo dizem de que
+// benefício tratam pelos próprios documentos: a petição inicial e a decisão
+// do processo (o arquivo traz o número do processo no caminho), o "Histórico
+// de benefícios - SUB - NB:" que o INSS junta em cada recurso do e-Recursos e
+// a comunicação do PAT. Documento que lista todos os benefícios da pessoa
+// (dossiê previdenciário, CNIS, extrato, histórico de créditos) não conta,
+// porque cita todos os NBs. Medido em 13.10.2026 nos 102 clientes de vários
+// casos: 84 dos 105 processos com documento citam NB, e os 53 recursos com o
+// histórico do SUB trazem um NB só cada um.
+// ══════════════════════════════════════════════════════════════════════════
+const RX_DOC_LISTA = /dossi[eê]|\bcnis\b|extrato|hiscre|hist[oó]rico de cr[eé]dito|infben|dados cadastrais|plenus|\bsabi\b|consulta (?:de|dos) benef/i;
+const RX_SUB_NB = /SUB\s*-\s*NB\s*:?\s*(\d{10})(?!\d)/g;
+function numDoAnexo(x){
+  const c = String((x&&x.caminho)||"");
+  let m = c.match(/^(?:pje|esaj|eproc)\/(\d{20})\//); if(m) return {tipo:"proc", d:m[1]};
+  m = c.match(/^pat\/(\d{6,})\//); if(m) return {tipo:"prot", d:m[1]};
+  m = RX_NUP.exec(`${c} ${(x&&x.nome)||""}`); return m ? {tipo:"nup", d:m.slice(1,5).join("")} : null;
+}
+// quanto o documento pesa para dizer o NB do número: a inicial nomeia o benefício pedido
+function pesoDoDoc(nome){
+  const n = String(nome||"");
+  if(RX_DOC_LISTA.test(n)) return 0;
+  if(/inicial/i.test(n)) return 5;
+  if(/senten[cç]|ac[oó]rd[aã]|decis[aã]o|comunica[cç][aã]o de decis/i.test(n)) return 3;
+  if(/contesta|recurso|raz[oõ]es|requerimento/i.test(n)) return 2;
+  return 1;
+}
+let _evCache = null;   // a evidência do cliente aberto, refeita quando os números ou os textos mudam
+function evidenciaNbs(ks){
+  const chave = ks.map(k=>k.id+":"+Object.values(numerosDoCaso(k)).map(x=>x.join(",")).join("/")).join("|")
+    + `#${(D.anexos||[]).length}#${(D._andsFicha||[]).length}`;
+  if(_evCache && _evCache.chave===chave) return _evCache.ev;
+  const ev = new Map();   // "tipo:dígitos" -> Map(nb -> {pts, fontes})
+  const somar = (num, nb, pts, fonte) => {
+    const ch = num.tipo+":"+num.d; if(!ev.has(ch)) ev.set(ch, new Map());
+    const m = ev.get(ch), x = m.get(nb) || {pts:0, fontes:new Set()};
+    x.pts += pts; if(x.fontes.size<4) x.fontes.add(fonte); m.set(nb, x);
+  };
+  for(const t of textosDoCliente(ks)){
+    if(!t.num || !t.peso) continue;
+    const sub = new Set([...String(t.txt||"").matchAll(RX_SUB_NB)].map(m=>m[1]));
+    for(const nb of sub) somar(t.num, nb, 5, "histórico do benefício juntado no recurso");
+    for(const nb of nbsCitados(t.txt)) if(!sub.has(nb)) somar(t.num, nb, t.peso, t.fonte);
+  }
+  _evCache = {chave, ev};
+  return ev;
+}
+// o NB do número é o mais citado, quando ganha com folga; sem folga, fica a lista para a pessoa escolher
+function nbDoNumero(ev, tipo, d){
+  const m = ev.get(tipo+":"+d); if(!m || !m.size) return null;
+  const r = [...m.entries()].map(([nb, x])=>({nb, pts:x.pts, fontes:[...x.fontes]})).sort((a,b)=>b.pts-a.pts);
+  const seg = r[1] ? r[1].pts : 0;
+  const conf = r[0].pts>=5 && r[0].pts>=2*seg ? "alta" : r[0].pts>=2 && r[0].pts>=1.5*seg ? "media" : null;
+  return {nb: conf ? r[0].nb : null, conf, ranking:r};
+}
 // de onde vem cada texto do cliente: o caso e, quando se sabe, o número a que ele pertence
 function textosDoCliente(ks){
   const ids = new Set(ks.map(k=>k.id)), out = [];
@@ -29630,16 +29821,18 @@ function textosDoCliente(ks){
     return null;
   };
   const ands = (D._andsFicha||[]).filter(a=>ids.has(a.caso_id)), porId = new Map(ands.map(a=>[a.id,a]));
-  for(const a of ands) out.push({casoId:a.caso_id, num:numDoAnd(a), txt:a.texto, fonte:"andamento de "+fmtTS(a.criado_em)});
+  for(const a of ands) out.push({casoId:a.caso_id, num:numDoAnd(a), txt:a.texto, fonte:"andamento de "+fmtTS(a.criado_em), peso:1});
   for(const x of (D.anexos||[])){
+    // o dossiê é do cliente; só conta o documento de um recurso (o NUP vem no caminho)
+    if(x.origem==="dossie" && !RX_NUP.test(`${x.caminho||""} ${x.nome||""}`)) continue;
     const a = x.andamento_id && porId.get(x.andamento_id);
-    const m = RX_NUP.exec(String(x.nome||"")), nup = m ? m.slice(1,5).join("") : null;
-    const num = a ? numDoAnd(a) : nup ? {tipo:"nup", d:nup} : null;
+    // F221 · sem andamento (e-SAJ e PAT), o número vem do caminho do arquivo
+    const num = (a && numDoAnd(a)) || numDoAnexo(x);
     const k = (a && D.casoPorId.get(a.caso_id)) || (x.caso_id && ids.has(x.caso_id) && D.casoPorId.get(x.caso_id)) || (num && dono(num.tipo, num.d));
-    if(k) out.push({casoId:k.id, num, txt:`${x.nome||""} ${x.texto||""}`, fonte:"documento "+String(x.nome||"").slice(0,60)});
+    if(k) out.push({casoId:k.id, num, txt:`${x.nome||""} ${x.texto||""}`, fonte:"documento "+String(x.nome||"").slice(0,60), peso:pesoDoDoc(x.nome)});
   }
   for(const k of ks) for(const b of crpsBlocos(k))
-    out.push({casoId:k.id, num:{tipo:"nup", d:soDig(b.nup)}, fonte:"recurso "+formatarNup(b.nup),
+    out.push({casoId:k.id, num:{tipo:"nup", d:soDig(b.nup)}, fonte:"recurso "+formatarNup(b.nup), peso:1,
       txt:(b.eventos||[]).map(e=>`${e.resumo||""} ${e.bruto||""}`).join(" ")});
   return out;
 }
@@ -29657,20 +29850,31 @@ function sugestoesOrganizar(cliId){
     for(const [d, cs] of por) if(cs.length>1) add({chave:`dup:${tipo}:${d}`, tipo:"duplicado", num:{tipo, d}, casos:cs,
       txt:`${TIPO_NUM[tipo]} ${fmtNum(tipo, d)} está gravado em ${cs.length} casos`});
   }
-  // 2 · o texto de um caso cita o NB de outro caso (ou o caso não tem NB nenhum)
+  // 2 · F221 · o número cujo NB, pelos documentos dele, está em outro caso;
+  // ou o caso sem NB cujo número diz de que NB trata
+  const ev = evidenciaNbs(ks);
+  for(const k of ks){ const n = nums.get(k.id);
+    for(const tipo of ["prot","nup","proc"]) for(const d of n[tipo]){
+      const r = nbDoNumero(ev, tipo, d); if(!r || !r.nb || n.nb.includes(r.nb)) continue;
+      const donos = ks.filter(x=>nums.get(x.id).nb.includes(r.nb)), fonte = r.ranking[0].fontes[0]||"";
+      if(donos.length===1)
+        add({chave:`mov:${tipo}:${d}:${donos[0].id}`, tipo:"mover", num:{tipo, d}, de:k.id, para:donos[0].id, nb:r.nb, fonte,
+          txt:`${TIPO_NUM[tipo]} ${fmtNum(tipo, d)} cita o NB ${fmtNb(r.nb)}, que está em outro caso`});
+      else if(!donos.length && !n.nb.length)
+        add({chave:`nb:${k.id}:${r.nb}`, tipo:"nb", para:k.id, nb:r.nb, fonte,
+          txt:`O caso não tem NB, e ${TIPO_NUM[tipo].toLowerCase()} ${fmtNum(tipo, d)} trata do NB ${fmtNb(r.nb)}`});
+    } }
+  // 3 · a anotação do próprio caso (sem número) cita o NB de outro caso
   for(const t of textosDoCliente(ks)){
+    if(t.num || !t.peso) continue;
     const n = nums.get(t.casoId); if(!n) continue;
     for(const nb of nbsCitados(t.txt)){
       if(n.nb.includes(nb)) continue;
       const donos = ks.filter(k=>nums.get(k.id).nb.includes(nb));
-      if(donos.length===1){
-        const alvo = donos[0];
-        if(t.num && n[t.num.tipo].includes(t.num.d))
-          add({chave:`mov:${t.num.tipo}:${t.num.d}:${alvo.id}`, tipo:"mover", num:t.num, de:t.casoId, para:alvo.id, nb, fonte:t.fonte,
-            txt:`${TIPO_NUM[t.num.tipo]} ${fmtNum(t.num.tipo, t.num.d)} cita o NB ${fmtNb(nb)}, que está em outro caso`});
-        else add({chave:`fun:${t.casoId}:${alvo.id}`, tipo:"fundir", de:t.casoId, para:alvo.id, nb, fonte:t.fonte,
-            txt:`Um texto deste caso cita o NB ${fmtNb(nb)}, que está em outro caso`});
-      } else if(!donos.length && !n.nb.length)
+      if(donos.length===1)
+        add({chave:`fun:${t.casoId}:${donos[0].id}`, tipo:"fundir", de:t.casoId, para:donos[0].id, nb, fonte:t.fonte,
+          txt:`Um texto deste caso cita o NB ${fmtNb(nb)}, que está em outro caso`});
+      else if(!donos.length && !n.nb.length)
         add({chave:`nb:${t.casoId}:${nb}`, tipo:"nb", para:t.casoId, nb, fonte:t.fonte,
           txt:`O caso não tem NB, e um texto dele cita o NB ${fmtNb(nb)}`});
     }
@@ -29684,7 +29888,13 @@ function organizarCasos(cliId){
   const ks = casosParaOrganizar(cliId);
   const outros = k => ks.filter(x=>x.id!==k.id);
   const opcoes = k => outros(k).map(x=>`<option value="${x.id}">${esc(rotCurtoCaso(x))}</option>`).join("");
-  const sug = sugestoesOrganizar(cliId);
+  // F221 · a sugestão avulsa sobre número ou caso que o plano automático já
+  // resolve não aparece: duas propostas para o mesmo número confundem
+  const plano = planoOrganizar(cliId).passos;
+  const nPlano = new Set(plano.filter(p=>p.acao==="mover").map(p=>`${p.tipo}:${p.d}`));
+  const cPlano = new Set(plano.flatMap(p=>[p.de, p.para]).filter(Boolean));
+  const sug = sugestoesOrganizar(cliId).filter(s=> s.tipo==="duplicado" ? !nPlano.has(`${s.num.tipo}:${s.num.d}`)
+    : !(cPlano.has(s.de) || cPlano.has(s.para)));
   const bt = (rot, fn, prim) => `<button type="button" class="adr-bt${prim?" adr-primario":""}" onclick="${fn}">${rot}</button>`;
   const linhaSug = s => {
     const de = s.de && D.casoPorId.get(s.de), para = s.para && D.casoPorId.get(s.para);
@@ -29718,16 +29928,19 @@ function organizarCasos(cliId){
     <p class="meio-sub">Cada caso junta o pedido no INSS (protocolo e NB), o recurso no CRPS e o processo judicial do mesmo benefício.
       Leve cada número ao caso certo: ele leva junto os andamentos dele, e a sincronização do To Do não desfaz a mudança.
       Casos que são o mesmo benefício se juntam num só.</p>
-    ${sug.length ? `<section class="org-sug" aria-label="O que os documentos indicam"><h4>O que os documentos indicam (${sug.length})</h4>${sug.map(linhaSug).join("")}</section>`
-      : `<p class="org-ok">Nenhum número repetido e nenhum documento citando o NB de outro caso.</p>`}
+    ${(kInc=>kInc ? faixaIncapacidade(kInc) : "")(ks.find(ehIncap))}
+    ${planoHtml(cliId)}
+    ${sug.length ? `<section class="org-sug" aria-label="O que os documentos indicam"><h4>O que mais os documentos indicam (${sug.length})</h4>${sug.map(linhaSug).join("")}</section>`
+      : plano.length ? "" : `<p class="org-ok">Nenhum número repetido e nenhum documento citando o NB de outro caso.</p>`}
     <div class="org-grade">${ks.map(cartao).join("") || `<p class="meio-sub">Nenhum caso em andamento.</p>`}</div>
     <div class="adr-modal-bts">${org ? `<span class="meio-sub">marcado como organizado em ${fmt(String(org.em).slice(0,10))}</span>` : ""}
       ${bt("Pronto, os casos estão organizados", `casosOrganizados('${cliId}')`, true)}</div>
   </div>`);
 }
-async function moverNumero(tipo, d, deId, paraId){
+// F221 · {quieto}: no lote (organização automática) não repinta nem avisa a cada número; devolve se levou
+async function moverNumero(tipo, d, deId, paraId, opts={}){
   const de = D.casoPorId.get(deId), para = D.casoPorId.get(paraId);
-  if(!de || !para || de.id===para.id || !TIPO_NUM[tipo]) return;
+  if(!de || !para || de.id===para.id || !TIPO_NUM[tipo]) return false;
   const agora = new Date().toISOString();
   const mDe = {...(de.arquivados||{}), [`mov:${tipo}:${d}`]:{para:paraId, por:eu.id, em:agora}}, mPara = {...(para.arquivados||{})};
   delete mPara[`mov:${tipo}:${d}`];             // voltou a este caso: a marca antiga sai
@@ -29750,7 +29963,7 @@ async function moverNumero(tipo, d, deId, paraId){
     if(mDe["crps:"+d]){ mPara["crps:"+d] = mDe["crps:"+d]; delete mDe["crps:"+d]; }
     ands = (D._andsFicha||[]).filter(a=>a.caso_id===deId && a.origem==="crps" && String(a.origem_id||"").startsWith(d+"|"));
   } else {
-    const p = processosDoCaso(de).find(x=>soDig(x.numero)===d); if(!p) return;
+    const p = processosDoCaso(de).find(x=>soDig(x.numero)===d); if(!p) return false;
     const multi = {...(de.datajud_multi||{})}, dj = multi[d] || (soDig(de.processo)===d ? de.datajud : null);
     delete multi[d]; cDe.datajud_multi = multi;
     if(dj) cPara.datajud_multi = {...(para.datajud_multi||{}), [d]:dj};
@@ -29767,7 +29980,7 @@ async function moverNumero(tipo, d, deId, paraId){
       await salvarProcessos(deId, processosDoCaso(de).filter(x=>soDig(x.numero)!==d));
       if(!processosDoCaso(para).some(x=>soDig(x.numero)===d)) await salvarProcessos(paraId, [...processosDoCaso(para), {...p, principal:false}]);
     }
-  }catch(e){ return aviso("Não consegui levar o número — rode o crm/fase2/schema_por_em_dia.sql no Supabase se faltar coluna"); }
+  }catch(e){ if(!opts.quieto) aviso("Não consegui levar o número — rode o crm/fase2/schema_por_em_dia.sql no Supabase se faltar coluna"); return false; }
   // os andamentos do número vão com ele, e os documentos e as tarefas desses andamentos também;
   // o que o caso de destino já tem (mesma origem, mesmo origem_id, que o banco não deixa repetir) sai do de origem
   const noDestino = new Set((D._andsFicha||[]).filter(a=>a.caso_id===paraId && a.origem_id).map(a=>a.origem+"|"+a.origem_id));
@@ -29780,23 +29993,43 @@ async function moverNumero(tipo, d, deId, paraId){
     await api(`/rest/v1/anexos?andamento_id=in.(${lote})`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:paraId})}).catch(()=>{});
     await api(`/rest/v1/andamento_tarefas?andamento_id=in.(${lote})`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:paraId})}).catch(()=>{});
   }
+  // F221 · os documentos do e-SAJ e do PAT não têm andamento: vão pelo número no caminho do arquivo
+  const caminhos = tipo==="proc" ? ["pje","esaj","eproc"].map(o=>`caminho.like.${o}/${d}/*`) : tipo==="prot" ? [`caminho.like.pat/${d}/*`] : [];
+  if(caminhos.length) await api(`/rest/v1/anexos?caso_id=eq.${deId}&or=(${caminhos.join(",")})`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:paraId})}).catch(()=>{});
+  // a memória acompanha o banco: o lote seguinte e a evidência leem o caso novo
+  const movidos = new Set(ids);
+  D._andsFicha = (D._andsFicha||[]).filter(a=>!repetidos.includes(a.id));
+  for(const a of D._andsFicha) if(movidos.has(a.id)) a.caso_id = paraId;
+  for(const x of (D.anexos||[])) if((x.andamento_id && movidos.has(x.andamento_id)) || (x.caso_id===deId && caminhos.length && (numDoAnexo(x)||{}).d===d)) x.caso_id = paraId;
   const rot = `${TIPO_NUM[tipo]} ${fmtNum(tipo, d)}`;
   await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify([
     {caso_id:deId, autor_id:eu.id, texto:`⇄ ${rot} foi levado ao caso "${tituloCaso(para)}"${ids.length?`, com ${ids.length} andamento(s)`:""}.`},
     {caso_id:paraId, autor_id:eu.id, texto:`⇄ ${rot} veio do caso "${tituloCaso(de)}"${ids.length?`, com ${ids.length} andamento(s)`:""}.`}])}).catch(()=>{});
+  if(opts.quieto) return true;
   aviso(`${rot} levado ao caso ${rotCurtoCaso(para)} ✔`, false);
   await abrirFicha(de.cliente_id);
   if(_orgReabrir===de.cliente_id) organizarCasos(de.cliente_id);
+  return true;
 }
 // o NB citado entra no caso como mais um NB (o principal, se o caso não tiver)
-async function anotarNbNoCaso(casoId, nb){
-  const k = D.casoPorId.get(casoId); if(!k || nbsDoCaso(k).some(n=>soDig(n)===soDig(nb))) return;
+async function anotarNbNoCaso(casoId, nb, opts={}){
+  const k = D.casoPorId.get(casoId); if(!k || nbsDoCaso(k).some(n=>soDig(n)===soDig(nb))) return false;
   const corpo = k.nb ? {nbs:[...(Array.isArray(k.nbs)?k.nbs:[]), fmtNb(nb)]} : {nb:fmtNb(nb)};
-  try{ await patchCaso(casoId, corpo); }catch(e){ return aviso("Não gravou — rode o crm/fase2/schema_linha_caso.sql no Supabase"); }
+  try{ await patchCaso(casoId, corpo); }catch(e){ if(!opts.quieto) aviso("Não gravou — rode o crm/fase2/schema_linha_caso.sql no Supabase"); return false; }
   Object.assign(k, corpo);
+  if(opts.quieto) return true;
   aviso(`NB ${fmtNb(nb)} anotado no caso ✔`, false);
   await abrirFicha(k.cliente_id);
   if(_orgReabrir===k.cliente_id) organizarCasos(k.cliente_id);
+  return true;
+}
+// F221 · o desfazer da anotação automática: o NB sai do caso (o principal passa ao seguinte)
+async function tirarNbDoCaso(casoId, nb){
+  const k = D.casoPorId.get(casoId); if(!k) return false;
+  const resto = nbsDoCaso(k).filter(n=>soDig(n)!==soDig(nb));
+  const corpo = {nb:resto[0]||null, nbs:resto.slice(1)};
+  try{ await patchCaso(casoId, corpo); }catch(e){ return false; }
+  Object.assign(k, corpo); return true;
 }
 // o número repetido fica só no caso escolhido: sai dos outros, um de cada vez
 async function deixarSo(tipo, d, manterId, idsCsv){
@@ -29815,6 +30048,167 @@ async function casosOrganizados(cliId){
 }
 // no 🧹 Cuidar do acervo: quem tem mais de um caso aberto, com o número repetido primeiro
 function blocoVariosCasos(){
+  const linhas = clientesVariosCasos();
+  if(!linhas.length) return "";
+  const mostra = linhas.slice(0, 40);
+  return `<details class="sem-acao neutro" id="acervo-varios"><summary>Clientes com mais de um caso aberto (${linhas.length}) — cada caso deve juntar NB, recurso e processo do mesmo benefício</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">Os de número repetido vêm primeiro. O botão abre a ficha com a janela de organizar; marcado como organizado, o cliente sai daqui até ganhar caso novo.</p>
+    <div class="form-linha" style="margin:4px 0 8px"><button class="btn-mini forte" onclick="organizarTodos()"
+      title="lê os documentos de cada cliente, monta o plano e mostra antes de aplicar">Organizar todos pelos documentos…</button>
+      <span class="meio-sub">o CRM lê os documentos de cada cliente, mostra o que faria e só aplica o que você marcar</span></div>
+    ${mostra.map(({c, ks, rep, semNum})=>`<div class="caso" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <span class="titulo-caso" style="cursor:pointer" onclick="abrirFicha('${c.id}')" title="abrir a ficha">${esc(c.nome)}</span>
+      <span class="meio-sub">${ks.length} casos · ${esc([...new Set(ks.map(k=>NOME_FASE[k.fase]||k.fase))].join(" + "))}</span>
+      ${rep?`<span class="chip urg" title="o mesmo número gravado em mais de um caso">${rep} número${rep>1?"s":""} repetido${rep>1?"s":""}</span>`:""}
+      ${semNum?`<span class="chip neutro">${semNum} sem número</span>`:""}
+      <button class="btn-mini" style="margin-left:auto" onclick="abrirOrganizar('${c.id}')">organizar</button></div>`).join("")}
+    ${linhas.length>mostra.length?`<p class="meio-sub">…e mais ${linhas.length-mostra.length}. A lista encurta conforme os clientes são organizados.</p>`:""}
+  </details>`;
+}
+async function abrirOrganizar(cliId){ await abrirFicha(cliId); organizarCasos(cliId); }
+
+// ══════════════════════════════════════════════════════════════════════════
+// F221 · O PLANO DE ORGANIZAÇÃO. Cada número com NB conhecido (pelos próprios
+// documentos, ou pelo único NB do caso em que está) junta-se aos outros
+// números do mesmo NB no caso mais adiantado do benefício (Judicial, depois
+// Conselho, INSS e Escritório): o NB vai junto, o caso que ficou sem número
+// se junta ao destino, e o NB que nenhum caso tinha é anotado. O que os
+// documentos não decidem (dois NBs sem folga, o NB contrário ao do caso, o
+// mesmo NB em dois casos) fica em "precisa de você", com um botão por NB.
+// Aplicado, o plano fica registrado em clientes.campos.org_auto e se desfaz.
+// ══════════════════════════════════════════════════════════════════════════
+const ORDEM_FASE_ORG = {judicial:5, conselho:4, peticao_inicial:4, inss:3, escritorio:2, outro:1};
+function planoOrganizar(cliId){
+  const ks = casosParaOrganizar(cliId), passos = [], duvidas = [];
+  if(ks.length<2) return {passos, duvidas};
+  const ev = evidenciaNbs(ks), nums = new Map(ks.map(k=>[k.id, numerosDoCaso(k)]));
+  const itens = [];
+  for(const k of ks){ const n = nums.get(k.id);
+    for(const tipo of ["prot","nup","proc"]) for(const d of n[tipo]){
+      const r = nbDoNumero(ev, tipo, d);
+      if(r && r.nb){
+        // o documento contradiz o NB do próprio caso, e nenhum outro caso tem o NB citado: decisão da pessoa
+        const dono = ks.some(x=>nums.get(x.id).nb.includes(r.nb));
+        if(n.nb.length && !n.nb.includes(r.nb) && !dono) duvidas.push({tipo, d, casoId:k.id, ranking:r.ranking.slice(0,3), contra:n.nb});
+        else itens.push({tipo, d, casoId:k.id, nb:r.nb, fonte:r.ranking[0].fontes[0]||""});
+      }
+      else if(r && r.ranking.length && !(n.nb.length===1 && r.ranking.some(x=>x.nb===n.nb[0])))
+        duvidas.push({tipo, d, casoId:k.id, ranking:r.ranking.slice(0,3)});
+      else if(n.nb.length===1) itens.push({tipo, d, casoId:k.id, nb:n.nb[0], fonte:"o NB do próprio caso", doCaso:true});
+    } }
+  const grupos = new Map();
+  for(const it of itens) grupos.set(it.nb, [...(grupos.get(it.nb)||[]), it]);
+  const saem = new Map();   // caso -> {n, para:Set}: números que deixam o caso
+  const sai = (casoId, para) => { const x = saem.get(casoId) || {n:0, para:new Set()}; x.n++; x.para.add(para); saem.set(casoId, x); };
+  for(const [nb, g] of grupos){
+    const donos = ks.filter(k=>nums.get(k.id).nb.includes(nb));
+    if(donos.length>1) continue;   // o mesmo NB em dois casos: a sugestão "repetido" pede a escolha
+    const env = [...new Set([...g.map(x=>x.casoId), ...donos.map(k=>k.id)])].map(id=>D.casoPorId.get(id));
+    if(env.length<2){
+      const k = env[0];
+      if(!donos.length && !nums.get(k.id).nb.length)
+        passos.push({acao:"nb", para:k.id, nb, txt:`Anotar o NB ${fmtNb(nb)} no caso ${rotCurtoCaso(k)}`, fonte:g[0].fonte});
+      continue;
+    }
+    env.sort((a,b)=>(ORDEM_FASE_ORG[b.fase]||0)-(ORDEM_FASE_ORG[a.fase]||0)
+      || (donos.includes(b)?1:0)-(donos.includes(a)?1:0)
+      || g.filter(x=>x.casoId===b.id).length-g.filter(x=>x.casoId===a.id).length
+      || String(a.criado_em||"").localeCompare(String(b.criado_em||"")));
+    const dest = env[0];
+    if(!donos.length) passos.push({acao:"nb", para:dest.id, nb, txt:`Anotar o NB ${fmtNb(nb)} no caso ${rotCurtoCaso(dest)}`, fonte:g[0].fonte});
+    else if(donos[0].id!==dest.id){
+      passos.push({acao:"mover", tipo:"nb", d:nb, de:donos[0].id, para:dest.id, txt:`Levar o NB ${fmtNb(nb)} ao caso ${rotCurtoCaso(dest)}`, fonte:"o caso mais adiantado do benefício"});
+      sai(donos[0].id, dest.id);
+    }
+    for(const it of g) if(it.casoId!==dest.id){
+      passos.push({acao:"mover", tipo:it.tipo, d:it.d, de:it.casoId, para:dest.id,
+        txt:`Levar ${TIPO_NUM[it.tipo]} ${fmtNum(it.tipo, it.d)} ao caso ${rotCurtoCaso(dest)} (NB ${fmtNb(nb)})`, fonte:it.fonte});
+      sai(it.casoId, dest.id);
+    }
+  }
+  // o caso que entrega todos os seus números a um só destino junta-se a ele
+  // (só o que veio do To Do: a casca fica encerrada e a fusão se desfaz)
+  for(const k of ks){
+    const x = saem.get(k.id); if(!x || x.para.size!==1 || !k.todo_task_id) continue;
+    const total = Object.values(nums.get(k.id)).reduce((s,v)=>s+v.length, 0);
+    const para = D.casoPorId.get([...x.para][0]);
+    if(total && x.n>=total && para) passos.push({acao:"juntar", de:k.id, para:para.id,
+      txt:`Juntar o caso ${rotCurtoCaso(k)} ao caso ${rotCurtoCaso(para)}, que fica com todos os números dele`, fonte:"o caso ficou sem número"});
+  }
+  const ordem = {nb:0, mover:1, juntar:2};
+  passos.sort((a,b)=>ordem[a.acao]-ordem[b.acao] || (a.tipo==="nb"?-1:0)-(b.tipo==="nb"?-1:0));
+  return {passos, duvidas};
+}
+async function aplicarPlano(cliId, passos, aoAndar){
+  const feitos = [];
+  for(const p of passos){
+    let ok = false, reg = null;
+    if(p.acao==="nb") ok = await anotarNbNoCaso(p.para, p.nb, {quieto:true});
+    else if(p.acao==="mover") ok = await moverNumero(p.tipo, p.d, p.de, p.para, {quieto:true});
+    else if(p.acao==="juntar"){ reg = await fundirCasos(p.de, p.para, {quieto:true}); ok = !!reg; }
+    if(ok) feitos.push({acao:p.acao, tipo:p.tipo, d:p.d, nb:p.nb, de:p.de, para:p.para, ...(reg?{reg}:{})});
+    if(aoAndar) aoAndar();
+  }
+  const c = D.cliPorId.get(cliId);
+  if(feitos.length && c){
+    const log = {em:new Date().toISOString(), por:eu.id, passos:feitos};
+    c.campos = {...(c.campos||{}), org_auto:[...(((c.campos||{}).org_auto)||[]).slice(-2), log]};
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  }
+  return feitos;
+}
+async function aplicarPlanoDoCliente(cliId){
+  const {passos} = planoOrganizar(cliId); if(!passos.length) return;
+  fecharCaixa(); aviso(`Organizando ${passos.length} passo(s)…`, false);
+  const feitos = await aplicarPlano(cliId, passos);
+  await carregar(); await abrirFicha(cliId);
+  aviso(`${feitos.length} de ${passos.length} passo(s) aplicados ✔ — o Desfazer fica na janela de organizar`, false);
+  organizarCasos(cliId);
+}
+async function desfazerOrganizacao(cliId){
+  const c = D.cliPorId.get(cliId), logs = ((c&&c.campos)||{}).org_auto||[], log = logs[logs.length-1];
+  if(!log) return;
+  if(!await confirmar(`Desfazer a organização automática de ${fmtTS(log.em)} ${horaSP(log.em)}?\n\nOs ${log.passos.length} passos voltam atrás, do último ao primeiro.`)) return;
+  fecharCaixa(); aviso("Desfazendo…", false);
+  await abrirFicha(cliId);   // os andamentos do cliente, como estão agora
+  for(const p of [...log.passos].reverse()){
+    if(p.acao==="juntar"){ await desfazerFusao(p.reg); for(const x of (D._andsFicha||[])) if(((p.reg||{}).ids||{}).andamentos?.includes(x.id)) x.caso_id = p.de; }
+    else if(p.acao==="mover") await moverNumero(p.tipo, p.d, p.para, p.de, {quieto:true});
+    else if(p.acao==="nb") await tirarNbDoCaso(p.para, p.nb);
+  }
+  c.campos = {...c.campos, org_auto:logs.slice(0,-1)};
+  await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  await carregar(); await abrirFicha(cliId);
+  aviso("Organização desfeita ✔", false);
+  organizarCasos(cliId);
+}
+// "é deste NB": a dúvida resolvida leva o número ao caso do NB, ou anota o NB no caso dele
+async function resolverDuvida(tipo, d, casoId, nb){
+  const ks = casosParaOrganizar((D.casoPorId.get(casoId)||{}).cliente_id);
+  const dono = ks.find(k=>k.id!==casoId && nbsDoCaso(k).some(n=>soDig(n)===nb));
+  if(dono) return levarNumero(tipo, d, casoId, dono.id);
+  return anotarNbNoCaso(casoId, nb);
+}
+function planoHtml(cliId){
+  const {passos, duvidas} = planoOrganizar(cliId);
+  const c = D.cliPorId.get(cliId), log = (((c&&c.campos)||{}).org_auto||[]).slice(-1)[0];
+  const linha = p => `<li><span>${esc(p.txt)}</span>${p.fonte?`<small class="meio-sub"> · ${esc(p.fonte)}</small>`:""}</li>`;
+  const duv = x => { const k = D.casoPorId.get(x.casoId);
+    return `<div class="org-s"><p><b>${esc(TIPO_NUM[x.tipo])} ${esc(fmtNum(x.tipo, x.d))}</b> <span class="meio-sub">· caso ${esc(rotCurtoCaso(k))}</span><br>
+      <small class="meio-sub">${x.contra ? `o caso tem o NB ${x.contra.map(fmtNb).join(", ")}, e os documentos falam de outro` : "os documentos citam mais de um NB, sem folga entre eles"}</small></p>
+      <div class="org-acoes">${x.ranking.map(r=>`<button type="button" class="adr-bt" onclick="resolverDuvida('${x.tipo}','${x.d}','${x.casoId}','${r.nb}')"
+        title="${esc(r.fontes.join("; "))}">é do NB ${fmtNb(r.nb)} <small>(${r.pts})</small></button>`).join("")}</div></div>`; };
+  return `${passos.length ? `<section class="org-plano" aria-label="O que o CRM organiza sozinho"><h4>O que o CRM organiza sozinho (${passos.length})</h4>
+      <ol>${passos.map(linha).join("")}</ol>
+      <div class="org-acoes"><button type="button" class="adr-bt adr-primario" onclick="aplicarPlanoDoCliente('${cliId}')">Aplicar os ${passos.length} passos</button>
+        <span class="meio-sub">vai com os andamentos, os documentos e as tarefas de cada número, e se desfaz depois</span></div></section>` : ""}
+    ${duvidas.length ? `<section class="org-sug org-duv" aria-label="Precisa de você"><h4>Precisa de você (${duvidas.length})</h4>${duvidas.map(duv).join("")}</section>` : ""}
+    ${log ? `<p class="org-log">Organizado automaticamente em ${esc(fmtTS(log.em))} ${esc(horaSP(log.em))} (${log.passos.length} passos).
+      <button type="button" class="adr-bt" onclick="desfazerOrganizacao('${cliId}')">Desfazer</button></p>` : ""}`;
+}
+
+// ── a organização em lote: todos os clientes de vários casos ─────────────
+function clientesVariosCasos(){
   const por = new Map();
   for(const k of ativos()) if(k.fase!=="pagamento") por.set(k.cliente_id, [...(por.get(k.cliente_id)||[]), k]);
   const linhas = [];
@@ -29828,21 +30222,246 @@ function blocoVariosCasos(){
     const rep = Object.values(conta).filter(n=>n>1).length, semNum = ks.filter(k=>!Object.values(numerosDoCaso(k)).some(x=>x.length)).length;
     linhas.push({c, ks, rep, semNum});
   }
-  if(!linhas.length) return "";
-  linhas.sort((a,b)=>b.rep-a.rep || b.semNum-a.semNum || b.ks.length-a.ks.length || (a.c.nome<b.c.nome?-1:1));
-  const mostra = linhas.slice(0, 40);
-  return `<details class="sem-acao neutro" id="acervo-varios"><summary>Clientes com mais de um caso aberto (${linhas.length}) — cada caso deve juntar NB, recurso e processo do mesmo benefício</summary>
-    <p class="meio-sub" style="margin:8px 0 4px">Os de número repetido vêm primeiro. O botão abre a ficha com a janela de organizar; marcado como organizado, o cliente sai daqui até ganhar caso novo.</p>
-    ${mostra.map(({c, ks, rep, semNum})=>`<div class="caso" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-      <span class="titulo-caso" style="cursor:pointer" onclick="abrirFicha('${c.id}')" title="abrir a ficha">${esc(c.nome)}</span>
-      <span class="meio-sub">${ks.length} casos · ${esc([...new Set(ks.map(k=>NOME_FASE[k.fase]||k.fase))].join(" + "))}</span>
-      ${rep?`<span class="chip urg" title="o mesmo número gravado em mais de um caso">${rep} número${rep>1?"s":""} repetido${rep>1?"s":""}</span>`:""}
-      ${semNum?`<span class="chip neutro">${semNum} sem número</span>`:""}
-      <button class="btn-mini" style="margin-left:auto" onclick="abrirOrganizar('${c.id}')">organizar</button></div>`).join("")}
-    ${linhas.length>mostra.length?`<p class="meio-sub">…e mais ${linhas.length-mostra.length}. A lista encurta conforme os clientes são organizados.</p>`:""}
-  </details>`;
+  return linhas.sort((a,b)=>b.rep-a.rep || b.semNum-a.semNum || b.ks.length-a.ks.length || (a.c.nome<b.c.nome?-1:1));
 }
-async function abrirOrganizar(cliId){ await abrirFicha(cliId); organizarCasos(cliId); }
+async function dadosDoCliente(cliId){
+  const ids = (D.casosDoCliente.get(cliId)||[]).map(k=>k.id).join(",");
+  const [ands, anexos] = await Promise.all([
+    ids ? todas("andamentos", `select=id,caso_id,origem,origem_id,texto,criado_em,responde_a&caso_id=in.(${ids})`).catch(()=>[]) : [],
+    todas("anexos", `select=id,caso_id,cliente_id,andamento_id,nome,caminho,origem,texto&cliente_id=eq.${cliId}`).catch(()=>[])]);
+  return {ands, anexos};
+}
+let _loteOrg = null;   // {planos:[{c, passos, duvidas, ands}], aplicando}
+async function organizarTodos(){
+  const linhas = clientesVariosCasos();
+  if(!linhas.length) return aviso("Nenhum cliente com mais de um caso aberto para organizar");
+  if(clienteAberto) fecharFicha(false);   // a ficha aberta não repinta com os dados de outro cliente
+  _loteOrg = {planos:[], parar:false};
+  caixa(`<div class="org-lote" role="dialog" aria-labelledby="org-lote-t">
+    <h3 id="org-lote-t">Organizar os clientes de vários casos</h3>
+    <p class="meio-sub" id="org-lote-st" aria-live="polite">Lendo os documentos de 0 de ${linhas.length} clientes…</p>
+    <progress id="org-lote-pb" max="${linhas.length}" value="0"></progress>
+    <div id="org-lote-res"></div></div>`);
+  for(let i=0; i<linhas.length; i++){
+    if(!document.getElementById("org-lote-pb")){ _loteOrg = null; D._andsFicha = []; D.anexos = []; _evCache = null; return; }   // fechou a janela: para
+    const {c} = linhas[i];
+    const dados = await dadosDoCliente(c.id);
+    D._andsFicha = dados.ands; D.anexos = dados.anexos; _evCache = null;
+    const pl = planoOrganizar(c.id);
+    _loteOrg.planos.push({c, passos:pl.passos, duvidas:pl.duvidas, ands:dados.ands});
+    const pb = document.getElementById("org-lote-pb"), st = document.getElementById("org-lote-st");
+    if(pb) pb.value = i+1;
+    if(st) st.textContent = `Lendo os documentos de ${i+1} de ${linhas.length} clientes…`;
+  }
+  D.anexos = []; _evCache = null;
+  pintarLoteOrg();
+}
+function pintarLoteOrg(){
+  const L = _loteOrg, res = document.getElementById("org-lote-res"); if(!L || !res) return;
+  const com = L.planos.filter(p=>p.passos.length), soDuv = L.planos.filter(p=>!p.passos.length && p.duvidas.length);
+  const semPista = L.planos.filter(p=>!p.passos.length && !p.duvidas.length);
+  const total = com.reduce((s,p)=>s+p.passos.length, 0);
+  const st = document.getElementById("org-lote-st");
+  if(st) st.textContent = `${L.planos.length} clientes lidos: ${com.length} com organização pronta (${total} passos), ${soDuv.length} só com dúvidas e ${semPista.length} sem pista nos documentos.`;
+  res.innerHTML = `${com.length ? `<section class="org-plano"><h4>Organização pronta</h4>
+      <ul class="org-lote-lista">${com.map((p,i)=>`<li><label><input type="checkbox" class="org-lote-ck" data-i="${L.planos.indexOf(p)}" checked>
+        <b>${esc(p.c.nome)}</b> <span class="meio-sub">${p.passos.length} passo(s)${p.duvidas.length?` · ${p.duvidas.length} dúvida(s)`:""}</span></label>
+        <details><summary>ver os passos</summary><ol>${p.passos.map(x=>`<li>${esc(x.txt)}${x.fonte?` <small class="meio-sub">· ${esc(x.fonte)}</small>`:""}</li>`).join("")}</ol></details></li>`).join("")}</ul>
+      <div class="org-acoes"><button type="button" class="adr-bt adr-primario" id="org-lote-ok" onclick="aplicarLoteOrg()">Aplicar nos clientes marcados</button>
+        <span class="meio-sub">cada cliente ganha o Desfazer na janela de organizar dele</span></div></section>` : ""}
+    ${soDuv.length ? `<section class="org-sug"><h4>Precisam de você (${soDuv.length})</h4>
+      <ul class="org-lote-lista">${soDuv.map(p=>`<li><b>${esc(p.c.nome)}</b> <span class="meio-sub">${p.duvidas.length} número(s) com mais de um NB</span>
+        <button type="button" class="adr-bt" onclick="fecharCaixa();abrirOrganizar('${p.c.id}')">organizar</button></li>`).join("")}</ul></section>` : ""}
+    ${semPista.length ? `<details class="org-lote-sem"><summary>Sem pista nos documentos (${semPista.length})</summary>
+      <p class="meio-sub">Nenhum documento destes casos cita NB. Abra e junte à mão o que for o mesmo benefício.</p>
+      <ul class="org-lote-lista">${semPista.map(p=>`<li>${esc(p.c.nome)} <button type="button" class="adr-bt" onclick="fecharCaixa();abrirOrganizar('${p.c.id}')">organizar</button></li>`).join("")}</ul></details>` : ""}`;
+}
+async function aplicarLoteOrg(){
+  const L = _loteOrg; if(!L || L.aplicando) return;
+  const marcados = [...document.querySelectorAll(".org-lote-ck:checked")].map(x=>L.planos[+x.dataset.i]).filter(Boolean);
+  if(!marcados.length) return aviso("Marque ao menos um cliente");
+  const total = marcados.reduce((s,p)=>s+p.passos.length, 0);
+  if(!await confirmar(`Aplicar ${total} passos em ${marcados.length} clientes?\n\nCada número leva junto os andamentos, os documentos e as tarefas dele. Cada cliente pode desfazer na janela de organizar.`)) return;
+  L.aplicando = true;
+  const bt = document.getElementById("org-lote-ok"); if(bt) bt.disabled = true;
+  const st = document.getElementById("org-lote-st"), pb = document.getElementById("org-lote-pb");
+  if(pb){ pb.max = total; pb.value = 0; }
+  let feitos = 0, andou = 0;
+  for(const p of marcados){
+    D._andsFicha = p.ands; D.anexos = []; _evCache = null;
+    const f = await aplicarPlano(p.c.id, p.passos, ()=>{ andou++; if(pb) pb.value = andou; if(st) st.textContent = `Aplicando ${andou} de ${total} passos…`; });
+    feitos += f.length;
+  }
+  D._andsFicha = []; L.aplicando = false; _loteOrg = null;
+  await carregar(); montarSidebar(); if(visao==="acervo") render();
+  if(st) st.textContent = `${feitos} de ${total} passos aplicados em ${marcados.length} clientes ✔`;
+  const res = document.getElementById("org-lote-res");
+  if(res) res.innerHTML = `<p class="org-ok">Pronto. Os clientes com dúvida continuam na fila do Cuidar do acervo; o Desfazer de cada um fica na janela de organizar.</p>`;
+}
+
+// ── o repasse em um clique: número e anotação vão ao caso certo ─────────
+async function levarNumero(tipo, d, deId, paraId){
+  const para = D.casoPorId.get(paraId); if(!para || !TIPO_NUM[tipo]) return;
+  if(!await confirmar(`Levar ${TIPO_NUM[tipo]} ${fmtNum(tipo, d)} ao caso ${rotCurtoCaso(para)}?\n\nVão junto os andamentos, os documentos e as tarefas dele, e a sincronização do To Do não desfaz a mudança.`)) return;
+  await moverNumero(tipo, d, deId, paraId);
+}
+function selLevarNumero(k, tipo, d){
+  const outros = casosParaOrganizar(k.cliente_id).filter(x=>x.id!==k.id); if(!outros.length) return "";
+  return `<select class="sel-levar" aria-label="levar ${esc(TIPO_NUM[tipo])} ${esc(fmtNum(tipo, d))} a outro caso do cliente"
+    onchange="const v=this.value;this.value='';if(v)levarNumero('${tipo}','${d}','${k.id}',v)"><option value="">levar a outro caso…</option>${
+    outros.map(x=>`<option value="${x.id}">${esc(rotCurtoCaso(x))}</option>`).join("")}</select>`;
+}
+// o NB de que o número trata, pelos documentos; de outro caso, com o botão que o leva até lá
+function nbForaDoCaso(k, tipo, d){
+  const ks = casosParaOrganizar(k.cliente_id); if(ks.length<2 || !ks.some(x=>x.id===k.id)) return null;
+  const r = nbDoNumero(evidenciaNbs(ks), tipo, d); if(!r) return null;
+  const meu = r.nb && nbsDoCaso(k).some(n=>soDig(n)===r.nb);
+  return {r, dono: r.nb && !meu ? ks.find(x=>x.id!==k.id && nbsDoCaso(x).some(n=>soDig(n)===r.nb)) || null : null};
+}
+function chipNbNumero(k, tipo, d){
+  const x = nbForaDoCaso(k, tipo, d); if(!x) return "";
+  const {r, dono} = x;
+  if(!r.nb) return `<span class="chip neutro nb-num" title="${esc(r.ranking.map(x=>`NB ${fmtNb(x.nb)}: ${x.pts}`).join(" · "))}">os documentos citam ${r.ranking.length} NBs</span>`;
+  return `<span class="chip ${dono?"urg":"neutro"} nb-num" title="pelos documentos: ${esc(r.ranking[0].fontes.join("; "))}">NB ${fmtNb(r.nb)}${dono?" · de outro caso":""}</span>${
+    dono ? `<button class="btn-mini" onclick="levarNumero('${tipo}','${d}','${k.id}','${dono.id}')" title="${esc(rotCurtoCaso(dono))}">levar ao caso do NB</button>` : ""}`;
+}
+// no topo da aba: o número deste caso cujos documentos tratam do NB de outro caso
+function avisoNumeroFora(k, tipo){
+  return (numerosDoCaso(k)[tipo]||[]).map(d=>({d, x:nbForaDoCaso(k, tipo, d)})).filter(o=>o.x && o.x.dono)
+    .map(({d, x})=>`<div class="num-fora" role="note"><span>${esc(TIPO_NUM[tipo])} ${esc(fmtNum(tipo, d))} trata do NB ${esc(fmtNb(x.r.nb))}, que está no caso ${esc(rotCurtoCaso(x.dono))}.</span>
+      <button class="btn-mini forte" onclick="levarNumero('${tipo}','${d}','${k.id}','${x.dono.id}')">Levar ao caso do NB</button></div>`).join("");
+}
+function itemLevarAndamento(a){
+  const k = a && D.casoPorId.get(a.caso_id);
+  if(!k || !casosParaOrganizar(k.cliente_id).some(x=>x.id!==k.id)) return "";
+  return `<button class="tl-mais-it" role="menuitem" onclick="moverAndamento('${a.id}')">Levar a outro caso…</button>`;
+}
+function moverAndamento(andId){
+  const a = (D._andsFicha||[]).find(x=>x.id===andId); if(!a) return;
+  const k = D.casoPorId.get(a.caso_id); if(!k) return;
+  const outros = casosParaOrganizar(k.cliente_id).filter(x=>x.id!==k.id);
+  if(!outros.length) return aviso("O cliente não tem outro caso aberto");
+  caixa(`<div class="adr-modal" role="dialog" aria-labelledby="mv-and-t"><h3 id="mv-and-t">Levar esta anotação a outro caso</h3>
+    <p class="meio-sub" style="margin:0">Vão junto os documentos, as tarefas e as respostas dela. O caso de agora registra para onde ela foi.</p>
+    <div class="esp-lista">${outros.map(x=>`<button type="button" class="esp-it" onclick="fecharCaixa();levarAndamento('${andId}','${x.id}')">${esc(rotCurtoCaso(x))}</button>`).join("")}</div></div>`);
+}
+async function levarAndamento(andId, paraId){
+  const a = (D._andsFicha||[]).find(x=>x.id===andId), para = D.casoPorId.get(paraId); if(!a || !para) return;
+  const deId = a.caso_id, ids = [a.id, ...(D._andsFicha||[]).filter(x=>x.responde_a===a.id).map(x=>x.id)].join(",");
+  const mudar = {method:"PATCH", headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:paraId})};
+  try{ await api(`/rest/v1/andamentos?id=in.(${ids})`, mudar); }
+  catch(e){ return aviso("Não consegui levar a anotação — o outro caso já tem este mesmo andamento?"); }
+  await api(`/rest/v1/anexos?andamento_id=in.(${ids})`, mudar).catch(()=>{});
+  await api(`/rest/v1/andamento_tarefas?andamento_id=in.(${ids})`, mudar).catch(()=>{});
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:deId, autor_id:eu.id,
+    texto:`⇄ A anotação de ${fmtTS(a.criado_em)} foi levada ao caso "${tituloCaso(para)}".`})}).catch(()=>{});
+  for(const x of (D._andsFicha||[])) if(ids.split(",").includes(x.id)) x.caso_id = paraId;
+  aviso(`Anotação levada ao caso ${rotCurtoCaso(para)} ✔`, false);
+  casoSel = paraId; await abrirFicha(para.cliente_id);
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// F221 · A LINHA DA INCAPACIDADE. O cliente de benefício por incapacidade
+// acumula casos em sequência: o auxílio cessa, pede-se a prorrogação,
+// recorre-se, ajuíza-se, e um benefício novo começa. A linha mostra, em ordem
+// de data, um item por NB: o período (DIB e DCB), a situação, o caso e a fase
+// em que está, os números que tratam dele (inclusive os que estão em outro
+// caso, com o botão de levar) e o próximo passo que o CRM já calcula
+// (prorrogação, recurso, prazo de análise, exigência e perícia).
+// ══════════════════════════════════════════════════════════════════════════
+const RX_ESP_INCAP = /^B?(31|32|91|92|94|36)\b/i;
+const RX_BEN_INCAP = /incapacidade|aux[ií]lio[- ]doen[cç]a|invalidez|aux[ií]lio[- ]acidente|acident[áa]ri|doen[cç]a/i;
+const ehIncap = k => RX_ESP_INCAP.test(String(k.especie||"").trim()) || RX_BEN_INCAP.test(k.beneficio||"");
+const _incapAberta = new Set();   // clientes com a linha aberta, nesta sessão
+function proximosDoCaso(k){
+  if(!k || k.fase==="encerrado") return [];
+  const out = [], hj = hoje();
+  const pe = prorrogarEm(k);
+  // a DCB vencida só é aviso no pedido ao INSS: no recurso e na ação ela é o motivo do caso
+  if(pe && k.dcb>=hj) out.push(pe<=hj ? {data:k.dcb, txt:`Pedir a prorrogação até ${fmtBarra(k.dcb)} (DCB)`} : {data:pe, txt:`Pedir a prorrogação a partir de ${fmtBarra(pe)}`});
+  else if(pe && (k.fase==="inss" || k.fase==="escritorio")) out.push({data:k.dcb, alerta:true, txt:`A DCB de ${fmtBarra(k.dcb)} passou sem pedido de prorrogação registrado`});
+  const rec = recorrerAte(k); if(rec) out.push({data:rec, txt:`Recorrer até ${fmtBarra(rec)}`});
+  const mora = prazoMora(k); if(mora) out.push({data:mora.data, alerta:mora.vencido, txt: mora.vencido ? `Análise do INSS vencida em ${fmtBarra(mora.data)}: avalie o MS por mora` : `O INSS deve decidir até ${fmtBarra(mora.data)}`});
+  if(k.exigencia_prazo) out.push({data:k.exigencia_prazo, txt:`Cumprir a exigência até ${fmtBarra(k.exigencia_prazo)}`});
+  const per = (D.eventos||[]).filter(e=>e.caso_id===k.id && e.status!=="cancelada" && dataSP(e.data_hora)>=hj).sort((a,b)=>String(a.data_hora).localeCompare(String(b.data_hora)))[0];
+  if(per) out.push({data:dataSP(per.data_hora), txt:`${per.tipo||"Perícia"} em ${fmtBarra(dataSP(per.data_hora))}`});
+  return out.sort((a,b)=>String(a.data).localeCompare(String(b.data)));
+}
+function linhaIncapacidade(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return [];
+  const rows = new Map();
+  const linha = (nb, chaveCaso) => { const ch = nb || "caso:"+chaveCaso;
+    if(!rows.has(ch)) rows.set(ch, {nb, esp:"", ini:"", dcb:"", sit:"", casos:[], nums:[], fontes:new Set(), prox:[]});
+    return rows.get(ch); };
+  const isoDe = v => /^\d{4}-\d{2}-\d{2}/.test(String(v||"")) ? String(v).slice(0,10) : isoBr(v);
+  const ks = casosParaOrganizar(cliId), ev = evidenciaNbs(ks);
+  // o caso sem NB entra na linha do NB que os documentos dos números dele citam
+  const nbPelosDocs = k => { const n = numerosDoCaso(k);
+    for(const t of ["proc","nup","prot"]) for(const d of n[t]){ const r = nbDoNumero(ev, t, d); if(r && r.nb) return r.nb; }
+    return ""; };
+  for(const k of (D.casosDoCliente.get(cliId)||[]).filter(ehIncap)){
+    const nbs = nbsDoCaso(k).map(soDig).filter(x=>x.length===10);
+    for(const nb of (nbs.length ? nbs : [nbPelosDocs(k)])){
+      const r = linha(nb, k.id);
+      if(!r.casos.includes(k)) r.casos.push(k);
+      r.esp = r.esp || String(k.especie||"").toUpperCase();
+      r.ini = r.ini || k.dib || k.der || "";
+      if(k.dcb && (!r.dcb || k.dcb>r.dcb)) r.dcb = k.dcb;
+      r.fontes.add("caso");
+    }
+  }
+  // o dossiê: os benefícios do CNIS, as cartas de concessão e os laudos médicos periciais
+  for(const v of (((cnisDe(c)||{}).vinculos)||[]).filter(v=>v.tipo==="Benefício" && v.nb)){
+    if(!RX_ESP_INCAP.test(String(v.especie||"")) && !RX_BEN_INCAP.test(String(v.origem||""))) continue;
+    const r = linha(soDig(v.nb));
+    r.esp = r.esp || ("B"+String(v.especie||"").replace(/\D/g,"").slice(0,2));
+    r.ini = r.ini || isoDe(v.inicio); if(!r.dcb && v.fim) r.dcb = isoDe(v.fim);
+    if(v.situacao) r.sitCnis = String(v.situacao).toLowerCase();
+    r.fontes.add("CNIS");
+  }
+  const fd = docsDoDossie(cliId).length ? fontesDoDossie(cliId) : null;
+  for(const x of ((fd||{}).cartas||[])){ const r = x.nb && rows.get(soDig(x.nb)); if(r){ r.ini = r.ini || isoDe(x.dib||x.der); r.fontes.add("carta de concessão"); } }
+  for(const l of ((fd||{}).laudos||[])){ const r = l.nb && rows.get(soDig(l.nb)); if(r){ (r.laudos = r.laudos||[]).push(l); r.fontes.add("laudo médico pericial"); } }
+  // os números que tratam de cada NB, pelos documentos, em qualquer caso aberto do cliente
+  for(const k of ks){ const n = numerosDoCaso(k);
+    for(const tipo of ["prot","nup","proc"]) for(const d of n[tipo]){
+      const nb = ((nbDoNumero(ev, tipo, d)||{}).nb) || (n.nb.length===1 ? n.nb[0] : "");
+      const r = nb && rows.get(nb); if(r) r.nums.push({tipo, d, caso:k});
+    } }
+  for(const r of rows.values()){
+    const vivo = r.casos.filter(k=>k.fase!=="encerrado").sort((a,b)=>(ORDEM_FASE_ORG[b.fase]||0)-(ORDEM_FASE_ORG[a.fase]||0))[0];
+    r.prox = vivo ? proximosDoCaso(vivo).slice(0,2) : [];
+    r.sit = r.dcb ? (r.dcb>=hoje() ? "ativo" : "cessado")
+      : r.casos.some(k=>k.resultado==="deferido") ? "concedido"
+      : r.sitCnis || (vivo ? "em andamento" : r.casos.length ? "encerrado" : "");
+    r.vivo = vivo || null;
+  }
+  return [...rows.values()].sort((a,b)=>(a.ini||"9999").localeCompare(b.ini||"9999"));
+}
+function faixaIncapacidade(k){
+  if(!k) return "";
+  const cliId = k.cliente_id, todos = D.casosDoCliente.get(cliId)||[];
+  if(!ehIncap(k) && !todos.some(x=>x.fase!=="encerrado" && ehIncap(x))) return "";
+  const rows = linhaIncapacidade(cliId); if(!rows.length) return "";
+  // o resumo anuncia o aviso vencido ou o próximo passo com data a vir, nunca um passo que já passou
+  const hj = hoje(), prox = rows.flatMap(r=>r.prox.map(p=>({...p, nb:r.nb}))).filter(p=>p.alerta || String(p.data)>=hj)
+    .sort((a,b)=>String(a.data).localeCompare(String(b.data)))[0];
+  const numHtml = (x, r) => { const fora = r.vivo && x.caso.id!==r.vivo.id && !nbsDoCaso(x.caso).some(n=>soDig(n)===r.nb);
+    return `<span class="incap-num${fora?" fora":""}">${esc(TIPO_NUM[x.tipo])} ${esc(fmtNum(x.tipo, x.d))}${fora ? ` <small>· em outro caso</small>
+      <button class="btn-mini" onclick="levarNumero('${x.tipo}','${x.d}','${x.caso.id}','${r.vivo.id}')" title="levar ao caso ${esc(rotCurtoCaso(r.vivo))}">trazer</button>` : ""}</span>`; };
+  const item = r => `<li class="incap-it${r.casos.includes(k)?" atual":""}${r.vivo?"":" passado"}">
+    <div class="incap-l1"><b>${r.nb ? `NB ${esc(fmtNb(r.nb))}` : "Sem NB"}</b>${r.esp?`<span class="chip neutro" title="${esc(nomeDaEspecie(r.esp)||"")}">${esc(r.esp)}</span>`:""}
+      <span class="incap-per">${r.ini?fmtBarra(r.ini):"?"} → ${r.dcb?fmtBarra(r.dcb):"…"}</span><span class="incap-sit">${esc(r.sit)}</span></div>
+    <div class="incap-l2">${r.casos.map(x=>`<button type="button" class="incap-caso${x.id===k.id?" on":""}" onclick="escolhido('${cliId}','${x.id}')"
+        title="abrir o caso">${esc(NOME_FASE[x.fase]||x.fase)}${x.etapa?` · ${esc(x.etapa)}`:""}</button>`).join("")
+      || `<span class="meio-sub">sem caso no CRM (${esc([...r.fontes].join(", "))})</span>`}${r.nums.map(x=>numHtml(x, r)).join("")}</div>
+    ${r.prox.length ? `<div class="incap-prox">${r.prox.map(p=>`<span${p.alerta?' class="alerta"':""}>${esc(p.txt)}</span>`).join("")}</div>` : ""}</li>`;
+  const aberta = _incapAberta.has(cliId);
+  return `<details class="incap" ${aberta?"open":""} ontoggle="this.open?_incapAberta.add('${cliId}'):_incapAberta.delete('${cliId}')">
+    <summary><span class="incap-tit">Linha da incapacidade</span><span class="incap-res">${rows.length} ${rows.length===1?"benefício":"benefícios"}${
+      prox ? ` · próximo: ${esc(prox.txt)}${prox.nb?` (NB ${esc(fmtNb(prox.nb))})`:""}` : ""}</span></summary>
+    <ol class="incap-lista">${rows.map(item).join("")}</ol></details>`;
+}
 
 // ── catálogo de documentos (espelho do site interno) ──────────────────────
 function docPorNome(nome){ return D.docs.find(d=>d.beneficio===nome); }

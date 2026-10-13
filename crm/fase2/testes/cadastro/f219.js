@@ -126,8 +126,9 @@ FIX.documentos_beneficio = [
   const btLemb = (await texto("#desfecho .adr-bt"))[0] || "";
   conf(5, "B1 o Desfecho sugere o lembrete pela data futura e, com card ligado, oferece atualizá-lo", /^Lembrete/.test(desf) && desf.includes("15.06.2027") && /Atualizar o card/.test(btLemb));
   // sem card ligado: o lembrete nasce do Desfecho
-  await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.campos.precasos = c.campos.precasos.map(x => { const y = { ...x }; delete y.lembrete_id; return y; }); repintarFicha(); }, CLI_CHEIO);
-  await p.waitForSelector("#desfecho");
+  // com a máquina carregada, a recarga da análise pode chegar depois: tira o card e repinta até o botão valer
+  await esperar(() => p.evaluate(cli => { const c = D.cliPorId.get(cli); c.campos.precasos = c.campos.precasos.map(x => { const y = { ...x }; delete y.lembrete_id; return y; }); repintarFicha();
+    const b = [...document.querySelectorAll("#desfecho .adr-bt")].find(x => /Criar o lembrete/.test(x.textContent)); return !!b && !b.disabled; }, CLI_CHEIO), 20000);
   const regB = reg.length;
   await p.click("#desfecho .adr-bt:has-text('Criar o lembrete')");
   await esperar(async () => reg.slice(regB).some(x => x.t === "lembretes" && x.m === "POST") && !!(((await pcAtual())[0] || {}).desfecho));

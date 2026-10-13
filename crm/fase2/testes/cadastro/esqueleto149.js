@@ -32,8 +32,9 @@ const K = FIX.casos;
     if (/\/auth\/v1\//.test(u)) return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(SESSAO) });
     if (rota.request().method() !== "GET") return rota.fulfill({ status: 204, body: "" });
     const t = (u.match(/\/rest\/v1\/([a-z_]+)/) || [])[1];
-    // a lista de clientes (abertura) e os andamentos da ficha demoram 1,2 s
-    if (lento && (t === "clientes" || (t === "andamentos" && /caso_id=in/.test(u)))) await new Promise(r => setTimeout(r, 1200));
+    // a lista de clientes (abertura) e os andamentos da ficha demoram 2,5 s: com folga para a
+    // máquina carregada (a suíte em paralelo), o esqueleto ainda está na tela quando a prova olha
+    if (lento && (t === "clientes" || (t === "andamentos" && /caso_id=in/.test(u)))) await new Promise(r => setTimeout(r, 2500));
     let corpo = FIX[t] || [];
     const f = u.match(/cliente_id=eq\.([0-9a-f-]+)/);
     if (f) corpo = corpo.filter(x => x.cliente_id === f[1]);
