@@ -256,11 +256,26 @@ def stj_djen(itens, agora, minimo=800):
 def stj_jt(edicao, titulo, texto, agora):
     """texto é o innerText da edição. Cada tese começa por 'N) ' e termina antes de 'Julgados'."""
     linhas, d = [], re.search(r"disponibilizada em:\s*(\d{2}/\d{2}/\d{4})", texto)
-    for m in re.finditer(r"(?s)(?:^|\n)\s*(\d{1,2})\)\s+(.+?)(?=\n\s*Julgados|\n\s*\d{1,2}\)\s|\Z)", texto):
+    # edição de outro ramo (processo civil, administrativo...) traz "Ramo: X" na primeira linha
+    ramo = (m[1].strip() if (m := re.search(r"(?m)^Ramo:\s*(.+)$", texto)) else "DIREITO PREVIDENCIÁRIO")
+    texto = texto.split("Clique nos links abaixo para consultar")[0]       # rodapé com a lista de edições
+    # a página traz, escondida, a lista de julgados de cada tese; só vale a numeração sequencial, para que uma
+    # linha dessa lista que comece por número não vire tese
+    marcas, esperado = [], 1
+    for m in re.finditer(r"(?:^|\n)\s*(\d{1,2})\)\s", texto):
+        if int(m[1]) == esperado:
+            marcas.append(m); esperado += 1
+    for i, m in enumerate(marcas):
+        bloco = texto[m.end(): marcas[i + 1].start() if i + 1 < len(marcas) else len(texto)]
+        j = re.search(r"\n\s*Julgados\b", bloco)
+        tese, julgados = (bloco[:j.start()], bloco[j.end():]) if j else (bloco, "")
+        refs = re.findall(r"[A-Za-z]+(?: (?:no|nos|na|nas|em) [A-Za-z]+)* \d[\d.]*/[A-Z]{2}, Rel\. Min(?:istr[oa])?\.? [^,]+, [^,]+, "
+                          r"(?i:DJe|DJ|DJEN) \d{2}/\d{2}/\d{4}", re.sub(r"\s+", " ", julgados))
         linhas.append({"id": f"STJ-JT-{edicao}-{m[1]}", "tribunal": "STJ", "tipo": "jurisprudencia_em_teses",
                        "numero": int(m[1]), "titulo": f"Edição {edicao}: {titulo}", "questao": None,
-                       "tese": re.sub(r"\s+", " ", m[2]).strip(), "situacao": None, "leading_case": None,
+                       "tese": re.sub(r"\s+", " ", tese).strip(), "situacao": None,
+                       "leading_case": "; ".join(refs[:5]) or None,          # julgados que a edição indica para a tese
                        "orgao_julgador": None, "relator": None, "data_afetacao": None, "data_julgamento": None,
-                       "data_publicacao": _data(d[1]) if d else None, "assuntos": "DIREITO PREVIDENCIÁRIO", "previdenciario": 1,
+                       "data_publicacao": _data(d[1]) if d else None, "assuntos": ramo, "previdenciario": int(ramo == "DIREITO PREVIDENCIÁRIO"),
                        "vinculo": None, "link_oficial": "https://scon.stj.jus.br/SCON/jt/", "coletado_em": agora})
     return linhas
