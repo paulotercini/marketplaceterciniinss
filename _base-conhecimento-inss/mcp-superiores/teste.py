@@ -81,6 +81,8 @@ assert dj[0]["temas"] == "1124", dj[0]["temas"]
 jt = parser.stj_jt("198", "AUXÍLIO-ACIDENTE", "EDIÇÃO N. 198\n1) O auxílio-acidente de remuneração variável usa a média.\n"
                    "Julgados\nSaiba mais\n2) O segurado vítima de novo acidente faz jus a um único benefício.\nJulgados\n", A)
 assert [x["id"] for x in jt] == ["STJ-JT-198-1", "STJ-JT-198-2"] and jt[1]["tese"].endswith("único benefício.")
+outro = parser.stj_jt("128", "HONORÁRIOS", "Ramo: DIREITO PROCESSUAL CIVIL\nEDIÇÃO N. 128\n1) Tese de honorários.\nJulgados\n", A)
+assert outro[0]["assuntos"] == "DIREITO PROCESSUAL CIVIL" and outro[0]["previdenciario"] == 0 and jt[0]["previdenciario"] == 1
 
 # banco: regravar não duplica, tema é substituído, a busca acha com e sem acento, e o 11240 não entra no 1124
 con = banco.abrir(":memory:")
