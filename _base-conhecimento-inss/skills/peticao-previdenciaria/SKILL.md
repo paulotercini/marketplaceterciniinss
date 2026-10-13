@@ -27,6 +27,8 @@ A forma de pesquisar, os filtros confiáveis e os que não são, e o que foi med
 
 **Fase 2, medir.** Rodar `python3 scripts/medir_peca.py peca.md --tipo inicial` (ou `inominado`, `laudo`, `crps`, `embargos`, `comum`, `memorial`, `ms`). O script devolve PASSA ou FALHA com a lista exata dos parágrafos fora do padrão. Peça que FALHA não segue. Reescreve-se o que o script apontou e mede-se de novo, quantas vezes for preciso. O relatório final da peça transcreve a última medição.
 
+**Fase 2-A, cadeia de cada pedido (regra permanente de 12/10/2026).** Antes de converter, cada pedido dos REQUERIMENTOS e de cada seção é percorrido sozinho, do pedido à prova, pelo protocolo de `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md`. Lacuna, salto lógico, fundamento genérico, prova sem ID no ponto do fato e cálculo sem demonstração se corrigem pontualmente no `peca.md`, sem reescrever a peça, e mede-se de novo. O relatório final transcreve o bloco CADEIA DOS PEDIDOS.
+
 **Fase 3, converter.** Rodar `node scripts/md2docx.js peca.md saida.docx --logo <caminho da logo>` (na primeira vez, `npm install` dentro de `scripts/`, que instala o `docx`) (com `--crps` para recuo de 4 cm nas peças administrativas). O script aplica cabeçalho, logo, fonte, margens, títulos pretos, citações recuadas, tabelas e o fecho com local, data e assinatura. Depois, converter em PDF e abrir a primeira página para conferência visual, como sempre.
 
 ## O método do titular (Onda 174), lido antes de redigir

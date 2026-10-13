@@ -154,3 +154,7 @@ A tese que a Turma Recursal aplica nasce no boletim oficial da TNU. O acervo do 
 Preliminar frequente no recurso inominado previdenciário. Quesitos prévios indeferidos, laudo insuficiente, esclarecimentos indeferidos e sentença na sequência. Pedir a ANULAÇÃO com retorno à instrução e, sucessivamente, o julgamento do mérito pela prova existente.
 
 Dois cuidados. Primeiro, o recurso só se sustenta se houve protesto no primeiro indeferimento e registro do prejuízo concreto no segundo, do contrário a Turma responde com preclusão ou ausência de prejuízo. Segundo, a via de uniformização é estreita, porque a Súmula 43 da TNU veda matéria processual em PUIL, de modo que a tese precisa ser revestida como direito material (`base-puil-pedilef-vedacao-materia-processual`). Arsenal em `auditoria-laudo-pericial/references/QUESITOS-NEGADOS-E-LAUDO-INSUFICIENTE.md`.
+
+## Cadeia de cada pedido (regra permanente, 12/10/2026)
+
+Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.

@@ -2,6 +2,14 @@
 
 Onda 176, complemento de 10/10/2026. Conferência de cada pedido da peça, um por vez, pela ligação entre o que se pede, os fatos, as provas, o cálculo e a conclusão jurídica.
 
+## Regra permanente (12/10/2026)
+
+O titular fixou esta conferência como regra permanente de toda peça jurídica do escritório, judicial ou administrativa, inicial, recurso, réplica, mandado de segurança, embargos, manifestação, recurso ao CRPS ou requerimento ao INSS. Ela roda em dois momentos, na redação, antes da conversão em .docx (Fase 2-A da `peticao-previdenciaria`), e na revisão (Camada 5-A da `base-revisao-peticao-aprofundada`), e nenhum dos dois a dispensa por pressa ou por peça curta.
+
+O mandato é o do advogado experiente em revisão estratégica. Cada pedido é analisado individualmente, verificando se o leitor compreende, sem procurar informação dispersa nem reconstruir o raciocínio, a sequência entre o que se pede, os fatos, as provas, o cálculo ou critério e a conclusão jurídica. Apontam-se objetivamente lacunas, saltos lógicos, fundamentos genéricos, provas não relacionadas de forma explícita e cálculos sem demonstração, e indica-se, ao final, o que esclarecer, conectar ou reorganizar.
+
+A peça não é reescrita por inteiro. A correção é pontual, a frase que falta, o ID que se acrescenta, a conta que se demonstra ou o parágrafo que muda de lugar, e é aplicada na própria versão entregue, com cada correção registrada no bloco O QUE ESCLARECER, CONECTAR OU REORGANIZAR. Elo que depende de documento ausente dos autos não se corrige por redação e vira pendência de juntada.
+
 ## O que se confere
 
 Cada pedido fecha uma cadeia de cinco elos:
