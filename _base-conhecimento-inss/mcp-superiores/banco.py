@@ -94,7 +94,10 @@ AVISOS = [
     "restrito aos processos em que o INSS é parte. Veja cobertura_integras.",
     "STF. Entram os temas de repercussão geral e os acórdãos dos leading cases previdenciários e das ações de "
     "controle do catálogo do escritório. A pesquisa geral de jurisprudência do STF não está aqui.",
-    "A Jurisprudência em Teses é a fotografia da data de cada edição (data_publicacao) e não se atualiza. Há tese "
+    "A Jurisprudência em Teses traz as 7 edições do previdenciário e 63 de outros ramos que tocam o trabalho do "
+    "escritório (processo civil, mandado de segurança, pessoa com deficiência e idosa, gênero, união estável, dano "
+    "moral). O ramo vem em assuntos, e só as do previdenciário têm previdenciario=1. Cada tese traz em leading_case "
+    "até cinco julgados que a edição indica. A edição é a fotografia da sua data (data_publicacao) e não se atualiza. Há tese "
     "superada depois, como a da desaposentação na edição 67, afastada pelo Tema 503 do STF. Confira o tema vinculante.",
     "Situação e tese são as da data da coleta. Citação em peça exige conferência no link_oficial, que é a fonte.",
 ]
