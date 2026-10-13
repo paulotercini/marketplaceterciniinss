@@ -111,13 +111,14 @@
     }
   ],
   "documentos": [
-    "Documento de identidade e CPF do requerente e dos membros do grupo familiar",
-    "Comprovante de idade (65 anos ou mais)",
-    "Comprovante de inscrição e atualização no CadÚnico",
+    "RG/CIN e CPF do idoso requerente",
+    "CPF de todos da casa",
+    "Certidão de nascimento ou documento que comprove a idade",
     "Comprovante de residência",
-    "Comprovantes de renda de todos os integrantes do grupo familiar",
-    "Notas fiscais e receituários de gastos com medicamentos e alimentação especial, se houver",
-    "Comprovante do requerimento administrativo (DER) e da carta de indeferimento, se houver"
+    "CadÚnico atualizado com CPF de todos",
+    "Comprovante de renda de quem trabalha",
+    "Se alguém recebe benefício, informe número e valor",
+    "Declaração de renda informal, se houver"
   ],
   "faq": [
     {

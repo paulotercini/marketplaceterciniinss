@@ -252,7 +252,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     card: [...document.querySelectorAll(".faixa-prazos .pz")].map(c => c.dataset.tipo + " " + c.querySelector(".pz-data").textContent) }));
   conf("o comentário padronizado entra no compositor, com a observação no fim",
     ex.txt === `[EXIGÊNCIA] O que o INSS exigiu: Apresentar CTPS\nPrazo para cumprir: ${fmtBR(emDias(6))}\nDocumento que falta: CTPS\nQuem vai cumprir: —\nCliente avisada.` && ex.modal === "none");
-  conf("a exigência grava o prazo no caso e vira quadro vermelho na hora", patches("exigencia_prazo").pop().exigencia_prazo === emDias(6) && ex.card.includes("Prazo fatal " + fmtBR(emDias(6))));
+  conf("a exigência grava o prazo no caso e vira quadro vermelho na hora", patches("exigencia_prazo").pop().exigencia_prazo === emDias(6) && ex.card.includes("Exigência do INSS " + fmtBR(emDias(6))));   // F220: o quadro diz qual prazo é
   await p.evaluate(() => popAnotacao("documentos")); await p.waitForTimeout(150);
   conf("Trouxe documentos: lista de documentos e o toque 'anexei no Drive' com a explicação do nome do PDF", await p.evaluate(() => {
     const m = document.getElementById("modal"); return !!m.querySelector("#pa-docs") && !!m.querySelector("#pa-drive") && /Nome do documento \+ data/.test(m.textContent); }));

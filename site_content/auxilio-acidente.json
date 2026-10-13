@@ -109,14 +109,14 @@
     }
   ],
   "documentos": [
-    "Documento de identidade e CPF",
-    "Comprovantes de vínculos e de recolhimentos ao INSS",
-    "Laudos e relatórios médicos que correlacionem a sequela e a redução de capacidade para a atividade habitual",
-    "Exames de imagem e demais exames complementares que demonstrem a sequela",
-    "Documentos do acidente (boletim de ocorrência, prontuário, atestados)",
-    "Comunicação de Acidente de Trabalho (CAT), quando houver",
-    "Documentação da empresa, como PGR, LTCAT e PPP, no caso de doença ocupacional",
-    "Comprovante de requerimento e carta de indeferimento ou de cessação do INSS (se houver)"
+    "RG, CNH ou CIN",
+    "CPF",
+    "CAT (Comunicação de Acidente de Trabalho)",
+    "Boletim de ocorrência",
+    "Laudo descrevendo a sequela permanente",
+    "Exames de imagem e laudos",
+    "Histórico do tratamento após o acidente",
+    "Carteira de Trabalho (CTPS)"
   ],
   "faq": [
     {

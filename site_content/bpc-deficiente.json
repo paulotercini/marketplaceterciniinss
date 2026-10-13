@@ -112,13 +112,14 @@
     }
   ],
   "documentos": [
-    "Documento de identidade e CPF do requerente e dos membros do grupo familiar",
-    "Comprovante de inscrição e atualização no CadÚnico",
+    "RG/CIN e CPF de TODOS da casa",
+    "Certidão de nascimento ou casamento",
     "Comprovante de residência",
-    "Comprovantes de renda de todos os integrantes do grupo familiar",
-    "Laudos, exames, relatórios e prontuários médicos que descrevam o impedimento",
-    "Notas fiscais e receituários de gastos com medicamentos, fraldas e alimentação especial",
-    "Comprovante do requerimento administrativo (DER) e da carta de indeferimento, se houver"
+    "CadÚnico atualizado com CPF de todos",
+    "Comprovante de renda de quem trabalha",
+    "Declaração de renda informal, se houver",
+    "Laudo médico com diagnóstico (CID) e limitações",
+    "Relatório funcional de profissionais de saúde"
   ],
   "faq": [
     {

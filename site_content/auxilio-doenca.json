@@ -113,14 +113,14 @@
     }
   ],
   "documentos": [
-    "Documento de identidade e CPF",
-    "Carteira de trabalho e comprovantes de vínculo ou de recolhimento ao INSS",
-    "Atestados médicos com data, diagnóstico (CID) e período de afastamento",
-    "Exames complementares, laudos e relatórios de especialistas",
-    "Receituários e relatórios de tratamento em curso",
-    "Comprovante de requerimento e carta de indeferimento do INSS (se houver)",
-    "Comunicação de Acidente de Trabalho (CAT), quando se tratar de acidente ou doença ocupacional",
-    "Comprovante de atividade rural (no caso do segurado especial)"
+    "RG, CNH ou CIN",
+    "CPF",
+    "Atestado médico",
+    "Laudo médico detalhado",
+    "Exames que sustentam o diagnóstico",
+    "Carteira de Trabalho (CTPS)",
+    "Se for empregado CLT, peça declaração da empresa com a data de início do afastamento",
+    "CAT (Comunicação de Acidente de Trabalho)"
   ],
   "faq": [
     {

@@ -240,8 +240,8 @@ FIX.colaboradores = [...FIX.colaboradores,
     && mencs.some(x => x.corpo.para_id === MARCOS));
   conf("quem cadastrou não se avisa a si mesmo",
     !mencs.some(x => x.corpo.para_id === EU));
-  conf("a menção pede o seguimento na triagem e leva à ficha (cliente_id)",
-    mencs.every(x => /dar seguimento na triagem/.test(x.corpo.texto)
+  conf("a menção pede que se abra o atendimento e leva à ficha (cliente_id)",   // F220
+    mencs.every(x => /abrir o atendimento/.test(x.corpo.texto)
       && /Ondina/.test(x.corpo.texto) && x.corpo.cliente_id));
 
   // ── 3. benefício conhecido vira pré-caso, nunca caso — e o cadastro

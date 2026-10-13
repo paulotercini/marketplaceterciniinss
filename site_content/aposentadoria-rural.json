@@ -93,14 +93,14 @@
     }
   ],
   "documentos": [
-    "Documento de identidade e CPF",
+    "RG, CNH ou CIN",
+    "CPF",
     "Comprovante de residência",
-    "Extrato do CNIS (Cadastro Nacional de Informações Sociais)",
-    "Autodeclaração rural assinada",
-    "Início de prova material (certidões de casamento e de nascimento dos filhos com profissão de lavrador, bloco de notas do produtor, ITR, título de eleitor com domicílio rural)",
-    "Contratos de arrendamento, parceria ou comodato rural, registrados ou com firma reconhecida",
-    "DAP/CAF, ficha sindical ou de cooperativa e documentos do INCRA, quando houver",
-    "Cartas de indeferimento ou concessão anteriores do INSS"
+    "Carteira de Trabalho (CTPS)",
+    "Contrato de arrendamento, parceria, meação ou comodato rural",
+    "Escritura pública de imóvel rural",
+    "Título de propriedade de imóvel rural",
+    "Título de aforamento"
   ],
   "faq": [
     {

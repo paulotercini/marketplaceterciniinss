@@ -110,14 +110,14 @@
     }
   ],
   "documentos": [
-    "Documento de identidade e CPF",
+    "RG, CNH ou CIN",
+    "CPF",
     "Comprovante de residência",
-    "Extrato do CNIS (Cadastro Nacional de Informações Sociais)",
-    "Carteira de Trabalho (CTPS) e contratos de trabalho",
-    "PPP (Perfil Profissiográfico Previdenciário) de cada empregador",
-    "Laudos técnicos das condições do ambiente de trabalho (LTCAT) e similares",
-    "Contracheques e folhas de ponto, se houve jornada com horas extras habituais",
-    "Cartas de indeferimento ou concessão anteriores do INSS"
+    "Carteira de Trabalho (CTPS)",
+    "Extrato do CNIS atualizado",
+    "PPP (Perfil Profissiográfico Previdenciário)",
+    "Se a empresa fechou, informe seu advogado",
+    "Até 13/10/1996"
   ],
   "faq": [
     {

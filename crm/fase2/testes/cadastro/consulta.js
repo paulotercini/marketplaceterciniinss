@@ -85,7 +85,8 @@ FIX.clientes[1] = { ...FIX.clientes[1], triagem: { atendimento:
     bts.length === 4 && bts.every(b => !b.off));
 
   await p.evaluate(() => { window.__abriu = []; window.open = (u) => { window.__abriu.push(u); return null; }; });
-  await p.evaluate(() => document.querySelector('.painel[data-p="0"].ativo .cad-mini').click());
+  // o primeiro portal do cartão da Consulta (F220: o quadro dos gerados, com o "Anexar o assinado", vem antes)
+  await p.evaluate(() => document.querySelectorAll('.painel[data-p="0"].ativo .cad-cartao')[0].querySelector(".cad-mini").click());
   await p.waitForTimeout(600);
   const abriu = await p.evaluate(() => window.__abriu);
   conf(`o botão abre o portal em aba nova (${JSON.stringify((abriu[0] || "").slice(0, 40))})`,

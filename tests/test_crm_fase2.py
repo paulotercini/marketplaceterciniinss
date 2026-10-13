@@ -1075,3 +1075,63 @@ def test_sync_nao_apaga_telefone_nem_nascimento_do_crm():
     assert (a["telefone"], a["dn"]) == ("16997112233", "08061968")   # CRM vence o vazio
     assert (b["telefone"], b["dn"]) == ("(16) 3242-2908", "01011960") # CRM vence; To Do preenche o vazio
     assert c["telefone"] == "16988887777"                             # CRM vazio: To Do preenche
+
+
+# ── F220 · caso movido no CRM ─────────────────────────────────────────────
+
+def test_caso_movido_no_crm_nao_volta_para_a_lista_antiga():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191", id="a"),
+        t("🌻 INSS", "Beltrano #00000000272", cpf="00000000272", id="b"),
+        t("🌻 INSS", "Ciclana #00000000353", cpf="00000000353", id="c", concluida=True,
+          concluida_em="2026-10-01"),
+    ]))
+    ka, kb, kc = (next(k for k in m["casos"] if k["todo_task_id"] == x) for x in "abc")
+    # a: movido no CRM, To Do ainda na lista antiga; b: o To Do já alcançou;
+    # c: concluído no To Do depois de movido
+    kb["origem_lista"] = "🖥 Conselho de Recursos"
+    movidos = [{"id": ka["id"], "mover_para": "👪 Judicial", "fase": "judicial"},
+               {"id": kb["id"], "mover_para": "🖥 Conselho de Recursos", "fase": "conselho"},
+               {"id": kc["id"], "mover_para": "👪 Judicial", "fase": "judicial"}]
+    limpar = migrar.respeitar_movidos(m, movidos)
+    assert ka["fase"] == "judicial", "o caso voltou para a fase da lista antiga"
+    assert set(limpar) == {kb["id"], kc["id"]}
+    assert kc["fase"] == "encerrado", "a conclusão no To Do deixou de valer"
+
+
+def test_marcas_do_crm_valem_sobre_o_todo():
+    m = migrar.mapear(crm_json([
+        t("👪 Judicial", "Fulana #00000000191", cpf="00000000191", id="a",
+          nb="1234567890", processo="0001234-56.2026.4.03.6314"),
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191", id="b",
+          andamentos=[{"data": "2026-09-20", "inicial": "P", "autor": "Paulo",
+                       "texto": "Protocolo 777777777 requerimento."}]),
+        t("🖥 Conselho de Recursos", "Fulana #00000000191", cpf="00000000191", id="c"),
+    ]))
+    ka, kb, kc = (next(k for k in m["casos"] if k["todo_task_id"] == x) for x in "abc")
+    marcados = [
+        {"id": ka["id"], "arquivados": {"mov:nb:1234567890": {"para": kb["id"]},
+                                        "mov:proc:00012345620264036314": {"para": kc["id"]}}},
+        {"id": kb["id"], "arquivados": {"mov:prot:777777777": {"para": kc["id"]},
+                                        "add:prot:888888888": {"de": "app"}}},
+        {"id": kc["id"], "arquivados": {"fundido": {"para": ka["id"], "em": "2026-10-13T10:00:00"}}},
+    ]
+    assert migrar.aplicar_marcas_do_crm(m, marcados) == 3
+    assert ka["nb"] is None and ka["processo"] is None, "o número levado voltou ao caso de origem"
+    assert kb["protocolos"] == ["888888888"], "o protocolo do CRM foi apagado ou o movido voltou"
+    assert kc["fase"] == "encerrado" and kc["encerrado_em"] == "2026-10-13T10:00:00"
+
+
+def test_ponte_dos_cards_so_conclui_o_que_o_crm_decidiu():
+    import ponte_cards
+    ls = [
+        {"id": "1", "tipo": "aposentadoria_futura", "detalhes": {"todo_task_id": "t1"}, "crm": {"etapa": "caso"}},
+        {"id": "2", "tipo": "aposentadoria_futura", "detalhes": {"todo_task_id": "t2"}, "crm": {"etapa": "arquivado", "motivo": "Faleceu"}},
+        {"id": "3", "tipo": "aposentadoria_futura", "detalhes": {"todo_task_id": "t3"}, "crm": {"etapa": "analisado"}},
+        {"id": "4", "tipo": "aposentadoria_futura", "detalhes": {"todo_task_id": "t4"}, "crm": {"etapa": "caso", "todo_concluido": "2026-10-01"}},
+        {"id": "5", "tipo": "aposentadoria_futura", "detalhes": {}, "crm": {"etapa": "arquivado"}},
+        {"id": "6", "tipo": "outro", "detalhes": {"todo_task_id": "t6"}, "crm": {"etapa": "caso"}},
+    ]
+    assert [l["id"] for l in ponte_cards.cards_para_concluir(ls)] == ["1", "2"]
+    assert ponte_cards.linha_do_card(ls[1], "2026-10-13") == "13.10.2026 (CRM): Card arquivado no CRM: Faleceu."
+    assert ponte_cards.linha_do_card(ls[0], "2026-10-13") == "13.10.2026 (CRM): Card concluído no CRM: virou caso."

@@ -95,14 +95,14 @@
     }
   ],
   "documentos": [
-    "Documento de identidade e CPF",
+    "RG, CNH ou CIN",
+    "CPF",
     "Comprovante de residência",
-    "Extrato do CNIS (Cadastro Nacional de Informações Sociais)",
-    "Carteira de Trabalho (CTPS) e contratos de trabalho",
-    "Laudos, exames e relatórios médicos, inclusive antigos, que indiquem o início da deficiência",
-    "Relatório médico detalhado descrevendo a deficiência e seus efeitos",
-    "Documentos que demonstrem impedimentos no trabalho e na vida diária",
-    "Cartas de indeferimento ou concessão anteriores do INSS"
+    "Carteira de Trabalho (CTPS)",
+    "Extratos do FGTS",
+    "Comprovantes de GPS ou contribuições como autônomo",
+    "DAS do MEI",
+    "Extrato do CNIS atualizado"
   ],
   "faq": [
     {

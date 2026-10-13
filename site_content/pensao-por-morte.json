@@ -112,14 +112,14 @@
     }
   ],
   "documentos": [
-    "Certidão de óbito do segurado",
-    "Documento de identidade e CPF dos dependentes",
-    "Certidão de casamento ou documentos de comprovação da união estável",
-    "Início de prova material da convivência (conta conjunta, IR, plano de saúde, fotografias datadas)",
-    "Certidão de nascimento dos filhos",
-    "Número do CNIS ou extrato de contribuições do falecido",
-    "Documentos médicos, em caso de filho inválido ou com deficiência",
-    "Comprovante do requerimento administrativo (DER) e da carta de indeferimento, se houver"
+    "Certidão de óbito",
+    "RG e CPF do falecido",
+    "Carteira de Trabalho do falecido",
+    "Últimas contribuições ou extrato CNIS do falecido",
+    "RG, CNH ou CIN",
+    "CPF",
+    "Comprovante de residência",
+    "Certidão de casamento"
   ],
   "faq": [
     {

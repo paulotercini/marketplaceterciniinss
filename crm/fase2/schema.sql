@@ -1051,7 +1051,7 @@ alter table colaboradores add column if not exists atende_zap boolean not null d
 alter table colaboradores add column if not exists cargo text;
 alter table colaboradores drop constraint if exists colaboradores_cargo_check;
 alter table colaboradores add constraint colaboradores_cargo_check
-  check (cargo is null or cargo in ('advogado','estagiario','assistente'));
+  check (cargo is null or cargo in ('advogado','estagiario','recepcao','assistente'));   -- F220 · recepção
 -- o quadro dito pelo escritório em 08.08.2026; só preenche quem está vazio,
 -- então mudar depois pela tela de configurações não é desfeito por engano
 update colaboradores set cargo='advogado'   where inicial in ('P','A','M') and cargo is null;

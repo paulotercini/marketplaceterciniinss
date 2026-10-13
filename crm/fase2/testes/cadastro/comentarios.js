@@ -143,6 +143,12 @@ FIX.andamentos.push({ id: AND1, caso_id: CASO1, autor_id: EU2, origem: "app",
   // do + atendimento
   await p.click(".sub-menu .atend-novo");
   await p.waitForTimeout(500);
+  // F220 · o + atendimento abre a tela cheia no Primeiro atendimento; a mesa
+  // das anotações fica na ficha, ao sair do modo atendimento
+  await p.click('button:has-text("Sair do modo atendimento")');
+  await p.waitForTimeout(300);
+  await p.click('.sub-menu button:has-text("Anotações")');
+  await p.waitForSelector("#at-nota");
   conf("os chips PARA estão na anotação do atendimento (3 iniciais)",
     (await p.evaluate(() => document.querySelectorAll(".at-eq").length)) === 3);
   await p.fill("#at-nota", "Separar a certidão rural e ligar avisando do prazo.");
