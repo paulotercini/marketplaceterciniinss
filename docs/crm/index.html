@@ -8564,8 +8564,10 @@ function camposLinkPje(k, grau, lk, num){
   if(JSON.stringify(novo)!==JSON.stringify(m)) campos.pje_links = novo;
   return campos;
 }
-const numDoAndPje = a => (String((a&&a.origem_id)||"").match(/\d{20}/)||[])[0]
-  || soDig((String((a&&a.texto)||"").match(/\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}/)||[])[0]||"");
+function numDoAndPje(a){
+  return (String((a&&a.origem_id)||"").match(/\d{20}/)||[])[0]
+    || soDig((String((a&&a.texto)||"").match(/\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}/)||[])[0]||"");
+}
 // o lado da parte que não é órgão público = o cliente
 function clienteDasPartes(partes){
   const lados = String(partes||"").split(/\s+[Xx]\s+/);

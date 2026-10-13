@@ -30,11 +30,13 @@ function extrair(nome) {
   assert.fail(`não consegui delimitar ${nome}`);
 }
 
-const ctx = { console };
+// F223 · os dois auxiliares de número, como no app
+const ctx = { console, soDig: v => String(v || "").replace(/\D/g, ""),
+  processosDoCaso: k => (Array.isArray(k.processos) && k.processos.length ? k.processos : k.processo ? [{ numero: k.processo }] : []) };
 vm.createContext(ctx);
 for (const f of ["linksPjeDoCaso", "linkPjeDoCaso", "grauDoAndamentoPje",
                  "sistemaDoAndamentoPje", "linkEsajPorNumero",
-                 "linkPjeDoAndamento", "camposLinkPje"])
+                 "linkPjeDoAndamento", "camposLinkPje", "numDoAndPje"])
   vm.runInContext(extrair(f), ctx);
 const { linkPjeDoCaso, grauDoAndamentoPje, linkPjeDoAndamento, camposLinkPje } = ctx;
 
@@ -77,4 +79,16 @@ test("link ausente não escreve nada", () => {
 test("nada a gravar quando já está igual", () => {
   const k = { pje_link: L1, pje_links: { "1º grau": L1 } };
   assert.deepEqual(camposLinkPje(k, "1º grau", L1), {});
+});
+
+test("F223 · caso com dois processos: a novidade de cada um abre os autos dele", () => {
+  const k = { processo: "5002222-11.2026.4.03.6314", pje_links: {},
+    processos: [{ numero: "5002222-11.2026.4.03.6314" }, { numero: "0001111-22.2021.4.03.6314" }] };
+  Object.assign(k, camposLinkPje(k, "1º grau", L1, "5002222-11.2026.4.03.6314"));
+  Object.assign(k, camposLinkPje(k, "1º grau", L2, "0001111-22.2021.4.03.6314"));
+  const and = n => ({ origem_id: `mov:${n}:2024-02-29`, texto: "PJe (1º grau): Remetidos os autos" });
+  assert.equal(linkPjeDoAndamento(and("50022221120264036314"), k), L1);
+  assert.equal(linkPjeDoAndamento(and("00011112220214036314"), k), L2, "o processo antigo abriu os autos do novo");
+  assert.equal(k.pje_links["1º grau"], L1, "a coleta do processo antigo trocou o link do principal");
+  assert.equal(linkPjeDoAndamento(and("00011112220214036314"), { ...k, pje_links: { "1º grau": L1 } }), null);
 });
