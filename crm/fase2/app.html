@@ -4253,7 +4253,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.45</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.46</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18442,7 +18442,8 @@ function dataDireitoDoCard(l){
   if(pref) return {data: pref.data, fonte: "checklist do To Do"};
   for(const a of (d.anotacoes||[]).slice().sort((p, q)=>(q.data||"") < (p.data||"") ? -1 : 1)){
     const m = /(aposent\w*|direito|ped[áa]gio|pontos|regra|idade)[^.;\n]{0,80}?(\d{2}\/\d{2}\/20[1-6]\d|(?:^|[^\d\/])\d{2}\/20[1-6]\d(?!\d))/i.exec(a.texto||"");
-    if(m){ const data = dataFuturaNoTexto(m[2]); if(data) return {data, fonte: `anotação de ${fmt(a.data)}`}; }
+    // a aposentadoria planejada vem depois da anotação; data anterior é outro fato (um benefício que já saiu, por exemplo)
+    if(m){ const data = dataFuturaNoTexto(m[2]); if(data && data > String(a.data||"")) return {data, fonte: `anotação de ${fmt(a.data)}`}; }
   }
   return null;
 }
@@ -18520,7 +18521,7 @@ function cabCard(l, c){
   const pcLig = crm.precaso_id && precasosDe(c).find(p=>p.id===crm.precaso_id);
   return `<div class="card-apos-cab" data-lemb="${l.id}">
     <span class="chip card-etapa et-${et}">${esc(rotEtapaCard(et))}</span>
-    <span class="card-direito">${dd ? `Direito provável em <b>${fmt(dd.data)}</b> <small>(${esc(dd.fonte)})</small>` : `<b>Sem data provável</b> <small>nem no checklist nem nas anotações</small>`}
+    <span class="card-direito">${dd ? `Direito provável ${dd.data < hoje() ? "desde" : "em"} <b>${fmt(dd.data)}</b> <small>(${esc(dd.fonte)})</small>` : `<b>Sem data provável</b> <small>nem no checklist nem nas anotações</small>`}
       <label class="lembrar-caixa">corrigir <input type="date" value="${esc(dd && dd.crm ? dd.data : "")}" onchange="cardDataDireito('${l.id}',this.value)"></label></span>
     <span class="card-acoes">
       ${et!=="caso" ? `<button class="btn-mini" onclick="abrirAtendimentoDoCard('${c.id}','${l.id}')" title="abre o atendimento ligado a este card, na Identificação em tela cheia">${pcLig ? "Continuar o atendimento" : "Abrir atendimento"}</button>` : ""}
@@ -18539,7 +18540,7 @@ function cartaoApos(l){
     <span class="check" style="border-color:var(--verde)"></span>
     <div class="info"><div class="nome">${esc(c.nome)}</div>
       <div class="meta"><span class="chip fase">${esc(l.titulo||"Aposentadoria futura")}</span>
-        <span>${dd ? `direito em <b>${fmt(dd.data)}</b>` : "sem data provável"}</span>
+        <span>${dd ? `direito ${dd.data < hoje() ? "desde" : "em"} <b>${fmt(dd.data)}</b>` : "sem data provável"}</span>
         <span class="chip ${venc?"urg":"neutro"}">${l.proximo_em ? (venc ? "⏰ venceu " : "lembrete ") + fmt(l.proximo_em) : "sem lembrete"}</span></div></div></div>`;
 }
 async function abrirCardApos(cliId){ await abrirFicha(cliId); abaAtiva = 9; repintarFicha(); }
