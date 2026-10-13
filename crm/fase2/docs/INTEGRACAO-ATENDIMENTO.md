@@ -78,13 +78,47 @@ Duas regras de ligação que faltam hoje:
 1. `salvarAnalise` passa a escrever no pré-caso aberto a espécie, o código e a subespécie da análise (`detalhes.servico`), e o id da análise em `etapas.analise`. Com isso o caso gerado herda a espécie que o Paulo decidiu, e não a que a recepção digitou.
 2. O lembrete criado da análise leva a data do melhor cenário e o plano de contribuições (`detalhes.plano`), que viram as linhas do card: "direito em dd/mm/aaaa", "manter o recolhimento como CI até lá", "trazer PPP da empresa X".
 
-## 4. O card do lembrete, uma representação só
+## 4. O card do lembrete é o registro em `lembretes` (decisão de 12.10.2026)
 
-Recomendação: o card é o registro em `lembretes` (tipo `aposentadoria_futura`, origem `precaso`), que já existe e já tem os botões de ida e volta. A tabela `aposentadorias` continua como a régua da data do direito (o Meu Dia e o aviso de 3 meses saem dela), e o card a mostra. Os casos em fase `aposentadoria_futura` ficam como legado: nenhum caso novo nasce nessa fase; a lista "Aposentadorias futuras" da lateral passa a listar os lembretes, e os casos antigos dessa fase vão para a mesma lista até virarem casos de verdade. Sem isso o colaborador continua sem saber se o cliente está em um caso, em um lembrete ou nos dois.
+### 4.1 O acervo, medido no banco em 12.10.2026
 
-O card mostra, na aba Lembretes e no Meu Dia, o nome, a espécie, a data do direito, a data do aviso, o responsável, o que fazer até lá (plano da análise e documentos pedidos pendentes) e três botões: "Gerar o caso" (já existe), "Reabrir a análise" (abre a Análise de Direito na análise registrada, `_adSel`) e "Mensagem ao cliente" (modelo já existe, `msgLembrete`).
+| Medida | Valor |
+|---|---|
+| Lembretes de aposentadoria futura | **455**, dos quais **404 ativos**, em 448 clientes; todos vieram do To Do (`detalhes.todo_task_id`), nenhum criado no CRM |
+| Vencidos (próximo contato no passado) | 22 ativos, o mais antigo com data de 29/01/2024 |
+| A vencer em 90 dias | 42 |
+| Entre 90 dias e um ano | 56 |
+| Além de um ano | 278 (a data mais distante é 01/03/2047); 6 sem data |
+| Responsável definido | nenhum |
+| Anotações do To Do | todos os ativos as têm, em média 5 por card |
+| Benefício no título | "Aposentadoria futura" genérico 191; tempo de contribuição 89; idade 60; acerto de CNIS 37; incapacidade temporária 24; especial 16; BPC 14; rural 12; revisão 8; pensão 2 |
+| Cruzamento com o CRM | 0 clientes com Análise de Direito, 1 com pré-caso, 2 com dossiê, 24 com caso ativo em outra lista |
+| Casos da antiga lista 🙏 Aposentadorias Futuras | 421, **todos encerrados** pela sincronização (o lembrete carrega a obrigação); a fase `aposentadoria_futura` não tem caso aberto, e a lista lateral "Aposentadorias futuras", que conta casos dessa fase, mostra zero |
+| Tabela `aposentadorias` (a régua do direito e o aviso de 3 meses) | 5 linhas |
 
-Alternativa, caso o Paulo prefira: o card ser um caso em fase `aposentadoria_futura`, com as etapas que a fase já tem. Vantagem: andamentos, tarefas, anexos e etapas sem código novo, e "virar caso" é mudar a fase. Desvantagem: contraria a regra da casa de que o caso nasce com a procuração assinada, e mantém dois mundos (lembretes e casos) para a mesma coisa. Por isso a recomendação é o lembrete.
+O acervo, portanto, já é a tabela `lembretes`, e está invisível como lista: cada card só aparece dentro da ficha, na aba Lembretes, ou no Meu Dia quando vence. Nenhum deles passou pela Análise de Direito.
+
+### 4.2 O sincronismo com o To Do, a regra que não pode ser quebrada
+
+A rodada `crm-sync.yml` (duas vezes por hora, `crm/sync_todo.py` e `crm/fase2/migrar.py`) lê a lista 🙏 Aposentadorias Futuras do To Do e grava um lembrete por tarefa, com id determinístico (`uid("lembrete", task_id)`), `titulo` = benefício, `proximo_em` = data de conclusão da tarefa, `ativo` = tarefa não concluída e `detalhes = {todo_task_id, beneficio, anotacoes[]}`. O merge é não destrutivo em `titulo`, `proximo_em`, `intervalo_meses`, `responsavel_id` e `ativo` (o que o CRM editou vence; só a conclusão no To Do desliga o card), mas **`detalhes` é substituído inteiro a cada rodada**, porque o upsert manda a coluna completa. O sentido inverso, banco → To Do (`escrever_todo.py`), está desligado por padrão.
+
+Consequências para o projeto:
+
+1. Tudo o que o CRM gravar no card tem de ficar fora de `detalhes`. A proposta é uma coluna nova, `lembretes.crm jsonb` (`{etapa, data_direito, analise_id, precaso_id, plano, documentos}`), que a sincronização não envia e, por isso, preserva. Nenhuma linha do `migrar.py` muda.
+2. O card continua nascendo do To Do enquanto a equipe usar a lista; o CRM passa a enriquecê-lo. Card criado no CRM (desfecho da análise) não tem `todo_task_id` e a sincronização não o toca.
+3. Quando o card vira caso, o CRM desliga o lembrete (`ativo=false`, que o merge respeita) e a tarefa do To Do deve ser concluída à mão, ou pelo `escrever_todo.py` se for ligado. É a única ponte de volta que falta decidir.
+
+### 4.3 As etapas do card
+
+| Etapa | Entra quando | O que o card mostra | Sai quando |
+|---|---|---|---|
+| 1. Monitorando | nasce do To Do ou do desfecho da análise | benefício, próximo contato, anotações, botões de aviso e WhatsApp (já existem) | o colaborador abre o atendimento pelo card |
+| 2. Em atendimento | "Abrir atendimento" no card cria o pré-caso ligado (`crm.precaso_id`) e leva à Identificação | o passo em que o atendimento está e quem está com ele | a Análise de Direito é registrada |
+| 3. Analisado | `salvarAnalise` grava `crm.analise_id` e `crm.data_direito` (melhor cenário ou quadro Idade) e cria ou atualiza a linha de `aposentadorias` com `lembrar_em` = 3 meses antes | "direito em dd/mm/aaaa", o plano (contribuições a manter) e o que falta de documento | a data do aviso chega |
+| 4. Pronto para protocolar | `lembrar_em` ≤ hoje (o Meu Dia já lista isso por `itensApos`) | o aviso, os documentos pendentes e o botão "Gerar o caso" | o caso nasce (`gerarCasoDoLembrete`) e o lembrete se desliga |
+| Arquivado | sem direito, desistência ou cliente que não voltou | o motivo | nunca; fica no histórico |
+
+As etapas vivem em `lembretes.crm.etapa`; a lista lateral "Aposentadorias futuras" passa a listar os lembretes ativos agrupados por etapa, em vez dos casos da fase vazia, e o Meu Dia ganha "cards vencidos" (22 hoje) e "a vencer em 90 dias" (42 hoje) como filas.
 
 ## 5. Documentos em quadros
 
@@ -119,19 +153,24 @@ A mesa antiga das Anotações (passos b1 a b4, `mesaAberta`) e o modo atendiment
 
 ## 8. O que depende do Paulo
 
-1. O card do lembrete é o registro em `lembretes` (recomendado) ou um caso em fase `aposentadoria_futura`.
+1. Decidido em 12.10.2026: o card do lembrete é o registro em `lembretes`.
 2. O caso continua nascendo só com procuração e contrato gerados, ou a Análise de Direito pode criá-lo antes, com a assinatura como pendência.
 3. "Arquivar" como terceira saída, com motivo, ou só lembrete e caso.
 4. O documento gerado fica guardado como a folha impressa (HTML) ou é obrigatório PDF desde já.
 5. O quadro "Para o cliente providenciar" segue o catálogo do site interno (recomendado) ou a lista do site institucional.
 6. A mesa das Anotações é recolhida quando o pré-caso passa a ter etapas.
+7. Quando o card vira caso, a tarefa do To Do é concluída à mão ou o `escrever_todo.py` passa a ser ligado para isso.
 
 ## 9. Ordem de implementação
 
-| Onda | Entrega | Tamanho |
-|---|---|---|
-| 1 | `etapas` e `desfecho` no pré-caso; "Concluir e passar adiante" nas quatro telas; cabeçalho com quem e quando; `salvarAnalise` devolve espécie e id ao pré-caso | pequena |
-| 2 | quadro "Desfecho" na Análise de Direito e em Documentos, chamando `lembrarApos`, o lembrete de origem `precaso` e `gerarCasoDoPre` | média |
-| 3 | Documentos em seis quadros, com o catálogo filtrado pelos benefícios e cruzado com o dossiê; documentos gerados guardados em `anexos` | média |
-| 4 | card do lembrete unificado, lista lateral e Meu Dia por papel; convivência com os casos antigos da fase | média |
-| 5 | `build_site.py` gera as listas do site institucional a partir do catálogo; mesa antiga recolhida | pequena |
+Começa pelo card, porque é onde o acervo está (404 ativos, nenhum analisado) e porque o card é a porta de entrada do atendimento para quem já é cliente.
+
+| Onda | Entrega | Tamanho | Depende de |
+|---|---|---|---|
+| 1 | `lembretes.crm` (schema), o card com etapas na aba Lembretes, a lista lateral "Aposentadorias futuras" lendo `lembretes`, as filas do Meu Dia (vencidos e 90 dias) e o botão "Abrir atendimento", que cria o pré-caso ligado ao card | média | nada; a sincronização continua igual |
+| 2 | `etapas` e `desfecho` no pré-caso; "Concluir e passar adiante" nas quatro telas; cabeçalho com quem e quando; `salvarAnalise` devolve espécie, análise e data do direito ao pré-caso e ao card (`crm.analise_id`, `crm.data_direito`, linha de `aposentadorias`) | média | onda 1 |
+| 3 | quadro "Desfecho" na Análise de Direito e em Documentos: lembrete (card novo ou etapa 3 do card existente), caso (`gerarCasoDoPre`, desligando o card) ou arquivamento | média | onda 2 |
+| 4 | Documentos em seis quadros, catálogo filtrado pelos benefícios e cruzado com o dossiê, documentos gerados guardados em `anexos` | média | onda 2 |
+| 5 | `build_site.py` gera as listas do site institucional a partir do catálogo; mesa antiga recolhida; decisão sobre a ponte de volta ao To Do (`escrever_todo.py`) | pequena | ondas 3 e 4 |
+
+Piloto da onda 1: os 42 cards que vencem em 90 dias, que são os que precisam de análise primeiro.
