@@ -37,6 +37,12 @@ jobs:
         with:
           node-version: "22"
 
+      # o f219 confere o catálogo pelo pytest (tests/test_docs_catalogo.py)
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pytest
+
       # o Chromium do Playwright são ~150 MB por rodada; a chave é a versão
       # travada no package.json, então ele só volta a baixar quando a versão
       # do Playwright muda
