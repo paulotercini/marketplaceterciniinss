@@ -3639,6 +3639,23 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .pa-passo i{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid #CFCDC6;display:grid;place-items:center;font-style:normal;font-size:12px;color:var(--pa-c2)}
 .pa-passo span{display:flex;flex-direction:column}.pa-passo b{font-size:13.5px;font-weight:600;color:#121212}.pa-passo small{font-size:11.5px;color:var(--pa-c2)}
 .pa-passo.cur{border-bottom-color:var(--pa-t)}.pa-passo.cur i{background:var(--pa-t);border-color:var(--pa-t);color:#fff}
+/* F219 · passo concluído, Concluir esta etapa, Desfecho e os quadros de Documentos */
+.pa-passo.feita{border-bottom-color:#1B6E38}.pa-passo.feita i{background:#EAF3EC;border-color:#1B6E38;color:#1B6E38}
+.pa-passo.feita.cur i{background:#1B6E38;color:#fff}
+.atend-concluir{background:#0E5C58;color:#fff;border-color:#0E5C58;transition:transform 160ms ease-out}.atend-concluir:active{transform:scale(.97)}
+.desf{border-left:3px solid #0E5C58}.desf-base{margin:6px 0 10px;font-size:14px}.desf-acoes{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.desf-acoes .adr-bt[disabled]{opacity:.45;cursor:not-allowed}
+.doc-quadros{display:grid;gap:12px}
+.doc-quadro{background:#fff;border:1px solid #E7E6E1;border-radius:10px;padding:12px 14px}
+.doc-quadro .desf{border:0;border-left:3px solid #0E5C58;padding:0 0 0 10px;margin:0}
+.doc-lista{max-height:42vh;max-height:42dvh;overflow:auto}
+.doc-it{display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:3px 0;cursor:pointer}.doc-it input{margin-top:3px}
+.doc-quem{color:#686660}.doc-neg{color:#8F5400}.doc-ja{color:#1B6E38}
+.doc-temos{margin:4px 0 0;padding-left:18px;font-size:13px}.doc-temos li{margin:3px 0}.doc-temos .arq-abrir{margin-left:6px}
+.doc-escr{margin-top:10px;font-size:13px;border-top:1px dashed #E7E6E1;padding-top:8px}.doc-escr ul{margin:4px 0 0;padding-left:18px}
+.doc-guia{border-top:1px dashed #E7E6E1;padding:8px 0}.doc-guia:first-of-type{border-top:0}
+.doc-catalogo summary{cursor:pointer;font-weight:600;font-size:13px}
+@media (prefers-reduced-motion:reduce){.atend-concluir{transition:none}.atend-concluir:active{transform:none}}
 .pa-passo:first-child{border-bottom-color:#B5D3CF}.pa-passo:first-child i{border-color:var(--pa-t);color:var(--pa-t)}
 .pa-nome-dif{margin:0 0 12px;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--vermelho,#c0392b) 10%,transparent);border:1px solid color-mix(in srgb,var(--vermelho,#c0392b) 35%,transparent);font-size:13px}
 .pa-cab{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px}
@@ -4253,7 +4270,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.46</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.47</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10651,10 +10668,11 @@ function conferirRuaNovo(){
 // F28: cliente novo da recepção avisa os ADVOGADOS — a triagem começa com
 // eles. Mesma escolha de ⚙️ do aviso de caso novo; quem cadastrou não se
 // avisa. A menção nasce sem caso (ainda não existe), presa ao cliente.
-async function avisarClienteNovo(cliId){
+// F219 · o mesmo aviso serve ao passo seguinte do atendimento (texto próprio)
+async function avisarClienteNovo(cliId, textoDado){
   const c=D.cliPorId.get(cliId);
   const alvos=quemAvisaClienteNovo().filter(x=>x.id!==eu.id);
-  const texto=`Cliente novo na recepção: ${(c&&c.nome)||"cliente"} — dar seguimento na triagem`;
+  const texto=textoDado||`Cliente novo na recepção: ${(c&&c.nome)||"cliente"} — dar seguimento na triagem`;
   for(const co of alvos)
     await api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({de_id:eu.id, para_id:co.id, cliente_id:cliId, texto})})
@@ -14817,7 +14835,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     ${(cd==="anotacoes"||cd==="direito") && (!ks.some(k=>k.fase!=="encerrado") || ks.some(k=>k.fase==="escritorio") || pcsVivos.length>0)
       ? barraEscritorio(c) : ""}
     ${cd==="triagem" ? painelTriagemFicha(c, ks) : ""}
-    ${cd==="documentos" ? caixaDocumentos(c, ks) + catalogoNoCadastro(c, ks) + painelConsulta(c) : ""}
+    ${cd==="documentos" ? painelDocumentosAtend(c, ks) : ""}
     ${cd==="anotacoes" ? caixaAtendimento(c, ks) : ""}
     ${cd==="mensagens" ? painelMensagensFicha(c, ks, evs) : ""}
     ${cd==="pa" ? painelPA(c, ks) : ""}
@@ -14921,7 +14939,12 @@ let subAnot = ler("crm_subanot") || "atendimento";
 function cabecalhoAtendimento(c, cd, vis){
   const cr = ((D._ficha||{}).creds||[]).find(x=>x.tipo==="meu_inss"), dn = dnIso(c.dn), tel = String(c.telefone||"").replace(/\D/g,"");
   const zap = (D.zapFicha||[]).length ? `verZapCliente('${c.id}')` : tel ? `window.open('https://wa.me/55${tel}','_blank','noopener')` : "";
-  const passo = (n, v, rot, sub) => vis[v]===false ? "" : `<button type="button" class="pa-passo${cd===v?" cur":""}" ${cd===v?'aria-current="step"':""} onclick="irSubCad('${v}')"><i>${n}</i><span><b>${rot}</b><small>${esc(sub)}</small></span></button>`;
+  // F219 · o passo fechado mostra quem fechou e quando (precaso.etapas); o botão conclui o passo aberto
+  const pc = preCasoAberto(c), et = (pc && pc.etapas) || {};
+  const feita = v => et[ETAPA_DE[v]];
+  const quemFez = e => { const co = D.colPorId.get(e.quem); return `✔ ${co ? co.nome.split(" ")[0] : "concluída"}, ${fmt(e.em)}`; };
+  const passo = (n, v, rot, sub) => vis[v]===false ? "" : `<button type="button" class="pa-passo${cd===v?" cur":""}${feita(v)?" feita":""}" ${cd===v?'aria-current="step"':""} onclick="irSubCad('${v}')"><i>${feita(v)?"✔":n}</i><span><b>${rot}</b><small>${esc(feita(v) ? quemFez(feita(v)) : sub)}</small></span></button>`;
+  const concluir = pc && ETAPA_DE[cd] && !feita(cd) ? `<button type="button" class="btn-mini atend-concluir" onclick="concluirEtapa('${c.id}','${cd}')" title="grava quem concluiu e quando, avisa quem vem depois e abre o passo seguinte">Concluir esta etapa →</button>` : "";
   return `<div class="atend-cab">
     <span class="avatar" style="--av:${corDoNome(c.nome)}">${esc((c.nome||"?")[0])}</span>
     <div class="atend-id"><div><b class="atend-nome">${esc(c.nome||"")}</b> <span class="atend-chip">Modo atendimento</span></div>
@@ -14929,6 +14952,7 @@ function cabecalhoAtendimento(c, cd, vis){
         ${dn ? `· ${esc(fmt(dn))}, ${idadeDe(c.dn)} anos` : ""} ${c.telefone ? `· ${esc(c.telefone)}` : ""}
         <span class="meio-sub">${cr ? `· Meu INSS com senha guardada <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button><button class="olho" title="ver (fica registrado)" onclick="verCred('${cr.id}')">👁</button>` : "· Meu INSS sem senha"}</span></div></div>
     <span class="atend-acoes">${zap ? `<button type="button" class="btn-mini" onclick="${zap}" title="${(D.zapFicha||[]).length ? "ler o histórico do WhatsApp" : "abrir o WhatsApp"}">WhatsApp</button>` : ""}
+      ${concluir}
       <button type="button" class="btn-mini" onclick="sairModoAtendimento('${c.id}')">Sair do modo atendimento</button></span>
   </div>
   <nav class="pa-passos atend-passos" aria-label="Passos do atendimento">
@@ -14940,17 +14964,19 @@ const _atendAberto = new Set();
 const ATEND_SUBS = new Set(["pa","mapa","direito","documentos"]);
 // fechar a tela de atendimento: o que foi escrito na Análise de Direito é registrado antes
 async function sairModoAtendimento(cliId){
-  const ctx = document.getElementById("ad-contexto");
-  if(ctx){
-    const cen = [...document.querySelectorAll("#ad-cens .ad-row")].some(r=>[...r.querySelectorAll("input,select,textarea")].some(e=>e.type!=="radio" && String(e.value||"").trim()));
-    const det = Object.keys(adColherDetalhes()).some(k=>k!=="servico");
-    if(ctx.value.trim() || cen || det){
-      const d = document.getElementById("ad-data"); if(d && !d.value) d.value = hoje();
-      await salvarAnalise(cliId);
-    }
-  }
+  await salvarAnaliseSePreenchida(cliId);
   _atendAberto.delete(cliId);
   irSubCad("identificacao");
+}
+// F219 · o formulário da Análise de Direito com algo escrito é registrado antes de sair ou de concluir o passo
+async function salvarAnaliseSePreenchida(cliId){
+  const ctx = document.getElementById("ad-contexto"); if(!ctx) return;
+  const cen = [...document.querySelectorAll("#ad-cens .ad-row")].some(r=>[...r.querySelectorAll("input,select,textarea")].some(e=>e.type!=="radio" && String(e.value||"").trim()));
+  const det = Object.keys(adColherDetalhes()).some(k=>k!=="servico");
+  if(ctx.value.trim() || cen || det){
+    const d = document.getElementById("ad-data"); if(d && !d.value) d.value = hoje();
+    await salvarAnalise(cliId);
+  }
 }
 function irSubCad(qual){
   if(qual==="atendimento") qual="anotacoes";   // nome antigo do trilho interno
@@ -18419,8 +18445,13 @@ async function marcarDesemprego(cliId, ligado){
 // análise ligados, motivo do arquivamento. A data provável vem, nesta
 // ordem, do que o CRM gravou, do checklist do To Do e da anotação mais
 // recente que fala em aposentar numa data.
-const APOS_ETAPAS = [["monitorando","Monitorando"],["atendimento","Em atendimento"],["analisado","Analisado"],["pronto","Pronto para protocolar"],["caso","Virou caso"],["arquivado","Arquivado"]];
-const APOS_MOTIVOS = ["Sem direito","Desistiu","Não voltou","Já aposentado","Outro"];
+// F219 · os marcos da base (base-aposentadoria-futura-pipeline): D-90 avisa (aposentadorias.lembrar_em),
+// D-60 pede documentos (lembretes.proximo_em → etapa Documentação) e D-0 protocola (Pronto só com a
+// data do direito alcançada). "Faleceu" manda avaliar a pensão aos dependentes.
+const APOS_ETAPAS = [["monitorando","Monitorando"],["atendimento","Em atendimento"],["analisado","Analisado"],["documentacao","Documentação"],["pronto","Pronto para protocolar"],["caso","Virou caso"],["arquivado","Arquivado"]];
+const APOS_MOTIVOS = ["Sem direito","Desistiu","Não voltou","Já aposentado","Faleceu","Outro"];
+const DIAS_DOCUMENTACAO = 60;
+const avisoDocs = data => diaUtilAntes(maisDiasISO(data, -DIAS_DOCUMENTACAO));
 const cardCrm = l => (l && l.crm && typeof l.crm==="object") ? l.crm : {};
 const ehCardApos = l => !!l && l.tipo==="aposentadoria_futura";
 const cardsApos = () => (D.lembretes||[]).filter(l=>ehCardApos(l) && l.ativo!==false);
@@ -18448,10 +18479,16 @@ function dataDireitoDoCard(l){
   return null;
 }
 function etapaDoCard(l){
-  const crm = cardCrm(l); if(crm.etapa) return crm.etapa;
+  const crm = cardCrm(l), e = crm.etapa;
+  if(e && !["monitorando","analisado","documentacao","pronto"].includes(e)) return e;   // atendimento, caso e arquivado são gravados
+  // F219 · as etapas de data são derivadas: Pronto só com o direito alcançado (D-0), Documentação quando o lembrete venceu (D-60)
+  const dd = dataDireitoDoCard(l), h = hoje();
+  if(dd && dd.data <= h) return "pronto";
+  if(l.proximo_em && l.proximo_em <= h) return "documentacao";
+  if(e) return e;
   if(crm.analise_id) return "analisado";
   if(crm.precaso_id) return "atendimento";
-  return l.proximo_em && l.proximo_em <= hoje() ? "pronto" : "monitorando";
+  return "monitorando";
 }
 function horizonteDoCard(l){
   const h = hoje(), p = l.proximo_em; if(!p) return "sem";
@@ -18474,7 +18511,7 @@ async function arquivarCard(lid, motivo){
   if(!motivo) return;
   if(!await cardGravar(lid, c=>{ c.etapa = "arquivado"; c.motivo = motivo; c.em = hoje(); c.quem = eu.id; }, {ativo:false})) return;
   D.lembretes = (D.lembretes||[]).filter(l=>l.ativo!==false);
-  aviso(`Card arquivado: ${motivo}`, false);
+  aviso(motivo==="Faleceu" ? "Card arquivado: faleceu — avalie a pensão por morte aos dependentes" : `Card arquivado: ${motivo}`, motivo==="Faleceu");
   montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto); else render();
 }
 // o atendimento nasce do card: o pré-caso fica ligado a ele e a ficha abre na Identificação, em tela cheia
@@ -19291,6 +19328,16 @@ async function salvarAnalise(cliId){
   const dd=detalhes.data_direito;
   if(dd && dd>hoje() && !(D.apos||[]).some(x=>x.cliente_id===cliId && x.data===dd))
     await avisarCenario(cliId, dd, (detalhes.servico||{}).nome||"Aposentadoria");
+  // F219 · a análise devolve ao pré-caso aberto a espécie decidida e a etapa, e ao card ligado a data do direito
+  const cA=D.cliPorId.get(cliId), pcA=cA && preCasoAberto(cA);
+  if(a && pcA){
+    const sv=detalhes.servico;
+    await mudarPreCasoCampos(cliId, pcA.id, p=>{
+      if(sv){ p.especie=sv.nome; p.cod=sv.cod; p.sub=sv.sub && sv.sub!==sv.cod ? sv.sub : null; }
+      p.etapas={...(p.etapas||{}), analise:{em:hoje(), quem:eu.id, analise_id:a.id}};
+    });
+    if(pcA.lembrete_id) await cardDaAnalise(cliId, pcA.lembrete_id, a, baseDesfecho(cA, a));
+  }
   aviso("⚖️ Análise registrada", false);
   montarSidebar(); abrirFicha(cliId);
 }
@@ -19716,7 +19763,7 @@ function painelDireito(c){
       ${cnisDe(c)&&cnisDe(c).caminho?`<button type="button" class="tl-bt" onclick="abrirCnis('${c.id}')" title="abre o extrato guardado em outra aba (CNIS de ${esc(fmt(cnisDe(c).em))})">Abrir CNIS</button>`
         :`<button type="button" class="tl-bt tl-falta" onclick="irSubCad('identificacao')" title="o CNIS ainda não foi inserido: insira na Identificação">Inserir CNIS</button>`}</span>
     </div>
-    <div class="adx-grade"><div class="adx-main">${exploracaoDireito(c, ks)}${modulosDireito(c)}${caixaConsideracoes(c)}</div>
+    <div class="adx-grade"><div class="adx-main">${exploracaoDireito(c, ks)}${modulosDireito(c)}${caixaConsideracoes(c)}${quadroDesfecho(c)}</div>
       <aside class="adx-lado">${listaConsideracoes(c)}${painelTrabalhos(c, ks)}</aside></div>
     ${resumoDireito(c, ult)}
     ${datas}
@@ -22151,7 +22198,8 @@ const tamArq = n => n==null ? "" : n>=1048576 ? (n/1048576).toFixed(1).replace("
 // originais e o PACOTE PARA O CLAUDE, um .md único com o texto de tudo.
 // ══════════════════════════════════════════════════════════════════════════
 const ORIGEM_DOC = { pje:"Judicial · PJe", eproc:"Judicial · eproc", esaj:"Judicial · e-SAJ",
-                     pat:"INSS", crps:"Recurso (CRPS)", escritorio:"Escritório", dossie:"Dossiê do cliente" };
+                     pat:"INSS", crps:"Recurso (CRPS)", escritorio:"Escritório", dossie:"Dossiê do cliente",
+                     gerado:"Gerado pelo escritório", assinado:"Assinado pelo cliente" };   // F219
 // todos os documentos do caso, num formato só: {nome, caminho, tipo, tamanho,
 // texto, data, origem, id?} — id existe para os de `anexos`; o acórdão do
 // CRPS mora em casos.crps e abre pelo caminho
@@ -30778,7 +30826,12 @@ function folhaDoc(d, c){
 function janelaImpressao(titulo, folhas){
   const w=window.open("","_blank");
   if(!w) return aviso("O navegador bloqueou a janela — libere os pop-ups deste site");
-  w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+  w.document.write(htmlImpressao(titulo, folhas));
+  w.document.close();
+}
+// F219 · a página impressa é também o que fica guardado em anexos (origem 'gerado')
+function htmlImpressao(titulo, folhas){
+  return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
   <title>${esc(titulo)}</title><style>
     /* F11 — o padrão do escritório, e não o do navegador: Bookman Old Style
        12, espaçamento 1,5. Georgia fica de reserva para quem abrir num
@@ -30809,8 +30862,7 @@ function janelaImpressao(titulo, folhas){
       section{width:auto;min-height:0;margin:0;padding:0;box-shadow:none}
       @page{size:A4;margin:20mm 18mm} }
   </style></head><body>${folhas}
-  <script>window.print()<\/script></body></html>`);
-  w.document.close();
+  <script>window.print()<\/script></body></html>`;
 }
 // F11 · NADA SAI COM LACUNA SEM ALGUÉM SABER
 // Antes, faltando RG e endereço, a procuração imprimia com a linha em branco
@@ -30856,9 +30908,45 @@ function imprimirDocsEscritorio(cliId, chaves, falta){
   const esp=especieDoContrato(c, ks);
   const docs=(chaves||[]).map(ch=>corpoDoDoc(ch, c, esp)).filter(Boolean);
   if(!docs.length) return;
-  janelaImpressao(docs.length===1 ? `${docs[0].rot} — ${c.nome}` : `Documentos — ${c.nome}`,
-                  docs.map(d=>folhaDoc(d, c)).join(""));
+  const titulo=docs.length===1 ? `${docs[0].rot} — ${c.nome}` : `Documentos — ${c.nome}`, folhas=docs.map(d=>folhaDoc(d, c)).join("");
+  janelaImpressao(titulo, folhas);
   registrarDocGerado(cliId, docs.map(d=>d.rot), falta);
+  guardarDocGerado(cliId, docs.map(d=>d.rot), htmlImpressao(titulo, folhas), falta);
+}
+// F219 · a folha exata que saiu (com as lacunas que saíram em branco) fica no bucket
+// privado, em gerados/<cliente>/, e numa linha de anexos presa ao cliente e ao caso
+// quando ele existe — meses depois se reimprime o mesmo texto
+async function guardarDocGerado(cliId, rots, html, falta){
+  const k=(casoSel&&D.casoPorId.get(casoSel))||(D.casosDoCliente.get(cliId)||[]).find(x=>x.fase!=="encerrado");
+  const stamp=new Date().toISOString().replace(/[:.]/g,"-").toLowerCase();
+  const caminho=`gerados/${cliId}/${hoje()}-${nomeSeguro(rots.join("-")).slice(0,60)}-${stamp.slice(11,19)}.html`;
+  const blob=new Blob([html],{type:"text/html"});
+  try{
+    await subirArquivo(caminho, blob);
+    const [an]=await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:k?k.id:null, cliente_id:cliId, autor_id:eu.id, origem:"gerado",
+        nome:`Gerado · ${rots.join("; ")}${(falta||[]).length?` (lacunas: ${falta.join(", ")})`:""}`, caminho, tipo:"text/html", tamanho:blob.size})});
+    if(an) (D.anexos=D.anexos||[]).unshift(an);
+    repintarFicha();
+  }catch(e){ aviso("Imprimiu, mas a cópia não ficou guardada em Documentos — tente de novo"); }
+}
+// o PDF assinado entra pelo mesmo caminho, com origem 'assinado'
+async function anexarAssinado(cliId, inpId){
+  const inp=document.getElementById(inpId), arq=inp&&inp.files&&inp.files[0]; if(!arq) return;
+  inp.value="";
+  if(arq.size > MAX_ARQ) return aviso("Arquivo grande demais (máximo 20 MB)");
+  const k=(casoSel&&D.casoPorId.get(casoSel))||(D.casosDoCliente.get(cliId)||[]).find(x=>x.fase!=="encerrado");
+  const caminho=`assinados/${cliId}/${hoje()}-${nomeSeguro(arq.name)}`;
+  aviso("Enviando o arquivo…", false);
+  try{
+    await subirArquivo(caminho, arq);
+    const [an]=await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:k?k.id:null, cliente_id:cliId, autor_id:eu.id, origem:"assinado",
+        nome:`Assinado · ${arq.name}`, caminho, tipo:arq.type||null, tamanho:arq.size})});
+    if(an) (D.anexos=D.anexos||[]).unshift(an);
+    aviso("📎 Documento assinado guardado");
+    repintarFicha();
+  }catch(e){ aviso("Não consegui enviar o arquivo — tente de novo"); }
 }
 // fica registrado no CRM o que foi impresso para o cliente assinar
 // o andamento passa a dizer TAMBÉM o que estava em branco na hora de gerar.
@@ -30915,6 +31003,325 @@ function docsDaAnalise(c){
     : `pronta, com ${ks.length===1?"o campo":"os "+ks.length+" campos"} que a espécie pede.`}</span>${!sv||falta.length?ir:""}</div>`;
 }
 function docsInformar(cliId){ adAbrir = true; adVisivel.add(cliId); abaAtiva = 0; irSubCad("direito"); }
+
+// ══════════════════════════════════════════════════════════════════════════
+// F219 · A INTEGRAÇÃO DO ATENDIMENTO (ondas 2 a 5 de INTEGRACAO-ATENDIMENTO.md)
+// ══════════════════════════════════════════════════════════════════════════
+// O pré-caso é o atendimento: cada tela do modo atendimento grava nele a etapa
+// que fechou (etapas.<tela> = {em, quem}) e o desfecho (lembrete, caso ou
+// arquivado). A Análise de Direito decide pela base da pesquisa de 12.10.2026:
+// direito hoje ou ato que não espera → caso; data futura → lembrete (card em
+// Lembretes com D-90 em aposentadorias e D-60 em proximo_em); nada → arquivar
+// com motivo. Os Documentos executam em seis quadros.
+const ETAPA_DE = {identificacao:"identificacao", pa:"pa", direito:"analise", documentos:"documentos"};
+// o pré-caso do atendimento em curso: o último vivo (o "Abrir atendimento" do card acrescenta no fim)
+function preCasoAberto(c){
+  const vs = precasosDe(c).filter(p=>!p.so_lembrete && p.especie!==ESPECIE_PAGAMENTOS);
+  return vs[vs.length-1] || null;
+}
+async function mudarPreCasoCampos(cliId, pcId, muda){
+  const c = D.cliPorId.get(cliId); if(!c) return false;
+  return gravarPrecasos(cliId, precasosDe(c).map(p=>{ if(p.id!==pcId) return p; const n = {...p}; muda(n); return n; }));
+}
+// "Concluir esta etapa": grava quem e quando, avisa quem vem depois (o mesmo aviso do cliente novo) e abre o passo seguinte
+async function concluirEtapa(cliId, sub){
+  const c = D.cliPorId.get(cliId), pc = c && preCasoAberto(c), k = ETAPA_DE[sub]; if(!pc || !k) return;
+  if(sub==="direito") await salvarAnaliseSePreenchida(cliId);
+  const extra = sub==="identificacao" ? {faltam: faltaParaDocs(c).length} : sub==="pa" ? {beneficios: benefSel(c)} : {};
+  if(!await mudarPreCasoCampos(cliId, pc.id, p=>{ p.etapas = {...(p.etapas||{}), [k]:{...((p.etapas||{})[k]||{}), ...extra, em:hoje(), quem:eu.id}}; })) return;
+  const rot = Object.fromEntries(SUB_CAD), seq = ["identificacao", (docsDoDossie(cliId).length || cnisDe(c)) ? "pa" : null, "direito", "documentos"].filter(Boolean);
+  const prox = seq[seq.indexOf(sub)+1];
+  await avisarClienteNovo(cliId, `${rot[sub]} concluída no atendimento de ${c.nome}${prox ? ` — próximo passo: ${rot[prox]}` : " — pronto para o desfecho"}`);
+  aviso(`${rot[sub]} concluída ✔`, false);
+  if(prox) irSubCad(prox); else repintarFicha();
+}
+// ── a base da decisão ────────────────────────────────────────────────────
+// ato que não espera (triagem-caso-novo e base-aposentadoria-futura-pipeline): o pedido não tem data futura a esperar
+const DESF_IMEDIATO = {rev:"revisão com decadência correndo", acerto:"acerto de CNIS que precede o requerimento", crps:"recurso ao CRPS em 30 dias",
+  b31:"benefício por incapacidade", b32:"benefício por incapacidade", acid:"benefício por incapacidade", b94:"auxílio-acidente", b36:"auxílio-acidente",
+  morte:"pensão por morte", reclusao:"auxílio-reclusão", urb:"salário-maternidade", rur:"salário-maternidade", def:"BPC", idoso:"BPC"};
+// a data em que a idade exigida pela opção marcada se completa (o "atinge em" do quadro Idade)
+function idadeAtingeEm(c){
+  const dn = dnIso(c.dn), id = idadeDe(c.dn); if(!dn || id==null) return null;
+  const i = sexoDe(c)==="F" ? 1 : 0;
+  const ds = opcoesSel(c).map(o=>IDADE_EXIG[o.o]).filter(Boolean).map(e=>e[i]).filter(ex=>id < ex).map(ex=>somarAnos(dn, ex)).sort();
+  return ds[0] || null;
+}
+function baseDesfecho(c, a){
+  const pc = preCasoAberto(c) || {}, d = (a && a.detalhes) || {}, m = a ? cenMelhor(a) : null, hj = hoje();
+  const data = d.data_direito || (m && m.data) || idadeAtingeEm(c) || null;
+  const fonte = d.data_direito ? `Análise de Direito de ${fmt(a.data_analise)}` : m && m.data ? `melhor cenário${m.regra ? ` (${m.regra})` : ""} da análise de ${fmt(a.data_analise)}` : data ? "quadro Idade da análise" : "";
+  const especie = (d.servico||{}).nome || pc.especie || (opcoesSel(c)[0]||{}).rot || "Aposentadoria futura";
+  const imed = pc.natureza==="revisao" ? DESF_IMEDIATO.rev : pc.natureza==="acerto" ? DESF_IMEDIATO.acerto : (opcoesSel(c).map(o=>DESF_IMEDIATO[o.o]).find(Boolean) || "");
+  const sug = imed ? "caso" : data ? (data <= hj ? "caso" : "lembrete") : "";
+  const motivo = imed ? `${imed}: o ato não espera data futura` : data ? (data <= hj ? `direito desde ${fmt(data)} (${fonte})` : `direito em ${fmt(data)} (${fonte})`) : "sem data de direito nem ato a praticar: complete a análise ou arquive";
+  return {pc, a, data, fonte, especie, imed, sug, motivo};
+}
+// a análise registrada atualiza o card: etapa Analisado, data do direito, aviso D-90 (aposentadorias) e lembrete D-60
+async function cardDaAnalise(cliId, lid, a, b){
+  const extra = {};
+  if(b.data && b.data > hoje()) extra.proximo_em = avisoDocs(b.data);
+  const ok = await cardGravar(lid, x=>{ x.etapa = "analisado"; x.analise_id = a.id; if(b.data){ x.data_direito = b.data; x.data_fonte = b.fonte; } x.em = hoje(); x.quem = eu.id; }, extra);
+  if(ok && b.data && b.data > hoje() && !(D.apos||[]).some(x=>x.cliente_id===cliId && x.data===b.data)) await lembrarApos(cliId, "auto", b.data, b.especie, avisoApos(b.data));
+  return ok;
+}
+// ── o quadro Desfecho (Análise de Direito e Documentos) ──────────────────
+function quadroDesfecho(c){
+  const pc = preCasoAberto(c); if(!pc) return "";
+  const a = analisesDe(c.id)[0] || null, b = baseDesfecho(c, a), lig = pc.lembrete_id;
+  const podeLemb = lig ? !!a : !!(b.data && b.data > hoje());
+  const bt = (sug, rot, on, fn, tit) => `<button type="button" class="adr-bt${b.sug===sug?" adr-primario":""}" ${on?"":"disabled"} onclick="${fn}" title="${esc(tit)}">${rot}</button>`;
+  return `<section class="adx-sec desf" id="desfecho" aria-labelledby="desf-t"><div class="adm-cab"><h3 id="desf-t">Desfecho desta análise</h3>
+      <span class="meio-sub">${a ? `análise de ${fmt(a.data_analise)}` : "nenhuma análise registrada ainda"}</span></div>
+    <p class="desf-base"><b>${b.sug==="caso" ? "Caso" : b.sug==="lembrete" ? "Lembrete" : "Sem desfecho sugerido"}</b> — ${esc(b.motivo)}.</p>
+    ${pc.etapas && pc.etapas.analise ? "" : `<p class="meio-sub">Registre a Análise de Direito: a espécie decidida nela desce ao pré-caso e ao caso.</p>`}
+    <div class="desf-acoes">
+      ${bt("lembrete", lig ? "Atualizar o card" : "Criar o lembrete", podeLemb, `desfechoLembrete('${c.id}')`, lig ? "grava no card a etapa Analisado, a data do direito, o aviso 3 meses antes e o pedido de documentos 60 dias antes" : "card em Lembretes com a data do direito, aviso 3 meses antes e pedido de documentos 60 dias antes")}
+      ${bt("caso", "Gerar o caso", !!pc.especie || !!(a && (a.detalhes||{}).servico), `desfechoCaso('${c.id}')`, "o caso nasce com a espécie da análise; a procuração e o contrato saem em Documentos")}
+      <select class="card-arquivar" aria-label="Arquivar o atendimento" onchange="if(this.value){desfechoArquivar('${c.id}',this.value)}"><option value="">Arquivar…</option>${APOS_MOTIVOS.map(m=>`<option>${m}</option>`).join("")}</select>
+    </div></section>`;
+}
+async function desfechoLembrete(cliId){
+  const c = D.cliPorId.get(cliId), pc = c && preCasoAberto(c); if(!pc) return;
+  const a = analisesDe(cliId)[0] || null, b = baseDesfecho(c, a);
+  if(pc.lembrete_id){
+    if(!a) return aviso("Registre a Análise de Direito primeiro");
+    if(!await cardDaAnalise(cliId, pc.lembrete_id, a, b)) return;
+    await mudarPreCasoCampos(cliId, pc.id, p=>{ p.so_lembrete = true; p.desfecho = {tipo:"lembrete", em:hoje(), quem:eu.id, ref:pc.lembrete_id}; });
+    aviso("Card atualizado: analisado, com a data do direito ✔", false);
+  }else{
+    if(!(b.data && b.data > hoje())) return aviso("Sem data futura do direito: informe a data na análise ou gere o caso");
+    const corpo = {cliente_id:cliId, tipo:"aposentadoria_futura", titulo:b.especie,
+      detalhes:{origem:"precaso", precaso_id:pc.id, beneficio:b.especie, anotacoes:[], plano:((a&&a.detalhes)||{}).plano||[]},
+      proximo_em:avisoDocs(b.data), intervalo_meses:6, criado_por:eu.id, ativo:true,
+      crm:{etapa:"analisado", data_direito:b.data, data_fonte:b.fonte, analise_id:a?a.id:null, precaso_id:pc.id, em:hoje(), quem:eu.id}};
+    let l;
+    try{ [l] = await api(`/rest/v1/lembretes`,{method:"POST",headers:{Prefer:"return=representation"},body:JSON.stringify(corpo)}); }
+    catch(e){ return aviso(/\bcrm\b|42703|PGRST204/.test(String(e.message||e)) ? "Rode o crm/fase2/schema_lembretes_crm.sql no Supabase — falta a coluna 'crm' em lembretes" : "Não consegui criar o lembrete — tente de novo"); }
+    if(!l) return;
+    (D.lembretes = D.lembretes||[]).push(l);
+    if(!(D.apos||[]).some(x=>x.cliente_id===cliId && x.data===b.data)) await lembrarApos(cliId, "auto", b.data, b.especie, avisoApos(b.data));
+    await mudarPreCasoCampos(cliId, pc.id, p=>{ p.so_lembrete = true; p.lembrete_id = l.id; p.desfecho = {tipo:"lembrete", em:hoje(), quem:eu.id, ref:l.id}; });
+    aviso(`Lembrete criado — direito em ${fmt(b.data)}; documentos a partir de ${fmt(avisoDocs(b.data))} ✔`, false);
+  }
+  _atendAberto.delete(cliId); subCad = "identificacao"; guardar("crm_subcad","identificacao"); abaAtiva = 9;
+  montarSidebar(); abrirFicha(cliId);
+}
+async function desfechoCaso(cliId){
+  const c = D.cliPorId.get(cliId), pc = c && preCasoAberto(c); if(!pc) return;
+  const a = analisesDe(cliId)[0], sv = a && (a.detalhes||{}).servico;
+  if(!pc.especie && sv) await mudarPreCasoCampos(cliId, pc.id, p=>{ p.especie = sv.nome; p.cod = sv.cod; p.sub = sv.sub && sv.sub!==sv.cod ? sv.sub : null; });
+  if(pc.lembrete_id) return gerarCasoDoPreECard(cliId, pc.id, pc.lembrete_id);
+  return gerarCasoDoPre(cliId, pc.id);
+}
+// arquivar: o pré-caso sai da mesa para campos.pc_arquivados, com o motivo, e a anotação registra; o card ligado arquiva junto
+async function desfechoArquivar(cliId, motivo){
+  const c = D.cliPorId.get(cliId), pc = c && preCasoAberto(c); if(!pc || !motivo) return;
+  const arq = {...pc, desfecho:{tipo:"arquivado", motivo, em:hoje(), quem:eu.id}};
+  c.campos = {...(c.campos||{}), pc_arquivados:[...((c.campos||{}).pc_arquivados||[]), arq],
+    atendimento:[...((c.campos||{}).atendimento||[]), {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], autor_id:eu.id, precaso_id:pc.id,
+      texto:`Atendimento arquivado: ${motivo}${pc.especie ? ` (${pc.especie})` : ""}.`}]};
+  if(!await gravarPrecasos(cliId, precasosDe(c).filter(p=>p.id!==pc.id))) return;
+  _atendAberto.delete(cliId); subCad = "identificacao"; guardar("crm_subcad","identificacao");
+  if(pc.lembrete_id) return arquivarCard(pc.lembrete_id, motivo);
+  aviso(motivo==="Faleceu" ? "Arquivado: faleceu — avalie a pensão por morte aos dependentes" : `Atendimento arquivado: ${motivo}`, motivo==="Faleceu");
+  montarSidebar(); abrirFicha(cliId);
+}
+// ── Documentos em seis quadros ───────────────────────────────────────────
+// o benefício marcado na análise → o nome do catálogo documentos_beneficio (espelho do site interno)
+const DOC_CAT = {idade:"Apos. por Idade", transicao:"Apos. Tempo de Contribuição", professor:"Apos. do Professor", pcd:"Apos. Tempo — Pessoa com Deficiência",
+  b46:"Apos. Especial", conv:"Apos. Especial", idade_rural:"Rural", hibrida:"Apos. por Idade Híbrida", def:"BPC/LOAS", idoso:"BPC/LOAS — Idoso",
+  morte:"Pensão por Morte", reclusao:"Auxílio-Reclusão", b31:"Aux. Incapacidade Temporária", b32:"Apos. por Incapacidade Permanente",
+  acid:"Aux. Incapacidade Temporária Acidentária (B91)", b94:"Aux. Acidente", b36:"Aux. Acidente", urb:"Salário-Maternidade", rur:"Salário-Maternidade",
+  rev:"Revisão", acerto:"Acerto de CNIS"};
+// Catálogo × dossiê (pesquisa de 12.10.2026). classe: A traz · A? pode trazer · B cadastro · C cliente · C* escritório · N nota.
+// A primeira regra que casa vence; rx roda sobre dsa(linha antes do " — "); tem sobre anexos.nome do dossiê; neg sobre
+// clientes.dossie.<portal>.inexistentes. Linha sem regra fica com o cliente. As regexes "tem" pressupõem o nome que
+// a extensão grava hoje ("<fonte> · <arquivo>", sem acento) e falham se o rótulo mudar.
+const DOC_FONTE = [
+  {rx:/do falecido|do preso|pelo preso|com o preso|de cada dependente|do dependente|de cada filho|de todos|dos moradores|de cada morador|dos parentes|de quem trabalha|anteriores? a prisao|antes da prisao|outro idoso|pcd da familia|do cuidador|\bdecore\b/, classe:"C", quem:"de terceiro: o dossiê é só do CPF do cliente"},
+  {rx:/^rg(,| e |\/| )|^cpf$|^rg$/, classe:"B", tem:c=>!!(civilDe(c).rg && c.cpf)},
+  {rx:/comprovante de residencia/, classe:"B?", quem:"o endereço está na ficha, a conta o cliente traz"},
+  {rx:/biometria/, classe:"C", quem:"o cliente confere no TRE"},
+  {rx:/^se ainda gestante|declaracao (da|de) empresa|declaracao medica|^laudo do medico do trabalho|carta da empresa/, classe:"C"},
+  {rx:/holerite|contracheque|extrato de pagamento de cooperativa|recibos de pagamento/, classe:"C", nota:"o CNIS completo traz as remunerações desde 07/1994"},
+  {rx:/anotacao na ctps/, classe:"C"},
+  {rx:/sorologia|laboratori|goniometria|\bbera\b|acuidade visual|snellen|receit|prescricao|atestado|detran|apae|caps\b|escola|\baee\b|professor|educacional|intervencao precoce|pedagog|historico de quedas|insalubridade|periculosidade|ltcat|ppra|\bpgr\b|pcmso|pcmat|laudos ambientais|sb-40|dss-8030|dirben|dises|\bepi\b|passe livre|cadeira de rodas|fraldas|medicamentos|plano de saude|despesas|avaliacao (do rh|de habilidades)|cota pcd|carteira de vacinacao|cartao da gestante|caderneta/, classe:"C"},
+  {rx:/^laudo medico|^laudo do medico (que acompanha|assistente)|laudo descrevendo|laudo psiquiatrico atualizado/, classe:"C", quem:"médico assistente, no modelo do escritório"},
+  {rx:/auxilio-doenca ativo|numero do beneficio|^salario-maternidade rural/, classe:"A?", tem:/^(Cartas de concessao|Extrato do beneficio|Declaracao · Declaracao de beneficiario)/},
+  {rx:/microficha/, classe:"C*"},
+  {rx:/(^|extrato (do )?|ou extrato )cnis\b/, classe:"A", tem:/^CNIS · /},
+  {rx:/carta de concessao/, classe:"A?", tem:/^Cartas de concessao · /, neg:/^Cartas de concessao/},
+  {rx:/laudos? (de afastamento|do inss)/, classe:"A?", tem:/^Laudos · /, neg:/^Laudos/},
+  {rx:/hiscre|historico de credito/, classe:"A?", tem:/^Extrato de pagamento · /, neg:/^Extrato de pagamento/, nota:"só 12 meses"},
+  {rx:/documentos administrativos do pa|historico completo do afastamento|encaminhamento da pmf|programa de reabilitacao|notificacao de cessacao|termo de exigencia|carta de justificativa|comparecimento ao programa/, classe:"A?", tem:/^(Processos administrativos|Extrato do beneficio) · /, neg:/^Extrato do beneficio/},
+  {rx:/processo administrativo de familiar/, classe:"C", quem:"de terceiro"},
+  {rx:/certificado da pessoa com deficiencia|carteira de identificacao de pessoa com deficiencia/, classe:"A?", tem:/^Declaracao · Certificado da pessoa com deficiencia/, neg:/Certificado da pessoa com deficiencia/},
+  {rx:/\bcat\b|comunicacao de acidente/, classe:"A?", tem:/^CAT · /, neg:/^CAT/},
+  {rx:/\bppp\b|perfil profissiogr|historico de exposicao (ao ruido|ocupacional)/, classe:"A?", tem:/^PPP · /, neg:/^PPP/},
+  {rx:/certidao de tempo de contribuicao|\bctc\b/, classe:"C*", tem:/^CTC · /, neg:/^CTC/, nota:"a do RPPS vem do órgão; o dossiê traz só a que o INSS emitiu"},
+  {rx:/\bdtc\b|declaracao de tempo de contribuicao|justificacao administrativa/, classe:"C*"},
+  {rx:/carteira de trabalho|\bctps\b/, classe:"A?", tem:/^CTPS RAIS CAGED · CTPS /, neg:/^CTPS/, nota:"a física continua para vínculo antigo, jornada e rural"},
+  {rx:/\brais\b/, classe:"A", tem:/^CTPS RAIS CAGED · Extrato RAIS/, neg:/^Extrato RAIS/},
+  {rx:/\bcaged\b/, classe:"A", tem:/^CTPS RAIS CAGED · Extrato CAGED/, neg:/^Extrato CAGED/},
+  {rx:/seguro-desemprego/, classe:"A", tem:/^CTPS RAIS CAGED · Seguro-desemprego/, neg:/^Seguro-desemprego/},
+  {rx:/defeso/, classe:"A?", tem:/^CTPS RAIS CAGED · Seguro-desemprego/, neg:/^Seguro-desemprego/},
+  {rx:/cartao de pis|pis\/pasep/, classe:"C"},
+  {rx:/contrato social|alteracao contratual|ccmei|certificado de microempreendedor|atividade de socio|\bcnpj\b/, classe:"A?", tem:/^CNPJ · /, neg:/^CNPJ/, nota:"prova o vínculo e a situação; o contrato social em si o cliente traz"},
+  {rx:/\bgps\b|carne|darf|das do mei|contribuicoes como autonomo|ultimas contribuicoes|comprovantes? (das ultimas|de recolhimento|de contribuicao|original)/, classe:"A?", tem:/^CNIS · CNIS completo/, nota:"pedir a guia só da competência que falta no CNIS"},
+  {rx:/ressonancia|\brm\b/, classe:"A?", tem:/^HC Ribeirao\/Exames · .*RESSON/i, neg:/exame de imagem ainda sem laudo|em processamento no HC/},
+  {rx:/radiografia|raio[ -]?x/, classe:"A?", tem:/^HC Ribeirao\/Exames · .*(RADIOGRAF|\bRX\b|RAIO)/i},
+  {rx:/tomografia|\boct\b/, classe:"A?", tem:/^HC Ribeirao\/Exames · .*TOMOGRAF/i},
+  {rx:/eletroneuromiografia|\benmg\b/, classe:"A?", tem:/^HC Ribeirao\/Exames · .*NEUROMIOGRAF/i},
+  {rx:/audiometria|imitanciometria/, classe:"A?", tem:/^HC Ribeirao\/Exames · .*(AUDIOMETR|IMITANCIOMETR)/i},
+  {rx:/campimetria|retinografia|angio/, classe:"A?", tem:/^HC Ribeirao\/Exames · .*(CAMPIMETR|RETINOGRAF|ANGIO)/i},
+  {rx:/ultrassom/, classe:"A?", tem:/^HC Ribeirao\/Exames · .*ULTRA/i},
+  {rx:/exames? (de imagem|que|de apoio|comprobat|complement)/, classe:"A?", tem:/^HC Ribeirao\/Exames · /},
+  {rx:/internac|prontuario|historico (de internacoes|do tratamento|de tratamentos)|atendimentos de emergencia/, classe:"A?", tem:/^HC Ribeirao\/(Internacoes|Relatorios) · /},
+  {rx:/relatorio|laudo|avaliacao (neuropsicologica|multidisciplinar|de fisiatra)/, classe:"A?", tem:/^HC Ribeirao\/Relatorios · /},
+  {rx:/hisben|historico de pagamentos|conbas|memorial de calculo|calculo independente|historico de remuneracoes no pa|salarios-de-contribuicao anteriores|conversao para urv|gfip|esocial/, classe:"C*"},
+  {rx:/^(atencao|ate 13\/10|de 14\/10|a partir de|coluna|joelho|ombro|auditiva|visual|intelectual\/mental\/autismo|conjuge|companheiro\(a\)|filhos|filho inv|pais \(classe|irmao inv|ecs 20|revisao pelo art|auxilio-inclusao|comprovacao de dependencia economica|demonstracao de que|comparativo entre|confirmacao de que|identificacao do periodo|descricao detalhada|qualquer documento|documentos que comprovem o requisito|justificativa de impossibilidade|documentos de forca maior|historico de (atividades repetitivas|tentativas|comunicacoes))|informe seu advogado|^se (a empresa|alguem)/, classe:"N"},
+  {rx:/lavrador|rural|\bdap\b|\bcaf\b|bloco de notas|\bccir\b|\bitr\b|sindicato|pronaf|agro amigo|arrendamento|parceria|comodato|producao|agricol|pesca|autodeclaracao|cooperativa|insumos|implementos|area plantada|comercializacao|extensao rural|programas governamentais|federativa|associacoes de produtores|aforamento|incra/, classe:"C", quem:"prova material rural (art. 106 da Lei 8.213/91; art. 116 da IN 128)"},
+  {rx:/cadunico|folha resumo|cras\b|nis familiar|bolsa familia/, classe:"C", quem:"CRAS; a extensão não baixa o CadÚnico"},
+];
+// seção do catálogo que é de terceiro (pensão, reclusão, BPC): tudo abaixo dela é do cliente, salvo "requerente"
+const SEC_TERCEIRO = /preso|falec|dependentes|moram na casa|composicao da familia|renda da familia|renda do preso|filhos e equiparados|prisao|beneficios excluidos/;
+function docsContraDossie(c, cat){
+  const docs = docsDoDossie(c.id), dz = c.dossie || {};
+  const neg = Object.values(dz).flatMap(p=>(p && p.inexistentes) || []);
+  const out = {temos:[], cliente:[], escritorio:[]};
+  let sec = "";
+  const linhas = [...String(cat.itens||"").split("\n").map(l=>[l.trim(), true]), ...String(cat.extras||"").split("\n").map(l=>[l.trim(), false])].filter(x=>x[0]);
+  for(const [l, base] of linhas){
+    if(l.startsWith("▸")){ sec = dsa(l); continue; }
+    const n = dsa(l.split(" — ")[0]);
+    const r = (SEC_TERCEIRO.test(sec) && !/requerente/.test(n)) ? {classe:"C", quem:"de terceiro: o dossiê é só do CPF do cliente"} : DOC_FONTE.find(x=>x.rx.test(n)) || {classe:"C"};
+    if(r.classe==="N") continue;
+    const tem = typeof r.tem==="function" ? r.tem(c) : !!(r.tem && docs.some(a=>r.tem.test(a.nome||"")));
+    const anexos = r.tem instanceof RegExp ? docs.filter(a=>r.tem.test(a.nome||"")) : [];
+    if(r.classe==="C*") out.escritorio.push({l, r, base});
+    else if(tem) out.temos.push({l, r, base, anexos});
+    else out.cliente.push({l, r, base, negativo:(r.neg && neg.find(x=>r.neg.test(x))) || null});
+  }
+  return out;
+}
+// os catálogos dos benefícios marcados na análise; sem marcação, o da espécie do contrato
+function catalogosDaAnalise(c){
+  const nomes = [...new Set(opcoesSel(c).map(o=>DOC_CAT[o.o]).filter(Boolean))];
+  let cats = nomes.map(n=>docPorNome(n)).filter(Boolean);
+  if(!cats.length){ const d = docDe(especieDoContrato(c, D.casosDoCliente.get(c.id)||[])); if(d) cats = [d]; }
+  return cats;
+}
+// o que a base do escritório sustenta por espécie (pesquisa de 12.10.2026): anexo da IN 128, serviço da Carta de
+// Serviços 2025 e o campo vinculante do formulário. Anexo fora de ANEXOS_IN128 abre a página de anexos do portal.
+const GUIA_RAC = ["RAC Completo (Anexo I)","RAC Acerto de Dados (Anexo I-A)","RAC Vínculos (Anexo I-B)","RAC Remunerações CI (Anexo I-D)","RAC Reconhecimento (Anexo I-E)","RAC Acerto de Contribuições (Anexo I-F)"];
+const NOTA_FORM = "RAC só se o CNIS tiver indicador: requerer com o CNIS limpo. No formulário, responder sim a todo período que o caso pede.";
+const GUIAS_ESPECIE = {
+  idade:{anexos:GUIA_RAC, servico:"Pedir Aposentadoria (todas as modalidades urbanas) — Meu INSS", nota:NOTA_FORM},
+  transicao:{anexos:[...GUIA_RAC, "CTC do RPPS (Anexo XV e XXIII) se houver tempo em regime próprio"], servico:"Pedir Aposentadoria (todas as modalidades urbanas) — Meu INSS", nota:NOTA_FORM},
+  professor:{anexos:[], servico:"Pedir Aposentadoria (todas as modalidades urbanas) — Meu INSS", nota:"Sem anexo próprio na base: atestado da escola e CTPS com função de magistério; responder sim a professor no formulário."},
+  pcd:{anexos:[], servico:"Emitir Certificado da Pessoa com Deficiência; Aposentadoria da PCD por Tempo ou por Idade — Meu INSS", nota:"Sem anexo da IN 128 na base; avaliação biopsicossocial com a documentação pretérita desde a DID."},
+  b46:{anexos:["PPP (Anexo XVII)"], servico:"Pedir Aposentadoria (Aposentadoria Especial) — Meu INSS", nota:"PPP obrigatório desde 01/01/2004; SB-40, DISES BE 5235 e DSS-8030 para períodos até 2003; LTCAT; responder sim a tempo especial."},
+  conv:{anexos:["PPP (Anexo XVII)"], servico:"Pedir Aposentadoria (todas as modalidades urbanas) — Meu INSS", nota:"PPP por vínculo especial; a conversão vale só até 13/11/2019; responder sim a tempo especial."},
+  idade_rural:{anexos:["Autodeclaração do segurado especial (art. 115 da IN 128)","RAC Reconhecimento (Anexo I-E)","RAC Acerto de Contribuições (Anexo I-F)"], servico:"Aposentadoria Rural — Meu INSS (pode exigir agendamento presencial)", nota:"Autodeclaração com o maior número de documentos do art. 116; entrevista rural depois do protocolo. O número do anexo da autodeclaração não foi localizado na base."},
+  hibrida:{anexos:["Autodeclaração do segurado especial (art. 115 da IN 128)","RAC Reconhecimento (Anexo I-E)"], servico:"Aposentadoria Rural — Meu INSS (pode exigir agendamento presencial)", nota:"O trecho rural segue a autodeclaração; responder sim a tempo rural no formulário."},
+  def:{anexos:["Termo de Compromisso (Anexo XXIX)"], servico:"Pedir BPC à Pessoa com Deficiência — Meu INSS (avaliação social presencial)", nota:"Anexo XXIX só quando o requerente não tem tutela, curatela ou guarda; CadÚnico atualizado em até 24 meses."},
+  idoso:{anexos:["Termo de Compromisso (Anexo XXIX)"], servico:"Pedir BPC ao Idoso — Meu INSS", nota:"Anexo XXIX só quando o requerente não tem tutela, curatela ou guarda; CadÚnico atualizado em até 24 meses."},
+  b31:{anexos:[], servico:"Pedir Auxílio por Incapacidade Temporária (Atestmed) — Meu INSS", nota:"Sem anexo; campos vinculantes do formulário: Data de início dos sintomas e Descrição dos sintomas."},
+  b32:{anexos:[], servico:"Pedir Aposentadoria por Incapacidade Permanente — Meu INSS (perícia presencial)", nota:"Sem anexo; o acréscimo de 25 % é pedido à parte."},
+  acid:{anexos:[], servico:"Cadastrar CAT e Pedir Auxílio por Incapacidade — Meu INSS", nota:"Sem CAT da empresa, requerer a CAT equiparada (art. 22, § 2º, da Lei 8.213/91)."},
+  b94:{anexos:[], servico:"Pedir Auxílio-Acidente — Meu INSS ou 135 (a base diverge sobre o canal)", nota:"Análise documental prévia obrigatória; conferir o canal antes de orientar o cliente."},
+  b36:{anexos:[], servico:"Pedir Auxílio-Acidente — Meu INSS ou 135 (a base diverge sobre o canal)", nota:"Análise documental prévia obrigatória; conferir o canal antes de orientar o cliente."},
+  morte:{anexos:[], servico:"Pedir Pensão por Morte — Meu INSS ou 135", nota:"Sem anexo da IN 128 na base; a Declaração de Pensão (Anexo XXIV) do CRM não tem lastro na base."},
+  reclusao:{anexos:[], servico:"Solicitar Auxílio-Reclusão — Meu INSS ou 135", nota:"Atestado trimestral de permanência na prisão para a manutenção."},
+  urb:{anexos:[], servico:"Pedir Salário-Maternidade (urbano) — Meu INSS", nota:"Empregada CLT recebe pela empresa."},
+  rur:{anexos:[], servico:"Pedir Salário-Maternidade (rural) — Meu INSS (pode exigir agendamento)", nota:"Usa a autodeclaração do segurado especial."},
+  rev:{anexos:[], servico:"Solicitar Recurso de Benefício (revisão administrativa) — Meu INSS", nota:"Documentos do benefício original (CONCAL, CONBAS, CONPRI); não cabe reafirmação da DER em revisão."},
+  acerto:{anexos:[...GUIA_RAC, "Declaração da empresa ou do OGMO (Anexo II e II-A)", "Cálculo em Atraso (Anexo VII)"], servico:"Acerto de Vínculos e Remunerações (CNIS) — pelo 135 ou na APS; o Meu INSS só anexa documentos", nota:"Um anexo certo para cada tipo de pendência."},
+  crps:{anexos:[], servico:"Apresentar Recurso Ordinário (Inicial) — Meu INSS", nota:"Prazo de 30 dias da ciência (art. 305 do Decreto 3.048/99)."},
+};
+const PORTAL_ANEXOS = "https://portalin.inss.gov.br/anexos";
+function painelDocumentosAtend(c, ks){
+  const pc = preCasoAberto(c);
+  return `<div class="doc-quadros">
+    <section class="doc-quadro" id="dq-assinar">${caixaDocumentos(c, ks)}</section>
+    ${quadroProvidenciar(c)}
+    ${quadroGuias(c)}
+    ${quadroGerados(c)}
+    ${pc ? `<section class="doc-quadro" id="dq-desfecho">${quadroDesfecho(c)}</section>` : ""}
+    <details class="doc-quadro doc-catalogo"><summary>Catálogo completo de documentos para o INSS — outro benefício, checklist do caso</summary>${catalogoNoCadastro(c, ks)}</details>
+    ${painelConsulta(c)}
+  </div>`;
+}
+// o que já pedimos ao cliente, com a entrega marcável — na mesa e no quadro
+function pedidosHtml(c, pedidos){
+  return `<div style="margin-top:8px">
+    <div class="meio-sub" style="margin-bottom:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">Já pedimos a ${esc(c.nome.split(" ")[0])}:
+      ${pedidos.some(p=>(p.itens||[]).some(i=>!i.entregue))?`<button class="btn-mini" onclick="cobrarDocs('${c.id}','')"
+        title="mensagem pronta no WhatsApp com os pendentes; a cobrança fica nas anotações">📲 cobrar pendentes</button>`:""}</div>
+    <ul class="mov-lista">
+      ${pedidos.map((p,pi)=>(p.itens||[]).map((it,ii)=>`<li>
+        <span class="mov-data">${p.em?fmt(p.em.slice(0,10)):"—"}</span>
+        <span class="mov-txt" style="${it.entregue?"text-decoration:line-through;color:var(--cinza)":""}">${esc(it.nome||it)}</span>
+        ${p.ate&&!it.entregue?chipPrazo(p.ate, "entrega combinada até"):""}
+        ${it.entregue?`<span class="chip verde" style="cursor:pointer" onclick="docEntregue('${c.id}',${pi},${ii})"
+            title="marcado por engano? clique para desfazer">entregue ${fmt(it.entregue)} ↺</span>`
+          :`<button class="btn-mini" onclick="docEntregue('${c.id}',${pi},${ii})">entregue</button>`}
+      </li>`).join("")).join("")}
+    </ul></div>`;
+}
+function quadroProvidenciar(c){
+  const cats = catalogosDaAnalise(c);
+  if(!cats.length) return `<section class="doc-quadro" id="dq-prov"><div class="rotulo-caso">Para o cliente providenciar</div>
+    <p class="meio-sub">Marque um benefício na Análise de Direito, ou defina a espécie, para o catálogo aparecer.</p></section>`;
+  const cli = [], temos = [], escr = [];
+  for(const cat of cats){ const r = docsContraDossie(c, cat);
+    for(const [lista, dest] of [[r.cliente, cli],[r.temos, temos],[r.escritorio, escr]]) for(const x of lista){
+      const k = dsa(x.l), j = dest.find(y=>y.k===k);
+      if(j){ j.bens.push(cat.beneficio); j.base = j.base || x.base; continue; }
+      dest.push({...x, k, bens:[cat.beneficio]}); } }
+  const pedidos = (c.campos||{}).docs_pedidos||[], jaPedido = new Set(pedidos.flatMap(p=>(p.itens||[]).map(i=>dsa(i.nome||i))));
+  const linha = x => `<label class="doc-it${x.base?" base":""}" title="${esc(x.bens.join(" · "))}"><input type="checkbox" class="at-doc" value="${esc(x.l)}" ${x.base?"checked":""}><span>${esc(x.l)}${
+    x.r.quem ? ` <small class="doc-quem">· ${esc(x.r.quem)}</small>` : ""}${x.negativo ? ` <small class="doc-neg">· o portal informou: ${esc(x.negativo)}</small>` : ""}${jaPedido.has(x.k) ? ` <small class="doc-ja">· já pedido</small>` : ""}</span></label>`;
+  const base = cli.filter(x=>x.base), extras = cli.filter(x=>!x.base), nomes = cats.map(x=>x.beneficio).join(" · ");
+  return `<section class="doc-quadro" id="dq-prov"><div class="rotulo-caso">Para o cliente providenciar <span class="meio-sub">${esc(nomes)} · ${cli.length} itens</span></div>
+    <p class="meio-sub">Catálogo do site interno cruzado com o dossiê: o que já veio pelos portais está no quadro seguinte e sai desta lista.</p>
+    <div id="at-docs" class="doc-lista">${base.map(linha).join("")}${extras.length ? `<div class="cc-tit" style="color:var(--laranja);padding:8px 0 3px">Conforme a atividade do cliente — marque o que se aplica</div>${extras.map(linha).join("")}` : ""}</div>
+    <div class="form-linha" style="margin-top:6px;align-items:center">
+      <input id="at-doc-extra" placeholder="outro documento — Enter acrescenta" style="flex:1;min-width:200px" onkeydown="if(event.key==='Enter'){event.preventDefault();docExtraAtendimento();}">
+      <label class="meio-sub" title="vencida a data, o pedido aparece no Meu Dia para cobrar">entrega até <input type="date" id="at-doc-ate" min="${hoje()}" value="${somaDias(hoje(),15)}"></label>
+      <button onclick="pedirDocsAtendimento('${c.id}','${escJs(nomes)}')">Imprimir e registrar o pedido</button></div>
+    ${pedidos.length ? pedidosHtml(c, pedidos) : ""}
+    ${escr.length ? `<div class="doc-escr"><b>O escritório obtém</b><ul>${escr.map(x=>`<li>${esc(x.l.split(" — ")[0])}${x.r.nota?` <small>· ${esc(x.r.nota)}</small>`:""}</li>`).join("")}</ul></div>` : ""}
+  </section>
+  <section class="doc-quadro" id="dq-temos"><div class="rotulo-caso">Já temos no dossiê <span class="meio-sub">${temos.length} ${temos.length===1?"item":"itens"}</span></div>
+    ${temos.length ? `<ul class="doc-temos">${temos.map(x=>`<li>${esc(x.l.split(" — ")[0])}${x.anexos.length ? ` <span>${x.anexos.slice(0,3).map(a=>`<button class="arq-abrir" onclick="abrirAnexo('${a.id}')">ver ${esc(String(a.nome||"").split(" · ").pop().replace(/\.(pdf|txt)$/i,""))}</button>`).join("")}</span>` : " <small>· na ficha</small>"}</li>`).join("")}</ul>`
+      : `<p class="meio-sub">${docsDoDossie(c.id).length ? "Nenhum item do catálogo veio pelo dossiê." : "O dossiê ainda não foi baixado: rode a extensão com o gov.br do cliente."}</p>`}
+  </section>`;
+}
+function quadroGuias(c){
+  const gs = opcoesSel(c).map(o=>({o, g:GUIAS_ESPECIE[o.o]})).filter(x=>x.g);
+  const link = rot => { const a = ANEXOS_IN128.find(x=>x[0]===rot);
+    return a ? `<a class="cad-mini" style="text-decoration:none" href="${IN128_BASE}${a[1]}" target="_blank" rel="noopener">${esc(rot)}</a>`
+             : `<a class="cad-mini" style="text-decoration:none" href="${PORTAL_ANEXOS}" target="_blank" rel="noopener" title="localizar na página de anexos do portal">${esc(rot)} ↗</a>`; };
+  return `<section class="doc-quadro" id="dq-guias"><div class="rotulo-caso">Guias e formulários do INSS <span class="meio-sub">${gs.length ? "por benefício em análise" : "marque um benefício na Análise de Direito"}</span></div>
+    ${gs.map(({o, g})=>`<div class="doc-guia"><b>${esc(o.rot)}</b> <span class="meio-sub">${esc(g.servico)}</span>
+      ${g.anexos.length ? `<div class="form-linha" style="flex-wrap:wrap;margin-top:4px">${g.anexos.map(link).join("")}</div>` : `<p class="meio-sub">Sem anexo próprio da IN 128 na base de conhecimento.</p>`}
+      ${g.nota ? `<p class="meio-sub">${esc(g.nota)}</p>` : ""}</div>`).join("")}
+    <p class="meio-sub">Só o que a base do escritório sustenta por espécie (pesquisa de 12.10.2026); os demais anexos ficam na Consulta, abaixo. Antes do protocolo, guardar o comprovante e a tela de resumo do formulário (Tema 1124/STJ).</p></section>`;
+}
+function quadroGerados(c){
+  const ds = (D.anexos||[]).filter(a=>a.cliente_id===c.id && /^(gerado|assinado)$/.test(a.origem||"")).sort((p, q)=>String(q.criado_em||"").localeCompare(String(p.criado_em||"")));
+  const temProc = ds.some(a=>/procura/i.test(a.nome||"")), temContr = ds.some(a=>/contrato/i.test(a.nome||""));
+  const quem = a => { const co = D.colPorId.get(a.autor_id); return co ? co.nome.split(" ")[0] : ""; };
+  return `<section class="doc-quadro" id="dq-gerados"><div class="rotulo-caso">Gerados e assinados <span class="meio-sub">${ds.length} ${ds.length===1?"documento":"documentos"}</span></div>
+    ${ds.length ? `<ul class="mov-lista">${ds.map(a=>`<li><span class="mov-data">${fmtTS(a.criado_em)}</span><span class="mov-txt">${a.origem==="assinado"?"✍ ":"🖨 "}${esc(a.nome)}${quem(a)?` <small>· ${esc(quem(a))}</small>`:""}</span>
+      <button class="btn-mini" onclick="abrirAnexo('${a.id}')">${a.origem==="assinado"?"abrir":"abrir e reimprimir"}</button></li>`).join("")}</ul>`
+      : `<p class="meio-sub">Nada gerado ainda. Cada documento gerado no primeiro quadro fica guardado aqui, com as lacunas que saíram em branco.</p>`}
+    <div class="form-linha" style="margin-top:6px;align-items:center">
+      <label class="cad-mini" style="cursor:pointer" title="o PDF ou a foto do documento assinado pelo cliente"><input type="file" id="doc-assinado" accept="image/*,application/pdf" style="display:none" onchange="anexarAssinado('${c.id}','doc-assinado')">📎 anexar o assinado</label>
+      <span class="meio-sub">${temProc && temContr ? "procuração e contrato gerados: o caso pode nascer" : "o caso nasce com a procuração e o contrato gerados e assinados"}</span></div></section>`;
+}
 
 // ── O QUADRO DO ATENDIMENTO ───────────────────────────────────────────────
 // Cliente sem caso anotado: é aqui que o atendimento vive até virar caso.
@@ -31907,6 +32314,9 @@ function caixaAtendimento(c, ks){
   const esp=(pcsVivos.find(p=>p.especie)||pcs[0]||{}).especie||campos.especie||"";
   const notas=campos.atendimento||[];
   const pedidos=campos.docs_pedidos||[];
+  // F219 · onda 5: o pré-caso com etapas segue o modo atendimento; a mesa antiga recolhe documentos, análise e decisão
+  // (a análise registrada pela própria mesa também grava etapas.analise; só o Concluir do modo atendimento muda o fluxo)
+  const novoFluxo = pcsVivos.some(p=>p.etapas && Object.keys(p.etapas).some(k=>k!=="analise"));
   const cat=docDe(esp);
   const itens=((cat&&cat.itens)||"").split("\n").map(x=>x.trim()).filter(x=>x&&!x.startsWith("▸ "));
   const extras=((cat&&cat.extras)||"").split("\n").map(x=>x.trim()).filter(x=>x&&!x.startsWith("▸ "));
@@ -32080,7 +32490,7 @@ function caixaAtendimento(c, ks){
         if(p.especie&&ehIncap(p.especie)&&!p.via) faltas.push(`escolher a via${rot}`);
         if(p.especie&&ehIncap(p.especie)&&!p.cidade) faltas.push(`dizer a cidade${rot}`);
       });
-      if(D.analises!==null && (analisesDe(c.id)[0]||{}).data_analise!==hoje())
+      if(!novoFluxo && D.analises!==null && (analisesDe(c.id)[0]||{}).data_analise!==hoje())
         faltas.push("registrar a análise de direito (passo 4)");
       const nPend=(campos.atendimento||[]).filter(ehNotaPendente).length;
       if(nPend) faltas.push(`resolver ${nPend} pendência${nPend>1?"s":""} (passo 3)`);
@@ -32141,6 +32551,8 @@ function caixaAtendimento(c, ks){
          clique, e o título resume o que há dentro — tela mais limpa */""}
     ${/* F54 · benefício por incapacidade: o checklist de documentos já nasce
          ABERTO — é o momento de pedir tudo, não de procurar onde clicar */""}
+    ${novoFluxo ? `<div class="mesa-guia pronta mesa-novo"><b>Este atendimento segue no modo atendimento</b> — a lista de documentos, a análise e o desfecho estão em Documentos e na Análise de Direito.
+      <button class="cad-mini" onclick="_atendAberto.add('${c.id}');irSubCad('documentos')">Abrir Documentos</button></div>` : `
     <details ${ehIncap(esp)?"open":""} class="mesa-bloco mesa-b2">
       <summary class="rotulo-caso" style="cursor:pointer;display:list-item">2 · Documentos que o cliente vai trazer${
         esp&&(itens.length||extras.length)?` <span class="meio-sub" style="text-transform:none">— lista de ${itens.length+extras.length} itens${pedidos.length?` · já pedimos ${pedidos.reduce((n,p)=>n+(p.itens||[]).length,0)}`:""} (abre e fecha no toque)</span>`
@@ -32185,7 +32597,7 @@ function caixaAtendimento(c, ks){
               :`<button class="btn-mini" onclick="docEntregue('${c.id}',${pi},${ii})">entregue</button>`}
           </li>`).join("")).join("")}
         </ul></div>`:""}
-    </details>`}
+    </details>`}`}
 
     <div class="mesa-bloco mesa-b3">
       <div class="rotulo-caso">3 · Anotações deste atendimento</div>
@@ -32271,7 +32683,7 @@ function caixaAtendimento(c, ks){
          das anotações (pedido do Paulo) — os campos preenchíveis são os
          mesmos da aba ⚖️ (formAnalise), renderizados uma vez só: quando a
          aba 8 está ativa o formulário vive lá, não aqui (IDs únicos) */""}
-    ${dobra("b4", D.analises!==null && (analisesDe(c.id)[0]||{}).data_analise===hoje(),
+    ${novoFluxo ? "" : dobra("b4", D.analises!==null && (analisesDe(c.id)[0]||{}).data_analise===hoje(),
       (()=>{const u=(analisesDe(c.id)||[])[0]||{},m=u.id?cenMelhor(u):null;
         return `4 · Análise de Direito — registrada hoje${m?` — melhor caminho: ${esc(m.regra||"")}${m.data?` em ${fmt(m.data)}`:""}`:""}`;})(), `
     <div class="mesa-bloco mesa-b4">
@@ -32282,11 +32694,11 @@ function caixaAtendimento(c, ks){
     </div>`)}
 
     ${pcsVivos.map(blocoHonor).join("")}
-    ${pcsVivos.map(blocoDecisao).join("")}
+    ${novoFluxo ? "" : pcsVivos.map(blocoDecisao).join("")}
     ${/* F31 · os documentos do escritório LOGO ABAIXO do criar caso: quem
          está gerando imprime a procuração, a declaração de pobreza e o
          contrato aqui mesmo, colhe a assinatura e clica Gerar o caso */""}
-    ${(pcsVivos.length && !ehPgto) ? `<div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
+    ${(pcsVivos.length && !ehPgto && !novoFluxo) ? `<div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
       ${caixaDocumentos(c, ks)}
     </div>` : ""}
   </div>`;
@@ -32301,11 +32713,12 @@ function docExtraAtendimento(){
   inp.value=""; inp.focus();
 }
 // imprime a lista para o cliente levar E registra no CRM o que pedimos
-async function pedirDocsAtendimento(cliId){
+// F219 · o quadro "Para o cliente providenciar" passa a espécie (uma ou mais, do catálogo)
+async function pedirDocsAtendimento(cliId, espDada){
   const c=D.cliPorId.get(cliId); if(!c) return;
   const itens=[...document.querySelectorAll("#at-docs .at-doc:checked")].map(x=>x.value).filter(Boolean);
   if(!itens.length) return aviso("Marque ao menos um documento");
-  const esp=(c.campos||{}).especie||"benefício a definir";
+  const esp=espDada||(c.campos||{}).especie||especieDoContrato(c, D.casosDoCliente.get(cliId)||[])||"benefício a definir";
   imprimirListaDocs(c, esp, itens, (docPorNome(esp)||{}).observacoes);
   const ate=(document.getElementById("at-doc-ate")||{}).value||null;   // F93
   const pedidos=[...((c.campos||{}).docs_pedidos||[]),

@@ -70,7 +70,7 @@ FIX.clientes[1] = { ...FIX.clientes[1], campos: { ...(FIX.clientes[1].campos || 
   conf("1 a data provável sai do checklist, e o aniversário não é lida como data", l1.dd && l1.dd.data === "2029-03-15" && l1.dd.fonte === "checklist do To Do");
   conf("2 sem checklist, a data vem da anotação mais recente que fala em aposentar", l2.dd && l2.dd.data === "2030-12-10" && /anotação de 18\.05\.2026/.test(l2.dd.fonte));
   conf("3 sem data em lugar nenhum, o card diz que não tem; a data anterior à anotação não é a do direito", l3.dd === null);
-  conf("4 a etapa: lembrete vencido é pronto para protocolar; o resto, monitorando", l2.et === "pronto" && l1.et === "monitorando" && l3.et === "monitorando");
+  conf("4 a etapa: lembrete vencido com o direito futuro é Documentação (D-60, F219); o resto, monitorando", l2.et === "documentacao" && l1.et === "monitorando" && l3.et === "monitorando");
   conf("5 o horizonte: 40 dias é até 90; vencido; 900 dias é depois", l1.h === "90" && l2.h === "vencido" && l3.h === "depois");
 
   // ── a lista lateral ────────────────────────────────────────────────────
@@ -83,7 +83,7 @@ FIX.clientes[1] = { ...FIX.clientes[1], campos: { ...(FIX.clientes[1].campos || 
   await p.click(".fchip[data-horiz=todos]");
   await p.waitForFunction(() => document.querySelectorAll(".cartao.card-apos").length === 3);
   const secoes = await texto("h3.secao");
-  conf("8 em Todos, os cards agrupados por etapa, com a data provável", /Monitorando \(2\)/.test(secoes[0]) && /Pronto para protocolar \(1\)/.test(secoes[1]) && (await texto(".cartao.card-apos .meta")).some(t => /direito em 15\.03\.2029/.test(t)));
+  conf("8 em Todos, os cards agrupados por etapa, com a data provável", /Monitorando \(2\)/.test(secoes[0]) && /Documentação \(1\)/.test(secoes[1]) && (await texto(".cartao.card-apos .meta")).some(t => /direito em 15\.03\.2029/.test(t)));
   await p.click(".cartao.card-apos");
   await p.waitForFunction(() => D._ficha && D._ficha.cliId && abaAtiva === 9 && document.querySelector(".card-apos-cab"));
   conf("9 o card abre a ficha na aba Lembretes", true);
