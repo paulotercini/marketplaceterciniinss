@@ -1122,6 +1122,35 @@ def test_marcas_do_crm_valem_sobre_o_todo():
     assert kc["fase"] == "encerrado" and kc["encerrado_em"] == "2026-10-13T10:00:00"
 
 
+def test_fundido_leva_ao_destino_o_que_o_todo_traz_de_novo():
+    # F221 · a tarefa do caso fundido continua aberta no To Do: a anotação, a
+    # perícia e a tarefa novas vão ao caso de destino, seguindo a cadeia de fusões
+    m = migrar.mapear(crm_json([
+        t("👪 Judicial", "Fulana #00000000191", cpf="00000000191", id="a"),
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191", id="b",
+          andamentos=[{"data": "2026-10-20", "inicial": "A", "autor": "Amanda",
+                       "texto": "Cliente trouxe o laudo do ortopedista."}]),
+        t("🖥 Conselho de Recursos", "Fulana #00000000191", cpf="00000000191", id="c"),
+    ]))
+    ka, kb, kc = (next(k for k in m["casos"] if k["todo_task_id"] == x) for x in "abc")
+    m["eventos"].append({"id": "e1", "caso_id": kb["id"], "tipo": "Perícia médica",
+                         "data_hora": "2026-11-20T09:00:00-03:00"})
+    m.setdefault("tarefas", []).append({"id": "t1", "caso_id": kc["id"], "titulo": "Cobrar o laudo"})
+    marcados = [{"id": kb["id"], "arquivados": {"fundido": {"para": kc["id"]}}},
+                {"id": kc["id"], "arquivados": {"fundido": {"para": ka["id"]}}},
+                {"id": "x", "arquivados": {"mov:nb:1234567890": {"para": "y"}}}]
+    assert migrar.redirecionar_fundidos(m, marcados) >= 3
+    nova = [a for a in m["andamentos"] if a["texto"].startswith("Cliente trouxe")]
+    assert nova and all(a["caso_id"] == ka["id"] for a in nova), "a anotação nova ficou na casca encerrada"
+    assert next(e for e in m["eventos"] if e["id"] == "e1")["caso_id"] == ka["id"], \
+        "a perícia anotada no To Do entraria de novo na casca"
+    assert next(x for x in m["tarefas"] if x["id"] == "t1")["caso_id"] == ka["id"]
+    # fusão em círculo não trava a rodada
+    assert migrar.redirecionar_fundidos({"andamentos": [{"caso_id": "p"}]}, [
+        {"id": "p", "arquivados": {"fundido": {"para": "q"}}},
+        {"id": "q", "arquivados": {"fundido": {"para": "p"}}}]) == 1
+
+
 def test_ponte_dos_cards_so_conclui_o_que_o_crm_decidiu():
     import ponte_cards
     ls = [
