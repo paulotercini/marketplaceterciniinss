@@ -343,7 +343,7 @@ Esta camada é especialmente crítica em.
 
 ### Camada 5-A - Cadeia de cada pedido (Onda 176, complemento)
 
-Cada pedido é conferido sozinho, pela ligação entre o pedido, os fatos, as provas, o cálculo, o valor ou o critério, quando houver, e a conclusão jurídica. O teste é o do leitor sem retorno, que parte do pedido e encontra cada elo sem procurar informação dispersa e sem refazer conta ou raciocínio. Os defeitos são cinco, lacuna, salto lógico, fundamento genérico, prova não relacionada de forma explícita e cálculo sem demonstração. O protocolo, o que cada tipo de pedido exige, a severidade e o modelo do bloco do relatório estão em `references/CADEIA-DO-PEDIDO.md`. O elo que falta é buscado nos autos antes de ser apontado como lacuna.
+Cada pedido é conferido sozinho, pela ligação entre o pedido, os fatos, as provas, o cálculo, o valor ou o critério, quando houver, e a conclusão jurídica. O teste é o do leitor sem retorno, que parte do pedido e encontra cada elo sem procurar informação dispersa e sem refazer conta ou raciocínio. Os defeitos são cinco, lacuna, salto lógico, fundamento genérico, prova não relacionada de forma explícita e cálculo sem demonstração. O protocolo, o que cada tipo de pedido exige, a severidade e o modelo do bloco do relatório estão em `references/CADEIA-DO-PEDIDO.md`. O elo que falta é buscado nos autos antes de ser apontado como lacuna. Regra permanente desde 12/10/2026, a Camada 5-A nunca é dispensada e suas correções pontuais são aplicadas na versão entregue sem aguardar o Passo 5, que continua valendo para os demais achados.
 
 ### Camada 6 - Orçamento de Extensão e Legibilidade (Onda 120)
 
