@@ -65,7 +65,7 @@ Foram corrigidos a menção que não levava ao trabalho, a janela de escolher o 
 
 Ficam a mesa antiga das Anotações e a Triagem ao lado da tela de atendimento, o texto das tarefas do To Do com os números misturados (o CRM corrige a sua cópia, e o To Do continua como está) e a ponte estreita de volta ao To Do, que passa a concluir tarefas de cards na próxima sincronização publicada e desliga com `PONTE_CARDS=0`. As marcas do organizador só produzem efeito na próxima rodada da sincronização, e as listas de documentos das 16 páginas do site institucional mudaram para o catálogo.
 
-Não foram verificados o acórdão da ADI 6309 no portal do STF (a fonte é o IBDP), os prazos de análise do acordo do RE 1.171.152 para os benefícios por incapacidade, que o relatório oficial consultado não traz, e a suspensão do prazo durante a exigência, que o CRM simplifica escondendo o prazo enquanto a exigência está aberta.
+Não foi verificado o acórdão da ADI 6309 no portal do STF (a fonte é o IBDP). Os prazos de análise do acordo do RE 1.171.152 para os benefícios por incapacidade e a suspensão durante a exigência foram conferidos depois, no texto do acórdão, e entraram na versão 11.49 (F221): 45 dias para a incapacidade temporária e a permanente e 60 para o auxílio-acidente, contados da perícia, com a contagem suspensa pela exigência e retomada com pelo menos 30 dias.
 
 ## Fontes
 
