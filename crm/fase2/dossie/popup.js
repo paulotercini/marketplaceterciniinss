@@ -6,6 +6,7 @@ const COLETORES = {
   'consultaprocessos.inss.gov.br': { arquivo: 'recursos.js', rotulo: 'e-Recursos: todos os documentos de cada recurso.' },
   'servicos.mte.gov.br': { arquivo: 'mte.js', rotulo: 'Emprega Brasil: CTPS completa (digital e outros vínculos), extrato RAIS e extrato CAGED.' },
   'appiris.hcrp.usp.br': { hc: true, rotulo: 'HC Ribeirão: exames de imagem (todo o período), internações e relatórios. A aba vai passar sozinha pelas três telas.' },
+  'cadunico.dataprev.gov.br': { arquivo: 'cadunico.js', rotulo: 'CadÚnico: ficha completa da família, comprovante de cadastro, membros e renda.' },
   'consultacnpj.redesim.gov.br': { redesim: true, rotulo: 'Redesim · Minhas Empresas: os CNPJs em que o CPF é sócio ou titular. Você clica em PESQUISAR (captcha); a lista é gravada sozinha.' },
 };
 
@@ -19,6 +20,15 @@ const COLETORES = {
   const viva = st.rodada_andamento && st.rodada_desde && (Date.now() - st.rodada_desde) < 3 * 3600000;
   if (viva) { $('tudo').disabled = true; $('tudo').textContent = `rodando: ${st.rodada_andamento}`; }
   else if (st.ultima_rodada) $('rodada').textContent = `última rodada ${new Date(st.ultima_rodada.em).toLocaleString('pt-BR')}:\n• ${st.ultima_rodada.relato.join('\n• ')}`;
+  // sem login: BPC/Bolsa Família/auxílios pelo CPF ou NIS, via API do Portal da Transparência
+  $('transp').onclick = async () => {
+    const cpf = String($('cpf-transp').value || '').replace(/\D/g, '');
+    if (cpf.length !== 11) { $('transp-res').className = 'meio erro'; $('transp-res').textContent = 'digite o CPF ou o NIS com 11 dígitos'; return; }
+    $('transp').disabled = true; $('transp').textContent = 'consultando…'; $('transp-res').className = 'meio';
+    const r = await chrome.runtime.sendMessage({ tipo: 'transparencia', cpf, pessoas: [] }).catch(e => ({ aviso: String(e.message || e) }));
+    $('transp').disabled = false; $('transp').textContent = '🔎 Portal da Transparência (sem login)';
+    $('transp-res').textContent = (r && (r.aviso || r.erro)) || 'sem resposta';
+  };
   $('abrir').onclick = async () => {
     const r = await chrome.runtime.sendMessage({ tipo: 'abrir' }).catch(() => null);
     $('rodada').className = 'meio';
@@ -47,7 +57,7 @@ const COLETORES = {
     $('crm').after(linha);
   });
   if (!c) {
-    $('onde').innerHTML = 'Abra, já logado com o gov.br do cliente, o <b>Meu INSS</b>, o <b>e-Recursos</b>, o <b>Emprega Brasil</b> ou o <b>HC Ribeirão</b> e clique de novo.';
+    $('onde').innerHTML = 'Abra, já logado com o gov.br do cliente, o <b>Meu INSS</b>, o <b>e-Recursos</b>, o <b>Emprega Brasil</b>, o <b>HC Ribeirão</b>, a <b>Redesim</b> ou o <b>CadÚnico</b> e clique de novo.';
     $('onde').className = 'erro';
     return;
   }

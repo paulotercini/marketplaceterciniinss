@@ -100,3 +100,63 @@ test('seguro-desemprego: JSON do MTE vira texto legível com parcelas e datas', 
   assert.match(t, /Última parcela paga em 12\/05\/2024/);
   assert.match(t, /dados brutos/);
 });
+
+test('cadastro do CNIS: campos com o nome das colunas do CRM', () => {
+  const { cadastro: c, texto } = R.cadastroDoCnis({ filiadoTO: { nit: 12345678901, nitFormatado: '123.45678.90-1', nome: 'MARIA APARECIDA DA SILVA',
+    nomeMae: 'ANA DA SILVA', sexo: 'FEMININO', dataNascimento: '1960-01-01', dataUltimaAtualizacao: '2020-12-29', cpf: 1234567890,
+    listaIdentidadeTO: [{ numero: '123456789', uf: 'SP', orgaoEmissorIdentidade: 'SSP' }],
+    listaCtpsTO: [{ numero: '23652', serie: '334', uf: 'SP' }], numeroTitulo: '000000000000',
+    enderecoPrincipalTO: { logradouro: 'Rua das Flores 10', bairro: 'Centro', cep: 14000000, municipio: 'Monte Alto', siglaUf: 'SP' },
+    municipioOrigem: 'Monte Alto', ufOrigem: 'SP', nacionalidade: 'Brasileira', grauInstrucao: 'Ensino fundamental' } });
+  assert.equal(c.cpf, '01234567890');                       // o CNIS devolve número: volta o zero à esquerda
+  assert.equal(c.dn, '1960-01-01'); assert.equal(c.sexo, 'F'); assert.equal(c.pis_nit, '123.45678.90-1');
+  assert.equal(c.rg, '123456789'); assert.equal(c.rg_orgao, 'SSP/SP');
+  assert.deepEqual(c.ctps, ['23652 334 SP']); assert.equal(c.cep, '14000000'); assert.equal(c.cidade, 'Monte Alto');
+  assert.match(texto, /Nascimento: 01\/01\/1960/); assert.match(texto, /RG: 123456789 SSP\/SP/);
+});
+
+test('CadÚnico: família com renda per capita e integrantes, legível e no resumo', () => {
+  const { familia, texto } = R.textoCadunico(
+    { numeroFamiliar: 1234567890, nome: 'MARIA APARECIDA DA SILVA', tipoPerfil: { codigo: 1, nome: 'Responsável Familiar' },
+      municipio: 'Monte Alto', uf: 'SP', dataCadastroFamilia: '2019-03-01', dataAtualizacaoFamilia: '2025-06-15',
+      tipoEstadoCadastralFamilia: { codigo: 3, nome: 'Cadastrado' }, tipoCondicaoCadastroFamiliar: { codigo: 1, nome: 'Atualizado' },
+      rendaFamiliarTotal: 1412, rendaFamiliarPorPessoa: 706, faixaRendaFamiliarTotal: 'Até 1 SM', faixaRendaFamiliarPorPessoa: 'Até 1/2 SM',
+      quantidadeIntegrantes: 2, qtPessoasCalculoRenda: 2, familiaEmSituacaoDeRua: { codigo: 0, nome: 'Não' }, quantidadePendencias: 0 },
+    { integranteFamiliaDTOs: [
+      { identificador: 0, isResponsavelFamiliar: true, tipoRelacaoParentescoRF: { nome: 'Pessoa Responsável pela Unidade Familiar' },
+        pessoaDadosCadastroDTO: { nomePessoa: 'MARIA APARECIDA DA SILVA', dataNascimentoPessoa: '1960-01-01', numeroCpfPessoa: 1234567890, numeroNisPisPasepPessoa: 12345678901, tipoEstadoCadastralMembro: { nome: 'Cadastrado' } } },
+      { isResponsavelFamiliar: false, tipoRelacaoParentescoRF: { nome: 'Cônjuge ou companheiro(a)' },
+        pessoaDadosCadastroDTO: { nomePessoa: 'JOSÉ DA SILVA', dataNascimentoPessoa: '1950-01-02', numeroCpfPessoa: 98765432100 } } ] }, [],
+    { extrato: [{ tipoExtrato: { nome: 'BPC' }, nomeEspecie: 'BPC para Idoso', nomeBeneficiario: 'MARIA APARECIDA DA SILVA', numeroCompetencia: 202609, valorBeneficio: 1621 },
+                { tipoExtrato: { nome: 'BPC' }, nomeEspecie: 'BPC para Idoso', nomeBeneficiario: 'MARIA APARECIDA DA SILVA', numeroCompetencia: 202504, valorBeneficio: 1518 }],
+      tipos: { tarifaSocialEnergiaEletrica: { numeroCompetencia: 202609, valorDesconto: 42.94 } }, consignacoes: [],
+      pendencias: { pendenciasOcorrenciasFamilia: [], pendenciasOcorrenciasPessoas: [] }, info: { familiaDespesaDTO: { valorDespesasEnergia: 120, valorDespesasAluguel: 0 } },
+      rendas: { '0': { renda: { possuiAlgumaRemuneracao: true, competenciaReferencia: '2026-08',
+        rendasBeneficios: { total: 1621, beneficios: [{ nb: 1234567890, especie: { descricao: 'AMPARO SOCIAL AO IDOSO' }, valor: 1621, dataInicioPagamento: '2025-02-28' }] } },
+        trabalho: { remuneracaoTrabalhoMesAnteriorEntrevista: 0, valorAposentadoriaPensaoBpcLoas: 1621 } } } });
+  assert.equal(familia.numero_familiar, '1234567890'); assert.equal(familia.renda_por_pessoa, 706); assert.equal(familia.integrantes, 2);
+  assert.equal(familia.membros[0].cpf, '01234567890');       // CPF numérico volta com o zero
+  assert.match(texto, /Renda por pessoa: R\$ 706,00 \(Até 1\/2 SM\) · 2 integrante\(s\), 2 no cálculo da renda/);
+  assert.match(texto, /★ MARIA APARECIDA DA SILVA · Pessoa Responsável pela Unidade Familiar · nasc. 01\/01\/1960/);
+  assert.equal(familia.beneficios_pagos[0].primeira_competencia, '202504'); assert.equal(familia.beneficios_pagos[0].meses, 2);
+  assert.match(texto, /BPC · BPC para Idoso · MARIA APARECIDA DA SILVA · 04\/2025 a 09\/2026 \(2 mês\/meses\) · último R\$ 1.621,00/);
+  assert.match(texto, /Tarifa Social de Energia Elétrica: desconto R\$ 42,94/);
+  assert.match(texto, /Benefício INSS NB 1234567890 · AMPARO SOCIAL AO IDOSO · R\$ 1.621,00 · início 28\/02\/2025/);
+  assert.match(texto, /DESPESAS DECLARADAS: energia R\$ 120,00/);
+});
+
+test('Portal da Transparência: pagamentos por integrante, agrupados por programa', () => {
+  const { pessoas, texto } = R.textoTransparencia([{ nome: 'MARIA APARECIDA DA SILVA', cpf: '01234567890', nis: '12345678901' }, { nome: 'JOSÉ DA SILVA', cpf: '98765432100' }],
+    { '01234567890': { programas: { bpc: [
+        { dataMesCompetencia: '202609', valor: 1621, concedidoJudicialmente: 'Sim', beneficiario: { nomeRepresentanteLegal: 'ANA' }, municipio: { nomeIBGE: 'MONTE ALTO', uf: { sigla: 'SP' } } },
+        { dataMesCompetencia: '202504', valor: 1518, concedidoJudicialmente: 'Sim', municipio: { nomeIBGE: 'MONTE ALTO', uf: { sigla: 'SP' } } }],
+      novo_bolsa_familia: [{ dataMesReferencia: '202401', valorSaque: 600 }],
+      auxilio_emergencial: [{ mesDisponibilizacao: '05/2020', valor: 600 }, { mesDisponibilizacao: '12/2020', valor: 300 }] } },
+      '98765432100': { programas: {} } });
+  assert.equal(pessoas[0].programas.length, 3);
+  assert.match(texto, /Auxílio Emergencial: 05\/2020 a 12\/2020 · 2 pagamento\(s\)/);
+  const bpc = pessoas[0].programas.find(p => p.programa === 'bpc');
+  assert.equal(bpc.meses, 2); assert.equal(bpc.total, 3139); assert.equal(bpc.concedido_judicialmente, true); assert.equal(bpc.representante_legal, 'ANA');
+  assert.match(texto, /BPC: 04\/2025 a 09\/2026 · 2 pagamento\(s\) · último R\$ 1.621,00 · total R\$ 3.139,00 · CONCEDIDO JUDICIALMENTE · representante legal: ANA · MONTE ALTO\/SP/);
+  assert.match(texto, /JOSÉ DA SILVA[^\n]*\n  nenhum pagamento encontrado/);
+});
