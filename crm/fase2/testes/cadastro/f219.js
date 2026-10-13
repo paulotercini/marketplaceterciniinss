@@ -70,7 +70,7 @@ FIX.documentos_beneficio = [
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(() => { window.open = () => ({ document: { write() {}, close() {} } }); const av = window.aviso; window._avisos = []; window.aviso = (m, s) => { _avisos.push(String(m)); return av(m, s); }; });
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
-  await p.waitForFunction(() => D._ficha && D._ficha.cliId && !_lendoDossie && !_lendoLeitores, null, { timeout: 10000 });
+  await p.waitForFunction(() => D._ficha && D._ficha.cliId && !_lendoDossie && !_lendoLeitores, null, { timeout: 30000 });
   await p.evaluate(() => { abaAtiva = 0; _atendAberto.add(clienteAberto); irSubCad("identificacao"); });
   await p.waitForSelector(".atend-passos");
   const texto = sel => p.evaluate(s => [...document.querySelectorAll(s)].map(e => e.textContent.replace(/\s+/g, " ").trim()), sel);
@@ -171,7 +171,8 @@ FIX.documentos_beneficio = [
   await p.waitForSelector("#dq-gerados");
   const regG = reg.length;
   await p.evaluate(cli => imprimirDocsEscritorio(cli, ["proc_judicial", "contrato"], ["CEP"]), CLI_CHEIO);
-  await p.waitForFunction(() => document.querySelectorAll("#dq-gerados .mov-lista li").length > 0, null, { timeout: 5000 }).catch(() => {});
+  await esperar(async () => reg.slice(regG).some(x => x.t === "storage" && /\/object\/anexos\/gerados\//.test(x.u))
+    && reg.slice(regG).some(x => x.t === "anexos" && x.m === "POST") && (await texto("#dq-gerados .mov-lista li")).some(t => /reimprimir/.test(t)), 10000);
   const up = reg.slice(regG).find(x => x.t === "storage" && /\/object\/anexos\/gerados\//.test(x.u));
   const an = reg.slice(regG).filter(x => x.t === "anexos" && x.m === "POST").map(x => x.corpo).pop() || {};
   const gerados = await texto("#dq-gerados .mov-lista li");
