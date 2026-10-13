@@ -218,6 +218,9 @@ def mapear(dados):
         # Dados de cliente do checklist (senha, telefone, CPF) continuam
         # entrando; o resto do checklist fica no To Do.
         if fase == "aposentadoria_futura":
+            # F218 · o resto do checklist vai ao card (é onde o Paulo anota a
+            # data provável da aposentadoria); senha, CPF e telefone ficam fora
+            checklist_card = []
             for c_it in t.get("checklist", []):
                 txt = (c_it.get("texto") or "").strip()
                 tipo_it, valor = classificar_item_checklist(txt, c["cpf"])
@@ -233,6 +236,8 @@ def mapear(dados):
                     c["telefone"] = c["telefone"] or valor
                 elif tipo_it == "cpf":
                     c["cpf"] = c["cpf"] or valor
+                elif tipo_it != "vazio":
+                    checklist_card.append({"texto": txt, "feito": bool(c_it.get("feito"))})
             lid = uid("lembrete", t["id"])
             lembretes[lid] = {
                 "id": lid, "cliente_id": cid, "tipo": "aposentadoria_futura",
@@ -243,6 +248,7 @@ def mapear(dados):
                     "anotacoes": [{"data": a["data"], "inicial": a["inicial"],
                                    "texto": a["texto"]}
                                   for a in t["andamentos"]],
+                    "checklist": checklist_card,
                 },
                 "intervalo_meses": None,
                 "proximo_em": t["prazo"],
