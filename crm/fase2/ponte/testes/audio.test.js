@@ -7,8 +7,10 @@ const a = require("node:assert");
 const { execFileSync } = require("node:child_process");
 const { paraOgg } = require("../ponte");
 
-t.test("WebM gravado no navegador vira OGG/Opus para mensagem de voz", async () => {
-  const webm = execFileSync(require("ffmpeg-static"), ["-loglevel", "error", "-f", "lavfi",
+// o ffmpeg vem do npm install da ponte; sem ele (a CI do site não instala a ponte), a conversão não se prova aqui
+let ffmpeg = null; try { ffmpeg = require("ffmpeg-static"); } catch { /* sem o pacote */ }
+t.test("WebM gravado no navegador vira OGG/Opus para mensagem de voz", { skip: !ffmpeg && "sem o ffmpeg-static (npm install na pasta da ponte)" }, async () => {
+  const webm = execFileSync(ffmpeg, ["-loglevel", "error", "-f", "lavfi",
     "-i", "sine=frequency=440:duration=1", "-c:a", "libopus", "-f", "webm", "pipe:1"]);
   const ogg = await paraOgg(webm);
   a.equal(ogg.subarray(0, 4).toString(), "OggS");

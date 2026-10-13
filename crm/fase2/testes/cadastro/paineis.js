@@ -70,8 +70,11 @@ FIX.casos[0] = { ...FIX.casos[0],
   // 1) abrir o cliente cai DIRETO no 📖 Caso completo, com o compositor
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   await p.waitForTimeout(900);
-  conf("a primeira tela é o Caso completo (subAba tudo)",
-    (await p.evaluate(() => subAba)) === "tudo");
+  // F166 · o caso abre nos andamentos do Escritório; o Caso completo fica a um clique
+  conf("a primeira tela são os andamentos do Escritório (F166), com o Caso completo a um clique",
+    (await p.evaluate(() => subAba)) === "escritorio" && /Caso completo/.test(await painel()));
+  await p.evaluate(() => { subAba = "tudo"; repintarFicha(); });
+  await p.waitForTimeout(500);
   conf("o painel mostra o 📖 Caso completo", /Caso completo/.test(await painel()));
   conf("o compositor está em cima (dá para escrever dali)",
     await p.evaluate(() => !!document.getElementById("and-texto") && !!document.getElementById("tf-box")));
@@ -123,8 +126,10 @@ FIX.casos[0] = { ...FIX.casos[0],
   conf("a aba Recurso usa a timeline da conversa",
     await p.evaluate(() => !!document.querySelector(".timeline .tl-dia") &&
       [...document.querySelectorAll(".timeline .autor-nome")].some(b => /Recurso/.test(b.textContent))));
+  // a estrela própria do recurso virou o sinal comum das linhas do tempo (tl-sinal)
   conf("o ⭐ de destaque do recurso continua lá",
-    await p.evaluate(() => !!document.querySelector(".timeline .crps-est")));
+    await p.evaluate(() => [...document.querySelectorAll(".timeline .tl-sinal.imp")]
+      .some(b => /toggleSinalCrps/.test(b.getAttribute("onclick") || ""))));
 
   // 6) aba CNJ no mesmo esqueleto, decisão em destaque
   await p.evaluate(() => { subAba = "cnj"; repintarFicha(); });

@@ -103,6 +103,12 @@ async function main() {
     console.log(`\n───── ${r.arquivo} ${r.estourou ? `(estourou o teto de ${TETO_MS / 1000}s)` : ""}`);
     console.log(r.saida.split("\n").slice(-30).join("\n").trimEnd());
   }
+  // na CI, cada prova que falhou vira anotação do GitHub: o nome e a primeira
+  // falha aparecem na página da rodada, sem baixar o log
+  if (process.env.GITHUB_ACTIONS) for (const r of ruins) {
+    const falha = (r.saida.split("\n").find(l => /FALHOU|FALHA|Error|✘/.test(l)) || placar(r.saida)).trim().slice(0, 200);
+    console.log(`::error title=${r.arquivo}${r.estourou ? " (estourou)" : ""}::${falha.replace(/%/g, "%25").replace(/\r?\n/g, " ")}`);
+  }
   console.log(`\n${feitos.length - ruins.length}/${feitos.length} provas passaram`
             + (ruins.length ? `  —  ${ruins.map(r => r.arquivo).join(", ")}` : ""));
   process.exit(ruins.length ? 1 : 0);

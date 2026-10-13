@@ -72,10 +72,13 @@ FIX.andamentos = [
   await p.waitForTimeout(900);
 
   // 1) o menu das fontes está no TOPO da coluna (não abaixo do cartão)
-  conf("os botões de coleta ficam em CIMA dos andamentos (alinhados ao cartão)",
+  // (o compositor do andamento passou a abrir a coluna em todas as fontes; o menu
+  // continua em cima da lista, na coluna ao lado do cartão, e não abaixo dele)
+  conf("os botões de coleta ficam em CIMA dos andamentos, na coluna ao lado do cartão",
     await p.evaluate(() => { const f = document.querySelector(".sub-menu.fontes");
-      const c = document.querySelector(".fatos-processo");
-      return f && c && Math.abs(f.getBoundingClientRect().top - c.getBoundingClientRect().top) < 8; }));
+      const c = document.querySelector(".fatos-processo"), lista = f && f.nextElementSibling;
+      return f && c && lista && f.getBoundingClientRect().left >= c.getBoundingClientRect().right
+        && f.getBoundingClientRect().bottom <= lista.getBoundingClientRect().top; }));
   conf("⚡ Coleta do PJe vem PRIMEIRO no menu e é a fonte padrão",
     await p.evaluate(() => { const bs = [...document.querySelectorAll(".sub-menu.fontes button")];
       return bs.length === 2 && /Coleta do PJe/.test(bs[0].textContent) &&

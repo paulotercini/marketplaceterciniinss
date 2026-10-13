@@ -332,7 +332,7 @@ function receberHistorico({ chats, messages, syncType }, baixar) {
   for (const c of chats || []) if (String(c.id).endsWith("@lid") && c.pnJid) lidParaFone.set(c.id, c.pnJid);
   filaHistorico = filaHistorico.then(() => importarHistorico(chats, messages, baixar))
     .catch(e => log("histórico:", e.message))
-    .then(() => { if (syncType === SOB_PEDIDO && esperandoPagina) esperandoPagina(messages); });
+    .then(() => { if (esperandoPagina && syncType === sobPedido()) esperandoPagina(messages); });
 }
 
 // ── --recuperar-midia: pede de novo ao celular as conversas dos clientes ──
@@ -340,7 +340,9 @@ function receberHistorico({ chats, messages, syncType }, baixar) {
 // pede ao celular as mensagens de novo (de 50 em 50, da mais nova para a mais
 // antiga) até passar da mídia mais antiga que falhou. Cada mensagem que volta
 // passa por gravar(), que refaz só a mídia que faltava.
-const SOB_PEDIDO = require("@whiskeysockets/baileys").proto.HistorySync.HistorySyncType.ON_DEMAND;
+// lido na hora: os testes carregam este arquivo sem a biblioteca do WhatsApp instalada
+let _sobPedido;
+const sobPedido = () => _sobPedido ??= require("@whiskeysockets/baileys").proto.HistorySync.HistorySyncType.ON_DEMAND;
 let esperandoPagina = null;
 const pagina = (s, chave, ts) => new Promise(resolve => {
   const t = setTimeout(() => { esperandoPagina = null; resolve(null); }, 30000);
