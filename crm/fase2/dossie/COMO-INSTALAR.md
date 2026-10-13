@@ -28,7 +28,7 @@ cada PDF também é anexado ao cliente (origem `dossie`).
 ## Usar
 
 1. **Meu INSS** (`meu.inss.gov.br`, logado como o cliente) → ícone → **Baixar tudo desta aba**.
-   Desce: CNIS completo, resumido e ano civil · declaração de beneficiário · certificado da pessoa com
+   Desce: dados cadastrais do CNIS (PDF + .txt, e os campos vão ao CRM para o cadastro) · CNIS completo, resumido e ano civil · declaração de beneficiário · certificado da pessoa com
    deficiência (quem tem BPC/aposentadoria PCD) · declaração de atividade · carta de concessão, laudo
    e extrato de informações do benefício (dossiê, com todas as opções) de cada benefício · CTC (quem já
    pediu uma) · extrato de pagamento dos últimos 12 meses · **cópia integral de todos os pedidos**
@@ -66,6 +66,16 @@ aberta, porque o login deles é por aba/portal. Portal sem login responde "sem s
 No fim a Redesim vem para a frente: é onde sobra o seu clique em PESQUISAR. O relato da rodada aparece
 no popup. Para o menor número de cliques: entre no gov.br pelo Meu INSS, abra o Emprega Brasil e o HC
 já logados, e clique em Rodar.
+
+6. **CadÚnico** (`cadunico.dataprev.gov.br`, "TOQUE PARA INICIAR" → entrar com gov.br do cliente) → mesmo botão.
+   Desce a ficha completa da família, o comprovante de cadastro e um `.txt` com integrantes e renda, em
+   `CadUnico\`; a renda per capita e o grupo familiar vão à ficha do CRM.
+   No fim, se a chave do **Portal da Transparência** estiver em ⚙, consulta cada integrante (BPC, Bolsa
+   Família, auxílios, Safra, Defeso) e grava em `Transparencia\`.
+
+7. **🔎 Portal da Transparência (sem login)**, no popup: digite o CPF ou NIS e a extensão consulta a pessoa
+   (e os integrantes que a ficha do CRM já conhecer) sem nenhum gov.br — serve ao colaborador que não tem o
+   login do cliente. Só precisa da chave da API em ⚙, que é do escritório e vale em todos os computadores.
 
 O progresso aparece na faixa azul no rodapé da página; no fim ela diz o que veio e o que faltou.
 

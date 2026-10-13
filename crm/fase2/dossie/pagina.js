@@ -23,8 +23,9 @@ window.DOSSIE = window.DOSSIE || {
 
   // no fim da rodada: o resumo do portal vai para clientes.dossie no CRM;
   // devolve o aviso a pôr na faixa quando não gravou (sem login, cliente fora do CRM)
-  async resumo(cliente, portal, { baixados, inexistentes, falhas }) {
-    const r = await chrome.runtime.sendMessage({ tipo: 'resumo', cpf: cliente.cpf, portal, baixados, inexistentes, falhas });
+  async resumo(cliente, portal, { baixados, inexistentes, falhas, cadastro, familia, familias }) {
+    const r = await chrome.runtime.sendMessage({ tipo: 'resumo', cpf: cliente.cpf, portal, baixados, inexistentes, falhas,
+      cadastro: cadastro || undefined, familia: familia || undefined, familias: familias || undefined });
     return r && r.crm && r.crm !== 'ok' ? `\n(resumo no CRM: ${r.crm})` : '';
   },
 
