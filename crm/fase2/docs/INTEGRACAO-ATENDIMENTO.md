@@ -172,9 +172,17 @@ Começa pelo card, porque é onde o acervo está (404 ativos, nenhum analisado) 
 | Onda | Entrega | Tamanho | Depende de |
 |---|---|---|---|
 | 1 · **entregue em 12.10.2026 (CRM 11.45, F218)** | `lembretes.crm` (schema aplicado), o checklist do To Do no card (`migrar.py`), o card com etapas e data provável na aba Lembretes, a lista lateral "Aposentadorias futuras" lendo `lembretes` por horizonte, "Abrir atendimento" (pré-caso ligado ao card), "Gerar o caso" e "Arquivar" | média | nada; a sincronização continua igual |
-| 2 | `etapas` e `desfecho` no pré-caso; "Concluir e passar adiante" nas quatro telas; cabeçalho com quem e quando; `salvarAnalise` devolve espécie, análise e data do direito ao pré-caso e ao card (`crm.analise_id`, `crm.data_direito`, linha de `aposentadorias`) | média | onda 1 |
-| 3 | quadro "Desfecho" na Análise de Direito e em Documentos: lembrete (card novo ou etapa 3 do card existente), caso (`gerarCasoDoPre`, desligando o card) ou arquivamento | média | onda 2 |
-| 4 | Documentos em seis quadros, catálogo filtrado pelos benefícios e cruzado com o dossiê, documentos gerados guardados em `anexos` | média | onda 2 |
-| 5 | `build_site.py` gera as listas do site institucional a partir do catálogo; mesa antiga recolhida; decisão sobre a ponte de volta ao To Do (`escrever_todo.py`) | pequena | ondas 3 e 4 |
+| 2 · **entregue em 13.10.2026 (CRM 11.47, F219)** | `etapas` e `desfecho` no pré-caso; "Concluir e passar adiante" nas quatro telas; cabeçalho com quem e quando; `salvarAnalise` devolve espécie, análise e data do direito ao pré-caso e ao card (`crm.analise_id`, `crm.data_direito`, linha de `aposentadorias`) | média | onda 1 |
+| 3 · **entregue em 13.10.2026 (CRM 11.47, F219)** | quadro "Desfecho" na Análise de Direito e em Documentos: lembrete (card novo ou etapa 3 do card existente), caso (`gerarCasoDoPre`, desligando o card) ou arquivamento | média | onda 2 |
+| 4 · **entregue em 13.10.2026 (CRM 11.47, F219)** | Documentos em seis quadros, catálogo filtrado pelos benefícios e cruzado com o dossiê, documentos gerados guardados em `anexos` | média | onda 2 |
+| 5 · **parte entregue em 13.10.2026 (CRM 11.47, F219)**: mesa antiga recolhida e `crm/docs_catalogo.py` (compara; `--aplicar` grava). Falta a decisão sobre aplicar ao site e sobre o `escrever_todo.py` | `build_site.py` gera as listas do site institucional a partir do catálogo; mesa antiga recolhida; decisão sobre a ponte de volta ao To Do (`escrever_todo.py`) | pequena | ondas 3 e 4 |
 
 Piloto da onda 1: os 42 cards que vencem em 90 dias, que são os que precisam de análise primeiro.
+
+## 10. O que a F219 decidiu (13.10.2026), com base na pesquisa `pesquisa-formularios-dossie-pipeline.md`
+
+As etapas do card passaram a ser monitorando, em atendimento, analisado, documentação, pronto para protocolar, virou caso e arquivado. Documentação entra quando o lembrete do card vence, e o lembrete criado pela análise cai 60 dias antes da data do direito (D-60), enquanto o aviso de 3 meses (`aposentadorias.lembrar_em`) continua sendo o D-90. Pronto para protocolar entra só quando a data do direito chega (D-0), porque a base manda protocolar no dia do requisito. O motivo Faleceu foi acrescentado ao arquivamento, com aviso para avaliar a pensão aos dependentes, e o card novo nasce com `intervalo_meses = 6`.
+
+O Desfecho sugere o caso quando a data do direito já passou ou quando o ato não espera (revisão, acerto de CNIS, recurso, incapacidade, auxílio-acidente, pensão, reclusão, maternidade, BPC), e sugere o lembrete quando a data é futura; a escolha continua do advogado. A regra de que o caso nasce com procuração e contrato não mudou. A folha gerada fica guardada como HTML (`anexos.origem = 'gerado'`), o assinado entra com `origem = 'assinado'`, e a mesa antiga das Anotações recolhe documentos, análise e decisão quando alguma etapa foi concluída pelo modo atendimento.
+
+Ficaram para decisão: aplicar ao site institucional a lista do catálogo (`python3 crm/docs_catalogo.py --aplicar` deixaria o site só com os itens-base, mais curtos que os de hoje), a ponte de volta ao To Do, a validade do comprovante de residência (90 ou 180 dias), o prazo do MS por mora (60 ou 90 dias) e os anexos IV, V, VIII, XXII, XXIV e XXVII, que estão na Consulta sem lastro na base.

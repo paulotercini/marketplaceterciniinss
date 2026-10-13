@@ -42,7 +42,8 @@ FIX.casos.push({ ...FIX.casos[0], id: "b0000000-0000-0000-0000-0000000000c2",
       return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(SESSAO) });
     const t = (u.match(/\/rest\/v1\/([a-z_]+)/) || [])[1];
     if (m !== "GET") {
-      escritos.push({ t, corpo: JSON.parse(rota.request().postData() || "{}") });
+      let corpo0 = {}; try { corpo0 = JSON.parse(rota.request().postData() || "{}"); } catch (e) { corpo0 = { bruto: true }; }   // F219: a folha gerada sobe em HTML
+      escritos.push({ t, corpo: corpo0 });
       return rota.fulfill({ status: 204, body: "" });
     }
     let corpo = FIX[t] || [];
