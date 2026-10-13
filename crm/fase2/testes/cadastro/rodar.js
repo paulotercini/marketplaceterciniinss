@@ -106,7 +106,7 @@ async function main() {
   // na CI, cada prova que falhou vira anotação do GitHub: o nome e a primeira
   // falha aparecem na página da rodada, sem baixar o log
   if (process.env.GITHUB_ACTIONS) for (const r of ruins) {
-    const falha = (r.saida.split("\n").find(l => /FALHOU|FALHA|Error|✘/.test(l)) || placar(r.saida)).trim().slice(0, 200);
+    const falha = (r.saida.split("\n").filter(l => /FALHOU|FALHA|Error|✘/.test(l)).slice(0, 3).join(" · ") || placar(r.saida)).trim().slice(0, 400);
     console.log(`::error title=${r.arquivo}${r.estourou ? " (estourou)" : ""}::${falha.replace(/%/g, "%25").replace(/\r?\n/g, " ")}`);
   }
   console.log(`\n${feitos.length - ruins.length}/${feitos.length} provas passaram`

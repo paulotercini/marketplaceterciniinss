@@ -76,6 +76,8 @@ FIX.documentos_beneficio = [
   const texto = sel => p.evaluate(s => [...document.querySelectorAll(s)].map(e => e.textContent.replace(/\s+/g, " ").trim()), sel);
   const n = sel => p.evaluate(s => document.querySelectorAll(s).length, sel);
   const pcAtual = () => p.evaluate(cli => JSON.parse(JSON.stringify((D.cliPorId.get(cli).campos || {}).precasos || [])), CLI_CHEIO);
+  // espera a condição em vez de um tempo fixo: sob carga (a CI roda quatro provas juntas) 600 ms não bastavam
+  const esperar = async (cond, ms = 8000) => { const fim = Date.now() + ms; while (Date.now() < fim) { if (await cond()) return true; await p.waitForTimeout(100); } return false; };
   const hojeBr = await p.evaluate(() => fmt(hoje()));
 
   // ── A · onda 2: etapas, Concluir e a análise que volta ao pré-caso e ao card ──
@@ -99,7 +101,8 @@ FIX.documentos_beneficio = [
   const visDd = await p.evaluate(() => !document.querySelector('#ad-campos [data-campo="data_direito"]').hidden);
   const regAntes = reg.length;
   await p.evaluate(cli => salvarAnalise(cli), CLI_CHEIO);
-  await p.waitForTimeout(600);
+  await esperar(async () => { const pc = (await pcAtual())[0] || {}; return pc.etapas && pc.etapas.analise
+    && reg.slice(regAntes).some(x => x.t === "aposentadorias" && x.m === "POST") && reg.slice(regAntes).some(x => x.t === "lembretes" && x.m === "PATCH"); });
   const novos = reg.slice(regAntes), pc2 = (await pcAtual())[0] || {};
   const lemb = novos.filter(x => x.t === "lembretes" && x.m === "PATCH").map(x => x.corpo).pop() || {};
   const apos = novos.filter(x => x.t === "aposentadorias" && x.m === "POST").map(x => x.corpo).pop() || {};
@@ -125,7 +128,7 @@ FIX.documentos_beneficio = [
   await p.waitForSelector("#desfecho");
   const regB = reg.length;
   await p.click("#desfecho .adr-bt:has-text('Criar o lembrete')");
-  await p.waitForTimeout(700);
+  await esperar(async () => reg.slice(regB).some(x => x.t === "lembretes" && x.m === "POST") && !!(((await pcAtual())[0] || {}).desfecho));
   const nl = reg.slice(regB).filter(x => x.t === "lembretes" && x.m === "POST").map(x => x.corpo).pop() || {};
   const pc3 = (await pcAtual())[0] || {};
   conf(7, "B2 Criar o lembrete grava o card de aposentadoria futura com etapa, data, D-60 e cadência de 6 meses, e o pré-caso registra o desfecho",
@@ -137,7 +140,7 @@ FIX.documentos_beneficio = [
   conf(5, "B3 revisão é ato que não espera: o Desfecho sugere o caso", imed.sug === "caso" && /não espera/.test(imed.motivo));
   await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.campos.precasos = [{ id: "pc_2", especie: "Aposentadoria por idade", natureza: "", marc: {}, em: "2026-10-12" }]; }, CLI_CHEIO);
   await p.evaluate(cli => desfechoArquivar(cli, "Faleceu"), CLI_CHEIO);
-  await p.waitForTimeout(500);
+  await esperar(async () => (await pcAtual()).length === 0);
   const arq = await p.evaluate(cli => { const cp = D.cliPorId.get(cli).campos; return { pcs: (cp.precasos || []).length, arq: (cp.pc_arquivados || []).slice(-1)[0], nota: (cp.atendimento || []).slice(-1)[0] }; }, CLI_CHEIO);
   const avisoPensao = await p.evaluate(() => _avisos.some(m => /pensão por morte/.test(m)));
   conf(5, "B4 Arquivar tira o pré-caso da mesa com o motivo, anota, e Faleceu lembra a pensão aos dependentes",
@@ -161,7 +164,7 @@ FIX.documentos_beneficio = [
   await p.waitForSelector("#dq-prov");
   const regC = reg.length;
   await p.click("#dq-prov button:has-text('Imprimir e registrar o pedido')");
-  await p.waitForTimeout(600);
+  await esperar(() => reg.slice(regC).some(x => x.t === "clientes" && x.m === "PATCH" && x.corpo.campos && x.corpo.campos.docs_pedidos));
   const ped = reg.slice(regC).filter(x => x.t === "clientes" && x.m === "PATCH").map(x => x.corpo).pop() || {};
   const dp = ((ped.campos || {}).docs_pedidos || []).slice(-1)[0] || {};
   conf(5, "C4 o pedido ao cliente fica registrado com a espécie do catálogo, a data de entrega e só o que falta", dp.especie === "Apos. por Idade" && dp.ate && dp.itens && dp.itens.some(i => /Biometria/.test(i.nome)) && !dp.itens.some(i => /CNIS/.test(i.nome)));
