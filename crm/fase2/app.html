@@ -4376,7 +4376,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.50</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.51</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8359,7 +8359,7 @@ async function conferirPje(coletaId){
         if(p.classe && !k.classe_judicial) campos.classe_judicial=p.classe;
         if(p.distribuido && !k.ajuizado_em) campos.ajuizado_em=p.distribuido;
         if(p.orgao && !k.orgao_judicial) campos.orgao_judicial=p.orgao;
-        Object.assign(campos, camposLinkPje(k, dados.grau, linkPje(dados.host, p)));
+        Object.assign(campos, camposLinkPje(k, dados.grau, linkPje(dados.host, p), p.numero));
       }
       if(Object.keys(campos).length){ plano.fichas.push({caso_id:k.id, campos}); plano.resumo.fichas++; }
       const movs = (Array.isArray(p.movimentos) && p.movimentos.length ? p.movimentos : [p.movimento]).filter(Boolean);
@@ -8520,7 +8520,10 @@ function linkEsajPorNumero(grau, numero){
 // o link certo para UM andamento do PJe / eproc / e-SAJ
 function linkPjeDoAndamento(a, k){
   const grau = grauDoAndamentoPje(a), sis = sistemaDoAndamentoPje(a);
-  const guardado = linkPjeDoCaso(k, grau);
+  // o link do grau é o do processo principal: andamento de outro processo do caso só abre pelo link do número dele
+  const num = numDoAndPje(a), m = linksPjeDoCaso(k);
+  const outro = num && soDig(k&&k.processo) && num!==soDig(k.processo) && processosDoCaso(k).length>1;
+  const guardado = (num && grau && m[`${num}|${grau}`]) || (outro ? null : linkPjeDoCaso(k, grau));
   // o mapa de links é por grau, não por sistema: um processo migrado do e-SAJ
   // para o eproc tem os dois — o link guardado só vale se for do sistema
   // deste andamento
@@ -8537,7 +8540,7 @@ function linkPjeDoAndamento(a, k){
 // obrigava a adivinhar qual dos dois ele abria
 function botoesPjeDoCaso(k, cls, extra){
   const m = linksPjeDoCaso(k);
-  const graus = Object.keys(m).filter(g=>m[g]);
+  const graus = Object.keys(m).filter(g=>m[g] && !g.includes("|"));
   const bt = (href, rot, tit) => `<a class="${cls}" href="${urlOk(href)}" target="_blank"
     rel="noopener" title="${esc(tit)}"${extra||""}>${esc(rot)}</a>`;
   if(graus.length)
@@ -8548,14 +8551,21 @@ function botoesPjeDoCaso(k, cls, extra){
 }
 // o que gravar na ficha quando uma coleta traz um link: o do grau dela entra
 // no mapa, sem derrubar o do outro grau
-function camposLinkPje(k, grau, lk){
+// F223 · o caso com dois processos tinha um link por grau só: a novidade do
+// processo de 2021 abria os autos do de 2026. O link passa a ser guardado
+// também pelo número ("<20 dígitos>|<grau>"), e o de grau vale para o principal.
+function camposLinkPje(k, grau, lk, num){
   if(!lk) return {};
-  const m = linksPjeDoCaso(k);
-  const campos = {};
-  if(k.pje_link !== lk) campos.pje_link = lk;
-  if(grau && m[grau] !== lk) campos.pje_links = {...m, [grau]: lk};
+  const m = linksPjeDoCaso(k), d = soDig(num), campos = {}, novo = {...m};
+  const doPrincipal = !d || !soDig(k.processo) || d===soDig(k.processo) || processosDoCaso(k).length<2;
+  if(doPrincipal && k.pje_link !== lk) campos.pje_link = lk;
+  if(grau && doPrincipal) novo[grau] = lk;
+  if(grau && d) novo[`${d}|${grau}`] = lk;
+  if(JSON.stringify(novo)!==JSON.stringify(m)) campos.pje_links = novo;
   return campos;
 }
+const numDoAndPje = a => (String((a&&a.origem_id)||"").match(/\d{20}/)||[])[0]
+  || soDig((String((a&&a.texto)||"").match(/\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}/)||[])[0]||"");
 // o lado da parte que não é órgão público = o cliente
 function clienteDasPartes(partes){
   const lados = String(partes||"").split(/\s+[Xx]\s+/);
@@ -8572,7 +8582,7 @@ async function vincularPjeNoCaso(p, k, nomeCli){
     ...(p.classe && !k.classe_judicial?{classe_judicial:p.classe}:{}),
     ...(p.distribuido && !k.ajuizado_em?{ajuizado_em:p.distribuido}:{}),
     ...(p.orgao && !k.orgao_judicial?{orgao_judicial:p.orgao}:{}),
-    ...camposLinkPje(k, (planoPjeAtual||{}).grau, linkPje((planoPjeAtual||{}).host, p))};
+    ...camposLinkPje(k, (planoPjeAtual||{}).grau, linkPje((planoPjeAtual||{}).host, p), p.numero)};
   try{
     await patchCaso(k.id, corpo);
   }catch(e){
@@ -8601,7 +8611,7 @@ async function criarCasoPjeParaCliente(p, c){
   const extra={...(p.classe?{classe_judicial:p.classe}:{}),
                ...(p.distribuido?{ajuizado_em:p.distribuido}:{}),
                ...(p.orgao?{orgao_judicial:p.orgao}:{}),
-               ...camposLinkPje({}, (planoPjeAtual||{}).grau, linkPje((planoPjeAtual||{}).host, p))};
+               ...camposLinkPje({}, (planoPjeAtual||{}).grau, linkPje((planoPjeAtual||{}).host, p), p.numero)};
   let k;
   try{
     [k]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
@@ -8948,7 +8958,7 @@ async function conferirPjeProc(coletaId){
     const campos={};
     if(dados.classe && !k.classe_judicial) campos.classe_judicial=dados.classe;
     if(dados.orgao && !k.orgao_judicial) campos.orgao_judicial=dados.orgao;
-    Object.assign(campos, camposLinkPje(k, dados.grau, dados.link));
+    Object.assign(campos, camposLinkPje(k, dados.grau, dados.link, dados.numero));
     if(Object.keys(campos).length){ plano.fichas.push({caso_id:k.id, campos}); }
     for(const it of (dados.itens||[])){
       const texto=[...(it.textos||[]), ...(it.docs||[]).map(d=>`📎 ${d.nome}`)].join(" · ");
@@ -24304,7 +24314,7 @@ function acessosDoCaso(k){
   const conselho = crpsNups(k).map(n=>a(linkERecursos(n), crpsNups(k).length>1?`e-SISREC ${formatarNup(n)}`:"e-SISREC",
     `abrir o recurso ${formatarNup(n)} no e-SISREC`));
   // judicial: um por grau, o mais alto primeiro
-  const m = linksPjeDoCaso(k), graus = Object.keys(m).filter(g=>m[g]).sort().reverse();
+  const m = linksPjeDoCaso(k), graus = Object.keys(m).filter(g=>m[g] && !g.includes("|")).sort().reverse();
   let jud = graus.map(g=>a(m[g], `${nomeSistemaDoLink(m[g])} · ${g}`, `abrir os autos do ${g} na sua sessão do ${nomeSistemaDoLink(m[g])}`));
   if(!jud.length && k.pje_link) jud = [a(k.pje_link, nomeSistemaDoLink(k.pje_link), "abrir os autos digitais")];
   if(!jud.length && justicaDoNumeroCnj(k.processo)==="estadual"){
@@ -25539,7 +25549,7 @@ function msgCliente(casoId, fonte, texto, data, pronto){
 }
 // F190 · os espelhos sem linha de `andamentos` entram no mesmo cartão
 // o link do processo no grau mais alto que a coleta já trouxe
-const linkPjeMaisAlto = k => linkPjeDoCaso(k, Object.keys(linksPjeDoCaso(k)).filter(g=>linksPjeDoCaso(k)[g]).sort().pop());
+const linkPjeMaisAlto = k => linkPjeDoCaso(k, Object.keys(linksPjeDoCaso(k)).filter(g=>linksPjeDoCaso(k)[g] && !g.includes("|")).sort().pop());
 function oficCnj(k, txt, m, ch){
   const l = linkPjeMaisAlto(k);
   return { casoId:k.id, segTexto:txt, fonte:"processo judicial",

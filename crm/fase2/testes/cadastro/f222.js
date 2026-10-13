@@ -124,6 +124,20 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await cel.screenshot({ path: path.join(OUT, "04-celular.png") });
   conf("no celular o ＋ Cliente tem 44 px de altura e a tela não rola para o lado", c8.h >= 44 && !c8.largo);
 
+  // F223 · caso com dois processos: a novidade de cada um abre os autos dele
+  const lk = await p.evaluate(() => {
+    const k = { id: "x-lk", processo: "5002222-11.2026.4.03.6314", pje_links: {}, processos: [{ numero: "5002222-11.2026.4.03.6314" }, { numero: "0001111-22.2021.4.03.6314" }] };
+    const novo = "https://pje1g.trf3.jus.br/a?id=1", velho = "https://pje1g.trf3.jus.br/a?id=2";
+    Object.assign(k, camposLinkPje(k, "1º grau", novo, "5002222-11.2026.4.03.6314"));
+    Object.assign(k, camposLinkPje(k, "1º grau", velho, "0001111-22.2021.4.03.6314"));
+    const and = n => ({ origem: "pje", origem_id: `mov:${n}:2024-02-29`, texto: "PJe (1º grau): Remetidos os autos" });
+    const sem = { ...k, pje_links: { "1º grau": novo } };
+    return { novo: linkPjeDoAndamento(and("50022221120264036314"), k), velho: linkPjeDoAndamento(and("00011112220214036314"), k),
+      semNumero: linkPjeDoAndamento(and("00011112220214036314"), sem), grau: k.pje_links["1º grau"], botoes: (botoesPjeDoCaso(k, "x").match(/<a /g) || []).length };
+  });
+  conf("no caso com dois processos, a novidade de cada um abre os autos dele, e nunca os do outro",
+    lk.novo.endsWith("id=1") && lk.velho.endsWith("id=2") && lk.semNumero === null && lk.grau.endsWith("id=1") && lk.botoes === 1);
+
   conf("sem erro de página", !p._erros.length && !cel._erros.length);
   if (p._erros.length || cel._erros.length) console.log(p._erros.concat(cel._erros).join("\n"));
   const bons = ok.filter(x => x[1]).length;
