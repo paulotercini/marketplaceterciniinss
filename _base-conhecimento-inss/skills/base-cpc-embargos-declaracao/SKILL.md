@@ -128,3 +128,7 @@ Mérito recursal está no recurso próprio. Contradição interna detalhada est�
 ## Redação da peça neste tema
 
 Ao transpor esta matéria para peça, seguir o bloco "técnica 6 (demonstrar por que a omissão altera o resultado)" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
+
+## Cadeia de cada pedido (regra permanente, 12/10/2026)
+
+Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.
