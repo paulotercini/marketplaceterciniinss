@@ -3857,6 +3857,18 @@ section.ben{background:#fff;border:1px solid #E7E6E1;border-radius:12px;padding:
 .incap-prox{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;font-weight:600;color:var(--texto)}
 @media (prefers-reduced-motion:reduce){.incap>summary::before{transition:none}}
 @media (max-width:720px){.incap-l1,.incap-l2{font-size:13px}.incap>summary{padding:10px 12px}}
+/* F222 · a pesquisa sem a pessoa oferece o cadastro */
+.busca-novo{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:14px 0 4px;padding:14px 16px;border:1px dashed var(--borda);border-radius:12px;background:var(--branco,#fff)}
+.busca-novo p{margin:0;flex:1 1 220px;font-size:14px;color:var(--texto)}
+.busca-novo.com-achados{background:transparent;border-width:1px 0 0;border-style:solid;border-radius:0;padding:12px 2px 4px}
+.busca-novo.com-achados p{color:var(--cinza)}
+.bn-cli{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border:0;border-radius:8px;background:var(--azul);color:#fff;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;transition:transform .16s ease-out}
+.bn-cli:active{transform:scale(.97)}
+.bn-cli:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+@media (hover:hover) and (pointer:fine){.bn-cli:hover{background:var(--azul-escuro)}}
+@media (prefers-reduced-motion:reduce){.bn-cli{transition:none}}
+@media (max-width:720px){.bn-cli{height:44px}}
+.ncl-da-busca{margin:0 0 8px;font-size:13.5px;color:var(--cinza)}
 /* F178–F180 · Triagem, Honorários e Identificação na língua visual da
    Análise de Direito (desenho aprovado em 04.10.2026) */
 .cad-cartao.tri-novo,.cad-cartao.idf{background:none;border:0;box-shadow:none;padding:0;display:flex;flex-direction:column;gap:16px}
@@ -4364,7 +4376,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.49</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.50</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4622,13 +4634,31 @@ function termosBusca(txt){
 function pesquisar(txt){
   const termos = termosBusca(txt);
   if(!termos.length) return [];
-  const achados = D.clientes.filter(c=>termos.every(t=>c._ix.includes(t)));
+  // F222 · o cliente gravado agora (etapa 1 do Novo Cliente, CPF achado no banco) entra sem índice e derrubava a pesquisa
+  const achados = D.clientes.filter(c=>{ if(c._ix==null) reindexarCliente(c); return termos.every(t=>c._ix.includes(t)); });
   // quem casa pelo NOME aparece primeiro; depois, nome mais curto (mais exato)
   const noNome = c => termos.every(t=>(c._nome_ix||"").includes(t));
   return achados.sort((a,b)=>{
     const d = (noNome(b)?1:0) - (noNome(a)?1:0);
     return d || (a.nome||"").length - (b.nome||"").length;
   });
+}
+// F222 · a pesquisa que não acha a pessoa oferece o cadastro. Vale para nome
+// (três letras ou mais) e para CPF válido; número de processo, NB e protocolo
+// não viram cliente. Com resultados, a saída fica no pé da lista, porque o
+// achado pode ser um homônimo; some quando alguém tem exatamente o nome
+// digitado (sem contar "de", "da", "dos") ou o CPF digitado.
+function saidaNovoCliente(txt, achados){
+  const t = String(txt||"").trim(), d = t.replace(/\D/g,"");
+  const ehCpf = d.length===11 && cpfValido(d) && !/[a-z]/.test(dsa(t));
+  if(!ehCpf && (t.length<3 || !/[a-z]/.test(dsa(t)))) return "";
+  const fortes = s => termosBusca(s).sort().join(" ");
+  if(ehCpf ? achados.some(c=>digitosCpf(c.cpf)===d) : achados.some(c=>fortes(c.nome)===fortes(t))) return "";
+  return `<div class="busca-novo${achados.length?" com-achados":""}">
+    <p>${achados.length ? "Não é nenhum destes?" : `Ninguém com ${ehCpf ? `o CPF ${esc(fmtCpf(d))}` : `“${esc(t)}”`} no CRM.`}</p>
+    <button type="button" class="bn-cli" data-bn="${esc(t)}" onclick="novoClienteDaBusca(this.dataset.bn)" title="abre o cadastro do cliente novo com ${ehCpf?"o CPF":"o nome"} da pesquisa">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Cliente</button>
+  </div>`;
 }
 // F39 · navegar com a pesquisa ativa: o clique no menu VAI para a lista e a
 // pesquisa se apaga sozinha — antes era preciso clicar no ✕ primeiro. Um
@@ -6116,15 +6146,14 @@ function montarSidebar(){
     if(somLigado()) plim();
     aviso(somLigado()?"Som ligado":"Som desligado", false);
   };
-  document.getElementById("btn-novo-cli").onclick=()=>{
-    document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
-    visao="novocliente"; limparBusca(); fecharMenuCel(); fecharFicha(false); render();
-  };
+  // o cadastro já com ficha continua de onde parou; sem ficha, recomeça limpo
+  document.getElementById("btn-novo-cli").onclick=()=>{ if(!_ncl.id) _ncl = {etapa:1, id:null}; irNovoCliente(); };
   document.querySelectorAll(".lista-item").forEach(el=>{
     el.onclick=()=>{
       document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
       el.classList.add("ativa");
       visao = el.dataset.v; limparBusca(); esconderEtiqueta();
+      if(visao==="novocliente" && !_ncl.id) _ncl = {etapa:1, id:null};   // F222 · o nome de uma pesquisa antiga não vale aqui
       fecharMenuCel(); fecharFicha(false); render();
     };
     el.onmouseenter=()=>etiquetaMenu(el);
@@ -7941,9 +7970,9 @@ function render(){
         meio=document.getElementById("conteudo-meio");
   if(buscaTxt){
     tituloLista("🔍 Pesquisa");
-    const achados = pesquisar(buscaTxt).slice(0,200);
+    const achados = pesquisar(buscaTxt).slice(0,200), novo = saidaNovoCliente(buscaTxt, achados);
     sub.textContent=`${achados.length} cliente(s) encontrados`;
-    meio.innerHTML = achados.map(c=>cartaoCliente(c)).join("") || "<p class='meio-sub'>Nada encontrado.</p>";
+    meio.innerHTML = (achados.map(c=>cartaoCliente(c)).join("") || (novo ? "" : "<p class='meio-sub'>Nada encontrado.</p>")) + novo;
     return ligarCartoes();
   }
   if(visao==="direito") return renderDireito();
@@ -10563,6 +10592,7 @@ function renderNovoCliente(){
       <p style="font-size:12px;color:var(--cinza);margin-top:8px">O cliente vai à lista Escritório e ${esc(quemAvisaClienteNovo().map(x=>x.nome.split(" ")[0]).join(", ")||"os advogados")} recebem a menção para abrir o atendimento.</p>
     </div>` : `
     <div class="caso ncl-larga">${passos}
+      ${_ncl.nomeBusca ? `<p class="ncl-da-busca">Nome trazido da pesquisa: <b>${esc(_ncl.nomeBusca)}</b>. Na etapa 2, o nome do CNIS tem preferência.</p>` : ""}
       <div class="form-linha">
         <input id="ncl-cpf" placeholder="CPF (só números) *" maxlength="14" oninput="conferirCpfNovo()">
         <input id="ncl-senha" placeholder="Senha Meu INSS" autocomplete="off"
@@ -10584,6 +10614,21 @@ function renderNovoCliente(){
   if(e2) nclPreencher();
 }
 function nclRecomecar(){ _ncl = {etapa:1, id:null}; renderNovoCliente(); }
+function irNovoCliente(){
+  document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
+  visao="novocliente"; limparBusca(); fecharMenuCel(); fecharFicha(false); render();
+}
+// F222 · o ＋ Cliente da pesquisa: o Novo Cliente abre do começo com o CPF no
+// campo ou com o nome guardado para a ficha (só nome e sobrenome, ao menos)
+function novoClienteDaBusca(t){
+  const d = String(t||"").replace(/\D/g,""), cpf = d.length===11 && cpfValido(d) ? d : "";
+  const nome = !cpf && termosBusca(t).length>=2 ? tituloOrgao(String(t).trim().replace(/\s+/g," ").toUpperCase()) : "";
+  _ncl = {etapa:1, id:null, nomeBusca:nome};
+  irNovoCliente();
+  const i = document.getElementById("ncl-cpf"); if(!i) return;
+  if(cpf){ i.value = cpf; conferirCpfNovo(); }
+  i.focus();
+}
 // a etapa 2 abre com o que a ficha já tem: o que o dossiê leu e o que a recepção digitou
 // o que o dossiê diz do cadastro: nome e nascimento do CNIS, estado civil da
 // qualificação do INSS (pedido ou laudo) e, como profissão, a ocupação (CBO)
@@ -10666,8 +10711,9 @@ async function nclPreencher(){
   if(_ncl.id!==id || !document.getElementById("ncl-nome")) return;
   const cad = dc && dc.texto ? lerCadastroTexto(dc.texto) : {}, dz0 = cadastroDoDossie(docs);
   _ncl.cad = cad;
-  const nomeFicha = cli.nome && !/^Cliente \d{3}\./.test(cli.nome) ? cli.nome : "";
-  pre("ncl-nome", nomeFicha || tituloOrgao(cad.nome || dz0.nome || ""));
+  const daBusca = !!_ncl.nomeBusca && cli.nome===_ncl.nomeBusca;
+  const nomeFicha = cli.nome && !/^Cliente \d{3}\./.test(cli.nome) && !daBusca ? cli.nome : "";
+  pre("ncl-nome", nomeFicha || tituloOrgao(cad.nome || dz0.nome || "") || (daBusca ? cli.nome : ""));
   pre("ncl-dn", dnIso(cli.dn) || dnIso(cad.nascimento) || dnIso(dz0.nascimento)); mostrarIdadeNovo();
   pre("ncl-sexo", cv.sexo || cad.sexo);
   // estado civil e profissão só pelo dossiê: não há campo para digitar
@@ -10857,7 +10903,7 @@ function nclTodosPortais(){
 }
 async function nclEtapa1(seguir=true){
   if(_ncl.id){ if(seguir){ _ncl.etapa=2; renderNovoCliente(); } return; }
-  const nome=_ncl.nomePat||"";
+  const nome=_ncl.nomePat||_ncl.nomeBusca||"";
   const cpf=document.getElementById("ncl-cpf").value.replace(/\D/g,"");
   if(!cpf) return aviso("Preencha o CPF: é ele que prende o dossiê à ficha");
   // F32 · CPF digitado errado não entra: a base se organiza pelo CPF
@@ -10880,7 +10926,7 @@ async function nclEtapa1(seguir=true){
   if(senha) await api(`/rest/v1/credenciais`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({cliente_id:cli.id, tipo:"meu_inss", valor:senha})}).catch(()=>
       aviso("O cliente gravou, mas a senha não — cadastre de novo pela ficha"));
-  _ncl = {etapa: seguir ? 2 : 1, id:cli.id};
+  _ncl = {etapa: seguir ? 2 : 1, id:cli.id, nomeBusca:_ncl.nomeBusca};
   if(!seguir){ const r=document.getElementById("ncl-ficha-recado"); if(r && !/bloqueou/.test(r.textContent)) r.textContent="Ficha criada ✔ — o dossiê baixado agora se prende a ela."; aviso("Ficha criada ✔ — rode a extensão do dossiê", false); return; }
   aviso("Ficha criada ✔ — agora a etapa 2", false);
   renderNovoCliente();
