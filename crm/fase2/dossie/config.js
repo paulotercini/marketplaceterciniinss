@@ -1,10 +1,15 @@
 const $ = id => document.getElementById(id);
 
-chrome.storage.local.get(['url', 'chave', 'quem']).then(c => {
+chrome.storage.local.get(['url', 'chave', 'quem', 'chave_transparencia']).then(c => {
   $('url').value = c.url || '';
   $('chave').value = c.chave || '';
+  $('chave_transparencia').value = c.chave_transparencia || '';
   mostrarQuem(c.quem);
 });
+$('salvar_transparencia').onclick = async () => {
+  await chrome.storage.local.set({ chave_transparencia: String($('chave_transparencia').value || '').replace(/[^!-~]/g, '') });
+  $('ok_transparencia').textContent = '✔ guardada';
+};
 
 function mostrarQuem(quem) {
   $('quem').className = quem ? 'ok' : 'erro';
