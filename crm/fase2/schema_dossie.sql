@@ -13,3 +13,10 @@
 -- }
 -- Uma chave por portal; a rodada nova substitui só a do portal que rodou.
 alter table clientes add column if not exists dossie jsonb;
+
+-- Rodar o dossiê de novo substitui o PDF (x-upsert). Substituir objeto existente é UPDATE em
+-- storage.objects, e o bucket só tinha insert/select/delete: a segunda rodada dava 400 em tudo
+-- (medido em 13.10.2026). Aplicado no Supabase como migração anexos_storage_update_para_upsert_do_dossie.
+drop policy if exists anexos_atualizar on storage.objects;
+create policy anexos_atualizar on storage.objects for update to authenticated
+  using (bucket_id = 'anexos') with check (bucket_id = 'anexos');

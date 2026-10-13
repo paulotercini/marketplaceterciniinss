@@ -128,6 +128,7 @@ const PORTAIS = [
   { chave: 'recursos', nome: 'e-Recursos', url: 'https://consultaprocessos.inss.gov.br/', padrao: 'https://consultaprocessos.inss.gov.br/*', arquivo: 'recursos.js' },
   { chave: 'mte', nome: 'Emprega Brasil', url: 'https://servicos.mte.gov.br/spme-v2/#/login', padrao: 'https://servicos.mte.gov.br/*', arquivo: 'mte.js', soSeAberto: true },
   { chave: 'hc', nome: 'HC Ribeirão', url: 'https://appiris.hcrp.usp.br/apex/r/iris/nossohcribeirao/login', padrao: 'https://appiris.hcrp.usp.br/*', hc: true, soSeAberto: true },
+  { chave: 'cadunico', nome: 'CadÚnico', url: 'https://cadunico.dataprev.gov.br/#/home', padrao: 'https://cadunico.dataprev.gov.br/*', arquivo: 'cadunico.js' },
   { chave: 'redesim', nome: 'Redesim', url: 'https://consultacnpj.redesim.gov.br/minhas-empresas', padrao: 'https://consultacnpj.redesim.gov.br/*', redesim: true },
 ];
 // abre em abas os portais que ainda não estão abertos — a pessoa entra em cada
@@ -214,10 +215,71 @@ chrome.downloads.onCreated.addListener(d => {
     chrome.downloads.cancel(d.id).then(() => chrome.downloads.erase({ id: d.id })).catch(() => {});
 });
 
+// ── PORTAL DA TRANSPARÊNCIA ──────────────────────────────────────────────
+// Sem login: a API de dados abertos (chave gratuita, cabeçalho chave-api-dados)
+// devolve os pagamentos de BPC, Bolsa Família, Auxílio Brasil/Emergencial,
+// Garantia-Safra e Seguro-Defeso por CPF ou NIS. Roda no fim do CadÚnico, para
+// cada integrante da família (o CadÚnico dá CPF e NIS de todos). A API aceita
+// ~90 chamadas/min: pausa entre uma e outra, e para no 429.
+const TRANSP = 'https://api.portaldatransparencia.gov.br/api-de-dados/';
+const TRANSP_ENDPOINTS = {
+  bpc: 'bpc-por-cpf-ou-nis?codigo=', novo_bolsa_familia: 'novo-bolsa-familia-sacado-por-cpf-ou-nis?codigo=',
+  bolsa_familia: 'bolsa-familia-sacado-por-cpf-ou-nis?codigo=', auxilio_brasil: 'auxilio-brasil-sacado-por-cpf-ou-nis?codigo=',
+  auxilio_emergencial: 'auxilio-emergencial-por-cpf-ou-nis?codigoBeneficiario=', safra: 'safra-codigo-por-cpf-ou-nis?codigo=',
+  seguro_defeso: 'seguro-defeso-codigo?codigo=',
+};
+async function transparencia(m) {
+  const { chave_transparencia: chave } = await chrome.storage.local.get(['chave_transparencia']);
+  if (!chave) return { crm: 'sem chave', aviso: 'Portal da Transparência: cole a chave da API em ⚙ para consultar os integrantes' };
+  let pessoas = (m.pessoas || []).filter(p => p.cpf || p.nis);
+  // sem login (botão do popup): só o CPF/NIS digitado; nome e integrantes vêm da ficha do CRM, se houver
+  if (!pessoas.length && m.cpf) {
+    const c = await CRM.clienteDoCpf(m.cpf).catch(() => null);
+    m.nome = m.nome || (c && c.nome) || '';
+    pessoas = [{ nome: m.nome || 'Cliente', cpf: /^\d{11}$/.test(m.cpf) ? m.cpf : null, nis: /^\d{11}$/.test(m.cpf) ? null : m.cpf }];
+    for (const x of (c && c.membros) || []) if (x.cpf !== m.cpf && (x.cpf || x.nis)) pessoas.push({ nome: x.nome, cpf: x.cpf, nis: x.nis });
+  }
+  const resultados = {};
+  let parou = null;
+  for (const p of pessoas) {
+    const codigo = p.cpf || p.nis;
+    resultados[codigo] = { pessoa: { nome: p.nome, cpf: p.cpf || null, nis: p.nis || null }, programas: {} };
+    for (const [k, ep] of Object.entries(TRANSP_ENDPOINTS)) {
+      if (parou) break;
+      const itens = [];
+      for (let pagina = 1; pagina <= 30; pagina++) {
+        const r = await fetch(`${TRANSP}${ep}${encodeURIComponent(codigo)}&pagina=${pagina}`, { headers: { 'chave-api-dados': chave, Accept: 'application/json' } }).catch(() => null);
+        await pausa(700);
+        if (!r) { resultados[codigo].erro = 'sem resposta'; break; }
+        if (r.status === 429) { parou = 'a API limitou as consultas (429) — rode de novo em alguns minutos'; break; }
+        if (r.status === 401 || r.status === 403) { parou = `a chave da API foi recusada (${r.status}) — confira em ⚙`; break; }
+        if (!r.ok) { resultados[codigo].erro = `${k}: HTTP ${r.status}`; break; }
+        const j = await r.json().catch(() => []);
+        const lista = Array.isArray(j) ? j : [];
+        itens.push(...lista);
+        if (lista.length < 15) break;                         // a API pagina de 15 em 15
+      }
+      if (itens.length) resultados[codigo].programas[k] = itens;
+    }
+    if (parou) { resultados[codigo].erro = parou; break; }
+  }
+  const t = R.textoTransparencia(pessoas, resultados);
+  const arquivo = { cpf: m.cpf, nome: m.nome, fonte: 'Transparencia', arquivo: 'Portal da Transparencia - beneficios por integrante.txt',
+    mime: 'text/plain', b64: R.b64(new TextEncoder().encode(t.texto)) };
+  const s = await salvar(arquivo).catch(e => ({ crm: String(e.message || e) }));
+  const res = await CRM.guardarResumo({ cpf: m.cpf, portal: 'transparencia',
+    resumo: { baixados: ['Portal da Transparencia - beneficios por integrante'], inexistentes: [], falhas: parou ? [parou] : [], pessoas: t.pessoas } })
+    .catch(e => String(e.message || e));
+  const comPagamento = t.pessoas.filter(p => p.programas.length).length;
+  return { ok: true, crm: res, aviso: `Portal da Transparência: ${pessoas.length} integrante(s) consultado(s), ${comPagamento} com pagamento${parou ? ' — ' + parou : ''}${s.crm && s.crm !== 'ok' ? ` (CRM: ${s.crm})` : ''}` };
+}
+
 // o resumo da rodada (o que veio, o que o portal diz que não existe, o que
 // falhou) vai para clientes.dossie — é o que deixa a ficha dizer "sem CTC"
 const resumo = m => CRM.guardarResumo({ cpf: m.cpf, portal: m.portal,
-  resumo: { baixados: m.baixados || [], inexistentes: m.inexistentes || [], falhas: m.falhas || [] } })
+  resumo: Object.assign({ baixados: m.baixados || [], inexistentes: m.inexistentes || [], falhas: m.falhas || [] },
+    m.cadastro ? { cadastro: m.cadastro } : {},          // Meu INSS: os dados cadastrais do CNIS, nas colunas do CRM
+    m.familia ? { familia: m.familia, familias: m.familias || [m.familia] } : {}) })   // CadÚnico: a família (renda per capita, integrantes)
   .then(crm => ({ ok: true, crm }), e => ({ ok: false, crm: String(e.message || e) }));
 
 chrome.runtime.onMessage.addListener((m, _de, responder) => {
@@ -232,6 +294,7 @@ chrome.runtime.onMessage.addListener((m, _de, responder) => {
   const tarefa = m.tipo === 'salvar' ? salvar(m)
     : m.tipo === 'resumo' ? resumo(m)
     : m.tipo === 'abrir' ? abrirTudo()
+    : m.tipo === 'transparencia' ? transparencia(m)
     : m.tipo === 'crm' && m.acao === 'entrar' ? CRM.entrar(m.email, m.senha).then(quem => ({ quem }))
     : m.tipo === 'crm' && m.acao === 'sair' ? CRM.sair().then(() => ({ ok: true }))
     : null;
