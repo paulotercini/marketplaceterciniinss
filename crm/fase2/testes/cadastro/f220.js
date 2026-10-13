@@ -264,9 +264,11 @@ function conf(peso, nome, ok) {
   await paulo.evaluate(() => { fecharEscolha(); });
   await paulo.evaluate(id => abrirOrganizar(id), cli2.id);
   await paulo.waitForTimeout(900);
-  const sug = await paulo.evaluate(() => [...document.querySelectorAll(".org-s p b")].map(x => x.textContent));
-  conf(3, "5.2 as sugestões apontam o protocolo repetido e o processo que cita o NB de outro caso",
-    sug.some(t => /Protocolo INSS 987654321 está gravado em 2 casos/.test(t)) && sug.some(t => /Processo judicial 0005555-11\.2025\.4\.03\.6314 cita o NB 612\.345\.678-9/.test(t)));
+  // F221 · o plano automático junta ao caso judicial o NB que a inicial cita e os recursos do mesmo benefício
+  const plano = await paulo.evaluate(() => [...document.querySelectorAll(".org-plano li")].map(x => x.textContent.replace(/\s+/g, " ")));
+  conf(3, "5.2 o plano leva ao caso judicial o NB que a inicial cita, os recursos e o protocolo, e junta os casos vazios",
+    plano.some(t => /Levar o NB 612\.345\.678-9 ao caso Judicial/.test(t)) && plano.some(t => /Recurso CRPS 44233\.654321\/2025-12 ao caso Judicial/.test(t))
+    && plano.some(t => /Protocolo INSS 987654321 ao caso Judicial/.test(t)) && plano.filter(t => /^Juntar o caso/.test(t)).length === 2);
   await foto(paulo, "organizar-casos", true);
   // 5.3 · o processo vai ao caso do B31, com o andamento e o documento
   await paulo.evaluate(([a, b]) => moverNumero("proc", "00055551120254036314", a, b), [D2, D1]);
