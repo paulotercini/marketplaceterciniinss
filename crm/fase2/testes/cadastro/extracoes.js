@@ -78,9 +78,13 @@ const SUPA = "https://ficticio.supabase.co";
   // 2) "DCB 16/09" vira a data de cessação, com alarme
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   await p.waitForTimeout(700);
-  await registrar("Concedido B31, DCB 16/09 conforme carta.");
-  const patDcb = escritos.find(x => x.m === "PATCH" && x.t === "casos" && x.corpo.dcb === "2026-09-16");
-  conf("a DCB do texto entrou na ficha (16/09 → 2026-09-16)",
+  // a data sem ano é a próxima ocorrência dela; o teste usa uma data 20 dias à frente,
+  // para não depender do dia em que roda
+  const fut = new Date(Date.now() + 20 * 86400000).toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
+  const ddmm = `${fut.slice(8, 10)}/${fut.slice(5, 7)}`;
+  await registrar(`Concedido B31, DCB ${ddmm} conforme carta.`);
+  const patDcb = escritos.find(x => x.m === "PATCH" && x.t === "casos" && x.corpo.dcb === fut);
+  conf(`a DCB do texto entrou na ficha (${ddmm} → ${fut})`,
     patDcb && patDcb.corpo.dcb_prorrogacao_pedida === false);
 
   // 3) o protocolo citado entra na ficha e vira pesquisável

@@ -66,8 +66,11 @@ FIX.clientes[1] = { ...FIX.clientes[1], triagem: { atendimento:
   await abrir(CLI_CHEIO);
   conf("a moldura acabou: nenhum iframe na tela",
     (await p.evaluate(() => document.querySelectorAll("iframe").length)) === 0);
-  conf("nenhum iframe no arquivo inteiro",
-    !/\<iframe/i.test(await p.evaluate(() => document.documentElement.outerHTML)));
+  // o único iframe do arquivo é o visualizador do F184 (documento do PJe em
+  // sandbox, em janela própria); site externo dentro do CRM não volta
+  conf("nenhum iframe de site externo no arquivo inteiro",
+    (await p.evaluate(() => document.documentElement.outerHTML.match(/<iframe[^>]*>/gi) || []))
+      .every(t => /\bsandbox\b/.test(t) && /srcdoc=/.test(t) && !/\ssrc=/.test(t)));
 
   const cartoes = await p.evaluate(() =>
     [...document.querySelectorAll('.painel[data-p="0"].ativo .cad-tit')].map(x => x.innerText.split("\n")[0].trim()));
