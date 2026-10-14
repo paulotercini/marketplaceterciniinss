@@ -91,7 +91,8 @@ AVISOS = [
     "STJ. Os espelhos são os acórdãos que a Secretaria de Jurisprudência tratou, não todos os julgados. As íntegras "
     "(dados abertos do STJ) cobrem 2021 a 2025, com acórdãos e decisões monocráticas terminativas. De 2026 em diante, "
     "quando o STJ passou a publicar o texto de poucas, a fonte é o Diário de Justiça Eletrônico Nacional (fonte djen), "
-    "restrito aos processos em que o INSS é parte. Veja cobertura_integras.",
+    "restrito aos processos em que o INSS é parte. Veja cobertura_integras. Na fonte djen, data_publicacao é a "
+    "disponibilização no Diário, e a publicação oficial é o dia útil seguinte (conferido em 13/10/2026).",
     "STF. Entram os temas de repercussão geral e os acórdãos dos leading cases previdenciários e das ações de "
     "controle do catálogo do escritório. A pesquisa geral de jurisprudência do STF não está aqui.",
     "A Jurisprudência em Teses traz as 7 edições do previdenciário e 63 de outros ramos que tocam o trabalho do "
