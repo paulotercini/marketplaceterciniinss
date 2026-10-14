@@ -53,8 +53,12 @@
         const u8 = r.ok ? R.comoPdf(buf) : null;
         if (!u8) {
           const msg = R.mensagemDoPortal(buf);
-          if (r.status === 404 || r.status === 204 || (r.ok && msg)) inexistentes.push(`${arquivo}${msg ? `: ${msg}` : ''}`);
-          else falhas.push(`${arquivo}: ${r.ok ? 'o portal não devolveu PDF' : `HTTP ${r.status}`}${msg ? ` — ${msg}` : ''}`);
+          // 403 = o portal não dá este PDF para este perfil (quem não é o responsável
+          // familiar, família antiga): é "não existe para este CPF", não falha técnica
+          // e 200 vazio (segunda família do CPF, 13.10.2026) também é "não há PDF"
+          if (r.status === 404 || r.status === 204 || r.status === 403 || (r.ok && (msg || !buf.byteLength)))
+            inexistentes.push(`${arquivo}${msg ? `: ${msg}` : (r.status === 403 ? ': o portal não permite para este perfil (403)' : ': o portal não tem este PDF para esta família')}`);
+          else falhas.push(`${arquivo}: ${r.ok ? `o portal não devolveu PDF (${new TextDecoder().decode(new Uint8Array(buf).slice(0, 120)).replace(/\s+/g, ' ')})` : `HTTP ${r.status}`}${msg ? ` — ${msg}` : ''}`);
           return;
         }
         const s = await D.salvar(cliente, 'CadUnico', arquivo, u8);
