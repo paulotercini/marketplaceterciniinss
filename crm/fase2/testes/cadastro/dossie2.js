@@ -4,6 +4,7 @@
 // sem os despachos. No quadro "O que o dossiê já diz": a DCB a gravar, o
 // recurso com o prazo contado da conclusão do pedido, a decadência da revisão
 // e o último laudo. Dados fictícios, datas contadas a partir de hoje.
+process.env.TZ = "America/Sao_Paulo";   // as datas da prova seguem o relógio do escritório, e não o da CI (UTC vira o dia às 21h)
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
