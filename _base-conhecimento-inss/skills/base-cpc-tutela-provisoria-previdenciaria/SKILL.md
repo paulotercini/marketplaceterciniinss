@@ -59,7 +59,7 @@ Segurado obtém tutela antecipada antecedente. INSS não recorre. Processo é ex
 
 Primeiro, em ação por incapacidade, aguardar laudo pericial judicial antes de tutela pode ser mais seguro.
 
-Segundo, em RVT exigir tabela comparativa DIB atual vs DIB reajustada.
+Segundo, não pedir tutela em RVT, porque a tese vigente do Tema 1102/STF é adversa ao segurado.
 
 Terceiro, tutela em MS não é tutela antecipada, é liminar (Lei 12.016/2009 art. 7º III).
 

@@ -50,8 +50,11 @@
   function mensagemDoPortal(buf) {
     try {
       const j = JSON.parse(new TextDecoder().decode(buf instanceof Uint8Array ? buf : new Uint8Array(buf || [])));
+      // o CadÚnico aninha: {detalhes:[{mensagemErro:{descricao}}]} ou {mensagemErro:{descricao}}
+      const d0 = j && Array.isArray(j.detalhes) ? j.detalhes[0] : j;
+      const fonte = (d0 && d0.mensagemErro && typeof d0.mensagemErro === 'object') ? d0.mensagemErro : d0;
       const m = typeof j === 'string' ? '' : ['mensagem', 'message', 'result', 'erro', 'error', 'descricao']
-        .map(k => j && j[k]).find(v => typeof v === 'string' && v.trim());
+        .map(k => fonte && fonte[k]).find(v => typeof v === 'string' && v.trim());
       return m ? m.trim().slice(0, 140) : '';
     } catch (e) { return ''; }
   }

@@ -1,6 +1,6 @@
 ---
 name: base-revisao-vida-toda-rvt
-description: "Revisão da Vida Toda (RVT), Tema 1102 STF, ADIs 2110 e 2111 STF e modulação, ótica pró-segurado com honestidade radical. Use SEMPRE que mencionar Revisão da Vida Toda, RVT, Tema 1102 STF, RE 1.276.977, ADI 2110 e ADI 2111, inconstitucionalidade art. 3º Lei 9.876/1999, regra de transição Lei 9.876, PBC Período Básico de Cálculo julho 1994, salários anteriores a julho 1994, maior benefício vida toda, modulação RVT 2024, benefícios concedidos antes novembro 1999, direito adquirido RVT, coisa julgada RVT, decadência art. 103 RVT, RVT com fibromialgia, RVT com segurada especial rural, RVT após EC 103/2019, reajuste pós-julgamento, prescrição quinquenal parcelas RVT, RMI vida toda, RVT em aposentadoria por idade, cálculo mais vantajoso. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103 e precedentes-previdenciarios."
+description: "Revisão da Vida Toda (RVT), Tema 1102 STF, ADIs 2110 e 2111 STF e modulação, ótica pró-segurado com honestidade radical. Tese vigente do Tema 1102 ADVERSA (art. 3º da Lei 9.876/1999 cogente, trânsito 15/05/2026); a antiga tese da opção mais favorável está superada. Use SEMPRE que mencionar Revisão da Vida Toda, RVT, Tema 1102 STF, RE 1.276.977, ADI 2110 e ADI 2111, inconstitucionalidade art. 3º Lei 9.876/1999, regra de transição Lei 9.876, PBC Período Básico de Cálculo julho 1994, salários anteriores a julho 1994, maior benefício vida toda, modulação RVT 2024, benefícios concedidos antes novembro 1999, direito adquirido RVT, coisa julgada RVT, decadência art. 103 RVT, RVT com fibromialgia, RVT com segurada especial rural, RVT após EC 103/2019, reajuste pós-julgamento, prescrição quinquenal parcelas RVT, RMI vida toda, RVT em aposentadoria por idade, cálculo mais vantajoso. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103 e precedentes-previdenciarios."
 ---
 
 # Revisão da Vida Toda (RVT)
@@ -25,7 +25,7 @@ EC 103/2019, art. 26. Nova regra de cálculo para benefícios concedidos após 1
 
 ## Marco jurisprudencial
 
-Tese do Tema 1102 (2022): o segurado FILIADO ANTES da Lei 9.876/99 que implementou os requisitos APÓS ela (e antes da EC 103) poderia optar pela regra definitiva do art. 29 da Lei 8.213 em vez da transição do art. 3º da Lei 9.876 — desfecho posterior nas ADIs 2110/2111 (2024) validou o art. 3º e esvaziou a tese.
+[TESE ANTIGA SUPERADA, não citar como vigente] Em 2022, o Tema 1102 admitia ao segurado filiado antes da Lei 9.876/1999 a opção pela regra definitiva do art. 29 da Lei 8.213/1991. Tema 1102/STF, tese vigente adversa ao segurado (trânsito em julgado em 15/05/2026, conferida em 13/10/2026 no MCP superiores e na fonte oficial). O art. 3º da Lei 9.876/1999 é cogente e o segurado não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/1991, ainda que mais favorável. A modulação apenas torna irrepetíveis os valores recebidos por decisões prolatadas até 05/04/2024 e dispensa honorários, custas e perícias contábeis nas ações pendentes naquela data. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`.
 
 ADIs 2110 e 2111 STF. Julgadas em 2024. Declararam constitucional o art. 3º da Lei 9.876/1999. O art. 3º é cogente, e o segurado que nele se enquadra não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/91; a modulação (ADI 2111 ED-ED, 10/04/2025) só alcança a devolução de valores e os ônus de sucumbência, como descrito adiante (auditoria 03/10/2026).
 
@@ -41,9 +41,9 @@ Primeiro, benefícios com DIB anterior a 29/11/1999 (vigência da Lei 9.876/1999
 
 Segundo, processos com coisa julgada formada antes do julgamento das ADIs, em que a revisão já foi deferida.
 
-Terceiro, hipóteses em que o cálculo originário, sem a regra de transição, produz renda maior de forma demonstrada concretamente.
+Terceiro, a modulação, que torna irrepetíveis os valores recebidos por decisões prolatadas até 05/04/2024 e dispensa honorários, custas e perícias contábeis nas ações pendentes naquela data.
 
-Quarto, hipóteses em que o direito adquirido se consolidou antes de 13/11/2019, e ainda estão dentro do prazo decadencial do art. 103.
+[Retirado em 13/10/2026] A renda maior pelo cálculo originário e o direito adquirido entre 29/11/1999 e 13/11/2019 não abrem espaço à revisão, porque a tese vigente veda a opção "independentemente de lhe ser mais favorável".
 
 ## Controvérsias vivas
 
@@ -71,7 +71,7 @@ Quarto, se a decadência estiver esgotada, comunicar franca e imediatamente.
 
 Quinto, em ações já ajuizadas, aguardar o desfecho e estudar transação ou desistência conforme jurisprudência atualizada.
 
-Sexto, cautela em abertura de novas ações puramente RVT pós-modulação das ADIs 2110 e 2111.
+Sexto, não ajuizar nova ação de RVT, porque a tese vigente do Tema 1102/STF a afasta. Em ação pendente, sustentar apenas a modulação.
 
 ## MCPs da casa
 

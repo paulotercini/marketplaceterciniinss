@@ -50,6 +50,12 @@ pdf = ("Ementa e Acórdão\n01/12/2022 PLENÁRIO\nRECURSO EXTRAORDINÁRIO 1.276.
 ac = parser.stf_acordao("RE 1276977", "1", pdf, "RG-1102", A)
 assert ac["data_julgamento"] == "2022-12-01" and ac["relator"] == "MARCO AURÉLIO", ac
 assert ac["ementa"].startswith("Recurso extraordinário. Revisão") and "INSTITUTO" not in ac["ementa"], ac["ementa"]
+pdf2 = ("Ementa e Acórdão\nRECURSO EXTRAORDINÁRIO 586.068\nRELATORA : MIN. ROSA WEBER\nREDATOR DO \nACÓRDÃO\n: MIN. GILMAR MENDES\n"
+        "RECTE.(S) :INSTITUTO NACIONAL DO SEGURO SOCIAL\nConstitucional e Processual Civil. Execução de título judicial inexigível por decisão posterior.\n"
+        "A C Ó R D Ã O\nAcordam os Ministros. Sessão Virtual de 9 de novembro de 2023.")
+ac2 = parser.stf_acordao("RE 586068", "2", pdf2, "RG-360", A)
+assert ac2["ementa"].startswith("Constitucional e Processual") and ac2["data_julgamento"] == "2023-11-09", ac2
+assert ac2["relator"] == "ROSA WEBER; redator do acórdão GILMAR MENDES", ac2["relator"]
 assert parser.stf_pecas_acordao('<a href="downloadPeca.asp?id=9&ext=.pdf">Inteiro teor do acórdão</a>'
                                 '<a href="downloadPeca.asp?id=8&ext=.pdf">Despacho</a>'
                                 '<a href="downloadPeca.asp?id=9&ext=.pdf">Inteiro teor do acórdão</a>') == ["9"]

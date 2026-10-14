@@ -479,9 +479,9 @@ MS em hipóteses excepcionais.
 
 Quando a controvérsia for sobre revisão de benefício já concedido, cuidar para não cair em matéria processual.
 
-Reformular como divergência sobre a interpretação da norma material da revisão (Tema 1102/STF para RVT, Tema 76/STF para teto, art. 144 para buraco verde).
+Reformular como divergência sobre a interpretação da norma material da revisão (Tema 76/STF para teto, art. 144 para buraco verde).
 
-Cruzamento com `base-revisao-vida-toda-rvt`, `base-revisao-teto-buraco-negro-verde`, `base-revisao-art29-melhor-beneficio`.
+Cruzamento com `base-revisao-teto-buraco-negro-verde`, `base-revisao-art29-melhor-beneficio`.
 
 ## 16. Caso paradigma do escritório (L. C. V., PUIL 0000810-25.2020.4.03.6314) (auditoria 03/10/2026)
 
