@@ -160,3 +160,9 @@ test('Portal da Transparência: pagamentos por integrante, agrupados por program
   assert.match(texto, /BPC: 04\/2025 a 09\/2026 · 2 pagamento\(s\) · último R\$ 1.621,00 · total R\$ 3.139,00 · CONCEDIDO JUDICIALMENTE · representante legal: ANA · MONTE ALTO\/SP/);
   assert.match(texto, /JOSÉ DA SILVA[^\n]*\n  nenhum pagamento encontrado/);
 });
+
+test('mensagemDoPortal: a mensagem aninhada do CadÚnico', () => {
+  const enc = s => new TextEncoder().encode(s);
+  assert.equal(R.mensagemDoPortal(enc('{"detalhes":[{"mensagemErro":{"codigo":12,"descricao":"Usuário não é o responsável familiar"}}]}')), 'Usuário não é o responsável familiar');
+  assert.equal(R.mensagemDoPortal(enc('{"mensagemErro":{"descricao":"Família sem comprovante"}}')), 'Família sem comprovante');
+});
