@@ -28,10 +28,10 @@ A fonte de dados dos geradores é o **Microsoft To Do** (Graph API, conta pessoa
 
 ## Dossiê do cliente (crm/fase2/dossie) — o que chega ao CRM
 
-<!-- dossie-versao: 0.11.0 — ao mudar manifest.json da extensão, atualize esta seção e este número;
+<!-- dossie-versao: 0.11.1 — ao mudar manifest.json da extensão, atualize esta seção e este número;
      tests em crm/fase2/dossie/testes/regras.test.js conferem que batem. -->
 
-Extensão de navegador (versão **0.11.0**). Com o gov.br do cliente logado, um clique baixa os documentos
+Extensão de navegador (versão **0.11.1**). Com o gov.br do cliente logado, um clique baixa os documentos
 do portal aberto na aba; **🔁 Rodar todos os portais** percorre Meu INSS → e-Recursos → Emprega Brasil → HC →
 Redesim, cada um na sua aba (abre as do gov.br que faltarem; Emprega Brasil e HC só se a aba logada já
 estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha e não decide nada: coleta e entrega.

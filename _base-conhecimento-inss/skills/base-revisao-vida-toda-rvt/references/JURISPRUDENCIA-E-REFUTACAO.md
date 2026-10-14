@@ -4,11 +4,11 @@
 
 ### Tema 1102 STF, RE 1.276.977
 
-Tese. Aplicação da regra definitiva de cálculo pode ser pleiteada quando mais vantajosa do que a regra de transição, respeitado o direito adquirido.
+Tese vigente. Tema 1102/STF, tese vigente adversa ao segurado (trânsito em julgado em 15/05/2026, conferida em 13/10/2026 no MCP superiores e na fonte oficial). O art. 3º da Lei 9.876/1999 é cogente e o segurado não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/1991, ainda que mais favorável. A modulação apenas torna irrepetíveis os valores recebidos por decisões prolatadas até 05/04/2024 e dispensa honorários, custas e perícias contábeis nas ações pendentes naquela data. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`. A tese de 2022, que permitia a opção pela regra definitiva mais vantajosa, está SUPERADA.
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação. Fundamento histórico da RVT. Após as ADIs 2110 e 2111 a leitura foi restringida.
+Aplicação. Tese adversa. Na peça do segurado, só a modulação.
 
 ### ADI 2110 STF e ADI 2111 STF
 

@@ -145,18 +145,38 @@ def stf_pecas_acordao(aba_andamentos):
     return vistos
 
 
+MESES = {m: i for i, m in enumerate(("janeiro fevereiro março abril maio junho julho agosto setembro outubro "
+                                     "novembro dezembro").split(), 1)}
+
+
+def _data_por_extenso(texto):
+    """Sessão virtual não traz data no cabeçalho, só no fim ('Sessão Virtual de 9 de novembro de 2023')."""
+    m = re.search(r"(?:Sess[ãa]o Virtual de|Bras[íi]lia,)\s*(\d{1,2})º?\s+(?:a\s+\d{1,2}\s+)?de\s+(\w+)\s+(?:de\s+)+(\d{4})", texto)
+    return f"{m[3]}-{MESES[m[2].lower()]:02d}-{int(m[1]):02d}" if m and m[2].lower() in MESES else None
+
+
 def stf_acordao(processo, peca_id, texto, temas, agora):
     datas = re.findall(r"\b(\d{2}/\d{2}/\d{4})\b", texto[:600])      # a primeira é a da sessão de julgamento
-    # a ementa fica entre a última linha de parte ("ADV.(A/S) :", "INTDO.(A/S) :") e o "A C Ó R D Ã O"
-    fim = re.search(r"A\s?C\s?[ÓO]\s?R\s?D\s?[ÃA]\s?O\s*\n", texto)
-    cab = texto[:fim.start()] if fim else ""
-    partes = list(re.finditer(r"(?m)^[A-ZÀ-Ú][A-ZÀ-Ú. ()/]{2,30}\s*:.*$", cab))
-    ementa = cab[partes[-1].end():] if partes else ""
-    ementa = re.sub(r"\s+", " ", re.sub(r"(?m)^.*Documento assinado digitalmente.*$|^\s*\d+\s*$", "", ementa)).strip()
+    # a ementa fica entre a última linha de parte ("ADV.(A/S) :", "INTDO.(A/S) :") e o "A C Ó R D Ã O". O
+    # "REDATOR DO ACÓRDÃO" do cabeçalho não conta, por isso vale a forma espaçada ou a linha que só tem a palavra
+    fim = (re.search(r"A C Ó R D Ã O", texto) or
+           re.search(r"(?m)(?<!REDATOR DO \n)^\s*AC[ÓO]RD[ÃA]O\s*\n(?!\s*:)", texto))
+    def _ementa(cab):
+        partes = list(re.finditer(r"(?m)^[A-ZÀ-Ú][A-ZÀ-Ú. ()/]{2,30}\s*:.*$", cab))
+        e = cab[partes[-1].end():] if partes else ""
+        return re.sub(r"\s+", " ", re.sub(r"(?m)^.*Documento assinado digitalmente.*$|^.*documento pode ser acessado.*$|"
+                                          r"^\s*\d+\s*$", "", e)).strip()
+    ementa = _ementa(texto[:fim.start()]) if fim else ""
+    if len(ementa) <= 80 and (dec := re.search(r"\nDecis[ãa]o:", texto)):
+        ementa = _ementa(texto[:dec.start()])         # manifestação sobre repercussão geral termina em "Decisão:"
     rel = re.search(r"RELATORA?\s*:\s*MIN(?:ISTRO|ISTRA|\.)?\s*(.+)", texto)
+    # relator vencido: quem redige o acórdão é outro ministro, e o portal o mostra como "Redator do acórdão"
+    red = re.search(r"REDATORA?\s*DO\s*AC[ÓO]RD[ÃA]O\s*:?\s*MIN(?:ISTRO|ISTRA|\.)?\s*(.+)", texto[:3000])
     return {"id": f"STF-PECA-{peca_id}", "tribunal": "STF", "fonte": "stf_acordao", "tipo": "acordao",
             "processo": processo, "classe": processo.split()[0], "orgao_julgador": "Plenário" if "PLENÁRIO" in texto[:4000].upper() else None,
-            "relator": rel[1].strip() if rel else None, "data_julgamento": _data(datas[0]) if datas else None,
+            "relator": re.sub(r"\s+", " ", (rel[1].strip() if rel else "") +
+                              (f"; redator do acórdão {red[1].strip()}" if red else "")) or None,
+            "data_julgamento": _data(datas[0]) if datas else _data_por_extenso(texto),
             "data_publicacao": None, "ementa": ementa if len(ementa) > 80 else None, "tese_juridica": None,
             "temas": temas, "referencias": None, "inteiro_teor": texto,
             "link_oficial": f"{STF}/processos/downloadPeca.asp?id={peca_id}&ext=.pdf", "coletado_em": agora}

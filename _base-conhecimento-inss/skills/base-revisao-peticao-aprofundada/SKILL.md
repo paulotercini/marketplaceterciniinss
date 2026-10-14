@@ -177,7 +177,7 @@ Verificar se há modulação temporal de efeitos. Procedimento.
 
 Para artigos alterados por lei posterior, verificar se a alteração tem efeitos retroativos ou apenas prospectivos.
 
-Para Temas STF/STJ/TNU, verificar se há ADI ou ADPF que modulou aplicação. Caso clássico. Tema 1102 STF (Revisão da Vida Toda) teve modulação em 2024.
+Para Temas STF/STJ/TNU, verificar se há ADI ou ADPF que modulou aplicação. Caso clássico. Tema 1102 STF (Revisão da Vida Toda), cuja tese de 2022 foi superada pela cogência do art. 3º da Lei 9.876/1999, com modulação até 05/04/2024 e trânsito em 15/05/2026.
 
 Para artigos da EC 103/2019, atentar à data de promulgação (13/11/2019) como marco temporal.
 

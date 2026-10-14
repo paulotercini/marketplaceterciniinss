@@ -73,7 +73,7 @@ Segundo, CAT lavrada após cessação do B31 indevida.
 
 Terceiro, laudo retrospectivo sobre DID para aposentadoria PCD.
 
-Quarto, violação de Tema 1102/STF (RVT) em sentença que negou RVT antes da tese.
+[Retirado em 13/10/2026] A sentença que negou a RVT não viola o Tema 1102/STF, cuja tese vigente é adversa ao segurado.
 
 Quinto, sentença com erro de fato (cômputo errado de tempo).
 
@@ -89,7 +89,7 @@ Cenário A, PPP retificado extemporâneo. Prova nova, art. 966, VII, do CPC (aud
 
 Cenário B, laudo pericial novo contradiz anterior. Avaliar erro de fato.
 
-Cenário C, Tema 1102/STF julgado após sentença desfavorável. Violação de norma (art. 966, V, do CPC; auditoria 25/07/2026, retirado o Tema 1370/STJ, que trata de decadência de revisão e está pendente).
+Cenário C [retirado em 13/10/2026]. Não cabe rescisória fundada no Tema 1102/STF contra sentença que negou a RVT, porque a tese vigente é adversa ao segurado. Tema 1102/STF, tese vigente adversa ao segurado (trânsito em julgado em 15/05/2026, conferida em 13/10/2026 no MCP superiores e na fonte oficial). O art. 3º da Lei 9.876/1999 é cogente e o segurado não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/1991, ainda que mais favorável. A modulação apenas torna irrepetíveis os valores recebidos por decisões prolatadas até 05/04/2024 e dispensa honorários, custas e perícias contábeis nas ações pendentes naquela data. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`.
 
 Cenário D, sentença fundada em documento falso. Art. 966 VI.
 

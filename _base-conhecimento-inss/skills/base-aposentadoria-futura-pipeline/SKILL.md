@@ -96,7 +96,7 @@ Isso evita que, na hora do acionamento, perca-se tempo refazendo onboarding.
 
 **Cliente perdeu qualidade de segurado durante a espera.** Verificar período de graça, contribuições facultativas em manutenção. Se perdeu, recalcular janela.
 
-**Surgiu nova regra mais favorável.** Periodicamente reavaliar se o caso ganhou hipótese alternativa (transição vs permanente, RVT, especial pós-Pareceres Fundacentro).
+**Surgiu nova regra mais favorável.** Periodicamente reavaliar se o caso ganhou hipótese alternativa (transição vs permanente, especial pós-Pareceres Fundacentro).
 
 **Cliente já contribuiu o suficiente para aposentadoria proporcional.** Avaliar se vale antecipar com cálculo menor antes da data alvo.
 

@@ -236,7 +236,7 @@ Negrito apenas em fatos-chave, elementos de prova e argumentos centrais.
 
 **Severidade.** IMPORTANTE.
 
-**Regra.** Tema 1102/STF teve modulação que limitou os efeitos do precedente. Toda peça que invoque o tema deve abordar a modulação aplicável ao caso concreto.
+**Regra.** Tema 1102/STF teve modulação que limitou os efeitos do precedente. Toda peça que invoque o tema deve abordar a modulação aplicável ao caso concreto. Citar como vigente a tese de 2022, da opção pela regra definitiva mais favorável, é BLOQUEANTE (tese superada; vigente desde o trânsito de 15/05/2026 a cogência do art. 3º da Lei 9.876/1999).
 
 **Correção.** Ler o repositório verificado de precedentes em `precedentes-previdenciarios` e citar a modulação literal.
 
