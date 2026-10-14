@@ -138,6 +138,17 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("no caso com dois processos, a novidade de cada um abre os autos dele, e nunca os do outro",
     lk.novo.endsWith("id=1") && lk.velho.endsWith("id=2") && lk.semNumero === null && lk.grau.endsWith("id=1") && lk.botoes === 1);
 
+  // F224 · com o campo aberto, o clique na pesquisa não é engolido: dá para selecionar parte do texto
+  await p.evaluate(id => abrirFicha(id), "c0000000-0000-0000-0000-0000000000e1");
+  await espera(800);
+  await p.evaluate(() => { const b = document.getElementById("busca"); b.value = "maria aparecida"; document.getElementById("app").classList.add("busca-aberta"); aplicarMenu(); });
+  await espera(300);
+  const sel = await p.evaluate(() => { const b = document.getElementById("busca"), ev = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
+    b.dispatchEvent(ev); return { bloqueou: ev.defaultPrevented, largura: b.getBoundingClientRect().width }; });
+  await p.click("#busca", { clickCount: 2 });
+  const marcado = await p.evaluate(() => { const b = document.getElementById("busca"); return b.value.slice(b.selectionStart, b.selectionEnd); });
+  conf("o campo de pesquisa aberto deixa selecionar uma parte do texto", !sel.bloqueou && sel.largura >= 80 && marcado.length > 0 && marcado.length < "maria aparecida".length);
+
   conf("sem erro de página", !p._erros.length && !cel._erros.length);
   if (p._erros.length || cel._erros.length) console.log(p._erros.concat(cel._erros).join("\n"));
   const bons = ok.filter(x => x[1]).length;
