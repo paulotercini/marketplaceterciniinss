@@ -10928,6 +10928,22 @@ async function nclEtapa1(seguir=true){
     if(achados && achados.length){ jaTem=achados[0]; D.clientes.push(jaTem); D.cliPorId.set(jaTem.id, jaTem); }
   }
   if(jaTem) return avisoCpfRepetido(jaTem, nome);
+  // F225 · a agenda e a anotação rápida criam a ficha sem CPF: a mesma pessoa não ganha uma segunda
+  const tel = document.getElementById("ncl-tel").value.trim();
+  const pre = preCadastroDe(nome, tel);
+  if(pre && await confirmar(`Já existe o pré-cadastro de ${pre.nome}${pre.telefone?`, telefone ${pre.telefone}`:""}, criado sem CPF (agenda ou anotação rápida).\n\nCompletar essa ficha com o CPF ${fmtCpf(cpf)}, em vez de criar outra?`)){
+    const corpo = {cpf, ...(!pre.telefone && soDig(tel).length>2 ? {telefone:tel} : {})};
+    try{ await api(`/rest/v1/clientes?id=eq.${pre.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(corpo)}); }
+    catch(e){ return aviso("Não consegui completar o pré-cadastro — tente de novo"); }
+    Object.assign(pre, corpo); reindexarCliente(pre);
+    const senhaP=document.getElementById("ncl-senha").value.trim();
+    if(senhaP) await api(`/rest/v1/credenciais`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({cliente_id:pre.id, tipo:"meu_inss", valor:senhaP})}).catch(()=>aviso("A ficha gravou, mas a senha não — cadastre de novo pela ficha"));
+    _ncl = {etapa: seguir ? 2 : 1, id:pre.id, nomeBusca:_ncl.nomeBusca};
+    if(!seguir){ aviso("Pré-cadastro completado com o CPF ✔ — rode a extensão do dossiê", false); return; }
+    aviso("Pré-cadastro completado com o CPF ✔ — agora a etapa 2", false);
+    return renderNovoCliente();
+  }
   const campos={atendimento:[{em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], texto:"Cliente cadastrado na recepção."}]};
   const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({nome: nome || `Cliente ${fmtCpf(cpf)}`, cpf, telefone:(t => t.replace(/\D/g,"").length > 2 ? t : null)(document.getElementById("ncl-tel").value.trim()), campos})});
@@ -10942,6 +10958,13 @@ async function nclEtapa1(seguir=true){
   if(!seguir){ const r=document.getElementById("ncl-ficha-recado"); if(r && !/bloqueou/.test(r.textContent)) r.textContent="Ficha criada ✔ — o dossiê baixado agora se prende a ela."; aviso("Ficha criada ✔ — rode a extensão do dossiê", false); return; }
   aviso("Ficha criada ✔ — agora a etapa 2", false);
   renderNovoCliente();
+}
+// a ficha sem CPF da mesma pessoa: o telefone (oito últimos dígitos) ou o nome igual
+function preCadastroDe(nome, tel){
+  const t8 = soDig(tel).slice(-8), nm = dsa(nome||"").replace(/\s+/g," ").trim();
+  const sem = (D.clientes||[]).filter(c=>!digitosCpf(c.cpf));
+  return (t8.length===8 && sem.find(c=>soDig(c.telefone).slice(-8)===t8))
+    || (nm.split(" ").length>=2 && sem.find(c=>dsa(c.nome||"").replace(/\s+/g," ").trim()===nm)) || null;
 }
 // os avisos do cliente novo vão a Amanda e Paulo, além de quem a configuração indicar
 function quemAvisaClienteNovo(){
@@ -30059,9 +30082,15 @@ async function moverNumero(tipo, d, deId, paraId, opts={}){
   D._andsFicha = (D._andsFicha||[]).filter(a=>!repetidos.includes(a.id));
   for(const a of D._andsFicha) if(movidos.has(a.id)) a.caso_id = paraId;
   for(const x of (D.anexos||[])) if((x.andamento_id && movidos.has(x.andamento_id)) || (x.caso_id===deId && caminhos.length && (numDoAnexo(x)||{}).d===d)) x.caso_id = paraId;
+  // F225 · as perícias e audiências marcadas não dizem de que número são: vão junto quando o
+  // caso de origem fica sem número nenhum, ou quando quem levou pediu (opts.eventos)
+  const evs = eventosFuturos(deId);
+  const semNumero = !Object.values(numerosDoCaso(de)).some(x=>x.length);
+  let nEv = 0;
+  if(evs.length && (opts.eventos===true || (opts.eventos!==false && semNumero))) nEv = await levarEventos(evs, paraId);
   const rot = `${TIPO_NUM[tipo]} ${fmtNum(tipo, d)}`;
   await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify([
-    {caso_id:deId, autor_id:eu.id, texto:`⇄ ${rot} foi levado ao caso "${tituloCaso(para)}"${ids.length?`, com ${ids.length} andamento(s)`:""}.`},
+    {caso_id:deId, autor_id:eu.id, texto:`⇄ ${rot} foi levado ao caso "${tituloCaso(para)}"${ids.length?`, com ${ids.length} andamento(s)`:""}${nEv?` e ${nEv} agendamento(s)`:""}.`},
     {caso_id:paraId, autor_id:eu.id, texto:`⇄ ${rot} veio do caso "${tituloCaso(de)}"${ids.length?`, com ${ids.length} andamento(s)`:""}.`}])}).catch(()=>{});
   if(opts.quieto) return true;
   aviso(`${rot} levado ao caso ${rotCurtoCaso(para)} ✔`, false);
@@ -30359,9 +30388,27 @@ async function aplicarLoteOrg(){
 
 // ── o repasse em um clique: número e anotação vão ao caso certo ─────────
 async function levarNumero(tipo, d, deId, paraId){
-  const para = D.casoPorId.get(paraId); if(!para || !TIPO_NUM[tipo]) return;
+  const para = D.casoPorId.get(paraId), de = D.casoPorId.get(deId); if(!para || !de || !TIPO_NUM[tipo]) return;
   if(!await confirmar(`Levar ${TIPO_NUM[tipo]} ${fmtNum(tipo, d)} ao caso ${rotCurtoCaso(para)}?\n\nVão junto os andamentos, os documentos e as tarefas dele, e a sincronização do To Do não desfaz a mudança.`)) return;
-  await moverNumero(tipo, d, deId, paraId);
+  // o caso de origem que guarda outros números pode ter perícia de qualquer um deles: a pessoa decide
+  const evs = eventosFuturos(deId), outros = Object.entries(numerosDoCaso(de)).some(([t, xs])=>xs.some(x=>!(t===tipo && x===d)));
+  let eventos = "auto";
+  if(evs.length && outros) eventos = await confirmar(`O caso de origem tem ${evs.length} agendamento(s) marcado(s):\n\n${evs.map(e=>`${e.tipo} em ${fmtTS(e.data_hora)}`).join("\n")}\n\nSão deste número e vão junto?`);
+  await moverNumero(tipo, d, deId, paraId, {eventos});
+}
+// as perícias, avaliações e audiências ainda por acontecer de um caso
+function eventosFuturos(casoId){
+  const hj = hoje();
+  return (D.eventos||[]).filter(e=>e.caso_id===casoId && e.status!=="cancelada" && dataSP(e.data_hora)>=hj);
+}
+// leva os agendamentos ao outro caso; o que o destino já tem (mesmo tipo e hora) é o mesmo agendamento e sai da origem
+async function levarEventos(evs, paraId){
+  let n = 0;
+  for(const e of evs){
+    try{ await api(`/rest/v1/eventos?id=eq.${e.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:paraId})}); e.caso_id = paraId; n++; }
+    catch(err){ await api(`/rest/v1/eventos?id=eq.${e.id}`,{method:"DELETE"}).catch(()=>{}); D.eventos = (D.eventos||[]).filter(x=>x.id!==e.id); }
+  }
+  return n;
 }
 function selLevarNumero(k, tipo, d){
   const outros = casosParaOrganizar(k.cliente_id).filter(x=>x.id!==k.id); if(!outros.length) return "";
