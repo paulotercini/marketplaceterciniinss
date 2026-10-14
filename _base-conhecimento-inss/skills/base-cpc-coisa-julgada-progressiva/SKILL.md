@@ -65,7 +65,7 @@ Cenário B, INSS recorre do tempo especial e aceita tempo comum. Execução do t
 
 Cenário C, sentença concede benefício e juros. INSS recorre só dos juros. Implantação imediata do benefício.
 
-Cenário D, julgamento antecipado parcial em RVT. Implantação da parte incontroversa.
+Cenário D [retirado em 13/10/2026]. A RVT não gera parte incontroversa, porque a tese vigente do Tema 1102/STF é adversa ao segurado.
 
 Cenário E, cumprimento de sentença com RPV da parte transitada enquanto pende apelação parcial.
 

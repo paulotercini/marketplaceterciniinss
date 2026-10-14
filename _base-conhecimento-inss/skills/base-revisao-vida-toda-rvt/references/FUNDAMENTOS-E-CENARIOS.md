@@ -28,7 +28,7 @@ Lei 8.213/91, art. 103. Decadência decenal.
 
 ### Tema 1102 STF, RE 1.276.977
 
-Julgado em dezembro de 2022. Decisão permitia a aplicação da regra originária quando mais vantajosa, com base na garantia do melhor benefício.
+[TESE ANTIGA SUPERADA] Em dezembro de 2022, a decisão permitia a aplicação da regra originária quando mais vantajosa. Tema 1102/STF, tese vigente adversa ao segurado (trânsito em julgado em 15/05/2026, conferida em 13/10/2026 no MCP superiores e na fonte oficial). O art. 3º da Lei 9.876/1999 é cogente e o segurado não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/1991, ainda que mais favorável. A modulação apenas torna irrepetíveis os valores recebidos por decisões prolatadas até 05/04/2024 e dispensa honorários, custas e perícias contábeis nas ações pendentes naquela data. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`.
 
 ### ADIs 2110 e 2111 STF
 
@@ -114,7 +114,7 @@ Terceiro, requerimento administrativo (Tema 1124 STJ).
 
 Quarto, ação judicial com pedido subsidiário.
 
-Quinto, fundamentação robusta com direito adquirido, não apenas com o Tema 1102.
+Quinto, nenhuma peça invoca o Tema 1102 a favor da revisão; ele só se cita pela modulação.
 
 Sexto, pedido de efeitos financeiros retroativos à DER, respeitada a prescrição quinquenal.
 

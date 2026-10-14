@@ -82,7 +82,7 @@ Pelos precedentes catalogados, identifica-se um conjunto de teses estratégicas 
 **Direito ao melhor benefício.**
 - Tema 334/STF (cálculo do melhor benefício).
 - Tema 1018/STJ (opção pelo benefício mais vantajoso).
-- Tema 1102/STF (RVT - opção pela regra definitiva mais favorável).
+- Tema 1102/STF (RVT, tese vigente ADVERSA desde o trânsito de 15/05/2026: art. 3º da Lei 9.876/1999 cogente, sem opção pela regra definitiva do art. 29; modulação até 05/04/2024). A tese antiga da opção mais favorável está SUPERADA.
 - Enunciado 1/CRPS (melhor benefício e opção pelo segurado).
 
 **Aposentadoria especial.**

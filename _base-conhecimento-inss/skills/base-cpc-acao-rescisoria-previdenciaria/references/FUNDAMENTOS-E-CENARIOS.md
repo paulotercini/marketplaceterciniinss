@@ -58,9 +58,9 @@ Prova nova.
 
 Erro de fato.
 
-### Cenário C — Tema 1102 STF
+### Cenário C — Tema 1102 STF [retirado em 13/10/2026]
 
-Violação de norma.
+Não cabe rescisória do segurado, porque a tese vigente é adversa. Tema 1102/STF, tese vigente adversa ao segurado (trânsito em julgado em 15/05/2026, conferida em 13/10/2026 no MCP superiores e na fonte oficial). O art. 3º da Lei 9.876/1999 é cogente e o segurado não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/1991, ainda que mais favorável. A modulação apenas torna irrepetíveis os valores recebidos por decisões prolatadas até 05/04/2024 e dispensa honorários, custas e perícias contábeis nas ações pendentes naquela data. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`.
 
 ### Cenário D — Documento falso
 

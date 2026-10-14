@@ -39,7 +39,7 @@ Decadência do art. 103. A ampliativa sustenta prazos autônomos por objeto de r
 
 Atividades concomitantes. A ampliativa soma todos os salários-de-contribuição, respeitado o teto. Confira se o cumprimento pelo INSS efetivamente somou, porque a divergência costuma estar no cálculo e não na tese.
 
-Revisão da vida toda. Confira a modulação e o recorte temporal antes de qualquer afirmação de viabilidade, e seja honesto sobre o cenário atual.
+Revisão da vida toda. A tese vigente do Tema 1102/STF é adversa (art. 3º da Lei 9.876/1999 cogente, sem opção pelo art. 29, trânsito em 15/05/2026); a tese de 2022 está superada. Só a modulação, até 05/04/2024, aproveita ao segurado.
 
 Acumulação e redutores da EC 103. A ampliativa preserva o direito adquirido quando um dos benefícios é anterior à reforma. Confira as datas antes da tese.
 
