@@ -13,7 +13,8 @@ const SUPA = "https://ficticio.supabase.co";
 const URL_AG = "https://script.google.com/macros/s/TESTE/exec";
 FIX.config_app = [...(FIX.config_app || []), { chave: "agenda_url", valor: URL_AG }];
 const g = criarAgenda({ "t-adm": { nome: "Paulo", papel: "admin" }, "t-eq": { nome: "Amanda", papel: "equipe" } });
-const q = quartas(6);
+// a quarta de hoje perde os horários já passados: as provas usam a próxima
+const q = (l => l[0] === new Date(Date.now()-3*3600e3).toISOString().slice(0,10) ? l.slice(1) : l.slice(0,6))(quartas(7));
 g.evento(q[0], "09:30", "10:00", "002 - Fulano Manual - Não confirmado");
 g.evento(q[0], "10:00", "11:00", "Audiência JEF Catanduva");
 g.evento(q[0], "08:00", "12:00", "Agenda Livre", { transparency: "transparent" });
