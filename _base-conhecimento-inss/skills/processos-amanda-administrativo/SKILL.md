@@ -43,7 +43,7 @@ Tarefas administrativas previdenciárias seguem fluxos previsíveis. O que parec
 
 **Indeferimento de benefício.** Sempre. Recurso CRPS exige análise jurídica, definição de tese, eventual MS paralelo. Skill `ponte-workflow-crps`.
 
-**Definição de espécie/regra de cálculo.** Cliente novo cuja análise indica múltiplas hipóteses (transição vs permanente, RVT vs comum). Paulo decide a estratégia. Após definida, Amanda executa.
+**Definição de espécie/regra de cálculo.** Cliente novo cuja análise indica múltiplas hipóteses (transição vs permanente). Paulo decide a estratégia. Após definida, Amanda executa.
 
 **Acordo proposto pelo INSS.** Avaliar valor, abdicação, melhor regra. Decisão de Paulo, executada por Amanda.
 
