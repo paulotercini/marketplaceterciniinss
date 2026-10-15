@@ -155,6 +155,8 @@ A **F222** (o ＋ Cliente na pesquisa): a pesquisa que não acha a pessoa mostra
 
 A **F223** (o link certo do processo): o caso com dois processos guardava um link de autos por grau só (`pje_links`), e a novidade do processo antigo abria os autos do novo. `camposLinkPje(k, grau, link, número)` guarda também `"<20 dígitos>|<grau>"` e só troca o link do grau quando o processo é o principal; `linkPjeDoAndamento` lê o número do andamento (`numDoAndPje`, do `origem_id` ou do texto) e, sendo de outro processo do caso sem link próprio, não oferece botão em vez de abrir o processo errado. As chaves com "|" ficam fora dos botões por grau.
 
+A **F224** (o documento da coleta que já existe vai ao caso aberto): `gravarDocsDaColeta`, por onde passam PJe, e-SAJ, eproc e PAT, pulava o documento cujo `caminho` já existia em `anexos`; como até o 11.08 o importador casava o processo com o primeiro caso do número, mesmo encerrado, os documentos ficaram presos ao caso encerrado e nunca migravam. Agora o documento já gravado em caso **encerrado** do mesmo cliente passa (PATCH de `caso_id` e `cliente_id`) ao caso aberto que a coleta escolheu; o que está em outro caso **aberto** fica, porque pode ter sido levado de propósito (`moverNumero`). O `andamento_id` não muda. Teste: `testes/cadastro/f224.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
