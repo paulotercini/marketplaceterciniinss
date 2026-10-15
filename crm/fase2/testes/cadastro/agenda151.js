@@ -15,9 +15,12 @@ FIX.config_app = [...(FIX.config_app || []), { chave: "agenda_url", valor: URL_A
 const g = criarAgenda({ "t-adm": { nome: "Paulo", papel: "admin" }, "t-eq": { nome: "Amanda", papel: "equipe" } });
 // a quarta de hoje perde os horários já passados: as provas usam a próxima
 const q = (l => l[0] === new Date(Date.now()-3*3600e3).toISOString().slice(0,10) ? l.slice(1) : l.slice(0,6))(quartas(7));
-g.evento(q[0], "09:30", "10:00", "002 - Fulano Manual - Não confirmado");
-g.evento(q[0], "10:00", "11:00", "Audiência JEF Catanduva");
-g.evento(q[0], "08:00", "12:00", "Agenda Livre", { transparency: "transparent" });
+// a barra e a faixa mostram a primeira quarta da agenda (numa quarta, a de hoje): a fixtura vai a ela também
+for (const d of new Set([quartas(1)[0], q[0]])) {
+  g.evento(d, "09:30", "10:00", "002 - Fulano Manual - Não confirmado");
+  g.evento(d, "10:00", "11:00", "Audiência JEF Catanduva");
+  g.evento(d, "08:00", "12:00", "Agenda Livre", { transparency: "transparent" });
+}
 
 (async () => {
   const s = http.createServer((qq, r) => {
@@ -142,12 +145,12 @@ g.evento(q[0], "08:00", "12:00", "Agenda Livre", { transparency: "transparent" }
   await p.evaluate(() => fecharCaixa());
 
   // confirmar e cancelar pelo menu do evento
-  await p.evaluate(async () => { await carregarAgenda(); agq.sel = agq.disp.dias[0].data; pintarAgenda(); });
+  await p.evaluate(async d => { await carregarAgenda(); agq.sel = d; pintarAgenda(); }, q[0]);   // a quarta das provas, e não a de hoje
   const idA = g.eventos.find(e => /Aurélia/.test(e.summary)).id;
   await p.click(`[data-aqev="${idA}"]`); await p.click('[data-aqop="confirmar"]');
   await p.waitForTimeout(400);
   conf("F151 · Confirmar troca o fim do título para 'Confirmado'", /Aurélia Ficta de Souza - Confirmado$/.test(g.eventos.find(e => e.id === idA).summary));
-  const idManual = g.eventos.find(e => /Fulano Manual/.test(e.summary)).id;
+  const idManual = g.eventos.find(e => /Fulano Manual/.test(e.summary) && e.start.dateTime.startsWith(q[0])).id;
   await p.click(`[data-aqev="${idManual}"]`);
   const opsManual = await p.evaluate(() => [...document.querySelectorAll(".aq-menu [data-aqop]")].map(b => b.dataset.aqop).join(","));
   conf(`F151 · atendimento lançado à mão só tem Confirmar e Abrir cliente (${opsManual})`, opsManual === "confirmar,abrir");
@@ -197,7 +200,8 @@ g.evento(q[0], "08:00", "12:00", "Agenda Livre", { transparency: "transparent" }
 
   // sem vaga nas seis quartas: o alerta aparece
   // (a quinta que entrou na troca também precisa de feriado para zerar as vagas)
-  q.forEach(d => { g.diaInteiro("ipt0crldsn7gg9s0gl9hn6l5b8@group.calendar.google.com", d, "Feriado");
+  // quartas(7): numa quarta, a agenda ainda mostra a de hoje
+  quartas(7).forEach(d => { g.diaInteiro("ipt0crldsn7gg9s0gl9hn6l5b8@group.calendar.google.com", d, "Feriado");
     const x = new Date(d + "T12:00:00Z"); x.setUTCDate(x.getUTCDate() + 1); g.diaInteiro("ipt0crldsn7gg9s0gl9hn6l5b8@group.calendar.google.com", x.toISOString().slice(0, 10), "Feriado"); });
   await p.evaluate(() => { agq.prof = "paulo"; agq.cache = {}; });
   await p.evaluate(async () => { agq.disp = null; agq.cache = {}; visao = "agendaq"; render(); await new Promise(r => setTimeout(r, 600)); });

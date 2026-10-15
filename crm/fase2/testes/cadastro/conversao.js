@@ -1,13 +1,9 @@
 // F34 — o caminho de volta: caso que não é caso vira atendimento.
 //
 //   1. o botão "↩ não é caso" mora no quadro do caso, ao lado do Encerrar
-//   2. converter preserva TUDO: andamentos viram anotações com o MESMO id
-//      (o id que a sincronização usa — a próxima rodada substitui, não
-//      duplica), tarefas abertas viram documentos pedidos, anexos voltam
-//      ao cadastro, o benefício vira pré-caso, e o caso é apagado
-//   3. perícia e pagamento travam a conversão (caso_id obrigatório no banco)
-//   4. reconverter não duplica nada (ids determinísticos)
-//   5. o lote da lista Escritório converte os livres e pula os travados
+//   2. F226: o caso volta a PRÉ-CASO na mesma linha (pre_caso, fase
+//      Escritório), com andamentos, anexos, tarefas e agenda; nada é apagado
+//   3. a lista Escritório não tem mais o lote que apagava os casos
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
@@ -101,78 +97,29 @@ FIX.eventos = [
       return rodape && /não é caso/.test(rodape.innerText) && /Encerrar caso/.test(rodape.innerText);
     }));
 
-  // ── 3 (antes do 2). perícia trava a conversão ───────────────────────────
+  // ── 2. F226 · "não é caso" volta a pré-caso: a MESMA linha, nada apagado ──
   escritos.length = 0;
   await p.evaluate(caso => naoEhCaso(caso), CASO2);
-  await p.waitForTimeout(500);
-  conf("caso com perícia NÃO converte — aviso e nada gravado",
-    !escritos.some(x => x.m === "DELETE"));
-  conf("a trava explica o motivo",
-    await p.evaluate(caso => /perícia/.test(travaConversao(D.casoPorId.get(caso))), CASO2));
-  conf("pagamento também trava",
-    await p.evaluate(caso => { D.pagamentos.push({ id: "pg1", caso_id: caso, valor: 100 });
-      const t = travaConversao(D.casoPorId.get(caso));
-      D.pagamentos.pop(); return /pagamento/.test(t); }, CASO3));
-
-  // ── 2. converter pelo botão ─────────────────────────────────────────────
-  escritos.length = 0;
-  await p.evaluate(caso => naoEhCaso(caso), CASO1);
   await p.waitForTimeout(900);
-  const patCli = escritos.find(x => x.m === "PATCH" && x.t === "clientes");
-  const cp = patCli && patCli.corpo.campos;
-  conf("os andamentos viram anotações do atendimento",
-    cp && (cp.atendimento || []).length === 2
-    && /veio do To Do/.test(cp.atendimento[0].texto) && /à mão no CRM/.test(cp.atendimento[1].texto));
-  conf("cada anotação leva o MESMO id do andamento — o dedupe da sincronização",
-    cp && cp.atendimento[0].id === AND1 && cp.atendimento[1].id === AND2);
-  conf("com data e autor originais, e a origem marcada",
-    cp && cp.atendimento[0].em === "2026-03-10T12:00:00Z" && cp.atendimento[0].quem === "Paulo"
-    && cp.atendimento[0].origem === "todo" && cp.atendimento[1].origem === "app");
-  conf("a tarefa ABERTA vira documento pedido, no formato da sincronização (id = caso)",
-    cp && (cp.docs_pedidos || []).some(pd => pd.id === CASO1
-      && pd.itens.length === 1 && /CNIS emitido/.test(pd.itens[0].nome)));
-  conf("o benefício vira pré-caso com natureza deduzida",
-    cp && (cp.precasos || []).some(pc => pc.especie === "Aposentadoria por idade rural"
-      && pc.de_caso === CASO1));
-  conf("os anexos voltam ao cadastro (caso_id nulo)",
-    escritos.some(x => x.m === "PATCH" && x.t === "anexos" && x.u.includes(`caso_id=eq.${CASO1}`)
-      && x.corpo.caso_id === null));
-  conf("e o caso é apagado do banco",
-    escritos.some(x => x.m === "DELETE" && x.t === "casos" && x.u.includes(`id=eq.${CASO1}`)));
-  conf("na memória, o caso sumiu e o cliente ficou 🟡 em atendimento",
-    await p.evaluate(([cli, caso]) => !D.casoPorId.get(caso)
-      && clientesEmAtendimento().some(c => c.id === cli) === false /* tem CASO2 ativo ainda */
-      && precasosDe(D.cliPorId.get(cli)).length === 1, [CLI_CHEIO, CASO1]));
+  const pat = escritos.find(x => x.m === "PATCH" && x.t === "casos" && x.u.includes(`id=eq.${CASO2}`));
+  conf("o caso vira pré-caso na mesma linha (pre_caso, fase Escritório)",
+    pat && pat.corpo.pre_caso === true && pat.corpo.fase === "escritorio");
+  conf("o objeto do pré-caso leva a natureza e de onde veio",
+    pat && pat.corpo.precaso && pat.corpo.precaso.de_caso === CASO2 && pat.corpo.precaso.id === CASO2);
+  conf("nada é apagado: nem o caso, nem os anexos saem dele",
+    !escritos.some(x => x.m === "DELETE") && !escritos.some(x => x.t === "anexos"));
+  conf("a perícia marcada já não trava: ela fica com a linha",
+    await p.evaluate(caso => (D.eventos || []).some(e => e.caso_id === caso), CASO2));
+  conf("na memória, o cliente passa a ter o pré-caso",
+    await p.evaluate(([cli, caso]) => precasosDe(D.cliPorId.get(cli)).some(pc => pc.caso_id === caso && pc.especie === "BPC/LOAS"), [CLI_CHEIO, CASO2]));
+  conf("e o pré-caso não oferece de novo o «não é caso»",
+    await p.evaluate(caso => !/naoEhCaso/.test(acoesDoCaso(D.casoPorId.get(caso))), CASO2));
 
-  // ── 4. reconverter não duplica ──────────────────────────────────────────
-  conf("reconverter o mesmo caso não duplica pré-caso nem anotações",
-    await p.evaluate(async ([cli, caso]) => {
-      const c = D.cliPorId.get(cli);
-      const k = { id: caso, cliente_id: cli, beneficio: "Aposentadoria por idade rural", fase: "escritorio" };
-      const dados = { ands: [{ id: "ad000000-0000-0000-0000-000000000001", caso_id: caso,
-        autor_id: null, texto: "Bloco que veio do To Do", criado_em: "2026-03-10T12:00:00Z", origem: "todo" }], tfs: [] };
-      const antes = { pcs: precasosDe(c).length, notas: (c.campos.atendimento || []).length };
-      await converterCasoEmAtendimento(k, c, dados);
-      return precasosDe(c).length === antes.pcs && (c.campos.atendimento || []).length === antes.notas;
-    }, [CLI_CHEIO, CASO1]));
-
-  // ── 5. o lote da lista Escritório ───────────────────────────────────────
-  await p.evaluate(() => { visao = "fase:escritorio"; render(); });
+  // ── 3. a lista Escritório não oferece mais o lote que apagava casos ──────
+  await p.evaluate(() => { visao = "fase:escritorio"; filtroColab = null; render(); });
   await p.waitForTimeout(400);
-  conf("a lista Escritório oferece o lote nos casos antigos",
-    /não são casos — converter todos/.test(await p.evaluate(() =>
-      (document.getElementById("conteudo-meio") || {}).innerText || "")));
-  escritos.length = 0;
-  await p.evaluate(() => converterEscritorioEmMassa());
-  await p.waitForTimeout(1200);
-  conf("o lote converte o caso livre (CASO3) e apaga só ele",
-    escritos.some(x => x.m === "DELETE" && x.u.includes(`id=eq.${CASO3}`))
-    && !escritos.some(x => x.m === "DELETE" && x.u.includes(`id=eq.${CASO2}`)));
-  conf("o travado continua vivo na memória, o livre sumiu",
-    await p.evaluate(([a, b]) => !!D.casoPorId.get(a) && !D.casoPorId.get(b), [CASO2, CASO3]));
-  conf("o cliente do lote ganhou o pré-caso da conversão",
-    await p.evaluate(cli => precasosDe(D.cliPorId.get(cli))
-      .some(pc => pc.especie === "Revisão de aposentadoria" && pc.natureza === "revisao"), CLI_VAZIO));
+  conf("a lista Escritório não tem mais o lote de conversão",
+    !/converter todos/.test(await p.evaluate(() => (document.getElementById("conteudo-meio") || {}).innerText || "")));
 
   console.log("=== o caminho de volta (F34) ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
