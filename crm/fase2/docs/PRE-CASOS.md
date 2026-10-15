@@ -12,7 +12,7 @@ O resultado é que o mesmo atendimento aparece em três lugares diferentes, a fi
 
 ## 3. Onde o pré-caso mora
 
-A linha nova em `casos` recebe `fase = 'escritorio'` e a coluna `pre_caso boolean default false` (migração `schema_pre_caso.sql`). A espécie vai em `beneficio`, as etapas do atendimento (`identificacao`, `pa`, `analise`, `documentos`, cada uma com `em` e `quem`) vão em `casos.etapas_atend jsonb`, e o desfecho vai em `casos.desfecho jsonb` (`{tipo, em, quem, motivo, lembrete_id}`).
+A linha nova em `casos` recebe `fase = 'escritorio'` e a coluna `pre_caso boolean not null default false` (migração `schema_pre_caso.sql`). A espécie vai em `beneficio`, e o objeto que antes morava em `campos.precasos` (natureza, marcadores, honorários, via, código, etapas do atendimento, desfecho e card ligado) vai inteiro em `casos.precaso jsonb`, com o mesmo `id` (`pc_…`) que anotações e cards já citam.
 
 Essa escolha aproveita o que o CRM já faz por caso. A F221 já ordena o Escritório como a fase menos adiantada (`ORDEM_FASE_ORG`), o "Levar a outro caso…" já move anotação entre casos do mesmo cliente, e a agenda, os documentos e as tarefas já se prendem por `caso_id`. Nenhuma dessas rotinas precisa conhecer o pré-caso como objeto à parte.
 
@@ -64,16 +64,16 @@ O campo `campos.precasos` fica como leitura por uma versão, e é apagado depois
 
 ## 9. Ondas de implementação
 
-A onda 1 cria o esquema, o script de migração e a leitura do pré-caso como caso, com o Casos ▾ e a lista 🙋 Escritório desenhados a partir de `casos`. A onda 2 leva os quatro passos e o Desfecho de três saídas ao pré-caso escolhido, com o seletor no modo atendimento e a troca do nome Lembretes para Aposentadorias futuras.
+A onda 1 (F226, feita em 15.10.2026) cria o esquema, a migração e a leitura do pré-caso como caso, com o Casos ▾ e a lista 🙋 Escritório desenhados a partir de `casos`. `precasosDe` e `gravarPrecasos` passaram a ler e gravar as linhas, de modo que todo o atendimento existente (etapas, Desfecho, card, honorários) funciona sem mudança; o "↩ não é caso" devolve a linha a pré-caso sem apagar nada, e gerar o caso muda a fase da mesma linha, com `mover_para` quando ela veio do To Do. A onda 2 leva os quatro passos e o Desfecho de três saídas ao pré-caso escolhido, com o seletor no modo atendimento e a troca do nome Lembretes para Aposentadorias futuras.
 
 A onda 3 altera o `migrar.py` para gravar as notas do 🙋 Escritório como andamentos do pré-caso e aplica `respeitar_movidos` ao caso gerado, com caso-ouro em `tests/test_crm_fase2.py`. A onda 4 ajusta contadores, Novidades e Cuidar do acervo, e cada onda leva um teste com pontuação em `testes/cadastro/` (banco simulado), no padrão da F220.
 
-## 10. Decisões que dependem do Paulo
+## 10. Decisões do Paulo (15.10.2026)
 
-**D1.** O cliente com dois pré-casos aparece na lista 🙋 Escritório em dois cartões (recomendado, porque cada benefício anda em ritmo próprio) ou em um cartão com o contador "+1".
+**D1.** O cliente com dois pré-casos aparece na lista 🙋 Escritório em **dois cartões**, porque cada benefício anda em ritmo próprio.
 
-**D2.** Na saída para Aposentadorias futuras, a ponte passa a mover a tarefa do To Do para a lista 🙏 Aposentadorias Futuras (recomendado, porque mantém a carteira igual nos dois sistemas e amplia a ponte em uma única operação), ou o colaborador continua movendo a tarefa à mão.
+**D2.** Na saída para Aposentadorias futuras, **a ponte move a tarefa do To Do** para a lista 🙏 Aposentadorias Futuras, para a carteira ficar igual nos dois sistemas.
 
-**D3.** Os 76 casos antigos da fase Escritório viram pré-casos (recomendado), ou os que tiverem anotação há mais de um ano são arquivados com o motivo "sem movimento" na própria migração.
+**D3.** Os 76 casos antigos da fase Escritório **viram pré-casos**.
 
-**D4.** Quem pode gerar o caso a partir do pré-caso, só o advogado (recomendado, porque o caso abre com procuração, contrato e espécie definida) ou também a equipe de atendimento.
+**D4.** **Qualquer colaborador** pode gerar o caso a partir do pré-caso.

@@ -256,7 +256,9 @@ FIX.colaboradores = [...FIX.colaboradores,
   await p.evaluate(() => criarCliente());
   await p.waitForTimeout(900);
   const postCli2 = escritos.find(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.campos);
-  const pc = postCli2 && (postCli2.corpo.campos.precasos || [])[0];
+  // F226 · o pré-caso nasce como linha de casos (pre_caso), com a espécie em beneficio
+  const pk = escritos.find(x => x.m === "POST" && x.t === "casos" && x.corpo.pre_caso);
+  const pc = pk && { ...pk.corpo.precaso, especie: pk.corpo.beneficio };
   conf("o sexo grava no cliente (homem/mulher — entra na data da aposentadoria)",
     postCli2 && postCli2.corpo.sexo === "M");
   const patEnd = escritos.find(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.logradouro);
@@ -272,7 +274,7 @@ FIX.colaboradores = [...FIX.colaboradores,
   conf("o relato do balcão entra nas anotações do atendimento",
     (postCli2.corpo.campos.atendimento || []).some(n => /roça a vida toda/.test(n.texto)));
   conf("e MESMO com benefício, caso não nasce na recepção",
-    !escritos.some(x => x.m === "POST" && x.t === "casos"));
+    !escritos.some(x => x.m === "POST" && x.t === "casos" && !x.corpo.pre_caso));
 
   // rua de fora da lista (mas em Monte Alto): grava como digitada, com a
   // cidade padrão e sem CEP inventado

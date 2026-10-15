@@ -77,7 +77,7 @@ FIX.documentos_beneficio = [
   await p.waitForSelector(".atend-passos");
   const texto = sel => p.evaluate(s => [...document.querySelectorAll(s)].map(e => e.textContent.replace(/\s+/g, " ").trim()), sel);
   const n = sel => p.evaluate(s => document.querySelectorAll(s).length, sel);
-  const pcAtual = () => p.evaluate(cli => JSON.parse(JSON.stringify((D.cliPorId.get(cli).campos || {}).precasos || [])), CLI_CHEIO);
+  const pcAtual = () => p.evaluate(cli => JSON.parse(JSON.stringify(precasosDe(D.cliPorId.get(cli))))   /* F226 · lê das linhas de casos */, CLI_CHEIO);
   // espera a condição em vez de um tempo fixo: sob carga (a CI roda quatro provas juntas) 600 ms não bastavam
   const esperar = async (cond, ms = 8000) => { const fim = Date.now() + ms; while (Date.now() < fim) { if (await cond()) return true; await p.waitForTimeout(100); } return false; };
   const hojeBr = await p.evaluate(() => fmt(hoje()));
@@ -126,8 +126,9 @@ FIX.documentos_beneficio = [
   const btLemb = (await texto("#desfecho .adr-bt"))[0] || "";
   conf(5, "B1 o Desfecho sugere o lembrete pela data futura e, com card ligado, oferece atualizá-lo", /^Lembrete/.test(desf) && desf.includes("15.06.2027") && /Atualizar o card/.test(btLemb));
   // sem card ligado: o lembrete nasce do Desfecho
+  // F226 · o card sai do objeto do pré-caso, que mora na linha de casos
   // com a máquina carregada, a recarga da análise pode chegar depois: tira o card e repinta até o botão valer
-  await esperar(() => p.evaluate(cli => { const c = D.cliPorId.get(cli); c.campos.precasos = c.campos.precasos.map(x => { const y = { ...x }; delete y.lembrete_id; return y; }); repintarFicha();
+  await esperar(() => p.evaluate(cli => { linhasPreCaso(cli).forEach(k => { if (k.precaso) delete k.precaso.lembrete_id; }); repintarFicha();
     const b = [...document.querySelectorAll("#desfecho .adr-bt")].find(x => /Criar o lembrete/.test(x.textContent)); return !!b && !b.disabled; }, CLI_CHEIO), 20000);
   const regB = reg.length;
   await p.click("#desfecho .adr-bt:has-text('Criar o lembrete')");
@@ -137,11 +138,11 @@ FIX.documentos_beneficio = [
   conf(7, "B2 Criar o lembrete grava o card de aposentadoria futura com etapa, data, D-60 e cadência de 6 meses, e o pré-caso registra o desfecho",
     nl.tipo === "aposentadoria_futura" && nl.crm && nl.crm.etapa === "analisado" && nl.crm.data_direito === DIREITO && nl.proximo_em === "2027-04-16" && nl.intervalo_meses === 6
     && nl.detalhes && nl.detalhes.origem === "precaso" && pc3.so_lembrete && pc3.desfecho && pc3.desfecho.tipo === "lembrete" && pc3.lembrete_id);
-  const imed = await p.evaluate(cli => { const c = D.cliPorId.get(cli); const pcs = c.campos.precasos;
+  const imed = await p.evaluate(cli => { const c = D.cliPorId.get(cli); const ks = D.casosDoCliente.get(cli); D.casosDoCliente.set(cli, (D.casosDoCliente.get(cli) || []).filter(k => !k.pre_caso)); const pcs = c.campos.precasos;
     c.campos.precasos = [{ id: "pc_rev", especie: "Revisão", natureza: "revisao", marc: {} }];
-    const b = baseDesfecho(c, null); c.campos.precasos = pcs; return b; }, CLI_CHEIO);
+    const b = baseDesfecho(c, null); c.campos.precasos = pcs; D.casosDoCliente.set(cli, ks); return b; }, CLI_CHEIO);
   conf(5, "B3 revisão é ato que não espera: o Desfecho sugere o caso", imed.sug === "caso" && /não espera/.test(imed.motivo));
-  await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.campos.precasos = [{ id: "pc_2", especie: "Aposentadoria por idade", natureza: "", marc: {}, em: "2026-10-12" }]; }, CLI_CHEIO);
+  await p.evaluate(cli => { const c = D.cliPorId.get(cli); D.casosDoCliente.set(cli, (D.casosDoCliente.get(cli) || []).filter(k => !k.pre_caso)); c.campos.precasos = [{ id: "pc_2", especie: "Aposentadoria por idade", natureza: "", marc: {}, em: "2026-10-12" }]; }, CLI_CHEIO);
   await p.evaluate(cli => desfechoArquivar(cli, "Faleceu"), CLI_CHEIO);
   await esperar(async () => (await pcAtual()).length === 0);
   const arq = await p.evaluate(cli => { const cp = D.cliPorId.get(cli).campos; return { pcs: (cp.precasos || []).length, arq: (cp.pc_arquivados || []).slice(-1)[0], nota: (cp.atendimento || []).slice(-1)[0] }; }, CLI_CHEIO);
@@ -150,7 +151,7 @@ FIX.documentos_beneficio = [
     arq.pcs === 0 && arq.arq && arq.arq.desfecho.motivo === "Faleceu" && /arquivado: Faleceu/.test(arq.nota.texto) && avisoPensao);
 
   // ── C · onda 4: Documentos em seis quadros ─────────────────────────────
-  await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.campos.precasos = [{ id: "pc_3", especie: "Aposentadoria por idade", natureza: "", marc: {}, em: "2026-10-12", etapas: { identificacao: { em: "2026-10-12" } } }];
+  await p.evaluate(cli => { const c = D.cliPorId.get(cli); D.casosDoCliente.set(cli, (D.casosDoCliente.get(cli) || []).filter(k => !k.pre_caso)); c.campos.precasos = [{ id: "pc_3", especie: "Aposentadoria por idade", natureza: "", marc: {}, em: "2026-10-12", etapas: { identificacao: { em: "2026-10-12" } } }];
     admSalvar(cli, a => { a.beneficios = { tempo: ["idade"] }; }); _atendAberto.add(cli); abaAtiva = 0; irSubCad("documentos"); }, CLI_CHEIO);
   await p.waitForSelector(".doc-quadros", { state: "attached" });
   const ids = await p.evaluate(() => [...document.querySelectorAll(".doc-quadros > .doc-quadro")].map(e => e.id).filter(Boolean));
