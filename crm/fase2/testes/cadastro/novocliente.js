@@ -395,7 +395,7 @@ FIX.colaboradores = [...FIX.colaboradores,
   await p.waitForTimeout(700);
   conf("cliente novo NÃO vê a aba Lembretes",
     await p.evaluate(() => ![...document.querySelectorAll(".menu-topo .mt")]
-      .some(b => /Lembretes/.test(b.textContent))));
+      .some(b => /Aposentadorias futuras/.test(b.textContent))));
   // F165 · sem atendimento em curso, o trilho é só a Identificação e o
   // + atendimento em destaque (antes abria direto na Triagem)
   conf("F165 · nem Anotações nem Triagem — só Identificação e o + atendimento",
@@ -428,7 +428,7 @@ FIX.colaboradores = [...FIX.colaboradores,
   await p.waitForTimeout(500);
   conf("encerrada a triagem, a aba Lembretes aparece",
     await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")]
-      .some(b => /Lembretes/.test(b.textContent))));
+      .some(b => /Aposentadorias futuras/.test(b.textContent))));
   conf("e o botão Anotações também",
     await p.evaluate(() => [...document.querySelectorAll(".sub-menu:not(.anot-trilho) button")]
       .some(b => /Anota/.test(b.textContent))));
@@ -436,7 +436,7 @@ FIX.colaboradores = [...FIX.colaboradores,
     await p.evaluate(() => !document.querySelector(".tri-balcao")));
   conf("cliente COM caso segue vendo Lembretes e Anotações como sempre",
     await p.evaluate(async cli => { await abrirFicha(cli);
-      return [...document.querySelectorAll(".menu-topo .mt")].some(b => /Lembretes/.test(b.textContent)); },
+      return [...document.querySelectorAll(".menu-topo .mt")].some(b => /Aposentadorias futuras/.test(b.textContent)); },
       CLI_CHEIO));
 
   // ── 5. cliente só com pré-caso também aparece em atendimento ────────────

@@ -64,7 +64,7 @@ const SUPA = "https://ficticio.supabase.co";
   await p.waitForSelector("#btn-processos");
   const m = await p.evaluate(() => ({ menu: [...document.querySelectorAll(".menu-topo .mt")].map(b => b.textContent.trim().split(" (")[0].replace(" ▾", "")), sub: subAba }));
   conf("o caso abre nos andamentos do Escritório", m.sub === "escritorio");
-  conf("Lembretes, quando existe, vem depois de Honorários", !m.menu.includes("Lembretes") || m.menu.indexOf("Lembretes") > m.menu.indexOf("Honorários"));
+  conf("Lembretes, quando existe, vem depois de Honorários", !m.menu.includes("Aposentadorias futuras") || m.menu.indexOf("Aposentadorias futuras") > m.menu.indexOf("Honorários"));
   // F165/F167 · cliente novo: só Cadastro, só Identificação e o + atendimento
   await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.campos = {...(c.campos || {})}; delete c.campos.precasos; delete c.campos.especie; return abrirFicha(cli); }, CLI_VAZIO);
   await p.waitForSelector("#campo-nome, .sub-menu .atend-novo", { state: "attached" });

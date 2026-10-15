@@ -92,13 +92,13 @@ FIX.analises_direito = [{ id: "a0000000-0000-0000-0000-000000000178", cliente_id
   conf("planejamento aparece para o facultativo, com as datas e a regra dos 6 e 12 meses",
     plano.length === 2 && /15\.10\.2026/.test(plano[0]) && /até 6 meses/.test(await p.textContent(".adr-plano")));
   escritos.length = 0;
-  await p.click(".adr-plano li >> text=levar ao Lembretes");
+  await p.click(".adr-plano li >> text=levar a Aposentadorias futuras");
   await p.waitForTimeout(400);
   const lemb = escritos.find(x => x.m === "POST" && x.t === "lembretes");
   conf("levar ao Lembretes cria lembrete geral com a data e o item do plano",
     lemb && lemb.corpo.tipo === "geral" && /^Contribuição: Pagar a competência 09\/2026/.test(lemb.corpo.titulo)
     && lemb.corpo.proximo_em === "2026-10-15" && lemb.corpo.detalhes.plano_item === "pl1");
-  conf("e a linha passa a dizer no Lembretes", /no Lembretes/.test((await p.$$eval(".adr-plano li", ls => ls[0].textContent))));
+  conf("e a linha passa a dizer no Lembretes", /em Aposentadorias futuras/.test((await p.$$eval(".adr-plano li", ls => ls[0].textContent))));
   const pend = await p.$$eval(".adr-pend li", ls => ls.map(l => ({ t: l.textContent, ok: l.querySelector(".adr-ponto").classList.contains("ok") })));
   conf("pendências: o que falta em vermelho, o entregue em verde, e o CNIS que falta",
     pend.some(x => /Relatório médico/.test(x.t) && !x.ok) && pend.some(x => /Carteira de trabalho/.test(x.t) && x.ok)

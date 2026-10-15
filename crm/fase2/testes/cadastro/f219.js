@@ -124,14 +124,14 @@ FIX.documentos_beneficio = [
   await p.waitForSelector("#desfecho");
   const desf = (await texto("#desfecho .desf-base"))[0] || "";
   const btLemb = (await texto("#desfecho .adr-bt"))[0] || "";
-  conf(5, "B1 o Desfecho sugere o lembrete pela data futura e, com card ligado, oferece atualizá-lo", /^Lembrete/.test(desf) && desf.includes("15.06.2027") && /Atualizar o card/.test(btLemb));
+  conf(5, "B1 o Desfecho sugere o lembrete pela data futura e, com card ligado, oferece atualizá-lo", /^Aposentadorias futuras/.test(desf) && desf.includes("15.06.2027") && /Atualizar em Aposentadorias futuras/.test(btLemb));
   // sem card ligado: o lembrete nasce do Desfecho
   // F226 · o card sai do objeto do pré-caso, que mora na linha de casos
   // com a máquina carregada, a recarga da análise pode chegar depois: tira o card e repinta até o botão valer
   await esperar(() => p.evaluate(cli => { linhasPreCaso(cli).forEach(k => { if (k.precaso) delete k.precaso.lembrete_id; }); repintarFicha();
-    const b = [...document.querySelectorAll("#desfecho .adr-bt")].find(x => /Criar o lembrete/.test(x.textContent)); return !!b && !b.disabled; }, CLI_CHEIO), 20000);
+    const b = [...document.querySelectorAll("#desfecho .adr-bt")].find(x => /Enviar a Aposentadorias futuras/.test(x.textContent)); return !!b && !b.disabled; }, CLI_CHEIO), 20000);
   const regB = reg.length;
-  await p.click("#desfecho .adr-bt:has-text('Criar o lembrete')");
+  await p.click("#desfecho .adr-bt:has-text('Enviar a Aposentadorias futuras')");
   await esperar(async () => reg.slice(regB).some(x => x.t === "lembretes" && x.m === "POST") && !!(((await pcAtual())[0] || {}).desfecho));
   const nl = reg.slice(regB).filter(x => x.t === "lembretes" && x.m === "POST").map(x => x.corpo).pop() || {};
   const pc3 = (await pcAtual())[0] || {};

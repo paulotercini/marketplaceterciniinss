@@ -96,6 +96,28 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     const r = [...document.querySelectorAll("#menu-processos .mp-it small")].map(x => x.textContent); fecharMenuProcessos(); return r; }, B);
   conf("no Casos ▾ o pré-caso vem antes do caso, marcado como pré-caso no escritório", /Pré-caso no escritório/.test(menu[0] || "") && !/Pré-caso/.test(menu[1] || ""));
 
+  // F227 · onda 2: o cartão abre o atendimento DAQUELE pré-caso, o seletor troca, e o Desfecho tem as três saídas em ordem
+  await p.evaluate(() => { visao = "fase:escritorio"; filtroColab = null; render(); });
+  await p.waitForTimeout(300);
+  await p.click(`#conteudo-meio .cartao[data-pc="pc_a1"]`);
+  await p.waitForTimeout(900);
+  conf("o cartão do pré-caso abre o atendimento dele", await p.evaluate(a => (preCasoAberto(D.cliPorId.get(a)) || {}).id === "pc_a1" && _atendAberto.has(a), A));
+  await p.evaluate(() => irSubCad("direito"));
+  await p.waitForTimeout(600);
+  const esc = await p.evaluate(() => [...document.querySelectorAll(".pc-escolha .pc-esc-bt")].map(b => [b.textContent, b.classList.contains("on")]));
+  await p.screenshot({ path: path.join(OUT, "02-seletor-e-desfecho.png") });
+  conf("com dois pré-casos, o modo atendimento mostra o seletor com o escolhido marcado",
+    esc.length === 2 && esc.some(([t, on]) => /Aposentadoria por idade/.test(t) && on) && esc.some(([t, on]) => /BPC/.test(t) && !on));
+  const ordem = await p.evaluate(() => [...document.querySelectorAll("#desfecho .desf-acoes > *")].map(e => e.tagName === "SELECT" ? e.options[0].text : e.textContent.trim()));
+  conf(`o Desfecho tem arquivar, Aposentadorias futuras e gerar o caso, nessa ordem (${ordem.join(" | ")})`,
+    ordem.length === 3 && /^1 · Arquivar/.test(ordem[0]) && /^2 · Enviar a Aposentadorias futuras/.test(ordem[1]) && /^3 · Gerar o caso/.test(ordem[2]));
+  await p.click(".pc-escolha .pc-esc-bt:not(.on)");
+  await p.waitForTimeout(500);
+  conf("o seletor troca o pré-caso do atendimento e o Desfecho acompanha", await p.evaluate(a => (preCasoAberto(D.cliPorId.get(a)) || {}).id === "pc_a2"
+    && /BPC/.test(document.querySelector("#desf-t").textContent), A));
+  conf("a aba do cliente se chama Aposentadorias futuras", await p.evaluate(() => /Aposentadorias futuras/.test(document.querySelector("#app").innerHTML) && !/data-vv="9">Lembretes/.test(document.querySelector("#app").innerHTML)));
+  await p.evaluate(a => { _atendAberto.delete(a); _pcSel.delete(a); }, A);
+
   // 4 · arquivar encerra a linha; gerar o caso muda a fase da MESMA linha
   await p.evaluate(a => gravarPrecasos(a, precasosDe(D.cliPorId.get(a)).filter(x => x.id !== "pc_a2")), A);
   const arq = linhas(A).find(k => k.precaso.id === "pc_a2");
