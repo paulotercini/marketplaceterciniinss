@@ -75,7 +75,7 @@ FIX.colaboradores.push({ id: COL2, nome: "Amanda Ficticia", inicial: "A", cor: "
   const abas = await p.evaluate(() =>
     [...document.querySelectorAll(".mt")].map(b => b.innerText.trim().split("\n")[0]));
   conf(`sem caso, o menu tem só Cadastro e Lembretes (${abas.join(" · ")})`,
-    abas.some(x => /Cadastro/.test(x)) && abas.some(x => /Lembretes/.test(x))
+    abas.some(x => /Cadastro/.test(x)) && abas.some(x => /Aposentadorias futuras/.test(x))
     && !abas.some(x => /Casos|Perícias|Honorários/.test(x)));
   conf("e a ficha abriu no Cadastro (a aba 2 não existe para ele)",
     (await p.evaluate(() => abaAtiva)) === 0);

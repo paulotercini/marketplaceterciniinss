@@ -3650,6 +3650,12 @@ section.ben{background:#fff;border:1px solid #E7E6E1;border-radius:12px;padding:
 .pa{background:#F3F2EE;padding:18px;border-radius:14px;--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-warn:#8F5400;--pa-ok:#1B6E38;--pa-info:#3A6491;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660;color:#121212;font-size:13px;line-height:1.45}
 .pa .mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-weight:500}
 .pa-passos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--pa-b);margin-bottom:14px}
+/* F227 · a escolha do pré-caso no modo atendimento */
+.pc-escolha{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:-6px 0 12px}
+.pc-esc-bt{border:1px solid #E0B341;background:#FFF;color:#8A6410;border-radius:999px;padding:3px 11px;font:inherit;font-size:12.5px;cursor:pointer;transition:transform 120ms ease-out}
+.pc-esc-bt:active{transform:scale(.97)}
+.pc-esc-bt.on{background:#FFF6DC;font-weight:600}
+.pc-esc-bt:focus-visible{outline:2px solid #8A6410;outline-offset:2px}
 .pa-passo{display:flex;align-items:center;gap:10px;padding:10px 4px 12px;border:0;border-bottom:3px solid #E7E6E1;background:none;text-align:left;cursor:pointer;font:inherit;color:var(--pa-c1)}
 .pa-passo i{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid #CFCDC6;display:grid;place-items:center;font-style:normal;font-size:12px;color:var(--pa-c2)}
 .pa-passo span{display:flex;flex-direction:column}.pa-passo b{font-size:13.5px;font-weight:600;color:#121212}.pa-passo small{font-size:11.5px;color:var(--pa-c2)}
@@ -4377,7 +4383,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.53</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.54</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7814,7 +7820,7 @@ function cartaoCliente(cli, casosMostrar){
     ].join("");
     const quem = [...quemProx, ...resp.filter(c=>!quemProx.includes(c))].slice(0,2);
     const dTxt = !dataProx ? "" : dataProx===hj ? "hoje" : `${dataProx.slice(8,10)}/${dataProx.slice(5,7)}`;
-    return `<div class="cartao ag-linha${ks.some(k=>k.urgente)?" urg":""}" data-cli="${cli.id}">
+    return `<div class="cartao ag-linha${ks.some(k=>k.urgente)?" urg":""}" data-cli="${cli.id}"${ks.length===1 && ehPreCaso(ks[0]) ? ` data-pc="${esc((ks[0].precaso||{}).id||ks[0].id)}"` : ""}>
     <span class="ag-slot"></span>
     <span class="ag-data${!dataProx?"":dataProx<hj?" venc":dataProx===hj?" hoje":""}"${dica?` title="${esc(dica)}"`:""}>${dTxt}</span>
     <div class="ag-txt"><b>${esc(cli.nome)}</b>${resumo?`<span class="ag-res">, ${esc(resumo)}</span>`:""}</div>
@@ -7916,6 +7922,7 @@ function ligarCartoes(){
     el.onpointerdown=()=>preCarregarFicha(el.dataset.cli);
     el.onclick=e=>{
       if(e.target.dataset.estrela!==undefined) return;
+      if(el.dataset.pc) return abrirAtendimentoDe(el.dataset.cli, el.dataset.pc);   // F227 · o cartão do pré-caso abre o atendimento dele
       abrirFicha(el.dataset.cli);
     };
     el.oncontextmenu=e=>{ if(el._segurou) return e.preventDefault(); menuMover(e, el.dataset.cli); };   // botão direito = Mover para…
@@ -14610,7 +14617,7 @@ function pintarFicha(){
   const stCli = ativosCli.length
     ? `<span class="cli-st ativo" title="${ativosCli.length} de ${ks.length} caso(s) em andamento${lembCli.length?` · e ${lembCli.length} lembrete(s) na aba 🔔`:""}">Cliente ativo · ${ativosCli.length} caso${ativosCli.length>1?"s":""} em andamento</span>`
     : lembCli.length
-      ? `<span class="cli-st lemb" title="nenhum processo em andamento, mas o escritório avisa de tempos em tempos — veja a aba 🔔 Lembretes">🟡 Sem processo — ${lembCli.length} lembrete${lembCli.length>1?"s":""} ativo${lembCli.length>1?"s":""}</span>`
+      ? `<span class="cli-st lemb" title="nenhum processo em andamento, mas o escritório avisa de tempos em tempos — veja a aba 🙏 Aposentadorias futuras">🟡 Sem processo — ${lembCli.length} lembrete${lembCli.length>1?"s":""} ativo${lembCli.length>1?"s":""}</span>`
       : ksR.length && !precasosDe(c).some(p=>!p.so_lembrete)
         ? `<span class="cli-st inativo" title="nenhum trabalho em andamento para este cliente">🔴 Cliente inativo — ${ksR.length>1?`os ${ksR.length} casos`:"o único caso"} encerrado${ksR.length>1?"s":""}${encDesde?` (último em ${fmt(dataSP(encDesde))})`:""}</span>`
         : (n=>n?`<span class="cli-st atend" title="pré-caso em formação: gerar o caso é gerar a procuração e assinar o contrato — até lá, o cliente fica amarelo, na lista Escritório">🟡 Em formação — ${n} pré-caso${n>1?"s":""}</span>`
@@ -14692,7 +14699,7 @@ function pintarFicha(){
         evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length)}
       ${(ks.length || pagK.length || pgs.length) ? `<button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Honorários${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>` : ""}
       ${/* F166 · Lembretes por último, depois de Honorários */""}
-      ${temLemb ? `<button class="mt ${abaAtiva===9?"on":""}" data-vv="9">Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>` : ""}
+      ${temLemb ? `<button class="mt ${abaAtiva===9?"on":""}" data-vv="9">Aposentadorias futuras${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>` : ""}
     </div>
     <button class="cel-tudo" onclick="fichaTudo()">⋯ mostrar tudo da ficha</button>
   </div>
@@ -14791,7 +14798,7 @@ function pintarFicha(){
   </div>
 
   <div class="painel ${abaAtiva===9?"ativo":""}" data-p="9">
-    <h3 style="margin-bottom:8px">🔔 Lembretes de ${esc(c.nome.split(" ")[0])}</h3>
+    <h3 style="margin-bottom:8px">🙏 Aposentadorias futuras de ${esc(c.nome.split(" ")[0])}</h3>
     <p class="meio-sub" style="margin-bottom:10px">O "avisar de tempos em tempos" — contribuição do INSS,
       cadastro para renovar, retomar contato. Vive no cliente, não num processo: vale mesmo sem
       nenhum caso em andamento, e cada aviso fica registrado (quem, quando, por onde).</p>
@@ -15161,7 +15168,8 @@ function cabecalhoAtendimento(c, cd, vis){
   <nav class="pa-passos atend-passos" aria-label="Passos do atendimento">
     ${passo("1","identificacao","Identificação","dados do cliente")}${passo("2","pa","Primeiro atendimento","situação e benefícios")}
     ${passo("3","direito","Análise de Direito",(n=>n ? `${n} ${n===1?"benefício":"benefícios"} em análise` : "trabalhos e planejamento")(Object.keys(benefSel(c)).length))}${passo("4","documentos","Documentos","pedido, guias e geração")}
-  </nav>`;
+  </nav>${(vs=>vs.length>1 ? `<nav class="pc-escolha" aria-label="Pré-caso em atendimento"><span class="meio-sub">Pré-caso:</span>${vs.map(p=>
+      `<button type="button" class="pc-esc-bt${pc && p.id===pc.id?" on":""}" ${pc && p.id===pc.id?'aria-current="true"':""} onclick="escolherPreCaso('${c.id}','${escJs(p.id)}')">${esc(p.especie||"Em formação")}</button>`).join("")}</nav>` : "")(preCasosVivos(c))}`;
 }
 const _atendAberto = new Set();
 const ATEND_SUBS = new Set(["pa","mapa","direito","documentos"]);
@@ -16859,7 +16867,7 @@ async function fecharAtendimento(cliId){
   aviso(k ? `Triagem encerrada e lançada em ${tituloCaso(k)} ✔`
           : (atencao.length||faltam.length)
             ? "Triagem encerrada — as Anotações se abriram, com o resumo ✔"
-            : "Triagem encerrada — as Anotações e os Lembretes se abriram ✔");
+            : "Triagem encerrada — as Anotações e as Aposentadorias futuras se abriram ✔");
 }
 async function salvarTriagem(cliId, triagem){
   const c = D.cliPorId.get(cliId); if(!c) return false;
@@ -17522,6 +17530,7 @@ function menuProcessos(ev, ks){
     + (ks.length>1?`<div class="mp-it ${!casoSel?"sel":""}" data-mp=""><b>📚 Todos os processos</b><small>andamentos juntos</small></div>`:"")
     + ks.filter(k=>k.fase==="encerrado").map(item).join("")
     + (ks.filter(k=>k.fase!=="encerrado").length>1 ? `<div class="mp-it mp-novo" data-mp="__org__">⇄ Organizar os casos</div>` : "")
+    + `<div class="mp-it mp-novo" data-mp="__novopc__" title="o cliente busca outro benefício: abre um pré-caso próprio">＋ Novo pré-caso (outro benefício)</div>`
     + `<div class="mp-it mp-novo" data-mp="__novo__">＋ Novo processo</div>`;
   document.body.appendChild(m);
   const r=ev.currentTarget.getBoundingClientRect(), W=m.offsetWidth||300, H=m.offsetHeight||200;
@@ -17531,6 +17540,9 @@ function menuProcessos(ev, ks){
     const v=it.dataset.mp;
     fecharMenuProcessos();
     if(v==="__org__") return organizarCasos(clienteAberto);
+    if(v==="__novopc__") return novoAtendimento(clienteAberto);
+    const kp = D.casoPorId.get(v);
+    if(ehPreCaso(kp)) return abrirAtendimentoDe(kp.cliente_id, (kp.precaso||{}).id||kp.id);   // F227
     if(v==="__novo__"){ abaAtiva=7; }
     else { casoSel=v||null; abaAtiva=2; subAba="escritorio"; }   // F166
     repintarFicha();
@@ -18829,7 +18841,7 @@ function renderCardsApos(){
   const todos = cardsApos(), hs = [["vencido","Vencidos"],["90","Até 90 dias"],["ano","Até um ano"],["depois","Depois"],["sem","Sem data"],["todos","Todos"]];
   const n = Object.fromEntries(hs.map(([h])=>[h, h==="todos" ? todos.length : todos.filter(l=>horizonteDoCard(l)===h).length]));
   const sel = _cardsFiltro, lista = (sel==="todos" ? todos : todos.filter(l=>horizonteDoCard(l)===sel)).slice().sort((a, b)=>String(a.proximo_em||"9999").localeCompare(String(b.proximo_em||"9999")));
-  document.getElementById("sub-lista").textContent = `${todos.length} cards ativos, mantidos pela sincronização com o To Do; o card abre a ficha na aba Lembretes`;
+  document.getElementById("sub-lista").textContent = `${todos.length} cards ativos, mantidos pela sincronização com o To Do; o card abre a ficha na aba Aposentadorias futuras`;
   const porEtapa = APOS_ETAPAS.map(([e, rot])=>[e, rot, lista.filter(l=>etapaDoCard(l)===e)]).filter(x=>x[2].length);
   document.getElementById("conteudo-meio").innerHTML = `<div class="filtros">${hs.map(([h, rot])=>`<button class="fchip${sel===h?" on":""}" data-horiz="${h}" onclick="_cardsFiltro='${h}';render()">${rot} (${n[h]})</button>`).join("")}</div>`
     + (porEtapa.map(([e, rot, ls])=>`<h3 class="secao">${esc(rot)} (${ls.length})</h3>${ls.map(cartaoApos).join("")}`).join("") || "<p class='meio-sub'>Nenhum card neste horizonte.</p>");
@@ -19059,7 +19071,7 @@ function cartaoLembrete(l){
 async function casoViraLembrete(casoId){
   const k=D.casoPorId.get(casoId); if(!k) return;
   const c=D.cliPorId.get(k.cliente_id)||{};
-  if(!await confirmar(`Transformar "${tituloCaso(k)}" em 🔔 lembrete de ${c.nome||"cliente"}?\n\nO lembrete nasce na aba 🔔 Lembretes (a cada 6 meses — dá para ajustar lá) e este caso é encerrado.`)) return;
+  if(!await confirmar(`Transformar "${tituloCaso(k)}" em 🔔 lembrete de ${c.nome||"cliente"}?\n\nO lembrete nasce na aba 🙏 Aposentadorias futuras (a cada 6 meses — dá para ajustar lá) e este caso é encerrado.`)) return;
   try{
     const [l]=await api(`/rest/v1/lembretes`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({cliente_id:k.cliente_id, tipo:"geral", titulo:tituloCaso(k),
@@ -19077,7 +19089,7 @@ async function casoViraLembrete(casoId){
   }
   await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
-      texto:"Caso transformado em 🔔 lembrete do cliente — o acompanhamento periódico segue na aba Lembretes."})}).catch(()=>{});
+      texto:"Caso transformado em 🔔 lembrete do cliente — o acompanhamento periódico segue na aba Aposentadorias futuras."})}).catch(()=>{});
   aviso("🔔 Virou lembrete — o caso foi encerrado");
   abaAtiva=9; montarSidebar(); abrirFicha(k.cliente_id);
 }
@@ -19870,7 +19882,7 @@ function resumoDireito(c, ult){
   const m=ult?cenMelhor(ult):null, data=(m&&m.data)||d.data_direito||null;
   const direito = !data ? tile("Atinge o direito", "—", ult?"sem data projetada":"nenhuma análise registrada")
     : tile("Atinge o direito", esc(fmt(data)),
-        data<=hoje() ? "direito alcançado" : temAvisoApos(c.id, data) ? "no Lembretes · aviso antes da data"
+        data<=hoje() ? "direito alcançado" : temAvisoApos(c.id, data) ? "em Aposentadorias futuras · aviso antes da data"
           : (n=>n<=1?"falta 1 mês":`faltam ${n} meses`)(mesesAte(data)), "adr-t-direito");
   return `<section class="adr-resumo" aria-label="Resumo do segurado">${idade}${tempo}${recolhe}${direito}</section>`;
 }
@@ -19926,7 +19938,7 @@ function regrasDireito(a){
         <span class="adr-data">${cn.data?esc(fmt(cn.data)):"—"}</span>
         <span class="adr-valor">${cn.valor?moedaBR(cn.valor):"—"}</span>
         <span class="adr-regra-acao">${cn.data && !ok ? (temAvisoApos(a.cliente_id, cn.data)
-          ? `<span class="adr-chip ok">no Lembretes</span>`
+          ? `<span class="adr-chip ok">em Aposentadorias futuras</span>`
           : `<button type="button" class="adr-bt" title="cria o aviso no Meu Dia ${MESES_AVISO} meses antes da data, para comunicar o cliente"
             onclick="avisarCenario('${a.cliente_id}','${cn.data}','${escJs(cn.regra||"")}')">avisar na época</button>`) : ""}</span>
       </li>`; }).join("")}</ol>
@@ -19942,8 +19954,8 @@ function planejamentoDireito(c, ult){
     ${pl.length ? `<ul class="adr-plano-lista">${pl.slice().sort((x,y)=>(x.data||"")<(y.data||"")?-1:1).map(p=>{
       const tem=lembs.some(l=>(l.detalhes||{}).plano_item===p.id);
       return `<li><span class="adr-data">${p.data?esc(fmt(p.data)):"—"}</span><span class="adr-plano-txt">${esc(p.texto||"")}</span>
-        ${tem?`<span class="adr-chip ok">no Lembretes</span>`
-          :p.data?`<button type="button" class="adr-bt" onclick="planoParaLembrete('${c.id}','${ult.id}','${escJs(p.id)}')">levar ao Lembretes</button>`:""}</li>`; }).join("")}</ul>`
+        ${tem?`<span class="adr-chip ok">em Aposentadorias futuras</span>`
+          :p.data?`<button type="button" class="adr-bt" onclick="planoParaLembrete('${c.id}','${ult.id}','${escJs(p.id)}')">levar a Aposentadorias futuras</button>`:""}</li>`; }).join("")}</ul>`
       : `<p class="meio-sub" style="margin:0">Nenhuma data planejada — registre no formulário da análise.</p>`}
   </section>`;
 }
@@ -21224,7 +21236,7 @@ function paDados(c, ks){
     ...Object.fromEntries(PA_BLOCOS_EXTRA.map(([b,,gs])=>[b, fatos.filter(x=>gs.includes(x.grupo))])),
   };
   const ap = (aposDoCliente(c)||[]).filter(a=>a.data).sort((a,b)=>a.data<b.data?-1:1)[0];
-  if(ap) grupos.plan.push({grupo:"idade", est:"info", fonte:"Lembretes", texto:`${ap.especie||"Aposentadoria"} prevista para ${fmtBarra(ap.data)}`});
+  if(ap) grupos.plan.push({grupo:"idade", est:"info", fonte:"Aposentadorias futuras", texto:`${ap.especie||"Aposentadoria"} prevista para ${fmtBarra(ap.data)}`});
   const pior = fs => fs.reduce((p, x)=>MAPA_ORDEM[x.est] < MAPA_ORDEM[p] ? x.est : p, "info");
   const ativos = grupos.cnpj.filter(x=>!/^Nenhum/.test(x.texto));
   const BL = {
@@ -21246,7 +21258,7 @@ function paDados(c, ks){
       return [ps.length ? `${ps.length} ${ps.length===1?"pedido":"pedidos"}` : "nenhum", false,
         pr ? curtoMapa(pr.texto) : ps.length ? `${ni} ${ni===1?"indeferido":"indeferidos"}, ${ps.length-ni} ${ps.length-ni===1?"outro":"outros"}` : "nenhum pedido no dossiê",
         pr ? pior(grupos.ped) : ni ? "warn" : ps.length ? "ok" : "info"]; })(pedidosAoInss(c, fd)),
-    plan: [ap ? fmtBarra(ap.data) : "—", true, ap ? (ap.especie||"aposentadoria") : "sem aposentadoria prevista nos Lembretes", "info"],
+    plan: [ap ? fmtBarra(ap.data) : "—", true, ap ? (ap.especie||"aposentadoria") : "sem aposentadoria prevista em Aposentadorias futuras", "info"],
     ...Object.fromEntries(PA_BLOCOS_EXTRA.map(([b])=>[b, [(n=>`${n} ${n===1?"registro":"registros"}`)(grupos[b].length), false,
       grupos[b].length ? curtoMapa(grupos[b][0].texto) : "", grupos[b].length ? pior(grupos[b]) : "info"]])),
   };
@@ -23603,7 +23615,7 @@ function qdVerLembrete(id){
     <div class="form-linha">
       <button class="btn-rap" onclick="fecharCaixa()">fechar</button>
       ${document.querySelector('.mt[data-vv="9"]')?`<button class="btn-mini" style="margin-left:auto"
-        onclick='fecharCaixa();document.querySelector(".mt[data-vv=\\"9\\"]").click()'>abrir a aba Lembretes</button>`:""}
+        onclick='fecharCaixa();document.querySelector(".mt[data-vv=\\"9\\"]").click()'>abrir a aba Aposentadorias futuras</button>`:""}
     </div>`);
 }
 async function qdMudarNota(cliId, idx, valor){
@@ -24944,7 +24956,7 @@ function blocoFatos(k){
         <span class="fx-rot">🔔</span>
         <button class="btn-mini" onclick="casoViraLembrete('${k.id}')">transformar em lembrete do cliente</button>
         <span class="meio-sub">este caso é um "avisar de tempos em tempos"? O lugar disso agora é a
-          aba 🔔 Lembretes — o botão cria o lembrete e encerra o caso.</span>
+          aba 🙏 Aposentadorias futuras — o botão cria o card e encerra o caso.</span>
       </div>`:""}
     </div>`;
   return `<section class="fatos fatos-processo">
@@ -31984,7 +31996,12 @@ function especieDoCaso(k){
   return k ? ((k.especie||k.subespecie) ? tituloCaso(k) : (k.beneficio||"")) : "";
 }
 function especieDoCliente(c, ks, doc){
-  const k = (casoSel && D.casoPorId.get(casoSel)) || (ks||[]).find(x=>x.fase!=="encerrado") || (ks||[])[0];
+  // F227 · o pré-caso não responde como caso: vale o caso de verdade, depois o pré-caso escolhido no atendimento
+  const sel = casoSel && D.casoPorId.get(casoSel);
+  const vivo = (sel && !ehPreCaso(sel) ? sel : null) || (ks||[]).find(x=>x.fase!=="encerrado" && !ehPreCaso(x));
+  const pa = !vivo && preCasoAberto(c);
+  if(pa && pa.especie) return pa.especie;
+  const k = vivo || (ks||[]).find(x=>!ehPreCaso(x));
   // a triagem lê o benefício escrito (ele diz "rural", "híbrida"…); o contrato
   // e o termo leem a espécie do caso (especieDoContrato)
   if(k && (doc ? especieDoCaso(k) : k.beneficio)) return doc ? especieDoCaso(k) : k.beneficio;
@@ -32224,10 +32241,15 @@ function docsInformar(cliId){ adAbrir = true; adVisivel.add(cliId); abaAtiva = 0
 // com motivo. Os Documentos executam em seis quadros.
 const ETAPA_DE = {identificacao:"identificacao", pa:"pa", direito:"analise", documentos:"documentos"};
 // o pré-caso do atendimento em curso: o último vivo (o "Abrir atendimento" do card acrescenta no fim)
+// F227 · o colaborador escolhe o pré-caso (cartão do Escritório, Casos ▾ ou o seletor do modo
+// atendimento); sem escolha, vale o último vivo
+const _pcSel = new Map();
+function preCasosVivos(c){ return precasosDe(c).filter(p=>!p.so_lembrete && p.especie!==ESPECIE_PAGAMENTOS); }
 function preCasoAberto(c){
-  const vs = precasosDe(c).filter(p=>!p.so_lembrete && p.especie!==ESPECIE_PAGAMENTOS);
-  return vs[vs.length-1] || null;
+  const vs = preCasosVivos(c);
+  return vs.find(p=>p.id===_pcSel.get(c.id)) || vs[vs.length-1] || null;
 }
+function escolherPreCaso(cliId, pcId){ _pcSel.set(cliId, pcId); repintarFicha(); }
 async function mudarPreCasoCampos(cliId, pcId, muda){
   const c = D.cliPorId.get(cliId); if(!c) return false;
   return gravarPrecasos(cliId, precasosDe(c).map(p=>{ if(p.id!==pcId) return p; const n = {...p}; muda(n); return n; }));
@@ -32291,14 +32313,15 @@ function quadroDesfecho(c){
   const a = analisesDe(c.id)[0] || null, b = baseDesfecho(c, a), lig = pc.lembrete_id;
   const podeLemb = lig ? !!a : !!(b.data && b.data > hoje());
   const bt = (sug, rot, on, fn, tit) => `<button type="button" class="adr-bt${b.sug===sug?" adr-primario":""}" ${on?"":"disabled"} onclick="${fn}" title="${esc(tit)}">${rot}</button>`;
-  return `<section class="adx-sec desf" id="desfecho" aria-labelledby="desf-t"><div class="adm-cab"><h3 id="desf-t">Desfecho desta análise</h3>
+  // F227 · as três saídas do pré-caso, sempre na mesma ordem: arquivar, Aposentadorias futuras, gerar o caso
+  return `<section class="adx-sec desf" id="desfecho" aria-labelledby="desf-t"><div class="adm-cab"><h3 id="desf-t">Desfecho deste pré-caso${pc.especie?` · ${esc(pc.especie)}`:""}</h3>
       <span class="meio-sub">${a ? `análise de ${fmt(a.data_analise)}` : "nenhuma análise registrada ainda"}</span></div>
-    <p class="desf-base"><b>${b.sug==="caso" ? "Caso" : b.sug==="lembrete" ? "Lembrete" : "Sem desfecho sugerido"}</b> — ${esc(b.motivo)}.</p>
+    <p class="desf-base"><b>${b.sug==="caso" ? "Caso" : b.sug==="lembrete" ? "Aposentadorias futuras" : "Sem desfecho sugerido"}</b> — ${esc(b.motivo)}.</p>
     ${pc.etapas && pc.etapas.analise ? "" : `<p class="meio-sub">Registre a Análise de Direito: a espécie decidida nela desce ao pré-caso e ao caso.</p>`}
     <div class="desf-acoes">
-      ${bt("lembrete", lig ? "Atualizar o card" : "Criar o lembrete", podeLemb, `desfechoLembrete('${c.id}')`, lig ? "grava no card a etapa Analisado, a data do direito, o aviso 3 meses antes e o pedido de documentos 60 dias antes" : "card em Lembretes com a data do direito, aviso 3 meses antes e pedido de documentos 60 dias antes")}
-      ${bt("caso", "Gerar o caso", !!pc.especie || !!(a && (a.detalhes||{}).servico), `desfechoCaso('${c.id}')`, "o caso nasce com a espécie da análise; a procuração e o contrato saem em Documentos")}
-      <select class="card-arquivar" aria-label="Arquivar o atendimento" onchange="if(this.value){desfechoArquivar('${c.id}',this.value)}"><option value="">Arquivar…</option>${APOS_MOTIVOS.map(m=>`<option>${m}</option>`).join("")}</select>
+      <select class="card-arquivar" aria-label="Arquivar o pré-caso" onchange="if(this.value){desfechoArquivar('${c.id}',this.value)}"><option value="">1 · Arquivar…</option>${APOS_MOTIVOS.map(m=>`<option>${m}</option>`).join("")}</select>
+      ${bt("lembrete", lig ? "2 · Atualizar em Aposentadorias futuras" : "2 · Enviar a Aposentadorias futuras", podeLemb, `desfechoLembrete('${c.id}')`, lig ? "grava no card a etapa Analisado, a data do direito, o aviso 3 meses antes e o pedido de documentos 60 dias antes" : "cria o card em Aposentadorias futuras com a data do direito; o pré-caso sai do Escritório")}
+      ${bt("caso", "3 · Gerar o caso", !!pc.especie || !!(a && (a.detalhes||{}).servico), `desfechoCaso('${c.id}')`, "o pré-caso vira o caso, com a espécie da análise; a procuração e o contrato saem em Documentos")}
     </div></section>`;
 }
 async function desfechoLembrete(cliId){
@@ -32322,7 +32345,7 @@ async function desfechoLembrete(cliId){
     (D.lembretes = D.lembretes||[]).push(l);
     if(!(D.apos||[]).some(x=>x.cliente_id===cliId && x.data===b.data)) await lembrarApos(cliId, "auto", b.data, b.especie, avisoApos(b.data));
     await mudarPreCasoCampos(cliId, pc.id, p=>{ p.so_lembrete = true; p.lembrete_id = l.id; p.desfecho = {tipo:"lembrete", em:hoje(), quem:eu.id, ref:l.id}; });
-    aviso(`Lembrete criado — direito em ${fmt(b.data)}; documentos a partir de ${fmt(avisoDocs(b.data))} ✔`, false);
+    aviso(`Enviado a Aposentadorias futuras — direito em ${fmt(b.data)}; documentos a partir de ${fmt(avisoDocs(b.data))} ✔`, false);
   }
   _atendAberto.delete(cliId); subCad = "identificacao"; guardar("crm_subcad","identificacao"); abaAtiva = 9;
   montarSidebar(); abrirFicha(cliId);
@@ -32652,8 +32675,9 @@ async function gravarPrecasos(cliId, pcs){
 async function novoPreCaso(cliId){
   mesaAberta.add("b1"); // F55 · atendimento novo nasce com o passo 1 à vista
   const pcs = [...precasosDe(D.cliPorId.get(cliId))];
-  pcs.push({id:"pc_"+Date.now().toString(36), especie:"", natureza:"", marc:{},
-            honorarios:"", quem:eu.id, em:hoje()});
+  const id = "pc_"+Date.now().toString(36);
+  pcs.push({id, especie:"", natureza:"", marc:{}, honorarios:"", quem:eu.id, em:hoje()});
+  _pcSel.set(cliId, id);
   if(await gravarPrecasos(cliId, pcs)) repintarFicha();
 }
 // F30 · o atendimento novo de quem já resolveu o anterior (caso gerado ou
@@ -32669,7 +32693,8 @@ async function novoAtendimento(cliId){
   abaAtiva = 0; irSubCad("pa");
 }
 // F220 · da menção ou da lista direto ao atendimento: abre o que existe ou começa um
-async function abrirAtendimentoDe(cliId){
+async function abrirAtendimentoDe(cliId, pcId){
+  if(pcId) _pcSel.set(cliId, pcId);
   await abrirFicha(cliId);
   const c = D.cliPorId.get(cliId); if(!c) return;
   document.getElementById("modal").style.display = "none";
@@ -32877,7 +32902,7 @@ async function preCasoParaLembrete(cliId, pcId){
   // ficam à vista na aba Lembretes, junto do lembrete criado
   subCad="identificacao"; guardar("crm_subcad","identificacao");
   abaAtiva=9;
-  aviso("Lembrete criado — as anotações do atendimento ficam na aba Lembretes ✔");
+  aviso("Lembrete criado — as anotações do atendimento ficam na aba Aposentadorias futuras ✔");
   repintarFicha(); montarSidebar();
 }
 // GERAR O CASO deste pré-caso: as anotações dele viram andamentos com a data
@@ -33065,7 +33090,7 @@ async function manterEmEscritorio(cliId, pcId){
 const semEmoji = l => String(l).replace(/^[^\p{L}\p{N}]+/u, "");
 function barraEscritorio(c){
   return `<section class="adr-barra-esc" aria-label="Ações do cliente em Escritório">
-    <p>Cliente mantido em <b>Escritório</b>. O acompanhamento corre pela Análise de Direito e pelos Lembretes.</p>
+    <p>Cliente mantido em <b>Escritório</b>. O acompanhamento corre pela Análise de Direito e por Aposentadorias futuras.</p>
     <button type="button" class="adr-bt" onclick="novoAndamentoDireito('${c.id}')">+ Novo andamento</button>
     <button type="button" class="adr-bt" onclick="modalProcuracoes('${c.id}')">Gerar procurações</button>
     <button type="button" class="adr-bt adr-primario" onclick="modalCriarCaso('${c.id}')">Criar caso</button>
@@ -33581,7 +33606,7 @@ function caixaAtendimento(c, ks){
         <span class="pc-nat">${[["concessao","concessão"],["revisao","revisão"],["acerto","acerto"]]
           .map(([v,r])=>`<button class="tri-e${pc.natureza===v?" on ok":""}"
             onclick="mudarPreCaso('${c.id}','${pc.id}','natureza','${pc.natureza===v?"":v}')">${r}</button>`).join("")}</span>
-        ${pc.so_lembrete?`<span class="chip verde" title="virou lembrete — acompanhamos a data sem gerar caso">acompanhando em Lembretes</span>
+        ${pc.so_lembrete?`<span class="chip verde" title="virou lembrete — acompanhamos a data sem gerar caso">acompanhando em Aposentadorias futuras</span>
           <button class="cad-mini" onclick="voltarLembreteParaMesa('${c.id}','${pc.id}')"
             title="desfaz: o pré-caso volta à mesa do atendimento e o lembrete criado é desativado">↺ voltar à mesa</button>`:""}
         <button class="cad-lap" style="margin-left:auto" title="tirar este pré-caso"
@@ -33682,7 +33707,7 @@ function caixaAtendimento(c, ks){
         <select id="pcl-resp-${pc.id}" title="quem avisa o cliente na data"><option value="">responsável…</option>
           ${equipeAtiva().map(x=>`<option value="${x.id}">${esc(x.nome.split(" ")[0])}</option>`).join("")}</select>
         <button class="btn-mini" onclick="preCasoParaLembrete('${c.id}','${pc.id}')"
-          title="não gera caso: cria o lembrete (aposentadoria futura, pagar contribuições…) e abre o botão Lembretes para as anotações de acompanhamento">
+          title="não gera caso: cria o lembrete (aposentadoria futura, pagar contribuições…) e abre a aba Aposentadorias futuras para as anotações de acompanhamento">
           Somente gerar lembrete</button>
         <span class="pc-ou">ou</span>
         <button class="btn-mini" onclick="tirarPreCaso('${c.id}','${pc.id}')"
