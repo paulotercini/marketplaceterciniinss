@@ -4376,7 +4376,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.51</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.52</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8889,8 +8889,19 @@ async function gravarDocsDaColeta(docs){
     // um sai aqui, um por vez — sem o contador a tela parecia travada
     if(total > 10 && (++i % 5 === 1 || i === total)) aviso(`Documentos: ${i} de ${total} (lendo o texto de cada um)…`, false);
     try{
-      const ja = await api(`/rest/v1/anexos?select=id&caminho=eq.${encodeURIComponent(d.caminho)}`);
-      if(ja && ja.length) continue;
+      const [ja] = await api(`/rest/v1/anexos?select=id,caso_id&caminho=eq.${encodeURIComponent(d.caminho)}`) || [];
+      if(ja){
+        // F224 · até o 11.08 o importador casava o processo com o primeiro caso do
+        // número, mesmo encerrado, e o documento ficou preso lá: vem ao caso aberto
+        // do mesmo cliente. Em outro caso ABERTO fica, porque foi levado de propósito (moverNumero)
+        const dono = D.casos.find(x=>x.id===ja.caso_id), alvo = D.casos.find(x=>x.id===d.caso_id);
+        if(dono && alvo && dono.id!==alvo.id && dono.encerrado_em && !alvo.encerrado_em && dono.cliente_id===alvo.cliente_id){
+          await api(`/rest/v1/anexos?id=eq.${ja.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+            body:JSON.stringify({caso_id:alvo.id, cliente_id:alvo.cliente_id||null})});
+          n++;
+        }
+        continue;
+      }
       let [an] = d.andamento_oid ? (await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem_id=eq.${encodeURIComponent(d.andamento_oid)}&limit=1`) || []) : [];
       // o e-SAJ não dá hora (00:00): vários movimentos no mesmo dia, e o momento
       // ligaria a peça ao primeiro deles — aí só vale a chave exata
