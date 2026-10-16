@@ -22211,7 +22211,7 @@ async function consultarTransparencia(cliId){
   const pessoas = (fz.membros||[]).filter(m=>m.cpf||m.nis).map(m=>({nome:m.nome, cpf:m.cpf, nis:m.nis}));
   const bt = document.getElementById("pa-transp-bt"); if(bt){ bt.disabled = true; bt.textContent = "Consultando…"; }
   let r;
-  try{ r = await (await api("/functions/v1/transparencia", {method:"POST", body:JSON.stringify({cliente_id:cliId, pessoas})})).json(); }
+  try{ r = await api("/functions/v1/transparencia", {method:"POST", body:JSON.stringify({cliente_id:cliId, pessoas})}); }
   catch(e){ r = {aviso:"O Portal da Transparência não respondeu: " + (e.message||e)}; }
   const [n] = await api(`/rest/v1/clientes?select=dossie&id=eq.${cliId}`).catch(()=>[]) || [];
   if(n) c.dossie = n.dossie;

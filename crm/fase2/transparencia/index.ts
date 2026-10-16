@@ -15,7 +15,8 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 const URL_SB = (Deno.env.get("SUPABASE_URL") || "").replace(/\/$/, "");
 const ANON = Deno.env.get("SUPABASE_ANON_KEY") || "";
-const CHAVE = Deno.env.get("TRANSPARENCIA_CHAVE") || "";
+// shortcut: o segredo foi salvo no painel como "Portal Transparência" (16.10.2026); some quando ele for renomeado
+const CHAVE = Deno.env.get("TRANSPARENCIA_CHAVE") || Deno.env.get("Portal Transparência") || Deno.env.get("Portal") || "";
 const TRANSP = "https://api.portaldatransparencia.gov.br/api-de-dados/";
 const ENDPOINTS: Record<string, string> = {
   bpc: "bpc-por-cpf-ou-nis?codigo=", novo_bolsa_familia: "novo-bolsa-familia-sacado-por-cpf-ou-nis?codigo=",
@@ -87,7 +88,8 @@ async function consultar(pessoas: Pessoa[]) {
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
-  if (!CHAVE) return json({ erro: "falta o segredo TRANSPARENCIA_CHAVE na função (Supabase › Edge Functions › Secrets)" }, 500);
+  // sem o segredo, diz quais nomes a função enxerga (só os nomes, nunca os valores)
+  if (!CHAVE) return json({ erro: `falta o segredo TRANSPARENCIA_CHAVE na função (Supabase › Edge Functions › Secrets); segredos visíveis: ${Object.keys(Deno.env.toObject()).filter((k) => !/^SUPABASE_|^DENO_|^HOME$|^PATH$/.test(k)).join(", ") || "nenhum"}` }, 500);
   const token = (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "");
   const auth = { apikey: ANON, Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
   const u = await fetch(`${URL_SB}/auth/v1/user`, { headers: auth });
