@@ -226,6 +226,9 @@
 
   // processo que não movimenta mais: a situação diz, e o modo rápido pula
   const arquivado = s => /arquivad|baixad|encerrad|extint|cancelad/i.test(String(s || ''));
+  // documentos (sentença, pasta digital) só do processo vivo E com caso aberto
+  // no CRM: sem caso, o documento não tem onde morar (mesma regra do PJe, F187)
+  const baixaDocs = (situacao, numero, ativos) => !arquivado(situacao) && !!ativos && ativos.has(numero);
 
   // a consulta por NÚMERO: no 1º grau cai direto na ficha (show.do); o mesmo
   // número no 2º grau é o recurso, quando existe
@@ -270,7 +273,7 @@
   }
 
   const API = { urlDaPasta, docsDaPasta, lerLinhaLista, lerListaHtml, totalRegistros, totalPaginas, bloqueado, pedeLogin, lerMovimentacoesHtml,
-                ehFicha, codigoDaUrl, lerFichaHtml, lerSelecaoHtml, lerIncidentesFicha, arquivado, urlBuscaNumero };
+                ehFicha, codigoDaUrl, lerFichaHtml, lerSelecaoHtml, lerIncidentesFicha, arquivado, baixaDocs, urlBuscaNumero };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.ESAJ_REGRAS = raiz.ESAJ_REGRAS || API;
 })(typeof window !== 'undefined' ? window : globalThis);

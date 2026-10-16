@@ -124,7 +124,16 @@
              orgao: org ? desHtml(org[1]).replace(/\s+/g, ' ') : null };
   }
 
-  const API = { lerLinhaAcervo, lerAcervoHtml, lerTimelineHtml, lerCabecalhoProcesso };
+  // processo arquivado: na cronologia (a mais recente primeiro), o primeiro
+  // movimento que fala em arquivo decide — "Arquivado definitivamente" é
+  // sim, "Desarquivado" é não
+  function arquivado(itens) {
+    for (const i of itens || []) for (const t of i.textos || [])
+      if (/arquivad/i.test(t)) return !/desarquivad/i.test(t);
+    return false;
+  }
+
+  const API = { lerLinhaAcervo, lerAcervoHtml, lerTimelineHtml, lerCabecalhoProcesso, arquivado };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.PJE_REGRAS = raiz.PJE_REGRAS || API;
 })(typeof window !== 'undefined' ? window : globalThis);

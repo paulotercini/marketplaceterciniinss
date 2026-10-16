@@ -167,7 +167,7 @@ chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
 // ══════════════════════════════════════════════════════════════════════════
 async function completarPje() {
   const lista = await API.acervoPje();
-  if (!lista.length) return { rotulo: 'PJe', erro: 'nenhum processo do acervo com caso no CRM — rode antes o ⚖️ PJe (acervo)' };
+  if (!lista.length) return { rotulo: 'PJe', ok: 0, falhas: 0, erro: 'nada a completar: nenhum processo do PJe movimentou desde a última rodada (rode antes o ⚖️ PJe para o acervo ficar em dia)' };
   // o worker do MV3 dorme sem atividade: um pulso a cada 20 s o mantém
   const pulso = setInterval(() => chrome.runtime.getPlatformInfo(() => {}), 20000);
   const janela = await chrome.windows.create({ url: lista[0].url, focused: false, state: 'normal', width: 1200, height: 900 });

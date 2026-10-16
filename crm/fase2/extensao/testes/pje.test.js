@@ -88,6 +88,15 @@ test('a cronologia sai com data do grupo, hora, textos e anexos de cada item', (
        url: '/pje/seam/resource/rest/pje-legacy/documento/download/900000001' }]);
 });
 
+test('processo arquivado: o movimento mais recente sobre arquivo decide', () => {
+  const it = t => ({ data: '2026-08-10', hora: null, textos: [t], docs: [] });
+  assert.ok(R.arquivado([it('Arquivado Definitivamente'), it('Transitado em julgado')]));
+  assert.ok(R.arquivado([it('Decorrido prazo'), it('Arquivado Definitivamente')]));
+  assert.ok(!R.arquivado([it('Desarquivado'), it('Arquivado Definitivamente')]));
+  assert.ok(!R.arquivado([it('Recebidos os autos')]));
+  assert.ok(!R.arquivado([]));
+});
+
 test('o cabeçalho do processo dá número, classe e órgão julgador', () => {
   const CAB = `<a class="titulo-topo dropdown-toggle titulo-topo-desktop" title="Mais detalhes">RecInoCiv 5000000-11.2020.4.03.9999
     <i class="fa fa-clipboard"></i></a><dl><dt>Órgão julgador</dt> <dd>21º Juiz Federal da 7ª TR SP</dd></dl>`;

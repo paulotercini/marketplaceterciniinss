@@ -179,6 +179,31 @@ quando a publicada na `main` é outra. Para atualizar: na pasta do repositório
 no computador, `git pull`; depois, em `chrome://extensions`, o botão ↻ da
 extensão (ou "Atualizar"). Não precisa reinstalar nem entrar de novo no CRM.
 
+## 📁 e-SAJ: documentos só dos casos ativos — desde 1.22.0
+
+No e-SAJ, sentença, pasta digital e anexos só descem do processo que **não
+está arquivado** e cujo número está num **caso aberto no CRM**. O processo que
+só vem dos favoritos ou da consulta por OAB, sem caso aberto, entrega as
+movimentações ao 📥 Importar e não baixa documento. Para trazer os documentos
+de um processo, abra o caso (ou ponha o número num caso aberto) e rode de novo.
+
+## 🔎 Completar só o que movimentou — desde 1.21.0
+
+O "completar processos" do PJe compara o último movimento do acervo com a
+cronologia já entregue ao CRM e **abre só o processo que movimentou** desde
+então (ou que nunca foi completado). Rode o ⚖️ PJe (acervo) antes, para o
+"último movimento" estar em dia. Rodada interrompida continua de onde parou,
+porque o que já foi entregue não é reaberto. Documento que devia descer e
+falhou (o PJe respondeu 404, por exemplo) traz o processo de volta na rodada
+seguinte, até 3 tentativas por documento; depois disso só quando movimentar.
+
+## 📁 Processo arquivado não baixa documento — desde 1.20.0
+
+No e-SAJ (ficha "Arquivado/Baixado/Encerrado") e no PJe (cronologia com
+"Arquivado definitivamente" sem "Desarquivado" depois), a extensão guarda as
+movimentações e **não baixa** sentença, pasta digital nem anexos: era o acervo
+antigo que fazia a rodada levar horas. O que já foi baixado antes fica no CRM.
+
 ## 🕰 Sessão que não cai — desde 1.17.0
 
 Enquanto uma aba do PAT, do e-SAJ, do PJe, do eproc ou do e-Recursos estiver
