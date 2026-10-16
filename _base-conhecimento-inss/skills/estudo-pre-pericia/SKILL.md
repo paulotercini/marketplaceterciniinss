@@ -192,3 +192,7 @@ O estudo pré-perícia existe para preparar o cliente no ponto que decide a per�
 Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra no ponto decisivo do estudo e nas perguntas prováveis do perito.
 
 O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
+
+## Juízo de Catanduva (Onda 179)
+
+O juízo acolhe o laudo pericial por fórmula fixa e confere a qualidade de segurado e a carência na DII que o perito fixar, e não na DER. O estudo pré-perícia leva à perícia exames e relatórios datados que permitam ao perito fixar a DII ou a data do agravamento, e prepara quesito sobre a assistência permanente de terceiro quando houver pedido dos 25%. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`, seção de benefício por incapacidade.

@@ -96,3 +96,7 @@ Não há regras sobre ruído, vibração, eletricidade, periculosidade, calor ou
 ## Odontologia, jurisprudência conferida de TRF3 e TRF4 (Onda 108)
 
 Treze acórdãos de cirurgião-dentista, auxiliar e atendente de consultório, por biológicos e químicos, com o recorte do contribuinte individual, em `references/ODONTOLOGIA-JURISPRUDENCIA-TRF3-TRF4.md`. Fichas conferidas em fonte oficial em 13/08/2026. Traz a linha do TRF3 para uso direto, a do TRF4 como persuasivo com sinalização de Região, a contra-linha do próprio TRF4 sobre químicos "ordinariamente empregados no mister" com o distinguishing do ato-fim odontológico, e quatro pontos de rigor, entre eles a correção sobre o alcance do Tema 1090.
+
+## Juízo de Catanduva (Onda 179)
+
+Depois de 05/03/1997, o juízo exige contato direto e habitual com pacientes portadores de doenças infectocontagiosas ou com material contaminado e "acentuado risco de contaminação". Atividade de apoio foi recusada, e o EPI anotado como eficaz afastou o agente. A peça ataca o EPI, com prova, na inicial (Tema 1090/STJ [NÃO CONFIRMADO]). Blocos literais em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 3.

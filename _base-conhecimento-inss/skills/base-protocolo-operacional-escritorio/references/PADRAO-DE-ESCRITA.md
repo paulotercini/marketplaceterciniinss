@@ -167,7 +167,11 @@ O titular relatou que as peças continuavam truncadas e de difícil compreensão
 
 ## Linguagem do juízo de Catanduva (Onda 176, 10/10/2026)
 
-O titular aprovou o Manual de Redação Jurídica do Escritório Tercini, extraído de nove decisões da Vara Federal e do JEF de Catanduva. Como o juízo tem um único juiz titular, as peças passam a usar a linguagem dele, isto é, o vocabulário, os conectores e a sequência de raciocínio que ele usa ao sentenciar, para que leia na petição o modo como ele próprio escreve. A formatação do escritório não muda. O manual está em `peticao-previdenciaria/references/ESTILO-MODELO.md`, e as medidas passam a ser frase de 15 a 30 palavras, até 40 quando preciso, e parágrafo de 30 a 55 palavras, com teto de 65.
+O titular aprovou o Manual de Redação Jurídica do Escritório Tercini, extraído de nove decisões da Vara Federal e do JEF de Catanduva. As peças passam a usar a linguagem do juízo, isto é, o vocabulário, os conectores e a sequência de raciocínio que ele usa ao sentenciar, para que o juiz leia na petição o modo como o próprio juízo escreve. A formatação do escritório não muda. O manual está em `peticao-previdenciaria/references/ESTILO-MODELO.md`, e as medidas passam a ser frase de 15 a 30 palavras, até 40 quando preciso, e parágrafo de 30 a 55 palavras, com teto de 65.
+
+## Perfil decisório do juízo de Catanduva (Onda 179, 16/10/2026)
+
+O titular determinou a leitura de todas as sentenças e decisões do juízo de Catanduva guardadas no CRM, para que a peça traga o que o juízo escreveria. Foram lidas 78, que corrigiram a premissa do juiz único da Onda 176, porque o juízo tem três modelos de texto, do titular, das substitutas e da assessoria do JEF. O perfil, os blocos-modelo literais por matéria e os critérios de decisão estão na skill `base-juizo-catanduva`, e o agente `juiz-catanduva` simula a sentença antes do protocolo. As medidas do escritório não mudam, porque a frase do juízo, de cerca de 40 palavras, é mais longa do que a fluência de leitura recomenda.
 
 ## Registro formal (12/10/2026)
 

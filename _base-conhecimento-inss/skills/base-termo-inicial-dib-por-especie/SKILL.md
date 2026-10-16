@@ -72,3 +72,7 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
 Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Juízo de Catanduva (Onda 179)
+
+O juízo fixa a DIB na DER como regra, no dia seguinte à cessação do auxílio-doença no auxílio-acidente, na citação quando o documento não instruiu o requerimento e no pedido de revisão na revisão. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 15, e em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.

@@ -122,3 +122,7 @@ RESSALVA OBRIGATÓRIA DE USO. O próprio TRF4 declara que os enunciados têm "ca
 ## Redação da peça neste tema
 
 Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria especial" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
+
+## Juízo de Catanduva (Onda 179)
+
+O juízo aplica o Tema 1090/STJ [NÃO CONFIRMADO] pelo ônus do autor e, no modelo do titular, não aplicou o item III (dúvida favorável ao autor) nos casos lidos. O argumento contra o EPI apresentado apenas nos embargos foi rejeitado como rediscussão. A peça ataca o EPI na inicial, por um dos itens do Tema 1090, com prova, e pede expressamente a aplicação do item III. Blocos literais em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 5.

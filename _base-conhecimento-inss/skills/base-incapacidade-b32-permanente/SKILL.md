@@ -163,3 +163,7 @@ No B32 o que decide é a insuscetibilidade de reabilitação, e essa conclusão 
 Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra no prognóstico, na análise de reabilitação e no acréscimo de 25% quando houver necessidade de terceiro.
 
 O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
+
+## Juízo de Catanduva (Onda 179)
+
+O juízo concede a incapacidade permanente apenas quando o laudo pericial a afirma e confere a qualidade de segurado na DII fixada pelo perito. O acréscimo de 25% depende de quesito específico sobre a assistência permanente de terceiro. Quando o perito separa a DII da data da incapacidade permanente, a sentença deve ser conferida, porque o corpus traz caso em que a DIB seguiu a data mais tardia. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.

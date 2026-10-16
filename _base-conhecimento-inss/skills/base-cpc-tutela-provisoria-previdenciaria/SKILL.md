@@ -107,3 +107,7 @@ Para MS, acionar `mandado-seguranca-previdenciario`.
 ## O que NÃO está nesta skill
 
 Liminar em MS em `mandado-seguranca-previdenciario`. Cumprimento de tutela em `execucao-cumprimento-previdenciario`. Estabilização com fundo em `base-cpc-coisa-julgada-progressiva`.
+
+## Juízo de Catanduva (Onda 179)
+
+Nenhuma das 78 sentenças e decisões do juízo concedeu tutela de urgência. A implantação ocorre após o trânsito, pela CEAB-DJ e pelo PREVJUD. Quando o titular decidir pedir a tutela, o pedido traz fundamentação autônoma do perigo. Detalhe na skill `base-juizo-catanduva`.
