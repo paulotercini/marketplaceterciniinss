@@ -194,3 +194,7 @@ O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos
 Desde a Portaria Interministerial MPS/MS nº 15, de 03/07/2026, a gestação de alto risco consta expressamente do rol de afecções que dispensam carência para os benefícios por incapacidade, como inciso XVIII do art. 2º da Portaria Interministerial MTP/MS nº 22/2022.
 
 Permanecem exigíveis a qualidade de segurada na DII e a incapacidade por mais de quinze dias consecutivos, com recomendação médica de afastamento. O detalhamento está em `base-carencia-por-especie-art27a/references/GESTACAO-ALTO-RISCO-DISPENSA-CARENCIA.md`.
+
+## Juízo de Catanduva (Onda 179)
+
+O juízo decide pelo laudo pericial e pelo CNIS. Confere a qualidade de segurado e a carência na DII do perito, homologa acordo com frequência e fixa a DIP na sentença, com implantação após o trânsito pela CEAB-DJ. A peça demonstra os dois requisitos na DII provável, com a contagem mês a mês. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.

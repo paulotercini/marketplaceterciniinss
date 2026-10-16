@@ -88,3 +88,7 @@ Contra-linha a antecipar. Há julgados que afastam a especialidade de químicos 
 ## Redação da peça neste tema
 
 Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria especial" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
+
+## Juízo de Catanduva (Onda 179)
+
+O juízo exige o agente pelo nome, o código do decreto da época e contato habitual e permanente, e não eventual. A medida de proteção eficaz afastou o agente, e o documento ausente do requerimento administrativo levou os efeitos financeiros para a citação. Blocos literais em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 4.

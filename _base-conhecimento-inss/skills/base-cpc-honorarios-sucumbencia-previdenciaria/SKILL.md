@@ -143,3 +143,7 @@ Para RPV e precatório, acionar `base-cumprimento-sentenca-rpv-precatorio`.
 ## O que NÃO está nesta skill
 
 Contrato em `honorarios-contrato-previdenciario`. Precatório em `base-cumprimento-sentenca-rpv-precatorio`. Execução em `execucao-cumprimento-previdenciario`.
+
+## Juízo de Catanduva (Onda 179)
+
+Na Vara de Catanduva, a renda de cerca de R$ 4.000 no CNIS levou à revogação da gratuidade, com honorários de 10% sobre o valor atualizado da causa e exigibilidade suspensa apenas quando a gratuidade se mantém. A réplica traz despesas comprovadas, e o recurso eficaz é o agravo de instrumento. Na procedência, o INSS paga o percentual mínimo sobre a condenação até a sentença. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seções 10 e 18.
