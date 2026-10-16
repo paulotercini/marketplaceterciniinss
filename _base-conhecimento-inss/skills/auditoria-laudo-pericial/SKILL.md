@@ -188,3 +188,7 @@ Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órg�
 ## Cadeia de cada pedido (regra permanente, 12/10/2026)
 
 Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.
+
+## Juízo de Catanduva (Onda 179)
+
+O juízo trata o laudo pericial como prova de "maior credibilidade" por ser "equidistante dos interesses das partes" e indefere quesito complementar "englobado nos quesitos já respondidos". A divergência com relatório particular, sozinha, não altera o resultado. A manifestação sobre o laudo pericial ataca vício formal, quesito não respondido, contradição interna ou falta de habilitação do perito, sempre com o trecho do laudo e o ID, e o quesito complementar é novo. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.

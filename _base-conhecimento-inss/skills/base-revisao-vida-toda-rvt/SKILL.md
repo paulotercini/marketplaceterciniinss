@@ -133,3 +133,7 @@ O IBDP tem posicionamento institucional sobre a matéria.
 ## O que NÃO está nesta skill
 
 Revisão do teto está em `base-revisao-teto-buraco-negro-verde`. Revisão do IRSM está em `base-revisao-irsm-fevereiro-1994`. Revisão do art. 29 II e melhor benefício em `base-revisao-art29-melhor-beneficio`. Revisão por reajustes ORTN/OTN em `base-revisao-reajuste-ortn-otn`.
+
+## Juízo de Catanduva (Onda 179)
+
+O juízo julga improcedente a revisão da vida toda pelo Tema 1102/STF [NÃO CONFIRMADO] e pelas ADIs 2.110 e 2.111, sem aguardar o trânsito, com dispensa de honorários pela modulação. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 9.

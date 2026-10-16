@@ -386,3 +386,7 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
 Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Juízo de Catanduva (Onda 179)
+
+O juízo recusou a união estável provada apenas por testemunhas, ainda que "segura e conclusiva", e não aceitou documento posterior ao óbito nem sentença estadual sem o INSS. A peça traz início de prova material contemporâneo dos 24 meses anteriores ao óbito, em nome dos dois e no mesmo endereço. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.

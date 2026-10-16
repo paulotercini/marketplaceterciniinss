@@ -172,3 +172,7 @@ Detalhamento operacional com modelo de estrutura em `references/ART-343-A-RISTJ-
 ## O que NÃO está nesta skill
 
 JEF está em `base-jef-previdenciario` e `base-recursos-jef`. CRPS está em `base-crps-panorama-geral`. Cumprimento está em `base-cumprimento-sentenca-rpv-precatorio`.
+
+## Juízo de Catanduva (Onda 179)
+
+O perfil da 1ª Vara Federal de Catanduva, com relatório completo, julgamento antecipado, análise do PPP período a período e fecho "Custas ex lege. PRI.", está na skill `base-juizo-catanduva`, e o esqueleto completo da sentença em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`.

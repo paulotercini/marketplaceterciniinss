@@ -336,3 +336,7 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
 Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Juízo de Catanduva (Onda 179)
+
+Em incapacidade, o juízo extingue a nova ação quando o perito repete a DII da ação anterior e a afasta apenas com prova de agravamento posterior ao trânsito. A peça aponta o fato novo com documento datado e formula quesito para que o perito fixe a data do agravamento. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`, seção de coisa julgada.
