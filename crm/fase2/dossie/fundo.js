@@ -78,6 +78,21 @@ async function noHc(tabId, metodo, arg) {
     func: (metodo, arg) => window.DOSSIE_HC[metodo](arg), args: [metodo, arg === undefined ? null : arg] });
   return r && r.result;
 }
+// Cada tela roda solta na página e o service worker colhe os PDFs a cada 3 s:
+// uma executeScript pendente por minutos derruba o worker (o mesmo do rodarTudo),
+// e a resposta com 32 relatórios de uma vez não chegava (16.10.2026)
+async function telaHc(tabId, tela, gravar) {
+  await noHc(tabId, 'rodar', tela);
+  for (let t = 0; t < 40 * 60000; t += 3000) {
+    await pausa(3000);
+    const [c] = await chrome.scripting.executeScript({ target: { tabId }, world: 'MAIN',
+      func: () => { const f = window.__dossieHcFila || []; window.__dossieHcFila = []; return { fila: f, pronto: window.__dossieHcPronto }; } }).catch(() => []);
+    if (!c || !c.result) continue;
+    for (const a of c.result.fila) await gravar(a);
+    if (c.result.pronto) return c.result.pronto;
+  }
+  return null;
+}
 async function rodarHc(tabId) {
   const st = await chrome.storage.local.get(['cliente']);
   const info = await noHc(tabId, 'info', st.cliente || null);
@@ -89,19 +104,19 @@ async function rodarHc(tabId) {
     const pronto = carregou(tabId);
     await chrome.tabs.update(tabId, { url: links[tela] });
     await pronto; await pausa(2500);
-    let r = await noHc(tabId, tela);
+    const gravar = async a => {
+      try { await salvar({ cpf: cliente.cpf, nome: cliente.nome, ...a }); ok++; }
+      catch (e) { falhas.push(`${a.arquivo}: ${e.message || e}`); }
+    };
+    let r = await telaHc(tabId, tela, gravar);
     if (r && r.recarregar) {                    // filtro "Exibir tudo" dos exames: a página se recarrega
       await carregou(tabId); await pausa(2500);
-      r = await noHc(tabId, tela);
+      r = await telaHc(tabId, tela, gravar);
     }
     if (!r) { falhas.push(`${rotulo}: a tela não respondeu`); continue; }
     porTela[rotulo] = r;
-    falhas.push(...r.falhas.map(f => `${rotulo} · ${f}`));
-    inexistentes.push(...r.inexistentes.map(f => `${rotulo} · ${f}`));
-    for (const a of r.arquivos || []) {
-      try { await salvar({ cpf: cliente.cpf, nome: cliente.nome, ...a }); ok++; }
-      catch (e) { falhas.push(`${a.arquivo}: ${e.message || e}`); }
-    }
+    falhas.push(...(r.falhas || []).map(f => `${rotulo} · ${f}`));
+    inexistentes.push(...(r.inexistentes || []).map(f => `${rotulo} · ${f}`));
   }
   const baixados = [];
   for (const [tela, r] of Object.entries(porTela)) for (const a of r.arquivos || []) baixados.push(`${tela} · ${a.arquivo}`);
@@ -117,7 +132,7 @@ async function rodarHc(tabId) {
 
 // ── RODAR TUDO ───────────────────────────────────────────────────────────
 // Um clique percorre os portais, um por vez, cada um na sua aba: a aba que já
-// está aberta é usada (é onde o login está); Meu INSS, e-Recursos e Redesim
+// está aberta é usada (é onde o login está); Meu INSS, e-Recursos, CadÚnico e Redesim
 // são abertos se faltarem (mesmo gov.br); Emprega Brasil e HC só rodam se a
 // aba estiver aberta, porque o login deles é por aba/portal. A Redesim fica
 // por último e vem para a frente: é onde sobra o clique humano (captcha).

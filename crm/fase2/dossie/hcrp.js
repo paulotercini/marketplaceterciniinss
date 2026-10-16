@@ -82,7 +82,10 @@
     const base = R.nomeSeguro(nome).replace(/\.pdf$/i, '');
     let arquivo = `${base}.pdf`;
     for (let n = 2; out.arquivos.some(a => a.fonte === fonte && a.arquivo === arquivo); n++) arquivo = `${base} (${n}).pdf`;
-    out.arquivos.push({ fonte, arquivo, b64: R.b64(u8) });
+    out.arquivos.push({ fonte, arquivo });
+    // o PDF vai à fila que o service worker esvazia a cada 3 s (fundo.js, telaHc):
+    // devolver 32 relatórios de uma vez no fim estourava a resposta e a tela "travava"
+    (window.__dossieHcFila = window.__dossieHcFila || []).push({ fonte, arquivo, b64: R.b64(u8) });
   }
 
   window.DOSSIE_HC = {
@@ -195,6 +198,13 @@
       return out;
     },
 
+    // dispara a tela e volta na hora; o resultado fica em window.__dossieHcPronto
+    rodar(tela) {
+      window.__dossieHcPronto = null; window.__dossieHcFila = [];
+      Promise.resolve().then(() => this[tela]()).then(r => { window.__dossieHcPronto = r || contagem(); },
+        e => { window.__dossieHcPronto = { ...contagem(), falhas: [String(e && e.message || e)] }; });
+      return true;
+    },
     fim(a) { D.faixa(a && a.texto != null ? a.texto : a, a && a.cor); },
   };
 })();

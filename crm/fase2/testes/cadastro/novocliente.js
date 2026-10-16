@@ -103,18 +103,18 @@ FIX.colaboradores = [...FIX.colaboradores,
   conf("F201 · a etapa 1 pede só CPF, senha e telefone, com o CPF obrigatório; o nome fica para a etapa 2",
     await p.evaluate(() => document.getElementById("ncl-cpf").placeholder.includes("*") && !document.getElementById("ncl-nome")
       && !!document.getElementById("ncl-senha") && !!document.getElementById("ncl-tel") && !document.getElementById("ncl-sexo") && !document.getElementById("ncl-rua")));
-  conf("F197 · e abre os quatro portais do dossiê em guias novas",
+  conf("F197 · e abre os seis portais do dossiê em guias novas",
     await p.evaluate(() => [...document.querySelectorAll(".ncl-portal")].map(a => a.textContent + "|" + a.target).join()
-      === "Abrir Meu INSS|_blank,Abrir Emprega Brasil|_blank,Abrir HC Ribeirão|_blank,Abrir Redesim|_blank"));
+      === "Abrir Meu INSS|_blank,Abrir e-Recursos|_blank,Abrir Emprega Brasil|_blank,Abrir HC Ribeirão|_blank,Abrir CadÚnico|_blank,Abrir Redesim|_blank"));
   escritos.length = 0;
   await p.evaluate(() => nclEtapa1());
   await p.waitForTimeout(300);
   conf("F197 · sem CPF a etapa 1 não grava", !escritos.some(x => x.m === "POST"));
   conf("F197 · sem CPF válido o portal não abre", await p.evaluate(() => nclPortal() === false));
-  conf("F197 · o botão único tenta as quatro guias e explica o bloqueio de pop-up",
+  conf("F197 · o botão único tenta as seis guias e explica o bloqueio de pop-up",
     await p.evaluate(async () => { const urls = []; window.open = (u) => { urls.push(u); return urls.length === 1 ? {} : null; };
       document.getElementById("ncl-cpf").value = "52998224725"; nclTodosPortais(); await new Promise(x => setTimeout(x, 400));
-      const ok = urls.length === 4 && /bloqueou 3 das 4 guias/.test(document.getElementById("ncl-ficha-recado").textContent);
+      const ok = urls.length === 6 && /bloqueou 5 das 6 guias/.test(document.getElementById("ncl-ficha-recado").textContent);
       _ncl = {etapa:1, id:null}; document.getElementById("ncl-cpf").value = ""; window.open = () => { window._abriu++; }; return ok; }));
   await p.fill("#ncl-cpf", cpfNovo());
   escritos.length = 0;
