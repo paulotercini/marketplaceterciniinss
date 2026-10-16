@@ -32,6 +32,7 @@
   const host = location.host;
   const espera = ms => new Promise(r => setTimeout(r, ms + Math.random() * 500));
   const ARQ = 'esaj_arquivados';                     // { numero: ISO da última conferência }
+  let ativos = new Set();                            // números do TJSP com caso aberto no CRM (a rodada preenche)
 
   async function baixar(url) {
     const r = await fetch(url, { credentials: 'include' });
@@ -134,13 +135,19 @@
     // virtualmente", "Acórdão registrado" e "Expedido Certidão" em dois dias),
     // e o CRM grava só as que ainda não conhece
     // F184 · a sentença/decisão destas cinco desce junto e vai com o caminho
-    await CRM.guardarDocs('esaj', out.numero, mv.slice(0, 5).flatMap(m => m.docs || []));
+    // processo arquivado ou sem caso aberto no CRM: as movimentações vão, os
+    // documentos não — a pasta digital do acervo antigo e dos processos só da
+    // OAB/favoritos é o que fazia a rodada levar horas
+    const docs = REG.baixaDocs(out.situacao, out.numero, ativos);
+    if (docs) await CRM.guardarDocs('esaj', out.numero, mv.slice(0, 5).flatMap(m => m.docs || []));
     out.movimentos = mv.slice(0, 5).map(m => ({ data: m.data, hora: '00:00',
       texto: m.detalhe ? `${m.texto} — ${m.detalhe}` : m.texto,
       ...((m.docs || []).some(d => d.caminho) ? { docs: m.docs.filter(d => d.caminho) } : {}) }));
     out.movimento = out.movimentos[0] || null;
-    try { out.pasta = await guardarPasta(out, rot); }
-    catch (e) { console.warn('[CRM] pasta digital:', out.numero, e); }
+    if (docs) {
+      try { out.pasta = await guardarPasta(out, rot); }
+      catch (e) { console.warn('[CRM] pasta digital:', out.numero, e); }
+    }
     return out;
   }
 
@@ -262,6 +269,7 @@
       // mais os números do TJSP nas fichas abertas do CRM
       faixa('lendo os processos do TJSP no CRM…');
       const { numeros, fichas } = await CRM.processosTjsp();
+      ativos = new Set(numeros);
       const temNumero = n => [...mapa.values()].some(x => x.numero === n);
       for (const n of numeros) if (!mapa.has(n) && !temNumero(n)) mapa.set(n, { numero: n, grau: '1º grau', origem: 'crm', codigo: null, link: null });
       // e o complemento: a consulta por OAB nos dois graus, que descobre o que

@@ -152,3 +152,57 @@ test('F184 · o documento sobe ao bucket privado com o crachá; já existir não
   assert.equal(pedidos[1].opcoes.headers.Authorization, 'Bearer jwt-novo');
   assert.equal(pedidos[1].opcoes.headers['x-upsert'], 'false', 'sobrescrever trocaria a sentença guardada');
 });
+
+// ── F190 · completar só o que movimentou ────────────────────────────────────
+test('movimentou: compara o último movimento do acervo com a cronologia entregue', async () => {
+  const { api } = await carregar();
+  const itens = [{ data: '2026-10-10', textos: ['Juntada de petição'] }, { data: '2026-10-01', textos: ['Recebidos os autos'] }];
+  assert.ok(api.movimentou({ data: '2026-10-11', texto: 'Conclusos' }, itens), 'dia depois');
+  assert.ok(!api.movimentou({ data: '2026-10-09', texto: 'Qualquer' }, itens), 'dia antes');
+  assert.ok(!api.movimentou({ data: '2026-10-10', texto: 'JUNTADA DE PETIÇÃO' }, itens), 'mesmo dia, mesmo texto');
+  assert.ok(api.movimentou({ data: '2026-10-10', texto: 'Conclusos' }, itens), 'mesmo dia, texto novo');
+  assert.ok(api.movimentou({ data: '2026-10-10', texto: 'x' }, undefined), 'nunca completado');
+  assert.ok(!api.movimentou(null, itens), 'acervo sem movimento, cronologia já entregue');
+});
+
+test('acervoPje: só entra o processo que movimentou desde a última cronologia', async () => {
+  const host = 'pje1g.trf3.jus.br';
+  const acervo = [{ dados: { host, processos: [
+    { numero: '5000000-11.2020.4.03.9999', id: '1', ca: 'a', movimento: { data: '2026-10-12', texto: 'Conclusos' } },
+    { numero: '5000000-22.2020.4.03.9999', id: '2', ca: 'b', movimento: { data: '2026-10-10', texto: 'Juntada' } },
+    { numero: '5000000-33.2020.4.03.9999', id: '3', ca: 'c', movimento: { data: '2026-10-10', texto: 'Juntada' } },
+  ] } }];
+  const casos = [{ processo: '5000000-11.2020.4.03.9999', processos: ['5000000-22.2020.4.03.9999', '5000000-33.2020.4.03.9999'] }];
+  const entregues = [{ dados: { lote: [
+    { numero: '5000000-11.2020.4.03.9999', itens: [{ data: '2026-10-10', textos: ['Juntada'] }] },
+    { numero: '5000000-22.2020.4.03.9999', itens: [{ data: '2026-10-10', textos: ['Juntada'] }] },
+  ] } }];
+  const { api } = await carregar({ guardado: { refresh: 'r', quem: 'eu' },
+    respostas: [{ corpo: { access_token: 't', refresh_token: 'r', expires_in: 3600 } },
+                { corpo: acervo }, { corpo: casos }, { corpo: entregues }] });
+  const lista = await api.acervoPje();
+  assert.deepStrictEqual(lista.map(p => p.numero).sort(),
+    ['5000000-11.2020.4.03.9999', '5000000-33.2020.4.03.9999']);   // o 22 não movimentou; o 33 nunca foi completado
+});
+
+test('acervoPje: documento que falhou traz o processo de volta, até 3 tentativas', async () => {
+  const host = 'pje1g.trf3.jus.br', numero = '5000000-22.2020.4.03.9999';
+  const acervo = [{ dados: { host, processos: [{ numero, id: '2', ca: 'b', movimento: { data: '2026-10-10', texto: 'Juntada' } }] } }];
+  const casos = [{ processo: numero, processos: [] }];
+  const entregues = [{ dados: { lote: [{ numero, itens: [{ data: '2026-10-10', textos: ['Juntada'],
+    docs: [{ id: '900', nome: 'Sentença', falhou: true }, { id: '901', nome: 'Laudo', caminho: 'pje/x/901' }] }] }] } }];
+  const rodar = async tentativas => {
+    const { api, memoria } = await carregar({ guardado: { refresh: 'r', quem: 'eu', pje_tentativas: tentativas },
+      respostas: [{ corpo: { access_token: 't', refresh_token: 'r', expires_in: 3600 } },
+                  { corpo: acervo }, { corpo: casos }, { corpo: entregues }] });
+    return { lista: await api.acervoPje(), tent: memoria.pje_tentativas };
+  };
+  let r = await rodar({});
+  assert.equal(r.lista.length, 1, '1ª tentativa entra');
+  assert.deepStrictEqual(r.tent, { 900: 1 });
+  r = await rodar({ 900: 2 });
+  assert.equal(r.lista.length, 1, '3ª tentativa ainda entra');
+  assert.deepStrictEqual(r.tent, { 900: 3 });
+  r = await rodar({ 900: 3 });
+  assert.equal(r.lista.length, 0, 'depois de 3, desiste');
+});

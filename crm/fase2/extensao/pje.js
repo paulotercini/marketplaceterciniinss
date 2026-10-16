@@ -213,7 +213,8 @@
     const itens = REG.lerTimelineHtml(tl.outerHTML);
     if (!itens.length) { faixaErr('a cronologia estava vazia na tela'); return { erro: 'vazio' }; }
     // F184 · as decisões vão junto: o CRM passa a dizer O QUE foi decidido
-    const docs = itens.flatMap(i => i.docs || []);
+    // processo arquivado: a cronologia vai, as peças não (pedido do Paulo)
+    const docs = REG.arquivado(itens) ? [] : itens.flatMap(i => i.docs || []);
     if (docs.some(d => DOCS_REGRAS.vaiBaixar(d.nome))) faixa(`processo ${cab.numero}: guardando as peças no CRM (as já guardadas são puladas)…`);
     // o PJe só libera o download do documento ABERTO no visualizador (medido
     // ao vivo: o não aberto responde 404) — então se clica nele na
@@ -227,6 +228,9 @@
       if (a) { a.click(); await pausa(700); await esperarLivre(); await esperarQuieto(700, 8000); }
       return fetch(d.url, { credentials: 'include' });
     } });
+    // F190 · o que devia descer e não desceu vai marcado: a rodada seguinte
+    // do "completar" reabre o processo só por causa dele (até 3 tentativas)
+    for (const d of docs) if (!d.caminho && DOCS_REGRAS.vaiBaixar(d.nome)) d.falhou = true;
     const OUT = { versao: 1, fonte: 'pje-processo', grau, host: location.host,
                   quando: new Date().toISOString(), numero: cab.numero,
                   classe: cab.classe || null, orgao: cab.orgao || null,

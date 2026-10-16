@@ -243,9 +243,24 @@ export async function docsExistentes(prefixo) {
   }
 }
 
+// F190 · o processo MOVIMENTOU desde a última cronologia entregue? O acervo
+// dá o último movimento (data + texto); a cronologia já entregue, os itens.
+// Quem nunca foi completado movimentou. Mesmo dia: conta como novo se o
+// texto não está entre os daquele dia (o acervo não dá hora comparável).
+export function movimentou(mov, itens) {
+  if (!itens) return true;
+  if (!mov) return false;
+  const topo = itens.reduce((m, i) => (i.data > m ? i.data : m), '');
+  if (mov.data !== topo) return mov.data > topo;
+  const t = String(mov.texto || '').trim().toLowerCase();
+  return !itens.some(i => i.data === topo && (i.textos || []).some(x => String(x).trim().toLowerCase() === t));
+}
+
 // F187 · os processos do PJe para completar: o endereço dos "Autos Digitais"
 // (id + ca) sai das últimas coletas do acervo, e só entra processo que tem
-// caso aberto no CRM — sem caso, os documentos não teriam onde morar
+// caso aberto no CRM — sem caso, os documentos não teriam onde morar.
+// F190 · e só o que movimentou desde a última vez: reabrir os 182 toda rodada
+// levava horas, caía no meio e recomeçava do primeiro
 export async function acervoPje() {
   const { url } = await config();
   const cab = await cabecalhos();
@@ -259,16 +274,36 @@ export async function acervoPje() {
     if (dig(k.processo)) doCrm.add(dig(k.processo));
     for (const p of (Array.isArray(k.processos) ? k.processos : [])) if (dig(p && (p.numero || p))) doCrm.add(dig(p.numero || p));
   }
+  // a última cronologia entregue de cada processo (lotes de 5, 100 coletas
+  // cobrem duas rodadas completas); fora da janela, conta como nunca feito
+  const rp = await fetchTeimoso(`${url}/rest/v1/coletas?select=dados&fonte=eq.pje-processo&order=criado_em.desc&limit=100`, { headers: cab });
+  if (!rp.ok) throw new Error(`não consegui ler as cronologias entregues (${rp.status})`);
+  const feitos = new Map();
+  for (const c of await rp.json()) {
+    const d = c.dados || {};
+    for (const p of (Array.isArray(d.lote) ? d.lote : [d]))
+      if (p && p.numero && !feitos.has(dig(p.numero))) feitos.set(dig(p.numero), p.itens || []);
+  }
+  // documento que devia descer e falhou (`falhou`, marcado pelo coletor) traz
+  // o processo de volta, até 3 tentativas por documento — contadas no navegador
+  // ao entrar na fila. shortcut: rodada que cai antes de chegar nele gasta uma
+  // tentativa; se incomodar, contar só na entrega
+  const tent = (await chrome.storage.local.get('pje_tentativas')).pje_tentativas || {};
+  const pendentes = itens => (itens || []).flatMap(i => i.docs || []).filter(d => d.falhou && d.id && (tent[d.id] || 0) < 3);
   const vistos = new Map();
   for (const c of await r.json()) {
     const d = c.dados || {};
     if (d.sistema || !/pje[12]g\.trf3\.jus\.br/.test(d.host || '')) continue;      // só o PJe do TRF3
     for (const p of (d.processos || [])) {
-      const chave = d.host + ':' + dig(p.numero);
-      if (p.id && p.ca && doCrm.has(dig(p.numero)) && !vistos.has(chave))
-        vistos.set(chave, { numero: p.numero, host: d.host,
-          url: `https://${d.host}/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompletoAdvogado.seam?id=${p.id}&ca=${p.ca}` });
+      const num = dig(p.numero), chave = d.host + ':' + num;
+      if (!p.id || !p.ca || !doCrm.has(num) || vistos.has(chave)) continue;
+      const faltam = pendentes(feitos.get(num));
+      if (!movimentou(p.movimento, feitos.get(num)) && !faltam.length) continue;
+      for (const x of faltam) tent[x.id] = (tent[x.id] || 0) + 1;
+      vistos.set(chave, { numero: p.numero, host: d.host,
+        url: `https://${d.host}/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompletoAdvogado.seam?id=${p.id}&ca=${p.ca}` });
     }
   }
+  await chrome.storage.local.set({ pje_tentativas: tent });
   return [...vistos.values()];
 }

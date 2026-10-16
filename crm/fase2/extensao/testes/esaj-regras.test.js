@@ -271,3 +271,11 @@ test('F186 · a pasta digital: o endereço da pasta e os documentos com as pági
     { id: '999', nome: 'Sentença', data: '2020-03-02', hora: '10:00', paginas: ['cdDocumento=999&numInicial=80&numFinal=80'] }]);
   assert.deepStrictEqual(R.docsDaPasta('<html>sem pasta</html>'), []);
 });
+
+test('documentos só de processo não arquivado e com caso aberto no CRM', () => {
+  const ativos = new Set(['1000087-72.2018.8.26.0368']);
+  assert.ok(R.baixaDocs('Em andamento', '1000087-72.2018.8.26.0368', ativos));
+  assert.ok(!R.baixaDocs('Arquivado', '1000087-72.2018.8.26.0368', ativos));          // arquivado
+  assert.ok(!R.baixaDocs('Em andamento', '0004008-13.2005.8.26.0368', ativos));       // só da OAB/favoritos
+  assert.ok(!R.baixaDocs('Em andamento', '1000087-72.2018.8.26.0368', null));         // CRM não respondeu
+});
