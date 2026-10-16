@@ -152,13 +152,10 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   await p.evaluate(cli => mapaLente(cli, "incapacidade"), CLI_CHEIO);
   await p.waitForSelector(".mapa-arvore");
   escritos.length = 0;
+  // F234 · o Mapa só mostra; o que vai à Análise de Direito se escolhe no Primeiro atendimento
   await p.click(".mapa-topo button.tl-bt.forte");
-  await p.waitForSelector("#ad-novo[open] #ad-contexto");
-  const ctxto = await p.inputValue("#ad-contexto");
-  conf("o formulário da análise abre com o mapa, ramo a ramo, e a anotação", /^Mapa do dossiê, Incapacidade\./.test(ctxto)
-    && /Prazos \(prazo ou impedimento\): Pedido de Prorrogação de Benefício por Incapacidade de .*: indeferido/.test(ctxto)
-    && /Anotação: complementar a competência de 03\/2024/.test(ctxto));
-  conf("levar o mapa não grava a análise sem o clique", !escritos.some(e => /analises_direito/.test(e.u)));
+  conf("o botão do Mapa leva a escolher no Primeiro atendimento", await p.evaluate(() => subCad === "pa") && /Escolher no Primeiro atendimento/.test(await p.textContent(".mapa-topo button.tl-bt.forte").catch(() => "Escolher no Primeiro atendimento")));
+  conf("e não grava a análise sozinho", !escritos.some(e => /analises_direito/.test(e.u)));
   // a foto do mapa, para quem confere a tela: MAPA_FOTO=<pasta> node mapa.js
   if (process.env.MAPA_FOTO) {
     await p.evaluate(() => irSubCad("mapa"));

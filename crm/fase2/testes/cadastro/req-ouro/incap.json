@@ -1,0 +1,4506 @@
+[
+ {
+  "nome": "sem DII: a informar",
+  "op": "b31",
+  "id": "qualidade_na_dii",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "DII do laudo, contribuindo",
+  "op": "b31",
+  "id": "qualidade_na_dii",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "01/02/2026",
+      "dcb": "30/06/2026",
+      "resultado": "incapaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "DII 01/02/2026"
+ },
+ {
+  "nome": "DII antiga dentro de um trecho de perda, com graça atual",
+  "op": "b31",
+  "id": "qualidade_na_dii",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2008-01",
+     "ate": "2012-06",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2012-07",
+     "ate": "2014-12",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2015-01",
+     "ate": "2015-01",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-08-15",
+    "perda": "2027-08-16"
+   },
+   "v": {
+    "inc_dii": "2013-05-10"
+   }
+  },
+  "est": "risco",
+  "txt": "sem qualidade"
+ },
+ {
+  "nome": "benefício em manutenção (semLimite)",
+  "op": "b31",
+  "id": "qualidade_na_dii",
+  "x": {
+   "gr": {
+    "semLimite": true
+   },
+   "v": {
+    "inc_dii": "2026-05-01"
+   }
+  },
+  "est": "ok",
+  "txt": "sem limite"
+ },
+ {
+  "nome": "Tema 255 TNU × IN 128, art. 184, § 4º: divergente",
+  "op": "b31",
+  "id": "qualidade_na_dii",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2005-01",
+     "ate": "2015-12",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2016-01",
+     "ate": "2024-12",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2025-01",
+     "ate": "2025-01",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2025-01",
+     "ate": "2025-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2025-07",
+     "ate": "2026-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2026-08-15",
+    "perda": "2026-08-16"
+   },
+   "v": {
+    "inc_dii": "2026-10-01"
+   }
+  },
+  "est": "divergente",
+  "txt": "24 meses"
+ },
+ {
+  "nome": "campo e laudo divergem: vale o campo e avisa",
+  "op": "b31",
+  "id": "qualidade_na_dii",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "v": {
+    "inc_dii": "2026-03-01"
+   },
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "01/02/2026",
+      "dcb": "30/06/2026",
+      "resultado": "incapaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "laudo PMF de 10/03/2026 diz DII 01/02/2026"
+ },
+ {
+  "nome": "perda com vínculo de emprego sem saída: avisa o limbo",
+  "op": "b31",
+  "id": "qualidade_na_dii",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2008-01",
+     "ate": "2012-06",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2012-07",
+     "ate": "2014-12",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2015-01",
+     "ate": "2015-01",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-08-15",
+    "perda": "2027-08-16"
+   },
+   "v": {
+    "inc_dii": "2013-05-10"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado",
+      "inicio": "01/01/2008",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "limbo"
+ },
+ {
+  "nome": "DII em 01/2026 com 5 contribuições antes e 8 depois: conta só até a DII",
+  "op": "b31",
+  "id": "carencia_12",
+  "x": {
+   "ct": {
+    "carencia": 13,
+    "periodos": [
+     [
+      "2025-08",
+      "2025-12"
+     ],
+     [
+      "2026-02",
+      "2026-09"
+     ]
+    ]
+   },
+   "v": {
+    "inc_dii": "2026-01-15"
+   }
+  },
+  "est": "falta",
+  "txt": "^5 contribuições até a DII"
+ },
+ {
+  "nome": "134 contribuições até a DII de 02/2026",
+  "op": "b31",
+  "id": "carencia_12",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "v": {
+    "inc_dii": "2026-02-01"
+   }
+  },
+  "est": "ok",
+  "txt": "contribuições até a DII \\(02/2026\\)"
+ },
+ {
+  "nome": "sem CNIS: a informar",
+  "op": "b31",
+  "id": "carencia_12",
+  "x": {
+   "v": {
+    "inc_dii": "2026-02-01"
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "segurado especial com 12 meses rurais e nenhuma contribuição",
+  "op": "b31",
+  "id": "carencia_12",
+  "x": {
+   "v": {
+    "inc_dii": "2026-09-01"
+   },
+   "ct": {
+    "carencia": 0,
+    "periodos": []
+   },
+   "tempos": [
+    {
+     "de": "2025-06-01",
+     "ate": "2026-09-30",
+     "onde": "sítio",
+     "nat": "rural",
+     "det": "Segurado especial"
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "^segurado especial com 16 meses"
+ },
+ {
+  "nome": "reingresso com 5 novas: as antigas não contam",
+  "op": "b31",
+  "id": "carencia_12",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2010-01",
+     "ate": "2015-12",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2016-01",
+     "ate": "2025-09",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2025-10",
+     "ate": "2025-10",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2025-10",
+     "ate": "2026-08",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-09",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-10-15",
+    "perda": "2027-10-16"
+   },
+   "ct": {
+    "carencia": 83,
+    "periodos": [
+     [
+      "2010-01",
+      "2015-12"
+     ],
+     [
+      "2025-10",
+      "2026-08"
+     ]
+    ]
+   },
+   "filiacao": "2010-01-01",
+   "v": {
+    "inc_dii": "2026-02-10"
+   }
+  },
+  "est": "falta",
+  "txt": "ainda não contam"
+ },
+ {
+  "nome": "reingresso com 6 novas: as antigas voltam a contar",
+  "op": "b31",
+  "id": "carencia_12",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2010-01",
+     "ate": "2015-12",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2016-01",
+     "ate": "2025-09",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2025-10",
+     "ate": "2025-10",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2025-10",
+     "ate": "2026-08",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-09",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-10-15",
+    "perda": "2027-10-16"
+   },
+   "ct": {
+    "carencia": 83,
+    "periodos": [
+     [
+      "2010-01",
+      "2015-12"
+     ],
+     [
+      "2025-10",
+      "2026-08"
+     ]
+    ]
+   },
+   "filiacao": "2010-01-01",
+   "v": {
+    "inc_dii": "2026-03-20"
+   }
+  },
+  "est": "ok",
+  "txt": "voltam a contar"
+ },
+ {
+  "nome": "sem DII, 138 até a DER: a informar",
+  "op": "b31",
+  "id": "carencia_12",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01"
+  },
+  "est": "informar",
+  "txt": "Informe a DII"
+ },
+ {
+  "nome": "doença da lista depois da filiação dispensa",
+  "op": "b31",
+  "id": "carencia_12",
+  "x": {
+   "ct": {
+    "carencia": 5,
+    "periodos": [
+     [
+      "2025-08",
+      "2025-12"
+     ]
+    ]
+   },
+   "filiacao": "2025-08-01",
+   "v": {
+    "inc_isencao": "Doença da lista (art. 151)",
+    "inc_did": "2025-11-01",
+    "inc_dii": "2026-01-15"
+   }
+  },
+  "est": "ok",
+  "txt": "dispensada"
+ },
+ {
+  "nome": "reingresso: 6 contribuições desde a volta e até a DII",
+  "op": "b31",
+  "id": "carencia_reingresso_27a",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2010-01",
+     "ate": "2015-12",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2016-01",
+     "ate": "2025-09",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2025-10",
+     "ate": "2025-10",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2025-10",
+     "ate": "2026-08",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-09",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-10-15",
+    "perda": "2027-10-16"
+   },
+   "ct": {
+    "carencia": 83,
+    "periodos": [
+     [
+      "2010-01",
+      "2015-12"
+     ],
+     [
+      "2025-10",
+      "2026-08"
+     ]
+    ]
+   },
+   "filiacao": "2010-01-01",
+   "v": {
+    "inc_dii": "2026-03-20"
+   }
+  },
+  "est": "ok",
+  "txt": "^6 contribuições desde a volta em 10/2025"
+ },
+ {
+  "nome": "reingresso: 5 desde a volta até a DII",
+  "op": "b31",
+  "id": "carencia_reingresso_27a",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2010-01",
+     "ate": "2015-12",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2016-01",
+     "ate": "2025-09",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2025-10",
+     "ate": "2025-10",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2025-10",
+     "ate": "2026-08",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-09",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-10-15",
+    "perda": "2027-10-16"
+   },
+   "ct": {
+    "carencia": 83,
+    "periodos": [
+     [
+      "2010-01",
+      "2015-12"
+     ],
+     [
+      "2025-10",
+      "2026-08"
+     ]
+    ]
+   },
+   "filiacao": "2010-01-01",
+   "v": {
+    "inc_dii": "2026-02-10"
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "sem perda antes da DII: não se aplica",
+  "op": "b31",
+  "id": "carencia_reingresso_27a",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "v": {
+    "inc_dii": "2026-02-01"
+   }
+  },
+  "est": "info"
+ },
+ {
+  "nome": "sem DII: conta até a DER e pede a DII",
+  "op": "b31",
+  "id": "carencia_reingresso_27a",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2010-01",
+     "ate": "2015-12",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2016-01",
+     "ate": "2025-09",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2025-10",
+     "ate": "2025-10",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2025-10",
+     "ate": "2026-08",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-09",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-10-15",
+    "perda": "2027-10-16"
+   },
+   "ct": {
+    "carencia": 83,
+    "periodos": [
+     [
+      "2010-01",
+      "2015-12"
+     ],
+     [
+      "2025-10",
+      "2026-08"
+     ]
+    ]
+   },
+   "filiacao": "2010-01-01"
+  },
+  "est": "informar",
+  "txt": "Informe a DII"
+ },
+ {
+  "nome": "gestação de alto risco com a doença antes da filiação",
+  "op": "b31",
+  "id": "isencao_carencia",
+  "x": {
+   "ct": {
+    "carencia": 5,
+    "periodos": [
+     [
+      "2026-02",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2020-01-01",
+   "v": {
+    "inc_isencao": "Gestação de alto risco",
+    "inc_did": "2019-05-01",
+    "inc_dii": "2026-08-01"
+   }
+  },
+  "est": "risco",
+  "txt": "antes da filiação"
+ },
+ {
+  "nome": "isenção reconhecida no laudo",
+  "op": "b31",
+  "id": "isencao_carencia",
+  "x": {
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "01/03/2026",
+      "dcb": "30/06/2026",
+      "resultado": "incapaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "",
+      "isencao": "Sim"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "reconheceu"
+ },
+ {
+  "nome": "carência cumprida, sem motivo: informativo",
+  "op": "b31",
+  "id": "isencao_carencia",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "v": {
+    "inc_dii": "2026-02-01"
+   }
+  },
+  "est": "info"
+ },
+ {
+  "nome": "nenhuma dispensa e carência falta",
+  "op": "b31",
+  "id": "isencao_carencia",
+  "x": {
+   "ct": {
+    "carencia": 13,
+    "periodos": [
+     [
+      "2025-08",
+      "2025-12"
+     ],
+     [
+      "2026-02",
+      "2026-09"
+     ]
+    ]
+   },
+   "v": {
+    "inc_isencao": "Nenhuma",
+    "inc_dii": "2026-01-15"
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "sem nada: a informar",
+  "op": "b31",
+  "id": "isencao_carencia",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "laudo incapaz por 150 dias",
+  "op": "b31",
+  "id": "incapacidade_15_dias",
+  "x": {
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "01/02/2026",
+      "dcb": "30/06/2026",
+      "resultado": "incapaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "150 dias"
+ },
+ {
+  "nome": "laudo incapaz por 10 dias",
+  "op": "b31",
+  "id": "incapacidade_15_dias",
+  "x": {
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "01/02/2026",
+      "dcb": "10/02/2026",
+      "resultado": "incapaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "só 10 dias"
+ },
+ {
+  "nome": "perícia concluiu capaz",
+  "op": "b31",
+  "id": "incapacidade_15_dias",
+  "x": {
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "01/02/2026",
+      "dcb": "",
+      "resultado": "capaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "capaz"
+ },
+ {
+  "nome": "sem prova médica",
+  "op": "b31",
+  "id": "incapacidade_15_dias",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "doença anterior à filiação",
+  "op": "b31",
+  "id": "preexistencia",
+  "x": {
+   "filiacao": "2020-01-01",
+   "v": {
+    "inc_did": "2019-05-01",
+    "inc_dii": "2026-03-01"
+   }
+  },
+  "est": "risco",
+  "txt": "agravamento"
+ },
+ {
+  "nome": "doença posterior à filiação (DID do laudo)",
+  "op": "b31",
+  "id": "preexistencia",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "01/02/2026",
+      "dcb": "30/06/2026",
+      "resultado": "incapaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "01/01/2025"
+ },
+ {
+  "nome": "doença anterior ao reingresso",
+  "op": "b31",
+  "id": "preexistencia",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2010-01",
+     "ate": "2015-12",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2016-01",
+     "ate": "2025-09",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2025-10",
+     "ate": "2025-10",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2025-10",
+     "ate": "2026-08",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-09",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-10-15",
+    "perda": "2027-10-16"
+   },
+   "ct": {
+    "carencia": 83,
+    "periodos": [
+     [
+      "2010-01",
+      "2015-12"
+     ],
+     [
+      "2025-10",
+      "2026-08"
+     ]
+    ]
+   },
+   "filiacao": "2010-01-01",
+   "v": {
+    "inc_did": "2024-01-10",
+    "inc_dii": "2026-03-20"
+   }
+  },
+  "est": "risco",
+  "txt": "volta ao RGPS depois da perda .01/10/2025."
+ },
+ {
+  "nome": "sem DID",
+  "op": "b31",
+  "id": "preexistencia",
+  "x": {
+   "filiacao": "2015-01-01"
+  },
+  "est": "informar",
+  "txt": "DID"
+ },
+ {
+  "nome": "sem CNIS",
+  "op": "b31",
+  "id": "preexistencia",
+  "x": {
+   "v": {
+    "inc_did": "2024-01-10"
+   }
+  },
+  "est": "informar",
+  "txt": "filiação"
+ },
+ {
+  "nome": "empregado: prazo correndo até o 30º dia",
+  "op": "b31",
+  "id": "prazo_30_dias_dib",
+  "x": {
+   "v": {
+    "inc_dat": "2026-09-30",
+    "inc_dii": "2026-10-01"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado",
+      "inicio": "01/03/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "16/10/2026",
+  "quando": "2026-10-30"
+ },
+ {
+  "nome": "contribuinte individual pediu depois de 30 dias",
+  "op": "b31",
+  "id": "prazo_30_dias_dib",
+  "x": {
+   "der": "2026-07-15",
+   "v": {
+    "inc_dii": "2026-05-01",
+    "der": "2026-07-15"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "DIB na DER"
+ },
+ {
+  "nome": "contribuinte individual pediu no prazo",
+  "op": "b31",
+  "id": "prazo_30_dias_dib",
+  "x": {
+   "der": "2026-05-20",
+   "v": {
+    "inc_dii": "2026-05-01",
+    "der": "2026-05-20"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "DIB na DII"
+ },
+ {
+  "nome": "sem DII nem último dia",
+  "op": "b31",
+  "id": "prazo_30_dias_dib",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "atestado completo para 75 dias: divergente",
+  "op": "b31",
+  "id": "documentos_analise_documental",
+  "x": {
+   "v": {
+    "inc_docs": "Sim",
+    "inc_dii": "2026-10-01",
+    "inc_dcb": "2026-12-14"
+   }
+  },
+  "est": "divergente",
+  "txt": "75 dias"
+ },
+ {
+  "nome": "atestado incompleto",
+  "op": "b31",
+  "id": "documentos_analise_documental",
+  "x": {
+   "v": {
+    "inc_docs": "Não"
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "atestado completo para 20 dias",
+  "op": "b31",
+  "id": "documentos_analise_documental",
+  "x": {
+   "v": {
+    "inc_docs": "Sim",
+    "inc_dii": "2026-10-01",
+    "inc_dcb": "2026-10-20"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem resposta",
+  "op": "b31",
+  "id": "documentos_analise_documental",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "DCB em 9 dias: prazo correndo",
+  "op": "b31",
+  "id": "prorrogacao_novo_pedido",
+  "x": {
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "01/09/2026",
+      "dii": "01/08/2026",
+      "dcb": "25/10/2026",
+      "resultado": "incapaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "25/10/2026",
+  "quando": "2026-10-25"
+ },
+ {
+  "nome": "DCB passou há 6 dias: com perícia só depois de 30, documental já cabe",
+  "op": "b31",
+  "id": "prorrogacao_novo_pedido",
+  "x": {
+   "v": {
+    "inc_dcb": "2026-10-10"
+   }
+  },
+  "est": "info",
+  "txt": "09/11/2026.*dia seguinte",
+  "quando": "2026-11-09"
+ },
+ {
+  "nome": "DCB distante: a janela são os últimos 15 dias do benefício",
+  "op": "b31",
+  "id": "prorrogacao_novo_pedido",
+  "x": {
+   "v": {
+    "inc_dcb": "2026-12-20"
+   }
+  },
+  "est": "info",
+  "txt": "06/12/2026",
+  "quando": "2026-12-06"
+ },
+ {
+  "nome": "sem benefício anterior",
+  "op": "b31",
+  "id": "prorrogacao_novo_pedido",
+  "x": {},
+  "est": "info",
+  "txt": "pedido novo"
+ },
+ {
+  "nome": "aposentadoria em manutenção",
+  "op": "b31",
+  "id": "vedacoes_acumulacao",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "apos": {
+    "especie": "Aposentadoria por idade",
+    "nb": "1234567890"
+   }
+  },
+  "est": "impedido",
+  "txt": "Aposentadoria por idade"
+ },
+ {
+  "nome": "seguro-desemprego pago depois da DII",
+  "op": "b31",
+  "id": "vedacoes_acumulacao",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "v": {
+    "inc_dii": "2026-03-01"
+   },
+   "fd": {
+    "seguros": [
+     {
+      "numero": "1",
+      "parcelas": [
+       {
+        "n": "1",
+        "pagamento": "10/04/2026",
+        "situacao": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "seguro-desemprego"
+ },
+ {
+  "nome": "nada impede",
+  "op": "b31",
+  "id": "vedacoes_acumulacao",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01"
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem CNIS",
+  "op": "b31",
+  "id": "vedacoes_acumulacao",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "auxílio-acidente ativo acumula",
+  "op": "b31",
+  "id": "vedacoes_acumulacao",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "benefCnis": [
+    {
+     "especie": "94",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2020-01-01",
+     "ate": "",
+     "situacao": "ATIVO",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "acumula"
+ },
+ {
+  "nome": "preso em regime fechado",
+  "op": "b31",
+  "id": "recluso_regime_fechado",
+  "x": {
+   "v": {
+    "inc_prisao": "Regime fechado",
+    "inc_dii": "2026-03-01"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "semiaberto recebe",
+  "op": "b31",
+  "id": "recluso_regime_fechado",
+  "x": {
+   "v": {
+    "inc_prisao": "Semiaberto"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem resposta",
+  "op": "b31",
+  "id": "recluso_regime_fechado",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "benefício ativo começou depois da DII antiga: mede pela história",
+  "op": "b31",
+  "id": "qualidade_na_dii",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2008-01",
+     "ate": "2012-06",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2012-07",
+     "ate": "2014-12",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2015-01",
+     "ate": "2015-01",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "semLimite": true
+   },
+   "benefCnis": [
+    {
+     "especie": "31",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2026-02-01",
+     "ate": "2026-12-31",
+     "situacao": "ATIVO",
+     "ativo": true
+    }
+   ],
+   "v": {
+    "inc_dii": "2013-05-10"
+   }
+  },
+  "est": "risco",
+  "txt": "sem qualidade"
+ },
+ {
+  "nome": "DII do campo em ordem e a do laudo em perda: risco",
+  "op": "b31",
+  "id": "qualidade_na_dii",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2008-01",
+     "ate": "2012-06",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2012-07",
+     "ate": "2014-12",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2015-01",
+     "ate": "2015-01",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-08-15",
+    "perda": "2027-08-16"
+   },
+   "v": {
+    "inc_dii": "2015-03-01"
+   },
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "01/06/2015",
+      "dii": "10/05/2013",
+      "dcb": "30/09/2015",
+      "resultado": "incapaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "que o INSS usa"
+ },
+ {
+  "nome": "carência pela DII do campo, mas falta pela DII do laudo",
+  "op": "b31",
+  "id": "carencia_12",
+  "x": {
+   "ct": {
+    "carencia": 21,
+    "periodos": [
+     [
+      "2025-01",
+      "2026-09"
+     ]
+    ]
+   },
+   "v": {
+    "inc_dii": "2026-03-01"
+   },
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "01/09/2025",
+      "dii": "01/08/2025",
+      "dcb": "30/12/2025",
+      "resultado": "incapaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "são só 8"
+ },
+ {
+  "nome": "segurado especial com rural antigo e lacuna: só conta o período imediatamente anterior",
+  "op": "b31",
+  "id": "isencao_carencia",
+  "x": {
+   "v": {
+    "inc_dii": "2026-09-15"
+   },
+   "ct": {
+    "carencia": 0,
+    "periodos": []
+   },
+   "tempos": [
+    {
+     "de": "2000-01-01",
+     "ate": "2005-12-31",
+     "onde": "sítio",
+     "nat": "rural",
+     "det": "Segurado especial"
+    },
+    {
+     "de": "2026-05-01",
+     "ate": "2026-09-30",
+     "onde": "sítio",
+     "nat": "rural",
+     "det": "Segurado especial"
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "só 5 no período"
+ },
+ {
+  "nome": "segurado especial com exatamente 12 meses rurais e nenhuma contribuição",
+  "op": "b31",
+  "id": "carencia_12",
+  "x": {
+   "v": {
+    "inc_dii": "2026-09-10"
+   },
+   "ct": {
+    "carencia": 0,
+    "periodos": []
+   },
+   "tempos": [
+    {
+     "de": "2025-10-01",
+     "ate": "2026-09-30",
+     "onde": "sítio",
+     "nat": "rural",
+     "det": "Segurado especial"
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "^segurado especial com 12 meses"
+ },
+ {
+  "nome": "doença da lista sem o CNIS: não sei a filiação",
+  "op": "b31",
+  "id": "isencao_carencia",
+  "x": {
+   "v": {
+    "inc_isencao": "Doença da lista (art. 151)",
+    "inc_did": "2025-11-01",
+    "inc_dii": "2026-01-15"
+   }
+  },
+  "est": "informar",
+  "txt": "não sei se foi depois"
+ },
+ {
+  "nome": "gestação de alto risco com DII antes da Portaria 15/2026",
+  "op": "b31",
+  "id": "isencao_carencia",
+  "x": {
+   "ct": {
+    "carencia": 5,
+    "periodos": [
+     [
+      "2025-10",
+      "2026-02"
+     ]
+    ]
+   },
+   "filiacao": "2020-01-01",
+   "v": {
+    "inc_isencao": "Gestação de alto risco",
+    "inc_did": "2026-01-10",
+    "inc_dii": "2026-03-01"
+   }
+  },
+  "est": "risco",
+  "txt": "03/07/2026"
+ },
+ {
+  "nome": "reingresso antes de 18/06/2019: fração da época",
+  "op": "b31",
+  "id": "carencia_12",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2005-01",
+     "ate": "2010-12",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2011-01",
+     "ate": "2017-12",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2018-01",
+     "ate": "2018-01",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2018-01",
+     "ate": "2018-04",
+     "txt": ""
+    }
+   ],
+   "ct": {
+    "carencia": 76,
+    "periodos": [
+     [
+      "2005-01",
+      "2010-12"
+     ],
+     [
+      "2018-01",
+      "2018-04"
+     ]
+    ]
+   },
+   "v": {
+    "inc_dii": "2018-05-10"
+   }
+  },
+  "est": "informar",
+  "txt": "18/06/2019"
+ },
+ {
+  "nome": "reingresso com carência dispensada: o 27-A não pesa",
+  "op": "b31",
+  "id": "carencia_reingresso_27a",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2010-01",
+     "ate": "2015-12",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2016-01",
+     "ate": "2025-09",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2025-10",
+     "ate": "2025-10",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2025-10",
+     "ate": "2026-08",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-09",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-10-15",
+    "perda": "2027-10-16"
+   },
+   "ct": {
+    "carencia": 83,
+    "periodos": [
+     [
+      "2010-01",
+      "2015-12"
+     ],
+     [
+      "2025-10",
+      "2026-08"
+     ]
+    ]
+   },
+   "filiacao": "2010-01-01",
+   "v": {
+    "inc_dii": "2026-02-10",
+    "inc_isencao": "Acidente de qualquer natureza"
+   }
+  },
+  "est": "info",
+  "txt": "não pesa"
+ },
+ {
+  "nome": "contribuinte individual: os 30 dias contam do afastamento, não da DII",
+  "op": "b31",
+  "id": "prazo_30_dias_dib",
+  "x": {
+   "der": "2026-06-05",
+   "v": {
+    "inc_dat": "2026-04-30",
+    "inc_dii": "2026-05-10",
+    "der": "2026-06-05"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "DIB na DER"
+ },
+ {
+  "nome": "empregado com DII depois do 16º dia: DIB na DII",
+  "op": "b31",
+  "id": "prazo_30_dias_dib",
+  "x": {
+   "v": {
+    "inc_dat": "2026-09-01",
+    "inc_dii": "2026-09-25"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado",
+      "inicio": "01/03/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "na DII, posterior ao 16º dia"
+ },
+ {
+  "nome": "vale o primeiro pedido depois da DII",
+  "op": "b31",
+  "id": "prazo_30_dias_dib",
+  "x": {
+   "v": {
+    "inc_dii": "2026-05-01"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   },
+   "fd": {
+    "processos": [
+     {
+      "servico": "Auxílio por Incapacidade Temporária",
+      "entrada": "10/09/2026"
+     },
+     {
+      "servico": "Auxílio por Incapacidade Temporária",
+      "entrada": "20/05/2026"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "20/05/2026"
+ },
+ {
+  "nome": "B31 ativo sem DCB lida",
+  "op": "b31",
+  "id": "prorrogacao_novo_pedido",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "31",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2026-08-01",
+     "ate": "",
+     "situacao": "ATIVO",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "informar",
+  "txt": "DCB"
+ },
+ {
+  "nome": "regime fechado com DII antes de 18/01/2019",
+  "op": "b31",
+  "id": "recluso_regime_fechado",
+  "x": {
+   "v": {
+    "inc_prisao": "Regime fechado",
+    "inc_dii": "2018-06-01"
+   }
+  },
+  "est": "info",
+  "txt": "338, § 6º"
+ },
+ {
+  "nome": "DII da incapacidade permanente, contribuindo",
+  "op": "b32",
+  "id": "qualidade_na_dii",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "v": {
+    "inc_dii_perm": "2026-05-01"
+   }
+  },
+  "est": "ok",
+  "txt": "DII 01/05/2026"
+ },
+ {
+  "nome": "DII antiga em perda",
+  "op": "b32",
+  "id": "qualidade_na_dii",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2008-01",
+     "ate": "2012-06",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2012-07",
+     "ate": "2014-12",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2015-01",
+     "ate": "2015-01",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-08-15",
+    "perda": "2027-08-16"
+   },
+   "v": {
+    "inc_dii": "2013-05-10"
+   }
+  },
+  "est": "risco"
+ },
+ {
+  "nome": "reingresso com 5 novas",
+  "op": "b32",
+  "id": "carencia_12",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2010-01",
+     "ate": "2015-12",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2016-01",
+     "ate": "2025-09",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2025-10",
+     "ate": "2025-10",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2025-10",
+     "ate": "2026-08",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-09",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-10-15",
+    "perda": "2027-10-16"
+   },
+   "ct": {
+    "carencia": 83,
+    "periodos": [
+     [
+      "2010-01",
+      "2015-12"
+     ],
+     [
+      "2025-10",
+      "2026-08"
+     ]
+    ]
+   },
+   "filiacao": "2010-01-01",
+   "v": {
+    "inc_dii": "2026-02-10"
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "138 contribuições",
+  "op": "b32",
+  "id": "carencia_12",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "v": {
+    "inc_dii": "2026-02-01"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "acidente do trabalho pela CAT com o mesmo CID do laudo",
+  "op": "b32",
+  "id": "isencao_carencia",
+  "x": {
+   "v": {
+    "inc_dii": "2026-01-10"
+   },
+   "fd": {
+    "cats": [
+     {
+      "numero": "2026-000001-1/01",
+      "tipoCat": "Inicial",
+      "emitente": "Empregador",
+      "data": "10/01/2026",
+      "tipo": "Típico",
+      "cnae": "10.11-2",
+      "cid": "S62"
+     }
+    ],
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "10/01/2026",
+      "dcb": "30/06/2026",
+      "resultado": "incapaz",
+      "cid": "S62.3",
+      "did": "01/01/2025",
+      "grau": "",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "acidente do trabalho"
+ },
+ {
+  "nome": "CAT de outro CID não dispensa sozinha",
+  "op": "b32",
+  "id": "isencao_carencia",
+  "x": {
+   "v": {
+    "inc_dii": "2026-01-10"
+   },
+   "fd": {
+    "cats": [
+     {
+      "numero": "2026-000001-1/01",
+      "tipoCat": "Inicial",
+      "emitente": "Empregador",
+      "data": "10/01/2026",
+      "tipo": "Típico",
+      "cnae": "10.11-2",
+      "cid": "S62"
+     }
+    ],
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "10/01/2026",
+      "dcb": "30/06/2026",
+      "resultado": "incapaz",
+      "cid": "F32.2",
+      "did": "01/01/2025",
+      "grau": "",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "marque o motivo"
+ },
+ {
+  "nome": "laudo total e permanente",
+  "op": "b32",
+  "id": "incapacidade_total_permanente",
+  "x": {
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "01/02/2026",
+      "dcb": "30/06/2026",
+      "resultado": "incapaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "Total e permanente",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "laudo parcial e permanente",
+  "op": "b32",
+  "id": "incapacidade_total_permanente",
+  "x": {
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "01/02/2026",
+      "dcb": "30/06/2026",
+      "resultado": "incapaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "Parcial e permanente",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "parcial"
+ },
+ {
+  "nome": "tipo temporária no campo",
+  "op": "b32",
+  "id": "incapacidade_total_permanente",
+  "x": {
+   "v": {
+    "inc_tipo": "Temporária"
+   }
+  },
+  "est": "falta",
+  "txt": "B31"
+ },
+ {
+  "nome": "sem prova",
+  "op": "b32",
+  "id": "incapacidade_total_permanente",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "pode ser reabilitado",
+  "op": "b32",
+  "id": "insuscetivel_reabilitacao",
+  "x": {
+   "v": {
+    "inc_reab": "Sim"
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "reabilitação frustrada, 58 anos",
+  "op": "b32",
+  "id": "insuscetivel_reabilitacao",
+  "x": {
+   "dn": "1968-03-01",
+   "v": {
+    "inc_reab": "Reabilitação frustrada"
+   }
+  },
+  "est": "ok",
+  "txt": "58 anos"
+ },
+ {
+  "nome": "sem resposta",
+  "op": "b32",
+  "id": "insuscetivel_reabilitacao",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "doença antes da filiação",
+  "op": "b32",
+  "id": "preexistencia",
+  "x": {
+   "filiacao": "2020-01-01",
+   "v": {
+    "inc_did": "2019-05-01",
+    "inc_dii": "2026-03-01"
+   }
+  },
+  "est": "risco"
+ },
+ {
+  "nome": "vindo do B31 cessado",
+  "op": "b32",
+  "id": "dib_b32",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "31",
+     "origem": "",
+     "nb": "2220001112",
+     "de": "2025-01-10",
+     "ate": "2026-03-31",
+     "situacao": "CESSADO",
+     "ativo": false
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "01/04/2026",
+  "quando": "2026-04-01"
+ },
+ {
+  "nome": "sem B31, empregado no prazo",
+  "op": "b32",
+  "id": "dib_b32",
+  "x": {
+   "v": {
+    "inc_dat": "2026-09-30",
+    "inc_dii": "2026-10-01"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado",
+      "inicio": "01/03/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "16º dia"
+ },
+ {
+  "nome": "sem dado",
+  "op": "b32",
+  "id": "dib_b32",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "não empregado: no B32 os 30 dias contam da DII",
+  "op": "b32",
+  "id": "dib_b32",
+  "x": {
+   "der": "2026-06-05",
+   "v": {
+    "inc_dat": "2026-04-30",
+    "inc_dii": "2026-05-10",
+    "der": "2026-06-05"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "DIB na DII"
+ },
+ {
+  "nome": "B31 cessado antes da DII não é o que precede",
+  "op": "b32",
+  "id": "dib_b32",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "31",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2010-01-01",
+     "ate": "2010-06-30",
+     "situacao": "CESSADO",
+     "ativo": false
+    }
+   ],
+   "v": {
+    "inc_dii": "2026-03-01"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "sem B31 antes"
+ },
+ {
+  "nome": "a carência se mede na DII da incapacidade permanente",
+  "op": "b32",
+  "id": "carencia_12",
+  "x": {
+   "ct": {
+    "carencia": 19,
+    "periodos": [
+     [
+      "2025-03",
+      "2026-09"
+     ]
+    ]
+   },
+   "v": {
+    "inc_dii": "2025-06-01",
+    "inc_dii_perm": "2026-06-01"
+   }
+  },
+  "est": "ok",
+  "txt": "06/2026"
+ },
+ {
+  "nome": "os 15 anos contam do benefício que precede, não da soma",
+  "op": "b32",
+  "id": "revisao_periodica",
+  "x": {
+   "dn": "1969-01-01",
+   "benefCnis": [
+    {
+     "especie": "31",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2000-01-01",
+     "ate": "2012-12-31",
+     "situacao": "CESSADO",
+     "ativo": false
+    },
+    {
+     "especie": "31",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2024-10-01",
+     "ate": "",
+     "situacao": "ATIVO",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "a cada 2 anos"
+ },
+ {
+  "nome": "precisa de ajuda permanente",
+  "op": "b32",
+  "id": "acrescimo_25",
+  "x": {
+   "v": {
+    "inc_terceiro": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "25 %"
+ },
+ {
+  "nome": "sem resposta",
+  "op": "b32",
+  "id": "acrescimo_25",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "homem com 11 anos: 60 %",
+  "op": "b32",
+  "id": "valor_rmi_b32",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "v": {
+    "inc_dii": "2026-02-01"
+   }
+  },
+  "est": "info",
+  "txt": "^60 % da média"
+ },
+ {
+  "nome": "mulher com 25 anos: 80 %",
+  "op": "b32",
+  "id": "valor_rmi_b32",
+  "x": {
+   "sx": "F",
+   "ct": {
+    "carencia": 300,
+    "periodos": [
+     [
+      "2001-01",
+      "2025-12"
+     ]
+    ]
+   },
+   "v": {
+    "inc_dii": "2026-02-01"
+   }
+  },
+  "est": "info",
+  "txt": "^80 %"
+ },
+ {
+  "nome": "acidente do trabalho informado: 100 %",
+  "op": "b32",
+  "id": "valor_rmi_b32",
+  "x": {
+   "v": {
+    "inc_dii": "2026-01-10",
+    "aci_tipo": "Típico (no trabalho)"
+   }
+  },
+  "est": "info",
+  "txt": "100 %"
+ },
+ {
+  "nome": "CAT no dossiê só avisa os 100 %",
+  "op": "b32",
+  "id": "valor_rmi_b32",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "v": {
+    "inc_dii": "2026-02-01"
+   },
+   "fd": {
+    "cats": [
+     {
+      "numero": "2026-000001-1/01",
+      "tipoCat": "Inicial",
+      "emitente": "Empregador",
+      "data": "10/01/2026",
+      "tipo": "Típico",
+      "cnae": "10.11-2",
+      "cid": "S62"
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "^60 %.*se a incapacidade vem desse acidente"
+ },
+ {
+  "nome": "homem com 42 anos: 104 % (sem teto de 100)",
+  "op": "b32",
+  "id": "valor_rmi_b32",
+  "x": {
+   "ct": {
+    "carencia": 504,
+    "periodos": [
+     [
+      "1984-01",
+      "2025-12"
+     ]
+    ]
+   },
+   "v": {
+    "inc_dii": "2026-02-01"
+   }
+  },
+  "est": "info",
+  "txt": "^104 %"
+ },
+ {
+  "nome": "DII em 13/11/2019: ainda a regra anterior",
+  "op": "b32",
+  "id": "valor_rmi_b32",
+  "x": {
+   "v": {
+    "inc_dii": "2019-11-13"
+   }
+  },
+  "est": "info",
+  "txt": "233, II, a"
+ },
+ {
+  "nome": "contribuição depois da DII não entra no coeficiente",
+  "op": "b32",
+  "id": "valor_rmi_b32",
+  "x": {
+   "ct": {
+    "carencia": 321,
+    "periodos": [
+     [
+      "2000-01",
+      "2026-09"
+     ]
+    ]
+   },
+   "v": {
+    "inc_dii": "2020-12-01"
+   }
+  },
+  "est": "info",
+  "txt": "^62 %"
+ },
+ {
+  "nome": "DII antes da EC 103: regra anterior",
+  "op": "b32",
+  "id": "valor_rmi_b32",
+  "x": {
+   "v": {
+    "inc_dii": "2018-05-01"
+   }
+  },
+  "est": "info",
+  "txt": "até 13/11/2019"
+ },
+ {
+  "nome": "aposentadoria em manutenção",
+  "op": "b32",
+  "id": "vedacoes_acumulacao",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "apos": {
+    "especie": "Aposentadoria por idade",
+    "nb": "1234567890"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "B31 ativo cessa com a aposentadoria",
+  "op": "b32",
+  "id": "vedacoes_acumulacao",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "benefCnis": [
+    {
+     "especie": "31",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2026-01-10",
+     "ate": "2026-12-31",
+     "situacao": "ATIVO",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "cessa com a aposentadoria"
+ },
+ {
+  "nome": "62 anos: dispensado",
+  "op": "b32",
+  "id": "revisao_periodica",
+  "x": {
+   "dn": "1964-01-01"
+  },
+  "est": "info",
+  "txt": "dispensado"
+ },
+ {
+  "nome": "46 anos: revisão a cada 2 anos",
+  "op": "b32",
+  "id": "revisao_periodica",
+  "x": {
+   "dn": "1980-01-01"
+  },
+  "est": "info",
+  "txt": "a cada 2 anos"
+ },
+ {
+  "nome": "Parkinson dispensa",
+  "op": "b32",
+  "id": "revisao_periodica",
+  "x": {
+   "dn": "1980-01-01",
+   "v": {
+    "inc_cid": "G20"
+   }
+  },
+  "est": "info",
+  "txt": "Parkinson"
+ },
+ {
+  "nome": "sem nascimento nem CID",
+  "op": "b32",
+  "id": "revisao_periodica",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "doméstico com acidente do trabalho depois de 02/06/2015",
+  "op": "acid",
+  "id": "categoria_acidentaria",
+  "x": {
+   "v": {
+    "aci_data": "2020-03-10"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado Doméstico",
+      "inicio": "01/01/2018",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "Doméstico"
+ },
+ {
+  "nome": "doméstico com acidente antes de 02/06/2015",
+  "op": "acid",
+  "id": "categoria_acidentaria",
+  "x": {
+   "v": {
+    "aci_data": "2014-03-10"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado Doméstico",
+      "inicio": "01/01/2010",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "impedido",
+  "txt": "02/06/2015"
+ },
+ {
+  "nome": "contribuinte individual não tem espécie acidentária",
+  "op": "acid",
+  "id": "categoria_acidentaria",
+  "x": {
+   "v": {
+    "aci_data": "2025-03-10"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "impedido",
+  "txt": "B31 ou B32 previdenciário"
+ },
+ {
+  "nome": "empregado pelo campo",
+  "op": "acid",
+  "id": "categoria_acidentaria",
+  "x": {
+   "v": {
+    "aci_data": "2025-03-10",
+    "aci_categoria": "Empregado"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem data",
+  "op": "acid",
+  "id": "categoria_acidentaria",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "CAT com CNAE e CID",
+  "op": "acid",
+  "id": "nexo_trabalho",
+  "x": {
+   "fd": {
+    "cats": [
+     {
+      "numero": "2026-000001-1/01",
+      "tipoCat": "Inicial",
+      "emitente": "Empregador",
+      "data": "10/01/2026",
+      "tipo": "Típico",
+      "cnae": "10.11-2",
+      "cid": "S62"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "NTEP"
+ },
+ {
+  "nome": "sem nexo",
+  "op": "acid",
+  "id": "nexo_trabalho",
+  "x": {
+   "v": {
+    "aci_nexo": "Sem nexo"
+   }
+  },
+  "est": "falta",
+  "txt": "previdenciário"
+ },
+ {
+  "nome": "NTEP informado",
+  "op": "acid",
+  "id": "nexo_trabalho",
+  "x": {
+   "v": {
+    "aci_ntep": "Sim",
+    "aci_cnae": "10.11-2"
+   }
+  },
+  "est": "ok",
+  "txt": "21-A"
+ },
+ {
+  "nome": "nada",
+  "op": "acid",
+  "id": "nexo_trabalho",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "CAT no dossiê",
+  "op": "acid",
+  "id": "cat_comunicacao",
+  "x": {
+   "fd": {
+    "cats": [
+     {
+      "numero": "2026-000001-1/01",
+      "tipoCat": "Inicial",
+      "emitente": "Empregador",
+      "data": "10/01/2026",
+      "tipo": "Típico",
+      "cnae": "10.11-2",
+      "cid": "S62"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "Empregador"
+ },
+ {
+  "nome": "sem CAT",
+  "op": "acid",
+  "id": "cat_comunicacao",
+  "x": {
+   "v": {
+    "aci_cat": "Não"
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "sem resposta",
+  "op": "acid",
+  "id": "cat_comunicacao",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "B91 em manutenção (gr.semLimite)",
+  "op": "acid",
+  "id": "qualidade_na_dii",
+  "x": {
+   "gr": {
+    "semLimite": true
+   },
+   "v": {
+    "inc_dii": "2026-05-01"
+   }
+  },
+  "est": "ok",
+  "txt": "sem limite"
+ },
+ {
+  "nome": "data da CAT, contribuindo",
+  "op": "acid",
+  "id": "qualidade_na_dii",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "fd": {
+    "cats": [
+     {
+      "numero": "2026-000001-1/01",
+      "tipoCat": "Inicial",
+      "emitente": "Empregador",
+      "data": "10/01/2026",
+      "tipo": "Típico",
+      "cnae": "10.11-2",
+      "cid": "S62"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "acidente em 10/01/2026"
+ },
+ {
+  "nome": "dispensada",
+  "op": "acid",
+  "id": "sem_carencia",
+  "x": {},
+  "est": "ok"
+ },
+ {
+  "nome": "total e permanente: B92",
+  "op": "acid",
+  "id": "incapacidade_acidentaria",
+  "x": {
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "01/02/2026",
+      "dcb": "30/06/2026",
+      "resultado": "incapaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "Total e permanente",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "B92"
+ },
+ {
+  "nome": "temporária: B91",
+  "op": "acid",
+  "id": "incapacidade_acidentaria",
+  "x": {
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "01/02/2026",
+      "dcb": "30/06/2026",
+      "resultado": "incapaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "Total e temporária",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "B91"
+ },
+ {
+  "nome": "capaz",
+  "op": "acid",
+  "id": "incapacidade_acidentaria",
+  "x": {
+   "fd": {
+    "laudos": [
+     {
+      "sistema": "PMF",
+      "exame": "10/03/2026",
+      "dii": "01/02/2026",
+      "dcb": "",
+      "resultado": "capaz",
+      "cid": "M54.5",
+      "did": "01/01/2025",
+      "grau": "",
+      "isencao": ""
+     }
+    ]
+   }
+  },
+  "est": "risco"
+ },
+ {
+  "nome": "parcial: B94",
+  "op": "acid",
+  "id": "incapacidade_acidentaria",
+  "x": {
+   "v": {
+    "inc_tipo": "Parcial"
+   }
+  },
+  "est": "falta",
+  "txt": "B94"
+ },
+ {
+  "nome": "temporária sem a duração: a informar",
+  "op": "acid",
+  "id": "incapacidade_acidentaria",
+  "x": {
+   "v": {
+    "inc_tipo": "Temporária"
+   }
+  },
+  "est": "informar",
+  "txt": "15 dias"
+ },
+ {
+  "nome": "temporária pelo campo com 10 dias",
+  "op": "acid",
+  "id": "incapacidade_acidentaria",
+  "x": {
+   "v": {
+    "inc_tipo": "Temporária",
+    "inc_dii": "2026-09-01",
+    "inc_dcb": "2026-09-10"
+   }
+  },
+  "est": "falta",
+  "txt": "só 10 dias"
+ },
+ {
+  "nome": "estabilidade depois do B91",
+  "op": "acid",
+  "id": "valor_efeitos_acidentario",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "91",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2025-10-01",
+     "ate": "2026-03-31",
+     "situacao": "CESSADO",
+     "ativo": false
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "31/03/2027",
+  "quando": "2027-03-31"
+ },
+ {
+  "nome": "aposentadoria em manutenção",
+  "op": "acid",
+  "id": "vedacoes_acumulacao",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "apos": {
+    "especie": "Aposentadoria por idade",
+    "nb": "1234567890"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "B32 previdenciário: conversão",
+  "op": "acid",
+  "id": "vedacoes_acumulacao",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "benefCnis": [
+    {
+     "especie": "32",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2022-01-01",
+     "ate": "",
+     "situacao": "ATIVO",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "conversão"
+ },
+ {
+  "nome": "contribuinte individual",
+  "op": "b94",
+  "id": "categoria_b94",
+  "x": {
+   "v": {
+    "aci_data": "2025-03-10"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "facultativo na graça do emprego anterior",
+  "op": "b94",
+  "id": "categoria_b94",
+  "x": {
+   "v": {
+    "aci_data": "2026-03-10"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado",
+      "inicio": "01/01/2015",
+      "fim": "31/12/2025",
+      "aberto": false,
+      "origem": "Empresa Teste"
+     },
+     {
+      "tipo": "Facultativo",
+      "inicio": "01/01/2026",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "184, § 7º"
+ },
+ {
+  "nome": "contribuinte individual na graça do emprego: divergente",
+  "op": "b94",
+  "id": "categoria_b94",
+  "x": {
+   "v": {
+    "aci_data": "2026-03-10"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado",
+      "inicio": "01/01/2015",
+      "fim": "31/12/2025",
+      "aberto": false,
+      "origem": "Empresa Teste"
+     },
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2026",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "divergente"
+ },
+ {
+  "nome": "empregado na data da CAT",
+  "op": "b94",
+  "id": "categoria_b94",
+  "x": {
+   "fd": {
+    "cats": [
+     {
+      "numero": "2026-000001-1/01",
+      "tipoCat": "Inicial",
+      "emitente": "Empregador",
+      "data": "10/01/2026",
+      "tipo": "Típico",
+      "cnae": "10.11-2",
+      "cid": "S62"
+     }
+    ]
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado",
+      "inicio": "01/03/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "Empregado"
+ },
+ {
+  "nome": "doméstico pelo campo",
+  "op": "b94",
+  "id": "categoria_b94",
+  "x": {
+   "v": {
+    "aci_data": "2024-05-01",
+    "aci_categoria": "Empregado doméstico"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "acidente na graça antes de 31/12/2008",
+  "op": "b94",
+  "id": "qualidade_data_acidente",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2000-01",
+     "ate": "2006-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2006-07",
+     "ate": "2007-12",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2008-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15"
+   },
+   "v": {
+    "aci_data": "2007-03-10"
+   }
+  },
+  "est": "risco",
+  "txt": "6.722"
+ },
+ {
+  "nome": "acidente da CAT, contribuindo",
+  "op": "b94",
+  "id": "qualidade_data_acidente",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "fd": {
+    "cats": [
+     {
+      "numero": "2026-000001-1/01",
+      "tipoCat": "Inicial",
+      "emitente": "Empregador",
+      "data": "10/01/2026",
+      "tipo": "Típico",
+      "cnae": "10.11-2",
+      "cid": "S62"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "acidente em 10/01/2026"
+ },
+ {
+  "nome": "sem data",
+  "op": "b94",
+  "id": "qualidade_data_acidente",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "CAT",
+  "op": "b94",
+  "id": "acidente_do_trabalho_nexo",
+  "x": {
+   "fd": {
+    "cats": [
+     {
+      "numero": "2026-000001-1/01",
+      "tipoCat": "Inicial",
+      "emitente": "Empregador",
+      "data": "10/01/2026",
+      "tipo": "Típico",
+      "cnae": "10.11-2",
+      "cid": "S62"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "CAT"
+ },
+ {
+  "nome": "perda auditiva com CAT",
+  "op": "b94",
+  "id": "acidente_do_trabalho_nexo",
+  "x": {
+   "fd": {
+    "cats": [
+     {
+      "numero": "2026-000001-1/01",
+      "tipoCat": "Inicial",
+      "emitente": "Empregador",
+      "data": "10/01/2026",
+      "tipo": "Doença",
+      "cnae": "10.11-2",
+      "cid": "H90.3"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "perda auditiva"
+ },
+ {
+  "nome": "sem nexo vira B36",
+  "op": "b94",
+  "id": "acidente_do_trabalho_nexo",
+  "x": {
+   "v": {
+    "aci_nexo": "Sem nexo"
+   }
+  },
+  "est": "falta",
+  "txt": "B36"
+ },
+ {
+  "nome": "B31 cessado marca a consolidação",
+  "op": "b94",
+  "id": "consolidacao",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "31",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2025-10-01",
+     "ate": "2026-03-31",
+     "situacao": "CESSADO",
+     "ativo": false
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "31/03/2026"
+ },
+ {
+  "nome": "ainda em B91",
+  "op": "b94",
+  "id": "consolidacao",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "91",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2026-05-01",
+     "ate": "2026-12-31",
+     "situacao": "ATIVO",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "sem dado",
+  "op": "b94",
+  "id": "consolidacao",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "sequela ainda não consolidada vale sobre a DCB",
+  "op": "b94",
+  "id": "consolidacao",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "31",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2025-10-01",
+     "ate": "2026-03-31",
+     "situacao": "CESSADO",
+     "ativo": false
+    }
+   ],
+   "v": {
+    "aci_sequela": "Não"
+   }
+  },
+  "est": "falta",
+  "txt": "não se consolidou"
+ },
+ {
+  "nome": "sequela consolidada Não não quer dizer sem sequela",
+  "op": "b94",
+  "id": "sequela_reducao",
+  "x": {
+   "v": {
+    "aci_sequela": "Não"
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "não reduz",
+  "op": "b94",
+  "id": "sequela_reducao",
+  "x": {
+   "v": {
+    "aci_reducao": "Não reduz"
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "reduz, fora do Anexo III",
+  "op": "b94",
+  "id": "sequela_reducao",
+  "x": {
+   "v": {
+    "aci_reducao": "Sim",
+    "aci_anexo3": "Fora do Anexo III",
+    "aci_atividade": "pedreiro"
+   }
+  },
+  "est": "ok",
+  "txt": "só exemplo"
+ },
+ {
+  "nome": "readaptação preventiva",
+  "op": "b94",
+  "id": "sequela_reducao",
+  "x": {
+   "v": {
+    "aci_reducao": "Sim",
+    "aci_readaptado": "Sim"
+   }
+  },
+  "est": "risco"
+ },
+ {
+  "nome": "sem resposta",
+  "op": "b94",
+  "id": "sequela_reducao",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "dispensada",
+  "op": "b94",
+  "id": "sem_carencia",
+  "x": {},
+  "est": "ok"
+ },
+ {
+  "nome": "dia seguinte à cessação",
+  "op": "b94",
+  "id": "dib_b94",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "91",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2025-10-01",
+     "ate": "2026-03-31",
+     "situacao": "CESSADO",
+     "ativo": false
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "01/04/2026",
+  "quando": "2026-04-01"
+ },
+ {
+  "nome": "sem auxílio anterior: DER",
+  "op": "b94",
+  "id": "dib_b94",
+  "x": {},
+  "est": "info",
+  "txt": "DER"
+ },
+ {
+  "nome": "outro auxílio-acidente ativo: opção",
+  "op": "b94",
+  "id": "vedacoes_b94",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "benefCnis": [
+    {
+     "especie": "36",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2019-01-01",
+     "ate": "",
+     "situacao": "ATIVO",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "opcao",
+  "txt": "mais vantajoso"
+ },
+ {
+  "nome": "aposentadoria em manutenção",
+  "op": "b94",
+  "id": "vedacoes_b94",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "apos": {
+    "especie": "Aposentadoria por idade",
+    "nb": "1234567890"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "nada impede",
+  "op": "b94",
+  "id": "vedacoes_b94",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01"
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "lesão e aposentadoria antes de 11/11/1997: divergente (Súmula 507 STJ)",
+  "op": "b94",
+  "id": "vedacoes_b94",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "42",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "1996-05-01",
+     "ate": "",
+     "situacao": "ATIVO",
+     "ativo": true
+    }
+   ],
+   "v": {
+    "aci_data": "1995-03-10"
+   }
+  },
+  "est": "divergente",
+  "txt": "11/11/1997"
+ },
+ {
+  "nome": "auxílio reaberto suspende",
+  "op": "b94",
+  "id": "vedacoes_b94",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "benefCnis": [
+    {
+     "especie": "91",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2026-05-01",
+     "ate": "2026-12-31",
+     "situacao": "ATIVO",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "suspenso"
+ },
+ {
+  "nome": "sem documento médico",
+  "op": "b94",
+  "id": "analise_documental_previa",
+  "x": {
+   "v": {
+    "aci_docs": "Não"
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "com documento médico",
+  "op": "b94",
+  "id": "analise_documental_previa",
+  "x": {
+   "v": {
+    "aci_docs": "Sim"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem resposta, com CAT",
+  "op": "b94",
+  "id": "analise_documental_previa",
+  "x": {
+   "fd": {
+    "cats": [
+     {
+      "numero": "2026-000001-1/01",
+      "tipoCat": "Inicial",
+      "emitente": "Empregador",
+      "data": "10/01/2026",
+      "tipo": "Típico",
+      "cnae": "10.11-2",
+      "cid": "S62"
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "CAT"
+ },
+ {
+  "nome": "pela carta do B31: 50 % do salário de benefício (IN 128, art. 233, X)",
+  "op": "b94",
+  "id": "valor_b94",
+  "x": {
+   "fd": {
+    "cartas": [
+     {
+      "nb": "2220001112",
+      "especie": "AUXÍLIO POR INCAPACIDADE TEMPORÁRIA",
+      "rmi": "1.820,00",
+      "dib": "10/01/2025"
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "233, X"
+ },
+ {
+  "nome": "pela carta do B31",
+  "op": "b94",
+  "id": "valor_b94",
+  "x": {
+   "fd": {
+    "cartas": [
+     {
+      "nb": "2220001112",
+      "especie": "AUXÍLIO POR INCAPACIDADE TEMPORÁRIA",
+      "rmi": "1.820,00",
+      "dib": "10/01/2025"
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "1\\.000,00"
+ },
+ {
+  "nome": "sem carta",
+  "op": "b94",
+  "id": "valor_b94",
+  "x": {},
+  "est": "info",
+  "txt": "50 %"
+ },
+ {
+  "nome": "contribuinte individual com sequela de acidente de trânsito",
+  "op": "b36",
+  "id": "categoria_b36",
+  "x": {
+   "v": {
+    "aci_data": "2025-03-10",
+    "aci_tipo": "Trânsito fora do trabalho"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "impedido",
+  "txt": "contribuinte individual"
+ },
+ {
+  "nome": "empregado",
+  "op": "b36",
+  "id": "categoria_b36",
+  "x": {
+   "v": {
+    "aci_data": "2025-03-10"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado",
+      "inicio": "01/03/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "doméstico depois de 2015",
+  "op": "b36",
+  "id": "categoria_b36",
+  "x": {
+   "v": {
+    "aci_data": "2016-03-10"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado Doméstico",
+      "inicio": "01/01/2015",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "facultativo sem emprego anterior",
+  "op": "b36",
+  "id": "categoria_b36",
+  "x": {
+   "v": {
+    "aci_data": "2025-03-10"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Facultativo",
+      "inicio": "01/01/2020",
+      "fim": "",
+      "aberto": true,
+      "origem": "Empresa Teste"
+     }
+    ]
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "acidente contribuindo",
+  "op": "b36",
+  "id": "qualidade_data_acidente",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "v": {
+    "aci_data": "2025-03-10"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "acidente em trecho de perda",
+  "op": "b36",
+  "id": "qualidade_data_acidente",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2008-01",
+     "ate": "2012-06",
+     "txt": ""
+    },
+    {
+     "tipo": "perda",
+     "de": "2012-07",
+     "ate": "2014-12",
+     "txt": ""
+    },
+    {
+     "tipo": "reingresso",
+     "de": "2015-01",
+     "ate": "2015-01",
+     "txt": ""
+    },
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2027-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-08-15",
+    "perda": "2027-08-16"
+   },
+   "v": {
+    "aci_data": "2013-05-10"
+   }
+  },
+  "est": "risco"
+ },
+ {
+  "nome": "trânsito fora do trabalho",
+  "op": "b36",
+  "id": "acidente_qualquer_natureza",
+  "x": {
+   "v": {
+    "aci_data": "2025-03-10",
+    "aci_tipo": "Trânsito fora do trabalho"
+   }
+  },
+  "est": "ok",
+  "txt": "trânsito"
+ },
+ {
+  "nome": "há CAT: é o B94",
+  "op": "b36",
+  "id": "acidente_qualquer_natureza",
+  "x": {
+   "fd": {
+    "cats": [
+     {
+      "numero": "2026-000001-1/01",
+      "tipoCat": "Inicial",
+      "emitente": "Empregador",
+      "data": "10/01/2026",
+      "tipo": "Típico",
+      "cnae": "10.11-2",
+      "cid": "S62"
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "B94"
+ },
+ {
+  "nome": "perda auditiva só como B94",
+  "op": "b36",
+  "id": "acidente_qualquer_natureza",
+  "x": {
+   "v": {
+    "inc_cid": "H91.9",
+    "aci_tipo": "Outro acidente"
+   }
+  },
+  "est": "impedido",
+  "txt": "86, § 4º"
+ },
+ {
+  "nome": "acidente antes de 29/04/1995",
+  "op": "b36",
+  "id": "acidente_qualquer_natureza",
+  "x": {
+   "v": {
+    "aci_data": "1994-08-01",
+    "aci_tipo": "Trânsito fora do trabalho"
+   }
+  },
+  "est": "impedido",
+  "txt": "29/04/1995"
+ },
+ {
+  "nome": "doença sem acidente",
+  "op": "b36",
+  "id": "acidente_qualquer_natureza",
+  "x": {
+   "v": {
+    "aci_tipo": "Doença sem acidente"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "sem resposta",
+  "op": "b36",
+  "id": "acidente_qualquer_natureza",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "data informada",
+  "op": "b36",
+  "id": "consolidacao",
+  "x": {
+   "v": {
+    "aci_consolidacao": "2026-02-01"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "maior esforço",
+  "op": "b36",
+  "id": "sequela_reducao",
+  "x": {
+   "v": {
+    "aci_reducao": "Sim, com maior esforço"
+   }
+  },
+  "est": "ok",
+  "txt": "maior esforço"
+ },
+ {
+  "nome": "dispensada",
+  "op": "b36",
+  "id": "sem_carencia",
+  "x": {},
+  "est": "ok"
+ },
+ {
+  "nome": "dez anos depois da cessação: DER",
+  "op": "b36",
+  "id": "dib_b36",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "31",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2014-01-01",
+     "ate": "2015-06-30",
+     "situacao": "CESSADO",
+     "ativo": false
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "10 anos"
+ },
+ {
+  "nome": "outro auxílio-acidente ativo: opção",
+  "op": "b36",
+  "id": "vedacoes_b36",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "benefCnis": [
+    {
+     "especie": "94",
+     "origem": "",
+     "nb": "9990001112",
+     "de": "2019-01-01",
+     "ate": "",
+     "situacao": "ATIVO",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "opcao"
+ },
+ {
+  "nome": "aposentadoria em manutenção",
+  "op": "b36",
+  "id": "vedacoes_b36",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2015-01",
+     "ate": "2026-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2026-07",
+     "ate": "2028-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2028-08-15",
+    "perda": "2028-08-16"
+   },
+   "ct": {
+    "carencia": 138,
+    "periodos": [
+     [
+      "2015-01",
+      "2026-06"
+     ]
+    ]
+   },
+   "filiacao": "2015-01-01",
+   "apos": {
+    "especie": "Aposentadoria por idade",
+    "nb": "1234567890"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "sem documento",
+  "op": "b36",
+  "id": "analise_documental_previa",
+  "x": {
+   "v": {
+    "aci_docs": "Não"
+   }
+  },
+  "est": "falta"
+ }
+]

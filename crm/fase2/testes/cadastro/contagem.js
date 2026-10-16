@@ -108,9 +108,10 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
 
   // 5 · o mapa leva a contagem aos campos da análise, sem gravar
   escritos.length = 0;
-  await p.evaluate(() => irSubCad("mapa"));
-  await p.waitForSelector(".mapa-topo button.tl-bt.forte");
-  await p.click(".mapa-topo button.tl-bt.forte");
+  // F234 · o Mapa só mostra: a passagem à Análise de Direito é pelo benefício aberto, que preenche o formulário
+  await p.evaluate(cli => { admSalvar(cli, a => { a.beneficios = { tempo: ["idade"] }; }); irSubCad("direito"); }, CLI_CHEIO);
+  await p.waitForSelector("#ad-quadrado");
+  await p.evaluate(cli => { adAbrirBenef(cli, "idade"); document.getElementById("ad-novo").open = true; }, CLI_CHEIO);
   await p.waitForSelector("#ad-novo[open]");
   const campos = await p.evaluate(() => ({ car: document.getElementById("ad-f-carencia").value, tempo: document.getElementById("ad-f-tempo").value }));
   conf("carência e tempo entram nos campos da análise", campos.car === "150 contribuições (CNIS, contagem do CRM)" && campos.tempo === "12 anos e 6 meses (CNIS, por competência)");

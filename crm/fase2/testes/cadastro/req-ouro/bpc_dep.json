@@ -1,0 +1,2249 @@
+[
+ {
+  "nome": "BPC: avó (pai ou mãe do RF) fica fora do grupo do neto requerente; Bolsa Família entra",
+  "op": "def",
+  "id": "renda_per_capita",
+  "x": {
+   "dn": "2015-04-02",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "condicao": "Atualizado",
+    "municipio": "Ribeirão Preto/SP",
+    "atualizada_em": "2026-03-10",
+    "renda_total": 3600,
+    "renda_por_pessoa": 900,
+    "membros": [
+     {
+      "nome": "ANA SOUZA",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1990-07-20",
+      "responsavel": true
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2015-04-02"
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2012-01-15"
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "parentesco": "Pai ou mãe",
+      "nascimento": "1950-02-10"
+     }
+    ],
+    "beneficios_pagos": [
+     {
+      "tipo": "Bolsa Família",
+      "especie": "Bolsa Família",
+      "beneficiario": "ANA SOUZA",
+      "primeira_competencia": "202401",
+      "ultima_competencia": "202609",
+      "meses": 33,
+      "valor_ultimo": 700
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "ANA SOUZA",
+      "beneficios_inss": [],
+      "remuneracao_ultimo_mes": null,
+      "declarado": {
+       "remuneracao_mes_anterior": 400
+      }
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "beneficios_inss": [
+       {
+        "nb": "1111111111",
+        "especie": "PENSAO POR MORTE PREVIDENCIARIA",
+        "valor": 2500,
+        "dib": "2010-01-01"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "366,67.*Bolsa Família.*fora do rol.*TEREZA"
+ },
+ {
+  "nome": "BPC: o Bolsa Família de R$ 700 é somado à renda",
+  "op": "def",
+  "id": "renda_per_capita",
+  "x": {
+   "dn": "2015-04-02",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "condicao": "Atualizado",
+    "municipio": "Ribeirão Preto/SP",
+    "atualizada_em": "2026-03-10",
+    "renda_total": 3600,
+    "renda_por_pessoa": 900,
+    "membros": [
+     {
+      "nome": "ANA SOUZA",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1990-07-20",
+      "responsavel": true
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2015-04-02"
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2012-01-15"
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "parentesco": "Pai ou mãe",
+      "nascimento": "1950-02-10"
+     }
+    ],
+    "beneficios_pagos": [
+     {
+      "tipo": "Bolsa Família",
+      "especie": "Bolsa Família",
+      "beneficiario": "ANA SOUZA",
+      "primeira_competencia": "202401",
+      "ultima_competencia": "202609",
+      "meses": 33,
+      "valor_ultimo": 700
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "ANA SOUZA",
+      "beneficios_inss": [],
+      "remuneracao_ultimo_mes": null,
+      "declarado": {
+       "remuneracao_mes_anterior": 400
+      }
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "beneficios_inss": [
+       {
+        "nb": "1111111111",
+        "especie": "PENSAO POR MORTE PREVIDENCIARIA",
+        "valor": 2500,
+        "dib": "2010-01-01"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "Bolsa Família de R\\$\\s?700,00 entra"
+ },
+ {
+  "nome": "BPC: renda acima de 1/4 é risco (outros meios), e não usa a renda_por_pessoa do CadÚnico (R$ 100)",
+  "op": "idoso",
+  "id": "renda_per_capita",
+  "x": {
+   "dn": "1959-06-01",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "atualizada_em": "2026-01-05",
+    "renda_por_pessoa": 100,
+    "membros": [
+     {
+      "nome": "JOAO LIMA",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1959-06-01",
+      "responsavel": true
+     },
+     {
+      "nome": "MARIA LIMA",
+      "parentesco": "Cônjuge ou companheiro(a)",
+      "nascimento": "1955-01-01"
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "JOAO LIMA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "MARIA LIMA",
+      "remuneracao_ultimo_mes": 1500,
+      "beneficios_inss": []
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "750,00.*outros meios"
+ },
+ {
+  "nome": "BPC: aposentadoria de 1 SM da esposa de 71 anos sai da conta",
+  "op": "idoso",
+  "id": "exclusoes_renda",
+  "x": {
+   "dn": "1959-06-01",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "atualizada_em": "2026-01-05",
+    "renda_por_pessoa": 100,
+    "membros": [
+     {
+      "nome": "JOAO LIMA",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1959-06-01",
+      "responsavel": true
+     },
+     {
+      "nome": "MARIA LIMA",
+      "parentesco": "Cônjuge ou companheiro(a)",
+      "nascimento": "1955-01-01"
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "JOAO LIMA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "MARIA LIMA",
+      "remuneracao_ultimo_mes": null,
+      "beneficios_inss": [
+       {
+        "especie": "APOSENTADORIA POR IDADE",
+        "valor": 1621
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "fora da conta.*71 anos"
+ },
+ {
+  "nome": "BPC: com a aposentadoria de 1 SM excluída, a renda por pessoa é zero",
+  "op": "idoso",
+  "id": "renda_per_capita",
+  "x": {
+   "dn": "1959-06-01",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "atualizada_em": "2026-01-05",
+    "renda_por_pessoa": 100,
+    "membros": [
+     {
+      "nome": "JOAO LIMA",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1959-06-01",
+      "responsavel": true
+     },
+     {
+      "nome": "MARIA LIMA",
+      "parentesco": "Cônjuge ou companheiro(a)",
+      "nascimento": "1955-01-01"
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "JOAO LIMA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "MARIA LIMA",
+      "remuneracao_ultimo_mes": null,
+      "beneficios_inss": [
+       {
+        "especie": "APOSENTADORIA POR IDADE",
+        "valor": 1621
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "0,00 por pessoa"
+ },
+ {
+  "nome": "BPC: benefício acima de 1 SM da esposa idosa entra na renda",
+  "op": "idoso",
+  "id": "renda_per_capita",
+  "x": {
+   "dn": "1959-06-01",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "atualizada_em": "2026-01-05",
+    "renda_por_pessoa": 100,
+    "membros": [
+     {
+      "nome": "JOAO LIMA",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1959-06-01",
+      "responsavel": true
+     },
+     {
+      "nome": "MARIA LIMA",
+      "parentesco": "Cônjuge ou companheiro(a)",
+      "nascimento": "1955-01-01"
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "JOAO LIMA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "MARIA LIMA",
+      "remuneracao_ultimo_mes": null,
+      "beneficios_inss": [
+       {
+        "especie": "APOSENTADORIA POR IDADE",
+        "valor": 2000
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "1\\.000,00"
+ },
+ {
+  "nome": "BPC: CadÚnico atualizado há mais de 24 meses é falta",
+  "op": "def",
+  "id": "cadunico",
+  "x": {
+   "dn": "2015-04-02",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "condicao": "Atualizado",
+    "municipio": "Ribeirão Preto/SP",
+    "atualizada_em": "2024-06-01",
+    "renda_total": 3600,
+    "renda_por_pessoa": 900,
+    "membros": [
+     {
+      "nome": "ANA SOUZA",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1990-07-20",
+      "responsavel": true
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2015-04-02"
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2012-01-15"
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "parentesco": "Pai ou mãe",
+      "nascimento": "1950-02-10"
+     }
+    ],
+    "beneficios_pagos": [
+     {
+      "tipo": "Bolsa Família",
+      "especie": "Bolsa Família",
+      "beneficiario": "ANA SOUZA",
+      "primeira_competencia": "202401",
+      "ultima_competencia": "202609",
+      "meses": 33,
+      "valor_ultimo": 700
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "ANA SOUZA",
+      "beneficios_inss": [],
+      "remuneracao_ultimo_mes": null,
+      "declarado": {
+       "remuneracao_mes_anterior": 400
+      }
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "beneficios_inss": [
+       {
+        "nb": "1111111111",
+        "especie": "PENSAO POR MORTE PREVIDENCIARIA",
+        "valor": 2500,
+        "dib": "2010-01-01"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "mais de 24 meses"
+ },
+ {
+  "nome": "BPC: CadÚnico atualizado em 03/2026 está em ordem",
+  "op": "def",
+  "id": "cadunico",
+  "x": {
+   "dn": "2015-04-02",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "condicao": "Atualizado",
+    "municipio": "Ribeirão Preto/SP",
+    "atualizada_em": "2026-03-10",
+    "renda_total": 3600,
+    "renda_por_pessoa": 900,
+    "membros": [
+     {
+      "nome": "ANA SOUZA",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1990-07-20",
+      "responsavel": true
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2015-04-02"
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2012-01-15"
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "parentesco": "Pai ou mãe",
+      "nascimento": "1950-02-10"
+     }
+    ],
+    "beneficios_pagos": [
+     {
+      "tipo": "Bolsa Família",
+      "especie": "Bolsa Família",
+      "beneficiario": "ANA SOUZA",
+      "primeira_competencia": "202401",
+      "ultima_competencia": "202609",
+      "meses": 33,
+      "valor_ultimo": 700
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "ANA SOUZA",
+      "beneficios_inss": [],
+      "remuneracao_ultimo_mes": null,
+      "declarado": {
+       "remuneracao_mes_anterior": 400
+      }
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "beneficios_inss": [
+       {
+        "nb": "1111111111",
+        "especie": "PENSAO POR MORTE PREVIDENCIARIA",
+        "valor": 2500,
+        "dib": "2010-01-01"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "10/03/2026"
+ },
+ {
+  "nome": "BPC: sem CadÚnico e sem campo, a informar",
+  "op": "def",
+  "id": "cadunico",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "BPC PcD: na concessão o salário entra na renda; o art. 21-A não se aplica",
+  "op": "def",
+  "id": "trabalho_pcd",
+  "x": {
+   "v": {
+    "ren_trabalha": "Sim"
+   }
+  },
+  "est": "info",
+  "txt": "entra na renda.*já concedido"
+ },
+ {
+  "nome": "BPC PcD já concedido e trabalhando: suspensão do art. 21-A",
+  "op": "def",
+  "id": "trabalho_pcd",
+  "x": {
+   "v": {
+    "ren_trabalha": "Sim"
+   },
+   "benefCnis": [
+    {
+     "especie": "87",
+     "nb": "1234567890",
+     "ativo": true,
+     "situacao": "ATIVO",
+     "de": "2020-01-01"
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "suspens.*21-A"
+ },
+ {
+  "nome": "BPC idoso: trabalho só entra na renda, sem suspensão do art. 21-A",
+  "op": "idoso",
+  "id": "trabalho_idoso",
+  "x": {
+   "v": {
+    "ren_trabalha": "Sim"
+   },
+   "benefCnis": [
+    {
+     "especie": "88",
+     "nb": "1234567890",
+     "ativo": true,
+     "situacao": "ATIVO",
+     "de": "2020-01-01"
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "^(?!.*(suspen|21-A)).*entra na renda"
+ },
+ {
+  "nome": "BPC: pensão por morte ativa não acumula, é opção",
+  "op": "def",
+  "id": "sem_outro_beneficio",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "21",
+     "nb": "1234567890",
+     "ativo": true,
+     "situacao": "ATIVO",
+     "de": "2020-01-01"
+    }
+   ]
+  },
+  "est": "opcao",
+  "txt": "B21"
+ },
+ {
+  "nome": "BPC: CNIS lido sem benefício ativo",
+  "op": "def",
+  "id": "sem_outro_beneficio",
+  "x": {
+   "g": {
+    "vinculos": []
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "BPC: impedimento de menos de 2 anos é falta",
+  "op": "def",
+  "id": "deficiencia_longo_prazo",
+  "x": {
+   "v": {
+    "def_longo": "Não"
+   }
+  },
+  "est": "falta",
+  "txt": "2 anos"
+ },
+ {
+  "nome": "BPC: impedimento de longo prazo informado",
+  "op": "def",
+  "id": "deficiencia_longo_prazo",
+  "x": {
+   "v": {
+    "def_longo": "Sim",
+    "def_cid": "F84.0",
+    "def_did": "2018-02-01"
+   }
+  },
+  "est": "ok",
+  "txt": "F84\\.0"
+ },
+ {
+  "nome": "BPC: avaliação do INSS não reconheceu o impedimento",
+  "op": "def",
+  "id": "avaliacao_biopsicossocial",
+  "x": {
+   "v": {
+    "def_avaliacao": "Deficiência não reconhecida"
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "BPC: comunicação de indeferimento por impedimento no dossiê",
+  "op": "def",
+  "id": "avaliacao_biopsicossocial",
+  "x": {
+   "fd": {
+    "processos": [
+     {
+      "entrada": "10/02/2026",
+      "servico": "Benefício Assistencial à Pessoa com Deficiência",
+      "comunicacoes": [
+       {
+        "decisao": "Indeferido",
+        "motivo": "Não atende ao critério de deficiência para acesso ao BPC-LOAS"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "indeferido"
+ },
+ {
+  "nome": "BPC: gastos por categoria pela Portaria 45/2026 (56 + 120)",
+  "op": "def",
+  "id": "deducao_saude",
+  "x": {
+   "v": {
+    "ren_gastos_cat": "medicamentos, fraldas"
+   }
+  },
+  "est": "ok",
+  "txt": "176,00.*Portaria Conjunta 45/2026"
+ },
+ {
+  "nome": "BPC: DER de agosto de 2026 usa os valores antigos (45 + 99), só na skill",
+  "op": "def",
+  "id": "deducao_saude",
+  "x": {
+   "der": "2026-08-10",
+   "v": {
+    "ren_gastos_cat": "medicamentos, fraldas"
+   }
+  },
+  "est": "ok",
+  "txt": "144,00.*só na skill"
+ },
+ {
+  "nome": "BPC: o desconto documentado põe a renda dentro do limite (ok, não warn)",
+  "op": "def",
+  "id": "renda_per_capita",
+  "x": {
+   "v": {
+    "ren_pessoas": "3",
+    "ren_total": "1300",
+    "ren_gastos_cat": "medicamentos, fraldas"
+   }
+  },
+  "est": "ok",
+  "txt": "374,67"
+ },
+ {
+  "nome": "BPC: valor livre de gastos com saúde não vale",
+  "op": "def",
+  "id": "deducao_saude",
+  "x": {
+   "v": {
+    "ren_saude": "500"
+   }
+  },
+  "est": "informar",
+  "txt": "categorias"
+ },
+ {
+  "nome": "BPC: sem biometria informada",
+  "op": "def",
+  "id": "biometria",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "BPC: biometria cadastrada",
+  "op": "idoso",
+  "id": "biometria",
+  "x": {
+   "v": {
+    "bpc_biometria": "Sim"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "BPC: mora fora do Brasil",
+  "op": "def",
+  "id": "nacionalidade_residencia",
+  "x": {
+   "v": {
+    "bpc_brasil": "Não"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "BPC: neto do RF (filho ou sobrinho do requerente) é dúvida que muda o resultado",
+  "op": "def",
+  "id": "renda_per_capita",
+  "x": {
+   "dn": "2015-04-02",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "condicao": "Atualizado",
+    "municipio": "Ribeirão Preto/SP",
+    "atualizada_em": "2026-03-10",
+    "renda_total": 3600,
+    "renda_por_pessoa": 900,
+    "membros": [
+     {
+      "nome": "ANA SOUZA",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1990-07-20",
+      "responsavel": true
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2015-04-02"
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2012-01-15"
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "parentesco": "Pai ou mãe",
+      "nascimento": "1950-02-10"
+     },
+     {
+      "nome": "LUCAS SOUZA",
+      "parentesco": "Neto(a) ou bisneto(a)",
+      "nascimento": "2000-01-01"
+     }
+    ],
+    "beneficios_pagos": [
+     {
+      "tipo": "Bolsa Família",
+      "especie": "Bolsa Família",
+      "beneficiario": "ANA SOUZA",
+      "primeira_competencia": "202401",
+      "ultima_competencia": "202609",
+      "meses": 33,
+      "valor_ultimo": 700
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "ANA SOUZA",
+      "beneficios_inss": [],
+      "remuneracao_ultimo_mes": null,
+      "declarado": {
+       "remuneracao_mes_anterior": 400
+      }
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "beneficios_inss": [
+       {
+        "nb": "1111111111",
+        "especie": "PENSAO POR MORTE PREVIDENCIARIA",
+        "valor": 2500,
+        "dib": "2010-01-01"
+       }
+      ]
+     },
+     {
+      "nome": "LUCAS SOUZA",
+      "remuneracao_ultimo_mes": 2000,
+      "beneficios_inss": []
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "confirme se entra: LUCAS.*muda o resultado"
+ },
+ {
+  "nome": "BPC: requerente que não está no CadÚnico",
+  "op": "def",
+  "id": "renda_per_capita",
+  "x": {
+   "dn": "2001-01-01",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "condicao": "Atualizado",
+    "municipio": "Ribeirão Preto/SP",
+    "atualizada_em": "2026-03-10",
+    "renda_total": 3600,
+    "renda_por_pessoa": 900,
+    "membros": [
+     {
+      "nome": "ANA SOUZA",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1990-07-20",
+      "responsavel": true
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2015-04-02"
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2012-01-15"
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "parentesco": "Pai ou mãe",
+      "nascimento": "1950-02-10"
+     }
+    ],
+    "beneficios_pagos": [
+     {
+      "tipo": "Bolsa Família",
+      "especie": "Bolsa Família",
+      "beneficiario": "ANA SOUZA",
+      "primeira_competencia": "202401",
+      "ultima_competencia": "202609",
+      "meses": 33,
+      "valor_ultimo": 700
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "ANA SOUZA",
+      "beneficios_inss": [],
+      "remuneracao_ultimo_mes": null,
+      "declarado": {
+       "remuneracao_mes_anterior": 400
+      }
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "beneficios_inss": [
+       {
+        "nb": "1111111111",
+        "especie": "PENSAO POR MORTE PREVIDENCIARIA",
+        "valor": 2500,
+        "dib": "2010-01-01"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "não achei o requerente"
+ },
+ {
+  "nome": "BPC idoso: 64 anos na DER, completa 65 em 10/03/2027",
+  "op": "idoso",
+  "id": "idade_65",
+  "x": {
+   "dn": "1962-03-10"
+  },
+  "est": "falta",
+  "txt": "10/03/2027",
+  "quando": "2027-03-10"
+ },
+ {
+  "nome": "BPC idoso: 66 anos na DER",
+  "op": "idoso",
+  "id": "idade_65",
+  "x": {
+   "dn": "1960-01-01"
+  },
+  "est": "ok",
+  "txt": "66 anos"
+ },
+ {
+  "nome": "BPC idoso: idade medida na DER, não hoje",
+  "op": "idoso",
+  "id": "idade_65",
+  "x": {
+   "dn": "1961-08-01",
+   "der": "2026-06-01"
+  },
+  "est": "falta",
+  "txt": "64 anos"
+ },
+ {
+  "nome": "BPC idoso: CadÚnico atualizado informado no campo",
+  "op": "idoso",
+  "id": "cadunico",
+  "x": {
+   "v": {
+    "ren_cad": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "informado"
+ },
+ {
+  "nome": "BPC idoso: dependência de terceiros aparece na saída do risco",
+  "op": "idoso",
+  "id": "renda_per_capita",
+  "x": {
+   "v": {
+    "ren_pessoas": "2",
+    "ren_total": "1500",
+    "bpc_terceiros": "Sim"
+   }
+  },
+  "est": "risco",
+  "txt": "terceiros"
+ },
+ {
+  "nome": "BPC idoso: o direito se completa aos 65",
+  "op": "idoso",
+  "quandoOp": true,
+  "x": {
+   "dn": "1962-03-10"
+  },
+  "quando": "2027-03-10"
+ },
+ {
+  "nome": "Pensão: a qualidade é do instituidor; o CNIS do cliente (em dia) não serve",
+  "op": "morte",
+  "id": "qualidade_instituidor",
+  "x": {
+   "v": {
+    "dep_fato": "2026-05-10",
+    "dep_classe": "Cônjuge"
+   },
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2020-01",
+     "ate": "2026-09",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-11-16",
+    "perda": "2027-11-17"
+   },
+   "ct": {
+    "carencia": 80,
+    "periodos": [
+     [
+      "2020-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "instituidor"
+ },
+ {
+  "nome": "Pensão: instituidor sem qualidade, mas com 67 anos e 180 contribuições (art. 102, § 2º)",
+  "op": "morte",
+  "id": "qualidade_instituidor",
+  "x": {
+   "v": {
+    "dep_fato": "2025-05-10",
+    "ins_ultima_contrib": "2015-12",
+    "ins_nasc": "1958-03-01",
+    "dep_contrib": "180"
+   }
+  },
+  "est": "ok",
+  "txt": "102, § 2º"
+ },
+ {
+  "nome": "Pensão: instituidor na graça de 12 meses",
+  "op": "morte",
+  "id": "qualidade_instituidor",
+  "x": {
+   "v": {
+    "dep_fato": "2025-10-01",
+    "ins_ultima_contrib": "2025-01"
+   }
+  },
+  "est": "ok",
+  "txt": "mantida até 16/03/2026"
+ },
+ {
+  "nome": "Pensão: graça vencida, sem direito a aposentadoria",
+  "op": "morte",
+  "id": "qualidade_instituidor",
+  "x": {
+   "v": {
+    "dep_fato": "2025-10-01",
+    "ins_ultima_contrib": "2023-01",
+    "dep_contrib": "40"
+   }
+  },
+  "est": "risco",
+  "txt": "102"
+ },
+ {
+  "nome": "Pensão: instituidor aposentado mantém a qualidade",
+  "op": "morte",
+  "id": "qualidade_instituidor",
+  "x": {
+   "v": {
+    "dep_fato": "2025-10-01",
+    "ins_aposentado": "Sim"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "Pensão: acidente de trânsito, 10 contribuições, união de 5 anos e viúva de 46: vitalícia",
+  "op": "morte",
+  "id": "duracao_cota_conjuge",
+  "x": {
+   "v": {
+    "dep_fato": "2025-03-10",
+    "dep_classe": "Companheiro(a)",
+    "dep_nasc": "1978-06-01",
+    "dep_uniao": "2020-01-15",
+    "dep_contrib": "10",
+    "ins_acidente": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "vitalícia.*acidente"
+ },
+ {
+  "nome": "Pensão: óbito em 2014, cota sem prazo (sem a regra dos 4 meses)",
+  "op": "morte",
+  "id": "duracao_cota_conjuge",
+  "x": {
+   "v": {
+    "dep_fato": "2014-08-20",
+    "dep_classe": "Cônjuge",
+    "dep_nasc": "1980-01-01",
+    "dep_uniao": "2013-01-01",
+    "dep_contrib": "5"
+   }
+  },
+  "est": "ok",
+  "txt": "sem prazo"
+ },
+ {
+  "nome": "Pensão: casamento de 1 ano, cota de 4 meses",
+  "op": "morte",
+  "id": "duracao_cota_conjuge",
+  "x": {
+   "v": {
+    "dep_fato": "2026-08-01",
+    "dep_classe": "Cônjuge",
+    "dep_nasc": "1970-01-01",
+    "dep_uniao": "2025-06-01",
+    "dep_contrib": "30"
+   }
+  },
+  "est": "falta",
+  "txt": "4 meses"
+ },
+ {
+  "nome": "Pensão: instituidor aposentado dispensa as 18 contribuições",
+  "op": "morte",
+  "id": "duracao_cota_conjuge",
+  "x": {
+   "v": {
+    "dep_fato": "2026-02-01",
+    "dep_classe": "Cônjuge",
+    "dep_nasc": "1950-01-01",
+    "dep_uniao": "1975-01-01",
+    "dep_contrib": "12",
+    "ins_aposentado": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "vitalícia.*aposentado"
+ },
+ {
+  "nome": "Pensão: cota de 4 meses já acabou antes do pedido",
+  "op": "morte",
+  "id": "duracao_cota_conjuge",
+  "x": {
+   "v": {
+    "dep_fato": "2025-01-10",
+    "dep_classe": "Cônjuge",
+    "dep_nasc": "1970-01-01",
+    "dep_uniao": "2024-06-01",
+    "dep_contrib": "30"
+   }
+  },
+  "est": "impedido",
+  "txt": "375, § 7º"
+ },
+ {
+  "nome": "Pensão: óbito em 2018, viúva de 35 anos: 15 anos (tabela até 2020)",
+  "op": "morte",
+  "id": "duracao_cota_conjuge",
+  "x": {
+   "v": {
+    "dep_fato": "2018-05-02",
+    "dep_classe": "Cônjuge",
+    "dep_nasc": "1983-01-01",
+    "dep_uniao": "2008-01-01",
+    "dep_contrib": "50"
+   }
+  },
+  "est": "ok",
+  "txt": "15 anos"
+ },
+ {
+  "nome": "Pensão: mãe com viúva habilitada fica de fora",
+  "op": "morte",
+  "id": "dependente_classe",
+  "x": {
+   "v": {
+    "dep_fato": "2026-05-01",
+    "dep_classe": "Pais",
+    "dep_classe1": "Cônjuge, companheiro ou filho"
+   }
+  },
+  "est": "impedido",
+  "txt": "16, § 1º"
+ },
+ {
+  "nome": "Pensão: filho com 22 anos no óbito",
+  "op": "morte",
+  "id": "dependente_classe",
+  "x": {
+   "v": {
+    "dep_fato": "2025-06-01",
+    "dep_classe": "Filho menor",
+    "dep_nasc": "2003-01-01"
+   }
+  },
+  "est": "falta",
+  "txt": "22 anos"
+ },
+ {
+  "nome": "Pensão: filho de 10 anos é dependente",
+  "op": "morte",
+  "id": "dependente_classe",
+  "x": {
+   "v": {
+    "dep_fato": "2026-06-01",
+    "dep_classe": "Filho menor",
+    "dep_nasc": "2016-03-01"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "Pensão: ex-cônjuge cujos alimentos acabaram antes do óbito",
+  "op": "morte",
+  "id": "dependente_classe",
+  "x": {
+   "v": {
+    "dep_fato": "2026-06-01",
+    "dep_classe": "Ex-cônjuge com alimentos",
+    "dep_alimentos": "2025-12-31"
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "Pensão: menor sob guarda é divergente",
+  "op": "morte",
+  "id": "equiparados_filho",
+  "x": {
+   "v": {
+    "dep_fato": "2026-02-01",
+    "dep_classe": "Menor sob guarda",
+    "dep_nasc": "2015-01-01"
+   }
+  },
+  "est": "divergente",
+  "txt": "Lei 15\\.108"
+ },
+ {
+  "nome": "Pensão: enteado com duas provas, uma dos 24 meses",
+  "op": "morte",
+  "id": "equiparados_filho",
+  "x": {
+   "v": {
+    "dep_fato": "2026-02-01",
+    "dep_classe": "Enteado ou menor tutelado",
+    "dep_provas_total": "2",
+    "dep_provas_24m": "1"
+   }
+  },
+  "est": "ok",
+  "txt": "equipara-se"
+ },
+ {
+  "nome": "Pensão: óbito em 2017 com uma só prova da união é risco (o Decreto 3.048 pedia três)",
+  "op": "morte",
+  "id": "prova_uniao",
+  "x": {
+   "v": {
+    "dep_fato": "2017-05-02",
+    "dep_classe": "Companheiro(a)",
+    "dep_provas_total": "1"
+   }
+  },
+  "est": "risco",
+  "txt": "mínimo três.*Súmula 63"
+ },
+ {
+  "nome": "Pensão: óbito em 2025, uma prova dos 24 meses: justificação administrativa",
+  "op": "morte",
+  "id": "prova_uniao",
+  "x": {
+   "v": {
+    "dep_fato": "2025-05-02",
+    "dep_classe": "Companheiro(a)",
+    "dep_provas_total": "1",
+    "dep_provas_24m": "1"
+   }
+  },
+  "est": "risco",
+  "txt": "justificação"
+ },
+ {
+  "nome": "Pensão: duas provas, nenhuma dos 24 meses",
+  "op": "morte",
+  "id": "prova_uniao",
+  "x": {
+   "v": {
+    "dep_fato": "2025-05-02",
+    "dep_classe": "Companheiro(a)",
+    "dep_provas_total": "2",
+    "dep_provas_24m": "0"
+   }
+  },
+  "est": "falta",
+  "txt": "24 meses"
+ },
+ {
+  "nome": "Pensão: mãe prova a dependência com duas provas",
+  "op": "morte",
+  "id": "dependencia_economica",
+  "x": {
+   "v": {
+    "dep_fato": "2025-05-02",
+    "dep_classe": "Pais",
+    "dep_provas_total": "3",
+    "dep_provas_24m": "2"
+   }
+  },
+  "est": "ok",
+  "txt": "dependência econômica"
+ },
+ {
+  "nome": "Pensão: cônjuge tem dependência presumida",
+  "op": "morte",
+  "id": "dependencia_economica",
+  "x": {
+   "v": {
+    "dep_fato": "2025-05-02",
+    "dep_classe": "Cônjuge"
+   }
+  },
+  "est": "ok",
+  "txt": "presumida"
+ },
+ {
+  "nome": "Pensão: filho de 10 anos tem 180 dias (até 28/11/2026)",
+  "op": "morte",
+  "id": "prazo_requerimento",
+  "x": {
+   "v": {
+    "dep_fato": "2026-06-01",
+    "dep_classe": "Filho menor",
+    "dep_nasc": "2016-03-01"
+   }
+  },
+  "est": "ok",
+  "txt": "28/11/2026",
+  "quando": "2026-11-28"
+ },
+ {
+  "nome": "Pensão: cônjuge depois de 90 dias recebe desde a DER",
+  "op": "morte",
+  "id": "prazo_requerimento",
+  "x": {
+   "v": {
+    "dep_fato": "2026-06-01",
+    "dep_classe": "Cônjuge"
+   }
+  },
+  "est": "info",
+  "txt": "desde a DER"
+ },
+ {
+  "nome": "Pensão: filho de 10 anos com óbito em 2018 tem só 90 dias",
+  "op": "morte",
+  "id": "prazo_requerimento",
+  "x": {
+   "der": "2018-08-15",
+   "v": {
+    "der": "2018-08-15",
+    "dep_fato": "2018-06-01",
+    "dep_classe": "Filho menor",
+    "dep_nasc": "2008-03-01"
+   }
+  },
+  "est": "ok",
+  "txt": "90 dias",
+  "quando": "2018-08-30"
+ },
+ {
+  "nome": "Pensão: viúva aposentada acumula com redutor",
+  "op": "morte",
+  "id": "acumulacao",
+  "x": {
+   "v": {
+    "dep_fato": "2025-01-01",
+    "dep_classe": "Cônjuge"
+   },
+   "benefCnis": [
+    {
+     "especie": "41",
+     "nb": "1234567890",
+     "ativo": true,
+     "situacao": "ATIVO",
+     "de": "2020-01-01"
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "60 %"
+ },
+ {
+  "nome": "Pensão: viúva que já recebe pensão de cônjuge escolhe uma",
+  "op": "morte",
+  "id": "acumulacao",
+  "x": {
+   "v": {
+    "dep_fato": "2025-01-01",
+    "dep_classe": "Cônjuge"
+   },
+   "benefCnis": [
+    {
+     "especie": "21",
+     "nb": "1234567890",
+     "ativo": true,
+     "situacao": "ATIVO",
+     "de": "2020-01-01"
+    }
+   ]
+  },
+  "est": "opcao"
+ },
+ {
+  "nome": "Pensão: dependente com BPC escolhe",
+  "op": "morte",
+  "id": "acumulacao",
+  "x": {
+   "v": {
+    "dep_fato": "2025-01-01",
+    "dep_classe": "Cônjuge"
+   },
+   "benefCnis": [
+    {
+     "especie": "88",
+     "nb": "1234567890",
+     "ativo": true,
+     "situacao": "ATIVO",
+     "de": "2020-01-01"
+    }
+   ]
+  },
+  "est": "opcao",
+  "txt": "BPC"
+ },
+ {
+  "nome": "Pensão: não exige carência",
+  "op": "morte",
+  "id": "sem_carencia",
+  "x": {},
+  "est": "info",
+  "txt": "carência"
+ },
+ {
+  "nome": "Pensão: condenação por homicídio exclui",
+  "op": "morte",
+  "id": "exclusao_crime_fraude",
+  "x": {
+   "v": {
+    "dep_exclusao": "Condenação definitiva por homicídio doloso ou tentativa"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "Pensão: sem a data do óbito",
+  "op": "morte",
+  "id": "obito",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "Reclusão: prisão em 2018 no semiaberto dava direito",
+  "op": "reclusao",
+  "id": "prisao_regime_fechado",
+  "x": {
+   "v": {
+    "dep_fato": "2018-06-10",
+    "dep_regime": "Semiaberto"
+   }
+  },
+  "est": "ok",
+  "txt": "semiaberto"
+ },
+ {
+  "nome": "Reclusão: prisão em 2018 com 3 contribuições: sem carência",
+  "op": "reclusao",
+  "id": "carencia_24",
+  "x": {
+   "v": {
+    "dep_fato": "2018-06-10",
+    "dep_regime": "Semiaberto",
+    "dep_contrib": "3"
+   }
+  },
+  "est": "ok",
+  "txt": "sem carência"
+ },
+ {
+  "nome": "Reclusão: prisão em 2020 com 10 contribuições: falta carência",
+  "op": "reclusao",
+  "id": "carencia_24",
+  "x": {
+   "v": {
+    "dep_fato": "2020-03-01",
+    "dep_contrib": "10"
+   }
+  },
+  "est": "falta",
+  "txt": "exige 24"
+ },
+ {
+  "nome": "Reclusão: reingresso pede 12 desde a volta",
+  "op": "reclusao",
+  "id": "carencia_24",
+  "x": {
+   "v": {
+    "dep_fato": "2022-03-01",
+    "dep_contrib": "13",
+    "ins_reingresso": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "metade"
+ },
+ {
+  "nome": "Reclusão: semiaberto em 2020 não dá direito",
+  "op": "reclusao",
+  "id": "prisao_regime_fechado",
+  "x": {
+   "v": {
+    "dep_fato": "2020-03-01",
+    "dep_regime": "Semiaberto"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "Reclusão: prisão preventiva dá direito",
+  "op": "reclusao",
+  "id": "prisao_regime_fechado",
+  "x": {
+   "v": {
+    "dep_fato": "2024-03-01",
+    "dep_regime": "Provisória, preventiva ou temporária"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "Reclusão: união iniciada depois da prisão",
+  "op": "reclusao",
+  "id": "dependente",
+  "x": {
+   "v": {
+    "dep_fato": "2021-03-01",
+    "dep_classe": "Companheiro(a)",
+    "dep_uniao": "2022-01-10",
+    "dep_provas_total": "3",
+    "dep_provas_24m": "2"
+   }
+  },
+  "est": "impedido",
+  "txt": "389"
+ },
+ {
+  "nome": "Reclusão: esposa casada antes da prisão",
+  "op": "reclusao",
+  "id": "dependente",
+  "x": {
+   "v": {
+    "dep_fato": "2021-03-01",
+    "dep_classe": "Cônjuge",
+    "dep_uniao": "2015-01-10"
+   }
+  },
+  "est": "ok",
+  "txt": "presumida"
+ },
+ {
+  "nome": "Reclusão: limite de baixa renda é campo (sem constante)",
+  "op": "reclusao",
+  "id": "baixa_renda",
+  "x": {
+   "v": {
+    "dep_fato": "2023-05-01",
+    "dep_media12": "1500"
+   }
+  },
+  "est": "informar",
+  "txt": "Portaria do ano da prisão"
+ },
+ {
+  "nome": "Reclusão: média dentro do limite informado",
+  "op": "reclusao",
+  "id": "baixa_renda",
+  "x": {
+   "v": {
+    "dep_fato": "2023-05-01",
+    "dep_media12": "1500",
+    "dep_teto": "1754.18"
+   }
+  },
+  "est": "ok",
+  "txt": "dentro do limite"
+ },
+ {
+  "nome": "Reclusão: média acima do limite",
+  "op": "reclusao",
+  "id": "baixa_renda",
+  "x": {
+   "v": {
+    "dep_fato": "2023-05-01",
+    "dep_media12": "2100",
+    "dep_teto": "1754.18"
+   }
+  },
+  "est": "falta",
+  "txt": "acima"
+ },
+ {
+  "nome": "Reclusão: sem salário nos 12 meses é baixa renda",
+  "op": "reclusao",
+  "id": "baixa_renda",
+  "x": {
+   "v": {
+    "dep_fato": "2023-05-01",
+    "rec_comps_12": "0"
+   }
+  },
+  "est": "ok",
+  "txt": "§ 5º"
+ },
+ {
+  "nome": "Reclusão: prisão em 2017, último salário dentro do limite (Decreto 3.048, art. 116)",
+  "op": "reclusao",
+  "id": "baixa_renda",
+  "x": {
+   "v": {
+    "dep_fato": "2017-05-01",
+    "rec_ultimo_sc": "1100",
+    "dep_teto": "1292.43"
+   }
+  },
+  "est": "ok",
+  "txt": "último salário.*116"
+ },
+ {
+  "nome": "Reclusão: pedido depois da soltura é vedado",
+  "op": "reclusao",
+  "id": "prazo_requerimento",
+  "x": {
+   "v": {
+    "dep_fato": "2025-01-01",
+    "rec_soltura": "2026-09-01"
+   }
+  },
+  "est": "impedido",
+  "txt": "soltura"
+ },
+ {
+  "nome": "Reclusão: recluso com auxílio por incapacidade em 2021",
+  "op": "reclusao",
+  "id": "vedacoes_recluso",
+  "x": {
+   "v": {
+    "dep_fato": "2021-01-01",
+    "rec_vedacao": "Auxílio por incapacidade"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "Reclusão: auxílio por incapacidade em prisão de 2017 é opção",
+  "op": "reclusao",
+  "id": "vedacoes_recluso",
+  "x": {
+   "v": {
+    "dep_fato": "2017-01-01",
+    "rec_vedacao": "Auxílio por incapacidade"
+   }
+  },
+  "est": "opcao"
+ },
+ {
+  "nome": "Reclusão: qualidade do recluso, não do cliente",
+  "op": "reclusao",
+  "id": "qualidade_recluso",
+  "x": {
+   "v": {
+    "dep_fato": "2025-01-01"
+   },
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2020-01",
+     "ate": "2026-09",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2027-11-16"
+   }
+  },
+  "est": "informar",
+  "txt": "recluso"
+ },
+ {
+  "nome": "Reclusão: recluso contribuindo na prisão",
+  "op": "reclusao",
+  "id": "qualidade_recluso",
+  "x": {
+   "v": {
+    "dep_fato": "2025-01-20",
+    "ins_ultima_contrib": "2025-01"
+   }
+  },
+  "est": "ok",
+  "txt": "contribuía"
+ },
+ {
+  "nome": "Reclusão: valor até 1 salário mínimo",
+  "op": "reclusao",
+  "id": "valor_maximo",
+  "x": {},
+  "est": "info",
+  "txt": "1\\.621,00"
+ },
+ {
+  "nome": "Reclusão: sem certidão da prisão",
+  "op": "reclusao",
+  "id": "certidao_prisao",
+  "x": {
+   "v": {
+    "rec_certidao": "Não"
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "BPC: com nora na casa, o filho pode ser casado e fica em dúvida (o rol só conta solteiros)",
+  "op": "idoso",
+  "id": "renda_per_capita",
+  "x": {
+   "dn": "1958-01-01",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "atualizada_em": "2026-02-01",
+    "membros": [
+     {
+      "nome": "JOSE PRADO",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1958-01-01",
+      "responsavel": true
+     },
+     {
+      "nome": "CARLOS PRADO",
+      "parentesco": "Filho(a)",
+      "nascimento": "1985-05-05"
+     },
+     {
+      "nome": "LUANA PRADO",
+      "parentesco": "Genro ou nora",
+      "nascimento": "1987-07-07"
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "JOSE PRADO",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "CARLOS PRADO",
+      "remuneracao_ultimo_mes": 3000,
+      "beneficios_inss": []
+     },
+     {
+      "nome": "LUANA PRADO",
+      "beneficios_inss": []
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "CARLOS.*genro ou nora.*muda o resultado"
+ },
+ {
+  "nome": "BPC: integrante sem renda no CadÚnico não vira renda zero",
+  "op": "idoso",
+  "id": "renda_per_capita",
+  "x": {
+   "dn": "1959-06-01",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "atualizada_em": "2026-01-05",
+    "renda_por_pessoa": 100,
+    "membros": [
+     {
+      "nome": "JOAO LIMA",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1959-06-01",
+      "responsavel": true
+     },
+     {
+      "nome": "MARIA LIMA",
+      "parentesco": "Cônjuge ou companheiro(a)",
+      "nascimento": "1955-01-01"
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "JOAO LIMA",
+      "beneficios_inss": []
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "não traz a renda de MARIA"
+ },
+ {
+  "nome": "BPC: DER anterior ao Decreto 12.534/2025 deixa o Bolsa Família fora da renda",
+  "op": "def",
+  "id": "renda_per_capita",
+  "x": {
+   "dn": "2015-04-02",
+   "der": "2025-03-10",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "condicao": "Atualizado",
+    "municipio": "Ribeirão Preto/SP",
+    "atualizada_em": "2026-03-10",
+    "renda_total": 3600,
+    "renda_por_pessoa": 900,
+    "membros": [
+     {
+      "nome": "ANA SOUZA",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1990-07-20",
+      "responsavel": true
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2015-04-02"
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2012-01-15"
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "parentesco": "Pai ou mãe",
+      "nascimento": "1950-02-10"
+     }
+    ],
+    "beneficios_pagos": [
+     {
+      "tipo": "Bolsa Família",
+      "especie": "Bolsa Família",
+      "beneficiario": "ANA SOUZA",
+      "primeira_competencia": "202401",
+      "ultima_competencia": "202609",
+      "meses": 33,
+      "valor_ultimo": 700
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "ANA SOUZA",
+      "beneficios_inss": [],
+      "remuneracao_ultimo_mes": null,
+      "declarado": {
+       "remuneracao_mes_anterior": 400
+      }
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "beneficios_inss": [
+       {
+        "nb": "1111111111",
+        "especie": "PENSAO POR MORTE PREVIDENCIARIA",
+        "valor": 2500,
+        "dib": "2010-01-01"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "133,33.*Bolsa Família fica fora"
+ },
+ {
+  "nome": "BPC: Bolsa Família no campo de outro benefício não é acumulação vedada",
+  "op": "def",
+  "id": "sem_outro_beneficio",
+  "x": {
+   "v": {
+    "bpc_outro_benef": "Bolsa Família"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "BPC: 'nenhum' no campo de outro benefício",
+  "op": "idoso",
+  "id": "sem_outro_beneficio",
+  "x": {
+   "v": {
+    "bpc_outro_benef": "nenhum"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "BPC: CadÚnico em dia não afirma CPF regular sem o dado",
+  "op": "idoso",
+  "id": "cadunico",
+  "x": {
+   "dn": "2015-04-02",
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "condicao": "Atualizado",
+    "municipio": "Ribeirão Preto/SP",
+    "atualizada_em": "2026-03-10",
+    "renda_total": 3600,
+    "renda_por_pessoa": 900,
+    "membros": [
+     {
+      "nome": "ANA SOUZA",
+      "parentesco": "Pessoa Responsável pela Unidade Familiar",
+      "nascimento": "1990-07-20",
+      "responsavel": true
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2015-04-02"
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "parentesco": "Filho(a)",
+      "nascimento": "2012-01-15"
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "parentesco": "Pai ou mãe",
+      "nascimento": "1950-02-10"
+     }
+    ],
+    "beneficios_pagos": [
+     {
+      "tipo": "Bolsa Família",
+      "especie": "Bolsa Família",
+      "beneficiario": "ANA SOUZA",
+      "primeira_competencia": "202401",
+      "ultima_competencia": "202609",
+      "meses": 33,
+      "valor_ultimo": 700
+     }
+    ],
+    "renda_cnis": [
+     {
+      "nome": "ANA SOUZA",
+      "beneficios_inss": [],
+      "remuneracao_ultimo_mes": null,
+      "declarado": {
+       "remuneracao_mes_anterior": 400
+      }
+     },
+     {
+      "nome": "PEDRO SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "JULIA SOUZA",
+      "beneficios_inss": []
+     },
+     {
+      "nome": "TEREZA SOUZA",
+      "beneficios_inss": [
+       {
+        "nb": "1111111111",
+        "especie": "PENSAO POR MORTE PREVIDENCIARIA",
+        "valor": 2500,
+        "dib": "2010-01-01"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "confira se o CPF"
+ },
+ {
+  "nome": "BPC: 'consultas medicas' sem acento não conta como medicamentos",
+  "op": "def",
+  "id": "deducao_saude",
+  "x": {
+   "v": {
+    "ren_gastos_cat": "consultas medicas"
+   }
+  },
+  "est": "ok",
+  "txt": "^R\\$\\s?110,00"
+ },
+ {
+  "nome": "Pensão: 'Não' no benefício do instituidor não mantém a qualidade",
+  "op": "morte",
+  "id": "qualidade_instituidor",
+  "x": {
+   "v": {
+    "dep_fato": "2025-10-01",
+    "ins_beneficio": "Não"
+   }
+  },
+  "est": "informar",
+  "txt": "última contribuição"
+ },
+ {
+  "nome": "Pensão: instituidor com BPC não tinha qualidade pelo benefício",
+  "op": "morte",
+  "id": "qualidade_instituidor",
+  "x": {
+   "v": {
+    "dep_fato": "2025-10-01",
+    "ins_beneficio": "BPC idoso B88"
+   }
+  },
+  "est": "risco",
+  "txt": "não mantém.*art\\. 23"
+ },
+ {
+  "nome": "Pensão: menor sob guarda é divergente já na classe do dependente",
+  "op": "morte",
+  "id": "dependente_classe",
+  "x": {
+   "v": {
+    "dep_fato": "2026-02-01",
+    "dep_classe": "Menor sob guarda",
+    "dep_nasc": "2015-01-01"
+   }
+  },
+  "est": "divergente",
+  "txt": "Lei 15\\.108"
+ },
+ {
+  "nome": "Pensão: óbito em 2017 com três documentos da união está em ordem",
+  "op": "morte",
+  "id": "prova_uniao",
+  "x": {
+   "v": {
+    "dep_fato": "2017-05-02",
+    "dep_classe": "Companheiro(a)",
+    "dep_provas_total": "3"
+   }
+  },
+  "est": "ok",
+  "txt": "três"
+ },
+ {
+  "nome": "Pensão: óbito em 2014, pedido com 61 dias passou o prazo de 30 dias",
+  "op": "morte",
+  "id": "prazo_requerimento",
+  "x": {
+   "der": "2014-05-01",
+   "v": {
+    "der": "2014-05-01",
+    "dep_fato": "2014-03-01",
+    "dep_classe": "Cônjuge"
+   }
+  },
+  "est": "info",
+  "txt": "30 dias.*9\\.528"
+ },
+ {
+  "nome": "Pensão: óbito em 2016, pedido com 70 dias está nos 90 da Lei 13.183/2015",
+  "op": "morte",
+  "id": "prazo_requerimento",
+  "x": {
+   "der": "2016-03-20",
+   "v": {
+    "der": "2016-03-20",
+    "dep_fato": "2016-01-10",
+    "dep_classe": "Cônjuge"
+   }
+  },
+  "est": "ok",
+  "txt": "90 dias.*13\\.183"
+ },
+ {
+  "nome": "Pensão: irmão menor de 16 tem 180 dias (IN 128, art. 369, I, a)",
+  "op": "morte",
+  "id": "prazo_requerimento",
+  "x": {
+   "v": {
+    "dep_fato": "2026-06-01",
+    "dep_classe": "Irmão",
+    "dep_nasc": "2014-01-01"
+   }
+  },
+  "est": "ok",
+  "txt": "28/11/2026"
+ },
+ {
+  "nome": "Pensão: filho com a pensão da mãe acumula a do pai sem redutor",
+  "op": "morte",
+  "id": "acumulacao",
+  "x": {
+   "v": {
+    "dep_fato": "2025-01-01",
+    "dep_classe": "Filho menor"
+   },
+   "benefCnis": [
+    {
+     "especie": "21",
+     "nb": "1234567890",
+     "ativo": true,
+     "situacao": "ATIVO",
+     "de": "2020-01-01"
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "sem redutor"
+ },
+ {
+  "nome": "Pensão: viúva com auxílio por incapacidade acumula sem redutor",
+  "op": "morte",
+  "id": "acumulacao",
+  "x": {
+   "v": {
+    "dep_fato": "2025-01-01",
+    "dep_classe": "Cônjuge"
+   },
+   "benefCnis": [
+    {
+     "especie": "31",
+     "nb": "1234567890",
+     "ativo": true,
+     "situacao": "ATIVO",
+     "de": "2020-01-01"
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "sem redutor"
+ },
+ {
+  "nome": "Pensão: duas pensões de cônjuge antes da EC 103 também não acumulam (art. 124, VI)",
+  "op": "morte",
+  "id": "acumulacao",
+  "x": {
+   "v": {
+    "dep_fato": "2018-01-01",
+    "dep_classe": "Cônjuge"
+   },
+   "benefCnis": [
+    {
+     "especie": "21",
+     "nb": "1234567890",
+     "ativo": true,
+     "situacao": "ATIVO",
+     "de": "2020-01-01"
+    }
+   ]
+  },
+  "est": "opcao",
+  "txt": "124, VI"
+ },
+ {
+  "nome": "Reclusão: prisão em 2017, último salário acima do limite",
+  "op": "reclusao",
+  "id": "baixa_renda",
+  "x": {
+   "v": {
+    "dep_fato": "2017-05-01",
+    "rec_ultimo_sc": "1500",
+    "dep_teto": "1292.43"
+   }
+  },
+  "est": "falta",
+  "txt": "acima"
+ },
+ {
+  "nome": "Reclusão: prisão em 2017 de desempregado (sem salário no mês da prisão)",
+  "op": "reclusao",
+  "id": "baixa_renda",
+  "x": {
+   "v": {
+    "dep_fato": "2017-05-01",
+    "ins_ultima_contrib": "2016-10"
+   }
+  },
+  "est": "ok",
+  "txt": "§ 1º"
+ },
+ {
+  "nome": "Reclusão: prisão em 2017 sem o último salário, a informar (não a média)",
+  "op": "reclusao",
+  "id": "baixa_renda",
+  "x": {
+   "v": {
+    "dep_fato": "2017-05-01",
+    "dep_media12": "900",
+    "dep_teto": "1292.43"
+   }
+  },
+  "est": "informar",
+  "txt": "último salário"
+ },
+ {
+  "nome": "Reclusão: prisão em 2018 não tem o limite de 1 salário mínimo",
+  "op": "reclusao",
+  "id": "valor_maximo",
+  "x": {
+   "v": {
+    "dep_fato": "2018-06-10"
+   }
+  },
+  "est": "info",
+  "txt": "sem o limite"
+ },
+ {
+  "nome": "Reclusão: prisão em 2018, pedido com 50 dias passou os 30 dias do Decreto 3.048",
+  "op": "reclusao",
+  "id": "prazo_requerimento",
+  "x": {
+   "der": "2018-04-20",
+   "v": {
+    "der": "2018-04-20",
+    "dep_fato": "2018-03-01",
+    "dep_classe": "Cônjuge"
+   }
+  },
+  "est": "info",
+  "txt": "30 dias.*116"
+ },
+ {
+  "nome": "Reclusão: ex-cônjuge cujos alimentos acabaram antes da prisão",
+  "op": "reclusao",
+  "id": "dependente",
+  "x": {
+   "v": {
+    "dep_fato": "2024-03-01",
+    "dep_classe": "Ex-cônjuge com alimentos",
+    "dep_alimentos": "2023-12-31"
+   }
+  },
+  "est": "falta",
+  "txt": "alimentos acabaram"
+ },
+ {
+  "nome": "Pensão: filho inválido de 10 anos conta como maior de 16 (90 dias, IN 128, art. 369, § 1º)",
+  "op": "morte",
+  "id": "prazo_requerimento",
+  "x": {
+   "v": {
+    "dep_fato": "2026-06-01",
+    "dep_classe": "Filho inválido ou com deficiência",
+    "dep_nasc": "2016-03-01"
+   }
+  },
+  "est": "info",
+  "txt": "90 dias"
+ }
+]

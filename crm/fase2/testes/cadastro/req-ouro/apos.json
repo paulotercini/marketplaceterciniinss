@@ -1,0 +1,2718 @@
+[
+ {
+  "nome": "filiado em 2010: transição do art. 18",
+  "op": "idade",
+  "id": "filiacao_marco",
+  "x": {
+   "sx": "M",
+   "filiacao": "2010-03-01"
+  },
+  "est": "info",
+  "txt": "art\\. 18"
+ },
+ {
+  "nome": "sem filiação nem CNIS",
+  "op": "idade",
+  "id": "filiacao_marco",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "filiado em 2021 pelo campo: art. 19, 20 anos",
+  "op": "idade",
+  "id": "filiacao_marco",
+  "x": {
+   "sx": "M",
+   "v": {
+    "apo_filiacao": "2021-02-01"
+   }
+  },
+  "est": "info",
+  "txt": "art\\. 19.*20 anos"
+ },
+ {
+  "nome": "linha rural anterior ao CNIS antecipa a filiação",
+  "op": "idade",
+  "id": "filiacao_marco",
+  "x": {
+   "filiacao": "2005-01-01",
+   "tempos": [
+    {
+     "de": "1985-01-01",
+     "ate": "1989-12-31",
+     "nat": "rural"
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "01/01/1985.*quadro Tempos"
+ },
+ {
+  "nome": "sem nascimento",
+  "op": "idade",
+  "id": "idade_minima",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "mulher que fez 61 anos em 2021: idade cumprida em 2021, não aos 62",
+  "op": "idade",
+  "id": "idade_minima",
+  "x": {
+   "sx": "F",
+   "dn": "1960-08-20",
+   "filiacao": "1990-01-01"
+  },
+  "est": "ok",
+  "txt": "61 anos em 2021",
+  "quando": "2021-08-20"
+ },
+ {
+  "nome": "mulher que fez 60 anos e 6 meses em 2020",
+  "op": "idade",
+  "id": "idade_minima",
+  "x": {
+   "sx": "F",
+   "dn": "1960-03-10",
+   "filiacao": "1990-01-01"
+  },
+  "est": "ok",
+  "txt": "60 anos e 6 meses em 2020",
+  "quando": "2020-09-10"
+ },
+ {
+  "nome": "homem com 64 anos: falta, completa 65 em 2027",
+  "op": "idade",
+  "id": "idade_minima",
+  "x": {
+   "sx": "M",
+   "dn": "1962-03-01",
+   "filiacao": "1990-01-01"
+  },
+  "est": "falta",
+  "txt": "01/03/2027",
+  "quando": "2027-03-01"
+ },
+ {
+  "nome": "mulher filiada depois de 2019: 62 (art. 19)",
+  "op": "idade",
+  "id": "idade_minima",
+  "x": {
+   "sx": "F",
+   "dn": "1964-01-01",
+   "v": {
+    "apo_filiacao": "2021-02-01"
+   }
+  },
+  "est": "ok",
+  "txt": "62 anos.*art\\. 19",
+  "quando": "2026-01-01"
+ },
+ {
+  "nome": "mulher sem filiação, escada antes dos 62 e DER em 2022: confirmar",
+  "op": "idade",
+  "id": "idade_minima",
+  "x": {
+   "sx": "F",
+   "dn": "1961-03-01",
+   "der": "2022-12-01"
+  },
+  "est": "informar",
+  "txt": "confirme a filiação",
+  "quando": "2022-09-01"
+ },
+ {
+  "nome": "homem filiado em 2010, 65 anos e 16 de contribuição: 15 anos bastam (art. 18), o art. 19 não se aplica",
+  "op": "idade",
+  "id": "tempo_minimo",
+  "x": {
+   "sx": "M",
+   "dn": "1961-01-15",
+   "filiacao": "2010-03-01",
+   "tempos": [
+    {
+     "de": "2010-03-01",
+     "ate": "2026-03-31",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "exige 15 anos \\(art\\. 18"
+ },
+ {
+  "nome": "homem filiado em 2021, 65 anos e 16 de contribuição: faltam (20 anos, art. 19)",
+  "op": "idade",
+  "id": "tempo_minimo",
+  "x": {
+   "sx": "M",
+   "dn": "1961-01-15",
+   "v": {
+    "apo_filiacao": "2021-02-01"
+   },
+   "tempos": [
+    {
+     "de": "2010-03-01",
+     "ate": "2026-03-31",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "exige 20 anos \\(art\\. 19"
+ },
+ {
+  "nome": "benefício por incapacidade intercalado soma no tempo",
+  "op": "idade",
+  "id": "tempo_minimo",
+  "x": {
+   "sx": "F",
+   "filiacao": "2000-01-01",
+   "tempos": [
+    {
+     "de": "2000-01-01",
+     "ate": "2009-12-31",
+     "nat": "comum"
+    },
+    {
+     "de": "2012-01-01",
+     "ate": "2016-02-29",
+     "nat": "comum"
+    }
+   ],
+   "benefCnis": [
+    {
+     "especie": "31",
+     "de": "2010-01-01",
+     "ate": "2011-12-31",
+     "ativo": false
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "intercalado"
+ },
+ {
+  "nome": "sem o intercalado, 14 anos e 2 meses: falta",
+  "op": "idade",
+  "id": "tempo_minimo",
+  "x": {
+   "sx": "F",
+   "filiacao": "2000-01-01",
+   "tempos": [
+    {
+     "de": "2000-01-01",
+     "ate": "2009-12-31",
+     "nat": "comum"
+    },
+    {
+     "de": "2012-01-01",
+     "ate": "2016-02-29",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "14 anos, 2 meses"
+ },
+ {
+  "nome": "só o CNIS, 180 meses: 15 anos",
+  "op": "idade",
+  "id": "tempo_minimo",
+  "x": {
+   "sx": "M",
+   "ct": {
+    "periodos": [
+     [
+      "2000-01",
+      "2014-12"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "15 anos, 0 meses.*exige 15"
+ },
+ {
+  "nome": "DER de 2018 (pedido antigo): sem tempo mínimo próprio, só idade e carência",
+  "op": "idade",
+  "id": "tempo_minimo",
+  "x": {
+   "sx": "F",
+   "dn": "1955-01-01",
+   "der": "2018-03-01",
+   "ct": {
+    "periodos": [
+     [
+      "2000-01",
+      "2014-12"
+     ]
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "art. 48"
+ },
+ {
+  "nome": "as contribuições a 5/11/12 % contam na idade",
+  "op": "idade",
+  "id": "tempo_minimo",
+  "x": {
+   "sx": "M",
+   "filiacao": "1990-01-01",
+   "tempos": [
+    {
+     "de": "2000-01-01",
+     "ate": "2015-12-31",
+     "nat": "comum"
+    }
+   ],
+   "v": {
+    "tra_aliq_comps": "01/2010 a 12/2014"
+   }
+  },
+  "est": "ok",
+  "txt": "contam nesta aposentadoria"
+ },
+ {
+  "nome": "benefício por incapacidade intercalado soma na carência (170 + 24)",
+  "op": "idade",
+  "id": "carencia_180",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "ct": {
+    "periodos": [
+     [
+      "2000-01",
+      "2009-12"
+     ],
+     [
+      "2012-01",
+      "2016-02"
+     ]
+    ]
+   },
+   "benefCnis": [
+    {
+     "especie": "31",
+     "de": "2010-01-01",
+     "ate": "2011-12-31",
+     "ativo": false
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "194 contribuições.*intercalado"
+ },
+ {
+  "nome": "sem o intercalado, 170: faltam 10",
+  "op": "idade",
+  "id": "carencia_180",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "ct": {
+    "periodos": [
+     [
+      "2000-01",
+      "2009-12"
+     ],
+     [
+      "2012-01",
+      "2016-02"
+     ]
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "faltam 10"
+ },
+ {
+  "nome": "CI sem conferir o atraso: a conferir",
+  "op": "idade",
+  "id": "carencia_180",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "ct": {
+    "periodos": [
+     [
+      "2000-01",
+      "2009-12"
+     ],
+     [
+      "2012-01",
+      "2016-02"
+     ]
+    ]
+   },
+   "benefCnis": [
+    {
+     "especie": "31",
+     "de": "2010-01-01",
+     "ate": "2011-12-31",
+     "ativo": false
+    }
+   ],
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2012"
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "atraso"
+ },
+ {
+  "nome": "CI com 18 competências pagas em atraso: 176",
+  "op": "idade",
+  "id": "carencia_180",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "ct": {
+    "periodos": [
+     [
+      "2000-01",
+      "2009-12"
+     ],
+     [
+      "2012-01",
+      "2016-02"
+     ]
+    ]
+   },
+   "benefCnis": [
+    {
+     "especie": "31",
+     "de": "2010-01-01",
+     "ate": "2011-12-31",
+     "ativo": false
+    }
+   ],
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2012"
+     }
+    ]
+   },
+   "v": {
+    "apo_ci_atraso": "01/2012 a 06/2013"
+   }
+  },
+  "est": "falta",
+  "txt": "176 contribuições.*sem 18"
+ },
+ {
+  "nome": "inscrita até 1991: tabela do art. 142 pelo ano dos 60 (2008: 162)",
+  "op": "idade",
+  "id": "carencia_180",
+  "x": {
+   "sx": "F",
+   "dn": "1948-05-01",
+   "ct": {
+    "periodos": [
+     [
+      "1985-01",
+      "1998-06"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "exige 162.*art\\. 142, ano 2008"
+ },
+ {
+  "nome": "art. 27-A não vale para aposentadoria",
+  "op": "idade",
+  "id": "carencia_180",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "ct": {
+    "periodos": [
+     [
+      "2000-01",
+      "2016-12"
+     ]
+    ]
+   },
+   "v": {
+    "car_reingresso": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "27-A"
+ },
+ {
+  "nome": "sem CNIS: informar",
+  "op": "idade",
+  "id": "carencia_180",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01"
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "carência cumprida e qualidade perdida: não impede",
+  "op": "idade",
+  "id": "qualidade_dispensada",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "ct": {
+    "periodos": [
+     [
+      "2000-01",
+      "2009-12"
+     ],
+     [
+      "2012-01",
+      "2016-02"
+     ]
+    ]
+   },
+   "benefCnis": [
+    {
+     "especie": "31",
+     "de": "2010-01-01",
+     "ate": "2011-12-31",
+     "ativo": false
+    }
+   ],
+   "gr": {
+    "vencida": true,
+    "perda": "2018-02-16",
+    "mantidaAte": "2018-02-15"
+   }
+  },
+  "est": "ok",
+  "txt": "perdeu a qualidade em 16/02/2018"
+ },
+ {
+  "nome": "sem a carência: só informa",
+  "op": "idade",
+  "id": "qualidade_dispensada",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "ct": {
+    "periodos": [
+     [
+      "2000-01",
+      "2009-12"
+     ],
+     [
+      "2012-01",
+      "2016-02"
+     ]
+    ]
+   }
+  },
+  "est": "info"
+ },
+ {
+  "nome": "inscrita em 1985, 60 anos em 2008 com 162: direito adquirido",
+  "op": "idade",
+  "id": "direito_adquirido_idade",
+  "x": {
+   "sx": "F",
+   "dn": "1948-05-01",
+   "ct": {
+    "periodos": [
+     [
+      "1985-01",
+      "1998-06"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "desde 01/05/2008",
+  "quando": "2008-05-01"
+ },
+ {
+  "nome": "homem com 59 em 2019: sem direito adquirido",
+  "op": "idade",
+  "id": "direito_adquirido_idade",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "ct": {
+    "periodos": [
+     [
+      "2000-01",
+      "2009-12"
+     ],
+     [
+      "2012-01",
+      "2016-02"
+     ]
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "sem direito adquirido"
+ },
+ {
+  "nome": "mulher com 60 em 2015, mas 150 contribuições em 2019",
+  "op": "idade",
+  "id": "direito_adquirido_idade",
+  "x": {
+   "sx": "F",
+   "dn": "1955-01-01",
+   "ct": {
+    "periodos": [
+     [
+      "2005-01",
+      "2017-06"
+     ]
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "150 contribuições"
+ },
+ {
+  "nome": "direito adquirido sem nascimento",
+  "op": "idade",
+  "id": "direito_adquirido_idade",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "carência só digitada (de hoje): não prova a carência de 2019, informar",
+  "op": "idade",
+  "id": "direito_adquirido_idade",
+  "x": {
+   "sx": "F",
+   "dn": "1948-05-01",
+   "v": {
+    "car_cumprida": "200"
+   }
+  },
+  "est": "informar",
+  "txt": "leia o CNIS"
+ },
+ {
+  "nome": "carência só digitada: sem data anterior à DER",
+  "op": "idade",
+  "quandoOp": true,
+  "x": {
+   "sx": "F",
+   "dn": "1948-05-01",
+   "v": {
+    "car_cumprida": "200"
+   },
+   "tempos": [
+    {
+     "de": "1985-01-01",
+     "ate": "2001-12-31",
+     "nat": "comum"
+    }
+   ]
+  },
+  "quando": "2026-10-16"
+ },
+ {
+  "nome": "já aposentado: impedido",
+  "op": "idade",
+  "id": "vedacao_acumulacao",
+  "x": {
+   "apos": {
+    "especie": "42",
+    "nb": "1234567890"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "B31 ativo: opção",
+  "op": "idade",
+  "id": "vedacao_acumulacao",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "31",
+     "de": "2026-01-01",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "opcao",
+  "txt": "auxílio por incapacidade"
+ },
+ {
+  "nome": "auxílio-acidente ativo: opção, cessa na véspera",
+  "op": "idade",
+  "id": "vedacao_acumulacao",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "94",
+     "de": "2015-01-01",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "opcao",
+  "txt": "véspera"
+ },
+ {
+  "nome": "CNIS lido sem benefício: em ordem",
+  "op": "idade",
+  "id": "vedacao_acumulacao",
+  "x": {
+   "g": {
+    "vinculos": []
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem CNIS: informar",
+  "op": "idade",
+  "id": "vedacao_acumulacao",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "pensão por morte ativa acumula com redução",
+  "op": "idade",
+  "id": "vedacao_acumulacao",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "21",
+     "de": "2015-01-01",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "pensão por morte"
+ },
+ {
+  "nome": "mulher que fez 61 anos em 2021 com 180 e 15 anos: direito em 2021 (escada), não aos 62",
+  "op": "idade",
+  "quandoOp": true,
+  "x": {
+   "sx": "F",
+   "dn": "1960-08-20",
+   "filiacao": "1990-01-01",
+   "ct": {
+    "periodos": [
+     [
+      "1990-01",
+      "2008-12"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "2008-12-31",
+     "nat": "comum"
+    }
+   ]
+  },
+  "quando": "2021-08-20"
+ },
+ {
+  "nome": "mulher com 60 anos e 6 meses em 2020",
+  "op": "idade",
+  "quandoOp": true,
+  "x": {
+   "sx": "F",
+   "dn": "1960-03-10",
+   "filiacao": "1990-01-01",
+   "ct": {
+    "periodos": [
+     [
+      "1990-01",
+      "2008-12"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "2008-12-31",
+     "nat": "comum"
+    }
+   ]
+  },
+  "quando": "2020-09-10"
+ },
+ {
+  "nome": "inscrita em 1985: direito adquirido aos 60 em 2008 (tabela, 162)",
+  "op": "idade",
+  "quandoOp": true,
+  "x": {
+   "sx": "F",
+   "dn": "1948-05-01",
+   "ct": {
+    "periodos": [
+     [
+      "1985-01",
+      "1998-06"
+     ]
+    ]
+   }
+  },
+  "quando": "2008-05-01"
+ },
+ {
+  "nome": "homem filiado em 2021 com 16 anos: art. 19 sem os 20 anos, sem data",
+  "op": "idade",
+  "quandoOp": true,
+  "x": {
+   "sx": "M",
+   "dn": "1961-01-15",
+   "v": {
+    "apo_filiacao": "2021-02-01"
+   },
+   "tempos": [
+    {
+     "de": "2010-03-01",
+     "ate": "2026-03-31",
+     "nat": "comum"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "2010-03",
+      "2026-03"
+     ]
+    ]
+   }
+  },
+  "quando": null
+ },
+ {
+  "nome": "homem filiado em 2010: direito aos 65, com 15 anos (art. 18)",
+  "op": "idade",
+  "quandoOp": true,
+  "x": {
+   "sx": "M",
+   "dn": "1961-01-15",
+   "filiacao": "2010-03-01",
+   "tempos": [
+    {
+     "de": "2010-03-01",
+     "ate": "2026-03-31",
+     "nat": "comum"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "2010-03",
+      "2026-03"
+     ]
+    ]
+   }
+  },
+  "quando": "2026-01-15"
+ },
+ {
+  "nome": "continua contribuindo: a competência 10/2026 conta; carência em 12/2028 e 15 anos em 31/12/2028",
+  "op": "idade",
+  "quandoOp": true,
+  "x": {
+   "sx": "M",
+   "dn": "1962-05-01",
+   "ct": {
+    "periodos": [
+     [
+      "2014-01",
+      "2026-09"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "2014-01-01",
+     "nat": "comum"
+    }
+   ],
+   "v": {
+    "apo_segue": "Sim"
+   }
+  },
+  "quando": "2028-12-31"
+ },
+ {
+  "nome": "continua contribuindo, só o CNIS: a carência fecha em 12/2028 (10/2026 entra na projeção)",
+  "op": "idade",
+  "quandoOp": true,
+  "x": {
+   "sx": "M",
+   "dn": "1962-05-01",
+   "ct": {
+    "periodos": [
+     [
+      "2014-01",
+      "2026-09"
+     ]
+    ]
+   },
+   "v": {
+    "apo_segue": "Sim"
+   }
+  },
+  "quando": "2028-12-01"
+ },
+ {
+  "nome": "sem continuar contribuindo: sem data",
+  "op": "idade",
+  "quandoOp": true,
+  "x": {
+   "sx": "M",
+   "dn": "1962-05-01",
+   "ct": {
+    "periodos": [
+     [
+      "2014-01",
+      "2026-09"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "2014-01-01",
+     "nat": "comum"
+    }
+   ]
+  },
+  "quando": null
+ },
+ {
+  "nome": "já aposentado: sem data",
+  "op": "idade",
+  "quandoOp": true,
+  "x": {
+   "sx": "M",
+   "dn": "1950-01-01",
+   "apos": {
+    "especie": "42"
+   },
+   "ct": {
+    "periodos": [
+     [
+      "1980-01",
+      "2010-12"
+     ]
+    ]
+   }
+  },
+  "quando": null
+ },
+ {
+  "nome": "filiado em 2021: impedido",
+  "op": "transicao",
+  "id": "filiado_ate_2019",
+  "x": {
+   "v": {
+    "apo_filiacao": "2021-02-01"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "filiado em 1990",
+  "op": "transicao",
+  "id": "filiado_ate_2019",
+  "x": {
+   "filiacao": "1990-01-01"
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem filiação",
+  "op": "transicao",
+  "id": "filiado_ate_2019",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "35 anos em 2017, com carência: direito adquirido, sem fator (96 pontos)",
+  "op": "transicao",
+  "id": "direito_adquirido_integral",
+  "x": {
+   "sx": "M",
+   "dn": "1960-06-01",
+   "tempos": [
+    {
+     "de": "1983-01-01",
+     "ate": "2019-12-31",
+     "nat": "comum"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1983-01",
+      "2019-12"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "sem fator",
+  "quando": "2017-12-31"
+ },
+ {
+  "nome": "35 anos em 2017, sem CNIS: a carência fica a conferir",
+  "op": "transicao",
+  "id": "direito_adquirido_integral",
+  "x": {
+   "sx": "M",
+   "dn": "1960-06-01",
+   "tempos": [
+    {
+     "de": "1983-01-01",
+     "ate": "2019-12-31",
+     "nat": "comum"
+    }
+   ],
+   "ct": null
+  },
+  "est": "informar",
+  "txt": "carência"
+ },
+ {
+  "nome": "professora com 25 anos em 2019, sem CNIS: a carência fica a conferir",
+  "op": "professor",
+  "id": "direito_adquirido_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ],
+   "ct": null
+  },
+  "est": "informar",
+  "txt": "carência"
+ },
+ {
+  "nome": "29 anos em 2019: sem direito adquirido",
+  "op": "transicao",
+  "id": "direito_adquirido_integral",
+  "x": {
+   "sx": "M",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "sem direito adquirido"
+ },
+ {
+  "nome": "proporcional cumprida sem a concordância: informar",
+  "op": "transicao",
+  "id": "direito_adquirido_proporcional",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "tempos": [
+    {
+     "de": "1980-01-01",
+     "ate": "2014-06-30",
+     "nat": "comum"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1980-01",
+      "2014-06"
+     ]
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "concordância",
+  "quando": "2014-06-04"
+ },
+ {
+  "nome": "proporcional com a concordância",
+  "op": "transicao",
+  "id": "direito_adquirido_proporcional",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "tempos": [
+    {
+     "de": "1980-01-01",
+     "ate": "2014-06-30",
+     "nat": "comum"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1980-01",
+      "2014-06"
+     ]
+    ]
+   },
+   "v": {
+    "tra_proporcional_ok": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "aceita",
+  "quando": "2014-06-04"
+ },
+ {
+  "nome": "proporcional sem CNIS: a carência até 2019 fica a conferir",
+  "op": "transicao",
+  "id": "direito_adquirido_proporcional",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "tempos": [
+    {
+     "de": "1980-01-01",
+     "ate": "2014-06-30",
+     "nat": "comum"
+    }
+   ],
+   "ct": null
+  },
+  "est": "informar",
+  "txt": "carência"
+ },
+ {
+  "nome": "proporcional recusada",
+  "op": "transicao",
+  "id": "direito_adquirido_proporcional",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "tempos": [
+    {
+     "de": "1980-01-01",
+     "ate": "2014-06-30",
+     "nat": "comum"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1980-01",
+      "2014-06"
+     ]
+    ]
+   },
+   "v": {
+    "tra_proporcional_ok": "Não"
+   }
+  },
+  "est": "info",
+  "txt": "não aceita"
+ },
+ {
+  "nome": "filiado depois de 16/12/1998: proporcional não se aplica",
+  "op": "transicao",
+  "id": "direito_adquirido_proporcional",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "filiacao": "2000-01-01",
+   "tempos": [
+    {
+     "de": "2000-01-01",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "16/12/1998"
+ },
+ {
+  "nome": "DER em 2025, homem: exige 102 pontos",
+  "op": "transicao",
+  "id": "pontos_art15",
+  "x": {
+   "sx": "M",
+   "dn": "1965-01-01",
+   "der": "2025-06-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "102 pontos em 2025"
+ },
+ {
+  "nome": "DER em 2025, mulher: exige 92 pontos",
+  "op": "transicao",
+  "id": "pontos_art15",
+  "x": {
+   "sx": "F",
+   "dn": "1970-01-01",
+   "der": "2025-06-01",
+   "tempos": [
+    {
+     "de": "1994-01-01",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "92 pontos em 2025"
+ },
+ {
+  "nome": "DER planejada em 2027, homem: exige 104 pontos",
+  "op": "transicao",
+  "id": "pontos_art15",
+  "x": {
+   "sx": "M",
+   "dn": "1965-01-01",
+   "der": "2027-03-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "104 pontos em 2027"
+ },
+ {
+  "nome": "DER planejada em 2027, mulher: exige 94 pontos",
+  "op": "transicao",
+  "id": "pontos_art15",
+  "x": {
+   "sx": "F",
+   "dn": "1970-01-01",
+   "der": "2027-03-01",
+   "tempos": [
+    {
+     "de": "1994-01-01",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "94 pontos em 2027"
+ },
+ {
+  "nome": "filiado depois: pontos não se aplicam",
+  "op": "transicao",
+  "id": "pontos_art15",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "v": {
+    "apo_filiacao": "2020-01-01"
+   },
+   "tempos": [
+    {
+     "de": "2020-01-01",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "não se aplica"
+ },
+ {
+  "nome": "mulher com os pontos de 2022",
+  "op": "transicao",
+  "id": "pontos_art15",
+  "x": {
+   "sx": "F",
+   "dn": "1966-03-01",
+   "tempos": [
+    {
+     "de": "1990-03-01",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "exigência de 2022"
+ },
+ {
+  "nome": "DER em 2025, homem: idade progressiva exige 64 anos",
+  "op": "transicao",
+  "id": "idade_progressiva_art16",
+  "x": {
+   "sx": "M",
+   "dn": "1965-01-01",
+   "der": "2025-06-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "exige 64 anos em 2025"
+ },
+ {
+  "nome": "DER planejada em 2027, mulher: idade progressiva exige 60",
+  "op": "transicao",
+  "id": "idade_progressiva_art16",
+  "x": {
+   "sx": "F",
+   "dn": "1970-01-01",
+   "der": "2027-03-01",
+   "tempos": [
+    {
+     "de": "1994-01-01",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "exige 60 anos em 2027"
+ },
+ {
+  "nome": "contribuições a 11 % sem complemento ficam fora do tempo da B42",
+  "op": "transicao",
+  "id": "idade_progressiva_art16",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "tempos": [
+    {
+     "de": "1988-01-01",
+     "ate": "2023-02-28",
+     "nat": "comum"
+    }
+   ],
+   "v": {
+    "tra_aliq_comps": "01/2015 a 12/2016",
+    "tra_aliq_compl": "Não"
+   }
+  },
+  "est": "falta",
+  "txt": "33 anos, 2 meses"
+ },
+ {
+  "nome": "complementadas para 20 %: contam",
+  "op": "transicao",
+  "id": "idade_progressiva_art16",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "tempos": [
+    {
+     "de": "1988-01-01",
+     "ate": "2023-02-28",
+     "nat": "comum"
+    }
+   ],
+   "v": {
+    "tra_aliq_comps": "01/2015 a 12/2016",
+    "tra_aliq_compl": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "62 anos e 6 meses.*2022",
+  "quando": "2022-12-31"
+ },
+ {
+  "nome": "pedágio de 50 % com exatamente 33 anos em 13/11/2019: não cabe (mais de 33)",
+  "op": "transicao",
+  "id": "pedagio50_art17",
+  "x": {
+   "sx": "M",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1986-11-14",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "não cabe.*mais de 33"
+ },
+ {
+  "nome": "pedágio de 50 % com 33 anos e 1 dia: cabe",
+  "op": "transicao",
+  "id": "pedagio50_art17",
+  "x": {
+   "sx": "M",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1986-11-13",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "fator previdenciário",
+  "quando": "2022-11-12"
+ },
+ {
+  "nome": "pedágio de 50 % com exatamente 28 anos (mulher): não cabe",
+  "op": "transicao",
+  "id": "pedagio50_art17",
+  "x": {
+   "sx": "F",
+   "dn": "1970-01-01",
+   "tempos": [
+    {
+     "de": "1991-11-14",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "mais de 28"
+ },
+ {
+  "nome": "pedágio de 50 % sem tempo: informar",
+  "op": "transicao",
+  "id": "pedagio50_art17",
+  "x": {
+   "sx": "M"
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "pedágio de 100 %: 60 anos e o tempo com pedágio",
+  "op": "transicao",
+  "id": "pedagio100_art20",
+  "x": {
+   "sx": "M",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1986-11-14",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "60 anos de idade",
+  "quando": "2025-01-01"
+ },
+ {
+  "nome": "pedágio de 100 % sem a idade: falta",
+  "op": "transicao",
+  "id": "pedagio100_art20",
+  "x": {
+   "sx": "M",
+   "dn": "1970-01-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "nat": "comum"
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "exige 60 anos"
+ },
+ {
+  "nome": "carência da B42 com intercalado",
+  "op": "transicao",
+  "id": "carencia_180",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "ct": {
+    "periodos": [
+     [
+      "2000-01",
+      "2009-12"
+     ],
+     [
+      "2012-01",
+      "2016-02"
+     ]
+    ]
+   },
+   "benefCnis": [
+    {
+     "especie": "31",
+     "de": "2010-01-01",
+     "ate": "2011-12-31",
+     "ativo": false
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "194"
+ },
+ {
+  "nome": "carência da B42 sem CNIS",
+  "op": "transicao",
+  "id": "carencia_180",
+  "x": {
+   "sx": "M"
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "24 competências a 11 % sem complemento",
+  "op": "transicao",
+  "id": "aliquota_reduzida",
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "tempos": [
+    {
+     "de": "1988-01-01",
+     "ate": "2023-02-28",
+     "nat": "comum"
+    }
+   ],
+   "v": {
+    "tra_aliq_comps": "01/2015 a 12/2016",
+    "tra_aliq_compl": "Não"
+   }
+  },
+  "est": "falta",
+  "txt": "24 competências"
+ },
+ {
+  "nome": "CNIS com indicador IREC-LC123: informar",
+  "op": "transicao",
+  "id": "aliquota_reduzida",
+  "x": {
+   "an": {
+    "indicadores": [
+     {
+      "codigo": "IREC-LC123",
+      "descricao": "",
+      "ocorrencias": 3
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "IREC-LC123"
+ },
+ {
+  "nome": "alíquota complementada",
+  "op": "transicao",
+  "id": "aliquota_reduzida",
+  "x": {
+   "v": {
+    "tra_aliq_compl": "Sim"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "CNIS só com empregado: sem alíquota reduzida",
+  "op": "transicao",
+  "id": "aliquota_reduzida",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "empregado"
+ },
+ {
+  "nome": "CNIS com CI e sem a alíquota das competências: informar, não presume 20 %",
+  "op": "transicao",
+  "id": "aliquota_reduzida",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado"
+     },
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2015"
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "alíquota de cada competência"
+ },
+ {
+  "nome": "CI com competências a 11 % no PDF do CNIS: informar",
+  "op": "transicao",
+  "id": "aliquota_reduzida",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "comps": [
+       {
+        "c": "01/2015",
+        "v": 1000,
+        "aliq": 11
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "alíquota da competência"
+ },
+ {
+  "nome": "só a contagem, sem o CNIS lido: informar",
+  "op": "transicao",
+  "id": "aliquota_reduzida",
+  "x": {
+   "ct": {
+    "periodos": [
+     [
+      "2000-01",
+      "2020-12"
+     ]
+    ]
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "só a contagem, sem o CNIS lido: benefícios a informar",
+  "op": "transicao",
+  "id": "vedacao_acumulacao",
+  "x": {
+   "ct": {
+    "periodos": [
+     [
+      "2000-01",
+      "2020-12"
+     ]
+    ]
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "B42 de direito adquirido em 2007: carência pela tabela do art. 142 do ano (156), não 180 da DER",
+  "op": "transicao",
+  "id": "carencia_180",
+  "x": {
+   "sx": "M",
+   "dn": "1950-01-01",
+   "tempos": [
+    {
+     "de": "1973-01-01",
+     "ate": "2008-12-31",
+     "nat": "comum"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1995-01",
+      "2008-12"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "168 contribuições.*exige 156.*ano 2007"
+ },
+ {
+  "nome": "B42 de direito adquirido em 2007 pela tabela do art. 142",
+  "op": "transicao",
+  "quandoOp": true,
+  "x": {
+   "sx": "M",
+   "dn": "1950-01-01",
+   "tempos": [
+    {
+     "de": "1973-01-01",
+     "ate": "2008-12-31",
+     "nat": "comum"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1995-01",
+      "2008-12"
+     ]
+    ]
+   }
+  },
+  "quando": "2007-12-31"
+ },
+ {
+  "nome": "competência abaixo do mínimo em 2021 sem complemento",
+  "op": "transicao",
+  "id": "competencia_minima",
+  "x": {
+   "an": {
+    "abaixo": [
+     {
+      "comp": "03/2021",
+      "valor": 900,
+      "minimo": 1100
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "1 competência"
+ },
+ {
+  "nome": "competência abaixo do mínimo complementada",
+  "op": "transicao",
+  "id": "competencia_minima",
+  "x": {
+   "an": {
+    "abaixo": [
+     {
+      "comp": "03/2021",
+      "valor": 900,
+      "minimo": 1100
+     }
+    ]
+   },
+   "v": {
+    "apo_compl": "Sim"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "abaixo do mínimo só antes da Reforma",
+  "op": "transicao",
+  "id": "competencia_minima",
+  "x": {
+   "an": {
+    "abaixo": [
+     {
+      "comp": "05/2015",
+      "valor": 500,
+      "minimo": 788
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem o PDF do CNIS",
+  "op": "transicao",
+  "id": "competencia_minima",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "qualidade dispensada na B42",
+  "op": "transicao",
+  "id": "qualidade_dispensada",
+  "x": {
+   "gr": {
+    "vencida": true,
+    "perda": "2020-01-16"
+   }
+  },
+  "est": "info",
+  "txt": "16/01/2020"
+ },
+ {
+  "nome": "B42 ativa no CNIS: impedido",
+  "op": "transicao",
+  "id": "vedacao_acumulacao",
+  "x": {
+   "benefCnis": [
+    {
+     "especie": "42",
+     "nb": "1",
+     "de": "2020-01-01",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "33 anos e 1 dia em 2019: pedágio de 50 % em 12/11/2022",
+  "op": "transicao",
+  "quandoOp": true,
+  "x": {
+   "sx": "M",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1986-11-13",
+     "nat": "comum"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1986-11",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "quando": "2022-11-12"
+ },
+ {
+  "nome": "exatamente 33 anos: sem pedágio de 50 %, o de 100 % aos 60",
+  "op": "transicao",
+  "quandoOp": true,
+  "x": {
+   "sx": "M",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1986-11-14",
+     "nat": "comum"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1986-11",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "quando": "2025-01-01"
+ },
+ {
+  "nome": "direito adquirido em 2017",
+  "op": "transicao",
+  "quandoOp": true,
+  "x": {
+   "sx": "M",
+   "dn": "1960-06-01",
+   "tempos": [
+    {
+     "de": "1983-01-01",
+     "ate": "2019-12-31",
+     "nat": "comum"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1983-01",
+      "2019-12"
+     ]
+    ]
+   }
+  },
+  "quando": "2017-12-31"
+ },
+ {
+  "nome": "filiado depois de 2019: sem data",
+  "op": "transicao",
+  "quandoOp": true,
+  "x": {
+   "sx": "M",
+   "dn": "1960-01-01",
+   "v": {
+    "apo_filiacao": "2020-01-01"
+   },
+   "tempos": [
+    {
+     "de": "2020-01-01",
+     "nat": "comum"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "2020-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "quando": null
+ },
+ {
+  "nome": "tempo parado: a idade progressiva chega em 2030 (65 anos)",
+  "op": "transicao",
+  "quandoOp": true,
+  "x": {
+   "sx": "M",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "2026-09-30",
+     "nat": "comum"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1990-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "quando": "2030-01-01"
+ },
+ {
+  "nome": "sem linhas de magistério, RAIS de professor",
+  "op": "professor",
+  "id": "magisterio_educacao_basica",
+  "x": {
+   "fd": {
+    "rais": [
+     {
+      "ano": "2019",
+      "cbo": "Professor de nivel medio no ensino fundamental"
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "RAIS"
+ },
+ {
+  "nome": "ensino superior não conta",
+  "op": "professor",
+  "id": "magisterio_educacao_basica",
+  "x": {
+   "v": {
+    "mag_nivel": "Superior"
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "superior"
+ },
+ {
+  "nome": "direção sem dizer se foi admitido como professor",
+  "op": "professor",
+  "id": "magisterio_educacao_basica",
+  "x": {
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "nat": "magisterio",
+     "det": "Direção"
+    }
+   ]
+  },
+  "est": "informar",
+  "txt": "admitida como professor"
+ },
+ {
+  "nome": "25 anos de magistério, mulher, no fundamental",
+  "op": "professor",
+  "id": "magisterio_educacao_basica",
+  "x": {
+   "sx": "F",
+   "filiacao": "1995-01-01",
+   "v": {
+    "mag_nivel": "Fundamental"
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "exige 25 anos"
+ },
+ {
+  "nome": "25 anos de magistério sem o nível de ensino: informar",
+  "op": "professor",
+  "id": "magisterio_educacao_basica",
+  "x": {
+   "sx": "F",
+   "filiacao": "1995-01-01",
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ]
+  },
+  "est": "informar",
+  "txt": "nível de ensino"
+ },
+ {
+  "nome": "função predominante de direção, linha sem detalhe: confirmar a admissão",
+  "op": "professor",
+  "id": "magisterio_educacao_basica",
+  "x": {
+   "sx": "F",
+   "filiacao": "1995-01-01",
+   "v": {
+    "mag_funcao": "Direção"
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "nat": "magisterio"
+    }
+   ]
+  },
+  "est": "informar",
+  "txt": "admitida como professor"
+ },
+ {
+  "nome": "direção de especialista fica fora",
+  "op": "professor",
+  "id": "magisterio_educacao_basica",
+  "x": {
+   "sx": "F",
+   "filiacao": "1995-01-01",
+   "v": {
+    "mag_admitido_professor": "Não"
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "ate": "2010-12-31",
+     "nat": "magisterio",
+     "det": "Regência"
+    },
+    {
+     "de": "2011-01-01",
+     "nat": "magisterio",
+     "det": "Coordenação"
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "especialista"
+ },
+ {
+  "nome": "sem a declaração da escola: em risco",
+  "op": "professor",
+  "id": "magisterio_educacao_basica",
+  "x": {
+   "sx": "F",
+   "filiacao": "1995-01-01",
+   "v": {
+    "mag_declaracao": "Não"
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "declaração"
+ },
+ {
+  "nome": "25 anos de magistério em 2014: direito adquirido",
+  "op": "professor",
+  "id": "direito_adquirido_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1990-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "direito adquirido",
+  "quando": "2014-12-31"
+ },
+ {
+  "nome": "só direção, sem confirmar a admissão como professor: informar, não ok",
+  "op": "professor",
+  "id": "direito_adquirido_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "nat": "magisterio",
+     "det": "Direção"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1990-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "admitida como professor"
+ },
+ {
+  "nome": "direção com a admissão como professor confirmada: direito adquirido",
+  "op": "professor",
+  "id": "direito_adquirido_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "nat": "magisterio",
+     "det": "Direção"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1990-01",
+      "2026-09"
+     ]
+    ]
+   },
+   "v": {
+    "mag_admitido_professor": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "direito adquirido",
+  "quando": "2014-12-31"
+ },
+ {
+  "nome": "só direção, sem confirmar: a idade progressiva fica a informar",
+  "op": "professor",
+  "id": "idade_progressiva_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "nat": "magisterio",
+     "det": "Direção"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1990-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "admitida como professor"
+ },
+ {
+  "nome": "só direção, sem confirmar: sem data",
+  "op": "professor",
+  "quandoOp": true,
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "nat": "magisterio",
+     "det": "Direção"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1990-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "quando": null
+ },
+ {
+  "nome": "23 anos em 2019: sem direito adquirido",
+  "op": "professor",
+  "id": "direito_adquirido_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1970-01-01",
+   "tempos": [
+    {
+     "de": "1996-01-01",
+     "nat": "magisterio"
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "sem direito adquirido"
+ },
+ {
+  "nome": "acréscimo de 17 % sobre o magistério até 1998",
+  "op": "professor",
+  "id": "acrescimo_ec20",
+  "x": {
+   "sx": "M",
+   "dn": "1962-01-01",
+   "tempos": [
+    {
+     "de": "1985-01-01",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1985-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "17 %",
+  "quando": "2017-08-20"
+ },
+ {
+  "nome": "sem magistério até 1998: não se aplica",
+  "op": "professor",
+  "id": "acrescimo_ec20",
+  "x": {
+   "sx": "M",
+   "tempos": [
+    {
+     "de": "2000-01-01",
+     "nat": "magisterio"
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "não se aplica"
+ },
+ {
+  "nome": "professora com 25 anos de magistério e 55 anos: idade progressiva cumprida (54a6m em 2026)",
+  "op": "professor",
+  "id": "idade_progressiva_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1971-05-10",
+   "v": {
+    "apo_filiacao": "2000-06-01"
+   },
+   "tempos": [
+    {
+     "de": "2001-03-01",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "2001-03",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "54 anos e 6 meses.*2026",
+  "quando": "2026-02-28"
+ },
+ {
+  "nome": "professora de 2026: pontos não precisa (88), já cumpre pela idade",
+  "op": "professor",
+  "id": "pontos_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1971-05-10",
+   "v": {
+    "apo_filiacao": "2000-06-01"
+   },
+   "tempos": [
+    {
+     "de": "2001-03-01",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "2001-03",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "88 pontos em 2026"
+ },
+ {
+  "nome": "professor, DER em 2025: exige 59 anos",
+  "op": "professor",
+  "id": "idade_progressiva_prof",
+  "x": {
+   "sx": "M",
+   "dn": "1970-01-01",
+   "der": "2025-06-01",
+   "tempos": [
+    {
+     "de": "1994-01-01",
+     "nat": "magisterio"
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "exige 59 anos em 2025"
+ },
+ {
+  "nome": "professor, DER em 2025: exige 97 pontos",
+  "op": "professor",
+  "id": "pontos_prof",
+  "x": {
+   "sx": "M",
+   "dn": "1970-01-01",
+   "der": "2025-06-01",
+   "tempos": [
+    {
+     "de": "1994-01-01",
+     "nat": "magisterio"
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "97 pontos em 2025"
+ },
+ {
+  "nome": "filiado depois: pontos do professor não se aplicam",
+  "op": "professor",
+  "id": "pontos_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "v": {
+    "apo_filiacao": "2020-01-01"
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "nat": "magisterio"
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "não se aplica"
+ },
+ {
+  "nome": "pedágio de 100 % da professora aos 52",
+  "op": "professor",
+  "id": "pedagio100_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1970-01-01",
+   "tempos": [
+    {
+     "de": "1996-01-01",
+     "nat": "magisterio"
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "52 anos de idade",
+  "quando": "2022-02-22"
+ },
+ {
+  "nome": "acidentário sem intercalar conta como magistério até 30/06/2020 (art. 214, III, a)",
+  "op": "professor",
+  "id": "pedagio100_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "ate": "2018-12-31",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ],
+   "benefCnis": [
+    {
+     "especie": "91",
+     "de": "2019-01-01",
+     "ate": "2021-12-31",
+     "ativo": false
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "52 anos de idade"
+ },
+ {
+  "nome": "previdenciário sem intercalar não conta como magistério",
+  "op": "professor",
+  "id": "pedagio100_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "ate": "2018-12-31",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ],
+   "benefCnis": [
+    {
+     "especie": "31",
+     "de": "2019-01-01",
+     "ate": "2021-12-31",
+     "ativo": false
+    }
+   ]
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "pedágio de 100 % sem magistério lançado",
+  "op": "professor",
+  "id": "pedagio100_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1970-01-01"
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "regra permanente: filiada em 2020, 57 anos e 25 de magistério",
+  "op": "professor",
+  "id": "permanente_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "v": {
+    "apo_filiacao": "2020-01-01"
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "nat": "magisterio"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "2005-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "57 anos",
+  "quando": "2022-01-01"
+ },
+ {
+  "nome": "regra permanente para filiado antes: não se aplica (IN 128, art. 250)",
+  "op": "professor",
+  "id": "permanente_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1990-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "art\\. 250"
+ },
+ {
+  "nome": "regra permanente ainda sem a idade, com alíquota reduzida: continua falta (o risco não esconde a falta)",
+  "op": "professor",
+  "id": "permanente_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1975-01-01",
+   "v": {
+    "apo_filiacao": "2020-01-01",
+    "tra_aliq_comps": "01/2021 a 12/2021"
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "nat": "magisterio"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "2005-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "decidir pelo advogado"
+ },
+ {
+  "nome": "regra permanente com alíquota reduzida: ponto a decidir",
+  "op": "professor",
+  "id": "permanente_prof",
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "v": {
+    "apo_filiacao": "2020-01-01",
+    "tra_aliq_comps": "01/2021 a 12/2021"
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "nat": "magisterio"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "2005-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "decidir pelo advogado"
+ },
+ {
+  "nome": "carência do professor",
+  "op": "professor",
+  "id": "carencia_180",
+  "x": {
+   "sx": "F",
+   "dn": "1971-05-10",
+   "v": {
+    "apo_filiacao": "2000-06-01"
+   },
+   "tempos": [
+    {
+     "de": "2001-03-01",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "2001-03",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "307"
+ },
+ {
+  "nome": "o magistério não se converte",
+  "op": "professor",
+  "id": "sem_conversao_magisterio",
+  "x": {
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1999-12-31",
+     "nat": "comum"
+    },
+    {
+     "de": "2000-01-01",
+     "nat": "magisterio"
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "fora dele"
+ },
+ {
+  "nome": "professor na rede pública e na particular",
+  "op": "professor",
+  "id": "vedacao_acumulacao",
+  "x": {
+   "g": {
+    "vinculos": []
+   },
+   "v": {
+    "mag_regime": "Ambos"
+   }
+  },
+  "est": "ok",
+  "txt": "rede pública"
+ },
+ {
+  "nome": "professora de 55 anos: direito em 28/02/2026 pela idade progressiva, e não aos 57",
+  "op": "professor",
+  "quandoOp": true,
+  "x": {
+   "sx": "F",
+   "dn": "1971-05-10",
+   "v": {
+    "apo_filiacao": "2000-06-01"
+   },
+   "tempos": [
+    {
+     "de": "2001-03-01",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "2001-03",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "quando": "2026-02-28"
+ },
+ {
+  "nome": "professora com pedágio de 100 % em 2022",
+  "op": "professor",
+  "quandoOp": true,
+  "x": {
+   "sx": "F",
+   "dn": "1970-01-01",
+   "tempos": [
+    {
+     "de": "1996-01-01",
+     "nat": "magisterio"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1996-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "quando": "2022-02-22"
+ },
+ {
+  "nome": "regra permanente: filiada em 2020",
+  "op": "professor",
+  "quandoOp": true,
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "v": {
+    "apo_filiacao": "2020-01-01"
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "nat": "magisterio"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "2005-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "quando": "2022-01-01"
+ },
+ {
+  "nome": "direito adquirido do professor em 2014",
+  "op": "professor",
+  "quandoOp": true,
+  "x": {
+   "sx": "F",
+   "dn": "1965-01-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "nat": "magisterio",
+     "det": "Regência"
+    }
+   ],
+   "ct": {
+    "periodos": [
+     [
+      "1990-01",
+      "2026-09"
+     ]
+    ]
+   }
+  },
+  "quando": "2014-12-31"
+ }
+]

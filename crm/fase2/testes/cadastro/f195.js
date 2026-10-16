@@ -72,26 +72,15 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
 
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   await p.waitForFunction(() => D._ficha && D._ficha.cliId && !_lendoDossie && !_lendoLeitores, null, { timeout: 10000 });
+  // F234 · o Mapa só mostra; o benefício aberto na Análise de Direito preenche o formulário com o dossiê
   await p.evaluate(() => { abaAtiva = 0; irSubCad("mapa"); });
   await p.waitForSelector(".mapa-arvore");
-  const n = await p.$$eval(".mapa-ramo", r => r.length);
-  conf(`o mapa leva todos os ${n} pontos por padrão`, n > 1 && !(await p.$(".mapa-fora-tag")) && /Levar à Análise de Direito$/.test((await p.textContent(".mapa-topo .tl-bt.forte")).trim()));
-  if (!(await p.$('.mapa-ramo[data-ramo="apo_der"].aberto'))) await p.click('.mapa-ramo[data-ramo="apo_der"] .mapa-no');
-  await p.waitForSelector(".mapa-fatos .mapa-levar.on");
-  const rot = (await p.textContent('.mapa-ramo[data-ramo="apo_der"] .mapa-no b')).trim();
-  await p.click(".mapa-fatos .mapa-levar"); await p.waitForTimeout(150);
-  conf("tirado da análise, o ponto ganha a marca e o botão conta", /fora da análise/.test(await p.textContent('.mapa-ramo[data-ramo="apo_der"]'))
-    && new RegExp(`\\(${n - 1} de ${n} pontos\\)`).test(await p.textContent(".mapa-topo .tl-bt.forte"))
-    && (await p.textContent(".mapa-fatos .mapa-levar")).trim() === "Levar à análise");
-
-  await p.click(".mapa-topo button.tl-bt.forte");
-  await p.waitForSelector("#ad-novo[open] #ad-trazido");
-  const tz = await p.evaluate(() => ({ txt: document.getElementById("ad-trazido").textContent, fora: [...document.querySelectorAll("#ad-trazido .ad-tz.fora b")].map(b => b.textContent),
-    lev: document.querySelectorAll("#ad-trazido details.ad-tz").length, ctx: document.getElementById("ad-contexto").value }));
-  conf("a análise mostra os pontos levados e o tirado, com o botão de levar", new RegExp(`${n - 1} de ${n} pontos levados`).test(tz.txt) && tz.lev === n - 1 && tz.fora.join() === rot);
-  conf("o ponto tirado não vai ao contexto da análise", !tz.ctx.includes(`${rot} (`) && /Mapa do dossiê/.test(tz.ctx));
-  await p.evaluate(() => { document.querySelectorAll("#ad-trazido details.ad-tz").forEach(d => { d.open = true; }); });
-  conf("cada ponto levado abre os fatos com a fonte", await p.$$eval("#ad-trazido details.ad-tz[open] .mapa-lista li", ls => ls.length > 0 && ls.every(l => l.querySelector(".dossie-orig"))));
+  conf("o Mapa manda escolher no Primeiro atendimento", /Escolher no Primeiro atendimento/.test(await p.textContent(".mapa-topo .tl-bt.forte")) && !(await p.$(".mapa-levar")));
+  await p.evaluate(cli => { admSalvar(cli, a => { a.beneficios = { tempo: ["idade"] }; }); irSubCad("direito"); }, CLI_CHEIO);
+  await p.waitForSelector("#ad-quadrado");
+  await p.evaluate(cli => { adAbrirBenef(cli, "idade"); document.getElementById("ad-novo").open = true; }, CLI_CHEIO);
+  await p.waitForSelector("#ad-novo[open] #ad-contexto");
+  conf("o contexto da análise leva o que veio do Primeiro atendimento", /^Primeiro atendimento, /.test(await p.inputValue("#ad-contexto")));
   await p.waitForTimeout(50);
   const est = () => p.evaluate(() => Object.fromEntries([...document.querySelectorAll("#ad-campos .adr-campo[data-campo]")].filter(l => !l.hidden)
     .map(l => [l.dataset.campo, [l.dataset.est, l.querySelector(".ad-est").textContent, l.querySelector(".ad-vai").textContent]])));
@@ -102,9 +91,8 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   await p.fill("#ad-f-carencia", "102 contribuições"); await p.fill("#ad-f-valor", "1621");
   e = await est();
   conf("o que você digita vira informado", e.carencia[0] === "ok" && e.valor[0] === "ok" && e.carencia[1] === "informado");
-  await p.click("#ad-trazido .ad-tz.fora button"); await p.waitForTimeout(100);
-  conf("levar de volta na análise não apaga o que se digitou", !(await p.$("#ad-trazido .ad-tz.fora")) && (await p.inputValue("#ad-f-carencia")) === "102 contribuições"
-    && new RegExp(`${n} de ${n} pontos levados`).test(await p.textContent("#ad-trazido")));
+  await p.evaluate(() => repintarFicha()); await p.waitForTimeout(100);
+  conf("repintar a tela não apaga o que se digitou", (await p.inputValue("#ad-f-carencia")) === "102 contribuições");
 
   // Documentos: sem análise, o caminho de volta; com análise, o que falta da espécie
   await p.evaluate(() => { irSubCad("documentos"); });
