@@ -201,7 +201,8 @@ FIX.lembretes = [{ id: "lb000000-0000-0000-0000-000000000001", cliente_id: CLI_V
   escritos.length = 0;
   await p.evaluate(cli => gerarCasoDoLembrete(cli, "pcL"), CLI_VAZIO);
   await p.waitForTimeout(900);
-  const postK = escritos.find(x => x.m === "POST" && x.t === "casos");
+  // F226 · o pré-caso já é linha de casos: gerar muda a mesma linha (PATCH, pre_caso false)
+  const postK = escritos.find(x => x.t === "casos" && (x.m === "POST" || (x.m === "PATCH" && x.corpo.pre_caso === false)));
   conf("gerar do lembrete cria o caso com a espécie do pré-caso",
     postK && postK.corpo.beneficio === "BPC/LOAS");
   conf("e a fase nunca cai em escritorio — sem o select da mesa, vai ao INSS",

@@ -166,7 +166,7 @@ Este documento reúne teses firmadas pelo Superior Tribunal de Justiça (STJ) em
 
 - **Tema 1321:** [Suspenso] Incidência de prescrição contra pessoa com deficiência mental ou intelectual, após a vigência da Lei 13.146/2015.
 
-- **Tema 1328:** [Suspenso] Se há dano moral in re ipsa na hipótese de invalidação da contratação de cartão de crédito com reserva de margem consignável (RMC) em benefício previdenciário.
+- **Tema 1328:** [Cancelado, conferido em 13/10/2026 no MCP superiores e na fonte oficial; não citar] Se há dano moral in re ipsa na hipótese de invalidação da contratação de cartão de crédito com reserva de margem consignável (RMC) em benefício previdenciário.
 
 - **Tema 1341:** [EM JULGAMENTO, situação oficial conferida em 11/07/2026] Definir se o filho maior inválido com renda auferida da concessão de benefício previdenciário pode receber o benefício de pensão por morte. Sem tese firmada. NÃO citar como julgado.
 

@@ -3158,6 +3158,7 @@ html[data-tema="v10"] .ag-selos{flex:none;display:inline-flex;align-items:center
 html[data-tema="v10"] .ag-selos > span{font-size:11px;line-height:18px;padding:0 6px;border-radius:4px;white-space:nowrap}
 html[data-tema="v10"] .ag-fatal{background:var(--venc-tinta);color:#fff;font-weight:600}
 html[data-tema="v10"] .ag-tipo{border:1px solid var(--cinza-claro);color:var(--cinza);line-height:16px!important}
+html[data-tema="v10"] .ag-tipo.pre-caso{border-color:#E0B341;color:#8A6410;background:#FFF6DC}
 html[data-tema="v10"] .ag-esp{background:#E9EEF0;color:#3E5660;font-family:var(--f-mono)}
 html[data-tema="v10"] .ag-linha .avatares{flex:none;width:28px;display:flex;justify-content:flex-end}
 html[data-tema="v10"] .ag-linha .avatares .avatar{width:24px;height:24px;font-size:11px}
@@ -3649,6 +3650,12 @@ section.ben{background:#fff;border:1px solid #E7E6E1;border-radius:12px;padding:
 .pa{background:#F3F2EE;padding:18px;border-radius:14px;--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-warn:#8F5400;--pa-ok:#1B6E38;--pa-info:#3A6491;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660;color:#121212;font-size:13px;line-height:1.45}
 .pa .mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-weight:500}
 .pa-passos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--pa-b);margin-bottom:14px}
+/* F227 · a escolha do pré-caso no modo atendimento */
+.pc-escolha{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:-6px 0 12px}
+.pc-esc-bt{border:1px solid #E0B341;background:#FFF;color:#8A6410;border-radius:999px;padding:3px 11px;font:inherit;font-size:12.5px;cursor:pointer;transition:transform 120ms ease-out}
+.pc-esc-bt:active{transform:scale(.97)}
+.pc-esc-bt.on{background:#FFF6DC;font-weight:600}
+.pc-esc-bt:focus-visible{outline:2px solid #8A6410;outline-offset:2px}
 .pa-passo{display:flex;align-items:center;gap:10px;padding:10px 4px 12px;border:0;border-bottom:3px solid #E7E6E1;background:none;text-align:left;cursor:pointer;font:inherit;color:var(--pa-c1)}
 .pa-passo i{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid #CFCDC6;display:grid;place-items:center;font-style:normal;font-size:12px;color:var(--pa-c2)}
 .pa-passo span{display:flex;flex-direction:column}.pa-passo b{font-size:13.5px;font-weight:600;color:#121212}.pa-passo small{font-size:11.5px;color:var(--pa-c2)}
@@ -4376,7 +4383,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.52</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.54</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7808,11 +7815,12 @@ function cartaoCliente(cli, casosMostrar){
       prazoMin && dataProx===prazoMin ? `<span class="ag-fatal">Prazo fatal</span>` : "",
       evFut ? `<span class="ag-tipo" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">${esc(evFut.tipo.split(" ")[0])} ${fmtBarra(dataSP(evFut.data_hora)).slice(0,5)} ${horaSP(evFut.data_hora)}</span>` : "",
       exig, dcb,
+      ks.length===1 && ehPreCaso(ks[0]) ? `<span class="ag-tipo pre-caso" title="pré-caso: ainda não virou caso">Pré-caso · ${esc(passoDoPreCaso(ks[0]))}</span>` : "",
       esp ? `<span class="ag-esp">${esc(esp)}</span>` : "",
     ].join("");
     const quem = [...quemProx, ...resp.filter(c=>!quemProx.includes(c))].slice(0,2);
     const dTxt = !dataProx ? "" : dataProx===hj ? "hoje" : `${dataProx.slice(8,10)}/${dataProx.slice(5,7)}`;
-    return `<div class="cartao ag-linha${ks.some(k=>k.urgente)?" urg":""}" data-cli="${cli.id}">
+    return `<div class="cartao ag-linha${ks.some(k=>k.urgente)?" urg":""}" data-cli="${cli.id}"${ks.length===1 && ehPreCaso(ks[0]) ? ` data-pc="${esc((ks[0].precaso||{}).id||ks[0].id)}"` : ""}>
     <span class="ag-slot"></span>
     <span class="ag-data${!dataProx?"":dataProx<hj?" venc":dataProx===hj?" hoje":""}"${dica?` title="${esc(dica)}"`:""}>${dTxt}</span>
     <div class="ag-txt"><b>${esc(cli.nome)}</b>${resumo?`<span class="ag-res">, ${esc(resumo)}</span>`:""}</div>
@@ -7886,9 +7894,12 @@ let soExigencia = false;                 // o filtro da lista INSS
 
 function grupoClientes(casosSel){
   const porCli = new Map();
-  casosSel.forEach(k=>{ if(!porCli.has(k.cliente_id)) porCli.set(k.cliente_id,[]);
-                        porCli.get(k.cliente_id).push(k); });
-  let pares = [...porCli].map(([cid,ks])=>[D.cliPorId.get(cid),ks]).filter(p=>p[0]);
+  // F226 · cada pré-caso é um cartão próprio (D1 do docs/PRE-CASOS.md): o mesmo
+  // cliente buscando dois benefícios aparece duas vezes no 🙋 Escritório
+  casosSel.forEach(k=>{ const ch = ehPreCaso(k) ? k.id : k.cliente_id;
+                        if(!porCli.has(ch)) porCli.set(ch,[]);
+                        porCli.get(ch).push(k); });
+  let pares = [...porCli].map(([,ks])=>[D.cliPorId.get(ks[0].cliente_id),ks]).filter(p=>p[0]);
   const ord = document.getElementById("ordem").value;
   if(ord==="alfa") pares.sort((a,b)=>a[0].nome.localeCompare(b[0].nome,"pt"));
   else pares.sort((a,b)=>{
@@ -7911,6 +7922,7 @@ function ligarCartoes(){
     el.onpointerdown=()=>preCarregarFicha(el.dataset.cli);
     el.onclick=e=>{
       if(e.target.dataset.estrela!==undefined) return;
+      if(el.dataset.pc) return abrirAtendimentoDe(el.dataset.cli, el.dataset.pc);   // F227 · o cartão do pré-caso abre o atendimento dele
       abrirFicha(el.dataset.cli);
     };
     el.oncontextmenu=e=>{ if(el._segurou) return e.preventDefault(); menuMover(e, el.dataset.cli); };   // botão direito = Mover para…
@@ -8077,12 +8089,8 @@ function render(){
     meio.innerHTML = chipsCol + (visao==="importante" ? blocoSinalizados() + blocoNovidadesTopo() : "")
       + (emAtend.length?`<h3 class="secao">🟡 Em atendimento — buscando documentos (${emAtend.length})</h3>`
           + emAtend.map(c=>cartaoCliente(c,[])).join(""):"")
-      + ((visao==="fase:escritorio" && casosDaFase("escritorio").length)
-          ?`<h3 class="secao">Casos antigos desta lista (${casosDaFase("escritorio").length} no total)
-              ${/* F34 · quem está no Escritório NÃO tem caso: é negociação. O
-                   lote desfaz os casos herdados da migração de uma vez. */""}
-              <button class="btn-mini" onclick="converterEscritorioEmMassa()"
-                title="andamentos viram anotações (data e autor preservados), benefício vira pré-caso, e estes casos são apagados — quem tem perícia ou pagamento fica de fora">↩ não são casos — converter todos em atendimentos</button></h3>`:"")
+      + ((visao==="fase:escritorio" && casosSel.length)
+          ?`<h3 class="secao">Pré-casos no escritório (${casosSel.length})</h3>`:"")
       + ((gs=>{ if(visao==="fase:prazo") gs.sort((x,y)=>{
             const m=ks=>ks.map(k=>k.prazo).filter(Boolean).sort()[0]||"9999";
             return m(x[1]).localeCompare(m(y[1])); }); return gs; })(grupoClientes(casosSel))
@@ -10939,6 +10947,22 @@ async function nclEtapa1(seguir=true){
     if(achados && achados.length){ jaTem=achados[0]; D.clientes.push(jaTem); D.cliPorId.set(jaTem.id, jaTem); }
   }
   if(jaTem) return avisoCpfRepetido(jaTem, nome);
+  // F225 · a agenda e a anotação rápida criam a ficha sem CPF: a mesma pessoa não ganha uma segunda
+  const tel = document.getElementById("ncl-tel").value.trim();
+  const pre = preCadastroDe(nome, tel);
+  if(pre && await confirmar(`Já existe o pré-cadastro de ${pre.nome}${pre.telefone?`, telefone ${pre.telefone}`:""}, criado sem CPF (agenda ou anotação rápida).\n\nCompletar essa ficha com o CPF ${fmtCpf(cpf)}, em vez de criar outra?`)){
+    const corpo = {cpf, ...(!pre.telefone && soDig(tel).length>2 ? {telefone:tel} : {})};
+    try{ await api(`/rest/v1/clientes?id=eq.${pre.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(corpo)}); }
+    catch(e){ return aviso("Não consegui completar o pré-cadastro — tente de novo"); }
+    Object.assign(pre, corpo); reindexarCliente(pre);
+    const senhaP=document.getElementById("ncl-senha").value.trim();
+    if(senhaP) await api(`/rest/v1/credenciais`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({cliente_id:pre.id, tipo:"meu_inss", valor:senhaP})}).catch(()=>aviso("A ficha gravou, mas a senha não — cadastre de novo pela ficha"));
+    _ncl = {etapa: seguir ? 2 : 1, id:pre.id, nomeBusca:_ncl.nomeBusca};
+    if(!seguir){ aviso("Pré-cadastro completado com o CPF ✔ — rode a extensão do dossiê", false); return; }
+    aviso("Pré-cadastro completado com o CPF ✔ — agora a etapa 2", false);
+    return renderNovoCliente();
+  }
   const campos={atendimento:[{em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], texto:"Cliente cadastrado na recepção."}]};
   const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({nome: nome || `Cliente ${fmtCpf(cpf)}`, cpf, telefone:(t => t.replace(/\D/g,"").length > 2 ? t : null)(document.getElementById("ncl-tel").value.trim()), campos})});
@@ -10953,6 +10977,13 @@ async function nclEtapa1(seguir=true){
   if(!seguir){ const r=document.getElementById("ncl-ficha-recado"); if(r && !/bloqueou/.test(r.textContent)) r.textContent="Ficha criada ✔ — o dossiê baixado agora se prende a ela."; aviso("Ficha criada ✔ — rode a extensão do dossiê", false); return; }
   aviso("Ficha criada ✔ — agora a etapa 2", false);
   renderNovoCliente();
+}
+// a ficha sem CPF da mesma pessoa: o telefone (oito últimos dígitos) ou o nome igual
+function preCadastroDe(nome, tel){
+  const t8 = soDig(tel).slice(-8), nm = dsa(nome||"").replace(/\s+/g," ").trim();
+  const sem = (D.clientes||[]).filter(c=>!digitosCpf(c.cpf));
+  return (t8.length===8 && sem.find(c=>soDig(c.telefone).slice(-8)===t8))
+    || (nm.split(" ").length>=2 && sem.find(c=>dsa(c.nome||"").replace(/\s+/g," ").trim()===nm)) || null;
 }
 // os avisos do cliente novo vão a Amanda e Paulo, além de quem a configuração indicar
 function quemAvisaClienteNovo(){
@@ -10971,10 +11002,6 @@ async function criarCliente(){
   const relato=((document.getElementById("ncl-relato")||{}).value||"").trim();
   const campos={...(cli.campos||{})};
   if(relato) campos.atendimento=[...(campos.atendimento||[]), {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], texto:relato}];
-  // benefício conhecido vira PRÉ-CASO (não caso): a advogada confere na
-  // triagem e gera o caso quando sair a procuração com o contrato
-  if(especie) campos.precasos=[...(campos.precasos||[]), {id:"pc_"+Date.now().toString(36), especie,
-    natureza:"", marc:{}, honorarios:"", quem:eu.id, em:hoje()}];
   const corpo={campos, sexo:document.getElementById("ncl-sexo").value||null};
   if((_ncl.dz||{}).civil) corpo.estado_civil = _ncl.dz.civil;
   if((_ncl.dz||{}).profissao) corpo.profissao = _ncl.dz.profissao;
@@ -10982,6 +11009,9 @@ async function criarCliente(){
   if(dnIsoV) corpo.dn=fmt(dnIsoV).replace(/\./g,"");
   try{ await api(`/rest/v1/clientes?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}); Object.assign(cli, corpo); }
   catch(e){ return aviso("Não consegui gravar a etapa 2 — tente de novo"); }
+  // benefício conhecido vira PRÉ-CASO (F226: linha de casos na fase Escritório)
+  if(especie) await gravarPrecasos(id, [...precasosDe(cli), {id:"pc_"+Date.now().toString(36), especie,
+    natureza:"", marc:{}, honorarios:"", quem:eu.id, em:hoje()}]);
   // o endereço grava pelo MESMO caminho da ficha (colunas + espelho da
   // procuração); rua da lista traz CEP, bairro e Monte Alto/SP de brinde
   const rua=ruaNovoAchada(), ruaTxt=document.getElementById("ncl-rua").value.trim();
@@ -11063,7 +11093,7 @@ function renderMencoes(){
         ${m.conversa_id?`<button class="btn-mini" onclick="abrirConversaDaMencao('${m.conversa_id}')">abrir conversa</button>`:""}
         ${/* F220 · a menção leva ao lugar do trabalho: o caso citado ou o atendimento do cliente novo */""}
         ${k?`<button class="btn-mini forte" onclick="abrirCasoDaMencao('${k.cliente_id}','${k.id}','${m.andamento_id||""}')">abrir o caso</button>`
-          : c && !(D.casosDoCliente.get(c.id)||[]).some(x=>x.fase!=="encerrado") ? `<button class="btn-mini forte" onclick="abrirAtendimentoDe('${c.id}')">abrir o atendimento</button>` : ""}
+          : c && !(D.casosDoCliente.get(c.id)||[]).some(x=>x.fase!=="encerrado" && !ehPreCaso(x)) ? `<button class="btn-mini forte" onclick="abrirAtendimentoDe('${c.id}')">abrir o atendimento</button>` : ""}
         ${c?`<button class="btn-mini" onclick="abrirFicha('${c.id}')">abrir ficha</button>`:""}
         <button class="btn-mini" onclick="lerMencao('${m.id}')">✔ resolvida</button>
       </div></div>`;
@@ -14462,7 +14492,7 @@ async function abrirFicha(cliId){
     // cliente novo: abre no 1º caso ativo — mas quem ainda não tem caso está
     // EM ATENDIMENTO, e a aba Casos abriria vazia; para esse, o começo é o
     // Cadastro, onde vivem as anotações e os documentos pedidos (08.99)
-    const temCaso = (D.casosDoCliente.get(cliId)||[]).some(k=>k.fase!=="encerrado");
+    const temCaso = (D.casosDoCliente.get(cliId)||[]).some(k=>k.fase!=="encerrado" && !ehPreCaso(k));   // F226 · o pré-caso abre no atendimento
     abaAtiva = temCaso ? 2 : 0;
     if(!temCaso && !SUB_CAD.some(([x])=>x===subCad)){
       const pcsA=precasosDe(c);
@@ -14575,19 +14605,22 @@ function pintarFicha(){
 
   if(casoSel && casoSel!=="__auto__" && !processosDe(ks).some(k=>k.id===casoSel)) casoSel=null;
   if(casoSel==="__auto__"){
-    const ativos=processosDe(ks).filter(k=>k.fase!=="encerrado");
+    // F226 · a escolha é entre casos de verdade; o pré-caso abre sem perguntar
+    const ativos=processosDe(ks).filter(k=>k.fase!=="encerrado" && !ehPreCaso(k));
     // com MAIS DE UM processo em aberto, ninguém adivinha em qual comentar:
     // o sistema pergunta antes de abrir (encerrados não contam para isso)
     if(ativos.length>1) return escolherProcesso(cliId, ativos);
-    casoSel = ativos.length ? ativos[0].id : (ks[0] ? ks[0].id : null);
+    casoSel = ativos.length ? ativos[0].id : ((ks.find(ehPreCaso)||ks[0]||{}).id || null);
   }
   const andsVis = casoSel ? ands.filter(a=>a.caso_id===casoSel) : ands;
   // ATIVO ou INATIVO, ao lado do nome (pedido do Paulo): quem abre a ficha
   // precisa saber de cara se AINDA trabalhamos para esta pessoa. Vermelho =
   // todos os casos encerrados; verde diz quantos seguem em andamento; cinza
   // é o cliente cadastrado que nunca teve caso.
-  const ativosCli = ks.filter(k=>k.fase!=="encerrado");
-  const encDesde = ks.map(k=>k.encerrado_em).filter(Boolean).sort().slice(-1)[0];
+  // F226 · o pré-caso não é caso: o estado do cliente conta só os casos de verdade
+  const ksR = ks.filter(k=>!k.pre_caso);
+  const ativosCli = ksR.filter(k=>k.fase!=="encerrado");
+  const encDesde = ksR.map(k=>k.encerrado_em).filter(Boolean).sort().slice(-1)[0];
   const lembCli = lembretesDo(cliId);
   // três estados a pedido do Paulo: verde = processo andando; amarelo = sem
   // processo, mas o escritório avisa (🔔 lembretes ativos — trabalho, só que
@@ -14595,9 +14628,9 @@ function pintarFicha(){
   const stCli = ativosCli.length
     ? `<span class="cli-st ativo" title="${ativosCli.length} de ${ks.length} caso(s) em andamento${lembCli.length?` · e ${lembCli.length} lembrete(s) na aba 🔔`:""}">Cliente ativo · ${ativosCli.length} caso${ativosCli.length>1?"s":""} em andamento</span>`
     : lembCli.length
-      ? `<span class="cli-st lemb" title="nenhum processo em andamento, mas o escritório avisa de tempos em tempos — veja a aba 🔔 Lembretes">🟡 Sem processo — ${lembCli.length} lembrete${lembCli.length>1?"s":""} ativo${lembCli.length>1?"s":""}</span>`
-      : ks.length
-        ? `<span class="cli-st inativo" title="nenhum trabalho em andamento para este cliente">🔴 Cliente inativo — ${ks.length>1?`os ${ks.length} casos`:"o único caso"} encerrado${ks.length>1?"s":""}${encDesde?` (último em ${fmt(dataSP(encDesde))})`:""}</span>`
+      ? `<span class="cli-st lemb" title="nenhum processo em andamento, mas o escritório avisa de tempos em tempos — veja a aba 🙏 Aposentadorias futuras">🟡 Sem processo — ${lembCli.length} lembrete${lembCli.length>1?"s":""} ativo${lembCli.length>1?"s":""}</span>`
+      : ksR.length && !precasosDe(c).some(p=>!p.so_lembrete)
+        ? `<span class="cli-st inativo" title="nenhum trabalho em andamento para este cliente">🔴 Cliente inativo — ${ksR.length>1?`os ${ksR.length} casos`:"o único caso"} encerrado${ksR.length>1?"s":""}${encDesde?` (último em ${fmt(dataSP(encDesde))})`:""}</span>`
         : (n=>n?`<span class="cli-st atend" title="pré-caso em formação: gerar o caso é gerar a procuração e assinar o contrato — até lá, o cliente fica amarelo, na lista Escritório">🟡 Em formação — ${n} pré-caso${n>1?"s":""}</span>`
                :`<span class="cli-st atend" title="cliente em atendimento — ainda não virou caso; as anotações e os documentos pedidos ficam na aba Cadastro">🟡 Em atendimento — buscando documentos</span>`)(precasosDe(c).filter(p=>!p.so_lembrete).length);
   document.getElementById("detalhe").innerHTML=`
@@ -14677,7 +14710,7 @@ function pintarFicha(){
         evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length)}
       ${(ks.length || pagK.length || pgs.length) ? `<button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Honorários${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>` : ""}
       ${/* F166 · Lembretes por último, depois de Honorários */""}
-      ${temLemb ? `<button class="mt ${abaAtiva===9?"on":""}" data-vv="9">Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>` : ""}
+      ${temLemb ? `<button class="mt ${abaAtiva===9?"on":""}" data-vv="9">Aposentadorias futuras${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>` : ""}
     </div>
     <button class="cel-tudo" onclick="fichaTudo()">⋯ mostrar tudo da ficha</button>
   </div>
@@ -14776,7 +14809,7 @@ function pintarFicha(){
   </div>
 
   <div class="painel ${abaAtiva===9?"ativo":""}" data-p="9">
-    <h3 style="margin-bottom:8px">🔔 Lembretes de ${esc(c.nome.split(" ")[0])}</h3>
+    <h3 style="margin-bottom:8px">🙏 Aposentadorias futuras de ${esc(c.nome.split(" ")[0])}</h3>
     <p class="meio-sub" style="margin-bottom:10px">O "avisar de tempos em tempos" — contribuição do INSS,
       cadastro para renovar, retomar contato. Vive no cliente, não num processo: vale mesmo sem
       nenhum caso em andamento, e cada aviso fica registrado (quem, quando, por onde).</p>
@@ -15146,7 +15179,8 @@ function cabecalhoAtendimento(c, cd, vis){
   <nav class="pa-passos atend-passos" aria-label="Passos do atendimento">
     ${passo("1","identificacao","Identificação","dados do cliente")}${passo("2","pa","Primeiro atendimento","situação e benefícios")}
     ${passo("3","direito","Análise de Direito",(n=>n ? `${n} ${n===1?"benefício":"benefícios"} em análise` : "trabalhos e planejamento")(Object.keys(benefSel(c)).length))}${passo("4","documentos","Documentos","pedido, guias e geração")}
-  </nav>`;
+  </nav>${(vs=>vs.length>1 ? `<nav class="pc-escolha" aria-label="Pré-caso em atendimento"><span class="meio-sub">Pré-caso:</span>${vs.map(p=>
+      `<button type="button" class="pc-esc-bt${pc && p.id===pc.id?" on":""}" ${pc && p.id===pc.id?'aria-current="true"':""} onclick="escolherPreCaso('${c.id}','${escJs(p.id)}')">${esc(p.especie||"Em formação")}</button>`).join("")}</nav>` : "")(preCasosVivos(c))}`;
 }
 const _atendAberto = new Set();
 const ATEND_SUBS = new Set(["pa","mapa","direito","documentos"]);
@@ -16640,7 +16674,7 @@ function painelTriagemFicha(c, ks){
   // a resposta pré-pronta aparece marcada até alguém responder à mão
   const estadoMarcado = p.estado || (!p.feito ? (l.estado||"") : "");
   // o que a recepção registrou: a espécie e o relato
-  const balcao = (!(ks||[]).length && !triagemFechada(c))
+  const balcao = (!(ks||[]).filter(k=>!k.pre_caso).length && !triagemFechada(c))   // F226 · o pré-caso não é caso
     ? ((c.campos||{}).atendimento||[]).slice(-3) : [];
   const especie = especieDoCliente(c, ks) || (porta && porta.especie) || "";
   // F178 · as cores do topo: o estado gravado de cada passo respondido
@@ -16844,7 +16878,7 @@ async function fecharAtendimento(cliId){
   aviso(k ? `Triagem encerrada e lançada em ${tituloCaso(k)} ✔`
           : (atencao.length||faltam.length)
             ? "Triagem encerrada — as Anotações se abriram, com o resumo ✔"
-            : "Triagem encerrada — as Anotações e os Lembretes se abriram ✔");
+            : "Triagem encerrada — as Anotações e as Aposentadorias futuras se abriram ✔");
 }
 async function salvarTriagem(cliId, triagem){
   const c = D.cliPorId.get(cliId); if(!c) return false;
@@ -17498,13 +17532,16 @@ function menuProcessos(ev, ks){
   // clicar no nome. Caso sem lista de origem cai no nome da fase.
   const item=k=>`<div class="mp-it ${casoSel===k.id?"sel":""} ${k.fase==="encerrado"?"enc":""}" data-mp="${k.id}" style="${k.fase==="encerrado"?"opacity:.55":""}">
     <b>${k.urgente?"🔥 ":""}${esc(tituloCaso(k))}</b>
-    <small>${k.fase==="encerrado"?"✔ Encerrado":esc(listaDe(k)!=="—"?listaDe(k):(NOME_FASE[k.fase]||""))}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠ exigência":""}${(n=>esc(Object.keys(TIPO_NUM).flatMap(t=>n[t].slice(0,1).map(d=>` · ${t==="proc"?"proc.":t==="nup"?"recurso":t==="prot"?"📄":"NB"} ${fmtNum(t,d)}`)).join("")))(numerosDoCaso(k))}</small>
+    <small>${k.fase==="encerrado"?"✔ Encerrado":ehPreCaso(k)?`🟡 Pré-caso no escritório · ${esc(passoDoPreCaso(k))}`:esc(listaDe(k)!=="—"?listaDe(k):(NOME_FASE[k.fase]||""))}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠ exigência":""}${(n=>esc(Object.keys(TIPO_NUM).flatMap(t=>n[t].slice(0,1).map(d=>` · ${t==="proc"?"proc.":t==="nup"?"recurso":t==="prot"?"📄":"NB"} ${fmtNum(t,d)}`)).join("")))(numerosDoCaso(k))}</small>
   </div>`;
   m.innerHTML =
-    ks.filter(k=>k.fase!=="encerrado").map(item).join("")
+    // F226 · os pré-casos primeiro, acima dos casos
+    ks.filter(ehPreCaso).map(item).join("")
+    + ks.filter(k=>k.fase!=="encerrado" && !ehPreCaso(k)).map(item).join("")
     + (ks.length>1?`<div class="mp-it ${!casoSel?"sel":""}" data-mp=""><b>📚 Todos os processos</b><small>andamentos juntos</small></div>`:"")
     + ks.filter(k=>k.fase==="encerrado").map(item).join("")
     + (ks.filter(k=>k.fase!=="encerrado").length>1 ? `<div class="mp-it mp-novo" data-mp="__org__">⇄ Organizar os casos</div>` : "")
+    + `<div class="mp-it mp-novo" data-mp="__novopc__" title="o cliente busca outro benefício: abre um pré-caso próprio">＋ Novo pré-caso (outro benefício)</div>`
     + `<div class="mp-it mp-novo" data-mp="__novo__">＋ Novo processo</div>`;
   document.body.appendChild(m);
   const r=ev.currentTarget.getBoundingClientRect(), W=m.offsetWidth||300, H=m.offsetHeight||200;
@@ -17514,6 +17551,9 @@ function menuProcessos(ev, ks){
     const v=it.dataset.mp;
     fecharMenuProcessos();
     if(v==="__org__") return organizarCasos(clienteAberto);
+    if(v==="__novopc__") return novoAtendimento(clienteAberto);
+    const kp = D.casoPorId.get(v);
+    if(ehPreCaso(kp)) return abrirAtendimentoDe(kp.cliente_id, (kp.precaso||{}).id||kp.id);   // F227
     if(v==="__novo__"){ abaAtiva=7; }
     else { casoSel=v||null; abaAtiva=2; subAba="escritorio"; }   // F166
     repintarFicha();
@@ -18812,7 +18852,7 @@ function renderCardsApos(){
   const todos = cardsApos(), hs = [["vencido","Vencidos"],["90","Até 90 dias"],["ano","Até um ano"],["depois","Depois"],["sem","Sem data"],["todos","Todos"]];
   const n = Object.fromEntries(hs.map(([h])=>[h, h==="todos" ? todos.length : todos.filter(l=>horizonteDoCard(l)===h).length]));
   const sel = _cardsFiltro, lista = (sel==="todos" ? todos : todos.filter(l=>horizonteDoCard(l)===sel)).slice().sort((a, b)=>String(a.proximo_em||"9999").localeCompare(String(b.proximo_em||"9999")));
-  document.getElementById("sub-lista").textContent = `${todos.length} cards ativos, mantidos pela sincronização com o To Do; o card abre a ficha na aba Lembretes`;
+  document.getElementById("sub-lista").textContent = `${todos.length} cards ativos, mantidos pela sincronização com o To Do; o card abre a ficha na aba Aposentadorias futuras`;
   const porEtapa = APOS_ETAPAS.map(([e, rot])=>[e, rot, lista.filter(l=>etapaDoCard(l)===e)]).filter(x=>x[2].length);
   document.getElementById("conteudo-meio").innerHTML = `<div class="filtros">${hs.map(([h, rot])=>`<button class="fchip${sel===h?" on":""}" data-horiz="${h}" onclick="_cardsFiltro='${h}';render()">${rot} (${n[h]})</button>`).join("")}</div>`
     + (porEtapa.map(([e, rot, ls])=>`<h3 class="secao">${esc(rot)} (${ls.length})</h3>${ls.map(cartaoApos).join("")}`).join("") || "<p class='meio-sub'>Nenhum card neste horizonte.</p>");
@@ -19042,7 +19082,7 @@ function cartaoLembrete(l){
 async function casoViraLembrete(casoId){
   const k=D.casoPorId.get(casoId); if(!k) return;
   const c=D.cliPorId.get(k.cliente_id)||{};
-  if(!await confirmar(`Transformar "${tituloCaso(k)}" em 🔔 lembrete de ${c.nome||"cliente"}?\n\nO lembrete nasce na aba 🔔 Lembretes (a cada 6 meses — dá para ajustar lá) e este caso é encerrado.`)) return;
+  if(!await confirmar(`Transformar "${tituloCaso(k)}" em 🔔 lembrete de ${c.nome||"cliente"}?\n\nO lembrete nasce na aba 🙏 Aposentadorias futuras (a cada 6 meses — dá para ajustar lá) e este caso é encerrado.`)) return;
   try{
     const [l]=await api(`/rest/v1/lembretes`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({cliente_id:k.cliente_id, tipo:"geral", titulo:tituloCaso(k),
@@ -19060,7 +19100,7 @@ async function casoViraLembrete(casoId){
   }
   await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
-      texto:"Caso transformado em 🔔 lembrete do cliente — o acompanhamento periódico segue na aba Lembretes."})}).catch(()=>{});
+      texto:"Caso transformado em 🔔 lembrete do cliente — o acompanhamento periódico segue na aba Aposentadorias futuras."})}).catch(()=>{});
   aviso("🔔 Virou lembrete — o caso foi encerrado");
   abaAtiva=9; montarSidebar(); abrirFicha(k.cliente_id);
 }
@@ -19512,7 +19552,7 @@ async function salvarAnalise(cliId){
   // F49 · no PRIMEIRO atendimento ainda não há caso — aí o registro vira
   // ANOTAÇÃO do atendimento (e, quando o pré-caso virar caso, as anotações
   // migram para os andamentos sozinhas, pela regra que já existe do F30)
-  const ativosCli=D.casos.filter(k=>k.cliente_id===cliId && k.fase!=="encerrado");
+  const ativosCli=D.casos.filter(k=>k.cliente_id===cliId && k.fase!=="encerrado" && !ehPreCaso(k));   // F226
   const m=cenMelhor({cenarios}), outros=cenarios.length-(m?1:0);
   const txt=`⚖️ Análise de Direito registrada (${fmt(data)})`
     +(m?` — melhor caminho: ${m.regra||"?"}${m.data?` em ${fmt(m.data)}`:""}${m.valor?`, ${moedaBR(m.valor)}`:""}`:"")
@@ -19763,7 +19803,8 @@ async function anotarNoDireito(cliId){
   const texto = (ta.value||"").trim(); if(!texto) return aviso("Escreva a anotação");
   // integração · com caso ativo, o andamento da Análise vai para o caso (com
   // a marca "⚖️ Análise ·"), onde a equipe o lê; sem caso, segue no cadastro
-  const vivos = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
+  // F226 · no pré-caso a análise segue como anotação do atendimento (onda 3 a leva à linha)
+  const vivos = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado" && !ehPreCaso(k));
   const k = vivos.find(x=>x.id===casoSel) || vivos[0];
   if(k){
     let and;
@@ -19852,7 +19893,7 @@ function resumoDireito(c, ult){
   const m=ult?cenMelhor(ult):null, data=(m&&m.data)||d.data_direito||null;
   const direito = !data ? tile("Atinge o direito", "—", ult?"sem data projetada":"nenhuma análise registrada")
     : tile("Atinge o direito", esc(fmt(data)),
-        data<=hoje() ? "direito alcançado" : temAvisoApos(c.id, data) ? "no Lembretes · aviso antes da data"
+        data<=hoje() ? "direito alcançado" : temAvisoApos(c.id, data) ? "em Aposentadorias futuras · aviso antes da data"
           : (n=>n<=1?"falta 1 mês":`faltam ${n} meses`)(mesesAte(data)), "adr-t-direito");
   return `<section class="adr-resumo" aria-label="Resumo do segurado">${idade}${tempo}${recolhe}${direito}</section>`;
 }
@@ -19908,7 +19949,7 @@ function regrasDireito(a){
         <span class="adr-data">${cn.data?esc(fmt(cn.data)):"—"}</span>
         <span class="adr-valor">${cn.valor?moedaBR(cn.valor):"—"}</span>
         <span class="adr-regra-acao">${cn.data && !ok ? (temAvisoApos(a.cliente_id, cn.data)
-          ? `<span class="adr-chip ok">no Lembretes</span>`
+          ? `<span class="adr-chip ok">em Aposentadorias futuras</span>`
           : `<button type="button" class="adr-bt" title="cria o aviso no Meu Dia ${MESES_AVISO} meses antes da data, para comunicar o cliente"
             onclick="avisarCenario('${a.cliente_id}','${cn.data}','${escJs(cn.regra||"")}')">avisar na época</button>`) : ""}</span>
       </li>`; }).join("")}</ol>
@@ -19924,8 +19965,8 @@ function planejamentoDireito(c, ult){
     ${pl.length ? `<ul class="adr-plano-lista">${pl.slice().sort((x,y)=>(x.data||"")<(y.data||"")?-1:1).map(p=>{
       const tem=lembs.some(l=>(l.detalhes||{}).plano_item===p.id);
       return `<li><span class="adr-data">${p.data?esc(fmt(p.data)):"—"}</span><span class="adr-plano-txt">${esc(p.texto||"")}</span>
-        ${tem?`<span class="adr-chip ok">no Lembretes</span>`
-          :p.data?`<button type="button" class="adr-bt" onclick="planoParaLembrete('${c.id}','${ult.id}','${escJs(p.id)}')">levar ao Lembretes</button>`:""}</li>`; }).join("")}</ul>`
+        ${tem?`<span class="adr-chip ok">em Aposentadorias futuras</span>`
+          :p.data?`<button type="button" class="adr-bt" onclick="planoParaLembrete('${c.id}','${ult.id}','${escJs(p.id)}')">levar a Aposentadorias futuras</button>`:""}</li>`; }).join("")}</ul>`
       : `<p class="meio-sub" style="margin:0">Nenhuma data planejada — registre no formulário da análise.</p>`}
   </section>`;
 }
@@ -20713,8 +20754,8 @@ async function abrirAcertoCnis(cliId){
             : "nenhuma fonte do dossiê traz o desligamento, e a prova sai da CTPS, do termo de rescisão ou do extrato analítico do FGTS."); }).join(" ");
   const nota = {id:crypto.randomUUID(), em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0],
     autor_id:eu.id, texto, origem:"app", precaso_id:pc.id};
-  const campos = {...(c.campos||{}), precasos:pcs, atendimento:[...atend, nota]};
-  if(pcs.some(p=>p.id==="legado")) delete campos.especie;
+  if(!await gravarPrecasos(cliId, pcs)) return;
+  const campos = {...(c.campos||{}), atendimento:[...atend, nota]};
   try{
     await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({campos})});
@@ -21206,7 +21247,7 @@ function paDados(c, ks){
     ...Object.fromEntries(PA_BLOCOS_EXTRA.map(([b,,gs])=>[b, fatos.filter(x=>gs.includes(x.grupo))])),
   };
   const ap = (aposDoCliente(c)||[]).filter(a=>a.data).sort((a,b)=>a.data<b.data?-1:1)[0];
-  if(ap) grupos.plan.push({grupo:"idade", est:"info", fonte:"Lembretes", texto:`${ap.especie||"Aposentadoria"} prevista para ${fmtBarra(ap.data)}`});
+  if(ap) grupos.plan.push({grupo:"idade", est:"info", fonte:"Aposentadorias futuras", texto:`${ap.especie||"Aposentadoria"} prevista para ${fmtBarra(ap.data)}`});
   const pior = fs => fs.reduce((p, x)=>MAPA_ORDEM[x.est] < MAPA_ORDEM[p] ? x.est : p, "info");
   const ativos = grupos.cnpj.filter(x=>!/^Nenhum/.test(x.texto));
   const BL = {
@@ -21228,7 +21269,7 @@ function paDados(c, ks){
       return [ps.length ? `${ps.length} ${ps.length===1?"pedido":"pedidos"}` : "nenhum", false,
         pr ? curtoMapa(pr.texto) : ps.length ? `${ni} ${ni===1?"indeferido":"indeferidos"}, ${ps.length-ni} ${ps.length-ni===1?"outro":"outros"}` : "nenhum pedido no dossiê",
         pr ? pior(grupos.ped) : ni ? "warn" : ps.length ? "ok" : "info"]; })(pedidosAoInss(c, fd)),
-    plan: [ap ? fmtBarra(ap.data) : "—", true, ap ? (ap.especie||"aposentadoria") : "sem aposentadoria prevista nos Lembretes", "info"],
+    plan: [ap ? fmtBarra(ap.data) : "—", true, ap ? (ap.especie||"aposentadoria") : "sem aposentadoria prevista em Aposentadorias futuras", "info"],
     ...Object.fromEntries(PA_BLOCOS_EXTRA.map(([b])=>[b, [(n=>`${n} ${n===1?"registro":"registros"}`)(grupos[b].length), false,
       grupos[b].length ? curtoMapa(grupos[b][0].texto) : "", grupos[b].length ? pior(grupos[b]) : "info"]])),
   };
@@ -23585,7 +23626,7 @@ function qdVerLembrete(id){
     <div class="form-linha">
       <button class="btn-rap" onclick="fecharCaixa()">fechar</button>
       ${document.querySelector('.mt[data-vv="9"]')?`<button class="btn-mini" style="margin-left:auto"
-        onclick='fecharCaixa();document.querySelector(".mt[data-vv=\\"9\\"]").click()'>abrir a aba Lembretes</button>`:""}
+        onclick='fecharCaixa();document.querySelector(".mt[data-vv=\\"9\\"]").click()'>abrir a aba Aposentadorias futuras</button>`:""}
     </div>`);
 }
 async function qdMudarNota(cliId, idx, valor){
@@ -24926,7 +24967,7 @@ function blocoFatos(k){
         <span class="fx-rot">🔔</span>
         <button class="btn-mini" onclick="casoViraLembrete('${k.id}')">transformar em lembrete do cliente</button>
         <span class="meio-sub">este caso é um "avisar de tempos em tempos"? O lugar disso agora é a
-          aba 🔔 Lembretes — o botão cria o lembrete e encerra o caso.</span>
+          aba 🙏 Aposentadorias futuras — o botão cria o card e encerra o caso.</span>
       </div>`:""}
     </div>`;
   return `<section class="fatos fatos-processo">
@@ -24996,9 +25037,9 @@ function acoesDoCaso(k){
   return `${((D.casosDoCliente.get(k.cliente_id)||[]).length>1 && k.fase!=="encerrado")
       ?`<button class="btn-mini" onclick="janelaFundir('${k.id}')"
           title="pedido → recurso → judicial é uma sequência só: incorpora outro caso a este, com todo o histórico">⇄ fundir</button>`:""}
-    ${k.fase!=="encerrado"
+    ${k.fase!=="encerrado" && !ehPreCaso(k)
       ?`<button class="btn-mini" onclick="naoEhCaso('${k.id}')"
-          title="cliente em negociação, ainda sem processo? Isto NÃO é caso: os andamentos viram anotações do atendimento (data e autor preservados) e o cliente volta a 🟡 em atendimento — a tarefa no To Do não muda">↩ não é caso</button>`:""}
+          title="cliente em negociação, ainda sem processo? Isto NÃO é caso: ele volta a pré-caso na lista 🙋 Escritório, com anotações, documentos e agenda — a tarefa no To Do não muda">↩ não é caso</button>`:""}
     ${k.fase==="encerrado"
     ? (co=>`<span class="chip fase" title="quem encerrou e quando">✔ encerrado${
         co?` por ${esc(co.nome.split(" ")[0])}`:""}${
@@ -28368,7 +28409,7 @@ async function cobrarDocs(cliId, casoId){
 function docsPreCasoComData(){
   const out=[];
   for(const c of (D.clientes||[])){
-    const kAtivo=(D.casosDoCliente.get(c.id)||[]).some(k=>k.fase!=="encerrado");
+    const kAtivo=(D.casosDoCliente.get(c.id)||[]).some(k=>k.fase!=="encerrado" && !ehPreCaso(k));
     if(kAtivo) continue;   // com caso, o checklist do caso é que vale
     ((c.campos||{}).docs_pedidos||[]).forEach((p,pi)=>{
       if(!p.ate) return;
@@ -30070,9 +30111,15 @@ async function moverNumero(tipo, d, deId, paraId, opts={}){
   D._andsFicha = (D._andsFicha||[]).filter(a=>!repetidos.includes(a.id));
   for(const a of D._andsFicha) if(movidos.has(a.id)) a.caso_id = paraId;
   for(const x of (D.anexos||[])) if((x.andamento_id && movidos.has(x.andamento_id)) || (x.caso_id===deId && caminhos.length && (numDoAnexo(x)||{}).d===d)) x.caso_id = paraId;
+  // F225 · as perícias e audiências marcadas não dizem de que número são: vão junto quando o
+  // caso de origem fica sem número nenhum, ou quando quem levou pediu (opts.eventos)
+  const evs = eventosFuturos(deId);
+  const semNumero = !Object.values(numerosDoCaso(de)).some(x=>x.length);
+  let nEv = 0;
+  if(evs.length && (opts.eventos===true || (opts.eventos!==false && semNumero))) nEv = await levarEventos(evs, paraId);
   const rot = `${TIPO_NUM[tipo]} ${fmtNum(tipo, d)}`;
   await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify([
-    {caso_id:deId, autor_id:eu.id, texto:`⇄ ${rot} foi levado ao caso "${tituloCaso(para)}"${ids.length?`, com ${ids.length} andamento(s)`:""}.`},
+    {caso_id:deId, autor_id:eu.id, texto:`⇄ ${rot} foi levado ao caso "${tituloCaso(para)}"${ids.length?`, com ${ids.length} andamento(s)`:""}${nEv?` e ${nEv} agendamento(s)`:""}.`},
     {caso_id:paraId, autor_id:eu.id, texto:`⇄ ${rot} veio do caso "${tituloCaso(de)}"${ids.length?`, com ${ids.length} andamento(s)`:""}.`}])}).catch(()=>{});
   if(opts.quieto) return true;
   aviso(`${rot} levado ao caso ${rotCurtoCaso(para)} ✔`, false);
@@ -30370,9 +30417,27 @@ async function aplicarLoteOrg(){
 
 // ── o repasse em um clique: número e anotação vão ao caso certo ─────────
 async function levarNumero(tipo, d, deId, paraId){
-  const para = D.casoPorId.get(paraId); if(!para || !TIPO_NUM[tipo]) return;
+  const para = D.casoPorId.get(paraId), de = D.casoPorId.get(deId); if(!para || !de || !TIPO_NUM[tipo]) return;
   if(!await confirmar(`Levar ${TIPO_NUM[tipo]} ${fmtNum(tipo, d)} ao caso ${rotCurtoCaso(para)}?\n\nVão junto os andamentos, os documentos e as tarefas dele, e a sincronização do To Do não desfaz a mudança.`)) return;
-  await moverNumero(tipo, d, deId, paraId);
+  // o caso de origem que guarda outros números pode ter perícia de qualquer um deles: a pessoa decide
+  const evs = eventosFuturos(deId), outros = Object.entries(numerosDoCaso(de)).some(([t, xs])=>xs.some(x=>!(t===tipo && x===d)));
+  let eventos = "auto";
+  if(evs.length && outros) eventos = await confirmar(`O caso de origem tem ${evs.length} agendamento(s) marcado(s):\n\n${evs.map(e=>`${e.tipo} em ${fmtTS(e.data_hora)}`).join("\n")}\n\nSão deste número e vão junto?`);
+  await moverNumero(tipo, d, deId, paraId, {eventos});
+}
+// as perícias, avaliações e audiências ainda por acontecer de um caso
+function eventosFuturos(casoId){
+  const hj = hoje();
+  return (D.eventos||[]).filter(e=>e.caso_id===casoId && e.status!=="cancelada" && dataSP(e.data_hora)>=hj);
+}
+// leva os agendamentos ao outro caso; o que o destino já tem (mesmo tipo e hora) é o mesmo agendamento e sai da origem
+async function levarEventos(evs, paraId){
+  let n = 0;
+  for(const e of evs){
+    try{ await api(`/rest/v1/eventos?id=eq.${e.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:paraId})}); e.caso_id = paraId; n++; }
+    catch(err){ await api(`/rest/v1/eventos?id=eq.${e.id}`,{method:"DELETE"}).catch(()=>{}); D.eventos = (D.eventos||[]).filter(x=>x.id!==e.id); }
+  }
+  return n;
 }
 function selLevarNumero(k, tipo, d){
   const outros = casosParaOrganizar(k.cliente_id).filter(x=>x.id!==k.id); if(!outros.length) return "";
@@ -31942,7 +32007,12 @@ function especieDoCaso(k){
   return k ? ((k.especie||k.subespecie) ? tituloCaso(k) : (k.beneficio||"")) : "";
 }
 function especieDoCliente(c, ks, doc){
-  const k = (casoSel && D.casoPorId.get(casoSel)) || (ks||[]).find(x=>x.fase!=="encerrado") || (ks||[])[0];
+  // F227 · o pré-caso não responde como caso: vale o caso de verdade, depois o pré-caso escolhido no atendimento
+  const sel = casoSel && D.casoPorId.get(casoSel);
+  const vivo = (sel && !ehPreCaso(sel) ? sel : null) || (ks||[]).find(x=>x.fase!=="encerrado" && !ehPreCaso(x));
+  const pa = !vivo && preCasoAberto(c);
+  if(pa && pa.especie) return pa.especie;
+  const k = vivo || (ks||[]).find(x=>!ehPreCaso(x));
   // a triagem lê o benefício escrito (ele diz "rural", "híbrida"…); o contrato
   // e o termo leem a espécie do caso (especieDoContrato)
   if(k && (doc ? especieDoCaso(k) : k.beneficio)) return doc ? especieDoCaso(k) : k.beneficio;
@@ -32182,10 +32252,15 @@ function docsInformar(cliId){ adAbrir = true; adVisivel.add(cliId); abaAtiva = 0
 // com motivo. Os Documentos executam em seis quadros.
 const ETAPA_DE = {identificacao:"identificacao", pa:"pa", direito:"analise", documentos:"documentos"};
 // o pré-caso do atendimento em curso: o último vivo (o "Abrir atendimento" do card acrescenta no fim)
+// F227 · o colaborador escolhe o pré-caso (cartão do Escritório, Casos ▾ ou o seletor do modo
+// atendimento); sem escolha, vale o último vivo
+const _pcSel = new Map();
+function preCasosVivos(c){ return precasosDe(c).filter(p=>!p.so_lembrete && p.especie!==ESPECIE_PAGAMENTOS); }
 function preCasoAberto(c){
-  const vs = precasosDe(c).filter(p=>!p.so_lembrete && p.especie!==ESPECIE_PAGAMENTOS);
-  return vs[vs.length-1] || null;
+  const vs = preCasosVivos(c);
+  return vs.find(p=>p.id===_pcSel.get(c.id)) || vs[vs.length-1] || null;
 }
+function escolherPreCaso(cliId, pcId){ _pcSel.set(cliId, pcId); repintarFicha(); }
 async function mudarPreCasoCampos(cliId, pcId, muda){
   const c = D.cliPorId.get(cliId); if(!c) return false;
   return gravarPrecasos(cliId, precasosDe(c).map(p=>{ if(p.id!==pcId) return p; const n = {...p}; muda(n); return n; }));
@@ -32249,14 +32324,15 @@ function quadroDesfecho(c){
   const a = analisesDe(c.id)[0] || null, b = baseDesfecho(c, a), lig = pc.lembrete_id;
   const podeLemb = lig ? !!a : !!(b.data && b.data > hoje());
   const bt = (sug, rot, on, fn, tit) => `<button type="button" class="adr-bt${b.sug===sug?" adr-primario":""}" ${on?"":"disabled"} onclick="${fn}" title="${esc(tit)}">${rot}</button>`;
-  return `<section class="adx-sec desf" id="desfecho" aria-labelledby="desf-t"><div class="adm-cab"><h3 id="desf-t">Desfecho desta análise</h3>
+  // F227 · as três saídas do pré-caso, sempre na mesma ordem: arquivar, Aposentadorias futuras, gerar o caso
+  return `<section class="adx-sec desf" id="desfecho" aria-labelledby="desf-t"><div class="adm-cab"><h3 id="desf-t">Desfecho deste pré-caso${pc.especie?` · ${esc(pc.especie)}`:""}</h3>
       <span class="meio-sub">${a ? `análise de ${fmt(a.data_analise)}` : "nenhuma análise registrada ainda"}</span></div>
-    <p class="desf-base"><b>${b.sug==="caso" ? "Caso" : b.sug==="lembrete" ? "Lembrete" : "Sem desfecho sugerido"}</b> — ${esc(b.motivo)}.</p>
+    <p class="desf-base"><b>${b.sug==="caso" ? "Caso" : b.sug==="lembrete" ? "Aposentadorias futuras" : "Sem desfecho sugerido"}</b> — ${esc(b.motivo)}.</p>
     ${pc.etapas && pc.etapas.analise ? "" : `<p class="meio-sub">Registre a Análise de Direito: a espécie decidida nela desce ao pré-caso e ao caso.</p>`}
     <div class="desf-acoes">
-      ${bt("lembrete", lig ? "Atualizar o card" : "Criar o lembrete", podeLemb, `desfechoLembrete('${c.id}')`, lig ? "grava no card a etapa Analisado, a data do direito, o aviso 3 meses antes e o pedido de documentos 60 dias antes" : "card em Lembretes com a data do direito, aviso 3 meses antes e pedido de documentos 60 dias antes")}
-      ${bt("caso", "Gerar o caso", !!pc.especie || !!(a && (a.detalhes||{}).servico), `desfechoCaso('${c.id}')`, "o caso nasce com a espécie da análise; a procuração e o contrato saem em Documentos")}
-      <select class="card-arquivar" aria-label="Arquivar o atendimento" onchange="if(this.value){desfechoArquivar('${c.id}',this.value)}"><option value="">Arquivar…</option>${APOS_MOTIVOS.map(m=>`<option>${m}</option>`).join("")}</select>
+      <select class="card-arquivar" aria-label="Arquivar o pré-caso" onchange="if(this.value){desfechoArquivar('${c.id}',this.value)}"><option value="">1 · Arquivar…</option>${APOS_MOTIVOS.map(m=>`<option>${m}</option>`).join("")}</select>
+      ${bt("lembrete", lig ? "2 · Atualizar em Aposentadorias futuras" : "2 · Enviar a Aposentadorias futuras", podeLemb, `desfechoLembrete('${c.id}')`, lig ? "grava no card a etapa Analisado, a data do direito, o aviso 3 meses antes e o pedido de documentos 60 dias antes" : "cria o card em Aposentadorias futuras com a data do direito; o pré-caso sai do Escritório")}
+      ${bt("caso", "3 · Gerar o caso", !!pc.especie || !!(a && (a.detalhes||{}).servico), `desfechoCaso('${c.id}')`, "o pré-caso vira o caso, com a espécie da análise; a procuração e o contrato saem em Documentos")}
     </div></section>`;
 }
 async function desfechoLembrete(cliId){
@@ -32280,7 +32356,7 @@ async function desfechoLembrete(cliId){
     (D.lembretes = D.lembretes||[]).push(l);
     if(!(D.apos||[]).some(x=>x.cliente_id===cliId && x.data===b.data)) await lembrarApos(cliId, "auto", b.data, b.especie, avisoApos(b.data));
     await mudarPreCasoCampos(cliId, pc.id, p=>{ p.so_lembrete = true; p.lembrete_id = l.id; p.desfecho = {tipo:"lembrete", em:hoje(), quem:eu.id, ref:l.id}; });
-    aviso(`Lembrete criado — direito em ${fmt(b.data)}; documentos a partir de ${fmt(avisoDocs(b.data))} ✔`, false);
+    aviso(`Enviado a Aposentadorias futuras — direito em ${fmt(b.data)}; documentos a partir de ${fmt(avisoDocs(b.data))} ✔`, false);
   }
   _atendAberto.delete(cliId); subCad = "identificacao"; guardar("crm_subcad","identificacao"); abaAtiva = 9;
   montarSidebar(); abrirFicha(cliId);
@@ -32542,9 +32618,26 @@ function quadroGerados(c){
 // os honorários combinados e as anotações de cada conversa. Tudo com autor.
 // Mora em clientes.campos.precasos; o cliente fica AMARELO, na lista
 // Escritório, até o caso nascer — e pode haver mais de um pré-caso.
+// F226 · o pré-caso é LINHA DE CASOS (pre_caso = true, fase Escritório), com o
+// objeto em casos.precaso e a espécie em beneficio (docs/PRE-CASOS.md). O id do
+// objeto continua o de antes (pc_…), porque anotações e cards o citam. O que
+// ainda estiver em campos.precasos é lido até a primeira gravação.
+const ehPreCaso = k => !!(k && k.pre_caso && k.fase==="escritorio");
+// o passo do atendimento em que o pré-caso está (as etapas que concluirEtapa grava)
+function passoDoPreCaso(k){
+  const e = (k.precaso||{}).etapas||{};
+  const p = [["identificacao","Identificação"],["pa","Primeiro atendimento"],["analise","Análise de Direito"],["documentos","Documentos"]].find(([x])=>!e[x]);
+  return p ? p[1] : "Desfecho";
+}
+function linhasPreCaso(cliId){
+  return (D.casosDoCliente.get(cliId)||[]).filter(k=>k.pre_caso && (k.fase==="escritorio" || (k.precaso||{}).so_lembrete))
+    .sort((a,b)=>String((a.precaso||{}).em||a.criado_em||"").localeCompare(String((b.precaso||{}).em||b.criado_em||"")));
+}
 function precasosDe(c){
   const cp = c.campos||{};
-  const pcs = cp.precasos||[];
+  const linhas = linhasPreCaso(c.id).map(k=>({...(k.precaso||{}), id:(k.precaso||{}).id||k.id, especie:k.beneficio||"", caso_id:k.id}));
+  const ids = new Set(linhas.map(p=>p.id));
+  const pcs = [...linhas, ...(cp.precasos||[]).filter(p=>!ids.has(p.id))];
   // legado: a espécie única de antes vira o primeiro pré-caso, na leitura
   if(!pcs.length && cp.especie && cp.especie!==ESPECIE_PAGAMENTOS)
     return [{id:"legado", especie:cp.especie, natureza:"", marc:{}, honorarios:"", quem:null, em:null}];
@@ -32552,20 +32645,50 @@ function precasosDe(c){
 }
 async function gravarPrecasos(cliId, pcs){
   const c = D.cliPorId.get(cliId); if(!c) return false;
-  c.campos = {...(c.campos||{}), precasos:pcs};
-  // o legado materializado substitui a espécie única
-  if(pcs.some(p=>p.id==="legado")) delete c.campos.especie;
+  const antes = precasosDe(c);
+  const linhaDe = pc => (pc.caso_id && D.casoPorId.get(pc.caso_id)) || linhasPreCaso(cliId).find(k=>((k.precaso||{}).id||k.id)===pc.id);
   try{
-    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({campos:c.campos})});
+    for(const pc of pcs){
+      const {caso_id, especie, ...precaso} = pc;
+      const corpo = {beneficio:especie||null, precaso, fase:pc.so_lembrete ? "encerrado" : "escritorio"};
+      const k = linhaDe(pc);
+      if(k){
+        if(k.beneficio===corpo.beneficio && k.fase===corpo.fase && JSON.stringify(k.precaso||{})===JSON.stringify(precaso)) continue;
+        await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)});
+        Object.assign(k, corpo);
+      } else {
+        // o id nasce aqui: a linha entra na memória sem esperar a volta do banco
+        const n = {...corpo, id:crypto.randomUUID(), cliente_id:cliId, titulo:c.nome, pre_caso:true, origem_lista:"🙋 Escritório", criado_em:new Date().toISOString()};
+        await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify(n)});
+        D.casos.push(n); D.casoPorId.set(n.id, n);
+        if(!D.casosDoCliente.has(cliId)) D.casosDoCliente.set(cliId, []);
+        D.casosDoCliente.get(cliId).push(n);
+      }
+    }
+    // o que saiu da lista (arquivado, virou caso) encerra a linha
+    for(const p of antes){
+      if(pcs.some(x=>x.id===p.id)) continue;
+      const k = linhaDe(p);
+      if(!k || !k.pre_caso || k.fase==="encerrado") continue;
+      const corpo = {fase:"encerrado", encerrado_em:new Date().toISOString()};
+      await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)});
+      Object.assign(k, corpo);
+    }
+    // o cadastro grava junto, como antes (quem chama pode ter mexido em c.campos, ex.: honor_ajuste);
+    // a linha passou a ser a fonte: campos.precasos (e a espécie única do legado) saem dele
+    const campos = {...(c.campos||{})}; delete campos.precasos;
+    if(pcs.some(p=>p.id==="legado")) delete campos.especie;
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify({campos})});
+    c.campos = campos;
     return true;
   }catch(e){ aviso("Não consegui guardar — tente de novo"); return false; }
 }
 async function novoPreCaso(cliId){
   mesaAberta.add("b1"); // F55 · atendimento novo nasce com o passo 1 à vista
   const pcs = [...precasosDe(D.cliPorId.get(cliId))];
-  pcs.push({id:"pc_"+Date.now().toString(36), especie:"", natureza:"", marc:{},
-            honorarios:"", quem:eu.id, em:hoje()});
+  const id = "pc_"+Date.now().toString(36);
+  pcs.push({id, especie:"", natureza:"", marc:{}, honorarios:"", quem:eu.id, em:hoje()});
+  _pcSel.set(cliId, id);
   if(await gravarPrecasos(cliId, pcs)) repintarFicha();
 }
 // F30 · o atendimento novo de quem já resolveu o anterior (caso gerado ou
@@ -32581,7 +32704,8 @@ async function novoAtendimento(cliId){
   abaAtiva = 0; irSubCad("pa");
 }
 // F220 · da menção ou da lista direto ao atendimento: abre o que existe ou começa um
-async function abrirAtendimentoDe(cliId){
+async function abrirAtendimentoDe(cliId, pcId){
+  if(pcId) _pcSel.set(cliId, pcId);
   await abrirFicha(cliId);
   const c = D.cliPorId.get(cliId); if(!c) return;
   document.getElementById("modal").style.display = "none";
@@ -32597,123 +32721,28 @@ async function abrirCasoDaMencao(cliId, casoId, andId){
 }
 
 // ══════════════════════════════════════════════════════════════════════════
-// F34 · O CAMINHO DE VOLTA — caso que não é caso vira atendimento
+// F34 · O CAMINHO DE VOLTA, refeito na F226
 // ══════════════════════════════════════════════════════════════════════════
-// Quem está na lista Escritório está em NEGOCIAÇÃO: atrás de documento,
-// aguardando documento — ainda não gerou caso. A migração antiga transformou
-// essas tarefas em casos; desde a 08.99 a sincronização não cria mais caso
-// para a lista 🙋 Escritório (tarefa nova vira anotação no cadastro), e esta
-// é a peça que faltava: desfazer os que ficaram.
-//
-// A integração se corrige sozinha depois do apagamento: o migrar.py só trata
-// como caso a tarefa cujo caso JÁ existe no banco — apagado, a próxima
-// sincronização alimenta campos.atendimento/docs_pedidos daquele cliente. E
-// como a sync deduplica as anotações pelo id do bloco (que é o id do
-// andamento), copiamos cada andamento com o MESMO id: a rodada seguinte
-// substitui em vez de duplicar.
-async function dadosParaConversao(ids){
-  const ands=[], tfs=[];
-  for(let i=0;i<ids.length;i+=40){
-    const lote=ids.slice(i,i+40).join(",");
-    ands.push(...await todas("andamentos",`select=*&caso_id=in.(${lote})`).catch(()=>[]));
-    tfs.push(...await todas("tarefas",`select=*&caso_id=in.(${lote})`).catch(()=>[]));
-  }
-  return {ands, tfs};
-}
-// perícia e pagamento têm caso_id obrigatório no banco: morreriam junto com
-// o caso. Quem os tem não converte — resolve-se primeiro, à mão.
-function travaConversao(k){
-  const evs=(D.eventos||[]).filter(e=>e.caso_id===k.id && e.status!=="cancelada");
-  const pgs=(D.pagamentos||[]).filter(p=>p.caso_id===k.id);
-  if(evs.length) return `tem ${evs.length} perícia(s)/evento(s) marcado(s)`;
-  if(pgs.length) return `tem ${pgs.length} pagamento(s) lançado(s)`;
-  return "";
-}
-async function converterCasoEmAtendimento(k, c, dados){
-  const ands=dados.ands.filter(a=>a.caso_id===k.id)
-    .sort((a,b)=>String(a.criado_em||"").localeCompare(String(b.criado_em||"")));
-  const tfs=dados.tfs.filter(t=>t.caso_id===k.id);
-  const campos={...(c.campos||{})};
-  const atuais=campos.atendimento||[];
-  const idsAt=new Set(atuais.map(n=>n.id).filter(Boolean));
-  const notas=ands.filter(a=>!idsAt.has(a.id)).map(a=>{
-    const co=D.colPorId.get(a.autor_id);
-    return {id:a.id, em:a.criado_em, texto:a.texto,
-            quem:co?co.nome.split(" ")[0]:null, origem:a.origem||"todo"};
-  });
-  if(notas.length)
-    campos.atendimento=[...atuais, ...notas]
-      .sort((a,b)=>String(a.em||"").localeCompare(String(b.em||"")));
-  const abertas=tfs.filter(t=>!t.concluida);
-  if(abertas.length){
-    // mesmo formato e id (o do caso) que a sincronização usa: sem duplicar
-    const outros=(campos.docs_pedidos||[]).filter(p=>p.id!==k.id);
-    campos.docs_pedidos=[...outros, {id:k.id, em:null, quem:"To Do",
-      especie:k.beneficio||null,
-      itens:abertas.map(t=>({nome:t.titulo, entregue:null}))}];
-  }
-  // o benefício vira PRÉ-CASO com id derivado do caso — reconverter não duplica
-  const pcs=precasosDe(c).filter(p=>p.id!=="legado");
-  const pcId="pc_"+String(k.id).replace(/-/g,"").slice(0,10);
-  if(!pcs.some(p=>p.id===pcId))
-    pcs.push({id:pcId, especie:k.beneficio||"",
-      natureza:/revis/.test(dsa(k.beneficio||""))?"revisao":"", marc:{},
-      honorarios:"", quem:eu.id, em:hoje(), de_caso:k.id});
-  campos.precasos=pcs;
-  delete campos.especie;
-  await api(`/rest/v1/anexos?caso_id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({caso_id:null})}).catch(()=>{});
-  await api(`/rest/v1/clientes?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({campos})});
-  c.campos=campos;
-  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"DELETE"});
-  D.casos=D.casos.filter(x=>x.id!==k.id); D.casoPorId.delete(k.id);
-  D.casosDoCliente.set(c.id,(D.casosDoCliente.get(c.id)||[]).filter(x=>x.id!==k.id));
-  (D.anexos||[]).forEach(a=>{ if(a.caso_id===k.id) a.caso_id=null; });
+// o caso que não é caso VOLTA A PRÉ-CASO: a mesma linha, com andamentos,
+// tarefas, anexos e agenda, passa à fase Escritório com pre_caso (docs/PRE-CASOS.md).
+// Antes (F34) os andamentos viravam anotações do cadastro e o caso era apagado.
+async function converterCasoEmAtendimento(k, c){
+  const corpo = {pre_caso:true, fase:"escritorio", precaso:{...(k.precaso||{}), id:(k.precaso||{}).id||k.id,
+    natureza:/revis/.test(dsa(k.beneficio||""))?"revisao":"", marc:{}, honorarios:"", quem:eu.id, em:hoje(), de_caso:k.id}};
+  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)});
+  Object.assign(k, corpo);
   reindexarCliente(c);
 }
 async function naoEhCaso(casoId){
   const k=D.casoPorId.get(casoId); if(!k) return;
   const c=D.cliPorId.get(k.cliente_id); if(!c) return;
-  const trava=travaConversao(k);
-  if(trava) return aviso(`Não dá para converter: este caso ${trava} — trate isso antes`);
-  if(!await confirmar(`"${tituloCaso(k)}" NÃO é caso?\n\nO que acontece:\n`
-    +`· os andamentos viram anotações do atendimento, com data e autor preservados\n`
-    +`· os anexos e os documentos pedidos voltam ao cadastro\n`
-    +`· o benefício vira pré-caso — o caso de verdade nasce quando assinar\n`
-    +`· este caso é APAGADO do CRM (a tarefa no To Do não muda)\n\n`
-    +`O cliente fica 🟡 em atendimento, na lista Escritório.`)) return;
-  const dados=await dadosParaConversao([k.id]);
-  await converterCasoEmAtendimento(k, c, dados);
-  plim(); aviso("O caso virou atendimento — anotações preservadas ✔");
+  if(!await confirmar(`"${tituloCaso(k)}" NÃO é caso?\n\nEle volta a PRÉ-CASO na lista 🙋 Escritório, com as anotações, os documentos, as tarefas e a agenda.\n`
+    +`O caso de verdade nasce no "Gerar caso" do atendimento. A tarefa no To Do não muda.`)) return;
+  try{ await converterCasoEmAtendimento(k, c); }
+  catch(e){ return aviso("Não consegui voltar a pré-caso — tente de novo"); }
+  plim(); aviso("Voltou a pré-caso, com tudo o que tinha ✔");
   montarSidebar(); casoSel=null; abaAtiva=0;
-  subCad="anotacoes"; guardar("crm_subcad","anotacoes");
   render(); abrirFicha(c.id);
-}
-// o LOTE dos legados: todos os casos da fase Escritório de uma vez, pulando
-// só os travados (perícia/pagamento). Decisão do Paulo em 16.08.2026.
-async function converterEscritorioEmMassa(){
-  const alvos=D.casos.filter(k=>k.fase==="escritorio");
-  if(!alvos.length) return aviso("Nenhum caso na fase Escritório");
-  const travados=alvos.filter(k=>travaConversao(k));
-  const livres=alvos.filter(k=>!travaConversao(k));
-  if(!await confirmar(`Converter ${livres.length} caso(s) da lista Escritório em ATENDIMENTOS?\n\n`
-    +`Cada um: andamentos → anotações (data e autor preservados), documentos\n`
-    +`pedidos e anexos de volta ao cadastro, benefício → pré-caso, caso apagado.\n`
-    +(travados.length?`\n${travados.length} caso(s) com perícia ou pagamento ficam de fora.\n`:"")
-    +`\nAs tarefas no To Do não mudam; a sincronização passa a alimentar as\nanotações desses clientes.`)) return;
-  const dados=await dadosParaConversao(livres.map(k=>k.id));
-  let n=0;
-  for(const k of livres){
-    const c=D.cliPorId.get(k.cliente_id);
-    if(!c) continue;
-    try{ await converterCasoEmAtendimento(k, c, dados); n++; }
-    catch(e){ /* segue: o que falhou fica como caso e aparece na lista */ }
-    if(n%25===0) aviso(`Convertendo… ${n} de ${livres.length}`, false);
-  }
-  plim();
-  aviso(`✔ ${n} caso(s) viraram atendimentos${travados.length?` · ${travados.length} ficaram (perícia/pagamento)`:""}`);
-  montarSidebar(); render();
 }
 // F30 · reabrir a triagem: o marcador de encerrada sai (fica o rastro), o
 // botão Triagem volta e as Anotações se recolhem até novo encerramento
@@ -32884,7 +32913,7 @@ async function preCasoParaLembrete(cliId, pcId){
   // ficam à vista na aba Lembretes, junto do lembrete criado
   subCad="identificacao"; guardar("crm_subcad","identificacao");
   abaAtiva=9;
-  aviso("Lembrete criado — as anotações do atendimento ficam na aba Lembretes ✔");
+  aviso("Lembrete criado — as anotações do atendimento ficam na aba Aposentadorias futuras ✔");
   repintarFicha(); montarSidebar();
 }
 // GERAR O CASO deste pré-caso: as anotações dele viram andamentos com a data
@@ -32926,15 +32955,26 @@ async function gerarCasoDoPre(cliId, pcId){
   const base = {cliente_id:cliId, titulo:c.nome,
     beneficio:pc.especie, fase, especie:pc.cod||null,
     origem_lista:(LISTAS_MOVER.find(([,f])=>f===fase)||["🙋 Escritório"])[0]};
-  const criar = corpo => api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify(corpo)});
+  // F226 · o pré-caso que já é linha de casos VIRA o caso (a mesma linha, com o
+  // que ela já tem); o que ainda morava só no cadastro nasce como antes
+  const linha = pc.caso_id && D.casoPorId.get(pc.caso_id);
+  const {caso_id:_c, especie:_e, ...resto} = pc;
+  const viraCaso = corpo => ({...corpo, pre_caso:false, precaso:{...resto, desfecho:{tipo:"caso", em:hoje(), quem:eu.id}},
+    // a linha que veio do To Do não volta ao Escritório na sincronização seguinte (respeitar_movidos)
+    ...(linha && linha.todo_task_id ? {mover_para:corpo.origem_lista} : {})});
+  const criar = async corpo => linha
+    ? (await api(`/rest/v1/casos?id=eq.${linha.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify(viraCaso(corpo))}), [Object.assign(linha, viraCaso(corpo))])
+    : api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"}, body:JSON.stringify(corpo)});
   try{
     try{ [k]=await criar(pc.sub ? {...base, subespecie:pc.sub} : base); }
     catch(e){ if(pc.sub && /subespecie|42703|PGRST204/.test(String(e.message||e))) [k]=await criar(base); else throw e; }
   }catch(e){ return aviso("Não consegui criar o caso — tente de novo"); }
-  D.casos.push(k); D.casoPorId.set(k.id,k);
-  if(!D.casosDoCliente.has(cliId)) D.casosDoCliente.set(cliId,[]);
-  D.casosDoCliente.get(cliId).push(k);
+  if(!linha){
+    D.casos.push(k); D.casoPorId.set(k.id,k);
+    if(!D.casosDoCliente.has(cliId)) D.casosDoCliente.set(cliId,[]);
+    D.casosDoCliente.get(cliId).push(k);
+  }
   const marcas = Object.entries(pc.marc||{}).filter(([,v])=>v).map(([m])=>m);
   await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
@@ -32972,7 +33012,7 @@ async function gerarCasoDoPre(cliId, pcId){
   }
   c.campos = {...(c.campos||{}), atendimento:ficam.length?ficam:undefined,
     docs_pedidos:undefined, especie:undefined,
-    precasos:pcs.filter(p=>p.id!==pcId)};
+    precasos:pcs.filter(p=>p.id!==pcId && !p.caso_id)};   // F226 · as linhas de casos não voltam ao cadastro
   if(!c.campos.precasos.length) delete c.campos.precasos;
   await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({campos:c.campos})}).catch(()=>{});
@@ -33061,7 +33101,7 @@ async function manterEmEscritorio(cliId, pcId){
 const semEmoji = l => String(l).replace(/^[^\p{L}\p{N}]+/u, "");
 function barraEscritorio(c){
   return `<section class="adr-barra-esc" aria-label="Ações do cliente em Escritório">
-    <p>Cliente mantido em <b>Escritório</b>. O acompanhamento corre pela Análise de Direito e pelos Lembretes.</p>
+    <p>Cliente mantido em <b>Escritório</b>. O acompanhamento corre pela Análise de Direito e por Aposentadorias futuras.</p>
     <button type="button" class="adr-bt" onclick="novoAndamentoDireito('${c.id}')">+ Novo andamento</button>
     <button type="button" class="adr-bt" onclick="modalProcuracoes('${c.id}')">Gerar procurações</button>
     <button type="button" class="adr-bt adr-primario" onclick="modalCriarCaso('${c.id}')">Criar caso</button>
@@ -33216,7 +33256,7 @@ async function salvarNotaAtendimento2(cliId){
   // F55 · prazo fatal direto da anotação: com um caso em andamento, a data
   // move o caso para 🗓 Tarefas com Prazo (o mesmo efeito do 📌 seguimento)
   const prazoFatal=v("at-prazo");
-  const ksAtivos=(D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
+  const ksAtivos=(D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado" && !ehPreCaso(k));   // F226 · prazo fatal é de caso de verdade
   if(prazoFatal && ksAtivos.length!==1)
     return aviso(ksAtivos.length?"Mais de um caso em andamento — marque o prazo pelo 📌 do próprio caso":"Prazo fatal pede caso em andamento — sem caso, use o marcador pendência");
   const nota={em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0],
@@ -33577,7 +33617,7 @@ function caixaAtendimento(c, ks){
         <span class="pc-nat">${[["concessao","concessão"],["revisao","revisão"],["acerto","acerto"]]
           .map(([v,r])=>`<button class="tri-e${pc.natureza===v?" on ok":""}"
             onclick="mudarPreCaso('${c.id}','${pc.id}','natureza','${pc.natureza===v?"":v}')">${r}</button>`).join("")}</span>
-        ${pc.so_lembrete?`<span class="chip verde" title="virou lembrete — acompanhamos a data sem gerar caso">acompanhando em Lembretes</span>
+        ${pc.so_lembrete?`<span class="chip verde" title="virou lembrete — acompanhamos a data sem gerar caso">acompanhando em Aposentadorias futuras</span>
           <button class="cad-mini" onclick="voltarLembreteParaMesa('${c.id}','${pc.id}')"
             title="desfaz: o pré-caso volta à mesa do atendimento e o lembrete criado é desativado">↺ voltar à mesa</button>`:""}
         <button class="cad-lap" style="margin-left:auto" title="tirar este pré-caso"
@@ -33678,7 +33718,7 @@ function caixaAtendimento(c, ks){
         <select id="pcl-resp-${pc.id}" title="quem avisa o cliente na data"><option value="">responsável…</option>
           ${equipeAtiva().map(x=>`<option value="${x.id}">${esc(x.nome.split(" ")[0])}</option>`).join("")}</select>
         <button class="btn-mini" onclick="preCasoParaLembrete('${c.id}','${pc.id}')"
-          title="não gera caso: cria o lembrete (aposentadoria futura, pagar contribuições…) e abre o botão Lembretes para as anotações de acompanhamento">
+          title="não gera caso: cria o lembrete (aposentadoria futura, pagar contribuições…) e abre a aba Aposentadorias futuras para as anotações de acompanhamento">
           Somente gerar lembrete</button>
         <span class="pc-ou">ou</span>
         <button class="btn-mini" onclick="tirarPreCaso('${c.id}','${pc.id}')"
@@ -34240,6 +34280,9 @@ document.getElementById("busca").addEventListener("input",e=>{
 // com o menu recolhido a pesquisa vira uma lupa: clicar estende o menu
 document.getElementById("busca").addEventListener("mousedown",e=>{
   const app=document.getElementById("app");
+  // F224 · com o campo já aberto, o clique é do texto: selecionar uma parte para apagar
+  // (antes o preventDefault valia sempre que a ficha estava aberta e travava a seleção)
+  if(e.target.getBoundingClientRect().width >= 80 || app.classList.contains("busca-aberta")) return;
   if(app.classList.contains("mini-lateral") || app.classList.contains("detalhe-aberto")){
     e.preventDefault();
     app.classList.add("busca-aberta"); aplicarMenu();
