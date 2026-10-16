@@ -1,0 +1,3503 @@
+[
+ {
+  "nome": "mulher com 58 anos cumpre os 55",
+  "op": "idade_rural",
+  "id": "idade_rural",
+  "x": {
+   "dn": "1968-05-10",
+   "sx": "F"
+  },
+  "est": "ok",
+  "txt": "exige 55"
+ },
+ {
+  "nome": "homem com 56 anos completa 60 em 2030",
+  "op": "idade_rural",
+  "id": "idade_rural",
+  "x": {
+   "dn": "1970-01-01",
+   "sx": "M"
+  },
+  "est": "falta",
+  "txt": "01/01/2030"
+ },
+ {
+  "nome": "sem nascimento, a informar",
+  "op": "idade_rural",
+  "id": "idade_rural",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "linha de segurado especial no quadro Tempos",
+  "op": "idade_rural",
+  "id": "categoria_rural",
+  "x": {
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "segurado especial"
+ },
+ {
+  "nome": "CNIS com PSE-NEG fica em risco",
+  "op": "idade_rural",
+  "id": "categoria_rural",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2010",
+      "fim": "31/12/2015",
+      "indicadores": [
+       "PSE-NEG"
+      ]
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "PSE-NEG"
+ },
+ {
+  "nome": "sem regime nem linha, a informar",
+  "op": "idade_rural",
+  "id": "categoria_rural",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "segurado especial desde 2005 tem 262 meses",
+  "op": "idade_rural",
+  "id": "carencia_rural_180",
+  "x": {
+   "dn": "1968-05-10",
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "^262 meses rurais.*exige 180"
+ },
+ {
+  "nome": "segurado especial desde 2015: faltam 38",
+  "op": "idade_rural",
+  "id": "carencia_rural_180",
+  "x": {
+   "dn": "1968-05-10",
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "2015-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "142 meses.*faltam 38"
+ },
+ {
+  "nome": "empregado rural com 4 anos entre 2012 e 2015 conta 48 meses (×3 com teto de 12 por ano civil, art. 203, par. único), e não 144",
+  "op": "idade_rural",
+  "id": "carencia_rural_180",
+  "x": {
+   "dn": "1966-01-01",
+   "sx": "M",
+   "tempos": [
+    {
+     "de": "2012-01-01",
+     "ate": "2015-12-31",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "^48 meses rurais"
+ },
+ {
+  "nome": "empregado rural com 4 anos entre 2012 e 2015: 48 meses de emprego ficam 48 (o teto de 12 por ano já está cheio)",
+  "op": "idade_rural",
+  "id": "empregado_ci_rural_meses",
+  "x": {
+   "dn": "1966-01-01",
+   "sx": "M",
+   "tempos": [
+    {
+     "de": "2012-01-01",
+     "ate": "2015-12-31",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "48 meses de emprego rural viram 48"
+ },
+ {
+  "nome": "safrista: 4 meses por ano de 2012 a 2015 (16) viram 48 pelo ×3",
+  "op": "idade_rural",
+  "id": "carencia_rural_180",
+  "x": {
+   "dn": "1966-01-01",
+   "sx": "M",
+   "tempos": [
+    {
+     "de": "2012-05-01",
+     "ate": "2012-08-31",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    },
+    {
+     "de": "2013-05-01",
+     "ate": "2013-08-31",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    },
+    {
+     "de": "2014-05-01",
+     "ate": "2014-08-31",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    },
+    {
+     "de": "2015-05-01",
+     "ate": "2015-08-31",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "^48 meses rurais.*multiplicador do empregado rural somou 32"
+ },
+ {
+  "nome": "safrista: 16 meses de emprego viram 48",
+  "op": "idade_rural",
+  "id": "empregado_ci_rural_meses",
+  "x": {
+   "dn": "1966-01-01",
+   "sx": "M",
+   "tempos": [
+    {
+     "de": "2012-05-01",
+     "ate": "2012-08-31",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    },
+    {
+     "de": "2013-05-01",
+     "ate": "2013-08-31",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    },
+    {
+     "de": "2014-05-01",
+     "ate": "2014-08-31",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    },
+    {
+     "de": "2015-05-01",
+     "ate": "2015-08-31",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "16 meses de emprego rural viram 48"
+ },
+ {
+  "nome": "segurado especial 2000-2010 (132) e empregado 6 meses por ano de 2016 a 2020 ×2 (60) somam 192",
+  "op": "idade_rural",
+  "id": "carencia_rural_180",
+  "x": {
+   "dn": "1964-01-01",
+   "sx": "M",
+   "tempos": [
+    {
+     "de": "2000-01-01",
+     "ate": "2010-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    },
+    {
+     "de": "2016-01-01",
+     "ate": "2016-06-30",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    },
+    {
+     "de": "2017-01-01",
+     "ate": "2017-06-30",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    },
+    {
+     "de": "2018-01-01",
+     "ate": "2018-06-30",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    },
+    {
+     "de": "2019-01-01",
+     "ate": "2019-06-30",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    },
+    {
+     "de": "2020-01-01",
+     "ate": "2020-06-30",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "^192 meses rurais"
+ },
+ {
+  "nome": "na roça antes de 1991 e 60 anos em 2009: tabela do art. 142 (168)",
+  "op": "idade_rural",
+  "id": "carencia_rural_180",
+  "x": {
+   "dn": "1949-03-01",
+   "sx": "M",
+   "v": {
+    "rur_pre1991": "Sim"
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "ate": "2009-03-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "171 meses.*exige 168 \\(tabela do art. 142, ano 2009\\)"
+ },
+ {
+  "nome": "CI rural sem contribuição desde 2011: o INSS não conta (risco)",
+  "op": "idade_rural",
+  "id": "carencia_rural_180",
+  "x": {
+   "dn": "1960-01-01",
+   "sx": "M",
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "2020-12-31",
+     "nat": "rural",
+     "det": "CI rural",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "^72 meses.*não os conta"
+ },
+ {
+  "nome": "CI rural sem contribuição desde 2011: 120 meses fora",
+  "op": "idade_rural",
+  "id": "empregado_ci_rural_meses",
+  "x": {
+   "dn": "1960-01-01",
+   "sx": "M",
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "2020-12-31",
+     "nat": "rural",
+     "det": "CI rural",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "^120 meses de CI rural"
+ },
+ {
+  "nome": "na roça na DER",
+  "op": "idade_rural",
+  "id": "periodo_imediatamente_anterior",
+  "x": {
+   "dn": "1968-05-10",
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "na roça na DER"
+ },
+ {
+  "nome": "parou em 2016, mas reuniu tudo aos 55 em 2015: direito adquirido",
+  "op": "idade_rural",
+  "id": "periodo_imediatamente_anterior",
+  "x": {
+   "dn": "1960-01-01",
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "ate": "2016-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "direito adquirido",
+  "quando": "2015-01-01"
+ },
+ {
+  "nome": "parou em 2020 e só fez 60 em 2024: fora da roça e da graça",
+  "op": "idade_rural",
+  "id": "periodo_imediatamente_anterior",
+  "x": {
+   "dn": "1964-06-01",
+   "sx": "M",
+   "tempos": [
+    {
+     "de": "2000-01-01",
+     "ate": "2020-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "último mês na roça 12/2020"
+ },
+ {
+  "nome": "empregado permanente descaracteriza",
+  "op": "idade_rural",
+  "id": "economia_familiar",
+  "x": {
+   "v": {
+    "rur_empregados": "Sim"
+   },
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "empregado permanente"
+ },
+ {
+  "nome": "só a família trabalha",
+  "op": "idade_rural",
+  "id": "economia_familiar",
+  "x": {
+   "v": {
+    "rur_empregados": "Não"
+   },
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem resposta, a informar",
+  "op": "idade_rural",
+  "id": "economia_familiar",
+  "x": {
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "empregado rural: não se aplica",
+  "op": "idade_rural",
+  "id": "economia_familiar",
+  "x": {
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Empregado rural",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "info"
+ },
+ {
+  "nome": "6 módulos: risco, com o Tema 1115",
+  "op": "idade_rural",
+  "id": "area_quatro_modulos",
+  "x": {
+   "v": {
+    "rur_modulos": "6"
+   },
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "Tema 1115"
+ },
+ {
+  "nome": "3 módulos: em ordem",
+  "op": "idade_rural",
+  "id": "area_quatro_modulos",
+  "x": {
+   "v": {
+    "rur_modulos": "3"
+   },
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "até 4"
+ },
+ {
+  "nome": "sem a área, a informar",
+  "op": "idade_rural",
+  "id": "area_quatro_modulos",
+  "x": {
+   "v": {
+    "rur_imovel": "Sítio São José"
+   },
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "informar",
+  "txt": "Sítio São José"
+ },
+ {
+  "nome": "atividade só antes de 2008: a área não se mede",
+  "op": "idade_rural",
+  "id": "area_quatro_modulos",
+  "x": {
+   "v": {
+    "rur_modulos": "10"
+   },
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "2005-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "info"
+ },
+ {
+  "nome": "mora em município não vizinho: risco",
+  "op": "idade_rural",
+  "id": "residencia",
+  "x": {
+   "v": {
+    "rur_reside": "Em município não vizinho"
+   },
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "contíguo"
+ },
+ {
+  "nome": "CadÚnico no mesmo município da roça",
+  "op": "idade_rural",
+  "id": "residencia",
+  "x": {
+   "v": {
+    "rur_municipio": "Jardinópolis"
+   },
+   "cad": {
+    "municipio": "JARDINOPOLIS - SP"
+   },
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "JARDINOPOLIS"
+ },
+ {
+  "nome": "sem dado, a informar",
+  "op": "idade_rural",
+  "id": "residencia",
+  "x": {
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "CNPJ na Redesim sozinho não descaracteriza: a informar, nunca impedido",
+  "op": "idade_rural",
+  "id": "sem_descaracterizacao",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   },
+   "fd": {
+    "cnpjs": [
+     {
+      "cnpj": "12.345.678/0001-90",
+      "razao": "SITIO BOA VISTA LTDA",
+      "situacao": "ATIVA",
+      "vinculo": "Sócio",
+      "qualificacao": "Sócio-Administrador"
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "simples inscrição não descaracteriza"
+ },
+ {
+  "nome": "vínculo urbano de 275 dias em 2019: risco",
+  "op": "idade_rural",
+  "id": "sem_descaracterizacao",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     },
+     {
+      "tipo": "Empregado",
+      "origem": "SUPERMERCADO",
+      "inicio": "01/03/2019",
+      "fim": "30/11/2019",
+      "indicadores": []
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "275 dias em 2019"
+ },
+ {
+  "nome": "CNIS só com o segurado especial: em ordem",
+  "op": "idade_rural",
+  "id": "sem_descaracterizacao",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "sem vínculo acima de 120 dias"
+ },
+ {
+  "nome": "BPC do próprio cliente: risco",
+  "op": "idade_rural",
+  "id": "sem_descaracterizacao",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   },
+   "benefCnis": [
+    {
+     "especie": "88",
+     "origem": "",
+     "nb": "7001",
+     "de": "2020-01-01",
+     "ate": "",
+     "situacao": "ATIVO",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "BPC"
+ },
+ {
+  "nome": "sem o CNIS, a informar",
+  "op": "idade_rural",
+  "id": "sem_descaracterizacao",
+  "x": {
+   "tempos": [
+    {
+     "de": "2005-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "informar",
+  "txt": "CNIS não foi lido"
+ },
+ {
+  "nome": "autodeclaração e um documento em cada metade",
+  "op": "idade_rural",
+  "id": "prova_autodeclaracao_ratificada",
+  "x": {
+   "dn": "1965-01-01",
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "2008-01-01",
+     "ate": "2022-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ],
+   "v": {
+    "rur_auto": "Sim",
+    "rur_ratif_1a": "ITR 2010",
+    "rur_ratif_2a": "nota fiscal de venda 2019"
+   }
+  },
+  "est": "ok",
+  "txt": "1ª metade: ITR 2010; 2ª metade: nota fiscal"
+ },
+ {
+  "nome": "sem documento na 2ª metade",
+  "op": "idade_rural",
+  "id": "prova_autodeclaracao_ratificada",
+  "x": {
+   "dn": "1965-01-01",
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "2008-01-01",
+     "ate": "2022-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ],
+   "v": {
+    "rur_auto": "Sim",
+    "rur_ratif_1a": "ITR 2010"
+   }
+  },
+  "est": "falta",
+  "txt": "2ª metade \\(07/2015 a 12/2022\\)"
+ },
+ {
+  "nome": "escritura de 2007 tem validade longa e alcança as duas metades",
+  "op": "idade_rural",
+  "id": "prova_autodeclaracao_ratificada",
+  "x": {
+   "dn": "1965-01-01",
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "2008-01-01",
+     "ate": "2022-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ],
+   "v": {
+    "rur_auto": "Sim",
+    "rur_ratif_1a": "Escritura do sítio 2007"
+   }
+  },
+  "est": "ok",
+  "txt": "validade longa"
+ },
+ {
+  "nome": "documento de 2020 não serve à 1ª metade",
+  "op": "idade_rural",
+  "id": "prova_autodeclaracao_ratificada",
+  "x": {
+   "dn": "1965-01-01",
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "2008-01-01",
+     "ate": "2022-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ],
+   "v": {
+    "rur_auto": "Sim",
+    "rur_ratif_1a": "nota fiscal 2020",
+    "rur_ratif_2a": "nota fiscal 2021"
+   }
+  },
+  "est": "risco",
+  "txt": "documento de 2020 não é dessa época"
+ },
+ {
+  "nome": "meses desde 2023 fora do CNIS: em ordem pela prorrogação (IN 128, art. 117, § 1º), com a nota",
+  "op": "idade_rural",
+  "id": "prova_autodeclaracao_ratificada",
+  "x": {
+   "dn": "1965-01-01",
+   "sx": "F",
+   "v": {
+    "rur_auto": "Sim",
+    "rur_ratif_1a": "ITR 2012",
+    "rur_ratif_2a": "nota 2020"
+   },
+   "tempos": [
+    {
+     "de": "2010-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "46 meses desde 01/2023.*art. 117, § 1º"
+ },
+ {
+  "nome": "período inteiro no CNIS (base governamental)",
+  "op": "idade_rural",
+  "id": "prova_autodeclaracao_ratificada",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "CNIS \\(base governamental\\)"
+ },
+ {
+  "nome": "já aposentado: impedido",
+  "op": "idade_rural",
+  "id": "nao_acumular",
+  "x": {
+   "apos": {
+    "especie": "Aposentadoria por idade",
+    "nb": "1234567890"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "BPC ativo: opção",
+  "op": "idade_rural",
+  "id": "nao_acumular",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   },
+   "benefCnis": [
+    {
+     "especie": "88",
+     "origem": "",
+     "nb": "7001",
+     "de": "2020-01-01",
+     "ate": "",
+     "situacao": "ATIVO",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "opcao",
+  "txt": "compare os valores"
+ },
+ {
+  "nome": "sem o CNIS, a informar",
+  "op": "idade_rural",
+  "id": "nao_acumular",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "CNIS sem benefício ativo: em ordem",
+  "op": "idade_rural",
+  "id": "nao_acumular",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "mulher na roça desde 1990 tem o direito aos 55, em 15/03/2020",
+  "op": "idade_rural",
+  "quandoOp": true,
+  "x": {
+   "dn": "1965-03-15",
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "quando": "2020-03-15"
+ },
+ {
+  "nome": "homem na roça desde 2015 completa idade e 181 meses em 2030",
+  "op": "idade_rural",
+  "quandoOp": true,
+  "x": {
+   "dn": "1970-01-01",
+   "sx": "M",
+   "tempos": [
+    {
+     "de": "2015-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "quando": "2030-01-01"
+ },
+ {
+  "nome": "parou em 2016, direito desde 2015",
+  "op": "idade_rural",
+  "quandoOp": true,
+  "x": {
+   "dn": "1960-01-01",
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "ate": "2016-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "quando": "2015-01-01"
+ },
+ {
+  "nome": "100 contribuições no CNIS e 90 meses rurais nas linhas somam 190: em ordem",
+  "op": "hibrida",
+  "id": "carencia_somada",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "ct": {
+    "carencia": 100,
+    "anos": 8,
+    "meses": 4,
+    "periodos": [
+     [
+      "2010-01",
+      "2018-04"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "100 contribuições do CNIS \\+ 90 meses rurais = 190"
+ },
+ {
+  "nome": "60 contribuições e 30 meses rurais: faltam 90",
+  "op": "hibrida",
+  "id": "carencia_somada",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "ct": {
+    "carencia": 60,
+    "periodos": [
+     [
+      "2018-01",
+      "2022-12"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "= 90.*faltam 90"
+ },
+ {
+  "nome": "CI rural depois de 1991 sem contribuição fica fora da soma",
+  "op": "hibrida",
+  "id": "carencia_somada",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "ct": {
+    "carencia": 150,
+    "periodos": [
+     [
+      "2008-01",
+      "2020-06"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "ate": "2000-12-31",
+     "nat": "rural",
+     "det": "CI rural",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "72 meses de CI rural depois de 11/1991 sem contribuição ficaram fora"
+ },
+ {
+  "nome": "CI no CNIS sem dizer do atraso: a conferir (art. 27, II)",
+  "op": "hibrida",
+  "id": "carencia_somada",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "ct": {
+    "carencia": 100,
+    "anos": 8,
+    "meses": 4,
+    "periodos": [
+     [
+      "2010-01",
+      "2018-04"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ],
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2010",
+      "fim": "30/04/2018",
+      "indicadores": []
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "art. 27, II"
+ },
+ {
+  "nome": "sem CNIS e sem linha rural, a informar",
+  "op": "hibrida",
+  "id": "carencia_somada",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F"
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "CI rural depois de 1991 sem contribuição: risco",
+  "op": "hibrida",
+  "id": "rural_pos_1991_sem_indenizacao",
+  "x": {
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "ate": "2000-12-31",
+     "nat": "rural",
+     "det": "CI rural",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "72 meses de CI rural depois de 11/1991"
+ },
+ {
+  "nome": "segurado especial depois de 1991 entra pela ACP",
+  "op": "hibrida",
+  "id": "rural_pos_1991_sem_indenizacao",
+  "x": {
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "68 meses de segurado especial.*ACP"
+ },
+ {
+  "nome": "DER anterior a 05/01/2018: divergente",
+  "op": "hibrida",
+  "id": "rural_pos_1991_sem_indenizacao",
+  "x": {
+   "der": "2017-06-01",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "divergente"
+ },
+ {
+  "nome": "só rural antes de 1991: informativo",
+  "op": "hibrida",
+  "id": "rural_pos_1991_sem_indenizacao",
+  "x": {
+   "tempos": [
+    {
+     "de": "1980-01-01",
+     "ate": "1990-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "info"
+ },
+ {
+  "nome": "mulher com 64 anos em 2026: exige 62",
+  "op": "hibrida",
+  "id": "idade_hibrida",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "ct": {
+    "carencia": 100,
+    "anos": 8,
+    "meses": 4,
+    "periodos": [
+     [
+      "2010-01",
+      "2018-04"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "exige 62 anos em 2026"
+ },
+ {
+  "nome": "homem com 61 anos completa 65 em 2030",
+  "op": "hibrida",
+  "id": "idade_hibrida",
+  "x": {
+   "dn": "1965-01-01",
+   "sx": "M",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "01/01/2030"
+ },
+ {
+  "nome": "mulher com 60 anos em DER de 2020 (exige 60 e 6 meses)",
+  "op": "hibrida",
+  "id": "idade_hibrida",
+  "x": {
+   "der": "2020-11-01",
+   "dn": "1960-09-10",
+   "sx": "F",
+   "filiacao": "1985-02-01"
+  },
+  "est": "falta",
+  "txt": "exige 60 anos e 6 meses.*10/09/2021"
+ },
+ {
+  "nome": "sem nascimento, a informar",
+  "op": "hibrida",
+  "id": "idade_hibrida",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "mulher que fez 61 anos em 2021 com tudo reunido tem o direito em 2021, e não em 2022",
+  "op": "hibrida",
+  "quandoOp": true,
+  "x": {
+   "dn": "1960-09-10",
+   "sx": "F",
+   "filiacao": "1985-02-01",
+   "ct": {
+    "carencia": 240,
+    "periodos": [
+     [
+      "1985-02",
+      "2005-01"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1978-01-01",
+     "ate": "1984-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "quando": "2021-09-10"
+ },
+ {
+  "nome": "mulher com 60 anos em 01/10/2019 e tudo reunido: direito adquirido antes da EC 103",
+  "op": "hibrida",
+  "quandoOp": true,
+  "x": {
+   "dn": "1959-10-01",
+   "sx": "F",
+   "filiacao": "1980-01-01",
+   "ct": {
+    "carencia": 477,
+    "periodos": [
+     [
+      "1980-01",
+      "2019-09"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1975-01-01",
+     "ate": "1979-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "quando": "2019-10-01"
+ },
+ {
+  "nome": "100 contribuições e 90 meses rurais, mulher de 1962: o direito vem aos 62, em 2024",
+  "op": "hibrida",
+  "quandoOp": true,
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "ct": {
+    "carencia": 100,
+    "anos": 8,
+    "meses": 4,
+    "periodos": [
+     [
+      "2010-01",
+      "2018-04"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "quando": "2024-05-01"
+ },
+ {
+  "nome": "190 meses somados dão mais de 15 anos",
+  "op": "hibrida",
+  "id": "tempo_minimo_contribuicao",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "ct": {
+    "carencia": 100,
+    "anos": 8,
+    "meses": 4,
+    "periodos": [
+     [
+      "2010-01",
+      "2018-04"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "exige 15 anos"
+ },
+ {
+  "nome": "homem filiado depois de 13/11/2019 precisa de 20 anos",
+  "op": "hibrida",
+  "id": "tempo_minimo_contribuicao",
+  "x": {
+   "dn": "1961-01-01",
+   "sx": "M",
+   "filiacao": "2020-03-01",
+   "ct": {
+    "carencia": 79,
+    "periodos": [
+     [
+      "2020-03",
+      "2026-09"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "2020-04-01",
+     "ate": "2026-09-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "exige 20 anos \\(homem filiado depois de 13/11/2019\\)"
+ },
+ {
+  "nome": "sem tempo lançado, a informar",
+  "op": "hibrida",
+  "id": "tempo_minimo_contribuicao",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F"
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "mulher com 10 anos de roça e 24 contribuições no CNIS: falta",
+  "op": "hibrida",
+  "id": "tempo_minimo_contribuicao",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1999-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ],
+   "ct": {
+    "carencia": 24,
+    "periodos": [
+     [
+      "2005-01",
+      "2006-12"
+     ]
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "exige 15 anos; faltam"
+ },
+ {
+  "nome": "qualidade só como informação",
+  "op": "hibrida",
+  "id": "qualidade_dispensada",
+  "x": {
+   "gr": {
+    "mantidaAte": "2020-02-15",
+    "perda": "2020-02-16",
+    "vencida": true
+   }
+  },
+  "est": "info",
+  "txt": "perdida em 16/02/2020"
+ },
+ {
+  "nome": "linha rural sem documento: falta",
+  "op": "hibrida",
+  "id": "prova_rural_por_periodo",
+  "x": {
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "sem documento"
+ },
+ {
+  "nome": "certidão de casamento de 1992 com profissão lavrador",
+  "op": "hibrida",
+  "id": "prova_rural_por_periodo",
+  "x": {
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": "certidão de casamento de 1992, lavrador"
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "certidão de casamento"
+ },
+ {
+  "nome": "documento de 2005 não é contemporâneo à linha de 1990 a 1997",
+  "op": "hibrida",
+  "id": "prova_rural_por_periodo",
+  "x": {
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": "nota fiscal de 2005"
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "não é contemporâneo"
+ },
+ {
+  "nome": "sem linha rural, a informar",
+  "op": "hibrida",
+  "id": "prova_rural_por_periodo",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "valor da híbrida é divergente",
+  "op": "hibrida",
+  "id": "valor_rmi",
+  "x": {
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "divergente",
+  "txt": "90 meses rurais"
+ },
+ {
+  "nome": "já aposentado: impedido",
+  "op": "hibrida",
+  "id": "nao_acumular",
+  "x": {
+   "apos": {
+    "especie": "Aposentadoria por tempo de contribuição",
+    "nb": "1"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "BPC ativo pelo Portal da Transparência: opção",
+  "op": "hibrida",
+  "id": "nao_acumular",
+  "x": {
+   "transp": {
+    "pessoas": [
+     {
+      "nome": "A",
+      "cpf": "1",
+      "programas": [
+       {
+        "programa": "bpc",
+        "rotulo": "BPC",
+        "meses": 20,
+        "primeira_competencia": "202401",
+        "ultima_competencia": "202609"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "opcao",
+  "txt": "Portal da Transparência"
+ },
+ {
+  "nome": "a qualidade se mede no parto (mat_data), não em qua_fato: parto na graça",
+  "op": "urb",
+  "id": "qualidade_no_fato",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-03-01",
+    "qua_fato": "2026-09-20"
+   },
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2020-01",
+     "ate": "2025-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2025-07",
+     "ate": "2026-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2026-08-15",
+    "perda": "2026-08-16"
+   }
+  },
+  "est": "ok",
+  "txt": "parto em 01/03/2026: em graça"
+ },
+ {
+  "nome": "parto depois da graça é risco, mesmo com qua_fato dentro dela",
+  "op": "urb",
+  "id": "qualidade_no_fato",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-09-20",
+    "qua_fato": "2026-03-01"
+   },
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2020-01",
+     "ate": "2025-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2025-07",
+     "ate": "2026-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2026-08-15",
+    "perda": "2026-08-16"
+   }
+  },
+  "est": "risco",
+  "txt": "parto em 20/09/2026"
+ },
+ {
+  "nome": "afastamento 26 dias antes do parto é o fato gerador",
+  "op": "urb",
+  "id": "qualidade_no_fato",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-09-05",
+    "mat_dat": "2026-08-10"
+   },
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2020-01",
+     "ate": "2025-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2025-07",
+     "ate": "2026-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2026-08-15",
+    "perda": "2026-08-16"
+   }
+  },
+  "est": "ok",
+  "txt": "afastamento em 10/08/2026"
+ },
+ {
+  "nome": "sem data do fato, a informar",
+  "op": "urb",
+  "id": "qualidade_no_fato",
+  "x": {
+   "hist": [
+    {
+     "tipo": "contrib",
+     "de": "2020-01",
+     "ate": "2025-06",
+     "txt": ""
+    },
+    {
+     "tipo": "graca",
+     "de": "2025-07",
+     "ate": "2026-08",
+     "txt": ""
+    }
+   ],
+   "gr": {
+    "mantidaAte": "2026-08-15",
+    "perda": "2026-08-16"
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "CI com 3 contribuições em dia: carência em ordem, inexigível (Enunciado 19)",
+  "op": "urb",
+  "id": "sem_carencia",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_categoria": "CI",
+    "mat_em_dia": "Sim"
+   },
+   "ct": {
+    "carencia": 3,
+    "periodos": [
+     [
+      "2026-02",
+      "2026-04"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "inexigível.*3 contribuições"
+ },
+ {
+  "nome": "empregada: carência inexigível",
+  "op": "urb",
+  "id": "sem_carencia",
+  "x": {
+   "v": {
+    "mat_categoria": "Empregada com vínculo ativo",
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "ok",
+  "txt": "inexigível"
+ },
+ {
+  "nome": "sem nenhum dado também não exige carência",
+  "op": "urb",
+  "id": "sem_carencia",
+  "x": {},
+  "est": "ok",
+  "txt": "inexigível"
+ },
+ {
+  "nome": "facultativa com 1 contribuição",
+  "op": "urb",
+  "id": "sem_carencia",
+  "x": {
+   "v": {
+    "mat_categoria": "Facultativa",
+    "mat_data": "2026-05-10"
+   },
+   "ct": {
+    "carencia": 1,
+    "periodos": [
+     [
+      "2026-03",
+      "2026-03"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "1 contribuição"
+ },
+ {
+  "nome": "CI com 3 contribuições pagas em dia",
+  "op": "urb",
+  "id": "contribuicao_em_dia_ci_facult_mei",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_categoria": "CI",
+    "mat_em_dia": "Sim"
+   },
+   "ct": {
+    "carencia": 3,
+    "periodos": [
+     [
+      "2026-02",
+      "2026-04"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "3 contribuições até 05/2026, paga até o vencimento"
+ },
+ {
+  "nome": "CI sem dizer se pagou em dia: a informar",
+  "op": "urb",
+  "id": "contribuicao_em_dia_ci_facult_mei",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_categoria": "CI"
+   },
+   "ct": {
+    "carencia": 3,
+    "periodos": [
+     [
+      "2026-02",
+      "2026-04"
+     ]
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "vencimento"
+ },
+ {
+  "nome": "CI sem nenhuma contribuição até o parto: falta",
+  "op": "urb",
+  "id": "contribuicao_em_dia_ci_facult_mei",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_categoria": "CI"
+   },
+   "ct": {
+    "carencia": 0,
+    "periodos": []
+   }
+  },
+  "est": "falta",
+  "txt": "nenhuma contribuição"
+ },
+ {
+  "nome": "CI que pagou depois do vencimento: risco",
+  "op": "urb",
+  "id": "contribuicao_em_dia_ci_facult_mei",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_categoria": "CI",
+    "mat_em_dia": "Não"
+   },
+   "ct": {
+    "carencia": 3,
+    "periodos": [
+     [
+      "2026-02",
+      "2026-04"
+     ]
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "depois do vencimento"
+ },
+ {
+  "nome": "empregada não prova pagamento",
+  "op": "urb",
+  "id": "contribuicao_em_dia_ci_facult_mei",
+  "x": {
+   "v": {
+    "mat_categoria": "Empregada com vínculo ativo",
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "info"
+ },
+ {
+  "nome": "baixa renda não validada no CNIS: risco",
+  "op": "urb",
+  "id": "contribuicao_em_dia_ci_facult_mei",
+  "x": {
+   "v": {
+    "mat_categoria": "Facultativa baixa renda",
+    "mat_data": "2026-05-10",
+    "mat_em_dia": "Sim"
+   },
+   "ct": {
+    "carencia": 5,
+    "periodos": [
+     [
+      "2025-12",
+      "2026-04"
+     ]
+    ]
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Facultativo",
+      "inicio": "01/12/2025",
+      "indicadores": [
+       "PREC-FBR"
+      ]
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "não validada"
+ },
+ {
+  "nome": "sem categoria, a informar",
+  "op": "urb",
+  "id": "contribuicao_em_dia_ci_facult_mei",
+  "x": {
+   "v": {
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "informar",
+  "txt": "categoria"
+ },
+ {
+  "nome": "parto: 120 dias",
+  "op": "urb",
+  "id": "fato_gerador_duracao",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "ok",
+  "txt": "^120 dias, de 10/05/2026 a 06/09/2026"
+ },
+ {
+  "nome": "aborto não criminoso: 2 semanas",
+  "op": "urb",
+  "id": "fato_gerador_duracao",
+  "x": {
+   "v": {
+    "mat_fato": "Aborto não criminoso",
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "ok",
+  "txt": "2 semanas, de 10/05/2026 a 23/05/2026"
+ },
+ {
+  "nome": "adoção: 120 dias qualquer que seja a idade (ACP)",
+  "op": "urb",
+  "id": "fato_gerador_duracao",
+  "x": {
+   "v": {
+    "mat_fato": "Adoção ou guarda",
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "ok",
+  "txt": "qualquer que seja a idade"
+ },
+ {
+  "nome": "internação: 120 dias depois da alta",
+  "op": "urb",
+  "id": "fato_gerador_duracao",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_internacao": "Sim",
+    "mat_alta": "2026-06-10"
+   }
+  },
+  "est": "ok",
+  "txt": "a 08/10/2026.*internação"
+ },
+ {
+  "nome": "Zika: mais 60 dias",
+  "op": "urb",
+  "id": "fato_gerador_duracao",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_zika": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "^180 dias"
+ },
+ {
+  "nome": "afastamento 40 dias antes do parto: risco",
+  "op": "urb",
+  "id": "fato_gerador_duracao",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_dat": "2026-03-31"
+   }
+  },
+  "est": "risco",
+  "txt": "28 dias antes"
+ },
+ {
+  "nome": "internação sem a alta, a informar",
+  "op": "urb",
+  "id": "fato_gerador_duracao",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_internacao": "Sim"
+   }
+  },
+  "est": "informar",
+  "txt": "alta"
+ },
+ {
+  "nome": "continua trabalhando: risco",
+  "op": "urb",
+  "id": "afastamento",
+  "x": {
+   "v": {
+    "mat_afastou": "Não"
+   }
+  },
+  "est": "risco",
+  "txt": "71-C"
+ },
+ {
+  "nome": "parou de trabalhar",
+  "op": "urb",
+  "id": "afastamento",
+  "x": {
+   "v": {
+    "mat_afastou": "Sim"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem resposta, a informar",
+  "op": "urb",
+  "id": "afastamento",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "desempregada em graça: informativo",
+  "op": "urb",
+  "id": "afastamento",
+  "x": {
+   "v": {
+    "mat_categoria": "Desempregada em graça"
+   }
+  },
+  "est": "info"
+ },
+ {
+  "nome": "empregada com vínculo: a empresa paga",
+  "op": "urb",
+  "id": "quem_paga_valor",
+  "x": {
+   "v": {
+    "mat_categoria": "Empregada com vínculo ativo",
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "info",
+  "txt": "a empresa paga"
+ },
+ {
+  "nome": "CI: o INSS paga a média dos 12 últimos",
+  "op": "urb",
+  "id": "quem_paga_valor",
+  "x": {
+   "v": {
+    "mat_categoria": "CI",
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "info",
+  "txt": "1/12 da soma"
+ },
+ {
+  "nome": "sem categoria nem CNIS, a informar",
+  "op": "urb",
+  "id": "quem_paga_valor",
+  "x": {
+   "v": {
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "a categoria sai do CNIS: doméstica",
+  "op": "urb",
+  "id": "quem_paga_valor",
+  "x": {
+   "v": {
+    "mat_data": "2026-05-10"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado Doméstico",
+      "inicio": "01/01/2020",
+      "fim": "",
+      "ultRemun": "09/2026",
+      "indicadores": []
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "último salário de contribuição"
+ },
+ {
+  "nome": "parto de 2020 pedido em 2026: 5 anos vencidos",
+  "op": "urb",
+  "id": "prazo_pedido",
+  "x": {
+   "v": {
+    "mat_data": "2020-01-10"
+   }
+  },
+  "est": "risco",
+  "txt": "venceram em 10/01/2025"
+ },
+ {
+  "nome": "parto de 2025 no prazo",
+  "op": "urb",
+  "id": "prazo_pedido",
+  "x": {
+   "v": {
+    "mat_data": "2025-01-10"
+   }
+  },
+  "est": "ok",
+  "txt": "até 10/01/2030"
+ },
+ {
+  "nome": "sem data, a informar",
+  "op": "urb",
+  "id": "prazo_pedido",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "o prazo se mede na DER do campo",
+  "op": "urb",
+  "id": "prazo_pedido",
+  "x": {
+   "der": "2024-12-01",
+   "v": {
+    "mat_data": "2020-01-10"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "o outro genitor já pediu: risco",
+  "op": "urb",
+  "id": "um_por_fato",
+  "x": {
+   "v": {
+    "mat_outro_genitor": "Sim"
+   }
+  },
+  "est": "risco"
+ },
+ {
+  "nome": "ninguém mais pediu",
+  "op": "urb",
+  "id": "um_por_fato",
+  "x": {
+   "v": {
+    "mat_outro_genitor": "Não"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "B80 no CNIS para o mesmo parto: risco",
+  "op": "urb",
+  "id": "um_por_fato",
+  "x": {
+   "v": {
+    "mat_data": "2026-05-10",
+    "mat_outro_genitor": "Não"
+   },
+   "benefCnis": [
+    {
+     "especie": "80",
+     "nb": "2001",
+     "de": "2026-05-10",
+     "ate": "2026-09-06",
+     "ativo": false
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "NB 2001"
+ },
+ {
+  "nome": "sem resposta, a informar",
+  "op": "urb",
+  "id": "um_por_fato",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "seguro-desemprego pago nos 120 dias: risco",
+  "op": "urb",
+  "id": "nao_acumular",
+  "x": {
+   "v": {
+    "mat_data": "2026-05-10"
+   },
+   "g": {
+    "vinculos": []
+   },
+   "fd": {
+    "seguros": [
+     {
+      "numero": "1",
+      "parcelas": [
+       {
+        "n": "1",
+        "liberacao": "01/06/2026",
+        "pagamento": "05/06/2026",
+        "valor": "1.621,00",
+        "situacao": "PAGA"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "seguro-desemprego"
+ },
+ {
+  "nome": "B31 no período: suspenso enquanto durar",
+  "op": "urb",
+  "id": "nao_acumular",
+  "x": {
+   "v": {
+    "mat_data": "2026-05-10"
+   },
+   "g": {
+    "vinculos": []
+   },
+   "benefCnis": [
+    {
+     "especie": "31",
+     "nb": "3",
+     "de": "2026-03-01",
+     "ate": "",
+     "ativo": true
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "art. 102"
+ },
+ {
+  "nome": "CNIS sem nada no período: em ordem",
+  "op": "urb",
+  "id": "nao_acumular",
+  "x": {
+   "v": {
+    "mat_data": "2026-05-10"
+   },
+   "g": {
+    "vinculos": []
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem o CNIS, a informar",
+  "op": "urb",
+  "id": "nao_acumular",
+  "x": {
+   "v": {
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "12 de 12 meses na roça antes do parto",
+  "op": "rur",
+  "id": "atividade_12_meses",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10"
+   },
+   "tempos": [
+    {
+     "de": "2024-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "^12 de 12"
+ },
+ {
+  "nome": "11 meses de roça nos 12 antes do parto: em ordem, porque o Enunciado 19, III, não exige o período todo",
+  "op": "rur",
+  "id": "atividade_12_meses",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10"
+   },
+   "tempos": [
+    {
+     "de": "2025-06-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "^11 de 12 meses.*Enunciado 19, III"
+ },
+ {
+  "nome": "10 meses de roça, mas fora dos 12 antes do parto: falta (não são os 10 meses de antes)",
+  "op": "rur",
+  "id": "atividade_12_meses",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-01-15"
+   },
+   "tempos": [
+    {
+     "de": "2024-01-01",
+     "ate": "2024-10-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "falta",
+  "txt": "nenhum mês de roça.*01/2025 a 12/2025"
+ },
+ {
+  "nome": "campo com 0 meses: falta",
+  "op": "rur",
+  "id": "atividade_12_meses",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "rur_meses_12": "0"
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "campo com 12 meses: em ordem",
+  "op": "rur",
+  "id": "atividade_12_meses",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "rur_meses_12": "12"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem a data do parto, a informar",
+  "op": "rur",
+  "id": "atividade_12_meses",
+  "x": {
+   "tempos": [
+    {
+     "de": "2024-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "sem carência",
+  "op": "rur",
+  "id": "sem_carencia",
+  "x": {},
+  "est": "ok",
+  "txt": "inexigível"
+ },
+ {
+  "nome": "sem carência mesmo sem contribuição",
+  "op": "rur",
+  "id": "sem_carencia",
+  "x": {
+   "ct": {
+    "carencia": 0,
+    "periodos": []
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem carência também na adoção",
+  "op": "rur",
+  "id": "sem_carencia",
+  "x": {
+   "v": {
+    "mat_fato": "Adoção ou guarda",
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem carência com CNIS de segurada especial",
+  "op": "rur",
+  "id": "sem_carencia",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "família, 2 módulos, mora no sítio, CNIS só de segurada especial",
+  "op": "rur",
+  "id": "condicao_segurada_especial",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "rur_empregados": "Não",
+    "rur_modulos": "2",
+    "rur_reside": "No imóvel rural"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "trabalho da família"
+ },
+ {
+  "nome": "8 módulos: risco",
+  "op": "rur",
+  "id": "condicao_segurada_especial",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "rur_empregados": "Não",
+    "rur_modulos": "8",
+    "rur_reside": "No imóvel rural"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "Tema 1115"
+ },
+ {
+  "nome": "CNPJ na Redesim sozinho não descaracteriza: a informar, nunca impedido",
+  "op": "rur",
+  "id": "condicao_segurada_especial",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "rur_empregados": "Não",
+    "rur_modulos": "2",
+    "rur_reside": "No imóvel rural"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   },
+   "fd": {
+    "cnpjs": [
+     {
+      "cnpj": "12.345.678/0001-90",
+      "razao": "SITIO BOA VISTA LTDA",
+      "situacao": "ATIVA"
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "simples inscrição não descaracteriza"
+ },
+ {
+  "nome": "mãe com 15 anos: risco",
+  "op": "rur",
+  "id": "condicao_segurada_especial",
+  "x": {
+   "dn": "2010-09-01",
+   "sx": "F",
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "rur_empregados": "Não",
+    "rur_modulos": "2",
+    "rur_reside": "No imóvel rural"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "abaixo de 16"
+ },
+ {
+  "nome": "sem a data do parto, a informar",
+  "op": "rur",
+  "id": "condicao_segurada_especial",
+  "x": {
+   "v": {
+    "rur_empregados": "Não"
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "ficha da UBS anterior ao parto de 2022",
+  "op": "rur",
+  "id": "ratificador_antes_do_parto",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2022-03-10",
+    "rur_ratif_antes": "ficha da UBS 15/08/2021",
+    "rur_titular_doc": "Própria"
+   }
+  },
+  "est": "ok",
+  "txt": "anterior ao fato"
+ },
+ {
+  "nome": "documento posterior ao parto: falta",
+  "op": "rur",
+  "id": "ratificador_antes_do_parto",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2022-03-10",
+    "rur_ratif_antes": "nota fiscal 20/05/2022"
+   }
+  },
+  "est": "falta",
+  "txt": "não é anterior"
+ },
+ {
+  "nome": "documento do marido vale se ele era segurado especial",
+  "op": "rur",
+  "id": "ratificador_antes_do_parto",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2022-03-10",
+    "rur_ratif_antes": "ITR 2020",
+    "rur_titular_doc": "Marido ou companheiro"
+   }
+  },
+  "est": "ok",
+  "txt": "titular era segurado especial"
+ },
+ {
+  "nome": "parto de 2026 sem cadastro no CNIS e sem documento: a informar, com a prorrogação do art. 117, § 1º",
+  "op": "rur",
+  "id": "ratificador_antes_do_parto",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10"
+   },
+   "g": {
+    "vinculos": []
+   }
+  },
+  "est": "informar",
+  "txt": "documento rural anterior.*art. 117, § 1º"
+ },
+ {
+  "nome": "parto de 2026 com segurada especial no CNIS: em ordem",
+  "op": "rur",
+  "id": "ratificador_antes_do_parto",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "base governamental"
+ },
+ {
+  "nome": "sem documento, a informar",
+  "op": "rur",
+  "id": "ratificador_antes_do_parto",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2022-03-10"
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "1 salário mínimo",
+  "op": "rur",
+  "id": "valor",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "info",
+  "txt": "1 salário mínimo"
+ },
+ {
+  "nome": "contribui para receber mais",
+  "op": "rur",
+  "id": "valor",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_rur_contrib": "Sim"
+   }
+  },
+  "est": "info",
+  "txt": "1/12"
+ },
+ {
+  "nome": "paga GPS mas o CNIS não tem contribuição",
+  "op": "rur",
+  "id": "valor",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_rur_contrib": "Sim"
+   },
+   "ct": {
+    "carencia": 0,
+    "periodos": []
+   }
+  },
+  "est": "info",
+  "txt": "recebe 1 salário mínimo"
+ },
+ {
+  "nome": "sem data, o mínimo da DER",
+  "op": "rur",
+  "id": "valor",
+  "x": {},
+  "est": "info",
+  "txt": "1 salário mínimo"
+ },
+ {
+  "nome": "parto: 120 dias",
+  "op": "rur",
+  "id": "fato_gerador_duracao",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "ok",
+  "txt": "^120 dias"
+ },
+ {
+  "nome": "aborto: 2 semanas",
+  "op": "rur",
+  "id": "fato_gerador_duracao",
+  "x": {
+   "v": {
+    "mat_fato": "Aborto não criminoso",
+    "mat_data": "2026-05-10"
+   }
+  },
+  "est": "ok",
+  "txt": "2 semanas"
+ },
+ {
+  "nome": "Zika: 180 dias",
+  "op": "rur",
+  "id": "fato_gerador_duracao",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_zika": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "^180 dias"
+ },
+ {
+  "nome": "sem o fato, a informar",
+  "op": "rur",
+  "id": "fato_gerador_duracao",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "no prazo, sem outro pedido nem benefício",
+  "op": "rur",
+  "id": "prazo_e_vedacoes",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_outro_genitor": "Não"
+   },
+   "g": {
+    "vinculos": []
+   }
+  },
+  "est": "ok",
+  "txt": "dentro dos 5 anos"
+ },
+ {
+  "nome": "pescadora com seguro-defeso: nota da acumulação controversa",
+  "op": "rur",
+  "id": "prazo_e_vedacoes",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_outro_genitor": "Não"
+   },
+   "g": {
+    "vinculos": []
+   },
+   "transp": {
+    "pessoas": [
+     {
+      "nome": "A",
+      "cpf": "1",
+      "programas": [
+       {
+        "programa": "seguro_defeso",
+        "rotulo": "Seguro-Defeso",
+        "meses": 4,
+        "ultima_competencia": "202603"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "seguro-defeso.*controversa"
+ },
+ {
+  "nome": "sem rural antes de 1991, sem a nota da ACP",
+  "op": "hibrida",
+  "id": "carencia_somada",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "ct": {
+    "carencia": 120,
+    "periodos": [
+     [
+      "2010-01",
+      "2019-12"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1995-01-01",
+     "ate": "2000-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "^120 contribuições do CNIS \\+ 72 meses rurais = 192 até 10/2026; exige 180$"
+ },
+ {
+  "nome": "CI aparece em maiúsculas",
+  "op": "urb",
+  "id": "sem_carencia",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_categoria": "CI"
+   },
+   "ct": {
+    "carencia": 3,
+    "periodos": [
+     [
+      "2026-02",
+      "2026-04"
+     ]
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "\\(CI\\)"
+ },
+ {
+  "nome": "parto de 2019: prazo vencido",
+  "op": "rur",
+  "id": "prazo_e_vedacoes",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2019-01-10",
+    "mat_outro_genitor": "Não"
+   },
+   "g": {
+    "vinculos": []
+   }
+  },
+  "est": "risco",
+  "txt": "venceram"
+ },
+ {
+  "nome": "o outro genitor já pediu: risco",
+  "op": "rur",
+  "id": "prazo_e_vedacoes",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_outro_genitor": "Sim"
+   },
+   "g": {
+    "vinculos": []
+   }
+  },
+  "est": "risco"
+ },
+ {
+  "nome": "sem resposta sobre o outro genitor, a informar",
+  "op": "rur",
+  "id": "prazo_e_vedacoes",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10"
+   },
+   "g": {
+    "vinculos": []
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "parto de 2026 com documento anterior e sem cadastro no CNIS: em ordem, pela prorrogação",
+  "op": "rur",
+  "id": "ratificador_antes_do_parto",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "rur_ratif_antes": "ficha da UBS 15/08/2025",
+    "rur_titular_doc": "Própria"
+   },
+   "g": {
+    "vinculos": []
+   }
+  },
+  "est": "ok",
+  "txt": "anterior ao fato.*art. 117, § 1º"
+ },
+ {
+  "nome": "híbrida: segurado especial desde 2015 com ITR de 2016 e sem CNIS lido: em ordem, com a nota de 2023",
+  "op": "hibrida",
+  "id": "prova_rural_por_periodo",
+  "x": {
+   "tempos": [
+    {
+     "de": "2015-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": "ITR 2016"
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "ITR 2016.*art. 117, § 1º.*leia o CNIS"
+ },
+ {
+  "nome": "híbrida: só 10 anos de roça e o CNIS não lido: a informar, e não falta",
+  "op": "hibrida",
+  "id": "tempo_minimo_contribuicao",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1999-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "informar",
+  "txt": "leia o CNIS"
+ },
+ {
+  "nome": "híbrida: só 90 meses de roça e o CNIS não lido: a informar, e não falta",
+  "op": "hibrida",
+  "id": "carencia_somada",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "informar",
+  "txt": "CNIS não lido.*= 90"
+ },
+ {
+  "nome": "híbrida: 12 competências de CI pagas em atraso saem da soma (100 - 12 + 90 = 178)",
+  "op": "hibrida",
+  "id": "carencia_somada",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "v": {
+    "apo_ci_atraso": "01/2010 a 12/2010"
+   },
+   "ct": {
+    "carencia": 100,
+    "periodos": [
+     [
+      "2010-01",
+      "2018-04"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ],
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2010",
+      "fim": "30/04/2018",
+      "indicadores": []
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "88 contribuições do CNIS [+] 90 meses rurais = 178.*sem 12 de CI"
+ },
+ {
+  "nome": "híbrida: CI sem atraso ('nenhuma', o formato da família das aposentadorias): em ordem",
+  "op": "hibrida",
+  "id": "carencia_somada",
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "v": {
+    "apo_ci_atraso": "nenhuma"
+   },
+   "ct": {
+    "carencia": 100,
+    "periodos": [
+     [
+      "2010-01",
+      "2018-04"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1997-06-30",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ],
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "inicio": "01/01/2010",
+      "fim": "30/04/2018",
+      "indicadores": []
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "= 190"
+ },
+ {
+  "nome": "híbrida: quem continua contribuindo (apo_segue) tem a data do direito projetada",
+  "op": "hibrida",
+  "quandoOp": true,
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "v": {
+    "apo_segue": "Sim"
+   },
+   "ct": {
+    "carencia": 100,
+    "periodos": [
+     [
+      "2018-07",
+      "2026-10"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1990-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "quando": "2032-06-01"
+ },
+ {
+  "nome": "híbrida: sem continuar contribuindo, 112 meses não chegam, sem data",
+  "op": "hibrida",
+  "quandoOp": true,
+  "x": {
+   "dn": "1962-05-01",
+   "sx": "F",
+   "ct": {
+    "carencia": 100,
+    "periodos": [
+     [
+      "2018-07",
+      "2026-10"
+     ]
+    ]
+   },
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "1990-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "quando": null
+ },
+ {
+  "nome": "já aposentado: sem data de direito a outra aposentadoria rural",
+  "op": "idade_rural",
+  "quandoOp": true,
+  "x": {
+   "dn": "1960-01-01",
+   "sx": "F",
+   "apos": {
+    "especie": "41",
+    "nb": "123"
+   },
+   "tempos": [
+    {
+     "de": "1990-01-01",
+     "ate": "",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "quando": null
+ },
+ {
+  "nome": "parou em 12/2024 e o parto foi em 01/2026: nenhum mês na janela, mas em graça (risco, IN contra Lei)",
+  "op": "rur",
+  "id": "atividade_12_meses",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-01-20"
+   },
+   "tempos": [
+    {
+     "de": "2024-01-01",
+     "ate": "2024-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "em graça no fato.*IN 128"
+ },
+ {
+  "nome": "meses de roça digitados por extenso: a informar, e não falta",
+  "op": "rur",
+  "id": "atividade_12_meses",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "rur_meses_12": "onze"
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "área digitada por extenso: a informar, e não risco",
+  "op": "idade_rural",
+  "id": "area_quatro_modulos",
+  "x": {
+   "v": {
+    "rur_modulos": "três"
+   }
+  },
+  "est": "informar",
+  "txt": "número"
+ },
+ {
+  "nome": "sem linha rural, o CNIS sozinho não diz que está em ordem",
+  "op": "idade_rural",
+  "id": "sem_descaracterizacao",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado",
+      "origem": "LOJA",
+      "inicio": "01/01/2026",
+      "fim": "",
+      "indicadores": []
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "lance as linhas rurais"
+ },
+ {
+  "nome": "maternidade rural sem linha: o emprego de 303 dias em 2025 aparece pela janela de 12 meses",
+  "op": "rur",
+  "id": "condicao_segurada_especial",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "rur_empregados": "Não",
+    "rur_modulos": "2",
+    "rur_reside": "No imóvel rural",
+    "rur_meses_12": "12"
+   },
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Empregado",
+      "origem": "LOJA",
+      "inicio": "01/02/2025",
+      "fim": "30/11/2025",
+      "indicadores": []
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "303 dias em 2025"
+ },
+ {
+  "nome": "facultativo por mais de 120 dias não é atividade remunerada: não descaracteriza",
+  "op": "idade_rural",
+  "id": "sem_descaracterizacao",
+  "x": {
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     },
+     {
+      "tipo": "Facultativo",
+      "inicio": "01/01/2019",
+      "fim": "31/12/2019",
+      "indicadores": []
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "sem vínculo acima de 120 dias"
+ },
+ {
+  "nome": "BPC do filho no Portal da Transparência não descaracteriza a mãe (art. 112, § 3º)",
+  "op": "idade_rural",
+  "id": "sem_descaracterizacao",
+  "x": {
+   "dn": "1965-01-01",
+   "sx": "F",
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   },
+   "transp": {
+    "pessoas": [
+     {
+      "nome": "FILHO",
+      "cpf": "111.111.111-11",
+      "nis": "",
+      "programas": [
+       {
+        "programa": "BPC",
+        "primeira_competencia": "202001",
+        "ultima_competencia": "202609",
+        "valor_ultimo": 1621
+       }
+      ]
+     }
+    ]
+   },
+   "cad": {
+    "membros": [
+     {
+      "nome": "FILHO",
+      "cpf": "111.111.111-11",
+      "nascimento": "10/10/2010",
+      "parentesco": "Filho"
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem nascimento e na roça antes de 1991: a tabela do art. 142 pode exigir menos, a informar",
+  "op": "idade_rural",
+  "id": "carencia_rural_180",
+  "x": {
+   "sx": "F",
+   "tempos": [
+    {
+     "de": "1985-01-01",
+     "ate": "1994-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "informar",
+  "txt": "informe o nascimento"
+ },
+ {
+  "nome": "na roça desde 09/1991 (antes de 11/1991) e 60 anos em 2010: tabela do art. 142 (174), IN 128, art. 199, § 2º",
+  "op": "idade_rural",
+  "id": "carencia_rural_180",
+  "x": {
+   "dn": "1950-01-01",
+   "sx": "M",
+   "tempos": [
+    {
+     "de": "1991-09-01",
+     "ate": "2006-02-28",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ]
+  },
+  "est": "ok",
+  "txt": "^174 meses rurais.*exige 174 .tabela do art. 142, ano 2010."
+ },
+ {
+  "nome": "híbrida: linha do quadro Tempos sem documento, mas coberta pelo segurado especial do CNIS: em ordem",
+  "op": "hibrida",
+  "id": "prova_rural_por_periodo",
+  "x": {
+   "tempos": [
+    {
+     "de": "2010-01-01",
+     "ate": "2020-12-31",
+     "nat": "rural",
+     "det": "Segurado especial",
+     "prova": ""
+    }
+   ],
+   "g": {
+    "vinculos": [
+     {
+      "tipo": "Segurado Especial",
+      "inicio": "01/01/2005",
+      "fim": "",
+      "indicadores": [
+       "PSE-POS"
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "vêm do CNIS"
+ },
+ {
+  "nome": "os 5 anos contam do afastamento (fato gerador), e não do parto",
+  "op": "urb",
+  "id": "prazo_pedido",
+  "x": {
+   "der": "2026-10-01",
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2021-10-10",
+    "mat_dat": "2021-09-20"
+   }
+  },
+  "est": "risco",
+  "txt": "venceram em 20/09/2026"
+ },
+ {
+  "nome": "desempregada em graça: as 2 semanas extras só depois do parto",
+  "op": "urb",
+  "id": "fato_gerador_duracao",
+  "x": {
+   "v": {
+    "mat_fato": "Parto",
+    "mat_data": "2026-05-10",
+    "mat_dat": "2026-04-20",
+    "mat_categoria": "Desempregada em graça"
+   }
+  },
+  "est": "ok",
+  "txt": "^120 dias, de 10/05/2026.*só as de depois"
+ }
+]

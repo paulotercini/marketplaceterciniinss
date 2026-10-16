@@ -1,0 +1,3781 @@
+[
+ {
+  "nome": "carta de concessão no dossiê",
+  "op": "rev",
+  "id": "beneficio_concedido",
+  "x": {
+   "fd": {
+    "cartas": [
+     {
+      "nb": "1234567890",
+      "especie": "APOSENTADORIA POR TEMPO DE CONTRIBUIÇÃO",
+      "rmi": "2.000,00",
+      "der": "10/01/2018",
+      "concessao": "20/02/2018",
+      "dib": "10/01/2018",
+      "dip": "10/01/2018"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "NB 1234567890, B42, DIB 10/01/2018"
+ },
+ {
+  "nome": "só o NB digitado",
+  "op": "rev",
+  "id": "beneficio_concedido",
+  "x": {
+   "v": {
+    "rev_nb": "123.456.789-0"
+   }
+  },
+  "est": "ok",
+  "txt": "informado"
+ },
+ {
+  "nome": "nada",
+  "op": "rev",
+  "id": "beneficio_concedido",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "só indeferimento no dossiê: é concessão",
+  "op": "rev",
+  "id": "beneficio_concedido",
+  "x": {
+   "fd": {
+    "processos": [
+     {
+      "servico": "Aposentadoria por idade",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/02/2026",
+      "atualizado": "10/03/2026",
+      "comunicacoes": [
+       {
+        "nb": "",
+        "decisao": "Indeferido",
+        "contra": true,
+        "motivo": "Falta de período de carência",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "583"
+ },
+ {
+  "nome": "pensão: o benefício de origem se revê no prazo dele",
+  "op": "rev",
+  "id": "beneficio_concedido",
+  "x": {
+   "fd": {
+    "cartas": [
+     {
+      "nb": "1234567890",
+      "especie": "PENSÃO POR MORTE",
+      "rmi": "2.000,00",
+      "der": "10/01/2018",
+      "concessao": "20/02/2018",
+      "dib": "10/01/2018",
+      "dip": "10/01/2018"
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "524"
+ },
+ {
+  "nome": "titular com 10 anos na concessão em 2014: não consumada (art. 591)",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "dn": "2004-03-10",
+   "v": {
+    "rev_primeiro": "2014-05-20"
+   }
+  },
+  "est": "ok",
+  "txt": "591.*|11/03/2030"
+ },
+ {
+  "nome": "titular com 10 anos em 2014: o prazo vai a 11/03/2030",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "dn": "2004-03-10",
+   "v": {
+    "rev_primeiro": "2014-05-20"
+   }
+  },
+  "est": "ok",
+  "txt": "11/03/2030"
+ },
+ {
+  "nome": "concedido antes de 28/06/1997: conta de 01/08/1997 (Tema 313)",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "v": {
+    "rev_primeiro": "1995-06-05",
+    "rev_dib": "1995-04-10"
+   }
+  },
+  "est": "impedido",
+  "txt": "01/08/1997 a 01/08/2007.*Tema 313"
+ },
+ {
+  "nome": "só a DIB de 1995: Tema 313 também, mas é estimativa (informar, não impedido)",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "v": {
+    "rev_dib": "1995-04-10"
+   }
+  },
+  "est": "informar",
+  "txt": "01/08/1997.*estimativa"
+ },
+ {
+  "nome": "primeiro pagamento vence a DIP e a DIB",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "v": {
+    "rev_primeiro": "2017-03-15"
+   },
+   "fd": {
+    "cartas": [
+     {
+      "nb": "1234567890",
+      "especie": "APOSENTADORIA POR TEMPO DE CONTRIBUIÇÃO",
+      "rmi": "2.000,00",
+      "der": "10/01/2018",
+      "concessao": "20/02/2018",
+      "dib": "05/06/2016",
+      "dip": "10/01/2017"
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "primeiro pagamento em 15/03/2017.*01/04/2027|01/04/2027.*primeiro pagamento em 15/03/2017"
+ },
+ {
+  "nome": "sem primeiro pagamento, a DIP da carta",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "fd": {
+    "cartas": [
+     {
+      "nb": "1234567890",
+      "especie": "APOSENTADORIA POR TEMPO DE CONTRIBUIÇÃO",
+      "rmi": "2.000,00",
+      "der": "10/01/2018",
+      "concessao": "20/12/2016",
+      "dib": "05/06/2016",
+      "dip": "10/01/2017"
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "DIP em 10/01/2017"
+ },
+ {
+  "nome": "só a DIB: consumada pela estimativa pede o 1º pagamento, não impede",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "fd": {
+    "cartas": [
+     {
+      "nb": "1234567890",
+      "especie": "APOSENTADORIA POR TEMPO DE CONTRIBUIÇÃO",
+      "rmi": "2.000,00",
+      "der": "10/01/2018",
+      "concessao": "",
+      "dib": "05/06/2016",
+      "dip": ""
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "estimativa.*primeiro pagamento"
+ },
+ {
+  "nome": "menor e incapaz: vale o início mais tardio (art. 591, § 3º)",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "der": "2025-10-01",
+   "hoje": "2025-10-01",
+   "dn": "1995-05-01",
+   "v": {
+    "rev_primeiro": "2008-03-10",
+    "rev_menor_incapaz": "Sim"
+   }
+  },
+  "est": "risco",
+  "txt": "03/01/2016.*03/01/2026|03/01/2026.*03/01/2016"
+ },
+ {
+  "nome": "pensão derivada com origem paga em 1990: Tema 313 pela origem, e não pela DDB da pensão",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "v": {
+    "rev_origem_primeiro": "1990-05-10"
+   },
+   "fd": {
+    "cartas": [
+     {
+      "nb": "1234567890",
+      "especie": "PENSÃO POR MORTE",
+      "rmi": "2.000,00",
+      "der": "10/01/2018",
+      "concessao": "20/02/2018",
+      "dib": "10/01/2018",
+      "dip": "10/01/2018"
+     }
+    ]
+   }
+  },
+  "est": "impedido",
+  "txt": "01/08/1997 a 01/08/2007"
+ },
+ {
+  "nome": "DIB digitada sozinha avisa a estimativa",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "v": {
+    "rev_dib": "2018-03-10"
+   }
+  },
+  "est": "info",
+  "txt": "DIB.*estimativa"
+ },
+ {
+  "nome": "readequação ao teto: decadência não se aplica (só na skill)",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "v": {
+    "rev_tese": "teto (buraco negro e verde)",
+    "rev_dib": "1990-01-10"
+   }
+  },
+  "est": "info",
+  "txt": "não se aplica.*só na skill"
+ },
+ {
+  "nome": "faixa: menos de 6 meses é risco (1º pagamento em 10/2016)",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "v": {
+    "rev_primeiro": "2016-10-20"
+   }
+  },
+  "est": "risco",
+  "txt": "01/11/2026"
+ },
+ {
+  "nome": "faixa: 6 a 12 meses é falta",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "v": {
+    "rev_primeiro": "2017-07-10"
+   }
+  },
+  "est": "falta",
+  "txt": "01/08/2027"
+ },
+ {
+  "nome": "faixa: 12 a 24 meses é info",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "v": {
+    "rev_primeiro": "2018-04-10"
+   }
+  },
+  "est": "info",
+  "txt": "01/05/2028"
+ },
+ {
+  "nome": "faixa: 24 meses ou mais é ok",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "v": {
+    "rev_primeiro": "2020-03-10"
+   }
+  },
+  "est": "ok",
+  "txt": "01/04/2030"
+ },
+ {
+  "nome": "1º pagamento em 09/2016: consumada",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "v": {
+    "rev_primeiro": "2016-09-20"
+   }
+  },
+  "est": "impedido",
+  "txt": "consumada"
+ },
+ {
+  "nome": "incapaz até 2016: corre de 03/01/2016",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "der": "2025-10-01",
+   "hoje": "2025-10-01",
+   "dn": "1970-01-01",
+   "v": {
+    "rev_primeiro": "2012-05-10",
+    "rev_menor_incapaz": "Sim"
+   }
+  },
+  "est": "risco",
+  "txt": "03/01/2016"
+ },
+ {
+  "nome": "cobrança do INSS não é revisão",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "v": {
+    "rev_tese": "Repetição de indébito / devolução de valores"
+   }
+  },
+  "est": "info",
+  "txt": "595"
+ },
+ {
+  "nome": "pensão derivada: prazo do benefício de origem",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {
+   "v": {
+    "rev_origem_primeiro": "2018-02-10",
+    "rev_primeiro": "2023-01-10"
+   }
+  },
+  "est": "info",
+  "txt": "origem.*01/03/2028|01/03/2028.*origem"
+ },
+ {
+  "nome": "sem data nenhuma",
+  "op": "rev",
+  "id": "decadencia_10_anos",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "só a DIB de 1995: estimativa, pede a concessão",
+  "op": "rev",
+  "id": "decadencia_beneficio_antigo",
+  "x": {
+   "v": {
+    "rev_dib": "1995-04-10"
+   }
+  },
+  "est": "informar",
+  "txt": "estimativa.*01/08/2007"
+ },
+ {
+  "nome": "1º pagamento em 1995: decaído em 01/08/2007",
+  "op": "rev",
+  "id": "decadencia_beneficio_antigo",
+  "x": {
+   "v": {
+    "rev_primeiro": "1995-05-10"
+   }
+  },
+  "est": "impedido",
+  "txt": "01/08/2007"
+ },
+ {
+  "nome": "DIB de 1995 paga só em 2005 (concessão judicial): regra geral",
+  "op": "rev",
+  "id": "decadencia_beneficio_antigo",
+  "x": {
+   "v": {
+    "rev_dib": "1995-04-10",
+    "rev_primeiro": "2005-03-10"
+   }
+  },
+  "est": "info",
+  "txt": "depois de 28/06/1997"
+ },
+ {
+  "nome": "DIB de 2000: regra geral",
+  "op": "rev",
+  "id": "decadencia_beneficio_antigo",
+  "x": {
+   "v": {
+    "rev_dib": "2000-02-10"
+   }
+  },
+  "est": "info",
+  "txt": "depois de 28/06/1997"
+ },
+ {
+  "nome": "DIB de 1995 na readequação ao teto",
+  "op": "rev",
+  "id": "decadencia_beneficio_antigo",
+  "x": {
+   "v": {
+    "rev_dib": "1995-04-10",
+    "rev_tese": "teto (buraco negro e verde)"
+   }
+  },
+  "est": "info",
+  "txt": "não decai"
+ },
+ {
+  "nome": "sem DIB",
+  "op": "rev",
+  "id": "decadencia_beneficio_antigo",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "DDB da carta antes de 1997",
+  "op": "rev",
+  "id": "decadencia_beneficio_antigo",
+  "x": {
+   "fd": {
+    "cartas": [
+     {
+      "nb": "1234567890",
+      "especie": "APOSENTADORIA POR TEMPO DE CONTRIBUIÇÃO",
+      "rmi": "2.000,00",
+      "der": "10/01/2018",
+      "concessao": "15/03/1996",
+      "dib": "10/01/1996",
+      "dip": ""
+     }
+    ]
+   }
+  },
+  "est": "impedido",
+  "txt": "15/03/1996"
+ },
+ {
+  "nome": "sem resposta",
+  "op": "rev",
+  "id": "pedido_revisao_anterior",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "nunca pediu",
+  "op": "rev",
+  "id": "pedido_revisao_anterior",
+  "x": {
+   "v": {
+    "rev_pedido_adm": "Não"
+   }
+  },
+  "est": "info",
+  "txt": "inciso I|103, I"
+ },
+ {
+  "nome": "já há ação sobre a revisão",
+  "op": "rev",
+  "id": "pedido_revisao_anterior",
+  "x": {
+   "v": {
+    "rev_acao_judicial": "Sim"
+   }
+  },
+  "est": "impedido",
+  "txt": "ação"
+ },
+ {
+  "nome": "pediu e falta a ciência",
+  "op": "rev",
+  "id": "pedido_revisao_anterior",
+  "x": {
+   "v": {
+    "rev_pedido_adm": "Sim",
+    "rev_pedido_data": "2024-05-10"
+   }
+  },
+  "est": "informar",
+  "txt": "ciência"
+ },
+ {
+  "nome": "prazo I consumado, inciso II aberto: divergente",
+  "op": "rev",
+  "id": "pedido_revisao_anterior",
+  "x": {
+   "v": {
+    "rev_primeiro": "2015-03-10",
+    "rev_pedido_data": "2020-05-10",
+    "rev_pedido_ciencia": "2021-02-01"
+   }
+  },
+  "est": "divergente",
+  "txt": "01/02/2031"
+ },
+ {
+  "nome": "menos de 12 meses do original: protocolar e ajuizar",
+  "op": "rev",
+  "id": "pedido_revisao_anterior",
+  "x": {
+   "v": {
+    "rev_primeiro": "2017-01-10",
+    "rev_pedido_ciencia": "2024-01-10"
+   }
+  },
+  "est": "risco",
+  "txt": "ajuíze"
+ },
+ {
+  "nome": "prazo original folgado",
+  "op": "rev",
+  "id": "pedido_revisao_anterior",
+  "x": {
+   "v": {
+    "rev_primeiro": "2020-03-10",
+    "rev_pedido_ciencia": "2024-01-10"
+   }
+  },
+  "est": "info",
+  "txt": "1370"
+ },
+ {
+  "nome": "processo de revisão no dossiê",
+  "op": "rev",
+  "id": "pedido_revisao_anterior",
+  "x": {
+   "v": {
+    "rev_primeiro": "2020-03-10"
+   },
+   "fd": {
+    "processos": [
+     {
+      "servico": "Revisão de benefício",
+      "status": "Concluída",
+      "entrada": "05/01/2024",
+      "atualizado": "20/03/2024",
+      "nb": "",
+      "comunicacoes": []
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "20/03/2024"
+ },
+ {
+  "nome": "os dois prazos acabaram",
+  "op": "rev",
+  "id": "pedido_revisao_anterior",
+  "x": {
+   "v": {
+    "rev_primeiro": "2005-03-10",
+    "rev_pedido_ciencia": "2010-01-10"
+   }
+  },
+  "est": "impedido",
+  "txt": "dois prazos"
+ },
+ {
+  "nome": "sem saber do documento novo",
+  "op": "rev",
+  "id": "prescricao_5_anos",
+  "x": {},
+  "est": "informar",
+  "txt": "desde 16/10/2021"
+ },
+ {
+  "nome": "com documento novo: DPR",
+  "op": "rev",
+  "id": "prescricao_5_anos",
+  "x": {
+   "v": {
+    "rev_novo_elemento": "Sim"
+   }
+  },
+  "est": "info",
+  "txt": "DPR"
+ },
+ {
+  "nome": "sem documento novo: DIP",
+  "op": "rev",
+  "id": "prescricao_5_anos",
+  "x": {
+   "v": {
+    "rev_novo_elemento": "Não"
+   }
+  },
+  "est": "info",
+  "txt": "DIP"
+ },
+ {
+  "nome": "teto: Tema 1005",
+  "op": "rev",
+  "id": "prescricao_5_anos",
+  "x": {
+   "v": {
+    "rev_tese": "teto (buraco negro e verde)"
+   }
+  },
+  "est": "info",
+  "txt": "1005"
+ },
+ {
+  "nome": "DPR digitada",
+  "op": "rev",
+  "id": "prescricao_5_anos",
+  "x": {
+   "v": {
+    "rev_pedido_data": "2025-06-01",
+    "rev_novo_elemento": "Sim"
+   }
+  },
+  "est": "info",
+  "txt": "desde 01/06/2020"
+ },
+ {
+  "nome": "incapaz: não correu até 02/01/2016",
+  "op": "rev",
+  "id": "prescricao_5_anos",
+  "x": {
+   "der": "2019-06-01",
+   "hoje": "2019-06-01",
+   "v": {
+    "rev_menor_incapaz": "Sim",
+    "rev_novo_elemento": "Não"
+   }
+  },
+  "est": "info",
+  "txt": "02/01/2016"
+ },
+ {
+  "nome": "sem resposta",
+  "op": "rev",
+  "id": "risco_reabrir_concessao",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "primeira revisão a pedido",
+  "op": "rev",
+  "id": "risco_reabrir_concessao",
+  "x": {
+   "v": {
+    "rev_pedido_adm": "Não"
+   }
+  },
+  "est": "falta",
+  "txt": "584"
+ },
+ {
+  "nome": "já houve revisão",
+  "op": "rev",
+  "id": "risco_reabrir_concessao",
+  "x": {
+   "v": {
+    "rev_pedido_adm": "Sim"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "revisão anterior no dossiê",
+  "op": "rev",
+  "id": "risco_reabrir_concessao",
+  "x": {
+   "fd": {
+    "processos": [
+     {
+      "servico": "Revisão de benefício",
+      "status": "Concluída",
+      "entrada": "05/01/2024",
+      "atualizado": "20/03/2024",
+      "comunicacoes": []
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem espécie",
+  "op": "rev",
+  "id": "vedacao_troca_especie",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "B31 não é aposentadoria",
+  "op": "rev",
+  "id": "vedacao_troca_especie",
+  "x": {
+   "v": {
+    "rev_especie": "B31 Auxílio por incapacidade temporária"
+   }
+  },
+  "est": "info"
+ },
+ {
+  "nome": "B42 que reconhece especial pode virar B46",
+  "op": "rev",
+  "id": "vedacao_troca_especie",
+  "x": {
+   "v": {
+    "rev_especie": "B42 Aposentadoria por tempo de contribuição",
+    "rev_tese": "reconhecimento de tempo especial"
+   }
+  },
+  "est": "ok",
+  "txt": "§ 2º"
+ },
+ {
+  "nome": "B41 e melhor benefício",
+  "op": "rev",
+  "id": "vedacao_troca_especie",
+  "x": {
+   "v": {
+    "rev_tese": "melhor benefício"
+   },
+   "fd": {
+    "cartas": [
+     {
+      "nb": "1234567890",
+      "especie": "APOSENTADORIA POR IDADE",
+      "rmi": "2.000,00",
+      "der": "10/01/2018",
+      "concessao": "20/02/2018",
+      "dib": "10/01/2018",
+      "dip": "10/01/2018"
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "§ 1º"
+ },
+ {
+  "nome": "B46 com saque do FGTS",
+  "op": "rev",
+  "id": "vedacao_troca_especie",
+  "x": {
+   "v": {
+    "rev_especie": "B46 Aposentadoria especial",
+    "rev_saque_fgts": "Sim"
+   }
+  },
+  "est": "info",
+  "txt": "FGTS"
+ },
+ {
+  "nome": "DIB de 1995 limitada ao teto",
+  "op": "rev",
+  "id": "tese_teto",
+  "x": {
+   "v": {
+    "rev_tese": "teto (buraco negro e verde)",
+    "rev_dib": "1995-04-10",
+    "rev_teto_glosa": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "Tema 76"
+ },
+ {
+  "nome": "DIB de 2010 não cabe",
+  "op": "rev",
+  "id": "tese_teto",
+  "x": {
+   "v": {
+    "rev_tese": "teto (buraco negro e verde)",
+    "rev_dib": "2010-04-10"
+   }
+  },
+  "est": "impedido",
+  "txt": "41/2003"
+ },
+ {
+  "nome": "sem glosa não há readequação",
+  "op": "rev",
+  "id": "tese_teto",
+  "x": {
+   "v": {
+    "rev_tese": "teto (buraco negro e verde)",
+    "rev_dib": "1995-04-10",
+    "rev_teto_glosa": "Não"
+   }
+  },
+  "est": "impedido",
+  "txt": "glosa"
+ },
+ {
+  "nome": "buraco negro sem a glosa conferida",
+  "op": "rev",
+  "id": "tese_teto",
+  "x": {
+   "v": {
+    "rev_tese": "teto (buraco negro e verde)",
+    "rev_dib": "1990-01-10"
+   }
+  },
+  "est": "informar",
+  "txt": "buraco negro.*930"
+ },
+ {
+  "nome": "outra tese, DIB de 1995",
+  "op": "rev",
+  "id": "tese_teto",
+  "x": {
+   "v": {
+    "rev_dib": "1995-04-10"
+   }
+  },
+  "est": "info",
+  "txt": "cabe"
+ },
+ {
+  "nome": "teto escolhido",
+  "op": "rev",
+  "id": "tese_teto_sem_decadencia",
+  "x": {
+   "v": {
+    "rev_tese": "teto (buraco negro e verde)"
+   }
+  },
+  "est": "ok",
+  "txt": "não decai"
+ },
+ {
+  "nome": "outra tese",
+  "op": "rev",
+  "id": "tese_teto_sem_decadencia",
+  "x": {
+   "v": {
+    "rev_tese": "vida toda"
+   }
+  },
+  "est": "info"
+ },
+ {
+  "nome": "B31 de 2017 no prazo, memória com média de 100%",
+  "op": "rev",
+  "id": "tese_art29_ii",
+  "x": {
+   "v": {
+    "rev_tese": "art. 29, II (melhor benefício)",
+    "rev_especie": "B31 Auxílio por incapacidade temporária",
+    "rev_dib": "2017-03-01",
+    "rev_primeiro": "2017-04-10",
+    "rev_media_100": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "80%"
+ },
+ {
+  "nome": "B31 de 2017 no prazo sem a memória de cálculo: informar, não ok",
+  "op": "rev",
+  "id": "tese_art29_ii",
+  "x": {
+   "v": {
+    "rev_tese": "art. 29, II (melhor benefício)",
+    "rev_especie": "B31 Auxílio por incapacidade temporária",
+    "rev_dib": "2017-03-01",
+    "rev_primeiro": "2017-04-10"
+   }
+  },
+  "est": "informar",
+  "txt": "memória de cálculo"
+ },
+ {
+  "nome": "memória já com os 80% maiores",
+  "op": "rev",
+  "id": "tese_art29_ii",
+  "x": {
+   "v": {
+    "rev_tese": "art. 29, II (melhor benefício)",
+    "rev_especie": "B31 Auxílio por incapacidade temporária",
+    "rev_dib": "2017-03-01",
+    "rev_primeiro": "2017-04-10",
+    "rev_media_100": "Não"
+   }
+  },
+  "est": "impedido",
+  "txt": "não há o que revisar"
+ },
+ {
+  "nome": "B41 não entra",
+  "op": "rev",
+  "id": "tese_art29_ii",
+  "x": {
+   "v": {
+    "rev_tese": "art. 29, II (melhor benefício)",
+    "rev_especie": "B41 Aposentadoria por idade",
+    "rev_dib": "2017-03-01"
+   }
+  },
+  "est": "impedido",
+  "txt": "art. 18"
+ },
+ {
+  "nome": "B31 de 2005 pago em 2005: decaído",
+  "op": "rev",
+  "id": "tese_art29_ii",
+  "x": {
+   "v": {
+    "rev_tese": "art. 29, II (melhor benefício)",
+    "rev_especie": "B31 Auxílio por incapacidade temporária",
+    "rev_dib": "2005-03-01",
+    "rev_primeiro": "2005-04-10"
+   }
+  },
+  "est": "impedido",
+  "txt": "decadência"
+ },
+ {
+  "nome": "B31 de 2005 só com a DIB: estimativa",
+  "op": "rev",
+  "id": "tese_art29_ii",
+  "x": {
+   "v": {
+    "rev_tese": "art. 29, II (melhor benefício)",
+    "rev_especie": "B31 Auxílio por incapacidade temporária",
+    "rev_dib": "2005-03-01"
+   }
+  },
+  "est": "informar",
+  "txt": "estimativa"
+ },
+ {
+  "nome": "DIB depois da EC 103",
+  "op": "rev",
+  "id": "tese_art29_ii",
+  "x": {
+   "v": {
+    "rev_tese": "art. 29, II (melhor benefício)",
+    "rev_especie": "B32 Aposentadoria por incapacidade permanente",
+    "rev_dib": "2020-01-10"
+   }
+  },
+  "est": "impedido",
+  "txt": "janela"
+ },
+ {
+  "nome": "sem espécie nem DIB",
+  "op": "rev",
+  "id": "tese_art29_ii",
+  "x": {
+   "v": {
+    "rev_tese": "art. 29, II (melhor benefício)"
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "outra tese, mas o B32 de 2017 cabe",
+  "op": "rev",
+  "id": "tese_art29_ii",
+  "x": {
+   "v": {
+    "rev_especie": "B32 Aposentadoria por incapacidade permanente",
+    "rev_dib": "2017-03-01"
+   }
+  },
+  "est": "info",
+  "txt": "dentro"
+ },
+ {
+  "nome": "sem a data anterior",
+  "op": "rev",
+  "id": "tese_melhor_beneficio",
+  "x": {
+   "v": {
+    "rev_tese": "melhor benefício",
+    "rev_primeiro": "2020-03-10"
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "com a data e o CNIS",
+  "op": "rev",
+  "id": "tese_melhor_beneficio",
+  "x": {
+   "v": {
+    "rev_tese": "melhor benefício",
+    "rev_primeiro": "2020-03-10",
+    "rev_melhor_data": "2015-06-10"
+   },
+   "ct": {
+    "carencia": 200,
+    "anos": 16,
+    "meses": 8,
+    "periodos": [
+     [
+      "2000-01",
+      "2016-08"
+     ]
+    ],
+    "foraMinimo": 0
+   }
+  },
+  "est": "falta",
+  "txt": "186 contribuições"
+ },
+ {
+  "nome": "o rótulo junta as duas teses",
+  "op": "rev",
+  "id": "tese_melhor_beneficio",
+  "x": {
+   "v": {
+    "rev_tese": "art. 29, II (melhor benefício)",
+    "rev_primeiro": "2020-03-10",
+    "rev_melhor_data": "2015-06-10"
+   }
+  },
+  "est": "falta",
+  "txt": "teses diferentes"
+ },
+ {
+  "nome": "decaída",
+  "op": "rev",
+  "id": "tese_melhor_beneficio",
+  "x": {
+   "v": {
+    "rev_tese": "melhor benefício",
+    "rev_primeiro": "2010-03-10"
+   }
+  },
+  "est": "impedido"
+ },
+ {
+  "nome": "outra tese",
+  "op": "rev",
+  "id": "tese_melhor_beneficio",
+  "x": {},
+  "est": "info",
+  "txt": "Enunciado 1"
+ },
+ {
+  "nome": "dois vínculos ao mesmo tempo",
+  "op": "rev",
+  "id": "tese_concomitantes",
+  "x": {
+   "v": {
+    "rev_tese": "atividades concomitantes (Tema 1070)",
+    "rev_dib": "2018-01-10",
+    "rev_primeiro": "2018-02-10"
+   },
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "A",
+      "inicio": "01/03/2010",
+      "fim": "31/12/2017",
+      "ultRemun": "12/2017",
+      "indicadores": [],
+      "aberto": false
+     },
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "B",
+      "inicio": "01/01/2015",
+      "fim": "31/12/2016",
+      "ultRemun": "12/2016",
+      "indicadores": [],
+      "aberto": false
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "24 meses"
+ },
+ {
+  "nome": "sem sobreposição",
+  "op": "rev",
+  "id": "tese_concomitantes",
+  "x": {
+   "v": {
+    "rev_tese": "atividades concomitantes (Tema 1070)",
+    "rev_dib": "2018-01-10",
+    "rev_primeiro": "2018-02-10"
+   },
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "A",
+      "inicio": "01/03/2010",
+      "fim": "31/12/2014",
+      "ultRemun": "12/2014",
+      "indicadores": [],
+      "aberto": false
+     },
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "B",
+      "inicio": "01/01/2015",
+      "fim": "31/12/2017",
+      "ultRemun": "12/2017",
+      "indicadores": [],
+      "aberto": false
+     }
+    ]
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "DIB depois de 17/06/2019",
+  "op": "rev",
+  "id": "tese_concomitantes",
+  "x": {
+   "v": {
+    "rev_tese": "atividades concomitantes (Tema 1070)",
+    "rev_dib": "2019-08-01"
+   },
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "A",
+      "inicio": "01/03/2010",
+      "fim": "31/12/2017",
+      "ultRemun": "12/2017",
+      "indicadores": [],
+      "aberto": false
+     },
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "B",
+      "inicio": "01/01/2015",
+      "fim": "31/12/2016",
+      "ultRemun": "12/2016",
+      "indicadores": [],
+      "aberto": false
+     }
+    ]
+   }
+  },
+  "est": "impedido",
+  "txt": "janela"
+ },
+ {
+  "nome": "sem CNIS",
+  "op": "rev",
+  "id": "tese_concomitantes",
+  "x": {
+   "v": {
+    "rev_tese": "atividades concomitantes (Tema 1070)",
+    "rev_dib": "2018-01-10",
+    "rev_primeiro": "2018-02-10"
+   }
+  },
+  "est": "informar",
+  "txt": "CNIS"
+ },
+ {
+  "nome": "outra tese, o CNIS já mostra",
+  "op": "rev",
+  "id": "tese_concomitantes",
+  "x": {
+   "v": {
+    "rev_dib": "2018-01-10"
+   },
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "A",
+      "inicio": "01/03/2010",
+      "fim": "31/12/2017",
+      "ultRemun": "12/2017",
+      "indicadores": [],
+      "aberto": false
+     },
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "B",
+      "inicio": "01/01/2015",
+      "fim": "31/12/2016",
+      "ultRemun": "12/2016",
+      "indicadores": [],
+      "aberto": false
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "24 meses"
+ },
+ {
+  "nome": "revisão da vida toda: tese vencida (Tema 1102)",
+  "op": "rev",
+  "id": "tese_rvt_vencida",
+  "x": {
+   "v": {
+    "rev_tese": "vida toda"
+   }
+  },
+  "est": "impedido",
+  "txt": "1102.*não ajuizar"
+ },
+ {
+  "nome": "ação já ajuizada: só a modulação",
+  "op": "rev",
+  "id": "tese_rvt_vencida",
+  "x": {
+   "v": {
+    "rev_tese": "vida toda",
+    "rev_acao_judicial": "Sim"
+   }
+  },
+  "est": "risco",
+  "txt": "modulação"
+ },
+ {
+  "nome": "outra tese",
+  "op": "rev",
+  "id": "tese_rvt_vencida",
+  "x": {},
+  "est": "info",
+  "txt": "1102"
+ },
+ {
+  "nome": "DIB antes de 29/11/1999",
+  "op": "rev",
+  "id": "tese_rvt_vencida",
+  "x": {
+   "v": {
+    "rev_tese": "vida toda",
+    "rev_dib": "1998-05-10"
+   }
+  },
+  "est": "impedido",
+  "txt": "direito adquirido"
+ },
+ {
+  "nome": "IRSM com DIB de 1995: decaída",
+  "op": "rev",
+  "id": "tese_irsm",
+  "x": {
+   "v": {
+    "rev_tese": "IRSM de fevereiro/1994",
+    "rev_dib": "1995-02-10"
+   }
+  },
+  "est": "impedido",
+  "txt": "consumada"
+ },
+ {
+  "nome": "DIB antes de 03/1994",
+  "op": "rev",
+  "id": "tese_irsm",
+  "x": {
+   "v": {
+    "rev_tese": "IRSM de fevereiro/1994",
+    "rev_dib": "1993-11-10"
+   }
+  },
+  "est": "impedido",
+  "txt": "03/1994"
+ },
+ {
+  "nome": "sem DIB",
+  "op": "rev",
+  "id": "tese_irsm",
+  "x": {
+   "v": {
+    "rev_tese": "IRSM de fevereiro/1994"
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "outra tese",
+  "op": "rev",
+  "id": "tese_irsm",
+  "x": {},
+  "est": "info"
+ },
+ {
+  "nome": "especial com PPP no dossiê",
+  "op": "rev",
+  "id": "tese_tempo_nao_computado",
+  "x": {
+   "v": {
+    "rev_tese": "reconhecimento de tempo especial",
+    "rev_primeiro": "2020-03-10"
+   },
+   "fd": {
+    "ppps": [
+     {
+      "empresa": "X",
+      "riscos": [
+       {
+        "fator": "Ruído",
+        "db": "92"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "1 PPP"
+ },
+ {
+  "nome": "especial sem PPP",
+  "op": "rev",
+  "id": "tese_tempo_nao_computado",
+  "x": {
+   "v": {
+    "rev_tese": "reconhecimento de tempo especial",
+    "rev_primeiro": "2020-03-10"
+   }
+  },
+  "est": "falta",
+  "txt": "1124"
+ },
+ {
+  "nome": "rural decaído",
+  "op": "rev",
+  "id": "tese_tempo_nao_computado",
+  "x": {
+   "v": {
+    "rev_tese": "reconhecimento de tempo rural",
+    "rev_primeiro": "2014-03-10"
+   }
+  },
+  "est": "impedido",
+  "txt": "975"
+ },
+ {
+  "nome": "deficiência com documento novo",
+  "op": "rev",
+  "id": "tese_tempo_nao_computado",
+  "x": {
+   "v": {
+    "rev_tese": "aposentadoria da pessoa com deficiência (LC 142)",
+    "rev_primeiro": "2020-03-10",
+    "rev_novo_elemento": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "DPR"
+ },
+ {
+  "nome": "outra tese",
+  "op": "rev",
+  "id": "tese_tempo_nao_computado",
+  "x": {},
+  "est": "info"
+ },
+ {
+  "nome": "sem cobrança",
+  "op": "rev",
+  "id": "tese_indebito",
+  "x": {},
+  "est": "info"
+ },
+ {
+  "nome": "erro do INSS imperceptível: boa-fé",
+  "op": "rev",
+  "id": "tese_indebito",
+  "x": {
+   "v": {
+    "rev_cobranca_valor": "3500",
+    "rev_cobranca_origem": "Erro do INSS",
+    "rev_boa_fe": "Não"
+   }
+  },
+  "est": "ok",
+  "txt": "979"
+ },
+ {
+  "nome": "dava para perceber",
+  "op": "rev",
+  "id": "tese_indebito",
+  "x": {
+   "v": {
+    "rev_cobranca_origem": "Erro do INSS",
+    "rev_boa_fe": "Sim"
+   }
+  },
+  "est": "risco",
+  "txt": "30%"
+ },
+ {
+  "nome": "fraude alegada",
+  "op": "rev",
+  "id": "tese_indebito",
+  "x": {
+   "v": {
+    "rev_cobranca_origem": "Fraude ou má-fé alegada"
+   }
+  },
+  "est": "risco",
+  "txt": "595"
+ },
+ {
+  "nome": "só o valor",
+  "op": "rev",
+  "id": "tese_indebito",
+  "x": {
+   "v": {
+    "rev_cobranca_valor": "1200"
+   }
+  },
+  "est": "informar",
+  "txt": "origem"
+ },
+ {
+  "nome": "sem CNIS",
+  "op": "acerto",
+  "id": "cnis_valor_prova",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "CNIS lido",
+  "op": "acerto",
+  "id": "cnis_valor_prova",
+  "x": {
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "A",
+      "inicio": "01/03/2010",
+      "fim": "31/12/2017",
+      "ultRemun": "12/2017",
+      "indicadores": [],
+      "aberto": false
+     },
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "B",
+      "inicio": "01/01/2015",
+      "fim": "31/12/2016",
+      "ultRemun": "12/2016",
+      "indicadores": [],
+      "aberto": false
+     }
+    ]
+   },
+   "ct": {
+    "carencia": 94,
+    "anos": 7,
+    "meses": 10,
+    "periodos": [
+     [
+      "2010-03",
+      "2017-12"
+     ]
+    ],
+    "foraMinimo": 0
+   }
+  },
+  "est": "ok",
+  "txt": "2 vínculos"
+ },
+ {
+  "nome": "sem o tipo",
+  "op": "acerto",
+  "id": "pedido_a_qualquer_tempo",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "excluir vínculo de doméstico: Anexo I-B",
+  "op": "acerto",
+  "id": "pedido_a_qualquer_tempo",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Excluir",
+    "cn_categoria": "Doméstico"
+   }
+  },
+  "est": "ok",
+  "txt": "I-B"
+ },
+ {
+  "nome": "excluir sem a categoria",
+  "op": "acerto",
+  "id": "pedido_a_qualquer_tempo",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Excluir"
+   }
+  },
+  "est": "informar",
+  "txt": "I-E"
+ },
+ {
+  "nome": "excluir de MEI: sem modelo simplificado (o I-D é do CI prestador)",
+  "op": "acerto",
+  "id": "pedido_a_qualquer_tempo",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Excluir",
+    "cn_categoria": "MEI"
+   }
+  },
+  "est": "ok",
+  "txt": "não há modelo simplificado.*RAC"
+ },
+ {
+  "nome": "excluir de CI: I-D se prestou serviço",
+  "op": "acerto",
+  "id": "pedido_a_qualquer_tempo",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Excluir",
+    "cn_categoria": "Contribuinte individual"
+   }
+  },
+  "est": "ok",
+  "txt": "I-D.*prestou serviço"
+ },
+ {
+  "nome": "incluir com RAC",
+  "op": "acerto",
+  "id": "pedido_a_qualquer_tempo",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Incluir",
+    "cn_finalidade": "aposentadoria por idade"
+   }
+  },
+  "est": "ok",
+  "txt": "RAC.*aposentadoria por idade"
+ },
+ {
+  "nome": "indicador P: pendência que bloqueia",
+  "op": "acerto",
+  "id": "indicador_classificado",
+  "x": {
+   "g": {
+    "indicadores": [
+     {
+      "codigo": "PEXT",
+      "descricao": "",
+      "ocorrencias": 1
+     }
+    ],
+    "vinculos": []
+   }
+  },
+  "est": "risco",
+  "txt": "bloqueia"
+ },
+ {
+  "nome": "indicador I: só alerta",
+  "op": "acerto",
+  "id": "indicador_classificado",
+  "x": {
+   "g": {
+    "indicadores": [
+     {
+      "codigo": "IREM-INDPEND",
+      "descricao": "",
+      "ocorrencias": 1
+     }
+    ],
+    "vinculos": []
+   }
+  },
+  "est": "info",
+  "txt": "alerta"
+ },
+ {
+  "nome": "indicador A: já tratado",
+  "op": "acerto",
+  "id": "indicador_classificado",
+  "x": {
+   "g": {
+    "indicadores": [
+     {
+      "codigo": "ASE-DEF",
+      "descricao": "",
+      "ocorrencias": 1
+     }
+    ],
+    "vinculos": []
+   }
+  },
+  "est": "ok",
+  "txt": "já tratado"
+ },
+ {
+  "nome": "acerto negado (AEXT-IND)",
+  "op": "acerto",
+  "id": "indicador_classificado",
+  "x": {
+   "g": {
+    "indicadores": [
+     {
+      "codigo": "AEXT-IND",
+      "descricao": "",
+      "ocorrencias": 1
+     }
+    ],
+    "vinculos": []
+   }
+  },
+  "est": "falta",
+  "txt": "negado"
+ },
+ {
+  "nome": "P e I juntos: o P manda",
+  "op": "acerto",
+  "id": "indicador_classificado",
+  "x": {
+   "g": {
+    "indicadores": [
+     {
+      "codigo": "IREM-INDPEND",
+      "descricao": "",
+      "ocorrencias": 1
+     },
+     {
+      "codigo": "PREC-MENOR-MIN",
+      "descricao": "",
+      "ocorrencias": 1
+     }
+    ],
+    "vinculos": []
+   }
+  },
+  "est": "risco",
+  "txt": "PREC-MENOR-MIN.*IREM-INDPEND"
+ },
+ {
+  "nome": "digitado sem CNIS",
+  "op": "acerto",
+  "id": "indicador_classificado",
+  "x": {
+   "v": {
+    "cn_pendencia": "PREC-MENOR-MIN no vínculo da empresa"
+   }
+  },
+  "est": "risco",
+  "txt": "PREC-MENOR-MIN"
+ },
+ {
+  "nome": "no vínculo do CNIS",
+  "op": "acerto",
+  "id": "indicador_classificado",
+  "x": {
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "A",
+      "inicio": "01/03/2010",
+      "fim": "",
+      "ultRemun": "09/2026",
+      "indicadores": [
+       "PVIN-IRREG"
+      ],
+      "aberto": true
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "PVIN-IRREG"
+ },
+ {
+  "nome": "CNIS sem indicador",
+  "op": "acerto",
+  "id": "indicador_classificado",
+  "x": {
+   "g": {
+    "indicadores": [],
+    "vinculos": []
+   }
+  },
+  "est": "ok",
+  "txt": "nenhum"
+ },
+ {
+  "nome": "PEXT com documento da época",
+  "op": "acerto",
+  "id": "extemporaneo",
+  "x": {
+   "g": {
+    "indicadores": [
+     {
+      "codigo": "PEXT",
+      "descricao": "",
+      "ocorrencias": 1
+     }
+    ],
+    "vinculos": []
+   },
+   "v": {
+    "cn_doc_contemporaneo": "Sim"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "PEXT sem documento",
+  "op": "acerto",
+  "id": "extemporaneo",
+  "x": {
+   "g": {
+    "indicadores": [
+     {
+      "codigo": "PEXT",
+      "descricao": "",
+      "ocorrencias": 1
+     }
+    ],
+    "vinculos": []
+   },
+   "v": {
+    "cn_doc_contemporaneo": "Não"
+   }
+  },
+  "est": "falta",
+  "txt": "não conta"
+ },
+ {
+  "nome": "AEXT-VT confirmado",
+  "op": "acerto",
+  "id": "extemporaneo",
+  "x": {
+   "g": {
+    "indicadores": [
+     {
+      "codigo": "AEXT-VT",
+      "descricao": "",
+      "ocorrencias": 1
+     }
+    ],
+    "vinculos": []
+   }
+  },
+  "est": "ok",
+  "txt": "confirmado"
+ },
+ {
+  "nome": "sem CNIS",
+  "op": "acerto",
+  "id": "extemporaneo",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "só indicador digitado, sem CNIS: não afirma nenhum",
+  "op": "acerto",
+  "id": "extemporaneo",
+  "x": {
+   "v": {
+    "cn_pendencia": "IREM-INDPEND"
+   }
+  },
+  "est": "informar",
+  "txt": "leia o CNIS"
+ },
+ {
+  "nome": "confirmado só em parte (AEXT-VP)",
+  "op": "acerto",
+  "id": "extemporaneo",
+  "x": {
+   "g": {
+    "indicadores": [
+     {
+      "codigo": "AEXT-VP",
+      "descricao": "",
+      "ocorrencias": 1
+     }
+    ],
+    "vinculos": []
+   }
+  },
+  "est": "falta",
+  "txt": "só em parte"
+ },
+ {
+  "nome": "sem categoria",
+  "op": "acerto",
+  "id": "prova_por_categoria",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "empregado com documento",
+  "op": "acerto",
+  "id": "prova_por_categoria",
+  "x": {
+   "v": {
+    "cn_categoria": "Empregado",
+    "cn_doc_contemporaneo": "Sim"
+   }
+  },
+  "est": "ok",
+  "txt": "CTPS"
+ },
+ {
+  "nome": "sem documento da época",
+  "op": "acerto",
+  "id": "prova_por_categoria",
+  "x": {
+   "v": {
+    "cn_categoria": "Empregado",
+    "cn_doc_contemporaneo": "Não"
+   }
+  },
+  "est": "risco",
+  "txt": "55, § 3º"
+ },
+ {
+  "nome": "reclamatória sem prova material",
+  "op": "acerto",
+  "id": "prova_por_categoria",
+  "x": {
+   "v": {
+    "cn_categoria": "Empregado",
+    "cn_reclamatoria": "Sim"
+   }
+  },
+  "est": "risco",
+  "txt": "172"
+ },
+ {
+  "nome": "doméstico sem resposta",
+  "op": "acerto",
+  "id": "prova_por_categoria",
+  "x": {
+   "v": {
+    "cn_categoria": "Doméstico"
+   }
+  },
+  "est": "falta",
+  "txt": "76"
+ },
+ {
+  "nome": "empregado",
+  "op": "acerto",
+  "id": "empregado_sem_recolhimento",
+  "x": {
+   "v": {
+    "cn_categoria": "Empregado"
+   }
+  },
+  "est": "ok",
+  "txt": "Enunciado 2"
+ },
+ {
+  "nome": "contribuinte individual",
+  "op": "acerto",
+  "id": "empregado_sem_recolhimento",
+  "x": {
+   "v": {
+    "cn_categoria": "Contribuinte individual"
+   }
+  },
+  "est": "info"
+ },
+ {
+  "nome": "sem nada",
+  "op": "acerto",
+  "id": "empregado_sem_recolhimento",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "empregado pelo CNIS",
+  "op": "acerto",
+  "id": "empregado_sem_recolhimento",
+  "x": {
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "A",
+      "inicio": "01/03/2010",
+      "fim": "31/12/2017",
+      "ultRemun": "12/2017",
+      "indicadores": [],
+      "aberto": false
+     },
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "B",
+      "inicio": "01/01/2015",
+      "fim": "31/12/2016",
+      "ultRemun": "12/2016",
+      "indicadores": [],
+      "aberto": false
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "27, I"
+ },
+ {
+  "nome": "CI que pagou atrasado",
+  "op": "acerto",
+  "id": "ci_em_atraso",
+  "x": {
+   "v": {
+    "cn_categoria": "Contribuinte individual",
+    "cn_ci_atraso": "Sim"
+   }
+  },
+  "est": "falta",
+  "txt": "27, II"
+ },
+ {
+  "nome": "CI em dia",
+  "op": "acerto",
+  "id": "ci_em_atraso",
+  "x": {
+   "v": {
+    "cn_categoria": "MEI",
+    "cn_ci_atraso": "Não"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "CI sem resposta",
+  "op": "acerto",
+  "id": "ci_em_atraso",
+  "x": {
+   "v": {
+    "cn_categoria": "Facultativo"
+   }
+  },
+  "est": "informar",
+  "txt": "data de pagamento"
+ },
+ {
+  "nome": "empregado",
+  "op": "acerto",
+  "id": "ci_em_atraso",
+  "x": {
+   "v": {
+    "cn_categoria": "Empregado"
+   }
+  },
+  "est": "info"
+ },
+ {
+  "nome": "sem CNIS",
+  "op": "acerto",
+  "id": "abaixo_do_minimo",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "nenhuma abaixo",
+  "op": "acerto",
+  "id": "abaixo_do_minimo",
+  "x": {
+   "ct": {
+    "carencia": 100,
+    "anos": 8,
+    "meses": 4,
+    "periodos": [],
+    "foraMinimo": 0
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "abaixo no ano corrente: ajustar",
+  "op": "acerto",
+  "id": "abaixo_do_minimo",
+  "x": {
+   "an": {
+    "abaixo": [
+     {
+      "comp": "03/2026",
+      "valor": 1000,
+      "minimo": 1621
+     }
+    ]
+   },
+   "ct": {
+    "carencia": 100,
+    "anos": 8,
+    "meses": 4,
+    "periodos": [],
+    "foraMinimo": 1
+   }
+  },
+  "est": "falta",
+  "txt": "03/2026.*dia 15"
+ },
+ {
+  "nome": "abaixo em ano encerrado: segue a EC",
+  "op": "acerto",
+  "id": "abaixo_do_minimo",
+  "x": {
+   "an": {
+    "abaixo": [
+     {
+      "comp": "05/2024",
+      "valor": 1000,
+      "minimo": 1412
+     },
+     {
+      "comp": "02/2026",
+      "valor": 900,
+      "minimo": 1621
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "EC 103.*19-E"
+ },
+ {
+  "nome": "antes de 11/2019 não entra",
+  "op": "acerto",
+  "id": "abaixo_do_minimo",
+  "x": {
+   "an": {
+    "abaixo": [
+     {
+      "comp": "05/2018",
+      "valor": 500,
+      "minimo": 954
+     }
+    ]
+   },
+   "ct": {
+    "carencia": 100,
+    "anos": 8,
+    "meses": 4,
+    "periodos": [],
+    "foraMinimo": 0
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem CNIS",
+  "op": "acerto",
+  "id": "mes_sem_remuneracao",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "três meses sem salário no fim do vínculo",
+  "op": "acerto",
+  "id": "mes_sem_remuneracao",
+  "x": {
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "Loja",
+      "inicio": "01/02/2015",
+      "fim": "30/06/2020",
+      "ultRemun": "03/2020",
+      "indicadores": [],
+      "aberto": false
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "3 meses.*223"
+ },
+ {
+  "nome": "vínculo sem lacuna",
+  "op": "acerto",
+  "id": "mes_sem_remuneracao",
+  "x": {
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "A",
+      "inicio": "01/03/2010",
+      "fim": "31/12/2017",
+      "ultRemun": "12/2017",
+      "indicadores": [],
+      "aberto": false
+     },
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "B",
+      "inicio": "01/01/2015",
+      "fim": "31/12/2016",
+      "ultRemun": "12/2016",
+      "indicadores": [],
+      "aberto": false
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "contribuinte individual não entra",
+  "op": "acerto",
+  "id": "mes_sem_remuneracao",
+  "x": {
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Contribuinte Individual",
+      "origem": "",
+      "inicio": "01/01/2015",
+      "fim": "31/12/2016",
+      "ultRemun": "06/2016",
+      "indicadores": [],
+      "aberto": false
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem RAIS",
+  "op": "acerto",
+  "id": "licenca_sem_remuneracao_rais",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "licença de 2018",
+  "op": "acerto",
+  "id": "licenca_sem_remuneracao_rais",
+  "x": {
+   "fd": {
+    "rais": [
+     {
+      "ano": "2018",
+      "raiz": "12345678",
+      "nome": "Empresa X",
+      "admissao": "01/01/2010",
+      "desligamento": "",
+      "cbo": "",
+      "remuneracoes": [],
+      "afastamentos": [
+       {
+        "de": "01/03/2018",
+        "ate": "30/06/2018",
+        "codigo": "70",
+        "motivo": "Licença sem vencimento"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "Empresa X.*122 dias"
+ },
+ {
+  "nome": "RAIS sem licença",
+  "op": "acerto",
+  "id": "licenca_sem_remuneracao_rais",
+  "x": {
+   "fd": {
+    "rais": [
+     {
+      "ano": "2018",
+      "raiz": "12345678",
+      "nome": "Empresa X",
+      "admissao": "01/01/2010",
+      "desligamento": "",
+      "cbo": "",
+      "remuneracoes": [],
+      "afastamentos": [
+       {
+        "de": "01/03/2018",
+        "ate": "30/04/2018",
+        "codigo": "10",
+        "motivo": "Doença"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "só licença depois de 2019",
+  "op": "acerto",
+  "id": "licenca_sem_remuneracao_rais",
+  "x": {
+   "fd": {
+    "rais": [
+     {
+      "ano": "2021",
+      "raiz": "12345678",
+      "nome": "Empresa X",
+      "admissao": "01/01/2010",
+      "desligamento": "",
+      "cbo": "",
+      "remuneracoes": [],
+      "afastamentos": [
+       {
+        "de": "01/03/2021",
+        "ate": "31/03/2021",
+        "codigo": "70",
+        "motivo": "Licença sem vencimento"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "licença de 2021",
+  "op": "acerto",
+  "id": "licenca_rais_depois_ec103",
+  "x": {
+   "fd": {
+    "rais": [
+     {
+      "ano": "2021",
+      "raiz": "12345678",
+      "nome": "Empresa X",
+      "admissao": "01/01/2010",
+      "desligamento": "",
+      "cbo": "",
+      "remuneracoes": [],
+      "afastamentos": [
+       {
+        "de": "01/03/2021",
+        "ate": "31/03/2021",
+        "codigo": "70",
+        "motivo": "Licença sem vencimento"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "19-E"
+ },
+ {
+  "nome": "só a de 2018",
+  "op": "acerto",
+  "id": "licenca_rais_depois_ec103",
+  "x": {
+   "fd": {
+    "rais": [
+     {
+      "ano": "2018",
+      "raiz": "12345678",
+      "nome": "Empresa X",
+      "admissao": "01/01/2010",
+      "desligamento": "",
+      "cbo": "",
+      "remuneracoes": [],
+      "afastamentos": [
+       {
+        "de": "01/03/2018",
+        "ate": "30/06/2018",
+        "codigo": "70",
+        "motivo": "Licença sem vencimento"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "licença que atravessa 13/11/2019 entra depois",
+  "op": "acerto",
+  "id": "licenca_rais_depois_ec103",
+  "x": {
+   "fd": {
+    "rais": [
+     {
+      "ano": "2019",
+      "raiz": "12345678",
+      "nome": "Empresa X",
+      "admissao": "01/01/2010",
+      "desligamento": "",
+      "cbo": "",
+      "remuneracoes": [],
+      "afastamentos": [
+       {
+        "de": "01/10/2019",
+        "ate": "31/01/2020",
+        "codigo": "70",
+        "motivo": "Licença sem vencimento"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "01/10/2019"
+ },
+ {
+  "nome": "licença que atravessa 13/11/2019 entra antes",
+  "op": "acerto",
+  "id": "licenca_sem_remuneracao_rais",
+  "x": {
+   "fd": {
+    "rais": [
+     {
+      "ano": "2019",
+      "raiz": "12345678",
+      "nome": "Empresa X",
+      "admissao": "01/01/2010",
+      "desligamento": "",
+      "cbo": "",
+      "remuneracoes": [],
+      "afastamentos": [
+       {
+        "de": "01/10/2019",
+        "ate": "31/01/2020",
+        "codigo": "70",
+        "motivo": "Licença sem vencimento"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "01/10/2019"
+ },
+ {
+  "nome": "erro de guia GPS: acerto na Receita, não no INSS",
+  "op": "acerto",
+  "id": "erro_na_guia_receita",
+  "x": {
+   "v": {
+    "cn_gps_erro": "Sim"
+   }
+  },
+  "est": "falta",
+  "txt": "Receita Federal, não no INSS"
+ },
+ {
+  "nome": "sem erro de guia",
+  "op": "acerto",
+  "id": "erro_na_guia_receita",
+  "x": {
+   "v": {
+    "cn_gps_erro": "Não"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "indicador de DARF no CNIS",
+  "op": "acerto",
+  "id": "erro_na_guia_receita",
+  "x": {
+   "g": {
+    "indicadores": [
+     {
+      "codigo": "PDARF-ALT-CPF",
+      "descricao": "",
+      "ocorrencias": 1
+     }
+    ],
+    "vinculos": []
+   }
+  },
+  "est": "informar",
+  "txt": "Receita"
+ },
+ {
+  "nome": "nada",
+  "op": "acerto",
+  "id": "erro_na_guia_receita",
+  "x": {},
+  "est": "info"
+ },
+ {
+  "nome": "não é indenização",
+  "op": "acerto",
+  "id": "indenizacao_periodo_decaido",
+  "x": {},
+  "est": "info"
+ },
+ {
+  "nome": "sem o período",
+  "op": "acerto",
+  "id": "indenizacao_periodo_decaido",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Indenizar"
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "CI de 1990 a 1994",
+  "op": "acerto",
+  "id": "indenizacao_periodo_decaido",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Indenizar",
+    "cn_categoria": "Contribuinte individual",
+    "cn_periodo_ini": "1990-01-01",
+    "cn_periodo_fim": "1994-12-31"
+   }
+  },
+  "est": "falta",
+  "txt": "60 meses.*multa de 10%"
+ },
+ {
+  "nome": "rural sem multa",
+  "op": "acerto",
+  "id": "indenizacao_periodo_decaido",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Indenizar",
+    "cn_categoria": "Segurado especial",
+    "cn_periodo_ini": "1990-01-01",
+    "cn_periodo_fim": "1990-12-31"
+   }
+  },
+  "est": "falta",
+  "txt": "sem a multa"
+ },
+ {
+  "nome": "rural depois de 11/1991 tem multa (§ 4º)",
+  "op": "acerto",
+  "id": "indenizacao_periodo_decaido",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Indenizar",
+    "cn_categoria": "Segurado especial",
+    "cn_periodo_ini": "1995-01-01",
+    "cn_periodo_fim": "2000-12-31"
+   }
+  },
+  "est": "falta",
+  "txt": "e multa de 10%"
+ },
+ {
+  "nome": "rural de 1990 a 1993: multa só no resto",
+  "op": "acerto",
+  "id": "indenizacao_periodo_decaido",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Indenizar",
+    "cn_categoria": "Segurado especial",
+    "cn_periodo_ini": "1990-01-01",
+    "cn_periodo_fim": "1993-12-31"
+   }
+  },
+  "est": "falta",
+  "txt": "com ela no resto"
+ },
+ {
+  "nome": "empregado não indeniza",
+  "op": "acerto",
+  "id": "indenizacao_periodo_decaido",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Indenizar",
+    "cn_categoria": "Empregado",
+    "cn_periodo_ini": "1990-01-01",
+    "cn_periodo_fim": "1990-12-31"
+   }
+  },
+  "est": "info",
+  "txt": "27, I"
+ },
+ {
+  "nome": "período recente pode não ter decaído (§ 3º)",
+  "op": "acerto",
+  "id": "indenizacao_periodo_decaido",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Indenizar",
+    "cn_categoria": "Contribuinte individual",
+    "cn_periodo_ini": "2023-01-01",
+    "cn_periodo_fim": "2024-12-31"
+   }
+  },
+  "est": "falta",
+  "txt": "§ 3º"
+ },
+ {
+  "nome": "início depois do fim",
+  "op": "acerto",
+  "id": "indenizacao_periodo_decaido",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Indenizar",
+    "cn_periodo_ini": "2000-01-01",
+    "cn_periodo_fim": "1999-01-01"
+   }
+  },
+  "est": "informar",
+  "txt": "depois do fim"
+ },
+ {
+  "nome": "vínculo em limbo: não pedir a baixa",
+  "op": "acerto",
+  "id": "limbo_nao_baixar",
+  "x": {
+   "v": {
+    "cn_limbo": "Sim"
+   },
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "Metalúrgica",
+      "inicio": "01/02/2015",
+      "fim": "",
+      "ultRemun": "01/2025",
+      "indicadores": [],
+      "aberto": true
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "não peça a baixa.*Metalúrgica"
+ },
+ {
+  "nome": "aberto sem salário depois de benefício",
+  "op": "acerto",
+  "id": "limbo_nao_baixar",
+  "x": {
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "Metalúrgica",
+      "inicio": "01/02/2015",
+      "fim": "",
+      "ultRemun": "01/2025",
+      "indicadores": [],
+      "aberto": true
+     }
+    ]
+   },
+   "benefCnis": [
+    {
+     "especie": "31",
+     "origem": "",
+     "nb": "1",
+     "de": "2025-02-01",
+     "ate": "2025-08-30",
+     "situacao": "CESSADO",
+     "ativo": false
+    }
+   ]
+  },
+  "est": "risco",
+  "txt": "Tema 300"
+ },
+ {
+  "nome": "aberto sem salário, sem sinal",
+  "op": "acerto",
+  "id": "limbo_nao_baixar",
+  "x": {
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "Metalúrgica",
+      "inicio": "01/02/2015",
+      "fim": "",
+      "ultRemun": "01/2025",
+      "indicadores": [],
+      "aberto": true
+     }
+    ]
+   }
+  },
+  "est": "informar",
+  "txt": "limbo"
+ },
+ {
+  "nome": "não é limbo",
+  "op": "acerto",
+  "id": "limbo_nao_baixar",
+  "x": {
+   "v": {
+    "cn_limbo": "Não"
+   },
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "Metalúrgica",
+      "inicio": "01/02/2015",
+      "fim": "",
+      "ultRemun": "01/2025",
+      "indicadores": [],
+      "aberto": true
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "CNIS sem vínculo aberto",
+  "op": "acerto",
+  "id": "limbo_nao_baixar",
+  "x": {
+   "g": {
+    "indicadores": [],
+    "vinculos": [
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "A",
+      "inicio": "01/03/2010",
+      "fim": "31/12/2017",
+      "ultRemun": "12/2017",
+      "indicadores": [],
+      "aberto": false
+     },
+     {
+      "tipo": "Empregado ou Agente Público",
+      "origem": "B",
+      "inicio": "01/01/2015",
+      "fim": "31/12/2016",
+      "ultRemun": "12/2016",
+      "indicadores": [],
+      "aberto": false
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "não é baixa renda",
+  "op": "acerto",
+  "id": "facultativo_baixa_renda",
+  "x": {
+   "v": {
+    "cn_categoria": "Facultativo"
+   }
+  },
+  "est": "info"
+ },
+ {
+  "nome": "sem CadÚnico",
+  "op": "acerto",
+  "id": "facultativo_baixa_renda",
+  "x": {
+   "v": {
+    "cn_categoria": "Facultativo baixa renda"
+   }
+  },
+  "est": "informar",
+  "txt": "CadÚnico"
+ },
+ {
+  "nome": "CadÚnico em dia",
+  "op": "acerto",
+  "id": "facultativo_baixa_renda",
+  "x": {
+   "v": {
+    "cn_categoria": "Facultativo baixa renda"
+   },
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "atualizada_em": "01/06/2025",
+    "renda_total": "1.500,00"
+   }
+  },
+  "est": "ok",
+  "txt": "01/06/2025"
+ },
+ {
+  "nome": "CadÚnico velho",
+  "op": "acerto",
+  "id": "facultativo_baixa_renda",
+  "x": {
+   "v": {
+    "cn_categoria": "Facultativo baixa renda"
+   },
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "atualizada_em": "10/01/2023",
+    "renda_total": "1.500,00"
+   }
+  },
+  "est": "risco",
+  "txt": "2 anos"
+ },
+ {
+  "nome": "validação negada no CNIS",
+  "op": "acerto",
+  "id": "facultativo_baixa_renda",
+  "x": {
+   "g": {
+    "indicadores": [
+     {
+      "codigo": "FBR-AUT-EXPCAD",
+      "descricao": "",
+      "ocorrencias": 1
+     }
+    ],
+    "vinculos": []
+   },
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "atualizada_em": "01/06/2025",
+    "renda_total": "1.500,00"
+   }
+  },
+  "est": "risco",
+  "txt": "FBR-AUT-EXPCAD"
+ },
+ {
+  "nome": "renda acima de 2 mínimos",
+  "op": "acerto",
+  "id": "facultativo_baixa_renda",
+  "x": {
+   "v": {
+    "cn_categoria": "Facultativo baixa renda"
+   },
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "atualizada_em": "01/06/2025",
+    "renda_total": 4000
+   }
+  },
+  "est": "risco",
+  "txt": "2 salários"
+ },
+ {
+  "nome": "renda crua do CadÚnico (\"1621.5\") não vira 162150",
+  "op": "acerto",
+  "id": "facultativo_baixa_renda",
+  "x": {
+   "v": {
+    "cn_categoria": "Facultativo baixa renda"
+   },
+   "cad": {
+    "estado_cadastral": "Cadastrado",
+    "atualizada_em": "01/06/2025",
+    "renda_total": "1621.5"
+   }
+  },
+  "est": "ok",
+  "txt": "1.621,50"
+ },
+ {
+  "nome": "nada negado",
+  "op": "acerto",
+  "id": "recurso_do_acerto",
+  "x": {},
+  "est": "info",
+  "txt": "126, III"
+ },
+ {
+  "nome": "acerto negado: 31/10 cai no sábado e 02/11 é Finados, vence em 03/11",
+  "op": "acerto",
+  "id": "recurso_do_acerto",
+  "x": {
+   "fd": {
+    "processos": [
+     {
+      "servico": "Atualização de vínculos e remunerações",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/08/2026",
+      "atualizado": "01/10/2026",
+      "comunicacoes": [
+       {
+        "nb": "",
+        "decisao": "Indeferido",
+        "contra": true,
+        "motivo": "Não comprovado",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "03/11/2026"
+ },
+ {
+  "nome": "acerto negado há meses",
+  "op": "acerto",
+  "id": "recurso_do_acerto",
+  "x": {
+   "fd": {
+    "processos": [
+     {
+      "servico": "Atualização de vínculos e remunerações",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/08/2026",
+      "atualizado": "01/03/2026",
+      "comunicacoes": [
+       {
+        "nb": "",
+        "decisao": "Indeferido",
+        "contra": true,
+        "motivo": "Não comprovado",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "risco",
+  "txt": "venceu"
+ },
+ {
+  "nome": "indeferimento de benefício não é acerto",
+  "op": "acerto",
+  "id": "recurso_do_acerto",
+  "x": {
+   "fd": {
+    "processos": [
+     {
+      "servico": "Aposentadoria por idade",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/02/2026",
+      "atualizado": "10/03/2026",
+      "comunicacoes": [
+       {
+        "nb": "",
+        "decisao": "Indeferido",
+        "contra": true,
+        "motivo": "Falta de período de carência",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "info"
+ },
+ {
+  "nome": "indeferimento na cópia do processo",
+  "op": "crps",
+  "id": "decisao_recorrivel",
+  "x": {
+   "fd": {
+    "processos": [
+     {
+      "servico": "Benefício por incapacidade",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/02/2026",
+      "atualizado": "10/09/2026",
+      "comunicacoes": [
+       {
+        "nb": "7654321098",
+        "decisao": "Indeferido",
+        "contra": true,
+        "motivo": "Não constatação de incapacidade laborativa",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "Indeferido.*7654321098"
+ },
+ {
+  "nome": "decisão digitada",
+  "op": "crps",
+  "id": "decisao_recorrivel",
+  "x": {
+   "v": {
+    "crp_decisao_tipo": "Cessação"
+   }
+  },
+  "est": "ok",
+  "txt": "Cessação"
+ },
+ {
+  "nome": "decisão favorável lida",
+  "op": "crps",
+  "id": "decisao_recorrivel",
+  "x": {
+   "fd": {
+    "processos": [
+     {
+      "servico": "Benefício por incapacidade",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/02/2026",
+      "atualizado": "10/09/2026",
+      "comunicacoes": [
+       {
+        "nb": "",
+        "decisao": "Deferido",
+        "contra": false,
+        "motivo": "",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "falta"
+ },
+ {
+  "nome": "nada",
+  "op": "crps",
+  "id": "decisao_recorrivel",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "ciência em 15/09/2026: prazo em 15/10/2026 (proxDiaUtil)",
+  "op": "crps",
+  "id": "prazo_30_dias",
+  "x": {
+   "hoje": "2026-09-20",
+   "der": "2026-09-20",
+   "v": {
+    "crp_ciencia": "2026-09-15"
+   }
+  },
+  "est": "ok",
+  "txt": "15/10/2026"
+ },
+ {
+  "nome": "ciência em 15/09/2026, hoje 16/10/2026: vencido",
+  "op": "crps",
+  "id": "prazo_30_dias",
+  "x": {
+   "v": {
+    "crp_ciencia": "2026-09-15"
+   }
+  },
+  "est": "risco",
+  "txt": "vencido em 15/10/2026"
+ },
+ {
+  "nome": "vencimento no sábado vai à segunda",
+  "op": "crps",
+  "id": "prazo_30_dias",
+  "x": {
+   "v": {
+    "crp_ciencia": "2026-09-17"
+   }
+  },
+  "est": "risco",
+  "txt": "19/10/2026"
+ },
+ {
+  "nome": "exemplo do Regimento: ciência em 10/10/2026",
+  "op": "crps",
+  "id": "prazo_30_dias",
+  "x": {
+   "v": {
+    "crp_ciencia": "2026-10-10"
+   }
+  },
+  "est": "ok",
+  "txt": "09/11/2026"
+ },
+ {
+  "nome": "e-mail: 5 dias da emissão",
+  "op": "crps",
+  "id": "prazo_30_dias",
+  "x": {
+   "v": {
+    "crp_forma_ciencia": "E-mail ou sistema (5 dias da emissão)",
+    "crp_emissao": "2026-10-01"
+   }
+  },
+  "est": "ok",
+  "txt": "06/10/2026.*05/11/2026|05/11/2026.*06/10/2026"
+ },
+ {
+  "nome": "interposto no prazo",
+  "op": "crps",
+  "id": "prazo_30_dias",
+  "x": {
+   "v": {
+    "crp_ciencia": "2026-08-01",
+    "crp_interposto_em": "2026-08-20"
+   }
+  },
+  "est": "ok",
+  "txt": "interposto"
+ },
+ {
+  "nome": "sem ciência",
+  "op": "crps",
+  "id": "prazo_30_dias",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "ciência estimada: 10/10 é sábado e 12/10 é feriado nacional, vence em 13/10",
+  "op": "crps",
+  "id": "prazo_30_dias",
+  "x": {
+   "hoje": "2026-09-20",
+   "der": "2026-09-20",
+   "fd": {
+    "processos": [
+     {
+      "servico": "Benefício por incapacidade",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/02/2026",
+      "atualizado": "10/09/2026",
+      "comunicacoes": [
+       {
+        "nb": "7654321098",
+        "decisao": "Indeferido",
+        "contra": true,
+        "motivo": "Não constatação de incapacidade laborativa",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "estimada.*13/10/2026|13/10/2026.*estimada"
+ },
+ {
+  "nome": "vencimento em Finados (02/11/2026) vai a 03/11",
+  "op": "crps",
+  "id": "prazo_30_dias",
+  "x": {
+   "v": {
+    "crp_ciencia": "2026-10-03"
+   }
+  },
+  "est": "ok",
+  "txt": "03/11/2026"
+ },
+ {
+  "nome": "ciência digitada depois da presumida: conta da mais cedo",
+  "op": "crps",
+  "id": "prazo_30_dias",
+  "x": {
+   "v": {
+    "crp_ciencia": "2026-10-20",
+    "crp_forma_ciencia": "E-mail ou sistema (5 dias da emissão)",
+    "crp_emissao": "2026-10-01"
+   }
+  },
+  "est": "ok",
+  "txt": "05/11/2026"
+ },
+ {
+  "nome": "ciência digitada",
+  "op": "crps",
+  "id": "data_da_ciencia",
+  "x": {
+   "v": {
+    "crp_ciencia": "2026-09-15",
+    "crp_forma_ciencia": "Carta com AR"
+   }
+  },
+  "est": "ok",
+  "txt": "15/09/2026"
+ },
+ {
+  "nome": "e-mail sem a emissão",
+  "op": "crps",
+  "id": "data_da_ciencia",
+  "x": {
+   "v": {
+    "crp_forma_ciencia": "E-mail ou sistema (5 dias da emissão)"
+   }
+  },
+  "est": "informar",
+  "txt": "emissão"
+ },
+ {
+  "nome": "só a cópia do processo",
+  "op": "crps",
+  "id": "data_da_ciencia",
+  "x": {
+   "fd": {
+    "processos": [
+     {
+      "servico": "Benefício por incapacidade",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/02/2026",
+      "atualizado": "10/09/2026",
+      "comunicacoes": [
+       {
+        "nb": "7654321098",
+        "decisao": "Indeferido",
+        "contra": true,
+        "motivo": "Não constatação de incapacidade laborativa",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "falta",
+  "txt": "última atualização"
+ },
+ {
+  "nome": "nada",
+  "op": "crps",
+  "id": "data_da_ciencia",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "ciência digitada depois da presumida",
+  "op": "crps",
+  "id": "data_da_ciencia",
+  "x": {
+   "v": {
+    "crp_ciencia": "2026-10-20",
+    "crp_forma_ciencia": "E-mail ou sistema (5 dias da emissão)",
+    "crp_emissao": "2026-10-01"
+   }
+  },
+  "est": "falta",
+  "txt": "06/10/2026"
+ },
+ {
+  "nome": "motivo da comunicação de decisão (fd.processos)",
+  "op": "crps",
+  "id": "motivo_da_decisao",
+  "x": {
+   "v": {
+    "crp_motivo": "outro texto"
+   },
+   "fd": {
+    "processos": [
+     {
+      "servico": "Benefício por incapacidade",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/02/2026",
+      "atualizado": "10/09/2026",
+      "comunicacoes": [
+       {
+        "nb": "7654321098",
+        "decisao": "Indeferido",
+        "contra": true,
+        "motivo": "Não constatação de incapacidade laborativa",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok",
+  "txt": "Não constatação de incapacidade"
+ },
+ {
+  "nome": "motivo digitado",
+  "op": "crps",
+  "id": "motivo_da_decisao",
+  "x": {
+   "v": {
+    "crp_motivo": "Falta de qualidade de segurado"
+   }
+  },
+  "est": "ok",
+  "txt": "qualidade"
+ },
+ {
+  "nome": "sem motivo",
+  "op": "crps",
+  "id": "motivo_da_decisao",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "procuração assinada",
+  "op": "crps",
+  "id": "legitimidade",
+  "x": {
+   "v": {
+    "crp_procuracao": "Sim"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem procuração",
+  "op": "crps",
+  "id": "legitimidade",
+  "x": {
+   "v": {
+    "crp_procuracao": "Não"
+   }
+  },
+  "est": "falta",
+  "txt": "112"
+ },
+ {
+  "nome": "sem resposta",
+  "op": "crps",
+  "id": "legitimidade",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "ação com o mesmo pedido: impedido",
+  "op": "crps",
+  "id": "sem_acao_judicial_igual",
+  "x": {
+   "v": {
+    "crp_acao_judicial": "Sim"
+   }
+  },
+  "est": "impedido",
+  "txt": "renúncia"
+ },
+ {
+  "nome": "sem ação",
+  "op": "crps",
+  "id": "sem_acao_judicial_igual",
+  "x": {
+   "v": {
+    "crp_acao_judicial": "Não"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem resposta",
+  "op": "crps",
+  "id": "sem_acao_judicial_igual",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "pedido de revisão sem documento novo",
+  "op": "crps",
+  "id": "revisao_sem_elemento_novo",
+  "x": {
+   "v": {
+    "crp_decisao_tipo": "Decisão em pedido de revisão",
+    "crp_elemento_novo": "Não"
+   }
+  },
+  "est": "impedido",
+  "txt": "§ 7º"
+ },
+ {
+  "nome": "indeferimento direto",
+  "op": "crps",
+  "id": "revisao_sem_elemento_novo",
+  "x": {
+   "v": {
+    "crp_decisao_tipo": "Indeferimento"
+   }
+  },
+  "est": "info"
+ },
+ {
+  "nome": "pedido de revisão com documento novo, sem saber se manteve: informar",
+  "op": "crps",
+  "id": "revisao_sem_elemento_novo",
+  "x": {
+   "v": {
+    "crp_decisao_tipo": "Decisão em pedido de revisão",
+    "crp_elemento_novo": "Sim"
+   }
+  },
+  "est": "informar",
+  "txt": "manteve"
+ },
+ {
+  "nome": "revisão que mudou o resultado, com documento novo",
+  "op": "crps",
+  "id": "revisao_sem_elemento_novo",
+  "x": {
+   "v": {
+    "crp_elemento_novo": "Sim",
+    "crp_decisao_tipo": "Decisão em pedido de revisão"
+   },
+   "fd": {
+    "processos": [
+     {
+      "servico": "Revisão de benefício",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/02/2026",
+      "atualizado": "10/09/2026",
+      "comunicacoes": [
+       {
+        "nb": "",
+        "decisao": "Deferido em parte",
+        "contra": false,
+        "motivo": "",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "revisão que manteve, sem resposta do documento: impedido",
+  "op": "crps",
+  "id": "revisao_sem_elemento_novo",
+  "x": {
+   "fd": {
+    "processos": [
+     {
+      "servico": "Revisão de benefício",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/02/2026",
+      "atualizado": "10/09/2026",
+      "comunicacoes": [
+       {
+        "nb": "7654321098",
+        "decisao": "Indeferido",
+        "contra": true,
+        "motivo": "Não constatação de incapacidade laborativa",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "impedido",
+  "txt": "§ 7º"
+ },
+ {
+  "nome": "pedido de revisão sem resposta",
+  "op": "crps",
+  "id": "revisao_sem_elemento_novo",
+  "x": {
+   "v": {
+    "crp_decisao_tipo": "Decisão em pedido de revisão"
+   }
+  },
+  "est": "informar"
+ },
+ {
+  "nome": "revisão que manteve o indeferimento: não conhecido mesmo com documento novo",
+  "op": "crps",
+  "id": "revisao_sem_elemento_novo",
+  "x": {
+   "v": {
+    "crp_elemento_novo": "Sim"
+   },
+   "fd": {
+    "processos": [
+     {
+      "servico": "Revisão de benefício",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/02/2026",
+      "atualizado": "10/09/2026",
+      "comunicacoes": [
+       {
+        "nb": "7654321098",
+        "decisao": "Indeferido",
+        "contra": true,
+        "motivo": "Não constatação de incapacidade laborativa",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "impedido",
+  "txt": "manteve"
+ },
+ {
+  "nome": "documento inédito",
+  "op": "crps",
+  "id": "preclusao",
+  "x": {
+   "v": {
+    "crp_elemento_novo": "Sim"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem documento inédito",
+  "op": "crps",
+  "id": "preclusao",
+  "x": {
+   "v": {
+    "crp_elemento_novo": "Não"
+   }
+  },
+  "est": "info"
+ },
+ {
+  "nome": "sem resposta",
+  "op": "crps",
+  "id": "preclusao",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "B31: matéria médica",
+  "op": "crps",
+  "id": "materia_de_alcada",
+  "x": {
+   "v": {
+    "crp_especie": "Auxílio temporário · B31"
+   }
+  },
+  "est": "info",
+  "txt": "médica"
+ },
+ {
+  "nome": "B41: cabe recurso especial",
+  "op": "crps",
+  "id": "materia_de_alcada",
+  "x": {
+   "v": {
+    "crp_especie": "Por idade urbana · B41"
+   }
+  },
+  "est": "info",
+  "txt": "recurso especial"
+ },
+ {
+  "nome": "motivo de perícia na cópia",
+  "op": "crps",
+  "id": "materia_de_alcada",
+  "x": {
+   "fd": {
+    "processos": [
+     {
+      "servico": "Benefício assistencial",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/02/2026",
+      "atualizado": "10/09/2026",
+      "comunicacoes": [
+       {
+        "nb": "7654321098",
+        "decisao": "Indeferido",
+        "contra": true,
+        "motivo": "Não constatação de incapacidade laborativa",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "médica"
+ },
+ {
+  "nome": "sem dado",
+  "op": "crps",
+  "id": "materia_de_alcada",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "fora do prazo",
+  "op": "crps",
+  "id": "relevacao_intempestividade",
+  "x": {
+   "v": {
+    "crp_ciencia": "2026-08-01"
+   }
+  },
+  "est": "risco",
+  "txt": "líquido e certo"
+ },
+ {
+  "nome": "no prazo",
+  "op": "crps",
+  "id": "relevacao_intempestividade",
+  "x": {
+   "v": {
+    "crp_ciencia": "2026-10-10"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "interposto fora do prazo",
+  "op": "crps",
+  "id": "relevacao_intempestividade",
+  "x": {
+   "v": {
+    "crp_ciencia": "2026-08-01",
+    "crp_interposto_em": "2026-09-10"
+   }
+  },
+  "est": "risco"
+ },
+ {
+  "nome": "sem ciência",
+  "op": "crps",
+  "id": "relevacao_intempestividade",
+  "x": {},
+  "est": "informar"
+ },
+ {
+  "nome": "regra",
+  "op": "crps",
+  "id": "reforma_pelo_inss",
+  "x": {},
+  "est": "info",
+  "txt": "305"
+ },
+ {
+  "nome": "decisão favorável depois",
+  "op": "crps",
+  "id": "reforma_pelo_inss",
+  "x": {
+   "fd": {
+    "processos": [
+     {
+      "servico": "Benefício por incapacidade",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/02/2026",
+      "atualizado": "10/09/2026",
+      "comunicacoes": [
+       {
+        "nb": "7654321098",
+        "decisao": "Indeferido",
+        "contra": true,
+        "motivo": "Não constatação de incapacidade laborativa",
+        "dcb": ""
+       }
+      ]
+     },
+     {
+      "servico": "Benefício por incapacidade",
+      "status": "Concluída",
+      "nb": "",
+      "entrada": "01/02/2026",
+      "atualizado": "10/09/2026",
+      "comunicacoes": [
+       {
+        "nb": "",
+        "decisao": "Deferido",
+        "contra": false,
+        "motivo": "",
+        "dcb": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "est": "info",
+  "txt": "Deferido"
+ },
+ {
+  "nome": "passou de 365 dias",
+  "op": "crps",
+  "id": "prazo_de_julgamento",
+  "x": {
+   "v": {
+    "crp_interposto_em": "2025-06-01"
+   }
+  },
+  "est": "falta",
+  "txt": "mandado de segurança"
+ },
+ {
+  "nome": "dentro do ano",
+  "op": "crps",
+  "id": "prazo_de_julgamento",
+  "x": {
+   "v": {
+    "crp_interposto_em": "2026-09-01"
+   }
+  },
+  "est": "info",
+  "txt": "01/09/2027"
+ },
+ {
+  "nome": "sem interposição",
+  "op": "crps",
+  "id": "prazo_de_julgamento",
+  "x": {},
+  "est": "info",
+  "txt": "365"
+ },
+ {
+  "nome": "ruído sugere o 13",
+  "op": "crps",
+  "id": "enunciado_vinculante",
+  "x": {
+   "v": {
+    "crp_motivo": "Ruído abaixo do limite de tolerância"
+   }
+  },
+  "est": "info",
+  "txt": "13"
+ },
+ {
+  "nome": "enunciado digitado",
+  "op": "crps",
+  "id": "enunciado_vinculante",
+  "x": {
+   "v": {
+    "crp_enunciado": "Enunciado 12"
+   }
+  },
+  "est": "ok"
+ },
+ {
+  "nome": "sem motivo",
+  "op": "crps",
+  "id": "enunciado_vinculante",
+  "x": {},
+  "est": "info",
+  "txt": "sem o motivo"
+ },
+ {
+  "nome": "carência com benefício intercalado sugere o 18",
+  "op": "crps",
+  "id": "enunciado_vinculante",
+  "x": {
+   "v": {
+    "crp_motivo": "Falta de período de carência"
+   },
+   "ct": {
+    "carencia": 100,
+    "anos": 8,
+    "meses": 4,
+    "periodos": [
+     [
+      "2010-01",
+      "2015-12"
+     ],
+     [
+      "2017-01",
+      "2020-12"
+     ]
+    ],
+    "foraMinimo": 0
+   },
+   "benefCnis": [
+    {
+     "especie": "31",
+     "origem": "",
+     "nb": "1",
+     "de": "2016-01-10",
+     "ate": "2016-11-30",
+     "situacao": "CESSADO",
+     "ativo": false
+    }
+   ]
+  },
+  "est": "info",
+  "txt": "18"
+ },
+ {
+  "nome": "falta de recolhimento sugere o 2",
+  "op": "crps",
+  "id": "enunciado_vinculante",
+  "x": {
+   "v": {
+    "crp_motivo": "Ausência de recolhimento das contribuições pelo empregador"
+   }
+  },
+  "est": "info",
+  "txt": "Enunciado 2 "
+ },
+ {
+  "nome": "unificar NIT",
+  "op": "acerto",
+  "id": "pedido_a_qualquer_tempo",
+  "x": {
+   "v": {
+    "cn_tipo_acerto": "Unificar NIT"
+   }
+  },
+  "est": "ok",
+  "txt": "unificar NIT"
+ },
+ {
+  "nome": "regra",
+  "op": "crps",
+  "id": "sem_efeito_suspensivo",
+  "x": {},
+  "est": "info",
+  "txt": "efeito suspensivo"
+ },
+ {
+  "nome": "cessação",
+  "op": "crps",
+  "id": "sem_efeito_suspensivo",
+  "x": {
+   "v": {
+    "crp_decisao_tipo": "Cessação"
+   }
+  },
+  "est": "info",
+  "txt": "cessação"
+ }
+]

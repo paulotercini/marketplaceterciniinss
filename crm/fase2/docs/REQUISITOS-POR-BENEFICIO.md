@@ -31,6 +31,47 @@ Os arquivos do MCP `normas` foram baixados em 31/05/2026; a IN 128 do `norma_ins
 | m | Valor da híbrida (`hibrida.valor_rmi`) | Lei 8.213, art. 48, § 4º: salário mínimo no período de segurado especial | Skill: só os meses pagos | **divergente** |
 | n | Formulário do acerto de CNIS (`acerto.pedido_a_qualquer_tempo`) | IN 128, art. 12, § 2º (IN 164/2024): anexos I-B a I-E | Tabela da skill base-cnis-acerto-indicadores | Vale a IN |
 
+## O que a revisão do catálogo corrigiu neste levantamento
+
+Depois do levantamento, cada família foi escrita em código e passou por um revisor independente, que conferiu de novo na norma (16.10.2026). Onde o catálogo (`REQ_BENEF`, em `app.html`) e as tabelas abaixo divergem, **vale o catálogo**. As correções que mudam o resultado:
+
+- **Empregado rural:** o ×3 (2011 a 2015) e o ×2 (2016 a 2020) valem só até 12 meses por ano civil (IN 128, art. 203, par. único, II). Quatro anos de emprego dão 48 meses, e não 144.
+- **Salário-maternidade rural:** os 12 meses podem ser descontínuos (Enunciado 19, III, do CRPS, redação de 13/07/2026); 11 meses de atividade nos 12 anteriores ao parto ficam em ordem.
+- **Prova rural depois de 01/2023:** o prazo do art. 38-B, § 1º, da Lei 8.213/91 está prorrogado até metade dos segurados especiais estar no cadastro (IN 128, art. 117, § 1º; Portaria 990, art. 101, § 1º); a autodeclaração ratificada continua valendo.
+- **Tabela do art. 142:** vale também para quem estava na roça antes de 11/1991 (IN 128, art. 199, § 2º).
+- **B31:** os 30 dias da DIB do não empregado contam do afastamento (IN 128, art. 336, II); a prorrogação se pede nos últimos 15 dias do benefício (art. 339, § 3º, red. IN 212/2026); dentro dos 30 dias do art. 346, o novo pedido documental é possível pela Portaria Conjunta 13/2026, art. 6º.
+- **B32:** 100 % da média para fato gerador até 13/11/2019, inclusive (IN 128, art. 233, II, a); depois, 60 % + 2 % sem teto de 100 %.
+- **Pensão e reclusão:** os prazos antes de 18/01/2019 não eram "90 dias para todos"; a prova anterior a 2019 não era dispensada; o limite de 1 salário mínimo do auxílio-reclusão tem data de corte; a acumulação segue também o art. 124, VI.
+
+## Para o advogado decidir (escolhas do catálogo)
+
+Cada item abaixo está no catálogo como está escrito; mudar é trocar uma regra no código, e o caso-ouro correspondente em `testes/cadastro/req-ouro/`.
+
+| Família | Escolha feita | Alternativa |
+|---|---|---|
+| Incapacidade | A DII digitada vale sobre a do laudo, com aviso "em risco" quando divergem | O laudo primeiro |
+| Incapacidade | Os 12 meses rurais do segurado especial contam até a DII, com lacuna máxima de 12 meses | Até o requerimento (art. 39, I) |
+| Incapacidade | Janela da prorrogação: da DCB menos 14 até a DCB (a DCB como último dia pago) | Da DCB menos 15 até a véspera |
+| Incapacidade | Gestação de alto risco isenta a carência desde 03/07/2026 (data do ato) | A data de publicação no DOU, não conferida |
+| Incapacidade | Facultativo na graça do emprego anterior: categoria em ordem no B94/B36 (IN 128, arts. 353, § 1º, e 184, § 7º) | Divergente |
+| Aposentadorias | Linha de RPPS ou militar no quadro Tempos antecipa a filiação e abre as transições | Só a filiação ao RGPS |
+| Aposentadorias | Acréscimo da EC 20 conta o magistério superior ("inclusive o universitário", art. 251, § 1º) | Só a educação básica |
+| Aposentadorias | Pontos do art. 29-C do professor, no direito adquirido, usam o tempo total | Só o magistério |
+| Aposentadorias | Carência só digitada, sem CNIS: a data do direito fica na própria DER | A data real |
+| PcD e especial | Auxílio-doença comum dentro do especial antes de 01/07/2020 conta como especial | Divergente: de 2003 a 2020 o RPS (art. 65, par. único) só contava o acidentário |
+| PcD e especial | Vigência da LC 142 em 09/11/2013 (LC 95, art. 8º, § 1º) | — |
+| PcD e especial | A data do direito da B46 de quem se filiou depois da reforma usa a regra sem idade (ADI 6309), e o requisito mostra "divergente" | As idades do art. 260 da IN 128 |
+| BPC e pensão | Auxílio-reclusão de prisão entre 05/11/2015 e 17/01/2019: 30 dias do Decreto | Os 90 dias da pensão (art. 80) |
+| BPC e pensão | Lei 13.183/2015 desde 05/11/2015; Lei 9.528/1997 desde 11/11/1997; Decreto 12.534/2025 desde 25/06/2025 | Datas não conferidas na fonte |
+| BPC e pensão | Instituidor que recebia pensão como dependente mantém a qualidade (art. 15, I) | Não conferido |
+| BPC e pensão | "Idoso acima de 65" lido como 65 anos ou mais na exclusão de renda | Acima de 65 |
+| BPC e pensão | Irmão menor de 16: 180 dias (IN 128) | A lei fala só em filhos |
+| BPC e pensão | A cota de 4 meses aparece como "falta" | "Informativo" (a pensão é devida pelos 4 meses) |
+| Revisão | Decadência só pela DIB fica "a informar" (pede o primeiro pagamento) | "Impedido" |
+| Revisão | Recurso contra decisão de pedido de revisão que manteve o indeferimento: "impedido" (Regimento, art. 112, § 7º) | A skill aponta vício de legalidade no parágrafo |
+| Acerto | Filiação obrigatória do rural no art. 45-A, § 4º, da Lei 8.212/91 desde 11/1991 | Não conferido |
+| Acerto | Exclusão de vínculo de MEI, facultativo e segurado especial pelo RAC (Anexo I) | Confirmar a prática |
+
 ## Regras transversais do motor
 
 - **Carência até o fato**: conta até a DII (incapacidade), até o mês da prisão (auxílio-reclusão) ou até a DER (aposentadorias). No reingresso (art. 27-A da Lei 8.213/91) conta 6 contribuições desde a volta e até a DII; o art. 27-A não vale para aposentadoria (Lei 10.666/2003, art. 3º, § 1º).

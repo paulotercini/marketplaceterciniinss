@@ -59,11 +59,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
 
   await p.evaluate(id => abrirAtendimentoDe(id), CLI_CHEIO);
-  await p.waitForSelector(".pa-blocos");
-  conf("o bloco CadÚnico nasce da família do dossiê e mostra estado e renda por pessoa",
-    await p.evaluate(() => { const b = [...document.querySelectorAll(".pa-bloco")].find(x => /CadÚnico/.test(x.textContent)); if (!b) return false; b.click(); return true; }));
-  await p.waitForSelector(".pa-transp");
-  const txt = await p.evaluate(() => document.querySelector(".pa-det").textContent);
+  // F233 · o CadÚnico é um quadro do Primeiro atendimento, sempre aberto
+  await p.waitForSelector("#paq-cad", { timeout: 15000 }).catch(() => {});
+  conf("o quadro CadÚnico nasce da família do dossiê e mostra estado e renda por pessoa", await p.evaluate(() => !!document.querySelector("#paq-cad .pa-transp")));
+  const txt = await p.evaluate(() => (document.getElementById("paq-cad") || {}).textContent || "");
   conf("o fato diz família, estado cadastral, integrantes e renda", /Cadastrada/.test(txt) && /3 integrante/.test(txt) && /150,00/.test(txt));
   conf("o quadro lista os integrantes com CPF e NIS e o que a Transparência já disse",
     /123\.456\.789-09/.test(txt) && /529\.982\.247-25/.test(txt) && /10000000002/.test(txt) && /BPC: 18 pagamento/.test(txt) && /sem pagamento encontrado/.test(txt) && /ainda não consultado/.test(txt)

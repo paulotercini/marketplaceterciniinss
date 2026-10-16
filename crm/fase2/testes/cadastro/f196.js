@@ -74,11 +74,10 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   await p.waitForFunction(() => D._ficha && D._ficha.cliId && !_lendoDossie && !_lendoLeitores, null, { timeout: 10000 });
   await p.evaluate(() => { abaAtiva = 0; _atendAberto.add(clienteAberto); irSubCad("pa"); });
-  await p.waitForSelector(".pa .pa-blocos");
+  await p.waitForSelector(".pa .paq");   // F233 · o Primeiro atendimento em quadros
   const pa = await p.evaluate(() => ({ passos: [...document.querySelectorAll(".atend-passos .pa-passo b")].map(b => b.textContent),
-    blocos: [...document.querySelectorAll(".pa-bloco .pa-bloco-rot")].map(b => b.textContent.trim()),
-    cartoes: [...document.querySelectorAll(".pa-cartao-bt > b")].map(b => b.textContent.trim()),
-    car: document.querySelector(".pa-bloco:nth-child(2) .pa-bloco-val").textContent, tl: !!document.querySelector(".pa-tl"),
+    blocos: [...document.querySelectorAll(".pa .paq[data-q]")].map(q => q.dataset.q),
+    car: ([...document.querySelectorAll("#paq-cnis .paq-bloco")].find(b => /Carência/.test(b.textContent)) || {}).textContent || "", tl: !!document.querySelector(".pa-tl"),
     lic: !!document.querySelector(".pa-tl-lic"), aba: [...document.querySelectorAll(".sub-menu button")].some(b => /Primeiro atendimento/.test(b.textContent)) }));
   conf("a aba Primeiro atendimento existe e abre o painel com os quatro passos", pa.aba && pa.passos.join("|") === "Identificação|Primeiro atendimento|Análise de Direito|Documentos");
   conf("o nome diferente do CNIS aparece no primeiro atendimento", /Nome diferente do CNIS/.test(await p.textContent(".pa")) && /Fulana Ficticia de Tal Souza/.test(await p.textContent(".pa-nome-dif")));
@@ -145,16 +144,15 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
     window.__sair = r.join(","); _atendAberto.add(clienteAberto); irSubCad("pa"); await new Promise(x => setTimeout(x, 150));
     return r.every(x => x === "ok");
   }));
-  conf("a situação tem os seis blocos do desenho", pa.blocos.join("|").startsWith("Qualidade de segurado|Carência|CNIS|RAIS e CAGED|CNPJs do titular|Pedidos ao INSS|Planejamento prévio|Não encontrado no dossiê"));
+  conf(`F233 · a situação abre pelos quadros do CNIS e da RAIS (${pa.blocos.join(", ")})`, pa.blocos.slice(0, 2).join() === "cnis,rais" && pa.blocos.includes("falta"));
   conf("os trabalhos possíveis saem do dossiê", await p.evaluate(() => paDados(D.clientes[0], D.casosDoCliente.get(D.clientes[0].id) || []).trabalhos.length > 0));
-  conf("a carência mostra a contagem do CNIS", /^104 de 180$/.test(pa.car.trim()));
+  conf("a carência mostra a contagem do CNIS", /104 contribuições/.test(pa.car));
   conf("a qualidade abre com a linha do tempo e a licença da RAIS marcada", pa.tl && pa.lic);
-  await p.click('.pa-bloco:has-text("RAIS e CAGED")'); await p.waitForTimeout(100);
-  conf("F213 · o bloco RAIS e CAGED traz a tabela dos vínculos e a licença sem remuneração, com a fonte", /licença sem remuneração/.test(await p.textContent(".pa-det")) && /RAIS de 2016/.test(await p.textContent(".pa-det"))
-    && !!(await p.$(".pa-det .pa-tabela")) && /licença sem remuneração de 01\/06\/2016/.test(await p.textContent(".pa-tabela")));
-  await (await p.$(".pa")).screenshot({ path: "/tmp/f196-rais.png" });
-  await p.click(".pa-det .pa-levar-bt"); await p.waitForTimeout(100);
-  conf("tirado da análise, o bloco diz que fica fora", (await p.getAttribute('.pa-bloco:has-text("RAIS e CAGED") .pa-bloco-vai', "aria-checked")) === "false");
+  conf("F213 · o quadro da RAIS traz a tabela dos vínculos e a licença sem remuneração, com a fonte", /licença sem remuneração/i.test(await p.textContent("#paq-rais")) && /RAIS de 2016/.test(await p.textContent("#paq-rais"))
+    && !!(await p.$("#paq-rais .pa-tabela")) && /licença sem remuneração de 01\/06\/2016/.test(await p.textContent("#paq-rais .pa-tabela")));
+  await p.click("#paq-rais .paq-todos"); await p.waitForTimeout(100);
+  conf("tirado da análise, o quadro inteiro fica fora", await p.evaluate(() => [...document.querySelectorAll("#paq-rais [data-k]")].every(li => li.classList.contains("fora")) && !paVai(clienteAberto, "rais")));
+  await p.click("#paq-rais .paq-todos"); await p.waitForTimeout(100);
   conf("F213 · o bloco Não encontrado orienta o que o dossiê não trouxe", /Nenhum laudo médico|não foi consultad/.test(await p.evaluate(() => paDados(D.clientes[0], []).grupos.falta.map(x => x.texto).join(" | "))));
   conf("F213 · o Primeiro atendimento não tem mais os trabalhos possíveis", !(await p.$(".pa .pa-trab")));
   conf("F207 · quem já é aposentado tem incapacidade e aposentadorias marcadas como impedidas", await p.evaluate(() => {
@@ -164,8 +162,8 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
     return imp.length > 0 && imp.every(k => ["incapacidade","tempo","especial","rural","b94","bpc"].includes(k)) && /aposentadoria por idade/.test(d.trabalhos.find(t=>t.impedido).impedido);
   }));
   await (await p.$(".pa")).screenshot({ path: process.env.FOTO || "/tmp/f196-pa.png" });
-  await p.evaluate(() => irSubCad("direito")); await p.waitForSelector(".pa-trab-ad");
-  conf("F213 · os trabalhos possíveis estão na Análise de Direito", !!(await p.$(".pa-trab-ad .pa-cartao")) && /\d+ de \d+ blocos/.test(await p.textContent(".pa-levar-box")));
+  await p.evaluate(() => irSubCad("direito")); await p.waitForSelector("#ad-quadrado");
+  conf("F234 · a Análise de Direito abre pelo quadrado dos benefícios escolhidos", !!(await p.$("#ad-quadrado .adq-bt")));
   const adx = await p.evaluate(async () => {
     const c = D.cliPorId.get(clienteAberto);
     const fora0 = _paForaBl.get(c.id); _paForaBl.delete(c.id);
@@ -174,7 +172,10 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
       { tipo: "Facultativo", codigo: "", origem: "", inicio: "01/03/2020", fim: "", comps: [{ c: "03/2020", v: 1045, aliq: 5 }, { c: "04/2020", v: 1045, aliq: 5 }, { c: "06/2020", v: 1045, aliq: 5 }] },
       { tipo: "Contribuinte Individual", codigo: "", origem: "", inicio: "01/01/2021", fim: "", comps: [{ c: "01/2021", v: 1100, aliq: 11 }] }] });
     _adxDiv.delete(c.id);
+    // F234 · a exploração do dossiê mora no painel do benefício aberto, num quadro que se abre
+    _adBenef.set(adChave(c), opcoesSel(c)[0].o);
     repintarFicha(); await new Promise(x => setTimeout(x, 150));
+    document.getElementById("adb-mais").open = true;
     const r = { secs: [...document.querySelectorAll(".adx-sec h3")].map(h => h.textContent), vinc: document.querySelector(".adx-tab").textContent };
     r.qual = document.querySelector(".adx-qual").textContent; r.semHist = !document.querySelector(".adx-graf");
     [...document.querySelectorAll(".adx-qual button")][0].click(); await new Promise(x => setTimeout(x, 150)); r.comHist = !!document.querySelector(".adx-graf");
@@ -189,7 +190,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
     _adxDiv.set(c.id, false); _adxAba.set(c.id, "vinculos"); repintarFicha(); await new Promise(x => setTimeout(x, 150));
     document.getElementById("adx-cons").value = "Conferir a licença de 2016 com o empregador"; await addConsideracao(c.id); await new Promise(x => setTimeout(x, 150));
     r.cons = document.querySelector(".adx-lado-cons").textContent;
-    r.lado = !!document.querySelector(".adx-lado .pa-trab-ad");
+
     if (fora0) _paForaBl.set(c.id, fora0); repintarFicha(); await new Promise(x => setTimeout(x, 100));
     return r;
   });
@@ -201,7 +202,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   conf("F215 · as remunerações começam em 07/1994", !adx.antigo);
   conf(`F215 · a qualidade mostra primeiro a última contribuição e até quando se mantém; o histórico abre no botão (${adx.qual.slice(0,80)})`, /Última contribuição/.test(adx.qual) && /mantida até/i.test(adx.qual) && adx.semHist && adx.comHist);
   conf(`F215 · baixa renda e 11 % em quadros próprios, com os meses (${adx.cats.join(" | ")} · ${adx.meses})`, adx.cats.some(t => /baixa renda.*3 meses/.test(t)) && adx.cats.some(t => /11 %/.test(t)) && /03\/2020 a 04\/2020, 06\/2020/.test(adx.meses));
-  conf("F214 · a consideração vai ao quadro fixo da direita, junto dos trabalhos", /Conferir a licença de 2016/.test(adx.cons) && adx.lado);
+  conf("F214 · a consideração vai ao quadro fixo da direita", /Conferir a licença de 2016/.test(adx.cons));
   conf("F215 · clicar numa chave não volta ao topo da página", await p.evaluate(async () => {
     const box = [document.getElementById("detalhe"), document.querySelector(".det-rolagem")].find(e => e && e.scrollHeight > e.clientHeight + 300);
     if (!box) return true;
@@ -225,20 +226,6 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
     && ped.ind.laudos.length === 1 && ped.def.res === "deferido");
   conf("F216 · a lista abre com todos, e a chave deixa só os indeferidos", ped.todos === 2 && ped.so === 1);
   await (await p.$(".adx-grade")).screenshot({ path: "/tmp/f196-adx.png" });
-  await p.click(".pa-cartao-bt"); await p.waitForTimeout(100);
-  conf("clicar no cartão o destaca", !!(await p.$(".pa-cartao.sel")));
-  const marcados = await p.$$eval(".pa-levar input", is => is.filter(i => i.checked).length);
-  if (!marcados) { await p.click(".pa-levar input"); await p.waitForTimeout(100); }
-  await p.click(".pa-prim"); await p.waitForSelector("#ad-novo[open] .ad-trab");
-  const ad = await p.evaluate(() => ({ nav: [...document.querySelectorAll(".ad-trab button b")].map(b => b.textContent), tz: document.getElementById("ad-trazido").textContent,
-    ctx: document.getElementById("ad-contexto").value, esp: document.getElementById("ad-esp").value }));
-  conf("a análise abre com os trabalhos levados e os blocos, e o CNIS fora oferece levar", ad.nav.length > 0 && /Do primeiro atendimento/.test(ad.tz) && /fora da análise/.test(ad.tz));
-  conf("o contexto da análise leva os blocos levados, sem o tirado", /^Primeiro atendimento, /.test(ad.ctx) && !/CNIS e RAIS \(/.test(ad.ctx));
-  await p.click("#ad-trazido .ad-tz.fora button"); await p.waitForTimeout(100);
-  conf("levado de volta na análise, o bloco entra", !(await p.$("#ad-trazido .ad-tz.fora")));
-  await p.evaluate(() => { const d = [...document.querySelectorAll("#ad-trazido details")]; d.forEach(x => x.open = true); });
-  await (await p.$("#ad-novo")).screenshot({ path: process.env.FOTO2 || "/tmp/f196-ad.png" });
-
   for (const [nome, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${nome}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);
   const falhas = ok.filter(([, v]) => !v).length + erros.length;

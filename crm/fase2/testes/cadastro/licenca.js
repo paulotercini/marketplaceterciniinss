@@ -95,13 +95,16 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
     && await p.$$eval(".mapa-fatos .mapa-lista li", ls => ls.some(l => /licença sem remuneração/.test(l.textContent) && l.querySelector(".adr-link"))));
 
   // 3 · a passagem à Análise de Direito leva a nota junto da contagem
-  await p.click(".mapa-topo button.tl-bt.forte");
+  // F234 · o Mapa só mostra: a passagem à Análise de Direito é pelo benefício aberto, que preenche o formulário
+  await p.evaluate(cli => { admSalvar(cli, a => { a.beneficios = { tempo: ["idade"] }; }); irSubCad("direito"); }, CLI_CHEIO);
+  await p.waitForSelector("#ad-quadrado");
+  await p.evaluate(cli => { adAbrirBenef(cli, "idade"); document.getElementById("ad-novo").open = true; }, CLI_CHEIO);
   await p.waitForSelector("#ad-novo[open] #ad-contexto");
   const campos = await p.evaluate(() => ({ t: document.getElementById("ad-f-tempo").value, c: document.getElementById("ad-f-carencia").value,
     ctx: document.getElementById("ad-contexto").value }));
   conf("o tempo e a carência levam a licença da RAIS", /8 anos e 8 meses \(CNIS, por competência\); a RAIS mostra 61 dias de licença sem remuneração, que o INSS tem descontado/.test(campos.t)
     && /104 contribuições .*61 dias de licença sem remuneração/.test(campos.c));
-  conf("o mapa inteiro vai ao contexto, com a licença", /licença sem remuneração/.test(campos.ctx));
+  conf("o que veio do Primeiro atendimento vai ao contexto, com a licença", /licença sem remuneração/i.test(campos.ctx));
 
   // 4 · a análise pede o certo por espécie, e os outros campos ficam a um clique
   const vis = await p.evaluate(() => ({
