@@ -246,7 +246,7 @@ FIX.documentos_beneficio.push(
   conf("e no lugar fica o + atendimento para a próxima vinda",
     t5.some(x => /\+ atendimento/.test(x)));
   await p.evaluate(() => { const b = [...document.querySelectorAll(".menu-topo .mt")]
-    .find(x => /Lembretes/.test(x.innerText)); if (b) b.click(); });
+    .find(x => /Aposentadorias futuras/.test(x.innerText)); if (b) b.click(); });
   await p.waitForTimeout(400);
   conf("a aba Lembretes mostra as anotações do atendimento que virou lembrete",
     /Vai juntar os exames/.test(await p.evaluate(() =>

@@ -21,13 +21,22 @@ const banco = new Banco(dados);
 const T = banco.t;
 T.clientes.push({ id: "c0000000-0000-0000-0000-0000000000e1", nome: "Eulália Fictícia Bastos", cpf: null, telefone: "(16) 99000-2001", campos: {}, criado_em: "2024-01-10T12:00:00Z" });
 
+// F225 · pré-cadastro da agenda (sem CPF) e caso com perícia marcada
+const iso = n => { const d = new Date(Date.now() + n * 864e5); return d.toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" }); };
+T.clientes.push({ id: "c0000000-0000-0000-0000-0000000000f1", nome: "Rosalina Fictícia Moura", cpf: null, telefone: "(16) 99000-3003", campos: { primeiro_atendimento: "agendado" }, criado_em: "2026-10-10T12:00:00Z" });
+T.clientes.push({ id: "c0000000-0000-0000-0000-0000000000f2", nome: "Teodoro Fictício Rangel", cpf: null, telefone: null, campos: {}, criado_em: "2024-01-10T12:00:00Z" });
+const caso = o => ({ titulo: "", protocolos: [], processos: [], crps_nups: [], crps: [], nbs: [], arquivados: {}, marcadores: [], ...o });
+T.casos.push(caso({ id: "b0000000-0000-0000-0000-0000000000f1", cliente_id: "c0000000-0000-0000-0000-0000000000f2", titulo: "Teodoro Fictício Rangel", fase: "inss", protocolos: ["700000077"], criado_em: "2025-01-01T12:00:00Z" }),
+  caso({ id: "b0000000-0000-0000-0000-0000000000f2", cliente_id: "c0000000-0000-0000-0000-0000000000f2", titulo: "Teodoro Fictício Rangel", fase: "judicial", criado_em: "2025-06-01T12:00:00Z" }));
+T.eventos.push({ id: "d0000000-0000-0000-0000-0000000000f1", caso_id: "b0000000-0000-0000-0000-0000000000f1", tipo: "Perícia", data_hora: `${iso(15)}T09:00:00`, status: "agendada" });
+
 // CPF fictício com dígitos verificadores válidos
 function cpfDe(base) {
   const d = base.split("").map(Number);
   for (const n of [9, 10]) { let s = 0; for (let i = 0; i < n; i++) s += d[i] * (n + 1 - i); d.push((s * 10) % 11 % 10); }
   return d.join("");
 }
-const CPF_NOVO = cpfDe("700100200"), CPF_BUSCA = cpfDe("700100300");
+const CPF_NOVO = cpfDe("700100200"), CPF_BUSCA = cpfDe("700100300"), CPF_PRE = cpfDe("700100400");
 
 const ok = [];
 const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : "FALHOU  ") + nome); };
@@ -137,6 +146,34 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   });
   conf("no caso com dois processos, a novidade de cada um abre os autos dele, e nunca os do outro",
     lk.novo.endsWith("id=1") && lk.velho.endsWith("id=2") && lk.semNumero === null && lk.grau.endsWith("id=1") && lk.botoes === 1);
+
+  // F224 · com o campo aberto, o clique na pesquisa não é engolido: dá para selecionar parte do texto
+  await p.evaluate(id => abrirFicha(id), "c0000000-0000-0000-0000-0000000000e1");
+  await espera(800);
+  await p.evaluate(() => { const b = document.getElementById("busca"); b.value = "maria aparecida"; document.getElementById("app").classList.add("busca-aberta"); aplicarMenu(); });
+  await espera(300);
+  const sel = await p.evaluate(() => { const b = document.getElementById("busca"), ev = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
+    b.dispatchEvent(ev); return { bloqueou: ev.defaultPrevented, largura: b.getBoundingClientRect().width }; });
+  await p.click("#busca", { clickCount: 2 });
+  const marcado = await p.evaluate(() => { const b = document.getElementById("busca"); return b.value.slice(b.selectionStart, b.selectionEnd); });
+  conf("o campo de pesquisa aberto deixa selecionar uma parte do texto", !sel.bloqueou && sel.largura >= 80 && marcado.length > 0 && marcado.length < "maria aparecida".length);
+
+  // F225 · o Novo Cliente completa o pré-cadastro da agenda pelo telefone, e não cria outra ficha
+  const antes = T.clientes.length;
+  await p.evaluate(() => { _ncl = { etapa: 1, id: null }; irNovoCliente(); });
+  await espera(300);
+  await p.fill("#ncl-cpf", CPF_PRE); await p.fill("#ncl-tel", "(16) 99000-3003");
+  await p.evaluate(() => nclEtapa1());
+  await espera(800);
+  const pre = T.clientes.find(c => c.id === "c0000000-0000-0000-0000-0000000000f1");
+  conf("o Novo Cliente completa o pré-cadastro da agenda com o CPF, sem criar outra ficha", pre.cpf === CPF_PRE && T.clientes.length === antes
+    && await p.evaluate(() => _ncl.id === "c0000000-0000-0000-0000-0000000000f1"));
+  // F225 · o protocolo levado deixa o caso sem número: a perícia marcada vai junto
+  await p.evaluate(id => abrirFicha(id), "c0000000-0000-0000-0000-0000000000f2");
+  await espera(800);
+  await p.evaluate(() => moverNumero("prot", "700000077", "b0000000-0000-0000-0000-0000000000f1", "b0000000-0000-0000-0000-0000000000f2", { quieto: true }));
+  await espera(300);
+  conf("o número levado de um caso que fica sem número leva junto a perícia marcada", T.eventos.find(e => e.id === "d0000000-0000-0000-0000-0000000000f1").caso_id === "b0000000-0000-0000-0000-0000000000f2");
 
   conf("sem erro de página", !p._erros.length && !cel._erros.length);
   if (p._erros.length || cel._erros.length) console.log(p._erros.concat(cel._erros).join("\n"));

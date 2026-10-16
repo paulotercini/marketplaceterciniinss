@@ -96,7 +96,7 @@ const PC = { id: "pc181", especie: "Aposentadoria por idade", natureza: "concess
     && custom.includes(`e o saldo de R$ 2.400,00 em 3 (três) parcelas mensais de R$ 800,00, vencendo a primeira em ${barra(dia(35))}.`)
     && !custom.includes(honPadrao));
   conf("o combinado fica no pré-caso e no cadastro (por variante)", await p.evaluate(cli => {
-    const c = D.cliPorId.get(cli); return c.campos.precasos[0].hon.valor === 3000 && c.campos.honor_estrut.padrao.parcelas === 3; }, CLI_CHEIO));
+    const c = D.cliPorId.get(cli); return precasosDe(c)[0].hon.valor === 3000 && c.campos.honor_estrut.padrao.parcelas === 3; }, CLI_CHEIO));
 
   escritos.length = 0;
   await p.click("#hn-pc181 button:has-text('Guardar no contrato')");

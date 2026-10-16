@@ -75,7 +75,7 @@ FIX.colaboradores.push({ id: COL2, nome: "Amanda Ficticia", inicial: "A", cor: "
   const abas = await p.evaluate(() =>
     [...document.querySelectorAll(".mt")].map(b => b.innerText.trim().split("\n")[0]));
   conf(`sem caso, o menu tem só Cadastro e Lembretes (${abas.join(" · ")})`,
-    abas.some(x => /Cadastro/.test(x)) && abas.some(x => /Lembretes/.test(x))
+    abas.some(x => /Cadastro/.test(x)) && abas.some(x => /Aposentadorias futuras/.test(x))
     && !abas.some(x => /Casos|Perícias|Honorários/.test(x)));
   conf("e a ficha abriu no Cadastro (a aba 2 não existe para ele)",
     (await p.evaluate(() => abaAtiva)) === 0);
@@ -120,8 +120,9 @@ FIX.colaboradores.push({ id: COL2, nome: "Amanda Ficticia", inicial: "A", cor: "
   conf("o bloco do pré-caso está na mesa", await p.$(".pc-bloco"));
   // o + atendimento da seção 2 já criou o pré-caso (F165)
   conf("acrescentar cria o pré-caso com autor e data",
-    escritosMais.some(x => x.m === "PATCH" && x.t === "clientes"
-      && (x.corpo.campos.precasos || []).some(pc => pc.quem === EU && pc.em)));
+    // F226 · o pré-caso é linha de casos (pre_caso), com o objeto em casos.precaso
+    escritosMais.some(x => x.m === "POST" && x.t === "casos" && x.corpo.pre_caso === true
+      && x.corpo.fase === "escritorio" && x.corpo.precaso && x.corpo.precaso.quem === EU && x.corpo.precaso.em));
   conf("o cartão amarelo do pré-caso aparece", await p.$(".pc-cartao"));
 
   // espécie + natureza + marcador
@@ -183,7 +184,8 @@ FIX.colaboradores.push({ id: COL2, nome: "Amanda Ficticia", inicial: "A", cor: "
   escritos.length = 0;
   await p.evaluate(([cli, id]) => gerarCasoDoPre(cli, id), [CLI_VAZIO, pcId]);
   await p.waitForTimeout(1000);
-  const post = escritos.find(x => x.m === "POST" && x.t === "casos");
+  // F226 · gerar o caso muda a MESMA linha do pré-caso
+  const post = escritos.find(x => x.m === "PATCH" && x.t === "casos" && x.corpo.pre_caso === false);
   conf(`gerar cria o caso com a espécie (${post && post.corpo.beneficio})`,
     post && post.corpo.beneficio === "Apos. Tempo de Contribuição");
   const dec = escritos.find(x => x.m === "POST" && x.t === "andamentos" && /\[DECISÃO\]/.test(x.corpo.texto));
@@ -194,8 +196,8 @@ FIX.colaboradores.push({ id: COL2, nome: "Amanda Ficticia", inicial: "A", cor: "
   conf("a anotação vira andamento com a DATA original",
     trans && trans.corpo.criado_em && /^\d{4}-\d{2}-\d{2}T/.test(trans.corpo.criado_em));
   conf("o pré-caso se encerra ao gerar",
-    escritos.some(x => x.m === "PATCH" && x.t === "clientes"
-      && x.corpo.campos && !(x.corpo.campos.precasos || []).length));
+    post && post.corpo.fase !== "escritorio" && post.corpo.precaso && post.corpo.precaso.desfecho.tipo === "caso"
+    && await p.evaluate(cli => !precasosDe(D.cliPorId.get(cli)).length, CLI_VAZIO));
 
   console.log("=== pré-caso (F25) ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));

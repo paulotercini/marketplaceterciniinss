@@ -115,8 +115,10 @@ FIX.casos[0] = { ...FIX.casos[0], nb: null };
   escritos.length = 0;
   await p.click(".dossie-acerto button.tl-bt");
   await p.waitForTimeout(300);
-  const pat = escritos.find(e => e.m === "PATCH" && /\/rest\/v1\/clientes/.test(e.u));
-  const pc = pat && (pat.corpo.campos.precasos || []).find(x => x.especie === "CNIS");
+  // F226 · o pré-caso nasce como linha de casos (beneficio CNIS) e a anotação no cadastro o cita pelo id
+  const pat = escritos.filter(e => e.m === "PATCH" && /\/rest\/v1\/clientes/.test(e.u)).pop();
+  const pk = escritos.find(e => e.m === "POST" && /\/rest\/v1\/casos/.test(e.u) && e.corpo.beneficio === "CNIS" && e.corpo.pre_caso);
+  const pc = pk && pk.corpo.precaso;
   const nota = pat && (pat.corpo.campos.atendimento || []).slice(-1)[0];
   conf("o atendimento de acerto de CNIS nasce com a prova do dossiê", pc && nota && nota.precaso_id === pc.id
     && /o CAGED mostra desligamento em 04\/04\/2002/.test(nota.texto) && /o RAIS de 2016 mostra desligamento em 20\/08\/2016, causa 21/.test(nota.texto)
