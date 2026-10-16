@@ -236,3 +236,7 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
 Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Juízo de Catanduva (Onda 179)
+
+O juízo conta a carência competência a competência e recusa o benefício por incapacidade como carência quando não há atividade efetiva antes e depois (Tema 1125/STF [NÃO CONFIRMADO], que trata apenas da carência). Tempo de Prefeitura provado apenas por testemunha foi recusado. A peça traz a tabela de carência por competência, partindo do número do INSS, e a certidão do município antes do ajuizamento. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.

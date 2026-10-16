@@ -128,3 +128,7 @@ RESSALVA OBRIGATÓRIA. Por declaração do próprio TRF4, os enunciados têm car
 ## Redação da peça neste tema
 
 Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria especial" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
+
+## Juízo de Catanduva (Onda 179)
+
+Depois de 18/11/2003, o juízo exige a técnica NHO-01 ou NR-15 e o nível normalizado, e recusou o PPP que mencionava apenas "decibelímetro" (Tema 174/TNU [NÃO CONFIRMADO]). O EPI não descaracteriza o ruído (Tema 555/STF [NÃO CONFIRMADO]). O juízo ainda cita a Súmula 32 da TNU, que está cancelada e não se cita. Blocos literais em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 2.

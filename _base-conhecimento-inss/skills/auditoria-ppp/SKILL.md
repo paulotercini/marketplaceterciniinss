@@ -170,3 +170,7 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
 Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Juízo de Catanduva (Onda 179)
+
+Para o juízo, "a prova do enquadramento especial das atividades laborais é procedida pela apresentação dos formulários de PPP", e o erro do formulário se discute na Justiça do Trabalho. A auditoria confere a assinatura de quem tem poderes, o responsável técnico em todo o período, a técnica de medição do ruído e a eficácia do EPI anotada, porque esses quatro pontos decidiram as improcedências do corpus. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seções 2 a 6.

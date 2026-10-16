@@ -26,7 +26,9 @@ final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
 - Localize e leia a **peticao inicial ja existente** (subpasta `Claude`) e o
   **MODELO OURO** correspondente (beneficio + esfera) na pasta Peticoes Ouro.
 - Leia o `peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md` (Onda 174) e o
-  `ESTILO-MODELO.md` (Onda 176, linguagem do juízo de Catanduva). A
+  `ESTILO-MODELO.md` (Onda 176, linguagem do juízo de Catanduva) e, em ação de
+  Catanduva, a skill `base-juizo-catanduva` (Onda 179), com o bloco-modelo da
+  matéria e o agente `juiz-catanduva` antes do protocolo. A
   peca ajustada segue a ordem de secoes, as formulas e a voz do titular, e a
   conferencia do item 7 inclui a estrutura do metodo, alem das citacoes e do visual.
 
