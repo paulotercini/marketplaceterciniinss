@@ -8899,7 +8899,7 @@ async function gravarDocsDaColeta(docs){
     try{
       const [ja] = await api(`/rest/v1/anexos?select=id,caso_id&caminho=eq.${encodeURIComponent(d.caminho)}`) || [];
       if(ja){
-        // F224 · até o 11.08 o importador casava o processo com o primeiro caso do
+        // F228 · até o 11.08 o importador casava o processo com o primeiro caso do
         // número, mesmo encerrado, e o documento ficou preso lá: vem ao caso aberto
         // do mesmo cliente. Em outro caso ABERTO fica, porque foi levado de propósito (moverNumero)
         const dono = D.casos.find(x=>x.id===ja.caso_id), alvo = D.casos.find(x=>x.id===d.caso_id);

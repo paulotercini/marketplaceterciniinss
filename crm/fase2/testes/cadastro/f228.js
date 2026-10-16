@@ -1,7 +1,7 @@
-// F224 · o documento da coleta que já existe por caminho, preso a um caso
+// F228 · o documento da coleta que já existe por caminho, preso a um caso
 // ENCERRADO do mesmo número, vem ao caso aberto do mesmo cliente em vez de ser
 // pulado; o que está em outro caso ABERTO fica onde foi posto. Banco simulado.
-// Uso: node f224.js [pasta-das-fotos]
+// Uso: node f228.js [pasta-das-fotos]
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
@@ -9,7 +9,7 @@ const path = require("path");
 const { FIX, SESSAO, CLI_CHEIO, CASO1 } = require("./fixturas");
 const { Banco, instalarBanco } = require("./banco-simulado");
 const SUPA = "https://ficticio.supabase.co";
-const OUT = process.argv[2] || "/tmp/f224";
+const OUT = process.argv[2] || "/tmp/f228";
 fs.mkdirSync(OUT, { recursive: true });
 
 const dados = {};
