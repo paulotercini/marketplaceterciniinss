@@ -4383,7 +4383,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.54</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.55</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7134,6 +7134,36 @@ async function descartarColetasVelhas(){
   await buscarColetas(); render();
   aviso(`${velhas.length} coleta(s) antiga(s) fora da fila`);
 }
+// F229 · CONFERIR E APLICAR TODAS DE UMA VEZ: o mesmo conferir + aplicar de
+// cada coleta dos tribunais, dos recursos e dos prazos, uma depois da outra.
+// O INSS fica de fora, porque cria casos e pede a conferência dos "confira
+// antes"; o processo completo sem caso no CRM fica na fila, como no clique.
+// shortcut: cada aplicar recarrega o CRM inteiro; se a fila passar de dezenas, recarregar só no fim
+const LOTE_FONTES = { pje:["conferirPje","aplicarPje"], "pje-processo":["conferirPjeProc","aplicarPjeProc"],
+  crps:[null,"aplicarCrps"], prazos:[null,"aplicarPrazos"] };
+const coletasDoLote = () => coletasPorFonte().novas.filter(c => LOTE_FONTES[c.fonte]);
+let aplicandoTodas = false;
+async function aplicarTodasColetas(){
+  const lista = coletasDoLote();
+  if(aplicandoTodas || !lista.length) return;
+  if(!confirm(`Conferir e aplicar ${lista.length} coleta(s) dos tribunais, recursos e prazos, uma depois da outra?`)) return;
+  aplicandoTodas = true;
+  try{
+    for(const [i, c] of lista.entries()){
+      aviso(`Importando ${i+1} de ${lista.length}…`, false);
+      const [conferir, aplicar] = LOTE_FONTES[c.fonte].map(f => f && window[f]);
+      try{
+        if(conferir) await conferir(c.id);
+        if(c.fonte==="pje-processo" && !(planoPjeProcAtual && planoPjeProcAtual.coleta_id===c.id && planoPjeProcAtual.caso_id)){
+          planoPjeProcAtual = null; continue; }
+        await aplicar(c.id);
+      }catch(e){ console.warn("aplicar todas:", c.id, e); }
+    }
+  }finally{ aplicandoTodas = false; }
+  await buscarColetas(); render();
+  const resta = coletasPendentes.filter(c => lista.some(x => x.id===c.id)).length;
+  aviso(`✔ ${lista.length-resta} coleta(s) aplicada(s)${resta?`; ${resta} ficaram na fila para conferir uma a uma (sem caso no CRM ou com falha)`:""}`);
+}
 async function usarColeta(id){
   try{
     const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${id}`) || [];
@@ -7277,6 +7307,8 @@ function telaImportarPat(){
           :c.fonte==="pje-processo"?`conferirPjeProc('${c.id}')`
           :c.fonte==="prazos"?`aplicarPrazos('${c.id}')`:`usarColeta('${c.id}')`}">${c.fonte==="prazos"?"gravar":"conferir"}</button>
       </div>`).join("")}
+      ${coletasDoLote().length>1?`<button class="btn-mini forte" onclick="aplicarTodasColetas()"
+        title="conferir e aplicar, uma depois da outra, as coletas dos tribunais, dos recursos e dos prazos (o INSS continua no botão dele)">✔ conferir e aplicar todas (${coletasDoLote().length})</button>`:""}
       ${velhas.length?`<div class="meio-sub" style="display:flex;align-items:center;gap:8px">
         ${velhas.length} coleta(s) anterior(es) da mesma origem — a mais nova já contém o que elas tinham.
         <button class="btn-mini" onclick="descartarColetasVelhas()">descartar</button></div>`:""}
@@ -9003,14 +9035,18 @@ async function conferirPjeProc(coletaId){
 }
 async function aplicarPjeProc(coletaId){
   if(!planoPjeProcAtual || planoPjeProcAtual.coleta_id!==coletaId) return;
+  // o plano desta coleta, preso aqui: outro conferir que termine no meio troca o
+  // planoPjeProcAtual global, e o aplicar gravava os movimentos da OUTRA coleta e marcava esta
+  // como aplicada (16.10.2026: o PJe 1º grau perdeu 7 movimentos)
+  const plano = planoPjeProcAtual;
   const falhas=[]; let feitos=0, fichas=0;
-  for(const f of (planoPjeProcAtual.fichas||[])){
+  for(const f of (plano.fichas||[])){
     try{
       await patchCaso(f.caso_id, f.campos);
       Object.assign(D.casoPorId.get(f.caso_id)||{}, f.campos); fichas++;
     }catch(e){}
   }
-  for(const a of planoPjeProcAtual.andamentos){
+  for(const a of plano.andamentos){
     const corpo={caso_id:a.caso_id, autor_id:eu.id, origem:"pje",
       origem_id:a.origem_id, publico:false, texto:a.texto};
     try{
@@ -9026,11 +9062,11 @@ async function aplicarPjeProc(coletaId){
       feitos++;
     }catch(e){ falhas.push(String(e.message||e).slice(0,90)); }
   }
-  const docsGravados = await gravarDocsDaColeta(planoPjeProcAtual.docs);
+  const docsGravados = await gravarDocsDaColeta(plano.docs);
   await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",
     headers:{Prefer:"return=minimal"},
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
-  planoPjeProcAtual = null;
+  if(planoPjeProcAtual===plano) planoPjeProcAtual = null;
   await buscarColetas();
   await carregar(); montarSidebar(); render();
   if(falhas.length){
@@ -9042,11 +9078,15 @@ async function aplicarPjeProc(coletaId){
 }
 async function aplicarPje(coletaId){
   if(!planoPjeAtual || planoPjeAtual.coleta_id!==coletaId) return;
+  // o plano desta coleta, preso aqui: outro conferir que termine no meio troca o
+  // planoPjeAtual global, e o aplicar gravava os movimentos da OUTRA coleta e marcava esta
+  // como aplicada (16.10.2026: o PJe 1º grau perdeu 7 movimentos)
+  const plano = planoPjeAtual;
   const falhas=[]; let feitos=0;
   // completa as fichas (classe/ajuizamento) antes dos movimentos; banco sem
   // as colunas novas só pula esta parte, sem derrubar o resto
   let fichas=0, fichasFalha=0;
-  for(const f of (planoPjeAtual.fichas||[])){
+  for(const f of (plano.fichas||[])){
     try{
       await patchCaso(f.caso_id, f.campos);
       Object.assign(D.casoPorId.get(f.caso_id)||{}, f.campos); fichas++;
@@ -9055,7 +9095,7 @@ async function aplicarPje(coletaId){
   // falha silenciosa aqui era o "117 fichas a completar" voltando toda vez:
   // o banco sem as colunas novas recusava o PATCH e ninguém ficava sabendo
   if(fichasFalha) aviso(`⚠ ${fichasFalha} ficha(s) não gravaram (classe/ajuizamento/órgão/link) — rode o schema_por_em_dia.sql no Supabase`);
-  for(const a of planoPjeAtual.andamentos){
+  for(const a of plano.andamentos){
     try{
       await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
         body:JSON.stringify({caso_id:a.caso_id, autor_id:eu.id, origem:"pje",
@@ -9063,11 +9103,11 @@ async function aplicarPje(coletaId){
       feitos++;
     }catch(e){ falhas.push(`${a.numero}: ${String(e.message||e).slice(0,90)}`); }
   }
-  const docsGravados = await gravarDocsDaColeta(planoPjeAtual.docs);
+  const docsGravados = await gravarDocsDaColeta(plano.docs);
   await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",
     headers:{Prefer:"return=minimal"},
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
-  planoPjeAtual = null;
+  if(planoPjeAtual===plano) planoPjeAtual = null;
   await buscarColetas();
   await carregar(); montarSidebar(); render();
   if(falhas.length){
