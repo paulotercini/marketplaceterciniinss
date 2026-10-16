@@ -246,3 +246,7 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
 Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Juízo de Catanduva (Onda 179)
+
+O juízo conta uma a uma as contribuições sem perda da qualidade de segurado ("apenas 118 recolhimentos"), não computa o benefício intercalado para as 120 (Tema 365/TNU [NÃO CONFIRMADO], adverso) e exige do contribuinte individual prova positiva da cessação involuntária da atividade (Tema 239/TNU [NÃO CONFIRMADO]). CadÚnico e auxílio emergencial não bastaram. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.

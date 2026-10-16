@@ -132,3 +132,7 @@ IBDP, advocacia previdenciária.
 ## O que NÃO está nesta skill
 
 Rito ordinário em Vara Federal está em `base-rito-ordinario-trf`. Recursos no JEF estão em `base-recursos-jef`. CRPS está em `base-crps-panorama-geral`. Cumprimento de sentença está em `base-cumprimento-sentenca-rpv-precatorio`.
+
+## Juízo de Catanduva (Onda 179)
+
+O perfil do JEF de Catanduva, com as fórmulas de dispensa do relatório, de regularidade, de dispositivo e de fecho, está na skill `base-juizo-catanduva`, e o esqueleto completo da sentença em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`.

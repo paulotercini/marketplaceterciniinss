@@ -110,3 +110,7 @@ Regra prática. Indeferido o quesito prévio, PROTESTAR desde logo e reservar a 
 ## Redação da peça neste tema
 
 Ao transpor esta matéria para peça, seguir o bloco "técnica 5 (impugnar o laudo por uma falha identificável)" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
+
+## Juízo de Catanduva (Onda 179)
+
+No juízo de Catanduva, a perícia técnica em tempo especial é deferida apenas com empresa inativa ou recusa documentada, o ofício à empregadora para juntar o LTCAT é deferido, e a impugnação ao laudo médico prospera apenas por vício formal ou omissão demonstrada. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 6, e em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.

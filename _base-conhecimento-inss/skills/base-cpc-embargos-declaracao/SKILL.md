@@ -132,3 +132,7 @@ Ao transpor esta matéria para peça, seguir o bloco "técnica 6 (demonstrar por
 ## Cadeia de cada pedido (regra permanente, 12/10/2026)
 
 Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.
+
+## Juízo de Catanduva (Onda 179)
+
+O juízo rejeitou os 14 embargos de declaração do corpus que rediscutiam o mérito, por "evidente caráter infringente". As correções vieram de erro material e de erro de fato documentado. Os embargos trazem o trecho da sentença ao lado do ponto omitido e o ID em que o ponto foi suscitado, e o inconformismo vai ao recurso. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 14.

@@ -101,3 +101,7 @@ Dispositivo legal se lê por `obter_artigo` no `normas`, com o identificador da 
 No parecer, todo achado de MCP sai marcado [NÃO CONFIRMADO] com o id devolvido pelo servidor, para a sessão principal conferir na fonte oficial. Achado de MCP nunca sobe a [CONFERIDO] dentro do agente.
 
 Para simular a rejeição, busque no `trf3` o que o tribunal nega ao segurado, com `polo_recorrente` igual a `segurado` e `resultado` igual a `negado`, e leia o dispositivo antes de usar o fundamento.
+
+## Juízo de Catanduva (Onda 179)
+
+Em peça dirigida à Subseção de Catanduva, o agente `juiz-catanduva` roda na mesma mensagem e decide pelos critérios e fórmulas reais do juízo (skill `base-juizo-catanduva`). Este agente continua a procurar a razão juridicamente sustentável para não acolher, e a fórmula real do juízo registrada naquela skill é a primeira hipótese de rejeição a testar.

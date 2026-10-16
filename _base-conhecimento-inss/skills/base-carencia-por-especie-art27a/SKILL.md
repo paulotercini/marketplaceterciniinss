@@ -74,3 +74,7 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
 Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Juízo de Catanduva (Onda 179)
+
+Na isenção de carência, o juízo usa a data mais antiga da doença que aparecer nos documentos médicos, e a filiação tardia de quem já era portador da doença afasta a isenção. A peça prova que a doença começou depois da filiação ou do reingresso, ou que houve agravamento posterior com carência cumprida. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.
