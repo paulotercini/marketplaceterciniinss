@@ -4383,7 +4383,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.55</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.56</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7499,6 +7499,8 @@ async function aplicarPat(){
             aviso("A importação parou: " + (e.message||String(e))); }
 }
 async function aplicarPatDeVerdade(){
+  // F229 · o plano preso aqui, como no PJe: outra coleta conferida no meio troca o planoPat global
+  const plano = planoPat;
   // UM ERRO NÃO PODE PARAR O LOTE. A primeira versão abortava no primeiro
   // problema — num lote de cem, isso deixa metade gravada e ninguém sabe
   // qual metade. Agora cada item responde por si, e o que falhou aparece no
@@ -7507,7 +7509,7 @@ async function aplicarPatDeVerdade(){
   const tentar = async (rotulo, f) => { try{ await f(); feitos++; }
     catch(e){ falhas.push(`${rotulo}: ${String(e.message||e).slice(0,120)}`); } };
 
-  for(const a of planoPat.atualizar) await tentar(a.protocolo, async () => {
+  for(const a of plano.atualizar) await tentar(a.protocolo, async () => {
     const k = D.casoPorId.get(a.caso_id); if(!k) return;
     const campos = { ...a.mudancas, situacao_inss: a.situacao, ...(corpoProtocolos(k, [a.protocolo])||{}) };
     await patchCaso(k.id, campos);
@@ -7518,7 +7520,7 @@ async function aplicarPatDeVerdade(){
           origem:"pat", origem_id:`situacao:${a.protocolo}:${a.situacao}`})});
   });
 
-  for(const novo of planoPat.novos) await tentar(novo.protocolo, async () => {
+  for(const novo of plano.novos) await tentar(novo.protocolo, async () => {
     const [k] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({cliente_id:novo.cliente_id, titulo:novo.nome, fase:novo.lista,
         beneficio:novo.beneficio, especie:novo.especie, der:novo.der,
@@ -7542,14 +7544,14 @@ async function aplicarPatDeVerdade(){
   // OS COMENTÁRIOS DO INSS. É o que responde "o que mudou?" — sem eles a
   // importação avisa que algo aconteceu e não diz o quê. Nascem internos
   // (`publico:false`): nada disso atravessa para a ficha do cliente.
-  for(const bl of planoPat.comentarios||[])
+  for(const bl of plano.comentarios||[])
     for(const c of bl.comentarios) await tentar(`comentário ${bl.protocolo}`, () =>
       api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
         body:JSON.stringify({caso_id:bl.caso_id, autor_id:eu.id, texto:c.texto,
           origem:"pat", origem_id:c.origem_id, publico:false,
           ...(c.quando?{criado_em:c.quando+"T12:00:00"}:{})})}));
 
-  for(const bloco of planoPat.eventos)
+  for(const bloco of plano.eventos)
     for(const ev of bloco.eventos) await tentar(`perícia ${bloco.protocolo}`, async () => {
       await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=minimal"},
         body:JSON.stringify({caso_id:bloco.caso_id, tipo:ev.tipo, status:"agendada",
@@ -7565,7 +7567,7 @@ async function aplicarPatDeVerdade(){
   // F44 · as movimentações "só última atualização" viram novidade em 📣 —
   // origem_id com o carimbo do portal: importar a mesma coleta duas vezes
   // não duplica (o plano já filtra pelo banco, e o índice único segura o resto)
-  for(const at of (planoPat.atualizacoes||[])) await tentar(`movimentação ${at.protocolo}`, () =>
+  for(const at of (plano.atualizacoes||[])) await tentar(`movimentação ${at.protocolo}`, () =>
     api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({caso_id:at.caso_id, autor_id:eu.id, origem:"pat",
         origem_id:`atualizacao:${at.protocolo}:${String(at.ts).replace(/\D/g,"")}`, publico:false,
@@ -7590,8 +7592,8 @@ async function aplicarPatDeVerdade(){
   // F184 · os anexos que a extensão guardou no bucket (todos, inclusive os
   // médicos — continuam internos) entram no caso do protocolo, com o texto
   let docsPat = 0;
-  if(planoPat.coleta_id) try{
-    const [c] = await api(`/rest/v1/coletas?select=dados&id=eq.${planoPat.coleta_id}`) || [];
+  if(plano.coleta_id) try{
+    const [c] = await api(`/rest/v1/coletas?select=dados&id=eq.${plano.coleta_id}`) || [];
     const docs = [];
     for(const det of ((c&&c.dados&&c.dados.detalhes)||[])){
       const p = String(det.protocolo||"").replace(/\D/g,"");
@@ -7602,11 +7604,11 @@ async function aplicarPatDeVerdade(){
   }catch(e){ falhas.push(`anexos do INSS: ${String(e.message||e).slice(0,120)}`); }
 
   // a coleta usada sai da fila: a mesma não pode ser oferecida duas vezes
-  if(planoPat.coleta_id)
-    await api(`/rest/v1/coletas?id=eq.${planoPat.coleta_id}`,{method:"PATCH",
+  if(plano.coleta_id)
+    await api(`/rest/v1/coletas?id=eq.${plano.coleta_id}`,{method:"PATCH",
       headers:{Prefer:"return=minimal"},
       body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
-  planoPat = null;
+  if(planoPat===plano) planoPat = null;
   await buscarColetas();
   await carregar(); montarSidebar(); render();
   if(!falhas.length) return aviso(`✔ ${feitos} gravação(ões)${docsPat?` · ${docsPat} anexo(s) do INSS com o texto`:""}`);
