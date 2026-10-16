@@ -4383,7 +4383,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.57</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.58</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15262,6 +15262,7 @@ async function notaDoAtendimento(cliId){
 }
 // fechar a tela de atendimento: o que foi escrito na Análise de Direito é registrado antes
 async function sairModoAtendimento(cliId){
+  await admGravarAgora();
   await salvarAnaliseSePreenchida(cliId);
   _atendAberto.delete(cliId);
   irSubCad("identificacao");
@@ -15270,7 +15271,7 @@ async function sairModoAtendimento(cliId){
 async function salvarAnaliseSePreenchida(cliId){
   const ctx = document.getElementById("ad-contexto"); if(!ctx) return;
   const cen = [...document.querySelectorAll("#ad-cens .ad-row")].some(r=>[...r.querySelectorAll("input,select,textarea")].some(e=>e.type!=="radio" && String(e.value||"").trim()));
-  const det = Object.keys(adColherDetalhes()).some(k=>k!=="servico");
+  const det = adDetPreenchido(adColherDetalhes());
   if(ctx.value.trim() || cen || det){
     const d = document.getElementById("ad-data"); if(d && !d.value) d.value = hoje();
     await salvarAnalise(cliId);
@@ -19181,6 +19182,15 @@ const REGRAS_DIREITO = ["Pontos","Pedágio 50%","Pedágio 100%","Idade progressi
   "Idade urbana","Idade rural","Idade híbrida","Especial","PCD (LC 142)","Professor",
   "Direito adquirido (pré-EC 103)","Incapacidade","BPC/LOAS","Revisão"];
 function analisesDe(cliId){ return (D.analisesPorCliente&&D.analisesPorCliente.get(cliId))||[]; }
+// F231 · no atendimento, as análises do pré-caso escolhido: a que ele ligou nas etapas,
+// a que traz detalhes.precaso_id e, sendo ele o único vivo, a registrada desde que nasceu
+// sem pré-caso marcado. Fora do atendimento, e no pré-caso sem linha, as do cliente.
+function analisesDaVez(c){
+  const as = analisesDe(c.id), pc = _atendAberto.has(c.id) && preCasoAberto(c);
+  if(!pc || !pc.caso_id) return as;
+  const aid = ((pc.etapas||{}).analise||{}).analise_id, so = preCasosVivos(c).length===1, desde = String(pc.em||"").slice(0,10);
+  return as.filter(a=>{ const p = (a.detalhes||{}).precaso_id; return p===pc.id || a.id===aid || (!p && so && (a.data_analise||"") >= desde); });
+}
 function moedaBR(v){ const n=Number(v);
   return (v!==""&&v!=null&&isFinite(n)) ? n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"}) : ""; }
 function cenMelhor(a){ const cs=a.cenarios||[];
@@ -19410,9 +19420,9 @@ const adPlano = p => `<div class="ad-pl form-linha" data-id="${esc(p&&p.id||"")}
     <button type="button" class="btn-mini" aria-label="tirar esta linha" onclick="this.closest('.ad-pl').remove()">${CAD_IC.fechar}</button></div>`;
 // espécie e subespécie do formulário: o pré-caso aberto, a última análise ou o caso
 function servicoInicial(c){
-  const pc=precasosDe(c).find(p=>!p.so_lembrete && p.cod);
+  const pa=preCasoAberto(c), pc=pa && pa.cod ? pa : precasosDe(c).find(p=>!p.so_lembrete && p.cod);   // F231 · o escolhido primeiro
   if(pc) return {cod:pc.cod, sub:pc.sub||pc.cod};
-  const sv=((analisesDe(c.id)[0]||{}).detalhes||{}).servico;
+  const sv=((analisesDaVez(c)[0]||{}).detalhes||{}).servico;
   if(sv && sv.cod) return {cod:sv.cod, sub:sv.sub||sv.cod};
   const k=(D.casosDoCliente.get(c.id)||[]).find(x=>x.especie && x.fase!=="encerrado");
   return k ? {cod:k.especie, sub:k.subespecie||k.especie} : {cod:"", sub:""};
@@ -19478,9 +19488,9 @@ const adVisivel=new Set();   // clientes cuja Análise de Direito foi aberta por
 function formAnalise(c){
   const pre=adPre; adPre=null;   // consumo único: os valores passam a viver no DOM
   const abrir=adAbrir; adAbrir=false;
-  const ant=(analisesDe(c.id)[0]||{}).detalhes||{};
+  const ant=(analisesDaVez(c)[0]||{}).detalhes||{};
   const sv=servicoInicial(c);
-  const rec=(recolheDe(c, analisesDe(c.id)[0])||{}).tipo||"";
+  const rec=(recolheDe(c, analisesDaVez(c)[0])||{}).tipo||"";
   const vis=camposDoServico({cod:sv.cod, sub:sv.sub, nome:nomeDaSubespecie(sv.sub)||nomeDaEspecie(sv.cod)||""});
   const oc=k=>vis.includes(k)?"":"hidden";
   const campo=(k, html)=>`<label class="adr-campo" data-campo="${k}" ${oc(k)}><span>${AD_ROT[k]} <em class="ad-est"></em></span>${html}<small class="ad-vai">vai para ${AD_VAI[k]}</small></label>`;
@@ -19554,6 +19564,7 @@ function formAnalise(c){
   </details>`;
 }
 async function salvarAnalise(cliId){
+  await admGravarAgora();   // F231
   const v=id=>{const e=document.getElementById(id);return e?e.value.trim():"";};
   const data=v("ad-data"), contexto=v("ad-contexto"), fonte=v("ad-fonte")||"manual";
   if(!data) return aviso("Diga a data em que a análise foi feita");
@@ -19565,7 +19576,8 @@ async function salvarAnalise(cliId){
     melhor:r.querySelector("input[type=radio]").checked||undefined,
   })).filter(x=>x.regra||x.data||x.valor||x.obs);
   const detalhes=adColherDetalhes();
-  const temDet=Object.keys(detalhes).some(k=>k!=="servico");
+  const temDet=adDetPreenchido(detalhes);
+  { const cP=D.cliPorId.get(cliId), pcP=cP && preCasoAberto(cP); if(pcP && pcP.id!=="legado") detalhes.precaso_id=pcP.id; }   // F231
   if(!contexto && !cenarios.length && !temDet)
     return aviso("Registre pelo menos um cenário ou o que foi conversado");
   // F54 · a resposta da triagem (empregado desde / CI / facultativo) viaja
@@ -19708,6 +19720,12 @@ function paLevarBlocoAd(cliId, b){ const s = new Set(_paForaBl.get(cliId)||[]); 
 function adTrazidoTrocar(cliId){
   const el = document.getElementById("ad-trazido"), c = D.cliPorId.get(cliId);
   if(el && c) el.outerHTML = adTrazido(c);
+}
+// F231 · escolher benefício ou deixar item de fora não é análise: conta o que se digitou
+function adDetPreenchido(d){
+  const m = d.modulos;
+  return Object.keys(d).some(k=>!["servico","modulos","precaso_id"].includes(k))
+    || !!(m && (Object.values(m.valores||{}).some(v=>String(v??"").trim()) || (m.tempos||[]).some(r=>r.de||r.ate||r.onde)));
 }
 function adColherDetalhes(){
   const v=id=>{const e=document.getElementById(id);return e?e.value.trim():"";};
@@ -20053,7 +20071,7 @@ function painelDireito(c){
   if(D.analises===null)
     return `<p class="meio-sub">A tabela desta página ainda não existe no banco — rode o
       <b>crm/fase2/schema_analise_direito.sql</b> no SQL Editor do Supabase e recarregue o CRM.</p>`;
-  const as=analisesDe(c.id), ult=as[0];
+  const as=analisesDe(c.id), ult=analisesDaVez(c)[0];   // F231 · a última do pré-caso no atendimento
   const ks=D.casosDoCliente.get(c.id)||[];
   const notas=[];
   for(const l of (D.lembretes||[]).filter(x=>x.cliente_id===c.id && x.tipo==="aposentadoria_futura"))
@@ -21764,7 +21782,33 @@ const EC103 = "2019-11-13";
 const BENEF_ROT = {pensao:"Pensão por morte e auxílio-reclusão", tempo:"Aposentadoria por idade ou tempo"};
 const benefRot = fam => BENEF_ROT[fam] || (PONTOS_ESPECIE.find(f=>f.chave===fam)||{rot:fam}).rot;
 const benefOpcao = (fam, o) => (BENEF[fam]||[]).find(x=>x[0]===o);
-function admDe(c){ const a = ((c||{}).campos||{}).ad_modulos||{}; return {valores:a.valores||{}, tempos:a.tempos||[], beneficios:a.beneficios}; }
+// F231 · a escolha da Análise de Direito (itens do Primeiro atendimento deixados de
+// fora, benefícios, campos e tempos) mora na linha do pré-caso, na coluna casos.ad
+// (schema_casos_ad.sql), e não mais no cliente: dois atendimentos do mesmo cliente
+// não se misturam. No atendimento vale o pré-caso escolhido; fora dele, o caso que
+// nasceu de um pré-caso (a linha leva o ad ao virar caso); sem nenhum dos dois, e no
+// pré-caso ainda sem linha (o "legado" e o de campos.precasos), campos.ad_modulos.
+const casoComAd = c => (D.casosDoCliente.get(c.id)||[]).find(k=>k.ad && !ehPreCaso(k) && k.fase!=="encerrado") || null;
+function linhaAd(c){
+  const pc = c && preCasoAberto(c), lin = pc && pc.caso_id && D.casoPorId.get(pc.caso_id);
+  if(lin && (_atendAberto.has(c.id) || !casoComAd(c))) return lin;
+  return c ? casoComAd(c) : null;
+}
+// a linha sem ad herda, em cópia, o do card anterior (mesmo lembrete) ou, se é o único
+// pré-caso vivo, o que o cliente tinha em campos.ad_modulos antes da F231
+function herdaAd(c, k, origem){
+  const lid = (k.precaso||{}).lembrete_id;
+  const irma = lid && (D.casosDoCliente.get(c.id)||[]).find(x=>x!==k && x.ad && (x.precaso||{}).lembrete_id===lid);
+  if(irma) return structuredClone(irma.ad);
+  const velho = (c.campos||{}).ad_modulos;
+  if(!velho || preCasosVivos(c).length!==1) return null;
+  if(origem) origem.cliente = true;
+  return structuredClone(velho);
+}
+function admDe(c){
+  const k = c && linhaAd(c), a = (k ? k.ad || herdaAd(c, k) : ((c||{}).campos||{}).ad_modulos) || {};
+  return {fora:a.fora||[], valores:a.valores||{}, tempos:a.tempos||[], beneficios:a.beneficios};
+}
 // a opção que a família abre sozinha: a idade e o dossiê decidem
 function benefPadrao(c, fam){
   const id = idadeDe(c.dn), sx = sexoDe(c)==="F" ? "F" : "M";
@@ -21783,7 +21827,7 @@ function benefSel(c){
   if(Object.keys(sel).length) return sel;
   // F220 · sem escolha gravada e sem sinal do dossiê, vale o benefício que a
   // recepção registrou no pré-caso ou que a última análise decidiu
-  const pc = preCasoAberto(c), a = analisesDe(c.id)[0], sv = a && (a.detalhes||{}).servico;
+  const pc = preCasoAberto(c), a = analisesDaVez(c)[0], sv = a && (a.detalhes||{}).servico;
   const x = [pc && pc.sub, pc && pc.cod, pc && pc.especie, sv && sv.sub, sv && sv.cod, (c.campos||{}).especie].map(opcaoDe).find(Boolean);
   return x ? {[x.fam]:[x.o]} : {};
 }
@@ -21799,17 +21843,41 @@ function opcaoDe(x){
 }
 const opcoesSel = c => Object.entries(benefSel(c)).flatMap(([fam, os])=>os.map(o=>benefOpcao(fam, o)).filter(Boolean).map(([o, rot, cod, sub, mods])=>({fam, o, rot, cod, sub, mods})));
 const modulosDe = c => { const ops = opcoesSel(c); return MOD_ORDEM.filter(m=>ops.some(o=>o.mods.includes(m))); };
-// grava a ficha com atraso, para não disparar um PATCH por tecla
+// grava com atraso, para não disparar um PATCH por tecla: a memória muda na hora e o
+// PATCH leva só o ad da linha (nunca a fase nem o precaso, que outros escritores mudam).
+// Um timer por destino: editar o pré-caso A e passar ao B não cancela a gravação do A.
 const _admTimer = new Map();
+function admAgendar(chave, grava){
+  clearTimeout((_admTimer.get(chave)||{}).t);
+  _admTimer.set(chave, {grava, t: setTimeout(()=>{ _admTimer.delete(chave); grava(); }, 600)});
+}
+// grava já o que estiver esperando (antes de trocar de pré-caso, concluir, sair ou registrar)
+async function admGravarAgora(){
+  const ps = [..._admTimer.values()]; _admTimer.clear();
+  for(const p of ps) clearTimeout(p.t);
+  await Promise.all(ps.map(p=>p.grava()));
+}
 function admSalvar(cliId, muda){
   const c = D.cliPorId.get(cliId); if(!c) return;
+  const k = linhaAd(c), o = {}, herdou = !!(k && !k.ad && herdaAd(c, k, o) && o.cliente);
   const adm = admDe(c); muda(adm);
+  const falha = () => aviso("Não consegui guardar a análise por benefício — tente de novo");
+  if(k){
+    k.ad = adm;
+    admAgendar(`k:${k.id}`, async ()=>{
+      try{ await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({ad:k.ad})}); }
+      catch(e){ return falha(); }
+      // herdou o do cliente: o velho sai de campos, para não passar a outro pré-caso
+      if(herdou && (c.campos||{}).ad_modulos){ const {ad_modulos, ...resto} = c.campos; c.campos = resto;
+        try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}); }catch(e){} }
+    });
+    return;
+  }
   c.campos = {...(c.campos||{}), ad_modulos: adm};
-  clearTimeout(_admTimer.get(cliId));
-  _admTimer.set(cliId, setTimeout(async ()=>{
+  admAgendar(`c:${cliId}`, async ()=>{
     try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}); }
-    catch(e){ aviso("Não consegui guardar a análise por benefício — tente de novo"); }
-  }, 600));
+    catch(e){ falha(); }
+  });
 }
 function benefFam(cliId, fam){
   const c = D.cliPorId.get(cliId); if(!c || !BENEF[fam]) return;
@@ -32303,7 +32371,7 @@ function caixaDocumentos(c, ks){
 // F195 · o que a Análise de Direito já deu aos documentos, e o que falta
 // informar nela para a espécie, com o caminho de volta ao formulário
 function docsDaAnalise(c){
-  const a = analisesDe(c.id)[0], d = (a&&a.detalhes)||{}, sv = d.servico;
+  const a = analisesDaVez(c)[0], d = (a&&a.detalhes)||{}, sv = d.servico;
   const ir = `<button class="btn-mini" onclick="docsInformar('${c.id}')">Informar na análise</button>`;
   if(!a) return `<div class="docs-ad form-linha" style="flex-wrap:wrap"><span class="meio-sub" style="flex:1 1 260px"><b>Análise de Direito:</b> nenhuma registrada; os documentos saem só com o cadastro.</span>${ir}</div>`;
   const ks = camposDoServico(sv||{}).filter(k=>AD_ROT[k] && !/^periodos_/.test(k));
@@ -32335,7 +32403,15 @@ function preCasoAberto(c){
   const vs = preCasosVivos(c);
   return vs.find(p=>p.id===_pcSel.get(c.id)) || vs[vs.length-1] || null;
 }
-function escolherPreCaso(cliId, pcId){ _pcSel.set(cliId, pcId); repintarFicha(); }
+// F231 · o estado da sessão é do pré-caso: trocar de pré-caso grava o que esperava
+// e recomeça a escolha da tela
+function trocarPreCaso(cliId, pcId){
+  if(_pcSel.get(cliId)===pcId) return;
+  admGravarAgora();
+  for(const m of [_paEsc, _paCartao, _paBloco, _paAnalise, _paForaBl, _mapaLente, _mapaFora]) m.delete(cliId);
+  _pcSel.set(cliId, pcId);
+}
+function escolherPreCaso(cliId, pcId){ trocarPreCaso(cliId, pcId); repintarFicha(); }
 async function mudarPreCasoCampos(cliId, pcId, muda){
   const c = D.cliPorId.get(cliId); if(!c) return false;
   return gravarPrecasos(cliId, precasosDe(c).map(p=>{ if(p.id!==pcId) return p; const n = {...p}; muda(n); return n; }));
@@ -32343,6 +32419,7 @@ async function mudarPreCasoCampos(cliId, pcId, muda){
 // "Concluir esta etapa": grava quem e quando, avisa quem vem depois (o mesmo aviso do cliente novo) e abre o passo seguinte
 async function concluirEtapa(cliId, sub){
   const c = D.cliPorId.get(cliId), pc = c && preCasoAberto(c), k = ETAPA_DE[sub]; if(!pc || !k) return;
+  await admGravarAgora();
   if(sub==="direito") await salvarAnaliseSePreenchida(cliId);
   const extra = sub==="identificacao" ? {faltam: faltaParaDocs(c).length} : sub==="pa" ? {beneficios: benefSel(c)} : {};
   if(!await mudarPreCasoCampos(cliId, pc.id, p=>{ p.etapas = {...(p.etapas||{}), [k]:{...((p.etapas||{})[k]||{}), ...extra, em:hoje(), quem:eu.id}}; })) return;
@@ -32396,7 +32473,7 @@ async function cardDaAnalise(cliId, lid, a, b){
 // ── o quadro Desfecho (Análise de Direito e Documentos) ──────────────────
 function quadroDesfecho(c){
   const pc = preCasoAberto(c); if(!pc) return "";
-  const a = analisesDe(c.id)[0] || null, b = baseDesfecho(c, a), lig = pc.lembrete_id;
+  const a = analisesDaVez(c)[0] || null, b = baseDesfecho(c, a), lig = pc.lembrete_id;
   const podeLemb = lig ? !!a : !!(b.data && b.data > hoje());
   const bt = (sug, rot, on, fn, tit) => `<button type="button" class="adr-bt${b.sug===sug?" adr-primario":""}" ${on?"":"disabled"} onclick="${fn}" title="${esc(tit)}">${rot}</button>`;
   // F227 · as três saídas do pré-caso, sempre na mesma ordem: arquivar, Aposentadorias futuras, gerar o caso
@@ -32412,7 +32489,7 @@ function quadroDesfecho(c){
 }
 async function desfechoLembrete(cliId){
   const c = D.cliPorId.get(cliId), pc = c && preCasoAberto(c); if(!pc) return;
-  const a = analisesDe(cliId)[0] || null, b = baseDesfecho(c, a);
+  const a = analisesDaVez(c)[0] || null, b = baseDesfecho(c, a);
   if(pc.lembrete_id){
     if(!a) return aviso("Registre a Análise de Direito primeiro");
     if(!await cardDaAnalise(cliId, pc.lembrete_id, a, b)) return;
@@ -32452,7 +32529,7 @@ async function desfechoCaso(cliId, forcar){
       <div class="adr-modal-bts"><button type="button" class="adr-bt adr-primario" onclick="fecharCaixa();irSubCad('documentos');setTimeout(()=>{const q=document.getElementById('dq-assinar');if(q)q.scrollIntoView({block:'start'})},60)">Gerar os documentos</button>
       <button type="button" class="adr-bt" onclick="fecharCaixa();desfechoCaso('${cliId}',true)">Gerar o caso assim mesmo</button></div></div>`);
   }
-  const a = analisesDe(cliId)[0], sv = a && (a.detalhes||{}).servico;
+  const a = analisesDaVez(D.cliPorId.get(cliId)||{id:cliId})[0], sv = a && (a.detalhes||{}).servico;
   if(!pc.especie && sv) await mudarPreCasoCampos(cliId, pc.id, p=>{ p.especie = sv.nome; p.cod = sv.cod; p.sub = sv.sub && sv.sub!==sv.cod ? sv.sub : null; });
   // F220 · incapacidade pede a via; a mesa onde ela se escolhia não aparece na tela de atendimento
   const pcA = preCasoAberto(c) || pc;
@@ -32763,7 +32840,7 @@ async function novoPreCaso(cliId){
   const pcs = [...precasosDe(D.cliPorId.get(cliId))];
   const id = "pc_"+Date.now().toString(36);
   pcs.push({id, especie:"", natureza:"", marc:{}, honorarios:"", quem:eu.id, em:hoje()});
-  _pcSel.set(cliId, id);
+  trocarPreCaso(cliId, id);
   if(await gravarPrecasos(cliId, pcs)) repintarFicha();
 }
 // F30 · o atendimento novo de quem já resolveu o anterior (caso gerado ou
@@ -32780,7 +32857,7 @@ async function novoAtendimento(cliId){
 }
 // F220 · da menção ou da lista direto ao atendimento: abre o que existe ou começa um
 async function abrirAtendimentoDe(cliId, pcId){
-  if(pcId) _pcSel.set(cliId, pcId);
+  if(pcId) trocarPreCaso(cliId, pcId);
   await abrirFicha(cliId);
   const c = D.cliPorId.get(cliId); if(!c) return;
   document.getElementById("modal").style.display = "none";
@@ -33116,7 +33193,7 @@ async function gerarCasoDoPre(cliId, pcId){
 const MANTIDO_ESCR = "Mantido em Escritório: faltam documentos";
 function passosDoAtendimento(c, pc){
   const desde = String(pc.em||"").slice(0,10);
-  const as = analisesDe(c.id);
+  const as = analisesDaVez(c);
   const previus = (D.anexos||[]).some(a=>(!a.cliente_id || a.cliente_id===c.id) && /pr[eé]vius/i.test(a.nome||""))
     || as.some(a=>a.fonte==="previus");
   const mantido = ((c.campos||{}).atendimento||[]).some(n=>String(n.texto||"").startsWith("Mantido em Escritório")
