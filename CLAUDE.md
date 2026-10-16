@@ -28,12 +28,12 @@ A fonte de dados dos geradores é o **Microsoft To Do** (Graph API, conta pessoa
 
 ## Dossiê do cliente (crm/fase2/dossie) — o que chega ao CRM
 
-<!-- dossie-versao: 0.11.1 — ao mudar manifest.json da extensão, atualize esta seção e este número;
+<!-- dossie-versao: 0.11.2 — ao mudar manifest.json da extensão, atualize esta seção e este número;
      tests em crm/fase2/dossie/testes/regras.test.js conferem que batem. -->
 
-Extensão de navegador (versão **0.11.1**). Com o gov.br do cliente logado, um clique baixa os documentos
+Extensão de navegador (versão **0.11.2**). Com o gov.br do cliente logado, um clique baixa os documentos
 do portal aberto na aba; **🔁 Rodar todos os portais** percorre Meu INSS → e-Recursos → Emprega Brasil → HC →
-Redesim, cada um na sua aba (abre as do gov.br que faltarem; Emprega Brasil e HC só se a aba logada já
+CadÚnico → Redesim, cada um na sua aba (abre as do gov.br que faltarem; Emprega Brasil e HC só se a aba logada já
 estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha e não decide nada: coleta e entrega.
 
 **De onde coleta**
@@ -78,7 +78,8 @@ estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha 
   primeira_competencia, ultima_competencia, valor_ultimo, total, concedido_judicialmente, representante_legal,
   municipio}]}]`. Complementa o CadÚnico (histórico de pagamentos) e vale para quem ainda não tem o gov.br:
   o popup tem **🔎 Portal da Transparência (sem login)** — o colaborador digita o CPF/NIS e a extensão consulta
-  a pessoa (e os integrantes que a ficha do CRM já conhecer, de `dossie.cadunico.familia.membros`).
+  a pessoa (e os integrantes que a ficha do CRM já conhecer, de `dossie.cadunico.familia.membros`). O CRM faz a mesma consulta
+  sem a extensão, pela Edge Function `transparencia` (F230).
 
 **Onde entrega** (os três ao mesmo tempo)
 1. **Drive**: `G:\Meu Drive\Processos\<Letra>\<Nome #CPF>\Dossie\<fonte>\<arquivo>.pdf`. Pasta existente
@@ -119,7 +120,7 @@ A aba **Primeiro atendimento** (`painelPA`, F196) é o painel do protótipo apro
 tempo (`paLinhaDoTempo`), e o botão que leva os trabalhos marcados e os blocos levados à Análise de Direito
 (`paIrAnalise`, `_paAnalise`, nav `.ad-trab`). Só lê; a escolha vale na sessão.
 O **Novo Cliente** tem duas etapas (F197, `_ncl`): a 1 pede só CPF (único obrigatório), senha e telefone (F201: o nome vem do CNIS na etapa 2, ou do PAT em `_ncl.nomePat`) e abre os
-portais do dossiê (`NCL_PORTAIS`); abrir um portal, o botão "Abrir as quatro guias" (`nclTodosPortais`) ou seguir cria a ficha (`nclEtapa1`), porque a extensão só prende o
+portais do dossiê (`NCL_PORTAIS`); abrir um portal, o botão "Abrir as seis guias" (`nclTodosPortais`) ou seguir cria a ficha (`nclEtapa1`), porque a extensão só prende o
 dossiê a cliente que já existe pelo CPF. A 2 confere o que o dossiê trouxe (`nclPreencher`) e completa o cadastro;
 concluir (`criarCliente`) leva à lista Escritório e avisa Amanda e Paulo (`quemAvisaClienteNovo`).
 O Primeiro atendimento avisa quando o nome do CRM difere do nome do CNIS (`nomeDoCnis`, `nomeIgual`, F198), com o botão "Usar o nome do CNIS", que grava só no clique; `gravarCnisLido` passou a guardar `cnis.nome`, e a ficha antiga lê o nome do texto do CNIS do dossiê. No Novo Cliente, o telefone já vem com o DDD 16, o celular que começa com 9 sem nove dígitos gera aviso (`telRecado`), e o botão "Senha padrão" (`nclSenhaPadrao`) preenche a senha guardada no navegador, porque o CRM é página pública e a senha não entra no código.
@@ -166,6 +167,8 @@ A **F227** (onda 2 dos pré-casos): o atendimento trabalha no **pré-caso escolh
 A **F228** (o documento da coleta que já existe vai ao caso aberto): `gravarDocsDaColeta`, por onde passam PJe, e-SAJ, eproc e PAT, pulava o documento cujo `caminho` já existia em `anexos`; como até o 11.08 o importador casava o processo com o primeiro caso do número, mesmo encerrado, os documentos ficaram presos ao caso encerrado e nunca migravam. Agora o documento já gravado em caso **encerrado** do mesmo cliente passa (PATCH de `caso_id` e `cliente_id`) ao caso aberto que a coleta escolheu; o que está em outro caso **aberto** fica, porque pode ter sido levado de propósito (`moverNumero`). O `andamento_id` não muda. Teste: `testes/cadastro/f228.js`.
 
 A **F229** (o 📥 Importar de uma vez): com duas ou mais coletas dos tribunais, recursos e prazos na fila, o botão "conferir e aplicar todas" (`aplicarTodasColetas`, `LOTE_FONTES`, `coletasDoLote`) faz o mesmo conferir + aplicar de cada uma, em sequência; o INSS fica no botão dele, porque cria casos, e o processo completo sem caso no CRM fica na fila. `aplicarPje`, `aplicarPjeProc` e `aplicarPatDeVerdade` (11.56) prendem o plano da sua coleta no início (`const plano`): o conferir de outra coleta que terminava no meio trocava o plano global, e o aplicar do PJe 1º grau gravou os movimentos do 2º e marcou a coleta como aplicada (16.10.2026, 7 movimentos perdidos). Teste: `testes/cadastro/f229.js`.
+
+A **F230** (os integrantes do CadÚnico no Primeiro atendimento): a família que a extensão grava em `clientes.dossie.cadunico.familia` vira fato do bloco CadÚnico (`familiaCadunico`, estado cadastral, integrantes e renda por pessoa; é o gatilho do trabalho BPC, `PA_GATILHO`), e o detalhe do bloco mostra o quadro dos integrantes (`quadroTransparencia`) com CPF, NIS e o que `dossie.transparencia.pessoas` já disse de cada um, com o botão "🔎 Consultar os integrantes" (`consultarTransparencia`), que chama a **Edge Function `transparencia`** (`crm/fase2/transparencia/index.ts`, publicada pelo MCP do Supabase com `verify_jwt`; confere o colaborador ativo pelo token, consulta a API com o segredo `TRANSPARENCIA_CHAVE` e grava `clientes.dossie.transparencia` no mesmo formato da extensão, com `origem: "crm"`) e relê o `dossie` do banco na volta. A API não aceita chamada direta do navegador (sem CORS), por isso a função; o `.txt` no Drive continua só pela extensão. Teste: `testes/cadastro/f230.js`.
 
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.

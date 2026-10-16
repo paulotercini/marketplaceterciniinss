@@ -4383,7 +4383,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.56</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.57</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10613,8 +10613,8 @@ const CEPS_MONTE_ALTO=[["15910-001","Rua dos Lirios","Centro"],["15910-003","Rua
 // cadastro, que confere o que o dossiê trouxe ou preenche o que falta; ao
 // concluir, o cliente vai à lista Escritório com a menção a Amanda e Paulo.
 let _ncl = {etapa:1, id:null};
-const NCL_PORTAIS = [["Meu INSS","https://meu.inss.gov.br/#/"], ["Emprega Brasil","https://servicos.mte.gov.br/spme-v2/#/login"],
-  ["HC Ribeirão","https://appiris.hcrp.usp.br/apex/r/iris/nossohcribeirao/login"], ["Redesim","https://consultacnpj.redesim.gov.br/minhas-empresas"]];
+const NCL_PORTAIS = [["Meu INSS","https://meu.inss.gov.br/#/"], ["e-Recursos","https://consultaprocessos.inss.gov.br/"], ["Emprega Brasil","https://servicos.mte.gov.br/spme-v2/#/login"],
+  ["HC Ribeirão","https://appiris.hcrp.usp.br/apex/r/iris/nossohcribeirao/login"], ["CadÚnico","https://cadunico.dataprev.gov.br/#/home"], ["Redesim","https://consultacnpj.redesim.gov.br/minhas-empresas"]];
 function renderNovoCliente(){
   tituloLista("➕ Novo Cliente");
   const e2 = _ncl.etapa===2 && _ncl.id;
@@ -10678,7 +10678,7 @@ function renderNovoCliente(){
       <div class="ncl-dossie">
         <b>Baixe o dossiê:</b> com o gov.br do segurado logado, clique para abrir cada portal numa guia nova e rode a extensão
         do dossiê (🔁 Rodar todos os portais). O dossiê traz CNIS, RAIS, CAGED, seguro-desemprego, pedidos, laudos, exames e CNPJs, e a etapa 2 vira só conferência.
-        <div class="form-linha" style="margin-top:8px;flex-wrap:wrap"><button type="button" class="ncl-todos" onclick="nclTodosPortais()">Abrir as quatro guias</button>${NCL_PORTAIS.map(([r,u])=>
+        <div class="form-linha" style="margin-top:8px;flex-wrap:wrap"><button type="button" class="ncl-todos" onclick="nclTodosPortais()">Abrir as seis guias</button>${NCL_PORTAIS.map(([r,u])=>
           `<a class="cad-mini ncl-portal" href="${u}" target="_blank" rel="noopener" onclick="return nclPortal()">Abrir ${r}</a>`).join("")}</div>
         <span class="meio-sub" id="ncl-ficha-recado">${_ncl.id ? "Ficha criada ✔ — o dossiê baixado agora se prende a ela." : "O primeiro portal aberto já cria a ficha pelo CPF, para o dossiê se prender a ela. Sem a senha do gov.br, siga direto para a etapa 2."}</span>
       </div>
@@ -10951,7 +10951,7 @@ function nclPortal(){
   if(!_ncl.id) nclEtapa1(false);
   return true;
 }
-// um clique abre as quatro guias; o navegador só deixa a primeira abrir sem a
+// um clique abre as seis guias; o navegador só deixa a primeira abrir sem a
 // permissão de pop-up do CRM, e o recado diz como dar essa permissão uma vez
 // a senha padrão não vai no código, porque o CRM é publicado em página pública:
 // fica guardada no computador de quem a digitou uma vez.
@@ -10972,7 +10972,7 @@ function nclTodosPortais(){
   if(!nclPortal()) return;
   const abertas = NCL_PORTAIS.map(([, u])=>window.open(u, "_blank", "noopener")).filter(Boolean).length;
   const r = document.getElementById("ncl-ficha-recado");
-  if(r && abertas < NCL_PORTAIS.length) r.innerHTML = `O navegador bloqueou ${NCL_PORTAIS.length - abertas} das ${NCL_PORTAIS.length} guias. Clique no ícone de pop-up bloqueado, no fim da barra de endereço, escolha <b>Sempre permitir</b> para o CRM e clique de novo em Abrir as quatro guias.`;
+  if(r && abertas < NCL_PORTAIS.length) r.innerHTML = `O navegador bloqueou ${NCL_PORTAIS.length - abertas} das ${NCL_PORTAIS.length} guias. Clique no ícone de pop-up bloqueado, no fim da barra de endereço, escolha <b>Sempre permitir</b> para o CRM e clique de novo em Abrir as seis guias.`;
 }
 async function nclEtapa1(seguir=true){
   if(_ncl.id){ if(seguir){ _ncl.etapa=2; renderNovoCliente(); } return; }
@@ -21089,6 +21089,9 @@ function fatosDoMapa(c, ks, fam){
   if(fs) out.push({grupo:"qualidade", fonte:"Seguro-desemprego", ...fs});
   const cad = lei("cadunico");
   if(cad.cor==="ok" || cad.cor==="alerta") out.push({grupo:"cadunico", est: cad.cor==="ok" ? "ok" : "warn", fonte:"CRM", texto:cad.txt});
+  const fz = familiaCadunico(c);      // F230 · a família que a extensão trouxe do Meu CadÚnico
+  if(fz) out.push({grupo:"cadunico", est: /ativ/i.test(fz.estado_cadastral||"") ? "ok" : "warn", fonte:"CadÚnico",
+    texto:`Família ${fz.numero_familiar||""}: ${fz.estado_cadastral||"estado não informado"} · ${(fz.membros||[]).length} integrante(s) · renda por pessoa ${moeda(fz.renda_por_pessoa)}`});
   // onda 3 · a contagem do CNIS, o requisito da espécie e a contagem do INSS ao lado.
   // A carência de 180 só decide na aposentadoria programável; na incapacidade
   // ela se confere na DII, depois da última perda da qualidade (art. 27-A)
@@ -22154,6 +22157,7 @@ function painelPA(c, ks){
         <button type="button" class="pa-levar-bt pa-sw${vai?" on":""}" role="switch" aria-checked="${vai}" onclick="paLevarBloco('${c.id}','${b}')"><i></i>Análise de Direito</button></span></div>
       ${b==="qual" ? paLinhaDoTempo(c, d) : ""}
       ${b==="rais" ? tabelaRaisCaged(d.fd) : ""}
+      ${b==="cad" ? quadroTransparencia(c) : ""}
       ${fs.length ? `<ul class="mapa-lista pa-fatos">${fs.map(fatoLi).join("")}</ul>` : `<p class="meio-sub">O dossiê ainda não traz fato para este bloco.</p>`}
     </section>`; };
   const passo = (n, rot, sub, cur, js) => `<button type="button" class="pa-passo${cur?" cur":""}" ${cur?'aria-current="step"':""} onclick="${js}"><i>${n}</i><span><b>${rot}</b><small>${esc(sub)}</small></span></button>`;
@@ -22184,6 +22188,35 @@ function painelPA(c, ks){
       </section>
     </div>
   </div>`;
+}
+// F230 · os integrantes do CadÚnico com CPF/NIS e o que o Portal da Transparência
+// já disse de cada um; o botão chama a Edge Function `transparencia` (crm/fase2/transparencia),
+// que consulta a API com a chave guardada no Supabase e grava clientes.dossie.transparencia
+const familiaCadunico = c => (c && c.dossie && c.dossie.cadunico && c.dossie.cadunico.familia) || null;
+function quadroTransparencia(c){
+  const fz = familiaCadunico(c); if(!fz) return "";
+  const tr = (c.dossie||{}).transparencia||{}, por = new Map((tr.pessoas||[]).flatMap(p=>[[p.cpf,p],[p.nis,p]]).filter(([k])=>k));
+  const linha = m => { const p = por.get(m.cpf) || por.get(m.nis);
+    const prog = p ? (p.programas||[]).map(x=>`${x.rotulo||x.programa}: ${x.meses} pagamento(s), último ${moeda(x.valor_ultimo)}`).join("; ") : "";
+    return `<tr><td>${esc(m.nome||"")}${m.responsavel?" <small>(RF)</small>":""}</td><td>${esc(m.parentesco||"")}</td><td class="mono">${esc(fmtCpf(m.cpf))}</td><td class="mono">${esc(m.nis||"—")}</td>
+      <td>${p ? (p.erro ? esc(p.erro) : prog || "sem pagamento encontrado") : "ainda não consultado"}</td></tr>`; };
+  return `<div class="pa-transp"><div class="pa-det-cab"><h4>Integrantes no Portal da Transparência</h4><span class="pa-det-dir">
+      <span class="meio-sub">${tr.em ? `consultado em ${esc(fmtBarra(String(tr.em).slice(0,10)))}` : "ainda não consultado"}</span>
+      <button type="button" class="btn-mini" id="pa-transp-bt" onclick="consultarTransparencia('${c.id}')">🔎 Consultar os integrantes</button></span></div>
+    <table class="pa-tabela"><thead><tr><th>Integrante</th><th>Parentesco</th><th>CPF</th><th>NIS</th><th>Portal da Transparência</th></tr></thead>
+    <tbody>${(fz.membros||[]).map(linha).join("")}</tbody></table></div>`;
+}
+async function consultarTransparencia(cliId){
+  const c = D.cliPorId.get(cliId), fz = c && familiaCadunico(c); if(!fz) return;
+  const pessoas = (fz.membros||[]).filter(m=>m.cpf||m.nis).map(m=>({nome:m.nome, cpf:m.cpf, nis:m.nis}));
+  const bt = document.getElementById("pa-transp-bt"); if(bt){ bt.disabled = true; bt.textContent = "Consultando…"; }
+  let r;
+  try{ r = await (await api("/functions/v1/transparencia", {method:"POST", body:JSON.stringify({cliente_id:cliId, pessoas})})).json(); }
+  catch(e){ r = {aviso:"O Portal da Transparência não respondeu: " + (e.message||e)}; }
+  const [n] = await api(`/rest/v1/clientes?select=dossie&id=eq.${cliId}`).catch(()=>[]) || [];
+  if(n) c.dossie = n.dossie;
+  aviso((r && (r.aviso || r.erro)) || "Portal da Transparência consultado", false);
+  repintarFicha();
 }
 function paAbrir(cliId, b){ _paBloco.set(cliId, _paBloco.get(cliId)===b ? "" : b); repintarFicha(); }
 function paCartao(cliId, k){ _paCartao.set(cliId, _paCartao.get(cliId)===k ? "" : k); repintarFicha(); }
