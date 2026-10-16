@@ -1,5 +1,7 @@
 # Análise por benefício · ramificação do Primeiro atendimento à Análise de Direito (F217, CRM 11.40)
 
+> **Substituído** em 16.10.2026 por `PRIMEIRO-ATENDIMENTO-QUADROS.md` (desenho) e `REQUISITOS-POR-BENEFICIO.md` (requisitos). Fica como registro da F217.
+
 Documento de projeto. Registra a árvore de benefícios, a matriz benefício → quadros, os campos de cada quadro com a fonte na base de conhecimento, as decisões de desenho e a régua de teste. O wireframe está em `wireframe-analise-por-beneficio.txt`.
 
 ## 1. O problema e a solução
