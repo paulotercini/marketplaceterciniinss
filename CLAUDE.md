@@ -165,6 +165,8 @@ A **F227** (onda 2 dos pré-casos): o atendimento trabalha no **pré-caso escolh
 
 A **F228** (o documento da coleta que já existe vai ao caso aberto): `gravarDocsDaColeta`, por onde passam PJe, e-SAJ, eproc e PAT, pulava o documento cujo `caminho` já existia em `anexos`; como até o 11.08 o importador casava o processo com o primeiro caso do número, mesmo encerrado, os documentos ficaram presos ao caso encerrado e nunca migravam. Agora o documento já gravado em caso **encerrado** do mesmo cliente passa (PATCH de `caso_id` e `cliente_id`) ao caso aberto que a coleta escolheu; o que está em outro caso **aberto** fica, porque pode ter sido levado de propósito (`moverNumero`). O `andamento_id` não muda. Teste: `testes/cadastro/f228.js`.
 
+A **F229** (o 📥 Importar de uma vez): com duas ou mais coletas dos tribunais, recursos e prazos na fila, o botão "conferir e aplicar todas" (`aplicarTodasColetas`, `LOTE_FONTES`, `coletasDoLote`) faz o mesmo conferir + aplicar de cada uma, em sequência; o INSS fica no botão dele, porque cria casos, e o processo completo sem caso no CRM fica na fila. `aplicarPje` e `aplicarPjeProc` prendem o plano da sua coleta no início (`const plano`): o conferir de outra coleta que terminava no meio trocava o plano global, e o aplicar do PJe 1º grau gravou os movimentos do 2º e marcou a coleta como aplicada (16.10.2026, 7 movimentos perdidos). Teste: `testes/cadastro/f229.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
