@@ -125,3 +125,7 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
 Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Juízo de Catanduva (Onda 179)
+
+O juízo examina o PPP período a período, pelo regime de prova de cada época, parte do que o INSS já reconheceu no processo administrativo e extingue por falta de interesse o período já enquadrado. A peça separa os períodos por regime de prova, indica o código do decreto, requer na inicial o ofício à empregadora para juntar o LTCAT e pede, em ordem subsidiária, especial, tempo de contribuição, reafirmação da DER e declaração dos períodos. Blocos literais e esqueleto da sentença em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`.

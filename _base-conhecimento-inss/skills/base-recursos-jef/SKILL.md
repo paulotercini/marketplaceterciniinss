@@ -158,3 +158,7 @@ Dois cuidados. Primeiro, o recurso só se sustenta se houve protesto no primeiro
 ## Cadeia de cada pedido (regra permanente, 12/10/2026)
 
 Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.
+
+## Juízo de Catanduva (Onda 179)
+
+O recurso contra sentença do JEF de Catanduva parte dos critérios registrados na skill `base-juizo-catanduva`, porque eles indicam o fundamento que a sentença usou e o que faltou na prova.
