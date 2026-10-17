@@ -42,9 +42,18 @@ A peça não usa coloquialismo nem palavra informal, em nenhuma seção, incluí
 | a usina acrescenta | o período da usina acrescenta |
 | chega a 85 pontos; os requisitos chegam em 18/01/2016 | alcança 85 pontos; os requisitos completam-se em 18/01/2016 |
 | levou ao INSS os mesmos formulários e pedido | apresentou ao INSS os mesmos formulários e o mesmo pedido |
+| o recurso havia chegado; o recurso chegou | o recurso foi interposto; o requerimento foi protocolado; o documento foi apresentado |
+| o art. 26 manda; a portaria manda desconsiderar | o art. 26 determina; a portaria determina que seja afastada |
+| após o acórdão da Junta | após a prolação do acórdão da Junta de Recursos |
 | começou na roça | iniciou o trabalho rural |
 | o caso que a regra dos pontos livra do fator | hipótese em que a regra dos pontos afasta o fator |
 | nem são devolvidos os valores recebidos | tampouco são restituíveis os valores recebidos |
+
+O órgão se nomeia por extenso em todas as ocorrências, como o documento (correção do titular de 17/10/2026): Junta de Recursos, Câmara de Julgamento, Conselho de Recursos da Previdência Social (ou CRPS, sigla consagrada, depois da primeira menção), Turma Recursal e Turma Nacional de Uniformização. "A Junta" e "a Câmara" não se usam sozinhas. O verbo que atribui efeito à norma é técnico (determina, dispõe, estabelece, veda, assegura, exige) e nunca "manda".
+
+> **Antes.** "O recurso especial havia chegado 395 dias após o acórdão da Junta, e o art. 26, § 1º, da Portaria DIRBEN/INSS 996/2022 manda desconsiderar a relevação da intempestividade ao aferir essa definitividade."
+
+> **Depois.** "O recurso especial foi interposto 395 dias após a prolação do acórdão da Junta de Recursos. Para a aferição dessa definitividade, o art. 26, § 1º, da Portaria DIRBEN/INSS 996/2022 determina que seja afastada a hipótese de relevação da intempestividade prevista no Regimento Interno do CRPS."
 
 ## A frase
 
