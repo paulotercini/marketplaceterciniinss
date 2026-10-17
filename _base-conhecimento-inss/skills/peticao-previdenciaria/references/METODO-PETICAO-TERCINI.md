@@ -2,7 +2,7 @@
 
 Onda 174, 04/10/2026. Método extraído do modelo de petição inicial de benefícios por incapacidade redigido pelo titular (arquivo Word, revisão 8, salvo em 22/07/2024) e fixado por ele como padrão de TODAS as peças do escritório, em todos os temas previdenciários. Esta referência prevalece na estrutura e nas fórmulas. O vocabulário, a construção da frase e do parágrafo e as medidas seguem o `ESTILO-MODELO.md` (Onda 176), que reproduz a linguagem do juízo de Catanduva.
 
-O método tem quatro marcas. A peça segue uma ordem fixa de seções, conhecida do julgador. Cada fato vem com o documento que o prova, descrito pelo emitente, pela data e pelo trecho literal. A lei é transcrita, e não apenas citada, antes de ser aplicada ao caso. E a fundamentação é legal e documental, com precedente só quando a tese depende dele.
+O método tem quatro marcas. A peça segue uma ordem fixa de seções, conhecida do julgador. Os fatos ocupam a maior parte da peça, e cada fato vem com o documento que o prova, descrito pelo emitente, pela data e pelo trecho literal. A lei é transcrita apenas no dispositivo controvertido, e o restante entra por remissão na frase (Onda 182, `ESTILO-MODELO.md`, seção A lei na medida). E a fundamentação é legal e documental, com precedente apenas quando a tese depende dele.
 
 ## 1. A petição inicial, ordem fixa
 
@@ -36,29 +36,28 @@ Primeiro, a pessoa e o vínculo. "A Parte Autora, nascida em [data por extenso],
 
 Segundo, o requerimento e o indeferimento. "Na data de [data por extenso], a Parte Autora pleiteou administrativamente perante o INSS de [agência] o benefício [espécie] (NB [__]), o qual restou **indeferido** em razão de [motivo do indeferimento, com as palavras da decisão]."
 
-Terceiro, a virada. "Entretanto, está equivocado o entendimento da Autarquia Federal, pois [razão central], senão vejamos." Há uma frase de virada pronta para cada motivo de indeferimento, entre colchetes de instrução, e o redator usa só a do caso.
+Terceiro, a virada. "Entretanto, está equivocado o entendimento da Autarquia Federal, porque [razão central, com o documento que a prova]." Há uma frase de virada pronta para cada motivo de indeferimento, entre colchetes de instrução, e o redator usa só a do caso.
 
 **2.1. DA [MATÉRIA DE FATO DECISIVA].** Subseção que demonstra o fato controvertido com a prova, como DA INCAPACIDADE, DA ATIVIDADE ESPECIAL, DO TRABALHO RURAL, DA DEPENDÊNCIA ECONÔMICA, DA DEFICIÊNCIA E DA MISERABILIDADE, DA SEQUELA. A sequência é sempre a mesma.
 
 1. O que o INSS concluiu e com qual fundamento, lido no processo administrativo (laudo SABI, análise de atividade especial, entrevista rural, avaliação social).
-2. O fato verdadeiro, descrito em linguagem clara, ligado à atividade concreta da Parte Autora ("A atividade de [__] consiste em [__]").
+2. O fato verdadeiro, em ordem cronológica e ligado à atividade concreta da Parte Autora, descrita pelos gestos, pela postura, pelo peso, pela jornada e pela ferramenta ("A atividade de [__] consiste em [__]"), e a limitação descrita pelo que a pessoa deixou de conseguir fazer.
 3. Cada documento que prova o fato, um por parágrafo, com emitente, registro profissional quando houver e data, seguido do trecho decisivo transcrito entre aspas, em negrito e itálico. Exemplo, "O Relatório Médico emitido pelo Dr. [nome] – CRM nº [__], datado de [dd/mm/aaaa], demonstra que a Parte Autora apresenta o seguinte diagnóstico: ***"[trecho literal]"***". De exame de imagem, laboratório ou medição ambiental transcreve-se SOMENTE a conclusão.
 4. O que mais o caso tiver de concreto (medicamentos e seus efeitos, tempo de afastamento, testemunhas indicadas), sem adjetivo.
-5. A conclusão da subseção. "Sendo assim, a documentação anexada aos autos comprova [o fato], o que demonstra a decisão precipitada da Autarquia Federal."
-6. O fecho dos fatos. "Sentindo-se lesada no direito de assistência da previdência, a Parte Autora não encontra outra alternativa senão se socorrer ao amparo do Poder Judiciário e propor a presente ação."
+5. A conclusão da subseção. "Sendo assim, a documentação anexada aos autos comprova [o fato] na data do requerimento administrativo." A seção termina nesse parágrafo, sem fecho retórico (Onda 182).
 
 **3. DO [BENEFÍCIO].** A seção de direito, também em sequência fixa.
 
-1. Abertura que nomeia o benefício e o dispositivo. "A Parte Autora [preenche o requisito], lhe sendo cabível a concessão do **[benefício]** disposto nos artigos [__] a [__] da Lei nº 8.213/91, cabendo especial atenção aos arts. [__] e [__] a seguir demonstrados:"
-2. Transcrição literal, em recuo, do caput e SOMENTE dos parágrafos, incisos e alíneas que decidem o caso, com o rótulo do artigo e do parágrafo em negrito. O texto sai da redação vigente do MCP `normas` (última ocorrência de cada parágrafo, sem os revogados), nunca de memória.
+1. Abertura que nomeia o benefício e delimita a controvérsia. "A Parte Autora preenche os requisitos do **[benefício]**, previsto nos arts. [__] a [__] da Lei 8.213/91, e a controvérsia se limita a [requisito]."
+2. Transcrição em recuo **apenas** quando o INSS contestou a interpretação do dispositivo, no máximo um por seção, com o caput e somente os parágrafos que decidem o caso, na redação vigente do MCP `normas`. Quando a controvérsia é de fato, como a existência de incapacidade, não há transcrição, e o requisito se demonstra pela prova com remissão na frase, como "(art. 59 da Lei 8.213/91)".
 3. Um parágrafo que liga a norma ao caso, apontando a prova do requisito ("A documentação médica em anexo demonstra que a Parte Autora possui incapacidade total para [__] e não tem apresentado melhoras em seu quadro clínico.").
-4. Os requisitos acessórios, um parágrafo cada, com a variante pronta entre colchetes (carência cumprida ou dispensada pelo art. 26, II, da Lei 8.213/91; qualidade de segurado pelo vínculo, pela contribuição ou pelo período de graça do art. 15 da Lei 8.213/91, de 6 meses ao facultativo, 12 meses após a cessação das contribuições ou do benefício, 24 meses com mais de 120 contribuições sem perda da qualidade ou com desemprego registrado, e 36 meses quando somadas as duas prorrogações).
+4. Os requisitos acessórios, em uma ou duas frases cada, com remissão na frase e sem transcrição, com a variante pronta entre colchetes (carência cumprida ou dispensada pelo art. 26, II, da Lei 8.213/91; qualidade de segurado pelo vínculo, pela contribuição ou pelo período de graça do art. 15 da Lei 8.213/91, de 6 meses ao facultativo, 12 meses após a cessação das contribuições ou do benefício, 24 meses com mais de 120 contribuições sem perda da qualidade ou com desemprego registrado, e 36 meses quando somadas as duas prorrogações).
 5. O pedido parcial da seção. "Posto isto, requer seja julgado procedente o pedido para concessão do [benefício principal]."
-6. O pedido subsidiário, quando houver, com a mesma técnica. "Caso não seja este o entendimento, ainda assim é devida a concessão do [benefício subsidiário], previsto nos artigos [__] a [__] da Lei 8.213/91, sendo de especial atenção os arts. [__] e [__] a seguir detalhados:" seguido da transcrição e de um parágrafo de ligação ("Do mesmo modo que para [o principal], a Parte Autora [cumpre os requisitos]").
+6. O pedido subsidiário, quando houver. "Caso não seja este o entendimento, ainda assim é devida a concessão do [benefício subsidiário] (arts. [__] a [__] da Lei 8.213/91), porque [o fato que o sustenta]." Não repete transcrição.
 7. O Parágrafo de Realidade, na forma de `base-peticao-paragrafo-de-realidade`, quando a peça for de pessoa física.
-8. O fecho do direito. "Deste modo, Excelência, em razão de estar devidamente comprovado que [síntese dos requisitos], requer seja [reconhecido/restabelecido] o direito ao [benefício], desde [a data do requerimento administrativo (dd/mm/aaaa) / a data da indevida cessação], como medida de direito e de justiça."
+8. O fecho do direito. "Deste modo, Excelência, comprovado que [síntese dos requisitos com o número], requer seja [reconhecido/restabelecido] o direito ao [benefício], desde [a data do requerimento administrativo (dd/mm/aaaa) / a data da cessação (dd/mm/aaaa)]."
 
-Seções adicionais entram ENTRE a 3 e os requerimentos, numeradas em sequência, só quando o caso exigir (por exemplo, DA REAFIRMAÇÃO DA DER, DOS EFEITOS FINANCEIROS, DA PRIORIDADE NA TRAMITAÇÃO). O total fica em até seis seções e sete páginas.
+Seções adicionais entram ENTRE a 3 e os requerimentos, numeradas em sequência, só quando o caso exigir (por exemplo, DA REAFIRMAÇÃO DA DER, DOS EFEITOS FINANCEIROS, DA PRIORIDADE NA TRAMITAÇÃO). O total fica, de preferência, em até seis seções e sete páginas (referência, Onda 181).
 
 Os efeitos financeiros do Tema 1124/STJ ficam protegidos de dois modos. Quando toda a prova integrou o processo administrativo, basta que DOS FATOS diga que os documentos em anexo foram apresentados ao INSS na DER e que o item 3 dos requerimentos fixe o termo inicial na DER. Quando há documento que não foi ao INSS, duas ou mais DERs, prova técnica judicial que confirma documento do processo administrativo ou omissão do INSS em emitir exigência, entra a seção adicional DOS EFEITOS FINANCEIROS, com a classificação de cada documento na forma da `peticao-previdenciaria`.
 
@@ -98,7 +97,7 @@ Os quesitos de outras perícias (técnica, social, biopsicossocial) seguem a mes
 
 A autora ou o autor é sempre "a Parte Autora", com iniciais maiúsculas, e o INSS é "o Instituto Nacional do Seguro Social – INSS" na primeira menção de cada seção e "a Autarquia Federal" nas seguintes. O juízo é "Vossa Excelência", e "Excelência" no vocativo do fecho do direito.
 
-As transições são as do titular, escolhidas pela relação lógica e sem repetição em parágrafos seguidos. Para contrapor, "Entretanto" e "Ocorre que". Para remeter à prova, "Conforme é possível observar na documentação em anexo" e "senão vejamos". Para encadear, "Por sua vez", "Já o", "Do mesmo modo". Para concluir, "Deste modo", "Sendo assim", "Posto isto". Para o subsidiário, "Caso não seja este o entendimento, ainda assim". Para fechar o direito, "como medida de direito e de justiça".
+As transições são as do titular, escolhidas pela relação lógica e sem repetição em parágrafos seguidos. Para contrapor, "Entretanto" e "Ocorre que". Para remeter à prova, "Conforme a documentação em anexo". Para encadear, "Por sua vez", "Já o", "Do mesmo modo". Para concluir, "Deste modo", "Sendo assim", "Posto isto". Para o subsidiário, "Caso não seja este o entendimento, ainda assim". Para fechar o direito, "Deste modo, Excelência".
 
 O registro é formal, simples e afirmativo. A frase diz o que aconteceu e onde está a prova, sem adjetivo de intensidade e sem acusação. O parágrafo tem de duas a quatro frases e de 30 a 55 palavras, com teto de 65, e a frase tem de 15 a 30 palavras, até 40 quando preciso (Onda 176), com tolerância ao parágrafo curto de documento transcrito. O vocabulário e os conectores são os do juízo de Catanduva, listados no `ESTILO-MODELO.md`, porque o juiz titular lê melhor o texto escrito como ele escreve.
 
@@ -108,7 +107,7 @@ Os campos a preencher ficam entre colchetes, e as instruções ao redator ficam 
 
 **Documento.** Na petição inicial o documento é referido como "em anexo", porque ainda não há ID. Nas demais peças, por ID do PJe. O nome do documento leva sempre o qualificador ("Relatório Médico", "laudo pericial", "Perfil Profissiográfico Previdenciário", "carta de concessão"), e o trecho decisivo é transcrito literalmente, em negrito e itálico, entre aspas.
 
-**Lei.** A transcrição é literal, em recuo, com rótulos em negrito, e se limita ao que decide o caso. O parágrafo seguinte aplica a norma ao fato. O dispositivo acessório, que não decide o caso, entra na própria frase com o trecho operativo entre aspas, como faz o juízo (Onda 176). Lei transcrita sem aplicação e aplicação sem a lei são, ambas, falhas do método.
+**Lei.** A transcrição é literal, em recuo, com rótulos em negrito, e se limita ao dispositivo cuja interpretação o INSS contestou, no máximo um por seção (Onda 182). O requisito incontroverso recebe remissão na frase. O parágrafo seguinte aplica a norma ao fato. O dispositivo acessório, que não decide o caso, entra na própria frase com o trecho operativo entre aspas, como faz o juízo (Onda 176). Lei transcrita sem aplicação e lei incontroversa transcrita em bloco são, ambas, falhas do método.
 
 **Precedente.** O modelo do titular não cita precedente na inicial de incapacidade, porque a lei e a prova bastam. Nas demais espécies o precedente entra só quando a tese depende dele (como o Tema 555/STF no ruído, o Tema 1007/STJ na híbrida, o Tema 27/STF na renda do BPC), uma única vez, com a tese literal em recuo e a marcação [CONFERIDO] apenas se constar do catálogo da base. Os bancos de teses dos Modelos Ouro guardam o restante para réplica e recurso.
 

@@ -30,11 +30,11 @@ Na data de [dd de mês de aaaa], a Parte Autora pleiteou administrativamente per
 
 [Motivos usuais. Não constatação de incapacidade laborativa. Falta de comprovação da qualidade de segurado. Ausência da carência mínima necessária.]
 
-[Utilizar se não foi constatada incapacidade] Entretanto, está equivocado o entendimento da Autarquia Federal, pois a Parte Autora está incapacitada de forma [total e permanente / total e temporária] para suas atividades [habituais, se segurada facultativa / laborais, se contribuinte individual ou empregada], senão vejamos.
+[Utilizar se não foi constatada incapacidade] Entretanto, está equivocado o entendimento da Autarquia Federal, porque a Parte Autora está incapacitada de forma [total e permanente / total e temporária] para suas atividades [habituais, se segurada facultativa / laborais, se contribuinte individual ou empregada], conforme a documentação médica descrita a seguir.
 
-[Utilizar se faltou qualidade de segurado] Entretanto, está equivocado o entendimento da Autarquia Federal, haja vista que, no momento em que surgiu a incapacidade, a Parte Autora estava no **período de graça** e mantinha todos os direitos perante a Previdência Social, senão vejamos.
+[Utilizar se faltou qualidade de segurado] Entretanto, está equivocado o entendimento da Autarquia Federal, haja vista que, no momento em que surgiu a incapacidade, a Parte Autora estava no **período de graça** desde [a última contribuição ou a cessação do benefício, com a data], conforme o CNIS em anexo.
 
-[Utilizar se faltou carência] Entretanto, está equivocado o entendimento da Autarquia Federal, haja vista que, no momento em que surgiu a incapacidade, [a Parte Autora havia cumprido a carência mínima necessária / a Parte Autora era segurada da Previdência Social e o benefício postulado independia de carência], senão vejamos.
+[Utilizar se faltou carência] Entretanto, está equivocado o entendimento da Autarquia Federal, haja vista que, no momento em que surgiu a incapacidade, [a Parte Autora contava [__] contribuições mensais, acima das 12 exigidas / a Parte Autora era segurada da Previdência Social e o benefício postulado independia de carência], conforme o CNIS em anexo.
 
 ### 2.1. DA INCAPACIDADE
 
@@ -42,7 +42,11 @@ A perícia médica do INSS entendeu que a Parte Autora está capaz para [o exerc
 
 Conforme é possível observar na documentação médica em anexo, a Parte Autora é portadora de [descrição clara das doenças, com o CID], que impõe limitação [física/mental] para o trabalho que exerce como [__].
 
-A atividade de [__] consiste em [descrição concreta das tarefas, posturas, cargas e jornada], de modo que a doença descrita impõe limitações na atividade desenvolvida na medida em que impossibilita [o carregamento de peso / os esforços repetitivos / a permanência em pé / outro gesto].
+A atividade de [__] consiste em [descrição concreta do dia de trabalho, com os gestos, a postura, o peso carregado, a jornada e a ferramenta], conforme a CTPS e o CNIS em anexo.
+
+A doença descrita impede [o gesto central da atividade, como erguer peso acima do ombro, permanecer em pé por oito horas ou repetir o movimento de pinça], que é exatamente o que o trabalho exige.
+
+[Narrar em ordem cronológica, com a data de cada fato: quando a Parte Autora deixou de trabalhar, quando procurou atendimento, quando fez cada exame e quando requereu o benefício.]
 
 O Relatório Médico emitido pelo Dr. [nome] – CRM nº [__], datado de [dd/mm/aaaa], demonstra que a Parte Autora apresenta o seguinte diagnóstico: ***"[trecho literal do relatório]"***
 
@@ -52,53 +56,31 @@ Os relatórios médicos estão acompanhados de exames de imagem que comprovam a 
 
 Já o exame de [Raio-X / Ressonância Magnética / Tomografia] do [segmento do corpo], datado de [dd/mm/aaaa], teve a seguinte conclusão: ***"[somente a conclusão do exame]"***
 
-Devido às dores decorrentes da doença, a Parte Autora necessita utilizar os seguintes medicamentos: [medicamentos, conforme a receita em anexo]. [Se o medicamento tem efeito colateral que impede o trabalho, acrescentar parágrafo com o efeito e a fonte.]
+Em razão das dores decorrentes da doença, a Parte Autora faz uso dos seguintes medicamentos: [medicamentos, conforme a receita em anexo]. [Se o medicamento tem efeito colateral que impede o trabalho, acrescentar parágrafo com o efeito e a fonte.]
 
-Sendo assim, a documentação médica anexada aos autos comprova a incapacidade da Parte Autora para a realização [da atividade de __ / das atividades habituais], o que demonstra a decisão precipitada da Autarquia Federal.
-
-Sentindo-se lesada no direito de assistência da previdência, a Parte Autora não encontra outra alternativa senão se socorrer ao amparo do Poder Judiciário e propor a presente ação.
+Sendo assim, a documentação médica anexada aos autos comprova a incapacidade da Parte Autora para a realização [da atividade de __ / das atividades habituais] desde [dd/mm/aaaa], data anterior ao requerimento administrativo, e a perícia administrativa não examinou [o documento ou a atividade que ela deixou de considerar].
 
 ## 3. DO BENEFÍCIO POR INCAPACIDADE
 
-A Parte Autora se encontra incapacitada de forma **total e permanente** para suas atividades habituais e laborais, lhe sendo cabível a concessão do **benefício por incapacidade permanente** disposto nos arts. 42 a 47 da Lei nº 8.213/91, cabendo especial atenção aos arts. 42 e 43 a seguir demonstrados:
+[A controvérsia do indeferimento por incapacidade é de fato, e por isso esta seção não transcreve lei. Transcrever em recuo apenas o dispositivo cuja interpretação o INSS contestou, no máximo um, como o § 2º do art. 42 quando o INSS alegar doença preexistente.]
 
-> **Art. 42.** A aposentadoria por invalidez, uma vez cumprida, quando for o caso, a carência exigida, será devida ao segurado que, estando ou não em gozo de auxílio-doença, for considerado incapaz e insusceptível de reabilitação para o exercício de atividade que lhe garanta a subsistência, e ser-lhe-á paga enquanto permanecer nesta condição.
+A Parte Autora preenche os requisitos do **benefício por incapacidade permanente** (arts. 42 a 47 da Lei 8.213/91), e a controvérsia se limita à incapacidade, demonstrada na seção anterior.
 
-> **§ 2º** A doença ou lesão de que o segurado já era portador ao filiar-se ao Regime Geral de Previdência Social não lhe conferirá direito à aposentadoria por invalidez, salvo quando a incapacidade sobrevier por motivo de progressão ou agravamento dessa doença ou lesão.
+A documentação médica registra incapacidade total para [o trabalho / as atividades habituais] e ausência de melhora desde [dd/mm/aaaa], apesar do tratamento, o que afasta a reabilitação para atividade que garanta a subsistência (art. 42 da Lei 8.213/91).
 
-> **Art. 43.** A aposentadoria por invalidez será devida a partir do dia imediato ao da cessação do auxílio-doença, ressalvado o disposto nos §§ 1º, 2º e 3º deste artigo.
+[A Parte Autora cumpriu a carência de 12 contribuições, porque o CNIS registra [__] contribuições mensais até [dd/mm/aaaa] (art. 25, I, da Lei 8.213/91). / A doença que acomete a Parte Autora dispensa a carência, porque [doença] integra a lista do art. 151 da Lei 8.213/91 (art. 26, II, da mesma lei).]
 
-> **§ 1º** Concluindo a perícia médica inicial pela existência de incapacidade total e definitiva para o trabalho, a aposentadoria por invalidez será devida: (Redação dada pela Lei nº 9.032, de 1995)
-
-> **a)** ao segurado empregado, a contar do décimo sexto dia do afastamento da atividade ou a partir da entrada do requerimento, se entre o afastamento e a entrada do requerimento decorrerem mais de trinta dias; (Redação Dada pela Lei nº 9.876, de 26.11.99)
-
-> **b)** ao segurado empregado doméstico, trabalhador avulso, contribuinte individual, especial e facultativo, a contar da data do início da incapacidade ou da data da entrada do requerimento, se entre essas datas decorrerem mais de trinta dias. (Redação Dada pela Lei nº 9.876, de 26.11.99)
-
-A documentação médica em anexo demonstra que a Parte Autora possui incapacidade total para [o trabalho / as atividades habituais] e não tem apresentado melhora em seu quadro clínico, apesar do tratamento descrito nos relatórios médicos, o que afasta a possibilidade de reabilitação exigida pelo art. 42.
-
-[A Parte Autora também cumpriu a carência mínima de 12 contribuições para obtenção do benefício, conforme CNIS em anexo. / A doença que acomete a Parte Autora independe do cumprimento da carência mínima de 12 contribuições, uma vez que se enquadra no inciso II do art. 26 da Lei 8.213/91.]
-
-Por sua vez, a Parte Autora mantinha a qualidade de segurada quando do surgimento da incapacidade, haja vista que [variante do vínculo ou do período de graça], nos termos do art. 15 da Lei 8.213/91.
+A Parte Autora mantinha a qualidade de segurada em [data de início da incapacidade], porque [variante do vínculo ou do período de graça, com a data] (art. 15, [inciso e parágrafo], da Lei 8.213/91).
 
 [Variantes, escolher uma. Estava empregada. Estava contribuindo como contribuinte individual. Estava contribuindo como segurada facultativa. Estava no período de graça de 6 (seis) meses por ter deixado de contribuir como facultativa a partir da competência __. Estava no período de graça de 12 (doze) meses por ter deixado de contribuir a partir da competência __. Estava no período de graça de 12 (doze) meses por ter cessado benefício anterior em __. Estava no período de graça de 24 (vinte e quatro) meses por ter mais de 120 (cento e vinte) contribuições sem perda da qualidade de segurada. Estava no período de graça de 24 (vinte e quatro) meses por ter deixado de contribuir a partir da competência __ e estar desempregada. Estava no período de graça de 36 (trinta e seis) meses por estar desempregada e ter mais de 120 (cento e vinte) contribuições.]
 
 Posto isto, requer seja julgado procedente o pedido para concessão do benefício previdenciário por incapacidade permanente.
 
-Caso não seja este o entendimento, ainda assim é devida a concessão do benefício por incapacidade temporária, previsto no art. 59 e seguintes da Lei 8.213/91, sendo de especial atenção os arts. 59 e 60 a seguir detalhados:
-
-> **Art. 59.** O auxílio-doença será devido ao segurado que, havendo cumprido, quando for o caso, o período de carência exigido nesta Lei, ficar incapacitado para o seu trabalho ou para a sua atividade habitual por mais de 15 (quinze) dias consecutivos.
-
-> **§ 1º** Não será devido o auxílio-doença ao segurado que se filiar ao Regime Geral de Previdência Social já portador da doença ou da lesão invocada como causa para o benefício, exceto quando a incapacidade sobrevier por motivo de progressão ou agravamento da doença ou da lesão. (Redação dada pela Lei nº 13.846, de 2019)
-
-> **Art. 60.** O auxílio-doença será devido ao segurado empregado a contar do décimo sexto dia do afastamento da atividade, e, no caso dos demais segurados, a contar da data do início da incapacidade e enquanto ele permanecer incapaz. (Redação dada pela Lei nº 9.876, de 26.11.99)
-
-> **§ 1º** Quando requerido por segurado afastado da atividade por mais de 30 (trinta) dias, o auxílio-doença será devido a contar da data da entrada do requerimento.
-
-Do mesmo modo que para o benefício por incapacidade permanente, a Parte Autora cumpriu a carência mínima necessária e mantém a qualidade de segurada, e a documentação médica demonstra a incapacidade para a sua atividade habitual por mais de quinze dias consecutivos, como exige o art. 59.
+Caso não seja este o entendimento, ainda assim é devida a concessão do benefício por incapacidade temporária (arts. 59 a 63 da Lei 8.213/91), porque a mesma documentação médica demonstra a incapacidade para a atividade habitual por mais de quinze dias consecutivos, com a carência e a qualidade de segurada já demonstradas.
 
 [PARÁGRAFO DE REALIDADE, na forma da skill base-peticao-paragrafo-de-realidade, com três a seis dados verificáveis da vida da Parte Autora, cada um com o documento em anexo, e a última frase ligada à incapacidade.]
 
-Deste modo, Excelência, em razão de estar devidamente comprovado que a Parte Autora é segurada da Previdência Social e que está incapacitada para suas atividades laborais e habituais, requer seja [reconhecido/restabelecido] o direito ao benefício por incapacidade, [desde a data do requerimento administrativo (dd/mm/aaaa) / desde a data da indevida cessação do benefício (dd/mm/aaaa)], como medida de direito e de justiça.
+Deste modo, Excelência, comprovado que a Parte Autora é segurada da Previdência Social e está incapacitada para [a atividade de __] desde [dd/mm/aaaa], requer seja [reconhecido/restabelecido] o direito ao benefício por incapacidade, [desde a data do requerimento administrativo (dd/mm/aaaa) / desde a data da cessação do benefício (dd/mm/aaaa)].
 
 ## 4. REQUERIMENTOS
 
