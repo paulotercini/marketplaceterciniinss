@@ -116,9 +116,9 @@ REGRAS de redação a serem seguidas em TODA peça CRPS.
 **Agravo interno ao Pleno (art. 93 RICRPS).** 3 a 5 páginas (auditoria 03/10/2026).
 **PUJ (arts. 120-124).** 5 a 8 páginas.
 **Reclamação.** 3 a 5 páginas.
-**Memorial.** Máximo 2 páginas (regra absoluta do escritório).
+**Memorial.** 2 páginas, de preferência.
 
-Peça mais longa que o teto é sinal de prolixidade. Cortar.
+As extensões acima são referência preferencial, e não limite obrigatório (Onda 181). Peça mais longa merece busca de repetição, e só a repetição sai. Fato, prova, norma aplicada e transição ficam, porque peça enxuta é peça sem ruído, e não peça sem o dado que o conselheiro precisa para decidir.
 
 ## FORMATAÇÃO ESPECÍFICA CRPS
 

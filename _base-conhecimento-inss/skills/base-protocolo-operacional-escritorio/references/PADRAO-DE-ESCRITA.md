@@ -35,20 +35,20 @@ A coluna Origem distingue o que o titular FIXOU do que foi PROPOSTO nesta Onda p
 | Anotação `(C)` no To Do | 2 a 3 linhas | Fixado, protocolo regra 1 |
 | Síntese do caso em petição | 2 a 3 linhas | Fixado, Onda 118 |
 | Componentes Visual Law por peça | 3 | Fixado, Onda 118 |
-| Petição inicial | 7 páginas | Fixado, Camada 6 |
-| Recurso inominado | 4 páginas | Fixado, Camada 6 |
-| Manifestação sobre laudo | 3 páginas | Fixado, Camada 6 |
-| Recurso ao CRPS | 3 páginas | Fixado, Camada 6 |
-| Embargos de declaração | 2 páginas | Fixado, Camada 6 |
-| Petição comum | 2 páginas | Fixado, Camada 6 |
-| Memorial | 2 páginas, limite absoluto | Fixado, peticao-previdenciaria |
-| Jurisprudência transcrita em toda a peça | 1 página, 15 linhas por precedente | Fixado, peticao-previdenciaria |
+| Petição inicial | 7 páginas, de preferência | Referência preferencial, Onda 181 |
+| Recurso inominado | 4 páginas, de preferência | Referência preferencial, Onda 181 |
+| Manifestação sobre laudo | 3 páginas, de preferência | Referência preferencial, Onda 181 |
+| Recurso ao CRPS | 3 páginas, de preferência | Referência preferencial, Onda 181 |
+| Embargos de declaração | 2 páginas, de preferência | Referência preferencial, Onda 181 |
+| Petição comum | 2 páginas, de preferência | Referência preferencial, Onda 181 |
+| Memorial | 2 páginas, de preferência | Referência preferencial, Onda 181 |
+| Jurisprudência transcrita em toda a peça | 1 página, 15 linhas por precedente, de preferência | Referência preferencial, Onda 181 |
 | Relatório médico ao médico assistente | 1 folha | Fixado, modelo Delgina |
 | Orientação ao cliente para perícia | 1 página | Fixado, Onda 96 |
-| Requerimento administrativo | 1 folha | Fixado, inicial-inss |
+| Requerimento administrativo | 1 folha, de preferência | Referência preferencial, Onda 181 |
 | Transcrição de atendimento | Teste dos quatro elementos, sem contagem | Fixado, Onda 132 |
-| Mandado de segurança | 5 páginas e 4 seções | Fixado, personalização 2.4 (Onda 158) |
-| Carta de retificação de PPP à empresa | 2 páginas | Proposto |
+| Mandado de segurança | 5 páginas e 4 seções, de preferência | Referência preferencial, Onda 181 |
+| Carta de retificação de PPP à empresa | 2 páginas, de preferência | Referência preferencial, Onda 181 |
 | Estudo pré-perícia e pré-audiência | 2 páginas | Proposto, a partir de "sem enrolação" |
 | Relatório de auditoria (PPP, laudo, CNIS, contestação, decisão) | 2 páginas, achados em ordem de gravidade | Proposto |
 | Relatório de triagem | 1 página, é parecer | Proposto, por aplicação da regra 4 |
@@ -64,7 +64,9 @@ Primeiro, declarar o teto e o ponto decisivo ANTES de redigir. A peça nasce den
 
 Segundo, aferir sobre o arquivo gerado. Em .docx, converter em PDF e contar páginas. Em texto, contar linhas.
 
-Terceiro, estourou, não sai. Volta para o corte, com lista do que saiu. Excesso justificado por múltiplas matérias é admitido se declarado no relatório, matéria por matéria.
+Terceiro, estourou, não sai. Volta para o corte, com lista do que saiu. Excesso justificado por múltiplas matérias é admitido se declarado no relatório, matéria por matéria. Esta terceira regra vale para parecer, relatório, anotação e mensagem, e não para peça processual ou administrativa.
+
+Quarto, na peça processual ou administrativa a extensão é referência preferencial, e não limite obrigatório (Onda 181, determinação do titular de 17/10/2026). A peça tem a extensão que a compreensão de cada pedido exige. Dela sai apenas a repetição, e nunca fato, prova, cálculo, explicação de norma ou transição necessária à compreensão. Na dúvida, o trecho fica.
 
 ## Os anti-padrões que geram folha
 
