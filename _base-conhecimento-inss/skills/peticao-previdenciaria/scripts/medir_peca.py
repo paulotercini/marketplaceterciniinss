@@ -30,7 +30,11 @@ VOCAB_TROCAR = [(r'(?i)\bposto que\b', 'posto que é concessivo; para causa, por
     (r'(?i)\bsó\b', 'coloquial; apenas'), (r'(?i)\bfic(?:ou|aram) n[oa]s? motivos\b', 'coloquial; constou apenas dos motivos'),
     (r'(?i)\bcheg(?:a|am|ou|aram) (?:a \d|em \d)', 'coloquial; alcança, ou completa-se em'), (r'(?i)\bmostr(?:a|am|ou|aram)\b', 'coloquial; indica ou demonstra'),
     (r'(?i)\b(?:está|estão|ficou|ficaram) fora d[oa]s?\b', 'coloquial; não integra'), (r'(?i)\blev(?:ou|aram) ao INSS\b', 'coloquial; apresentou ao INSS'),
-    (r'(?i)\bna roça\b', 'coloquial; trabalho rural'), (r'(?i)\blivr(?:a|am)\b', 'coloquial; afasta')]
+    (r'(?i)\bna roça\b', 'coloquial; trabalho rural'), (r'(?i)\blivr(?:a|am)\b', 'coloquial; afasta'),
+    # 17/10/2026, correções do titular
+    (r'(?i)\b(?:havia|haviam|tinha|tinham)\s+chegado\b|\bcheg(?:ou|aram)\b', 'coloquial; foi interposto, foi protocolado ou foi apresentado'),
+    (r'(?i)\bmand(?:a|am|ou|aram)\b', 'coloquial; a norma determina, dispõe ou estabelece'),
+    (r'\bJunta\b(?!\s+de\s+Recursos)|\bCâmara\b(?!\s+de\s+Julgamento)', 'órgão reduzido; Junta de Recursos ou Câmara de Julgamento, por extenso')]
 ART_RX = r'\b(art(?:igo)?s?\.?\s*\d+[º°]?(?:[-\.]?[A-Z])?)'
 CONECTIVO_RX = r'(?i)\b(além disso|soma-se a isso|também|porque|uma vez que|já que|visto que|por isso|por essa razão|por esse motivo|de modo que|assim|dessa forma|desse modo|portanto|logo|ocorre que|todavia|contudo|entretanto|no entanto|ainda assim|mesmo diante|nem se diga|tampouco|na sequência|a partir de então|em seguida|nesse contexto|nesse ponto|com efeito|isso porque|de fato|embora|pois|razão pela qual|diante disso|desta forma|deste modo|como visto|no ponto|daí|haja vista|na medida em que|em que pesem?|ou seja|por sua vez|especificamente|no caso concreto|ademais|nesse sentido|sendo assim|por fim)\b'
 EXPLICA_RX = r'(?i)(porque|pois|uma vez que|na medida em que|de modo que|razão pela qual|o que significa|isto é|ou seja|aplica-se|incide|toma como referência|exige|exigid|prevê|previst|estabelece|assegura|garante|dispõe|disposto|determina|haja vista|a seguir|declara)'   # Onda 174, a transcrição anunciada (a seguir demonstrados) é a explicação no método do titular
