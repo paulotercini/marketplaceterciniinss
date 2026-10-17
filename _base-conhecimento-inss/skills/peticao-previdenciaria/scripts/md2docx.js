@@ -16,7 +16,8 @@
      texto corrido              -> parágrafo justificado, Bookman 12, 1,5, recuo 2 cm (ou 4 cm com --crps)
    Inline: ***negrito e itálico*** (trecho literal de documento), **negrito**, *itálico*.
 
-   Uso: node md2docx.js peca.md saida.docx --logo /caminho/logo.PNG [--crps]
+   Uso: node md2docx.js peca.md saida.docx --logo /caminho/logo.PNG [--crps] [--sem-cadeia]
+   Onda 180: exige peca.cadeia.md ao lado de peca.md (Fase 2-A); sem ele, sai com código 3.
 */
 const fs=require('fs');
 const {Document,Packer,Paragraph,TextRun,ImageRun,Table,TableRow,TableCell,AlignmentType,WidthType,BorderStyle,ShadingType,Header,Footer,VerticalAlign,PageBreak}=require('docx');
@@ -62,6 +63,15 @@ function fecho(){
 
 // --- parse ---
 const md=fs.readFileSync(inFile,'utf8').replace(/\r/g,'');
+// Onda 180: a regra da cadeia escrita em prosa não era cumprida; a conversão exige o relatório ao lado da peça.
+if(!rest.includes('--sem-cadeia')){
+  const cadeiaFile=inFile.replace(/\.md$/i,'')+'.cadeia.md';
+  const c=fs.existsSync(cadeiaFile)?fs.readFileSync(cadeiaFile,'utf8'):'';
+  const falta=[];
+  if(!/CADEIA DOS PEDIDOS/.test(c)||!/O QUE ESCLARECER, CONECTAR OU REORGANIZAR/.test(c)) falta.push('os blocos CADEIA DOS PEDIDOS e O QUE ESCLARECER, CONECTAR OU REORGANIZAR, do agente revisor-cadeia-do-pedido');
+  if(/^@endereco:.*Catanduva/im.test(md)&&!/LINGUAGEM DO JUÍZO/.test(c)) falta.push('o bloco LINGUAGEM DO JUÍZO, do agente juiz-catanduva');
+  if(falta.length){console.error('Conversão bloqueada. Falta em '+cadeiaFile+': '+falta.join('; ')+'. Rode a Fase 2-A da peticao-previdenciaria, aplique as correções no .md e grave o relatório. Use --sem-cadeia apenas em documento que não seja peça.');process.exit(3);}
+}
 const blocos=md.split(/\n\s*\n/).map(b=>b.trim()).filter(Boolean);
 const children=[];
 for(const b of blocos){

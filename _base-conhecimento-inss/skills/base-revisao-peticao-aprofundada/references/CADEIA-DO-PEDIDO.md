@@ -10,6 +10,10 @@ O mandato é o do advogado experiente em revisão estratégica. Cada pedido é a
 
 A peça não é reescrita por inteiro. A correção é pontual, a frase que falta, o ID que se acrescenta, a conta que se demonstra ou o parágrafo que muda de lugar, e é aplicada na própria versão entregue, com cada correção registrada no bloco O QUE ESCLARECER, CONECTAR OU REORGANIZAR. Elo que depende de documento ausente dos autos não se corrige por redação e vira pendência de juntada.
 
+## Execução obrigatória (Onda 180, 17/10/2026)
+
+O titular relatou que a regra escrita não era cumprida e que precisava pedir a conferência depois de cada peça. A causa é a mesma da Onda 140, em que a prosa do padrão visual não era seguida até virar script: a regra dependia de o redator se lembrar dela entre dezenas de outras e de conferir o próprio texto. Desde a Onda 180, a conferência roda em agente próprio, o `revisor-cadeia-do-pedido`, que não redigiu a peça e lê como o juiz lê, com o mandato literal do titular. O relatório se grava em `peca.cadeia.md`, e o `md2docx.js` recusa a conversão sem ele. Em peça endereçada a Catanduva, o mesmo arquivo traz o bloco LINGUAGEM DO JUÍZO, do agente `juiz-catanduva`.
+
 ## O que se confere
 
 Cada pedido fecha uma cadeia de cinco elos:
