@@ -76,7 +76,7 @@ def medir(md, tipo):
         if n>PARAG_MAX and qualificacao:
             continue   # qualificação civil é parágrafo único por padrão do escritório
         if n>PARAG_MAX:
-            achados.append(('IMPORTANTE', f'Parágrafo com {n} palavras (~{-(-n//PAL_LINHA)} linhas) em "{sec}". Teto 65, cerca de seis linhas. Dividir em dois parágrafos ligados por transição, ou retirar o que não decide.', p[:110]))
+            achados.append(('IMPORTANTE', f'Parágrafo com {n} palavras (~{-(-n//PAL_LINHA)} linhas) em "{sec}". Teto 65, cerca de seis linhas. Dividir em dois parágrafos ligados por transição, sem retirar conteúdo.', p[:110]))
         elif n<PARAG_MIN and not re.search(r'(?i)requeriment|pedido|quesito', sec) and not re.match(r'(?i)^(requer|pede|nestes termos|termos em que|pelo exposto|diante do exposto|ante o exposto|\d+(\.\d+)*\.\s)', p):
             achados.append(('MENOR', f'Parágrafo com {n} palavras em "{sec}". Abaixo de 2 linhas, provável frase-decreto ou ideia não desenvolvida.', p[:110]))
     LISTA_RX = r'(?i)requeriment|pedido|quesito'   # Onda 174, itens numerados de requerimentos e quesitos não são prosa
@@ -141,8 +141,8 @@ def medir(md, tipo):
     # 7. orcamento
     teto=PAGINAS.get(tipo); pag=total/PAL_PAGINA
     if teto:
-        if pag>teto*1.3: achados.append(('CRÍTICO', f'Extensão estimada de {pag:.1f} páginas contra orçamento de {teto}. Acima de 30%.', ''))
-        elif pag>teto: achados.append(('IMPORTANTE', f'Extensão estimada de {pag:.1f} páginas contra orçamento de {teto}.', ''))
+        # Onda 181: a extensão é referência preferencial; o achado informa e nunca reprova, porque o teto obrigatório gerava cortes que prejudicavam a compreensão
+        if pag>teto: achados.append(('MENOR', f'Extensão estimada de {pag:.1f} páginas, acima da referência preferencial de {teto}. Informativo. Retirar apenas repetição; nunca fato, prova, raciocínio ou transição.', ''))
     return achados, ps, total, pag
 
 def main():

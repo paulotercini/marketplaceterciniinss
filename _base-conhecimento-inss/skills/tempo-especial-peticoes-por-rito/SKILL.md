@@ -104,7 +104,7 @@ Esta skill NÃO substitui as skills de CRPS (recurso-especial-crps, admissibilid
 
 ## Extensão
 
-Teto de a peça por rito, o orçamento da Camada 6, 7 páginas na inicial, 4 no recurso inominado, 3 no recurso ao CRPS. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Extensão de referência da peça por rito, 7 páginas na inicial, 4 no recurso inominado e 3 no recurso ao CRPS. É referência preferencial, e não limite obrigatório (Onda 181): a peça tem a extensão que a compreensão de cada pedido exige, e dela sai apenas a repetição, nunca fato, prova, cálculo, explicação de norma ou transição. Antes de escrever, nomear em uma frase o ponto que decide, e o dado que o prova acompanha cada pedido. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Redação da peça neste tema
 

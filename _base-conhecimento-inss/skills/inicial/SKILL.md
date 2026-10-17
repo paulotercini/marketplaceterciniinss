@@ -158,7 +158,7 @@ Esta skill executa ferramentas. Para rodar, o ambiente precisa de:
 
 ## Extensão
 
-Teto de a petição inicial, 7 páginas, orçamento da Camada 6, com jurisprudência transcrita em no máximo 1 página. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Extensão de referência da petição inicial, 7 páginas, com jurisprudência transcrita em cerca de 1 página. É referência preferencial, e não limite obrigatório (Onda 181): a peça tem a extensão que a compreensão de cada pedido exige, e dela sai apenas a repetição, nunca fato, prova, cálculo, explicação de norma ou transição. Antes de escrever, nomear em uma frase o ponto que decide, e o dado que o prova acompanha cada pedido. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 

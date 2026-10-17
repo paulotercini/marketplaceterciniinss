@@ -117,6 +117,9 @@ O título começa por DO, DA, DOS ou DAS. Segue-se o instituto técnico, depois 
 
 ## Critérios de corte
 
+Os critérios retiram apenas repetição e ruído. Nenhum deles autoriza retirar fato, prova, cálculo, explicação de como a norma se aplica ao caso ou transição necessária à compreensão de um pedido, e a extensão de referência da peça não é motivo de corte (Onda 181). Na dúvida, o trecho fica.
+
+
 1. A frase repete o que o título ou o parágrafo anterior já disse? Sai.
 2. O adjetivo ou o advérbio sai sem perda de informação? Sai.
 3. A transcrição da lei tem parágrafo que não decide o caso? O parágrafo sai.
@@ -138,7 +141,7 @@ A peça só sai depois de dez conferências, feitas em silêncio, com só o resu
 6. os argumentos estão ligados aos fatos, às provas e ao direito, e cada pedido fecha a sua cadeia;
 7. não há repetição, explicação óbvia ou fundamentação excessiva;
 8. a leitura é fluida e o argumento convence;
-9. a peça não pode ser reduzida sem perda de conteúdo;
+9. a peça não repete o mesmo fundamento, e nenhum trecho necessário à compreensão de um pedido foi retirado;
 10. não há erro jurídico, probatório ou argumentativo.
 
 O `scripts/medir_peca.py` confere as medidas, os conectores, o vocabulário vedado e os títulos. A vírgula isolada entre verbo e complemento, a ideia do parágrafo e os pontos 5 a 10 ficam com a `base-revisao-peticao-aprofundada`.
