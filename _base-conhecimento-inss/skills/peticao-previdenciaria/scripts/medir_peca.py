@@ -24,7 +24,7 @@ PAGINAS = {'inicial':7,'inominado':4,'laudo':3,'crps':3,'embargos':2,'comum':2,'
 PAL_PAGINA = 300                     # ~30 linhas úteis x 10 palavras, descontando títulos
 
 ADJ_VEDADOS = r'\b(inconteste|terminantemente|absolutamente(?!\s+incapaz)|manifestamente|flagrante(?:mente)?|absurd[oa]|basilares?|induvidos[oa](?:mente)?|escancarad[oa]|gritante|esdr[úu]xul[oa]|desesperador[a]?|abandonad[oa] à pr[óo]pria sorte|cristalin[oa]|patente(?:mente)?|evidentemente|obviamente|claramente)\b'
-FORMULAS_VAZIAS = r'(?i)\b(é cediço|é de se ver|como se sabe|vale ressaltar|importante mencionar|em apertada síntese|sem dúvida|insta salientar|cumpre ressaltar|mister se faz|resta claro|resta evidente|à luz dos mais comezinhos|os mais basilares|princípios de justiça)\b'
+FORMULAS_VAZIAS = r'(?i)\b(é cediço|é de se ver|como se sabe|vale ressaltar|importante mencionar|em apertada síntese|sem dúvida|insta salientar|cumpre ressaltar|mister se faz|resta claro|resta evidente|à luz dos mais comezinhos|os mais basilares|princípios de justiça|senão vejamos|como medida de direito e de justiça|devidamente comprovad[oa]s?|lhe sendo cabível|decisão precipitada|socorrer ao amparo)\b'   # Onda 182, fórmulas do modelo de 2024 retiradas do método
 VOCAB_TROCAR = [(r'(?i)\bposto que\b', 'posto que é concessivo; para causa, porque ou haja vista'), (r'(?i)\btão-somente\b', 'tão somente'), (r'\bNCPC\b', 'CPC'), (r'(?i)\bo \(a\) autor \(a\)', 'a Parte Autora'), (r'\bExplico\.', 'conclusão curta seguida de explicação; inverter a ordem'),
     # registro formal (12/10/2026), coloquialismos corrigidos pelo titular; tabela em ESTILO-MODELO.md
     (r'(?i)\bsó\b', 'coloquial; apenas'), (r'(?i)\bfic(?:ou|aram) n[oa]s? motivos\b', 'coloquial; constou apenas dos motivos'),
@@ -142,6 +142,14 @@ def medir(md, tipo):
         if v: erros.append(f'termo valorativo "{v.group(0)}"')
         if erros:
             achados.append(('IMPORTANTE', f'Título fora do padrão formal e nominal, {"; ".join(erros)}. Nomear o instituto, o requisito, o vício ou o pedido, e levar o dado para a primeira frase da seção.', t))
+    # 9. lei transcrita em excesso (Onda 182): mais de um artigo em recuo na mesma seção
+    sec='(sem seção)'; arts_recuo={}
+    for blk in re.split(r'\n\s*\n', md):
+        b=blk.strip()
+        if b.startswith('#'): sec=re.sub(r'^#+\s*','',b.split('\n')[0])
+        elif b.startswith('>') and re.match(r'^>\s*(\*\*)?\s*Art(igo)?\.?\s*\d', b): arts_recuo[sec]=arts_recuo.get(sec,0)+1
+    for sec,n in arts_recuo.items():
+        if n>=2: achados.append(('MENOR', f'{n} artigos transcritos em recuo em "{sec}". Transcrever apenas o dispositivo cuja interpretação o INSS contestou e usar remissão na frase para o restante (ESTILO-MODELO, A lei na medida).', ''))
     # 7. orcamento
     teto=PAGINAS.get(tipo); pag=total/PAL_PAGINA
     if teto:
