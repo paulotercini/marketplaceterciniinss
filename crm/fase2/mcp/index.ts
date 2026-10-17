@@ -94,10 +94,11 @@ const civil = (c: any) => { const v: Record<string, any> = { ...((c.campos || {}
 export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?: string }) {
   // a conta do assistente (papel "assistente_ia") roda sozinha nas rotinas
   // agendadas: lê, anota, cria tarefa e PREENCHE o que está vazio no caso e no
-  // cadastro, mas não conclui, não reagenda e não troca o que a equipe escreveu.
+  // cadastro (a etapa também avança dentro da fase), mas não conclui, não
+  // reagenda e não troca o que a equipe escreveu.
   // Essas decisões ficam com quem é gente.
   const robo = eu.papel === "assistente_ia";
-  const server = new McpServer({ name: "crm-tercini", version: "0.8.0" });
+  const server = new McpServer({ name: "crm-tercini", version: "0.8.1" });
   const leitura = { readOnlyHint: true, openWorldHint: false };
   const escrita = { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false };
   let cols: Map<string, any> | null = null;
@@ -405,7 +406,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
   server.registerTool("atualizar_caso", {
     title: "Atualizar dados do caso",
     description: "Altera os dados de gestão de um caso: etapa, espécie, resultado (deferido, indeferido, acordo, desistencia), data da decisão, exigência do INSS (descrição e prazo), NB, as datas (DER, DIB, DCB, DII, DAT, DID, consolidação, CAT, óbito, prisão, parto, 1º pagamento, CadÚnico, distribuição, recursos do CRPS), o grau da deficiência e a prorrogação pedida; e ACRESCENTA protocolos do INSS, NUPs do CRPS e outros NBs, sem tirar nenhum. Grava na linha do tempo cada campo com o valor anterior e o novo. Para apagar um campo, mande texto vazio. Fase, prazo fatal, encerramento e número do processo judicial ficam no CRM. A etapa precisa ser uma das da fase do caso (ficha_cliente mostra a fase)."
-      + (robo ? " Nesta conta só se PREENCHE campo vazio: campo já preenchido não muda, e a divergência volta na resposta para você anotar. Sempre informe o motivo (o documento de onde tirou)." : ""),
+      + (robo ? " Nesta conta só se PREENCHE campo vazio: campo já preenchido não muda, e a divergência volta na resposta para você anotar. A exceção é a etapa, que também AVANÇA na ordem da fase quando o caso anda (para trás, ou sobre etapa escrita à mão, não muda). Sempre informe o motivo (o documento ou o andamento de onde tirou)." : ""),
     inputSchema: z.object({
       caso_id: ID,
       etapa: z.string().optional(),
@@ -449,7 +450,10 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
         return texto("Prorrogação pedida num caso sem DCB: informe a DCB junto. Nada foi gravado.");
       const atual = k[c] ?? null;
       if (atual === val || (atual === false && !val)) continue;
-      if (robo && atual !== null && atual !== false) { divergentes.push(`${CAMPOS[c]} (no CRM: ${fmtv(c, atual)}; informado: ${fmtv(c, val)})`); continue; }
+      // a etapa anda com o caso: o assistente a leva adiante na ordem da fase, nunca para trás,
+      // e a etapa escrita à mão (fora da lista) fica
+      const ordem = ETAPAS[k.fase] || [], avanca = c === "etapa" && ordem.includes(atual) && ordem.indexOf(val) > ordem.indexOf(atual);
+      if (robo && atual !== null && atual !== false && !avanca) { divergentes.push(`${CAMPOS[c]} (no CRM: ${fmtv(c, atual)}; informado: ${fmtv(c, val)})`); continue; }
       novo[c] = val;
       linhas.push(`${CAMPOS[c]}: ${fmtv(c, atual)} → ${fmtv(c, val)}`);
     }

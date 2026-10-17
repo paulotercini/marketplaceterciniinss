@@ -270,6 +270,14 @@ conf("NUP com dígitos errados e espécie fora do catálogo não gravam nada", r
 const fichaR = await call("ficha_cliente", { cliente_id: CLI });
 conf("a ficha pede as datas por espécie e as mostra no formato do Brasil", fichaR.includes("02/05/2026") && fichaR.includes("15/11/2026")
   && pedidos.some((p) => p.includes("select=") && p.includes("dii") && p.includes("crps_nups") && p.includes("dcb_prorrogacao_pedida")));
+const r8f = await call("atualizar_caso", { caso_id: CASO, etapa: "aguardando análise", motivo: "andamento do PAT de 10/10/2026" });
+conf("o assistente avança a etapa na ordem da fase e anota a anterior", casoR.etapa === "aguardando análise"
+  && T.andamentos.at(-1).texto.includes("etapa: em exigência → aguardando análise") && r8f.includes("atualizado"));
+const r8g = await call("atualizar_caso", { caso_id: CASO, etapa: "requerimento protocolado" });
+casoR.etapa = "aguardando o INSS ligar";
+const r8h = await call("atualizar_caso", { caso_id: CASO, etapa: "decidido" });
+conf("o assistente não volta a etapa nem troca a etapa escrita à mão", r8g.includes("etapa (no CRM: aguardando análise")
+  && r8h.includes("etapa (no CRM: aguardando o INSS ligar") && casoR.etapa === "aguardando o INSS ligar");
 T.colaboradores[0].papel = undefined;
 casoR.subespecie = "B41.RURAL";
 const r8e = await call("atualizar_caso", { caso_id: CASO, especie: "b42", dcb: "15/12/2026" });
