@@ -90,6 +90,8 @@ const PG = [
 
   escritos.length = 0;
   await p.click('.hon-tab button[data-recebe="f1800000-0000-0000-0000-000000000002"]');
+  // F236 · o "recebido" pergunta o dia e o valor que entrou antes de gravar
+  await p.click('#modal button:has-text("Confirmar")');
   await p.waitForTimeout(700);
   const patch = escritos.find(x => x.m === "PATCH" && x.t === "pagamentos");
   conf("recebido ainda grava (PATCH com status recebido, data e quem recebeu)",

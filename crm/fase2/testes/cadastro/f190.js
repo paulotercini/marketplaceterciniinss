@@ -89,7 +89,9 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   conf("o trecho decisivo aparece abaixo do documento", /JULGO PROCEDENTE/.test(await txt(sent + " .tl-disp")));
   conf("o botão principal é Criar tarefa ou prazo", /Criar tarefa ou prazo/.test(await txt(sent + " .tl-barra .tl-bt.forte")));
   conf("o cartão abre no PJe", await p.evaluate(q => { const a = document.querySelector(q + " .tl-link"); return !!a && /pje1g/.test(a.href) && a.target === "_blank"; }, sent));
-  conf("a sentença do JEF sugere o prazo do recurso inominado", /Prazo sugerido/.test(await txt(sent + " .tl-prazo-sug")) && /vence/.test(await txt(sent + " .tl-prazo-sug")));
+  // F236 · a sentença deste cartão julga PROCEDENTE: não há recurso nosso, e o cartão diz isso e o que vigiar, sem "Criar prazo"
+  conf("a sentença procedente do JEF não sugere recurso nosso: diz que não há e vigia o do INSS (F236)",
+    /sem recurso nosso/.test(await txt(sent + " .tl-prazo-sug")) && /recurso do INSS/.test(await txt(sent + " .tl-prazo-sug")) && !/Criar prazo/.test(await txt(sent + " .tl-prazo-sug")));
   conf("o não lido aparece no cabeçalho", /não lido/.test(await txt(sent + " .tl-novo")));
   // ⋯
   const mais = await p.evaluate(q => [...document.querySelectorAll(q + " .tl-mais-it")].map(b => b.textContent.trim()), sent);

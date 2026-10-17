@@ -143,11 +143,11 @@ const PC = { id: "pc181", especie: "Aposentadoria por idade", natureza: "concess
   if (RETRATO) await p.screenshot({ path: path.join(RETRATO, "cobranca181.png") });
   await p.evaluate(() => fecharCaixa());
 
-  // 4 · lembrar 3 dias antes
+  // 4 · lembrar 3 dias antes — F236: o lembrete nasce com as parcelas do combinado (a caixa já vem ligada)
   escritos.length = 0;
   await p.check('.painel[data-p="4"].ativo #hon-cob-lemb');
   await p.waitForTimeout(800);
-  const lembs = escritos.filter(x => x.m === "POST" && x.t === "lembretes");
+  const lembs = await p.evaluate(() => (D.lembretes || []).filter(l => (l.detalhes || {}).origem === "cobranca").map(l => ({ corpo: l })));
   const pgs = await p.evaluate(() => D.pagamentos.map(x => ({ id: x.id, v: x.vencimento })));
   conf("um lembrete por lançamento aberto, 3 dias antes do vencimento", lembs.length === 4
     && lembs.every(l => { const pg = pgs.find(x => x.id === l.corpo.detalhes.pgto_id);
