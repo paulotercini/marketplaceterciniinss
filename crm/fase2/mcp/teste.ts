@@ -248,7 +248,37 @@ const casoR = T.casos[0], nbAntes = casoR.nb;
 const ra = await call("atualizar_caso", { caso_id: CASO, nb: "999.888.777-6", dcb: "30/11/2026", motivo: "carta de concessão" });
 conf("o assistente só preenche: NB que já existe fica, DCB vazia entra", casoR.nb === nbAntes && casoR.dcb === "2026-11-30"
   && ra.includes("Não alterado, porque já estava preenchido") && ra.includes("NB (no CRM: " + nbAntes));
+conf("DCB nova arma o lembrete da prorrogação 15 dias antes", casoR.dcb_prorrogar_em === "2026-11-15" && casoR.dcb_prorrogacao_pedida === false);
+// etapa 8 · datas por espécie, espécie, prorrogação e números
+casoR.arquivados = { "mov:prot:777888999": { de: "outro" } };
+const r8b = await call("atualizar_caso", { caso_id: CASO, dii: "02/05/2026", especie: "B42", dcb_prorrogacao_pedida: true,
+  novos_protocolos: ["123.456.789", "555666777", "777888999"], novos_nups: ["44000.000002/2026-02"], novos_nbs: ["1234567890", "216.197.676-6"],
+  motivo: "comunicação de decisão de 01/10/2026" });
+conf("o assistente preenche DII e prorrogação, e a espécie preenchida vira divergência", casoR.dii === "2026-05-02" && casoR.dcb_prorrogacao_pedida === true
+  && casoR.especie === "B41" && r8b.includes("espécie (no CRM: B41; informado: B42)"));
+conf("protocolo, NUP e NB só são acrescentados, sem repetir", JSON.stringify(casoR.protocolos) === JSON.stringify(["123456789", "555666777"])
+  && JSON.stringify(casoR.crps_nups) === JSON.stringify(["44000000002202602"]) && JSON.stringify(casoR.nbs) === JSON.stringify(["2161976766"]));
+conf("o protocolo acrescentado leva a marca add:prot e o levado a outro caso não volta", !!casoR.arquivados["add:prot:555666777"]
+  && !casoR.arquivados["add:prot:123456789"] && !!casoR.arquivados["mov:prot:777888999"] && r8b.includes("Não acrescentado: protocolo 777888999"));
+conf("a anotação traz o que entrou e a fonte", /DII: vazio → 02\/05\/2026/.test(T.andamentos.at(-1).texto) && T.andamentos.at(-1).texto.includes("protocolo acrescentado: 555666777")
+  && T.andamentos.at(-1).texto.includes("comunicação de decisão de 01/10/2026"));
+const nPed = pedidos.length, protAntes = [...casoR.protocolos];
+const r8c = await call("atualizar_caso", { caso_id: CASO, novos_nups: ["44000.0002/26"], dat: "01/01/2026" });
+const r8d = await call("atualizar_caso", { caso_id: CASO, especie: "B99" });
+conf("NUP com dígitos errados e espécie fora do catálogo não gravam nada", r8c.includes("dígitos inválido") && r8d.includes("não está no catálogo")
+  && !casoR.dat && !pedidos.slice(nPed).some((p) => p.startsWith("PATCH")) && JSON.stringify(casoR.protocolos) === JSON.stringify(protAntes));
+const fichaR = await call("ficha_cliente", { cliente_id: CLI });
+conf("a ficha pede as datas por espécie e as mostra no formato do Brasil", fichaR.includes("02/05/2026") && fichaR.includes("15/11/2026")
+  && pedidos.some((p) => p.includes("select=") && p.includes("dii") && p.includes("crps_nups") && p.includes("dcb_prorrogacao_pedida")));
 T.colaboradores[0].papel = undefined;
+casoR.subespecie = "B41.RURAL";
+const r8e = await call("atualizar_caso", { caso_id: CASO, especie: "b42", dcb: "15/12/2026" });
+conf("quem é gente troca a espécie, a subespécie de outra sai e a DCB nova religa a prorrogação", casoR.especie === "B42" && casoR.subespecie === null
+  && casoR.dcb_prorrogacao_pedida === false && casoR.dcb_prorrogar_em === "2026-11-30" && r8e.includes("prorrogação pedida: sim → não (DCB nova)"));
+const nAg = pedidos.length;
+await call("agenda", { quem: "todos", dias: 0, desde: "05/01/2026" });
+conf("a agenda aceita desde para as vencidas", pedidos.slice(nAg).some((p) => p.includes("lembrar_em=gte.2026-01-05"))
+  && (await call("agenda", { desde: "ontem" })).includes("inválida"));
 
 // colaborador inativo não passa
 T.colaboradores[0].ativo = false;

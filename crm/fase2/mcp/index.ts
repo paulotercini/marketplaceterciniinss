@@ -3,6 +3,7 @@
 // e atualizar o caso · etapa 4: documentos do caso · etapa 5: comandos prontos
 // etapa 6: WhatsApp (ler, rascunhar e levar ao caso; enviar fica com gente)
 // etapa 7: completar cadastro e gestão do caso (só preenche o que está vazio)
+// etapa 8: as datas por espécie, a espécie, a prorrogação e os números (protocolo, NUP, NB) no caso
 //
 // O Claude (ou o ChatGPT) se liga a este endereço como conector personalizado:
 //   https://<projeto>.supabase.co/functions/v1/mcp-crm
@@ -60,9 +61,27 @@ const enc = encodeURIComponent;
 // o formato de uuid sem exigir a versão: os ids do CRM nascem de uuid5 e de uuid4
 const ID = z.string().regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i, "id no formato uuid");
 const texto = (o: unknown) => ({ content: [{ type: "text" as const, text: typeof o === "string" ? o : JSON.stringify(o, null, 1) }] });
+const DATA = z.string().describe("AAAA-MM-DD ou DD/MM/AAAA");
+const isoDe = (d: string) => {
+  const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(d.trim());
+  const iso = m ? `${m[3]}-${m[2]}-${m[1]}` : d.trim();
+  return /^\d{4}-\d{2}-\d{2}$/.test(iso) && !isNaN(Date.parse(iso + "T12:00:00Z")) ? iso : null;
+};
 
 // colunas que a IA lê de cada tabela (nada de credenciais)
-const COL_CASO = "id,cliente_id,titulo,beneficio,especie,fase,etapa,mover_para,processo,processos,nb,protocolos,der,dib,dcb,prazo,exigencia_prazo,exigencia_descricao,resultado,parceria,importante,urgente";
+const COL_CASO = "id,cliente_id,titulo,beneficio,especie,subespecie,fase,etapa,mover_para,processo,processos,nb,nbs,protocolos,crps_nups,der,dib,dcb,dcb_prorrogacao_pedida,dcb_prorrogar_em,decisao_em,prazo,exigencia_prazo,exigencia_descricao,resultado,dii,dat,did,consolidacao_em,cat_em,obito_em,prisao_em,parto_em,primeiro_pagamento_em,cadunico,grau_deficiencia,ajuizado_em,ro_protocolado_em,ed_protocolado_em,re_protocolado_em,parceria,importante,urgente";
+// os campos do caso que atualizar_caso grava, e como cada um aparece na anotação
+const CAMPOS: Record<string, string> = { etapa: "etapa", resultado: "resultado", decisao_em: "data da decisão",
+  exigencia_prazo: "prazo da exigência", exigencia_descricao: "exigência", der: "DER", dib: "DIB", dcb: "DCB", nb: "NB",
+  especie: "espécie", dii: "DII", dat: "DAT", did: "DID", consolidacao_em: "consolidação", cat_em: "CAT emitida em",
+  obito_em: "óbito", prisao_em: "prisão", parto_em: "parto", primeiro_pagamento_em: "1º pagamento",
+  cadunico: "CadÚnico atualizado em", grau_deficiencia: "grau da deficiência", ajuizado_em: "distribuído em",
+  ro_protocolado_em: "recurso ordinário protocolado em", ed_protocolado_em: "embargos de declaração protocolados em",
+  re_protocolado_em: "recurso especial protocolado em", dcb_prorrogacao_pedida: "prorrogação pedida" };
+const DATAS = new Set(["decisao_em", "exigencia_prazo", "der", "dib", "dcb", "dii", "dat", "did", "consolidacao_em", "cat_em",
+  "obito_em", "prisao_em", "parto_em", "primeiro_pagamento_em", "cadunico", "ajuizado_em", "ro_protocolado_em", "ed_protocolado_em", "re_protocolado_em"]);
+const DATAS_FICHA = new Set([...DATAS, "dcb_prorrogar_em"]);
+const DIAS_PRORROG = 15;                       // o mesmo do app: o lembrete da prorrogação, 15 dias antes da DCB
 const COL_CLIENTE = "id,nome,cpf,dn,telefone,cidade,uf,profissao,estado_civil,sexo,campos,criado_em,rg,rg_orgao,nome_mae,pis_nit,logradouro,numero,complemento,bairro,cep";
 // o cadastro civil: coluna própria, com a cópia antiga em campos.civil (o mesmo que civilDe() do app)
 const CIVIS: Record<string, string> = { nome_mae: "nome da mãe", rg: "RG", rg_orgao: "órgão do RG", pis_nit: "PIS/NIT",
@@ -74,10 +93,11 @@ const civil = (c: any) => { const v: Record<string, any> = { ...((c.campos || {}
 // ── as ferramentas ─────────────────────────────────────────────────────────
 export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?: string }) {
   // a conta do assistente (papel "assistente_ia") roda sozinha nas rotinas
-  // agendadas: lê, anota e cria tarefa, mas não conclui, não reagenda e não
-  // altera o caso. Essas decisões ficam com quem é gente.
+  // agendadas: lê, anota, cria tarefa e PREENCHE o que está vazio no caso e no
+  // cadastro, mas não conclui, não reagenda e não troca o que a equipe escreveu.
+  // Essas decisões ficam com quem é gente.
   const robo = eu.papel === "assistente_ia";
-  const server = new McpServer({ name: "crm-tercini", version: "0.7.0" });
+  const server = new McpServer({ name: "crm-tercini", version: "0.8.0" });
   const leitura = { readOnlyHint: true, openWorldHint: false };
   const escrita = { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false };
   let cols: Map<string, any> | null = null;
@@ -121,7 +141,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
 
   server.registerTool("ficha_cliente", {
     title: "Ficha do cliente",
-    description: "Dados civis do cliente e todos os casos dele (benefício, espécie, fase, etapa, processo, NB, DER, DIB, DCB, prazo fatal, exigência do INSS). Não traz senhas.",
+    description: "Dados civis do cliente e todos os casos dele: benefício, espécie, fase, etapa, processos, NBs, protocolos, NUPs do CRPS, exigência do INSS, prazo fatal e as datas (DER, DIB, DCB e prorrogação, decisão, DII, DAT, DID, consolidação, CAT, óbito, prisão, parto, 1º pagamento, CadÚnico, distribuição, recursos). Campo vazio vem null. Não traz senhas.",
     inputSchema: z.object({ cliente_id: ID }),
     annotations: leitura,
   }, async ({ cliente_id }) => {
@@ -136,8 +156,8 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
       cadastro: civil(c),
       cadastro_em_branco: [...(c.dn ? [] : ["nascimento"]), ...Object.keys(CIVIS).filter(k => !civil(c)[k] && k !== "complemento").map(k => CIVIS[k])],
       representante_legal: campos.representante ?? null, cliente_desde: br(String(c.criado_em).slice(0, 10)),
-      casos: casos.map((k: any) => ({ ...k, der: br(k.der), dib: br(k.dib), dcb: br(k.dcb), prazo_fatal: br(k.prazo),
-        exigencia_prazo: br(k.exigencia_prazo), prazo: undefined, cliente_id: undefined })),
+      casos: casos.map((k: any) => ({ ...Object.fromEntries(Object.entries(k).map(([c, v]) => [c, DATAS_FICHA.has(c) && v ? br(String(v)) : v])),
+        prazo_fatal: br(k.prazo), prazo: undefined, cliente_id: undefined })),
     });
   });
 
@@ -161,15 +181,18 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
 
   server.registerTool("agenda", {
     title: "Agenda e prazos",
-    description: "O que tem data num período: tarefas abertas (de quem e o que fazer, com o tarefa_id para concluir ou reagendar), prazos fatais dos casos e perícias, audiências e julgamentos agendados. Por padrão, as tarefas de quem pergunta, de hoje a 7 dias, incluindo as vencidas.",
+    description: "O que tem data num período: tarefas abertas (de quem e o que fazer, com o tarefa_id para concluir ou reagendar), prazos fatais dos casos e perícias, audiências e julgamentos agendados. Por padrão, as tarefas de quem pergunta, de hoje a 7 dias, incluindo as vencidas. Traz até 200 tarefas, das mais antigas para as mais novas: para as vencidas recentes, use desde.",
     inputSchema: z.object({
       dias: z.number().int().min(0).max(90).default(7).describe("quantos dias à frente"),
       quem: z.string().default("eu").describe("'eu', 'todos' ou o nome ou a inicial de um colaborador"),
       incluir_vencidas: z.boolean().default(true),
+      desde: DATA.optional().describe("as vencidas só a partir desta data (vale mais que incluir_vencidas)"),
     }),
     annotations: leitura,
-  }, async ({ dias, quem, incluir_vencidas }) => {
-    const hj = hojeSP(), ate = somaDias(hj, dias), de = incluir_vencidas ? "1900-01-01" : hj;
+  }, async ({ dias, quem, incluir_vencidas, desde }) => {
+    const hj = hojeSP(), ate = somaDias(hj, dias);
+    const de = desde ? isoDe(desde) : incluir_vencidas ? "1900-01-01" : hj;
+    if (!de) return texto(`Data "${desde}" inválida; use AAAA-MM-DD ou DD/MM/AAAA.`);
     let col: string | null = eu.id;
     if (quem === "todos") col = null;
     else if (quem !== "eu") {
@@ -241,12 +264,6 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
     const [a] = await db("andamentos", { caso_id, autor_id: eu.id, texto: txt.trim(), origem: "app",
       origem_id: `mcp:${crypto.randomUUID()}`, ...extra });
     return a;
-  };
-  const DATA = z.string().describe("AAAA-MM-DD ou DD/MM/AAAA");
-  const isoDe = (d: string) => {
-    const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(d.trim());
-    const iso = m ? `${m[3]}-${m[2]}-${m[1]}` : d.trim();
-    return /^\d{4}-\d{2}-\d{2}$/.test(iso) && !isNaN(Date.parse(iso + "T12:00:00Z")) ? iso : null;
   };
 
   server.registerTool("registrar_anotacao", {
@@ -375,47 +392,103 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
     return texto(`Tarefa de ${quem} reagendada de ${br(t.lembrar_em)} para ${br(dia)}.`);
   });
 
-  // os campos que o assistente pode mudar e como cada um aparece na anotação
-  const CAMPOS: Record<string, string> = { etapa: "etapa", resultado: "resultado", decisao_em: "data da decisão",
-    exigencia_prazo: "prazo da exigência", exigencia_descricao: "exigência", der: "DER", dib: "DIB", dcb: "DCB", nb: "NB" };
-  const DATAS = new Set(["decisao_em", "exigencia_prazo", "der", "dib", "dcb"]);
+  // as listas de números só GANHAM item por aqui: [campo do argumento, nome, dígitos aceitos]
+  const LISTAS: Record<string, [string, string, (d: string) => boolean]> = {
+    protocolos: ["novos_protocolos", "protocolo", (d) => d.length >= 6],
+    crps_nups: ["novos_nups", "NUP do CRPS", (d) => d.length === 17],
+    nbs: ["novos_nbs", "NB", (d) => d.length === 10],
+  };
+  const fmtv = (c: string, x: any) => x == null || x === "" ? "vazio" : x === true ? "sim" : x === false ? "não"
+    : DATAS.has(c) ? br(String(x)) : String(x);
   // o assistente (robo) também usa, mas só PREENCHE campo vazio: o que a
   // equipe já escreveu ele não troca, só aponta a divergência na resposta
   server.registerTool("atualizar_caso", {
     title: "Atualizar dados do caso",
-    description: "Altera a etapa, o resultado (deferido, indeferido, acordo, desistencia), a data da decisão, a exigência do INSS (descrição e prazo), DER, DIB, DCB ou NB de um caso. Grava na linha do tempo cada campo com o valor anterior e o novo. Para apagar um campo, mande texto vazio. Fase, prazo fatal e encerramento ficam no CRM. A etapa precisa ser uma das da fase do caso (ficha_cliente mostra a fase)."
+    description: "Altera os dados de gestão de um caso: etapa, espécie, resultado (deferido, indeferido, acordo, desistencia), data da decisão, exigência do INSS (descrição e prazo), NB, as datas (DER, DIB, DCB, DII, DAT, DID, consolidação, CAT, óbito, prisão, parto, 1º pagamento, CadÚnico, distribuição, recursos do CRPS), o grau da deficiência e a prorrogação pedida; e ACRESCENTA protocolos do INSS, NUPs do CRPS e outros NBs, sem tirar nenhum. Grava na linha do tempo cada campo com o valor anterior e o novo. Para apagar um campo, mande texto vazio. Fase, prazo fatal, encerramento e número do processo judicial ficam no CRM. A etapa precisa ser uma das da fase do caso (ficha_cliente mostra a fase)."
       + (robo ? " Nesta conta só se PREENCHE campo vazio: campo já preenchido não muda, e a divergência volta na resposta para você anotar. Sempre informe o motivo (o documento de onde tirou)." : ""),
     inputSchema: z.object({
       caso_id: ID,
       etapa: z.string().optional(),
+      especie: z.string().optional().describe("código do catálogo: B31, B41, B87, CNIS, REV… (pedido fora do catálogo fica no CRM)"),
       resultado: z.enum(["deferido", "indeferido", "acordo", "desistencia", ""]).optional(),
       decisao_em: DATA.optional(), exigencia_prazo: DATA.optional(), exigencia_descricao: z.string().max(1000).optional(),
       der: DATA.optional(), dib: DATA.optional(), dcb: DATA.optional(), nb: z.string().optional(),
+      dii: DATA.optional().describe("início da incapacidade"), dat: DATA.optional().describe("data do acidente de trabalho"),
+      did: DATA.optional().describe("início da deficiência ou da doença"), consolidacao_em: DATA.optional().describe("consolidação das lesões"),
+      cat_em: DATA.optional().describe("emissão da CAT"), obito_em: DATA.optional(), prisao_em: DATA.optional(),
+      parto_em: DATA.optional().describe("parto, ou guarda na adoção"), primeiro_pagamento_em: DATA.optional().describe("1º pagamento do benefício"),
+      cadunico: DATA.optional().describe("última atualização do CadÚnico"), ajuizado_em: DATA.optional().describe("distribuição da ação"),
+      ro_protocolado_em: DATA.optional(), ed_protocolado_em: DATA.optional(), re_protocolado_em: DATA.optional(),
+      grau_deficiencia: z.enum(["leve", "moderada", "grave", ""]).optional(),
+      dcb_prorrogacao_pedida: z.boolean().optional().describe("true quando o pedido de prorrogação da DCB já foi feito"),
+      novos_protocolos: z.array(z.string()).max(10).optional().describe("protocolos do INSS a acrescentar"),
+      novos_nups: z.array(z.string()).max(10).optional().describe("NUPs de recurso no CRPS a acrescentar (17 dígitos)"),
+      novos_nbs: z.array(z.string()).max(10).optional().describe("outros NBs do caso a acrescentar (o principal vai em nb)"),
       motivo: z.string().max(500).optional().describe("de onde veio a informação (ex.: carta de concessão de 12/09)"),
     }),
     annotations: escrita,
   }, async (args) => {
-    const [k] = await db(`casos?select=id,cliente_id,titulo,fase,${Object.keys(CAMPOS).join(",")}&id=eq.${args.caso_id}`);
+    const [k] = await db(`casos?select=id,cliente_id,titulo,fase,subespecie,arquivados,${Object.keys(LISTAS).join(",")},${Object.keys(CAMPOS).join(",")}&id=eq.${args.caso_id}`);
     if (!k) return texto("Caso não encontrado; nada foi gravado.");
-    const novo: Record<string, unknown> = {}, linhas: string[] = [], divergentes: string[] = [];
+    const novo: Record<string, unknown> = {}, linhas: string[] = [], divergentes: string[] = [], recusados: string[] = [];
     for (const c of Object.keys(CAMPOS)) {
       const v = (args as any)[c];
       if (v === undefined) continue;
-      let val: string | null = String(v).trim() || null;
+      let val: any = typeof v === "boolean" ? v : String(v).trim() || null;
       if (val && DATAS.has(c)) { val = isoDe(val); if (!val) return texto(`${CAMPOS[c]} com data inválida; nada foi gravado.`); }
       if (val && c === "nb") val = soDig(val);
+      if (val && c === "especie") {
+        val = val.toUpperCase();
+        if (!ESPECIES.includes(val)) return texto(`A espécie "${val}" não está no catálogo do CRM (${ESPECIES.join(", ")}). Nada foi gravado.`);
+      }
       if (val && c === "etapa") {
         const ok = ETAPAS[k.fase] || [];
         if (!ok.includes(val)) return texto(`A etapa "${val}" não existe na fase ${k.fase}. Use uma destas: ${ok.join(", ") || "(esta fase não tem etapas)"}. Nada foi gravado.`);
       }
-      if ((k[c] ?? null) === val) continue;
-      if (robo && (k[c] ?? null) !== null) { divergentes.push(`${CAMPOS[c]} (no CRM: ${DATAS.has(c) ? br(String(k[c])) : k[c]}; informado: ${DATAS.has(c) && val ? br(val) : val ?? "vazio"})`); continue; }
+      if (val === true && c === "dcb_prorrogacao_pedida" && !("dcb" in novo ? novo.dcb : k.dcb))
+        return texto("Prorrogação pedida num caso sem DCB: informe a DCB junto. Nada foi gravado.");
+      const atual = k[c] ?? null;
+      if (atual === val || (atual === false && !val)) continue;
+      if (robo && atual !== null && atual !== false) { divergentes.push(`${CAMPOS[c]} (no CRM: ${fmtv(c, atual)}; informado: ${fmtv(c, val)})`); continue; }
       novo[c] = val;
-      const fmtv = (x: any) => x == null || x === "" ? "vazio" : DATAS.has(c) ? br(String(x)) : String(x);
-      linhas.push(`${CAMPOS[c]}: ${fmtv(k[c])} → ${fmtv(val)}`);
+      linhas.push(`${CAMPOS[c]}: ${fmtv(c, atual)} → ${fmtv(c, val)}`);
     }
-    const div = divergentes.length ? ` Não alterado, porque já estava preenchido: ${divergentes.join("; ")}.` : "";
-    if (!linhas.length) return texto((divergentes.length ? "Nada gravado." : "Nada a mudar: os valores já são esses.") + div);
+    // DCB nova rearma o lembrete da prorrogação, como salvarDCB no app
+    if ("dcb" in novo) {
+      novo.dcb_prorrogar_em = novo.dcb ? somaDias(novo.dcb as string, -DIAS_PRORROG) : null;
+      if (!("dcb_prorrogacao_pedida" in novo)) {
+        novo.dcb_prorrogacao_pedida = false;
+        if (k.dcb_prorrogacao_pedida) linhas.push(`${CAMPOS.dcb_prorrogacao_pedida}: sim → não (DCB nova)`);
+      }
+    }
+    // a subespécie de outra espécie deixaria o título preso na antiga
+    if (novo.especie && k.subespecie && !String(k.subespecie).startsWith(String(novo.especie))) {
+      novo.subespecie = null; linhas.push(`subespécie: ${k.subespecie} → vazio`);
+    }
+    for (const [col, [arg, nome, valido]] of Object.entries(LISTAS)) {
+      const pedidos = ((args as any)[arg] || []).map(soDig).filter(Boolean) as string[];
+      if (!pedidos.length) continue;
+      const ruim = pedidos.find((d) => !valido(d));
+      if (ruim) return texto(`${nome} ${ruim} com número de dígitos inválido; nada foi gravado.`);
+      const atuais = Array.isArray(k[col]) ? k[col] : [];
+      const ja = new Set([...atuais, ...(col === "nbs" ? [k.nb, novo.nb] : [])].map(soDig));
+      // o protocolo que a equipe levou deste caso a outro (mov:prot) não volta por aqui
+      const movidos = col === "protocolos" ? pedidos.filter((d) => (k.arquivados || {})[`mov:prot:${d}`]) : [];
+      if (movidos.length) recusados.push(`protocolo ${movidos.join(", ")}, que a equipe levou deste caso para outro`);
+      const add = [...new Set(pedidos)].filter((d) => !ja.has(d) && !movidos.includes(d));
+      if (!add.length) continue;
+      novo[col] = [...atuais, ...add];
+      linhas.push(`${nome} acrescentado: ${add.join(", ")}`);
+      // a sincronização do To Do reescreve casos.protocolos; a marca add:prot o mantém (aplicar_marcas_do_crm)
+      if (col === "protocolos") {
+        const arq = { ...(k.arquivados || {}) }, em = new Date().toISOString();
+        for (const d of add) arq[`add:prot:${d}`] = { por: eu.id, em };
+        novo.arquivados = arq;
+      }
+    }
+    const div = (divergentes.length ? ` Não alterado, porque já estava preenchido: ${divergentes.join("; ")}.` : "")
+      + (recusados.length ? ` Não acrescentado: ${recusados.join("; ")}.` : "");
+    if (!linhas.length) return texto((div ? "Nada gravado." : "Nada a mudar: os valores já são esses.") + div);
     await db(`casos?id=eq.${args.caso_id}`, novo, "PATCH");
     const cli = (await clientesDe([k.cliente_id])).get(k.cliente_id) || "";
     await anotar(args.caso_id, `✎ Caso atualizado. ${linhas.join("; ")}.` + (args.motivo?.trim() ? ` Fonte: ${args.motivo.trim()}.` : "")
@@ -787,6 +860,9 @@ const ETAPAS: Record<string, string[]> = {
   pagamento: ["aguardando implantação", "benefício implantado", "aguardando RPV", "RPV expedida", "recebido"],
   aposentadoria_futura: ["monitorando", "documentação em dia", "pronto para protocolar"],
 };
+// os códigos do catálogo de espécies · espelho de ESPECIES e ESPECIES_MAIS em crm/fase2/app.html
+const ESPECIES = ["B31", "B32", "B91", "B92", "B36", "B94", "B41", "B42", "B46", "B57", "B21", "B93", "B25", "B26", "B80", "B87", "B88",
+  "CNIS", "CTC", "REV", "REST", "COPIA", "JA", "IIR", "GPS", "SD", "B01", "B04", "B07", "B08", "B52", "B29", "B30", "B40", "B56", "B89", "B96"];
 
 // ── a porta: descoberta OAuth, token e colaborador ativo ───────────────────
 // O Claude não aceita dois conectores com o mesmo endereço; a conta do
