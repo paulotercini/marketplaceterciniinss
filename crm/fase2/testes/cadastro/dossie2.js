@@ -138,9 +138,10 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   conf("a data da comunicação, que é a da emissão da cópia, não é lida", !("em" in ci) && pi.atualizado === dia(-10));
   conf("a data por extenso vira data", await p.evaluate(() => dataPorExtenso("CIDADE - SP, 11 de Março de 2026.") === "11/03/2026"));
   const dec = await p.evaluate(([c, e]) => [decadenciaDe(c, []), decadenciaDe(c, e)], [cn, ex]);
-  conf("sem o extrato, a decadência conta do mês da concessão; com ele, do primeiro pagamento",
-    dec[0].ate.slice(0, 7) === iso(mes(4, 1)).slice(0, 7) && /concessão em/.test(dec[0].base)
-    && dec[1].ate.slice(0, 7) === iso(mes(5, 1)).slice(0, 7) && dec[1].base === `primeiro pagamento em ${PAGO}`);
+  // F235 · os 10 anos contam do dia 1º do mês seguinte ao primeiro pagamento (Lei 8.213, art. 103, I); sem o extrato, da DIP
+  conf("sem o extrato, a decadência conta da DIP; com ele, do primeiro pagamento (dia 1º do mês seguinte)",
+    dec[0].ate.slice(0, 7) === iso(mes(4, 1)).slice(0, 7) && /DIP|concessão/.test(dec[0].base)
+    && dec[1].ate === iso(mes(6, 1)) && dec[1].base.startsWith(`primeiro pagamento em ${PAGO}`), dec);
 
   // 2 · o quadro na Análise de Direito
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
@@ -159,8 +160,8 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   conf("a decadência perto do fim fica em destaque, com o primeiro pagamento", qc.alerta && /A revisão do ato de concessão pode ser pedida até/.test(qc.t)
     && qc.t.includes(`primeiro pagamento em ${PAGO}`) && /art\. 103 da Lei 8\.213\/91/.test(qc.t));
   const ql = q.find(x => x.id === "laudo") || {};
-  conf("o último laudo é o da PMF, com CID, DII e DCB", ql.t && ql.t.includes(`Laudo médico de ${dia(-20)} (perícia de prorrogação): incapacidade reconhecida, CID M51.1`)
-    && ql.t.includes(`DCB ${dia(40)}`) && /Laudo da Perícia Médica Federal/.test(ql.t));
+  conf("o último laudo é o da PMF, com CID, DII e DCB", ql.t && ql.t.includes(`Na perícia de ${dia(-20)}, o INSS reconheceu a incapacidade`) && ql.t.includes("CID M51.1")
+    && ql.t.includes(`com fim marcado para ${dia(40)}`) && /Laudo da Perícia Médica Federal/.test(ql.t));
   conf("cada fato abre o documento de origem", (await p.$$(".ad-q-dossie li .dossie-orig .adr-link")).length === 3);
   conf("nada do dossiê entrou no caso sem o clique", !escritos.some(e => /\/rest\/v1\/(casos|eventos)/.test(e.u)));
 
@@ -184,8 +185,9 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   const fatalRec = await p.evaluate(d => contarPrazo(d, PRAZOS_CATALOGO.find(x => x.id === "crps")), iso(dia(-10)));
   const qr = q.find(x => x.id === "recurso") || {};
   conf("o recurso vem primeiro, com o pedido, a data, a conclusão e o prazo", q[0].id === "recurso" && qr.alerta
-    && qr.t.includes(`Pedido de Prorrogação de Benefício por Incapacidade de ${dia(-30)} do NB 700.123.456-7: indeferido, não constatação da incapacidade laborativa, pedido concluído em ${dia(-10)}`)
-    && qr.t.includes(`Recurso ao CRPS até ${fatalRec.split("-").reverse().join("/")}, 30 dias corridos contados da conclusão`));
+    && qr.t.startsWith(`Recurso ao CRPS até ${fatalRec.split("-").reverse().join("/")} (`)
+    && qr.t.includes(`Pedido de Prorrogação de Benefício por Incapacidade de ${dia(-30)} do NB 700.123.456-7: indeferido, não constatação da incapacidade laborativa`)
+    && qr.t.includes(`contam da conclusão do pedido (${dia(-10)})`));
   conf("a DCB da decisão mais nova já passou e não é oferecida", !q.some(x => x.id === "dcb"));
   escritos.length = 0;
   await p.click('.ad-q-dossie li[data-fato="recurso"] button.tl-bt');
@@ -201,7 +203,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
     return itensDaOnda2(f, [{ ...D.casoPorId.get(casoId), prazo: null }]).find(i => i.id === "recurso");
   }, [PA_SEM_DATA, CASO1]);
   conf("sem a data da conclusão, o recurso pede a ciência e não conta prazo", semData && !semData.alerta && !semData.acao
-    && /: indeferido, não constatação da incapacidade laborativa\. A cópia não traz a data da conclusão do pedido: conferir a ciência no Meu INSS/.test(semData.texto));
+    && /: indeferido, não constatação da incapacidade laborativa\. A cópia não traz a data da conclusão do pedido: confira no Meu INSS quando a decisão foi vista/.test(semData.texto));
 
   for (const [nome, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${nome}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);

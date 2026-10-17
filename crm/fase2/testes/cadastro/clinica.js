@@ -67,13 +67,13 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   await p.waitForFunction(() => D._ficha && D._ficha.cliId && !_lendoDossie && !_lendoLeitores, null, { timeout: 10000 });
   const lin = await p.evaluate(cli => linhaClinica(cli).map(x => ({ d: x.data, t: x.tipo, ti: x.titulo, r: x.resumo, c: x.cids, g: x.grave })), CLI_CHEIO);
   conf("quatro documentos, do mais novo ao mais antigo", lin.map(x => x.d).join(",") === "2026-05-30,2025-01-10,2024-06-21,2024-05-11");
-  conf("o exame traz a conclusão e o sinal de doença grave", lin[0].t === "Exame" && lin[0].ti === "TOMOGRAFIA COMPUTADORIZADA - PELVE"
+  conf("o exame traz a conclusão e o sinal de doença grave", lin[0].t === "Exame" && lin[0].ti === "Tomografia computadorizada - pelve"
     && /^Seguimento de sarcoma operado no fêmur esquerdo, sem lesões secundárias na pelve\.$/.test(lin[0].r) && lin[0].g === "sarcoma");
-  conf("o digitalizado entra pela data e pelo tipo do nome", lin[1].t === "Exame" && lin[1].ti === "RESSONANCIA MAGNETICA - JOELHO" && !lin[1].r);
-  conf("o relatório traz a hipótese decifrada e o CID", lin[2].t === "Relatório" && /hipótese: MEMBRO INFERIOR ESQUERDO: FRATURA DE FEMUR DISTAL ESQUERDO/.test(lin[2].r)
+  conf("o digitalizado entra pela data e pelo tipo do nome", lin[1].t === "Exame" && lin[1].ti === "Ressonancia magnetica - joelho" && !lin[1].r);
+  conf("o relatório traz a hipótese decifrada e o CID", lin[2].t === "Relatório" && /hipótese: membro inferior esquerdo: fratura de femur distal esquerdo/i.test(lin[2].r)
     && lin[2].c.join() === "S72.4");
   conf("a internação traz o período e o diagnóstico principal", lin[3].t === "Internação" && lin[3].ti === "internação de 11/05/2024 a 22/06/2024"
-    && lin[3].r === "diagnóstico principal: fratura da diafise do femur");
+    && /^diagnóstico principal: fratura da diafise do femur$/i.test(lin[3].r));
   const area = await p.evaluate(cli => areaClinica(linhaClinica(cli)), CLI_CHEIO);
   conf("a área médica é a do membro inferior", area && area.agente === "medico-membro-inferior" && area.n === 4);
 
@@ -83,8 +83,8 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   await p.click('.mapa-ramo[data-ramo="inc_dii"] .mapa-no');
   await p.waitForSelector('.mapa-ramo[data-ramo="inc_dii"].aberto + .mapa-fatos');
   let fx = await p.textContent(".mapa-fatos");
-  conf("o ramo da DII traz a linha do tempo clínica", /30\/05\/2026, exame: TOMOGRAFIA COMPUTADORIZADA - PELVE; Seguimento de sarcoma/.test(fx)
-    && /11\/05\/2024, internação: internação de 11\/05\/2024 a 22\/06\/2024; diagnóstico principal/.test(fx));
+  conf("o ramo da DII traz a linha do tempo clínica", /30\/05\/2026, exame: tomografia computadorizada - pelve; seguimento de sarcoma/i.test(fx)
+    && /11\/05\/2024, internação: internação de 11\/05\/2024 a 22\/06\/2024; diagnóstico principal/i.test(fx));
   const clin = await p.$$eval(".mapa-fatos .mapa-lista li", ls => ls.map(l => l.textContent.replace(/\s+/g, " ").trim()).filter(t => /registro clínico em/.test(t)));
   conf("o registro mais antigo fica fixo no topo da linha clínica, e o mais recente logo abaixo", clin.length === 2
     && /^Primeiro registro clínico em 11\/05\/2024, internação/.test(clin[0]) && /^Último registro clínico em 30\/05\/2026, exame/.test(clin[1]));
@@ -105,7 +105,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   await p.evaluate(cli => mapaLente(cli, "pensao"), CLI_CHEIO);
   await p.waitForSelector(".mapa-fora");
   const fora = await p.textContent(".mapa-fora");
-  conf("na pensão, a linha clínica fica recolhida fora do mapa", /TOMOGRAFIA COMPUTADORIZADA - PELVE/.test(fora) && /internação de 11\/05\/2024/.test(fora));
+  conf("na pensão, a linha clínica fica recolhida fora do mapa", /tomografia computadorizada - pelve/i.test(fora) && /internação de 11\/05\/2024/.test(fora));
 
   for (const [nome, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${nome}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);

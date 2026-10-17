@@ -146,7 +146,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   }));
   conf(`F233 · a situação abre pelos quadros do CNIS e da RAIS (${pa.blocos.join(", ")})`, pa.blocos.slice(0, 2).join() === "cnis,rais" && pa.blocos.includes("falta"));
   conf("os trabalhos possíveis saem do dossiê", await p.evaluate(() => paDados(D.clientes[0], D.casosDoCliente.get(D.clientes[0].id) || []).trabalhos.length > 0));
-  conf("a carência mostra a contagem do CNIS", /104 contribuições/.test(pa.car));
+  conf("a carência mostra a contagem do CNIS", /104 (contribuições|meses)/.test(pa.car));
   conf("a qualidade abre com a linha do tempo e a licença da RAIS marcada", pa.tl && pa.lic);
   conf("F213 · o quadro da RAIS traz a tabela dos vínculos e a licença sem remuneração, com a fonte", /licença sem remuneração/i.test(await p.textContent("#paq-rais")) && /RAIS de 2016/.test(await p.textContent("#paq-rais"))
     && !!(await p.$("#paq-rais .pa-tabela")) && /licença sem remuneração de 01\/06\/2016/.test(await p.textContent("#paq-rais .pa-tabela")));

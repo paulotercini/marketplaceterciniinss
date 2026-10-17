@@ -96,15 +96,15 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   for (const q of ["cnis", "rais", "cnpj", "ben"]) { const el = await p.$("#paq-" + q); if (el) await el.screenshot({ path: path.join(OUT, `01-pa-${q}.png`) }); }
   const qs = await p.evaluate(() => [...document.querySelectorAll(".pa .paq[data-q]")].map(q => q.dataset.q));
   conf(`os quadros seguem a ordem da conversa: CNIS, RAIS, CNPJs… (${qs.join(", ")})`, qs.slice(0, 3).join() === "cnis,rais,cnpj" && qs.includes("docs") && qs.includes("falta"));
-  conf("o quadro dos benefícios vem por último, com a faixa de benefícios", await p.evaluate(() => { const b = document.getElementById("paq-ben"), qq = [...document.querySelectorAll(".pa .paq")];
+  conf("o quadro dos benefícios vem por último, com a faixa de benefícios", await p.evaluate(() => { const b = document.getElementById("paq-escolha"), qq = [...document.querySelectorAll(".pa .paq")];
     return b && qq[qq.length - 1] === b && b.querySelectorAll(".ben-chip").length === 11; }));
   const cnis = await p.evaluate(() => { const q = document.getElementById("paq-cnis"); return { oque: !!q.querySelector(".paq-oque"), achado: (q.querySelector(".paq-achado") || {}).textContent || "",
     importa: !!q.querySelector(".paq-importa"), blocos: [...q.querySelectorAll(".paq-bloco small")].map(x => x.textContent), itens: [...q.querySelectorAll(".paq-it")].map(x => x.textContent.replace(/\s+/g, " ")) }; });
   conf("cada quadro diz o que é, o que encontramos e para que importa", cnis.oque && /O que encontramos/.test(cnis.achado) && cnis.importa);
-  conf(`o CNIS traz qualidade, carência, tempo, última contribuição e último benefício (${cnis.blocos.join(" · ")})`,
-    ["Qualidade de segurado", "Carência", "Tempo pelo CNIS", "Última contribuição", "Último benefício"].every(b => cnis.blocos.includes(b)));
-  conf("o indicador do CNIS aparece traduzido, com o tipo (pendência que bloqueia)", cnis.itens.some(t => /Pendência, que bloqueia/.test(t) && /PEXT/.test(t)));
-  conf("o benefício do CNIS vira item (B31 de 2018)", cnis.itens.some(t => /Benefício 31/.test(t) && /2018/.test(t)));
+  conf(`o CNIS traz qualidade, carência, tempo, último mês pago e o benefício pelo nome (${cnis.blocos.join(" · ")})`,
+    ["Qualidade de segurado", "Carência (meses de contribuição)", "Tempo pelo CNIS", "Último mês pago"].every(b => cnis.blocos.includes(b)) && cnis.blocos.some(b => /Auxílio-doença|Aposentadoria|Benefício/.test(b)));
+  conf("o indicador do CNIS aparece traduzido, com o vínculo e o que pedir", cnis.itens.some(t => /fora do prazo/.test(t) && /Peça/.test(t) && /PEXT/.test(t)));
+  conf("o benefício do CNIS vira item, pelo nome (B31 de 2018)", cnis.itens.some(t => /Auxílio-doença \(B31\)/.test(t) && /2018/.test(t)));
   const rais = await p.evaluate(() => { const q = document.getElementById("paq-rais"); return { achado: (q.querySelector(".paq-achado") || {}).textContent || "",
     itens: [...q.querySelectorAll(".paq-it")].map(x => [x.dataset.k, x.textContent.replace(/\s+/g, " ")]), tabela: !!q.querySelector(".paq-rola table") }; });
   conf(`a RAIS responde se há afastamento sem remuneração, e o período (${rais.achado.trim()})`, /sim: 1 licença/.test(rais.achado) && rais.itens.some(([k, t]) => /^rais\.lic:/.test(k) && /01\/06\/2016 a 31\/07\/2016/.test(t) && /61 dias/.test(t)));
@@ -161,7 +161,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // 7 · sem dossiê: só o relato e os benefícios
   await abrir(S, "pc_s1");
   const sem = await p.evaluate(() => ({ sd: !!document.querySelector(".pa .pa-sem-dz"), relato: /Relato fictício/.test((document.querySelector(".pa-relato") || {}).textContent || ""),
-    quadros: document.querySelectorAll(".pa .paq[data-q]").length, ben: document.querySelectorAll("#paq-ben .ben-chip").length }));
+    quadros: document.querySelectorAll(".pa .paq[data-q]").length, ben: document.querySelectorAll("#paq-escolha .ben-chip").length }));
   conf("sem dossiê, o painel mostra o relato da recepção e o quadro dos benefícios, sem quadros vazios", sem.sd && sem.relato && sem.quadros === 0 && sem.ben === 11);
 
   // 8 · 390 px: nada passa da tela, a não ser dentro do contêiner rolável

@@ -18,9 +18,9 @@ const SUPA = "https://ficticio.supabase.co";
 const FAMILIAS = [
   ["BPC/LOAS", "BPC/LOAS", 4], ["Apos. Especial", "Aposentadoria especial", 4],
   ["Aux. Incapacidade Temporária", "Incapacidade", 4], ["Aux. Acidente", "Auxílio-acidente", 3],
-  ["Rural", "Rural e híbrida", 4], ["Pensão por Morte", "Dependentes", 3],
-  ["Apos. Tempo de Contribuição", "Aposentadoria programável", 3], ["Revisão", "Revisão", 3],
-  ["Acerto de CNIS", "Acerto de CNIS", 3], ["Recurso especial ou incidente", "Recurso no CRPS", 3],
+  ["Rural", "Rural, híbrida e seguro-defeso", 4], ["Pensão por Morte", "Dependentes", 3],
+  ["Apos. Tempo de Contribuição", "Aposentadoria programável", 3], ["Revisão", "Revisão e isenção de IR", 3],
+  ["Acerto de CNIS", "CNIS e contribuições", 3], ["Recurso especial ou incidente", "Recurso, cópia e justificação", 3],
   ["Salário-Maternidade", "Salário-maternidade", 3],
   ["Encaminhamentos do processo de apuração (MOB)", null, 0],
 ];

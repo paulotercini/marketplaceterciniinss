@@ -120,7 +120,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   await p.click('.mapa-ramo[data-ramo="b94_nexo"] .mapa-no');
   await p.waitForSelector('.mapa-ramo[data-ramo="b94_nexo"].aberto + .mapa-fatos');
   fx = await p.textContent(".mapa-fatos");
-  conf("a CAT vai ao ramo do nexo, com a Lista C do NTEP", /CAT inicial de acidente típico em 12\/03\/2025, CID S626 \(fratura de outros dedos\), CNAE 49\.302; o nexo pelo NTEP se confere na Lista C do Anexo II do Decreto 3\.048\/99/.test(fx));
+  conf("a CAT vai ao ramo do nexo, com a Lista C do NTEP", /CAT de 12\/03\/2025: acidente típico \(CAT inicial\), fratura de outros dedos \(CID S62\.6\)\. Pergunte como foi e se ficou sequela; o nexo pelo CNAE 49\.302 se confere na Lista C do Anexo II do Decreto 3\.048\/99/.test(fx));
 
   // 4 · os honorários pela renda do extrato, conforme a variante do contrato
   const hon = await p.evaluate(cli => quadroHonorDossie(D.cliPorId.get(cli), D.casosDoCliente.get(cli)), CLI_CHEIO);
