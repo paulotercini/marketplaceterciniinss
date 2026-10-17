@@ -25,3 +25,11 @@ for col in ['Na revisão discutiram-se só os salários de contribuição.', 'A 
 for formal in ['Na revisão discutiram-se apenas os salários de contribuição.', 'A matéria constou apenas dos motivos da sentença.', 'A soma alcança 85 pontos.', 'A razão social indica a atividade.', 'O agente não integra o rol.', 'A Parte Autora apresentou ao INSS os mesmos formulários.', 'A Parte Autora iniciou o trabalho rural.', 'É hipótese em que a regra dos pontos afasta o fator.']:
     assert not any('coloquial' in a for a in achados(formal)), formal
 print('ok 3')
+# 17/10/2026: "havia chegado", "manda" e o órgão reduzido caem; a forma do titular passa
+ruim='O recurso especial havia chegado 395 dias após o acórdão da Junta, e o art. 26, § 1º, da Portaria DIRBEN/INSS 996/2022 manda desconsiderar a relevação.'
+a=achados(ruim)
+assert any('foi interposto' in x for x in a) and any('determina' in x for x in a) and any('Junta de Recursos' in x for x in a), a
+boa='O recurso especial foi interposto 395 dias após a prolação do acórdão da Junta de Recursos. Para a aferição dessa definitividade, o art. 26, § 1º, da Portaria DIRBEN/INSS 996/2022 determina que seja afastada a hipótese de relevação da intempestividade prevista no Regimento Interno do CRPS.'
+assert not any(('coloquial' in x or 'órgão reduzido' in x) for x in achados(boa)), achados(boa)
+assert not any('determina' in x for x in achados('O mandado de segurança foi impetrado contra a autoridade.'))
+print('ok 4')
