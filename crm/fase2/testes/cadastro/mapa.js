@@ -94,13 +94,14 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   conf("os prazos vêm primeiro, depois os quatro pontos da incapacidade e os outros fatos", rs.map(r => r.id).join(",") === "prazos,inc_dii,inc_carencia,inc_qualidade,inc_pericia,outros");
   const fxPrazos = await p.textContent(".mapa-fatos");
   conf("o ramo dos prazos é vermelho e já abre, com o recurso contado da conclusão", rs[0].est === "est-crit" && rs[0].aberto
-    && /Recurso ao CRPS até/.test(fxPrazos) && /pedido concluído em/.test(fxPrazos) && !/Perícia agendada/.test(fxPrazos));
+    && /Recurso ao CRPS até/.test(fxPrazos) && /conclusão do pedido/.test(fxPrazos) && !/Perícia agendada/.test(fxPrazos));
   conf("o recurso traz a ação e o documento de origem", (await p.$$(".mapa-fatos .mapa-lista li button.tl-bt")).length === 1
     && (await p.$$(".mapa-fatos .mapa-lista .adr-link")).length === 1);
   const r = id => rs.find(x => x.id === id) || {};
   // onda 5 · o laudo reconhece a incapacidade, mas sem relatório médico no
   // dossiê o ramo fica em atenção: é o que falta para a próxima perícia
-  conf("sem relatório médico para a perícia, o ramo da DII fica em atenção", r("inc_dii").est === "est-warn" && /Nenhum relatório médico no dossiê/.test(r("inc_dii").t));
+  conf("sem relatório médico para a perícia, o ramo da DII fica em atenção", r("inc_dii").est === "est-warn" && await p.evaluate(() => { const c = D.cliPorId.get(clienteAberto), fam = PONTOS_ESPECIE.find(f => f.chave === "incapacidade");
+    return ramosDoMapa(c, D.casosDoCliente.get(c.id) || [], fam).ramos.find(x => x.id === "inc_dii").fatos.some(x => /Nenhum relatório médico no dossiê/.test(x.texto)); }));
   conf("a competência abaixo do mínimo deixa a carência em atenção", r("inc_carencia").est === "est-warn" && /abaixo do mínimo/.test(r("inc_carencia").t));
   conf("o emprego em curso e o período de graça deixam a qualidade verde", r("inc_qualidade").est === "est-ok");
   conf("a DCB do laudo fica no ramo da perícia", r("inc_pericia").est === "est-warn" && /DCB em/.test(r("inc_pericia").t));
@@ -146,7 +147,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   conf("o ponto sem fato no dossiê fica a conferir", r("dep_qualidade").est === "est-pend" && /a conferir/.test(r("dep_qualidade").t));
   const fora = await p.textContent(".mapa-fora");
   conf("o laudo e a competência abaixo do mínimo saem do mapa, recolhidos no pé", /Fora do mapa de dependentes/.test(fora)
-    && /Laudo médico de/.test(fora) && /abaixo do mínimo/.test(fora) && !(await p.$eval(".mapa-fora", d => d.open)));
+    && /Na perícia de|Laudo do INSS de/.test(fora) && /abaixo do mínimo/.test(fora) && !(await p.$eval(".mapa-fora", d => d.open)));
 
   // 5 · o mapa vai para a Análise de Direito, sem gravar sozinho
   await p.evaluate(cli => mapaLente(cli, "incapacidade"), CLI_CHEIO);

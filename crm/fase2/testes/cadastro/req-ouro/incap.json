@@ -1535,11 +1535,12 @@
   "est": "ok"
  },
  {
-  "nome": "sem resposta",
+  "nome": "sem resposta: só se pergunta no atendimento por familiar, fora da conta",
   "op": "b31",
   "id": "recluso_regime_fechado",
   "x": {},
-  "est": "informar"
+  "est": "info",
+  "txt": "familiar"
  },
  {
   "nome": "benefício ativo começou depois da DII antiga: mede pela história",

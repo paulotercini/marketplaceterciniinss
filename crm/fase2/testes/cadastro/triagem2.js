@@ -113,7 +113,7 @@ FIX.casos[0] = { ...FIX.casos[0], beneficio: "" };
   conf("com a espécie no caso, a porta não aparece (o caso responde por ela)",
     !(await p.$(".tri-porta")));
   conf("e a família do caso manda, mesmo com a porta respondida diferente",
-    /Rural e híbrida/.test(await p.evaluate(() => (document.querySelector(".tri-especie") || {}).textContent || "")));
+    /Rural, híbrida e seguro-defeso/.test(await p.evaluate(() => (document.querySelector(".tri-especie") || {}).textContent || "")));
   await p.evaluate(caso => { D.casoPorId.get(caso).beneficio = ""; }, CASO1);
 
   // ── 2. as perguntas do escritório ───────────────────────────────────────

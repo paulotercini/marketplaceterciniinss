@@ -162,8 +162,8 @@ FIX.documentos_beneficio = [
     && !prov.some(t => /CNIS|RAIS/.test(t)) && prov.some(t => /Biometria/.test(t)) && prov.some(t => /Carteira de Trabalho/.test(t)) && escr.some(t => /DTC/.test(t)));
   const guias = (await texto("#dq-guias .doc-guia")).join(" | ");
   const guiasRur = await p.evaluate(cli => { admSalvar(cli, a => { a.beneficios = { rural: ["idade_rural"], incapacidade: ["b31"] }; }); const c = D.cliPorId.get(cli); return quadroGuias(c).replace(/<[^>]+>/g, " "); }, CLI_CHEIO);
-  conf(5, "C3 guias por espécie: RAC e o serviço do Meu INSS na idade; autodeclaração no rural; campos vinculantes no B31",
-    /RAC Completo \(Anexo I\)/.test(guias) && /Pedir Aposentadoria/.test(guias) && /Autodeclaração do segurado especial/.test(guiasRur) && /Data de início dos sintomas/.test(guiasRur));
+  conf(5, "C3 guias por espécie: RAC e o serviço do Meu INSS na idade; autodeclaração no rural; no B31, o aviso de que o formulário prende o INSS",
+    /RAC Completo \(Anexo I\)/.test(guias) && /Pedir Aposentadoria/.test(guias) && /Autodeclaração do segurado especial/.test(guiasRur) && /sintomas começaram/.test(guiasRur));
   await p.evaluate(cli => { admSalvar(cli, a => { a.beneficios = { tempo: ["idade"] }; }); repintarFicha(); }, CLI_CHEIO);
   await p.waitForSelector("#dq-prov");
   const regC = reg.length;

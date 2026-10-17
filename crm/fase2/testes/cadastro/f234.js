@@ -132,7 +132,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(300);
 
   // 5 · o Desfecho segue o benefício aberto; o histórico fica fechado no atendimento
-  conf("o Desfecho é do benefício aberto", await p.evaluate(a => /idade urbana/i.test(baseDesfecho(D.cliPorId.get(a), null).especie), A));
+  conf("o Desfecho tem uma linha por benefício marcado, e não segue o último clique", await p.evaluate(a => { const c = D.cliPorId.get(a), b = baseDesfecho(c, null);
+    return b.linhas.length === opcoesSel(c).length && b.linhas.some(l => /idade urbana/i.test(l.o.rot)); }, A));
   conf("no atendimento, as análises anteriores e o histórico ficam num quadro fechado", await p.evaluate(() => { const h = document.getElementById("ad-hist"); return !!h && !h.open; }));
   conf("nenhum id repetido na tela", await p.evaluate(() => { const ids = [...document.querySelectorAll("[id]")].map(e => e.id); return ids.length === new Set(ids).size; }));
 

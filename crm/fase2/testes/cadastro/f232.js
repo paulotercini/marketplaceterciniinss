@@ -1,5 +1,5 @@
 // F232 · o motor de requisitos por benefício (docs/REQUISITOS-POR-BENEFICIO.md): o
-// catálogo cobre as 23 opções do BENEF, todo requisito tem pergunta, base, conferência
+// catálogo cobre as 31 opções do BENEF (23 benefícios e, desde a F235, os 8 serviços), todo requisito tem pergunta, base, conferência
 // e campos que existem; nenhum quebra com o contexto vazio; os casos-ouro de cada
 // família (req-ouro/*.json) passam; e as correções do cálculo (graça do B91, conversão
 // por agente sem dobrar, fórmulas da EC 103 por ano, pedágio de 50 %, data do direito
@@ -67,7 +67,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     return { ops: ops.length, sem, ruins, campos, quebra, ids, total: Object.values(REQ_BENEF).reduce((n, l) => n + l.length, 0),
       apos: ["idade", "transicao", "professor", "pcd", "pcd_idade", "b46", "idade_rural", "hibrida"].filter(o => !(REQ_EXTRA[o] || {}).quando) };
   });
-  conf(`o catálogo cobre as ${cat.ops} opções do BENEF (${cat.total} requisitos)${cat.sem.length ? `; faltam ${cat.sem.join(", ")}` : ""}`, cat.ops === 23 && !cat.sem.length);
+  conf(`o catálogo cobre as ${cat.ops} opções do BENEF (${cat.total} requisitos)${cat.sem.length ? `; faltam ${cat.sem.join(", ")}` : ""}`, cat.ops === 31 && !cat.sem.length);
   conf(`todo requisito tem id, pergunta, base, conferência e mede${cat.ruins.length ? `: ${cat.ruins.join(", ")}` : ""}`, !cat.ruins.length);
   conf(`nenhum id repetido na mesma opção${cat.ids.length ? `: ${cat.ids.join(", ")}` : ""}`, !cat.ids.length);
   conf(`todo campo pedido existe em CAMPO_AD${cat.campos.length ? `: ${cat.campos.slice(0, 8).join(", ")}` : ""}`, !cat.campos.length);
