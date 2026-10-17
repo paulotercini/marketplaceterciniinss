@@ -33,3 +33,10 @@ boa='O recurso especial foi interposto 395 dias após a prolação do acórdão 
 assert not any(('coloquial' in x or 'órgão reduzido' in x) for x in achados(boa)), achados(boa)
 assert not any('determina' in x for x in achados('O mandado de segurança foi impetrado contra a autoridade.'))
 print('ok 4')
+# Onda 182: fórmulas do modelo de 2024 e lei transcrita em excesso
+assert any('senão vejamos' in x for x in achados('Entretanto, está equivocado o entendimento da Autarquia Federal, pois a Parte Autora está incapacitada para o trabalho, senão vejamos.'))
+duas='## 3. DO BENEFÍCIO\n\n> **Art. 42.** Texto.\n\n> **Art. 43.** Texto.\n\nA Parte Autora preenche os requisitos porque o laudo registra a incapacidade total desde a data do requerimento administrativo.'
+assert any('artigos transcritos' in x for x in achados(duas))
+uma='## 3. DO BENEFÍCIO\n\n> **Art. 42.** Texto.\n\n> **§ 2º** Texto.\n\nA Parte Autora preenche os requisitos porque o laudo registra a incapacidade total desde a data do requerimento administrativo.'
+assert not any('artigos transcritos' in x for x in achados(uma))
+print('ok 5')
