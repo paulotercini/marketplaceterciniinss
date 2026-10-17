@@ -49,7 +49,7 @@ A peça adota a linguagem da unidade em seis pontos.
 2. **A pergunta do juízo.** A seção controvertida formula a questão como o juízo a formula ao delimitar a causa: "Cabe saber, assim, se a Parte Autora tem, ou não, direito à [prestação], o que depende do enquadramento especial dos períodos de [datas]". A resposta vem na mesma seção.
 3. **A sequência do bloco-modelo.** A seção de direito segue a ordem do bloco-modelo da matéria (requisitos legais, regime de prova da época, prova exigida, caso concreto, soma ou conclusão), para que o juiz encontre cada requisito no lugar em que ele próprio o examina. Os blocos estão nos dois arquivos de referência.
 4. **Os conectores da unidade.** Assim, Desta forma, Como visto, Por outro lado, Além disso, Daí, Ou seja, No ponto, No caso concreto, Por fim. O mesmo conector não se repete em parágrafos seguidos.
-5. **A remissão normativa acessória.** O dispositivo que decide o caso continua transcrito em bloco, pelo método do titular. O dispositivo acessório pode vir na forma do juízo, entre parênteses e com "v.", como "(v. art. 15, § 2.º, da Lei n.º 8.213/91)".
+5. **A remissão normativa acessória.** Transcreve-se em bloco apenas o dispositivo que o INSS contestou ou que decide o requisito controvertido, no máximo um por seção, pela regra da lei na medida (Onda 182). O dispositivo acessório pode vir na forma do juízo, entre parênteses e com "v.", como "(v. art. 15, § 2.º, da Lei n.º 8.213/91)".
 6. **O fecho com número.** O juízo conclui pela soma, por exemplo "passa o autor a somar, na DER, tempo de contribuição de [x]". A seção da peça fecha com o mesmo número, e o demonstrativo vai em anexo.
 
 ## O que a peça não adota
