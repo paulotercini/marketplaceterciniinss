@@ -77,7 +77,7 @@ administrativa de 1 folha, sem lei/decreto).
   quebrado em partes que caibam (nomear `... (parte 1 de N)`). Apague os temporarios.
 
 ## 7. Peticao administrativa de 1 folha (norte para o analista)
-- **No maximo uma folha.** E um norte para bater o olho e entender o pedido — **sem
+- **De preferencia uma folha** (referencia, nao limite obrigatorio, Onda 181). E um norte para bater o olho e entender o pedido — **sem
   explicacoes, sem fundamentacao**. Conteudo enxuto:
   - qualificacao minima do segurado e do procurador (OAB/SP 331.110);
   - **o que se requer** (beneficio + especie/B, DER pretendida);
