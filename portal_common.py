@@ -183,17 +183,50 @@ def gravar_ficha(path, ficha, chave, h):
 
 # espelho do ETAPAS_POR_FASE de crm/fase2/app.html — ao acrescentar etapa lá,
 # acrescente aqui, senão ela simplesmente não aparece para o cliente
-ETAPAS_PUBLICAS = {
-    "em atendimento", "reunindo documentos", "análise de direito", "aguardando o cliente",
-    "requerimento protocolado", "aguardando perícia", "perícia realizada", "em exigência",
-    "aguardando análise", "decidido",
-    "recurso protocolado", "aguardando distribuição", "em diligência", "em pauta", "julgado",
-    "ação distribuída", "aguardando citação", "contestação apresentada", "perícia designada",
-    "aguardando sentença", "sentença publicada", "em recurso",
-    "a redigir", "redigida", "a protocolar",
-    "aguardando implantação", "benefício implantado", "aguardando RPV", "RPV expedida", "recebido",
-    "monitorando", "documentação em dia", "pronto para protocolar",
+# F236 · por fase: a etapa que ficou de uma fase anterior ("aguardando perícia"
+# num caso que já está no Conselho) não é a situação atual e não sai
+ETAPAS_POR_FASE = {
+    "escritorio": {"em atendimento", "reunindo documentos", "análise de direito", "aguardando o cliente"},
+    "inss": {"requerimento protocolado", "aguardando perícia", "perícia realizada", "em exigência",
+             "aguardando análise", "decidido"},
+    "conselho": {"recurso protocolado", "aguardando distribuição", "em diligência", "em pauta", "julgado"},
+    "judicial": {"ação distribuída", "aguardando citação", "contestação apresentada", "perícia designada",
+                 "perícia realizada", "aguardando sentença", "sentença publicada", "em recurso"},
+    "peticao_inicial": {"a redigir", "redigida", "a protocolar"},
+    "pagamento": {"aguardando implantação", "benefício implantado", "aguardando RPV", "RPV expedida", "recebido"},
+    "aposentadoria_futura": {"monitorando", "documentação em dia", "pronto para protocolar"},
 }
+ETAPAS_PUBLICAS = set().union(*ETAPAS_POR_FASE.values())
+
+
+def fase_da_etapa(k):
+    """F236 · a fase de que a etapa tem de ser. No prazo fatal (fase "outro") o
+    caso continua sendo da lista de onde veio (ronda.prazo_de)."""
+    fase = k.get("fase")
+    if fase != "outro":
+        return fase
+    de = (k.get("ronda") or {}).get("prazo_de") or k.get("origem_lista") or ""
+    for trecho, f in (("INSS", "inss"), ("Conselho", "conselho"), ("Judicial", "judicial"),
+                      ("Peti", "peticao_inicial"), ("Escrit", "escritorio")):
+        if trecho in de:
+            return f
+    return None
+
+
+def etapa_publicavel(k):
+    """F236 · a etapa só sai se for do catálogo, da fase em que o caso está (no
+    Judicial também a da execução, que corre nos autos) e se o CRM não a marcou
+    como desatualizada: casos.trilha.velha guarda a etapa que um fato oficial
+    mais novo contradiz (a sentença depois de "perícia realizada"). A marca vale
+    só enquanto a etapa for a mesma: o escritório aceitou outra, ela sai."""
+    etapa = (k.get("etapa") or "").strip()
+    fase = fase_da_etapa(k)
+    validas = ETAPAS_POR_FASE.get(fase, set()) | (ETAPAS_POR_FASE["pagamento"] if fase == "judicial" else set())
+    trilha = k.get("trilha") if isinstance(k.get("trilha"), dict) else {}
+    velha = trilha.get("velha") if isinstance(trilha.get("velha"), dict) else {}
+    if etapa not in ETAPAS_PUBLICAS or etapa not in validas or velha.get("etapa") == etapa:
+        return None
+    return etapa
 
 
 def _supa_pagina(url, chave, caminho, pagina=1000):
@@ -228,7 +261,7 @@ def crm_do_cliente():
     try:
         clientes = _supa_pagina(url, chave, "/rest/v1/clientes?select=id,cpf&cpf=not.is.null")
         casos = _supa_pagina(url, chave,
-                             "/rest/v1/casos?select=cliente_id,etapa,fase,mover_para,origem_lista,trf3"
+                             "/rest/v1/casos?select=cliente_id,etapa,fase,mover_para,origem_lista,trf3,trilha,ronda"
                              "&or=(etapa.not.is.null,trf3.not.is.null)")
     except Exception as e:
         print(f"   (dados do CRM indisponíveis: {type(e).__name__})")
@@ -243,18 +276,23 @@ def crm_do_cliente():
         if not (cpf and lista):
             continue
         fora = {}
-        etapa = (k.get("etapa") or "").strip()
-        if etapa in ETAPAS_PUBLICAS:          # etapa à mão não vai ao portal
+        etapa = etapa_publicavel(k)     # F236 · catálogo, fase atual e não desatualizada
+        if etapa:
             fora["etapa"] = etapa
         t = k.get("trf3") or {}
         # o painel cobre a 3ª Região inteira, vara e JEF de primeiro grau
         # inclusive, e a fila de cada um é fila de julgamento do seu órgão
-        if k.get("fase") == "judicial" and isinstance(t, dict) and t.get("ordem"):
+        # F236 · no prazo fatal (fase "outro") vindo do Judicial, a fila continua valendo
+        if fase_da_etapa(k) == "judicial" and isinstance(t, dict) and t.get("ordem"):
             fora["fila"] = f"{t['ordem']}º de {t['total']}" if t.get("total") else f"{t['ordem']}º"
             if t.get("consultado_em"):
                 fora["fila_em"] = _br(t["consultado_em"])
         if fora:
             mapa[(cpf, lista)] = fora
+            # F236 · no prazo fatal a tarefa do To Do continua na lista de origem: o portal a acha pelos dois nomes
+            de = (k.get("ronda") or {}).get("prazo_de")
+            if k.get("fase") == "outro" and de and de != lista:
+                mapa.setdefault((cpf, de), fora)
     return mapa
 
 

@@ -51,9 +51,10 @@ const RETRATO = process.env.RETRATO_DIR;
   const falta = await p.evaluate(cli => cadFaltando(D.cliPorId.get(cli)), CLI_CHEIO);
   const comp = await p.textContent(".idf-comp");
   const chips = await p.$$eval(".idf-chip", bs => bs.map(b => ({ t: b.textContent.trim(), tag: b.tagName })));
-  conf(`cliente sem endereço: 83% completo e um chip (${JSON.stringify(falta)})`,
-    /Cadastro 83% completo/.test(comp) && chips.length === falta.length && chips.length === 1 && chips[0].t === "endereço" && chips[0].tag === "BUTTON");
-  conf("a barra diz 83", (await p.getAttribute('.idf-comp [role="progressbar"]', "aria-valuenow")) === "83");
+  // F236 · uma régua só: a Identificação conta as lacunas da peça (rua, bairro, cidade, UF e CEP), num chip só de endereço
+  conf(`cliente sem endereço: 50% completo, 5 lacunas e um chip (${JSON.stringify(falta)})`,
+    /Cadastro 50% completo · 5 lacunas nas peças/.test(comp) && falta.length === 5 && chips.length === 1 && chips[0].t === "endereço" && chips[0].tag === "BUTTON");
+  conf("a barra diz 50", (await p.getAttribute('.idf-comp [role="progressbar"]', "aria-valuenow")) === "50");
   const cartoes = await p.$$eval(".idf-card", cs => cs.map(c => ({ h: c.querySelector("h3").textContent,
     rots: [...c.querySelectorAll(".cad-campo > label")].map(l => l.textContent.replace(/\s+/g, " ").trim()) })));
   conf("três cartões na ordem: Documentos e acesso, Dados pessoais, Contato",
@@ -93,8 +94,8 @@ const RETRATO = process.env.RETRATO_DIR;
   await abrir(CLI_VAZIO);
   const comp2 = await p.textContent(".idf-comp");
   const chips2 = await p.$$eval(".idf-chip", bs => bs.map(b => b.textContent.trim()));
-  conf(`cliente vazio: 17% e cinco chips (${chips2.join(", ")})`,
-    /Cadastro 17% completo/.test(comp2) && chips2.join("|") === "CPF|nascimento|estado civil|profissão|endereço");
+  conf(`cliente vazio: 10% (9 lacunas) e cinco chips (${chips2.join(", ")})`,
+    /Cadastro 10% completo · 9 lacunas nas peças/.test(comp2) && chips2.join("|") === "CPF|nascimento|estado civil|profissão|endereço");
   await p.click('.idf-chip[data-falta="cpf"]');
   await p.waitForTimeout(300);
   conf("o chip CPF abre o editor do CPF", !!(await p.$("#campo-cpf #ed-campo")));

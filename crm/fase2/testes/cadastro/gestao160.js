@@ -107,7 +107,8 @@ FIX.leads = [{ id: "l1", nome: "Prospecto Fictício Alves", telefone: "(16) 9999
   await p.evaluate(() => irPara("meudia"));
   await p.waitForFunction(() => [...document.querySelectorAll("h3.secao")].some(h => /Delegadas por mim/.test(h.textContent)));
   const deleg = await p.evaluate(() => {
-    const sec = [...document.querySelectorAll("section.pl-grupo")].find(x => /Delegadas por mim/.test(x.textContent));
+    // F236 · Delegadas por mim virou seção recolhida (<details class="pl-grupo">) no pé do Meu Dia
+    const sec = [...document.querySelectorAll(".pl-grupo")].find(x => /Delegadas por mim/.test(x.textContent));
     return { n: sec.querySelector(".pl-n").textContent.trim(), linhas: sec.querySelectorAll(".ag-linha").length,
       txt: sec.textContent.replace(/\s+/g, " "), revisa: !!document.querySelector(".ag-revisa") };
   });

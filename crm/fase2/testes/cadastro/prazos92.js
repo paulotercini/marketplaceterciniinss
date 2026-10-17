@@ -104,8 +104,9 @@ const SUPA = "https://ficticio.supabase.co";
   // ── o modal 📌 dar seguimento: escolher pelo nome preenche a data ─────────
   await p.evaluate(([caso]) => { const i = segRegistrar(caso, "Sentença improcedente publicada.", null); abrirSeguimento(i); }, [CASO1]);
   await p.waitForSelector("#seg-cat");
-  conf("o catálogo aparece ao lado do prazo fatal, com as 18 entradas",
-    await p.evaluate(() => document.querySelectorAll("#seg-cat option").length === 19));
+  // F236 · 19 entradas: os quesitos do JEF (10 dias úteis, Lei 10.259, art. 12, § 2º) entraram no catálogo
+  conf("o catálogo aparece ao lado do prazo fatal, com as 19 entradas",
+    await p.evaluate(() => document.querySelectorAll("#seg-cat option").length === 20));
   await p.evaluate(() => {
     document.getElementById("seg-de").value = "2027-03-01";
     const sel = document.getElementById("seg-cat"); sel.value = "ri"; sel.dispatchEvent(new Event("change"));

@@ -82,7 +82,8 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
   // F220 · o quadro diz que é a exigência, e não só "Prazo fatal"
   conf("a exigência do INSS é um quadro de PRAZO FATAL, em vermelho", on.cards.some(c => c.tipo === "Exigência do INSS" && c.data === fmtBR(mais(3)) && c.prazo && /179, 38, 30/.test(c.sombra)));
   conf("recorrer até (30 dias da decisão) entrou como quadro de prazo", on.cards.filter(c => c.prazo && !c.semMotivo).length === 2);
-  conf("a perícia marcada é um quadro cinza", (i => i >= 0 && !on.cards[i].prazo && !/179, 38, 30/.test(on.cards[i].sombra))(on.cards.findIndex(c => c.tipo === "Perícia")));
+  // F236 · o quadro da perícia diz também o que falta ("Perícia · avisar"): o tipo continua na frente
+  conf("a perícia marcada é um quadro cinza", (i => i >= 0 && !on.cards[i].prazo && !/179, 38, 30/.test(on.cards[i].sombra))(on.cards.findIndex(c => String(c.tipo).startsWith("Perícia"))));
   const iso = d => d.split("/").reverse().join("");
   conf("F145 · os prazos vêm em ordem decrescente de data", on.cards.every((c, i) => !i || iso(on.cards[i-1].data) >= iso(c.data)) && on.cards.filter(c => c.prazo).length === 3);
   conf("cada quadro tem só a data e o 'saber mais'", on.cards.every(c => c.mais) && on.cards.every(c => /^\d\d\/\d\d\/\d{4}$/.test(c.data)));
@@ -97,7 +98,9 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
   await abrir("?tema=");
   const off = await ler();
   conf("desligado: sem quadros, o quadro de datas segue dentro do cartão", !off.faixa && off.dentroDoCartao && !off.linhaCaso);
-  conf("desligado: exigência e recorrer NÃO entram no quadro (ficam nos chips)", await p.evaluate(() => ![...document.querySelectorAll("#quadro-datas .qd-linha")].some(l => /xigência do INSS|Recorrer até/.test(l.textContent))));
+  // F236 · o clássico (o visual padrão da equipe) mostra as mesmas datas do v10: a exigência e o recorrer até entram em "Lembretes e datas"
+  conf("desligado: exigência e recorrer até entram no quadro, como no v10 (F236)", await p.evaluate(() => { const ls = [...document.querySelectorAll("#quadro-datas .qd-linha")].map(l => l.textContent);
+    return ls.some(t => /Exigência do INSS/.test(t)) && ls.some(t => /Recorrer até/.test(t)); }));
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);

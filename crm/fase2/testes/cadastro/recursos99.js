@@ -11,6 +11,8 @@ const { FIX, SESSAO, CLI_CHEIO, CASO1 } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 
 const NUP1 = "44233139765202537", NUP2 = "44233000111202699";
+// F236 · a lista dos números da aba Recurso mostra o NUP formatado (44233.139765/2025-37), como o alto do quadro
+const fmtN = n => `${n.slice(0, 5)}.${n.slice(5, 11)}/${n.slice(11, 15)}-${n.slice(15)}`;
 FIX.casos[0].crps_nups = [NUP1];
 FIX.casos[0].crps = [];
 
@@ -56,7 +58,7 @@ FIX.casos[0].crps = [];
   await p.evaluate(([cli]) => abrirFicha(cli).then(() => { subAba = "crps"; repintarFicha(); }), [CLI_CHEIO]);
   await p.waitForSelector(`#crps-nup-${CASO1}`);
   const t0 = await p.evaluate(() => document.getElementById("detalhe").textContent);
-  conf("a aba Recurso lista o número que o caso já tem", t0.includes(NUP1));
+  conf("a aba Recurso lista o número que o caso já tem", t0.includes(fmtN(NUP1)));
 
   // o segundo recurso: a caixa oferece as duas saídas, e "acrescentar" é a principal
   await p.evaluate(([caso, n2]) => { document.getElementById("crps-nup-" + caso).value = n2; salvarCrpsNup(caso); }, [CASO1, NUP2]);
@@ -78,7 +80,7 @@ FIX.casos[0].crps = [];
   await p.waitForFunction(() => /2 recursos neste caso/.test(document.getElementById("detalhe").textContent), null, { timeout: 5000 });
   const t1 = await p.evaluate(() => document.getElementById("detalhe").textContent);
   conf("a aba lista os dois, com o aviso neutro e o separar como opção",
-    t1.includes(NUP1) && t1.includes(NUP2) && /2 recursos neste caso/.test(t1) && /separar em 2 casos/.test(t1) && !/O certo é um caso para cada um/.test(t1));
+    t1.includes(fmtN(NUP1)) && t1.includes(fmtN(NUP2)) && /2 recursos neste caso/.test(t1) && /separar em 2 casos/.test(t1) && !/O certo é um caso para cada um/.test(t1));
 
   // tirar um: fica um
   await p.evaluate(([caso, n2]) => removerCrpsNup(caso, n2), [CASO1, NUP2]);

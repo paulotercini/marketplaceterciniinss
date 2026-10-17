@@ -175,7 +175,7 @@ def _cliente_key(t):
 def mapear(dados):
     """crm.json -> dicionário de linhas por tabela (ids determinísticos)."""
     clientes, casos, andamentos, eventos, tarefas = {}, {}, {}, {}, {}
-    pagamentos, lembretes = {}, {}
+    pagamentos, lembretes, fora_de_pagamentos = {}, {}, []
     credenciais, vinculos, pend_vinculos = {}, {}, []
     pulados, sem_senha_padrao = {}, 0
 
@@ -275,6 +275,11 @@ def mapear(dados):
 
         if lista == "💵 Pagamentos":
             for item in t.get("checklist") or []:
+                # senha, CPF, telefone, protocolo... não são parcela: vão ao campo
+                # certo no laço de baixo, como nas outras listas
+                if not e_parcela(item.get("texto"), c["cpf"]):
+                    fora_de_pagamentos.append(item.get("id"))
+                    continue
                 pg = pagamento_do_item(kid, item, cid)
                 if pg:
                     pagamentos[pg["todo_item_id"]] = pg
@@ -379,6 +384,7 @@ def mapear(dados):
         "credenciais": list(credenciais.values()),
         "vinculos": list(vinculos.values()),
         "pagamentos": list(pagamentos.values()),
+        "fora_de_pagamentos": [i for i in fora_de_pagamentos if i],
         "lembretes": list(lembretes.values()),
         "pulados": pulados,
     }
@@ -564,19 +570,32 @@ def redirecionar_fundidos(mapa, marcados):
     return n
 
 
-def manter_dados_do_banco(mapa, banco):
-    """Telefone e nascimento: o CRM vence; a tarefa do To Do só preenche o
-    que está vazio. Antes, tarefa sem telefone no corpo mandava null e apagava
+# o nome que o Novo Cliente grava enquanto o CNIS não chega (F201) conta como vazio
+RE_NOME_PROVISORIO = re.compile(r"\s*(Cliente\s+[\d.\-]*)?\s*")
+
+
+def manter_dados_do_banco(mapa, banco, tabela="clientes", campos=("telefone", "dn", "nome")):
+    """O CRM vence; a tarefa do To Do só preenche o que está vazio.
+
+    Telefone e nascimento: tarefa sem telefone no corpo mandava null e apagava
     o que o app ou a importação do checklist (telefones_todo.py) tinham
-    gravado — em 04/10/2026 foram 628 cadastros em minutos. O lote do
-    PostgREST exige as mesmas chaves em todas as linhas, então o valor do
-    banco entra na linha em vez de a coluna sair dela."""
-    por_id = {c["id"]: c for c in banco or []}
-    for c in mapa.get("clientes", []):
-        b = por_id.get(c.get("id"))
-        for campo in ("telefone", "dn"):
-            if b and b.get(campo):
-                c[campo] = b[campo]
+    gravado — em 04/10/2026 foram 628 cadastros em minutos. Nome: o mais longo
+    das tarefas do mesmo CPF desfazia o "Usar o nome do CNIS" (F198), e uma
+    tarefa pessoal com o CPF no título renomeava o cliente.
+
+    Com tabela="casos": o prazo fatal e a ⭐ marcados no CRM voltavam ao que a
+    tarefa tinha (ou a nada) a cada 10 minutos. O To Do ainda preenche o caso
+    sem prazo e acende a ⭐ apagada, mas não a apaga.
+
+    O lote do PostgREST exige as mesmas chaves em todas as linhas, então o
+    valor do banco entra na linha em vez de a coluna sair dela."""
+    por_id = {b["id"]: b for b in banco or []}
+    for linha in mapa.get(tabela) or []:
+        b = por_id.get(linha.get("id")) or {}
+        for campo in campos:
+            v = b.get(campo)
+            if v and not (campo == "nome" and RE_NOME_PROVISORIO.fullmatch(v)):
+                linha[campo] = v
 
 
 def remapear_clientes(mapa, cpf_para_id_existente):
@@ -668,7 +687,13 @@ RE_DATA_BR = re.compile(r"\b(\d{2})[./](\d{2})[./](\d{4})\b")
 RE_DATA_PARCIAL = re.compile(r"\b\d{1,2}[./]\d{1,2}(?:[./]\d{2,4})?\b")
 RE_VALOR_RS = re.compile(r"R\$\s*([\d.]+(?:,\d{2})?)")
 RE_VALOR_DEC = re.compile(r"\b(\d{1,3}(?:\.\d{3})*,\d{2})\b")
-RE_VALOR_NUM = re.compile(r"\b(\d{2,7})\b")
+# número colado em letra ou símbolo ("Es@645351", "Ana.241223", "30%") é
+# senha, código ou percentual, e não valor
+RE_VALOR_NUM = re.compile(r"(?<![\w@*.=/#-])(\d{2,7})(?![\w@*%-])")
+RE_URL = re.compile(r"\S+://\S*")
+RE_FONE = re.compile(r"\(?\b\d{2}\)?[\s.-]*9?\d{4}[\s.-]?\d{4}\b")
+RE_DIGITOS = re.compile(r"\d+(?:[./-]\d+)*")
+VALOR_MAX = 500_000      # parcela acima disso é número lido como valor
 
 
 def _num_br(s):
@@ -679,25 +704,51 @@ def _num_br(s):
     return v if v > 0 else None
 
 
+def _sem_numeros_longos(t):
+    """Telefone, e o que tem 7 dígitos ou mais com ou sem pontuação (processo,
+    NB, CPF, CNPJ, protocolo), saem antes de procurar o número solto."""
+    t = RE_FONE.sub(" ", t)
+    return RE_DIGITOS.sub(lambda m: " " if len(re.sub(r"\D", "", m.group())) >= 7 else m.group(), t)
+
+
 def valor_do_item(texto):
     """O valor da parcela: R$ explícito > número com centavos > o MAIOR
-    número solto (o 500 de "2ª parcela 500", nunca o 2 nem o 10/09)."""
-    t = RE_DATA_BR.sub(" ", texto or "")
-    m = RE_VALOR_RS.search(t)
+    número solto (o 500 de "2ª parcela 500", nunca o 2 nem o 10/09).
+
+    O que não parece dinheiro não vira valor: em 17.10.2026, 17 parcelas
+    passavam de R$ 500 mil (processo, protocolo, telefone, senha) e 195 eram o
+    CPF do cliente lido como R$ 131 a R$ 998."""
+    t = RE_URL.sub(" ", RE_DATA_BR.sub(" ", texto or ""))
+    m = RE_VALOR_RS.search(t) or RE_VALOR_DEC.search(t)
     if m:
-        return _num_br(m.group(1))
-    m = RE_VALOR_DEC.search(t)
-    if m:
-        return _num_br(m.group(1))
-    t = RE_DATA_PARCIAL.sub(" ", t)
-    ns = [_num_br(x) for x in RE_VALOR_NUM.findall(t)]
-    ns = [n for n in ns if n]
-    return max(ns) if ns else None
+        v = _num_br(m.group(1))
+    else:
+        t = RE_DATA_PARCIAL.sub(" ", _sem_numeros_longos(t))
+        ns = [n for n in (_num_br(x) for x in RE_VALOR_NUM.findall(t)) if n]
+        v = max(ns) if ns else None
+    return v if v and v <= VALOR_MAX else None
 
 
 def data_do_item(texto):
     m = RE_DATA_BR.search(texto or "")
     return f"{m.group(3)}-{m.group(2)}-{m.group(1)}" if m else None
+
+
+def e_parcela(texto, cpf_cliente=None):
+    """O item do checklist de 💵 Pagamentos é parcela, ou dado do cliente?
+
+    A classificação das outras listas vale aqui: senha, CPF, telefone,
+    protocolo, parceria e aniversário não viram parcela (em 17.10.2026 havia
+    125 senhas na descrição de parcelas, visíveis na aba). Texto livre continua
+    parcela ("Pagou tudo"); número puro é parcela quando é valor ("500") ou
+    vencimento ("10/11/2026"); e "R$500,00" colado não é senha."""
+    t = (texto or "").strip()
+    if re.fullmatch(r"R\$\s*[\d.]+(?:,\d{2})?", t):
+        return True
+    tipo, _ = classificar_item_checklist(t, cpf_cliente)
+    if tipo in ("dado", "protocolo") and re.fullmatch(r"[\d\s./\-]+", t):
+        return bool(valor_do_item(t) or data_do_item(t))
+    return tipo in ("tarefa", "nome", "vazio")
 
 
 def pagamento_do_item(kid, item, cid=None):
@@ -747,7 +798,9 @@ def _sql_insert(tabela, linhas, conflito="do nothing", update_cols=(), chave="id
             "(" + ", ".join(_sql_val(l[c]) for c in cols) + ")"
             for l in linhas[i:i + 500]
         )
-        acao = (f"do update set " + ", ".join(f"{c} = excluded.{c}" for c in update_cols)
+        # "col = expr" vai como está (o CRM vence); o nome solto, excluded.col
+        acao = (f"do update set " + ", ".join(c if "=" in c else f"{c} = excluded.{c}"
+                                              for c in update_cols)
                 if update_cols else conflito)
         out.append(f"insert into {tabela} ({', '.join(cols)}) values\n{vals}\n"
                    f"on conflict ({chave}) {acao};")
@@ -757,21 +810,33 @@ def _sql_insert(tabela, linhas, conflito="do nothing", update_cols=(), chave="id
 def gerar_sql(mapa):
     return "\n\n".join(filter(None, [
         "begin;",
+        # o CRM vence, como no manter_dados_do_banco: o To Do só preenche o vazio
         _sql_insert("clientes", mapa["clientes"],
-                    update_cols=("nome", "dn", "telefone")),
+                    update_cols=("nome = case when coalesce(clientes.nome, '') ~ "
+                                 r"'^\s*(Cliente\s+[0-9.-]*)?\s*$' then excluded.nome else clientes.nome end",
+                                 "dn = coalesce(nullif(clientes.dn, ''), excluded.dn)",
+                                 "telefone = coalesce(nullif(clientes.telefone, ''), excluded.telefone)")),
         # senha nova editada no app nunca é sobrescrita: conflito = do nothing
         _sql_insert("credenciais", mapa.get("credenciais", [])),
         _sql_insert("vinculos", mapa.get("vinculos", []), chave="cliente_id, ligado_a"),
         _sql_insert("casos", mapa["casos"],
-                    update_cols=("fase", "prazo", "importante", "beneficio",
+                    update_cols=("fase", "prazo = coalesce(casos.prazo, excluded.prazo)",
+                                 "importante = casos.importante or excluded.importante",
+                                 "beneficio = coalesce(casos.beneficio, excluded.beneficio)",
                                  "parceria", "protocolos",
                                  "nb", "processo", "origem_lista", "encerrado_em")),
         _sql_insert("andamentos", mapa["andamentos"]),
         _sql_insert("eventos", mapa["eventos"], chave="caso_id,tipo,data_hora"),
         _sql_insert("tarefas", mapa["tarefas"],
                     update_cols=("prazo", "concluida", "concluida_em")),
+        # só o item marcado mexe no status: aberto -> recebido, nunca o contrário
         _sql_insert("pagamentos", mapa.get("pagamentos", []), chave="todo_item_id",
-                    update_cols=("descricao", "valor", "status", "pago_em", "vencimento")),
+                    update_cols=("descricao", "valor",
+                                 "status = case when excluded.status = 'recebido' "
+                                 "then excluded.status else pagamentos.status end",
+                                 "pago_em = case when excluded.status = 'recebido' "
+                                 "then excluded.pago_em else pagamentos.pago_em end",
+                                 "vencimento")),
         _sql_insert("lembretes", mapa.get("lembretes", []),
                     update_cols=("detalhes", "proximo_em", "ativo")),
         _sql_insert("tarefas", mapa.get("tarefas_docs", [])),
@@ -910,7 +975,13 @@ def subir_rest(mapa):
         cpf_para_id = {(c.get("cpf") or "").strip(): c["id"]
                        for c in cli_exist if (c.get("cpf") or "").strip()}
     nc = remapear_clientes(mapa, cpf_para_id)
-    manter_dados_do_banco(mapa, _rest_todas(url, chave, "/rest/v1/clientes?select=id,telefone,dn"))
+    manter_dados_do_banco(mapa, _rest_todas(url, chave, "/rest/v1/clientes?select=id,telefone,dn,nome"))
+    # o CPF que o CRM pôs na ficha vinda do To Do sem CPF: a tarefa mandava null
+    # e o apagava. Sem leitura nova: o E2 (e o caminho antigo) já trazem todo
+    # cliente cujo id não é o do próprio CPF, que são os únicos em que o CPF do
+    # banco pode divergir do da linha. O id não muda: o remapeamento já correu.
+    manter_dados_do_banco(mapa, [{"id": cid, "cpf": cpf} for cpf, cid in cpf_para_id.items()],
+                          campos=("cpf",))
     if nc:
         print(f"  clientes remapeados para ids já existentes: {nc}")
 
@@ -1001,6 +1072,17 @@ def subir_rest(mapa):
                 resgatados += 1
     if resgatados:
         print(f"  processo/NB preservados do banco (To Do vazio): {resgatados}")
+
+    # O PRAZO FATAL, A ⭐ E A ESPÉCIE MARCADOS NO CRM NÃO VOLTAM AO DA TAREFA. A
+    # equipe registra no CRM desde outubro; a tarefa sem data apagava o prazo
+    # posto no caso (F38), e a sem espécie reconhecível apagava a do catálogo
+    # do CRM (ou a trocava pelo nome do To Do). Só os casos abertos com algum
+    # deles, e não a carteira (E2); no encerrado, a espécie vazia não vai (abaixo).
+    manter_dados_do_banco(mapa, _rest_todas(
+        url, chave, "/rest/v1/casos?todo_task_id=not.is.null&fase=neq.encerrado"
+                    "&or=(prazo.not.is.null,importante.is.true,beneficio.not.is.null)"
+                    "&select=id,prazo,importante,beneficio"),
+        "casos", ("prazo", "importante", "beneficio"))
 
     # A LISTA 💵 PAGAMENTOS É A ABA PAGAMENTOS DO CLIENTE, NÃO UM CASO.
     # Mesmo princípio de 🙏 Aposentadorias Futuras -> aba 🔔 Lembretes: lista do
@@ -1220,6 +1302,8 @@ def subir_rest(mapa):
         ("credenciais", "credenciais", "ignore-duplicates", "id"),
         ("vinculos", "vinculos", "ignore-duplicates", "cliente_id,ligado_a"),
         ("casos", "casos", "merge-duplicates", "id"),
+        # tarefa sem espécie reconhecível: o caso vai sem a coluna (ver abaixo)
+        ("casos_sem_especie", "casos", "merge-duplicates", "id"),
         ("andamentos", "andamentos", "ignore-duplicates", "id"),
         ("eventos", "eventos", "ignore-duplicates", "caso_id,tipo,data_hora"),
         ("tarefas", "tarefas", "merge-duplicates", "id"),
@@ -1227,6 +1311,8 @@ def subir_rest(mapa):
         # unique parcial em todo_item_id é a trava); conferências do app
         # ficam intactas — o upsert só toca as colunas enviadas
         ("pagamentos", "pagamentos", "merge-duplicates", "todo_item_id"),
+        # item ainda aberto no To Do: vai sem status nem pago_em (ver abaixo)
+        ("pagamentos_abertos", "pagamentos", "merge-duplicates", "todo_item_id"),
         # docs solicitados citados em andamentos: só insere — concluir no app fica
         ("tarefas_docs", "tarefas", "ignore-duplicates", "id"),
         # 🙏 Aposentadorias Futuras: id determinístico por tarefa; o merge
@@ -1281,14 +1367,20 @@ def subir_rest(mapa):
 
     # F220 · o que o CRM decidiu sobre o caso vale sobre o To Do: o caso movido
     # (mover_para) não volta à lista antiga, o fundido continua encerrado e o
-    # número levado a outro caso não volta ao caso de onde saiu
-    try:
-        marcados = _rest(url, chave, "GET",
-                         "/rest/v1/casos?or=(mover_para.not.is.null,arquivados.not.is.null)"
-                         "&select=id,mover_para,fase,arquivados") or []
-    except Exception as e:                      # noqa: BLE001 — sem a leitura, o comportamento antigo
-        marcados = []
-        print(f"  aviso: não li as marcas do CRM nos casos ({e})")
+    # número levado a outro caso não volta ao caso de onde saiu.
+    # [BUG 17.10.2026] arquivados nunca é nulo (o padrão é '{}'): o filtro
+    # antigo trazia os 3.433 casos numa página só, o Supabase cortava em 1000
+    # linhas e 10 dos 11 casos marcados ficavam de fora — o caso mandado para
+    # 🗓 Tarefas com Prazo voltava ao Escritório. Agora vêm só os marcados, e
+    # todos; se o banco recusar o filtro de jsonb, o antigo, paginado.
+    marcados = []
+    for filtro in ("arquivados.neq.%7B%7D", "arquivados.not.is.null"):
+        try:
+            marcados = _rest_todas(url, chave, f"/rest/v1/casos?or=(mover_para.not.is.null,{filtro})"
+                                               "&select=id,mover_para,fase,arquivados")
+            break
+        except Exception as e:                  # noqa: BLE001 — sem a leitura, o comportamento antigo
+            print(f"  aviso: não li as marcas do CRM nos casos ({e})")
     limpar_mover = respeitar_movidos(mapa, marcados)
     n_marcas = aplicar_marcas_do_crm(mapa, marcados)
     if n_marcas:
@@ -1296,6 +1388,21 @@ def subir_rest(mapa):
     n_fus = redirecionar_fundidos(mapa, marcados)
     if n_fus:
         print(f"  anotações, eventos e tarefas de casos fundidos levados ao destino: {n_fus}")
+
+    # 💵 ABERTO -> RECEBIDO, NUNCA O CONTRÁRIO. O item ainda aberto no To Do não
+    # manda status nem pago_em: a parcela que o CRM deu por recebida (botão
+    # Recebido) voltava a "aberto" a cada rodada. O item marcado continua
+    # dando a parcela por recebida; a parcela nova nasce "aberto" pelo padrão.
+    pgs = mapa.get("pagamentos") or []
+    mapa["pagamentos"] = [p for p in pgs if p.get("status") == "recebido"]
+    mapa["pagamentos_abertos"] = [{col: v for col, v in p.items() if col not in ("status", "pago_em")}
+                                  for p in pgs if p.get("status") != "recebido"]
+    # a espécie vazia não vai: no caso encerrado (fora da leitura acima) ela
+    # apagava a do CRM; o caso novo nasce sem espécie, pelo padrão da coluna
+    ks = mapa.get("casos") or []
+    mapa["casos"] = [k for k in ks if k.get("beneficio")]
+    mapa["casos_sem_especie"] = [{col: v for col, v in k.items() if col != "beneficio"}
+                                 for k in ks if not k.get("beneficio")]
 
     for chave_mapa, tabela, res, conflito in ordem:
         linhas = resolver(mapa.get(chave_mapa, []))
@@ -1308,6 +1415,23 @@ def subir_rest(mapa):
         else:
             print(f"  {chave_mapa}: {len(linhas) - caiu} linhas enviadas"
                   + (f", {caiu} recusada(s)" if caiu else ""))
+
+    # 💵 o item que é dado do cliente (senha, CPF, telefone...) e já tinha virado
+    # parcela sai da aba. Só a linha que nasceu deste item do To Do e que o CRM
+    # nunca tocou (sem conferência, nem "Recebido"); o item continua no To Do.
+    # Apagar é decisão do escritório: a faxina só roda com LIMPAR_PARCELAS_FALSAS=1, e só na parcela aberta.
+    fora = sorted(set(mapa.get("fora_de_pagamentos") or [])) if os.environ.get("LIMPAR_PARCELAS_FALSAS") == "1" else []
+    tirados = 0
+    try:
+        for i in range(0, len(fora), 100):
+            tirados += len(_rest(url, chave, "DELETE",
+                                 "/rest/v1/pagamentos?todo_item_id=in.(" + ",".join(fora[i:i + 100])
+                                 + ")&conferencias=eq.%5B%5D&status=eq.aberto&select=todo_item_id",
+                                 prefer="return=representation") or [])
+    except Exception as e:                      # noqa: BLE001 — a faxina não derruba a rodada
+        print(f"  aviso: não tirei da aba Pagamentos os itens que não são parcela ({e})")
+    if tirados:
+        print(f"  💵 itens do checklist que não são parcela (senha, CPF, telefone...) tirados da aba: {tirados}")
 
     # o To Do alcançou o CRM (ou a tarefa foi concluída): o mover_para cumpriu o papel
     if limpar_mover:

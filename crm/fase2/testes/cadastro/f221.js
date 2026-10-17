@@ -84,7 +84,8 @@ T.anexos.push(
   { id: DOC.iniB, cliente_id: B, caso_id: B1, origem: "pje", nome: "Petição inicial", caminho: `pje/${PROCB20}/444`, tipo: "text/plain",
     texto: "Petição inicial. O autor recebeu o NB 600.000.000-3 e depois o NB 600.000.000-4.", criado_em: "2026-06-01T12:00:00Z" },
   { id: DOC.notaC, cliente_id: C, caso_id: C1, andamento_id: AND.notaC, origem: null, nome: "foto do relatório.pdf", caminho: "anexos/x/foto.pdf", tipo: "application/pdf", texto: "", criado_em: "2026-09-02T13:00:00Z" });
-T.eventos.push({ id: "d0000000-0000-0000-0000-0000000000c1", caso_id: C1, tipo: "Perícia médica", data_hora: `${iso(-20)}T09:00:00`, status: "agendada", local: "APS fictícia", criado_em: "2026-08-01T12:00:00Z" });
+// F236 · a perícia que abre o prazo de análise é a FEITA ("realizada"); a "agendada" que passou deixa o prazo parado
+T.eventos.push({ id: "d0000000-0000-0000-0000-0000000000c1", caso_id: C1, tipo: "Perícia médica", data_hora: `${iso(-20)}T09:00:00`, status: "realizada", local: "APS fictícia", criado_em: "2026-08-01T12:00:00Z" });
 
 let pontos = 0, total = 0;
 const falhas = [];
@@ -256,10 +257,11 @@ function conf(peso, nome, ok) {
     c2: proximosDoCaso({ id: "x-dcb2", cliente_id: "x", fase: "judicial", especie: "B31", dcb }).map(x => x.txt) }), iso(-90));
   // com a janela aberta (DCB em 10 dias), o quadro de prazos não dá o pedido por vencido: a DCB diz até quando pedir
   const quadro = await p.evaluate(k => linhasDeDatas(D.casoPorId.get(k).cliente_id).soltas.filter(x => x.casoId === k).map(x => (x.rotulo || "") + "|" + (x.rot || "").replace(/<[^>]+>/g, "")), C3);
-  conf(4, "D2 o próximo passo do benefício que vai cessar é pedir a prorrogação até a DCB e o resumo o anuncia; a DCB vencida avisa no INSS e some na ação",
-    /Pedir a prorrogação até/.test(li.itens[1]) && new RegExp(`próximo: Pedir a prorrogação até ${br(iso(10))}`).test(li.res) && /3 benefícios/.test(li.res)
+  // F236 · a janela são os 15 dias que ANTECEDEM a DCB (IN 128/2022, art. 339, § 3º): o último dia é a véspera, e com ela aberta o quadro mantém o "Pedir a prorrogação" com a data limite
+  conf(4, "D2 o próximo passo do benefício que vai cessar é pedir a prorrogação até a véspera da DCB e o resumo o anuncia; a DCB vencida avisa no INSS e some na ação",
+    /Pedir a prorrogação até/.test(li.itens[1]) && new RegExp(`próximo: Pedir a prorrogação até ${br(iso(9))}`).test(li.res) && /3 benefícios/.test(li.res)
     && !/Pedir a prorrogação/.test(li.itens[0]) && passos.a1.some(t => /passou sem pedido de prorrogação registrado !/.test(t)) && !passos.c2.some(t => /prorroga/i.test(t))
-    && !quadro.some(t => /^Pedir a prorrogação\|/.test(t)) && quadro.some(t => /^DCB, o benefício cessa\|.*peça a prorrogação até este dia/.test(t)));
+    && quadro.some(t => /^Pedir a prorrogação\|.*até/.test(t)) && quadro.some(t => /^DCB, o benefício cessa\|.*peça a prorrogação até/.test(t)));
   if (!/próximo: Pedir/.test(li.res) || process.env.VER) console.log("   linha:", JSON.stringify({ li, passos }));
   const mora = await p.evaluate(([k, der, per]) => {
     const kk = D.casoPorId.get(k), sem = (() => { const ev = D.eventos; D.eventos = []; const r = prazoMora(kk); D.eventos = ev; return r; })();
