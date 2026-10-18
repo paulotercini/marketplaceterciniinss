@@ -4597,7 +4597,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.65</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.66</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15783,9 +15783,12 @@ async function abrirFicha(cliId){
     // repintar o mesmo cliente depois de gravar busca de novo, sempre)
     const pre = trocouCliente && preFicha.get(cliId);
     preFicha.delete(cliId);
+    const esc0 = escritas;
     const [ands, creds, vincs, anexos, convs, tarefasF, zapsF] = await
       ((pre && Date.now()-pre.em < 20000 && pre.escritas===escritas) ? pre.p : buscarFicha(cliId, ids));
-    D.anexos = anexos;
+    // F241 · o documento gravado enquanto a busca estava a caminho (gerado, assinado) não some da tela: a busca saiu antes dele
+    const meio = escritas!==esc0 ? (D.anexos||[]).filter(a=>a.cliente_id===cliId && !anexos.some(b=>b.id===a.id)) : [];
+    D.anexos = meio.length ? [...meio, ...anexos] : anexos;
     D.convFicha = convs;
     D.zapFicha = zapsF;
     D.tarefasFicha = tarefasF;
