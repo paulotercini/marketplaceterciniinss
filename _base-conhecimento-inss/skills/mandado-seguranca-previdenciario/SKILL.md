@@ -157,7 +157,7 @@ Trava de honestidade. O mesmo STJ reafirma que o MS contra ato judicial é excep
 
 ## Extensão
 
-Teto da peça do mandado de segurança, 5 páginas e 4 seções, fixado na personalização do titular (Onda 158). Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Extensão de referência do mandado de segurança, 5 páginas e 4 seções, de preferência (personalização do titular, Onda 158). É referência preferencial, e não limite obrigatório (Onda 181): a peça tem a extensão que a compreensão de cada pedido exige, e dela sai apenas a repetição, nunca fato, prova, cálculo, explicação de norma ou transição. Antes de escrever, nomear em uma frase o ponto que decide, e o dado que o prova acompanha cada pedido. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 

@@ -7,7 +7,7 @@ description: "Skill para transposição de análise de PPP em petições de temp
 
 ## Visão Geral
 
-Esta skill converte o resultado da análise de PPP (produzida pelas skills `auditoria-ppp` e `ppp-agentes-especializados`) em petições adaptadas ao rito processual e ao posicionamento específico do órgão julgador. A mesma tese de tempo especial exige argumentação, estrutura, ênfase probatória e fundamentação normativa diferentes conforme tramite perante o CRPS, o JEF ou o rito ordinário do TRF3. Em qualquer rito, a forma da peça é a do `peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md` (Onda 174), com o Perfil Profissiográfico Previdenciário descrito pelo emitente e pela data e o trecho do agente nocivo transcrito em negrito e itálico, e o esqueleto pronto está nos Modelos Ouro 2.0 de aposentadoria especial.
+Esta skill converte o resultado da análise de PPP (produzida pelas skills `auditoria-ppp` e `ppp-agentes-especializados`) em petições adaptadas ao rito processual e ao posicionamento específico do órgão julgador. A mesma tese de tempo especial exige argumentação, estrutura, ênfase probatória e fundamentação normativa diferentes conforme tramite perante o CRPS, o JEF ou o rito ordinário do TRF3. Em qualquer rito, a forma da peça é a do `peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md` (Onda 174), com o Perfil Profissiográfico Previdenciário descrito pelo emitente e pela data e o trecho do agente nocivo transcrito em negrito e itálico, e o esqueleto pronto está nos Modelos Ouro 3.0 de aposentadoria especial.
 
 O erro mais grave que um advogado pode cometer ao peticionar tempo especial é tratar todos os ritos e órgãos julgadores como se fossem idênticos. Cada instância tem sua cultura decisória, seus precedentes dominantes, seu grau de receptividade a determinados argumentos e suas limitações normativas. Esta skill mapeia essas diferenças e orienta a redação.
 
@@ -104,7 +104,7 @@ Esta skill NÃO substitui as skills de CRPS (recurso-especial-crps, admissibilid
 
 ## Extensão
 
-Teto de a peça por rito, o orçamento da Camada 6, 7 páginas na inicial, 4 no recurso inominado, 3 no recurso ao CRPS. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Extensão de referência da peça por rito, 7 páginas na inicial, 4 no recurso inominado e 3 no recurso ao CRPS. É referência preferencial, e não limite obrigatório (Onda 181): a peça tem a extensão que a compreensão de cada pedido exige, e dela sai apenas a repetição, nunca fato, prova, cálculo, explicação de norma ou transição. Antes de escrever, nomear em uma frase o ponto que decide, e o dado que o prova acompanha cada pedido. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Redação da peça neste tema
 

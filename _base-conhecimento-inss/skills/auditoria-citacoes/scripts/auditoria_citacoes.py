@@ -3,7 +3,7 @@
 
 Etapa 1 da skill auditoria-citacoes. Varredura MECANICA e deterministica.
 Extrai toda jurisprudencia afirmada nas skills (base-*, ponte-* e operacionais)
-e, opcionalmente, nos Modelos Ouro 2.0 baixados do Drive, e lista os achados
+e, opcionalmente, nos Modelos Ouro 3.0 baixados do Drive, e lista os achados
 em JSON para triagem e verificacao nas etapas seguintes.
 
 O que este script FAZ.
@@ -108,7 +108,7 @@ def em_quarentena(linhas, i):
 # ---------------------------------------------------------------- varredura
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--modelos", help="pasta local dos Modelos Ouro 2.0 baixados do Drive")
+    ap.add_argument("--modelos", help="pasta local dos Modelos Ouro 3.0 baixados do Drive")
     ap.add_argument("--incluir-catalogo", action="store_true",
                     help="inclui base-precedentes-catalogo-vinculantes na varredura")
     ap.add_argument("--saida", default="auditoria_citacoes.json")

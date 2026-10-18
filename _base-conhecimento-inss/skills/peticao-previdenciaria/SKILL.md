@@ -37,7 +37,7 @@ Toda peça, em todos os temas, segue `references/METODO-PETICAO-TERCINI.md`, ext
 
 Na petição inicial a ordem é fixa. Endereçamento, qualificação copiada da procuração, nome da ação centralizado, INSS com a Gerência Executiva de São José do Rio Preto, e as seções 1. DA INEXISTÊNCIA DE AÇÃO JUDICIAL COM O MESMO OBJETO, 2. DOS FATOS (com a subseção do fato decisivo), 3. DO [BENEFÍCIO], eventuais seções adicionais e REQUERIMENTOS, seguidos de valor da causa, fecho e, havendo perícia, QUESITOS. As demais peças seguem o esqueleto da seção 4 do método.
 
-A voz é a do titular. A parte é "a Parte Autora", o réu é "o Instituto Nacional do Seguro Social – INSS" e depois "a Autarquia Federal", a virada dos fatos é "Entretanto, está equivocado o entendimento da Autarquia Federal, pois..., senão vejamos", e o direito fecha por "Deste modo, Excelência, ... como medida de direito e de justiça". O documento é descrito pelo emitente, pelo registro profissional e pela data, com o trecho decisivo transcrito em ***"negrito e itálico"***, e a lei é transcrita em recuo, só no que decide, antes do parágrafo que a aplica ao caso.
+A voz é a do titular. A parte é "a Parte Autora", o réu é "o Instituto Nacional do Seguro Social – INSS" e depois "a Autarquia Federal", a virada dos fatos é "Entretanto, está equivocado o entendimento da Autarquia Federal, porque [razão com o documento]", e o direito fecha por "Deste modo, Excelência, comprovado que [...], requer [...] desde [data]". Os fatos ocupam a maior parte da peça, em ordem cronológica, com o documento descrito pelo emitente, pelo registro profissional e pela data e com o trecho decisivo transcrito em ***"negrito e itálico"***. A lei é transcrita em recuo apenas no dispositivo cuja interpretação o INSS contestou, e o requisito incontroverso recebe remissão na frase (Onda 182, `references/ESTILO-MODELO.md`).
 
 ## O estilo, calibrado no papel do escritório
 
@@ -257,7 +257,7 @@ A regra central é que a réplica NÃO responde a cada linha da contestação. F
 
 Quando a peça for memorial (sustentação oral no CRPS, turma recursal, câmara do TRF3), aplicar o framework EVO (Essencial, Visual, Organizado) adaptado ao previdenciário.
 
-**Limite absoluto.** Duas páginas. Memorial com mais de duas páginas será ignorado. O desembargador ou conselheiro só lê o memorial quando percebe, à primeira vista, que ele reduz o custo cognitivo. Memorial com cara e volume de petição elimina suas chances antes da primeira linha.
+**Extensão de referência.** Duas páginas, de preferência (Onda 181). O memorial curto é o que o julgador lê. O desembargador ou conselheiro só lê o memorial quando percebe, à primeira vista, que ele reduz o custo cognitivo. Memorial com cara e volume de petição elimina suas chances antes da primeira linha.
 
 **Estrutura obrigatória.** Uma página ideal, duas máximo.
 
@@ -304,13 +304,13 @@ Antes de gerar qualquer petição, esta skill aciona automaticamente as skills c
 A revisão final do conteúdo da petição é responsabilidade da skill `base-revisao-peticao-aprofundada`, acionada automaticamente após esta skill concluir a geração, na ordem única de execução dela. A `revisao-peticao` é apenas redirecionamento para ela desde a Onda 139.
 
 
-## Orçamento declarado antes da redação (Onda 120)
+## Extensão de referência declarada antes da redação (Onda 120, revista na Onda 181)
 
-Antes de escrever a primeira linha, declarar o tipo de peça, o orçamento de páginas correspondente e a distribuição por seção. Exemplo para petição inicial de 7 páginas, endereçamento e qualificação 0,5, fatos 2, direito 3, Parágrafo de Realidade 0,5, pedidos 1.
+Antes de escrever a primeira linha, declarar o tipo de peça, a extensão de referência e a distribuição por seção. Exemplo para petição inicial de cerca de 7 páginas, endereçamento e qualificação 0,5, fatos 2, direito 3, Parágrafo de Realidade 0,5, pedidos 1.
 
-A distribuição é plano de trabalho, não promessa. Seção que estourar o previsto sinaliza que ali há fundamento acessório sendo desenvolvido como se fosse decisivo, e é onde a fusão de fundamentos deve atuar primeiro.
+A distribuição é plano de trabalho, não limite. Desde 17/10/2026, por determinação do titular, a extensão de cada peça é **referência preferencial, e não obrigatória**, porque o limite rígido levava a cortes que prejudicavam a compreensão. Seção que passar do previsto é examinada em busca de fundamento acessório desenvolvido como decisivo e de repetição, que saem. Fato, prova, cálculo, explicação de norma e transição ficam, mesmo que a peça passe da referência. A clareza de cada pedido prevalece sobre o número de páginas.
 
-Peça sem orçamento declarado cresce por acúmulo, porque cada skill acionada acrescenta e nenhuma subtrai. O orçamento por tipo de peça e a passada de corte estão na Camada 6 da `base-revisao-peticao-aprofundada`.
+A referência por tipo de peça e a passada de enxugamento sem meta estão na Camada 6 da `base-revisao-peticao-aprofundada`.
 
 ## MCPs da casa
 

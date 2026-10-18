@@ -35,20 +35,20 @@ A coluna Origem distingue o que o titular FIXOU do que foi PROPOSTO nesta Onda p
 | Anotação `(C)` no To Do | 2 a 3 linhas | Fixado, protocolo regra 1 |
 | Síntese do caso em petição | 2 a 3 linhas | Fixado, Onda 118 |
 | Componentes Visual Law por peça | 3 | Fixado, Onda 118 |
-| Petição inicial | 7 páginas | Fixado, Camada 6 |
-| Recurso inominado | 4 páginas | Fixado, Camada 6 |
-| Manifestação sobre laudo | 3 páginas | Fixado, Camada 6 |
-| Recurso ao CRPS | 3 páginas | Fixado, Camada 6 |
-| Embargos de declaração | 2 páginas | Fixado, Camada 6 |
-| Petição comum | 2 páginas | Fixado, Camada 6 |
-| Memorial | 2 páginas, limite absoluto | Fixado, peticao-previdenciaria |
-| Jurisprudência transcrita em toda a peça | 1 página, 15 linhas por precedente | Fixado, peticao-previdenciaria |
+| Petição inicial | 7 páginas, de preferência | Referência preferencial, Onda 181 |
+| Recurso inominado | 4 páginas, de preferência | Referência preferencial, Onda 181 |
+| Manifestação sobre laudo | 3 páginas, de preferência | Referência preferencial, Onda 181 |
+| Recurso ao CRPS | 3 páginas, de preferência | Referência preferencial, Onda 181 |
+| Embargos de declaração | 2 páginas, de preferência | Referência preferencial, Onda 181 |
+| Petição comum | 2 páginas, de preferência | Referência preferencial, Onda 181 |
+| Memorial | 2 páginas, de preferência | Referência preferencial, Onda 181 |
+| Jurisprudência transcrita em toda a peça | 1 página, 15 linhas por precedente, de preferência | Referência preferencial, Onda 181 |
 | Relatório médico ao médico assistente | 1 folha | Fixado, modelo Delgina |
 | Orientação ao cliente para perícia | 1 página | Fixado, Onda 96 |
-| Requerimento administrativo | 1 folha | Fixado, inicial-inss |
+| Requerimento administrativo | 1 folha, de preferência | Referência preferencial, Onda 181 |
 | Transcrição de atendimento | Teste dos quatro elementos, sem contagem | Fixado, Onda 132 |
-| Mandado de segurança | 5 páginas e 4 seções | Fixado, personalização 2.4 (Onda 158) |
-| Carta de retificação de PPP à empresa | 2 páginas | Proposto |
+| Mandado de segurança | 5 páginas e 4 seções, de preferência | Referência preferencial, Onda 181 |
+| Carta de retificação de PPP à empresa | 2 páginas, de preferência | Referência preferencial, Onda 181 |
 | Estudo pré-perícia e pré-audiência | 2 páginas | Proposto, a partir de "sem enrolação" |
 | Relatório de auditoria (PPP, laudo, CNIS, contestação, decisão) | 2 páginas, achados em ordem de gravidade | Proposto |
 | Relatório de triagem | 1 página, é parecer | Proposto, por aplicação da regra 4 |
@@ -64,7 +64,9 @@ Primeiro, declarar o teto e o ponto decisivo ANTES de redigir. A peça nasce den
 
 Segundo, aferir sobre o arquivo gerado. Em .docx, converter em PDF e contar páginas. Em texto, contar linhas.
 
-Terceiro, estourou, não sai. Volta para o corte, com lista do que saiu. Excesso justificado por múltiplas matérias é admitido se declarado no relatório, matéria por matéria.
+Terceiro, estourou, não sai. Volta para o corte, com lista do que saiu. Excesso justificado por múltiplas matérias é admitido se declarado no relatório, matéria por matéria. Esta terceira regra vale para parecer, relatório, anotação e mensagem, e não para peça processual ou administrativa.
+
+Quarto, na peça processual ou administrativa a extensão é referência preferencial, e não limite obrigatório (Onda 181, determinação do titular de 17/10/2026). A peça tem a extensão que a compreensão de cada pedido exige. Dela sai apenas a repetição, e nunca fato, prova, cálculo, explicação de norma ou transição necessária à compreensão. Na dúvida, o trecho fica.
 
 ## Os anti-padrões que geram folha
 
@@ -176,6 +178,20 @@ O titular determinou a leitura de todas as sentenças e decisões do juízo de C
 ## Registro formal (12/10/2026)
 
 O titular determinou que toda escrita jurídica do escritório, peça, parecer e Parágrafo de Realidade, evite coloquialismo e palavra informal, e corrigiu ele próprio onze expressões de uma peça ("só" por "apenas", "chega a" por "alcança", "mostra" por "indica", "começou na roça" por "iniciou o trabalho rural", entre outras). A tabela completa está em `peticao-previdenciaria/references/ESTILO-MODELO.md`, seção Registro formal, e o `medir_peca.py` aponta as formas já corrigidas. A orientação ao cliente segue o padrão 7, linguagem simples, que não se confunde com linguagem informal.
+
+Em 17/10/2026 o titular acrescentou três correções, com o exemplo em `ESTILO-MODELO.md`, seção A frase. O recurso "foi interposto" e o requerimento "foi protocolado", e nunca "havia chegado". A norma "determina", "dispõe" ou "estabelece", e nunca "manda". O órgão se nomeia por extenso em todas as ocorrências, Junta de Recursos e Câmara de Julgamento, e nunca "a Junta" ou "a Câmara". O `medir_peca.py` aponta as três formas.
+
+## A mesma escrita em todos os ritos (Onda 184, 18/10/2026)
+
+O titular determinou que todas as peças mantenham a mesma integridade de escrita, e não apenas a petição inicial, e que o recurso administrativo use linguagem mais simples, com artigo apenas quando extremamente necessário. O `ESTILO-MODELO.md` ganhou o quadro "A mesma peça em todos os ritos", que diz o que cada peça transcreve. Embargos e manifestação sobre laudo não transcrevem lei, e o recurso ao CRPS cita a norma por remissão curta. O medidor acusa a lei em bloco nessas peças. O prazo dos embargos no CRPS é de 30 dias (art. 92, § 2º, do Regimento Interno).
+
+## Modelos Ouro 3.0 (Onda 183, 18/10/2026)
+
+O titular aprovou os três pilotos e determinou a correção dos demais modelos pelas regras da Onda 182. A pasta `Acervo de Modelos\Modelos Ouro 3.0` do Drive reúne os 72 modelos nas mesmas 14 subpastas da versão 2.0, que permanece intacta como histórico e saiu do MCP acervo. Cada modelo transcreve no máximo um dispositivo por seção, narra os fatos com data, documento e número e segue a sequência do juízo de Catanduva. Os pontos que dependem de conferência ficam marcados "conferir antes de usar" no próprio modelo.
+
+## Fatos primeiro e lei na medida (Onda 182, 17/10/2026)
+
+O titular pediu texto direto, jurídico e formal, sem enrolação e sem excesso de lei, com preferência pelos fatos e pelo seu detalhamento, e aprovou a revisão do `ESTILO-MODELO.md`. A análise mostrou que o excesso de lei vinha do método, que mandava transcrever o artigo em toda seção de direito, e que o fato resumido vinha da falta de regra de conteúdo para os fatos. O manual passou a ter a seção "Os fatos primeiro, e detalhados" (ordem cronológica, atividade pelos gestos e pela jornada, limitação pelo que a pessoa deixou de conseguir fazer, quadro de períodos) e a seção "A lei na medida" (transcrição apenas do dispositivo contestado pelo INSS, no máximo um por seção, e remissão na frase para o restante). A regra "uma informação nova por frase" deu lugar a "cada frase acrescenta um fato ou a consequência do anterior". Saíram do método as fórmulas "senão vejamos", "decisão precipitada da Autarquia Federal", "Sentindo-se lesada [...] socorrer ao amparo do Poder Judiciário", "lhe sendo cabível", "devidamente comprovado" e "como medida de direito e de justiça", e o `medir_peca.py` passou a apontá-las, assim como dois ou mais artigos transcritos em recuo na mesma seção. O manual trocou o histórico das calibragens por dois trechos-modelo completos, e o exemplar da petição inicial de incapacidade deixou de transcrever cinco artigos.
 
 ## Método Tercini de petição (Onda 174, 04/10/2026)
 
