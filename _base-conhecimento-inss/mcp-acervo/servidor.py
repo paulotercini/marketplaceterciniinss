@@ -15,7 +15,7 @@ import banco
 
 mcp = MCPServer("acervo", instructions=(
     "Acervo de pecas e modelos do escritorio Paulo Roberto Tercini Filho, em base LOCAL "
-    "construida a partir dos Modelos Ouro 2.0, do Acervo de Modelos e das pecas "
+    "construida a partir dos Modelos Ouro 3.0, do Acervo de Modelos e das pecas "
     "PROTOCOLADAS, que sao os PDF assinados pelo escritorio guardados nas pastas de "
     "cliente. Responde 'como ja sustentamos X' devolvendo o TRECHO argumentativo e a "
     "peca de origem. Rascunho NAO entra, so o que foi protocolado e o modelo, porque "
