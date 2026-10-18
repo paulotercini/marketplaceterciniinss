@@ -39,7 +39,10 @@ Estudo com os protótipos: https://claude.ai/artifact/7naCSCHvExCjhJMBVdeouL
    - Falta responder: em risco, falta, a informar e divergente, com os campos.
    - Conclusão: "O que dá para fazer agora", tempos, considerações, "Registrar análise" e a linha que leva ao Desfecho.
 3. **F240 (11.64), feita.** Documentos em passos no modo atendimento com pré-caso (fora dele fica como era): Assinar (com os gerados e assinados), Pedir ao cliente (com o que já temos no dossiê), Guia do pedido e Desfecho. Catálogo, consultas com o CPF, anexos da IN 128 e site interno ficam na gaveta "Ferramentas", fechada e à vista em todos os passos. A conversa da equipe continua abaixo da página, como nas outras abas do atendimento.
-4. **Encurtar o caso.** A linha do tempo mostra os mais recentes, os prazos aparecem resumidos e o Caso completo é agrupado por mês.
+4. **F241 (11.65), feita.** Encurtar o caso, sem passos:
+   - A linha do tempo do Escritório mostra os dias mais recentes, com ao menos 5 anotações e todas as não lidas. As mais antigas ficam no botão "Ver as N anotações mais antigas".
+   - Prazos e compromissos mostra o próximo, o próximo prazo fatal, a perícia, os vencidos, os a confirmar e o que vence em 7 dias. As datas mais adiante ficam em "Ver mais N datas", na mesma ordem decrescente (F145).
+   - O Caso completo, com mais de 12 registros, vem por mês dentro de cada fase. Ficam abertos o mês atual, o anterior e o mês mais recente do caso.
 
 ## Decidido
 
