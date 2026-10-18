@@ -15,6 +15,11 @@ assert any('posto que' in a for a in achados('O pedido procede, posto que o form
 longa = ' '.join(['palavra']*45) + '.'
 assert any('Frase com' in a for a in achados(longa))
 assert not any('Frase com' in a for a in achados(' '.join(['palavra']*40) + ' "trecho literal do documento transcrito".'))
+# Onda 184: lei em recuo é IMPORTANTE em laudo, embargos e CRPS; na inicial, um artigo por seção passa
+recuo='## 2. DA OMISSÃO\n\n> **Art. 1.022.** Cabem embargos de declaração contra qualquer decisão judicial.\n'
+assert any('Lei transcrita em recuo' in a for a in achados(recuo,'embargos'))
+assert not any('Lei transcrita em recuo' in a for a in achados(recuo,'inicial'))
+assert any('remissões a artigo' in a for a in achados(' '.join(f'art. {i}' for i in range(1,9)),'crps'))
 print('ok')
 # termo técnico "absolutamente incapaz" não é intensificador
 assert not any('Adjetivo' in a for a in achados('A prescrição não corre contra o dependente absolutamente incapaz, nos termos do art. 198, I, do Código Civil, de modo que o termo inicial é a data do óbito.'))
