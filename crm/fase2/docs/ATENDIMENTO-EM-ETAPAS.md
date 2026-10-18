@@ -38,7 +38,7 @@ Estudo com os protótipos: https://claude.ai/artifact/7naCSCHvExCjhJMBVdeouL
    - Já resolvido: em ordem e informativo, uma linha cada.
    - Falta responder: em risco, falta, a informar e divergente, com os campos.
    - Conclusão: "O que dá para fazer agora", tempos, considerações, "Registrar análise" e a linha que leva ao Desfecho.
-3. **Documentos.** Quatro passos: assinar, pedir ao cliente, guia do pedido e desfecho. Catálogo, consultas, anexos da IN 128 e site interno vão para uma gaveta "Ferramentas", e a conversa da equipe fica ao lado.
+3. **F240 (11.64), feita.** Documentos em passos no modo atendimento com pré-caso (fora dele fica como era): Assinar (com os gerados e assinados), Pedir ao cliente (com o que já temos no dossiê), Guia do pedido e Desfecho. Catálogo, consultas com o CPF, anexos da IN 128 e site interno ficam na gaveta "Ferramentas", fechada e à vista em todos os passos. A conversa da equipe continua abaixo da página, como nas outras abas do atendimento.
 4. **Encurtar o caso.** A linha do tempo mostra os mais recentes, os prazos aparecem resumidos e o Caso completo é agrupado por mês.
 
 ## Decidido
