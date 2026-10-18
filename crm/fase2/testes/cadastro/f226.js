@@ -49,6 +49,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
+    localStorage.setItem("crm_passos_tudo", "1");   // F238/F239 · a página inteira; os passos têm o f238.js e o f239.js
     localStorage.setItem("crm_tema", "v10");
   }, [SUPA, SESSAO]);
   await instalarBanco(ctx, { SUPA, SESSAO, banco });
@@ -108,6 +109,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.screenshot({ path: path.join(OUT, "02-seletor-e-desfecho.png") });
   conf("com dois pré-casos, o modo atendimento mostra o seletor com o escolhido marcado",
     esc.length === 2 && esc.some(([t, on]) => /Aposentadoria por idade/.test(t) && on) && esc.some(([t, on]) => /BPC/.test(t) && !on));
+  await p.evaluate(() => irSubCad("documentos")); await p.waitForTimeout(400);   // F239 · o Desfecho fica só no fim de Documentos
   const ordem = await p.evaluate(() => [...document.querySelectorAll("#desfecho .desf-acoes > *")].map(e => e.tagName === "SELECT" ? e.options[0].text : e.textContent.trim()));
   conf(`o Desfecho tem arquivar, Aposentadorias futuras e gerar o caso, nessa ordem (${ordem.join(" | ")})`,
     ordem.length === 3 && /^1 · Arquivar/.test(ordem[0]) && /^2 · Enviar a Aposentadorias futuras/.test(ordem[1]) && /^3 · Gerar o caso/.test(ordem[2]));

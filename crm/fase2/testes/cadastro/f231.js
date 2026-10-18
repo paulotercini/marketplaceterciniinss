@@ -57,6 +57,7 @@ const cli = id => T.clientes.find(c => c.id === id);
   await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
+    localStorage.setItem("crm_passos_tudo", "1");   // F238/F239 · a página inteira; os passos têm o f238.js e o f239.js
     localStorage.setItem("crm_tema", "v10");
   }, [SUPA, SESSAO]);
   await instalarBanco(ctx, { SUPA, SESSAO, banco });
