@@ -31,8 +31,8 @@ import parser
 
 FONTES_PADRAO = """\
 # origem|caminho|filtro opcional no caminho relativo
-modelo_ouro|G:\\Meu Drive\\Acervo de Modelos\\Modelos Ouro 2.0
-# Peticoes Ouro fica de fora desde 20/09/2026, e versao anterior superada pelo 2.0.
+modelo_ouro|G:\\Meu Drive\\Acervo de Modelos\\Modelos Ouro 3.0
+# Peticoes Ouro fica de fora desde 20/09/2026, e o 2.0 desde 18/10/2026, versoes superadas pelo 3.0.
 acervo|G:\\Meu Drive\\Acervo de Modelos
 # As pastas Claude dos clientes sairam do escopo em 20/09/2026, por decisao do titular,
 # porque guardam rascunho que em regra foi corrigido antes do protocolo.
@@ -48,7 +48,7 @@ nomes|G:\\Meu Drive\\Processos
 """
 
 # Duplicacao de sincronismo do Drive, 14 das 34 pastas de topo do Acervo tem gemea "(1)".
-IGNORAR_PASTA = ("__pycache__", ".git", ".obsidian")
+IGNORAR_PASTA = ("__pycache__", ".git", ".obsidian", "Modelos Ouro 2.0")
 IGNORAR_ARQUIVO = ("desktop.ini", "thumbs.db")
 
 # A peca PROTOCOLADA e reconhecida pela assinatura do escritorio no proprio texto, que
@@ -75,6 +75,9 @@ def fontes():
         arq.parent.mkdir(parents=True, exist_ok=True)
         arq.write_text(FONTES_PADRAO, encoding="utf-8")
         print(f"criado {arq}, confira as raizes antes de indexar", flush=True)
+    texto = arq.read_text(encoding="utf-8")
+    if "Modelos Ouro 2.0" in texto:      # fontes.txt de antes de 18/10/2026
+        arq.write_text(texto.replace("Modelos Ouro 2.0", "Modelos Ouro 3.0"), encoding="utf-8")
     saida = []
     for linha in arq.read_text(encoding="utf-8").splitlines():
         linha = linha.strip()

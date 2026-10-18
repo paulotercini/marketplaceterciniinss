@@ -68,12 +68,17 @@ Degrau 5, prequestionamento. Em todos os degraus, nomear os dispositivos (arts. 
 
 ## Modelo de tópico para a impugnação
 
+No tópico, transcreve-se o trecho do laudo ao lado do documento médico que o contradiz, e nenhuma lei vai em bloco, porque os dispositivos entram por remissão na frase (Onda 184, `peticao-previdenciaria/references/ESTILO-MODELO.md`).
+
 ```
 [N]. DA INSUFICIÊNCIA TÉCNICA DO LAUDO E DA NECESSIDADE DE ESCLARECIMENTOS
 
-O laudo concluiu pela capacidade laborativa a partir de [síntese do que
-o laudo fez], sem, contudo, examinar [a atividade real do autor / as
-exigências concretas da função / os documentos médicos de ID X e Y].
+O laudo pericial (ID [__]) concluiu pela capacidade laborativa nos
+seguintes termos: "[trecho literal da conclusão do laudo]". Contudo, o
+[relatório médico ou exame], de DD/MM/AAAA (ID [__]), registra que
+"[trecho literal da limitação]", e o laudo não examinou [a atividade
+real da Parte Autora / as exigências concretas da função / esse
+documento].
 
 A incapacidade previdenciária não se resolve no diagnóstico. Ela decorre
 da relação entre a moléstia, as limitações funcionais e as exigências
@@ -83,7 +88,7 @@ conclusão sobre capacidade.
 
 Não se trata de divergência quanto à conclusão, mas de INSUFICIÊNCIA
 metodológica, que o art. 473 do CPC não admite e que o art. 477, § 2º,
-manda sanar por esclarecimentos.
+determina que se sane por esclarecimentos.
 
 Requer-se, por isso, [esclarecimentos quanto aos quesitos anexos /
 complementação do laudo / subsidiariamente, nova perícia com perito de

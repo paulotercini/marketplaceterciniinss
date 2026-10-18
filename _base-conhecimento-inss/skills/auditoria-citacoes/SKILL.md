@@ -1,13 +1,13 @@
 ---
 name: auditoria-citacoes
-description: "Auditora de veracidade das citações jurisprudenciais da base. Varre as skills (base-*, ponte-*, operacionais) e os Modelos Ouro 2.0 do Drive, extrai Tema, Súmula, Enunciado, PUIL, PEDILEF, REsp, RE, ADI, IRDR, IAC e QO afirmados, e confere se existem, se estão vigentes e se a tese citada bate com a real. Honestidade radical aplicada à própria base, corrige o sanável e sinaliza o resto. Use SEMPRE que mencionar averiguar veracidade das skills, auditar modelos ouro, conferência de jurisprudência em massa, auditoria de citações, citação inventada, homônimo de tribunal, tema cancelado citado como vigente, catálogo complementar verificado, quarentena de citação, manutenção periódica da base, auditoria_citacoes.py. Cinco etapas, script determinístico, triagem por status, verificação na fonte por subagentes, correção com nota datada, porta de qualidade com commit. Cruza com base-precedentes-catalogo-vinculantes e base-revisao-peticao-aprofundada. NÃO use para revisar petição individual."
+description: "Auditora de veracidade das citações jurisprudenciais da base. Varre as skills (base-*, ponte-*, operacionais) e os Modelos Ouro 3.0 do Drive, extrai Tema, Súmula, Enunciado, PUIL, PEDILEF, REsp, RE, ADI, IRDR, IAC e QO afirmados, e confere se existem, se estão vigentes e se a tese citada bate com a real. Honestidade radical aplicada à própria base, corrige o sanável e sinaliza o resto. Use SEMPRE que mencionar averiguar veracidade das skills, auditar modelos ouro, conferência de jurisprudência em massa, auditoria de citações, citação inventada, homônimo de tribunal, tema cancelado citado como vigente, catálogo complementar verificado, quarentena de citação, manutenção periódica da base, auditoria_citacoes.py. Cinco etapas, script determinístico, triagem por status, verificação na fonte por subagentes, correção com nota datada, porta de qualidade com commit. Cruza com base-precedentes-catalogo-vinculantes e base-revisao-peticao-aprofundada. NÃO use para revisar petição individual."
 ---
 
 # Auditoria de Veracidade das Citações da Base
 
 ## 1. Escopo e postura
 
-Skill operacional de manutenção. Aplica à própria base de conhecimento o mesmo rigor que a `base-revisao-peticao-aprofundada` aplica às peças. Toda jurisprudência afirmada nas skills (`base-*`, `ponte-*` e operacionais) e nos Modelos Ouro 2.0 do Drive, Tema, Súmula, Enunciado, PUIL e correlatos, é tratada como suspeita até confirmação. O que dá para corrigir, corrige. O que não dá, sinaliza com destaque.
+Skill operacional de manutenção. Aplica à própria base de conhecimento o mesmo rigor que a `base-revisao-peticao-aprofundada` aplica às peças. Toda jurisprudência afirmada nas skills (`base-*`, `ponte-*` e operacionais) e nos Modelos Ouro 3.0 do Drive, Tema, Súmula, Enunciado, PUIL e correlatos, é tratada como suspeita até confirmação. O que dá para corrigir, corrige. O que não dá, sinaliza com destaque.
 
 Postura pró-segurado exclusiva. Uma citação falsa ou divergente na base contamina cada peça gerada a partir dela. Auditar a base é proteger o segurado na origem.
 
@@ -95,7 +95,7 @@ Terceira, portal bloqueado se registra com honestidade. Dizer que conferiu na fo
 
 Quarta, tudo em português correto, no padrão de redação do escritório, sem dois-pontos introduzindo lista na prosa.
 
-## 5. Modelos Ouro 2.0 e o Drive
+## 5. Modelos Ouro 3.0 e o Drive
 
 A varredura dos modelos depende de baixá-los antes com o comando `modelos --baixar`, que exige token do Drive por script válido. Quando o token estiver expirado ou indisponível, a auditoria roda apenas sobre as skills, declara a limitação no relatório e deixa os modelos para a rodada seguinte, sem silêncio sobre a lacuna.
 

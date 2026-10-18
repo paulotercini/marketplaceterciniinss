@@ -81,7 +81,7 @@ Uma decisão pode acionar mais de um eixo. Embargos e recurso não se confundem 
 
 ## Prazos, atenção
 
-Primeiro, embargos, 5 dias no CRPS e no CPC.
+Primeiro, embargos, 30 dias no CRPS (art. 92, § 2º, do Regimento Interno, Portaria MPS 125/2026) e 5 dias no CPC.
 
 Segundo, recurso ordinário no CRPS, 30 dias.
 

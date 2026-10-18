@@ -201,7 +201,7 @@ Skills relevantes. `peticao-previdenciaria`.
 
 ### Memorial
 
-- [ ] **Limite absoluto de duas páginas** (CRÍTICO se exceder).
+- [ ] **Duas páginas, de preferência** (referência, sem achado por extensão, Onda 181).
 - [ ] **Framework EVO.** Essencial, Visual, Organizado.
 - [ ] Elementos essenciais apenas. Questão central, fundamento para reforma, provas e resultados, pedido final.
 - [ ] **Vedado** reproduzir a fundamentação da petição ou recurso.

@@ -24,13 +24,17 @@ PAGINAS = {'inicial':7,'inominado':4,'laudo':3,'crps':3,'embargos':2,'comum':2,'
 PAL_PAGINA = 300                     # ~30 linhas úteis x 10 palavras, descontando títulos
 
 ADJ_VEDADOS = r'\b(inconteste|terminantemente|absolutamente(?!\s+incapaz)|manifestamente|flagrante(?:mente)?|absurd[oa]|basilares?|induvidos[oa](?:mente)?|escancarad[oa]|gritante|esdr[úu]xul[oa]|desesperador[a]?|abandonad[oa] à pr[óo]pria sorte|cristalin[oa]|patente(?:mente)?|evidentemente|obviamente|claramente)\b'
-FORMULAS_VAZIAS = r'(?i)\b(é cediço|é de se ver|como se sabe|vale ressaltar|importante mencionar|em apertada síntese|sem dúvida|insta salientar|cumpre ressaltar|mister se faz|resta claro|resta evidente|à luz dos mais comezinhos|os mais basilares|princípios de justiça)\b'
+FORMULAS_VAZIAS = r'(?i)\b(é cediço|é de se ver|como se sabe|vale ressaltar|importante mencionar|em apertada síntese|sem dúvida|insta salientar|cumpre ressaltar|mister se faz|resta claro|resta evidente|à luz dos mais comezinhos|os mais basilares|princípios de justiça|senão vejamos|como medida de direito e de justiça|devidamente comprovad[oa]s?|lhe sendo cabível|decisão precipitada|socorrer ao amparo)\b'   # Onda 182, fórmulas do modelo de 2024 retiradas do método
 VOCAB_TROCAR = [(r'(?i)\bposto que\b', 'posto que é concessivo; para causa, porque ou haja vista'), (r'(?i)\btão-somente\b', 'tão somente'), (r'\bNCPC\b', 'CPC'), (r'(?i)\bo \(a\) autor \(a\)', 'a Parte Autora'), (r'\bExplico\.', 'conclusão curta seguida de explicação; inverter a ordem'),
     # registro formal (12/10/2026), coloquialismos corrigidos pelo titular; tabela em ESTILO-MODELO.md
     (r'(?i)\bsó\b', 'coloquial; apenas'), (r'(?i)\bfic(?:ou|aram) n[oa]s? motivos\b', 'coloquial; constou apenas dos motivos'),
     (r'(?i)\bcheg(?:a|am|ou|aram) (?:a \d|em \d)', 'coloquial; alcança, ou completa-se em'), (r'(?i)\bmostr(?:a|am|ou|aram)\b', 'coloquial; indica ou demonstra'),
     (r'(?i)\b(?:está|estão|ficou|ficaram) fora d[oa]s?\b', 'coloquial; não integra'), (r'(?i)\blev(?:ou|aram) ao INSS\b', 'coloquial; apresentou ao INSS'),
-    (r'(?i)\bna roça\b', 'coloquial; trabalho rural'), (r'(?i)\blivr(?:a|am)\b', 'coloquial; afasta')]
+    (r'(?i)\bna roça\b', 'coloquial; trabalho rural'), (r'(?i)\blivr(?:a|am)\b', 'coloquial; afasta'),
+    # 17/10/2026, correções do titular
+    (r'(?i)\b(?:havia|haviam|tinha|tinham)\s+chegado\b|\bcheg(?:ou|aram)\b', 'coloquial; foi interposto, foi protocolado ou foi apresentado'),
+    (r'(?i)\bmand(?:a|am|ou|aram)\b', 'coloquial; a norma determina, dispõe ou estabelece'),
+    (r'\bJunta\b(?!\s+de\s+Recursos)|\bCâmara\b(?!\s+de\s+Julgamento)', 'órgão reduzido; Junta de Recursos ou Câmara de Julgamento, por extenso')]
 ART_RX = r'\b(art(?:igo)?s?\.?\s*\d+[º°]?(?:[-\.]?[A-Z])?)'
 CONECTIVO_RX = r'(?i)\b(além disso|soma-se a isso|também|porque|uma vez que|já que|visto que|por isso|por essa razão|por esse motivo|de modo que|assim|dessa forma|desse modo|portanto|logo|ocorre que|todavia|contudo|entretanto|no entanto|ainda assim|mesmo diante|nem se diga|tampouco|na sequência|a partir de então|em seguida|nesse contexto|nesse ponto|com efeito|isso porque|de fato|embora|pois|razão pela qual|diante disso|desta forma|deste modo|como visto|no ponto|daí|haja vista|na medida em que|em que pesem?|ou seja|por sua vez|especificamente|no caso concreto|ademais|nesse sentido|sendo assim|por fim)\b'
 EXPLICA_RX = r'(?i)(porque|pois|uma vez que|na medida em que|de modo que|razão pela qual|o que significa|isto é|ou seja|aplica-se|incide|toma como referência|exige|exigid|prevê|previst|estabelece|assegura|garante|dispõe|disposto|determina|haja vista|a seguir|declara)'   # Onda 174, a transcrição anunciada (a seguir demonstrados) é a explicação no método do titular
@@ -76,7 +80,7 @@ def medir(md, tipo):
         if n>PARAG_MAX and qualificacao:
             continue   # qualificação civil é parágrafo único por padrão do escritório
         if n>PARAG_MAX:
-            achados.append(('IMPORTANTE', f'Parágrafo com {n} palavras (~{-(-n//PAL_LINHA)} linhas) em "{sec}". Teto 65, cerca de seis linhas. Dividir em dois parágrafos ligados por transição, ou retirar o que não decide.', p[:110]))
+            achados.append(('IMPORTANTE', f'Parágrafo com {n} palavras (~{-(-n//PAL_LINHA)} linhas) em "{sec}". Teto 65, cerca de seis linhas. Dividir em dois parágrafos ligados por transição, sem retirar conteúdo.', p[:110]))
         elif n<PARAG_MIN and not re.search(r'(?i)requeriment|pedido|quesito', sec) and not re.match(r'(?i)^(requer|pede|nestes termos|termos em que|pelo exposto|diante do exposto|ante o exposto|\d+(\.\d+)*\.\s)', p):
             achados.append(('MENOR', f'Parágrafo com {n} palavras em "{sec}". Abaixo de 2 linhas, provável frase-decreto ou ideia não desenvolvida.', p[:110]))
     LISTA_RX = r'(?i)requeriment|pedido|quesito'   # Onda 174, itens numerados de requerimentos e quesitos não são prosa
@@ -138,11 +142,25 @@ def medir(md, tipo):
         if v: erros.append(f'termo valorativo "{v.group(0)}"')
         if erros:
             achados.append(('IMPORTANTE', f'Título fora do padrão formal e nominal, {"; ".join(erros)}. Nomear o instituto, o requisito, o vício ou o pedido, e levar o dado para a primeira frase da seção.', t))
+    # 9. lei transcrita em excesso (Onda 182): mais de um artigo em recuo na mesma seção
+    sec='(sem seção)'; arts_recuo={}
+    for blk in re.split(r'\n\s*\n', md):
+        b=blk.strip()
+        if b.startswith('#'): sec=re.sub(r'^#+\s*','',b.split('\n')[0])
+        elif b.startswith('>') and re.match(r'^>\s*(\*\*)?\s*Art(igo)?\.?\s*\d', b): arts_recuo[sec]=arts_recuo.get(sec,0)+1
+    # Onda 184: manifestação sobre laudo, embargos e recurso administrativo não transcrevem lei em bloco
+    if tipo in ('laudo','embargos','crps') and arts_recuo:
+        achados.append(('IMPORTANTE', f'Lei transcrita em recuo em peça do tipo {tipo}. Nesta peça transcreve-se o trecho do laudo, da decisão ou do documento, e a lei entra por remissão curta (ESTILO-MODELO, A mesma peça em todos os ritos).', ''))
+    if tipo=='crps':
+        n_art=len(re.findall(r'\bart(?:igo)?s?\.?\s*\d', md, re.I))
+        if n_art>6: achados.append(('MENOR', f'{n_art} remissões a artigo no recurso administrativo. Linguagem simples: citar artigo apenas quando a decisão contrariou norma expressa ou o pedido depende dele.', ''))
+    for sec,n in arts_recuo.items():
+        if n>=2: achados.append(('MENOR', f'{n} artigos transcritos em recuo em "{sec}". Transcrever apenas o dispositivo cuja interpretação o INSS contestou e usar remissão na frase para o restante (ESTILO-MODELO, A lei na medida).', ''))
     # 7. orcamento
     teto=PAGINAS.get(tipo); pag=total/PAL_PAGINA
     if teto:
-        if pag>teto*1.3: achados.append(('CRÍTICO', f'Extensão estimada de {pag:.1f} páginas contra orçamento de {teto}. Acima de 30%.', ''))
-        elif pag>teto: achados.append(('IMPORTANTE', f'Extensão estimada de {pag:.1f} páginas contra orçamento de {teto}.', ''))
+        # Onda 181: a extensão é referência preferencial; o achado informa e nunca reprova, porque o teto obrigatório gerava cortes que prejudicavam a compreensão
+        if pag>teto: achados.append(('MENOR', f'Extensão estimada de {pag:.1f} páginas, acima da referência preferencial de {teto}. Informativo. Retirar apenas repetição; nunca fato, prova, raciocínio ou transição.', ''))
     return achados, ps, total, pag
 
 def main():

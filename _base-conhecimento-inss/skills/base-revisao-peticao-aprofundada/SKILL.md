@@ -53,7 +53,7 @@ Etapa 7. `julgador-opositor`, o julgador que procura razão para não acolher, r
 Etapa 7-A. `juiz-catanduva`, na mesma mensagem da Etapa 7, em toda peça dirigida à Subseção de Catanduva (Onda 179). Simula a sentença com os critérios e as fórmulas reais do juízo e aponta os trechos fora da linguagem da unidade.
 Etapa 8. Decisor administrativo simulado, só em peça dirigida ao INSS ou ao CRPS.
 Etapa 9. `black-team`, só em peça de ALTO RISCO ou por pedido expresso, recebendo todos os relatórios anteriores.
-Etapa 10. Camada 6, aferição de extensão e passada de corte, depois de recebidos todos os pareceres, porque o pipeline é aditivo e o corte vem por último.
+Etapa 10. Camada 6, aferição de extensão e passada de enxugamento sem meta, depois de recebidos todos os pareceres, porque o pipeline é aditivo e o enxugamento vem por último.
 Etapa 11. Relatório consolidado de duas páginas, com recepção dos achados pela disciplina da Onda 99 e fluxo pós-revisão.
 
 ## REGRA ZERO - PROTOCOLO ANTI-ALUCINAÇÃO DE 5 NÍVEIS
@@ -238,8 +238,8 @@ Itens auditados:
 - Rodapé do escritório.
 - **Dois-pontos** só antes de citação literal ou enumeração, nunca antes de miniconclusão (Onda 163).
 - Documentos referenciados por ID nas peças intermediárias, e "em anexo" na petição inicial e no mandado de segurança, sempre com emitente, data e trecho decisivo em negrito e itálico (Onda 174).
-- Estrutura do Método Tercini (`peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md`, Onda 174). Na petição inicial, endereçamento, qualificação copiada da procuração, nome da ação centralizado, 1. DA INEXISTÊNCIA DE AÇÃO JUDICIAL COM O MESMO OBJETO, 2. DOS FATOS com a subseção do fato decisivo, 3. DO [BENEFÍCIO] com a lei transcrita antes de aplicada, seções adicionais, REQUERIMENTOS na ordem do método, valor da causa pelo art. 292 do CPC, fecho "Termos em que," e "Pede deferimento." e QUESITOS quando houver perícia. Nas demais peças, o esqueleto da seção 4 do método. Desvio de ordem ou de fórmula é achado IMPORTANTE.
-- Voz do titular. "a Parte Autora", "a Autarquia Federal" depois da primeira menção na seção, virada "Entretanto, está equivocado o entendimento da Autarquia Federal" e fecho do direito "Deste modo, Excelência".
+- Estrutura do Método Tercini (`peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md`, Onda 174). Na petição inicial, endereçamento, qualificação copiada da procuração, nome da ação centralizado, 1. DA INEXISTÊNCIA DE AÇÃO JUDICIAL COM O MESMO OBJETO, 2. DOS FATOS com a subseção do fato decisivo, 3. DO [BENEFÍCIO] com a lei transcrita apenas no dispositivo controvertido e o restante em remissão na frase (Onda 182), seções adicionais, REQUERIMENTOS na ordem do método, valor da causa pelo art. 292 do CPC, fecho "Termos em que," e "Pede deferimento." e QUESITOS quando houver perícia. Nas demais peças, o esqueleto da seção 4 do método. Desvio de ordem ou de fórmula é achado IMPORTANTE.
+- Voz do titular. "a Parte Autora", "a Autarquia Federal" depois da primeira menção na seção, virada "Entretanto, está equivocado o entendimento da Autarquia Federal, porque" e fecho do direito "Deste modo, Excelência". Os fatos ocupam a maior parte da peça, com data, documento e número, e a lei incontroversa transcrita em bloco é achado IMPORTANTE (Onda 182).
 - Linguagem do juízo (Onda 176, `peticao-previdenciaria/references/ESTILO-MODELO.md`). Em peça dirigida a Catanduva, a peça usa o vocabulário, os conectores e a sequência do bloco-modelo da matéria extraídos de 78 decisões do juízo (Onda 179, `base-juizo-catanduva`). Conferir, em silêncio, os dez pontos da auditoria do manual (padrão reproduzido, uma ideia por parágrafo, frase clara, conectores necessários, continuidade, vínculo entre fato, prova e direito, ausência de repetição, fluidez, possibilidade de redução e erro jurídico ou probatório), e reportar só o resultado. A vírgula isolada entre verbo e complemento é conferida aqui, porque o medidor não a detecta.
 
 ### Camada 2 - Conformidade Normativa
@@ -350,56 +350,52 @@ Desde a Onda 180, a Camada 5-A despacha a peça ao agente `base-conhecimento-ins
 
 Cada pedido é conferido sozinho, pela ligação entre o pedido, os fatos, as provas, o cálculo, o valor ou o critério, quando houver, e a conclusão jurídica. O teste é o do leitor sem retorno, que parte do pedido e encontra cada elo sem procurar informação dispersa e sem refazer conta ou raciocínio. Os defeitos são cinco, lacuna, salto lógico, fundamento genérico, prova não relacionada de forma explícita e cálculo sem demonstração. O protocolo, o que cada tipo de pedido exige, a severidade e o modelo do bloco do relatório estão em `references/CADEIA-DO-PEDIDO.md`. O elo que falta é buscado nos autos antes de ser apontado como lacuna. Regra permanente desde 12/10/2026, a Camada 5-A nunca é dispensada e suas correções pontuais são aplicadas na versão entregue sem aguardar o Passo 5, que continua valendo para os demais achados.
 
-### Camada 6 - Orçamento de Extensão e Legibilidade (Onda 120)
+### Camada 6 - Extensão de Referência e Legibilidade (Onda 120, revista na Onda 181)
 
-Esta camada existe porque o pipeline é aditivo. Os Juristas Conferentes, os Processualistas Conferentes e os Decisores Simulados devolvem sempre o fundamento que ficou de fora, e nunca o que sobra. Sem uma etapa que meça e corte, o crescimento da peça é o resultado natural do desenho, e a peça longa custa ao segurado, porque o julgador com pilha de processos lê uma vez só e decide.
+Esta camada existe porque o pipeline é aditivo. Os Juristas Conferentes, os Processualistas Conferentes e os Decisores Simulados devolvem sempre o fundamento que ficou de fora, e nunca o que sobra. Sem uma etapa que meça e retire a repetição, o crescimento da peça é o resultado natural do desenho. A medida, porém, é a compreensão do julgador, que lê uma vez só e decide, e não o número de páginas.
 
-#### Orçamento por tipo de peça
+#### Extensão de referência por tipo de peça (preferencial, Onda 181)
 
-Petição inicial, 7 páginas. Recurso inominado, 4 páginas. Manifestação sobre laudo, 3 páginas. Recurso ao CRPS, 3 páginas. Embargos de declaração, 2 páginas. Petições comuns, 2 páginas. Memorial, 2 páginas, limite absoluto já vigente. Jurisprudência somada em toda a peça, 1 página, limite já vigente.
+Petição inicial, 7 páginas. Recurso inominado, 4 páginas. Manifestação sobre laudo, 3 páginas. Recurso ao CRPS, 3 páginas. Embargos de declaração, 2 páginas. Petições comuns, 2 páginas. Memorial, 2 páginas. Jurisprudência somada em toda a peça, 1 página.
 
-O orçamento é teto de referência, nunca meta de preenchimento. Peça que resolve a matéria em menos páginas está certa e não se completa. Caso com múltiplas matérias relevantes admite excesso, desde que declarado e justificado no relatório, matéria por matéria.
+Desde 17/10/2026, por determinação do titular, essas medidas são **referência preferencial, e não limite obrigatório**. O teto obrigatório e a meta de corte de 20% produziam peças com fato, prova ou raciocínio retirados, que o juiz não conseguia compreender. A peça tem a extensão que a compreensão de cada pedido exige. Peça que resolve a matéria em menos páginas está certa e não se completa, e peça que precisa de mais páginas não se corta para caber.
 
 #### Como aferir
 
-A aferição é feita sobre o arquivo gerado, não por estimativa. Converter o .docx em PDF e contar as páginas, descontando a folha de rosto do endereçamento e as páginas ocupadas por tabela de linha do tempo e quadro de confronto, que têm limites próprios.
+A extensão se mede sobre o arquivo gerado e se informa no relatório, antes e depois da revisão, sem gerar achado por si.
 
 ```bash
 soffice --headless --convert-to pdf "<arquivo.docx>" --outdir /tmp
 python3 -c "import pypdf,sys; print(len(pypdf.PdfReader(sys.argv[1]).pages))" "/tmp/<arquivo>.pdf"
 ```
 
-Disponibilidade verificada na Onda 120, o ambiente de geração tem soffice em /usr/bin/soffice e pypdf instalado, de modo que a contagem de páginas é a via padrão. Se a conversão falhar, usar contagem de palavras do corpo como aproximação, com a ressalva expressa de que é estimativa. A equivalência entre palavras e páginas no padrão visual do escritório (Bookman Old Style 12pt, A4, margens do escritório) precisa ser calibrada medindo três peças reais já protocoladas, e enquanto essa calibração não for feita a contagem de palavras não substitui a contagem de páginas.
+Se a conversão falhar, a contagem de palavras do corpo serve de aproximação, com a ressalva de que é estimativa.
 
-#### Passada de corte obrigatória
+#### Passada de enxugamento, sem meta
 
-Toda peça passa por uma leitura exclusiva de corte antes do relatório final, com meta de reduzir 20% sem perda de conteúdo. A meta é de esforço, não de resultado. Se a peça não comportar 20%, corta-se o que comportar e registra-se o percentual atingido.
+Toda peça passa por uma leitura de enxugamento antes do relatório final, sem meta de percentual. Saem apenas a repetição literal de fundamento já desenvolvido, a conclusão repetida ao fim de seção que já a trouxe, a fórmula vazia e o adjetivo de intensidade.
 
-Alvos do corte, nesta ordem. Repetição de fundamento já desenvolvido. Contexto que o julgador já domina. Conclusão restatada ao fim de seção que já a trouxe no início. Adjetivo onde havia dado concreto disponível. Explicação de norma incontroversa. Transcrição de precedente que a súmula do fundamento já resolve.
+O que nunca sai. Fato ligado a prova, a prova indicada no ponto do fato, o cálculo ou a soma que sustenta o pedido, o requisito legal enfrentado, a explicação de como a norma se aplica ao caso, a transição que liga uma frase à outra, a ressalva ou o risco, e o elemento que a contestação previsível atacará. Na dúvida, o trecho fica.
 
-O corte retira unidade inteira, seja parágrafo, fundamento ou transcrição, e nunca encurta frase nem desfaz o conectivo que liga uma frase à outra, porque o encurtamento é o que produz o texto telegráfico (Onda 138). Depois do corte, o medidor roda de novo.
-
-O que nunca se corta. Fato ligado a prova por ID. Ressalva, risco ou limitação. Requisito legal enfrentado. Elemento que a contestação previsível atacará.
-
-O relatório informa o número de páginas antes, depois e o percentual, e lista o que saiu, por seção, para conferência humana. Corte sem lista não é auditável e não conta.
+O enxugamento retira unidade inteira e nunca encurta frase nem desfaz conectivo, porque o encurtamento produz o texto telegráfico (Onda 138). Depois dele, a cadeia de cada pedido (Camada 5-A) é conferida de novo, e trecho cuja retirada rompe um elo volta à peça. O relatório lista o que saiu, por seção, para conferência humana.
 
 #### Conferência de persuasão (Onda 160)
 
-Depois do corte, a revisão confere quatro técnicas da seção "Persuasão com base empírica" de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`. A defesa previsível do INSS sem nomeação e refutação em parágrafo próprio é achado IMPORTANTE, porque a peça perde a base de embargos por omissão. O número do INSS lido antes do número do segurado na seção decisiva é achado MENOR, assim como o reconhecimento administrativo disponível nos autos e não usado como premissa. A pretensão redigida como pedido de exceção, quando cabe descrevê-la como aplicação ordinária de norma, também é achado MENOR.
+Depois do enxugamento, a revisão confere quatro técnicas da seção "Persuasão com base empírica" de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`. A defesa previsível do INSS sem nomeação e refutação em parágrafo próprio é achado IMPORTANTE, porque a peça perde a base de embargos por omissão. O número do INSS lido antes do número do segurado na seção decisiva é achado MENOR, assim como o reconhecimento administrativo disponível nos autos e não usado como premissa. A pretensão redigida como pedido de exceção, quando cabe descrevê-la como aplicação ordinária de norma, também é achado MENOR.
 
 #### Fusão de fundamentos
 
-Por tese, um fundamento decisivo desenvolvido. Os demais entram em uma linha de menção, sem desenvolvimento, disponíveis para a réplica ou o recurso se o INSS os atacar.
+Por tese, um fundamento decisivo desenvolvido. Os demais entram em uma linha de menção, disponíveis para a réplica ou o recurso se o INSS os atacar, salvo quando o pedido não se compreende sem eles, caso em que se desenvolvem.
 
 Essa regra é o freio direto do efeito aditivo dos Conferentes. O retorno deles entra na peça como fundamento decisivo, se for melhor que o adotado, ou como linha de menção. Nunca como seção nova.
 
 #### Medição mecânica, primeiro (Onda 140)
 
-Antes da amostragem, rodar `python3 peticao-previdenciaria/scripts/medir_peca.py peca.md --tipo <tipo>` sobre o Markdown da peça. O script aplica o padrão calibrado, parágrafo de 20 a 65 palavras (alvo de 30 a 55), frase de até 40 palavras fora de transcrição, transição entre as frases, vocabulário do manual da Onda 176, títulos, sem sequência de frases curtas, sem adjetivo de intensidade nem fórmula vazia, dispositivo citado com explicação, documento com ID e orçamento de páginas. Cada linha da saída é um achado desta camada, com a severidade que o script atribui. Peça que FALHA no script volta para a redação antes de qualquer outra camada, porque revisar prosa fora da medida é revisar o que vai ser reescrito. A amostragem abaixo cobre o que o script não mede.
+Antes da amostragem, rodar `python3 peticao-previdenciaria/scripts/medir_peca.py peca.md --tipo <tipo>` sobre o Markdown da peça. O script aplica o padrão calibrado, parágrafo de 20 a 65 palavras (alvo de 30 a 55), frase de até 40 palavras fora de transcrição, transição entre as frases, vocabulário do manual da Onda 176, títulos, sem sequência de frases curtas, sem adjetivo de intensidade nem fórmula vazia, dispositivo citado com explicação, documento com ID e extensão de referência, esta apenas informativa. Cada linha da saída é um achado desta camada, com a severidade que o script atribui. Peça que FALHA no script volta para a redação antes de qualquer outra camada, porque revisar prosa fora da medida é revisar o que vai ser reescrito. A amostragem abaixo cobre o que o script não mede.
 
 #### Amostragem de legibilidade
 
-Extensão dentro do orçamento não garante leitura fácil. Sortear três parágrafos do miolo, um da fundamentação de fato, um da de direito e um do confronto, e conferir cada um contra quatro pontos.
+Extensão dentro da referência não garante leitura fácil. Sortear três parágrafos do miolo, um da fundamentação de fato, um da de direito e um do confronto, e conferir cada um contra quatro pontos.
 
 1. O parágrafo tem de 3 a 5 linhas, com teto de 6, e suas frases se ligam pelos conectores do juízo (Onda 176, `peticao-previdenciaria/references/ESTILO-MODELO.md`).
 2. A primeira linha não resume o que as seguintes explicam (proibição do parágrafo-modelo).
@@ -414,9 +410,7 @@ Falha em qualquer ponto gera achado, com o parágrafo transcrito e a reescrita s
 
 #### Severidade dos achados desta camada
 
-Extensão até 30% acima do orçamento, IMPORTANTE. Acima de 30%, CRÍTICO. Nunca BLOQUEANTE, porque excesso de extensão não invalida a peça nem prejudica de forma irreversível o segurado.
-
-Excesso justificado por múltiplas matérias, com a justificativa matéria por matéria no relatório, não gera achado.
+Extensão acima da referência não gera achado, apenas informação no relatório (Onda 181). Gera achado a prolixidade concreta, isto é, a repetição de fundamento ou a fórmula vazia, como MENOR. Gera achado IMPORTANTE o corte que retirou fato, prova, cálculo, explicação de norma ou transição necessária à compreensão de um pedido.
 
 Falha sistêmica de legibilidade, dois ou mais dos três parágrafos sorteados, IMPORTANTE.
 
@@ -448,7 +442,6 @@ Exemplos.
 - Pedido incompatível com o rito.
 - PUIL com paradigma de TRF (art. 14, §2º, Lei 10.259/2001) ou do STF (QO 48/TNU).
 - PUIL com tese inovadora não suscitada (QO 10/TNU).
-- Memorial extraprocessual com mais de duas páginas (regra absoluta do escritório).
 - Reafirmação da DER sem concordância formal do segurado.
 
 **IMPORTANTE**.
@@ -492,7 +485,7 @@ Estrutura padrão entregue após apresentação do .docx.
 
 **Resumo executivo.** Duas a três frases indicando o resultado geral, com contagem de achados por severidade. Se houver BLOQUEANTES, destacar no topo com selo "PEÇA NÃO DEVE SER PROTOCOLADA".
 
-**Painel de extensão.** Linha única com o tipo de peça, o orçamento, as páginas aferidas antes do corte, as páginas depois do corte e o percentual reduzido. Exemplo, "Petição inicial. Orçamento 7 páginas. Antes 11. Depois 8. Redução de 27%. Excesso de 1 página justificado pela cumulação de tempo especial e reafirmação da DER."
+**Painel de extensão.** Linha única, informativa, com o tipo de peça, a referência preferencial, as páginas antes e depois do enxugamento e o que saiu. Exemplo, "Petição inicial. Referência 7 páginas. Antes 9. Depois 8. Saíram duas repetições na seção 3."
 
 **Cadeia dos pedidos (Onda 176).** Bloco CADEIA DOS PEDIDOS, uma linha por pedido com o veredito e a localização, seguido de O QUE ESCLARECER, CONECTAR OU REORGANIZAR, pedido a pedido, conforme `references/CADEIA-DO-PEDIDO.md`. Vício já reportado no bloco não se repete nas camadas.
 
@@ -558,11 +551,7 @@ Se houver achados CRÍTICOS, IMPORTANTES ou MENORES sem BLOQUEANTES, perguntar.
 
 Aguardar resposta. Se autorizado, gerar nova versão do .docx aplicando as correções e apresentar o arquivo corrigido. Se autorizado tratar apenas críticos, perguntar se também deseja sugestões para os demais.
 
-Se a peça exceder o orçamento de extensão depois da passada de corte, informar antes da pergunta de correção.
-
-"A peça está com [N] páginas contra um orçamento de [M]. A passada de corte já reduziu [X]%. O excesso restante decorre de [motivo]. Posso executar um segundo corte, indicando o que sairia, ou manter e registrar a justificativa."
-
-Segundo corte nunca se executa em silêncio. O que sai vai listado antes, para decisão sua.
+A extensão acima da referência preferencial se informa em uma frase, sem proposta de novo corte (Onda 181). Corte adicional só se faz a pedido do titular, com o que sairia listado antes.
 
 ## CHECKLIST POR RITO
 

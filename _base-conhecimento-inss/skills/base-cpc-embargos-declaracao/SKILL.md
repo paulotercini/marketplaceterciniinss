@@ -29,7 +29,7 @@ CPC, art. 1.025. Prequestionamento ficto, matéria considerada incluída no acó
 
 CPC, art. 1.026. Interrupção do prazo do recurso seguinte. Multa de até 2% no §2º e até 10% na reiteração no §3º.
 
-RICRPS, art. 92, Portaria MPS 125/2026. Embargos no CRPS por omissão, contradição, obscuridade ou erro material, prazo de 5 dias.
+RICRPS, art. 92, Portaria MPS 125/2026. Embargos no CRPS por omissão, contradição, obscuridade ou erro material, prazo de 30 dias (§ 2º), e o erro material se corrige a qualquer tempo. Os 5 dias do art. 1.023 do CPC valem apenas no processo judicial.
 
 Lei 9.099/95, art. 48. Embargos no JEF nos casos do CPC.
 
@@ -77,7 +77,7 @@ Endereçamento e qualificação em uma linha cada.
 
 Tempestividade em uma frase, data da intimação e prazo.
 
-Bloco do vício 1. Trecho viciado citado entre aspas com página e parágrafo. Explicação objetiva do defeito em duas ou três frases. Pedido de saneamento.
+Bloco do vício 1. Trecho viciado citado entre aspas, com o ID (no CRPS, a folha), ao lado do ponto suscitado e do ID onde foi suscitado. Explicação objetiva do defeito em duas ou três frases, dizendo por que o ponto muda o resultado. Pedido de saneamento. Nenhuma lei se transcreve, e o art. 1.022 do CPC (no CRPS, o art. 92 do Regimento Interno) entra por remissão (Onda 184).
 
 Bloco do vício 2, se houver, na mesma forma.
 
@@ -136,3 +136,5 @@ Toda peça produzida com esta skill passa, antes da entrega, pela conferência i
 ## Juízo de Catanduva (Onda 179)
 
 O juízo rejeitou os 14 embargos de declaração do corpus que rediscutiam o mérito, por "evidente caráter infringente". As correções vieram de erro material e de erro de fato documentado. Os embargos trazem o trecho da sentença ao lado do ponto omitido e o ID em que o ponto foi suscitado, e o inconformismo vai ao recurso. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 14.
+
+Forma da peça (Onda 184). Segue ESTILO-MODELO.md, seção A mesma peça em todos os ritos.

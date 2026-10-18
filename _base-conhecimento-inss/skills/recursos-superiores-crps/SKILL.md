@@ -64,7 +64,7 @@ Pareceres da Consultoria Jurídica do MPS aprovados pelo Ministro vinculam as UJ
 
 1. Admissibilidade (tempestividade, legitimidade, não alçada exclusiva, interesse)
 2. Hipótese de anulação (enquadramento preciso no art. 91, §1º)
-3. Mérito (legislação, decreto, IN 128, enunciados, jurisprudência)
+3. Mérito, um tópico por requisito ou vício, aberto pelo fato e pelo erro do acórdão, com título nominal sem número de artigo e a norma (legislação, decreto, IN 128, enunciados, jurisprudência) por remissão curta, cada dispositivo citado uma vez e transcrito apenas o trecho exato da norma ou do Enunciado contrariado (Onda 184; modelo em `base-recurso-crps-peca-enxuta/references/MODELO-RECURSO-ESPECIAL-ENXUTO.md`)
 4. Precedentes (art. 109, §§2º-4º)
 5. Pedido subsidiário de apreciação definitiva pela Câmara (art. 91, §3º)
 6. Sustentação oral (art. 81)
@@ -118,3 +118,5 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
 Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+Forma da peça (Onda 184). Segue ESTILO-MODELO.md, seção A mesma peça em todos os ritos.

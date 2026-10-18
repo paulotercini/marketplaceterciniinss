@@ -152,7 +152,7 @@ Quando a retificação obtida alterar o cenário probatório na via administrati
 
 ## Extensão
 
-Teto de a carta de retificação à empresa, 2 páginas, com os vícios em ordem de gravidade. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Extensão de referência da carta de retificação à empresa, 2 páginas, com os vícios em ordem de gravidade. É referência preferencial, e não limite obrigatório (Onda 181): a peça tem a extensão que a compreensão de cada pedido exige, e dela sai apenas a repetição, nunca fato, prova, cálculo, explicação de norma ou transição. Antes de escrever, nomear em uma frase o ponto que decide, e o dado que o prova acompanha cada pedido. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 
