@@ -102,15 +102,17 @@ Se aplicável, incluir na preliminar a impugnação do §8º pelos mesmos fundam
 
 Ao redigir a preliminar, utilizar a skill peticao-previdenciaria com a seguinte estrutura
 
-SEÇÃO — DA INCONSTITUCIONALIDADE E ILEGALIDADE DO ART. 112, §7º, DA PORTARIA MPS 462/2026
+SEÇÃO — DA ILEGALIDADE DA EXIGÊNCIA DE ELEMENTO NOVO PARA O CONHECIMENTO DO RECURSO
+
+O título nomeia o vício, e não o número do artigo (Onda 184). A seção abre pelo fato, isto é, o pedido de revisão, a decisão de indeferimento com o trecho literal e a data do recurso, e só depois passa à norma. O único texto transcrito é o trecho exato do §7º do art. 112, porque é a norma cuja aplicação se contesta, e o restante entra por remissão curta, em linguagem simples.
 
 Parágrafos sobre
 
-1. A hierarquia normativa e a impossibilidade de portaria restringir lei formal
-2. O art. 126 da Lei 8.213/91 e o direito irrestrito de recurso
-3. O art. 56 da Lei 9.784/99 e a vedação de caução probatória
-4. O art. 5º, LV, CF e a ampla defesa com recursos
-5. A ADI 6096/STF e a proteção contra atos negativos
+1. O fato, com o protocolo e a folha, e o trecho literal da decisão ou do despacho que aplicou o §7º
+2. A hierarquia normativa e a impossibilidade de portaria restringir lei formal
+3. O direito irrestrito de recurso (art. 126 da Lei 8.213/91)
+4. A vedação de caução probatória (art. 56 da Lei 9.784/99)
+5. A ampla defesa com recursos (art. 5º, LV, CF) e a ADI 6096/STF, na proteção contra atos negativos
 6. O pedido de afastamento do §7º e conhecimento do recurso pelo mérito
 
 Extensão — 1 a 2 páginas no padrão JEF (enxuto) ou 2 a 3 páginas no rito ordinário/CRPS (denso)

@@ -148,6 +148,12 @@ def medir(md, tipo):
         b=blk.strip()
         if b.startswith('#'): sec=re.sub(r'^#+\s*','',b.split('\n')[0])
         elif b.startswith('>') and re.match(r'^>\s*(\*\*)?\s*Art(igo)?\.?\s*\d', b): arts_recuo[sec]=arts_recuo.get(sec,0)+1
+    # Onda 184: manifestação sobre laudo, embargos e recurso administrativo não transcrevem lei em bloco
+    if tipo in ('laudo','embargos','crps') and arts_recuo:
+        achados.append(('IMPORTANTE', f'Lei transcrita em recuo em peça do tipo {tipo}. Nesta peça transcreve-se o trecho do laudo, da decisão ou do documento, e a lei entra por remissão curta (ESTILO-MODELO, A mesma peça em todos os ritos).', ''))
+    if tipo=='crps':
+        n_art=len(re.findall(r'\bart(?:igo)?s?\.?\s*\d', md, re.I))
+        if n_art>6: achados.append(('MENOR', f'{n_art} remissões a artigo no recurso administrativo. Linguagem simples: citar artigo apenas quando a decisão contrariou norma expressa ou o pedido depende dele.', ''))
     for sec,n in arts_recuo.items():
         if n>=2: achados.append(('MENOR', f'{n} artigos transcritos em recuo em "{sec}". Transcrever apenas o dispositivo cuja interpretação o INSS contestou e usar remissão na frase para o restante (ESTILO-MODELO, A lei na medida).', ''))
     # 7. orcamento

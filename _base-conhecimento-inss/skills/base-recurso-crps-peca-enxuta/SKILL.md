@@ -54,7 +54,7 @@ Petição recursal CRPS pró-segurado segue estrutura mínima de 4 seções, cad
 
 Indicar data de ciência, prazo recursal (30 dias para ordinário, etc.), data de protocolo. Confirmar legitimidade e interesse.
 
-Modelo. "A decisão impugnada foi cientificada em DD/MM/AAAA conforme [protocolo/extrato/aviso]. O presente recurso é apresentado em DD/MM/AAAA, no prazo de 30 dias do art. 77 do RICRPS (Portaria MPS 125/2026), em recurso de competência do CRPS (art. 126, I, da Lei 8.213/91). O segurado tem legitimidade e interesse na reforma." (auditoria 03/10/2026)
+Modelo. "A decisão impugnada foi cientificada em DD/MM/AAAA conforme [protocolo/extrato/aviso]. O presente recurso é apresentado em DD/MM/AAAA, dentro do prazo de 30 dias (art. 77 do Regimento Interno do CRPS)." (auditoria 03/10/2026)
 
 ### Seção 2 - Dos Fatos Relevantes (3 a 5 parágrafos cronológicos)
 
@@ -64,21 +64,21 @@ Modelo. "Em DD/MM/AAAA o segurado requereu [benefício] no NB XXXX (protocolo Y)
 
 ### Seção 3 - Do Mérito (núcleo da peça)
 
-Subdividida em tópicos, cada um abrindo com o ENQUADRAMENTO NORMATIVO e depois a aplicação ao caso concreto.
+Subdividida em tópicos, um por requisito ou por erro da decisão. Cada tópico abre pelo fato e pelo erro da decisão, e a norma entra depois, por remissão curta (Onda 184).
 
 Estrutura recomendada por tópico.
 
 ```
-3.1. DA INCIDÊNCIA DO ART. X DA LEI 8.213/91
+3.1. DA QUALIDADE DE SEGURADO
 
-[Transcrição literal do dispositivo, conforme arquivo verificado em base-legislacao-fontes-primarias]
+[O que a decisão disse, com o trecho literal e a folha ou o protocolo.]
 
-A norma assegura ao segurado [hipótese normativa].
+[O fato e o documento que a decisão deixou de considerar, com a data e o número.]
 
-No caso, [fato concreto vinculado a ID do documento] preenche a hipótese, conforme [Enunciado X/CRPS ou Parecer CONJUR Y/AGU].
-
-A decisão recorrida violou o dispositivo ao [erro específico].
+[A consequência: o requisito está cumprido, com a remissão curta à norma, como "(art. 15, II, da Lei 8.213/91)", apenas se necessária.]
 ```
+
+**Linguagem simples e artigo apenas quando extremamente necessário (Onda 184).** O recurso administrativo se escreve em linguagem mais simples que a peça judicial. O artigo de lei entra apenas quando a decisão contrariou norma expressa ou quando o pedido depende dele, e entra por remissão curta na frase. Não se transcreve lei em bloco. A única transcrição admitida é o trecho exato da norma ou do Enunciado do CRPS que a decisão contrariou, uma vez na peça. A hierarquia da seção anterior indica onde procurar o fundamento, e não uma lista de normas a citar. O título do tópico nomeia o requisito ou o vício, e nunca o número do artigo. A forma segue `peticao-previdenciaria/references/ESTILO-MODELO.md`, seção A mesma peça em todos os ritos, e os três modelos da pasta references já a aplicam.
 
 Por bloco temático, NÃO redigir mais de 8 parágrafos. Cada parágrafo com três linhas, no máximo quatro, desenvolvendo uma ideia em frases completas, e não em frases soltas.
 
