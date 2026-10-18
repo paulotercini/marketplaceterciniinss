@@ -39,6 +39,7 @@ As regras deste manual valem para toda peça do escritório, e não apenas para 
 | Recurso inominado, apelação, contrarrazões, réplica e alegações finais | trecho da sentença ou da contestação, com o ID | em bloco apenas quando a decisão contrariou o texto do dispositivo, um por seção, e o resto por remissão |
 | Manifestação sobre laudo pericial | trecho do laudo ao lado do documento médico que o contradiz | nenhuma transcrição; art. 479 do CPC por remissão |
 | Embargos de declaração | trecho da decisão ao lado do ponto suscitado e do ID onde foi suscitado | nenhuma transcrição; art. 1.022 do CPC por remissão |
+| Petição comum (juntada, ciência, prazo, manifestação sobre documento, informação de cumprimento) | nada; o fato, o documento pelo ID e o pedido, em um a três parágrafos | artigo apenas quando o pedido depende dele, por remissão |
 | Recurso ao CRPS, requerimento e cumprimento de exigência ao INSS | trecho da decisão administrativa e do documento, com o protocolo ou a folha | artigo apenas quando extremamente necessário, sem transcrição, salvo o trecho exato da norma ou do Enunciado do CRPS que a decisão contrariou |
 
 **A peça administrativa usa linguagem mais simples.** O conselheiro e o servidor decidem pelo documento e pela norma que conhecem. A peça diz o que aconteceu, o que a decisão deixou de considerar e o que se pede, em frases de uso comum. O artigo entra apenas quando a decisão contrariou norma expressa ou quando o pedido depende dele, e entra por remissão curta. Detalhe em `base-recurso-crps-peca-enxuta`.
