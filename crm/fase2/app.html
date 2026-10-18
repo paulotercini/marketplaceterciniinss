@@ -4597,7 +4597,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.66</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.67</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -16045,7 +16045,7 @@ function pintarFicha(){
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
         ? `${faixaFixo(k)}${faixaTrilha(k)}${faixaIncapacidade(k)}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${linhaCaso(k)}${botaoFixar(k)}${faixaPrazos(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir">${composerCaso(k)}${menu}${painelDaAba()}</div></div>`
+           <div class="caso-dir">${menu}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
             : aba==="inss" ? painelINSS(k, andsVis)

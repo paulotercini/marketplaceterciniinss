@@ -164,11 +164,11 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   const menu = await p.evaluate(() => {
     const m = document.querySelector(".painel[data-p='2'] .sub-menu.menu-andamentos"), esc = document.querySelector(".escrever"), tl = document.querySelector(".painel[data-p='2'] .timeline");
     return { botoes: [...m.querySelectorAll("button")].map(b => b.textContent.replace(/\s+/g, " ").trim()), on: (m.querySelector("button.on") || {}).textContent,
-      abaixoDoCompositor: m.getBoundingClientRect().top >= esc.getBoundingClientRect().bottom - 1,
+      acimaDoCompositor: m.getBoundingClientRect().bottom <= esc.getBoundingClientRect().top + 1,   // F242 · as abas vêm antes do campo de escrever
       acimaDaConversa: tl && m.getBoundingClientRect().bottom <= tl.getBoundingClientRect().top + 1,
       umCompositor: document.querySelectorAll("#and-texto").length === 1, rotulo: getComputedStyle(m, "::before").content };
   });
-  conf("o menu dos andamentos fica entre onde se escreve e o que se lê, sem o rótulo 'CASO'", menu.abaixoDoCompositor && menu.acimaDaConversa && menu.umCompositor && /none/.test(menu.rotulo));
+  conf("F242 · o menu dos andamentos fica acima de onde se escreve e do que se lê, sem o rótulo 'CASO'", menu.acimaDoCompositor && menu.acimaDaConversa && menu.umCompositor && /none/.test(menu.rotulo));
   conf("Escritório · INSS · Recurso (CRPS) · Caso Completo — Judicial só existe com número", menu.botoes.join("|").replace(/ \(sem dados\)/g, "") === "Escritório|INSS|Recurso (CRPS)|Caso Completo");
   conf("o Caso Completo abre por padrão", /Caso Completo/.test(menu.on || ""));
   const idTudo = await p.evaluate(() => { const li = [...document.querySelectorAll(".painel[data-p='2'] .timeline li.tl-of")].find(l => /Contestar o laudo/.test(l.textContent));
@@ -180,11 +180,11 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     tl: [...document.querySelectorAll(".timeline .tl-of")].map(li => li.querySelector(".autor-nome").textContent), compositor: !!document.querySelector("#and-texto") }));
   conf("com dois recursos, a aba mostra os DOIS juntos por padrão, cada linha dizendo de qual é",
     /Todos os recursos/.test(crps.on) && crps.tl.length === 2 && crps.tl.every(t => /^Recurso 44236\./.test(t)));
-  conf("o sub-menu deixa escolher um só; o compositor está na aba também", crps.menu.length === 3 && crps.compositor);
+  conf("o sub-menu deixa escolher um só; a aba do Recurso não tem o campo de escrever (F242)", crps.menu.length === 3 && !crps.compositor);
   await p.evaluate(() => { nupSel = "44236000111202455"; repintarFicha(); }); await p.waitForTimeout(200);
   conf("escolhido um, só ele aparece", await p.evaluate(() => document.querySelectorAll(".timeline .tl-of").length === 1 && /000111/.test(document.querySelector(".painel[data-p='2'] .fatos:not(.fatos-processo) .fatos-topo h3").textContent)));
   await p.evaluate(() => { nupSel = ""; irSubAba("inss"); }); await p.waitForTimeout(200);
-  conf("a aba INSS também escreve dali (compositor) e lista o comentário do INSS", await p.evaluate(() => !!document.querySelector("#and-texto") && /Solicitamos a apresentação de CTPS/.test(document.querySelector(".timeline").textContent)));
+  conf("F242 · a aba INSS não tem o campo de escrever e lista o comentário do INSS", await p.evaluate(() => !document.querySelector("#and-texto") && /Solicitamos a apresentação de CTPS/.test(document.querySelector(".timeline").textContent)));
 
   // ── F110 · blocos por dia ────────────────────────────────────────────────
   const ff = await p.evaluate(() => {
@@ -203,6 +203,9 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   // F143 · papel quente: cabeçalho em pedra clara (#EFEEEB) e compositor em #F3F2EE
   // F182 · na aba Casos o chão é cinza (#F8F8F6) e os cartões são brancos, como no canvas
   conf("a ficha tem chão próprio e só o cabeçalho do cliente tem cor própria", /rgb\((255, 255, 255|248, 248, 246)\)/.test(ff.chao) && ff.topo === "rgb(239, 238, 235)");
+  // F242 · o campo de escrever mora no Escritório (e no Caso completo), não nas abas dos portais
+  await p.evaluate(() => irSubAba("escritorio")); await p.waitForTimeout(200);
+  ff.escrever = await p.evaluate(() => (e => e && { borda: getComputedStyle(e).borderTopStyle, fundo: getComputedStyle(e).backgroundColor, hoje: getComputedStyle(e, "::before").content })(document.querySelector(".escrever")));
   // F182 · o compositor virou cartão branco com borda, como no canvas
   conf("o compositor é um cartão branco, sem o rótulo 'Hoje' (F112/F182)", ff.escrever && ff.escrever.fundo === "rgb(255, 255, 255)" && !/Hoje/.test(ff.escrever.hoje));
   // F112 · fechado: só tipos + Sugestões e o campo; aberto: prazo com Lembrar em ao lado, Atribuir para com as ferramentas e o Registrar
