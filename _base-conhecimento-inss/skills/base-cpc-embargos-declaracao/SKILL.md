@@ -29,7 +29,7 @@ CPC, art. 1.025. Prequestionamento ficto, matéria considerada incluída no acó
 
 CPC, art. 1.026. Interrupção do prazo do recurso seguinte. Multa de até 2% no §2º e até 10% na reiteração no §3º.
 
-RICRPS, art. 92, Portaria MPS 125/2026. Embargos no CRPS por omissão, contradição, obscuridade ou erro material, prazo de 5 dias.
+RICRPS, art. 92, Portaria MPS 125/2026. Embargos no CRPS por omissão, contradição, obscuridade ou erro material, prazo de 30 dias (§ 2º), e o erro material se corrige a qualquer tempo. Os 5 dias do art. 1.023 do CPC valem apenas no processo judicial.
 
 Lei 9.099/95, art. 48. Embargos no JEF nos casos do CPC.
 
