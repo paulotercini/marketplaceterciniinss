@@ -155,7 +155,7 @@ FIX.documentos_beneficio = [
   await p.evaluate(cli => { const c = D.cliPorId.get(cli); D.casosDoCliente.set(cli, (D.casosDoCliente.get(cli) || []).filter(k => !k.pre_caso)); c.campos.precasos = [{ id: "pc_3", especie: "Aposentadoria por idade", natureza: "", marc: {}, em: "2026-10-12", etapas: { identificacao: { em: "2026-10-12" } } }];
     admSalvar(cli, a => { a.beneficios = { tempo: ["idade"] }; }); _atendAberto.add(cli); abaAtiva = 0; irSubCad("documentos"); }, CLI_CHEIO);
   await p.waitForSelector(".doc-quadros", { state: "attached" });
-  const ids = await p.evaluate(() => [...document.querySelectorAll(".doc-quadros > .doc-quadro")].map(e => e.id).filter(Boolean));
+  const ids = await p.evaluate(() => [...document.querySelectorAll(".doc-quadros .doc-quadro")   /* F240 · os quadros ficam dentro dos passos */].map(e => e.id).filter(Boolean));
   conf(5, "C1 Documentos em seis quadros: assinar, providenciar, já temos, guias, gerados e desfecho", ["dq-assinar", "dq-prov", "dq-temos", "dq-guias", "dq-gerados", "dq-desfecho"].every(i => ids.includes(i)));
   const prov = await texto("#dq-prov .doc-it"), temos = await texto("#dq-temos li"), escr = await texto("#dq-prov .doc-escr li");
   conf(9, "C2 o catálogo cruza com o dossiê: CNIS e RAIS em Já temos com ver, RG e CPF da ficha, biometria e CTPS com o cliente, DTC com o escritório",

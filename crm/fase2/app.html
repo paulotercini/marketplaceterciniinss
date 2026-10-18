@@ -3824,8 +3824,8 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .tp-onde{font-size:12px;color:var(--pa-c2);font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace}
 .tp-chave{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--pa-c1);cursor:pointer}.tp-chave input{margin:0;accent-color:var(--pa-t)}
 .tp-passo[hidden]{display:none!important}
-.adx-main.tp-raiz{--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660}
-.adx-main .tp-rola{margin:0 0 12px;padding:6px 0;background:var(--fundo,#F8F8F6)}
+.doc-quadros.tp-raiz,.adx-main.tp-raiz{--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660}
+.doc-quadros .tp-rola,.adx-main .tp-rola{margin:0 0 12px;padding:6px 0;background:var(--fundo,#F8F8F6)}
 .adx-main .tp-trilha button{border:1px solid transparent}
 .tp-pe{position:sticky;bottom:0;z-index:2;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;justify-content:flex-end;margin-top:12px;padding:10px 12px;background:#fff;border:1px solid var(--pa-b);border-radius:10px;box-shadow:0 -4px 12px rgba(0,0,0,.05)}
 .adb-passo-sub{margin:4px 0 8px;color:var(--pa-c2,#686660);font-size:12.5px}
@@ -4590,7 +4590,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.63</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.64</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -16525,8 +16525,11 @@ async function salvarAnaliseSePreenchida(cliId){
 }
 function irSubCad(qual){
   if(qual==="atendimento") qual="anotacoes";   // nome antigo do trilho interno
-  if(qual==="consulta") qual="documentos";     // F31: a Consulta mora em Documentos
+  const consulta = qual==="consulta";
+  if(consulta) qual="documentos";     // F31: a Consulta mora em Documentos
   subCad = qual; guardar("crm_subcad", qual); repintarFicha();
+  // F240 · em passos, a Consulta mora na gaveta Ferramentas: pedir a Consulta abre a gaveta
+  const ferr = consulta && document.getElementById("dq-ferramentas"); if(ferr){ ferr.open = true; ferr.scrollIntoView({block:"start"}); }
   if(SUB_DOSSIE_TUDO.has(qual)) lerDossieTodo(clienteAberto);
 }
 // compatibilidade: o trilho interno de Anotações acabou na F30 — Consulta,
@@ -22161,6 +22164,8 @@ function linhaDesfecho(c){
     <button type="button" class="tl-bt" onclick="irDesfecho()">Ir ao Desfecho, em Documentos →</button></section>`;
 }
 function irDesfecho(){
+  const c = D.cliPorId.get(clienteAberto);
+  if(c){ const ch = passoChave("doc", c); _passoAt.set(ch, "desfecho"); (_passoVisto.get(ch) || _passoVisto.set(ch, new Set()).get(ch)).add("desfecho"); }   // F240 · Documentos abre no passo do Desfecho
   irSubCad("documentos");
   setTimeout(()=>{ const e = document.getElementById("dq-desfecho") || document.getElementById("desfecho"); if(e) e.scrollIntoView({block:"start"}); }, 60);
 }
@@ -43745,6 +43750,24 @@ function docFeitoDe(c, jud){
 }
 function painelDocumentosAtend(c, ks){
   const pc = preCasoAberto(c);
+  // F240 · no atendimento, Documentos em passos: assinar, pedir ao cliente, guia do pedido e desfecho; o que é
+  // consulta (catálogo, consultas com o CPF, anexos da IN 128, site interno) vai para a gaveta Ferramentas
+  if(_atendAberto.has(c.id) && pc){
+    let urg = false; try{ urg = limitesDaEntrega(c, casoDaVez(c)).length > 0; }catch(e){}
+    const tp = passosDaTela("doc", c, [{id:"assinar", rot:"Assinar", conta:"", alerta:false}, {id:"pedir", rot:"Pedir ao cliente", conta:"", alerta:urg},
+      {id:"guias", rot:"Guia do pedido", conta:"", alerta:false}, {id:"desfecho", rot:"Desfecho", conta:"", alerta:false}]);
+    const oc = id => !tp.tudo && id!==tp.at ? " hidden" : "";
+    return `<div class="doc-quadros tp-raiz${tp.tudo ? " tp-tudo" : ""}"${tp.attrs}>${tp.trilha}
+    <div class="tp-passo" data-passo="assinar"${oc("assinar")}><section class="doc-quadro" id="dq-assinar">${caixaDocumentos(c, ks)}</section>${quadroGerados(c)}</div>
+    <div class="tp-passo" data-passo="pedir"${oc("pedir")}>${quadroProvidenciar(c)}</div>
+    <div class="tp-passo" data-passo="guias"${oc("guias")}>${quadroGuias(c)}</div>
+    <div class="tp-passo" data-passo="desfecho"${oc("desfecho")}><section class="doc-quadro" id="dq-desfecho">${quadroDesfecho(c)}</section></div>
+    <div class="tp-pe">${tp.nav}</div>
+    <details class="doc-quadro doc-ferr" id="dq-ferramentas"><summary>Ferramentas: catálogo completo de documentos, consultas com o CPF, anexos da IN 128 e site interno</summary>
+      <details class="doc-quadro doc-catalogo"><summary>Catálogo completo de documentos para o INSS — outro benefício, checklist do caso</summary>${catalogoNoCadastro(c, ks)}</details>
+      ${painelConsulta(c)}</details>
+  </div>`;
+  }
   return `<div class="doc-quadros">
     ${quadroPendCaso(c, ks)}
     <section class="doc-quadro" id="dq-assinar">${caixaDocumentos(c, ks)}</section>
