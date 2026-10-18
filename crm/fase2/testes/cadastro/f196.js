@@ -150,6 +150,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Aposentadoria por idade", beneficio: 
   conf("a qualidade abre com a linha do tempo e a licença da RAIS marcada", pa.tl && pa.lic);
   conf("F213 · o quadro da RAIS traz a tabela dos vínculos e a licença sem remuneração, com a fonte", /licença sem remuneração/i.test(await p.textContent("#paq-rais")) && /RAIS de 2016/.test(await p.textContent("#paq-rais"))
     && !!(await p.$("#paq-rais .pa-tabela")) && /licença sem remuneração de 01\/06\/2016/.test(await p.textContent("#paq-rais .pa-tabela")));
+  await p.evaluate(() => passoTudo(true));   // F238 · os quadros todos à vista; os passos têm o f238.js
   await p.click("#paq-rais .paq-todos"); await p.waitForTimeout(100);
   conf("tirado da análise, o quadro inteiro fica fora", await p.evaluate(() => [...document.querySelectorAll("#paq-rais [data-k]")].every(li => li.classList.contains("fora")) && !paVai(clienteAberto, "rais")));
   await p.click("#paq-rais .paq-todos"); await p.waitForTimeout(100);

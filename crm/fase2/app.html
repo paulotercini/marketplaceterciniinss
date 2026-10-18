@@ -3779,10 +3779,6 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .pa-prim:disabled{opacity:.45;cursor:not-allowed}
 /* F233 · o Primeiro atendimento em quadros: um quadro por documento, item a item, com a caixinha do que vai à Análise de Direito */
 .paq-legenda{margin:12px 0 0}.paq-legenda .paq-cx{width:14px;height:14px;cursor:default}
-.paq-indice{position:sticky;top:0;z-index:2;display:flex;flex-wrap:wrap;gap:6px;margin:10px -4px 12px;padding:8px 4px;background:#F3F2EE}
-.paq-indice a{display:inline-flex;gap:6px;align-items:baseline;min-height:28px;padding:3px 10px;border:1px solid var(--pa-b);border-radius:999px;background:#fff;color:var(--pa-c1);text-decoration:none;font-size:12.5px}
-.paq-indice a small{color:var(--pa-c2);font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace}
-.paq-indice a:focus-visible{outline:2px solid var(--pa-t);outline-offset:2px}
 .paq{background:#fff;border:1px solid var(--pa-b);border-radius:12px;padding:14px 16px;margin:0 0 14px;scroll-margin-top:60px;min-width:0}
 .paq-cab{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
 .paq-cab h3{margin:0;flex:1 1 auto;display:flex;align-items:center;gap:8px;font-family:'Zilla Slab',Georgia,serif;font-weight:600;font-size:18px}
@@ -3809,8 +3805,26 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .paq-sinais{list-style:none;margin:10px 0;padding:0;display:flex;flex-direction:column;gap:6px}
 .paq-sinais li{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;border:1px solid var(--pa-b);border-radius:10px;padding:8px 10px}
 .paq-barra{position:sticky;bottom:0;z-index:2;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin:14px -18px -18px;padding:10px 18px;background:#fff;border-top:1px solid var(--pa-b);border-radius:0 0 14px 14px;box-shadow:0 -4px 12px rgba(0,0,0,.05)}
-@media (max-width:640px){.paq{padding:12px}.paq-txt{flex-basis:100%}.paq-barra{padding:10px 12px}.paq-indice{position:static}}
+@media (max-width:640px){.paq{padding:12px}.paq-txt{flex-basis:100%}.paq-barra{padding:10px 12px}}
 @media (prefers-reduced-motion:reduce){.paq-cx{transition:none}.paq-cx:active{transform:none}}
+/* F238 · passos dentro da página: a trilha com flechas, um passo à vista e "Ver tudo numa página" */
+.tp-rola{position:sticky;top:0;z-index:3;overflow-x:auto;margin:10px -4px 12px;padding:6px 4px;background:#F3F2EE;scrollbar-width:thin}
+.tp-trilha{display:flex;min-width:max-content;list-style:none;margin:0;padding:0}
+.tp-trilha button{font:inherit;font-size:12.5px;color:var(--pa-c1);background:#fff;border:0;cursor:pointer;min-height:36px;padding:0 20px 0 24px;margin-left:-9px;display:flex;gap:7px;align-items:center;white-space:nowrap;clip-path:polygon(0 0,calc(100% - 11px) 0,100% 50%,calc(100% - 11px) 100%,0 100%,11px 50%)}
+.tp-trilha li:first-child button{margin-left:0;padding-left:12px;clip-path:polygon(0 0,calc(100% - 11px) 0,100% 50%,calc(100% - 11px) 100%,0 100%)}
+.tp-trilha button:hover{background:#FBFBFA;color:#121212}
+.tp-n{flex:none;width:20px;height:20px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;font:500 11px 'IBM Plex Mono',ui-monospace,Consolas,monospace}
+.tp-conta{font:11px 'IBM Plex Mono',ui-monospace,Consolas,monospace;opacity:.8}
+.tp-trilha .feito button{background:#E4F1EA;color:var(--pa-t)}.tp-trilha .feito .tp-n{background:var(--pa-t);border-color:var(--pa-t);color:#fff}
+.tp-trilha .aqui button,.tp-trilha .aqui button:hover{background:var(--pa-t);color:#fff;font-weight:600}
+.tp-trilha .alerta .tp-n{border-color:var(--pa-crit);color:var(--pa-crit)}.tp-trilha .aqui.alerta .tp-n{border-color:#fff;color:#fff}.tp-trilha .feito.alerta .tp-n{background:var(--pa-crit);border-color:var(--pa-crit);color:#fff}
+.tp-trilha button:focus-visible{outline:2px solid var(--pa-t);outline-offset:-4px}
+.tp-urgente{margin:10px 0 0;padding:8px 12px;border-radius:8px;background:#FBE9E8;color:var(--pa-crit)}
+.tp-nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:8px 10px}
+.tp-onde{font-size:12px;color:var(--pa-c2);font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace}
+.tp-chave{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--pa-c1);cursor:pointer}.tp-chave input{margin:0;accent-color:var(--pa-t)}
+.tp-passo[hidden]{display:none!important}
+@media (max-width:640px){.tp-rola{position:static}.tp-nav{justify-content:flex-start}}
 /* F234 · a Análise de Direito por benefício: o quadrado dos escolhidos e, logo abaixo, os requisitos do aberto */
 .adq,.adb{--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-warn:#8F5400;--pa-ok:#1B6E38;--pa-info:#3A6491;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660;background:#fff;border:1px solid #E7E6E1;border-radius:12px;padding:14px 16px;margin:0 0 14px;min-width:0}
 .adq-cab,.adb-topo{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px}
@@ -4570,7 +4584,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.61</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.62</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -24496,7 +24510,7 @@ function herdaAd(c, k, origem){
 }
 function admDe(c){
   const k = c && linhaAd(c), a = (k ? k.ad || herdaAd(c, k) : ((c||{}).campos||{}).ad_modulos) || {};
-  return {fora:a.fora||[], valores:a.valores||{}, tempos:a.tempos||[], beneficios:a.beneficios};
+  return {fora:a.fora||[], valores:a.valores||{}, tempos:a.tempos||[], beneficios:a.beneficios, passos:a.passos||{}};   // F238 · o passo aberto de cada página
 }
 // a opção que a família abre sozinha: a idade e o dossiê decidem
 function benefPadrao(c, fam){
@@ -30532,7 +30546,7 @@ function paPintarMarca(li, vai){
   const pa = li.closest(".pa"); if(!pa) return;
   for(const sec of pa.querySelectorAll(".paq[data-q]")){ const t = sec.querySelectorAll("[data-k]").length, n = t - sec.querySelectorAll("[data-k].fora").length;
     const ct = sec.querySelector(".paq-n"); if(ct) ct.textContent = t ? `${n} de ${t} vão` : "";
-    const ix = pa.querySelector(`.paq-indice a[href="#paq-${sec.dataset.q}"] small`); if(ix) ix.textContent = t ? `${n}/${t}` : "—"; }
+    const ix = pa.querySelector(`.tp-trilha li[data-passo="${sec.dataset.q}"] .tp-conta`); if(ix) ix.textContent = t ? `${n}/${t}` : ""; }
   const tot = pa.querySelectorAll(".paq [data-k]").length - pa.querySelectorAll(".paq [data-k].fora").length, b = pa.querySelector(".paq-barra-n");
   if(b) b.textContent = `${tot} ${tot===1?"item":"itens"} do dossiê`;
 }
@@ -30574,7 +30588,17 @@ function painelPA(c, ks){
       ${t.impedido ? `<span class="pa-falta"><b>${t.selo==="opcao" ? "Opção" : "Impedimento"}</b> ${esc(t.impedido)}</span>` : ""}
       ${t.falta.length ? `<span class="pa-falta"><b>Falta:</b> ${esc(t.falta.slice(0, 2).join("; "))}</span>` : ""}</li>`; };
   const passo = (n, rot, sub, cur, js) => `<button type="button" class="pa-passo${cur?" cur":""}" ${cur?'aria-current="step"':""} onclick="${js}"><i>${n}</i><span><b>${rot}</b><small>${esc(sub)}</small></span></button>`;
-  return `<div class="pa">
+  // F238 · um quadro por passo, na ordem da conversa; o quadro sem nada a mostrar entra no passo "Não encontrado"
+  const cheio = q => q.itens.length || q.docs.length || q.blocos.length || q.extra, temFalta = qd.quadros.some(q=>q.id==="falta");
+  const grupos = qd.quadros.filter(q=>cheio(q) || !temFalta || q.id==="falta").map(q=>({id:q.id, qs:[q]}));
+  if(temFalta) grupos.find(g=>g.id==="falta").qs.unshift(...qd.quadros.filter(q=>!(cheio(q) || q.id==="falta")));
+  const passos = semDz ? [] : [...grupos.map(g=>{ const q = g.qs[g.qs.length-1], [v, t] = g.qs.map(conta).reduce((a, b)=>[a[0]+b[0], a[1]+b[1]], [0, 0]);
+    return {id:g.id, rot:PA_PASSO_ROT[q.id] || q.rot.split(":")[0], conta:t ? `${v}/${t}` : "", alerta:g.qs.some(q=>q.itens.some(x=>x.est==="crit"))}; }),
+    {id:"escolha", rot:"Escolher os benefícios", conta:"", alerta:false}];
+  const tp = passos.length > 1 ? passosDaTela("pa", c, passos) : null, oculto = id => tp && !tp.tudo && id!==tp.at ? " hidden" : "";
+  let nq = 0;
+  const urg = semDz ? [] : d.trabalhos.filter(t=>t.selo==="crit" && t.prazo && t.prazo.texto);
+  return `<div class="pa${tp ? ` tp-raiz${tp.tudo ? " tp-tudo" : ""}` : ""}"${tp ? tp.attrs : ""}>
     <nav class="pa-passos" aria-label="Passos do atendimento">
       ${passo("✓", "Identificação", "conferida", false, "irSubCad('identificacao')")}
       ${passo(2, "Primeiro atendimento", "leitura do dossiê", true, "")}
@@ -30590,11 +30614,10 @@ function painelPA(c, ks){
       <p><b>O dossiê ainda não foi baixado.</b> Os quadros nascem quando a extensão trouxer os documentos dos portais com o gov.br do cliente. Até lá, escolha o benefício abaixo e siga para a Análise de Direito.</p>
       ${(ns=>ns.length ? `<div class="pa-relato"><span class="meio-sub">O que a recepção registrou</span>${ns.map(n=>`<p><b>${esc(n.quem||"")}</b> <span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span> ${esc(String(n.texto||"").slice(0,1500))}</p>`).join("")}</div>` : "")(((c.campos||{}).atendimento||[]).slice(-3))}
     </section>` : `<ul class="pa-legenda paq-legenda"><li><i class="pa-bola crit"></i>Em risco ou prazo correndo</li><li><i class="pa-bola warn"></i>Falta ou a conferir</li><li><i class="pa-bola ok"></i>Em ordem</li><li><i class="pa-bola info"></i>Informativo</li><li><span class="paq-cx" aria-hidden="true"></span>Vai para a Análise de Direito (desmarque só o que não tem a ver com a visita)</li></ul>
-    <nav class="paq-indice" aria-label="Quadros do dossiê">${qd.quadros.map((q, i)=>{ const [v, t] = conta(q);
-      return `<a href="#paq-${q.id}" onclick="event.preventDefault();document.getElementById('paq-${q.id}').scrollIntoView({behavior:'smooth',block:'start'})">${i+1} · ${esc(q.rot.split(":")[0])} <small>${t ? `${v}/${t}` : "—"}</small></a>`; }).join("")}
-      <a href="#paq-escolha" onclick="event.preventDefault();document.getElementById('paq-escolha').scrollIntoView({behavior:'smooth',block:'start'})">Escolher os benefícios</a></nav>
-    ${qd.quadros.map((q, i)=>quadro(q, i+1)).join("")}`}
-    <section class="paq paq-escolha" id="paq-escolha" aria-labelledby="paq-t-escolha">
+    ${urg.map(t=>`<p class="tp-urgente" role="note"><b>Prazo correndo:</b> ${esc(t.f.rot)}: ${esc(t.prazo.texto)}</p>`).join("")}
+    ${tp ? tp.trilha : ""}
+    ${grupos.map(g=>`<div class="tp-passo" data-passo="${g.id}"${oculto(g.id)}>${g.qs.map(q=>quadro(q, ++nq)).join("")}</div>`).join("")}`}
+    <section class="paq paq-escolha${tp ? " tp-passo" : ""}" id="paq-escolha" data-passo="escolha"${oculto("escolha")} aria-labelledby="paq-t-escolha">
       <div class="paq-cab"><h3 id="paq-t-escolha"><i>✓</i>Benefícios para a Análise de Direito</h3></div>
       <p class="paq-oque">Marque os benefícios que vão à Análise de Direito; lá, cada um abre os requisitos dele.${d.trabalhos.length && !semDz ? " Os que têm sinal no dossiê vêm primeiro." : ""}</p>
       ${!semDz && d.trabalhos.length ? `<ul class="paq-sinais">${d.trabalhos.map(sinal).join("")}</ul>` : ""}
@@ -30602,8 +30625,72 @@ function painelPA(c, ks){
       ${roteiroPerguntas(c, ks)}
     </section>
     <div class="paq-barra"><span><b>Vão:</b> ${nEsc ? esc(ops.map(o=>o.rot).join(", ")) : "nenhum benefício marcado"}${semDz ? "" : ` · <span class="paq-barra-n">${tot} ${tot===1?"item":"itens"} do dossiê</span>`}</span>
-      <button type="button" class="pa-prim" ${nEsc?"":"disabled"} onclick="paConcluir('${c.id}')">${pc ? "Concluir e levar" : "Levar"} à Análise de Direito →</button></div>
+      <span class="tp-nav">${tp ? tp.nav : ""}<button type="button" class="pa-prim tp-fim" ${nEsc?"":"disabled"}${tp && !tp.ult ? " hidden" : ""} onclick="paConcluir('${c.id}')">${pc ? "Concluir e levar" : "Levar"} à Análise de Direito →</button></span></div>
   </div>`;
+}
+const PA_PASSO_ROT = {roca:"Roça e pesca", cad:"CadÚnico", ben:"Cartas e extratos", falta:"Não encontrado"};
+// ══════════════════════════════════════════════════════════════════════════
+// F238 · PASSOS DENTRO DE UMA PÁGINA LONGA (crm/fase2/docs/ATENDIMENTO-EM-ETAPAS.md)
+// ══════════════════════════════════════════════════════════════════════════
+// Uma trilha com flechas, um passo à vista e a barra do pé com Anterior e Próximo. Nenhum passo é
+// trancado. Todos ficam na página; os de fora só ficam escondidos, e "Ver tudo numa página" tira o
+// esconder. O passo aberto vale por pré-caso (casos.ad.passos) e volta quando se reabre o atendimento.
+const _passoAt = new Map(), _passoVisto = new Map();
+const passoChave = (tela, c) => `${tela}|${c.id}|${(preCasoAberto(c)||{}).id||""}`;
+const verTudoPassos = () => ler("crm_passos_tudo")==="1";
+// monta o estado da tela: o passo aberto, os já vistos, a trilha e os botões do pé
+function passosDaTela(tela, c, passos){
+  const ids = passos.map(p=>p.id), ch = passoChave(tela, c);
+  let at = _passoAt.get(ch) || (admDe(c).passos||{})[tela];
+  if(!ids.includes(at)) at = ids[0];
+  _passoAt.set(ch, at);
+  const i = ids.indexOf(at), tudo = verTudoPassos();
+  const visto = _passoVisto.get(ch) || new Set(ids.slice(0, i + 1)); visto.add(at); _passoVisto.set(ch, visto);
+  const ult = tudo || i===ids.length-1;
+  const trilha = `<div class="tp-rola"><ol class="tp-trilha" aria-label="Passos desta página">${passos.map((p, j)=>{ const cur = !tudo && j===i, ok = !cur && visto.has(p.id);
+    return `<li class="${[cur?"aqui":"", ok?"feito":"", p.alerta?"alerta":""].filter(Boolean).join(" ")}" data-passo="${p.id}" data-rot="${esc(p.rot)}">
+      <button type="button" onclick="passoIr('${tela}','${c.id}','${p.id}')"${cur ? ' aria-current="step"' : ""}><span class="tp-n">${ok ? "✓" : j+1}</span>${esc(p.rot)}${p.conta ? ` <span class="tp-conta">${esc(p.conta)}</span>` : ""}</button></li>`; }).join("")}</ol></div>`;
+  const nav = `<span class="tp-onde">${tudo ? "Página inteira" : `Passo ${i+1} de ${ids.length}`}</span>
+    <label class="tp-chave"><input type="checkbox"${tudo ? " checked" : ""} onchange="passoTudo(this.checked)"> Ver tudo numa página</label>
+    <button type="button" class="tl-bt tp-ant"${tudo ? " hidden" : ""}${i===0 ? " disabled" : ""} onclick="passoVai('${tela}','${c.id}',-1)">← Anterior</button>
+    <button type="button" class="pa-prim tp-prox"${ult ? " hidden" : ""} onclick="passoVai('${tela}','${c.id}',1)">${ult ? "" : `Próximo: ${esc(passos[i+1].rot)} →`}</button>`;
+  return {at, tudo, ult, trilha, nav, attrs:` data-tp="${tela}" data-cli="${c.id}" data-at="${at}"`};
+}
+// repinta só a trilha, os passos e o pé, sem repintar a ficha (o que se digitou fica)
+function passoPinta(root){
+  const tudo = root.classList.contains("tp-tudo"), lis = [...root.querySelectorAll(".tp-trilha > li")], ids = lis.map(l=>l.dataset.passo);
+  const i = Math.max(0, ids.indexOf(root.dataset.at)), c = D.cliPorId.get(root.dataset.cli), visto = (c && _passoVisto.get(passoChave(root.dataset.tp, c))) || new Set();
+  lis.forEach((l, j)=>{ const cur = !tudo && j===i, ok = !cur && visto.has(l.dataset.passo), b = l.querySelector("button");
+    l.classList.toggle("aqui", cur); l.classList.toggle("feito", ok);
+    cur ? b.setAttribute("aria-current", "step") : b.removeAttribute("aria-current");
+    l.querySelector(".tp-n").textContent = ok ? "✓" : String(j+1); });
+  root.querySelectorAll(".tp-passo").forEach(s=>{ s.hidden = !tudo && s.dataset.passo!==ids[i]; });
+  const ult = tudo || i===ids.length-1, ant = root.querySelector(".tp-ant"), prox = root.querySelector(".tp-prox"), onde = root.querySelector(".tp-onde");
+  if(ant){ ant.hidden = tudo; ant.disabled = i===0; }
+  if(prox){ prox.hidden = ult; prox.textContent = ult ? "" : `Próximo: ${lis[i+1].dataset.rot} →`; }
+  root.querySelectorAll(".tp-fim").forEach(b=>{ b.hidden = !ult; });
+  if(onde) onde.textContent = tudo ? "Página inteira" : `Passo ${i+1} de ${ids.length}`;
+  // na tela estreita a trilha rola de lado: o passo aberto fica à vista
+  const rola = root.querySelector(".tp-rola"), li = lis[i];
+  if(rola && li && (li.offsetLeft < rola.scrollLeft || li.offsetLeft + li.offsetWidth > rola.scrollLeft + rola.clientWidth)) rola.scrollLeft = Math.max(0, li.offsetLeft - 24);
+}
+function passoIr(tela, cliId, id){
+  const root = document.querySelector(`[data-tp="${tela}"][data-cli="${cliId}"]`), c = D.cliPorId.get(cliId); if(!root || !c) return;
+  const ch = passoChave(tela, c), visto = _passoVisto.get(ch) || new Set();
+  visto.add(id); _passoVisto.set(ch, visto); _passoAt.set(ch, id); root.dataset.at = id;
+  passoPinta(root);
+  const alvo = root.classList.contains("tp-tudo") ? root.querySelector(`.tp-passo[data-passo="${id}"]`) : root.querySelector(".tp-rola");
+  if(alvo && (root.classList.contains("tp-tudo") || alvo.getBoundingClientRect().top < 0)) alvo.scrollIntoView({block:"start"});
+  if(linhaAd(c) && (admDe(c).passos||{})[tela]!==id) admSalvar(cliId, a=>{ a.passos = {...(a.passos||{}), [tela]:id}; });
+}
+function passoVai(tela, cliId, d){
+  const root = document.querySelector(`[data-tp="${tela}"][data-cli="${cliId}"]`); if(!root) return;
+  const ids = [...root.querySelectorAll(".tp-trilha > li")].map(l=>l.dataset.passo), i = ids.indexOf(root.dataset.at);
+  passoIr(tela, cliId, ids[Math.max(0, Math.min(ids.length-1, i + d))]);
+}
+function passoTudo(on){
+  guardar("crm_passos_tudo", on ? "1" : "0");
+  document.querySelectorAll("[data-tp]").forEach(r=>{ r.classList.toggle("tp-tudo", on); r.querySelectorAll(".tp-chave input").forEach(x=>{ x.checked = on; }); passoPinta(r); });
 }
 // "mostrar mais": abre e fecha a lista no lugar
 function paMais(bt){
