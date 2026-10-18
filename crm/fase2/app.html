@@ -3824,6 +3824,13 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .tp-onde{font-size:12px;color:var(--pa-c2);font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace}
 .tp-chave{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--pa-c1);cursor:pointer}.tp-chave input{margin:0;accent-color:var(--pa-t)}
 .tp-passo[hidden]{display:none!important}
+/* F241 · a visão do caso mais curta: a linha do tempo, os prazos e o Caso completo por mês */
+.tl-antigos-bt,.fp-ver-todos{margin:6px 0 10px;align-self:flex-start}
+.pz[hidden],.timeline[hidden]{display:none!important}
+.mes-b{border-top:1px solid var(--linha,#E7E6E1)}.mes-b>summary{display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;list-style:none;font-size:13px}
+.mes-b>summary::-webkit-details-marker{display:none}.mes-b>summary .ar{transition:transform .15s}.mes-b[open]>summary .ar{transform:rotate(90deg)}
+.mes-b>summary .nm{font-weight:600}.mes-b>summary .qt{margin-left:auto;color:var(--cinza);font-size:12px}
+@media (prefers-reduced-motion:reduce){.mes-b>summary .ar{transition:none}}
 .doc-quadros.tp-raiz,.adx-main.tp-raiz{--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660}
 .doc-quadros .tp-rola,.adx-main .tp-rola{margin:0 0 12px;padding:6px 0;background:var(--fundo,#F8F8F6)}
 .adx-main .tp-trilha button{border:1px solid transparent}
@@ -4590,7 +4597,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.64</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.65</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -32774,7 +32781,18 @@ function faixaPrazos(k){
       ${x.cumprir?`<button class="pz-ok" onclick="${x.cumprir}" title="cumpriu: tira o prazo daqui e devolve o caso à lista de onde veio">✔</button>`:""}
     </div>`;
   };
-  return `<div class="faixa-prazos" aria-label="Prazos e providências">${tit}${topo}${minhas.map(card).join("")}</div>`;
+  // F241 · a ordem continua decrescente (F145); o que não pede atenção agora fica num "mais N"
+  const atencao = x => x===prox || x===proxFatal || x===proxEv || pend(x) || x.aConfirmar || diasAte(x.data)<=7;
+  const quietos = minhas.filter(x=>!atencao(x)), recolhe = quietos.length >= 2 && !_pzTodos.has(k.id);
+  const cards = minhas.map((x, i)=>{ const h = card(x, i); return recolhe && !atencao(x) ? h.replace('<div class="pz ', '<div hidden class="pz pz-quieto ') : h; }).join("");
+  const mais = recolhe ? `<button type="button" class="tl-bt fp-ver-todos" onclick="pzVerTodos(this,'${k.id}')">Ver mais ${quietos.length} ${quietos.length===1?"data":"datas"} mais adiante</button>` : "";
+  return `<div class="faixa-prazos" aria-label="Prazos e providências">${tit}${topo}${cards}${mais}</div>`;
+}
+const _pzTodos = new Set();   // F241 · os casos em que se abriram todas as datas, na sessão
+function pzVerTodos(bt, casoId){
+  _pzTodos.add(casoId);
+  bt.closest(".faixa-prazos").querySelectorAll(".pz-quieto").forEach(e=>{ e.hidden = false; });
+  bt.remove();
 }
 function prazoSaberMais(i){
   const x = faixaAtual[i]; if(!x) return;
@@ -36119,9 +36137,17 @@ function linhaDoTempo(ands){
   };
   // a linha do tempo vem do mais novo para o mais velho: os dias separam a
   // leitura, e a fronteira do "não lido" mostra até onde você precisa descer
-  let corpo="", diaAtual=null, fronteira=false, passouNova=false;
+  let corpo="", diaAtual=null, fronteira=false, passouNova=false, cortou=false;
+  // F241 · à vista os dias mais recentes, com ao menos TL_VISIVEIS anotações e todas as não lidas; os mais antigos num botão
+  const limite = Math.max(TL_VISIVEIS, ultimaNova + 1), aberto = !casoId || _tlAntigos.has(casoId);
   for(const [i, a] of raiz.entries()){
     const d=dataSP(a.criado_em);
+    if(!aberto && !cortou && i>=limite && d!==diaAtual && raiz.length - i > 1){
+      if(diaAtual!==null){ corpo+=fecharDia(); diaAtual=null; }
+      const n = raiz.length - i;
+      corpo+=`</ul><button type="button" class="tl-bt tl-antigos-bt" onclick="tlVerAntigos(this,'${casoId}')">Ver ${n===1?"a anotação mais antiga":`as ${n} anotações mais antigas`}</button><ul class="timeline tl-antigos" hidden>`;
+      cortou=true;
+    }
     // F236 · a linha vai depois da ÚLTIMA nova: abaixo dela não sobra nada por ler
     if(passouNova && !fronteira && i>ultimaNova){
       corpo+=`<li class="tl-fim-novas"><span>— você já tinha visto daqui para baixo —</span></li>`;
@@ -36142,6 +36168,12 @@ function linhaDoTempo(ands){
     esc(mencs.map(m=>`${((D.colPorId.get(m.de_id)||{}).nome||"").split(" ")[0]} ${fmt(dataSP(m.criado_em)).slice(0,5)}`).join(", "))}) — o cartão leva o selo “@ menciona você”</div>` : "";
   return banner + avisoMenc + `<ul class="timeline">${corpo
     || "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
+}
+const TL_VISIVEIS = 5, _tlAntigos = new Set();   // F241 · os casos em que se abriu a linha do tempo inteira, na sessão
+function tlVerAntigos(bt, casoId){
+  _tlAntigos.add(casoId);
+  const ul = bt.nextElementSibling; if(ul) ul.hidden = false;
+  bt.remove();
 }
 
 // ── 🌻 Andamentos INSS (PAT/Meu INSS) ────────────────────────────────────
@@ -36486,7 +36518,7 @@ function fasesDoCaso(k){
 }
 function casoCompletoPorFase(k, linhas, itens){
   const fases = fasesDoCaso(k);
-  if(fases.length<2) return tlOficial(linhas);
+  if(fases.length<2) return tlPorMes(linhas, k.id);
   const idx = new Map(); linhas.forEach((l,i)=>idx.set(l, itens[i]));
   const grupos = fases.map(f=>({f, ls:[]}));
   for(const l of linhas){
@@ -36502,7 +36534,7 @@ function casoCompletoPorFase(k, linhas, itens){
     const per = g.f.ini==="0000" ? (g.f.fim?`até ${fmt(g.f.fim)}`:"") : `${g.f.fim?`${fmt(g.f.ini)} a ${fmt(g.f.fim)}`:`desde ${fmt(g.f.ini)}`}`;
     return `<details class="fase-b${atual?" atual":""}" ${aberta?"open":""} data-fase-chave="${esc(chave)}">
       <summary><span class="ar">▸</span><span class="nm">Fase ${g.f.n} · ${esc(g.f.nome)}</span><span class="per">${esc(per)}</span><span class="qt">${g.ls.length} registro${g.ls.length===1?"":"s"}</span></summary>
-      <div class="fase-c">${g.ls.length?tlOficial(g.ls):`<p class="meio-sub" style="padding:8px 12px">Nenhum registro nesta fase.</p>`}</div>
+      <div class="fase-c">${g.ls.length?tlPorMes(g.ls, chave):`<p class="meio-sub" style="padding:8px 12px">Nenhum registro nesta fase.</p>`}</div>
     </details>`;
   }).join("");
 }
@@ -36510,6 +36542,27 @@ function ligarFasesCaso(){
   document.querySelectorAll("details.fase-b[data-fase-chave]").forEach(d=>{
     d.ontoggle = ()=>{ const ch=d.dataset.faseChave; if(d.open) fasesAbertas.add(ch); else fasesAbertas.delete(ch); };
   });
+  // F241 · o mês aberto ou fechado à mão continua assim na repintura
+  document.querySelectorAll("details.mes-b[data-mes-chave]").forEach(d=>{
+    d.ontoggle = ()=>{ _mesesAbertos.set(d.dataset.mesChave, d.open); };
+  });
+}
+// F241 · o Caso completo por mês: com muitos registros, cada mês num bloco; ficam abertos o mês atual, o anterior e o
+// mês mais recente do caso (o caso parado mostra o último movimento). Poucos registros ou um mês só: a lista de sempre
+const _mesesAbertos = new Map();
+const MES_NOME = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+function tlPorMes(linhas, chave){
+  const mes = l => String(l.q||"").slice(0, 7);
+  const grupos = []; for(const l of linhas){ const m = mes(l), g = grupos[grupos.length-1]; if(g && g.m===m) g.ls.push(l); else grupos.push({m, ls:[l]}); }
+  if(linhas.length <= 12 || grupos.length < 2) return tlOficial(linhas);
+  const hj = hoje().slice(0, 7), ant = somaDias(hoje().slice(0, 8) + "01", -1).slice(0, 7), maisNovo = grupos.map(g=>g.m).filter(Boolean).sort().pop();
+  return grupos.map(g=>{
+    const ch = `${chave}|${g.m}`, padrao = !g.m || g.m===hj || g.m===ant || g.m===maisNovo;
+    const aberto = _mesesAbertos.has(ch) ? _mesesAbertos.get(ch) : padrao;
+    const rot = g.m ? `${MES_NOME[+g.m.slice(5, 7) - 1]} de ${g.m.slice(0, 4)}` : "sem data";
+    return `<details class="mes-b"${aberto ? " open" : ""} data-mes-chave="${esc(ch)}"><summary><span class="ar">▸</span><span class="nm">${esc(cap1(rot))}</span><span class="qt">${g.ls.length} registro${g.ls.length===1?"":"s"}</span></summary>
+      <div class="mes-c">${tlOficial(g.ls)}</div></details>`;
+  }).join("");
 }
 function painelTudo(k, ands){
   const itens=fatosDoCasoTodo(k, ands);
