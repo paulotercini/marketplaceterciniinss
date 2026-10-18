@@ -92,6 +92,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // 1 · a ordem e o modelo dos quadros
   await abrir(P, "pc_p1");
+  await p.evaluate(() => passoTudo(true));   // F238 · este teste lê os quadros todos; os passos têm o f238.js
   await p.screenshot({ path: path.join(OUT, "01-pa-topo.png") });
   for (const q of ["cnis", "rais", "cnpj", "ben"]) { const el = await p.$("#paq-" + q); if (el) await el.screenshot({ path: path.join(OUT, `01-pa-${q}.png`) }); }
   const qs = await p.evaluate(() => [...document.querySelectorAll(".pa .paq[data-q]")].map(q => q.dataset.q));
@@ -169,7 +170,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.setViewportSize({ width: 390, height: 844 });
   await p.waitForTimeout(400);
   const largos = await p.evaluate(() => { const w = document.documentElement.clientWidth;
-    return [...document.querySelectorAll(".pa *")].filter(e => !e.closest(".paq-rola") && e.getBoundingClientRect().right > w + 1 && e.getBoundingClientRect().width > 0).map(e => e.className || e.tagName).slice(0, 5); });
+    return [...document.querySelectorAll(".pa *")].filter(e => !e.closest(".paq-rola, .tp-rola") && e.getBoundingClientRect().right > w + 1 && e.getBoundingClientRect().width > 0).map(e => e.className || e.tagName).slice(0, 5); });
   await p.screenshot({ path: path.join(OUT, "02-pa-390.png"), fullPage: true });
   conf(`a 390 px nada transborda fora das tabelas roláveis${largos.length ? `: ${largos.join(", ")}` : ""}`, !largos.length);
 
