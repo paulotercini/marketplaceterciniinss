@@ -33,14 +33,16 @@ Estudo com os protótipos: https://claude.ai/artifact/7naCSCHvExCjhJMBVdeouL
    - Cada quadro de `quadrosDoPA` é um passo, e o último é "Escolher os benefícios".
    - O quadro sem nada a mostrar entra no passo "Não encontrado".
    - Sem dossiê não há trilha.
-2. **Análise de Direito.** Quatro passos:
+2. **F239 (11.63), feita.** A Análise de Direito em passos no modo atendimento (fora dele fica como era). Quatro passos:
    - Benefício.
    - Já resolvido: em ordem e informativo, uma linha cada.
    - Falta responder: em risco, falta, a informar e divergente, com os campos.
-   - Conclusão: veredito, "O que dá para fazer agora", tempos, considerações e "Registrar análise".
+   - Conclusão: "O que dá para fazer agora", tempos, considerações, "Registrar análise" e a linha que leva ao Desfecho.
 3. **Documentos.** Quatro passos: assinar, pedir ao cliente, guia do pedido e desfecho. Catálogo, consultas, anexos da IN 128 e site interno vão para uma gaveta "Ferramentas", e a conversa da equipe fica ao lado.
 4. **Encurtar o caso.** A linha do tempo mostra os mais recentes, os prazos aparecem resumidos e o Caso completo é agrupado por mês.
 
-## Ainda a decidir
+## Decidido
 
-- **Onde fica o Desfecho.** A recomendação é deixá-lo só no fim de Documentos e pôr uma linha na Análise de Direito que leve até ele.
+- **O Desfecho fica só no fim de Documentos** (Paulo, 17.10.2026). Na Análise de Direito, a Conclusão traz a linha "Ir ao Desfecho, em Documentos" (`linhaDesfecho`, `irDesfecho`).
+- **Com um benefício só**, ele abre sozinho e a primeira visita começa depois do passo "Benefício".
+- **Escolher o benefício** leva ao passo seguinte. O veredito do benefício fica à vista em todos os passos dele, e responder um campo recalcula sem trocar de passo.

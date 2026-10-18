@@ -61,6 +61,7 @@ function conf(peso, nome, ok) {
     await ctx.addInitScript(([u, ss]) => {
       localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
       localStorage.setItem("crm_sessao", JSON.stringify(ss));
+      localStorage.setItem("crm_passos_tudo", "1");   // F238/F239 · a página inteira; os passos têm o f238.js e o f239.js
       localStorage.setItem("crm_tema", "v10");
     }, [SUPA, sess]);
     await instalarBanco(ctx, { SUPA, SESSAO: sess, banco });
@@ -146,6 +147,7 @@ function conf(peso, nome, ok) {
   });
   await paulo.click("#ad-novo button:has-text('Registrar análise')");
   await paulo.waitForTimeout(1500);
+  await paulo.evaluate(() => irSubCad("documentos")); await paulo.waitForTimeout(500);   // F239 · o Desfecho fica só no fim de Documentos
   const desf = (await textoDe(paulo, "#desfecho .desf-base"))[0] || "";
   conf(2, "3.1 a análise registrada sugere gerar o caso", /^Caso/.test(desf));
   const casosAntes = banco.t.casos.filter(k => k.cliente_id === cli.id).length;

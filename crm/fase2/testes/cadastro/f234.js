@@ -51,6 +51,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
+    localStorage.setItem("crm_passos_tudo", "1");   // F238/F239 · a página inteira; os passos têm o f238.js e o f239.js
     localStorage.setItem("crm_tema", "v10");
   }, [SUPA, SESSAO]);
   await instalarBanco(ctx, { SUPA, SESSAO, banco });
@@ -70,7 +71,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // 1 · o quadrado vem primeiro, só com os escolhidos, e nada abre antes do clique
   const q0 = await p.evaluate(() => { const q = document.getElementById("ad-quadrado"), main = q && q.parentElement;
-    return { ok: !!q, primeiro: main && main.firstElementChild === q, bts: [...document.querySelectorAll("#ad-quadrado .adq-bt")].map(b => [b.dataset.op, b.textContent.replace(/\s+/g, " ")]),
+    return { ok: !!q, primeiro: main && main.querySelector(":scope > :not(.tp-rola)") === q, bts: [...document.querySelectorAll("#ad-quadrado .adq-bt")].map(b => [b.dataset.op, b.textContent.replace(/\s+/g, " ")]),
       vazio: !!document.getElementById("ad-benef") && !document.querySelector("#ad-benef .adb-req"), irmao: q && q.nextElementSibling && q.nextElementSibling.id }; });
   await p.screenshot({ path: path.join(OUT, "01-quadrado.png") });
   conf("o quadrado dos benefícios é o primeiro da Análise de Direito", q0.ok && q0.primeiro);
@@ -151,8 +152,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(400);
   await p.evaluate(() => irSubCad("direito"));
   await p.waitForTimeout(400);
-  conf("no outro pré-caso, o quadrado é o dele e nada está aberto", await p.evaluate(() => [...document.querySelectorAll("#ad-quadrado .adq-bt")].map(b => b.dataset.op).join() === "idoso"
-    && !document.querySelector("#ad-benef .adb-req")));
+  // F239 · com um benefício só, ele já abre sozinho no atendimento
+  conf("no outro pré-caso, o quadrado é o dele, e o benefício único já abre", await p.evaluate(() => [...document.querySelectorAll("#ad-quadrado .adq-bt")].map(b => b.dataset.op).join() === "idoso"
+    && (document.getElementById("ad-benef") || {}).dataset.op === "idoso"));
   await p.evaluate(a => abrirAtendimentoDe(a, "pc_r1"), A);
   await p.waitForTimeout(400);
   await p.evaluate(() => irSubCad("direito"));

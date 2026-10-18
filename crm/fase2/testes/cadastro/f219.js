@@ -41,6 +41,7 @@ FIX.documentos_beneficio = [
   await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
+    localStorage.setItem("crm_passos_tudo", "1");   // F238/F239 · a página inteira; os passos têm o f238.js e o f239.js
     localStorage.setItem("crm_tema", "v10");
   }, [SUPA, SESSAO]);
   const reg = []; let seq = 0;
@@ -120,7 +121,7 @@ FIX.documentos_beneficio = [
     etapas[0] === "documentacao" && etapas[1] === "pronto" && etapas[2] === "analisado" && etapas[3] === "caso" && etapas[4]);
 
   // ── B · onda 3: o quadro Desfecho ──────────────────────────────────────
-  await p.evaluate(() => repintarFicha());
+  await p.evaluate(() => irSubCad("documentos"));   // F239 · o Desfecho fica só no fim de Documentos
   await p.waitForSelector("#desfecho");
   const desf = (await texto("#desfecho .desf-base"))[0] || "";
   const btLemb = (await texto("#desfecho .adr-bt"))[0] || "";
@@ -192,7 +193,7 @@ FIX.documentos_beneficio = [
   let py = false;
   try { execSync("python3 -m pytest tests/test_docs_catalogo.py -q", { cwd: path.join(__dirname, "../../../.."), stdio: "pipe" }); py = true; } catch (e) {}
   conf(5, "D1 o catálogo do CRM compara e alimenta as listas do site (docs_catalogo.py, testado)", py);
-  await p.evaluate(() => { abaAtiva = 0; _atendAberto.add(clienteAberto); irSubCad("direito"); });
+  await p.evaluate(() => { abaAtiva = 0; _atendAberto.add(clienteAberto); irSubCad("documentos"); });
   await p.waitForSelector("#desfecho");
   const css = fs.readFileSync(path.join(__dirname, "app.html"), "utf8");
   const a11y = await p.evaluate(() => ({ h3: !!document.querySelector("#desfecho h3"), sel: !!document.querySelector("#desfecho select[aria-label]"), bts: [...document.querySelectorAll("#desfecho button")].every(b => b.type === "button") }));

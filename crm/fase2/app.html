@@ -3581,7 +3581,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .adr-form-sub{font-size:12.5px;font-weight:600;color:var(--cinza)}
 .adr-campos{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 14px}
 .adr-campo{display:flex;flex-direction:column;gap:3px;font-size:12.5px;font-weight:600;color:var(--cinza)}
-.adr-campo input,.adr-campo select{min-height:40px;font-weight:400}
+.adr-campo input,.adr-campo select{min-height:40px;font-weight:400}.adr-campo{min-width:0}.adr-campo input,.adr-campo select{max-width:100%;min-width:0}
 .ad-est{font-style:normal;font-size:11px;font-weight:600;margin-left:4px;color:var(--cinza-claro)}
 .adr-campo[data-est="falta"] .ad-est{color:var(--laranja)}
 .adr-campo[data-est="pre"] .ad-est{color:var(--azul)}
@@ -3824,6 +3824,12 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .tp-onde{font-size:12px;color:var(--pa-c2);font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace}
 .tp-chave{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--pa-c1);cursor:pointer}.tp-chave input{margin:0;accent-color:var(--pa-t)}
 .tp-passo[hidden]{display:none!important}
+.adx-main.tp-raiz{--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660}
+.adx-main .tp-rola{margin:0 0 12px;padding:6px 0;background:var(--fundo,#F8F8F6)}
+.adx-main .tp-trilha button{border:1px solid transparent}
+.tp-pe{position:sticky;bottom:0;z-index:2;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;justify-content:flex-end;margin-top:12px;padding:10px 12px;background:#fff;border:1px solid var(--pa-b);border-radius:10px;box-shadow:0 -4px 12px rgba(0,0,0,.05)}
+.adb-passo-sub{margin:4px 0 8px;color:var(--pa-c2,#686660);font-size:12.5px}
+.adr-desf-ir{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px}.adr-desf-ir p{margin:0}
 @media (max-width:640px){.tp-rola{position:static}.tp-nav{justify-content:flex-start}}
 /* F234 · a Análise de Direito por benefício: o quadrado dos escolhidos e, logo abaixo, os requisitos do aberto */
 .adq,.adb{--pa-t:#0E5C58;--pa-crit:#B3261E;--pa-warn:#8F5400;--pa-ok:#1B6E38;--pa-info:#3A6491;--pa-b:#E7E6E1;--pa-c1:#4A4944;--pa-c2:#686660;background:#fff;border:1px solid #E7E6E1;border-radius:12px;padding:14px 16px;margin:0 0 14px;min-width:0}
@@ -4584,7 +4590,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.62</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.63</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -21945,7 +21951,22 @@ function painelDireito(c){
   const datas = as.length>1 ? `<nav class="ad-datas" aria-label="Análises de Direito">${as.map(a=>`<button type="button" class="${a===sel?"on":""}"
     aria-pressed="${a===sel}" onclick="_adSel.set('${c.id}','${a.id}');repintarFicha()">${esc(fmt(a.data_analise))}<small>${esc(a.fonte||"manual")}</small></button>`).join("")}</nav>` : "";
   const anteriores = datas ? [] : as.slice(1);
-  const atend = _atendAberto.has(c.id) && !!preCasoAberto(c), ab = adBenefAberto(c);   // F234
+  const atend = _atendAberto.has(c.id) && !!preCasoAberto(c);   // F234
+  // F239 · com um benefício só, ele já abre: o passo "Benefício" não pede clique
+  if(atend && !adBenefAberto(c) && opcoesSel(c).length===1) _adBenef.set(adChave(c), opcoesSel(c)[0].o);
+  const ab = adBenefAberto(c);
+  // F239 · com um benefício só, a primeira visita já começa depois do passo "Benefício"
+  if(atend && ab && opcoesSel(c).length===1 && !_passoAt.has(passoChave("ad", c)) && !(admDe(c).passos||{}).ad){
+    const ps = adPassosDe(c, ks, ab); _passoAt.set(passoChave("ad", c), (ps[1] || ps[0]).id); }
+  // F239 · no atendimento, a Análise de Direito em passos: Benefício, Já resolvido, Falta responder, Conclusão
+  const tp = atend ? passosDaTela("ad", c, adPassosDe(c, ks, ab)) : null, oc = id => tp && !tp.tudo && id!==tp.at ? " hidden" : "";
+  const principal = tp
+    ? `<div class="adx-main tp-raiz${tp.tudo ? " tp-tudo" : ""}"${tp.attrs}>${tp.trilha}
+        ${quadradoEmPasso(quadradoBeneficios(c, ks), oc)}
+        ${ab ? painelBeneficio(c, ks, ab, oc) : `<div id="ad-benef"></div>`}
+        <div class="tp-passo" data-passo="concl"${oc("concl")}>${caixaConsideracoes(c)}${formAnalise(c)}${linhaDesfecho(c)}</div>
+        <div class="tp-pe">${tp.nav}</div></div>`
+    : `<div class="adx-main">${quadradoBeneficios(c, ks)}${ab ? painelBeneficio(c, ks, ab) : `<div id="ad-benef"></div>`}${caixaConsideracoes(c)}${quadroDesfecho(c)}${formAnalise(c)}</div>`;
   return `<div class="adr">
     <div class="ad-topo">${faixaDoCaso(ks)}
       <span class="ad-topo-fim">${chipParceria(c, ks)}
@@ -21954,7 +21975,7 @@ function painelDireito(c){
       ${cnisDe(c)&&cnisDe(c).caminho?`<button type="button" class="tl-bt" onclick="abrirCnis('${c.id}')" title="abre o extrato guardado em outra aba (CNIS de ${esc(fmt(cnisDe(c).em))})">Abrir CNIS</button>`
         :`<button type="button" class="tl-bt tl-falta" onclick="irSubCad('identificacao')" title="o CNIS ainda não foi inserido: insira na Identificação">Inserir CNIS</button>`}</span>
     </div>
-    <div class="adx-grade"><div class="adx-main">${quadradoBeneficios(c, ks)}${ab ? painelBeneficio(c, ks, ab) : `<div id="ad-benef"></div>`}${caixaConsideracoes(c)}${quadroDesfecho(c)}${formAnalise(c)}</div>
+    <div class="adx-grade">${principal}
       <aside class="adx-lado">${listaConsideracoes(c)}</aside></div>
     ${atend ? `<details class="adr-hist" id="ad-hist"><summary>Análises anteriores e histórico</summary>` : ""}
     ${resumoDireito(c, ult)}
@@ -22058,7 +22079,7 @@ function quandoTxt(op, a, x){
     return ja ? `Requisitos cumpridos desde ${d}; o pagamento começa no dia do pedido.` : `Requisitos cumpridos em ${d}, pelas regras abaixo.`;
   return `Direito ${ja ? "desde" : "em"} ${d}, pelos requisitos abaixo.`;
 }
-function painelBeneficio(c, ks, op){
+function painelBeneficio(c, ks, op, oc){
   const o = opcoesSel(c).find(x=>x.o===op); if(!o) return `<div id="ad-benef"></div>`;
   const x = reqCtx(c, ks, op), a = avaliarReq(op, x), lev = itensLevados(c, ks), v = x.vDig || x.v, ex = REQ_EXTRA[op] || {};
   const dica = k => { const f = (ex.pre||{})[k]; try{ return (f ? f(x) : null) || ((x.preUsado||{})[k] ? {...x.preUsado[k], doDossie:true} : null); }catch(e){ return null; } };
@@ -22076,21 +22097,72 @@ function painelBeneficio(c, ks, op){
   const ver = vereditoReq(op, x, a);
   let agora = []; try{ agora = ex.agora ? ex.agora(x, a) || [] : []; }catch(e){}
   const porQ = new Map(); for(const it of lev){ if(!porQ.has(it.qrot)) porQ.set(it.qrot, []); porQ.get(it.qrot).push(it); }
+  const der = /^(crps|COPIA|JA)$/.test(op) ? "" : `<div class="adm-campos adb-der">${campoAd(c, "der", v)}</div>`;
+  const tempos = o.mods.includes("tempos") ? `<div class="adb-tempos"><h4>Tempos de contribuição</h4>${caixaTempos(c, x.temposAuto ? x.tempos : null)}<div class="adm-calc" data-mod="tempos">${admCalcHtml("tempos", c, {...admCtx(c, ks), tempos:x.tempos, tot:x.tot})}</div></div>` : "";
+  const mais = `<details class="adb-mais" id="adb-mais"><summary>Do primeiro atendimento: ${lev.length} ${lev.length===1?"item levado":"itens levados"}, e os documentos em detalhe</summary>
+      ${[...porQ].map(([q, its])=>`<div class="adb-lev"><b>${esc(q)}</b><ul>${its.map(it=>`<li>${esc(it.txt)}${it.anexo ? ` <button type="button" class="adr-link" onclick="abrirAnexo('${it.anexo}')">ver</button>` : ""}</li>`).join("")}</ul></div>`).join("")
+        || `<p class="meio-sub">Nenhum item levado do Primeiro atendimento.</p>`}
+      ${exploracaoDireito(c, ks)}</details>`;
+  const nota = `<p class="meio-sub adm-nota">Os itens marcados "a conferir na lei" ainda não foram checados na norma, e os marcados "INSS e Justiça divergem" pedem a decisão do advogado antes de virar pedido ou peça.</p>`;
+  // F239 · em passos: o que o dossiê já resolveu, depois o que falta responder (com a DER), e a conclusão
+  if(oc && a){
+    const rs = a.rs.filter(r=>!rec.includes(r)), ok = rs.filter(adResolvido), fal = rs.filter(r=>!adResolvido(r));
+    const derEm = fal.length ? "falta" : "ok";
+    return `<section class="adb" id="ad-benef" data-op="${op}" aria-labelledby="adb-t">
+    <div class="adb-topo"><h3 id="adb-t">Requisitos · ${esc(o.rot)}</h3><span class="adb-cont">${esc(adContagem(a))}</span></div>
+    ${ver ? `<p class="adb-veredito tom-${ver.tom}" role="status">${esc(ver.txt)}</p>` : ""}
+    ${ok.length || rec.length ? `<div class="tp-passo" data-passo="ok"${oc("ok")}>
+      <p class="adb-passo-sub">O que o dossiê já responde. Confira com a pessoa o que vier marcado "Do dossiê"; a base legal abre em cada um.</p>
+      ${derEm==="ok" ? der : ""}
+      ${ok.length ? `<ol class="adb-lista adb-resolvidos">${ok.map(linha).join("")}</ol>` : ""}
+      ${rec.length ? `<details class="adb-recolhido"><summary>${esc(ex.recolherRot || "Outros pontos")} (${rec.length})</summary><ol class="adb-lista">${rec.map(linha).join("")}</ol></details>` : ""}
+      ${mais}</div>` : ""}
+    ${fal.length ? `<div class="tp-passo" data-passo="falta"${oc("falta")}>
+      <p class="adb-passo-sub">O que ainda pede resposta, prova ou decisão. Cada resposta recalcula o benefício na hora.</p>
+      ${der}<ol class="adb-lista">${fal.map(linha).join("")}</ol>${nota}</div>` : ""}
+    <div class="tp-passo" data-passo="concl"${oc("concl")}>
+      ${agora.length ? `<div class="adb-agora"><b>O que dá para fazer agora</b><ol>${agora.map(t=>`<li>${esc(t)}</li>`).join("")}</ol></div>` : ""}
+      ${a.resumo ? `<p class="adb-resumo"><b>Em uma frase:</b> ${esc(a.resumo)}</p>` : ""}
+      <p class="adb-quando">${a.quando ? quandoTxt(op, a, x) : ""}</p>
+      ${tempos}</div>
+  </section>`;
+  }
   return `<section class="adb" id="ad-benef" data-op="${op}" aria-labelledby="adb-t">
     <div class="adb-topo"><h3 id="adb-t">Requisitos · ${esc(o.rot)}</h3><span class="adb-cont">${a ? esc(adContagem(a)) : ""}</span></div>
     ${ver ? `<p class="adb-veredito tom-${ver.tom}" role="status">${esc(ver.txt)}</p>` : ""}
     ${agora.length ? `<div class="adb-agora"><b>O que dá para fazer agora</b><ol>${agora.map(t=>`<li>${esc(t)}</li>`).join("")}</ol></div>` : ""}
     ${a && a.resumo ? `<p class="adb-resumo"><b>Em uma frase:</b> ${esc(a.resumo)}</p>` : ""}
     <p class="adb-quando">${a && a.quando ? quandoTxt(op, a, x) : ""}</p>
-    ${/^(crps|COPIA|JA)$/.test(op) ? "" : `<div class="adm-campos adb-der">${campoAd(c, "der", v)}</div>`}
+    ${der}
     ${a ? `<ol class="adb-lista">${a.rs.filter(r=>!rec.includes(r)).map(linha).join("")}</ol>${rec.length ? `<details class="adb-recolhido"><summary>${esc(ex.recolherRot || "Outros pontos")} (${rec.length})</summary><ol class="adb-lista">${rec.map(linha).join("")}</ol></details>` : ""}` : `<p class="meio-sub">Este benefício ainda não tem requisitos no catálogo.</p>`}
-    ${o.mods.includes("tempos") ? `<div class="adb-tempos"><h4>Tempos de contribuição</h4>${caixaTempos(c, x.temposAuto ? x.tempos : null)}<div class="adm-calc" data-mod="tempos">${admCalcHtml("tempos", c, {...admCtx(c, ks), tempos:x.tempos, tot:x.tot})}</div></div>` : ""}
-    <details class="adb-mais" id="adb-mais"><summary>Do primeiro atendimento: ${lev.length} ${lev.length===1?"item levado":"itens levados"}, e os documentos em detalhe</summary>
-      ${[...porQ].map(([q, its])=>`<div class="adb-lev"><b>${esc(q)}</b><ul>${its.map(it=>`<li>${esc(it.txt)}${it.anexo ? ` <button type="button" class="adr-link" onclick="abrirAnexo('${it.anexo}')">ver</button>` : ""}</li>`).join("")}</ul></div>`).join("")
-        || `<p class="meio-sub">Nenhum item levado do Primeiro atendimento.</p>`}
-      ${exploracaoDireito(c, ks)}</details>
-    <p class="meio-sub adm-nota">Os itens marcados "a conferir na lei" ainda não foram checados na norma, e os marcados "INSS e Justiça divergem" pedem a decisão do advogado antes de virar pedido ou peça.</p>
+    ${tempos}
+    ${mais}
+    ${nota}
   </section>`;
+}
+// F239 · os passos da Análise de Direito no atendimento: o benefício, o já resolvido, o que falta responder e a conclusão
+// o quadrado é o passo "Benefício" e continua logo acima do painel do benefício aberto
+const quadradoEmPasso = (h, oc) => h.replace('<section class="adq"', `<section class="adq tp-passo" data-passo="benef"${oc("benef")}`);
+const adResolvido = r => r.est==="ok" || r.est==="info";
+function adPassosDe(c, ks, ab){
+  const ps = [{id:"benef", rot:"Benefício", conta:String(opcoesSel(c).length || ""), alerta:false}];
+  let a = null; if(ab){ try{ a = avaliarReq(ab, reqCtx(c, ks, ab)); }catch(e){} }
+  if(a){ const rec = (REQ_EXTRA[ab]||{}).recolher ? a.rs.filter(r=>{ try{ return REQ_EXTRA[ab].recolher(r, reqCtx(c, ks, ab)); }catch(e){ return false; } }) : [];
+    const rs = a.rs.filter(r=>!rec.includes(r)), ok = rs.filter(adResolvido), fal = rs.filter(r=>!adResolvido(r));
+    if(ok.length || rec.length) ps.push({id:"ok", rot:"Já resolvido", conta:String(ok.length), alerta:false});
+    if(fal.length) ps.push({id:"falta", rot:"Falta responder", conta:String(fal.length), alerta:fal.some(r=>["risco","impedido","falta"].includes(r.est))}); }
+  ps.push({id:"concl", rot:"Conclusão", conta:"", alerta:false});
+  return ps;
+}
+// F239 · o Desfecho do pré-caso fica só no fim de Documentos; aqui, a linha que leva até ele (decisão do Paulo, 17.10.2026)
+function linhaDesfecho(c){
+  if(!preCasoAberto(c)) return "";
+  return `<section class="adx-sec adr-desf-ir" id="desfecho-ir"><p><b>Desfecho deste pré-caso.</b> Arquivar, enviar a Aposentadorias futuras ou gerar o caso fica no fim de Documentos, depois dos papéis.</p>
+    <button type="button" class="tl-bt" onclick="irDesfecho()">Ir ao Desfecho, em Documentos →</button></section>`;
+}
+function irDesfecho(){
+  irSubCad("documentos");
+  setTimeout(()=>{ const e = document.getElementById("dq-desfecho") || document.getElementById("desfecho"); if(e) e.scrollIntoView({block:"start"}); }, 60);
 }
 // abre o benefício: repinta o quadrado e o painel, e o formulário passa a ser dele
 function adAbrirBenef(cliId, op){
@@ -22098,14 +22170,22 @@ function adAbrirBenef(cliId, op){
   _adBenef.set(adChave(c), op);
   adRepintarBenef(cliId);
   adServicoDoBenef(c, op);
+  // F239 · em passos, escolher o benefício leva ao passo seguinte
+  if(document.querySelector('[data-tp="ad"]')){ const ids = adPassosDe(c, D.casosDoCliente.get(cliId)||[], op).map(p=>p.id); return passoIr("ad", cliId, ids[1] || ids[0]); }
   const el = document.getElementById("ad-benef"); if(el && el.scrollIntoView) el.scrollIntoView({behavior:"smooth", block:"nearest"});
 }
 function adMaisBenef(bt){ const m = bt.closest(".adq").querySelector(".adq-mais"); m.hidden = !m.hidden; bt.setAttribute("aria-expanded", String(!m.hidden)); }
 function adRepintarBenef(cliId){
   const c = D.cliPorId.get(cliId), q = document.getElementById("ad-quadrado"), b = document.getElementById("ad-benef"); if(!c || !q) return repintarFicha();
   const ks = D.casosDoCliente.get(cliId)||[], aberto = !q.querySelector(".adq-mais").hidden, ab = adBenefAberto(c);
-  q.outerHTML = quadradoBeneficios(c, ks);
+  const root = document.querySelector('[data-tp="ad"]');
+  q.outerHTML = root ? quadradoEmPasso(quadradoBeneficios(c, ks), ()=>"") : quadradoBeneficios(c, ks);
   if(aberto){ const q2 = document.getElementById("ad-quadrado"); q2.querySelector(".adq-mais").hidden = false; q2.querySelector(".adq-cab .btn-mini").setAttribute("aria-expanded", "true"); }
+  // F239 · em passos, a trilha muda com o benefício: refaz a trilha e o pé, e o painel nasce no passo certo
+  if(root){ const t = passosDaTela("ad", c, adPassosDe(c, ks, ab)), oc = id => !t.tudo && id!==t.at ? " hidden" : "";
+    root.querySelector(".tp-rola").outerHTML = t.trilha; root.querySelector(".tp-pe").innerHTML = t.nav; root.dataset.at = t.at;
+    if(b) b.outerHTML = ab ? painelBeneficio(c, ks, ab, oc) : `<div id="ad-benef"></div>`;
+    return passoPinta(root); }
   if(b) b.outerHTML = ab ? painelBeneficio(c, ks, ab) : `<div id="ad-benef"></div>`;
 }
 // recalcula no lugar: o estado de cada requisito e a contagem, sem tocar nos campos
