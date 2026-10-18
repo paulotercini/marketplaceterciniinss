@@ -192,3 +192,5 @@ Toda peça produzida com esta skill passa, antes da entrega, pela conferência i
 ## Juízo de Catanduva (Onda 179)
 
 O juízo trata o laudo pericial como prova de "maior credibilidade" por ser "equidistante dos interesses das partes" e indefere quesito complementar "englobado nos quesitos já respondidos". A divergência com relatório particular, sozinha, não altera o resultado. A manifestação sobre o laudo pericial ataca vício formal, quesito não respondido, contradição interna ou falta de habilitação do perito, sempre com o trecho do laudo e o ID, e o quesito complementar é novo. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.
+
+Forma da peça (Onda 184). Segue ESTILO-MODELO.md, seção A mesma peça em todos os ritos.

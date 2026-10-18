@@ -44,7 +44,7 @@ ATENÇÃO. O JEF segue dias úteis também após CPC/15. Verificar no calendári
 Prazos.
 - Recurso ordinário à JR. 30 dias corridos da ciência (art. 305 Decreto 3.048/99 c/c art. 77 Portaria 996/2022).
 - Recurso especial à CAJ. 30 dias corridos.
-- Embargos de declaração. 5 dias corridos (art. 92 RICRPS Portaria MPS 125/2026).
+- Embargos de declaração. 30 dias corridos (art. 92, § 2º, RICRPS, Portaria MPS 125/2026), e o erro material a qualquer tempo.
 - Agravo do art. 116 RICRPS. 15 dias corridos.
 
 ATENÇÃO. Prazos do CRPS são em DIAS CORRIDOS, não em dias úteis. Erro frequente do advogado é aplicar a contagem do CPC.

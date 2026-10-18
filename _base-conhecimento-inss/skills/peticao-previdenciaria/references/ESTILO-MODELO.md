@@ -29,6 +29,20 @@ O requisito que o INSS reconheceu ou não discutiu recebe remissão na própria 
 
 A norma é sempre aplicada ao fato na frase seguinte, com um verbo que diga a sua função (dispõe, estabelece, assegura, exige, veda, determina).
 
+## A mesma peça em todos os ritos (Onda 184)
+
+As regras deste manual valem para toda peça do escritório, e não apenas para a petição inicial. Os fatos vêm primeiro e detalhados, a frase segue as mesmas medidas e as fórmulas vedadas continuam vedadas. Muda apenas o que se transcreve, conforme o quadro abaixo. Nas peças posteriores à inicial, o documento é indicado pelo ID, e a decisão atacada é citada pelo trecho literal, ao lado do fato ou do documento que ela deixou de examinar.
+
+| Peça | O que se transcreve | A lei |
+|---|---|---|
+| Petição inicial e mandado de segurança | trecho do documento e da decisão do INSS | um dispositivo por seção, apenas o controvertido |
+| Recurso inominado, apelação, contrarrazões, réplica e alegações finais | trecho da sentença ou da contestação, com o ID | em bloco apenas quando a decisão contrariou o texto do dispositivo, um por seção, e o resto por remissão |
+| Manifestação sobre laudo pericial | trecho do laudo ao lado do documento médico que o contradiz | nenhuma transcrição; art. 479 do CPC por remissão |
+| Embargos de declaração | trecho da decisão ao lado do ponto suscitado e do ID onde foi suscitado | nenhuma transcrição; art. 1.022 do CPC por remissão |
+| Recurso ao CRPS, requerimento e cumprimento de exigência ao INSS | trecho da decisão administrativa e do documento, com o protocolo ou a folha | artigo apenas quando extremamente necessário, sem transcrição, salvo o trecho exato da norma ou do Enunciado do CRPS que a decisão contrariou |
+
+**A peça administrativa usa linguagem mais simples.** O conselheiro e o servidor decidem pelo documento e pela norma que conhecem. A peça diz o que aconteceu, o que a decisão deixou de considerar e o que se pede, em frases de uso comum. O artigo entra apenas quando a decisão contrariou norma expressa ou quando o pedido depende dele, e entra por remissão curta. Detalhe em `base-recurso-crps-peca-enxuta`.
+
 ## A frase
 
 A frase segue a ordem sujeito, verbo e complemento, sem vírgula isolada entre o verbo e o complemento e com no máximo uma inserção entre vírgulas. **Cada frase acrescenta um fato ou a consequência do anterior**, e liga dois ou três elementos quando a narração o exige, como a data, o documento e o que ele registra. A referência é de 15 a 30 palavras, e a frase que narra documento pode chegar a 40. A data vem em dd/mm/aaaa no corpo e por extenso apenas na idade e no fecho.
