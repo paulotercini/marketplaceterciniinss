@@ -35,7 +35,7 @@ Todo parecer e todo relatório terminam com duas seções, nesta ordem.
 
 ## 3. Toda peça parte do MODELO OURO
 
-Origem no Drive, pasta Modelos Ouro 2.0. Não havendo modelo do tipo, usar o mais próximo e SINALIZAR expressamente qual foi usado e por quê.
+Origem no Drive, pasta Modelos Ouro 3.0. Não havendo modelo do tipo, usar o mais próximo e SINALIZAR expressamente qual foi usado e por quê.
 
 Documento formal em .docx no padrão `base-peticao-previdenciaria-padrao-visual`.
 
