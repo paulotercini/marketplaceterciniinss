@@ -31,7 +31,7 @@ Acionar `base-crps-panorama-geral` para mapa do regimento.
 
 ### Passo 4. Fundamentação normativa do mérito
 
-Acionar a skill base-* específica do benefício e do tema controvertido.
+Acionar a skill base-* específica do benefício e do tema controvertido. A pesquisa normativa vai até o fim, mas a peça leva apenas a norma que a decisão contrariou ou de que o pedido depende, por remissão curta e em linguagem simples, e cada tópico abre pelo fato e pelo erro da decisão (Onda 184, `base-recurso-crps-peca-enxuta`, Seção 3).
 
 Aposentadoria especial. Skills `base-especial-*` correspondentes.
 Incapacidade. Skills `base-incapacidade-*` ou `base-auxilio-acidente-b94-*`.
@@ -105,7 +105,7 @@ Diligência prévia ou em mesa pode reverter decisão. Acionar `incidentes-instr
 
 ## 5. Postura
 
-Pró-segurado integral. CRPS é a última via administrativa antes do Judiciário e merece esforço argumentativo denso. Esgotar fundamentação normativa, citar precedentes vinculantes do CRPS e dos tribunais superiores, usar incidentes processuais como ferramenta ofensiva e não recuar diante de não conhecimento mal fundamentado.
+Pró-segurado integral. CRPS é a última via administrativa antes do Judiciário e merece esforço argumentativo denso. Esgotar a pesquisa normativa, levar à peça apenas o artigo extremamente necessário (Onda 184), citar precedentes vinculantes do CRPS e dos tribunais superiores, usar incidentes processuais como ferramenta ofensiva e não recuar diante de não conhecimento mal fundamentado.
 
 ## Hub de portarias administrativas
 
@@ -134,3 +134,5 @@ Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órg�
 ## Cadeia de cada pedido (regra permanente, 12/10/2026)
 
 Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.
+
+Forma da peça (Onda 184). Segue ESTILO-MODELO.md, seção A mesma peça em todos os ritos.

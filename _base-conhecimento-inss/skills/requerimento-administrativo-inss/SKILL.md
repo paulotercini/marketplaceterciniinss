@@ -47,7 +47,7 @@ Nome completo, CPF, NIT/PIS, data de nascimento, endereço, telefone e e-mail. S
 
 ### Objeto do Requerimento
 
-Uma frase direta identificando o que se pretende. Exemplos de formulação adequada. "Apresenta requerimento de concessão de pensão por morte (B21), com base no art. 74 da Lei 8.213/91." Ou "Apresenta documentação complementar para cumprimento de exigência formulada no processo administrativo nº [número], NB [número]."
+Uma frase direta identificando o que se pretende. Exemplos de formulação adequada. "Apresenta requerimento de concessão de pensão por morte (B21)." Ou "Apresenta documentação complementar para cumprimento de exigência formulada no processo administrativo nº [número], NB [número]."
 
 ### Quadro-Resumo de Dados
 
@@ -67,7 +67,7 @@ Parágrafos curtos e diretos descrevendo a situação fática. Sem adjetivação
 
 ### Enquadramento Normativo
 
-Uma seção curta indicando os dispositivos legais e normativos que fundamentam o pedido. Sem transcrição de artigos (o servidor conhece a legislação). Indicar apenas o artigo e o diploma, com uma frase conectando ao caso concreto. Exemplo adequado. "O benefício de pensão por morte é devido aos dependentes do segurado que falecer, nos termos do art. 74 da Lei 8.213/91, independentemente de carência (art. 26, I). A qualidade de segurado do instituidor na data do óbito está comprovada pelo CNIS, que registra contribuições até [competência], com período de graça vigente nos termos do art. 15, II, da Lei 8.213/91."
+Uma seção curta, em linguagem simples, que liga o fato ao requisito. Sem transcrição de artigos (o servidor conhece a legislação). O artigo entra apenas quando extremamente necessário, isto é, quando o pedido depende dele ou quando o INSS costuma negar contra norma expressa, e entra por remissão curta na frase (Onda 184). Exemplo adequado. "A pensão por morte não exige carência. O instituidor mantinha a qualidade de segurado na data do óbito, porque o CNIS registra contribuições até [competência] e o óbito ocorreu dentro do período de graça (art. 15, II, da Lei 8.213/91)."
 
 ### Documentos Anexos
 
@@ -75,7 +75,7 @@ Lista numerada de todos os documentos que acompanham o requerimento. Cada item c
 
 ### Pedido
 
-Uma frase direta com o que se requer. "Diante do exposto, requer a concessão do benefício de pensão por morte (B21), com DIB na data do óbito ([data]), nos termos do art. 74 da Lei 8.213/91."
+Uma frase direta com o que se requer. "Diante do exposto, requer a concessão do benefício de pensão por morte (B21), com DIB na data do óbito ([data])." O pedido não cita artigo.
 
 ### Fechamento
 
@@ -176,3 +176,5 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
 Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+Forma da peça (Onda 184). Segue ESTILO-MODELO.md, seção A mesma peça em todos os ritos.

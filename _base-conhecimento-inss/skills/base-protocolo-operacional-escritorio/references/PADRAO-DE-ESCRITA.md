@@ -181,6 +181,10 @@ O titular determinou que toda escrita jurídica do escritório, peça, parecer e
 
 Em 17/10/2026 o titular acrescentou três correções, com o exemplo em `ESTILO-MODELO.md`, seção A frase. O recurso "foi interposto" e o requerimento "foi protocolado", e nunca "havia chegado". A norma "determina", "dispõe" ou "estabelece", e nunca "manda". O órgão se nomeia por extenso em todas as ocorrências, Junta de Recursos e Câmara de Julgamento, e nunca "a Junta" ou "a Câmara". O `medir_peca.py` aponta as três formas.
 
+## A mesma escrita em todos os ritos (Onda 184, 18/10/2026)
+
+O titular determinou que todas as peças mantenham a mesma integridade de escrita, e não apenas a petição inicial, e que o recurso administrativo use linguagem mais simples, com artigo apenas quando extremamente necessário. O `ESTILO-MODELO.md` ganhou o quadro "A mesma peça em todos os ritos", que diz o que cada peça transcreve. Embargos e manifestação sobre laudo não transcrevem lei, e o recurso ao CRPS cita a norma por remissão curta. O medidor acusa a lei em bloco nessas peças. O prazo dos embargos no CRPS é de 30 dias (art. 92, § 2º, do Regimento Interno).
+
 ## Modelos Ouro 3.0 (Onda 183, 18/10/2026)
 
 O titular aprovou os três pilotos e determinou a correção dos demais modelos pelas regras da Onda 182. A pasta `Acervo de Modelos\Modelos Ouro 3.0` do Drive reúne os 72 modelos nas mesmas 14 subpastas da versão 2.0, que permanece intacta como histórico e saiu do MCP acervo. Cada modelo transcreve no máximo um dispositivo por seção, narra os fatos com data, documento e número e segue a sequência do juízo de Catanduva. Os pontos que dependem de conferência ficam marcados "conferir antes de usar" no próprio modelo.
