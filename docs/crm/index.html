@@ -3824,6 +3824,27 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .tp-onde{font-size:12px;color:var(--pa-c2);font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace}
 .tp-chave{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--pa-c1);cursor:pointer}.tp-chave input{margin:0;accent-color:var(--pa-t)}
 .tp-passo[hidden]{display:none!important}
+/* F246 · Trouxe documentos */
+.td{display:flex;flex-direction:column;gap:6px;min-width:0}.modal-cx:has(.td){width:min(760px,94vw);max-width:none;overflow-x:hidden}
+.td-g{display:flex;flex-direction:column;gap:4px;margin:6px 0}
+.td-g-cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px}
+.td-selo{font-size:12px;font-weight:600;border-radius:999px;padding:3px 10px;background:#E7EEF8;color:#2F5E9E}
+.td-selo.judicial{background:#E3F0EF;color:#0E5C58}.td-selo.conselho{background:#FBF1DC;color:#6B4E16}.td-selo.cli{background:#F1F0EC;color:#5B5A54}.td-selo.pre{background:#FBF1DC;color:#7A5300}
+.td-it{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;width:100%;min-height:48px;padding:6px 10px;border:1px solid var(--borda,#E2E0D9);border-radius:10px;background:#FFFFFF}
+.td-it.on{border-color:#BFE0CF;background:#F2F8F4}
+.td-it:focus-visible{outline:2px solid var(--verde,#1E6F50);outline-offset:2px}
+.td-cx{flex:none;width:22px;height:22px;border-radius:6px;border:1.5px solid #B9B6AE;display:grid;place-items:center;font-size:13px;color:#FFFFFF}
+.td-it.on .td-cx{background:var(--verde,#1E6F50);border-color:var(--verde,#1E6F50)}
+.td-nm{display:flex;flex-direction:column;gap:1px;min-width:0}.td-nm b{font-weight:500;font-size:13.5px}.td-nm small{font-size:12px;color:var(--cinza)}
+.td-ate{margin-left:auto;font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12px;color:var(--cinza);white-space:nowrap}.td-ate.perto{color:#B3261E}
+.td-outro{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-top:8px;border-top:1px dashed var(--borda,#E2E0D9)}
+.td-outro input{flex:1 1 260px;min-height:36px}
+.td-outros{margin:4px 0;padding-left:18px;font-size:13px}
+.td-arq{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}.td-arq .btn-mini{cursor:pointer}
+.td-assin{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--cinza)}
+.td-pe{position:sticky;bottom:0;z-index:1;background:var(--branco,#FFFFFF);display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:8px;padding:10px 0 4px;border-top:1px solid var(--borda,#E2E0D9)}
+.td-classif{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0 0 10px;padding:8px 12px;border:1px dashed #C9A85A;background:#FFFCF4;border-radius:10px;font-size:13px}
+.td-classif-bts{display:inline-flex;flex-wrap:wrap;gap:6px}
 /* F245 · a conferência em um clique, a movimentação e o advogado responsável */
 .conf-bts{display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap}
 .conf-bts .tl-bt{min-height:28px;padding:0 9px;font-size:12px}
@@ -4642,7 +4663,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.70</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.71</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -16001,6 +16022,7 @@ function pintarFicha(){
         title="abre o SMBot numa aba e copia o telefone do cliente — é só colar na busca do atendimento">💬 SMBot</button>`:""}
       ${botaoZapCliente(cliId)}
       ${temaV10() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
+      ${casosDoBalcao(cliId).length ? `<button type="button" class="btn-mini td-abrir" onclick="trouxeDocumentos('${cliId}')" title="marque o que o cliente deixou no escritório: cada papel vai ao caso que o pediu">Trouxe documentos</button>` : ""}
       ${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}
       ${chipAgendaCliente(c)}
       <button class="fechar nao-cel" onclick="fecharFicha()">✕</button></div>
@@ -16101,7 +16123,7 @@ function pintarFicha(){
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
         ? `${faixaFixo(k)}${(t=>t ? t.replace(/<\/section>\s*$/, `${faixaIncapacidade(k)}</section>`) : faixaIncapacidade(k))(faixaTrilha(k))}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${/* F243 · os prazos vêm primeiro: são a primeira leitura do colaborador */""}${faixaPrazos(k)}${linhaCaso(k)}${botaoFixar(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir">${menu}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div></div>`
+           <div class="caso-dir">${bannerAClassificar(k)}${menu}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
             : aba==="inss" ? painelINSS(k, andsVis)
@@ -45779,6 +45801,219 @@ async function docEntregue(cliId, pi, ii){
   abrirFicha(cliId);
 }
 
+
+// ══════════════════════════════════════════════════════════════════════════
+// F246 · TROUXE DOCUMENTOS (pedido do Paulo, 19.10.2026). O cliente de dois ou três casos deixa papéis no balcão e a
+// recepção não sabe de qual caso são. A janela junta o que cada caso pediu (os itens 📄 do checklist do caso e os
+// pedidos do atendimento, `campos.docs_pedidos`, presos ao pré-caso); a recepção marca o que chegou e cada papel vai
+// ao caso que o pediu: a juntada nasce lá, o pedido baixa, quem cuida é avisado. Papel do cliente (RG, CPF, endereço)
+// vale para todos; papel que ninguém pediu ganha a sugestão do caso e o "Não sei de qual caso", que fica a classificar
+// pelo advogado responsável. Ligações: a exigência do INSS oferece "cumprida", o papel médico lembra a perícia marcada
+// e o aviso leva o prazo do caso; o contrato ou a procuração assinados entram em "Gerados e assinados".
+// ══════════════════════════════════════════════════════════════════════════
+const RX_DOC_PESSOAL = /^(rg|cpf|cnh|cin\b|carteira de identidade|documento de identidade|comprovante de (endere|resid)|certid[ãa]o de (nascimento|casamento)|t[íi]tulo de eleitor|biometria)/i;
+const RX_DOC_MEDICO = /m[ée]dic|laudo|exame|relat[óo]rio|receita|resson[âa]ncia|eletroneuro|raio|tomografia|atestado|ultrass|ortoped|psiqui|cardio|neuro/i;
+const RX_DOC_TEMPO = /ctps|carteira de trabalho|ppp|ltcat|carn[êe]|guia|gps|contribui|holerite|rais|v[íi]nculo|rescis/i;
+let _td = null;   // {cliId, marc:Set, outros:[{nome, dest}], dest, assin}
+function casosDoBalcao(cliId){
+  const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
+  return ks.filter(k=>!ehPreCaso(k)).concat(ks.filter(ehPreCaso));
+}
+const rotTd = k => ehPreCaso(k) ? `Atendimento · ${(k.beneficio||((k.precaso||{}).especie)||"benefício a definir")}` : `${k.especie||""}${k.especie?" · ":""}${NOME_FASE[faseEfetiva(k)]||k.fase}`;
+// os pedidos abertos do cliente, por caso: o checklist 📄 do caso e o pedido do atendimento (do pré-caso dele)
+function pedidosDoBalcao(cliId){
+  const c = D.cliPorId.get(cliId) || {}, ks = casosDoBalcao(cliId), grupos = new Map(), pessoais = new Map();
+  const grupo = k => { if(!grupos.has(k.id)) grupos.set(k.id, {k, itens:[]}); return grupos.get(k.id); };
+  const poe = (k, ref, nome, ate, pedido) => {
+    if(RX_DOC_PESSOAL.test(nome)){ const ch = dsa(nome); if(!pessoais.has(ch)) pessoais.set(ch, {ch:`p:${ch}`, nome, ate, pedido, refs:[]});
+      pessoais.get(ch).refs.push({...ref, casoId:k.id}); return; }
+    const g = grupo(k), ch = `${k.id}:${dsa(nome)}`, ja = g.itens.find(x=>x.ch===ch);
+    if(ja) ja.refs.push({...ref, casoId:k.id}); else g.itens.push({ch, nome, ate, pedido, refs:[{...ref, casoId:k.id}]}); };
+  for(const k of ks.filter(k=>!ehPreCaso(k)))
+    for(const t of (D.tarefas||[]).filter(t=>t.caso_id===k.id && !t.concluida && /^📄/.test(t.titulo||"")))
+      poe(k, {tipo:"tarefa", id:t.id}, t.titulo.replace(/^📄\s*/, ""), t.prazo||null, "no checklist do caso");
+  const pres = ks.filter(ehPreCaso);
+  ((c.campos||{}).docs_pedidos||[]).forEach((p, pi)=>{
+    const k = pres.find(x=>(x.precaso||{}).id===p.precaso_id) || (pres.length===1 ? pres[0] : null) || pres[0] || ks[0]; if(!k) return;
+    (p.itens||[]).forEach((it, ii)=>{ if(it && !it.entregue) poe(k, {tipo:"pedido", pi, ii}, String(it.nome||it), p.ate||null, `pedido em ${p.em ? fmt(String(p.em).slice(0,10)) : "atendimento"}${p.quem ? ` por ${p.quem}` : ""}`); }); });
+  return {ks, grupos:[...grupos.values()], pessoais:[...pessoais.values()]};
+}
+// o caso que o papel não pedido provavelmente é: o médico vai ao de incapacidade; CTPS, PPP e carnê, ao de aposentadoria
+function sugestaoDoBalcao(nome, ks){
+  const vivos = ks.filter(k=>!ehPreCaso(k)).length ? ks.filter(k=>!ehPreCaso(k)) : ks;
+  if(vivos.length===1) return vivos[0].id;
+  if(RX_DOC_MEDICO.test(nome)){ const k = vivos.find(x=>ehIncap(x) || /bpc|loas|defici/i.test(x.beneficio||"")); if(k) return k.id; }
+  if(RX_DOC_TEMPO.test(nome)){ const k = vivos.find(x=>/apos|tempo|idade|especial|ctc|revis/i.test(`${x.beneficio||""} ${x.especie||""}`) && !ehIncap(x)); if(k) return k.id; }
+  return "";
+}
+function trouxeDocumentos(cliId){
+  _td = {cliId, marc:new Set(), outros:[], dest:"", assin:false};
+  pintarTrouxe();
+}
+function pintarTrouxe(){
+  if(!_td) return;
+  const c = D.cliPorId.get(_td.cliId); if(!c) return;
+  const {ks, grupos, pessoais} = pedidosDoBalcao(_td.cliId), hj = hoje();
+  const linha = it => { const on = _td.marc.has(it.ch);
+    return `<button type="button" class="td-it${on?" on":""}" aria-pressed="${on}" onclick="tdMarcar('${esc(it.ch)}')"><span class="td-cx" aria-hidden="true">${on?"✓":""}</span>
+      <span class="td-nm"><b>${esc(it.nome)}</b><small>${esc(it.pedido||"")}</small></span>${it.ate?`<span class="td-ate${it.ate<=somaDias(hj,3)?" perto":""}">até ${esc(fmtBarra(it.ate).slice(0,5))}</span>`:""}</button>`; };
+  const bloco = (rot, nota, itens, cls) => itens.length ? `<section class="td-g"><div class="td-g-cab"><span class="td-selo ${cls||""}">${esc(rot)}</span><span class="meio-sub">${esc(nota)}</span></div>${itens.map(linha).join("")}</section>` : "";
+  const nada = !grupos.some(g=>g.itens.length) && !pessoais.length;
+  const destOps = ks.map(k=>`<option value="${k.id}">${esc(rotTd(k))}</option>`).join("");
+  const sug = _td.outroTxt ? sugestaoDoBalcao(_td.outroTxt, ks) : "";
+  const vai = resumoTrouxe(ks, grupos, pessoais);
+  // aberta, troca só o conteúdo (o caixa() de novo repetia a animação de abrir a cada clique)
+  const ja = document.querySelector("#modal .td"), rolagem = ja ? ja.closest(".modal-cx") : null, y = rolagem ? rolagem.scrollTop : 0;
+  (ja ? (h => { ja.outerHTML = h; if(rolagem) rolagem.scrollTop = y; }) : caixa)(`<div class="td" role="dialog" aria-labelledby="td-t">
+    <h3 id="td-t" style="margin:0 0 4px">O que ${esc((c.nome||"").split(" ")[0])} trouxe?</h3>
+    <p class="meio-sub" style="margin:0 0 10px">Marque o que chegou. Cada papel já sabe de qual caso é, pelo que o caso pediu: não precisa escolher o caso.</p>
+    ${nada ? `<p class="meio-sub td-vazio">Nenhum caso deste cliente tem papel pedido em aberto. Escreva abaixo o que chegou.</p>` : ""}
+    ${grupos.map(g=>bloco(rotTd(g.k), ehPreCaso(g.k) ? "pedido no atendimento" : (g.k.etapa||""), g.itens, ehPreCaso(g.k) ? "pre" : faseEfetiva(g.k))).join("")}
+    ${bloco(ks.length>1 ? "Do cliente · todos os casos" : "Do cliente", "papel pessoal, vale para todos", pessoais, "cli")}
+    <div class="td-outro">
+      <label for="td-outro-txt">Outro papel</label>
+      <input id="td-outro-txt" value="${esc(_td.outroTxt||"")}" placeholder="o que não estava pedido, por exemplo receita do ortopedista" oninput="_td.outroTxt=this.value;tdOutroSel()">
+      <span id="td-outro-box"${(_td.outroTxt||"").trim() ? "" : " hidden"}><select id="td-outro-dest" aria-label="de qual caso é" onchange="_td.dest=this.value;_td.destMao=true;tdResumo()">
+        <option value="">escolha o caso…</option>${destOps}<option value="naosei">Não sei de qual caso</option></select>
+        <button type="button" class="btn-mini" onclick="tdOutroAdd()">acrescentar</button></span>
+    </div>
+    ${_td.outros.length ? `<ul class="td-outros">${_td.outros.map((o, i)=>`<li><b>${esc(o.nome)}</b> → ${o.dest==="naosei" ? "a classificar pelo advogado responsável" : esc(rotTd(D.casoPorId.get(o.dest)||{}))}
+      <button type="button" class="adr-link" onclick="_td.outros.splice(${i},1);pintarTrouxe()">tirar</button></li>`).join("")}</ul>` : ""}
+    <div class="td-arq"><label class="btn-mini" for="td-arq">Fotografar ou anexar</label>
+      <input type="file" id="td-arq" accept="image/*,application/pdf" capture="environment" multiple style="display:none" onchange="_td.arqs=[...this.files];pintarTrouxeArq()">
+      <span id="td-arq-n" class="meio-sub">${(_td.arqs||[]).length ? `${_td.arqs.length} arquivo(s) para juntar` : "opcional: a foto ou o PDF vai junto da juntada"}</span>
+      <label class="td-assin"><input type="checkbox" ${_td.assin?"checked":""} onchange="_td.assin=this.checked"> é contrato ou procuração assinados</label></div>
+    <div class="td-pe"><span><small class="meio-sub">Vai para</small><br><span class="td-vai">${esc(vai || "nada marcado ainda")}</span></span>
+      <button type="button" class="pa-prim td-reg" ${vai?"":"disabled"} onclick="registrarTrouxe()">Registrar a entrega</button></div>
+  </div>`);
+  const sel = document.getElementById("td-outro-dest"); if(sel){ sel.value = _td.dest || sug; _td.dest = sel.value; }
+}
+// o papel não pedido: a caixa do caso aparece com a sugestão, sem redesenhar a janela (o redesenho no meio do clique perdia o clique)
+function tdOutroSel(){
+  const box = document.getElementById("td-outro-box"), sel = document.getElementById("td-outro-dest"); if(!box || !sel || !_td) return;
+  const txt = String(_td.outroTxt||"").trim(); box.hidden = !txt;
+  if(!_td.destMao){ _td.dest = txt ? sugestaoDoBalcao(txt, casosDoBalcao(_td.cliId)) : ""; sel.value = _td.dest; }
+  tdResumo();
+}
+function tdResumo(){
+  const el = document.querySelector(".td-pe .td-vai"), bt = document.querySelector(".td-reg"); if(!el || !_td) return;
+  const {ks, grupos, pessoais} = pedidosDoBalcao(_td.cliId), v = resumoTrouxe(ks, grupos, pessoais);
+  el.textContent = v || "nada marcado ainda"; if(bt) bt.disabled = !v;
+}
+function pintarTrouxeArq(){ const n = document.getElementById("td-arq-n"); if(n) n.textContent = `${(_td.arqs||[]).length} arquivo(s) para juntar`; }
+function tdMarcar(ch){ if(!_td) return; _td.marc.has(ch) ? _td.marc.delete(ch) : _td.marc.add(ch); pintarTrouxe(); }
+function tdOutroAdd(){
+  const nome = String(_td.outroTxt||"").trim(); if(!nome) return;
+  if(!_td.dest) return aviso("Escolha de qual caso é, ou “Não sei de qual caso”");
+  _td.outros.push({nome, dest:_td.dest}); _td.outroTxt = ""; _td.dest = ""; _td.destMao = false; pintarTrouxe();
+}
+// para onde vai cada coisa marcada: {casoId: [nomes]}, e os a classificar
+function destinoTrouxe(ks, grupos, pessoais){
+  const por = new Map(), add = (id, nome) => { if(!por.has(id)) por.set(id, []); if(!por.get(id).includes(nome)) por.get(id).push(nome); };
+  for(const g of grupos) for(const it of g.itens) if(_td.marc.has(it.ch)) add(g.k.id, it.nome);
+  const vivos = ks.filter(k=>!ehPreCaso(k)).length ? ks.filter(k=>!ehPreCaso(k)) : ks;
+  for(const it of pessoais) if(_td.marc.has(it.ch)) for(const k of vivos) add(k.id, it.nome);
+  const pendente = String(_td.outroTxt||"").trim() && _td.dest ? [{nome:_td.outroTxt.trim(), dest:_td.dest}] : [];
+  const naosei = [];
+  for(const o of _td.outros.concat(pendente)) o.dest==="naosei" ? naosei.push(o.nome) : add(o.dest, o.nome);
+  return {por, naosei};
+}
+function resumoTrouxe(ks, grupos, pessoais){
+  const {por, naosei} = destinoTrouxe(ks, grupos, pessoais);
+  return [...[...por].map(([id, ns])=>`${rotTd(D.casoPorId.get(id)||{})} (${ns.length})`), naosei.length ? `a classificar (${naosei.length})` : ""].filter(Boolean).join(" · ");
+}
+async function registrarTrouxe(){
+  if(!_td) return;
+  const cliId = _td.cliId, c = D.cliPorId.get(cliId); if(!c) return;
+  const {ks, grupos, pessoais} = pedidosDoBalcao(cliId), {por, naosei} = destinoTrouxe(ks, grupos, pessoais);
+  if(!por.size && !naosei.length) return aviso("Marque o que chegou");
+  const btn = document.querySelector(".td-reg"); if(btn){ btn.disabled = true; btn.textContent = "Registrando…"; }
+  const hj = hoje(), agora = new Date().toISOString(), advId = advogadoDoCliente(cliId)[0];
+  // 1 · a baixa nos pedidos: o item 📄 do caso é concluído e o pedido do atendimento ganha a data da entrega
+  const marcados = [...grupos.flatMap(g=>g.itens), ...pessoais].filter(it=>_td.marc.has(it.ch));
+  const camposPed = JSON.parse(JSON.stringify((c.campos||{}).docs_pedidos||[])); let mudouPed = false;
+  for(const it of marcados) for(const r of it.refs){
+    if(r.tipo==="tarefa"){ const t = (D.tarefas||[]).find(x=>x.id===r.id); if(t){ t.concluida = true; t.concluida_em = agora; }
+      await api(`/rest/v1/tarefas?id=eq.${r.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({concluida:true, concluida_em:agora})}).catch(()=>{}); }
+    else if(camposPed[r.pi] && camposPed[r.pi].itens[r.ii]){ camposPed[r.pi].itens[r.ii].entregue = hj; mudouPed = true; } }
+  if(mudouPed){ c.campos = {...(c.campos||{}), docs_pedidos:camposPed};
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}).catch(()=>{}); }
+  // 2 · a juntada em cada caso, com o que importa a quem cuida: a perícia marcada e o prazo do caso
+  const juntadas = [], exig = [];
+  const lista = ns => ns.length===1 ? ns[0] : `${ns.slice(0, -1).join(", ")} e ${ns[ns.length-1]}`;
+  for(const [casoId, nomes] of por){
+    const k = D.casoPorId.get(casoId); if(!k) continue;
+    const per = (D.eventos||[]).filter(e=>e.caso_id===casoId && ehPericiaInss(e) && !/cancel/.test(e.status||"") && dataSP(e.data_hora)>=hj).sort((a,b)=>String(a.data_hora).localeCompare(String(b.data_hora)))[0];
+    const pz = [k.exigencia_prazo, k.prazo].filter(d=>d && d>=hj).sort()[0];
+    const adv = D.colPorId.get(advId);
+    const texto = `Juntada: ${lista(nomes)}, entregue${nomes.length>1?"s":""} pela cliente no balcão.`
+      + (per && nomes.some(n=>RX_DOC_MEDICO.test(n)) ? ` Levar na perícia de ${fmtBarra(dataSP(per.data_hora))}.` : "")
+      + (pz ? ` Prazo do caso: ${fmtBarra(pz)}.` : "")
+      + (adv && adv.id!==eu.id ? ` @${adv.nome.split(" ")[0]}` : "");
+    let and = null;
+    try{ [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})}); }catch(e){}
+    if(!and) continue;
+    juntadas.push({k, and});
+    if(adv && adv.id!==eu.id) criarMencoes(texto, casoId, and.id, [adv.id]).catch(()=>{});
+    if(emExigencia(k)) exig.push(k);
+  }
+  // 3 · o papel que ninguém sabe de qual caso é: fica a classificar, e o advogado responsável decide
+  if(naosei.length){
+    const k0 = ks.find(k=>!ehPreCaso(k)) || ks[0];
+    if(k0){ const adv = D.colPorId.get(advId);
+      const texto = `A classificar: ${lista(naosei)}, entregue${naosei.length>1?"s":""} pela cliente no balcão. De qual caso é?${adv && adv.id!==eu.id ? ` @${adv.nome.split(" ")[0]}` : ""}`;
+      let and = null;
+      try{ [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},body:JSON.stringify({caso_id:k0.id, autor_id:eu.id, texto, importante:true})}); }catch(e){}
+      if(and){ juntadas.push({k:k0, and, classificar:true});
+        if(adv && adv.id!==eu.id) criarMencoes(texto, k0.id, and.id, [adv.id]).catch(()=>{});
+        const lst = [...(((c.campos||{}).a_classificar)||[]), {and_id:and.id, nomes:naosei, em:hj, quem:(eu.nome||"").split(" ")[0]}];
+        c.campos = {...(c.campos||{}), a_classificar:lst};
+        await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}).catch(()=>{}); } }
+  }
+  // 4 · os arquivos vão junto da juntada do caso com mais papéis; contrato ou procuração assinados entram em Gerados e assinados
+  const alvo = juntadas.filter(j=>!j.classificar).sort((a,b)=>(por.get(b.k.id)||[]).length - (por.get(a.k.id)||[]).length)[0] || juntadas[0];
+  for(const arq of (_td.arqs||[])){
+    if(!alvo) break;
+    if(arq.size > MAX_ARQ){ aviso("Arquivo grande demais (máximo 20 MB)"); continue; }
+    const stamp = new Date().toISOString().replace(/[:.]/g,"-").toLowerCase();
+    const caminho = _td.assin ? `assinados/${cliId}/${hj}-${nomeSeguro(arq.name)}` : `${cliId}/${stamp}-${nomeSeguro(arq.name)}`;
+    const nome = _td.assin ? `${/procura/i.test(arq.name) ? "Procuração assinada" : "Contrato assinado"} · ${arq.name}` : arq.name;
+    try{ await subirArquivo(caminho, arq);
+      const [an] = await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:ehPreCaso(alvo.k) ? null : alvo.k.id, cliente_id:cliId, autor_id:eu.id, nome, caminho, tipo:arq.type||null, tamanho:arq.size,
+          andamento_id:alvo.and.id, ...(_td.assin ? {origem:"assinado"} : {})})});
+      if(an) (D.anexos = D.anexos||[]).unshift(an); }
+    catch(e){ aviso("Um arquivo não subiu — anexe de novo pelo caso"); }
+  }
+  _td = null;
+  fecharCaixa();
+  if(clienteAberto===cliId) await abrirFicha(cliId); else { montarSidebar(); render(); }
+  const msg = `Entrega registrada em ${juntadas.filter(j=>!j.classificar).length} ${juntadas.filter(j=>!j.classificar).length===1?"caso":"casos"}${naosei.length?" · 1 papel a classificar":""}`;
+  // a exigência do INSS: entregue o papel, falta protocolar; o botão marca quando protocolar
+  if(exig.length) caixa(`<h3 style="margin:0 0 6px">${esc(msg)}</h3>
+    <p class="meio-sub" style="margin:0 0 10px">${exig.length===1?"Este caso está":"Estes casos estão"} em exigência do INSS. Depois de protocolar os papéis no Meu INSS, marque a exigência como cumprida.</p>
+    <div class="esp-lista">${exig.map(k=>`<button type="button" class="esp-it" onclick="fecharCaixa();cumprirExigencia('${k.id}')">✔ Exigência cumprida · ${esc(rotTd(k))}${k.exigencia_prazo?` (até ${fmtBarra(k.exigencia_prazo)})`:""}</button>`).join("")}</div>`);
+  else aviso(msg, false);
+}
+// o papel a classificar aparece em todos os casos do cliente, com um botão por caso
+function bannerAClassificar(k){
+  const c = k && D.cliPorId.get(k.cliente_id), lst = (((c||{}).campos||{}).a_classificar)||[];
+  if(!lst.length) return "";
+  const ks = casosDoBalcao(k.cliente_id).filter(x=>!ehPreCaso(x));
+  return lst.map((x, i)=>`<div class="td-classif" role="note"><span class="td-selo pre">a classificar</span>
+    <span>${esc((x.nomes||[]).join(", "))} · entregue em ${esc(fmtBarra(x.em))}${x.quem?` (${esc(x.quem)})`:""}. De qual caso é?</span>
+    <span class="td-classif-bts">${ks.map(y=>`<button type="button" class="btn-mini" onclick="classificarPapel('${k.cliente_id}',${i},'${y.id}')">${esc(rotTd(y))}</button>`).join("")}</span></div>`).join("");
+}
+async function classificarPapel(cliId, i, casoId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const lst = [...(((c.campos||{}).a_classificar)||[])], x = lst[i]; if(!x) return;
+  lst.splice(i, 1);
+  c.campos = {...(c.campos||{}), a_classificar:lst.length ? lst : undefined};
+  await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  const a = (D._andsFicha||[]).find(y=>y.id===x.and_id);
+  if(a && a.caso_id!==casoId) return levarAndamento(x.and_id, casoId);
+  aviso("Classificado ✔", false); repintarFicha();
+}
 // modelos de documentos ({nome},{cpf},{nb}... preenchidos com o cliente)
 function preencherDoc(conteudo, c, k){
   const dataExt=new Date(hoje()+"T12:00:00").toLocaleDateString(IDIOMA,{day:"numeric",month:"long",year:"numeric"});
