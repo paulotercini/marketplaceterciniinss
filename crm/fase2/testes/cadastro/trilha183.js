@@ -72,10 +72,10 @@ const DADOS = {
   if (FOTO) { await p.screenshot({ path: FOTO + "-0.png" }); await p.setViewportSize({ width: 400, height: 900 }); await p.waitForTimeout(500); await p.screenshot({ path: FOTO + "-m.png" }); await p.setViewportSize({ width: 1440, height: 1100 }); await p.waitForTimeout(400); }
   const v = await p.evaluate(() => ({
     fases: [...document.querySelectorAll(".jn-l .jn-b")].map(b => [...b.classList].find(c => /^jn-[afnv]$/.test(c))).join("|"),
-    tit: document.querySelector(".tr-cab h3").textContent,
+    tit: (trAjuda || (trAjuda = true, trRepintar()), document.querySelector(".tr-cab h3")).textContent,
     nomes: [...document.querySelectorAll(".tr-l .tr-nm")].map(x => x.textContent),
     roxo: getComputedStyle(document.querySelector(".tr-g-ex")).color, execRecolhida: !!document.querySelector(".tr-grp"),
-    ritos: [...document.querySelectorAll(".tr-ritos option")].map(b => b.textContent) }));
+    ritos: [...(trAjuda || (trAjuda = true, trRepintar()), document.querySelectorAll(".tr-ritos option"))].map(b => b.textContent) }));
   conf("processo do TJSP abre a trilha acidentária, judicial como fase atual", v.tit === "Acidentário · TJSP" && v.fases.endsWith("jn-a"));
   conf("no acidentário a perícia e o laudo vêm antes da contestação", v.nomes.indexOf("Laudo juntado") < v.nomes.indexOf("Citação e contestação") && v.nomes.indexOf("Perícia realizada") > 0);
   conf("a execução entra recolhida, com o grupo em roxo, e abre no clique", v.execRecolhida && !v.nomes.includes("RPV ou precatório expedido") && v.roxo === "rgb(165, 24, 127)");
@@ -121,7 +121,7 @@ const DADOS = {
   await p.evaluate(() => { const i = TRILHAS.escritorio.e.indexOf("Aguardando documentos"); trEscolher(casoSel, "escritorio", i); });
   await p.evaluate(() => { const i = TRILHAS.escritorio.e.indexOf("Aguardando documentos"); return trDetalhe(casoSel, "escritorio", i, "relatório médico"); });
   await p.waitForTimeout(200);
-  const esc = await p.evaluate(() => ({ tit: document.querySelector(".tr-cab h3").textContent, x: (document.querySelector(".tr-l .tr-x") || {}).textContent,
+  const esc = await p.evaluate(() => ({ tit: (trAjuda || (trAjuda = true, trRepintar()), document.querySelector(".tr-cab h3")).textContent, x: (document.querySelector(".tr-l .tr-x") || {}).textContent,
     cor: getComputedStyle(document.querySelector(".jn-ver")).getPropertyValue("--fc").trim(), sel: !!document.querySelector(".tr-doc select") }));
   if (FOTO) await p.screenshot({ path: FOTO + "-2.png" });
   conf("a jornada abre a trilha do Escritório, em vermelho, com o documento aguardado", esc.tit === "Atendimento" && esc.x === "relatório médico" && esc.cor === "#7C8DA6" && esc.sel);

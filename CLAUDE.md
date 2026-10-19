@@ -192,6 +192,8 @@ A **F241** (a visão do caso mais curta, onda 4 de `crm/fase2/docs/ATENDIMENTO-E
 
 A **F242** (as abas do caso acima do campo de escrever, pedido do Paulo de 18.10.2026): na coluna da direita do caso (v10) vêm primeiro as abas Escritório, INSS, Recurso (CRPS), Judicial e Caso Completo (`menu-andamentos`), depois o campo de escrever (`composerCaso`) e os andamentos; nas abas INSS, Recurso e Judicial, que só mostram o que veio dos portais, o campo de escrever não aparece. Testes: `harmonia138.js` e `linha102.js`.
 
+A **F243** (a ficha mais compacta, pedido do Paulo de 18.10.2026): no v10 o CPF, a senha do Meu INSS e o telefone vão na linha do nome (`resumoIn`, `.resumo-lado`), e o menu do cliente sobe uma linha. A faixa das etapas (`faixaTrilha`, `.tr-compacta`) perdeu a linha do título e do tipo: as fases ficam numa linha só, e a aba da fase atual traz a etapa, o "(desatualizada)" e o passo por vir (`.jn-st .tr-agora`); o nome da trilha, o seletor do tipo de processo, a legenda e "esta fase não houve" abrem no "?" ao fim da linha das fases, que ganha um ponto vermelho quando o tipo pede confirmação; as etapas ficam mais baixas. Na coluna da esquerda do caso, "Prazos e compromissos" vem antes do cartão do caso. Testes ajustados: `caso182`, `conducao189`, `trilha183`, `f236-etapa`, `f236-final-docs`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
