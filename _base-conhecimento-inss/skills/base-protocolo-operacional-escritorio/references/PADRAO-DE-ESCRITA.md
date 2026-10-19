@@ -130,6 +130,14 @@ Exemplo de forma.
 
 A regra vale para o chat, para o Cowork e para o relatório dos agentes ao titular. A peça processual continua em prosa, na forma do `ESTILO-MODELO.md`.
 
+**Decisões numeradas (19/10/2026).** Toda pendência que depende do titular vem como item numerado, com as opções em letras e a recomendada marcada com ✔, para que ele responda "1A, 2B". Exemplo, "**1. Prazo dos embargos no CRPS:** A) 30 dias, portaria ✔ · B) 5 dias, skill".
+
+**Rótulos fixos na resposta sobre caso (19/10/2026).** A resposta sobre caso usa, nesta ordem e apenas os que tiverem conteúdo, os rótulos em negrito **Recomendação**, **Fazer**, **Prazo** e **Risco**. O gatilho do protocolo (decadência, litispendência, Tema 1124, qualidade de segurado) só aparece quando dispara.
+
+**Relatório longo fora do chat (19/10/2026).** Lista com mais de dez itens ou relatório de lote vai em arquivo ou página, e o chat traz o resumo em até cinco linhas e o link.
+
+**Siglas no chat (19/10/2026).** No chat valem as siglas da casa sem apresentação por extenso (DER, DII, DIB, DCB, NB, CNIS, PPP, LTCAT, JEF, CRPS, RO, MS, B31, B32, B91, B94). Na peça continua a regra da primeira ocorrência por extenso.
+
 ## Cruzamentos
 
 `base-revisao-peticao-aprofundada`, Camada 6, para a aferição em peça judicial.
