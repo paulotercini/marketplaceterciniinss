@@ -77,15 +77,16 @@
 
   const contagem = () => ({ arquivos: [], falhas: [], inexistentes: [] });
   // nome repetido (3 relatórios no mesmo minuto) ganha " (2)", " (3)": senão um sobrescreve o outro
-  function guardar(out, fonte, nome, u8) {
+  function guardar(out, fonte, nome, u8, mime = 'application/pdf') {
     if (!u8) { out.inexistentes.push(nome); return; }
-    const base = R.nomeSeguro(nome).replace(/\.pdf$/i, '');
-    let arquivo = `${base}.pdf`;
-    for (let n = 2; out.arquivos.some(a => a.fonte === fonte && a.arquivo === arquivo); n++) arquivo = `${base} (${n}).pdf`;
+    const ext = mime === 'image/jpeg' ? 'jpg' : 'pdf';
+    const base = R.nomeSeguro(nome).replace(/\.(pdf|jpg)$/i, '');
+    let arquivo = `${base}.${ext}`;
+    for (let n = 2; out.arquivos.some(a => a.fonte === fonte && a.arquivo === arquivo); n++) arquivo = `${base} (${n}).${ext}`;
     out.arquivos.push({ fonte, arquivo });
     // o PDF vai à fila que o service worker esvazia a cada 3 s (fundo.js, telaHc):
     // devolver 32 relatórios de uma vez no fim estourava a resposta e a tela "travava"
-    (window.__dossieHcFila = window.__dossieHcFila || []).push({ fonte, arquivo, b64: R.b64(u8) });
+    (window.__dossieHcFila = window.__dossieHcFila || []).push({ fonte, arquivo, b64: R.b64(u8), mime });
   }
 
   window.DOSSIE_HC = {
@@ -104,7 +105,8 @@
       const link = parte => { const a = [...document.querySelectorAll('a')].find(a => (a.getAttribute('href') || '').includes(`/${parte}?`)); return a && a.href; };
       const links = { exames: link('exames'), internacoes: link('internacoes'), relatorios: link('relatorios') };
       if (!links.exames && !links.internacoes && !links.relatorios) return { erro: 'não achei o menu do HC — volte à página inicial do portal e clique de novo' };
-      return { cliente: { cpf, nome }, links };
+      // o registro HC (0000000X) é a chave do paciente no visualizador de imagens
+      return { cliente: { cpf, nome }, links, registro: String(acesso.codigo_paciente || acesso.sub || '') };
     },
 
     async exames() {
@@ -170,6 +172,54 @@
       return out;
     },
 
+    // "Visualizar Imagens Médicas" (tela de Exames) pede ao APEX um bilhete de uso
+    // único, que vence em minutos, e abre o visualizador em outra aba: aqui só se
+    // captura o endereço (window.open interceptado); o service worker abre a aba
+    // em segundo plano na hora, antes das outras telas
+    async bilhete() {
+      const b = [...document.querySelectorAll('button')].find(e => /Visualizar Imagens/i.test(e.innerText));
+      if (!b) return { inexistente: 'a tela de Exames não tem o botão de imagens' };
+      let url = null; const abrir = window.open;
+      window.open = u => { url = String(u); return null; };
+      b.click();
+      for (let t = 0; t < 10000 && !url; t += 400) {
+        await D.pausa(400);
+        const c = [...document.querySelectorAll('.ui-dialog button')].find(e => /Visualizar Imagens/i.test(e.innerText));
+        if (c) c.click();
+      }
+      window.open = abrir;
+      return url ? { url } : { erro: 'o HC não abriu o visualizador de imagens' };
+    },
+
+    // Agfa XERO Viewer (hcrpeiweb01, mapeado em 19.10.2026): tudo sai de /wado/ com a
+    // sessão da aba — STUDY lista os exames, IMAGE as imagens de cada um e XERO
+    // devolve a imagem renderizada em JPEG. O "Exportar o DICOM" exige senha e
+    // entrega um zip com visualizador, inútil para juntar ao processo.
+    async imagens(a) {
+      const out = contagem(), registro = a && a.registro;
+      if (!registro) { out.falhas.push('sem o registro HC do paciente'); return out; }
+      const V = (((document.scripts[0] || {}).src || '').match(/[?&]v=([^&]+)/) || [])[1] || '';
+      const wado = p => fetch('/wado/?' + new URLSearchParams({ v: V, ae: 'local', language: 'pt_BR', ...p }));
+      const json = async p => { const r = await wado({ contentType: 'text/javascript', ...p }); if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); };
+      const colher = (n, cond, acc = [], se = null) => { se = n.seriesUID || se; if (cond(n)) acc.push({ ...n, se }); (n.children || []).forEach(c => colher(c, cond, acc, se)); return acc; };
+      const estudos = colher(await json({ requestType: 'STUDY', PatientIdentifier: 'EIHCRP:' + registro, groupByIssuer: '*' }), n => n.tagName === 'study');
+      if (!estudos.length) out.inexistentes.push('nenhum exame com imagem no visualizador');
+      for (const [i, e] of estudos.entries()) {
+        const rot = `${dataBr(e.StudyDateF)} ${e.StudyDescription || ''}`.trim();
+        if (!Number(e.NumberOfStudyRelatedInstances)) { out.inexistentes.push(`${rot}: sem imagem disponível no visualizador`); continue; }
+        D.faixa(`HC · imagens: exame ${i + 1} de ${estudos.length} (${rot})…`);
+        try {
+          const imgs = colher(await json({ requestType: 'IMAGE', regroup: '*', studyUID: e.studyUID, Position: 0, Count: 256, fromHeader: 'false' }), n => !!n.objectUID);
+          for (const [k, im] of imgs.entries()) {
+            const r = await wado({ requestType: 'XERO', studyUID: e.studyUID, seriesUID: im.se, objectUID: im.objectUID, rows: 3000 });
+            guardar(out, 'HC Ribeirao/Imagens', `${rot} ${k + 1}`.slice(0, 150), r.ok ? new Uint8Array(await r.arrayBuffer()) : null, 'image/jpeg');
+            await D.pausa(300);
+          }
+        } catch (err) { out.falhas.push(`${rot}: ${err.message || err}`); }
+      }
+      return out;
+    },
+
     async internacoes() {
       const out = contagem();
       const botoes = await esperarLista('button[title="Visualizar Autorização de Internação"]', 15000);
@@ -199,9 +249,10 @@
     },
 
     // dispara a tela e volta na hora; o resultado fica em window.__dossieHcPronto
-    rodar(tela) {
+    rodar(a) {
+      const { tela, arg } = typeof a === 'string' ? { tela: a } : a;
       window.__dossieHcPronto = null; window.__dossieHcFila = [];
-      Promise.resolve().then(() => this[tela]()).then(r => { window.__dossieHcPronto = r || contagem(); },
+      Promise.resolve().then(() => this[tela](arg)).then(r => { window.__dossieHcPronto = r || contagem(); },
         e => { window.__dossieHcPronto = { ...contagem(), falhas: [String(e && e.message || e)] }; });
       return true;
     },
