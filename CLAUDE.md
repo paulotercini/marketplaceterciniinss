@@ -28,12 +28,12 @@ A fonte de dados dos geradores é o **Microsoft To Do** (Graph API, conta pessoa
 
 ## Dossiê do cliente (crm/fase2/dossie) — o que chega ao CRM
 
-<!-- dossie-versao: 0.11.2 — ao mudar manifest.json da extensão, atualize esta seção e este número;
+<!-- dossie-versao: 0.12.0 — ao mudar manifest.json da extensão, atualize esta seção e este número;
      tests em crm/fase2/dossie/testes/regras.test.js conferem que batem. -->
 
-Extensão de navegador (versão **0.11.2**). Com o gov.br do cliente logado, um clique baixa os documentos
-do portal aberto na aba; **🔁 Rodar todos os portais** percorre Meu INSS → e-Recursos → Emprega Brasil → HC →
-CadÚnico → Redesim, cada um na sua aba (abre as do gov.br que faltarem; Emprega Brasil e HC só se a aba logada já
+Extensão de navegador (versão **0.12.0**). Com o gov.br do cliente logado, um clique baixa os documentos
+do portal aberto na aba; **🔁 Rodar todos os portais** percorre Meu INSS → e-Recursos → Emprega Brasil →
+CadÚnico → Redesim → HC (o HC por último, porque é o mais pesado e o CRM precisa do CNIS, da RAIS e do CadÚnico antes; a Redesim só abre a tela para o clique no captcha e segue), cada um na sua aba (abre as do gov.br que faltarem; Emprega Brasil e HC só se a aba logada já
 estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha e não decide nada: coleta e entrega.
 
 **De onde coleta**
@@ -52,7 +52,12 @@ estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha 
   prova o desemprego e acresce 12 meses, mas o prazo continua contado da última competência, e não da última
   parcela: IN 128, art. 184, §§ 2º e 5º) · informe de rendimentos MTE por ano (PDF).
 - **HC Ribeirão**: exames de imagem e de método de todo o período (sem exame de sangue), internações,
-  relatórios médicos e multiprofissionais.
+  relatórios médicos e multiprofissionais · **as imagens dos exames** (0.12.0): o botão "Visualizar Imagens
+  Médicas" da tela de Exames pede ao APEX um bilhete de uso único (vence em minutos) e abre o Agfa XERO Viewer
+  (`hcrpeiweb01.hcrp.usp.br`) em outra aba; a extensão intercepta o `window.open` (`bilhete` em `hcrp.js`), abre a
+  aba em segundo plano na hora e, pelo `/wado/` dessa sessão (STUDY → IMAGE → XERO, pelo registro HC do token),
+  grava cada imagem renderizada em JPEG em `HC Ribeirao\Imagens\<data> <exame> <n>.jpg`. O "Exportar o DICOM"
+  do visualizador exige senha e entrega zip com visualizador, por isso fica de fora.
 - **Redesim (Minhas Empresas)**: os CNPJs em que o CPF é sócio/titular/responsável, em **PDF da consulta**
   (o "Gerar PDF" do portal, montado no navegador sem captcha — a extensão o aciona) e em `.txt` (por CNPJ:
   nome empresarial, situação cadastral, matriz/filial, município/UF, vínculo do CPF, qualificação, capital
@@ -86,7 +91,7 @@ estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha 
    vence (busca por `#CPF`, depois por nome sem acento); cliente novo ganha pasta capitalizada com `#CPF`.
    Fontes: `Cadastro`, `CNIS`, `Declaracao`, `Cartas de concessao`, `Laudos`, `Extrato do beneficio`,
    `Extrato de pagamento`, `Processos administrativos`, `PPP`, `CAT`, `CTC`, `Recursos\<NUP>`,
-   `CTPS RAIS CAGED`, `HC Ribeirao\Exames|Internacoes|Relatorios`, `CNPJ`, `CadUnico`, `Transparencia`. Gravado pelo programa `host/dossie_host.py`
+   `CTPS RAIS CAGED`, `HC Ribeirao\Exames|Internacoes|Relatorios|Imagens`, `CNPJ`, `CadUnico`, `Transparencia`. Gravado pelo programa `host/dossie_host.py`
    (native messaging); sem ele, cai em `Downloads/Dossie/`.
 2. **Tabela `anexos`**, uma linha por PDF presa ao **cliente** (`cliente_id` pelo CPF; sem caso nem
    andamento): `origem='dossie'`, `nome="<fonte> · <arquivo>"`, `caminho="dossie/<cpf>/<fonte>/<arquivo>"`
@@ -193,6 +198,8 @@ A **F241** (a visão do caso mais curta, onda 4 de `crm/fase2/docs/ATENDIMENTO-E
 A **F242** (as abas do caso acima do campo de escrever, pedido do Paulo de 18.10.2026): na coluna da direita do caso (v10) vêm primeiro as abas Escritório, INSS, Recurso (CRPS), Judicial e Caso Completo (`menu-andamentos`), depois o campo de escrever (`composerCaso`) e os andamentos; nas abas INSS, Recurso e Judicial, que só mostram o que veio dos portais, o campo de escrever não aparece. Testes: `harmonia138.js` e `linha102.js`.
 
 A **F243** (a ficha mais compacta, pedido do Paulo de 18.10.2026): no v10 o CPF, a senha do Meu INSS e o telefone vão na linha do nome (`resumoIn`, `.resumo-lado`), e o menu do cliente sobe uma linha. A faixa das etapas (`faixaTrilha`, `.tr-compacta`) perdeu a linha do título e do tipo: as fases ficam numa linha só, e a aba da fase atual traz a etapa, o "(desatualizada)" e o passo por vir (`.jn-st .tr-agora`); o nome da trilha, o seletor do tipo de processo, a legenda e "esta fase não houve" abrem no "?" ao fim da linha das fases, que ganha um ponto vermelho quando o tipo pede confirmação; as etapas ficam mais baixas. Na coluna da esquerda do caso, "Prazos e compromissos" vem antes do cartão do caso. Testes ajustados: `caso182`, `conducao189`, `trilha183`, `f236-etapa`, `f236-final-docs`.
+
+A **F244** (a tela do caso mais enxuta, pedido do Paulo de 18.10.2026): no cartão do andamento (`comentarioV12`) Responder, + prazo, Concluir tarefa e Reagendar vão para a linha do autor (`.tl-cab-fim .tl-barra`); o campo de escrever do computador fica numa linha só até ser clicado (os tipos e o Sugestões aparecem com `.esc-aberto`; no celular fica como era); as novas e as menções viram um aviso só (`.tl-banner-um`); no cartão do caso os acessos (Meu INSS, PJe) vão para a linha do título e o "+" dos números para o canto; a Linha da incapacidade vira a última linha da faixa das fases. Também na 11.69: `completarD` mantém a análise registrada há menos de 2 minutos que a carga que já estava a caminho não trouxe (`_analisesGravadas`); sem isso o Desfecho voltava a "nenhuma análise" e o `f219` esgotava o tempo no GitHub. Testes ajustados: `linha102`.
 
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
