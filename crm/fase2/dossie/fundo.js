@@ -81,8 +81,8 @@ async function noHc(tabId, metodo, arg) {
 // Cada tela roda solta na página e o service worker colhe os PDFs a cada 3 s:
 // uma executeScript pendente por minutos derruba o worker (o mesmo do rodarTudo),
 // e a resposta com 32 relatórios de uma vez não chegava (16.10.2026)
-async function telaHc(tabId, tela, gravar) {
-  await noHc(tabId, 'rodar', tela);
+async function telaHc(tabId, tela, gravar, arg) {
+  await noHc(tabId, 'rodar', { tela, arg });
   for (let t = 0; t < 40 * 60000; t += 3000) {
     await pausa(3000);
     const [c] = await chrome.scripting.executeScript({ target: { tabId }, world: 'MAIN',
@@ -97,7 +97,7 @@ async function rodarHc(tabId) {
   const st = await chrome.storage.local.get(['cliente']);
   const info = await noHc(tabId, 'info', st.cliente || null);
   if (!info || info.erro) { const e = (info && info.erro) || 'não consegui ler o HC'; await noHc(tabId, 'fim', { texto: e, cor: '#B3261E' }); return { erro: e }; }
-  const { cliente, links } = info;
+  const { cliente, links, registro } = info;
   let ok = 0; const falhas = [], inexistentes = [], porTela = {};
   for (const [tela, rotulo] of [['exames', 'exames'], ['internacoes', 'internações'], ['relatorios', 'relatórios']]) {
     if (!links[tela]) { falhas.push(`${rotulo}: link não encontrado no menu`); continue; }
@@ -114,9 +114,21 @@ async function rodarHc(tabId) {
       r = await telaHc(tabId, tela, gravar);
     }
     if (!r) { falhas.push(`${rotulo}: a tela não respondeu`); continue; }
-    porTela[rotulo] = r;
-    falhas.push(...(r.falhas || []).map(f => `${rotulo} · ${f}`));
-    inexistentes.push(...(r.inexistentes || []).map(f => `${rotulo} · ${f}`));
+    const anotar = (rot, x) => { porTela[rot] = x; falhas.push(...(x.falhas || []).map(f => `${rot} · ${f}`)); inexistentes.push(...(x.inexistentes || []).map(f => `${rot} · ${f}`)); };
+    anotar(rotulo, r);
+    if (tela !== 'exames') continue;
+    // as imagens dos exames vivem em outro domínio (Agfa XERO): o bilhete só existe
+    // na tela de Exames e vence em minutos, por isso a aba, em segundo plano, abre
+    // na hora e é fechada no fim; o coletor é o mesmo hcrp.js
+    const bilhete = await noHc(tabId, 'bilhete').catch(e => ({ erro: String(e.message || e) }));
+    if (!bilhete || !bilhete.url) { anotar('imagens', { falhas: bilhete && bilhete.erro ? [bilhete.erro] : [], inexistentes: bilhete && bilhete.inexistente ? [bilhete.inexistente] : [] }); continue; }
+    const aba = await chrome.tabs.create({ url: bilhete.url, active: false });
+    try {
+      await carregou(aba.id); await pausa(4000);
+      const ri = await telaHc(aba.id, 'imagens', gravar, { registro });
+      anotar('imagens', ri || { falhas: ['o visualizador não respondeu'] });
+    } catch (e) { falhas.push(`imagens: ${e.message || e}`); }
+    await chrome.tabs.remove(aba.id).catch(() => {});
   }
   const baixados = [];
   for (const [tela, r] of Object.entries(porTela)) for (const a of r.arquivos || []) baixados.push(`${tela} · ${a.arquivo}`);
@@ -134,17 +146,19 @@ async function rodarHc(tabId) {
 // Um clique percorre os portais, um por vez, cada um na sua aba: a aba que já
 // está aberta é usada (é onde o login está); Meu INSS, e-Recursos, CadÚnico e Redesim
 // são abertos se faltarem (mesmo gov.br); Emprega Brasil e HC só rodam se a
-// aba estiver aberta, porque o login deles é por aba/portal. A Redesim fica
-// por último e vem para a frente: é onde sobra o clique humano (captcha).
+// aba estiver aberta, porque o login deles é por aba/portal. O HC vai depois
+// de todos, porque é o mais pesado (imagens) e o CRM precisa do CNIS, da RAIS
+// e do CadÚnico o quanto antes; a Redesim vem antes dele e para a frente, porque
+// só abre a tela e segue: a pessoa clica em PESQUISAR (captcha) enquanto o HC roda.
 // Portal sem login responde "sem sessão" e a rodada segue; o relato fica em
 // chrome.storage (ultima_rodada) e o popup mostra.
 const PORTAIS = [
   { chave: 'meuinss', nome: 'Meu INSS', url: 'https://meu.inss.gov.br/#/', padrao: 'https://meu.inss.gov.br/*', arquivo: 'meuinss.js' },
   { chave: 'recursos', nome: 'e-Recursos', url: 'https://consultaprocessos.inss.gov.br/', padrao: 'https://consultaprocessos.inss.gov.br/*', arquivo: 'recursos.js' },
   { chave: 'mte', nome: 'Emprega Brasil', url: 'https://servicos.mte.gov.br/spme-v2/#/login', padrao: 'https://servicos.mte.gov.br/*', arquivo: 'mte.js', soSeAberto: true },
-  { chave: 'hc', nome: 'HC Ribeirão', url: 'https://appiris.hcrp.usp.br/apex/r/iris/nossohcribeirao/login', padrao: 'https://appiris.hcrp.usp.br/*', hc: true, soSeAberto: true },
   { chave: 'cadunico', nome: 'CadÚnico', url: 'https://cadunico.dataprev.gov.br/#/home', padrao: 'https://cadunico.dataprev.gov.br/*', arquivo: 'cadunico.js' },
   { chave: 'redesim', nome: 'Redesim', url: 'https://consultacnpj.redesim.gov.br/minhas-empresas', padrao: 'https://consultacnpj.redesim.gov.br/*', redesim: true },
+  { chave: 'hc', nome: 'HC Ribeirão', url: 'https://appiris.hcrp.usp.br/apex/r/iris/nossohcribeirao/login', padrao: 'https://appiris.hcrp.usp.br/*', hc: true, soSeAberto: true },
 ];
 // abre em abas os portais que ainda não estão abertos — a pessoa entra em cada
 // um (o login é dela) e depois clica em "Rodar todos os portais"

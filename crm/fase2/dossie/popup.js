@@ -5,7 +5,7 @@ const COLETORES = {
   'meu.inss.gov.br': { arquivo: 'meuinss.js', rotulo: 'Meu INSS: CNIS, declaração, cartas, extrato de pagamento, processos, laudos, PPP e CAT.' },
   'consultaprocessos.inss.gov.br': { arquivo: 'recursos.js', rotulo: 'e-Recursos: todos os documentos de cada recurso.' },
   'servicos.mte.gov.br': { arquivo: 'mte.js', rotulo: 'Emprega Brasil: CTPS completa (digital e outros vínculos), extrato RAIS e extrato CAGED.' },
-  'appiris.hcrp.usp.br': { hc: true, rotulo: 'HC Ribeirão: exames de imagem (todo o período), internações e relatórios. A aba vai passar sozinha pelas três telas.' },
+  'appiris.hcrp.usp.br': { hc: true, rotulo: 'HC Ribeirão: exames de imagem (todo o período), internações e relatórios. A aba vai passar sozinha pelas três telas e abre, em segundo plano, o visualizador das imagens dos exames (JPEG).' },
   'cadunico.dataprev.gov.br': { arquivo: 'cadunico.js', rotulo: 'CadÚnico: ficha completa da família, comprovante de cadastro, membros e renda.' },
   'consultacnpj.redesim.gov.br': { redesim: true, rotulo: 'Redesim · Minhas Empresas: os CNPJs em que o CPF é sócio ou titular. Você clica em PESQUISAR (captcha); a lista é gravada sozinha.' },
 };
