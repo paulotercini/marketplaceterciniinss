@@ -3824,6 +3824,36 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .tp-onde{font-size:12px;color:var(--pa-c2);font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace}
 .tp-chave{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--pa-c1);cursor:pointer}.tp-chave input{margin:0;accent-color:var(--pa-t)}
 .tp-passo[hidden]{display:none!important}
+/* F245 · a conferência em um clique, a movimentação e o advogado responsável */
+.conf-bts{display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap}
+.conf-bts .tl-bt{min-height:28px;padding:0 9px;font-size:12px}
+.conf-bts .conf-mais{padding:0 6px}
+.conf-bts .conf-mov{border-color:#E8C77A;background:#FFF8E6;color:#7A5300}
+.faixa-prazos .fp-conf{margin:2px 0 8px;flex-wrap:nowrap}.faixa-prazos .fp-conf .tl-bt{white-space:nowrap}
+.ag-linha{container-type:inline-size}.ag-linha .ag-conf{margin-left:auto;flex-wrap:nowrap}.ag-linha .ag-conf .tl-bt{white-space:nowrap}@container (max-width:720px){.ag-linha .ag-conf{display:none}}
+.cli-bloco{display:inline-flex;flex-direction:column;align-items:flex-start;gap:0;min-width:0}
+.cli-adv{font-size:12px;color:var(--cinza);margin:0 0 0 44px;line-height:1.3}
+.cli-adv-bt{all:unset;cursor:pointer;color:var(--texto,#121212);font-weight:500;border-bottom:1px dotted currentColor}
+.cli-adv-bt:focus-visible{outline:2px solid var(--azul,#2F5E9E);outline-offset:2px}
+.tl-conf-mais{display:block;font-size:11.5px;color:var(--cinza);margin:0 0 2px}
+.conf-dias,.mov-ops{display:flex;flex-wrap:wrap;gap:6px}
+.mov-campos{margin:0 0 10px;gap:8px;align-items:center}
+/* F244 · a tela do caso: as ações na linha do autor, o campo recolhido, um aviso só, o cartão do caso e a linha da incapacidade mais baixos */
+html[data-tema="v10"] .tl-cab{flex-wrap:wrap;row-gap:4px}
+html[data-tema="v10"] .tl-cab-fim .tl-barra{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px;margin:0 6px 0 0;padding:0;border:0}
+html[data-tema="v10"] .tl-cab-fim .tl-barra .tl-bt:not(.tl-bt-ic){min-height:28px;padding:0 9px;font-size:12px}
+html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
+html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) .tipo-fila{display:none}
+html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) #and-texto{min-height:0;height:40px}
+html[data-tema="v10"] .tl-banner-um{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+html[data-tema="v10"] .tl-banner-um .btn-mini{margin-left:auto}
+html[data-tema="v10"] .tl-banner-sep{color:var(--cinza)}
+html[data-tema="v10"] .lc-cab .lc-acessos{display:inline-flex;flex-wrap:wrap;gap:4px;margin:0}
+html[data-tema="v10"] .caso-esq .linha-caso{position:relative}html[data-tema="v10"] .caso-esq .linha-caso .lc-topo{position:static}
+html[data-tema="v10"] .caso-esq .linha-caso .lc-mais-pe{position:absolute;top:10px;right:12px;margin:0;width:28px;height:28px;border:1px solid var(--borda);border-radius:6px;background:#FFFFFF}
+html[data-tema="v10"] .caso-esq .lc-placa .et-sug{padding:4px 8px;font-size:11.5px;line-height:1.35}
+html[data-tema="v10"] .tr-faixa .incap{margin:0;border:0;border-top:1px solid var(--borda);border-radius:0;box-shadow:none;background:#FBFBFA}
+html[data-tema="v10"] .tr-faixa .incap>summary{padding:6px 14px;font-size:12.5px}
 /* F243 · a ficha mais compacta: os dados do cliente na linha do nome e a faixa das etapas mais baixa */
 html[data-tema="v10"] .det-topo .linha1{flex-wrap:wrap;row-gap:6px}
 html[data-tema="v10"] .det-topo .resumo-lado{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin:0 0 0 10px}
@@ -4612,7 +4642,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.68</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.70</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5803,6 +5833,7 @@ async function vigiarMudancas(){
   finally{ vigiando = false; }
 }
 // o que só telas secundárias usam: entra em D quando chegar, sem tocar no resto
+const _analisesGravadas = new Map();
 function completarD(r){
   D.and30 = r.and30||[]; D.novid = r.novid||[]; D.modelos = r.modelos||[]; D.sugestoes = r.sugestoes||[];
   D.leads = r.leads||[]; D.docs = r.docs||[]; D.ckls = r.ckls||[]; D.docModelos = r.docModelos||[];
@@ -5813,6 +5844,10 @@ function completarD(r){
   D.mencoesEnv = r.mencEnv||[];   // F236
   // ⚖️ F48 — null preservado de propósito (tabela ausente ≠ tabela vazia)
   D.analises = r.anals===undefined ? [] : r.anals;
+  // F244 · a análise registrada há pouco que a carga ainda não trouxe (a busca saiu antes da gravação) continua na memória:
+  // sem isso o Desfecho voltava a "nenhuma análise registrada" e desligava o botão (o f219 esgotava o tempo no GitHub)
+  if(Array.isArray(D.analises)) for(const [id, g] of _analisesGravadas){
+    if(Date.now() - g.em > 120000 || D.analises.some(x=>x.id===id)) _analisesGravadas.delete(id); else D.analises.push(g.a); }
   D.analisesPorCliente = new Map();
   for(const a of (D.analises||[])){
     if(!D.analisesPorCliente.has(a.cliente_id)) D.analisesPorCliente.set(a.cliente_id,[]);
@@ -5964,6 +5999,9 @@ function donosDoCliente(cliId){
 // o card de aposentadoria e o honorário vão ao advogado: o atribuído com cargo de advogado do caso
 // (ou do caso mais recente do cliente); sem nenhum, o administrador
 function advogadoDoCliente(cliId, k){
+  // F245 · o advogado escolhido na ficha (abaixo do nome) vale primeiro
+  const esc0 = ((D.cliPorId && D.cliPorId.get(cliId) || {}).campos || {}).advogado_id;
+  if(esc0 && D.colPorId.get(esc0)) return [esc0];
   const ks = [k, ...(D.casosDoCliente.get(cliId)||[]).slice().sort((x,y)=>String(y.criado_em||"").localeCompare(String(x.criado_em||"")))].filter(Boolean);
   for(const x of ks){ const adv = (D.atrDoCaso.get(x.id)||[]).filter(id=>(D.colPorId.get(id)||{}).cargo==="advogado"); if(adv.length) return adv; }
   return [colAdmin().id];
@@ -11456,6 +11494,7 @@ function linhaAgenda(it){
       esp?`<span class="ag-esp">${esc(esp)}</span>`:""}</span>
     <span class="avatares"${cli?` data-equipe="${cli.id}"`:""}>${quem.map(c=>
       `<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")}</span>
+    ${k && d<=hj ? botoesConferir(k, "ag-conf") : ""}
     <span class="acoes">${k?`
       <button class="acao-card fogo ${k.urgente?"on":""}" title="Urgente" data-fogo="${k.id}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.6 3.2 4.5 5.4 4.5 10a4.5 4.5 0 0 1-9 0c0-2.3 1.2-3.7 2.2-4.8.4 1.6 1.2 2.6 2.3 2.8-.4-2.6-.6-5.4 0-8Z"/></svg></button>
       <button class="acao-card ${k.importante?"on":""}" title="Importante" data-estrela="${k.id}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9Z"/></svg></button>`:""}</span>
@@ -15947,11 +15986,11 @@ function pintarFicha(){
       <button class="cel-voltar so-cel" onclick="fecharFicha()" title="voltar para a lista">‹</button>
       ${/* o nome e a bolinha abrem o mapa dos casos (pedido do Paulo): em
            que lista está cada um, e um clique leva direto ao processo */""}
-      <span class="cli-casos" onclick="menuCasosDoCliente(event,'${cliId}')"
+      <span class="cli-bloco"><span class="cli-casos" onclick="menuCasosDoCliente(event,'${cliId}')"
         title="ver os casos deste cliente e em que lista está cada um">
         <span class="avatar" style="--av:${corDoNome(c.nome)}">${esc(c.nome[0])}</span><h2>${esc(c.nome)}</h2>
         <span class="cli-casos-seta">▾</span>
-      </span>
+      </span>${temaV10() ? linhaAdvogado(c) : ""}</span>
       <button class="olho" title="copiar o nome do cliente"
         onclick="copiar('${escJs(c.nome)}','Nome copiado')">📋</button>
       ${/* F101 · a parceria ao lado do nome, só quando existe: quem abre a
@@ -16061,7 +16100,7 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}${faixaTrilha(k)}${faixaIncapacidade(k)}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${/* F243 · os prazos vêm primeiro: são a primeira leitura do colaborador */""}${faixaPrazos(k)}${linhaCaso(k)}${botaoFixar(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
+        ? `${faixaFixo(k)}${(t=>t ? t.replace(/<\/section>\s*$/, `${faixaIncapacidade(k)}</section>`) : faixaIncapacidade(k))(faixaTrilha(k))}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${/* F243 · os prazos vêm primeiro: são a primeira leitura do colaborador */""}${faixaPrazos(k)}${linhaCaso(k)}${botaoFixar(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
            <div class="caso-dir">${menu}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
@@ -21523,6 +21562,7 @@ async function salvarAnalise(cliId){
     catch(e){ if(/detalhes|42703|PGRST204/.test(String(e.message||e))) [a]=await postar(corpo); else throw e; }
   }catch(e){ return aviso("Rode o crm/fase2/schema_analise_direito.sql no Supabase — falta a tabela 'analises_direito'"); }
   if(a){
+    _analisesGravadas.set(a.id, {a, em:Date.now()});   // F244 · a carga que já estava a caminho não a apaga
     D.analises=D.analises||[]; D.analises.push(a);
     const as=D.analisesPorCliente.get(cliId)||[];
     as.push(a); as.sort((x,y)=>x.data_analise<y.data_analise?1:-1);
@@ -21646,7 +21686,7 @@ async function apagarAnalise(id){
   if(!await confirmar("Apagar esta análise? Os comentários já gravados nos casos ficam.")) return;
   try{ await api(`/rest/v1/analises_direito?id=eq.${id}`,{method:"DELETE"}); }
   catch(e){ return aviso("Não consegui apagar — tente de novo."); }
-  D.analises=D.analises.filter(x=>x.id!==id);
+  D.analises=D.analises.filter(x=>x.id!==id); _analisesGravadas.delete(id);
   const as=(D.analisesPorCliente.get(a.cliente_id)||[]).filter(x=>x.id!==id);
   if(as.length) D.analisesPorCliente.set(a.cliente_id, as); else D.analisesPorCliente.delete(a.cliente_id);
   aviso("Análise apagada", false);
@@ -32755,7 +32795,7 @@ function faixaPrazos(k){
   // F145 · na coluna do caso os prazos vêm em ordem decrescente de data (decisão do Paulo, 27.09.2026)
   minhas.sort((a,b)=>a.data<b.data?1:a.data>b.data?-1:0);
   faixaAtual = minhas;
-  const tit = `<h3 class="fp-tit">Prazos e compromissos</h3>`;   // F182
+  const tit = `<h3 class="fp-tit">Prazos e compromissos</h3>${botoesConferir(k, "fp-conf")}`;   // F182 · F245 · a conferência em um clique
   if(!minhas.length) return `<div class="faixa-prazos vazia" aria-label="Prazos e providências">${tit}
     <span class="meio-sub">Sem prazos ou lembretes em aberto. Um andamento com data cria o lembrete; a anotação com ⏰ cria o prazo.</span></div>`;
   // F236 · sem mexer na ordem (F145), o que não pode passar despercebido: o PRÓXIMO (a menor data de hoje em diante
@@ -33696,8 +33736,8 @@ function linhaCaso(k){
       ${k.urgente?`<span class="chip urg">Urgente</span>`:""}
       ${semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo — custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:""}
       <button class="lc-claude" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)">✦ Claude</button>
+      ${(ac=>ac.atual.length?`<span class="lc-acessos">${ac.atual.join("")}</span>`:"")(acessosDoCaso(k))}
       </div>
-      ${(ac=>ac.atual.length?`<div class="lc-acessos">${ac.atual.join("")}</div>`:"")(acessosDoCaso(k))}
       <div class="lc-placa">
       ${k.fase==="encerrado" && !k.der ? "" : `<span class="lc-f"><span class="lc-k">DER</span>${k.der
         ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar">${fmtBarra(k.der)}</span>`
@@ -36060,7 +36100,7 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
         ])}</span>
     </span>` : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
-    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${fmtTS(a.criado_em).slice(0,5)}${(h=>h?` · ${h}`:"")(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}<span class="tl-cab-fim">${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${tarefasCartao(a)}${chipsReacao}${resposta||""}${barra}${raiz?caixaRespInline(a):""}</span>`;
+    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${fmtTS(a.criado_em).slice(0,5)}${(h=>h?` · ${h}`:"")(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}<span class="tl-cab-fim">${barra}${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${tarefasCartao(a)}${chipsReacao}${resposta||""}${raiz?caixaRespInline(a):""}</span>`;   // F244 · as ações na linha do autor
 }
 // F41 · RESPONDER de qualquer comentário: arma o responde_a e o próximo
 // Registrar entra aninhado no comentário original (como a conclusão de
@@ -36134,7 +36174,15 @@ function linhaDoTempo(ands){
   // resposta órfã (o pai foi apagado) volta a ser comentário de primeiro
   // nível: sumir com o "feito" de alguém seria pior que mostrá-lo solto
   const temPai = new Set(vivos.map(a=>a.id));
-  const raiz = vivos.filter(a=>(!a.responde_a || !temPai.has(a.responde_a)) && !ehReacao(a));
+  const raiz0 = vivos.filter(a=>(!a.responde_a || !temPai.has(a.responde_a)) && !ehReacao(a));
+  // F245 · a conferência sem novidade repetida ("Está em análise", "Sem movimentação") fica numa linha só: a mais nova
+  // à vista, com quantas vezes se conferiu antes; as outras continuam no banco e no Caso completo
+  const ehConf = a => RX_CONFERENCIA.test(String(a.texto||"").trim()) && !porPai.has(a.id) && !a.importante;
+  const raiz = [];
+  for(const a of raiz0){ const ant = raiz[raiz.length-1];
+    if(ant && ehConf(a) && ehConf(ant) && (euLi(a) || (a.autor_id===eu.id && !ORIGENS_ROBO.includes(a.origem)))){ ant._confMais = (ant._confMais||0) + 1; ant._confDesde = dataSP(a.criado_em); continue; }
+    if(ehConf(a)){ a._confMais = 0; a._confDesde = null; }
+    raiz.push(a); }
   // F236 · o que veio de um portal conta como novo mesmo importado por mim (o selo "Novo · não lido" já contava),
   // salvo a linha de sistema, que não tem selo: o número do aviso, a linha divisória e os selos falam da mesma coisa
   const naoLi = a => !euLi(a) && (a.autor_id!==eu.id || (ORIGENS_ROBO.includes(a.origem) && !ehEventoSistema(a)));
@@ -36157,7 +36205,8 @@ function linhaDoTempo(ands){
       return `<li class="tl-sys"><span class="texto" title="${esc(fmtTS(a.criado_em))} às ${esc(horaSP(a.criado_em))}">${esc(a.origem==="pat"?limparHtmlPat(a.texto):a.texto)}</span></li>`;
     // F236 · o cartão que cita você leva o selo, no cabeçalho (v10)
     const menc = (D.mencoes||[]).some(m=>m.andamento_id===a.id && m.para_id===eu.id);
-    const html = comentario(a, sub, reacoes, true);
+    const html0 = comentario(a, sub, reacoes, true);
+    const html = a._confMais ? html0.replace('<span class="tl-corpo">', `<span class="tl-conf-mais" title="conferências iguais anteriores, uma por linha no Caso completo">conferido mais ${a._confMais} ${a._confMais===1?"vez":"vezes"} desde ${fmt(a._confDesde)}</span><span class="tl-corpo">`) : html0;
     return `<li class="${temaV10()?"tl-card ":""}${naoLi(a)?"tl-nao-lida":""}${clsSinal(a)}">${menc ? html.replace('<span class="tl-cab-fim">', '<span class="chip tl-menc" title="esta anotação cita você e a menção ainda não foi lida">@ menciona você</span><span class="tl-cab-fim">') : html}</li>`;
   };
   // a linha do tempo vem do mais novo para o mais velho: os dias separam a
@@ -36183,15 +36232,15 @@ function linhaDoTempo(ands){
     if(naoLi(a)) passouNova=true;
   }
   if(diaAtual!==null) corpo+=fecharDia();
-  const banner = novas && casoId
-    ? `<div class="tl-banner">🔵 ${novas} nova(s) para você desde a última visita
-        <button class="btn-mini" onclick="liTudoNaFicha('${casoId}')">✔ marcar todas como lidas</button></div>`
-    : "";
+  const bannerTxt = novas && casoId ? `🔵 ${novas} nova(s) para você desde a última visita` : "";
   // F236 · as menções a você não se misturam às outras novas: o aviso conta só elas
   const mencs = (D.mencoes||[]).filter(m=>m.andamento_id && m.para_id===eu.id && vivos.some(a=>a.id===m.andamento_id));
-  const avisoMenc = mencs.length ? `<div class="tl-banner tl-banner-menc">@ ${mencs.length} ${mencs.length>1?"menções":"menção"} a você sem leitura neste caso (${
-    esc(mencs.map(m=>`${((D.colPorId.get(m.de_id)||{}).nome||"").split(" ")[0]} ${fmt(dataSP(m.criado_em)).slice(0,5)}`).join(", "))}) — o cartão leva o selo “@ menciona você”</div>` : "";
-  return banner + avisoMenc + `<ul class="timeline">${corpo
+  const mencTxt = mencs.length ? `<span class="tl-banner-menc" title="o cartão leva o selo “@ menciona você”">@ ${mencs.length} ${mencs.length>1?"menções":"menção"} a você sem leitura (${
+    esc(mencs.map(m=>`${((D.colPorId.get(m.de_id)||{}).nome||"").split(" ")[0]} ${fmt(dataSP(m.criado_em)).slice(0,5)}`).join(", "))})</span>` : "";
+  // F244 · as novas e as menções num aviso só, com o "marcar todas como lidas" no fim
+  const banner = bannerTxt || mencTxt ? `<div class="tl-banner tl-banner-um">${[bannerTxt, mencTxt].filter(Boolean).join(" <span class=\"tl-banner-sep\">·</span> ")}${
+    bannerTxt ? `<button class="btn-mini" onclick="liTudoNaFicha('${casoId}')">✔ marcar todas como lidas</button>` : ""}</div>` : "";
+  return banner + `<ul class="timeline">${corpo
     || "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
 }
 const TL_VISIVEIS = 5, _tlAntigos = new Set();   // F241 · os casos em que se abriu a linha do tempo inteira, na sessão
@@ -38357,6 +38406,141 @@ async function toggleImp(casoId){
   await patchCaso(casoId, {importante:k.importante});
   aviso(k.importante?"⭐ Marcado como Importante":"Importante removido");
   montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F245 · A CONFERÊNCIA EM UM CLIQUE E A MOVIMENTAÇÃO EM DOIS (pedido do Paulo, 19.10.2026)
+// ══════════════════════════════════════════════════════════════════════════
+// O gesto mais repetido do dia: conferir o pedido, escrever "Está em análise" e remarcar para a semana que vem.
+// "Sem novidade" faz os três de uma vez, com desfazer; nunca sozinho (decisão do Paulo: o CRM não remarca por conta
+// própria). "Movimentou" pergunta o que aconteceu e, no clique da resposta, grava a anotação com ⭐, acende a ⭐ do
+// caso, declara a etapa e avisa o advogado responsável.
+const CONF_FASE = {inss:["Em análise", "Está em análise.", 7], conselho:["Aguardando julgamento", "Aguardando julgamento no CRPS.", 15],
+  judicial:["Sem movimentação", "Sem movimentação no processo.", 15], pagamento:["Aguardando pagamento", "Aguardando o pagamento.", 15]};
+const RX_CONFERENCIA = /^(est[áa] em an[áa]lise|aguardando julgamento|sem movimenta[çc][ãa]o|aguardando o pagamento)\b/i;
+const confDaFase = k => { const f = faseEfetiva(k), x = CONF_FASE[f] || CONF_FASE.inss; return {f, rot:x[0], txt:x[1], dias:x[2]}; };
+// o caso que se confere: em andamento no INSS, no Conselho, no Judicial ou no Pagamento
+const conferivel = k => !!k && !ehPreCaso(k) && !!CONF_FASE[faseEfetiva(k)];
+function botoesConferir(k, cls){
+  if(!conferivel(k)) return "";
+  const c = confDaFase(k);
+  return `<span class="conf-bts ${cls||""}"><button type="button" class="tl-bt conf-sem" onclick="semNovidade('${k.id}',0,event)"
+      title="anota “${esc(c.txt)}” e marca de novo para daqui a ${c.dias} dias; dá para desfazer">${esc(c.rot)} · +${c.dias} d</button><button type="button" class="tl-bt conf-mais" aria-label="outro intervalo"
+      title="outro intervalo" onclick="semNovidadeMenu('${k.id}',event)">▾</button><button type="button" class="tl-bt conf-mov" onclick="movimentou('${k.id}',event)"
+      title="aconteceu algo: escolha o quê; vira anotação com ⭐ e avisa o advogado responsável">Movimentou</button></span>`;
+}
+function semNovidadeMenu(casoId, ev){
+  if(ev) ev.stopPropagation();
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const c = confDaFase(k);
+  caixa(`<h3 style="margin:0 0 8px">${esc(c.rot)}: voltar a conferir em</h3>
+    <div class="conf-dias">${[3, 7, 15, 30].map(n=>`<button type="button" class="esp-it${n===c.dias?" on":""}" onclick="fecharCaixa();semNovidade('${casoId}',${n})">${n} dias</button>`).join("")}</div>`);
+}
+async function semNovidade(casoId, dias, ev){
+  if(ev) ev.stopPropagation();
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const c = confDaFase(k), quando = proxDiaUtil(somaDias(hoje(), dias || c.dias)), hj = hoje();
+  const texto = `${c.txt} Conferir de novo em ${fmtBarra(quando)}.`;
+  let and = null;
+  try{ [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})}); }
+  catch(e){ return aviso("Não gravou a conferência — tente de novo"); }
+  if(!and) return;
+  api(`/rest/v1/andamentos_lidos`,{method:"POST",headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
+    body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
+  if(Array.isArray(D._andsFicha) && clienteAberto===k.cliente_id) D._andsFicha.unshift(and);
+  // a conferência que vencia (o lembrete de conferir, de hoje ou de antes) sai; a data volta daqui a N dias
+  const velhas = (D.tarefasPorCaso.get(casoId)||[]).filter(t=>!t.concluida_em && t.natureza==="lembrete" && t.lembrar_em && t.lembrar_em<=hj);
+  const agora = new Date().toISOString();
+  for(const t of velhas){ t.concluida_em = agora;
+    api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({concluida_em:agora})}).catch(()=>{}); }
+  // o "Concluir em" do To Do (casos.prazo) vencido é a própria data de conferir: anda junto. Ele não é apagado, porque
+  // o To Do só preenche o vazio e devolveria a data velha
+  const prazoAntes = k.prazo; let tf = null;
+  if(k.prazo && k.prazo<=hj){ k.prazo = quando; await patchCaso(casoId, {prazo:quando}).catch(()=>{}); }
+  else { try{ [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:eu.id, atribuido_por:eu.id, lembrar_em:quando, natureza:"lembrete"})});
+    tarefaNaMemoria(tf); }catch(e){} }
+  const repinta = () => { montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha(); };
+  repinta();
+  avisoDesfazer(`${c.rot} · conferir de novo em ${fmtBarra(quando)}`, async ()=>{
+    await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"DELETE"}).catch(()=>{});
+    if(Array.isArray(D._andsFicha)) D._andsFicha = D._andsFicha.filter(a=>a.id!==and.id);
+    for(const t of velhas){ t.concluida_em = null;
+      api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({concluida_em:null})}).catch(()=>{}); }
+    if(tf){ api(`/rest/v1/andamento_tarefas?id=eq.${tf.id}`,{method:"DELETE"}).catch(()=>{});
+      D.tarefasPorCaso.set(casoId, (D.tarefasPorCaso.get(casoId)||[]).filter(t=>t.id!==tf.id)); }
+    if(prazoAntes!==k.prazo){ k.prazo = prazoAntes; await patchCaso(casoId, {prazo:prazoAntes}).catch(()=>{}); }
+    repinta(); aviso("Conferência desfeita", false);
+  });
+}
+// o que costuma acontecer em cada fase: [rótulo, etapa declarada, efeito]
+const MOV_FASE = {
+  inss:[["Exigência", "em exigência", "exig"], ["Perícia marcada", "aguardando perícia", "data"], ["Deferido", "decidido", "deferido"],
+    ["Indeferido", "decidido", "indeferido"], ["Outro", null, ""]],
+  conselho:[["Em pauta", "em pauta", "data"], ["Diligência", "em diligência", ""], ["Julgado", "julgado", ""], ["Outro", null, ""]],
+  judicial:[["Perícia designada", "perícia designada", "data"], ["Laudo juntado", "perícia realizada", ""], ["Sentença", "sentença publicada", ""],
+    ["Recurso ou acórdão", "em recurso", ""], ["Outro", null, ""]],
+  pagamento:[["Benefício implantado", "benefício implantado", ""], ["RPV expedida", "RPV expedida", ""], ["Pago", "recebido", ""], ["Outro", null, ""]],
+};
+function movimentou(casoId, ev){
+  if(ev) ev.stopPropagation();
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const ops = MOV_FASE[confDaFase(k).f] || MOV_FASE.inss, adv = D.colPorId.get(advogadoDoCliente(k.cliente_id, k)[0]);
+  const cli = D.cliPorId.get(k.cliente_id) || {};
+  caixa(`<h3 style="margin:0 0 4px">O que aconteceu? <small class="meio-sub">· ${esc(cli.nome||"")} · ${esc(tituloCaso(k))}</small></h3>
+    <p class="meio-sub" style="margin:0 0 10px">Escreva o detalhe, se quiser, e clique no que aconteceu: vira anotação com ⭐, a ⭐ do caso acende${adv && adv.id!==eu.id ? ` e ${esc(adv.nome.split(" ")[0])} é avisado` : ""}.</p>
+    <div class="form-linha mov-campos"><input id="mov-txt" placeholder="detalhe (opcional): o que pediram, a data, o resultado" style="flex:1;min-width:220px">
+      <label class="meio-sub">data <input type="date" id="mov-data" title="a data da perícia, da pauta ou do prazo da exigência"></label></div>
+    <div class="esp-lista mov-ops">${ops.map(([r], i)=>`<button type="button" class="esp-it" onclick="registrarMovimento('${casoId}',${i})">${esc(r)}</button>`).join("")}</div>`);
+  setTimeout(()=>{ const i = document.getElementById("mov-txt"); if(i) i.focus(); }, 30);
+}
+async function registrarMovimento(casoId, i){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const [rot, etapa, efeito] = (MOV_FASE[confDaFase(k).f] || MOV_FASE.inss)[i] || [];
+  if(!rot) return;
+  const det = ((document.getElementById("mov-txt")||{}).value||"").trim(), data = ((document.getElementById("mov-data")||{}).value||"");
+  if(rot==="Outro" && !det) return aviso("Escreva o que aconteceu");
+  const advId = advogadoDoCliente(k.cliente_id, k)[0], adv = D.colPorId.get(advId);
+  const texto = `${rot==="Outro" ? "" : `${rot}`}${det ? `${rot==="Outro" ? "" : ": "}${det}` : ""}${data ? ` (${fmtBarra(data)})` : ""}${rot==="Outro" ? "" : "."}`.replace(/\.\.$/, ".");
+  let and = null;
+  try{ [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto, importante:true})}); }
+  catch(e){ return aviso("Não gravou — tente de novo"); }
+  if(!and) return;
+  fecharCaixa();
+  if(Array.isArray(D._andsFicha) && clienteAberto===k.cliente_id) D._andsFicha.unshift(and);
+  if(and.importante) (D.sinalizados = D.sinalizados || []).unshift(and);
+  const muda = {importante:true};
+  if(etapa && etapasDaFase(k).includes(etapa)) muda.etapa = etapa;
+  if(efeito==="deferido" || efeito==="indeferido"){ muda.resultado = efeito; muda.decisao_em = data || hoje(); }
+  if(efeito==="exig"){ muda.exigencia_prazo = data || somaDias(hoje(), 30); muda.exigencia_descricao = det || "Exigência do INSS"; }
+  Object.assign(k, muda);
+  await patchCaso(casoId, muda).catch(()=>{});
+  // a data da perícia ou da pauta vira lembrete do advogado responsável, nesse dia
+  if(data && efeito==="data") try{ const [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:advId || eu.id, atribuido_por:eu.id, lembrar_em:data, natureza:"lembrete"})}); tarefaNaMemoria(tf); }catch(e){}
+  if(advId && advId!==eu.id) criarMencoes(texto, casoId, and.id, [advId]).catch(()=>{});
+  montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha();
+  aviso(`⭐ ${rot}${adv && adv.id!==eu.id ? ` · ${adv.nome.split(" ")[0]} avisado` : ""}`, false);
+}
+// o advogado responsável, abaixo do nome do cliente: o escolhido ou o advogado dos casos
+function linhaAdvogado(c){
+  const id = advogadoDoCliente(c.id)[0], co = D.colPorId.get(id);
+  return `<span class="cli-adv">Advogado responsável: <button type="button" class="cli-adv-bt" onclick="escolherAdvogado('${c.id}')"
+    title="trocar o advogado responsável por este cliente: é quem a ⭐ e a movimentação avisam">${esc(co ? co.nome : "escolher")} ▾</button></span>`;
+}
+function escolherAdvogado(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const atual = advogadoDoCliente(cliId)[0], advs = equipeAtiva().filter(x=>x.cargo==="advogado" || x.papel==="admin");
+  caixa(`<h3 style="margin:0 0 8px">Advogado responsável <small class="meio-sub">· ${esc(c.nome)}</small></h3>
+    <div class="esp-lista">${(advs.length ? advs : equipeAtiva()).map(x=>`<button type="button" class="esp-it${x.id===atual?" on":""}" onclick="gravarAdvogado('${cliId}','${x.id}')">${esc(x.nome)}</button>`).join("")}</div>`);
+}
+async function gravarAdvogado(cliId, colId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  c.campos = {...(c.campos||{}), advogado_id:colId};
+  try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}); }
+  catch(e){ return aviso("Não gravou — tente de novo"); }
+  fecharCaixa(); aviso(`Advogado responsável: ${(D.colPorId.get(colId)||{}).nome||""}`, false); repintarFicha();
 }
 async function toggleUrg(casoId){
   const k=D.casoPorId.get(casoId); if(!k) return;
