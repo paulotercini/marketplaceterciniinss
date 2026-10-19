@@ -30,6 +30,7 @@ A coluna Origem distingue o que o titular FIXOU do que foi PROPOSTO nesta Onda p
 |---|---|---|
 | Resposta em chat | O tamanho da pergunta, um parágrafo para pergunta de uma linha | Fixado, 22/09/2026 |
 | Resposta em chat com pesquisa | Até 3 parágrafos, até 3 dados concretos, julgado pela corrente e lista no anexo | Fixado, 04/10/2026 |
+| Resposta em chat com enumeração | Lista curta, um item por linha, dado decisivo em negrito, teto de 250 palavras | Fixado, 19/10/2026 |
 | Parecer | 1 página | Fixado, protocolo regra 4 |
 | Análise da Vida Completa | Conclusão no topo, sem teto de páginas | Fixado, protocolo regra 4 |
 | Anotação `(C)` no To Do | 2 a 3 linhas | Fixado, protocolo regra 1 |
@@ -101,6 +102,33 @@ A lista completa vai em planilha anexa (.xlsx), uma linha por julgado, com os ca
 Relatório de agente e saída de MCP são insumo. O chat recebe a síntese, e o detalhe que valer a pena guardar vai ao anexo.
 
 Exemplo de forma, com os fatos do caso trocados por marcadores. "Recomendo pedir o período em [empregador agroindustrial] como principal, com reafirmação da DER, e o período em [segundo empregador] como sucessivo. Parte das Turmas do TRF3 enquadra por categoria o rural de empresa agroindustrial até 28/04/1995, só com CTPS e PPP, que já estão no processo administrativo. O risco é a corrente que segue o PUIL 452/PE, que exige prova do agente nocivo, e prova feita só em juízo leva a DIB para a citação (Tema 1124/STJ). Os julgados ainda não foram abertos no portal, e a lista está na planilha anexa."
+
+## Resposta de chat em lista (Onda 185, 19/10/2026)
+
+O titular mostrou uma resposta sobre os documentos de uma ação de incapacidade com cerca de 430 palavras em prosa, em que cada documento virava uma frase. A queixa foi literal, "isso me faz perder muito tempo lendo". A mesma resposta em lista coube em cerca de 150 palavras, sem perder documento algum.
+
+A enumeração de três ou mais itens (documentos, providências, prazos, riscos) vai em lista curta, um item por linha, com o dado decisivo em negrito e sem frase de ligação. A argumentação continua em prosa. A tabela serve apenas para comparar valores ou períodos.
+
+A análise tem até três blocos curtos, a conclusão, o fundamento e o risco, e cada bloco pode ser parágrafo ou lista. O teto é de 250 palavras, salvo pedido do titular. A resposta sobre caso abre pela recomendação em uma linha, segue com o que fazer em lista e fecha com o risco principal em uma ou duas frases.
+
+A pergunta sobre o que existe e o que falta vira duas listas, "Já temos" e "Falta". Cada item da segunda indica quem providencia ou onde se obtém, e nenhum item narra o conteúdo do documento.
+
+Exemplo de forma.
+
+> **Pronto para protocolar após 3 providências.**
+>
+> **Já temos**
+> - CNIS, CTPS digital, processo administrativo [número] (decisão e laudo de [data])
+> - Relatórios do [hospital] de [datas]
+>
+> **Falta**
+> - Procuração, contrato, declaração de hipossuficiência: **escritório**
+> - Relatório funcional com a data de início da incapacidade: **médico assistente**
+> - Comprovante do seguro-desemprego e parcelas: **Emprega Brasil**
+>
+> **Atenção:** não juntar os arquivos que duplicam a pasta Dossie.
+
+A regra vale para o chat, para o Cowork e para o relatório dos agentes ao titular. A peça processual continua em prosa, na forma do `ESTILO-MODELO.md`.
 
 ## Cruzamentos
 
