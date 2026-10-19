@@ -82,6 +82,17 @@ document.getElementById('b-tudo').onclick = () => {
       + (r.pat && r.pat.esperando ? 'tela pronta — clique em "Buscar"' : (r.pat && r.pat.erro) || 'ok');
   });
 };
+// 1.23 · acervo + relação e depois o completar, num clique só (roda no worker)
+document.getElementById('b-judicial').onclick = () => {
+  res.style.color = '#5B6069';
+  res.textContent = 'lendo o acervo do PJe e a relação do eproc — confira em 📥 Importar; depois vêm as peças';
+  chrome.runtime.sendMessage({ tipo: 'rodar-judicial' }, r => {
+    if (!r) return;
+    if (r.erro) { res.style.color = '#B3261E'; res.textContent = r.erro; return; }
+    res.style.color = r.feitos.some(f => f.erro) ? '#B4530A' : '#1E6F50';
+    res.textContent = r.feitos.map(f => `${f.rotulo}: ${f.erro ? '⚠ ' + f.erro : '✔ ' + (f.ok === 'retomado' ? 'ok' : f.ok)}`).join(' · ');
+  });
+};
 // F187 · completar processos: roda no service worker (o popup pode fechar);
 // o andamento do PJe fica no storage e aparece aqui quando o popup abre
 document.getElementById('b-completo').onclick = () => {
