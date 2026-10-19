@@ -99,6 +99,7 @@ FIX.casos.push(
       return /Encerrar caso/.test(rodape.textContent) && /não é caso/.test(rodape.textContent); }));
 
   // o ➕ aberto sobrevive à repintura (F69: botão + corpo, mesma mecânica)
+  await p.waitForSelector(".fatos-processo .fx-mais-bt", { timeout: 15000 });   // a ficha pode estar repintando (a máquina do GitHub é mais lenta)
   await p.evaluate(() => document.querySelector(".fatos-processo .fx-mais-bt").click());
   await p.waitForTimeout(400);
   conf("o clique no ➕ abre o corpo com NB, DIB e o protocolo",
@@ -128,6 +129,7 @@ FIX.casos.push(
   conf("CRPS: gravado o ED, o campo do Recurso Especial aparece (dinâmico)",
     escritos.some(x => x.m === "PATCH" && x.t === "casos" && x.corpo.ed_protocolado_em === "2026-07-10") &&
     await p.evaluate(() => !!document.querySelector('.fatos-processo [data-fato="re_protocolado_em"]')));
+  await p.waitForSelector(".fatos-processo .fx-mais-bt", { timeout: 15000 });   // a ficha pode estar repintando (a máquina do GitHub é mais lenta)
   await p.evaluate(() => document.querySelector(".fatos-processo .fx-mais-bt").click());
   await p.waitForTimeout(400);
   conf("CRPS: o ➕ guarda os dados do INSS (DER e protocolo de lá)",
@@ -144,6 +146,7 @@ FIX.casos.push(
   conf("judicial: os números dos processos vinculados aparecem logo abaixo",
     await p.evaluate(() => { const el = document.querySelector(".fatos-processo .fx-procs, .fatos-processo > dl.fx-grade [data-fato=\"processo\"]");
       return !!el; }));
+  await p.waitForSelector(".fatos-processo .fx-mais-bt", { timeout: 15000 });   // a ficha pode estar repintando (a máquina do GitHub é mais lenta)
   await p.evaluate(() => document.querySelector(".fatos-processo .fx-mais-bt").click());
   await p.waitForTimeout(400);
   conf("judicial: a trilha (etapas anteriores) mora dentro do ➕",
