@@ -123,19 +123,16 @@ async function esperarConclusao(fonte, antes, tetoMs = 15 * 60000) {
   }
   return { erro: 'não terminou no tempo — veja a faixa na aba' };
 }
-async function rodarTudo() {
-  const antes = await chrome.storage.local.get(Object.values(CHAVE_ULTIMA));
-  const pat = await rodarFonte('pat', { ativar: true });   // prepara a tela e devolve na hora
-  const tarefas = [];
-  const roda = (fonte, aba, rotulo) => tarefas.push((async () => {
-    let r = await rodarFonte(fonte, { aba, ativar: false });
-    if (r && r.erro === 'retomando') r = await esperarConclusao(fonte, antes[CHAVE_ULTIMA[fonte]]);
-    return { rotulo, ...r };
-  })());
-  roda('crps', null, 'e-Recursos');
-  roda('esaj', null, 'e-SAJ');
-  // PJe e eproc: uma rodada por aba aberta (1º e 2º grau; os hosts do eproc);
-  // sem aba nenhuma, abre a do 1º grau
+// cada fonte roda em segundo plano na sua aba; o que responde "retomando"
+// termina quando a data da última coleta muda no storage
+const rodadorDeFundo = (tarefas, antes) => (fonte, aba, rotulo) => tarefas.push((async () => {
+  let r = await rodarFonte(fonte, { aba, ativar: false });
+  if (r && r.erro === 'retomando') r = await esperarConclusao(fonte, antes[CHAVE_ULTIMA[fonte]]);
+  return { rotulo, ...r };
+})());
+// PJe e eproc: uma rodada por aba aberta (1º e 2º grau; os hosts do eproc);
+// sem aba nenhuma, abre a do 1º grau
+async function acervoPorAba(roda) {
   for (const fonte of ['pje', 'eproc']) {
     const abas = await chrome.tabs.query({ url: DOMINIOS[fonte] });
     const porHost = new Map();
@@ -144,6 +141,15 @@ async function rodarTudo() {
     if (!porHost.size) roda(fonte, null, fonte === 'pje' ? 'PJe' : 'eproc');
     for (const [h, a] of porHost) roda(fonte, a, `${fonte === 'pje' ? 'PJe' : 'eproc'} ${h.split('.')[0]}`);
   }
+}
+async function rodarTudo() {
+  const antes = await chrome.storage.local.get(Object.values(CHAVE_ULTIMA));
+  const pat = await rodarFonte('pat', { ativar: true });   // prepara a tela e devolve na hora
+  const tarefas = [];
+  const roda = rodadorDeFundo(tarefas, antes);
+  roda('crps', null, 'e-Recursos');
+  roda('esaj', null, 'e-SAJ');
+  await acervoPorAba(roda);
   const feitos = await Promise.all(tarefas);
   return { feitos, pat };
 }
@@ -257,6 +263,23 @@ async function rodarPrazos() {
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-prazos') return;
   rodarPrazos().then(responder, e => responder({ erro: String(e.message || e) }));
+  return true;
+});
+
+// 1.23 · PJe E eproc NUM CLIQUE: o acervo e a relação primeiro, para as
+// coletas já irem ao 📥 Importar e a conferência começar; depois o completar,
+// que escolhe o que baixar pelo último movimento que o acervo acabou de trazer
+async function rodarJudicial() {
+  const antes = await chrome.storage.local.get(Object.values(CHAVE_ULTIMA));
+  const tarefas = [];
+  await acervoPorAba(rodadorDeFundo(tarefas, antes));
+  const acervo = await Promise.all(tarefas);
+  const completo = await Promise.all([completarEproc(), completarPje()]);
+  return { feitos: [...acervo, ...completo.map(f => ({ ...f, rotulo: f.rotulo + ' completar' }))] };
+}
+chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
+  if (msg.tipo !== 'rodar-judicial') return;
+  rodarJudicial().then(responder, e => responder({ erro: String(e.message || e) }));
   return true;
 });
 

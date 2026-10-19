@@ -179,6 +179,15 @@ quando a publicada na `main` é outra. Para atualizar: na pasta do repositório
 no computador, `git pull`; depois, em `chrome://extensions`, o botão ↻ da
 extensão (ou "Atualizar"). Não precisa reinstalar nem entrar de novo no CRM.
 
+## ⚖️ PJe e eproc num clique — desde 1.23.0
+
+O botão **⚖️ PJe e eproc: acervo e completar** faz, em ordem, o que antes eram três
+cliques: lê o acervo do PJe e a relação do eproc em cada aba aberta (os dois graus do
+PJe, os hosts do eproc; sem aba, abre a do 1º grau), e essas coletas já vão para o
+📥 Importar, onde você confere enquanto o resto roda; **depois** completa os processos
+(baixa as peças) do que movimentou. Os botões separados continuam para quem quiser
+rodar só uma parte.
+
 ## 📁 e-SAJ: documentos só dos casos ativos — desde 1.22.0
 
 No e-SAJ, sentença, pasta digital e anexos só descem do processo que **não
