@@ -213,7 +213,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   const fechado = await p.evaluate(`(() => { ${VIS}
     const sug = document.querySelector("#tipo-fila .sug-abrir");
     return { sug: !!sug && vis("#tipo-fila .sug-abrir") && sug.textContent.trim() === "Sugestões", campo: vis("#and-texto"), barra: vis("#tf-box"), prazo: vis("#and-prazo-ck") }; })()`);
-  conf("fechado: ficam à vista só os tipos, o Sugestões ao lado deles e o campo", fechado.sug && fechado.campo && !fechado.barra && !fechado.prazo);
+  conf("F244 · fechado: fica à vista só o campo (os tipos e o Sugestões aparecem ao clicar nele)", !fechado.sug && fechado.campo && !fechado.barra && !fechado.prazo);
   await p.click("#and-texto"); await p.waitForTimeout(250);
   const aberto = await p.evaluate(`(() => { ${VIS}
     const linhas = [...document.querySelectorAll("#tf-box .esc-linha")];
