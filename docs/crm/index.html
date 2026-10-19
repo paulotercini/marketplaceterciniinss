@@ -3824,6 +3824,21 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .tp-onde{font-size:12px;color:var(--pa-c2);font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace}
 .tp-chave{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--pa-c1);cursor:pointer}.tp-chave input{margin:0;accent-color:var(--pa-t)}
 .tp-passo[hidden]{display:none!important}
+/* F243 · a ficha mais compacta: os dados do cliente na linha do nome e a faixa das etapas mais baixa */
+html[data-tema="v10"] .det-topo .linha1{flex-wrap:wrap;row-gap:6px}
+html[data-tema="v10"] .det-topo .resumo-lado{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin:0 0 0 10px}
+html[data-tema="v10"] .tr-compacta .jn-l{grid-template-columns:repeat(var(--nf,4),minmax(0,1fr)) auto}
+html[data-tema="v10"] .tr-compacta .jn-b{min-height:36px;padding:6px 12px;flex-direction:row;align-items:center;justify-content:flex-start;gap:8px;white-space:nowrap;overflow:hidden}
+html[data-tema="v10"] .tr-compacta .jn-st{overflow:hidden;text-overflow:ellipsis;min-width:0}html[data-tema="v10"] .tr-compacta .jn-st .tr-agora b{font-weight:500}
+html[data-tema="v10"] .tr-compacta .jn-nome{flex:none}
+html[data-tema="v10"] .tr-compacta .jn-l .tr-ajuda{align-self:center;margin:0 8px;position:relative}
+html[data-tema="v10"] .tr-ajuda-pend::after{content:"";position:absolute;top:-2px;right:-2px;width:8px;height:8px;border-radius:50%;background:#B3261E}
+html[data-tema="v10"] .tr-compacta .tr-corpo{padding:6px 14px 6px;gap:6px}
+html[data-tema="v10"] .tr-compacta .tr-et{min-height:0;gap:3px;padding:3px 5px 4px}
+html[data-tema="v10"] .tr-compacta .tr-et .tr-nm{font-size:11.5px;line-height:1.25}
+html[data-tema="v10"] .tr-compacta .tr-d{font-size:10.5px}
+html[data-tema="v10"] .tr-compacta .tr-b{height:6px}
+html[data-tema="v10"] .tr-compacta{margin-bottom:10px}
 /* F241 · a visão do caso mais curta: a linha do tempo, os prazos e o Caso completo por mês */
 .tl-antigos-bt,.fp-ver-todos{margin:6px 0 10px;align-self:flex-start}
 .pz[hidden],.timeline[hidden]{display:none!important}
@@ -4597,7 +4612,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.67</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.68</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15900,6 +15915,30 @@ function pintarFicha(){
         ? `<span class="cli-st inativo" title="nenhum trabalho em andamento para este cliente">🔴 Cliente inativo — ${ksR.length>1?`os ${ksR.length} casos`:"o único caso"} encerrado${ksR.length>1?"s":""}${encDesde?` (último em ${fmt(dataSP(encDesde))})`:""}</span>`
         : (n=>n?`<span class="cli-st atend" title="pré-caso em formação: gerar o caso é gerar a procuração e assinar o contrato — até lá, o cliente fica amarelo, na lista Escritório">🟡 Em formação — ${n} pré-caso${n>1?"s":""}</span>`
                :`<span class="cli-st atend" title="cliente em atendimento — ainda não virou caso; as anotações e os documentos pedidos ficam na aba Cadastro">🟡 Em atendimento — buscando documentos</span>`)(precasosDe(c).filter(p=>!p.so_lembrete).length);
+  // F243 · no v10 o CPF, a senha do Meu INSS e o telefone vão na linha do nome, e o menu do cliente sobe (pedido do Paulo, 18.10.2026)
+  const resumoIn = `      <span class="id-min"><b>CPF</b> ${c.cpf?`<span class="cop" data-cop="${esc(c.cpf)}" data-cop-msg="CPF copiado" title="clique para copiar">${fmtCpf(c.cpf)}</span>
+        <button class="olho" title="copiar CPF" onclick="copiar('${c.cpf}','CPF copiado')">📋</button>`:"—"}</span>
+      ${(cr=>cr?`<span class="id-min"><b>Meu INSS</b> ••••••
+        <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button>
+        <button class="olho" title="ver (fica registrado)" onclick="verCred('${cr.id}')">👁</button></span>`
+        :`<span class="id-min"><b>Meu INSS</b> <span class="meio-sub">sem senha</span></span>`)(creds.find(x=>x.tipo==="meu_inss"))}
+      ${/* F86 · o telefone ao lado do CPF e da senha: é o terceiro dado que a
+           equipe copia o dia inteiro (o protótipo o mostrava na faixa) */""}
+      ${(temaV10() && c.telefone)?`<span class="id-min"><b>Telefone</b> <span class="cop" data-cop="${esc(c.telefone)}" data-cop-msg="Telefone copiado" title="clique para copiar">${esc(c.telefone)}</span>
+        <button class="olho" title="copiar o telefone" onclick="copiar('${escJs(c.telefone)}','Telefone copiado')">📋</button></span>`:""}
+      ${/* F56 · o "Concluir em" do To Do agora mora aqui: UMA data à vista
+           dizendo quando este cliente volta — vencida grita em vermelho,
+           futura avisa em azul, e a ausência de data também é informação */""}
+      ${/* F108 · no tema v10 a pílula saiu (pedido do Paulo, 17.09): a data
+           que cobra ação já mora nos quadros de prazo do caso */""}
+      ${temaV10()?"":(pd=>pd.venceu
+        ?`<button class="volta-pilula venceu" onclick="irParaData('${pd.venceu.tipo}')"
+            title="${esc(pd.venceu.rotulo)} — esperando desde ${fmt(pd.venceu.data)}; clique para ir até lá">⏰ venceu ${fmt(pd.venceu.data)} · ${esc(pd.venceu.rotulo)}</button>`
+        :pd.proxima
+        ?`<button class="volta-pilula futura" onclick="irParaData('${pd.proxima.tipo}')"
+            title="${esc(pd.proxima.rotulo)} — clique para ir até lá">📅 volta ${fmt(pd.proxima.data)} · ${esc(pd.proxima.rotulo)}</button>`
+        :`<span class="volta-pilula vazia" title="nenhuma data marcada para este cliente — sem lembrete, ninguém é cobrado de voltar aqui">📅 sem próxima data — marque nas Anotações</span>`)(proximaDataDe(cliId))}
+`;
   document.getElementById("detalhe").innerHTML=`
   <div class="det-principal">
   <div class="det-rolagem">
@@ -15922,35 +15961,13 @@ function pintarFicha(){
         style="background:#EDF8F1;border-color:#BFE3CC;color:#128C4B;font-weight:500"
         title="abre o SMBot numa aba e copia o telefone do cliente — é só colar na busca do atendimento">💬 SMBot</button>`:""}
       ${botaoZapCliente(cliId)}
+      ${temaV10() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
       ${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}
       ${chipAgendaCliente(c)}
       <button class="fechar nao-cel" onclick="fecharFicha()">✕</button></div>
     ${/* abaixo do nome só o que a equipe usa o tempo todo: CPF e a senha do
          Meu INSS. O resto do cadastro fica na aba 📇, sem poluir aqui. */""}
-    <div class="resumo">
-      <span class="id-min"><b>CPF</b> ${c.cpf?`<span class="cop" data-cop="${esc(c.cpf)}" data-cop-msg="CPF copiado" title="clique para copiar">${fmtCpf(c.cpf)}</span>
-        <button class="olho" title="copiar CPF" onclick="copiar('${c.cpf}','CPF copiado')">📋</button>`:"—"}</span>
-      ${(cr=>cr?`<span class="id-min"><b>Meu INSS</b> ••••••
-        <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button>
-        <button class="olho" title="ver (fica registrado)" onclick="verCred('${cr.id}')">👁</button></span>`
-        :`<span class="id-min"><b>Meu INSS</b> <span class="meio-sub">sem senha</span></span>`)(creds.find(x=>x.tipo==="meu_inss"))}
-      ${/* F86 · o telefone ao lado do CPF e da senha: é o terceiro dado que a
-           equipe copia o dia inteiro (o protótipo o mostrava na faixa) */""}
-      ${(temaV10() && c.telefone)?`<span class="id-min"><b>Telefone</b> <span class="cop" data-cop="${esc(c.telefone)}" data-cop-msg="Telefone copiado" title="clique para copiar">${esc(c.telefone)}</span>
-        <button class="olho" title="copiar o telefone" onclick="copiar('${escJs(c.telefone)}','Telefone copiado')">📋</button></span>`:""}
-      ${/* F56 · o "Concluir em" do To Do agora mora aqui: UMA data à vista
-           dizendo quando este cliente volta — vencida grita em vermelho,
-           futura avisa em azul, e a ausência de data também é informação */""}
-      ${/* F108 · no tema v10 a pílula saiu (pedido do Paulo, 17.09): a data
-           que cobra ação já mora nos quadros de prazo do caso */""}
-      ${temaV10()?"":(pd=>pd.venceu
-        ?`<button class="volta-pilula venceu" onclick="irParaData('${pd.venceu.tipo}')"
-            title="${esc(pd.venceu.rotulo)} — esperando desde ${fmt(pd.venceu.data)}; clique para ir até lá">⏰ venceu ${fmt(pd.venceu.data)} · ${esc(pd.venceu.rotulo)}</button>`
-        :pd.proxima
-        ?`<button class="volta-pilula futura" onclick="irParaData('${pd.proxima.tipo}')"
-            title="${esc(pd.proxima.rotulo)} — clique para ir até lá">📅 volta ${fmt(pd.proxima.data)} · ${esc(pd.proxima.rotulo)}</button>`
-        :`<span class="volta-pilula vazia" title="nenhuma data marcada para este cliente — sem lembrete, ninguém é cobrado de voltar aqui">📅 sem próxima data — marque nas Anotações</span>`)(proximaDataDe(cliId))}
-    </div>
+    ${temaV10() ? "" : `<div class="resumo">${resumoIn}</div>`}
     <div class="menu-topo">
       ${/* abas em pivot claro (espec. 7.2): texto limpo, sem emoji de ícone */""}
       ${/* Documentos saiu do menu (08.98): ele é passo do atendimento, e o
@@ -16044,7 +16061,7 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}${faixaTrilha(k)}${faixaIncapacidade(k)}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${linhaCaso(k)}${botaoFixar(k)}${faixaPrazos(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
+        ? `${faixaFixo(k)}${faixaTrilha(k)}${faixaIncapacidade(k)}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${/* F243 · os prazos vêm primeiro: são a primeira leitura do colaborador */""}${faixaPrazos(k)}${linhaCaso(k)}${botaoFixar(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
            <div class="caso-dir">${menu}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
@@ -33887,10 +33904,14 @@ function faixaTrilha(k){
   // F236 · uma etapa só na tela: a aba da fase, o "Agora:" e a placa leem a etapa do caso
   const agora = etapaAgora(k);
   const fases = jornadaFases(k), stVer = (fases.find(x=>x.f===ver)||{}).st;
+  // F243 · a aba da fase atual diz a etapa (o "Agora:" de antes), se ela está desatualizada e o passo por vir
+  const MK0 = f => f===ver ? MK : null;
   const abas = fases.map(({f,st})=>{
     const c = COR_FASE[f], txt = st==="a" ? (agora || "em curso") : st==="f" ? resumoFase(k, f) : st==="n" ? "não houve" : "a vir";
+    const mkA = st==="a" ? MK0(f) : null, aguarda = mkA ? (i=>i>=0 && !mkA[i].d ? ` · aguardando ${esc(ets[i].n)}` : "")(mkA.findIndex(m=>m.s==="a")) : "";
+    const stHtml = st==="a" ? `<span class="tr-agora"><b>${esc(agora||"a definir")}</b>${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}${aguarda}</span>` : esc(txt);
     return `<button role="tab" aria-selected="${ver===f}" class="jn-b jn-${st}${ver===f?" jn-ver":""}" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}"
-      onclick="trVerFase('${k.id}','${f}')"><span class="jn-nome"><i></i><span class="jn-txt">${c.n}</span></span><span class="jn-st">${esc(txt)}</span></button>`; }).join("");
+      onclick="trVerFase('${k.id}','${f}')" title="${esc(`${c.n}: ${String(txt)}`)}"><span class="jn-nome"><i></i><span class="jn-txt">${c.n}</span></span><span class="jn-st">${stHtml}</span></button>`; }).join("");
   const alt = Object.entries(TRILHAS).filter(([,t])=>t.fase===ver);
   // o tipo de processo é uma escolha rara: um seletor, e não cinco pílulas
   const dd = ritoManual(k, ver) ? null : ritoDados(k, ver);
@@ -33940,13 +33961,14 @@ function faixaTrilha(k){
   const leg = trAjuda ? `<div class="tr-leg" id="tr-leg"><span><i class="tr-lf"></i>cumprida</span><span><i class="tr-la"></i>atual</span><span><i class="tr-lv"></i>a vir</span>
       <span><i class="tr-lo"></i>só se houver</span><span><i class="tr-ln"></i><s>não houve</s></span>${ver==="judicial"?`<span><i class="tr-lx"></i>execução</span>`:""}
       <span>A data vem da anotação que cumpriu a etapa. Grupos cumpridos ficam recolhidos; clique para abrir.</span></div>` : "";
-  return `<section class="tr-faixa tr" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}" aria-label="Jornada e trilha do caso">
-    <div class="jn-l" role="tablist" aria-label="Fases do caso">${abas}</div>
+  // F243 · a faixa compacta (pedido do Paulo, 18.10.2026): as fases numa linha e as etapas logo abaixo; o nome da trilha, o
+  // tipo de processo, a legenda e "esta fase não houve" ficam no "?", que ganha um ponto quando o tipo pede confirmação
+  return `<section class="tr-faixa tr tr-compacta" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}" aria-label="Jornada e trilha do caso">
+    <div class="jn-l" role="tablist" aria-label="Fases do caso">${abas}<button class="tr-ajuda${confirma ? " tr-ajuda-pend" : ""}" aria-expanded="${trAjuda}" aria-controls="tr-leg"
+      title="${esc(`${T.nome}: o tipo de processo e o que cada marca quer dizer`)}" onclick="trAjuda=!trAjuda;trRepintar()">?</button></div>
     <div class="tr-corpo">
-      <div class="tr-cab"><h3>${esc(T.nome)}</h3><span class="tr-agora">${ver===faseAt?`Agora: <b>${esc(agora||"a definir")}</b>${
-        /* F236 · a etapa desmentida avisa também aqui, e o passo por vir tem a mesma palavra no título e no passo */""}${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}${
-        (i=>i>=0 && !MK[i].d ? ` · aguardando ${esc(ets[i].n)}` : "")(MK.findIndex(m=>m.s==="a"))}`:`<span class="meio-sub">${stVer==="v"?"fase ainda não alcançada":"fase anterior"}</span>`}</span>
-        ${houveBt}${chips}<button class="tr-ajuda" aria-expanded="${trAjuda}" aria-controls="tr-leg" title="o que cada marca quer dizer" onclick="trAjuda=!trAjuda;trRepintar()">?</button></div>
+      ${trAjuda ? `<div class="tr-cab"><h3>${esc(T.nome)}</h3>${ver===faseAt ? "" : `<span class="meio-sub">${stVer==="v"?"fase ainda não alcançada":"fase anterior"}</span>`}
+        ${houveBt}${chips}</div>` : ""}
       ${leg}
       <div class="tr-rol-box"><button class="tr-seta tr-seta-esq" aria-label="etapas anteriores" tabindex="-1" onclick="trRolar(-1)">‹</button>
         <div class="tr-rol" onscroll="trSombra(this)"><ol class="tr-l" style="--n:${itens.length}">${itens.join("")}</ol></div>

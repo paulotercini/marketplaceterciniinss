@@ -76,7 +76,7 @@ const DADOS = {
   const esq = await p.evaluate(() => {
     const jn = [...document.querySelectorAll(".jn-l .jn-b")];
     return { fases: jn.map(b => b.querySelector(".jn-nome").textContent.trim() + ":" + [...b.classList].find(c => /^jn-[afnv]$/.test(c))).join("|"),
-      trilha: (document.querySelector(".tr-cab h3") || {}).textContent || "", passos: document.querySelectorAll(".tr-l .tr-et").length,
+      trilha: ((trAjuda || (trAjuda = true, trRepintar()), document.querySelector(".tr-cab h3")) || {}).textContent || "", passos: document.querySelectorAll(".tr-l .tr-et").length,
       abas: [...document.querySelectorAll(".outras-abas .oa-linha small")].map(x => x.textContent),
       txt: (document.querySelector(".outras-abas") || {}).textContent || "" };
   });

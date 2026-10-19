@@ -299,12 +299,12 @@ const casoDe = id => T.casos.find(k => k.id === id);
   const tr2 = await p.evaluate(id => { const k = D.casoPorId.get(id), r = ritoDe(k, "judicial"), ets = TRILHAS[r].e.map(lerEtapaTrilha), ms = marcasDaTrilha(k, "judicial", "judicial", r, ets);
     const i = ms.findIndex(m => m.s === "a"); return { atual: i >= 0 ? ets[i].n : "", agora: ((document.querySelector(".tr-agora") || {}).textContent || "").replace(/\s+/g, " ") }; }, F2.id);
   conf("F2 com a RPV expedida, o destaque da trilha não fica na sentença: vai ao passo cumprido mais adiantado, e o 'Agora:' avisa",
-    tr2.atual === "RPV ou precatório expedido" && /Agora: sentença publicada \(desatualizada\)/.test(tr2.agora));
+    tr2.atual === "RPV ou precatório expedido" && /sentença publicada \(desatualizada\)/.test(tr2.agora));
   await abrir(F3);
   const tr3 = await p.evaluate(() => ({ agora: ((document.querySelector(".tr-agora") || {}).textContent || "").replace(/\s+/g, " "),
     passo: [...document.querySelectorAll(".tr-l .tr-et.tr-sa")].map(b => b.textContent.replace(/\s+/g, " ").trim()) }));
   conf("F3 o passo por vir tem a mesma palavra no título e no passo ('aguardando Acórdão do TRF3'), e não 'agora'",
-    /Agora: em recurso · aguardando Acórdão do TRF3/.test(tr3.agora) && tr3.passo.some(t => /Acórdão do TRF3\s*aguardando/.test(t)));
+    /em recurso · aguardando Acórdão do TRF3/.test(tr3.agora) && tr3.passo.some(t => /Acórdão do TRF3\s*aguardando/.test(t)));
   conf("F4 o topo da revisão do acervo diz o critério da linha (30 dias de anotação, 90 de revisão)",
     await p.evaluate(() => /sem anotação da equipe nos últimos 30 dias e sem revisão nos últimos 90/.test(blocoRevisao())));
   conf("F5 o atalho de honorários põe o ano na data que não é deste ano",

@@ -46,12 +46,12 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(([cli, id]) => { abrirFicha(cli); casoSel = id; abaAtiva = 2; subAba = "escritorio"; }, [CLI_CHEIO, CASO1]);
   await p.waitForSelector(".tr-faixa .tr-l");
-  const tit = () => p.evaluate(() => document.querySelector(".tr-cab h3").textContent);
+  const tit = () => p.evaluate(() => (trAjuda || (trAjuda = true, trRepintar()), document.querySelector(".tr-cab h3")).textContent);
 
   // 1) sem escolha manual, vale o rito dos dados, com "provável" e o motivo
   conf("o rito dos dados vence o padrão da espécie (TJSP + B42 = competência delegada)", (await tit()) === "Competência delegada · TJSP");
   conf("confiança baixa mostra 'provável' com o botão confirmar", await p.evaluate(() => !!document.querySelector(".tr-prov button")));
-  conf("o seletor diz de onde veio o rito", /pelos dados: TJSP/.test(await p.evaluate(() => document.querySelector(".tr-ritos").title)));
+  conf("o seletor diz de onde veio o rito", /pelos dados: TJSP/.test(await p.evaluate(() => (trAjuda || (trAjuda = true, trRepintar()), document.querySelector(".tr-ritos")).title)));
 
   // 2) confirmar grava a escolha manual (casos.trilha) e some o "provável"
   await p.click(".tr-prov button");

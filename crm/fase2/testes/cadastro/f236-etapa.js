@@ -137,7 +137,7 @@ const casoDe = id => T.casos.find(k => k.id === id);
     v.etapa === "aguardando perícia" && v.velha === "etapa desatualizada"
     && v.sug === `Sugestão: decidido · indeferido (pela situação do PAT “Concluída - Indeferida” de ${curta(-8)}) — Aceitar`);
   conf("A2 uma etapa só na tela: a placa, o 'Agora:' da trilha e a aba da fase dizem a mesma coisa",
-    v.agora === "aguardando perícia" && v.atual === "aguardando perícia");
+    v.agora === "aguardando perícia" && v.atual.startsWith("aguardando perícia"));   // F243 · a aba da fase atual traz a etapa (e o passo por vir)
   await p.waitForTimeout(400);
   conf("A3 a etapa contrariada ganha a marca para o portal (trilha.velha), e a etapa em si não muda",
     (casoDe(A.id).trilha || {}).velha && casoDe(A.id).trilha.velha.etapa === "aguardando perícia" && casoDe(A.id).trilha.velha.proposta === "decidido"
