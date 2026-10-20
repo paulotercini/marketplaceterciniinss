@@ -1918,6 +1918,20 @@
   .zg-bola.on{background:var(--feito,#1b6e38)}
   .ze-so-leitura{margin:0;font-size:12.5px;color:#5c3d00;background:#fbf1e0;border-radius:8px;padding:7px 10px}
   .zx-rot{margin:10px 0 4px;font-size:12px;font-weight:600;color:var(--cinza)}
+  .zv-lista{display:flex;flex-direction:column;gap:4px;margin:4px 0}
+  .zl-som{border:0;background:none;cursor:pointer;font-size:15px;padding:2px 4px}
+  .zl-achado{display:flex;flex-direction:column;gap:2px;width:100%;text-align:left;border:0;background:none;padding:8px 12px;border-radius:10px;cursor:pointer;font:inherit}
+  @media (hover:hover) and (pointer:fine){.zl-achado:hover{background:var(--lateral-hover,#eceef2)}}
+  .zl-achado .l1{display:flex;gap:6px;font-size:13px}.zl-achado .l1 .hora{margin-left:auto;font-size:11.5px;color:var(--cinza-claro,var(--cinza))}
+  .zl-achado .l2{font-size:12.5px;color:var(--cinza)}
+  .zl-achado mark{background:#fde68a;color:inherit;border-radius:3px;padding:0 1px}
+  .zv-item{text-align:left;border:1px solid var(--borda);border-radius:8px;background:var(--branco);padding:7px 10px;font:inherit;cursor:pointer}
+  .zv-item.on{border-color:var(--azul);background:var(--azul-fundo,#e6f0ef);box-shadow:inset 3px 0 0 var(--azul)}
+  /* F191 · foto do contato: na ficha e ampliada */
+  .zt-foto,.foto-zap{cursor:zoom-in;object-fit:cover}
+  img.avatar.foto-zap{width:40px;height:40px;border-radius:50%;padding:0}
+  .foto-grande{display:flex;justify-content:center}
+  .foto-grande img{max-width:min(520px,80vw);max-height:75vh;border-radius:12px}
   .zap-audio-prev{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 12px;border-top:1px solid var(--borda);background:var(--azul-fundo,#e6f0ef);font-size:12.5px}
   .zap-audio-prev audio{height:34px;flex:1;min-width:200px}
   /* F183 · acabamento igual ao desenho aprovado */
@@ -5277,11 +5291,58 @@ async function iniciar(){
   if(!digitandoNoMeio && !["novocliente","config"].includes(visao)) render();
   if(!vigiaLigada){ vigiaLigada = true; setInterval(vigiarMudancas, VIGIA_MS); }
   // F187 · "online agora" no painel do gestor: um ponto por minuto
+  if(!zapSomLigado){ zapSomLigado = true; vigiarZapSom(); setInterval(vigiarZapSom, 20000); }
   if(!presencaLigada){ presencaLigada = true;
     const ponto = () => api(`/rest/v1/rpc/zap_presenca`,{method:"POST", body:"{}"}).catch(()=>{});
     ponto(); setInterval(ponto, 60000); }
 }
-let presencaLigada = false;
+let presencaLigada = false, zapSomLigado = false;
+// F191 · aviso de mensagem nova (som e, com a aba escondida, aviso do navegador):
+// mensagem nova numa conversa minha ou sem dono, e transferência/@ para mim.
+// Olha a cada 20 s em qualquer tela do CRM; a primeira volta só aprende.
+let zapSomVisto = null, zapAudioCtx = null;
+const somZapLigado = () => ler("crm_zap_som") !== "0";
+function tocarAvisoZap(texto){
+  if(!somZapLigado()) return;
+  try{
+    zapAudioCtx = zapAudioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    if(zapAudioCtx.state === "suspended") zapAudioCtx.resume();
+    [[880, 0], [660, 0.16]].forEach(([f, t])=>{
+      const o = zapAudioCtx.createOscillator(), g = zapAudioCtx.createGain(), t0 = zapAudioCtx.currentTime + t;
+      o.frequency.value = f; o.connect(g); g.connect(zapAudioCtx.destination);
+      g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.25, t0+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0+0.14); o.start(t0); o.stop(t0+0.15);
+    });
+  }catch(e){}
+  if(document.hidden && window.Notification && Notification.permission==="granted")
+    try{ new Notification("WhatsApp · CRM", {body: texto, tag: "crm-zap"}); }catch(e){}
+}
+async function vigiarZapSom(){
+  if(!eu) return;
+  const [cs, ms] = await Promise.all([
+    todas("zap_conversas","select=id,nao_lidas,atendente_id,status,nome_perfil,cliente_id,lead_id,telefone&nao_lidas=gt.0").catch(()=>null),
+    todas("mencoes",`select=id,texto&para_id=eq.${eu.id}&lida_em=is.null&conversa_id=not.is.null`).catch(()=>null)]);
+  if(!cs || !ms) return;
+  const minhas = cs.filter(c=>c.status!=="resolvida" && (c.atendente_id===eu.id || !c.atendente_id));
+  const agora = {conv: new Map(minhas.map(c=>[c.id, c.nao_lidas])), menc: new Set(ms.map(m=>m.id))};
+  if(zapSomVisto){
+    const nova = minhas.find(c=>c.nao_lidas > (zapSomVisto.conv.get(c.id)||0));
+    const menc = ms.find(m=>!zapSomVisto.menc.has(m.id));
+    if(menc) tocarAvisoZap(menc.texto.replace(/^💬\s*/,""));
+    else if(nova) tocarAvisoZap(`Mensagem nova de ${nomeDaConversa(nova)}`);
+  }
+  zapSomVisto = agora;
+}
+async function alternarSomZap(){
+  const ligar = !somZapLigado();
+  guardar("crm_zap_som", ligar ? "1" : "0");
+  if(ligar){
+    tocarAvisoZap("teste");
+    if(window.Notification && Notification.permission==="default") await Notification.requestPermission().catch(()=>{});
+  }
+  aviso(ligar ? "Aviso sonoro ligado 🔔" : "Aviso sonoro desligado", false);
+  pintarListaZap();
+}
 
 // Ajuste do ESCRITÓRIO, não do navegador de cada um: o endereço do painel do
 // SMBot vale para todo mundo, e quem trocar de máquina não reconfigura nada.
@@ -12930,7 +12991,27 @@ const tintaZap = cor => `color:color-mix(in srgb, ${cor} 82%, #000);background:c
 
 // As filas são as do SMBot: Minhas, Pendentes (ninguém pegou ainda), Todas as
 // abertas e Retornos ("responder depois" com hora); Encerradas fica à parte.
-let zapBusca = "";
+let zapBusca = "", zapBuscaT = null, zapAchados = [];
+// F191 · a busca também procura DENTRO das mensagens (palavra, nº de processo,
+// nome dito na conversa), no banco, sem acento
+async function buscarNasMensagens(){
+  const q = zapBusca.trim();
+  if(q.length < 3){ if(zapAchados.length){ zapAchados = []; pintarListaZap(); } return; }
+  const r = await api(`/rest/v1/rpc/zap_buscar`,{method:"POST", body:JSON.stringify({p_q:q, p_limite:40})}).catch(()=>null);
+  if(!r || zapBusca.trim()!==q) return;
+  zapAchados = r.filter(m=>{ const c = zapConvs.find(x=>x.id===m.conversa_id); return c && zapVisivel(c); });
+  pintarListaZap();
+}
+function achadoZap(m){
+  const c = zapConvs.find(x=>x.id===m.conversa_id) || {};
+  const t = String(m.texto||""), q = dsa(zapBusca.trim()), i = dsa(t).indexOf(q);
+  const ini = Math.max(0, i-50), fim = i<0 ? 120 : i+q.length+70;
+  const trecho = i<0 ? esc(t.slice(0,120))
+    : `${ini?"…":""}${esc(t.slice(ini,i))}<mark>${esc(t.slice(i,i+q.length))}</mark>${esc(t.slice(i+q.length,fim))}${fim<t.length?"…":""}`;
+  return `<button class="zl-achado" data-za="${m.conversa_id}|${m.mensagem_id}">
+      <span class="l1"><b>${esc(nomeDaConversa(c))}</b><span class="hora">${diaZap(m.momento)} ${horaSP(m.momento)}</span></span>
+      <span class="l2">${m.direcao==="saida"?"Escritório: ":m.direcao==="interna"?"Nota: ":""}${trecho}</span></button>`;
+}
 function pintarListaZap(){
   const meu = c => c.atendente_id===eu.id;
   const aberta = c => c.status!=="resolvida";
@@ -12969,6 +13050,8 @@ function pintarListaZap(){
   document.querySelector(".zap-lado").innerHTML =
     `<div class="zl-cab">
        <div class="zl-topo"><h2>WhatsApp</h2>
+         <button class="zl-som" onclick="alternarSomZap()" title="${somZapLigado()?"aviso sonoro ligado — clique para desligar":"aviso sonoro desligado — clique para ligar"}"
+           aria-label="aviso sonoro" aria-pressed="${somZapLigado()}">${somZapLigado()?"🔔":"🔕"}</button>
          <button class="zap-estado ${zapComProblema()?"ruim":""}" onclick="abrirConexaoZap()" title="conexão do WhatsApp: ${esc(p.txt)}"><i style="background:${p.cor}"></i>${
            zapComProblema()?(cfgApp("zap_qr")?"Ler QR code":"Corrigir conexão"):"conectado"}</button></div>
        <label class="zl-busca">${zic("busca")}<input type="search" id="zl-busca" value="${esc(zapBusca)}"
@@ -12986,14 +13069,20 @@ function pintarListaZap(){
          ${gestor?`<button class="zl-link ${zapPainelAberto?"on":""}" onclick="abrirPainelZap()">Painel da equipe</button>`:""}
        </div>
      </div>
-     <div class="zl-lista">${lista || `<p class="meio-sub" style="padding:8px 6px">Nenhuma conversa aqui.</p>`}</div>`;
+     <div class="zl-lista">${lista || (zapAchados.length?"":`<p class="meio-sub" style="padding:8px 6px">Nenhuma conversa aqui.</p>`)}
+       ${zapAchados.length?`<p class="zl-grupo">Nas mensagens (${zapAchados.length})</p>${zapAchados.map(achadoZap).join("")}`:""}</div>`;
   document.querySelectorAll("[data-zf]").forEach(b=>b.onclick=()=>{ zapFiltro=b.dataset.zf; pintarListaZap(); });
   document.querySelectorAll("[data-zch]").forEach(b=>b.onclick=()=>{ zapChips[b.dataset.zch]=!zapChips[b.dataset.zch]; pintarListaZap(); });
   const fs = document.getElementById("zf-setor"); if(fs) fs.onchange=()=>{ zapChips.setor=fs.value; pintarListaZap(); };
   const fe = document.getElementById("zf-etq"); if(fe) fe.onchange=()=>{ zapChips.etiqueta=fe.value; pintarListaZap(); };
   const fa = document.getElementById("zf-atend"); if(fa) fa.onchange=()=>{ zapChips.atendente=fa.value; if(fa.value) zapFiltro="todas"; pintarListaZap(); };
   const b2 = document.getElementById("zl-busca");
-  b2.oninput = ()=>{ zapBusca=b2.value; pintarListaZap(); };
+  b2.oninput = ()=>{ zapBusca=b2.value; pintarListaZap();
+    clearTimeout(zapBuscaT); zapBuscaT = setTimeout(buscarNasMensagens, 400); };
+  document.querySelectorAll("[data-za]").forEach(el=>el.onclick=async()=>{
+    const [cv, msg] = el.dataset.za.split("|");
+    await abrirConversa(cv); irParaMsg(msg);
+  });
   // a lista repinta a cada 6 s: quem está digitando a busca não pode perder o cursor
   if(comFoco){ b2.focus(); b2.setSelectionRange(b2.value.length, b2.value.length); }
   document.querySelectorAll("[data-zc]").forEach(el=>el.onclick=()=>abrirConversa(el.dataset.zc));
@@ -13003,6 +13092,16 @@ function pintarListaZap(){
 // planilha. Ela vive no balde privado, então a URL é assinada em LOTE — uma
 // chamada para a lista inteira, e não uma por linha.
 let zapFotos = new Map();
+// F191 · a foto do perfil em tamanho grande, ao clicar
+function verFotoGrande(u){
+  if(!u) return;
+  caixa(`<div class="foto-grande"><img src="${esc(u)}" alt="foto do contato no WhatsApp"></div>`);
+}
+function fotoDoCliente(cliId){
+  const zs = D.zapFicha||[];
+  const z = zs.find(x=>x.cliente_id===cliId && zapFotos.get(x.foto_url)) || zs.find(x=>zapFotos.get(x.foto_url));
+  return z ? zapFotos.get(z.foto_url) : null;
+}
 function avatarZap(c){
   const u = zapFotos.get(c.foto_url);
   const ini = (nomeDaConversa(c)||"?").trim()[0].toUpperCase();
@@ -13134,7 +13233,7 @@ function pintarConversa(){
   document.getElementById("zap-dir").innerHTML =
     `<div class="zap-topo">
        <div class="zt-l1">
-         ${avatarZap(c)}
+         ${zapFotos.get(c.foto_url)?`<img class="zap-av zt-foto" src="${esc(zapFotos.get(c.foto_url))}" alt="foto do contato" title="clique para ampliar" onclick="verFotoGrande(this.src)">`:avatarZap(c)}
          <div class="zt-id">
            <h2>${esc(nomeDaConversa(c))}</h2>
            <div class="zt-sub">
@@ -13244,9 +13343,12 @@ function pintarPainelZap(c){
       }).join("")}</section>` : "";
   if(!c){ el.innerHTML = ""; return; }
   if(!cli){
+    const sug = sugestoesVinculo(c);
     el.innerHTML = `<section class="zp-card"><h3>Sem cliente vinculado</h3>
         <p class="zp-sub">Este número não está na ficha de nenhum cliente. Vincule para ver o caso aqui.</p>
-        <button class="zt-btn" onclick="vincularConversa()">Vincular a um cliente</button></section>${transf}${hist}`;
+        ${sug.length?`<h4>Será um destes? (pelo nome do contato)</h4>${sug.map(x=>`<div class="zp-kv"><span>${esc(x.nome)}</span>
+          <button class="zl-link" onclick="vincularConversa('${x.id}')">vincular</button></div>`).join("")}`:""}
+        <button class="zt-btn" style="margin-top:8px" onclick="vincularConversa()">Vincular a um ou mais clientes</button></section>${transf}${hist}`;
     return;
   }
   const ks = (D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado");
@@ -13945,26 +14047,64 @@ async function abrirArquivoZap(caminho){
 }
 
 // Cliente que escreve de outro número (o da filha, o do vizinho) não casa pelo
-// telefone. Quem atende sabe quem é: liga a conversa à ficha na mão. Não mexe
-// no cadastro; o telefone da ficha continua sendo o que o cliente informou.
-function vincularConversa(){
-  caixa(`<h3>Vincular a conversa a um cliente</h3>
+// telefone. Quem atende sabe quem é: liga a conversa à ficha na mão.
+// F191 · um número pode falar por mais de um cliente (a namorada que cuida do
+// benefício do namorado e da sogra): o primeiro marcado fica dono da conversa;
+// nos outros o número entra na lista de telefones da ficha (sem virar o
+// principal), e a conversa aparece na ficha de cada um.
+function sugestoesVinculo(c){
+  const nome = String(c.nome_perfil||"").replace(/[^\p{L} ]/gu," ").trim();
+  return nome.length >= 3 ? pesquisar(nome).filter(x=>x.id!==c.cliente_id).slice(0, 4) : [];
+}
+function vincularConversa(preId){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  const sel = [...new Set([c.cliente_id, preId].filter(Boolean))];
+  const item = x => `<button class="zv-item ${sel.includes(x.id)?"on":""}" data-zv="${x.id}" aria-pressed="${sel.includes(x.id)}">
+      ${esc(x.nome)}${x.cidade?` <span class="meio-sub">· ${esc(x.cidade)}</span>`:""}${x.cpf?` <span class="meio-sub mono">${esc(cpfMascarado(x.cpf))}</span>`:""}</button>`;
+  const sug = sugestoesVinculo(c);
+  caixa(`<h3>Vincular a conversa a cliente(s)</h3>
+    <p class="meio-sub">Marque um ou mais. O primeiro fica como dono da conversa; nos outros, o número
+       ${esc(foneZap(c.telefone))} entra na lista de telefones da ficha, com a observação abaixo.</p>
+    ${sug.length?`<p class="zx-rot">Sugestões pelo nome do contato (${esc(c.nome_perfil||"")})</p><div class="zv-lista">${sug.map(item).join("")}</div>`:""}
+    <p class="zx-rot">Buscar</p>
     <input id="zv-busca" placeholder="nome ou CPF" style="width:100%" autocomplete="off">
-    <div id="zv-res" style="margin-top:8px"></div>`);
+    <div id="zv-res" class="zv-lista"></div>
+    <p class="zx-rot">Marcados</p><div id="zv-sel" class="meio-sub"></div>
+    <input id="zv-obs" placeholder="observação do número nas outras fichas (ex.: é a namorada, cuida do benefício)" style="width:100%;margin-top:6px">
+    <div class="form-linha" style="margin-top:10px"><button class="btn-rap" id="zv-ok">Vincular</button></div>`);
   const inp = document.getElementById("zv-busca"), res = document.getElementById("zv-res");
-  inp.focus();
+  const pintaSel = () => {
+    document.getElementById("zv-sel").innerHTML = sel.length
+      ? sel.map((id,i)=>`${i?"":"<b>dono:</b> "}${esc(D.cliPorId.get(id)?.nome||"")}`).join(" · ") : "nenhum ainda";
+    document.querySelectorAll("[data-zv]").forEach(b=>{ const on = sel.includes(b.dataset.zv);
+      b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
+  };
+  const ligar = () => document.querySelectorAll("[data-zv]").forEach(b=>b.onclick=()=>{
+    const k = sel.indexOf(b.dataset.zv); if(k>=0) sel.splice(k,1); else sel.push(b.dataset.zv); pintaSel(); });
   inp.oninput = () => {
     const achados = pesquisar(inp.value).slice(0, 8);
-    res.innerHTML = achados.map(c=>`<button class="btn-rap" data-zv="${c.id}" style="display:block;width:100%;margin:4px 0;text-align:left">
-        ${esc(c.nome)} ${c.cidade?`<span class="meio-sub">· ${esc(c.cidade)}</span>`:""}</button>`).join("")
-      || (inp.value.trim().length>2 ? `<p class="meio-sub">ninguém com esse nome</p>` : "");
-    res.querySelectorAll("[data-zv]").forEach(b=>b.onclick=async()=>{
-      fecharCaixa();
-      await api(`/rest/v1/zap_conversas?id=eq.${zapAberta}`,{method:"PATCH",
-        headers:{Prefer:"return=minimal"}, body:JSON.stringify({cliente_id:b.dataset.zv, lead_id:null})});
-      aviso(`Conversa vinculada a ${D.cliPorId.get(b.dataset.zv)?.nome||"cliente"} ✔`);
-      await recarregarZap();
-    });
+    res.innerHTML = achados.map(item).join("") || (inp.value.trim().length>2 ? `<p class="meio-sub">ninguém com esse nome</p>` : "");
+    ligar();
+  };
+  ligar(); pintaSel(); inp.focus();
+  document.getElementById("zv-ok").onclick = async ()=>{
+    if(!sel.length) return aviso("Marque ao menos um cliente");
+    const obs = (document.getElementById("zv-obs").value||"").trim() || `WhatsApp de ${c.nome_perfil||"outra pessoa"}`;
+    fecharCaixa();
+    try{
+      if(c.cliente_id!==sel[0])
+        await api(`/rest/v1/zap_conversas?id=eq.${zapAberta}`,{method:"PATCH",
+          headers:{Prefer:"return=minimal"}, body:JSON.stringify({cliente_id:sel[0], lead_id:null})});
+      const chave = String(c.telefone||"").replace(/\D/g,"").slice(-8);
+      for(const id of sel.slice(1)){
+        const cli = D.cliPorId.get(id); if(!cli) continue;
+        const lista = telefonesDe(cli);
+        if(lista.some(t=>String(t.numero||"").replace(/\D/g,"").slice(-8)===chave)) continue;
+        await salvarTelefones(id, [...lista, {numero:foneZap(c.telefone), obs, zap:false}]);
+      }
+    }catch(e){ return aviso(msgErro(e)); }
+    aviso(sel.length>1 ? `Conversa ligada a ${sel.length} clientes ✔` : `Conversa vinculada a ${D.cliPorId.get(sel[0])?.nome||"cliente"} ✔`);
+    await recarregarZap();
   };
 }
 
@@ -15833,7 +15973,7 @@ function buscarFicha(cliId, ids){
       ids?todas("andamento_tarefas",`select=*&caso_id=in.(${ids})`).catch(()=>[]):[],
       // a conversa é de um cliente só, mas quem cuida do benefício de outro
       // (a namorada, o marido) tem o número na lista dele: aparece nas duas fichas
-      todas("zap_conversas",`select=id,ultima_em,ultimo_texto,nao_lidas,telefone,nome_perfil,cliente_id&or=(${
+      todas("zap_conversas",`select=id,ultima_em,ultimo_texto,nao_lidas,telefone,nome_perfil,cliente_id,foto_url&or=(${
         ["cliente_id.eq."+cliId, ...(chavesDoCliente(cliId).length?[`chave.in.(${chavesDoCliente(cliId).join(",")})`]:[])].join(",")
       })&order=ultima_em.desc.nullslast`).catch(()=>[]),
     ]);
@@ -15902,6 +16042,8 @@ async function abrirFicha(cliId){
     D.anexos = meio.length ? [...meio, ...anexos] : anexos;
     D.convFicha = convs;
     D.zapFicha = zapsF;
+    // F191 · a foto do WhatsApp aparece na identificação do cliente
+    await assinarFotosZap(zapsF.filter(z=>z.cliente_id===cliId || !zapsF.some(y=>y.cliente_id===cliId)));
     D.tarefasFicha = tarefasF;
     D._andsFicha = ands;
     D._ficha = { cliId, creds, vincs };
@@ -16045,7 +16187,8 @@ function pintarFicha(){
            que lista está cada um, e um clique leva direto ao processo */""}
       <span class="cli-bloco"><span class="cli-casos" onclick="menuCasosDoCliente(event,'${cliId}')"
         title="ver os casos deste cliente e em que lista está cada um">
-        <span class="avatar" style="--av:${corDoNome(c.nome)}">${esc(c.nome[0])}</span><h2>${esc(c.nome)}</h2>
+        ${(u=>u?`<img class="avatar foto-zap" src="${esc(u)}" alt="foto de ${esc(c.nome)} no WhatsApp" title="foto do WhatsApp — clique para ampliar" onclick="verFotoGrande(this.src)">`
+          :`<span class="avatar" style="--av:${corDoNome(c.nome)}">${esc(c.nome[0])}</span>`)(fotoDoCliente(c.id))}<h2>${esc(c.nome)}</h2>
         <span class="cli-casos-seta">▾</span>
       </span>${temaV10() ? linhaAdvogado(c) : ""}</span>
       <button class="olho" title="copiar o nome do cliente"

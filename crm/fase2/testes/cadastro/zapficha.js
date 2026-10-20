@@ -118,7 +118,17 @@ const MSGS = [
   await p.fill("#zv-busca", nome.split(" ")[0]);
   await p.waitForSelector(`[data-zv="${CLI_CHEIO}"]`);
   await p.click(`[data-zv="${CLI_CHEIO}"]`);
+  // F191 · um número pode falar por mais de um cliente: marca a segunda ficha também
+  const nome2 = await p.evaluate(id => D.cliPorId.get(id).nome, CLI_VAZIO);
+  await p.fill("#zv-busca", nome2.split(" ")[0]);
+  await p.waitForSelector(`[data-zv="${CLI_VAZIO}"]`);
+  await p.click(`[data-zv="${CLI_VAZIO}"]`);
+  await p.fill("#zv-obs", "é a filha");
+  await p.click("#zv-ok");
   await p.waitForFunction(id => (zapConvs.find(c => c.id === id) || {}).cliente_id, ZAP_SOLTA);
+  const tel2 = patches.find(x => x.u.includes(`clientes?id=eq.${CLI_VAZIO}`) && x.b && Array.isArray(x.b.telefones));
+  conf("vincular a mais de um: o número entra na lista de telefones da segunda ficha, com a observação",
+    tel2 && tel2.b.telefones.some(t => t.obs === "é a filha" && t.zap === false));
   const pt = patches.find(x => x.u.includes(`zap_conversas?id=eq.${ZAP_SOLTA}`));
   conf("vincular grava o cliente na conversa e limpa o prospecto", pt && pt.b.cliente_id === CLI_CHEIO && pt.b.lead_id === null);
   conf("depois de vincular o cabeçalho passa a “abrir ficha”", await p.waitForFunction(() =>

@@ -2714,3 +2714,19 @@ begin
 end $$;
 select cron.unschedule('zap-alarme-ponte') where exists (select 1 from cron.job where jobname = 'zap-alarme-ponte');
 select cron.schedule('zap-alarme-ponte', '*/5 * * * *', 'select zap_alarme_ponte()');
+
+-- F191 · busca dentro das mensagens (sem acento) e a marca de "já foi para o
+-- Drive" (o transcrever.py, no computador do escritório, leva foto e documento
+-- do cliente à pasta dele no Drive, em PDF)
+alter table zap_mensagens add column if not exists drive_em timestamptz;
+create or replace function zap_buscar(p_q text, p_limite int default 40)
+returns table (mensagem_id uuid, conversa_id uuid, direcao text, tipo text, texto text, momento timestamptz)
+language sql stable security definer set search_path = public, extensions as $$
+  select m.id, m.conversa_id, m.direcao, m.tipo, left(m.texto, 400), m.momento
+    from zap_mensagens m
+   where length(trim(p_q)) >= 3 and m.texto is not null
+     and extensions.unaccent(lower(m.texto)) like '%' || extensions.unaccent(lower(trim(p_q))) || '%'
+   order by m.momento desc
+   limit least(coalesce(p_limite, 40), 100);
+$$;
+grant execute on function zap_buscar(text, int) to authenticated;
