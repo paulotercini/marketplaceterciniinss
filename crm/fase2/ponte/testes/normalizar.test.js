@@ -131,3 +131,11 @@ t.test("o relógio é o do WhatsApp, em segundos", () => {
           new Date(1785000000000).toISOString());
   a.equal(N.quandoWa({}), null);
 });
+
+t.test("recente: o lote da reconexão entra só com o que chegou nos últimos dias", () => {
+  const agora = Date.parse("2026-10-20T12:00:00Z");
+  const m = s => ({ messageTimestamp: Math.floor(Date.parse(s) / 1000) });
+  a.strictEqual(N.recente(m("2026-10-20T11:59:00Z"), 3 * 864e5, agora), true);
+  a.strictEqual(N.recente(m("2026-10-10T11:59:00Z"), 3 * 864e5, agora), false);
+  a.strictEqual(N.recente({}, 3 * 864e5, agora), false);
+});

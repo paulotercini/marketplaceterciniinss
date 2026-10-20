@@ -31,6 +31,11 @@ const foneDaMensagem = (m, mapa) => {
   return k.fromMe ? "" : jidParaFone(jid);
 };
 
+// chegou há pouco? (o lote 'append' da reconexão traz o recente misturado ao antigo)
+const recente = (m, ms, agora = Date.now()) => {
+  const q = quandoWa(m); return !!q && agora - new Date(q).getTime() <= ms;
+};
+
 // Mensagem que não é conversa: recibo de entrega, reação, apagamento, chave
 // de criptografia. Entra no fluxo do Baileys e não pode virar linha na tela.
 const TIPOS_MUDOS = ["protocolMessage", "reactionMessage", "senderKeyDistributionMessage",
@@ -165,4 +170,4 @@ function chaveDaMensagem(jid, original) {
 
 module.exports = { soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem, agruparHistorico,
                    miolo, tipoDaMensagem, textoDaMensagem, deveIgnorar,
-                   nomeSeguro, quandoWa, citacaoDe, reacaoDe, chaveDaMensagem };
+                   nomeSeguro, quandoWa, citacaoDe, reacaoDe, chaveDaMensagem, recente };
