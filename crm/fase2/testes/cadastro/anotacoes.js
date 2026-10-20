@@ -71,7 +71,7 @@ FIX.andamento_tarefas = [{ id: "t1", andamento_id: AND, caso_id: CASO1, colabora
 
   // ── 1. a fila de tipos ──────────────────────────────────────────────────
   const chips = await p.evaluate(() =>
-    [...document.querySelectorAll("#tipo-fila .tipo-ch")].map(x => x.innerText.trim()));
+    [...document.querySelectorAll("#tipo-fila .tipo-ch[data-tipoand]")].map(x => x.innerText.trim()));
   conf(`os seis tipos, fechados (${chips.join(", ")})`,
     JSON.stringify(chips) === JSON.stringify(["Exigência", "Perícia", "Prova", "Contato", "Decisão", "Protocolo"]));
   conf("não existe o tipo OUTROS nem NOTA — seria o dreno onde tudo cai",
