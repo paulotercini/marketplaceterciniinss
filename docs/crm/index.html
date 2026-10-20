@@ -13073,7 +13073,7 @@ async function abrirConversa(id){
   zapPainelAberto = false;
   zapAberta = id;
   const c = zapConvs.find(x=>x.id===id); if(!c) return;
-  zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${id}&order=seq`).catch(()=>[]);
+  zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${id}&order=momento,seq`).catch(()=>[]);
   await carregarReacoes();
   zapProto = c.atendimento_id
     ? ((await todas("zap_atendimentos",`select=numero&id=eq.${c.atendimento_id}`).catch(()=>[]))[0]||{}).numero
@@ -13093,7 +13093,7 @@ async function abrirConversa(id){
 async function recarregarMsgs(){
   if(!zapAberta) return;
   const antes = zapMsgs.length, comTexto = zapMsgs.filter(m=>m.texto).length;
-  zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${zapAberta}&order=seq`).catch(()=>zapMsgs);
+  zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${zapAberta}&order=momento,seq`).catch(()=>zapMsgs);
   const reacAntes = JSON.stringify([...zapReacoes]);
   await carregarReacoes();
   // a transcrição do áudio chega segundos depois: um texto novo também repinta
@@ -13885,7 +13885,7 @@ async function verZapCliente(cliId){
   const zs = D.zapFicha||[]; if(!zs.length) return;
   const ids = zs.map(z=>z.id).join(",");
   const ms = await todas("zap_mensagens",
-    `select=id,direcao,autor_id,por_bot,tipo,texto,midia_url,midia_nome,status,quando_wa,criado_em&conversa_id=in.(${ids})&direcao=neq.interna&status=neq.rascunho&order=seq.desc&limit=300`)
+    `select=id,direcao,autor_id,por_bot,tipo,texto,midia_url,midia_nome,status,quando_wa,criado_em&conversa_id=in.(${ids})&direcao=neq.interna&status=neq.rascunho&order=momento.desc,seq.desc&limit=300`)
     .catch(()=>null);
   if(ms===null) return aviso("Não consegui carregar as mensagens");
   ms.reverse();
