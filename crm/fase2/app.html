@@ -13107,7 +13107,8 @@ function verFotoGrande(u){
 function fotoDoCliente(cliId){
   const zs = D.zapFicha||[];
   const z = zs.find(x=>x.cliente_id===cliId && !x.contato_nome && zapFotos.get(x.foto_url));
-  return z ? zapFotos.get(z.foto_url) : null;
+  // F193 · sem conversa ainda: a foto que a ponte buscou ao cadastrar o telefone
+  return z ? zapFotos.get(z.foto_url) : (zapFotos.get((D.cliPorId.get(cliId)||{}).foto_url) || null);
 }
 function avatarZap(c){
   const u = zapFotos.get(c.foto_url);
@@ -16092,7 +16093,8 @@ async function abrirFicha(cliId){
     D.convFicha = convs;
     D.zapFicha = zapsF;
     // F191 · a foto do WhatsApp aparece na identificação do cliente
-    await assinarFotosZap(zapsF.filter(z=>z.cliente_id===cliId || !zapsF.some(y=>y.cliente_id===cliId)));
+    await assinarFotosZap([...zapsF.filter(z=>z.cliente_id===cliId && !z.contato_nome),
+      ...(D.cliPorId.get(cliId)?.foto_url ? [{foto_url:D.cliPorId.get(cliId).foto_url}] : [])]);
     D.tarefasFicha = tarefasF;
     D._andsFicha = ands;
     D._ficha = { cliId, creds, vincs };

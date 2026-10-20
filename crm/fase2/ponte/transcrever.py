@@ -105,7 +105,9 @@ class Banco:
 # Mesma pasta da extensão do dossiê (achar_ou_criar: pelo #CPF, depois pelo
 # nome; só cria se nada casar), na subpasta WhatsApp. Foto vira PDF; PDF vai
 # como veio; outro formato (Word, planilha) vai no formato original.
-DRIVE_DESDE = os.environ.get("DRIVE_DESDE", "2026-10-20")   # o antigo fica onde está
+# o antigo fica onde está, a não ser que DRIVE_DESDE (no .env) diga outra data;
+# lido na hora, porque o .env só entra no ambiente em principal()
+drive_desde = lambda: os.environ.get("DRIVE_DESDE", "2026-10-20")
 
 
 def raiz_do_drive():
@@ -143,7 +145,7 @@ def levar_ao_drive(banco, falhas):
         return
     sys.path.insert(0, str(AQUI.parent / "dossie" / "host"))
     from dossie_host import achar_ou_criar, seguro
-    for m in banco.para_o_drive(DRIVE_DESDE):
+    for m in banco.para_o_drive(drive_desde()):
         if falhas.get(m["id"], 0) >= TENTATIVAS:
             continue
         try:
