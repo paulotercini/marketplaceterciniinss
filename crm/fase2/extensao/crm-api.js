@@ -168,20 +168,25 @@ export async function nups() {
 // acervo de verdade está nas fichas: `casos.processo` e `casos.processos[]`,
 // todo número com ".8.26." no meio (justiça estadual, TJSP). Só ficha aberta
 // (encerrado_em nulo) — caso encerrado não precisa de movimento.
+// 1.24 · o assunto do caso diz se é previdenciário; sem assunto ainda, vale
+// como se fosse. Falência, execução, cobrança, ação contra banco ficam de fora
+export const previdenciario = b => !b || /apos|aux|esp[eé]cie|revis|cnis|bpc|loas|pens[aã]o|rural|incapac|acidente|reclus|matern|sal[aá]rio|benef|recurso|apura|inss|previd|defici/i.test(b);
 export async function processosTjsp() {
   const { url } = await config();
   const r = await fetchTeimoso(
-    `${url}/rest/v1/casos?select=processo,processos&encerrado_em=is.null&limit=5000`,
+    `${url}/rest/v1/casos?select=processo,processos,beneficio&encerrado_em=is.null&limit=5000`,
     { headers: await cabecalhos() });
   if (!r.ok) throw new Error(`não consegui ler os processos do CRM (${r.status})`);
   const linhas = await r.json();
-  const fora = new Set();
-  const pega = v => { const m = String(v || '').match(/\d{7}-\d{2}\.\d{4}\.8\.26\.\d{4}/); if (m) fora.add(m[0]); };
+  const fora = new Set(), comDocs = new Set();
+  const pega = (v, prev) => { const m = String(v || '').match(/\d{7}-\d{2}\.\d{4}\.8\.26\.\d{4}/); if (m) { fora.add(m[0]); if (prev) comDocs.add(m[0]); } };
   for (const l of linhas) {
-    pega(l.processo);
-    for (const p of (Array.isArray(l.processos) ? l.processos : [])) pega(p && (p.numero || p));
+    const prev = previdenciario(l.beneficio);
+    pega(l.processo, prev);
+    for (const p of (Array.isArray(l.processos) ? l.processos : [])) pega(p && (p.numero || p), prev);
   }
-  return { numeros: [...fora], fichas: linhas.length };
+  // numeros: as movimentações de todo caso aberto; comDocs: só os previdenciários baixam peças
+  return { numeros: [...fora], comDocs: [...comDocs], fichas: linhas.length };
 }
 
 // o que o popup mostra no "testar conexão": responde de uma vez quem está
