@@ -2735,3 +2735,31 @@ grant execute on function zap_buscar(text, int) to authenticated;
 -- guarda quem fala e a relação; o cliente continua em cliente_id
 alter table zap_conversas add column if not exists contato_nome text;
 alter table zap_conversas add column if not exists contato_relacao text;
+
+-- F193 · foto do cliente novo: gravar ou mudar o telefone pede a foto do
+-- WhatsApp (zap_pedidos_foto); a ponte busca devagar e grava clientes.foto_url
+alter table clientes add column if not exists foto_url text;
+create table if not exists zap_pedidos_foto (
+  id uuid primary key default gen_random_uuid(),
+  cliente_id uuid not null references clientes(id) on delete cascade,
+  telefone text not null,
+  pedido_em timestamptz not null default now(),
+  feito_em timestamptz,
+  resultado text
+);
+create index if not exists zap_pedidos_foto_fila on zap_pedidos_foto (pedido_em) where feito_em is null;
+alter table zap_pedidos_foto enable row level security;
+drop policy if exists autenticados on zap_pedidos_foto;
+create policy autenticados on zap_pedidos_foto for all to authenticated using (true) with check (true);
+create or replace function zap_pedir_foto() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if length(regexp_replace(coalesce(new.telefone,''), '\D', '', 'g')) >= 10
+     and (tg_op = 'INSERT' or new.telefone is distinct from old.telefone) then
+    insert into zap_pedidos_foto (cliente_id, telefone) values (new.id, new.telefone);
+  end if;
+  return new;
+end $$;
+drop trigger if exists zap_pedir_foto on clientes;
+create trigger zap_pedir_foto after insert or update of telefone on clientes
+  for each row execute function zap_pedir_foto();
