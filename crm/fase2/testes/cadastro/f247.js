@@ -135,6 +135,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf(`a conferência anota a implantação que falta (${ni && ni.texto})`, ni && ni.texto === `Conferi: o benefício ainda não foi implantado. Conferir de novo em ${br(em7)}.`);
   await p.click(".faixa-prazos .conf-mov");
   await p.waitForSelector(".mov-ops .esp-it");
+  await p.waitForFunction(() => document.activeElement && document.activeElement.id === "mov-txt");   // a janela põe o cursor no detalhe; só depois se preenche o NB
   conf("o Movimentou abre por 'Benefício implantado'", (await p.textContent(".mov-ops .esp-it")) === "Benefício implantado" && !!(await p.$("#mov-nb")));
   await p.fill("#mov-nb", "1234567890"); await p.fill("#mov-dib", iso(-10)); await p.fill("#mov-rmi", "1.621,00");
   await p.screenshot({ path: path.join(OUT, "02-implantado.png") });
