@@ -1919,6 +1919,7 @@
   .ze-so-leitura{margin:0;font-size:12.5px;color:#5c3d00;background:#fbf1e0;border-radius:8px;padding:7px 10px}
   .zx-rot{margin:10px 0 4px;font-size:12px;font-weight:600;color:var(--cinza)}
   .zv-lista{display:flex;flex-direction:column;gap:4px;margin:4px 0}
+  .zt-pergunta{margin:0;font-size:12.5px;color:#5c3d00;background:#fbf1e0;border-radius:8px;padding:6px 10px}
   .zl-som{border:0;background:none;cursor:pointer;font-size:15px;padding:2px 4px}
   .zl-achado{display:flex;flex-direction:column;gap:2px;width:100%;text-align:left;border:0;background:none;padding:8px 12px;border-radius:10px;cursor:pointer;font:inherit}
   @media (hover:hover) and (pointer:fine){.zl-achado:hover{background:var(--lateral-hover,#eceef2)}}
@@ -1930,8 +1931,8 @@
   /* F191 · foto do contato: na ficha e ampliada */
   .zt-foto,.foto-zap{cursor:zoom-in;object-fit:cover}
   img.avatar.foto-zap{width:40px;height:40px;border-radius:50%;padding:0}
-  .foto-grande{display:flex;justify-content:center}
-  .foto-grande img{max-width:min(520px,80vw);max-height:75vh;border-radius:12px}
+  .foto-grande{position:fixed;inset:0;z-index:9999;background:rgba(18,18,18,.78);display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:16px;box-sizing:border-box}
+  .foto-grande img{max-width:min(640px,100%);max-height:100%;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
   .zap-audio-prev{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 12px;border-top:1px solid var(--borda);background:var(--azul-fundo,#e6f0ef);font-size:12.5px}
   .zap-audio-prev audio{height:34px;flex:1;min-width:200px}
   /* F183 · acabamento igual ao desenho aprovado */
@@ -13025,7 +13026,7 @@ function pintarListaZap(){
   const visiveis = zapConvs.filter(zapVisivel);
   let cs = visiveis.filter(c=>naAba(zapFiltro,c)
     && (!zapChips.atendente || c.atendente_id===zapChips.atendente)
-    && (!q || dsa(nomeDaConversa(c)).includes(q) || (qd.length>=4 && String(c.telefone||"").includes(qd)))
+    && (!q || dsa(nomeDaConversa(c)+" "+((clienteDaConversa(c)||{}).nome||"")).includes(q) || (qd.length>=4 && String(c.telefone||"").includes(qd)))
     && (!zapChips.naoLidas || c.nao_lidas)
     && (!zapChips.setor || c.setor_id===zapChips.setor)
     && (!zapChips.etiqueta || (zapAux.convEtq.get(c.id)||[]).includes(zapChips.etiqueta)));
@@ -13095,11 +13096,17 @@ let zapFotos = new Map();
 // F191 · a foto do perfil em tamanho grande, ao clicar
 function verFotoGrande(u){
   if(!u) return;
-  caixa(`<div class="foto-grande"><img src="${esc(u)}" alt="foto do contato no WhatsApp"></div>`);
+  const d = document.createElement("div");
+  d.className = "foto-grande"; d.setAttribute("role", "dialog"); d.setAttribute("aria-label", "foto do contato; clique ou Esc para fechar");
+  d.innerHTML = `<img src="${esc(u)}" alt="foto do contato no WhatsApp">`;
+  const fechar = () => { d.remove(); document.removeEventListener("keydown", esc_); };
+  const esc_ = e => { if(e.key==="Escape") fechar(); };
+  d.onclick = fechar; document.addEventListener("keydown", esc_);
+  document.body.appendChild(d);
 }
 function fotoDoCliente(cliId){
   const zs = D.zapFicha||[];
-  const z = zs.find(x=>x.cliente_id===cliId && zapFotos.get(x.foto_url)) || zs.find(x=>zapFotos.get(x.foto_url));
+  const z = zs.find(x=>x.cliente_id===cliId && !x.contato_nome && zapFotos.get(x.foto_url));
   return z ? zapFotos.get(z.foto_url) : null;
 }
 function avatarZap(c){
@@ -13122,11 +13129,48 @@ async function assinarFotosZap(cs){
   }catch(e){ /* sem foto a lista continua funcionando, com a inicial */ }
 }
 
+// F192 · quem CONVERSA nem sempre é o cliente (a mãe do Axel fala por ele):
+// a conversa mostra quem fala; o cliente aparece ao lado ("mãe de Axel")
 function nomeDaConversa(c){
+  if(c.contato_nome) return c.contato_nome;
   const cli = c.cliente_id && D.cliPorId.get(c.cliente_id);
   if(cli) return cli.nome;
   const lead = c.lead_id && D.leads.find(l=>l.id===c.lead_id);
   return (lead && lead.nome) || c.nome_perfil || c.telefone || "desconhecido";
+}
+
+const clienteDaConversa = c => c && c.cliente_id && D.cliPorId.get(c.cliente_id);
+const falaPor = c => { const cli = clienteDaConversa(c);
+  return c.contato_nome && cli ? `${c.contato_relacao?c.contato_relacao+" de ":"fala por "}${cli.nome.split(" ")[0]}` : ""; };
+// o nome do WhatsApp não é o do cliente e ninguém disse quem conversa: pergunta
+function nomeDiferente(c){
+  const cli = clienteDaConversa(c), p = dsa(c.nome_perfil||"").split(/\s+/)[0];
+  return !!cli && !c.contato_nome && p.length>=3 && !dsa(cli.nome).split(/\s+/).includes(p);
+}
+function quemConversa(){
+  const c = zapConvs.find(x=>x.id===zapAberta); const cli = clienteDaConversa(c); if(!c) return;
+  const rels = ["mãe","pai","filho(a)","cônjuge","companheiro(a)","irmão(ã)","neto(a)","sobrinho(a)","advogado(a)","outro"];
+  caixa(`<h3>Quem conversa nesta conversa?</h3>
+    <p class="meio-sub">${cli?`O cliente é <b>${esc(cli.nome)}</b>. `:""}No WhatsApp o contato aparece como “${esc(c.nome_perfil||c.telefone||"")}”.</p>
+    <label class="cfg-ck"><input type="radio" name="zq" value="cli" ${c.contato_nome?"":"checked"}> o próprio cliente</label>
+    <label class="cfg-ck"><input type="radio" name="zq" value="outro" ${c.contato_nome?"checked":""}> outra pessoa, que fala pelo cliente</label>
+    <div class="form-linha" style="margin-top:6px">
+      <input id="zq-nome" placeholder="nome de quem conversa" value="${esc(c.contato_nome||c.nome_perfil||"")}" style="min-width:220px">
+      <select id="zq-rel"><option value="">relação…</option>${rels.map(r=>`<option ${c.contato_relacao===r?"selected":""}>${r}</option>`).join("")}</select>
+    </div>
+    <div class="form-linha" style="margin-top:10px"><button class="btn-rap" id="zq-ok">Guardar</button></div>`);
+  document.getElementById("zq-nome").oninput = () => { document.querySelector('[name=zq][value=outro]').checked = true; };
+  document.getElementById("zq-rel").onchange = () => { document.querySelector('[name=zq][value=outro]').checked = true; };
+  document.getElementById("zq-ok").onclick = async () => {
+    const outro = document.querySelector('[name=zq]:checked').value==="outro";
+    const nome = (document.getElementById("zq-nome").value||"").trim();
+    if(outro && !nome) return aviso("Escreva o nome de quem conversa");
+    const rel = document.getElementById("zq-rel").value || null;
+    fecharCaixa();
+    await mudarConversa(outro ? {contato_nome:nome, contato_relacao:rel}
+                              : {contato_nome:null, contato_relacao:null});
+    aviso(outro ? `Anotado: quem conversa é ${nome} ✔` : "Anotado: quem conversa é o próprio cliente ✔", false);
+  };
 }
 
 function cartaoConversa(c){
@@ -13145,7 +13189,7 @@ function cartaoConversa(c){
         ${s?`<span class="zc-setor"><i style="background:${esc(s.cor)}"></i>${esc(s.nome)}</span>`:""}
         ${etq.slice(0,2).map(e=>`<span class="zc-etq" style="color:color-mix(in srgb, ${esc(e.cor)} 85%, #000)">${esc(e.texto)}</span>`).join("")}
         ${etq.length>2?`<span class="zc-etq" title="${esc(etq.slice(2).map(e=>e.texto).join(", "))}">+${etq.length-2}</span>`:""}
-        ${!cli?`<span class="zc-alerta">Sem cliente vinculado</span>`:""}
+        ${!cli?`<span class="zc-alerta">Sem cliente vinculado</span>`:falaPor(c)?`<span>${esc(falaPor(c))}</span>`:""}
         ${!at&&c.status!=="resolvida"?`<span>Pendente</span>`:""}
         ${r?`<span class="zc-ret" title="${esc(r.nota||"")}">Retorno ${diaZap(r.quando)} ${horaSP(r.quando)}</span>`:""}
         ${c.bot_ativo?`<span>Robô</span>`:""}
@@ -13237,6 +13281,7 @@ function pintarConversa(){
          <div class="zt-id">
            <h2>${esc(nomeDaConversa(c))}</h2>
            <div class="zt-sub">
+             ${falaPor(c)?`<span>${esc(falaPor(c))} · cliente <b>${esc(cli.nome)}</b></span>`:""}
              <span class="mono">${esc(foneZap(c.telefone))}</span>
              ${zapProto?`<button class="zap-proto" title="protocolo do atendimento — clique para copiar"
                 onclick="copiar('${zapProto}','Protocolo copiado')">Protocolo ${zapProto}</button>`:""}
@@ -13254,6 +13299,7 @@ function pintarConversa(){
              <div class="zt-menu">
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
                ${pode?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>`:""}
+               ${cli?`<button onclick="quemConversa()">Quem conversa…</button>`:""}
                ${cli?`<button onclick="abrirFicha('${cli.id}')">Abrir a ficha do cliente</button>`
                     :`<button onclick="vincularConversa()">Vincular a um cliente</button>`}
                ${tel?`<a href="https://wa.me/55${tel}" target="_blank" rel="noopener">Abrir no WhatsApp do aparelho</a>`:""}
@@ -13261,6 +13307,8 @@ function pintarConversa(){
            </details>
          </div>
        </div>
+       ${nomeDiferente(c)?`<p class="zt-pergunta">No WhatsApp o contato se chama “${esc(c.nome_perfil)}”, e o cliente é ${esc(cli.nome)}.
+          É outra pessoa que fala por ele? <button class="zl-link" onclick="quemConversa()">Informar quem conversa</button></p>`:""}
        <div class="zt-l2">
          <button class="zt-chip" onclick="escolherSetor()" title="setor da conversa" ${s?`style="${tintaZap(esc(s.cor))}"`:""}>${s
            ?`<i style="background:${esc(s.cor)}"></i>${esc(s.nome)}`:"Escolher setor"}</button>
@@ -13619,8 +13667,9 @@ function preencheZap(txt){
   const cli = c0 && c0.cliente_id && D.cliPorId.get(c0.cliente_id);
   const ks = cli ? processosDe(D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado") : [];
   const k = ks.length===1 ? ks[0] : null;
-  const nome = (cli && cli.nome) || (c0 && c0.nome_perfil) || "";
+  const nome = (c0 && c0.contato_nome) || (cli && cli.nome) || (c0 && c0.nome_perfil) || "";
   const map = {
+    "{cliente}": (cli && cli.nome) || "",
     "{nome}": nome, "{primeiro_nome}": (nome||"").trim().split(/\s+/)[0]||"",
     "{data}": fmt(hoje()),
     "{beneficio}": especieDoCaso(k), "{processo}": (k&&k.processo)||"", "{nb}": (k&&k.nb)||"",
@@ -13670,7 +13719,7 @@ function msgDocumentos(d){
   const c = zapConvs.find(x=>x.id===zapAberta);
   const nome = c ? (nomeDaConversa(c)||"").split(/\s+/)[0] : "";
   return `Olá${nome?", "+nome:""}! Aqui é do escritório Paulo R. Tercini Filho.\n\n`
-    + `Para dar andamento no seu pedido de *${d.beneficio}*, precisamos destes documentos:\n\n`
+    + `Para dar andamento no ${c&&c.contato_nome&&clienteDaConversa(c)?`pedido de *${d.beneficio}* de ${clienteDaConversa(c).nome.split(" ")[0]}`:`seu pedido de *${d.beneficio}*`}, precisamos destes documentos:\n\n`
     + itens.map((x,i)=>`${i+1}. ${x}`).join("\n")
     + (d.observacoes?`\n\n${d.observacoes}`:"")
     + `\n\nPode mandar por aqui mesmo — foto pelo celular serve, desde que dê para ler. 🙏`;
@@ -15973,7 +16022,7 @@ function buscarFicha(cliId, ids){
       ids?todas("andamento_tarefas",`select=*&caso_id=in.(${ids})`).catch(()=>[]):[],
       // a conversa é de um cliente só, mas quem cuida do benefício de outro
       // (a namorada, o marido) tem o número na lista dele: aparece nas duas fichas
-      todas("zap_conversas",`select=id,ultima_em,ultimo_texto,nao_lidas,telefone,nome_perfil,cliente_id,foto_url&or=(${
+      todas("zap_conversas",`select=id,ultima_em,ultimo_texto,nao_lidas,telefone,nome_perfil,cliente_id,foto_url,contato_nome,contato_relacao&or=(${
         ["cliente_id.eq."+cliId, ...(chavesDoCliente(cliId).length?[`chave.in.(${chavesDoCliente(cliId).join(",")})`]:[])].join(",")
       })&order=ultima_em.desc.nullslast`).catch(()=>[]),
     ]);
