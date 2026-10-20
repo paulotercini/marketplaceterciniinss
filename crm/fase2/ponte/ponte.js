@@ -193,9 +193,20 @@ async function conectar() {
 
   // F194 · o escritório não atende ligação: quem liga recebe uma mensagem
   // pedindo para escrever ou mandar áudio (o banco decide, uma a cada 6 h)
+  // o aviso cru da chamada traz o número de verdade (caller_pn) ao lado do @lid;
+  // o Baileys 6 não o repassa ao evento "call", então ele é lido aqui
+  sock.ws.on("CB:call", node => {
+    const info = Array.isArray(node && node.content) ? node.content[0] : null;
+    const at = (info && info.attrs) || {};
+    const lid = String(at["call-creator"] || at.from || "").replace(/:\d+@/, "@");
+    const pn = at.caller_pn || at["caller-pn"] || at.caller_jid;
+    if (lid.endsWith("@lid") && pn) lidParaFone.set(lid, String(pn).replace(/:\d+@/, "@"));
+    else if (info && info.tag === "offer") log("ligação: campos do aviso", Object.keys(at).join(","));
+  });
   sock.ev.on("call", async chamadas => {
     for (const c of chamadas) {
-      const fone = N.foneDaLigacao(c, lidParaFone);
+      let fone = N.foneDaLigacao(c, lidParaFone);
+      if (c.status === "offer" && !fone) { await espera(1000); fone = N.foneDaLigacao(c, lidParaFone); }
       if (c.status === "offer" && !fone) { log("ligação de número escondido:", c.from); continue; }
       if (!fone || N.chaveFone(fone).length < 8) continue;
       const r = await rpc("zap_ligacao", { p_telefone: fone, p_nome: null, p_video: !!c.isVideo })
