@@ -3864,7 +3864,8 @@ html[data-tema="v10"] .tl-cab{flex-wrap:wrap;row-gap:4px}
 html[data-tema="v10"] .tl-cab-fim .tl-barra{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px;margin:0 6px 0 0;padding:0;border:0}
 html[data-tema="v10"] .tl-cab-fim .tl-barra .tl-bt:not(.tl-bt-ic){min-height:28px;padding:0 9px;font-size:12px}
 html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
-html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) .tipo-fila{display:none}
+/* F247 · fechado, o campo mostra só os dois gestos de um clique: Sem resposta e Pedir ao cliente */
+html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) .tipo-fila > :not(.tipo-sr):not(.tipo-pc){display:none}
 html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) #and-texto{min-height:0;height:40px}
 html[data-tema="v10"] .tl-banner-um{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
 html[data-tema="v10"] .tl-banner-um .btn-mini{margin-left:auto}
@@ -4663,7 +4664,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.71</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.72</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15329,10 +15330,39 @@ function ctRepetir(d, el){
   document.querySelectorAll(".modal-cx .ct-rep.on").forEach(b=>b.classList.remove("on"));
   if(el && el.tagName==="BUTTON") el.classList.add("on");
 }
+// F247 · o "feito" diz o que foi feito, pelo que a tarefa pedia: "Apresentar réplica" concluída vira "Réplica
+// protocolada", e não "Tarefa concluída". Vale a primeira peça citada no pedido; o lembrete e a revisão ficam genéricos.
+const FEITO_DA_TAREFA = [
+  [/r[ée]plica/i, "Réplica protocolada"],
+  [/embargos de declara/i, "Embargos de declaração protocolados"],
+  [/contrarraz/i, "Contrarrazões protocoladas"],
+  [/recurso inominado/i, "Recurso inominado protocolado"],
+  [/apela[çc][ãa]o/i, "Apelação protocolada"],
+  [/recurso ordin[áa]rio/i, "Recurso ordinário protocolado"],
+  [/recurso especial/i, "Recurso especial protocolado"],
+  [/quesitos/i, "Quesitos apresentados"],
+  [/sobre o laudo|laudo pericial/i, "Manifestação sobre o laudo protocolada"],
+  [/c[áa]lculos/i, "Manifestação sobre os cálculos protocolada"],
+  [/cumprimento de senten[çc]a/i, "Cumprimento de sentença protocolado"],
+  [/exig[êe]ncia/i, "Exigência cumprida"],
+  [/(solicitar|requerer|pedir) (o |a )?(benef[íi]cio|aposentadoria|aux[íi]lio|pens[ãa]o|bpc)/i, "Benefício solicitado no INSS"],
+  [/\bjuntar\b|juntada/i, "Documentos juntados"],
+  [/peti[çc][ãa]o|manifestar|manifesta[çc][ãa]o/i, "Petição protocolada"],
+];
+function feitoDaTarefa(texto){
+  const t = String(texto||"").slice(0, 300); let melhor = null;
+  // a peça nomeada vence o "manifestar" genérico, que é a última regra
+  for(const [rx, frase] of FEITO_DA_TAREFA.slice(0, -1)){ const m = rx.exec(t); if(m && (!melhor || m.index<melhor.i)) melhor = {i:m.index, frase}; }
+  const [rxG, fraseG] = FEITO_DA_TAREFA[FEITO_DA_TAREFA.length-1];
+  return melhor ? melhor.frase : rxG.test(t) ? fraseG : null;
+}
+const feitoDe = t => t && t.natureza!=="lembrete" && t.papel!=="revisa"
+  ? feitoDaTarefa(((D._andsFicha||[]).find(a=>a.id===t.andamento_id)||{}).texto) : null;
 function concluirTarefa(id){
+  const tt=(D.tarefasFicha||[]).find(x=>x.id===id), fd=feitoDe(tt);
   caixa(`<h3>✔ Concluir a sua parte</h3>
     <p class="meio-sub">O que você fez vira um comentário no processo — o histórico continua.</p>
-    <div class="form-linha">${CONCLUIR_PRESETS.map(t=>
+    <div class="form-linha">${(fd?[fd]:[]).concat(CONCLUIR_PRESETS).map(t=>
       `<button class="btn-rap" onclick="document.getElementById('ct-txt').value=this.textContent">${t}</button>`).join("")}</div>
     <textarea id="ct-txt" rows="2" placeholder="ou escreva o que foi feito…"
       style="width:100%;margin-top:8px;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px"></textarea>
@@ -15367,6 +15397,12 @@ async function concluirDeVez(id, txt, prot){
        || [...(D.tarefasPorCaso||new Map()).values()].flat().find(x=>x.id===id);
   if(!t) return;
   txt=(txt||"").trim(); prot=(prot||"").replace(/\D/g,"");
+  // F247 · o clique único escreve o que foi feito, pelo pedido da tarefa (o pedido de fora da ficha vem do banco)
+  if(!txt && t.natureza!=="lembrete" && t.papel!=="revisa"){
+    const orig=(D._andsFicha||[]).find(x=>x.id===t.andamento_id)
+      || (await api(`/rest/v1/andamentos?id=eq.${t.andamento_id}&select=texto`).catch(()=>[]))[0];
+    txt=feitoDaTarefa(orig && orig.texto) || "";
+  }
   await api(`/rest/v1/andamento_tarefas?id=eq.${id}`,{method:"PATCH",
     headers:{Prefer:"return=minimal"},
     body:JSON.stringify({concluida_em:new Date().toISOString()})});
@@ -16224,8 +16260,10 @@ function pintarFicha(){
         const bs=document.getElementById("sug-abrir"); if(bs) bs.classList.remove("on");
         setTimeout(folgaComposer,0);
       };
-      cxEsc.addEventListener("mousedown", abrirEsc);
-      cxEsc.addEventListener("touchstart", abrirEsc, {passive:true});
+      // F247 · os botões de um clique do campo fechado não abrem o campo: abrir empurrava o botão antes do clique
+      const abrirSeNaoUmClique = e=>{ if(!(e.target.closest && e.target.closest(".tipo-sr,.tipo-pc"))) abrirEsc(); };
+      cxEsc.addEventListener("mousedown", abrirSeNaoUmClique);
+      cxEsc.addEventListener("touchstart", abrirSeNaoUmClique, {passive:true});
       campoAnd.addEventListener("focus", abrirEsc);
       // 150ms: tempo de o clique terminar (mouseup + click) antes de decidir
       cxEsc.addEventListener("focusout", ()=>setTimeout(fecharEsc, 150));
@@ -34625,11 +34663,13 @@ function composerCaso(k){
   // F21 · o tipo antes do texto. Vocabulário FECHADO (lição de Clio, Linear e
   // das Tabelas do CNJ). F105 · no tema cada tipo abre uma janela (POPS_ANOTACAO);
   // sem o tema, o esqueleto entra direto no texto, como sempre
-  const chips = v10
+  const chips = (v10
     ? Object.entries(POPS_ANOTACAO).map(([ch,P])=>
           `<button class="tipo-ch" data-tipoand="${ch}" onclick="popAnotacao('${ch}')">${esc(P.rot)}</button>`).join("")
     : TIPOS_ANOTACAO.map(([ch,rot])=>
-          `<button class="tipo-ch" data-tipoand="${ch}" onclick="escolherTipoAnotacao('${ch}')">${esc(rot)}</button>`).join("");
+          `<button class="tipo-ch" data-tipoand="${ch}" onclick="escolherTipoAnotacao('${ch}')">${esc(rot)}</button>`).join(""))
+    // F247 · os dois gestos que mais se escreviam à mão, em um clique
+    + (encerrado ? "" : `<button class="tipo-ch tipo-sr" onclick="semRespostaMenu('${k.id}')" title="anota a tentativa e marca a próxima para 2 dias úteis">Sem resposta</button><button class="tipo-ch tipo-pc" onclick="pedirAoCliente('${k.id}')" title="o pedido entra no Trouxe documentos e baixa quando o papel chega">Pedir ao cliente</button>`);
   const area = `<textarea id="and-texto" rows="2" placeholder="Escreva o andamento…  a data pode vir no texto: “verificar em 24/08” — ou clique num tipo acima e preencha as lacunas"></textarea>`;
   // o id tf-box é a chave da TRAVA: é por ele que novoAndamento sabe que
   // precisa exigir responsável e data. Renomear sem manter o id já derrubou
@@ -38438,8 +38478,14 @@ async function toggleImp(casoId){
 // caso, declara a etapa e avisa o advogado responsável.
 const CONF_FASE = {inss:["Em análise", "Está em análise.", 7], conselho:["Aguardando julgamento", "Aguardando julgamento no CRPS.", 15],
   judicial:["Sem movimentação", "Sem movimentação no processo.", 15], pagamento:["Aguardando pagamento", "Aguardando o pagamento.", 15]};
-const RX_CONFERENCIA = /^(est[áa] em an[áa]lise|aguardando julgamento|sem movimenta[çc][ãa]o|aguardando o pagamento)\b/i;
-const confDaFase = k => { const f = faseEfetiva(k), x = CONF_FASE[f] || CONF_FASE.inss; return {f, rot:x[0], txt:x[1], dias:x[2]}; };
+const RX_CONFERENCIA = /^(est[áa] em an[áa]lise|aguardando julgamento|sem movimenta[çc][ãa]o|aguardando o pagamento|conferi: o benef[íi]cio ainda n[ãa]o foi implantado)/i;
+// F247 · concedido e ainda fora do Pagamento: o que se confere toda semana é a implantação
+const aguardaImplantacao = k => !!k && k.resultado==="deferido" && ["inss","conselho","judicial"].includes(faseEfetiva(k)) && !/implantad/i.test(k.etapa||"") && !(k.ronda||{}).implantado;
+const confDaFase = k => { const f = faseEfetiva(k), x = CONF_FASE[f] || CONF_FASE.inss;
+  return aguardaImplantacao(k) ? {f, rot:"Não implantado", txt:"Conferi: o benefício ainda não foi implantado.", dias:7, impl:true}
+    : {f, rot:x[0], txt:x[1], dias:x[2]}; };
+const movOps = k => { const c = confDaFase(k), ops = MOV_FASE[c.f] || MOV_FASE.inss;
+  return c.impl ? [["Benefício implantado", "benefício implantado", "impl"], ...ops.filter(o=>!/implantado/i.test(o[0]))] : ops; };
 // o caso que se confere: em andamento no INSS, no Conselho, no Judicial ou no Pagamento
 const conferivel = k => !!k && !ehPreCaso(k) && !!CONF_FASE[faseEfetiva(k)];
 function botoesConferir(k, cls){
@@ -38507,21 +38553,30 @@ const MOV_FASE = {
 function movimentou(casoId, ev){
   if(ev) ev.stopPropagation();
   const k = D.casoPorId.get(casoId); if(!k) return;
-  const ops = MOV_FASE[confDaFase(k).f] || MOV_FASE.inss, adv = D.colPorId.get(advogadoDoCliente(k.cliente_id, k)[0]);
+  const ops = movOps(k), adv = D.colPorId.get(advogadoDoCliente(k.cliente_id, k)[0]), impl = confDaFase(k).impl;
   const cli = D.cliPorId.get(k.cliente_id) || {};
   caixa(`<h3 style="margin:0 0 4px">O que aconteceu? <small class="meio-sub">· ${esc(cli.nome||"")} · ${esc(tituloCaso(k))}</small></h3>
     <p class="meio-sub" style="margin:0 0 10px">Escreva o detalhe, se quiser, e clique no que aconteceu: vira anotação com ⭐, a ⭐ do caso acende${adv && adv.id!==eu.id ? ` e ${esc(adv.nome.split(" ")[0])} é avisado` : ""}.</p>
     <div class="form-linha mov-campos"><input id="mov-txt" placeholder="detalhe (opcional): o que pediram, a data, o resultado" style="flex:1;min-width:220px">
       <label class="meio-sub">data <input type="date" id="mov-data" title="a data da perícia, da pauta ou do prazo da exigência"></label></div>
+    ${impl ? `<div class="form-linha mov-impl"><span class="meio-sub">Se implantou:</span>
+      <input id="mov-nb" inputmode="numeric" placeholder="NB" style="width:130px" value="${esc(k.nb||"")}">
+      <label class="meio-sub">DIB <input type="date" id="mov-dib" value="${esc(k.dib||"")}"></label>
+      <input id="mov-rmi" inputmode="decimal" placeholder="renda R$" style="width:110px"></div>` : ""}
     <div class="esp-lista mov-ops">${ops.map(([r], i)=>`<button type="button" class="esp-it" onclick="registrarMovimento('${casoId}',${i})">${esc(r)}</button>`).join("")}</div>`);
   setTimeout(()=>{ const i = document.getElementById("mov-txt"); if(i) i.focus(); }, 30);
 }
 async function registrarMovimento(casoId, i){
   const k = D.casoPorId.get(casoId); if(!k) return;
-  const [rot, etapa, efeito] = (MOV_FASE[confDaFase(k).f] || MOV_FASE.inss)[i] || [];
+  const [rot, etapa, efeito] = movOps(k)[i] || [];
   if(!rot) return;
-  const det = ((document.getElementById("mov-txt")||{}).value||"").trim(), data = ((document.getElementById("mov-data")||{}).value||"");
+  let det = ((document.getElementById("mov-txt")||{}).value||"").trim();
+  const data = ((document.getElementById("mov-data")||{}).value||"");
   if(rot==="Outro" && !det) return aviso("Escreva o que aconteceu");
+  // F247 · a implantação leva NB, DIB e renda para a anotação e o NB e a DIB para o caso
+  const vl = id => ((document.getElementById(id)||{}).value||"").trim();
+  const nb = efeito==="impl" ? vl("mov-nb").replace(/\D/g,"") : "", dib = efeito==="impl" ? vl("mov-dib") : "", rmi = efeito==="impl" ? vl("mov-rmi") : "";
+  if(efeito==="impl") det = [nb && `NB ${fmtNb(nb)}`, dib && `DIB ${fmtBarra(dib)}`, rmi && `renda R$ ${rmi.replace(/^R\$\s*/,"")}`, det].filter(Boolean).join(", ");
   const advId = advogadoDoCliente(k.cliente_id, k)[0], adv = D.colPorId.get(advId);
   const texto = `${rot==="Outro" ? "" : `${rot}`}${det ? `${rot==="Outro" ? "" : ": "}${det}` : ""}${data ? ` (${fmtBarra(data)})` : ""}${rot==="Outro" ? "" : "."}`.replace(/\.\.$/, ".");
   let and = null;
@@ -38536,6 +38591,11 @@ async function registrarMovimento(casoId, i){
   if(etapa && etapasDaFase(k).includes(etapa)) muda.etapa = etapa;
   if(efeito==="deferido" || efeito==="indeferido"){ muda.resultado = efeito; muda.decisao_em = data || hoje(); }
   if(efeito==="exig"){ muda.exigencia_prazo = data || somaDias(hoje(), 30); muda.exigencia_descricao = det || "Exigência do INSS"; }
+  if(efeito==="impl"){
+    if(nb && nb!==soDig(k.nb||"") && !(k.nbs||[]).map(soDig).includes(nb)) Object.assign(muda, k.nb ? {nbs:[...(Array.isArray(k.nbs)?k.nbs:[]), nb]} : {nb});
+    if(dib && !k.dib) muda.dib = dib;
+    muda.ronda = {...(k.ronda||{}), implantado:hoje()};
+  }
   Object.assign(k, muda);
   await patchCaso(casoId, muda).catch(()=>{});
   // a data da perícia ou da pauta vira lembrete do advogado responsável, nesse dia
@@ -38563,6 +38623,93 @@ async function gravarAdvogado(cliId, colId){
   try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}); }
   catch(e){ return aviso("Não gravou — tente de novo"); }
   fecharCaixa(); aviso(`Advogado responsável: ${(D.colPorId.get(colId)||{}).nome||""}`, false); repintarFicha();
+}
+// F247 · TENTEI CONTATO, SEM RESPOSTA. O ciclo mais escrito à mão ("Entrei em contato", "não retornou", "Aguardar
+// até…"): um clique anota a tentativa, conta quantas seguidas já foram e marca a próxima para 2 dias úteis; da
+// terceira em diante, oferece a mensagem pronta no WhatsApp. Dá para desfazer.
+const RX_SEM_RESPOSTA = /^\[CONTATO\] Sem resposta/;
+function tentativasSemResposta(casoId){
+  const ands = (D._andsFicha||[]).filter(a=>a.caso_id===casoId && !a.excluir && !ehOficial(a))
+    .sort((x,y)=>x.criado_em<y.criado_em?1:-1);
+  let n = 0; for(const a of ands){ if(RX_SEM_RESPOSTA.test(a.texto||"")) n++; else break; }
+  return n;
+}
+function msgRetorno(c){
+  return `Olá, ${(c.nome||"").split(" ")[0]}! Aqui é ${(eu.nome||"").split(" ")[0]}, do escritório Paulo Tercini. Tentamos falar com você sobre o seu processo. Pode nos retornar quando puder?`;
+}
+async function semResposta(casoId, canal){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const c = D.cliPorId.get(k.cliente_id) || {}, n = tentativasSemResposta(casoId) + 1;
+  const quando = proxDiaUtil(somaDias(hoje(), 2));
+  const texto = `[CONTATO] Sem resposta (${n}ª tentativa, ${canal||"telefone"}). Tentar de novo em ${fmtBarra(quando)}.`;
+  let and = null, tf = null;
+  try{ [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})}); }
+  catch(e){ return aviso("Não gravou — tente de novo"); }
+  if(!and) return;
+  fecharCaixa();
+  api(`/rest/v1/andamentos_lidos`,{method:"POST",headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
+    body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
+  if(Array.isArray(D._andsFicha)) D._andsFicha.unshift(and);
+  try{ [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:eu.id, atribuido_por:eu.id, lembrar_em:quando, natureza:"lembrete"})});
+    tarefaNaMemoria(tf); }catch(e){}
+  const repinta = () => { montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha(); };
+  repinta();
+  avisoDesfazer(`${n}ª tentativa sem resposta · tentar de novo em ${fmtBarra(quando)}`, async ()=>{
+    await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"DELETE"}).catch(()=>{});
+    if(Array.isArray(D._andsFicha)) D._andsFicha = D._andsFicha.filter(a=>a.id!==and.id);
+    if(tf){ api(`/rest/v1/andamento_tarefas?id=eq.${tf.id}`,{method:"DELETE"}).catch(()=>{});
+      D.tarefasPorCaso.set(casoId, (D.tarefasPorCaso.get(casoId)||[]).filter(t=>t.id!==tf.id)); }
+    repinta(); aviso("Tentativa desfeita", false);
+  });
+  const tel = soDig(c.telefone);
+  if(n>=3 && tel) caixa(`<h3 style="margin:0 0 6px">${n}ª tentativa sem resposta</h3>
+    <p class="meio-sub" style="margin:0 0 10px">Mande a mensagem pronta pelo WhatsApp:</p>
+    <p class="sr-msg" style="background:var(--fundo2,#f5f5f2);padding:10px;border-radius:8px;margin:0 0 10px">${esc(msgRetorno(c))}</p>
+    <a class="btn-rap sr-zap" target="_blank" rel="noopener" onclick="fecharCaixa()" href="https://wa.me/55${tel}?text=${encodeURIComponent(msgRetorno(c))}">Abrir no WhatsApp</a>`);
+}
+function semRespostaMenu(casoId){
+  const n = tentativasSemResposta(casoId);
+  caixa(`<h3 style="margin:0 0 4px">Tentei contato, sem resposta</h3>
+    <p class="meio-sub" style="margin:0 0 10px">${n ? `Já são ${n} tentativa(s) seguida(s). ` : ""}Anota a tentativa e marca a próxima para daqui a 2 dias úteis.</p>
+    <div class="esp-lista">${["telefone","WhatsApp","e-mail"].map(x=>`<button type="button" class="esp-it" onclick="semResposta('${casoId}','${x}')">${x}</button>`).join("")}</div>`);
+}
+// F247 · PEDIR AO CLIENTE no caso em andamento. O pedido entra em `campos.docs_pedidos` preso ao caso (caso_id), com a
+// data de entrega: aparece no "Trouxe documentos" e baixa sozinho quando o papel chega. Na data, um lembrete cobra.
+function pedirAoCliente(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const c = D.cliPorId.get(k.cliente_id) || {};
+  caixa(`<h3 style="margin:0 0 4px">Pedir ao cliente <small class="meio-sub">· ${esc(c.nome||"")} · ${esc(tituloCaso(k))}</small></h3>
+    <p class="meio-sub" style="margin:0 0 8px">Um documento por linha. Quando chegar, a recepção marca no “Trouxe documentos” e o pedido baixa.</p>
+    <textarea id="pc-itens" rows="3" style="width:100%;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px" placeholder="Relatório médico atualizado&#10;Senha do Meu INSS"></textarea>
+    <div class="form-linha" style="margin-top:8px;align-items:center">
+      <label class="meio-sub">entregar até <input type="date" id="pc-ate" value="${proxDiaUtil(somaDias(hoje(), 15))}"></label>
+      <button class="btn-rap" style="margin-left:auto" onclick="gravarPedidoAoCliente('${casoId}')">Registrar o pedido</button></div>`);
+  setTimeout(()=>{ const i = document.getElementById("pc-itens"); if(i) i.focus(); }, 30);
+}
+async function gravarPedidoAoCliente(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const c = D.cliPorId.get(k.cliente_id); if(!c) return;
+  const itens = linhasDe((document.getElementById("pc-itens")||{}).value);
+  if(!itens.length) return aviso("Escreva ao menos um documento");
+  const ate = (document.getElementById("pc-ate")||{}).value || null;
+  const pedidos = [...((c.campos||{}).docs_pedidos||[]), {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0],
+    caso_id:casoId, ...(ate?{ate}:{}), itens:itens.map(nome=>({nome, entregue:null}))}];
+  const texto = `[DOCUMENTOS] Pedido ao cliente: ${itens.join("; ")}.${ate ? ` Entregar até ${fmtBarra(ate)}.` : ""}`;
+  let and = null;
+  try{
+    await api(`/rest/v1/clientes?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:{...(c.campos||{}), docs_pedidos:pedidos}})});
+    c.campos = {...(c.campos||{}), docs_pedidos:pedidos};
+    [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})});
+  }catch(e){ return aviso("Não gravou o pedido — tente de novo"); }
+  fecharCaixa();
+  if(and && Array.isArray(D._andsFicha)) D._andsFicha.unshift(and);
+  if(and && ate) try{ const [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:eu.id, atribuido_por:eu.id, lembrar_em:ate, natureza:"lembrete"})}); tarefaNaMemoria(tf); }catch(e){}
+  montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha();
+  aviso(`${itens.length} documento(s) pedido(s) ao cliente${ate ? ` até ${fmtBarra(ate)}` : ""}`, false);
 }
 async function toggleUrg(casoId){
   const k=D.casoPorId.get(casoId); if(!k) return;
@@ -45834,7 +45981,8 @@ function pedidosDoBalcao(cliId){
       poe(k, {tipo:"tarefa", id:t.id}, t.titulo.replace(/^📄\s*/, ""), t.prazo||null, "no checklist do caso");
   const pres = ks.filter(ehPreCaso);
   ((c.campos||{}).docs_pedidos||[]).forEach((p, pi)=>{
-    const k = pres.find(x=>(x.precaso||{}).id===p.precaso_id) || (pres.length===1 ? pres[0] : null) || pres[0] || ks[0]; if(!k) return;
+    const k = (p.caso_id && ks.find(x=>x.id===p.caso_id))   // F247 · o pedido feito no caso em andamento
+      || pres.find(x=>(x.precaso||{}).id===p.precaso_id) || (pres.length===1 ? pres[0] : null) || pres[0] || ks[0]; if(!k) return;
     (p.itens||[]).forEach((it, ii)=>{ if(it && !it.entregue) poe(k, {tipo:"pedido", pi, ii}, String(it.nome||it), p.ate||null, `pedido em ${p.em ? fmt(String(p.em).slice(0,10)) : "atendimento"}${p.quem ? ` por ${p.quem}` : ""}`); }); });
   return {ks, grupos:[...grupos.values()], pessoais:[...pessoais.values()]};
 }

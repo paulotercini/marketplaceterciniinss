@@ -242,7 +242,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
 
   // ── F105 · a janela do tipo ──────────────────────────────────────────────
   await p.evaluate(() => irSubAba("escritorio")); await p.waitForTimeout(200);
-  const fila = await p.evaluate(() => [...document.querySelectorAll("#tipo-fila .tipo-ch")].map(b => b.textContent.trim()));
+  const fila = await p.evaluate(() => [...document.querySelectorAll("#tipo-fila .tipo-ch[data-tipoand]")].map(b => b.textContent.trim()));
   conf("os tipos do compositor: trouxe documentos, exigência, perícia, protocolo, petição, decisão, contato, ouvidoria",
     fila.join("|") === "Trouxe documentos|Exigência|Perícia|Protocolo|Petição|Decisão|Contato|Ouvidoria");
   await p.evaluate(() => popAnotacao("exigencia")); await p.waitForTimeout(150);
