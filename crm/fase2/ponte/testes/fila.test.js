@@ -107,3 +107,19 @@ t.test("sem citação, não manda opção de quoted", async () => {
     { ...zapOk, sendMessage: async (jid, conteudo, op) => { opcoes = op; return { key: { id: "X" } }; } });
   a.equal(opcoes, undefined);
 });
+
+t.test("banco fora do ar: a mensagem não se perde, vai para o arquivo do servidor", async () => {
+  const fs = require("node:fs");
+  const P = require("../ponte");
+  const antes = global.fetch;
+  global.fetch = async () => { throw new Error("banco fora do ar"); };
+  try { fs.unlinkSync(P.FILA_LOCAL); } catch {}
+  const m = { key: { id: "WA-PERDIDA", remoteJid: "5516999990000@s.whatsapp.net", fromMe: false },
+              message: { conversation: "oi" }, messageTimestamp: 1792500000 };
+  const ok = await P.guardarComInsistencia(m, null, []);
+  global.fetch = antes;
+  const salvo = fs.readFileSync(P.FILA_LOCAL, "utf8");
+  fs.unlinkSync(P.FILA_LOCAL);
+  a.strictEqual(ok, false);
+  a.ok(salvo.includes("WA-PERDIDA"));
+});
