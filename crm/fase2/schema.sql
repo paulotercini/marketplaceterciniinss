@@ -2730,3 +2730,8 @@ language sql stable security definer set search_path = public, extensions as $$
    limit least(coalesce(p_limite, 40), 100);
 $$;
 grant execute on function zap_buscar(text, int) to authenticated;
+
+-- F192 · quem CONVERSA nem sempre é o cliente (a mãe fala pelo filho): a conversa
+-- guarda quem fala e a relação; o cliente continua em cliente_id
+alter table zap_conversas add column if not exists contato_nome text;
+alter table zap_conversas add column if not exists contato_relacao text;

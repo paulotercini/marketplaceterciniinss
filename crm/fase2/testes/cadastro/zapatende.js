@@ -152,6 +152,27 @@ const T = {
   await p.evaluate(() => vigiarZapSom());
   conf("mensagem nova numa conversa sem dono toca o aviso", (await p.evaluate(() => _toques.join("|"))).includes("Mensagem nova de"));
 
+  // F192 · quem conversa não é o cliente (a mãe fala pelo filho)
+  await p.evaluate(id => abrirConversa(id), Z1);
+  await p.waitForSelector(".zap-topo");
+  conf("nome do WhatsApp diferente do cliente: o cabeçalho pergunta quem conversa", (await p.textContent(".zap-topo")).includes("Informar quem conversa"));
+  await p.evaluate(() => quemConversa());
+  await p.click('[name=zq][value=outro]');
+  await p.fill("#zq-nome", "Maria Ficta");
+  await p.selectOption("#zq-rel", "mãe");
+  await p.click("#zq-ok");
+  await p.waitForTimeout(300);
+  const qc = escritas.find(e => /zap_conversas\?id=eq/.test(e.u) && e.b && e.b.contato_nome === "Maria Ficta");
+  conf("guardar grava quem conversa e a relação", qc && qc.b.contato_relacao === "mãe");
+  const topoQ = await p.textContent(".zap-topo");
+  conf("o cabeçalho mostra quem fala e por qual cliente", topoQ.includes("Maria Ficta") && topoQ.includes("mãe de Aurélia"));
+
+  // F192 · foto grande: sobre a tela inteira, fecha com um clique
+  await p.evaluate(() => verFotoGrande("data:image/gif;base64,R0lGODlhAQABAAAAACw="));
+  conf("a foto grande abre sobre a tela inteira", !!(await p.$(".foto-grande")));
+  await p.mouse.click(10, 10);
+  conf("um clique fora fecha a foto", !(await p.$(".foto-grande")));
+
   // encerrar com observação
   await p.evaluate(() => encerrarConversa());
   await p.fill("#ze-obs", "Perícia confirmada para dia 10");
