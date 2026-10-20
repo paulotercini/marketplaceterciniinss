@@ -53,6 +53,8 @@ const T = {
       const corpo = rota.request().postData();
       escritas.push({ u, m, b: corpo ? JSON.parse(corpo) : null });
       if (/rpc\/zap_encerrar/.test(u)) return rota.fulfill({ status: 200, contentType: "application/json", body: "4217" });
+      if (/rpc\/zap_buscar/.test(u)) return rota.fulfill({ status: 200, contentType: "application/json",
+        body: JSON.stringify([{ mensagem_id: "m1", conversa_id: Z1, direcao: "entrada", tipo: "texto", texto: "Chegou carta do INSS marcando perícia", momento: "2026-10-05T12:59:00Z" }]) });
       return rota.fulfill({ status: 204, body: "" });
     }
     const t = (u.match(/\/rest\/v1\/([a-z_]+)/) || [])[1];
@@ -134,6 +136,21 @@ const T = {
     (await p.textContent(".zap-audio-prev")).includes("Enviar áudio") && escritas.length === antesAudio);
   await p.evaluate(() => { descartarAudioZap(); pintarConversaGuardando(); });
   conf("descartar some com a prévia", !(await p.$(".zap-audio-prev")));
+
+  // F191 · busca dentro das mensagens: acha a frase e abre a conversa nela
+  await p.fill("#zl-busca", "perícia");
+  await p.dispatchEvent("#zl-busca", "input");
+  await p.waitForSelector(".zl-achado", { timeout: 5000 }).catch(() => {});
+  conf("a busca procura dentro das mensagens e marca o trecho", ((await p.textContent(".zl-lista").catch(() => "")) || "").includes("Nas mensagens") && !!(await p.$(".zl-achado mark")));
+  await p.fill("#zl-busca", ""); await p.dispatchEvent("#zl-busca", "input");
+
+  // F191 · aviso sonoro: mensagem nova numa conversa minha ou sem dono toca
+  await p.evaluate(() => { window._toques = []; tocarAvisoZap = t => _toques.push(t); zapSomVisto = null; });
+  await p.evaluate(() => vigiarZapSom());
+  conf("a primeira olhada só aprende, sem tocar", (await p.evaluate(() => _toques.length)) === 0);
+  T.zap_conversas[0].nao_lidas = 3;
+  await p.evaluate(() => vigiarZapSom());
+  conf("mensagem nova numa conversa sem dono toca o aviso", (await p.evaluate(() => _toques.join("|"))).includes("Mensagem nova de"));
 
   // encerrar com observação
   await p.evaluate(() => encerrarConversa());
