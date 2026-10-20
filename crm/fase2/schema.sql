@@ -2770,7 +2770,7 @@ create trigger zap_pedir_foto after insert or update of telefone on clientes
 -- "ativo" do passo desliga a resposta sem programador.
 insert into zap_bot_passos (chave, texto, opcoes, entrega_setor, ordem) values
 ('ligacao',
-E'Olá! 📞 Vimos sua ligação.\n\nO escritório não atende ligações pelo WhatsApp, mas responde por mensagem. Escreva aqui ou mande um áudio contando o que precisa, que a equipe responde no horário de atendimento (segunda a sexta, das 8h às 18h).',
+E'Olá! 📞 Vimos sua ligação.\n\nO escritório não atende ligações pelo WhatsApp, mas responde por mensagem. Escreva aqui ou mande um áudio contando o que precisa, que a equipe responde no horário de atendimento (segunda a sexta, das 7h às 17h). Caso prefira ligar, estamos disponíveis no telefone fixo (16)3242-2908.',
  '[]'::jsonb, null, 10)
 on conflict (chave) do nothing;
 
