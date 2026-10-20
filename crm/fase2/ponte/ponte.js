@@ -623,6 +623,41 @@ async function guardarFoto(conversaId, jid, s = sock) {
   } catch (e) { /* foto é enfeite: não pode atrapalhar a mensagem */ }
 }
 
+// ── F193 · foto do cliente novo ───────────────────────────────────────────
+// Cadastrou o cliente (ou mudou o telefone)? O banco põe um pedido em
+// zap_pedidos_foto; a ponte pergunta ao WhatsApp, devagar (um a cada 3 s, para
+// não parecer robô), e grava a foto em clientes.foto_url. Só vem foto que o
+// contato deixa ver (privacidade dele no WhatsApp).
+async function buscarFotosPedidas(s = sock) {
+  if (!ligado || !s) return;
+  const fila = await sb("/rest/v1/zap_pedidos_foto?feito_em=is.null&select=id,cliente_id,telefone&order=pedido_em&limit=5").catch(() => []);
+  for (const p of fila) {
+    let resultado = "sem whatsapp";
+    try {
+      const d = N.soDigitos(p.telefone);
+      const fone = d.length <= 11 ? "55" + d : d;
+      const [achado] = await s.onWhatsApp(fone);
+      if (achado && achado.exists) {
+        const url = await s.profilePictureUrl(achado.jid, "image").catch(() => null);
+        resultado = "sem foto";
+        if (url) {
+          const r = await fetch(url);
+          if (r.ok) {
+            const caminho = `zap/perfil/cli-${p.cliente_id}.jpg`;
+            await subirMidia(Buffer.from(await r.arrayBuffer()), caminho, "image/jpeg");
+            await sb(`/rest/v1/clientes?id=eq.${p.cliente_id}`, { method: "PATCH",
+              headers: { Prefer: "return=minimal" }, body: JSON.stringify({ foto_url: caminho }) });
+            resultado = "ok";
+          }
+        }
+      }
+    } catch (e) { resultado = "erro: " + String(e.message).slice(0, 80); }
+    await sb(`/rest/v1/zap_pedidos_foto?id=eq.${p.id}`, { method: "PATCH", headers: { Prefer: "return=minimal" },
+      body: JSON.stringify({ feito_em: agora(), resultado }) }).catch(() => {});
+    await espera(3000);
+  }
+}
+
 // ── avisos automáticos ────────────────────────────────────────────────────
 // Quem lembra o cliente da perícia é o banco (zap_gerar_avisos); a ponte só
 // bate na porta de hora em hora. A função é idempotente e recusa fora do
@@ -702,6 +737,7 @@ if (require.main === module) {
   rodarAvisos();
   baterPonto();
   vigiar();
+  setInterval(() => buscarFotosPedidas().catch(e => log("fotos:", e.message)), 30000);
   setInterval(() => reprocessarPendentes(require("@whiskeysockets/baileys").downloadMediaMessage)
     .catch(e => log("fila do servidor:", e.message)), 300000);
   const tchau = async s => { log("saindo por", s); await anotar("zap_status", "parada"); process.exit(0); };
