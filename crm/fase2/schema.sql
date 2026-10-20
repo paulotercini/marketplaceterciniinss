@@ -2677,3 +2677,10 @@ grant execute on function eu_colab(), zap_assumir(uuid), zap_transferir(uuid, uu
 -- ("*Dr. Paulo Tercini:*" em cima da mensagem). A ponte põe na hora de enviar;
 -- no CRM o texto fica limpo. Vazio = usa o nome.
 alter table colaboradores add column if not exists assinatura_zap text;
+
+-- F189 · a ordem da conversa é a hora da mensagem, não a da gravação: o
+-- histórico que o celular manda depois de cada reconexão entra com seq maior
+-- e aparecia abaixo das mensagens de hoje
+alter table zap_mensagens add column if not exists momento timestamptz
+  generated always as (coalesce(quando_wa, criado_em)) stored;
+create index if not exists zap_msg_momento on zap_mensagens (conversa_id, momento, seq);
