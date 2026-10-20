@@ -2684,3 +2684,54 @@ alter table colaboradores add column if not exists assinatura_zap text;
 alter table zap_mensagens add column if not exists momento timestamptz
   generated always as (coalesce(quando_wa, criado_em)) stored;
 create index if not exists zap_msg_momento on zap_mensagens (conversa_id, momento, seq);
+
+-- F190 · alarme da ponte: sem sinal de vida há mais de 5 minutos, o gestor
+-- recebe uma menção (uma por queda); quando volta, outra dizendo que voltou.
+-- Roda no próprio banco (pg_cron), que não depende da ponte nem do computador.
+create or replace function zap_alarme_ponte() returns void
+language plpgsql security definer set search_path = public as $$
+declare v_visto timestamptz; v_alarme text; v_morta boolean;
+begin
+  select nullif(valor,'')::timestamptz into v_visto from config_app where chave = 'zap_visto_em';
+  select valor into v_alarme from config_app where chave = 'zap_alarme_em';
+  v_morta := v_visto is null or v_visto < now() - interval '5 minutes';
+  if v_morta and coalesce(v_alarme,'') = '' then
+    insert into mencoes (para_id, texto)
+    select id, '⚠ WhatsApp: a ponte está sem sinal desde '
+           || coalesce(to_char(v_visto at time zone 'America/Sao_Paulo', 'DD/MM HH24:MI'), 'agora')
+           || '. Mensagens não estão entrando no CRM. Veja WhatsApp › Corrigir conexão.'
+      from colaboradores where ativo and papel = 'admin';
+    insert into config_app (chave, valor) values ('zap_alarme_em', now()::text)
+      on conflict (chave) do update set valor = excluded.valor, atualizado = now();
+  elsif not v_morta and coalesce(v_alarme,'') <> '' then
+    insert into mencoes (para_id, texto)
+    select id, '✔ WhatsApp: a ponte voltou às '
+           || to_char(v_visto at time zone 'America/Sao_Paulo', 'HH24:MI')
+           || '. O que chegou no meio entra pelo histórico do celular.'
+      from colaboradores where ativo and papel = 'admin';
+    update config_app set valor = '', atualizado = now() where chave = 'zap_alarme_em';
+  end if;
+end $$;
+select cron.unschedule('zap-alarme-ponte') where exists (select 1 from cron.job where jobname = 'zap-alarme-ponte');
+select cron.schedule('zap-alarme-ponte', '*/5 * * * *', 'select zap_alarme_ponte()');
+
+-- F191 · busca dentro das mensagens (sem acento) e a marca de "já foi para o
+-- Drive" (o transcrever.py, no computador do escritório, leva foto e documento
+-- do cliente à pasta dele no Drive, em PDF)
+alter table zap_mensagens add column if not exists drive_em timestamptz;
+create or replace function zap_buscar(p_q text, p_limite int default 40)
+returns table (mensagem_id uuid, conversa_id uuid, direcao text, tipo text, texto text, momento timestamptz)
+language sql stable security definer set search_path = public, extensions as $$
+  select m.id, m.conversa_id, m.direcao, m.tipo, left(m.texto, 400), m.momento
+    from zap_mensagens m
+   where length(trim(p_q)) >= 3 and m.texto is not null
+     and extensions.unaccent(lower(m.texto)) like '%' || extensions.unaccent(lower(trim(p_q))) || '%'
+   order by m.momento desc
+   limit least(coalesce(p_limite, 40), 100);
+$$;
+grant execute on function zap_buscar(text, int) to authenticated;
+
+-- F192 · quem CONVERSA nem sempre é o cliente (a mãe fala pelo filho): a conversa
+-- guarda quem fala e a relação; o cliente continua em cliente_id
+alter table zap_conversas add column if not exists contato_nome text;
+alter table zap_conversas add column if not exists contato_relacao text;

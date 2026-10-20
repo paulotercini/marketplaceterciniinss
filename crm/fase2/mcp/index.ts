@@ -666,7 +666,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
   // muda o status de 'rascunho' para 'fila' e a ponte leva. O rascunho vai
   // com por_bot=true: assim não dispara zap_humano_assumiu, que calaria o bot
   // da conversa por uma mensagem que talvez nunca saia.
-  const COL_ZAP = "id,telefone,nome_perfil,cliente_id,lead_id,atendente_id,status,nao_lidas,ultima_em,ultimo_texto,bot_ativo,setor_id,atendimento_id";
+  const COL_ZAP = "id,telefone,nome_perfil,cliente_id,lead_id,atendente_id,status,nao_lidas,ultima_em,ultimo_texto,bot_ativo,setor_id,atendimento_id,contato_nome,contato_relacao";
   // setor, etiquetas, protocolo e retorno aberto: o que a tela do CRM mostra no cabeçalho
   const contextoZap = async (c: any) => {
     const [setor] = c.setor_id ? await db(`zap_setores?select=nome&id=eq.${c.setor_id}`) : [];
@@ -678,6 +678,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
     const trs = await Promise.all(tr.map(async (t: any) => `${hora(t.em)} ${t.tipo === "assumiu" ? `${await nomeCol(t.para_id)} assumiu`
       : `${(await nomeCol(t.de_id)) || "fila"} → ${(await nomeCol(t.para_id)) || "setor"}`}${t.motivo ? ` (${t.motivo})` : ""}`));
     return [at ? `protocolo #${at.numero}` : "", setor ? `setor ${setor.nome}` : "",
+      c.contato_nome ? `quem conversa: ${c.contato_nome}${c.contato_relacao ? ` (${c.contato_relacao} do cliente)` : " (fala pelo cliente)"}` : "",
       c.atendente_id ? `com ${await nomeCol(c.atendente_id)}` : "sem atendente (pendente)",
       trs.length ? `transferências: ${trs.join("; ")}` : "",
       etq.length ? `etiquetas: ${etq.map((e: any) => e.zap_etiquetas?.texto).filter(Boolean).join(", ")}` : "",
