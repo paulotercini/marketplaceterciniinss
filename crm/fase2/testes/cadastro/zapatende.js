@@ -53,6 +53,8 @@ const T = {
       const corpo = rota.request().postData();
       escritas.push({ u, m, b: corpo ? JSON.parse(corpo) : null });
       if (/rpc\/zap_encerrar/.test(u)) return rota.fulfill({ status: 200, contentType: "application/json", body: "4217" });
+      if (/rpc\/zap_buscar/.test(u)) return rota.fulfill({ status: 200, contentType: "application/json",
+        body: JSON.stringify([{ mensagem_id: "m1", conversa_id: Z1, direcao: "entrada", tipo: "texto", texto: "Chegou carta do INSS marcando perícia", momento: "2026-10-05T12:59:00Z" }]) });
       return rota.fulfill({ status: 204, body: "" });
     }
     const t = (u.match(/\/rest\/v1\/([a-z_]+)/) || [])[1];
@@ -134,6 +136,42 @@ const T = {
     (await p.textContent(".zap-audio-prev")).includes("Enviar áudio") && escritas.length === antesAudio);
   await p.evaluate(() => { descartarAudioZap(); pintarConversaGuardando(); });
   conf("descartar some com a prévia", !(await p.$(".zap-audio-prev")));
+
+  // F191 · busca dentro das mensagens: acha a frase e abre a conversa nela
+  await p.fill("#zl-busca", "perícia");
+  await p.dispatchEvent("#zl-busca", "input");
+  await p.waitForSelector(".zl-achado", { timeout: 5000 }).catch(() => {});
+  conf("a busca procura dentro das mensagens e marca o trecho", ((await p.textContent(".zl-lista").catch(() => "")) || "").includes("Nas mensagens") && !!(await p.$(".zl-achado mark")));
+  await p.fill("#zl-busca", ""); await p.dispatchEvent("#zl-busca", "input");
+
+  // F191 · aviso sonoro: mensagem nova numa conversa minha ou sem dono toca
+  await p.evaluate(() => { window._toques = []; tocarAvisoZap = t => _toques.push(t); zapSomVisto = null; });
+  await p.evaluate(() => vigiarZapSom());
+  conf("a primeira olhada só aprende, sem tocar", (await p.evaluate(() => _toques.length)) === 0);
+  T.zap_conversas[0].nao_lidas = 3;
+  await p.evaluate(() => vigiarZapSom());
+  conf("mensagem nova numa conversa sem dono toca o aviso", (await p.evaluate(() => _toques.join("|"))).includes("Mensagem nova de"));
+
+  // F192 · quem conversa não é o cliente (a mãe fala pelo filho)
+  await p.evaluate(id => abrirConversa(id), Z1);
+  await p.waitForSelector(".zap-topo");
+  conf("nome do WhatsApp diferente do cliente: o cabeçalho pergunta quem conversa", (await p.textContent(".zap-topo")).includes("Informar quem conversa"));
+  await p.evaluate(() => quemConversa());
+  await p.click('[name=zq][value=outro]');
+  await p.fill("#zq-nome", "Maria Ficta");
+  await p.selectOption("#zq-rel", "mãe");
+  await p.click("#zq-ok");
+  await p.waitForTimeout(300);
+  const qc = escritas.find(e => /zap_conversas\?id=eq/.test(e.u) && e.b && e.b.contato_nome === "Maria Ficta");
+  conf("guardar grava quem conversa e a relação", qc && qc.b.contato_relacao === "mãe");
+  const topoQ = await p.textContent(".zap-topo");
+  conf("o cabeçalho mostra quem fala e por qual cliente", topoQ.includes("Maria Ficta") && topoQ.includes("mãe de Aurélia"));
+
+  // F192 · foto grande: sobre a tela inteira, fecha com um clique
+  await p.evaluate(() => verFotoGrande("data:image/gif;base64,R0lGODlhAQABAAAAACw="));
+  conf("a foto grande abre sobre a tela inteira", !!(await p.$(".foto-grande")));
+  await p.mouse.click(10, 10);
+  conf("um clique fora fecha a foto", !(await p.$(".foto-grande")));
 
   // encerrar com observação
   await p.evaluate(() => encerrarConversa());

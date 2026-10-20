@@ -184,10 +184,11 @@ async function conectar() {
   sock.ev.on("messaging-history.set", h => receberHistorico(h, downloadMediaMessage));
 
   sock.ev.on("messages.upsert", async ({ messages, type }) => {
-    if (type !== "notify") return;                 // 'append' é histórico velho
+    // 'append' é o que chegou enquanto a ponte reconectava (ela recomeça a cada
+    // ~50 min): o recente entra; o antigo é histórico, que vem por outro caminho
     for (const m of messages) {
-      try { await entrou(m, downloadMediaMessage); }
-      catch (e) { log("erro ao guardar mensagem:", e.message); }
+      if (type !== "notify" && !N.recente(m, RECENTE_MS)) continue;
+      await guardarComInsistencia(m, downloadMediaMessage);
     }
   });
 
@@ -204,6 +205,41 @@ async function conectar() {
           body: JSON.stringify({ status: novo }) }).catch(() => {});
     }
   });
+}
+
+// ── nada se perde ─────────────────────────────────────────────────────────
+// Banco lento ou fora do ar não pode custar a mensagem: tenta de novo com
+// espera crescente e, se ainda falhar, guarda a mensagem crua num arquivo do
+// servidor, que é reprocessado a cada 5 minutos (gravar() não duplica).
+const RECENTE_MS = 3 * 864e5;
+const FILA_LOCAL = path.join(__dirname, "pendentes.jsonl");
+const bufferJson = () => require("@whiskeysockets/baileys").BufferJSON;
+async function guardarComInsistencia(m, baixar, esperas = [2000, 10000, 30000]) {
+  for (let i = 0; ; i++) {
+    try { await entrou(m, baixar); return true; }
+    catch (e) {
+      if (i >= esperas.length) {
+        log("não gravou depois de", i + 1, "tentativas; guardada no servidor:", e.message);
+        fs.appendFileSync(FILA_LOCAL, JSON.stringify(m, bufferJson().replacer) + "\n");
+        return false;
+      }
+      log(`erro ao guardar mensagem (tentativa ${i + 1}):`, e.message);
+      await espera(esperas[i]);
+    }
+  }
+}
+async function reprocessarPendentes(baixar) {
+  if (!fs.existsSync(FILA_LOCAL) || !ligado) return;
+  const lote = FILA_LOCAL + ".lote";
+  fs.renameSync(FILA_LOCAL, lote);       // o que falhar de novo volta para FILA_LOCAL
+  const linhas = fs.readFileSync(lote, "utf8").split("\n").filter(Boolean);
+  let ok = 0;
+  for (const l of linhas) {
+    let m; try { m = JSON.parse(l, bufferJson().reviver); } catch { continue; }
+    if (await guardarComInsistencia(m, baixar, [])) ok++;
+  }
+  fs.unlinkSync(lote);
+  if (linhas.length) log(`fila do servidor: ${ok} de ${linhas.length} mensagem(ns) gravada(s)`);
 }
 
 // ── chegou mensagem ───────────────────────────────────────────────────────
@@ -666,6 +702,8 @@ if (require.main === module) {
   rodarAvisos();
   baterPonto();
   vigiar();
+  setInterval(() => reprocessarPendentes(require("@whiskeysockets/baileys").downloadMediaMessage)
+    .catch(e => log("fila do servidor:", e.message)), 300000);
   const tchau = async s => { log("saindo por", s); await anotar("zap_status", "parada"); process.exit(0); };
   process.on("SIGINT", () => tchau("SIGINT"));
   process.on("SIGTERM", () => tchau("SIGTERM"));
@@ -674,4 +712,4 @@ if (require.main === module) {
   process.on("unhandledRejection", e => log("erro solto (seguindo):", (e && e.message) || e));
 }
 
-module.exports = { sb, rpc, enviar, entrou, conteudoDaMensagem, paraOgg, assinar };
+module.exports = { sb, rpc, enviar, entrou, conteudoDaMensagem, paraOgg, assinar, guardarComInsistencia, FILA_LOCAL };
