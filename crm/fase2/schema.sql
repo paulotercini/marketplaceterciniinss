@@ -1194,12 +1194,12 @@ E'Desculpe, não consegui entender. 😅\n\nVou chamar alguém do escritório pa
  '[]'::jsonb, 'triagem', 8),
 
 ('fora_horario',
-E'Recebemos sua mensagem! 🌙\n\nO escritório atende de segunda a sexta, das 8h às 18h. Fora desse horário a gente responde no próximo dia útil — mas pode deixar sua mensagem aqui que já fica registrada.',
+E'Recebemos sua mensagem! 🌙\n\nO escritório atende de segunda a sexta, das 7h às 17h. Fora desse horário a gente responde no próximo dia útil — mas pode deixar sua mensagem aqui que já fica registrada.',
  '[]'::jsonb, null, 9)
 on conflict (chave) do nothing;
 
 insert into config_app (chave, valor) values
-  ('zap_hora_inicio','08:00'), ('zap_hora_fim','18:00'), ('zap_dias_uteis','1,2,3,4,5'),
+  ('zap_hora_inicio','07:00'), ('zap_hora_fim','17:00'), ('zap_dias_uteis','1,2,3,4,5'),
   -- segundos de silêncio do bot depois de falar: quem manda "oi", "bom dia" e
   -- "alguém aí?" em cinco segundos recebe um menu, não três
   ('zap_pausa_bot','15'), ('zap_bot_ligado','sim')
@@ -1216,8 +1216,8 @@ language sql stable security definer set search_path = public as $$
   )
   select coalesce(
     extract(isodow from agora)::text = any (string_to_array(coalesce(dias,'1,2,3,4,5'), ','))
-    and agora::time >= coalesce(ini,'08:00')::time
-    and agora::time <  coalesce(fim,'18:00')::time, true)
+    and agora::time >= coalesce(ini,'07:00')::time
+    and agora::time <  coalesce(fim,'17:00')::time, true)
   from h
 $$;
 
