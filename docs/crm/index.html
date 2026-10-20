@@ -4664,7 +4664,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.72</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.73</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -32563,7 +32563,7 @@ function linhasDeDatas(cliId){
       rotulo:mora.vencido?"Prazo de análise do INSS vencido":"Prazo de análise do INSS", curto:mora.vencido?"Análise do INSS vencida":"INSS decide até",
       resumo:mora.vencido?(ms?"MS decidido: acompanhe a impetração":"avalie o mandado de segurança por mora"):`${mora.dias} dias ${mora.pericia?`da ${mora.tipo}`:"da DER"}${mora.suspenso?", descontada a exigência":""}`,
       rot:`<b>${mora.vencido?`O INSS passou do prazo de análise — ${ms?"o mandado de segurança por mora já foi decidido: acompanhe a impetração":"avalie o mandado de segurança por mora"}`:"Prazo do INSS para decidir o pedido"}</b>
-           <small class="qd-de">${mora.dias} dias ${mora.pericia?`da ${esc(mora.tipo)} de ${fmt(mora.desde)}`:`da DER de ${fmt(x.der)}`}${mora.suspenso?", descontada a pausa da exigência (IN 128/2022, art. 566, § 9º)":""}, pelo acordo homologado no RE 1.171.152 (confira a vigência do acordo antes de citá-lo); reforço: Lei 9.784/1999, art. 49 (decidir em até 30 dias depois de concluída a instrução) · ${tit}</small>`, edita:"", acao:""});
+           <small class="qd-de">${mora.dias} dias ${mora.pericia?`da ${esc(mora.tipo)} de ${fmt(mora.desde)}`:`da DER de ${fmt(x.der)}`}${mora.suspenso?", descontada a pausa da exigência (IN 128/2022, art. 566, § 9º)":""}, pelo acordo homologado no RE 1.171.152 (confira a vigência do acordo antes de citá-lo); reforço: Lei 9.784/1999, art. 49 (decidir em até 30 dias depois de concluída a instrução) · ${tit}</small>`, edita:"", acao: mora.vencido && !ms ? botaoOuvidoria(x) : "", ouv: mora.vencido && !ms ? botaoOuvidoria(x) : ""});   // F248 · também no cartão, num clique
     if(rec){
       const rotulo = fe==="conselho" ? "Recurso especial" : "Recurso ordinário";
       const l={data:rec, ico:"⚖️", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true, rotulo,
@@ -32898,7 +32898,7 @@ function faixaPrazos(k){
       <button class="pz-mais" onclick="${ir}" title="${x.andId?"ir até a anotação que criou este prazo"
         :x.semMotivo?"esta data veio do “Concluir em” do To Do — diga do que ela é":"ver o que é e o que fazer"}">${
         x.semMotivo?"do que é?":"saber mais"}</button>
-      ${x.cumprir?`<button class="pz-ok" onclick="${x.cumprir}" title="cumpriu: tira o prazo daqui e devolve o caso à lista de onde veio">✔</button>`:""}
+      ${x.cumprir?`<button class="pz-ok" onclick="${x.cumprir}" title="cumpriu: tira o prazo daqui e devolve o caso à lista de onde veio">✔</button>`:""}${x.ouv||""}
     </div>`;
   };
   // F241 · a ordem continua decrescente (F145); o que não pede atenção agora fica num "mais N"
@@ -34840,7 +34840,7 @@ const IC_SVG = {
 const ehOficial = a => !!(a && ORIGENS_OFICIAIS.includes(a.origem));
 // expedição, juntada, conclusão… — o que não pede leitura nem ação
 const RX_ROTINA = /^(expedi[çc][ãa]o|juntada|conclus|remetid|recebid|certid|decorrid|ato ordinat|mandado|confirmada a intima|redistribu|arquivad|desarquivad|documento juntado|baixa definitiva)/i;
-const RX_NAO_ROTINA = /laudo|senten|decis|ac[óo]rd|per[ií]cia|audi[êe]n|contesta|alvar|rpv|precat|julg|tutela|liminar|prazo|intima|cita[çc]/i;
+const RX_NAO_ROTINA = /acordo|c[áa]lculo|laudo|senten|decis|ac[óo]rd|per[ií]cia|audi[êe]n|contesta|alvar|rpv|precat|julg|tutela|liminar|prazo|intima|cita[çc]/i;
 function ehRotina(x){
   const a = x && x.and;
   if(!a || a.origem!=="pje" || x.forte || a.importante || a.urgente) return false;
@@ -35514,7 +35514,7 @@ function infoOficial(x){
     // F236 · a perícia que o processo marcou e o CRM não agendou: "Agendar … com aviso" sai do ⋯ e é o botão principal
     const destaquePericia = ev && ev.tipo!=="Julgamento" && !(D.eventos||[]).some(e=>e.caso_id===a.caso_id && dataSP(e.data_hora)===ev.data)
       ? `<button class="tl-bt forte" onclick="periciaRapida(${i})" title="agenda na aba Perícias, com o aviso ao cliente hoje e a véspera, e abre o roteiro">Agendar ${esc(tipoEv(ev.tipo).toLowerCase())} com aviso</button>` : "";
-    const destaque = (destaqueCrps + sust) || destaquePericia;
+    const destaque = (destaqueCrps + sust) || destaquePericia || botoesAcordo(a);   // F248
     return { i, lido: euLi(a), andId: a.id, portal: portalDoAndamento(a, k), destaque,
       msg: `msgAndamento('${a.id}')`, sinais: sinaisHtml(a),
       antes: atoDoCartaoHtml(a), docs: docsDoCartao(a), prazo: prazoSugeridoHtml(a, i), feito: feitoDoCartao(a),
@@ -38710,6 +38710,86 @@ async function gravarPedidoAoCliente(casoId){
       body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:eu.id, atribuido_por:eu.id, lembrar_em:ate, natureza:"lembrete"})}); tarefaNaMemoria(tf); }catch(e){}
   montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha();
   aviso(`${itens.length} documento(s) pedido(s) ao cliente${ate ? ` até ${fmtBarra(ate)}` : ""}`, false);
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F248 · OUVIDORIA E ACORDO EM UM CLIQUE (a segunda leva do levantamento de 20.10.2026: "Fazer reclamação na
+// ouvidoria", "Resposta da ouvidoria…", "Foi oferecida proposta de acordo", "Aceitei a proposta", "Concordei com os
+// cálculos"). O CRM só registra o que a pessoa fez no portal; nada é enviado daqui.
+// ══════════════════════════════════════════════════════════════════════════
+// a anotação de um clique, com o lembrete opcional e o desfazer
+async function anotarUmClique(casoId, texto, o={}){
+  const k = D.casoPorId.get(casoId); if(!k) return null;
+  let and = null, tf = null;
+  try{ [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto, ...(o.responde_a?{responde_a:o.responde_a}:{}), ...(o.importante?{importante:true}:{})})}); }
+  catch(e){ aviso("Não gravou — tente de novo"); return null; }
+  if(!and) return null;
+  fecharCaixa();
+  api(`/rest/v1/andamentos_lidos`,{method:"POST",headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
+    body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
+  if(Array.isArray(D._andsFicha)) D._andsFicha.unshift(and);
+  if(o.lembrarEm) try{ [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:eu.id, atribuido_por:eu.id, lembrar_em:o.lembrarEm, natureza:"lembrete"})});
+    tarefaNaMemoria(tf); }catch(e){}
+  const repinta = () => { montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha(); };
+  repinta();
+  avisoDesfazer(o.rot || "Anotado", async ()=>{
+    await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"DELETE"}).catch(()=>{});
+    if(Array.isArray(D._andsFicha)) D._andsFicha = D._andsFicha.filter(a=>a.id!==and.id);
+    if(tf){ api(`/rest/v1/andamento_tarefas?id=eq.${tf.id}`,{method:"DELETE"}).catch(()=>{});
+      D.tarefasPorCaso.set(casoId, (D.tarefasPorCaso.get(casoId)||[]).filter(t=>t.id!==tf.id)); }
+    repinta(); aviso("Desfeito", false);
+  });
+  return and;
+}
+// a Ouvidoria responde em até 30 dias, prorrogáveis (Lei 13.460/2017, art. 16)
+const RX_OUVIDORIA = /^\[OUVIDORIA\]/;
+const ouvidoriaDoCaso = k => (D._andsFicha||[]).some(a=>a.caso_id===k.id && !a.excluir && RX_OUVIDORIA.test(a.texto||"") && (!k.der || dataSP(a.criado_em)>=k.der));
+function botaoOuvidoria(k){
+  return ouvidoriaDoCaso(k)
+    ? `<button class="btn-mini ouv-resp" onclick="fecharCaixa();ouvidoriaRespondeu('${k.id}')" title="anota que a Ouvidoria respondeu e o pedido segue em análise; confere de novo em 15 dias">Ouvidoria respondeu · +15 d</button>`
+    : `<button class="btn-mini ouv-abrir" onclick="fecharCaixa();abrirOuvidoria('${k.id}')" title="registra a reclamação feita no Fala.BR e marca a resposta para 30 dias">Abrir Ouvidoria</button>`;
+}
+function abrirOuvidoria(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const c = D.cliPorId.get(k.cliente_id) || {};
+  caixa(`<h3 style="margin:0 0 4px">Reclamação na Ouvidoria <small class="meio-sub">· ${esc(c.nome||"")} · ${esc(tituloCaso(k))}</small></h3>
+    <p class="meio-sub" style="margin:0 0 8px">Abra a reclamação no Fala.BR (prazo de análise do INSS vencido) e registre aqui o número; a resposta fica marcada para 30 dias.</p>
+    <div class="form-linha" style="align-items:center"><input id="ouv-num" placeholder="nº da manifestação (opcional)" style="width:240px">
+      <a class="btn-rap" href="https://falabr.cgu.gov.br/" target="_blank" rel="noopener">Abrir o Fala.BR</a>
+      <button class="btn-rap" style="margin-left:auto" onclick="gravarOuvidoria('${casoId}')">Registrar a reclamação</button></div>`);
+}
+function gravarOuvidoria(casoId){
+  const num = ((document.getElementById("ouv-num")||{}).value||"").trim(), quando = proxDiaUtil(somaDias(hoje(), 30));
+  return anotarUmClique(casoId, `[OUVIDORIA] Reclamação aberta na Ouvidoria pelo prazo de análise vencido${num?` (nº ${num})`:""}. Ver a resposta em ${fmtBarra(quando)}.`,
+    {lembrarEm:quando, rot:`Ouvidoria aberta · resposta em ${fmtBarra(quando)}`});
+}
+function ouvidoriaRespondeu(casoId){
+  const quando = proxDiaUtil(somaDias(hoje(), 15));
+  return anotarUmClique(casoId, `[OUVIDORIA] A Ouvidoria respondeu: o pedido segue em análise. Conferir de novo em ${fmtBarra(quando)}.`,
+    {lembrarEm:quando, rot:`Ouvidoria respondeu · conferir em ${fmtBarra(quando)}`});
+}
+// a proposta de acordo e os cálculos do movimento judicial: o que se fez no processo, num clique
+const RX_ACORDO_FEITO = /^(Aceitei|Recusei) o acordo|^Proposta de acordo: falar com o cliente|^Concordei com os cálculos/;
+function botoesAcordo(a){
+  const mv = movimentoJudicial(a.texto); if(!mv || mv.fonte==="CRPS") return "";
+  const t = dsa(mv.ato);
+  if((D._andsFicha||[]).some(x=>x.responde_a===a.id && RX_ACORDO_FEITO.test(x.texto||""))) return "";
+  const bt = (rot, tipo, forte, tit) => `<button class="tl-bt${forte?" forte":""} acordo-bt" onclick="respostaAcordo('${a.id}','${tipo}')" title="${esc(tit)}">${rot}</button>`;
+  if(/acordo/.test(t) && !/homolog/.test(t))
+    return bt("Aceitei o acordo", "aceitei", true, "registra que a proposta foi aceita no processo") + bt("Recusei", "recusei", false, "registra a recusa; o processo segue")
+      + bt("Falar com o cliente", "cliente", false, "anota e lembra você de responder em 2 dias úteis");
+  if(/calculo/.test(t) && !/homolog|contadoria/.test(t))
+    return bt("Concordei com os cálculos", "calculos", true, "registra a concordância com os cálculos no processo");
+  return "";
+}
+function respostaAcordo(andId, tipo){
+  const a = (D._andsFicha||[]).find(x=>x.id===andId); if(!a) return;
+  const em2 = proxDiaUtil(somaDias(hoje(), 2));
+  const T = {aceitei:"Aceitei o acordo proposto pelo INSS.", recusei:"Recusei o acordo proposto pelo INSS; o processo segue.",
+    cliente:`Proposta de acordo: falar com o cliente antes de responder. Responder até ${fmtBarra(em2)}.`, calculos:"Concordei com os cálculos."}[tipo];
+  if(!T) return;
+  return anotarUmClique(a.caso_id, T, {responde_a:a.id, importante:tipo==="aceitei" || tipo==="calculos", lembrarEm:tipo==="cliente" ? em2 : null, rot:T.replace(/\.$/,"")});
 }
 async function toggleUrg(casoId){
   const k=D.casoPorId.get(casoId); if(!k) return;
