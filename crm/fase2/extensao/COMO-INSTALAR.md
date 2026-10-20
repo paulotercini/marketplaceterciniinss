@@ -179,6 +179,13 @@ quando a publicada na `main` é outra. Para atualizar: na pasta do repositório
 no computador, `git pull`; depois, em `chrome://extensions`, o botão ↻ da
 extensão (ou "Atualizar"). Não precisa reinstalar nem entrar de novo no CRM.
 
+## 📁 e-SAJ: peças só de caso previdenciário — desde 1.24.0
+
+Além de não estar arquivado e ter caso aberto no CRM, o processo só baixa peças quando
+o assunto do caso é previdenciário (aposentadoria, auxílio, BPC, pensão, revisão, acerto
+de CNIS…) ou ainda está em branco. Caso aberto de falência, execução, cobrança, ação
+contra banco, ação civil pública etc. continua recebendo as movimentações, sem peças.
+
 ## ⚖️ PJe e eproc num clique — desde 1.23.0
 
 O botão **⚖️ PJe e eproc: acervo e completar** faz, em ordem, o que antes eram três

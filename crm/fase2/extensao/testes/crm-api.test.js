@@ -153,6 +153,23 @@ test('F184 · o documento sobe ao bucket privado com o crachá; já existir não
   assert.equal(pedidos[1].opcoes.headers['x-upsert'], 'false', 'sobrescrever trocaria a sentença guardada');
 });
 
+// ── 1.24 · o e-SAJ só baixa peças de caso aberto previdenciário ─────────────
+test('processosTjsp: todo caso aberto dá movimentação, só o previdenciário dá peças', async () => {
+  const { api } = await carregar({ guardado: { refresh: 'r1' }, respostas: [CRACHA_OK, { corpo: [
+    { processo: '0002499-64.2010.8.26.0338', processos: [], beneficio: 'Ação civil pública, responsabilidade da administração' },
+    { processo: '0003054-15.2015.8.26.0368', processos: [], beneficio: 'Falência' },
+    { processo: '1000001-11.2024.8.26.0368', processos: [{ numero: '1000002-22.2024.8.26.0368' }], beneficio: 'Espécie 94' },
+    { processo: '1000003-33.2024.8.26.0368', processos: [], beneficio: null },
+  ] }] });
+  const r = await api.processosTjsp();
+  assert.equal(r.numeros.length, 5);
+  assert.deepStrictEqual(r.comDocs.sort(), ['1000001-11.2024.8.26.0368', '1000002-22.2024.8.26.0368', '1000003-33.2024.8.26.0368']);
+  for (const b of ['Apos. Tempo de Contribuição', 'Aux. Incapacidade Temporária', 'Revisão', 'Acerto de CNIS', 'BPC/LOAS', 'Pensão por Morte', 'Salário-Maternidade', 'Auxílio-Reclusão'])
+    assert.ok(api.previdenciario(b), b);
+  for (const b of ['Execução de título extrajudicial', 'Ação de cobrança contra seguradora', 'Ação contra banco no Juizado Especial Cível', 'Carta precatória cível, intimação', 'Consignação em pagamento', 'Embargos à execução', 'Mandado de segurança, reintegração de servidor público'])
+    assert.ok(!api.previdenciario(b), b);
+});
+
 // ── F190 · completar só o que movimentou ────────────────────────────────────
 test('movimentou: compara o último movimento do acervo com a cronologia entregue', async () => {
   const { api } = await carregar();

@@ -268,8 +268,8 @@
       }
       // mais os números do TJSP nas fichas abertas do CRM
       faixa('lendo os processos do TJSP no CRM…');
-      const { numeros, fichas } = await CRM.processosTjsp();
-      ativos = new Set(numeros);
+      const { numeros, fichas, comDocs } = await CRM.processosTjsp();
+      ativos = new Set(comDocs || numeros);              // 1.24 · peças só de caso previdenciário
       const temNumero = n => [...mapa.values()].some(x => x.numero === n);
       for (const n of numeros) if (!mapa.has(n) && !temNumero(n)) mapa.set(n, { numero: n, grau: '1º grau', origem: 'crm', codigo: null, link: null });
       // e o complemento: a consulta por OAB nos dois graus, que descobre o que
