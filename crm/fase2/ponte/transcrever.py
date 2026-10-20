@@ -15,8 +15,9 @@ do Storage, transcreve em português e grava a transcrição em `texto` (áudio 
 WhatsApp não tem legenda, o campo está livre). Daí em diante a ficha, o
 conector do Claude e o "↪ andamento" leem a transcrição sem mudar nada.
 
-Modelo: WHISPER_MODELO no .env (padrão "small", bom em português e leve; "medium"
-acerta mais e leva o dobro). Na primeira vez baixa o modelo (~500 MB).
+Modelo: WHISPER_MODELO no .env (padrão "large-v3-turbo", 20.10.2026: acerta bem mais
+que o "small" em português, ~1,6 GB, leva mais ou menos o tempo do áudio; "small" é o
+leve, para computador fraco). Na primeira vez baixa o modelo.
 """
 import io
 import json
@@ -30,6 +31,9 @@ from pathlib import Path
 AQUI = Path(__file__).resolve().parent
 TENTATIVAS = 3          # áudio que falha 3 vezes ganha um marcador e sai da fila
 SEM_FALA = "[áudio sem fala]"
+VOCABULARIO = ("Conversa de cliente com escritório de advocacia previdenciária: INSS, perícia, "
+               "auxílio-doença, aposentadoria, BPC, LOAS, CNIS, benefício, recurso, procuração, "
+               "Meu INSS, doutor, doutora.")
 FALHOU = "[áudio não transcrito]"
 
 
@@ -91,7 +95,7 @@ def principal():
     ler_env()
     banco = Banco()
     from faster_whisper import WhisperModel  # só aqui: o --teste não precisa dele
-    nome = os.environ.get("WHISPER_MODELO", "small")
+    nome = os.environ.get("WHISPER_MODELO", "large-v3-turbo")
     log(f"carregando o modelo {nome}… (na primeira vez ele é baixado)")
     modelo = WhisperModel(nome, device="cpu", compute_type="int8")
     log("pronto: transcrevendo os áudios que chegarem")
@@ -104,7 +108,10 @@ def principal():
         for m in fila:
             try:
                 audio = banco.baixar(m["midia_url"])
-                trechos, _ = modelo.transcribe(io.BytesIO(audio), language="pt", vad_filter=True)
+                # o vocabulário do escritório orienta as palavras raras (INSS, CNIS, BPC);
+                # sem condicionar no trecho anterior, um erro não se repete em cascata
+                trechos, _ = modelo.transcribe(io.BytesIO(audio), language="pt", vad_filter=True,
+                                               initial_prompt=VOCABULARIO, condition_on_previous_text=False)
                 texto = juntar(s.text for s in trechos)
                 banco.gravar(m["id"], texto)
                 log("🎤", texto[:70])
