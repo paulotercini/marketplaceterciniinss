@@ -736,7 +736,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
   }, async ({ quantas, ...qual }) => {
     const c = await conversaDe(qual);
     if (!c) return texto("Conversa não encontrada.");
-    const msgs = (await db(`zap_mensagens?select=id,direcao,autor_id,por_bot,tipo,texto,midia_nome,status,quando_wa,criado_em&conversa_id=eq.${c.id}&order=seq.desc&limit=${quantas}`)).reverse();
+    const msgs = (await db(`zap_mensagens?select=id,direcao,autor_id,por_bot,tipo,texto,midia_nome,status,quando_wa,criado_em&conversa_id=eq.${c.id}&order=momento.desc,seq.desc&limit=${quantas}`)).reverse();
     const cli = c.cliente_id ? (await clientesDe([c.cliente_id])).get(c.cliente_id) : "";
     const quem = async (m: any) => m.direcao === "entrada" ? "cliente" : m.direcao === "interna" ? `nota interna de ${await nomeCol(m.autor_id) || "equipe"}`
       : m.por_bot && !m.autor_id ? "bot" : (await nomeCol(m.autor_id)) || "escritório";
