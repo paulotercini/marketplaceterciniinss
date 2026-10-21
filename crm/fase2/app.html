@@ -13694,6 +13694,7 @@ function preencheZap(txt){
     "{nome}": nome, "{primeiro_nome}": (nome||"").trim().split(/\s+/)[0]||"",
     "{data}": fmt(hoje()),
     "{beneficio}": especieDoCaso(k), "{processo}": (k&&k.processo)||"", "{nb}": (k&&k.nb)||"",
+    "{dcb}": k&&k.dcb ? fmtBarra(k.dcb) : "",
   };
   return Object.entries(map).reduce((t,[a,v])=>v?t.split(a).join(v):t, txt);
 }
@@ -43162,6 +43163,79 @@ async function anexarAssinado(cliId, inpId){
     repintarFicha();
   }catch(e){ aviso("Não consegui enviar o arquivo — tente de novo"); }
 }
+// F195 · o documento gerado ou assinado vai ao cliente pelo WhatsApp, sem baixar
+// e anexar à mão: o assinado (PDF ou foto) vai como está; o gerado, que é HTML,
+// vira PDF no navegador. Sempre com confirmação, porque sai para o cliente.
+async function docAoZap(id){
+  const a=(D.anexos||[]).find(x=>x.id===id); if(!a) return;
+  const cli=D.cliPorId.get(a.cliente_id); if(!cli) return;
+  const zs=await todas("zap_conversas",`select=id,telefone,contato_nome,contato_relacao&cliente_id=eq.${cli.id}&order=ultima_em.desc.nullslast`).catch(()=>[]);
+  const conv=zs[0]||null, fone=conv ? conv.telefone : cli.telefone;
+  if(!conv && soDig(fone||"").length<10) return aviso("Este cliente não tem telefone nem conversa no WhatsApp");
+  const para=conv && conv.contato_nome ? `${conv.contato_nome}${conv.contato_relacao?` (${conv.contato_relacao} de ${cli.nome.split(" ")[0]})`:""}` : cli.nome;
+  const nomeDoc=String(a.nome||"documento").replace(/^(Gerado|Assinado) · /,"").replace(/ \(lacunas:.*\)$/,"");
+  const leg=`Olá, ${(conv&&conv.contato_nome||cli.nome).split(" ")[0]}! Segue o documento: ${nomeDoc}.`;
+  caixa(`<h3>Mandar pelo WhatsApp?</h3>
+    <p class="meio-sub">${esc(nomeDoc)}${a.origem==="gerado"?" (vai em PDF)":""}<br>para <b>${esc(para)}</b> · <span class="mono">${esc(foneZap(fone))}</span></p>
+    <textarea id="dz-leg" rows="3" style="width:100%;box-sizing:border-box">${esc(leg)}</textarea>
+    <div class="form-linha" style="margin-top:10px"><button class="btn-rap" id="dz-ok">Enviar</button></div>`);
+  document.getElementById("dz-ok").onclick = async () => {
+    const legenda=(document.getElementById("dz-leg").value||"").trim();
+    fecharCaixa(); aviso("Preparando o documento…", false);
+    try{
+      const cid = conv ? conv.id : await api(`/rest/v1/rpc/zap_abrir`,{method:"POST", body:JSON.stringify({p_telefone:fone, p_nome:null})});
+      const url = await linkArquivo(a.caminho);
+      let blob, nome = nomeSeguro(nomeDoc).slice(0,80);
+      if(/^text\//.test(a.tipo||"") || a.origem==="gerado"){ blob = await pdfDoGerado(await (await fetch(url)).text()); nome += ".pdf"; }
+      else { blob = await (await fetch(url)).blob(); const ext=(a.caminho.match(/\.[a-z0-9]{2,5}$/i)||[""])[0]; if(ext && !nome.endsWith(ext)) nome += ext; }
+      const caminho=`zap/${cid}/enviados/${Date.now()}-${nome}`;
+      await subirArquivo(caminho, blob);
+      await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({conversa_id:cid, direcao:"saida", autor_id:eu.id, tipo:tipoDoArquivo(blob),
+          texto:legenda||null, midia_url:caminho, midia_nome:nome, midia_mime:blob.type||null, status:"fila"})});
+      aviso(`📲 Enviado a ${para.split(" ")[0]} pelo WhatsApp`, false);
+    }catch(e){ aviso("Não consegui mandar pelo WhatsApp: "+msgErro(e)); }
+  };
+}
+// o HTML do gerado (uma <section> por folha A4) vira PDF: cada folha numa
+// imagem, e a folha que passa do A4 se divide entre parágrafos, nunca no meio da linha
+function cdnScript(url, global){
+  if(window[global]) return Promise.resolve();
+  return new Promise((ok, erro) => { const t=document.createElement("script"); t.src=url; t.onload=ok; t.onerror=()=>erro(new Error("sem internet para gerar o PDF")); document.head.appendChild(t); });
+}
+async function pdfDoGerado(html){
+  await cdnScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js", "html2canvas");
+  await cdnScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js", "jspdf");
+  const ifr=document.createElement("iframe");
+  ifr.style.cssText="position:fixed;left:-10000px;top:0;width:820px;height:1200px;border:0";
+  document.body.appendChild(ifr);
+  try{
+    await new Promise(r => { ifr.onload=r; ifr.srcdoc=html; });
+    const doc=ifr.contentDocument;
+    doc.body.style.background="#fff"; doc.body.style.padding="0";
+    const pdf=new window.jspdf.jsPDF({unit:"mm", format:"a4"}); let pagina=0;
+    for(const sec of doc.querySelectorAll("section")){
+      sec.style.margin="0"; sec.style.boxShadow="none";
+      const cv=await window.html2canvas(sec, {scale:2, backgroundColor:"#fff"});
+      const r=sec.getBoundingClientRect(), k=cv.width/r.width, mm=cv.width/210, folha=297*mm, margem=16*mm;
+      const fins=[...sec.querySelectorAll("p,h1,div")].map(e=>(e.getBoundingClientRect().bottom-r.top)*k).sort((x,y)=>x-y);
+      for(let y=0; y < cv.height-1; ){
+        const topo = y ? margem : 0;
+        let fim = y + folha - topo;
+        if(fim < cv.height){ fim -= margem; fim = fins.filter(f=>f>y+10 && f<=fim).pop() || fim; }
+        else fim = cv.height;
+        fim = Math.round(fim);   // corte em pixel inteiro: o fracionado deixava uma linha cinza no pé da folha
+        const pd=document.createElement("canvas"); pd.width=cv.width; pd.height=fim-y;
+        const g=pd.getContext("2d"); g.fillStyle="#fff"; g.fillRect(0, 0, pd.width, pd.height);
+        g.drawImage(cv, 0, y, cv.width, fim-y, 0, 0, cv.width, fim-y);
+        if(pagina++) pdf.addPage();
+        pdf.addImage(pd.toDataURL("image/jpeg", 0.92), "JPEG", 0, topo/mm, 210, (fim-y)/mm);
+        y = fim;
+      }
+    }
+    return pdf.output("blob");
+  } finally { ifr.remove(); }
+}
 // fica registrado no CRM o que foi impresso para o cliente assinar
 // o andamento passa a dizer TAMBÉM o que estava em branco na hora de gerar.
 // Sem isso, meses depois ninguém sabe se a lacuna da procuração assinada foi
@@ -44823,7 +44897,8 @@ function quadroGerados(c){
   const quem = a => { const co = D.colPorId.get(a.autor_id); return co ? co.nome.split(" ")[0] : ""; };
   return `<section class="doc-quadro" id="dq-gerados"><div class="rotulo-caso">Gerados e assinados <span class="meio-sub">${ds.length} ${ds.length===1?"documento":"documentos"}</span></div>
     ${ds.length ? `<ul class="mov-lista">${ds.map(a=>`<li><span class="mov-data">${fmtTS(a.criado_em)}</span><span class="mov-txt">${assin(a)?"✍ ":"🖨 "}${esc(a.nome)}${quem(a)?` <small>· ${esc(quem(a))}</small>`:""}</span>
-      <button class="btn-mini" onclick="abrirAnexo('${a.id}')">${assin(a)?"abrir":"abrir e reimprimir"}</button></li>`).join("")}</ul>`
+      <button class="btn-mini" onclick="abrirAnexo('${a.id}')">${assin(a)?"abrir":"abrir e reimprimir"}</button>
+      <button class="btn-mini" onclick="docAoZap('${a.id}')" title="mandar ao cliente pelo WhatsApp, em PDF">📲 WhatsApp</button></li>`).join("")}</ul>`
       : `<p class="meio-sub">Nada gerado ainda. Cada documento gerado no primeiro quadro fica guardado aqui, com as lacunas que saíram em branco.</p>`}
     <div class="form-linha" style="margin-top:6px;align-items:center">
       <label class="cad-mini" style="cursor:pointer" title="o PDF ou a foto do documento assinado pelo cliente"><input type="file" id="doc-assinado" accept="image/*,application/pdf" style="display:none" onchange="anexarAssinado('${c.id}','doc-assinado')">Anexar o assinado</label>
