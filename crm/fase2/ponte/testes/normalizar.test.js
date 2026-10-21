@@ -4,6 +4,16 @@ const t = require("node:test");
 const a = require("node:assert");
 const N = require("../normalizar");
 
+t.test("ligação: número do jid, do mapa do @lid, e nada fora do toque inicial", () => {
+  a.equal(N.foneDaLigacao({ status: "offer", from: "5516999638450@s.whatsapp.net" }), "5516999638450");
+  a.equal(N.foneDaLigacao({ status: "offer", from: "5516999638450:12@s.whatsapp.net" }), "5516999638450");
+  const mapa = new Map([["1199@lid", "5516920008301@s.whatsapp.net"]]);
+  a.equal(N.foneDaLigacao({ status: "offer", from: "1199:3@lid" }, mapa), "5516920008301");
+  a.equal(N.foneDaLigacao({ status: "offer", from: "7777@lid" }, mapa), "");
+  a.equal(N.foneDaLigacao({ status: "ringing", from: "5516999638450@s.whatsapp.net" }), "");
+  a.equal(N.foneDaLigacao({ status: "offer", isGroup: true, from: "5516999638450@s.whatsapp.net" }), "");
+});
+
 const msg = (conteudo, extra = {}) => ({
   key: { remoteJid: "5516999990000@s.whatsapp.net", id: "WA1", fromMe: false },
   pushName: "Maria", messageTimestamp: 1785000000,
