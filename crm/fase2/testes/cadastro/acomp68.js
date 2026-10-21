@@ -68,6 +68,7 @@ const SUPA = "https://ficticio.supabase.co";
 
   // ── marcar Manual grava e acende o chip ──
   escritos.length = 0;
+  await p.waitForSelector(".chip-acomp");   // no GitHub a ficha ainda se redesenha depois do clique anterior
   await p.evaluate(() => document.querySelector(".chip-acomp").click());
   await p.waitForTimeout(600);
   conf("clicar em Manual grava casos.acompanhamento='manual'",
@@ -78,6 +79,7 @@ const SUPA = "https://ficticio.supabase.co";
 
   // ── o ✓ registra quem e quando ──
   escritos.length = 0;
+  await p.waitForSelector(".acomp-check");   // no GitHub a ficha ainda se redesenha depois do clique anterior
   await p.evaluate(() => document.querySelector(".acomp-check").click());
   await p.waitForTimeout(600);
   conf("o ✓ grava checado_em + checado_por (eu)",
