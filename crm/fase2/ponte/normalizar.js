@@ -168,6 +168,19 @@ function chaveDaMensagem(jid, original) {
   return { remoteJid: jid, id: original.externo_id, fromMe: original.direcao !== "entrada" };
 }
 
-module.exports = { soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem, agruparHistorico,
+// Ligação recebida (evento "call" do Baileys): só o toque inicial ("offer"),
+// fora de grupo. O número vem do jid; atrás de um @lid, do mapa aprendido.
+// Sem número conhecido, devolve "" (não dá para responder a um @lid).
+const foneDaLigacao = (c, mapa) => {
+  if (!c || c.status !== "offer" || c.isGroup) return "";
+  for (const j of [c.from, c.chatId]) {
+    const jid = String(j || "").replace(/:\d+@/, "@");
+    if (jid.endsWith("@s.whatsapp.net")) return jidParaFone(jid);
+    if (jid.endsWith("@lid") && mapa && mapa.has(jid)) return jidParaFone(mapa.get(jid));
+  }
+  return "";
+};
+
+module.exports = { soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem, foneDaLigacao, agruparHistorico,
                    miolo, tipoDaMensagem, textoDaMensagem, deveIgnorar,
                    nomeSeguro, quandoWa, citacaoDe, reacaoDe, chaveDaMensagem, recente };

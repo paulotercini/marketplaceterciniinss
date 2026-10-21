@@ -183,6 +183,38 @@ async function conectar() {
 
   sock.ev.on("messaging-history.set", h => receberHistorico(h, downloadMediaMessage));
 
+  // os contatos trazem o par @lid / número: é o que permite responder a ligação
+  const aprenderLids = cs => { for (const c of cs || []) {
+    if (c.lid && String(c.id || "").endsWith("@s.whatsapp.net")) lidParaFone.set(c.lid, c.id);
+    if (c.jid && String(c.id || "").endsWith("@lid")) lidParaFone.set(c.id, c.jid);
+  } };
+  sock.ev.on("contacts.upsert", aprenderLids);
+  sock.ev.on("contacts.update", aprenderLids);
+
+  // F194 · o escritório não atende ligação: quem liga recebe uma mensagem
+  // pedindo para escrever ou mandar áudio (o banco decide, uma a cada 6 h)
+  // o aviso cru da chamada traz o número de verdade (caller_pn) ao lado do @lid;
+  // o Baileys 6 não o repassa ao evento "call", então ele é lido aqui
+  sock.ws.on("CB:call", node => {
+    const info = Array.isArray(node && node.content) ? node.content[0] : null;
+    const at = (info && info.attrs) || {};
+    const lid = String(at["call-creator"] || at.from || "").replace(/:\d+@/, "@");
+    const pn = at.caller_pn || at["caller-pn"] || at.caller_jid;
+    if (lid.endsWith("@lid") && pn) lidParaFone.set(lid, String(pn).replace(/:\d+@/, "@"));
+    else if (info && info.tag === "offer") log("ligação: campos do aviso", Object.keys(at).join(","));
+  });
+  sock.ev.on("call", async chamadas => {
+    for (const c of chamadas) {
+      let fone = N.foneDaLigacao(c, lidParaFone);
+      if (c.status === "offer" && !fone) { await espera(1000); fone = N.foneDaLigacao(c, lidParaFone); }
+      if (c.status === "offer" && !fone) { log("ligação de número escondido:", c.from); continue; }
+      if (!fone || N.chaveFone(fone).length < 8) continue;
+      const r = await rpc("zap_ligacao", { p_telefone: fone, p_nome: null, p_video: !!c.isVideo })
+        .catch(e => "erro: " + e.message);
+      log("📞 ligação de", fone, "→", r);
+    }
+  });
+
   sock.ev.on("messages.upsert", async ({ messages, type }) => {
     // 'append' é o que chegou enquanto a ponte reconectava (ela recomeça a cada
     // ~50 min): o recente entra; o antigo é histórico, que vem por outro caminho
@@ -246,7 +278,16 @@ async function reprocessarPendentes(baixar) {
 // ── chegou mensagem ───────────────────────────────────────────────────────
 // id de privacidade (@lid) -> telefone, aprendido no que o cliente manda; serve
 // para achar a conversa quando quem escreve é o escritório
-const lidParaFone = new Map();
+// F194: o mapa fica num arquivo, porque a ponte recomeça várias vezes ao dia e a
+// ligação de quem esconde o número só se responde se o @lid já é conhecido
+const LIDS = path.join(__dirname, "lids.json");
+const lidParaFone = new Map((() => { try { return Object.entries(JSON.parse(fs.readFileSync(LIDS, "utf8"))); } catch { return []; } })());
+let lidsGravados = lidParaFone.size;
+setInterval(() => {
+  if (lidParaFone.size === lidsGravados) return;
+  try { fs.writeFileSync(LIDS, JSON.stringify(Object.fromEntries(lidParaFone))); lidsGravados = lidParaFone.size; }
+  catch (e) { log("lids:", e.message); }
+}, 60000).unref();
 
 async function entrou(m, baixar) {
   const reacao = N.reacaoDe(m);

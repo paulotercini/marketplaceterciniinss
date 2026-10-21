@@ -1194,12 +1194,12 @@ E'Desculpe, não consegui entender. 😅\n\nVou chamar alguém do escritório pa
  '[]'::jsonb, 'triagem', 8),
 
 ('fora_horario',
-E'Recebemos sua mensagem! 🌙\n\nO escritório atende de segunda a sexta, das 8h às 18h. Fora desse horário a gente responde no próximo dia útil — mas pode deixar sua mensagem aqui que já fica registrada.',
+E'Recebemos sua mensagem! 🌙\n\nO escritório atende de segunda a sexta, das 7h às 17h. Fora desse horário a gente responde no próximo dia útil — mas pode deixar sua mensagem aqui que já fica registrada.',
  '[]'::jsonb, null, 9)
 on conflict (chave) do nothing;
 
 insert into config_app (chave, valor) values
-  ('zap_hora_inicio','08:00'), ('zap_hora_fim','18:00'), ('zap_dias_uteis','1,2,3,4,5'),
+  ('zap_hora_inicio','07:00'), ('zap_hora_fim','17:00'), ('zap_dias_uteis','1,2,3,4,5'),
   -- segundos de silêncio do bot depois de falar: quem manda "oi", "bom dia" e
   -- "alguém aí?" em cinco segundos recebe um menu, não três
   ('zap_pausa_bot','15'), ('zap_bot_ligado','sim')
@@ -1216,8 +1216,8 @@ language sql stable security definer set search_path = public as $$
   )
   select coalesce(
     extract(isodow from agora)::text = any (string_to_array(coalesce(dias,'1,2,3,4,5'), ','))
-    and agora::time >= coalesce(ini,'08:00')::time
-    and agora::time <  coalesce(fim,'18:00')::time, true)
+    and agora::time >= coalesce(ini,'07:00')::time
+    and agora::time <  coalesce(fim,'17:00')::time, true)
   from h
 $$;
 
@@ -2763,3 +2763,107 @@ end $$;
 drop trigger if exists zap_pedir_foto on clientes;
 create trigger zap_pedir_foto after insert or update of telefone on clientes
   for each row execute function zap_pedir_foto();
+
+-- F194 · ligação no WhatsApp: o escritório não atende ligação, então quem liga
+-- recebe uma mensagem dizendo para escrever ou mandar áudio (uma a cada 6 h por
+-- conversa, para quem liga oito vezes não receber oito). O texto é editável e o
+-- "ativo" do passo desliga a resposta sem programador.
+insert into zap_bot_passos (chave, texto, opcoes, entrega_setor, ordem) values
+('ligacao',
+E'Olá! 📞 Vimos sua ligação.\n\nO escritório não atende ligações pelo WhatsApp, mas responde por mensagem. Escreva aqui ou mande um áudio contando o que precisa, que a equipe responde no horário de atendimento (segunda a sexta, das 7h às 17h). Caso prefira ligar, estamos disponíveis no telefone fixo (16)3242-2908.',
+ '[]'::jsonb, null, 10)
+on conflict (chave) do nothing;
+
+create or replace function zap_ligacao(p_telefone text, p_nome text default null, p_video boolean default false)
+returns text
+language plpgsql security definer set search_path = public as $$
+declare v_conv uuid; v_txt text;
+begin
+  v_conv := zap_abrir(p_telefone, p_nome);
+  if exists (select 1 from zap_mensagens where conversa_id = v_conv and aviso_chave = 'ligacao'
+                and criado_em > now() - interval '6 hours') then return 'ja_avisado'; end if;
+  select texto into v_txt from zap_bot_passos where chave = 'ligacao' and ativo;
+  if v_txt is null then return 'desligado'; end if;
+  insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status, aviso_chave, aviso_ref)
+  values (v_conv, 'saida', true, v_txt, 'fila', 'ligacao', gen_random_uuid());
+  perform zap_nota_sistema(v_conv, null, '📞 Ligou por ' || case when p_video then 'vídeo' else 'voz' end
+    || ' às ' || to_char(now() at time zone 'America/Sao_Paulo', 'HH24:MI')
+    || '. Foi a resposta automática pedindo para escrever ou mandar áudio.');
+  return 'avisado';
+end $$;
+
+-- F194 · conversa parada: cliente escreveu e ninguém respondeu. Depois de 2 h
+-- avisa quem atende (o dono, ou o setor, ou a equipe do WhatsApp); depois de
+-- 1 dia avisa o gestor. Um aviso por espera e por nível; "ok", "obrigado" e
+-- emoji não pedem resposta. Só no expediente.
+alter table zap_conversas add column if not exists alerta_nivel smallint not null default 0;
+alter table zap_conversas add column if not exists alerta_de timestamptz;
+
+create or replace function zap_esperas() returns table
+  (id uuid, atendente_id uuid, setor_id uuid, alerta_nivel smallint, alerta_de timestamptz, nome text, espera timestamptz)
+language sql stable security definer set search_path = public as $$
+  with w as (
+    select z.id, z.atendente_id, z.setor_id, z.alerta_nivel, z.alerta_de,
+           coalesce(nullif(trim(z.contato_nome),''), k.nome, nullif(trim(z.nome_perfil),''), z.telefone) as nome,
+           -- a resposta automática (por_bot) não conta como resposta de gente
+           (select min(m.momento) from zap_mensagens m where m.conversa_id = z.id and m.direcao = 'entrada'
+               and m.momento > coalesce((select max(s.momento) from zap_mensagens s
+                                          where s.conversa_id = z.id and s.direcao = 'saida'
+                                            and not coalesce(s.por_bot, false)), '-infinity')) as espera,
+           (select m.texto from zap_mensagens m where m.conversa_id = z.id and m.direcao in ('entrada','saida')
+             order by m.momento desc, m.seq desc limit 1) as ultimo
+      from zap_conversas z left join clientes k on k.id = z.cliente_id
+     where z.status = 'aberta')
+  select id, atendente_id, setor_id, alerta_nivel, alerta_de, nome, espera from w
+   where espera is not null and espera > now() - interval '7 days'
+     and coalesce(ultimo,'') !~* '^\s*(ok|okay|obrigad[oa]s?|muito obrigad[oa]s?|valeu|blz|beleza|certo|ta|tá|sim|amém|amem|de nada|👍|🙏|❤️)[\s!.]*$'
+$$;
+
+create or replace function zap_alerta_parada() returns integer
+language plpgsql security definer set search_path = public as $$
+declare r record; n integer := 0; v_quando text;
+begin
+  if not zap_no_horario() then return 0; end if;
+  for r in select * from zap_esperas() loop
+    if r.alerta_de is distinct from r.espera then r.alerta_nivel := 0; end if;   -- espera nova
+    v_quando := to_char(r.espera at time zone 'America/Sao_Paulo', 'DD/MM "às" HH24:MI');
+    if r.alerta_nivel < 2 and r.espera < now() - interval '24 hours' then
+      insert into mencoes (para_id, conversa_id, texto)
+      select c.id, r.id, '⏰ WhatsApp: ' || r.nome || ' espera resposta desde ' || v_quando || ' (mais de 1 dia).'
+        from colaboradores c where c.ativo and c.papel = 'admin';
+      update zap_conversas set alerta_nivel = 2, alerta_de = r.espera where zap_conversas.id = r.id;
+      n := n + 1;
+    elsif r.alerta_nivel < 1 and r.espera < now() - interval '2 hours' then
+      insert into mencoes (para_id, conversa_id, texto)
+      select c.id, r.id, '⏰ WhatsApp: ' || r.nome || ' escreveu ' || v_quando || ' e ainda não teve resposta.'
+        from colaboradores c
+       where c.ativo and (
+             c.id = r.atendente_id
+          or (r.atendente_id is null and r.setor_id is not null
+              and exists (select 1 from colaborador_setores s where s.colaborador_id = c.id and s.setor_id = r.setor_id))
+          or (r.atendente_id is null and r.setor_id is null and c.atende_zap and c.papel <> 'admin'));
+      update zap_conversas set alerta_nivel = 1, alerta_de = r.espera where zap_conversas.id = r.id;
+      n := n + 1;
+    end if;
+  end loop;
+  return n;
+end $$;
+select cron.unschedule('zap-alerta-parada') where exists (select 1 from cron.job where jobname = 'zap-alerta-parada');
+select cron.schedule('zap-alerta-parada', '*/15 * * * *', 'select zap_alerta_parada()');
+
+-- F194 · cadastrou o cliente (ou o telefone dele)? A conversa que já existe com
+-- aquele número passa a ser dele, sem ninguém vincular à mão
+create or replace function zap_vincular_cliente() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  update zap_conversas z set cliente_id = new.id
+   where z.cliente_id is null
+     and z.chave in (select fone_chave(new.telefone)
+                     union select fone_chave(t->>'numero')
+                       from jsonb_array_elements(case when jsonb_typeof(new.telefones) = 'array'
+                                                      then new.telefones else '[]'::jsonb end) t);
+  return new;
+end $$;
+drop trigger if exists zap_vincular_cliente on clientes;
+create trigger zap_vincular_cliente after insert or update of telefone, telefones on clientes
+  for each row execute function zap_vincular_cliente();
