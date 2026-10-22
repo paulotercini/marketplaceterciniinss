@@ -41,22 +41,15 @@ LISTA_FASE = {
     # O mapa casa a lista pelo nome EXATO. Existem na conta listas com nome
     # quase igual e sem emoji; a tarefa delas entrava com fase "outro" e
     # sumia de todas as listas da barra lateral. Eram 270 casos, 194 ativos.
-    "Escritório": "escritorio",
-    "Escritorio": "escritorio",
+    # F254 (22.10.2026): as listas "Escritório", "Petição Inicial", "Recurso Administrativo", "Impugnações" e "Audiências"
+    # da conta são de MODELOS e roteiros de peça ("Impugnação ao Laudo Pericial", "Análise de PPP"), sem nenhum cliente:
+    # saíram do mapa. Sem fase e sem CPF, a tarefa é pulada, e o caso que já estava no banco é encerrado pela faxina.
     "INSS": "inss",
     "Judicial": "judicial",
     "Conselho de Recursos": "conselho",
-    "Recurso Administrativo": "conselho",
-    "Recursos Administrativos": "conselho",
     "Pagamentos": "pagamento",
     "Aposentadorias Futuras": "aposentadoria_futura",
     "Petições Iniciais": "peticao_inicial",
-    "Petição Inicial": "peticao_inicial",
-    "Peticao Inicial": "peticao_inicial",
-    "Impugnações": "judicial",
-    "Impugnacoes": "judicial",
-    "Audiências": "judicial",
-    "Audiencias": "judicial",
     "Tarefas com Prazo": "outro",
 }
 LISTA_PARTICULAR = "Tarefas"        # lista pessoal do To Do -> tarefas do Paulo

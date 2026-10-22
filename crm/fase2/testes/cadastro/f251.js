@@ -27,7 +27,7 @@ Object.assign(dados, { colaboradores: [...FIX.colaboradores, { id: INGRID, auth_
     { id: "c0000000-0000-4000-8000-000000000002", nome: "Bruno Fictício Lista", cpf: null, telefone: null, campos: {}, telefones: [], criado_em: "2026-01-01T12:00:00Z" },
     { id: "c0000000-0000-4000-8000-000000000003", nome: "Clara Fictícia Índice", cpf: null, telefone: null, campos: {}, telefones: [], criado_em: "2026-01-01T12:00:00Z" },
     { id: "c0000000-0000-4000-8000-000000000004", nome: "Élio Fictício Acento", cpf: null, telefone: null, campos: {}, telefones: [], criado_em: "2026-01-01T12:00:00Z" },
-    { id: "c0000000-0000-4000-8000-000000000005", nome: "3M Fictícia Empresa", cpf: null, telefone: null, campos: {}, telefones: [], criado_em: "2026-01-01T12:00:00Z" }],
+    { id: "c0000000-0000-4000-8000-000000000005", nome: "3M Fictícia Empresa", cpf: null, telefone: null, campos: { e_cliente: true }, telefones: [], criado_em: "2026-01-01T12:00:00Z" }],
   casos: [], atribuicoes: [], documentos_beneficio: FIX.documentos_beneficio || [], modelos_documento: FIX.modelos_documento,
   config_app: [...(FIX.config_app || []), { chave: "crm_transicao", valor: JSON.stringify({ ligada: true, onda: 1, niveis: {} }) }] });
 const banco = new Banco(dados);
