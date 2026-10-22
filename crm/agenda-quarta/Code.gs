@@ -19,7 +19,10 @@ const CONFIG = {
   // aceita "001", "002", "001 livre", "001 - Livre (anote o telefone)", "001 - disponível", "002 vaga";
   // o título que já tem telefone anotado (8 dígitos ou mais) deixou de ser vaga
   REGEX_VAGA: /^\s*(00[12])\s*(?:[-–—:]?\s*\(?\s*(?:livre|dispon[ií]vel|vaga|aberto)\b(?:(?!\d{4}[\s.-]?\d{4}).)*)?\s*$/i,
-  VERSAO: 'F250e · cores, editar, sem cor = Paulo',
+  // F250f · o Marcos e a Amanda deixam o horário livre como "LIVRE 10:30-11:00" ou "LIVRE 09h30-10h00", sem o código:
+  // é vaga sem tipo; o tipo vem do cliente na hora de agendar (001 primeiro atendimento, 002 cliente do escritório)
+  REGEX_VAGA_LIVRE: /^\s*livre\b(?:(?!\d{4}[\s.-]?\d{4}).)*$/i,
+  VERSAO: 'F250f · LIVRE do Marcos e da Amanda',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
   // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
@@ -159,7 +162,10 @@ function hm_(d) { return Utilities.formatDate(d, CONFIG.TZ, 'HH:mm'); }
 function ymd_(d) { return Utilities.formatDate(d, CONFIG.TZ, 'yyyy-MM-dd'); }
 function diaSemana_(data) { return Number(Utilities.formatDate(dt_(data, '12:00'), CONFIG.TZ, 'u')) % 7; }
 function sobrepoe_(a1, a2, b1, b2) { return a1 < b2 && b1 < a2; }
-function ehVaga_(ev) { return CONFIG.REGEX_VAGA.test((ev && ev.summary) || ''); }
+function ehVaga_(ev) { const t = (ev && ev.summary) || ''; return CONFIG.REGEX_VAGA.test(t) || CONFIG.REGEX_VAGA_LIVRE.test(t); }
+function minutos_(ev) { return Math.round((new Date(ev.end.dateTime) - new Date(ev.start.dateTime)) / 60000); }
+/** O tipo em que a vaga sem código aparece: 45 minutos ou mais, 001; menos, 002. Na hora de agendar, vale o do cliente. */
+function tipoPelaDuracao_(ev) { return minutos_(ev) >= CONFIG.DURACAO['001'] ? '001' : '002'; }
 function tipoDaVaga_(ev) { const m = ((ev && ev.summary) || '').match(CONFIG.REGEX_VAGA); return m ? m[1] : null; }
 function ehAtendimento_(ev) { return CONFIG.REGEX_ATENDIMENTO.test((ev && ev.summary) || '') && !ehVaga_(ev); }
 function recusado_(ev) { return (ev.attendees || []).some(a => a.self && a.responseStatus === 'declined'); }
@@ -243,7 +249,7 @@ function resumo_(ev) {
   const m = titulo.match(CONFIG.REGEX_ATENDIMENTO), vaga = ehVaga_(ev);
   return {
     id: ev.id, titulo, data: ymd_(ini), inicio: hm_(ini), fim: hm_(fim),
-    atendimento: !!m && !vaga, vaga, tipo: m ? m[1] : null, profissional: donoDoEvento_(ev) || (m ? CONFIG.PADRAO : null),
+    atendimento: !!m && !vaga, vaga, tipo: m ? m[1] : (vaga ? tipoPelaDuracao_(ev) : null), tipoFixo: !!m, profissional: donoDoEvento_(ev) || ((m || vaga) ? CONFIG.PADRAO : null),
     confirmado: /(^|\s)confirmado\s*$/i.test(titulo) && !/n[ãa]o confirmado\s*$/i.test(titulo),
     origemCrm: p.origem === 'crm-agenda',
     clienteId: p.clienteId || null, nome: p.nome || null,
@@ -272,9 +278,9 @@ function horariosLivres_(data, tipo, ocupados, user, agora, prof) {
 }
 
 function vagasLivres_(vagas, tipo, agora) {
-  return vagas.filter(ev => tipoDaVaga_(ev) === tipo && new Date(ev.start.dateTime) > agora)
+  return vagas.filter(ev => (tipoDaVaga_(ev) || tipoPelaDuracao_(ev)) === tipo && new Date(ev.start.dateTime) > agora)
     .map(ev => ({ inicio: hm_(new Date(ev.start.dateTime)), fim: hm_(new Date(ev.end.dateTime)), encaixado: true, reserva: false,
-                  vaga: true, eventoId: ev.id, tipo, profissional: donoDoEvento_(ev) || CONFIG.PADRAO }));
+                  vaga: true, eventoId: ev.id, tipo, tipoFixo: !!tipoDaVaga_(ev), profissional: donoDoEvento_(ev) || CONFIG.PADRAO }));
 }
 
 /* ---------------------------- Ações ---------------------------- */
@@ -353,7 +359,7 @@ function agendar_(user, r) {
     let vaga = null;
     if (r.eventoId) {
       vaga = Calendar.Events.get(CONFIG.CALENDAR_ID, String(r.eventoId));
-      if (!vaga || vaga.status === 'cancelled' || !ehVaga_(vaga) || tipoDaVaga_(vaga) !== tipo || !contaPara_(vaga, prof)) {
+      if (!vaga || vaga.status === 'cancelled' || !ehVaga_(vaga) || (tipoDaVaga_(vaga) && tipoDaVaga_(vaga) !== tipo) || !contaPara_(vaga, prof)) {
         throw erro_('HORARIO_INDISPONIVEL', 'Esta vaga acabou de ser preenchida. A agenda será atualizada.');
       }
     } else {
@@ -362,8 +368,8 @@ function agendar_(user, r) {
       if (!slot) throw erro_('HORARIO_INDISPONIVEL', 'O horário acabou de ser ocupado. A agenda será atualizada.');
     }
 
-    const ini = dt_(r.data, r.inicio);
-    const fim = new Date(ini.getTime() + CONFIG.DURACAO[tipo] * 60000);
+    const ini = vaga ? new Date(vaga.start.dateTime) : dt_(r.data, r.inicio);
+    const fim = vaga ? new Date(vaga.end.dateTime) : new Date(ini.getTime() + CONFIG.DURACAO[tipo] * 60000);
     const descricao = [
       'Telefone: ' + tel,
       'Tipo: ' + (tipo === '001' ? 'Primeiro atendimento' : 'Cliente do escritório'),
