@@ -16,9 +16,10 @@ const CONFIG = {
   REGEX_ATENDIMENTO: /^\s*(00[12])/,
   // F250 · a VAGA: o evento que o escritório deixa no Google Agenda só com o código ("001", "002" ou "001 livre").
   // É horário livre daquele tipo; agendar troca o título pelo nome do cliente no mesmo evento, e cancelar devolve.
-  // aceita "001", "002", "001 livre", "001 - disponível", "002 vaga", "001 (livre)"
-  REGEX_VAGA: /^\s*(00[12])\s*[-–—:]?\s*\(?\s*(?:livre|dispon[ií]vel|vaga|aberto)?\s*\)?\s*\.?\s*$/i,
-  VERSAO: 'F250b · vagas 001/002',
+  // aceita "001", "002", "001 livre", "001 - Livre (anote o telefone)", "001 - disponível", "002 vaga";
+  // o título que já tem telefone anotado (8 dígitos ou mais) deixou de ser vaga
+  REGEX_VAGA: /^\s*(00[12])\s*(?:[-–—:]?\s*\(?\s*(?:livre|dispon[ií]vel|vaga|aberto)\b(?:(?!\d{4}[\s.-]?\d{4}).)*)?\s*$/i,
+  VERSAO: 'F250c · vagas 001/002',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
   // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
