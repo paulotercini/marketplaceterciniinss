@@ -19,15 +19,15 @@ const CONFIG = {
   // aceita "001", "002", "001 livre", "001 - Livre (anote o telefone)", "001 - disponível", "002 vaga";
   // o título que já tem telefone anotado (8 dígitos ou mais) deixou de ser vaga
   REGEX_VAGA: /^\s*(00[12])\s*(?:[-–—:]?\s*\(?\s*(?:livre|dispon[ií]vel|vaga|aberto)\b(?:(?!\d{4}[\s.-]?\d{4}).)*)?\s*$/i,
-  VERSAO: 'F250d · vagas 001/002',
+  VERSAO: 'F250e · cores, editar, sem cor = Paulo',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
   // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
   // dias: 0 domingo ... 6 sábado. limite/reservas: só o Paulo tem.
   PROFISSIONAIS: {
-    paulo:  { nome: 'Paulo',  tratamento: 'o Dr. Paulo Roberto Tercini Filho', cor: '9',  dias: [3],             limite: 14,   reservas: [['18:00', '18:30']], exibir: 6 },
-    marcos: { nome: 'Marcos', tratamento: 'o Dr. Marcos',                      cor: '10', dias: [1, 2, 3, 4, 5], limite: null, reservas: [],                   exibir: 10 },
-    amanda: { nome: 'Amanda', tratamento: 'a Dra. Amanda',                     cor: '5',  dias: [1, 2, 3, 4, 5], limite: null, reservas: [],                   exibir: 10 }
+    paulo:  { nome: 'Paulo',  tratamento: 'o Dr. Paulo Roberto Tercini Filho', cor: '9',  tons: ['9', '7', '1'],  dias: [3],             limite: 14,   reservas: [['18:00', '18:30']], exibir: 6 },
+    marcos: { nome: 'Marcos', tratamento: 'o Dr. Marcos',                      cor: '10', tons: ['10', '2'], dias: [1, 2, 3, 4, 5], limite: null, reservas: [],                   exibir: 10 },
+    amanda: { nome: 'Amanda', tratamento: 'a Dra. Amanda',                     cor: '5',  tons: ['5', '6'],  dias: [1, 2, 3, 4, 5], limite: null, reservas: [],                   exibir: 10 }
   },
   PADRAO: 'paulo',
   // dia inteiro nestas agendas bloqueia o dia de quem está na lista
@@ -52,6 +52,7 @@ function diagnostico_() {
   return { ok: true, versao: CONFIG.VERSAO, proximos14dias: { eventos: evs.length, comCodigo001ou002: comCodigo.length,
     vagas: evs.filter(ehVaga_).length, vagasDisponivel: evs.filter(ev => ehVaga_(ev) && ev.transparency === 'transparent').length,
     vagasSemCorDeProfissional: evs.filter(ev => ehVaga_(ev) && donoDoEvento_(ev) === null).length,
+    coresDosAtendimentos: comCodigo.reduce((o, ev) => { const k = (ehVaga_(ev) ? 'vaga ' : 'atend ') + (ev.colorId || 'sem cor'); o[k] = (o[k] || 0) + 1; return o; }, {}),
     vagasPorProfissional: Object.keys(CONFIG.PROFISSIONAIS).reduce((o, k) => { o[k] = evs.filter(ev => ehVaga_(ev) && contaPara_(ev, prof_(k))).length; return o; }, {}) } };
 }
 
@@ -66,6 +67,7 @@ function doPost(e) {
       case 'confirmar':           out = confirmar_(user, req); break;
       case 'cancelar':            out = cancelar_(user, req); break;
       case 'remarcar':            out = remarcar_(user, req); break;
+      case 'editar':              out = editar_(user, req); break;
       case 'agendamentosFuturos': out = agendamentosFuturos_(user, req); break;
       case 'quemSouEu':           out = { ok: true, usuario: user.nome, papel: user.papel }; break;
       case 'definirDias':         out = definirDias_(user, req); break;
@@ -187,7 +189,8 @@ function atendeNoDia_(prof, data) {
 function donoDoEvento_(ev) {
   const p = (ev.extendedProperties && ev.extendedProperties.private) || {};
   if (p.profissional && CONFIG.PROFISSIONAIS[p.profissional]) return p.profissional;
-  const achado = Object.keys(CONFIG.PROFISSIONAIS).find(k => CONFIG.PROFISSIONAIS[k].cor === String(ev.colorId || ''));
+  const c = String(ev.colorId || '');
+  const achado = Object.keys(CONFIG.PROFISSIONAIS).find(k => (CONFIG.PROFISSIONAIS[k].tons || [CONFIG.PROFISSIONAIS[k].cor]).indexOf(c) >= 0);
   return achado || null;
 }
 
@@ -217,7 +220,9 @@ function diaBloqueado_(data, prof) {
 /** Atendimento que conta no dia de quem: o da cor dele; sem cor, conta para o Paulo (dono da agenda). */
 function contaPara_(ev, prof) { const d = donoDoEvento_(ev); return d === prof.id || (d === null && prof.id === CONFIG.PADRAO); }
 function eventosDoProfissional_(evs, prof) {
-  return evs.filter(ev => { const d = donoDoEvento_(ev); return d === null || d === prof.id; });
+  return evs.filter(ev => { const d = donoDoEvento_(ev);
+    if (d !== null) return d === prof.id;
+    return (ehAtendimento_(ev) || ehVaga_(ev)) ? prof.id === CONFIG.PADRAO : true; });
 }
 
 function eventosDoDia_(data) {
@@ -238,7 +243,7 @@ function resumo_(ev) {
   const m = titulo.match(CONFIG.REGEX_ATENDIMENTO), vaga = ehVaga_(ev);
   return {
     id: ev.id, titulo, data: ymd_(ini), inicio: hm_(ini), fim: hm_(fim),
-    atendimento: !!m && !vaga, vaga, tipo: m ? m[1] : null, profissional: donoDoEvento_(ev),
+    atendimento: !!m && !vaga, vaga, tipo: m ? m[1] : null, profissional: donoDoEvento_(ev) || (m ? CONFIG.PADRAO : null),
     confirmado: /(^|\s)confirmado\s*$/i.test(titulo) && !/n[ãa]o confirmado\s*$/i.test(titulo),
     origemCrm: p.origem === 'crm-agenda',
     clienteId: p.clienteId || null, nome: p.nome || null,
@@ -269,7 +274,7 @@ function horariosLivres_(data, tipo, ocupados, user, agora, prof) {
 function vagasLivres_(vagas, tipo, agora) {
   return vagas.filter(ev => tipoDaVaga_(ev) === tipo && new Date(ev.start.dateTime) > agora)
     .map(ev => ({ inicio: hm_(new Date(ev.start.dateTime)), fim: hm_(new Date(ev.end.dateTime)), encaixado: true, reserva: false,
-                  vaga: true, eventoId: ev.id, tipo }));
+                  vaga: true, eventoId: ev.id, tipo, profissional: donoDoEvento_(ev) || CONFIG.PADRAO }));
 }
 
 /* ---------------------------- Ações ---------------------------- */
@@ -372,7 +377,7 @@ function agendar_(user, r) {
       clienteId: r.clienteId ? String(r.clienteId) : '', agendadoPor: user.nome };
     const ev = vaga
       ? Calendar.Events.patch({ summary: tipo + ' - ' + nome + ' - Não confirmado', description: descricao,
-          extendedProperties: { private: Object.assign(privado, { vaga: '1' }) } }, CONFIG.CALENDAR_ID, vaga.id)
+          extendedProperties: { private: Object.assign(privado, { vaga: '1', tituloVaga: vaga.summary }) } }, CONFIG.CALENDAR_ID, vaga.id)
       : Calendar.Events.insert({
           summary: tipo + ' - ' + nome + ' - Não confirmado',
           description: descricao,
@@ -409,12 +414,29 @@ function cancelar_(user, r) {
 function liberar_(ev) {
   const p = (ev.extendedProperties && ev.extendedProperties.private) || {};
   if (p.vaga === '1') {
-    Calendar.Events.patch({ summary: p.tipo || tipoDaVaga_(ev) || '001', description: '',
-      extendedProperties: { private: { origem: '', vaga: '', nome: '', telefone: '', clienteId: '', agendadoPor: '' } } },
+    Calendar.Events.patch({ summary: p.tituloVaga || p.tipo || tipoDaVaga_(ev) || '001', description: '',
+      extendedProperties: { private: { origem: '', vaga: '', tituloVaga: '', nome: '', telefone: '', clienteId: '', agendadoPor: '' } } },
       CONFIG.CALENDAR_ID, ev.id);
   } else {
     Calendar.Events.remove(CONFIG.CALENDAR_ID, ev.id);
   }
+}
+
+function editar_(user, r) {
+  const ev = Calendar.Events.get(CONFIG.CALENDAR_ID, String(r.eventId || ''));
+  if (!ehAtendimento_(ev)) throw erro_('NAO_PERMITIDO', 'Só se edita um atendimento 001 ou 002.');
+  const nome = String(r.nome || '').replace(/\s+/g, ' ').trim();
+  if (nome.length < 3) throw erro_('PARAMETRO', 'Informe o nome do cliente.');
+  const tipo = (ev.summary.match(CONFIG.REGEX_ATENDIMENTO) || [])[1];
+  const st = /(^|\s)confirmado\s*$/i.test(ev.summary) && !/n[ãa]o confirmado\s*$/i.test(ev.summary) ? 'Confirmado' : 'Não confirmado';
+  const tel = String(r.telefone || '').replace(/\D/g, '');
+  const p = Object.assign({}, (ev.extendedProperties && ev.extendedProperties.private) || {}, { nome });
+  if (tel) p.telefone = tel;
+  const desc = String(ev.description || '').replace(/^Telefone: .*$/m, '').trim();
+  const novo = Calendar.Events.patch({ summary: tipo + ' - ' + nome + ' - ' + st,
+    description: (tel ? 'Telefone: ' + tel + '\n' : '') + desc + '\nEditado por: ' + user.nome + ' em ' + Utilities.formatDate(new Date(), CONFIG.TZ, 'dd/MM/yyyy HH:mm'),
+    extendedProperties: { private: p } }, CONFIG.CALENDAR_ID, ev.id);
+  return { ok: true, evento: resumo_(novo) };
 }
 
 /** Grava o novo horário primeiro e só depois remove o antigo, para não perder a vaga. */

@@ -74,7 +74,7 @@ for (const d of new Set([quartas(1)[0], q[0]])) {
   const foto = n => process.env.FOTO ? p.screenshot({ path: process.env.FOTO + "-" + n + ".png" }) : null;
   await foto("tela");
   const tela = await p.evaluate(() => ({ dias: document.querySelectorAll(".aq-dia").length,
-    manual: !!document.querySelector(".aq-ev.p-nenhum"), outro: !!document.querySelector(".aq-ev.outro"),
+    manual: !!document.querySelector(".aq-ev.p-paulo[class*=' t00']"), outro: !!document.querySelector(".aq-ev.outro"),
     livre: [...document.querySelectorAll(".aq-ev")].some(e => /Agenda Livre/.test(e.textContent)),
     reserva: !!document.querySelector(".aq-reserva"), almoco: !!document.querySelector(".aq-almoco") }));
   conf("F151 · seis quartas na faixa; atendimento manual, audiência em cinza, almoço e reserva do Paulo", tela.dias === 6 && tela.manual && tela.outro && tela.almoco && tela.reserva);
@@ -153,7 +153,7 @@ for (const d of new Set([quartas(1)[0], q[0]])) {
   const idManual = g.eventos.find(e => /Fulano Manual/.test(e.summary) && e.start.dateTime.startsWith(q[0])).id;
   await p.click(`[data-aqev="${idManual}"]`);
   const opsManual = await p.evaluate(() => [...document.querySelectorAll(".aq-menu [data-aqop]")].map(b => b.dataset.aqop).join(","));
-  conf(`F151 · atendimento lançado à mão só tem Confirmar e Abrir cliente (${opsManual})`, opsManual === "confirmar,abrir");
+  conf(`F151 · atendimento lançado à mão tem Editar, Confirmar e Abrir cliente (${opsManual})`, opsManual === "editar,confirmar,abrir");   // F250e · Editar
   await p.keyboard.press("Escape"); await p.mouse.click(5, 5);
   const antes = escritas.length;
   await p.click(`[data-aqev="${idA}"]`); await p.click('[data-aqop="cancelar"]');
