@@ -140,8 +140,21 @@ const MSGS = [
     const d = document.createElement("div"); d.innerHTML = '<ul id="cli-todos-l"></ul><p id="cli-todos-n"></p>'; document.body.appendChild(d);
     pintarClientesTodos();
     const it = document.querySelector(`#cli-todos-l [data-cli="${cli}"]`), outro = document.querySelector(`#cli-todos-l [data-cli]:not([data-cli="${cli}"])`);
-    return !!it.querySelector("img.avatar") && (!outro || !!outro.querySelector("span.avatar"));
+    const r = !!it.querySelector("img.avatar") && (!outro || !!outro.querySelector("span.avatar")); d.remove(); return r;
   }, CLI_CHEIO));
+
+  // "Sem telefone": só quem não tem número, e o número se completa na própria linha
+  // (o vínculo de vários clientes, acima, deu telefone a esta ficha: aqui ela volta a não ter)
+  await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.telefone = null; c.telefones = []; renderClientesTodos(); }, CLI_VAZIO);
+  await p.click("#cli-semtel");
+  const semTelIds = await p.$$eval("#cli-todos-l [data-cli]", bs => bs.map(b => b.dataset.cli));
+  conf("o filtro Sem telefone traz quem não tem número e esconde quem tem", semTelIds.includes(CLI_VAZIO) && !semTelIds.includes(CLI_CHEIO));
+  await p.fill(`[data-tel="${CLI_VAZIO}"]`, "99876-5432");
+  await p.click(`[data-salvatel="${CLI_VAZIO}"]`);
+  await p.waitForTimeout(400);
+  const pTel = patches.findLast(x => x.u.includes(`clientes?id=eq.${CLI_VAZIO}`) && x.b.telefone);
+  conf("guardar grava o telefone com o DDD 16 e a pessoa sai da lista", !!pTel && pTel.b.telefone === "(16) 99876-5432"
+    && !(await p.$(`#cli-todos-l [data-cli="${CLI_VAZIO}"]`)));
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);
