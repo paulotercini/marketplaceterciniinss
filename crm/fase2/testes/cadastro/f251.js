@@ -181,7 +181,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const vm = await p.$$eval(".aq-vaga", b => b.map(x => [x.dataset.aqvaga, x.className]));
   conf(`na agenda do Marcos só a vaga dele, nos tons de verde (${vm.map(v => v[0]).join(", ")})`, vm.length === 1 && vm[0][0] === "M2" && /p-marcos/.test(vm[0][1]));
   conf("o atendimento do Marcos (sálvia) é dele e as vagas do Paulo não aparecem", await p.evaluate(() => { const e = document.querySelector('[data-aqev="M1"]'); return !!e && e.classList.contains("p-marcos") && !document.querySelector('[data-aqvaga="P4"]'); }));
-  conf("o almoço continua bloqueando o Marcos", /Almoço/.test(await p.textContent(".aq-evs")));
+  conf("o almoço é só do Paulo: não aparece na agenda do Marcos", !/Almoço/.test(await p.textContent(".aq-tempo")) && !(await p.$(".aq-almoco")));
   await foto("03-marcos");
   conf("a vaga LIVRE do Marcos diz \"Livre · 30 min\"", /Livre · 30 min/.test(await p.textContent('.aq-vaga[data-aqvaga="M2"]')));
   // F250h · dia sem vaga no Google (como o 23/10 do Marcos): nenhum horário, em vez dos horários calculados
@@ -213,7 +213,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click(`[data-aqdia="${W}"]`);
   const vt = await p.$$eval(".aq-vaga", b => b.map(x => x.dataset.aqvaga));
   conf(`a Completa junta as vagas do Paulo e do Marcos (${vt.join(", ")})`, vt.includes("P4") && vt.includes("M2"));
-  conf("na Completa o almoço aparece uma vez só", await p.evaluate(d => agq.disp.dias.find(x => x.data === d).eventos.filter(e => e.id === "ALM").length === 1, W));
+  conf("na Completa o almoço do Paulo aparece uma vez só", await p.evaluate(d => agq.disp.dias.find(x => x.data === d).eventos.filter(e => e.id === "ALM").length === 1, W));
   await foto("04-completa");
   await p.click('.aq-vaga[data-aqvaga="M2"]');
   conf("a vaga do Marcos na Completa agenda com o Marcos", await p.evaluate(() => fluxo.prof === "marcos" && fluxo.eventoId === "M2"));
