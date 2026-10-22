@@ -50,3 +50,7 @@ Esta mudança está no `Code.gs`: copie o arquivo inteiro para o projeto no scri
 ## O LIVRE do Marcos e da Amanda (F250f, 22.10.2026)
 
 No Google do escritório o Marcos (sálvia) e a Amanda (banana) deixam o horário livre como `LIVRE 10:30-11:00` ou `LIVRE 09h30-10h00`, sem o código. O script lê esse título como vaga sem tipo: aparece tracejada na cor do profissional (no tom do 001 se tiver 45 minutos ou mais, no do 002 se tiver menos), o tipo vem do cliente na hora de agendar (001 primeiro atendimento, 002 cliente do escritório), o horário do evento não muda e cancelar devolve o título LIVRE original. O título com telefone anotado deixa de ser vaga.
+
+## Agenda mais rápida (F250g, 22.10.2026)
+
+A disponibilidade busca o período inteiro numa consulta à agenda e uma a cada agenda de férias ou feriado, em vez de três consultas por dia (até 30 por profissional). O resultado é o mesmo.
