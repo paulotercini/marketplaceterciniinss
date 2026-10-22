@@ -165,8 +165,54 @@ def _cliente_key(t):
     return ("cpf", t["cpf"]) if t["cpf"] else ("nome", t["nome"] or t["titulo"])
 
 
-def mapear(dados):
-    """crm.json -> dicionário de linhas por tabela (ids determinísticos)."""
+# F256 (22.10.2026) · A MESMA PESSOA EM DUAS FICHAS. A tarefa sem "#CPF" virava
+# cliente pelo nome, e o nome escrito de outro jeito ("Adejair Donizete Maran" no
+# 💵, "Adejair Donisete Maran #CPF" no 👪) fazia duas fichas: 38 pessoas assim.
+# Agora a tarefa sem CPF vai à ficha COM CPF de nome igual ou quase igual (até
+# 2 letras de diferença, mesmo primeiro nome), e só quando há UMA candidata.
+def nome_chave(n):
+    n = "".join(ch for ch in unicodedata.normalize("NFD", (n or "").lower())
+                if unicodedata.category(ch) != "Mn")
+    n = re.sub(r"[^a-z ]", " ", n)
+    n = re.sub(r"\b(de|da|do|dos|das|e)\b", " ", n)
+    n = re.sub(r"(.)\1", r"\1", n.replace("z", "s").replace("y", "i"))
+    return " ".join(n.split())
+
+
+def _distancia(a, b, teto=2):
+    if abs(len(a) - len(b)) > teto:
+        return teto + 1
+    d = list(range(len(b) + 1))
+    for i in range(1, len(a) + 1):
+        p, d[0] = d[0], i
+        for j in range(1, len(b) + 1):
+            q = d[j]
+            d[j] = min(d[j] + 1, d[j - 1] + 1, p + (a[i - 1] != b[j - 1]))
+            p = q
+    return d[len(b)]
+
+
+def cpf_pelo_nome(nome, cpf_por_nome):
+    """O CPF da ficha de nome igual ou quase igual; None se nenhuma ou mais de uma."""
+    k = nome_chave(nome)
+    if len(k.split()) < 2:
+        return None
+    if k in cpf_por_nome:
+        cpfs = cpf_por_nome[k]
+    else:
+        pri = k.split()[0]
+        cpfs = {c for kk, cs in cpf_por_nome.items()
+                if kk.split()[0] == pri and _distancia(k, kk) <= 2 for c in cs}
+    return next(iter(cpfs)) if len(cpfs) == 1 else None
+
+
+def mapear(dados, cpf_por_nome=None):
+    """crm.json -> dicionário de linhas por tabela (ids determinísticos).
+    `cpf_por_nome` ({nome_chave: {cpf}}) vem das fichas com CPF do banco (F256)."""
+    cpf_por_nome = {k: set(v) for k, v in (cpf_por_nome or {}).items()}
+    for t in dados["tarefas"]:
+        if t.get("cpf") and t.get("nome"):
+            cpf_por_nome.setdefault(nome_chave(t["nome"]), set()).add(t["cpf"])
     clientes, casos, andamentos, eventos, tarefas = {}, {}, {}, {}, {}
     pagamentos, lembretes, fora_de_pagamentos = {}, {}, []
     credenciais, vinculos, pend_vinculos = {}, {}, []
@@ -191,13 +237,16 @@ def mapear(dados):
             continue
         fase = fase or "outro"
 
-        tipo, chave = _cliente_key(t)
+        achado = None if t["cpf"] else cpf_pelo_nome(t["nome"] or t["titulo"], cpf_por_nome)
+        tipo, chave = ("cpf", achado) if achado else _cliente_key(t)
         cid = uid("cliente", tipo, chave)
         c = clientes.setdefault(cid, {
             "id": cid, "cpf": t["cpf"], "nome": t["nome"] or t["titulo"],
             "dn": None, "telefone": None,
         })
-        if t["nome"] and len(t["nome"]) > len(c["nome"] or ""):
+        if achado:
+            c["cpf"] = c["cpf"] or achado
+        elif t["nome"] and len(t["nome"]) > len(c["nome"] or ""):
             c["nome"] = t["nome"]
         c["dn"] = c["dn"] or t["dn"]
         c["telefone"] = c["telefone"] or t["telefone"]
@@ -1489,6 +1538,25 @@ def subir_rest(mapa):
         print(f"  aviso: não gravei o carimbo da sincronização: {e}")
 
 
+def cpf_por_nome_do_banco():
+    """{nome_chave: {cpf}} das fichas com CPF (F256); sem banco, vazio."""
+    url = (os.environ.get("SUPABASE_URL") or "").strip()
+    chave = (os.environ.get("SUPABASE_SERVICE_KEY") or "").strip()
+    if not url or not chave:
+        return {}
+    try:
+        linhas = _rest_todas(url, chave, "/rest/v1/clientes?cpf=not.is.null&select=nome,cpf")
+    except Exception as e:
+        print(f"::warning::sem as fichas com CPF para juntar nomes parecidos ({e})")
+        return {}
+    out = {}
+    for l in linhas:
+        cpf = re.sub(r"\D", "", l.get("cpf") or "")
+        if len(cpf) == 11 and l.get("nome"):
+            out.setdefault(nome_chave(l["nome"]), set()).add(cpf)
+    return out
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--entrada", default=str(ENTRADA))
@@ -1496,7 +1564,7 @@ def main(argv=None):
     args = ap.parse_args(argv)
 
     dados = json.loads(pathlib.Path(args.entrada).read_text(encoding="utf-8"))
-    mapa = mapear(dados)
+    mapa = mapear(dados, None if args.sql else cpf_por_nome_do_banco())
     resumo = {t: len(mapa[t]) for t in ("clientes", "casos", "andamentos", "eventos", "pagamentos",
                                         "lembretes", "tarefas", "credenciais", "vinculos")}
     print("mapeado:", resumo)
