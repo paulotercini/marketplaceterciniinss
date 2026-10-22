@@ -3879,8 +3879,22 @@ html[data-tema="v10"] .tl-cab{flex-wrap:wrap;row-gap:4px}
 html[data-tema="v10"] .tl-cab-fim .tl-barra{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px;margin:0 6px 0 0;padding:0;border:0}
 html[data-tema="v10"] .tl-cab-fim .tl-barra .tl-bt:not(.tl-bt-ic){min-height:28px;padding:0 9px;font-size:12px}
 html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
+/* F250 · as vagas do Google Agenda e a lista Clientes */
+.aq-vagas{margin:10px 0 12px}.aq-vagas h4{margin:0 0 6px;font-size:13px}
+.aq-vagas-l{display:flex;flex-wrap:wrap;gap:8px}
+.aq-vaga{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:92px;padding:8px 12px;border:1.5px dashed #1E6F50;border-radius:10px;background:#F2F8F4;color:#14513A;cursor:pointer;font:inherit}
+.aq-vaga b{font-size:15px}.aq-vaga span{font-size:12px}
+.aq-vaga.t001{border-color:#2F5E9E;background:#EEF3FA;color:#22487A}
+@media (hover:hover) and (pointer:fine){.aq-vaga:hover{filter:brightness(.96)}}
+.aq-ev.aq-ev-vaga{background:#F2F8F4;border:1.5px dashed #1E6F50;color:#14513A;cursor:pointer}
+.aq-dia-livres{display:block;font-size:11px;color:#1E6F50;font-weight:600}
+.aq-horarios small{display:block;font-size:11px;opacity:.8}
+.cli-todos-l{list-style:none;margin:10px 0 0;padding:0}
+.cli-todos-it{display:flex;flex-direction:column;align-items:flex-start;width:100%;padding:9px 10px;border:none;border-bottom:1px solid var(--borda);background:none;text-align:left;cursor:pointer;font:inherit}
+.cli-todos-it span{font-size:12px;color:var(--cinza)}
+@media (hover:hover) and (pointer:fine){.cli-todos-it:hover{background:var(--fundo2,#f5f5f2)}}
 /* F249 · o nível 0 (primeiro acesso): na ficha só o Cadastro (Identificação); na barra só a Agenda, e o Novo Cliente fica no botão fixo */
-html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="0"] .lista-item:not([data-v="agendaq"]),html[data-nivel="0"] .cel-tudo,
+html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="0"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]),html[data-nivel="0"] .cel-tudo,
 html[data-nivel="0"] #btn-v10-anotar,html[data-nivel="0"] .rapida-caixa{display:none!important}
 /* F249 · a transição: no nível 1 o campo de escrever fica como o To Do (sem os tipos nem Sugestões) e as datas numa linha */
 html[data-nivel="1"] #tipo-fila .tipo-ch[data-tipoand],html[data-nivel="1"] .sug-abrir{display:none!important}
@@ -4692,7 +4706,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.76</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.77</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6888,7 +6902,8 @@ function montarSidebar(){
     // entra nas listas, porque é onde o atendente trabalha
     document.getElementById("grupo-dinamicas").innerHTML = [...din, ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
         ["direito","⚖️ Análise de Direito", direitoAlcancado().length||null],
-        ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && dataSP(e.data_hora)>=hoje()).length]]
+        ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && dataSP(e.data_hora)>=hoje()).length],
+        ["clientes","👥 Clientes", (D.clientes||[]).length]]   // F250 · a lista de todos os clientes (nível 0)
       .filter(([id])=>pode.includes(id) && !["particulares","rotinas"].includes(id))
       .map(([id,rot,n])=>`<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
         (id==="meudia"&&nVenc)?`<span class="cont venc" title="${nVenc} vencida${nVenc>1?"s":""} · ${n||0} hoje">${n?`${nVenc} · ${n}`:nVenc}</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("");   // F236 · vencidas · hoje, como a tela
@@ -9042,6 +9057,7 @@ function render(){
   if(visao==="dashboard") return renderDash();
   if(visao==="fase:aposentadoria_futura") return renderCardsApos();   // F218 · os cards, não os casos da fase
   if(visao==="agenda") return renderAgenda();
+  if(visao==="clientes") return renderClientesTodos();   // F250
   if(visao==="calendario") return renderCalendario();
   if(visao==="particulares") return renderParticulares();
   if(visao==="meudia") return renderMeuDia();
@@ -10821,7 +10837,7 @@ const LISTAS_POR_CARGO = {
   advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "direito", "agenda"],
   recepcao: ["meudia","mencoes","whatsapp","calendario","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente"],
 };
-const listasDoColab = () => meuNivel()===0 ? ["agendaq", "novocliente"]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente)
+const listasDoColab = () => meuNivel()===0 ? ["agendaq", "clientes", "novocliente"]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente)
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
 function alternarVerComo(){
   guardar("crm_ver_como", visaoColab() ? "" : "colab");
@@ -14631,6 +14647,28 @@ function renderMarketing(){
 }
 
 // ── agenda e dashboard ────────────────────────────────────────────────────
+// F250 · todos os clientes do escritório, em ordem de nome, com um filtro; o clique abre a ficha (no nível 0, só a Identificação)
+let _cliFiltro = "";
+function renderClientesTodos(){
+  tituloLista(temaV10() ? "Clientes" : "👥 Clientes");
+  document.getElementById("sub-lista").textContent = `${(D.clientes||[]).length} clientes do escritório. Digite parte do nome, o CPF ou o telefone.`;
+  document.getElementById("conteudo-meio").innerHTML = `<div class="cli-todos"><input id="cli-filtro" class="aq-inp" placeholder="Filtrar por nome, CPF ou telefone" value="${esc(_cliFiltro)}" autocomplete="off">
+    <ul class="cli-todos-l" id="cli-todos-l"></ul><p class="meio-sub" id="cli-todos-n"></p></div>`;
+  const inp = document.getElementById("cli-filtro");
+  inp.oninput = () => { _cliFiltro = inp.value; pintarClientesTodos(); };
+  pintarClientesTodos();
+}
+function pintarClientesTodos(){
+  const q = dsa(_cliFiltro).replace(/\s+/g," ").trim(), dig = _cliFiltro.replace(/\D/g,""), partes = q.split(" ").filter(Boolean);
+  const todos = (D.clientes||[]).filter(c=>c.nome).slice().sort((a, b)=>dsa(a.nome).localeCompare(dsa(b.nome)));
+  const achados = !q ? todos : todos.filter(c=>{ const n = dsa(c.nome);
+    return partes.every(p=>n.includes(p)) || (dig.length>=3 && (String(c.cpf||"").includes(dig) || String(c.telefone||"").replace(/\D/g,"").includes(dig))); });
+  const MAX = 200, l = document.getElementById("cli-todos-l"); if(!l) return;
+  l.innerHTML = achados.slice(0, MAX).map(c=>`<li><button type="button" class="cli-todos-it" data-cli="${c.id}"><b>${esc(c.nome)}</b>
+    <span>${cpfMascarado(c.cpf)}${c.telefone?` · ${esc(fmtTelBR(c.telefone))}`:""}</span></button></li>`).join("") || `<li class="meio-sub">Ninguém com “${esc(_cliFiltro)}”.</li>`;
+  document.getElementById("cli-todos-n").textContent = achados.length > MAX ? `Mostrando ${MAX} de ${achados.length}: digite mais para achar.` : "";
+  l.querySelectorAll("[data-cli]").forEach(b=>b.onclick=()=>abrirFicha(b.dataset.cli));
+}
 function renderAgenda(){
   tituloLista("🩺 Perícias & Audiências");
   document.getElementById("sub-lista").textContent="Agenda estruturada — adicione novas pela ficha do cliente.";
@@ -47132,16 +47170,36 @@ function pintarAgenda(){
   const dia = r.dias.find(d=>d.data===agq.sel) || r.dias[0];
   const faixa = r.dias.map(d=>`<button class="aq-dia${d.data===agq.sel?" on":""}${d.bloqueado?" bloq":d.lotado?" lot":""}" data-aqdia="${d.data}">
       <b>${siglaData(d.data)}</b>
-      <span>${d.bloqueado?"Feriado ou férias":d.limite?`${d.atendimentos}/${d.limite}${d.lotado?" · lotado":""}`:`${d.atendimentos} ${d.atendimentos===1?"atendimento":"atendimentos"}`}</span></button>`).join("");
+      <span>${d.bloqueado?"Feriado ou férias":d.limite?`${d.atendimentos}/${d.limite}${d.lotado?" · lotado":""}`:`${d.atendimentos} ${d.atendimentos===1?"atendimento":"atendimentos"}`}</span>${(n=>n?`<span class="aq-dia-livres">${n} ${n===1?"vaga":"vagas"}</span>`:"")(vagasDoDia(d).length)}</button>`).join("");
   alvo.innerHTML = `<div class="aq">
     ${r.alerta?`<div class="aq-alerta" role="alert">${esc(r.alerta)}</div>`:""}
     <div class="aq-faixa" role="tablist" aria-label="Próximos dias de atendimento de ${esc(nomeProf(agq.prof))}">${faixa}</div>
+    ${dia ? listaVagas(dia) : ""}
     ${dia ? linhaDoTempoAgenda(dia, r) : ""}
     <p class="meio-sub">Conectado como ${esc(r.usuario||"")} (${esc(r.papel||"")}). A agenda se atualiza sozinha a cada minuto.
       <a href="#" onclick="event.preventDefault();document.getElementById('conteudo-meio').innerHTML=cardLigarAgenda()">trocar token</a></p>
   </div>`;
   alvo.querySelectorAll("[data-aqdia]").forEach(b=>b.onclick=()=>{ agq.sel=b.dataset.aqdia; pintarAgenda(); });
   alvo.querySelectorAll("[data-aqev]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); menuEventoAgenda(b, dia.eventos.find(x=>x.id===b.dataset.aqev)); });
+  alvo.querySelectorAll("[data-aqvaga]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); agendarNaVaga(dia, b.dataset.aqvaga); });
+}
+// F250 · A VAGA DO GOOGLE AGENDA. O escritório deixa no Google Agenda os horários disponíveis com o título do tipo
+// ("001", 45 minutos, ou "002", 30 minutos) e quem agenda troca esse título pelo nome do cliente. O Apps Script
+// devolve essas vagas em livres[tipo] com vaga:true e o eventoId; agendar nelas troca o título do mesmo evento.
+const vagasDoDia = d => d && !d.bloqueado ? ["001", "002"].flatMap(t=>(d.livres[t]||[]).filter(s=>s.vaga).map(s=>({...s, tipo:s.tipo||t})))
+  .sort((a, b)=>hmMin(a.inicio)-hmMin(b.inicio)) : [];
+// com vagas no dia, valem elas (dos dois tipos); sem vagas, os horários calculados do tipo escolhido, como antes
+const livresDoDia = (d, tipo) => { const v = vagasDoDia(d); return v.length ? v : (d && d.livres[tipo]) || []; };
+const minDoTipo = t => t==="001" ? 45 : 30;
+function listaVagas(dia){
+  const v = vagasDoDia(dia); if(!v.length) return "";
+  return `<section class="aq-vagas" aria-label="Vagas livres"><h4>Vagas livres · ${v.length}</h4>
+    <div class="aq-vagas-l">${v.map(s=>`<button type="button" class="aq-vaga t${s.tipo}" data-aqvaga="${esc(s.eventoId)}" title="agendar o cliente neste horário">
+      <b>${s.inicio}</b><span>${s.tipo} · ${minDoTipo(s.tipo)} min</span></button>`).join("")}</div></section>`;
+}
+function agendarNaVaga(dia, eventoId){
+  const s = vagasDoDia(dia).find(x=>x.eventoId===eventoId); if(!s) return;
+  abrirFluxoAgenda({data:dia.data, inicio:s.inicio, prof:agq.prof, vaga:{eventoId, tipo:s.tipo}});
 }
 const AQ_INI = 8*60, AQ_FIM = 18*60+30, AQ_PX = 24;   // 24 px a cada 15 minutos
 function linhaDoTempoAgenda(dia, r){
@@ -47155,6 +47213,8 @@ function linhaDoTempoAgenda(dia, r){
   const nR = Math.max(1, raias.length);
   const bloco = e => {
     const top = Math.max(0,y(e.inicio)), h = Math.max(AQ_PX-2, y(e.fim)-Math.max(0,y(e.inicio))-2);
+    if(e.vaga) return `<button class="aq-ev aq-ev-vaga" data-aqvaga="${esc(e.id)}" style="top:${top}px;height:${h}px;left:calc(${e._raia}*100%/${nR});width:calc(100%/${nR} - 4px)"
+      title="vaga livre ${esc(e.tipo||"")} · ${e.inicio} às ${e.fim} · clique para agendar"><span class="aq-ev-h">${e.inicio}–${e.fim} · ${esc(e.tipo||"")}</span><b>Livre · agendar</b></button>`;
     // a cor é do profissional; compromisso que não é atendimento fica cinza
     const cls = e.atendimento ? `aq-ev p-${e.profissional||"nenhum"}` : "aq-ev outro";
     const nome = e.atendimento ? (e.nome || e.titulo.replace(/^\s*00[12]\s*-\s*/,"").replace(/\s*-\s*(n[ãa]o confirmado|confirmado)\s*$/i,"")) : e.titulo;
@@ -47287,7 +47347,9 @@ function abrirFluxoAgenda(op={}){
   fluxo = { etapa: op.remarcar ? 5 : 1, cli:null, novo:false, tipo: op.remarcar ? op.remarcar.tipo : null,
     prof: (op.remarcar && op.remarcar.profissional) || op.prof || agq.prof,
     nome:"", tel:"", telOk:false, acomp:null, data: op.data || agq.sel, inicio: op.inicio || null, obs:"",
-    o1:false, o2:false, remarcar: op.remarcar || null, sugerir: op.sugerir || null, msg:"", feito:null, busca:"" };
+    o1:false, o2:false, remarcar: op.remarcar || null, sugerir: op.sugerir || null, msg:"", feito:null, busca:"",
+    vaga: op.vaga || null, eventoId: (op.vaga||{}).eventoId || null };   // F250
+  if(op.vaga) fluxo.tipo = op.vaga.tipo;
   if(op.remarcar){ const c = clienteDoEvento(op.remarcar); fluxo.cli = c; fluxo.nome = op.remarcar.nome || (c&&c.nome) || ""; fluxo.tel = op.remarcar.telefone || (c&&c.telefone) || ""; }
   pintarFluxo();
 }
@@ -47337,17 +47399,17 @@ function pintarFluxo(){
     const dias = (dispP&&dispP.dias||[]).filter(d=>!d.bloqueado);
     // dia sem vaga (hoje depois do expediente, ou lotado) não serve de ponto de
     // partida: o fluxo abre no primeiro dia que tem horário livre
-    if(dias.length && (!f.data || !dias.some(d=>d.data===f.data && (d.livres[f.tipo]||[]).length)))
-      f.data = (dias.find(d=>(d.livres[f.tipo]||[]).length)||dias[0]||{}).data;
+    if(dias.length && (!f.data || !dias.some(d=>d.data===f.data && livresDoDia(d, f.tipo).length)))
+      f.data = (dias.find(d=>livresDoDia(d, f.tipo).length)||dias[0]||{}).data;
     const dia = dias.find(d=>d.data===f.data);
-    const livres = dia ? (dia.livres[f.tipo]||[]) : [];
-    const grupo = (tit, l) => l.length ? `<h4>${tit}</h4><div class="aq-horarios">${l.map(s=>`<button class="${s.inicio===f.inicio?"on":""}${f.sugerir&&s.inicio===f.sugerir.depoisDe?" sugerido":""}" data-aqhora="${s.inicio}">${s.inicio}</button>`).join("")}</div>` : "";
+    const livres = dia ? livresDoDia(dia, f.tipo) : [], soVagas = livres.some(s=>s.vaga);
+    const grupo = (tit, l) => l.length ? `<h4>${tit}</h4><div class="aq-horarios">${l.map(s=>`<button class="${s.inicio===f.inicio&&(!s.vaga||s.eventoId===f.eventoId)?"on":""}${f.sugerir&&s.inicio===f.sugerir.depoisDe?" sugerido":""}" data-aqhora="${s.inicio}"${s.vaga?` data-aqvev="${esc(s.eventoId)}" data-aqtipo="${s.tipo}"`:""}>${s.inicio}${s.vaga?` <small>${s.tipo} · ${minDoTipo(s.tipo)} min</small>`:""}</button>`).join("")}</div>` : "";
     corpo = `<h3>${f.remarcar?"Novo horário para "+esc(f.nome):"Escolha o horário"} <span class="aq-tipo">${f.tipo} · ${f.tipo==="001"?45:30} minutos</span></h3>
       <div class="aq-profsel" role="group" aria-label="Com quem">${lista.map(x=>`<button class="${f.prof===x.id?"on":""}" data-aqfprof="${x.id}" ${f.remarcar?"disabled":""}><i class="aq-bola p-${x.id}"></i>${esc(x.nome)}</button>`).join("")}</div>
       ${!dispP?`<p class="meio-sub">carregando a agenda de ${esc(nomeProf(f.prof))}…</p>`:""}
-      <div class="aq-diasel">${dias.map(d=>`<button class="${d.data===f.data?"on":""}" data-aqdata="${d.data}" ${(d.livres[f.tipo]||[]).length?"":"disabled"}>${siglaData(d.data)}<small>${(d.livres[f.tipo]||[]).length} livres</small></button>`).join("")}</div>
-      ${grupo("Horários recomendados", livres.filter(s=>s.encaixado && !s.reserva))}
-      ${grupo("Outros horários", livres.filter(s=>!s.encaixado && !s.reserva))}
+      <div class="aq-diasel">${dias.map(d=>`<button class="${d.data===f.data?"on":""}" data-aqdata="${d.data}" ${livresDoDia(d, f.tipo).length?"":"disabled"}>${siglaData(d.data)}<small>${livresDoDia(d, f.tipo).length} livres</small></button>`).join("")}</div>
+      ${soVagas ? grupo("Vagas livres no Google Agenda", livres) : grupo("Horários recomendados", livres.filter(s=>s.encaixado && !s.reserva))}
+      ${soVagas ? "" : grupo("Outros horários", livres.filter(s=>!s.encaixado && !s.reserva))}
       ${grupo("Encaixe urgente", livres.filter(s=>s.reserva))}
       ${!livres.length?`<p class="meio-sub">Sem horário livre nesta quarta.</p>`:""}
       <div class="aq-bts"><button class="btn-rap" data-aqvolta="1" ${f.remarcar?"hidden":""}>Voltar</button>
@@ -47381,8 +47443,8 @@ function ligarFluxo(){
   const busca = $("aq-busca");
   if(busca){ busca.focus(); busca.setSelectionRange(busca.value.length, busca.value.length);
     busca.oninput = () => { f.busca = busca.value; const pos=busca.selectionStart; pintarFluxo(); const b=$("aq-busca"); if(b) b.setSelectionRange(pos,pos); }; }
-  document.querySelectorAll("[data-aqcli]").forEach(b=>b.onclick=()=>{ f.cli=D.cliPorId.get(b.dataset.aqcli); f.novo=false; f.tipo="002"; f.nome=f.cli.nome; f.tel=(f.cli.telefone||"").replace(/\D/g,""); f.corrigir=false; f.etapa=2; f.msg=""; pintarFluxo(); });
-  document.querySelectorAll("[data-aqnovo]").forEach(b=>b.onclick=()=>{ f.cli=null; f.novo=true; f.tipo="001"; if(!f.nome) f.nome=f.busca.replace(/\d/g,"").trim(); f.etapa=2; f.msg=""; pintarFluxo(); });
+  document.querySelectorAll("[data-aqcli]").forEach(b=>b.onclick=()=>{ f.cli=D.cliPorId.get(b.dataset.aqcli); f.novo=false; f.tipo=(f.vaga&&f.vaga.tipo)||"002"; f.nome=f.cli.nome; f.tel=(f.cli.telefone||"").replace(/\D/g,""); f.corrigir=false; f.etapa=2; f.msg=""; pintarFluxo(); });
+  document.querySelectorAll("[data-aqnovo]").forEach(b=>b.onclick=()=>{ f.cli=null; f.novo=true; f.tipo=(f.vaga&&f.vaga.tipo)||"001"; if(!f.nome) f.nome=f.busca.replace(/\d/g,"").trim(); f.etapa=2; f.msg=""; pintarFluxo(); });
   const tel = $("aq-tel"); if(tel) tel.oninput = () => mascararTel(tel);
   on("aq-corrigir", ()=>{ f.corrigir=true; pintarFluxo(); });
   on("aq-seg2", async ()=>{
@@ -47406,8 +47468,9 @@ function ligarFluxo(){
   on("aq-seg4", async ()=>{ f.etapa=5; pintarFluxo(); if(!agq.cache[f.prof]){ await carregarAgenda(f.prof); pintarFluxo(); } });
   document.querySelectorAll("[data-aqfprof]").forEach(b=>b.onclick=async()=>{ f.prof=b.dataset.aqfprof; f.data=null; f.inicio=null; pintarFluxo();
     if(!agq.cache[f.prof]){ await carregarAgenda(f.prof); } if(fluxo===f && f.etapa===5) pintarFluxo(); });
-  document.querySelectorAll("[data-aqdata]").forEach(b=>b.onclick=()=>{ f.data=b.dataset.aqdata; f.inicio=null; pintarFluxo(); });
-  document.querySelectorAll("[data-aqhora]").forEach(b=>b.onclick=()=>{ f.inicio=b.dataset.aqhora; pintarFluxo(); });
+  document.querySelectorAll("[data-aqdata]").forEach(b=>b.onclick=()=>{ f.data=b.dataset.aqdata; f.inicio=null; f.eventoId=null; pintarFluxo(); });
+  document.querySelectorAll("[data-aqhora]").forEach(b=>b.onclick=()=>{ f.inicio=b.dataset.aqhora;
+    f.eventoId = b.dataset.aqvev || null; if(b.dataset.aqtipo) f.tipo = b.dataset.aqtipo; pintarFluxo(); });   // F250 · a vaga leva o tipo dela
   on("aq-seg5", async ()=>{ if(!f.remarcar){ f.etapa=6; return pintarFluxo(); } await gravarFluxo(); });
   const o1=$("aq-o1"), o2=$("aq-o2"), obs=$("aq-obs");
   if(o1) o1.onchange=()=>{ f.o1=o1.checked; $("aq-gravar").disabled=!(f.o1&&f.o2); };
@@ -47423,7 +47486,7 @@ async function gravarFluxo(){
   try{
     let r;
     if(f.remarcar){
-      r = await agendaApi("remarcar", {eventId:f.remarcar.id, profissional:f.prof, data:f.data, inicio:f.inicio});
+      r = await agendaApi("remarcar", {eventId:f.remarcar.id, profissional:f.prof, data:f.data, inicio:f.inicio, eventoId:f.eventoId||""});
     } else {
       // primeiro atendimento: o pré-cadastro nasce antes, para o evento já levar o cliente
       if(f.novo && !f.preCli){
@@ -47435,7 +47498,7 @@ async function gravarFluxo(){
       }
       const cli = f.cli || f.preCli;
       r = await agendaApi("agendar", {profissional:f.prof, tipo:f.tipo, nome:f.nome, telefone:f.tel, clienteId:cli?cli.id:"",
-        data:f.data, inicio:f.inicio, observacoes:f.obs, orientacoesConfirmadas: f.o1 && f.o2});
+        data:f.data, inicio:f.inicio, eventoId:f.eventoId||"", observacoes:f.obs, orientacoesConfirmadas: f.o1 && f.o2});
     }
     const ev = r.evento; f.feito = ev; f.msg = "";
     const c = f.cli || f.preCli || clienteDoEvento(ev);
@@ -47444,7 +47507,7 @@ async function gravarFluxo(){
     if(agq.prof===f.prof) agq.sel = ev.data;
   }catch(e){
     f.msg = e.message;
-    if(e.codigo==="HORARIO_INDISPONIVEL"){ f.inicio=null; f.etapa=5; await carregarAgenda(f.prof); }
+    if(e.codigo==="HORARIO_INDISPONIVEL"){ f.inicio=null; f.eventoId=null; f.etapa=5; await carregarAgenda(f.prof); }
   }
   pintarFluxo();
   await carregarAgenda(f.prof); if(f.prof!==agq.prof) await carregarAgenda(); if(f.prof!=="paulo") await carregarAgenda("paulo");

@@ -27,3 +27,15 @@ Paulo, Marcos e Amanda agendam na MESMA agenda do Google (a do Paulo). A cor do 
 O limite de 14 por dia e o encaixe das 18h00 às 18h30 são só do Paulo. O Paulo atende às quartas; Marcos e Amanda, de segunda a sexta. O tratamento usado na mensagem de WhatsApp (por exemplo, "o Dr. Marcos") também está em `CONFIG.PROFISSIONAIS`: confira os nomes completos antes de implantar.
 
 Os dias fixos e as trocas pontuais (a quarta 07/10 pela quinta 08/10, por exemplo) são mudados pelo próprio CRM, em "Dias de atendimento", só com o token do Paulo. Ficam nas propriedades do script (AJUSTES), sem editar o código. A agenda "Férias" bloqueia só o Paulo; a "Feriado", todos.
+
+## Vagas no Google Agenda (F250, 21.10.2026)
+
+O escritório deixa no Google Agenda os horários disponíveis com o título só do tipo: `001` (primeiro atendimento, 45 minutos) ou `002` (cliente do escritório, 30 minutos); `001 livre` também vale. Na cor do profissional, como os demais eventos.
+
+- Num dia com vagas, só elas são oferecidas, dos dois tipos; num dia sem nenhuma vaga, o horário livre continua calculado como antes.
+- A vaga não ocupa nem conta no limite do dia.
+- Agendar pelo CRM troca o título do mesmo evento para `001 - Nome do cliente - Não confirmado`, com telefone e quem agendou na descrição.
+- Cancelar ou remarcar devolve o evento à vaga (`001` ou `002`), em vez de apagá-lo.
+- Quem preferir pode continuar trocando o título à mão no Google Agenda: o CRM passa a mostrar o horário como atendimento.
+
+Esta mudança está no `Code.gs`: copie o arquivo inteiro para o projeto no script.google.com e faça uma nova versão da implantação, mantendo a mesma URL (passo 7 acima).
