@@ -28,6 +28,12 @@ const semCpf = cli("Benedita Fictícia Sem Cpf");
 const imprimir = cli("Imprimir"), icloud = cli("iCloud"), pai = cli("Pai"), impug = cli("Impugnação à Contestação");
 const ligar = cli("Ligar- Osmar Fictício (marcar horário)"), proprio = cli("Paulo Roberto Tercini"), so1 = cli("Geraldo");
 const voltou = cli("Carla Fictícia Volta", null, { nao_cliente: true });
+// F255 · a cor da situação: caso andando, só no Escritório, nenhum aberto
+const formacao = cli("Dora Fictícia Formação", "11144477735");
+const caso = (c, fase, o = {}) => T.casos.push({ id: `b0000000-0000-4000-8000-${String(++seq).padStart(12, "0")}`, cliente_id: c.id, titulo: c.nome, fase,
+  protocolos: [], processos: [], crps_nups: [], crps: [], nbs: [], arquivados: {}, marcadores: [], ronda: {}, prazos_tribunal: [], pje_links: {},
+  criado_em: "2026-01-01T12:00:00Z", ...o });
+caso(comCpf, "inss"); caso(comCpf, "encerrado"); caso(formacao, "escritorio", { pre_caso: true }); caso(semCpf, "encerrado");
 
 const ok = [];
 const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : "FALHOU  ") + nome); };
@@ -61,8 +67,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // 1 · a regra da lista
   let nomes = await lista();
   await p.screenshot({ path: path.join(OUT, "01-lista.png") });
-  conf(`na lista ficam só as pessoas (${nomes.join(", ")})`, nomes.join() === [comCpf, semCpf].map(c => c.nome).join());
-  conf("a contagem da lista acompanha", /^2 clientes/.test(await p.textContent("#sub-lista")));
+  conf(`na lista ficam só as pessoas (${nomes.join(", ")})`, nomes.join() === [comCpf, semCpf, formacao].map(c => c.nome).join());
+  const cores = await p.$$eval("#cli-todos-l .cli-todos-it", b => b.map(x => x.querySelector(".cli-sit").className.replace("cli-sit ", "") + ":" + x.querySelector(".cli-sit-t").textContent));
+  conf(`ao lado do nome, a situação em cor (${cores.join(", ")})`, cores.join() === "ativo:Caso ativo,inativo:Inativo,formacao:Em formação");
+  conf("a contagem da lista acompanha", /^3 clientes/.test(await p.textContent("#sub-lista")));
   conf("tarefas, contatos, nome só e o próprio Paulo ficam de fora", await p.evaluate(ids => ids.every(i => !ehClienteDaLista(D.cliPorId.get(i))),
     [imprimir, icloud, pai, impug, ligar, proprio, so1, voltou].map(c => c.id)));
 
@@ -88,7 +96,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     g.length === 1 && /Não parecem clientes \(6\)/.test(g[0].t) && g[0].marcados === 6);
   await p.click("#acervo-semcpf .btn-mini.forte"); await p.waitForTimeout(800);
   conf("'Tirar os marcados' grava nao_cliente nos seis", [imprimir, icloud, pai, impug, ligar, proprio].every(c => T.clientes.find(x => x.id === c.id).campos.nao_cliente === true));
-  conf("nenhum cadastro foi apagado", T.clientes.length === 10);
+  conf("nenhum cadastro foi apagado", T.clientes.length === 11);
 
   // 4 · quem não é administrador não vê nada disso
   await p.evaluate(() => { eu.papel = "colaborador"; });

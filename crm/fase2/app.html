@@ -3511,6 +3511,10 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .aq-sug button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:9px 12px;border:0;border-top:1px solid var(--borda);background:#fff;font:inherit;text-align:left;cursor:pointer}
 .aq-sug button:first-child{border-top:0}
 .aq-sug button span{font-size:12px;color:var(--cinza)}
+.aq-sug-t{margin:0;padding:7px 12px 3px;font-size:12px;font-weight:600;color:#8a5a00;background:#fbf4e4;border-top:1px solid var(--borda)}
+.aq-sug button.aq-parecido{background:#fffaf0}
+.aq-teljá{display:flex;flex-direction:column;gap:8px;margin:4px 0 10px;padding:10px 12px;border:1px solid #e8cf94;border-radius:12px;background:#fbf4e4}
+.aq-teljá .meio-sub{margin:0}
 .aq-sug .aq-novo{background:var(--placa)}
 @media (hover:hover) and (pointer:fine){.aq-sug button:hover{background:var(--lateral,#F3F2EE)}}
 .aq-bts{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
@@ -3918,6 +3922,9 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .cli-aberto{font-style:normal;color:var(--aviso,#D97706);font-weight:600}
 .cli-todos-tx span{font-size:12px;color:var(--cinza)}
 .cli-todos-it .avatar{width:36px;height:36px;font-size:14px;background:var(--av,var(--azul))}
+.cli-todos-it .cli-sit{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:1px}
+.cli-sit.ativo{background:#2e8b57}.cli-sit.formacao{background:#e0a800}.cli-sit.inativo{background:#c0392b}
+.cli-sit-t{font-style:normal;font-weight:600}.cli-sit-t.ativo{color:#1f6b41}.cli-sit-t.formacao{color:#8a6500}.cli-sit-t.inativo{color:#a3291c}
 @media (hover:hover) and (pointer:fine){.cli-todos-it:hover{background:var(--fundo2,#f5f5f2)}}
 /* F249 · o nível 0 (primeiro acesso): na ficha só o Cadastro (Identificação); na barra só a Agenda, e o Novo Cliente fica no botão fixo */
 html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="0"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]),html[data-nivel="0"] .cel-tudo,
@@ -4738,7 +4745,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.85</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.86</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14745,6 +14752,13 @@ async function marcarNaoCliente(cliId, nao){
   aviso(nao ? `“${c.nome}” saiu da lista Clientes` : `“${c.nome}” volta à lista Clientes`, false);
   if(clienteAberto===cliId) repintarFicha(); else render();
 }
+// F255 · a situação do cliente na lista: caso andando (verde), só atendimento ou pré-caso no Escritório (amarelo), nenhum aberto (vermelho)
+function situacaoDaLista(c){
+  const abertos = (D.casosDoCliente.get(c.id)||[]).filter(k=>k.fase!=="encerrado");
+  if(abertos.some(k=>k.fase!=="escritorio")) return ["ativo","Caso ativo"];
+  if(abertos.length || ((c.campos||{}).precasos||[]).length) return ["formacao","Em formação"];
+  return ["inativo","Inativo"];
+}
 function pintarClientesTodos(){
   const q = dsa(_cliFiltro).replace(/\s+/g," ").trim(), dig = _cliFiltro.replace(/\D/g,""), partes = q.split(" ").filter(Boolean);
   const todos = (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).slice().sort((a, b)=>dsa(a.nome).localeCompare(dsa(b.nome)));   // F254
@@ -14767,8 +14781,8 @@ function pintarClientesTodos(){
     const u = c.foto_url && zapFotos.get(c.foto_url);
     return `${sep}<li><button type="button" class="cli-todos-it" data-cli="${c.id}">${u
       ? `<img class="avatar foto-zap" src="${esc(u)}" alt="">` : `<span class="avatar" style="--av:${corDoNome(c.nome)}"${c.foto_url?` data-foto="${esc(c.foto_url)}"`:""}>${esc(c.nome[0])}</span>`}
-    <span class="cli-todos-tx"><b>${esc(c.nome)}</b>
-    <span>${cpfMascarado(c.cpf)}${c.telefone?` · ${esc(fmtTelBR(c.telefone))}`:""}${_cliSemTel && temCasoAberto(c)?` · <em class="cli-aberto">caso aberto</em>`:""}</span></span></button>${_cliSemTel
+    <span class="cli-todos-tx">${(([cl, rot])=>`<b><span class="cli-sit ${cl}" title="${rot}"></span>${esc(c.nome)}</b>
+    <span><em class="cli-sit-t ${cl}">${rot}</em> · `)(situacaoDaLista(c))}${cpfMascarado(c.cpf)}${c.telefone?` · ${esc(fmtTelBR(c.telefone))}`:""}${_cliSemTel && temCasoAberto(c)?` · <em class="cli-aberto">caso aberto</em>`:""}</span></span></button>${_cliSemTel
       ? `<span class="cli-tel-form"><input data-tel="${c.id}" inputmode="tel" placeholder="(16) 9____-____" aria-label="telefone de ${esc(c.nome)}">
          <button type="button" class="btn-mini" data-salvatel="${c.id}">Guardar</button></span>` : ""}</li>`; }).join("")
     || `<li class="meio-sub">Ninguém com “${esc(_cliFiltro)}”.</li>`;
@@ -47564,15 +47578,55 @@ function abrirFluxoAgenda(op={}){
   if(op.remarcar){ const c = clienteDoEvento(op.remarcar); fluxo.cli = c; fluxo.nome = op.remarcar.nome || (c&&c.nome) || ""; fluxo.tel = op.remarcar.telefone || (c&&c.telefone) || ""; }
   pintarFluxo();
 }
+// F257 · o nome escrito de outro jeito também aparece (Luiz e Luis, Colatrelli e Collatrelli, Souza e Sousa): cada
+// palavra vira a chave do som (sem acento, z = s, y = i, ph = f, letra dobrada simples) e aceita uma letra trocada
+const chaveSom = w => dsa(w).replace(/ph/g,"f").replace(/y/g,"i").replace(/z/g,"s").replace(/(.)\1+/g,"$1");
+function quaseIgual(a, b){   // b começa por a, com no máximo uma letra a mais, a menos ou trocada
+  if(b.startsWith(a)) return true;
+  if(a.length < 4) return false;
+  const c = b.slice(0, a.length), d = b.slice(0, a.length + 1), e = b.slice(0, a.length - 1);
+  const um = (x, y) => { if(Math.abs(x.length - y.length) > 1) return false; let i = 0, j = 0, dif = 0;
+    while(i < x.length && j < y.length){ if(x[i]===y[j]){ i++; j++; continue; } if(++dif > 1) return false;
+      if(x.length > y.length) i++; else if(y.length > x.length) j++; else { i++; j++; } }
+    return dif + (x.length - i) + (y.length - j) <= 1; };
+  return um(a, c) || um(a, d) || um(a, e);
+}
+const ultimos8 = t => String(t||"").replace(/\D/g,"").slice(-8);
+function clientesDoTelefone(tel){   // quem já tem esse número, pelos 8 últimos dígitos (o DDD e o 9 variam)
+  const u = ultimos8(tel); if(u.length < 8) return [];
+  return D.clientes.filter(c => c.nome && [c.telefone, ...telefonesDe(c).map(t=>t.numero)].some(n => ultimos8(n) === u));
+}
 function buscarClientesAgenda(q){
   const n = dsa(q).replace(/\s+/g," ").trim(); if(n.replace(/\D/g,"").length<3 && n.length<3) return [];
   const partes = n.split(" ").filter(Boolean), dig = q.replace(/\D/g,"");
-  return D.clientes.filter(c=>{ const nome = dsa(c.nome).replace(/\s+/g," ");
-    return (dig.length>=3 && String(c.cpf||"").includes(dig)) || partes.every(p=>nome.includes(p)); }).slice(0,8);
+  if(dig.length >= 3 && !/[a-z]/.test(n))
+    return D.clientes.filter(c => String(c.cpf||"").includes(dig) || (dig.length >= 4 && [c.telefone, ...telefonesDe(c).map(t=>t.numero)].some(t => String(t||"").replace(/\D/g,"").includes(dig))))
+      .slice(0,8).map(c => ({c, como: String(c.cpf||"").includes(dig) ? "" : "telefone"}));
+  const sons = partes.map(chaveSom);
+  const iguais = [], parecidos = [];
+  for(const c of D.clientes){ if(!c.nome) continue;
+    const nome = dsa(c.nome).replace(/\s+/g," ");
+    if(partes.every(p=>nome.includes(p))){ iguais.push({c, como:""}); continue; }
+    const pals = nome.split(" ").map(chaveSom);
+    if(sons.every(sp => pals.some(w => quaseIgual(sp, w)))) parecidos.push({c, como:"parecido"}); }
+  return [...iguais.slice(0,8), ...parecidos.slice(0, Math.max(3, 8 - iguais.length))];
 }
 function sugAgendaHtml(f){
-  return buscarClientesAgenda(f.busca).map(c=>`<button data-aqcli="${c.id}"><b>${esc(c.nome)}</b><span>${cpfMascarado(c.cpf)} · ${esc(civilDe(c).cidade||"cidade não informada")}</span></button>`).join("")
+  const achados = buscarClientesAgenda(f.busca), temParecido = achados.some(a=>a.como==="parecido");
+  return achados.map(({c, como})=>`${como==="parecido" && achados.find(a=>a.como==="parecido").c===c ? `<p class="aq-sug-t">Nome parecido: confira se não é a mesma pessoa</p>` : ""}<button data-aqcli="${c.id}"${como?` class="aq-${como}"`:""}><b>${esc(c.nome)}</b><span>${cpfMascarado(c.cpf)}${c.telefone?` · ${esc(fmtTelBR(c.telefone))}`:""} · ${esc(civilDe(c).cidade||"cidade não informada")}</span></button>`).join("")
     + (f.busca.trim().length>=3 ? `<button class="aq-novo" data-aqnovo="1"><b>Nenhum destes, é primeiro atendimento</b><span>cria o pré-cadastro e agenda ${f.vaga&&f.vaga.tipo?f.vaga.tipo:"001"}</span></button>` : "");
+}
+// F257 · o telefone do primeiro atendimento que já está num cadastro: pode ser a mesma pessoa (agenda como cliente)
+// ou alguém pedindo para um familiar ou amigo (segue como primeiro atendimento)
+function telJaCadastrado(f){
+  const l = clientesDoTelefone(f.tel); if(!l.length) return "";
+  return `<div class="aq-teljá" role="status"><b>Este telefone já está no cadastro de:</b>
+    <div class="aq-sug">${l.slice(0,4).map(c=>`<button data-aqmesmo="${c.id}"><b>${esc(c.nome)}</b><span>É esta pessoa: agendar como cliente do escritório</span></button>`).join("")}</div>
+    <p class="meio-sub">Se quem vem é outra pessoa (familiar ou amigo de quem ligou), continue como primeiro atendimento.</p></div>`;
+}
+function ligarTelJa(f){
+  document.querySelectorAll("[data-aqmesmo]").forEach(b=>b.onclick=()=>{ const c = D.cliPorId.get(b.dataset.aqmesmo); if(!c) return;
+    f.cli=c; f.novo=false; f.tipo=(f.vaga&&f.vaga.tipo)||"002"; f.nome=c.nome; f.tel=(c.telefone||"").replace(/\D/g,"") || f.tel; f.corrigir=false; f.msg=""; pintarFluxo(); });
 }
 function ligarSugAgenda(f){
   document.querySelectorAll("[data-aqcli]").forEach(b=>b.onclick=()=>{ f.cli=D.cliPorId.get(b.dataset.aqcli); f.novo=false; f.tipo=(f.vaga&&f.vaga.tipo)||"002"; f.nome=f.cli.nome; f.tel=(f.cli.telefone||"").replace(/\D/g,""); f.corrigir=false; f.etapa=2; f.msg=""; pintarFluxo(); });
@@ -47587,13 +47641,14 @@ function pintarFluxo(){
   if(f.feito){ corpo = sucessoFluxo(); }
   else if(f.etapa===1){
     corpo = `<h3>Quem vem ao atendimento?${f.vaga?` <span class="aq-tipo">${f.vaga.tipo||"livre"} · ${dataBR(f.data)} às ${hmTxt(f.inicio)}</span>`:""}</h3>
-      <input id="aq-busca" class="aq-inp" placeholder="Nome ou CPF" value="${esc(f.busca)}" autocomplete="off">
+      <input id="aq-busca" class="aq-inp" placeholder="Nome, CPF ou telefone" value="${esc(f.busca)}" autocomplete="off">
       <div class="aq-sug">${sugAgendaHtml(f)}</div>`;
   } else if(f.etapa===2){
     corpo = f.novo ? `<h3>Primeiro atendimento <span class="aq-tipo">001 · 45 minutos</span></h3>
         <label class="aq-campo">Nome completo<input id="aq-nome" class="aq-inp" value="${esc(f.nome)}"></label>
         <label class="aq-campo">Telefone com DDD<input id="aq-tel" class="aq-inp" inputmode="tel" placeholder="(16) 99999-9999" value="${esc(fmtTelBR(f.tel))}"></label>
-        <div class="aq-bts"><button class="btn-rap" data-aqvolta="1">Voltar</button><button class="btn-rap forte" id="aq-seg2">Continuar</button></div>`
+        <div id="aq-tel-de">${telJaCadastrado(f)}</div>
+        <div class="aq-bts"><button class="btn-rap" data-aqvolta="1">Voltar</button><button class="btn-rap forte" id="aq-seg2">${clientesDoTelefone(f.tel).length?"É outra pessoa, continuar":"Continuar"}</button></div>`
       : `<h3>${esc(f.cli.nome)} <span class="aq-tipo">002 · 30 minutos</span></h3>
         <p class="meio-sub">Cliente do escritório. Confira o telefone antes de seguir.</p>
         ${f.corrigir||!f.tel ? `<label class="aq-campo">${f.tel?"Telefone com DDD":"Sem telefone no cadastro. Informe o telefone com DDD, que ele fica gravado no cliente"}<input id="aq-tel" class="aq-inp" inputmode="tel" placeholder="(16) 99999-9999" value="${esc(fmtTelBR(f.tel))}"></label>`
@@ -47662,7 +47717,10 @@ function ligarFluxo(){
     // F250e · a cada letra só a lista de sugestões muda: repintar a janela inteira fazia a tela piscar em branco
     busca.oninput = () => { f.busca = busca.value; const box = document.querySelector(".aq-fluxo .aq-sug"); if(box){ box.innerHTML = sugAgendaHtml(f); ligarSugAgenda(f); } }; }
   ligarSugAgenda(f);
-  const tel = $("aq-tel"); if(tel) tel.oninput = () => mascararTel(tel);
+  const tel = $("aq-tel"); if(tel) tel.oninput = () => { mascararTel(tel);
+    if(f.novo){ f.tel = tel.value.replace(/\D/g,""); const box = $("aq-tel-de"); if(box){ box.innerHTML = telJaCadastrado(f); ligarTelJa(f); }
+      const seg = $("aq-seg2"); if(seg) seg.textContent = clientesDoTelefone(f.tel).length ? "É outra pessoa, continuar" : "Continuar"; } };
+  ligarTelJa(f);
   on("aq-corrigir", ()=>{ f.corrigir=true; pintarFluxo(); });
   on("aq-seg2", async ()=>{
     if(f.novo){ f.nome = ($("aq-nome").value||"").replace(/\s+/g," ").trim(); }
