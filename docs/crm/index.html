@@ -3903,6 +3903,8 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .aq-dia-livres{display:block;font-size:11px;color:#1E6F50;font-weight:600}
 .aq-horarios small{display:block;font-size:11px;opacity:.8}
 .cli-todos-l{list-style:none;margin:10px 0 0;padding:0}
+.semcpf-g{margin:6px 0}.semcpf-g summary{cursor:pointer;padding:4px 0}
+.semcpf-it{display:flex;align-items:center;gap:8px;padding:4px 0 4px 6px;border-bottom:1px solid var(--borda)}
 .cli-az{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 10px;position:sticky;top:0;z-index:2;padding:6px 0;background:var(--fundo,#F8F8F6)}
 .cli-az-l{min-width:30px;height:30px;padding:0 8px;border:1px solid var(--borda);border-radius:6px;background:#fff;font:inherit;font-size:13px;font-weight:600;cursor:pointer;color:var(--texto)}
 .cli-az-l.on{background:var(--azul,#1F5C5A);border-color:var(--azul,#1F5C5A);color:#fff}
@@ -4730,7 +4732,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.84</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.85</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6930,7 +6932,7 @@ function montarSidebar(){
     document.getElementById("grupo-dinamicas").innerHTML = [...din, ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
         ["direito","⚖️ Análise de Direito", direitoAlcancado().length||null],
         ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && dataSP(e.data_hora)>=hoje()).length],
-        ["clientes","👥 Clientes", (D.clientes||[]).length]]   // F250 · a lista de todos os clientes (nível 0)
+        ["clientes","👥 Clientes", (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length]]   // F250 · a lista de todos os clientes (nível 0)
       .filter(([id])=>pode.includes(id) && !["particulares","rotinas"].includes(id))
       .map(([id,rot,n])=>`<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
         (id==="meudia"&&nVenc)?`<span class="cont venc" title="${nVenc} vencida${nVenc>1?"s":""} · ${n||0} hoje">${n?`${nVenc} · ${n}`:nVenc}</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("");   // F236 · vencidas · hoje, como a tela
@@ -11392,7 +11394,7 @@ function renderAcervo(){
   document.getElementById("sub-lista").textContent =
     "O trabalho sem data marcada: rotina, conferências e processos parados. Nada aqui vence hoje.";
   const corpo = blocoRotinas() + blocoCrpsManual() + blocoCadunico()
-    + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos();
+    + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoSemCpf();
   document.getElementById("conteudo-meio").innerHTML = corpo
     || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
@@ -14681,7 +14683,7 @@ const letraDoNome = n => { const l = dsa(String(n||"").trim()).charAt(0).toUpper
 const LETRAS = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "#"];
 function renderClientesTodos(){
   tituloLista(temaV10() ? "Clientes" : "👥 Clientes");
-  document.getElementById("sub-lista").textContent = `${(D.clientes||[]).length} clientes do escritório. Escolha a letra ou digite parte do nome, o CPF ou o telefone.`;
+  document.getElementById("sub-lista").textContent = `${(D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length} clientes do escritório. Escolha a letra ou digite parte do nome, o CPF ou o telefone.`;
   document.getElementById("conteudo-meio").innerHTML = `<div class="cli-todos">
     <nav class="cli-az" id="cli-az" aria-label="Índice de A a Z"></nav>
     <input id="cli-filtro" class="aq-inp" placeholder="Filtrar por nome, CPF ou telefone" value="${esc(_cliFiltro)}" autocomplete="off">
@@ -14696,9 +14698,34 @@ function escolherLetra(l){
   pintarClientesTodos();
   const lista = document.getElementById("cli-todos-l"); if(lista && lista.scrollIntoView) lista.scrollIntoView({block:"nearest"});
 }
+// F254 · QUEM É CLIENTE NA LISTA. O To Do trazia como "cliente" toda tarefa sem CPF ("Imprimir", "iCloud", "Comprar balas"),
+// e apagar a tarefa lá só encerra o caso: o cadastro fica. Na lista vale: quem tem CPF; sem CPF, quem tem nome e sobrenome
+// que não sejam de tarefa; nunca quem o Paulo marcou "Não é cliente" (campos.nao_cliente), e sempre quem ele marcou "É cliente".
+const RX_NAO_PESSOA = /(^|[^a-z])(imprimir|icloud|agenda|agendar|protocolos?|analise|contratos?|documentos|peticoes|replica|ouvidoria|ver|ligar|comprar|conferencia|holerites|mascara|qrcode|procon|termo|medidas|anotacoes|doc|calculo|embargos|incapacidade|deficiencia|atividades?|auxilio-acidente|impugnacao|md|digitalizar|processo|aviso|colocar|comprovantes|ressonancia|cumprir|verificar|ultima|auditoria|esclarecimentos|estrategia|diagnostico|ruptura|recurso|escolha|acerto|advogad[oa]|forum|depoente|laudo|pdfs?|adicionar|descobrir|redimensionar|e-?mail|jurisprudencias?|procuracao|condominio|despejo|etiquetas)([^a-z]|$)/;
+const palavrasDoNome = n => String(n||"").trim().split(/\s+/).filter(Boolean);
+const naoPareceCliente = c => { const n = dsa(c.nome||"").replace(/[()"'+,]/g," ");
+  // nome de pessoa não tem número; o nome de quem é da equipe também não é de cliente
+  return RX_NAO_PESSOA.test(n) || /\d/.test(n) || /^(a|aa|i ?m|pai|mae)$/.test(n.trim()) || /(^|\s)tercini(\s|$)/.test(n)
+    || (D.colaboradores||[]).some(co=>{ const e = dsa(co.nome||"").trim(); return e.split(/\s+/).length>=2 && n.trim().startsWith(e); }); };
+function ehClienteDaLista(c){
+  const k = c.campos || {};
+  if(k.nao_cliente) return false;
+  if(k.e_cliente || String(c.cpf||"").replace(/\D/g,"").length===11) return true;
+  return palavrasDoNome(c.nome).length >= 2 && !naoPareceCliente(c);
+}
+async function marcarNaoCliente(cliId, nao){
+  const c = D.cliPorId.get(cliId); if(!c || !souAdmin()) return;
+  const campos = {...(c.campos||{})};
+  if(nao){ campos.nao_cliente = true; delete campos.e_cliente; } else { delete campos.nao_cliente; campos.e_cliente = true; }
+  try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos})}); }
+  catch(e){ return aviso("Não gravou — tente de novo"); }
+  c.campos = campos;
+  aviso(nao ? `“${c.nome}” saiu da lista Clientes` : `“${c.nome}” volta à lista Clientes`, false);
+  if(clienteAberto===cliId) repintarFicha(); else render();
+}
 function pintarClientesTodos(){
   const q = dsa(_cliFiltro).replace(/\s+/g," ").trim(), dig = _cliFiltro.replace(/\D/g,""), partes = q.split(" ").filter(Boolean);
-  const todos = (D.clientes||[]).filter(c=>c.nome).slice().sort((a, b)=>dsa(a.nome).localeCompare(dsa(b.nome)));
+  const todos = (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).slice().sort((a, b)=>dsa(a.nome).localeCompare(dsa(b.nome)));   // F254
   const porLetra = new Map(); todos.forEach(c=>{ const l = letraDoNome(c.nome); porLetra.set(l, (porLetra.get(l)||0) + 1); });
   const az = document.getElementById("cli-az");
   if(az) az.innerHTML = `<button type="button" class="cli-az-l${!_cliLetra?" on":""}" data-letra="" aria-pressed="${!_cliLetra}">Todos</button>`
@@ -38923,8 +38950,11 @@ async function registrarMovimento(casoId, i){
 // o advogado responsável, abaixo do nome do cliente: o escolhido ou o advogado dos casos
 function linhaAdvogado(c){
   const id = advogadoDoCliente(c.id)[0], co = D.colPorId.get(id);
+  const nc = souAdmin() ? (ehClienteDaLista(c)
+      ? ` · <button type="button" class="cli-adv-bt cli-nao" onclick="marcarNaoCliente('${c.id}',true)" title="tira este cadastro da lista Clientes (não apaga nada)">Não é cliente</button>`
+      : ` · <span class="chip neutro">fora da lista Clientes</span> <button type="button" class="cli-adv-bt cli-sim" onclick="marcarNaoCliente('${c.id}',false)" title="volta este cadastro à lista Clientes">É cliente</button>`) : "";   // F254
   return `<span class="cli-adv">Advogado responsável: <button type="button" class="cli-adv-bt" onclick="escolherAdvogado('${c.id}')"
-    title="trocar o advogado responsável por este cliente: é quem a ⭐ e a movimentação avisam">${esc(co ? co.nome : "escolher")} ▾</button></span>`;
+    title="trocar o advogado responsável por este cliente: é quem a ⭐ e a movimentação avisam">${esc(co ? co.nome : "escolher")} ▾</button>${nc}</span>`;
 }
 function escolherAdvogado(cliId){
   const c = D.cliPorId.get(cliId); if(!c) return;
@@ -41232,6 +41262,40 @@ function blocoVariosCasos(){
       <button class="btn-mini" style="margin-left:auto" onclick="abrirOrganizar('${c.id}')">organizar</button></div>`).join("")}
     ${linhas.length>mostra.length?`<p class="meio-sub">…e mais ${linhas.length-mostra.length}. A lista encurta conforme os clientes são organizados.</p>`:""}
   </details>`;
+}
+// F254 · os cadastros sem CPF, em três grupos: o que não parece cliente vem marcado; o Paulo confirma e eles saem da lista
+function blocoSemCpf(){
+  if(!souAdmin()) return "";
+  const sem = (D.clientes||[]).filter(c=>c.nome && String(c.cpf||"").replace(/\D/g,"").length!==11 && !(c.campos||{}).e_cliente)
+    .sort((a, b)=>dsa(a.nome).localeCompare(dsa(b.nome)));
+  if(!sem.length) return "";
+  const escondidos = sem.filter(c=>(c.campos||{}).nao_cliente), vivos = sem.filter(c=>!(c.campos||{}).nao_cliente);
+  const g1 = vivos.filter(naoPareceCliente), g2 = vivos.filter(c=>!naoPareceCliente(c) && palavrasDoNome(c.nome).length<2),
+        g3 = vivos.filter(c=>!naoPareceCliente(c) && palavrasDoNome(c.nome).length>=2);
+  const casos = c => (D.casosDoCliente.get(c.id)||[]);
+  const linha = (c, marcado) => `<label class="semcpf-it"><input type="checkbox" class="semcpf-ck" value="${c.id}"${marcado?" checked":""}>
+    <b class="semcpf-nome" style="cursor:pointer" onclick="event.preventDefault();abrirFicha('${c.id}')">${esc(c.nome)}</b>
+    <span class="meio-sub">${casos(c).length} caso${casos(c).length===1?"":"s"}${casos(c).some(k=>k.fase!=="encerrado")?" · com caso aberto":""}</span></label>`;
+  const grupo = (tit, sub, l, marcado, aberto) => l.length ? `<details class="semcpf-g"${aberto?" open":""}><summary><b>${tit} (${l.length})</b> <span class="meio-sub">${sub}</span></summary>
+    ${l.map(c=>linha(c, marcado)).join("")}</details>` : "";
+  return `<details class="sem-acao neutro" id="acervo-semcpf"><summary>Conferir cadastros sem CPF (${vivos.length}) — o que não é cliente sai da lista Clientes</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">Nada é apagado: os marcados só saem da lista Clientes, com os casos e o histórico, e voltam pelo “É cliente” da ficha.</p>
+    ${grupo("Não parecem clientes", "tarefas do To Do e contatos (Imprimir, iCloud, Pai…), já marcados", g1, true, true)}
+    ${grupo("Só o primeiro nome", "confira na ficha antes de marcar", g2, false, false)}
+    ${grupo("Pessoas sem CPF", "em geral clientes antigos: continuam na lista", g3, false, false)}
+    <div class="form-linha" style="margin-top:8px"><button class="btn-mini forte" onclick="esconderSemCpf()">Tirar os marcados da lista Clientes</button>
+      <span class="meio-sub">${escondidos.length ? `${escondidos.length} já fora da lista` : ""}</span></div>
+  </details>`;
+}
+async function esconderSemCpf(){
+  const ids = [...document.querySelectorAll("#acervo-semcpf .semcpf-ck:checked")].map(i=>i.value);
+  if(!ids.length) return aviso("Marque ao menos um cadastro");
+  let ok = 0;
+  for(const id of ids){ const c = D.cliPorId.get(id); if(!c) continue;
+    const campos = {...(c.campos||{}), nao_cliente:true}; delete campos.e_cliente;
+    try{ await api(`/rest/v1/clientes?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos})}); c.campos = campos; ok++; }catch(e){} }
+  aviso(`${ok} cadastro${ok===1?"":"s"} fora da lista Clientes${ok<ids.length?` · ${ids.length-ok} não gravaram, tente de novo`:""}`, false);
+  montarSidebar(); render();
 }
 async function abrirOrganizar(cliId){ await abrirFicha(cliId); organizarCasos(cliId); }
 
