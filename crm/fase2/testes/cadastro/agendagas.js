@@ -31,7 +31,8 @@ function criarAgenda(tokens){
     patch(parc, cal, id){ const e = eventos.find(x=>x.id===id); Object.assign(e, parc); return JSON.parse(JSON.stringify(e)); },
     remove(cal, id){ const i = eventos.findIndex(x=>x.id===id); if(i>=0) eventos.splice(i,1); },
   }};
-  const props = { TOKENS: JSON.stringify(tokens) };
+  // F250h · este teste confere o cálculo antigo dos horários (sem vagas marcadas no Google): liga o soVagas: false
+  const props = { TOKENS: JSON.stringify(tokens), AJUSTES: JSON.stringify({ paulo: { soVagas: false }, marcos: { soVagas: false }, amanda: { soVagas: false } }) };
   const ctx = vm.createContext({
     Utilities, Calendar, Logger:{log(){}},
     PropertiesService:{ getScriptProperties:()=>({ getProperty:k=>props[k], setProperty:(k,v)=>{props[k]=v;} }) },

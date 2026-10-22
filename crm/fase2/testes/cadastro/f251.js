@@ -184,6 +184,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o almoço continua bloqueando o Marcos", /Almoço/.test(await p.textContent(".aq-evs")));
   await foto("03-marcos");
   conf("a vaga LIVRE do Marcos diz \"Livre · 30 min\"", /Livre · 30 min/.test(await p.textContent('.aq-vaga[data-aqvaga="M2"]')));
+  // F250h · dia sem vaga no Google (como o 23/10 do Marcos): nenhum horário, em vez dos horários calculados
+  const semVaga = await p.evaluate(d => agq.disp.dias.filter(x => x.data !== d && !x.bloqueado).every(x => !(x.livres["001"] || []).length && !(x.livres["002"] || []).length), W);
+  conf("nos dias do Marcos sem vaga no Google não aparece horário nenhum", semVaga);
   // a Amanda: a vaga LIVRE, um primeiro atendimento nela e o cancelamento
   await p.click('[data-aqprof="amanda"]');
   await p.waitForFunction(() => agq.disp && agq.disp.profissional === "amanda", null, { timeout: 10000 });
