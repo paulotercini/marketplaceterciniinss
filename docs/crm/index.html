@@ -3910,8 +3910,10 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .cli-az-l.on{background:var(--azul,#1F5C5A);border-color:var(--azul,#1F5C5A);color:#fff}
 .cli-az-l:disabled{opacity:.35;cursor:default}
 .cli-letra{margin:12px 0 2px;padding:0 10px;font-size:12px;font-weight:700;color:var(--cinza);letter-spacing:.04em}
-.cli-todos-it{display:flex;flex-direction:column;align-items:flex-start;width:100%;padding:9px 10px;border:none;border-bottom:1px solid var(--borda);background:none;text-align:left;cursor:pointer;font:inherit}
-.cli-todos-it span{font-size:12px;color:var(--cinza)}
+.cli-todos-it{display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px;border:none;border-bottom:1px solid var(--borda);background:none;text-align:left;cursor:pointer;font:inherit}
+.cli-todos-tx{display:flex;flex-direction:column;min-width:0}
+.cli-todos-tx span{font-size:12px;color:var(--cinza)}
+.cli-todos-it .avatar{width:36px;height:36px;font-size:14px;background:var(--av,var(--azul))}
 @media (hover:hover) and (pointer:fine){.cli-todos-it:hover{background:var(--fundo2,#f5f5f2)}}
 /* F249 · o nível 0 (primeiro acesso): na ficha só o Cadastro (Identificação); na barra só a Agenda, e o Novo Cliente fica no botão fixo */
 html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="0"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]),html[data-nivel="0"] .cel-tudo,
@@ -14739,12 +14741,18 @@ function pintarClientesTodos(){
   // sem filtro, a lista ganha o separador de cada letra
   let antes = "";
   l.innerHTML = achados.slice(0, MAX).map(c=>{ const le = letraDoNome(c.nome), sep = !q && le!==antes ? `<li class="cli-letra" id="cli-letra-${le==="#"?"outros":le}">${le}</li>` : ""; antes = le;
-    return `${sep}<li><button type="button" class="cli-todos-it" data-cli="${c.id}"><b>${esc(c.nome)}</b>
-    <span>${cpfMascarado(c.cpf)}${c.telefone?` · ${esc(fmtTelBR(c.telefone))}`:""}</span></button></li>`; }).join("")
+    const u = c.foto_url && zapFotos.get(c.foto_url);
+    return `${sep}<li><button type="button" class="cli-todos-it" data-cli="${c.id}">${u
+      ? `<img class="avatar foto-zap" src="${esc(u)}" alt="">` : `<span class="avatar" style="--av:${corDoNome(c.nome)}"${c.foto_url?` data-foto="${esc(c.foto_url)}"`:""}>${esc(c.nome[0])}</span>`}
+    <span class="cli-todos-tx"><b>${esc(c.nome)}</b>
+    <span>${cpfMascarado(c.cpf)}${c.telefone?` · ${esc(fmtTelBR(c.telefone))}`:""}</span></span></button></li>`; }).join("")
     || `<li class="meio-sub">Ninguém com “${esc(_cliFiltro)}”.</li>`;
   document.getElementById("cli-todos-n").textContent = achados.length > MAX
     ? `Mostrando ${MAX} de ${achados.length}: escolha a letra ou digite mais para achar.` : (_cliLetra && !q ? `${achados.length} na letra ${_cliLetra}.` : "");
   l.querySelectorAll("[data-cli]").forEach(b=>b.onclick=()=>abrirFicha(b.dataset.cli));
+  // a foto do WhatsApp (clientes.foto_url) entra depois, no lugar da inicial, sem repintar a lista
+  if(l.querySelector("[data-foto]")) assinarFotosZap(achados.slice(0, MAX)).then(()=>l.querySelectorAll("[data-foto]").forEach(a=>{
+    const u = zapFotos.get(a.dataset.foto); if(u) a.outerHTML = `<img class="avatar foto-zap" src="${esc(u)}" alt="">`; }));
 }
 function renderAgenda(){
   tituloLista("🩺 Perícias & Audiências");
