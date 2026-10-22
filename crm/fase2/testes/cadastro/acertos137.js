@@ -66,7 +66,7 @@ const SUPA = "https://ficticio.supabase.co";
     const barra = await p.evaluate(() => {
       const lum = c => { const [r, g, b] = c.match(/\d+/g).slice(0, 3).map(x => { x /= 255; return x <= .03928 ? x / 12.92 : ((x + .055) / 1.055) ** 2.4; }); return .2126 * r + .7152 * g + .0722 * b; };
       const fundo = getComputedStyle(document.getElementById("barra-cel")).backgroundColor;
-      return [...document.querySelectorAll("#barra-cel button")].map(b => {
+      return [...document.querySelectorAll("#barra-cel button")].filter(b => getComputedStyle(b).display !== "none").map(b => {   // F252 · os do nível 0 ficam escondidos
         const a = lum(getComputedStyle(b).color), f = lum(fundo);
         return { svg: !!b.querySelector("b svg"), razao: (Math.max(a, f) + .05) / (Math.min(a, f) + .05) };
       });
