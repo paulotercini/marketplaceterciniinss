@@ -88,6 +88,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // 2 · ligar: todos no 1, o Paulo no 3
   conf("o menu da conta traz 'Níveis da equipe' ao administrador", await p.evaluate(() => /Níveis da equipe/.test(document.getElementById("menu-conta").textContent)));
   await p.evaluate(() => abrirTransicao());
+  conf("desligada, o painel já mostra os níveis e as ondas como botões", (await p.$$(".trn-nv")).length > 0 && (await p.$$(".trn-onda")).length === 6);
   await p.click(".trn-ligar");
   await p.waitForTimeout(500);
   const c1 = cfg();
@@ -152,6 +153,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("no nível 3 o atributo some", (await nivel()) === null);
   await p.evaluate(() => gravarTransicao({ ligada: false })); await p.waitForTimeout(400);
   conf("desligar volta todos ao completo", cfg().ligada === false && await p.evaluate(id => nivelDe(id), MARCOS) === 3);
+  await p.evaluate(() => abrirTransicao());
+  await p.click(`.trn-nv[data-col="${MARCOS}"][data-n="2"]`);
+  await p.waitForTimeout(500);
+  conf("com ela desligada, clicar num nível liga a transição e grava o nível", cfg().ligada === true && cfg().niveis[MARCOS] === 2 && cfg().niveis[PAULO] === 3
+    && await p.evaluate(() => /ligada/.test(document.querySelector(".trn-estado").textContent)));
 
   conf("sem erro de página", !erros.length);
   if (erros.length) console.log(erros);
