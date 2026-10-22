@@ -16,7 +16,9 @@ const CONFIG = {
   REGEX_ATENDIMENTO: /^\s*(00[12])/,
   // F250 · a VAGA: o evento que o escritório deixa no Google Agenda só com o código ("001", "002" ou "001 livre").
   // É horário livre daquele tipo; agendar troca o título pelo nome do cliente no mesmo evento, e cancelar devolve.
-  REGEX_VAGA: /^\s*(00[12])\s*(?:-\s*)?(?:livre)?\s*$/i,
+  // aceita "001", "002", "001 livre", "001 - disponível", "002 vaga", "001 (livre)"
+  REGEX_VAGA: /^\s*(00[12])\s*[-–—:]?\s*\(?\s*(?:livre|dispon[ií]vel|vaga|aberto)?\s*\)?\s*\.?\s*$/i,
+  VERSAO: 'F250b · vagas 001/002',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
   // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
@@ -36,8 +38,19 @@ const CONFIG = {
 
 /* ---------------------------- Entrada ---------------------------- */
 
-function doGet() {
-  return json_({ ok: true, servico: 'agenda-quarta' });
+function doGet(e) {
+  // F250 · o diagnóstico sem token diz só a versão e CONTAGENS (nenhum título, nome ou horário sai daqui)
+  if (e && e.parameter && e.parameter.diag) return json_(diagnostico_());
+  return json_({ ok: true, servico: 'agenda-quarta', versao: CONFIG.VERSAO });
+}
+function diagnostico_() {
+  const agora = new Date(), fim = new Date(agora.getTime() + 14 * 86400000);
+  const r = Calendar.Events.list(CONFIG.CALENDAR_ID, { timeMin: agora.toISOString(), timeMax: fim.toISOString(), singleEvents: true, maxResults: 500 });
+  const evs = (r.items || []).filter(ev => ev.status !== 'cancelled' && ev.start && ev.start.dateTime);
+  const comCodigo = evs.filter(ev => CONFIG.REGEX_ATENDIMENTO.test(ev.summary || ''));
+  return { ok: true, versao: CONFIG.VERSAO, proximos14dias: { eventos: evs.length, comCodigo001ou002: comCodigo.length,
+    vagas: evs.filter(ehVaga_).length, vagasDisponivel: evs.filter(ev => ehVaga_(ev) && ev.transparency === 'transparent').length,
+    vagasSemCorDeProfissional: evs.filter(ev => ehVaga_(ev) && donoDoEvento_(ev) === null).length } };
 }
 
 function doPost(e) {
@@ -213,7 +226,7 @@ function eventosDoDia_(data) {
   });
   return (r.items || []).filter(ev =>
     ev.status !== 'cancelled' && ev.start && ev.start.dateTime &&
-    ev.transparency !== 'transparent' && !recusado_(ev));
+    (ev.transparency !== 'transparent' || ehVaga_(ev)) && !recusado_(ev));   // a vaga marcada como "Disponível" também vale
 }
 
 function resumo_(ev) {
