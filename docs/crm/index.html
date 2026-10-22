@@ -3915,6 +3915,9 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="0"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]),html[data-nivel="0"] .cel-tudo,
 html[data-nivel="0"] #btn-v10-anotar,html[data-nivel="0"] .rapida-caixa,html[data-nivel="0"] #fab-rapida,
 html[data-nivel="0"] .barra-cel [data-cel="meudia"],html[data-nivel="0"] .barra-cel [data-cel="mencoes"],html[data-nivel="0"] .barra-cel [data-cel="menu"],html[data-nivel="0"] .grupo:has(#grupo-fases){display:none!important}
+/* F253 · a faixa de quem olha como outro nível */
+#ver-nivel-faixa{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:900;display:flex;align-items:center;gap:12px;padding:8px 10px 8px 16px;border-radius:999px;background:#23231F;color:#fff;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:calc(100vw - 32px)}
+#ver-nivel-faixa button{border:none;border-radius:999px;padding:6px 12px;background:#fff;color:#23231F;font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}
 /* F252 · no celular do nível 0, a barra de baixo é Agenda, Clientes e Buscar */
 .barra-cel .so-n0{display:none!important}html[data-nivel="0"] .barra-cel .so-n0{display:block!important}
 /* F249 · a transição: no nível 1 o campo de escrever fica como o To Do (sem os tipos nem Sugestões) e as datas numa linha */
@@ -4727,7 +4730,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.79</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.80</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -9053,7 +9056,7 @@ function ligarCartoes(){
 let vistaAnimada="";
 function render(){
   aplicarTema(); marcarBarraCel();
-  if(visaoColab() && !listasDoColab().includes(visao)) visao = meuNivel()===0 ? "agendaq" : "meudia";
+  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = meuNivel()===0 ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
   // o fade só quando a VISTA muda (trocar de lista, pesquisar) — render()
   // também roda em clique de chip/estrela e piscaria a cada toque
   const chaveVista=visao+"|"+(buscaTxt||"");
@@ -10865,7 +10868,7 @@ const listasDoColab = () => meuNivel()===0 ? ["agendaq", "clientes", "novoclient
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
 function alternarVerComo(){
   guardar("crm_ver_como", visaoColab() ? "" : "colab");
-  if(visaoColab() && !listasDoColab().includes(visao)) visao = meuNivel()===0 ? "agendaq" : "meudia";
+  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = meuNivel()===0 ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
   montarSidebar(); render();
 }
 let segAberto = null;
@@ -38876,7 +38879,7 @@ function movimentou(casoId, ev){
       <label class="meio-sub">DIB <input type="date" id="mov-dib" value="${esc(k.dib||"")}"></label>
       <input id="mov-rmi" inputmode="decimal" placeholder="renda R$" style="width:110px"></div>` : ""}
     <div class="esp-lista mov-ops">${ops.map(([r], i)=>`<button type="button" class="esp-it" onclick="registrarMovimento('${casoId}',${i})">${esc(r)}</button>`).join("")}</div>`);
-  setTimeout(()=>{ const i = document.getElementById("mov-txt"); if(i) i.focus(); }, 30);
+  setTimeout(()=>{ const i = document.getElementById("mov-txt"), a = document.activeElement; if(i && !(a && a.matches && a.matches("input,textarea,select"))) i.focus(); }, 30);
 }
 async function registrarMovimento(casoId, i){
   const k = D.casoPorId.get(casoId); if(!k) return;
@@ -39131,7 +39134,7 @@ const meuNivel = () => !eu ? 3 : (souAdmin() && transicao() && verNivel()!=null)
 function verComoNivel(n){
   try{ if(n==null) sessionStorage.removeItem("crm_ver_nivel"); else sessionStorage.setItem("crm_ver_nivel", String(n)); }catch(e){}
   fecharCaixa(); aplicarNivel(); if(clienteAberto) fecharFicha(false); visao = "meudia"; montarSidebar(); render();
-  aviso(n==null ? "De volta à sua visão" : `Você está vendo o CRM como o nível ${n}. Para voltar: menu da conta › Níveis da equipe › Voltar à minha visão`, false);
+  aviso(n==null ? "De volta à sua visão" : `Você está vendo o CRM como o nível ${n}. Para voltar, use a faixa no alto da tela.`, false);
 }
 const ondaAtual = () => (transicao()||{}).onda || ONDAS.length;
 const _verCompleto = new Set();   // as telas abertas por inteiro nesta sessão
@@ -39139,6 +39142,12 @@ const telaSimples = (tela, c) => meuNivel()<3 && ondaAtual()<ONDA_TELA[tela] && 
 function verCompleto(tela){ _verCompleto.add(tela); repintarFicha(); }
 function aplicarNivel(){
   const n = meuNivel(), o = ondaAtual(), h = document.documentElement;
+  // F253 · o administrador que olha como outro nível vê sempre a faixa para voltar
+  let fx = document.getElementById("ver-nivel-faixa");
+  if(souAdmin() && transicao() && verNivel()!=null){
+    if(!fx){ fx = document.createElement("div"); fx.id = "ver-nivel-faixa"; document.body.appendChild(fx); }
+    fx.innerHTML = `<span>Você está vendo o CRM como o <b>nível ${verNivel()}</b>.</span><button type="button" onclick="verComoNivel(null)">Voltar à minha visão</button>`;
+  } else if(fx) fx.remove();
   if(n<3) h.setAttribute("data-nivel", String(n)); else h.removeAttribute("data-nivel");
   const css = n<3 ? Object.entries(REC_ONDA).filter(([w])=>o < +w)
     .map(([, sel])=>sel.split(",").map(x=>`html[data-nivel] ${x}`).join(",") + "{display:none!important}").join("\n") : "";
@@ -47345,7 +47354,8 @@ function editarEventoAgenda(ev){
     fecharCaixa(); aviso("Atendimento atualizado", false);
     await carregarAgenda(); montarSidebar(); if(visao==="agendaq") pintarAgenda();
   };
-  setTimeout(()=>{ const i = document.getElementById("aq-ed-nome"); if(i){ i.focus(); i.select(); } }, 30);
+  // F253 · o cursor vai ao nome só se ninguém já começou a digitar em outro campo da janela
+  setTimeout(()=>{ const i = document.getElementById("aq-ed-nome"), a = document.activeElement; if(i && !(a && a.matches && a.matches("input,textarea,select"))){ i.focus(); i.select(); } }, 30);
 }
 function clienteDoEvento(ev){
   if(ev.clienteId && D.cliPorId.get(ev.clienteId)) return D.cliPorId.get(ev.clienteId);

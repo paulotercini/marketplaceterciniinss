@@ -101,6 +101,12 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o painel oferece 'ver como nível 0/1/2'", (await p.$$(".trn-ver-n")).length === 3);
   await p.click(".trn-ver-n >> text=nível 0"); await p.waitForTimeout(500);
   conf("ver como nível 0 mostra só a Agenda, sem gravar nada", (await nivel()) === "0" && await p.evaluate(() => visao) === "agendaq" && cfg().niveis[PAULO] === 3);
+  conf("vendo como o nível 0, a faixa para voltar fica à vista", await vis("#ver-nivel-faixa button"));
+  await p.evaluate(() => irPara("config")); await p.waitForTimeout(400);
+  conf("as Configurações abrem para o administrador mesmo vendo como o nível 0", await p.evaluate(() => visao) === "config");
+  await p.click("#ver-nivel-faixa button"); await p.waitForTimeout(400);
+  conf("a faixa devolve a visão completa e some", (await nivel()) === null && !(await p.$("#ver-nivel-faixa")));
+  await p.evaluate(() => verComoNivel(0)); await p.waitForTimeout(300);
   await p.evaluate(() => abrirTransicao());
   await p.click(".trn-ver-volta"); await p.waitForTimeout(400);
   conf("'Voltar à minha visão' devolve o nível 3", (await nivel()) === null);
