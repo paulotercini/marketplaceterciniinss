@@ -39,3 +39,10 @@ O escritório deixa no Google Agenda os horários disponíveis com o título só
 - Quem preferir pode continuar trocando o título à mão no Google Agenda: o CRM passa a mostrar o horário como atendimento.
 
 Esta mudança está no `Code.gs`: copie o arquivo inteiro para o projeto no script.google.com e faça uma nova versão da implantação, mantendo a mesma URL (passo 7 acima).
+
+## Cores, evento sem cor e Editar (F250e, 22.10.2026)
+
+- Cada profissional aceita os tons da sua cor no Google: Paulo, mirtilo (9), pavão (7) e lavanda (1); Marcos, manjericão (10) e sálvia (2); Amanda, banana (5) e tangerina (6).
+- O atendimento e a vaga **sem cor** são do Paulo, dono da agenda: não aparecem nem ocupam a agenda do Marcos e da Amanda. O compromisso sem cor que não é atendimento (almoço, reunião) continua bloqueando todos.
+- Ação nova `editar`: troca o nome e o telefone de um atendimento já marcado, inclusive o lançado à mão, mantendo o tipo e o status.
+- O diagnóstico `?diag=1` mostra, só em contagens, as cores usadas pelos atendimentos e pelas vagas e quantas vagas cada profissional tem.

@@ -3887,6 +3887,19 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .aq-vaga.t001{border-color:#2F5E9E;background:#EEF3FA;color:#22487A}
 @media (hover:hover) and (pointer:fine){.aq-vaga:hover{filter:brightness(.96)}}
 .aq-ev.aq-ev-vaga{background:#F2F8F4;border:1.5px dashed #1E6F50;color:#14513A;cursor:pointer}
+/* F250e · cada profissional na sua cor e, dentro dela, um tom para 001 (45 min, mais escuro) e outro para 002 (30 min, mais claro);
+   a vaga vai tracejada e o atendimento marcado, cheio, no mesmo tom */
+.aq .aq-ev.p-paulo.t001,.aq-vaga.p-paulo.t001,.aq-sw.p-paulo.t001{--tom:#1F4E8C;--fundo:#DCE7F6}
+.aq .aq-ev.p-paulo.t002,.aq-vaga.p-paulo.t002,.aq-sw.p-paulo.t002{--tom:#4A90D9;--fundo:#EEF5FD}
+.aq .aq-ev.p-marcos.t001,.aq-vaga.p-marcos.t001,.aq-sw.p-marcos.t001{--tom:#1E6B3A;--fundo:#DCEFE2}
+.aq .aq-ev.p-marcos.t002,.aq-vaga.p-marcos.t002,.aq-sw.p-marcos.t002{--tom:#4FA86B;--fundo:#EEF8F1}
+.aq .aq-ev.p-amanda.t001,.aq-vaga.p-amanda.t001,.aq-sw.p-amanda.t001{--tom:#8F6500;--fundo:#F8EAC6}
+.aq .aq-ev.p-amanda.t002,.aq-vaga.p-amanda.t002,.aq-sw.p-amanda.t002{--tom:#D4A72C;--fundo:#FDF6E1}
+.aq .aq-ev[class*=" t00"]:not(.outro){background:var(--fundo);border-left:4px solid var(--tom);color:#1E2328}
+.aq .aq-ev.aq-ev-vaga[class*=" t00"]{background:#fff;border:1.5px dashed var(--tom);border-left-width:4px;color:var(--tom)}
+.aq-vaga[class*=" t00"]{background:#fff;border:1.5px dashed var(--tom);color:var(--tom)}
+.aq-vaga[class*=" t00"] b{color:var(--tom)}
+.aq-leg-tipos{display:inline-flex;gap:10px;align-items:center}.aq-leg .aq-sw[class*=" t00"]{background:var(--tom)}.aq-leg-tipos i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}
 .aq-dia-livres{display:block;font-size:11px;color:#1E6F50;font-weight:600}
 .aq-horarios small{display:block;font-size:11px;opacity:.8}
 .cli-todos-l{list-style:none;margin:10px 0 0;padding:0}
@@ -3895,7 +3908,7 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 @media (hover:hover) and (pointer:fine){.cli-todos-it:hover{background:var(--fundo2,#f5f5f2)}}
 /* F249 · o nível 0 (primeiro acesso): na ficha só o Cadastro (Identificação); na barra só a Agenda, e o Novo Cliente fica no botão fixo */
 html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="0"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]),html[data-nivel="0"] .cel-tudo,
-html[data-nivel="0"] #btn-v10-anotar,html[data-nivel="0"] .rapida-caixa{display:none!important}
+html[data-nivel="0"] #btn-v10-anotar,html[data-nivel="0"] .rapida-caixa,html[data-nivel="0"] .grupo:has(#grupo-fases){display:none!important}
 /* F249 · a transição: no nível 1 o campo de escrever fica como o To Do (sem os tipos nem Sugestões) e as datas numa linha */
 html[data-nivel="1"] #tipo-fila .tipo-ch[data-tipoand],html[data-nivel="1"] .sug-abrir{display:none!important}
 .fp-nv{display:none}
@@ -4706,7 +4719,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.77</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.78</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -47033,6 +47046,7 @@ let agq = { prof:"paulo", cache:{}, disp:null, sel:null, erro:null, carregando:{
 const COR_PROF = { paulo:"azul", marcos:"verde", amanda:"amarelo" };
 async function carregarAgenda(prof){
   prof = prof || agq.prof;
+  if(prof==="todos") return carregarCompleta();   // F250e
   if(agq.carregando[prof]) return agq.cache[prof];
   agq.carregando[prof] = true;
   try{ agq.cache[prof] = await agendaApi("disponibilidade", {profissional:prof}); agq.erro = null; agq.em = Date.now(); }
@@ -47042,7 +47056,29 @@ async function carregarAgenda(prof){
     if(agq.disp && (!agq.sel || !agq.disp.dias.some(d=>d.data===agq.sel))) agq.sel = (agq.disp.dias.find(d=>!d.bloqueado)||agq.disp.dias[0]||{}).data || null; }
   return agq.cache[prof];
 }
-function nomeProf(id){ const l = ((agq.disp||agq.cache.paulo||{}).profissionais)||[]; return (l.find(x=>x.id===id)||{}).nome || (id ? id[0].toUpperCase()+id.slice(1) : ""); }
+// F250e · a agenda Completa junta as três: os dias de todos, os eventos sem repetir (o almoço é de todos) e as vagas de cada um
+const PROFS_AGENDA = ["paulo", "marcos", "amanda"];
+async function carregarCompleta(){
+  await Promise.all(PROFS_AGENDA.map(pr=>carregarAgenda(pr)));
+  const partes = PROFS_AGENDA.map(pr=>agq.cache[pr]).filter(Boolean);
+  if(!partes.length){ if(agq.prof==="todos") agq.disp = null; return null; }
+  const datas = [...new Set(partes.flatMap(r=>r.dias.map(d=>d.data)))].sort();
+  const dias = datas.map(data=>{
+    const ds = partes.map(r=>({r, d:r.dias.find(x=>x.data===data)})).filter(x=>x.d);
+    const vistos = new Set(), eventos = [];
+    ds.forEach(({r, d})=>(d.eventos||[]).forEach(e=>{ if(vistos.has(e.id)) return; vistos.add(e.id);
+      eventos.push({...e, profissional: e.profissional || ((e.atendimento||e.vaga) ? r.profissional : null)}); }));
+    const livres = {"001":[], "002":[]};
+    ds.forEach(({r, d})=>["001","002"].forEach(t=>(d.livres[t]||[]).forEach(s=>livres[t].push({...s, profissional:s.profissional||r.profissional}))));
+    return {data, diaSemana:ds[0].d.diaSemana, limite:null, bloqueado:ds.every(x=>x.d.bloqueado), lotado:false,
+      atendimentos:ds.reduce((n, x)=>n + (x.d.atendimentos||0), 0), eventos, livres, reservas:[], janelas:ds[0].d.janelas};
+  });
+  agq.cache.todos = {...partes[0], profissional:"todos", dias, alerta:null};
+  if(agq.prof==="todos"){ agq.disp = agq.cache.todos;
+    if(!agq.sel || !dias.some(d=>d.data===agq.sel)) agq.sel = (dias.find(d=>!d.bloqueado)||dias[0]||{}).data || null; }
+  return agq.cache.todos;
+}
+function nomeProf(id){ if(id==="todos") return "Completa"; const l = ((agq.disp||agq.cache.paulo||{}).profissionais)||[]; return (l.find(x=>x.id===id)||{}).nome || (id ? id[0].toUpperCase()+id.slice(1) : ""); }
 function tratamentoProf(id){ const l = ((agq.disp||agq.cache.paulo||{}).profissionais)||[]; return (l.find(x=>x.id===id)||{}).tratamento || "o Dr. Paulo Roberto Tercini Filho"; }
 // o contador da barra: a ocupação do próximo dia de atendimento do Paulo ("9/14")
 function contadorAgenda(){
@@ -47152,7 +47188,7 @@ function renderAgendaQuarta(){
 function pintarTopoAgenda(){
   const lista = ((agq.disp||agq.cache.paulo||{}).profissionais) || [{id:"paulo",nome:"Paulo"},{id:"marcos",nome:"Marcos"},{id:"amanda",nome:"Amanda"}];
   document.getElementById("topo-extra").innerHTML = `<div class="aq-topo">
-    <div class="seg-colab aq-profs" role="group" aria-label="Profissional">${lista.map(x=>`<button data-aqprof="${x.id}" aria-pressed="${agq.prof===x.id}" class="${agq.prof===x.id?"on":""}"><i class="aq-bola p-${x.id}"></i>${esc(x.nome)}</button>`).join("")}</div>
+    <div class="seg-colab aq-profs" role="group" aria-label="Profissional">${[...lista, {id:"todos", nome:"Completa"}].map(x=>`<button data-aqprof="${x.id}" aria-pressed="${agq.prof===x.id}" class="${agq.prof===x.id?"on":""}"><i class="aq-bola p-${x.id}"></i>${esc(x.nome)}</button>`).join("")}</div>
     ${((agq.disp||agq.cache.paulo||{}).papel==="admin")?`<button class="btn-rap" onclick="abrirDiasAgenda()">Dias de atendimento</button>`:""}
     <button class="aq-agendar" onclick="abrirFluxoAgenda()">+ Agendar</button></div>`;
   document.querySelectorAll("[data-aqprof]").forEach(b=>b.onclick=async()=>{ agq.prof=b.dataset.aqprof; agq.disp=agq.cache[agq.prof]||null; agq.sel=null; pintarTopoAgenda();
@@ -47194,12 +47230,12 @@ const minDoTipo = t => t==="001" ? 45 : 30;
 function listaVagas(dia){
   const v = vagasDoDia(dia); if(!v.length) return "";
   return `<section class="aq-vagas" aria-label="Vagas livres"><h4>Vagas livres · ${v.length}</h4>
-    <div class="aq-vagas-l">${v.map(s=>`<button type="button" class="aq-vaga t${s.tipo}" data-aqvaga="${esc(s.eventoId)}" title="agendar o cliente neste horário">
-      <b>${s.inicio}</b><span>${s.tipo} · ${minDoTipo(s.tipo)} min</span></button>`).join("")}</div></section>`;
+    <div class="aq-vagas-l">${v.map(s=>`<button type="button" class="aq-vaga p-${s.profissional||agq.prof} t${s.tipo}" data-aqvaga="${esc(s.eventoId)}" title="agendar o cliente neste horário${agq.prof==="todos"?` · ${esc(nomeProf(s.profissional||"paulo"))}`:""}">
+      <b>${s.inicio}</b><span>${s.tipo} · ${minDoTipo(s.tipo)} min${agq.prof==="todos"?` · ${esc(nomeProf(s.profissional||"paulo"))}`:""}</span></button>`).join("")}</div></section>`;
 }
 function agendarNaVaga(dia, eventoId){
   const s = vagasDoDia(dia).find(x=>x.eventoId===eventoId); if(!s) return;
-  abrirFluxoAgenda({data:dia.data, inicio:s.inicio, prof:agq.prof, vaga:{eventoId, tipo:s.tipo}});
+  abrirFluxoAgenda({data:dia.data, inicio:s.inicio, prof:s.profissional || (agq.prof==="todos" ? "paulo" : agq.prof), vaga:{eventoId, tipo:s.tipo}});
 }
 const AQ_INI = 8*60, AQ_FIM = 18*60+30, AQ_PX = 24;   // 24 px a cada 15 minutos
 function linhaDoTempoAgenda(dia, r){
@@ -47213,10 +47249,10 @@ function linhaDoTempoAgenda(dia, r){
   const nR = Math.max(1, raias.length);
   const bloco = e => {
     const top = Math.max(0,y(e.inicio)), h = Math.max(AQ_PX-2, y(e.fim)-Math.max(0,y(e.inicio))-2);
-    if(e.vaga) return `<button class="aq-ev aq-ev-vaga" data-aqvaga="${esc(e.id)}" style="top:${top}px;height:${h}px;left:calc(${e._raia}*100%/${nR});width:calc(100%/${nR} - 4px)"
+    if(e.vaga) return `<button class="aq-ev aq-ev-vaga p-${e.profissional||(agq.prof==="todos"?"paulo":agq.prof)} t${e.tipo}" data-aqvaga="${esc(e.id)}" style="top:${top}px;height:${h}px;left:calc(${e._raia}*100%/${nR});width:calc(100%/${nR} - 4px)"
       title="vaga livre ${esc(e.tipo||"")} · ${e.inicio} às ${e.fim} · clique para agendar"><span class="aq-ev-h">${e.inicio}–${e.fim} · ${esc(e.tipo||"")}</span><b>Livre · agendar</b></button>`;
     // a cor é do profissional; compromisso que não é atendimento fica cinza
-    const cls = e.atendimento ? `aq-ev p-${e.profissional||"nenhum"}` : "aq-ev outro";
+    const cls = e.atendimento ? `aq-ev p-${e.profissional||(agq.prof==="todos"?"paulo":agq.prof)} t${e.tipo}` : "aq-ev outro";
     const nome = e.atendimento ? (e.nome || e.titulo.replace(/^\s*00[12]\s*-\s*/,"").replace(/\s*-\s*(n[ãa]o confirmado|confirmado)\s*$/i,"")) : e.titulo;
     return `<button class="${cls}" data-aqev="${esc(e.id)}" style="top:${top}px;height:${h}px;left:calc(${e._raia}*100%/${nR});width:calc(100%/${nR} - 4px)"
       ${e.atendimento?"":"tabindex=\"-1\""} title="${esc(e.titulo)} · ${e.inicio} às ${e.fim}">
@@ -47226,7 +47262,10 @@ function linhaDoTempoAgenda(dia, r){
   const reservas = (r.dias.find(d=>d.data===dia.data)||{}).reservas || dia.reservas || [];
   const cab = dia.limite ? `${dia.atendimentos} de ${dia.limite} atendimentos${dia.lotado?" · lotado":""}` : `${dia.atendimentos} ${dia.atendimentos===1?"atendimento":"atendimentos"}`;
   return `<div class="aq-tempo-cab"><b>${nomeProf(agq.prof)} · ${diaExt(dia.data)}, ${dataBR(dia.data)}</b><span>${cab}</span>
-      <span class="aq-leg"><i class="p-${agq.prof}"></i>atendimento de ${esc(nomeProf(agq.prof))} (001 primeiro, 002 cliente) <i class="outro"></i>outro compromisso</span></div>
+      <span class="aq-leg">${(agq.prof==="todos" ? ["paulo","marcos","amanda"] : [agq.prof]).map(pr=>`<span class="aq-leg-tipos">${esc(nomeProf(pr))}:
+        <span><i class="aq-sw p-${pr} t001"></i>001 · 45 min</span>
+        <span><i class="aq-sw p-${pr} t002"></i>002 · 30 min</span></span>`).join("")}
+        <i class="outro"></i>outro compromisso · tracejado = vaga livre</span></div>
     <div class="aq-tempo" style="height:${alto}px">
       <div class="aq-horas">${horas.map(m=>`<span style="top:${(m-AQ_INI)/15*AQ_PX}px">${String(Math.floor(m/60)).padStart(2,"0")}:${String(m%60).padStart(2,"0")}</span>`).join("")}</div>
       <div class="aq-trilho">
@@ -47244,7 +47283,7 @@ function menuEventoAgenda(el, ev){
   const podeMexer = ev.origemCrm;
   const m = document.createElement("div"); m.className = "aq-menu"; m.setAttribute("role","menu");
   const op = (acao, rot) => `<button role="menuitem" data-aqop="${acao}">${rot}</button>`;
-  m.innerHTML = (ev.confirmado ? "" : op("confirmar","Confirmar"))
+  m.innerHTML = op("editar","Editar") + (ev.confirmado ? "" : op("confirmar","Confirmar"))
     + (podeMexer ? op("remarcar","Remarcar") : "")
     + (podeMexer ? op("cancelar","Cancelar") : "")
     + op("abrir","Abrir cliente")
@@ -47256,6 +47295,23 @@ function menuEventoAgenda(el, ev){
   const fora = e => { if(!m.contains(e.target)){ m.remove(); document.removeEventListener("click", fora, true); } };
   setTimeout(()=>document.addEventListener("click", fora, true));
   m.querySelectorAll("[data-aqop]").forEach(b=>b.onclick=async()=>{ m.remove(); await acaoEventoAgenda(b.dataset.aqop, ev); });
+}
+// F250e · Editar o atendimento já marcado, também o lançado à mão no Google Agenda: o nome e o telefone; o tipo e o status ficam
+const nomeDoEvento = ev => ev.nome || ev.titulo.replace(/^\s*00[12]\s*-\s*/,"").replace(/\s*-\s*(n[ãa]o confirmado|confirmado)\s*$/i,"");
+function editarEventoAgenda(ev){
+  caixa(`<div class="aq-fluxo"><h3>Editar o atendimento <span class="aq-tipo">${esc(ev.tipo||"")} · ${dataBR(ev.data)} às ${hmTxt(ev.inicio)}</span></h3>
+    <label class="aq-campo">Nome do cliente<input id="aq-ed-nome" class="aq-inp" value="${esc(nomeDoEvento(ev))}"></label>
+    <label class="aq-campo">Telefone com DDD<input id="aq-ed-tel" class="aq-inp" inputmode="tel" value="${esc(fmtTelBR(ev.telefone||""))}" oninput="mascararTel(this)"></label>
+    <div class="aq-bts"><button class="btn-rap" onclick="fecharCaixa()">Cancelar</button><button class="btn-rap forte" id="aq-ed-salvar">Salvar</button></div></div>`);
+  document.getElementById("aq-ed-salvar").onclick = async ()=>{
+    const nome = document.getElementById("aq-ed-nome").value.replace(/\s+/g," ").trim(), tel = document.getElementById("aq-ed-tel").value.replace(/\D/g,"");
+    if(nome.length<3) return aviso("Informe o nome do cliente.");
+    try{ await agendaApi("editar", {eventId:ev.id, nome, telefone:tel}); }
+    catch(e){ return aviso(e.codigo==="ACAO_INVALIDA" ? "O Apps Script da agenda ainda está na versão antiga: implante a F250e para poder editar." : e.message); }
+    fecharCaixa(); aviso("Atendimento atualizado", false);
+    await carregarAgenda(); montarSidebar(); if(visao==="agendaq") pintarAgenda();
+  };
+  setTimeout(()=>{ const i = document.getElementById("aq-ed-nome"); if(i){ i.focus(); i.select(); } }, 30);
 }
 function clienteDoEvento(ev){
   if(ev.clienteId && D.cliPorId.get(ev.clienteId)) return D.cliPorId.get(ev.clienteId);
@@ -47274,6 +47330,7 @@ async function acaoEventoAgenda(acao, ev){
       aviso("Atendimento cancelado", false);
     }
     else if(acao==="remarcar"){ return abrirFluxoAgenda({remarcar:ev}); }
+    else if(acao==="editar"){ return editarEventoAgenda(ev); }
     else if(acao==="abrir"){ const c = clienteDoEvento(ev); return c ? abrirFicha(c.id) : aviso("Não achei este cliente no CRM pelo nome do evento."); }
     else if(acao==="whats"){ try{ await navigator.clipboard.writeText(msgAgendaWhats(ev.nome, ev.data, ev.inicio, ev.tipo, ev.profissional)); }catch(e){} aviso("Mensagem copiada", false); return; }
   }catch(e){ aviso(e.message); }
@@ -47345,7 +47402,7 @@ function chipAgendaCliente(c){
 let fluxo = null;
 function abrirFluxoAgenda(op={}){
   fluxo = { etapa: op.remarcar ? 5 : 1, cli:null, novo:false, tipo: op.remarcar ? op.remarcar.tipo : null,
-    prof: (op.remarcar && op.remarcar.profissional) || op.prof || agq.prof,
+    prof: (op.remarcar && op.remarcar.profissional) || op.prof || (agq.prof==="todos" ? "paulo" : agq.prof),
     nome:"", tel:"", telOk:false, acomp:null, data: op.data || agq.sel, inicio: op.inicio || null, obs:"",
     o1:false, o2:false, remarcar: op.remarcar || null, sugerir: op.sugerir || null, msg:"", feito:null, busca:"",
     vaga: op.vaga || null, eventoId: (op.vaga||{}).eventoId || null };   // F250
@@ -47359,6 +47416,14 @@ function buscarClientesAgenda(q){
   return D.clientes.filter(c=>{ const nome = dsa(c.nome).replace(/\s+/g," ");
     return (dig.length>=3 && String(c.cpf||"").includes(dig)) || partes.every(p=>nome.includes(p)); }).slice(0,8);
 }
+function sugAgendaHtml(f){
+  return buscarClientesAgenda(f.busca).map(c=>`<button data-aqcli="${c.id}"><b>${esc(c.nome)}</b><span>${cpfMascarado(c.cpf)} · ${esc(civilDe(c).cidade||"cidade não informada")}</span></button>`).join("")
+    + (f.busca.trim().length>=3 ? `<button class="aq-novo" data-aqnovo="1"><b>Nenhum destes, é primeiro atendimento</b><span>cria o pré-cadastro e agenda ${f.vaga?f.vaga.tipo:"001, com 45 minutos"}</span></button>` : "");
+}
+function ligarSugAgenda(f){
+  document.querySelectorAll("[data-aqcli]").forEach(b=>b.onclick=()=>{ f.cli=D.cliPorId.get(b.dataset.aqcli); f.novo=false; f.tipo=(f.vaga&&f.vaga.tipo)||"002"; f.nome=f.cli.nome; f.tel=(f.cli.telefone||"").replace(/\D/g,""); f.corrigir=false; f.etapa=2; f.msg=""; pintarFluxo(); });
+  document.querySelectorAll("[data-aqnovo]").forEach(b=>b.onclick=()=>{ f.cli=null; f.novo=true; f.tipo=(f.vaga&&f.vaga.tipo)||"001"; if(!f.nome) f.nome=f.busca.replace(/\d/g,"").trim(); f.etapa=2; f.msg=""; pintarFluxo(); });
+}
 function pintarFluxo(){
   const f = fluxo; if(!f) return;
   const passos = ["Quem","Tipo","Agendamentos","Acompanhante","Horário","Orientações"];
@@ -47367,11 +47432,9 @@ function pintarFluxo(){
   const msg = f.msg ? `<div class="aq-msg" role="alert">${esc(f.msg)}</div>` : "";
   if(f.feito){ corpo = sucessoFluxo(); }
   else if(f.etapa===1){
-    const sug = buscarClientesAgenda(f.busca);
-    corpo = `<h3>Quem vem ao atendimento?</h3>
+    corpo = `<h3>Quem vem ao atendimento?${f.vaga?` <span class="aq-tipo">${f.vaga.tipo} · ${dataBR(f.data)} às ${hmTxt(f.inicio)}</span>`:""}</h3>
       <input id="aq-busca" class="aq-inp" placeholder="Nome ou CPF" value="${esc(f.busca)}" autocomplete="off">
-      <div class="aq-sug">${sug.map(c=>`<button data-aqcli="${c.id}"><b>${esc(c.nome)}</b><span>${cpfMascarado(c.cpf)} · ${esc(civilDe(c).cidade||"cidade não informada")}</span></button>`).join("")}
-        ${f.busca.trim().length>=3?`<button class="aq-novo" data-aqnovo="1"><b>Nenhum destes, é primeiro atendimento</b><span>cria o pré-cadastro e agenda 001, com 45 minutos</span></button>`:""}</div>`;
+      <div class="aq-sug">${sugAgendaHtml(f)}</div>`;
   } else if(f.etapa===2){
     corpo = f.novo ? `<h3>Primeiro atendimento <span class="aq-tipo">001 · 45 minutos</span></h3>
         <label class="aq-campo">Nome completo<input id="aq-nome" class="aq-inp" value="${esc(f.nome)}"></label>
@@ -47442,9 +47505,9 @@ function ligarFluxo(){
     const volta = {2:1, 3:2, 4:(f.futuros&&f.futuros.length?3:2), 5:4, 6:5}; f.etapa = volta[f.etapa]||1; pintarFluxo(); });
   const busca = $("aq-busca");
   if(busca){ busca.focus(); busca.setSelectionRange(busca.value.length, busca.value.length);
-    busca.oninput = () => { f.busca = busca.value; const pos=busca.selectionStart; pintarFluxo(); const b=$("aq-busca"); if(b) b.setSelectionRange(pos,pos); }; }
-  document.querySelectorAll("[data-aqcli]").forEach(b=>b.onclick=()=>{ f.cli=D.cliPorId.get(b.dataset.aqcli); f.novo=false; f.tipo=(f.vaga&&f.vaga.tipo)||"002"; f.nome=f.cli.nome; f.tel=(f.cli.telefone||"").replace(/\D/g,""); f.corrigir=false; f.etapa=2; f.msg=""; pintarFluxo(); });
-  document.querySelectorAll("[data-aqnovo]").forEach(b=>b.onclick=()=>{ f.cli=null; f.novo=true; f.tipo=(f.vaga&&f.vaga.tipo)||"001"; if(!f.nome) f.nome=f.busca.replace(/\d/g,"").trim(); f.etapa=2; f.msg=""; pintarFluxo(); });
+    // F250e · a cada letra só a lista de sugestões muda: repintar a janela inteira fazia a tela piscar em branco
+    busca.oninput = () => { f.busca = busca.value; const box = document.querySelector(".aq-fluxo .aq-sug"); if(box){ box.innerHTML = sugAgendaHtml(f); ligarSugAgenda(f); } }; }
+  ligarSugAgenda(f);
   const tel = $("aq-tel"); if(tel) tel.oninput = () => mascararTel(tel);
   on("aq-corrigir", ()=>{ f.corrigir=true; pintarFluxo(); });
   on("aq-seg2", async ()=>{

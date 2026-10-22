@@ -51,6 +51,13 @@ const DISP = { ok: true, usuario: "Paulo", papel: "admin", profissional: "paulo"
     livres: { "001": [{ inicio: "08:00", fim: "08:45", encaixado: true, reserva: false, vaga: true, eventoId: "V1", tipo: "001" }],
               "002": [{ inicio: "10:00", fim: "10:30", encaixado: true, reserva: false, vaga: true, eventoId: "V2", tipo: "002" }] },
     reservas: [], janelas: [{ inicio: "08:00", fim: "12:30" }, { inicio: "13:30", fim: "18:30" }] }] };
+const DISP_M = JSON.parse(JSON.stringify(DISP)); DISP_M.profissional = "marcos";
+DISP_M.dias[0].eventos = [{ id: "M1", titulo: "002", data: DIA, inicio: "14:00", fim: "14:30", atendimento: false, vaga: true, tipo: "002", profissional: "marcos" },
+  { id: "ALM", titulo: "Almoço", data: DIA, inicio: "12:30", fim: "13:30", atendimento: false, vaga: false, tipo: null, profissional: null }];
+DISP_M.dias[0].livres = { "001": [], "002": [{ inicio: "14:00", fim: "14:30", encaixado: true, reserva: false, vaga: true, eventoId: "M1", tipo: "002", profissional: "marcos" }] };
+DISP_M.dias[0].atendimentos = 0;
+const DISP_A = JSON.parse(JSON.stringify(DISP_M)); DISP_A.profissional = "amanda"; DISP_A.dias[0].eventos = [DISP_M.dias[0].eventos[1]]; DISP_A.dias[0].livres = { "001": [], "002": [] };
+DISP.dias[0].eventos.push(DISP_M.dias[0].eventos[1]);
 const pedidos = [];
 
 const ok = [];
@@ -75,7 +82,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
   await ctx.route(/script\.google\.com/, async r => {
     const b = JSON.parse(r.request().postData() || "{}"); pedidos.push(b);
-    const resp = b.acao === "disponibilidade" ? DISP
+    const resp = b.acao === "disponibilidade" ? (b.profissional === "marcos" ? DISP_M : b.profissional === "amanda" ? DISP_A : DISP)
+      : b.acao === "editar" ? { ok: true, evento: {} }
       : b.acao === "agendar" ? { ok: true, evento: { id: b.eventoId || "NOVO", titulo: `${b.tipo} - ${b.nome} - Não confirmado`, data: b.data, inicio: b.inicio, fim: "08:45", atendimento: true, tipo: b.tipo, profissional: "paulo", origemCrm: true } }
       : b.acao === "agendamentosFuturos" ? { ok: true, agendamentos: [] } : { ok: true, usuario: "Paulo", papel: "admin" };
     r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(resp) }); });
@@ -102,11 +110,29 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a faixa do dia conta as vagas", /2 vagas/.test(await p.textContent(".aq-dia")));
   conf("na linha do tempo a vaga é 'Livre · agendar' e o atendimento marcado continua", (await p.$$(".aq-ev-vaga")).length === 2 && /Fulano/.test(await p.textContent(".aq-evs")));
   await p.screenshot({ path: path.join(OUT, "01-vagas.png"), fullPage: true });
+  conf("a vaga 001 e a 002 do Paulo têm tons de azul diferentes", await p.evaluate(() => {
+    const c = sel => getComputedStyle(document.querySelector(sel)).borderTopColor;
+    return c('.aq-vaga[data-aqvaga="V1"]') !== c('.aq-vaga[data-aqvaga="V2"]') && document.querySelector('.aq-vaga[data-aqvaga="V1"]').classList.contains("p-paulo"); }));
+  conf("o atendimento marcado leva a cor do tipo (002)", await p.evaluate(() => document.querySelector('[data-aqev="A1"]').classList.contains("t002")));
+  // Editar o atendimento marcado
+  await p.click('[data-aqev="A1"]');
+  const opsEv = await p.$$eval(".aq-menu [data-aqop]", b => b.map(x => x.textContent));
+  conf(`o atendimento marcado oferece Editar (${opsEv.join(", ")})`, opsEv[0] === "Editar");
+  await p.click('.aq-menu [data-aqop="editar"]');
+  await p.fill("#aq-ed-nome", "Fulano Fictício Corrigido");
+  await p.click("#aq-ed-salvar"); await p.waitForTimeout(500);
+  const ed = pedidos.find(x => x.acao === "editar");
+  conf("Editar pede ao Google a troca do nome", ed && ed.eventId === "A1" && ed.nome === "Fulano Fictício Corrigido");
+  await p.evaluate(() => fecharCaixa());
   // 2 · agendar na vaga 001
   await p.click('.aq-vaga[data-aqvaga="V1"]');
   await p.waitForSelector("#aq-busca");
   conf("a vaga abre o agendamento já com o tipo e o horário dela", await p.evaluate(() => fluxo.tipo === "001" && fluxo.eventoId === "V1" && fluxo.inicio === "08:00"));
+  await p.evaluate(() => { window._jan = document.querySelector(".aq-fluxo"); });
+  await p.type("#aq-busca", "Ana Fic");
+  conf("digitar o nome não repinta a janela (sem tela piscando)", await p.evaluate(() => document.querySelector(".aq-fluxo") === window._jan && document.activeElement.id === "aq-busca"));
   await p.fill("#aq-busca", "Ana Fictícia");
+  await p.evaluate(() => { const b = document.getElementById("aq-busca"); b.dispatchEvent(new Event("input")); });
   await p.waitForSelector("[data-aqcli]");
   await p.click("[data-aqcli]");
   conf("escolher cliente do escritório não troca o tipo da vaga (001)", await p.evaluate(() => fluxo.tipo === "001"));
@@ -122,6 +148,18 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click('[data-aqhora="08:00"]');
   conf("escolher a vaga de 001 passa o tipo a 001", await p.evaluate(() => fluxo.tipo === "001" && fluxo.eventoId === "V1"));
   await p.evaluate(() => fecharCaixa());
+  // a agenda Completa
+  await p.click('[data-aqprof="todos"]');
+  await p.waitForFunction(() => agq.prof === "todos" && agq.disp && agq.disp.profissional === "todos", null, { timeout: 10000 });
+  await p.evaluate(() => pintarAgenda());
+  const vc = await p.$$eval(".aq-vaga", b => b.map(x => x.className));
+  conf(`a Completa junta as vagas do Paulo e do Marcos (${vc.length})`, vc.length === 3 && vc.some(c => /p-marcos/.test(c)) && vc.some(c => /p-paulo/.test(c)));
+  conf("o almoço, que é de todos, aparece uma vez só", await p.evaluate(() => agq.disp.dias[0].eventos.filter(e => e.id === "ALM").length === 1));
+  await p.click('.aq-vaga[data-aqvaga="M1"]');
+  conf("a vaga do Marcos na Completa agenda com o Marcos", await p.evaluate(() => fluxo.prof === "marcos" && fluxo.eventoId === "M1"));
+  await p.evaluate(() => fecharCaixa());
+  await p.screenshot({ path: path.join(OUT, "03-completa.png"), fullPage: true });
+  await p.evaluate(() => { agq.prof = "paulo"; agq.disp = agq.cache.paulo; });
   // 4 · nível 0: a lista Clientes
   await p.evaluate(() => verComoNivel(0)); await p.waitForTimeout(400);
   const itens = await p.evaluate(() => [...document.querySelectorAll(".lista-item")].filter(e => e.offsetParent !== null).map(e => e.dataset.v));
