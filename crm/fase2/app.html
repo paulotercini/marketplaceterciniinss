@@ -4692,7 +4692,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.75</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.76</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -39033,7 +39033,14 @@ function nivelDe(colId){
   const n = (t.niveis||{})[colId], co = D.colPorId && D.colPorId.get(colId);
   return [0, 1, 2, 3].includes(n) ? n : (co && co.papel==="admin" ? 3 : 0);
 }
-const meuNivel = () => eu ? nivelDe(eu.id) : 3;
+// o administrador pode olhar o CRM como um nível, nesta sessão, sem trocar de usuário
+const verNivel = () => { try{ const v = sessionStorage.getItem("crm_ver_nivel"); return v==null || v==="" ? null : +v; }catch(e){ return null; } };
+const meuNivel = () => !eu ? 3 : (souAdmin() && transicao() && verNivel()!=null) ? verNivel() : nivelDe(eu.id);
+function verComoNivel(n){
+  try{ if(n==null) sessionStorage.removeItem("crm_ver_nivel"); else sessionStorage.setItem("crm_ver_nivel", String(n)); }catch(e){}
+  fecharCaixa(); aplicarNivel(); if(clienteAberto) fecharFicha(false); visao = "meudia"; montarSidebar(); render();
+  aviso(n==null ? "De volta à sua visão" : `Você está vendo o CRM como o nível ${n}. Para voltar: menu da conta › Níveis da equipe › Voltar à minha visão`, false);
+}
 const ondaAtual = () => (transicao()||{}).onda || ONDAS.length;
 const _verCompleto = new Set();   // as telas abertas por inteiro nesta sessão
 const telaSimples = (tela, c) => meuNivel()<3 && ondaAtual()<ONDA_TELA[tela] && _atendAberto.has(c.id) && !_verCompleto.has(tela);
@@ -39086,6 +39093,9 @@ function abrirTransicao(){
     <div class="trn-ondas">${ONDAS.map(([n, r])=>`<button type="button" class="esp-it trn-onda${n===onda?" on":""}" onclick="gravarTransicao({onda:${n}})">${n} · ${esc(r)}</button>`).join("")}</div>
     <p class="meio-sub" style="margin:0">Nível de cada um (0 · Agenda e Identificação, 1 · só anotação, 2 · com sugestões, 3 · completo):</p>
     <ul class="trn-lista">${equipeAtiva().map(co=>`<li><b>${esc(co.nome)}</b>${[0, 1, 2, 3].map(n=>`<button type="button" class="btn-mini trn-nv${nv(co.id)===n?" on":""}" data-col="${co.id}" data-n="${n}" aria-pressed="${nv(co.id)===n}" onclick="gravarTransicao({col:'${co.id}', n:${n}})">${n}</button>`).join("")}</li>`).join("")}</ul>
+    ${t ? `<p class="meio-sub" style="margin:10px 0 4px">Ver o CRM como o colaborador vê (só para você, nesta sessão):</p>
+      <div class="form-linha trn-ver">${[0, 1, 2].map(n=>`<button type="button" class="btn-mini trn-ver-n${verNivel()===n?" on":""}" onclick="verComoNivel(${n})">nível ${n}</button>`).join("")}
+        ${verNivel()!=null ? `<button type="button" class="btn-mini trn-ver-volta" onclick="verComoNivel(null)">Voltar à minha visão</button>` : ""}</div>` : ""}
     ${t ? `<button class="btn-rap trn-desligar" onclick="gravarTransicao({ligada:false})">Desligar a transição</button>`
         : `<button class="btn-rap trn-ligar" onclick="gravarTransicao({ligada:true, onda:1})">Ligar a transição</button>`}`);
 }

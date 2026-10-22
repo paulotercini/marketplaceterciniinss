@@ -97,6 +97,14 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("quem não foi escolhido começa no 0 (primeiro acesso)", await p.evaluate(id => nivelDe(id), MARCOS) === 0);
   await p.screenshot({ path: path.join(OUT, "01-painel.png") });
 
+  // 2a · o Paulo olha como o nível 0 sem trocar de usuário, e volta
+  conf("o painel oferece 'ver como nível 0/1/2'", (await p.$$(".trn-ver-n")).length === 3);
+  await p.click(".trn-ver-n >> text=nível 0"); await p.waitForTimeout(500);
+  conf("ver como nível 0 mostra só a Agenda, sem gravar nada", (await nivel()) === "0" && await p.evaluate(() => visao) === "agendaq" && cfg().niveis[PAULO] === 3);
+  await p.evaluate(() => abrirTransicao());
+  await p.click(".trn-ver-volta"); await p.waitForTimeout(400);
+  conf("'Voltar à minha visão' devolve o nível 3", (await nivel()) === null);
+  await p.evaluate(() => abrirTransicao());
   // 2b · o nível 0: só a Agenda e a Identificação
   await p.click(`.trn-nv[data-col="${PAULO}"][data-n="0"]`);
   await p.waitForTimeout(500);
