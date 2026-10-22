@@ -112,7 +112,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(400);
   conf("no nível 0, a tela inicial é a Agenda do Google", (await nivel()) === "0" && await p.evaluate(() => visao) === "agendaq");
   const itens = await p.evaluate(() => [...document.querySelectorAll(".lista-item")].filter(e => e.offsetParent !== null).map(e => e.dataset.v));
-  conf(`a barra mostra só a Agenda (${itens.join(", ")})`, itens.join() === "agendaq");
+  conf(`a barra mostra só a Agenda e os Clientes (${itens.join(", ")})`, itens.join() === "agendaq,clientes");
   conf("o Novo Cliente continua no botão fixo e a anotação rápida some", await vis("#btn-v10-cli") && !(await vis("#btn-v10-anotar")));
   await p.click("#btn-v10-cli"); await p.waitForTimeout(400);
   conf("o Novo Cliente abre", await p.evaluate(() => visao) === "novocliente");
