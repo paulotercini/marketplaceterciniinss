@@ -676,9 +676,11 @@ async function buscarFotosPedidas(s = sock) {
   for (const p of fila) {
     let resultado = "sem whatsapp";
     try {
-      const d = N.soDigitos(p.telefone);
-      const fone = d.length <= 11 ? "55" + d : d;
-      const [achado] = await s.onWhatsApp(fone);
+      let achado = null;
+      for (const fone of N.variantesFone(p.telefone)) {
+        [achado] = await s.onWhatsApp(fone);
+        if (achado && achado.exists) break;
+      }
       if (achado && achado.exists) {
         const url = await s.profilePictureUrl(achado.jid, "image").catch(() => null);
         resultado = "sem foto";
