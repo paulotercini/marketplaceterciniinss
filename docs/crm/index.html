@@ -4730,7 +4730,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.83</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.84</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -47324,7 +47324,7 @@ function linhaDoTempoAgenda(dia, r){
       <div class="aq-horas">${horas.map(m=>`<span style="top:${(m-AQ_INI)/15*AQ_PX}px">${String(Math.floor(m/60)).padStart(2,"0")}:${String(m%60).padStart(2,"0")}</span>`).join("")}</div>
       <div class="aq-trilho">
         ${horas.map(m=>`<i class="aq-linha${m%60?" meia":""}" style="top:${(m-AQ_INI)/15*AQ_PX}px"></i>`).join("")}
-        <div class="aq-almoco" style="top:${y("12:30")}px;height:${y("13:30")-y("12:30")}px"><span>Almoço, sem agendamento</span></div>
+        ${agq.prof==="paulo" ? `<div class="aq-almoco" style="top:${y("12:30")}px;height:${y("13:30")-y("12:30")}px"><span>Almoço, sem agendamento</span></div>` : ""}
         ${reservas.map(v=>`<div class="aq-reserva" style="top:${y(v.inicio)}px;height:${y(v.fim)-y(v.inicio)}px"><span>Encaixe urgente, somente Paulo</span></div>`).join("")}
         <div class="aq-evs">${evs.map(bloco).join("")}</div>
       </div>

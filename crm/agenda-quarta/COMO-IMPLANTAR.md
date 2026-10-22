@@ -58,3 +58,7 @@ A disponibilidade busca o período inteiro numa consulta à agenda e uma a cada 
 ## Só as vagas do Google (F250h, 22.10.2026)
 
 Com o escritório marcando à mão os horários livres, só a vaga é oferecida: o dia sem vaga não tem horário (antes o script calculava os vãos de 15 em 15 minutos, e o Marcos aparecia com 36 horários no 23/10, em que não atende). Para voltar ao cálculo antigo de um profissional, grave `soVagas: false` nos AJUSTES dele.
+
+## O almoço é do Paulo (F250i, 22.10.2026)
+
+O evento sem a cor de nenhum profissional (o almoço, um compromisso do Paulo) é só do Paulo: não aparece nem bloqueia a agenda do Marcos e da Amanda. Para bloquear o Marcos ou a Amanda, o compromisso vai na cor de cada um.

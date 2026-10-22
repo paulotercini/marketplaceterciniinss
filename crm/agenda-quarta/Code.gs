@@ -22,7 +22,7 @@ const CONFIG = {
   // F250f · o Marcos e a Amanda deixam o horário livre como "LIVRE 10:30-11:00" ou "LIVRE 09h30-10h00", sem o código:
   // é vaga sem tipo; o tipo vem do cliente na hora de agendar (001 primeiro atendimento, 002 cliente do escritório)
   REGEX_VAGA_LIVRE: /^\s*livre\b(?:(?!\d{4}[\s.-]?\d{4}).)*$/i,
-  VERSAO: 'F250h · só as vagas do Google',
+  VERSAO: 'F250i · sem cor é só do Paulo',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
   // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
@@ -232,7 +232,8 @@ function contaPara_(ev, prof) { const d = donoDoEvento_(ev); return d === prof.i
 function eventosDoProfissional_(evs, prof) {
   return evs.filter(ev => { const d = donoDoEvento_(ev);
     if (d !== null) return d === prof.id;
-    return (ehAtendimento_(ev) || ehVaga_(ev)) ? prof.id === CONFIG.PADRAO : true; });
+    // F250i · a agenda é do Paulo: o que não tem a cor de ninguém (o almoço, um compromisso dele) é só dele
+    return prof.id === CONFIG.PADRAO; });
 }
 
 function eventosDoDia_(data) {
