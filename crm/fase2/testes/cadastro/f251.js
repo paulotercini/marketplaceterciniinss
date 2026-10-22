@@ -42,7 +42,9 @@ const google = criarGoogle({ tokens: { "tok-ingrid": { nome: "Ingrid", papel: "e
   ev("P1", LIVRE("001"), "09:00", "09:45"), ev("P2", LIVRE("002"), "09:45", "10:15"),
   ev("P3", "002 - Rafael Fictício - Não confirmado", "10:15", "10:45"), ev("ALM", "Almoço", "12:30", "13:30"),
   ev("P4", LIVRE("001"), "13:30", "14:15"),
-  ev("M1", "002 - Michelle Fictícia - Confirmado", "09:00", "09:30", "2"), ev("M2", LIVRE("002"), "09:30", "10:00", "2")] });
+  ev("M1", "002 - Michelle Fictícia - Confirmado", "09:00", "09:30", "2"), ev("M2", "LIVRE 09:30-10:00", "09:30", "10:00", "2"),
+  // a Amanda (banana) escreve o horário livre como "LIVRE 09h30-10h00", sem o código, como no Google do escritório
+  ev("A1", "LIVRE 10h00-10h30", "10:00", "10:30", "5")] });
 const evG = id => google.eventos.find(e => e.id === id) || {};
 
 const ok = [];
@@ -177,6 +179,28 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o atendimento do Marcos (sálvia) é dele e as vagas do Paulo não aparecem", await p.evaluate(() => { const e = document.querySelector('[data-aqev="M1"]'); return !!e && e.classList.contains("p-marcos") && !document.querySelector('[data-aqvaga="P4"]'); }));
   conf("o almoço continua bloqueando o Marcos", /Almoço/.test(await p.textContent(".aq-evs")));
   await foto("03-marcos");
+  conf("a vaga LIVRE do Marcos diz \"Livre · 30 min\"", /Livre · 30 min/.test(await p.textContent('.aq-vaga[data-aqvaga="M2"]')));
+  // a Amanda: a vaga LIVRE, um primeiro atendimento nela e o cancelamento
+  await p.click('[data-aqprof="amanda"]');
+  await p.waitForFunction(() => agq.disp && agq.disp.profissional === "amanda", null, { timeout: 10000 });
+  await p.click(`[data-aqdia="${W}"]`);
+  conf("a vaga LIVRE da Amanda aparece tracejada nos tons de amarelo", await p.evaluate(() => { const v = document.querySelector('.aq-vaga[data-aqvaga="A1"]'), t = document.querySelector('.aq-ev-vaga[data-aqvaga="A1"]');
+    return !!v && v.classList.contains("p-amanda") && !!t && t.classList.contains("p-amanda"); }));
+  await p.click('.aq-vaga[data-aqvaga="A1"]');
+  await p.type("#aq-busca", "Primeira Ficticia Amanda", { delay: 10 });
+  await p.click("[data-aqnovo]");
+  await p.fill("#aq-tel", "16999990010"); await p.click("#aq-seg2");
+  await p.waitForSelector('[data-aqacomp="nao"]'); await p.click('[data-aqacomp="nao"]'); await p.click("#aq-seg4");
+  await p.click("#aq-seg5"); await p.check("#aq-o1"); await p.check("#aq-o2"); await p.click("#aq-gravar");
+  await p.waitForSelector(".aq-whats", { timeout: 10000 });
+  conf(`na vaga LIVRE, o primeiro atendimento vira 001 no próprio evento, no mesmo horário (${evG("A1").summary})`,
+    evG("A1").summary === "001 - Primeira Ficticia Amanda - Não confirmado" && evG("A1").end.dateTime.slice(11, 16) === "10:30" && evG("A1").colorId === "5");
+  await p.evaluate(() => fecharCaixa());
+  await recarregar();
+  conf("agendado, fica cheio no amarelo do 001", await p.evaluate(() => { const e = document.querySelector('[data-aqev="A1"]'); return !!e && e.classList.contains("p-amanda") && e.classList.contains("t001"); }));
+  await p.click('[data-aqev="A1"]'); await p.click('.aq-menu [data-aqop="cancelar"]'); await p.waitForTimeout(600);
+  conf(`cancelar devolve o título LIVRE original (${evG("A1").summary})`, evG("A1").summary === "LIVRE 10h00-10h30");
+  await foto("03b-amanda");
   await p.click('[data-aqprof="todos"]');
   await p.waitForFunction(() => agq.disp && agq.disp.profissional === "todos", null, { timeout: 10000 });
   await p.click(`[data-aqdia="${W}"]`);
@@ -194,9 +218,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const az = await p.$$eval("#cli-az [data-letra]", b => b.map(x => [x.dataset.letra, x.disabled]));
   conf(`o índice tem Todos, A a Z e # (${az.length})`, az.length === 28 && az[0][0] === "" && az[1][0] === "A" && az[27][0] === "#");
   const ativas = az.filter(([l, d]) => l && !d).map(([l]) => l).join("");
-  conf(`só as letras com cliente ficam ativas (${ativas})`, ativas === "ABCEN#");
+  conf(`só as letras com cliente ficam ativas (${ativas})`, ativas === "ABCENP#");
   const seps = await p.$$eval(".cli-letra", b => b.map(x => x.textContent).join(""));
-  conf(`em Todos, a lista se separa por letra (${seps})`, seps === "#ABCEN");
+  conf(`em Todos, a lista se separa por letra (${seps})`, seps === "#ABCENP");
   await foto("06-indice");
   await p.click('#cli-az [data-letra="E"]'); await p.waitForTimeout(200);
   const soE = await p.$$eval(".cli-todos-it b", b => b.map(x => x.textContent));
@@ -207,7 +231,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click('#cli-az [data-letra="#"]'); await p.waitForTimeout(200);
   conf("o # traz o nome que começa com número", (await p.$$eval(".cli-todos-it b", b => b.map(x => x.textContent))).join() === "3M Fictícia Empresa");
   await p.click('#cli-az [data-letra=""]'); await p.waitForTimeout(200);
-  conf("Todos volta a lista inteira", (await p.$$(".cli-todos-it")).length === 6);
+  conf("Todos volta a lista inteira", (await p.$$(".cli-todos-it")).length === 7);
   await p.click('#cli-az [data-letra="C"]'); await p.waitForTimeout(200);
   await p.fill("#cli-filtro", "ana fic"); await p.waitForTimeout(200);
   conf("digitar procura em todos e solta a letra", await p.evaluate(() => _cliLetra === "") && (await p.$$eval(".cli-todos-it b", b => b.map(x => x.textContent))).join() === "Ana Fictícia Colab");

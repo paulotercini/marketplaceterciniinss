@@ -46,3 +46,7 @@ Esta mudança está no `Code.gs`: copie o arquivo inteiro para o projeto no scri
 - O atendimento e a vaga **sem cor** são do Paulo, dono da agenda: não aparecem nem ocupam a agenda do Marcos e da Amanda. O compromisso sem cor que não é atendimento (almoço, reunião) continua bloqueando todos.
 - Ação nova `editar`: troca o nome e o telefone de um atendimento já marcado, inclusive o lançado à mão, mantendo o tipo e o status.
 - O diagnóstico `?diag=1` mostra, só em contagens, as cores usadas pelos atendimentos e pelas vagas e quantas vagas cada profissional tem.
+
+## O LIVRE do Marcos e da Amanda (F250f, 22.10.2026)
+
+No Google do escritório o Marcos (sálvia) e a Amanda (banana) deixam o horário livre como `LIVRE 10:30-11:00` ou `LIVRE 09h30-10h00`, sem o código. O script lê esse título como vaga sem tipo: aparece tracejada na cor do profissional (no tom do 001 se tiver 45 minutos ou mais, no do 002 se tiver menos), o tipo vem do cliente na hora de agendar (001 primeiro atendimento, 002 cliente do escritório), o horário do evento não muda e cancelar devolve o título LIVRE original. O título com telefone anotado deixa de ser vaga.

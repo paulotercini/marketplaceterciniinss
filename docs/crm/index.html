@@ -4730,7 +4730,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.80</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.81</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -47270,15 +47270,18 @@ const vagasDoDia = d => d && !d.bloqueado ? ["001", "002"].flatMap(t=>(d.livres[
 // com vagas no dia, valem elas (dos dois tipos); sem vagas, os horários calculados do tipo escolhido, como antes
 const livresDoDia = (d, tipo) => { const v = vagasDoDia(d); return v.length ? v : (d && d.livres[tipo]) || []; };
 const minDoTipo = t => t==="001" ? 45 : 30;
+// F250f · o rótulo da vaga: com código, "001 · 45 min"; a "LIVRE" do Marcos e da Amanda, "Livre · 30 min" (o tipo vem do cliente)
+const minDaVaga = s => hmMin(s.fim) - hmMin(s.inicio);
+const rotVaga = s => s.tipoFixo===false ? `Livre · ${minDaVaga(s)} min` : `${s.tipo} · ${minDoTipo(s.tipo)} min`;
 function listaVagas(dia){
   const v = vagasDoDia(dia); if(!v.length) return "";
   return `<section class="aq-vagas" aria-label="Vagas livres"><h4>Vagas livres · ${v.length}</h4>
     <div class="aq-vagas-l">${v.map(s=>`<button type="button" class="aq-vaga p-${s.profissional||agq.prof} t${s.tipo}" data-aqvaga="${esc(s.eventoId)}" title="agendar o cliente neste horário${agq.prof==="todos"?` · ${esc(nomeProf(s.profissional||"paulo"))}`:""}">
-      <b>${s.inicio}</b><span>${s.tipo} · ${minDoTipo(s.tipo)} min${agq.prof==="todos"?` · ${esc(nomeProf(s.profissional||"paulo"))}`:""}</span></button>`).join("")}</div></section>`;
+      <b>${s.inicio}</b><span>${rotVaga(s)}${agq.prof==="todos"?` · ${esc(nomeProf(s.profissional||"paulo"))}`:""}</span></button>`).join("")}</div></section>`;
 }
 function agendarNaVaga(dia, eventoId){
   const s = vagasDoDia(dia).find(x=>x.eventoId===eventoId); if(!s) return;
-  abrirFluxoAgenda({data:dia.data, inicio:s.inicio, prof:s.profissional || (agq.prof==="todos" ? "paulo" : agq.prof), vaga:{eventoId, tipo:s.tipo}});
+  abrirFluxoAgenda({data:dia.data, inicio:s.inicio, prof:s.profissional || (agq.prof==="todos" ? "paulo" : agq.prof), vaga:{eventoId, tipo:s.tipoFixo===false ? null : s.tipo}});
 }
 const AQ_INI = 8*60, AQ_FIM = 18*60+30, AQ_PX = 24;   // 24 px a cada 15 minutos
 function linhaDoTempoAgenda(dia, r){
@@ -47293,7 +47296,7 @@ function linhaDoTempoAgenda(dia, r){
   const bloco = e => {
     const top = Math.max(0,y(e.inicio)), h = Math.max(AQ_PX-2, y(e.fim)-Math.max(0,y(e.inicio))-2);
     if(e.vaga) return `<button class="aq-ev aq-ev-vaga p-${e.profissional||(agq.prof==="todos"?"paulo":agq.prof)} t${e.tipo}" data-aqvaga="${esc(e.id)}" style="top:${top}px;height:${h}px;left:calc(${e._raia}*100%/${nR});width:calc(100%/${nR} - 4px)"
-      title="vaga livre ${esc(e.tipo||"")} · ${e.inicio} às ${e.fim} · clique para agendar"><span class="aq-ev-h">${e.inicio}–${e.fim} · ${esc(e.tipo||"")}</span><b>Livre · agendar</b></button>`;
+      title="vaga livre ${esc(e.tipoFixo===false?"":e.tipo||"")} · ${e.inicio} às ${e.fim} · clique para agendar"><span class="aq-ev-h">${e.inicio}–${e.fim}${e.tipoFixo===false?"":` · ${esc(e.tipo||"")}`}</span><b>Livre · agendar</b></button>`;
     // a cor é do profissional; compromisso que não é atendimento fica cinza
     const cls = e.atendimento ? `aq-ev p-${e.profissional||(agq.prof==="todos"?"paulo":agq.prof)} t${e.tipo}` : "aq-ev outro";
     const nome = e.atendimento ? (e.nome || e.titulo.replace(/^\s*00[12]\s*-\s*/,"").replace(/\s*-\s*(n[ãa]o confirmado|confirmado)\s*$/i,"")) : e.titulo;
@@ -47462,7 +47465,7 @@ function buscarClientesAgenda(q){
 }
 function sugAgendaHtml(f){
   return buscarClientesAgenda(f.busca).map(c=>`<button data-aqcli="${c.id}"><b>${esc(c.nome)}</b><span>${cpfMascarado(c.cpf)} · ${esc(civilDe(c).cidade||"cidade não informada")}</span></button>`).join("")
-    + (f.busca.trim().length>=3 ? `<button class="aq-novo" data-aqnovo="1"><b>Nenhum destes, é primeiro atendimento</b><span>cria o pré-cadastro e agenda ${f.vaga?f.vaga.tipo:"001, com 45 minutos"}</span></button>` : "");
+    + (f.busca.trim().length>=3 ? `<button class="aq-novo" data-aqnovo="1"><b>Nenhum destes, é primeiro atendimento</b><span>cria o pré-cadastro e agenda ${f.vaga&&f.vaga.tipo?f.vaga.tipo:"001"}</span></button>` : "");
 }
 function ligarSugAgenda(f){
   document.querySelectorAll("[data-aqcli]").forEach(b=>b.onclick=()=>{ f.cli=D.cliPorId.get(b.dataset.aqcli); f.novo=false; f.tipo=(f.vaga&&f.vaga.tipo)||"002"; f.nome=f.cli.nome; f.tel=(f.cli.telefone||"").replace(/\D/g,""); f.corrigir=false; f.etapa=2; f.msg=""; pintarFluxo(); });
@@ -47476,7 +47479,7 @@ function pintarFluxo(){
   const msg = f.msg ? `<div class="aq-msg" role="alert">${esc(f.msg)}</div>` : "";
   if(f.feito){ corpo = sucessoFluxo(); }
   else if(f.etapa===1){
-    corpo = `<h3>Quem vem ao atendimento?${f.vaga?` <span class="aq-tipo">${f.vaga.tipo} · ${dataBR(f.data)} às ${hmTxt(f.inicio)}</span>`:""}</h3>
+    corpo = `<h3>Quem vem ao atendimento?${f.vaga?` <span class="aq-tipo">${f.vaga.tipo||"livre"} · ${dataBR(f.data)} às ${hmTxt(f.inicio)}</span>`:""}</h3>
       <input id="aq-busca" class="aq-inp" placeholder="Nome ou CPF" value="${esc(f.busca)}" autocomplete="off">
       <div class="aq-sug">${sugAgendaHtml(f)}</div>`;
   } else if(f.etapa===2){
@@ -47510,7 +47513,7 @@ function pintarFluxo(){
       f.data = (dias.find(d=>livresDoDia(d, f.tipo).length)||dias[0]||{}).data;
     const dia = dias.find(d=>d.data===f.data);
     const livres = dia ? livresDoDia(dia, f.tipo) : [], soVagas = livres.some(s=>s.vaga);
-    const grupo = (tit, l) => l.length ? `<h4>${tit}</h4><div class="aq-horarios">${l.map(s=>`<button class="${s.inicio===f.inicio&&(!s.vaga||s.eventoId===f.eventoId)?"on":""}${f.sugerir&&s.inicio===f.sugerir.depoisDe?" sugerido":""}" data-aqhora="${s.inicio}"${s.vaga?` data-aqvev="${esc(s.eventoId)}" data-aqtipo="${s.tipo}"`:""}>${s.inicio}${s.vaga?` <small>${s.tipo} · ${minDoTipo(s.tipo)} min</small>`:""}</button>`).join("")}</div>` : "";
+    const grupo = (tit, l) => l.length ? `<h4>${tit}</h4><div class="aq-horarios">${l.map(s=>`<button class="${s.inicio===f.inicio&&(!s.vaga||s.eventoId===f.eventoId)?"on":""}${f.sugerir&&s.inicio===f.sugerir.depoisDe?" sugerido":""}" data-aqhora="${s.inicio}"${s.vaga?` data-aqvev="${esc(s.eventoId)}"${s.tipoFixo===false?"":` data-aqtipo="${s.tipo}"`}`:""}>${s.inicio}${s.vaga?` <small>${rotVaga(s)}</small>`:""}</button>`).join("")}</div>` : "";
     corpo = `<h3>${f.remarcar?"Novo horário para "+esc(f.nome):"Escolha o horário"} <span class="aq-tipo">${f.tipo} · ${f.tipo==="001"?45:30} minutos</span></h3>
       <div class="aq-profsel" role="group" aria-label="Com quem">${lista.map(x=>`<button class="${f.prof===x.id?"on":""}" data-aqfprof="${x.id}" ${f.remarcar?"disabled":""}><i class="aq-bola p-${x.id}"></i>${esc(x.nome)}</button>`).join("")}</div>
       ${!dispP?`<p class="meio-sub">carregando a agenda de ${esc(nomeProf(f.prof))}…</p>`:""}
