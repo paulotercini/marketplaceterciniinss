@@ -13068,6 +13068,8 @@ function pintarListaZap(){
   const sel = (id, rot, itens, atual) => `<label class="zl-sel ${atual?"on":""}"><span class="sr">${rot}</span>
       <select id="${id}"><option value="">${rot}</option>
       ${itens.map(([v,t])=>`<option value="${v}" ${atual===v?"selected":""}>${esc(t)}</option>`).join("")}</select>${zic("baixo",12)}</label>`;
+  // a lista se repinta a cada 6 s: sem guardar a rolagem, ela voltava ao topo no meio da leitura
+  const rolLista = (document.querySelector(".zl-lista")||{}).scrollTop || 0;
   document.querySelector(".zap-lado").innerHTML =
     `<div class="zl-cab">
        <div class="zl-topo"><h2>WhatsApp</h2>
@@ -13092,6 +13094,7 @@ function pintarListaZap(){
      </div>
      <div class="zl-lista">${lista || (zapAchados.length?"":`<p class="meio-sub" style="padding:8px 6px">Nenhuma conversa aqui.</p>`)}
        ${zapAchados.length?`<p class="zl-grupo">Nas mensagens (${zapAchados.length})</p>${zapAchados.map(achadoZap).join("")}`:""}</div>`;
+  const zl = document.querySelector(".zl-lista"); if(zl) zl.scrollTop = rolLista;
   document.querySelectorAll("[data-zf]").forEach(b=>b.onclick=()=>{ zapFiltro=b.dataset.zf; pintarListaZap(); });
   document.querySelectorAll("[data-zch]").forEach(b=>b.onclick=()=>{ zapChips[b.dataset.zch]=!zapChips[b.dataset.zch]; pintarListaZap(); });
   const fs = document.getElementById("zf-setor"); if(fs) fs.onchange=()=>{ zapChips.setor=fs.value; pintarListaZap(); };
@@ -13275,7 +13278,11 @@ function atualizarVistos(){
 // repintar sem perder o que está sendo escrito (chegou mensagem no meio da frase)
 function pintarConversaGuardando(){
   const t = document.getElementById("zap-txt"), txt = t ? t.value : "", foco = document.activeElement===t;
+  // quem está lendo mais acima não é puxado para o fim (só quem já estava no fim acompanha o que chega)
+  const cx = document.getElementById("zap-msgs"), y = cx ? cx.scrollTop : 0;
+  const noFim = !cx || cx.scrollHeight - cx.scrollTop - cx.clientHeight < 80;
   pintarConversa();
+  const cx2 = document.getElementById("zap-msgs"); if(cx2 && !noFim) cx2.scrollTop = y;
   const t2 = document.getElementById("zap-txt");
   if(t2 && txt){ t2.value = txt; if(foco) t2.focus(); }
 }
