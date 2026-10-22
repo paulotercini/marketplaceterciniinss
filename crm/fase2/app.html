@@ -3903,12 +3903,20 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .aq-dia-livres{display:block;font-size:11px;color:#1E6F50;font-weight:600}
 .aq-horarios small{display:block;font-size:11px;opacity:.8}
 .cli-todos-l{list-style:none;margin:10px 0 0;padding:0}
+.cli-az{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 10px;position:sticky;top:0;z-index:2;padding:6px 0;background:var(--fundo,#F8F8F6)}
+.cli-az-l{min-width:30px;height:30px;padding:0 8px;border:1px solid var(--borda);border-radius:6px;background:#fff;font:inherit;font-size:13px;font-weight:600;cursor:pointer;color:var(--texto)}
+.cli-az-l.on{background:var(--azul,#1F5C5A);border-color:var(--azul,#1F5C5A);color:#fff}
+.cli-az-l:disabled{opacity:.35;cursor:default}
+.cli-letra{margin:12px 0 2px;padding:0 10px;font-size:12px;font-weight:700;color:var(--cinza);letter-spacing:.04em}
 .cli-todos-it{display:flex;flex-direction:column;align-items:flex-start;width:100%;padding:9px 10px;border:none;border-bottom:1px solid var(--borda);background:none;text-align:left;cursor:pointer;font:inherit}
 .cli-todos-it span{font-size:12px;color:var(--cinza)}
 @media (hover:hover) and (pointer:fine){.cli-todos-it:hover{background:var(--fundo2,#f5f5f2)}}
 /* F249 · o nível 0 (primeiro acesso): na ficha só o Cadastro (Identificação); na barra só a Agenda, e o Novo Cliente fica no botão fixo */
 html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="0"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]),html[data-nivel="0"] .cel-tudo,
-html[data-nivel="0"] #btn-v10-anotar,html[data-nivel="0"] .rapida-caixa,html[data-nivel="0"] .grupo:has(#grupo-fases){display:none!important}
+html[data-nivel="0"] #btn-v10-anotar,html[data-nivel="0"] .rapida-caixa,html[data-nivel="0"] #fab-rapida,
+html[data-nivel="0"] .barra-cel [data-cel="meudia"],html[data-nivel="0"] .barra-cel [data-cel="mencoes"],html[data-nivel="0"] .barra-cel [data-cel="menu"],html[data-nivel="0"] .grupo:has(#grupo-fases){display:none!important}
+/* F252 · no celular do nível 0, a barra de baixo é Agenda, Clientes e Buscar */
+.barra-cel .so-n0{display:none!important}html[data-nivel="0"] .barra-cel .so-n0{display:block!important}
 /* F249 · a transição: no nível 1 o campo de escrever fica como o To Do (sem os tipos nem Sugestões) e as datas numa linha */
 html[data-nivel="1"] #tipo-fila .tipo-ch[data-tipoand],html[data-nivel="1"] .sug-abrir{display:none!important}
 .fp-nv{display:none}
@@ -4719,7 +4727,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.78</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.79</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4827,6 +4835,8 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
 <!-- barra de baixo do celular: os quatro destinos de campo -->
 <div class="cel-fundo" id="cel-fundo" onclick="fecharMenuCel()"></div>
 <nav class="barra-cel" id="barra-cel">
+  <button data-cel="agendaq" class="so-n0"><b aria-hidden="true">📅</b>Agenda</button>
+  <button data-cel="clientes" class="so-n0"><b aria-hidden="true">👥</b>Clientes</button>
   <button data-cel="meudia"><b aria-hidden="true">☀️</b>Meu Dia</button>
   <button data-cel="busca"><b aria-hidden="true">🔍</b>Buscar</button>
   <button data-cel="mencoes"><b aria-hidden="true">📥</b>Menções<span class="selo" id="selo-menc" style="display:none"></span></button>
@@ -6821,6 +6831,7 @@ const SVG_MENU = {
   "🗓️":'<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 2.8V6M16 2.8V6"/><rect x="7" y="12.5" width="4" height="4" rx="1" fill="currentColor" stroke="none"/>',
   "🗓":'<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/>',
   "👤":'<circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/>',
+  "👥":'<circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.7-3 3-4.6 6-4.6s5.3 1.6 6 4.6"/><circle cx="16.5" cy="9" r="2.6"/><path d="M15.8 14.3c2.6.1 4.6 1.6 5.2 4.2"/>',
   "⭐":'<path d="m12 3.3 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.5l5.9-.8L12 3.3Z"/>',
   "📋":'<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5V3h6v1.5M9 10h6M9 13.5h6M9 17h4"/>',
   "🔁":'<path d="M17.5 6.5H8a4 4 0 0 0-4 4v.5M6.5 17.5H16a4 4 0 0 0 4-4V13"/><path d="m14.5 3.5 3 3-3 3M9.5 20.5l-3-3 3-3"/>',
@@ -14661,25 +14672,48 @@ function renderMarketing(){
 
 // ── agenda e dashboard ────────────────────────────────────────────────────
 // F250 · todos os clientes do escritório, em ordem de nome, com um filtro; o clique abre a ficha (no nível 0, só a Identificação)
-let _cliFiltro = "";
+// F252 · o índice de A a Z no alto: a letra mostra só os nomes dela (a letra sem cliente fica apagada); digitar procura em todos
+let _cliFiltro = "", _cliLetra = "";
+const letraDoNome = n => { const l = dsa(String(n||"").trim()).charAt(0).toUpperCase(); return /[A-Z]/.test(l) ? l : "#"; };
+const LETRAS = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "#"];
 function renderClientesTodos(){
   tituloLista(temaV10() ? "Clientes" : "👥 Clientes");
-  document.getElementById("sub-lista").textContent = `${(D.clientes||[]).length} clientes do escritório. Digite parte do nome, o CPF ou o telefone.`;
-  document.getElementById("conteudo-meio").innerHTML = `<div class="cli-todos"><input id="cli-filtro" class="aq-inp" placeholder="Filtrar por nome, CPF ou telefone" value="${esc(_cliFiltro)}" autocomplete="off">
+  document.getElementById("sub-lista").textContent = `${(D.clientes||[]).length} clientes do escritório. Escolha a letra ou digite parte do nome, o CPF ou o telefone.`;
+  document.getElementById("conteudo-meio").innerHTML = `<div class="cli-todos">
+    <nav class="cli-az" id="cli-az" aria-label="Índice de A a Z"></nav>
+    <input id="cli-filtro" class="aq-inp" placeholder="Filtrar por nome, CPF ou telefone" value="${esc(_cliFiltro)}" autocomplete="off">
     <ul class="cli-todos-l" id="cli-todos-l"></ul><p class="meio-sub" id="cli-todos-n"></p></div>`;
   const inp = document.getElementById("cli-filtro");
-  inp.oninput = () => { _cliFiltro = inp.value; pintarClientesTodos(); };
+  inp.oninput = () => { _cliFiltro = inp.value; if(_cliFiltro.trim()) _cliLetra = ""; pintarClientesTodos(); };
   pintarClientesTodos();
+}
+function escolherLetra(l){
+  _cliLetra = _cliLetra===l ? "" : l; _cliFiltro = "";
+  const inp = document.getElementById("cli-filtro"); if(inp) inp.value = "";
+  pintarClientesTodos();
+  const lista = document.getElementById("cli-todos-l"); if(lista && lista.scrollIntoView) lista.scrollIntoView({block:"nearest"});
 }
 function pintarClientesTodos(){
   const q = dsa(_cliFiltro).replace(/\s+/g," ").trim(), dig = _cliFiltro.replace(/\D/g,""), partes = q.split(" ").filter(Boolean);
   const todos = (D.clientes||[]).filter(c=>c.nome).slice().sort((a, b)=>dsa(a.nome).localeCompare(dsa(b.nome)));
-  const achados = !q ? todos : todos.filter(c=>{ const n = dsa(c.nome);
-    return partes.every(p=>n.includes(p)) || (dig.length>=3 && (String(c.cpf||"").includes(dig) || String(c.telefone||"").replace(/\D/g,"").includes(dig))); });
+  const porLetra = new Map(); todos.forEach(c=>{ const l = letraDoNome(c.nome); porLetra.set(l, (porLetra.get(l)||0) + 1); });
+  const az = document.getElementById("cli-az");
+  if(az) az.innerHTML = `<button type="button" class="cli-az-l${!_cliLetra?" on":""}" data-letra="" aria-pressed="${!_cliLetra}">Todos</button>`
+    + LETRAS.map(l=>{ const n = porLetra.get(l)||0;
+      return `<button type="button" class="cli-az-l${_cliLetra===l?" on":""}" data-letra="${l}" aria-pressed="${_cliLetra===l}" ${n?"":"disabled"} title="${n} cliente${n===1?"":"s"}">${l}</button>`; }).join("");
+  if(az) az.querySelectorAll("[data-letra]").forEach(b=>b.onclick=()=>escolherLetra(b.dataset.letra));
+  const achados = q ? todos.filter(c=>{ const n = dsa(c.nome);
+      return partes.every(p=>n.includes(p)) || (dig.length>=3 && (String(c.cpf||"").includes(dig) || String(c.telefone||"").replace(/\D/g,"").includes(dig))); })
+    : _cliLetra ? todos.filter(c=>letraDoNome(c.nome)===_cliLetra) : todos;
   const MAX = 200, l = document.getElementById("cli-todos-l"); if(!l) return;
-  l.innerHTML = achados.slice(0, MAX).map(c=>`<li><button type="button" class="cli-todos-it" data-cli="${c.id}"><b>${esc(c.nome)}</b>
-    <span>${cpfMascarado(c.cpf)}${c.telefone?` · ${esc(fmtTelBR(c.telefone))}`:""}</span></button></li>`).join("") || `<li class="meio-sub">Ninguém com “${esc(_cliFiltro)}”.</li>`;
-  document.getElementById("cli-todos-n").textContent = achados.length > MAX ? `Mostrando ${MAX} de ${achados.length}: digite mais para achar.` : "";
+  // sem filtro, a lista ganha o separador de cada letra
+  let antes = "";
+  l.innerHTML = achados.slice(0, MAX).map(c=>{ const le = letraDoNome(c.nome), sep = !q && le!==antes ? `<li class="cli-letra" id="cli-letra-${le==="#"?"outros":le}">${le}</li>` : ""; antes = le;
+    return `${sep}<li><button type="button" class="cli-todos-it" data-cli="${c.id}"><b>${esc(c.nome)}</b>
+    <span>${cpfMascarado(c.cpf)}${c.telefone?` · ${esc(fmtTelBR(c.telefone))}`:""}</span></button></li>`; }).join("")
+    || `<li class="meio-sub">Ninguém com “${esc(_cliFiltro)}”.</li>`;
+  document.getElementById("cli-todos-n").textContent = achados.length > MAX
+    ? `Mostrando ${MAX} de ${achados.length}: escolha a letra ou digite mais para achar.` : (_cliLetra && !q ? `${achados.length} na letra ${_cliLetra}.` : "");
   l.querySelectorAll("[data-cli]").forEach(b=>b.onclick=()=>abrirFicha(b.dataset.cli));
 }
 function renderAgenda(){

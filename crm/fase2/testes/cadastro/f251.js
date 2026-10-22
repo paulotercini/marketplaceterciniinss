@@ -24,7 +24,10 @@ for (const t of ["tarefas", "eventos", "pagamentos", "meu_dia", "andamentos", "s
 Object.assign(dados, { colaboradores: [...FIX.colaboradores, { id: INGRID, auth_id: AUTH_I, nome: "Ingrid Fictícia", inicial: "I", cor: "#8a4b00",
     papel: "colaborador", ativo: true, cargo: "recepcao" }],
   clientes: [{ id: "c0000000-0000-4000-8000-000000000001", nome: "Ana Fictícia Colab", cpf: "52998224725", telefone: "(16) 99999-0001", campos: {}, telefones: [], criado_em: "2026-01-01T12:00:00Z" },
-    { id: "c0000000-0000-4000-8000-000000000002", nome: "Bruno Fictício Lista", cpf: null, telefone: null, campos: {}, telefones: [], criado_em: "2026-01-01T12:00:00Z" }],
+    { id: "c0000000-0000-4000-8000-000000000002", nome: "Bruno Fictício Lista", cpf: null, telefone: null, campos: {}, telefones: [], criado_em: "2026-01-01T12:00:00Z" },
+    { id: "c0000000-0000-4000-8000-000000000003", nome: "Clara Fictícia Índice", cpf: null, telefone: null, campos: {}, telefones: [], criado_em: "2026-01-01T12:00:00Z" },
+    { id: "c0000000-0000-4000-8000-000000000004", nome: "Élio Fictício Acento", cpf: null, telefone: null, campos: {}, telefones: [], criado_em: "2026-01-01T12:00:00Z" },
+    { id: "c0000000-0000-4000-8000-000000000005", nome: "3M Fictícia Empresa", cpf: null, telefone: null, campos: {}, telefones: [], criado_em: "2026-01-01T12:00:00Z" }],
   casos: [], atribuicoes: [], documentos_beneficio: FIX.documentos_beneficio || [], modelos_documento: FIX.modelos_documento,
   config_app: [...(FIX.config_app || []), { chave: "crm_transicao", valor: JSON.stringify({ ligada: true, onda: 1, niveis: {} }) }] });
 const banco = new Banco(dados);
@@ -187,7 +190,37 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // 8 · a lista Clientes abre só a Identificação
   await p.click('.lista-item[data-v="clientes"]'); await p.waitForTimeout(300);
+  // F252 · o índice de A a Z
+  const az = await p.$$eval("#cli-az [data-letra]", b => b.map(x => [x.dataset.letra, x.disabled]));
+  conf(`o índice tem Todos, A a Z e # (${az.length})`, az.length === 28 && az[0][0] === "" && az[1][0] === "A" && az[27][0] === "#");
+  const ativas = az.filter(([l, d]) => l && !d).map(([l]) => l).join("");
+  conf(`só as letras com cliente ficam ativas (${ativas})`, ativas === "ABCEN#");
+  const seps = await p.$$eval(".cli-letra", b => b.map(x => x.textContent).join(""));
+  conf(`em Todos, a lista se separa por letra (${seps})`, seps === "#ABCEN");
+  await foto("06-indice");
+  await p.click('#cli-az [data-letra="E"]'); await p.waitForTimeout(200);
+  const soE = await p.$$eval(".cli-todos-it b", b => b.map(x => x.textContent));
+  conf(`a letra E traz o nome com acento (${soE.join(", ")})`, soE.join() === "Élio Fictício Acento");
+  await p.click('#cli-az [data-letra="B"]'); await p.waitForTimeout(200);
+  conf("a letra B traz só o Bruno e diz quantos são", (await p.$$eval(".cli-todos-it b", b => b.map(x => x.textContent))).join() === "Bruno Fictício Lista"
+    && /1 na letra B/.test(await p.textContent("#cli-todos-n")) && await p.evaluate(() => document.querySelector('#cli-az [data-letra="B"]').classList.contains("on")));
+  await p.click('#cli-az [data-letra="#"]'); await p.waitForTimeout(200);
+  conf("o # traz o nome que começa com número", (await p.$$eval(".cli-todos-it b", b => b.map(x => x.textContent))).join() === "3M Fictícia Empresa");
+  await p.click('#cli-az [data-letra=""]'); await p.waitForTimeout(200);
+  conf("Todos volta a lista inteira", (await p.$$(".cli-todos-it")).length === 6);
+  await p.click('#cli-az [data-letra="C"]'); await p.waitForTimeout(200);
   await p.fill("#cli-filtro", "ana fic"); await p.waitForTimeout(200);
+  conf("digitar procura em todos e solta a letra", await p.evaluate(() => _cliLetra === "") && (await p.$$eval(".cli-todos-it b", b => b.map(x => x.textContent))).join() === "Ana Fictícia Colab");
+  await p.setViewportSize({ width: 390, height: 800 }); await p.waitForTimeout(300);
+  conf("no celular o índice quebra a linha, sem rolar de lado", await p.evaluate(() => { const n = document.getElementById("cli-az"); return n.scrollWidth <= n.clientWidth + 1 && document.documentElement.scrollWidth <= window.innerWidth + 1; }));
+  const barra = await p.$$eval("#barra-cel button", b => b.filter(x => x.offsetParent !== null).map(x => x.dataset.cel));
+  conf(`no celular a barra de baixo é Agenda, Clientes e Buscar (${barra.join(", ")})`, barra.join() === "agendaq,clientes,busca" && !(await vis("#fab-rapida")));
+  conf("os ícones da barra são desenhados, não emoji", await p.evaluate(() => [...document.querySelectorAll("#barra-cel button")].filter(b => b.offsetParent !== null).every(b => !!b.querySelector("b svg"))));
+  await foto("07-indice-celular");
+  await p.click('#barra-cel [data-cel="agendaq"]'); await p.waitForTimeout(300);
+  conf("no celular, Agenda na barra abre a agenda", await p.evaluate(() => visao === "agendaq"));
+  await p.click('#barra-cel [data-cel="clientes"]'); await p.waitForTimeout(300);
+  await p.setViewportSize({ width: 1440, height: 900 }); await p.waitForTimeout(300);
   await p.click(".cli-todos-it"); await p.waitForTimeout(600);
   const abas = await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].filter(e => e.offsetParent !== null).map(e => e.textContent.trim()));
   conf(`o cliente abre só no Cadastro, na Identificação (${abas.join(", ")})`, abas.join() === "Cadastro" && await p.evaluate(() => subCad) === "identificacao");
