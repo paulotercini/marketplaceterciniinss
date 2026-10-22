@@ -3912,6 +3912,10 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .cli-letra{margin:12px 0 2px;padding:0 10px;font-size:12px;font-weight:700;color:var(--cinza);letter-spacing:.04em}
 .cli-todos-it{display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px;border:none;border-bottom:1px solid var(--borda);background:none;text-align:left;cursor:pointer;font:inherit}
 .cli-todos-tx{display:flex;flex-direction:column;min-width:0}
+.cli-semtel{margin:6px 0;width:auto;padding:4px 10px}
+.cli-tel-form{display:flex;gap:6px;padding:0 10px 9px 56px;border-bottom:1px solid var(--borda)}
+.cli-tel-form input{flex:1;max-width:200px;font:inherit;padding:4px 8px;border:1px solid var(--borda);border-radius:6px}
+.cli-aberto{font-style:normal;color:var(--aviso,#D97706);font-weight:600}
 .cli-todos-tx span{font-size:12px;color:var(--cinza)}
 .cli-todos-it .avatar{width:36px;height:36px;font-size:14px;background:var(--av,var(--azul))}
 @media (hover:hover) and (pointer:fine){.cli-todos-it:hover{background:var(--fundo2,#f5f5f2)}}
@@ -14680,7 +14684,10 @@ function renderMarketing(){
 // ── agenda e dashboard ────────────────────────────────────────────────────
 // F250 · todos os clientes do escritório, em ordem de nome, com um filtro; o clique abre a ficha (no nível 0, só a Identificação)
 // F252 · o índice de A a Z no alto: a letra mostra só os nomes dela (a letra sem cliente fica apagada); digitar procura em todos
-let _cliFiltro = "", _cliLetra = "";
+let _cliFiltro = "", _cliLetra = "", _cliSemTel = false;
+// sem telefone não há WhatsApp nem foto: o filtro põe primeiro quem tem caso aberto, e o número se completa ali mesmo
+const semTelefone = c => String(c.telefone||"").replace(/\D/g,"").length < 10;
+const temCasoAberto = c => (D.casosDoCliente.get(c.id)||[]).some(k=>k.fase!=="encerrado");
 const letraDoNome = n => { const l = dsa(String(n||"").trim()).charAt(0).toUpperCase(); return /[A-Z]/.test(l) ? l : "#"; };
 const LETRAS = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "#"];
 function renderClientesTodos(){
@@ -14689,9 +14696,22 @@ function renderClientesTodos(){
   document.getElementById("conteudo-meio").innerHTML = `<div class="cli-todos">
     <nav class="cli-az" id="cli-az" aria-label="Índice de A a Z"></nav>
     <input id="cli-filtro" class="aq-inp" placeholder="Filtrar por nome, CPF ou telefone" value="${esc(_cliFiltro)}" autocomplete="off">
+    <button type="button" id="cli-semtel" class="cli-az-l cli-semtel" aria-pressed="${_cliSemTel}"></button>
     <ul class="cli-todos-l" id="cli-todos-l"></ul><p class="meio-sub" id="cli-todos-n"></p></div>`;
   const inp = document.getElementById("cli-filtro");
   inp.oninput = () => { _cliFiltro = inp.value; if(_cliFiltro.trim()) _cliLetra = ""; pintarClientesTodos(); };
+  document.getElementById("cli-semtel").onclick = () => { _cliSemTel = !_cliSemTel; pintarClientesTodos(); };
+  pintarClientesTodos();
+}
+async function completarTelefone(cliId){
+  const inp = document.querySelector(`[data-tel="${cliId}"]`), c = D.cliPorId.get(cliId); if(!inp || !c) return;
+  let d = inp.value.replace(/\D/g,""); if(d.startsWith("55") && d.length >= 12) d = d.slice(2);
+  if(d.length === 8 || d.length === 9) d = "16" + d;           // como no Novo Cliente: sem DDD, é 16
+  if(d.length < 10 || d.length > 11) return aviso("Número incompleto: escreva o DDD e o número");
+  const r = telRecado(d); if(r) return aviso(r);
+  if(!await salvarCliCampo(cliId, "telefone", fmtTelBR(d))) return;
+  reindexarCliente(c);
+  aviso(`📞 Telefone de ${c.nome.split(" ")[0]} guardado. A foto do WhatsApp chega em instantes.`, false);
   pintarClientesTodos();
 }
 function escolherLetra(l){
@@ -14734,22 +14754,29 @@ function pintarClientesTodos(){
     + LETRAS.map(l=>{ const n = porLetra.get(l)||0;
       return `<button type="button" class="cli-az-l${_cliLetra===l?" on":""}" data-letra="${l}" aria-pressed="${_cliLetra===l}" ${n?"":"disabled"} title="${n} cliente${n===1?"":"s"}">${l}</button>`; }).join("");
   if(az) az.querySelectorAll("[data-letra]").forEach(b=>b.onclick=()=>escolherLetra(b.dataset.letra));
-  const achados = q ? todos.filter(c=>{ const n = dsa(c.nome);
-      return partes.every(p=>n.includes(p)) || (dig.length>=3 && (String(c.cpf||"").includes(dig) || String(c.telefone||"").replace(/\D/g,"").includes(dig))); })
-    : _cliLetra ? todos.filter(c=>letraDoNome(c.nome)===_cliLetra) : todos;
+  const semTel = todos.filter(semTelefone), bt = document.getElementById("cli-semtel");
+  if(bt){ bt.textContent = `Sem telefone (${semTel.length})`; bt.classList.toggle("on", _cliSemTel); bt.setAttribute("aria-pressed", _cliSemTel); }
+  const achados = (_cliSemTel ? semTel : todos).filter(c=>!q || (()=>{ const n = dsa(c.nome);
+      return partes.every(p=>n.includes(p)) || (dig.length>=3 && (String(c.cpf||"").includes(dig) || String(c.telefone||"").replace(/\D/g,"").includes(dig))); })())
+    .filter(c=>q || !_cliLetra || letraDoNome(c.nome)===_cliLetra);
+  if(_cliSemTel) achados.sort((a, b)=>temCasoAberto(b) - temCasoAberto(a));   // estável: dentro de cada grupo, a ordem do nome
   const MAX = 200, l = document.getElementById("cli-todos-l"); if(!l) return;
   // sem filtro, a lista ganha o separador de cada letra
   let antes = "";
-  l.innerHTML = achados.slice(0, MAX).map(c=>{ const le = letraDoNome(c.nome), sep = !q && le!==antes ? `<li class="cli-letra" id="cli-letra-${le==="#"?"outros":le}">${le}</li>` : ""; antes = le;
+  l.innerHTML = achados.slice(0, MAX).map(c=>{ const le = letraDoNome(c.nome), sep = !q && !_cliSemTel && le!==antes ? `<li class="cli-letra" id="cli-letra-${le==="#"?"outros":le}">${le}</li>` : ""; antes = le;
     const u = c.foto_url && zapFotos.get(c.foto_url);
     return `${sep}<li><button type="button" class="cli-todos-it" data-cli="${c.id}">${u
       ? `<img class="avatar foto-zap" src="${esc(u)}" alt="">` : `<span class="avatar" style="--av:${corDoNome(c.nome)}"${c.foto_url?` data-foto="${esc(c.foto_url)}"`:""}>${esc(c.nome[0])}</span>`}
     <span class="cli-todos-tx"><b>${esc(c.nome)}</b>
-    <span>${cpfMascarado(c.cpf)}${c.telefone?` · ${esc(fmtTelBR(c.telefone))}`:""}</span></span></button></li>`; }).join("")
+    <span>${cpfMascarado(c.cpf)}${c.telefone?` · ${esc(fmtTelBR(c.telefone))}`:""}${_cliSemTel && temCasoAberto(c)?` · <em class="cli-aberto">caso aberto</em>`:""}</span></span></button>${_cliSemTel
+      ? `<span class="cli-tel-form"><input data-tel="${c.id}" inputmode="tel" placeholder="(16) 9____-____" aria-label="telefone de ${esc(c.nome)}">
+         <button type="button" class="btn-mini" data-salvatel="${c.id}">Guardar</button></span>` : ""}</li>`; }).join("")
     || `<li class="meio-sub">Ninguém com “${esc(_cliFiltro)}”.</li>`;
   document.getElementById("cli-todos-n").textContent = achados.length > MAX
     ? `Mostrando ${MAX} de ${achados.length}: escolha a letra ou digite mais para achar.` : (_cliLetra && !q ? `${achados.length} na letra ${_cliLetra}.` : "");
   l.querySelectorAll("[data-cli]").forEach(b=>b.onclick=()=>abrirFicha(b.dataset.cli));
+  l.querySelectorAll("[data-salvatel]").forEach(b=>b.onclick=()=>completarTelefone(b.dataset.salvatel));
+  l.querySelectorAll("[data-tel]").forEach(i=>i.onkeydown=e=>{ if(e.key==="Enter") completarTelefone(i.dataset.tel); });
   // a foto do WhatsApp (clientes.foto_url) entra depois, no lugar da inicial, sem repintar a lista
   if(l.querySelector("[data-foto]")) assinarFotosZap(achados.slice(0, MAX)).then(()=>l.querySelectorAll("[data-foto]").forEach(a=>{
     const u = zapFotos.get(a.dataset.foto); if(u) a.outerHTML = `<img class="avatar foto-zap" src="${esc(u)}" alt="">`; }));
