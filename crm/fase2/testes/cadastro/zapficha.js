@@ -134,6 +134,15 @@ const MSGS = [
   conf("depois de vincular o cabeçalho passa a “abrir ficha”", await p.waitForFunction(() =>
     (document.querySelector(".zap-topo")?.textContent || "").includes("Abrir a ficha"), null, { timeout: 5000 }).then(() => true, () => false));
 
+  // a lista Clientes mostra a foto do WhatsApp (clientes.foto_url) no lugar da inicial
+  conf("lista Clientes: quem tem foto ganha a foto, quem não tem fica com a inicial", await p.evaluate(async cli => {
+    const c = D.cliPorId.get(cli); c.foto_url = "zap/perfil/cli-x.jpg"; zapFotos.set(c.foto_url, "data:image/gif;base64,R0lGODlhAQABAAAAACw=");
+    const d = document.createElement("div"); d.innerHTML = '<ul id="cli-todos-l"></ul><p id="cli-todos-n"></p>'; document.body.appendChild(d);
+    pintarClientesTodos();
+    const it = document.querySelector(`#cli-todos-l [data-cli="${cli}"]`), outro = document.querySelector(`#cli-todos-l [data-cli]:not([data-cli="${cli}"])`);
+    return !!it.querySelector("img.avatar") && (!outro || !!outro.querySelector("span.avatar"));
+  }, CLI_CHEIO));
+
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);
   const falhas = ok.filter(([, v]) => !v).length + erros.length;

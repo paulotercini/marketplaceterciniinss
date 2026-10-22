@@ -181,6 +181,16 @@ const foneDaLigacao = (c, mapa) => {
   return "";
 };
 
-module.exports = { soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem, foneDaLigacao, agruparHistorico,
+// Celular gravado sem o 9 da frente (ou com ele, quando a conta é antiga): o
+// WhatsApp acha a pessoa por um dos dois. Fixo (começa de 2 a 5) não muda.
+const variantesFone = t => {
+  let d = soDigitos(t); if (d.length <= 11) d = "55" + d;
+  const ddd = d.slice(2, 4), loc = d.slice(4), v = [d];
+  if (loc.length === 8 && /^[6-9]/.test(loc)) v.push("55" + ddd + "9" + loc);
+  else if (loc.length === 9 && loc[0] === "9") v.push("55" + ddd + loc.slice(1));
+  return v;
+};
+
+module.exports = { variantesFone, soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem, foneDaLigacao, agruparHistorico,
                    miolo, tipoDaMensagem, textoDaMensagem, deveIgnorar,
                    nomeSeguro, quandoWa, citacaoDe, reacaoDe, chaveDaMensagem, recente };

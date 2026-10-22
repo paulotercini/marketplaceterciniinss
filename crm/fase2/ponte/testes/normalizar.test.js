@@ -4,6 +4,12 @@ const t = require("node:test");
 const a = require("node:assert");
 const N = require("../normalizar");
 
+t.test("variantes do celular: com e sem o 9; o fixo fica como está", () => {
+  a.deepEqual(N.variantesFone("(16) 9963-8450"), ["551699638450", "5516999638450"]);
+  a.deepEqual(N.variantesFone("16999638450"), ["5516999638450", "551699638450"]);
+  a.deepEqual(N.variantesFone("1632422908"), ["551632422908"]);
+});
+
 t.test("ligação: número do jid, do mapa do @lid, e nada fora do toque inicial", () => {
   a.equal(N.foneDaLigacao({ status: "offer", from: "5516999638450@s.whatsapp.net" }), "5516999638450");
   a.equal(N.foneDaLigacao({ status: "offer", from: "5516999638450:12@s.whatsapp.net" }), "5516999638450");
