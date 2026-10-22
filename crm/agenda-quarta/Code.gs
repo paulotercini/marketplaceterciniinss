@@ -19,7 +19,7 @@ const CONFIG = {
   // aceita "001", "002", "001 livre", "001 - Livre (anote o telefone)", "001 - disponível", "002 vaga";
   // o título que já tem telefone anotado (8 dígitos ou mais) deixou de ser vaga
   REGEX_VAGA: /^\s*(00[12])\s*(?:[-–—:]?\s*\(?\s*(?:livre|dispon[ií]vel|vaga|aberto)\b(?:(?!\d{4}[\s.-]?\d{4}).)*)?\s*$/i,
-  VERSAO: 'F250c · vagas 001/002',
+  VERSAO: 'F250d · vagas 001/002',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
   // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
@@ -51,7 +51,8 @@ function diagnostico_() {
   const comCodigo = evs.filter(ev => CONFIG.REGEX_ATENDIMENTO.test(ev.summary || ''));
   return { ok: true, versao: CONFIG.VERSAO, proximos14dias: { eventos: evs.length, comCodigo001ou002: comCodigo.length,
     vagas: evs.filter(ehVaga_).length, vagasDisponivel: evs.filter(ev => ehVaga_(ev) && ev.transparency === 'transparent').length,
-    vagasSemCorDeProfissional: evs.filter(ev => ehVaga_(ev) && donoDoEvento_(ev) === null).length } };
+    vagasSemCorDeProfissional: evs.filter(ev => ehVaga_(ev) && donoDoEvento_(ev) === null).length,
+    vagasPorProfissional: Object.keys(CONFIG.PROFISSIONAIS).reduce((o, k) => { o[k] = evs.filter(ev => ehVaga_(ev) && contaPara_(ev, prof_(k))).length; return o; }, {}) } };
 }
 
 function doPost(e) {
@@ -284,7 +285,8 @@ function disponibilidade_(user, r) {
     }
     const evs = eventosDoProfissional_(eventosDoDia_(data), prof);
     // a vaga não ocupa: é o horário que se oferece
-    const vagas = evs.filter(ehVaga_);
+    // a vaga é de quem tem a cor; sem cor, é do Paulo (dono da agenda), e a vaga de outro não ocupa nem se oferece
+    const vagas = evs.filter(ev => ehVaga_(ev) && contaPara_(ev, prof));
     const ocupados = evs.filter(ev => !ehVaga_(ev)).map(ev => [new Date(ev.start.dateTime), new Date(ev.end.dateTime)]);
     const atend = evs.filter(ev => ehAtendimento_(ev) && contaPara_(ev, prof)).length;
     const lotado = !!prof.limite && atend >= prof.limite;
@@ -295,7 +297,7 @@ function disponibilidade_(user, r) {
         : vagas.length ? vagasLivres_(vagas, tipo, agora)
         : horariosLivres_(data, tipo, ocupados, user, agora, prof);
     });
-    return Object.assign(base, { bloqueado: false, atendimentos: atend, lotado, eventos: evs.map(resumo_), livres,
+    return Object.assign(base, { bloqueado: false, atendimentos: atend, lotado, eventos: evs.filter(ev => !ehVaga_(ev) || contaPara_(ev, prof)).map(resumo_), livres,
              reservas: prof.reservas.map(([a, b]) => ({ inicio: a, fim: b })),
              janelas: CONFIG.JANELAS.map(([a, b]) => ({ inicio: a, fim: b })) });
   });
@@ -346,7 +348,7 @@ function agendar_(user, r) {
     let vaga = null;
     if (r.eventoId) {
       vaga = Calendar.Events.get(CONFIG.CALENDAR_ID, String(r.eventoId));
-      if (!vaga || vaga.status === 'cancelled' || !ehVaga_(vaga) || tipoDaVaga_(vaga) !== tipo) {
+      if (!vaga || vaga.status === 'cancelled' || !ehVaga_(vaga) || tipoDaVaga_(vaga) !== tipo || !contaPara_(vaga, prof)) {
         throw erro_('HORARIO_INDISPONIVEL', 'Esta vaga acabou de ser preenchida. A agenda será atualizada.');
       }
     } else {
