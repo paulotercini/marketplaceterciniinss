@@ -4730,7 +4730,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.81</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.82</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -47103,6 +47103,10 @@ async function carregarAgenda(prof){
 const PROFS_AGENDA = ["paulo", "marcos", "amanda"];
 async function carregarCompleta(){
   await Promise.all(PROFS_AGENDA.map(pr=>carregarAgenda(pr)));
+  return juntarCompleta();
+}
+// F250g · junta o que já está guardado, sem ir ao Google: a Completa abre na hora quando as três já carregaram
+function juntarCompleta(){
   const partes = PROFS_AGENDA.map(pr=>agq.cache[pr]).filter(Boolean);
   if(!partes.length){ if(agq.prof==="todos") agq.disp = null; return null; }
   const datas = [...new Set(partes.flatMap(r=>r.dias.map(d=>d.data)))].sort();
@@ -47121,6 +47125,8 @@ async function carregarCompleta(){
     if(!agq.sel || !dias.some(d=>d.data===agq.sel)) agq.sel = (dias.find(d=>!d.bloqueado)||dias[0]||{}).data || null; }
   return agq.cache.todos;
 }
+// F250g · com a agenda aberta, as dos outros profissionais carregam em segundo plano: trocar de Paulo para Marcos ou Amanda fica imediato
+function preCarregarAgendas(){ PROFS_AGENDA.filter(pr=>pr!==agq.prof && !agq.cache[pr] && !agq.carregando[pr]).forEach(pr=>carregarAgenda(pr).catch(()=>{})); }
 function nomeProf(id){ if(id==="todos") return "Completa"; const l = ((agq.disp||agq.cache.paulo||{}).profissionais)||[]; return (l.find(x=>x.id===id)||{}).nome || (id ? id[0].toUpperCase()+id.slice(1) : ""); }
 function tratamentoProf(id){ const l = ((agq.disp||agq.cache.paulo||{}).profissionais)||[]; return (l.find(x=>x.id===id)||{}).tratamento || "o Dr. Paulo Roberto Tercini Filho"; }
 // o contador da barra: a ocupação do próximo dia de atendimento do Paulo ("9/14")
@@ -47217,8 +47223,8 @@ function renderAgendaQuarta(){
   agq.disp = agq.cache[agq.prof] || null;
   if(!agq.disp){
     alvo.innerHTML = `<div class="aq" aria-busy="true"><div class="aq-faixa">${Array.from({length:6},()=>`<span class="aq-dia sk-caixa">${skl("60%",11)}${skl("40%",10)}</span>`).join("")}</div>${esqueletoLista(8)}</div>`;
-    carregarAgenda().then(()=>{ if(visao==="agendaq") { montarSidebar(); pintarTopoAgenda(); pintarAgenda(); } });
-  } else pintarAgenda();
+    carregarAgenda().then(()=>{ if(visao==="agendaq") { montarSidebar(); pintarTopoAgenda(); pintarAgenda(); } preCarregarAgendas(); });
+  } else { pintarAgenda(); preCarregarAgendas(); }
   // 60 s, só com a aba à vista e a tela aberta
   clearInterval(agq.timer);
   agq.timer = setInterval(async ()=>{
@@ -47234,7 +47240,9 @@ function pintarTopoAgenda(){
     <div class="seg-colab aq-profs" role="group" aria-label="Profissional">${[...lista, {id:"todos", nome:"Completa"}].map(x=>`<button data-aqprof="${x.id}" aria-pressed="${agq.prof===x.id}" class="${agq.prof===x.id?"on":""}"><i class="aq-bola p-${x.id}"></i>${esc(x.nome)}</button>`).join("")}</div>
     ${((agq.disp||agq.cache.paulo||{}).papel==="admin")?`<button class="btn-rap" onclick="abrirDiasAgenda()">Dias de atendimento</button>`:""}
     <button class="aq-agendar" onclick="abrirFluxoAgenda()">+ Agendar</button></div>`;
-  document.querySelectorAll("[data-aqprof]").forEach(b=>b.onclick=async()=>{ agq.prof=b.dataset.aqprof; agq.disp=agq.cache[agq.prof]||null; agq.sel=null; pintarTopoAgenda();
+  document.querySelectorAll("[data-aqprof]").forEach(b=>b.onclick=async()=>{ agq.prof=b.dataset.aqprof;
+    if(agq.prof==="todos" && PROFS_AGENDA.every(pr=>agq.cache[pr])) juntarCompleta();   // F250g · a Completa sai do que já está guardado
+    agq.disp=agq.cache[agq.prof]||null; agq.sel=null; pintarTopoAgenda();
     if(!agq.disp){ document.getElementById("conteudo-meio").innerHTML = esqueletoLista(8); await carregarAgenda(); } else carregarAgenda().then(()=>visao==="agendaq"&&pintarAgenda());
     if(!agq.sel && agq.disp) agq.sel=(agq.disp.dias.find(d=>!d.bloqueado)||agq.disp.dias[0]||{}).data;
     if(visao==="agendaq") pintarAgenda(); });

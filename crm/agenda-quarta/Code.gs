@@ -22,7 +22,7 @@ const CONFIG = {
   // F250f · o Marcos e a Amanda deixam o horário livre como "LIVRE 10:30-11:00" ou "LIVRE 09h30-10h00", sem o código:
   // é vaga sem tipo; o tipo vem do cliente na hora de agendar (001 primeiro atendimento, 002 cliente do escritório)
   REGEX_VAGA_LIVRE: /^\s*livre\b(?:(?!\d{4}[\s.-]?\d{4}).)*$/i,
-  VERSAO: 'F250f · LIVRE do Marcos e da Amanda',
+  VERSAO: 'F250g · período de uma vez',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
   // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
@@ -242,6 +242,45 @@ function eventosDoDia_(data) {
     (ev.transparency !== 'transparent' || ehVaga_(ev)) && !recusado_(ev));   // a vaga marcada como "Disponível" também vale
 }
 
+/** F250g · os eventos de todas as datas numa consulta só (com paginação), agrupados por dia. */
+function eventosDoPeriodo_(datas) {
+  const porDia = {}; datas.forEach(d => { porDia[d] = []; });
+  if (!datas.length) return porDia;
+  let token = null;
+  do {
+    const q = { timeMin: dt_(datas[0], '00:00').toISOString(), timeMax: dt_(datas[datas.length - 1], '23:59').toISOString(),
+      singleEvents: true, orderBy: 'startTime', maxResults: 2500 };
+    if (token) q.pageToken = token;
+    const r = Calendar.Events.list(CONFIG.CALENDAR_ID, q);
+    (r.items || []).forEach(ev => {
+      if (ev.status === 'cancelled' || !ev.start || !ev.start.dateTime) return;
+      if (ev.transparency === 'transparent' && !ehVaga_(ev)) return;
+      if (recusado_(ev)) return;
+      const d = ymd_(new Date(ev.start.dateTime)); if (porDia[d]) porDia[d].push(ev);
+    });
+    token = r.nextPageToken || null;
+  } while (token);
+  return porDia;
+}
+/** F250g · as datas bloqueadas (férias, feriado) do profissional no período, uma consulta por agenda de bloqueio. */
+function bloqueadosDoPeriodo_(prof, datas) {
+  const set = {};
+  if (!datas.length) return set;
+  const timeMin = dt_(datas[0], '00:00').toISOString(), timeMax = dt_(datas[datas.length - 1], '23:59').toISOString();
+  CONFIG.CALENDARIOS_BLOQUEIO_DIA_INTEIRO.forEach(c => {
+    if (c.quem.indexOf(prof.id) < 0) return;
+    try {
+      const r = Calendar.Events.list(c.id, { timeMin, timeMax, singleEvents: true, maxResults: 250 });
+      (r.items || []).forEach(ev => {
+        if (ev.status === 'cancelled' || !ev.start || !ev.start.date) return;
+        // o dia inteiro vai de start.date até a véspera de end.date
+        datas.forEach(d => { if (d >= ev.start.date && d < (ev.end && ev.end.date > ev.start.date ? ev.end.date : ev.start.date + 'z')) set[d] = true; });
+      });
+    } catch (e) {}
+  });
+  return set;
+}
+
 function resumo_(ev) {
   const p = (ev.extendedProperties && ev.extendedProperties.private) || {};
   const ini = new Date(ev.start.dateTime), fim = new Date(ev.end.dateTime);
@@ -289,12 +328,13 @@ function disponibilidade_(user, r) {
   const prof = prof_(r.profissional);
   const n = Math.min(Number(r.dias) || prof.exibir, 30);
   const agora = new Date();
-  const dias = proximosDias_(prof, n).map(data => {
+  const datas = proximosDias_(prof, n), doPeriodo = eventosDoPeriodo_(datas), bloq = bloqueadosDoPeriodo_(prof, datas);
+  const dias = datas.map(data => {
     const base = { data, diaSemana: diaSemana_(data), limite: prof.limite };
-    if (diaBloqueado_(data, prof)) {
+    if (bloq[data]) {
       return Object.assign(base, { bloqueado: true, atendimentos: 0, lotado: true, eventos: [], livres: { '001': [], '002': [] } });
     }
-    const evs = eventosDoProfissional_(eventosDoDia_(data), prof);
+    const evs = eventosDoProfissional_(doPeriodo[data] || [], prof);
     // a vaga não ocupa: é o horário que se oferece
     // a vaga é de quem tem a cor; sem cor, é do Paulo (dono da agenda), e a vaga de outro não ocupa nem se oferece
     const vagas = evs.filter(ev => ehVaga_(ev) && contaPara_(ev, prof));

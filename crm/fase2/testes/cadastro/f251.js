@@ -89,6 +89,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("sem o título vazio das listas do escritório", !(await vis(".grupo:has(#grupo-fases) h3")));
   const profs = await p.$$eval("[data-aqprof]", b => b.map(x => x.dataset.aqprof));
   conf(`dá para ver Paulo, Marcos, Amanda e a Completa (${profs.join(", ")})`, profs.join() === "paulo,marcos,amanda,todos");
+  // F250g · as agendas do Marcos e da Amanda carregam em segundo plano: a troca é imediata
+  conf("com a agenda do Paulo aberta, as do Marcos e da Amanda já carregam em segundo plano",
+    await p.waitForFunction(() => agq.cache.marcos && agq.cache.amanda, null, { timeout: 8000 }).then(() => true, () => false));
   await p.click(`[data-aqdia="${W}"]`);
   const vagas = await p.$$eval(".aq-vaga", b => b.map(x => [x.dataset.aqvaga, x.className]));
   conf(`na quarta do Paulo aparecem as 3 vagas dele (${vagas.map(v => v[0]).join(", ")})`, vagas.map(v => v[0]).join() === "P1,P2,P4");
@@ -172,6 +175,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // 7 · a agenda do Marcos e a Completa
   await p.click('[data-aqprof="marcos"]');
+  conf("trocar para o Marcos mostra a agenda dele na hora, sem esperar o Google", await p.evaluate(() => agq.disp && agq.disp.profissional === "marcos" && !!document.querySelector(".aq-faixa")));
   await p.waitForFunction(() => agq.disp && agq.disp.profissional === "marcos", null, { timeout: 10000 });
   await p.click(`[data-aqdia="${W}"]`);
   const vm = await p.$$eval(".aq-vaga", b => b.map(x => [x.dataset.aqvaga, x.className]));

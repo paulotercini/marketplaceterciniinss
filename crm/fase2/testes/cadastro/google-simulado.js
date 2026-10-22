@@ -20,14 +20,15 @@ function formatDate(d, tz, f){
 }
 const copia = o => JSON.parse(JSON.stringify(o));
 
-function criarGoogle({ eventos = [], tokens = {} } = {}){
-  let seq = 0;
+function criarGoogle({ eventos = [], tokens = {}, outras = {} } = {}){
+  let seq = 0; const conta = { list: 0 };   // outras: {id da agenda: [eventos de dia inteiro]} (férias, feriado)
   const evs = eventos.map(e => ({ status: "confirmed", extendedProperties: { private: {} }, ...e, id: e.id || "ev" + (++seq) }));
   const props = { TOKENS: JSON.stringify(tokens) };
   const ms = e => new Date(e.start.dateTime).getTime();
   const Calendar = { Events: {
     list(cal, q){
-      if (cal !== "primary") return { items: [] };
+      conta.list++;
+      if (cal !== "primary") return { items: copia(outras[cal] || []) };
       let r = evs.filter(e => e.status !== "cancelled");
       if (q.timeMin) r = r.filter(e => !e.start.dateTime || new Date(e.end.dateTime) > new Date(q.timeMin));
       if (q.timeMax) r = r.filter(e => !e.start.dateTime || new Date(e.start.dateTime) < new Date(q.timeMax));
@@ -57,7 +58,7 @@ function criarGoogle({ eventos = [], tokens = {} } = {}){
   });
   vm.runInContext(fs.readFileSync(CODE, "utf8"), ctx, { filename: "Code.gs" });
   return {
-    eventos: evs,
+    eventos: evs, conta,
     post: body => JSON.parse(ctx.doPost({ postData: { contents: JSON.stringify(body) } }).texto),
     get: q => JSON.parse(ctx.doGet({ parameter: q || {} }).texto),
   };
