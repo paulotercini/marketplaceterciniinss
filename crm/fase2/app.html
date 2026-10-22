@@ -4692,7 +4692,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.74</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.75</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -39075,21 +39075,25 @@ function docSimples(c, ks){
 // o painel do Paulo: a onda e o nível de cada um
 function abrirTransicao(){
   if(!souAdmin()) return;
-  const t = transicao();
-  if(!t) return caixa(`<h3 style="margin:0 0 6px">Transição do To Do</h3>
-    <p class="meio-sub">Desligada: todos veem o CRM completo. Ao ligar, todos começam no nível 0 (primeiro acesso: só a Agenda e a Identificação do cliente), menos você, que fica no 3; a onda 1 já vale.</p>
-    <button class="btn-rap trn-ligar" onclick="gravarTransicao({ligada:true, onda:1})">Ligar a transição</button>`);
-  caixa(`<h3 style="margin:0 0 6px">Transição do To Do</h3>
+  // o painel é o mesmo ligada ou não: com ela desligada, os números mostram onde cada um vai ficar, e escolher um
+  // nível ou uma onda já liga a transição (antes só havia "Ligar", e os números do texto não eram botões)
+  const t = transicao(), atual = lerTransicao() || {}, onda = t ? t.onda : 1;
+  const nv = id => { const n = (atual.niveis||{})[id], co = D.colPorId.get(id);
+    return [0, 1, 2, 3].includes(n) ? n : (co && co.papel==="admin" ? 3 : 0); };
+  caixa(`<h3 style="margin:0 0 6px">Transição do To Do · <span class="trn-estado">${t ? "ligada" : "desligada"}</span></h3>
+    <p class="meio-sub" style="margin:0 0 8px">${t ? "Cada colaborador vê o CRM do nível dele." : "Hoje todos veem o CRM completo. Escolher um nível ou uma onda, ou o botão abaixo, liga a transição."}</p>
     <p class="meio-sub" style="margin:0">Onda em vigor para os níveis 1 e 2:</p>
-    <div class="trn-ondas">${ONDAS.map(([n, r])=>`<button type="button" class="esp-it trn-onda${n===t.onda?" on":""}" onclick="gravarTransicao({onda:${n}})">${n} · ${esc(r)}</button>`).join("")}</div>
+    <div class="trn-ondas">${ONDAS.map(([n, r])=>`<button type="button" class="esp-it trn-onda${n===onda?" on":""}" onclick="gravarTransicao({onda:${n}})">${n} · ${esc(r)}</button>`).join("")}</div>
     <p class="meio-sub" style="margin:0">Nível de cada um (0 · Agenda e Identificação, 1 · só anotação, 2 · com sugestões, 3 · completo):</p>
-    <ul class="trn-lista">${equipeAtiva().map(co=>`<li><b>${esc(co.nome)}</b>${[0, 1, 2, 3].map(n=>`<button type="button" class="btn-mini trn-nv${nivelDe(co.id)===n?" on":""}" data-col="${co.id}" data-n="${n}" onclick="gravarTransicao({col:'${co.id}', n:${n}})">${n}</button>`).join("")}</li>`).join("")}</ul>
-    <button class="btn-rap trn-desligar" onclick="gravarTransicao({ligada:false})">Desligar a transição</button>`);
+    <ul class="trn-lista">${equipeAtiva().map(co=>`<li><b>${esc(co.nome)}</b>${[0, 1, 2, 3].map(n=>`<button type="button" class="btn-mini trn-nv${nv(co.id)===n?" on":""}" data-col="${co.id}" data-n="${n}" aria-pressed="${nv(co.id)===n}" onclick="gravarTransicao({col:'${co.id}', n:${n}})">${n}</button>`).join("")}</li>`).join("")}</ul>
+    ${t ? `<button class="btn-rap trn-desligar" onclick="gravarTransicao({ligada:false})">Desligar a transição</button>`
+        : `<button class="btn-rap trn-ligar" onclick="gravarTransicao({ligada:true, onda:1})">Ligar a transição</button>`}`);
 }
 async function gravarTransicao(o){
   const atual = lerTransicao() || {}, t = {...atual, niveis:{...(atual.niveis||{})}};
-  if("ligada" in o){ t.ligada = o.ligada; if(o.ligada){ t.onda = o.onda || 1; t.niveis[eu.id] = 3; } }
-  if(o.onda) t.onda = o.onda;
+  if("ligada" in o) t.ligada = o.ligada;
+  else if(!t.ligada) t.ligada = true;   // escolher um nível ou uma onda com ela desligada liga a transição
+  if(t.ligada){ t.onda = o.onda || t.onda || 1; if(t.niveis[eu.id]==null) t.niveis[eu.id] = 3; }
   if(o.col) t.niveis[o.col] = o.n;
   try{ await guardarCfgApp(TRANS_CHAVE, JSON.stringify(t)); }catch(e){ return aviso("Não gravou — tente de novo"); }
   aplicarNivel(); montarSidebar(); render(); if(clienteAberto) repintarFicha();
