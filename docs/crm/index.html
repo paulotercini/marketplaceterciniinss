@@ -4730,7 +4730,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.82</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.83</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -47529,7 +47529,7 @@ function pintarFluxo(){
       ${soVagas ? grupo("Vagas livres no Google Agenda", livres) : grupo("Horários recomendados", livres.filter(s=>s.encaixado && !s.reserva))}
       ${soVagas ? "" : grupo("Outros horários", livres.filter(s=>!s.encaixado && !s.reserva))}
       ${grupo("Encaixe urgente", livres.filter(s=>s.reserva))}
-      ${!livres.length?`<p class="meio-sub">Sem horário livre nesta quarta.</p>`:""}
+      ${!livres.length?`<p class="meio-sub">Sem vaga livre neste dia.</p>`:""}
       <div class="aq-bts"><button class="btn-rap" data-aqvolta="1" ${f.remarcar?"hidden":""}>Voltar</button>
         <button class="btn-rap forte" id="aq-seg5" ${f.inicio?"":"disabled"}>${f.remarcar?"Remarcar":"Continuar"}</button></div>`;
   } else if(f.etapa===6){

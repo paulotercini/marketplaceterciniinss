@@ -22,7 +22,7 @@ const CONFIG = {
   // F250f · o Marcos e a Amanda deixam o horário livre como "LIVRE 10:30-11:00" ou "LIVRE 09h30-10h00", sem o código:
   // é vaga sem tipo; o tipo vem do cliente na hora de agendar (001 primeiro atendimento, 002 cliente do escritório)
   REGEX_VAGA_LIVRE: /^\s*livre\b(?:(?!\d{4}[\s.-]?\d{4}).)*$/i,
-  VERSAO: 'F250g · período de uma vez',
+  VERSAO: 'F250h · só as vagas do Google',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
   // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
@@ -33,6 +33,9 @@ const CONFIG = {
     amanda: { nome: 'Amanda', tratamento: 'a Dra. Amanda',                     cor: '5',  tons: ['5', '6'],  dias: [1, 2, 3, 4, 5], limite: null, reservas: [],                   exibir: 10 }
   },
   PADRAO: 'paulo',
+  // F250h · o escritório marca à mão no Google os horários livres: só a vaga é oferecida, e o dia sem vaga não tem horário.
+  // O cálculo antigo (os horários vagos de 15 em 15 minutos) volta para quem tiver soVagas: false nos AJUSTES.
+  SO_VAGAS: true,
   // dia inteiro nestas agendas bloqueia o dia de quem está na lista
   CALENDARIOS_BLOQUEIO_DIA_INTEIRO: [
     { id: 'e83gr2c3gb344uo2nkll6geaac@group.calendar.google.com', quem: ['paulo'] },                    // Férias
@@ -183,6 +186,7 @@ function prof_(id) {
   const aj = ajustes_()[chave] || {};
   return Object.assign({ id: chave }, p, {
     dias: Array.isArray(aj.dias) ? aj.dias : p.dias,
+    soVagas: typeof aj.soVagas === 'boolean' ? aj.soVagas : CONFIG.SO_VAGAS,
     extras: aj.extras || [], folgas: aj.folgas || []
   });
 }
@@ -345,7 +349,7 @@ function disponibilidade_(user, r) {
     Object.keys(CONFIG.DURACAO).forEach(tipo => {
       // com vagas no dia, só elas valem; sem nenhuma, o horário livre é calculado como antes
       livres[tipo] = (lotado && user.papel !== 'admin') ? []
-        : vagas.length ? vagasLivres_(vagas, tipo, agora)
+        : (prof.soVagas || vagas.length) ? vagasLivres_(vagas, tipo, agora)
         : horariosLivres_(data, tipo, ocupados, user, agora, prof);
     });
     return Object.assign(base, { bloqueado: false, atendimentos: atend, lotado, eventos: evs.filter(ev => !ehVaga_(ev) || contaPara_(ev, prof)).map(resumo_), livres,
@@ -403,6 +407,7 @@ function agendar_(user, r) {
         throw erro_('HORARIO_INDISPONIVEL', 'Esta vaga acabou de ser preenchida. A agenda será atualizada.');
       }
     } else {
+      if (prof.soVagas) throw erro_('HORARIO_INDISPONIVEL', 'Escolha uma das vagas livres da agenda.');
       const ocupados = evs.filter(ev => !ehVaga_(ev)).map(ev => [new Date(ev.start.dateTime), new Date(ev.end.dateTime)]);
       const slot = horariosLivres_(r.data, tipo, ocupados, user, new Date(), prof).find(s => s.inicio === r.inicio);
       if (!slot) throw erro_('HORARIO_INDISPONIVEL', 'O horário acabou de ser ocupado. A agenda será atualizada.');
