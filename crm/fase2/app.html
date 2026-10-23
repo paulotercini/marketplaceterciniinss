@@ -13343,7 +13343,13 @@ function pintarConversaGuardando(){
   // quem está lendo mais acima não é puxado para o fim (só quem já estava no fim acompanha o que chega)
   const cx = document.getElementById("zap-msgs"), y = cx ? cx.scrollTop : 0;
   const noFim = !cx || cx.scrollHeight - cx.scrollTop - cx.clientHeight < 80;
+  // o áudio que está tocando atravessa a repintura (mensagem nova chegando) sem parar
+  const tocando = [...document.querySelectorAll("#zap-msgs audio[data-ouvir]")];
   pintarConversa();
+  for(const a of tocando){
+    const b = [...document.querySelectorAll("#zap-msgs button[data-ouvir]")].find(x=>x.dataset.ouvir===a.dataset.ouvir);
+    if(b) b.replaceWith(a);
+  }
   const cx2 = document.getElementById("zap-msgs"); if(cx2 && !noFim) cx2.scrollTop = y;
   const t2 = document.getElementById("zap-txt");
   if(t2 && txt){ t2.value = txt; if(foco) t2.focus(); }
@@ -13619,7 +13625,10 @@ function bolhaZap(m, cli){
     <div class="pe">${horaSP(m.criado_em)}
       ${cli?`<button class="virar" onclick="virarAndamento('${m.id}')"
         title="registrar no histórico de um processo">↪ andamento</button>`:""}</div></div>`;
-  const corpo = m.midia_url
+  const corpo = m.midia_url && m.tipo==="audio"
+    ? `<button class="zap-anexo" data-ouvir="${esc(m.midia_url)}" onclick="ouvirAqui(this,'${escJs(m.midia_url)}')">▶ ouvir</button>`
+      + (m.texto?`<div>🎤 ${esc(m.texto)}</div>`:"")
+    : m.midia_url
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${m.tipo==="audio"?"🎤 ":""}${esc(m.texto)}</div>`:"")
     : esc(m.texto||`[${m.tipo}]`);
@@ -14143,7 +14152,7 @@ async function verZapCliente(cliId){
     const resto = (m.texto||"").replace("[mídia não baixada]","").trim();
     if(semArq) corpo = `<span class="meio-sub">${m.tipo==="audio"?"🎤 áudio":"📎 "+esc(m.tipo)} antigo, não baixado — só no celular</span>`
       + (resto?`<div>${esc(resto)}</div>`:"");
-    else if(m.tipo==="audio") corpo = `<button class="btn-mini" onclick="abrirArquivoZap('${escJs(m.midia_url)}')">▶ ouvir</button> `
+    else if(m.tipo==="audio") corpo = `<button class="btn-mini" data-ouvir="${esc(m.midia_url)}" onclick="ouvirAqui(this,'${escJs(m.midia_url)}')">▶ ouvir</button> `
       + (m.texto ? `<i>🎤 ${esc(m.texto)}</i>` : `<span class="meio-sub">🎤 transcrevendo…</span>`);
     else if(m.midia_url) corpo = `<button class="btn-mini" onclick="abrirArquivoZap('${escJs(m.midia_url)}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${esc(m.texto)}</div>`:"");
@@ -14178,6 +14187,19 @@ function obsDoNumero(cliId, tel){
   const c = D.cliPorId.get(cliId), k = String(tel||"").replace(/\D/g,"").slice(-8);
   const t = c && telefonesDe(c).find(t=>String(t.numero||"").replace(/\D/g,"").slice(-8)===k);
   return t && t.obs && t.obs!=="principal" ? t.obs : "";
+}
+// O áudio toca na própria conversa: o botão vira o tocador, sem abrir outra aba.
+// Link de 1 h, para pausar e voltar no áudio longo sem o link vencer.
+async function ouvirAqui(btn, caminho){
+  if(!caminho || btn.disabled) return;
+  btn.disabled = true;
+  try{
+    const a = document.createElement("audio");
+    a.controls = true; a.autoplay = true; a.preload = "auto";
+    a.dataset.ouvir = caminho; a.style.cssText = "display:block;max-width:100%;height:36px";
+    a.src = await linkArquivo(caminho, 3600);
+    btn.replaceWith(a);
+  }catch(e){ btn.disabled = false; aviso("Não consegui abrir o áudio"); }
 }
 async function abrirArquivoZap(caminho){
   if(!caminho) return;
