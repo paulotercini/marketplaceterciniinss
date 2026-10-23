@@ -226,9 +226,19 @@ chrome.notifications.onClicked.addListener(async id => {
     await chrome.windows.update(aba.windowId, { focused: true });
   } else await chrome.tabs.create({ url: CRM_IMPORTAR });
 });
+// 1.25.1 · a rodada longa passa minutos só esperando a página (prazos do PJe,
+// completar); sem chamada à API o Chrome encerra o worker no meio, sem erro e
+// sem o aviso do fim (23.10.2026: parou depois do e-SAJ). O pulso o mantém vivo.
+const comPulso = async f => {
+  const p = setInterval(() => chrome.runtime.getPlatformInfo(() => {}), 20000);
+  try { return await f(); } finally { clearInterval(p); }
+};
+const responderComAviso = (titulo, f, responder) => comPulso(f).then(
+  r => responder(avisarFim(titulo, r)),
+  e => responder(avisarFim(titulo, { erro: String(e.message || e) })));
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-tudo') return;
-  rodarTudo().then(r => responder(avisarFim('Atualizar tudo', r)), e => responder({ erro: String(e.message || e) }));
+  responderComAviso('Atualizar tudo', rodarTudo, responder);
   return true;
 });
 
@@ -335,7 +345,7 @@ async function rodarPrazos() {
 }
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-prazos') return;
-  rodarPrazos().then(r => responder(avisarFim('Prazos dos tribunais', r)), e => responder({ erro: String(e.message || e) }));
+  responderComAviso('Prazos dos tribunais', rodarPrazos, responder);
   return true;
 });
 
@@ -352,14 +362,13 @@ async function rodarJudicial() {
 }
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-judicial') return;
-  rodarJudicial().then(r => responder(avisarFim('PJe e eproc', r)), e => responder({ erro: String(e.message || e) }));
+  responderComAviso('PJe e eproc', rodarJudicial, responder);
   return true;
 });
 
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-completo') return;
-  Promise.all([completarEproc(), completarPje()])
-    .then(feitos => responder(avisarFim('Completar processos', { feitos })), e => responder({ erro: String(e.message || e) }));
+  responderComAviso('Completar processos', async () => ({ feitos: await Promise.all([completarEproc(), completarPje()]) }), responder);
   return true;
 });
 
