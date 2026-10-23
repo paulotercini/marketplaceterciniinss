@@ -75,3 +75,15 @@ t.test("mensagem já gravada sem mídia: o --recuperar-midia completa a mesma li
   a.equal(corpo.midia_url, "zap/conv-1/ABC1-laudo.pdf");
   a.equal(corpo.texto, "segue o laudo");
 });
+
+t.test("download que não responde não tranca a fila: a mensagem entra marcada", async () => {
+  process.env.PRAZO_MIDIA = "50";
+  delete require.cache[require.resolve("../ponte")];
+  const P2 = require("../ponte");
+  P2._usarSocket({ updateMediaMessage: async m => m });
+  await P2.gravar(msgDoc("T1", "laudo.pdf"), () => new Promise(() => {}), "conv-1", "entrada", "entregue");
+  const ins = insercao();
+  a.equal(ins.midia_url, undefined);
+  a.match(ins.texto, /\[mídia não baixada\]/);
+  delete process.env.PRAZO_MIDIA;
+});

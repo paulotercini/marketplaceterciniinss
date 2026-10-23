@@ -379,15 +379,22 @@ const MIDIA = ["imagem", "audio", "video", "documento", "figurinha"];
 const SEM_MIDIA = "[mídia não baixada]";
 let recuperadas = 0;
 
+// Download que não responde trancava a fila do histórico inteira (23/10: 1 de
+// 19 conversas gravadas depois do QR). Passado o prazo, a mídia fica marcada
+// para o --recuperar-midia e a fila segue.
+const PRAZO_MIDIA = Number(process.env.PRAZO_MIDIA || 60000);
+const comPrazo = p => Promise.race([p, espera(PRAZO_MIDIA).then(() => {
+  throw new Error(`download sem resposta em ${PRAZO_MIDIA / 1000} s`); })]);
+
 async function baixarMidia(m, baixar, conversa, tipo) {
   let buf;
-  try { buf = await baixar(m, "buffer", {}, { reuploadRequest: sock.updateMediaMessage }); }
+  try { buf = await comPrazo(baixar(m, "buffer", {}, { reuploadRequest: sock.updateMediaMessage })); }
   catch (e) {
     // link vencido: o WhatsApp responde 403, e o Baileys só pede ao celular
     // que reenvie em 404/410. Pede aqui e tenta de novo, uma vez.
     if (!/status code 403/.test(e.message)) throw e;
-    m = await sock.updateMediaMessage(m);
-    buf = await baixar(m, "buffer", {}, { reuploadRequest: sock.updateMediaMessage });
+    m = await comPrazo(sock.updateMediaMessage(m));
+    buf = await comPrazo(baixar(m, "buffer", {}, { reuploadRequest: sock.updateMediaMessage }));
   }
   const c = N.miolo(m);
   const orig = (c.documentMessage && c.documentMessage.fileName) || "";
