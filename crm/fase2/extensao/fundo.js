@@ -1,4 +1,5 @@
 import * as API from './crm-api.js';
+import { sessaoCaida } from './sessao.js';
 
 // O botão do popup fala com a aba certa. Nada acontece sem clique.
 const ALVO = {
@@ -142,6 +143,9 @@ async function acervoPorAba(roda) {
     for (const [h, a] of porHost) roda(fonte, a, `${fonte === 'pje' ? 'PJe' : 'eproc'} ${h.split('.')[0]}`);
   }
 }
+// 1.25 · o "atualizar tudo" leva também os prazos e o completar, que eram dois
+// botões à parte: primeiro as coletas (vão logo ao 📥 Importar), depois os
+// prazos, e por último o completar, que escolhe o que baixar pelo acervo novo
 async function rodarTudo() {
   const antes = await chrome.storage.local.get(Object.values(CHAVE_ULTIMA));
   const pat = await rodarFonte('pat', { ativar: true });   // prepara a tela e devolve na hora
@@ -151,11 +155,80 @@ async function rodarTudo() {
   roda('esaj', null, 'e-SAJ');
   await acervoPorAba(roda);
   const feitos = await Promise.all(tarefas);
+  feitos.push(...(await rodarPrazos()).feitos.map(f => ({ ...f, rotulo: f.rotulo + ' prazos' })));
+  const completo = await Promise.all([completarEproc(), completarPje()]);
+  feitos.push(...completo.map(f => ({ ...f, rotulo: f.rotulo + ' completar' })));
   return { feitos, pat };
 }
+
+// 1.25 · CONFERÊNCIA DAS SESSÕES antes de rodar. Só as abas abertas: a aba
+// que falta é aberta pela rodada, e sem ela não há o que tocar. PJe, eproc e
+// e-SAJ são tocados no endereço da própria aba, como a vigia já faz a cada
+// 4 min (o eproc derruba a sessão com endereço sem assinatura); o PAT vive de
+// token, então vale o endereço da aba; o e-Recursos, o token da página.
+const NOME = { pat: 'INSS (PAT)', crps: 'e-Recursos', pje: 'PJe', eproc: 'eproc', esaj: 'e-SAJ' };
+async function sessoesCaidas() {
+  const caidas = [];
+  for (const fonte of Object.keys(DOMINIOS)) {
+    const vistos = new Set();
+    for (const aba of await chrome.tabs.query({ url: DOMINIOS[fonte] })) {
+      const host = new URL(aba.url).host;
+      if (vistos.has(host)) continue;
+      vistos.add(host);
+      let caiu = sessaoCaida(aba.url);
+      try {
+        if (!caiu && fonte === 'crps') {
+          const [r] = await chrome.scripting.executeScript({ target: { tabId: aba.id },
+            func: () => !localStorage.getItem('ifs_auth') });
+          caiu = !!(r && r.result);
+        } else if (!caiu && ['pje', 'eproc', 'esaj'].includes(fonte)) {
+          const r = await fetch(aba.url, { credentials: 'include', cache: 'no-store' });
+          caiu = sessaoCaida(r.url, await r.text());
+        }
+      } catch (e) { console.warn('[sessões]', fonte, e.message); }
+      if (caiu) caidas.push({ rotulo: `${NOME[fonte]} ${host.split('.')[0]}`, tabId: aba.id, windowId: aba.windowId });
+    }
+  }
+  return { caidas };
+}
+chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
+  if (msg.tipo !== 'sessoes') return;
+  sessoesCaidas().then(responder, e => responder({ caidas: [], erro: String(e.message || e) }));
+  return true;
+});
+
+// 1.25 · AVISO DE CONCLUSÃO. A rodada longa termina com o popup fechado, e o
+// resumo que ele mostraria se perdia. A notificação traz o resumo, e o clique
+// abre o CRM no 📥 Importar (a aba do CRM, se aberta, é reaproveitada).
+const CRM_IMPORTAR = 'https://paulotercini.github.io/marketplaceterciniinss/crm/?ir=patinss';
+const ICONE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+function avisarFim(titulo, r) {
+  const feitos = (r && r.feitos) || [];
+  const erros = feitos.filter(f => f.erro).length;
+  const linhas = r && r.erro ? [r.erro]
+    : feitos.map(f => `${f.rotulo}: ${f.erro ? '⚠ ' + f.erro : '✔'}`);
+  try {
+    chrome.notifications.create('crm-fim-' + Date.now(), {
+      type: 'basic', iconUrl: ICONE, requireInteraction: true,
+      title: `${titulo}: ${r && r.erro ? 'falhou' : erros ? `${erros} com aviso` : 'concluído'}`,
+      message: (linhas.join('\n') || 'nada a coletar').slice(0, 500),
+      contextMessage: 'clique para abrir o 📥 Importar do CRM',
+    });
+  } catch (e) { console.warn('[aviso]', e.message); }
+  return r;
+}
+chrome.notifications.onClicked.addListener(async id => {
+  if (!id.startsWith('crm-fim-')) return;
+  chrome.notifications.clear(id);
+  const [aba] = await chrome.tabs.query({ url: 'https://paulotercini.github.io/marketplaceterciniinss/crm/*' });
+  if (aba) {
+    await chrome.tabs.update(aba.id, { url: CRM_IMPORTAR, active: true });
+    await chrome.windows.update(aba.windowId, { focused: true });
+  } else await chrome.tabs.create({ url: CRM_IMPORTAR });
+});
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-tudo') return;
-  rodarTudo().then(responder, e => responder({ erro: String(e.message || e) }));
+  rodarTudo().then(r => responder(avisarFim('Atualizar tudo', r)), e => responder({ erro: String(e.message || e) }));
   return true;
 });
 
@@ -262,7 +335,7 @@ async function rodarPrazos() {
 }
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-prazos') return;
-  rodarPrazos().then(responder, e => responder({ erro: String(e.message || e) }));
+  rodarPrazos().then(r => responder(avisarFim('Prazos dos tribunais', r)), e => responder({ erro: String(e.message || e) }));
   return true;
 });
 
@@ -279,14 +352,14 @@ async function rodarJudicial() {
 }
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-judicial') return;
-  rodarJudicial().then(responder, e => responder({ erro: String(e.message || e) }));
+  rodarJudicial().then(r => responder(avisarFim('PJe e eproc', r)), e => responder({ erro: String(e.message || e) }));
   return true;
 });
 
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-completo') return;
   Promise.all([completarEproc(), completarPje()])
-    .then(feitos => responder({ feitos }), e => responder({ erro: String(e.message || e) }));
+    .then(feitos => responder(avisarFim('Completar processos', { feitos })), e => responder({ erro: String(e.message || e) }));
   return true;
 });
 
