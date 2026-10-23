@@ -4745,7 +4745,7 @@ html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.86</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.87</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6971,6 +6971,8 @@ function montarSidebar(){
     // ⚖️ F48 — o coração do escritório: o número é o que exige ação, clientes
     // cuja análise mais recente diz que o direito JÁ chegou
     ["direito","⚖️ Análise de Direito", direitoAlcancado().length||null],
+    // a lista de todos os clientes (F250) também na visão do titular, e não só na do colaborador
+    ["clientes","👥 Clientes", (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length],
     ["claude","🤖 Claude", D.sugestoes.length],
     ["docmodelos","📄 Modelos", D.docModelos.length],
     ["quadro","📌 Quadro", null],
@@ -7016,10 +7018,11 @@ function montarSidebar(){
     const vis = document.getElementById("grupo-visoes");
     const tmp = document.createElement("div"); tmp.innerHTML = vis.innerHTML;
     const tira = id => { const el=tmp.querySelector(`[data-v="${id}"]`); if(el) el.remove(); return el; };
-    tira("direito"); tira("agenda"); tira("patinss");
+    tira("clientes"); tira("direito"); tira("agenda"); tira("patinss");
     const nDir = direitoAlcancado().length, nAg = D.eventos.filter(e=>e.status==="agendada" && dataSP(e.data_hora)>=hoje()).length;
     // F236 · o Importar fica à vista de quem aplica, com o número de coletas esperando
-    vis.innerHTML = item("direito","⚖️ Análise de Direito",nDir) + item("agenda","🩺 Perícias & Audiências",nAg)
+    vis.innerHTML = item("clientes","👥 Clientes",(D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length)   // à vista do titular, e não no "Mais"
+      + item("direito","⚖️ Análise de Direito",nDir) + item("agenda","🩺 Perícias & Audiências",nAg)
       + item("patinss","📥 Importar do INSS",coletasPorFonte().novas.length);
     const mais = ["calendario","importante","particulares","rotinas","acervo"].map(id=>{ const x=dd[id];
         return item(id,x[1],x[2]==="🔒"?null:x[2], x[2]==="🔒"?`<span class="priv">🔒 só você</span>`:""); }).join("")
