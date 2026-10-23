@@ -244,12 +244,36 @@
     return { ok: itens.length };
   }
 
+  // 1.26 · UM PROCESSO SÓ: com a ficha aberta na aba (show.do), o clique lê
+  // aquele processo e guarda as peças dele, como o PJe e o eproc já faziam, sem
+  // esperar a rodada do acervo inteiro. As peças seguem a mesma regra da rodada
+  // (caso aberto e previdenciário no CRM, processo não arquivado).
+  async function coletarFichaAberta(oab) {
+    const grau = /\/cposg\//.test(location.pathname) ? '2º grau' : '1º grau';
+    const { numeros, comDocs } = await CRM.processosTjsp();
+    ativos = new Set(comDocs || numeros);
+    faixa('e-SAJ: lendo o processo aberto e guardando as peças (as já guardadas são puladas)…');
+    const x = await lerProcesso({ numero: null, grau, origem: 'aberto', codigo: REG.codigoDaUrl(location.href),
+      link: location.href }, 'e-SAJ ' + grau);
+    if (x.semFicha) { faixaErr('não consegui ler a ficha deste processo — dê F5 e clique de novo'); return { erro: 'sem ficha' }; }
+    await CRM.enviar('pje', { versao: 1, fonte: 'pje-acervo', sistema: 'esaj', tribunal: 'TJSP', grau, host, oab,
+      quando: new Date().toISOString(), parcial: true, pulados: 0, processos: [paraEntrega(x)] });
+    faixaOk(REG.baixaDocs(x.situacao, x.numero, ativos)
+      ? `✔ processo ${x.numero} entregue ao CRM com as peças — confira em 📥 Importar.`
+      : `✔ processo ${x.numero} entregue ao CRM, sem peças: está arquivado ou não tem caso previdenciário aberto no CRM.`);
+    someFaixa(15000);
+    return { ok: 1 };
+  }
+
   window.crmRodar = async (_desde, opts) => {
     try {
       if (!REG) { faixaErr('esaj-regras.js não subiu — recarregue a página (F5)'); return { erro: 'sem regras' }; }
       const oab = await oabLogada();
       if (!oab) { faixaErr('faça login no e-SAJ (painel do advogado) e clique de novo'); return { erro: 'sem login' }; }
       if (opts && opts.prazos) return await coletarPrazos();
+      // o "atualizar tudo" (opts.acervo) quer o acervo, mesmo com uma ficha aberta
+      if (/\/(cpopg|cposg)\/show\.do/.test(location.pathname) && REG.codigoDaUrl(location.href) && !(opts && opts.acervo))
+        return await coletarFichaAberta(oab);
 
       // a lista-mãe: os favoritos do navegador (pastas "A a J", "I a Z"), que
       // é como o escritório acompanha os ativos do TJSP. Chave: o CÓDIGO, e
