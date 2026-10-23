@@ -64,6 +64,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const naLista = () => p.$$eval("#cli-todos-l .cli-todos-it b", b => b.map(x => x.textContent));
   const lista = async () => { await p.evaluate(() => irPara("clientes")); await p.waitForTimeout(300); return naLista(); };
 
+  // 0 · a lista também à vista na barra do titular (administrador), e não só na do colaborador
+  conf("o titular vê 👥 Clientes na barra lateral, fora do \"Mais\"", !!(await p.$('#grupo-visoes .lista-item[data-v="clientes"]')));
   // 1 · a regra da lista
   let nomes = await lista();
   await p.screenshot({ path: path.join(OUT, "01-lista.png") });
