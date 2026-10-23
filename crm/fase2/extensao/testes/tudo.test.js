@@ -24,7 +24,7 @@ test('sessaoCaida reconhece o login e deixa passar a página logada', async () =
 
 test('aviso de conclusão: permissão, clique abre o Importar, e o CRM entende o ?ir', () => {
   assert.ok(JSON.parse(ler('manifest.json')).permissions.includes('notifications'));
-  assert.match(src, /avisarFim\('Atualizar tudo'/);
+  assert.match(src, /avisarFim\(titulo, r\)/);
   assert.match(src, /\?ir=patinss/);
   const app = fs.readFileSync(path.join(__dirname, '..', '..', 'app.html'), 'utf8');
   assert.match(app, /get\("ir"\)==="patinss"/);
@@ -33,4 +33,10 @@ test('aviso de conclusão: permissão, clique abre o Importar, e o CRM entende o
 test('o popup confere as sessões antes de rodar tudo', () => {
   assert.match(ler('popup.js'), /tipo: 'sessoes'/);
   assert.match(src, /msg\.tipo !== 'sessoes'/);
+});
+
+test('as rodadas longas correm com o pulso que mantém o worker vivo', () => {
+  for (const t of ['Atualizar tudo', 'Prazos dos tribunais', 'PJe e eproc', 'Completar processos'])
+    assert.match(src, new RegExp(`responderComAviso\\('${t}'`));
+  assert.match(src, /const comPulso = async f =>[\s\S]*getPlatformInfo/);
 });
