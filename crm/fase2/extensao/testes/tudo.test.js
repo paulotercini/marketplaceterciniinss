@@ -40,3 +40,10 @@ test('as rodadas longas correm com o pulso que mantém o worker vivo', () => {
     assert.match(src, new RegExp(`responderComAviso\\('${t}'`));
   assert.match(src, /const comPulso = async f =>[\s\S]*getPlatformInfo/);
 });
+
+test('e-SAJ: com a ficha aberta, o clique lê só aquele processo', () => {
+  const esaj = ler('esaj.js');
+  assert.match(esaj, /async function coletarFichaAberta\(oab\)/);
+  assert.match(esaj, /show\\\.do\/\.test\(location\.pathname\)[^\n]*!\(opts && opts\.acervo\)\)\n\s*return await coletarFichaAberta\(oab\)/);
+  assert.match(esaj, /parcial: true, pulados: 0, processos: \[paraEntrega\(x\)\]/);
+});

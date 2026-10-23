@@ -179,6 +179,19 @@ quando a publicada na `main` é outra. Para atualizar: na pasta do repositório
 no computador, `git pull`; depois, em `chrome://extensions`, o botão ↻ da
 extensão (ou "Atualizar"). Não precisa reinstalar nem entrar de novo no CRM.
 
+## 📄 Um processo só, com as peças — desde 1.26.0
+
+Para baixar as peças de **um** processo sem esperar a rodada inteira: abra o processo no
+portal e clique no botão daquele portal no popup (não no "Atualizar tudo").
+
+- **PJe**: abra o processo (Autos Digitais) e clique em ⚖️ PJe TRF3.
+- **eproc**: abra o processo e clique em 🏛 eproc TJSP.
+- **e-SAJ** (novo na 1.26.0): abra a ficha do processo (`show.do`) e clique em ⚖️ e-SAJ TJSP.
+
+O processo vai ao 📥 Importar com as peças. No e-SAJ, as peças seguem a regra da rodada:
+só de processo não arquivado com caso previdenciário aberto no CRM; a faixa avisa quando
+não desceram por isso.
+
 ## 🔁 Atualizar tudo, de verdade — desde 1.25.0
 
 - **Um clique faz a rodada inteira**: INSS (o seu clique em "Buscar"), e-Recursos, e-SAJ, acervo do
