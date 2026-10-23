@@ -792,4 +792,5 @@ if (require.main === module) {
   process.on("unhandledRejection", e => log("erro solto (seguindo):", (e && e.message) || e));
 }
 
-module.exports = { sb, rpc, enviar, entrou, conteudoDaMensagem, paraOgg, assinar, guardarComInsistencia, FILA_LOCAL };
+module.exports = { sb, rpc, enviar, entrou, gravar, conteudoDaMensagem, paraOgg, assinar, guardarComInsistencia, FILA_LOCAL,
+                   _usarSocket: s => { sock = s; } };   // _usarSocket: só os testes
