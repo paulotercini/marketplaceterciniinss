@@ -41,6 +41,8 @@ const MSGS = [
   await ctx.route(SUPA + "/**", rota => {
     const u = rota.request().url(), m = rota.request().method();
     if (/\/auth\/v1\//.test(u)) return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(SESSAO) });
+    if (/\/storage\/v1\/object\/sign\//.test(u))
+      return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ signedURL: "/object/sign/anexos/zap/x/a1.ogg?token=t" }) });
     if (m === "PATCH") {
       patches.push({ u, b: JSON.parse(rota.request().postData() || "{}") });
       const id = (u.match(/id=eq\.([0-9a-f-]+)/) || [])[1], z = ZAPS.find(x => x.id === id);
@@ -76,6 +78,11 @@ const MSGS = [
     && jan.includes("🎤 marcando a perícia para o dia 20") && jan.includes("transcrevendo…") && jan.includes("robô"));
   conf("áudio antigo sem arquivo diz que não foi baixado e não oferece ouvir", jan.includes("áudio antigo, não baixado")
     && (await p.$$eval("#modal .zap-b", bs => bs.filter(b => b.textContent.includes("não baixado") && b.querySelector("button")).length)) === 0);
+  const abas = ctx.pages().length;
+  await p.click('#modal .zap-b button[data-ouvir="zap/x/a1.ogg"]');
+  await p.waitForSelector('#modal audio[data-ouvir="zap/x/a1.ogg"]');
+  conf("▶ ouvir toca o áudio na própria janela, sem abrir outra aba", ctx.pages().length === abas
+    && /token=t/.test(await p.getAttribute('#modal audio[data-ouvir="zap/x/a1.ogg"]', "src")));
   conf("a janela é só leitura: sem caixa de resposta", !(await p.$("#modal textarea")) && !(await p.$("#modal #zap-txt")));
   await p.waitForFunction(() => !(D.zapFicha || []).some(z => z.nao_lidas));
   conf("abrir zera as novas", patches.some(x => /zap_conversas\?id=in\./.test(x.u) && x.b.nao_lidas === 0));
@@ -96,6 +103,11 @@ const MSGS = [
   await p.evaluate(() => irPara("whatsapp"));
   await p.waitForFunction(() => zapConvs.length);
   await p.evaluate(id => abrirConversa(id), ZAP_CLI);
+  await p.click('#zap-msgs button[data-ouvir="zap/x/a1.ogg"]');
+  await p.waitForSelector('#zap-msgs audio[data-ouvir="zap/x/a1.ogg"]');
+  await p.evaluate(() => { window._tocador = document.querySelector('#zap-msgs audio[data-ouvir]'); pintarConversaGuardando(); });
+  conf("na conversa, o tocador continua o mesmo depois da repintura (mensagem nova chegando)",
+    await p.evaluate(() => document.querySelector('#zap-msgs audio[data-ouvir="zap/x/a1.ogg"]') === window._tocador));
   conf("conversa de cliente mostra “abrir ficha” e não “vincular”",
     (await p.textContent(".zap-topo")).includes("Abrir a ficha") && !(await p.textContent(".zap-topo")).includes("Vincular"));
 
