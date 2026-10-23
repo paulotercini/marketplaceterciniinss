@@ -70,9 +70,35 @@ document.getElementById('b-pagina').onclick = () => {
   });
 };
 
+// 1.25 · antes de rodar, as abas com a sessão caída: cada uma vira um botão que
+// a traz para a frente (para entrar de novo), e "rodar assim mesmo" segue
+const caidas = document.getElementById('caidas');
 document.getElementById('b-tudo').onclick = () => {
   res.style.color = '#5B6069';
-  res.textContent = 'rodando tudo — na aba do INSS, clique em "Buscar"; os outros já correm atrás';
+  res.textContent = 'conferindo as sessões…';
+  chrome.runtime.sendMessage({ tipo: 'sessoes' }, r => {
+    const lista = (r && r.caidas) || [];
+    if (!lista.length) return rodarTudo();
+    res.style.color = '#B3261E';
+    res.textContent = `sessão encerrada em: ${lista.map(c => c.rotulo).join(', ')} — entre de novo e clique outra vez`;
+    caidas.innerHTML = '';
+    for (const c of lista) {
+      const b = document.createElement('button');
+      b.className = 'claro';
+      b.textContent = `entrar de novo: ${c.rotulo}`;
+      b.onclick = () => { chrome.tabs.update(c.tabId, { active: true }); chrome.windows.update(c.windowId, { focused: true }); };
+      caidas.append(b);
+    }
+    const seguir = document.createElement('button');
+    seguir.className = 'claro';
+    seguir.textContent = 'rodar assim mesmo';
+    seguir.onclick = () => { caidas.innerHTML = ''; rodarTudo(); };
+    caidas.append(seguir);
+  });
+};
+function rodarTudo() {
+  res.style.color = '#5B6069';
+  res.textContent = 'rodando tudo — na aba do INSS, clique em "Buscar"; os outros já correm atrás, e o aviso do Chrome traz o fim';
   chrome.runtime.sendMessage({ tipo: 'rodar-tudo' }, r => {
     if (!r) return (res.textContent = 'sem resposta — as coletas seguem nas abas; confira em 📥 Importar');
     if (r.erro) { res.style.color = '#B3261E'; res.textContent = r.erro; return; }
@@ -81,7 +107,7 @@ document.getElementById('b-tudo').onclick = () => {
     res.textContent = r.feitos.map(linha).join(' · ') + ' · INSS: '
       + (r.pat && r.pat.esperando ? 'tela pronta — clique em "Buscar"' : (r.pat && r.pat.erro) || 'ok');
   });
-};
+}
 // 1.23 · acervo + relação e depois o completar, num clique só (roda no worker)
 document.getElementById('b-judicial').onclick = () => {
   res.style.color = '#5B6069';

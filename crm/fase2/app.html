@@ -5057,7 +5057,8 @@ const equipeAtiva = () => (D.colaboradores||[]).filter(c=>c.ativo!==false && c.n
 let sessao = null;   // {access_token, refresh_token, user}
 let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
-let visao = "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
+// 1.25 da extensão · o aviso de fim da rodada abre o CRM com ?ir=patinss, já no 📥 Importar
+let visao = new URLSearchParams(location.search).get("ir")==="patinss" ? "patinss" : "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
 // F236 · o Meu Dia tem filtro próprio e abre no dia de quem entrou; as listas (filtroColab) abrem na pessoa
 let filtroDia = null;
 let secRecolhida = new Set();   // F79: seções do Meu Dia recolhidas (sobrevive às repinturas)

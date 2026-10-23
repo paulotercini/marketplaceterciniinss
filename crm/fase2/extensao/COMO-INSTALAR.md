@@ -179,6 +179,18 @@ quando a publicada na `main` é outra. Para atualizar: na pasta do repositório
 no computador, `git pull`; depois, em `chrome://extensions`, o botão ↻ da
 extensão (ou "Atualizar"). Não precisa reinstalar nem entrar de novo no CRM.
 
+## 🔁 Atualizar tudo, de verdade — desde 1.25.0
+
+- **Um clique faz a rodada inteira**: INSS (o seu clique em "Buscar"), e-Recursos, e-SAJ, acervo do
+  PJe e relação do eproc; depois os **prazos dos tribunais**; por último o **completar processos**.
+  Os botões separados continuam para quem quiser rodar só uma parte.
+- **Sessões conferidas antes**: a aba aberta que está na tela de login (ou responde com ela) aparece
+  no popup com o botão "entrar de novo", que traz a aba para a frente; "rodar assim mesmo" segue.
+  A aba que falta é aberta pela rodada, como antes.
+- **Aviso do Chrome no fim** (também do "PJe e eproc", dos prazos e do completar): o resumo de cada
+  fonte, e o clique abre o CRM já no 📥 Importar (`?ir=patinss`). Ao atualizar para a 1.25, o Chrome
+  pede a permissão de notificações.
+
 ## 📁 e-SAJ: peças só de caso previdenciário — desde 1.24.0
 
 Além de não estar arquivado e ter caso aberto no CRM, o processo só baixa peças quando
