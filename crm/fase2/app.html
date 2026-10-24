@@ -16421,7 +16421,8 @@ async function gravarLembrar(id, campos, msg){
       ? "⚠ O banco ainda não tem esta coluna: execute o schema_funcoes_todo.sql no Supabase"
       : "Não consegui gravar o lembrete");
   }
-  for(const t of [(D.tarefasFicha||[]).find(x=>x.id===id), tarefaAberta(id)]) if(t) Object.assign(t, campos);
+  // a ficha e a faixa de prazos guardam cópias separadas da tarefa: as duas recebem a mudança
+  for(const t of [...(D.tarefasFicha||[]), ...[...(D.tarefasPorCaso||new Map()).values()].flat()]) if(t.id===id) Object.assign(t, campos);
   if(campos.lembrar_hora && window.Notification && Notification.permission==="default")
     Notification.requestPermission().catch(()=>{});
   aviso(msg, false);
