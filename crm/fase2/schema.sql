@@ -1857,6 +1857,8 @@ create index if not exists atarefas_minhas on andamento_tarefas (colaborador_id,
   where concluida_em is null;
 create index if not exists atarefas_caso on andamento_tarefas (caso_id, lembrar_em)
   where concluida_em is null;
+-- hora opcional do aviso na data (schema_lembrete_hora.sql)
+alter table andamento_tarefas add column if not exists lembrar_hora time;
 
 -- Tarefa para alguém cai na caixa de menções DELE — a caixa que já existe,
 -- não uma segunda. Para si mesmo não avisa: ninguém precisa ser notificado
