@@ -1288,7 +1288,8 @@ begin
 
   -- quem pergunta do processo recebe a etapa pública na hora (a mesma do
   -- portal) e só passa a uma pessoa se quiser; sem etapa, segue para a equipe
-  if achou = 'processo' and c.bot_passo <> 'situacao' then
+  if achou = 'processo' and c.bot_passo <> 'situacao'
+     and coalesce((select valor from config_app where chave='zap_robo_novo'),'nao') = 'sim' then
     txt := zap_situacao(new.conversa_id);
     if txt is not null and exists (select 1 from zap_bot_passos where chave='situacao' and ativo) then
       insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
@@ -1344,6 +1345,8 @@ alter table zap_bot_passos add column if not exists espera_min integer
   check (espera_min is null or espera_min > 0);
 alter table zap_bot_passos add column if not exists espera_vai text;
 alter table zap_conversas add column if not exists bot_desde timestamptz;
+-- nasce desligado: o Paulo liga pelo CRM (Configurações › WhatsApp) quando quiser
+insert into config_app (chave, valor) values ('zap_robo_novo','nao') on conflict (chave) do nothing;
 
 create or replace function zap_bot_desde() returns trigger
 language plpgsql as $$
@@ -1462,7 +1465,8 @@ create or replace function zap_bot_esperas() returns integer
 language plpgsql security definer set search_path = public as $$
 declare r record; q zap_bot_passos; n integer := 0;
 begin
-  if coalesce((select valor from config_app where chave='zap_bot_ligado'),'sim') <> 'sim' then return 0; end if;
+  if coalesce((select valor from config_app where chave='zap_bot_ligado'),'sim') <> 'sim'
+     or coalesce((select valor from config_app where chave='zap_robo_novo'),'nao') <> 'sim' then return 0; end if;
   for r in select c.id, p.espera_vai from zap_conversas c join zap_bot_passos p on p.chave = c.bot_passo
             where c.bot_ativo and c.atendente_id is null and c.status <> 'resolvida'
               and p.espera_min is not null and c.bot_desde < now() - make_interval(mins => p.espera_min)

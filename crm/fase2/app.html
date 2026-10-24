@@ -14456,6 +14456,8 @@ async function renderConfig(){
              ${(cfgApp("zap_bot_ligado")||"sim")==="sim"?"checked":""}> 🤖 robô ligado</label>
            <label class="cfg-ck"><input type="checkbox" id="cf-avisos"
              ${(cfgApp("zap_avisos_ligado")||"sim")==="sim"?"checked":""}> 🔔 avisos automáticos ligados</label>
+           <label class="cfg-ck" title="o robô responde a situação do processo com a etapa pública e manda o lembrete do menu sem resposta"><input type="checkbox" id="cf-robo-novo"
+             ${cfgApp("zap_robo_novo")==="sim"?"checked":""}> robô responde a situação do processo e lembra quem não respondeu</label>
            <label class="cfg-ck">🔄 revisar o acervo a cada
              <input type="number" id="cf-rev-dias" min="15" max="365" style="width:64px"
                value="${esc(cfgApp("revisao_dias")||"90")}"> dias,</label>
@@ -14674,6 +14676,7 @@ function ligarConfig(){
   cfgSalva("cf-pausa","zap_pausa_bot", el=>String(Math.max(0, +el.value||0)));
   cfgSalva("cf-bot","zap_bot_ligado",  el=>el.checked?"sim":"nao");
   cfgSalva("cf-avisos","zap_avisos_ligado", el=>el.checked?"sim":"nao");
+  cfgSalva("cf-robo-novo","zap_robo_novo", el=>el.checked?"sim":"nao");
   cfgSalva("cf-rev-dias","revisao_dias", el=>String(Math.max(15, +el.value||90)));
   cfgSalva("cf-rev-dose","revisao_dose", el=>String(Math.max(1, +el.value||5)));
   // F92 · só o que tem cara de data entra; o resto é descartado em silêncio
