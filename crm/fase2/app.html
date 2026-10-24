@@ -3948,6 +3948,11 @@ html[data-nivel="1"] .faixa-prazos:not(.nv-ver) .fp-nv{display:inline-flex}
 /* F247 · fechado, o campo mostra só os dois gestos de um clique: Sem resposta e Pedir ao cliente */
 html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) .tipo-fila > :not(.tipo-sr):not(.tipo-pc){display:none}
 html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) #and-texto{min-height:0;height:40px}
+/* F260 · recolhido, o quadro é UMA linha (decisão do Paulo, 24.10.2026): o campo "Escrever no caso…" e, à direita,
+   os dois gestos de um clique da F247; ao tocar no campo ele se abre inteiro */
+html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto){display:flex;align-items:center;gap:8px;padding-top:8px;padding-bottom:8px}
+html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) .tipo-fila{order:2;margin:0;flex:none}
+html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) #and-texto{order:1;flex:1;height:38px!important;min-height:0!important;padding-top:8px;padding-bottom:8px;resize:none;overflow:hidden}
 html[data-tema="v10"] .tl-banner-um{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
 html[data-tema="v10"] .tl-banner-um .btn-mini{margin-left:auto}
 html[data-tema="v10"] .tl-banner-sep{color:var(--cinza)}
@@ -16997,6 +17002,7 @@ function pintarFicha(){
     if(cxEsc){
       const abrirEsc = ()=>{ if(!cxEsc.classList.contains("esc-aberto")){
         cxEsc.classList.add("esc-aberto");
+        if(campoAnd.dataset.dica) campoAnd.placeholder = campoAnd.dataset.dica;   // F260 · a dica longa só com o quadro aberto
         setTimeout(()=>{
           folgaComposer();
           // no celular o composer aberto come 190px do rodapé: quem estava
@@ -17011,6 +17017,7 @@ function pintarFicha(){
       const fecharEsc = ()=>{
         if(campoAnd.value.trim() || cxEsc.contains(document.activeElement)) return;
         cxEsc.classList.remove("esc-aberto");
+        campoAnd.placeholder = "Escrever no caso…";
         // as caixas que a barra abriu vão junto: sozinhas na tela, sem o botão
         // que as fecha (ele mora na barra), viravam painéis órfãos
         ["sug-box","preenche-box","exig-box","lembrar-box"].forEach(id=>{
@@ -35564,7 +35571,7 @@ function composerCaso(k){
           `<button class="tipo-ch" data-tipoand="${ch}" onclick="escolherTipoAnotacao('${ch}')">${esc(rot)}</button>`).join(""))
     // F247 · os dois gestos que mais se escreviam à mão, em um clique
     + (encerrado ? "" : `<button class="tipo-ch tipo-sr" onclick="semRespostaMenu('${k.id}')" title="anota a tentativa e marca a próxima para 2 dias úteis">Sem resposta</button><button class="tipo-ch tipo-pc" onclick="pedirAoCliente('${k.id}')" title="o pedido entra no Trouxe documentos e baixa quando o papel chega">Pedir ao cliente</button>`);
-  const area = `<textarea id="and-texto" rows="2" placeholder="Escreva o andamento…  a data pode vir no texto: “verificar em 24/08” — ou clique num tipo acima e preencha as lacunas"></textarea>`;
+  const area = `<textarea id="and-texto" rows="2" placeholder="Escrever no caso…" data-dica="Escreva o andamento…  a data pode vir no texto: “verificar em 24/08” — ou clique num tipo acima e preencha as lacunas"></textarea>`;
   // o id tf-box é a chave da TRAVA: é por ele que novoAndamento sabe que
   // precisa exigir responsável e data. Renomear sem manter o id já derrubou
   // a obrigatoriedade uma vez.
