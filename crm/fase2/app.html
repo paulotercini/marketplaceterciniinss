@@ -4762,6 +4762,11 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-tag{font-size:10.5px;font-weight:700;let
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-quando{margin-top:3px;font-size:13px;font-weight:600;color:var(--dk-fatal,#B3261E)}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-fatal .fp2-circ{margin-top:2px}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .pz .fp2-mais{position:static;opacity:1;inset:auto}
+html .tl-tarefa .tf-prog{margin-left:6px;font-size:11px;padding:1px 7px;border-radius:10px;border:1px solid var(--borda);background:#fff;color:var(--cinza);cursor:pointer}
+html .tl-tarefa .tf-prog.on{border-color:var(--azul);color:var(--azul-escuro);font-weight:600}
+html span.tf-prog.on{cursor:default}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini{margin-top:2px;font-size:12px;color:var(--cinza)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini.hora{color:var(--azul-escuro);font-weight:600}
 
 </style>
 </head>
@@ -11594,6 +11599,9 @@ function itensAgendaTodos(){
     const igual = !k.prazo ? "" : rec===k.prazo ? "rec" : k.exigencia_prazo===k.prazo ? "exig"
       : (k.prazos_tribunal||[]).some(p=>p.fim===k.prazo && dataDoPrazo(p) && !respostaAoPrazo(k, p)) ? "trib" : "";
     if(k.prazo && !igual) por({data:k.prazo, k, cli, fatal:true, resumo:k.lembrar_motivo||tituloCaso(k)}, donos);
+    // a data de início do Planner: o prazo fatal entra na agenda também no dia de começar
+    if(k.prazo && k.prazo_inicio && k.prazo_inicio<k.prazo) por({data:k.prazo_inicio, k, cli, selo:"Começar",
+      resumo:`começar: prazo fatal em ${fmt(k.prazo)} (${k.lembrar_motivo||tituloCaso(k)})`}, donos);
     // F236 · pedir a prorrogação só enquanto dá: com a DCB já passada (a cessação que a ação discute) não é tarefa. O item
     // diz até quando: a véspera da DCB (IN 128/2022, art. 339, § 3º). Com a janela aberta o item é de hoje (antes caía em
     // "Vencidas" no dia em que a janela abria); passada a véspera, vence na véspera
@@ -11741,7 +11749,7 @@ function linhaAgenda(it){
     <span class="ag-slot">${slot}</span>
     <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
     <div class="ag-txt"><b>${nome}</b>${cli&&resumo?`<span class="ag-res">, ${esc(resumo)}</span>`:""}</div>
-    <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${
+    <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${
       it.selo?`<span class="${it.prazo?"ag-prazo":"ag-tipo"}">${esc(it.selo)}</span>`:""}${
       it.extra?`<span class="ag-tipo" title="a menção que acompanha a tarefa ainda não foi lida">${esc(it.extra)}</span>`:""}${
       tc&&tc.papel==="revisa"?`<span class="ag-tipo ag-revisa" title="revisa o que o executor fez">revisa</span>`:""}${
@@ -12729,29 +12737,66 @@ const COLUNAS_QUADRO=[["escritorio","🙋 Escritório"],["inss","🌻 INSS"],
   ["conselho","🖥 Conselho"],["judicial","👪 Judicial"],["pagamento","💰 Pagamento"]];
 function kcardCaso(k){
   const c=D.cliPorId.get(k.cliente_id);
+  const quem=(D.atrDoCaso.get(k.id)||[]).map(id=>D.colPorId.get(id)).filter(Boolean);
   return `<div class="kcard" draggable="true" data-caso="${k.id}" data-cli="${c?c.id:""}">
     <div class="nome">${esc(c?c.nome:k.titulo)}</div>
     <div class="meta">${k.urgente?`<span class="chip urg">🔥</span>`:""}${k.beneficio?`<span class="chip ben">${esc(k.beneficio)}</span>`:""}
-      ${chipExig(k)}${chipPrazo(k.prazo)}</div></div>`;
+      ${chipExig(k)}${chipPrazo(k.prazo)}${quem.map(q=>`<span class="avatar mini" style="background:${q.cor}" title="${esc(q.nome)}">${esc(q.inicial)}</span>`).join("")}</div></div>`;
+}
+// O "Agrupar por" do Planner: o mesmo quadro, em colunas por fase, por responsável ou pelo prazo fatal, numa tela só.
+// Por fase e por responsável o cartão se arrasta (muda a fase, ou passa o caso de uma pessoa para outra); pelo prazo,
+// não, porque prazo fatal não se muda arrastando.
+const AGRUPAR_QUADRO = [["fase","Fase"],["responsavel","Responsável"],["prazo","Prazo fatal"]];
+function colunasDoQuadro(modo){
+  const ks = ativos(), urg = xs => xs.sort((a,b)=>(b.urgente?1:0)-(a.urgente?1:0));
+  if(modo==="responsavel") return [...equipeAtiva().map(c=>[c.id, c.nome.split(" ")[0], urg(ks.filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(c.id)))]),
+    ["", "Sem responsável", urg(ks.filter(k=>!(D.atrDoCaso.get(k.id)||[]).length))]];
+  if(modo==="prazo"){ const hj = hoje(), em = n => somaDias(hj, n), comP = ks.filter(k=>k.prazo).sort((a,b)=>a.prazo<b.prazo?-1:1);
+    return [["venc","Vencidos", comP.filter(k=>k.prazo<hj)], ["hoje","Hoje", comP.filter(k=>k.prazo===hj)],
+      ["sete","Próximos sete dias", comP.filter(k=>k.prazo>hj && k.prazo<=em(7))], ["depois","Mais tarde", comP.filter(k=>k.prazo>em(7))]]; }
+  return COLUNAS_QUADRO.map(([f,rot])=>[f, rot, urg(D.casos.filter(k=>k.fase===f))]);
 }
 function renderQuadro(){
   tituloLista("📌 Quadro");
-  document.getElementById("sub-lista").textContent=
-    "Arraste o cartão para mudar a fase do caso — a alteração vai para o banco (e o To Do acompanha).";
+  const modo = ler("crm_quadro_agrupar") || "fase";
+  document.getElementById("sub-lista").innerHTML = `Agrupar por: ${AGRUPAR_QUADRO.map(([v,r])=>
+    `<button class="fchip ${v===modo?"on":""}" data-agrupar="${v}">${r}</button>`).join("")} · ${
+    modo==="fase" ? "arraste o cartão para mudar a fase do caso (o To Do acompanha)."
+    : modo==="responsavel" ? "arraste o cartão para passar o caso a outra pessoa." : "o prazo fatal muda na ficha, não aqui."}`;
   document.getElementById("conteudo-meio").innerHTML =
-    `<div class="kanban">`+COLUNAS_QUADRO.map(([f,rot])=>{
-      const ks=D.casos.filter(k=>k.fase===f)
-        .sort((a,b)=>(b.urgente?1:0)-(a.urgente?1:0));
-      return `<div class="coluna" data-fase="${f}"><h4>${rot}<span>${ks.length}</span></h4>
+    `<div class="kanban">`+colunasDoQuadro(modo).map(([id,rot,ks])=>
+      `<div class="coluna" ${modo==="prazo"?"":`data-${modo==="fase"?"fase":"colab"}="${id}"`}><h4>${esc(rot)}<span>${ks.length}</span></h4>
         ${ks.slice(0,60).map(kcardCaso).join("")}
-        ${ks.length>60?`<p class="meio-sub">+${ks.length-60} — use a pesquisa</p>`:""}</div>`;
-    }).join("")+`</div>`;
+        ${ks.length>60?`<p class="meio-sub">+${ks.length-60} — use a pesquisa</p>`:""}</div>`).join("")+`</div>`;
+  document.querySelectorAll("[data-agrupar]").forEach(b=>b.onclick=()=>{ guardar("crm_quadro_agrupar", b.dataset.agrupar); renderQuadro(); });
   ligarQuadro();
 }
 function ligarQuadro(){
   document.querySelectorAll(".kcard[data-caso]").forEach(el=>{
-    el.ondragstart=e=>e.dataTransfer.setData("text/caso", el.dataset.caso);
+    el.ondragstart=e=>{ e.dataTransfer.setData("text/caso", el.dataset.caso);
+      const de=el.closest(".coluna[data-colab]"); if(de) e.dataTransfer.setData("text/de", de.dataset.colab); };
     el.onclick=()=>{ if(el.dataset.cli) abrirFicha(el.dataset.cli); };
+  });
+  document.querySelectorAll(".coluna[data-colab]").forEach(col=>{
+    col.ondragover=e=>{ e.preventDefault(); col.classList.add("solta"); };
+    col.ondragleave=()=>col.classList.remove("solta");
+    col.ondrop=async e=>{
+      e.preventDefault(); col.classList.remove("solta");
+      const id=e.dataTransfer.getData("text/caso"), de=e.dataTransfer.getData("text/de"), para=col.dataset.colab;
+      if(!id || de===para) return;
+      const atr=D.atrDoCaso.get(id)||[];
+      try{
+        if(para && !atr.includes(para)) await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+          body:JSON.stringify({caso_id:id, colaborador_id:para})});
+        if(de) await api(`/rest/v1/atribuicoes?caso_id=eq.${id}&colaborador_id=eq.${de}`,{method:"DELETE"});
+      }catch(err){ return aviso("Não consegui passar o caso: "+String(err.message||err).slice(0,80)); }
+      D.atrDoCaso.set(id, [...atr.filter(x=>x!==de && x!==para), ...(para?[para]:[])]);
+      const k=D.casoPorId.get(id), c=k && D.cliPorId.get(k.cliente_id);
+      if(para && para!==eu.id) api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({de_id:eu.id, para_id:para, caso_id:id,
+          texto:`👤 ${(eu.nome||"").split(" ")[0]} atribuiu a você o cliente ${c?c.nome:""}`.trim()})}).catch(()=>{});
+      aviso(para ? `Caso passado para ${(D.colPorId.get(para)||{}).nome||""}` : "Caso sem responsável"); montarSidebar(); renderQuadro();
+    };
   });
   document.querySelectorAll(".coluna[data-fase]").forEach(col=>{
     col.ondragover=e=>{ e.preventDefault(); col.classList.add("solta"); };
@@ -16023,8 +16068,8 @@ async function gravarLembrar(id, campos, msg){
     await api(`/rest/v1/andamento_tarefas?id=eq.${id}`,{method:"PATCH",
       headers:{Prefer:"return=minimal"}, body:JSON.stringify(campos)});
   }catch(e){
-    return aviso(/lembrar_hora/.test(String(e.message||e))
-      ? "⚠ O banco ainda não guarda o horário: execute o schema_funcoes_todo.sql no Supabase"
+    return aviso(/lembrar_hora|iniciada_em/.test(String(e.message||e))
+      ? "⚠ O banco ainda não tem esta coluna: execute o schema_funcoes_todo.sql no Supabase"
       : "Não consegui gravar o lembrete");
   }
   for(const t of [(D.tarefasFicha||[]).find(x=>x.id===id), tarefaAberta(id)]) if(t) Object.assign(t, campos);
@@ -16032,6 +16077,11 @@ async function gravarLembrar(id, campos, msg){
     Notification.requestPermission().catch(()=>{});
   aviso(msg, false);
   if(clienteAberto) abrirFicha(clienteAberto); else render();
+}
+function alternarAndamento(id){
+  const t = tarefaAberta(id); if(!t) return;
+  return gravarLembrar(id, {iniciada_em: t.iniciada_em ? null : new Date().toISOString()},
+    t.iniciada_em ? "Tarefa voltou para não iniciada" : "Em andamento: a equipe vê que você começou");
 }
 function mudarHoraLembrar(id, hora){
   return gravarLembrar(id, {lembrar_hora: hora || null},
@@ -33514,7 +33564,7 @@ function faixaPrazos(k){
     return `<div class="pz fp2-lin pz-${nat}${pend(x)?" pz-venceu":""}${destaque?" fp2-fatal":""}${x.semMotivo?" pz-semmotivo":""}${x.aConfirmar?" pz-confirmar":""}" data-nat="${nat}" title="${esc(tipo+(resumo?` · ${resumo}`:""))}">
       ${x.cumprir?`<button class="fp2-circ" onclick="${x.cumprir}" title="cumpri: tira o prazo daqui e devolve o caso à lista de onde veio" aria-label="cumpri"></button>`:`<span class="fp2-bola" aria-hidden="true"></span>`}
       ${destaque
-        ? `<span class="fp2-txt"><small class="fp2-tag">Prazo fatal</small><b>${esc(titulo)}</b><span class="fp2-quando">${esc(data)}</span>${sub?`<small>${esc(sub)}</small>`:""}</span>`
+        ? `<span class="fp2-txt"><small class="fp2-tag">Prazo fatal</small><b>${esc(titulo)}</b><span class="fp2-quando">${esc(data)}</span>${inicioDoPrazo(x, quando)}${sub?`<small>${esc(sub)}</small>`:""}</span>`
         : `<span class="fp2-txt"><b>${esc(titulo)}</b>${sub?`<small>${esc(sub)}</small>`:""}</span><span class="fp2-data">${esc(data)}</span>`}${x.avs||""}
       <button class="fp2-mais" onclick="${ir}" title="${x.andId?"ir até a anotação que criou este prazo":x.semMotivo?"esta data veio do To Do: diga do que ela é":"ver o que é e o que fazer"}">${x.semMotivo?"do que é?":"abrir"}</button>${x.ouv||""}
     </div>`;
@@ -33533,6 +33583,37 @@ function faixaPrazos(k){
   const sem = destaque ? "" : `<p class="fp2-sem meio-sub">Sem prazo fatal em aberto neste caso.</p>`;
   const nv = minhas.length ? `<button type="button" class="tl-bt fp-nv" onclick="this.closest('.faixa-prazos').classList.add('nv-ver')" title="no nível 1 as datas ficam recolhidas">ver as datas</button>` : "";   // F249
   return `<div class="faixa-prazos fp2" aria-label="Prazos e providências">${tit}${nv}${destaque ? linha(destaque, true) : sem}${blocos}</div>`;
+}
+// A DATA DE INÍCIO DO PLANNER no prazo fatal (casos.prazo_inicio): quando começar, além de quando vence.
+// Só vale para o prazo fatal do próprio caso (casos.prazo); os prazos que vêm do tribunal ou da exigência não têm.
+function inicioDoPrazo(x, quando){
+  const k = D.casoPorId.get(x.casoId);
+  if(!k || k.prazo!==x.data) return "";
+  const ini = k.prazo_inicio, hj = hoje(), mudar = `<a href="#" onclick="event.preventDefault();event.stopPropagation();marcarInicioPrazo('${k.id}')">`;
+  if(!ini) return `<small class="fp2-ini">${mudar}marcar quando começar</a></small>`;
+  return `<small class="fp2-ini${ini<=hj?" hora":""}">${ini<=hj?`Já é hora de começar (início ${fmtBarra(ini).slice(0,5)})`:`Começar em ${quando(ini)}`} · ${mudar}mudar</a></small>`;
+}
+function marcarInicioPrazo(casoId){
+  const k = D.casoPorId.get(casoId); if(!k || !k.prazo) return;
+  const sug = n => diasUteisAntes(k.prazo, n);
+  caixa(`<h3>Quando começar este prazo?</h3>
+    <p class="meio-sub">O prazo fatal vence em ${fmtBarra(k.prazo)}. No dia de começar, ele entra no Meu Dia de quem cuida do caso.</p>
+    <div class="form-linha">
+      <button class="btn-rap" onclick="gravarInicioPrazo('${casoId}','${sug(5)}')">5 dias úteis antes</button>
+      <button class="btn-rap" onclick="gravarInicioPrazo('${casoId}','${sug(10)}')">10 dias úteis antes</button>
+      <input type="date" max="${k.prazo}" value="${k.prazo_inicio||""}" onchange="gravarInicioPrazo('${casoId}', this.value)">
+      ${k.prazo_inicio?`<button class="btn-rap" onclick="gravarInicioPrazo('${casoId}', null)">sem início</button>`:""}
+    </div>`);
+}
+async function gravarInicioPrazo(casoId, data){
+  fecharCaixa();
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  try{ await patchCaso(casoId, {prazo_inicio: data || null}); }
+  catch(e){ return aviso(/prazo_inicio/.test(String(e.message||e))
+    ? "⚠ O banco ainda não guarda o início: execute o schema_funcoes_todo.sql no Supabase" : "Não consegui gravar o início"); }
+  k.prazo_inicio = data || null;
+  aviso(data ? `Começar em ${fmtBarra(data)}` : "Prazo sem data de início", false);
+  if(clienteAberto) abrirFicha(clienteAberto); else render();
 }
 const _pzTodos = new Set();   // F241 · os casos em que se abriram todas as datas, na sessão
 function pzVerTodos(bt, casoId){
@@ -36677,7 +36758,12 @@ function tarefasCartao(a){
     const bola = (!feita && t.colaborador_id===eu.id)
       ? `<button class="tf-ok" onclick="concluirDeVez('${t.id}')" title="concluir agora — dá para desfazer logo depois" aria-label="concluir a sua tarefa"></button>`
       : `<span class="tl-tf-bola" aria-hidden="true"></span>`;
-    return `<span class="tl-tarefa ${feita?"feita":atras?"atras":""}">${bola}<span>${esc(rot)}</span></span>`;
+    // o progresso do Planner: não iniciada, em andamento (iniciada_em) e concluída
+    const andando = !feita && t.iniciada_em;
+    const prog = feita ? "" : t.colaborador_id===eu.id
+      ? `<button class="tl-bt tf-prog${andando?" on":""}" onclick="alternarAndamento('${t.id}')" title="${andando?"voltar para não iniciada":"avisar a equipe que você já começou"}">${andando?"em andamento":"começar"}</button>`
+      : andando ? `<span class="tf-prog on" title="desde ${horaLocal(t.iniciada_em)}">em andamento</span>` : "";
+    return `<span class="tl-tarefa ${feita?"feita":atras?"atras":""}${andando?" andando":""}">${bola}<span>${esc(rot)}</span>${prog}</span>`;
   }).join("")}</span>`;
 }
 function caixaRespInline(a){
