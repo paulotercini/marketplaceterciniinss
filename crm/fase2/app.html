@@ -6367,7 +6367,7 @@ function casosDeDiasAnteriores(col){
 function secaoDiasAnteriores(col){
   const ks = casosDeDiasAnteriores(col); if(!ks.length) return "";
   return `<section class="pl-grupo"><h3 class="secao">De dias anteriores <span class="pl-n">${ks.length}</span></h3>`
-    + `<p class="meio-sub">Do último dia em que você usou o Meu Dia, ainda aberto. <button class="btn-rap" onclick="trazerParaHoje()">☀️ Trazer todos para hoje</button></p>`
+    + `<p class="meio-sub" style="display:flex;align-items:center;gap:10px;padding:8px 16px;margin:0">Do último dia em que você usou o Meu Dia, ainda aberto. <button class="btn-mini" onclick="trazerParaHoje()">☀️ Trazer todos para hoje</button></p>`
     + grupoClientes(ks).map(([c,g])=>cartaoCliente(c,g)).join("") + `</section>`;
 }
 async function trazerParaHoje(){
@@ -11599,7 +11599,7 @@ function itensAgendaTodos(){
       : (k.prazos_tribunal||[]).some(p=>p.fim===k.prazo && dataDoPrazo(p) && !respostaAoPrazo(k, p)) ? "trib" : "";
     if(k.prazo && !igual) por({data:k.prazo, k, cli, fatal:true, resumo:k.lembrar_motivo||tituloCaso(k)}, donos);
     // a data de início do Planner: o prazo fatal entra na agenda também no dia de começar
-    if(k.prazo && k.prazo_inicio && k.prazo_inicio<k.prazo) por({data:k.prazo_inicio, k, cli, selo:"Começar",
+    if(k.prazo && k.prazo_inicio && k.prazo_inicio<k.prazo) por({data:k.prazo_inicio<hj ? hj : k.prazo_inicio, k, cli, selo:"Começar",
       resumo:`começar: prazo fatal em ${fmt(k.prazo)} (${k.lembrar_motivo||tituloCaso(k)})`}, donos);
     // F236 · pedir a prorrogação só enquanto dá: com a DCB já passada (a cessação que a ação discute) não é tarefa. O item
     // diz até quando: a véspera da DCB (IN 128/2022, art. 339, § 3º). Com a janela aberta o item é de hoje (antes caía em
@@ -12758,10 +12758,10 @@ function colunasDoQuadro(modo){
 function renderQuadro(){
   tituloLista("📌 Quadro");
   const modo = ler("crm_quadro_agrupar") || "fase";
-  document.getElementById("sub-lista").innerHTML = `Agrupar por: ${AGRUPAR_QUADRO.map(([v,r])=>
-    `<button class="fchip ${v===modo?"on":""}" data-agrupar="${v}">${r}</button>`).join("")} · ${
+  document.getElementById("sub-lista").innerHTML = `<span style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">Agrupar por: ${AGRUPAR_QUADRO.map(([v,r])=>
+    `<button class="fchip ${v===modo?"on":""}" data-agrupar="${v}" style="display:inline-flex">${r}</button>`).join("")} <span class="meio-sub">${
     modo==="fase" ? "arraste o cartão para mudar a fase do caso (o To Do acompanha)."
-    : modo==="responsavel" ? "arraste o cartão para passar o caso a outra pessoa." : "o prazo fatal muda na ficha, não aqui."}`;
+    : modo==="responsavel" ? "arraste o cartão para passar o caso a outra pessoa." : "o prazo fatal muda na ficha, não aqui."}</span></span>`;
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="kanban">`+colunasDoQuadro(modo).map(([id,rot,ks])=>
       `<div class="coluna" ${modo==="prazo"?"":`data-${modo==="fase"?"fase":"colab"}="${id}"`}><h4>${esc(rot)}<span>${ks.length}</span></h4>
@@ -33554,10 +33554,13 @@ function faixaPrazos(k){
     return d===0 ? "vence hoje" : d<0 ? `venceu há ${du(Math.max(1,u))}` : u ? `faltam ${du(u)}` : `faltam ${d} dias corridos`; };
   const linha = (x, destaque) => {
     const i = minhas.indexOf(x), d = diasAte(x.data), nat = natDaLinha(x), tipo = tipoDaLinha(x),
-          resumo = resumoDaLinha(x), vis = visivelDaLinha(x), titulo = resumo || vis;
+          resumo = resumoDaLinha(x), vis = visivelDaLinha(x), kx = D.casoPorId.get(x.casoId),
+          // o prazo fatal sem anotação diz o motivo gravado no caso (o "Lembrar em" do To Do), e não "Prazo fatal" de novo
+          motivo = nat==="fatal" && kx && kx.prazo===x.data && kx.lembrar_motivo,
+          titulo = (RX_TIPO_GENERICO.test(resumo || vis) && motivo) || resumo || vis;
     const ir = x.andId ? `qdIrParaAndamento('${x.casoId}','${x.andId}')`
       : x.semMotivo ? `explicarPrazo('${x.casoId}')` : `prazoSaberMais(${i})`;
-    const sub = [destaque ? "" : NAT_ROT[nat], tipo!==NAT_ROT[nat] && tipo!==titulo ? tipo : "", x.semMotivo ? "do To Do, diga do que é" : ""]
+    const sub = [destaque ? "" : NAT_ROT[nat], tipo!==NAT_ROT[nat] && tipo!==titulo ? tipo : "", x.semMotivo && !motivo ? "do To Do, diga do que é" : ""]
       .filter(Boolean).join(" · ");
     const data = quando(x.data) + (destaque || nat==="fatal" ? ` · ${falta(x.data)}` : x.aConfirmar && d<0 ? " · confirme" : "");
     return `<div class="pz fp2-lin pz-${nat}${pend(x)?" pz-venceu":""}${destaque?" fp2-fatal":""}${x.semMotivo?" pz-semmotivo":""}${x.aConfirmar?" pz-confirmar":""}" data-nat="${nat}" title="${esc(tipo+(resumo?` · ${resumo}`:""))}">
