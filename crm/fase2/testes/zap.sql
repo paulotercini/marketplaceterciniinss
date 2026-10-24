@@ -105,7 +105,7 @@ update zap_conversas set atendente_id='33333333-3333-3333-3333-333333333333', st
   where chave=fone_chave('16999990000');
 do $$ begin
   perform zap_transferir((select id from zap_conversas where chave=fone_chave('16999990000')),
-                         '44444444-4444-4444-4444-444444444444','vai para o judicial');
+                         '44444444-4444-4444-4444-444444444444', p_motivo => 'vai para o judicial');
 end $$;
 insert into r select 't17 o novo atendente assume',
   (select atendente_id='44444444-4444-4444-4444-444444444444'
