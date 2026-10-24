@@ -62,9 +62,11 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
     const qd = document.querySelector("#quadro-datas");
     const dentroDoCartao = !!qd && !!qd.closest(".fatos-processo");
     const cards = [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({
-      tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent, prazo: c.classList.contains("pz-fatal"),
-      semMotivo: c.classList.contains("pz-semmotivo"), txtTipo: c.querySelector(".pz-tipo").textContent,
-      fundo: getComputedStyle(c).backgroundColor, sombra: getComputedStyle(c).boxShadow, mais: !!c.querySelector(".pz-mais") }));
+      tipo: c.dataset.tipo, data: c.dataset.data.split("-").reverse().join("/"), prazo: c.classList.contains("pz-fatal"),
+      semMotivo: c.classList.contains("pz-semmotivo"), txtTipo: c.textContent,
+      fundo: getComputedStyle(c).backgroundColor, mais: !!c.querySelector(".pz-mais"),
+      // F254 · a natureza está na bolinha (ou no círculo de cumprir) da linha
+      sombra: (b => b ? getComputedStyle(b).backgroundColor + " " + getComputedStyle(b).borderColor : "")(c.querySelector(".fp2-bola,.fp2-circ")) }));
     // F145 · os prazos ficam na coluna do caso: acima do compositor ou à esquerda dele
     const e = document.querySelector(".escrever"), fr = faixa && faixa.getBoundingClientRect(), er = e && e.getBoundingClientRect();
     const acima = !!(fr && er && (fr.bottom <= er.top + 1 || fr.right <= er.left + 1));
@@ -85,15 +87,17 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
   // F236 · o quadro da perícia diz também o que falta ("Perícia · avisar"): o tipo continua na frente
   conf("a perícia marcada é um quadro cinza", (i => i >= 0 && !on.cards[i].prazo && !/179, 38, 30/.test(on.cards[i].sombra))(on.cards.findIndex(c => String(c.tipo).startsWith("Perícia"))));
   const iso = d => d.split("/").reverse().join("");
-  conf("F145 · os prazos vêm em ordem decrescente de data", on.cards.every((c, i) => !i || iso(on.cards[i-1].data) >= iso(c.data)) && on.cards.filter(c => c.prazo).length === 3);
+  // F254 · o prazo fatal abre a faixa e o resto vem do mais próximo ao mais distante (substitui a ordem decrescente da F145)
+  const resto = on.cards.slice(1);
+  conf("F254 · depois do prazo fatal em destaque, os prazos vêm em ordem crescente de data", resto.every((c, i) => !i || iso(resto[i-1].data) <= iso(c.data)) && on.cards.filter(c => c.prazo).length === 3);
   conf("cada quadro tem só a data e o 'saber mais'", on.cards.every(c => c.mais) && on.cards.every(c => /^\d\d\/\d\d\/\d{4}$/.test(c.data)));
   // o "saber mais" da exigência abre a ficha dela, com o ✔ cumprida
   await p.evaluate(d => [...document.querySelectorAll(".faixa-prazos .pz-fatal:not(.pz-semmotivo)")]
-    .find(c => /Exigência do INSS/.test(c.dataset.tipo) && c.querySelector(".pz-data").textContent === d).querySelector(".pz-mais").click(), fmtBR(mais(3)));
+    .find(c => /Exigência do INSS/.test(c.dataset.tipo) && c.dataset.data.split("-").reverse().join("/") === d).querySelector(".pz-mais").click(), fmtBR(mais(3)));
   await p.waitForTimeout(200);
-  conf("o 'saber mais' da exigência traz o que é e o ✔ cumprida", await p.evaluate(() => {
-    const m = document.getElementById("modal"); return /Exigência do INSS/.test(m.textContent) && !!m.querySelector('button[onclick^="cumprirExigencia"]'); }));
-  await p.evaluate(() => fecharCaixa());
+  conf("o 'abrir' da exigência leva ao painel de progresso, com o que é e o ✔ cumprida", await p.evaluate(() => {
+    const m = document.getElementById("painel-prazo"); return !!m && /Exig/.test(m.textContent) && !!m.querySelector('button[onclick^="cumprirExigencia"]'); }));
+  await p.evaluate(() => fecharPainelPrazo());
 
   await abrir("?tema=");
   const off = await ler();
