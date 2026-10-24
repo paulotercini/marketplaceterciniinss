@@ -4865,6 +4865,14 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 
 #painel-prazo .pp-zap-com{padding:8px 16px;font-size:12.5px;background:#FFF7E6;border-bottom:1px solid #F0D9A8;color:#6B4A00}
 #painel-prazo .pp-zap-com b{font-weight:500}
+#painel-prazo .pp-ic{flex:none;width:36px;height:36px;border:1px solid var(--borda);border-radius:50%;background:#fff;font-size:16px;cursor:pointer}
+@media (hover:hover) and (pointer:fine){#painel-prazo .pp-ic:hover{border-color:var(--azul)}}
+#painel-prazo .pp-ic.gravando{background:var(--dk-fatal,#B3261E);border-color:var(--dk-fatal,#B3261E);color:#fff}
+#painel-prazo .pp-zap-pend{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 16px;border-top:1px solid var(--borda);background:#F7FBF8}
+#painel-prazo .pp-zap-pend[hidden]{display:none}
+#painel-prazo .pp-zap-pend .pp-rot{flex-basis:100%;margin:0}
+#painel-prazo .pp-zap-pend audio{height:36px;flex:1;min-width:180px}
+#painel-prazo .pp-zap-arq{flex:1;font-size:13.5px}#painel-prazo .pp-zap-arq small{color:var(--cinza)}
 /* F261 · a conversa de WhatsApp no painel ao lado da ficha */
 :is(#painel-prazo,#painel-prazo-esq) .pp-tag.pp-zap{color:#128C4B}
 :is(#painel-prazo,#painel-prazo-esq) .pp-zap-msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding:12px 16px;background:#F4F1EC}
@@ -14403,12 +14411,23 @@ async function virarAndamento(msgId){
 // enquanto a transcrição não chega, aparece "transcrevendo…".
 const _zapLado = new Map();   // as mensagens que o painel mostra, para anotar sem buscar de novo
 async function responderZapLado(convId, cliId){
-  const t = document.getElementById("pp-zap-txt"), txt = (t && t.value || "").trim();
-  if(!txt) return;
+  const t = document.getElementById("pp-zap-txt"), txt = (t && t.value || "").trim(), pend = zapLadoPend;
+  if(!txt && !pend) return;
+  if(zapLadoRec) return aviso("Pare a gravação antes de enviar", false);
   t.value = "";
+  const msg = corpo => api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({conversa_id:convId, direcao:"saida", autor_id:eu.id, status:"fila", ...corpo})});
   try{
-    await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({conversa_id:convId, direcao:"saida", autor_id:eu.id, texto:txt, status:"fila"})});
+    if(pend){
+      const arq = pend.tipo==="audio" ? new File([pend.blob], "audio.webm", {type: pend.blob.type||"audio/webm"}) : pend.file;
+      const caminho = `zap/${convId}/enviados/${Date.now()}-${nomeSeguro(arq.name || "arquivo")}`;
+      aviso(pend.tipo==="audio" ? "Enviando o áudio…" : `Enviando ${arq.name}…`, false);
+      await subirArquivo(caminho, arq);
+      await msg({tipo: pend.tipo==="audio" ? "audio" : tipoDoArquivo(arq), texto: pend.tipo==="audio" ? null : (txt||null),
+        midia_url: caminho, midia_nome: arq.name, midia_mime: arq.type||null});
+      descartarPendZap();
+      if(pend.tipo==="audio" && txt) await msg({texto: txt});
+    }else await msg({texto: txt});
   }catch(e){ t.value = txt; return aviso(msgErro(e)); }
   if(estadoPonte().txt!=="ponte ligada") aviso("Guardado na fila: a ponte está fora do ar e envia quando voltar", false);
   verZapCliente(cliId);
@@ -14440,6 +14459,55 @@ function tarefaDaMsgZap(msgId){
   campo.setSelectionRange(campo.value.length, campo.value.length);
   campo.scrollIntoView({block:"center"});
   aviso("Complete com o que fazer e escolha quem faz e quando", false);
+}
+// F266 · ÁUDIO E ANEXO NO PAINEL, SEM SAIR DE PLANO (pedido do Paulo, 24.10.2026): gravar e escolher o arquivo
+// só PREPARAM a mensagem; ela fica na prévia, para ouvir ou conferir, e sai no Enviar (ou some no Descartar)
+let zapLadoPend = null, zapLadoRec = null;
+function pintarPendZap(){
+  const box = document.getElementById("pp-zap-pend"), env = document.getElementById("pp-zap-env"), p = zapLadoPend;
+  if(env) env.textContent = !p ? "Enviar" : p.tipo==="audio" ? "Enviar áudio" : "Enviar arquivo";
+  if(!box) return;
+  box.hidden = !p;
+  const kb = n => n > 1048576 ? `${(n/1048576).toFixed(1).replace(".",",")} MB` : `${Math.max(1, Math.round(n/1024))} KB`;
+  box.innerHTML = !p ? "" : (p.tipo==="audio"
+      ? `<span class="pp-rot">Áudio pronto: ouça antes de enviar</span><audio controls src="${p.url}"></audio>`
+      : `<span class="pp-rot">Arquivo pronto: confira antes de enviar</span><span class="pp-zap-arq">📎 ${esc(p.nome)} <small>${kb(p.file.size)}</small></span>`)
+    + `<button class="pp-sec-bt" onclick="descartarPendZap()">Descartar</button>`;
+}
+function descartarPendZap(){
+  if(zapLadoPend && zapLadoPend.url) URL.revokeObjectURL(zapLadoPend.url);
+  zapLadoPend = null; pintarPendZap();
+}
+async function gravarAudioLado(convId){
+  if(zapLadoRec) return zapLadoRec.stop();
+  if(!navigator.mediaDevices || !window.MediaRecorder) return aviso("Este navegador não grava áudio");
+  let stream;
+  try{ stream = await navigator.mediaDevices.getUserMedia({audio:true}); }
+  catch(e){ return aviso("Sem permissão para usar o microfone"); }
+  const tipo = MediaRecorder.isTypeSupported("audio/webm;codecs=opus") ? "audio/webm;codecs=opus" : "";
+  const rec = new MediaRecorder(stream, tipo ? {mimeType: tipo} : undefined), partes = [];
+  rec.ondataavailable = e=>{ if(e.data.size) partes.push(e.data); };
+  rec.onstop = ()=>{
+    stream.getTracks().forEach(t=>t.stop());
+    zapLadoRec = null;
+    const b = document.getElementById("pp-zap-rec"); if(b){ b.classList.remove("gravando"); b.textContent = "🎤"; }
+    const blob = new Blob(partes, {type: rec.mimeType || "audio/webm"});
+    if(blob.size < 1500) return aviso("Áudio curto demais");
+    descartarPendZap();
+    zapLadoPend = {tipo: "audio", blob, url: URL.createObjectURL(blob), conversa: convId};
+    pintarPendZap();
+  };
+  rec.start(); zapLadoRec = rec;
+  const b = document.getElementById("pp-zap-rec");
+  if(b){ b.classList.add("gravando"); b.textContent = "■"; b.title = "parar a gravação (o envio é depois, no Enviar)"; }
+}
+function escolherArquivoLado(convId, inp){
+  const f = inp.files && inp.files[0]; inp.value = "";
+  if(!f) return;
+  if(f.size > 60*1024*1024) return aviso("Arquivo grande demais para o WhatsApp (máx. 60 MB)");
+  descartarPendZap();
+  zapLadoPend = {tipo: "arquivo", file: f, nome: f.name || "arquivo", conversa: convId};
+  pintarPendZap();
 }
 function botaoZapCliente(cliId){
   const zs = D.zapFicha||[];
@@ -14497,9 +14565,16 @@ async function verZapCliente(cliId){
       <button class="pp-x" onclick="fecharPainelPrazo()" aria-label="fechar">✕</button></header>
     ${(at => at && at.id!==eu.id ? `<div class="pp-zap-com" role="status">Em atendimento com <b>${esc(at.nome.split(" ")[0])}</b>. Você pode responder: ${esc(at.nome.split(" ")[0])} recebe o aviso e a conversa continua com ${esc(at.nome.split(" ")[0])}.</div>` : "")(minha.atendente_id && D.colPorId.get(minha.atendente_id))}
     <div class="zap-msgs pp-zap-msgs">${linhas.join("") || `<p class="meio-sub">Nenhuma mensagem ainda.</p>`}</div>
-    <footer class="pp-zap-resp"><textarea id="pp-zap-txt" rows="2" placeholder="Responder pelo WhatsApp…"
+    <div id="pp-zap-pend" class="pp-zap-pend" hidden></div>
+    <footer class="pp-zap-resp">
+      <input type="file" id="pp-zap-arq" hidden onchange="escolherArquivoLado('${minha.id}',this)">
+      <button class="pp-ic" onclick="document.getElementById('pp-zap-arq').click()" title="anexar documento: você confere e depois envia" aria-label="anexar documento">📎</button>
+      <button class="pp-ic" id="pp-zap-rec" onclick="gravarAudioLado('${minha.id}')" title="gravar áudio: você ouve e depois envia" aria-label="gravar áudio">🎤</button>
+      <textarea id="pp-zap-txt" rows="2" placeholder="Responder pelo WhatsApp…"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();responderZapLado('${minha.id}','${cliId}')}"></textarea>
-      <button class="pp-pri" onclick="responderZapLado('${minha.id}','${cliId}')">Enviar</button></footer>`;
+      <button class="pp-pri" id="pp-zap-env" onclick="responderZapLado('${minha.id}','${cliId}')">Enviar</button></footer>`;
+  if(zapLadoPend && zapLadoPend.conversa!==minha.id) descartarPendZap();
+  pintarPendZap();
   requestAnimationFrame(()=>{ el.classList.add("aberto"); document.body.classList.add("lado-aberto"); });
   const caixaMsgs = el.querySelector(".zap-msgs"); if(caixaMsgs) caixaMsgs.scrollTop = caixaMsgs.scrollHeight;
   // abrir é ler: zera o "novas" do botão
@@ -33879,6 +33954,8 @@ async function comentarNoPrazo(casoId, andId){
 function fecharPainelPrazo(){
   painelPz = null; painelZapCli = null;
   // o conteúdo sai junto: o painel fechado não guarda a conversa ou o prazo de antes (que reaparecia por um instante)
+  if(zapLadoRec) zapLadoRec.stop();
+  if(zapLadoPend) descartarPendZap();
   const el = document.getElementById("painel-prazo"); if(el){ el.classList.remove("aberto"); el.innerHTML = ""; }
   document.body.classList.remove("lado-aberto","zap-aberto");
   fecharPrazoEsq();
