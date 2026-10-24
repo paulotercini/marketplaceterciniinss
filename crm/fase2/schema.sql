@@ -1221,6 +1221,53 @@ language sql stable security definer set search_path = public as $$
   from h
 $$;
 
+-- O que o robô faz depois de saber a opção (achou), ou de não saber (null):
+-- chamado pelo zap_bot e pela triagem por IA (F259), que decide depois.
+create or replace function zap_bot_seguir(p_conversa uuid, p_vai text) returns void
+language plpgsql security definer set search_path = public as $$
+declare c zap_conversas; p zap_bot_passos; achou text := p_vai; txt text;
+begin
+  select * into c from zap_conversas where id = p_conversa;
+  select * into p from zap_bot_passos where chave=c.bot_passo and ativo;
+  if not found then return; end if;
+
+  if achou is null then
+    -- ninguém fica preso no menu: na segunda vez sem entender, vai para gente
+    update zap_conversas set bot_erros = bot_erros + 1 where id=p_conversa;
+    if c.bot_erros + 1 >= 2 then achou := 'nao_entendi';
+    else
+      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+      values (p_conversa, 'saida', true,
+              'Não entendi 🤔 — responda com o número da opção, por favor.' || E'\n\n' || p.texto,
+              'fila');
+      return;
+    end if;
+  end if;
+
+  -- quem pergunta do processo recebe a etapa pública na hora (a mesma do
+  -- portal) e só passa a uma pessoa se quiser; sem etapa, segue para a equipe
+  if achou = 'processo' and c.bot_passo <> 'situacao'
+     and coalesce((select valor from config_app where chave='zap_robo_novo'),'nao') = 'sim' then
+    txt := zap_situacao(p_conversa);
+    if txt is not null and exists (select 1 from zap_bot_passos where chave='situacao' and ativo) then
+      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+      values (p_conversa, 'saida', true, txt, 'fila');
+      update zap_conversas set bot_passo='situacao', bot_erros=0 where id=p_conversa;
+      return;
+    end if;
+  end if;
+
+  select * into p from zap_bot_passos where chave=achou and ativo;
+  if not found then return; end if;
+  insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+  values (p_conversa, 'saida', true, p.texto, 'fila');
+  update zap_conversas set bot_passo=achou, bot_erros=0 where id=p_conversa;
+  if p.entrega_setor is not null then
+    perform zap_entregar(p_conversa, p.entrega_setor, p.chave);
+  end if;
+end $$;
+revoke execute on function zap_bot_seguir(uuid, text) from public, anon, authenticated;
+
 -- O bot em si. Roda no banco, e não na ponte, porque assim vale para qualquer
 -- caminho de entrada — a ponte de hoje, o SMBot, ou a API oficial amanhã.
 create or replace function zap_bot() returns trigger
@@ -1273,40 +1320,25 @@ begin
     end if;
   end loop;
 
-  if achou is null then
-    -- ninguém fica preso no menu: na segunda vez sem entender, vai para gente
-    update zap_conversas set bot_erros = bot_erros + 1 where id=new.conversa_id;
-    if c.bot_erros + 1 >= 2 then achou := 'nao_entendi';
-    else
-      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
-      values (new.conversa_id, 'saida', true,
-              'Não entendi 🤔 — responda com o número da opção, por favor.' || E'\n\n' || p.texto,
-              'fila');
-      return new;
-    end if;
+  -- texto livre que nenhuma opção reconheceu: a IA lê e escolhe a opção do
+  -- menu (F259). A resposta volta por zap_triagem_aplicar; se não voltar em
+  -- 60 s, o zap_relogio segue o caminho de antes (zap_triagem_vencidas).
+  if achou is null and trim(txt) <> '' and jsonb_array_length(p.opcoes) > 1
+     and coalesce((select valor from config_app where chave='zap_robo_ia'),'nao') = 'sim'
+     and coalesce((select valor from config_app where chave='zap_triagem_url'),'') <> '' then
+    update zap_mensagens set bot_ia = 'pedida:' || c.bot_passo where id = new.id;
+    begin
+      perform net.http_post(
+        url := (select valor from config_app where chave='zap_triagem_url'),
+        body := jsonb_build_object('mensagem_id', new.id),
+        headers := '{"Content-Type":"application/json"}'::jsonb,
+        timeout_milliseconds := 20000);
+    exception when others then null;   -- sem pg_net, a espera de 60 s resolve
+    end;
+    return new;
   end if;
 
-  -- quem pergunta do processo recebe a etapa pública na hora (a mesma do
-  -- portal) e só passa a uma pessoa se quiser; sem etapa, segue para a equipe
-  if achou = 'processo' and c.bot_passo <> 'situacao'
-     and coalesce((select valor from config_app where chave='zap_robo_novo'),'nao') = 'sim' then
-    txt := zap_situacao(new.conversa_id);
-    if txt is not null and exists (select 1 from zap_bot_passos where chave='situacao' and ativo) then
-      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
-      values (new.conversa_id, 'saida', true, txt, 'fila');
-      update zap_conversas set bot_passo='situacao', bot_erros=0 where id=new.conversa_id;
-      return new;
-    end if;
-  end if;
-
-  select * into p from zap_bot_passos where chave=achou and ativo;
-  if not found then return new; end if;
-  insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
-  values (new.conversa_id, 'saida', true, p.texto, 'fila');
-  update zap_conversas set bot_passo=achou, bot_erros=0 where id=new.conversa_id;
-  if p.entrega_setor is not null then
-    perform zap_entregar(new.conversa_id, p.entrega_setor, p.chave);
-  end if;
+  perform zap_bot_seguir(new.conversa_id, achou);
   return new;
 end $$;
 
@@ -1515,6 +1547,78 @@ begin
   values (p_conversa, 'saida', true, q.texto, 'fila');
   if q.entrega_setor is not null then perform zap_entregar(p_conversa, q.entrega_setor, q.chave); end if;
 end $$;
+
+-- ══ A triagem do texto livre por IA (F259, o nó "decide" do Kapso) ════════
+-- O menu reconhece o número e as palavras de cada opção (quando). O que sobra,
+-- como "minha aposentadoria saiu?", ia para "não entendi". Com zap_robo_ia
+-- ligado, o zap_bot marca a mensagem (bot_ia = 'pedida:<passo>') e chama a
+-- Edge Function zap_triagem, que pede ao Claude só a ESCOLHA de uma opção do
+-- menu (nunca uma resposta ao cliente) e devolve por zap_triagem_aplicar.
+-- Sem resposta em 60 s (função fora do ar, sem chave), o relógio segue o
+-- caminho de antes. Nasce desligado.
+alter table zap_mensagens add column if not exists bot_ia text;
+insert into config_app (chave, valor) values ('zap_robo_ia','nao') on conflict (chave) do nothing;
+insert into config_app (chave, valor)
+values ('zap_triagem_url','https://bhdyatqaebpzufridwkh.supabase.co/functions/v1/zap_triagem')
+on conflict (chave) do nothing;
+
+-- a função pega a mensagem uma vez só (a chamada repetida não gasta IA)
+create or replace function zap_triagem_pegar(p_msg uuid) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare m zap_mensagens; p zap_bot_passos;
+begin
+  update zap_mensagens set bot_ia = 'lendo:' || substr(bot_ia, 8)
+   where id = p_msg and bot_ia like 'pedida:%' and criado_em > now() - interval '5 minutes'
+  returning * into m;
+  if not found then return null; end if;
+  select * into p from zap_bot_passos where chave = substr(m.bot_ia, 7);
+  if not found then return null; end if;
+  return jsonb_build_object('texto', m.texto, 'passo', p.chave, 'menu', p.texto, 'opcoes', p.opcoes);
+end $$;
+
+create or replace function zap_triagem_aplicar(p_msg uuid, p_vai text) returns void
+language plpgsql security definer set search_path = public as $$
+declare m zap_mensagens; c zap_conversas; v_passo text; v_vai text;
+begin
+  select * into m from zap_mensagens where id = p_msg and (bot_ia like 'pedida:%' or bot_ia like 'lendo:%')
+    for update;
+  if not found then return; end if;
+  v_passo := split_part(m.bot_ia, ':', 2);
+  -- só vale opção que o passo tem: a IA não inventa destino
+  select o->>'vai' into v_vai from zap_bot_passos p, jsonb_array_elements(p.opcoes) o
+   where p.chave = v_passo and o->>'vai' = p_vai limit 1;
+  update zap_mensagens set bot_ia = 'ia:' || coalesce(v_vai, 'nenhuma') where id = p_msg;
+  select * into c from zap_conversas where id = m.conversa_id;
+  -- a conversa andou enquanto a IA lia (gente assumiu, outra mensagem veio): não mexe
+  if not c.bot_ativo or c.atendente_id is not null or c.bot_passo is distinct from v_passo
+     or exists (select 1 from zap_mensagens x where x.conversa_id = m.conversa_id
+                  and x.direcao = 'entrada' and x.seq > m.seq) then
+    return;
+  end if;
+  if v_vai is not null then
+    perform zap_nota_sistema(m.conversa_id, null, 'Robô: a IA leu "' || left(coalesce(m.texto, ''), 80)
+            || '" como a opção "' || v_vai || '"');
+  end if;
+  perform zap_bot_seguir(m.conversa_id, v_vai);
+end $$;
+
+create or replace function zap_triagem_vencidas() returns integer
+language plpgsql security definer set search_path = public as $$
+declare r record; n integer := 0;
+begin
+  for r in select id from zap_mensagens
+            where (bot_ia like 'pedida:%' or bot_ia like 'lendo:%') and criado_em < now() - interval '60 seconds'
+            order by criado_em loop
+    perform zap_triagem_aplicar(r.id, null);
+    n := n + 1;
+  end loop;
+  return n;
+end $$;
+revoke execute on function zap_triagem_pegar(uuid) from public, anon, authenticated;
+revoke execute on function zap_triagem_aplicar(uuid, text) from public, anon, authenticated;
+revoke execute on function zap_triagem_vencidas() from public, anon, authenticated;
+grant execute on function zap_triagem_pegar(uuid) to service_role;
+grant execute on function zap_triagem_aplicar(uuid, text) to service_role;
 
 -- ══ Da conversa para o processo ═══════════════════════════════════════════
 -- A conversa é do CLIENTE; o andamento é do PROCESSO. São coisas diferentes,
@@ -2575,6 +2679,7 @@ begin
     update zap_retornos set avisado_em = now() where id = r.id;
   end loop;
   perform zap_bot_esperas();
+  perform zap_triagem_vencidas();
   return n;
 end $$;
 
