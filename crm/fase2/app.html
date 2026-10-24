@@ -4842,6 +4842,12 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini.hora{color:var(--azul-escuro);font-w
 #painel-prazo .pp-tl li span{display:block;font-size:11.5px;color:var(--cinza);font-variant-numeric:tabular-nums}
 #painel-prazo .pp-pri,#painel-prazo .pp-sec-bt{transition:transform 120ms ease-out}
 
+#painel-prazo #pp-com{width:100%;box-sizing:border-box;min-height:56px;padding:8px 10px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:13.5px;resize:vertical}
+#painel-prazo #pp-com:focus{outline:2px solid var(--azul);outline-offset:-1px}
+#painel-prazo .pp-com-bt{margin-top:6px;min-height:32px}
+html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+@media (hover:hover) and (pointer:fine){html .tl-tarefa .tl-tf-abrir:hover{text-decoration:underline}}
+
 </style>
 </head>
 <body>
@@ -33677,7 +33683,8 @@ function faixaPrazos(k){
   const sem = destaque ? "" : `<p class="fp2-sem meio-sub">Sem prazo fatal em aberto neste caso.</p>`;
   const nv = minhas.length ? `<button type="button" class="tl-bt fp-nv" onclick="this.closest('.faixa-prazos').classList.add('nv-ver')" title="no nível 1 as datas ficam recolhidas">ver as datas</button>` : "";   // F249
   if(painelPz && painelPz.casoId===k.id){ const j = minhas.findIndex(x=>x.data===painelPz.data && (x.andId||"")===painelPz.andId);
-    if(j>=0) setTimeout(()=>abrirPainelPrazo(j)); }
+    if(j>=0) setTimeout(()=>abrirPainelPrazo(j));
+    else if(painelPz.andId){ const pz = painelPz; setTimeout(()=>abrirPainelTarefa(pz.casoId, pz.andId)); } }
   return `<div class="faixa-prazos fp2" aria-label="Prazos e providências">${tit}${nv}${destaque ? linha(destaque, true) : sem}${blocos}</div>`;
 }
 // A DATA DE INÍCIO DO PLANNER no prazo fatal (casos.prazo_inicio): quando começar, além de quando vence. Só vale
@@ -33709,6 +33716,31 @@ async function gravarInicioPrazo(casoId, data){
 // início ao vencimento), quem está fazendo, as etapas, o início, a origem e o histórico. Fecha no ✕ ou no Esc,
 // e continua aberto quando a ficha se repinta depois de uma ação feita dentro dele.
 let painelPz = null;
+function abrirPainelTarefa(casoId, andId){
+  let i = (faixaAtual||[]).findIndex(x=>x.casoId===casoId && x.andId===andId);
+  if(i<0){
+    const t = (D.tarefasPorCaso.get(casoId)||[]).find(x=>x.andamento_id===andId && !x.concluida_em); if(!t) return;
+    const a = (D._andsFicha||[]).find(x=>x.id===andId), d = diasAte(t.lembrar_em);
+    faixaAtual.push({casoId, andId, data: t.lembrar_em, _nat: t.natureza==="fatal" ? "fatal" : "lembrete",
+      _titulo: cortaFrase(String(a && a.texto || "Tarefa").replace(/\s+/g," "), 90), _ir: `qdIrParaAndamento('${casoId}','${andId}')`,
+      _quando: diaTarefa(t.lembrar_em), _falta: d===0 ? "vence hoje" : d<0 ? `venceu há ${-d} ${-d===1?"dia":"dias"}` : `faltam ${d} ${d===1?"dia":"dias"}`});
+    i = faixaAtual.length - 1;
+  }
+  abrirPainelPrazo(i);
+}
+// "Comentar neste prazo": o comentário entra na linha do tempo como RESPOSTA à anotação que criou o prazo (o
+// mesmo encadeamento do "feito"); sem anotação de origem, vira comentário do caso
+async function comentarNoPrazo(casoId, andId){
+  const el = document.getElementById("pp-com"), texto = (el && el.value || "").trim();
+  if(!texto) return el && el.focus();
+  try{
+    const [a] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id: casoId, autor_id: eu.id, texto, ...(andId ? {responde_a: andId} : {})})});
+    if(a){ (D._andsFicha = D._andsFicha || []).unshift(a); await criarMencoes(texto, casoId, a.id, []).catch(()=>{}); }
+    aviso("Comentário registrado no caso", false);
+  }catch(e){ return aviso("Não consegui registrar o comentário"); }
+  if(clienteAberto) abrirFicha(clienteAberto);
+}
 function fecharPainelPrazo(){
   painelPz = null;
   const el = document.getElementById("painel-prazo"); if(el) el.classList.remove("aberto");
@@ -33746,6 +33778,8 @@ function abrirPainelPrazo(i){
     if(t.iniciada_em) hist.push([t.iniciada_em, `${nome(t.colaborador_id)} começou`]);
     for(const e of (t.etapas||[])) if(e.feito && e.em) hist.push([e.em, `${nome(e.por)} fez “${e.t}”`]);
   }
+  if(x.andId) for(const c of (D._andsFicha||[]).filter(a=>a.responde_a===x.andId))
+    hist.push([c.criado_em, `${nome(c.autor_id)}: ${cortaFrase(String(c.texto||"").replace(/\s+/g," "), 120)}`]);
   hist.sort((a,b)=>String(b[0]).localeCompare(String(a[0])));   // o mais recente primeiro (pedido do Paulo, 24.10.2026)
   const origem = x.andId ? `<button class="pp-sec-bt" onclick="fecharPainelPrazo();${x._ir}">ver na linha do tempo</button>`
     : `<button class="pp-sec-bt" onclick="${x._ir}">${x.semMotivo && !x._motivo ? "do que é?" : "detalhes"}</button>`;
@@ -33760,6 +33794,10 @@ function abrirPainelPrazo(i){
     <section class="pp-sec"><div class="pp-rot">Quanto falta</div><div class="pp-falta pp-${tom}">${(m => m ? `${/^faltam/.test(m[1]) ? "" : esc(m[1])}<b>${m[2]}</b> ${esc(m[3].trim())}` : esc(x._falta || ""))(/^(.*?)(\d+)(.*)$/.exec(x._falta||""))}</div><div class="pp-qdo">${esc(x._quando)}</div>${barra}${inicio}</section>
     ${ts.length ? ts.map(tarefa).join("") : `<section class="pp-sec"><p class="meio-sub">Ninguém tem tarefa aberta para este prazo.</p></section>`}
     ${hist.length ? `<section class="pp-sec"><div class="pp-rot">Histórico</div><ol class="pp-tl">${hist.map(([q, t])=>`<li><span>${esc(horaLocal(q))}</span>${esc(t)}</li>`).join("")}</ol></section>` : ""}
+    <section class="pp-sec"><div class="pp-rot">Comentar neste prazo</div>
+      <textarea id="pp-com" rows="2" placeholder="O que aconteceu? Vai para a linha do tempo do caso."
+        onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();comentarNoPrazo('${x.casoId}','${x.andId||""}')}"></textarea>
+      <button class="pp-sec-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Comentar</button></section>
     <footer>${principal}${minha ? `<button class="pp-sec-bt" onclick="adiarTarefa('${minha.id}')">Adiar</button>` : ""}${origem}</footer>`;
   requestAnimationFrame(()=>el.classList.add("aberto"));
 }
@@ -36907,17 +36945,14 @@ function tarefasCartao(a){
     const bola = (!feita && t.colaborador_id===eu.id)
       ? `<button class="tf-ok" onclick="concluirDeVez('${t.id}')" title="concluir agora — dá para desfazer logo depois" aria-label="concluir a sua tarefa"></button>`
       : `<span class="tl-tf-bola" aria-hidden="true"></span>`;
-    // o progresso do Planner: não iniciada, em andamento (iniciada_em) e concluída
+    // F259 · na anotação a tarefa é UMA linha (decisão do Paulo, 24.10.2026): o andamento e as etapas vivem no
+    // painel de progresso, que abre com um clique nela; aqui fica só o resumo e o círculo de concluir
     const andando = !feita && t.iniciada_em;
-    const prog = feita ? "" : t.colaborador_id===eu.id
-      ? `<button class="tl-bt tf-prog${andando?" on":""}" onclick="alternarAndamento('${t.id}')" title="${andando?"voltar para não iniciada":"avisar a equipe que você já começou"}">${andando?"em andamento":"começar"}</button>`
-      : andando ? `<span class="tf-prog on" title="desde ${horaLocal(t.iniciada_em)}">em andamento</span>` : "";
-    // as ETAPAS do To Do (os itens do checklist do Planner): os passos para cumprir a tarefa, à vista no cartão
     const ets = Array.isArray(t.etapas) ? t.etapas : [], nOk = ets.filter(e=>e.feito).length;
-    const etapas = feita ? "" : `<span class="tf-etapas">${ets.map((e,j)=>
-      `<label class="tf-et${e.feito?" ok":""}"><input type="checkbox"${e.feito?" checked":""} onchange="marcarEtapa('${t.id}',${j},this.checked)"><span>${esc(e.t)}</span></label>`).join("")}
-      <button class="tf-et-add" onclick="novaEtapa('${t.id}')">+ etapa</button>${ets.length?`<small class="tf-et-n">${nOk} de ${ets.length} feitas</small>`:""}</span>`;
-    return `<span class="tl-tarefa ${feita?"feita":atras?"atras":""}${andando?" andando":""}">${bola}<span>${esc(rot)}</span>${prog}</span>${etapas}`;
+    const resumo = feita ? "" : `${andando?" · em andamento":""}${ets.length?` · etapas ${nOk}/${ets.length}`:""}`;
+    return `<span class="tl-tarefa ${feita?"feita":atras?"atras":""}${andando?" andando":""}">${bola}${feita
+      ? `<span>${esc(rot)}</span>`
+      : `<button class="tl-tf-abrir" onclick="abrirPainelTarefa('${t.caso_id}','${t.andamento_id}')" title="ver o progresso: andamento, etapas e histórico">${esc(rot+resumo)}<span aria-hidden="true"> ›</span></button>`}</span>`;
   }).join("")}</span>`;
 }
 function caixaRespInline(a){
