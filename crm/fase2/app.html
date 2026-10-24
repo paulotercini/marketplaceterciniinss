@@ -6299,8 +6299,8 @@ async function alternarMeuDia(casoId){
 
 // ── DE DIAS ANTERIORES (as "sugestões" do To Do) ──────────────────────────
 // O Meu Dia do To Do esvazia à meia-noite, mas o que ficou por fazer volta
-// como sugestão, para trazer ao dia com um clique. Aqui é igual: o que EU pus
-// no dia nos últimos sete dias, caso ainda aberto e que não está no de hoje.
+// como sugestão, para trazer ao dia com um clique. Como lá, vale o ÚLTIMO dia
+// em que EU usei o Meu Dia (até sete atrás): caso ainda aberto e fora do de hoje.
 let meuDiaAntes = {dia: null, linhas: []};
 function carregarMeuDiaAntes(){
   if(meuDiaAntes.dia===hoje()) return;
@@ -6312,13 +6312,14 @@ function casosDeDiasAnteriores(col){
   if(col && col!==eu.id) return [];
   carregarMeuDiaAntes();
   const jaHoje = new Set(D.meudia.filter(m=>m.colaborador_id===eu.id).map(m=>m.caso_id));
-  const ids = new Set(meuDiaAntes.linhas.map(m=>m.caso_id).filter(id=>!jaHoje.has(id)));
+  const ultimo = meuDiaAntes.linhas.reduce((u,m)=>m.dia>u?m.dia:u, "");
+  const ids = new Set(meuDiaAntes.linhas.filter(m=>m.dia===ultimo).map(m=>m.caso_id).filter(id=>!jaHoje.has(id)));
   return ativos().filter(k=>ids.has(k.id));
 }
 function secaoDiasAnteriores(col){
   const ks = casosDeDiasAnteriores(col); if(!ks.length) return "";
   return `<section class="pl-grupo"><h3 class="secao">De dias anteriores <span class="pl-n">${ks.length}</span></h3>`
-    + `<p class="meio-sub">Você pôs no dia e ainda não voltou para hoje. <button class="btn-rap" onclick="trazerParaHoje()">☀️ Trazer todos para hoje</button></p>`
+    + `<p class="meio-sub">Do último dia em que você usou o Meu Dia, ainda aberto. <button class="btn-rap" onclick="trazerParaHoje()">☀️ Trazer todos para hoje</button></p>`
     + grupoClientes(ks).map(([c,g])=>cartaoCliente(c,g)).join("") + `</section>`;
 }
 async function trazerParaHoje(){
