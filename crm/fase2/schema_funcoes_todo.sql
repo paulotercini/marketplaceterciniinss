@@ -1,5 +1,5 @@
 -- FUNÇÕES TRAZIDAS DO MICROSOFT TO DO
--- Só acrescenta colunas: rodar duas vezes dá no mesmo que rodar uma.
+-- Acrescenta colunas e troca duas funções do WhatsApp: rodar duas vezes dá no mesmo que rodar uma.
 
 -- Lembrete com horário: a tarefa continua com a data em lembrar_em; a hora é
 -- opcional e, quando existe, o CRM avisa naquele horário da data.
