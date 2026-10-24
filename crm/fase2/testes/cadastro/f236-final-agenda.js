@@ -305,9 +305,10 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   const cP = await cartoes(paulo);
   // F254 · o próximo é o primeiro da faixa que ainda vem (a ordem é crescente); o título quebra a linha, não é cortado
   const proxP = cP.find(c => !/pz-venceu|pz-confirmar/.test(c.cls));
-  conf("o PRÓXIMO é a sustentação (e não a pauta antiga) e o título dele quebra a linha em vez de ser cortado",
-    proxP && proxP.tipo === "Sustentação oral" && await paulo.evaluate(() => { const c = [...document.querySelectorAll(".caso-esq .pz")].find(x => x.dataset.tipo === "Sustentação oral"), t = c && c.querySelector(".fp2-txt b");
-      return !!t && getComputedStyle(t).whiteSpace !== "nowrap"; }), proxP);
+  // F268 · a linha mostra só a data e o abrir; o título fica no passar do mouse e no painel
+  conf("o PRÓXIMO é a sustentação (e não a pauta antiga), com o título no passar do mouse",
+    proxP && proxP.tipo === "Sustentação oral" && await paulo.evaluate(() => { const c = [...document.querySelectorAll(".caso-esq .pz")].find(x => x.dataset.tipo === "Sustentação oral");
+      return !!c && /Sustentação oral/.test(c.title); }), proxP);
   await paulo.evaluate(k => propostaSustentacao(k), P.k.id); await espera(paulo, 700);
   const tSust = T.andamentos.find(a => a.caso_id === P.k.id && /^🎙 Sustentação oral no julgamento de/.test(a.texto || ""));
   const tfSust = tSust && T.andamento_tarefas.find(t => t.andamento_id === tSust.id);
@@ -328,7 +329,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   conf("a perícia que passou é UMA linha (sem a do prazo parado), na data dela, com a conta de quando o INSS decide",
     lS.filter(x => x.conf).length === 1 && !lS.some(x => x.rotulo === "Prazo de análise parado") && lS.some(x => x.rotulo === "Compareceu?" && x.data === dia(-12) && /o INSS decide até/.test(x.rot) && x.curto === "Confirmar a perícia"), lS.map(x => `${x.rotulo}@${x.data}`));
   conf("ela não 'venceu': diz há quantos dias, pede o clique e não entra na conta dos vencidos",
-    cS.some(c => c.tipo === "Compareceu?" && /confirme/.test(c.txt) && !/pz-venceu/.test(c.cls)) && /A confirmar\s*1/.test(rS) && !/Vencidas/.test(rS), { cS, rS });
+    cS.some(c => c.tipo === "Compareceu?" && /Confirmar a perícia/.test(c.txt) && !/pz-venceu/.test(c.cls)) && /A confirmar\s*1/.test(rS) && !/Vencidas/.test(rS), { cS, rS });
   const clS = await paulo.evaluate(k => quadroDatas(D.casoPorId.get(k)), S.k.id);
   conf("no clássico também: a linha da perícia não diz 'venceu'", !/venceu/.test(clS) && /aconteceu\? Confirme/.test(clS));
 
@@ -348,7 +349,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   // ── r12 · a DCB: o resumo dá o prazo fatal à janela da prorrogação ────────────────────────────────────────────
   await ficha(paulo, W.c.id, W.k.id);
   const rW = await resumo(paulo);
-  conf("o prazo fatal em destaque é a janela da prorrogação, e não a DCB", /Prazo fatal\s*Pedir a prorrogação/.test(rW) && !/Prazo fatal\s*(DCB|Benefício cessa)/.test(rW), rW);
+  conf("o prazo fatal em destaque é a janela da prorrogação, e não a DCB", /Prazo fatal.*úteis\s*Pedir a prorrogação/.test(rW) && !/Prazo fatal.*úteis\s*(DCB|Benefício cessa)/.test(rW), rW);
   await ficha(paulo, W2.c.id, W2.k.id);
   const lW2 = await linhas(paulo, W2.k), jan = lW2.find(x => x.rotulo === "Pedir a prorrogação");
   conf("com a janela aberta: o resumo não repete a data, e a linha traz a tarefa e a mensagem num clique",
