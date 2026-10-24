@@ -4882,6 +4882,8 @@ body.arrasta-zap #painel-prazo-esq,body.arrasta-zap .escrever,body.arrasta-and #
 :is(#painel-prazo,#painel-prazo-esq) .pp-zap-msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding:12px 16px;background:#F4F1EC}
 :is(#painel-prazo,#painel-prazo-esq) .pp-zap-msgs .zap-b{position:relative}
 :is(#painel-prazo,#painel-prazo-esq) .zl-acoes{display:flex;gap:6px;margin-top:6px}
+/* no computador os dois botões aparecem só na mensagem sob o mouse (no teste real eram 30 pares de uma vez); no toque, sempre */
+@media (hover:hover) and (pointer:fine){#painel-prazo .zap-b:not(:hover):not(:focus-within) .zl-acoes{visibility:hidden}}
 :is(#painel-prazo,#painel-prazo-esq) .zl-acoes button{min-height:26px;padding:0 9px;border:1px solid var(--borda);border-radius:999px;background:#fff;color:var(--azul-escuro);font:inherit;font-size:12px;font-weight:500;cursor:pointer}
 @media (hover:hover) and (pointer:fine){:is(#painel-prazo,#painel-prazo-esq) .zl-acoes button:hover{border-color:var(--azul)}}
 :is(#painel-prazo,#painel-prazo-esq) .pp-zap-resp{align-items:flex-end}
@@ -12880,8 +12882,11 @@ function kcardCaso(k){
 const AGRUPAR_QUADRO = [["fase","Fase"],["responsavel","Responsável"],["prazo","Prazo fatal"]];
 function colunasDoQuadro(modo){
   const ks = ativos(), urg = xs => xs.sort((a,b)=>(b.urgente?1:0)-(a.urgente?1:0));
-  if(modo==="responsavel") return [...equipeAtiva().map(c=>[c.id, c.nome.split(" ")[0], urg(ks.filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(c.id)))]),
-    ["", "Sem responsável", urg(ks.filter(k=>!(D.atrDoCaso.get(k.id)||[]).length))]];
+  // "de quem é" segue a regra única da F236 (ehDoColab: atribuído ao caso ou com tarefa aberta nele); no teste real de
+  // 24.10, só pela atribuição, 715 casos caíam em "Sem responsável"
+  if(modo==="responsavel"){ const eq = equipeAtiva();
+    return [...eq.map(c=>[c.id, c.nome.split(" ")[0], urg(ks.filter(k=>ehDoColab(k, c.id)))]),
+      ["", "Sem responsável", urg(ks.filter(k=>!eq.some(c=>ehDoColab(k, c.id))))]]; }
   if(modo==="prazo"){ const hj = hoje(), em = n => somaDias(hj, n), comP = ks.filter(k=>k.prazo).sort((a,b)=>a.prazo<b.prazo?-1:1);
     return [["venc","Vencidos", comP.filter(k=>k.prazo<hj)], ["hoje","Hoje", comP.filter(k=>k.prazo===hj)],
       ["sete","Próximos sete dias", comP.filter(k=>k.prazo>hj && k.prazo<=em(7))], ["depois","Mais tarde", comP.filter(k=>k.prazo>em(7))]]; }
@@ -33924,11 +33929,16 @@ function faixaPrazos(k){
           // o prazo fatal sem anotação diz o motivo gravado no caso (o "Lembrar em" do To Do), e não "Prazo fatal" de novo
           motivo = nat==="fatal" && kx && kx.prazo===x.data && kx.lembrar_motivo,
           // o tipo específico vem na frente do que fazer ("Pedir a prorrogação: DCB 05/11"), como no cartão antigo
-          titulo = (RX_TIPO_GENERICO.test(resumo || vis) && motivo)
+          titulo0 = (RX_TIPO_GENERICO.test(resumo || vis) && motivo)
             || (RX_TIPO_GENERICO.test(tipo) ? (resumo || vis) : resumo && resumo!==vis ? `${vis}: ${resumo}` : vis);
+    let titulo = titulo0;
     const ir = x.andId ? `qdIrParaAndamento('${x.casoId}','${x.andId}')`
       : x.semMotivo ? `explicarPrazo('${x.casoId}')` : `prazoSaberMais(${i})`;
-    const sub = x.semMotivo && !motivo ? "do To Do, diga do que é" : "";
+    // o prazo que veio do "Concluir em" do To Do sem descrição (258 no teste real de 24.10): o título pede a descrição,
+    // em vez de repetir "Prazo fatal" debaixo da etiqueta "Prazo fatal"
+    const semDesc = x.semMotivo && !motivo && RX_TIPO_GENERICO.test(titulo);
+    if(semDesc) titulo = "Diga do que é este prazo";
+    const sub = x.semMotivo && !motivo ? (semDesc ? "veio do To Do sem descrição" : "do To Do, diga do que é") : "";
     const data = quando(x.data) + (destaque || nat==="fatal" ? ` · ${falta(x.data)}` : x.aConfirmar && d<0 ? " · confirme" : "");
     Object.assign(x, {_nat: nat, _titulo: titulo, _motivo: motivo, _ir: ir, _quando: quando(x.data), _falta: falta(x.data)});   // para o painel
     return `<div class="pz fp2-lin pz-${nat}${pend(x)?" pz-venceu":""}${destaque?" fp2-fatal":""}${x.semMotivo?" pz-semmotivo":""}${x.aConfirmar?" pz-confirmar":""}" data-nat="${nat}" data-tipo="${esc(tipo)}" data-data="${x.data}" title="${esc(tipo+(resumo?` · ${resumo}`:""))}">
