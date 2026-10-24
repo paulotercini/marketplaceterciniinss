@@ -33602,7 +33602,7 @@ function faixaPrazos(k){
       ${destaque
         ? `<span class="fp2-txt"><small class="fp2-tag">Prazo fatal</small><b>${esc(titulo)}</b><span class="fp2-quando">${esc(data)}</span>${inicioDoPrazo(x, quando)}${sub?`<small>${esc(sub)}</small>`:""}</span>`
         : `<span class="fp2-txt"><b>${esc(titulo)}</b>${sub?`<small>${esc(sub)}</small>`:""}</span><span class="fp2-data">${esc(data)}</span>`}${x.avs||""}
-      <button class="fp2-mais" onclick="${ir}" title="${x.andId?"ir até a anotação que criou este prazo":x.semMotivo?"esta data veio do To Do: diga do que ela é":"ver o que é e o que fazer"}">${x.semMotivo && !motivo?"do que é?":"abrir"}</button>${x.ouv||""}
+      <button class="fp2-mais" onclick="${ir}" title="${x.andId?"ir até a anotação que criou este prazo":x.semMotivo?"esta data veio do To Do: diga do que ela é":"ver o que é e o que fazer"}">${x.andId ? "ver a tarefa" : x.semMotivo && !motivo ? "do que é?" : "detalhes"}</button>${x.ouv||""}
     </div>`;
   };
   const destaque = proxFatal || minhas.filter(x=>natDaLinha(x)==="fatal" && pend(x))[0] || null;
