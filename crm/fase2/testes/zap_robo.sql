@@ -25,7 +25,7 @@ insert into casos (id, cliente_id, titulo, beneficio, fase, etapa, pre_caso, tri
   -- no prazo fatal, a etapa vale pela lista de origem
   ('aaaaaaaa-0000-0000-0000-000000000006','11111111-1111-1111-1111-111111111111','Prazo','Salário-maternidade','outro','em exigência',false,null,'{"prazo_de":"🌻 INSS"}'),
   ('aaaaaaaa-0000-0000-0000-000000000007','22222222-2222-2222-2222-222222222222','Novo','Auxílio-doença','inss',null,false,null,'{}');
-insert into config_app (chave, valor) values ('zap_bot_ligado','sim'), ('zap_pausa_bot','0'),
+insert into config_app (chave, valor) values ('zap_bot_ligado','sim'), ('zap_pausa_bot','0'), ('zap_robo_novo','nao'),
   ('zap_hora_inicio','00:00'), ('zap_hora_fim','23:59'), ('zap_dias_uteis','1,2,3,4,5,6,7')
   on conflict (chave) do update set valor = excluded.valor;
 create temp table r(k text, v boolean);
@@ -57,6 +57,23 @@ insert into r select 't4 etapa desatualizada não sai',
   zap_etapa_publica((select k from casos k where id='aaaaaaaa-0000-0000-0000-000000000005')) is null;
 insert into r select 't5 no prazo fatal vale a lista de origem',
   zap_etapa_publica((select k from casos k where id='aaaaaaaa-0000-0000-0000-000000000006')) = 'em exigência';
+
+-- ── desligado (o padrão), o robô age como antes ───────────────────────────
+select _diz('5516966665555','oi');
+insert into clientes (id, nome, telefone) values ('55555555-5555-5555-5555-555555555555','Desligado','16 96666-5555');
+insert into casos (cliente_id, titulo, beneficio, fase, etapa) values
+  ('55555555-5555-5555-5555-555555555555','X','Auxílio-doença','inss','aguardando perícia');
+update zap_conversas set cliente_id = '55555555-5555-5555-5555-555555555555' where telefone = '5516966665555';
+select _diz('5516966665555','1');
+insert into r select 't0a desligado: pergunta do processo vai para a equipe',
+  _ultima('5516966665555') like '%cuida do seu processo%';
+select _diz('5516955554444','oi');
+update zap_conversas set bot_desde = bot_desde - interval '3 hours' where telefone = '5516955554444';
+update zap_mensagens set criado_em = criado_em - interval '3 hours'
+ where conversa_id = (select id from zap_conversas where telefone = '5516955554444');
+insert into r select 't0b desligado: nenhum lembrete', zap_bot_esperas() = 0;
+update config_app set valor = 'sim' where chave = 'zap_robo_novo';
+delete from zap_conversas where telefone = '5516955554444';
 
 -- ── quem pergunta do processo recebe a resposta na hora ───────────────────
 select _diz('5516999990000','oi');
