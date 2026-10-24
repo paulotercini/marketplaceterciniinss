@@ -2160,6 +2160,14 @@ create index if not exists atarefas_minhas on andamento_tarefas (colaborador_id,
   where concluida_em is null;
 create index if not exists atarefas_caso on andamento_tarefas (caso_id, lembrar_em)
   where concluida_em is null;
+-- hora opcional do aviso na data (schema_funcoes_todo.sql)
+alter table andamento_tarefas add column if not exists lembrar_hora time;
+-- etapas da tarefa (schema_funcoes_todo.sql)
+alter table andamento_tarefas add column if not exists etapas jsonb not null default '[]'::jsonb;
+-- tarefa em andamento (schema_funcoes_todo.sql)
+alter table andamento_tarefas add column if not exists iniciada_em timestamptz;
+-- data de início do prazo fatal (schema_funcoes_todo.sql)
+alter table casos add column if not exists prazo_inicio date;
 
 -- Tarefa para alguém cai na caixa de menções DELE — a caixa que já existe,
 -- não uma segunda. Para si mesmo não avisa: ninguém precisa ser notificado
@@ -2742,6 +2750,10 @@ create or replace function eu_colab() returns uuid
 language sql stable security definer set search_path = public as $$
   select id from colaboradores where auth_id = auth.uid() limit 1;
 $$;
+-- autor e data da atribuição (schema_funcoes_todo.sql)
+alter table atribuicoes add column if not exists atribuido_por uuid
+  references colaboradores(id) on delete set null default eu_colab();
+alter table atribuicoes add column if not exists atribuido_em timestamptz default now();
 
 -- gestor do WhatsApp: o admin e o assistente (o conector do Claude age em
 -- nome do escritório, como o gestor)
@@ -2776,19 +2788,34 @@ drop trigger if exists zap_guarda_conv on zap_conversas;
 create trigger zap_guarda_conv before update on zap_conversas
   for each row execute function zap_guarda_conversa();
 
--- responder: só o dono, o gestor, ou quem pega a pendente (o gatilho
--- zap_humano_assumiu já faz dele o dono). Nota interna, todo mundo.
+-- ATENDIMENTO COMPARTILHADO NO WHATSAPP (decisão do Paulo, 24.10.2026): quem não é o atendente também
+-- responde ao cliente; a conversa continua com o atendente, que recebe uma menção dizendo quem respondeu.
+-- O cliente vê quem escreveu pela assinatura (F188). Substitui a trava de "só o dono ou o gestor responde".
 create or replace function zap_guarda_mensagem() returns trigger
 language plpgsql as $$
-declare v_eu uuid := eu_colab(); v_dono uuid;
 begin
-  if new.direcao <> 'saida' or v_eu is null or zap_gestor() then return new; end if;
-  select atendente_id into v_dono from zap_conversas where id = new.conversa_id;
-  if v_dono is not null and v_dono <> v_eu then
-    raise exception 'Esta conversa está com outro atendente. Peça ao gestor, ou escreva uma nota interna com @nome.';
-  end if;
+  return new;   -- responder é de todos; quem atende continua sendo o dono (zap_guarda_conversa segue valendo)
+end $$;
+
+create or replace function zap_avisa_resposta_compartilhada() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare v_dono uuid; v_nome text;
+begin
+  if new.direcao <> 'saida' or new.autor_id is null then return new; end if;
+  select atendente_id, coalesce(nullif(trim(nome_perfil),''), telefone) into v_dono, v_nome
+    from zap_conversas where id = new.conversa_id;
+  if v_dono is null or v_dono = new.autor_id then return new; end if;
+  -- uma menção por pessoa e conversa enquanto o atendente não a lê: dez respostas não viram dez avisos
+  if exists (select 1 from mencoes where para_id = v_dono and de_id = new.autor_id
+               and conversa_id = new.conversa_id and lida_em is null) then return new; end if;
+  insert into mencoes (de_id, para_id, conversa_id, texto)
+  values (new.autor_id, v_dono, new.conversa_id,
+          '💬 ' || zap_nome_colab(new.autor_id) || ' respondeu a ' || coalesce(v_nome, 'o cliente') || ' na conversa que está com você');
   return new;
 end $$;
+drop trigger if exists zap_avisa_resposta on zap_mensagens;
+create trigger zap_avisa_resposta after insert on zap_mensagens
+  for each row execute function zap_avisa_resposta_compartilhada();
 drop trigger if exists zap_guarda_msg on zap_mensagens;
 create trigger zap_guarda_msg before insert on zap_mensagens
   for each row execute function zap_guarda_mensagem();

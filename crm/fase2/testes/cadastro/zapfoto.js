@@ -1,4 +1,4 @@
-// F261 · A FOTO EM MINIATURA: a imagem enviada ou recebida aparece no balão da conversa,
+// F269 · A FOTO EM MINIATURA: a imagem enviada ou recebida aparece no balão da conversa,
 // como no WhatsApp, e o clique abre o original. Dados fictícios.
 const { chromium } = require("playwright");
 const http = require("http");
