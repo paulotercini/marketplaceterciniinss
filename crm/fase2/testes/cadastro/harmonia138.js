@@ -151,8 +151,8 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
       esq: (e => e && getComputedStyle(e).position === "sticky" && !!e.querySelector(".lc-placa") && !!e.querySelector(".faixa-prazos"))(document.querySelector(".caso-esq")),
       dir: (e => !!(e && e.firstElementChild.classList.contains("menu-andamentos") && e.querySelector(".menu-andamentos + .caso-acoes") && e.querySelector(".caso-acoes ~ .fatos")))(document.querySelector(".caso-dir")),   // F242 · as abas em cima, o campo de escrever e os andamentos
       placa2: (e => e && getComputedStyle(e).flexDirection === "column" && [...e.children].every(f => getComputedStyle(f).flexDirection === "row"))(document.querySelector(".caso-esq .lc-placa")),   // F182 · rótulo e valor na mesma linha, como no canvas
-      pzDesc: (d => d.every((x, i) => !i || d[i-1] >= x))([...document.querySelectorAll(".caso-esq .pz .pz-data")].map(b => b.textContent.split("/").reverse().join(""))),
-      pzFina: [...document.querySelectorAll(".caso-esq .pz")].every(e => e.getBoundingClientRect().height <= 40),
+      pzDesc: (d => d.every((x, i) => !i || d[i-1] <= x))([...document.querySelectorAll(".caso-esq .pz:not(.fp2-fatal)")].map(b => b.dataset.data)),
+      pzFina: [...document.querySelectorAll(".caso-esq .pz:not(.fp2-fatal)")].every(e => e.getBoundingClientRect().height <= 64),
       verifNeutra: !!(verif && verif.querySelector(".lc-vazio") && !verif.querySelector(".lc-manual")),
       peq: peq.length };
   });
@@ -161,7 +161,7 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
   conf("F145 · à esquerda, parada, a placa e os prazos", f.esq);
   conf("F242 · à direita, as abas em cima, depois o campo de escrever e os andamentos", f.dir);
   conf("F182 · a placa em linhas: rótulo à esquerda, valor à direita", f.placa2);
-  conf("F145 · os prazos em linhas finas, em ordem decrescente", f.pzDesc && f.pzFina);
+  conf("F254 · os prazos em linhas, em ordem crescente depois do prazo fatal", f.pzDesc && f.pzFina);
   conf("Verificação a definir fica cinza como a Etapa, sem o vermelho", f.verifNeutra);
   conf(`os botões da linha do tempo e dos prazos têm ao menos 24px (${f.peq} menores)`, f.peq === 0);
 
