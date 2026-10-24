@@ -1,4 +1,4 @@
-// F258 · O ROBÔ CONDUZIDO PELA EQUIPE (ideia do Kapso): a conversa mostra em
+// F258/F259 · O ROBÔ CONDUZIDO PELA EQUIPE (ideia do Kapso): a conversa mostra em
 // que passo do robô está e desde quando, e o "Levar o robô a um passo…" do ⋯
 // chama zap_bot_ir com o passo escolhido. Dados fictícios.
 const { chromium } = require("playwright");
@@ -62,6 +62,9 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   await p.evaluate(id => abrirConversa(id), CONV);
   await p.waitForSelector(".zap-topo");
   const topo = await p.textContent(".zap-topo");
+  // F259 · a conversa abre com o acabamento do WhatsApp (zap_visual sem valor)
+  conf("a conversa tem a aparência do WhatsApp", await p.$(".zap-tela.wa"));
+  conf("e o fundo da conversa é bege", (await p.$eval(".zap-msgs", e => getComputedStyle(e).backgroundColor)) === "rgb(239, 234, 226)");
   conf("a conversa mostra o passo do robô em palavras", topo.includes("Robô: respondeu a situação do processo"));
   conf("e desde quando", /desde .*\d{2}:\d{2}/.test(topo));
   conf("o ⋯ tem Levar o robô a um passo", topo.includes("Levar o robô a um passo"));

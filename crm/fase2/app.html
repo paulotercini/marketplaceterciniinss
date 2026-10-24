@@ -1968,6 +1968,16 @@
   .zp-tarefa b{font-weight:600}
   .zp-tarefa .prox{color:var(--prox,#8f5400)}.zp-tarefa .venc{color:var(--venc,#b3261e)}
   .zp-nova{margin-top:6px;height:28px;font-size:12px}
+  /* F259 · o acabamento do WhatsApp (ideia do Kapso): fundo bege, balão branco
+     de quem escreve e verde do escritório, sem borda. Nota interna, agendada,
+     rascunho e falha mantêm o seu desenho. Volta ao anterior nas Configurações. */
+  .zap-tela.wa .zap-msgs{background:#efeae2}
+  .zap-tela.wa .zap-b:not(.interna):not(.agendada):not(.rascunho):not(.ruim){background:#fff;border-color:transparent;
+    box-shadow:0 1px .5px rgba(11,20,26,.13);border-radius:8px;border-top-left-radius:0}
+  .zap-tela.wa .zap-b.saida:not(.interna):not(.agendada):not(.rascunho):not(.ruim){background:#d9fdd3;
+    border-top-left-radius:8px;border-top-right-radius:0}
+  .zap-tela.wa .zap-b.bot{font-style:normal}
+  .zap-tela.wa .zap-dia{background:#fff;border-color:transparent;box-shadow:0 1px .5px rgba(11,20,26,.13)}
   /* tela estreita: Retorno e Transferir ficam só com o ícone, para o nome caber inteiro */
   @media (max-width:1700px){.zt-acoes .zt-btn:not(.pri) .lbl{display:none}.zt-acoes .zt-btn:not(.pri){width:32px;padding:0;justify-content:center}}
   /* .id-secao só vive dentro do cartão "Ligações do cliente" (F9.2): o rótulo
@@ -12932,7 +12942,7 @@ async function renderWhats(){
   // F183 · três colunas: quem está falando, a conversa e, ao lado, o cliente
   // (caso, etapa, prazo) — atender sem sair da tela para abrir a ficha
   document.getElementById("conteudo-meio").innerHTML =
-    `<div class="zap-tela">
+    `<div class="zap-tela${cfgApp("zap_visual")==="escritorio"?"":" wa"}">
        <div class="zap-lado"><div class="meio-sub">carregando…</div></div>
        <div class="zap-dir" id="zap-dir"></div>
        <aside class="zap-painel" id="zap-painel"></aside>
@@ -13624,7 +13634,7 @@ function bolhaZap(m, cli){
   const quem = m.por_bot ? "🤖 robô"
             : m.autor_id ? (D.colPorId.get(m.autor_id)||{}).nome || "escritório" : "";
   if(m.direcao==="interna") return `<div class="zap-b interna">
-    <div class="txt"><b>Nota interna · ${esc(quem)}:</b> ${esc(m.texto||"")}</div>
+    <div class="txt"><b>Nota interna${quem?` · ${esc(quem)}`:""}:</b> ${esc(m.texto||"")}</div>
     <div class="pe">${horaSP(m.criado_em)}
       ${cli?`<button class="virar" onclick="virarAndamento('${m.id}')"
         title="registrar no histórico de um processo">↪ andamento</button>`:""}</div></div>`;
@@ -14458,6 +14468,10 @@ async function renderConfig(){
              ${(cfgApp("zap_avisos_ligado")||"sim")==="sim"?"checked":""}> 🔔 avisos automáticos ligados</label>
            <label class="cfg-ck" title="o robô responde a situação do processo com a etapa pública e manda o lembrete do menu sem resposta"><input type="checkbox" id="cf-robo-novo"
              ${cfgApp("zap_robo_novo")==="sim"?"checked":""}> robô responde a situação do processo e lembra quem não respondeu</label>
+           <label class="cfg-ck" title="quando o cliente escreve no menu em vez de digitar o número, a IA escolhe a opção; exige a chave ANTHROPIC_API_KEY na função zap_triagem do Supabase"><input type="checkbox" id="cf-robo-ia"
+             ${cfgApp("zap_robo_ia")==="sim"?"checked":""}> IA lê o texto livre e escolhe a opção do menu</label>
+           <label class="cfg-ck"><input type="checkbox" id="cf-zap-visual"
+             ${cfgApp("zap_visual")==="escritorio"?"":"checked"}> conversa com a aparência do WhatsApp</label>
            <label class="cfg-ck">🔄 revisar o acervo a cada
              <input type="number" id="cf-rev-dias" min="15" max="365" style="width:64px"
                value="${esc(cfgApp("revisao_dias")||"90")}"> dias,</label>
@@ -14677,6 +14691,8 @@ function ligarConfig(){
   cfgSalva("cf-bot","zap_bot_ligado",  el=>el.checked?"sim":"nao");
   cfgSalva("cf-avisos","zap_avisos_ligado", el=>el.checked?"sim":"nao");
   cfgSalva("cf-robo-novo","zap_robo_novo", el=>el.checked?"sim":"nao");
+  cfgSalva("cf-robo-ia","zap_robo_ia", el=>el.checked?"sim":"nao");
+  cfgSalva("cf-zap-visual","zap_visual", el=>el.checked?"whatsapp":"escritorio");
   cfgSalva("cf-rev-dias","revisao_dias", el=>String(Math.max(15, +el.value||90)));
   cfgSalva("cf-rev-dose","revisao_dose", el=>String(Math.max(1, +el.value||5)));
   // F92 · só o que tem cara de data entra; o resto é descartado em silêncio
