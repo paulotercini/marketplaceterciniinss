@@ -5361,7 +5361,10 @@ async function iniciar(){
   // não repinta por cima de quem está digitando num formulário da lista
   const digitandoNoMeio = document.querySelector("#conteudo-meio :is(input,textarea,select):focus");
   if(!digitandoNoMeio && !["novocliente","config"].includes(visao)) render();
-  if(!vigiaLigada){ vigiaLigada = true; setInterval(vigiarMudancas, VIGIA_MS); }
+  if(!vigiaLigada){ vigiaLigada = true; setInterval(vigiarMudancas, VIGIA_MS);
+    // como o To Do ao voltar para a frente: a aba que reaparece busca o que mudou na hora, sem esperar a volta do relógio
+    document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) vigiarMudancas(); });
+    vigiarLembretes(); setInterval(vigiarLembretes, 30000); }
   // F187 · "online agora" no painel do gestor: um ponto por minuto
   if(!zapSomLigado){ zapSomLigado = true; vigiarZapSom(); setInterval(vigiarZapSom, 20000); }
   if(!presencaLigada){ presencaLigada = true;
@@ -6292,6 +6295,42 @@ async function alternarMeuDia(casoId){
     D.meudia = await todas("meu_dia",`select=*&dia=eq.${hoje()}`);
     montarSidebar(); render();
   }catch(e){ aviso("Não consegui mexer no Meu Dia"); }
+}
+
+// ── DE DIAS ANTERIORES (as "sugestões" do To Do) ──────────────────────────
+// O Meu Dia do To Do esvazia à meia-noite, mas o que ficou por fazer volta
+// como sugestão, para trazer ao dia com um clique. Aqui é igual: o que EU pus
+// no dia nos últimos sete dias, caso ainda aberto e que não está no de hoje.
+let meuDiaAntes = {dia: null, linhas: []};
+function carregarMeuDiaAntes(){
+  if(meuDiaAntes.dia===hoje()) return;
+  meuDiaAntes = {dia: hoje(), linhas: []};
+  todas("meu_dia",`select=caso_id,dia&colaborador_id=eq.${eu.id}&caso_id=not.is.null&dia=lt.${hoje()}&dia=gte.${somaDias(hoje(),-7)}`)
+    .then(r=>{ meuDiaAntes.linhas = r||[]; if(visao==="meudia" && !clienteAberto) render(); }).catch(()=>{});
+}
+function casosDeDiasAnteriores(col){
+  if(col && col!==eu.id) return [];
+  carregarMeuDiaAntes();
+  const jaHoje = new Set(D.meudia.filter(m=>m.colaborador_id===eu.id).map(m=>m.caso_id));
+  const ids = new Set(meuDiaAntes.linhas.map(m=>m.caso_id).filter(id=>!jaHoje.has(id)));
+  return ativos().filter(k=>ids.has(k.id));
+}
+function secaoDiasAnteriores(col){
+  const ks = casosDeDiasAnteriores(col); if(!ks.length) return "";
+  return `<section class="pl-grupo"><h3 class="secao">De dias anteriores <span class="pl-n">${ks.length}</span></h3>`
+    + `<p class="meio-sub">Você pôs no dia e ainda não voltou para hoje. <button class="btn-rap" onclick="trazerParaHoje()">☀️ Trazer todos para hoje</button></p>`
+    + grupoClientes(ks).map(([c,g])=>cartaoCliente(c,g)).join("") + `</section>`;
+}
+async function trazerParaHoje(){
+  const ks = casosDeDiasAnteriores(null); if(!ks.length) return;
+  try{
+    // um a um: o índice único do dia devolve 409 para o que outra aba já trouxe, e esse se ignora
+    await Promise.all(ks.map(k=>api(`/rest/v1/meu_dia`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({colaborador_id:eu.id, caso_id:k.id, dia:hoje()})}).catch(()=>{})));
+    D.meudia = await todas("meu_dia",`select=*&dia=eq.${hoje()}`);
+    aviso(`${ks.length} trazido${ks.length>1?"s":""} para o seu Meu Dia ☀️`);
+  }catch(e){ aviso("Não consegui trazer para o Meu Dia"); }
+  montarSidebar(); render();
 }
 
 async function moverCaso(casoId, lista){
@@ -9256,6 +9295,7 @@ function renderMeuDia(){
     + avisoCRPS()
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
     + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || `<p class='meio-sub'>Nada adicionado — ${celular()?"toque e segure":"clique com o botão direito"} num cliente e escolha ☀️ Adicionar ao Meu Dia.</p>`)
+    + secaoDiasAnteriores(filtroColab)
     + `<h3 class="secao">🟡 Vencem hoje (${nHoje})</h3>`
     + (grupoClientes(hojeK).map(([c,ks])=>cartaoCliente(c,ks)).join("")
        + tHoje.map(t=>cartaoTarefa(t)).join("")
@@ -11734,6 +11774,7 @@ function renderAgendaV10(qual){
   + secoes.slice(2).map(secao).join("")
   + (adic.length ? `<section class="pl-grupo"><h3 class="secao">Adicionados ao dia <span class="pl-n">${adic.length}</span></h3>`
       + adic.map(([c,ks])=>cartaoCliente(c,ks)).join("") + `</section>` : "")
+  + (planej ? "" : secaoDiasAnteriores(col))
   // F236 · a recepção completa os cadastros quando sobra tempo (a procuração sai com a linha da rua em branco)
   + (!planej && eu.cargo==="recepcao" && (!col || col===eu.id) ? blocoSemEndereco() : "")
   // F236 · o que eu passei a outra pessoa fica recolhido embaixo: a primeira tela é o MEU trabalho
@@ -15650,7 +15691,7 @@ function vistos(a){
         title="${esc(c.nome)} — ${rev?"revisa · ":""}${t.concluida_em?`concluída em ${horaLocal(t.concluida_em)}`
                 :`tarefa para ${fmt(t.lembrar_em)}`}">
         <b style="background:${c.cor}">${esc(c.inicial)}</b>
-        ${rev?`<small>revisa</small> `:""}${t.concluida_em?"✔":`🗓 ${fmt(t.lembrar_em).slice(0,5)}`}</span>`;}).join("")}
+        ${rev?`<small>revisa</small> `:""}${t.concluida_em?"✔":`🗓 ${fmt(t.lembrar_em).slice(0,5)}${t.lembrar_hora?` ⏰ ${String(t.lembrar_hora).slice(0,5)}`:""}`}</span>`;}).join("")}
     ${/* F14 · o círculo do To Do: um clique conclui e a faixa oferece desfazer
          por oito segundos. Quem quiser escrever o que fez continua tendo a
          janela, agora no botão ao lado, que não é mais o caminho obrigatório
@@ -15910,7 +15951,73 @@ function adiarTarefa(id){
       <button class="btn-rap" onclick="mudarLembrar('${id}', maisDias(1))">+1 dia útil</button>
       <button class="btn-rap" onclick="mudarLembrar('${id}', maisDias(7))">+1 semana</button>
       <input type="date" onchange="mudarLembrar('${id}', this.value)">
+    </div>
+    <h3>⏰ Avisar na hora</h3>
+    <p class="meio-sub">Na data do lembrete, o CRM avisa no horário escolhido, mesmo com a aba escondida.</p>
+    <div class="form-linha">
+      <button class="btn-rap" onclick="sonecaTarefa('${id}', 60)">Daqui a 1 hora</button>
+      <input type="time" onchange="mudarHoraLembrar('${id}', this.value)">
+      <button class="btn-rap" onclick="mudarHoraLembrar('${id}', null)">sem horário</button>
     </div>`);
+}
+// ── LEMBRETE COM HORÁRIO (como o To Do) ──────────────────────────────────
+// O To Do guarda data e hora do lembrete e dispara um aviso do Windows na
+// hora, com "adiar". Aqui a data continua em lembrar_em e a hora, opcional,
+// em lembrar_hora (schema_lembrete_hora.sql). O aviso sai uma vez por
+// tarefa/data/hora: a marca fica neste navegador, para não repetir a cada volta.
+function tarefaAberta(id){
+  return (D.tarefasFicha||[]).find(x=>x.id===id)
+    || [...(D.tarefasPorCaso||new Map()).values()].flat().find(x=>x.id===id);
+}
+async function gravarLembrar(id, campos, msg){
+  fecharCaixa();
+  try{
+    await api(`/rest/v1/andamento_tarefas?id=eq.${id}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify(campos)});
+  }catch(e){
+    return aviso(/lembrar_hora/.test(String(e.message||e))
+      ? "⚠ O banco ainda não guarda o horário: execute o schema_lembrete_hora.sql no Supabase"
+      : "Não consegui gravar o lembrete");
+  }
+  for(const t of [(D.tarefasFicha||[]).find(x=>x.id===id), tarefaAberta(id)]) if(t) Object.assign(t, campos);
+  if(campos.lembrar_hora && window.Notification && Notification.permission==="default")
+    Notification.requestPermission().catch(()=>{});
+  aviso(msg, false);
+  if(clienteAberto) abrirFicha(clienteAberto); else render();
+}
+function mudarHoraLembrar(id, hora){
+  return gravarLembrar(id, {lembrar_hora: hora || null},
+    hora ? `Aviso marcado para as ${hora} ⏰` : "Lembrete sem horário");
+}
+// a "soneca" do To Do: o aviso volta daqui a N minutos, hoje
+function sonecaTarefa(id, min){
+  const d = agoraSP(); d.setMinutes(d.getMinutes()+min);
+  if(d.toLocaleDateString("sv")!==hoje()) return mudarLembrar(id, maisDias(1));
+  const hora = d.toTimeString().slice(0,5);
+  return gravarLembrar(id, {lembrar_em: hoje(), lembrar_hora: hora}, `Aviso adiado para as ${hora} ⏰`);
+}
+// a tarefa minha de hoje cuja hora chegou e que ainda não avisou
+function lembretesNaHora(tarefas, hojeIso, horaAgora, avisados){
+  return tarefas.filter(t=>!t.concluida_em && t.lembrar_hora && t.lembrar_em===hojeIso
+    && String(t.lembrar_hora).slice(0,5)<=horaAgora
+    && !avisados.has(`${t.id}|${t.lembrar_em}|${String(t.lembrar_hora).slice(0,5)}`));
+}
+function vigiarLembretes(){
+  if(!eu || !D || !D.tarefasPorCaso) return;
+  const avisados = new Set(JSON.parse(ler("crm_lemb_avisados")||"[]"));
+  const minhas = [...D.tarefasPorCaso.values()].flat().filter(t=>t.colaborador_id===eu.id);
+  const vez = lembretesNaHora(minhas, hoje(), agoraSP().toTimeString().slice(0,5), avisados);
+  for(const t of vez){
+    avisados.add(`${t.id}|${t.lembrar_em}|${String(t.lembrar_hora).slice(0,5)}`);
+    const k = D.casoPorId.get(t.caso_id), c = k && D.cliPorId.get(k.cliente_id);
+    const txt = `${c ? c.nome : "Tarefa"} · ${String(t.lembrar_hora).slice(0,5)}`;
+    plim(); aviso(`⏰ Lembrete: ${txt}`, false);
+    if(window.Notification && Notification.permission==="granted") try{
+      const n = new Notification("⏰ Lembrete · CRM", {body: txt, tag: "crm-lemb-"+t.id, requireInteraction: true});
+      n.onclick = ()=>{ window.focus(); if(c) abrirFicha(c.id); n.close(); };
+    }catch(e){}
+  }
+  if(vez.length) guardar("crm_lemb_avisados", JSON.stringify([...avisados].slice(-300)));
 }
 async function mudarLembrar(id, data){
   if(!data) return;
@@ -36464,7 +36571,7 @@ function tarefasCartao(a){
     const feita = !!t.concluida_em, atras = !feita && t.lembrar_em && t.lembrar_em < hoje();
     const nome = c.nome.split(" ")[0];
     const rot = feita ? `Concluída · ${nome} · ${horaLocal(t.concluida_em)}`
-      : `${nome} · ${diaTarefa(t.lembrar_em)} · ${t.papel==="revisa"?"revisa":t.natureza==="lembrete"?"lembrete":"tarefa"}`;
+      : `${nome} · ${diaTarefa(t.lembrar_em)}${t.lembrar_hora?` ⏰ ${String(t.lembrar_hora).slice(0,5)}`:""} · ${t.papel==="revisa"?"revisa":t.natureza==="lembrete"?"lembrete":"tarefa"}`;
     const bola = (!feita && t.colaborador_id===eu.id)
       ? `<button class="tf-ok" onclick="concluirDeVez('${t.id}')" title="concluir agora — dá para desfazer logo depois" aria-label="concluir a sua tarefa"></button>`
       : `<span class="tl-tf-bola" aria-hidden="true"></span>`;
