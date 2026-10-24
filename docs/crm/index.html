@@ -1463,7 +1463,8 @@
            border:1px solid var(--borda);border-radius:12px;background:var(--branco);overflow:hidden}
   .zap-painel{flex:0 0 300px;overflow:auto;display:flex;flex-direction:column;gap:10px;min-width:0}
   .zap-painel:empty{display:none}
-  @media (max-width:1180px){.zap-painel{display:none}}
+  @media (max-width:1180px){.zap-painel{flex-basis:260px}}
+  @media (max-width:1023px){.zap-painel{display:none}}
   .zap-topo{display:flex;flex-direction:column;gap:8px;padding:12px 16px;border-bottom:1px solid var(--borda);background:var(--branco)}
   .zap-frame{flex:1;width:100%;border:0;background:#fff}
   .zap-nota{padding:6px 10px;font-size:11px;color:var(--cinza);border-top:1px solid var(--borda)}
@@ -1879,6 +1880,9 @@
   .zp-cab{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px}
   .zp-sub{font-size:12px;color:var(--cinza);margin:2px 0 8px}
   .zp-tit{font-weight:600;font-size:13.5px}
+  .zap-mini{display:block;width:240px;max-width:100%;height:180px;object-fit:cover;border-radius:8px;cursor:zoom-in;background:#0000000d;margin-bottom:4px}
+  .zp-rep-tit{margin:4px 2px 0;font-size:11.5px;font-weight:600;color:var(--cinza)}
+  .zp-rep{border-left:3px solid var(--verde,#2E7D4F)}
   .zp-kv{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:4px 0}
   .zp-kv>span:first-child{color:var(--cinza-claro,var(--cinza))}
   .zp-kv>span:last-child,.zp-kv>b{text-align:right}
@@ -13740,6 +13744,7 @@ function pintarConversa(){
     if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); enviarZap(); }
   };
   const cx = document.getElementById("zap-msgs"); cx.scrollTop = cx.scrollHeight;
+  carregarMinis(cx);
 }
 
 // F183 · o cliente ao lado da conversa: o que se pergunta enquanto se
@@ -13793,6 +13798,17 @@ function pintarPainelZap(c){
     </section>`;
   };
   const tarefas = (D.tarefas||[]).filter(t=>!t.concluida && (t.cliente_id===cli.id || ks.some(k=>k.id===t.caso_id)));
+  const reps = representadosDe(cli, chave);
+  const repCard = ({x, por}) => {
+    const kx = (D.casosDoCliente.get(x.id)||[]).filter(k=>k.fase!=="encerrado");
+    return `<section class="zp-card zp-rep">
+      <div class="zp-cab"><h3>${esc(x.nome)}</h3><button class="zl-link" onclick="abrirFicha('${x.id}')">Abrir ficha</button></div>
+      ${x.cpf?`<div class="zp-kv"><span>CPF</span><span class="mono">${esc(cpfMascarado(x.cpf))}</span></div>`:""}
+      ${por?`<div class="zp-kv"><span>Vínculo</span><span>${esc(por)}</span></div>`:""}
+      ${kx.length ? kx.slice(0,3).map(k=>`<div class="zp-kv"><span>${esc(k.beneficio||k.titulo||"Caso")}</span><span>${esc(k.etapa||listaDe(k).replace(/^\S+\s/, ""))}</span></div>`).join("")
+        : `<p class="zp-sub">Nenhum caso aberto.</p>`}
+    </section>`;
+  };
   el.innerHTML = `<section class="zp-card">
       <div class="zp-cab"><h3>Ficha do cliente</h3><button class="zl-link" onclick="abrirFicha('${cli.id}')">Abrir ficha</button></div>
       <div class="zp-kv"><span>Nome</span><span>${esc(cli.nome)}</span></div>
@@ -13801,6 +13817,7 @@ function pintarPainelZap(c){
       ${outros.length?`<div class="zp-kv"><span>Outros números</span><span>${outros.map(t=>esc(foneZap(t.numero))+(t.obs&&t.obs!=="principal"?` · ${esc(t.obs)}`:"")).join("<br>")}</span></div>`:""}
     </section>
     ${ks.length ? ks.slice(0,3).map(caso).join("") : `<section class="zp-card"><h4>Caso</h4><p class="zp-sub">Nenhum caso aberto.</p></section>`}
+    ${reps.length ? `<h4 class="zp-rep-tit">Clientes que ${esc(String(cli.nome||"").split(" ")[0])} representa (${reps.length})</h4>${reps.map(repCard).join("")}` : ""}
     <section class="zp-card"><h4>Tarefas abertas</h4>
       ${tarefas.slice(0,5).map(t=>`<label class="zp-tarefa"><input type="checkbox" onchange="concluirTarefaZap('${t.id}')">
         <span>${esc(t.titulo||"")}${t.prazo?` <b class="${t.prazo<hoje()?"venc":"prox"}">${dmaZap(t.prazo).slice(0,5)}</b>`:""}</span></label>`).join("")
@@ -13903,6 +13920,8 @@ function bolhaZap(m, cli){
   const corpo = m.midia_url && m.tipo==="audio"
     ? `<button class="zap-anexo" data-ouvir="${esc(m.midia_url)}" onclick="ouvirAqui(this,'${escJs(m.midia_url)}')">▶ ouvir</button>`
       + (m.texto?`<div>🎤 ${esc(m.texto)}</div>`:"")
+    : m.midia_url && m.tipo==="imagem"
+    ? miniZap(m.midia_url, `verMidiaZap('${m.id}')`) + (m.texto?`<div>${esc(m.texto)}</div>`:"")
     : m.midia_url
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${m.tipo==="audio"?"🎤 ":""}${esc(m.texto)}</div>`:"")
@@ -13964,6 +13983,19 @@ function alternarNota(){
   if(t2){ t2.value = guarda; t2.focus(); }
 }
 
+// F269 · a foto aparece em miniatura no balão, como no WhatsApp; o clique abre o original.
+// O link assinado vale 1 hora e fica guardado 50 minutos, porque a conversa repinta a cada 6 s
+const _miniUrl = new Map();
+const miniZap = (caminho, abrir) => `<img class="zap-mini" data-mini="${esc(caminho)}" alt="foto" onclick="${abrir}">`;
+async function carregarMinis(raiz){
+  for(const im of (raiz||document).querySelectorAll("img.zap-mini[data-mini]:not([src])")){
+    const k = im.dataset.mini, g = _miniUrl.get(k);
+    try{
+      if(!g || g.ate < Date.now()) _miniUrl.set(k, {u: await linkArquivo(k, 3600), ate: Date.now() + 50*60e3});
+      im.src = _miniUrl.get(k).u;
+    }catch(e){ im.replaceWith(Object.assign(document.createElement("span"), {className:"meio-sub", textContent:"📷 foto (não carregou)"})); }
+  }
+}
 async function verMidiaZap(id){
   const m = zapMsgs.find(x=>x.id===id); if(!m||!m.midia_url) return;
   const guia = window.open("","_blank");
@@ -14605,6 +14637,8 @@ async function verZapCliente(cliId){
       + (resto?`<div>${esc(resto)}</div>`:"");
     else if(m.tipo==="audio") corpo = `<button class="btn-mini" data-ouvir="${esc(m.midia_url)}" onclick="ouvirAqui(this,'${escJs(m.midia_url)}')">▶ ouvir</button> `
       + (m.texto ? `<i>🎤 ${esc(m.texto)}</i>` : `<span class="meio-sub">🎤 transcrevendo…</span>`);
+    else if(m.midia_url && m.tipo==="imagem") corpo = miniZap(m.midia_url, `abrirArquivoZap('${escJs(m.midia_url)}')`)
+      + (m.texto?`<div>${esc(m.texto)}</div>`:"");
     else if(m.midia_url) corpo = `<button class="btn-mini" onclick="abrirArquivoZap('${escJs(m.midia_url)}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${esc(m.texto)}</div>`:"");
     else corpo = esc(m.texto||`[${m.tipo}]`);
@@ -14643,6 +14677,7 @@ async function verZapCliente(cliId){
   pintarPendZap();
   requestAnimationFrame(()=>{ el.classList.add("aberto"); document.body.classList.add("lado-aberto"); });
   const caixaMsgs = el.querySelector(".zap-msgs"); if(caixaMsgs) caixaMsgs.scrollTop = caixaMsgs.scrollHeight;
+  carregarMinis(caixaMsgs);
   // abrir é ler: zera o "novas" do botão
   const lidas = zs.filter(z=>z.nao_lidas);
   if(lidas.length){
@@ -14688,6 +14723,19 @@ async function abrirArquivoZap(caminho){
 // benefício do namorado e da sogra): o primeiro marcado fica dono da conversa;
 // nos outros o número entra na lista de telefones da ficha (sem virar o
 // principal), e a conversa aparece na ficha de cada um.
+// F268 · quem fala na conversa representa outros clientes: o representante gravado na ficha
+// deles (campos.representante, pelo CPF ou pelo nome) ou o número desta conversa na lista de telefones deles
+function representadosDe(cli, chave8){
+  const dig = v => String(v||"").replace(/\D/g,""), cpf = dig(cli.cpf), nome = dsa(cli.nome).trim();
+  return (D.clientes||[]).filter(x=>x.id!==cli.id).map(x=>{
+    const r = representanteDe(x);
+    // com CPF nos dois lados vale o CPF; sem ele, o nome igual
+    if(r && (cpf && dig(r.cpf) ? dig(r.cpf)===cpf : nome && dsa(r.nome).trim()===nome))
+      return {x, por:r.qualidade ? `representante (${r.qualidade})` : "representante"};
+    const t = chave8 && telefonesDe(x).find(t=>String(t.numero||"").replace(/\D/g,"").slice(-8)===chave8);
+    return t ? {x, por:t.obs && t.obs!=="principal" ? t.obs : "mesmo WhatsApp"} : null;
+  }).filter(Boolean).sort((a,b)=>String(a.x.nome).localeCompare(String(b.x.nome)));
+}
 function sugestoesVinculo(c){
   const nome = String(c.nome_perfil||"").replace(/[^\p{L} ]/gu," ").trim();
   return nome.length >= 3 ? pesquisar(nome).filter(x=>x.id!==c.cliente_id).slice(0, 4) : [];
