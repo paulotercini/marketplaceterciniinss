@@ -4873,6 +4873,10 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 #painel-prazo .pp-zap-pend .pp-rot{flex-basis:100%;margin:0}
 #painel-prazo .pp-zap-pend audio{height:36px;flex:1;min-width:180px}
 #painel-prazo .pp-zap-arq{flex:1;font-size:13.5px}#painel-prazo .pp-zap-arq small{color:var(--cinza)}
+/* F267 · arrastar entre as partes: o que se pode soltar ganha o contorno tracejado */
+#painel-prazo [data-zmsg]{cursor:grab}
+body.zap-aberto .timeline li[draggable="true"]{cursor:grab}
+body.arrasta-zap #painel-prazo-esq,body.arrasta-zap .escrever,body.arrasta-and #painel-prazo{outline:2px dashed var(--azul);outline-offset:-4px}
 /* F261 · a conversa de WhatsApp no painel ao lado da ficha */
 :is(#painel-prazo,#painel-prazo-esq) .pp-tag.pp-zap{color:#128C4B}
 :is(#painel-prazo,#painel-prazo-esq) .pp-zap-msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding:12px 16px;background:#F4F1EC}
@@ -14509,6 +14513,61 @@ function escolherArquivoLado(convId, inp){
   zapLadoPend = {tipo: "arquivo", file: f, nome: f.name || "arquivo", conversa: convId};
   pintarPendZap();
 }
+// F267 · ARRASTAR ENTRE AS PARTES (pedido do Paulo, 24.10.2026). Nada se grava nem se envia sozinho: soltar só
+// PREENCHE o campo de destino, para conferir e confirmar.
+//  · a mensagem do WhatsApp (direita) → o "Comentar neste prazo" da tarefa (esquerda) ou o campo de escrever no caso
+//  · o andamento da linha do tempo (meio) → o campo de resposta do WhatsApp, como rascunho para o cliente
+function textoDoItemLinha(li){
+  const v = li.querySelector('[id^="visto-"]'), id = v && v.id.slice(6);
+  const a = id && (D._andsFicha||[]).find(x=>x.id===id);
+  const bruto = a ? a.texto : ((li.querySelector(".texto") || li).innerText || "");
+  const texto = String(bruto).replace(/^[⏰🔥\s]*\[PRAZO [0-9.]+\]\s*/u, "").replace(/\s+/g, " ").trim();
+  return {texto, quando: a ? a.criado_em : null};
+}
+function rascunhoParaCliente(item){
+  const cli = D.cliPorId.get(clienteAberto), nome = cli ? String(cli.nome).split(" ")[0] : "";
+  return `Olá${nome ? ", " + nome : ""}! Uma novidade do seu processo${item.quando ? ` (${fmtTS(item.quando)})` : ""}: ${cortaFrase(item.texto, 300)}\n\nSe tiver qualquer dúvida, é só responder por aqui.`;
+}
+function colocarNoCampo(campo, texto){
+  campo.value = campo.value.trim() ? `${campo.value.trim()}\n${texto}` : texto;
+  campo.focus(); campo.setSelectionRange(campo.value.length, campo.value.length);
+  if(campo.oninput) campo.oninput();
+  campo.dispatchEvent(new Event("input", {bubbles: true}));
+}
+document.addEventListener("mouseover", e=>{   // o item da linha do tempo só fica arrastável com a conversa aberta
+  const li = document.body.classList.contains("zap-aberto") && e.target.closest && e.target.closest(".timeline li");
+  if(li && !li.draggable) li.draggable = true;
+});
+document.addEventListener("dragstart", e=>{
+  const z = e.target.closest && e.target.closest("[data-zmsg]");
+  if(z){ e.dataTransfer.setData("text/crm-zap", z.dataset.zmsg); e.dataTransfer.effectAllowed = "copy"; document.body.classList.add("arrasta-zap"); return; }
+  const li = document.body.classList.contains("zap-aberto") && e.target.closest && e.target.closest(".timeline li");
+  if(li){ e.dataTransfer.setData("text/crm-and", JSON.stringify(textoDoItemLinha(li))); e.dataTransfer.effectAllowed = "copy"; document.body.classList.add("arrasta-and"); }
+});
+document.addEventListener("dragend", ()=>document.body.classList.remove("arrasta-zap","arrasta-and"));
+const destinoDoArrasto = (e, tipo) => tipo==="text/crm-zap"
+  ? e.target.closest && (e.target.closest("#painel-prazo-esq") || e.target.closest(".escrever"))
+  : tipo==="text/crm-and" ? e.target.closest && e.target.closest("#painel-prazo") : null;
+document.addEventListener("dragover", e=>{
+  const tipo = [...(e.dataTransfer.types||[])].find(t=>t==="text/crm-zap" || t==="text/crm-and");
+  if(tipo && destinoDoArrasto(e, tipo)){ e.preventDefault(); e.dataTransfer.dropEffect = "copy"; }
+});
+document.addEventListener("drop", e=>{
+  const tipo = [...(e.dataTransfer.types||[])].find(t=>t==="text/crm-zap" || t==="text/crm-and"), alvo = tipo && destinoDoArrasto(e, tipo);
+  if(!alvo) return;
+  e.preventDefault(); document.body.classList.remove("arrasta-zap","arrasta-and");
+  if(tipo==="text/crm-zap"){
+    const m = _zapLado.get(e.dataTransfer.getData("text/crm-zap")); if(!m) return;
+    const campo = alvo.id==="painel-prazo-esq" ? document.getElementById("pp-com") : document.getElementById("and-texto");
+    if(!campo) return;
+    colocarNoCampo(campo, `WhatsApp do cliente em ${fmtTS(m.q)}: “${m.texto.trim()}”`);
+    aviso(alvo.id==="painel-prazo-esq" ? "Confira e clique em Comentar" : "Complete e registre no caso", false);
+  }else{
+    const campo = document.getElementById("pp-zap-txt"); if(!campo) return;
+    colocarNoCampo(campo, rascunhoParaCliente(JSON.parse(e.dataTransfer.getData("text/crm-and"))));
+    aviso("Rascunho para o cliente: confira, ajuste e só então envie", false);
+  }
+});
 function botaoZapCliente(cliId){
   const zs = D.zapFicha||[];
   if(!zs.length) return "";
@@ -14546,7 +14605,7 @@ async function verZapCliente(cliId){
     const acoes = m.direcao==="entrada" && !semArq && resto
       ? `<span class="zl-acoes"><button onclick="anotarMsgZap('${m.id}','${cliId}')" title="registrar na linha do tempo do caso">anotar</button><button onclick="tarefaDaMsgZap('${m.id}')" title="levar ao campo de escrever no caso, com a data que estiver no texto">virar tarefa</button></span>` : "";
     _zapLado.set(m.id, {texto: m.texto||"", q});
-    return sep + `<div class="zap-b ${m.direcao}" style="max-width:85%">
+    return sep + `<div class="zap-b ${m.direcao}" style="max-width:85%"${acoes ? ` draggable="true" data-zmsg="${m.id}" title="arraste para a tarefa ou para o campo de escrever no caso"` : ""}>
       ${quem?`<div class="autor">${esc(quem)}</div>`:""}<div class="txt">${corpo}</div>
       <div class="pe">${horaSP(q)}${m.status==="erro"?" · não enviou":""}</div>${acoes}</div>`;
   });
