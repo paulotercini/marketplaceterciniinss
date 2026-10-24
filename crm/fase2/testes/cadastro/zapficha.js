@@ -72,21 +72,21 @@ const MSGS = [
   await p.waitForSelector('.det-topo button[onclick^="verZapCliente"]');
   conf("o topo da ficha tem o botão 💬 WhatsApp com as novas", /WhatsApp.*2 novas/.test(await p.textContent('.det-topo button[onclick^="verZapCliente"]')));
   await p.click('.det-topo button[onclick^="verZapCliente"]');
-  await p.waitForSelector("#modal .zap-msgs .zap-b");
-  const jan = await p.textContent("#modal .zap-msgs");
+  await p.waitForSelector("#painel-prazo .zap-msgs .zap-b");
+  const jan = await p.textContent("#painel-prazo .zap-msgs");
   conf("a janela traz texto, áudio transcrito e áudio ainda transcrevendo", jan.includes("Chegou carta do INSS")
     && jan.includes("🎤 marcando a perícia para o dia 20") && jan.includes("transcrevendo…") && jan.includes("robô"));
   conf("áudio antigo sem arquivo diz que não foi baixado e não oferece ouvir", jan.includes("áudio antigo, não baixado")
-    && (await p.$$eval("#modal .zap-b", bs => bs.filter(b => b.textContent.includes("não baixado") && b.querySelector("button")).length)) === 0);
+    && (await p.$$eval("#painel-prazo .zap-b", bs => bs.filter(b => b.textContent.includes("não baixado") && b.querySelector("button")).length)) === 0);
   const abas = ctx.pages().length;
-  await p.click('#modal .zap-b button[data-ouvir="zap/x/a1.ogg"]');
-  await p.waitForSelector('#modal audio[data-ouvir="zap/x/a1.ogg"]');
+  await p.click('#painel-prazo .zap-b button[data-ouvir="zap/x/a1.ogg"]');
+  await p.waitForSelector('#painel-prazo audio[data-ouvir="zap/x/a1.ogg"]');
   conf("▶ ouvir toca o áudio na própria janela, sem abrir outra aba", ctx.pages().length === abas
-    && /token=t/.test(await p.getAttribute('#modal audio[data-ouvir="zap/x/a1.ogg"]', "src")));
-  conf("a janela é só leitura: sem caixa de resposta", !(await p.$("#modal textarea")) && !(await p.$("#modal #zap-txt")));
+    && /token=t/.test(await p.getAttribute('#painel-prazo audio[data-ouvir="zap/x/a1.ogg"]', "src")));
+  conf("F261 · a conversa abre ao lado da ficha, com a resposta embaixo", !!(await p.$("#painel-prazo #pp-zap-txt")));
   await p.waitForFunction(() => !(D.zapFicha || []).some(z => z.nao_lidas));
   conf("abrir zera as novas", patches.some(x => /zap_conversas\?id=in\./.test(x.u) && x.b.nao_lidas === 0));
-  await p.evaluate(() => fecharCaixa());
+  await p.evaluate(() => fecharPainelPrazo());
 
   // a aba Mensagens também mostra a última e abre a mesma janela
   await p.waitForSelector('button.mt[data-vv="0"]');
@@ -95,9 +95,9 @@ const MSGS = [
   await p.waitForSelector('.painel[data-p="0"].ativo .zap-ping');
   conf("a aba Mensagens mostra a última mensagem", (await p.textContent('.painel[data-p="0"].ativo .zap-ping')).includes("Chegou carta do INSS"));
   await p.click('.painel[data-p="0"].ativo .zap-ping button');
-  await p.waitForSelector("#modal .zap-msgs .zap-b");
-  conf("“ler mensagens” abre a janela de leitura", (await p.textContent("#modal h3")).includes("WhatsApp"));
-  await p.evaluate(() => fecharCaixa());
+  await p.waitForSelector("#painel-prazo .zap-msgs .zap-b");
+  conf("“ler mensagens” abre a conversa ao lado", (await p.textContent("#painel-prazo header")).includes("WhatsApp"));
+  await p.evaluate(() => fecharPainelPrazo()); await p.waitForTimeout(400);
 
   // na tela do WhatsApp, a conversa de cliente mostra “abrir ficha”
   await p.evaluate(() => irPara("whatsapp"));
@@ -117,10 +117,10 @@ const MSGS = [
   await p.evaluate(cli => abrirFicha(cli), CLI_VAZIO);
   await p.waitForSelector('.det-topo button[onclick^="verZapCliente"]');
   await p.click('.det-topo button[onclick^="verZapCliente"]');
-  await p.waitForSelector("#modal .zap-msgs .zap-b");
-  const cab = await p.textContent("#modal .meio-sub");
+  await p.waitForSelector("#painel-prazo .zap-msgs .zap-b");
+  const cab = await p.textContent("#painel-prazo .pp-cli");
   conf("a ficha de quem tem o número na lista mostra a conversa, dizendo de quem é", cab.includes("conversa de") && cab.includes("Fulana (namorada)"));
-  await p.evaluate(() => fecharCaixa());
+  await p.evaluate(() => fecharPainelPrazo());
 
   // a conversa solta ganha o vincular, que liga à ficha escolhida
   await p.evaluate(id => abrirConversa(id), ZAP_SOLTA);

@@ -1,4 +1,4 @@
-// F260 · A FICHA DE QUEM FALA E A DE QUEM ELA REPRESENTA: aberta a conversa, o painel da
+// F268 · A FICHA DE QUEM FALA E A DE QUEM ELA REPRESENTA: aberta a conversa, o painel da
 // direita traz primeiro a ficha do dono da conversa e, abaixo, a dos clientes que ele
 // representa (representante gravado na ficha ou o mesmo número na lista de telefones). Dados fictícios.
 const { chromium } = require("playwright");
