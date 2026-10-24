@@ -235,9 +235,14 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   conf("no andamento oficial, 'Criar tarefa ou prazo' é o botão principal, sempre à vista (F190)", ff.pin === "1");
 
   // ── F104 · os quadros ────────────────────────────────────────────────────
-  const cards = await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({ tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent, onclick: c.querySelector(".pz-mais").getAttribute("onclick") })));
-  conf("o prazo com anotação de origem vira quadro vermelho e o 'saber mais' vai até a anotação",
-    cards.some(c => c.tipo === "Prazo fatal" && c.data === fmtBR(emDias(9)) && /qdIrParaAndamento/.test(c.onclick)));
+  const cards = await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({ tipo: c.dataset.tipo, data: c.dataset.data.split("-").reverse().join("/"), onclick: c.querySelector(".pz-mais").getAttribute("onclick") })));
+  // F257 · o "abrir" leva ao painel de progresso, e é dele que se vai à anotação
+  const vaiAnotacao = await p.evaluate(d => { const c = [...document.querySelectorAll(".faixa-prazos .pz")].find(x => x.dataset.tipo === "Prazo fatal" && x.dataset.data === d);
+    if(!c) return false; c.querySelector(".pz-mais").click();
+    const ok = [...document.querySelectorAll("#painel-prazo button")].some(b => /qdIrParaAndamento/.test(b.getAttribute("onclick") || ""));
+    fecharPainelPrazo(); return ok; }, emDias(9));
+  conf("o prazo com anotação de origem vira linha de prazo fatal e o 'abrir' leva, pelo painel, até a anotação",
+    cards.some(c => c.tipo === "Prazo fatal" && c.data === fmtBR(emDias(9))) && vaiAnotacao);
   conf("o 'lembrar antes' da mesma anotação é um quadro cinza ao lado", cards.some(c => c.tipo === "Lembrar antes" && c.data === fmtBR(emDias(4))));
 
   // ── F105 · a janela do tipo ──────────────────────────────────────────────
@@ -252,7 +257,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   await p.evaluate((d) => { document.getElementById("pa-oque").value = "Apresentar CTPS"; document.getElementById("pa-prazo").value = d; document.getElementById("pa-doc").value = "CTPS"; document.getElementById("pa-obs").value = "Cliente avisada."; }, emDias(6));
   await p.evaluate(() => popInserir("exigencia")); await p.waitForTimeout(300);
   const ex = await p.evaluate(() => ({ txt: document.getElementById("and-texto").value, modal: document.getElementById("modal").style.display,
-    card: [...document.querySelectorAll(".faixa-prazos .pz")].map(c => c.dataset.tipo + " " + c.querySelector(".pz-data").textContent) }));
+    card: [...document.querySelectorAll(".faixa-prazos .pz")].map(c => c.dataset.tipo + " " + c.dataset.data.split("-").reverse().join("/")) }));
   conf("o comentário padronizado entra no compositor, com a observação no fim",
     ex.txt === `[EXIGÊNCIA] O que o INSS exigiu: Apresentar CTPS\nPrazo para cumprir: ${fmtBR(emDias(6))}\nDocumento que falta: CTPS\nQuem vai cumprir: —\nCliente avisada.` && ex.modal === "none");
   conf("a exigência grava o prazo no caso e vira quadro vermelho na hora", patches("exigencia_prazo").pop().exigencia_prazo === emDias(6) && ex.card.includes("Exigência do INSS " + fmtBR(emDias(6))));   // F220: o quadro diz qual prazo é
@@ -335,7 +340,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   await p.evaluate(async (a) => { const c = { dcb: a.d, dcb_prorrogar_em: null, dcb_prorrogacao_pedida: false };
     await patchCaso(a.id, c); Object.assign(D.casoPorId.get(a.id), c); repintarFicha(); }, { id: CASO1, d: emDias(20) });
   await p.waitForTimeout(300);
-  const dois = await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => `${c.dataset.nat}|${c.dataset.tipo}|${c.querySelector(".pz-data").textContent}`));
+  const dois = await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => `${c.dataset.nat}|${c.dataset.tipo}|${c.dataset.data.split("-").reverse().join("/")}`));
   conf("a DCB vira quadro de PRAZO FATAL no dia da cessação", dois.includes(`fatal|DCB, o benefício cessa|${fmtBR(emDias(20))}`));
   conf("e o dia de pedir a prorrogação continua ao lado, como compromisso", dois.includes(`compromisso|Pedir a prorrogação|${fmtBR(emDias(5))}`));
   conf("marcada a prorrogação, os dois quadros somem juntos", await p.evaluate(async (id) => {
@@ -462,7 +467,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       await patchCaso(a.id, c); Object.assign(D.casoPorId.get(a.id), c); repintarFicha(); },
       { id: CASO1, dcb, pr: prorrogar, pd: pedida });
     await p.waitForTimeout(300);
-    return p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => c.innerText.replace(/\s+/g, " ")));
+    return p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => c.innerText.replace(/\s+/g, " ") + " " + c.dataset.data.split("-").reverse().join("/")));
   };
   const semCampo = await porDcb(emDias(20), null, false);
   conf("DCB anotada sem data de prorrogação já gera o lembrete 15 dias antes",

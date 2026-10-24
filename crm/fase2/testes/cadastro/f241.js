@@ -99,18 +99,19 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // 3 · Prazos e compromissos: à vista o vencido e o próximo; o resto num "mais N", na mesma ordem decrescente
   await abrir(cA, kA);
   const pz = () => p.evaluate(() => { const f = document.querySelector(".faixa-prazos"); const cs = [...f.querySelectorAll(".pz")];
-    return { vis: cs.filter(c => c.offsetParent !== null).map(c => c.querySelector(".pz-data").textContent), todos: cs.map(c => c.querySelector(".pz-data").textContent),
-      bt: (f.querySelector(".fp-ver-todos") || {}).textContent || "", resumo: (f.querySelector(".fp-resumo") || {}).textContent || "" }; });
+    return { vis: cs.filter(c => c.checkVisibility()).map(c => c.dataset.data.split("-").reverse().join("/")), todos: cs.map(c => c.dataset.data.split("-").reverse().join("/")),
+      bt: (f.querySelector("details.fp2-grupo:not([open]) summary") || {}).textContent || "", resumo: f.textContent }; });
   let z = await pz();
   await p.screenshot({ path: path.join(OUT, "02-prazos.png") });
   const br = s => `${s.slice(8, 10)}/${s.slice(5, 7)}/${s.slice(0, 4)}`;
   const adiante = [90, 60, 40].map(d => br(iso(d)));
   conf(`à vista o vencido e o próximo, e não os de longe (${z.vis.join(", ")})`, z.vis.includes(br(iso(-2))) && z.vis.includes(br(iso(3))) && !adiante.some(d => z.vis.includes(d)));
-  conf(`o resto num botão (${z.bt})`, /Ver mais 3 datas/.test(z.bt));
+  conf(`o resto em "Mais tarde", recolhido (${z.bt})`, /Mais tarde\s*3/.test(z.bt));
   const q = s => s.split("/").reverse().join("");
-  conf("a ordem decrescente continua (F145)", z.todos.every((d, i) => !i || q(z.todos[i - 1]) >= q(d)) && adiante.every(d => z.todos.includes(d)));
-  conf("o resumo do topo continua dizendo o próximo e os vencidos", /Próximo/.test(z.resumo) && /vencido/.test(z.resumo));
-  await p.click(".fp-ver-todos");
+  const resto = z.todos.slice(1);
+  conf("F254 · depois do prazo fatal, a ordem é crescente", resto.every((d, i) => !i || q(resto[i - 1]) <= q(d)) && adiante.every(d => z.todos.includes(d)));
+  conf("os grupos dizem o vencido e o que vem", /Vencidas/.test(z.resumo) && /Mais tarde/.test(z.resumo));
+  await p.click("details.fp2-grupo summary");
   z = await pz();
   conf("o clique mostra todas as datas", z.vis.length === z.todos.length && !z.bt);
 
