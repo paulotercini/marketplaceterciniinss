@@ -4784,6 +4784,43 @@ html .tf-etapas .tf-et-n{font-size:11.5px;color:var(--cinza)}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini{margin-top:2px;font-size:12px;color:var(--cinza)}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini.hora{color:var(--azul-escuro);font-weight:600}
 
+/* F257 · o painel de progresso do prazo, à direita, como o de detalhes do To Do; sem escurecer a ficha */
+#painel-prazo{position:fixed;top:0;right:0;bottom:0;width:min(420px,100vw);z-index:900;display:flex;flex-direction:column;overflow-y:auto;
+  background:#fff;border-left:1px solid var(--borda);box-shadow:-12px 0 32px rgba(0,0,0,.12);transform:translateX(105%);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+#painel-prazo.aberto{transform:none}
+@media (prefers-reduced-motion:reduce){#painel-prazo{transition:opacity .2s;transform:none;opacity:0;pointer-events:none}#painel-prazo.aberto{opacity:1;pointer-events:auto}}
+#painel-prazo header{display:flex;gap:10px;align-items:flex-start;padding:16px 18px 12px;border-bottom:1px solid var(--borda)}
+#painel-prazo header div{flex:1}
+#painel-prazo h3{margin:2px 0 0;font-size:17px;line-height:1.3;font-weight:600;color:var(--texto)}
+#painel-prazo .pp-tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dk-lemb,#2F6FB0)}
+#painel-prazo .pp-tag.pp-fatal{color:var(--dk-fatal,#B3261E)}#painel-prazo .pp-tag.pp-compromisso{color:var(--dk-comp,#B7791F)}
+#painel-prazo .pp-x{min-width:32px;min-height:32px;border:0;border-radius:8px;background:transparent;font-size:16px;color:var(--cinza);cursor:pointer}
+@media (hover:hover) and (pointer:fine){#painel-prazo .pp-x:hover{background:var(--fundo)}}
+#painel-prazo .pp-sec{padding:12px 18px;border-bottom:1px solid var(--borda)}
+#painel-prazo .pp-rot{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--cinza);margin:6px 0 6px}
+#painel-prazo .pp-falta{font-size:15px;font-weight:600;color:var(--texto)}
+#painel-prazo .pp-falta.pp-venc,#painel-prazo .pp-falta.pp-perto{color:var(--dk-fatal,#B3261E)}
+#painel-prazo .pp-barra{height:8px;border-radius:4px;background:#ECEAE5;margin:10px 0 4px;overflow:hidden}
+#painel-prazo .pp-barra i{display:block;height:100%;border-radius:4px;background:var(--azul)}
+#painel-prazo .pp-barra.pp-perto i,#painel-prazo .pp-barra.pp-venc i{background:var(--dk-fatal,#B3261E)}
+#painel-prazo .pp-lin,#painel-prazo .pp-linha{display:flex;justify-content:space-between;font-size:12px;color:var(--cinza)}
+#painel-prazo .pp-linha{margin-top:8px;font-size:13px}#painel-prazo .pp-linha span:last-child{color:var(--texto)}
+#painel-prazo .pp-quem{font-size:13.5px;color:var(--cinza);margin-bottom:8px}#painel-prazo .pp-quem b{color:var(--texto)}
+#painel-prazo .pp-seg{display:flex;border:1px solid var(--borda);border-radius:8px;overflow:hidden}
+#painel-prazo .pp-seg button{flex:1;min-height:32px;border:0;border-right:1px solid var(--borda);background:#fff;font:inherit;font-size:12.5px;color:var(--texto);cursor:pointer}
+#painel-prazo .pp-seg button:last-child{border-right:0}
+#painel-prazo .pp-seg button.on{background:var(--azul);color:#fff;font-weight:600}
+#painel-prazo .pp-seg button:disabled:not(.on){color:var(--cinza-claro,#9A988F);cursor:default}
+#painel-prazo .pp-et{display:flex;gap:9px;align-items:center;min-height:30px;font-size:14px;cursor:pointer}
+#painel-prazo .pp-et input{width:17px;height:17px;accent-color:var(--feito,#1E6F50)}
+#painel-prazo .pp-et.ok span{text-decoration:line-through;color:var(--cinza)}
+#painel-prazo .pp-add{margin-top:4px;min-height:28px;padding:0 10px;border:1px dashed var(--borda);border-radius:6px;background:#fff;color:var(--azul-escuro);font-size:12.5px;cursor:pointer}
+#painel-prazo .pp-hist{font-size:12.5px;color:var(--texto);padding:3px 0}#painel-prazo .pp-hist span{color:var(--cinza);font-variant-numeric:tabular-nums}
+#painel-prazo footer{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap;padding:14px 18px;border-top:1px solid var(--borda);background:#fff;position:sticky;bottom:0}
+#painel-prazo .pp-pri{min-height:36px;padding:0 16px;border:0;border-radius:8px;background:var(--feito,#1E6F50);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+#painel-prazo .pp-sec-bt{min-height:36px;padding:0 14px;border:1px solid var(--borda);border-radius:8px;background:#fff;color:var(--azul-escuro);font:inherit;font-weight:500;cursor:pointer}
+#painel-prazo button:active{transform:scale(.97)}
+
 </style>
 </head>
 <body>
@@ -33594,15 +33631,15 @@ function faixaPrazos(k){
           titulo = (RX_TIPO_GENERICO.test(resumo || vis) && motivo) || resumo || vis;
     const ir = x.andId ? `qdIrParaAndamento('${x.casoId}','${x.andId}')`
       : x.semMotivo ? `explicarPrazo('${x.casoId}')` : `prazoSaberMais(${i})`;
-    const sub = [destaque ? "" : NAT_ROT[nat], tipo!==NAT_ROT[nat] && tipo!==titulo ? tipo : "", x.semMotivo && !motivo ? "do To Do, diga do que é" : ""]
-      .filter(Boolean).join(" · ");
+    const sub = x.semMotivo && !motivo ? "do To Do, diga do que é" : "";
     const data = quando(x.data) + (destaque || nat==="fatal" ? ` · ${falta(x.data)}` : x.aConfirmar && d<0 ? " · confirme" : "");
+    Object.assign(x, {_nat: nat, _titulo: titulo, _motivo: motivo, _ir: ir, _quando: quando(x.data), _falta: falta(x.data)});   // para o painel
     return `<div class="pz fp2-lin pz-${nat}${pend(x)?" pz-venceu":""}${destaque?" fp2-fatal":""}${x.semMotivo?" pz-semmotivo":""}${x.aConfirmar?" pz-confirmar":""}" data-nat="${nat}" title="${esc(tipo+(resumo?` · ${resumo}`:""))}">
       ${x.cumprir?`<button class="fp2-circ" onclick="${x.cumprir}" title="cumpri: tira o prazo daqui e devolve o caso à lista de onde veio" aria-label="cumpri"></button>`:`<span class="fp2-bola" aria-hidden="true"></span>`}
       ${destaque
-        ? `<span class="fp2-txt"><small class="fp2-tag">Prazo fatal</small><b>${esc(titulo)}</b><span class="fp2-quando">${esc(data)}</span>${inicioDoPrazo(x, quando)}${sub?`<small>${esc(sub)}</small>`:""}</span>`
+        ? `<span class="fp2-txt"><small class="fp2-tag">Prazo fatal</small><b>${esc(titulo)}</b><span class="fp2-quando">${esc(data)}</span>${sub?`<small>${esc(sub)}</small>`:""}</span>`
         : `<span class="fp2-txt"><b>${esc(titulo)}</b>${sub?`<small>${esc(sub)}</small>`:""}</span><span class="fp2-data">${esc(data)}</span>`}${x.avs||""}
-      <button class="fp2-mais" onclick="${ir}" title="${x.andId?"ir até a anotação que criou este prazo":x.semMotivo?"esta data veio do To Do: diga do que ela é":"ver o que é e o que fazer"}">${x.andId ? "ver a tarefa" : x.semMotivo && !motivo ? "do que é?" : "detalhes"}</button>${x.ouv||""}
+      <button class="fp2-mais" onclick="abrirPainelPrazo(${i})" title="ver o progresso: quem faz, etapas e histórico">abrir</button>${x.ouv||""}
     </div>`;
   };
   const destaque = proxFatal || minhas.filter(x=>natDaLinha(x)==="fatal" && pend(x))[0] || null;
@@ -33618,17 +33655,12 @@ function faixaPrazos(k){
     : `<section class="fp2-grupo"${tom?` data-tom="${tom}"`:""}>${cab(rot, g.length)}${g.map(x=>linha(x)).join("")}</section>`).join("");
   const sem = destaque ? "" : `<p class="fp2-sem meio-sub">Sem prazo fatal em aberto neste caso.</p>`;
   const nv = minhas.length ? `<button type="button" class="tl-bt fp-nv" onclick="this.closest('.faixa-prazos').classList.add('nv-ver')" title="no nível 1 as datas ficam recolhidas">ver as datas</button>` : "";   // F249
+  if(painelPz && painelPz.casoId===k.id){ const j = minhas.findIndex(x=>x.data===painelPz.data && (x.andId||"")===painelPz.andId);
+    if(j>=0) setTimeout(()=>abrirPainelPrazo(j)); }
   return `<div class="faixa-prazos fp2" aria-label="Prazos e providências">${tit}${nv}${destaque ? linha(destaque, true) : sem}${blocos}</div>`;
 }
-// A DATA DE INÍCIO DO PLANNER no prazo fatal (casos.prazo_inicio): quando começar, além de quando vence.
-// Só vale para o prazo fatal do próprio caso (casos.prazo); os prazos que vêm do tribunal ou da exigência não têm.
-function inicioDoPrazo(x, quando){
-  const k = D.casoPorId.get(x.casoId);
-  if(!k || k.prazo!==x.data) return "";
-  const ini = k.prazo_inicio, hj = hoje(), mudar = `<a href="#" onclick="event.preventDefault();event.stopPropagation();marcarInicioPrazo('${k.id}')">`;
-  if(!ini) return `<small class="fp2-ini">${mudar}marcar quando começar</a></small>`;
-  return `<small class="fp2-ini${ini<=hj?" hora":""}">${ini<=hj?`Já é hora de começar (início ${fmtBarra(ini).slice(0,5)})`:`Começar em ${quando(ini)}`} · ${mudar}mudar</a></small>`;
-}
+// A DATA DE INÍCIO DO PLANNER no prazo fatal (casos.prazo_inicio): quando começar, além de quando vence. Só vale
+// para o prazo fatal do próprio caso (casos.prazo); marca-se no painel de progresso (abrirPainelPrazo).
 function marcarInicioPrazo(casoId){
   const k = D.casoPorId.get(casoId); if(!k || !k.prazo) return;
   const sug = n => diasUteisAntes(k.prazo, n);
@@ -33651,6 +33683,63 @@ async function gravarInicioPrazo(casoId, data){
   aviso(data ? `Começar em ${fmtBarra(data)}` : "Prazo sem data de início", false);
   if(clienteAberto) abrirFicha(clienteAberto); else render();
 }
+// F257 · O PAINEL DE PROGRESSO DO PRAZO (o painel de detalhes do To Do). A faixa fica só com o prazo e o
+// "abrir"; o painel, que entra pela direita sem escurecer a ficha, diz o que fazer, quanto falta (com a barra do
+// início ao vencimento), quem está fazendo, as etapas, o início, a origem e o histórico. Fecha no ✕ ou no Esc,
+// e continua aberto quando a ficha se repinta depois de uma ação feita dentro dele.
+let painelPz = null;
+function fecharPainelPrazo(){
+  painelPz = null;
+  const el = document.getElementById("painel-prazo"); if(el) el.classList.remove("aberto");
+}
+function abrirPainelPrazo(i){
+  const x = faixaAtual[i]; if(!x) return;
+  painelPz = {casoId: x.casoId, data: x.data, andId: x.andId || ""};
+  const hj = hoje(), k = D.casoPorId.get(x.casoId), nome = id => ((D.colPorId.get(id)||{}).nome||"alguém").split(" ")[0];
+  const abertas = (D.tarefasPorCaso.get(x.casoId)||[]).filter(t=>!t.concluida_em);
+  const ts = x.andId ? abertas.filter(t=>t.andamento_id===x.andId) : x.tc ? [x.tc] : x._nat==="fatal" ? abertas : [];
+  const minha = ts.find(t=>t.colaborador_id===eu.id);
+  // a barra: do início (o marcado no prazo, ou a criação da tarefa mais antiga) ao vencimento, com o hoje
+  const ini = (k && k.prazo===x.data && k.prazo_inicio) || ts.map(t=>String(t.criado_em||"").slice(0,10)).filter(Boolean).sort()[0] || null;
+  const pct = ini && x.data>ini ? Math.max(0, Math.min(100, Math.round(100*diasEntreIso(ini, hj)/diasEntreIso(ini, x.data)))) : null;
+  const tom = x.data<hj ? "venc" : pct!=null && pct>=70 ? "perto" : "";
+  const barra = pct==null ? "" : `<div class="pp-barra pp-${tom}" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
+    <div class="pp-lin"><span>Início ${fmtBarra(ini).slice(0,5)}</span><span>Vence ${fmtBarra(x.data).slice(0,5)}</span></div>`;
+  const inicio = k && k.prazo===x.data ? `<div class="pp-linha"><span>Começar</span><span>${k.prazo_inicio
+    ? `${k.prazo_inicio<=hj?"já é hora (desde ":"em "}${fmtBarra(k.prazo_inicio).slice(0,5)}${k.prazo_inicio<=hj?")":""}` : "sem data"} · <a href="#" onclick="event.preventDefault();marcarInicioPrazo('${k.id}')">${k.prazo_inicio?"mudar":"marcar"}</a></span></div>` : "";
+  const estado = t => { const minhaT = t.colaborador_id===eu.id, e = t.iniciada_em ? 1 : 0;
+    const op = (n, rot, acao) => `<button class="${n===e?"on":""}"${minhaT && n!==e ? ` onclick="${acao}"` : " disabled"}>${rot}</button>`;
+    return `<div class="pp-seg" aria-label="andamento de ${esc(nome(t.colaborador_id))}">${op(0, "Não iniciada", `alternarAndamento('${t.id}')`)}${
+      op(1, "Em andamento", `alternarAndamento('${t.id}')`)}${op(2, "Concluída", `concluirDeVez('${t.id}')`)}</div>`; };
+  const etapas = t => { const ets = Array.isArray(t.etapas) ? t.etapas : [];
+    return `<div class="pp-rot">Etapas${ets.length?` · ${ets.filter(e=>e.feito).length} de ${ets.length}`:""}</div>${ets.map((e,j)=>
+      `<label class="pp-et${e.feito?" ok":""}"><input type="checkbox"${e.feito?" checked":""} onchange="marcarEtapa('${t.id}',${j},this.checked)"><span>${esc(e.t)}</span></label>`).join("")
+      }<button class="pp-add" onclick="novaEtapa('${t.id}')">+ etapa</button>`; };
+  const tarefa = t => `<section class="pp-sec"><div class="pp-quem"><b>${esc(nome(t.colaborador_id))}</b>${t.atribuido_por && t.atribuido_por!==t.colaborador_id ? ` · atribuída por ${esc(nome(t.atribuido_por))}` : ""}${
+      t.lembrar_hora ? ` · ⏰ ${String(t.lembrar_hora).slice(0,5)}` : ""}</div>${estado(t)}${etapas(t)}</section>`;
+  const hist = [];
+  for(const t of ts){
+    if(t.criado_em) hist.push([t.criado_em, t.atribuido_por && t.atribuido_por!==t.colaborador_id
+      ? `${nome(t.atribuido_por)} atribuiu a ${nome(t.colaborador_id)}` : `${nome(t.colaborador_id)} criou a tarefa`]);
+    if(t.iniciada_em) hist.push([t.iniciada_em, `${nome(t.colaborador_id)} começou`]);
+    for(const e of (t.etapas||[])) if(e.feito && e.em) hist.push([e.em, `${nome(e.por)} fez “${e.t}”`]);
+  }
+  hist.sort((a,b)=>String(a[0]).localeCompare(String(b[0])));
+  const origem = x.andId ? `<button class="pp-sec-bt" onclick="fecharPainelPrazo();${x._ir}">ver na linha do tempo</button>`
+    : `<button class="pp-sec-bt" onclick="${x._ir}">${x.semMotivo && !x._motivo ? "do que é?" : "detalhes"}</button>`;
+  const principal = x.cumprir ? `<button class="pp-pri" onclick="fecharPainelPrazo();${x.cumprir}">✔ Cumpri</button>`
+    : minha ? `<button class="pp-pri" onclick="concluirDeVez('${minha.id}')">✔ Concluir a minha tarefa</button>` : "";
+  let el = document.getElementById("painel-prazo");
+  if(!el){ el = document.createElement("aside"); el.id = "painel-prazo"; el.setAttribute("aria-label", "Progresso do prazo"); document.body.appendChild(el); }
+  el.innerHTML = `<header><div><small class="pp-tag pp-${x._nat}">${esc(NAT_ROT[x._nat]||"Prazo")}</small><h3>${esc(x._titulo)}</h3></div>
+      <button class="pp-x" onclick="fecharPainelPrazo()" aria-label="fechar">✕</button></header>
+    <section class="pp-sec"><div class="pp-rot">Quanto falta</div><div class="pp-falta pp-${tom}">${esc(x._falta || x._quando)} · ${esc(x._quando)}</div>${barra}${inicio}</section>
+    ${ts.length ? ts.map(tarefa).join("") : `<section class="pp-sec"><p class="meio-sub">Ninguém tem tarefa aberta para este prazo.</p></section>`}
+    ${hist.length ? `<section class="pp-sec"><div class="pp-rot">Histórico</div>${hist.map(([q, t])=>`<div class="pp-hist"><span>${esc(horaLocal(q))}</span> ${esc(t)}</div>`).join("")}</section>` : ""}
+    <footer>${principal}${minha ? `<button class="pp-sec-bt" onclick="adiarTarefa('${minha.id}')">Adiar</button>` : ""}${origem}</footer>`;
+  requestAnimationFrame(()=>el.classList.add("aberto"));
+}
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && painelPz && !document.querySelector("#modal:not([style*='none']) *")) fecharPainelPrazo(); });
 const _pzTodos = new Set();   // F241 · os casos em que se abriram todas as datas, na sessão
 function pzVerTodos(bt, casoId){
   _pzTodos.add(casoId);
