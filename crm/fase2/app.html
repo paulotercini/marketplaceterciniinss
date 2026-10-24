@@ -4821,6 +4821,27 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini.hora{color:var(--azul-escuro);font-w
 #painel-prazo .pp-sec-bt{min-height:36px;padding:0 14px;border:1px solid var(--borda);border-radius:8px;background:#fff;color:var(--azul-escuro);font:inherit;font-weight:500;cursor:pointer}
 #painel-prazo button:active{transform:scale(.97)}
 
+/* F258 · acabamento do painel (revisão de design, 24.10.2026) */
+#painel-prazo{transition:transform 240ms cubic-bezier(.32,.72,0,1)}
+#painel-prazo .pp-cli{font-size:12px;color:var(--cinza);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#painel-prazo .pp-falta{display:flex;align-items:baseline;gap:6px;font-size:14px;font-weight:500}
+#painel-prazo .pp-falta b{font-size:34px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+#painel-prazo .pp-qdo{font-size:13px;color:var(--cinza);margin-top:2px}
+#painel-prazo .pp-barra{position:relative;overflow:visible}
+#painel-prazo .pp-barra em{position:absolute;top:-4px;width:2px;height:16px;margin-left:-1px;border-radius:1px;background:var(--texto)}
+#painel-prazo .pp-quem{display:flex;align-items:center;gap:6px}
+#painel-prazo .pp-seg button{transition:background-color 150ms ease,color 150ms ease}
+#painel-prazo .pp-seg button:not(:disabled):active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){#painel-prazo .pp-seg button:not(:disabled):not(.on):hover{background:var(--azul-fundo,#E6F0EF)}}
+#painel-prazo .pp-mini{height:4px;border-radius:2px;background:#ECEAE5;margin:-2px 0 6px;overflow:hidden}
+#painel-prazo .pp-mini i{display:block;height:100%;background:var(--feito,#1E6F50);transition:width 200ms ease-out}
+#painel-prazo .pp-tl{list-style:none;margin:0;padding:0 0 0 14px;border-left:2px solid var(--borda)}
+#painel-prazo .pp-tl li{position:relative;padding:2px 0 8px 8px;font-size:13px;color:var(--texto)}
+#painel-prazo .pp-tl li::before{content:"";position:absolute;left:-20px;top:7px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--azul)}
+#painel-prazo .pp-tl li:last-child::before{background:var(--azul)}
+#painel-prazo .pp-tl li span{display:block;font-size:11.5px;color:var(--cinza);font-variant-numeric:tabular-nums}
+#painel-prazo .pp-pri,#painel-prazo .pp-sec-bt{transition:transform 120ms ease-out}
+
 </style>
 </head>
 <body>
@@ -33703,7 +33724,7 @@ function abrirPainelPrazo(i){
   const ini = (k && k.prazo===x.data && k.prazo_inicio) || ts.map(t=>String(t.criado_em||"").slice(0,10)).filter(Boolean).sort()[0] || null;
   const pct = ini && x.data>ini ? Math.max(0, Math.min(100, Math.round(100*diasEntreIso(ini, hj)/diasEntreIso(ini, x.data)))) : null;
   const tom = x.data<hj ? "venc" : pct!=null && pct>=70 ? "perto" : "";
-  const barra = pct==null ? "" : `<div class="pp-barra pp-${tom}" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
+  const barra = pct==null ? "" : `<div class="pp-barra pp-${tom}" role="progressbar" aria-label="tempo do prazo já passado" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i><em style="left:${pct}%" title="hoje"></em></div>
     <div class="pp-lin"><span>Início ${fmtBarra(ini).slice(0,5)}</span><span>Vence ${fmtBarra(x.data).slice(0,5)}</span></div>`;
   const inicio = k && k.prazo===x.data ? `<div class="pp-linha"><span>Começar</span><span>${k.prazo_inicio
     ? `${k.prazo_inicio<=hj?"já é hora (desde ":"em "}${fmtBarra(k.prazo_inicio).slice(0,5)}${k.prazo_inicio<=hj?")":""}` : "sem data"} · <a href="#" onclick="event.preventDefault();marcarInicioPrazo('${k.id}')">${k.prazo_inicio?"mudar":"marcar"}</a></span></div>` : "";
@@ -33712,10 +33733,11 @@ function abrirPainelPrazo(i){
     return `<div class="pp-seg" aria-label="andamento de ${esc(nome(t.colaborador_id))}">${op(0, "Não iniciada", `alternarAndamento('${t.id}')`)}${
       op(1, "Em andamento", `alternarAndamento('${t.id}')`)}${op(2, "Concluída", `concluirDeVez('${t.id}')`)}</div>`; };
   const etapas = t => { const ets = Array.isArray(t.etapas) ? t.etapas : [];
-    return `<div class="pp-rot">Etapas${ets.length?` · ${ets.filter(e=>e.feito).length} de ${ets.length}`:""}</div>${ets.map((e,j)=>
+    const nOk = ets.filter(e=>e.feito).length;
+    return `<div class="pp-rot">Etapas${ets.length?` · ${nOk} de ${ets.length}`:""}</div>${ets.length ? `<div class="pp-mini"><i style="width:${Math.round(100*nOk/ets.length)}%"></i></div>` : ""}${ets.map((e,j)=>
       `<label class="pp-et${e.feito?" ok":""}"><input type="checkbox"${e.feito?" checked":""} onchange="marcarEtapa('${t.id}',${j},this.checked)"><span>${esc(e.t)}</span></label>`).join("")
       }<button class="pp-add" onclick="novaEtapa('${t.id}')">+ etapa</button>`; };
-  const tarefa = t => `<section class="pp-sec"><div class="pp-quem"><b>${esc(nome(t.colaborador_id))}</b>${t.atribuido_por && t.atribuido_por!==t.colaborador_id ? ` · atribuída por ${esc(nome(t.atribuido_por))}` : ""}${
+  const tarefa = t => `<section class="pp-sec"><div class="pp-quem">${av(t.colaborador_id)}<b>${esc(nome(t.colaborador_id))}</b>${t.atribuido_por && t.atribuido_por!==t.colaborador_id ? ` · atribuída por ${esc(nome(t.atribuido_por))}` : ""}${
       t.lembrar_hora ? ` · ⏰ ${String(t.lembrar_hora).slice(0,5)}` : ""}</div>${estado(t)}${etapas(t)}</section>`;
   const hist = [];
   for(const t of ts){
@@ -33731,11 +33753,13 @@ function abrirPainelPrazo(i){
     : minha ? `<button class="pp-pri" onclick="concluirDeVez('${minha.id}')">✔ Concluir a minha tarefa</button>` : "";
   let el = document.getElementById("painel-prazo");
   if(!el){ el = document.createElement("aside"); el.id = "painel-prazo"; el.setAttribute("aria-label", "Progresso do prazo"); document.body.appendChild(el); }
-  el.innerHTML = `<header><div><small class="pp-tag pp-${x._nat}">${esc(NAT_ROT[x._nat]||"Prazo")}</small><h3>${esc(x._titulo)}</h3></div>
+  const cli = k && D.cliPorId.get(k.cliente_id);
+  const av = id => { const c = D.colPorId.get(id); return c ? `<span class="avatar mini" style="background:${c.cor}" aria-hidden="true">${esc(c.inicial)}</span>` : ""; };
+  el.innerHTML = `<header><div>${cli ? `<div class="pp-cli">${esc(cli.nome)}${k.beneficio ? ` · ${esc(k.beneficio)}` : ""}</div>` : ""}<small class="pp-tag pp-${x._nat}">${esc(NAT_ROT[x._nat]||"Prazo")}</small><h3>${esc(x._titulo)}</h3></div>
       <button class="pp-x" onclick="fecharPainelPrazo()" aria-label="fechar">✕</button></header>
-    <section class="pp-sec"><div class="pp-rot">Quanto falta</div><div class="pp-falta pp-${tom}">${esc(x._falta || x._quando)} · ${esc(x._quando)}</div>${barra}${inicio}</section>
+    <section class="pp-sec"><div class="pp-rot">Quanto falta</div><div class="pp-falta pp-${tom}">${(m => m ? `${/^faltam/.test(m[1]) ? "" : esc(m[1])}<b>${m[2]}</b> ${esc(m[3].trim())}` : esc(x._falta || ""))(/^(.*?)(\d+)(.*)$/.exec(x._falta||""))}</div><div class="pp-qdo">${esc(x._quando)}</div>${barra}${inicio}</section>
     ${ts.length ? ts.map(tarefa).join("") : `<section class="pp-sec"><p class="meio-sub">Ninguém tem tarefa aberta para este prazo.</p></section>`}
-    ${hist.length ? `<section class="pp-sec"><div class="pp-rot">Histórico</div>${hist.map(([q, t])=>`<div class="pp-hist"><span>${esc(horaLocal(q))}</span> ${esc(t)}</div>`).join("")}</section>` : ""}
+    ${hist.length ? `<section class="pp-sec"><div class="pp-rot">Histórico</div><ol class="pp-tl">${hist.map(([q, t])=>`<li><span>${esc(horaLocal(q))}</span>${esc(t)}</li>`).join("")}</ol></section>` : ""}
     <footer>${principal}${minha ? `<button class="pp-sec-bt" onclick="adiarTarefa('${minha.id}')">Adiar</button>` : ""}${origem}</footer>`;
   requestAnimationFrame(()=>el.classList.add("aberto"));
 }
