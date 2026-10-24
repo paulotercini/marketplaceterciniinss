@@ -4863,6 +4863,8 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini.hora{color:var(--azul-escuro);font-w
 html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
 @media (hover:hover) and (pointer:fine){html .tl-tarefa .tl-tf-abrir:hover{text-decoration:underline}}
 
+#painel-prazo .pp-zap-com{padding:8px 16px;font-size:12.5px;background:#FFF7E6;border-bottom:1px solid #F0D9A8;color:#6B4A00}
+#painel-prazo .pp-zap-com b{font-weight:500}
 /* F261 · a conversa de WhatsApp no painel ao lado da ficha */
 :is(#painel-prazo,#painel-prazo-esq) .pp-tag.pp-zap{color:#128C4B}
 :is(#painel-prazo,#painel-prazo-esq) .pp-zap-msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding:12px 16px;background:#F4F1EC}
@@ -14492,6 +14494,7 @@ async function verZapCliente(cliId){
         ? `${z.telefone||""} (conversa de ${D.cliPorId.get(z.cliente_id)?.nome||z.nome_perfil||"outro contato"}${obsDoNumero(cliId,z.telefone)?", "+obsDoNumero(cliId,z.telefone):""})`
         : (z.telefone||""))).join(" · ")}</div><small class="pp-tag pp-zap">WhatsApp</small><h3>${esc(cli?.nome||"")}</h3></div>
       <button class="pp-x" onclick="fecharPainelPrazo()" aria-label="fechar">✕</button></header>
+    ${(at => at && at.id!==eu.id ? `<div class="pp-zap-com" role="status">Em atendimento com <b>${esc(at.nome.split(" ")[0])}</b>. Você pode responder: ${esc(at.nome.split(" ")[0])} recebe o aviso e a conversa continua com ${esc(at.nome.split(" ")[0])}.</div>` : "")(minha.atendente_id && D.colPorId.get(minha.atendente_id))}
     <div class="zap-msgs pp-zap-msgs">${linhas.join("") || `<p class="meio-sub">Nenhuma mensagem ainda.</p>`}</div>
     <footer class="pp-zap-resp"><textarea id="pp-zap-txt" rows="2" placeholder="Responder pelo WhatsApp…"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();responderZapLado('${minha.id}','${cliId}')}"></textarea>
@@ -16712,7 +16715,7 @@ function buscarFicha(cliId, ids){
       ids?todas("andamento_tarefas",`select=*&caso_id=in.(${ids})`).catch(()=>[]):[],
       // a conversa é de um cliente só, mas quem cuida do benefício de outro
       // (a namorada, o marido) tem o número na lista dele: aparece nas duas fichas
-      todas("zap_conversas",`select=id,ultima_em,ultimo_texto,nao_lidas,telefone,nome_perfil,cliente_id,foto_url,contato_nome,contato_relacao&or=(${
+      todas("zap_conversas",`select=id,ultima_em,ultimo_texto,nao_lidas,telefone,nome_perfil,cliente_id,foto_url,contato_nome,contato_relacao,atendente_id&or=(${
         ["cliente_id.eq."+cliId, ...(chavesDoCliente(cliId).length?[`chave.in.(${chavesDoCliente(cliId).join(",")})`]:[])].join(",")
       })&order=ultima_em.desc.nullslast`).catch(()=>[]),
     ]);

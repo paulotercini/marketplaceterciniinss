@@ -23,3 +23,32 @@ alter table andamento_tarefas add column if not exists iniciada_em timestamptz;
 -- Etapas da tarefa (os steps do To Do, o checklist do Planner): os passos para
 -- cumprir a tarefa, cada um com feito, quem e quando.
 alter table andamento_tarefas add column if not exists etapas jsonb not null default '[]'::jsonb;
+
+-- ATENDIMENTO COMPARTILHADO NO WHATSAPP (decisão do Paulo, 24.10.2026): quem não é o atendente também
+-- responde ao cliente; a conversa continua com o atendente, que recebe uma menção dizendo quem respondeu.
+-- O cliente vê quem escreveu pela assinatura (F188). Substitui a trava de "só o dono ou o gestor responde".
+create or replace function zap_guarda_mensagem() returns trigger
+language plpgsql as $$
+begin
+  return new;   -- responder é de todos; quem atende continua sendo o dono (zap_guarda_conversa segue valendo)
+end $$;
+
+create or replace function zap_avisa_resposta_compartilhada() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare v_dono uuid; v_nome text;
+begin
+  if new.direcao <> 'saida' or new.autor_id is null then return new; end if;
+  select atendente_id, coalesce(nullif(trim(nome_perfil),''), telefone) into v_dono, v_nome
+    from zap_conversas where id = new.conversa_id;
+  if v_dono is null or v_dono = new.autor_id then return new; end if;
+  -- uma menção por pessoa e conversa enquanto o atendente não a lê: dez respostas não viram dez avisos
+  if exists (select 1 from mencoes where para_id = v_dono and de_id = new.autor_id
+               and conversa_id = new.conversa_id and lida_em is null) then return new; end if;
+  insert into mencoes (de_id, para_id, conversa_id, texto)
+  values (new.autor_id, v_dono, new.conversa_id,
+          '💬 ' || zap_nome_colab(new.autor_id) || ' respondeu a ' || coalesce(v_nome, 'o cliente') || ' na conversa que está com você');
+  return new;
+end $$;
+drop trigger if exists zap_avisa_resposta on zap_mensagens;
+create trigger zap_avisa_resposta after insert on zap_mensagens
+  for each row execute function zap_avisa_resposta_compartilhada();
