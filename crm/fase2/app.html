@@ -4794,74 +4794,74 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini.hora{color:var(--azul-escuro);font-w
   background:#fff;border-left:1px solid var(--borda);box-shadow:-12px 0 32px rgba(0,0,0,.12);transform:translateX(105%);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
 #painel-prazo.aberto{transform:none}
 @media (prefers-reduced-motion:reduce){#painel-prazo{transition:opacity .2s;transform:none;opacity:0;pointer-events:none}#painel-prazo.aberto{opacity:1;pointer-events:auto}}
-#painel-prazo header{display:flex;gap:10px;align-items:flex-start;padding:16px 18px 12px;border-bottom:1px solid var(--borda)}
-#painel-prazo header div{flex:1}
-#painel-prazo h3{margin:2px 0 0;font-size:17px;line-height:1.3;font-weight:600;color:var(--texto)}
-#painel-prazo .pp-tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dk-lemb,#2F6FB0)}
-#painel-prazo .pp-tag.pp-fatal{color:var(--dk-fatal,#B3261E)}#painel-prazo .pp-tag.pp-compromisso{color:var(--dk-comp,#B7791F)}
-#painel-prazo .pp-x{min-width:32px;min-height:32px;border:0;border-radius:8px;background:transparent;font-size:16px;color:var(--cinza);cursor:pointer}
-@media (hover:hover) and (pointer:fine){#painel-prazo .pp-x:hover{background:var(--fundo)}}
-#painel-prazo .pp-sec{padding:12px 18px;border-bottom:1px solid var(--borda)}
-#painel-prazo .pp-rot{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--cinza);margin:6px 0 6px}
-#painel-prazo .pp-falta{font-size:15px;font-weight:600;color:var(--texto)}
-#painel-prazo .pp-falta.pp-venc,#painel-prazo .pp-falta.pp-perto{color:var(--dk-fatal,#B3261E)}
-#painel-prazo .pp-barra{height:8px;border-radius:4px;background:#ECEAE5;margin:10px 0 4px;overflow:hidden}
-#painel-prazo .pp-barra i{display:block;height:100%;border-radius:4px;background:var(--azul)}
-#painel-prazo .pp-barra.pp-perto i,#painel-prazo .pp-barra.pp-venc i{background:var(--dk-fatal,#B3261E)}
-#painel-prazo .pp-lin,#painel-prazo .pp-linha{display:flex;justify-content:space-between;font-size:12px;color:var(--cinza)}
-#painel-prazo .pp-linha{margin-top:8px;font-size:13px}#painel-prazo .pp-linha span:last-child{color:var(--texto)}
-#painel-prazo .pp-quem{font-size:13.5px;color:var(--cinza);margin-bottom:8px}#painel-prazo .pp-quem b{color:var(--texto)}
-#painel-prazo .pp-seg{display:flex;border:1px solid var(--borda);border-radius:8px;overflow:hidden}
-#painel-prazo .pp-seg button{flex:1;min-height:32px;border:0;border-right:1px solid var(--borda);background:#fff;font:inherit;font-size:12.5px;color:var(--texto);cursor:pointer}
-#painel-prazo .pp-seg button:last-child{border-right:0}
-#painel-prazo .pp-seg button.on{background:var(--azul);color:#fff;font-weight:600}
-#painel-prazo .pp-seg button:disabled:not(.on){color:var(--cinza-claro,#9A988F);cursor:default}
-#painel-prazo .pp-et{display:flex;gap:9px;align-items:center;min-height:30px;font-size:14px;cursor:pointer}
-#painel-prazo .pp-et input{width:17px;height:17px;accent-color:var(--feito,#1E6F50)}
-#painel-prazo .pp-et.ok span{text-decoration:line-through;color:var(--cinza)}
-#painel-prazo .pp-add{margin-top:4px;min-height:28px;padding:0 10px;border:1px dashed var(--borda);border-radius:6px;background:#fff;color:var(--azul-escuro);font-size:12.5px;cursor:pointer}
-#painel-prazo .pp-hist{font-size:12.5px;color:var(--texto);padding:3px 0}#painel-prazo .pp-hist span{color:var(--cinza);font-variant-numeric:tabular-nums}
-#painel-prazo footer{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap;padding:14px 18px;border-top:1px solid var(--borda);background:#fff;position:sticky;bottom:0}
-#painel-prazo .pp-pri{min-height:36px;padding:0 16px;border:0;border-radius:8px;background:var(--feito,#1E6F50);color:#fff;font:inherit;font-weight:600;cursor:pointer}
-#painel-prazo .pp-sec-bt{min-height:36px;padding:0 14px;border:1px solid var(--borda);border-radius:8px;background:#fff;color:var(--azul-escuro);font:inherit;font-weight:500;cursor:pointer}
-#painel-prazo button:active{transform:scale(.97)}
+:is(#painel-prazo,#painel-prazo-esq) header{display:flex;gap:10px;align-items:flex-start;padding:16px 18px 12px;border-bottom:1px solid var(--borda)}
+:is(#painel-prazo,#painel-prazo-esq) header div{flex:1}
+:is(#painel-prazo,#painel-prazo-esq) h3{margin:2px 0 0;font-size:17px;line-height:1.3;font-weight:600;color:var(--texto)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dk-lemb,#2F6FB0)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-tag.pp-fatal{color:var(--dk-fatal,#B3261E)}:is(#painel-prazo,#painel-prazo-esq) .pp-tag.pp-compromisso{color:var(--dk-comp,#B7791F)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-x{min-width:32px;min-height:32px;border:0;border-radius:8px;background:transparent;font-size:16px;color:var(--cinza);cursor:pointer}
+@media (hover:hover) and (pointer:fine){:is(#painel-prazo,#painel-prazo-esq) .pp-x:hover{background:var(--fundo)}}
+:is(#painel-prazo,#painel-prazo-esq) .pp-sec{padding:12px 18px;border-bottom:1px solid var(--borda)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-rot{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--cinza);margin:6px 0 6px}
+:is(#painel-prazo,#painel-prazo-esq) .pp-falta{font-size:15px;font-weight:600;color:var(--texto)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-falta.pp-venc,:is(#painel-prazo,#painel-prazo-esq) .pp-falta.pp-perto{color:var(--dk-fatal,#B3261E)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-barra{height:8px;border-radius:4px;background:#ECEAE5;margin:10px 0 4px;overflow:hidden}
+:is(#painel-prazo,#painel-prazo-esq) .pp-barra i{display:block;height:100%;border-radius:4px;background:var(--azul)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-barra.pp-perto i,:is(#painel-prazo,#painel-prazo-esq) .pp-barra.pp-venc i{background:var(--dk-fatal,#B3261E)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-lin,:is(#painel-prazo,#painel-prazo-esq) .pp-linha{display:flex;justify-content:space-between;font-size:12px;color:var(--cinza)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-linha{margin-top:8px;font-size:13px}:is(#painel-prazo,#painel-prazo-esq) .pp-linha span:last-child{color:var(--texto)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-quem{font-size:13.5px;color:var(--cinza);margin-bottom:8px}:is(#painel-prazo,#painel-prazo-esq) .pp-quem b{color:var(--texto)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-seg{display:flex;border:1px solid var(--borda);border-radius:8px;overflow:hidden}
+:is(#painel-prazo,#painel-prazo-esq) .pp-seg button{flex:1;min-height:32px;border:0;border-right:1px solid var(--borda);background:#fff;font:inherit;font-size:12.5px;color:var(--texto);cursor:pointer}
+:is(#painel-prazo,#painel-prazo-esq) .pp-seg button:last-child{border-right:0}
+:is(#painel-prazo,#painel-prazo-esq) .pp-seg button.on{background:var(--azul);color:#fff;font-weight:600}
+:is(#painel-prazo,#painel-prazo-esq) .pp-seg button:disabled:not(.on){color:var(--cinza-claro,#9A988F);cursor:default}
+:is(#painel-prazo,#painel-prazo-esq) .pp-et{display:flex;gap:9px;align-items:center;min-height:30px;font-size:14px;cursor:pointer}
+:is(#painel-prazo,#painel-prazo-esq) .pp-et input{width:17px;height:17px;accent-color:var(--feito,#1E6F50)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-et.ok span{text-decoration:line-through;color:var(--cinza)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-add{margin-top:4px;min-height:28px;padding:0 10px;border:1px dashed var(--borda);border-radius:6px;background:#fff;color:var(--azul-escuro);font-size:12.5px;cursor:pointer}
+:is(#painel-prazo,#painel-prazo-esq) .pp-hist{font-size:12.5px;color:var(--texto);padding:3px 0}:is(#painel-prazo,#painel-prazo-esq) .pp-hist span{color:var(--cinza);font-variant-numeric:tabular-nums}
+:is(#painel-prazo,#painel-prazo-esq) footer{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap;padding:14px 18px;border-top:1px solid var(--borda);background:#fff;position:sticky;bottom:0}
+:is(#painel-prazo,#painel-prazo-esq) .pp-pri{min-height:36px;padding:0 16px;border:0;border-radius:8px;background:var(--feito,#1E6F50);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+:is(#painel-prazo,#painel-prazo-esq) .pp-sec-bt{min-height:36px;padding:0 14px;border:1px solid var(--borda);border-radius:8px;background:#fff;color:var(--azul-escuro);font:inherit;font-weight:500;cursor:pointer}
+:is(#painel-prazo,#painel-prazo-esq) button:active{transform:scale(.97)}
 
 /* F258 · acabamento do painel (revisão de design, 24.10.2026) */
 #painel-prazo{transition:transform 240ms cubic-bezier(.32,.72,0,1)}
-#painel-prazo .pp-cli{font-size:12px;color:var(--cinza);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#painel-prazo .pp-falta{display:flex;align-items:baseline;gap:6px;font-size:14px;font-weight:500}
-#painel-prazo .pp-falta b{font-size:34px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-#painel-prazo .pp-qdo{font-size:13px;color:var(--cinza);margin-top:2px}
-#painel-prazo .pp-barra{position:relative;overflow:visible}
-#painel-prazo .pp-barra em{position:absolute;top:-4px;width:2px;height:16px;margin-left:-1px;border-radius:1px;background:var(--texto)}
-#painel-prazo .pp-quem{display:flex;align-items:center;gap:6px}
-#painel-prazo .pp-seg button{transition:background-color 150ms ease,color 150ms ease}
-#painel-prazo .pp-seg button:not(:disabled):active{transform:scale(.97)}
-@media (hover:hover) and (pointer:fine){#painel-prazo .pp-seg button:not(:disabled):not(.on):hover{background:var(--azul-fundo,#E6F0EF)}}
-#painel-prazo .pp-mini{height:4px;border-radius:2px;background:#ECEAE5;margin:-2px 0 6px;overflow:hidden}
-#painel-prazo .pp-mini i{display:block;height:100%;background:var(--feito,#1E6F50);transition:width 200ms ease-out}
-#painel-prazo .pp-tl{list-style:none;margin:0;padding:0 0 0 14px;border-left:2px solid var(--borda)}
-#painel-prazo .pp-tl li{position:relative;padding:2px 0 8px 8px;font-size:13px;color:var(--texto)}
-#painel-prazo .pp-tl li::before{content:"";position:absolute;left:-20px;top:7px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--azul)}
-#painel-prazo .pp-tl li:first-child::before{background:var(--azul)}
-#painel-prazo .pp-tl li span{display:block;font-size:11.5px;color:var(--cinza);font-variant-numeric:tabular-nums}
-#painel-prazo .pp-pri,#painel-prazo .pp-sec-bt{transition:transform 120ms ease-out}
+:is(#painel-prazo,#painel-prazo-esq) .pp-cli{font-size:12px;color:var(--cinza);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+:is(#painel-prazo,#painel-prazo-esq) .pp-falta{display:flex;align-items:baseline;gap:6px;font-size:14px;font-weight:500}
+:is(#painel-prazo,#painel-prazo-esq) .pp-falta b{font-size:34px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+:is(#painel-prazo,#painel-prazo-esq) .pp-qdo{font-size:13px;color:var(--cinza);margin-top:2px}
+:is(#painel-prazo,#painel-prazo-esq) .pp-barra{position:relative;overflow:visible}
+:is(#painel-prazo,#painel-prazo-esq) .pp-barra em{position:absolute;top:-4px;width:2px;height:16px;margin-left:-1px;border-radius:1px;background:var(--texto)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-quem{display:flex;align-items:center;gap:6px}
+:is(#painel-prazo,#painel-prazo-esq) .pp-seg button{transition:background-color 150ms ease,color 150ms ease}
+:is(#painel-prazo,#painel-prazo-esq) .pp-seg button:not(:disabled):active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){:is(#painel-prazo,#painel-prazo-esq) .pp-seg button:not(:disabled):not(.on):hover{background:var(--azul-fundo,#E6F0EF)}}
+:is(#painel-prazo,#painel-prazo-esq) .pp-mini{height:4px;border-radius:2px;background:#ECEAE5;margin:-2px 0 6px;overflow:hidden}
+:is(#painel-prazo,#painel-prazo-esq) .pp-mini i{display:block;height:100%;background:var(--feito,#1E6F50);transition:width 200ms ease-out}
+:is(#painel-prazo,#painel-prazo-esq) .pp-tl{list-style:none;margin:0;padding:0 0 0 14px;border-left:2px solid var(--borda)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-tl li{position:relative;padding:2px 0 8px 8px;font-size:13px;color:var(--texto)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-tl li::before{content:"";position:absolute;left:-20px;top:7px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--azul)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-tl li:first-child::before{background:var(--azul)}
+:is(#painel-prazo,#painel-prazo-esq) .pp-tl li span{display:block;font-size:11.5px;color:var(--cinza);font-variant-numeric:tabular-nums}
+:is(#painel-prazo,#painel-prazo-esq) .pp-pri,:is(#painel-prazo,#painel-prazo-esq) .pp-sec-bt{transition:transform 120ms ease-out}
 
-#painel-prazo #pp-com{width:100%;box-sizing:border-box;min-height:56px;padding:8px 10px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:13.5px;resize:vertical}
-#painel-prazo #pp-com:focus{outline:2px solid var(--azul);outline-offset:-1px}
-#painel-prazo .pp-com-bt{margin-top:6px;min-height:32px}
+:is(#painel-prazo,#painel-prazo-esq) #pp-com{width:100%;box-sizing:border-box;min-height:56px;padding:8px 10px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:13.5px;resize:vertical}
+:is(#painel-prazo,#painel-prazo-esq) #pp-com:focus{outline:2px solid var(--azul);outline-offset:-1px}
+:is(#painel-prazo,#painel-prazo-esq) .pp-com-bt{margin-top:6px;min-height:32px}
 html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
 @media (hover:hover) and (pointer:fine){html .tl-tarefa .tl-tf-abrir:hover{text-decoration:underline}}
 
 /* F261 · a conversa de WhatsApp no painel ao lado da ficha */
-#painel-prazo .pp-tag.pp-zap{color:#128C4B}
-#painel-prazo .pp-zap-msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding:12px 16px;background:#F4F1EC}
-#painel-prazo .pp-zap-msgs .zap-b{position:relative}
-#painel-prazo .zl-acoes{display:flex;gap:6px;margin-top:6px}
-#painel-prazo .zl-acoes button{min-height:26px;padding:0 9px;border:1px solid var(--borda);border-radius:999px;background:#fff;color:var(--azul-escuro);font:inherit;font-size:12px;font-weight:600;cursor:pointer}
-@media (hover:hover) and (pointer:fine){#painel-prazo .zl-acoes button:hover{border-color:var(--azul)}}
-#painel-prazo .pp-zap-resp{align-items:flex-end}
-#painel-prazo .pp-zap-resp textarea{flex:1;min-height:40px;padding:8px 10px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:13.5px;resize:none}
+:is(#painel-prazo,#painel-prazo-esq) .pp-tag.pp-zap{color:#128C4B}
+:is(#painel-prazo,#painel-prazo-esq) .pp-zap-msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding:12px 16px;background:#F4F1EC}
+:is(#painel-prazo,#painel-prazo-esq) .pp-zap-msgs .zap-b{position:relative}
+:is(#painel-prazo,#painel-prazo-esq) .zl-acoes{display:flex;gap:6px;margin-top:6px}
+:is(#painel-prazo,#painel-prazo-esq) .zl-acoes button{min-height:26px;padding:0 9px;border:1px solid var(--borda);border-radius:999px;background:#fff;color:var(--azul-escuro);font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+@media (hover:hover) and (pointer:fine){:is(#painel-prazo,#painel-prazo-esq) .zl-acoes button:hover{border-color:var(--azul)}}
+:is(#painel-prazo,#painel-prazo-esq) .pp-zap-resp{align-items:flex-end}
+:is(#painel-prazo,#painel-prazo-esq) .pp-zap-resp textarea{flex:1;min-height:40px;padding:8px 10px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:13.5px;resize:none}
 
 /* F261 · em tela larga o painel não cobre a ficha: o CRM abre espaço para ele, as duas telas lado a lado */
 @media (min-width:1200px){body.lado-aberto #app{margin-right:420px}}
@@ -4870,6 +4870,11 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 body.zap-aberto .app.detalhe-aberto .meio{display:none}
 body.zap-aberto .app.detalhe-aberto{grid-template-columns:300px 1fr}
 body.zap-aberto .app.detalhe-aberto.mini-lateral{grid-template-columns:64px 1fr}
+
+/* F264 · o prazo à esquerda, no lugar da faixa, enquanto a conversa ocupa a direita */
+#painel-prazo-esq{display:flex;flex-direction:column;background:#fff;border:1px solid var(--borda);border-radius:12px;overflow:hidden;margin:12px 0 0}
+body.prazo-esq .caso-esq > :not(#painel-prazo-esq){display:none!important}
+#painel-prazo-esq footer{position:static}
 
 </style>
 </head>
@@ -33826,11 +33831,22 @@ function fecharPainelPrazo(){
   painelPz = null; painelZapCli = null;
   const el = document.getElementById("painel-prazo"); if(el) el.classList.remove("aberto");
   document.body.classList.remove("lado-aberto","zap-aberto");
+  fecharPrazoEsq();
+}
+// F264 · com a conversa de WhatsApp aberta à direita, o prazo abre À ESQUERDA, no lugar de "Prazos e compromissos"
+// (pedido do Paulo, 24.10.2026): uma janela de cada lado e a linha do tempo no meio. Fechar devolve a faixa.
+function fecharPrazoEsq(){
+  const el = document.getElementById("painel-prazo-esq"); if(el) el.remove();
+  document.body.classList.remove("prazo-esq");
+  if(!painelZapCli) return;
+  painelPz = null;
 }
 function abrirPainelPrazo(i){
   const x = faixaAtual[i]; if(!x) return;
-  painelPz = {casoId: x.casoId, data: x.data, andId: x.andId || ""}; painelZapCli = null;
-  document.body.classList.remove("zap-aberto");
+  const esq = painelZapCli && document.querySelector(".caso-esq");
+  painelPz = {casoId: x.casoId, data: x.data, andId: x.andId || ""};
+  if(!esq){ painelZapCli = null; document.body.classList.remove("zap-aberto"); }
+  const fechar = esq ? "fecharPrazoEsq()" : "fecharPainelPrazo()";
   const hj = hoje(), k = D.casoPorId.get(x.casoId), nome = id => ((D.colPorId.get(id)||{}).nome||"alguém").split(" ")[0];
   const abertas = (D.tarefasPorCaso.get(x.casoId)||[]).filter(t=>!t.concluida_em);
   const ts = x.andId ? abertas.filter(t=>t.andamento_id===x.andId) : x.tc ? [x.tc] : x._nat==="fatal" ? abertas : [];
@@ -33864,16 +33880,26 @@ function abrirPainelPrazo(i){
   if(x.andId) for(const c of (D._andsFicha||[]).filter(a=>a.responde_a===x.andId))
     hist.push([c.criado_em, `${nome(c.autor_id)}: ${cortaFrase(String(c.texto||"").replace(/\s+/g," "), 120)}`]);
   hist.sort((a,b)=>String(b[0]).localeCompare(String(a[0])));   // o mais recente primeiro (pedido do Paulo, 24.10.2026)
-  const origem = x.andId ? `<button class="pp-sec-bt" onclick="fecharPainelPrazo();${x._ir}">ver na linha do tempo</button>`
+  const origem = x.andId ? `<button class="pp-sec-bt" onclick="${fechar};${x._ir}">ver na linha do tempo</button>`
     : `<button class="pp-sec-bt" onclick="${x._ir}">${x.semMotivo && !x._motivo ? "do que é?" : "detalhes"}</button>`;
-  const principal = x.cumprir ? `<button class="pp-pri" onclick="fecharPainelPrazo();${x.cumprir}">✔ Cumpri</button>`
+  const principal = x.cumprir ? `<button class="pp-pri" onclick="${fechar};${x.cumprir}">✔ Cumpri</button>`
     : minha ? `<button class="pp-pri" onclick="concluirDeVez('${minha.id}')">✔ Concluir a minha tarefa</button>` : "";
-  let el = document.getElementById("painel-prazo");
-  if(!el){ el = document.createElement("aside"); el.id = "painel-prazo"; el.setAttribute("aria-label", "Progresso do prazo"); document.body.appendChild(el); }
+  let el;
+  if(esq){
+    el = document.getElementById("painel-prazo-esq") || Object.assign(document.createElement("aside"), {id: "painel-prazo-esq"});
+    el.setAttribute("aria-label", "Progresso do prazo");
+    if(el.parentNode!==esq) esq.prepend(el);
+    document.body.classList.add("prazo-esq");
+  }else{
+    fecharPrazoEsq();
+    el = document.getElementById("painel-prazo");
+    if(!el){ el = document.createElement("aside"); el.id = "painel-prazo"; document.body.appendChild(el); }
+    el.setAttribute("aria-label", "Progresso do prazo");
+  }
   const cli = k && D.cliPorId.get(k.cliente_id);
   const av = id => { const c = D.colPorId.get(id); return c ? `<span class="avatar mini" style="background:${c.cor}" aria-hidden="true">${esc(c.inicial)}</span>` : ""; };
   el.innerHTML = `<header><div>${cli ? `<div class="pp-cli">${esc(cli.nome)}${k.beneficio ? ` · ${esc(k.beneficio)}` : ""}</div>` : ""}<small class="pp-tag pp-${x._nat}">${esc(NAT_ROT[x._nat]||"Prazo")}</small><h3>${esc(x._titulo)}</h3></div>
-      <button class="pp-x" onclick="fecharPainelPrazo()" aria-label="fechar">✕</button></header>
+      <button class="pp-x" onclick="${fechar}" aria-label="fechar">✕</button></header>
     <section class="pp-sec"><div class="pp-rot">Quanto falta</div><div class="pp-falta pp-${tom}">${(m => m ? `${/^faltam/.test(m[1]) ? "" : esc(m[1])}<b>${m[2]}</b> ${esc(m[3].trim())}` : esc(x._falta || ""))(/^(.*?)(\d+)(.*)$/.exec(x._falta||""))}</div><div class="pp-qdo">${esc(x._quando)}</div>${barra}${inicio}</section>
     ${ts.length ? ts.map(tarefa).join("") : `<section class="pp-sec"><p class="meio-sub">Ninguém tem tarefa aberta para este prazo.</p></section>`}
     ${hist.length ? `<section class="pp-sec"><div class="pp-rot">Histórico</div><ol class="pp-tl">${hist.map(([q, t])=>`<li><span>${esc(horaLocal(q))}</span>${esc(t)}</li>`).join("")}</ol></section>` : ""}
@@ -33882,9 +33908,11 @@ function abrirPainelPrazo(i){
         onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();comentarNoPrazo('${x.casoId}','${x.andId||""}')}"></textarea>
       <button class="pp-sec-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Comentar</button></section>
     <footer>${principal}${minha ? `<button class="pp-sec-bt" onclick="adiarTarefa('${minha.id}')">Adiar</button>` : ""}${origem}</footer>`;
+  if(esq) return;
   requestAnimationFrame(()=>{ el.classList.add("aberto"); document.body.classList.add("lado-aberto"); });
 }
-document.addEventListener("keydown", e=>{ if(e.key==="Escape" && painelPz && !document.querySelector("#modal:not([style*='none']) *")) fecharPainelPrazo(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && painelPz && !document.querySelector("#modal:not([style*='none']) *"))
+  document.getElementById("painel-prazo-esq") ? fecharPrazoEsq() : fecharPainelPrazo(); });
 const _pzTodos = new Set();   // F241 · os casos em que se abriram todas as datas, na sessão
 function pzVerTodos(bt, casoId){
   _pzTodos.add(casoId);
