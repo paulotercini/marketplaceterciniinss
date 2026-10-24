@@ -13620,7 +13620,8 @@ function pintarConversa(){
   // F187 · conversa de outro atendente: o atendente só lê e anota (nota interna
   // com @nome chama quem atende); o gestor pode tirar para si
   const pode = podeAgirZap(c), deOutro = !!at && at.id!==eu.id;
-  if(!pode) zapNota = true;
+  // F265 · atendimento compartilhado: quem não atende também responde ao cliente (o atendente é avisado); encerrar,
+  // retorno e robô continuam de quem atende
   // F183 · duas linhas: quem é e o que se faz (Retorno, Transferir, Encerrar)
   // em cima; embaixo o que classifica a conversa. O que se usa pouco (fixar,
   // robô, abrir no aparelho) mora no "⋯"
@@ -13685,10 +13686,10 @@ function pintarConversa(){
         <button class="btn-rap ze-enviar" onclick="enviarAudioZap()">Enviar áudio</button></div>`:""}
      <div class="zap-escrever ${zapNota?"modo-nota":""}">
        <div class="zap-sug" id="zap-sug" hidden></div>
-       ${pode?"":`<p class="ze-so-leitura">Esta conversa está com ${esc(at.nome)}. Você pode ler e escrever nota interna;
-          escreva @${esc(at.nome.split(" ")[0])} para chamar quem atende.</p>`}
+       ${pode?"":`<p class="ze-so-leitura">Esta conversa está com ${esc(at.nome)}. Você pode responder: ${esc(at.nome.split(" ")[0])} recebe o aviso
+          e a conversa continua com ${esc(at.nome.split(" ")[0])}.</p>`}
        <div class="ze-modos" role="tablist" aria-label="Para quem é o texto">
-         ${pode?`<button role="tab" aria-selected="${!zapNota}" class="${zapNota?"":"on"}" onclick="${zapNota?"alternarNota()":""}">Responder ao cliente</button>`:""}
+         <button role="tab" aria-selected="${!zapNota}" class="${zapNota?"":"on"}" onclick="${zapNota?"alternarNota()":""}">Responder ao cliente</button>
          <button role="tab" aria-selected="${zapNota}" class="${zapNota?"on nota":""}" id="zap-btn-nota"
            onclick="${zapNota?"":"alternarNota()"}" title="fica na conversa, o cliente não vê">Nota interna</button>
        </div>
