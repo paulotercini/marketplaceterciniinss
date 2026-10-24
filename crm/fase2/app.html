@@ -14530,6 +14530,7 @@ function rascunhoParaCliente(item){
 }
 function colocarNoCampo(campo, texto){
   campo.value = campo.value.trim() ? `${campo.value.trim()}\n${texto}` : texto;
+  campo.style.height = Math.min(Math.max(campo.scrollHeight + 2, 40), 180) + "px";   // o rascunho inteiro à vista
   campo.focus(); campo.setSelectionRange(campo.value.length, campo.value.length);
   if(campo.oninput) campo.oninput();
   campo.dispatchEvent(new Event("input", {bubbles: true}));
@@ -34093,7 +34094,7 @@ function abrirPainelPrazo(i){
       <textarea id="pp-com" rows="2" placeholder="O que aconteceu? Vai para a linha do tempo do caso."
         onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();comentarNoPrazo('${x.casoId}','${x.andId||""}')}"></textarea>
       <button class="pp-sec-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Comentar</button></section>
-    <footer>${principal}${x.acao || ""}${minha ? `<button class="pp-sec-bt" onclick="adiarTarefa('${minha.id}')">Adiar</button>` : ""}${origem}</footer>`;
+    <footer>${principal}${x.cumprir ? "" : x.acao || ""}${minha ? `<button class="pp-sec-bt" onclick="adiarTarefa('${minha.id}')">Adiar</button>` : ""}${origem}</footer>`;
   if(esq) return;
   requestAnimationFrame(()=>{ el.classList.add("aberto"); document.body.classList.add("lado-aberto"); });
 }
