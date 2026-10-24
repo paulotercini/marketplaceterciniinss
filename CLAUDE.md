@@ -229,6 +229,8 @@ A **F259** (o visual do WhatsApp e a triagem do texto livre, escolha do Paulo de
 
 A **F260** (a ficha de quem fala e a dos representados, pedido do Paulo de 24.10.2026): aberta a conversa, o painel da direita do WhatsApp traz primeiro a ficha do dono da conversa e, abaixo, "Clientes que … representa", um cartão por cliente (CPF, vínculo, casos abertos com a etapa e "Abrir ficha"), achados por `representadosDe`: o representante gravado na ficha do outro (`campos.representante`, pelo CPF ou, sem CPF, pelo nome) ou o número da conversa na lista de telefones dele (o que o "Vincular a um ou mais clientes" grava), com a observação do telefone. O painel passa a aparecer até 1024 px de largura (260 px abaixo de 1180). Teste: `testes/cadastro/zaprep.js`.
 
+A **F261** (a foto em miniatura, pedido do Paulo de 24.10.2026): a mensagem de imagem (`tipo = imagem`) aparece no balão da conversa e no histórico do WhatsApp da ficha como miniatura de 240 × 180 (`miniZap`, `.zap-mini`), e o clique abre o original; o link assinado vale 1 hora e fica guardado 50 minutos (`_miniUrl`, `carregarMinis`), porque a conversa repinta a cada 6 s. Documento, vídeo e áudio continuam como eram. Teste: `testes/cadastro/zapfoto.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

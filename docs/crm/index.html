@@ -1880,6 +1880,7 @@
   .zp-cab{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px}
   .zp-sub{font-size:12px;color:var(--cinza);margin:2px 0 8px}
   .zp-tit{font-weight:600;font-size:13.5px}
+  .zap-mini{display:block;width:240px;max-width:100%;height:180px;object-fit:cover;border-radius:8px;cursor:zoom-in;background:#0000000d;margin-bottom:4px}
   .zp-rep-tit{margin:4px 2px 0;font-size:11.5px;font-weight:600;color:var(--cinza)}
   .zp-rep{border-left:3px solid var(--verde,#2E7D4F)}
   .zp-kv{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:4px 0}
@@ -13482,6 +13483,7 @@ function pintarConversa(){
     if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); enviarZap(); }
   };
   const cx = document.getElementById("zap-msgs"); cx.scrollTop = cx.scrollHeight;
+  carregarMinis(cx);
 }
 
 // F183 · o cliente ao lado da conversa: o que se pergunta enquanto se
@@ -13657,6 +13659,8 @@ function bolhaZap(m, cli){
   const corpo = m.midia_url && m.tipo==="audio"
     ? `<button class="zap-anexo" data-ouvir="${esc(m.midia_url)}" onclick="ouvirAqui(this,'${escJs(m.midia_url)}')">▶ ouvir</button>`
       + (m.texto?`<div>🎤 ${esc(m.texto)}</div>`:"")
+    : m.midia_url && m.tipo==="imagem"
+    ? miniZap(m.midia_url, `verMidiaZap('${m.id}')`) + (m.texto?`<div>${esc(m.texto)}</div>`:"")
     : m.midia_url
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${m.tipo==="audio"?"🎤 ":""}${esc(m.texto)}</div>`:"")
@@ -13718,6 +13722,19 @@ function alternarNota(){
   if(t2){ t2.value = guarda; t2.focus(); }
 }
 
+// F261 · a foto aparece em miniatura no balão, como no WhatsApp; o clique abre o original.
+// O link assinado vale 1 hora e fica guardado 50 minutos, porque a conversa repinta a cada 6 s
+const _miniUrl = new Map();
+const miniZap = (caminho, abrir) => `<img class="zap-mini" data-mini="${esc(caminho)}" alt="foto" onclick="${abrir}">`;
+async function carregarMinis(raiz){
+  for(const im of (raiz||document).querySelectorAll("img.zap-mini[data-mini]:not([src])")){
+    const k = im.dataset.mini, g = _miniUrl.get(k);
+    try{
+      if(!g || g.ate < Date.now()) _miniUrl.set(k, {u: await linkArquivo(k, 3600), ate: Date.now() + 50*60e3});
+      im.src = _miniUrl.get(k).u;
+    }catch(e){ im.replaceWith(Object.assign(document.createElement("span"), {className:"meio-sub", textContent:"📷 foto (não carregou)"})); }
+  }
+}
 async function verMidiaZap(id){
   const m = zapMsgs.find(x=>x.id===id); if(!m||!m.midia_url) return;
   const guia = window.open("","_blank");
@@ -14203,6 +14220,8 @@ async function verZapCliente(cliId){
       + (resto?`<div>${esc(resto)}</div>`:"");
     else if(m.tipo==="audio") corpo = `<button class="btn-mini" data-ouvir="${esc(m.midia_url)}" onclick="ouvirAqui(this,'${escJs(m.midia_url)}')">▶ ouvir</button> `
       + (m.texto ? `<i>🎤 ${esc(m.texto)}</i>` : `<span class="meio-sub">🎤 transcrevendo…</span>`);
+    else if(m.midia_url && m.tipo==="imagem") corpo = miniZap(m.midia_url, `abrirArquivoZap('${escJs(m.midia_url)}')`)
+      + (m.texto?`<div>${esc(m.texto)}</div>`:"");
     else if(m.midia_url) corpo = `<button class="btn-mini" onclick="abrirArquivoZap('${escJs(m.midia_url)}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${esc(m.texto)}</div>`:"");
     else corpo = esc(m.texto||`[${m.tipo}]`);
@@ -14218,6 +14237,7 @@ async function verZapCliente(cliId){
     <div class="zap-msgs" style="max-height:65vh;overflow:auto;display:flex;flex-direction:column;gap:4px">
       ${linhas.join("") || `<p class="meio-sub">Nenhuma mensagem ainda.</p>`}</div>`);
   const caixaMsgs = document.querySelector("#modal .zap-msgs"); if(caixaMsgs) caixaMsgs.scrollTop = caixaMsgs.scrollHeight;
+  carregarMinis(caixaMsgs);
   // abrir é ler: zera o "novas" do botão
   const lidas = zs.filter(z=>z.nao_lidas);
   if(lidas.length){
