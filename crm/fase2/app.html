@@ -4733,6 +4733,36 @@ html[data-tema="v10"] .app.celular .tr-corpo{padding:10px 12px 12px}
 html[data-tema="v10"] .app.celular .tr-ritos{margin-left:0}
 html[data-tema="v10"] .app.celular .tr-acoes{flex-wrap:wrap;margin-left:0}
 @media (prefers-reduced-motion:reduce){html[data-tema="v10"] .tr-pnl{animation:none}html[data-tema="v10"] .tr-rol{scroll-behavior:auto}html[data-tema="v10"] .tr-b,html[data-tema="v10"] .tr-et,html[data-tema="v10"] .jn-b{transition:none}html[data-tema="v10"] .tr-bt:active{transform:none}}
+/* F254 · a faixa de prazos como o Planejado do To Do: linhas, grupos e a bolinha da natureza */
+html .faixa-prazos.fp2.fp2.fp2.fp2{display:block}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-lin{display:flex;align-items:center;gap:10px;flex:none;min-width:0;margin:0;padding:8px 10px;
+  background:#fff;color:var(--texto);border:none;border-bottom:1px solid var(--borda);border-radius:0}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-txt{flex:1;min-width:0;display:flex;flex-direction:column}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-txt b{font-weight:500;font-size:13.5px;overflow:hidden;text-overflow:ellipsis}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-txt small{font-size:11.5px;color:var(--cinza)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-data{font-size:12px;color:var(--cinza);white-space:nowrap}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-bola{width:10px;height:10px;border-radius:50%;flex:none;margin:0 4px;background:var(--dk-lemb,#2F6FB0)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz-compromisso .fp2-bola{background:var(--dk-comp,#B7791F)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz-fatal .fp2-bola{background:var(--dk-fatal,#B3261E)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-circ{width:18px;height:18px;border-radius:50%;flex:none;border:2px solid var(--dk-fatal,#B3261E);background:#fff;cursor:pointer}
+@media (hover:hover) and (pointer:fine){html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-circ:hover{background:var(--dk-fatal,#B3261E)}}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-mais{border:1px solid var(--borda);background:#fff;color:var(--azul-escuro);border-radius:5px;padding:2px 8px;font-size:12px;cursor:pointer}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal{border:1px solid var(--dk-fatal,#B3261E);border-left:4px solid var(--dk-fatal,#B3261E);border-radius:8px;margin:4px 0 10px;padding:10px 12px}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal .fp2-txt b{font-weight:600;font-size:14.5px;white-space:normal}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal .fp2-data,html .faixa-prazos.fp2.fp2.fp2.fp2 .pz-fatal .fp2-data,html .faixa-prazos.fp2.fp2.fp2.fp2 .pz-venceu .fp2-data{color:var(--dk-fatal,#B3261E);font-weight:600}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.pz-semmotivo{background:var(--ambar-fundo,#FEF3C7)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-g{display:flex;align-items:center;gap:6px;margin:10px 0 2px;font-size:12.5px;font-weight:600;color:var(--texto)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 [data-tom="venc"] .fp2-g{color:var(--dk-fatal,#B3261E)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 details.fp2-grupo summary{cursor:pointer}
+html .faixa-prazos.fp2.fp2.fp2.fp2 details.fp2-grupo summary .fp2-g{display:inline-flex}
+html[data-nivel="1"] .faixa-prazos.fp2.fp2.fp2:not(.nv-ver) :is(.fp2-grupo,.fp2-sem){display:none!important}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.pz-venceu:not(.fp2-fatal){background:#fff;box-shadow:none;border-left:0}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal{background:#FDF3F2;box-shadow:none;align-items:flex-start}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dk-fatal,#B3261E)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-quando{margin-top:3px;font-size:13px;font-weight:600;color:var(--dk-fatal,#B3261E)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-fatal .fp2-circ{margin-top:2px}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz .fp2-mais{position:static;opacity:1;inset:auto}
+
 </style>
 </head>
 <body>
@@ -33445,8 +33475,9 @@ function faixaPrazos(k){
     minhas.push(x);
     for(const f of (x.filhas||[]).sort((a,b)=>a.data<b.data?-1:1)) minhas.push({...f, filha:true});
   }
-  // F145 · na coluna do caso os prazos vêm em ordem decrescente de data (decisão do Paulo, 27.09.2026)
-  minhas.sort((a,b)=>a.data<b.data?1:a.data>b.data?-1:0);
+  // F254 · do mais próximo para o mais distante, como o Planejado do To Do (decisão do Paulo, 24.10.2026,
+  // que substitui a ordem decrescente da F145)
+  minhas.sort((a,b)=>a.data<b.data?-1:a.data>b.data?1:0);
   faixaAtual = minhas;
   const tit = `<h3 class="fp-tit">Prazos e compromissos</h3>${botoesConferir(k, "fp-conf")}`;   // F182 · F245 · a conferência em um clique
   if(!minhas.length) return `<div class="faixa-prazos vazia" aria-label="Prazos e providências">${tit}
@@ -33462,45 +33493,46 @@ function faixaPrazos(k){
   const comProrrog = new Set(minhas.filter(x=>x.prorrogDe).map(x=>x.prorrogDe));
   const proxFatal = ord(minhas.filter(x=>(natDaLinha(x)==="fatal" && !comProrrog.has(x.dcbDe)) || x.prorrogDe))[0] || null;
   const nVenc = minhas.filter(pend).length, nConf = minhas.filter(x=>x.aConfirmar).length, proxEv = ord(minhas.filter(x=>x.ev))[0] || null;
-  const relDe = d => d===0 ? "hoje" : d<0 ? `venceu há ${-d} d` : d===1 ? "amanhã" : `em ${d} d`;
-  // no resumo do topo: o tipo genérico com o que fazer ("Compromisso · Amanda: …"); o específico pelo nome curto e o detalhe;
-  // depois de "prazo fatal:", o tipo "Prazo fatal" não se repete
-  const dizTexto = (x, comoFatal) => { const t = tipoDaLinha(x), r = resumoDaLinha(x), v = visivelDaLinha(x);
-    if(comoFatal && t==="Prazo fatal") return [x.semMotivo?"do To Do":"", r?cortaFrase(r, 60):""].filter(Boolean).join(" · ") || t;
-    return RX_TIPO_GENERICO.test(t) ? `${t}${x.semMotivo?" · do To Do":""}${r?` · ${cortaFrase(r, 60)}`:""}` : `${v}${r && r!==v?` · ${cortaFrase(r, 60)}`:""}`; };
-  const diz = (x, comoFatal) => `<b>${esc(dizTexto(x, comoFatal))}</b> em ${fmtBarra(x.data).slice(0,5)} (${relDe(diasAte(x.data))})`;
-  const topo = (prox || nVenc || nConf) ? `<p class="fp-resumo">${prox?`Próximo: ${diz(prox)}`:"Nada à frente"}${
-    proxEv && proxEv!==prox ? ` · ${diz(proxEv)}` : ""}${
-    proxFatal && proxFatal!==prox ? ` · prazo fatal: ${diz(proxFatal, true)}` : ""}${
-    nVenc?` · <b class="fp-venc">${nVenc} vencido${nVenc>1?"s":""}</b>`:""}${
-    nConf?` · <b class="fp-conf">${nConf} a confirmar</b>`:""}</p>` : "";
-  const card = (x, i) => {
-    const venceu = pend(x), d = diasAte(x.data);
-    // F115 · o cartão diz o que é, e não só que é prazo.
-    // F116 · e diz de que NATUREZA é: prazo fatal, compromisso ou lembrete.
-    // F236 · e DO QUE é: ao lado do tipo vai o resumo (o que fazer, o ato, a tarefa) e a bolinha de quem faz
-    const nat = natDaLinha(x), tipo = tipoDaLinha(x), resumo = resumoDaLinha(x), vis = visivelDaLinha(x);
-    const rel = x.aConfirmar && d<0 ? `há ${-d} d · confirme` : relDe(d);
+  // F254 · A FAIXA COMO O PLANEJADO DO TO DO. O prazo fatal abre a faixa numa linha própria, que diz o que
+  // fazer e quanto falta em DIAS ÚTEIS; o resto vem nos grupos do Planejado (Vencidas, Hoje, Amanhã, Próximos sete
+  // dias, Mais tarde), cada linha com a bolinha da natureza. "Mais tarde" fica recolhido.
+  const uteis = iso => { const passo = iso>=hj ? 1 : -1; let n = 0, d = hj;
+    for(let i=0; d!==iso && i<4000; i++){ d = somaDias(d, passo); if(ehDiaUtil(d)) n++; } return n; };
+  const quando = iso => { const d = diasAte(iso);
+    return d===0 ? "Hoje" : d===1 ? "Amanhã" : d===-1 ? "Ontem"
+      : `${SIGLA_DIA[new Date(iso+"T12:00:00").getDay()]}., ${fmtBarra(iso).slice(0,5)}`; };
+  const falta = iso => { const d = diasAte(iso), u = uteis(iso), du = n => `${n} ${n===1?"dia útil":"dias úteis"}`;
+    return d===0 ? "vence hoje" : d<0 ? `venceu há ${du(Math.max(1,u))}` : u ? `faltam ${du(u)}` : `faltam ${d} dias corridos`; };
+  const linha = (x, destaque) => {
+    const i = minhas.indexOf(x), d = diasAte(x.data), nat = natDaLinha(x), tipo = tipoDaLinha(x),
+          resumo = resumoDaLinha(x), vis = visivelDaLinha(x), titulo = resumo || vis;
     const ir = x.andId ? `qdIrParaAndamento('${x.casoId}','${x.andId}')`
       : x.semMotivo ? `explicarPrazo('${x.casoId}')` : `prazoSaberMais(${i})`;
-    const ehProx = x===prox, longe = !venceu && d>10;   // F236 · a cor diz a urgência: o prazo fatal distante fica leve
-    return `<div class="pz pz-${nat}${venceu?" pz-venceu":""}${x.semMotivo?" pz-semmotivo":""}${!venceu&&d<=3&&nat!=="fatal"?" pz-perto":""}${ehProx?" pz-proximo":""}${longe?" pz-longe":""}${x.filha?" pz-filha":""}${x.ev?" pz-ev":""}${x.aConfirmar?" pz-confirmar":""}" data-tipo="${esc(tipo)}" data-nat="${nat}" title="${esc(tipo+(resumo?` · ${resumo}`:""))}">
-      <span class="pz-tipo">${esc(vis)}${x.semMotivo?" · do To Do":""}${resumo && vis!==resumo?`<span class="pz-res"> · ${esc(resumo)}</span>`:""}</span>
-      <b class="pz-data">${fmtBarra(x.data)}</b>
-      ${ehProx?`<span class="pz-selo">próximo</span>`:""}${x.avs||""}<small class="pz-rel">${rel}</small>
-      <button class="pz-mais" onclick="${ir}" title="${x.andId?"ir até a anotação que criou este prazo"
-        :x.semMotivo?"esta data veio do “Concluir em” do To Do — diga do que ela é":"ver o que é e o que fazer"}">${
-        x.semMotivo?"do que é?":"saber mais"}</button>
-      ${x.cumprir?`<button class="pz-ok" onclick="${x.cumprir}" title="cumpriu: tira o prazo daqui e devolve o caso à lista de onde veio">✔</button>`:""}${x.ouv||""}
+    const sub = [destaque ? "" : NAT_ROT[nat], tipo!==NAT_ROT[nat] && tipo!==titulo ? tipo : "", x.semMotivo ? "do To Do, diga do que é" : ""]
+      .filter(Boolean).join(" · ");
+    const data = quando(x.data) + (destaque || nat==="fatal" ? ` · ${falta(x.data)}` : x.aConfirmar && d<0 ? " · confirme" : "");
+    return `<div class="pz fp2-lin pz-${nat}${pend(x)?" pz-venceu":""}${destaque?" fp2-fatal":""}${x.semMotivo?" pz-semmotivo":""}${x.aConfirmar?" pz-confirmar":""}" data-nat="${nat}" title="${esc(tipo+(resumo?` · ${resumo}`:""))}">
+      ${x.cumprir?`<button class="fp2-circ" onclick="${x.cumprir}" title="cumpri: tira o prazo daqui e devolve o caso à lista de onde veio" aria-label="cumpri"></button>`:`<span class="fp2-bola" aria-hidden="true"></span>`}
+      ${destaque
+        ? `<span class="fp2-txt"><small class="fp2-tag">Prazo fatal</small><b>${esc(titulo)}</b><span class="fp2-quando">${esc(data)}</span>${sub?`<small>${esc(sub)}</small>`:""}</span>`
+        : `<span class="fp2-txt"><b>${esc(titulo)}</b>${sub?`<small>${esc(sub)}</small>`:""}</span><span class="fp2-data">${esc(data)}</span>`}${x.avs||""}
+      <button class="fp2-mais" onclick="${ir}" title="${x.andId?"ir até a anotação que criou este prazo":x.semMotivo?"esta data veio do To Do: diga do que ela é":"ver o que é e o que fazer"}">${x.semMotivo?"do que é?":"abrir"}</button>${x.ouv||""}
     </div>`;
   };
-  // F241 · a ordem continua decrescente (F145); o que não pede atenção agora fica num "mais N"
-  const atencao = x => x===prox || x===proxFatal || x===proxEv || pend(x) || x.aConfirmar || diasAte(x.data)<=7;
-  const quietos = minhas.filter(x=>!atencao(x)), recolhe = quietos.length >= 2 && !_pzTodos.has(k.id);
-  const cards = minhas.map((x, i)=>{ const h = card(x, i); return recolhe && !atencao(x) ? h.replace('<div class="pz ', '<div hidden class="pz pz-quieto ') : h; }).join("");
-  const mais = recolhe ? `<button type="button" class="tl-bt fp-ver-todos" onclick="pzVerTodos(this,'${k.id}')">Ver mais ${quietos.length} ${quietos.length===1?"data":"datas"} mais adiante</button>` : "";
+  const destaque = proxFatal || minhas.filter(x=>natDaLinha(x)==="fatal" && pend(x))[0] || null;
+  const em = n => somaDias(hj, n);
+  const GRUPOS = [["Vencidas", pend, "venc"], ["A confirmar", x=>x.aConfirmar, "conf"], ["Hoje", x=>x.data===hj, "hoje"],
+    ["Amanhã", x=>x.data===em(1), ""], ["Próximos sete dias", x=>x.data>em(1) && x.data<=em(7), ""], ["Mais tarde", x=>x.data>em(7), ""]];
+  const ja = new Set(destaque ? [destaque] : []);
+  const grupos = GRUPOS.map(([rot, f, tom])=>{ const g = minhas.filter(x=>!ja.has(x) && f(x)); g.forEach(x=>ja.add(x)); return [rot, g, tom]; })
+    .filter(([,g])=>g.length);
+  const cab = (rot, n) => `<h4 class="fp2-g">${rot} <span class="pl-n">${n}</span></h4>`;
+  const blocos = grupos.map(([rot, g, tom]) => rot==="Mais tarde" && grupos.length>1
+    ? `<details class="fp2-grupo"${_pzTodos.has(k.id)?" open":""} ontoggle="if(this.open)_pzTodos.add('${k.id}')"><summary>${cab(rot, g.length)}</summary>${g.map(x=>linha(x)).join("")}</details>`
+    : `<section class="fp2-grupo"${tom?` data-tom="${tom}"`:""}>${cab(rot, g.length)}${g.map(x=>linha(x)).join("")}</section>`).join("");
+  const sem = destaque ? "" : `<p class="fp2-sem meio-sub">Sem prazo fatal em aberto neste caso.</p>`;
   const nv = minhas.length ? `<button type="button" class="tl-bt fp-nv" onclick="this.closest('.faixa-prazos').classList.add('nv-ver')" title="no nível 1 as datas ficam recolhidas">ver as datas</button>` : "";   // F249
-  return `<div class="faixa-prazos" aria-label="Prazos e providências">${tit}${topo}${nv}${cards}${mais}</div>`;
+  return `<div class="faixa-prazos fp2" aria-label="Prazos e providências">${tit}${nv}${destaque ? linha(destaque, true) : sem}${blocos}</div>`;
 }
 const _pzTodos = new Set();   // F241 · os casos em que se abriram todas as datas, na sessão
 function pzVerTodos(bt, casoId){
