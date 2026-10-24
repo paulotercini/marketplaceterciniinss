@@ -7065,8 +7065,7 @@ function montarSidebar(){
     ["claude","🤖 Claude", D.sugestoes.length],
     ["docmodelos","📄 Modelos", D.docModelos.length],
     ["quadro","📌 Quadro", null],
-    // F132 · três desenhos do quadro por horizonte, em teste (24.09.2026)
-    ["quadro1","📌 Quadro 1", null], ["quadro2","📌 Quadro 2", null], ["quadro3","📌 Quadro 3", null],
+    // F132 · os Quadros 1, 2 e 3 saíram do menu: o "Agrupar por" do 📌 Quadro faz o mesmo numa tela só (F255)
     ["vendas","💼 Vendas", D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length],
     // o número que aparece é o que exige ação: não lida ou sem dono
     ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
