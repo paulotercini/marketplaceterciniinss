@@ -4792,7 +4792,30 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-mais{min-height:28px;padding:0 12px;font
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-circ{width:22px;height:22px}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini a{font-weight:500}
 /* F268 · a linha só com a data e o abrir */
-html .faixa-prazos .fp2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}   /* o título, só para o leitor de tela */
+/* F269 · ficha mais limpa: os botões da anotação aparecem ao passar o mouse (ou com o foco); no toque ficam à vista */
+@media (hover:hover) and (pointer:fine){
+  html .timeline li{position:relative}
+  html .timeline li .tl-barra{position:absolute;top:10px;right:14px;margin:0;z-index:2;border-radius:8px;pointer-events:none}
+  html .timeline li:is(:hover,:focus-within) .tl-barra{background:var(--branco,#fff);pointer-events:auto}
+  html .timeline li .tl-barra .tl-sinal.on{pointer-events:auto}
+  html .timeline li .tl-barra > .tl-bt:not(.forte),html .timeline li .tl-barra-fim > :not(.tl-sinais),html .timeline li .tl-sinais > .tl-sinal:not(.on){opacity:0;transition:opacity 120ms ease-out}
+  html .timeline li:is(:hover,:focus-within) .tl-barra :is(.tl-bt,.tl-barra-fim > *,.tl-sinal),html .timeline li .tl-barra-fim > details[open]{opacity:1}
+}
+@media (hover:hover) and (pointer:fine){
+  /* F269 · nas linhas das listas e do Meu Dia, conferir, urgente e importante aparecem ao passar o mouse; o marcado fica */
+  html .cartao .conf-bts.ag-conf,html .cartao .acoes .acao-card:not(.on){opacity:0;transition:opacity 120ms ease-out}
+  html .cartao:is(:hover,:focus-within) :is(.conf-bts.ag-conf,.acoes .acao-card){opacity:1}
+}
+#sub-lista.sub-dica{display:none}
+html .outras-abas .oa-txt{flex-direction:row;align-items:baseline;gap:8px}
+html .outras-abas .oa-txt > span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html .faixa-prazos .fp-cab{display:flex;align-items:center;gap:8px}
+html .faixa-prazos .fp-menu{margin-left:auto;position:relative}
+html .faixa-prazos .fp-menu .tl-mais-menu{top:calc(100% + 4px);bottom:auto;right:0;left:auto;z-index:30}
+html .faixa-prazos.fp2:has(.fp-menu[open]){overflow:visible;z-index:5}
+html .faixa-prazos .fp-menu .tl-mais-menu .conf-bts{display:flex;flex-direction:column;gap:4px;padding:4px}
+html .faixa-prazos .fp-menu .tl-mais-menu .tl-bt{justify-content:flex-start;width:100%}
+html :is(.faixa-prazos,.outras-abas) .fp2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}   /* o título, só para o leitor de tela */
 html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-lin .fp2-data{flex:1;font-size:13.5px;color:var(--texto,#1F2933)}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-lin.pz-venceu .fp2-data,html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal .fp2-data{color:var(--dk-fatal,#B3261E);font-weight:500}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal{align-items:center;flex-wrap:wrap}
@@ -7114,6 +7137,18 @@ const svgIc = (emoji, t=17) => SVG_MENU[emoji]
 // título da lista (espec. 6.1): sempre azul-escuro, com o ícone SVG da lista
 // à esquerda — a cor por lista fica só na pastilha do menu. O rótulo com
 // emoji continua a fonte de verdade; aqui muda só a apresentação.
+// F269 · a frase que explica a tela, embaixo do título, vira a dica do título (no passar do mouse): a tela abre só com o
+// que se usa. Quando o subtítulo traz controles (o "Agrupar por" do Quadro), eles ficam e só a frase sai
+function subtituloComoDica(){
+  const sub = document.getElementById("sub-lista"), h = document.getElementById("titulo-lista"); if(!sub || !h) return;
+  const ajustar = () => {
+    const frase = !sub.children.length && sub.textContent.trim();
+    sub.classList.toggle("sub-dica", !!frase); h.title = frase || "";
+    sub.querySelectorAll(":scope > span > .meio-sub").forEach(x=>{ h.title = x.textContent.trim(); x.hidden = true; });
+  };
+  new MutationObserver(ajustar).observe(sub, {childList:true, characterData:true, subtree:true}); ajustar();
+}
+if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", subtituloComoDica); else subtituloComoDica();
 function tituloLista(rot){
   const h = document.getElementById("titulo-lista");
   // F144 · o que a agenda do v10 põe no topo sai ao trocar de tela
@@ -33908,7 +33943,9 @@ function faixaPrazos(k){
   // que substitui a ordem decrescente da F145)
   minhas.sort((a,b)=>a.data<b.data?-1:a.data>b.data?1:0);
   faixaAtual = minhas;
-  const tit = `<h3 class="fp-tit">Prazos e compromissos</h3>${botoesConferir(k, "fp-conf")}`;   // F182 · F245 · a conferência em um clique
+  // F182 · F245 · a conferência em um clique; F269 · ela mora no "⋯" ao lado do título, para o quadro ficar só com as datas
+  const conf = botoesConferir(k, "fp-conf");
+  const tit = `<div class="fp-cab"><h3 class="fp-tit">Prazos e compromissos</h3>${conf ? `<details class="tl-mais fp-menu"><summary class="tl-bt tl-bt-ic" aria-label="Conferir o caso" title="conferir o caso: sem novidade ou movimentou">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${conf}</span></details>` : ""}</div>`;
   if(!minhas.length) return `<div class="faixa-prazos vazia" aria-label="Prazos e providências">${tit}
     <span class="meio-sub">Sem prazos ou lembretes em aberto. Um andamento com data cria o lembrete; a anotação com ⏰ cria o prazo.</span></div>`;
   // F236 · sem mexer na ordem (F145), o que não pode passar despercebido: o PRÓXIMO (a menor data de hoje em diante
@@ -35525,7 +35562,7 @@ function painelOutrasAbas(k){
   return `<section class="outras-abas" aria-label="Nas outras abas"><h3>Nas outras abas</h3>
     ${linhas.map(([q,aba,txt,cor])=>`<button class="oa-linha" onclick="irOutraAba('${q}')">
       <span class="oa-ponto" style="background:${cor}"></span>
-      <span class="oa-txt"><small>${aba}</small><span>${esc(txt)}</span></span>
+      <span class="oa-txt" title="${esc(txt)}"><small>${aba}</small><span class="fp2-sr">${esc(txt)}</span><span aria-hidden="true">${esc(String(txt).split(" · ")[0].split(": ")[0])}</span></span>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`).join("")}
   </section>`;
 }
