@@ -257,10 +257,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // ── a coluna do v10: a ordem da F145 com o próximo em destaque ─────────
   await p.evaluate(() => { document.documentElement.setAttribute("data-tema", "v10"); });
   await abrir(cB, kB);
-  const fx = await p.evaluate(() => { const ds = [...document.querySelectorAll(".caso-esq .pz .pz-data")].map(b => b.textContent.split("/").reverse().join(""));
-    const r = document.querySelector(".caso-esq .fp-resumo"), px = document.querySelector(".caso-esq .pz.pz-proximo");
-    return { desc: ds.every((x, i) => !i || ds[i - 1] >= x), resumo: r ? r.textContent : "", prox: px ? px.dataset.tipo : "", selo: !!(px && px.querySelector(".pz-selo")) }; });
-  conf("a coluna mantém a ordem decrescente (F145) e põe no topo o próximo e o próximo prazo fatal", fx.desc && /Próximo:/.test(fx.resumo) && /Pedir a prorrogação/.test(fx.resumo) && fx.selo);
+  const fx = await p.evaluate(() => { const ds = [...document.querySelectorAll(".caso-esq .pz:not(.fp2-fatal)")].map(b => b.dataset.data);
+    const dq = document.querySelector(".caso-esq .pz.fp2-fatal");
+    return { asc: ds.every((x, i) => !i || ds[i - 1] <= x), destaque: dq ? dq.textContent.replace(/\s+/g, " ") : "" }; });
+  conf("F254 · a coluna abre com o prazo fatal em destaque (a prorrogação) e segue em ordem crescente", fx.asc && /prorroga/i.test(fx.destaque) && /falta|vence|venceu/.test(fx.destaque));
+  if (!(fx.asc && /prorroga/i.test(fx.destaque))) console.log("faixa:", JSON.stringify(fx));
 
   conf("sem erro de página", !p._erros.length);
   if (p._erros.length) console.log(p._erros.join("\n"));
