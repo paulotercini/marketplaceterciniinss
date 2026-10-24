@@ -14439,7 +14439,7 @@ async function verZapCliente(cliId){
   // ficha, para ler, responder e levar ao caso o que importa sem redigitar. A mensagem não vira andamento sozinha:
   // quem lê decide o que entra (o mesmo princípio da tela do WhatsApp)
   const cli = D.cliPorId.get(cliId), minha = zs.find(z=>z.cliente_id===cliId) || zs[0];
-  painelPz = null;
+  painelPz = null; painelZapCli = cliId;
   let el = document.getElementById("painel-prazo");
   if(!el){ el = document.createElement("aside"); el.id = "painel-prazo"; document.body.appendChild(el); }
   el.setAttribute("aria-label", "Conversa de WhatsApp");
@@ -16673,6 +16673,8 @@ function preCarregarFicha(cliId){
   if(preFicha.size>6) preFicha.delete(preFicha.keys().next().value);
 }
 async function abrirFicha(cliId){
+  // F262 · a conversa ao lado acompanha a ficha nas abas (INSS, Conselho, Judicial); trocar de CLIENTE fecha a do anterior
+  if(painelZapCli && painelZapCli!==cliId) fecharPainelPrazo();
   const c = D.cliPorId.get(cliId);
   if(!c) return aviso("Cliente ainda carregando — tente de novo em instantes");
   const trocouCliente = clienteAberto !== cliId;
@@ -33788,7 +33790,7 @@ async function gravarInicioPrazo(casoId, data){
 // "abrir"; o painel, que entra pela direita sem escurecer a ficha, diz o que fazer, quanto falta (com a barra do
 // início ao vencimento), quem está fazendo, as etapas, o início, a origem e o histórico. Fecha no ✕ ou no Esc,
 // e continua aberto quando a ficha se repinta depois de uma ação feita dentro dele.
-let painelPz = null;
+let painelPz = null, painelZapCli = null;   // o painel mostra um prazo (painelPz) ou a conversa de um cliente (painelZapCli)
 function abrirPainelTarefa(casoId, andId){
   let i = (faixaAtual||[]).findIndex(x=>x.casoId===casoId && x.andId===andId);
   if(i<0){
@@ -33815,13 +33817,13 @@ async function comentarNoPrazo(casoId, andId){
   if(clienteAberto) abrirFicha(clienteAberto);
 }
 function fecharPainelPrazo(){
-  painelPz = null;
+  painelPz = null; painelZapCli = null;
   const el = document.getElementById("painel-prazo"); if(el) el.classList.remove("aberto");
   document.body.classList.remove("lado-aberto");
 }
 function abrirPainelPrazo(i){
   const x = faixaAtual[i]; if(!x) return;
-  painelPz = {casoId: x.casoId, data: x.data, andId: x.andId || ""};
+  painelPz = {casoId: x.casoId, data: x.data, andId: x.andId || ""}; painelZapCli = null;
   const hj = hoje(), k = D.casoPorId.get(x.casoId), nome = id => ((D.colPorId.get(id)||{}).nome||"alguém").split(" ")[0];
   const abertas = (D.tarefasPorCaso.get(x.casoId)||[]).filter(t=>!t.concluida_em);
   const ts = x.andId ? abertas.filter(t=>t.andamento_id===x.andId) : x.tc ? [x.tc] : x._nat==="fatal" ? abertas : [];
@@ -40069,6 +40071,7 @@ function dataNatural(texto){
 function fecharFicha(rerender=true){
   { const d = document.getElementById("detalhe"); if(d) d.classList.remove("atend-tela"); }
   clienteAberto=null; abaAtiva=2;
+  if(painelZapCli) fecharPainelPrazo();   // sem ficha, a conversa ao lado não tem com o que conversar
   menuFichaSessao=null;   // a exceção do ☰ morre com a ficha
   document.getElementById("app").classList.remove("detalhe-aberto","ficha-tudo");
   aplicarMenu();
