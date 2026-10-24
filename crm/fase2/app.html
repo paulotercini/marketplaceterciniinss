@@ -4866,6 +4866,11 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 /* F261 · em tela larga o painel não cobre a ficha: o CRM abre espaço para ele, as duas telas lado a lado */
 @media (min-width:1200px){body.lado-aberto #app{margin-right:420px}}
 
+/* F263 · com a conversa de WhatsApp ao lado, a lista do meio sai de cena (o mesmo corte da tela estreita) */
+body.zap-aberto .app.detalhe-aberto .meio{display:none}
+body.zap-aberto .app.detalhe-aberto{grid-template-columns:300px 1fr}
+body.zap-aberto .app.detalhe-aberto.mini-lateral{grid-template-columns:64px 1fr}
+
 </style>
 </head>
 <body>
@@ -14440,6 +14445,7 @@ async function verZapCliente(cliId){
   // quem lê decide o que entra (o mesmo princípio da tela do WhatsApp)
   const cli = D.cliPorId.get(cliId), minha = zs.find(z=>z.cliente_id===cliId) || zs[0];
   painelPz = null; painelZapCli = cliId;
+  document.body.classList.add("zap-aberto");   // F263 · com a conversa ao lado, a lista da esquerda recolhe e a ficha ganha a largura
   let el = document.getElementById("painel-prazo");
   if(!el){ el = document.createElement("aside"); el.id = "painel-prazo"; document.body.appendChild(el); }
   el.setAttribute("aria-label", "Conversa de WhatsApp");
@@ -33819,11 +33825,12 @@ async function comentarNoPrazo(casoId, andId){
 function fecharPainelPrazo(){
   painelPz = null; painelZapCli = null;
   const el = document.getElementById("painel-prazo"); if(el) el.classList.remove("aberto");
-  document.body.classList.remove("lado-aberto");
+  document.body.classList.remove("lado-aberto","zap-aberto");
 }
 function abrirPainelPrazo(i){
   const x = faixaAtual[i]; if(!x) return;
   painelPz = {casoId: x.casoId, data: x.data, andId: x.andId || ""}; painelZapCli = null;
+  document.body.classList.remove("zap-aberto");
   const hj = hoje(), k = D.casoPorId.get(x.casoId), nome = id => ((D.colPorId.get(id)||{}).nome||"alguém").split(" ")[0];
   const abertas = (D.tarefasPorCaso.get(x.casoId)||[]).filter(t=>!t.concluida_em);
   const ts = x.andId ? abertas.filter(t=>t.andamento_id===x.andId) : x.tc ? [x.tc] : x._nat==="fatal" ? abertas : [];
