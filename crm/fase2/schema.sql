@@ -1857,7 +1857,7 @@ create index if not exists atarefas_minhas on andamento_tarefas (colaborador_id,
   where concluida_em is null;
 create index if not exists atarefas_caso on andamento_tarefas (caso_id, lembrar_em)
   where concluida_em is null;
--- hora opcional do aviso na data (schema_lembrete_hora.sql)
+-- hora opcional do aviso na data (schema_funcoes_todo.sql)
 alter table andamento_tarefas add column if not exists lembrar_hora time;
 
 -- Tarefa para alguém cai na caixa de menções DELE — a caixa que já existe,
@@ -2439,6 +2439,10 @@ create or replace function eu_colab() returns uuid
 language sql stable security definer set search_path = public as $$
   select id from colaboradores where auth_id = auth.uid() limit 1;
 $$;
+-- autor e data da atribuição (schema_funcoes_todo.sql)
+alter table atribuicoes add column if not exists atribuido_por uuid
+  references colaboradores(id) on delete set null default eu_colab();
+alter table atribuicoes add column if not exists atribuido_em timestamptz default now();
 
 -- gestor do WhatsApp: o admin e o assistente (o conector do Claude age em
 -- nome do escritório, como o gestor)
