@@ -4791,6 +4791,13 @@ html .tl-tarefa .tf-prog.on{background:var(--azul-fundo,#E6F0EF);border-color:va
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-mais{min-height:28px;padding:0 12px;font-size:12.5px;font-weight:500;border-color:var(--azul);color:var(--azul-escuro)}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-circ{width:22px;height:22px}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini a{font-weight:500}
+/* F268 · a linha só com a data e o abrir */
+html .faixa-prazos .fp2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}   /* o título, só para o leitor de tela */
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-lin .fp2-data{flex:1;font-size:13.5px;color:var(--texto,#1F2933)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-lin.pz-venceu .fp2-data,html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal .fp2-data{color:var(--dk-fatal,#B3261E);font-weight:500}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal{align-items:center;flex-wrap:wrap}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal .fp2-tag{white-space:nowrap}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-lin .fp2-mais{margin-left:auto;flex:none}
 html .tf-etapas{display:flex;flex-direction:column;gap:2px;margin:4px 0 2px 30px}
 html .tf-etapas .tf-et{display:flex;align-items:center;gap:8px;font-size:13px;min-height:26px;cursor:pointer}
 html .tf-etapas .tf-et input{width:16px;height:16px;accent-color:var(--feito,#1E6F50)}
@@ -33925,6 +33932,8 @@ function faixaPrazos(k){
       : `${SIGLA_DIA[new Date(iso+"T12:00:00").getDay()]}., ${fmtBarra(iso).slice(0,5)}`; };
   const falta = iso => { const d = diasAte(iso), u = uteis(iso), du = n => `${n} ${n===1?"dia útil":"dias úteis"}`;
     return d===0 ? "vence hoje" : d<0 ? `venceu há ${du(Math.max(1,u))}` : u ? `faltam ${du(u)}` : `faltam ${d} dias corridos`; };
+  // F268 · A LINHA SÓ COM A DATA E O "ABRIR" (pedido do Paulo, 24.10.2026: a ficha tem informação demais). O título,
+  // o motivo, quem faz e o "cumpri" moram no painel; aqui ficam a bolinha da natureza, a data e o título no passar do mouse
   const linha = (x, destaque) => {
     const i = minhas.indexOf(x), d = diasAte(x.data), nat = natDaLinha(x), tipo = tipoDaLinha(x),
           resumo = resumoDaLinha(x), vis = visivelDaLinha(x), kx = D.casoPorId.get(x.casoId),
@@ -33940,15 +33949,14 @@ function faixaPrazos(k){
     // em vez de repetir "Prazo fatal" debaixo da etiqueta "Prazo fatal"
     const semDesc = x.semMotivo && !motivo && RX_TIPO_GENERICO.test(titulo);
     if(semDesc) titulo = "Diga do que é este prazo";
-    const sub = x.semMotivo && !motivo ? (semDesc ? "veio do To Do sem descrição" : "do To Do, diga do que é") : "";
-    const data = quando(x.data) + (destaque || nat==="fatal" ? ` · ${falta(x.data)}` : x.aConfirmar && d<0 ? " · confirme" : "");
+    // o grupo já diz "Hoje" ou "Amanhã": a linha mostra o dia da semana e a data; o prazo fatal diz também quanto falta
+    const dia = `${SIGLA_DIA[new Date(x.data+"T12:00:00").getDay()]}., ${fmtBarra(x.data).slice(0,5)}`;
+    const data = destaque ? `${dia} · ${falta(x.data)}` : dia;
     Object.assign(x, {_nat: nat, _titulo: titulo, _motivo: motivo, _ir: ir, _quando: quando(x.data), _falta: falta(x.data)});   // para o painel
-    return `<div class="pz fp2-lin pz-${nat}${pend(x)?" pz-venceu":""}${destaque?" fp2-fatal":""}${x.semMotivo?" pz-semmotivo":""}${x.aConfirmar?" pz-confirmar":""}" data-nat="${nat}" data-tipo="${esc(tipo)}" data-data="${x.data}" title="${esc(tipo+(resumo?` · ${resumo}`:""))}">
-      ${x.cumprir?`<button class="fp2-circ" onclick="${x.cumprir}" title="cumpri: tira o prazo daqui e devolve o caso à lista de onde veio" aria-label="cumpri"></button>`:`<span class="fp2-bola" aria-hidden="true"></span>`}
-      ${destaque
-        ? `<span class="fp2-txt"><small class="fp2-tag">Prazo fatal</small><b>${esc(titulo)}</b><span class="fp2-quando">${esc(data)}</span>${sub?`<small>${esc(sub)}</small>`:""}</span>`
-        : `<span class="fp2-txt"><b>${esc(titulo)}</b>${sub?`<small>${esc(sub)}</small>`:""}</span><span class="fp2-data">${esc(data)}</span>`}${x.avs||""}
-      <button class="fp2-mais pz-mais" onclick="abrirPainelPrazo(${i})" title="ver o progresso: quem faz, etapas e histórico">abrir</button>${x.ouv||""}
+    return `<div class="pz fp2-lin pz-${nat}${pend(x)?" pz-venceu":""}${destaque?" fp2-fatal":""}${x.semMotivo?" pz-semmotivo":""}${x.aConfirmar?" pz-confirmar":""}" data-nat="${nat}" data-tipo="${esc(tipo)}" data-data="${x.data}" title="${esc(titulo)}">
+      <span class="fp2-bola" aria-hidden="true"></span>
+      ${destaque ? `<small class="fp2-tag">Prazo fatal</small>` : ""}<span class="fp2-data">${esc(data)}</span><span class="fp2-sr">${esc(titulo)}</span>
+      <button class="fp2-mais pz-mais" onclick="abrirPainelPrazo(${i})">abrir</button>
     </div>`;
   };
   const destaque = proxFatal || minhas.filter(x=>natDaLinha(x)==="fatal" && pend(x))[0] || null;
