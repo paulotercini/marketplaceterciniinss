@@ -4853,6 +4853,19 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini.hora{color:var(--azul-escuro);font-w
 html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
 @media (hover:hover) and (pointer:fine){html .tl-tarefa .tl-tf-abrir:hover{text-decoration:underline}}
 
+/* F261 · a conversa de WhatsApp no painel ao lado da ficha */
+#painel-prazo .pp-tag.pp-zap{color:#128C4B}
+#painel-prazo .pp-zap-msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding:12px 16px;background:#F4F1EC}
+#painel-prazo .pp-zap-msgs .zap-b{position:relative}
+#painel-prazo .zl-acoes{display:flex;gap:6px;margin-top:6px}
+#painel-prazo .zl-acoes button{min-height:26px;padding:0 9px;border:1px solid var(--borda);border-radius:999px;background:#fff;color:var(--azul-escuro);font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+@media (hover:hover) and (pointer:fine){#painel-prazo .zl-acoes button:hover{border-color:var(--azul)}}
+#painel-prazo .pp-zap-resp{align-items:flex-end}
+#painel-prazo .pp-zap-resp textarea{flex:1;min-height:40px;padding:8px 10px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:13.5px;resize:none}
+
+/* F261 · em tela larga o painel não cobre a ficha: o CRM abre espaço para ele, as duas telas lado a lado */
+@media (min-width:1200px){body.lado-aberto #app{margin-right:420px}}
+
 </style>
 </head>
 <body>
@@ -14342,6 +14355,46 @@ async function virarAndamento(msgId){
 // tudo o que o cliente mandou e o que o escritório respondeu, em ordem. Áudio
 // vem transcrito (crm/fase2/ponte/transcrever.py, Whisper nesta máquina);
 // enquanto a transcrição não chega, aparece "transcrevendo…".
+const _zapLado = new Map();   // as mensagens que o painel mostra, para anotar sem buscar de novo
+async function responderZapLado(convId, cliId){
+  const t = document.getElementById("pp-zap-txt"), txt = (t && t.value || "").trim();
+  if(!txt) return;
+  t.value = "";
+  try{
+    await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({conversa_id:convId, direcao:"saida", autor_id:eu.id, texto:txt, status:"fila"})});
+  }catch(e){ t.value = txt; return aviso(msgErro(e)); }
+  if(estadoPonte().txt!=="ponte ligada") aviso("Guardado na fila: a ponte está fora do ar e envia quando voltar", false);
+  verZapCliente(cliId);
+}
+// "anotar": a mensagem vai à linha do tempo do caso, pelo mesmo caminho do "virar andamento" da tela do WhatsApp
+async function anotarMsgZap(msgId, cliId){
+  const ks = processosDe(D.casosDoCliente.get(cliId)||[]);
+  if(!ks.length) return aviso("Este cliente ainda não tem processo");
+  const gravar = async casoId => {
+    fecharCaixa();
+    try{ await api(`/rest/v1/rpc/zap_virar_andamento`,{method:"POST",
+      body:JSON.stringify({p_mensagem:msgId, p_caso:casoId, p_autor:eu.id})}); }
+    catch(e){ return aviso("Não consegui anotar: "+msgErro(e)); }
+    aviso("Anotado na linha do tempo do caso ✔", false);
+    if(clienteAberto) abrirFicha(clienteAberto);
+  };
+  if(ks.length===1) return gravar(ks[0].id);
+  caixa(`<h3>Em qual processo?</h3><p class="meio-sub">O cliente tem mais de um, e o histórico é de cada processo.</p>
+    ${ks.map(k=>`<button class="btn-rap" data-zk="${k.id}" style="display:block;width:100%;margin:6px 0;text-align:left">${esc(k.titulo||k.beneficio||"processo")}</button>`).join("")}`);
+  document.querySelectorAll("[data-zk]").forEach(b=>b.onclick=()=>gravar(b.dataset.zk));
+}
+// "virar tarefa": leva o texto ao campo de escrever no caso, que já lê a data do texto e pede quem faz e quando
+function tarefaDaMsgZap(msgId){
+  const m = _zapLado.get(msgId), campo = document.getElementById("and-texto");
+  if(!m || !campo) return aviso("Abra o caso na ficha para criar a tarefa");
+  campo.value = `WhatsApp do cliente em ${fmtTS(m.q)}: “${m.texto.trim()}” — `;
+  campo.focus();
+  if(campo.oninput) campo.oninput();
+  campo.setSelectionRange(campo.value.length, campo.value.length);
+  campo.scrollIntoView({block:"center"});
+  aviso("Complete com o que fazer e escolha quem faz e quando", false);
+}
 function botaoZapCliente(cliId){
   const zs = D.zapFicha||[];
   if(!zs.length) return "";
@@ -14375,18 +14428,31 @@ async function verZapCliente(cliId){
     else if(m.midia_url) corpo = `<button class="btn-mini" onclick="abrirArquivoZap('${escJs(m.midia_url)}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${esc(m.texto)}</div>`:"");
     else corpo = esc(m.texto||`[${m.tipo}]`);
+    const acoes = m.direcao==="entrada" && (m.texto||"").trim()
+      ? `<span class="zl-acoes"><button onclick="anotarMsgZap('${m.id}','${cliId}')" title="registrar na linha do tempo do caso">anotar</button><button onclick="tarefaDaMsgZap('${m.id}')" title="levar ao campo de escrever no caso, com a data que estiver no texto">virar tarefa</button></span>` : "";
+    _zapLado.set(m.id, {texto: m.texto||"", q});
     return sep + `<div class="zap-b ${m.direcao}" style="max-width:85%">
       ${quem?`<div class="autor">${esc(quem)}</div>`:""}<div class="txt">${corpo}</div>
-      <div class="pe">${horaSP(q)}${m.status==="erro"?" · não enviou":""}</div></div>`;
+      <div class="pe">${horaSP(q)}${m.status==="erro"?" · não enviou":""}</div>${acoes}</div>`;
   });
-  const cli = D.cliPorId.get(cliId);
-  caixa(`<h3>💬 WhatsApp · ${esc(cli?.nome||"")}</h3>
-    <p class="meio-sub">Só leitura. ${zs.map(z=>esc(z.cliente_id && z.cliente_id!==cliId
+  // F261 · A CONVERSA AO LADO DA FICHA (decisão do Paulo, 24.10.2026): o mesmo painel lateral do prazo, sem cobrir a
+  // ficha, para ler, responder e levar ao caso o que importa sem redigitar. A mensagem não vira andamento sozinha:
+  // quem lê decide o que entra (o mesmo princípio da tela do WhatsApp)
+  const cli = D.cliPorId.get(cliId), minha = zs.find(z=>z.cliente_id===cliId) || zs[0];
+  painelPz = null;
+  let el = document.getElementById("painel-prazo");
+  if(!el){ el = document.createElement("aside"); el.id = "painel-prazo"; document.body.appendChild(el); }
+  el.setAttribute("aria-label", "Conversa de WhatsApp");
+  el.innerHTML = `<header><div><div class="pp-cli">${zs.map(z=>esc(z.cliente_id && z.cliente_id!==cliId
         ? `${z.telefone||""} (conversa de ${D.cliPorId.get(z.cliente_id)?.nome||z.nome_perfil||"outro contato"}${obsDoNumero(cliId,z.telefone)?", "+obsDoNumero(cliId,z.telefone):""})`
-        : (z.telefone||""))).join(" · ")}</p>
-    <div class="zap-msgs" style="max-height:65vh;overflow:auto;display:flex;flex-direction:column;gap:4px">
-      ${linhas.join("") || `<p class="meio-sub">Nenhuma mensagem ainda.</p>`}</div>`);
-  const caixaMsgs = document.querySelector("#modal .zap-msgs"); if(caixaMsgs) caixaMsgs.scrollTop = caixaMsgs.scrollHeight;
+        : (z.telefone||""))).join(" · ")}</div><small class="pp-tag pp-zap">WhatsApp</small><h3>${esc(cli?.nome||"")}</h3></div>
+      <button class="pp-x" onclick="fecharPainelPrazo()" aria-label="fechar">✕</button></header>
+    <div class="zap-msgs pp-zap-msgs">${linhas.join("") || `<p class="meio-sub">Nenhuma mensagem ainda.</p>`}</div>
+    <footer class="pp-zap-resp"><textarea id="pp-zap-txt" rows="2" placeholder="Responder pelo WhatsApp…"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();responderZapLado('${minha.id}','${cliId}')}"></textarea>
+      <button class="pp-pri" onclick="responderZapLado('${minha.id}','${cliId}')">Enviar</button></footer>`;
+  requestAnimationFrame(()=>{ el.classList.add("aberto"); document.body.classList.add("lado-aberto"); });
+  const caixaMsgs = el.querySelector(".zap-msgs"); if(caixaMsgs) caixaMsgs.scrollTop = caixaMsgs.scrollHeight;
   // abrir é ler: zera o "novas" do botão
   const lidas = zs.filter(z=>z.nao_lidas);
   if(lidas.length){
@@ -33751,6 +33817,7 @@ async function comentarNoPrazo(casoId, andId){
 function fecharPainelPrazo(){
   painelPz = null;
   const el = document.getElementById("painel-prazo"); if(el) el.classList.remove("aberto");
+  document.body.classList.remove("lado-aberto");
 }
 function abrirPainelPrazo(i){
   const x = faixaAtual[i]; if(!x) return;
@@ -33806,7 +33873,7 @@ function abrirPainelPrazo(i){
         onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();comentarNoPrazo('${x.casoId}','${x.andId||""}')}"></textarea>
       <button class="pp-sec-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Comentar</button></section>
     <footer>${principal}${minha ? `<button class="pp-sec-bt" onclick="adiarTarefa('${minha.id}')">Adiar</button>` : ""}${origem}</footer>`;
-  requestAnimationFrame(()=>el.classList.add("aberto"));
+  requestAnimationFrame(()=>{ el.classList.add("aberto"); document.body.classList.add("lado-aberto"); });
 }
 document.addEventListener("keydown", e=>{ if(e.key==="Escape" && painelPz && !document.querySelector("#modal:not([style*='none']) *")) fecharPainelPrazo(); });
 const _pzTodos = new Set();   // F241 · os casos em que se abriram todas as datas, na sessão
