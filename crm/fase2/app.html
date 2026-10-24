@@ -4765,6 +4765,22 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .pz .fp2-mais{position:static;opacity:1;inset
 html .tl-tarefa .tf-prog{margin-left:6px;font-size:11px;padding:1px 7px;border-radius:10px;border:1px solid var(--borda);background:#fff;color:var(--cinza);cursor:pointer}
 html .tl-tarefa .tf-prog.on{border-color:var(--azul);color:var(--azul-escuro);font-weight:600}
 html span.tf-prog.on{cursor:default}
+/* F256 · botões mais visíveis (crítica de design, 24.10.2026): a ação principal cheia, as secundárias com contorno,
+   alvo de clique de pelo menos 28 px, e o que é estado (em andamento, etapas) com cara de estado */
+html[data-tema="v10"] .tl-bt.tl-bt-ok{background:var(--feito,#1E6F50);border-color:var(--feito,#1E6F50);color:#FFFFFF;font-weight:600}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .tl-bt.tl-bt-ok:hover{filter:brightness(1.08)}}
+html .tl-tarefa .tf-prog{min-height:26px;padding:0 10px;font-size:12px;font-weight:600;border-radius:999px;border:1px solid var(--azul);color:var(--azul-escuro);background:#fff}
+html .tl-tarefa button.tf-prog:not(.on)::before{content:"▶ "}
+html .tl-tarefa .tf-prog.on{background:var(--azul-fundo,#E6F0EF);border-color:var(--azul);color:var(--azul-escuro)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-mais{min-height:28px;padding:0 12px;font-size:12.5px;font-weight:600;border-color:var(--azul);color:var(--azul-escuro)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-circ{width:22px;height:22px}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini a{font-weight:600}
+html .tf-etapas{display:flex;flex-direction:column;gap:2px;margin:4px 0 2px 30px}
+html .tf-etapas .tf-et{display:flex;align-items:center;gap:8px;font-size:13px;min-height:26px;cursor:pointer}
+html .tf-etapas .tf-et input{width:16px;height:16px;accent-color:var(--feito,#1E6F50)}
+html .tf-etapas .tf-et.ok span{text-decoration:line-through;color:var(--cinza)}
+html .tf-etapas .tf-et-add{align-self:flex-start;min-height:26px;padding:0 10px;border:1px dashed var(--borda);border-radius:6px;background:#fff;color:var(--azul-escuro);font-size:12px;cursor:pointer}
+html .tf-etapas .tf-et-n{font-size:11.5px;color:var(--cinza)}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini{margin-top:2px;font-size:12px;color:var(--cinza)}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini.hora{color:var(--azul-escuro);font-weight:600}
 
@@ -11748,7 +11764,7 @@ function linhaAgenda(it){
     <span class="ag-slot">${slot}</span>
     <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
     <div class="ag-txt"><b>${nome}</b>${cli&&resumo?`<span class="ag-res">, ${esc(resumo)}</span>`:""}</div>
-    <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${
+    <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${it.tc && Array.isArray(it.tc.etapas) && it.tc.etapas.length?`<span class="ag-tipo">etapas ${it.tc.etapas.filter(e=>e.feito).length}/${it.tc.etapas.length}</span>`:""}${
       it.selo?`<span class="${it.prazo?"ag-prazo":"ag-tipo"}">${esc(it.selo)}</span>`:""}${
       it.extra?`<span class="ag-tipo" title="a menção que acompanha a tarefa ainda não foi lida">${esc(it.extra)}</span>`:""}${
       tc&&tc.papel==="revisa"?`<span class="ag-tipo ag-revisa" title="revisa o que o executor fez">revisa</span>`:""}${
@@ -16049,7 +16065,7 @@ function adiarTarefa(id){
     <div class="form-linha">
       <button class="btn-rap" onclick="sonecaTarefa('${id}', 60)">Daqui a 1 hora</button>
       <input type="time" onchange="mudarHoraLembrar('${id}', this.value)">
-      <button class="btn-rap" onclick="mudarHoraLembrar('${id}', null)">sem horário</button>
+      <button class="btn-mini" onclick="mudarHoraLembrar('${id}', null)">tirar o horário</button>
     </div>`);
 }
 // ── LEMBRETE COM HORÁRIO (como o To Do) ──────────────────────────────────
@@ -16067,7 +16083,7 @@ async function gravarLembrar(id, campos, msg){
     await api(`/rest/v1/andamento_tarefas?id=eq.${id}`,{method:"PATCH",
       headers:{Prefer:"return=minimal"}, body:JSON.stringify(campos)});
   }catch(e){
-    return aviso(/lembrar_hora|iniciada_em/.test(String(e.message||e))
+    return aviso(/lembrar_hora|iniciada_em|etapas/.test(String(e.message||e))
       ? "⚠ O banco ainda não tem esta coluna: execute o schema_funcoes_todo.sql no Supabase"
       : "Não consegui gravar o lembrete");
   }
@@ -16081,6 +16097,24 @@ function alternarAndamento(id){
   const t = tarefaAberta(id); if(!t) return;
   return gravarLembrar(id, {iniciada_em: t.iniciada_em ? null : new Date().toISOString()},
     t.iniciada_em ? "Tarefa voltou para não iniciada" : "Em andamento: a equipe vê que você começou");
+}
+function novaEtapa(id){
+  caixa(`<h3>Nova etapa</h3>
+    <p class="meio-sub">Um passo para cumprir a tarefa. A equipe vê quantas etapas já foram feitas.</p>
+    <div class="form-linha"><input id="et-txt" style="flex:1" placeholder="Ex.: pedir o PPP à empresa"
+      onkeydown="if(event.key==='Enter')gravarEtapa('${id}')"><button class="btn-rap" onclick="gravarEtapa('${id}')">Acrescentar</button></div>`);
+  setTimeout(()=>{ const i=document.getElementById("et-txt"); if(i) i.focus(); });
+}
+function gravarEtapa(id){
+  const i = document.getElementById("et-txt"), v = (i && i.value || "").trim(), t = tarefaAberta(id);
+  if(!v || !t) return;
+  return gravarLembrar(id, {etapas: [...(t.etapas||[]), {t: v, feito: false}]}, "Etapa acrescentada");
+}
+// shortcut: a lista inteira é regravada; duas pessoas marcando a mesma tarefa no mesmo segundo, vale a última
+function marcarEtapa(id, j, ok){
+  const t = tarefaAberta(id); if(!t) return;
+  const ets = (t.etapas||[]).map((e,i)=>i===j ? {...e, feito: ok, por: ok ? eu.id : null, em: ok ? new Date().toISOString() : null} : e);
+  return gravarLembrar(id, {etapas: ets}, ok ? `Etapa feita · ${ets.filter(e=>e.feito).length} de ${ets.length}` : "Etapa reaberta");
 }
 function mudarHoraLembrar(id, hora){
   return gravarLembrar(id, {lembrar_hora: hora || null},
@@ -33568,7 +33602,7 @@ function faixaPrazos(k){
       ${destaque
         ? `<span class="fp2-txt"><small class="fp2-tag">Prazo fatal</small><b>${esc(titulo)}</b><span class="fp2-quando">${esc(data)}</span>${inicioDoPrazo(x, quando)}${sub?`<small>${esc(sub)}</small>`:""}</span>`
         : `<span class="fp2-txt"><b>${esc(titulo)}</b>${sub?`<small>${esc(sub)}</small>`:""}</span><span class="fp2-data">${esc(data)}</span>`}${x.avs||""}
-      <button class="fp2-mais" onclick="${ir}" title="${x.andId?"ir até a anotação que criou este prazo":x.semMotivo?"esta data veio do To Do: diga do que ela é":"ver o que é e o que fazer"}">${x.semMotivo?"do que é?":"abrir"}</button>${x.ouv||""}
+      <button class="fp2-mais" onclick="${ir}" title="${x.andId?"ir até a anotação que criou este prazo":x.semMotivo?"esta data veio do To Do: diga do que ela é":"ver o que é e o que fazer"}">${x.semMotivo && !motivo?"do que é?":"abrir"}</button>${x.ouv||""}
     </div>`;
   };
   const destaque = proxFatal || minhas.filter(x=>natDaLinha(x)==="fatal" && pend(x))[0] || null;
@@ -36765,7 +36799,12 @@ function tarefasCartao(a){
     const prog = feita ? "" : t.colaborador_id===eu.id
       ? `<button class="tl-bt tf-prog${andando?" on":""}" onclick="alternarAndamento('${t.id}')" title="${andando?"voltar para não iniciada":"avisar a equipe que você já começou"}">${andando?"em andamento":"começar"}</button>`
       : andando ? `<span class="tf-prog on" title="desde ${horaLocal(t.iniciada_em)}">em andamento</span>` : "";
-    return `<span class="tl-tarefa ${feita?"feita":atras?"atras":""}${andando?" andando":""}">${bola}<span>${esc(rot)}</span>${prog}</span>`;
+    // as ETAPAS do To Do (os itens do checklist do Planner): os passos para cumprir a tarefa, à vista no cartão
+    const ets = Array.isArray(t.etapas) ? t.etapas : [], nOk = ets.filter(e=>e.feito).length;
+    const etapas = feita ? "" : `<span class="tf-etapas">${ets.map((e,j)=>
+      `<label class="tf-et${e.feito?" ok":""}"><input type="checkbox"${e.feito?" checked":""} onchange="marcarEtapa('${t.id}',${j},this.checked)"><span>${esc(e.t)}</span></label>`).join("")}
+      <button class="tf-et-add" onclick="novaEtapa('${t.id}')">+ etapa</button>${ets.length?`<small class="tf-et-n">${nOk} de ${ets.length} feitas</small>`:""}</span>`;
+    return `<span class="tl-tarefa ${feita?"feita":atras?"atras":""}${andando?" andando":""}">${bola}<span>${esc(rot)}</span>${prog}</span>${etapas}`;
   }).join("")}</span>`;
 }
 function caixaRespInline(a){

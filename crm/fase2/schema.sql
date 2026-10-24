@@ -1859,6 +1859,8 @@ create index if not exists atarefas_caso on andamento_tarefas (caso_id, lembrar_
   where concluida_em is null;
 -- hora opcional do aviso na data (schema_funcoes_todo.sql)
 alter table andamento_tarefas add column if not exists lembrar_hora time;
+-- etapas da tarefa (schema_funcoes_todo.sql)
+alter table andamento_tarefas add column if not exists etapas jsonb not null default '[]'::jsonb;
 -- tarefa em andamento (schema_funcoes_todo.sql)
 alter table andamento_tarefas add column if not exists iniciada_em timestamptz;
 -- data de início do prazo fatal (schema_funcoes_todo.sql)

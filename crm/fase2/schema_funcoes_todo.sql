@@ -19,3 +19,7 @@ alter table casos add column if not exists prazo_inicio date;
 -- Progresso em três estados (o percentComplete do Planner): a tarefa aberta
 -- com iniciada_em preenchido está em andamento; concluida_em continua igual.
 alter table andamento_tarefas add column if not exists iniciada_em timestamptz;
+
+-- Etapas da tarefa (os steps do To Do, o checklist do Planner): os passos para
+-- cumprir a tarefa, cada um com feito, quem e quando.
+alter table andamento_tarefas add column if not exists etapas jsonb not null default '[]'::jsonb;
