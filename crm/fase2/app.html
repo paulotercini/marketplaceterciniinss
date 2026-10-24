@@ -34040,7 +34040,8 @@ function fecharPrazoEsq(){
 }
 function abrirPainelPrazo(i){
   const x = faixaAtual[i]; if(!x) return;
-  const esq = painelZapCli && document.querySelector(".caso-esq");
+  // no celular não há espaço para duas janelas: o prazo toma o lugar da conversa, como antes
+  const esq = painelZapCli && !celular() && document.querySelector(".caso-esq");
   painelPz = {casoId: x.casoId, data: x.data, andId: x.andId || ""};
   if(!esq){ painelZapCli = null; document.body.classList.remove("zap-aberto"); }
   const fechar = esq ? "fecharPrazoEsq()" : "fecharPainelPrazo()";
