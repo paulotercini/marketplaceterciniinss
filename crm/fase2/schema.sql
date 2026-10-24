@@ -1859,6 +1859,10 @@ create index if not exists atarefas_caso on andamento_tarefas (caso_id, lembrar_
   where concluida_em is null;
 -- hora opcional do aviso na data (schema_funcoes_todo.sql)
 alter table andamento_tarefas add column if not exists lembrar_hora time;
+-- tarefa em andamento (schema_funcoes_todo.sql)
+alter table andamento_tarefas add column if not exists iniciada_em timestamptz;
+-- data de início do prazo fatal (schema_funcoes_todo.sql)
+alter table casos add column if not exists prazo_inicio date;
 
 -- Tarefa para alguém cai na caixa de menções DELE — a caixa que já existe,
 -- não uma segunda. Para si mesmo não avisa: ninguém precisa ser notificado

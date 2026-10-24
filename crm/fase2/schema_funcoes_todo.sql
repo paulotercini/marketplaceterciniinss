@@ -11,3 +11,11 @@ alter table andamento_tarefas add column if not exists lembrar_hora time;
 alter table atribuicoes add column if not exists atribuido_por uuid
   references colaboradores(id) on delete set null default eu_colab();
 alter table atribuicoes add column if not exists atribuido_em timestamptz default now();
+
+-- Data de início no prazo fatal (o startDateTime do Planner): quando começar,
+-- além de quando vence. No dia, o prazo entra no Meu Dia de quem cuida do caso.
+alter table casos add column if not exists prazo_inicio date;
+
+-- Progresso em três estados (o percentComplete do Planner): a tarefa aberta
+-- com iniciada_em preenchido está em andamento; concluida_em continua igual.
+alter table andamento_tarefas add column if not exists iniciada_em timestamptz;
