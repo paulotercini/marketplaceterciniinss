@@ -5425,9 +5425,22 @@ async function alternarSomZap(){
 // banco, e essa não dá para guardar no banco.)
 // um PATCH de caso = uma linha. Eram 52 cópias do mesmo fetch — 52 chances
 // de um header divergente. O erro continua subindo para quem chamou.
-function patchCaso(id, campos){
-  return api(`/rest/v1/casos?id=eq.${id}`,{method:"PATCH",
-    headers:{Prefer:"return=minimal"}, body:JSON.stringify(campos)});
+// EDIÇÃO AO MESMO TEMPO (o change_key do To Do): o PATCH só vale se o caso
+// ainda está como esta tela o viu (mudou_em). Se outra pessoa mexeu antes, a
+// gravação segue campo a campo, como no To Do, mas a tela recarrega o caso e
+// avisa, para ninguém continuar trabalhando em cima do que já mudou.
+async function patchCaso(id, campos){
+  const k = D && D.casoPorId && D.casoPorId.get(id), visto = k && k.mudou_em;
+  const patch = (filtro, sel) => api(`/rest/v1/casos?id=eq.${id}${filtro}&select=${sel}`,{method:"PATCH",
+    headers:{Prefer:"return=representation"}, body:JSON.stringify(campos)});
+  if(!visto) return void await patch("", "id");
+  const [ok] = (await patch(`&mudou_em=eq.${encodeURIComponent(visto)}`, "mudou_em")) || [];
+  if(ok){ k.mudou_em = ok.mudou_em; return; }
+  const [atual] = (await patch("", "*")) || [];
+  if(!atual) return;
+  Object.assign(k, atual);
+  aviso("⚠ Outra pessoa alterou este caso há pouco. Gravei a sua mudança e recarreguei o caso: confira antes de seguir.");
+  if(clienteAberto) abrirFicha(clienteAberto);
 }
 // TODA tarefa criada em tela entra na memória NA HORA — gravar no banco e só
 // aparecer no Meu Dia depois do F5 fazia a tarefa recém-criada "sumir" das
@@ -6863,7 +6876,7 @@ function quantosVencidos(){
 function quantosNoMeuDia(){
   if(temaV10()){ const hj=hoje();
     // F236 · o que a tela da pessoa mostra: os itens dela de hoje e o que ELA pôs no dia
-    return itensAgenda(eu.id).filter(i=>i.data===hj).length
+    return (mdMostraVence() ? itensAgenda(eu.id).filter(i=>i.data===hj).length : 0)
       + new Set((D.meudia||[]).filter(m=>m.colaborador_id===eu.id).map(m=>m.caso_id).filter(id=>D.casoPorId.get(id))).size; }
   const casosDia = (D.meudia||[]).filter(m=>m.caso_id)
     .map(m=>D.casoPorId.get(m.caso_id)).filter(Boolean);
@@ -7158,6 +7171,8 @@ function montarConta(){
       + op("auditoria","Auditoria To Do", (r=>r?`${r.total} diferença(s) em ${fmtTS(r.em)}`:"")(resumoAuditoria()))
       + op("config","Configurações") + `<hr>` : "")
     + op("som", somLigado()?"Desligar o som":"Ligar o som")
+    + op("mdvence", "Meu Dia com o que vence hoje", mdMostraVence()?"ligado":"desligado: só o que eu pus no dia")
+    + (navigator.setAppBadge ? op("badge", "Número no ícone", (BADGE_OPCOES.find(([v])=>v===(ler("crm_badge")||"meudia"))||[])[1]) : "")
     + (souAdmin() ? op("vercomo", visaoColab()?"Voltar à minha visão":"Ver como colaborador")
         + op("niveis", "Níveis da equipe", transicao() ? `transição na onda ${ondaAtual()}` : "transição desligada") : "")   // F249
     + op("recolher","Recolher o menu") + op("tema","Voltar ao visual anterior") + `<hr>` + op("sair","Sair");
@@ -7168,6 +7183,8 @@ function montarConta(){
        config: ()=>irPara("config"),
        auditoria: ()=>{ audLista=null; audLinhas=null; irPara("auditoria"); },
        som: ()=>document.getElementById("btn-som").click(),
+       mdvence: ()=>{ guardar("crm_md_vence", mdMostraVence()?"0":"1"); montarConta(); montarSidebar(); render(); },
+       badge: ()=>escolherBadge(),
        vercomo: ()=>alternarVerComo(),
        niveis: ()=>abrirTransicao(),
        recolher: ()=>document.getElementById("btn-lateral").click(),
@@ -9297,10 +9314,10 @@ function renderMeuDia(){
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
     + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || `<p class='meio-sub'>Nada adicionado — ${celular()?"toque e segure":"clique com o botão direito"} num cliente e escolha ☀️ Adicionar ao Meu Dia.</p>`)
     + secaoDiasAnteriores(filtroColab)
-    + `<h3 class="secao">🟡 Vencem hoje (${nHoje})</h3>`
+    + (!mdMostraVence() ? "" : `<h3 class="secao">🟡 Vencem hoje (${nHoje})</h3>`
     + (grupoClientes(hojeK).map(([c,ks])=>cartaoCliente(c,ks)).join("")
        + tHoje.map(t=>cartaoTarefa(t)).join("")
-       + apos.hoje.join("") + lemb.hoje.join("") || "<p class='meio-sub'>Nada vence hoje. 🎉</p>")
+       + apos.hoje.join("") + lemb.hoje.join("") || "<p class='meio-sub'>Nada vence hoje. 🎉</p>"))
     + (filtroVencidas ? `<h3 class="secao">🔴 Vencidas (${nVenc})</h3>`
        + (grupoClientes(vencK).map(([c,ks])=>cartaoCliente(c,ks)).join("")
           + tVenc.map(t=>cartaoTarefa(t)).join("")
@@ -11715,7 +11732,7 @@ function renderAgendaV10(qual){
   const col = planej ? filtroPlanColab : filtroDia;   // F236 · o Meu Dia tem filtro próprio
   const em = n=>{ const x=new Date(hoje()+"T12:00:00"); x.setDate(x.getDate()+n); return x.toLocaleDateString("sv"); };
   const hj = hoje();
-  let itens = itensAgenda(col);
+  let itens = planej || mdMostraVence() ? itensAgenda(col) : [];
   // F236 · O MEU DIA COMEÇA PELO ATRASADO DA PESSOA e mostra o próximo dia útil (no sábado, até a
   // segunda): a perícia de amanhã e o prazo de segunda não esperam alguém abrir o Planejado
   const util = (()=>{ let d=em(1); while(!ehDiaUtil(d)) d=somaDias(d,1); return d; })();
@@ -15964,7 +15981,7 @@ function adiarTarefa(id){
 // ── LEMBRETE COM HORÁRIO (como o To Do) ──────────────────────────────────
 // O To Do guarda data e hora do lembrete e dispara um aviso do Windows na
 // hora, com "adiar". Aqui a data continua em lembrar_em e a hora, opcional,
-// em lembrar_hora (schema_lembrete_hora.sql). O aviso sai uma vez por
+// em lembrar_hora (schema_funcoes_todo.sql). O aviso sai uma vez por
 // tarefa/data/hora: a marca fica neste navegador, para não repetir a cada volta.
 function tarefaAberta(id){
   return (D.tarefasFicha||[]).find(x=>x.id===id)
@@ -15977,7 +15994,7 @@ async function gravarLembrar(id, campos, msg){
       headers:{Prefer:"return=minimal"}, body:JSON.stringify(campos)});
   }catch(e){
     return aviso(/lembrar_hora/.test(String(e.message||e))
-      ? "⚠ O banco ainda não guarda o horário: execute o schema_lembrete_hora.sql no Supabase"
+      ? "⚠ O banco ainda não guarda o horário: execute o schema_funcoes_todo.sql no Supabase"
       : "Não consegui gravar o lembrete");
   }
   for(const t of [(D.tarefasFicha||[]).find(x=>x.id===id), tarefaAberta(id)]) if(t) Object.assign(t, campos);
@@ -16005,6 +16022,7 @@ function lembretesNaHora(tarefas, hojeIso, horaAgora, avisados){
 }
 function vigiarLembretes(){
   if(!eu || !D || !D.tarefasPorCaso) return;
+  atualizarBadge();
   const avisados = new Set(JSON.parse(ler("crm_lemb_avisados")||"[]"));
   const minhas = [...D.tarefasPorCaso.values()].flat().filter(t=>t.colaborador_id===eu.id);
   const vez = lembretesNaHora(minhas, hoje(), agoraSP().toTimeString().slice(0,5), avisados);
@@ -16013,12 +16031,55 @@ function vigiarLembretes(){
     const k = D.casoPorId.get(t.caso_id), c = k && D.cliPorId.get(k.cliente_id);
     const txt = `${c ? c.nome : "Tarefa"} · ${String(t.lembrar_hora).slice(0,5)}`;
     plim(); aviso(`⏰ Lembrete: ${txt}`, false);
-    if(window.Notification && Notification.permission==="granted") try{
-      const n = new Notification("⏰ Lembrete · CRM", {body: txt, tag: "crm-lemb-"+t.id, requireInteraction: true});
-      n.onclick = ()=>{ window.focus(); if(c) abrirFicha(c.id); n.close(); };
-    }catch(e){}
+    notificarLembrete(t, c, txt);
   }
   if(vez.length) guardar("crm_lemb_avisados", JSON.stringify([...avisados].slice(-300)));
+}
+// Com o programa guardado (sw.js), o aviso traz os botões do To Do: concluir
+// e adiar 1 hora sem abrir o CRM. Sem ele, o aviso simples abre a ficha.
+async function notificarLembrete(t, c, txt){
+  if(!window.Notification || Notification.permission!=="granted") return;
+  const titulo = "⏰ Lembrete · CRM", base = {body: txt, tag: "crm-lemb-"+t.id, requireInteraction: true};
+  try{
+    if(navigator.serviceWorker && navigator.serviceWorker.controller){
+      const reg = await navigator.serviceWorker.ready;
+      return await reg.showNotification(titulo, {...base, data: {tarefa: t.id, cliente: c ? c.id : null},
+        actions: [{action: "concluir", title: "✔ Concluir"}, {action: "adiar", title: "⏰ Adiar 1 hora"}]});
+    }
+    const n = new Notification(titulo, base);
+    n.onclick = ()=>{ window.focus(); if(c) abrirFicha(c.id); n.close(); };
+  }catch(e){}
+}
+function cliqueNoAviso(d){
+  if(!d || d.crm!=="lembrete") return;
+  if(d.acao==="concluir") concluirDeVez(d.tarefa);
+  else if(d.acao==="adiar") sonecaTarefa(d.tarefa, 60);
+  else if(d.cliente) abrirFicha(d.cliente);
+}
+// O NÚMERO NO ÍCONE (o "badge" do To Do): quem instalou o CRM como aplicativo
+// vê no ícone quanto há no Meu Dia, ou só as vencidas. A escolha é deste
+// navegador, como no To Do, e o padrão é o Meu Dia.
+// o "Mostrar no Meu Dia as tarefas que vencem hoje" do To Do: desligado, o
+// Meu Dia fica só com o que a pessoa pôs nele (e as menções a ela)
+function mdMostraVence(){ return ler("crm_md_vence") !== "0"; }
+const BADGE_OPCOES = [["meudia","Meu Dia"],["vencidas","Só as vencidas"],["nada","Desligado"]];
+function contarVencidas(){
+  const hj = hoje();
+  return [...(D.tarefasPorCaso||new Map()).values()].flat()
+    .filter(t=>t.colaborador_id===eu.id && !t.concluida_em && t.lembrar_em && t.lembrar_em<hj).length;
+}
+function atualizarBadge(){
+  if(!navigator.setAppBadge || !eu || !D) return;
+  const modo = ler("crm_badge") || "meudia";
+  const n = modo==="nada" ? 0 : modo==="vencidas" ? contarVencidas() : quantosNoMeuDia();
+  (n ? navigator.setAppBadge(n) : navigator.clearAppBadge()).catch(()=>{});
+}
+function escolherBadge(){
+  const atual = ler("crm_badge") || "meudia";
+  caixa(`<h3>🔢 Número no ícone do CRM</h3>
+    <p class="meio-sub">Aparece no ícone de quem instalou o CRM como aplicativo.</p>
+    <div class="form-linha">${BADGE_OPCOES.map(([v,r])=>
+      `<button class="btn-rap${v===atual?" on":""}" onclick="guardar('crm_badge','${v}');fecharCaixa();atualizarBadge();aviso('Número do ícone: ${r}',false)">${r}</button>`).join("")}</div>`);
 }
 async function mudarLembrar(id, data){
   if(!data) return;
@@ -16856,7 +16917,15 @@ function pintarFicha(){
         D.atrDoCaso.set(k.id,(D.atrDoCaso.get(k.id)||[]).filter(x=>x!==colId));
       }
     }
-    aviso(tinha?"Atribuído":"Atribuição removida"); montarSidebar();
+    // como o "atribuída a você" do To Do: quem recebe o cliente fica sabendo,
+    // pelas Menções e pelo Meu Dia, em vez de descobrir quando abrir a lista
+    if(tinha && colId!==eu.id && casosAtivos.length){
+      const c = D.cliPorId.get(casosAtivos[0].cliente_id);
+      await api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({de_id:eu.id, para_id:colId, caso_id:casosAtivos[0].id,
+          texto:`👤 ${(eu.nome||"").split(" ")[0]} atribuiu a você o cliente ${c?c.nome:""}`.trim()})}).catch(()=>{});
+    }
+    aviso(tinha?(colId!==eu.id?"Atribuído · a pessoa foi avisada":"Atribuído"):"Atribuição removida"); montarSidebar();
     render();   // atualiza a coluna do meio na hora (avatar e cor do responsável)
   });
   // F236 · "recebido" pergunta o dia e o valor que entrou e, na parcela sem caso de quem tem dois ou mais, de qual caso
@@ -47297,7 +47366,7 @@ function aplicarMenu(){
   try{ if(localStorage.getItem("crm_sw")==="1") liga = true; }catch(e){}
   if(!liga) return;
   navigator.serviceWorker.register("sw.js").catch(()=>{});
-  navigator.serviceWorker.addEventListener("message", e=>{ if(e.data==="crm-nova-versao") avisoNovaVersao(); });
+  navigator.serviceWorker.addEventListener("message", e=>{ if(e.data==="crm-nova-versao") avisoNovaVersao(); else cliqueNoAviso(e.data); });
 })();
 function avisoNovaVersao(){
   if(document.getElementById("nova-versao")) return;
