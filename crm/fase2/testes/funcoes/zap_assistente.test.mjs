@@ -15,4 +15,6 @@ assert.ok(t.includes("Cliente: oi, telefone [número]") && t.includes("Robô: me
 assert.deepEqual(pedidosAbertos([{ caso_id: "k1", itens: [{ nome: "RG", entregue: null }, { nome: "CNIS", entregue: "2026-10-01" }] }]), ["RG (caso k1)"]);
 assert.equal(primeiroNome("Maria da Silva"), "Maria");
 assert.ok(promptRascunho("Maria", [], "x").includes("Não prometa resultado"));
+assert.ok(promptRascunho("Maria", [], "x", "Assine como equipe.").includes("Instruções do escritório (seguem as proibições acima):\nAssine como equipe."));
+assert.ok(!promptRascunho("Maria", [], "x", "  ").includes("Instruções do escritório"));
 console.log("zap_assistente: ok");

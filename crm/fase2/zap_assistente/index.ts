@@ -47,12 +47,14 @@ export function promptResumo(nome: string, casos: string[], conversa: string) {
     `<conversa>\n${conversa}\n</conversa>\n\nResuma para a equipe em até 5 linhas: o que o cliente quer, o que já foi respondido ` +
     `e o que ainda falta responder ou providenciar. Não invente fato que a conversa não traz.`;
 }
-export function promptRascunho(nome: string, casos: string[], conversa: string) {
+export function promptRascunho(nome: string, casos: string[], conversa: string, instrucoes = "") {
   return `${REGRAS}\n\nCliente: ${nome || "não identificado"}. Casos abertos: ${casos.join("; ") || "nenhum"}.\n\n` +
     `<conversa>\n${conversa}\n</conversa>\n\nEscreva a próxima mensagem do escritório ao cliente, cordial e curta (até 4 frases), ` +
     `respondendo ao que ele perguntou por último. Não prometa resultado, prazo ou valor, não dê parecer jurídico e não ` +
     `afirme andamento que a conversa ou a etapa do caso não mostram; se faltar informação, diga que a equipe vai conferir e retorna. ` +
-    `Responda apenas com o texto da mensagem.`;
+    `Responda apenas com o texto da mensagem.` +
+    // instruções editáveis nas Configurações do WhatsApp (zap_ia_txt_rascunho); as proibições acima continuam valendo
+    (instrucoes.trim() ? `\n\nInstruções do escritório (seguem as proibições acima):\n${instrucoes.trim().slice(0, 2000)}` : "");
 }
 export function promptDocumento(casos: Caso[], pedidos: string[]) {
   return `${REGRAS}\n\nO cliente mandou o arquivo anexo pelo WhatsApp. Diga que documento é (por exemplo: RG, CPF, comprovante de ` +
@@ -134,7 +136,9 @@ if (typeof Deno !== "undefined") {
         const msgs: Msg[] = (await ler(`zap_mensagens?select=direcao,por_bot,tipo,texto,criado_em&conversa_id=eq.${convId}&order=seq.desc&limit=40`)).reverse();
         const conversa = transcricao(msgs);
         if (!conversa) return json({ erro: "conversa sem mensagens" }, 400);
-        const p = (m.acao === "resumo" ? promptResumo : promptRascunho)(primeiroNome(cli?.nome), casos.map(linhaDoCaso), conversa);
+        const [txt] = m.acao === "rascunho" ? await ler(`config_app?select=valor&chave=eq.zap_ia_txt_rascunho`) : [];
+        const p = m.acao === "resumo" ? promptResumo(primeiroNome(cli?.nome), casos.map(linhaDoCaso), conversa)
+          : promptRascunho(primeiroNome(cli?.nome), casos.map(linhaDoCaso), conversa, String(txt?.valor || ""));
         return json({ texto: await claude([{ type: "text", text: p }]) });
       }
 

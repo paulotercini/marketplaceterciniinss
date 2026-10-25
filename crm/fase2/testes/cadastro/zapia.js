@@ -123,6 +123,16 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   conf("o prazo de volta ao robô aparece com 60 min", await p.$eval("#cf-volta-min", e => e.value).catch(() => "") === "60");
   conf("o plantão da IA nasce desligado, com 20 min e o caso novo para os três advogados", await p.$eval("#cf-ia-plantao", e => !e.checked).catch(() => false)
     && await p.$eval("#cf-plantao-min", e => e.value).catch(() => "") === "20" && await p.$eval("#cf-plantao-lead", e => e.value).catch(() => "") === "todos");
+  conf("F275 · conversa na hora desligada (0 dias), chamada direta e as duas instruções editáveis",
+    await p.$eval("#cf-plantao-aberta-dias", e => e.value).catch(() => "") === "0"
+    && await p.$eval("#cf-ia-motor", e => e.value).catch(() => "") === "mensagens"
+    && !!(await p.$("#cf-ia-txt-plantao")) && !!(await p.$("#cf-ia-txt-rascunho")));
+  await p.selectOption("#cf-ia-motor", "agentes");
+  await p.fill("#cf-ia-txt-plantao", "Atendemos de segunda a sexta.");
+  await p.dispatchEvent("#cf-ia-txt-plantao", "change");
+  await p.waitForTimeout(300);
+  conf("trocar o motor e as instruções grava em config_app", escritas.some(w => JSON.stringify(w.b || "").includes("zap_ia_motor") && JSON.stringify(w.b).includes("agentes"))
+    && escritas.some(w => JSON.stringify(w.b || "").includes("Atendemos de segunda a sexta.")));
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);

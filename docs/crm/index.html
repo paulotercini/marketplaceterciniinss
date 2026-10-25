@@ -15217,7 +15217,7 @@ async function renderConfig(){
              ${cfgApp("zap_robo_agenda")==="sim"?"checked":""}> robô marca o horário pelas vagas da agenda</label>
            <label class="cfg-ck" title="fora do expediente, quem escolhe caso novo conta o caso por escrito ou por áudio, e o relato fica como nota da equipe"><input type="checkbox" id="cf-robo-noturno"
              ${cfgApp("zap_robo_noturno")==="sim"?"checked":""}> fora do expediente, robô colhe o relato do caso novo</label>
-           <label class="cfg-ck" title="a mensagem do cliente sem resposta da equipe no prazo abaixo vai à IA (função zap_plantao): ela tranquiliza dizendo qual advogado vai responder e avisa esse advogado e a recepção no CRM, atende o caso novo e oferece a agenda; agradecimento e conversa entre colegas ficam sem resposta; nunca dá parecer, chance ou valor"><input type="checkbox" id="cf-ia-plantao"
+           <label class="cfg-ck" title="quem não está em conversa com a equipe conversa com a IA na hora (dúvidas, caso novo, agenda); com a equipe na conversa, a mensagem sem resposta no prazo abaixo vai à IA, que tranquiliza dizendo qual advogado vai responder; todo aviso vai a todos os advogados e à recepção no CRM; agradecimento e conversa entre colegas ficam sem resposta; nunca dá parecer, chance ou valor"><input type="checkbox" id="cf-ia-plantao"
              ${cfgApp("zap_ia_plantao")==="sim"?"checked":""}> IA responde quem ficou sem resposta e atende o caso novo</label>
            <label class="cfg-ck">a IA responde depois de
              <input type="number" id="cf-plantao-min" min="1" max="240" style="width:64px"
@@ -15226,6 +15226,15 @@ async function renderConfig(){
                value="${esc(cfgApp("zap_plantao_fora_min")||"5")}"> min fora dele</label>
            <label class="cfg-ck" title="o advogado responsável do caso novo e do cliente sem advogado na ficha nem na conversa; todo aviso vai a todos os advogados e à recepção">caso novo vai para
              <select id="cf-plantao-lead">${[["todos","os três advogados"],["Paulo","Paulo"],["Marcos","Marcos"],["Amanda","Amanda"]].map(([v,n])=>`<option value="${v}" ${(cfgApp("zap_plantao_lead")||"todos")===v?"selected":""}>${n}</option>`).join("")}</select></label>
+           <label class="cfg-ck" title="sem mensagem da equipe nesse prazo (e sem atendente), a IA conversa na hora com a pessoa, tira dúvidas, colhe o caso e agenda; com a equipe na conversa, ela espera o prazo acima e só tranquiliza">a IA conversa na hora com quem não falou com a equipe nos últimos
+             <input type="number" id="cf-plantao-aberta-dias" min="0" max="60" style="width:64px"
+               value="${esc(cfgApp("zap_plantao_aberta_dias")||"0")}"> dias (0 desliga)</label>
+           <label class="cfg-ck" title="chamada direta: a função lê a conversa e responde a cada vez; Managed Agents: o agente fica cadastrado e versionado no Console da Anthropic, e cada conversa tem a sua sessão, com o histórico, que se acompanha no Console">motor da IA do WhatsApp
+             <select id="cf-ia-motor">${[["mensagens","chamada direta"],["agentes","Managed Agents (beta)"]].map(([v,n])=>`<option value="${v}" ${(cfgApp("zap_ia_motor")||"mensagens")===v?"selected":""}>${n}</option>`).join("")}</select></label>
+           <label class="cfg-ck" style="display:block" title="o que a IA deve saber e seguir no WhatsApp: endereço, horário, como o escritório atende, o que responder; as proibições (parecer, chance, valor) continuam valendo">instruções do escritório para a IA do WhatsApp
+             <textarea id="cf-ia-txt-plantao" rows="5" style="width:100%" placeholder="Ex.: endereço do escritório, dias e horário de atendimento, o que levar ao primeiro atendimento">${esc(cfgApp("zap_ia_txt_plantao")||"")}</textarea></label>
+           <label class="cfg-ck" style="display:block" title="o que o ✨ Rascunho deve seguir ao escrever a resposta para a equipe conferir">instruções do escritório para o ✨ Rascunho
+             <textarea id="cf-ia-txt-rascunho" rows="3" style="width:100%">${esc(cfgApp("zap_ia_txt_rascunho")||"")}</textarea></label>
            <label class="cfg-ck"><input type="checkbox" id="cf-zap-visual"
              ${cfgApp("zap_visual")==="escritorio"?"":"checked"}> conversa com a aparência do WhatsApp</label>
            <label class="cfg-ck">🔄 revisar o acervo a cada
@@ -15459,7 +15468,11 @@ function ligarConfig(){
   cfgSalva("cf-ia-plantao","zap_ia_plantao", el=>el.checked?"sim":"nao");
   cfgSalva("cf-plantao-min","zap_plantao_min", el=>String(Math.min(240, Math.max(1, Math.round(+el.value||20)))));
   cfgSalva("cf-plantao-fora-min","zap_plantao_fora_min", el=>String(Math.min(240, Math.max(1, Math.round(+el.value||5)))));
+  cfgSalva("cf-plantao-aberta-dias","zap_plantao_aberta_dias", el=>String(Math.min(60, Math.max(0, Math.round(+el.value||0)))));
+  cfgSalva("cf-ia-txt-plantao","zap_ia_txt_plantao", el=>el.value.trim().slice(0, 4000));
+  cfgSalva("cf-ia-txt-rascunho","zap_ia_txt_rascunho", el=>el.value.trim().slice(0, 2000));
   cfgSalva("cf-plantao-lead","zap_plantao_lead", el=>el.value||"todos");
+  cfgSalva("cf-ia-motor","zap_ia_motor", el=>el.value==="agentes"?"agentes":"mensagens");
   cfgSalva("cf-zap-visual","zap_visual", el=>el.checked?"whatsapp":"escritorio");
   cfgSalva("cf-rev-dias","revisao_dias", el=>String(Math.max(15, +el.value||90)));
   cfgSalva("cf-rev-dose","revisao_dose", el=>String(Math.max(1, +el.value||5)));
