@@ -174,7 +174,8 @@ select pg_temp.velha((select id from lt9)); select zap_plantao_vencidas();
 select zap_plantao_aplicar((select id from lt9), 'falhou', null, null, false, null, null, null);
 insert into r select 'p33 todos: três advogados e a recepção avisados',
   (select count(*) from mencoes where conversa_id = (select id from t9)) = 4
-  and exists (select 1 from zap_mensagens where conversa_id = (select id from t9) and texto like 'Recebemos a sua mensagem. A equipe do escritório já foi avisada e responderá%');
+  and exists (select 1 from zap_mensagens where conversa_id = (select id from t9) and texto like 'Recebemos a sua mensagem. A equipe do escritório já foi avisada e responderá%')
+  and exists (select 1 from zap_mensagens where conversa_id = (select id from t9) and texto like '%avisou os advogados e a recepção%');
 insert into r select 'p34 o caso com advogado avisa ele e a recepção, sem os outros',
   (select array_agg(para_id::text) @> array['aaaaaaaa-0000-0000-0000-000000000002','aaaaaaaa-0000-0000-0000-000000000005']
           and not array_agg(para_id::text) @> array['aaaaaaaa-0000-0000-0000-000000000003']

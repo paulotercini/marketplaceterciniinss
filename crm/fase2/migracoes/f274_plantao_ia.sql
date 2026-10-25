@@ -220,7 +220,7 @@ begin
    where trim(coalesce(p_advogado, '')) <> ''
      and (assinatura_zap = trim(p_advogado) or nome = trim(p_advogado)) limit 1;
   v_adv := coalesce(v_adv, zap_advogado_da_conversa(c.id));
-  v_quem := coalesce(zap_nome_colab(v_adv), 'os advogados');
+  v_quem := case when v_adv is null then 'os advogados e a recepção' else zap_nome_colab(v_adv) || ' e a recepção' end;
 
   v_txt := left(trim(coalesce(p_resposta, '')), 1500);
   if v_acao = 'falhou' then
