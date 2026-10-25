@@ -15130,6 +15130,9 @@ async function renderConfig(){
            <label class="cfg-ck">silêncio do robô entre falas:
              <input type="number" id="cf-pausa" min="0" max="300" style="width:70px"
                value="${esc(cfgApp("zap_pausa_bot")||"15")}"> s</label>
+           <label class="cfg-ck" title="quem escreve dentro desse prazo depois do encerramento continua com o atendente; depois dele, a conversa volta ao robô. Zero volta ao robô na hora (útil para testar)">conversa encerrada volta ao robô depois de
+             <input type="number" id="cf-volta-min" min="0" max="1440" style="width:70px"
+               value="${esc(cfgApp("zap_volta_min")||"60")}"> min</label>
            ${/* F92 · os feriados que o catálogo de prazos não conhece: os da
                 comarca e os forenses. Os nacionais (fixos e móveis) já estão
                 no programa. */""}
@@ -15337,6 +15340,7 @@ function ligarConfig(){
   cfgSalva("cf-ini","zap_hora_inicio", el=>el.value||"08:00");
   cfgSalva("cf-fim","zap_hora_fim",    el=>el.value||"18:00");
   cfgSalva("cf-pausa","zap_pausa_bot", el=>String(Math.max(0, +el.value||0)));
+  cfgSalva("cf-volta-min","zap_volta_min", el=>String(Math.max(0, Math.round(+el.value||0))));
   cfgSalva("cf-bot","zap_bot_ligado",  el=>el.checked?"sim":"nao");
   cfgSalva("cf-avisos","zap_avisos_ligado", el=>el.checked?"sim":"nao");
   cfgSalva("cf-robo-novo","zap_robo_novo", el=>el.checked?"sim":"nao");
