@@ -85,8 +85,9 @@ FIX.clientes[1] = { ...FIX.clientes[1], campos: { ...(FIX.clientes[1].campos || 
   const secoes = await texto("h3.secao");
   conf("8 em Todos, os cards agrupados por etapa, com a data provável", /Monitorando \(2\)/.test(secoes[0]) && /Documentação \(1\)/.test(secoes[1]) && (await texto(".cartao.card-apos .meta")).some(t => /direito em 15\.03\.2029/.test(t)));
   await p.click(".cartao.card-apos");
-  await p.waitForFunction(() => D._ficha && D._ficha.cliId && abaAtiva === 9 && document.querySelector(".card-apos-cab"));
-  conf("9 o card abre a ficha na aba Lembretes", true);
+  await p.waitForFunction(() => D._ficha && D._ficha.cliId && abaAtiva === 0 && document.querySelector("#modal .card-apos-cab"));
+  conf("9 o card abre a ficha no Cadastro, com o card aberto na janela (F277)", true);
+  await p.evaluate(() => fecharCaixa());
 
   // ── o card na aba Lembretes ────────────────────────────────────────────
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
