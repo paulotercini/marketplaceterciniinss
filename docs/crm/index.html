@@ -13839,6 +13839,7 @@ function pintarConversa(){
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
                ${pode?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>`:""}
                ${pode&&!fim&&(zapAux.passos||[]).length?`<button onclick="levarRobo()">Levar o robô a um passo…</button>`:""}
+               ${pode&&cfgApp("zap_ia_plantao")==="sim"?`<button onclick="mudarConversa({sem_ia:!c.sem_ia})">${c.sem_ia?"A IA volta a responder esta conversa":"A IA não responde esta conversa"}</button>`:""}
                ${cli?`<button onclick="quemConversa()">Quem conversa…</button>`:""}
                ${cli?`<button onclick="abrirFicha('${cli.id}')">Abrir a ficha do cliente</button>`
                     :`<button onclick="vincularConversa()">Vincular a um cliente</button>`}
@@ -13847,6 +13848,8 @@ function pintarConversa(){
            </details>
          </div>
        </div>
+       ${c.sem_ia&&cfgApp("zap_ia_plantao")==="sim"?`<p class="zt-pergunta">A IA não responde esta conversa.
+          <button class="zl-link" onclick="mudarConversa({sem_ia:false})">Voltar a responder</button></p>`:""}
        ${c.automatica?`<p class="zt-pergunta">Mensagem automática de outra empresa: a conversa fica fora da fila e o robô não responde.
           <button class="zl-link" onclick="naoEhAutomatica()">Não é automática</button></p>`:""}
        ${nomeDiferente(c)?`<p class="zt-pergunta">No WhatsApp o contato se chama “${esc(c.nome_perfil)}”, e o cliente é ${esc(cli.nome)}.
@@ -15209,6 +15212,15 @@ async function renderConfig(){
              ${cfgApp("zap_robo_agenda")==="sim"?"checked":""}> robô marca o horário pelas vagas da agenda</label>
            <label class="cfg-ck" title="fora do expediente, quem escolhe caso novo conta o caso por escrito ou por áudio, e o relato fica como nota da equipe"><input type="checkbox" id="cf-robo-noturno"
              ${cfgApp("zap_robo_noturno")==="sim"?"checked":""}> fora do expediente, robô colhe o relato do caso novo</label>
+           <label class="cfg-ck" title="a mensagem do cliente sem resposta da equipe no prazo abaixo vai à IA (função zap_plantao): ela tranquiliza dizendo qual advogado vai responder e avisa esse advogado no CRM, atende o caso novo e oferece a agenda; agradecimento e conversa entre colegas ficam sem resposta; nunca dá parecer, chance ou valor"><input type="checkbox" id="cf-ia-plantao"
+             ${cfgApp("zap_ia_plantao")==="sim"?"checked":""}> IA responde quem ficou sem resposta e atende o caso novo</label>
+           <label class="cfg-ck">a IA responde depois de
+             <input type="number" id="cf-plantao-min" min="1" max="240" style="width:64px"
+               value="${esc(cfgApp("zap_plantao_min")||"20")}"> min no expediente e</label>
+           <label class="cfg-ck"><input type="number" id="cf-plantao-fora-min" min="1" max="240" style="width:64px"
+               value="${esc(cfgApp("zap_plantao_fora_min")||"5")}"> min fora dele</label>
+           <label class="cfg-ck" title="quem recebe o caso novo e o cliente sem advogado na ficha nem na conversa">caso novo vai para
+             <select id="cf-plantao-lead">${["Paulo","Marcos","Amanda"].map(n=>`<option ${(cfgApp("zap_plantao_lead")||"Marcos")===n?"selected":""}>${n}</option>`).join("")}</select></label>
            <label class="cfg-ck"><input type="checkbox" id="cf-zap-visual"
              ${cfgApp("zap_visual")==="escritorio"?"":"checked"}> conversa com a aparência do WhatsApp</label>
            <label class="cfg-ck">🔄 revisar o acervo a cada
@@ -15439,6 +15451,10 @@ function ligarConfig(){
   cfgSalva("cf-ia-equipe","zap_ia_equipe", el=>el.checked?"sim":"nao");
   cfgSalva("cf-robo-agenda","zap_robo_agenda", el=>el.checked?"sim":"nao");
   cfgSalva("cf-robo-noturno","zap_robo_noturno", el=>el.checked?"sim":"nao");
+  cfgSalva("cf-ia-plantao","zap_ia_plantao", el=>el.checked?"sim":"nao");
+  cfgSalva("cf-plantao-min","zap_plantao_min", el=>String(Math.min(240, Math.max(1, Math.round(+el.value||20)))));
+  cfgSalva("cf-plantao-fora-min","zap_plantao_fora_min", el=>String(Math.min(240, Math.max(1, Math.round(+el.value||5)))));
+  cfgSalva("cf-plantao-lead","zap_plantao_lead", el=>el.value||"Marcos");
   cfgSalva("cf-zap-visual","zap_visual", el=>el.checked?"whatsapp":"escritorio");
   cfgSalva("cf-rev-dias","revisao_dias", el=>String(Math.max(15, +el.value||90)));
   cfgSalva("cf-rev-dose","revisao_dose", el=>String(Math.max(1, +el.value||5)));
