@@ -225,6 +225,10 @@ insert into r select 'p41 a sessão e o agente do Managed Agents voltam à funç
 select zap_plantao_ma_guardar('', '', '');
 update config_app set valor = '' where chave = 'zap_ia_txt_plantao';
 update config_app set valor = '0' where chave = 'zap_plantao_aberta_dias';
+-- F276 · a conversa marcada no ⋯ conversa com a IA na hora, com a equipe nela e o modo interativo desligado
+update zap_conversas set ia_conversa = true where id = (select id from v);
+insert into r select 'p42 a IA conversa com este número', pg_temp.ia(pg_temp.entra((select id from v), 'quero marcar')) = 'plantao:pedida';
+update zap_conversas set ia_conversa = false, plantao = '{}' where id = (select id from v);
 
 -- fora da IA: a conversa marcada, a automática, o histórico reenviado e o menu ligado
 create temp table z as select zap_abrir('5516955550005', 'Colega') id;
