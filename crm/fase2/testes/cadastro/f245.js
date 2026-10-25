@@ -88,7 +88,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // 2 · Sem novidade: um clique
   const em7 = await util(7);
   const nAnd = T.andamentos.length, nTf = T.andamento_tarefas.length;
-  await p.click(".faixa-prazos .conf-sem");
+  await p.evaluate(() => { const d = document.querySelector(".faixa-prazos .fp-menu"); if (d) d.open = true; }); await p.click(".faixa-prazos .conf-sem");
   await p.waitForTimeout(700);
   const novo = T.andamentos.slice(nAnd).find(a => a.caso_id === kA.id);
   conf(`um clique anota a conferência com a data de voltar (${novo && novo.texto})`, novo && novo.texto === `Está em análise. Conferir de novo em ${br(em7)}.` && novo.autor_id === PAULO);
@@ -104,13 +104,13 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // 3 · com o "Concluir em" do To Do vencido, é ele que anda
   await abrir(cB, kB);
-  await p.click(".faixa-prazos .conf-sem");
+  await p.evaluate(() => { const d = document.querySelector(".faixa-prazos .fp-menu"); if (d) d.open = true; }); await p.click(".faixa-prazos .conf-sem");
   await p.waitForTimeout(700);
   conf(`o "Concluir em" vencido anda para daqui a 7 dias, sem lembrete a mais (${T.casos.find(k => k.id === kB.id).prazo})`,
     T.casos.find(k => k.id === kB.id).prazo === em7 && !T.andamento_tarefas.some(t => t.caso_id === kB.id));
 
   // 4 · outro intervalo pelo ▾
-  await p.click(".faixa-prazos .conf-mais");
+  await p.evaluate(() => { const d = document.querySelector(".faixa-prazos .fp-menu"); if (d) d.open = true; }); await p.click(".faixa-prazos .conf-mais");
   conf("o ▾ oferece 3, 7, 15 e 30 dias", (await p.$$eval(".conf-dias .esp-it", b => b.map(x => x.textContent))).join() === "3 dias,7 dias,15 dias,30 dias");
   await p.evaluate(() => fecharCaixa());
 
@@ -123,7 +123,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // 6 · Movimentou: dois cliques
   await abrir(cA, kA);
-  await p.click(".faixa-prazos .conf-mov");
+  await p.evaluate(() => { const d = document.querySelector(".faixa-prazos .fp-menu"); if (d) d.open = true; }); await p.click(".faixa-prazos .conf-mov");
   await p.waitForSelector(".mov-ops .esp-it");
   const opcoes = await p.$$eval(".mov-ops .esp-it", b => b.map(x => x.textContent));
   conf(`no INSS as opções são as do pedido (${opcoes.join(", ")})`, opcoes.join() === "Exigência,Perícia marcada,Deferido,Indeferido,Outro");
