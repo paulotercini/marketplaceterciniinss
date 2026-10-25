@@ -77,6 +77,9 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   const rep = await p.$$eval("#zap-painel .zp-rep", es => es.map(e => e.textContent));
   conf("abaixo, os dois clientes que ela representa", rep.length === 2 && rep[0].includes("Antônio") && rep[1].includes("Pedro"));
   conf("o representante gravado na ficha conta pelo CPF, com a qualidade", rep[1].includes("representante (mãe)"));
+  conf("o advogado responsável aparece ao lado do nome, na lista e no topo",
+    await p.$eval(".zap-conv .zc-adv", e => e.textContent.trim().length > 0).catch(() => false)
+    && /Advogado:/.test(await p.$eval(".zt-sub", e => e.textContent)));
   conf("o mesmo número conta com a observação do telefone", rep[0].includes("é a nora, cuida do benefício"));
   conf("quem tem outro representante fica de fora", !rep.join("").includes("Carla"));
   conf("o título diz quantos são", (await p.textContent("#zap-painel .zp-rep-tit")).includes("(2)"));

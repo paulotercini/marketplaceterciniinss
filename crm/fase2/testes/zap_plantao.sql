@@ -63,15 +63,22 @@ insert into r select 'p10 a resposta vai ao cliente', pg_temp.respostas((select 
   and (select status = 'fila' and por_bot from zap_mensagens where bot_ia = 'plantao:resposta' limit 1);
 insert into r select 'p11 o Dr. Marcos recebe a menção',
   exists (select 1 from mencoes where para_id = 'aaaaaaaa-0000-0000-0000-000000000002' and conversa_id = (select id from v)
-            and texto like '%aguarda resposta no WhatsApp: quer saber do processo');
+            and texto like '%aguarda resposta no WhatsApp: quer saber do processo · responsável: Marcos');
 insert into r select 'p12 nota interna para a equipe',
-  exists (select 1 from zap_mensagens where conversa_id = (select id from v) and direcao = 'interna' and texto like 'Assistente virtual: respondeu e avisou Marcos%');
+  exists (select 1 from zap_mensagens where conversa_id = (select id from v) and direcao = 'interna' and texto like 'Assistente virtual: respondeu e avisou a equipe (responsável: Marcos)%');
 
 -- o cliente insiste antes de a equipe responder: a IA não fala de novo
 create temp table m3 as select pg_temp.entra((select id from v), 'oi?') id;
 select pg_temp.velha((select id from m3)); select zap_plantao_vencidas();
 insert into r select 'p13 uma resposta só por espera', pg_temp.ia((select id from m3)) = 'plantao:ja_avisado'
   and pg_temp.respostas((select id from v)) = 1;
+-- 4 horas depois da resposta da IA, ainda sem a equipe, a IA responde de novo
+update zap_mensagens set criado_em = now() - interval '5 hours' where conversa_id = (select id from v) and bot_ia = 'plantao:resposta';
+create temp table m3b as select pg_temp.entra((select id from v), 'ninguém me responde') id;
+select pg_temp.velha((select id from m3b)); select zap_plantao_vencidas();
+insert into r select 'p13b depois de 4 horas a IA responde de novo', pg_temp.ia((select id from m3b)) = 'plantao:pedida';
+select zap_plantao_pegar((select id from m3b));
+select zap_plantao_aplicar((select id from m3b), 'nada', '', '', false, '', '', '');
 
 -- a equipe respondeu; o cliente escreve de novo e a equipe responde dentro do prazo
 insert into zap_mensagens (conversa_id, direcao, texto) select id, 'saida', E'*Dr. Marcos:*\n\nMaria, conferi e está tudo certo.' from v;
@@ -121,7 +128,7 @@ insert into r select 'p20 telefone principal: a etapa vai', (select j->'cliente'
   and (select j->'cliente'->'casos'->0->>'etapa' from pg2) = 'aguardando perícia';
 select zap_plantao_aplicar((select id from m8), 'equipe', 'A Dra. Amanda foi avisada com prioridade.', 'Dr. Paulo Tercini', true, 'perícia amanhã', '', '');
 insert into r select 'p21 urgente vai ao advogado que o cliente pediu, com o aviso',
-  exists (select 1 from mencoes where para_id = 'aaaaaaaa-0000-0000-0000-000000000001' and texto like '⚠ URGENTE%perícia amanhã');
+  exists (select 1 from mencoes where para_id = 'aaaaaaaa-0000-0000-0000-000000000001' and texto like '⚠ URGENTE%perícia amanhã%');
 update clientes set telefone = '16 92222-0002' where id = 'cccccccc-0000-0000-0000-000000000001';
 insert into zap_mensagens (conversa_id, direcao, texto) select id, 'saida', E'*Dra. Amanda Garcez:*\n\nOk' from v;
 create temp table m9 as select pg_temp.entra((select id from v), 'e agora?') id;
@@ -175,10 +182,9 @@ select zap_plantao_aplicar((select id from lt9), 'falhou', null, null, false, nu
 insert into r select 'p33 todos: três advogados e a recepção avisados',
   (select count(*) from mencoes where conversa_id = (select id from t9)) = 4
   and exists (select 1 from zap_mensagens where conversa_id = (select id from t9) and texto like 'Recebemos a sua mensagem. A equipe do escritório já foi avisada e responderá%')
-  and exists (select 1 from zap_mensagens where conversa_id = (select id from t9) and texto like '%avisou os advogados e a recepção%');
-insert into r select 'p34 o caso com advogado avisa ele e a recepção, sem os outros',
-  (select array_agg(para_id::text) @> array['aaaaaaaa-0000-0000-0000-000000000002','aaaaaaaa-0000-0000-0000-000000000005']
-          and not array_agg(para_id::text) @> array['aaaaaaaa-0000-0000-0000-000000000003']
+  and exists (select 1 from zap_mensagens where conversa_id = (select id from t9) and texto like '%e avisou a equipe');
+insert into r select 'p34 o caso com advogado avisa todos, com o responsável no texto',
+  (select count(distinct para_id) = 4 and bool_or(texto like '%responsável: Marcos%')
      from mencoes where conversa_id = (select id from v));
 update config_app set valor = 'Marcos' where chave = 'zap_plantao_lead';
 
