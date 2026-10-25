@@ -231,6 +231,8 @@ A **F268** (a ficha de quem fala e a dos representados, pedido do Paulo de 24.10
 
 A **F269** (a foto em miniatura, pedido do Paulo de 24.10.2026): a mensagem de imagem (`tipo = imagem`) aparece no balão da conversa e no histórico do WhatsApp da ficha como miniatura de 240 × 180 (`miniZap`, `.zap-mini`), e o clique abre o original; o link assinado vale 1 hora e fica guardado 50 minutos (`_miniUrl`, `carregarMinis`), porque a conversa repinta a cada 6 s. Documento, vídeo e áudio continuam como eram. Teste: `testes/cadastro/zapfoto.js`.
 
+A **F270** (mais WhatsApp, pedido do Paulo de 25.10.2026): com o visual do WhatsApp (F259), o balão ganha a cauda no primeiro da sequência e os seguidos ficam juntos, a hora fica cinza, "enviada/entregue/lida" viram ✓, ✓✓ e ✓✓ azul (`span[data-st]`, o texto continua para o leitor de tela), as ações do balão flutuam no canto, a bolinha das não lidas é verde, o topo e o campo de escrever ficam no cinza do aplicativo, o Enviar é o botão redondo verde, e rolar para cima mostra o botão que desce à última mensagem (`.zap-desce`). Entre 1024 e 1279 px a ficha do cliente (F268) deixou de ser coluna fixa, que espremia a conversa a 140 px, e abre como gaveta no clique no nome do topo (`alternarFichaZap`, `.ficha-on`, ✕ `.zp-fechar`). Testes: `zaprep.js` e `zapfoto.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

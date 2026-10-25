@@ -73,6 +73,7 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
   await p.waitForFunction(() => { const i = document.querySelector("#zap-msgs img.zap-mini"); return i && i.complete && i.naturalWidth > 0; });
   conf("a foto aparece em miniatura no balão", true);
   conf("a legenda vem abaixo da foto", (await p.textContent("#zb-m1")).includes("o laudo"));
+  conf("F270 · a enviada mostra o tique no lugar da palavra", await p.$eval("#zs-m2", e => e.dataset.st === "enviada" && getComputedStyle(e, "::after").content.includes("✓")));
   conf("o documento continua como anexo", (await p.textContent("#zb-m2")).includes("📎 contrato.pdf") && !(await p.$("#zb-m2 img")));
   await p.evaluate(() => pintarConversaGuardando());
   await p.waitForFunction(() => { const i = document.querySelector("#zap-msgs img.zap-mini"); return i && i.src; });

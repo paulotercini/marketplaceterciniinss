@@ -65,9 +65,14 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   await p.evaluate(() => { zapFiltro = "todas"; irPara("whatsapp"); });
   await p.waitForSelector(".zap-conv");
   await p.click(".zap-conv");
+  await p.waitForSelector("#zap-painel .zp-card", { state: "attached" });
+  // F270 · em 1100 px a ficha é gaveta: fechada até o clique no nome, que abre e o ✕ fecha
+  conf("em 1100 px a conversa fica com espaço (ficha fechada)", await p.$eval("#zap-dir", e => e.offsetWidth > 350)
+    && await p.$eval("#zap-painel", e => getComputedStyle(e).display === "none"));
+  await p.click(".zt-id h2");
   await p.waitForSelector("#zap-painel .zp-card");
   const cards = await p.$$eval("#zap-painel .zp-card", es => es.map(e => e.textContent));
-  conf("o painel aparece também na tela de 1100 px", await p.$eval("#zap-painel", e => getComputedStyle(e).display !== "none"));
+  conf("o clique no nome abre a ficha na tela de 1100 px", await p.$eval("#zap-painel", e => getComputedStyle(e).display !== "none"));
   conf("a primeira ficha é a de quem fala", /Ficha do cliente/.test(cards[0]) && cards[0].includes("Rosa Fictícia Lima"));
   const rep = await p.$$eval("#zap-painel .zp-rep", es => es.map(e => e.textContent));
   conf("abaixo, os dois clientes que ela representa", rep.length === 2 && rep[0].includes("Antônio") && rep[1].includes("Pedro"));
