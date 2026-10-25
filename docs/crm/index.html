@@ -4806,7 +4806,13 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini a{font-weight:500}
   html .cartao .conf-bts.ag-conf,html .cartao .acoes .acao-card:not(.on){opacity:0;transition:opacity 120ms ease-out}
   html .cartao:is(:hover,:focus-within) :is(.conf-bts.ag-conf,.acoes .acao-card){opacity:1}
 }
-#sub-lista.sub-dica{display:none}
+/* F270 · com mouse, a frase de explicação sai da tela e vira a dica do título, que ganha um "i" discreto; no toque
+   (celular) não há passar o mouse, e a frase continua à vista */
+@media (hover:hover) and (pointer:fine){
+#sub-lista.sub-dica,p.meio-sub.sub-dica{display:none}
+.dica-tit{cursor:help}
+.dica-tit::after{content:"i";display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;margin-left:6px;border:1px solid currentColor;border-radius:50%;font:italic 500 10px/1 Georgia,serif;opacity:.45;vertical-align:middle}
+}
 html .outras-abas .oa-txt{flex-direction:row;align-items:baseline;gap:8px}
 html .outras-abas .oa-txt > span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 html .faixa-prazos .fp-cab{display:flex;align-items:center;gap:8px}
@@ -6531,8 +6537,8 @@ function casosDeDiasAnteriores(col){
 }
 function secaoDiasAnteriores(col){
   const ks = casosDeDiasAnteriores(col); if(!ks.length) return "";
-  return `<section class="pl-grupo"><h3 class="secao">De dias anteriores <span class="pl-n">${ks.length}</span></h3>`
-    + `<p class="meio-sub" style="display:flex;align-items:center;gap:10px;padding:8px 16px;margin:0">Do último dia em que você usou o Meu Dia, ainda aberto. <button class="btn-mini" onclick="trazerParaHoje()">☀️ Trazer todos para hoje</button></p>`
+  return `<section class="pl-grupo"><h3 class="secao dica-tit" title="Do último dia em que você usou o Meu Dia, ainda aberto.">De dias anteriores <span class="pl-n">${ks.length}</span></h3>`
+    + `<p class="meio-sub" style="display:flex;align-items:center;gap:10px;padding:8px 16px;margin:0"><button class="btn-mini" onclick="trazerParaHoje()">☀️ Trazer todos para hoje</button></p>`
     + grupoClientes(ks).map(([c,g])=>cartaoCliente(c,g)).join("") + `</section>`;
 }
 async function trazerParaHoje(){
@@ -7143,12 +7149,31 @@ function subtituloComoDica(){
   const sub = document.getElementById("sub-lista"), h = document.getElementById("titulo-lista"); if(!sub || !h) return;
   const ajustar = () => {
     const frase = !sub.children.length && sub.textContent.trim();
-    sub.classList.toggle("sub-dica", !!frase); h.title = frase || "";
-    sub.querySelectorAll(":scope > span > .meio-sub").forEach(x=>{ h.title = x.textContent.trim(); x.hidden = true; });
+    sub.classList.toggle("sub-dica", !!frase); h.title = frase || ""; h.classList.toggle("dica-tit", !!frase);
+    sub.querySelectorAll(":scope > span > .meio-sub").forEach(x=>{ h.title = x.textContent.trim(); h.classList.add("dica-tit"); x.hidden = true; });
   };
   new MutationObserver(ajustar).observe(sub, {childList:true, characterData:true, subtree:true}); ajustar();
 }
-if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", subtituloComoDica); else subtituloComoDica();
+// a mesma regra nas seções das telas do meio (as Configurações, sobretudo): o parágrafo de explicação logo abaixo de um título vira a dica
+// dele. Fica à vista o que é conteúdo: o aviso de lista vazia ("Nenhum…", "Sem…", "Caixa vazia"), o que tem botão ou
+// campo, a frase curta e o que está nas caixas de decisão (#modal), onde a explicação ajuda a escolher
+const RX_VAZIO = /^(nenhum|nenhuma|sem |caixa vazia|ainda não)/i;
+function frasesComoDica(raiz){
+  // só nas telas do meio (Configurações e as visões): na ficha, o parágrafo abaixo do título costuma ser o dado do caso
+  for(const x of (raiz||document).querySelectorAll("#conteudo-meio :is(h2,h3,h4,.secao) + p.meio-sub:not(.sub-dica)")){
+    const h = x.previousElementSibling, t = x.textContent.trim().replace(/\s+/g, " ");
+    if(x.closest("#modal") || t.length < 36 || RX_VAZIO.test(t) || x.querySelector("button,input,select,textarea,a,label")) continue;
+    h.title = h.title ? `${h.title}\n${t}` : t; h.classList.add("dica-tit"); x.classList.add("sub-dica");
+  }
+}
+function vigiarFrases(){
+  let fila = 0;
+  new MutationObserver(()=>{ if(!fila) fila = requestAnimationFrame(()=>{ fila = 0; frasesComoDica(); }); })
+    .observe(document.body, {childList:true, subtree:true});
+  frasesComoDica();
+}
+function iniciarDicas(){ subtituloComoDica(); vigiarFrases(); }
+if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", iniciarDicas); else iniciarDicas();
 function tituloLista(rot){
   const h = document.getElementById("titulo-lista");
   // F144 · o que a agenda do v10 põe no topo sai ao trocar de tela
