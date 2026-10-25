@@ -305,7 +305,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   const cP = await cartoes(paulo);
   // F254 · o próximo é o primeiro da faixa que ainda vem (a ordem é crescente); o título quebra a linha, não é cortado
   const proxP = cP.find(c => !/pz-venceu|pz-confirmar/.test(c.cls));
-  // F268 · a linha mostra só a data e o abrir; o título fica no passar do mouse e no painel
+  // F275 · a linha mostra só a data e o abrir; o título fica no passar do mouse e no painel
   conf("o PRÓXIMO é a sustentação (e não a pauta antiga), com o título no passar do mouse",
     proxP && proxP.tipo === "Sustentação oral" && await paulo.evaluate(() => { const c = [...document.querySelectorAll(".caso-esq .pz")].find(x => x.dataset.tipo === "Sustentação oral");
       return !!c && /Sustentação oral/.test(c.title); }), proxP);

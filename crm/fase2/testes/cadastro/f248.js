@@ -71,7 +71,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector("#app.logado", { timeout: 15000 });
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const abrir = async (c, k) => { await p.evaluate(async ([cid, kid]) => { await abrirFicha(cid); casoSel = kid; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); fecharCaixa(); }, [c.id, k.id]); await p.waitForTimeout(500); };
-  // F268 · a linha da faixa mostra só a data e o abrir: a Ouvidoria fica no rodapé do painel do prazo
+  // F275 · a linha da faixa mostra só a data e o abrir: a Ouvidoria fica no rodapé do painel do prazo
   const painelOuv = async () => { await p.evaluate(() => { const i = faixaAtual.findIndex(x => /ouv-/.test(x.acao || "")); if (i >= 0) abrirPainelPrazo(i); }); await p.waitForTimeout(400); };
   const util = n => p.evaluate(n => proxDiaUtil(somaDias(hoje(), n)), n);
   const br = s => `${s.slice(8, 10)}/${s.slice(5, 7)}/${s.slice(0, 4)}`;
