@@ -1,4 +1,4 @@
--- Regressão da F274: o plantão da IA no WhatsApp (sem chamar a IA: as respostas
+-- Regressão da F274 e da F275: o plantão da IA no WhatsApp (sem chamar a IA: as respostas
 -- dela entram direto por zap_plantao_aplicar, como a Edge Function faria).
 -- ⚠ Este arquivo APAGA conversas: banco de teste só.
 --   psql "postgres://…" -q -f crm/fase2/testes/zap_plantao.sql
@@ -187,6 +187,44 @@ insert into r select 'p34 o caso com advogado avisa todos, com o responsável no
   (select count(distinct para_id) = 4 and bool_or(texto like '%responsável: Marcos%')
      from mencoes where conversa_id = (select id from v));
 update config_app set valor = 'Marcos' where chave = 'zap_plantao_lead';
+
+-- F275 · quem não está em conversa com a equipe conversa com a IA na hora
+update config_app set valor = '3' where chave = 'zap_plantao_aberta_dias';
+create temp table n1 as select zap_abrir('5516988880008', 'Rita') id;
+create temp table n1a as select pg_temp.entra((select id from n1), 'qual o endereço do escritório?') id;
+insert into r select 'p35 sem a equipe na conversa, a IA é chamada na hora', pg_temp.ia((select id from n1a)) = 'plantao:pedida';
+update config_app set valor = 'Atendemos de segunda a sexta.' where chave = 'zap_ia_txt_plantao';
+create temp table pg3 as select zap_plantao_pegar((select id from n1a)) j;
+insert into r select 'p36 a IA recebe o modo, as instruções e o motor',
+  (select (j->>'interativa')::boolean and j->>'instrucoes' = 'Atendemos de segunda a sexta.' and j->>'motor' = 'mensagens'
+          and j->>'conversa_id' = (select id from n1)::text from pg3);
+select zap_plantao_aplicar((select id from n1a), 'conversa', 'Bom dia, Rita. Sou a assistente virtual do escritório.', '', false, 'endereço', '', '');
+insert into r select 'p37 conversa responde sem avisar a equipe', pg_temp.respostas((select id from n1)) = 1
+  and (select plantao->>'modo' = 'conversa' and plantao->>'n' = '1' from zap_conversas where id = (select id from n1))
+  and not exists (select 1 from mencoes where conversa_id = (select id from n1));
+insert into r select 'p38 com a equipe na conversa, o plantão espera o prazo',
+  pg_temp.ia(pg_temp.entra((select id from v), 'oi de novo')) = 'plantao:espera';
+update zap_conversas set plantao = '{"modo":"conversa","n":11}' where id = (select id from n1);
+create temp table n1b as select pg_temp.entra((select id from n1), 'e o que preciso levar?') id;
+select zap_plantao_pegar((select id from n1b));
+select zap_plantao_aplicar((select id from n1b), 'conversa', 'RG, CPF e os documentos do INSS.', '', false, 'documentos', '', '');
+insert into r select 'p39 na 12ª resposta da conversa, a equipe é avisada',
+  exists (select 1 from mencoes where conversa_id = (select id from n1))
+  and (select plantao->>'modo' is null from zap_conversas where id = (select id from n1));
+create temp table n2 as select zap_abrir('5516988880009', 'Muitas') id;
+insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status, bot_ia)
+  select (select id from n2), 'saida', true, 'resposta ' || g, 'enviada', 'plantao:resposta' from generate_series(1, 15) g;
+insert into r select 'p40 15 respostas da IA em 24 h devolvem ao plantão',
+  pg_temp.ia(pg_temp.entra((select id from n2), 'mais uma')) = 'plantao:espera';
+select zap_plantao_sessao((select id from n1), '{"id":"sesn_teste","em":"2026-10-25T10:00:00Z","ate":"2026-10-25T10:05:00Z"}');
+select zap_plantao_ma_guardar('agent_teste', 'env_teste', 'v1');
+create temp table n1c as select pg_temp.entra((select id from n1), 'obrigada') id;
+insert into r select 'p41 a sessão e o agente do Managed Agents voltam à função',
+  (select j->'sessao'->>'id' = 'sesn_teste' and j->'ma'->>'agente' = 'agent_teste' and j->'ma'->>'versao' = 'v1'
+     from (select zap_plantao_pegar((select id from n1c)) j) x);
+select zap_plantao_ma_guardar('', '', '');
+update config_app set valor = '' where chave = 'zap_ia_txt_plantao';
+update config_app set valor = '0' where chave = 'zap_plantao_aberta_dias';
 
 -- fora da IA: a conversa marcada, a automática, o histórico reenviado e o menu ligado
 create temp table z as select zap_abrir('5516955550005', 'Colega') id;
