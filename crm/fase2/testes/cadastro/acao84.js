@@ -80,7 +80,7 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
   // 10.18 · o prazo do To Do SEM anotação de origem passou a aparecer, em
   // âmbar e marcado "do To Do" (caso do Nelson: a data existia e não se via)
   conf("o prazo fatal SEM anotação de origem vira quadro âmbar, marcado como do To Do",
-    on.cards.some(c => c.data === fmtBR(mais(-1)) && c.semMotivo && /do To Do/.test(c.txtTipo)));
+    on.cards.some(c => c.data === fmtBR(mais(-1)) && c.semMotivo && /Diga do que é/.test(c.txtTipo)));
   // F220 · o quadro diz que é a exigência, e não só "Prazo fatal"
   conf("a exigência do INSS é um quadro de PRAZO FATAL, em vermelho", on.cards.some(c => c.tipo === "Exigência do INSS" && c.data === fmtBR(mais(3)) && c.prazo && /179, 38, 30/.test(c.sombra)));
   conf("recorrer até (30 dias da decisão) entrou como quadro de prazo", on.cards.filter(c => c.prazo && !c.semMotivo).length === 2);

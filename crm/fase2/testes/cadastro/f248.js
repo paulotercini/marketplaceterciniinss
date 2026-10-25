@@ -71,6 +71,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector("#app.logado", { timeout: 15000 });
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const abrir = async (c, k) => { await p.evaluate(async ([cid, kid]) => { await abrirFicha(cid); casoSel = kid; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); fecharCaixa(); }, [c.id, k.id]); await p.waitForTimeout(500); };
+  // F275 · a linha da faixa mostra só a data e o abrir: a Ouvidoria fica no rodapé do painel do prazo
+  const painelOuv = async () => { await p.evaluate(() => { const i = faixaAtual.findIndex(x => /ouv-/.test(x.acao || "")); if (i >= 0) abrirPainelPrazo(i); }); await p.waitForTimeout(400); };
   const util = n => p.evaluate(n => proxDiaUtil(somaDias(hoje(), n)), n);
   const br = s => `${s.slice(8, 10)}/${s.slice(5, 7)}/${s.slice(0, 4)}`;
 
@@ -78,10 +80,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
 
   // 1 · Ouvidoria no prazo de análise vencido
-  await abrir(cO, kO);
-  conf("o prazo de análise vencido traz 'Abrir Ouvidoria'", !!(await p.$(".faixa-prazos .ouv-abrir")));
+  await abrir(cO, kO); await painelOuv();
+  conf("o prazo de análise vencido traz 'Abrir Ouvidoria'", !!(await p.$("#painel-prazo .ouv-abrir")));
   await p.screenshot({ path: path.join(OUT, "01-ouvidoria.png") });
-  await p.click(".faixa-prazos .ouv-abrir");
+  await p.click("#painel-prazo .ouv-abrir");
   await p.fill("#ouv-num", "2026-123456");
   const em30 = await util(30), n1 = T.andamentos.length;
   await p.click('button:has-text("Registrar a reclamação")');
@@ -89,10 +91,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const ov = T.andamentos.slice(n1).find(a => a.caso_id === kO.id);
   conf(`a reclamação é anotada com o número (${ov && ov.texto})`, ov && ov.texto === `[OUVIDORIA] Reclamação aberta na Ouvidoria pelo prazo de análise vencido (nº 2026-123456). Ver a resposta em ${br(em30)}.`);
   conf("a resposta fica marcada para 30 dias", T.andamento_tarefas.some(t => t.andamento_id === (ov || {}).id && t.lembrar_em === em30));
-  await abrir(cO, kO);
-  conf("depois, o botão vira 'Ouvidoria respondeu · +15 d'", !!(await p.$(".faixa-prazos .ouv-resp")) && !(await p.$(".faixa-prazos .ouv-abrir")));
+  await abrir(cO, kO); await painelOuv();
+  conf("depois, o botão vira 'Ouvidoria respondeu · +15 d'", !!(await p.$("#painel-prazo .ouv-resp")) && !(await p.$("#painel-prazo .ouv-abrir")));
   const em15 = await util(15), n2 = T.andamentos.length;
-  await p.click(".faixa-prazos .ouv-resp");
+  await p.click("#painel-prazo .ouv-resp");
   await p.waitForTimeout(700);
   const rs = T.andamentos.slice(n2).find(a => a.caso_id === kO.id);
   conf(`a resposta é anotada num clique (${rs && rs.texto})`, rs && rs.texto === `[OUVIDORIA] A Ouvidoria respondeu: o pedido segue em análise. Conferir de novo em ${br(em15)}.`

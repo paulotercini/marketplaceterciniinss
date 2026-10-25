@@ -4863,6 +4863,57 @@ html .tl-tarefa .tf-prog.on{background:var(--azul-fundo,#E6F0EF);border-color:va
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-mais{min-height:28px;padding:0 12px;font-size:12.5px;font-weight:500;border-color:var(--azul);color:var(--azul-escuro)}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-circ{width:22px;height:22px}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini a{font-weight:500}
+/* F275 · a linha só com a data e o abrir */
+/* F276 · ficha mais limpa: os botões da anotação aparecem ao passar o mouse (ou com o foco); no toque ficam à vista */
+@media (hover:hover) and (pointer:fine){
+  html .timeline li{position:relative}
+  html .timeline li .tl-barra{position:absolute;top:10px;right:14px;margin:0;z-index:2;border-radius:8px;pointer-events:none}
+  html .timeline li:is(:hover,:focus-within) .tl-barra{background:var(--branco,#fff);pointer-events:auto}
+  html .timeline li .tl-barra .tl-sinal.on{pointer-events:auto}
+  html .timeline li .tl-barra > .tl-bt:not(.forte),html .timeline li .tl-barra-fim > :not(.tl-sinais),html .timeline li .tl-sinais > .tl-sinal:not(.on){opacity:0;transition:opacity 120ms ease-out}
+  html .timeline li:is(:hover,:focus-within) .tl-barra :is(.tl-bt,.tl-barra-fim > *,.tl-sinal),html .timeline li .tl-barra-fim > details[open]{opacity:1}
+}
+@media (hover:hover) and (pointer:fine){
+  /* F276 · nas linhas das listas e do Meu Dia, conferir, urgente e importante aparecem ao passar o mouse; o marcado fica */
+  html .cartao .conf-bts.ag-conf,html .cartao .acoes .acao-card:not(.on){opacity:0;transition:opacity 120ms ease-out}
+  html .cartao:is(:hover,:focus-within) :is(.conf-bts.ag-conf,.acoes .acao-card){opacity:1}
+}
+/* F273 · com mouse, a frase de explicação sai da tela e vira a dica do título, que ganha um "i" discreto; no toque
+   (celular) não há passar o mouse, e a frase continua à vista */
+@media (hover:hover) and (pointer:fine){
+#sub-lista.sub-dica,p.meio-sub.sub-dica{display:none}
+.dica-tit{cursor:help}
+.dica-tit::after{content:"i";display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;margin-left:6px;border:1px solid currentColor;border-radius:50%;font:italic 500 10px/1 Georgia,serif;opacity:.45;vertical-align:middle}
+}
+html .outras-abas .oa-txt{flex-direction:row;align-items:baseline;gap:8px}
+html .outras-abas .oa-txt > span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html .faixa-prazos .fp-cab{display:flex;align-items:center;gap:8px}
+html .faixa-prazos .fp-menu{margin-left:auto;position:relative}
+/* F274 · o ⋯ que abre para baixo (no alto da tela não há espaço acima) */
+html .tl-mais.mais-baixo{position:relative}
+:is(#painel-prazo,#painel-prazo-esq) .pp-mais{position:relative;margin-left:auto}
+:is(#painel-prazo,#painel-prazo-esq) .pp-mais .tl-mais-it{justify-content:flex-start;width:100%;border:0;background:none}
+html .meio-topo .topo-mais{margin-left:auto}
+html .tipo-mais.mais-baixo .tl-mais-menu{left:0;right:auto}
+html .det-topo .linha1 > .det-canto{margin-left:auto;display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+html .lc-cab .lc-menu{margin-left:auto}
+html .zl-mais .zl-link{text-decoration:none;color:inherit}
+html .meio.ag-v10 #topo-mais{display:none}
+html .meio-topo .topo-mais .tl-mais-menu{gap:8px;padding:10px}
+html .meio-topo .topo-mais .btn-fundo{display:inline-flex;align-items:center;gap:6px;width:100%;justify-content:flex-start}
+html .meio-topo .topo-mais .btn-fundo::after{content:"Mudar o fundo"}
+html .meio-topo .topo-mais .ordenar{display:flex;align-items:center;gap:6px;margin:0}
+html .tl-mais.mais-baixo .tl-mais-menu{top:calc(100% + 4px);bottom:auto;right:0;left:auto;z-index:40}
+html .faixa-prazos .fp-menu .tl-mais-menu{top:calc(100% + 4px);bottom:auto;right:0;left:auto;z-index:30}
+html .faixa-prazos.fp2:has(.fp-menu[open]){overflow:visible;z-index:5}
+html .faixa-prazos .fp-menu .tl-mais-menu .conf-bts{display:flex;flex-direction:column;gap:4px;padding:4px}
+html .faixa-prazos .fp-menu .tl-mais-menu .tl-bt{justify-content:flex-start;width:100%}
+html :is(.faixa-prazos,.outras-abas) .fp2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}   /* o título, só para o leitor de tela */
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-lin .fp2-data{flex:1;font-size:13.5px;color:var(--texto,#1F2933)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-lin.pz-venceu .fp2-data,html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal .fp2-data{color:var(--dk-fatal,#B3261E);font-weight:500}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal{align-items:center;flex-wrap:wrap}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal .fp2-tag{white-space:nowrap}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-lin .fp2-mais{margin-left:auto;flex:none}
 html .tf-etapas{display:flex;flex-direction:column;gap:2px;margin:4px 0 2px 30px}
 html .tf-etapas .tf-et{display:flex;align-items:center;gap:8px;font-size:13px;min-height:26px;cursor:pointer}
 html .tf-etapas .tf-et input{width:16px;height:16px;accent-color:var(--feito,#1E6F50)}
@@ -5072,12 +5123,16 @@ body.prazo-esq .caso-esq > :not(#painel-prazo-esq){display:none!important}
     <div class="meio-topo">
       <h1 id="titulo-lista"></h1>
       <div class="topo-extra" id="topo-extra"></div>
+      <!-- F274 · o fundo da lista e a ordem moram no ⋯ ao lado do título, como no To Do -->
+      <details class="tl-mais mais-baixo topo-mais" id="topo-mais"><summary class="tl-bt tl-bt-ic" aria-label="Opções da lista" title="opções da lista: ordem e fundo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg></summary>
+      <span class="tl-mais-menu" role="menu">
       <button class="btn-fundo" id="btn-fundo" title="mudar o fundo desta lista" onclick="abrirFundos()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0 0 17c1.2 0 1.8-.7 1.8-1.5 0-1.4-1.3-1.7-1.3-2.9 0-.9.8-1.6 1.9-1.6h1.8a4.3 4.3 0 0 0 4.3-4.3c0-3.9-3.9-6.7-8.5-6.7Z"/><path d="M7.5 10.5h.01M10.5 7h.01M14.5 7h.01M17 10h.01"/></svg></button>
-      <!-- F236 · as listas abrem pela data que cobra, vencidos primeiro -->
-      <div class="ordenar">Ordenar: <select id="ordem">
-        <option value="prazo" selected>Data mais próxima</option>
-        <option value="alfa">Alfabética</option>
-      </select></div>
+        <!-- F236 · as listas abrem pela data que cobra, vencidos primeiro -->
+        <div class="ordenar">Ordenar: <select id="ordem">
+          <option value="prazo" selected>Data mais próxima</option>
+          <option value="alfa">Alfabética</option>
+        </select></div>
+      </span></details>
     </div>
     <div class="meio-sub" id="sub-lista"></div>
     <div id="conteudo-meio"></div>
@@ -6573,8 +6628,8 @@ function casosDeDiasAnteriores(col){
 }
 function secaoDiasAnteriores(col){
   const ks = casosDeDiasAnteriores(col); if(!ks.length) return "";
-  return `<section class="pl-grupo"><h3 class="secao">De dias anteriores <span class="pl-n">${ks.length}</span></h3>`
-    + `<p class="meio-sub" style="display:flex;align-items:center;gap:10px;padding:8px 16px;margin:0">Do último dia em que você usou o Meu Dia, ainda aberto. <button class="btn-mini" onclick="trazerParaHoje()">☀️ Trazer todos para hoje</button></p>`
+  return `<section class="pl-grupo"><h3 class="secao dica-tit" title="Do último dia em que você usou o Meu Dia, ainda aberto.">De dias anteriores <span class="pl-n">${ks.length}</span></h3>`
+    + `<p class="meio-sub" style="display:flex;align-items:center;gap:10px;padding:8px 16px;margin:0"><button class="btn-mini" onclick="trazerParaHoje()">☀️ Trazer todos para hoje</button></p>`
     + grupoClientes(ks).map(([c,g])=>cartaoCliente(c,g)).join("") + `</section>`;
 }
 async function trazerParaHoje(){
@@ -7179,6 +7234,37 @@ const svgIc = (emoji, t=17) => SVG_MENU[emoji]
 // título da lista (espec. 6.1): sempre azul-escuro, com o ícone SVG da lista
 // à esquerda — a cor por lista fica só na pastilha do menu. O rótulo com
 // emoji continua a fonte de verdade; aqui muda só a apresentação.
+// F276 · a frase que explica a tela, embaixo do título, vira a dica do título (no passar do mouse): a tela abre só com o
+// que se usa. Quando o subtítulo traz controles (o "Agrupar por" do Quadro), eles ficam e só a frase sai
+function subtituloComoDica(){
+  const sub = document.getElementById("sub-lista"), h = document.getElementById("titulo-lista"); if(!sub || !h) return;
+  const ajustar = () => {
+    const frase = !sub.children.length && sub.textContent.trim();
+    sub.classList.toggle("sub-dica", !!frase); h.title = frase || ""; h.classList.toggle("dica-tit", !!frase);
+    sub.querySelectorAll(":scope > span > .meio-sub").forEach(x=>{ h.title = x.textContent.trim(); h.classList.add("dica-tit"); x.hidden = true; });
+  };
+  new MutationObserver(ajustar).observe(sub, {childList:true, characterData:true, subtree:true}); ajustar();
+}
+// a mesma regra nas seções das telas do meio (as Configurações, sobretudo): o parágrafo de explicação logo abaixo de um título vira a dica
+// dele. Fica à vista o que é conteúdo: o aviso de lista vazia ("Nenhum…", "Sem…", "Caixa vazia"), o que tem botão ou
+// campo, a frase curta e o que está nas caixas de decisão (#modal), onde a explicação ajuda a escolher
+const RX_VAZIO = /^(nenhum|nenhuma|sem |caixa vazia|ainda não)/i;
+function frasesComoDica(raiz){
+  // só nas telas do meio (Configurações e as visões): na ficha, o parágrafo abaixo do título costuma ser o dado do caso
+  for(const x of (raiz||document).querySelectorAll("#conteudo-meio :is(h2,h3,h4,.secao) + p.meio-sub:not(.sub-dica)")){
+    const h = x.previousElementSibling, t = x.textContent.trim().replace(/\s+/g, " ");
+    if(x.closest("#modal") || t.length < 36 || RX_VAZIO.test(t) || x.querySelector("button,input,select,textarea,a,label")) continue;
+    h.title = h.title ? `${h.title}\n${t}` : t; h.classList.add("dica-tit"); x.classList.add("sub-dica");
+  }
+}
+function vigiarFrases(){
+  let fila = 0;
+  new MutationObserver(()=>{ if(!fila) fila = requestAnimationFrame(()=>{ fila = 0; frasesComoDica(); }); })
+    .observe(document.body, {childList:true, subtree:true});
+  frasesComoDica();
+}
+function iniciarDicas(){ subtituloComoDica(); vigiarFrases(); }
+if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", iniciarDicas); else iniciarDicas();
 function tituloLista(rot){
   const h = document.getElementById("titulo-lista");
   // F144 · o que a agenda do v10 põe no topo sai ao trocar de tela
@@ -13441,6 +13527,7 @@ function achadoZap(m){
       <span class="l1"><b>${esc(nomeDaConversa(c))}</b><span class="hora">${diaZap(m.momento)} ${horaSP(m.momento)}</span></span>
       <span class="l2">${m.direcao==="saida"?"Escritório: ":m.direcao==="interna"?"Nota: ":""}${trecho}</span></button>`;
 }
+let zapMaisAberto = false;   // F274 · o ⋯ da lista do WhatsApp continua aberto quando a lista se repinta
 function pintarListaZap(){
   const meu = c => c.atendente_id===eu.id;
   const aberta = c => c.status!=="resolvida";
@@ -13482,10 +13569,16 @@ function pintarListaZap(){
   document.querySelector(".zap-lado").innerHTML =
     `<div class="zl-cab">
        <div class="zl-topo"><h2>WhatsApp</h2>
-         <button class="zl-som" onclick="alternarSomZap()" title="${somZapLigado()?"aviso sonoro ligado — clique para desligar":"aviso sonoro desligado — clique para ligar"}"
-           aria-label="aviso sonoro" aria-pressed="${somZapLigado()}">${somZapLigado()?"🔔":"🔕"}</button>
          <button class="zap-estado ${zapComProblema()?"ruim":""}" onclick="abrirConexaoZap()" title="conexão do WhatsApp: ${esc(p.txt)}"><i style="background:${p.cor}"></i>${
-           zapComProblema()?(cfgApp("zap_qr")?"Ler QR code":"Corrigir conexão"):"conectado"}</button></div>
+           zapComProblema()?(cfgApp("zap_qr")?"Ler QR code":"Corrigir conexão"):"conectado"}</button>
+         ${/* F274 · som, Encerradas e Painel da equipe no ⋯; a lista se repinta a cada 6 s, então o ⋯ lembra se estava aberto */""}
+         <details class="tl-mais mais-baixo zl-mais"${zapMaisAberto?" open":""} ontoggle="zapMaisAberto=this.open"><summary class="tl-bt tl-bt-ic" aria-label="Mais opções do WhatsApp" title="som, encerradas e painel da equipe">${IC_SVG.mais}</summary>
+           <span class="tl-mais-menu" role="menu">
+             <button class="tl-mais-it zl-som" role="menuitem" onclick="alternarSomZap()" aria-pressed="${somZapLigado()}">${somZapLigado()?"🔔 Aviso sonoro ligado":"🔕 Aviso sonoro desligado"}</button>
+             <button class="tl-mais-it zl-link ${zapFiltro==="fim"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="fim">Encerradas${zapFiltro==="fim"?` (${cs.length})`:""}</button>
+             ${visiveis.some(c=>c.automatica)?`<button class="tl-mais-it zl-link ${zapFiltro==="auto"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="auto" title="robô de outra empresa (F272)">Automáticas${zapFiltro==="auto"?` (${cs.length})`:""}</button>`:""}
+             ${gestor?`<button class="tl-mais-it zl-link ${zapPainelAberto?"on":""}" role="menuitem" onclick="abrirPainelZap()">Painel da equipe</button>`:""}
+           </span></details></div>
        <label class="zl-busca">${zic("busca")}<input type="search" id="zl-busca" value="${esc(zapBusca)}"
          placeholder="Buscar nome ou telefone" aria-label="Buscar conversa"></label>
        <div class="zl-filas" role="tablist" aria-label="Filas" style="grid-template-columns:repeat(${filtros.length},minmax(0,1fr))">${filtros.map(([f,r])=>{
@@ -13497,9 +13590,6 @@ function pintarListaZap(){
          ${zapAux.setores.length?sel("zf-setor","Setor",zapAux.setores.map(s=>[s.id,s.nome]),zapChips.setor):""}
          ${zapAux.etiquetas.length?sel("zf-etq","Etiqueta",zapAux.etiquetas.map(e=>[e.id,e.texto]),zapChips.etiqueta):""}
          ${gestor?sel("zf-atend","Atendente",equipeAtiva().map(c=>[c.id,c.nome]),zapChips.atendente):""}
-         <button class="zl-link ${zapFiltro==="fim"?"on":""}" data-zf="fim">Encerradas${zapFiltro==="fim"?` (${cs.length})`:""}</button>
-         ${visiveis.some(c=>c.automatica)?`<button class="zl-link ${zapFiltro==="auto"?"on":""}" data-zf="auto" title="robô de outra empresa (F272)">Automáticas${zapFiltro==="auto"?` (${cs.length})`:""}</button>`:""}
-         ${gestor?`<button class="zl-link ${zapPainelAberto?"on":""}" onclick="abrirPainelZap()">Painel da equipe</button>`:""}
        </div>
      </div>
      <div class="zl-lista">${lista || (zapAchados.length?"":`<p class="meio-sub" style="padding:8px 6px">Nenhuma conversa aqui.</p>`)}
@@ -17292,20 +17382,22 @@ function pintarFicha(){
           :`<span class="avatar" style="--av:${corDoNome(c.nome)}">${esc(c.nome[0])}</span>`)(fotoDoCliente(c.id))}<h2>${esc(c.nome)}</h2>
         <span class="cli-casos-seta">▾</span>
       </span>${temaV10() ? linhaAdvogado(c) : ""}</span>
-      <button class="olho" title="copiar o nome do cliente"
-        onclick="copiar('${escJs(c.nome)}','Nome copiado')">📋</button>
       ${/* F101 · a parceria ao lado do nome, só quando existe: quem abre a
            ficha vê de cara que o caso é dividido com outro advogado */""}
       ${chipParceria(c, ks)}
-      ${c.telefone?`<button class="btn-mini" onclick="abrirSmbot('${c.id}')"
-        style="background:#EDF8F1;border-color:#BFE3CC;color:#128C4B;font-weight:500"
-        title="abre o SMBot numa aba e copia o telefone do cliente — é só colar na busca do atendimento">💬 SMBot</button>`:""}
       ${botaoZapCliente(cliId)}
       ${temaV10() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
-      ${casosDoBalcao(cliId).length ? `<button type="button" class="btn-mini td-abrir" onclick="trouxeDocumentos('${cliId}')" title="marque o que o cliente deixou no escritório: cada papel vai ao caso que o pediu">Trouxe documentos</button>` : ""}
-      ${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}
+      ${/* F274 · o que não se usa a toda hora vai ao ⋯ do cabeçalho; CPF e a senha do Meu INSS ficam à vista (pedido do Paulo) */""}
+      ${menuMais([
+        casosDoBalcao(cliId).length ? `<button class="tl-mais-it td-abrir" role="menuitem" onclick="trouxeDocumentos('${cliId}')">Trouxe documentos</button>` : "",
+        `<button class="tl-mais-it" role="menuitem" title="copiar o nome do cliente" onclick="copiar('${escJs(c.nome)}','Nome copiado')">Copiar o nome</button>`,
+        c.telefone ? `<button class="tl-mais-it" role="menuitem" onclick="abrirSmbot('${c.id}')">Abrir no SMBot</button>` : "",
+        temaV10() ? itemNaoCliente(c) : "",
+      ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo det-mais"')}
+      ${/* F274 · a situação do cliente e o ✕ andam juntos no canto direito, mesmo quando a linha quebra */""}
+      <span class="det-canto">${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}
       ${chipAgendaCliente(c)}
-      <button class="fechar nao-cel" onclick="fecharFicha()">✕</button></div>
+      <button class="fechar nao-cel" onclick="fecharFicha()">✕</button></span></div>
     ${/* abaixo do nome só o que a equipe usa o tempo todo: CPF e a senha do
          Meu INSS. O resto do cadastro fica na aba 📇, sem poluir aqui. */""}
     ${temaV10() ? "" : `<div class="resumo">${resumoIn}</div>`}
@@ -17402,7 +17494,7 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}${(t=>t ? t.replace(/<\/section>\s*$/, `${faixaIncapacidade(k)}</section>`) : faixaIncapacidade(k))(faixaTrilha(k))}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${/* F243 · os prazos vêm primeiro: são a primeira leitura do colaborador */""}${faixaPrazos(k)}${linhaCaso(k)}${botaoFixar(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
+        ? `${faixaFixo(k)}${(t=>t ? t.replace(/<\/section>\s*$/, `${faixaIncapacidade(k)}</section>`) : faixaIncapacidade(k))(faixaTrilha(k))}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${/* F243 · os prazos vêm primeiro: são a primeira leitura do colaborador */""}${faixaPrazos(k)}${linhaCaso(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
            <div class="caso-dir">${bannerAClassificar(k)}${menu}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
@@ -34113,7 +34205,9 @@ function faixaPrazos(k){
   // que substitui a ordem decrescente da F145)
   minhas.sort((a,b)=>a.data<b.data?-1:a.data>b.data?1:0);
   faixaAtual = minhas;
-  const tit = `<h3 class="fp-tit">Prazos e compromissos</h3>${botoesConferir(k, "fp-conf")}`;   // F182 · F245 · a conferência em um clique
+  // F182 · F245 · a conferência em um clique; F276 · ela mora no "⋯" ao lado do título, para o quadro ficar só com as datas
+  const conf = botoesConferir(k, "fp-conf");
+  const tit = `<div class="fp-cab"><h3 class="fp-tit">Prazos e compromissos</h3>${conf ? `<details class="tl-mais fp-menu"><summary class="tl-bt tl-bt-ic" aria-label="Conferir o caso" title="conferir o caso: sem novidade ou movimentou">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${conf}</span></details>` : ""}</div>`;
   if(!minhas.length) return `<div class="faixa-prazos vazia" aria-label="Prazos e providências">${tit}
     <span class="meio-sub">Sem prazos ou lembretes em aberto. Um andamento com data cria o lembrete; a anotação com ⏰ cria o prazo.</span></div>`;
   // F236 · sem mexer na ordem (F145), o que não pode passar despercebido: o PRÓXIMO (a menor data de hoje em diante
@@ -34137,6 +34231,8 @@ function faixaPrazos(k){
       : `${SIGLA_DIA[new Date(iso+"T12:00:00").getDay()]}., ${fmtBarra(iso).slice(0,5)}`; };
   const falta = iso => { const d = diasAte(iso), u = uteis(iso), du = n => `${n} ${n===1?"dia útil":"dias úteis"}`;
     return d===0 ? "vence hoje" : d<0 ? `venceu há ${du(Math.max(1,u))}` : u ? `faltam ${du(u)}` : `faltam ${d} dias corridos`; };
+  // F275 · A LINHA SÓ COM A DATA E O "ABRIR" (pedido do Paulo, 24.10.2026: a ficha tem informação demais). O título,
+  // o motivo, quem faz e o "cumpri" moram no painel; aqui ficam a bolinha da natureza, a data e o título no passar do mouse
   const linha = (x, destaque) => {
     const i = minhas.indexOf(x), d = diasAte(x.data), nat = natDaLinha(x), tipo = tipoDaLinha(x),
           resumo = resumoDaLinha(x), vis = visivelDaLinha(x), kx = D.casoPorId.get(x.casoId),
@@ -34152,15 +34248,14 @@ function faixaPrazos(k){
     // em vez de repetir "Prazo fatal" debaixo da etiqueta "Prazo fatal"
     const semDesc = x.semMotivo && !motivo && RX_TIPO_GENERICO.test(titulo);
     if(semDesc) titulo = "Diga do que é este prazo";
-    const sub = x.semMotivo && !motivo ? (semDesc ? "veio do To Do sem descrição" : "do To Do, diga do que é") : "";
-    const data = quando(x.data) + (destaque || nat==="fatal" ? ` · ${falta(x.data)}` : x.aConfirmar && d<0 ? " · confirme" : "");
+    // o grupo já diz "Hoje" ou "Amanhã": a linha mostra o dia da semana e a data; o prazo fatal diz também quanto falta
+    const dia = `${SIGLA_DIA[new Date(x.data+"T12:00:00").getDay()]}., ${fmtBarra(x.data).slice(0,5)}`;
+    const data = destaque ? `${dia} · ${falta(x.data)}` : dia;
     Object.assign(x, {_nat: nat, _titulo: titulo, _motivo: motivo, _ir: ir, _quando: quando(x.data), _falta: falta(x.data)});   // para o painel
-    return `<div class="pz fp2-lin pz-${nat}${pend(x)?" pz-venceu":""}${destaque?" fp2-fatal":""}${x.semMotivo?" pz-semmotivo":""}${x.aConfirmar?" pz-confirmar":""}" data-nat="${nat}" data-tipo="${esc(tipo)}" data-data="${x.data}" title="${esc(tipo+(resumo?` · ${resumo}`:""))}">
-      ${x.cumprir?`<button class="fp2-circ" onclick="${x.cumprir}" title="cumpri: tira o prazo daqui e devolve o caso à lista de onde veio" aria-label="cumpri"></button>`:`<span class="fp2-bola" aria-hidden="true"></span>`}
-      ${destaque
-        ? `<span class="fp2-txt"><small class="fp2-tag">Prazo fatal</small><b>${esc(titulo)}</b><span class="fp2-quando">${esc(data)}</span>${sub?`<small>${esc(sub)}</small>`:""}</span>`
-        : `<span class="fp2-txt"><b>${esc(titulo)}</b>${sub?`<small>${esc(sub)}</small>`:""}</span><span class="fp2-data">${esc(data)}</span>`}${x.avs||""}
-      <button class="fp2-mais pz-mais" onclick="abrirPainelPrazo(${i})" title="ver o progresso: quem faz, etapas e histórico">abrir</button>${x.ouv||""}
+    return `<div class="pz fp2-lin pz-${nat}${pend(x)?" pz-venceu":""}${destaque?" fp2-fatal":""}${x.semMotivo?" pz-semmotivo":""}${x.aConfirmar?" pz-confirmar":""}" data-nat="${nat}" data-tipo="${esc(tipo)}" data-data="${x.data}" title="${esc(titulo)}">
+      <span class="fp2-bola" aria-hidden="true"></span>
+      ${destaque ? `<small class="fp2-tag">Prazo fatal</small>` : ""}<span class="fp2-data">${esc(data)}</span><span class="fp2-sr">${esc(titulo)}</span>
+      <button class="fp2-mais pz-mais" onclick="abrirPainelPrazo(${i})">abrir</button>
     </div>`;
   };
   const destaque = proxFatal || minhas.filter(x=>natDaLinha(x)==="fatal" && pend(x))[0] || null;
@@ -34292,8 +34387,8 @@ function abrirPainelPrazo(i){
   if(x.andId) for(const c of (D._andsFicha||[]).filter(a=>a.responde_a===x.andId))
     hist.push([c.criado_em, `${nome(c.autor_id)}: ${cortaFrase(String(c.texto||"").replace(/\s+/g," "), 120)}`]);
   hist.sort((a,b)=>String(b[0]).localeCompare(String(a[0])));   // o mais recente primeiro (pedido do Paulo, 24.10.2026)
-  const origem = x.andId ? `<button class="pp-sec-bt" onclick="${fechar};${x._ir}">ver na linha do tempo</button>`
-    : `<button class="pp-sec-bt" onclick="${x._ir}">${x.semMotivo && !x._motivo ? "do que é?" : "detalhes"}</button>`;
+  const origem = x.andId ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="${fechar};${x._ir}">Ver na linha do tempo</button>`
+    : `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="${x._ir}">${x.semMotivo && !x._motivo ? "Dizer do que é" : "Detalhes"}</button>`;
   const principal = x.cumprir ? `<button class="pp-pri" onclick="${fechar};${x.cumprir}">✔ Cumpri</button>`
     : minha ? `<button class="pp-pri" onclick="concluirDeVez('${minha.id}')">✔ Concluir a minha tarefa</button>` : "";
   let el;
@@ -34319,7 +34414,8 @@ function abrirPainelPrazo(i){
       <textarea id="pp-com" rows="2" placeholder="O que aconteceu? Vai para a linha do tempo do caso."
         onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();comentarNoPrazo('${x.casoId}','${x.andId||""}')}"></textarea>
       <button class="pp-sec-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Comentar</button></section>
-    <footer>${principal}${x.cumprir ? "" : x.acao || ""}${minha ? `<button class="pp-sec-bt" onclick="adiarTarefa('${minha.id}')">Adiar</button>` : ""}${origem}</footer>`;
+    <footer>${principal}${x.cumprir ? "" : x.acao || ""}${/* F274 · o principal à vista; adiar e o caminho para a origem no ⋯ */""}${menuMais([
+      minha ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="adiarTarefa('${minha.id}')">Adiar</button>` : "", origem]).replace('class="tl-mais"', 'class="tl-mais pp-mais"')}</footer>`;
   if(esq) return;
   requestAnimationFrame(()=>{ el.classList.add("aberto"); document.body.classList.add("lado-aberto"); });
 }
@@ -35212,7 +35308,11 @@ function linhaCaso(k){
       ${k.natureza?`<span class="chip nat-chip" title="natureza do pedido">${esc(rotNatureza(k.natureza))}</span>`:""}
       ${k.urgente?`<span class="chip urg">Urgente</span>`:""}
       ${semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo — custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:""}
-      <button class="lc-claude" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)">✦ Claude</button>
+      ${/* F274 · Claude e Fixar comentário no ⋯ do cartão do caso */""}
+      ${menuMais([
+        `<button class="tl-mais-it lc-claude" role="menuitem" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)">✦ Pedir ao Claude</button>`,
+        k.fixo && k.fixo.texto ? "" : `<button class="tl-mais-it fixar-caso" role="menuitem" onclick="lcEditarFixo('${k.id}')" title="fixar um comentário que aparece em destaque ao abrir o caso">${ICO_PIN} Fixar comentário</button>`,
+      ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo lc-menu"')}
       ${(ac=>ac.atual.length?`<span class="lc-acessos">${ac.atual.join("")}</span>`:"")(acessosDoCaso(k))}
       </div>
       <div class="lc-placa">
@@ -35729,7 +35829,7 @@ function painelOutrasAbas(k){
   return `<section class="outras-abas" aria-label="Nas outras abas"><h3>Nas outras abas</h3>
     ${linhas.map(([q,aba,txt,cor])=>`<button class="oa-linha" onclick="irOutraAba('${q}')">
       <span class="oa-ponto" style="background:${cor}"></span>
-      <span class="oa-txt"><small>${aba}</small><span>${esc(txt)}</span></span>
+      <span class="oa-txt" title="${esc(txt)}"><small>${aba}</small><span class="fp2-sr">${esc(txt)}</span><span aria-hidden="true">${esc(String(txt).split(" · ")[0].split(": ")[0])}</span></span>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`).join("")}
   </section>`;
 }
@@ -36081,8 +36181,10 @@ function composerCaso(k){
   // das Tabelas do CNJ). F105 · no tema cada tipo abre uma janela (POPS_ANOTACAO);
   // sem o tema, o esqueleto entra direto no texto, como sempre
   const chips = (v10
-    ? Object.entries(POPS_ANOTACAO).map(([ch,P])=>
-          `<button class="tipo-ch" data-tipoand="${ch}" onclick="popAnotacao('${ch}')">${esc(P.rot)}</button>`).join("")
+    // F274 · os oito tipos de anotação ficam num ⋯ "Tipo"; à vista, só Sem resposta e Pedir ao cliente
+    ? `<details class="tl-mais mais-baixo tipo-mais"><summary class="tipo-ch" title="escolher o tipo de anotação: o campo ganha as lacunas para preencher">Tipo ▾</summary><span class="tl-mais-menu" role="menu">${
+        Object.entries(POPS_ANOTACAO).map(([ch,P])=>
+          `<button class="tipo-ch tl-mais-it" role="menuitem" data-tipoand="${ch}" onclick="this.closest('details').open=false;popAnotacao('${ch}')">${esc(P.rot)}</button>`).join("")}</span></details>`
     : TIPOS_ANOTACAO.map(([ch,rot])=>
           `<button class="tipo-ch" data-tipoand="${ch}" onclick="escolherTipoAnotacao('${ch}')">${esc(rot)}</button>`).join(""))
     // F247 · os dois gestos que mais se escreviam à mão, em um clique
@@ -40032,11 +40134,16 @@ async function registrarMovimento(casoId, i){
 // o advogado responsável, abaixo do nome do cliente: o escolhido ou o advogado dos casos
 function linhaAdvogado(c){
   const id = advogadoDoCliente(c.id)[0], co = D.colPorId.get(id);
-  const nc = souAdmin() ? (ehClienteDaLista(c)
-      ? ` · <button type="button" class="cli-adv-bt cli-nao" onclick="marcarNaoCliente('${c.id}',true)" title="tira este cadastro da lista Clientes (não apaga nada)">Não é cliente</button>`
-      : ` · <span class="chip neutro">fora da lista Clientes</span> <button type="button" class="cli-adv-bt cli-sim" onclick="marcarNaoCliente('${c.id}',false)" title="volta este cadastro à lista Clientes">É cliente</button>`) : "";   // F254
+  // F254 · o "fora da lista" segue à vista; o botão de mudar foi ao ⋯ do cabeçalho (F274, itemNaoCliente)
+  const nc = souAdmin() && !ehClienteDaLista(c) ? ` · <span class="chip neutro">fora da lista Clientes</span>` : "";
   return `<span class="cli-adv">Advogado responsável: <button type="button" class="cli-adv-bt" onclick="escolherAdvogado('${c.id}')"
     title="trocar o advogado responsável por este cliente: é quem a ⭐ e a movimentação avisam">${esc(co ? co.nome : "escolher")} ▾</button>${nc}</span>`;
+}
+function itemNaoCliente(c){
+  if(!souAdmin()) return "";
+  return ehClienteDaLista(c)
+    ? `<button class="tl-mais-it cli-nao" role="menuitem" onclick="marcarNaoCliente('${c.id}',true)" title="tira este cadastro da lista Clientes (não apaga nada)">Não é cliente</button>`
+    : `<button class="tl-mais-it cli-sim" role="menuitem" onclick="marcarNaoCliente('${c.id}',false)" title="volta este cadastro à lista Clientes">É cliente</button>`;
 }
 function escolherAdvogado(cliId){
   const c = D.cliPorId.get(cliId); if(!c) return;

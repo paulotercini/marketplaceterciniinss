@@ -78,14 +78,14 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // 2 · Não é cliente / É cliente, na ficha
   await p.evaluate(async id => { await abrirFicha(id); }, semCpf.id); await p.waitForTimeout(400);
-  conf("a ficha mostra 'Não é cliente' ao administrador", !!(await p.$(".cli-adv .cli-nao")));
-  await p.click(".cli-adv .cli-nao"); await p.waitForTimeout(500);
+  conf("a ficha mostra 'Não é cliente' ao administrador", !!(await p.$(".det-mais .cli-nao")));
+  await p.evaluate(() => { const d = document.querySelector(".det-mais"); if (d) d.open = true; }); await p.click(".det-mais .cli-nao"); await p.waitForTimeout(500);
   conf("o clique grava campos.nao_cliente e não apaga o cadastro", T.clientes.find(c => c.id === semCpf.id).campos.nao_cliente === true);
-  conf("a ficha passa a dizer 'fora da lista Clientes' com o 'É cliente'", /fora da lista Clientes/.test(await p.textContent(".cli-adv")) && !!(await p.$(".cli-adv .cli-sim")));
+  conf("a ficha passa a dizer 'fora da lista Clientes' com o 'É cliente'", /fora da lista Clientes/.test(await p.textContent(".cli-adv")) && !!(await p.$(".det-mais .cli-sim")));
   nomes = await lista();
   conf("e sai da lista", !nomes.includes(semCpf.nome));
   await p.evaluate(async id => { await abrirFicha(id); }, so1.id); await p.waitForTimeout(400);
-  await p.click(".cli-adv .cli-sim"); await p.waitForTimeout(500);
+  await p.evaluate(() => { const d = document.querySelector(".det-mais"); if (d) d.open = true; }); await p.click(".det-mais .cli-sim"); await p.waitForTimeout(500);
   conf("'É cliente' devolve à lista quem tem só o primeiro nome", T.clientes.find(c => c.id === so1.id).campos.e_cliente === true && (await lista()).includes("Geraldo"));
 
   // 3 · Conferir cadastros sem CPF, no Cuidar do acervo
@@ -103,7 +103,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // 4 · quem não é administrador não vê nada disso
   await p.evaluate(() => { eu.papel = "colaborador"; });
   await p.evaluate(async id => { await abrirFicha(id); }, comCpf.id); await p.waitForTimeout(400);
-  conf("o colaborador não vê o 'Não é cliente'", !(await p.$(".cli-adv .cli-nao")));
+  conf("o colaborador não vê o 'Não é cliente'", !(await p.$(".det-mais .cli-nao")));
   conf("nem o bloco do acervo", await p.evaluate(() => blocoSemCpf() === ""));
 
   conf(`sem erro de página (${erros.join(" | ")})`, !erros.length);
