@@ -110,14 +110,16 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("com dois pré-casos, o modo atendimento mostra o seletor com o escolhido marcado",
     esc.length === 2 && esc.some(([t, on]) => /Aposentadoria por idade/.test(t) && on) && esc.some(([t, on]) => /BPC/.test(t) && !on));
   await p.evaluate(() => irSubCad("documentos")); await p.waitForTimeout(400);   // F239 · o Desfecho fica só no fim de Documentos
-  const ordem = await p.evaluate(() => [...document.querySelectorAll("#desfecho .desf-acoes > *")].map(e => e.tagName === "SELECT" ? e.options[0].text : e.textContent.trim()));
-  conf(`o Desfecho tem arquivar, Aposentadorias futuras e gerar o caso, nessa ordem (${ordem.join(" | ")})`,
-    ordem.length === 3 && /^1 · Arquivar/.test(ordem[0]) && /^2 · Enviar a Aposentadorias futuras/.test(ordem[1]) && /^3 · Gerar o caso/.test(ordem[2]));
+  // F277 · o Desfecho virou Criar caso: o início, o número e o botão; arquivar e Aposentadorias futuras como outras saídas
+  const cc = await p.evaluate(() => ({ini: [...document.querySelectorAll("#desfecho #cc-inicio option")].map(o => o.text), num: !!document.querySelector("#desfecho #cc-num"),
+    bt: (document.querySelector("#desfecho .cc-form button") || {}).textContent, outras: [...document.querySelectorAll("#desfecho .desf-acoes > select, #desfecho .desf-acoes > button")].map(e => e.tagName === "SELECT" ? e.options[0].text : e.textContent.trim())}));
+  conf(`o Criar caso pede o início e o número, e as outras saídas seguem (${cc.ini.join(", ")} | ${cc.outras.join(" | ")})`,
+    cc.ini.join() === "escolha…,INSS,Conselho de Recursos,Judicial" && cc.num && /Criar caso/.test(cc.bt || "") && cc.outras.length === 2 && /^Arquivar/.test(cc.outras[0]) && /^Enviar a Aposentadorias futuras/.test(cc.outras[1]));
   await p.click(".pc-escolha .pc-esc-bt:not(.on)");
   await p.waitForTimeout(500);
   conf("o seletor troca o pré-caso do atendimento e o Desfecho acompanha", await p.evaluate(a => (preCasoAberto(D.cliPorId.get(a)) || {}).id === "pc_a2"
     && /BPC/.test(document.querySelector("#desf-t").textContent), A));
-  conf("a aba do cliente se chama Aposentadorias futuras", await p.evaluate(() => /Aposentadorias futuras/.test(document.querySelector("#app").innerHTML) && !/data-vv="9">Lembretes/.test(document.querySelector("#app").innerHTML)));
+  conf("as Aposentadorias futuras saíram do menu da ficha (F277)", await p.evaluate(() => !document.querySelector('.mt[data-vv="9"]')));
   await p.evaluate(a => { _atendAberto.delete(a); _pcSel.delete(a); }, A);
 
   // 4 · arquivar encerra a linha; gerar o caso muda a fase da MESMA linha

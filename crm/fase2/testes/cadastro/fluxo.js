@@ -81,7 +81,7 @@ FIX.documentos_beneficio.push(
   // F220 · o + atendimento abre a tela cheia no Primeiro atendimento; a mesa
   // fica na ficha, ao sair do modo atendimento
   await p.click('button:has-text("Sair do modo atendimento")');
-  await p.click('.sub-menu button:has-text("Anotações")');
+  await p.evaluate(() => irSubCad("anotacoes"));   // F277 · o Cadastro mostra só a Identificação; a mesa abre pelo atalho
   await p.waitForSelector(".caixa-atend");
   await p.waitForTimeout(300);
 
@@ -100,8 +100,9 @@ FIX.documentos_beneficio.push(
     (await trilho()).some(x => /Triagem/.test(x)));
   // F165 · com o atendimento em curso (o pré-caso do +), as Anotações ficam
   // no trilho ao lado da Triagem reaberta
-  conf("F165 · e as Anotações continuam, porque há atendimento em curso",
-    (await trilho()).some(x => /Anotações/.test(x)));
+  // F277 · fora da tela de atendimento o Cadastro não mostra a mesa (as Anotações): só a Identificação e o aberto agora
+  conf("F277 · as Anotações ficam fora do trilho do Cadastro",
+    !(await trilho()).some(x => /Anotações/.test(x)));
   conf("o rastro da reabertura fica gravado",
     escritos.some(x => x.m === "PATCH" && x.t === "clientes"
       && /reaberta/.test(JSON.stringify(x.corpo)) && !/"atendimento"/.test(JSON.stringify((x.corpo.triagem || {}).atendimento || null))));
@@ -245,12 +246,12 @@ FIX.documentos_beneficio.push(
     t5.length > 0 && !t5.some(x => /^Anotações/.test(x)));
   conf("e no lugar fica o + atendimento para a próxima vinda",
     t5.some(x => /\+ atendimento/.test(x)));
-  await p.evaluate(() => { const b = [...document.querySelectorAll(".menu-topo .mt")]
-    .find(x => /Aposentadorias futuras/.test(x.innerText)); if (b) b.click(); });
+  // F277 · a aba virou o quadro Aposentadoria do Cadastro; os cards (com as anotações) abrem numa janela
+  await p.evaluate(() => verAposFuturas(clienteAberto));
   await p.waitForTimeout(400);
-  conf("a aba Lembretes mostra as anotações do atendimento que virou lembrete",
-    /Vai juntar os exames/.test(await p.evaluate(() =>
-      (document.querySelector('.painel[data-p="9"].ativo') || {}).innerText || "")));
+  conf("os cards de Aposentadorias futuras mostram as anotações do atendimento que virou lembrete",
+    /Vai juntar os exames/.test(await p.evaluate(() => (document.querySelector("#modal") || {}).innerText || "")));
+  await p.evaluate(() => fecharCaixa());
 
   // ── 6. cliente com caso: Documentos existe, Anotações só com atendimento ─
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
@@ -262,9 +263,9 @@ FIX.documentos_beneficio.push(
   // Identificação e o + atendimento
   // (F171: com caso, a Análise de Direito também fica no trilho)
   // (F220: e Documentos, onde estão a procuração e o que falta ao caso)
-  conf(`F165 · com caso e sem atendimento: Identificação, Documentos, Análise de Direito e + atendimento (${tCheio.join(" · ")})`,
-    tCheio.length === 4 && /^Identificação/.test(tCheio[0]) && /^Documentos/.test(tCheio[1])
-    && /^Análise de Direito/.test(tCheio[2]) && /\+ atendimento/.test(tCheio[3]));
+  // F277 · o Cadastro é só a Identificação, com o + atendimento no canto (pedido do Paulo, 25.10.2026)
+  conf(`F277 · com caso e sem atendimento: só Identificação e + atendimento (${tCheio.join(" · ")})`,
+    tCheio.length === 2 && /^Identificação/.test(tCheio[0]) && /\+ atendimento/.test(tCheio[1]));
   await p.evaluate(() => { const b = [...document.querySelectorAll('.painel[data-p="0"].ativo .sub-menu button')]
     .find(x => /\+ atendimento/.test(x.innerText)); if (b) b.click(); });
   await p.waitForTimeout(600);
@@ -273,11 +274,13 @@ FIX.documentos_beneficio.push(
   conf(`o + atendimento abre a tela do atendimento também para quem já tem caso (${tAt.join(" · ")})`,
     await p.evaluate(() => document.getElementById("detalhe").classList.contains("atend-tela") && subCad === "pa")
     && tAt.some(x => /Primeiro atendimento/.test(x)));
+  await p.click(".atend-acoes .atend-concluir");   // F277 · Salvar pré-caso: sem salvar, sair o descarta
+  await p.waitForTimeout(400);
   await p.click('button:has-text("Sair do modo atendimento")');
   await p.waitForTimeout(300);
   const tSai = await trilho();
-  conf(`F165 · e, fora da tela, a mesa tem Anotações, Triagem e Documentos (${tSai.join(" · ")})`,
-    tSai.some(x => /Anotações/.test(x)) && tSai.some(x => /Triagem/.test(x)) && tSai.some(x => /Documentos/.test(x)));
+  conf(`F277 · e, fora da tela, o Cadastro segue só com a Identificação e o Abrir atendimento (${tSai.join(" · ")})`,
+    tSai.length === 2 && /^Identificação/.test(tSai[0]) && /Abrir atendimento/.test(tSai[1]));
 
   // ── 7. F31: o menu Documentos incorporou a Consulta ─────────────────────
   conf("o botão Consulta saiu do trilho",

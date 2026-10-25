@@ -147,7 +147,7 @@ FIX.andamentos.push({ id: AND1, caso_id: CASO1, autor_id: EU2, origem: "app",
   // das anotações fica na ficha, ao sair do modo atendimento
   await p.click('button:has-text("Sair do modo atendimento")');
   await p.waitForTimeout(300);
-  await p.click('.sub-menu button:has-text("Anotações")');
+  await p.evaluate(() => irSubCad("anotacoes"));   // F277 · o Cadastro mostra só a Identificação; a mesa abre pelo atalho
   await p.waitForSelector("#at-nota");
   conf("os chips PARA estão na anotação do atendimento (3 iniciais)",
     (await p.evaluate(() => document.querySelectorAll(".at-eq").length)) === 3);
