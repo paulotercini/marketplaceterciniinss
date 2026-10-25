@@ -13844,6 +13844,7 @@ function pintarConversa(){
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
                ${pode?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>`:""}
                ${pode&&!fim&&(zapAux.passos||[]).length?`<button onclick="levarRobo()">Levar o robô a um passo…</button>`:""}
+               ${pode&&cfgApp("zap_ia_plantao")==="sim"?`<button onclick="mudarConversa({ia_conversa:!c.ia_conversa})">${c.ia_conversa?"A IA deixa de conversar com este número":"A IA conversa com este número"}</button>`:""}
                ${pode&&cfgApp("zap_ia_plantao")==="sim"?`<button onclick="mudarConversa({sem_ia:!c.sem_ia})">${c.sem_ia?"A IA volta a responder esta conversa":"A IA não responde esta conversa"}</button>`:""}
                ${cli?`<button onclick="quemConversa()">Quem conversa…</button>`:""}
                ${cli?`<button onclick="abrirFicha('${cli.id}')">Abrir a ficha do cliente</button>`
