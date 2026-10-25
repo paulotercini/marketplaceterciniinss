@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_plantao.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, FERRAMENTAS_AGENDA, ferramentasDaConversa, vagasDoDia, rotulo, COMO_MARCAR } from "../../zap_plantao/index.ts";
+import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET } from "../../zap_plantao/index.ts";
 
 assert.equal(mascarar("CPF 123.456.789-09"), "CPF [número]");
 const msgs = [
@@ -57,38 +57,64 @@ assert.equal(enviados[0].events[0].type, "user.message");
 assert.deepEqual([enviados[1].events[0].type, enviados[1].events[0].custom_tool_use_id], ["user.custom_tool_result", "sevt_9"]);
 await assert.rejects(turno("sesn_1", "oi", falso([{ type: "session.status_idle", id: "e2", stop_reason: { type: "end_turn" } }])), /parou sem decisão/);
 
-// F277 · o agente marca pela agenda do CRM
-const da = definicaoAgente("", true);
-assert.deepEqual(da.tools.map((f) => f.name), ["decidir", "consultar_vagas", "marcar_atendimento"]);
-assert.ok(da.system.includes("Dra. Amanda") && da.system.includes('"agendar": não use') && !da.system.includes("o sistema manda os horários livres"));
-assert.ok(!definicaoAgente("", false).system.includes("Como marcar"), "sem o token da agenda, o agente fica como era");
+// F278 · a Assistente faz a triagem e o Agendador (Console) marca pela agenda do CRM
+assert.deepEqual(definicaoAgente("x").tools.map((f) => f.name), ["decidir"]);
+const doConsole = "Você é a assistente.\n- \"lead\": acolha.\n- \"agendar\": não use. Você mesma marca o atendimento pelas ferramentas.\n- \"equipe\": urgente.\n\n" +
+  "Proibido, sem exceção: parecer.\n\nComo marcar o atendimento (quando...):\n1. consulte as vagas.\n8. Nunca invente.\n\nResponda sempre chamando a ferramenta decidir.";
+const tri = paraTriagem(doConsole);
+assert.ok(tri.includes(AGENDAR_BULLET) && !tri.includes("Como marcar o atendimento") && !tri.includes("Você mesma marca"));
+assert.ok(tri.indexOf("Proibido") < tri.indexOf("Como encaminhar ao Agendador:") && tri.indexOf("Como encaminhar ao Agendador:") < tri.indexOf("Responda sempre chamando"));
+assert.ok(tri.includes('- "lead": acolha.') && tri.includes('- "equipe": urgente.'), "o resto do texto do Console fica");
+assert.equal(paraTriagem(tri), tri, "aplicar de novo não muda nada");
+const lig = ligacaoTriagem({ version: 5, system: doConsole, tools: [{ type: "custom", name: "decidir" }, { type: "custom", name: "consultar_vagas" }] }, "agent_X");
+assert.equal(lig.version, 5); assert.deepEqual(lig.tools.map((t) => t.name), ["decidir"]);
+assert.deepEqual(lig.multiagent.subagents.predefined_agents, ["agent_X"]);
+assert.equal(lig.multiagent.subagents.inline_agents.type, "disabled"); assert.equal(lig.multiagent.workflows.type, "disabled");
 assert.equal(rotulo("2026-10-27", "09:30", "a Dra. Amanda"), "terça-feira, 27/10, às 9h30, com a Dra. Amanda");
 assert.deepEqual(vagasDoDia([{ data: "2026-10-28", livres: { "001": [{ inicio: "14:00", eventoId: "b" }, { inicio: "15:00" }] } },
   { data: "2026-10-27", livres: { "001": [{ inicio: "09:30", eventoId: "a" }] } }, { data: "2026-10-26", bloqueado: true, livres: { "001": [{ inicio: "08:00", eventoId: "z" }] } }],
   "001", "a Dra. Amanda").map((v) => v.eventoId), ["a", "b"], "ordem de data, só vaga marcada, sem dia bloqueado");
 const chamadas = [], noBanco = [];
+const meu = { id: "ev-meu", atendimento: true, data: "2026-10-29", inicio: "10:00", profissional: "amanda" };
 const agendaFalsa = async (acao, corpo) => { chamadas.push([acao, corpo]);
-  if (acao === "disponibilidade") return { ok: true, profissionais: [{ id: corpo.profissional, tratamento: corpo.profissional === "amanda" ? "a Dra. Amanda" : "o Dr. Paulo" }],
-    dias: [{ data: "2026-10-27", livres: { "001": [{ inicio: "09:30", eventoId: "ev-" + corpo.profissional }] } }] };
+  if (acao === "disponibilidade") return { ok: true, dias: [{ data: "2026-10-27", livres: { "001": [{ inicio: "09:30", eventoId: "ev-" + corpo.profissional }] } }] };
+  if (acao === "agendamentosFuturos") return { ok: true, agendamentos: [meu, { id: "ev-vaga", atendimento: false }] };
   return corpo.eventoId === "tomado" ? { ok: false, codigo: "HORARIO_INDISPONIVEL" } : { ok: true }; };
 const bancoFalso = async (nome, corpo) => { noBanco.push([nome, corpo]);
   return nome === "zap_plantao_agenda" ? { telefone: "5516999998888", cliente_id: null, nome_ficha: null, ligada: true } : null; };
 const fz = ferramentasDaConversa("c1", agendaFalsa, bancoFalso);
-const cv = await fz.consultar_vagas({ profissionais: ["amanda", "paulo", "hacker"] });
-assert.equal(cv.tipo, "001"); assert.equal(cv.vagas.amanda[0].rotulo, "terça-feira, 27/10, às 9h30, com a Dra. Amanda");
+const cv = await fz.consultar_vagas({ profissionais: ["amanda", "paulo", "hacker"], tipo: "002" });
+assert.equal(cv.tipo, "001", "o tipo sai da conversa, não do agente"); assert.equal(cv.vagas.amanda[0].rotulo, "terça-feira, 27/10, às 9h30, com a Dra. Amanda");
 assert.ok(!("hacker" in cv.vagas));
-const mk = await fz.marcar_atendimento({ profissional: "amanda", data: "2026-10-27", inicio: "09:30", eventoId: "ev-amanda", nome: "Maria Souza", modalidade: "remoto", assunto: "auxílio-doença" });
-assert.ok(mk.marcado);
+assert.deepEqual(cv.atendimentos_marcados, [{ atendimentoId: "ev-meu", rotulo: "quinta-feira, 29/10, às 10h00, com a Dra. Amanda" }]);
+// o esquema do Agendador não traz data nem hora: a vaga é relida pelo eventoId
+const mk = await fz.marcar_atendimento({ eventoId: "ev-amanda", profissional: "amanda", tipo: "002", nome: "Maria Souza", modalidade: "remoto", assunto: "auxílio-doença", acompanhante: true, orientacoes_dadas: true });
+assert.ok(mk.marcado && /não repita/.test(mk.aviso));
 const ag = chamadas.find((c) => c[0] === "agendar")[1];
-assert.equal(ag.telefone, "16999998888"); assert.equal(ag.tipo, "001"); assert.ok(ag.observacoes.includes("Modalidade: remoto"));
+assert.deepEqual([ag.telefone, ag.tipo, ag.data, ag.inicio], ["16999998888", "001", "2026-10-27", "09:30"]);
+assert.ok(ag.observacoes.includes("Modalidade: remoto") && ag.observacoes.includes("Outra pessoa será atendida junto"));
 assert.deepEqual(noBanco.filter((b) => b[0] === "zap_plantao_marcado")[0][1].p_modalidade, "remoto");
 assert.equal(noBanco.filter((b) => b[0] === "zap_plantao_agenda").length, 1, "lê a conversa uma vez por turno");
-assert.match((await fz.marcar_atendimento({ profissional: "amanda", data: "2026-10-27", inicio: "09:30", eventoId: "tomado", nome: "M", modalidade: "presencial", assunto: "" })).erro, /tomado/);
+assert.match((await fz.marcar_atendimento({ eventoId: "sumiu", profissional: "amanda", nome: "M", modalidade: "presencial", assunto: "" })).erro, /não está mais livre/);
+// remarcar e cancelar valem só para atendimento desta pessoa
+const alheio = await fz.remarcar_atendimento({ atendimentoId: "ev-de-outro", novoEventoId: "ev-paulo" });
+assert.match(alheio.erro, /não encontrado/); assert.equal(alheio.atendimentos_marcados[0].atendimentoId, "ev-meu");
+assert.ok(!chamadas.some((c) => c[0] === "remarcar"));
+const rm = await fz.remarcar_atendimento({ atendimentoId: "ev-meu", novoEventoId: "ev-paulo" });
+assert.ok(rm.remarcado); const rc = chamadas.find((c) => c[0] === "remarcar")[1];
+assert.deepEqual([rc.eventId, rc.eventoId, rc.profissional, rc.data, rc.inicio], ["ev-meu", "ev-paulo", "paulo", "2026-10-27", "09:30"]);
+assert.match((await fz.cancelar_atendimento({ atendimentoId: "ev-vaga", motivo: "" })).erro, /não encontrado/, "vaga não é atendimento");
+assert.ok((await fz.cancelar_atendimento({ atendimentoId: "ev-meu", motivo: "viagem" })).cancelado);
+assert.equal(chamadas.find((c) => c[0] === "cancelar")[1].eventId, "ev-meu");
+assert.ok(noBanco.some((b) => b[0] === "zap_nota_sistema" && /cancelou.*Motivo: viagem/.test(b[1].p_texto)));
+assert.ok(!("motivo" in fz.encaminhado));
+await fz.encaminhar_equipe({ motivo: "prazo vencendo", urgente: true });
+assert.deepEqual(fz.encaminhado, { motivo: "prazo vencendo", urgente: true });
 
-// o turno responde à ferramenta e continua até a decidir
+// a chamada do Agendador chega ao stream principal (session_thread_id) e o turno a responde
 enviados.length = 0;
 const dec2 = await turno("sesn_2", "quero marcar", falso([
-  { type: "agent.custom_tool_use", id: "sevt_1", name: "consultar_vagas", input: { profissionais: ["amanda"] } },
+  { type: "agent.custom_tool_use", id: "sevt_1", name: "consultar_vagas", session_thread_id: "sthr_1", input: { profissionais: ["amanda"], tipo: "001" } },
   { type: "session.status_idle", id: "e3", stop_reason: { type: "requires_action" } },
   { type: "agent.custom_tool_use", id: "sevt_2", name: "decidir", input: { acao: "conversa", resposta: "Há vaga terça às 9h30." } },
 ]), fz);
