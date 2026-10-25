@@ -180,7 +180,7 @@ function conf(peso, nome, ok) {
     await p.evaluate(id => { casoSel = id; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); }, kid);
     await p.waitForTimeout(250);
     await p.click("#and-texto"); await p.waitForTimeout(150);
-    await p.click(`.tipo-ch[data-tipoand="${tipo}"]`);
+    await p.evaluate(() => { const d = document.querySelector(".tipo-mais"); if (d) d.open = true; }); await p.click(`.tipo-ch[data-tipoand="${tipo}"]`);
     await p.waitForSelector(".pop-campos");
     for (const [id, v] of Object.entries(campos)) {
       const el = await p.$(`#pa-${id}`); if (!el) continue;
