@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_plantao.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET } from "../../zap_plantao/index.ts";
+import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA } from "../../zap_plantao/index.ts";
 
 assert.equal(mascarar("CPF 123.456.789-09"), "CPF [número]");
 const msgs = [
@@ -66,6 +66,20 @@ assert.ok(tri.includes(AGENDAR_BULLET) && !tri.includes("Como marcar o atendimen
 assert.ok(tri.indexOf("Proibido") < tri.indexOf("Como encaminhar ao Agendador:") && tri.indexOf("Como encaminhar ao Agendador:") < tri.indexOf("Responda sempre chamando"));
 assert.ok(tri.includes('- "lead": acolha.') && tri.includes('- "equipe": urgente.'), "o resto do texto do Console fica");
 assert.equal(paraTriagem(tri), tri, "aplicar de novo não muda nada");
+// F280 · as linhas e a abertura variada
+assert.ok(tri.indexOf("Como escrever no WhatsApp:") < tri.indexOf("Responda sempre chamando") && regras().includes("Como escrever no WhatsApp:"));
+assert.ok(!tri.includes("sem mudar o conteúdo") && paraTriagem(tri.replace(/\n\nComo escrever no WhatsApp:[\s\S]*?(?=\n\nResponda)/, "")) === tri, "o texto antigo do Console ganha o estilo");
+assert.equal(emLinhas("Boa noite, Paulo! Seja bem-vindo à Advocacia Previdenciária. Sou a assistente virtual do escritório e posso ajudar no que precisar hoje."),
+  "Boa noite, Paulo!\n\nSeja bem-vindo à Advocacia Previdenciária. Sou a assistente virtual do escritório e posso ajudar no que precisar hoje.");
+assert.equal(emLinhas("Recebido, obrigado."), "Recebido, obrigado.");
+assert.ok(emLinhas("Obrigada, Sr. Paulo. Haverá outra pessoa que também será atendida junto com o senhor? Pergunto para já informar o profissional.").startsWith("Obrigada, Sr. Paulo.\n\nHaverá"));
+const agC = "Você é a assistente.\n\nTriagem:\n1. Pergunte o nome completo.\n2. Pergunte em poucas palavras do que se trata o caso.\n3. Pergunte se prefere atendimento presencial, no escritório, ou remoto, por chamada.\n4. Pergunte se haverá outra pessoa que também será atendida junto.\n5. Escolha.\n6. Chame consultar_vagas (no CRM) e ofereça no máximo 3 horários, numerados.\n7. Confirme.\n8. Antes de marcar, oriente: ter em mãos a senha do GOV.BR. Só depois chame marcar_atendimento.";
+const agN = paraAgendador(agC);
+assert.ok(agN.includes(AG_ASSUNTO) && agN.includes(AG_MODALIDADE) && !agN.includes("ou remoto, por chamada") && !agN.includes("4. Pergunte se haverá outra pessoa") && agN.includes(AG_HORARIOS) && agN.includes(AG_ORIENTA) && !agN.includes("Antes de marcar, oriente"));
+assert.ok(agN.indexOf("Não repita bom dia") < agN.indexOf("Triagem:"));
+assert.equal(paraAgendador(agN), agN, "o Agendador ajustado não muda de novo");
+assert.ok(paraTriagem('na primeira resposta, diga "seja bem-vindo(a) a Advocacia Previdenciária". Fim.').includes("abertura variada"));
+assert.equal(emLinhas("Linha um.\n\nLinha dois."), "Linha um.\n\nLinha dois.");
 const lig = ligacaoTriagem({ version: 5, system: doConsole, tools: [{ type: "custom", name: "decidir" }, { type: "custom", name: "consultar_vagas" }] }, "agent_X");
 assert.equal(lig.version, 5); assert.deepEqual(lig.tools.map((t) => t.name), ["decidir"]);
 assert.deepEqual(lig.multiagent.subagents.predefined_agents, ["agent_X"]);
@@ -74,6 +88,10 @@ assert.equal(rotulo("2026-10-27", "09:30", "a Dra. Amanda"), "terça-feira, 27/1
 assert.deepEqual(vagasDoDia([{ data: "2026-10-28", livres: { "001": [{ inicio: "14:00", eventoId: "b" }, { inicio: "15:00" }] } },
   { data: "2026-10-27", livres: { "001": [{ inicio: "09:30", eventoId: "a" }] } }, { data: "2026-10-26", bloqueado: true, livres: { "001": [{ inicio: "08:00", eventoId: "z" }] } }],
   "001", "a Dra. Amanda").map((v) => v.eventoId), ["a", "b"], "ordem de data, só vaga marcada, sem dia bloqueado");
+const manhas = [1, 2, 3, 4, 5].map((k) => ({ data: `2026-11-0${k}`, livres: { "001": [{ inicio: "09:00", eventoId: "m" + k }] } }));
+const ofert = vagasDoDia([...manhas, { data: "2026-11-09", livres: { "001": [{ inicio: "14:30", eventoId: "t" }] } }], "001", "o Dr. Marcos");
+assert.deepEqual(ofert.map((v) => v.eventoId), ["m1", "m2", "m3", "t"], "a primeira tarde vem mesmo depois de quatro manhãs");
+assert.equal(ofert[3].periodo, "tarde");
 const chamadas = [], noBanco = [];
 const meu = { id: "ev-meu", atendimento: true, data: "2026-10-29", inicio: "10:00", profissional: "amanda" };
 const agendaFalsa = async (acao, corpo) => { chamadas.push([acao, corpo]);
@@ -124,5 +142,5 @@ assert.equal(res1.custom_tool_use_id, "sevt_1"); assert.ok(JSON.parse(res1.conte
 const pai = promptPlantao({ ...base, contato: "Paulo Tercini", relacao: "pai", cliente: { nome: "Pietra Tercini", mesmo_telefone: true, casos: [] } });
 assert.ok(pai.includes("Quem escreve é Paulo Tercini (pai de Pietra Tercini): chame pelo nome de quem escreve"));
 assert.ok(!p1.includes("Quem escreve"), "sem relação gravada, nada muda");
-assert.ok(regras().includes("seja bem-vindo(a) ao escritório Paulo R. Tercini Filho"));
+assert.ok(regras().includes("boas-vindas em nome da Advocacia Previdenciária"));
 console.log("zap_plantao: ok");

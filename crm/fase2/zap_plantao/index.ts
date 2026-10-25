@@ -50,7 +50,7 @@ export const ESQUEMA = {
   required: ["acao", "resposta", "advogado", "urgente", "assunto", "relato", "nome"],
   properties: {
     acao: { type: "string", enum: ACOES },
-    resposta: { type: "string", description: "a mensagem ao cliente; vazia quando acao for nada" },
+    resposta: { type: "string", description: "a mensagem ao cliente, em duas ou três linhas curtas separadas por linha em branco (\\n\\n); vazia quando acao for nada" },
     advogado: { type: "string", description: "a assinatura do advogado que vai responder, uma da lista" },
     urgente: { type: "boolean" },
     assunto: { type: "string", description: "uma linha para a equipe: o que o cliente quer" },
@@ -76,8 +76,8 @@ export function regras(instrucoes = "") {
     `Como o escritório conversa: cumprimenta pelo primeiro nome, com bom dia, boa tarde ou boa noite conforme a hora, ` +
     `frases curtas, tom cordial e formal, sem gíria e sem emoji. A equipe assina as mensagens ("*Dr. Marcos:*"); você não assina, ` +
     `mas, na sua primeira resposta da conversa, ou quando a sua última resposta tiver mais de um dia, dê as boas-vindas: ` +
-    `cumprimente pelo primeiro nome de quem escreve, diga "seja bem-vindo(a) ao escritório Paulo R. Tercini Filho", ` +
-    `apresente-se como a assistente virtual do escritório e pergunte em que pode ajudar.\n\n` +
+    `cumprimente pelo primeiro nome de quem escreve, dê as boas-vindas em nome da Advocacia Previdenciária, ` +
+    `apresente-se como a assistente virtual do escritório e pergunte em que pode ajudar.` + ESTILO + `\n\n` +
     `O contexto diz o modo. No modo "conversa na hora" a pessoa não está em conversa com a equipe: converse com ela, ` +
     `responda o que puder e conduza o atendimento, sem mandar esperar a equipe. No modo "plantão" a equipe já conversa com ` +
     `a pessoa e ainda não respondeu: tranquilize e avise o advogado.\n\n` +
@@ -109,6 +109,14 @@ export function regras(instrucoes = "") {
     (instrucoes.trim() ? `\n\nInstruções do escritório (seguem as proibições acima):\n${instrucoes.trim().slice(0, 4000)}` : "");
 }
 
+// F280 · a resposta em linhas, com a abertura variada, como a recepção escreve (pedido do Paulo de 25.10.2026)
+export const ESTILO = `\n\nComo escrever no WhatsApp:\n` +
+  `Escreva como uma pessoa da recepção, em duas ou três linhas curtas separadas por uma linha em branco: a saudação, ` +
+  `o assunto e, se houver, a pergunta. Nunca junte tudo numa linha só. Varie a abertura de uma conversa para outra, ` +
+  `sem repetir a mesma fórmula, por exemplo "Boa noite, Paulo! Seja bem-vindo à Advocacia Previdenciária.", ` +
+  `"Paulo, boa noite! A Advocacia Previdenciária agradece o seu contato.", "Olá, Paulo, boa noite! Que bom receber a sua mensagem.", ` +
+  `"Boa tarde, Maria! Obrigada por escrever à Advocacia Previdenciária.". Depois da primeira resposta, não repita saudação nem boas-vindas.`;
+
 // F278 · a Assistente faz a triagem e passa o agendamento ao Agendador de Atendimentos
 // Jurídicos, o agente que o Paulo mantém no Console (pedido de 25.10.2026)
 export const AGENDAR_BULLET = `- "agendar": não use. Quem marca, remarca e cancela é o Agendador de Atendimentos Jurídicos, como explicado em "Como encaminhar ao Agendador".\n`;
@@ -118,7 +126,7 @@ export const COMO_ENCAMINHAR = `\n\nComo encaminhar ao Agendador:\n` +
   `send_to_agent, com o nome de quem escreve, se o número é de cliente do escritório (o contexto diz), o assunto em uma linha, ` +
   `o que a pessoa já disse sobre presencial ou remoto e a última mensagem dela. Enquanto o agendamento estiver em curso, cada ` +
   `mensagem nova da pessoa vai ao Agendador, na mesma conversa com ele. A resposta do Agendador é a mensagem ao cliente: ` +
-  `repasse-a pela decidir sem mudar o conteúdo, com acao "conversa" no modo conversa na hora e "responder" no modo plantão. ` +
+  `repasse-a pela decidir sem mudar datas, horários, nomes e dados, escrita como em "Como escrever no WhatsApp", com acao "conversa" no modo conversa na hora e "responder" no modo plantão. ` +
   `Quando o Agendador disser que a confirmação já foi enviada pelo sistema, repasse somente o que ele acrescentar, como o endereço, ` +
   `ou chame decidir com acao "nada" e resposta vazia. Quando o Agendador passar a conversa à equipe, use acao "equipe".`;
 // troca, no texto do Console, a marcação própria (F277) pelo encaminhamento; o resto do texto fica
@@ -130,9 +138,51 @@ export function paraTriagem(system: string) {
     const fim = t.indexOf("\n\nResponda sempre chamando", ini);
     t = t.slice(0, ini) + (fim >= 0 ? t.slice(fim) : "");
   }
-  if (t.includes("\n\nComo encaminhar ao Agendador:")) return t;
-  const resp = t.indexOf("\n\nResponda sempre chamando");
-  return resp >= 0 ? t.slice(0, resp) + COMO_ENCAMINHAR + t.slice(resp) : t + COMO_ENCAMINHAR;
+  t = t.replace("repasse-a pela decidir sem mudar o conteúdo,", 'repasse-a pela decidir sem mudar datas, horários, nomes e dados, escrita como em "Como escrever no WhatsApp",');
+  t = t.replace('diga "seja bem-vindo(a) ao escritório Paulo R. Tercini Filho", ', "dê as boas-vindas em nome da Advocacia Previdenciária, ")
+    .replace('diga "seja bem-vindo(a) a Advocacia Previdenciária".', 'dê as boas-vindas em nome da Advocacia Previdenciária, com a abertura variada de "Como escrever no WhatsApp".');
+  const antes = (bloco: string) => {
+    const resp = t.indexOf("\n\nResponda sempre chamando");
+    t = resp >= 0 ? t.slice(0, resp) + bloco + t.slice(resp) : t + bloco;
+  };
+  if (!t.includes("\n\nComo encaminhar ao Agendador:")) antes(COMO_ENCAMINHAR);
+  if (!t.includes("\n\nComo escrever no WhatsApp:")) antes(ESTILO);
+  return t;
+}
+
+// F280 · o Agendador (texto do Console) sem saudação repetida, com a pergunta do assunto do Paulo
+// e o presencial como regra: o remoto só quando a pessoa pede (25.10.2026); aplicar de novo não muda nada
+export const AG_ABERTURA = `\n\nComo escrever: a Assistente virtual já cumprimentou a pessoa. Não repita bom dia, boa tarde, boa noite nem boas-vindas; ` +
+  `comece direto, por exemplo "Vou ajudar com o agendamento.". Escreva em duas ou três linhas curtas separadas por uma linha em branco.`;
+export const AG_ASSUNTO = `2. Pergunte se o assunto é de aposentadoria ou de outro benefício do INSS, ou se é outro assunto, por exemplo ` +
+  `"O assunto que gostaria de tratar é relacionado a aposentadoria ou a outro benefício do INSS, ou é outro assunto?", e, na mesma mensagem, quem será a pessoa atendida.`;
+export const AG_MODALIDADE = `3. O atendimento é presencial, no escritório. Não ofereça nem pergunte sobre atendimento remoto; marque remoto somente quando a própria pessoa pedir.`;
+export const AG_OUTRA = `4. Não pergunte agora sobre outra pessoa: a pergunta vem junto dos horários, no passo 6.`;
+export const AG_HORARIOS = `6. Chame consultar_vagas (no CRM) e ofereça dois horários, numerados, com dia da semana, data, hora e advogado: ` +
+  `o mais próximo de manhã e o mais próximo à tarde (o campo periodo de cada vaga diz qual é). Na mesma mensagem, em outra linha, diga: ` +
+  `"Se for necessário atender mais de uma pessoa, preciso verificar na agenda se há outro horário disponível na sequência."`;
+export const AG_ORIENTA = `8. Não dê orientações antes de marcar. Com a confirmação do passo 7, chame marcar_atendimento: o sistema envia a última mensagem, ` +
+  `com a senha do GOV.BR (Meu INSS) quando o assunto é do INSS e o lembrete de que o atendimento é individual.`;
+export function paraAgendador(system: string) {
+  let t = String(system || "");
+  t = t.replace(/^2\. Pergunte em poucas palavras do que se trata o caso\.$/m, AG_ASSUNTO)
+    .replace(/^3\. Pergunte se prefere atendimento presencial[^\n]*$/m, AG_MODALIDADE)
+    .replace(/^4\. Pergunte se haverá outra pessoa[^\n]*$/m, AG_OUTRA)
+    .replace(/^6\. Chame consultar_vagas \(no CRM\) e ofereça no máximo 3 horários[^\n]*$/m, AG_HORARIOS)
+    .replace(/^8\. Antes de marcar, oriente[^\n]*$/m, AG_ORIENTA);
+  if (!t.includes("\n\nComo escrever: a Assistente virtual já cumprimentou")) {
+    const i = t.indexOf("\n\n");
+    t = i >= 0 ? t.slice(0, i) + AG_ABERTURA + t.slice(i) : t + AG_ABERTURA;
+  }
+  return t;
+}
+
+// a resposta que veio numa linha só ganha a quebra depois da primeira frase
+export function emLinhas(txt: string) {
+  const t = String(txt || "").trim();
+  if (t.includes("\n") || t.length <= 120) return t;
+  // "Sr." e "Dra." não encerram a frase
+  return t.replace(/^(.+?(?<!\b(?:Sr|Sra|Srta|Dr|Dra|Prof|Profa))[.!?])\s+(?=\S)/, "$1\n\n");
 }
 
 // o que muda a cada mensagem
@@ -215,14 +265,19 @@ export function rotulo(data: string, inicio: string, com: string) {
   const [h, mi] = inicio.split(":");
   return `${SEMANA[new Date(Date.UTC(a, m - 1, d)).getUTCDay()]}, ${String(d).padStart(2, "0")}/${String(m).padStart(2, "0")}, às ${Number(h)}h${mi}, com ${com}`;
 }
-// só a vaga marcada no Google (com eventoId), nunca o horário calculado
+// só a vaga marcada no Google (com eventoId), nunca o horário calculado; a primeira da manhã e a
+// primeira da tarde vêm sempre, porque o Agendador oferece uma de cada (pedido do Paulo, 25.10.2026)
 export function vagasDoDia(dias: any[], tipo: string, com: string, n = 4) {
-  const out: { rotulo: string; data: string; inicio: string; eventoId: string }[] = [];
+  const todas: { rotulo: string; data: string; inicio: string; eventoId: string; periodo: string }[] = [];
   for (const d of dias || []) {
     if (d.bloqueado) continue;
-    for (const v of d.livres?.[tipo] || []) if (v.eventoId) out.push({ rotulo: rotulo(d.data, v.inicio, com), data: d.data, inicio: v.inicio, eventoId: v.eventoId });
+    for (const v of d.livres?.[tipo] || []) if (v.eventoId) todas.push({ rotulo: rotulo(d.data, v.inicio, com), data: d.data, inicio: v.inicio,
+      eventoId: v.eventoId, periodo: v.inicio < "12:00" ? "manhã" : "tarde" });
   }
-  return out.sort((x, y) => (x.data + x.inicio).localeCompare(y.data + y.inicio)).slice(0, n);
+  todas.sort((x, y) => (x.data + x.inicio).localeCompare(y.data + y.inicio));
+  const primeiras = ["manhã", "tarde"].map((p) => todas.find((v) => v.periodo === p)).filter(Boolean) as typeof todas;
+  const out = [...primeiras, ...todas.filter((v) => !primeiras.includes(v))].slice(0, n);
+  return out.sort((x, y) => (x.data + x.inicio).localeCompare(y.data + y.inicio));
 }
 export const foneAgenda = (t: string) => { const d = String(t || "").replace(/\D/g, ""); return (d.length === 12 || d.length === 13) && d.startsWith("55") ? d.slice(2) : d; };
 
@@ -475,12 +530,15 @@ if (typeof Deno !== "undefined") {
         if (!x?.ma?.agente) return json({ erro: "teste fechado ou agente ausente" }, 403);
         const agendador = String(corpo.agendador || "");
         if (!/^agent_[A-Za-z0-9]+$/.test(agendador)) return json({ erro: "agendador inválido" }, 400);
-        const ag = await maLer(`agents/${agendador}`);
+        let ag = await maLer(`agents/${agendador}`);
         if (ag.multiagent) return json({ erro: "o Agendador não pode coordenar outro agente" }, 400);
+        // F280 · versão nova do Agendador antes da ligação, para a Assistente prender a versão nova
+        const sysAg = paraAgendador(ag.system);
+        if (sysAg !== ag.system) ag = await ma(`agents/${ag.id}`, { version: ag.version, system: sysAg });
         const novo = ligacaoTriagem(await maLer(`agents/${x.ma.agente}`), ag.id);
         const feito = await ma(`agents/${x.ma.agente}`, novo);
         return json({ versao: feito.version, ferramentas: (feito.tools || []).map((t: { name?: string; type: string }) => t.name || t.type),
-          multiagent: feito.multiagent, system: feito.system });
+          multiagent: feito.multiagent, system: feito.system, agendador: { versao: ag.version, system: ag.system } });
       } catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
     }
     if (corpo.preparar === true) {
@@ -515,7 +573,7 @@ if (typeof Deno !== "undefined") {
       let acao = ACOES.includes(r.acao) ? r.acao : "responder";
       if (acao === "conversa" && !x.interativa) acao = "responder";   // com a equipe na conversa, a IA não conversa
       await rpc("zap_plantao_aplicar", {
-        p_msg: msg, p_acao: acao, p_resposta: String(r.resposta || ""), p_advogado: String(r.advogado || ""),
+        p_msg: msg, p_acao: acao, p_resposta: emLinhas(r.resposta), p_advogado: String(r.advogado || ""),
         p_urgente: r.urgente === true, p_assunto: String(r.assunto || ""), p_relato: String(r.relato || ""),
         p_nome: String(r.nome || ""),
       });
