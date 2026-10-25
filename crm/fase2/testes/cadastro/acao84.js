@@ -69,7 +69,7 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
       sombra: (b => b ? getComputedStyle(b).backgroundColor + " " + getComputedStyle(b).borderColor : "")(c.querySelector(".fp2-bola,.fp2-circ")) }));
     // F145 · os prazos ficam na coluna do caso: acima do compositor ou à esquerda dele
     const e = document.querySelector(".escrever"), fr = faixa && faixa.getBoundingClientRect(), er = e && e.getBoundingClientRect();
-    const acima = !!(fr && er && (fr.bottom <= er.top + 1 || fr.right <= er.left + 1));
+    const acima = !!(fr && er && (fr.bottom <= er.top + 1 || fr.right <= er.left + 1 || fr.left >= er.right - 1));   // F278 · ou à direita, na terceira coluna
     return { faixa: !!faixa, dentroDoCartao, cards, acima, linhaCaso: !!document.querySelector(".linha-caso") };
   });
 
