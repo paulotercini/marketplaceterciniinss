@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_plantao.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA } from "../../zap_plantao/index.ts";
+import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, FERRAMENTAS_AGENDA, ferramentasDaConversa, vagasDoDia, rotulo, COMO_MARCAR } from "../../zap_plantao/index.ts";
 
 assert.equal(mascarar("CPF 123.456.789-09"), "CPF [número]");
 const msgs = [
@@ -56,4 +56,43 @@ assert.equal(dec.acao, "conversa");
 assert.equal(enviados[0].events[0].type, "user.message");
 assert.deepEqual([enviados[1].events[0].type, enviados[1].events[0].custom_tool_use_id], ["user.custom_tool_result", "sevt_9"]);
 await assert.rejects(turno("sesn_1", "oi", falso([{ type: "session.status_idle", id: "e2", stop_reason: { type: "end_turn" } }])), /parou sem decisão/);
+
+// F277 · o agente marca pela agenda do CRM
+const da = definicaoAgente("", true);
+assert.deepEqual(da.tools.map((f) => f.name), ["decidir", "consultar_vagas", "marcar_atendimento"]);
+assert.ok(da.system.includes("Dra. Amanda") && da.system.includes('"agendar": não use') && !da.system.includes("o sistema manda os horários livres"));
+assert.ok(!definicaoAgente("", false).system.includes("Como marcar"), "sem o token da agenda, o agente fica como era");
+assert.equal(rotulo("2026-10-27", "09:30", "a Dra. Amanda"), "terça-feira, 27/10, às 9h30, com a Dra. Amanda");
+assert.deepEqual(vagasDoDia([{ data: "2026-10-28", livres: { "001": [{ inicio: "14:00", eventoId: "b" }, { inicio: "15:00" }] } },
+  { data: "2026-10-27", livres: { "001": [{ inicio: "09:30", eventoId: "a" }] } }, { data: "2026-10-26", bloqueado: true, livres: { "001": [{ inicio: "08:00", eventoId: "z" }] } }],
+  "001", "a Dra. Amanda").map((v) => v.eventoId), ["a", "b"], "ordem de data, só vaga marcada, sem dia bloqueado");
+const chamadas = [], noBanco = [];
+const agendaFalsa = async (acao, corpo) => { chamadas.push([acao, corpo]);
+  if (acao === "disponibilidade") return { ok: true, profissionais: [{ id: corpo.profissional, tratamento: corpo.profissional === "amanda" ? "a Dra. Amanda" : "o Dr. Paulo" }],
+    dias: [{ data: "2026-10-27", livres: { "001": [{ inicio: "09:30", eventoId: "ev-" + corpo.profissional }] } }] };
+  return corpo.eventoId === "tomado" ? { ok: false, codigo: "HORARIO_INDISPONIVEL" } : { ok: true }; };
+const bancoFalso = async (nome, corpo) => { noBanco.push([nome, corpo]);
+  return nome === "zap_plantao_agenda" ? { telefone: "5516999998888", cliente_id: null, nome_ficha: null, ligada: true } : null; };
+const fz = ferramentasDaConversa("c1", agendaFalsa, bancoFalso);
+const cv = await fz.consultar_vagas({ profissionais: ["amanda", "paulo", "hacker"] });
+assert.equal(cv.tipo, "001"); assert.equal(cv.vagas.amanda[0].rotulo, "terça-feira, 27/10, às 9h30, com a Dra. Amanda");
+assert.ok(!("hacker" in cv.vagas));
+const mk = await fz.marcar_atendimento({ profissional: "amanda", data: "2026-10-27", inicio: "09:30", eventoId: "ev-amanda", nome: "Maria Souza", modalidade: "remoto", assunto: "auxílio-doença" });
+assert.ok(mk.marcado);
+const ag = chamadas.find((c) => c[0] === "agendar")[1];
+assert.equal(ag.telefone, "16999998888"); assert.equal(ag.tipo, "001"); assert.ok(ag.observacoes.includes("Modalidade: remoto"));
+assert.deepEqual(noBanco.filter((b) => b[0] === "zap_plantao_marcado")[0][1].p_modalidade, "remoto");
+assert.equal(noBanco.filter((b) => b[0] === "zap_plantao_agenda").length, 1, "lê a conversa uma vez por turno");
+assert.match((await fz.marcar_atendimento({ profissional: "amanda", data: "2026-10-27", inicio: "09:30", eventoId: "tomado", nome: "M", modalidade: "presencial", assunto: "" })).erro, /tomado/);
+
+// o turno responde à ferramenta e continua até a decidir
+enviados.length = 0;
+const dec2 = await turno("sesn_2", "quero marcar", falso([
+  { type: "agent.custom_tool_use", id: "sevt_1", name: "consultar_vagas", input: { profissionais: ["amanda"] } },
+  { type: "session.status_idle", id: "e3", stop_reason: { type: "requires_action" } },
+  { type: "agent.custom_tool_use", id: "sevt_2", name: "decidir", input: { acao: "conversa", resposta: "Há vaga terça às 9h30." } },
+]), fz);
+assert.equal(dec2.resposta, "Há vaga terça às 9h30.");
+const res1 = enviados[1].events[0];
+assert.equal(res1.custom_tool_use_id, "sevt_1"); assert.ok(JSON.parse(res1.content[0].text).vagas.amanda.length === 1);
 console.log("zap_plantao: ok");
