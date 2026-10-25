@@ -77,10 +77,12 @@ FIX.lembretes = [{ id: "l0000000-0000-0000-0000-00000000f481", cliente_id: CLI_C
   // 1) o menu na barra lateral (pintado pelo montarSidebar já com os dados)
   conf("⚖️ Análise de Direito está na barra lateral",
     await p.evaluate(() => !!document.querySelector('.lista-item[data-v="direito"]')));
-  conf("F171 · a Análise de Direito está dentro do Cadastro, e não no menu do topo",
-    await p.evaluate(() => { abaAtiva = 0; subCad = "identificacao"; repintarFicha();
+  // F277 · a Análise de Direito é passo do atendimento: fora dele o Cadastro é só a Identificação, e ela abre pelo atalho
+  conf("F277 · a Análise de Direito não está no menu do topo e abre dentro do Cadastro",
+    await p.evaluate(() => { abaAtiva = 0; irSubCad("direito");
       return ![...document.querySelectorAll(".mt")].some(b => /Análise de Direito/.test(b.textContent))
         && [...document.querySelectorAll(".sub-menu button")].some(b => /Análise de Direito/.test(b.textContent)); }));
+  await p.evaluate(() => irSubCad("identificacao"));
 
   // 3) abrir a aba: convite + formulário + anotação antiga do To Do
   await p.evaluate(() => { abaAtiva = 0; subCad = "direito"; repintarFicha(); /* F171 · a análise mora no Cadastro */ });

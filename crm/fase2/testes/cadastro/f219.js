@@ -124,7 +124,7 @@ FIX.documentos_beneficio = [
   await p.evaluate(() => irSubCad("documentos"));   // F239 · o Desfecho fica só no fim de Documentos
   await p.waitForSelector("#desfecho");
   const desf = (await texto("#desfecho .desf-base"))[0] || "";
-  const btLemb = (await texto("#desfecho .adr-bt"))[0] || "";
+  const btLemb = (await texto("#desfecho .adr-bt")).find(x => /Aposentadorias futuras/.test(x)) || "";   // F277 · o primeiro botão é o Criar caso
   conf(5, "B1 o Desfecho sugere o lembrete pela data futura e, com card ligado, oferece atualizá-lo", /^Aposentadorias futuras/.test(desf) && desf.includes("15.06.2027") && /Atualizar em Aposentadorias futuras/.test(btLemb));
   // sem card ligado: o lembrete nasce do Desfecho
   // F226 · o card sai do objeto do pré-caso, que mora na linha de casos

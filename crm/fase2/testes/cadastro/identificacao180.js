@@ -57,8 +57,9 @@ const RETRATO = process.env.RETRATO_DIR;
   conf("a barra diz 50", (await p.getAttribute('.idf-comp [role="progressbar"]', "aria-valuenow")) === "50");
   const cartoes = await p.$$eval(".idf-card", cs => cs.map(c => ({ h: c.querySelector("h3").textContent,
     rots: [...c.querySelectorAll(".cad-campo > label")].map(l => l.textContent.replace(/\s+/g, " ").trim()) })));
-  conf("três cartões na ordem: Documentos e acesso, Dados pessoais, Contato",
-    cartoes.length === 3 && cartoes[0].h === "Documentos e acesso" && cartoes[1].h === "Dados pessoais" && cartoes[2].h === "Contato");
+  // F277 · o quarto cartão é a Aposentadoria, ao lado de Contato
+  conf("quatro cartões na ordem: Documentos e acesso, Dados pessoais, Contato e Aposentadoria",
+    cartoes.length === 4 && cartoes[0].h === "Documentos e acesso" && cartoes[1].h === "Dados pessoais" && cartoes[2].h === "Contato" && /^Aposentadoria/.test(cartoes[3].h));
   const tem = (i, rx) => cartoes[i].rots.some(r => rx.test(r));
   conf("Documentos e acesso: CPF, Senha Meu INSS, PIS/NIT, CNIS, Pasta",
     [/^CPF/, /Senha Meu INSS/, /PIS \/ NIT/, /^CNIS/, /Pasta do cliente/].every(rx => tem(0, rx)));

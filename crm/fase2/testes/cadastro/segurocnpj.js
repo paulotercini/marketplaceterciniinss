@@ -194,8 +194,7 @@ FIX.casos[0] = { ...FIX.casos[0], titulo: "Auxílio por incapacidade temporária
   // 6 · na aba Lembretes, a conta mostra o seguro e dispensa a marca manual
   await p.evaluate(([cli, caso]) => { casoSel = caso; const m = document.getElementById("modal"); if (m) m.innerHTML = ""; pintarFicha(); }, [CLI_CHEIO, CASO1]);
   await p.evaluate(() => { _atendAberto.clear(); subCad = "identificacao"; repintarFicha(); });   // F208 · sai do modo atendimento
-  await p.waitForSelector('button.mt[data-vv="9"]');
-  await p.click('button.mt[data-vv="9"]');
+  await p.evaluate(() => verAposFuturas(clienteAberto));   // F277 · a aba virou o quadro Aposentadoria do Cadastro, e os cards abrem numa janela
   await p.waitForSelector(".conta-cx .conta-linha.sd");
   const cx = await p.textContent(".conta-cx");
   conf("a conta dos Lembretes traz a qualidade com o seguro e o documento", /Qualidade mantida até 16\/11\/2021/.test(cx)
