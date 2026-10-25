@@ -112,9 +112,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.evaluate(() => irSubCad("documentos")); await p.waitForTimeout(400);   // F239 · o Desfecho fica só no fim de Documentos
   // F277 · o Desfecho virou Criar caso: o início, o número e o botão; arquivar e Aposentadorias futuras como outras saídas
   const cc = await p.evaluate(() => ({ini: [...document.querySelectorAll("#desfecho #cc-inicio option")].map(o => o.text), num: !!document.querySelector("#desfecho #cc-num"),
-    bt: (document.querySelector("#desfecho .cc-form button") || {}).textContent, outras: [...document.querySelectorAll("#desfecho .desf-acoes > select, #desfecho .desf-acoes > button")].map(e => e.tagName === "SELECT" ? e.options[0].text : e.textContent.trim())}));
+    bt: (document.querySelector("#desfecho .cc-form button") || {}).textContent, outras: [...document.querySelectorAll("#desfecho .desf-saida h4")].map(e => e.textContent.trim())}));
   conf(`o Criar caso pede o início e o número, e as outras saídas seguem (${cc.ini.join(", ")} | ${cc.outras.join(" | ")})`,
-    cc.ini.join() === "escolha…,INSS,Conselho de Recursos,Judicial" && cc.num && /Criar caso/.test(cc.bt || "") && cc.outras.length === 2 && /^Arquivar/.test(cc.outras[0]) && /^Enviar a Aposentadorias futuras/.test(cc.outras[1]));
+    cc.ini.join() === "escolha…,INSS,Conselho de Recursos,Judicial" && cc.num && /Criar caso/.test(cc.bt || "") && cc.outras.join("|") === "Criar caso|Criar aposentadoria futura|Encerrar");   // F278
   await p.click(".pc-escolha .pc-esc-bt:not(.on)");
   await p.waitForTimeout(500);
   conf("o seletor troca o pré-caso do atendimento e o Desfecho acompanha", await p.evaluate(a => (preCasoAberto(D.cliPorId.get(a)) || {}).id === "pc_a2"
