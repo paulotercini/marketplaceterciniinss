@@ -230,6 +230,16 @@ update zap_conversas set ia_conversa = true where id = (select id from v);
 insert into r select 'p42 a IA conversa com este número', pg_temp.ia(pg_temp.entra((select id from v), 'quero marcar')) = 'plantao:pedida';
 update zap_conversas set ia_conversa = false, plantao = '{}' where id = (select id from v);
 
+-- F279 · encerrar recomeça a IA: sem sessão, sem o modo antigo e sem a conversa anterior
+update zap_conversas set ia_sessao = '{"id":"sesn_velha"}', plantao = '{"modo":"conversa","n":4,"nome":"Outro"}', ia_conversa = true where id = (select id from v);
+select zap_encerrar((select id from v));
+insert into r select 'p43 encerrar limpa a sessão e o modo', (select ia_sessao is null and not plantao ? 'modo' and not plantao ? 'nome' from zap_conversas where id = (select id from v));
+create temp table n43 as select pg_temp.entra((select id from v), 'olá, boa noite') id;
+update zap_mensagens set bot_ia = 'plantao:pedida' where id = (select id from n43);
+insert into r select 'p44 depois do encerramento a IA lê só a conversa nova',
+  (select jsonb_array_length(j->'mensagens') = 1 from (select zap_plantao_pegar((select id from n43)) j) x);
+update zap_conversas set ia_conversa = false, plantao = '{}' where id = (select id from v);
+
 -- fora da IA: a conversa marcada, a automática, o histórico reenviado e o menu ligado
 create temp table z as select zap_abrir('5516955550005', 'Colega') id;
 update zap_conversas set sem_ia = true where id = (select id from z);
