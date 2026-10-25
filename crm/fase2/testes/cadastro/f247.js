@@ -129,11 +129,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await abrir(cD, kD);
   conf("o concedido ainda não implantado se confere como 'Não implantado · +7 d'", /Não implantado · \+7 d/.test(await p.textContent(".faixa-prazos .conf-sem")));
   const em7 = await util(7), n4 = T.andamentos.length;
-  await p.click(".faixa-prazos .conf-sem");
+  await p.evaluate(() => { const d = document.querySelector(".faixa-prazos .fp-menu"); if (d) d.open = true; }); await p.click(".faixa-prazos .conf-sem");
   await p.waitForTimeout(700);
   const ni = T.andamentos.slice(n4).find(a => a.caso_id === kD.id);
   conf(`a conferência anota a implantação que falta (${ni && ni.texto})`, ni && ni.texto === `Conferi: o benefício ainda não foi implantado. Conferir de novo em ${br(em7)}.`);
-  await p.click(".faixa-prazos .conf-mov");
+  await p.evaluate(() => { const d = document.querySelector(".faixa-prazos .fp-menu"); if (d) d.open = true; }); await p.click(".faixa-prazos .conf-mov");
   await p.waitForSelector(".mov-ops .esp-it");
   await p.waitForFunction(() => document.activeElement && document.activeElement.id === "mov-txt");   // a janela põe o cursor no detalhe; só depois se preenche o NB
   conf("o Movimentou abre por 'Benefício implantado'", (await p.textContent(".mov-ops .esp-it")) === "Benefício implantado" && !!(await p.$("#mov-nb")));
