@@ -3732,3 +3732,40 @@ revoke all on function zap_agenda_chamar(uuid, text, jsonb) from public, anon, a
 revoke all on function zap_bot_ler(uuid) from public, anon, authenticated;
 grant execute on function zap_agenda_pegar(uuid, text), zap_agenda_oferecer(uuid, text, jsonb),
   zap_agenda_marcado(uuid, text), zap_agenda_falhou(uuid, text, text) to service_role;
+
+-- F273 · o robô volta depois do encerramento (decisão do Paulo de 25.10.2026)
+-- Encerrar só marcava a conversa como resolvida, e o atendente e o robô calado
+-- ficavam: o cliente que voltava a escrever caía no mesmo atendente e nunca
+-- mais via o menu. Agora a conversa reaberta pelo cliente recomeça como no
+-- primeiro contato: sem atendente, sem setor e com o robô no início. A
+-- conversa de robô de outra empresa (F272, onda 2) continua calada.
+
+create or replace function zap_toque() returns trigger
+language plpgsql as $$
+declare volta boolean;
+begin
+  -- nota interna não mexe na prévia nem no não-lidas: a lista mostra a
+  -- conversa com o CLIENTE, e não o bilhete que a equipe deixou
+  if new.direcao = 'interna' then return new; end if;
+  select new.direcao = 'entrada' and status = 'resolvida' and not automatica into volta
+    from zap_conversas where id = new.conversa_id;
+  update zap_conversas set
+    ultima_em    = coalesce(new.quando_wa, new.criado_em, now()),
+    ultimo_texto = left(coalesce(nullif(trim(new.texto),''), '['||new.tipo||']'), 200),
+    nao_lidas    = case when new.direcao='entrada' then nao_lidas + 1 else nao_lidas end,
+    -- cliente que volta a escrever reabre a conversa: "resolvida" era a
+    -- opinião do escritório, e ele acabou de discordar
+    status       = case when new.direcao='entrada' and status='resolvida'
+                        then 'aberta' else status end,
+    -- e o assunto novo começa pelo robô (F273)
+    atendente_id = case when volta then null else atendente_id end,
+    setor        = case when volta then null else setor end,
+    setor_id     = case when volta then null else setor_id end,
+    bot_ativo    = case when volta then true else bot_ativo end,
+    bot_passo    = case when volta then null else bot_passo end,
+    bot_desde    = case when volta then null else bot_desde end,
+    bot_erros    = case when volta then 0 else bot_erros end,
+    bot_dados    = case when volta then null else bot_dados end
+  where id = new.conversa_id;
+  return new;
+end $$;
