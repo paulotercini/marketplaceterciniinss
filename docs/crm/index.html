@@ -1463,8 +1463,19 @@
            border:1px solid var(--borda);border-radius:12px;background:var(--branco);overflow:hidden}
   .zap-painel{flex:0 0 300px;overflow:auto;display:flex;flex-direction:column;gap:10px;min-width:0}
   .zap-painel:empty{display:none}
-  @media (max-width:1180px){.zap-painel{flex-basis:260px}}
+  /* F270 · entre 1024 e 1279 px o cliente abre como gaveta sobre a conversa, como os "Dados do contato" do WhatsApp:
+     em coluna fixa a conversa ficava com 140 px. Abre no nome do topo da conversa. */
+  .zp-fechar{display:none}
+  @media (min-width:1024px) and (max-width:1279px){
+    .zap-tela{position:relative}
+    .zap-painel{display:none;position:absolute;top:0;right:0;bottom:0;width:340px;z-index:6;padding:44px 10px 10px;
+      background:var(--fundo,#f7f6f3);box-shadow:-8px 0 24px rgba(0,0,0,.14);border-radius:10px 0 0 10px}
+    .zap-tela.ficha-on .zap-painel:not(:empty){display:flex}
+    .zap-tela.ficha-on .zp-fechar{display:block;position:absolute;top:8px;right:12px;z-index:7;border:0;background:none;
+      font-size:18px;color:var(--cinza);cursor:pointer;padding:4px 8px}
+  }
   @media (max-width:1023px){.zap-painel{display:none}}
+  .zt-id h2[role=button]{cursor:pointer}
   .zap-topo{display:flex;flex-direction:column;gap:8px;padding:12px 16px;border-bottom:1px solid var(--borda);background:var(--branco)}
   .zap-frame{flex:1;width:100%;border:0;background:#fff}
   .zap-nota{padding:6px 10px;font-size:11px;color:var(--cinza);border-top:1px solid var(--borda)}
@@ -1982,6 +1993,35 @@
     border-top-left-radius:8px;border-top-right-radius:0}
   .zap-tela.wa .zap-b.bot{font-style:normal}
   .zap-tela.wa .zap-dia{background:#fff;border-color:transparent;box-shadow:0 1px .5px rgba(11,20,26,.13)}
+  /* F270 · mais WhatsApp: cauda no primeiro balão da sequência, balões seguidos juntos, hora cinza,
+     tiques no lugar de "enviada/entregue/lida" (azul na lida), bolinha verde das não lidas,
+     topo e campo de escrever no cinza do aplicativo, botão redondo de enviar e o de descer ao fim */
+  .zap-tela.wa .zap-b{position:relative}
+  .zap-tela.wa .zap-b.entrada::before,.zap-tela.wa .zap-b.saida:not(.agendada):not(.rascunho):not(.ruim)::before{
+    content:"";position:absolute;top:0;width:0;height:0;border-top:8px solid #fff}
+  .zap-tela.wa .zap-b.entrada::before{left:-8px;border-left:8px solid transparent}
+  .zap-tela.wa .zap-b.saida::before{right:-8px;border-top-color:#d9fdd3;border-right:8px solid transparent}
+  .zap-tela.wa .zap-b.entrada + .zap-b.entrada,.zap-tela.wa .zap-b.saida + .zap-b.saida{margin-top:-6px;border-radius:8px}
+  .zap-tela.wa .zap-b.entrada + .zap-b.entrada::before,.zap-tela.wa .zap-b.saida + .zap-b.saida::before{display:none}
+  .zap-tela.wa .zap-b .pe{color:#667781;font-size:11px}
+  .zap-tela.wa .zap-b.saida .pe span[data-st=enviada],.zap-tela.wa .zap-b.saida .pe span[data-st=entregue],
+  .zap-tela.wa .zap-b.saida .pe span[data-st=lida]{font-size:0;color:#667781;letter-spacing:-4px;padding-right:4px}
+  .zap-tela.wa .zap-b.saida .pe span[data-st=enviada]::after{content:"✓";font-size:14px}
+  .zap-tela.wa .zap-b.saida .pe span[data-st=entregue]::after{content:"✓✓";font-size:14px}
+  .zap-tela.wa .zap-b.saida .pe span[data-st=lida]::after{content:"✓✓";font-size:14px;color:#53bdeb}
+  .zap-tela.wa .zap-conv .bolha{background:#25d366;color:#fff;border-radius:10px;min-width:20px;text-align:center}
+  .zap-tela.wa .zap-conv.nova .l1 .hora{color:#1fa855;font-weight:600}
+  .zap-tela.wa .zap-conv.nova .l1 b{color:inherit}
+  .zap-tela.wa .zap-topo,.zap-tela.wa .zap-escrever:not(.modo-nota){background:#f0f2f5}
+  .zap-tela.wa .zap-escrever:not(.modo-nota) .ze-caixa{border-color:transparent;border-radius:8px}
+  .zap-tela.wa .zap-escrever:not(.modo-nota) .btn-rap.ze-enviar{width:44px;height:44px;padding:0;border-radius:50%;
+    background:#00a884;border-color:#00a884;font-size:0}
+  .zap-tela.wa .zap-escrever:not(.modo-nota) .btn-rap.ze-enviar::after{content:"➤";font-size:18px}
+  .zap-tela.wa .zap-acoes{position:absolute;top:3px;right:6px;background:inherit;border-radius:6px;padding:0 2px}
+  .zap-dir{position:relative}
+  .zap-desce{position:absolute;right:18px;bottom:140px;width:40px;height:40px;border-radius:50%;border:0;z-index:3;
+    background:#fff;color:#54656f;font-size:22px;line-height:1;cursor:pointer;box-shadow:0 1px 3px rgba(11,20,26,.25)}
+  .zap-desce[hidden]{display:none}
   /* tela estreita: Retorno e Transferir ficam só com o ícone, para o nome caber inteiro */
   @media (max-width:1700px){.zt-acoes .zt-btn:not(.pri) .lbl{display:none}.zt-acoes .zt-btn:not(.pri){width:32px;padding:0;justify-content:center}}
   /* .id-secao só vive dentro do cartão "Ligações do cliente" (F9.2): o rótulo
@@ -13211,6 +13251,7 @@ async function renderWhats(){
        <div class="zap-lado"><div class="meio-sub">carregando…</div></div>
        <div class="zap-dir" id="zap-dir"></div>
        <aside class="zap-painel" id="zap-painel"></aside>
+       <button class="zp-fechar" onclick="alternarFichaZap()" aria-label="Fechar a ficha">✕</button>
      </div>`;
   await recarregarZap();
   pararZapTimer();
@@ -13610,7 +13651,7 @@ async function recarregarMsgs(){
 // escrevendo no meio da frase
 function atualizarVistos(){
   zapMsgs.forEach(m=>{ const el=document.getElementById("zs-"+m.id);
-                       if(el) el.textContent = seloZap(m); });
+                       if(el){ el.textContent = seloZap(m); el.dataset.st = m.direcao==="saida" ? m.status||"" : ""; } });
 }
 
 // repintar sem perder o que está sendo escrito (chegou mensagem no meio da frase)
@@ -13652,7 +13693,7 @@ function pintarConversa(){
        <div class="zt-l1">
          ${zapFotos.get(c.foto_url)?`<img class="zap-av zt-foto" src="${esc(zapFotos.get(c.foto_url))}" alt="foto do contato" title="clique para ampliar" onclick="verFotoGrande(this.src)">`:avatarZap(c)}
          <div class="zt-id">
-           <h2>${esc(nomeDaConversa(c))}</h2>
+           <h2 role="button" tabindex="0" title="ver a ficha" onclick="alternarFichaZap()" onkeydown="if(event.key==='Enter')alternarFichaZap()">${esc(nomeDaConversa(c))}</h2>
            <div class="zt-sub">
              ${falaPor(c)?`<span>${esc(falaPor(c))} · cliente <b>${esc(cli.nome)}</b></span>`:""}
              <span class="mono">${esc(foneZap(c.telefone))}</span>
@@ -13729,7 +13770,7 @@ function pintarConversa(){
              <button class="zap-icone" onclick="agendarZap()" title="agendar o envio para outro dia e hora" aria-label="Agendar envio">${zic("agenda")}</button>`}
            </div>
          </div>
-         <button class="btn-rap ze-enviar" id="zap-enviar" onclick="enviarZap()">${zapNota?"Anotar":"Enviar"}</button>
+         <button class="btn-rap ze-enviar" id="zap-enviar" aria-label="${zapNota?"Anotar":"Enviar"}" onclick="enviarZap()">${zapNota?"Anotar":"Enviar"}</button>
        </div>
      </div>`;
   pintarPainelZap(c);
@@ -13745,7 +13786,14 @@ function pintarConversa(){
   };
   const cx = document.getElementById("zap-msgs"); cx.scrollTop = cx.scrollHeight;
   carregarMinis(cx);
+  // F270 · como no WhatsApp: rolou para cima, aparece o botão que desce à última mensagem
+  const desce = Object.assign(document.createElement("button"), {className:"zap-desce", hidden:true, textContent:"⌄",
+    title:"ir para a última mensagem", onclick:()=>cx.scrollTo({top:cx.scrollHeight, behavior:"smooth"})});
+  desce.setAttribute("aria-label", "Ir para a última mensagem");
+  cx.after(desce);
+  cx.onscroll = () => { desce.hidden = cx.scrollHeight - cx.scrollTop - cx.clientHeight < 200; };
 }
+function alternarFichaZap(){ const t = document.querySelector(".zap-tela"); if(t) t.classList.toggle("ficha-on"); }
 
 // F183 · o cliente ao lado da conversa: o que se pergunta enquanto se
 // responde ("qual é o caso, em que pé está, quando é a próxima data"). Só
@@ -13949,7 +13997,7 @@ function bolhaZap(m, cli){
         <button onclick="reagirMsg('${m.id}')" title="reagir">😀</button>
         <button onclick="encaminharMsg('${m.id}')" title="encaminhar para outra conversa">↪</button></span>`:""}
       ${horaSP(m.quando_wa||m.criado_em)}
-      <span id="zs-${m.id}">${seloZap(m)}</span>
+      <span id="zs-${m.id}" data-st="${m.direcao==="saida"?esc(m.status||""):""}">${seloZap(m)}</span>
       ${m.status==="erro"?`<span title="${esc(m.erro||"")}">não enviou</span>`:""}
       ${cli?`<button class="virar" onclick="virarAndamento('${m.id}')"
          title="registrar no histórico de um processo">↪ andamento</button>`:""}
