@@ -22,8 +22,17 @@ insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'o
 insert into r select 'a1 com atendente, o robô não fala',
   not exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v));
 
--- encerrou, o cliente volta
+-- encerrou e o cliente escreve logo: ainda é com a Amanda
 select zap_encerrar((select id from v));
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'esqueci de perguntar' from v;
+insert into r select 'a0 dentro de 1 hora, segue com o atendente',
+  (select status = 'aberta' and atendente_id is not null and not bot_ativo from zap_conversas where id = (select id from v))
+  and not exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v));
+
+-- encerrou e o cliente volta duas horas depois
+select zap_encerrar((select id from v));
+update zap_atendimentos set encerrado_em = now() - interval '2 hours'
+ where id = (select atendimento_id from zap_conversas where id = (select id from v));
 insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'oi de novo' from v;
 insert into r select 'a2 reabre sem atendente e sem setor',
   (select status = 'aberta' and atendente_id is null and setor is null and bot_ativo from zap_conversas where id = (select id from v));
