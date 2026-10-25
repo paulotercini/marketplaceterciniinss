@@ -138,7 +138,8 @@ begin
       update zap_mensagens set bot_ia = 'plantao:respondida' where id = r.id;
     elsif r.bot_ia = 'plantao:espera' and exists (
             select 1 from zap_mensagens x where x.conversa_id = r.conversa_id and x.bot_ia = 'plantao:resposta'
-               and x.momento > now() - interval '4 hours'   -- depois de 4 h sem a equipe, responde de novo
+               -- depois de 4 h sem a equipe, responde de novo, só no horário comercial (Paulo, 25.10.2026)
+               and (x.momento > now() - interval '4 hours' or not zap_no_horario())
                and x.momento > coalesce((select max(h.momento) from zap_mensagens h where h.conversa_id = r.conversa_id
                                            and h.direcao = 'saida' and not h.por_bot), '-infinity')) then
       update zap_mensagens set bot_ia = 'plantao:ja_avisado' where id = r.id;      -- uma resposta por espera
