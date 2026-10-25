@@ -3801,7 +3801,7 @@ end $$;
 -- da IA (zap_conversas.sem_ia, no ⋯ da conversa).
 insert into config_app (chave, valor) values
   ('zap_ia_plantao','nao'), ('zap_plantao_min','20'), ('zap_plantao_fora_min','5'),
-  ('zap_plantao_lead','Marcos'),
+  ('zap_plantao_lead','todos'),
   ('zap_plantao_url','https://bhdyatqaebpzufridwkh.supabase.co/functions/v1/zap_plantao')
   on conflict (chave) do nothing;
 
@@ -3837,6 +3837,8 @@ begin
      where k.cliente_id = c.cliente_id and k.fase <> 'encerrado' order by k.criado_em desc limit 1;
     if v is not null then return v; end if;
   end if;
+  -- 'todos' (decisão do Paulo, 25.10.2026): sem advogado definido, nulo, e todos os advogados são avisados
+  if coalesce((select valor from config_app where chave = 'zap_plantao_lead'), 'todos') = 'todos' then return null; end if;
   select a.id into v from zap_advogados() a
    where a.nome = coalesce((select valor from config_app where chave = 'zap_plantao_lead'), '');
   return coalesce(v, (select id from colaboradores where ativo and papel = 'admin' order by nome limit 1));
@@ -3999,12 +4001,13 @@ begin
    where trim(coalesce(p_advogado, '')) <> ''
      and (assinatura_zap = trim(p_advogado) or nome = trim(p_advogado)) limit 1;
   v_adv := coalesce(v_adv, zap_advogado_da_conversa(c.id));
-  v_quem := zap_nome_colab(v_adv);
+  v_quem := coalesce(zap_nome_colab(v_adv), 'os advogados');
 
   v_txt := left(trim(coalesce(p_resposta, '')), 1500);
   if v_acao = 'falhou' then
-    v_txt := 'Recebemos a sua mensagem. ' || coalesce((select assinatura_zap from colaboradores where id = v_adv), 'A equipe do escritório')
-             || ' já foi avisado(a) e responderá '
+    v_txt := 'Recebemos a sua mensagem. ' || coalesce((select assinatura_zap from colaboradores where id = v_adv) || ' já foi avisado(a)',
+                                                      'A equipe do escritório já foi avisada')
+             || ' e responderá '
              || case when zap_no_horario() then 'assim que possível.' else 'no próximo dia útil.' end;
   end if;
 
@@ -4035,13 +4038,16 @@ begin
   perform zap_nota_sistema(c.id, null, 'Assistente virtual: '
           || case v_acao when 'falhou' then 'a IA não respondeu; saiu o aviso de recebimento' else 'respondeu' end
           || ' e avisou ' || v_quem || coalesce(' · ' || nullif(trim(p_assunto), ''), ''));
-  if not exists (select 1 from mencoes where para_id = v_adv and conversa_id = c.id and lida_em is null) then
-    insert into mencoes (de_id, para_id, conversa_id, texto)
-    values (v_claude, v_adv, c.id,
-            case when p_urgente then '⚠ URGENTE · ' else '' end || '💬 '
-            || coalesce(nullif(trim(c.nome_perfil), ''), c.telefone, 'O cliente')
-            || ' aguarda resposta no WhatsApp' || coalesce(': ' || nullif(trim(p_assunto), ''), ''));
-  end if;
+  insert into mencoes (de_id, para_id, conversa_id, texto)
+  select v_claude, a.id, c.id,
+         case when p_urgente then '⚠ URGENTE · ' else '' end || '💬 '
+         || coalesce(nullif(trim(c.nome_perfil), ''), c.telefone, 'O cliente')
+         || ' aguarda resposta no WhatsApp' || coalesce(': ' || nullif(trim(p_assunto), ''), '')
+    from colaboradores a
+   -- o advogado da conversa (todos, no caso novo) e a recepção (pedido do Paulo, 25.10.2026)
+   where a.ativo and coalesce(trim(a.assinatura_zap), '') <> ''
+     and ((a.cargo = 'advogado' and (v_adv is null or a.id = v_adv)) or a.cargo in ('estagiario', 'recepcao'))
+     and not exists (select 1 from mencoes x where x.para_id = a.id and x.conversa_id = c.id and x.lida_em is null);
   if v_acao = 'agendar' and zap_agenda_ligada() then
     update zap_conversas set bot_dados = coalesce(bot_dados, '{}'::jsonb)
            || jsonb_build_object('nome', coalesce(nullif(initcap(trim(p_nome)), ''), c.plantao->>'nome', nullif(trim(c.nome_perfil), ''), 'Cliente'))
