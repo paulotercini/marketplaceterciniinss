@@ -3919,6 +3919,8 @@ begin
       update zap_mensagens set bot_ia = 'plantao:respondida' where id = r.id;
     elsif r.bot_ia = 'plantao:espera' and exists (
             select 1 from zap_mensagens x where x.conversa_id = r.conversa_id and x.bot_ia = 'plantao:resposta'
+               -- depois de 4 h sem a equipe, responde de novo, só no horário comercial (Paulo, 25.10.2026)
+               and (x.momento > now() - interval '4 hours' or not zap_no_horario())
                and x.momento > coalesce((select max(h.momento) from zap_mensagens h where h.conversa_id = r.conversa_id
                                            and h.direcao = 'saida' and not h.por_bot), '-infinity')) then
       update zap_mensagens set bot_ia = 'plantao:ja_avisado' where id = r.id;      -- uma resposta por espera
@@ -4001,7 +4003,7 @@ begin
    where trim(coalesce(p_advogado, '')) <> ''
      and (assinatura_zap = trim(p_advogado) or nome = trim(p_advogado)) limit 1;
   v_adv := coalesce(v_adv, zap_advogado_da_conversa(c.id));
-  v_quem := case when v_adv is null then 'os advogados e a recepção' else zap_nome_colab(v_adv) || ' e a recepção' end;
+  v_quem := 'a equipe' || case when v_adv is null then '' else ' (responsável: ' || zap_nome_colab(v_adv) || ')' end;
 
   v_txt := left(trim(coalesce(p_resposta, '')), 1500);
   if v_acao = 'falhou' then
@@ -4043,11 +4045,12 @@ begin
          case when p_urgente then '⚠ URGENTE · ' else '' end || '💬 '
          || coalesce(nullif(trim(c.nome_perfil), ''), c.telefone, 'O cliente')
          || ' aguarda resposta no WhatsApp' || coalesce(': ' || nullif(trim(p_assunto), ''), '')
+         || case when v_adv is null then '' else ' · responsável: ' || zap_nome_colab(v_adv) end
     from colaboradores a
-   -- o advogado da conversa (todos, no caso novo) e a recepção (pedido do Paulo, 25.10.2026)
+   -- todos os advogados e a recepção são avisados; o responsável vai no texto (pedido do Paulo, 25.10.2026)
    where a.ativo and coalesce(trim(a.assinatura_zap), '') <> ''
-     and ((a.cargo = 'advogado' and (v_adv is null or a.id = v_adv)) or a.cargo in ('estagiario', 'recepcao'))
-     and not exists (select 1 from mencoes x where x.para_id = a.id and x.conversa_id = c.id and x.lida_em is null);
+     and a.cargo in ('advogado', 'estagiario', 'recepcao')
+     and (p_urgente or not exists (select 1 from mencoes x where x.para_id = a.id and x.conversa_id = c.id and x.lida_em is null));
   if v_acao = 'agendar' and zap_agenda_ligada() then
     update zap_conversas set bot_dados = coalesce(bot_dados, '{}'::jsonb)
            || jsonb_build_object('nome', coalesce(nullif(initcap(trim(p_nome)), ''), c.plantao->>'nome', nullif(trim(c.nome_perfil), ''), 'Cliente'))

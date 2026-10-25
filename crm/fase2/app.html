@@ -1744,6 +1744,7 @@
   .zc-corpo{flex:1;min-width:0}
   .zap-conv .l1{display:flex;align-items:baseline;gap:6px;font-size:13.5px}
   .zap-conv .l1 b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .zap-conv .l1 .zc-adv{flex:none;font-size:11px;color:var(--cinza,#667);white-space:nowrap}
   .zap-conv .l1 .hora{margin-left:auto;font-size:11.5px;color:var(--cinza-claro,var(--cinza));flex:0 0 auto}
   .zap-conv .bolha{background:var(--azul);color:#fff;border-radius:9px;padding:0 6px;
                    font-size:11px;font-weight:600;line-height:17px}
@@ -13664,6 +13665,9 @@ function nomeDaConversa(c){
 }
 
 const clienteDaConversa = c => c && c.cliente_id && D.cliPorId.get(c.cliente_id);
+// o advogado responsável pelo cliente da conversa (F245), ao lado do nome (pedido do Paulo, 25.10.2026)
+const advDaConversa = c => { const cli = clienteDaConversa(c); if(!cli) return "";
+  return (D.colPorId.get((advogadoDoCliente(cli.id)||[])[0])||{}).nome || ""; };
 const falaPor = c => { const cli = clienteDaConversa(c);
   return c.contato_nome && cli ? `${c.contato_relacao?c.contato_relacao+" de ":"fala por "}${cli.nome.split(" ")[0]}` : ""; };
 // o nome do WhatsApp não é o do cliente e ninguém disse quem conversa: pergunta
@@ -13706,7 +13710,7 @@ function cartaoConversa(c){
   return `<div class="zap-conv ${zapAberta===c.id?"on":""} ${c.nao_lidas?"nova":""}" data-zc="${c.id}">
     ${avatarZap(c)}
     <div class="zc-corpo">
-      <div class="l1"><b>${esc(nomeDaConversa(c))}</b>
+      <div class="l1"><b>${esc(nomeDaConversa(c))}</b>${advDaConversa(c)?`<span class="zc-adv" title="advogado responsável">${esc(advDaConversa(c))}</span>`:""}
         <span class="hora">${c.ultima_em?quandoFalou(c.ultima_em):""}</span></div>
       <div class="l2">${esc((c.ultimo_texto||"").slice(0,80))}</div>
       <div class="l3">
@@ -13819,6 +13823,7 @@ function pintarConversa(){
            <div class="zt-sub">
              ${falaPor(c)?`<span>${esc(falaPor(c))} · cliente <b>${esc(cli.nome)}</b></span>`:""}
              <span class="mono">${esc(foneZap(c.telefone))}</span>
+             ${advDaConversa(c)?`<span>Advogado: <b>${esc(advDaConversa(c))}</b></span>`:""}
              ${zapProto?`<button class="zap-proto" title="protocolo do atendimento — clique para copiar"
                 onclick="copiar('${zapProto}','Protocolo copiado')">Protocolo ${zapProto}</button>`:""}
              ${c.bot_ativo&&c.bot_passo?`<span class="zt-robo" title="o passo do robô nesta conversa">Robô: <b>${esc(rotPasso(c.bot_passo))}</b>${c.bot_desde?` desde ${diaZap(c.bot_desde)} ${horaSP(c.bot_desde)}`:""}</span>`:""}
@@ -15219,7 +15224,7 @@ async function renderConfig(){
                value="${esc(cfgApp("zap_plantao_min")||"20")}"> min no expediente e</label>
            <label class="cfg-ck"><input type="number" id="cf-plantao-fora-min" min="1" max="240" style="width:64px"
                value="${esc(cfgApp("zap_plantao_fora_min")||"5")}"> min fora dele</label>
-           <label class="cfg-ck" title="quem recebe o caso novo e o cliente sem advogado na ficha nem na conversa; a recepção (Ingrid e Meissa) é avisada sempre">caso novo vai para
+           <label class="cfg-ck" title="o advogado responsável do caso novo e do cliente sem advogado na ficha nem na conversa; todo aviso vai a todos os advogados e à recepção">caso novo vai para
              <select id="cf-plantao-lead">${[["todos","os três advogados"],["Paulo","Paulo"],["Marcos","Marcos"],["Amanda","Amanda"]].map(([v,n])=>`<option value="${v}" ${(cfgApp("zap_plantao_lead")||"todos")===v?"selected":""}>${n}</option>`).join("")}</select></label>
            <label class="cfg-ck"><input type="checkbox" id="cf-zap-visual"
              ${cfgApp("zap_visual")==="escritorio"?"":"checked"}> conversa com a aparência do WhatsApp</label>
