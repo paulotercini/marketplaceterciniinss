@@ -233,6 +233,8 @@ A **F269** (a foto em miniatura, pedido do Paulo de 24.10.2026): a mensagem de i
 
 A **F270** (mais WhatsApp, pedido do Paulo de 25.10.2026): com o visual do WhatsApp (F259), o balão ganha a cauda no primeiro da sequência e os seguidos ficam juntos, a hora fica cinza, "enviada/entregue/lida" viram ✓, ✓✓ e ✓✓ azul (`span[data-st]`, o texto continua para o leitor de tela), as ações do balão flutuam no canto, a bolinha das não lidas é verde, o topo e o campo de escrever ficam no cinza do aplicativo, o Enviar é o botão redondo verde, e rolar para cima mostra o botão que desce à última mensagem (`.zap-desce`). Entre 1024 e 1279 px a ficha do cliente (F268) deixou de ser coluna fixa, que espremia a conversa a 140 px, e abre como gaveta no clique no nome do topo (`alternarFichaZap`, `.ficha-on`, ✕ `.zp-fechar`). Testes: `zaprep.js` e `zapfoto.js`.
 
+A **F271** (o WhatsApp no celular, pedido do Paulo de 25.10.2026): a lista ocupa a tela, sem o quadro vazio "Escolha uma conversa"; aberta, a conversa ocupa a tela toda (`#app.zap-conv-aberta`, `.zap-dir` fixo), sem a barra de baixo e sem o ⚡, que cobria o enviar, com a seta de volta à lista (`voltarListaZap`, `.zt-voltar`); os botões do topo ficam só com o ícone; as ações do balão ficam na linha da hora, maiores ao toque, sem cobrir o texto; e o nome abre a ficha em tela cheia abaixo de 1024 px, com o ✕. Teste: `zapcel.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

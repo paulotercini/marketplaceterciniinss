@@ -2023,6 +2023,33 @@
   .zap-desce{position:absolute;right:18px;bottom:140px;width:40px;height:40px;border-radius:50%;border:0;z-index:3;
     background:#fff;color:#54656f;font-size:22px;line-height:1;cursor:pointer;box-shadow:0 1px 3px rgba(11,20,26,.25)}
   .zap-desce[hidden]{display:none}
+  /* F271 · o WhatsApp no celular: a lista ocupa a tela e, aberta a conversa, ela ocupa a tela toda (sem a barra de baixo
+     nem o ⚡, que cobria o enviar), com a seta de volta; o nome abre a ficha em tela cheia; os botões ficam só com o ícone;
+     as ações do balão ficam na linha da hora, sem cobrir o texto */
+  .zt-voltar{display:none}
+  .app.celular .zap-dir:has(.zap-vazio){display:none}
+  .app.celular .zap-lado{max-height:none}
+  .app.celular.zap-conv-aberta .zap-dir{position:fixed;inset:0;z-index:90;height:auto;border-radius:0;border:0;margin:0}
+  .app.celular.zap-conv-aberta ~ .barra-cel,.app.celular.zap-conv-aberta ~ .fab-rapida{display:none}
+  .app.celular.zap-conv-aberta .zap-escrever{padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+  .app.celular .zt-voltar{display:block;border:0;background:none;font-size:22px;line-height:1;padding:6px 4px;color:var(--texto);cursor:pointer;flex:none}
+  .app.celular .zap-topo{padding:8px 10px;gap:6px}
+  .app.celular .zt-l1,.app.celular .zt-acoes{flex-wrap:nowrap;gap:6px}
+  .app.celular .zt-id{min-width:0;flex:1}
+  .app.celular .zt-id h2{font-size:16px}
+  .app.celular .zt-sub{font-size:11.5px}
+  .app.celular .zt-acoes .zt-btn .lbl{display:none}
+  .app.celular .zt-acoes .zt-btn{width:36px;height:36px;padding:0;justify-content:center}
+  .app.celular .zap-av{flex:none}
+  .app.celular .zap-tela.wa .zap-acoes{position:static;background:none}
+  @media (hover:none){.zap-tela.wa .zap-acoes{position:static;background:none}}
+  @media (hover:none){.zap-acoes button{font-size:16px;padding:4px 6px}}
+  @media (max-width:1023px){
+    .zap-tela.ficha-on .zap-painel:not(:empty){display:flex;position:fixed;inset:0;z-index:95;overflow:auto;
+      padding:52px 12px 16px;background:var(--fundo,#f7f6f3)}
+    .zap-tela.ficha-on .zp-fechar{display:block;position:fixed;top:8px;right:10px;z-index:96;border:0;background:none;
+      font-size:22px;color:var(--cinza);cursor:pointer;padding:6px 10px}
+  }
   /* tela estreita: Retorno e Transferir ficam só com o ícone, para o nome caber inteiro */
   @media (max-width:1700px){.zt-acoes .zt-btn:not(.pri) .lbl{display:none}.zt-acoes .zt-btn:not(.pri){width:32px;padding:0;justify-content:center}}
   /* .id-secao só vive dentro do cartão "Ligações do cliente" (F9.2): o rótulo
@@ -7157,6 +7184,7 @@ function tituloLista(rot){
   // F144 · o que a agenda do v10 põe no topo sai ao trocar de tela
   const tx = document.getElementById("topo-extra"); if(tx) tx.innerHTML = "";
   const me = document.querySelector(".meio"); if(me) me.classList.remove("ag-v10","zap-v");
+  document.getElementById("app")?.classList.remove("zap-conv-aberta");
   const i = rot.indexOf(" ");
   const ic = i>0 ? svgIc(rot.slice(0,i), 19) : null;
   if(ic) h.innerHTML = `<span class="ic" aria-hidden="true">${ic}</span><span class="h1-txt">${esc(rot.slice(i+1))}</span>`;
@@ -13692,6 +13720,7 @@ function pintarConversa(){
   document.getElementById("zap-dir").innerHTML =
     `<div class="zap-topo">
        <div class="zt-l1">
+         <button class="zt-voltar" onclick="voltarListaZap()" aria-label="Voltar às conversas">←</button>
          ${zapFotos.get(c.foto_url)?`<img class="zap-av zt-foto" src="${esc(zapFotos.get(c.foto_url))}" alt="foto do contato" title="clique para ampliar" onclick="verFotoGrande(this.src)">`:avatarZap(c)}
          <div class="zt-id">
            <h2 role="button" tabindex="0" title="ver a ficha" onclick="alternarFichaZap()" onkeydown="if(event.key==='Enter')alternarFichaZap()">${esc(nomeDaConversa(c))}</h2>
@@ -13709,7 +13738,7 @@ function pintarConversa(){
          <div class="zt-acoes">
            ${fim||!pode?"":`<button class="zt-btn" onclick="novoRetorno()" title="responder depois, com dia e hora" aria-label="Retorno">${zic("relogio")}<span class="lbl">Retorno</span></button>
            <button class="zt-btn" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
-           ${pode?`<button class="zt-btn pri" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}Encerrar`}</button>`:""}
+           ${pode?`<button class="zt-btn pri" aria-label="${fim?"Reabrir":"Encerrar"}" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}<span class="lbl">Encerrar</span>`}</button>`:""}
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
              <div class="zt-menu">
@@ -13785,6 +13814,7 @@ function pintarConversa(){
     if(sug && !sug.hidden && e.key==="Escape"){ sug.hidden = true; return; }
     if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); enviarZap(); }
   };
+  document.getElementById("app").classList.add("zap-conv-aberta");
   const cx = document.getElementById("zap-msgs"); cx.scrollTop = cx.scrollHeight;
   carregarMinis(cx);
   // F270 · como no WhatsApp: rolou para cima, aparece o botão que desce à última mensagem
@@ -13793,6 +13823,13 @@ function pintarConversa(){
   desce.setAttribute("aria-label", "Ir para a última mensagem");
   cx.after(desce);
   cx.onscroll = () => { desce.hidden = cx.scrollHeight - cx.scrollTop - cx.clientHeight < 200; };
+}
+// F271 · no celular a conversa ocupa a tela, como no WhatsApp; a seta volta à lista
+function voltarListaZap(){
+  zapAberta = null; zapResponder = null;
+  document.getElementById("app").classList.remove("zap-conv-aberta");
+  document.querySelector(".zap-tela")?.classList.remove("ficha-on");
+  document.getElementById("zap-dir").innerHTML = telaVaziaZap(); pintarPainelZap(null); pintarListaZap();
 }
 function alternarFichaZap(){ const t = document.querySelector(".zap-tela"); if(t) t.classList.toggle("ficha-on"); }
 
