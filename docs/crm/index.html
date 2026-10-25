@@ -15212,15 +15212,15 @@ async function renderConfig(){
              ${cfgApp("zap_robo_agenda")==="sim"?"checked":""}> robô marca o horário pelas vagas da agenda</label>
            <label class="cfg-ck" title="fora do expediente, quem escolhe caso novo conta o caso por escrito ou por áudio, e o relato fica como nota da equipe"><input type="checkbox" id="cf-robo-noturno"
              ${cfgApp("zap_robo_noturno")==="sim"?"checked":""}> fora do expediente, robô colhe o relato do caso novo</label>
-           <label class="cfg-ck" title="a mensagem do cliente sem resposta da equipe no prazo abaixo vai à IA (função zap_plantao): ela tranquiliza dizendo qual advogado vai responder e avisa esse advogado no CRM, atende o caso novo e oferece a agenda; agradecimento e conversa entre colegas ficam sem resposta; nunca dá parecer, chance ou valor"><input type="checkbox" id="cf-ia-plantao"
+           <label class="cfg-ck" title="a mensagem do cliente sem resposta da equipe no prazo abaixo vai à IA (função zap_plantao): ela tranquiliza dizendo qual advogado vai responder e avisa esse advogado e a recepção no CRM, atende o caso novo e oferece a agenda; agradecimento e conversa entre colegas ficam sem resposta; nunca dá parecer, chance ou valor"><input type="checkbox" id="cf-ia-plantao"
              ${cfgApp("zap_ia_plantao")==="sim"?"checked":""}> IA responde quem ficou sem resposta e atende o caso novo</label>
            <label class="cfg-ck">a IA responde depois de
              <input type="number" id="cf-plantao-min" min="1" max="240" style="width:64px"
                value="${esc(cfgApp("zap_plantao_min")||"20")}"> min no expediente e</label>
            <label class="cfg-ck"><input type="number" id="cf-plantao-fora-min" min="1" max="240" style="width:64px"
                value="${esc(cfgApp("zap_plantao_fora_min")||"5")}"> min fora dele</label>
-           <label class="cfg-ck" title="quem recebe o caso novo e o cliente sem advogado na ficha nem na conversa">caso novo vai para
-             <select id="cf-plantao-lead">${["Paulo","Marcos","Amanda"].map(n=>`<option ${(cfgApp("zap_plantao_lead")||"Marcos")===n?"selected":""}>${n}</option>`).join("")}</select></label>
+           <label class="cfg-ck" title="quem recebe o caso novo e o cliente sem advogado na ficha nem na conversa; a recepção (Ingrid e Meissa) é avisada sempre">caso novo vai para
+             <select id="cf-plantao-lead">${[["todos","os três advogados"],["Paulo","Paulo"],["Marcos","Marcos"],["Amanda","Amanda"]].map(([v,n])=>`<option value="${v}" ${(cfgApp("zap_plantao_lead")||"todos")===v?"selected":""}>${n}</option>`).join("")}</select></label>
            <label class="cfg-ck"><input type="checkbox" id="cf-zap-visual"
              ${cfgApp("zap_visual")==="escritorio"?"":"checked"}> conversa com a aparência do WhatsApp</label>
            <label class="cfg-ck">🔄 revisar o acervo a cada
@@ -15454,7 +15454,7 @@ function ligarConfig(){
   cfgSalva("cf-ia-plantao","zap_ia_plantao", el=>el.checked?"sim":"nao");
   cfgSalva("cf-plantao-min","zap_plantao_min", el=>String(Math.min(240, Math.max(1, Math.round(+el.value||20)))));
   cfgSalva("cf-plantao-fora-min","zap_plantao_fora_min", el=>String(Math.min(240, Math.max(1, Math.round(+el.value||5)))));
-  cfgSalva("cf-plantao-lead","zap_plantao_lead", el=>el.value||"Marcos");
+  cfgSalva("cf-plantao-lead","zap_plantao_lead", el=>el.value||"todos");
   cfgSalva("cf-zap-visual","zap_visual", el=>el.checked?"whatsapp":"escritorio");
   cfgSalva("cf-rev-dias","revisao_dias", el=>String(Math.max(15, +el.value||90)));
   cfgSalva("cf-rev-dose","revisao_dose", el=>String(Math.max(1, +el.value||5)));

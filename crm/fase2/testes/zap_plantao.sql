@@ -11,7 +11,8 @@ insert into colaboradores (id, nome, inicial, cor, papel, cargo, assinatura_zap,
   ('aaaaaaaa-0000-0000-0000-000000000001','Paulo','P','#000','admin','advogado','Dr. Paulo Tercini',true),
   ('aaaaaaaa-0000-0000-0000-000000000002','Marcos','M','#000','colaborador','advogado','Dr. Marcos',true),
   ('aaaaaaaa-0000-0000-0000-000000000003','Amanda','A','#000','colaborador','advogado','Dra. Amanda Garcez',true),
-  ('aaaaaaaa-0000-0000-0000-000000000004','Claude','C','#000','assistente_ia','assistente',null,true);
+  ('aaaaaaaa-0000-0000-0000-000000000004','Claude','C','#000','assistente_ia','assistente',null,true),
+  ('aaaaaaaa-0000-0000-0000-000000000005','Ingrid','I','#000','colaborador','estagiario','Ingrid',true);
 insert into config_app (chave, valor) values ('zap_ia_plantao','nao'), ('zap_bot_ligado','nao'), ('zap_pausa_bot','0'),
   ('zap_hora_inicio','00:00'), ('zap_hora_fim','23:59'), ('zap_dias_uteis','1,2,3,4,5,6,7'),
   ('zap_plantao_min','20'), ('zap_plantao_lead','Marcos'), ('zap_plantao_url',''),
@@ -158,12 +159,28 @@ insert into r select 'p27 limite de 8 respostas', (select bot_passo = 'agendar' 
 
 -- o áudio do lead espera a transcrição
 update zap_conversas set plantao = '{"modo":"lead","n":1}', bot_passo = null, bot_dados = null where id = (select id from y);
-create temp table l5 as select pg_temp.entra((select id from y), null, 'audio') id;
+create temp table l9 as select pg_temp.entra((select id from y), null, 'audio') id;
 select zap_plantao_vencidas();
-insert into r select 'p28 áudio sem texto espera', pg_temp.ia((select id from l5)) = 'plantao:agora';
-update zap_mensagens set texto = 'transcrição do áudio' where id = (select id from l5);
+insert into r select 'p28 áudio sem texto espera', pg_temp.ia((select id from l9)) = 'plantao:agora';
+update zap_mensagens set texto = 'transcrição do áudio' where id = (select id from l9);
 select zap_plantao_vencidas();
-insert into r select 'p29 com a transcrição, a IA é chamada', pg_temp.ia((select id from l5)) = 'plantao:pedida';
+insert into r select 'p29 com a transcrição, a IA é chamada', pg_temp.ia((select id from l9)) = 'plantao:pedida';
+
+-- 'todos': o caso novo avisa os três advogados e a recepção; o caso com advogado, só ele e a recepção
+update config_app set valor = 'todos' where chave = 'zap_plantao_lead';
+create temp table t9 as select zap_abrir('5516977770007', 'Novo2') id;
+create temp table lt9 as select pg_temp.entra((select id from t9), 'quero saber do auxílio') id;
+select pg_temp.velha((select id from lt9)); select zap_plantao_vencidas();
+select zap_plantao_aplicar((select id from lt9), 'falhou', null, null, false, null, null, null);
+insert into r select 'p33 todos: três advogados e a recepção avisados',
+  (select count(*) from mencoes where conversa_id = (select id from t9)) = 4
+  and exists (select 1 from zap_mensagens where conversa_id = (select id from t9) and texto like 'Recebemos a sua mensagem. A equipe do escritório já foi avisada e responderá%')
+  and exists (select 1 from zap_mensagens where conversa_id = (select id from t9) and texto like '%avisou os advogados e a recepção%');
+insert into r select 'p34 o caso com advogado avisa ele e a recepção, sem os outros',
+  (select array_agg(para_id::text) @> array['aaaaaaaa-0000-0000-0000-000000000002','aaaaaaaa-0000-0000-0000-000000000005']
+          and not array_agg(para_id::text) @> array['aaaaaaaa-0000-0000-0000-000000000003']
+     from mencoes where conversa_id = (select id from v));
+update config_app set valor = 'Marcos' where chave = 'zap_plantao_lead';
 
 -- fora da IA: a conversa marcada, a automática, o histórico reenviado e o menu ligado
 create temp table z as select zap_abrir('5516955550005', 'Colega') id;
