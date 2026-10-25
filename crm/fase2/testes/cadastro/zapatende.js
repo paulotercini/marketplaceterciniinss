@@ -83,7 +83,7 @@ const T = {
   conf("o cartão mostra setor, etiqueta e o retorno marcado, no grupo das fixadas", cartao.includes("Jurídico") && cartao.includes("URGENTE") && cartao.includes("Retorno") && (await p.textContent(".zl-lista")).startsWith("Fixadas"));
   await p.click('[data-zf="retornos"]');
   conf("a aba Retornos traz só quem tem retorno", await p.$$eval(".zap-conv", cs => cs.length) === 1);
-  await p.click('[data-zf="fim"]');
+  await p.evaluate(() => { const d = document.querySelector(".zl-mais"); if (d) d.open = true; }); await p.click('[data-zf="fim"]');
   conf("Encerradas traz a resolvida", (await p.textContent(".zap-lado")).includes("Outra pessoa"));
   await p.click('[data-zf="todas"]');
 
