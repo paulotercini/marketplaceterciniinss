@@ -74,9 +74,9 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   await p.waitForSelector(".zap-conv");
   const lista = await p.textContent(".zap-lado");
   conf("a lista tem o link Automáticas", lista.includes("Automáticas"));
-  await p.click('[data-zf="auto"]');
+  await p.evaluate(() => { const d = document.querySelector(".zl-mais"); if (d) d.open = true; }); await p.click('[data-zf="auto"]');
   conf("a fila Automáticas mostra o robô de outra empresa", (await p.textContent(".zl-lista")).includes("Banco X"));
-  await p.click('[data-zf="fim"]');
+  await p.evaluate(() => { const d = document.querySelector(".zl-mais"); if (d) d.open = true; }); await p.click('[data-zf="fim"]');
   conf("e as Encerradas não o misturam", !(await p.textContent(".zl-lista")).includes("Banco X"));
 
   await p.evaluate(id => abrirConversa(id), AUTO);
