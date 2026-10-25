@@ -95,4 +95,8 @@ const dec2 = await turno("sesn_2", "quero marcar", falso([
 assert.equal(dec2.resposta, "Há vaga terça às 9h30.");
 const res1 = enviados[1].events[0];
 assert.equal(res1.custom_tool_use_id, "sevt_1"); assert.ok(JSON.parse(res1.content[0].text).vagas.amanda.length === 1);
+const pai = promptPlantao({ ...base, contato: "Paulo Tercini", relacao: "pai", cliente: { nome: "Pietra Tercini", mesmo_telefone: true, casos: [] } });
+assert.ok(pai.includes("Quem escreve é Paulo Tercini (pai de Pietra Tercini): chame pelo nome de quem escreve"));
+assert.ok(!p1.includes("Quem escreve"), "sem relação gravada, nada muda");
+assert.ok(regras().includes("seja bem-vindo(a) ao escritório Paulo R. Tercini Filho"));
 console.log("zap_plantao: ok");
