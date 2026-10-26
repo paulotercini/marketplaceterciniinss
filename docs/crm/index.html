@@ -14134,7 +14134,7 @@ function pintarPainelZap(c){
   const repCard = ({x, por}) => {
     const kx = (D.casosDoCliente.get(x.id)||[]).filter(k=>k.fase!=="encerrado");
     return `<section class="zp-card zp-rep">
-      <div class="zp-cab"><h3>${esc(x.nome)}</h3><button class="zl-link" onclick="abrirFicha('${x.id}')">Abrir ficha</button></div>
+      <div class="zp-cab"><h3>${esc(x.nome)}</h3><button class="zl-link" onclick="fichaComZap('${x.id}')">Abrir ficha</button></div>
       ${x.cpf?`<div class="zp-kv"><span>CPF</span><span class="mono">${esc(cpfMascarado(x.cpf))}</span></div>`:""}
       ${por?`<div class="zp-kv"><span>Vínculo</span><span>${esc(por)}</span></div>`:""}
       ${kx.length ? kx.slice(0,3).map(k=>`<div class="zp-kv"><span>${esc(k.beneficio||k.titulo||"Caso")}</span><span>${esc(k.etapa||listaDe(k).replace(/^\S+\s/, ""))}</span></div>`).join("")
@@ -14142,7 +14142,7 @@ function pintarPainelZap(c){
     </section>`;
   };
   el.innerHTML = `<section class="zp-card">
-      <div class="zp-cab"><h3>Ficha do cliente</h3><button class="zl-link" onclick="abrirFicha('${cli.id}')">Abrir ficha</button></div>
+      <div class="zp-cab"><h3>Ficha do cliente</h3><button class="zl-link" onclick="fichaComZap('${cli.id}')">Abrir ficha</button></div>
       <div class="zp-kv"><span>Nome</span><span>${esc(cli.nome)}</span></div>
       <div class="zp-kv"><span>CPF</span><span class="mono">${esc(cpfMascarado(cli.cpf))}</span></div>
       ${nasc?`<div class="zp-kv"><span>Nascimento</span><span>${dmaZap(nasc)}${idade!=null?` · ${idade} anos`:""}</span></div>`:""}
@@ -15007,6 +15007,8 @@ function botaoZapCliente(cliId){
     style="background:#EDF8F1;border-color:#BFE3CC;color:#128C4B;font-weight:500"
     title="ler as mensagens de WhatsApp deste cliente">💬 WhatsApp${n?` <b>(${n} nova${n>1?"s":""})</b>`:""}</button>`;
 }
+// F282 · o "Abrir ficha" do WhatsApp abre a ficha (o caso, quando há) com a conversa ao lado, como o botão WhatsApp da ficha
+async function fichaComZap(cliId){ await abrirFicha(cliId); if(clienteAberto===cliId) await verZapCliente(cliId); }
 async function verZapCliente(cliId){
   const zs = D.zapFicha||[]; if(!zs.length) return;
   const ids = zs.map(z=>z.id).join(",");

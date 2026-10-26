@@ -86,6 +86,11 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   await p.click("#zap-painel .zp-rep button");
   await p.waitForTimeout(400);
   conf("Abrir ficha leva à ficha do representado", await p.evaluate(id => clienteAberto === id, AVO));
+  // F282 · e a conversa fica ao lado da ficha, como no botão WhatsApp da ficha
+  await p.waitForSelector("#painel-prazo .pp-zap-msgs", { timeout: 5000 }).catch(() => {});
+  conf("a ficha abre com a conversa do WhatsApp ao lado", await p.evaluate(() => document.body.classList.contains("zap-aberto")
+    && !!document.querySelector("#painel-prazo .pp-zap-msgs") && document.getElementById("app").classList.contains("detalhe-aberto")));
+  conf("a agenda da tela do WhatsApp não fica por cima da ficha", await p.evaluate(() => { const a = document.getElementById("zap-ag"); return !a || !a.offsetParent; }));
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);
