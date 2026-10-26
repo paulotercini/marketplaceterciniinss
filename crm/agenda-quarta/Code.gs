@@ -22,7 +22,7 @@ const CONFIG = {
   // F250f · o Marcos e a Amanda deixam o horário livre como "LIVRE 10:30-11:00" ou "LIVRE 09h30-10h00", sem o código:
   // é vaga sem tipo; o tipo vem do cliente na hora de agendar (001 primeiro atendimento, 002 cliente do escritório)
   REGEX_VAGA_LIVRE: /^\s*livre\b(?:(?!\d{4}[\s.-]?\d{4}).)*$/i,
-  VERSAO: 'F250i · sem cor é só do Paulo',
+  VERSAO: 'F281 · procurar a partir de uma data',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
   // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
@@ -204,9 +204,11 @@ function donoDoEvento_(ev) {
   return achado || null;
 }
 
-function proximosDias_(prof, n) {
+function proximosDias_(prof, n, desde) {
   const res = [];
-  let d = dt_(ymd_(new Date()), '12:00');
+  // F281 · desde: procurar a partir de uma data adiante (o cliente que quer janeiro); nunca antes de hoje
+  const hojeYmd = ymd_(new Date());
+  let d = dt_(desde && /^\d{4}-\d{2}-\d{2}$/.test(desde) && desde > hojeYmd ? desde : hojeYmd, '12:00');
   for (let i = 0; res.length < n && i < 400; i++) {
     const data = ymd_(d);
     if (atendeNoDia_(prof, data)) res.push(data);
@@ -333,7 +335,7 @@ function disponibilidade_(user, r) {
   const prof = prof_(r.profissional);
   const n = Math.min(Number(r.dias) || prof.exibir, 30);
   const agora = new Date();
-  const datas = proximosDias_(prof, n), doPeriodo = eventosDoPeriodo_(datas), bloq = bloqueadosDoPeriodo_(prof, datas);
+  const datas = proximosDias_(prof, n, String(r.desde || '')), doPeriodo = eventosDoPeriodo_(datas), bloq = bloqueadosDoPeriodo_(prof, datas);
   const dias = datas.map(data => {
     const base = { data, diaSemana: diaSemana_(data), limite: prof.limite };
     if (bloq[data]) {

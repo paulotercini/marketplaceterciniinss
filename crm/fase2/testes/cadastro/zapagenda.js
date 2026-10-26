@@ -34,11 +34,15 @@ const T = banco.t;
 
 // quarta: duas vagas do Paulo (sem cor) e uma da Amanda (banana); quinta: a vaga LIVRE do Marcos (sálvia)
 const QUA = proximo(3), QUI = proximo(4);
+// uma quarta treze semanas adiante, fora das seis quartas que a agenda do Paulo mostra
+const somaDias = (d, n) => new Date(Date.parse(d + "T12:00:00Z") + n * 86400e3).toISOString().slice(0, 10);
+const LONGE = somaDias(QUA, 91), DESDE = somaDias(LONGE, -3);
 const ev = (dia, id, s, ini, fim, cor) => ({ id, summary: s, start: quando(dia, ini), end: quando(dia, fim), ...(cor ? { colorId: cor } : {}) });
 const LIVRE = t => `${t} - Livre (anote o telefone)`;
 const google = criarGoogle({ tokens: { "tok-paulo": { nome: "Paulo", papel: "admin" } }, eventos: [
   ev(QUA, "P1", LIVRE("001"), "09:00", "09:45"), ev(QUA, "P4", LIVRE("002"), "13:30", "14:00"),
-  ev(QUA, "A1", LIVRE("002"), "10:00", "10:30", "5"), ev(QUI, "M2", "LIVRE 09:30-10:00", "09:30", "10:00", "2")] });
+  ev(QUA, "A1", LIVRE("002"), "10:00", "10:30", "5"), ev(QUI, "M2", "LIVRE 09:30-10:00", "09:30", "10:00", "2"),
+  ev(LONGE, "P9", LIVRE("001"), "09:00", "09:45")] });
 const evG = id => google.eventos.find(e => e.id === id) || {};
 
 const ok = [];
@@ -165,6 +169,37 @@ const conf = (pts, nome, v) => { ok.push([pts, nome, !!v]); console.log((v ? "PA
   conf(4, `recolhida, vira a pílula com as vagas que sobram (${pil.trim()})`, /Agenda · 2 vagas/.test(pil) && await p.evaluate(() => localStorage.getItem("crm_zap_agenda") === "0"));
   await p.click(".zag-pilula");
   conf(2, "a pílula abre a agenda de novo", !!(await p.$(".zag-cx")));
+
+  // 5b · a data adiante (o cliente que quer janeiro) e a vaga do Paulo com a carga em curso
+  const corrida = await p.evaluate(async () => { delete agq.cache.paulo; const [a, b] = await Promise.all([carregarAgenda("paulo"), carregarAgenda("paulo")]);
+    return !!(a && b && a === b && a.dias.some(d => vagasDoDia(d).length)); });
+  conf(6, "quem pede a agenda do Paulo com a carga em curso recebe as vagas dele, e não a agenda vazia", corrida);
+  conf(2, "a vaga adiante não aparece entre as próximas", !(await p.$(`.zag-dia[data-zagdia="${LONGE}"]`)));
+  await p.evaluate(id => abrirConversa(id), C_ANA);
+  await p.fill("#zag-desde", DESDE); await p.dispatchEvent("#zag-desde", "change");
+  await p.waitForSelector(`.zag-dia[data-zagdia="${LONGE}"]`, { timeout: 5000 }).catch(() => {});
+  const dLonge = await p.$$eval(".zag-dia", b => b.map(x => x.dataset.zagdia));
+  conf(8, `"A partir de" ${DESDE} mostra a vaga do Paulo em ${LONGE} (${dLonge.slice(0, 3).join(", ")})`, dLonge[0] === LONGE && dLonge.every(d => d >= DESDE));
+  const mais = await p.textContent(".zag-mais").catch(() => "");
+  conf(4, `há o botão para seguir adiante (${mais.trim()})`, /Mais datas, depois de/.test(mais));
+  if (!(await p.$('.zag-vaga[data-zagvaga="P9"]'))) await p.click(`.zag-dia[data-zagdia="${LONGE}"]`);
+  await p.click('.zag-vaga[data-zagvaga="P9"]');
+  await p.waitForSelector(".aq-fluxo", { timeout: 5000 }).catch(() => {});
+  await p.click("#aq-seg2");
+  // a Ana já tem o atendimento de quarta: o fluxo avisa e segue
+  await p.waitForSelector("#aq-seguir", { timeout: 5000 }).catch(() => {});
+  if (await p.$("#aq-seguir")) await p.click("#aq-seguir");
+  await p.waitForSelector('[data-aqacomp="nao"]');
+  await p.click('[data-aqacomp="nao"]'); await p.click("#aq-seg4");
+  await p.waitForSelector("#aq-seg5"); await p.click("#aq-seg5");
+  await p.check("#aq-o1"); await p.check("#aq-o2");
+  await p.click("#aq-gravar");
+  await p.waitForSelector(".aq-whats", { timeout: 10000 }).catch(() => {});
+  conf(8, `a vaga adiante vira o atendimento no Google (${evG("P9").summary})`, /Ana Fictícia Zap/.test(evG("P9").summary || ""));
+  await p.evaluate(() => fecharCaixa());
+  await p.click(".zag-desde .zl-link");
+  const volta = await p.$$eval(".zag-dia", b => b.map(x => x.dataset.zagdia));
+  conf(2, `"voltar às próximas" devolve as datas de agora (${volta.join(", ")})`, volta.includes(QUI) && !volta.includes(LONGE));
 
   // 6 · telas menores: a agenda não cobre o enviar
   await p.setViewportSize({ width: 1100, height: 800 }); await p.waitForTimeout(300);
