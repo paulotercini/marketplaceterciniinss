@@ -4025,6 +4025,9 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .zag-vaga small{font-weight:400;margin-left:3px}
 @media (hover:hover) and (pointer:fine){.zag-vaga:hover{background:var(--fundo)}.zag-dia:hover{background:#f7f7f5}}
 .zag-vazio{padding:10px 4px;color:var(--cinza)}
+.zag-desde{display:flex;align-items:center;gap:6px;padding:2px 12px 4px;font-size:12px;flex-wrap:wrap}
+.zag-desde input{font:inherit;font-size:12px;padding:3px 6px;border:1px solid var(--borda);border-radius:6px}
+.zag-mais{display:block;width:100%;margin-top:8px;padding:7px;border:1px dashed var(--borda);border-radius:8px;background:none;font:inherit;font-size:12px;cursor:pointer;color:var(--azul)}
 .aq-dia-livres{display:block;font-size:11px;color:#1E6F50;font-weight:600}
 .aq-horarios small{display:block;font-size:11px;opacity:.8}
 .cli-todos-l{list-style:none;margin:10px 0 0;padding:0}
@@ -48785,16 +48788,18 @@ async function agendaApi(acao, dados={}){
 // F152 · três profissionais na MESMA agenda do Google, cada um com a sua cor
 // (Paulo azul, Marcos verde, Amanda amarela). A disponibilidade é por
 // profissional; agq.disp é a de quem está escolhido na tela.
-let agq = { prof:"paulo", cache:{}, disp:null, sel:null, erro:null, carregando:{}, em:0, timer:null };
+let agq = { prof:"paulo", cache:{}, disp:null, sel:null, erro:null, carregando:{}, pend:{}, em:0, timer:null };
 const COR_PROF = { paulo:"azul", marcos:"verde", amanda:"amarelo" };
 async function carregarAgenda(prof){
   prof = prof || agq.prof;
   if(prof==="todos") return carregarCompleta();   // F250e
-  if(agq.carregando[prof]) return agq.cache[prof];
+  // F281 · quem chega com a carga em curso espera a mesma: devolver o cache vazio fazia a Completa sair sem o profissional
+  if(agq.carregando[prof]) return agq.pend[prof];
   agq.carregando[prof] = true;
+  let fim; agq.pend[prof] = new Promise(r=>{ fim = r; });
   try{ agq.cache[prof] = await agendaApi("disponibilidade", {profissional:prof}); agq.erro = null; agq.em = Date.now(); }
   catch(e){ agq.erro = e; }
-  finally{ agq.carregando[prof] = false; }
+  finally{ agq.carregando[prof] = false; fim(agq.cache[prof]); }
   if(prof===agq.prof){ agq.disp = agq.cache[prof] || null;
     if(agq.disp && (!agq.sel || !agq.disp.dias.some(d=>d.data===agq.sel))) agq.sel = (agq.disp.dias.find(d=>!d.bloqueado)||agq.disp.dias[0]||{}).data || null; }
   return agq.cache[prof];
@@ -48809,6 +48814,13 @@ async function carregarCompleta(){
 function juntarCompleta(){
   const partes = PROFS_AGENDA.map(pr=>agq.cache[pr]).filter(Boolean);
   if(!partes.length){ if(agq.prof==="todos") agq.disp = null; return null; }
+  const dias = juntarDias(partes);
+  agq.cache.todos = {...partes[0], profissional:"todos", dias, alerta:null};
+  if(agq.prof==="todos"){ agq.disp = agq.cache.todos;
+    if(!agq.sel || !dias.some(d=>d.data===agq.sel)) agq.sel = (dias.find(d=>!d.bloqueado)||dias[0]||{}).data || null; }
+  return agq.cache.todos;
+}
+function juntarDias(partes){
   const datas = [...new Set(partes.flatMap(r=>r.dias.map(d=>d.data)))].sort();
   const dias = datas.map(data=>{
     const ds = partes.map(r=>({r, d:r.dias.find(x=>x.data===data)})).filter(x=>x.d);
@@ -48820,10 +48832,7 @@ function juntarCompleta(){
     return {data, diaSemana:ds[0].d.diaSemana, limite:null, bloqueado:ds.every(x=>x.d.bloqueado), lotado:false,
       atendimentos:ds.reduce((n, x)=>n + (x.d.atendimentos||0), 0), eventos, livres, reservas:[], janelas:ds[0].d.janelas};
   });
-  agq.cache.todos = {...partes[0], profissional:"todos", dias, alerta:null};
-  if(agq.prof==="todos"){ agq.disp = agq.cache.todos;
-    if(!agq.sel || !dias.some(d=>d.data===agq.sel)) agq.sel = (dias.find(d=>!d.bloqueado)||dias[0]||{}).data || null; }
-  return agq.cache.todos;
+  return dias;
 }
 // F250g · com a agenda aberta, as dos outros profissionais carregam em segundo plano: trocar de Paulo para Marcos ou Amanda fica imediato
 function preCarregarAgendas(){ PROFS_AGENDA.filter(pr=>pr!==agq.prof && !agq.cache[pr] && !agq.carregando[pr]).forEach(pr=>carregarAgenda(pr).catch(()=>{})); }
@@ -48994,14 +49003,14 @@ function agendarNaVaga(dia, eventoId){
 // F281 · A AGENDA NO WHATSAPP (pedido do Paulo, 26.10.2026): no canto de baixo à direita da tela do WhatsApp, os dias
 // com vaga do Paulo, do Marcos e da Amanda, cada um na sua cor, e o clique na vaga abre o agendamento ali mesmo, já com
 // o cliente da conversa aberta (ou o nome e o telefone do contato, se não for cliente). Lê a agenda Completa.
-let zag = { aberta:null, prof:"todos", dia:null };
+let zag = { aberta:null, prof:"todos", dia:null, desde:null, longe:null, longePor:null, longeErro:null, longeCarr:false };
 function zagAberta(){ if(zag.aberta===null){ const v = ler("crm_zap_agenda"); zag.aberta = v ? v==="1" : !celular(); } return zag.aberta; }
 function zagAlternar(){ zag.aberta = !zagAberta(); guardar("crm_zap_agenda", zag.aberta ? "1" : "0"); pintarAgendaZap(); }
 function zagProf(pr){ zag.prof = pr; zag.dia = null; pintarAgendaZap(); }
 function zagDia(d){ zag.dia = zag.dia===d ? "" : d; pintarAgendaZap(); }
 // as vagas da Completa por dia, só dos profissionais escolhidos
 function zagDias(){
-  const r = agq.cache.todos; if(!r) return [];
+  const r = zag.desde ? zag.longe : agq.cache.todos; if(!r) return [];
   return r.dias.map(d=>({d, v:vagasDoDia(d).map(s=>({...s, profissional:s.profissional||"paulo"})).filter(s=>zag.prof==="todos" || s.profissional===zag.prof)}))
     .filter(x=>x.v.length);
 }
@@ -49009,7 +49018,7 @@ function zagConversa(){ return zapAberta ? zapConvs.find(c=>c.id===zapAberta) ||
 const telDaConversa = c => { const d = String((c&&c.telefone)||"").replace(/\D/g,""); return /^55\d{10,11}$/.test(d) ? d.slice(2) : d; };
 function pintarAgendaZap(){
   const el = document.getElementById("zap-ag"); if(!el) return;
-  const profs = PROFS_AGENDA, todos = profs.every(pr=>agq.cache[pr]);
+  const profs = PROFS_AGENDA, todos = zag.desde ? !!zag.longe : profs.every(pr=>agq.cache[pr]);
   const dias = zagDias(), total = dias.reduce((n, x)=>n + x.v.length, 0);
   if(!zagAberta()){
     el.innerHTML = `<button class="zag-pilula" onclick="zagAlternar()" aria-expanded="false" title="abrir a agenda de atendimentos">
@@ -49018,9 +49027,11 @@ function pintarAgendaZap(){
   }
   let corpo;
   if(!agendaUrl() || !agendaToken()) corpo = `<p class="zag-vazio">A agenda não está conectada neste navegador. <a href="#" onclick="event.preventDefault();irPara('agendaq')">Conectar na Agenda</a></p>`;
+  else if(zag.desde && zag.longeErro) corpo = `<p class="zag-vazio">${esc(zag.longeErro)}</p>`;
+  else if(zag.desde && !todos) corpo = `<p class="zag-vazio">procurando as vagas a partir de ${dataBR(zag.desde)}…</p>`;
   else if(agq.erro && !todos) corpo = `<p class="zag-vazio">${esc(agq.erro.message)} <button class="btn-mini" onclick="zagCarregar(true)">tentar de novo</button></p>`;
   else if(!todos) corpo = `<p class="zag-vazio">carregando as vagas…</p>`;
-  else if(!dias.length) corpo = `<p class="zag-vazio">Nenhuma vaga livre nos próximos dias${zag.prof==="todos"?"":` de ${esc(nomeProf(zag.prof))}`}.</p>`;
+  else if(!dias.length) corpo = `<p class="zag-vazio">Nenhuma vaga livre ${zag.desde?`a partir de ${dataBR(zag.desde)}`:"nos próximos dias"}${zag.prof==="todos"?"":` de ${esc(nomeProf(zag.prof))}`}.</p>${zagMais()}`;
   else {
     if(zag.dia===null || (zag.dia && !dias.some(x=>x.d.data===zag.dia))) zag.dia = dias[0].d.data;
     corpo = dias.map(({d, v})=>{
@@ -49031,7 +49042,7 @@ function pintarAgendaZap(){
         ${aberto ? `<div class="zag-vagas">${por.map(([pr, l])=>`<div class="zag-prof"><span><i class="aq-bola p-${pr}"></i>${esc(nomeProf(pr))}</span>
           <div class="zag-hs">${l.map(s=>`<button class="zag-vaga p-${pr} t${s.tipo}" data-zagvaga="${esc(s.eventoId)}" onclick="agendarPeloZap('${d.data}','${esc(s.eventoId)}')"
             title="agendar com ${esc(nomeProf(pr))} em ${dataBR(d.data)} às ${s.inicio}">${s.inicio}<small>${s.tipoFixo===false ? `${minDaVaga(s)} min` : s.tipo}</small></button>`).join("")}</div></div>`).join("")}</div>` : ""}`;
-    }).join("");
+    }).join("") + zagMais();
   }
   const c = zagConversa(), cli = c && c.cliente_id && D.cliPorId.get(c.cliente_id);
   el.innerHTML = `<section class="zag-cx" aria-label="Agenda de atendimentos">
@@ -49040,8 +49051,33 @@ function pintarAgendaZap(){
       <button onclick="zagAlternar()" title="recolher a agenda" aria-label="Recolher a agenda">▾</button></div>
     <div class="zag-profs" role="group" aria-label="Profissional">${[["todos","Todos"], ...profs.map(pr=>[pr, nomeProf(pr)])].map(([id, nm])=>
       `<button data-zagprof="${id}" aria-pressed="${zag.prof===id}" onclick="zagProf('${id}')">${id==="todos"?"":`<i class="aq-bola p-${id}"></i>`}${esc(nm)}</button>`).join("")}</div>
+    <div class="zag-desde"><label for="zag-desde">A partir de</label>
+      <input type="date" id="zag-desde" min="${hoje()}" value="${zag.desde||""}" onchange="zagBuscar(this.value)">
+      ${zag.desde?`<button class="zl-link" onclick="zagBuscar('')">voltar às próximas</button>`:""}</div>
     <p class="zag-para">${c ? `Agendar para: <b>${esc(cli ? cli.nome : (c.nome_perfil || fmtTelBR(telDaConversa(c))))}</b>${cli?"":" (não é cliente)"}` : "Clique na vaga para agendar sem sair do WhatsApp."}</p>
     <div class="zag-corpo">${corpo}</div></section>`;
+}
+// "Mais datas": continua do dia seguinte ao último que a busca trouxe
+function zagMais(){
+  const r = zag.desde ? zag.longe : agq.cache.todos, ult = r && r.dias.length && r.dias[r.dias.length-1].data;
+  if(!ult || zag.longeErro) return "";
+  const dep = new Date(ult+"T12:00:00"); dep.setDate(dep.getDate()+1);
+  return `<button class="zag-mais" onclick="zagBuscar('${dep.toISOString().slice(0,10)}')">Mais datas, depois de ${dataBR(ult)}</button>`;
+}
+// F281 · procurar a partir de uma data adiante (o cliente que quer janeiro): as três agendas a partir dela, sem mexer na agenda de hoje
+async function zagBuscar(desde){
+  desde = desde && desde > hoje() ? desde : "";
+  Object.assign(zag, {desde:desde||null, longe:null, longePor:null, longeErro:null, dia:null});
+  pintarAgendaZap();
+  if(!desde) return;
+  try{
+    const rs = await Promise.all(PROFS_AGENDA.map(pr=>agendaApi("disponibilidade", {profissional:pr, desde, dias: pr==="paulo" ? 5 : 25})));
+    if(zag.desde!==desde) return;
+    // a versão antiga do Apps Script não conhece o "desde" e devolve as datas de hoje
+    if(rs.some(r=>r.dias.length && r.dias[0].data < desde)) zag.longeErro = "Para procurar datas adiante, a agenda do Google precisa da versão nova do Apps Script (F281). Até lá, aparecem só as próximas datas.";
+    else { zag.longePor = Object.fromEntries(PROFS_AGENDA.map((pr, i)=>[pr, rs[i]])); zag.longe = {dias: juntarDias(rs)}; }
+  }catch(e){ if(zag.desde===desde) zag.longeErro = e.message; }
+  if(zag.desde===desde && visao==="whatsapp") pintarAgendaZap();
 }
 // as três agendas: a primeira vez, e de novo quando passou um minuto (ou no ↻)
 async function zagCarregar(forcar){
@@ -49053,8 +49089,12 @@ async function zagCarregar(forcar){
   if(visao==="whatsapp") pintarAgendaZap();
 }
 function agendarPeloZap(data, eventoId){
-  const dia = (agq.cache.todos||{dias:[]}).dias.find(d=>d.data===data);
+  const dia = ((zag.desde ? zag.longe : agq.cache.todos)||{dias:[]}).dias.find(d=>d.data===data);
   const s = vagasDoDia(dia).find(x=>x.eventoId===eventoId); if(!s) return;
+  // a data adiante entra na agenda do profissional, que é de onde o passo do horário lê os dias
+  const pr = s.profissional||"paulo", dPr = zag.longePor && zag.longePor[pr] && zag.longePor[pr].dias.find(d=>d.data===data);
+  if(dPr && agq.cache[pr] && !agq.cache[pr].dias.some(d=>d.data===data))
+    agq.cache[pr] = {...agq.cache[pr], dias:[...agq.cache[pr].dias, dPr].sort((a, b)=>a.data<b.data?-1:1)};
   const c = zagConversa(), cli = c && c.cliente_id && D.cliPorId.get(c.cliente_id);
   abrirFluxoAgenda({data, inicio:s.inicio, prof:s.profissional||"paulo", vaga:{eventoId, tipo:s.tipoFixo===false ? null : s.tipo},
     cli, tel:telDaConversa(c), busca:c && !cli ? (c.nome_perfil||"") : ""});
@@ -49448,7 +49488,7 @@ async function gravarFluxo(){
   pintarFluxo();
   await carregarAgenda(f.prof); if(f.prof!==agq.prof) await carregarAgenda(); if(f.prof!=="paulo") await carregarAgenda("paulo");
   montarSidebar(); if(visao==="agendaq") pintarAgenda();
-  if(visao==="whatsapp"){ juntarCompleta(); pintarAgendaZap(); }
+  if(visao==="whatsapp"){ juntarCompleta(); if(zag.desde) zagBuscar(zag.desde); else pintarAgendaZap(); }
 }
 
 // ── atalhos de teclado ────────────────────────────────────────────────────
