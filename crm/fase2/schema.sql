@@ -4611,9 +4611,11 @@ drop trigger if exists clientes_caixa on clientes;
 create trigger clientes_caixa before insert or update of nome, nome_mae, profissao, logradouro, complemento, bairro, cidade, endereco, uf
   on clientes for each row execute function clientes_caixa();
 
--- os já gravados: o update dispara o gatilho só onde há caixa alta
-update clientes set nome = nome, nome_mae = nome_mae, logradouro = logradouro, complemento = complemento,
-                    bairro = bairro, cidade = cidade, endereco = endereco
+-- os já gravados: o valor vai convertido, porque o a_sem_mudanca (suppress_redundant_updates_trigger,
+-- que roda antes) descarta o "set x = x" sem chegar ao clientes_caixa
+update clientes set nome = caixa_do_cadastro(nome), nome_mae = caixa_do_cadastro(nome_mae),
+                    logradouro = caixa_do_cadastro(logradouro), complemento = caixa_do_cadastro(complemento),
+                    bairro = caixa_do_cadastro(bairro), cidade = caixa_do_cadastro(cidade), endereco = caixa_do_cadastro(endereco)
  where (nome ~ '[A-Za-zÀ-ÿ]' and nome = upper(nome))
     or (nome_mae ~ '[A-Za-zÀ-ÿ]' and nome_mae = upper(nome_mae))
     or (logradouro ~ '[A-Za-zÀ-ÿ]' and logradouro = upper(logradouro))
