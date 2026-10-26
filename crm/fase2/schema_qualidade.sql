@@ -7,7 +7,7 @@
 -- se encerram. Com o aviso ligado, o WhatsApp lembra o cliente sozinho no
 -- primeiro dia útil do mês do pagamento, pelo mesmo caminho dos avisos de perícia
 -- (zap_mensagens, uma vez só por mês e plano).
--- F283 · os ajustes do Paulo (26.10.2026): "Pagar até" com dia, mês e ano (o
+-- F284 · os ajustes do Paulo (26.10.2026): "Pagar até" com dia, mês e ano (o
 -- vencimento do primeiro pagamento, que ancora o calendário), a primeira
 -- competência, a forma anual e o aviso no primeiro dia útil do mês.
 -- Rode no Supabase (SQL Editor). Pode rodar de novo sem estragar nada.
@@ -31,7 +31,7 @@ create table if not exists qualidade_planos (
   criado_por  uuid default eu_colab(),
   criado_em   timestamptz not null default now()
 );
--- F283 · o vencimento do primeiro pagamento; os seguintes caem no mesmo dia, pelo calendário da forma
+-- F284 · o vencimento do primeiro pagamento; os seguintes caem no mesmo dia, pelo calendário da forma
 alter table qualidade_planos add column if not exists pagar_ate date;
 alter table qualidade_planos drop constraint if exists qualidade_planos_modalidade_check;
 alter table qualidade_planos add constraint qualidade_planos_modalidade_check
@@ -88,7 +88,7 @@ insert into zap_avisos (chave, descricao, sobre, tipo_ev, dias_antes, texto, rev
 E'Olá, {nome}! Aqui é do escritório Paulo R. Tercini Filho. 🙂\n\nEste mês tem pagamento do INSS para manter a sua qualidade de segurado: guia *{codigo}*{valor}, *até {data}*.\n\nSe precisar da guia ou tiver qualquer dúvida, é só responder por aqui.',
  false, 9)
 on conflict (chave) do nothing;
--- F283 · o texto da primeira versão (ainda não mexido) passa a dizer o vencimento do mês
+-- F284 · o texto da primeira versão (ainda não mexido) passa a dizer o vencimento do mês
 update zap_avisos set descricao = 'Manutenção da qualidade de segurado — 1º dia útil do mês do pagamento',
   texto = E'Olá, {nome}! Aqui é do escritório Paulo R. Tercini Filho. 🙂\n\nEste mês tem pagamento do INSS para manter a sua qualidade de segurado: guia *{codigo}*{valor}, *até {data}*.\n\nSe precisar da guia ou tiver qualquer dúvida, é só responder por aqui.'
  where chave = 'qualidade_pagamento' and texto like '%é dia de pagar o INSS%';
