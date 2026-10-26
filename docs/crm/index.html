@@ -32729,11 +32729,12 @@ function qualidadeProximos(q, k, desde){
   }
   return out;
 }
-// o aviso do WhatsApp: o primeiro dia útil do mês do vencimento (a mesma regra de qualidade_primeiro_util)
+// o aviso do WhatsApp: o primeiro dia útil do mês do vencimento, sem sábado, domingo e feriado nacional (fixo ou
+// móvel), a mesma regra de qualidade_primeiro_util no banco
 function qualidadeAviso(venc){
-  const d = new Date(venc.slice(0,7)+"-01T12:00:00");
-  while([0,6].includes(d.getDay()) || ["01-01","05-01"].includes(d.toLocaleDateString("sv").slice(5))) d.setDate(d.getDate()+1);
-  return d.toLocaleDateString("sv");
+  let d = venc.slice(0,7)+"-01";
+  while([0,6].includes(new Date(d+"T12:00:00").getDay()) || feriadosNacionais(+d.slice(0,4)).has(d)) d = somaDias(d, 1);
+  return d;
 }
 const qualValor = v => v==null || v==="" ? "" : `R$ ${Number(v).toFixed(2).replace(".", ",")}`;
 const qualGuia = q => q.codigo==="MEI" ? "DAS do MEI" : q.codigo && q.codigo!=="outro" ? `GPS código ${q.codigo}` : "guia do INSS";

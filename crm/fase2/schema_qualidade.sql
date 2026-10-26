@@ -70,12 +70,31 @@ returns date language sql immutable as $$
              extract(day from (date_trunc('month', p_mes) + interval '1 month - 1 day'))::int) - 1))::date
 $$;
 
--- o primeiro dia útil do mês: nem sábado, nem domingo, nem 1º de janeiro, nem 1º de maio
+-- a Páscoa (Meeus/Jones/Butcher), para os feriados móveis: a mesma conta do app.html (pascoa)
+create or replace function qualidade_pascoa(p_ano int)
+returns date language plpgsql immutable as $$
+declare a int; b int; c int; d int; e int; f int; g int; h int; i int; k int; l int; m int; mes int; dia int;
+begin
+  a := p_ano % 19; b := p_ano / 100; c := p_ano % 100; d := b / 4; e := b % 4; f := (b + 8) / 25; g := (b - f + 1) / 3;
+  h := (19*a + b - d - g + 15) % 30; i := c / 4; k := c % 4; l := (32 + 2*e + 2*i - h - k) % 7; m := (a + 11*h + 22*l) / 451;
+  mes := (h + l - 7*m + 114) / 31; dia := ((h + l - 7*m + 114) % 31) + 1;
+  return make_date(p_ano, mes, dia);
+end $$;
+
+-- feriado nacional: os fixos (1º/1, 21/4, 1º/5, 7/9, 12/10, 2/11, 15/11, 20/11, 25/12) e os móveis (Carnaval,
+-- segunda e terça, Sexta-feira Santa e Corpus Christi), a mesma lista do app.html (feriadosNacionais)
+create or replace function qualidade_feriado(p_dia date)
+returns boolean language sql immutable as $$
+  select to_char(p_dia, 'MM-DD') in ('01-01','04-21','05-01','09-07','10-12','11-02','11-15','11-20','12-25')
+      or p_dia - qualidade_pascoa(extract(year from p_dia)::int) in (-48, -47, -2, 60)
+$$;
+
+-- o primeiro dia útil do mês: nem sábado, nem domingo, nem feriado nacional
 create or replace function qualidade_primeiro_util(p_mes date)
 returns date language plpgsql immutable as $$
 declare d date := date_trunc('month', p_mes)::date;
 begin
-  while extract(isodow from d) > 5 or to_char(d, 'MM-DD') in ('01-01','05-01') loop d := d + 1; end loop;
+  while extract(isodow from d) > 5 or qualidade_feriado(d) loop d := d + 1; end loop;
   return d;
 end $$;
 
