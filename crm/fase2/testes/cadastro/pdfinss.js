@@ -227,10 +227,10 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: CPF_DOC };
   // F29 · o cabeçalho completa a Identificação: mãe e os NITs nos campos vazios
   const patMae = escritos.find(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.nome_mae);
   conf("o nome da mãe e o NIT vazios se preenchem sozinhos na Identificação",
-    patMae && /PEDROSA/.test(patMae.corpo.nome_mae) && /123\.45678\.90-1/.test(patMae.corpo.pis_nit));
+    patMae && /PEDROSA/i.test(patMae.corpo.nome_mae) && /123\.45678\.90-1/.test(patMae.corpo.pis_nit));
   conf("e a memória da ficha já reflete o preenchimento",
     await p.evaluate(cli => { const c = D.cliPorId.get(cli);
-      return /PEDROSA/.test(c.nome_mae || "") && !!c.pis_nit; }, CLI_CHEIO));
+      return /PEDROSA/i.test(c.nome_mae || "") && !!c.pis_nit; }, CLI_CHEIO));
 
   // a resposta dada À MÃO e a nota que já existia não são tocadas pela releitura
   await p.evaluate(cli => { const c = D.cliPorId.get(cli);
