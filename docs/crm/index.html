@@ -3848,6 +3848,17 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .atend-conv-corpo{display:flex;flex-direction:column;gap:8px;margin-top:8px}
 .atend-nota{margin:0;font-size:13.5px;line-height:1.5;border-left:3px solid #E3DED3;padding-left:10px}
 .atend-conv-nova{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+/* F283 · as anotações fixas à direita no modo atendimento; na tela estreita ficam no pé, como antes */
+@media (min-width:1100px){
+  #detalhe.atend-tela{padding-right:392px}
+  #detalhe.atend-tela .atend-conversa{position:fixed;top:14px;right:16px;bottom:14px;width:360px;margin:0;overflow:auto;z-index:61;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+}
+.atend-docs{border-top:1px dashed #E7E6E1;padding-top:8px;font-size:13px}.atend-docs ul{margin:4px 0 6px;padding-left:18px}.atend-docs li.entregue{color:#686660}
+.atend-docs input{flex:1 1 200px;box-sizing:border-box;padding:8px 10px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:14px}
+.pa-prob{margin:0 0 14px;padding:12px 16px;border:2px solid #B3261E;border-radius:12px;background:#FCEDEC}
+.pa-prob h3{margin:0 0 4px;font-size:15px;color:#B3261E}.pa-prob ul{list-style:none;margin:8px 0 0;padding:0;max-height:340px;overflow:auto;display:flex;flex-direction:column;gap:6px}
+.pa-prob li{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;background:#fff;border-left:4px solid #B3261E;cursor:grab;font-size:13px}
+.pa-prob li.warn{border-left-color:#8F5400}.pa-prob li small{color:#686660;margin-right:4px}.pa-prob li .btn-mini{margin-left:auto;flex:none}
 .atend-conv-nova textarea{flex:1 1 320px;box-sizing:border-box;padding:9px 12px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:14px;resize:vertical}
 .pa-sem-dz{margin:0 0 12px;padding:10px 12px;border-radius:10px;background:#FFFFFF;border:1px dashed #CFCBC2;font-size:13px;display:flex;flex-direction:column;gap:8px}
 .pa-sem-dz p{margin:0;line-height:1.5}
@@ -17408,7 +17419,9 @@ function repintarFicha(){
     const y = (mesma && _rolPend) || [det ? det.scrollTop : 0, rol ? rol.scrollTop : 0, window.scrollY];
     // e o que estava aberto (o formulário da análise, um detalhe) continua aberto
     const abertos = mesma ? [...document.querySelectorAll("#detalhe details[id][open]")].map(x=>x.id) : [];
+    const rasc = mesma && (document.getElementById("atend-nota")||{}).value;   // F283 · a anotação ainda não gravada fica
     pintarFicha();
+    { const ta = document.getElementById("atend-nota"); if(rasc && ta && !ta.value) ta.value = rasc; }
     for(const id of abertos){ const e = document.getElementById(id); if(e) e.open = true; }
     { const novo = document.getElementById("ad-novo"); if(form && novo && form.dataset.pc===novo.dataset.pc) novo.replaceWith(form); }
     if(mesma){ _rolPend = y; requestAnimationFrame(()=>{ const d = document.getElementById("detalhe"), r = document.querySelector(".det-rolagem");
@@ -17920,7 +17933,6 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     ${cd==="pa" ? painelPA(c, ks) : ""}
     ${cd==="mapa" ? painelMapa(c, ks) : ""}
     ${cd==="direito" ? painelDireito(c) : ""}
-    ${tela && cd!=="identificacao" ? conversaAtendimento(c) : ""}
     ${cd!=="identificacao" ? "" : `
     ${/* a aposentadoria provável mudou-se para a aba 🔔 Lembretes: é aviso de
          data que chega, não dado de cadastro (pedido do Paulo) */""}
@@ -17993,7 +18005,8 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
       </div>
       <p style="margin-top:8px;font-size:12px;color:var(--cinza)">Toda visualização de senha é registrada (quem e quando).</p>
     </details>`;
-    })()}`}`;
+    })()}`}
+    ${tela ? conversaAtendimento(c) : ""}`;
 }
 // as divisões do Cadastro, na ordem em que o atendimento acontece
 // ordem da especificação F9 §2 — a do atendimento real. Mensagens fica no
@@ -18089,15 +18102,64 @@ const ATEND_SUBS = new Set(["pa","mapa","direito","documentos"]);
 function conversaAtendimento(c){
   const pc = preCasoAberto(c);
   const ns = ((c.campos||{}).atendimento||[]).filter(n=>!pc || !n.precaso_id || n.precaso_id===pc.id).slice(-6).reverse();
-  return `<details class="atend-conversa" id="atend-conversa" ${ns.length?"open":""}>
-    <summary>Conversa da equipe${ns.length?` (${ns.length})`:""} <span class="meio-sub">anotações deste atendimento · @nome avisa a pessoa</span></summary>
+  // F283 · no modo atendimento as anotações ficam abertas, fixas à direita em todos os passos (pedido do Paulo, 26.10.2026)
+  return `<details class="atend-conversa" id="atend-conversa" open ondragover="event.preventDefault()" ondrop="probSoltar(event)">
+    <summary>Anotações do atendimento${ns.length?` (${ns.length})`:""} <span class="meio-sub">@nome avisa a pessoa</span></summary>
     <div class="atend-conv-corpo">
       ${ns.map(n=>`<p class="atend-nota"><b>${esc(n.quem||"")}</b> <span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span><br>${destacarMencoes(esc(String(n.texto||"")))}</p>`).join("")
         || `<p class="meio-sub">Nenhuma anotação ainda neste atendimento.</p>`}
       <div class="atend-conv-nova"><textarea id="atend-nota" rows="2" placeholder="Anote para a equipe; @Amanda avisa a Amanda"></textarea>
         <button type="button" class="adr-bt adr-primario" onclick="notaDoAtendimento('${c.id}')">Anotar</button></div>
+      ${docsAnotadosHtml(c, pc)}
     </div></details>`;
 }
+// F283 · os documentos a pedir, anotados durante o atendimento: um pedido do pré-caso em `campos.docs_pedidos`
+// (origem "anotacoes"), o mesmo lugar que o Trouxe documentos e o Pedir ao cliente leem
+const pcDoPedido = pc => pc && pc.id!=="legado" ? pc.id : null;
+const docsAnotadosDe = (c, pc) => ((c.campos||{}).docs_pedidos||[]).find(p=>p.origem==="anotacoes" && (p.precaso_id||null)===pcDoPedido(pc));
+function docsAnotadosHtml(c, pc){
+  const its = (docsAnotadosDe(c, pc)||{}).itens||[];
+  return `<div class="atend-docs"><b>Documentos a pedir${its.length?` (${its.length})`:""}</b>
+    ${its.length ? `<ul>${its.map((it, i)=>`<li${it.entregue?' class="entregue"':""}>${esc(it.nome)}${it.entregue ? ` <small class="meio-sub">entregue em ${esc(fmtBarra(it.entregue))}</small>` : ` <button type="button" class="olho" title="tirar da lista" aria-label="tirar ${esc(it.nome)} da lista" onclick="docDesanotar('${c.id}',${i})">✕</button>`}</li>`).join("")}</ul>` : ""}
+    <div class="atend-conv-nova"><input id="atend-doc" type="text" placeholder="Ex.: laudo do ortopedista atualizado" onkeydown="if(event.key==='Enter')docAnotar('${c.id}')">
+      <button type="button" class="adr-bt" onclick="docAnotar('${c.id}')">Pedir</button></div></div>`;
+}
+async function gravarDocsAnotados(c, muda){
+  const pc = preCasoAberto(c), peds = JSON.parse(JSON.stringify((c.campos||{}).docs_pedidos||[]));
+  let p = peds.find(x=>x.origem==="anotacoes" && (x.precaso_id||null)===pcDoPedido(pc));
+  if(!p){ p = {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], origem:"anotacoes", especie:(pc && pc.especie) || "benefício a definir", ...(pcDoPedido(pc) ? {precaso_id:pc.id} : {}), itens:[]}; peds.push(p); }
+  muda(p.itens);
+  const campos = {...(c.campos||{}), docs_pedidos:peds.filter(x=>x!==p || x.itens.length)};
+  try{ await api(`/rest/v1/clientes?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos})}); }
+  catch(e){ aviso("Não consegui gravar o documento — tente de novo"); return false; }
+  c.campos = campos; repintarFicha(); return true;
+}
+async function docAnotar(cliId){
+  const c = D.cliPorId.get(cliId), inp = document.getElementById("atend-doc"); if(!c || !inp) return;
+  const t = (inp.value||"").trim(); if(!t) return aviso("Escreva o documento");
+  await gravarDocsAnotados(c, its=>{ if(!its.some(i=>dsa(i.nome)===dsa(t))) its.push({nome:t, entregue:null}); });
+}
+async function docDesanotar(cliId, i){ const c = D.cliPorId.get(cliId); if(c) await gravarDocsAnotados(c, its=>its.splice(i, 1)); }
+// F283 · o quadro vermelho da Análise de Direito: o que o Primeiro atendimento marcou em vermelho ou amarelo, para arrastar às anotações
+function problemasDoPA(c, ks){
+  let qs = []; try{ qs = quadrosDoPA(c, ks).quadros; }catch(e){ return []; }
+  const ruim = e => e==="crit" || e==="warn";
+  return qs.flatMap(q=>[...(q.blocos||[]).filter(b=>ruim(b[2])).map(b=>({txt:`${b[0]}: ${b[1]}`, est:b[2]})), ...q.itens.filter(x=>ruim(x.est))]
+    .map(x=>({txt:x.txt, est:x.est, q:q.rot}))).sort((a, b)=>(a.est==="crit" ? 0 : 1) - (b.est==="crit" ? 0 : 1));
+}
+function quadroProblemasPA(c, ks){
+  const ps = problemasDoPA(c, ks); if(!ps.length) return "";
+  return `<section class="pa-prob" aria-label="Problemas vistos no Primeiro atendimento">
+    <h3>Problemas vistos no Primeiro atendimento (${ps.length})</h3>
+    <p class="meio-sub">Arraste um problema para as anotações, ou use "anotar".</p>
+    <ul>${ps.map(p=>`<li class="${p.est}" draggable="true" data-txt="${esc(`${p.q}: ${p.txt}`)}" ondragstart="event.dataTransfer.setData('text/plain', this.dataset.txt)">
+      <span><small>${esc(p.q)}</small> ${esc(p.txt)}</span><button type="button" class="btn-mini" onclick="probParaNota(this.closest('li').dataset.txt)">anotar</button></li>`).join("")}</ul></section>`;
+}
+function probParaNota(txt){
+  const ta = document.getElementById("atend-nota"); if(!ta || !txt) return;
+  ta.value = (ta.value.trim() ? ta.value.trim() + "\n" : "") + txt; ta.focus();
+}
+function probSoltar(ev){ ev.preventDefault(); probParaNota(ev.dataTransfer.getData("text/plain")); }
 async function notaDoAtendimento(cliId){
   const c = D.cliPorId.get(cliId), ta = document.getElementById("atend-nota"); if(!c || !ta) return;
   const t = (ta.value||"").trim(); if(!t) return aviso("Escreva a anotação");
@@ -23615,6 +23677,7 @@ function painelDireito(c){
       ${cnisDe(c)&&cnisDe(c).caminho?`<button type="button" class="tl-bt" onclick="abrirCnis('${c.id}')" title="abre o extrato guardado em outra aba (CNIS de ${esc(fmt(cnisDe(c).em))})">Abrir CNIS</button>`
         :`<button type="button" class="tl-bt tl-falta" onclick="irSubCad('identificacao')" title="o CNIS ainda não foi inserido: insira na Identificação">Inserir CNIS</button>`}</span>
     </div>
+    ${atend ? quadroProblemasPA(c, ks) : ""}
     <div class="adx-grade">${principal}
       <aside class="adx-lado">${listaConsideracoes(c)}</aside></div>
     ${atend ? `<details class="adr-hist" id="ad-hist"><summary>Análises anteriores e histórico</summary>` : ""}
