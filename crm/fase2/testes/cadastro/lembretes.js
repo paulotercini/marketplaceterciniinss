@@ -197,9 +197,9 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725" };
   const ordem = await p.evaluate(() => {
     const painel = document.querySelector("#modal");
     const y = sel => { const e = painel.querySelector(sel); return e ? Math.round(e.getBoundingClientRect().y) : null; };
-    return { apos: y(".apos-faixa"), novo: y(".lb-novo"), contas: y(".conta-cx") };
+    return { apos: y(".af-todo h4"), novo: y(".lb-novo"), contas: y(".conta-cx") };   // F278 · a aposentadoria provável fica no quadro; a janela abre na lista do To Do
   });
-  conf(`a aposentadoria provável abre a aba (y ${ordem.apos})`, ordem.apos !== null);
+  conf(`a janela abre na lista do Microsoft To Do (y ${ordem.apos})`, ordem.apos !== null);
   conf(`o "＋ novo lembrete" vem depois (y ${ordem.novo})`,
     ordem.novo !== null && ordem.novo > ordem.apos);
   conf(`e as contas fecham a aba (y ${ordem.contas})`,

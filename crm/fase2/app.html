@@ -4864,6 +4864,39 @@ html .tl-tarefa .tf-prog.on{background:var(--azul-fundo,#E6F0EF);border-color:va
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-mais{min-height:28px;padding:0 12px;font-size:12.5px;font-weight:500;border-color:var(--azul);color:var(--azul-escuro)}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-circ{width:22px;height:22px}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini a{font-weight:500}
+/* F278 · o caso em três colunas: o caso, os andamentos e os prazos; com o WhatsApp aberto, os prazos descem para baixo do caso */
+@container ficha (min-width:900px){
+  html[data-tema="v10"] .caso-2col.caso-3col{grid-template-columns:280px minmax(0,1fr) 250px;grid-template-areas:"esq dir pz";gap:0 18px}
+  html[data-tema="v10"] .caso-3col > .caso-esq:not(.caso-pz){grid-area:esq}
+  html[data-tema="v10"] .caso-3col > .caso-dir{grid-area:dir}
+  html[data-tema="v10"] .caso-3col > .caso-pz{grid-area:pz}
+  html[data-tema="v10"] body.zap-aberto .caso-2col.caso-3col{grid-template-columns:300px minmax(0,1fr);grid-template-areas:"esq dir" "pz dir";grid-template-rows:auto 1fr}
+  html[data-tema="v10"] body.zap-aberto .caso-3col > .caso-esq{position:static;max-height:none}
+}
+@container ficha (max-width:899px){
+  html[data-tema="v10"] .caso-3col{display:flex;flex-direction:column}
+  html[data-tema="v10"] .caso-3col > .caso-pz{order:1}
+  html[data-tema="v10"] .caso-3col > .caso-dir{order:2}
+}
+html[data-tema="v10"] .caso-pz .faixa-prazos{margin-top:0}
+html[data-tema="v10"] body.zap-aberto .caso-pz .faixa-prazos{margin-top:12px}
+html[data-tema="v10"] .tr-faixa .tr-corpo{position:relative}
+html[data-tema="v10"] .tr-faixa .tr-rec-menos{position:absolute;top:6px;right:10px;z-index:2;width:24px;height:24px;border:1px solid var(--borda);border-radius:6px;background:#fff;color:#4A4944;font-size:16px;line-height:1;cursor:pointer}
+html[data-tema="v10"] .tr-faixa .tr-oculta{padding:4px 12px 6px}
+html[data-tema="v10"] .tr-faixa .tr-oculta .tr-recolher{border:0;background:none;color:var(--azul-escuro);font-size:12.5px;cursor:pointer;padding:4px 0}
+/* com três colunas o meio é mais estreito: o campo de escrever ocupa a linha e os botões descem */
+html[data-tema="v10"] .app:not(.celular) .caso-3col .escrever.esc-v12:not(.esc-aberto){flex-wrap:wrap}
+html[data-tema="v10"] .app:not(.celular) .caso-3col .escrever.esc-v12:not(.esc-aberto) #and-texto{flex:1 1 100%}
+html .idf-apos .ac-abrir{margin-left:auto}
+html .idf-apos .ac-abrir + .ac-mais{margin-left:0}
+.af-notas,.af-todo{margin:0 0 14px}
+.af-notas h4,.af-todo h4{margin:0 0 6px;font-size:14px;font-weight:500}
+html .desf .desf-saidas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:12px 0 0}
+html .desf .desf-saida{border:1px solid var(--borda);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--branco,#fff)}
+html .desf .desf-saida h4{margin:0;font-size:14px;font-weight:500}
+html .desf .desf-saida p{margin:0}
+html .desf .ds-caso{grid-column:1 / -1}
+html .desf .desf-saida .cc-form{margin:0}
 /* F277 · o quadro Aposentadoria do Cadastro e o Criar caso */
 html .idf-apos .adr-h{display:flex;align-items:center;gap:8px}
 html .idf-apos .ac-mais{margin-left:auto}
@@ -17444,6 +17477,9 @@ function pintarFicha(){
           :`<span class="avatar" style="--av:${corDoNome(c.nome)}">${esc(c.nome[0])}</span>`)(fotoDoCliente(c.id))}<h2>${esc(c.nome)}</h2>
         <span class="cli-casos-seta">▾</span>
       </span>${temaV10() ? linhaAdvogado(c) : ""}</span>
+      ${/* F278 · o copiar o nome volta ao lado do nome (pedido do Paulo, 25.10.2026) */""}
+      <button class="olho" title="copiar o nome do cliente"
+        onclick="copiar('${escJs(c.nome)}','Nome copiado')">📋</button>
       ${/* F101 · a parceria ao lado do nome, só quando existe: quem abre a
            ficha vê de cara que o caso é dividido com outro advogado */""}
       ${chipParceria(c, ks)}
@@ -17452,7 +17488,6 @@ function pintarFicha(){
       ${/* F274 · o que não se usa a toda hora vai ao ⋯ do cabeçalho; CPF e a senha do Meu INSS ficam à vista (pedido do Paulo) */""}
       ${menuMais([
         casosDoBalcao(cliId).length ? `<button class="tl-mais-it td-abrir" role="menuitem" onclick="trouxeDocumentos('${cliId}')">Trouxe documentos</button>` : "",
-        `<button class="tl-mais-it" role="menuitem" title="copiar o nome do cliente" onclick="copiar('${escJs(c.nome)}','Nome copiado')">Copiar o nome</button>`,
         c.telefone ? `<button class="tl-mais-it" role="menuitem" onclick="abrirSmbot('${c.id}')">Abrir no SMBot</button>` : "",
         temaV10() ? itemNaoCliente(c) : "",
       ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo det-mais"')}
@@ -17554,8 +17589,9 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}${(t=>t ? t.replace(/<\/section>\s*$/, `${faixaIncapacidade(k)}</section>`) : faixaIncapacidade(k))(faixaTrilha(k))}<div class="caso-2col"><aside class="caso-esq" aria-label="O caso e os prazos">${/* F243 · os prazos vêm primeiro: são a primeira leitura do colaborador */""}${faixaPrazos(k)}${linhaCaso(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir">${bannerAClassificar(k)}${menu}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div></div>`
+        ? `${faixaFixo(k)}${(t=>t ? t.replace(/<\/section>\s*$/, `${faixaIncapacidade(k)}</section>`) : faixaIncapacidade(k))(faixaTrilha(k))}<div class="caso-2col caso-3col"><aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
+           <div class="caso-dir">${bannerAClassificar(k)}${menu}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div>
+           <aside class="caso-esq caso-pz" aria-label="Prazos e compromissos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
             : aba==="inss" ? painelINSS(k, andsVis)
@@ -22346,7 +22382,7 @@ function renderCardsApos(){
   document.getElementById("conteudo-meio").innerHTML = `<div class="filtros">${hs.map(([h, rot])=>`<button class="fchip${sel===h?" on":""}" data-horiz="${h}" onclick="_cardsFiltro='${h}';render()">${rot} (${n[h]})</button>`).join("")}</div>`
     + (porEtapa.map(([e, rot, ls])=>`<h3 class="secao">${esc(rot)} (${ls.length})</h3>${ls.map(cartaoApos).join("")}`).join("") || "<p class='meio-sub'>Nenhum card neste horizonte.</p>");
 }
-function painelLembretes(c){
+function painelLembretes(c, naJanela){
   const ls = lembretesDo(c.id).sort((a,b)=>(a.proximo_em||"9999")<(b.proximo_em||"9999")?-1:1);
   const apos = aposDoCliente(c);
   // F30 · atendimento resolvido em LEMBRETE: as anotações vêm morar aqui —
@@ -22406,8 +22442,9 @@ function painelLembretes(c){
   // ordem pedida pelo Paulo: aposentadoria provável no topo, os lembretes,
   // um botão só para criar, e as contas no pé. A aba é sobre DATA QUE CHEGA, e
   // tudo o que não é data que chega ficou de fora para a página não pesar.
-  return `<div class="apos-faixa" style="justify-content:flex-start">${caixaApos(c)}${caixaDossie(c)}</div>
-    ${notasAqui.length?`<div class="caso" style="border-left:3px solid var(--verde)">
+  // F278 · na janela do quadro Aposentadoria, a aposentadoria provável já está no quadro e as anotações no alto da janela
+  return `${naJanela ? "" : `<div class="apos-faixa" style="justify-content:flex-start">${caixaApos(c)}${caixaDossie(c)}</div>`}
+    ${notasAqui.length && !naJanela?`<div class="caso" style="border-left:3px solid var(--verde)">
       <div class="rotulo-caso">Anotações do atendimento que virou lembrete</div>
       <ul class="mov-lista" style="margin-top:4px">${notasAqui.slice().reverse().map(n=>`<li>
         <span class="mov-data">${n.em?fmt(n.em.slice(0,10)):"—"}</span>
@@ -32538,7 +32575,8 @@ function caixaAposCadastro(c){
     : auto ? `Por idade: ${auto.sexoUsado==="F" ? "mulher aos 62" : "homem aos 65"} anos${auto.suposto ? " (sexo deduzido pelo nome; confira ao lado)" : ""}.`
     : !sexoDe(c) ? "Informe o sexo para calcular a aposentadoria por idade." : "";
   return `<section class="idf-card idf-apos" aria-labelledby="idf-apos">
-    <h3 class="adr-h" id="idf-apos">Aposentadoria <button type="button" class="cad-mini ac-mais" onclick="novaAposCad('${c.id}')"
+    <h3 class="adr-h" id="idf-apos">Aposentadoria <button type="button" class="cad-mini ac-abrir" onclick="verAposFuturas('${c.id}')"
+      title="as anotações do pré-caso ou do caso que foi para Aposentadorias futuras e a lista do Microsoft To Do">Abrir</button><button type="button" class="cad-mini ac-mais" onclick="novaAposCad('${c.id}')"
       title="acrescentar uma aposentadoria: o nome, a data e quando avisar" aria-label="acrescentar aposentadoria">${CAD_IC.mais}</button></h3>
     ${linhas.length ? `<ul class="ac-lista">${linhas.join("")}</ul>` : ""}
     ${nota ? `<p class="meio-sub ac-nota">${esc(nota)}</p>` : ""}
@@ -32570,7 +32608,24 @@ async function salvarAposCad(cliId){
   abrirFicha(cliId);
 }
 // os cards de Aposentadorias futuras (o que era a aba): anotações do To Do, avisos e contas, numa janela
-function conteudoAposFuturas(c){ return `<h3 style="margin:0 0 8px">Aposentadorias futuras de ${esc(String(c.nome||"").split(" ")[0])}</h3>${painelLembretes(c)}`; }
+// F278 · o Abrir do quadro: as anotações do pré-caso que virou aposentadoria futura e do caso que foi para lá, e os cards
+// de Aposentadorias futuras do Microsoft To Do (com as anotações de cada um)
+function conteudoAposFuturas(c){
+  const pcs = precasosDe(c).filter(p=>p.so_lembrete), cp = c.campos||{};
+  const notasPc = pcs.length ? (cp.atendimento||[]) : [];
+  const casosAF = (D.casosDoCliente.get(c.id)||[]).filter(k=>(D.lembretes||[]).some(l=>l.origem_caso===k.id && l.ativo!==false) || k.fase==="aposentadoria_futura");
+  const andsK = k => (D._andsFicha||[]).filter(a=>a.caso_id===k.id).sort((a,b)=>String(b.criado_em).localeCompare(String(a.criado_em))).slice(0,8);
+  const li = (q, quem, txt) => `<li><span class="mov-data">${q ? fmt(String(q).slice(0,10)) : "—"}</span><span class="mov-txt">${quem ? `<b>${esc(quem)}:</b> ` : ""}${esc(txt||"")}</span></li>`;
+  const nomeDe = id => ((D.colPorId.get(id)||{}).nome||"").split(" ")[0];
+  const blocoNotas = notasPc.length || casosAF.length ? `<section class="af-notas"><h4>Anotações</h4>
+    ${notasPc.length ? `<div class="rotulo-caso">Do pré-caso que virou aposentadoria futura${pcs[0].especie ? ` · ${esc(pcs[0].especie)}` : ""}</div>
+      <ul class="mov-lista">${notasPc.slice().reverse().map(n=>li(n.em, n.quem, n.texto)).join("")}</ul>` : ""}
+    ${casosAF.map(k=>`<div class="rotulo-caso">Do caso ${esc(tituloCaso(k))}${k.fase==="encerrado" ? " (encerrado)" : ""}</div>
+      <ul class="mov-lista">${andsK(k).map(a=>li(a.criado_em, nomeDe(a.autor_id), a.texto)).join("") || `<li class="meio-sub">sem anotações carregadas</li>`}</ul>`).join("")}
+  </section>` : "";
+  return `<h3 style="margin:0 0 8px">Aposentadorias futuras de ${esc(String(c.nome||"").split(" ")[0])}</h3>
+    ${blocoNotas}<section class="af-todo"><h4>Do Microsoft To Do</h4>${painelLembretes(c, true)}</section>`;
+}
 function verAposFuturas(cliId){
   const c = D.cliPorId.get(cliId); if(!c) return;
   caixa(`<div class="apos-modal" data-cli="${c.id}">${conteudoAposFuturas(c)}</div>`);
@@ -35720,8 +35775,11 @@ function faixaTrilha(k){
   // tipo de processo, a legenda e "esta fase não houve" ficam no "?", que ganha um ponto quando o tipo pede confirmação
   return `<section class="tr-faixa tr tr-compacta" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}" aria-label="Jornada e trilha do caso">
     <div class="jn-l" role="tablist" aria-label="Fases do caso">${abas}<button class="tr-ajuda${confirma ? " tr-ajuda-pend" : ""}" aria-expanded="${trAjuda}" aria-controls="tr-leg"
-      title="${esc(`${T.nome}: o tipo de processo e o que cada marca quer dizer`)}" onclick="trAjuda=!trAjuda;trRepintar()">?</button></div>
-    <div class="tr-corpo">
+      title="${esc(`${T.nome}: o tipo de processo e o que cada marca quer dizer`)}" onclick="trAjuda=!trAjuda;trRepintar()">?</button>
+</div>
+    ${/* F278 · o − recolhe as etapas e o + as devolve; a escolha fica guardada neste computador (pedido do Paulo, 25.10.2026) */""}
+    ${trOculta() ? `<div class="tr-oculta"><button type="button" class="tr-recolher" aria-expanded="false" onclick="guardar('crm_trilha_oculta','');trRepintar()">+ mostrar as etapas</button></div>` : `<div class="tr-corpo">
+      <button type="button" class="tr-recolher tr-rec-menos" aria-expanded="true" title="esconder as etapas" aria-label="esconder as etapas" onclick="guardar('crm_trilha_oculta','1');trRepintar()">−</button>
       ${trAjuda ? `<div class="tr-cab"><h3>${esc(T.nome)}</h3>${ver===faseAt ? "" : `<span class="meio-sub">${stVer==="v"?"fase ainda não alcançada":"fase anterior"}</span>`}
         ${houveBt}${chips}</div>` : ""}
       ${leg}
@@ -35729,8 +35787,9 @@ function faixaTrilha(k){
         <div class="tr-rol" onscroll="trSombra(this)"><ol class="tr-l" style="--n:${itens.length}">${itens.join("")}</ol></div>
         <button class="tr-seta tr-seta-dir" aria-label="próximas etapas" tabindex="-1" onclick="trRolar(1)">›</button></div>
       ${pnl}
-    </div></section>`;
+    </div>`}</section>`;
 }
+const trOculta = () => ler("crm_trilha_oculta")==="1";
 // repinta sem perder a rolagem da ficha e põe a etapa atual no meio da trilha
 function trRepintar(){
   const rol = document.querySelector(".det-rolagem"), y = rol ? rol.scrollTop : 0;
@@ -45593,7 +45652,11 @@ function quadroDesfecho(c){
     ${pc.etapas && pc.etapas.analise ? "" : `<p class="meio-sub">Registre a Análise de Direito: a espécie decidida nela desce ao pré-caso e ao caso.</p>`}
     ${/* F277 · CRIAR CASO (pedido do Paulo, 25.10.2026): o caso nasce aqui, com o início (INSS, Conselho de Recursos ou
          Judicial) e o número do protocolo ou do processo; arquivar e Aposentadorias futuras seguem como as outras saídas */""}
-    <div class="cc-form">
+    ${/* F278 · o fim do atendimento em três saídas lado a lado (pedido do Paulo, 25.10.2026): Criar caso, Criar aposentadoria
+         futura ou Encerrar */""}
+    <div class="desf-saidas">
+    <div class="desf-saida ds-caso"><h4>Criar caso</h4>
+      <div class="cc-form">
       <label>Início <select id="cc-inicio" onchange="document.getElementById('cc-num-rot').textContent=this.value==='judicial'?'Número do processo':'Número do protocolo'">
         ${[["","escolha…"],["inss","INSS"],["conselho","Conselho de Recursos"],["judicial","Judicial"]].map(([v,r])=>`<option value="${v}"${(pc.inicio||(pc.via==="jud"?"judicial":""))===v?" selected":""}>${r}</option>`).join("")}</select></label>
       <label><span id="cc-num-rot">${(pc.inicio||(pc.via==="jud"?"judicial":""))==="judicial" ? "Número do processo" : "Número do protocolo"}</span>
@@ -45601,10 +45664,14 @@ function quadroDesfecho(c){
       <button type="button" class="adr-bt${b.sug==="caso"?" adr-primario":""}" ${(!!pc.especie || !!(a && (a.detalhes||{}).servico) || b.linhas.some(l=>l.acao==="caso"))?"":"disabled"} onclick="criarCasoDoAtend('${c.id}')"
         title="o pré-caso vira o caso, na lista do início escolhido; a procuração e o contrato saem em Documentos">Criar caso</button>
     </div>
-    <div class="desf-acoes desf-outras"><span class="meio-sub">Ou:</span>
-      <select class="card-arquivar" aria-label="Arquivar o pré-caso" onchange="if(this.value){desfechoConfirmarArquivo('${c.id}',this.value);this.value=''}"><option value="">Arquivar…${b.linhas.some(l=>l.prazo) ? " (há prazo correndo: não arquive)" : ""}</option>${/* F235 · a isenção de IR é para aposentado: "Já aposentado" não é motivo de arquivá-la */""}${APOS_MOTIVOS.filter(m=>!(m==="Já aposentado" && opcoesSel(c).some(o=>o.o==="IIR"))).map(m=>`<option>${m}</option>`).join("")}</select>
-      ${bt("lembrete", lig ? "Atualizar em Aposentadorias futuras" : "Enviar a Aposentadorias futuras", podeLemb, `desfechoLembrete('${c.id}')`, lig ? "grava no card a etapa Analisado, a data do direito, o aviso 3 meses antes e o pedido de documentos 60 dias antes" : "cria o card em Aposentadorias futuras com a data do direito; o pré-caso sai do Escritório")}
-    </div></section>`;
+    </div>
+    <div class="desf-saida ds-af"><h4>Criar aposentadoria futura</h4><p class="meio-sub">Guarda a data do direito no quadro Aposentadoria e avisa 3 meses antes.</p>
+      ${bt("lembrete", lig ? "Atualizar a aposentadoria futura" : "Criar aposentadoria futura", podeLemb, `desfechoLembrete('${c.id}')`, lig ? "grava no card a etapa Analisado, a data do direito, o aviso 3 meses antes e o pedido de documentos 60 dias antes" : "cria o card em Aposentadorias futuras com a data do direito; o pré-caso sai do Escritório")}
+    </div>
+    <div class="desf-saida ds-enc"><h4>Encerrar</h4><p class="meio-sub">O pré-caso sai da lista Escritório, com o motivo anotado.</p>
+      <select class="card-arquivar" aria-label="Encerrar o atendimento: o motivo" onchange="if(this.value){desfechoConfirmarArquivo('${c.id}',this.value);this.value=''}"><option value="">o motivo…${b.linhas.some(l=>l.prazo) ? " (há prazo correndo: não encerre)" : ""}</option>${/* F235 · a isenção de IR é para aposentado: "Já aposentado" não é motivo de arquivá-la */""}${APOS_MOTIVOS.filter(m=>!(m==="Já aposentado" && opcoesSel(c).some(o=>o.o==="IIR"))).map(m=>`<option>${m}</option>`).join("")}</select>
+    </div>
+</div></section>`;
 }
 async function desfechoLembrete(cliId){
   const c = D.cliPorId.get(cliId), pc = c && preCasoAberto(c); if(!pc) return;
@@ -45711,10 +45778,10 @@ function desfechoConfirmarArquivo(cliId, motivo){
   let pz = null; try{ pz = prazosDoDossie(c)[0]; }catch(e){}
   const lp = desfechoPorBenef(c).find(l=>l.prazo);
   const alerta = pz ? `Há prazo correndo: ${pz.texto} (${faltamTxt(pz.fatal)}).` : lp ? `Há prazo correndo: ${lp.o.rot}, ${lp.txt.replace(/^gere o caso já:\s*/, "")}.` : "";
-  caixa(`<div class="adr-modal" role="dialog" aria-labelledby="desf-arq"><h3 id="desf-arq">Arquivar este atendimento: ${esc(motivo)}?</h3>
+  caixa(`<div class="adr-modal" role="dialog" aria-labelledby="desf-arq"><h3 id="desf-arq">Encerrar este atendimento: ${esc(motivo)}?</h3>
     ${alerta ? `<p class="meio-sub desf-alerta" style="margin:0">${esc(alerta)}</p>` : `<p class="meio-sub" style="margin:0">O pré-caso sai da mesa e a anotação registra o motivo.</p>`}
     <div class="adr-modal-bts"><button type="button" class="adr-bt adr-primario" onclick="fecharCaixa()">Voltar</button>
-      <button type="button" class="adr-bt" onclick="fecharCaixa();desfechoArquivar('${cliId}','${esc(motivo).replace(/'/g, "&#39;")}')">Arquivar</button></div></div>`);
+      <button type="button" class="adr-bt" onclick="fecharCaixa();desfechoArquivar('${cliId}','${esc(motivo).replace(/'/g, "&#39;")}')">Encerrar</button></div></div>`);
 }
 // arquivar: o pré-caso sai da mesa para campos.pc_arquivados, com o motivo, e a anotação registra; o card ligado arquiva junto
 async function desfechoArquivar(cliId, motivo){
