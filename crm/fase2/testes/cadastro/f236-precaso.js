@@ -185,7 +185,8 @@ const cli = c => T.clientes.find(x => x.id === c);
   conf("Abrir a análise leva à Análise de Direito dessa análise, com os requisitos na ficha dela",
     await p.evaluate(a => abaAtiva === 0 && subCad === "direito" && _adSel.get(clienteAberto) === a, AV) && /Requisitos registrados · Por idade/.test(await texto(".adr-ficha")));
   await p.evaluate(() => { abaAtiva = 9; repintarFicha(); });
-  conf("a aposentadoria provável diz que está em caso", /em caso:/.test(await texto("#apos-cx")));
+  conf("a aposentadoria provável diz que está em caso (no quadro Aposentadoria do Cadastro, F277)", /em caso:/.test(await texto(".idf-apos")));
+  await p.evaluate(() => fecharCaixa());
 
   // ── 3 · o card com o direito alcançado (achados A: alarme e recado) ──
   await p.evaluate(sx => abrirFicha(sx), S);

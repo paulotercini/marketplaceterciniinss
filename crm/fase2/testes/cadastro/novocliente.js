@@ -426,17 +426,18 @@ FIX.colaboradores = [...FIX.colaboradores,
     "c0000000-0000-0000-0000-000000000002");
   await p.evaluate(() => repintarFicha());
   await p.waitForTimeout(500);
-  conf("encerrada a triagem, a aba Lembretes aparece",
-    await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")]
+  // F277 · as Aposentadorias futuras viraram o quadro Aposentadoria da Identificação, sem aba no menu
+  conf("encerrada a triagem, o Cadastro traz o quadro Aposentadoria, sem aba no menu",
+    await p.evaluate(() => /Aposentadoria/.test(caixaAposCadastro(D.cliPorId.get(clienteAberto))) && ![...document.querySelectorAll(".menu-topo .mt")]
       .some(b => /Aposentadorias futuras/.test(b.textContent))));
   conf("e o botão Anotações também",
     await p.evaluate(() => [...document.querySelectorAll(".sub-menu:not(.anot-trilho) button")]
       .some(b => /Anota/.test(b.textContent))));
   conf("o relato do balcão sai da Triagem (agora mora nas Anotações)",
     await p.evaluate(() => !document.querySelector(".tri-balcao")));
-  conf("cliente COM caso segue vendo Lembretes e Anotações como sempre",
-    await p.evaluate(async cli => { await abrirFicha(cli);
-      return [...document.querySelectorAll(".menu-topo .mt")].some(b => /Aposentadorias futuras/.test(b.textContent)); },
+  conf("cliente COM caso também tem o quadro Aposentadoria no Cadastro",
+    await p.evaluate(async cli => { await abrirFicha(cli); abaAtiva = 0; irSubCad("identificacao");
+      return !!document.querySelector(".idf-apos"); },
       CLI_CHEIO));
 
   // ── 5. cliente só com pré-caso também aparece em atendimento ────────────

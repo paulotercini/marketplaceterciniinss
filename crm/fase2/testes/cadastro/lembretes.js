@@ -192,15 +192,14 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725" };
     pintarFicha(); }, [CLI_CHEIO, CASO1]);
   // a aba Lembretes é a data-vv="9", não a 1: a numeração das abas não é a
   // ordem em que elas aparecem
-  await p.waitForSelector('button.mt[data-vv="9"]');
-  await p.click('button.mt[data-vv="9"]');
+  await p.evaluate(() => verAposFuturas(clienteAberto));   // F277 · a aba virou o quadro Aposentadoria do Cadastro, e os cards abrem numa janela
   await p.waitForSelector(".lb-novo");
   const ordem = await p.evaluate(() => {
-    const painel = document.querySelector('.painel[data-p="9"].ativo') || document.querySelector(".painel.ativo");
+    const painel = document.querySelector("#modal");
     const y = sel => { const e = painel.querySelector(sel); return e ? Math.round(e.getBoundingClientRect().y) : null; };
-    return { apos: y(".apos-faixa"), novo: y(".lb-novo"), contas: y(".conta-cx") };
+    return { apos: y(".af-todo h4"), novo: y(".lb-novo"), contas: y(".conta-cx") };   // F278 · a aposentadoria provável fica no quadro; a janela abre na lista do To Do
   });
-  conf(`a aposentadoria provável abre a aba (y ${ordem.apos})`, ordem.apos !== null);
+  conf(`a janela abre na lista do Microsoft To Do (y ${ordem.apos})`, ordem.apos !== null);
   conf(`o "＋ novo lembrete" vem depois (y ${ordem.novo})`,
     ordem.novo !== null && ordem.novo > ordem.apos);
   conf(`e as contas fecham a aba (y ${ordem.contas})`,
@@ -246,7 +245,7 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725" };
 
   // o desemprego é decisão de quem atende, e fica gravado
   escritos.length = 0;
-  await p.click('.painel[data-p="9"] .conta-ck input');
+  await p.click('#modal .conta-ck input');
   await p.waitForTimeout(700);
   const pat = escritos.find(x => x.m === "PATCH" && x.t === "clientes");
   conf("marcar desemprego grava na triagem, com autor e data",
@@ -259,7 +258,7 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725" };
   await (await p.$(".conta-cx")).screenshot({ path: path.join(__dirname, "f20-contas.png") });
   await p.evaluate(() => { const d = document.querySelector(".lb-novo"); if (d) d.open = false; });
   await p.waitForTimeout(200);
-  const painel = await p.$('.painel[data-p="9"].ativo') || await p.$(".painel.ativo");
+  const painel = await p.$("#modal .modal-cx") || await p.$(".painel.ativo");
   if (painel) await painel.screenshot({ path: path.join(__dirname, "f20-lembretes.png") });
 
   console.log("=== lembretes e período de graça (F20) ===");
