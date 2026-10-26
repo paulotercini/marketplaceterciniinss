@@ -258,6 +258,8 @@ A **F277** (Cadastro, atendimento e pré-caso, pedido do Paulo de 25.10.2026): a
 
 A **F278** (a ficha do caso em três colunas, pedido do Paulo de 25.10.2026): o 📋 de copiar o nome voltou ao lado do nome; a trilha de etapas tem o − que a recolhe ("+ mostrar as etapas" a devolve; `crm_trilha_oculta` no navegador); o caso fica em `.caso-3col`: o cartão do benefício à esquerda (`.caso-esq`), os andamentos no meio (`.caso-dir`) e os prazos à direita (`.caso-esq.caso-pz`, só a data e o abrir); com o WhatsApp aberto (`body.zap-aberto`) os prazos descem para baixo do cartão e a conversa fica à direita. O quadro Aposentadoria tem o **Abrir**, que mostra as anotações do pré-caso que virou aposentadoria futura e dos casos que foram para lá, e os cards do Microsoft To Do (`conteudoAposFuturas`, `painelLembretes(c, true)`). O fim de Documentos traz três saídas lado a lado: **Criar caso**, **Criar aposentadoria futura** e **Encerrar** (o arquivar de antes, com o motivo).
 
+A **F282** (o cadastro em "Primeira letra maiúscula", pedido do Paulo de 26.10.2026): o gatilho `clientes_caixa` converte, na gravação e venha de onde vier (extensão do dossiê, CNIS da F29, PAT, To Do), o nome, o nome da mãe, a profissão e o endereço que chegam todos em maiúsculas (`caixa_do_cadastro`: preposições minúsculas, siglas, UF depois de "/" ou " - " e romanos maiúsculos); o texto com minúsculas, digitado à mão, não muda; `uf` sempre maiúscula; CPF, NIT, RG e `rg_orgao` não passam. SQL em `crm/fase2/migracoes/f282_caixa_do_cadastro.sql`, com o update dos já gravados.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
