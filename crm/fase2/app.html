@@ -17332,12 +17332,13 @@ async function adotarDossie(cliId, cpf){
   return orf.length;
 }
 function buscarFicha(cliId, ids){
+  const adot = adotarDossie(cliId, (D.cliPorId.get(cliId)||{}).cpf).catch(()=>0);
   return Promise.all([
       ids?todas("andamentos",`select=*,andamentos_lidos(colaborador_id,lido_em)&caso_id=in.(${ids})&order=criado_em.desc`)
           .catch(()=>todas("andamentos",`select=*&caso_id=in.(${ids})&order=criado_em.desc`).catch(()=>[])):[],
       todas("credenciais",`select=id,tipo,cliente_id&cliente_id=eq.${cliId}`).catch(()=>[]),
       todas("vinculos",`select=*&or=(cliente_id.eq.${cliId},ligado_a.eq.${cliId})`).catch(()=>[]),
-      adotarDossie(cliId, (D.cliPorId.get(cliId)||{}).cpf).then(()=>todas("anexos",`select=*&cliente_id=eq.${cliId}&order=criado_em.desc`)).catch(()=>[]),
+      adot.then(()=>todas("anexos",`select=*&cliente_id=eq.${cliId}&order=criado_em.desc`)).catch(()=>[]),
       todas("conversas",`select=criado_em,texto,de_cliente&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
       ids?todas("andamento_tarefas",`select=*&caso_id=in.(${ids})`).catch(()=>[]):[],
       // a conversa é de um cliente só, mas quem cuida do benefício de outro
@@ -17345,7 +17346,44 @@ function buscarFicha(cliId, ids){
       todas("zap_conversas",`select=id,ultima_em,ultimo_texto,nao_lidas,telefone,nome_perfil,cliente_id,foto_url,contato_nome,contato_relacao,atendente_id&or=(${
         ["cliente_id.eq."+cliId, ...(chavesDoCliente(cliId).length?[`chave.in.(${chavesDoCliente(cliId).join(",")})`]:[])].join(",")
       })&order=ultima_em.desc.nullslast`).catch(()=>[]),
+      // F285 · a linha do cliente de novo: a extensão grava o dossiê e o cadastro
+      // depois que o CRM carregou a lista, e a ficha mostrava o da abertura
+      adot.then(()=>api(`/rest/v1/clientes?select=*&id=eq.${cliId}`)).catch(()=>[]),
     ]);
+}
+// F285 · só o que a extensão escreve: o resumo dos portais e os campos vazios
+// do cadastro (o que se digitou na ficha e ainda não voltou do banco fica)
+const CAD_DO_DOSSIE = ["dn","nome_mae","sexo","pis_nit","rg","rg_orgao","logradouro","bairro","cidade","uf","cep"];
+function fundirClienteDoBanco(cliId, row){
+  const v = D.cliPorId.get(cliId); if(!v || !row || row.id!==cliId) return;
+  if(row.dossie && Object.keys(row.dossie).length) v.dossie = row.dossie;
+  for(const k of CAD_DO_DOSSIE) if(!v[k] && row[k]) v[k] = row[k];
+}
+// F285 · "Atualizar dossiê" na Identificação: busca de novo o que a extensão
+// gravou para o CPF (adota o que estiver preso a outra ficha), relê o texto e
+// completa os campos vazios com os dados cadastrais do CNIS. A caixa
+// (Primeira Letra Maiúscula) é do gatilho clientes_caixa (F282).
+async function atualizarDossie(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  if(digitosCpf(c.cpf).length!==11) return aviso("A ficha não tem CPF. A extensão prende o dossiê pelo CPF: preencha o CPF e rode o dossiê de novo.");
+  aviso("Buscando o dossiê deste CPF…", false);
+  for(const a of docsDoDossie(cliId)){ _leitoresTentados.delete(a.id); _dossieFalhou.delete(a.id); }
+  preFicha.delete(cliId);
+  await abrirFicha(cliId);
+  const cad = ((c.dossie||{}).meuinss||{}).cadastro || {}, novo = {};
+  for(const k of CAD_DO_DOSSIE) if(!c[k] && cad[k]) novo[k] = cad[k];
+  let n = 0;
+  if(Object.keys(novo).length){
+    try{
+      const [row] = await api(`/rest/v1/clientes?id=eq.${cliId}`, {method:"PATCH", headers:{Prefer:"return=representation"}, body:JSON.stringify(novo)}) || [];
+      Object.assign(c, row || novo); n = Object.keys(novo).length;
+      if(clienteAberto===cliId) repintarFicha();
+    }catch(e){ console.warn("dossiê: cadastro não completado", e); }
+  }
+  const docs = docsDoDossie(cliId).length, portais = Object.keys(c.dossie||{}).length;
+  aviso(docs || portais
+    ? `Dossiê atualizado: ${docs} documento${docs===1?"":"s"}${n?` e ${n} campo${n===1?"":"s"} do cadastro preenchido${n===1?"":"s"}`:""}.`
+    : "Nenhum dossiê deste CPF no CRM. Se a extensão rodou sem o login do CRM, os arquivos ficaram só no Drive: faça o login na extensão e rode o dossiê de novo.");
 }
 const preFicha = new Map();   // cliId -> {p, em, escritas}
 function preCarregarFicha(cliId){
@@ -17407,11 +17445,12 @@ async function abrirFicha(cliId){
     const pre = trocouCliente && preFicha.get(cliId);
     preFicha.delete(cliId);
     const esc0 = escritas;
-    const [ands, creds, vincs, anexos, convs, tarefasF, zapsF] = await
+    const [ands, creds, vincs, anexos, convs, tarefasF, zapsF, cliRow] = await
       ((pre && Date.now()-pre.em < 20000 && pre.escritas===escritas) ? pre.p : buscarFicha(cliId, ids));
     // F241 · o documento gravado enquanto a busca estava a caminho (gerado, assinado) não some da tela: a busca saiu antes dele
     const meio = escritas!==esc0 ? (D.anexos||[]).filter(a=>a.cliente_id===cliId && !anexos.some(b=>b.id===a.id)) : [];
     D.anexos = meio.length ? [...meio, ...anexos] : anexos;
+    fundirClienteDoBanco(cliId, (cliRow||[])[0]);
     D.convFicha = convs;
     D.zapFicha = zapsF;
     // F191 · a foto do WhatsApp aparece na identificação do cliente
@@ -44404,7 +44443,9 @@ function fichaIdentificacao(c, creds){
       ${caixaAposCadastro(c)}
       ${caixaQualidade(c)}
       ${/* onda 0 · o dossiê também na Identificação, que está sempre à vista */""}
-      ${(h=>h?`<div class="idf-dossie">${h}</div>`:"")(caixaDossie(c))}
+      <div class="idf-dossie">${caixaDossie(c)}
+        <button class="cad-mini" style="margin-top:6px" title="busca de novo o que a extensão do gov.br baixou para este CPF"
+          onclick="atualizarDossie('${c.id}')">Atualizar dossiê</button></div>
     </div>
   </div>`;
 }
