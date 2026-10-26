@@ -119,7 +119,8 @@ async function idDoCliente(cpf) {
   const r = await fetchTeimoso(`${url}/rest/v1/clientes?select=id&cpf=eq.${cpf}&limit=1`, { headers: await cabecalhos() });
   if (!r.ok) throw new Error(`CRM recusou a busca do cliente (${r.status})`);
   const id = ((await r.json())[0] || {}).id || null;
-  clientePorCpf.set(cpf, id);
+  // a ficha criada no meio da rodada não fica "fora do CRM" até a extensão reiniciar
+  if (id) clientePorCpf.set(cpf, id);
   return id;
 }
 

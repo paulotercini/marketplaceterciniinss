@@ -31,7 +31,7 @@ A fonte de dados dos geradores é o **Microsoft To Do** (Graph API, conta pessoa
 <!-- dossie-versao: 0.12.0 — ao mudar manifest.json da extensão, atualize esta seção e este número;
      tests em crm/fase2/dossie/testes/regras.test.js conferem que batem. -->
 
-Extensão de navegador (versão **0.12.0**). Com o gov.br do cliente logado, um clique baixa os documentos
+Extensão de navegador (versão **0.12.1**). Com o gov.br do cliente logado, um clique baixa os documentos
 do portal aberto na aba; **🔁 Rodar todos os portais** percorre Meu INSS → e-Recursos → Emprega Brasil →
 CadÚnico → Redesim → HC (o HC por último, porque é o mais pesado e o CRM precisa do CNIS, da RAIS e do CadÚnico antes; a Redesim só abre a tela para o clique no captcha e segue), cada um na sua aba (abre as do gov.br que faltarem; Emprega Brasil e HC só se a aba logada já
 estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha e não decide nada: coleta e entrega.
@@ -267,6 +267,8 @@ A **F283** (as anotações ao lado no modo atendimento, pedido do Paulo de 26.10
 A **F283b** (as Pendências, pedido do Paulo de 26.10.2026): o quadro vermelho virou **Pendências**, o primeiro passo da Análise de Direito do atendimento; a trilha passou a Pendências, **Análise do Benefício** (o quadrado dos benefícios e, do aberto, "Já cumprido" e "Ainda falta" no mesmo passo, `.adb-parte`) e Conclusão (`adPassosDe`). Cada pendência é a providência e quem a toma, Cliente ou Escritório (`providenciaDe`, pela chave do item de `quadrosDoPA`; sem regra, o imperativo do próprio texto vira "Deve …", `instrucaoDoTexto`), e é ela que vai às anotações; as competências abaixo do mínimo saem em faixas (`faixasDeComps`). As anotações ganharam o campo maior, no alto, e os cartões separados (`.atend-notas`). Testes: `f283.js`, `f239.js` e `f234.js` ajustados.
 
 A **F283c** (os atalhos do dossiê, pedido do Paulo de 26.10.2026): no canto de baixo à direita da tela de atendimento, abaixo das anotações, os botões **CNIS Resumido**, **CNIS Completo** e **Declaração de Beneficiário** (`atalhosDossie`, `ATALHOS_DZ`) abrem o anexo mais recente do dossiê (`abrirAnexo`); o que o dossiê não tem fica desligado. Teste: `f283.js`.
+
+A **F285** (Atualizar dossiê, pedido do Paulo de 26.10.2026): o CRM carregava a linha do cliente uma vez só, na entrada, e a ficha aberta depois de a extensão rodar mostrava o resumo dos portais e o cadastro de antes; `buscarFicha` passou a reler a linha (`fundirClienteDoBanco`: o `dossie` e só os campos vazios de `CAD_DO_DOSSIE`). Na Identificação, o botão **Atualizar dossiê** (`atualizarDossie`) busca de novo o dossiê do CPF (adota o que está preso a outra ficha, `adotarDossie`), relê o texto e completa os campos vazios com `dossie.meuinss.cadastro`; a caixa vem do gatilho da F282. A extensão (0.12.1) deixou de guardar o "cliente fora do CRM" do CPF achado vazio, que valia até ela reiniciar. Teste: `testes/cadastro/f285.js`.
 
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
