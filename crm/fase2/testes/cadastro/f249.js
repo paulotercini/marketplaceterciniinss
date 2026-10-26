@@ -77,7 +77,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
 
   const nivel = () => p.evaluate(() => document.documentElement.getAttribute("data-nivel"));
-  const vis = sel => p.evaluate(s => { const e = document.querySelector(s); return !!e && e.offsetParent !== null; }, sel);
+  const vis = sel => p.evaluate(s => { const e = document.querySelector(s); return !!e && (e.offsetParent !== null || getComputedStyle(e).position === "fixed"); }, sel);
   const cfg = () => { const r = T.config_app.filter(x => x.chave === "crm_transicao").pop(); return r ? JSON.parse(r.valor) : null; };
 
   // 1 · desligada: ninguém muda de tela
