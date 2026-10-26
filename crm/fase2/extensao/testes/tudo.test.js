@@ -47,3 +47,12 @@ test('e-SAJ: com a ficha aberta, o clique lê só aquele processo', () => {
   assert.match(esaj, /show\\\.do\/\.test\(location\.pathname\)[^\n]*!\(opts && opts\.acervo\)\)\n\s*return await coletarFichaAberta\(oab\)/);
   assert.match(esaj, /parcial: true, pulados: 0, processos: \[paraEntrega\(x\)\]/);
 });
+
+test('1.27 · o eproc da Fazenda Pública entra sempre na rodada, com ou sem aba', () => {
+  const f = fs.readFileSync(path.join(__dirname, '..', 'fundo.js'), 'utf8');
+  assert.match(f, /SEMPRE = \{ eproc: \['https:\/\/eproc1g-ef\.tjsp\.jus\.br\//);
+  for (const uso of [/acervoPorAba[\s\S]*?alvosPorHost\(fonte/, /completarEproc[\s\S]*?alvosPorHost\('eproc'/, /um\(fonte, aba, rotulo, false, url\)/])
+    assert.match(f, uso);
+  // com url, a rodada abre aquele host e não pega a aba do cível
+  assert.match(f, /if \(!aba && !url\) aba = abaPreferida/);
+});
