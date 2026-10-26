@@ -29,6 +29,8 @@ dados.clientes.push({ id: A, nome: "Rosalina Ficta Moura", cpf: "70010020133", d
   dossie: { meuinss: { em: "2026-10-08T10:00:00Z" } }, triagem: { pdf: { cnis: CNIS } }, campos: {} });
 dados.casos.push(pre(K1, "pc_r1", "", { fora: [], beneficios: { tempo: ["idade"], incapacidade: ["b31"] }, valores: {}, tempos: [] }),
   pre(K2, "pc_r2", "BPC/LOAS", { fora: [], beneficios: { bpc: ["idoso"] }, valores: {}, tempos: [] }));
+dados.anexos.push({ id: "ax_res", cliente_id: A, origem: "dossie", nome: "CNIS · CNIS resumido (vinculos).pdf", caminho: "dossie/70010020133/CNIS/CNIS resumido (vinculos).pdf", tipo: "application/pdf", criado_em: "2026-10-08T10:00:00Z" },
+  { id: "ax_dec", cliente_id: A, origem: "dossie", nome: "Declaracao · Declaracao de beneficiario.pdf", caminho: "dossie/70010020133/Declaracao/Declaracao de beneficiario.pdf", tipo: "application/pdf", criado_em: "2026-10-08T10:00:00Z" });
 const banco = new Banco(dados);
 const T = banco.t;
 
@@ -95,6 +97,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("gravar um documento não apaga a anotação em curso", (await p.inputValue("#atend-nota")).startsWith("rascunho") && ped().itens.length === 2);
   await p.click(".atend-docs li .olho"); await p.waitForTimeout(500);
   conf("o ✕ tira o documento da lista", ped().itens.length === 1 && ped().itens[0].nome === "CTPS");
+  // F283c · os atalhos do dossiê no pé das anotações
+  const at = await p.evaluate(() => [...document.querySelectorAll(".atend-atalhos button")].map(b => [b.textContent, b.disabled, (b.getAttribute("onclick") || "")]));
+  conf(`no pé das anotações, CNIS Resumido, CNIS Completo e Declaração de Beneficiário (${at.map(x => x[0]).join(", ")})`, at.map(x => x[0]).join("|") === "CNIS Resumido|CNIS Completo|Declaração de Beneficiário");
+  conf("o que está no dossiê abre o anexo; o que falta fica desligado", /ax_res/.test(at[0][2]) && at[1][1] && /ax_dec/.test(at[2][2]) && !at[0][1] && !at[2][1]);
+  conf("os atalhos ficam no canto de baixo à direita, abaixo das anotações", await p.evaluate(() => { const b = document.querySelector(".atend-atalhos").getBoundingClientRect(), c = document.getElementById("atend-conversa").getBoundingClientRect(); return b.top >= c.bottom && b.bottom >= innerHeight - 30 && b.right >= innerWidth - 30; }));
   // fora do atendimento, sem quadro nem painel
   await p.evaluate(a => { _atendAberto.delete(a); irSubCad("direito"); }, A); await p.waitForTimeout(300);
   conf("fora do atendimento, nem as pendências nem as anotações fixas", await p.evaluate(() => !document.querySelector(".pa-prob") && !document.getElementById("atend-conversa")));
