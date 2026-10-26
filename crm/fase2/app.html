@@ -4934,6 +4934,25 @@ html .desf .desf-saida h4{margin:0;font-size:14px;font-weight:500}
 html .desf .desf-saida p{margin:0}
 html .desf .ds-caso{grid-column:1 / -1}
 html .desf .desf-saida .cc-form{margin:0}
+/* F282 · Manutenção da Qualidade de Segurado */
+html .mq-bloco{display:flex;flex-direction:column;gap:8px}
+html .mq-plano{display:flex;flex-direction:column;gap:4px;padding:8px 0;border-bottom:1px solid var(--borda)}
+html .mq-plano b{font-weight:500;font-size:13.5px}
+html .mq-plano small{color:var(--cinza);font-size:12px}
+html .mq-bts{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+html .mq-novo{align-self:flex-start}
+html .idf-qual .adr-h{display:flex;align-items:center;gap:8px}
+html .idf-qual .ac-mais{margin-left:auto}
+html .idf-apos .ac-qual{margin:8px 0 0;font-size:13px}
+html .mq-pa{margin-top:12px;padding-top:10px;border-top:1px dashed var(--borda)}
+.mq-modal .mq-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 0}
+.mq-modal .mq-form label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--cinza)}
+.mq-modal .mq-form label.cfg-ck{flex-direction:row;align-items:center;gap:8px;color:var(--texto,#1F2933);font-size:13px}
+.mq-modal .mq-largo{grid-column:1 / -1}
+.mq-modal .mq-form label[hidden]{display:none}
+.mq-modal .mq-sec{display:flex;flex-direction:column;gap:6px;padding:10px 0;border-top:1px solid var(--borda)}
+.mq-modal .mq-datas{margin:0;font-variant-numeric:tabular-nums}
+@media (max-width:520px){.mq-modal .mq-form{grid-template-columns:1fr}}
 /* F277 · o quadro Aposentadoria do Cadastro e o Criar caso */
 html .idf-apos .adr-h{display:flex;align-items:center;gap:8px}
 html .idf-apos .ac-mais{margin-left:auto}
@@ -6198,6 +6217,7 @@ const CARGA_1 = {
     meudia: ()=>todas("meu_dia",`select=*&dia=eq.${hoje()}`),
     mencoes: ()=>todas("mencoes",`select=*&para_id=eq.${eu.id}&lida_em=is.null&order=criado_em.desc`),
     apos: ()=>todas("aposentadorias","select=*&order=data").catch(()=>[]),
+    qualid: ()=>todas("qualidade_planos","select=*&ativo=is.true&order=criado_em").catch(()=>null),   // F282
     listaPref: ()=>todas("lista_pref","select=*").catch(()=>[]),
     cfgs: ()=>todas("config_app","select=*").catch(()=>[]),
     tarefasAnd: ()=>todas("andamento_tarefas","select=*&concluida_em=is.null").catch(()=>[]),
@@ -6422,8 +6442,9 @@ function completarD(r){
 function montarD(r){
   const {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, mencoes, apos, listaPref, cfgs, tarefasAnd, lembs} = r;
   D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, mencoes, apos, listaPref};
-  D._bruto1 = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, mencoes, apos, listaPref, cfgs, tarefasAnd, lembs};
+  D._bruto1 = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, mencoes, apos, listaPref, cfgs, tarefasAnd, lembs, qualid:r.qualid};
   D.lembretes = lembs||[];
+  D.qualidade = r.qualid===undefined ? [] : r.qualid;   // F282 · null: rodar o schema_qualidade.sql
   D.eventos = semEventoRepetido(eventos||[]);   // F236 · "Perícia" e "Perícia médica" do mesmo dia são uma perícia só
   completarD(r);
   D.prefPorLista = new Map((listaPref||[]).map(x=>[x.chave,x]));
@@ -23572,6 +23593,10 @@ function pendenciasDireito(c){
   </section>`;
 }
 const _adSel = new Map();
+// F282 · o parecer da Manutenção da Qualidade de Segurado, dentro da Análise de Direito
+function secaoManutencaoAnalise(c){
+  return `<section class="adx-sec mq-analise" aria-labelledby="mq-an-t"><div class="adm-cab"><h3 id="mq-an-t">Manutenção da Qualidade de Segurado</h3></div>${blocoManutencao(c, "analise")}</section>`;
+}
 function painelDireito(c){
   if(D.analises===null)
     return `<p class="meio-sub">A tabela desta página ainda não existe no banco — rode o
@@ -23601,9 +23626,9 @@ function painelDireito(c){
     ? `<div class="adx-main tp-raiz${tp.tudo ? " tp-tudo" : ""}"${tp.attrs}>${tp.trilha}
         ${quadradoEmPasso(quadradoBeneficios(c, ks), oc)}
         ${ab ? painelBeneficio(c, ks, ab, oc) : `<div id="ad-benef"></div>`}
-        <div class="tp-passo" data-passo="concl"${oc("concl")}>${caixaConsideracoes(c)}${formAnalise(c)}${linhaDesfecho(c)}</div>
+        <div class="tp-passo" data-passo="concl"${oc("concl")}>${caixaConsideracoes(c)}${secaoManutencaoAnalise(c)}${formAnalise(c)}${linhaDesfecho(c)}</div>
         <div class="tp-pe">${tp.nav}</div></div>`
-    : `<div class="adx-main">${quadradoBeneficios(c, ks)}${ab ? painelBeneficio(c, ks, ab) : `<div id="ad-benef"></div>`}${caixaConsideracoes(c)}${quadroDesfecho(c)}${formAnalise(c)}</div>`;
+    : `<div class="adx-main">${quadradoBeneficios(c, ks)}${ab ? painelBeneficio(c, ks, ab) : `<div id="ad-benef"></div>`}${caixaConsideracoes(c)}${secaoManutencaoAnalise(c)}${quadroDesfecho(c)}${formAnalise(c)}</div>`;
   return `<div class="adr">
     <div class="ad-topo">${faixaDoCaso(ks)}
       <span class="ad-topo-fim">${chipParceria(c, ks)}
@@ -26082,7 +26107,7 @@ function exploracaoDireito(c, ks){
   if(!(docsDoDossie(c.id).length || cnisDe(c))) return "";
   const d = paDados(c, ks), vai = b => paVai(c.id, b), sec = [];
   const aba = _adxAba.get(c.id) || "vinculos", soDiv = _adxDiv.has(c.id) ? !!_adxDiv.get(c.id) : true;
-  if(vai("qual")) sec.push(["Qualidade de segurado", painelQualidade(c, d)]);
+  if(vai("qual")) sec.push(["Qualidade de segurado", painelQualidade(c, d) + `<div class="mq-pa"><div class="rotulo-caso">Manutenção da Qualidade de Segurado</div>${blocoManutencao(c, "pa")}</div>`]);   // F282
   if(vai("cnis") || vai("rais") || vai("car")) sec.push(["CNIS, RAIS e CAGED", `<div class="adx-abas" role="tablist">
       <button type="button" role="tab" aria-selected="${aba==="vinculos"}" class="${aba==="vinculos"?"on":""}" onclick="_adxAba.set('${c.id}','vinculos');repintarFicha()">Vínculos</button>
       <button type="button" role="tab" aria-selected="${aba==="remun"}" class="${aba==="remun"?"on":""}" onclick="_adxAba.set('${c.id}','remun');repintarFicha()">Remunerações</button>
@@ -32596,6 +32621,148 @@ function caixaApos(cli){
     <div id="apos-form"></div>
   </div>`;
 }
+// ══════════════════════════════════════════════════════════════════════════
+// F282 · MANUTENÇÃO DA QUALIDADE DE SEGURADO (pedido do Paulo, 26.10.2026)
+// O plano de pagamento ao INSS de quem ainda não tem direito e precisa manter a
+// qualidade de segurado. É do CLIENTE (vale para BPC e pensão, é acessório) e
+// segue depois que os atendimentos se encerram. Nasce no parecer da Análise de
+// Direito, aparece no Primeiro atendimento (Qualidade de segurado), em Documentos
+// (a folha "Como pagar o INSS") e no quadro da Identificação, ao lado de
+// Aposentadoria. Com o aviso ligado, o banco lembra o cliente pelo WhatsApp no dia
+// do pagamento (zap_gerar_avisos_qualidade, crm/fase2/schema_qualidade.sql).
+// ══════════════════════════════════════════════════════════════════════════
+const QUAL_MODOS = {mensal:"Mensal", semestral:"Uma vez a cada 6 meses", seis_semestral:"Os 6 primeiros meses e depois a cada 6 meses", caso_a_caso:"Caso a caso"};
+const QUAL_CODIGOS = () => [["MEI","MEI (DAS)"], ...GPS_CATEGORIAS.map(([v,r])=>[v,`${v} — ${r}`]), ["outro","Outro"]];
+function qualidadeDe(cliId){ return (D.qualidade||[]).filter(q=>q.cliente_id===cliId && q.ativo!==false); }
+// o mês de pagamento ('AAAA-MM'), a mesma conta do banco (qualidade_paga_no_mes)
+function qualidadePagaNoMes(q, ym){
+  const n = (+ym.slice(0,4)*12 + +ym.slice(5,7)) - (+String(q.inicio).slice(0,4)*12 + +String(q.inicio).slice(5,7));
+  if(n < 0 || (q.fim && ym > String(q.fim).slice(0,7))) return false;
+  if(q.modalidade==="mensal") return true;
+  if(q.modalidade==="semestral") return n % 6 === 0;
+  if(q.modalidade==="seis_semestral") return n < 6 || (n - 5) % 6 === 0;
+  return (q.meses||[]).includes(ym);
+}
+// os próximos pagamentos, de hoje em diante
+function qualidadeProximos(q, k, desde){
+  const out = [], h = desde || hoje(); let a = +h.slice(0,4), m = +h.slice(5,7);
+  for(let i = 0; i < 240 && out.length < k; i++){
+    const ym = `${a}-${String(m).padStart(2,"0")}`, d = `${ym}-${String(q.dia||15).padStart(2,"0")}`;
+    if(qualidadePagaNoMes(q, ym) && d >= h) out.push(d);
+    if(++m > 12){ m = 1; a++; }
+  }
+  return out;
+}
+const qualValor = v => v==null || v==="" ? "" : `R$ ${Number(v).toFixed(2).replace(".", ",")}`;
+const qualGuia = q => q.codigo==="MEI" ? "DAS do MEI" : q.codigo && q.codigo!=="outro" ? `GPS código ${q.codigo}` : "guia do INSS";
+function qualResumo(q){
+  const px = qualidadeProximos(q, 1)[0];
+  return `${QUAL_MODOS[q.modalidade]||q.modalidade} · ${qualGuia(q)}${q.valor ? ` · ${qualValor(q.valor)}` : ""} · dia ${q.dia}${px ? ` · próximo em ${fmtBarra(px)}` : " · sem pagamento por vir"}`;
+}
+// o bloco que vai à Identificação, ao Primeiro atendimento, à Análise de Direito e a Documentos
+function blocoManutencao(c, onde){
+  if(D.qualidade===null) return `<p class="meio-sub mq-falta">Rode o crm/fase2/schema_qualidade.sql no Supabase para usar a Manutenção da Qualidade de Segurado.</p>`;
+  const qs = qualidadeDe(c.id);
+  const intro = onde==="pa" ? "Sem direito a benefício hoje? Combine com o cliente como manter a qualidade de segurado; o parecer é dado na Análise de Direito."
+    : onde==="analise" ? "O parecer: como o cliente paga o INSS para não perder a qualidade de segurado. Fica no cadastro dele, com o aviso pelo WhatsApp."
+    : onde==="doc" ? "A folha para entregar ao cliente, com a guia, o valor e o calendário." : "";
+  return `<div class="mq-bloco">${qs.length ? qs.map(q=>`<div class="mq-plano"><b>${esc(qualResumo(q))}</b>
+      <small>${q.aviso_zap ? "WhatsApp automático ligado" : "sem aviso pelo WhatsApp"}${q.fim ? ` · até ${fmtBarra(String(q.fim).slice(0,10))}` : ""}${q.motivo ? ` · ${esc(q.motivo)}` : ""}</small>
+      <span class="mq-bts"><button type="button" class="btn-mini" onclick="verQualidade('${c.id}')">Abrir</button>
+      ${onde==="doc" || onde==="analise" ? `<button type="button" class="btn-mini" onclick="imprimirQualidade('${c.id}','${q.id}')">Imprimir para o cliente</button>` : ""}</span></div>`).join("")
+    : `${intro ? `<p class="meio-sub">${intro}</p>` : `<p class="meio-sub">Nenhum plano de pagamento.</p>`}
+      <button type="button" class="btn-mini mq-novo" onclick="formQualidade('${c.id}','','${onde||""}')">Definir o plano</button>`}</div>`;
+}
+function caixaQualidade(c){
+  return `<section class="idf-card idf-qual" aria-labelledby="idf-qual">
+    <h3 class="adr-h" id="idf-qual">Manutenção da qualidade${qualidadeDe(c.id).length ? `<button type="button" class="cad-mini ac-mais" onclick="formQualidade('${c.id}','','')" title="outro plano" aria-label="acrescentar plano">${CAD_IC.mais}</button>` : ""}</h3>
+    ${blocoManutencao(c, "")}</section>`;
+}
+function quadroManutencaoDoc(c){
+  return `<section class="doc-quadro" id="dq-qualidade"><div class="rotulo-caso">Manutenção da Qualidade de Segurado</div>${blocoManutencao(c, "doc")}</section>`;
+}
+function formQualidade(cliId, id, onde){
+  const q = (D.qualidade||[]).find(x=>x.id===id) || {modalidade:"mensal", codigo:"MEI", dia:15, inicio:hoje(), aviso_zap:true, meses:[]};
+  caixa(`<div class="mq-modal" role="dialog" aria-labelledby="mq-t"><h3 id="mq-t">Manutenção da Qualidade de Segurado</h3>
+    <div class="mq-form">
+      <label>Como paga <select id="mq-mod" onchange="document.getElementById('mq-meses-l').hidden=this.value!=='caso_a_caso'">${Object.entries(QUAL_MODOS).map(([v,r])=>`<option value="${v}"${q.modalidade===v?" selected":""}>${r}</option>`).join("")}</select></label>
+      <label>Guia <select id="mq-cod">${QUAL_CODIGOS().map(([v,r])=>`<option value="${v}"${q.codigo===v?" selected":""}>${esc(r)}</option>`).join("")}</select></label>
+      <label>Valor (R$) <input id="mq-valor" type="number" step="0.01" min="0" value="${q.valor==null?"":esc(String(q.valor))}"></label>
+      <label>Dia do pagamento <input id="mq-dia" type="number" min="1" max="28" value="${q.dia||15}"></label>
+      <label>Primeiro pagamento <input id="mq-ini" type="month" value="${String(q.inicio||hoje()).slice(0,7)}"></label>
+      <label>Até (opcional) <input id="mq-fim" type="month" value="${q.fim ? String(q.fim).slice(0,7) : ""}"></label>
+      <label id="mq-meses-l" class="mq-largo"${q.modalidade==="caso_a_caso"?"":" hidden"}>Meses de pagamento <input id="mq-meses" placeholder="11/2026, 05/2027" value="${(q.meses||[]).map(m=>`${m.slice(5)}/${m.slice(0,4)}`).join(", ")}"></label>
+      <label class="mq-largo">Por que paga <input id="mq-mot" value="${esc(q.motivo||"")}" placeholder="ex.: mantém a qualidade até a aposentadoria por idade, em 2031"></label>
+      <label class="cfg-ck mq-largo"><input type="checkbox" id="mq-zap"${q.aviso_zap?" checked":""}> Avisar o cliente pelo WhatsApp no dia do pagamento, sozinho</label>
+    </div>
+    <div class="adr-modal-bts"><button type="button" class="adr-bt adr-primario" onclick="salvarQualidade('${cliId}','${q.id||""}','${onde||""}')">Guardar</button>
+      <button type="button" class="adr-bt" onclick="fecharCaixa()">Cancelar</button></div></div>`);
+}
+async function salvarQualidade(cliId, id, onde){
+  const v = i => ((document.getElementById(i)||{}).value||"").trim();
+  const mod = v("mq-mod"), dia = +v("mq-dia"), ini = v("mq-ini"), fim = v("mq-fim");
+  const meses = v("mq-meses").split(/[,;\s]+/).map(x=>(x.match(/^(\d{1,2})\/(\d{4})$/)||[])).filter(m=>m[1]).map(m=>`${m[2]}-${m[1].padStart(2,"0")}`);
+  if(!QUAL_MODOS[mod]) return aviso("Escolha como o cliente paga");
+  if(!(dia>=1 && dia<=28)) return aviso("O dia do pagamento vai de 1 a 28");
+  if(!/^\d{4}-\d{2}$/.test(ini)) return aviso("Informe o mês do primeiro pagamento");
+  if(mod==="caso_a_caso" && !meses.length) return aviso("Caso a caso: informe os meses, como 11/2026, 05/2027");
+  const c = D.cliPorId.get(cliId), an = onde==="analise" && c ? (analisesDaVez(c)[0]||null) : null;
+  const corpo = {cliente_id:cliId, modalidade:mod, codigo:v("mq-cod")||null, valor:v("mq-valor") ? Number(v("mq-valor")) : null, dia,
+    inicio:`${ini}-01`, fim: fim ? `${fim}-28` : null, meses: mod==="caso_a_caso" ? meses : [], motivo:v("mq-mot")||null,
+    aviso_zap:!!(document.getElementById("mq-zap")||{}).checked, ativo:true, ...(an ? {analise_id:an.id} : {})};
+  try{
+    if(id){ await api(`/rest/v1/qualidade_planos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(corpo)});
+      Object.assign((D.qualidade||[]).find(x=>x.id===id)||{}, corpo); }
+    else { const [q] = await api(`/rest/v1/qualidade_planos`,{method:"POST",headers:{Prefer:"return=representation"},body:JSON.stringify(corpo)});
+      if(q) (D.qualidade = D.qualidade||[]).push(q); }
+  }catch(e){ return aviso(/qualidade_planos|42P01|PGRST205/.test(String(e.message||e)) ? "Rode o crm/fase2/schema_qualidade.sql no Supabase" : "Não consegui guardar o plano — tente de novo"); }
+  fecharCaixa(); aviso(corpo.aviso_zap ? "Plano guardado: o WhatsApp lembra o cliente no dia do pagamento" : "Plano guardado", false);
+  if(clienteAberto) repintarFicha();
+}
+async function encerrarQualidade(id){
+  if(!await confirmar("Encerrar este plano? O WhatsApp para de lembrar o cliente; o plano fica no histórico.")) return;
+  try{ await api(`/rest/v1/qualidade_planos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({ativo:false})}); }
+  catch(e){ return aviso("Não consegui encerrar — tente de novo"); }
+  const q = (D.qualidade||[]).find(x=>x.id===id); if(q) q.ativo = false;
+  fecharCaixa(); aviso("Plano encerrado", false); if(clienteAberto) repintarFicha();
+}
+async function alternarZapQualidade(id, ligado){
+  try{ await api(`/rest/v1/qualidade_planos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({aviso_zap:ligado})}); }
+  catch(e){ return aviso("Não consegui mudar o aviso — tente de novo"); }
+  const q = (D.qualidade||[]).find(x=>x.id===id); if(q) q.aviso_zap = ligado;
+  aviso(ligado ? "WhatsApp automático ligado" : "WhatsApp automático desligado", false); if(clienteAberto) repintarFicha();
+}
+// o Abrir: o plano, os próximos pagamentos, o aviso e o histórico do que o WhatsApp já mandou
+async function verQualidade(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const qs = qualidadeDe(cliId);
+  let env = [];
+  try{ if(qs.length) env = await api(`/rest/v1/zap_mensagens?select=aviso_ref,aviso_chave,criado_em,status&aviso_ref=in.(${qs.map(q=>q.id).join(",")})&aviso_chave=like.qualidade*&order=criado_em.desc`) || []; }catch(e){}
+  caixa(`<div class="mq-modal"><h3>Manutenção da Qualidade de Segurado · ${esc(String(c.nome||"").split(" ")[0])}</h3>
+    ${qs.map(q=>`<section class="mq-sec"><b>${esc(qualResumo(q))}</b>${q.motivo ? `<p class="meio-sub">${esc(q.motivo)}</p>` : ""}
+      <label class="cfg-ck"><input type="checkbox"${q.aviso_zap?" checked":""} onchange="alternarZapQualidade('${q.id}',this.checked)"> WhatsApp automático no dia do pagamento</label>
+      <div class="rotulo-caso">Próximos pagamentos</div><p class="mq-datas">${qualidadeProximos(q, 6).map(fmtBarra).join(" · ") || "nenhum"}</p>
+      <div class="rotulo-caso">Avisos enviados</div>${(e=>e.length ? `<ul class="mov-lista">${e.map(m=>`<li><span class="mov-data">${fmt(String(m.criado_em).slice(0,10))}</span><span class="mov-txt">pagamento de ${esc(String(m.aviso_chave).slice(10).split("-").reverse().join("/"))} · ${esc(m.status)}</span></li>`).join("")}</ul>` : `<p class="meio-sub">nenhum ainda</p>`)(env.filter(m=>m.aviso_ref===q.id))}
+      <div class="adr-modal-bts"><button type="button" class="adr-bt" onclick="formQualidade('${cliId}','${q.id}','')">Editar</button>
+        <button type="button" class="adr-bt" onclick="imprimirQualidade('${cliId}','${q.id}')">Imprimir para o cliente</button>
+        <button type="button" class="adr-bt" onclick="encerrarQualidade('${q.id}')">Encerrar o plano</button></div></section>`).join("")
+      || `<p class="meio-sub">Nenhum plano ativo.</p><button type="button" class="adr-bt adr-primario" onclick="formQualidade('${cliId}','','')">Definir o plano</button>`}</div>`);
+}
+// a folha para o cliente: a guia, o valor, o calendário e até quando
+function imprimirQualidade(cliId, id){
+  const c = D.cliPorId.get(cliId), q = (D.qualidade||[]).find(x=>x.id===id); if(!c || !q) return;
+  const px = qualidadeProximos(q, 12);
+  const como = q.codigo==="MEI" ? "Pague o DAS do MEI pelo aplicativo MEI ou pelo Portal do Empreendedor (gov.br/mei)."
+    : "Gere a guia (GPS) no site da Receita Federal, no Sistema de Acréscimos Legais (SAL), com o seu NIT, o código e a competência, e pague no banco, na lotérica ou pelo aplicativo do banco.";
+  janelaImpressao("Como pagar o INSS", [`<section>${DOC_TIMBRE}<h1>Como pagar o INSS</h1>
+    <p><b>${esc(c.nome||"")}</b>${c.cpf ? ` · CPF ${esc(fmtCpf(c.cpf))}` : ""}</p>
+    <p>Para manter a sua qualidade de segurado do INSS, faça os pagamentos abaixo${q.motivo ? `: ${esc(q.motivo)}` : "."}</p>
+    <p><b>Forma:</b> ${esc(QUAL_MODOS[q.modalidade]||"")}<br><b>Guia:</b> ${esc(qualGuia(q))}${q.valor ? `<br><b>Valor:</b> ${esc(qualValor(q.valor))}` : ""}<br><b>Dia do pagamento:</b> ${q.dia} de cada mês de pagamento${q.fim ? `<br><b>Até:</b> ${esc(fmtBarra(String(q.fim).slice(0,10)).slice(3))}` : ""}</p>
+    <p><b>Próximos pagamentos:</b></p><p>${px.map(fmtBarra).join(" · ") || "—"}</p>
+    <p>${esc(como)}</p>
+    <p>Guarde os comprovantes. Qualquer dúvida, fale com o escritório${q.aviso_zap ? "; no dia de cada pagamento, enviamos um lembrete pelo WhatsApp" : ""}.</p>
+    <div class="rodape">${esc(ESCRITORIO_RODAPE)}</div></section>`]);
+}
 // F277 · O QUADRO APOSENTADORIA DO CADASTRO (pedido do Paulo, 25.10.2026): ao lado de Contato, simples, com a data de cada
 // aposentadoria e o dia em que o escritório é avisado. A por idade sai do nascimento e do sexo (homem aos 65, mulher aos 62),
 // com o aviso 3 meses antes; o + acrescenta outra, com o nome, a data e o dia do aviso. Os cards de Aposentadorias futuras
@@ -32619,6 +32786,7 @@ function caixaAposCadastro(c){
       title="acrescentar uma aposentadoria: o nome, a data e quando avisar" aria-label="acrescentar aposentadoria">${CAD_IC.mais}</button></h3>
     ${linhas.length ? `<ul class="ac-lista">${linhas.join("")}</ul>` : ""}
     ${nota ? `<p class="meio-sub ac-nota">${esc(nota)}</p>` : ""}
+    ${qualidadeDe(c.id).length ? `<p class="ac-qual"><button type="button" class="ac-card" onclick="verQualidade('${c.id}')">Pagando o INSS para manter a qualidade · ver o plano ›</button></p>` : ""}
     <div id="ac-form"></div>
   </section>`;
 }
@@ -44066,6 +44234,7 @@ function fichaIdentificacao(c, creds){
         ${cadCampoEndereco(c)}
       </section>
       ${caixaAposCadastro(c)}
+      ${caixaQualidade(c)}
       ${/* onda 0 · o dossiê também na Identificação, que está sempre à vista */""}
       ${(h=>h?`<div class="idf-dossie">${h}</div>`:"")(caixaDossie(c))}
     </div>
@@ -46284,7 +46453,7 @@ function painelDocumentosAtend(c, ks){
     return `<div class="doc-quadros tp-raiz${tp.tudo ? " tp-tudo" : ""}"${tp.attrs}>${tp.trilha}
     <div class="tp-passo" data-passo="assinar"${oc("assinar")}><section class="doc-quadro" id="dq-assinar">${caixaDocumentos(c, ks)}</section>${quadroGerados(c)}</div>
     <div class="tp-passo" data-passo="pedir"${oc("pedir")}>${quadroProvidenciar(c)}</div>
-    <div class="tp-passo" data-passo="guias"${oc("guias")}>${quadroGuias(c)}</div>
+    <div class="tp-passo" data-passo="guias"${oc("guias")}>${quadroGuias(c)}${quadroManutencaoDoc(c)}</div>
     <div class="tp-passo" data-passo="desfecho"${oc("desfecho")}><section class="doc-quadro" id="dq-desfecho">${quadroDesfecho(c)}</section></div>
     <div class="tp-pe">${tp.nav}</div>
     <details class="doc-quadro doc-ferr" id="dq-ferramentas"><summary>Ferramentas: catálogo completo de documentos, consultas com o CPF, anexos da IN 128 e site interno</summary>
