@@ -16,7 +16,7 @@ const K1 = "b0000000-0000-0000-0000-000000000a34", K2 = "b0000000-0000-0000-0000
 const CNIS = { em: "2026-10-08", nome: "Rosalina Ficta Moura", paginas: 3, qtVinculos: 1, nits: [], contribSemPerda: 150, indicadores: [],
   vinculos: [{ seq: 1, tipo: "Empregado", origem: "LOJAS FICTICIAS LTDA", codigo: "11.444.777/0001-61", inicio: "01/03/2012", fim: "31/05/2019", ultRemun: "05/2019", aberto: false, indicadores: [] },
     { seq: 2, tipo: "Benefício", especie: "31", origem: "AUXILIO DOENCA PREVIDENCIARIO", nb: "6123456780", inicio: "10/03/2018", fim: "20/05/2018", situacao: "CESSADO", aberto: false }],
-  analise: { abertos: [], errosEmp: [], abaixo: [], mesAnt: "09/2026", agora: { tipo: "empregado" }, benefAtivos: [], qtComps: 174,
+  analise: { abertos: [], errosEmp: [], abaixo: [{ comp: "03/2018" }, { comp: "04/2018" }, { comp: "05/2018" }, { comp: "09/2018" }], mesAnt: "09/2026", agora: { tipo: "empregado" }, benefAtivos: [], qtComps: 174,
     contagem: { periodos: [["2012-03", "2019-05"]], carencia: 174, anos: 14, meses: 6, foraMinimo: 0 } } };
 const dados = {};
 for (const t of ["tarefas", "eventos", "pagamentos", "meu_dia", "andamentos", "sugestoes", "mencoes", "leads", "lembretes", "analises_direito", "anexos",
@@ -72,24 +72,32 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const ped = () => ((cli().campos || {}).docs_pedidos || []).find(x => x.origem === "anotacoes");
   conf("o documento anotado vai a docs_pedidos, preso ao pré-caso", ped() && ped().precaso_id === "pc_r1" && ped().itens.length === 1);
   conf("e aparece na lista ao lado", await p.evaluate(() => /Laudo do ortopedista/.test(document.querySelector(".atend-docs").textContent)));
-  // o quadro vermelho e o arrastar
+  conf("as competências abaixo do mínimo saem em faixas", await p.evaluate(() => faixasDeComps(["03/2021","04/2021","05/2021","09/2021"]).join("|") === "03/2021 a 05/2021|09/2021"));
+  // as pendências, primeiro passo da Análise de Direito, e o arrastar
   await ir("direito");
-  const nProb = await p.evaluate(() => document.querySelectorAll(".pa-prob li").length);
-  await p.screenshot({ path: path.join(OUT, "01-direito.png") });
-  conf(`a Análise de Direito mostra o quadro vermelho dos problemas (${nProb})`, nProb > 0 && await p.evaluate(() => /qualidade/i.test(document.querySelector(".pa-prob").textContent)));
+  const pend = await p.evaluate(() => { const r = document.querySelector('[data-tp="ad"]'); const lis = [...r.querySelectorAll(".tp-trilha > li")];
+    return { ids: lis.map(l => l.dataset.passo).join(), aqui: (lis.find(l => l.classList.contains("aqui")) || {}).dataset?.passo,
+      itens: [...document.querySelectorAll(".pa-prob li")].map(li => ({ quem: li.querySelector(".pp-quem").textContent, acao: li.dataset.txt })) }; });
+  await p.screenshot({ path: path.join(OUT, "01-pendencias.png") });
+  conf(`a trilha é Pendências, Análise do Benefício e Conclusão, e abre nas Pendências (${pend.ids} · ${pend.aqui})`, pend.ids === "pend,benef,concl" && pend.aqui === "pend");
+  conf(`cada pendência diz o que deve ser feito e por quem (${pend.itens.length})`, pend.itens.length > 0 && pend.itens.every(x => /^Deve /.test(x.acao) && /^(Cliente|Escritório)$/.test(x.quem)));
+  conf("a qualidade perdida pede a pergunta do desemprego", pend.itens.some(x => /desempregada/.test(x.acao)));
+  conf("as competências abaixo do mínimo pedem o pagamento, com as faixas", pend.itens.some(x => x.quem === "Cliente" && /Deve pagar a complementação das competências 03\/2018 a 05\/2018 e 09\/2018/.test(x.acao)));
+  conf("o que falta no dossiê vira providência (rodar o Emprega Brasil)", pend.itens.some(x => /rodar o Emprega Brasil/.test(x.acao)));
   await p.fill("#atend-nota", "rascunho");
   await p.dragAndDrop(".pa-prob li", "#atend-conversa");
   const txt = await p.inputValue("#atend-nota");
-  conf(`arrastar o problema leva o texto às anotações (${txt.slice(0, 60)})`, /^rascunho\n.+/.test(txt));
+  conf(`arrastar a pendência leva a providência às anotações (${txt.slice(0, 60)})`, /^rascunho\nDeve .+/.test(txt));
   await p.click(".pa-prob li .btn-mini");
   conf("o anotar faz o mesmo", (await p.inputValue("#atend-nota")).split("\n").length === 3);
+  conf("o campo de escrever é maior (6 linhas)", await p.evaluate(() => document.getElementById("atend-nota").getBoundingClientRect().height >= 120));
   await p.fill("#atend-doc", "CTPS"); await p.click(".atend-docs .adr-bt"); await p.waitForTimeout(500);
   conf("gravar um documento não apaga a anotação em curso", (await p.inputValue("#atend-nota")).startsWith("rascunho") && ped().itens.length === 2);
   await p.click(".atend-docs li .olho"); await p.waitForTimeout(500);
   conf("o ✕ tira o documento da lista", ped().itens.length === 1 && ped().itens[0].nome === "CTPS");
   // fora do atendimento, sem quadro nem painel
   await p.evaluate(a => { _atendAberto.delete(a); irSubCad("direito"); }, A); await p.waitForTimeout(300);
-  conf("fora do atendimento, nem o quadro nem as anotações fixas", await p.evaluate(() => !document.querySelector(".pa-prob") && !document.getElementById("atend-conversa")));
+  conf("fora do atendimento, nem as pendências nem as anotações fixas", await p.evaluate(() => !document.querySelector(".pa-prob") && !document.getElementById("atend-conversa")));
   // 390 px: as anotações voltam ao pé
   await p.evaluate(([a, x]) => abrirAtendimentoDe(a, x), [A, "pc_r1"]); await p.waitForTimeout(400);
   await p.setViewportSize({ width: 390, height: 844 }); await p.waitForTimeout(300);

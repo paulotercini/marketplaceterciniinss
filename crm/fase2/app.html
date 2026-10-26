@@ -3847,16 +3847,26 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .atend-conversa summary{cursor:pointer;font-weight:600;font-size:14px;min-height:32px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .atend-conv-corpo{display:flex;flex-direction:column;gap:8px;margin-top:8px}
 .atend-nota{margin:0;font-size:13.5px;line-height:1.5;border-left:3px solid #E3DED3;padding-left:10px}
+/* F283b · as anotações em cartões separados, com o autor e a data no alto; o campo de escrever maior */
+.atend-bloco{border-top:1px solid #E7E6E1;padding-top:10px}.atend-bloco h4{margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:#686660}
+.atend-notas{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.atend-notas .atend-nota{border:1px solid #E7E6E1;border-left:4px solid #0E5C58;border-radius:8px;padding:8px 10px;background:#FAFAF8}
+.atend-nota-cab{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:3px}.atend-nota-txt{white-space:pre-wrap;overflow-wrap:anywhere}
+#atend-nota{min-height:130px;flex-basis:100%}
+.pa-prob li .pp-corpo{display:flex;flex-direction:column;gap:2px;min-width:0}.pa-prob li .pp-corpo small{margin:0}
+.pp-quem{flex:none;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:#E6F0EF;color:#0E5C58}.pp-quem.cli{background:#FFF1DC;color:#8F5400}
+.pa-prob.vazio{border-color:#B5D3CF;background:#F3F8F7}.pa-prob.vazio h3{color:#0E5C58}
+.adb-parte-t{margin:12px 0 4px;font-size:14px}.adb-parte-t.ok{color:#1B6E38}.adb-parte-t.falta{color:#B3261E}
 .atend-conv-nova{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
 /* F283 · as anotações fixas à direita no modo atendimento; na tela estreita ficam no pé, como antes */
 @media (min-width:1100px){
   #detalhe.atend-tela{padding-right:392px}
   #detalhe.atend-tela .atend-conversa{position:fixed;top:14px;right:16px;bottom:14px;width:360px;margin:0;overflow:auto;z-index:61;box-shadow:0 2px 12px rgba(0,0,0,.08)}
 }
-.atend-docs{border-top:1px dashed #E7E6E1;padding-top:8px;font-size:13px}.atend-docs ul{margin:4px 0 6px;padding-left:18px}.atend-docs li.entregue{color:#686660}
+.atend-docs{font-size:13px}.atend-docs ul{margin:4px 0 6px;padding-left:18px}.atend-docs li.entregue{color:#686660}
 .atend-docs input{flex:1 1 200px;box-sizing:border-box;padding:8px 10px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:14px}
 .pa-prob{margin:0 0 14px;padding:12px 16px;border:2px solid #B3261E;border-radius:12px;background:#FCEDEC}
-.pa-prob h3{margin:0 0 4px;font-size:15px;color:#B3261E}.pa-prob ul{list-style:none;margin:8px 0 0;padding:0;max-height:340px;overflow:auto;display:flex;flex-direction:column;gap:6px}
+.pa-prob h3{margin:0 0 4px;font-size:15px;color:#B3261E}.pa-prob ul{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
 .pa-prob li{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;background:#fff;border-left:4px solid #B3261E;cursor:grab;font-size:13px}
 .pa-prob li.warn{border-left-color:#8F5400}.pa-prob li small{color:#686660;margin-right:4px}.pa-prob li .btn-mini{margin-left:auto;flex:none}
 .atend-conv-nova textarea{flex:1 1 320px;box-sizing:border-box;padding:9px 12px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:14px;resize:vertical}
@@ -18122,15 +18132,17 @@ const ATEND_SUBS = new Set(["pa","mapa","direito","documentos"]);
 // sem sair da tela. Gerado o caso, elas viram andamentos dele, como sempre.
 function conversaAtendimento(c){
   const pc = preCasoAberto(c);
-  const ns = ((c.campos||{}).atendimento||[]).filter(n=>!pc || !n.precaso_id || n.precaso_id===pc.id).slice(-6).reverse();
+  const ns = ((c.campos||{}).atendimento||[]).filter(n=>!pc || !n.precaso_id || n.precaso_id===pc.id).slice(-30).reverse();
   // F283 · no modo atendimento as anotações ficam abertas, fixas à direita em todos os passos (pedido do Paulo, 26.10.2026)
   return `<details class="atend-conversa" id="atend-conversa" open ondragover="event.preventDefault()" ondrop="probSoltar(event)">
     <summary>Anotações do atendimento${ns.length?` (${ns.length})`:""} <span class="meio-sub">@nome avisa a pessoa</span></summary>
     <div class="atend-conv-corpo">
-      ${ns.map(n=>`<p class="atend-nota"><b>${esc(n.quem||"")}</b> <span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span><br>${destacarMencoes(esc(String(n.texto||"")))}</p>`).join("")
-        || `<p class="meio-sub">Nenhuma anotação ainda neste atendimento.</p>`}
-      <div class="atend-conv-nova"><textarea id="atend-nota" rows="2" placeholder="Anote para a equipe; @Amanda avisa a Amanda"></textarea>
+      ${/* F283b · o campo de escrever primeiro e maior; as anotações em cartões; os documentos em bloco próprio */""}
+      <div class="atend-conv-nova"><textarea id="atend-nota" rows="6" placeholder="Anote o que deve ser feito. Arraste aqui uma pendência; @Amanda avisa a Amanda"></textarea>
         <button type="button" class="adr-bt adr-primario" onclick="notaDoAtendimento('${c.id}')">Anotar</button></div>
+      <div class="atend-bloco"><h4>Anotações${ns.length?` (${ns.length})`:""}</h4>
+      ${ns.length ? `<ol class="atend-notas">${ns.map(n=>`<li class="atend-nota"><div class="atend-nota-cab"><b>${esc(n.quem||"")}</b><span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span></div><div class="atend-nota-txt">${destacarMencoes(esc(String(n.texto||"")))}</div></li>`).join("")}</ol>`
+        : `<p class="meio-sub">Nenhuma anotação ainda neste atendimento.</p>`}</div>
       ${docsAnotadosHtml(c, pc)}
     </div></details>`;
 }
@@ -18140,7 +18152,7 @@ const pcDoPedido = pc => pc && pc.id!=="legado" ? pc.id : null;
 const docsAnotadosDe = (c, pc) => ((c.campos||{}).docs_pedidos||[]).find(p=>p.origem==="anotacoes" && (p.precaso_id||null)===pcDoPedido(pc));
 function docsAnotadosHtml(c, pc){
   const its = (docsAnotadosDe(c, pc)||{}).itens||[];
-  return `<div class="atend-docs"><b>Documentos a pedir${its.length?` (${its.length})`:""}</b>
+  return `<div class="atend-docs atend-bloco"><h4>Documentos a pedir${its.length?` (${its.length})`:""}</h4>
     ${its.length ? `<ul>${its.map((it, i)=>`<li${it.entregue?' class="entregue"':""}>${esc(it.nome)}${it.entregue ? ` <small class="meio-sub">entregue em ${esc(fmtBarra(it.entregue))}</small>` : ` <button type="button" class="olho" title="tirar da lista" aria-label="tirar ${esc(it.nome)} da lista" onclick="docDesanotar('${c.id}',${i})">✕</button>`}</li>`).join("")}</ul>` : ""}
     <div class="atend-conv-nova"><input id="atend-doc" type="text" placeholder="Ex.: laudo do ortopedista atualizado" onkeydown="if(event.key==='Enter')docAnotar('${c.id}')">
       <button type="button" class="adr-bt" onclick="docAnotar('${c.id}')">Pedir</button></div></div>`;
@@ -18161,20 +18173,80 @@ async function docAnotar(cliId){
   await gravarDocsAnotados(c, its=>{ if(!its.some(i=>dsa(i.nome)===dsa(t))) its.push({nome:t, entregue:null}); });
 }
 async function docDesanotar(cliId, i){ const c = D.cliPorId.get(cliId); if(c) await gravarDocsAnotados(c, its=>its.splice(i, 1)); }
-// F283 · o quadro vermelho da Análise de Direito: o que o Primeiro atendimento marcou em vermelho ou amarelo, para arrastar às anotações
+// F283b · as PENDÊNCIAS da Análise de Direito: o que o Primeiro atendimento marcou em vermelho ou amarelo, escrito como a
+// providência a tomar e por quem (escritório ou cliente), para arrastar às anotações (pedido do Paulo, 26.10.2026)
+// as competências em faixas: 03/2021, 04/2021, 05/2021 → "03/2021 a 05/2021"
+function faixasDeComps(comps){
+  const ks = [...new Set(comps.map(chaveComp))].sort(), out = [];
+  for(const k of ks){ const u = out[out.length-1]; if(u && mesesEntreYm(u[1], k)===2) u[1] = k; else out.push([k, k]); }
+  const br = k => k.split("-").reverse().join("/");
+  return out.map(([a, b])=>a===b ? br(a) : `${br(a)} a ${br(b)}`);
+}
+const juntaE = xs => xs.length < 2 ? (xs[0]||"") : `${xs.slice(0, -1).join(", ")} e ${xs[xs.length-1]}`;
+// o verbo da instrução que o texto já traz ("Peça a carteira…") vira a providência ("Deve pedir a carteira…")
+const IMPERATIVO = {"peça":"pedir", "pedir":"pedir", "confira":"conferir", "junte":"juntar", "pergunte":"perguntar", "baixe":"baixar", "traga":"trazer", "rode":"rodar", "atualize":"atualizar"};
+function instrucaoDoTexto(t){
+  const m = String(t).match(/(?:^|[.;:]\s+)(Pe[çc]a|Pedir|Confira|Junte|Pergunte|Baixe|Traga|Rode|Atualize)\b([^.;]*)/i);
+  return m ? `Deve ${IMPERATIVO[m[1].toLowerCase()]}${m[2]}` : "";
+}
+function providenciaDe(p, ctx){
+  const k = p.k || "", t = String(p.txt || ""), esc_ = "Escritório", cli = "Cliente";
+  if(k==="cnis.qual"){ const at = t.match(/pode pagar os meses atrasados \(([^)]+)\)/), ate = (t.match(/até (\d{2}\/\d{2}\/\d{4})/)||[])[1];
+    if(at && !/Perdeu/.test(t)) return [cli, `Deve pagar os meses atrasados (${at[1]})${ate ? ` até ${ate}` : ""}, para não perder a qualidade de segurado`];
+    const perda = (t.match(/em (\d{2}\/\d{2}\/\d{4})/)||[])[1];
+    return [esc_, /Pergunte/.test(t) ? `Deve perguntar se a pessoa ficou desempregada depois do último mês pago (seguro-desemprego ou cadastro no SINE estendem a graça em 12 meses); sem isso, a qualidade foi perdida${perda ? ` em ${perda}` : ""}`
+      : `Deve avaliar o reingresso: a qualidade foi perdida${perda ? ` em ${perda}` : ""} e só volta com novas contribuições`]; }
+  if(/^cad:/.test(k) && /sem a data do CadÚnico/.test(t)) return [esc_, `Deve anotar a data de inscrição ou de atualização do CadÚnico, pelo comprovante do CRAS`];
+  if(k==="cnis.min"){ const fx = faixasDeComps(((ctx.an||{}).abaixo||[]).map(x=>x.comp));
+    return [cli, `Deve pagar a complementação das competências ${juntaE(fx)}, que estão abaixo do mínimo (o escritório gera a guia)`]; }
+  if(/^cnis\.ind:PEXT/.test(k) && !/não peça a carteira/.test(t)) return [cli, `Deve trazer a carteira de trabalho (contrato e saída), a rescisão e os holerites do vínculo que entrou fora do prazo; depois, pedir o acerto do CNIS`];
+  if(/^cnis\.(ctps|papeis):/.test(k)) return [esc_, `Deve pedir o acerto do CNIS para incluir o vínculo, com a carteira de trabalho e os papéis da época: ${t.replace(/^[^:]*:\s*/, "").replace(/\.\s*Pe.*$/, "")}`];
+  if(/^cnis\.aberto:/.test(k)) return /Pedir a correção/.test(t) ? [esc_, `Deve pedir a correção da data de saída no CNIS com a carteira de trabalho (RAC Vínculos): ${t.split(";")[0].replace(/^[^:]*:\s*/, "")}`]
+    : [esc_, `Deve confirmar com a pessoa se ainda trabalha em ${t.replace(/^[^:]*:\s*/, "").split(",")[0]}; se saiu, pedir a correção da data de saída no CNIS com a carteira de trabalho`];
+  if(/^cnis\.limbo:/.test(k)) return [cli, `Deve pedir à empresa a declaração escrita de que recusou a volta ao trabalho; com ela, o escritório avalia o novo pedido ao INSS ou a ação contra a empresa`];
+  if(/^rais\.lic:/.test(k)) return [esc_, `Deve confirmar com a pessoa a ${t.split(":")[0].toLowerCase()}; se não houve, pedir ao empregador a retificação da RAIS`];
+  if(/^rais\.vinc:/.test(k)) return [cli, `Deve trazer a carteira de trabalho ou a rescisão com a data de saída do ${t.split(":")[0].replace(/^Vínculo/, "vínculo")}`];
+  if(/^cnpj\.pergunta:/.test(k)) return [esc_, `Deve perguntar se a empresa ainda funciona; se parou, a pessoa deve pedir a baixa do CNPJ, porque o INSS presume a atividade`];
+  if(/^ppp:/.test(k)){ const emp = (t.match(/^PPP de ([^,]+)/)||[])[1] || "do empregador";
+    return [cli, /falta o PPP de/.test(t) ? `Deve pedir à ${emp} o PPP do período que falta: ${(t.match(/falta o PPP de ([^:.,]+)/)||[])[1]||""}`
+      : /EPI/.test(t) ? `Deve pedir à ${emp} o LTCAT do período, para provar que o EPI declarado eficaz no PPP não protegia`
+      : `Deve pedir à ${emp} a retificação do PPP (agente, intensidade ou período): ${t.replace(/^PPP de [^:]*:\s*/, "")}`]; }
+  if(/^ped\.semprorrog:/.test(k)) return [esc_, `Deve fazer novo pedido do benefício, porque não houve pedido de prorrogação antes do corte`];
+  if(/^ped\./.test(k)) return [esc_, `Deve cumprir o prazo: ${t}`];
+  if(/^ben\.dec:/.test(k)) return [esc_, `Deve pedir a revisão antes do fim do prazo de decadência: ${t}`];
+  if(/^ben\.cota:/.test(k)) return [esc_, `Deve avaliar o recurso ou a ação contra o corte da cota da pensão: ${t}`];
+  if(/^saude/.test(k)) return [cli, `Deve trazer relatório médico atual, com data, CID e o que impede o trabalho`];
+  if(k==="cad.atualizacao") return [cli, `Deve atualizar o CadÚnico no CRAS antes do pedido, porque o cadastro passou de 24 meses`];
+  if(/^falta:/.test(k)){
+    if(/Emprega Brasil|CTPS, RAIS/i.test(t)) return [esc_, `Deve rodar o Emprega Brasil na extensão do dossiê (carteira de trabalho, RAIS e CAGED)`];
+    if(/HC Ribeir/i.test(t)) return [esc_, `Deve rodar o portal do HC Ribeirão na extensão do dossiê, se a pessoa se trata lá`];
+    if(/Redesim|CNPJ/i.test(t)) return [esc_, `Deve rodar a Redesim na extensão do dossiê, para conferir as empresas em nome da pessoa`];
+    if(/PPP/.test(t)) return [cli, `Deve pedir ao empregador o PPP de cada vínculo com atividade especial`];
+    if(/laudo m[ée]dico|relat[óo]rio m[ée]dico/i.test(t)) return [cli, `Deve trazer laudo e relatório médico atuais, com data, CID e o que impede o trabalho`];
+    if(/Extrato de pagamento/i.test(t)) return [esc_, `Deve baixar no Meu INSS o ${t.split(":")[0].replace(/^Extrato/, "extrato")}`];
+    if(/c[óo]pia/i.test(t) && /agendamento/i.test(t)) return [esc_, `Deve agendar no INSS a cópia do processo do benefício concedido`];
+    if(/pedido administrativo|processo|Laudo da per[íi]cia/i.test(t)) return [esc_, `Deve baixar no Meu INSS a cópia integral do processo administrativo`];
+  }
+  return [esc_, instrucaoDoTexto(t) || `Deve conferir e resolver: ${t}`];
+}
 function problemasDoPA(c, ks){
-  let qs = []; try{ qs = quadrosDoPA(c, ks).quadros; }catch(e){ return []; }
+  let r = null; try{ r = quadrosDoPA(c, ks); }catch(e){ return []; }
   const ruim = e => e==="crit" || e==="warn";
-  return qs.flatMap(q=>[...(q.blocos||[]).filter(b=>ruim(b[2])).map(b=>({txt:`${b[0]}: ${b[1]}`, est:b[2]})), ...q.itens.filter(x=>ruim(x.est))]
-    .map(x=>({txt:x.txt, est:x.est, q:q.rot}))).sort((a, b)=>(a.est==="crit" ? 0 : 1) - (b.est==="crit" ? 0 : 1));
+  // os blocos do alto do CNIS repetem itens (a qualidade é o cnis.qual): só os itens viram pendência
+  return r.quadros.flatMap(q=>q.itens.filter(x=>ruim(x.est))
+    .map(x=>{ const [quem, acao] = providenciaDe(x, r); return {txt:x.txt, est:x.est, q:q.rot, quem, acao}; }))
+    .sort((a, b)=>(a.est==="crit" ? 0 : 1) - (b.est==="crit" ? 0 : 1));
 }
 function quadroProblemasPA(c, ks){
-  const ps = problemasDoPA(c, ks); if(!ps.length) return "";
-  return `<section class="pa-prob" aria-label="Problemas vistos no Primeiro atendimento">
-    <h3>Problemas vistos no Primeiro atendimento (${ps.length})</h3>
-    <p class="meio-sub">Arraste um problema para as anotações, ou use "anotar".</p>
-    <ul>${ps.map(p=>`<li class="${p.est}" draggable="true" data-txt="${esc(`${p.q}: ${p.txt}`)}" ondragstart="event.dataTransfer.setData('text/plain', this.dataset.txt)">
-      <span><small>${esc(p.q)}</small> ${esc(p.txt)}</span><button type="button" class="btn-mini" onclick="probParaNota(this.closest('li').dataset.txt)">anotar</button></li>`).join("")}</ul></section>`;
+  const ps = problemasDoPA(c, ks);
+  if(!ps.length) return `<section class="pa-prob vazio" aria-label="Pendências"><h3>Pendências</h3><p class="meio-sub">Nenhuma pendência vista no Primeiro atendimento.</p></section>`;
+  return `<section class="pa-prob" aria-label="Pendências">
+    <h3>Pendências (${ps.length})</h3>
+    <p class="meio-sub">O que deve ser feito, e por quem. Arraste uma pendência para as anotações, ou use "anotar".</p>
+    <ul>${ps.map(p=>`<li class="${p.est}" draggable="true" data-txt="${esc(p.acao)}" ondragstart="event.dataTransfer.setData('text/plain', this.dataset.txt)">
+      <span class="pp-quem ${p.quem==="Cliente" ? "cli" : "esc"}">${p.quem}</span>
+      <span class="pp-corpo"><b>${esc(p.acao)}</b><small>${esc(p.q)} · ${esc(p.txt)}</small></span>
+      <button type="button" class="btn-mini" onclick="probParaNota(this.closest('li').dataset.txt)">anotar</button></li>`).join("")}</ul></section>`;
 }
 function probParaNota(txt){
   const ta = document.getElementById("atend-nota"); if(!ta || !txt) return;
@@ -23682,13 +23754,11 @@ function painelDireito(c){
   // F239 · com um benefício só, ele já abre: o passo "Benefício" não pede clique
   if(atend && !adBenefAberto(c) && opcoesSel(c).length===1) _adBenef.set(adChave(c), opcoesSel(c)[0].o);
   const ab = adBenefAberto(c);
-  // F239 · com um benefício só, a primeira visita já começa depois do passo "Benefício"
-  if(atend && ab && opcoesSel(c).length===1 && !_passoAt.has(passoChave("ad", c)) && !(admDe(c).passos||{}).ad){
-    const ps = adPassosDe(c, ks, ab); _passoAt.set(passoChave("ad", c), (ps[1] || ps[0]).id); }
   // F239 · no atendimento, a Análise de Direito em passos: Benefício, Já resolvido, Falta responder, Conclusão
   const tp = atend ? passosDaTela("ad", c, adPassosDe(c, ks, ab)) : null, oc = id => tp && !tp.tudo && id!==tp.at ? " hidden" : "";
   const principal = tp
     ? `<div class="adx-main tp-raiz${tp.tudo ? " tp-tudo" : ""}"${tp.attrs}>${tp.trilha}
+        <div class="tp-passo" data-passo="pend"${oc("pend")}>${quadroProblemasPA(c, ks)}</div>
         ${quadradoEmPasso(quadradoBeneficios(c, ks), oc)}
         ${ab ? painelBeneficio(c, ks, ab, oc) : `<div id="ad-benef"></div>`}
         <div class="tp-passo" data-passo="concl"${oc("concl")}>${caixaConsideracoes(c)}${secaoManutencaoAnalise(c)}${formAnalise(c)}${linhaDesfecho(c)}</div>
@@ -23702,7 +23772,6 @@ function painelDireito(c){
       ${cnisDe(c)&&cnisDe(c).caminho?`<button type="button" class="tl-bt" onclick="abrirCnis('${c.id}')" title="abre o extrato guardado em outra aba (CNIS de ${esc(fmt(cnisDe(c).em))})">Abrir CNIS</button>`
         :`<button type="button" class="tl-bt tl-falta" onclick="irSubCad('identificacao')" title="o CNIS ainda não foi inserido: insira na Identificação">Inserir CNIS</button>`}</span>
     </div>
-    ${atend ? quadroProblemasPA(c, ks) : ""}
     <div class="adx-grade">${principal}
       <aside class="adx-lado">${listaConsideracoes(c)}</aside></div>
     ${atend ? `<details class="adr-hist" id="ad-hist"><summary>Análises anteriores e histórico</summary>` : ""}
@@ -23839,13 +23908,15 @@ function painelBeneficio(c, ks, op, oc){
     return `<section class="adb" id="ad-benef" data-op="${op}" aria-labelledby="adb-t">
     <div class="adb-topo"><h3 id="adb-t">Requisitos · ${esc(o.rot)}</h3><span class="adb-cont">${esc(adContagem(a))}</span></div>
     ${ver ? `<p class="adb-veredito tom-${ver.tom}" role="status">${esc(ver.txt)}</p>` : ""}
-    ${ok.length || rec.length ? `<div class="tp-passo" data-passo="ok"${oc("ok")}>
+    ${ok.length || rec.length ? `<div class="tp-passo adb-parte" data-passo="benef"${oc("benef")}>
+      <h4 class="adb-parte-t ok">Já cumprido (${ok.length})</h4>
       <p class="adb-passo-sub">O que o dossiê já responde. Confira com a pessoa o que vier marcado "Do dossiê"; a base legal abre em cada um.</p>
       ${derEm==="ok" ? der : ""}
       ${ok.length ? `<ol class="adb-lista adb-resolvidos">${ok.map(linha).join("")}</ol>` : ""}
       ${rec.length ? `<details class="adb-recolhido"><summary>${esc(ex.recolherRot || "Outros pontos")} (${rec.length})</summary><ol class="adb-lista">${rec.map(linha).join("")}</ol></details>` : ""}
       ${mais}</div>` : ""}
-    ${fal.length ? `<div class="tp-passo" data-passo="falta"${oc("falta")}>
+    ${fal.length ? `<div class="tp-passo adb-parte" data-passo="benef"${oc("benef")}>
+      <h4 class="adb-parte-t falta">Ainda falta (${fal.length})</h4>
       <p class="adb-passo-sub">O que ainda pede resposta, prova ou decisão. Cada resposta recalcula o benefício na hora.</p>
       ${der}<ol class="adb-lista">${fal.map(linha).join("")}</ol>${nota}</div>` : ""}
     <div class="tp-passo" data-passo="concl"${oc("concl")}>
@@ -23872,13 +23943,14 @@ function painelBeneficio(c, ks, op, oc){
 // o quadrado é o passo "Benefício" e continua logo acima do painel do benefício aberto
 const quadradoEmPasso = (h, oc) => h.replace('<section class="adq"', `<section class="adq tp-passo" data-passo="benef"${oc("benef")}`);
 const adResolvido = r => r.est==="ok" || r.est==="info";
+// F283b · Pendências primeiro, depois a Análise do Benefício (os botões dos benefícios e, do aberto, o que já se cumpriu e o
+// que falta) e a Conclusão (pedido do Paulo, 26.10.2026)
 function adPassosDe(c, ks, ab){
-  const ps = [{id:"benef", rot:"Benefício", conta:String(opcoesSel(c).length || ""), alerta:false}];
+  const np = problemasDoPA(c, ks);
+  const ps = [{id:"pend", rot:"Pendências", conta:String(np.length || ""), alerta:np.some(x=>x.est==="crit")}];
   let a = null; if(ab){ try{ a = avaliarReq(ab, reqCtx(c, ks, ab)); }catch(e){} }
-  if(a){ const rec = (REQ_EXTRA[ab]||{}).recolher ? a.rs.filter(r=>{ try{ return REQ_EXTRA[ab].recolher(r, reqCtx(c, ks, ab)); }catch(e){ return false; } }) : [];
-    const rs = a.rs.filter(r=>!rec.includes(r)), ok = rs.filter(adResolvido), fal = rs.filter(r=>!adResolvido(r));
-    if(ok.length || rec.length) ps.push({id:"ok", rot:"Já resolvido", conta:String(ok.length), alerta:false});
-    if(fal.length) ps.push({id:"falta", rot:"Falta responder", conta:String(fal.length), alerta:fal.some(r=>["risco","impedido","falta"].includes(r.est))}); }
+  const fal = a ? a.rs.filter(r=>!adResolvido(r)) : [];
+  ps.push({id:"benef", rot:"Análise do Benefício", conta:String(opcoesSel(c).length || ""), alerta:fal.some(r=>["risco","impedido","falta"].includes(r.est))});
   ps.push({id:"concl", rot:"Conclusão", conta:"", alerta:false});
   return ps;
 }
@@ -23901,7 +23973,7 @@ function adAbrirBenef(cliId, op){
   adRepintarBenef(cliId);
   adServicoDoBenef(c, op);
   // F239 · em passos, escolher o benefício leva ao passo seguinte
-  if(document.querySelector('[data-tp="ad"]')){ const ids = adPassosDe(c, D.casosDoCliente.get(cliId)||[], op).map(p=>p.id); return passoIr("ad", cliId, ids[1] || ids[0]); }
+  if(document.querySelector('[data-tp="ad"]')) return passoIr("ad", cliId, "benef");   // F283b · o benefício abre no mesmo passo
   const el = document.getElementById("ad-benef"); if(el && el.scrollIntoView) el.scrollIntoView({behavior:"smooth", block:"nearest"});
 }
 function adMaisBenef(bt){ const m = bt.closest(".adq").querySelector(".adq-mais"); m.hidden = !m.hidden; bt.setAttribute("aria-expanded", String(!m.hidden)); }
