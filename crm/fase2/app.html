@@ -3977,17 +3977,54 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .aq-ev.aq-ev-vaga{background:#F2F8F4;border:1.5px dashed #1E6F50;color:#14513A;cursor:pointer}
 /* F250e · cada profissional na sua cor e, dentro dela, um tom para 001 (45 min, mais escuro) e outro para 002 (30 min, mais claro);
    a vaga vai tracejada e o atendimento marcado, cheio, no mesmo tom */
-.aq .aq-ev.p-paulo.t001,.aq-vaga.p-paulo.t001,.aq-sw.p-paulo.t001{--tom:#1F4E8C;--fundo:#DCE7F6}
-.aq .aq-ev.p-paulo.t002,.aq-vaga.p-paulo.t002,.aq-sw.p-paulo.t002{--tom:#4A90D9;--fundo:#EEF5FD}
-.aq .aq-ev.p-marcos.t001,.aq-vaga.p-marcos.t001,.aq-sw.p-marcos.t001{--tom:#1E6B3A;--fundo:#DCEFE2}
-.aq .aq-ev.p-marcos.t002,.aq-vaga.p-marcos.t002,.aq-sw.p-marcos.t002{--tom:#4FA86B;--fundo:#EEF8F1}
-.aq .aq-ev.p-amanda.t001,.aq-vaga.p-amanda.t001,.aq-sw.p-amanda.t001{--tom:#8F6500;--fundo:#F8EAC6}
-.aq .aq-ev.p-amanda.t002,.aq-vaga.p-amanda.t002,.aq-sw.p-amanda.t002{--tom:#D4A72C;--fundo:#FDF6E1}
+.aq .aq-ev.p-paulo.t001,.aq-vaga.p-paulo.t001,.zag-vaga.p-paulo.t001,.aq-sw.p-paulo.t001{--tom:#1F4E8C;--fundo:#DCE7F6}
+.aq .aq-ev.p-paulo.t002,.aq-vaga.p-paulo.t002,.zag-vaga.p-paulo.t002,.aq-sw.p-paulo.t002{--tom:#4A90D9;--fundo:#EEF5FD}
+.aq .aq-ev.p-marcos.t001,.aq-vaga.p-marcos.t001,.zag-vaga.p-marcos.t001,.aq-sw.p-marcos.t001{--tom:#1E6B3A;--fundo:#DCEFE2}
+.aq .aq-ev.p-marcos.t002,.aq-vaga.p-marcos.t002,.zag-vaga.p-marcos.t002,.aq-sw.p-marcos.t002{--tom:#4FA86B;--fundo:#EEF8F1}
+.aq .aq-ev.p-amanda.t001,.aq-vaga.p-amanda.t001,.zag-vaga.p-amanda.t001,.aq-sw.p-amanda.t001{--tom:#8F6500;--fundo:#F8EAC6}
+.aq .aq-ev.p-amanda.t002,.aq-vaga.p-amanda.t002,.zag-vaga.p-amanda.t002,.aq-sw.p-amanda.t002{--tom:#D4A72C;--fundo:#FDF6E1}
 .aq .aq-ev[class*=" t00"]:not(.outro){background:var(--fundo);border-left:4px solid var(--tom);color:#1E2328}
 .aq .aq-ev.aq-ev-vaga[class*=" t00"]{background:#fff;border:1.5px dashed var(--tom);border-left-width:4px;color:var(--tom)}
 .aq-vaga[class*=" t00"]{background:#fff;border:1.5px dashed var(--tom);color:var(--tom)}
 .aq-vaga[class*=" t00"] b{color:var(--tom)}
 .aq-leg-tipos{display:inline-flex;gap:10px;align-items:center}.aq-leg .aq-sw[class*=" t00"]{background:var(--tom)}.aq-leg-tipos i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}
+/* F281 · a agenda no canto de baixo à direita do WhatsApp: os dias com vaga de cada profissional, na cor dele, e o
+   agendamento ali mesmo, sem sair da conversa. Recolhida, vira a pílula "Agenda · N vagas". */
+.zap-ag{position:fixed;right:16px;bottom:88px;z-index:40;font-size:13px}   /* acima do ⚡ e do enviar */
+.app.celular .zap-ag{right:10px;bottom:calc(124px + env(safe-area-inset-bottom))}
+.app.celular.zap-conv-aberta .zap-ag{z-index:92;bottom:calc(132px + env(safe-area-inset-bottom))}
+.app.celular.zap-conv-aberta .zag-cx{max-height:calc(100dvh - 300px)}
+.modal-fundo:has(.aq-fluxo){z-index:95}
+.zag-pilula{display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:22px;border:1px solid var(--borda);background:var(--branco,#fff);
+  color:var(--texto);font:inherit;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.16)}
+.zag-pilula .aq-bola{margin:0}
+.zag-cx{width:340px;max-width:calc(100vw - 20px);max-height:min(62vh,520px);display:flex;flex-direction:column;background:var(--branco,#fff);
+  border:1px solid var(--borda);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.2);overflow:hidden}
+.zag-cab{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--borda);background:#f0f2f5}
+.zag-cab h3{margin:0;font-size:14px;flex:1}
+.zag-cab button{border:0;background:none;font-size:16px;cursor:pointer;color:var(--cinza);padding:2px 6px}
+.zag-profs{display:flex;gap:4px;padding:8px 10px 4px;flex-wrap:wrap}
+.zag-profs button{display:flex;align-items:center;gap:4px;border:1px solid var(--borda);background:var(--branco,#fff);border-radius:14px;padding:3px 9px;font:inherit;font-size:12px;cursor:pointer}
+.zag-profs button[aria-pressed=true]{background:#1E2328;color:#fff;border-color:#1E2328}
+.zag-profs .aq-bola{margin:0}
+.zag-para{padding:2px 12px 6px;color:var(--cinza);font-size:12px}
+.zag-corpo{overflow:auto;padding:4px 10px 10px}
+.zag-dia{display:flex;align-items:center;gap:8px;width:100%;padding:7px 8px;border:1px solid var(--borda);border-radius:8px;background:var(--branco,#fff);
+  font:inherit;cursor:pointer;margin-top:6px;text-align:left}
+.zag-dia[aria-expanded=true]{border-color:#1E2328;background:#f7f7f5}
+.zag-dia>b{min-width:74px}
+.zag-conta{display:flex;gap:6px;flex-wrap:wrap}
+.zag-n{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:600;padding:1px 7px;border-radius:10px;color:#fff}
+.zag-n.p-paulo{background:#2F6FB0}.zag-n.p-marcos{background:#1B7F3B}.zag-n.p-amanda{background:#C9A227;color:#2E2300}
+.zag-vagas{padding:6px 2px 4px 8px}
+.zag-prof{display:flex;align-items:flex-start;gap:6px;margin-top:4px}
+.zag-prof>span{min-width:62px;font-size:12px;font-weight:600;padding-top:5px;display:flex;align-items:center;gap:4px}
+.zag-prof .aq-bola{margin:0}
+.zag-hs{display:flex;flex-wrap:wrap;gap:5px}
+.zag-vaga{border:1.5px dashed var(--tom);background:#fff;color:var(--tom);border-radius:7px;padding:4px 8px;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.zag-vaga small{font-weight:400;margin-left:3px}
+@media (hover:hover) and (pointer:fine){.zag-vaga:hover{background:var(--fundo)}.zag-dia:hover{background:#f7f7f5}}
+.zag-vazio{padding:10px 4px;color:var(--cinza)}
 .aq-dia-livres{display:block;font-size:11px;color:#1E6F50;font-weight:600}
 .aq-horarios small{display:block;font-size:11px;opacity:.8}
 .cli-todos-l{list-style:none;margin:10px 0 0;padding:0}
@@ -13368,12 +13405,14 @@ async function renderWhats(){
        <div class="zap-dir" id="zap-dir"></div>
        <aside class="zap-painel" id="zap-painel"></aside>
        <button class="zp-fechar" onclick="alternarFichaZap()" aria-label="Fechar a ficha">✕</button>
+       <div class="zap-ag" id="zap-ag"></div>
      </div>`;
+  zagCarregar();
   await recarregarZap();
   pararZapTimer();
   // sem WebSocket: uma olhada a cada 6 segundos é o suficiente para quem está
   // atendendo e não deixa a página pesada
-  zapTimer = setInterval(()=>{ if(visao==="whatsapp") recarregarZap(true); else pararZapTimer(); }, 6000);
+  zapTimer = setInterval(()=>{ if(visao==="whatsapp"){ recarregarZap(true); if(zagAberta()) zagCarregar(); } else pararZapTimer(); }, 6000);
 }
 
 async function recarregarZap(silencioso){
@@ -13754,7 +13793,7 @@ async function abrirConversa(id){
   zapHist = await todas("zap_atendimentos",
     `select=numero,aberto_em,observacao&conversa_id=eq.${id}&encerrado_em=not.is.null&order=aberto_em.desc&limit=5`).catch(()=>[]);
   pintarConversa();
-  pintarListaZap();
+  pintarListaZap(); pintarAgendaZap();
   if(c.nao_lidas){        // abrir é ler
     await api(`/rest/v1/zap_conversas?id=eq.${id}`,{method:"PATCH",
       headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}).catch(()=>{});
@@ -13932,7 +13971,7 @@ function pintarConversa(){
 // F271 · no celular a conversa ocupa a tela, como no WhatsApp; a seta volta à lista
 function voltarListaZap(){
   zapAberta = null; zapResponder = null;
-  document.getElementById("app").classList.remove("zap-conv-aberta");
+  document.getElementById("app").classList.remove("zap-conv-aberta"); pintarAgendaZap();
   document.querySelector(".zap-tela")?.classList.remove("ficha-on");
   document.getElementById("zap-dir").innerHTML = telaVaziaZap(); pintarPainelZap(null); pintarListaZap();
 }
@@ -48584,6 +48623,74 @@ function agendarNaVaga(dia, eventoId){
   const s = vagasDoDia(dia).find(x=>x.eventoId===eventoId); if(!s) return;
   abrirFluxoAgenda({data:dia.data, inicio:s.inicio, prof:s.profissional || (agq.prof==="todos" ? "paulo" : agq.prof), vaga:{eventoId, tipo:s.tipoFixo===false ? null : s.tipo}});
 }
+// F281 · A AGENDA NO WHATSAPP (pedido do Paulo, 26.10.2026): no canto de baixo à direita da tela do WhatsApp, os dias
+// com vaga do Paulo, do Marcos e da Amanda, cada um na sua cor, e o clique na vaga abre o agendamento ali mesmo, já com
+// o cliente da conversa aberta (ou o nome e o telefone do contato, se não for cliente). Lê a agenda Completa.
+let zag = { aberta:null, prof:"todos", dia:null };
+function zagAberta(){ if(zag.aberta===null){ const v = ler("crm_zap_agenda"); zag.aberta = v ? v==="1" : !celular(); } return zag.aberta; }
+function zagAlternar(){ zag.aberta = !zagAberta(); guardar("crm_zap_agenda", zag.aberta ? "1" : "0"); pintarAgendaZap(); }
+function zagProf(pr){ zag.prof = pr; zag.dia = null; pintarAgendaZap(); }
+function zagDia(d){ zag.dia = zag.dia===d ? "" : d; pintarAgendaZap(); }
+// as vagas da Completa por dia, só dos profissionais escolhidos
+function zagDias(){
+  const r = agq.cache.todos; if(!r) return [];
+  return r.dias.map(d=>({d, v:vagasDoDia(d).map(s=>({...s, profissional:s.profissional||"paulo"})).filter(s=>zag.prof==="todos" || s.profissional===zag.prof)}))
+    .filter(x=>x.v.length);
+}
+function zagConversa(){ return zapAberta ? zapConvs.find(c=>c.id===zapAberta) || null : null; }
+const telDaConversa = c => { const d = String((c&&c.telefone)||"").replace(/\D/g,""); return /^55\d{10,11}$/.test(d) ? d.slice(2) : d; };
+function pintarAgendaZap(){
+  const el = document.getElementById("zap-ag"); if(!el) return;
+  const profs = PROFS_AGENDA, todos = profs.every(pr=>agq.cache[pr]);
+  const dias = zagDias(), total = dias.reduce((n, x)=>n + x.v.length, 0);
+  if(!zagAberta()){
+    el.innerHTML = `<button class="zag-pilula" onclick="zagAlternar()" aria-expanded="false" title="abrir a agenda de atendimentos">
+      ${profs.map(pr=>`<i class="aq-bola p-${pr}"></i>`).join("")}Agenda${todos?` · ${total} ${total===1?"vaga":"vagas"}`:""}</button>`;
+    return;
+  }
+  let corpo;
+  if(!agendaUrl() || !agendaToken()) corpo = `<p class="zag-vazio">A agenda não está conectada neste navegador. <a href="#" onclick="event.preventDefault();irPara('agendaq')">Conectar na Agenda</a></p>`;
+  else if(agq.erro && !todos) corpo = `<p class="zag-vazio">${esc(agq.erro.message)} <button class="btn-mini" onclick="zagCarregar(true)">tentar de novo</button></p>`;
+  else if(!todos) corpo = `<p class="zag-vazio">carregando as vagas…</p>`;
+  else if(!dias.length) corpo = `<p class="zag-vazio">Nenhuma vaga livre nos próximos dias${zag.prof==="todos"?"":` de ${esc(nomeProf(zag.prof))}`}.</p>`;
+  else {
+    if(zag.dia===null || (zag.dia && !dias.some(x=>x.d.data===zag.dia))) zag.dia = dias[0].d.data;
+    corpo = dias.map(({d, v})=>{
+      const por = profs.map(pr=>[pr, v.filter(s=>s.profissional===pr)]).filter(([, l])=>l.length);
+      const aberto = d.data===zag.dia;
+      return `<button class="zag-dia" data-zagdia="${d.data}" aria-expanded="${aberto}" onclick="zagDia('${d.data}')"><b>${siglaData(d.data)}</b>
+          <span class="zag-conta">${por.map(([pr, l])=>`<span class="zag-n p-${pr}" title="${esc(nomeProf(pr))}: ${l.length} ${l.length===1?"vaga":"vagas"}">${esc(nomeProf(pr))} ${l.length}</span>`).join("")}</span></button>
+        ${aberto ? `<div class="zag-vagas">${por.map(([pr, l])=>`<div class="zag-prof"><span><i class="aq-bola p-${pr}"></i>${esc(nomeProf(pr))}</span>
+          <div class="zag-hs">${l.map(s=>`<button class="zag-vaga p-${pr} t${s.tipo}" data-zagvaga="${esc(s.eventoId)}" onclick="agendarPeloZap('${d.data}','${esc(s.eventoId)}')"
+            title="agendar com ${esc(nomeProf(pr))} em ${dataBR(d.data)} às ${s.inicio}">${s.inicio}<small>${s.tipoFixo===false ? `${minDaVaga(s)} min` : s.tipo}</small></button>`).join("")}</div></div>`).join("")}</div>` : ""}`;
+    }).join("");
+  }
+  const c = zagConversa(), cli = c && c.cliente_id && D.cliPorId.get(c.cliente_id);
+  el.innerHTML = `<section class="zag-cx" aria-label="Agenda de atendimentos">
+    <div class="zag-cab"><h3>Agenda de atendimentos</h3>
+      <button onclick="zagCarregar(true)" title="atualizar as vagas" aria-label="Atualizar as vagas">↻</button>
+      <button onclick="zagAlternar()" title="recolher a agenda" aria-label="Recolher a agenda">▾</button></div>
+    <div class="zag-profs" role="group" aria-label="Profissional">${[["todos","Todos"], ...profs.map(pr=>[pr, nomeProf(pr)])].map(([id, nm])=>
+      `<button data-zagprof="${id}" aria-pressed="${zag.prof===id}" onclick="zagProf('${id}')">${id==="todos"?"":`<i class="aq-bola p-${id}"></i>`}${esc(nm)}</button>`).join("")}</div>
+    <p class="zag-para">${c ? `Agendar para: <b>${esc(cli ? cli.nome : (c.nome_perfil || fmtTelBR(telDaConversa(c))))}</b>${cli?"":" (não é cliente)"}` : "Clique na vaga para agendar sem sair do WhatsApp."}</p>
+    <div class="zag-corpo">${corpo}</div></section>`;
+}
+// as três agendas: a primeira vez, e de novo quando passou um minuto (ou no ↻)
+async function zagCarregar(forcar){
+  if(!agendaUrl() || !agendaToken()) return pintarAgendaZap();
+  const velho = !PROFS_AGENDA.every(pr=>agq.cache[pr]) || Date.now() - (agq.em||0) > 60000;
+  if(!forcar && !velho){ if(!agq.cache.todos){ juntarCompleta(); pintarAgendaZap(); } return; }
+  pintarAgendaZap();
+  await carregarCompleta().catch(()=>{});
+  if(visao==="whatsapp") pintarAgendaZap();
+}
+function agendarPeloZap(data, eventoId){
+  const dia = (agq.cache.todos||{dias:[]}).dias.find(d=>d.data===data);
+  const s = vagasDoDia(dia).find(x=>x.eventoId===eventoId); if(!s) return;
+  const c = zagConversa(), cli = c && c.cliente_id && D.cliPorId.get(c.cliente_id);
+  abrirFluxoAgenda({data, inicio:s.inicio, prof:s.profissional||"paulo", vaga:{eventoId, tipo:s.tipoFixo===false ? null : s.tipo},
+    cli, tel:telDaConversa(c), busca:c && !cli ? (c.nome_perfil||"") : ""});
+}
 const AQ_INI = 8*60, AQ_FIM = 18*60+30, AQ_PX = 24;   // 24 px a cada 15 minutos
 function linhaDoTempoAgenda(dia, r){
   if(dia.bloqueado) return `<div class="aq-vazio">Dia bloqueado por feriado ou férias.</div>`;
@@ -48755,6 +48862,9 @@ function abrirFluxoAgenda(op={}){
     o1:false, o2:false, remarcar: op.remarcar || null, sugerir: op.sugerir || null, msg:"", feito:null, busca:"",
     vaga: op.vaga || null, eventoId: (op.vaga||{}).eventoId || null };   // F250
   if(op.vaga) fluxo.tipo = op.vaga.tipo;
+  // F281 · do WhatsApp: o cliente da conversa vai direto à conferência do telefone; quem não é cliente, com o nome e o número
+  if(op.cli){ Object.assign(fluxo, {cli:op.cli, tipo:fluxo.tipo||"002", nome:op.cli.nome, tel:(op.cli.telefone||"").replace(/\D/g,"") || op.tel || "", etapa:2}); }
+  else { if(op.busca) fluxo.busca = op.busca; if(op.tel) fluxo.tel = op.tel; }
   if(op.remarcar){ const c = clienteDoEvento(op.remarcar); fluxo.cli = c; fluxo.nome = op.remarcar.nome || (c&&c.nome) || ""; fluxo.tel = op.remarcar.telefone || (c&&c.telefone) || ""; }
   pintarFluxo();
 }
@@ -48883,7 +48993,8 @@ function sucessoFluxo(){
     <p class="aq-resumo"><b>${esc(f.nome)}</b> · com ${esc(nomeProf(f.prof))} · ${diaExt(e.data)}, ${dataBR(e.data)} às ${hmTxt(e.inicio)} · ${f.tipo} · ${f.tipo==="001"?45:30} minutos</p>
     <pre class="aq-whats">${esc(msg)}</pre>
     <div class="aq-bts"><button class="btn-rap" id="aq-copiar">Copiar</button>
-      ${f.tel?`<a class="btn-rap" target="_blank" rel="noopener" href="https://wa.me/55${String(f.tel).replace(/\D/g,"")}?text=${encodeURIComponent(msg)}">Abrir no WhatsApp</a>`:""}
+      ${visao==="whatsapp" && zapAberta ? `<button class="btn-rap forte" id="aq-naconversa">Pôr na conversa</button>` : ""}
+      ${f.tel && !(visao==="whatsapp" && zapAberta)?`<a class="btn-rap" target="_blank" rel="noopener" href="https://wa.me/55${String(f.tel).replace(/\D/g,"")}?text=${encodeURIComponent(msg)}">Abrir no WhatsApp</a>`:""}
       ${f.acomp==="sim"?`<button class="btn-rap forte" id="aq-segunda">Agendar a segunda pessoa</button>`:""}
       <button class="btn-rap" onclick="fecharCaixa()">Fechar</button></div>`;
 }
@@ -48933,6 +49044,8 @@ function ligarFluxo(){
   if(obs) obs.oninput=()=>{ f.obs=obs.value; };
   on("aq-gravar", ()=>gravarFluxo());
   on("aq-copiar", async ()=>{ try{ await navigator.clipboard.writeText(msgAgendaWhats(f.nome, f.feito.data, f.feito.inicio, f.tipo, f.prof)); }catch(e){} aviso("Mensagem copiada", false); });
+  on("aq-naconversa", ()=>{ const t = $("zap-txt"); if(!t) return; t.value = msgAgendaWhats(f.nome, f.feito.data, f.feito.inicio, f.tipo, f.prof);
+    t.dispatchEvent(new Event("input", {bubbles:true})); fecharCaixa(); t.focus(); });
   on("aq-segunda", ()=>{ const e=f.feito; fecharCaixa(); abrirFluxoAgenda({data:e.data, prof:f.prof, sugerir:{depoisDe:e.fim}}); });
 }
 async function gravarFluxo(){
@@ -48967,6 +49080,7 @@ async function gravarFluxo(){
   pintarFluxo();
   await carregarAgenda(f.prof); if(f.prof!==agq.prof) await carregarAgenda(); if(f.prof!=="paulo") await carregarAgenda("paulo");
   montarSidebar(); if(visao==="agendaq") pintarAgenda();
+  if(visao==="whatsapp"){ juntarCompleta(); pintarAgendaZap(); }
 }
 
 // ── atalhos de teclado ────────────────────────────────────────────────────
