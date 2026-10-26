@@ -49,6 +49,11 @@ def test_f283_pagar_ate_ancora_o_calendario_e_anual():
 
 @pytest.mark.skipif(not shutil.which("node"), reason="sem node")
 def test_f283_aviso_no_primeiro_dia_util_do_mes():
-    js = _funcao("qualidadeAviso") + "\nconsole.log(JSON.stringify(['2026-11-15','2027-05-20','2027-01-10'].map(qualidadeAviso)))"
+    app = APP.read_text("utf-8")
+    ini = app.index("const FERIADOS_FIXOS")
+    js = "\n".join([app[ini:app.index("\n", ini)], "const _feriadosAno = new Map();", _funcao("somaDias"), _funcao("pascoa"),
+                    _funcao("feriadosNacionais"), _funcao("qualidadeAviso")]) + (
+        "\nconsole.log(JSON.stringify(['2026-11-15','2027-05-20','2027-01-10','2025-03-20'].map(qualidadeAviso)))")
     out = json.loads(subprocess.run(["node", "-e", js], capture_output=True, text=True, check=True).stdout)
-    assert out == ["2026-11-02", "2027-05-03", "2027-01-04"]   # 01/11/2026 é domingo; 1º/5 é feriado; 1º/1 é feriado e 2-3 fim de semana
+    # 01/11/2026 é domingo e 02/11 é Finados; 1º/5 é feriado; 1º/1 é feriado e 2-3 fim de semana; Carnaval de 2025 em 03-04/03
+    assert out == ["2026-11-03", "2027-05-03", "2027-01-04", "2025-03-05"]
