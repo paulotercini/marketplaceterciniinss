@@ -89,7 +89,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   e = await estado();
   await p.screenshot({ path: path.join(OUT, "03-desfecho.png") });
   conf("o Desfecho é o último passo, com as três saídas", e.vis.join() === "desfecho" && !e.prox && await visivel("desfecho")
-    && await p.evaluate(() => document.querySelectorAll("#desfecho .desf-acoes > *").length === 3));
+    && await p.evaluate(() => document.querySelectorAll("#desfecho .desf-saidas > .desf-saida").length === 3));   // F278 · Criar caso, Criar aposentadoria futura e Encerrar
   conf("os passos de fora continuam na página", await p.evaluate(() => ["dq-assinar", "dq-prov", "dq-guias", "dq-gerados", "dq-desfecho"].every(i => !!document.getElementById(i))));
   await p.waitForTimeout(800);
   conf("o passo aberto vai para a linha do pré-caso (casos.ad.passos.doc)", ((T.casos.find(k => k.id === K1).ad || {}).passos || {}).doc === "desfecho");
