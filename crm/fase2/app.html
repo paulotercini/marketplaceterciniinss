@@ -4966,6 +4966,9 @@ html .mq-pa{margin-top:12px;padding-top:10px;border-top:1px dashed var(--borda)}
 .mq-modal .mq-form label[hidden]{display:none}
 .mq-modal .mq-sec{display:flex;flex-direction:column;gap:6px;padding:10px 0;border-top:1px solid var(--borda)}
 .mq-modal .mq-datas{margin:0;font-variant-numeric:tabular-nums}
+.mq-modal .mq-cal{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;font-variant-numeric:tabular-nums}
+.mq-modal .mq-cal li{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.mq-modal .mq-cal small{color:var(--cinza)}
 @media (max-width:520px){.mq-modal .mq-form{grid-template-columns:1fr}}
 /* F277 · o quadro Aposentadoria do Cadastro e o Criar caso */
 html .idf-apos .adr-h{display:flex;align-items:center;gap:8px}
@@ -32697,33 +32700,46 @@ function caixaApos(cli){
 // Aposentadoria. Com o aviso ligado, o banco lembra o cliente pelo WhatsApp no dia
 // do pagamento (zap_gerar_avisos_qualidade, crm/fase2/schema_qualidade.sql).
 // ══════════════════════════════════════════════════════════════════════════
-const QUAL_MODOS = {mensal:"Mensal", semestral:"Uma vez a cada 6 meses", seis_semestral:"Os 6 primeiros meses e depois a cada 6 meses", caso_a_caso:"Caso a caso"};
+// F283 · as formas, nos nomes do Paulo (26.10.2026)
+const QUAL_MODOS = {seis_semestral:"Pagar 6 meses e depois uma vez a cada 6 meses", mensal:"Pagar direto (todo mês)",
+  semestral:"Pagar uma vez a cada 6 meses", anual:"Pagar uma vez a cada 12 meses", caso_a_caso:"Outra forma"};
 const QUAL_CODIGOS = () => [["MEI","MEI (DAS)"], ...GPS_CATEGORIAS.map(([v,r])=>[v,`${v} — ${r}`]), ["outro","Outro"]];
 function qualidadeDe(cliId){ return (D.qualidade||[]).filter(q=>q.cliente_id===cliId && q.ativo!==false); }
-// o mês de pagamento ('AAAA-MM'), a mesma conta do banco (qualidade_paga_no_mes)
+// o mês de pagamento ('AAAA-MM'), a mesma conta do banco (qualidade_paga_no_mes): conta do mês do primeiro vencimento
+// (pagar_ate; nos planos da primeira versão, o início)
 function qualidadePagaNoMes(q, ym){
-  const n = (+ym.slice(0,4)*12 + +ym.slice(5,7)) - (+String(q.inicio).slice(0,4)*12 + +String(q.inicio).slice(5,7));
+  const b = String(q.pagar_ate || q.inicio);
+  const n = (+ym.slice(0,4)*12 + +ym.slice(5,7)) - (+b.slice(0,4)*12 + +b.slice(5,7));
   if(n < 0 || (q.fim && ym > String(q.fim).slice(0,7))) return false;
   if(q.modalidade==="mensal") return true;
   if(q.modalidade==="semestral") return n % 6 === 0;
+  if(q.modalidade==="anual") return n % 12 === 0;
   if(q.modalidade==="seis_semestral") return n < 6 || (n - 5) % 6 === 0;
   return (q.meses||[]).includes(ym);
 }
-// os próximos pagamentos, de hoje em diante
+// os próximos vencimentos, de hoje em diante: o dia do pagar_ate (o último dia, nos meses mais curtos)
 function qualidadeProximos(q, k, desde){
-  const out = [], h = desde || hoje(); let a = +h.slice(0,4), m = +h.slice(5,7);
-  for(let i = 0; i < 240 && out.length < k; i++){
-    const ym = `${a}-${String(m).padStart(2,"0")}`, d = `${ym}-${String(q.dia||15).padStart(2,"0")}`;
+  const out = [], h = desde || hoje(), dia = +(q.pagar_ate ? String(q.pagar_ate).slice(8,10) : q.dia || 15);
+  let a = +h.slice(0,4), m = +h.slice(5,7);
+  for(let i = 0; i < 360 && out.length < k; i++){
+    const ym = `${a}-${String(m).padStart(2,"0")}`, ult = new Date(a, m, 0).getDate();
+    const d = `${ym}-${String(Math.min(dia, ult)).padStart(2,"0")}`;
     if(qualidadePagaNoMes(q, ym) && d >= h) out.push(d);
     if(++m > 12){ m = 1; a++; }
   }
   return out;
 }
+// o aviso do WhatsApp: o primeiro dia útil do mês do vencimento (a mesma regra de qualidade_primeiro_util)
+function qualidadeAviso(venc){
+  const d = new Date(venc.slice(0,7)+"-01T12:00:00");
+  while([0,6].includes(d.getDay()) || ["01-01","05-01"].includes(d.toLocaleDateString("sv").slice(5))) d.setDate(d.getDate()+1);
+  return d.toLocaleDateString("sv");
+}
 const qualValor = v => v==null || v==="" ? "" : `R$ ${Number(v).toFixed(2).replace(".", ",")}`;
 const qualGuia = q => q.codigo==="MEI" ? "DAS do MEI" : q.codigo && q.codigo!=="outro" ? `GPS código ${q.codigo}` : "guia do INSS";
 function qualResumo(q){
   const px = qualidadeProximos(q, 1)[0];
-  return `${QUAL_MODOS[q.modalidade]||q.modalidade} · ${qualGuia(q)}${q.valor ? ` · ${qualValor(q.valor)}` : ""} · dia ${q.dia}${px ? ` · próximo em ${fmtBarra(px)}` : " · sem pagamento por vir"}`;
+  return `${QUAL_MODOS[q.modalidade]||q.modalidade} · ${qualGuia(q)}${q.valor ? ` · ${qualValor(q.valor)}` : ""}${px ? ` · próximo: pagar até ${fmtBarra(px)}` : " · sem pagamento por vir"}`;
 }
 // o bloco que vai à Identificação, ao Primeiro atendimento, à Análise de Direito e a Documentos
 function blocoManutencao(c, onde){
@@ -32748,32 +32764,33 @@ function quadroManutencaoDoc(c){
   return `<section class="doc-quadro" id="dq-qualidade"><div class="rotulo-caso">Manutenção da Qualidade de Segurado</div>${blocoManutencao(c, "doc")}</section>`;
 }
 function formQualidade(cliId, id, onde){
-  const q = (D.qualidade||[]).find(x=>x.id===id) || {modalidade:"mensal", codigo:"MEI", dia:15, inicio:hoje(), aviso_zap:true, meses:[]};
+  const q = (D.qualidade||[]).find(x=>x.id===id) || {modalidade:"seis_semestral", codigo:"MEI", inicio:hoje(), aviso_zap:true, meses:[]};
   caixa(`<div class="mq-modal" role="dialog" aria-labelledby="mq-t"><h3 id="mq-t">Manutenção da Qualidade de Segurado</h3>
     <div class="mq-form">
-      <label>Como paga <select id="mq-mod" onchange="document.getElementById('mq-meses-l').hidden=this.value!=='caso_a_caso'">${Object.entries(QUAL_MODOS).map(([v,r])=>`<option value="${v}"${q.modalidade===v?" selected":""}>${r}</option>`).join("")}</select></label>
+      <label class="mq-largo">Como paga <select id="mq-mod" onchange="document.getElementById('mq-meses-l').hidden=this.value!=='caso_a_caso'">${Object.entries(QUAL_MODOS).map(([v,r])=>`<option value="${v}"${q.modalidade===v?" selected":""}>${r}</option>`).join("")}</select></label>
       <label>Guia <select id="mq-cod">${QUAL_CODIGOS().map(([v,r])=>`<option value="${v}"${q.codigo===v?" selected":""}>${esc(r)}</option>`).join("")}</select></label>
       <label>Valor (R$) <input id="mq-valor" type="number" step="0.01" min="0" value="${q.valor==null?"":esc(String(q.valor))}"></label>
-      <label>Dia do pagamento <input id="mq-dia" type="number" min="1" max="28" value="${q.dia||15}"></label>
-      <label>Primeiro pagamento <input id="mq-ini" type="month" value="${String(q.inicio||hoje()).slice(0,7)}"></label>
-      <label>Até (opcional) <input id="mq-fim" type="month" value="${q.fim ? String(q.fim).slice(0,7) : ""}"></label>
+      <label>Primeira competência <input id="mq-ini" type="month" value="${String(q.inicio||hoje()).slice(0,7)}"></label>
+      <label>Pagar até <input id="mq-ate" type="date" value="${q.pagar_ate ? String(q.pagar_ate).slice(0,10) : ""}" title="o vencimento do primeiro pagamento; os seguintes caem no mesmo dia"></label>
+      <label>Último pagamento (opcional) <input id="mq-fim" type="month" value="${q.fim ? String(q.fim).slice(0,7) : ""}"></label>
       <label id="mq-meses-l" class="mq-largo"${q.modalidade==="caso_a_caso"?"":" hidden"}>Meses de pagamento <input id="mq-meses" placeholder="11/2026, 05/2027" value="${(q.meses||[]).map(m=>`${m.slice(5)}/${m.slice(0,4)}`).join(", ")}"></label>
       <label class="mq-largo">Por que paga <input id="mq-mot" value="${esc(q.motivo||"")}" placeholder="ex.: mantém a qualidade até a aposentadoria por idade, em 2031"></label>
-      <label class="cfg-ck mq-largo"><input type="checkbox" id="mq-zap"${q.aviso_zap?" checked":""}> Avisar o cliente pelo WhatsApp no dia do pagamento, sozinho</label>
+      <label class="cfg-ck mq-largo"><input type="checkbox" id="mq-zap"${q.aviso_zap?" checked":""}> Avisar o cliente pelo WhatsApp no primeiro dia útil do mês de cada pagamento, sozinho</label>
     </div>
     <div class="adr-modal-bts"><button type="button" class="adr-bt adr-primario" onclick="salvarQualidade('${cliId}','${q.id||""}','${onde||""}')">Guardar</button>
       <button type="button" class="adr-bt" onclick="fecharCaixa()">Cancelar</button></div></div>`);
 }
 async function salvarQualidade(cliId, id, onde){
   const v = i => ((document.getElementById(i)||{}).value||"").trim();
-  const mod = v("mq-mod"), dia = +v("mq-dia"), ini = v("mq-ini"), fim = v("mq-fim");
+  const mod = v("mq-mod"), ate = v("mq-ate"), ini = v("mq-ini"), fim = v("mq-fim");
   const meses = v("mq-meses").split(/[,;\s]+/).map(x=>(x.match(/^(\d{1,2})\/(\d{4})$/)||[])).filter(m=>m[1]).map(m=>`${m[2]}-${m[1].padStart(2,"0")}`);
   if(!QUAL_MODOS[mod]) return aviso("Escolha como o cliente paga");
-  if(!(dia>=1 && dia<=28)) return aviso("O dia do pagamento vai de 1 a 28");
-  if(!/^\d{4}-\d{2}$/.test(ini)) return aviso("Informe o mês do primeiro pagamento");
+  if(!/^\d{4}-\d{2}$/.test(ini)) return aviso("Informe a primeira competência");
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(ate)) return aviso("Informe o Pagar até: o dia, o mês e o ano do primeiro vencimento");
+  if(fim && fim < ate.slice(0,7)) return aviso("O último pagamento vem depois do primeiro vencimento");
   if(mod==="caso_a_caso" && !meses.length) return aviso("Caso a caso: informe os meses, como 11/2026, 05/2027");
   const c = D.cliPorId.get(cliId), an = onde==="analise" && c ? (analisesDaVez(c)[0]||null) : null;
-  const corpo = {cliente_id:cliId, modalidade:mod, codigo:v("mq-cod")||null, valor:v("mq-valor") ? Number(v("mq-valor")) : null, dia,
+  const corpo = {cliente_id:cliId, modalidade:mod, codigo:v("mq-cod")||null, valor:v("mq-valor") ? Number(v("mq-valor")) : null, dia:+ate.slice(8,10), pagar_ate:ate,
     inicio:`${ini}-01`, fim: fim ? `${fim}-28` : null, meses: mod==="caso_a_caso" ? meses : [], motivo:v("mq-mot")||null,
     aviso_zap:!!(document.getElementById("mq-zap")||{}).checked, ativo:true, ...(an ? {analise_id:an.id} : {})};
   try{
@@ -32781,8 +32798,8 @@ async function salvarQualidade(cliId, id, onde){
       Object.assign((D.qualidade||[]).find(x=>x.id===id)||{}, corpo); }
     else { const [q] = await api(`/rest/v1/qualidade_planos`,{method:"POST",headers:{Prefer:"return=representation"},body:JSON.stringify(corpo)});
       if(q) (D.qualidade = D.qualidade||[]).push(q); }
-  }catch(e){ return aviso(/qualidade_planos|42P01|PGRST205/.test(String(e.message||e)) ? "Rode o crm/fase2/schema_qualidade.sql no Supabase" : "Não consegui guardar o plano — tente de novo"); }
-  fecharCaixa(); aviso(corpo.aviso_zap ? "Plano guardado: o WhatsApp lembra o cliente no dia do pagamento" : "Plano guardado", false);
+  }catch(e){ return aviso(/qualidade_planos|pagar_ate|modalidade_check|42P01|42703|PGRST20[45]/.test(String(e.message||e)) ? "Rode o crm/fase2/schema_qualidade.sql no Supabase (a versão nova)" : "Não consegui guardar o plano — tente de novo"); }
+  fecharCaixa(); aviso(corpo.aviso_zap ? "Plano guardado: o WhatsApp lembra o cliente no primeiro dia útil do mês de cada pagamento" : "Plano guardado", false);
   if(clienteAberto) repintarFicha();
 }
 async function encerrarQualidade(id){
@@ -32806,8 +32823,8 @@ async function verQualidade(cliId){
   try{ if(qs.length) env = await api(`/rest/v1/zap_mensagens?select=aviso_ref,aviso_chave,criado_em,status&aviso_ref=in.(${qs.map(q=>q.id).join(",")})&aviso_chave=like.qualidade*&order=criado_em.desc`) || []; }catch(e){}
   caixa(`<div class="mq-modal"><h3>Manutenção da Qualidade de Segurado · ${esc(String(c.nome||"").split(" ")[0])}</h3>
     ${qs.map(q=>`<section class="mq-sec"><b>${esc(qualResumo(q))}</b>${q.motivo ? `<p class="meio-sub">${esc(q.motivo)}</p>` : ""}
-      <label class="cfg-ck"><input type="checkbox"${q.aviso_zap?" checked":""} onchange="alternarZapQualidade('${q.id}',this.checked)"> WhatsApp automático no dia do pagamento</label>
-      <div class="rotulo-caso">Próximos pagamentos</div><p class="mq-datas">${qualidadeProximos(q, 6).map(fmtBarra).join(" · ") || "nenhum"}</p>
+      <label class="cfg-ck"><input type="checkbox"${q.aviso_zap?" checked":""} onchange="alternarZapQualidade('${q.id}',this.checked)"> WhatsApp automático no primeiro dia útil do mês de cada pagamento</label>
+      <div class="rotulo-caso">Próximos pagamentos</div>${(px=>px.length ? `<ul class="mq-cal">${px.map(d=>`<li><span>pagar até <b>${fmtBarra(d)}</b></span>${q.aviso_zap ? `<small>aviso em ${fmtBarra(qualidadeAviso(d))}</small>` : ""}</li>`).join("")}</ul>` : `<p class="meio-sub">nenhum</p>`)(qualidadeProximos(q, 6))}
       <div class="rotulo-caso">Avisos enviados</div>${(e=>e.length ? `<ul class="mov-lista">${e.map(m=>`<li><span class="mov-data">${fmt(String(m.criado_em).slice(0,10))}</span><span class="mov-txt">pagamento de ${esc(String(m.aviso_chave).slice(10).split("-").reverse().join("/"))} · ${esc(m.status)}</span></li>`).join("")}</ul>` : `<p class="meio-sub">nenhum ainda</p>`)(env.filter(m=>m.aviso_ref===q.id))}
       <div class="adr-modal-bts"><button type="button" class="adr-bt" onclick="formQualidade('${cliId}','${q.id}','')">Editar</button>
         <button type="button" class="adr-bt" onclick="imprimirQualidade('${cliId}','${q.id}')">Imprimir para o cliente</button>
@@ -32823,10 +32840,10 @@ function imprimirQualidade(cliId, id){
   janelaImpressao("Como pagar o INSS", [`<section>${DOC_TIMBRE}<h1>Como pagar o INSS</h1>
     <p><b>${esc(c.nome||"")}</b>${c.cpf ? ` · CPF ${esc(fmtCpf(c.cpf))}` : ""}</p>
     <p>Para manter a sua qualidade de segurado do INSS, faça os pagamentos abaixo${q.motivo ? `: ${esc(q.motivo)}` : "."}</p>
-    <p><b>Forma:</b> ${esc(QUAL_MODOS[q.modalidade]||"")}<br><b>Guia:</b> ${esc(qualGuia(q))}${q.valor ? `<br><b>Valor:</b> ${esc(qualValor(q.valor))}` : ""}<br><b>Dia do pagamento:</b> ${q.dia} de cada mês de pagamento${q.fim ? `<br><b>Até:</b> ${esc(fmtBarra(String(q.fim).slice(0,10)).slice(3))}` : ""}</p>
-    <p><b>Próximos pagamentos:</b></p><p>${px.map(fmtBarra).join(" · ") || "—"}</p>
+    <p><b>Forma:</b> ${esc(QUAL_MODOS[q.modalidade]||"")}<br><b>Guia:</b> ${esc(qualGuia(q))}${q.valor ? `<br><b>Valor:</b> ${esc(qualValor(q.valor))}` : ""}<br><b>Primeira competência:</b> ${esc(String(q.inicio).slice(5,7)+"/"+String(q.inicio).slice(0,4))}${q.pagar_ate ? `<br><b>Pagar até:</b> ${esc(fmtBarra(String(q.pagar_ate).slice(0,10)))}, e os seguintes no mesmo dia` : ""}${q.fim ? `<br><b>Último pagamento:</b> ${esc(String(q.fim).slice(5,7)+"/"+String(q.fim).slice(0,4))}` : ""}</p>
+    <p><b>Pague até:</b></p><p>${px.map(fmtBarra).join(" · ") || "—"}</p>
     <p>${esc(como)}</p>
-    <p>Guarde os comprovantes. Qualquer dúvida, fale com o escritório${q.aviso_zap ? "; no dia de cada pagamento, enviamos um lembrete pelo WhatsApp" : ""}.</p>
+    <p>Guarde os comprovantes. Qualquer dúvida, fale com o escritório${q.aviso_zap ? "; no primeiro dia útil de cada mês de pagamento, enviamos um lembrete pelo WhatsApp" : ""}.</p>
     <div class="rodape">${esc(ESCRITORIO_RODAPE)}</div></section>`]);
 }
 // F277 · O QUADRO APOSENTADORIA DO CADASTRO (pedido do Paulo, 25.10.2026): ao lado de Contato, simples, com a data de cada
