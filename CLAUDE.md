@@ -264,6 +264,8 @@ A **F283** (as anotações ao lado no modo atendimento, pedido do Paulo de 26.10
 
 A **F283b** (as Pendências, pedido do Paulo de 26.10.2026): o quadro vermelho virou **Pendências**, o primeiro passo da Análise de Direito do atendimento; a trilha passou a Pendências, **Análise do Benefício** (o quadrado dos benefícios e, do aberto, "Já cumprido" e "Ainda falta" no mesmo passo, `.adb-parte`) e Conclusão (`adPassosDe`). Cada pendência é a providência e quem a toma, Cliente ou Escritório (`providenciaDe`, pela chave do item de `quadrosDoPA`; sem regra, o imperativo do próprio texto vira "Deve …", `instrucaoDoTexto`), e é ela que vai às anotações; as competências abaixo do mínimo saem em faixas (`faixasDeComps`). As anotações ganharam o campo maior, no alto, e os cartões separados (`.atend-notas`). Testes: `f283.js`, `f239.js` e `f234.js` ajustados.
 
+A **F283c** (os atalhos do dossiê, pedido do Paulo de 26.10.2026): no canto de baixo à direita da tela de atendimento, abaixo das anotações, os botões **CNIS Resumido**, **CNIS Completo** e **Declaração de Beneficiário** (`atalhosDossie`, `ATALHOS_DZ`) abrem o anexo mais recente do dossiê (`abrirAnexo`); o que o dossiê não tem fica desligado. Teste: `f283.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
