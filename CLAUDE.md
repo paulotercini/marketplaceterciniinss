@@ -260,6 +260,8 @@ A **F278** (a ficha do caso em três colunas, pedido do Paulo de 25.10.2026): o 
 
 A **F282** (o cadastro em "Primeira letra maiúscula", pedido do Paulo de 26.10.2026): o gatilho `clientes_caixa` converte, na gravação e venha de onde vier (extensão do dossiê, CNIS da F29, PAT, To Do), o nome, o nome da mãe, a profissão e o endereço que chegam todos em maiúsculas (`caixa_do_cadastro`: preposições minúsculas, siglas, UF depois de "/" ou " - " e romanos maiúsculos); o texto com minúsculas, digitado à mão, não muda; `uf` sempre maiúscula; CPF, NIT, RG e `rg_orgao` não passam. SQL em `crm/fase2/migracoes/f282_caixa_do_cadastro.sql`, com o update dos já gravados.
 
+A **F283** (as anotações ao lado no modo atendimento, pedido do Paulo de 26.10.2026): em todos os passos da tela de atendimento, a Identificação inclusive, as "Anotações do atendimento" (`conversaAtendimento`, as mesmas `campos.atendimento`) ficam abertas e fixas à direita a partir de 1100 px (abaixo disso, no pé, como antes), com **Documentos a pedir** junto (`docsAnotadosHtml`, `docAnotar`, `docDesanotar`): um pedido do pré-caso em `campos.docs_pedidos` com `origem: "anotacoes"`, que o Trouxe documentos já lê. Na Análise de Direito do atendimento, o quadro vermelho "Problemas vistos no Primeiro atendimento" (`quadroProblemasPA`, `problemasDoPA`: blocos e itens de `quadrosDoPA` em vermelho ou amarelo, os vermelhos primeiro) se arrasta às anotações ou vai pelo "anotar" (`probParaNota`, `probSoltar`), que só preenche o campo; a repintura guarda a anotação ainda não gravada. Teste: `testes/cadastro/f283.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
