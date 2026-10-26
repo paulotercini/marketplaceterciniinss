@@ -13985,6 +13985,7 @@ function pintarConversa(){
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
                ${pode?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>`:""}
                ${pode&&!fim&&(zapAux.passos||[]).length?`<button onclick="levarRobo()">Levar o robô a um passo…</button>`:""}
+               ${pode?`<button onclick="pedirHistoricoZap()" title="${esc(c.historico_resultado||"pede ao celular as mensagens anteriores à mais antiga desta conversa")}">${c.historico_pedido&&!c.historico_feito?"Buscando o histórico no celular…":"Buscar histórico no celular"}</button>`:""}
                ${pode&&cfgApp("zap_ia_plantao")==="sim"?`<button onclick="mudarConversa({ia_conversa:!c.ia_conversa})">${c.ia_conversa?"A IA deixa de conversar com este número":"A IA conversa com este número"}</button>`:""}
                ${pode&&cfgApp("zap_ia_plantao")==="sim"?`<button onclick="mudarConversa({sem_ia:!c.sem_ia})">${c.sem_ia?"A IA volta a responder esta conversa":"A IA não responde esta conversa"}</button>`:""}
                ${cli?`<button onclick="quemConversa()">Quem conversa…</button>`:""}
@@ -14474,6 +14475,11 @@ async function mudarConversa(campos){
   }catch(e){ return aviso(msgErro(e)); }
   Object.assign(zapConvs.find(x=>x.id===zapAberta)||{}, campos);
   pintarConversa(); pintarListaZap();
+}
+// F286 · a ponte pede ao celular as mensagens anteriores à mais antiga da conversa (até 1 minuto)
+async function pedirHistoricoZap(){
+  await mudarConversa({historico_pedido:new Date().toISOString(), historico_feito:null, historico_resultado:null});
+  aviso("Pedido enviado ao celular. As mensagens antigas aparecem na conversa em até 1 minuto.");
 }
 async function assumirConversa(){
   if(!zapAberta) return;
