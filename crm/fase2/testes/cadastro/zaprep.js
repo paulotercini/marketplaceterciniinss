@@ -83,6 +83,14 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   conf("o mesmo número conta com a observação do telefone", rep[0].includes("é a nora, cuida do benefício"));
   conf("quem tem outro representante fica de fora", !rep.join("").includes("Carla"));
   conf("o título diz quantos são", (await p.textContent("#zap-painel .zp-rep-tit")).includes("(2)"));
+  // F286 · o ⋯ da conversa pede ao celular o histórico antigo
+  // a gaveta da ficha cobre o ⋯ em 1100 px: o clique vai pelo próprio botão
+  await p.evaluate(() => [...document.querySelectorAll(".zt-menu button")].find(b => /Buscar histórico/.test(b.textContent)).click());
+  await p.waitForTimeout(300);
+  const ped = escritas.find(e => e.m === "PATCH" && e.u.includes("zap_conversas?id=eq." + CONV) && e.b && e.b.historico_pedido);
+  conf("Buscar histórico no celular grava o pedido na conversa", ped && ped.b.historico_feito === null);
+  conf("e o botão passa a dizer que está buscando", await p.evaluate(() => /Buscando o histórico no celular/.test(document.querySelector(".zt-menu").textContent)));
+  await p.evaluate(() => document.querySelector(".zt-mais")?.removeAttribute("open"));
   await p.click("#zap-painel .zp-rep button");
   await p.waitForTimeout(400);
   conf("Abrir ficha leva à ficha do representado", await p.evaluate(id => clienteAberto === id, AVO));

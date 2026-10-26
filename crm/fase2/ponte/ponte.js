@@ -415,7 +415,10 @@ async function baixarMidia(m, baixar, conversa, tipo) {
 let filaHistorico = Promise.resolve();
 function receberHistorico({ chats, messages, syncType }, baixar) {
   for (const c of chats || []) if (String(c.id).endsWith("@lid") && c.pnJid) lidParaFone.set(c.id, c.pnJid);
-  filaHistorico = filaHistorico.then(() => importarHistorico(chats, messages, baixar))
+  // o lote pedido (recuperar mídia, F286) quem grava é quem pediu: importarHistorico
+  // zeraria o não-lido da conversa, que pode ter mensagem nova sem resposta
+  const pedido = syncType === sobPedido();
+  filaHistorico = filaHistorico.then(() => pedido ? null : importarHistorico(chats, messages, baixar))
     .catch(e => log("histórico:", e.message))
     .then(() => { if (esperandoPagina && syncType === sobPedido()) esperandoPagina(messages); });
 }
@@ -457,6 +460,7 @@ async function recuperarMidias(s = sock) {
         if (msgs && msgs.length) { jids = [jid]; break; }
       }
       if (!msgs || !msgs.length) { if (volta === 0) log("recuperar mídia: o celular não respondeu pela conversa de", c.telefone); break; }
+      for (const m of msgs) await gravarDoCelular(m, conversa);
       const velha = msgs.reduce((a, b) => ((N.quandoWa(a) || "") < (N.quandoWa(b) || "") ? a : b));
       if (!N.quandoWa(velha) || N.quandoWa(velha) <= limite) break;
       ancora = { externo_id: velha.key.id, direcao: velha.key.fromMe ? "saida" : "entrada", quando_wa: N.quandoWa(velha) };
@@ -465,6 +469,63 @@ async function recuperarMidias(s = sock) {
   }
   log(`recuperar mídia: fim — ${recuperadas - antes} mídia(s) recuperada(s)`);
 }
+// a mensagem que o celular devolve a pedido: gravar() não dobra a que já existe
+async function gravarDoCelular(m, conversa) {
+  if (N.deveIgnorar(m) || N.reacaoDe(m)) return false;
+  try {
+    const l = await gravar(m, (...a) => require("@whiskeysockets/baileys").downloadMediaMessage(...a), conversa,
+      m.key.fromMe ? "saida" : "entrada", m.key.fromMe ? "enviada" : "entregue");
+    return !l.repetida;
+  } catch (e) { log("não gravei uma mensagem pedida ao celular:", e.message); return false; }
+}
+
+// ── F286 · o histórico antigo pedido ao celular ──────────────────────────
+// A conversa de cliente nasce com historico_pedido (o banco marca), e o ⋯ da
+// conversa pede de novo. A ponte pede ao celular, de 50 em 50, as mensagens
+// anteriores à mais antiga que o CRM tem, até o celular não ter mais.
+let buscandoHistorico = false;
+async function buscarHistoricosPedidos(s = sock) {
+  if (!ligado || !s || buscandoHistorico || recuperando) return;
+  buscandoHistorico = true;
+  try {
+    const fila = await sb("/rest/v1/zap_conversas?historico_pedido=not.is.null&historico_feito=is.null"
+      + "&select=id,telefone&order=historico_pedido&limit=3");
+    for (const c of fila) {
+      let resultado;
+      try {
+        const n = await historicoDaConversa(s, c);
+        resultado = n ? `${n} mensagem(ns) antiga(s) trazida(s) do celular` : "o celular não tem mensagem mais antiga";
+      } catch (e) { resultado = "erro: " + String(e.message).slice(0, 80); }
+      log(`histórico pedido: ${c.telefone} — ${resultado}`);
+      await sb(`/rest/v1/zap_conversas?id=eq.${c.id}`, { method: "PATCH", headers: { Prefer: "return=minimal" },
+        body: JSON.stringify({ historico_feito: agora(), historico_resultado: resultado }) }).catch(() => {});
+    }
+  } finally { buscandoHistorico = false; }
+}
+async function historicoDaConversa(s, c) {
+  let [ancora] = await sb(`/rest/v1/zap_mensagens?conversa_id=eq.${c.id}&externo_id=not.is.null`
+    + "&quando_wa=not.is.null&select=externo_id,direcao,quando_wa&order=quando_wa.asc&limit=1");
+  if (!ancora) return 0;
+  const fone = N.soDigitos(c.telefone);
+  const [w] = await s.onWhatsApp(fone).catch(() => []);
+  let jids = [...new Set([w && w.lid, (w && w.jid) || `${fone}@s.whatsapp.net`].filter(Boolean))];
+  let n = 0;
+  for (let volta = 0; volta < 40; volta++) {
+    let msgs = null;
+    for (const jid of jids) {
+      msgs = await pagina(s, { remoteJid: jid, id: ancora.externo_id, fromMe: ancora.direcao === "saida" }, Date.parse(ancora.quando_wa));
+      msgs = (msgs || []).filter(m => jids.includes(String(m.key.remoteJid)));
+      if (msgs.length) { jids = [String(msgs[0].key.remoteJid)]; break; }
+    }
+    if (!msgs.length) break;
+    for (const m of msgs) if (await gravarDoCelular(m, c.id)) n++;
+    const velha = msgs.reduce((a, b) => ((N.quandoWa(a) || "") < (N.quandoWa(b) || "") ? a : b));
+    if (!N.quandoWa(velha) || N.quandoWa(velha) >= ancora.quando_wa) break;
+    ancora = { externo_id: velha.key.id, direcao: velha.key.fromMe ? "saida" : "entrada", quando_wa: N.quandoWa(velha) };
+  }
+  return n;
+}
+
 async function importarHistorico(chats, messages, baixar) {
   // o principal e os da lista da ficha (o da filha, o segundo WhatsApp)
   // o PostgREST entrega no máximo 1000 linhas por vez: vem em páginas
@@ -789,6 +850,7 @@ if (require.main === module) {
   baterPonto();
   vigiar();
   setInterval(() => buscarFotosPedidas().catch(e => log("fotos:", e.message)), 30000);
+  setInterval(() => buscarHistoricosPedidos().catch(e => log("histórico pedido:", e.message)), 30000);
   setInterval(() => reprocessarPendentes(require("@whiskeysockets/baileys").downloadMediaMessage)
     .catch(e => log("fila do servidor:", e.message)), 300000);
   const tchau = async s => { log("saindo por", s); await anotar("zap_status", "parada"); process.exit(0); };
@@ -799,5 +861,6 @@ if (require.main === module) {
   process.on("unhandledRejection", e => log("erro solto (seguindo):", (e && e.message) || e));
 }
 
-module.exports = { sb, rpc, enviar, entrou, gravar, conteudoDaMensagem, paraOgg, assinar, guardarComInsistencia, FILA_LOCAL,
+module.exports = { sb, rpc, enviar, entrou, gravar, buscarHistoricosPedidos,
+                   _ligado: v => { ligado = v; }, _pagina: msgs => esperandoPagina && esperandoPagina(msgs), conteudoDaMensagem, paraOgg, assinar, guardarComInsistencia, FILA_LOCAL,
                    _usarSocket: s => { sock = s; } };   // _usarSocket: só os testes
