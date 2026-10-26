@@ -19456,7 +19456,7 @@ async function gravarCnisLido(cliId, lido, anexo, opc={}){
   // campo vazio; os NITs entram todos, sem repetir os já anotados
   const compl = {};
   if(!c.nome_mae && !((c.campos||{}).civil||{}).nome_mae && lido.filiado.mae)
-    compl.nome_mae = lido.filiado.mae;
+    compl.nome_mae = tituloOrgao(lido.filiado.mae);   // F282 · o banco também converte (clientes_caixa)
   const nitsJa = String(valCli(c,"pis_nit")||"").split(/[\s·,;]+/).filter(Boolean);
   const nitsNovos = (lido.nits||[]).filter(n=>!nitsJa.includes(n));
   if(nitsNovos.length) compl.pis_nit = nitsJa.concat(nitsNovos).join(" · ");
