@@ -3852,6 +3852,7 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .atend-notas{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .atend-notas .atend-nota{border:1px solid #E7E6E1;border-left:4px solid #0E5C58;border-radius:8px;padding:8px 10px;background:#FAFAF8}
 .atend-nota-cab{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:3px}.atend-nota-txt{white-space:pre-wrap;overflow-wrap:anywhere}
+.atend-atalhos{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.atend-atalhos .adr-bt{flex:1 1 40%;min-height:32px;padding:4px 8px;font-size:12.5px}.atend-atalhos .adr-bt:last-child{flex-basis:100%}.atend-atalhos .adr-bt[disabled]{opacity:.45;cursor:not-allowed}
 #atend-nota{min-height:130px;flex-basis:100%}
 .pa-prob li .pp-corpo{display:flex;flex-direction:column;gap:2px;min-width:0}.pa-prob li .pp-corpo small{margin:0}
 .pp-quem{flex:none;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:#E6F0EF;color:#0E5C58}.pp-quem.cli{background:#FFF1DC;color:#8F5400}
@@ -3862,6 +3863,7 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 @media (min-width:1100px){
   #detalhe.atend-tela{padding-right:392px}
   #detalhe.atend-tela .atend-conversa{position:fixed;top:14px;right:16px;bottom:14px;width:360px;margin:0;overflow:auto;z-index:61;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+  #detalhe.atend-tela .atend-conversa{bottom:126px}#detalhe.atend-tela .atend-atalhos{position:fixed;right:16px;bottom:14px;width:360px;box-sizing:border-box;margin:0;padding:8px 10px;z-index:61;background:#FFFFFF;border:1px solid var(--borda);border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
 }
 .atend-docs{font-size:13px}.atend-docs ul{margin:4px 0 6px;padding-left:18px}.atend-docs li.entregue{color:#686660}
 .atend-docs input{flex:1 1 200px;box-sizing:border-box;padding:8px 10px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:14px}
@@ -18144,7 +18146,15 @@ function conversaAtendimento(c){
       ${ns.length ? `<ol class="atend-notas">${ns.map(n=>`<li class="atend-nota"><div class="atend-nota-cab"><b>${esc(n.quem||"")}</b><span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span></div><div class="atend-nota-txt">${destacarMencoes(esc(String(n.texto||"")))}</div></li>`).join("")}</ol>`
         : `<p class="meio-sub">Nenhuma anotação ainda neste atendimento.</p>`}</div>
       ${docsAnotadosHtml(c, pc)}
-    </div></details>`;
+    </div></details>${atalhosDossie(c)}`;
+}
+// F283c · no pé das anotações, os três papéis que mais se consultam no atendimento, direto do dossiê (pedido do Paulo, 26.10.2026)
+const ATALHOS_DZ = [["CNIS Resumido", /CNIS resumido/i], ["CNIS Completo", /CNIS completo/i], ["Declaração de Beneficiário", /declara[çc][ãa]o de benefici/i]];
+function atalhosDossie(c){
+  const ds = docsDoDossie(c.id).sort((a, b)=>String(b.criado_em||"").localeCompare(String(a.criado_em||"")));
+  return `<div class="atend-atalhos">${ATALHOS_DZ.map(([rot, rx])=>{ const a = ds.find(d=>rx.test(fonteDoDossie(d)[1]));
+    return a ? `<button type="button" class="adr-bt" onclick="abrirAnexo('${a.id}')">${rot}</button>`
+      : `<button type="button" class="adr-bt" disabled title="não está no dossiê">${rot}</button>`; }).join("")}</div>`;
 }
 // F283 · os documentos a pedir, anotados durante o atendimento: um pedido do pré-caso em `campos.docs_pedidos`
 // (origem "anotacoes"), o mesmo lugar que o Trouxe documentos e o Pedir ao cliente leem
