@@ -77,7 +77,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const andsDe = k => T.andamentos.filter(a => a.caso_id === k.id).map(a => a.texto);
 
   // 1 · a janela junta o que cada frente pediu
-  await p.click(".td-abrir");
+  await p.evaluate(() => { const d = document.querySelector(".det-mais"); if (d) d.open = true; }); await p.click(".td-abrir");
   await p.waitForSelector(".td");
   const g = await p.evaluate(() => [...document.querySelectorAll(".td-g")].map(x => [x.querySelector(".td-selo").textContent, [...x.querySelectorAll(".td-nm b")].map(b => b.textContent)]));
   await p.screenshot({ path: path.join(OUT, "01-janela.png") });

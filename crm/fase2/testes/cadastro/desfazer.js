@@ -112,7 +112,7 @@ FIX.lembretes = [{ id: "lb000000-0000-0000-0000-000000000001", cliente_id: CLI_V
   await p.waitForTimeout(400);
   conf("o lembrete vindo do atendimento oferece o ↺ voltar ao atendimento",
     /voltar ao atendimento/.test(await p.evaluate(() =>
-      (document.querySelector('.painel[data-p="9"]') || {}).innerText || "")));
+      (document.querySelector("#modal") || {}).innerText || "")));
   escritos.length = 0;
   await p.evaluate(cli => voltarLembreteParaMesa(cli, "pcL"), CLI_VAZIO);
   await p.waitForTimeout(600);
@@ -122,6 +122,9 @@ FIX.lembretes = [{ id: "lb000000-0000-0000-0000-000000000001", cliente_id: CLI_V
     await p.evaluate(cli => { const pc = precasosDe(D.cliPorId.get(cli)).find(p2 => p2.id === "pcL");
       return pc && !pc.so_lembrete; }, CLI_VAZIO));
 
+  // F277 · os cards abrem numa janela, e a mesa (Anotações) abre pelo atalho: o Cadastro mostra só a Identificação
+  await p.evaluate(() => { fecharCaixa(); irSubCad("anotacoes"); });
+  await p.waitForTimeout(300);
   // ── 3. tirar → lixeira → restaurar ──────────────────────────────────────
   escritos.length = 0;
   await p.evaluate(cli => tirarPreCaso(cli, "pcL"), CLI_VAZIO);
@@ -197,7 +200,7 @@ FIX.lembretes = [{ id: "lb000000-0000-0000-0000-000000000001", cliente_id: CLI_V
   await p.waitForTimeout(400);
   conf("o lembrete oferece TAMBÉM o Gerar o caso",
     /Gerar o caso/.test(await p.evaluate(() =>
-      (document.querySelector('.painel[data-p="9"]') || {}).innerText || "")));
+      (document.querySelector("#modal") || {}).innerText || "")));
   escritos.length = 0;
   await p.evaluate(cli => gerarCasoDoLembrete(cli, "pcL"), CLI_VAZIO);
   await p.waitForTimeout(900);

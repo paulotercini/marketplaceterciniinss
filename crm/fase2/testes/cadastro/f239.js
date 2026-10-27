@@ -74,8 +74,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await abrirAd("pc_r1");
   let e = await estado();
   await p.screenshot({ path: path.join(OUT, "01-beneficio.png") });
-  conf(`sem benefício aberto, a trilha é Benefício e Conclusão (${e && e.ids.join(", ")})`, e && e.ids.join() === "benef,concl");
-  conf(`só o quadrado à vista (${e.vis.join(", ")})`, e.vis.join() === "benef" && /^Próximo: Conclusão/.test(e.prox));
+  conf(`a trilha é Pendências, Análise do Benefício e Conclusão (${e && e.ids.join(", ")})`, e && e.ids.join() === "pend,benef,concl");
+  conf(`abre nas Pendências (${e.vis.join(", ")})`, e.vis.join() === "pend" && /^Próximo: Análise do Benefício/.test(e.prox));
+  await p.click(".tp-prox");
+  e = await estado();
+  conf(`Próximo mostra o quadrado dos benefícios (${e.vis.join(", ")})`, e.vis.join() === "benef");
   conf("o Desfecho saiu da Análise de Direito no atendimento", await p.evaluate(() => !document.getElementById("desfecho") && !!document.getElementById("desfecho-ir")));
 
   // 2 · escolher o benefício abre o Já resolvido, só com o que está em ordem ou é informativo
@@ -83,10 +86,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(300);
   e = await estado();
   await p.screenshot({ path: path.join(OUT, "02-resolvido.png") });
-  conf(`o clique no B31 leva ao passo seguinte, com a trilha do benefício (${e.ids.join(", ")} · ${e.vis.join(", ")})`, e.ids.join() === "benef,ok,falta,concl" && e.vis.join() === "ok" && e.feitos.includes("benef"));
-  const okE = await ests('.tp-passo[data-passo="ok"] .adb-req'), falE = await ests('.tp-passo[data-passo="falta"] .adb-req');
-  conf(`Já resolvido traz só em ordem e informativo (${okE.length})`, okE.length > 0 && okE.every(c => /est-(ok|info)\b/.test(c)));
-  conf(`Falta responder traz o resto (${falE.length})`, falE.length > 0 && falE.every(c => !/est-(ok|info)\b/.test(c)));
+  conf(`o clique no B31 abre os requisitos no mesmo passo (${e.ids.join(", ")} · ${e.vis.join(", ")})`, e.ids.join() === "pend,benef,concl" && e.vis.join() === "benef");
+  const okE = await ests('.adb-parte:has(.adb-parte-t.ok) .adb-req'), falE = await ests('.adb-parte:has(.adb-parte-t.falta) .adb-req');
+  conf(`Já cumprido traz só em ordem e informativo (${okE.length})`, okE.length > 0 && okE.every(c => /est-(ok|info)\b/.test(c)));
+  conf(`Ainda falta traz o resto (${falE.length})`, falE.length > 0 && falE.every(c => !/est-(ok|info)\b/.test(c)));
   conf("os requisitos somam os do catálogo, nenhum repetido", await p.evaluate(() => document.querySelectorAll("#ad-benef .adb-req").length === REQ_BENEF.b31.length
     && new Set([...document.querySelectorAll("#ad-benef .adb-req")].map(li => li.dataset.id)).size === REQ_BENEF.b31.length));
   conf("a resposta do benefício (veredito) fica à vista em todos os passos do benefício", await p.evaluate(() => { const v = document.querySelector("#ad-benef .adb-veredito"); return !!v && v.offsetParent !== null; }));
@@ -95,16 +98,15 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // 3 · Falta responder: a DER e os campos; responder recalcula no lugar, sem trocar de passo
   await p.waitForTimeout(1500);   // a leitura do PDF do CNIS, que o painel pede, termina e repinta uma vez
   await p.evaluate(() => { window.__rep = 0; const o = repintarFicha; window.repintarFicha = (...a) => { window.__rep++; window.__pilha = (new Error().stack || "").split(/\n/).slice(2, 5).join(" < "); return o(...a); }; });
-  await p.click(".tp-prox");
   e = await estado();
-  conf(`Próximo abre o Falta responder, com a DER (${e.vis})`, e.vis.join() === "falta" && await p.evaluate(() => { const d = document.querySelector('.tp-passo[data-passo="falta"] [data-adm="der"]'); return !!d && d.offsetParent !== null; }));
+  conf(`a DER fica em Ainda falta, à vista (${e.vis})`, e.vis.join() === "benef" && await p.evaluate(() => { const d = document.querySelector('.adb-parte:has(.adb-parte-t.falta) [data-adm="der"]'); return !!d && d.offsetParent !== null; }));
   await p.screenshot({ path: path.join(OUT, "03-falta.png") });
   const c0 = await p.textContent("#ad-benef .adb-cont");
-  await p.fill('.tp-passo[data-passo="falta"] [data-adm="der"]', "2026-10-20");
-  await p.dispatchEvent('.tp-passo[data-passo="falta"] [data-adm="der"]', "change");
+  await p.fill('.adb-parte:has(.adb-parte-t.falta) [data-adm="der"]', "2026-10-20");
+  await p.dispatchEvent('.adb-parte:has(.adb-parte-t.falta) [data-adm="der"]', "change");
   await p.waitForTimeout(300);
   e = await estado();
-  conf(`responder um campo recalcula e o passo fica (${c0} → ${await p.textContent("#ad-benef .adb-cont")})`, e.vis.join() === "falta");
+  conf(`responder um campo recalcula e o passo fica (${c0} → ${await p.textContent("#ad-benef .adb-cont")})`, e.vis.join() === "benef");
   const rep = await p.evaluate(() => [window.__rep, window.__pilha || ""]);
   conf(`trocar de passo e responder não repintam a ficha${rep[0] ? ` (${rep[1]})` : ""}`, rep[0] === 0);
 
@@ -135,8 +137,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // 6 · um benefício só: abre sozinho e começa no passo seguinte
   await abrirAd("pc_r2");
   e = await estado();
-  conf(`com um benefício só, ele abre sozinho e a visita começa depois do Benefício (${e.ids.join(", ")} · ${e.vis})`, (await p.evaluate(() => (document.getElementById("ad-benef") || {}).dataset.op)) === "idoso"
-    && e.vis.join() === e.ids[1] && e.feitos.includes("benef"));
+  conf(`com um benefício só, ele abre sozinho, e a visita começa nas Pendências (${e.ids.join(", ")} · ${e.vis})`, (await p.evaluate(() => (document.getElementById("ad-benef") || {}).dataset.op)) === "idoso"
+    && e.vis.join() === "pend");
 
   // 7 · fora do atendimento, a Análise de Direito fica como era
   await p.evaluate(a => { _atendAberto.delete(a); irSubCad("direito"); }, A); await p.waitForTimeout(300);

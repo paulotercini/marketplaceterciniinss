@@ -76,12 +76,15 @@ FIX.andamentos = [
 
   // F104 · no tema, o prazo é um QUADRO comandado pela anotação de origem
   const cards = () => p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({
-    tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent, onclick: c.querySelector(".pz-mais").getAttribute("onclick") })));
+    tipo: c.dataset.tipo, data: c.dataset.data.split("-").reverse().join("/"), onclick: c.querySelector(".pz-mais").getAttribute("onclick") })));
   const fmtBR = iso => `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
   await abrir("?tema=v10");
   const on = await cards();
   conf("ligado: o prazo COM anotação de origem vira um quadro de prazo fatal", on.length === 1 && on[0].tipo === "Prazo fatal" && on[0].data === fmtBR(PRAZO_A));
-  conf("o 'saber mais' leva ao comentário que criou o prazo", on[0] && on[0].onclick.includes(`qdIrParaAndamento('${CASO1}','${AND_ORIG}')`));
+  await p.evaluate(() => document.querySelector(".faixa-prazos .pz .pz-mais").click()); await p.waitForTimeout(300);
+  conf("o 'abrir' leva ao painel, que leva ao comentário que criou o prazo", await p.evaluate(([c, a]) =>
+    [...document.querySelectorAll("#painel-prazo button")].some(b => (b.getAttribute("onclick") || "").includes(`qdIrParaAndamento('${c}','${a}')`)), [CASO1, AND_ORIG]));
+  await p.evaluate(() => fecharPainelPrazo());
   conf("o compositor lembra a data fatal e oferece o ✔ cumprido pela janela", await p.evaluate(() => /fatal/.test(document.querySelector(".escrever").textContent) && !!document.querySelector('button[onclick^="janelaPrazoCumprido"]')));
   // [BUG 20.09.2026] o prazo SEM origem é o que vem do "Concluir em" do To Do,
   // que é como o escritório marca prazo. Escondê-lo fazia a ficha dizer "sem
@@ -92,8 +95,10 @@ FIX.andamentos = [
     c2.some(c => /Prazo fatal/.test(c.tipo) && c.data === fmtBR(PRAZO_B)));
   conf("e o quadro dele pergunta do que é, em âmbar", await p.evaluate(() => {
     const c = document.querySelector(".faixa-prazos .pz.pz-semmotivo");
-    return !!c && /do que é/.test(c.querySelector(".pz-mais").textContent)
-      && /explicarPrazo/.test(c.querySelector(".pz-mais").getAttribute("onclick"));
+    if(!c || !/do que é/.test(c.textContent)) return false;
+    c.querySelector(".pz-mais").click();
+    const ok = [...document.querySelectorAll("#painel-prazo button")].some(b => /do que é/.test(b.textContent) && /explicarPrazo/.test(b.getAttribute("onclick") || ""));
+    fecharPainelPrazo(); return ok;
   }));
   conf("o compositor continua convidando a explicá-lo", await p.evaluate(() => !!document.querySelector('button[onclick^="explicarPrazo"]')));
 

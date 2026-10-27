@@ -62,3 +62,13 @@ def test_catalogo_por_fase_e_o_mesmo_de_antes():
     assert len(pc.ETAPAS_PUBLICAS) == 33 and "aguardando perícia" in pc.ETAPAS_PUBLICAS
     assert pc.fase_da_etapa({"fase": "outro", "origem_lista": "☕ Pessoal"}) is None
     assert pc.etapa_publicavel({"fase": "outro", "origem_lista": "☕ Pessoal", "etapa": "decidido"}) is None
+
+
+def test_robo_do_whatsapp_usa_o_mesmo_catalogo_do_portal():
+    """F258 · o robô do WhatsApp diz a etapa pelo banco (zap_etapas_publicas em
+    crm/fase2/schema.sql): o catálogo de lá tem de ser o mesmo do portal."""
+    import re
+    sql = (pathlib.Path(__file__).resolve().parent.parent / "crm/fase2/schema.sql").read_text(encoding="utf-8")
+    trecho = sql.split("-- etapas:inicio", 1)[1].split("-- etapas:fim", 1)[0]
+    pares = set(re.findall(r"\('([a-z_]+)','([^']+)'\)", trecho))
+    assert pares == {(f, e) for f, es in pc.ETAPAS_POR_FASE.items() for e in es}

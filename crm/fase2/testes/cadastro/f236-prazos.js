@@ -232,7 +232,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // ── a fase verdadeira e o ✔ feito do clássico ─────────────────────────
   await abrir(cJ, kJ);
   const j = await p.evaluate(kid => { const k = D.casoPorId.get(kid); const h = linhaCaso(k);
-    return { fe: faseEfetiva(k), tram: /Judicial · prazo correndo/.test(h), fila: /214º/.test(h), etapa: /em recurso/.test(h), rec: recorrerAte(k) }; }, kJ.id);
+    return { fe: faseEfetiva(k), tram: /Judicial · prazo correndo/.test(h), fila: /214º/.test(h), etapa: /em recurso/.test(faixaTrilha(k)),   /* F287 · a etapa mora na faixa das fases */ rec: recorrerAte(k) }; }, kJ.id);
   conf("J · no 🗓 Tarefas com Prazo o caso continua judicial: tramitação, fila do TRF3 e etapa", j.fe === "judicial" && j.tram && j.fila && j.etapa);
   // a revisão concluída antes do protocolo não baixa o prazo; a conclusão de quem executa, sim
   const tRev = T.andamento_tarefas.find(t => t.caso_id === kJ.id && t.papel === "revisa"), tExe = T.andamento_tarefas.find(t => t.caso_id === kJ.id && t.papel === "executa");
@@ -257,10 +257,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // ── a coluna do v10: a ordem da F145 com o próximo em destaque ─────────
   await p.evaluate(() => { document.documentElement.setAttribute("data-tema", "v10"); });
   await abrir(cB, kB);
-  const fx = await p.evaluate(() => { const ds = [...document.querySelectorAll(".caso-esq .pz .pz-data")].map(b => b.textContent.split("/").reverse().join(""));
-    const r = document.querySelector(".caso-esq .fp-resumo"), px = document.querySelector(".caso-esq .pz.pz-proximo");
-    return { desc: ds.every((x, i) => !i || ds[i - 1] >= x), resumo: r ? r.textContent : "", prox: px ? px.dataset.tipo : "", selo: !!(px && px.querySelector(".pz-selo")) }; });
-  conf("a coluna mantém a ordem decrescente (F145) e põe no topo o próximo e o próximo prazo fatal", fx.desc && /Próximo:/.test(fx.resumo) && /Pedir a prorrogação/.test(fx.resumo) && fx.selo);
+  const fx = await p.evaluate(() => { const ds = [...document.querySelectorAll(".caso-esq .pz:not(.fp2-fatal)")].map(b => b.dataset.data);
+    const dq = document.querySelector(".caso-esq .pz.fp2-fatal");
+    return { asc: ds.every((x, i) => !i || ds[i - 1] <= x), destaque: dq ? dq.textContent.replace(/\s+/g, " ") : "" }; });
+  conf("F254 · a coluna abre com o prazo fatal em destaque (a prorrogação) e segue em ordem crescente", fx.asc && /prorroga/i.test(fx.destaque) && /falta|vence|venceu/.test(fx.destaque));
+  if (!(fx.asc && /prorroga/i.test(fx.destaque))) console.log("faixa:", JSON.stringify(fx));
 
   conf("sem erro de página", !p._erros.length);
   if (p._erros.length) console.log(p._erros.join("\n"));

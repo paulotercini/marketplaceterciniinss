@@ -120,7 +120,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   await p.waitForFunction(() => typeof D !== "undefined" && D._completo === true && D.cliPorId && D.cliPorId.size > 0, null, { timeout: 15000 });
   const espera = ms => p.waitForTimeout(ms);
   const ficha = async (cli, caso, aba = 2) => { await p.evaluate(async ([c, k, a]) => { await abrirFicha(c); casoSel = k; abaAtiva = a; subAba = "escritorio"; repintarFicha(); }, [cli, caso, aba]); await espera(250); };
-  const cartoes = () => p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({ tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent })));
+  const cartoes = () => p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({ tipo: c.dataset.tipo, data: c.dataset.data.split("-").reverse().join("/") })));
   const menu = () => p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].map(b => b.textContent.trim()).join(" | "));
 
   // ── a lista 🩺 Perícias & Audiências ──────────────────────────────────────
