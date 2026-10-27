@@ -349,7 +349,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   // ── r12 · a DCB: o resumo dá o prazo fatal à janela da prorrogação ────────────────────────────────────────────
   await ficha(paulo, W.c.id, W.k.id);
   const rW = await resumo(paulo);
-  conf("o prazo fatal em destaque é a janela da prorrogação, e não a DCB", /Prazo fatal.*úteis\s*Pedir a prorrogação/.test(rW) && !/Prazo fatal.*úteis\s*(DCB|Benefício cessa)/.test(rW), rW);
+  conf("o prazo fatal em destaque é a janela da prorrogação, e não a DCB", /Pedir a prorrogação[^\n]*\s*abrir\s*Prazo fatal: [^\n]*úteis/.test(rW) && !/(DCB|Benefício cessa)[^\n]*\s*abrir\s*Prazo fatal:/.test(rW), rW);
   await ficha(paulo, W2.c.id, W2.k.id);
   const lW2 = await linhas(paulo, W2.k), jan = lW2.find(x => x.rotulo === "Pedir a prorrogação");
   conf("com a janela aberta: o resumo não repete a data, e a linha traz a tarefa e a mensagem num clique",

@@ -5174,6 +5174,37 @@ body.zap-aberto .app.detalhe-aberto.mini-lateral{grid-template-columns:64px 1fr}
 body.prazo-esq .caso-esq > :not(#painel-prazo-esq){display:none!important}
 #painel-prazo-esq footer{position:static}
 
+/* F287 · o cartão do caso e o quadro Prazos (pedido do Paulo, 27.10.2026): a canetinha ao lado da espécie, o ⋯ no canto,
+   a tramitação como link do portal, a flecha no meio da borda de baixo e, aberto, seções com rótulo à esquerda */
+html[data-tema="v10"] .caso-esq .linha-caso{margin-bottom:22px}
+html[data-tema="v10"] .caso-esq .lc-sobre-l{display:flex;align-items:center;gap:2px;min-height:28px;margin:-4px 0 -6px}
+html[data-tema="v10"] .caso-esq .lc-sobre-l .lapis{opacity:.5}
+html[data-tema="v10"] .caso-esq .lc-sobre-l .lc-menu{margin-left:auto}
+html[data-tema="v10"] .caso-esq .lc-placa .lc-tram-link{display:inline-flex;align-items:center;gap:4px;padding:0;border:0;background:none;font:inherit;font-size:13.5px;font-weight:500;color:var(--azul-escuro);text-decoration:none;cursor:pointer;white-space:nowrap}
+html[data-tema="v10"] .caso-esq .lc-placa .lc-tram-link svg{flex:none;opacity:.75}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .caso-esq .lc-placa .lc-tram-link:hover{text-decoration:underline;text-underline-offset:3px}}
+html[data-tema="v10"] .caso-esq .lc-placa .lc-tram-link:focus-visible{outline:2px solid var(--azul);outline-offset:2px;border-radius:3px}
+html[data-tema="v10"] .caso-esq .lc-placa>.lc-etapa-aviso{padding-right:0;flex-wrap:wrap}
+html[data-tema="v10"] .caso-esq .linha-caso .lc-mais-pe.tr-alca{top:auto;right:auto;left:50%;bottom:0;display:inline-flex;width:auto;min-width:44px;height:22px;margin:0;padding:0 12px;
+  border:1px solid var(--borda);border-radius:999px;background:#FFFFFF;color:#4A4944}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .caso-esq .linha-caso .lc-mais-pe.tr-alca:hover{background:#F3F2EE;color:#121212}}
+html[data-tema="v10"] .caso-esq :is(.lc-numeros,.lc-gestao){gap:8px;padding:14px 18px 18px;border-top:1px solid var(--placa)}
+html[data-tema="v10"] .caso-esq .lc-sec{margin:0 0 2px;font:500 11px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:#686660}
+html[data-tema="v10"] .caso-esq :is(.lc-numeros,.lc-gestao){gap:14px}
+html[data-tema="v10"] .caso-esq .lc-linha{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-height:0}
+html[data-tema="v10"] .caso-esq .lc-linha>.lc-k{flex:1 1 100%;min-width:0;margin:0 0 -2px;font:500 12px/1.3 var(--f-ui);letter-spacing:0;text-transform:none;color:#686660}
+html[data-tema="v10"] .caso-esq .lc-linha .btn-mini{padding:3px 9px;font-size:12px;line-height:1.3}
+html[data-tema="v10"] .caso-esq .lc-linha .lc-vazio{font-size:12.5px;font-style:normal;color:var(--cinza)}
+html[data-tema="v10"] .caso-esq .lc-add{width:22px;height:22px;border:1px solid var(--borda);border-radius:50%;color:#4A4944}
+html[data-tema="v10"] .caso-esq .lc-mais2{display:flex;align-items:center;justify-content:space-between;width:calc(100% + 36px);height:40px;margin:6px -18px -8px;padding:0 18px;
+  border:0;border-top:1px solid var(--placa);border-radius:0;background:transparent;color:#121212;font:500 13px var(--f-ui)}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .caso-esq .lc-mais2:hover{background:#F8F8F6}}
+html[data-tema="v10"] .caso-esq .lc-mais2 svg{color:#686660}
+html[data-tema="v10"] .caso-esq .lc-gestao .chip-acomp{border-radius:999px;padding:3px 8px;font-size:12px;line-height:1.3}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-lin .fp2-data{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal{flex-wrap:wrap;align-items:center;row-gap:2px}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-falta{flex:1 1 100%;min-width:0;padding-left:28px;font-size:11.5px;line-height:1.35;color:var(--dk-fatal,#B3261E)}
+html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-falta .fp2-tag{font-size:inherit;font-weight:500;letter-spacing:0;text-transform:none}
 </style>
 </head>
 <body>
@@ -10068,7 +10099,7 @@ async function conferirPje(coletaId){
     render();
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
 }
-// F287 · PROCESSO SEM CASO HÁ MAIS DE 7 DIAS. A extensão do e-SAJ (1.24) só
+// F288 · PROCESSO SEM CASO HÁ MAIS DE 7 DIAS. A extensão do e-SAJ (1.24) só
 // baixa peças de processo com caso aberto, e o processo novo que a consulta
 // por OAB acha antes do cadastro fica só na lista desta conferência, que some
 // ao aplicar. A data em que cada número apareceu sem caso fica guardada em
@@ -17784,7 +17815,7 @@ function pintarFicha(){
         // acima delas: é a primeira coisa que se lê ao abrir o caso
         ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col"><aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
            <div class="caso-dir">${bannerAClassificar(k)}${menu}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div>
-           <aside class="caso-esq caso-pz" aria-label="Prazos e compromissos">${faixaPrazos(k)}</aside></div>`
+           <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
             : aba==="inss" ? painelINSS(k, andsVis)
@@ -34875,7 +34906,7 @@ function faixaPrazos(k){
   faixaAtual = minhas;
   // F182 · F245 · a conferência em um clique; F276 · ela mora no "⋯" ao lado do título, para o quadro ficar só com as datas
   const conf = botoesConferir(k, "fp-conf");
-  const tit = `<div class="fp-cab"><h3 class="fp-tit">Prazos e compromissos</h3>${conf ? `<details class="tl-mais fp-menu"><summary class="tl-bt tl-bt-ic" aria-label="Conferir o caso" title="conferir o caso: sem novidade ou movimentou">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${conf}</span></details>` : ""}</div>`;
+  const tit = `<div class="fp-cab"><h3 class="fp-tit">Prazos</h3>${conf ? `<details class="tl-mais fp-menu"><summary class="tl-bt tl-bt-ic" aria-label="Conferir o caso" title="conferir o caso: sem novidade ou movimentou">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${conf}</span></details>` : ""}</div>`;
   if(!minhas.length) return `<div class="faixa-prazos vazia" aria-label="Prazos e providências">${tit}
     <span class="meio-sub">Sem prazos ou lembretes em aberto. Um andamento com data cria o lembrete; a anotação com ⏰ cria o prazo.</span></div>`;
   // F236 · sem mexer na ordem (F145), o que não pode passar despercebido: o PRÓXIMO (a menor data de hoje em diante
@@ -34918,12 +34949,14 @@ function faixaPrazos(k){
     if(semDesc) titulo = "Diga do que é este prazo";
     // o grupo já diz "Hoje" ou "Amanhã": a linha mostra o dia da semana e a data; o prazo fatal diz também quanto falta
     const dia = `${SIGLA_DIA[new Date(x.data+"T12:00:00").getDay()]}., ${fmtBarra(x.data).slice(0,5)}`;
-    const data = destaque ? `${dia} · ${falta(x.data)}` : dia;
+    // F287 · a data e o "abrir" numa linha só; o "Prazo fatal · venceu há…" desce, menor (pedido do Paulo, 27.10.2026)
+    const data = dia;
     Object.assign(x, {_nat: nat, _titulo: titulo, _motivo: motivo, _ir: ir, _quando: quando(x.data), _falta: falta(x.data)});   // para o painel
     return `<div class="pz fp2-lin pz-${nat}${pend(x)?" pz-venceu":""}${destaque?" fp2-fatal":""}${x.semMotivo?" pz-semmotivo":""}${x.aConfirmar?" pz-confirmar":""}" data-nat="${nat}" data-tipo="${esc(tipo)}" data-data="${x.data}" title="${esc(titulo)}">
       <span class="fp2-bola" aria-hidden="true"></span>
-      ${destaque ? `<small class="fp2-tag">Prazo fatal</small>` : ""}<span class="fp2-data">${esc(data)}</span><span class="fp2-sr">${esc(titulo)}</span>
+      <span class="fp2-data">${esc(data)}</span><span class="fp2-sr">${esc(titulo)}</span>
       <button class="fp2-mais pz-mais" onclick="abrirPainelPrazo(${i})">abrir</button>
+      ${destaque ? `<small class="fp2-falta"><span class="fp2-tag fp2-sr">Prazo fatal: </span>${esc(falta(x.data))}</small>` : ""}
     </div>`;
   };
   const destaque = proxFatal || minhas.filter(x=>natDaLinha(x)==="fatal" && pend(x))[0] || null;
@@ -35666,9 +35699,11 @@ function lcNumeros(k){
   // F220 · com mais de um caso aberto, o número que está no caso errado vai ao certo daqui
   if(casosParaOrganizar(k.cliente_id).length>1) partes.push(`<div class="lc-linha"><span class="lc-k">Outros casos</span>
     <button class="btn-mini" onclick="organizarCasos('${k.cliente_id}')" title="levar NB, protocolo, recurso e processo ao caso certo, ou juntar os casos que são o mesmo benefício">⇄ organizar os números dos casos</button></div>`);
-  return `<div class="lc-numeros" id="lc-numeros-${k.id}">${partes.join("")}
-    <button class="lc-mais lc-mais2" onclick="lcAbrir('${k.id}',${lcNivel(k.id)===2?1:2})"
-      title="protocolos, verificação, comentário fixo e ações do caso">${lcNivel(k.id)===2?"− gestão do caso":"+ gestão do caso"}</button></div>`;
+  // F287 · aberto, o cartão se lê em seções com título, rótulo à esquerda e valor à direita (pedido do Paulo, 27.10.2026)
+  const g2 = lcNivel(k.id)===2;
+  return `<div class="lc-numeros" id="lc-numeros-${k.id}"><h4 class="lc-sec">Números do caso</h4>${partes.join("")}
+    <button type="button" class="lc-mais lc-mais2" onclick="lcAbrir('${k.id}',${g2?1:2})" aria-expanded="${g2}"
+      title="protocolos, verificação, comentário fixo e ações do caso">Gestão do caso${setaAlca(!g2)}</button></div>`;
 }
 const lcFichaAberta = new Set();
 // F114 · todas as datas do caso, na ordem da leitura. A linha mostra as
@@ -35967,21 +36002,21 @@ function linhaCaso(k){
            do pedido com os selos e o ➕; embaixo a PLACA, um quadro por dado
            fixo, rótulo em cima e valor embaixo, em colunas alinhadas. */""}
       ${/* F236 · na fase "outro" a linha diz a lista do To Do (e de onde veio o prazo), não "Outros" */""}
-      <span class="lc-sobre">${esc([k.especie, k.fase==="outro" ? listaDoOutro(k) : tram].filter(Boolean).join(" · "))}</span>
-      <div class="lc-cab">
-      ${/* F113 · só o nome do pedido e a canetinha; o código do INSS fica no title e na janela */""}
-      <b class="lc-ben ${(k.especie||k.beneficio||tituloProprio(k))?"":"lc-vazio"}" title="${esc(k.especie?`${k.especie} · `:"")}${esc((k.especie||k.beneficio) ? tituloCaso(k) : tituloProprio(k) || tituloCaso(k))} — clique na canetinha para trocar">${
-        (k.especie||k.beneficio) ? esc(tituloCaso(k)) : tituloProprio(k) ? esc(tituloProprio(k)) : "definir o pedido"}</b>
-      <button class="lapis" title="trocar a espécie ou o pedido deste caso" onclick="escolherEspecie('${k.id}')">✎</button>
-      ${k.natureza?`<span class="chip nat-chip" title="natureza do pedido">${esc(rotNatureza(k.natureza))}</span>`:""}
-      ${k.urgente?`<span class="chip urg">Urgente</span>`:""}
-      ${semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo — custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:""}
+      ${/* F287 · a canetinha da espécie ao lado do "B42 · INSS" e o ⋯ no canto, onde ficava o + (pedido do Paulo, 27.10.2026) */""}
+      <div class="lc-sobre-l"><span class="lc-sobre">${esc([k.especie, k.fase==="outro" ? listaDoOutro(k) : tram].filter(Boolean).join(" · "))}</span>
+      <button class="lapis" title="trocar a espécie ou o pedido deste caso" aria-label="trocar a espécie ou o pedido deste caso" onclick="escolherEspecie('${k.id}')">✎</button>
       ${/* F274 · Claude e Fixar comentário no ⋯ do cartão do caso */""}
       ${menuMais([
         `<button class="tl-mais-it lc-claude" role="menuitem" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)">✦ Pedir ao Claude</button>`,
         k.fixo && k.fixo.texto ? "" : `<button class="tl-mais-it fixar-caso" role="menuitem" onclick="lcEditarFixo('${k.id}')" title="fixar um comentário que aparece em destaque ao abrir o caso">${ICO_PIN} Fixar comentário</button>`,
-      ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo lc-menu"')}
-      ${(ac=>ac.atual.length?`<span class="lc-acessos">${ac.atual.join("")}</span>`:"")(acessosDoCaso(k))}
+      ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo lc-menu"')}</div>
+      <div class="lc-cab">
+      ${/* F113 · só o nome do pedido e a canetinha; o código do INSS fica no title e na janela */""}
+      <b class="lc-ben ${(k.especie||k.beneficio||tituloProprio(k))?"":"lc-vazio"}" title="${esc(k.especie?`${k.especie} · `:"")}${esc((k.especie||k.beneficio) ? tituloCaso(k) : tituloProprio(k) || tituloCaso(k))} — clique na canetinha para trocar">${
+        (k.especie||k.beneficio) ? esc(tituloCaso(k)) : tituloProprio(k) ? esc(tituloProprio(k)) : "definir o pedido"}</b>
+      ${k.natureza?`<span class="chip nat-chip" title="natureza do pedido">${esc(rotNatureza(k.natureza))}</span>`:""}
+      ${k.urgente?`<span class="chip urg">Urgente</span>`:""}
+      ${semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo — custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:""}
       </div>
       <div class="lc-placa">
       ${k.fase==="encerrado" && !k.der ? "" : `<span class="lc-f"><span class="lc-k">DER</span>${k.der
@@ -35989,7 +36024,10 @@ function linhaCaso(k){
         : `<span class="lc-vazio">não informada</span>`}<button class="lapis" title="alterar a DER" onclick="editarFato('${k.id}','der')">✎</button></span>`}
       ${/* F114 · o que decide ESTA espécie, e só isso; o resto em gestão do caso */""}
       ${camposEssenciais(k).map(c=>lcCampo(k,c)).join("")}
-      <span class="lc-f"><span class="lc-k">Tramitação</span><span class="lc-tram">${esc(tram)}</span></span>
+      ${/* F287 · o acesso da fase (PAT, Meu INSS, e-SISREC, autos) é a própria tramitação, com o ícone de ir */""}
+      <span class="lc-f"><span class="lc-k">Tramitação</span>${(a=>a
+        ? a.replace('class="lc-acesso"', 'class="lc-tram lc-tram-link"').replace(/>[^<]*<\/(a|button)>\s*$/, `>${esc(tram)}${IC_SVG.ir}</$1>`)
+        : `<span class="lc-tram">${esc(tram)}</span>`)(acessosDoCaso(k).atual[0])}</span>
       ${/* F119 · a etapa, o passo dentro da fase. É ela que responde ao
            cliente quando ele pergunta como está o processo. */""}
       ${/* F121 · a POSIÇÃO NA FILA do TRF3 (pedido do Paulo, 19.09). O painel
@@ -35999,13 +36037,13 @@ function linhaCaso(k){
            mensagem pronta) continua no cartão do caso. */""}
       ${filaTrf3(k)}
       ${recursoParado(k)}
-      ${etapasDaFase(k).length ? `<span class="lc-f" title="onde o caso está dentro de ${esc(tram)}">
-        <span class="lc-k">Etapa</span><span class="lc-etapa ${k.etapa?"":"lc-vazio"}">${esc(k.etapa||"a definir")}</span>
-        <button class="lapis" title="mudar a etapa do caso" onclick="escolherEtapa('${k.id}')">✎</button>${avisoEtapa(k)}</span>` : ""}
+      ${/* F287 · a etapa mora na faixa das fases, no alto do caso; aqui fica só o aviso, quando há (etapa velha, sugestão) */""}
+      ${(a=>a?`<span class="lc-f lc-etapa-aviso" title="etapa do caso: ${esc(k.etapa||"a definir")}">${a}</span>`:"")(etapasDaFase(k).length ? avisoEtapa(k) : "")}
       ${lcVerificacao(k)}
       </div>
-      <button class="lc-mais lc-mais-pe" onclick="lcAbrir('${k.id}',${n?0:1})" aria-expanded="${n?"true":"false"}"
-        aria-label="${n?"fechar os números do caso":"abrir os números do caso"}" title="${n?"fechar":"os números do caso: NB, e-Sisrec, processo judicial"}">${n?"−":"+"}</button>
+      ${/* F287 · a flecha no meio da borda de baixo, como a alça das fases (F286) */""}
+      <button type="button" class="lc-mais lc-mais-pe tr-alca" onclick="lcAbrir('${k.id}',${n?0:1})" aria-expanded="${n?"true":"false"}"
+        aria-label="${n?"fechar os números do caso":"abrir os números do caso"}" title="${n?"fechar":"os números do caso: NB, e-Sisrec, processo judicial"}">${setaAlca(!n)}</button>
     </div>
     ${n>=1?lcNumeros(k):""}
     ${n>=2?lcGestao(k):""}
@@ -36265,8 +36303,9 @@ function faixaTrilha(k){
 // F286 · a alça de recolher (pedido do Paulo, 26.10.2026): no meio da borda de baixo, recolhe o quadro inteiro (as fases,
 // as etapas e a linha da incapacidade) e o devolve; a escolha fica guardada neste computador
 const trOculta = () => ler("crm_trilha_oculta")==="1";
+const setaAlca = baixo => `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${baixo ? "M6 9l6 6 6-6" : "M6 15l6-6 6 6"}"/></svg>`;
 function alcaTrilha(fechada){
-  const seta = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${fechada ? "M6 9l6 6 6-6" : "M6 15l6-6 6 6"}"/></svg>`;
+  const seta = setaAlca(fechada);
   return `<button type="button" class="tr-alca" aria-expanded="${!fechada}" title="${fechada ? "mostrar as fases e as etapas do caso" : "recolher as fases e as etapas"}"
     aria-label="${fechada ? "mostrar as fases e as etapas do caso" : "recolher as fases e as etapas"}" onclick="guardar('crm_trilha_oculta','${fechada ? "" : "1"}');trRepintar()">${seta}${fechada ? "<span>Fases e etapas</span>" : ""}</button>`;
 }
