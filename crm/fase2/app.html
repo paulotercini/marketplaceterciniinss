@@ -4943,10 +4943,20 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini a{font-weight:500}
 }
 html[data-tema="v10"] .caso-pz .faixa-prazos{margin-top:0}
 html[data-tema="v10"] body.zap-aberto .caso-pz .faixa-prazos{margin-top:12px}
-html[data-tema="v10"] .tr-faixa .tr-corpo{position:relative}
-html[data-tema="v10"] .tr-faixa .tr-rec-menos{position:absolute;top:6px;right:10px;z-index:2;width:24px;height:24px;border:1px solid var(--borda);border-radius:6px;background:#fff;color:#4A4944;font-size:16px;line-height:1;cursor:pointer}
-html[data-tema="v10"] .tr-faixa .tr-oculta{padding:4px 12px 6px}
-html[data-tema="v10"] .tr-faixa .tr-oculta .tr-recolher{border:0;background:none;color:var(--azul-escuro);font-size:12.5px;cursor:pointer;padding:4px 0}
+/* F286 · a alça de recolher: um botão-pílula no meio da borda de baixo do quadro; recolhido, fica sobre uma linha fina */
+html[data-tema="v10"] .tr-faixa{position:relative;overflow:visible;margin-bottom:22px}
+html[data-tema="v10"] .tr-faixa > .jn-l{border-top-left-radius:12px;border-top-right-radius:12px;overflow:hidden}
+html[data-tema="v10"] .tr-alca{position:absolute;left:50%;bottom:0;transform:translate(-50%,50%);z-index:3;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  height:22px;min-width:44px;padding:0 12px;border:1px solid var(--borda);border-radius:999px;background:#FFFFFF;color:#4A4944;font:500 12px var(--f-ui);cursor:pointer;
+  box-shadow:0 1px 2px rgba(0,0,0,.06);transition:transform 160ms cubic-bezier(.23,1,.32,1),background-color 160ms ease,color 160ms ease}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .tr-alca:hover{background:#F3F2EE;color:#121212}}
+html[data-tema="v10"] .tr-alca:active{transform:translate(-50%,50%) scale(.96)}
+html[data-tema="v10"] .tr-alca:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+html[data-tema="v10"] .tr-recolhida{position:relative;height:22px;margin:0 0 14px;display:flex;align-items:center;justify-content:center}
+html[data-tema="v10"] .tr-recolhida::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px solid var(--borda)}
+html[data-tema="v10"] .tr-recolhida .tr-alca{position:relative;left:auto;bottom:auto;transform:none}
+html[data-tema="v10"] .tr-recolhida .tr-alca:active{transform:scale(.96)}
+@media (prefers-reduced-motion:reduce){html[data-tema="v10"] .tr-alca{transition:none}}
 /* com três colunas o meio é mais estreito: o campo de escrever ocupa a linha e os botões descem */
 html[data-tema="v10"] .app:not(.celular) .caso-3col .escrever.esc-v12:not(.esc-aberto){flex-wrap:wrap}
 html[data-tema="v10"] .app:not(.celular) .caso-3col .escrever.esc-v12:not(.esc-aberto) #and-texto{flex:1 1 100%}
@@ -17727,7 +17737,7 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}${(t=>t ? t.replace(/<\/section>\s*$/, `${faixaIncapacidade(k)}</section>`) : faixaIncapacidade(k))(faixaTrilha(k))}<div class="caso-2col caso-3col"><aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
+        ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col"><aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
            <div class="caso-dir">${bannerAClassificar(k)}${menu}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div>
            <aside class="caso-esq caso-pz" aria-label="Prazos e compromissos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
@@ -36197,9 +36207,7 @@ function faixaTrilha(k){
     <div class="jn-l" role="tablist" aria-label="Fases do caso">${abas}<button class="tr-ajuda${confirma ? " tr-ajuda-pend" : ""}" aria-expanded="${trAjuda}" aria-controls="tr-leg"
       title="${esc(`${T.nome}: o tipo de processo e o que cada marca quer dizer`)}" onclick="trAjuda=!trAjuda;trRepintar()">?</button>
 </div>
-    ${/* F278 · o − recolhe as etapas e o + as devolve; a escolha fica guardada neste computador (pedido do Paulo, 25.10.2026) */""}
-    ${trOculta() ? `<div class="tr-oculta"><button type="button" class="tr-recolher" aria-expanded="false" onclick="guardar('crm_trilha_oculta','');trRepintar()">+ mostrar as etapas</button></div>` : `<div class="tr-corpo">
-      <button type="button" class="tr-recolher tr-rec-menos" aria-expanded="true" title="esconder as etapas" aria-label="esconder as etapas" onclick="guardar('crm_trilha_oculta','1');trRepintar()">−</button>
+    <div class="tr-corpo">
       ${trAjuda ? `<div class="tr-cab"><h3>${esc(T.nome)}</h3>${ver===faseAt ? "" : `<span class="meio-sub">${stVer==="v"?"fase ainda não alcançada":"fase anterior"}</span>`}
         ${houveBt}${chips}</div>` : ""}
       ${leg}
@@ -36207,9 +36215,22 @@ function faixaTrilha(k){
         <div class="tr-rol" onscroll="trSombra(this)"><ol class="tr-l" style="--n:${itens.length}">${itens.join("")}</ol></div>
         <button class="tr-seta tr-seta-dir" aria-label="próximas etapas" tabindex="-1" onclick="trRolar(1)">›</button></div>
       ${pnl}
-    </div>`}</section>`;
+    </div></section>`;
 }
+// F286 · a alça de recolher (pedido do Paulo, 26.10.2026): no meio da borda de baixo, recolhe o quadro inteiro (as fases,
+// as etapas e a linha da incapacidade) e o devolve; a escolha fica guardada neste computador
 const trOculta = () => ler("crm_trilha_oculta")==="1";
+function alcaTrilha(fechada){
+  const seta = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${fechada ? "M6 9l6 6 6-6" : "M6 15l6-6 6 6"}"/></svg>`;
+  return `<button type="button" class="tr-alca" aria-expanded="${!fechada}" title="${fechada ? "mostrar as fases e as etapas do caso" : "recolher as fases e as etapas"}"
+    aria-label="${fechada ? "mostrar as fases e as etapas do caso" : "recolher as fases e as etapas"}" onclick="guardar('crm_trilha_oculta','${fechada ? "" : "1"}');trRepintar()">${seta}${fechada ? "<span>Fases e etapas</span>" : ""}</button>`;
+}
+function faixaTrilhaComAlca(k){
+  const t = faixaTrilha(k);
+  if(!t) return faixaIncapacidade(k);
+  if(trOculta()) return `<div class="tr-recolhida">${alcaTrilha(true)}</div>`;
+  return t.replace(/<\/section>\s*$/, `${faixaIncapacidade(k)}${alcaTrilha(false)}</section>`);
+}
 // repinta sem perder a rolagem da ficha e põe a etapa atual no meio da trilha
 function trRepintar(){
   const rol = document.querySelector(".det-rolagem"), y = rol ? rol.scrollTop : 0;
