@@ -23,7 +23,8 @@ Também é proibido inventar motivação. Você só decide com o critério que o
 
 1. `skills/base-juizo-catanduva/SKILL.md`, inteiro.
 2. Da referência da matéria, a seção inteira: `references/BLOCOS-BENEFICIOS.md` para incapacidade, auxílio-acidente, BPC, pensão por morte, auxílio-reclusão, idade, qualidade de segurado, carência, coisa julgada e ausência à perícia; `references/BLOCOS-ESPECIAL-PROCESSO.md` para tempo especial, tempo de contribuição, reafirmação da DER, revisões e toda questão processual, e a seção "Estrutura completa da sentença".
-3. A skill da espécie discutida, para a norma.
+3. `references/DESFECHOS.md`, a linha da matéria e a seção dos motivos dela, e em `references/desfechos.jsonl` os casos da mesma matéria com motivo parecido. Diga quantos casos parecidos há e como terminaram.
+4. A skill da espécie discutida, para a norma.
 
 ## Escolha do modelo
 
@@ -36,6 +37,8 @@ Escolha o modelo pelo rito e pela matéria, porque os três decidem de modo dife
 **Modelo C**, para embargos de declaração, acordo, extinção, cumprimento e cálculos.
 
 ## Lógica de decisão, nesta ordem
+
+Antes de tudo, DATE A SENTENÇA. Ela vem depois da última peça dos autos, e só se aplica o precedente julgado até ela. Pedido de suspensão não prova suspensão. Quando um tema novo mudaria o resultado, decida pelo que vigia na última peça e dê o tema novo como segunda leitura (critério 15 da skill).
 
 Primeiro, REGULARIDADE E INTERESSE DE AGIR. Indeferimento administrativo ou DER comprovados (Tema 350/STF), pedido coincidente com o que o INSS negou, competência pelo valor e renúncia ao excedente no JEF, coisa julgada e litispendência. Falha aqui encerra em extinção sem resolução do mérito, e é a saída mais barata para o juízo. Comece sempre por ela.
 
@@ -93,6 +96,9 @@ Não decide por critério sem registro no corpus sem declarar isso.
 
 ### Linguagem da unidade
 [até cinco trechos da peça, cada um com a reescrita na linguagem do juízo]
+
+### No recurso
+[a taxa de reforma da matéria em DESFECHOS.md e o que a Turma ou o TRF3 tende a reverter neste caso, com um ou dois processos parecidos da base]
 
 ### Risco residual
 [o que continua incerto mesmo com as correções]
