@@ -71,10 +71,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("com a folha de cada peça (fls. 1, 2, 3)", /fls\. 1\b/.test(arv[0]) && /fls\. 2\b/.test(arv[1]) && /fls\. 3\b/.test(arv[2]));
 
   await p.evaluate(() => piIr(2));
-  await p.waitForFunction(() => { const f = document.querySelector("#pi-2 iframe"); return f && f.contentDocument && /PROCEDENTE/.test(f.contentDocument.body.textContent); }, null, { timeout: 8000 }).catch(() => {});
+  await p.waitForFunction(() => { const f = document.querySelector("#pi-2 iframe"); return f && f.contentDocument && /PROCEDENTE/.test((f.contentDocument.body?.textContent || "")); }, null, { timeout: 8000 }).catch(() => {});
   await p.waitForTimeout(300);
   const sent = await p.evaluate(() => { const f = document.querySelector("#pi-2 iframe");
-    return { txt: f && f.contentDocument && f.contentDocument.body.textContent, sandbox: f && f.getAttribute("sandbox"), vazou: window.__vazou,
+    return { txt: f && f.contentDocument && f.contentDocument.body?.textContent, sandbox: f && f.getAttribute("sandbox"), vazou: window.__vazou,
       on: (document.querySelector("#proc-inteiro .pi-arvore button.on") || { dataset: {} }).dataset.i }; });
   conf("a sentença (HTML do PJe) aparece dentro do CRM", /JULGO PROCEDENTE/.test(sent.txt || ""));
   conf("a árvore acende a peça que está na tela", sent.on === "2");
