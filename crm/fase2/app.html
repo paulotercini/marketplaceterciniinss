@@ -48940,6 +48940,7 @@ function gerarDocumento(modeloId, cliId){
   const k=(D.casosDoCliente.get(cliId)||[]).find(x=>x.fase!=="encerrado");
   const corpo=preencherDoc(m.conteudo, c, k);
   const w=window.open("","_blank");
+  if(!w) return aviso("O navegador bloqueou a janela — libere os pop-ups deste site");
   w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
   <title>${esc(m.titulo)} — ${esc(c.nome)}</title><style>
     body{font-family:Georgia,serif;max-width:700px;margin:40px auto;color:#111;line-height:1.8;font-size:15px}
@@ -49043,6 +49044,7 @@ function imprimirDocs(casoId){
 function imprimirListaDocs(c, beneficio, itens, obs){
   const hojeBr=fmt(hoje());
   const w=window.open("","_blank");
+  if(!w) return aviso("O navegador bloqueou a janela — libere os pop-ups deste site");
   w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
   <title>Documentos — ${esc(c.nome)}</title><style>
     body{font-family:Georgia,serif;max-width:680px;margin:40px auto;color:#222;line-height:1.6}
@@ -49860,7 +49862,7 @@ function pintarFluxo(){
     corpo = `<h3>${f.remarcar?"Novo horário para "+esc(f.nome):"Escolha o horário"} <span class="aq-tipo">${f.tipo} · ${f.tipo==="001"?45:30} minutos</span></h3>
       <div class="aq-profsel" role="group" aria-label="Com quem">${lista.map(x=>`<button class="${f.prof===x.id?"on":""}" data-aqfprof="${x.id}" ${f.remarcar?"disabled":""}><i class="aq-bola p-${x.id}"></i>${esc(x.nome)}</button>`).join("")}</div>
       ${!dispP?`<p class="meio-sub">carregando a agenda de ${esc(nomeProf(f.prof))}…</p>`:""}
-      <div class="aq-diasel">${dias.map(d=>`<button class="${d.data===f.data?"on":""}" data-aqdata="${d.data}" ${livresDoDia(d, f.tipo).length?"":"disabled"}>${siglaData(d.data)}<small>${livresDoDia(d, f.tipo).length} livres</small></button>`).join("")}</div>
+      <div class="aq-diasel">${dias.map(d=>`<button class="${d.data===f.data?"on":""}" data-aqdata="${d.data}" ${livresDoDia(d, f.tipo).length?"":"disabled"}>${siglaData(d.data)}<small>${(n=>`${n} livre${n===1?"":"s"}`)(livresDoDia(d, f.tipo).length)}</small></button>`).join("")}</div>
       ${soVagas ? grupo("Vagas livres no Google Agenda", livres) : grupo("Horários recomendados", livres.filter(s=>s.encaixado && !s.reserva))}
       ${soVagas ? "" : grupo("Outros horários", livres.filter(s=>!s.encaixado && !s.reserva))}
       ${grupo("Encaixe urgente", livres.filter(s=>s.reserva))}
