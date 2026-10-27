@@ -969,6 +969,30 @@
   .caso.caso-arq{background:#F7F5FB;border-color:#DDD4EC}
   .arq-it{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:5px 0;border-top:1px solid #E7E1F1}
   .arq-it:first-of-type{border-top:none}
+  /* F289 · o processo inteiro: árvore de peças à esquerda, leitura contínua à direita */
+  #proc-inteiro{position:fixed;inset:0;z-index:2000;background:var(--fundo);display:flex;flex-direction:column}
+  #proc-inteiro .pi-cab{display:flex;align-items:center;gap:10px;padding:8px 14px;background:var(--branco);border-bottom:1px solid var(--borda)}
+  #proc-inteiro .pi-cab b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #proc-inteiro .pi-corpo{flex:1;display:flex;min-height:0}
+  #proc-inteiro .pi-arvore{width:300px;flex:none;overflow:auto;background:var(--branco);border-right:1px solid var(--borda);padding:6px 0}
+  #proc-inteiro .pi-arvore button{display:block;width:100%;text-align:left;border:0;background:none;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--texto);border-left:3px solid transparent}
+  #proc-inteiro .pi-arvore button:hover{background:var(--azul-fundo)}
+  #proc-inteiro .pi-arvore button.on{background:var(--azul-fundo);border-left-color:var(--azul)}
+  #proc-inteiro .pi-arvore small{display:block;color:var(--cinza-claro)}
+  #proc-inteiro .pi-autos{flex:1;overflow:auto;padding:14px}
+  #proc-inteiro .pi-peca{max-width:900px;margin:0 auto 18px}
+  #proc-inteiro .pi-peca h4{margin:0 0 6px;font-size:14px;color:var(--cinza)}
+  #proc-inteiro .pi-folha{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18);margin-bottom:10px;min-height:200px}
+  #proc-inteiro .pi-folha canvas,#proc-inteiro .pi-folha img{display:block;width:100%;height:auto}
+  #proc-inteiro .pi-folha iframe{display:block;width:100%;border:0;min-height:300px}
+  #proc-inteiro .pi-folha .meio-sub{padding:16px}
+  #proc-inteiro .pi-ver-arvore{display:none}
+  @media (max-width:800px){
+    #proc-inteiro .pi-ver-arvore{display:inline-block}
+    #proc-inteiro .pi-arvore{position:absolute;top:49px;bottom:0;left:0;z-index:1;display:none;box-shadow:2px 0 8px rgba(0,0,0,.2)}
+    #proc-inteiro.arvore-on .pi-arvore{display:block}
+    #proc-inteiro .pi-autos{padding:8px}
+  }
   .arq-abrir{border:none;background:none;font:inherit;font-weight:600;color:var(--azul);
     cursor:pointer;padding:2px 0;text-align:left;word-break:break-word}
   @media (hover:hover) and (pointer:fine){.arq-abrir:hover{text-decoration:underline}}
@@ -33478,6 +33502,7 @@ function painelDocumentos(k, origens){
   return `<div class="caso docs-painel">
     <div class="rotulo-caso">${temaV10()?"":"📂 "}${docs.length} documento${docs.length>1?"s":""}${total?` · ${tamArq(total)}`:""}</div>
     <div class="form-linha docs-acoes" style="align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px">
+      ${origens===DOCS_JUDICIAIS?`<button class="${temaV10()?"tl-bt forte":"btn-mini"}" onclick="abrirProcessoInteiro('${k.id}')" title="as peças judiciais em ordem cronológica, uma depois da outra, com a árvore ao lado">${temaV10()?"":"📖 "}Abrir o processo inteiro</button>`:""}
       <button class="${bt}" onclick="baixarDocsZip('${k.id}')" title="os arquivos originais do caso inteiro (judicial, INSS, recurso e escritório), em pastas por origem">${temaV10()?"":"⬇ "}Baixar tudo (.zip)</button>
       <button class="${bt}" onclick="pacoteClaude('${k.id}')" title="um arquivo .md com o texto de todos os documentos do caso — arraste para uma conversa do Claude">${temaV10()?"":"🤖 "}Pacote para o Claude (.md)</button>
       <button class="${bt}" onclick="digitalizadosClaude('${k.id}')" title="os documentos sem texto (scan, foto) num PDF só, numerados como no pacote — o Claude os lê pela imagem">${temaV10()?"":"📎 "}Digitalizados para o Claude (PDF)</button>
@@ -33502,6 +33527,114 @@ function painelDocumentos(k, origens){
       </div>`).join("")}
     </div>`).join("")}
   </div>`;
+}
+// F289 · O PROCESSO INTEIRO. As peças judiciais do caso (as mesmas de
+// Documentos) uma depois da outra, da mais antiga à mais nova, com a árvore
+// de peças e a folha contínua, como nos autos do e-SAJ e do eproc. Nada se
+// junta num PDF: cada peça se busca e se desenha só quando chega perto da tela.
+function pecasDoProcesso(k){
+  return docsDaOrigem(k, DOCS_JUDICIAIS).slice()
+    .sort((a,b)=>String(a.data||"").localeCompare(String(b.data||"")) || String(a.nome||"").localeCompare(String(b.nome||"")));
+}
+let _piObs = null;
+function fecharProcessoInteiro(){
+  if(_piObs){ _piObs.disconnect(); _piObs = null; }
+  const el = document.getElementById("proc-inteiro"); if(el) el.remove();
+  document.body.style.overflow = "";
+  document.removeEventListener("keydown", _piTecla);
+}
+function _piTecla(e){ if(e.key==="Escape") fecharProcessoInteiro(); }
+function abrirProcessoInteiro(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const pecas = pecasDoProcesso(k); if(!pecas.length) return aviso("Nenhuma peça judicial no CRM");
+  fecharProcessoInteiro();
+  const c = D.cliPorId.get(k.cliente_id) || {};
+  // a folha (fls.) de cada peça: a contagem só vale onde o número de páginas é conhecido
+  let fl = 1, conhecido = true;
+  const fls = pecas.map(d=>{ const n = d.tipo==="application/pdf" ? +d.paginas||0 : 1;
+    const r = conhecido ? fl : null; if(!n) conhecido = false; fl += n; return r; });
+  const rot = d => d.evento || String(d.nome||"documento").replace(/\.(pdf|html?)$/i,"");
+  const el = document.createElement("div");
+  el.id = "proc-inteiro"; el.setAttribute("role","dialog"); el.setAttribute("aria-label","processo inteiro");
+  el.innerHTML = `<div class="pi-cab">
+      <button class="btn-mini pi-ver-arvore" onclick="this.closest('#proc-inteiro').classList.toggle('arvore-on')">Peças</button>
+      <b>${esc(c.nome||"cliente")}${k.processo?` · ${esc(k.processo)}`:""} · ${pecas.length} peça${pecas.length>1?"s":""}</b>
+      <button class="btn-mini" onclick="fecharProcessoInteiro()" title="fechar (Esc)">✕</button></div>
+    <div class="pi-corpo">
+      <nav class="pi-arvore" aria-label="peças do processo">${pecas.map((d,i)=>`<button data-i="${i}" onclick="piIr(${i})">
+        ${esc(rot(d))}<small>${d.data?fmt(String(d.data).slice(0,10)):""}${fls[i]?` · fls. ${fls[i]}`:""}${d.evento&&d.nome?` · ${esc(d.nome)}`:""}</small></button>`).join("")}</nav>
+      <div class="pi-autos">${pecas.map((d,i)=>`<section class="pi-peca" id="pi-${i}" data-i="${i}">
+        <h4>${esc(rot(d))}${d.data?` · ${fmt(String(d.data).slice(0,10))}`:""}${fls[i]?` · fls. ${fls[i]}`:""}</h4>
+        <div class="pi-folha"><p class="meio-sub">Carregando…</p></div></section>`).join("")}</div>
+    </div>`;
+  document.body.appendChild(el);
+  document.body.style.overflow = "hidden";
+  document.addEventListener("keydown", _piTecla);
+  const autos = el.querySelector(".pi-autos");
+  // a peça que entra na tela se desenha e acende na árvore
+  _piObs = new IntersectionObserver(ents=>{
+    for(const e of ents){
+      if(!e.isIntersecting) continue;
+      const i = +e.target.dataset.i, sec = e.target;
+      if(!sec.dataset.feito){ sec.dataset.feito = "1"; desenharPeca(pecas[i], sec.querySelector(".pi-folha")); }
+    }
+  }, {root:autos, rootMargin:"600px 0px"});
+  autos.querySelectorAll(".pi-peca").forEach(x=>_piObs.observe(x));
+  // a árvore acende a peça que está no alto da leitura
+  const secs = [...autos.querySelectorAll(".pi-peca")], bts = [...el.querySelectorAll(".pi-arvore button")];
+  const acender = ()=>{ const topo = autos.getBoundingClientRect().top + 80;
+    let i = 0; secs.forEach((x,j)=>{ if(x.getBoundingClientRect().top <= topo) i = j; });
+    if(autos.scrollTop > 0 && autos.scrollTop + autos.clientHeight >= autos.scrollHeight - 2) i = secs.length - 1;   // a última não sobe ao alto
+    bts.forEach((b,j)=>b.classList.toggle("on", j===i)); };
+  autos.addEventListener("scroll", acender, {passive:true}); acender();
+  for(const ev of ["wheel","touchstart","keydown"]) autos.addEventListener(ev, ()=>{ el._alvo = null; }, {passive:true});
+  el._acender = acender;   // a folha que cresce ao carregar muda quem está no alto
+}
+function piIr(i){
+  const el = document.getElementById("proc-inteiro"); if(!el) return;
+  el.classList.remove("arvore-on");
+  const sec = document.getElementById("pi-"+i); if(sec) sec.scrollIntoView({block:"start"});
+  // as peças de cima que terminam de carregar crescem e empurram a escolhida:
+  // até a pessoa rolar por conta própria, a leitura volta a ela
+  el._alvo = sec;
+}
+const piAcender = ()=>{ const el = document.getElementById("proc-inteiro"); if(!el) return;
+  if(el._alvo) el._alvo.scrollIntoView({block:"start"}); if(el._acender) el._acender(); };
+async function desenharPeca(d, caixaEl){
+  const sec = caixaEl.parentElement;
+  try{
+    const url = await linkArquivo(d.caminho, 600);
+    if(/^image\//.test(d.tipo||"")){ caixaEl.innerHTML = `<img alt="${esc(d.nome||"imagem")}" src="${url}">`; return; }
+    const r = await fetch(url); if(!r.ok) throw new Error(r.status);
+    if(/^text\//.test(d.tipo||"")){
+      // o HTML do PJe sem script nenhum (sandbox sem allow-scripts); a mesma
+      // origem serve só para medir a altura da folha
+      const html = await r.text();
+      const f = document.createElement("iframe");
+      f.setAttribute("sandbox","allow-same-origin"); f.srcdoc = html;
+      f.onload = ()=>{ try{ f.style.height = (f.contentDocument.documentElement.scrollHeight+20)+"px"; }catch(e){} piAcender(); };
+      caixaEl.replaceChildren(f); return;
+    }
+    const lib = await carregarPdfJs();
+    const pdf = await lib.getDocument({data:new Uint8Array(await r.arrayBuffer()), isEvalSupported:false}).promise;
+    caixaEl.remove();
+    for(let n=1; n<=pdf.numPages; n++){
+      const pag = await pdf.getPage(n);
+      const vp1 = pag.getViewport({scale:1});
+      const larg = Math.min(sec.clientWidth || 900, 900) * (window.devicePixelRatio||1);
+      const vp = pag.getViewport({scale: larg / vp1.width});
+      const cv = document.createElement("canvas"); cv.width = vp.width; cv.height = vp.height;
+      const folha = document.createElement("div"); folha.className = "pi-folha"; folha.appendChild(cv);
+      sec.appendChild(folha);
+      await pag.render({canvasContext:cv.getContext("2d"), viewport:vp}).promise;
+    }
+    piAcender();
+  }catch(e){
+    if(!caixaEl.isConnected) sec.appendChild(caixaEl);
+    caixaEl.innerHTML = `<p class="meio-sub">Não consegui mostrar esta peça. <button class="btn-mini" onclick="${d.id?`abrirAnexo('${escJs(d.id)}')`:`abrirDecisao('${escJs(d.caminho)}')`}">Abrir em outra guia</button></p>`;
+
+    piAcender();
+  }
 }
 function salvarBlob(nome, blob){
   const a = document.createElement("a");
