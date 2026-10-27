@@ -180,7 +180,7 @@ insert into r select 't25 fora do horário avisa antes de mostrar o menu',
 -- ── transferência entre atendentes ────────────────────────────────────────
 do $$ begin
   perform zap_transferir((select id from zap_conversas where chave=fone_chave('16999990000')),
-                         '44444444-4444-4444-4444-444444444444','é caso judicial');
+                         '44444444-4444-4444-4444-444444444444', p_motivo => 'é caso judicial');
 end $$;
 insert into r select 't26 transferir troca o dono e deixa rastro',
   (select para_id='44444444-4444-4444-4444-444444444444' and motivo='é caso judicial'

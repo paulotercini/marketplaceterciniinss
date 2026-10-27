@@ -151,7 +151,9 @@ function conf(peso, nome, ok) {
   const desf = (await textoDe(paulo, "#desfecho .desf-base"))[0] || "";
   conf(2, "3.1 a análise registrada sugere gerar o caso", /^Caso/.test(desf));
   const casosAntes = banco.t.casos.filter(k => k.cliente_id === cli.id).length;
-  await paulo.click("#desfecho button:has-text('Gerar o caso')");
+  // F277 · o Desfecho virou Criar caso: escolhe o início e informa o número do protocolo
+  await paulo.selectOption("#cc-inicio", "inss"); await paulo.fill("#cc-num", "123456789");
+  await paulo.click("#desfecho .cc-form button:has-text('Criar caso')");
   await paulo.waitForTimeout(600);
   const perguntou = await paulo.evaluate(() => !!document.getElementById("desf-sem"));
   conf(4, "3.2 sem procuração e contrato gerados, o CRM pergunta antes de criar o caso", perguntou && banco.t.casos.filter(k => k.cliente_id === cli.id).length === casosAntes);
@@ -180,7 +182,7 @@ function conf(peso, nome, ok) {
     await p.evaluate(id => { casoSel = id; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); }, kid);
     await p.waitForTimeout(250);
     await p.click("#and-texto"); await p.waitForTimeout(150);
-    await p.click(`.tipo-ch[data-tipoand="${tipo}"]`);
+    await p.evaluate(() => { const d = document.querySelector(".tipo-mais"); if (d) d.open = true; }); await p.click(`.tipo-ch[data-tipoand="${tipo}"]`);
     await p.waitForSelector(".pop-campos");
     for (const [id, v] of Object.entries(campos)) {
       const el = await p.$(`#pa-${id}`); if (!el) continue;

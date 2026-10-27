@@ -35,3 +35,17 @@ self.addEventListener("fetch", e => {
     return daRede;
   })());
 });
+
+// Os botões do aviso de lembrete (o "concluir" e o "adiar" do To Do). Quem
+// grava é a página aberta, que tem a sessão: aqui só se repassa o clique.
+self.addEventListener("notificationclick", e => {
+  e.notification.close();
+  const d = e.notification.data || {};
+  e.waitUntil((async () => {
+    const cls = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+    if (cls[0]) {
+      cls[0].postMessage({ crm: "lembrete", acao: e.action || "abrir", ...d });
+      if (!e.action) return cls[0].focus();
+    } else if (!e.action) return self.clients.openWindow("./");
+  })());
+});

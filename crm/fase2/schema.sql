@@ -1221,6 +1221,53 @@ language sql stable security definer set search_path = public as $$
   from h
 $$;
 
+-- O que o robô faz depois de saber a opção (achou), ou de não saber (null):
+-- chamado pelo zap_bot e pela triagem por IA (F259), que decide depois.
+create or replace function zap_bot_seguir(p_conversa uuid, p_vai text) returns void
+language plpgsql security definer set search_path = public as $$
+declare c zap_conversas; p zap_bot_passos; achou text := p_vai; txt text;
+begin
+  select * into c from zap_conversas where id = p_conversa;
+  select * into p from zap_bot_passos where chave=c.bot_passo and ativo;
+  if not found then return; end if;
+
+  if achou is null then
+    -- ninguém fica preso no menu: na segunda vez sem entender, vai para gente
+    update zap_conversas set bot_erros = bot_erros + 1 where id=p_conversa;
+    if c.bot_erros + 1 >= 2 then achou := 'nao_entendi';
+    else
+      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+      values (p_conversa, 'saida', true,
+              'Não entendi 🤔 — responda com o número da opção, por favor.' || E'\n\n' || p.texto,
+              'fila');
+      return;
+    end if;
+  end if;
+
+  -- quem pergunta do processo recebe a etapa pública na hora (a mesma do
+  -- portal) e só passa a uma pessoa se quiser; sem etapa, segue para a equipe
+  if achou = 'processo' and c.bot_passo <> 'situacao'
+     and coalesce((select valor from config_app where chave='zap_robo_novo'),'nao') = 'sim' then
+    txt := zap_situacao(p_conversa);
+    if txt is not null and exists (select 1 from zap_bot_passos where chave='situacao' and ativo) then
+      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+      values (p_conversa, 'saida', true, txt, 'fila');
+      update zap_conversas set bot_passo='situacao', bot_erros=0 where id=p_conversa;
+      return;
+    end if;
+  end if;
+
+  select * into p from zap_bot_passos where chave=achou and ativo;
+  if not found then return; end if;
+  insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+  values (p_conversa, 'saida', true, p.texto, 'fila');
+  update zap_conversas set bot_passo=achou, bot_erros=0 where id=p_conversa;
+  if p.entrega_setor is not null then
+    perform zap_entregar(p_conversa, p.entrega_setor, p.chave);
+  end if;
+end $$;
+revoke execute on function zap_bot_seguir(uuid, text) from public, anon, authenticated;
+
 -- O bot em si. Roda no banco, e não na ponte, porque assim vale para qualquer
 -- caminho de entrada — a ponte de hoje, o SMBot, ou a API oficial amanhã.
 create or replace function zap_bot() returns trigger
@@ -1273,27 +1320,25 @@ begin
     end if;
   end loop;
 
-  if achou is null then
-    -- ninguém fica preso no menu: na segunda vez sem entender, vai para gente
-    update zap_conversas set bot_erros = bot_erros + 1 where id=new.conversa_id;
-    if c.bot_erros + 1 >= 2 then achou := 'nao_entendi';
-    else
-      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
-      values (new.conversa_id, 'saida', true,
-              'Não entendi 🤔 — responda com o número da opção, por favor.' || E'\n\n' || p.texto,
-              'fila');
-      return new;
-    end if;
+  -- texto livre que nenhuma opção reconheceu: a IA lê e escolhe a opção do
+  -- menu (F259). A resposta volta por zap_triagem_aplicar; se não voltar em
+  -- 60 s, o zap_relogio segue o caminho de antes (zap_triagem_vencidas).
+  if achou is null and trim(txt) <> '' and jsonb_array_length(p.opcoes) > 1
+     and coalesce((select valor from config_app where chave='zap_robo_ia'),'nao') = 'sim'
+     and coalesce((select valor from config_app where chave='zap_triagem_url'),'') <> '' then
+    update zap_mensagens set bot_ia = 'pedida:' || c.bot_passo where id = new.id;
+    begin
+      perform net.http_post(
+        url := (select valor from config_app where chave='zap_triagem_url'),
+        body := jsonb_build_object('mensagem_id', new.id),
+        headers := '{"Content-Type":"application/json"}'::jsonb,
+        timeout_milliseconds := 20000);
+    exception when others then null;   -- sem pg_net, a espera de 60 s resolve
+    end;
+    return new;
   end if;
 
-  select * into p from zap_bot_passos where chave=achou and ativo;
-  if not found then return new; end if;
-  insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
-  values (new.conversa_id, 'saida', true, p.texto, 'fila');
-  update zap_conversas set bot_passo=achou, bot_erros=0 where id=new.conversa_id;
-  if p.entrega_setor is not null then
-    perform zap_entregar(new.conversa_id, p.entrega_setor, p.chave);
-  end if;
+  perform zap_bot_seguir(new.conversa_id, achou);
   return new;
 end $$;
 
@@ -1316,6 +1361,264 @@ end $$;
 drop trigger if exists zap_humano_ins on zap_mensagens;
 create trigger zap_humano_ins after insert on zap_mensagens
   for each row execute function zap_humano_assumiu();
+
+-- ══ O robô que responde, espera e pode ser conduzido (F258) ═══════════════
+-- Três coisas do Kapso trazidas para a nossa ponte, sem a API oficial:
+-- 1. quem pergunta do processo recebe a etapa pública na hora, a mesma do
+--    portal (catálogo, fase atual e não desatualizada), e só se o número que
+--    escreve é o telefone principal da ficha, com DDD: o da filha, o vinculado
+--    à mão e o desconhecido seguem para a equipe, como antes;
+-- 2. cada passo pode esperar: sem resposta em espera_min minutos, o robô vai
+--    a espera_vai (um lembrete, uma pessoa) ou, sem destino, volta ao começo
+--    calado, para a próxima mensagem receber o menu;
+-- 3. a equipe vê em que passo a conversa está e leva o robô a outro passo
+--    (zap_bot_ir), inclusive devolvendo ao robô a conversa que alguém assumiu.
+alter table zap_bot_passos add column if not exists espera_min integer
+  check (espera_min is null or espera_min > 0);
+alter table zap_bot_passos add column if not exists espera_vai text;
+alter table zap_conversas add column if not exists bot_desde timestamptz;
+-- nasce desligado: o Paulo liga pelo CRM (Configurações › WhatsApp) quando quiser
+insert into config_app (chave, valor) values ('zap_robo_novo','nao') on conflict (chave) do nothing;
+
+create or replace function zap_bot_desde() returns trigger
+language plpgsql as $$
+begin
+  if tg_op = 'INSERT' or new.bot_passo is distinct from old.bot_passo then
+    new.bot_desde := case when new.bot_passo is null then null else now() end;
+  end if;
+  return new;
+end $$;
+drop trigger if exists zap_bot_desde on zap_conversas;
+create trigger zap_bot_desde before insert or update on zap_conversas
+  for each row execute function zap_bot_desde();
+
+do $$ begin
+  if not exists (select 1 from zap_bot_passos where chave='situacao') then
+    insert into zap_bot_passos (chave, texto, opcoes, entrega_setor, ordem, espera_min) values
+    ('situacao',
+     E'Se quiser falar com alguém do escritório, é só responder aqui que eu chamo quem cuida do seu processo.',
+     -- qualquer resposta, até foto ou áudio, vai para quem cuida do processo
+     '[{"tecla":"","quando":"^","vai":"processo"}]'::jsonb, null, 10, 1440);
+  end if;
+  if not exists (select 1 from zap_bot_passos where chave='lembrete') then
+    insert into zap_bot_passos (chave, texto, opcoes, entrega_setor, ordem, espera_min)
+    select 'lembrete',
+           E'Olá! Ainda podemos ajudar? Responda com o número de uma das opções acima, ou *0* para falar com alguém do escritório.',
+           opcoes, null, 11, 1440
+      from zap_bot_passos where chave='inicio';
+    update zap_bot_passos set espera_min=120, espera_vai='lembrete' where chave='inicio';
+  end if;
+end $$;
+
+-- DDD + 8 últimos dígitos: o WhatsApp de conta antiga não tem o nono dígito,
+-- e só os 8 últimos (fone_chave) confundem números de DDDs diferentes
+create or replace function fone_ddd8(p text) returns text
+language plpgsql immutable as $$
+declare d text := regexp_replace(coalesce(p,''), '\D', '', 'g');
+begin
+  if length(d) >= 12 and left(d, 2) = '55' then d := substr(d, 3); end if;
+  d := ltrim(d, '0');
+  if length(d) < 10 then return null; end if;
+  return left(d, 2) || right(d, 8);
+end $$;
+
+-- espelho do ETAPAS_POR_FASE do portal_common.py e do app.html (o teste
+-- tests/test_etapa_portal.py confere que são iguais)
+create or replace function zap_etapas_publicas() returns table (fase text, etapa text)
+language sql immutable as $$
+  values
+  -- etapas:inicio
+  ('escritorio','em atendimento'), ('escritorio','reunindo documentos'),
+  ('escritorio','análise de direito'), ('escritorio','aguardando o cliente'),
+  ('inss','requerimento protocolado'), ('inss','aguardando perícia'), ('inss','perícia realizada'),
+  ('inss','em exigência'), ('inss','aguardando análise'), ('inss','decidido'),
+  ('conselho','recurso protocolado'), ('conselho','aguardando distribuição'), ('conselho','em diligência'),
+  ('conselho','em pauta'), ('conselho','julgado'),
+  ('judicial','ação distribuída'), ('judicial','aguardando citação'), ('judicial','contestação apresentada'),
+  ('judicial','perícia designada'), ('judicial','perícia realizada'), ('judicial','aguardando sentença'),
+  ('judicial','sentença publicada'), ('judicial','em recurso'),
+  ('peticao_inicial','a redigir'), ('peticao_inicial','redigida'), ('peticao_inicial','a protocolar'),
+  ('pagamento','aguardando implantação'), ('pagamento','benefício implantado'), ('pagamento','aguardando RPV'),
+  ('pagamento','RPV expedida'), ('pagamento','recebido'),
+  ('aposentadoria_futura','monitorando'), ('aposentadoria_futura','documentação em dia'),
+  ('aposentadoria_futura','pronto para protocolar')
+  -- etapas:fim
+$$;
+
+-- a etapa que pode sair para o cliente: a mesma regra do etapa_publicavel()
+-- do portal_common.py (fase atual, no Judicial também a da execução, e não a
+-- marcada como desatualizada em casos.trilha.velha)
+create or replace function zap_etapa_publica(k casos) returns text
+language plpgsql stable set search_path = public as $$
+declare v_fase text := k.fase; v_de text; v_etapa text := trim(coalesce(k.etapa, ''));
+begin
+  if v_fase = 'outro' then
+    v_de := coalesce(k.ronda->>'prazo_de', k.origem_lista, '');
+    v_fase := case when v_de like '%INSS%' then 'inss' when v_de like '%Conselho%' then 'conselho'
+                   when v_de like '%Judicial%' then 'judicial' when v_de like '%Peti%' then 'peticao_inicial'
+                   when v_de like '%Escrit%' then 'escritorio' end;
+  end if;
+  if v_etapa = '' or not exists (select 1 from zap_etapas_publicas() e
+       where e.etapa = v_etapa and (e.fase = v_fase or (v_fase = 'judicial' and e.fase = 'pagamento'))) then
+    return null;
+  end if;
+  if jsonb_typeof(k.trilha->'velha') = 'object' and k.trilha->'velha'->>'etapa' = v_etapa then return null; end if;
+  return v_etapa;
+end $$;
+
+-- o texto da situação, ou null quando não há o que dizer com segurança
+create or replace function zap_situacao(p_conversa uuid) returns text
+language plpgsql stable security definer set search_path = public as $$
+declare c zap_conversas; v_tel text; v_linhas text := ''; v_n integer := 0; k casos; e text;
+begin
+  select * into c from zap_conversas where id = p_conversa;
+  if not found or c.cliente_id is null then return null; end if;
+  select telefone into v_tel from clientes where id = c.cliente_id;
+  if fone_ddd8(c.telefone) is null or fone_ddd8(c.telefone) is distinct from fone_ddd8(v_tel) then
+    return null;
+  end if;
+  for k in select * from casos
+            where cliente_id = c.cliente_id and fase <> 'encerrado' and not coalesce(pre_caso, false)
+            order by criado_em loop
+    e := zap_etapa_publica(k);
+    if e is null then continue; end if;
+    v_n := v_n + 1;
+    exit when v_n > 3;
+    v_linhas := v_linhas || E'\n• ' || coalesce(nullif(trim(k.beneficio), ''), k.titulo) || ': *' || e || '*';
+  end loop;
+  if v_linhas = '' then return null; end if;
+  return 'A situação atual ' || case when v_n > 1 then 'dos seus processos' else 'do seu processo' end
+         || ' no escritório:' || v_linhas || E'\n\n'
+         || (select texto from zap_bot_passos where chave = 'situacao');
+end $$;
+
+-- a espera de cada passo; roda no zap_relogio (a ponte chama a cada 30 s)
+create or replace function zap_bot_esperas() returns integer
+language plpgsql security definer set search_path = public as $$
+declare r record; q zap_bot_passos; n integer := 0;
+begin
+  if coalesce((select valor from config_app where chave='zap_bot_ligado'),'sim') <> 'sim'
+     or coalesce((select valor from config_app where chave='zap_robo_novo'),'nao') <> 'sim' then return 0; end if;
+  for r in select c.id, p.espera_vai from zap_conversas c join zap_bot_passos p on p.chave = c.bot_passo
+            where c.bot_ativo and c.atendente_id is null and c.status <> 'resolvida'
+              and p.espera_min is not null and c.bot_desde < now() - make_interval(mins => p.espera_min)
+              and not exists (select 1 from zap_mensagens m where m.conversa_id = c.id
+                                and m.direcao = 'entrada' and m.criado_em > c.bot_desde) loop
+    if r.espera_vai is null then
+      update zap_conversas set bot_passo = null, bot_erros = 0 where id = r.id;
+      continue;
+    end if;
+    -- lembrete de madrugada é pior do que lembrete nenhum: espera o expediente
+    if not zap_no_horario() then continue; end if;
+    select * into q from zap_bot_passos where chave = r.espera_vai and ativo;
+    if not found then
+      update zap_conversas set bot_passo = null, bot_erros = 0 where id = r.id;
+      continue;
+    end if;
+    insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+    values (r.id, 'saida', true, q.texto, 'fila');
+    update zap_conversas set bot_passo = q.chave, bot_erros = 0, bot_desde = now() where id = r.id;
+    if q.entrega_setor is not null then perform zap_entregar(r.id, q.entrega_setor, q.chave); end if;
+    n := n + 1;
+  end loop;
+  return n;
+end $$;
+
+-- levar o robô a um passo: manda o texto do passo, devolve a conversa ao robô
+-- e deixa a nota de quem fez. Mesma permissão de transferir.
+create or replace function zap_bot_ir(p_conversa uuid, p_passo text) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_eu uuid := eu_colab(); v_dono uuid; q zap_bot_passos;
+begin
+  select atendente_id into v_dono from zap_conversas where id = p_conversa;
+  if not found then raise exception 'conversa inexistente'; end if;
+  if v_eu is not null and not zap_gestor() and v_dono is not null and v_dono <> v_eu then
+    raise exception 'Só quem atende a conversa (ou o gestor) pode devolver ao robô.';
+  end if;
+  select * into q from zap_bot_passos where chave = p_passo and ativo;
+  if not found then raise exception 'passo do robô inexistente ou desligado: %', p_passo; end if;
+  perform set_config('zap.via_funcao', '1', true);
+  update zap_conversas
+     set atendente_id = null, bot_ativo = true, bot_passo = q.chave, bot_erros = 0, bot_desde = now(),
+         status = case when status = 'resolvida' then 'aberta' else status end
+   where id = p_conversa;
+  perform zap_nota_sistema(p_conversa, v_eu, '↺ ' || zap_nome_colab(v_eu) || ' levou o robô ao passo "' || q.chave || '"');
+  insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+  values (p_conversa, 'saida', true, q.texto, 'fila');
+  if q.entrega_setor is not null then perform zap_entregar(p_conversa, q.entrega_setor, q.chave); end if;
+end $$;
+
+-- ══ A triagem do texto livre por IA (F259, o nó "decide" do Kapso) ════════
+-- O menu reconhece o número e as palavras de cada opção (quando). O que sobra,
+-- como "minha aposentadoria saiu?", ia para "não entendi". Com zap_robo_ia
+-- ligado, o zap_bot marca a mensagem (bot_ia = 'pedida:<passo>') e chama a
+-- Edge Function zap_triagem, que pede ao Claude só a ESCOLHA de uma opção do
+-- menu (nunca uma resposta ao cliente) e devolve por zap_triagem_aplicar.
+-- Sem resposta em 60 s (função fora do ar, sem chave), o relógio segue o
+-- caminho de antes. Nasce desligado.
+alter table zap_mensagens add column if not exists bot_ia text;
+insert into config_app (chave, valor) values ('zap_robo_ia','nao') on conflict (chave) do nothing;
+insert into config_app (chave, valor)
+values ('zap_triagem_url','https://bhdyatqaebpzufridwkh.supabase.co/functions/v1/zap_triagem')
+on conflict (chave) do nothing;
+
+-- a função pega a mensagem uma vez só (a chamada repetida não gasta IA)
+create or replace function zap_triagem_pegar(p_msg uuid) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare m zap_mensagens; p zap_bot_passos;
+begin
+  update zap_mensagens set bot_ia = 'lendo:' || substr(bot_ia, 8)
+   where id = p_msg and bot_ia like 'pedida:%' and criado_em > now() - interval '5 minutes'
+  returning * into m;
+  if not found then return null; end if;
+  select * into p from zap_bot_passos where chave = substr(m.bot_ia, 7);
+  if not found then return null; end if;
+  return jsonb_build_object('texto', m.texto, 'passo', p.chave, 'menu', p.texto, 'opcoes', p.opcoes);
+end $$;
+
+create or replace function zap_triagem_aplicar(p_msg uuid, p_vai text) returns void
+language plpgsql security definer set search_path = public as $$
+declare m zap_mensagens; c zap_conversas; v_passo text; v_vai text;
+begin
+  select * into m from zap_mensagens where id = p_msg and (bot_ia like 'pedida:%' or bot_ia like 'lendo:%')
+    for update;
+  if not found then return; end if;
+  v_passo := split_part(m.bot_ia, ':', 2);
+  -- só vale opção que o passo tem: a IA não inventa destino
+  select o->>'vai' into v_vai from zap_bot_passos p, jsonb_array_elements(p.opcoes) o
+   where p.chave = v_passo and o->>'vai' = p_vai limit 1;
+  update zap_mensagens set bot_ia = 'ia:' || coalesce(v_vai, 'nenhuma') where id = p_msg;
+  select * into c from zap_conversas where id = m.conversa_id;
+  -- a conversa andou enquanto a IA lia (gente assumiu, outra mensagem veio): não mexe
+  if not c.bot_ativo or c.atendente_id is not null or c.bot_passo is distinct from v_passo
+     or exists (select 1 from zap_mensagens x where x.conversa_id = m.conversa_id
+                  and x.direcao = 'entrada' and x.seq > m.seq) then
+    return;
+  end if;
+  if v_vai is not null then
+    perform zap_nota_sistema(m.conversa_id, null, 'Robô: a IA leu "' || left(coalesce(m.texto, ''), 80)
+            || '" como a opção "' || v_vai || '"');
+  end if;
+  perform zap_bot_seguir(m.conversa_id, v_vai);
+end $$;
+
+create or replace function zap_triagem_vencidas() returns integer
+language plpgsql security definer set search_path = public as $$
+declare r record; n integer := 0;
+begin
+  for r in select id from zap_mensagens
+            where (bot_ia like 'pedida:%' or bot_ia like 'lendo:%') and criado_em < now() - interval '60 seconds'
+            order by criado_em loop
+    perform zap_triagem_aplicar(r.id, null);
+    n := n + 1;
+  end loop;
+  return n;
+end $$;
+revoke execute on function zap_triagem_pegar(uuid) from public, anon, authenticated;
+revoke execute on function zap_triagem_aplicar(uuid, text) from public, anon, authenticated;
+revoke execute on function zap_triagem_vencidas() from public, anon, authenticated;
+grant execute on function zap_triagem_pegar(uuid) to service_role;
+grant execute on function zap_triagem_aplicar(uuid, text) to service_role;
 
 -- ══ Da conversa para o processo ═══════════════════════════════════════════
 -- A conversa é do CLIENTE; o andamento é do PROCESSO. São coisas diferentes,
@@ -1857,6 +2160,14 @@ create index if not exists atarefas_minhas on andamento_tarefas (colaborador_id,
   where concluida_em is null;
 create index if not exists atarefas_caso on andamento_tarefas (caso_id, lembrar_em)
   where concluida_em is null;
+-- hora opcional do aviso na data (schema_funcoes_todo.sql)
+alter table andamento_tarefas add column if not exists lembrar_hora time;
+-- etapas da tarefa (schema_funcoes_todo.sql)
+alter table andamento_tarefas add column if not exists etapas jsonb not null default '[]'::jsonb;
+-- tarefa em andamento (schema_funcoes_todo.sql)
+alter table andamento_tarefas add column if not exists iniciada_em timestamptz;
+-- data de início do prazo fatal (schema_funcoes_todo.sql)
+alter table casos add column if not exists prazo_inicio date;
 
 -- Tarefa para alguém cai na caixa de menções DELE — a caixa que já existe,
 -- não uma segunda. Para si mesmo não avisa: ninguém precisa ser notificado
@@ -2375,6 +2686,8 @@ begin
     end if;
     update zap_retornos set avisado_em = now() where id = r.id;
   end loop;
+  perform zap_bot_esperas();
+  perform zap_triagem_vencidas();
   return n;
 end $$;
 
@@ -2437,6 +2750,10 @@ create or replace function eu_colab() returns uuid
 language sql stable security definer set search_path = public as $$
   select id from colaboradores where auth_id = auth.uid() limit 1;
 $$;
+-- autor e data da atribuição (schema_funcoes_todo.sql)
+alter table atribuicoes add column if not exists atribuido_por uuid
+  references colaboradores(id) on delete set null default eu_colab();
+alter table atribuicoes add column if not exists atribuido_em timestamptz default now();
 
 -- gestor do WhatsApp: o admin e o assistente (o conector do Claude age em
 -- nome do escritório, como o gestor)
@@ -2471,19 +2788,34 @@ drop trigger if exists zap_guarda_conv on zap_conversas;
 create trigger zap_guarda_conv before update on zap_conversas
   for each row execute function zap_guarda_conversa();
 
--- responder: só o dono, o gestor, ou quem pega a pendente (o gatilho
--- zap_humano_assumiu já faz dele o dono). Nota interna, todo mundo.
+-- ATENDIMENTO COMPARTILHADO NO WHATSAPP (decisão do Paulo, 24.10.2026): quem não é o atendente também
+-- responde ao cliente; a conversa continua com o atendente, que recebe uma menção dizendo quem respondeu.
+-- O cliente vê quem escreveu pela assinatura (F188). Substitui a trava de "só o dono ou o gestor responde".
 create or replace function zap_guarda_mensagem() returns trigger
 language plpgsql as $$
-declare v_eu uuid := eu_colab(); v_dono uuid;
 begin
-  if new.direcao <> 'saida' or v_eu is null or zap_gestor() then return new; end if;
-  select atendente_id into v_dono from zap_conversas where id = new.conversa_id;
-  if v_dono is not null and v_dono <> v_eu then
-    raise exception 'Esta conversa está com outro atendente. Peça ao gestor, ou escreva uma nota interna com @nome.';
-  end if;
+  return new;   -- responder é de todos; quem atende continua sendo o dono (zap_guarda_conversa segue valendo)
+end $$;
+
+create or replace function zap_avisa_resposta_compartilhada() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare v_dono uuid; v_nome text;
+begin
+  if new.direcao <> 'saida' or new.autor_id is null then return new; end if;
+  select atendente_id, coalesce(nullif(trim(nome_perfil),''), telefone) into v_dono, v_nome
+    from zap_conversas where id = new.conversa_id;
+  if v_dono is null or v_dono = new.autor_id then return new; end if;
+  -- uma menção por pessoa e conversa enquanto o atendente não a lê: dez respostas não viram dez avisos
+  if exists (select 1 from mencoes where para_id = v_dono and de_id = new.autor_id
+               and conversa_id = new.conversa_id and lida_em is null) then return new; end if;
+  insert into mencoes (de_id, para_id, conversa_id, texto)
+  values (new.autor_id, v_dono, new.conversa_id,
+          '💬 ' || zap_nome_colab(new.autor_id) || ' respondeu a ' || coalesce(v_nome, 'o cliente') || ' na conversa que está com você');
   return new;
 end $$;
+drop trigger if exists zap_avisa_resposta on zap_mensagens;
+create trigger zap_avisa_resposta after insert on zap_mensagens
+  for each row execute function zap_avisa_resposta_compartilhada();
 drop trigger if exists zap_guarda_msg on zap_mensagens;
 create trigger zap_guarda_msg before insert on zap_mensagens
   for each row execute function zap_guarda_mensagem();
@@ -2867,3 +3199,1509 @@ end $$;
 drop trigger if exists zap_vincular_cliente on clientes;
 create trigger zap_vincular_cliente after insert or update of telefone, telefones on clientes
   for each row execute function zap_vincular_cliente();
+
+-- ══ A IA no WhatsApp, ondas 2 a 5 (F272): cópia de migracoes/f272_ia_whatsapp.sql ══
+-- ══ A IA no WhatsApp, ondas 2 a 5 (F272) ══════════════════════════════════
+-- Planejamento: Claude Doc "IA no WhatsApp do escritório: planejamento".
+-- A onda 1 (triagem do texto livre e situação do processo) é a F258/F259.
+-- Tudo nasce DESLIGADO, cada onda numa caixa das Configurações do WhatsApp:
+--   zap_filtro_auto  onda 2  mensagem automática de outra empresa sai da fila
+--                            (a triagem do áudio transcrito segue a caixa da IA, zap_robo_ia)
+--   zap_ia_equipe    onda 3  resumo e rascunho no CRM (Edge Function zap_assistente)
+--   zap_robo_agenda  onda 4  o robô oferece as vagas da agenda e marca (Edge Function zap_agenda)
+--   zap_robo_noturno onda 5  fora do expediente, o robô colhe o relato do caso novo
+-- A juntada do documento ao caso (onda 4) é botão do CRM e segue zap_ia_equipe.
+insert into config_app (chave, valor) values
+  ('zap_filtro_auto','nao'), ('zap_ia_equipe','nao'), ('zap_robo_agenda','nao'), ('zap_robo_noturno','nao'),
+  ('zap_agenda_url','https://bhdyatqaebpzufridwkh.supabase.co/functions/v1/zap_agenda'), ('zap_agenda_profs','marcos,amanda')
+  on conflict (chave) do nothing;
+
+alter table zap_conversas add column if not exists automatica boolean not null default false;
+-- o que o robô guarda no meio de um fluxo (vagas oferecidas, nome, relato) e o
+-- pedido de uso único que a Edge Function zap_agenda apresenta para ler isso
+alter table zap_conversas add column if not exists bot_dados jsonb;
+
+-- ── Onda 2 · a mensagem automática de outra empresa ───────────────────────
+-- Robô de banco, de concessionária, de loja: ele responde ao nosso menu com o
+-- menu dele, e os dois conversam sozinhos (houve conversa com 223 mensagens).
+-- Só vale para conversa SEM cliente na ficha: cliente nunca é filtrado.
+create or replace function zap_eh_automatica(p text) returns boolean
+language sql immutable as $$
+  select lower(translate(coalesce(p, ''),
+    'áàâãäéèêëíìîïóòôõöúùûüçÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇ', 'aaaaaeeeeiiiiooooouuuucAAAAAEEEEIIIIOOOOOUUUUC'))
+    ~ ('(este canal (e|eh) (utilizado|usado) exclusivamente|esta e uma mensagem automatica|mensagem automatica'
+       '|nao responda (a )?esta mensagem|utilize as opcoes|digite (o numero da opcao|uma das opcoes|a opcao)'
+       '|opcao invalida|selecione uma das opcoes|escolha uma das opcoes abaixo|sou (o|a) assistente virtual'
+       '|(nosso|seu) atendimento virtual|numero nao recebe mensagens|este numero nao (e|eh) monitorado)')
+$$;
+
+create or replace function zap_filtro() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare c zap_conversas;
+begin
+  if new.direcao <> 'entrada' then return new; end if;
+  select * into c from zap_conversas where id = new.conversa_id;
+  if c.cliente_id is not null then return new; end if;
+  if not c.automatica then
+    if coalesce((select valor from config_app where chave='zap_filtro_auto'),'nao') <> 'sim'
+       or not zap_eh_automatica(new.texto) then return new; end if;
+    perform zap_nota_sistema(c.id, null,
+      'Mensagem automática de outra empresa: a conversa saiu da fila e o robô não responde. '
+      || 'Para desfazer, use "Não é automática" no topo da conversa.');
+  end if;
+  -- a conversa marcada fica fora da fila, sem não lidas e sem alerta
+  perform set_config('zap.via_funcao', '1', true);
+  update zap_conversas set automatica = true, status = 'resolvida', nao_lidas = 0, alerta_nivel = 0
+   where id = c.id;
+  return new;
+end $$;
+-- depois de zap_toque_ins (que reabre e soma não lidas) e antes de zap_zbot_ins
+drop trigger if exists zap_v_filtro_ins on zap_mensagens;
+create trigger zap_v_filtro_ins after insert on zap_mensagens
+  for each row execute function zap_filtro();
+
+-- ── O menu com as opções das ondas 4 e 5 ──────────────────────────────────
+-- A opção 6 só aparece no texto do menu com a agenda ligada; desligada, quem
+-- escreve "6" ou "quero agendar" vai para uma pessoa, como antes.
+do $$ begin
+  if not exists (select 1 from zap_bot_passos where chave='agendar') then
+    insert into zap_bot_passos (chave, texto, opcoes, entrega_setor, ordem) values
+    ('agendar', E'Vou consultar os horários livres do escritório. Um momento, por favor.', '[]', null, 20),
+    ('agendar_nome', E'Para marcar o horário, escreva o seu *nome completo*, por favor.',
+     '[{"tecla":"","quando":"^","vai":"agendar"}]', null, 21),
+    ('agendar_escolha', E'Responda com o número do horário escolhido, ou *0* para falar com alguém do escritório.',
+     '[]', null, 22),
+    ('novo_relato', E'O escritório está fora do horário de atendimento, mas já posso adiantar o seu caso.\n\n'
+       || E'Conte em poucas palavras o que aconteceu e qual benefício procura. Pode escrever ou mandar um áudio.',
+     '[{"tecla":"","quando":"^","vai":"novo_relato_fim"}]', null, 23);
+    update zap_bot_passos set espera_min = 30, espera_vai = null where chave = 'agendar_nome';
+    update zap_bot_passos set espera_min = 120, espera_vai = null where chave = 'novo_relato';
+    insert into zap_bot_passos (chave, texto, opcoes, entrega_setor, ordem) values
+    ('novo_relato_fim', E'Obrigado! Anotei o seu relato. Alguém do escritório responde no próximo dia útil.',
+     '[]', 'triagem', 24);
+    update zap_bot_passos set opcoes = opcoes || '[{"vai":"agendar","tecla":"6","quando":"agendar|agendamento|marcar (um )?horario|marcar atendimento|horario livre"}]'::jsonb
+     where chave in ('inicio','lembrete')
+       and not opcoes @> '[{"vai":"agendar"}]'::jsonb;
+  end if;
+end $$;
+
+create or replace function zap_menu_texto(p_chave text) returns text
+language sql stable security definer set search_path = public as $$
+  select p.texto || case when p.chave in ('inicio','lembrete')
+                          and coalesce((select valor from config_app where chave='zap_robo_agenda'),'nao') = 'sim'
+                          and coalesce((select valor from config_app where chave='zap_agenda_url'),'') <> ''
+                     then E'\n*6* — Agendar um horário no escritório' else '' end
+    from zap_bot_passos p where p.chave = p_chave and p.ativo
+$$;
+
+-- ── O robô (zap_bot) com as ondas 2, 4 e 5 ────────────────────────────────
+create or replace function public.zap_bot() returns trigger
+language plpgsql security definer set search_path to 'public' as $function$
+declare
+  c zap_conversas; p zap_bot_passos; ultimo timestamptz; pausa integer;
+begin
+  if new.direcao <> 'entrada' then return new; end if;
+  -- interruptor geral: dia de escritório cheio, ou robô dando problema, a
+  -- equipe desliga tudo numa linha sem precisar de programador
+  if coalesce((select valor from config_app where chave='zap_bot_ligado'),'sim') <> 'sim'
+    then return new; end if;
+  select * into c from zap_conversas where id = new.conversa_id;
+  -- humano no comando: o bot cala a boca. Nada é pior que robô falando por
+  -- cima do advogado. Robô de outra empresa (onda 2) também não recebe menu.
+  if c.atendente_id is not null or not c.bot_ativo or c.automatica then return new; end if;
+
+  -- cliente que manda três mensagens seguidas não merece três menus; no meio
+  -- de um fluxo (nome, relato, escolha do horário) a resposta é esperada
+  pausa := coalesce((select valor from config_app where chave='zap_pausa_bot'), '15')::int;
+  select max(criado_em) into ultimo from zap_mensagens
+   where conversa_id = new.conversa_id and por_bot;
+  if ultimo is not null and pausa > 0 and coalesce(c.bot_passo,'') not in ('agendar_nome','agendar_escolha','novo_relato')
+     and ultimo > now() - make_interval(secs => pausa) then return new; end if;
+
+  if c.bot_passo is null then                       -- primeiro contato
+    if not zap_no_horario() then
+      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+      select new.conversa_id, 'saida', true, texto, 'fila'
+        from zap_bot_passos where chave='fora_horario' and ativo;
+    end if;
+    select * into p from zap_bot_passos where chave='inicio' and ativo;
+    if not found then return new; end if;
+    insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+    values (new.conversa_id, 'saida', true, zap_menu_texto('inicio'), 'fila');
+    update zap_conversas set bot_passo='inicio' where id=new.conversa_id;
+    return new;
+  end if;
+
+  select * into p from zap_bot_passos where chave=c.bot_passo and ativo;
+  if not found then return new; end if;
+
+  -- áudio ainda sem transcrição num passo de menu (onda 2): o robô espera o
+  -- texto do transcrever.py em vez de dizer que não entendeu; sem texto em
+  -- 10 minutos, o relógio segue o caminho de antes (zap_triagem_vencidas)
+  if new.tipo = 'audio' and trim(coalesce(new.texto,'')) = '' and jsonb_array_length(p.opcoes) > 1
+     and coalesce((select valor from config_app where chave='zap_robo_ia'),'nao') = 'sim' then
+    update zap_mensagens set bot_ia = 'audio:' || c.bot_passo where id = new.id;
+    return new;
+  end if;
+
+  perform zap_bot_ler(new.id);
+  return new;
+end $function$;
+
+-- o miolo do robô: ler a mensagem no passo em que a conversa está e decidir.
+-- Separado do gatilho para valer também quando a transcrição do áudio chega.
+create or replace function zap_bot_ler(p_msg uuid) returns void
+language plpgsql security definer set search_path = public as $$
+declare
+  m zap_mensagens; c zap_conversas; p zap_bot_passos; op jsonb; achou text; txt text; n integer;
+  v_vagas jsonb;
+begin
+  select * into m from zap_mensagens where id = p_msg;
+  select * into c from zap_conversas where id = m.conversa_id;
+  select * into p from zap_bot_passos where chave=c.bot_passo and ativo;
+  if not found then return; end if;
+  -- esperando a agenda responder: o que o cliente escrever agora não é escolha
+  if c.bot_passo = 'agendar' or coalesce(c.bot_dados ? 'pedido_em', false) then return; end if;
+
+  txt := lower(translate(coalesce(m.texto,''),
+    'áàâãäéèêëíìîïóòôõöúùûüçÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇ',
+    'aaaaaeeeeiiiiooooouuuucAAAAAEEEEIIIIOOOOOUUUUC'));
+
+  -- escolha do horário oferecido (onda 4): o número da vaga, ou 0
+  if c.bot_passo = 'agendar_escolha' then
+    v_vagas := coalesce(c.bot_dados->'vagas', '[]'::jsonb);
+    n := case when trim(txt) ~ '^\*?\d{1,2}\*?[.)]?$' then regexp_replace(txt, '\D', '', 'g')::int end;
+    if n = 0 then perform zap_bot_seguir(c.id, 'humano'); return; end if;
+    if n between 1 and jsonb_array_length(v_vagas) then
+      perform zap_agenda_chamar(c.id, 'marcar', jsonb_build_object('escolha', n));
+      return;
+    end if;
+    perform zap_bot_seguir(c.id, null);
+    return;
+  end if;
+
+  -- nome completo para o primeiro atendimento (onda 4)
+  if c.bot_passo = 'agendar_nome' then
+    if array_length(regexp_split_to_array(trim(regexp_replace(coalesce(m.texto,''), '[^[:alpha:] ]', '', 'g')), '\s+'), 1) >= 2
+       and length(trim(m.texto)) between 5 and 80 then
+      update zap_conversas set bot_dados = coalesce(bot_dados,'{}'::jsonb) || jsonb_build_object('nome', initcap(trim(m.texto)))
+       where id = c.id;
+      perform zap_agenda_chamar(c.id, 'oferecer', '{}'::jsonb);
+    else
+      perform zap_bot_seguir(c.id, null);
+    end if;
+    return;
+  end if;
+
+  -- relato do caso novo fora do expediente (onda 5): qualquer resposta vale
+  if c.bot_passo = 'novo_relato' then
+    if m.tipo = 'audio' and trim(coalesce(m.texto,'')) = '' then
+      update zap_mensagens set bot_ia = 'audio:novo_relato' where id = m.id;
+      return;
+    end if;
+    perform zap_nota_sistema(c.id, null, 'Relato do caso novo, colhido pelo robô fora do expediente: '
+            || coalesce(nullif(trim(m.texto),''), '[' || m.tipo || ']'));
+    update zap_conversas set bot_dados = coalesce(bot_dados,'{}'::jsonb) || jsonb_build_object('relato', left(m.texto, 1000))
+     where id = c.id;
+    if zap_agenda_ligada() then
+      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+      values (c.id, 'saida', true, 'Obrigado! Anotei o seu relato. Se quiser, já posso marcar o seu primeiro atendimento no escritório.', 'fila');
+      perform zap_bot_seguir(c.id, 'agendar');
+    else
+      perform zap_bot_seguir(c.id, 'novo_relato_fim');
+    end if;
+    return;
+  end if;
+
+  for op in select * from jsonb_array_elements(p.opcoes) loop
+    if trim(txt) = lower(op->>'tecla')
+       or (coalesce(op->>'quando','') <> '' and txt ~ (op->>'quando')) then
+      achou := op->>'vai'; exit;
+    end if;
+  end loop;
+
+  -- texto livre que nenhuma opção reconheceu: a IA lê e escolhe a opção do
+  -- menu (F259). A resposta volta por zap_triagem_aplicar; se não voltar em
+  -- 60 s, o zap_relogio segue o caminho de antes (zap_triagem_vencidas).
+  if achou is null and trim(txt) <> '' and jsonb_array_length(p.opcoes) > 1
+     and coalesce((select valor from config_app where chave='zap_robo_ia'),'nao') = 'sim'
+     and coalesce((select valor from config_app where chave='zap_triagem_url'),'') <> '' then
+    update zap_mensagens set bot_ia = 'pedida:' || c.bot_passo where id = m.id;
+    begin
+      perform net.http_post(
+        url := (select valor from config_app where chave='zap_triagem_url'),
+        body := jsonb_build_object('mensagem_id', m.id),
+        headers := '{"Content-Type":"application/json"}'::jsonb,
+        timeout_milliseconds := 20000);
+    exception when others then null;   -- sem pg_net, a espera de 60 s resolve
+    end;
+    return;
+  end if;
+
+  perform zap_bot_seguir(c.id, achou);
+end $$;
+
+-- a transcrição do áudio chegou (transcrever.py grava em texto): o robô lê
+create or replace function zap_audio_transcrito() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare c zap_conversas; v_passo text := substr(new.bot_ia, 7);
+begin
+  if new.bot_ia is null or new.bot_ia not like 'audio:%' or v_passo = 'vencido'
+     or trim(coalesce(new.texto,'')) = '' or new.texto like '[áudio%' then return new; end if;
+  update zap_mensagens set bot_ia = null where id = new.id;
+  select * into c from zap_conversas where id = new.conversa_id;
+  -- a conversa andou enquanto o áudio era transcrito: não mexe
+  if not c.bot_ativo or c.atendente_id is not null or c.bot_passo is distinct from v_passo
+     or exists (select 1 from zap_mensagens x where x.conversa_id = new.conversa_id
+                  and x.direcao = 'entrada' and x.seq > new.seq) then
+    return new;
+  end if;
+  perform zap_bot_ler(new.id);
+  return new;
+end $$;
+drop trigger if exists zap_audio_transcrito on zap_mensagens;
+create trigger zap_audio_transcrito after update of texto on zap_mensagens
+  for each row when (new.bot_ia like 'audio:%') execute function zap_audio_transcrito();
+
+-- a continuação do robô, com a agenda (onda 4) e o relato noturno (onda 5)
+create or replace function public.zap_bot_seguir(p_conversa uuid, p_vai text) returns void
+language plpgsql security definer set search_path to 'public' as $function$
+declare c zap_conversas; p zap_bot_passos; achou text := p_vai; txt text;
+begin
+  select * into c from zap_conversas where id = p_conversa;
+  select * into p from zap_bot_passos where chave=c.bot_passo and ativo;
+  if not found then return; end if;
+
+  if achou is null then
+    -- ninguém fica preso no menu: na segunda vez sem entender, vai para gente
+    update zap_conversas set bot_erros = bot_erros + 1 where id=p_conversa;
+    if c.bot_erros + 1 >= 2 then achou := 'nao_entendi';
+    else
+      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+      values (p_conversa, 'saida', true,
+              case when c.bot_passo in ('agendar_nome','agendar_escolha') then 'Não entendi 🤔' || E'\n\n' || p.texto
+                   else 'Não entendi 🤔 — responda com o número da opção, por favor.' || E'\n\n'
+                        || coalesce(zap_menu_texto(c.bot_passo), p.texto) end,
+              'fila');
+      return;
+    end if;
+  end if;
+
+  -- quem pergunta do processo recebe a etapa pública na hora (a mesma do
+  -- portal) e só passa a uma pessoa se quiser; sem etapa, segue para a equipe
+  if achou = 'processo' and c.bot_passo <> 'situacao'
+     and coalesce((select valor from config_app where chave='zap_robo_novo'),'nao') = 'sim' then
+    txt := zap_situacao(p_conversa);
+    if txt is not null and exists (select 1 from zap_bot_passos where chave='situacao' and ativo) then
+      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+      values (p_conversa, 'saida', true, txt, 'fila');
+      update zap_conversas set bot_passo='situacao', bot_erros=0 where id=p_conversa;
+      return;
+    end if;
+  end if;
+
+  -- caso novo fora do expediente (onda 5): o robô colhe o relato antes
+  if achou = 'novo' and not zap_no_horario()
+     and coalesce((select valor from config_app where chave='zap_robo_noturno'),'nao') = 'sim'
+     and exists (select 1 from zap_bot_passos where chave='novo_relato' and ativo) then
+    achou := 'novo_relato';
+  end if;
+
+  -- agenda (onda 4): desligada, quem pede horário vai para uma pessoa
+  if achou = 'agendar' then
+    if not zap_agenda_ligada() then achou := 'humano';
+    elsif zap_cliente_do_numero(p_conversa) is null and coalesce(c.bot_dados->>'nome','') = '' then
+      achou := 'agendar_nome';
+    else
+      perform zap_agenda_chamar(p_conversa, 'oferecer', '{}'::jsonb);
+      return;
+    end if;
+  end if;
+
+  select * into p from zap_bot_passos where chave=achou and ativo;
+  if not found then return; end if;
+  insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+  values (p_conversa, 'saida', true, coalesce(zap_menu_texto(achou), p.texto), 'fila');
+  update zap_conversas set bot_passo=achou, bot_erros=0 where id=p_conversa;
+  if p.entrega_setor is not null then
+    perform zap_entregar(p_conversa, p.entrega_setor, p.chave);
+  end if;
+end $function$;
+
+-- o áudio sem transcrição em 10 minutos segue como texto não entendido
+create or replace function public.zap_triagem_vencidas() returns integer
+language plpgsql security definer set search_path to 'public' as $function$
+declare r record; n integer := 0; c zap_conversas;
+begin
+  for r in select id from zap_mensagens
+            where (bot_ia like 'pedida:%' or bot_ia like 'lendo:%') and criado_em < now() - interval '60 seconds'
+            order by criado_em loop
+    perform zap_triagem_aplicar(r.id, null);
+    n := n + 1;
+  end loop;
+  for r in select id, conversa_id, seq, substr(bot_ia, 7) passo from zap_mensagens
+            where bot_ia like 'audio:%' and bot_ia <> 'audio:vencido' and criado_em < now() - interval '10 minutes'
+            order by criado_em loop
+    update zap_mensagens set bot_ia = 'audio:vencido' where id = r.id;
+    select * into c from zap_conversas where id = r.conversa_id;
+    if c.bot_ativo and c.atendente_id is null and c.bot_passo = r.passo
+       and not exists (select 1 from zap_mensagens x where x.conversa_id = r.conversa_id
+                         and x.direcao = 'entrada' and x.seq > r.seq) then
+      if r.passo = 'novo_relato' then
+        perform zap_nota_sistema(c.id, null, 'Relato do caso novo: o cliente mandou áudio, ainda sem transcrição.');
+        perform zap_bot_seguir(c.id, 'novo_relato_fim');
+      else
+        perform zap_bot_seguir(c.id, null);
+      end if;
+    end if;
+    n := n + 1;
+  end loop;
+  -- a agenda que não respondeu em 2 minutos: a conversa vai para uma pessoa
+  for r in select id from zap_conversas
+            where bot_dados ? 'pedido_em' and (bot_dados->>'pedido_em')::timestamptz < now() - interval '2 minutes'
+              and bot_ativo and atendente_id is null loop
+    perform zap_agenda_falhou(r.id, null, 'a agenda não respondeu');
+    n := n + 1;
+  end loop;
+  return n;
+end $function$;
+
+-- o lembrete do menu (F258) também mostra a opção 6 quando a agenda está ligada
+CREATE OR REPLACE FUNCTION public.zap_bot_esperas()
+ RETURNS integer
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare r record; q zap_bot_passos; n integer := 0;
+begin
+  if coalesce((select valor from config_app where chave='zap_bot_ligado'),'sim') <> 'sim'
+     or coalesce((select valor from config_app where chave='zap_robo_novo'),'nao') <> 'sim' then return 0; end if;
+  for r in select c.id, p.espera_vai from zap_conversas c join zap_bot_passos p on p.chave = c.bot_passo
+            where c.bot_ativo and c.atendente_id is null and c.status <> 'resolvida'
+              and p.espera_min is not null and c.bot_desde < now() - make_interval(mins => p.espera_min)
+              and not exists (select 1 from zap_mensagens m where m.conversa_id = c.id
+                                and m.direcao = 'entrada' and m.criado_em > c.bot_desde) loop
+    if r.espera_vai is null then
+      update zap_conversas set bot_passo = null, bot_erros = 0 where id = r.id;
+      continue;
+    end if;
+    -- lembrete de madrugada é pior do que lembrete nenhum: espera o expediente
+    if not zap_no_horario() then continue; end if;
+    select * into q from zap_bot_passos where chave = r.espera_vai and ativo;
+    if not found then
+      update zap_conversas set bot_passo = null, bot_erros = 0 where id = r.id;
+      continue;
+    end if;
+    insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+    values (r.id, 'saida', true, coalesce(zap_menu_texto(q.chave), q.texto), 'fila');
+    update zap_conversas set bot_passo = q.chave, bot_erros = 0, bot_desde = now() where id = r.id;
+    if q.entrega_setor is not null then perform zap_entregar(r.id, q.entrega_setor, q.chave); end if;
+    n := n + 1;
+  end loop;
+  return n;
+end $function$;
+
+-- ── Onda 4 · a agenda pelo robô ───────────────────────────────────────────
+create or replace function zap_agenda_ligada() returns boolean
+language sql stable security definer set search_path = public as $$
+  select coalesce((select valor from config_app where chave='zap_robo_agenda'),'nao') = 'sim'
+     and coalesce((select valor from config_app where chave='zap_agenda_url'),'') <> ''
+$$;
+
+-- o cliente da ficha só quando quem escreve é o telefone principal dela (a
+-- mesma regra da situação do processo); a filha que escreve é primeiro atendimento
+create or replace function zap_cliente_do_numero(p_conversa uuid) returns uuid
+language sql stable security definer set search_path = public as $$
+  select k.id from zap_conversas c join clientes k on k.id = c.cliente_id
+   where c.id = p_conversa and fone_ddd8(c.telefone) is not null and fone_ddd8(c.telefone) = fone_ddd8(k.telefone)
+$$;
+
+-- pede à Edge Function zap_agenda; o pedido de uso único vai em bot_dados
+create or replace function zap_agenda_chamar(p_conversa uuid, p_acao text, p_extra jsonb) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_pedido text := gen_random_uuid()::text;
+begin
+  perform set_config('zap.via_funcao', '1', true);
+  update zap_conversas
+     set bot_passo = case when p_acao = 'oferecer' then 'agendar' else bot_passo end, bot_erros = 0,
+         bot_dados = coalesce(bot_dados,'{}'::jsonb) || p_extra
+                     || jsonb_build_object('pedido', v_pedido, 'pedido_em', now(), 'acao', p_acao)
+   where id = p_conversa;
+  if p_acao = 'oferecer' then
+    insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+    select p_conversa, 'saida', true, texto, 'fila' from zap_bot_passos where chave = 'agendar' and ativo;
+  end if;
+  begin
+    perform net.http_post(
+      url := (select valor from config_app where chave='zap_agenda_url'),
+      body := jsonb_build_object('conversa_id', p_conversa, 'pedido', v_pedido),
+      headers := '{"Content-Type":"application/json"}'::jsonb,
+      timeout_milliseconds := 30000);
+  exception when others then null;    -- o relógio dá a conversa a uma pessoa em 2 minutos
+  end;
+end $$;
+
+-- a Edge Function lê o pedido UMA vez: devolve o que ela precisa e apaga o
+-- pedido; pedido_em fica até a resposta, para o relógio socorrer a conversa
+create or replace function zap_agenda_pegar(p_conversa uuid, p_pedido text) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare c zap_conversas; v_cli uuid; v_nome text; v_out jsonb;
+begin
+  select * into c from zap_conversas where id = p_conversa for update;
+  if not found or c.bot_dados->>'pedido' is distinct from p_pedido
+     or (c.bot_dados->>'pedido_em')::timestamptz < now() - interval '2 minutes' then return null; end if;
+  v_cli := zap_cliente_do_numero(p_conversa);
+  if v_cli is not null then select nome into v_nome from clientes where id = v_cli; end if;
+  v_out := jsonb_build_object('acao', c.bot_dados->>'acao', 'telefone', c.telefone,
+             'cliente_id', v_cli, 'nome', coalesce(v_nome, c.bot_dados->>'nome'),
+             'relato', c.bot_dados->>'relato', 'vagas', c.bot_dados->'vagas', 'tipo', c.bot_dados->>'tipo',
+             'escolha', c.bot_dados->'escolha',
+             'profissionais', (select valor from config_app where chave='zap_agenda_profs'));
+  perform set_config('zap.via_funcao', '1', true);
+  update zap_conversas set bot_dados = bot_dados - 'pedido' where id = p_conversa;
+  return v_out;
+end $$;
+
+-- as vagas achadas viram a mensagem numerada; sem vaga, a conversa vai para gente
+create or replace function zap_agenda_oferecer(p_conversa uuid, p_tipo text, p_vagas jsonb) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_txt text := ''; v jsonb; i integer := 0; c zap_conversas;
+begin
+  select * into c from zap_conversas where id = p_conversa;
+  -- resposta atrasada (o relógio já entregou a conversa) não volta a oferecer
+  if not found or c.atendente_id is not null or not coalesce(c.bot_dados ? 'pedido_em', false) then return; end if;
+  if jsonb_array_length(coalesce(p_vagas,'[]'::jsonb)) = 0 then
+    perform zap_agenda_falhou(p_conversa, null, 'nenhuma vaga livre na agenda');
+    return;
+  end if;
+  for v in select * from jsonb_array_elements(p_vagas) loop
+    i := i + 1;
+    v_txt := v_txt || E'\n*' || i || '* — ' || (v->>'rotulo');
+  end loop;
+  perform set_config('zap.via_funcao', '1', true);
+  update zap_conversas set bot_passo = 'agendar_escolha', bot_erros = 0,
+         bot_dados = (coalesce(bot_dados,'{}'::jsonb) - 'pedido_em' - 'acao')
+                     || jsonb_build_object('vagas', p_vagas, 'tipo', p_tipo)
+   where id = p_conversa;
+  insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+  values (p_conversa, 'saida', true, 'Estes são os próximos horários livres:' || v_txt || E'\n*0* — nenhum destes, falar com alguém'
+          || E'\n\nResponda com o número do horário.', 'fila');
+end $$;
+
+-- marcado: confirma ao cliente com as orientações e deixa a nota à equipe
+create or replace function zap_agenda_marcado(p_conversa uuid, p_rotulo text) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+  values (p_conversa, 'saida', true,
+    'Pronto! ✅ Seu atendimento está marcado para ' || p_rotulo || '.' || E'\n\n'
+    || 'Traga um documento com foto e a senha do Meu INSS (gov.br) atualizada. O atendimento é individual: '
+    || 'se outra pessoa da família também precisa, peça um horário para ela.' || E'\n\n'
+    || 'Se precisar remarcar, é só escrever aqui.', 'fila');
+  perform zap_nota_sistema(p_conversa, null, '📅 O robô marcou na agenda: ' || p_rotulo);
+  perform set_config('zap.via_funcao', '1', true);
+  update zap_conversas set bot_passo = null, bot_erros = 0,
+         bot_dados = bot_dados - 'vagas' - 'escolha' - 'pedido' - 'pedido_em' - 'acao'
+   where id = p_conversa;
+end $$;
+
+-- qualquer falha da agenda: o cliente é avisado e a conversa vai para gente
+create or replace function zap_agenda_falhou(p_conversa uuid, p_pedido text, p_motivo text) returns void
+language plpgsql security definer set search_path = public as $$
+declare c zap_conversas;
+begin
+  select * into c from zap_conversas where id = p_conversa;
+  -- só age com um pedido em curso: a resposta atrasada não entrega duas vezes
+  if not found or c.atendente_id is not null or not coalesce(c.bot_dados ? 'pedido_em', false) then return; end if;
+  perform set_config('zap.via_funcao', '1', true);
+  update zap_conversas set bot_dados = bot_dados - 'pedido' - 'pedido_em' - 'acao' where id = p_conversa;
+  perform zap_nota_sistema(p_conversa, null, 'Robô: não consegui marcar pela agenda (' || coalesce(p_motivo,'erro') || ').');
+  insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+  values (p_conversa, 'saida', true, 'Não consegui ver os horários agora. Já chamei alguém do escritório para marcar com você.', 'fila');
+  update zap_conversas set bot_passo = 'humano' where id = p_conversa;
+  perform zap_entregar(p_conversa, 'triagem', 'marcar horário na agenda');
+end $$;
+
+-- as portas da Edge Function só abrem para service_role
+revoke all on function zap_agenda_pegar(uuid, text) from public, anon, authenticated;
+revoke all on function zap_agenda_oferecer(uuid, text, jsonb) from public, anon, authenticated;
+revoke all on function zap_agenda_marcado(uuid, text) from public, anon, authenticated;
+revoke all on function zap_agenda_falhou(uuid, text, text) from public, anon, authenticated;
+revoke all on function zap_agenda_chamar(uuid, text, jsonb) from public, anon, authenticated;
+revoke all on function zap_bot_ler(uuid) from public, anon, authenticated;
+grant execute on function zap_agenda_pegar(uuid, text), zap_agenda_oferecer(uuid, text, jsonb),
+  zap_agenda_marcado(uuid, text), zap_agenda_falhou(uuid, text, text) to service_role;
+
+-- F273 · o robô volta depois do encerramento (decisão do Paulo de 25.10.2026)
+-- Encerrar só marcava a conversa como resolvida, e o atendente e o robô calado
+-- ficavam: o cliente que voltava a escrever caía no mesmo atendente e nunca
+-- mais via o menu. Agora a conversa reaberta pelo cliente recomeça como no
+-- primeiro contato: sem atendente, sem setor e com o robô no início. Quem
+-- escreve até 1 hora depois do encerramento (config_app.zap_volta_min) ainda
+-- é a mesma conversa e fica com o atendente. A conversa de robô de outra
+-- empresa (F272, onda 2) continua calada.
+
+insert into config_app (chave, valor) values ('zap_volta_min', '60') on conflict (chave) do nothing;
+
+create or replace function zap_toque() returns trigger
+language plpgsql as $$
+declare volta boolean;
+begin
+  -- nota interna não mexe na prévia nem no não-lidas: a lista mostra a
+  -- conversa com o CLIENTE, e não o bilhete que a equipe deixou
+  if new.direcao = 'interna' then return new; end if;
+  select new.direcao = 'entrada' and c.status = 'resolvida' and not c.automatica
+         and coalesce(a.encerrado_em, '-infinity') < now()
+             - make_interval(mins => coalesce((select valor from config_app where chave='zap_volta_min'),'60')::int)
+    into volta
+    from zap_conversas c left join zap_atendimentos a on a.id = c.atendimento_id
+   where c.id = new.conversa_id;
+  update zap_conversas set
+    ultima_em    = coalesce(new.quando_wa, new.criado_em, now()),
+    ultimo_texto = left(coalesce(nullif(trim(new.texto),''), '['||new.tipo||']'), 200),
+    nao_lidas    = case when new.direcao='entrada' then nao_lidas + 1 else nao_lidas end,
+    -- cliente que volta a escrever reabre a conversa: "resolvida" era a
+    -- opinião do escritório, e ele acabou de discordar
+    status       = case when new.direcao='entrada' and status='resolvida'
+                        then 'aberta' else status end,
+    -- e o assunto novo começa pelo robô (F273)
+    atendente_id = case when volta then null else atendente_id end,
+    setor        = case when volta then null else setor end,
+    setor_id     = case when volta then null else setor_id end,
+    bot_ativo    = case when volta then true else bot_ativo end,
+    bot_passo    = case when volta then null else bot_passo end,
+    bot_desde    = case when volta then null else bot_desde end,
+    bot_erros    = case when volta then 0 else bot_erros end,
+    bot_dados    = case when volta then null else bot_dados end
+  where id = new.conversa_id;
+  return new;
+end $$;
+
+-- ══ O plantão da IA no WhatsApp (F274): cópia de migracoes/f274_plantao_ia.sql ══
+-- ══ O plantão da IA no WhatsApp (F274) ═════════════════════════════════════
+-- Pedido do Paulo, 25.10.2026: a demora da resposta é o que mais faz o cliente
+-- ligar ou ir ao escritório. No histórico (desde 10/2025), de 3.519 vezes em que
+-- o cliente escreveu, 946 esperaram mais de 1 hora e 442 mais de um dia.
+-- O robô do menu está desligado (a equipe responde do celular), por isso o
+-- plantão é independente dele:
+--   · a mensagem do cliente que fica sem resposta da equipe por zap_plantao_min
+--     minutos (zap_plantao_fora_min fora do expediente) vai à IA (Edge Function
+--     zap_plantao), que lê o histórico da conversa e o caso e decide: não
+--     responder (agradecimento, "ok", conversa pessoal ou entre colegas),
+--     tranquilizar dizendo qual advogado vai responder, ou atender o caso novo;
+--   · o advogado (Paulo, Marcos ou Amanda) recebe a menção no CRM: o da ficha,
+--     senão o último que assinou na conversa, senão o do caso, senão o padrão;
+--   · o caso novo segue em modo "lead": a IA acolhe, colhe o relato e, com o
+--     nome e o assunto, oferece os horários da agenda (onda 4, zap_agenda);
+--   · uma resposta só por espera: depois que a IA tranquilizou, ela só volta a
+--     falar quando a equipe tiver respondido;
+--   · sem resposta da IA em 90 s, sai uma mensagem fixa de recebimento.
+-- Nasce DESLIGADO (zap_ia_plantao = 'nao'), e cada conversa pode ficar fora
+-- da IA (zap_conversas.sem_ia, no ⋯ da conversa).
+insert into config_app (chave, valor) values
+  ('zap_ia_plantao','nao'), ('zap_plantao_min','20'), ('zap_plantao_fora_min','5'),
+  ('zap_plantao_lead','todos'),
+  ('zap_plantao_url','https://bhdyatqaebpzufridwkh.supabase.co/functions/v1/zap_plantao')
+  on conflict (chave) do nothing;
+
+alter table zap_conversas add column if not exists sem_ia boolean not null default false;
+-- modo (lead), n (respostas no modo lead), nome, relato, pedido_msg, pedido_em
+alter table zap_conversas add column if not exists plantao jsonb;
+
+-- os advogados que recebem o cliente (cargo advogado, com assinatura no WhatsApp)
+create or replace function zap_advogados() returns setof colaboradores
+language sql stable security definer set search_path = public as $$
+  select * from colaboradores
+   where ativo and cargo = 'advogado' and coalesce(trim(assinatura_zap), '') <> '' order by nome
+$$;
+
+-- quem responde a conversa: o advogado da ficha (F245), senão o último que
+-- assinou na conversa, senão o atribuído a um caso aberto, senão o padrão
+create or replace function zap_advogado_da_conversa(p_conversa uuid) returns uuid
+language plpgsql stable security definer set search_path = public as $$
+declare c zap_conversas; v uuid;
+begin
+  select * into c from zap_conversas where id = p_conversa;
+  if c.cliente_id is not null then
+    select a.id into v from clientes cl join zap_advogados() a on a.id::text = cl.campos->>'advogado_id'
+     where cl.id = c.cliente_id;
+    if v is not null then return v; end if;
+  end if;
+  select a.id into v from zap_mensagens m join zap_advogados() a on m.texto like '*' || a.assinatura_zap || ':*%'
+   where m.conversa_id = p_conversa and m.direcao = 'saida' and m.momento > now() - interval '180 days'
+   order by m.momento desc limit 1;
+  if v is not null then return v; end if;
+  if c.cliente_id is not null then
+    select a.id into v from atribuicoes t join casos k on k.id = t.caso_id join zap_advogados() a on a.id = t.colaborador_id
+     where k.cliente_id = c.cliente_id and k.fase <> 'encerrado' order by k.criado_em desc limit 1;
+    if v is not null then return v; end if;
+  end if;
+  -- 'todos' (decisão do Paulo, 25.10.2026): sem advogado definido, nulo, e todos os advogados são avisados
+  if coalesce((select valor from config_app where chave = 'zap_plantao_lead'), 'todos') = 'todos' then return null; end if;
+  select a.id into v from zap_advogados() a
+   where a.nome = coalesce((select valor from config_app where chave = 'zap_plantao_lead'), '');
+  return coalesce(v, (select id from colaboradores where ativo and papel = 'admin' order by nome limit 1));
+end $$;
+
+create or replace function zap_plantao_chamar(p_msg uuid) returns void
+language plpgsql security definer set search_path = public as $$
+declare m zap_mensagens;
+begin
+  update zap_mensagens set bot_ia = 'plantao:pedida' where id = p_msg returning * into m;
+  perform set_config('zap.via_funcao', '1', true);
+  update zap_conversas set plantao = coalesce(plantao, '{}'::jsonb)
+         || jsonb_build_object('pedido_msg', p_msg, 'pedido_em', now())
+   where id = m.conversa_id;
+  begin
+    perform net.http_post(
+      url := (select valor from config_app where chave = 'zap_plantao_url'),
+      body := jsonb_build_object('mensagem_id', p_msg),
+      headers := '{"Content-Type":"application/json"}'::jsonb,
+      timeout_milliseconds := 55000);
+  exception when others then null;   -- sem pg_net, a mensagem fixa sai em 90 s
+  end;
+end $$;
+
+-- a mensagem do cliente entra na espera do plantão
+create or replace function zap_plantao_gatilho() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare c zap_conversas; v_bot boolean;
+begin
+  if new.direcao <> 'entrada'
+     or coalesce((select valor from config_app where chave = 'zap_ia_plantao'), 'nao') <> 'sim' then return new; end if;
+  -- o histórico que o celular reenvia na reconexão não é mensagem nova
+  if coalesce(new.quando_wa, now()) < now() - interval '10 minutes' then return new; end if;
+  select * into c from zap_conversas where id = new.conversa_id;
+  if c.automatica or c.sem_ia then return new; end if;
+  v_bot := coalesce((select valor from config_app where chave = 'zap_bot_ligado'), 'sim') = 'sim';
+  if v_bot and c.bot_ativo and c.atendente_id is null then return new; end if;   -- o menu cuida
+  -- escolha do horário oferecido com o robô desligado: lê aqui o que o zap_bot leria
+  if c.bot_passo in ('agendar', 'agendar_nome', 'agendar_escolha') or coalesce(c.bot_dados ? 'pedido_em', false) then
+    perform zap_bot_ler(new.id);
+    return new;
+  end if;
+  if c.plantao->>'modo' = 'lead' then
+    -- o caso novo é respondido na hora; o áudio espera a transcrição (relógio)
+    if new.tipo = 'audio' and trim(coalesce(new.texto, '')) = '' then
+      update zap_mensagens set bot_ia = 'plantao:agora' where id = new.id;
+    else
+      perform zap_plantao_chamar(new.id);
+    end if;
+  else
+    update zap_mensagens set bot_ia = 'plantao:espera' where id = new.id;
+  end if;
+  return new;
+end $$;
+-- depois do filtro de mensagem automática (zap_v_filtro_ins), que marca a conversa
+drop trigger if exists zap_w_plantao_ins on zap_mensagens;
+create trigger zap_w_plantao_ins after insert on zap_mensagens
+  for each row execute function zap_plantao_gatilho();
+
+-- o relógio do plantão (zap_relogio, a cada 30 s)
+create or replace function zap_plantao_vencidas() returns integer
+language plpgsql security definer set search_path = public as $$
+declare r record; n integer := 0; v_min integer; v_fim timestamptz;
+begin
+  if coalesce((select valor from config_app where chave = 'zap_ia_plantao'), 'nao') <> 'sim' then return 0; end if;
+  v_min := case when zap_no_horario()
+                then coalesce(nullif((select valor from config_app where chave = 'zap_plantao_min'), ''), '20')::int
+                else coalesce(nullif((select valor from config_app where chave = 'zap_plantao_fora_min'), ''), '5')::int end;
+  for r in select m.id, m.conversa_id, m.seq, m.momento, m.bot_ia from zap_mensagens m
+            where (m.bot_ia = 'plantao:espera' and m.criado_em < now() - make_interval(mins => v_min))
+               or (m.bot_ia = 'plantao:agora' and (trim(coalesce(m.texto, '')) not in ('') and m.texto not like '[áudio%'
+                                                   or m.criado_em < now() - interval '3 minutes'))
+            order by m.criado_em loop
+    if exists (select 1 from zap_mensagens x where x.conversa_id = r.conversa_id and x.direcao = 'entrada' and x.seq > r.seq) then
+      update zap_mensagens set bot_ia = 'plantao:junto' where id = r.id;           -- a mais nova responde por todas
+    elsif exists (select 1 from zap_mensagens x where x.conversa_id = r.conversa_id and x.direcao = 'saida'
+                    and not x.por_bot and x.momento >= r.momento) then
+      update zap_mensagens set bot_ia = 'plantao:respondida' where id = r.id;
+    elsif r.bot_ia = 'plantao:espera' and exists (
+            select 1 from zap_mensagens x where x.conversa_id = r.conversa_id and x.bot_ia = 'plantao:resposta'
+               -- depois de 4 h sem a equipe, responde de novo, só no horário comercial (Paulo, 25.10.2026)
+               and (x.momento > now() - interval '4 hours' or not zap_no_horario())
+               and x.momento > coalesce((select max(h.momento) from zap_mensagens h where h.conversa_id = r.conversa_id
+                                           and h.direcao = 'saida' and not h.por_bot), '-infinity')) then
+      update zap_mensagens set bot_ia = 'plantao:ja_avisado' where id = r.id;      -- uma resposta por espera
+    elsif exists (select 1 from zap_conversas c where c.id = r.conversa_id and (c.automatica or c.sem_ia)) then
+      update zap_mensagens set bot_ia = 'plantao:fora' where id = r.id;
+    else
+      perform zap_plantao_chamar(r.id);
+    end if;
+    n := n + 1;
+  end loop;
+  -- a IA não respondeu em 90 s: o cliente recebe o aviso fixo e o advogado, a menção
+  for r in select c.id, (c.plantao->>'pedido_msg')::uuid msg from zap_conversas c
+            where c.plantao ? 'pedido_em' and (c.plantao->>'pedido_em')::timestamptz < now() - interval '90 seconds' loop
+    perform zap_plantao_aplicar(r.msg, 'falhou', null, null, false, null, null, null);
+    n := n + 1;
+  end loop;
+  return n;
+end $$;
+
+-- a Edge Function pega a mensagem uma vez só e recebe o que precisa para responder
+create or replace function zap_plantao_pegar(p_msg uuid) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare m zap_mensagens; c zap_conversas; cl clientes; v_adv colaboradores; v_mesmo boolean; v_casos jsonb;
+begin
+  update zap_mensagens set bot_ia = 'plantao:lendo' where id = p_msg and bot_ia = 'plantao:pedida' returning * into m;
+  if not found then return null; end if;
+  select * into c from zap_conversas where id = m.conversa_id;
+  if c.cliente_id is not null then select * into cl from clientes where id = c.cliente_id; end if;
+  -- a etapa do processo só sai para o telefone principal da ficha (a regra do zap_situacao)
+  v_mesmo := cl.id is not null and fone_ddd8(c.telefone) is not null and fone_ddd8(c.telefone) = fone_ddd8(cl.telefone);
+  if v_mesmo then
+    select jsonb_agg(jsonb_build_object('beneficio', coalesce(nullif(trim(k.beneficio), ''), k.titulo),
+             'fase', k.fase, 'etapa', zap_etapa_publica(k)) order by k.criado_em)
+      into v_casos from casos k
+     where k.cliente_id = cl.id and k.fase <> 'encerrado' and not coalesce(k.pre_caso, false);
+  end if;
+  select * into v_adv from colaboradores where id = zap_advogado_da_conversa(c.id);
+  return jsonb_build_object(
+    'contato', coalesce(nullif(trim(c.nome_perfil), ''), ''),
+    'cliente', case when cl.id is null then null else jsonb_build_object('nome', cl.nome,
+                 'mesmo_telefone', v_mesmo, 'casos', coalesce(v_casos, '[]'::jsonb)) end,
+    'advogado', v_adv.assinatura_zap,
+    'advogados', (select jsonb_agg(assinatura_zap) from zap_advogados()),
+    'modo', coalesce(c.plantao->>'modo', ''),
+    'respostas', coalesce((c.plantao->>'n')::int, 0),
+    'horario', zap_no_horario(),
+    'agenda', zap_agenda_ligada(),
+    'agora', to_char(now() at time zone 'America/Sao_Paulo', 'DD/MM/YYYY HH24:MI'),
+    'mensagens', (select coalesce(jsonb_agg(jsonb_build_object('direcao', x.direcao, 'por_bot', x.por_bot,
+                    'tipo', x.tipo, 'texto', x.texto, 'momento', x.momento) order by x.momento, x.seq), '[]'::jsonb)
+                    from (select * from zap_mensagens where conversa_id = c.id and direcao in ('entrada', 'saida')
+                          order by momento desc, seq desc limit 60) x));
+end $$;
+
+-- a resposta da IA (ou a falta dela): só vale se a conversa não andou
+create or replace function zap_plantao_aplicar(p_msg uuid, p_acao text, p_resposta text, p_advogado text,
+  p_urgente boolean, p_assunto text, p_relato text, p_nome text) returns void
+language plpgsql security definer set search_path = public as $$
+declare m zap_mensagens; c zap_conversas; v_adv uuid; v_acao text := p_acao; v_txt text; v_n integer;
+        v_claude uuid := (select id from colaboradores where papel = 'assistente_ia' and ativo order by nome limit 1);
+        v_quem text;
+begin
+  select * into c from zap_conversas where id = (select conversa_id from zap_mensagens where id = p_msg) for update;
+  if not found or c.plantao->>'pedido_msg' is distinct from p_msg::text then return; end if;
+  perform set_config('zap.via_funcao', '1', true);
+  update zap_conversas set plantao = plantao - 'pedido_msg' - 'pedido_em' where id = c.id;
+  if v_acao not in ('nada', 'responder', 'lead', 'agendar', 'equipe', 'falhou') then v_acao := 'falhou'; end if;
+  update zap_mensagens set bot_ia = 'plantao:' || v_acao where id = p_msg returning * into m;
+  -- a conversa andou enquanto a IA lia: a mensagem mais nova, ou a equipe, responde
+  if c.automatica or c.sem_ia
+     or exists (select 1 from zap_mensagens x where x.conversa_id = c.id and x.direcao = 'entrada' and x.seq > m.seq)
+     or exists (select 1 from zap_mensagens x where x.conversa_id = c.id and x.direcao = 'saida'
+                  and not x.por_bot and x.momento >= m.momento) then
+    return;
+  end if;
+  if v_acao = 'nada' then return; end if;
+
+  -- o advogado: o que a IA indicou, se for um dos advogados; senão, a regra da conversa
+  select id into v_adv from zap_advogados()
+   where trim(coalesce(p_advogado, '')) <> ''
+     and (assinatura_zap = trim(p_advogado) or nome = trim(p_advogado)) limit 1;
+  v_adv := coalesce(v_adv, zap_advogado_da_conversa(c.id));
+  v_quem := 'a equipe' || case when v_adv is null then '' else ' (responsável: ' || zap_nome_colab(v_adv) || ')' end;
+
+  v_txt := left(trim(coalesce(p_resposta, '')), 1500);
+  if v_acao = 'falhou' then
+    v_txt := 'Recebemos a sua mensagem. ' || coalesce((select assinatura_zap from colaboradores where id = v_adv) || ' já foi avisado(a)',
+                                                      'A equipe do escritório já foi avisada')
+             || ' e responderá '
+             || case when zap_no_horario() then 'assim que possível.' else 'no próximo dia útil.' end;
+  end if;
+
+  if v_acao = 'lead' then
+    v_n := coalesce((c.plantao->>'n')::int, 0) + 1;
+    update zap_conversas set plantao = coalesce(plantao, '{}'::jsonb) || jsonb_build_object('modo', 'lead', 'n', v_n)
+           || case when coalesce(trim(p_nome), '') <> '' then jsonb_build_object('nome', initcap(trim(p_nome))) else '{}'::jsonb end
+           || case when coalesce(trim(p_relato), '') <> '' then jsonb_build_object('relato', left(trim(p_relato), 1500)) else '{}'::jsonb end
+     where id = c.id;
+    -- ninguém conversa com a IA para sempre: na oitava resposta, a agenda ou a equipe
+    if v_n >= 8 then v_acao := 'agendar'; end if;
+  end if;
+
+  if v_txt <> '' then
+    insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status, bot_ia)
+    values (c.id, 'saida', true, v_txt, 'fila', 'plantao:resposta');
+  end if;
+  if v_acao = 'lead' then return; end if;
+
+  -- daqui em diante a conversa é da equipe: o modo lead termina e o advogado é avisado
+  select * into c from zap_conversas where id = c.id;
+  update zap_conversas set plantao = plantao - 'modo' - 'n' where id = c.id;
+  if coalesce(trim(p_relato), c.plantao->>'relato', '') <> '' then
+    perform zap_nota_sistema(c.id, null, 'Relato colhido pela assistente virtual: '
+            || coalesce(nullif(trim(p_nome), ''), c.plantao->>'nome', '') || ' · '
+            || coalesce(nullif(trim(p_relato), ''), c.plantao->>'relato'));
+  end if;
+  perform zap_nota_sistema(c.id, null, 'Assistente virtual: '
+          || case v_acao when 'falhou' then 'a IA não respondeu; saiu o aviso de recebimento' else 'respondeu' end
+          || ' e avisou ' || v_quem || coalesce(' · ' || nullif(trim(p_assunto), ''), ''));
+  insert into mencoes (de_id, para_id, conversa_id, texto)
+  select v_claude, a.id, c.id,
+         case when p_urgente then '⚠ URGENTE · ' else '' end || '💬 '
+         || coalesce(nullif(trim(c.nome_perfil), ''), c.telefone, 'O cliente')
+         || ' aguarda resposta no WhatsApp' || coalesce(': ' || nullif(trim(p_assunto), ''), '')
+         || case when v_adv is null then '' else ' · responsável: ' || zap_nome_colab(v_adv) end
+    from colaboradores a
+   -- todos os advogados e a recepção são avisados; o responsável vai no texto (pedido do Paulo, 25.10.2026)
+   where a.ativo and coalesce(trim(a.assinatura_zap), '') <> ''
+     and a.cargo in ('advogado', 'estagiario', 'recepcao')
+     and (p_urgente or not exists (select 1 from mencoes x where x.para_id = a.id and x.conversa_id = c.id and x.lida_em is null));
+  if v_acao = 'agendar' and zap_agenda_ligada() then
+    update zap_conversas set bot_dados = coalesce(bot_dados, '{}'::jsonb)
+           || jsonb_build_object('nome', coalesce(nullif(initcap(trim(p_nome)), ''), c.plantao->>'nome', nullif(trim(c.nome_perfil), ''), 'Cliente'))
+           || case when coalesce(trim(p_relato), c.plantao->>'relato', '') <> ''
+                   then jsonb_build_object('relato', left(coalesce(nullif(trim(p_relato), ''), c.plantao->>'relato'), 1000)) else '{}'::jsonb end
+     where id = c.id;
+    perform zap_agenda_chamar(c.id, 'oferecer', '{}'::jsonb);
+  end if;
+end $$;
+
+-- o relógio passa a cuidar também do plantão
+create or replace function zap_relogio() returns integer
+language plpgsql security definer set search_path = public as $$
+declare n integer := 0; r record;
+begin
+  update zap_mensagens set status = 'fila'
+   where status = 'agendada' and enviar_em <= now();
+  get diagnostics n = row_count;
+  for r in select z.id, z.conversa_id, coalesce(z.colaborador_id, c.atendente_id) quem, z.nota,
+                  coalesce(nullif(trim(c.nome_perfil), ''), c.telefone) nome
+             from zap_retornos z join zap_conversas c on c.id = z.conversa_id
+            where z.feito_em is null and z.avisado_em is null and z.quando <= now() loop
+    if r.quem is not null then
+      insert into mencoes (para_id, conversa_id, texto)
+      values (r.quem, r.conversa_id, '⏰ Retorno: responder ' || coalesce(r.nome, 'o contato')
+              || coalesce(' — ' || nullif(trim(r.nota), ''), ''));
+    end if;
+    update zap_retornos set avisado_em = now() where id = r.id;
+  end loop;
+  perform zap_bot_esperas();
+  perform zap_triagem_vencidas();
+  perform zap_plantao_vencidas();
+  return n;
+end $$;
+
+-- as portas da Edge Function só abrem para service_role
+revoke all on function zap_plantao_pegar(uuid) from public, anon, authenticated;
+revoke all on function zap_plantao_aplicar(uuid, text, text, text, boolean, text, text, text) from public, anon, authenticated;
+revoke all on function zap_plantao_chamar(uuid) from public, anon, authenticated;
+revoke all on function zap_plantao_vencidas() from public, anon, authenticated;
+grant execute on function zap_plantao_pegar(uuid), zap_plantao_aplicar(uuid, text, text, text, boolean, text, text, text)
+  to service_role;
+
+-- ══ A IA conversa na hora e o motor Managed Agents (F275) ═══════════════════
+-- Pedido do Paulo, 25.10.2026: a IA esperava o prazo do plantão e dizia que a
+-- equipe responderia depois, também ao cliente novo e a quem não estava em
+-- conversa com ninguém. Agora:
+--   · conversa "interativa" (sem atendente e sem mensagem da equipe nos
+--     últimos zap_plantao_aberta_dias dias) vai à IA na hora, e ela conversa:
+--     tira dúvidas do atendimento, colhe o caso novo e oferece a agenda (ação
+--     "conversa", além de "lead"); com a equipe na conversa, segue o plantão de
+--     antes (espera o prazo e tranquiliza);
+--   · as instruções do escritório para a IA (zap_ia_txt_plantao) e para o
+--     ✨ Rascunho (zap_ia_txt_rascunho) se editam nas Configurações;
+--   · zap_ia_motor = 'agentes' troca a chamada direta pelo Managed Agents: o
+--     agente fica cadastrado e versionado no Console da Anthropic (zap_ma_*) e
+--     cada conversa tem a sua sessão (zap_conversas.ia_sessao).
+-- Nasce DESLIGADO: zap_plantao_aberta_dias = '0' e zap_ia_motor = 'mensagens'.
+insert into config_app (chave, valor) values
+  ('zap_plantao_aberta_dias','0'), ('zap_ia_txt_plantao',''), ('zap_ia_txt_rascunho',''),
+  ('zap_ia_motor','mensagens'), ('zap_ma_agente',''), ('zap_ma_ambiente',''), ('zap_ma_versao','')
+  on conflict (chave) do nothing;
+
+-- {id, em, ate}: a sessão do Managed Agents e até onde a conversa já foi entregue a ela
+alter table zap_conversas add column if not exists ia_sessao jsonb;
+
+-- a conversa sem atendente e sem a equipe nos últimos N dias conversa com a IA na hora;
+-- 15 respostas da IA em 24 h devolvem a conversa ao plantão comum
+create or replace function zap_plantao_interativa(p_conversa uuid) returns boolean
+language sql stable security definer set search_path = public as $$
+  with d as (select coalesce(nullif((select valor from config_app where chave = 'zap_plantao_aberta_dias'), ''), '0')::int n)
+  select d.n > 0 and c.atendente_id is null
+     and not exists (select 1 from zap_mensagens h where h.conversa_id = c.id and h.direcao = 'saida' and not h.por_bot
+                       and h.momento > now() - make_interval(days => d.n))
+     and (select count(*) from zap_mensagens b where b.conversa_id = c.id and b.bot_ia = 'plantao:resposta'
+            and b.momento > now() - interval '24 hours') < 15
+    from zap_conversas c, d where c.id = p_conversa
+$$;
+
+-- o Managed Agents abre a sessão e lê o histórico: mais folga antes do aviso fixo
+create or replace function zap_plantao_chamar(p_msg uuid) returns void
+language plpgsql security definer set search_path = public as $$
+declare m zap_mensagens;
+begin
+  update zap_mensagens set bot_ia = 'plantao:pedida' where id = p_msg returning * into m;
+  perform set_config('zap.via_funcao', '1', true);
+  update zap_conversas set plantao = coalesce(plantao, '{}'::jsonb)
+         || jsonb_build_object('pedido_msg', p_msg, 'pedido_em', now())
+   where id = m.conversa_id;
+  begin
+    perform net.http_post(
+      url := (select valor from config_app where chave = 'zap_plantao_url'),
+      body := jsonb_build_object('mensagem_id', p_msg),
+      headers := '{"Content-Type":"application/json"}'::jsonb,
+      timeout_milliseconds := 85000);
+  exception when others then null;   -- sem pg_net, a mensagem fixa sai em 90 s
+  end;
+end $$;
+
+-- a mensagem do cliente entra na espera do plantão, ou vai à IA na hora
+create or replace function zap_plantao_gatilho() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare c zap_conversas; v_bot boolean;
+begin
+  if new.direcao <> 'entrada'
+     or coalesce((select valor from config_app where chave = 'zap_ia_plantao'), 'nao') <> 'sim' then return new; end if;
+  -- o histórico que o celular reenvia na reconexão não é mensagem nova
+  if coalesce(new.quando_wa, now()) < now() - interval '10 minutes' then return new; end if;
+  select * into c from zap_conversas where id = new.conversa_id;
+  if c.automatica or c.sem_ia then return new; end if;
+  v_bot := coalesce((select valor from config_app where chave = 'zap_bot_ligado'), 'sim') = 'sim';
+  if v_bot and c.bot_ativo and c.atendente_id is null then return new; end if;   -- o menu cuida
+  -- escolha do horário oferecido com o robô desligado: lê aqui o que o zap_bot leria
+  if c.bot_passo in ('agendar', 'agendar_nome', 'agendar_escolha') or coalesce(c.bot_dados ? 'pedido_em', false) then
+    perform zap_bot_ler(new.id);
+    return new;
+  end if;
+  if c.plantao->>'modo' in ('lead', 'conversa') or zap_plantao_interativa(c.id) then
+    -- respondida na hora; o áudio espera a transcrição (relógio)
+    if new.tipo = 'audio' and trim(coalesce(new.texto, '')) = '' then
+      update zap_mensagens set bot_ia = 'plantao:agora' where id = new.id;
+    else
+      perform zap_plantao_chamar(new.id);
+    end if;
+  else
+    update zap_mensagens set bot_ia = 'plantao:espera' where id = new.id;
+  end if;
+  return new;
+end $$;
+create or replace trigger zap_w_plantao_ins after insert on zap_mensagens
+  for each row execute function zap_plantao_gatilho();
+
+-- a Edge Function pega a mensagem uma vez só e recebe o que precisa para responder
+create or replace function zap_plantao_pegar(p_msg uuid) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare m zap_mensagens; c zap_conversas; cl clientes; v_adv colaboradores; v_mesmo boolean; v_casos jsonb;
+begin
+  update zap_mensagens set bot_ia = 'plantao:lendo' where id = p_msg and bot_ia = 'plantao:pedida' returning * into m;
+  if not found then return null; end if;
+  select * into c from zap_conversas where id = m.conversa_id;
+  if c.cliente_id is not null then select * into cl from clientes where id = c.cliente_id; end if;
+  -- a etapa do processo só sai para o telefone principal da ficha (a regra do zap_situacao)
+  v_mesmo := cl.id is not null and fone_ddd8(c.telefone) is not null and fone_ddd8(c.telefone) = fone_ddd8(cl.telefone);
+  if v_mesmo then
+    select jsonb_agg(jsonb_build_object('beneficio', coalesce(nullif(trim(k.beneficio), ''), k.titulo),
+             'fase', k.fase, 'etapa', zap_etapa_publica(k)) order by k.criado_em)
+      into v_casos from casos k
+     where k.cliente_id = cl.id and k.fase <> 'encerrado' and not coalesce(k.pre_caso, false);
+  end if;
+  select * into v_adv from colaboradores where id = zap_advogado_da_conversa(c.id);
+  return jsonb_build_object(
+    'conversa_id', c.id,
+    'contato', coalesce(nullif(trim(c.nome_perfil), ''), ''),
+    'cliente', case when cl.id is null then null else jsonb_build_object('nome', cl.nome,
+                 'mesmo_telefone', v_mesmo, 'casos', coalesce(v_casos, '[]'::jsonb)) end,
+    'advogado', v_adv.assinatura_zap,
+    'advogados', (select jsonb_agg(assinatura_zap) from zap_advogados()),
+    'modo', coalesce(c.plantao->>'modo', ''),
+    'respostas', coalesce((c.plantao->>'n')::int, 0),
+    'interativa', c.plantao->>'modo' in ('lead', 'conversa') or coalesce(zap_plantao_interativa(c.id), false),
+    'horario', zap_no_horario(),
+    'agenda', zap_agenda_ligada(),
+    'agora', to_char(now() at time zone 'America/Sao_Paulo', 'DD/MM/YYYY HH24:MI'),
+    'instrucoes', coalesce((select valor from config_app where chave = 'zap_ia_txt_plantao'), ''),
+    'motor', coalesce((select valor from config_app where chave = 'zap_ia_motor'), 'mensagens'),
+    'ma', jsonb_build_object('agente', (select valor from config_app where chave = 'zap_ma_agente'),
+                             'ambiente', (select valor from config_app where chave = 'zap_ma_ambiente'),
+                             'versao', (select valor from config_app where chave = 'zap_ma_versao')),
+    'sessao', c.ia_sessao,
+    'mensagens', (select coalesce(jsonb_agg(jsonb_build_object('direcao', x.direcao, 'por_bot', x.por_bot,
+                    'tipo', x.tipo, 'texto', x.texto, 'momento', x.momento) order by x.momento, x.seq), '[]'::jsonb)
+                    from (select * from zap_mensagens where conversa_id = c.id and direcao in ('entrada', 'saida')
+                          order by momento desc, seq desc limit 60) x));
+end $$;
+
+-- o Managed Agents guarda a sessão da conversa e o agente cadastrado
+create or replace function zap_plantao_sessao(p_conversa uuid, p_sessao jsonb) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  perform set_config('zap.via_funcao', '1', true);
+  update zap_conversas set ia_sessao = p_sessao where id = p_conversa;
+end $$;
+create or replace function zap_plantao_ma_guardar(p_agente text, p_ambiente text, p_versao text) returns void
+language sql security definer set search_path = public as $$
+  update config_app set valor = coalesce(p_agente, '') where chave = 'zap_ma_agente';
+  update config_app set valor = coalesce(p_ambiente, '') where chave = 'zap_ma_ambiente';
+  update config_app set valor = coalesce(p_versao, '') where chave = 'zap_ma_versao';
+$$;
+
+-- a resposta da IA (ou a falta dela): só vale se a conversa não andou
+create or replace function zap_plantao_aplicar(p_msg uuid, p_acao text, p_resposta text, p_advogado text,
+  p_urgente boolean, p_assunto text, p_relato text, p_nome text) returns void
+language plpgsql security definer set search_path = public as $$
+declare m zap_mensagens; c zap_conversas; v_adv uuid; v_acao text := p_acao; v_txt text; v_n integer;
+        v_claude uuid := (select id from colaboradores where papel = 'assistente_ia' and ativo order by nome limit 1);
+        v_quem text; v_modo text;
+begin
+  select * into c from zap_conversas where id = (select conversa_id from zap_mensagens where id = p_msg) for update;
+  if not found or c.plantao->>'pedido_msg' is distinct from p_msg::text then return; end if;
+  perform set_config('zap.via_funcao', '1', true);
+  update zap_conversas set plantao = plantao - 'pedido_msg' - 'pedido_em' where id = c.id;
+  if v_acao not in ('nada', 'responder', 'lead', 'conversa', 'agendar', 'equipe', 'falhou') then v_acao := 'falhou'; end if;
+  update zap_mensagens set bot_ia = 'plantao:' || v_acao where id = p_msg returning * into m;
+  -- a conversa andou enquanto a IA lia: a mensagem mais nova, ou a equipe, responde
+  if c.automatica or c.sem_ia
+     or exists (select 1 from zap_mensagens x where x.conversa_id = c.id and x.direcao = 'entrada' and x.seq > m.seq)
+     or exists (select 1 from zap_mensagens x where x.conversa_id = c.id and x.direcao = 'saida'
+                  and not x.por_bot and x.momento >= m.momento) then
+    return;
+  end if;
+  if v_acao = 'nada' then return; end if;
+
+  -- o advogado: o que a IA indicou, se for um dos advogados; senão, a regra da conversa
+  select id into v_adv from zap_advogados()
+   where trim(coalesce(p_advogado, '')) <> ''
+     and (assinatura_zap = trim(p_advogado) or nome = trim(p_advogado)) limit 1;
+  v_adv := coalesce(v_adv, zap_advogado_da_conversa(c.id));
+  v_quem := 'a equipe' || case when v_adv is null then '' else ' (responsável: ' || zap_nome_colab(v_adv) || ')' end;
+
+  v_txt := left(trim(coalesce(p_resposta, '')), 1500);
+  if v_acao = 'falhou' then
+    v_txt := 'Recebemos a sua mensagem. ' || coalesce((select assinatura_zap from colaboradores where id = v_adv) || ' já foi avisado(a)',
+                                                      'A equipe do escritório já foi avisada')
+             || ' e responderá '
+             || case when zap_no_horario() then 'assim que possível.' else 'no próximo dia útil.' end;
+  end if;
+
+  if v_acao in ('lead', 'conversa') then
+    v_n := coalesce((c.plantao->>'n')::int, 0) + 1;
+    v_modo := case when v_acao = 'lead' or c.plantao->>'modo' = 'lead' then 'lead' else 'conversa' end;
+    update zap_conversas set plantao = coalesce(plantao, '{}'::jsonb) || jsonb_build_object('modo', v_modo, 'n', v_n)
+           || case when coalesce(trim(p_nome), '') <> '' then jsonb_build_object('nome', initcap(trim(p_nome))) else '{}'::jsonb end
+           || case when coalesce(trim(p_relato), '') <> '' then jsonb_build_object('relato', left(trim(p_relato), 1500)) else '{}'::jsonb end
+     where id = c.id;
+    -- ninguém conversa com a IA para sempre: o caso novo vai à agenda na 8ª resposta, a dúvida à equipe na 12ª
+    if v_modo = 'lead' and v_n >= 8 then v_acao := 'agendar';
+    elsif v_modo = 'conversa' and v_n >= 12 then v_acao := 'equipe'; end if;
+  end if;
+
+  if v_txt <> '' then
+    insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status, bot_ia)
+    values (c.id, 'saida', true, v_txt, 'fila', 'plantao:resposta');
+  end if;
+  if v_acao in ('lead', 'conversa') then return; end if;
+
+  -- daqui em diante a conversa é da equipe: o modo termina e o advogado é avisado
+  select * into c from zap_conversas where id = c.id;
+  update zap_conversas set plantao = plantao - 'modo' - 'n' where id = c.id;
+  if coalesce(trim(p_relato), c.plantao->>'relato', '') <> '' then
+    perform zap_nota_sistema(c.id, null, 'Relato colhido pela assistente virtual: '
+            || coalesce(nullif(trim(p_nome), ''), c.plantao->>'nome', '') || ' · '
+            || coalesce(nullif(trim(p_relato), ''), c.plantao->>'relato'));
+  end if;
+  perform zap_nota_sistema(c.id, null, 'Assistente virtual: '
+          || case v_acao when 'falhou' then 'a IA não respondeu; saiu o aviso de recebimento' else 'respondeu' end
+          || ' e avisou ' || v_quem || coalesce(' · ' || nullif(trim(p_assunto), ''), ''));
+  insert into mencoes (de_id, para_id, conversa_id, texto)
+  select v_claude, a.id, c.id,
+         case when p_urgente then '⚠ URGENTE · ' else '' end || '💬 '
+         || coalesce(nullif(trim(c.nome_perfil), ''), c.telefone, 'O cliente')
+         || ' aguarda resposta no WhatsApp' || coalesce(': ' || nullif(trim(p_assunto), ''), '')
+         || case when v_adv is null then '' else ' · responsável: ' || zap_nome_colab(v_adv) end
+    from colaboradores a
+   -- todos os advogados e a recepção são avisados; o responsável vai no texto (pedido do Paulo, 25.10.2026)
+   where a.ativo and coalesce(trim(a.assinatura_zap), '') <> ''
+     and a.cargo in ('advogado', 'estagiario', 'recepcao')
+     and (p_urgente or not exists (select 1 from mencoes x where x.para_id = a.id and x.conversa_id = c.id and x.lida_em is null));
+  if v_acao = 'agendar' and zap_agenda_ligada() then
+    update zap_conversas set bot_dados = coalesce(bot_dados, '{}'::jsonb)
+           || jsonb_build_object('nome', coalesce(nullif(initcap(trim(p_nome)), ''), c.plantao->>'nome', nullif(trim(c.nome_perfil), ''), 'Cliente'))
+           || case when coalesce(trim(p_relato), c.plantao->>'relato', '') <> ''
+                   then jsonb_build_object('relato', left(coalesce(nullif(trim(p_relato), ''), c.plantao->>'relato'), 1000)) else '{}'::jsonb end
+     where id = c.id;
+    perform zap_agenda_chamar(c.id, 'oferecer', '{}'::jsonb);
+  end if;
+end $$;
+
+-- o teste do Managed Agents (zap_plantao com {preparar: true}) abre uma vez e se fecha
+insert into config_app (chave, valor) values ('zap_ma_teste', 'nao') on conflict (chave) do nothing;
+create or replace function zap_plantao_ma_teste() returns jsonb
+language plpgsql security definer set search_path = public as $$
+begin
+  update config_app set valor = 'nao' where chave = 'zap_ma_teste' and valor = 'sim';
+  if not found then return null; end if;
+  return jsonb_build_object(
+    'horario', zap_no_horario(), 'agenda', zap_agenda_ligada(),
+    'agora', to_char(now() at time zone 'America/Sao_Paulo', 'DD/MM/YYYY HH24:MI'),
+    'advogados', (select jsonb_agg(assinatura_zap) from zap_advogados()),
+    'instrucoes', coalesce((select valor from config_app where chave = 'zap_ia_txt_plantao'), ''),
+    'ma', jsonb_build_object('agente', (select valor from config_app where chave = 'zap_ma_agente'),
+                             'ambiente', (select valor from config_app where chave = 'zap_ma_ambiente'),
+                             'versao', (select valor from config_app where chave = 'zap_ma_versao')));
+end $$;
+revoke all on function zap_plantao_ma_teste() from public, anon, authenticated;
+grant execute on function zap_plantao_ma_teste() to service_role;
+
+revoke all on function zap_plantao_sessao(uuid, jsonb) from public, anon, authenticated;
+revoke all on function zap_plantao_ma_guardar(text, text, text) from public, anon, authenticated;
+revoke all on function zap_plantao_interativa(uuid) from public, anon, authenticated;
+grant execute on function zap_plantao_sessao(uuid, jsonb), zap_plantao_ma_guardar(text, text, text) to service_role;
+-- F276 · a IA conversa com este número (pedido do Paulo, 25.10.2026): a conversa marcada no ⋯
+-- vai à IA na hora mesmo com mensagem da equipe nos últimos dias e com o modo interativo desligado.
+alter table zap_conversas add column if not exists ia_conversa boolean not null default false;
+
+create or replace function zap_plantao_interativa(p_conversa uuid) returns boolean
+language sql stable security definer set search_path = public as $$
+  with d as (select coalesce(nullif((select valor from config_app where chave = 'zap_plantao_aberta_dias'), ''), '0')::int n)
+  select c.atendente_id is null
+     and (c.ia_conversa or (d.n > 0
+          and not exists (select 1 from zap_mensagens h where h.conversa_id = c.id and h.direcao = 'saida' and not h.por_bot
+                            and h.momento > now() - make_interval(days => d.n))))
+     and (select count(*) from zap_mensagens b where b.conversa_id = c.id and b.bot_ia = 'plantao:resposta'
+            and b.momento > now() - interval '24 hours') < 15
+    from zap_conversas c, d where c.id = p_conversa
+$$;
+-- F277 · o agente do Managed Agents marca o atendimento pela agenda do CRM
+-- (pedido do Paulo de 25.10.2026). As ferramentas consultar_vagas e
+-- marcar_atendimento rodam na Edge Function zap_plantao, que lê aqui o que a
+-- agenda precisa e, marcado, confirma ao cliente e deixa a nota à equipe.
+
+-- o que a agenda precisa da conversa: telefone, ficha (001 sem ficha, 002 com) e se está ligada
+create or replace function zap_plantao_agenda(p_conversa uuid) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare c zap_conversas; v_cli uuid; v_nome text;
+begin
+  select * into c from zap_conversas where id = p_conversa;
+  if not found then return null; end if;
+  v_cli := zap_cliente_do_numero(p_conversa);
+  if v_cli is not null then select nome into v_nome from clientes where id = v_cli; end if;
+  return jsonb_build_object('telefone', c.telefone, 'cliente_id', v_cli, 'nome_ficha', v_nome,
+                            'ligada', zap_agenda_ligada());
+end $$;
+
+-- marcado pelo agente: a confirmação sai daqui, para não se perder se o turno passar do prazo
+create or replace function zap_plantao_marcado(p_conversa uuid, p_rotulo text, p_modalidade text, p_assunto text) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status, bot_ia)
+  values (p_conversa, 'saida', true,
+    'Seu atendimento está marcado para ' || p_rotulo
+    || case when p_modalidade = 'remoto' then ', na modalidade remota.'
+            else ', no escritório.' end || E'\n\n'
+    || 'Tenha em mãos um documento com foto e a senha do Meu INSS (gov.br) atualizada. O atendimento é individual: '
+    || 'se outra pessoa da família também precisa, peça um horário para ela.' || E'\n\n'
+    || 'Se precisar remarcar, é só escrever aqui.', 'fila', 'plantao:resposta');
+  perform zap_nota_sistema(p_conversa, null, '📅 A assistente virtual marcou na agenda: ' || p_rotulo
+          || ' · ' || coalesce(nullif(p_modalidade, ''), 'presencial')
+          || coalesce(' · ' || nullif(trim(p_assunto), ''), ''));
+end $$;
+
+revoke all on function zap_plantao_agenda(uuid) from public, anon, authenticated;
+revoke all on function zap_plantao_marcado(uuid, text, text, text) from public, anon, authenticated;
+grant execute on function zap_plantao_agenda(uuid), zap_plantao_marcado(uuid, text, text, text) to service_role;
+
+-- quem escreve pode não ser o cliente da ficha (o pai da cliente, o filho do segurado):
+-- a IA chama pelo nome de quem escreve, gravado em contato_nome e contato_relacao
+create or replace function zap_plantao_pegar(p_msg uuid) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare m zap_mensagens; c zap_conversas; cl clientes; v_adv colaboradores; v_mesmo boolean; v_casos jsonb;
+begin
+  update zap_mensagens set bot_ia = 'plantao:lendo' where id = p_msg and bot_ia = 'plantao:pedida' returning * into m;
+  if not found then return null; end if;
+  select * into c from zap_conversas where id = m.conversa_id;
+  if c.cliente_id is not null then select * into cl from clientes where id = c.cliente_id; end if;
+  -- a etapa do processo só sai para o telefone principal da ficha (a regra do zap_situacao)
+  v_mesmo := cl.id is not null and fone_ddd8(c.telefone) is not null and fone_ddd8(c.telefone) = fone_ddd8(cl.telefone);
+  if v_mesmo then
+    select jsonb_agg(jsonb_build_object('beneficio', coalesce(nullif(trim(k.beneficio), ''), k.titulo),
+             'fase', k.fase, 'etapa', zap_etapa_publica(k)) order by k.criado_em)
+      into v_casos from casos k
+     where k.cliente_id = cl.id and k.fase <> 'encerrado' and not coalesce(k.pre_caso, false);
+  end if;
+  select * into v_adv from colaboradores where id = zap_advogado_da_conversa(c.id);
+  return jsonb_build_object(
+    'conversa_id', c.id,
+    'contato', coalesce(nullif(trim(c.contato_nome), ''), nullif(trim(c.nome_perfil), ''), ''),
+    'relacao', nullif(trim(c.contato_relacao), ''),
+    'cliente', case when cl.id is null then null else jsonb_build_object('nome', cl.nome,
+                 'mesmo_telefone', v_mesmo, 'casos', coalesce(v_casos, '[]'::jsonb)) end,
+    'advogado', v_adv.assinatura_zap,
+    'advogados', (select jsonb_agg(assinatura_zap) from zap_advogados()),
+    'modo', coalesce(c.plantao->>'modo', ''),
+    'respostas', coalesce((c.plantao->>'n')::int, 0),
+    'interativa', c.plantao->>'modo' in ('lead', 'conversa') or coalesce(zap_plantao_interativa(c.id), false),
+    'horario', zap_no_horario(),
+    'agenda', zap_agenda_ligada(),
+    'agora', to_char(now() at time zone 'America/Sao_Paulo', 'DD/MM/YYYY HH24:MI'),
+    'instrucoes', coalesce((select valor from config_app where chave = 'zap_ia_txt_plantao'), ''),
+    'motor', coalesce((select valor from config_app where chave = 'zap_ia_motor'), 'mensagens'),
+    'ma', jsonb_build_object('agente', (select valor from config_app where chave = 'zap_ma_agente'),
+                             'ambiente', (select valor from config_app where chave = 'zap_ma_ambiente'),
+                             'versao', (select valor from config_app where chave = 'zap_ma_versao')),
+    'sessao', c.ia_sessao,
+    'mensagens', (select coalesce(jsonb_agg(jsonb_build_object('direcao', x.direcao, 'por_bot', x.por_bot,
+                    'tipo', x.tipo, 'texto', x.texto, 'momento', x.momento) order by x.momento, x.seq), '[]'::jsonb)
+                    from (select * from zap_mensagens where conversa_id = c.id and direcao in ('entrada', 'saida')
+                          order by momento desc, seq desc limit 60) x));
+end $$;
+
+-- F279 · encerrar o atendimento recomeça a IA (pedido do Paulo de 25.10.2026)
+--   O cliente que volta a escrever depois do encerramento é recebido como conversa nova:
+--   a sessão do Managed Agents e o modo do plantão saem da conversa, e a IA só lê as
+--   mensagens desde o último encerramento.
+
+create or replace function zap_atendimento_ciclo() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare v uuid;
+begin
+  if tg_op = 'INSERT' or (old.status = 'resolvida' and new.status <> 'resolvida') then
+    insert into zap_atendimentos (conversa_id) values (new.id) returning id into v;
+    update zap_conversas set atendimento_id = v where id = new.id;
+  elsif new.status = 'resolvida' and old.status <> 'resolvida' then
+    update zap_atendimentos set encerrado_em = coalesce(encerrado_em, now())
+     where id = new.atendimento_id;
+    -- encerrado, a IA recomeça: sessão nova e sem o modo da conversa anterior (F279)
+    update zap_conversas set ia_sessao = null, plantao = plantao - 'modo' - 'n' - 'nome' where id = new.id;
+  end if;
+  return null;
+end $$;
+
+create or replace function zap_plantao_pegar(p_msg uuid) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare m zap_mensagens; c zap_conversas; cl clientes; v_adv colaboradores; v_mesmo boolean; v_casos jsonb;
+begin
+  update zap_mensagens set bot_ia = 'plantao:lendo' where id = p_msg and bot_ia = 'plantao:pedida' returning * into m;
+  if not found then return null; end if;
+  select * into c from zap_conversas where id = m.conversa_id;
+  if c.cliente_id is not null then select * into cl from clientes where id = c.cliente_id; end if;
+  -- a etapa do processo só sai para o telefone principal da ficha (a regra do zap_situacao)
+  v_mesmo := cl.id is not null and fone_ddd8(c.telefone) is not null and fone_ddd8(c.telefone) = fone_ddd8(cl.telefone);
+  if v_mesmo then
+    select jsonb_agg(jsonb_build_object('beneficio', coalesce(nullif(trim(k.beneficio), ''), k.titulo),
+             'fase', k.fase, 'etapa', zap_etapa_publica(k)) order by k.criado_em)
+      into v_casos from casos k
+     where k.cliente_id = cl.id and k.fase <> 'encerrado' and not coalesce(k.pre_caso, false);
+  end if;
+  select * into v_adv from colaboradores where id = zap_advogado_da_conversa(c.id);
+  return jsonb_build_object(
+    'conversa_id', c.id,
+    'contato', coalesce(nullif(trim(c.contato_nome), ''), nullif(trim(c.nome_perfil), ''), ''),
+    'relacao', nullif(trim(c.contato_relacao), ''),
+    'cliente', case when cl.id is null then null else jsonb_build_object('nome', cl.nome,
+                 'mesmo_telefone', v_mesmo, 'casos', coalesce(v_casos, '[]'::jsonb)) end,
+    'advogado', v_adv.assinatura_zap,
+    'advogados', (select jsonb_agg(assinatura_zap) from zap_advogados()),
+    'modo', coalesce(c.plantao->>'modo', ''),
+    'respostas', coalesce((c.plantao->>'n')::int, 0),
+    'interativa', c.plantao->>'modo' in ('lead', 'conversa') or coalesce(zap_plantao_interativa(c.id), false),
+    'horario', zap_no_horario(),
+    'agenda', zap_agenda_ligada(),
+    'agora', to_char(now() at time zone 'America/Sao_Paulo', 'DD/MM/YYYY HH24:MI'),
+    'instrucoes', coalesce((select valor from config_app where chave = 'zap_ia_txt_plantao'), ''),
+    'motor', coalesce((select valor from config_app where chave = 'zap_ia_motor'), 'mensagens'),
+    'ma', jsonb_build_object('agente', (select valor from config_app where chave = 'zap_ma_agente'),
+                             'ambiente', (select valor from config_app where chave = 'zap_ma_ambiente'),
+                             'versao', (select valor from config_app where chave = 'zap_ma_versao')),
+    'sessao', c.ia_sessao,
+    'mensagens', (select coalesce(jsonb_agg(jsonb_build_object('direcao', x.direcao, 'por_bot', x.por_bot,
+                    'tipo', x.tipo, 'texto', x.texto, 'momento', x.momento) order by x.momento, x.seq), '[]'::jsonb)
+                    from (select * from zap_mensagens where conversa_id = c.id and direcao in ('entrada', 'saida')
+                            and momento > coalesce((select max(a.encerrado_em) from zap_atendimentos a
+                                                     where a.conversa_id = c.id and a.encerrado_em < m.momento), '-infinity')
+                          order by momento desc, seq desc limit 60) x));
+end $$;
+-- F280 · quem escreve por outra pessoa da ficha (contato_relacao) marca o primeiro atendimento (001)
+-- em nome próprio, e não o 002 da ficha (25.10.2026).
+-- shortcut: o parente que marca para o próprio cliente da ficha também cai no 001; a equipe ajusta na agenda.
+create or replace function public.zap_plantao_agenda(p_conversa uuid)
+ returns jsonb
+ language plpgsql
+ security definer
+ set search_path to 'public'
+as $function$
+declare c zap_conversas; v_cli uuid; v_nome text;
+begin
+  select * into c from zap_conversas where id = p_conversa;
+  if not found then return null; end if;
+  if c.contato_relacao is null then v_cli := zap_cliente_do_numero(p_conversa); end if;
+  if v_cli is not null then select nome into v_nome from clientes where id = v_cli; end if;
+  return jsonb_build_object('telefone', c.telefone, 'cliente_id', v_cli, 'nome_ficha', v_nome,
+                            'ligada', zap_agenda_ligada());
+end $function$;
+
+-- a senha do gov.br só no assunto do INSS (o Dr. Marcos atende os demais), e o lembrete do atendimento
+-- individual fecha a mensagem (pedido do Paulo, 25.10.2026)
+create or replace function public.zap_plantao_marcado(p_conversa uuid, p_rotulo text, p_modalidade text, p_assunto text)
+ returns void
+ language plpgsql
+ security definer
+ set search_path to 'public'
+as $function$
+begin
+  insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status, bot_ia)
+  values (p_conversa, 'saida', true,
+    'Seu atendimento está marcado para ' || p_rotulo
+    || case when p_modalidade = 'remoto' then ', na modalidade remota.' else ', no escritório.' end || E'\n\n'
+    || case when p_rotulo ilike '%Dr. Marcos%' then 'Tenha em mãos um documento com foto.'
+            else 'Tenha em mãos um documento com foto e a senha do Meu INSS (gov.br) atualizada.' end || E'\n\n'
+    || 'Se precisar remarcar, é só escrever aqui.' || E'\n\n'
+    || 'Lembramos que o atendimento é individual: se outra pessoa da família também precisa, peça um horário para ela.',
+    'fila', 'plantao:resposta');
+  perform zap_nota_sistema(p_conversa, null, '📅 A assistente virtual marcou na agenda: ' || p_rotulo
+          || ' · ' || coalesce(nullif(p_modalidade, ''), 'presencial')
+          || coalesce(' · ' || nullif(trim(p_assunto), ''), ''));
+end $function$;
+
+-- ═══ F282 · cadastro em "Primeira letra maiúscula" (crm/fase2/migracoes/f282_caixa_do_cadastro.sql) ═══
+-- F282 · o cadastro em "Primeira letra maiúscula" (pedido do Paulo de 26.10.2026).
+-- O dossiê (extensão), o PDF do CNIS (F29), o PAT e o To Do gravam nome, nome da mãe
+-- e endereço em CAIXA ALTA. O gatilho converte na gravação, venha de onde vier, e só
+-- o texto que está todo em maiúsculas: o que foi digitado à mão não muda.
+-- Preposições e artigos ficam minúsculos (menos na primeira palavra); siglas, UF
+-- depois de "/" ou " - " e algarismos romanos ficam maiúsculos. uf e rg_orgao não passam.
+
+create or replace function caixa_do_cadastro(t text) returns text
+language plpgsql immutable as $$
+declare
+  miudas text[] := array['de','da','do','das','dos','e','em','na','no','nas','nos','com'];
+  siglas text[] := array['CEP','CPF','NIT','PIS','INSS','CNPJ','CTPS','RG','SSP','COHAB','CDHU','BNH','ME','EPP',
+                         'II','III','IV','VI','VII','VIII','IX','XI','XII','XIII','XIV','XV','XX','XXI','XXII','XXIII'];
+  ufs text[] := array['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI',
+                      'RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+  w text; ant text := ''; r text[] := '{}'; i int := 0; uf text;
+begin
+  if t is null or t !~ '[A-Za-zÀ-ÿ]' or t <> upper(t) then return t; end if;
+  foreach w in array regexp_split_to_array(btrim(regexp_replace(t, '\s+', ' ', 'g')), ' ') loop
+    i := i + 1;
+    if regexp_replace(w, '[[:punct:]]', '', 'g') = any(siglas)
+       or (ant = '-' and regexp_replace(w, '[[:punct:]]', '', 'g') = any(ufs)) then
+      null;                                            -- fica como veio
+    elsif i > 1 and lower(w) = any(miudas) then
+      w := lower(w);
+    else
+      w := initcap(lower(w));
+      uf := substring(w from '/([A-Za-z]{2})[[:punct:]]*$');
+      if upper(uf) = any(ufs) then w := regexp_replace(w, '/' || uf, '/' || upper(uf)); end if;
+    end if;
+    r := r || w; ant := w;
+  end loop;
+  return array_to_string(r, ' ');
+end $$;
+
+create or replace function clientes_caixa() returns trigger language plpgsql as $$
+begin
+  new.nome        := caixa_do_cadastro(new.nome);
+  new.nome_mae    := caixa_do_cadastro(new.nome_mae);
+  new.profissao   := caixa_do_cadastro(new.profissao);
+  new.logradouro  := caixa_do_cadastro(new.logradouro);
+  new.complemento := caixa_do_cadastro(new.complemento);
+  new.bairro      := caixa_do_cadastro(new.bairro);
+  new.cidade      := caixa_do_cadastro(new.cidade);
+  new.endereco    := caixa_do_cadastro(new.endereco);
+  new.uf          := upper(new.uf);
+  return new;
+end $$;
+
+drop trigger if exists clientes_caixa on clientes;
+create trigger clientes_caixa before insert or update of nome, nome_mae, profissao, logradouro, complemento, bairro, cidade, endereco, uf
+  on clientes for each row execute function clientes_caixa();
+
+-- os já gravados: o valor vai convertido, porque o a_sem_mudanca (suppress_redundant_updates_trigger,
+-- que roda antes) descarta o "set x = x" sem chegar ao clientes_caixa
+update clientes set nome = caixa_do_cadastro(nome), nome_mae = caixa_do_cadastro(nome_mae),
+                    logradouro = caixa_do_cadastro(logradouro), complemento = caixa_do_cadastro(complemento),
+                    bairro = caixa_do_cadastro(bairro), cidade = caixa_do_cadastro(cidade), endereco = caixa_do_cadastro(endereco)
+ where (nome ~ '[A-Za-zÀ-ÿ]' and nome = upper(nome))
+    or (nome_mae ~ '[A-Za-zÀ-ÿ]' and nome_mae = upper(nome_mae))
+    or (logradouro ~ '[A-Za-zÀ-ÿ]' and logradouro = upper(logradouro))
+    or (complemento ~ '[A-Za-zÀ-ÿ]' and complemento = upper(complemento))
+    or (bairro ~ '[A-Za-zÀ-ÿ]' and bairro = upper(bairro))
+    or (cidade ~ '[A-Za-zÀ-ÿ]' and cidade = upper(cidade))
+    or (endereco ~ '[A-Za-zÀ-ÿ]' and endereco = upper(endereco));
+
+
+-- ══ O histórico antigo pedido ao celular (F286): cópia de migracoes/f286_historico_celular.sql ══
+-- ══ F286 · o histórico antigo pedido ao celular (pedido do Paulo, 26.10.2026) ══
+-- O WhatsApp entrega o histórico uma vez, ao ler o QR, e a ponte guarda só o
+-- de quem já é cliente. Quem virou cliente depois (ou cuja conversa se perdeu
+-- na importação) ficava só com as mensagens novas. Agora a conversa guarda um
+-- pedido (historico_pedido): nasce pedido na conversa de cliente, e o ⋯ da
+-- conversa pede de novo. A ponte lê os pedidos, pede ao celular as mensagens
+-- anteriores à mais antiga que o CRM tem e grava historico_feito/resultado.
+
+alter table zap_conversas
+  add column if not exists historico_pedido timestamptz,
+  add column if not exists historico_feito timestamptz,
+  add column if not exists historico_resultado text;
+
+create index if not exists zap_conversas_historico_fila on zap_conversas (historico_pedido)
+  where historico_pedido is not null and historico_feito is null;
+
+create or replace function zap_historico_ao_nascer() returns trigger
+language plpgsql as $$
+begin
+  if new.cliente_id is not null and new.historico_pedido is null then new.historico_pedido := now(); end if;
+  return new;
+end $$;
+create or replace trigger zap_historico_nasce before insert on zap_conversas
+  for each row execute function zap_historico_ao_nascer();
+
+-- A mensagem mais antiga que todas as da conversa é histórico, e não novidade:
+-- não mexe na prévia, no não-lidas, no status nem no robô.
+create or replace function zap_eh_historico(m zap_mensagens) returns boolean
+language sql stable as $$
+  select m.quando_wa is not null and m.quando_wa < (select min(x.quando_wa) from zap_mensagens x
+                                                     where x.conversa_id = m.conversa_id and x.id <> m.id
+                                                       and x.direcao <> 'interna')
+$$;
+
+create or replace function zap_toque() returns trigger
+language plpgsql as $$
+declare volta boolean;
+begin
+  -- nota interna não mexe na prévia nem no não-lidas: a lista mostra a
+  -- conversa com o CLIENTE, e não o bilhete que a equipe deixou
+  if new.direcao = 'interna' then return new; end if;
+  -- F286: o histórico antigo pedido ao celular não é mensagem nova
+  if zap_eh_historico(new) then return new; end if;
+  select new.direcao = 'entrada' and c.status = 'resolvida' and not c.automatica
+         and coalesce(a.encerrado_em, '-infinity') < now()
+             - make_interval(mins => coalesce((select valor from config_app where chave='zap_volta_min'),'60')::int)
+    into volta
+    from zap_conversas c left join zap_atendimentos a on a.id = c.atendimento_id
+   where c.id = new.conversa_id;
+  update zap_conversas set
+    ultima_em    = coalesce(new.quando_wa, new.criado_em, now()),
+    ultimo_texto = left(coalesce(nullif(trim(new.texto),''), '['||new.tipo||']'), 200),
+    nao_lidas    = case when new.direcao='entrada' then nao_lidas + 1 else nao_lidas end,
+    -- cliente que volta a escrever reabre a conversa: "resolvida" era a
+    -- opinião do escritório, e ele acabou de discordar
+    status       = case when new.direcao='entrada' and status='resolvida'
+                        then 'aberta' else status end,
+    -- e o assunto novo começa pelo robô (F273)
+    atendente_id = case when volta then null else atendente_id end,
+    setor        = case when volta then null else setor end,
+    setor_id     = case when volta then null else setor_id end,
+    bot_ativo    = case when volta then true else bot_ativo end,
+    bot_passo    = case when volta then null else bot_passo end,
+    bot_desde    = case when volta then null else bot_desde end,
+    bot_erros    = case when volta then 0 else bot_erros end,
+    bot_dados    = case when volta then null else bot_dados end
+  where id = new.conversa_id;
+  return new;
+end $$;
+
+-- o robô do menu também não responde ao histórico (a linha entra no corpo que já está no banco)
+do $$
+declare d text := pg_get_functiondef('zap_bot()'::regprocedure);
+begin
+  if position('zap_eh_historico' in d) = 0 then
+    execute replace(d, $a$if new.direcao <> 'entrada' then return new; end if;$a$,
+      $a$if new.direcao <> 'entrada' or zap_eh_historico(new) then return new; end if;$a$);
+  end if;
+end $$;

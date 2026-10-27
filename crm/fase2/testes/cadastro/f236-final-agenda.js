@@ -225,9 +225,9 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   const linhas = (p, k) => p.evaluate(kid => linhasDeDatas(D.casoPorId.get(kid).cliente_id).linhas.filter(x => x.casoId === kid)
     .map(x => ({ rotulo: x.rotulo || "", curto: x.curto || "", data: x.data, nat: x.natureza || "", resumo: x.resumo || "", acao: x.acao || "", conf: !!x.aConfirmar,
       rot: String(x.rot || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ") })), k.id);
-  const cartoes = p => p.evaluate(() => [...document.querySelectorAll(".caso-esq .faixa-prazos .pz")].map(c => ({ tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent,
+  const cartoes = p => p.evaluate(() => [...document.querySelectorAll(".caso-esq .faixa-prazos .pz")].map(c => ({ tipo: c.dataset.tipo, data: c.dataset.data.split("-").reverse().join("/"),
     rel: (c.querySelector(".pz-rel") || {}).textContent || "", cls: c.className, txt: c.textContent.replace(/\s+/g, " ").trim() })));
-  const resumo = p => p.evaluate(() => (document.querySelector(".caso-esq .fp-resumo") || {}).textContent || "");
+  const resumo = p => p.evaluate(() => (document.querySelector(".caso-esq .faixa-prazos") || {}).textContent || "");
   const itens = (p, col) => p.evaluate(c => itensAgenda(c).map(i => ({ cli: (i.cli || {}).id || null, data: i.data, selo: i.selo || "", resumo: i.resumo || "",
     fatal: !!i.fatal, prazo: !!i.prazo, conf: !!i.evPassado, avisar: i.avisar ? i.avisar.id : null })), col);
 
@@ -303,10 +303,12 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   conf("a sustentação oral entra em Prazos e compromissos na data limite do Regimento (art. 81, III), com a proposta num clique",
     sust && sust.data === sustAte && /art\. 81, III/.test(sust.rot) && /propostaSustentacao/.test(sust.acao), sust);
   const cP = await cartoes(paulo);
-  const proxP = cP.find(c => /pz-proximo/.test(c.cls));
-  conf("o PRÓXIMO é a sustentação (e não a pauta antiga) e o rótulo dele não é comido pelo selo",
-    proxP && proxP.tipo === "Sustentação oral" && await paulo.evaluate(() => { const t = document.querySelector(".caso-esq .pz.pz-proximo .pz-tipo"), c = t && t.closest(".pz");
-      return !!t && getComputedStyle(t).whiteSpace === "normal" && getComputedStyle(c).flexWrap === "wrap"; }), proxP);
+  // F254 · o próximo é o primeiro da faixa que ainda vem (a ordem é crescente); o título quebra a linha, não é cortado
+  const proxP = cP.find(c => !/pz-venceu|pz-confirmar/.test(c.cls));
+  // F275 · a linha mostra só a data e o abrir; o título fica no passar do mouse e no painel
+  conf("o PRÓXIMO é a sustentação (e não a pauta antiga), com o título no passar do mouse",
+    proxP && proxP.tipo === "Sustentação oral" && await paulo.evaluate(() => { const c = [...document.querySelectorAll(".caso-esq .pz")].find(x => x.dataset.tipo === "Sustentação oral");
+      return !!c && /Sustentação oral/.test(c.title); }), proxP);
   await paulo.evaluate(k => propostaSustentacao(k), P.k.id); await espera(paulo, 700);
   const tSust = T.andamentos.find(a => a.caso_id === P.k.id && /^🎙 Sustentação oral no julgamento de/.test(a.texto || ""));
   const tfSust = tSust && T.andamento_tarefas.find(t => t.andamento_id === tSust.id);
@@ -327,7 +329,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   conf("a perícia que passou é UMA linha (sem a do prazo parado), na data dela, com a conta de quando o INSS decide",
     lS.filter(x => x.conf).length === 1 && !lS.some(x => x.rotulo === "Prazo de análise parado") && lS.some(x => x.rotulo === "Compareceu?" && x.data === dia(-12) && /o INSS decide até/.test(x.rot) && x.curto === "Confirmar a perícia"), lS.map(x => `${x.rotulo}@${x.data}`));
   conf("ela não 'venceu': diz há quantos dias, pede o clique e não entra na conta dos vencidos",
-    cS.some(c => c.tipo === "Compareceu?" && /há 12 d · confirme/.test(c.rel) && !/pz-venceu/.test(c.cls)) && /1 a confirmar/.test(rS) && !/vencido/.test(rS), { cS, rS });
+    cS.some(c => c.tipo === "Compareceu?" && /Confirmar a perícia/.test(c.txt) && !/pz-venceu/.test(c.cls)) && /A confirmar\s*1/.test(rS) && !/Vencidas/.test(rS), { cS, rS });
   const clS = await paulo.evaluate(k => quadroDatas(D.casoPorId.get(k)), S.k.id);
   conf("no clássico também: a linha da perícia não diz 'venceu'", !/venceu/.test(clS) && /aconteceu\? Confirme/.test(clS));
 
@@ -347,7 +349,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   // ── r12 · a DCB: o resumo dá o prazo fatal à janela da prorrogação ────────────────────────────────────────────
   await ficha(paulo, W.c.id, W.k.id);
   const rW = await resumo(paulo);
-  conf("o resumo do quadro chama de prazo fatal a janela da prorrogação, e não a DCB", /prazo fatal: Pedir a prorrogação/.test(rW) && !/prazo fatal: (DCB|Benefício cessa)/.test(rW), rW);
+  conf("o prazo fatal em destaque é a janela da prorrogação, e não a DCB", /Pedir a prorrogação[^\n]*\s*abrir\s*Prazo fatal: [^\n]*úteis/.test(rW) && !/(DCB|Benefício cessa)[^\n]*\s*abrir\s*Prazo fatal:/.test(rW), rW);
   await ficha(paulo, W2.c.id, W2.k.id);
   const lW2 = await linhas(paulo, W2.k), jan = lW2.find(x => x.rotulo === "Pedir a prorrogação");
   conf("com a janela aberta: o resumo não repete a data, e a linha traz a tarefa e a mensagem num clique",

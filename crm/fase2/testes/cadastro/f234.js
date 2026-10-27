@@ -71,10 +71,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // 1 · o quadrado vem primeiro, só com os escolhidos, e nada abre antes do clique
   const q0 = await p.evaluate(() => { const q = document.getElementById("ad-quadrado"), main = q && q.parentElement;
-    return { ok: !!q, primeiro: main && main.querySelector(":scope > :not(.tp-rola)") === q, bts: [...document.querySelectorAll("#ad-quadrado .adq-bt")].map(b => [b.dataset.op, b.textContent.replace(/\s+/g, " ")]),
+    return { ok: !!q, primeiro: main && (x => !!x && (x === q || (x.dataset.passo === "pend" && x.nextElementSibling === q)))(main.querySelector(":scope > :not(.tp-rola)")), bts: [...document.querySelectorAll("#ad-quadrado .adq-bt")].map(b => [b.dataset.op, b.textContent.replace(/\s+/g, " ")]),
       vazio: !!document.getElementById("ad-benef") && !document.querySelector("#ad-benef .adb-req"), irmao: q && q.nextElementSibling && q.nextElementSibling.id }; });
   await p.screenshot({ path: path.join(OUT, "01-quadrado.png") });
-  conf("o quadrado dos benefícios é o primeiro da Análise de Direito", q0.ok && q0.primeiro);
+  conf("o quadrado dos benefícios vem logo depois das Pendências (F283b)", q0.ok && q0.primeiro);
   conf(`o quadrado mostra só os escolhidos (${q0.bts.map(b => b[0]).join(", ")})`, q0.bts.map(b => b[0]).sort().join() === "b31,idade");
   conf("cada botão traz a contagem dos requisitos", q0.bts.every(([, t]) => /\d+ de \d+ em ordem/.test(t)));
   conf("nada abre antes do clique, e o lugar do painel é logo abaixo do quadrado", q0.vazio && q0.irmao === "ad-benef");

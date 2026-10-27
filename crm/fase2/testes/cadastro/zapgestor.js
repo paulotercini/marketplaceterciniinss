@@ -106,7 +106,10 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.waitForSelector(".zap-topo");
   const topo = await p.textContent(".zap-topo");
   conf("atendente: na conversa de outra pessoa não há Transferir nem Encerrar", !topo.includes("Transferir") && !topo.includes("Encerrar"));
-  conf("atendente: aviso de só leitura e o campo vira nota interna", (await p.textContent(".zap-escrever")).includes("está com Amanda") && await p.evaluate(() => zapNota));
+  // F265 · atendimento compartilhado: quem não atende também responde, e a nota interna continua à mão
+  conf("atendente: o aviso diz com quem a conversa está e que dá para responder", (await p.textContent(".zap-escrever")).includes("está com Amanda")
+    && (await p.textContent(".zap-escrever")).includes("Você pode responder") && (await p.textContent(".ze-modos")).includes("Responder ao cliente"));
+  await p.evaluate(() => { if(!zapNota) alternarNota(); });
   await p.fill("#zap-txt", "@Amanda o cliente pediu retorno");
   await p.click("#zap-enviar");
   await p.waitForTimeout(400);

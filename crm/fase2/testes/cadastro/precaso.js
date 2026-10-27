@@ -74,9 +74,9 @@ FIX.colaboradores.push({ id: COL2, nome: "Amanda Ficticia", inicial: "A", cor: "
   await p.waitForSelector('button.mt[data-vv="0"]');
   const abas = await p.evaluate(() =>
     [...document.querySelectorAll(".mt")].map(b => b.innerText.trim().split("\n")[0]));
-  conf(`sem caso, o menu tem só Cadastro e Lembretes (${abas.join(" · ")})`,
-    abas.some(x => /Cadastro/.test(x)) && abas.some(x => /Aposentadorias futuras/.test(x))
-    && !abas.some(x => /Casos|Perícias|Honorários/.test(x)));
+  // F277 · as Aposentadorias futuras saíram do menu: viraram o quadro Aposentadoria do Cadastro
+  conf(`sem caso, o menu tem só o Cadastro (${abas.join(" · ")})`,
+    abas.some(x => /Cadastro/.test(x)) && !abas.some(x => /Aposentadorias futuras|Casos|Perícias|Honorários/.test(x)));
   conf("e a ficha abriu no Cadastro (a aba 2 não existe para ele)",
     (await p.evaluate(() => abaAtiva)) === 0);
 
@@ -98,14 +98,15 @@ FIX.colaboradores.push({ id: COL2, nome: "Amanda Ficticia", inicial: "A", cor: "
   // dela, a ficha mostra a mesa com o trilho completo
   conf("o + atendimento abre a tela do atendimento no Primeiro atendimento",
     await p.evaluate(() => document.getElementById("detalhe").classList.contains("atend-tela") && subCad === "pa"));
+  await p.click(".atend-acoes .atend-concluir");   // F277 · Salvar pré-caso: sem salvar, sair o descarta
+  await p.waitForTimeout(400);
   await p.click('button:has-text("Sair do modo atendimento")');
-  await p.click('.sub-menu button:has-text("Anotações")');
+  await p.evaluate(() => irSubCad("anotacoes"));   // F277 · o Cadastro mostra só a Identificação; a mesa abre pelo atalho
   await p.waitForTimeout(300);
   const divisoes = await lerTrilho();
   conf(`o trilho do cliente triado sem caso, com atendimento (${divisoes.join(" · ")})`,
     /Identificação/.test(divisoes[0]) && divisoes.some(x => /Anotações/.test(x))
-    && divisoes.some(x => /Documentos/.test(x))     // F31: carrega a Consulta
-    && divisoes.some(x => /Mensagens/.test(x))
+    && divisoes.some(x => /Abrir atendimento/.test(x))   // F277 · fora da tela, só a Identificação e o aberto pelo atalho
     && !divisoes.some(x => /Triagem/.test(x))       // encerrada, sumiu
     && !divisoes.some(x => /Consulta/.test(x)));    // mora dentro de Documentos
   await p.evaluate(() => irSubAnot("consulta"));
