@@ -14,8 +14,8 @@ está no nível completo vê tudo o que o outro escreveu.
 | Nível | O que se vê |
 |---|---|
 | 0 · Primeiro acesso | Só a 📅 Agenda (a integrada ao Google Agenda), que é a tela inicial e a única lista do menu, e a Identificação do cliente. A pesquisa acha o cliente e abre só a Identificação; o Novo Cliente funciona. |
-| 1 · Só anotação | Linha do tempo, o campo de escrever e o Lembrar em. Prazos numa linha de resumo ("ver as datas" abre). No atendimento: o relato na Conversa da equipe e os documentos do dossiê em lista; na Análise de Direito, o veredito do CRM por benefício e o parecer em texto livre; em Documentos, gerar, assinados e o Desfecho. |
-| 2 · Anotação + sugestões | O nível 1 com os tipos de anotação, as Sugestões, a frase "Ao registrar" e as datas à vista. |
+| 1 · Andamentos dos portais | O nível 0 e a aba Casos, somente leitura: só as abas INSS, Recurso (CRPS) e Judicial, sem o campo de escrever, sem os prazos e sem os botões que gravam (ficam os de trocar de aba, abrir o documento, copiar e marcar como lido). As etapas aparecem, mas não se escolhem. Decisão do Paulo de 27.10.2026: o colaborador se familiariza com a agenda, o cadastro e os andamentos antes de escrever. |
+| 2 · Anotação | A linha do tempo do Escritório, o campo de escrever com os tipos e as Sugestões, os prazos à vista, o Lembrar em e o que a onda ligou. No atendimento, as telas simples até a onda delas. É o nível em que se deixa o To Do. |
 | 3 · Completo | O CRM inteiro. |
 
 - O nível é **por colaborador** e quem define é o Paulo (menu da conta, "Níveis da equipe").
