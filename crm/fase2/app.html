@@ -5217,7 +5217,7 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-falta .fp2-tag{font-size:inherit;font-we
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.87</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.88</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7586,7 +7586,8 @@ function montarSidebar(){
     // F236 · o Importar fica à vista de quem aplica, com o número de coletas esperando
     vis.innerHTML = item("clientes","👥 Clientes",(D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length)   // à vista do titular, e não no "Mais"
       + item("direito","⚖️ Análise de Direito",nDir) + item("agenda","🩺 Perícias & Audiências",nAg)
-      + item("patinss","📥 Importar do INSS",coletasPorFonte().novas.length);
+      + item("patinss","📥 Importar do INSS",coletasPorFonte().novas.length, (()=>{ const n=coletasPorFonte().novas.length, v=semCasoAntigos().length;
+          return v ? `${n?`<span class="cont">${n}</span>`:""}<span class="cont" style="background:#c0392b;color:#fff" title="processos do acervo sem caso no CRM há mais de 7 dias">⚠ ${v}</span>` : ""; })());
     const mais = ["calendario","importante","particulares","rotinas","acervo"].map(id=>{ const x=dd[id];
         return item(id,x[1],x[2]==="🔒"?null:x[2], x[2]==="🔒"?`<span class="priv">🔒 só você</span>`:""); }).join("")
       + item("fase:prazo","🗓 Tarefas com Prazo",nFase("prazo"))
@@ -8915,6 +8916,7 @@ function telaImportarPat(){
     <p class="meio-sub">Solte aqui o arquivo <code>pat_AAAA-MM-DD.json</code> que o coletor baixou.
       Nada é gravado até você conferir e mandar aplicar.</p>
     ${linhaUltimasColetas()}
+    ${avisoSemCaso()}
     ${(()=>{ const {novas, velhas} = coletasPorFonte();
       if(!novas.length) return `<p class="meio-sub">Nenhuma coleta esperando. Use a extensão do navegador,
         ou solte um arquivo aqui embaixo.</p>`;
@@ -10093,8 +10095,51 @@ async function conferirPje(coletaId){
       if(!novos) plano.resumo.sem_mudanca++;
     }
     planoPjeAtual = plano;
+    await anotarSemCaso(dados, plano.semCaso, porProcesso, fora).catch(()=>{});
     render();
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
+}
+// F288 · PROCESSO SEM CASO HÁ MAIS DE 7 DIAS. A extensão do e-SAJ (1.24) só
+// baixa peças de processo com caso aberto, e o processo novo que a consulta
+// por OAB acha antes do cadastro fica só na lista desta conferência, que some
+// ao aplicar. A data em que cada número apareceu sem caso fica guardada em
+// config_app.pje_sem_caso, e o 📥 Importar avisa passados 7 dias.
+function pjeSemCaso(){
+  const v = cfgApp("pje_sem_caso");
+  if(v && typeof v==="object") return v;
+  try{ return JSON.parse(v||"{}"); }catch(e){ return {}; }
+}
+async function anotarSemCaso(dados, semCaso, porProcesso, fora){
+  const m = pjeSemCaso(), antes = JSON.stringify(m), agora = new Date().toISOString();
+  for(const p of (dados.processos||[])){
+    const d = soDig(p.numero);
+    if(d && m[d] && (porProcesso.has(d) || fora.has(d))) delete m[d];
+  }
+  for(const p of semCaso){
+    const d = soDig(p.numero);
+    if(d && !m[d]) m[d] = { numero:p.numero, partes:(p.partes||"").slice(0,80), sistema:dados.sistema||"pje", desde:agora };
+  }
+  if(JSON.stringify(m)!==antes) await guardarCfgApp("pje_sem_caso", JSON.stringify(m));
+}
+// os anotados que continuam sem caso (o vínculo feito por outro caminho tira da lista sem nova coleta)
+function semCasoAntigos(dias=7){
+  const comCaso = new Set();
+  for(const k of D.casos||[]){
+    if(soDig(k.processo)) comCaso.add(soDig(k.processo));
+    for(const px of (Array.isArray(k.processos)?k.processos:[])) if(soDig(px && (px.numero||px))) comCaso.add(soDig(px.numero||px));
+  }
+  const fora = new Set(pjeIgnorados()), corte = Date.now() - dias*86400000;
+  return Object.entries(pjeSemCaso())
+    .filter(([d,x]) => !comCaso.has(d) && !fora.has(d) && new Date(x.desde).getTime() < corte)
+    .map(([,x]) => x).sort((a,b) => a.desde < b.desde ? -1 : 1);
+}
+function avisoSemCaso(){
+  const l = semCasoAntigos(); if(!l.length) return "";
+  return `<div class="exig aviso-sem-caso"><strong>⚠ ${l.length} processo(s) do acervo sem caso no CRM há mais de 7 dias.</strong>
+    As peças dele não são baixadas até haver caso. Confira a coleta do tribunal para vincular, criar o caso ou ignorar.
+    ${l.slice(0,30).map(x=>`<div class="meio-sub" style="margin-top:2px">${esc(x.numero)} — ${esc(x.partes||"")}
+      · ${esc(x.sistema==="esaj"?"e-SAJ":x.sistema)} · sem caso desde ${esc(fmt(dataSP(x.desde)))}</div>`).join("")}
+    ${l.length>30?`<div class="meio-sub">…e mais ${l.length-30}.</div>`:""}</div>`;
 }
 // casamento TOLERANTE de nome: um contido no outro, na ordem, ignorando
 // caixa, acento e preposições. "joao aparecido ambrosio" está dentro de
