@@ -1,6 +1,6 @@
 // F249 · a transição do To Do em níveis (crm/fase2/docs/TRANSICAO.md): o painel do Paulo liga a transição (todos no
-// nível 1, ele no 3), troca a onda e o nível de cada um; no nível 1 o campo de escrever fica sem os tipos, as datas
-// numa linha, o que a onda não ligou some, e o atendimento abre simples (relato, veredito e parecer, Documentos com
+// nível 0, ele no 3), troca a onda e o nível de cada um; o nível 1 (F294) só lê os andamentos do INSS, do CRPS e do
+// Judicial; no nível 2 o que a onda não ligou some, e o atendimento abre simples (relato, veredito e parecer, Documentos com
 // o Desfecho), com "Ver … completo". Banco simulado e dados fictícios. Uso: node f249.js [fotos]
 const { chromium } = require("playwright");
 const http = require("http");
@@ -39,6 +39,7 @@ const and = (k, n, texto, o = {}) => { const a = { id: id("e"), caso_id: k.id, a
 const cX = cli("Xênia Fictícia Transição");
 const kX = caso(cX, { beneficio: "Apos. por Idade", especie: "B41", fase: "inss", der: iso(-30), prazo: iso(5), protocolos: ["1700000501"] });
 and(kX, -20, "Requerimento protocolado.");
+and(kX, -10, "Em análise.", { origem: "pat", origem_id: "1700000501|c1" });   // F294 · o andamento do INSS que o nível 1 lê
 const PC = "pc_f249a";
 const kP = caso(cX, { fase: "escritorio", pre_caso: true, beneficio: "Aposentadoria por idade", origem_lista: "🙋 Escritório",
   precaso: { id: PC, natureza: "", marc: {}, honorarios: "", quem: null, em: iso(-1) } });
@@ -128,25 +129,42 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf(`a ficha mostra só o Cadastro (${abas.join(", ")}) com a Identificação (${subs.join(", ")})`, abas.join() === "Cadastro" && subs.join() === "Identificação");
   await p.screenshot({ path: path.join(OUT, "00-nivel0-ficha.png") });
 
-  // 3 · o Paulo no nível 1 (para ver como o colaborador vê)
+  // 3 · F294 · o nível 1: a Agenda, os Clientes e os andamentos dos portais, sem escrever
   await p.evaluate(id => gravarTransicao({ col: id, n: 1 }), PAULO); await p.waitForTimeout(400);
+  await p.evaluate(() => { fecharCaixa(); fecharFicha && fecharFicha(); visao = "meudia"; render(); montarSidebar(); });
+  await p.waitForTimeout(400);
+  conf("no nível 1, o html leva data-nivel=1 e a tela inicial é a Agenda", (await nivel()) === "1" && await p.evaluate(() => visao) === "agendaq");
+  const itens1 = await p.evaluate(() => [...document.querySelectorAll(".lista-item")].filter(e => e.offsetParent !== null).map(e => e.dataset.v));
+  conf(`no nível 1 a barra mostra a Agenda e os Clientes (${itens1.join(", ")})`, itens1.join() === "agendaq,clientes");
+  await p.evaluate(id => abrirFicha(id), cX.id); await p.waitForTimeout(600);
+  const abas1 = await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].filter(e => e.offsetParent !== null).map(e => e.textContent.trim()));
+  conf(`a ficha do nível 1 abre no Cadastro e mostra os Casos (${abas1.join(", ")})`, abas1.length === 2 && abas1[0] === "Cadastro" && /^Casos/.test(abas1[1]));
+  await abrir(cX, kX);
+  const sub1 = await p.evaluate(() => [...document.querySelectorAll(".menu-andamentos button")].filter(e => e.offsetParent !== null).map(e => e.textContent.trim()));
+  conf(`no caso, só as abas dos portais (${sub1.join(", ")})`, sub1.length >= 1 && sub1.every(t => /^(INSS|Recurso|Judicial)/.test(t)));
+  conf("o caso abre na aba INSS, sem o campo de escrever", await p.evaluate(() => document.querySelector(".menu-andamentos button.on")?.textContent.trim().startsWith("INSS")) && !(await vis(".caso-dir .tipo-fila, .caso-dir #tipo-fila")));
+  conf("os prazos, que têm botões de gravar, não aparecem", !(await vis(".caso-pz")) && !(await vis(".conf-sem")));
+  await p.screenshot({ path: path.join(OUT, "02-nivel1-caso.png") });
+  conf("as etapas aparecem, mas não se escolhem", await vis(".tr-et") && await p.evaluate(() => getComputedStyle(document.querySelector(".tr-et")).pointerEvents === "none"));
+  conf("os botões que gravam somem (arquivar, tarefa, estrela, mensagem, levar, aceitar etapa, advogado)",
+    await p.evaluate(() => !["alternarArquivo", "abrirSeguimento", "alternarSinal", "msgAndamento", "moverAndamento", "aceitarEtapaProposta", "escolherAdvogado", "editarFato"]
+      .some(f => [...document.querySelectorAll(`#detalhe [onclick*="${f}"]`)].some(e => e.offsetParent !== null))));
+  conf("os de ler continuam (copiar o texto e marcar como lido)", await vis('.painel[data-p="2"] [onclick^="copiar"]') && await vis('.painel[data-p="2"] [onclick^="liNaFicha"]'));
+
+  // 3b · o nível 2: a anotação, com o que a onda ligou
+  await p.evaluate(id => gravarTransicao({ col: id, n: 2 }), PAULO); await p.waitForTimeout(400);
   await p.evaluate(() => fecharCaixa());
   await abrir(cX, kX);
-  conf("no nível 1, o html leva data-nivel=1", (await nivel()) === "1");
-  conf("o campo de escrever fica sem os tipos de anotação", !(await vis('#tipo-fila .tipo-ch[data-tipoand]')));
+  conf("no nível 2, o html leva data-nivel=2 e o campo de escrever volta", (await nivel()) === "2" && await vis("#tipo-fila"));
   conf("na onda 1, Sem resposta e Pedir ao cliente ainda não aparecem", !(await vis(".tipo-ch.tipo-sr")) && !(await vis(".tipo-ch.tipo-pc")));
   conf("na onda 1, o 'Em análise · +7 d' já aparece e o Movimentou não", await vis(".faixa-prazos .conf-sem") && !(await vis(".faixa-prazos .conf-mov")));
-  conf("as datas ficam numa linha, com 'ver as datas'", !(await vis(".faixa-prazos .pz")) && await vis(".faixa-prazos .fp-nv"));
-  await p.screenshot({ path: path.join(OUT, "02-nivel1-caso.png") });
-  await p.click(".faixa-prazos .fp-nv");
-  conf("'ver as datas' mostra os cartões", await vis(".faixa-prazos .pz"));
 
   // 4 · a onda 2 liga Sem resposta e Pedir ao cliente
   await p.evaluate(() => gravarTransicao({ onda: 2 })); await p.waitForTimeout(400); await p.evaluate(() => fecharCaixa());
   await abrir(cX, kX);
   conf("na onda 2, Sem resposta e Pedir ao cliente aparecem", await vis(".tipo-ch.tipo-sr") && await vis(".tipo-ch.tipo-pc"));
 
-  // 5 · o atendimento no nível 1
+  // 5 · o atendimento no nível 2
   await p.evaluate(([c, x]) => abrirAtendimentoDe(c, x), [cX.id, PC]);
   await p.waitForTimeout(800);
   await p.evaluate(() => irSubCad("pa")); await p.waitForTimeout(500);

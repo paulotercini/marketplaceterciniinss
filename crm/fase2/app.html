@@ -4098,19 +4098,21 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .cli-sit-t{font-style:normal;font-weight:600}.cli-sit-t.ativo{color:#1f6b41}.cli-sit-t.formacao{color:#8a6500}.cli-sit-t.inativo{color:#a3291c}
 @media (hover:hover) and (pointer:fine){.cli-todos-it:hover{background:var(--fundo2,#f5f5f2)}}
 /* F249 · o nível 0 (primeiro acesso): na ficha só o Cadastro (Identificação); na barra só a Agenda, e o Novo Cliente fica no botão fixo */
-html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="0"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]),html[data-nivel="0"] .cel-tudo,
-html[data-nivel="0"] #btn-v10-anotar,html[data-nivel="0"] .rapida-caixa,html[data-nivel="0"] #fab-rapida,
-html[data-nivel="0"] .barra-cel [data-cel="meudia"],html[data-nivel="0"] .barra-cel [data-cel="mencoes"],html[data-nivel="0"] .barra-cel [data-cel="menu"],html[data-nivel="0"] .grupo:has(#grupo-fases){display:none!important}
+html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]):not(#btn-processos),
+:is(html[data-nivel="0"],html[data-nivel="1"]) :is(.lista-item:not([data-v="agendaq"]):not([data-v="clientes"]),.cel-tudo,#btn-v10-anotar,.rapida-caixa,#fab-rapida,
+.barra-cel [data-cel="meudia"],.barra-cel [data-cel="mencoes"],.barra-cel [data-cel="menu"],.grupo:has(#grupo-fases)){display:none!important}
+/* F294 · o nível 1 só navega nos andamentos dos portais: sem os prazos, que têm botões de gravar */
+html[data-nivel="1"] :is(.caso-pz,.td-classif){display:none!important}
+/* F294 · no caso, o nível 1 vê só os botões de ler (trocar de aba, abrir o documento, copiar); os que gravam somem */
+html[data-nivel="1"] .painel[data-p="2"] [onclick]:not([onclick^="irSubAba"]):not([onclick^="trVerFase"]):not([onclick^="trAjuda"]):not([onclick^="guardar("]):not([onclick^="lcAbrir"]):not([onclick^="irOutraAba"]):not([onclick^="abrirMeuInss"]):not([onclick^="fonte"]):not([onclick^="filtroTudo"]):not([onclick^="procSel"]):not([onclick^="nupSel"]):not([onclick^="instSel"]):not([onclick^="tudoSoMarcos"]):not([onclick^="copiar"]):not([onclick^="liNaFicha"]):not([onclick^="liTudoNaFicha"]):not([onclick^="abrirAnexo"]):not([onclick^="abrirDecisao"]):not([onclick^="document."]):not([onclick^="fecharCaixa"]):not([onclick^="this."]):not([onclick^="trEscolher"]),html[data-nivel="1"] #detalhe :is(.cli-adv-bt,.cli-nao){display:none!important}
+html[data-nivel="1"] .painel[data-p="2"] [onclick^="trEscolher"]{pointer-events:none}
+html[data-nivel="1"] .mp-it.mp-novo{display:none!important}
 /* F253 · a faixa de quem olha como outro nível */
 #ver-nivel-faixa{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:900;display:flex;align-items:center;gap:12px;padding:8px 10px 8px 16px;border-radius:999px;background:#23231F;color:#fff;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:calc(100vw - 32px)}
 #ver-nivel-faixa button{border:none;border-radius:999px;padding:6px 12px;background:#fff;color:#23231F;font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}
 /* F252 · no celular do nível 0, a barra de baixo é Agenda, Clientes e Buscar */
-.barra-cel .so-n0{display:none!important}html[data-nivel="0"] .barra-cel .so-n0{display:block!important}
-/* F249 · a transição: no nível 1 o campo de escrever fica como o To Do (sem os tipos nem Sugestões) e as datas numa linha */
-html[data-nivel="1"] #tipo-fila .tipo-ch[data-tipoand],html[data-nivel="1"] .sug-abrir{display:none!important}
+.barra-cel .so-n0{display:none!important}:is(html[data-nivel="0"],html[data-nivel="1"]) .barra-cel .so-n0{display:block!important}
 .fp-nv{display:none}
-html[data-nivel="1"] .faixa-prazos:not(.nv-ver) .pz,html[data-nivel="1"] .faixa-prazos:not(.nv-ver) .fp-ver-todos{display:none!important}
-html[data-nivel="1"] .faixa-prazos:not(.nv-ver) .fp-nv{display:inline-flex}
 .nv-simples{background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px;padding:16px;margin:10px 0}
 .nv-simples h3{margin:0 0 6px}.nv-simples .nv-completo{margin-top:12px}
 .nv-docs ul{margin:6px 0 0;padding-left:18px}
@@ -4931,7 +4933,6 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-g{display:flex;align-items:center;gap:6p
 html .faixa-prazos.fp2.fp2.fp2.fp2 [data-tom="venc"] .fp2-g{color:var(--dk-fatal,#B3261E)}
 html .faixa-prazos.fp2.fp2.fp2.fp2 details.fp2-grupo summary{cursor:pointer}
 html .faixa-prazos.fp2.fp2.fp2.fp2 details.fp2-grupo summary .fp2-g{display:inline-flex}
-html[data-nivel="1"] .faixa-prazos.fp2.fp2.fp2:not(.nv-ver) :is(.fp2-grupo,.fp2-sem){display:none!important}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.pz-venceu:not(.fp2-fatal){background:#fff;box-shadow:none;border-left:0}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal{background:#FDF3F2;box-shadow:none;align-items:flex-start}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-tag{font-size:10.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--dk-fatal,#B3261E)}
@@ -9699,7 +9700,7 @@ function ligarCartoes(){
 let vistaAnimada="";
 function render(){
   aplicarTema(); marcarBarraCel();
-  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = meuNivel()===0 ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
+  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = meuNivel()<=1 ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
   // o fade só quando a VISTA muda (trocar de lista, pesquisar) — render()
   // também roda em clique de chip/estrela e piscaria a cada toque
   const chaveVista=visao+"|"+(buscaTxt||"");
@@ -11538,7 +11539,7 @@ const colAdmin = () => equipeAtiva().find(c=>c.papel==="admin") || eu;
 const souAdmin = () => !!eu && eu.papel==="admin";
 // F131 · a barra do colaborador é a do To Do: só as listas que a equipe já
 // conhece. O admin vê a mesma barra ligando "ver como colaborador".
-const visaoColab = () => !souAdmin() || ler("crm_ver_como")==="colab" || meuNivel()===0;   // F249 · o nível 0 também
+const visaoColab = () => !souAdmin() || ler("crm_ver_como")==="colab" || meuNivel()<=1;   // F249 · os níveis 0 e 1 também
 // F187 · o atendente precisa do WhatsApp e das Menções (aviso de transferência e @)
 const LISTAS_COLAB = ["meudia","mencoes","whatsapp","calendario","planejado","agendaq","importante","particulares","rotinas",
   "fase:prazo","fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial",
@@ -11551,11 +11552,11 @@ const LISTAS_POR_CARGO = {
   advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "direito", "agenda"],
   recepcao: ["meudia","mencoes","whatsapp","calendario","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente"],
 };
-const listasDoColab = () => meuNivel()===0 ? ["agendaq", "clientes", "novocliente"]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente)
+const listasDoColab = () => meuNivel()<=1 ? ["agendaq", "clientes", "novocliente"]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente)
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
 function alternarVerComo(){
   guardar("crm_ver_como", visaoColab() ? "" : "colab");
-  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = meuNivel()===0 ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
+  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = meuNivel()<=1 ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
   montarSidebar(); render();
 }
 let segAberto = null;
@@ -17571,7 +17572,7 @@ async function abrirFicha(cliId){
     procSel = ""; nupSel = ""; fonteCnj = ""; fontePat = ""; fonteCrps = "";   // idem: processo e fonte (F71: PJe padrão)
     subAba = "escritorio";   // F166 · abrir um caso é abrir os andamentos do Escritório (era o Caso completo, F45)
   }
-  if(meuNivel()===0){ abaAtiva = 0; subCad = "identificacao"; _atendAberto.delete(cliId); }   // F249 · primeiro acesso: só a Identificação
+  if(meuNivel()<=1){ if(meuNivel()===0 || abaAtiva!==2) abaAtiva = 0; subCad = "identificacao"; _atendAberto.delete(cliId); }   // F249 · primeiro acesso: só a Identificação; F294 · o nível 1 também os Casos
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
   // em rede lenta a coluna abria branca até as 6 consultas voltarem
@@ -17841,7 +17842,10 @@ function pintarFicha(){
           // histórico não some quando a etapa acaba.
           const visiveis = abasVisiveis(k, andsVis);
           const {inss:temINSS, crps:temCRPS, cnj:temCNJ} = visiveis;
-          const aba = visiveis[subAba] ? subAba : "escritorio";
+          // F294 · o nível 1 lê só os andamentos dos portais (INSS, Recurso, Judicial), onde não há campo de escrever
+          const nv1 = meuNivel()===1;
+          const aba = nv1 ? (["inss","crps","cnj"].find(a=>a===subAba && visiveis[a]) || ["inss","crps","cnj"].find(a=>visiveis[a]) || "")
+            : visiveis[subAba] ? subAba : "escritorio";
           // a etiqueta da aba diz o estado sem abrir: ✔ quando a fase foi
           // encerrada à mão, 🗄 quando TODOS os processos daquela fonte estão
           // arquivados (um só arquivado não marca a aba — o outro segue vivo),
@@ -17856,12 +17860,12 @@ function pintarFicha(){
           // comentário fixo, os prazos em quadros e só então o trabalho.
           const v10 = temaV10();
           const menu = `<div class="sub-menu${v10?" menu-andamentos":""}" style="width:100%">
-          <button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">${v10?"Escritório":"Andamentos do Escritório"}</button>
+          ${nv1 ? "" : `<button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">${v10?"Escritório":"Andamentos do Escritório"}</button>`}
           ${temINSS?`<button class="${cls("inss",faseEncerrada(k,"pat"))}" onclick="irSubAba('inss')">${v10?"INSS":"Andamentos INSS"}${rot(comentariosPat(andsVis).length, abaPatArquivada(k), faseEncerrada(k,"pat"))}</button>`:""}
           ${temCRPS?`<button class="${cls("crps",faseEncerrada(k,"crps"))}" onclick="irSubAba('crps')">Recurso (CRPS)${rot(crpsTotalEventos(k), abaCrpsArquivada(k), faseEncerrada(k,"crps"))}</button>`:""}
           ${temCNJ?`<button class="${cls("cnj",faseEncerrada(k,"cnj"))}" onclick="irSubAba('cnj')">${v10?"Judicial":"Andamentos do CNJ"}${rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k), faseEncerrada(k,"cnj"))}</button>`:""}
-          <button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
-            title="todas as fontes juntas, em ordem cronológica">${v10?"Caso Completo":"Caso completo"}</button>
+          ${nv1 ? "" : `<button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
+            title="todas as fontes juntas, em ordem cronológica">${v10?"Caso Completo":"Caso completo"}</button>`}
         </div>`;
           return (v10
         // F145 · duas colunas (pedido do Paulo, 27.09.2026): à esquerda, parada,
@@ -17870,10 +17874,10 @@ function pintarFicha(){
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
         ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col"><aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir">${bannerAClassificar(k)}${menu}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div>
+           <div class="caso-dir">${bannerAClassificar(k)}${menu}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || nv1 ? "" : composerCaso(k)}${painelDaAba()}</div>
            <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
-          function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
+          function painelDaAba(){ return !aba ? `<p class="meio-sub">Este caso ainda não tem andamento do INSS, do Conselho de Recursos nem do Judicial.</p>` : aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
             : aba==="inss" ? painelINSS(k, andsVis)
             : aba==="tudo" ? painelTudo(k, andsVis) : painelEscritorio(k, andsVis); }
         })()}
@@ -18131,7 +18135,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   const tela = abaAtiva===0 && pcsVivos.length>0 && _atendAberto.has(c.id) && (ATEND_SUBS.has(cd) || cd==="identificacao");
   queueMicrotask(()=>{ const d = document.getElementById("detalhe"); if(d){ d.classList.toggle("atend-tela", tela); d.classList.toggle("id-bege", abaAtiva===0 && ["identificacao","direito","documentos"].includes(cd)); } });
   if(tela) for(const v of Object.keys(vis)) if(v!=="identificacao" && !ATEND_SUBS.has(v)) vis[v] = false;
-  if(meuNivel()===0) for(const v of Object.keys(vis)) vis[v] = v==="identificacao";   // F249 · primeiro acesso
+  if(meuNivel()<=1) for(const v of Object.keys(vis)) vis[v] = v==="identificacao";   // F249 · primeiro acesso; F294 · e o nível 1
   return `
     ${tela ? cabecalhoAtendimento(c, cd, vis) : ""}
     <div class="sub-menu" style="width:100%">
@@ -18141,7 +18145,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
         .map(([v,r])=>`<button class="${cd===v?"on":""}" onclick="irSubCad('${v}')">${r}${
         v==="direito"&&analisesDe(c.id).length?` (${analisesDe(c.id).length})`:""}${
         v==="anotacoes"&&semCaso?` <span class="meio-sub">•</span>`:""}</button>`).join("")}
-      ${meuNivel()===0 || !podeAtender() ? "" : !pcsVivos.length ? `<button class="trilho-mais atend-novo" style="align-self:center;margin-left:auto"
+      ${meuNivel()<=1 || !podeAtender() ? "" : !pcsVivos.length ? `<button class="trilho-mais atend-novo" style="align-self:center;margin-left:auto"
         title="abrir um atendimento novo — pode virar caso novo ou só lembrete"
         onclick="novoAtendimento('${c.id}')">+ atendimento</button>`
         : !tela ? `<button class="trilho-mais atend-novo" style="align-self:center;margin-left:auto"
@@ -41215,7 +41219,7 @@ function respostaAcordo(andId, tipo){
 }
 // ══════════════════════════════════════════════════════════════════════════
 // F249 · A TRANSIÇÃO EM NÍVEIS (crm/fase2/docs/TRANSICAO.md, decisões do Paulo de 20.10.2026). O To Do era só escrever
-// a anotação; o CRM tem muito mais. Cada colaborador tem um nível (1 · só anotação, 2 · anotação + sugestões,
+// a anotação; o CRM tem muito mais. Cada colaborador tem um nível (1 · andamentos dos portais, 2 · anotação,
 // 3 · completo) e a onda diz quais recursos já foram ligados para os níveis 1 e 2. A anotação é o centro em todos:
 // o que o CRM calcula continua por trás, e o que se escreve no 1 aparece igual no 3. Sem a transição ligada, todos
 // veem o completo, como antes.
@@ -41256,7 +41260,7 @@ function aplicarNivel(){
     fx.innerHTML = `<span>Você está vendo o CRM como o <b>nível ${verNivel()}</b>.</span><button type="button" onclick="verComoNivel(null)">Voltar à minha visão</button>`;
   } else if(fx) fx.remove();
   if(n<3) h.setAttribute("data-nivel", String(n)); else h.removeAttribute("data-nivel");
-  const css = n<3 ? Object.entries(REC_ONDA).filter(([w])=>o < +w)
+  const css = n<3 ? Object.entries(REC_ONDA).filter(([w])=>n===1 || o < +w)
     .map(([, sel])=>sel.split(",").map(x=>`html[data-nivel] ${x}`).join(",") + "{display:none!important}").join("\n") : "";
   let st = document.getElementById("css-ondas");
   if(!st){ st = document.createElement("style"); st.id = "css-ondas"; document.head.appendChild(st); }
@@ -41299,7 +41303,7 @@ function abrirTransicao(){
     <p class="meio-sub" style="margin:0 0 8px">${t ? "Cada colaborador vê o CRM do nível dele." : "Hoje todos veem o CRM completo. Escolher um nível ou uma onda, ou o botão abaixo, liga a transição."}</p>
     <p class="meio-sub" style="margin:0">Onda em vigor para os níveis 1 e 2:</p>
     <div class="trn-ondas">${ONDAS.map(([n, r])=>`<button type="button" class="esp-it trn-onda${n===onda?" on":""}" onclick="gravarTransicao({onda:${n}})">${n} · ${esc(r)}</button>`).join("")}</div>
-    <p class="meio-sub" style="margin:0">Nível de cada um (0 · Agenda e Identificação, 1 · só anotação, 2 · com sugestões, 3 · completo):</p>
+    <p class="meio-sub" style="margin:0">Nível de cada um (0 · Agenda e Identificação, 1 · andamentos dos portais, 2 · anotação, 3 · completo):</p>
     <ul class="trn-lista">${equipeAtiva().map(co=>`<li><b>${esc(co.nome)}</b>${[0, 1, 2, 3].map(n=>`<button type="button" class="btn-mini trn-nv${nv(co.id)===n?" on":""}" data-col="${co.id}" data-n="${n}" aria-pressed="${nv(co.id)===n}" onclick="gravarTransicao({col:'${co.id}', n:${n}})">${n}</button>`).join("")}</li>`).join("")}</ul>
     ${t ? `<p class="meio-sub" style="margin:10px 0 4px">Ver o CRM como o colaborador vê (só para você, nesta sessão):</p>
       <div class="form-linha trn-ver">${[0, 1, 2].map(n=>`<button type="button" class="btn-mini trn-ver-n${verNivel()===n?" on":""}" onclick="verComoNivel(${n})">nível ${n}</button>`).join("")}
