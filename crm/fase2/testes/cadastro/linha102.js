@@ -95,9 +95,9 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       nivel1: !!r.querySelector(".lc-numeros"), semRegua: !document.querySelector(".regua-caso"), semCartaoFora: !document.querySelector(".painel[data-p='2'] > .fatos-processo"),
       semPrazoFatalSolto: !/Prazo fatal do caso/.test(document.querySelector(".painel[data-p='2']").textContent) };
   });
-  conf("uma linha só: o nome do pedido (sem o código), DER em dd/mm/aaaa, tramitação e verificação", /^(B41 · INSS )?Aposentadoria por idade/.test(lc.txt) && /DER 12\/05\/2024/.test(lc.txt) && /TRAMITAÇÃO INSS/i.test(lc.txt) && /VERIFICAÇÃO Manual/i.test(lc.txt));
+  conf("uma linha só: o nome do pedido (sem o código), DER em dd/mm/aaaa, tramitação e verificação", /^(B41 · INSS ✎ )?Aposentadoria por idade/.test(lc.txt) && /DER 12\/05\/2024/.test(lc.txt) && /TRAMITAÇÃO INSS/i.test(lc.txt) && /VERIFICAÇÃO Manual/i.test(lc.txt));
   // ── F113 · a espécie pela janela, com subespécies e pedido à mão ─────────
-  conf("a canetinha ao lado do nome abre a janela das espécies", await p.evaluate(() => /escolherEspecie/.test((document.querySelector(".lc-topo .lc-ben + .lapis") || {}).getAttribute("onclick") || "")));
+  conf("a canetinha ao lado do nome abre a janela das espécies", await p.evaluate(() => /escolherEspecie/.test((document.querySelector(".lc-topo .lc-sobre + .lapis") || { getAttribute: () => "" }).getAttribute("onclick") || "")));
   await p.evaluate((id) => escolherEspecie(id), CASO1); await p.waitForTimeout(150);
   const jan = await p.evaluate(() => { const m = document.getElementById("modal"); return { itens: m.querySelectorAll(".esp-it").length, b36: /Auxílio-acidente previdenciário/.test(m.textContent),
     b42: [...m.querySelectorAll(".esp-it")].filter(b => /Aposentadoria por tempo de contribuição/.test(b.textContent)).length, livre: !!m.querySelector("#esp-livre") }; });
@@ -351,18 +351,18 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
 
   // ── F119 · a etapa, o passo dentro da fase ──────────────────────────────
   conf("a exigência registrada lá atrás já tinha declarado a etapa sozinha", await p.evaluate(() =>
-    D.casoPorId.get(casoSel).etapa === "em exigência" && document.querySelector(".lc-etapa").textContent.trim() === "em exigência"));
+    D.casoPorId.get(casoSel).etapa === "em exigência" && document.querySelector(".tr-agora b").textContent.trim() === "em exigência"));
   await p.evaluate(() => gravarEtapa(casoSel, "")); await p.waitForTimeout(300);
-  conf("a linha mostra a etapa ao lado da tramitação, e vazia ela convida a definir", await p.evaluate(() => {
+  conf("F287 · a etapa saiu da placa e mora na faixa das fases", await p.evaluate(() => {
     const rots = [...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim());
-    return rots.includes("Tramitação") && rots.includes("Etapa") && document.querySelector(".lc-etapa").textContent.trim() === "a definir"; }));
+    return rots.includes("Tramitação") && !rots.includes("Etapa") && !D.casoPorId.get(casoSel).etapa && !!document.querySelector(".tr-agora b"); }));
   await p.evaluate((id) => escolherEtapa(id), CASO1); await p.waitForTimeout(200);
   conf("a janela só oferece as etapas da fase em que o caso está", await p.evaluate(() => {
     const t = [...document.querySelectorAll("#modal .esp-it")].map(b => b.textContent.trim());
     return t.includes("aguardando perícia") && t.includes("em exigência") && !t.includes("aguardando sentença"); }));
   await p.evaluate(() => gravarEtapa(casoSel, "aguardando perícia")); await p.waitForTimeout(350);
   conf("escolher a etapa grava e aparece na linha", (patches("etapa").pop() || {}).etapa === "aguardando perícia"
-    && await p.evaluate(() => document.querySelector(".lc-etapa").textContent.trim() === "aguardando perícia"));
+    && await p.evaluate(() => document.querySelector(".tr-agora b").textContent.trim() === "aguardando perícia"));
   await p.evaluate(() => popAnotacao("exigencia")); await p.waitForTimeout(200);
   await p.evaluate((d) => { document.getElementById("pa-oque").value = "RG"; document.getElementById("pa-prazo").value = d; }, emDias(6));
   await p.evaluate(() => popInserir("exigencia")); await p.waitForTimeout(400);

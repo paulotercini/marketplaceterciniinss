@@ -124,7 +124,8 @@ const casoDe = id => T.casos.find(k => k.id === id);
   };
   const tela = () => p.evaluate(() => {
     const t = s => ((document.querySelector(s) || {}).textContent || "").replace(/\s+/g, " ").trim();
-    return { etapa: t(".lc-placa .lc-etapa"), velha: t(".lc-placa .et-velha"), sug: t(".lc-placa .et-sug"), agora: t(".tr-agora b"),
+    return { etapa: t(".tr-agora b"),   // F287 · a etapa saiu da placa e mora na faixa das fases
+      velha: t(".lc-placa .et-velha"), sug: t(".lc-placa .et-sug"), agora: t(".tr-agora b"),
       atual: t(".jn-l .jn-a .jn-st"), jornada: [...document.querySelectorAll(".jn-l .jn-b")].map(b => `${b.querySelector(".jn-txt").textContent} ${b.querySelector(".jn-st").textContent}`.replace(/\s+/g, " ").trim()),
       sobre: t(".lc-sobre"), ben: t(".lc-ben") };
   });
