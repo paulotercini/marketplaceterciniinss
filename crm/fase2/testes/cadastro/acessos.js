@@ -56,8 +56,8 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   const semPat = await p.evaluate(id => { const k = {...D.casoPorId.get(id), processo_link: null, fase: "inss", protocolos: ["9876543210"]}; return acessosDoCaso(k).atual.join(""); }, CASO1);
   conf("sem tarefa no PAT, o botão é o do Meu INSS com o protocolo", /Meu INSS/.test(semPat) && /9876543210/.test(semPat));
   await p.evaluate(() => repintarFicha());
-  conf("a linha do caso mostra o acesso da fase e o Sem gratuidade", await p.evaluate(() =>
-    !!document.querySelector(".linha-caso .lc-acessos a") && !!document.querySelector(".linha-caso .lc-sem-grat")));
+  conf("a tramitação é o link do acesso da fase, e o Sem gratuidade aparece", await p.evaluate(() =>
+    !!document.querySelector(".linha-caso .lc-tram-link[href]") && !!document.querySelector(".linha-caso .lc-sem-grat")));
   await p.evaluate(id => { D.casoPorId.get(id).gratuidade = "concedida"; repintarFicha(); }, CASO1);
   conf("concedida não aparece", await p.evaluate(() => !document.querySelector(".lc-sem-grat")));
   await p.evaluate(id => { lcAbrir(id, 2); }, CASO1);

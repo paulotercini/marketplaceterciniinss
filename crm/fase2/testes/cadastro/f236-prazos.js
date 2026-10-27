@@ -232,7 +232,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // ── a fase verdadeira e o ✔ feito do clássico ─────────────────────────
   await abrir(cJ, kJ);
   const j = await p.evaluate(kid => { const k = D.casoPorId.get(kid); const h = linhaCaso(k);
-    return { fe: faseEfetiva(k), tram: /Judicial · prazo correndo/.test(h), fila: /214º/.test(h), etapa: /em recurso/.test(h), rec: recorrerAte(k) }; }, kJ.id);
+    return { fe: faseEfetiva(k), tram: /Judicial · prazo correndo/.test(h), fila: /214º/.test(h), etapa: /em recurso/.test(faixaTrilha(k)),   /* F287 · a etapa mora na faixa das fases */ rec: recorrerAte(k) }; }, kJ.id);
   conf("J · no 🗓 Tarefas com Prazo o caso continua judicial: tramitação, fila do TRF3 e etapa", j.fe === "judicial" && j.tram && j.fila && j.etapa);
   // a revisão concluída antes do protocolo não baixa o prazo; a conclusão de quem executa, sim
   const tRev = T.andamento_tarefas.find(t => t.caso_id === kJ.id && t.papel === "revisa"), tExe = T.andamento_tarefas.find(t => t.caso_id === kJ.id && t.papel === "executa");

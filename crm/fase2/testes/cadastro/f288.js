@@ -1,7 +1,7 @@
-// F287 · o processo do acervo sem caso no CRM há mais de 7 dias (a extensão
+// F288 · o processo do acervo sem caso no CRM há mais de 7 dias (a extensão
 // do e-SAJ 1.24 só baixa peças de processo com caso): a conferência anota a
 // data em que o número apareceu sem caso, e o 📥 Importar avisa. Banco simulado.
-// Uso: node f287.js
+// Uso: node f288.js
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
