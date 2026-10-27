@@ -55,7 +55,7 @@ const SUPA = "https://ficticio.supabase.co";
       const placa = document.querySelector(".lc-topo .lc-placa");
       const cab = document.querySelector(".lc-topo .lc-cab");
       return { placa: !!placa, cab: !!cab,
-        benNoCab: !!(cab && cab.querySelector(".lc-ben + .lapis")),
+        benNoCab: !!(cab && cab.querySelector(".lc-ben")) && !!document.querySelector(".lc-topo .lc-sobre-l .lc-sobre + .lapis"),   // F287 · a canetinha ao lado da espécie
         maisNoCab: !!(cab && cab.querySelector(".lc-mais")),
         maisDepois: !!(placa && placa.nextElementSibling && placa.nextElementSibling.classList.contains("lc-mais")),
         rotulos: placa ? [...placa.querySelectorAll(".lc-f > .lc-k")].map(x => x.textContent.trim()) : [],
@@ -64,9 +64,9 @@ const SUPA = "https://ficticio.supabase.co";
         urgenteSemEmoji: !/🔥/.test((cab && cab.textContent) || "") };
     });
     conf("a faixa do caso tem o cabeçalho e a placa dentro da .lc-topo", r.placa && r.cab);
-    conf("F145 · o nome do pedido e a canetinha no cabeçalho; o ➕ logo abaixo da placa", r.benNoCab && !r.maisNoCab && r.maisDepois);
-    conf("a placa traz DER, Tramitação e Etapa, um quadro por dado", ["DER", "Tramitação", "Etapa"].every(x => r.rotulos.includes(x)));
-    conf(`F145 · a placa tem uma linha a cada par de quadros (${r.altura}px)`, r.altura > 40 * Math.ceil(r.rotulos.length / 2) && r.altura < 70 * Math.ceil(r.rotulos.length / 2));
+    conf("F287 · o nome do pedido no cabeçalho, a canetinha ao lado da espécie e a flecha logo abaixo da placa", r.benNoCab && !r.maisNoCab && r.maisDepois);
+    conf("a placa traz DER e Tramitação; a etapa mora na faixa das fases (F287)", ["DER", "Tramitação"].every(x => r.rotulos.includes(x)) && !r.rotulos.includes("Etapa"));
+    conf(`F145 · a placa tem uma linha a cada par de quadros (${r.altura}px)`, r.altura > 18 * r.rotulos.length && r.altura < 70 * Math.ceil(r.rotulos.length / 2));
     conf(`F145 · a placa fica em pares, duas colunas (${r.colunas})`, r.colunas === 2);
     conf("o selo de urgente não usa emoji", r.urgenteSemEmoji);
     const meta = await p.evaluate(() => document.querySelector('meta[name="viewport"]').content);
