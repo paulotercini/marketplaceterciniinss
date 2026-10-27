@@ -87,6 +87,27 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     const desenhou = await p.waitForFunction(() => document.querySelectorAll("#pi-0 canvas").length > 0, null, { timeout: 10000 }).then(() => true).catch(() => false);
     conf("a petição inicial (PDF) se desenha em folhas, sem abrir outro arquivo", desenhou);
   }
+  // etapa 1 do Claude: as peças marcadas na árvore vão ao pedido pronto, com as fls.
+  await p.click('#proc-inteiro .pi-it input[data-i="0"]'); await p.click('#proc-inteiro .pi-it input[data-i="2"]');
+  conf("marcar peças na árvore mostra quantas vão ao Claude", /\(2 peças\)/.test(await p.textContent("#proc-inteiro .pi-claude")));
+  await p.click("#proc-inteiro .pi-claude");
+  await p.waitForSelector("#modal .modal-cx");
+  const cx = await p.evaluate(() => { const m = document.querySelector("#modal .modal-cx"), r = m.getBoundingClientRect();
+    return { txt: m.textContent, topo: m.contains(document.elementFromPoint(r.left + r.width / 2, r.top + 20)) }; });
+  conf("o pedido abre por cima do processo inteiro, com os pedidos do processo", cx.topo && /Resumo do processo/.test(cx.txt) && /Pontos para o recurso/.test(cx.txt) && /Conferência de prazos/.test(cx.txt));
+  if (process.env.FOTO) { await p.waitForTimeout(300); await p.screenshot({ path: process.env.FOTO.replace(/\.png$/, "-claude.png") }); }
+  await p.keyboard.press("Escape");
+  conf("Esc com o pedido aberto não fecha o processo inteiro", await p.evaluate(() => !!document.getElementById("proc-inteiro")));
+  await p.evaluate(() => { window.open = u => { window.__url = u; return null; }; if (!document.querySelector("#modal .modal-cx")) piClaude(); });
+  await p.click("#modal .esp-it:has-text('Resumo do processo')");
+  const ped = await p.evaluate(() => decodeURIComponent((window.__url || "").split("?q=")[1] || ""));
+  conf("o pedido leva as peças marcadas com a folha de cada uma, e só elas", /Petição inicial.*fls\. 1/.test(ped) && /Sentença.*fls\. 3/.test(ped)
+    && /anexo:a0000002/.test(ped) && /anexo:a0000001/.test(ped) && !/anexo:a0000003/.test(ped) && /Cite cada fato pela peça e pelas fls\./.test(ped));
+  await p.evaluate(() => { window.__url = ""; piClaude(1); });
+  await p.click("#modal .esp-it:has-text('Pontos para o recurso')");
+  const ped1 = await p.evaluate(() => decodeURIComponent((window.__url || "").split("?q=")[1] || ""));
+  conf("'Ler esta peça com o Claude' leva só aquela peça", /Contestação.*fls\. 2/.test(ped1) && !/anexo:a0000001/.test(ped1) && !/anexo:a0000002/.test(ped1));
+  conf("cada peça tem o botão 'Ler esta peça com o Claude'", await p.evaluate(() => document.querySelectorAll("#proc-inteiro .pi-peca .pi-ler").length === 3));
   if (process.env.FOTO) { await p.waitForTimeout(800); await p.screenshot({ path: process.env.FOTO }); }
   await p.keyboard.press("Escape");
   conf("Esc fecha o processo inteiro", await p.evaluate(() => !document.getElementById("proc-inteiro") && document.body.style.overflow === ""));
