@@ -975,7 +975,11 @@
   #proc-inteiro .pi-cab b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   #proc-inteiro .pi-corpo{flex:1;display:flex;min-height:0}
   #proc-inteiro .pi-arvore{width:300px;flex:none;overflow:auto;background:var(--branco);border-right:1px solid var(--borda);padding:6px 0}
-  #proc-inteiro .pi-arvore button{display:block;width:100%;text-align:left;border:0;background:none;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--texto);border-left:3px solid transparent}
+  #proc-inteiro .pi-it{display:flex;align-items:flex-start}
+  #proc-inteiro .pi-it input{margin:9px 0 0 10px;flex:none}
+  #proc-inteiro .pi-peca h4 .pi-ler{float:right;font-weight:400}
+  body:has(#proc-inteiro) .modal-fundo{z-index:2100}
+  #proc-inteiro .pi-arvore button{display:block;flex:1;min-width:0;text-align:left;border:0;background:none;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--texto);border-left:3px solid transparent}
   #proc-inteiro .pi-arvore button:hover{background:var(--azul-fundo)}
   #proc-inteiro .pi-arvore button.on{background:var(--azul-fundo);border-left-color:var(--azul)}
   #proc-inteiro .pi-arvore small{display:block;color:var(--cinza-claro)}
@@ -33446,20 +33450,29 @@ const PEDIDOS_DOCS = [
   ["crps",     "Recurso ao CRPS",                        "Minute o recurso ao CRPS contra a decisão, com os fundamentos de fato e de direito."],
   ["cliente",  "Resumo para o cliente",                  "Escreva um resumo para o cliente, em linguagem simples, pronto para enviar pelo WhatsApp."],
 ];
+// os pedidos do processo inteiro citam cada fato pela peça e pelas fls.
+const PEDIDOS_PROCESSO = [
+  ["p_resumo",  "Resumo do processo",                          "Resuma o processo em ordem cronológica: o que cada parte pediu, o que o juízo decidiu e em que fase está, citando as fls. de cada peça."],
+  ["p_recurso", "Pontos para o recurso",                       "Aponte os pontos da última decisão que se atacam em recurso: o erro de fato ou de direito, a prova dos autos que o demonstra, com as fls., e o recurso cabível com o prazo."],
+  ["p_prazos",  "Conferência de prazos",                       "Confira os prazos do processo: cada intimação, o prazo que abriu, o termo final e se já foi cumprido, citando as fls."],
+  ["p_laudo",   "Confronto do laudo com os documentos médicos", "Confronte o laudo pericial com os documentos médicos dos autos: as divergências de diagnóstico, de data de início da incapacidade e de limitação, com as fls. de cada um."],
+  ["p_minuta",  "Minuta da próxima peça",                      "Diga qual é a próxima peça do escritório neste processo e redija a minuta, com os fatos e as provas citados pelas fls."],
+];
 let _docsClaude = null;
-function menuClaudeDocs(casoId, chaves){
+function menuClaudeDocs(casoId, chaves, modo){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const todos = documentosDoCaso(k);
   const lista = (chaves && chaves.length) ? todos.filter(d=>chaves.includes(chaveDoc(d))) : todos;
-  _docsClaude = {casoId, chaves: lista.map(chaveDoc)};
+  _docsClaude = {casoId, chaves: lista.map(chaveDoc), modo};
+  const pedidos = modo==="processo" ? PEDIDOS_PROCESSO : PEDIDOS_DOCS;
   const semTexto = lista.filter(d=>!d.texto && !["crps","escritorio"].includes(d.origem));
   const onde = ler("crm_claude_onde") || "web";
   caixa(`<h3 style="margin:0 0 4px">Pedir ao Claude</h3>
-    <p class="meio-sub" style="margin:0 0 8px">${lista.length===1?`Documento: <b>${esc(lista[0].nome||"documento")}</b>.`:`${lista.length} documento${lista.length>1?"s":""} do caso.`}
+    <p class="meio-sub" style="margin:0 0 8px">${lista.length===1?`Documento: <b>${esc(lista[0].nome||"documento")}</b>.`:modo==="processo"?`${lista.length} peça${lista.length>1?"s":""} do processo, com as fls.`:`${lista.length} documento${lista.length>1?"s":""} do caso.`}
       O Claude lê pelo conector do CRM. Revise o pedido antes de enviar; nada volta ao CRM sem a sua confirmação.</p>
     ${semTexto.length?`<p class="meio-sub" style="margin:0 0 8px;color:var(--prox)">${semTexto.length===1?"1 documento digitalizado, sem texto: o CRM baixa o PDF dele":`${semTexto.length} documentos digitalizados, sem texto: o CRM baixa o PDF deles`} para você anexar na conversa.</p>`:""}
-    <div class="esp-lista">${PEDIDOS_DOCS.map(([id,rot])=>`<button class="esp-it" onclick="abrirClaudeDocs('${id}')">${esc(rot)}</button>`).join("")}</div>
-    <label class="meio-sub" style="display:block;margin-top:10px">Pergunta livre sobre os documentos
+    <div class="esp-lista">${pedidos.map(([id,rot])=>`<button class="esp-it" onclick="abrirClaudeDocs('${id}')">${esc(rot)}</button>`).join("")}</div>
+    <label class="meio-sub" style="display:block;margin-top:10px">Pergunta livre sobre ${modo==="processo"?"o processo":"os documentos"}
       <textarea id="cl-livre" rows="2" style="width:100%;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px;margin-top:4px" placeholder="ex.: o laudo responde ao quesito sobre a data de início da incapacidade?"></textarea></label>
     <div class="form-linha" style="margin-top:8px">
       <span class="cl-onde" role="radiogroup" aria-label="onde abrir">
@@ -33469,7 +33482,14 @@ function menuClaudeDocs(casoId, chaves){
       <button class="tl-bt forte" style="margin-left:auto" onclick="abrirClaudeDocs('livre')">Perguntar</button>
     </div>`);
 }
-function pedidoClaudeDocs(k, chaves, instrucao){
+function pedidoClaudeDocs(k, chaves, instrucao, modo){
+  if(modo==="processo") return `Use o conector CRM Tercini. No processo do caso ${k.id} (cliente_id ${k.cliente_id}), leia com ler_documento (caso_id ${k.id}) as peças abaixo, em ordem cronológica, com a folha que o CRM contou para cada uma:
+${indiceDoProcesso(k, chaves)}
+Cite cada fato pela peça e pelas fls. Para as demais peças, use documentos_caso. Se precisar, consulte ficha_cliente e anotacoes_caso. Peça digitalizada sem texto vai anexada nesta conversa, quando houver.
+
+${instrucao}
+
+${CLAUDE_ESTILO}`;
   return `Use o conector CRM Tercini. No caso ${k.id} (cliente_id ${k.cliente_id}), leia com ler_documento (caso_id ${k.id}) estes documentos: ${chaves.join("; ")}. `
     + `Se precisar, consulte ficha_cliente e anotacoes_caso. Documento digitalizado sem texto vai anexado nesta conversa, quando houver.
 
@@ -33481,10 +33501,10 @@ async function abrirClaudeDocs(pedido){
   const s = _docsClaude; if(!s) return;
   const k = D.casoPorId.get(s.casoId); if(!k) return;
   const instr = pedido==="livre" ? ((document.getElementById("cl-livre")||{}).value||"").trim()
-    : (PEDIDOS_DOCS.find(x=>x[0]===pedido)||[])[2];
+    : ([...PEDIDOS_DOCS, ...PEDIDOS_PROCESSO].find(x=>x[0]===pedido)||[])[2];
   if(!instr) return aviso("Escreva a pergunta");
   const onde = ler("crm_claude_onde") || "web";
-  const url = (onde==="app" ? "claude://claude.ai/new?q=" : "https://claude.ai/new?q=") + encodeURIComponent(pedidoClaudeDocs(k, s.chaves, instr));
+  const url = (onde==="app" ? "claude://claude.ai/new?q=" : "https://claude.ai/new?q=") + encodeURIComponent(pedidoClaudeDocs(k, s.chaves, instr, s.modo));
   fecharCaixa();
   if(onde==="app") location.href = url; else window.open(url, "_blank", "noopener");
   const semTexto = documentosDoCaso(k).filter(d=>s.chaves.includes(chaveDoc(d)) && !d.texto && !["crps","escritorio"].includes(d.origem));
@@ -33540,40 +33560,64 @@ function pecasDoProcesso(k){
   return docsDaOrigem(k, DOCS_JUDICIAIS).slice()
     .sort((a,b)=>String(a.data||"").localeCompare(String(b.data||"")) || String(a.nome||"").localeCompare(String(b.nome||"")));
 }
+// a folha (fls.) de cada peça: a contagem só vale onde o número de páginas é conhecido
+function flsDasPecas(pecas){
+  let fl = 1, conhecido = true;
+  return pecas.map(d=>{ const n = d.tipo==="application/pdf" ? +d.paginas||0 : 1;
+    const r = conhecido ? fl : null; if(!n) conhecido = false; fl += n; return r; });
+}
+const rotPeca = d => d.evento || String(d.nome||"documento").replace(/\.(pdf|html?)$/i,"");
+function indiceDoProcesso(k, chaves){
+  const pecas = pecasDoProcesso(k), fls = flsDasPecas(pecas);
+  return pecas.map((d,i)=>chaves.includes(chaveDoc(d))
+    ? `- ${rotPeca(d)}${d.data?` (${fmt(String(d.data).slice(0,10))})`:""}${fls[i]?`, fls. ${fls[i]}`:""}: ${chaveDoc(d)}` : "")
+    .filter(Boolean).join("\n");
+}
+// Pedir ao Claude no processo inteiro: uma peça (i), as marcadas na árvore ou todas
+function piClaude(i){
+  const el = document.getElementById("proc-inteiro"); if(!el) return;
+  const k = D.casoPorId.get(el.dataset.caso); if(!k) return;
+  const pecas = pecasDoProcesso(k);
+  const marcadas = [...el.querySelectorAll(".pi-it input:checked")].map(x=>pecas[+x.dataset.i]);
+  const sel = i!=null ? [pecas[i]] : (marcadas.length ? marcadas : pecas);
+  menuClaudeDocs(k.id, sel.filter(Boolean).map(chaveDoc), "processo");
+}
+function piMarcou(){
+  const el = document.getElementById("proc-inteiro"); if(!el) return;
+  const n = el.querySelectorAll(".pi-it input:checked").length;
+  el.querySelector(".pi-claude-n").textContent = n ? ` (${n} peça${n>1?"s":""})` : "";
+}
 let _piObs = null;
 function fecharProcessoInteiro(){
   if(_piObs){ _piObs.disconnect(); _piObs = null; }
   const el = document.getElementById("proc-inteiro"); if(el) el.remove();
   document.body.style.overflow = "";
-  document.removeEventListener("keydown", _piTecla);
+  document.removeEventListener("keydown", _piTecla, true);
 }
-function _piTecla(e){ if(e.key==="Escape") fecharProcessoInteiro(); }
+function _piTecla(e){ if(e.key==="Escape" && !document.querySelector("#modal:not([style*='none']) *")) fecharProcessoInteiro(); }
 function abrirProcessoInteiro(casoId){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const pecas = pecasDoProcesso(k); if(!pecas.length) return aviso("Nenhuma peça judicial no CRM");
   fecharProcessoInteiro();
   const c = D.cliPorId.get(k.cliente_id) || {};
-  // a folha (fls.) de cada peça: a contagem só vale onde o número de páginas é conhecido
-  let fl = 1, conhecido = true;
-  const fls = pecas.map(d=>{ const n = d.tipo==="application/pdf" ? +d.paginas||0 : 1;
-    const r = conhecido ? fl : null; if(!n) conhecido = false; fl += n; return r; });
-  const rot = d => d.evento || String(d.nome||"documento").replace(/\.(pdf|html?)$/i,"");
+  const fls = flsDasPecas(pecas), rot = rotPeca;
   const el = document.createElement("div");
-  el.id = "proc-inteiro"; el.setAttribute("role","dialog"); el.setAttribute("aria-label","processo inteiro");
+  el.id = "proc-inteiro"; el.dataset.caso = k.id; el.setAttribute("role","dialog"); el.setAttribute("aria-label","processo inteiro");
   el.innerHTML = `<div class="pi-cab">
       <button class="btn-mini pi-ver-arvore" onclick="this.closest('#proc-inteiro').classList.toggle('arvore-on')">Peças</button>
       <b>${esc(c.nome||"cliente")}${k.processo?` · ${esc(k.processo)}`:""} · ${pecas.length} peça${pecas.length>1?"s":""}</b>
+      <button class="tl-bt forte pi-claude" onclick="piClaude()" title="pedido pronto ao Claude sobre as peças marcadas na árvore, ou sobre todas">${IC_SVG.claude} Pedir ao Claude<span class="pi-claude-n"></span></button>
       <button class="btn-mini" onclick="fecharProcessoInteiro()" title="fechar (Esc)">✕</button></div>
     <div class="pi-corpo">
-      <nav class="pi-arvore" aria-label="peças do processo">${pecas.map((d,i)=>`<button data-i="${i}" onclick="piIr(${i})">
-        ${esc(rot(d))}<small>${d.data?fmt(String(d.data).slice(0,10)):""}${fls[i]?` · fls. ${fls[i]}`:""}${d.evento&&d.nome?` · ${esc(d.nome)}`:""}</small></button>`).join("")}</nav>
+      <nav class="pi-arvore" aria-label="peças do processo">${pecas.map((d,i)=>`<div class="pi-it"><input type="checkbox" data-i="${i}" onchange="piMarcou()" aria-label="marcar ${esc(rot(d))} para o Claude"><button data-i="${i}" onclick="piIr(${i})">
+        ${esc(rot(d))}<small>${d.data?fmt(String(d.data).slice(0,10)):""}${fls[i]?` · fls. ${fls[i]}`:""}${d.evento&&d.nome?` · ${esc(d.nome)}`:""}</small></button></div>`).join("")}</nav>
       <div class="pi-autos">${pecas.map((d,i)=>`<section class="pi-peca" id="pi-${i}" data-i="${i}">
-        <h4>${esc(rot(d))}${d.data?` · ${fmt(String(d.data).slice(0,10))}`:""}${fls[i]?` · fls. ${fls[i]}`:""}</h4>
+        <h4><button class="btn-mini pi-ler" onclick="piClaude(${i})">Ler esta peça com o Claude</button>${esc(rot(d))}${d.data?` · ${fmt(String(d.data).slice(0,10))}`:""}${fls[i]?` · fls. ${fls[i]}`:""}</h4>
         <div class="pi-folha"><p class="meio-sub">Carregando…</p></div></section>`).join("")}</div>
     </div>`;
   document.body.appendChild(el);
   document.body.style.overflow = "hidden";
-  document.addEventListener("keydown", _piTecla);
+  document.addEventListener("keydown", _piTecla, true);   // captura: vê a caixa aberta antes de outro Esc a fechar
   const autos = el.querySelector(".pi-autos");
   // a peça que entra na tela se desenha e acende na árvore
   _piObs = new IntersectionObserver(ents=>{
@@ -33629,7 +33673,7 @@ async function desenharPeca(d, caixaEl){
       const vp = pag.getViewport({scale: larg / vp1.width});
       const cv = document.createElement("canvas"); cv.width = vp.width; cv.height = vp.height;
       const folha = document.createElement("div"); folha.className = "pi-folha"; folha.appendChild(cv);
-      sec.appendChild(folha);
+      sec.appendChild(folha); piAcender();   // cada folha nova empurra as peças de baixo
       await pag.render({canvasContext:cv.getContext("2d"), viewport:vp}).promise;
     }
     piAcender();
