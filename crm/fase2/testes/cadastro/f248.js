@@ -117,6 +117,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await abrir(cJ, kJ); await p.evaluate(() => irSubAba("cnj")); await p.waitForTimeout(400);
   conf("respondida, a proposta não oferece os botões de novo", !(await p.$('.acordo-bt:has-text("Aceitei o acordo")')) && !!(await p.$('.acordo-bt:has-text("Concordei com os cálculos")')));
   const n4 = T.andamentos.length;
+  await p.hover('.timeline li:has(.acordo-bt:has-text("Concordei com os cálculos"))');   // F288 · com mouse, as ações aparecem ao passar sobre o cartão
   await p.click('.acordo-bt:has-text("Concordei com os cálculos")');
   await p.waitForTimeout(700);
   const cc = T.andamentos.slice(n4).find(a => a.caso_id === kJ.id);

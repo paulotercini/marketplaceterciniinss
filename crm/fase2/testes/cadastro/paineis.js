@@ -92,7 +92,7 @@ FIX.casos[0] = { ...FIX.casos[0],
   // 2b) F46: registro do escritório com o NOME e a COR do colaborador
   conf("o registro do escritório mostra o NOME do colaborador",
     await p.evaluate(() => [...document.querySelectorAll(".timeline .autor-nome")]
-      .some(b => /Paulo Tercini/.test(b.textContent))));
+      .some(b => /^Paulo$/.test(b.textContent.trim()))));   // F288 · o primeiro nome, como no Escritório
   conf("e o avatar leva a COR do colaborador com a inicial (não o selo neutro)",
     await p.evaluate(() => [...document.querySelectorAll(".timeline .avatar.mini")]
       .some(a => !a.classList.contains("av-fonte") && a.textContent.trim() === "P" &&

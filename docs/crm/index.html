@@ -5205,6 +5205,38 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-lin .fp2-data{min-width:0;white-space
 html .faixa-prazos.fp2.fp2.fp2.fp2 .pz.fp2-fatal{flex-wrap:wrap;align-items:center;row-gap:2px}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-falta{flex:1 1 100%;min-width:0;padding-left:28px;font-size:11.5px;line-height:1.35;color:var(--dk-fatal,#B3261E)}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-falta .fp2-tag{font-size:inherit;font-weight:500;letter-spacing:0;text-transform:none}
+/* F288 · os andamentos num padrão só, em Escritório, INSS, Conselho, Judicial e Caso completo (pedido do Paulo,
+   27.10.2026): menos espaço entre os dias e dentro do cartão, a data só no cabeçalho do dia (no cartão, a hora), o
+   nome em preto ao lado da bolinha na cor de cada pessoa, e o campo de escrever numa linha só */
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.dia-bloco,
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.dia-bloco:nth-child(n){border:0!important;padding:0;margin:0 0 12px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .dia-bloco .tl-dia{padding:0 2px 6px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .dia-bloco .tl-dia span{font-size:11.5px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .dia-itens{gap:6px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card{padding:10px 14px;border-radius:10px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-cab{min-height:24px;gap:8px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-cab .tl-av{width:24px;height:24px;font-size:11px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .autor-nome{margin:0;font-size:13px;font-weight:500;color:var(--texto)}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-of .autor-nome{color:var(--sist)}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li .tl-cab:has(.tl-av:not(.av-fonte)) .autor-nome{color:var(--texto)}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-hora{font-size:12px;color:var(--cinza)}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .dia-itens .tl-dt{display:none}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-corpo{margin-top:4px;font-size:14px;line-height:1.5}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .resp{margin-top:8px}
+html[data-tema="v10"] .painel[data-p="2"] .tl-banner.tl-banner-um{padding:6px 10px;margin:0 0 10px;font-size:12.5px;border-radius:8px}
+html[data-tema="v10"] .painel[data-p="2"] .tl-banner.tl-banner-um .btn-mini{min-height:24px;padding:0 8px;font-size:12px}
+html[data-tema="v10"] .painel[data-p="2"] .escrever.esc-v12{padding:10px 12px;border-radius:12px}
+html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto){flex-wrap:nowrap}
+html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) #and-texto{flex:1 1 0;width:auto;min-width:120px}
+/* as ações do cartão, com mouse: o botão principal fica no canto direito do cabeçalho e as ações escondidas, à
+   esquerda dele (antes, o espaço vazio delas empurrava o botão principal para cima do nome e da hora) */
+@media (hover:hover) and (pointer:fine){
+  html[data-tema="v10"] .painel[data-p="2"] .timeline li .tl-barra{top:7px;right:10px;padding:0;border:0;gap:4px}
+  html[data-tema="v10"] .painel[data-p="2"] .timeline li .tl-barra > .tl-bt.forte{order:2}
+  html[data-tema="v10"] .painel[data-p="2"] .timeline li .tl-barra > .tl-barra-fim{order:1}
+  html[data-tema="v10"] .painel[data-p="2"] .timeline li:is(:hover,:focus-within) .tl-barra{box-shadow:-12px 0 10px -4px #FFFFFF}
+  html[data-tema="v10"] .painel[data-p="2"] .timeline li .tl-barra .tl-bt:not(.tl-bt-ic){min-height:26px;padding:0 9px;font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -37732,9 +37764,10 @@ function infoOficial(x){
 }
 function cartaoTl(x){
   if(x.ev) return cartaoPericia(x.ev);
-  const d=(x.q||"").slice(0,10), hora=(x.q||"").length>=16 ? (x.q||"").slice(11,16) : "";
+  // F288 · a hora 00:00 é a do movimento sem hora (e-SAJ, DataJud): não se mostra
+  const d=(x.q||"").slice(0,10), hora=(h=>h==="00:00"?"":h)((x.q||"").length>=16 ? (x.q||"").slice(11,16) : "");
   const a = x.and, inf = x.corAv ? null : infoOficial(x);
-  const cab = `<span class="tl-cab"><span class="avatar mini tl-av${x.corAv?"":" av-fonte"}"${x.corAv?` style="background:${x.corAv}"`:""}>${x.em||"·"}</span><b class="autor-nome">${esc(x.rot||"")}</b><span class="tl-hora">${d?fmt(d).slice(0,5):"—"}${hora?` · ${hora}`:""}</span>${inf && inf.lido===false?`<span class="tl-novo">Novo · não lido</span>`:""}</span>`;
+  const cab = `<span class="tl-cab"><span class="avatar mini tl-av${x.corAv?"":" av-fonte"}"${x.corAv?` style="background:${x.corAv}"`:""}>${x.em||"·"}</span><b class="autor-nome">${esc(x.rot||"")}</b><span class="tl-hora">${d?`<span class="tl-dt">${fmt(d).slice(0,5)}${hora?" · ":""}</span>`:"—"}${hora}</span>${inf && inf.lido===false?`<span class="tl-novo">Novo · não lido</span>`:""}</span>`;
   const corpo = `<span class="tl-corpo">${x.forte?`<b>${esc(x.texto||"")}</b>`:esc(x.texto||"")}</span>`;
   const cls = `tl-card tl-of${x.corAv?"":" tl-oficial"} ${x.cls||""}${x.forte?" tudo-marco":""}${clsSinal(a)}`;
   if(!inf){
@@ -38365,7 +38398,7 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
         ])}</span>
     </span>` : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
-    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${fmtTS(a.criado_em).slice(0,5)}${(h=>h?` · ${h}`:"")(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}<span class="tl-cab-fim">${barra}${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${tarefasCartao(a)}${chipsReacao}${resposta||""}${raiz?caixaRespInline(a):""}</span>`;   // F244 · as ações na linha do autor
+    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${(h=>`<span class="tl-dt">${fmtTS(a.criado_em).slice(0,5)}${h?" · ":""}</span>${h}`)(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}<span class="tl-cab-fim">${barra}${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${tarefasCartao(a)}${chipsReacao}${resposta||""}${raiz?caixaRespInline(a):""}</span>`;   // F244 · as ações na linha do autor
 }
 // F41 · RESPONDER de qualquer comentário: arma o responde_a e o próximo
 // Registrar entra aninhado no comentário original (como a conclusão de
@@ -38951,7 +38984,7 @@ function painelTudo(k, ands){
     const ofi = temaV10() && !x.and && !nosso ? oficDoItem(k, x) : null;   // uma vez por repintura
     return { q: x.q, em: identidade?esc(x.avIni):(iconeFonte(fk)||(temaV10()?(svgIc(em,12)||em):em)),
       // o DataJud diz em que sistema o processo corre: o nome dele vem primeiro
-      rot: nosso?(x.quem||resto.join(" ")):(/CNJ/.test(x.chip||"")&&fk&&fk!=="cnj"
+      rot: nosso?(x.quem?x.quem.split(" ")[0]:resto.join(" ")):(/CNJ/.test(x.chip||"")&&fk&&fk!=="cnj"
         ? `${FONTES_SIS[fk].n} · CNJ` : /PJe/.test(x.chip||"")&&fk ? FONTES_SIS[fk].n : (resto.join(" ")||em)),
       corAv: identidade?x.avCor:null, texto: x.texto, and: x.and, ev: temaV10() ? x.ev : null,
       forte: x.marco, cls: x.resposta?"tl-resposta":"",
