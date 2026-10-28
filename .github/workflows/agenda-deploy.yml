@@ -1,0 +1,59 @@
+name: Publicar a agenda (Apps Script)
+
+# Cada merge na main que altere o Code.gs ou o appsscript.json sobe os dois
+# ao projeto "Agenda Quarta CRM" (de 26.10.2026) e gera uma versão nova da
+# implantação existente: a URL /exec que o CRM usa não muda.
+# Segredos (passo a passo em crm/agenda-quarta/COMO-IMPLANTAR.md, seção 8):
+#   CLASPRC_JSON        conteúdo do .clasprc.json do clasp login do Paulo
+#   AGENDA_SCRIPT_ID    ID do script (Configurações do projeto)
+#   AGENDA_DEPLOYMENT_ID  o trecho AKfy… da URL /exec
+# Sem os segredos o workflow avisa e termina sem erro.
+on:
+  push:
+    branches: [main]
+    paths: ["crm/agenda-quarta/Code.gs", "crm/agenda-quarta/appsscript.json", ".github/workflows/agenda-deploy.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: agenda-deploy
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CLASPRC_JSON: ${{ secrets.CLASPRC_JSON }}
+      SCRIPT_ID: ${{ secrets.AGENDA_SCRIPT_ID }}
+      DEPLOYMENT_ID: ${{ secrets.AGENDA_DEPLOYMENT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Sintaxe do Code.gs
+        run: cp crm/agenda-quarta/Code.gs "$RUNNER_TEMP/Code.js" && node --check "$RUNNER_TEMP/Code.js"
+      - name: Segredos presentes
+        id: seg
+        run: |
+          if [ -z "$CLASPRC_JSON" ] || [ -z "$SCRIPT_ID" ] || [ -z "$DEPLOYMENT_ID" ]; then
+            echo "::warning::Faltam os segredos da agenda; nada foi publicado (COMO-IMPLANTAR.md, seção 8)."
+            echo "ok=0" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=1" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Subir e implantar
+        if: steps.seg.outputs.ok == '1'
+        working-directory: crm/agenda-quarta
+        run: |
+          printf '%s' "$CLASPRC_JSON" > ~/.clasprc.json
+          # só o Code.gs e o appsscript.json sobem; o push substitui os arquivos do projeto
+          printf '{"scriptId":"%s","rootDir":"."}' "$SCRIPT_ID" > .clasp.json
+          printf '**/**\n!Code.gs\n!appsscript.json\n' > .claspignore
+          npx -y @google/clasp@2.4.2 push --force
+          npx -y @google/clasp@2.4.2 deploy --deploymentId "$DEPLOYMENT_ID" \
+            --description "${GITHUB_SHA::7} $(date -u +%d.%m.%Y)"
+          npx -y @google/clasp@2.4.2 deployments | grep -F "$DEPLOYMENT_ID"
+      - name: Apagar a credencial
+        if: always()
+        run: rm -f ~/.clasprc.json
