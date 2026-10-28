@@ -17,6 +17,8 @@ create table if not exists sugestoes_equipe (
   criado_em  timestamptz not null default now(),
   lida_em    timestamptz
 );
+-- os anexos (print, vídeo): [{caminho, nome, tipo}] no bucket privado "sugestoes"
+alter table sugestoes_equipe add column if not exists arquivos jsonb not null default '[]';
 
 -- o titular: o Paulo, e não qualquer admin, porque a anotação pode ser sobre outro admin
 create or replace function sou_titular() returns boolean
@@ -37,3 +39,17 @@ create policy sug_titular_marcar on sugestoes_equipe for update to authenticated
   using (sou_titular()) with check (sou_titular());
 create policy sug_titular_apagar on sugestoes_equipe for delete to authenticated using (sou_titular());
 revoke all on sugestoes_equipe from anon;
+
+-- o bucket dos anexos: privado, 50 MB por arquivo, só imagem e vídeo; todos enviam, somente o titular lê e apaga
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+  values ('sugestoes','sugestoes',false, 52428800, array['image/*','video/*'])
+  on conflict (id) do update set public = false, file_size_limit = 52428800, allowed_mime_types = array['image/*','video/*'];
+drop policy if exists sugestoes_enviar on storage.objects;
+drop policy if exists sugestoes_ler on storage.objects;
+drop policy if exists sugestoes_apagar on storage.objects;
+create policy sugestoes_enviar on storage.objects for insert to authenticated
+  with check (bucket_id = 'sugestoes');
+create policy sugestoes_ler on storage.objects for select to authenticated
+  using (bucket_id = 'sugestoes' and sou_titular());
+create policy sugestoes_apagar on storage.objects for delete to authenticated
+  using (bucket_id = 'sugestoes' and sou_titular());

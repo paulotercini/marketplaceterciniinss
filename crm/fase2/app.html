@@ -5725,8 +5725,8 @@ async function api(caminho, opcoes={}, tentativa=0){
 // link fixo: para abrir, o app pede uma URL assinada que vence em minutos —
 // laudo médico e CNIS não podem ficar num endereço que funciona para sempre.
 const BUCKET = "anexos";
-async function subirArquivo(caminho, arquivo){
-  const r = await fetch(`${CONFIG.SUPABASE_URL.replace(/\/$/,"")}/storage/v1/object/${BUCKET}/${caminho}`,{
+async function subirArquivo(caminho, arquivo, bucket=BUCKET){
+  const r = await fetch(`${CONFIG.SUPABASE_URL.replace(/\/$/,"")}/storage/v1/object/${bucket}/${caminho}`,{
     method:"POST",
     headers:{ apikey: CONFIG.ANON_KEY,
               Authorization: "Bearer " + (sessao ? sessao.access_token : CONFIG.ANON_KEY),
@@ -5735,8 +5735,8 @@ async function subirArquivo(caminho, arquivo){
   if(!r.ok) throw new Error(`${r.status}: ${(await r.text()).slice(0,200)}`);
   return true;
 }
-async function linkArquivo(caminho, segundos=120){
-  const d = await api(`/storage/v1/object/sign/${BUCKET}/${caminho}`,
+async function linkArquivo(caminho, segundos=120, bucket=BUCKET){
+  const d = await api(`/storage/v1/object/sign/${bucket}/${caminho}`,
     {method:"POST", body:JSON.stringify({expiresIn:segundos})});
   return CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/storage/v1" + d.signedURL;
 }
@@ -48136,6 +48136,8 @@ function abrirSugestao(){
       `<label><input type="radio" name="sug-tipo" value="${v}" ${i?"":"checked"}> ${r}</label>`).join("")}</div>
     <textarea id="sug-texto" rows="4" style="width:100%;resize:vertical"
       placeholder="o que aconteceu, onde e o que deveria acontecer"></textarea>
+    <label class="meio-sub" style="display:block;margin:6px 0">Anexar print ou vídeo (até 50 MB cada):
+      <input type="file" id="sug-arq" accept="image/*,video/*" multiple></label>
     <p class="meio-sub" style="margin:4px 0">Tela: ${esc(telaAtual())}</p>
     <div class="form-linha"><button style="margin-left:auto" onclick="salvarSugestao()">Enviar ao Paulo</button></div>
     ${souTitular()?`<div id="sug-lista" style="margin-top:10px"><p class="meio-sub">Carregando as recebidas…</p></div>`:""}`);
@@ -48146,9 +48148,19 @@ async function salvarSugestao(){
   const t = (document.getElementById("sug-texto").value||"").trim();
   if(!t){ aviso("Escreva a sugestão"); return; }
   const tipo = (document.querySelector('input[name="sug-tipo"]:checked')||{}).value || "erro";
+  const arqs = [...((document.getElementById("sug-arq")||{}).files||[])];
+  if(arqs.some(f=>f.size > 50*1024*1024)){ aviso("Cada arquivo pode ter até 50 MB"); return; }
   try{
+    // o arquivo vai ao bucket privado "sugestoes", que somente o titular lê
+    const pasta = crypto.randomUUID(), arquivos = [];
+    if(arqs.length) aviso("Enviando os anexos…", false);
+    for(const f of arqs){
+      const caminho = `${pasta}/${f.name.replace(/[^\w.\-]+/g,"_")}`;
+      await subirArquivo(caminho, f, "sugestoes");
+      arquivos.push({caminho, nome:f.name, tipo:f.type});
+    }
     await api(`/rest/v1/sugestoes_equipe`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({tipo, texto:t, tela:telaAtual().slice(0,300), autor:eu.id})});
+      body:JSON.stringify({tipo, texto:t, tela:telaAtual().slice(0,300), autor:eu.id, arquivos})});
     fecharCaixa(); aviso("Sugestão enviada ao Paulo");
   }catch(e){ aviso(e.status===404 ? "Falta rodar o schema_sugestoes.sql no Supabase" : "Não foi possível enviar: "+e.message); }
 }
@@ -48162,8 +48174,15 @@ async function carregarSugestoes(){
     const a = D.colPorId && D.colPorId.get(x.autor);
     return `<div class="sug-it${x.lida_em?"":" nova"}"><b>${esc(rot[x.tipo]||x.tipo)}</b> · ${esc(a?a.nome:"?")} · ${esc(new Date(x.criado_em).toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo"}))}
       ${x.lida_em?"":`<button class="btn-mini" onclick="lerSugestao('${x.id}')">marcar como lida</button>`}
-      <div style="white-space:pre-wrap">${esc(x.texto)}</div><div class="meio-sub">${esc(x.tela||"")}</div></div>`;
+      <div style="white-space:pre-wrap">${esc(x.texto)}</div>
+      ${(x.arquivos||[]).map(a=>`<button class="btn-mini" onclick="abrirAnexoSug('${esc(a.caminho)}')">📎 ${esc(a.nome)}</button>`).join(" ")}
+      <div class="meio-sub">${esc(x.tela||"")}</div></div>`;
   }).join("") : `<p class="meio-sub">Nenhuma ainda.</p>`);
+}
+async function abrirAnexoSug(caminho){
+  const guia = window.open("", "_blank");   // abrir agora: depois do await o navegador bloqueia
+  try{ const u = await linkArquivo(caminho, 600, "sugestoes"); if(guia) guia.location = u; else location.href = u; }
+  catch(e){ if(guia) guia.close(); aviso("Não foi possível abrir o anexo: "+e.message); }
 }
 async function lerSugestao(id){
   try{ await api(`/rest/v1/sugestoes_equipe?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},

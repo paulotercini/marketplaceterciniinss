@@ -59,16 +59,20 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click("#fab-sug");
   await p.check('input[name="sug-tipo"][value="melhoria"]');
   await p.fill("#sug-texto", "O botão de salvar some no celular.");
+  await p.setInputFiles("#sug-arq", { name: "print tela.png", mimeType: "image/png", buffer: Buffer.from("png") });
   await p.click("text=Enviar ao Paulo");
   await p.waitForFunction(() => document.getElementById("modal").style.display === "none");
   const g = T.sugestoes_equipe[0] || {};
   conf("grava tipo, texto, autor e tela", g.tipo === "melhoria" && g.texto === "O botão de salvar some no celular." && g.autor && /ficha de/.test(g.tela || ""));
+  conf("o print vai ao bucket sugestoes e fica na anotação", (g.arquivos || []).length === 1 && /print_tela\.png$/.test(g.arquivos[0].caminho)
+    && banco.escritas.some(e => e.t === "storage" && String(e.chave).startsWith("sugestoes/")));
   conf("o texto vazio não grava", await p.evaluate(async () => { abrirSugestao(); await salvarSugestao(); return document.getElementById("modal").style.display !== "none"; }) && T.sugestoes_equipe.length === 1);
 
   await p.evaluate(() => { fecharCaixa(); abrirSugestao(); });
   await p.waitForSelector(".sug-it");
   conf("o titular vê as recebidas", (await p.locator(".sug-it").innerText()).includes("some no celular"));
-  await p.click(".sug-it .btn-mini");
+  conf("o titular vê o anexo", await p.locator(".sug-it >> text=📎 print tela.png").count() === 1);
+  await p.click(".sug-it >> text=marcar como lida");
   await p.waitForFunction(() => !document.querySelector(".sug-it.nova"));
   conf("marca como lida", !!T.sugestoes_equipe[0].lida_em);
 
