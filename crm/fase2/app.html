@@ -1241,6 +1241,19 @@
   .app.mini-lateral .sidebar .rapida-caixa::before{left:11px;top:11px;font-size:18px}
   .app.celular ~ .fab-rapida{bottom:64px}   /* acima da barra do celular */
   .app.celular.detalhe-aberto ~ .fab-rapida{display:none}  /* na ficha, o composer manda */
+  /* F290 · sugestões da equipe: acima do ⚡, em todas as telas e níveis, com o rótulo à vista */
+  .fab-sug{position:fixed;right:16px;bottom:72px;z-index:80;height:36px;padding:0 14px;border-radius:18px;
+    border:none;background:#B45309;color:#fff;font-size:13px;font-weight:700;cursor:pointer;
+    box-shadow:0 4px 14px rgba(0,0,0,.25)}
+  @media (hover:hover) and (pointer:fine){.fab-sug:hover{background:#92400E}}
+  .app.celular ~ .fab-sug{bottom:120px}
+  .app.celular.detalhe-aberto ~ .fab-sug{bottom:130px}
+  .app.celular.zap-conv-aberta ~ .fab-sug{bottom:calc(132px + env(safe-area-inset-bottom))}
+  .sug-tipos{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+  .sug-tipos label{border:1px solid var(--borda);border-radius:14px;padding:3px 10px;cursor:pointer}
+  .sug-tipos label:has(input:checked){border-color:#B45309;background:#FEF3C7}
+  .sug-it{border-top:1px solid var(--borda);padding:6px 0;font-size:13px}
+  .sug-it.nova{background:#FFFBEB}
   /* F49 · a linha de estado da análise, na triagem e nas anotações */
   .ad-status{font-size:13px;border-radius:8px;padding:7px 10px;margin:6px 0}
   .ad-status.pendente{background:#FFF8E7;border:1px solid #E9B44C}
@@ -4041,9 +4054,9 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .aq-leg-tipos{display:inline-flex;gap:10px;align-items:center}.aq-leg .aq-sw[class*=" t00"]{background:var(--tom)}.aq-leg-tipos i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}
 /* F281 · a agenda no canto de baixo à direita do WhatsApp: os dias com vaga de cada profissional, na cor dele, e o
    agendamento ali mesmo, sem sair da conversa. Recolhida, vira a pílula "Agenda · N vagas". */
-.zap-ag{position:fixed;right:16px;bottom:88px;z-index:40;font-size:13px}   /* acima do ⚡ e do enviar */
-.app.celular .zap-ag{right:10px;bottom:calc(124px + env(safe-area-inset-bottom))}
-.app.celular.zap-conv-aberta .zap-ag{z-index:92;bottom:calc(132px + env(safe-area-inset-bottom))}
+.zap-ag{position:fixed;right:16px;bottom:120px;z-index:40;font-size:13px}   /* acima do ⚡ e do enviar */
+.app.celular .zap-ag{right:10px;bottom:calc(166px + env(safe-area-inset-bottom))}
+.app.celular.zap-conv-aberta .zap-ag{z-index:92;bottom:calc(176px + env(safe-area-inset-bottom))}
 .app.celular.zap-conv-aberta .zag-cx{max-height:calc(100dvh - 300px)}
 .modal-fundo:has(.aq-fluxo){z-index:95}
 .zag-pilula{display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:22px;border:1px solid var(--borda);background:var(--branco,#fff);
@@ -5400,6 +5413,8 @@ html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) #and
 <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
 <button class="fab-rapida" id="fab-rapida" onclick="anotacaoRapida()"
   title="anotação rápida (ligação ou balcão) — o registro nasce urgente">⚡</button>
+<button class="fab-sug" id="fab-sug" onclick="abrirSugestao()"
+  title="anotar um erro, uma correção ou uma melhoria do CRM; somente o Paulo lê">✎ Sugestões</button>
 <div id="modal" style="display:none"></div>
 
 <script>
@@ -5710,8 +5725,8 @@ async function api(caminho, opcoes={}, tentativa=0){
 // link fixo: para abrir, o app pede uma URL assinada que vence em minutos —
 // laudo médico e CNIS não podem ficar num endereço que funciona para sempre.
 const BUCKET = "anexos";
-async function subirArquivo(caminho, arquivo){
-  const r = await fetch(`${CONFIG.SUPABASE_URL.replace(/\/$/,"")}/storage/v1/object/${BUCKET}/${caminho}`,{
+async function subirArquivo(caminho, arquivo, bucket=BUCKET){
+  const r = await fetch(`${CONFIG.SUPABASE_URL.replace(/\/$/,"")}/storage/v1/object/${bucket}/${caminho}`,{
     method:"POST",
     headers:{ apikey: CONFIG.ANON_KEY,
               Authorization: "Bearer " + (sessao ? sessao.access_token : CONFIG.ANON_KEY),
@@ -5720,8 +5735,8 @@ async function subirArquivo(caminho, arquivo){
   if(!r.ok) throw new Error(`${r.status}: ${(await r.text()).slice(0,200)}`);
   return true;
 }
-async function linkArquivo(caminho, segundos=120){
-  const d = await api(`/storage/v1/object/sign/${BUCKET}/${caminho}`,
+async function linkArquivo(caminho, segundos=120, bucket=BUCKET){
+  const d = await api(`/storage/v1/object/sign/${bucket}/${caminho}`,
     {method:"POST", body:JSON.stringify({expiresIn:segundos})});
   return CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/storage/v1" + d.signedURL;
 }
@@ -48105,6 +48120,76 @@ async function notaChecklistToggle(cliId, idx, ci){
 // andamento e o caso é marcado 🔥 (sobe em toda lista, com contador); sem
 // caso, vira anotação urgente do atendimento na ficha — e nada se perde.
 let arCliSel=null, arLead=null, arNovo=null;
+// F290 · SUGESTÕES DA EQUIPE. Qualquer colaborador anota um erro, uma correção ou uma melhoria, com a tela
+// em que estava; somente o titular lê (RLS em schema_sugestoes.sql). Quem escreve não lê nem o que gravou,
+// por isso o POST vai com return=minimal
+const SUG_TIPOS = [["erro","Erro"],["correcao","Correção"],["melhoria","Melhoria"]];
+function telaAtual(){
+  const c = clienteAberto && D.cliPorId && D.cliPorId.get(clienteAberto);
+  return visao + (c ? ` · ficha de ${c.nome} (aba ${abaAtiva})` : "");
+}
+const souTitular = () => !!eu && eu.inicial==="P";
+function abrirSugestao(){
+  caixa(`<h3 style="margin:0 0 2px">✎ Sugestões para o CRM</h3>
+    <p class="meio-sub" style="margin:0 0 4px">Anote um erro, uma correção ou uma melhoria. Somente o Paulo lê.</p>
+    <div class="sug-tipos" role="radiogroup" aria-label="tipo">${SUG_TIPOS.map(([v,r],i)=>
+      `<label><input type="radio" name="sug-tipo" value="${v}" ${i?"":"checked"}> ${r}</label>`).join("")}</div>
+    <textarea id="sug-texto" rows="4" style="width:100%;resize:vertical"
+      placeholder="o que aconteceu, onde e o que deveria acontecer"></textarea>
+    <label class="meio-sub" style="display:block;margin:6px 0">Anexar print ou vídeo (até 50 MB cada):
+      <input type="file" id="sug-arq" accept="image/*,video/*" multiple></label>
+    <p class="meio-sub" style="margin:4px 0">Tela: ${esc(telaAtual())}</p>
+    <div class="form-linha"><button style="margin-left:auto" onclick="salvarSugestao()">Enviar ao Paulo</button></div>
+    ${souTitular()?`<div id="sug-lista" style="margin-top:10px"><p class="meio-sub">Carregando as recebidas…</p></div>`:""}`);
+  document.getElementById("sug-texto").focus();
+  if(souTitular()) carregarSugestoes();
+}
+async function salvarSugestao(){
+  const t = (document.getElementById("sug-texto").value||"").trim();
+  if(!t){ aviso("Escreva a sugestão"); return; }
+  const tipo = (document.querySelector('input[name="sug-tipo"]:checked')||{}).value || "erro";
+  const arqs = [...((document.getElementById("sug-arq")||{}).files||[])];
+  if(arqs.some(f=>f.size > 50*1024*1024)){ aviso("Cada arquivo pode ter até 50 MB"); return; }
+  try{
+    // o arquivo vai ao bucket privado "sugestoes", que somente o titular lê
+    const pasta = crypto.randomUUID(), arquivos = [];
+    if(arqs.length) aviso("Enviando os anexos…", false);
+    for(const f of arqs){
+      const caminho = `${pasta}/${f.name.replace(/[^\w.\-]+/g,"_")}`;
+      await subirArquivo(caminho, f, "sugestoes");
+      arquivos.push({caminho, nome:f.name, tipo:f.type});
+    }
+    await api(`/rest/v1/sugestoes_equipe`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({tipo, texto:t, tela:telaAtual().slice(0,300), autor:eu.id, arquivos})});
+    fecharCaixa(); aviso("Sugestão enviada ao Paulo");
+  }catch(e){ aviso(e.status===404 ? "Falta rodar o schema_sugestoes.sql no Supabase" : "Não foi possível enviar: "+e.message); }
+}
+async function carregarSugestoes(){
+  const div = document.getElementById("sug-lista"); if(!div) return;
+  let ls;
+  try{ ls = await api(`/rest/v1/sugestoes_equipe?select=*&order=criado_em.desc&limit=100`); }
+  catch(e){ div.innerHTML = `<p class="meio-sub">Não foi possível ler as recebidas: ${esc(e.message)}</p>`; return; }
+  const rot = Object.fromEntries(SUG_TIPOS);
+  div.innerHTML = `<b>Recebidas (${ls.filter(x=>!x.lida_em).length} novas)</b>` + (ls.length ? ls.map(x=>{
+    const a = D.colPorId && D.colPorId.get(x.autor);
+    return `<div class="sug-it${x.lida_em?"":" nova"}"><b>${esc(rot[x.tipo]||x.tipo)}</b> · ${esc(a?a.nome:"?")} · ${esc(new Date(x.criado_em).toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo"}))}
+      ${x.lida_em?"":`<button class="btn-mini" onclick="lerSugestao('${x.id}')">marcar como lida</button>`}
+      <div style="white-space:pre-wrap">${esc(x.texto)}</div>
+      ${(x.arquivos||[]).map(a=>`<button class="btn-mini" onclick="abrirAnexoSug('${esc(a.caminho)}')">📎 ${esc(a.nome)}</button>`).join(" ")}
+      <div class="meio-sub">${esc(x.tela||"")}</div></div>`;
+  }).join("") : `<p class="meio-sub">Nenhuma ainda.</p>`);
+}
+async function abrirAnexoSug(caminho){
+  const guia = window.open("", "_blank");   // abrir agora: depois do await o navegador bloqueia
+  try{ const u = await linkArquivo(caminho, 600, "sugestoes"); if(guia) guia.location = u; else location.href = u; }
+  catch(e){ if(guia) guia.close(); aviso("Não foi possível abrir o anexo: "+e.message); }
+}
+async function lerSugestao(id){
+  try{ await api(`/rest/v1/sugestoes_equipe?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({lida_em:new Date().toISOString()})}); }
+  catch(e){ aviso("Não foi possível marcar: "+e.message); return; }
+  carregarSugestoes();
+}
 function anotacaoRapida(pre){
   arCliSel=null; arLead=null; arNovo=null;
   caixa(`<h3 style="margin:0 0 2px">⚡ Anotação rápida</h3>
