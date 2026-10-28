@@ -87,9 +87,9 @@ const conf = (pts, nome, v) => { ok.push([pts, nome, !!v]); console.log((v ? "PA
   await p.waitForSelector("#zap-ag .zag-dia", { timeout: 10000 }).catch(() => {});
   await p.waitForTimeout(400);   // a entrada da tela anima por 0,14 s
   const cx = await caixaAg();
-  // logo acima do ⚡ da anotação rápida, que ocupa os últimos 64 px do canto
+  // logo acima do ⚡ da anotação rápida e do ✎ Sugestões (F290), que ocupam os últimos 108 px do canto
   conf(8, `a agenda fica no canto de baixo à direita (${Math.round(cx.w - cx.r)} px da direita, ${Math.round(cx.h - cx.b)} px de baixo)`,
-    cx.w - cx.r <= 30 && cx.h - cx.b <= 100 && cx.l > cx.w / 2 && cx.t > cx.h / 3);
+    cx.w - cx.r <= 30 && cx.h - cx.b <= 140 && cx.l > cx.w / 2 && cx.t > cx.h / 3);
   const rect = sel => p.evaluate(x => { const e = document.querySelector(x); if (!e || !e.offsetParent && getComputedStyle(e).position !== "fixed") return null; const r = e.getBoundingClientRect(); return r.width ? { l: r.left, t: r.top, r: r.right, b: r.bottom } : null; }, sel);
   const fab = await rect(".fab-rapida");
   conf(4, "a agenda não fica sob o botão ⚡ da anotação rápida", !fab || !cruza(cx, fab));
