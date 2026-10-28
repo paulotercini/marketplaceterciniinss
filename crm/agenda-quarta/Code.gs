@@ -22,7 +22,7 @@ const CONFIG = {
   // F250f · o Marcos e a Amanda deixam o horário livre como "LIVRE 10:30-11:00" ou "LIVRE 09h30-10h00", sem o código:
   // é vaga sem tipo; o tipo vem do cliente na hora de agendar (001 primeiro atendimento, 002 cliente do escritório)
   REGEX_VAGA_LIVRE: /^\s*livre\b(?:(?!\d{4}[\s.-]?\d{4}).)*$/i,
-  VERSAO: 'F281 · procurar a partir de uma data',
+  VERSAO: 'F290 · a vaga vale acima do limite',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
   // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
@@ -347,7 +347,8 @@ function disponibilidade_(user, r) {
     const vagas = evs.filter(ev => ehVaga_(ev) && contaPara_(ev, prof));
     const ocupados = evs.filter(ev => !ehVaga_(ev)).map(ev => [new Date(ev.start.dateTime), new Date(ev.end.dateTime)]);
     const atend = evs.filter(ev => ehAtendimento_(ev) && contaPara_(ev, prof)).length;
-    const lotado = !!prof.limite && atend >= prof.limite;
+    // a vaga marcada no Google é o horário que o escritório abriu, e vale mesmo acima do limite (28.10.2026: a 15ª vaga do Paulo aparecia e não aceitava)
+    const lotado = !!prof.limite && atend >= prof.limite && !vagas.length;
     const livres = {};
     Object.keys(CONFIG.DURACAO).forEach(tipo => {
       // com vagas no dia, só elas valem; sem nenhuma, o horário livre é calculado como antes
@@ -399,7 +400,7 @@ function agendar_(user, r) {
   try {
     const evs = eventosDoProfissional_(eventosDoDia_(r.data), prof);
     const atend = evs.filter(ev => ehAtendimento_(ev) && contaPara_(ev, prof)).length;
-    if (prof.limite && atend >= prof.limite && user.papel !== 'admin') {
+    if (prof.limite && atend >= prof.limite && user.papel !== 'admin' && !r.eventoId) {
       throw erro_('LOTADO', 'Limite de ' + prof.limite + ' atendimentos de ' + prof.nome + ' atingido neste dia.');
     }
     // F250 · na vaga, o horário é o do próprio evento, e ele só serve se ainda for vaga
