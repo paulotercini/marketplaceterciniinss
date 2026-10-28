@@ -62,3 +62,18 @@ Com o escritório marcando à mão os horários livres, só a vaga é oferecida:
 ## O almoço é do Paulo (F250i, 22.10.2026)
 
 O evento sem a cor de nenhum profissional (o almoço, um compromisso do Paulo) é só do Paulo: não aparece nem bloqueia a agenda do Marcos e da Amanda. Para bloquear o Marcos ou a Amanda, o compromisso vai na cor de cada um.
+
+## 8. Publicação automática (28.10.2026)
+
+Desde 28.10.2026 o workflow `.github/workflows/agenda-deploy.yml` sobe o `Code.gs` e o `appsscript.json` ao projeto "Agenda Quarta CRM" (o de 26.10.2026) a cada merge na main que os altere, e gera nova versão da implantação existente, com a mesma URL. O passo 7 deixa de ser manual. A credencial se grava uma vez só:
+
+1. Em https://script.google.com/home/usersettings, com a conta paulotercini@gmail.com, ligar "API do Google Apps Script".
+2. No computador, com o Node instalado, abrir o PowerShell e executar `npx -y @google/clasp@2.4.2 login`. O navegador abre: entrar com paulotercini@gmail.com e autorizar.
+3. Abrir o arquivo `%USERPROFILE%\.clasprc.json` no Bloco de Notas e copiar o conteúdo inteiro.
+4. No GitHub, em Settings, Secrets and variables, Actions, New repository secret, gravar três segredos:
+   - `CLASPRC_JSON`: o conteúdo copiado no passo 3;
+   - `AGENDA_SCRIPT_ID`: no editor do projeto "Agenda Quarta CRM", em Configurações do projeto, o "ID do script";
+   - `AGENDA_DEPLOYMENT_ID`: o trecho entre `/s/` e `/exec` da URL da agenda que o CRM usa (Implantar, Gerenciar implantações, ID da implantação).
+5. Em Actions, "Publicar a agenda (Apps Script)", Run workflow, para a primeira publicação.
+
+O push substitui os arquivos do projeto no Google: edição feita à mão no editor se perde no merge seguinte, por isso toda mudança vai pelo repositório. As propriedades do script (tokens, AJUSTES) não são tocadas. Sem os segredos, o workflow avisa e não publica.
