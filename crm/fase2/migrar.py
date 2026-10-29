@@ -84,6 +84,18 @@ def _norm(s):
                    if not unicodedata.combining(ch)).strip()
 
 
+# F296 · Onda E do fluxo do To Do (29.10.2026): a etapa da tarefa é a ficha do cliente. O NB vai ao caso, o parente com
+# "#CPF" vira vínculo (e não o CPF do cliente), a senha do gov.br vai às credenciais, e o que não tem campo (CNPJ,
+# e-mail, telefone com recado, a data provável da aposentadoria, o parente que não é cliente) vira nota da ficha
+RE_NB_ITEM = re.compile(r"^(?:nb|n[º°.]?\s*(?:do\s+)?benef[ií]cio|benef[ií]cio)\b\s*[:\-nº°.]*\s*(\d[\d.\-/ ]{8,14}\d)\s*$", re.I)
+RE_NB_FMT = re.compile(r"^\d{3}\.\d{3}\.\d{3}-\d$")
+RE_CNPJ = re.compile(r"\b\d{2}\.?\d{3}\.?\d{3}/\d{4}-?\d{2}\b")
+RE_GOV = re.compile(r"^(?:senha\s+(?:do\s+)?)?(?:gov\.?\s?br|meu\s*inss)\s*[:\-]\s*(\S+)\s*$", re.I)
+RE_TEL_EM = re.compile(r"\(?\b\d{2}\)?[\s.\-]+9?\s?\d{4}[.\-\s]?\d{4}\b")
+RE_EMAIL = re.compile(r"[\w.+\-]+@[\w\-]+\.[\w.\-]+")
+RE_DATA_APOS = re.compile(r"aposent\w*.*?\b(\d{1,2}/\d{1,2}/\d{2,4}|\d{1,2}/\d{4})\b", re.I)
+
+
 def classificar_item_checklist(txt, cpf_cliente=None):
     """O checklist do To Do é onde o escritório guarda dados soltos do cliente.
     Classifica cada item: ('senha_padrao'|'senha'|'cpf'|'telefone'|'protocolo'|
@@ -96,16 +108,38 @@ def classificar_item_checklist(txt, cpf_cliente=None):
         return ("dado", None)                      # data de nascimento já é tratada
     if re.fullmatch(r"padr[ãa]o\.?", t, re.I):
         return ("senha_padrao", None)              # senha padrão do escritório
-    m = re.match(r"senha\b.*?[:\-\s]\s*(\S+)\s*$", t, re.I)
+    m = RE_GOV.match(t) or re.match(r"senha\b.*?[:\-\s]\s*(\S+)\s*$", t, re.I)
     if m:
         return ("senha", m.group(1))
+    m = RE_NB_ITEM.match(t)
+    if m and len(re.sub(r"\D", "", m.group(1))) == 10:
+        return ("nb", re.sub(r"\D", "", m.group(1)))
+    if RE_NB_FMT.match(t):
+        return ("nb", re.sub(r"\D", "", t))
+    if RE_CNPJ.search(t):
+        return ("nota", ("cnpj", t))
+    if RE_EMAIL.search(t):
+        return ("nota", ("email", t))
+    if RE_DATA_APOS.search(t):
+        return ("nota", ("aposentadoria", t))
     m = RE_CPF_FMT.search(t)
     if m:
+        # "Filho da Rosmeire Soares Costa #CPF": o CPF é do parente, e não do cliente
+        resto = re.sub(r"\b(cpf|n[º°o]?)\b[:.\s]*", " ", (t[:m.start()] + t[m.end():]).replace("#", " "), flags=re.I).strip(" :-")
+        mrel = RE_RELACAO.match(resto)
+        nome = re.sub(r"^d[aoe]s?\s+", "", resto[mrel.end():].strip() if mrel else resto, flags=re.I).strip(" :-")
+        if len(nome.split()) >= 2 and all(re.fullmatch(r"[A-Za-zÀ-ÿ'.]+", p) for p in nome.split()):
+            return ("nome", (mrel.group(1).strip().lower() if mrel else None, nome, "".join(m.groups())))
         return ("cpf", "".join(m.groups()))
     if RE_TEL_ITEM.fullmatch(t):
         dig = re.sub(r"\D", "", t)
         if 10 <= len(dig) <= 11:
             return ("telefone", dig)
+    m = RE_TEL_EM.search(t)
+    if m and re.search(r"[A-Za-zÀ-ÿ]", t):
+        dig = re.sub(r"\D", "", m.group(0))
+        if 10 <= len(dig) <= 11:
+            return ("telefone_nota", (dig, t))      # "16 99711-2233 (filha)": o número e o recado
     if re.fullmatch(r"[\d\s./\-]+", t):            # só números (com separadores)
         dig = re.sub(r"\D", "", t)
         if len(dig) < 6 or (cpf_cliente and dig == cpf_cliente):
@@ -126,10 +160,13 @@ def classificar_item_checklist(txt, cpf_cliente=None):
     mrel = RE_RELACAO.match(t)
     resto = t[mrel.end():].strip() if mrel else t
     palavras = resto.split()
+    if mrel:
+        resto = re.sub(r"^d[aoe]s?\s+", "", resto, flags=re.I)
+        palavras = resto.split()
     if 2 <= len(palavras) <= 6 and all(
             re.fullmatch(r"[A-Za-zÀ-ÿ'.]+", p) for p in palavras):
         rel = mrel.group(1).strip().lower() if mrel else None
-        return ("nome", (rel, resto))              # candidato a parente/amigo
+        return ("nome", (rel, resto, None))        # candidato a parente/amigo
     return ("tarefa", t)
 
 
@@ -216,6 +253,7 @@ def mapear(dados, cpf_por_nome=None):
     clientes, casos, andamentos, eventos, tarefas = {}, {}, {}, {}, {}
     pagamentos, lembretes, fora_de_pagamentos = {}, {}, []
     credenciais, vinculos, pend_vinculos = {}, {}, []
+    notas, subtarefas_dado = {}, []   # F296 · nota da ficha por cliente; ids das etapas que eram dado e viraram subtarefa
     pulados, sem_senha_padrao = {}, 0
 
     for t in dados["tarefas"]:
@@ -345,6 +383,17 @@ def mapear(dados, cpf_por_nome=None):
             tipo_it, valor = classificar_item_checklist(txt, c["cpf"])
             if tipo_it in ("vazio", "dado"):
                 continue
+            if tipo_it not in ("tarefa", "nome"):
+                subtarefas_dado.append(uid("subtarefa", kid, md5(txt)))
+            if tipo_it == "nb":
+                casos[kid]["nb"] = casos[kid]["nb"] or valor
+                continue
+            if tipo_it == "telefone_nota":
+                c["telefone"] = c["telefone"] or valor[0]
+                tipo_it, valor = "nota", ("telefone", valor[1])
+            if tipo_it == "nota":
+                _nota(notas, cid, valor[0], valor[1], kid)
+                continue
             if tipo_it in ("senha_padrao", "senha"):
                 if tipo_it == "senha_padrao" and not SENHA_PADRAO:
                     sem_senha_padrao += 1
@@ -373,7 +422,7 @@ def mapear(dados, cpf_por_nome=None):
                 continue
             if tipo_it == "nome":
                 pend_vinculos.append((cid, valor[0], valor[1], kid, txt,
-                                      bool(c_it.get("feito"))))
+                                      bool(c_it.get("feito")), valor[2]))
                 continue
             tid = uid("subtarefa", kid, md5(txt))
             tarefas[tid] = {
@@ -397,15 +446,22 @@ def mapear(dados, cpf_por_nome=None):
 
     # segunda passada: item de checklist com nome de gente vira vínculo se o
     # nome bater com OUTRO cliente da base; senão volta a ser subtarefa
-    nome_idx = {}
+    nome_idx, cpf_idx = {}, {}
     for cli in clientes.values():
         nome_idx.setdefault(_norm(cli["nome"]), cli["id"])
-    for cid, relacao, nome_txt, kid, txt, feito in pend_vinculos:
-        outro = nome_idx.get(_norm(nome_txt))
+        if cli.get("cpf"):
+            cpf_idx.setdefault(cli["cpf"], cli["id"])
+    for cid, relacao, nome_txt, kid, txt, feito, cpf_rel in pend_vinculos:
+        outro = (cpf_rel and cpf_idx.get(cpf_rel)) or nome_idx.get(_norm(nome_txt))
         if outro and outro != cid:
             vid = uid("vinculo", cid, outro)
             vinculos[vid] = {"id": vid, "cliente_id": cid,
                              "ligado_a": outro, "relacao": relacao}
+            subtarefas_dado.append(uid("subtarefa", kid, md5(txt)))
+        elif relacao or cpf_rel:
+            # F296 · parente que não é cliente: nota da ficha, e não tarefa
+            _nota(notas, cid, "parente", txt, kid)
+            subtarefas_dado.append(uid("subtarefa", kid, md5(txt)))
         else:
             tid = uid("subtarefa", kid, md5(txt))
             tarefas[tid] = {
@@ -429,7 +485,15 @@ def mapear(dados, cpf_por_nome=None):
         "fora_de_pagamentos": [i for i in fora_de_pagamentos if i],
         "lembretes": list(lembretes.values()),
         "pulados": pulados,
+        "notas_ficha": notas,
+        "subtarefas_dado": sorted(set(subtarefas_dado)),
     }
+
+
+def _nota(notas, cid, tipo, texto, kid=None):
+    lst = notas.setdefault(cid, [])
+    if not any(n["texto"] == texto for n in lst):
+        lst.append({"tipo": tipo, "texto": texto, "caso_id": kid})
 
 
 def remapear_casos(mapa, task_para_id_existente):
@@ -710,6 +774,12 @@ def remapear_clientes(mapa, cpf_para_id_existente):
             for campo in ("cliente_id", "ligado_a"):
                 if v.get(campo):
                     v[campo] = troca.get(v[campo], v[campo])
+        notas = {}
+        for cid, lst in (mapa.get("notas_ficha") or {}).items():
+            dest = notas.setdefault(troca.get(cid, cid), [])
+            dest += [n for n in lst if n not in dest]
+        if "notas_ficha" in mapa:
+            mapa["notas_ficha"] = notas
     return len(troca)
 
 
@@ -1484,6 +1554,41 @@ def subir_rest(mapa):
         else:
             print(f"  {chave_mapa}: {len(linhas) - caiu} linhas enviadas"
                   + (f", {caiu} recusada(s)" if caiu else ""))
+
+    # F296 · as etapas do To Do que não têm campo vão à ficha como nota (clientes.campos.notas_todo, a chave inteira é
+    # do To Do e se regrava). Lê o campos de quem tem nota, para o PATCH não apagar o resto do jsonb.
+    # shortcut: o cliente que perdeu todas as notas no To Do fica com as antigas, até a próxima nota dele
+    notas = mapa.get("notas_ficha") or {}
+    ids_cli = {c["id"] for c in mapa.get("clientes") or []}
+    alvo = sorted(cid for cid in notas if cid in ids_cli)
+    gravadas = 0
+    try:
+        campos_de = {}
+        for i in range(0, len(alvo), 100):
+            for c in _rest_todas(url, chave, "/rest/v1/clientes?select=id,campos&id=in.(" + ",".join(alvo[i:i + 100]) + ")"):
+                campos_de[c["id"]] = c.get("campos") or {}
+        for cid in alvo:
+            if cid not in campos_de or campos_de[cid].get("notas_todo") == notas[cid]:
+                continue
+            _rest(url, chave, "PATCH", f"/rest/v1/clientes?id=eq.{cid}",
+                  {"campos": {**campos_de[cid], "notas_todo": notas[cid]}}, "return=minimal")
+            gravadas += 1
+    except Exception as e:                      # noqa: BLE001 — a nota não derruba a rodada
+        print(f"  aviso: notas da ficha vindas do To Do não gravadas ({e})")
+    if gravadas:
+        print(f"  🗒 fichas com notas do To Do atualizadas: {gravadas}")
+    # a etapa que é dado (NB, senha, parente, CNPJ...) e já tinha virado subtarefa sai da lista de tarefas do caso;
+    # o dado continua na ficha. Apagar é decisão do escritório: só com LIMPAR_ETAPAS_DADO=1
+    if os.environ.get("LIMPAR_ETAPAS_DADO") == "1":
+        sub = mapa.get("subtarefas_dado") or []
+        tiradas = 0
+        try:
+            for i in range(0, len(sub), 100):
+                tiradas += len(_rest(url, chave, "DELETE", "/rest/v1/tarefas?id=in.(" + ",".join(sub[i:i + 100]) + ")&select=id",
+                                     prefer="return=representation") or [])
+        except Exception as e:                  # noqa: BLE001
+            print(f"  aviso: não tirei as etapas que eram dado da ficha ({e})")
+        print(f"  etapas do To Do que eram dado da ficha, tiradas das tarefas: {tiradas}")
 
     # 💵 o item que é dado do cliente (senha, CPF, telefone...) e já tinha virado
     # parcela sai da aba. Só a linha que nasceu deste item do To Do e que o CRM
