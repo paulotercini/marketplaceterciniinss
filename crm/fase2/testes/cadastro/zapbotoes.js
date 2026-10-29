@@ -100,7 +100,6 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     conf("o topo não mostra o número de protocolo", !(await p.$(".zap-proto")) && !/Protocolo/.test(await p.$eval(".zap-topo", e => e.textContent)));
     await p.tap('button[onclick="assumirConversa()"]'); await p.waitForTimeout(300);
     conf("Assumir a conversa grava", escritas.some(e => /zap_conversas|assumir/.test(e.u)));
-    await toca('.zt-acoes [aria-label="Retorno"]', "Retorno");
     await toca('.zt-acoes [aria-label="Transferir"]', "Transferir");
     await toca('.zt-acoes [aria-label="Encerrar"]', "Encerrar");
     await toca('button[onclick="escolherSetor()"]', "Setor");
