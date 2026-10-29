@@ -103,7 +103,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click(".trn-ver-n >> text=nível 0"); await p.waitForTimeout(500);
   conf("ver como nível 0 mostra só a Agenda, sem gravar nada", (await nivel()) === "0" && await p.evaluate(() => visao) === "agendaq" && cfg().niveis[PAULO] === 3);
   conf("vendo como o nível 0, a faixa para voltar fica à vista", await vis("#ver-nivel-faixa button"));
-  await p.evaluate(() => irPara("config")); await p.waitForTimeout(400);
+  conf("vendo como o nível 0, a barra monta o menu da conta", await p.evaluate(() => {   // antes, só a visão completa o montava
+    document.getElementById("btn-conta").onclick = null; montarSidebar(); return !!document.getElementById("btn-conta").onclick; }));
+  await p.click("#btn-conta"); await p.click('#menu-conta [data-conta="config"]'); await p.waitForTimeout(400);   // pelos cliques, como o Paulo
   conf("as Configurações abrem para o administrador mesmo vendo como o nível 0", await p.evaluate(() => visao) === "config");
   await p.click("#ver-nivel-faixa button"); await p.waitForTimeout(400);
   conf("a faixa devolve a visão completa e some", (await nivel()) === null && !(await p.$("#ver-nivel-faixa")));
