@@ -208,11 +208,11 @@ const conf = (pts, nome, v) => { ok.push([pts, nome, !!v]); console.log((v ? "PA
   await p.setViewportSize({ width: 390, height: 800 }); await p.waitForTimeout(400);
   await p.evaluate(id => abrirConversa(id), C_ANA); await p.waitForTimeout(300);
   await p.evaluate(() => { if (zagAberta()) zagAlternar(); });
-  const env2 = await p.evaluate(() => { const e = document.querySelector(".ze-enviar"); if (!e) return null; const r = e.getBoundingClientRect(); return { l: r.left, t: r.top, r: r.right, b: r.bottom }; });
-  const pil2 = await caixaAg();
-  conf(2, "no celular, com a conversa aberta, a pílula aparece sem cobrir o enviar", !!env2 && pil2.r - pil2.l > 0 && !cruza(pil2, env2)
-    && await p.evaluate(() => { const r = document.querySelector(".zag-pilula").getBoundingClientRect(); return document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest(".zag-pilula") !== null; }));
-  await p.click(".zag-pilula");
+  // 29.10.2026: no celular, com a conversa aberta, a pílula recolhida sai (cobria o áudio gravado e os balões) e a
+  // agenda abre pelo ⋯
+  conf(2, "no celular, com a conversa aberta, a pílula sai e a agenda abre pelo ⋯",
+    await p.evaluate(() => getComputedStyle(document.querySelector("#zap-ag")).display === "none"));
+  await p.click(".zt-mais summary"); await p.click('.zt-mais button[onclick*="zagAlternar"]');
   const escr = await rect(".zap-escrever");
   conf(4, "no celular, a agenda aberta não cobre o campo de escrever", !!escr && !cruza(await caixaAg(), escr));
   await p.click('.zag-vaga[data-zagvaga="P4"]').catch(() => {});

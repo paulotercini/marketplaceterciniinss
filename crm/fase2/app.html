@@ -1851,8 +1851,6 @@
   .zap-escrever{position:relative}
   .zap-icone.gravando{background:#fde7e7;border-color:#e57373;animation:piscaRec 1s infinite}
   @keyframes piscaRec{50%{opacity:.55}}
-  .zap-proto{font-family:var(--f-mono,monospace);font-size:11.5px;color:var(--cinza);cursor:pointer;
-             border:0;background:var(--placa,#eef0f3);border-radius:5px;padding:1px 7px}
   /* F183 · estrutura da tela: lista com filas, cabeçalho em duas linhas, painel do cliente */
   .zic{flex:0 0 auto;display:block}
   .mono{font-family:var(--f-mono,monospace)}
@@ -2074,6 +2072,12 @@
   .app.celular.zap-conv-aberta .zap-dir{position:fixed;inset:0;z-index:90;height:auto;border-radius:0;border:0;margin:0}
   .app.celular.zap-conv-aberta ~ .barra-cel,.app.celular.zap-conv-aberta ~ .fab-rapida{display:none}
   .app.celular.zap-conv-aberta .zap-escrever{padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+  /* a conversa em tela cheia fica no z-index 90 (a ficha, 95/96): sem isto, Agendar, Retorno, Transferir, Encerrar e as
+     demais caixas abriam por trás dela e o toque não respondia */
+  .app.celular.zap-conv-aberta ~ #modal .modal-fundo{z-index:97}
+  /* o áudio menor no celular */
+  .app.celular .zap-b audio[data-ouvir]{width:200px!important;height:32px!important}
+  .app.celular .zap-audio-prev audio{height:32px;min-width:0;width:100%;max-width:200px}
   .app.celular .zt-voltar{display:block;border:0;background:none;font-size:22px;line-height:1;padding:6px 4px;color:var(--texto);cursor:pointer;flex:none}
   .app.celular .zap-topo{padding:8px 10px;gap:6px}
   .app.celular .zt-l1,.app.celular .zt-acoes{flex-wrap:nowrap;gap:6px}
@@ -4058,6 +4062,9 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .app.celular .zap-ag{right:10px;bottom:calc(166px + env(safe-area-inset-bottom))}
 .app.celular.zap-conv-aberta .zap-ag{z-index:92;bottom:calc(176px + env(safe-area-inset-bottom))}
 .app.celular.zap-conv-aberta .zag-cx{max-height:calc(100dvh - 300px)}
+/* no celular, a pílula recolhida cobria o áudio gravado, o Descartar e os balões: com a conversa aberta ela sai, e a
+   agenda abre pelo ⋯ ("Agenda de atendimentos") */
+.app.celular.zap-conv-aberta .zap-ag:has(> .zag-pilula){display:none}
 .modal-fundo:has(.aq-fluxo){z-index:95}
 .zag-pilula{display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:22px;border:1px solid var(--borda);background:var(--branco,#fff);
   color:var(--texto);font:inherit;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.16)}
@@ -13614,7 +13621,7 @@ let zapFiltro = "minhas", zapAberta = null, zapMsgs = [], zapTimer = null, zapCo
 let zapNota = false;
 // o que veio do SMBot: setores, etiquetas, retornos, reações e o protocolo
 let zapAux = {setores:[], etiquetas:[], convEtq:new Map(), retornos:[]};
-let zapReacoes = new Map(), zapProto = null, zapResponder = null, zapHist = [], zapTransf = [], zapPainelAberto = false;
+let zapReacoes = new Map(), zapResponder = null, zapHist = [], zapTransf = [], zapPainelAberto = false;
 let zapChips = {naoLidas:false, fixadas:false, setor:"", etiqueta:"", atendente:""};
 async function carregarAuxZap(){
   const [setores, etiquetas, ce, retornos, colabSetores, mencs, passos] = await Promise.all([
@@ -14049,9 +14056,6 @@ async function abrirConversa(id){
   const c = zapConvs.find(x=>x.id===id); if(!c) return;
   zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${id}&order=momento,seq`).catch(()=>[]);
   await carregarReacoes();
-  zapProto = c.atendimento_id
-    ? ((await todas("zap_atendimentos",`select=numero&id=eq.${c.atendimento_id}`).catch(()=>[]))[0]||{}).numero
-    : null;
   zapTransf = await todas("zap_transferencias",
     `select=de_id,para_id,motivo,tipo,setor_id,por,em&conversa_id=eq.${id}&order=em.desc&limit=8`).catch(()=>[]);
   zapHist = await todas("zap_atendimentos",
@@ -14127,8 +14131,6 @@ function pintarConversa(){
              ${falaPor(c)?`<span>${esc(falaPor(c))} · cliente <b>${esc(cli.nome)}</b></span>`:""}
              <span class="mono">${esc(foneZap(c.telefone))}</span>
              ${advDaConversa(c)?`<span>Advogado: <b>${esc(advDaConversa(c))}</b></span>`:""}
-             ${zapProto?`<button class="zap-proto" title="protocolo do atendimento — clique para copiar"
-                onclick="copiar('${zapProto}','Protocolo copiado')">Protocolo ${zapProto}</button>`:""}
              ${c.bot_ativo&&c.bot_passo?`<span class="zt-robo" title="o passo do robô nesta conversa">Robô: <b>${esc(rotPasso(c.bot_passo))}</b>${c.bot_desde?` desde ${diaZap(c.bot_desde)} ${horaSP(c.bot_desde)}`:""}</span>`:""}
              ${at?`<span>Atendendo: <b>${esc(at.nome)}</b></span>`
                  :`<button class="zl-link" onclick="assumirConversa()">Assumir a conversa</button>`}
@@ -14144,6 +14146,7 @@ function pintarConversa(){
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
              <div class="zt-menu">
+               <button onclick="this.closest('details').open=false;zagAlternar()">Agenda de atendimentos</button>
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
                ${pode?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>`:""}
                ${pode&&!fim&&(zapAux.passos||[]).length?`<button onclick="levarRobo()">Levar o robô a um passo…</button>`:""}
@@ -14681,7 +14684,7 @@ function encerrarConversa(){
   const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
   const cli = c.cliente_id && D.cliPorId.get(c.cliente_id);
   const ks = cli ? processosDe(D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado") : [];
-  caixa(`<h3>Encerrar o atendimento${zapProto?` #${zapProto}`:""}</h3>
+  caixa(`<h3>Encerrar o atendimento</h3>
     <textarea id="ze-obs" rows="3" style="width:100%" placeholder="observação (opcional): o que foi resolvido"></textarea>
     ${ks.length===1?`<label style="display:block;margin-top:6px;font-size:13px"><input type="checkbox" id="ze-caso">
        registrar a observação no histórico de ${esc(ks[0].titulo||"processo")}</label>`:""}
