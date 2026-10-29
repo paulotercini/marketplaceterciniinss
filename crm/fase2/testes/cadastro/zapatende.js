@@ -90,7 +90,7 @@ const T = {
   await p.click(`.zap-conv[data-zc="${Z1}"]`);
   await p.waitForSelector(".zap-topo");
   const topo = await p.textContent(".zap-topo");
-  conf("o cabeçalho tem protocolo, setor, etiquetas, retorno e encerrar", topo.includes("Protocolo 4217") && topo.includes("Jurídico") && topo.includes("URGENTE") && topo.includes("Retorno") && topo.includes("Encerrar"));
+  conf("o cabeçalho tem setor, etiquetas, retorno e encerrar, sem o protocolo", !topo.includes("Protocolo") && topo.includes("Jurídico") && topo.includes("URGENTE") && topo.includes("Retorno") && topo.includes("Encerrar"));
   const painel = await p.textContent("#zap-painel");
   conf("o painel ao lado mostra o cliente vinculado e o caso", painel.includes("Abrir ficha") && painel.includes("Caso"));
   conf("a resposta do cliente mostra a mensagem citada", (await p.textContent("#zb-m2 .zap-cit")).includes("Chegou carta do INSS"));
