@@ -640,6 +640,28 @@ def manter_dados_do_banco(mapa, banco, tabela="clientes", campos=("telefone", "d
                 linha[campo] = v
 
 
+def respeitar_despacho(mapa, pendentes):
+    """F291 · o "Concluir por hoje" do CRM apaga a ⭐ e marca a volta. Enquanto a ponte
+    (ponte_despacho.py) não leva isso ao To Do, a tarefa ainda tem a estrela e a
+    regra "casos.importante or excluded.importante" a acenderia de novo. O caso
+    despachado e ainda não levado entra com a ⭐ apagada e a data do despacho."""
+    por_id = {}
+    for p in pendentes or []:
+        d = (p.get("ronda") or {}).get("despacho") or {}
+        if d.get("prazo") and not d.get("todo"):      # a consulta já filtra; a regra vale também sem ela
+            por_id[p["id"]] = d
+    n = 0
+    for linha in mapa.get("casos") or []:
+        d = por_id.get(linha.get("id"))
+        if d is None:
+            continue
+        linha["importante"] = False
+        if d.get("prazo"):
+            linha["prazo"] = d["prazo"]
+        n += 1
+    return n
+
+
 def remapear_clientes(mapa, cpf_para_id_existente):
     """[BUG 17.09.2026] Cliente cadastrado NO APP ganha id aleatório. Se a
     mesma pessoa também é tarefa do To Do, a importação seguinte tentava
@@ -1125,6 +1147,11 @@ def subir_rest(mapa):
                     "&or=(prazo.not.is.null,importante.is.true,beneficio.not.is.null)"
                     "&select=id,prazo,importante,beneficio"),
         "casos", ("prazo", "importante", "beneficio"))
+    n_desp = respeitar_despacho(mapa, _rest_todas(
+        url, chave, "/rest/v1/casos?todo_task_id=not.is.null&ronda->despacho=not.is.null"
+                    "&ronda->despacho->>todo=is.null&select=id,ronda"))
+    if n_desp:
+        print(f"  despachados no CRM ainda sem ponte (⭐ apagada mantida): {n_desp}")
 
     # A LISTA 💵 PAGAMENTOS É A ABA PAGAMENTOS DO CLIENTE, NÃO UM CASO.
     # Mesmo princípio de 🙏 Aposentadorias Futuras -> aba 🔔 Lembretes: lista do

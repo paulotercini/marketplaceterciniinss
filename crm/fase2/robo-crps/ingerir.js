@@ -186,7 +186,6 @@ async function main() {
   let guardados = 0;
 
   for (const { caso, novos: novosDoCaso } of porCaso.values()) {
-    let acender = false;
     const antesPorNup = blocosPorNup(caso.crps);
     const finais = new Map(antesPorNup);   // parte do que já havia, sobrescreve o novo
     for (const [nup, json] of novosDoCaso) {
@@ -233,17 +232,17 @@ async function main() {
         const frescos = bloco.eventos
           .filter(e => !T.TIPOS_SILENCIOSOS.has(e.tipo) && !vistos.has(T.chaveEvento(e))).reverse();
         for (const e of frescos) {
-          if (PEDE_CIENCIA.has(e.tipo)) { e.importante = true; acender = true; }
+          if (PEDE_CIENCIA.has(e.tipo)) e.importante = true;
           await sb('/rest/v1/andamentos', { method: 'POST', headers: { Prefer: 'return=minimal' },
             body: JSON.stringify({ caso_id: caso.id, autor_id: autorIA, texto: comentarioDoEvento(e) }) });
           novos++;
         }
       }
     }
-    // acender o ⭐ do processo é o que põe o caso na frente de quem trabalha:
-    // decisão e pauta não podem esperar alguém lembrar de abrir a aba
+    // F291 · a ⭐ do caso é a fila de hoje e só a pessoa a acende, como no To Do (decisão do Paulo,
+    // 29.10.2026); a decisão e a pauta acendem a ⭐ do movimento, que aparece nas Novidades
     await sb(`/rest/v1/casos?id=eq.${caso.id}`, { method: 'PATCH', headers: { Prefer: 'return=minimal' },
-      body: JSON.stringify({ crps: [...finais.values()], ...(acender ? { importante: true } : {}) }) });
+      body: JSON.stringify({ crps: [...finais.values()] }) });
     ok++;
   }
   // marca a última sincronização, para o CRM mostrar
