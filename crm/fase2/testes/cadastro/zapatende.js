@@ -78,11 +78,9 @@ const T = {
   await p.evaluate(() => { zapFiltro = "todas"; irPara("whatsapp"); });
   await p.waitForSelector(".zap-conv");
   const abas = await p.textContent(".zl-cab");
-  conf("filas como no SMBot: Minhas, Pendentes, Todas, Retornos e Encerradas", ["Minhas", "Pendentes", "Todas", "Retornos", "Encerradas"].every(x => abas.includes(x)));
+  conf("filas Minhas, Pendentes, Todas e Encerradas, sem Retornos (29.10.2026)", ["Minhas", "Pendentes", "Todas", "Encerradas"].every(x => abas.includes(x)) && !abas.includes("Retornos"));
   const cartao = await p.textContent(`.zap-conv[data-zc="${Z1}"]`);
   conf("o cartão mostra setor, etiqueta e o retorno marcado, no grupo das fixadas", cartao.includes("Jurídico") && cartao.includes("URGENTE") && cartao.includes("Retorno") && (await p.textContent(".zl-lista")).startsWith("Fixadas"));
-  await p.click('[data-zf="retornos"]');
-  conf("a aba Retornos traz só quem tem retorno", await p.$$eval(".zap-conv", cs => cs.length) === 1);
   await p.evaluate(() => { const d = document.querySelector(".zl-mais"); if (d) d.open = true; }); await p.click('[data-zf="fim"]');
   conf("Encerradas traz a resolvida", (await p.textContent(".zap-lado")).includes("Outra pessoa"));
   await p.click('[data-zf="todas"]');
@@ -90,7 +88,7 @@ const T = {
   await p.click(`.zap-conv[data-zc="${Z1}"]`);
   await p.waitForSelector(".zap-topo");
   const topo = await p.textContent(".zap-topo");
-  conf("o cabeçalho tem setor, etiquetas, retorno e encerrar, sem o protocolo", !topo.includes("Protocolo") && topo.includes("Jurídico") && topo.includes("URGENTE") && topo.includes("Retorno") && topo.includes("Encerrar"));
+  conf("o cabeçalho tem setor, etiquetas, o retorno já marcado e encerrar, sem o protocolo", !topo.includes("Protocolo") && topo.includes("Jurídico") && topo.includes("URGENTE") && topo.includes("Retorno") && topo.includes("Encerrar"));
   const painel = await p.textContent("#zap-painel");
   conf("o painel ao lado mostra o cliente vinculado e o caso", painel.includes("Abrir ficha") && painel.includes("Caso"));
   conf("a resposta do cliente mostra a mensagem citada", (await p.textContent("#zb-m2 .zap-cit")).includes("Chegou carta do INSS"));
