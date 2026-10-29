@@ -2052,6 +2052,34 @@
   .zap-tela.wa .zap-conv .bolha{background:#25d366;color:#fff;border-radius:10px;min-width:20px;text-align:center}
   .zap-tela.wa .zap-conv.nova .l1 .hora{color:#1fa855;font-weight:600}
   .zap-tela.wa .zap-conv.nova .l1 b{color:inherit}
+  /* 29.10.2026 · a lista sem letra sobre letra, também na coluna estreita (~290 px) e no celular: a fila mostra o número
+     embaixo do nome, os filtros ficam numa linha que rola de lado, e a linha do nome leva só o nome e a hora (o advogado
+     desce para a linha de baixo) */
+  .zl-filas button{height:auto;min-height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:1px;line-height:1.15;padding:5px 2px;min-width:0;overflow:hidden}
+  .zl-filas .n{font-size:11px;font-variant-numeric:tabular-nums}
+  .zl-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -14px;padding:1px 14px}
+  .zl-chips::-webkit-scrollbar{display:none}
+  .zl-chip,.zl-sel{flex:none;white-space:nowrap}
+  .zl-sel-rot{max-width:120px;overflow:hidden;text-overflow:ellipsis}
+  .zl-sel select{position:absolute;inset:0;width:100%;max-width:none;margin:0;padding:0;opacity:0;font-size:16px}
+  .zap-conv .l1{align-items:center}
+  .zap-conv .l1 b{flex:1;min-width:0}
+  .zap-conv .l3{flex-wrap:nowrap;overflow:hidden;white-space:nowrap;gap:6px}
+  .zap-conv .l3 > span{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .zap-conv .l3 > .zc-fim,.zap-conv .l3 > .bolha{flex:none;overflow:visible}
+  .zap-conv .l3 .zc-adv{color:var(--texto);font-weight:500}
+  .zap-conv .l3 > span + span:not(.zc-fim)::before{content:"·";margin-right:6px;color:var(--cinza-claro,var(--cinza))}
+  /* a classe "nova" é também a do aviso de novidades (cartão branco com borda e 12 px de margem): na lista, a conversa não lida
+     pintava um cartão e a lida não, e as duas pareciam de listas diferentes */
+  .zap-conv.nova:not(.on){background:transparent;border:0;border-radius:10px;padding:10px 12px;margin-bottom:2px;gap:10px;align-items:stretch}
+  @media (hover:hover) and (pointer:fine){.zap-conv.nova:not(.on):hover{background:var(--lateral-hover,#eceef2)}}
+  /* no celular, sem o segundo título "WhatsApp" (o da lista genérica) e sem a moldura em volta da lista */
+  .app.celular .meio.zap-v .meio-topo{display:none}
+  .app.celular .zap-lado{border:0;background:transparent;box-shadow:none}
+  .app.celular .zl-cab{padding:4px 4px 8px}
+  .app.celular .zl-chips{margin:0 -4px;padding:1px 4px}
+  .app.celular .zl-lista{padding:0 0 96px}
   .zap-tela.wa .zap-topo,.zap-tela.wa .zap-escrever:not(.modo-nota){background:#f0f2f5}
   .zap-tela.wa .zap-escrever:not(.modo-nota) .ze-caixa{border-color:transparent;border-radius:8px}
   .zap-tela.wa .zap-escrever:not(.modo-nota) .btn-rap.ze-enviar{width:44px;height:44px;padding:0;border-radius:50%;
@@ -4064,7 +4092,7 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .app.celular.zap-conv-aberta .zag-cx{max-height:calc(100dvh - 300px)}
 /* no celular, a pílula recolhida cobria o áudio gravado, o Descartar e os balões: com a conversa aberta ela sai, e a
    agenda abre pelo ⋯ ("Agenda de atendimentos") */
-.app.celular.zap-conv-aberta .zap-ag:has(> .zag-pilula){display:none}
+.app.celular .zap-ag:has(> .zag-pilula){display:none}   /* 29.10.2026: também sobre a lista, onde cobria a hora das conversas */
 .modal-fundo:has(.aq-fluxo){z-index:95}
 .zag-pilula{display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:22px;border:1px solid var(--borda);background:var(--branco,#fff);
   color:var(--texto);font:inherit;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.16)}
@@ -13872,7 +13900,9 @@ function pintarListaZap(){
   }
   const p = estadoPonte();
   const busca = document.getElementById("zl-busca"), comFoco = document.activeElement===busca;
+  // o select fica invisível por cima do rótulo: no celular ele precisa de 16 px (senão o iPhone dá zoom), e o rótulo segue com 12 px
   const sel = (id, rot, itens, atual) => `<label class="zl-sel ${atual?"on":""}"><span class="sr">${rot}</span>
+      <span class="zl-sel-rot" aria-hidden="true">${esc((itens.find(([v])=>v===atual)||[,rot])[1])}</span>
       <select id="${id}"><option value="">${rot}</option>
       ${itens.map(([v,t])=>`<option value="${v}" ${atual===v?"selected":""}>${esc(t)}</option>`).join("")}</select>${zic("baixo",12)}</label>`;
   // a lista se repinta a cada 6 s: sem guardar a rolagem, ela voltava ao topo no meio da leitura
@@ -14020,10 +14050,11 @@ function cartaoConversa(c){
   return `<div class="zap-conv ${zapAberta===c.id?"on":""} ${c.nao_lidas?"nova":""}" data-zc="${c.id}">
     ${avatarZap(c)}
     <div class="zc-corpo">
-      <div class="l1"><b>${esc(nomeDaConversa(c))}</b>${advDaConversa(c)?`<span class="zc-adv" title="advogado responsável">${esc(advDaConversa(c))}</span>`:""}
+      <div class="l1"><b>${esc(nomeDaConversa(c))}</b>
         <span class="hora">${c.ultima_em?quandoFalou(c.ultima_em):""}</span></div>
       <div class="l2">${esc((c.ultimo_texto||"").slice(0,80))}</div>
       <div class="l3">
+        ${advDaConversa(c)?`<span class="zc-adv" title="advogado responsável: ${esc(advDaConversa(c))}">${esc(advDaConversa(c).split(" ")[0])}</span>`:""}
         ${s?`<span class="zc-setor"><i style="background:${esc(s.cor)}"></i>${esc(s.nome)}</span>`:""}
         ${etq.slice(0,2).map(e=>`<span class="zc-etq" style="color:color-mix(in srgb, ${esc(e.cor)} 85%, #000)">${esc(e.texto)}</span>`).join("")}
         ${etq.length>2?`<span class="zc-etq" title="${esc(etq.slice(2).map(e=>e.texto).join(", "))}">+${etq.length-2}</span>`:""}
