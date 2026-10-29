@@ -7677,8 +7677,8 @@ function montarSidebar(){
       + `<div class="mais-lista"${aberto?"":" hidden"}>${mais}</div>`;
     document.getElementById("btn-mais-visoes").onclick=()=>{ guardar("crm_mais_visoes", aberto?"0":"1"); montarSidebar(); };
     document.getElementById("busca").placeholder = "Nome, CPF, processo";
-    montarConta();
   }
+  if(temaV10()) montarConta();   // também na visão do colaborador (nível 0 e 1), senão o menu da conta não abre
   const bVer=document.getElementById("btn-vercomo");
   if(bVer){ bVer.style.display = souAdmin() ? "" : "none"; bVer.classList.toggle("on", visaoColab());
     bVer.textContent = visaoColab() ? "voltar" : "ver como colaborador"; }
