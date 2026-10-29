@@ -1,6 +1,6 @@
 // F245 · a conferência em um clique e a movimentação em dois (pedido do Paulo, 19.10.2026): "Sem novidade" anota
 // "Está em análise", fecha o lembrete vencido e marca de novo para 7 dias (ou anda o "Concluir em" do To Do), com
-// desfazer; nunca sozinho. "Movimentou" grava a anotação com ⭐, acende a ⭐ do caso, declara a etapa, registra o
+// desfazer; nunca sozinho. "Movimentou" grava a anotação com ⭐ (a do caso não acende, F291), declara a etapa, registra o
 // resultado e avisa o advogado responsável, que aparece abaixo do nome do cliente e pode ser trocado. As conferências
 // iguais em sequência viram uma linha só. Banco simulado e dados fictícios. Uso: node f245.js [fotos]
 const { chromium } = require("playwright");
@@ -134,7 +134,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(800);
   const mov = T.andamentos.slice(nAnd2).find(a => a.caso_id === kA.id), kA2 = T.casos.find(k => k.id === kA.id);
   conf(`a anotação nasce com ⭐ e o que aconteceu (${mov && mov.texto})`, mov && mov.importante && mov.texto === "Indeferido: negado por falta de qualidade de segurado.");
-  conf("a ⭐ do caso acende, a etapa vira 'decidido' e o resultado fica registrado", kA2.importante && kA2.etapa === "decidido" && kA2.resultado === "indeferido" && kA2.decisao_em === iso(0));
+  conf("a ⭐ do caso NÃO acende (F291: só a pessoa a acende), a etapa vira 'decidido' e o resultado fica registrado", !kA2.importante && kA2.etapa === "decidido" && kA2.resultado === "indeferido" && kA2.decisao_em === iso(0));
   conf("o advogado responsável (Marcos) é avisado por menção", T.mencoes.slice(nMenc).some(m => m.para_id === MARCOS && m.andamento_id === mov.id));
 
   // 7 · trocar o advogado responsável

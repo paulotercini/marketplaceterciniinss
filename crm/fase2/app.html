@@ -3349,7 +3349,20 @@ html[data-tema="v10"] .seg-colab button.on{background:#fff;color:var(--texto);fo
 html[data-tema="v10"] .ag-venc{color:var(--venc-tinta);font-weight:600}
 /* a linha da agenda */
 html[data-tema="v10"] #conteudo-meio .ag-linha{display:flex;align-items:center;gap:12px;padding:0 12px 0 16px;min-height:46px;background:#fff;cursor:pointer}
-html[data-tema="v10"] .ag-slot{flex:none;width:18px;display:inline-flex;justify-content:center;color:var(--cinza)}
+html[data-tema="v10"] .ag-slot{flex:none;width:24px;display:inline-flex;justify-content:center;color:var(--cinza)}
+/* F291 · o círculo do To Do volta à linha: concluir por hoje (data de volta, ⭐ apagada, fora do Meu Dia) */
+.desp-circ{width:24px;height:24px;border:none;background:none;padding:0;cursor:pointer;flex:none;position:relative;display:grid;place-items:center}
+.desp-circ::before{content:"";width:18px;height:18px;box-sizing:border-box;border-radius:50%;border:1.5px solid var(--cinza-claro);background:#fff}
+@media (hover:hover) and (pointer:fine){.desp-circ:hover::before{border-color:var(--azul)}.desp-circ:hover::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;font-size:11px;color:var(--azul)}}
+.desp-circ:focus-visible{outline:2px solid var(--azul);outline-offset:1px;border-radius:50%}
+.cartao:not(.ag-linha) .desp-circ{margin-right:10px}
+.desp-bt{border:1px solid var(--borda);background:var(--branco);border-radius:999px;padding:2px 10px;font-size:12px;cursor:pointer;color:var(--texto);margin-left:6px;white-space:nowrap;flex:none}
+html[data-tema="v10"] .caso-esq .lc-sobre{white-space:nowrap}
+@media (hover:hover) and (pointer:fine){.desp-bt:hover{border-color:var(--azul)}}
+.desp-datas,.desp-quem{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px}
+.desp-datas .btn-mini.on,.desp-quem .btn-mini.on{background:var(--azul);color:#fff;border-color:var(--azul)}
+.desp-datas small{opacity:.75;margin-left:3px}
+#desp-nota{width:100%;box-sizing:border-box;margin:0 0 10px;font:inherit;padding:6px 8px;border:1px solid var(--borda);border-radius:6px}
 html[data-tema="v10"] .ag-linha .check{width:18px;height:18px;min-width:0;border-radius:4px;border:1.5px solid var(--cinza-claro);background:#fff;padding:0;cursor:pointer}
 html[data-tema="v10"] .ag-data{flex:none;width:52px;font:13px var(--f-mono);color:var(--cinza)}
 html[data-tema="v10"] .ag-data.venc{color:var(--venc-tinta)}
@@ -9618,7 +9631,7 @@ function cartaoCliente(cli, casosMostrar){
     const quem = [...quemProx, ...resp.filter(c=>!quemProx.includes(c))].slice(0,2);
     const dTxt = !dataProx ? "" : dataProx===hj ? "hoje" : `${dataProx.slice(8,10)}/${dataProx.slice(5,7)}${dataProx.slice(0,4)!==hj.slice(0,4)?"/"+dataProx.slice(2,4):""}`;
     return `<div class="cartao ag-linha${ks.some(k=>k.urgente)?" urg":""}" data-cli="${cli.id}"${ks.length===1 && ehPreCaso(ks[0]) ? ` data-pc="${esc((ks[0].precaso||{}).id||ks[0].id)}"` : ""}>
-    <span class="ag-slot"></span>
+    <span class="ag-slot">${(k0=>k0 && !ehPreCaso(k0) ? botaoDespacho(k0) : "")(ks.find(k=>k.importante)||kP||ks[0])}</span>
     <span class="ag-data${!dataProx?"":dataProx<hj?" venc":dataProx===hj?" hoje":""}"${dica?` title="${esc(dica)}"`:""}>${dTxt}</span>
     <div class="ag-txt"><b>${esc(cli.nome)}</b>${resumo?`<span class="ag-res">, ${esc(resumo)}</span>`:""}</div>
     <span class="ag-selos">${selos}</span>
@@ -9634,6 +9647,7 @@ function cartaoCliente(cli, casosMostrar){
   // linha. Era um convite falso, e ocupava a primeira coisa que o olho
   // encontra. Sem ele, todos os nomes começam na mesma coluna.
   return `<div class="cartao" data-cli="${cli.id}">
+    ${(k0=>k0 && !ehPreCaso(k0) ? botaoDespacho(k0) : "")(ks.find(k=>k.importante)||ks[0])}
     ${/* F22 · quem está com o caso, visível sem abrir: uma fita na borda
          esquerda com a cor de cada colaborador atribuído (até três). O
          avatar da direita continua; a fita é o que o olho varre na lista. */""}
@@ -9751,6 +9765,7 @@ function ligarCartoes(){
     b.classList.toggle("on", k.urgente);
     aviso(k.urgente?"🔥 Marcado como URGENTE":"Urgência removida");
   });
+  document.querySelectorAll("[data-despachar]").forEach(b=>b.onclick=e=>despachar(b.dataset.despachar, e));
   document.querySelectorAll(".avatares[data-equipe]").forEach(a=>a.onclick=e=>{
     e.stopPropagation(); abrirFicha(a.dataset.equipe);   // a equipe fica no menu vertical da ficha
   });
@@ -12233,7 +12248,9 @@ function itensAgendaTodos(){
     const rec = recorrerAte(k);
     const igual = !k.prazo ? "" : rec===k.prazo ? "rec" : k.exigencia_prazo===k.prazo ? "exig"
       : (k.prazos_tribunal||[]).some(p=>p.fim===k.prazo && dataDoPrazo(p) && !respostaAoPrazo(k, p)) ? "trib" : "";
-    if(k.prazo && !igual) por({data:k.prazo, k, cli, fatal:true, resumo:k.lembrar_motivo||tituloCaso(k)}, donos);
+    const volta = k.prazo && ((k.ronda||{}).despacho||{}).prazo===k.prazo;   // F291 · a volta à fila não é prazo fatal
+    if(k.prazo && !igual) por(volta ? {data:k.prazo, k, cli, selo:"Volta à fila", resumo:k.lembrar_motivo||tituloCaso(k)}
+      : {data:k.prazo, k, cli, fatal:true, resumo:k.lembrar_motivo||tituloCaso(k)}, donos);
     // a data de início do Planner: o prazo fatal entra na agenda também no dia de começar
     if(k.prazo && k.prazo_inicio && k.prazo_inicio<k.prazo) por({data:k.prazo_inicio<hj ? hj : k.prazo_inicio, k, cli, selo:"Começar",
       resumo:`começar: prazo fatal em ${fmt(k.prazo)} (${k.lembrar_motivo||tituloCaso(k)})`}, donos);
@@ -35032,7 +35049,16 @@ function linhasDeDatas(cliId){
     // em" do To Do (que é como o escritório marca prazo) fica no quadro em âmbar, perguntando do que é. F236 · o clássico
     // passa a mostrar o motivo e a pergunta também (antes só "PRAZO FATAL — nome do caso"); o mesmo dia de um prazo que
     // o CRM já conhece (recurso, exigência, tribunal) não repete a linha: vai junto dele (acima, "também no To Do")
-    if(x.prazo && !igualA){
+    // F291 · a data do "Concluir por hoje" é a volta do cliente à fila, e não prazo fatal
+    const desp = x.prazo && ((x.ronda||{}).despacho||{}).prazo===x.prazo ? x.ronda.despacho : null;
+    if(desp){
+      const por = D.colPorId.get(desp.por);
+      linhas.push({data:x.prazo, ico:"↩", natureza:"lembrete", casoId:x.id, cru:true, rotulo:"Volta à fila", resumo:"volta à fila",
+        rot:`<b>Volta à fila — ${tit}</b>
+                  <small class="qd-de">Concluído por hoje${por?` por ${esc(por.nome.split(" ")[0])}`:""} em ${fmt(String(desp.em||"").slice(0,10))}</small>`,
+        edita:`onchange="qdMudarPrazo('${x.id}',this.value)"`});
+    }
+    else if(x.prazo && !igualA){
       const txtOg = og ? `${esc(og.texto.slice(0,110))}${og.texto.length>110?"…":""}` : "";
       // F236 · o resumo é a frase da anotação que fala desta data ("protocolamos até 23/10"), e não o começo dela
       linhas.push({data:x.prazo, ico:"⏰", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true, rotulo:"Prazo fatal",
@@ -36283,6 +36309,7 @@ function linhaCaso(k){
       ${/* F287 · a canetinha da espécie ao lado do "B42 · INSS" e o ⋯ no canto, onde ficava o + (pedido do Paulo, 27.10.2026) */""}
       <div class="lc-sobre-l"><span class="lc-sobre">${esc([k.especie, k.fase==="outro" ? listaDoOutro(k) : tram].filter(Boolean).join(" · "))}</span>
       <button class="lapis" title="trocar a espécie ou o pedido deste caso" aria-label="trocar a espécie ou o pedido deste caso" onclick="escolherEspecie('${k.id}')">✎</button>
+      ${k.fase!=="encerrado" && !ehPreCaso(k) ? `<button class="desp-bt" onclick="despachar('${k.id}',event)" title="Concluir por hoje: escolher quando o cliente volta à fila, apagar a ⭐ e tirar do Meu Dia; se quiser, passar a outra pessoa" aria-label="Concluir por hoje">✔ Concluir</button>` : ""}
       ${/* F274 · Claude e Fixar comentário no ⋯ do cartão do caso */""}
       ${menuMais([
         `<button class="tl-mais-it lc-claude" role="menuitem" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)">✦ Pedir ao Claude</button>`,
@@ -39744,11 +39771,7 @@ async function toggleSinalCrps(casoId, nup, i, campo){
   const b = crpsBlocos(k).find(x=>so(x.nup)===so(nup)); if(!b) return;
   const e = (b.eventos||[])[i]; if(!e) return;
   e[campo] = !e[campo];
-  await gravarCrps(k);
-  if(campo==="importante" && e.importante && !k.importante){
-    k.importante = true;
-    await patchCaso(k.id, {importante:true}).catch(()=>{});
-  }
+  await gravarCrps(k);   // F291 · a ⭐ do movimento não acende a do caso: essa é a fila de hoje, como no To Do
   aviso(e[campo] ? (campo==="urgente"?"Movimentação marcada como urgente ⚡":"Movimentação destacada ⭐")
                  : "Marca retirada", false);
   repintarTudo();
@@ -40227,14 +40250,12 @@ async function salvarManualNovidade(casoId, nup){
   c.checagens = [{em:new Date().toISOString(), por:eu.id, novidade:true}, ...(c.checagens||[])].slice(0, HISTORICO_MAX);
   c.total = (c.total||0) + 1;
   c.proxima = maisDiasISO(hoje(), c.cada_dias||CADENCIA_PADRAO);
-  k.importante = true;
   await gravarCrps(k);
-  await patchCaso(k.id, {importante:true}).catch(()=>{});
   await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
       texto:`🔎 CRPS (consulta manual) — ${txt}`})}).catch(()=>{});
   plim();
-  aviso("Andamento registrado ⭐", false);
+  aviso("Andamento registrado", false);
   abrirFicha(clienteAberto);
 }
 
@@ -41068,6 +41089,111 @@ async function semNovidade(casoId, dias, ev){
     repinta(); aviso("Conferência desfeita", false);
   });
 }
+// ══════════════════════════════════════════════════════════════════════════
+// F291 · CONCLUIR POR HOJE (Onda A do fluxo do To Do, pedido do Paulo de 29.10.2026)
+// ══════════════════════════════════════════════════════════════════════════
+// No To Do, a ⭐ Importante é a fila do dia. Atendido o cliente, o Paulo marca quando ele volta
+// ("Concluir em", casos.prazo), tira do Meu Dia, apaga a estrela e, às vezes, passa a outra pessoa:
+// quatro a seis cliques. Aqui é um gesto: o círculo da linha ou o botão do caso. A ⭐ do caso só a
+// pessoa acende (decisão do Paulo, 29.10.2026). A ponte (crm/fase2/ponte_despacho.py) leva a data e a
+// estrela apagada ao To Do antes da sincronização, que de outro modo devolveria a estrela.
+function botaoDespacho(k){
+  return `<button class="desp-circ" data-despachar="${k.id}" title="Concluir por hoje: escolher quando volta, apagar a ⭐ e tirar do Meu Dia" aria-label="Concluir por hoje"></button>`;
+}
+function proxSegunda(base){
+  const b = base || hoje(), d = new Date(b + "T12:00:00");
+  return somaDias(b, ((8 - d.getDay()) % 7) || 7);
+}
+const DESP_DATAS = [["Amanhã", ()=>somaDias(hoje(),1)], ["Próxima semana", ()=>proxSegunda()], ["Em 15 dias", ()=>somaDias(hoje(),15)],
+  ["Em 1 mês", ()=>somaMeses(hoje(),1)], ["Em 6 meses", ()=>somaMeses(hoje(),6)]];
+let _desp = null;
+function despachar(casoId, ev){
+  if(ev){ ev.stopPropagation(); if(ev.preventDefault) ev.preventDefault(); }
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const cli = D.cliPorId.get(k.cliente_id) || {};
+  // a data que já existe e está adiante vem escolhida: o despacho só confirma
+  const ja = k.prazo && k.prazo > hoje() ? k.prazo : null;
+  _desp = {casoId, data:ja, para:null};
+  const eq = equipeAtiva().filter(c=>c.id!==eu.id);
+  caixa(`<h3 style="margin:0 0 4px">✔ Concluir por hoje <small class="meio-sub">· ${esc(cli.nome||"")} · ${esc(tituloCaso(k))}</small></h3>
+    <p class="meio-sub" style="margin:0 0 10px">Quando o cliente volta à fila? A ⭐ apaga e ele sai do seu Meu Dia.</p>
+    <div class="desp-datas">${DESP_DATAS.map(([r,f])=>{ const d=f();
+      return `<button type="button" class="btn-mini${d===ja?" on":""}" data-dd="${d}" onclick="despData(this.dataset.dd,this)">${r}<small>${fmtBarra(d).slice(0,5)}</small></button>`; }).join("")}
+      <input type="date" id="desp-data" aria-label="escolher a data" value="${ja && !DESP_DATAS.some(([,f])=>f()===ja) ? ja : ""}" onchange="despData(this.value,this)"></div>
+    ${eq.length ? `<div class="desp-quem"><span class="meio-sub">Passar a (opcional):</span>${eq.map(c=>
+      `<button type="button" class="btn-mini" data-p="${c.id}" onclick="despPara(this.dataset.p,this)">${esc(c.nome.split(" ")[0])}</button>`).join("")}</div>` : ""}
+    <textarea id="desp-nota" rows="2" placeholder="anotação (opcional): o que foi feito e o que se espera"></textarea>
+    <div class="form-linha"><button class="btn-rap" onclick="fecharCaixa()">cancelar</button>
+      <button class="btn-mini" id="desp-ok" style="margin-left:auto" onclick="gravarDespacho()">✔ Concluir por hoje</button></div>`);
+}
+function despData(v, el){
+  if(!_desp) return;
+  _desp.data = v || null;
+  document.querySelectorAll(".desp-datas .btn-mini.on").forEach(b=>b.classList.remove("on"));
+  if(el && el.classList.contains("btn-mini")){ el.classList.add("on"); const i=document.getElementById("desp-data"); if(i) i.value=""; }
+}
+function despPara(id, el){
+  if(!_desp) return;
+  _desp.para = _desp.para===id ? null : id;
+  document.querySelectorAll(".desp-quem .btn-mini").forEach(b=>b.classList.toggle("on", b.dataset.p===_desp.para));
+}
+async function gravarDespacho(){
+  const s = _desp; if(!s) return;
+  const k = D.casoPorId.get(s.casoId); if(!k) return;
+  if(!s.data) return aviso("Escolha quando o cliente volta à fila");
+  if(s.data <= hoje()) return aviso("A volta precisa ser depois de hoje");
+  const nota = ((document.getElementById("desp-nota")||{}).value||"").trim();
+  fecharCaixa(); _desp = null;
+  const cli = D.cliPorId.get(k.cliente_id) || {};
+  const antes = {prazo:k.prazo||null, importante:!!k.importante, ronda:k.ronda||{}};
+  const ronda = {...(k.ronda||{}), despacho:{em:new Date().toISOString(), por:eu.id, prazo:s.data, ...(s.para?{para:s.para}:{})}};
+  const muda = {prazo:s.data, importante:false, ronda};
+  try{ await patchCaso(k.id, muda); }catch(e){ return aviso("Não gravou — tente de novo"); }
+  Object.assign(k, muda);
+  const dias = (D.meudia||[]).filter(x=>x.caso_id===k.id && x.colaborador_id===eu.id);
+  for(const x of dias) api(`/rest/v1/meu_dia?id=eq.${x.id}`,{method:"DELETE"}).catch(()=>{});
+  D.meudia = (D.meudia||[]).filter(x=>!dias.includes(x));
+  let and = null;
+  if(nota) try{
+    [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto:nota})}) || [];
+    if(and && Array.isArray(D._andsFicha) && clienteAberto===k.cliente_id) D._andsFicha.unshift(and);
+    if(and && /@\p{L}/u.test(nota)) criarMencoes(nota, k.id, and.id).catch(()=>{});
+  }catch(e){ aviso("A anotação não gravou — o resto foi feito"); }
+  // passar a outra pessoa: como trocar o "Atribuído a" do To Do, ela entra e quem passou sai
+  const atrAntes = [...(D.atrDoCaso.get(k.id)||[])];
+  let passou = null;
+  if(s.para && s.para!==eu.id){
+    passou = D.colPorId.get(s.para);
+    if(!atrAntes.includes(s.para)) try{ await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:k.id, colaborador_id:s.para})}); }catch(e){ if(e.status!==409) passou = null; }
+    if(passou && atrAntes.includes(eu.id))
+      await api(`/rest/v1/atribuicoes?caso_id=eq.${k.id}&colaborador_id=eq.${eu.id}`,{method:"DELETE"}).catch(()=>{});
+    if(passou){
+      D.atrDoCaso.set(k.id, [...new Set([...atrAntes.filter(x=>x!==eu.id), s.para])]);
+      api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({de_id:eu.id, para_id:s.para, caso_id:k.id, ...(and?{andamento_id:and.id}:{}),
+          texto:`👤 ${(eu.nome||"").split(" ")[0]} passou a você o cliente ${cli.nome||""}, para ${fmtBarra(s.data)}${nota?`: ${nota.slice(0,140)}`:""}`})}).catch(()=>{});
+    }
+  }
+  const repinta = () => { montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha(); };
+  repinta();
+  avisoDesfazer(`✔ ${cli.nome||"Cliente"} volta em ${fmtBarra(s.data)}${passou?` · com ${passou.nome.split(" ")[0]}`:""}`, async ()=>{
+    const volta = {prazo:antes.prazo, importante:antes.importante, ronda:antes.ronda};
+    await patchCaso(k.id, volta).catch(()=>{}); Object.assign(k, volta);
+    for(const x of dias){ try{ const [m] = await api(`/rest/v1/meu_dia`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({colaborador_id:eu.id, caso_id:k.id, dia:x.dia||hoje()})}) || []; if(m) D.meudia.push(m); }catch(e){} }
+    if(and){ await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"DELETE"}).catch(()=>{});
+      if(Array.isArray(D._andsFicha)) D._andsFicha = D._andsFicha.filter(a=>a.id!==and.id); }
+    if(passou){
+      if(!atrAntes.includes(s.para)) await api(`/rest/v1/atribuicoes?caso_id=eq.${k.id}&colaborador_id=eq.${s.para}`,{method:"DELETE"}).catch(()=>{});
+      if(atrAntes.includes(eu.id)) await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:k.id, colaborador_id:eu.id})}).catch(()=>{});
+      D.atrDoCaso.set(k.id, atrAntes);
+    }
+    repinta(); aviso("Desfeito: o cliente voltou à fila", false);
+  });
+}
 // o que costuma acontecer em cada fase: [rótulo, etapa declarada, efeito]
 const MOV_FASE = {
   inss:[["Exigência", "em exigência", "exig"], ["Perícia marcada", "aguardando perícia", "data"], ["Deferido", "decidido", "deferido"],
@@ -41083,7 +41209,7 @@ function movimentou(casoId, ev){
   const ops = movOps(k), adv = D.colPorId.get(advogadoDoCliente(k.cliente_id, k)[0]), impl = confDaFase(k).impl;
   const cli = D.cliPorId.get(k.cliente_id) || {};
   caixa(`<h3 style="margin:0 0 4px">O que aconteceu? <small class="meio-sub">· ${esc(cli.nome||"")} · ${esc(tituloCaso(k))}</small></h3>
-    <p class="meio-sub" style="margin:0 0 10px">Escreva o detalhe, se quiser, e clique no que aconteceu: vira anotação com ⭐, a ⭐ do caso acende${adv && adv.id!==eu.id ? ` e ${esc(adv.nome.split(" ")[0])} é avisado` : ""}.</p>
+    <p class="meio-sub" style="margin:0 0 10px">Escreva o detalhe, se quiser, e clique no que aconteceu: vira anotação com ⭐${adv && adv.id!==eu.id ? ` e ${esc(adv.nome.split(" ")[0])} é avisado` : ""}.</p>
     <div class="form-linha mov-campos"><input id="mov-txt" placeholder="detalhe (opcional): o que pediram, a data, o resultado" style="flex:1;min-width:220px">
       <label class="meio-sub">data <input type="date" id="mov-data" title="a data da perícia, da pauta ou do prazo da exigência"></label></div>
     ${impl ? `<div class="form-linha mov-impl"><span class="meio-sub">Se implantou:</span>
@@ -41114,7 +41240,7 @@ async function registrarMovimento(casoId, i){
   fecharCaixa();
   if(Array.isArray(D._andsFicha) && clienteAberto===k.cliente_id) D._andsFicha.unshift(and);
   if(and.importante) (D.sinalizados = D.sinalizados || []).unshift(and);
-  const muda = {importante:true};
+  const muda = {};   // F291 · a anotação leva ⭐, mas a do caso só a pessoa acende (a fila de hoje, como no To Do)
   if(etapa && etapasDaFase(k).includes(etapa)) muda.etapa = etapa;
   if(efeito==="deferido" || efeito==="indeferido"){ muda.resultado = efeito; muda.decisao_em = data || hoje(); }
   if(efeito==="exig"){ muda.exigencia_prazo = data || somaDias(hoje(), 30); muda.exigencia_descricao = det || "Exigência do INSS"; }
@@ -41124,13 +41250,13 @@ async function registrarMovimento(casoId, i){
     muda.ronda = {...(k.ronda||{}), implantado:hoje()};
   }
   Object.assign(k, muda);
-  await patchCaso(casoId, muda).catch(()=>{});
+  if(Object.keys(muda).length) await patchCaso(casoId, muda).catch(()=>{});
   // a data da perícia ou da pauta vira lembrete do advogado responsável, nesse dia
   if(data && efeito==="data") try{ const [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:advId || eu.id, atribuido_por:eu.id, lembrar_em:data, natureza:"lembrete"})}); tarefaNaMemoria(tf); }catch(e){}
   if(advId && advId!==eu.id) criarMencoes(texto, casoId, and.id, [advId]).catch(()=>{});
   montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha();
-  aviso(`⭐ ${rot}${adv && adv.id!==eu.id ? ` · ${adv.nome.split(" ")[0]} avisado` : ""}`, false);
+  aviso(`${rot}${adv && adv.id!==eu.id ? ` · ${adv.nome.split(" ")[0]} avisado` : ""}`, false);
 }
 // o advogado responsável, abaixo do nome do cliente: o escolhido ou o advogado dos casos
 function linhaAdvogado(c){
