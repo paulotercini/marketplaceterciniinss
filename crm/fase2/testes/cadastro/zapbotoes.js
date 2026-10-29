@@ -140,6 +140,14 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     conf("o ⋯ abre a agenda de atendimentos", await vis(".zag-cx"));
     await p.tap(".zt-voltar"); await p.waitForTimeout(200);
     conf("a seta volta à lista", await vis(".zap-conv"));
+    // a agenda aberta fica sobre a lista no celular: fecha antes de abrir a conversa de novo
+    await p.evaluate(() => { if (zagAberta()) zagAlternar(); });
+    await p.tap(".zap-conv"); await p.waitForSelector("#zap-msgs .zap-b");
+    await p.waitForSelector(".zt-mais summary", { state: "visible" });
+    await p.tap(".zt-mais summary"); await p.waitForTimeout(100);
+    await p.tap('.zt-mais button[onclick="marcarNaoLida()"]'); await p.waitForTimeout(300);
+    conf("Marcar como não lida grava e volta à lista com a bolinha", escritas.some(e => /zap_conversas/.test(e.u) && e.m === "PATCH" && e.b && e.b.nao_lidas === 1)
+      && await vis(".zap-conv.nova .bolha"));
   } catch (e) { conf("FALHA " + e.message.split("\n")[0], false); }
   console.log(erros.length ? "erros de console:\n" + erros.join("\n") : "erros de console: nenhum");
   ok.forEach(([n, v]) => console.log((v ? "✔ " : "✘ ") + n));

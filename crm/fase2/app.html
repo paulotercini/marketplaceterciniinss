@@ -14147,6 +14147,7 @@ function pintarConversa(){
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
              <div class="zt-menu">
                <button onclick="this.closest('details').open=false;zagAlternar()">Agenda de atendimentos</button>
+               <button onclick="marcarNaoLida()">Marcar como não lida</button>
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
                ${pode?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>`:""}
                ${pode&&!fim&&(zapAux.passos||[]).length?`<button onclick="levarRobo()">Levar o robô a um passo…</button>`:""}
@@ -14237,6 +14238,15 @@ function pintarConversa(){
   cx.onscroll = () => { desce.hidden = cx.scrollHeight - cx.scrollTop - cx.clientHeight < 200; };
 }
 // F271 · no celular a conversa ocupa a tela, como no WhatsApp; a seta volta à lista
+// como no WhatsApp: a conversa fecha (abrir é ler) e volta à lista com a bolinha, para responder depois
+async function marcarNaoLida(){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  const n = Math.max(1, c.nao_lidas||0);
+  try{ await api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:n})}); }
+  catch(e){ return aviso(msgErro(e)); }
+  c.nao_lidas = n; voltarListaZap(); aviso("Marcada como não lida");
+}
 function voltarListaZap(){
   zapAberta = null; zapResponder = null;
   document.getElementById("app").classList.remove("zap-conv-aberta"); pintarAgendaZap();
