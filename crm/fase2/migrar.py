@@ -239,7 +239,7 @@ def cpf_pelo_nome(nome, cpf_por_nome):
     else:
         pri = k.split()[0]
         cpfs = {c for kk, cs in cpf_por_nome.items()
-                if kk.split()[0] == pri and _distancia(k, kk) <= 2 for c in cs}
+                if kk.split()[:1] == [pri] and _distancia(k, kk) <= 2 for c in cs}
     return next(iter(cpfs)) if len(cpfs) == 1 else None
 
 

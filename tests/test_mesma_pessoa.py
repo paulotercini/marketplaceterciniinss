@@ -36,3 +36,8 @@ def test_duvida_ou_nome_so_nao_junta():
     assert migrar.cpf_pelo_nome("Maria", banco) is None                  # só o primeiro nome
     assert migrar.cpf_pelo_nome("Joana Silva Ficta", banco) is None      # outro primeiro nome
     assert migrar.cpf_pelo_nome("Maria Souza Pereira", banco) is None    # nome diferente
+
+
+def test_ficha_de_nome_vazio_no_banco_nao_derruba():
+    # a ficha cujo nome some na chave ("de", símbolo) derrubava o migrar.py (29.10.2026)
+    assert migrar.cpf_pelo_nome("Ana Ficta Souza", {"": {"52998224725"}, "ana ficta sousa": {"00000000191"}}) == "00000000191"
