@@ -20,6 +20,10 @@ on:
         description: 'sim = roda também a auditoria To Do × CRM'
         required: false
         default: 'nao'
+      limpar_etapas:
+        description: 'sim = tira as subtarefas que eram dado da ficha (F296, decisão do Paulo de 29.10.2026)'
+        required: false
+        default: 'nao'
 
 concurrency:
   group: crm-sync
@@ -144,6 +148,7 @@ jobs:
           # senha padrão do escritório (item "Padrão" no checklist do To Do) —
           # opcional; sem ela os itens "Padrão" são só ignorados
           SENHA_PADRAO_MEUINSS: ${{ secrets.SENHA_PADRAO_MEUINSS }}
+          LIMPAR_ETAPAS_DADO: ${{ inputs.limpar_etapas == 'sim' && '1' || '' }}
         run: python crm/fase2/migrar.py
 
       # F189 · o rito de cada caso pelos dados (casos.conducao). Falha aqui não
