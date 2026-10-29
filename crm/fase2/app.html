@@ -1504,14 +1504,15 @@
            border:1px solid var(--borda);border-radius:12px;background:var(--branco);overflow:hidden}
   .zap-painel{flex:0 0 300px;overflow:auto;display:flex;flex-direction:column;gap:10px;min-width:0}
   .zap-painel:empty{display:none}
-  /* F270 · entre 1024 e 1279 px o cliente abre como gaveta sobre a conversa, como os "Dados do contato" do WhatsApp:
-     em coluna fixa a conversa ficava com 140 px. Abre no nome do topo da conversa. */
+  /* F270 · entre 1024 e 1439 px o cliente abre como gaveta sobre a conversa, como os "Dados do contato" do WhatsApp:
+     em coluna fixa a conversa ficava com 140 px (280 px a 1280, 29.10.2026). Abre no nome do topo da conversa. */
   .zp-fechar{display:none}
-  @media (min-width:1024px) and (max-width:1279px){
+  @media (min-width:1024px) and (max-width:1439px){
     .zap-tela{position:relative}
     .zap-painel{display:none;position:absolute;top:0;right:0;bottom:0;width:340px;z-index:6;padding:44px 10px 10px;
       background:var(--fundo,#f7f6f3);box-shadow:-8px 0 24px rgba(0,0,0,.14);border-radius:10px 0 0 10px}
     .zap-tela.ficha-on .zap-painel:not(:empty){display:flex}
+    .app:not(.celular) .zap-dir{margin-right:60px}   /* sem a coluna da ficha, o ⚡ e o Sugestões ficavam sobre o Enviar */
     .zap-tela.ficha-on .zp-fechar{display:block;position:absolute;top:8px;right:12px;z-index:7;border:0;background:none;
       font-size:18px;color:var(--cinza);cursor:pointer;padding:4px 8px}
   }
@@ -2003,6 +2004,10 @@
   .zt-id h2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .zt-acoes{flex-wrap:nowrap}
   .app.celular .zt-l1,.app.celular .zt-acoes{flex-wrap:wrap}
+  /* 29.10.2026 · topo da conversa estreita: cada dado numa peça só (o telefone quebrava em três linhas) e os botões só com o ícone */
+  .zt-sub>*{white-space:nowrap}
+  .zap-dir{container-type:inline-size}
+  @container (max-width:440px){.zt-acoes .zt-btn .lbl{display:none}.zt-acoes .zt-btn{padding:0 9px}}
   .zap-dia{align-self:center;font-size:11.5px;color:var(--cinza-claro,var(--cinza));background:var(--branco);
            border:1px solid var(--borda);border-radius:10px;padding:2px 10px;margin:4px 0}
   .zap-b .autor{font-size:11px;font-weight:600;color:var(--cinza);text-transform:none;margin-bottom:2px}
@@ -3135,7 +3140,7 @@ html[data-tema="v10"] .cartao .meta .chip{flex:none;font-family:var(--f-mono);fo
 html[data-tema="v10"] .cartao .orig{display:inline-flex;align-items:center;gap:4px;min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--cinza);font-family:var(--f-ui)}
 html[data-tema="v10"] .cartao .orig svg{flex:none;color:var(--cinza-claro)}
 #conteudo-meio{container-type:inline-size}
-@container (max-width:560px){ html[data-tema="v10"] .cartao .nome .cpf{display:none} }
+@container (max-width:440px){ html[data-tema="v10"] .cartao .nome .cpf{display:none} }
 @media (hover:hover) and (pointer:fine){
   html[data-tema="v10"] .cartao .avatar.mini.vazio{opacity:0;transition:opacity 120ms var(--ease-out)}
   html[data-tema="v10"] .cartao:hover .avatar.mini.vazio,html[data-tema="v10"] .cartao:focus-within .avatar.mini.vazio{opacity:1}
@@ -3553,7 +3558,7 @@ html[data-tema="v10"] .dk-entra{animation:dk-entra .22s cubic-bezier(.2,.7,.2,1)
   html[data-tema="v10"] .dk-equipe{grid-column:1/-1}
   html[data-tema="v10"] .dk-regua{height:90px}
 }
-@container (max-width:560px){
+@container (max-width:440px){
   html[data-tema="v10"] .dk-trilha{display:none}
   html[data-tema="v10"] .dk-num{font-size:24px}
   html[data-tema="v10"] .dk-kpi,html[data-tema="v10"] .dk-mini{min-height:100px;padding:12px}
@@ -13871,8 +13876,10 @@ function pintarListaZap(){
   const meu = c => c.atendente_id===eu.id;
   const aberta = c => c.status!=="resolvida";
   const gestor = zapGestor();
-  const filtros = gestor ? [["minhas","Minhas"],["sem","Pendentes"],["todas","Todas"],["retornos","Retornos"]]
-                         : [["minhas","Minhas"],["sem","Pendentes"],["retornos","Retornos"]];
+  // 29.10.2026 · sem a fila Retornos, que o escritório não usa (pedido do Paulo)
+  const filtros = gestor ? [["minhas","Minhas"],["sem","Pendentes"],["todas","Todas"]]
+                         : [["minhas","Minhas"],["sem","Pendentes"]];
+  if(zapFiltro==="retornos") zapFiltro = gestor ? "todas" : "minhas";
   if(!gestor && zapFiltro==="todas") zapFiltro = "minhas";
   const naAba = (f,c) => f==="minhas" ? meu(c)&&aberta(c) : f==="sem" ? !c.atendente_id&&aberta(c)
                        : f==="fim" ? !aberta(c)&&!c.automatica : f==="auto" ? !!c.automatica
@@ -14171,8 +14178,7 @@ function pintarConversa(){
          <div class="zt-acoes">
            ${cfgApp("zap_ia_equipe")==="sim"?`<button class="zt-btn" onclick="iaZap('resumo')" title="a IA resume a conversa para você (nada vai ao cliente)" aria-label="Resumo">✨<span class="lbl">Resumo</span></button>
            ${pode&&!fim?`<button class="zt-btn" onclick="iaZap('rascunho')" title="a IA escreve uma resposta no campo; confira antes de enviar" aria-label="Rascunho">✨<span class="lbl">Rascunho</span></button>`:""}`:""}
-           ${fim||!pode?"":`<button class="zt-btn" onclick="novoRetorno()" title="responder depois, com dia e hora" aria-label="Retorno">${zic("relogio")}<span class="lbl">Retorno</span></button>
-           <button class="zt-btn" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
+           ${fim||!pode?"":`<button class="zt-btn" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
            ${pode?`<button class="zt-btn pri" aria-label="${fim?"Reabrir":"Encerrar"}" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}<span class="lbl">Encerrar</span>`}</button>`:""}
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
@@ -49664,7 +49670,7 @@ function agendarNaVaga(dia, eventoId){
 // com vaga do Paulo, do Marcos e da Amanda, cada um na sua cor, e o clique na vaga abre o agendamento ali mesmo, já com
 // o cliente da conversa aberta (ou o nome e o telefone do contato, se não for cliente). Lê a agenda Completa.
 let zag = { aberta:null, prof:"todos", dia:null, desde:null, longe:null, longePor:null, longeErro:null, longeCarr:false };
-function zagAberta(){ if(zag.aberta===null){ const v = ler("crm_zap_agenda"); zag.aberta = v ? v==="1" : !celular(); } return zag.aberta; }
+function zagAberta(){ if(zag.aberta===null){ const v = ler("crm_zap_agenda"); zag.aberta = v ? v==="1" : !celular() && innerWidth>=1440; /* abaixo de 1440 não há coluna da ficha e a agenda aberta cobriria a conversa */ } return zag.aberta; }
 function zagAlternar(){ zag.aberta = !zagAberta(); guardar("crm_zap_agenda", zag.aberta ? "1" : "0"); pintarAgendaZap(); }
 function zagProf(pr){ zag.prof = pr; zag.dia = null; pintarAgendaZap(); }
 function zagDia(d){ zag.dia = zag.dia===d ? "" : d; pintarAgendaZap(); }
