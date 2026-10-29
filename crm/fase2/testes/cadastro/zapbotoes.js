@@ -88,6 +88,13 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
     await p.evaluate(() => { zapFiltro = "todas"; irPara("whatsapp"); });
     await p.waitForSelector(".zap-conv");
+    // 29.10.2026 · a lista sem letra sobre letra: nenhuma fila corta o texto, os filtros não quebram em duas linhas e a
+    // conversa não lida não vira cartão branco (a classe "nova" é também a do aviso de novidades)
+    conf("a lista no celular não corta nem sobrepõe texto", await p.evaluate(() =>
+      [...document.querySelectorAll(".zl-filas button")].every(b => b.scrollWidth <= b.clientWidth + 1)
+      && new Set([...document.querySelectorAll(".zl-chips > *")].map(e => Math.round(e.getBoundingClientRect().top))).size === 1
+      && [...document.querySelectorAll(".zap-conv")].every(e => getComputedStyle(e).borderTopWidth === "0px")
+      && getComputedStyle(document.querySelector(".zl-sel-rot") || document.body).fontSize !== "16px"));
     await p.tap(".zap-conv");
     await p.waitForSelector("#zap-msgs .zap-b");
     conf("o topo não mostra o número de protocolo", !(await p.$(".zap-proto")) && !/Protocolo/.test(await p.$eval(".zap-topo", e => e.textContent)));
