@@ -3361,6 +3361,10 @@ html[data-tema="v10"] .caso-esq .lc-sobre{white-space:nowrap}
 @media (hover:hover) and (pointer:fine){.desp-bt:hover{border-color:var(--azul)}}
 .desp-datas,.desp-quem{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px}
 .desp-datas .btn-mini.on,.desp-quem .btn-mini.on,.chip-desp.on{background:var(--azul);color:#fff;border-color:var(--azul)}
+.mz-grade{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+.mz-q{border:1px solid var(--borda,#e6e8ec);border-radius:10px;padding:10px 12px;background:var(--fundo-card,#fff);min-width:0}
+.mz-q[data-tom="venc"]{border-color:#e7b3ae}.mz-q[data-tom="hoje"]{border-color:#ecd39a}
+@media (max-width:900px){.mz-grade{grid-template-columns:1fr}}
 .sep-op{display:flex;gap:8px;align-items:baseline;padding:3px 0;font-size:13px}
 .sep-ent{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--borda,#e6e8ec)}
 .sep-ent .btn-mini{margin:4px 6px 0 0}
@@ -5098,6 +5102,8 @@ html .idf-apos .adr-h{display:flex;align-items:center;gap:8px}
 html .idf-apos .ac-mais{margin-left:auto}
 html .idf-apos .ac-lista{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
 html .idf-apos .ac-it{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:baseline;gap:4px 10px;padding:8px 0;border-bottom:1px solid var(--borda)}
+html .idf-notas-todo .ac-lista{list-style:none;margin:0;padding:0}
+html .idf-notas-todo .ac-it{display:grid;grid-template-columns:110px minmax(0,1fr);gap:4px 10px;padding:7px 0;border-bottom:1px solid var(--borda);font-size:13px}
 html .idf-apos .ac-it b{font-weight:500;font-size:13.5px;min-width:0}
 html .idf-apos .ac-it .ac-data{font-variant-numeric:tabular-nums;font-size:13.5px}
 html .idf-apos .ac-it small{grid-column:1 / -1;color:var(--cinza);font-size:12px}
@@ -9859,7 +9865,8 @@ function render(){
     .concat(equipeAtiva().map(x=>
       `<button class="fchip fchip-ini ${filtroColab===x.id?"on":""}" data-fcol="${x.id}" title="${esc(x.nome)}">`+
       `<span class="avatar mini" style="background:${x.cor}">${esc(x.inicial)}</span></button>`)).join("")
-    +(filtroColab && visao!=="minhas" ? `<span class="meio-sub filtro-conta" style="align-self:center">mostrando ${casosSel.length} de ${nTodos}</span>` : "")+`</div>`;
+    +(filtroColab && visao!=="minhas" ? `<span class="meio-sub filtro-conta" style="align-self:center">mostrando ${casosSel.length} de ${nTodos}</span>` : "")
+    +(visao==="importante" ? `<button class="fchip ${matrizImp?"on":""}" id="chip-matriz" aria-pressed="${matrizImp}" style="margin-left:auto">▦ Matriz importante × urgente</button>` : "")+`</div>`;
   // na lista INSS, os casos em exigência (prazo legal de 30 dias) vêm primeiro
   const emExig = casosSel.filter(emExigencia);
   if(visao==="fase:inss" && (emExig.length || soExigencia)){
@@ -9889,6 +9896,7 @@ function render(){
     // só depois os casos antigos que a lista ainda carrega
     // F236 · com o filtro por pessoa, o bloco mostra os atendimentos dela, em vez de sumir
     const emAtend = visao==="fase:escritorio" ? clientesEmAtendimento().filter(c=>!filtroColab || doAtendimentoDe(c, filtroColab)) : [];
+    if(visao==="importante" && matrizImp) meio.innerHTML = chipsCol + matrizImportante(filtroColab); else
     meio.innerHTML = chipsCol + (visao==="importante" ? blocoSinalizados() + blocoNovidadesTopo() : "")
       + (emAtend.length?`<h3 class="secao">🟡 Em atendimento — buscando documentos (${emAtend.length})</h3>`
           + emAtend.map(c=>cartaoCliente(c,[])).join(""):"")
@@ -9907,9 +9915,27 @@ function render(){
     }
   }
   document.querySelectorAll("[data-fcol]").forEach(b=>b.onclick=()=>{ filtroColab=b.dataset.fcol||null; render(); });
+  const cm = document.getElementById("chip-matriz"); if(cm) cm.onclick = () => { matrizImp = !matrizImp; render(); };
   ligarCartoes();
   // F236 · a linha diz o próximo passo: o texto da tarefa vem do banco na primeira vez
   buscarTextosAgenda(casosSel.map(k=>(agendaPorCaso().get(k.id)||{}).andId).filter(Boolean));
+}
+
+// F295 · a matriz importante × urgente (Onda D do fluxo do To Do): a ⭐ e o ⚡ do caso em quatro quadros. O quarto
+// (nem ⭐ nem ⚡) é o acervo inteiro, por isso só conta
+let matrizImp = false;
+function matrizImportante(col){
+  const ks = ativos().filter(k=>(k.importante || k.urgente) && (!col || ehDoColab(k, col)));
+  const q = (tit, sub, f, tom) => { const g = ks.filter(f);
+    return `<section class="mz-q" data-tom="${tom}"><h3 class="secao">${tit} <span class="pl-n">${g.length}</span></h3><p class="meio-sub">${sub}</p>`
+      + (grupoClientes(g).map(([c,x])=>cartaoCliente(c,x)).join("") || `<p class="meio-sub">Nenhum.</p>`) + `</section>`; };
+  const resto = ativos().filter(k=>!k.importante && !k.urgente && (!col || ehDoColab(k, col))).length;
+  return `<div class="mz-grade">`
+    + q("⭐⚡ Importante e urgente", "Fazer hoje.", k=>k.importante && k.urgente, "venc")
+    + q("⚡ Urgente, sem ⭐", "Resolver rápido ou passar a outra pessoa.", k=>k.urgente && !k.importante, "hoje")
+    + q("⭐ Importante, sem urgência", "Marcar a data de volta.", k=>k.importante && !k.urgente, "")
+    + `<section class="mz-q"><h3 class="secao">Nem ⭐ nem ⚡ <span class="pl-n">${resto}</span></h3><p class="meio-sub">Seguem nas listas pela data de volta.</p></section>`
+    + `</div>`;
 }
 
 // ── Meu Dia (com filtro por colaborador) ──────────────────────────────────
@@ -12487,7 +12513,8 @@ function renderAgendaV10(qual){
       + `</section>`;
   };
   const nDegNL = deleg.filter(i=>i.extra).length;
-  const corpo = secoes.slice(0,2).map(secao).join("")
+  const corpo = (planej || (col && col!==eu.id) ? "" : blocoOntem())
+  + secoes.slice(0,2).map(secao).join("")
   + (mencs.length ? `<section class="pl-grupo" data-tom="menc"><h3 class="secao">Menções a você <span class="pl-n">${mencs.length}</span></h3>`
       + mencs.slice(0,8).map(linhaMencaoDia).join("")
       + (mencs.length>8?`<button class="btn-rap mais-plan" onclick="irPara('mencoes')">ver as ${mencs.length} em Menções</button>`:"") + `</section>` : "")
@@ -12523,6 +12550,46 @@ function renderAgendaV10(qual){
   buscarTextosAgenda([...itens, ...deleg].filter(i=>i.andId && !i.resumo).map(i=>i.andId));
 }
 function avisoSeMeuDia(planej){ return planej ? "" : avisoCRPS(); }
+// F295 · o resumo de ontem (Onda D do fluxo do To Do): no último dia útil, quantas anotações eu fiz, em quantos
+// clientes, e quem eu despachei, com a data de volta. Recolhido; abre no clique
+function ultimoDiaUtil(){ let d = somaDias(hoje(), -1); while(!ehDiaUtil(d)) d = somaDias(d, -1); return d; }
+function resumoOntem(quem, dia){
+  const ands = (D.and30||[]).filter(a=>a.autor_id===quem && !ORIGENS_ROBO.includes(a.origem) && dataSP(a.criado_em)===dia);
+  const cliDe = id => { const k = D.casoPorId.get(id); return k && k.cliente_id; };
+  const clis = new Set(ands.map(a=>cliDe(a.caso_id)).filter(Boolean));
+  const desp = ativos().filter(k=>{ const d = (k.ronda||{}).despacho; return d && d.por===quem && dataSP(d.em)===dia; });
+  return {n: ands.length, clis: clis.size, desp};
+}
+function blocoOntem(){
+  const dia = ultimoDiaUtil(), r = resumoOntem(eu.id, dia);
+  if(!r.n && !r.desp.length) return "";
+  const rot = dia===somaDias(hoje(), -1) ? "Ontem" : `${SIGLA_DIA[new Date(dia+"T12:00:00").getDay()]}, ${dia.slice(8,10)}/${dia.slice(5,7)}`;
+  const partes = [r.n ? `${r.n} ${r.n===1?"anotação":"anotações"} em ${r.clis} ${r.clis===1?"cliente":"clientes"}` : "",
+    r.desp.length ? `${r.desp.length} ${r.desp.length===1?"concluído":"concluídos"} por hoje` : ""].filter(Boolean).join(" · ");
+  const linha = k => { const c = D.cliPorId.get(k.cliente_id), d = (k.ronda||{}).despacho||{};
+    return `<div class="cartao ag-linha"${c?` data-cli="${c.id}"`:""}><span class="ag-slot"></span>
+      <span class="ag-data">${d.prazo?`${d.prazo.slice(8,10)}/${d.prazo.slice(5,7)}`:""}</span>
+      <div class="ag-txt"><b>${esc(c?c.nome:tituloCaso(k))}</b><span class="ag-res">, volta à fila${d.prazo?` em ${fmt(d.prazo)}`:""}${
+        d.para && d.para!==eu.id ? ` com ${esc(((D.colPorId.get(d.para)||{}).nome||"").split(" ")[0])}` : ""}</span></div>
+      <span class="ag-selos"><span class="ag-tipo">${esc(k.especie||NOME_FASE[k.fase]||"")}</span></span></div>`; };
+  return `<details class="pl-grupo pl-dobra md-ontem" data-tom="ontem"><summary><h3 class="secao">${rot} <span class="pl-n">${partes}</span></h3></summary>`
+    + (r.desp.length ? r.desp.map(linha).join("") : `<p class="meio-sub">Nenhum cliente concluído por hoje nesse dia.</p>`) + `</details>`;
+}
+// F295 · o aviso das 8h: uma vez por dia útil, a partir das 8h, o que vence hoje e o que está vencido no meu dia
+function avisoDas8(agora = agoraSP()){
+  const hj = hoje();
+  if(!ehDiaUtil(hj) || agora.toTimeString().slice(0,5) < "08:00" || ler("crm_aviso8")===hj) return null;
+  guardar("crm_aviso8", hj);
+  const its = itensAgenda(eu.id), nH = its.filter(i=>i.data===hj).length, nV = its.filter(i=>i.data<hj).length;
+  const txt = `${nH} para hoje${nV ? ` e ${nV} ${nV===1?"vencida":"vencidas"}` : ""}`;
+  const h = agora.getHours();
+  aviso(`☀️ ${h<12 ? "Bom dia" : h<18 ? "Boa tarde" : "Boa noite"}. Meu Dia: ${txt}`, false);
+  if(window.Notification && Notification.permission==="granted") try{
+    const n = new Notification("☀️ Meu Dia · CRM", {body: txt, tag: "crm-aviso8"});
+    n.onclick = ()=>{ window.focus(); irPara("meudia"); n.close(); };
+  }catch(e){}
+  return txt;
+}
 // F236 · a menção a mim no Meu Dia: quem citou, de qual cliente, o pedido; a caixa dá por lida
 function linhaMencaoDia(m){
   const de = D.colPorId.get(m.de_id), k = m.caso_id && D.casoPorId.get(m.caso_id),
@@ -17222,7 +17289,7 @@ function lembretesNaHora(tarefas, hojeIso, horaAgora, avisados){
 }
 function vigiarLembretes(){
   if(!eu || !D || !D.tarefasPorCaso) return;
-  atualizarBadge();
+  atualizarBadge(); avisoDas8();
   const avisados = new Set(JSON.parse(ler("crm_lemb_avisados")||"[]"));
   const minhas = [...D.tarefasPorCaso.values()].flat().filter(t=>t.colaborador_id===eu.id);
   const vez = lembretesNaHora(minhas, hoje(), agoraSP().toTimeString().slice(0,5), avisados);
@@ -33281,6 +33348,15 @@ function caixaAposCadastro(c){
     <div id="ac-form"></div>
   </section>`;
 }
+// F296 · Onda E: as etapas do To Do que não têm campo na ficha (CNPJ, e-mail, telefone com recado, a data provável da
+// aposentadoria, o parente que não é cliente) chegam pelo migrar.py em campos.notas_todo e ficam à vista aqui
+const ROT_NOTA_TODO = {cnpj:"CNPJ", email:"E-mail", telefone:"Telefone", aposentadoria:"Aposentadoria", parente:"Parente"};
+function caixaNotasTodo(c){
+  const ns = ((c.campos||{}).notas_todo||[]).filter(n=>n && n.texto);
+  if(!ns.length) return "";
+  return `<section class="idf-card idf-notas-todo" aria-labelledby="idf-ntodo"><h3 class="adr-h" id="idf-ntodo">Anotado nas etapas do To Do</h3>
+    <ul class="ac-lista">${ns.map(n=>`<li class="ac-it"><b>${esc(ROT_NOTA_TODO[n.tipo]||"Nota")}</b><small>${esc(n.texto)}</small></li>`).join("")}</ul></section>`;
+}
 function novaAposCad(cliId){
   const f = document.getElementById("ac-form"); if(!f) return;
   f.innerHTML = `<div class="ac-form">
@@ -41283,7 +41359,7 @@ function separarParaCliente(cliId){
     ${ger.length ? `<p class="cap-perg" style="margin:8px 0 2px">Já gerado ou assinado</p>
       ${ger.map(a=>`<label class="sep-op"><input type="checkbox" class="sep-an" value="${a.id}"> ${esc(String(a.nome||"documento").replace(/^(Gerado|Assinado) · /,""))} <small class="meio-sub">${esc(fmtBarra(dataSP(a.criado_em||new Date().toISOString())))}</small></label>`).join("")}` : ""}
     <div class="form-linha" style="margin-top:6px"><input id="sep-outro" placeholder="outro papel (escreva o nome)" style="flex:1"></div>
-    <div class="desp-quem"><span class="meio-sub">Quem imprime:</span>${eq.map(x=>
+    <div class="desp-quem" style="margin-top:12px"><span class="meio-sub">Quem imprime:</span>${eq.map(x=>
       `<button type="button" class="btn-mini${x.id===_sep.para?" on":""}" data-p="${x.id}" onclick="sepPara(this.dataset.p)">${esc(x.nome.split(" ")[0])}</button>`).join("")}</div>
     <div class="desp-datas"><span class="meio-sub">Na pasta até:</span>
       ${[["Hoje",hoje()],["Amanhã",somaDias(hoje(),1)]].map(([r,d])=>`<button type="button" class="btn-mini${d===_sep.ate?" on":""}" data-dd="${d}" onclick="sepAte(this.dataset.dd)">${r}</button>`).join("")}
@@ -45159,6 +45235,7 @@ function fichaIdentificacao(c, creds){
         ${cadCampoEndereco(c)}
       </section>
       ${caixaAposCadastro(c)}
+      ${caixaNotasTodo(c)}
       ${caixaQualidade(c)}
       ${/* onda 0 · o dossiê também na Identificação, que está sempre à vista */""}
       <div class="idf-dossie">${caixaDossie(c)}

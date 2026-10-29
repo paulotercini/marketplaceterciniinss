@@ -163,7 +163,7 @@ def test_classificar_checklist_telefone_cpf_protocolo():
 
 
 def test_classificar_checklist_nome_de_parente():
-    tipo, (rel, nome) = migrar.classificar_item_checklist("Esposa Fulana de Tal")
+    tipo, (rel, nome, _) = migrar.classificar_item_checklist("Esposa Fulana de Tal")
     assert tipo == "nome" and rel == "esposa" and nome == "Fulana de Tal"
 
 
