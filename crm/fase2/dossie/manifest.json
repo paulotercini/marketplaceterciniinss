@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Dossiê do cliente — Tercini",
-  "version": "0.12.1",
+  "version": "0.13.0",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApwpdm3Rkep2+q0uvkaWGpli7AxXkxIXdSSiaMqjyCv7wuP0qgQo3N4TQiFf/ySe8WanC0QQ5k/b01SA4WHPm6QnBQEsy9WwbnIjDbd37kxp8KxdkZHNsx6X321iPLwtgngoFrcPAHdONRlXrWN33xu1E03GqEZAvPoIOfDRQkFP5uxbjPRetGQFBZfrJp6GERiQTwuLQJ9Cmqw+7SZZyqXHC+MPgNEXUFWwKrlOLkSs26Y5hSL1fWkEC1PEpufoLK3s/ax88PGi0uJwZ8H+FlBteP9soC4jA/5hCyCaXo83AK09gkZZHU7EphImSECAocXbUqcbWO3UljPslAVa4CQIDAQAB",
   "description": "Na sessão gov.br já logada do cliente, baixa num clique os documentos do Meu INSS, do e-Recursos, do Emprega Brasil (CTPS, RAIS, CAGED) do HC Ribeirão (exames de imagem com as imagens, internações, relatórios) da Redesim (CNPJs vinculados ao CPF) e do CadÚnico (ficha completa da família) para a pasta do cliente em G:\\Meu Drive\\Processos e para a ficha no CRM.",
   "permissions": [

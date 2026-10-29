@@ -3361,6 +3361,12 @@ html[data-tema="v10"] .caso-esq .lc-sobre{white-space:nowrap}
 @media (hover:hover) and (pointer:fine){.desp-bt:hover{border-color:var(--azul)}}
 .desp-datas,.desp-quem{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px}
 .desp-datas .btn-mini.on,.desp-quem .btn-mini.on,.chip-desp.on{background:var(--azul);color:#fff;border-color:var(--azul)}
+.sep-op{display:flex;gap:8px;align-items:baseline;padding:3px 0;font-size:13px}
+.sep-ent{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--borda,#e6e8ec)}
+.sep-ent .btn-mini{margin:4px 6px 0 0}
+.chip-entregar,.chip-parente{min-height:24px;padding:2px 10px;border-radius:999px;border:1px solid var(--borda,#d9dce1);background:#fff;font:600 12px system-ui;cursor:pointer;color:inherit}
+.chip-entregar{border-color:#c98a00;background:#fff6e0;color:#7a5200}
+.chip-parente.tem{border-color:var(--azul);color:var(--azul)}
 .desp-datas small{opacity:.75;margin-left:3px}
 #desp-nota{width:100%;box-sizing:border-box;margin:0 0 10px;font:inherit;padding:6px 8px;border:1px solid var(--borda);border-radius:6px}
 html[data-tema="v10"] .ag-linha .check{width:18px;height:18px;min-width:0;border-radius:4px;border:1.5px solid var(--cinza-claro);background:#fff;padding:0;cursor:pointer}
@@ -17838,8 +17844,10 @@ function pintarFicha(){
         <button class="olho" title="copiar CPF" onclick="copiar('${c.cpf}','CPF copiado')">📋</button>`:"—"}</span>
       ${(cr=>cr?`<span class="id-min"><b>Meu INSS</b> ••••••
         <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button>
-        <button class="olho" title="ver (fica registrado)" onclick="verCred('${cr.id}')">👁</button></span>`
-        :`<span class="id-min"><b>Meu INSS</b> <span class="meio-sub">sem senha</span></span>`)(creds.find(x=>x.tipo==="meu_inss"))}
+        <button class="olho" title="ver (fica registrado)" onclick="verCred('${cr.id}')">👁</button>${c.cpf?`
+        <button class="olho entrar-inss" title="entrar no Meu INSS: copia o CPF e abre o login do gov.br" onclick="entrarMeuInss('${cliId}')">↗</button>`:""}</span>`
+        :`<span class="id-min"><b>Meu INSS</b> <span class="meio-sub">sem senha</span>${c.cpf?`
+        <button class="olho entrar-inss" title="entrar no Meu INSS: copia o CPF e abre o login do gov.br" onclick="entrarMeuInss('${cliId}')">↗</button>`:""}</span>`)(creds.find(x=>x.tipo==="meu_inss"))}
       ${/* F86 · o telefone ao lado do CPF e da senha: é o terceiro dado que a
            equipe copia o dia inteiro (o protótipo o mostrava na faixa) */""}
       ${(temaV10() && c.telefone)?`<span class="id-min"><b>Telefone</b> <span class="cop" data-cop="${esc(c.telefone)}" data-cop-msg="Telefone copiado" title="clique para copiar">${esc(c.telefone)}</span>
@@ -17877,11 +17885,13 @@ function pintarFicha(){
       ${/* F101 · a parceria ao lado do nome, só quando existe: quem abre a
            ficha vê de cara que o caso é dividido com outro advogado */""}
       ${chipParceria(c, ks)}
+      ${chipsParentes(c)}${chipEntregar(c)}
       ${botaoZapCliente(cliId)}
       ${temaV10() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
       ${/* F274 · o que não se usa a toda hora vai ao ⋯ do cabeçalho; CPF e a senha do Meu INSS ficam à vista (pedido do Paulo) */""}
       ${menuMais([
         casosDoBalcao(cliId).length ? `<button class="tl-mais-it td-abrir" role="menuitem" onclick="trouxeDocumentos('${cliId}')">Trouxe documentos</button>` : "",
+        casoDoDoc(cliId) ? `<button class="tl-mais-it sep-abrir" role="menuitem" onclick="separarParaCliente('${cliId}')">Imprimir e separar para o cliente</button>` : "",
         c.telefone ? `<button class="tl-mais-it" role="menuitem" onclick="abrirSmbot('${c.id}')">Abrir no SMBot</button>` : "",
         temaV10() ? itemNaoCliente(c) : "",
       ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo det-mais"')}
@@ -41243,6 +41253,145 @@ async function aplicarDespacho(k, s, nota){
     }
     repinta(); aviso("Desfeito: o cliente voltou à fila", false);
   });
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F293 · PAPEL E PORTAL (Onda C do fluxo do To Do, pedido do Paulo de 29.10.2026)
+// ══════════════════════════════════════════════════════════════════════════
+// No vídeo, o Paulo gera o "Pedido para Médico Assistente", passa à Meissa "imprime e deixa na pasta" e o cliente
+// retira no balcão. Aqui é um gesto: escolher o papel (modelo ou documento já gerado), quem imprime e até quando.
+// O pedido vira anotação no caso, tarefa de quem imprime (no Meu Dia dela) e item "para entregar" na ficha
+// (campos.entregar), que a recepção baixa com "Entregue" quando o cliente retira.
+const entregarDe = c => (((c||{}).campos||{}).entregar)||[];
+function modelosDoCliente(c, ks){
+  return (D.docModelos||[]).filter(m=>m.categoria==="geral" || ks.some(k=>k.beneficio && dsa(m.categoria)===dsa(k.beneficio)));
+}
+let _sep = null;
+function separarParaCliente(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const k = casoDoDoc(cliId);
+  if(!k) return aviso("Este cliente não tem caso nem atendimento aberto para registrar o pedido");
+  const ks = (D.casosDoCliente.get(cliId)||[]).filter(x=>x.fase!=="encerrado");
+  const mods = modelosDoCliente(c, ks);
+  const ger = (D.anexos||[]).filter(a=>a.cliente_id===cliId && /^(gerado|assinado)$/.test(a.origem||"")).slice(0, 8);
+  const eq = equipeAtiva();
+  const rec = eq.filter(x=>x.cargo==="recepcao"), est = eq.filter(x=>x.cargo==="estagiario");
+  _sep = {cliId, casoId:k.id, para:((rec[0]||est[0])||{}).id||null, ate:hoje()};
+  caixa(`<h3 style="margin:0 0 4px">Imprimir e separar para o cliente <small class="meio-sub">· ${esc(c.nome)}</small></h3>
+    <p class="meio-sub" style="margin:0 0 8px">Quem imprime recebe a tarefa no Meu Dia, e a ficha mostra o que está na pasta até o cliente retirar.</p>
+    ${mods.length ? `<p class="cap-perg" style="margin:6px 0 2px">Modelo, preenchido com os dados do cliente</p>
+      ${mods.map(m=>`<label class="sep-op"><input type="checkbox" class="sep-mod" value="${m.id}"> ${esc(m.titulo)}</label>`).join("")}` : ""}
+    ${ger.length ? `<p class="cap-perg" style="margin:8px 0 2px">Já gerado ou assinado</p>
+      ${ger.map(a=>`<label class="sep-op"><input type="checkbox" class="sep-an" value="${a.id}"> ${esc(String(a.nome||"documento").replace(/^(Gerado|Assinado) · /,""))} <small class="meio-sub">${esc(fmtBarra(dataSP(a.criado_em||new Date().toISOString())))}</small></label>`).join("")}` : ""}
+    <div class="form-linha" style="margin-top:6px"><input id="sep-outro" placeholder="outro papel (escreva o nome)" style="flex:1"></div>
+    <div class="desp-quem"><span class="meio-sub">Quem imprime:</span>${eq.map(x=>
+      `<button type="button" class="btn-mini${x.id===_sep.para?" on":""}" data-p="${x.id}" onclick="sepPara(this.dataset.p)">${esc(x.nome.split(" ")[0])}</button>`).join("")}</div>
+    <div class="desp-datas"><span class="meio-sub">Na pasta até:</span>
+      ${[["Hoje",hoje()],["Amanhã",somaDias(hoje(),1)]].map(([r,d])=>`<button type="button" class="btn-mini${d===_sep.ate?" on":""}" data-dd="${d}" onclick="sepAte(this.dataset.dd)">${r}</button>`).join("")}
+      <input type="date" id="sep-ate" aria-label="escolher a data" min="${hoje()}" onchange="sepAte(this.value)"></div>
+    <div class="form-linha"><button class="btn-rap" onclick="fecharCaixa()">cancelar</button>
+      <button class="btn-mini" id="sep-ok" style="margin-left:auto" onclick="gravarSeparar()">Separar para o cliente</button></div>`);
+}
+function sepPara(id){
+  if(!_sep) return; _sep.para = _sep.para===id ? null : id;
+  document.querySelectorAll(".desp-quem .btn-mini").forEach(b=>b.classList.toggle("on", b.dataset.p===_sep.para));
+}
+function sepAte(v){
+  if(!_sep || !v) return; _sep.ate = v;
+  document.querySelectorAll(".desp-datas .btn-mini").forEach(b=>b.classList.toggle("on", b.dataset.dd===v));
+}
+async function gravarSeparar(){
+  const s = _sep; if(!s) return;
+  const c = D.cliPorId.get(s.cliId), k = D.casoPorId.get(s.casoId); if(!c || !k) return;
+  const mods = [...document.querySelectorAll(".sep-mod:checked")].map(x=>(D.docModelos||[]).find(m=>m.id===x.value)).filter(Boolean);
+  const ans = [...document.querySelectorAll(".sep-an:checked")].map(x=>(D.anexos||[]).find(a=>a.id===x.value)).filter(Boolean);
+  const outro = ((document.getElementById("sep-outro")||{}).value||"").trim();
+  if(!mods.length && !ans.length && !outro) return aviso("Escolha o papel a separar");
+  if(!s.para) return aviso("Escolha quem imprime");
+  fecharCaixa(); _sep = null;
+  // o modelo vira documento guardado (gerados/), para quem imprime abrir em Documentos sem gerar de novo
+  const novos = [];
+  for(const m of mods){
+    const corpo = preencherDoc(m.conteudo, c, k), caminho = `gerados/${c.id}/${hoje()}-${nomeSeguro(m.titulo).slice(0,60)}-${Date.now()}.html`;
+    const html = htmlImpressao(`${m.titulo} — ${c.nome}`, `<pre style="white-space:pre-wrap;font:inherit">${esc(corpo)}</pre>`);
+    try{
+      const blob = new Blob([html],{type:"text/html"});
+      await subirArquivo(caminho, blob);
+      const [an] = await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:k.id, cliente_id:c.id, autor_id:eu.id, origem:"gerado", nome:`Gerado · ${m.titulo}`, caminho, tipo:"text/html", tamanho:blob.size})}) || [];
+      if(an){ (D.anexos=D.anexos||[]).unshift(an); novos.push(an); }
+    }catch(e){ aviso(`O modelo ${m.titulo} não ficou guardado — imprima pela aba de mensagens`); }
+  }
+  const docs = [...mods.map(m=>m.titulo), ...ans.map(a=>String(a.nome||"documento").replace(/^(Gerado|Assinado) · /,"")), ...(outro?[outro]:[])];
+  const quem = D.colPorId.get(s.para), nomeQuem = quem ? quem.nome.split(" ")[0] : "";
+  const texto = `🖨 Separar para ${c.nome.split(" ")[0]} retirar no balcão: ${docs.join("; ")}. @${nomeQuem} imprime e deixa na pasta até ${fmtBarra(s.ate)}.`;
+  let and, tf;
+  try{
+    [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto})}) || [];
+    [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({andamento_id:and.id, caso_id:k.id, colaborador_id:s.para, atribuido_por:eu.id, lembrar_em:s.ate, natureza:"compromisso"})}) || [];
+    tarefaNaMemoria(tf);
+  }catch(e){ return aviso("Não gravou — tente de novo"); }
+  if(and && Array.isArray(D._andsFicha) && clienteAberto===c.id) D._andsFicha.unshift(and);
+  if(s.para!==eu.id) criarMencoes(texto, k.id, and.id).catch(()=>{});
+  const item = {id:"en_"+Date.now().toString(36), docs, anexos:[...novos, ...ans].map(a=>a.id), caso_id:k.id, and_id:and.id, tf_id:tf&&tf.id, para:s.para, ate:s.ate, em:hoje(), por:eu.id};
+  c.campos = {...(c.campos||{}), entregar:[...entregarDe(c), item]};
+  await api(`/rest/v1/clientes?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  aviso(`🖨 Separado: ${nomeQuem} imprime até ${fmtBarra(s.ate)}`, false);
+  if(clienteAberto===c.id) repintarFicha();
+}
+// a ficha avisa o que está na pasta: quem atende o cliente no balcão vê e entrega
+function chipEntregar(c){
+  const n = entregarDe(c).length; if(!n) return "";
+  return `<button type="button" class="chip-entregar" onclick="entregarAoCliente('${c.id}')" title="papéis separados na pasta para o cliente retirar">🖨 ${n} para entregar</button>`;
+}
+function entregarAoCliente(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const lst = entregarDe(c);
+  caixa(`<h3 style="margin:0 0 8px">Para entregar ao cliente <small class="meio-sub">· ${esc(c.nome)}</small></h3>
+    ${lst.map((x, i)=>{ const q = D.colPorId.get(x.para);
+      return `<div class="sep-ent"><div><b>${esc(x.docs.join("; "))}</b><br><small class="meio-sub">separado em ${esc(fmtBarra(x.em))}${q?`, ${esc(q.nome.split(" ")[0])} imprime até ${esc(fmtBarra(x.ate))}`:""}</small>
+        ${(x.anexos||[]).map(id=>(D.anexos||[]).find(a=>a.id===id)).filter(Boolean).map(a=>`<button type="button" class="btn-mini" onclick="abrirAnexo('${a.id}')">abrir para imprimir</button>`).join("")}</div>
+        <button type="button" class="btn-mini forte" onclick="marcarEntregue('${cliId}',${i})">✔ Entregue</button></div>`; }).join("") || `<p class="meio-sub">Nada separado.</p>`}
+    <div class="form-linha"><button class="btn-rap" onclick="fecharCaixa()">fechar</button></div>`);
+}
+async function marcarEntregue(cliId, i){
+  const c = D.cliPorId.get(cliId), lst = [...entregarDe(c)], x = lst[i]; if(!x) return;
+  lst.splice(i, 1);
+  c.campos = {...(c.campos||{}), entregar:lst.length ? lst : undefined};
+  try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}); }
+  catch(e){ return aviso("Não gravou — tente de novo"); }
+  if(x.tf_id) api(`/rest/v1/andamento_tarefas?id=eq.${x.tf_id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({concluida_em:new Date().toISOString()})}).catch(()=>{});
+  const t = x.tf_id && (D.tarefasPorCaso.get(x.caso_id)||[]).find(y=>y.id===x.tf_id); if(t) t.concluida_em = new Date().toISOString();
+  if(x.caso_id && D.casoPorId.get(x.caso_id)) try{
+    const [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:x.caso_id, autor_id:eu.id, texto:`✔ Entregue no balcão: ${x.docs.join("; ")}.`, responde_a:x.and_id||null})}) || [];
+    if(and && Array.isArray(D._andsFicha) && clienteAberto===cliId) D._andsFicha.unshift(and);
+  }catch(e){}
+  if(lst.length) entregarAoCliente(cliId); else fecharCaixa();
+  aviso("✔ Entregue ao cliente", false);
+  if(clienteAberto===cliId) repintarFicha();
+}
+// F293 · o parente que também é cliente fica à vista no alto da ficha (no To Do, "Filho da Rosmeire #CPF" nas etapas),
+// e avisa o que ele tem marcado nos próximos 7 dias, para aproveitar a mesma visita
+function chipsParentes(c){
+  const hj = hoje(), ate = somaDias(hj, 7);
+  return vincsDoCliente(c).map(v=>{
+    const o = D.cliPorId.get(v.cliente_id===c.id ? v.ligado_a : v.cliente_id); if(!o) return "";
+    const tem = itensAgenda(null).filter(i=>i.cli && i.cli.id===o.id && i.data<=ate && !i.antes)
+      .map(i=>`${i.data<hj?"vencido":i.data===hj?"hoje":fmtBarra(i.data).slice(0,5)}: ${i.selo?i.selo+", ":""}${i.resumo||""}`);
+    const n = entregarDe(o).length; if(n) tem.push(`${n} papel(éis) para entregar no balcão`);
+    return `<button type="button" class="chip-parente${tem.length?" tem":""}" onclick="abrirFicha('${o.id}')"
+      title="${esc(`${o.nome}${v.relacao?` (${v.relacao})`:""} também é cliente${tem.length?`. Aproveite a visita:\n• ${tem.slice(0,4).join("\n• ")}`:""}`)}">👪 ${esc(o.nome.split(" ")[0])}${v.relacao?` · ${esc(v.relacao)}`:""}${tem.length?` · também tem ${tem.length}`:""}</button>`;
+  }).join("");
+}
+// F293 · a consulta do dia no Meu INSS: o CPF vai à área de transferência e o portal abre no login do gov.br;
+// a senha copia no 📋 ao lado. Com a extensão do dossiê, "Só o extrato de pagamento" baixa um documento só
+function entrarMeuInss(cliId){
+  const c = D.cliPorId.get(cliId); if(!c || !c.cpf) return aviso("Sem CPF no cadastro");
+  copiar(c.cpf, "CPF copiado: cole no gov.br. A senha copia no 📋 ao lado");
+  window.open(MEU_INSS, "_blank", "noopener");
 }
 // o que costuma acontecer em cada fase: [rótulo, etapa declarada, efeito]
 const MOV_FASE = {
