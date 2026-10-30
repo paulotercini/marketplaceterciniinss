@@ -5352,6 +5352,10 @@ html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) #and
 /* F298 · a ficha no celular (pedido do Paulo, 30.10.2026): o voltar, o nome e o 📋 numa linha; CPF, Meu INSS e telefone
    juntos e menores; o ⋯ do tamanho dos outros botões e o menu dele dentro da tela; o campo de escrever numa linha
    até o toque; e o ✎ Sugestões redondo, acima do campo, sem cobrir o Sugestões dele */
+/* F300 · a marca do serviço dentro do botão: 16 px, alinhada ao texto */
+:is(.btn-mini,.btn-rap,.tl-bt,.adr-bt,.lc-acesso,.lc-tram,button,a) > .fonte-ic{width:16px;height:16px;vertical-align:-3px;border-radius:3px;flex:none}
+:is(.btn-mini,.btn-rap,.tl-bt,.adr-bt,.lc-acesso,.lc-tram) > .fonte-mono{font:600 9px/1 var(--f-mono,ui-monospace,monospace)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* F299 · no celular a placa do caso (DER, campos, tramitação) só abre na flecha */
 .app.celular .linha-caso[data-n="0"] .lc-placa{display:none}
 .app.celular .det-topo{padding-top:6px}
@@ -12098,7 +12102,7 @@ function linhaNovidade(a){
       ?`<a class="btn-mini" href="${urlOk(l)}" target="_blank" rel="noopener" title="abrir os autos digitais${g?` do ${esc(g)}`:""} na sua sessão do ${nomeSistemaDoLink(l)}">abrir no ${nomeSistemaDoLink(l)}${g?` · ${esc(g)}`:""} ↗</a>`
       :a.origem==="crps"
       ?`<button class="btn-mini" onclick="abrirERecursos('${a.caso_id}','${a.id}')"
-          title="abre o recurso no e-Recursos e copia o NUP">e-Recursos ↗</button>`
+          title="abre o recurso no e-Recursos e copia o NUP">${iconeFonte("crps")} ↗</button>`
       :k.processo_link?`<a class="btn-mini" href="${urlOk(k.processo_link)}" target="_blank" rel="noopener">abrir ↗</a>`:"")(grauDoAndamentoPje(a), a.origem==="pje"?linkPjeDoAndamento(a,k):null)}
     ${(i=>`${eventoDaNovidade(a)?`<button class="btn-mini" onclick="periciaRapida(${i})"
       title="agenda na aba 🩺 e cria o aviso 3 dias úteis antes — um clique">🩺 agendar+aviso</button>`:""}${segBtnHtml(i, "📌 dar seguimento")}`)(
@@ -14336,7 +14340,7 @@ function pintarConversa(){
                ${cli?`<button onclick="quemConversa()">Quem conversa…</button>`:""}
                ${cli?`<button onclick="abrirFicha('${cli.id}')">Abrir a ficha do cliente</button>`
                     :`<button onclick="vincularConversa()">Vincular a um cliente</button>`}
-               ${tel?`<a href="https://wa.me/55${tel}" target="_blank" rel="noopener">Abrir no WhatsApp do aparelho</a>`:""}
+               ${tel?`<a href="https://wa.me/55${tel}" target="_blank" rel="noopener" aria-label="Abrir no WhatsApp do aparelho">${iconeFonte("zap")} Abrir no aparelho</a>`:""}
              </div>
            </details>
          </div>
@@ -15372,7 +15376,7 @@ function botaoZapCliente(cliId){
   const n = zs.reduce((s,z)=>s+(z.nao_lidas||0),0);
   return `<button class="btn-mini" onclick="verZapCliente('${cliId}')"
     style="background:#EDF8F1;border-color:#BFE3CC;color:#128C4B;font-weight:500"
-    title="ler as mensagens de WhatsApp deste cliente">💬 WhatsApp${n?` <b>(${n} nova${n>1?"s":""})</b>`:""}</button>`;
+    title="ler as mensagens de WhatsApp deste cliente">${iconeFonte("zap")}${n?` <b>${n}</b><span class="sr-only"> nova${n>1?"s":""}</span>`:""}</button>`;
 }
 // F282 · o "Abrir ficha" do WhatsApp abre a ficha (o caso, quando há) com a conversa ao lado, como o botão WhatsApp da ficha
 async function fichaComZap(cliId){ await abrirFicha(cliId); if(clienteAberto===cliId) await verZapCliente(cliId); }
@@ -18466,7 +18470,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
         <span style="font-size:13px;color:var(--cinza)">${CAD_IC.agenda} Agendar atendimento:</span>
         <select id="ag-tipo"><option value="002">002 — cliente antigo</option><option value="001">001 — cliente novo</option></select>
         <input type="date" id="ag-data"><input type="time" id="ag-hora" value="09:00">
-        <button onclick="agendarAtendimento('${c.id}')">Abrir no Google Agenda</button>
+        <button onclick="agendarAtendimento('${c.id}')" aria-label="Abrir no Google Agenda">${iconeFonte("gcal")} Abrir</button>
         <button class="btn-mini" onclick="irSubCad('documentos')"
           title="a lista do benefício, sugerida pelo sistema — marcar, imprimir e cada item vira checklist do caso">${CAD_IC.doc} documentos para trazer</button>
       </div>
@@ -18512,7 +18516,7 @@ function cabecalhoAtendimento(c, cd, vis){
       <div class="atend-dados mono">CPF ${c.cpf ? `<span class="cop" data-cop="${esc(c.cpf)}" data-cop-msg="CPF copiado" title="clique para copiar">${fmtCpf(c.cpf)}</span>` : "—"}
         ${dn ? `· ${esc(fmt(dn))}, ${idadeDe(c.dn)} anos` : ""} ${c.telefone ? `· ${esc(c.telefone)}` : ""}
         <span class="meio-sub">${cr ? `· Meu INSS com senha guardada <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button><button class="olho" title="ver (fica registrado)" onclick="verCred('${cr.id}')">👁</button>` : `· Meu INSS: senha não guardada; peça agora <button type="button" class="btn-mini" onclick="irSubCad('identificacao')">Guardar</button>`}</span></div></div>
-    <span class="atend-acoes">${zap ? `<button type="button" class="btn-mini" onclick="${zap}" title="${(D.zapFicha||[]).length ? "ler o histórico do WhatsApp" : "abrir o WhatsApp"}">WhatsApp</button>` : ""}
+    <span class="atend-acoes">${zap ? `<button type="button" class="btn-mini" onclick="${zap}" title="${(D.zapFicha||[]).length ? "ler o histórico do WhatsApp" : "abrir o WhatsApp"}">${iconeFonte("zap")}</button>` : ""}
       ${concluir}
       <button type="button" class="btn-mini" onclick="sairModoAtendimento('${c.id}')">Sair do modo atendimento</button></span>
   </div>
@@ -20630,9 +20634,9 @@ function painelPericiasFicha(c, ks, evs){
           :e.status==="agendada"?`<button class="btn-mini" onclick="janelaAvisado('${e.id}')"
             title="registrar que o cliente foi avisado — e se agendou o atendimento presencial de preparação">📞 avisado</button>`:""}
         <button class="btn-mini" onclick="copiarLembrete('${e.id}')">💬 copiar lembrete</button>
-        ${c.telefone?`<a class="btn-mini" target="_blank" rel="noopener" href="#" onclick="event.preventDefault();zapLembrete('${e.id}')" style="text-decoration:none">📲 WhatsApp</a>`:""}
+        ${c.telefone?`<a class="btn-mini" target="_blank" rel="noopener" href="#" onclick="event.preventDefault();zapLembrete('${e.id}')" style="text-decoration:none" title="mandar o lembrete pelo WhatsApp">${iconeFonte("zap")}</a>`:""}
         <a class="btn-mini" target="_blank" rel="noopener" style="text-decoration:none"
-           href="${gcal(e.tipo+" — "+esc(c.nome), dataSP(e.data_hora), horaSP(e.data_hora), 90, "", e.local||"")}">📅 Google Agenda</a>
+           href="${gcal(e.tipo+" — "+esc(c.nome), dataSP(e.data_hora), horaSP(e.data_hora), 90, "", e.local||"")}" title="pôr no Google Agenda">${iconeFonte("gcal")}</a>
         ${e.status==="agendada"?`<button class="btn-mini" onclick="cancelarEvento('${e.id}')"
            title="desmarcada, remarcada ou lançada errada (ex.: ano trocado) — some das listas; a ficha guarda como cancelada">✕ cancelar</button>`:""}`
       :e.status==="agendada"?`
@@ -21186,7 +21190,7 @@ function abrirCobranca(pgId){
       <button class="adr-bt" onclick="copiar(document.getElementById('cob-txt').value,'Mensagem copiada')">copiar</button>
       ${tel?`<a class="adr-bt adr-primario cob-zap" style="display:inline-flex;align-items:center;text-decoration:none" target="_blank" rel="noopener"
         href="https://wa.me/${tel}?text=${encodeURIComponent(mensagemCobranca(c, p))}"
-        onclick="this.href='https://wa.me/${tel}?text='+encodeURIComponent(document.getElementById('cob-txt').value)">abrir no WhatsApp</a>`
+        onclick="this.href='https://wa.me/${tel}?text='+encodeURIComponent(document.getElementById('cob-txt').value)" aria-label="Abrir no WhatsApp">${iconeFonte("zap")} Abrir</a>`
         :`<span class="adr-nota">Sem telefone cadastrado para o WhatsApp.</span>`}
     </div>`);
 }
@@ -21504,7 +21508,7 @@ function painelMensagensFicha(c, ks, evs){
       const pronto = preencher(m.texto, c, ev, exigK&&exigK.exigencia_prazo);
       return `<div class="modelo"><div class="cab"><strong>${esc(m.titulo)}</strong>
         <button class="btn-mini" onclick='copiar(${JSON.stringify(pronto)},"Mensagem copiada")'><span class="ic-bt">${CAD_IC.copiar}</span>copiar</button>
-        ${c.telefone?`<button class="btn-mini" onclick='window.open("https://wa.me/55${c.telefone.replace(/\D/g,"")}?text="+encodeURIComponent(${JSON.stringify(pronto)}),"_blank")'><span class="ic-bt">${CAD_IC.zap}</span>WhatsApp</button>`:""}</div>
+        ${c.telefone?`<button class="btn-mini" onclick='window.open("https://wa.me/55${c.telefone.replace(/\D/g,"")}?text="+encodeURIComponent(${JSON.stringify(pronto)}),"_blank")'>${iconeFonte("zap")}</button>`:""}</div>
         <div class="previa">${esc(pronto)}</div></div>`;
     }).join("")}
     <p class="meio-sub" style="margin-top:14px">Documentos para imprimir (preenchidos com os dados do cliente):</p>
@@ -23064,7 +23068,7 @@ function painelLembretes(c, naJanela){
       <div class="form-linha" style="margin-top:6px;align-items:center">
         <button class="btn-mini" onclick="lembreteAvisado('${l.id}','manual')"
           title="${l.intervalo_meses?`registra o aviso e rearma para daqui a ${l.intervalo_meses} mês(es)`:"registra e desliga (aviso único)"}">✔ avisado hoje</button>
-        ${c.telefone?`<button class="btn-mini" onclick="zapAvisoLembrete('${l.id}')" title="abre o WhatsApp com a mensagem pronta e registra o aviso">📲 WhatsApp</button>`:""}
+        ${c.telefone?`<button class="btn-mini" onclick="zapAvisoLembrete('${l.id}')" title="abre o WhatsApp com a mensagem pronta e registra o aviso">${iconeFonte("zap")}</button>`:""}
         <button class="btn-mini" onclick='copiar(${JSON.stringify(msgLembrete(l,c))},"Mensagem copiada 💬")'>📋 copiar msg</button>
         <span class="lembrar-caixa">🗓 adiar para <input type="date" min="${hoje()}" onchange="adiarLembrete('${l.id}',this.value)"></span>
         <button class="btn-mini" style="margin-left:auto" onclick="desligarLembrete('${l.id}')"
@@ -36420,12 +36424,14 @@ function abrirMeuInss(prot){
   window.open(MEU_INSS, "_blank", "noopener");
 }
 function acessosDoCaso(k){
-  const a = (href, rot, tit) => `<a class="lc-acesso" href="${urlOk(href)}" target="_blank" rel="noopener" title="${esc(tit)}">${esc(rot)} ↗</a>`;
+  // F300 · o símbolo do sistema (INSS, e-SISREC, PJe, e-SAJ, eproc) antes do nome
+  const ic = rot => iconeFonte(/^PAT|INSS/.test(rot) ? "inss" : /SISREC/.test(rot) ? "crps" : /e-SAJ/.test(rot) ? "esaj" : /eproc/.test(rot) ? "eproc" : /PJe/.test(rot) ? "pje" : "");
+  const a = (href, rot, tit) => `<a class="lc-acesso" href="${urlOk(href)}" target="_blank" rel="noopener" title="${esc(tit)}">${ic(rot)} ${esc(rot)} ↗</a>`;
   const prots = (k.protocolos||[]).map(x=>soDig(x)).filter(Boolean);
   const inss = [];
   if(k.processo_link) inss.push(a(k.processo_link, "PAT", "abrir a tarefa no PAT"));
   else if(prots.length) inss.push(`<button class="lc-acesso" onclick="abrirMeuInss('${prots[0]}')"
-      title="o pedido não está no PAT: abre o Meu INSS e copia o protocolo ${prots[0]}">Meu INSS ↗</button>`);
+      title="o pedido não está no PAT: abre o Meu INSS e copia o protocolo ${prots[0]}">${iconeFonte("inss")} Meu INSS ↗</button>`);
   // protocolo com tarefa no PAT, além do que já tem link
   prots.filter(x=>!String(k.processo_link||"").endsWith(x)).slice(0, k.processo_link?3:0)
     .forEach(x=>inss.push(a(PAT_TAREFA+x, `PAT ${x}`, `abrir a tarefa ${x} no PAT`)));
@@ -37870,7 +37876,7 @@ function msgCliente(casoId, fonte, texto, data, pronto){
       ${tel?`oninput="document.getElementById('msg-wa').href='https://wa.me/55${tel}?text='+encodeURIComponent(this.value)"`:""}>${esc(txt)}</textarea>
     <div class="form-linha" style="margin-top:10px">
       <button class="tl-bt" onclick="fecharCaixa()">Cancelar</button>
-      ${tel?`<a class="tl-bt tl-link" id="msg-wa" style="margin-left:auto" target="_blank" rel="noopener" href="${esc(wa(txt))}">Abrir no WhatsApp ${IC_SVG.ir}</a>`:""}
+      ${tel?`<a class="tl-bt tl-link" id="msg-wa" style="margin-left:auto" target="_blank" rel="noopener" href="${esc(wa(txt))}" aria-label="Abrir no WhatsApp">${iconeFonte("zap")} Abrir ${IC_SVG.ir}</a>`:""}
       <button class="tl-bt forte" ${tel?"":`style="margin-left:auto"`} onclick="copiar(document.getElementById('msg-and').value,'Mensagem copiada');fecharCaixa()">Copiar</button>
     </div>`);
   const ta = document.getElementById("msg-and"); if(ta) ta.focus();
@@ -41656,7 +41662,7 @@ async function semResposta(casoId, canal){
   if(n>=3 && tel) caixa(`<h3 style="margin:0 0 6px">${n}ª tentativa sem resposta</h3>
     <p class="meio-sub" style="margin:0 0 10px">Mande a mensagem pronta pelo WhatsApp:</p>
     <p class="sr-msg" style="background:var(--fundo2,#f5f5f2);padding:10px;border-radius:8px;margin:0 0 10px">${esc(msgRetorno(c))}</p>
-    <a class="btn-rap sr-zap" target="_blank" rel="noopener" onclick="fecharCaixa()" href="https://wa.me/55${tel}?text=${encodeURIComponent(msgRetorno(c))}">Abrir no WhatsApp</a>`);
+    <a class="btn-rap sr-zap" target="_blank" rel="noopener" onclick="fecharCaixa()" href="https://wa.me/55${tel}?text=${encodeURIComponent(msgRetorno(c))}" aria-label="Abrir no WhatsApp">${iconeFonte("zap")} Abrir</a>`);
 }
 function semRespostaMenu(casoId){
   const n = tentativasSemResposta(casoId);
@@ -41745,7 +41751,7 @@ function abrirOuvidoria(casoId){
   caixa(`<h3 style="margin:0 0 4px">Reclamação na Ouvidoria <small class="meio-sub">· ${esc(c.nome||"")} · ${esc(tituloCaso(k))}</small></h3>
     <p class="meio-sub" style="margin:0 0 8px">Abra a reclamação no Fala.BR (prazo de análise do INSS vencido) e registre aqui o número; a resposta fica marcada para 30 dias.</p>
     <div class="form-linha" style="align-items:center"><input id="ouv-num" placeholder="nº da manifestação (opcional)" style="width:240px">
-      <a class="btn-rap" href="https://falabr.cgu.gov.br/" target="_blank" rel="noopener">Abrir o Fala.BR</a>
+      <a class="btn-rap" href="https://falabr.cgu.gov.br/" target="_blank" rel="noopener" aria-label="Abrir o Fala.BR">${iconeFonte("falabr")} Abrir</a>
       <button class="btn-rap" style="margin-left:auto" onclick="gravarOuvidoria('${casoId}')">Registrar a reclamação</button></div>`);
 }
 function gravarOuvidoria(casoId){
@@ -47759,7 +47765,7 @@ function quadroGerados(c){
   return `<section class="doc-quadro" id="dq-gerados"><div class="rotulo-caso">Gerados e assinados <span class="meio-sub">${ds.length} ${ds.length===1?"documento":"documentos"}</span></div>
     ${ds.length ? `<ul class="mov-lista">${ds.map(a=>`<li><span class="mov-data">${fmtTS(a.criado_em)}</span><span class="mov-txt">${assin(a)?"✍ ":"🖨 "}${esc(a.nome)}${quem(a)?` <small>· ${esc(quem(a))}</small>`:""}</span>
       <button class="btn-mini" onclick="abrirAnexo('${a.id}')">${assin(a)?"abrir":"abrir e reimprimir"}</button>
-      <button class="btn-mini" onclick="docAoZap('${a.id}')" title="mandar ao cliente pelo WhatsApp, em PDF">📲 WhatsApp</button></li>`).join("")}</ul>`
+      <button class="btn-mini" onclick="docAoZap('${a.id}')" title="mandar ao cliente pelo WhatsApp, em PDF">${iconeFonte("zap")}</button></li>`).join("")}</ul>`
       : `<p class="meio-sub">Nada gerado ainda. Cada documento gerado no primeiro quadro fica guardado aqui, com as lacunas que saíram em branco.</p>`}
     <div class="form-linha" style="margin-top:6px;align-items:center">
       <label class="cad-mini" style="cursor:pointer" title="o PDF ou a foto do documento assinado pelo cliente"><input type="file" id="doc-assinado" accept="image/*,application/pdf" style="display:none" onchange="anexarAssinado('${c.id}','doc-assinado')">Anexar o assinado</label>
@@ -49741,6 +49747,11 @@ const FONTES_SIS = {
   eproc:{d:null,                            n:"eproc", m:"ep"},
   inss: {d:"meu.inss.gov.br",               n:"INSS"},
   crps: {d:"consultaprocessos.inss.gov.br", n:"e-Sisrec"},
+  // F300 · as marcas dos botões de serviço: o ícone conhecido no lugar da palavra (pedido do Paulo, 30.10.2026)
+  // o WhatsApp é desenhado aqui (o botão mais usado não espera a rede): o balão verde com o fone
+  zap:  {n:"WhatsApp", svg:`<svg class="fonte-ic" width="16" height="16" viewBox="0 0 24 24" role="img" aria-label="WhatsApp"><title>WhatsApp</title><path fill="#25D366" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/><path fill="#fff" d="M8.6 7.3c.3-.6.6-.6.9-.6h.6c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .6l-.5.7c-.1.2-.2.3 0 .6.7 1.1 1.6 2 2.7 2.6.3.2.4.1.6 0l.7-.8c.2-.2.4-.2.6-.1l1.9.9c.3.1.4.2.4.4 0 .5-.2 1.4-.9 1.8-.6.4-1.5.6-2.6.3-1.7-.5-3.5-1.8-4.7-3.4-.9-1.3-1.5-2.7-1.4-3.8 0-.7.1-1.2.3-1.6z"/></svg>`},
+  gcal: {d:"calendar.google.com",           n:"Google Agenda", m:"GA"},
+  falabr:{d:"falabr.cgu.gov.br",            n:"Fala.BR", m:"FB"},
   cnj:  {d:"www.cnj.jus.br",                n:"CNJ"},
 };
 function fonteDoItem(x){
@@ -49758,6 +49769,7 @@ function fonteDoItem(x){
 }
 function iconeFonte(chave){
   const f = FONTES_SIS[chave]; if(!f) return "";
+  if(f.svg) return f.svg;
   const sg = f.m || f.n.replace(/[^A-Za-z]/g,"").slice(0,2);
   return f.d
     ? `<img class="fonte-ic" src="https://www.google.com/s2/favicons?domain=${f.d}&amp;sz=32" alt="${f.n}" title="${f.n}"
@@ -50526,7 +50538,7 @@ function sucessoFluxo(){
     <pre class="aq-whats">${esc(msg)}</pre>
     <div class="aq-bts"><button class="btn-rap" id="aq-copiar">Copiar</button>
       ${visao==="whatsapp" && zapAberta ? `<button class="btn-rap forte" id="aq-naconversa">Pôr na conversa</button>` : ""}
-      ${f.tel && !(visao==="whatsapp" && zapAberta)?`<a class="btn-rap" target="_blank" rel="noopener" href="https://wa.me/55${String(f.tel).replace(/\D/g,"")}?text=${encodeURIComponent(msg)}">Abrir no WhatsApp</a>`:""}
+      ${f.tel && !(visao==="whatsapp" && zapAberta)?`<a class="btn-rap" target="_blank" rel="noopener" href="https://wa.me/55${String(f.tel).replace(/\D/g,"")}?text=${encodeURIComponent(msg)}" aria-label="Abrir no WhatsApp">${iconeFonte("zap")} Abrir</a>`:""}
       ${f.acomp==="sim"?`<button class="btn-rap forte" id="aq-segunda">Agendar a segunda pessoa</button>`:""}
       <button class="btn-rap" onclick="fecharCaixa()">Fechar</button></div>`;
 }

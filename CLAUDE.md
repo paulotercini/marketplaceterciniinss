@@ -290,6 +290,8 @@ A **F298** (a ficha no celular, pedido do Paulo de 30.10.2026): o voltar, o nome
 
 A **F299** (a ficha no celular fechada até o toque, pedido do Paulo de 30.10.2026): no celular, as fases e etapas nascem recolhidas na alça "Fases e etapas" (`trOculta`, `trAlternar`, chave própria `crm_trilha_oculta_cel`, que o toque grava; o computador segue com `crm_trilha_oculta`), e a placa do caso (DER, campos, tramitação) só abre na flecha do pé do cartão (`.linha-caso[data-n="0"] .lc-placa`). Teste: `f298.js`.
 
+A **F300** (a marca no lugar do nome, pedido do Paulo de 30.10.2026): os botões de serviço mostram o ícone conhecido no lugar da palavra, pelo mesmo `iconeFonte` da F141: o WhatsApp é um SVG próprio em `FONTES_SIS.zap` (não espera a rede), e `gcal` (Google Agenda) e `falabr` (Fala.BR) entram pelo favicon. Vale no topo da ficha (a marca com o número das novas), no atendimento, nos lembretes, nos documentos, no Sem resposta, na agenda, na cobrança, no Fala.BR, no e-Recursos e nos acessos do caso (`acessosDoCaso`: INSS, e-SISREC, PJe, e-SAJ e eproc com a marca antes do nome). O botão só com ícone leva `aria-label` ou o `title` da marca, para o leitor de tela; a lista "💬 WhatsApp" do menu e os títulos de tela continuam escritos. Testes ajustados: `agenda151.js` e `zapficha.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
