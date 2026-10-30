@@ -2123,6 +2123,11 @@
   .app.celular .zap-tela.wa .zap-acoes{position:static;background:none}
   @media (hover:none){.zap-tela.wa .zap-acoes{position:static;background:none}}
   @media (hover:none){.zap-acoes button{font-size:16px;padding:4px 6px}}
+  /* 30.10.2026 · como no WhatsApp, no toque as ações do balão aparecem só no balão tocado (pedido do Paulo) */
+  .app.celular .zap-b:not(.toque) .zap-acoes{display:none}
+  @media (hover:none){.zap-b:not(.toque) .zap-acoes{display:none}}
+  .zap-b.toque .virar{opacity:1}
+  .zap-b.toque{box-shadow:0 0 0 2px rgba(0,168,132,.35)}
   @media (max-width:1023px){
     .zap-tela.ficha-on .zap-painel:not(:empty){display:flex;position:fixed;inset:0;z-index:95;overflow:auto;
       padding:52px 12px 16px;background:var(--fundo,#f7f6f3)}
@@ -14958,6 +14963,13 @@ async function cancelarAgendada(id){
   await abrirConversa(zapAberta);
 }
 
+// toque no balão mostra as ações dele e esconde as dos outros; tocar de novo, ou em outro lugar, esconde
+document.addEventListener("click", e => {
+  if(e.target.closest("button,a,audio,video,input,textarea,select,summary,.zap-cit")) return;
+  const b = e.target.closest(".zap-b"), ant = document.querySelector(".zap-b.toque");
+  if(ant && ant!==b) ant.classList.remove("toque");
+  if(b && b.querySelector(".zap-acoes,.virar")) b.classList.toggle("toque");
+});
 function responderMsg(id){ zapResponder = id; pintarConversaGuardando(); const t=document.getElementById("zap-txt"); if(t) t.focus(); }
 
 const EMOJIS_ZAP = ["👍","❤️","😂","😮","😢","🙏","✅"];

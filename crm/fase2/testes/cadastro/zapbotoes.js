@@ -107,9 +107,16 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.tap(".zt-mais summary"); await p.waitForTimeout(100);
     conf("o ⋯ abre o menu à vista", await p.evaluate(() => { const b = document.querySelector('.zt-mais button[onclick="quemConversa()"]'); if (!b || !b.offsetWidth) return false; const r = b.getBoundingClientRect(); return b.contains(document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)); }));
     await toca('.zt-mais button[onclick="quemConversa()"]', "Quemconversa");
+    // 30.10.2026 · as ações do balão aparecem só no balão tocado
+    const balao = async () => { if (!(await p.$("#zb-m1.toque"))) { await p.evaluate(() => document.querySelectorAll("details[open]").forEach(d => d.open = false)); await p.tap("#zb-m1 .txt"); await p.waitForTimeout(80); } };
+    conf("as ações do balão ficam escondidas até o toque", !(await vis("#zb-m1 .zap-acoes")));
+    await balao();
+    conf("o toque no balão mostra as ações dele", await vis("#zb-m1 .zap-acoes"));
     await toca("#zb-m1 button[onclick^=\"reagirMsg\"]", "Reagir");
+    await balao();
     await toca("#zb-m1 button[onclick^=\"encaminharMsg\"]", "Encaminhar");
     await toca('.zap-icone[aria-label="Mensagens prontas"]', "Mensagensprontas");
+    await balao();
     await p.tap("#zb-m1 button[onclick^=\"responderMsg\"]"); await p.waitForTimeout(100);
     conf("↩ responder mostra a citação acima do campo", await vis(".zap-resp"));
     await p.tap(".zap-resp .btn-mini");
