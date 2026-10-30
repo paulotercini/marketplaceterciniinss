@@ -14,13 +14,13 @@ sys.stdout.reconfigure(encoding="utf-8")
 # ---------------------------------------------------------------- 1. tabela de identidade
 
 todos = [p.name for p in __import__("ingestor").arquivos(incluir_fora=True)]
-assert len(todos) == 400, f"o corpus tinha 400 arquivos .md em 05/10/2026 (399 da coleta de 04/10/2026 + Portaria Conjunta 45/2026), agora tem {len(todos)}"
+assert len(todos) == 404, f"o corpus tinha 404 arquivos .md em 30/10/2026 (400 de 05/10/2026 + as 4 normas do Boletim IBDP 899), agora tem {len(todos)}"
 faltam = [n for n in todos if n not in identidade.NORMAS]
 assert not faltam, f"arquivos fora da tabela de identidade: {faltam}"
 sobram = [n for n in identidade.NORMAS if n not in todos]
 assert not sobram, f"tabela de identidade aponta arquivo que não existe: {sobram}"
 assert all(n in identidade.NORMAS for n in identidade.FORA), "FORA cita arquivo fora da tabela"
-assert len({v[0] for v in identidade.NORMAS.values()}) == 392, "392 normas em 400 arquivos"
+assert len({v[0] for v in identidade.NORMAS.values()}) == 396, "396 normas em 404 arquivos"
 try:
     identidade.identidade("Lei-inexistente.md")
     raise SystemExit("arquivo fora da tabela tinha de levantar KeyError")
@@ -244,9 +244,9 @@ except Exception:
 
 um = lambda s, *a: real.execute(s, a).fetchone()[0]
 
-# medido em 05/10/2026 contra os 400 arquivos (coleta de 04/10/2026 + Portaria Conjunta 45/2026)
-assert um("SELECT count(*) FROM norma") == 391, um("SELECT count(*) FROM norma")
-assert um("SELECT count(*) FROM artigo") == 24409, um("SELECT count(*) FROM artigo")
+# medido em 30/10/2026 contra os 404 arquivos (400 de 05/10/2026 + as 4 normas do Boletim IBDP 899, 19 artigos)
+assert um("SELECT count(*) FROM norma") == 395, um("SELECT count(*) FROM norma")
+assert um("SELECT count(*) FROM artigo") == 24428, um("SELECT count(*) FROM artigo")
 assert um("SELECT count(*) FROM artigo WHERE vigente=1 AND revogado=1") == 0, \
     "nenhuma versão revogada pode estar marcada como vigente"
 
