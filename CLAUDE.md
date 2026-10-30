@@ -304,6 +304,8 @@ A **F304** (uma tipografia só, pedido do Paulo de 30.10.2026): cada família te
 
 A **F305** (a agenda flutuante em todas as telas, pedido do Paulo de 30.10.2026): o painel da agenda do WhatsApp (F281) saiu da tela do WhatsApp e virou o `#zap-ag` global, depois do ✎ Sugestões, na mesma coluna do ⚡ e logo acima dos dois: no computador a pílula "Agenda · N vagas" com o ícone do calendário, no celular o botão redondo do tamanho do ⚡. Fora do WhatsApp, abrir vale só na tela (`zag.fora`, que `irPara` recolhe) e carrega as vagas no clique; no WhatsApp segue a escolha guardada (`crm_zap_agenda`). Na própria Agenda o botão some, e no celular com a conversa aberta continua pelo ⋯. As regras passaram a `#zap-ag` (a `.zap-ag` do balão da mensagem agendada pegava o `position:fixed`). Teste: `zapagenda.js`, seção 7.
 
+A **F306** (só o visual novo e sem o urgente, pedido do Paulo de 30.10.2026): o CRM abre sempre no v10; saíram o botão "visual" e o "Voltar ao visual anterior" do menu da conta, e `alternarTema` (a suíte de tela, em navegador automatizado e sem `crm_tema`, ainda roda o clássico das provas antigas). O botão de urgente (o fogo das linhas, o raio dos andamentos e do campo de escrever) e a Matriz importante × urgente ficam escondidos por CSS, porque se confundiam com a ⭐; a coluna `urgente` continua no banco. Na linha das listas e do Meu Dia, a inicial do responsável é um quadrado, à esquerda da ⭐, como no To Do. Testes: `f295.js` e `f298.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

@@ -109,17 +109,21 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     d.innerHTML = linhaAgenda({ k: D.casoPorId.get(kid), cli: D.cliPorId.get(cid), data: "2020-10-14", quem: [], resumo: "o INSS passou dos 90 dias",
       selo: "Mora do INSS", prazo: true, fatal: true });
     const v = s => [...d.querySelectorAll(s)].some(e => e.offsetParent);
-    const r = { res: v(".ag-res"), selo: v(".ag-prazo"), fatal: v(".ag-fatal"), esp: v(".ag-esp"), data: v(".ag-data"), nome: v(".ag-txt b"), botoes: v(".acoes .acao-card") };
+    const r = { res: v(".ag-res"), selo: v(".ag-prazo"), fatal: v(".ag-fatal"), esp: v(".ag-esp"), data: v(".ag-data"), nome: v(".ag-txt b"), botoes: v(".acoes .acao-card[data-estrela]"), fogo: v(".acao-card.fogo") };
     d.remove(); return r; }, [cA.id, kA.id]);
   conf("no Meu Dia do celular, o texto da anotação e as etiquetas somem", !linha.res && !linha.selo);
   conf("ficam data, nome, espécie e lista, prazo fatal e os botões", linha.data && linha.nome && linha.esp && linha.fatal && linha.botoes);
+  conf("sem o botão de urgente (F306)", !linha.fogo);
   // F303 · a linha do Meu Dia alinhada e o filtro por pessoa dentro da margem
   await p.evaluate(() => irPara("meudia")); await p.waitForTimeout(1000);
-  const al = await p.evaluate(() => { const l = [...document.querySelectorAll("#conteudo-meio .ag-linha")].find(e => e.querySelector(".acoes .acao-card") && e.querySelector(".avatares .avatar")); if (!l) return null;
+  const al = await p.evaluate(() => { const l = [...document.querySelectorAll("#conteudo-meio .ag-linha")].find(e => e.querySelector(".acoes .acao-card[data-estrela]") && e.querySelector(".avatares .avatar")); if (!l) return null;
     const m = s => { const b = l.querySelector(s).getClientRects()[0]; return (b.top + b.bottom) / 2; };  // a primeira linha do nome
     const seg = document.querySelector(".seg-colab").getBoundingClientRect(), card = l.getBoundingClientRect();
-    return { d: m(".ag-data"), n: Math.min(m(".ag-txt b"), 1e9), f: m(".acoes .acao-card"), a: m(".avatares .avatar"), segR: seg.right, cardR: card.right }; });
-  conf("data, nome, fogo, estrela e responsável na mesma linha", al && [al.d, al.f, al.a].every(y => Math.abs(y - al.n) < 6));
+    return { d: m(".ag-data"), n: Math.min(m(".ag-txt b"), 1e9), f: m(".acoes .acao-card[data-estrela]"), a: m(".avatares .avatar"),
+      aR: l.querySelector(".avatares .avatar").getBoundingClientRect().right, eL: l.querySelector(".acoes .acao-card[data-estrela]").getBoundingClientRect().left,
+      raio: parseFloat(getComputedStyle(l.querySelector(".avatares .avatar")).borderTopLeftRadius), segR: seg.right, cardR: card.right }; });
+  conf("data, nome, estrela e responsável na mesma linha", al && [al.d, al.f, al.a].every(y => Math.abs(y - al.n) < 6));
+  conf("a inicial do responsável em quadrado, à esquerda da estrela (F306)", al && al.raio <= 8 && al.aR <= al.eL);
   conf("o filtro por pessoa não passa da margem", al && al.segR <= al.cardR + 1);
   await p.screenshot({ path: OUT + "/cel-meudia.png" });
   conf("sem erro de página", !erros.length);
