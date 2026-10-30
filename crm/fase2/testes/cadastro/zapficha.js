@@ -70,7 +70,7 @@ const MSGS = [
   // o botão ao lado do nome abre as mensagens, só para ler, com o áudio transcrito
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   await p.waitForSelector('.det-topo button[onclick^="verZapCliente"]');
-  // F300 · o botão é a marca do WhatsApp com o número das novas
+  // F301 · o botão é a marca do WhatsApp com o número das novas
   conf("o topo da ficha tem o botão do WhatsApp com as novas", await p.$eval('.det-topo button[onclick^="verZapCliente"]', b =>
     !!b.querySelector('.fonte-ic,.fonte-mono') && /2 novas/.test(b.textContent)));
   await p.click('.det-topo button[onclick^="verZapCliente"]');
