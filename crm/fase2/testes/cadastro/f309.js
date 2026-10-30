@@ -35,7 +35,9 @@ const pedido = (token, extra) => google.post({ acao: "agendar", token, profissio
   const sem = pedido("tok-paulo", { foraDaVaga: false });
   conf(`sem a opção, o dia sem atendimento continua recusado (${sem.codigo})`, !sem.ok);
   const bate = pedido("tok-paulo", { inicio: "10:15" });
-  conf(`o horário que bate com outro atendimento é recusado (${bate.codigo})`, !bate.ok && bate.codigo === "HORARIO_INDISPONIVEL");
+  conf(`o horário que bate com outro atendimento pede confirmação (${bate.codigo})`, !bate.ok && bate.codigo === "SOBREPOSICAO" && /10:00/.test(bate.erro || ""));
+  const junto = pedido("tok-paulo", { inicio: "10:15", nome: "Beltrano Ficticio Junto", telefone: "16999990011", sobrepor: true });
+  conf(`confirmado, o administrador agenda junto (${junto.ok})`, junto.ok);
 
   // 2 · a tela do Paulo
   const s = http.createServer((q, r) => {
@@ -80,6 +82,23 @@ const pedido = (token, extra) => google.post({ acao: "agendar", token, profissio
   const novo = google.eventos.find(e => /Fulano Fict.cio Livre - /.test(e.summary || ""));
   conf(`o Google Agenda recebe ${QUI} às 08:30, 45 minutos (${novo && novo.start.dateTime})`,
     novo && novo.start.dateTime.startsWith(QUI) && /T11:30:00/.test(new Date(novo.start.dateTime).toISOString()) && (new Date(novo.end.dateTime) - new Date(novo.start.dateTime)) === 45 * 60e3);
+
+  // 3 · 13:15 na quarta, com atendimento às 13:30 (o caso do Paulo, 04/11): a tela pergunta e, confirmado, grava
+  google.eventos.push({ id: "X2", summary: "001 - Ciclano Fictício - Confirmado", start: quando(W, "13:30"), end: quando(W, "14:15") });
+  let pergunta = "";
+  p.removeAllListeners("dialog"); p.on("dialog", d => { pergunta = d.message(); d.accept(); });
+  await p.evaluate(async () => { fecharCaixa(); await carregarAgenda("paulo"); abrirFluxoAgenda({}); });
+  await p.waitForSelector("#aq-busca");
+  await p.type("#aq-busca", "Fulano Ficticio Almoco", { delay: 10 });
+  await p.click("[data-aqnovo]");
+  await p.fill("#aq-tel", "16999990010"); await p.click("#aq-seg2");
+  await p.waitForSelector('[data-aqacomp="nao"]'); await p.click('[data-aqacomp="nao"]'); await p.click("#aq-seg4");
+  await p.waitForSelector(".aq-livre"); await p.click(".aq-livre summary");
+  await p.fill("#aq-ldata", W); await p.fill("#aq-lhora", "13:15"); await p.click("#aq-lusar");
+  await p.click("#aq-seg5"); await p.check("#aq-o1"); await p.check("#aq-o2"); await p.click("#aq-gravar");
+  await p.waitForSelector(".aq-whats", { timeout: 10000 });
+  const almoco = google.eventos.find(e => /Fulano Fict.cio Almoco - /.test(e.summary || ""));
+  conf(`13:15 com atendimento às 13:30: pergunta e grava (${pergunta.slice(0, 60)})`, /13:30/.test(pergunta) && almoco && /T16:15:00/.test(new Date(almoco.start.dateTime).toISOString()));
 
   conf("sem erro de página", !erros.length);
   if (erros.length) console.log(erros);
