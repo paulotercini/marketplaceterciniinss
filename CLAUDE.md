@@ -299,6 +299,8 @@ A **F303** (nenhum texto passa da borda do quadro, pedido do Paulo de 30.10.2026
 
 A **F303** (o Meu Dia no celular, pedido do Paulo de 30.10.2026): abaixo de 760 px, a linha do Meu Dia (`linhaAgenda`) mostra só a data, o nome, a espécie e a lista (`.ag-esp`), o "Prazo fatal" (`.ag-fatal`) e os botões do lado (fogo, estrela, responsável); o texto da anotação (`.ag-res`), as demais etiquetas e o "Em análise" (`.ag-conf`) ficam escondidos. Só CSS; o computador não muda. Teste: `f298.js`.
 
+A **F304** (uma tipografia só, pedido do Paulo de 30.10.2026): cada família tem um papel. Zilla Slab só no título da tela (h1) e no nome do cliente (h2, avatar); IBM Plex Mono só no número que se copia (CPF, NB, protocolo, processo, NUP); IBM Plex Sans em todo o resto, inclusive títulos de quadro (h3, h4, `.lc-ben`, o dia da linha do tempo) e datas, horas e contagens, com `font-variant-numeric:tabular-nums`. A escala é de pixels inteiros: os meios-pixels (9,5 a 14,5) foram arredondados (12,5 e 13,5 para baixo), o `font-family:monospace` e o Georgia soltos passaram às variáveis (com fallback), e botão, campo e seleção herdam a família com 13 px (`:where(button,input,select,textarea)`). Antes eram quatro famílias e 36 tamanhos nas telas medidas. Teste: `testes/cadastro/f304.js` (família, tamanho inteiro, Zilla só no título, data e hora fora da fonte de código), nas mesmas telas da F303.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
