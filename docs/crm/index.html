@@ -4218,7 +4218,7 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 /* F249 · o nível 0 (primeiro acesso): na ficha só o Cadastro (Identificação); na barra só a Agenda, e o Novo Cliente fica no botão fixo */
 html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]):not(#btn-processos),
 :is(html[data-nivel="0"],html[data-nivel="1"]) :is(.lista-item:not([data-v="agendaq"]):not([data-v="clientes"]),.cel-tudo,#btn-v10-anotar,.rapida-caixa,#fab-rapida,
-.barra-cel [data-cel="meudia"],.barra-cel [data-cel="mencoes"],.barra-cel [data-cel="menu"],.grupo:has(#grupo-fases)){display:none!important}
+.barra-cel [data-cel="meudia"],.barra-cel [data-cel="whatsapp"],.barra-cel [data-cel="mencoes"],.barra-cel [data-cel="menu"],.grupo:has(#grupo-fases)){display:none!important}
 /* F294 · o nível 1 só navega nos andamentos dos portais: sem os prazos, que têm botões de gravar */
 html[data-nivel="1"] :is(.caso-pz,.td-classif){display:none!important}
 /* F294 · no caso, o nível 1 vê só os botões de ler (trocar de aba, abrir o documento, copiar); os que gravam somem */
@@ -4228,7 +4228,7 @@ html[data-nivel="1"] .mp-it.mp-novo{display:none!important}
 /* F253 · a faixa de quem olha como outro nível */
 #ver-nivel-faixa{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:900;display:flex;align-items:center;gap:12px;padding:8px 10px 8px 16px;border-radius:999px;background:#23231F;color:#fff;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:calc(100vw - 32px)}
 #ver-nivel-faixa button{border:none;border-radius:999px;padding:6px 12px;background:#fff;color:#23231F;font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}
-/* F252 · no celular do nível 0, a barra de baixo é Agenda, Clientes e Buscar */
+/* F252 · no celular do nível 0, a barra de baixo é Agenda, Clientes e Buscar; F306 · nos demais, o WhatsApp no lugar do Buscar (a busca fica no alto) */
 .barra-cel .so-n0{display:none!important}:is(html[data-nivel="0"],html[data-nivel="1"]) .barra-cel .so-n0{display:block!important}
 .fp-nv{display:none}
 .nv-simples{background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px;padding:16px;margin:10px 0}
@@ -5555,8 +5555,9 @@ html[data-tema="v10"] .aq-ligar h3{font-size:15px}
 <nav class="barra-cel" id="barra-cel">
   <button data-cel="agendaq" class="so-n0"><b aria-hidden="true">📅</b>Agenda</button>
   <button data-cel="clientes" class="so-n0"><b aria-hidden="true">👥</b>Clientes</button>
+  <button data-cel="busca" class="so-n0"><b aria-hidden="true">🔍</b>Buscar</button>
   <button data-cel="meudia"><b aria-hidden="true">☀️</b>Meu Dia</button>
-  <button data-cel="busca"><b aria-hidden="true">🔍</b>Buscar</button>
+  <button data-cel="whatsapp"><b aria-hidden="true">💬</b>WhatsApp<span class="selo" id="selo-zap" style="display:none"></span></button>
   <button data-cel="mencoes"><b aria-hidden="true">📥</b>Menções<span class="selo" id="selo-menc" style="display:none"></span></button>
   <button data-cel="menu"><b aria-hidden="true">☰</b>Listas</button>
 </nav>
@@ -42366,6 +42367,9 @@ function marcarBarraCel(){
     b.classList.toggle("on", b.dataset.cel===foco));
   const s=document.getElementById("selo-menc"), n=(D.mencoes||[]).length;
   if(s){ s.textContent=n; s.style.display = n ? "block" : "none"; }
+  // F306 · o mesmo contador do 💬 WhatsApp do menu
+  const z=document.getElementById("selo-zap"), nz=D.zapResumo||0;
+  if(z){ z.textContent=nz; z.style.display = nz ? "block" : "none"; }
 }
 
 // "Perícia agendada para 19/08/2026 às 8:50..." no andamento -> evento na hora
@@ -50959,7 +50963,8 @@ document.querySelectorAll("#barra-cel button").forEach(b=>{
   b.onclick=()=>irCel(b.dataset.cel);
   // F137 · os mesmos ícones desenhados do menu lateral, no lugar do emoji
   const ic=b.querySelector("b"), em=ic.textContent;
-  ic.innerHTML = em==="☰"
+  ic.innerHTML = b.dataset.cel==="whatsapp" ? iconeFonte("zap").replace(/width="16" height="16"/,'width="21" height="21"')
+    : em==="☰"
     ? '<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
     : (svgIc(em,21)||em); });
 let timerCel=null;
