@@ -72,7 +72,7 @@ const andamentos = [
   and("n-k13", "k13", EU, "INSS: Em análise → Concluída - Indeferida", -3, { origem: "pat" }),
   and("a-k13", "k13", AM, "Indeferido: vamos recorrer à Junta.", -1),
   and("n-k1", "k1", EU, `⏰ Prazo no PJe: Sentença (10 dias) — vence em ${br(dia(3))}.`, -1, { origem: "pje" }),
-  // F302 · a mesma mudança vinda do acervo e da leitura dos documentos, e o mesmo movimento em duas RPVs do e-SAJ
+  // F304 · a mesma mudança vinda do acervo e da leitura dos documentos, e o mesmo movimento em duas RPVs do e-SAJ
   and("r-acervo", "k6", EU, `PJe (1º grau): Disponibilizado no DJ Eletrônico em ${br(dia(-1))} — em ${pt(dia(0))} 01:12 — CumSenFaz 5001644-98.2024.4.03.6314`, 0, { origem: "pje" }),
   and("r-docs", "k6", EU, `PJe (1º grau): Disponibilizado no DJ Eletrônico em ${br(dia(-1))} · Juntada de ato ordinatório · 📎 Ato Ordinatório — em ${pt(dia(-2))} 15:13 — CumSenFaz 5001644-98.2024.4.03.6314`, -2, { origem: "pje" }),
   and("r-rpv1", "k6", EU, `e-SAJ TJSP (1º grau): Suspensão do Prazo — em ${pt(dia(-1))} 00:00 — Requisição de Pequeno Valor (01) 0000035-73.2026.8.26.0381`, -1, { origem: "pje" }),
@@ -197,14 +197,14 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // a perícia do PJe e o julgamento do CRPS em pauta: os dois pedem agendar (a pauta virou julgamento na frente crps)
   conf(`as Novidades abrem pelo que pede ação, sem os prazos dos tribunais (${nov.slice(0, 2).join(" | ")})`, /^🩺 Perícias, audiências e julgamentos a agendar \(2\)/.test(nov[0]) && !nov.some(t => /Prazos dos tribunais/.test(t)));
   const rep = await paulo.evaluate(() => [...document.querySelectorAll("#conteudo-meio .nov")].map(e => e.dataset.and));
-  conf("F302 · o prazo do expediente não é novidade", !rep.includes("n-k1"), rep);
-  conf("F302 · o movimento do acervo que a leitura dos documentos já trouxe aparece uma vez, na linha mais completa", rep.includes("r-docs") && !rep.includes("r-acervo"), rep);
-  conf("F302 · o mesmo movimento em duas RPVs do e-SAJ aparece uma vez", rep.filter(x => /^r-rpv/.test(x)).length === 1, rep);
-  conf("F302 · a mesma petição em semanas diferentes continua duas vezes", rep.includes("r-pet1") && rep.includes("r-pet2"), rep);
+  conf("F304 · o prazo do expediente não é novidade", !rep.includes("n-k1"), rep);
+  conf("F304 · o movimento do acervo que a leitura dos documentos já trouxe aparece uma vez, na linha mais completa", rep.includes("r-docs") && !rep.includes("r-acervo"), rep);
+  conf("F304 · o mesmo movimento em duas RPVs do e-SAJ aparece uma vez", rep.filter(x => /^r-rpv/.test(x)).length === 1, rep);
+  conf("F304 · a mesma petição em semanas diferentes continua duas vezes", rep.includes("r-pet1") && rep.includes("r-pet2"), rep);
   const lidoJunto = await paulo.evaluate(async () => { await marcarLidas(["r-docs"]);
     const li = id => ((D.novid || []).find(a => a.id === id).andamentos_lidos || []).some(l => l.colaborador_id === eu.id);
     return li("r-acervo"); });
-  conf("F302 · lida a linha que ficou, a repetida escondida fica lida também", lidoJunto);
+  conf("F304 · lida a linha que ficou, a repetida escondida fica lida também", lidoJunto);
   const lat = await paulo.evaluate(() => ({ hoje: [...document.querySelectorAll("#grupo-dinamicas .lista-item")].map(e => e.dataset.v).join(","),
     imp: (document.querySelector('#grupo-visoes [data-v="patinss"] .cont') || {}).textContent || "" }));
   conf("as Novidades saem do Mais e entram na faixa do dia do administrador", /meudia,mencoes,novidades/.test(lat.hoje));

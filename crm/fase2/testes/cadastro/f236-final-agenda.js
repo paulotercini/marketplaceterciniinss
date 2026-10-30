@@ -416,7 +416,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   await ficha(paulo, F.c.id, F.k.id);
   const sgF = await paulo.evaluate(id => prazoSugeridoHtml(D._andsFicha.find(a => a.id === id), 0), SENT_F.id);
   conf("o cartão da sentença favorável não manda vigiar o recurso do INSS que já veio", /sem recurso nosso/.test(sgF) && /O INSS recorreu em/.test(sgF) && !/pode recorrer até/.test(sgF) && !/vigiar/.test(sgF), sgF);
-  // F302 · o prazo do tribunal deixou de ser novidade: o "N ·" à frente só aparece com perícia ou julgamento a agendar
+  // F304 · o prazo do tribunal deixou de ser novidade: o "N ·" à frente só aparece com perícia ou julgamento a agendar
   const contNov = await paulo.evaluate(() => { montarSidebar(); const np = novidades().filter(a => novPede(a)).length;
     return { np, t: (document.querySelector('#grupo-dinamicas [data-v="novidades"] .cont') || {}).textContent || "" }; });
   conf(`a barra das Novidades diz quantas pedem ação à frente do total (${contNov.t})`, contNov.np ? /^\d+ · \d+$/.test(contNov.t.trim()) : /^\d+$/.test(contNov.t.trim()), contNov);
