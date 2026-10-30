@@ -290,6 +290,8 @@ A **F298** (a ficha no celular, pedido do Paulo de 30.10.2026): o voltar, o nome
 
 A **F299** (a ficha no celular fechada até o toque, pedido do Paulo de 30.10.2026): no celular, as fases e etapas nascem recolhidas na alça "Fases e etapas" (`trOculta`, `trAlternar`, chave própria `crm_trilha_oculta_cel`, que o toque grava; o computador segue com `crm_trilha_oculta`), e a placa do caso (DER, campos, tramitação) só abre na flecha do pé do cartão (`.linha-caso[data-n="0"] .lc-placa`). Teste: `f298.js`.
 
+A **F300** (a data de pagamento das guias do CNIS, pedido do Paulo de 30.10.2026): `competenciasDaLinha` guarda a "Data Pgto." de cada competência de contribuinte individual e facultativo (`pg`) e lê o indicador seguido de vírgula ("IREC-MEI,"). `ciPagasEmAtraso(vs)` apura as guias pagas depois do vencimento (dia 15 do mês seguinte, Lei 8.212/91, art. 30, II; o DAS do MEI no dia 20; os dois adiados ao dia útil pelo `diaBancario`) antes da primeira paga em dia, que não contam para a carência (Lei 8.213/91, art. 27, II), e `PRE_DOSSIE.apo_ci_atraso` responde com elas, ou "nenhuma", o campo que antes se perguntava à pessoa (lê o CNIS da sessão, `_cnisComps`; o reingresso depois da perda da qualidade fica com a equipe). Os tipos de filiado de antes da Lei 9.876/99 (Autônomo, Equiparado a Autônomo, Empresário) entram em `TIPOS_FILIADO` como contribuinte individual, também com o acento gravado como U+FFFD no extrato ("Aut\uFFFDnomo"): antes o vínculo sumia e as guias iam ao vínculo de cima. Conferido com dois extratos reais. Teste: `testes/cadastro/f300.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
