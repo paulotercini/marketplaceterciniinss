@@ -157,7 +157,7 @@ const conf = (pts, nome, v) => { ok.push([pts, nome, !!v]); console.log((v ? "PA
   await p.waitForSelector('[data-aqacomp="nao"]');
   await p.click('[data-aqacomp="nao"]'); await p.click("#aq-seg4");
   await p.waitForSelector("#aq-seg5"); await p.click("#aq-seg5");
-  await p.check("#aq-o1"); await p.check("#aq-o2");
+  await p.waitForSelector("#aq-aviso002"); // F306 · no 002 é aviso, sem caixa
   await p.click("#aq-gravar");
   await p.waitForSelector(".aq-whats", { timeout: 10000 }).catch(() => {});
   conf(4, `agendado com a Amanda, com o telefone da conversa (${evG("A1").summary})`, /Joana Ficticia Lead/.test(evG("A1").summary || "") && /16988880002/.test(evG("A1").description || ""));
