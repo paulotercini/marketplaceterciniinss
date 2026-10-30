@@ -2156,6 +2156,43 @@
   @media (hover:none){.zap-b:not(.toque) .zap-acoes{display:none}}
   .zap-b.toque .virar{opacity:1}
   .zap-b.toque{box-shadow:0 0 0 2px rgba(0,168,132,.35)}
+  /* F310 · a conversa no celular como no WhatsApp (pedido do Paulo, 30.10.2026): o topo numa linha, com a relação de quem
+     fala (o resto vai ao cartão "Conversa" da ficha que o nome abre); a hora na linha do texto e o autor só quando muda;
+     o campo de escrever numa linha, com o + (mensagens prontas e agendar) e a chave Nota */
+  .zt-curto,.zp-conv-cel,.so-cel-ze{display:none}
+  .app.celular .zp-conv-cel{display:block}
+  .app.celular .zp-conv-cel .zt-sub{flex-direction:column;align-items:flex-start;gap:6px;font-size:13px;margin:6px 0 10px}
+  .app.celular .zp-conv-cel .zt-l2{padding:0}
+  .app.celular .zap-topo{padding:6px 8px;gap:2px}
+  .app.celular .zap-topo .zt-sub{display:block;margin:0}
+  .app.celular .zap-topo .zt-sub>:not(.zt-curto){display:none}
+  .app.celular .zap-topo .zt-curto{display:block;overflow:hidden;text-overflow:ellipsis}
+  .app.celular .zap-topo .zt-l2 .zt-chip,.app.celular .zap-topo .zt-l2:not(:has(.zt-ret)){display:none}
+  .app.celular .zt-l1 .zap-av{width:36px;height:36px;font-size:15px}
+  .app.celular .zt-acoes{gap:4px}
+  .app.celular .zt-acoes .zt-btn{width:32px;height:32px}
+  .app.celular .zap-msgs{padding:8px 10px}
+  .app.celular .zap-b{padding:5px 8px 4px;max-width:85%}
+  .app.celular .zap-b .txt{display:inline}
+  .app.celular .zap-b .pe{float:right;margin:7px 0 -3px 10px;line-height:1}
+  .app.celular .zap-b.seguida .autor,.app.celular .zap-b:not(.toque) .virar{display:none}
+  .app.celular .zap-desce{bottom:72px}
+  .app.celular .ze-modos,.app.celular .ze-so-pc{display:none}
+  .app.celular .zap-escrever{padding:6px 8px;gap:0}
+  .app.celular .zap-escrever>:not(.ze-linha){margin-bottom:4px}
+  .app.celular .ze-linha{gap:6px}
+  .app.celular .ze-caixa{flex-direction:row;align-items:flex-end;min-height:44px;box-sizing:border-box;padding:4px 4px 4px 12px;border-radius:22px}
+  .app.celular .zap-escrever textarea#zap-txt{height:24px;align-self:center;font-size:16px;line-height:24px}
+  .app.celular .ze-ferr{flex:none;min-height:0}
+  .app.celular .ze-mais{display:block;position:relative;flex:none}
+  .app.celular .ze-mais>summary{list-style:none;width:30px;height:44px;display:flex;align-items:center;justify-content:center;
+    font-size:28px;font-weight:300;color:#54656f;cursor:pointer}
+  .ze-mais>summary::-webkit-details-marker{display:none}
+  .app.celular .ze-mais .zt-menu{top:auto;bottom:calc(100% + 6px);left:0;right:auto;min-width:200px}
+  .app.celular .ze-nota-cel{display:inline-flex;align-items:center;flex:none;height:30px;margin-bottom:7px;padding:0 9px;border:1px solid var(--borda);
+    border-radius:15px;background:var(--branco);font:inherit;font-size:12px;font-weight:600;color:var(--cinza);cursor:pointer}
+  .app.celular .ze-nota-cel.on{background:#fffbea;border-color:#e0b955;color:var(--prox,#8f5400)}
+  .app.celular .zap-escrever.modo-nota .btn-rap.ze-enviar{height:44px;padding:0 12px}
   @media (max-width:1023px){
     .zap-tela.ficha-on .zap-painel:not(:empty){display:flex;position:fixed;inset:0;z-index:95;overflow:auto;
       padding:52px 12px 16px;background:var(--fundo,#f7f6f3)}
@@ -14426,12 +14463,33 @@ function pintarConversaGuardando(){
 const SELO = {rascunho:"rascunho", agendada:"agendada", fila:"na fila", enviando:"enviando", enviada:"enviada", entregue:"entregue", lida:"lida", erro:"não enviou"};
 const seloZap = m => m.direcao==="saida" ? (SELO[m.status]||"") : "";
 
+// F310 · quem fala, telefone, advogado, robô, atendente, setor, etiquetas e retorno: no computador ficam no topo da
+// conversa; no celular, no cartão "Conversa" da ficha que o nome abre, para o topo caber numa linha
+function dadosDaConversaZap(c){
+  const cli = clienteDaConversa(c), at = c.atendente_id && D.colPorId.get(c.atendente_id);
+  const deOutro = !!at && at.id!==eu.id, s = setorDe(c), r = retornoDe(c);
+  return { sub: `             ${falaPor(c)?`<span class="zt-fala">${esc(falaPor(c))} · cliente <b>${esc(cli.nome)}</b></span>`:""}
+             <span class="mono">${esc(foneZap(c.telefone))}</span>
+             ${advDaConversa(c)?`<span>Advogado: <b>${esc(advDaConversa(c))}</b></span>`:""}
+             ${c.bot_ativo&&c.bot_passo?`<span class="zt-robo" title="o passo do robô nesta conversa">Robô: <b>${esc(rotPasso(c.bot_passo))}</b>${c.bot_desde?` desde ${diaZap(c.bot_desde)} ${horaSP(c.bot_desde)}`:""}</span>`:""}
+             ${at?`<span>Atendendo: <b>${esc(at.nome)}</b></span>`
+                 :`<button class="zl-link" onclick="assumirConversa()">Assumir a conversa</button>`}
+             ${deOutro && zapGestor()?`<button class="zl-link" onclick="assumirConversa()">Assumir (tirar de ${esc(at.nome)})</button>`:""}
+           `,
+    l2: `         <button class="zt-chip" onclick="escolherSetor()" title="setor da conversa" ${s?`style="${tintaZap(esc(s.cor))}"`:""}>${s
+           ?`<i style="background:${esc(s.cor)}"></i>${esc(s.nome)}`:"Escolher setor"}</button>
+         ${etiquetasDe(c).map(e=>`<button class="zt-chip" style="${tintaZap(esc(e.cor))}" onclick="editarEtiquetas()">${esc(e.texto)}</button>`).join("")}
+         <button class="zt-chip novo" onclick="editarEtiquetas()">+ etiqueta</button>
+         ${r?`<button class="zt-ret" onclick="novoRetorno()" title="mudar o retorno">${zic("relogio",14)}Retorno ${diaZap(r.quando)}, ${horaSP(r.quando)}${r.nota?` · ${esc(r.nota)}`:""}</button>`:""}
+` };
+}
+
 function pintarConversa(){
   const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
   const cli = c.cliente_id && D.cliPorId.get(c.cliente_id);
   const at = c.atendente_id && D.colPorId.get(c.atendente_id);
   const tel = (c.telefone||"").replace(/\D/g,"");
-  const s = setorDe(c), r = retornoDe(c), fim = c.status==="resolvida";
+  const fim = c.status==="resolvida", dz = dadosDaConversaZap(c);
   // F187 · conversa de outro atendente: o atendente só lê e anota (nota interna
   // com @nome chama quem atende); o gestor pode tirar para si
   const pode = podeAgirZap(c), deOutro = !!at && at.id!==eu.id;
@@ -14448,14 +14506,8 @@ function pintarConversa(){
          <div class="zt-id">
            <h2 role="button" tabindex="0" title="ver a ficha" onclick="alternarFichaZap()" onkeydown="if(event.key==='Enter')alternarFichaZap()">${esc(nomeDaConversa(c))}</h2>
            <div class="zt-sub">
-             ${falaPor(c)?`<span>${esc(falaPor(c))} · cliente <b>${esc(cli.nome)}</b></span>`:""}
-             <span class="mono">${esc(foneZap(c.telefone))}</span>
-             ${advDaConversa(c)?`<span>Advogado: <b>${esc(advDaConversa(c))}</b></span>`:""}
-             ${c.bot_ativo&&c.bot_passo?`<span class="zt-robo" title="o passo do robô nesta conversa">Robô: <b>${esc(rotPasso(c.bot_passo))}</b>${c.bot_desde?` desde ${diaZap(c.bot_desde)} ${horaSP(c.bot_desde)}`:""}</span>`:""}
-             ${at?`<span>Atendendo: <b>${esc(at.nome)}</b></span>`
-                 :`<button class="zl-link" onclick="assumirConversa()">Assumir a conversa</button>`}
-             ${deOutro && zapGestor()?`<button class="zl-link" onclick="assumirConversa()">Assumir (tirar de ${esc(at.nome)})</button>`:""}
-           </div>
+             ${falaPor(c)?`<span class="zt-curto">${esc(falaPor(c))}</span>`:""}
+${dz.sub}           </div>
          </div>
          <div class="zt-acoes">
            ${cfgApp("zap_ia_equipe")==="sim"?`<button class="zt-btn" onclick="iaZap('resumo')" title="a IA resume a conversa para você (nada vai ao cliente)" aria-label="Resumo">✨<span class="lbl">Resumo</span></button>
@@ -14487,19 +14539,15 @@ function pintarConversa(){
           <button class="zl-link" onclick="naoEhAutomatica()">Não é automática</button></p>`:""}
        ${nomeDiferente(c)?`<p class="zt-pergunta">No WhatsApp o contato se chama “${esc(c.nome_perfil)}”, e o cliente é ${esc(cli.nome)}.
           É outra pessoa que fala por ele? <button class="zl-link" onclick="quemConversa()">Informar quem conversa</button></p>`:""}
-       <div class="zt-l2">
-         <button class="zt-chip" onclick="escolherSetor()" title="setor da conversa" ${s?`style="${tintaZap(esc(s.cor))}"`:""}>${s
-           ?`<i style="background:${esc(s.cor)}"></i>${esc(s.nome)}`:"Escolher setor"}</button>
-         ${etiquetasDe(c).map(e=>`<button class="zt-chip" style="${tintaZap(esc(e.cor))}" onclick="editarEtiquetas()">${esc(e.texto)}</button>`).join("")}
-         <button class="zt-chip novo" onclick="editarEtiquetas()">+ etiqueta</button>
-         ${r?`<button class="zt-ret" onclick="novoRetorno()" title="mudar o retorno">${zic("relogio",14)}Retorno ${diaZap(r.quando)}, ${horaSP(r.quando)}${r.nota?` · ${esc(r.nota)}`:""}</button>`:""}
-       </div>
+       <div class="zt-l2">${dz.l2}</div>
      </div>
      <div class="zap-msgs" id="zap-msgs">${zapMsgs.map((m,i)=>{
         // a data entra entre as mensagens quando o dia muda, como no aparelho
         const d = dataSP(m.quando_wa||m.criado_em), ant = i && dataSP(zapMsgs[i-1].quando_wa||zapMsgs[i-1].criado_em);
         const dia = d!==ant ? `<div class="zap-dia">${(t=>t==="hoje"?"Hoje":t==="ontem"?"Ontem":dmaZap(d))(diaZap(m.quando_wa||m.criado_em))}</div>` : "";
-        return dia + bolhaZap(m,cli); }).join("")
+        const a = i && zapMsgs[i-1];
+        const seguida = !dia && a && a.direcao===m.direcao && (a.autor_id||"")===(m.autor_id||"") && !!a.por_bot===!!m.por_bot;
+        return dia + bolhaZap(m,cli,seguida); }).join("")
         || `<p class="meio-sub" style="padding:12px">Sem mensagens ainda.</p>`}</div>
      ${zapResponder?`<div class="zap-resp"><span>↩ respondendo</span>
         <span class="txt">${esc(textoCurto(zapMsgs.find(m=>m.id===zapResponder)))}</span>
@@ -14519,6 +14567,12 @@ function pintarConversa(){
            onclick="${zapNota?"":"alternarNota()"}" title="fica na conversa, o cliente não vê">Nota interna</button>
        </div>
        <div class="ze-linha">
+         ${zapNota?"":`<details class="ze-mais so-cel-ze">
+           <summary aria-label="Mais opções">+</summary>
+           <div class="zt-menu">
+             <button onclick="this.closest('details').open=false;frasesZap()">Mensagens prontas</button>
+             <button onclick="this.closest('details').open=false;agendarZap()">Agendar o envio</button>
+           </div></details>`}
          <div class="ze-caixa">
            <textarea id="zap-txt" rows="2" placeholder="${zapNota
              ? "Anotação para a equipe. O cliente não vê."
@@ -14527,11 +14581,13 @@ function pintarConversa(){
              <input type="file" id="zap-arq" hidden onchange="mandarArquivoZap()">
              ${zapNota?"":`<button class="zap-icone" onclick="document.getElementById('zap-arq').click()"
                title="mandar foto, PDF ou áudio" aria-label="Anexar arquivo">${zic("clipe")}</button>
-             <button class="zap-icone" onclick="frasesZap()" title="mensagens prontas (ou digite / no campo)" aria-label="Mensagens prontas">${zic("frases")}</button>
+             <button class="zap-icone ze-so-pc" onclick="frasesZap()" title="mensagens prontas (ou digite / no campo)" aria-label="Mensagens prontas">${zic("frases")}</button>
              <button class="zap-icone" id="zap-rec" onclick="gravarAudioZap()" title="gravar áudio" aria-label="Gravar áudio">${zic("mic")}</button>
-             <button class="zap-icone" onclick="agendarZap()" title="agendar o envio para outro dia e hora" aria-label="Agendar envio">${zic("agenda")}</button>`}
+             <button class="zap-icone ze-so-pc" onclick="agendarZap()" title="agendar o envio para outro dia e hora" aria-label="Agendar envio">${zic("agenda")}</button>`}
            </div>
          </div>
+         <button class="ze-nota-cel so-cel-ze ${zapNota?"on":""}" aria-pressed="${zapNota}" onclick="alternarNota()"
+           title="nota interna: fica na conversa, o cliente não vê">Nota</button>
          <button class="btn-rap ze-enviar" id="zap-enviar" aria-label="${zapNota?"Anotar":"Enviar"}" onclick="enviarZap()">${zapNota?"Anotar":"Enviar"}</button>
        </div>
      </div>`;
@@ -14593,9 +14649,12 @@ function pintarPainelZap(c){
         return `<div class="zp-kv"><span>${diaZap(t.em)} ${horaSP(t.em)}</span><span>${esc(txt)}${t.motivo?` · ${esc(t.motivo)}`:""}</span></div>`;
       }).join("")}</section>` : "";
   if(!c){ el.innerHTML = ""; return; }
+  const dz = c.id===zapAberta ? dadosDaConversaZap(c) : null;
+  const conv = dz ? `<section class="zp-card zp-conv-cel"><h4>Conversa</h4><div class="zt-sub">${dz.sub}</div>
+      <div class="zt-l2">${dz.l2}</div></section>` : "";
   if(!cli){
     const sug = sugestoesVinculo(c);
-    el.innerHTML = `<section class="zp-card"><h3>Sem cliente vinculado</h3>
+    el.innerHTML = `${conv}<section class="zp-card"><h3>Sem cliente vinculado</h3>
         <p class="zp-sub">Este número não está na ficha de nenhum cliente. Vincule para ver o caso aqui.</p>
         ${sug.length?`<h4>Será um destes? (pelo nome do contato)</h4>${sug.map(x=>`<div class="zp-kv"><span>${esc(x.nome)}</span>
           <button class="zl-link" onclick="vincularConversa('${x.id}')">vincular</button></div>`).join("")}`:""}
@@ -14636,7 +14695,7 @@ function pintarPainelZap(c){
         : `<p class="zp-sub">Nenhum caso aberto.</p>`}
     </section>`;
   };
-  el.innerHTML = `<section class="zp-card">
+  el.innerHTML = `${conv}<section class="zp-card">
       <div class="zp-cab"><h3>Ficha do cliente</h3><button class="zl-link" onclick="fichaComZap('${cli.id}')">Abrir ficha</button></div>
       <div class="zp-kv"><span>Nome</span><span>${esc(cli.nome)}</span></div>
       <div class="zp-kv"><span>CPF</span><span class="mono">${esc(cpfMascarado(cli.cpf))}</span></div>
@@ -14736,7 +14795,7 @@ document.addEventListener("click", e=>{
   document.querySelectorAll(".zt-mais[open]").forEach(d=>{ if(!d.contains(e.target)) d.open = false; });
 });
 
-function bolhaZap(m, cli){
+function bolhaZap(m, cli, seguida){
   const quem = m.por_bot ? "🤖 robô"
             : m.autor_id ? (D.colPorId.get(m.autor_id)||{}).nome || "escritório" : "";
   if(m.direcao==="interna") return `<div class="zap-b interna">
@@ -14758,7 +14817,7 @@ function bolhaZap(m, cli){
                : m.responde_externo ? zapMsgs.find(x=>x.externo_id===m.responde_externo) : null;
   const reac = zapReacoes.get(m.id)||[];
   return `<div class="zap-b ${m.direcao} ${m.por_bot?"bot":""} ${m.status==="erro"?"ruim":""}
-      ${m.status==="rascunho"?"rascunho":""} ${m.status==="agendada"?"agendada":""}" id="zb-${m.id}">
+      ${m.status==="rascunho"?"rascunho":""} ${m.status==="agendada"?"agendada":""} ${seguida?"seguida":""}" id="zb-${m.id}">
     ${quem?`<div class="autor">${esc(m.aviso_chave?"aviso automático":quem)}${m.encaminhada_de?" · ↪ encaminhada":""}</div>`:""}
     ${citada?`<div class="zap-cit" onclick="irParaMsg('${citada.id}')">${esc(textoCurto(citada))}</div>`
       : m.responde_a||m.responde_externo?`<div class="zap-cit">mensagem citada (antiga)</div>`:""}
