@@ -26,7 +26,7 @@ Regimentos internos dos TRFs.
 
 ### Súmula 490 STJ
 
-Reexame necessário em Fazenda Pública com limite de alçada.
+Sentença ilíquida não dispensa o reexame necessário; o limite de alçada atual é o do art. 496, § 3º, I, do CPC, 1.000 salários mínimos para a União e suas autarquias (auditoria 30/10/2026).
 
 ### Tema 1030 STJ
 

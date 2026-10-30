@@ -999,6 +999,13 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Uso indevido corrigido em 03/10/2026: a base o usava para admitir ação rescisória no JEF, que o Enunciado 44/FONAJEF veda.
 - Conferido em. 03/10/2026 (auditoria 03/10/2026)
 
+### SUMULA 627/STJ
+- Situação. vigente
+- Tese literal. "O contribuinte faz jus à concessão ou à manutenção da isenção do imposto de renda, não se lhe exigindo a demonstração da contemporaneidade dos sintomas da doença nem da recidiva da enfermidade."
+- Órgão e leading case. STJ, Primeira Seção, aprovada em 12/12/2018 (DJe 17/12/2018).
+- Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/doc.jsp?sumula=627
+- Conferido em. 30/10/2026 (auditoria 30/10/2026)
+
 Fonte secundária, não conta como conferido (auditoria 03/10/2026). Ficam sem título ### para que o script não os registre como conferidos. O texto foi lido fora do portal oficial e precisa ser confirmado na fonte oficial antes de citar em peça.
 - ENUNCIADO 225/FONAJEF. Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Não lido em portal oficial, porque a lista do CJF só vai até o Enunciado 110. Texto lido na página da AJUFE, que organiza o FONAJEF. Confirmar na fonte oficial antes de citar em peça. Tese literal. Texto da página da AJUFE, "A prova técnica simplificada é legítima para análise de pedidos de benefícios previdenciários e assistenciais". Órgão e leading case. XVIII FONAJEF. Fonte secundária. https://www.ajufe.org.br/foruns/fonajef/enunciados-fonajef/enunciados-xviii-fonajef/enunciado-n-225. Lido em 03/10/2026.
 - SUMULA 160/TFR. Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Texto lido só na LegJur, que declara pendente a conferência com a fonte oficial. Confirmar na fonte oficial antes de citar em peça. Tese literal. Trecho, como transcrito no relatório C3, "A suspeita de fraude ... não enseja, de plano, a sua suspensão ou cancelamento, mas dependerá de apuração em procedimento administrativo". Órgão e leading case. TFR. Data não registrada no relatório C3. Fonte secundária. https://www.legjur.com/sumula/tfr/160. Uso indevido corrigido em 03/10/2026: a base dizia que a súmula admite dano moral. Ela exige apuração em procedimento administrativo antes da suspensão ou do cancelamento por suspeita de fraude. Lido em 03/10/2026.

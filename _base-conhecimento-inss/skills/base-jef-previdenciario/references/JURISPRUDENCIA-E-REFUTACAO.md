@@ -8,9 +8,9 @@ Renúncia ao excedente e vinculação da execução.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 1086 STJ
+### Alçada do JEF
 
-Critérios para alçada JEF.
+A renúncia ao excedente de 60 salários mínimos se rege pelo Tema 1030/STJ. O Tema 1086/STJ, antes citado aqui, trata de licença-prêmio de servidor público e foi retirado (auditoria 30/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 

@@ -16,7 +16,9 @@ Fonte oficial em https://www.stj.jus.br
 
 ### Súmula 50 TNU
 
-Tese. É possível a conversão do tempo de serviço especial em comum do trabalho prestado em qualquer período, observado, após a EC 103/2019, o limite de 13/11/2019 do art. 25, §2º (auditoria 03/10/2026).
+Tese. "É possível a conversão do tempo de serviço especial em comum do trabalho prestado em qualquer período." [NÃO CONFIRMADO]
+
+Observação do escritório, que não integra a súmula. Após a EC 103/2019, a conversão alcança apenas o tempo cumprido até 13/11/2019 (art. 25, § 2º) (auditoria 30/10/2026).
 
 Fonte oficial em https://www.jf.jus.br
 
