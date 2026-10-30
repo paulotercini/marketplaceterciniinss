@@ -117,8 +117,10 @@ jobs:
       # caso ou foi arquivado no CRM conclui a tarefa dele no To Do, com uma
       # linha datada no corpo. Ligada por padrão; desliga com a variável de
       # repositório PONTE_CARDS = 0. Falha aqui não derruba a sincronização.
+      # [BUG 30.10.2026] a variável não criada vale nulo, e nulo != '0' dá falso no
+      # GitHub (os dois viram o número 0): as duas pontes nunca rodaram. Daí o || '1'.
       - name: Cards decididos no CRM -> concluir no To Do
-        if: steps.seg.outputs.tem == 'true' && vars.PONTE_CARDS != '0'
+        if: steps.seg.outputs.tem == 'true' && (vars.PONTE_CARDS || '1') != '0'
         continue-on-error: true
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -129,7 +131,7 @@ jobs:
       # ANTES do crawl, senão a sincronização acenderia a estrela de novo. Desliga com
       # PONTE_DESPACHO = 0. Falha aqui não derruba a sincronização (o migrar.py segura a ⭐).
       - name: Concluir por hoje no CRM -> To Do
-        if: steps.seg.outputs.tem == 'true' && vars.PONTE_DESPACHO != '0'
+        if: steps.seg.outputs.tem == 'true' && (vars.PONTE_DESPACHO || '1') != '0'
         continue-on-error: true
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
