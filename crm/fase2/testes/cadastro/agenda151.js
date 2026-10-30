@@ -99,8 +99,8 @@ for (const d of new Set([quartas(1)[0], q[0]])) {
   await p.click(`[data-aqdata="${q[0]}"]`);
   await p.click('[data-aqhora="08:00"]');
   await p.click("#aq-seg5");
-  // F306 · o cliente do escritório é 002: aviso para ler, sem caixa, e o Agendar já liberado
-  conf("F306 · no 002 as orientações são aviso, e o Agendar não pede marcação", await p.evaluate(() =>
+  // F307 · o cliente do escritório é 002: aviso para ler, sem caixa, e o Agendar já liberado
+  conf("F307 · no 002 as orientações são aviso, e o Agendar não pede marcação", await p.evaluate(() =>
     !!document.getElementById("aq-aviso002") && !document.getElementById("aq-o1") && !document.getElementById("aq-gravar").disabled));
   await p.click("#aq-gravar");
   await p.waitForSelector(".aq-whats");
@@ -171,7 +171,7 @@ for (const d of new Set([quartas(1)[0], q[0]])) {
   await p.waitForSelector("[data-aqhora]");
   conf("F152 · no fluxo, o Marcos vem escolhido e sem encaixe urgente", await p.evaluate(() => fluxo.prof === "marcos" && !/Encaixe urgente/.test(document.querySelector(".aq-fluxo").textContent)));
   await p.click(`[data-aqdata="${q[0]}"]`); await p.click('[data-aqhora="08:00"]'); await p.click("#aq-seg5");
-  await p.waitForSelector("#aq-aviso002"); await p.click("#aq-gravar");   // F306 · 002 é aviso
+  await p.waitForSelector("#aq-aviso002"); await p.click("#aq-gravar");   // F307 · 002 é aviso
   await p.waitForSelector(".aq-whats");
   const evM = g.eventos.find(e => /Aurélia/.test(e.summary) && e.colorId === "10");
   conf("F152 · o mesmo horário (08h00) vale para o Marcos, gravado em verde", !!evM && new Date(evM.start.dateTime).getTime() === new Date(q[0] + "T08:00:00-03:00").getTime());

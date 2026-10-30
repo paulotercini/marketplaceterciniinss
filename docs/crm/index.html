@@ -2620,9 +2620,12 @@ dialog.confirmar::backdrop{background:rgba(15,17,22,.38)}
    a página já nascer no tema certo, sem piscar. As fontes só são pedidas
    quando o tema está ligado. */
 (function(){try{
+  /* F306 · o visual anterior saiu (pedido do Paulo, 30.10.2026): o v10 vale sempre, sem interruptor.
+     shortcut: a suíte de tela (navegador automatizado) sem crm_tema ainda roda o clássico, porque 38 provas
+     antigas o exercitam; quando forem migradas ao v10, apague o navigator.webdriver daqui */
   var q=new URLSearchParams(location.search).get("tema");
-  if(q!==null){ if(q) localStorage.setItem("crm_tema",q); else localStorage.removeItem("crm_tema"); }
-  var t=localStorage.getItem("crm_tema");
+  if(q!==null && navigator.webdriver){ if(q) localStorage.setItem("crm_tema",q); else localStorage.removeItem("crm_tema"); }
+  var t=localStorage.getItem("crm_tema") || (navigator.webdriver ? "" : "v10");
   if(t){ document.documentElement.setAttribute("data-tema",t);
     var l=document.createElement("link"); l.rel="stylesheet";
     l.href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Zilla+Slab:wght@600&display=swap";
@@ -3395,6 +3398,8 @@ html[data-tema="v10"] .ag-esp{background:#E9EEF0;color:#3E5660;font-family:var(-
 html[data-tema="v10"] .ag-linha .avatares{flex:none;width:28px;display:flex;justify-content:flex-end}
 html[data-tema="v10"] .ag-linha .avatares .avatar{width:24px;height:24px;font-size:11px}
 html[data-tema="v10"] .ag-linha .avatares .avatar + .avatar{margin-left:-8px}
+/* F306 · a inicial do responsável em quadrado, como os demais botões do CRM, ao lado esquerdo da ⭐ (pedido do Paulo, 30.10.2026) */
+html[data-tema="v10"] .cartao .avatares .avatar{border-radius:6px}
 html[data-tema="v10"] .ag-linha .acoes{flex:none;width:60px;display:flex;justify-content:flex-end}
 /* F236 · o prazo (do tribunal, do recurso, da exigência) em vermelho claro, abaixo do prazo fatal; a data com o ano cabe;
    a seção recolhida (Delegadas por mim) e as menções a você */
@@ -3435,8 +3440,8 @@ html[data-tema="v10"] .seg-colab{max-width:100%;overflow-x:auto;scrollbar-width:
   html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt{grid-column:3;align-self:first baseline;font-size:15px}
   html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt{line-height:20px}
   /* os botões centrados na primeira linha do nome, também quando o nome ocupa duas */
-  html[data-tema="v10"] #conteudo-meio .ag-linha .acoes{grid-column:4;width:auto;gap:0;align-self:start;margin-top:-7px}
-  html[data-tema="v10"] #conteudo-meio .ag-linha .avatares{grid-column:5;width:auto;min-width:0;justify-content:flex-start;margin-left:4px;align-self:start;margin-top:-2px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .acoes{grid-column:5;width:auto;gap:0;align-self:start;margin-top:-7px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .avatares{grid-column:4;width:auto;min-width:0;justify-content:flex-end;margin:-2px 2px 0 4px;align-self:start}
   html[data-tema="v10"] #conteudo-meio .ag-linha .ag-selos{grid-column:3/-1;grid-row:2;flex-wrap:nowrap;overflow:hidden}
   /* o filtro por pessoa numa linha só, na mesma margem dos cartões: os botões dividem a largura (no Safari a rolagem interna vazava) */
   html[data-tema="v10"] .meio.ag-v10 .topo-extra{margin-left:0;flex:1 1 100%;width:100%;max-width:100%;min-width:0}
@@ -4074,6 +4079,8 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .tp-trilha .aqui button,.tp-trilha .aqui button:hover{background:var(--pa-t);color:#fff;font-weight:600}
 .tp-trilha .alerta .tp-n{border-color:var(--pa-crit);color:var(--pa-crit)}.tp-trilha .aqui.alerta .tp-n{border-color:#fff;color:#fff}.tp-trilha .feito.alerta .tp-n{background:var(--pa-crit);border-color:var(--pa-crit);color:#fff}
 .tp-trilha button:focus-visible{outline:2px solid var(--pa-t);outline-offset:-4px}
+/* F306 · o botão de urgente saiu de toda a tela, porque se confundia com o de importante (pedido do Paulo, 30.10.2026) */
+.acao-card.fogo,.tl-sinal.urg,.esc-ic.urg,#chip-matriz{display:none!important}
 .tp-urgente{margin:10px 0 0;padding:8px 12px;border-radius:8px;background:#FBE9E8;color:var(--pa-crit)}
 .tp-nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:8px 10px}
 .tp-onde{font-size:12px;color:var(--pa-c2);font-family:var(--f-mono,ui-monospace,Consolas,monospace)}
@@ -4218,7 +4225,7 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 /* F249 · o nível 0 (primeiro acesso): na ficha só o Cadastro (Identificação); na barra só a Agenda, e o Novo Cliente fica no botão fixo */
 html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]):not(#btn-processos),
 :is(html[data-nivel="0"],html[data-nivel="1"]) :is(.lista-item:not([data-v="agendaq"]):not([data-v="clientes"]),.cel-tudo,#btn-v10-anotar,.rapida-caixa,#fab-rapida,
-.barra-cel [data-cel="meudia"],.barra-cel [data-cel="mencoes"],.barra-cel [data-cel="menu"],.grupo:has(#grupo-fases)){display:none!important}
+.barra-cel [data-cel="meudia"],.barra-cel [data-cel="whatsapp"],.barra-cel [data-cel="mencoes"],.barra-cel [data-cel="menu"],.grupo:has(#grupo-fases)){display:none!important}
 /* F294 · o nível 1 só navega nos andamentos dos portais: sem os prazos, que têm botões de gravar */
 html[data-nivel="1"] :is(.caso-pz,.td-classif){display:none!important}
 /* F294 · no caso, o nível 1 vê só os botões de ler (trocar de aba, abrir o documento, copiar); os que gravam somem */
@@ -4228,7 +4235,7 @@ html[data-nivel="1"] .mp-it.mp-novo{display:none!important}
 /* F253 · a faixa de quem olha como outro nível */
 #ver-nivel-faixa{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:900;display:flex;align-items:center;gap:12px;padding:8px 10px 8px 16px;border-radius:999px;background:#23231F;color:#fff;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:calc(100vw - 32px)}
 #ver-nivel-faixa button{border:none;border-radius:999px;padding:6px 12px;background:#fff;color:#23231F;font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}
-/* F252 · no celular do nível 0, a barra de baixo é Agenda, Clientes e Buscar */
+/* F252 · no celular do nível 0, a barra de baixo é Agenda, Clientes e Buscar; F306 · nos demais, o WhatsApp no lugar do Buscar (a busca fica no alto) */
 .barra-cel .so-n0{display:none!important}:is(html[data-nivel="0"],html[data-nivel="1"]) .barra-cel .so-n0{display:block!important}
 .fp-nv{display:none}
 .nv-simples{background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px;padding:16px;margin:10px 0}
@@ -5494,8 +5501,6 @@ html[data-tema="v10"] .aq-ligar h3{font-size:15px}
         title="mostra a barra exatamente como o colaborador a vê; clique de novo para voltar">ver como colaborador</button>
       <button id="btn-niveis" class="sair" onclick="abrirTransicao()" style="display:none"
         title="a transição do To Do: o nível de cada colaborador e a onda dos recursos">níveis</button>
-      <button id="btn-tema" class="sair" onclick="alternarTema()"
-        title="alternar entre o visual atual e o visual novo (v10, papel e petróleo)">visual</button>
       <button class="sair" onclick="sair()">sair</button></div>
     <div class="sep"></div>
     <!-- F52 · a anotação rápida tem porta FIXA na barra; F65 · ela subiu para
@@ -5555,8 +5560,9 @@ html[data-tema="v10"] .aq-ligar h3{font-size:15px}
 <nav class="barra-cel" id="barra-cel">
   <button data-cel="agendaq" class="so-n0"><b aria-hidden="true">📅</b>Agenda</button>
   <button data-cel="clientes" class="so-n0"><b aria-hidden="true">👥</b>Clientes</button>
+  <button data-cel="busca" class="so-n0"><b aria-hidden="true">🔍</b>Buscar</button>
   <button data-cel="meudia"><b aria-hidden="true">☀️</b>Meu Dia</button>
-  <button data-cel="busca"><b aria-hidden="true">🔍</b>Buscar</button>
+  <button data-cel="whatsapp"><b aria-hidden="true">💬</b>WhatsApp<span class="selo" id="selo-zap" style="display:none"></span></button>
   <button data-cel="mencoes"><b aria-hidden="true">📥</b>Menções<span class="selo" id="selo-menc" style="display:none"></span></button>
   <button data-cel="menu"><b aria-hidden="true">☰</b>Listas</button>
 </nav>
@@ -7913,7 +7919,7 @@ function montarConta(){
     + (navigator.setAppBadge ? op("badge", "Número no ícone", (BADGE_OPCOES.find(([v])=>v===(ler("crm_badge")||"meudia"))||[])[1]) : "")
     + (souAdmin() ? op("vercomo", visaoColab()?"Voltar à minha visão":"Ver como colaborador")
         + op("niveis", "Níveis da equipe", transicao() ? `transição na onda ${ondaAtual()}` : "transição desligada") : "")   // F249
-    + op("recolher","Recolher o menu") + op("tema","Voltar ao visual anterior") + `<hr>` + op("sair","Sair");
+    + op("recolher","Recolher o menu") + `<hr>` + op("sair","Sair");
   const fechar = () => { m.hidden = true; b.setAttribute("aria-expanded","false"); };
   b.onclick = e => { e.stopPropagation(); m.hidden = !m.hidden; b.setAttribute("aria-expanded", String(!m.hidden)); };
   m.querySelectorAll("[data-conta]").forEach(x=>x.onclick=e=>{ e.stopPropagation(); fechar();
@@ -7926,7 +7932,6 @@ function montarConta(){
        vercomo: ()=>alternarVerComo(),
        niveis: ()=>abrirTransicao(),
        recolher: ()=>document.getElementById("btn-lateral").click(),
-       tema: ()=>alternarTema(),
        sair: ()=>sair() })[x.dataset.conta]();
   });
   if(!window.__contaFora){ window.__contaFora = true;
@@ -42366,6 +42371,9 @@ function marcarBarraCel(){
     b.classList.toggle("on", b.dataset.cel===foco));
   const s=document.getElementById("selo-menc"), n=(D.mencoes||[]).length;
   if(s){ s.textContent=n; s.style.display = n ? "block" : "none"; }
+  // F306 · o mesmo contador do 💬 WhatsApp do menu
+  const z=document.getElementById("selo-zap"), nz=D.zapResumo||0;
+  if(z){ z.textContent=nz; z.style.display = nz ? "block" : "none"; }
 }
 
 // "Perícia agendada para 19/08/2026 às 8:50..." no andamento -> evento na hora
@@ -50072,12 +50080,6 @@ document.getElementById("busca").addEventListener("mousedown",e=>{
 // exceção da sessão, não preferência gravada — fechou a ficha, a exceção
 // morre e a próxima ficha abre com o menu recolhido de novo.
 let menuFichaSessao = null;   // null (recolhe) | "cheio" (o ☰ abriu nesta ficha)
-// F80 · o interruptor do tema: guarda em localStorage e recarrega, porque o
-// atributo é lido no boot (antes do CSS) e as fontes entram só quando ligado
-function alternarTema(){
-  try{ if(localStorage.getItem("crm_tema")) localStorage.removeItem("crm_tema"); else localStorage.setItem("crm_tema","v10"); }catch(e){}
-  location.reload();
-}
 function aplicarMenu(){
   const app=document.getElementById("app");
   if(!app) return;
@@ -50963,7 +50965,8 @@ document.querySelectorAll("#barra-cel button").forEach(b=>{
   b.onclick=()=>irCel(b.dataset.cel);
   // F137 · os mesmos ícones desenhados do menu lateral, no lugar do emoji
   const ic=b.querySelector("b"), em=ic.textContent;
-  ic.innerHTML = em==="☰"
+  ic.innerHTML = b.dataset.cel==="whatsapp" ? iconeFonte("zap").replace(/width="16" height="16"/,'width="21" height="21"')
+    : em==="☰"
     ? '<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
     : (svgIc(em,21)||em); });
 let timerCel=null;

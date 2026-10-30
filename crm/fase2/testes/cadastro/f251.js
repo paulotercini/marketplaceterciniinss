@@ -167,7 +167,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector('[data-aqacomp="nao"]');
   await p.click('[data-aqacomp="nao"]'); await p.click("#aq-seg4");
   await p.click("#aq-seg5");
-  await p.waitForSelector("#aq-aviso002"); // F306 · no 002 é aviso, sem caixa
+  await p.waitForSelector("#aq-aviso002"); // F307 · no 002 é aviso, sem caixa
   await p.click("#aq-gravar");
   await p.waitForSelector(".aq-whats", { timeout: 10000 });
   conf(`cliente do escritório na vaga 002 (${evG("P2").summary})`, evG("P2").summary === "002 - Ana Fictícia Colab - Não confirmado");
