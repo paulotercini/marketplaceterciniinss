@@ -50737,14 +50737,18 @@ function pintarFluxo(){
   } else if(f.etapa===6){
     corpo = `<h3>Orientações ao cliente</h3>
       <p class="meio-sub">${esc(f.nome)} · com ${esc(nomeProf(f.prof))} · ${diaExt(f.data)}, ${dataBR(f.data)} às ${hmTxt(f.inicio)} · ${f.tipo}</p>
-      <label class="aq-ck"><input type="checkbox" id="aq-o1" ${f.o1?"checked":""}> Orientei o cliente a trazer a senha do Meu INSS (conta gov.br) atualizada.</label>
-      <label class="aq-ck"><input type="checkbox" id="aq-o2" ${f.o2?"checked":""}> Informei que o agendamento é individual e que outra pessoa com assunto próprio precisa de horário separado.</label>
+      ${f.tipo==="002"
+        // pedido do Paulo de 30.10.2026: no 002 o cliente já conhece a rotina, basta lembrar
+        ? `<div class="aq-msg" id="aq-aviso002">Lembre o cliente: trazer a senha do Meu INSS atualizada. O atendimento é individual; outra pessoa com assunto próprio precisa de horário separado.</div>`
+        : `<label class="aq-ck"><input type="checkbox" id="aq-o1" ${f.o1?"checked":""}> Orientei o cliente a trazer a senha do Meu INSS (conta gov.br) atualizada.</label>
+      <label class="aq-ck"><input type="checkbox" id="aq-o2" ${f.o2?"checked":""}> Informei que o agendamento é individual e que outra pessoa com assunto próprio precisa de horário separado.</label>`}
       <label class="aq-campo">Observações (opcional)<textarea id="aq-obs" rows="2" class="aq-inp">${esc(f.obs)}</textarea></label>
-      <div class="aq-bts"><button class="btn-rap" data-aqvolta="1">Voltar</button><button class="btn-rap forte" id="aq-gravar" ${f.o1&&f.o2?"":"disabled"}>Agendar</button></div>`;
+      <div class="aq-bts"><button class="btn-rap" data-aqvolta="1">Voltar</button><button class="btn-rap forte" id="aq-gravar" ${orientou(f)?"":"disabled"}>Agendar</button></div>`;
   }
   caixa(`<div class="aq-fluxo">${f.feito?"":cab}${msg}${corpo}</div>`);
   ligarFluxo();
 }
+const orientou = f => f.tipo==="002" || (f.o1 && f.o2);
 function sucessoFluxo(){
   const f = fluxo, e = f.feito, msg = msgAgendaWhats(f.nome, e.data, e.inicio, f.tipo, f.prof);
   return `<h3>${f.remarcar?"Atendimento remarcado":"Atendimento agendado"}</h3>
@@ -50797,8 +50801,8 @@ function ligarFluxo(){
     f.eventoId = b.dataset.aqvev || null; if(b.dataset.aqtipo) f.tipo = b.dataset.aqtipo; pintarFluxo(); });   // F250 · a vaga leva o tipo dela
   on("aq-seg5", async ()=>{ if(!f.remarcar){ f.etapa=6; return pintarFluxo(); } await gravarFluxo(); });
   const o1=$("aq-o1"), o2=$("aq-o2"), obs=$("aq-obs");
-  if(o1) o1.onchange=()=>{ f.o1=o1.checked; $("aq-gravar").disabled=!(f.o1&&f.o2); };
-  if(o2) o2.onchange=()=>{ f.o2=o2.checked; $("aq-gravar").disabled=!(f.o1&&f.o2); };
+  if(o1) o1.onchange=()=>{ f.o1=o1.checked; $("aq-gravar").disabled=!orientou(f); };
+  if(o2) o2.onchange=()=>{ f.o2=o2.checked; $("aq-gravar").disabled=!orientou(f); };
   if(obs) obs.oninput=()=>{ f.obs=obs.value; };
   on("aq-gravar", ()=>gravarFluxo());
   on("aq-copiar", async ()=>{ try{ await navigator.clipboard.writeText(msgAgendaWhats(f.nome, f.feito.data, f.feito.inicio, f.tipo, f.prof)); }catch(e){} aviso("Mensagem copiada", false); });
@@ -50824,7 +50828,7 @@ async function gravarFluxo(){
       }
       const cli = f.cli || f.preCli;
       r = await agendaApi("agendar", {profissional:f.prof, tipo:f.tipo, nome:f.nome, telefone:f.tel, clienteId:cli?cli.id:"",
-        data:f.data, inicio:f.inicio, eventoId:f.eventoId||"", observacoes:f.obs, orientacoesConfirmadas: f.o1 && f.o2});
+        data:f.data, inicio:f.inicio, eventoId:f.eventoId||"", observacoes:f.obs, orientacoesConfirmadas: orientou(f)});
     }
     const ev = r.evento; f.feito = ev; f.msg = "";
     const c = f.cli || f.preCli || clienteDoEvento(ev);
