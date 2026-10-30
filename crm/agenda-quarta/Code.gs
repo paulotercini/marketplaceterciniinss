@@ -415,8 +415,10 @@ function agendar_(user, r) {
       }
     } else if (livre) {
       const a = dt_(r.data, r.inicio).getTime(), b = a + CONFIG.DURACAO[tipo] * 60000;
-      if (evs.some(ev => ev.id !== r.ignorar && ehAtendimento_(ev) && contaPara_(ev, prof) && new Date(ev.start.dateTime) < b && new Date(ev.end.dateTime) > a)) {
-        throw erro_('HORARIO_INDISPONIVEL', 'Já há atendimento de ' + prof.nome + ' neste horário.');
+      // F309b · o que bate com outro atendimento pede confirmação; confirmado (sobrepor), o administrador agenda junto
+      const bate = evs.find(ev => ev.id !== r.ignorar && ehAtendimento_(ev) && contaPara_(ev, prof) && new Date(ev.start.dateTime) < b && new Date(ev.end.dateTime) > a);
+      if (bate && r.sobrepor !== true) {
+        throw erro_('SOBREPOSICAO', 'Das ' + hm_(new Date(bate.start.dateTime)) + ' às ' + hm_(new Date(bate.end.dateTime)) + ' já há atendimento de ' + prof.nome + ' (' + bate.summary + ').');
       }
     } else {
       if (prof.soVagas) throw erro_('HORARIO_INDISPONIVEL', 'Escolha uma das vagas livres da agenda.');
@@ -513,7 +515,7 @@ function remarcar_(user, r) {
   const novo = agendar_(user, {
     profissional: r.profissional || donoDoEvento_(antigo) || CONFIG.PADRAO,
     tipo: p.tipo || r.tipo, nome: p.nome || r.nome, telefone: p.telefone || r.telefone,
-    clienteId: p.clienteId || r.clienteId, data: r.data, inicio: r.inicio, eventoId: r.eventoId, foraDaVaga: r.foraDaVaga, ignorar: antigo.id,
+    clienteId: p.clienteId || r.clienteId, data: r.data, inicio: r.inicio, eventoId: r.eventoId, foraDaVaga: r.foraDaVaga, sobrepor: r.sobrepor, ignorar: antigo.id,
     observacoes: r.observacoes, orientacoesConfirmadas: true
   });
   liberar_(antigo);
