@@ -19633,6 +19633,10 @@ const TIPOS_FILIADO = [
   ["Empregador","Empregador"],
   ["Empregado","Empregado"],
   ["Facultativo","Facultativo"],
+  // F300 · as categorias de antes da Lei 9.876/99, hoje contribuinte individual: sem elas o vínculo sumia e as guias iam ao vínculo de cima
+  ["Equiparado a Autônomo","Contribuinte Individual"],
+  ["Autônomo","Contribuinte Individual"],
+  ["Empresário","Contribuinte Individual"],
 ];
 const SIT_BEN = {"1":"CESSADO","2":"ATIVO","3":"SUSPENSO"};
 // F127 · as competências de uma linha do extrato, com o valor que vale.
@@ -19644,12 +19648,29 @@ function competenciasDaLinha(txt){
   const out = []; let atual = null;
   for(const tok of String(txt||"").split(/\s+/)){
     if(/^\d{2}\/\d{4}$/.test(tok)){ atual = {c:tok, vals:[], ind:[]}; out.push(atual); continue; }
+    if(atual && /^\d{2}\/\d{2}\/\d{4}$/.test(tok)){ if(!atual.vals.length) atual.pg = tok; continue; }   // F300 · a "Data Pgto." do recolhimento
     if(atual && /^[\d.]+,\d{2}$/.test(tok)) atual.vals.push(+tok.replace(/\./g,"").replace(",","."));
-    else if(atual && /^[A-Z]{3,}(?:-[A-Z0-9]{2,})+$/.test(tok)) atual.ind.push(tok);   // F214 · o indicador da competência
+    else if(atual && /^[A-Z]{3,}(?:-[A-Z0-9]{2,})+,?$/.test(tok)) atual.ind.push(tok.replace(/,$/, ""));   // F214 · o indicador da competência ("IREC-MEI, IREC-LC123")
   }
   // F215 · com contribuição e salário na linha, a razão dá a alíquota (5, 11 ou 20 %)
-  return out.filter(x=>x.vals.length).map(x=>({c:x.c, v:Math.max(...x.vals), ...(x.ind.length ? {ind:x.ind} : {}),
+  return out.filter(x=>x.vals.length).map(x=>({c:x.c, v:Math.max(...x.vals), ...(x.pg ? {pg:x.pg} : {}), ...(x.ind.length ? {ind:x.ind} : {}),
     ...(x.vals.length > 1 && Math.max(...x.vals) > 0 ? {aliq: Math.round(Math.min(...x.vals) / Math.max(...x.vals) * 100)} : {})}));
+}
+// F300 · as guias de CI e facultativo pagas em atraso antes da primeira paga em dia não contam para a carência
+// (Lei 8.213/91, art. 27, II). Vence no dia 15 do mês seguinte (Lei 8.212/91, art. 30, II), e o DAS do MEI no
+// dia 20, os dois adiados ao dia útil seguinte. Devolve as competências em atraso, ou null sem guia com data.
+// shortcut: conta só a partir do primeiro recolhimento do CNIS; o reingresso depois da perda da qualidade reabre a regra e fica com a equipe
+function ciPagasEmAtraso(vs){
+  const cs = [];
+  for(const v of (vs||[]).filter(v=>/Individual|Facultativo/i.test(v.tipo||""))) for(const cp of v.comps||[])
+    if(cp.pg) cs.push({...cp, mei: /MEI|Microempreendedor/i.test(v.origem||"") || (cp.ind||[]).some(i=>/MEI|LC123/.test(i))});
+  if(!cs.length) return null;
+  cs.sort((a, b)=>chaveComp(a.c).localeCompare(chaveComp(b.c)));
+  const venc = cp => { let d = `${somarMeses(chaveComp(cp.c) + "-01", 1).slice(0, 8)}${cp.mei ? "20" : "15"}`;
+    while(!diaBancario(d)) d = somaDias(d, 1); return d; };
+  const out = [];
+  for(const cp of cs){ if(isoBr(cp.pg) <= venc(cp)) break; out.push(cp); }
+  return out;
 }
 function lerVinculosCnis(itens){
   const linhas = linhasDoPdf(palavrasDoPdf(itens));
@@ -19685,7 +19706,8 @@ function lerVinculosCnis(itens){
       return;
     }
     // vínculo comum: acha o tipo de filiado, o mais longo que casar
-    const par = TIPOS_FILIADO.find(([escrito])=>resto.includes(escrito));
+    // F300 · há extrato que grava o acento como "\uFFFD" ("Aut\uFFFDnomo"): o tipo casa também assim
+    const par = TIPOS_FILIADO.map(([e, t])=>[[e, e.replace(/[^\x00-\x7f]/g, "\uFFFD")].find(f=>resto.includes(f)), t]).find(([e])=>e);
     if(!par) return;
     const [escrito, tipo] = par;
     const antes = resto.slice(0, resto.indexOf(escrito)).trim();
@@ -27475,6 +27497,12 @@ const _clinFonte = i => `${String(i.tipo||"documento").toLowerCase()} de ${fmtBa
 const _semLaudoCom = (x, k) => !(x.fd.laudos||[]).some(l=>l[k]);
 const _certMais = (x, k) => (x.cert||[]).filter(c=>c[k]).sort((a, b)=>String(b[k]).localeCompare(String(a[k])))[0];
 const PRE_DOSSIE = {
+  // F300 · a data de pagamento de cada guia do CNIS completo responde à pergunta do carnê pago em atraso
+  apo_ci_atraso: x => { if(!x.c) return null; const st = _cnisComps.get(x.c.id);
+    if(!st){ carregarCnisComps(x.c); return null; }
+    const a = ciPagasEmAtraso(st.vs); if(!a) return null;
+    return a.length ? {val:faixasDeMeses(a), fonte:`CNIS completo: ${plu(a.length, "guia paga", "guias pagas")} depois do vencimento antes da primeira paga em dia`}
+      : {val:"nenhuma", fonte:"CNIS completo: a primeira guia de CI ou facultativo foi paga até o vencimento"}; },
   inc_dii: x => { if(!_semLaudoCom(x, "dii")) return null; const a = _clinMais(x, "afast");
     if(a) return {val:a.fatos.afast.ini, fonte:`${_clinFonte(a)}: afastamento desde ${fmtBarra(a.fatos.afast.ini)}`};
     const d = _clinMais(x, "desde"); return d ? {val:d.fatos.desde, fonte:`${_clinFonte(d)}: sem condições de trabalhar desde ${fmtBarra(d.fatos.desde)}`} : null; },
