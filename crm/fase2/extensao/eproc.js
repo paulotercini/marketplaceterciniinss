@@ -6,7 +6,7 @@
 // O TJSP tem QUATRO eprocs, cada um num host, e o seletor de perfil do topo
 // (SP / EF / CR / TJSP) pula de um para outro abrindo outra aba:
 //   eproc1g.tjsp.jus.br        1º grau cível        (perfil SP)
-//   eproc1g-ef.tjsp.jus.br     execução fiscal      (perfil EF)
+//   eproc1g-ef.tjsp.jus.br     Fazenda Pública      (perfil EF; acidentário)
 //   eproc1g-crim.tjsp.jus.br   criminal             (perfil CR)
 //   eproc2g.tjsp.jus.br        2º grau              (perfil TJSP)
 // Cada aba coleta o SEU host. Conferido ao vivo em 14.09.2026: só o cível
@@ -25,7 +25,7 @@
   const REG = window.EPROC_REGRAS;
   const host = location.host;
   const grau = /eproc2g/.test(host) ? '2º grau' : '1º grau';
-  const sistema = /-ef\./.test(host) ? 'eproc TJSP execução fiscal'
+  const sistema = /-ef\./.test(host) ? 'eproc TJSP Fazenda Pública'
                 : /-crim\./.test(host) ? 'eproc TJSP criminal'
                 : /eproc2g/.test(host) ? 'eproc TJSP 2º grau' : 'eproc TJSP 1º grau';
 
