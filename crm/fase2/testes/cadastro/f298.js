@@ -102,6 +102,16 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.tap(".det-mais > summary");
   await p.tap("#and-texto"); await p.waitForTimeout(300);
   conf("tocado, o campo mostra os tipos", (await p.$$eval("#tipo-fila > *", a => a.filter(e => e.offsetParent).length)) > 2);
+  // F303 · a linha do Meu Dia no celular: data, nome, espécie e lista, prazo fatal e os botões do lado
+  const linha = await p.evaluate(([cid, kid]) => {
+    const d = document.createElement("div"); d.id = "f303"; document.body.appendChild(d);
+    d.innerHTML = linhaAgenda({ k: D.casoPorId.get(kid), cli: D.cliPorId.get(cid), data: "2020-10-14", quem: [], resumo: "o INSS passou dos 90 dias",
+      selo: "Mora do INSS", prazo: true, fatal: true });
+    const v = s => [...d.querySelectorAll(s)].some(e => e.offsetParent);
+    const r = { res: v(".ag-res"), selo: v(".ag-prazo"), fatal: v(".ag-fatal"), esp: v(".ag-esp"), data: v(".ag-data"), nome: v(".ag-txt b"), botoes: v(".acoes .acao-card") };
+    d.remove(); return r; }, [cA.id, kA.id]);
+  conf("no Meu Dia do celular, o texto da anotação e as etiquetas somem", !linha.res && !linha.selo);
+  conf("ficam data, nome, espécie e lista, prazo fatal e os botões", linha.data && linha.nome && linha.esp && linha.fatal && linha.botoes);
   conf("sem erro de página", !erros.length);
   console.log(`${ok.filter(x => x[1]).length}/${ok.length} passaram`);
   await nav.close(); s.close();
