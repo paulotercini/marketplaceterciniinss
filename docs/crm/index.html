@@ -2120,7 +2120,25 @@
   .zap-tela.wa .zap-escrever:not(.modo-nota) .btn-rap.ze-enviar::after{content:"➤";font-size:18px}
   .zap-tela.wa .zap-acoes{position:absolute;top:3px;right:6px;background:inherit;border-radius:6px;padding:0 2px}
   .zap-dir{position:relative}
-  .zap-b audio[data-ouvir]{width:280px}
+  /* 30.10.2026 · identidade com o WhatsApp: o tocador de áudio, o microfone no lugar do Enviar, o topo em duas linhas */
+  .zap-player{display:inline-flex;align-items:center;gap:8px;width:280px;max-width:100%;padding:4px 0}
+  .zap-player audio{display:none}
+  .zp-play{flex:none;width:34px;height:34px;border-radius:50%;border:0;background:#00a884;color:#fff;font-size:13px;cursor:pointer}
+  .zp-onda{flex:1;display:flex;align-items:center;gap:2px;height:28px;cursor:pointer}
+  .zp-onda i{flex:1;min-width:2px;border-radius:2px;background:#b7c0c6}
+  .zp-onda i.on{background:#00a884}
+  .zp-tempo{flex:none;font-size:11px;color:#667781;min-width:30px;font-variant-numeric:tabular-nums}
+  .zp-vel{flex:none;border:0;border-radius:10px;background:rgba(0,0,0,.08);font-size:11px;font-weight:600;padding:2px 6px;cursor:pointer;color:#54656f}
+  .zap-b{transition:transform .15s}
+  .zap-escrever:not(.modo-nota) .ze-linha:has(#zap-txt:placeholder-shown) #zap-enviar{display:none}
+  .ze-linha:not(:has(#zap-txt:placeholder-shown)) #zap-rec:not(.gravando){display:none}
+  .ze-mic{align-self:flex-end;flex:none;width:44px;height:44px;border-radius:50%;justify-content:center}
+  .zap-tela.wa .ze-mic:not(.gravando){background:#00a884;border-color:#00a884;color:#fff}
+  .ze-mic.gravando{width:auto;border-radius:22px;padding:0 14px;color:#b3261e;background:#fde7e7}
+  .zt-sub{flex-wrap:nowrap;overflow:hidden;min-width:0;gap:6px}
+  .zt-sub>*{min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .zt-sub>.mono,.zt-sub>button{flex:none}
+  .zt-sub>span+span::before{content:"·";margin-right:6px;color:var(--cinza)}
   .zap-desce{position:absolute;right:18px;bottom:140px;width:40px;height:40px;border-radius:50%;border:0;z-index:3;
     background:#fff;color:#54656f;font-size:22px;line-height:1;cursor:pointer;box-shadow:0 1px 3px rgba(11,20,26,.25)}
   .zap-desce[hidden]{display:none}
@@ -2137,7 +2155,7 @@
      demais caixas abriam por trás dela e o toque não respondia */
   .app.celular.zap-conv-aberta ~ #modal .modal-fundo{z-index:97}
   /* o áudio menor no celular */
-  .app.celular .zap-b audio[data-ouvir]{width:200px!important;height:32px!important}
+  .app.celular .zap-player{width:220px}
   .app.celular .zap-audio-prev audio{height:32px;min-width:0;width:100%;max-width:200px}
   .app.celular .zt-voltar{display:block;border:0;background:none;font-size:22px;line-height:1;padding:6px 4px;color:var(--texto);cursor:pointer;flex:none}
   .app.celular .zap-topo{padding:8px 10px;gap:6px}
@@ -14413,10 +14431,10 @@ function pintarConversaGuardando(){
   const cx = document.getElementById("zap-msgs"), y = cx ? cx.scrollTop : 0;
   const noFim = !cx || cx.scrollHeight - cx.scrollTop - cx.clientHeight < 80;
   // o áudio que está tocando atravessa a repintura (mensagem nova chegando) sem parar
-  const tocando = [...document.querySelectorAll("#zap-msgs audio[data-ouvir]")];
+  const tocando = [...document.querySelectorAll("#zap-msgs .zap-player")].filter(x=>x.querySelector("audio"));
   pintarConversa();
   for(const a of tocando){
-    const b = [...document.querySelectorAll("#zap-msgs button[data-ouvir]")].find(x=>x.dataset.ouvir===a.dataset.ouvir);
+    const b = [...document.querySelectorAll("#zap-msgs .zap-player")].find(x=>x.dataset.p===a.dataset.p);
     if(b) b.replaceWith(a);
   }
   const cx2 = document.getElementById("zap-msgs"); if(cx2 && !noFim) cx2.scrollTop = y;
@@ -14528,11 +14546,11 @@ function pintarConversa(){
              ${zapNota?"":`<button class="zap-icone" onclick="document.getElementById('zap-arq').click()"
                title="mandar foto, PDF ou áudio" aria-label="Anexar arquivo">${zic("clipe")}</button>
              <button class="zap-icone" onclick="frasesZap()" title="mensagens prontas (ou digite / no campo)" aria-label="Mensagens prontas">${zic("frases")}</button>
-             <button class="zap-icone" id="zap-rec" onclick="gravarAudioZap()" title="gravar áudio" aria-label="Gravar áudio">${zic("mic")}</button>
              <button class="zap-icone" onclick="agendarZap()" title="agendar o envio para outro dia e hora" aria-label="Agendar envio">${zic("agenda")}</button>`}
            </div>
          </div>
          <button class="btn-rap ze-enviar" id="zap-enviar" aria-label="${zapNota?"Anotar":"Enviar"}" onclick="enviarZap()">${zapNota?"Anotar":"Enviar"}</button>
+         ${zapNota?"":`<button class="zap-icone ze-mic" id="zap-rec" onclick="gravarAudioZap()" title="gravar áudio" aria-label="Gravar áudio">${zic("mic")}</button>`}
        </div>
      </div>`;
   pintarPainelZap(c);
@@ -14745,7 +14763,7 @@ function bolhaZap(m, cli){
       ${cli?`<button class="virar" onclick="virarAndamento('${m.id}')"
         title="registrar no histórico de um processo">↪ andamento</button>`:""}</div></div>`;
   const corpo = m.midia_url && m.tipo==="audio"
-    ? `<button class="zap-anexo" data-ouvir="${esc(m.midia_url)}" onclick="ouvirAqui(this,'${escJs(m.midia_url)}')">▶ ouvir</button>`
+    ? playerZap(m.midia_url)
       + (m.texto?`<div>🎤 ${esc(m.texto)}</div>`:"")
     : m.midia_url && m.tipo==="imagem"
     ? miniZap(m.midia_url, `verMidiaZap('${m.id}')`) + (m.texto?`<div>${esc(m.texto)}</div>`:"")
@@ -15125,10 +15143,28 @@ async function cancelarAgendada(id){
 
 // toque no balão mostra as ações dele e esconde as dos outros; tocar de novo, ou em outro lugar, esconde
 document.addEventListener("click", e => {
-  if(e.target.closest("button,a,audio,video,input,textarea,select,summary,.zap-cit")) return;
+  if(e.target.closest("button,a,audio,video,input,textarea,select,summary,.zap-cit,.zap-player")) return;
   const b = e.target.closest(".zap-b"), ant = document.querySelector(".zap-b.toque");
   if(ant && ant!==b) ant.classList.remove("toque");
   if(b && b.querySelector(".zap-acoes,.virar")) b.classList.toggle("toque");
+});
+let zapArrasto = null;
+document.addEventListener("touchstart", e=>{
+  const b = e.target.closest("#zap-msgs .zap-b");
+  if(!b || !b.querySelector('[onclick^="responderMsg"]') || e.touches.length>1) return;
+  zapArrasto = {b, x:e.touches[0].clientX, y:e.touches[0].clientY, dx:0};
+}, {passive:true});
+document.addEventListener("touchmove", e=>{
+  const z = zapArrasto; if(!z) return;
+  const dx = e.touches[0].clientX - z.x, dy = e.touches[0].clientY - z.y;
+  if(!z.dx && Math.abs(dy) > Math.abs(dx)){ zapArrasto = null; return; }   // rolar a conversa não é responder
+  z.dx = Math.max(0, dx);
+  z.b.style.transition = "none"; z.b.style.transform = `translateX(${Math.min(z.dx, 80)}px)`;
+}, {passive:true});
+document.addEventListener("touchend", ()=>{
+  const z = zapArrasto; zapArrasto = null; if(!z) return;
+  z.b.style.transition = ""; z.b.style.transform = "";
+  if(z.dx > 60) responderMsg(z.b.id.slice(3));
 });
 function responderMsg(id){ zapResponder = id; pintarConversaGuardando(); const t=document.getElementById("zap-txt"); if(t) t.focus(); }
 
@@ -15536,7 +15572,7 @@ async function verZapCliente(cliId){
     const resto = (m.texto||"").replace("[mídia não baixada]","").trim();
     if(semArq) corpo = `<span class="meio-sub">${m.tipo==="audio"?"🎤 áudio":"📎 "+esc(m.tipo)} antigo, não baixado — só no celular</span>`
       + (resto?`<div>${esc(resto)}</div>`:"");
-    else if(m.tipo==="audio") corpo = `<button class="btn-mini" data-ouvir="${esc(m.midia_url)}" onclick="ouvirAqui(this,'${escJs(m.midia_url)}')">▶ ouvir</button> `
+    else if(m.tipo==="audio") corpo = playerZap(m.midia_url)
       + (m.texto ? `<i>🎤 ${esc(m.texto)}</i>` : `<span class="meio-sub">🎤 transcrevendo…</span>`);
     else if(m.midia_url && m.tipo==="imagem") corpo = miniZap(m.midia_url, `abrirArquivoZap('${escJs(m.midia_url)}')`)
       + (m.texto?`<div>${esc(m.texto)}</div>`:"");
@@ -15600,16 +15636,52 @@ function obsDoNumero(cliId, tel){
 }
 // O áudio toca na própria conversa: o botão vira o tocador, sem abrir outra aba.
 // Link de 1 h, para pausar e voltar no áudio longo sem o link vencer.
+// 30.10.2026 · o áudio como no WhatsApp: ▶, a onda (o clique nela leva ao ponto), o tempo e a velocidade 1×, 1,5× e 2×
+// shortcut: a onda é desenhada pelo caminho do arquivo, e não pelo som; decodificar cada áudio só para o desenho não compensa
+function playerZap(caminho){
+  let h = 0; for(const ch of String(caminho)) h = (h*31 + ch.charCodeAt(0)) >>> 0;
+  const barras = Array.from({length:28}, (_, i)=>{ h = (h*1103515245 + 12345) >>> 0; return 25 + (h>>>16) % 70; });
+  return `<span class="zap-player" data-p="${esc(caminho)}">
+    <button class="zp-play" data-ouvir="${esc(caminho)}" onclick="ouvirAqui(this,'${escJs(caminho)}')" aria-label="Ouvir o áudio">▶</button>
+    <span class="zp-onda" onclick="pularZap(event,this)" aria-hidden="true">${barras.map(a=>`<i style="height:${a}%"></i>`).join("")}</span>
+    <span class="zp-tempo">0:00</span>
+    <button class="zp-vel" onclick="velZap(this)" aria-label="Velocidade do áudio">1×</button></span>`;
+}
+const tempoZap = t => isFinite(t) ? `${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,"0")}` : "0:00";
 async function ouvirAqui(btn, caminho){
+  const pl = btn.closest(".zap-player");
+  let a = pl.querySelector("audio");
+  if(a){ a.paused ? a.play().catch(()=>{}) : a.pause(); return; }
   if(!caminho || btn.disabled) return;
   btn.disabled = true;
   try{
-    const a = document.createElement("audio");
-    a.controls = true; a.autoplay = true; a.preload = "auto";
-    a.dataset.ouvir = caminho; a.style.cssText = "display:block;max-width:100%;height:36px";
+    a = document.createElement("audio");
+    a.preload = "auto"; a.dataset.ouvir = caminho; a.playbackRate = +(pl.dataset.vel||1);
+    const onda = [...pl.querySelectorAll(".zp-onda i")], tempo = pl.querySelector(".zp-tempo");
+    a.onplay = ()=>{ btn.textContent = "❚❚"; btn.setAttribute("aria-label","Pausar"); };
+    a.onpause = a.onended = ()=>{ btn.textContent = "▶"; btn.setAttribute("aria-label","Ouvir o áudio"); };
+    a.onloadedmetadata = ()=>{ tempo.textContent = tempoZap(a.duration); };
+    a.ontimeupdate = ()=>{
+      const p = isFinite(a.duration) && a.duration ? a.currentTime/a.duration : 0;
+      onda.forEach((b,i)=>b.classList.toggle("on", i < p*onda.length));
+      tempo.textContent = tempoZap(a.currentTime);
+    };
     a.src = await linkArquivo(caminho, 3600);
-    btn.replaceWith(a);
+    pl.appendChild(a);
+    btn.disabled = false;
+    a.play().catch(()=>{});
   }catch(e){ btn.disabled = false; aviso("Não consegui abrir o áudio"); }
+}
+function pularZap(ev, onda){
+  const a = onda.closest(".zap-player").querySelector("audio");
+  if(!a || !isFinite(a.duration)) return;
+  const r = onda.getBoundingClientRect();
+  a.currentTime = a.duration * Math.min(1, Math.max(0, (ev.clientX - r.left) / r.width));
+}
+function velZap(b){
+  const pl = b.closest(".zap-player"), v = {1:1.5, 1.5:2, 2:1}[pl.dataset.vel||1];
+  pl.dataset.vel = v; b.textContent = String(v).replace(".", ",") + "×";
+  const a = pl.querySelector("audio"); if(a) a.playbackRate = v;
 }
 async function abrirArquivoZap(caminho){
   if(!caminho) return;
