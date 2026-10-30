@@ -121,6 +121,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click("#aq-gravar");
   await p.waitForSelector(".aq-whats", { timeout: 10000 });
   conf(`a vaga vira o atendimento no próprio evento (${evG("P1").summary})`, evG("P1").summary === "001 - Novo Ficticio Cliente - Não confirmado");
+  conf(`a vaga sem cor do Paulo vira atendimento no azul dele (colorId ${evG("P1").colorId})`, evG("P1").colorId === "9");
   const novo = T.clientes.find(c => c.nome === "Novo Ficticio Cliente");
   conf("o pré-cadastro nasce no CRM e o evento leva o cliente", !!novo && ((evG("P1").extendedProperties || {}).private || {}).clienteId === novo.id);
   await foto("02-agendado");

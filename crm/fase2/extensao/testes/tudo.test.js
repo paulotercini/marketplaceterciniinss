@@ -1,4 +1,4 @@
-// 1.25 · o "atualizar tudo" leva prazos e completar, confere as sessões antes e
+// 1.25 · o "atualizar tudo" leva o completar, confere as sessões antes e
 // avisa no fim; o CRM abre no 📥 Importar pelo ?ir=patinss do aviso.
 const test = require('node:test');
 const assert = require('node:assert');
@@ -8,10 +8,12 @@ const { pathToFileURL } = require('url');
 const ler = f => fs.readFileSync(path.join(__dirname, '..', f), 'utf8');
 const src = ler('fundo.js');
 
-test('rodarTudo: coletas, depois prazos, depois completar', () => {
+test('1.28 · rodarTudo: o completar não espera o e-SAJ e os prazos saíram', () => {
   const f = src.slice(src.indexOf('async function rodarTudo()')).split('\n}')[0];
-  const a = f.indexOf('await Promise.all(tarefas)'), p = f.indexOf('rodarPrazos()'), c = f.indexOf('completarPje()');
-  assert.ok(a > 0 && p > a && c > p);
+  assert.ok(!/rodarPrazos|prazos: true/.test(src), 'sem a busca dos prazos');
+  assert.match(f, /tarefas\.push\(judicialAoMesmoTempo\(antes\)\)/);
+  assert.ok(!/completarPje|completarEproc/.test(f), 'o completar vem de cada tribunal, não do fim da rodada');
+  assert.ok(!/b-prazos/.test(ler('popup.html') + ler('popup.js')));
 });
 
 test('sessaoCaida reconhece o login e deixa passar a página logada', async () => {
@@ -36,7 +38,7 @@ test('o popup confere as sessões antes de rodar tudo', () => {
 });
 
 test('as rodadas longas correm com o pulso que mantém o worker vivo', () => {
-  for (const t of ['Atualizar tudo', 'Prazos dos tribunais', 'PJe e eproc', 'Completar processos'])
+  for (const t of ['Atualizar tudo', 'PJe e eproc', 'Completar processos'])
     assert.match(src, new RegExp(`responderComAviso\\('${t}'`));
   assert.match(src, /const comPulso = async f =>[\s\S]*getPlatformInfo/);
 });
@@ -51,7 +53,7 @@ test('e-SAJ: com a ficha aberta, o clique lê só aquele processo', () => {
 test('1.27 · o eproc da Fazenda Pública entra sempre na rodada, com ou sem aba', () => {
   const f = fs.readFileSync(path.join(__dirname, '..', 'fundo.js'), 'utf8');
   assert.match(f, /SEMPRE = \{ eproc: \['https:\/\/eproc1g-ef\.tjsp\.jus\.br\//);
-  for (const uso of [/acervoPorAba[\s\S]*?alvosPorHost\(fonte/, /completarEproc[\s\S]*?alvosPorHost\('eproc'/, /um\(fonte, aba, rotulo, false, url\)/])
+  for (const uso of [/acervoECompletar[\s\S]*?alvosPorHost\(fonte/, /completarEproc[\s\S]*?alvosPorHost\('eproc'/])
     assert.match(f, uso);
   // com url, a rodada abre aquele host e não pega a aba do cível
   assert.match(f, /if \(!aba && !url\) aba = abaPreferida/);

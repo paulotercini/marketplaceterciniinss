@@ -82,7 +82,7 @@ const MSGS = [
     && (await p.$$eval("#painel-prazo .zap-b", bs => bs.filter(b => b.textContent.includes("não baixado") && b.querySelector("button")).length)) === 0);
   const abas = ctx.pages().length;
   await p.click('#painel-prazo .zap-b button[data-ouvir="zap/x/a1.ogg"]');
-  await p.waitForSelector('#painel-prazo audio[data-ouvir="zap/x/a1.ogg"]');
+  await p.waitForSelector('#painel-prazo audio[data-ouvir="zap/x/a1.ogg"]', {state: "attached"});
   conf("▶ ouvir toca o áudio na própria janela, sem abrir outra aba", ctx.pages().length === abas
     && /token=t/.test(await p.getAttribute('#painel-prazo audio[data-ouvir="zap/x/a1.ogg"]', "src")));
   conf("F261 · a conversa abre ao lado da ficha, com a resposta embaixo", !!(await p.$("#painel-prazo #pp-zap-txt")));
@@ -106,7 +106,7 @@ const MSGS = [
   await p.waitForFunction(() => zapConvs.length);
   await p.evaluate(id => abrirConversa(id), ZAP_CLI);
   await p.click('#zap-msgs button[data-ouvir="zap/x/a1.ogg"]');
-  await p.waitForSelector('#zap-msgs audio[data-ouvir="zap/x/a1.ogg"]');
+  await p.waitForSelector('#zap-msgs audio[data-ouvir="zap/x/a1.ogg"]', {state: "attached"});
   await p.evaluate(() => { window._tocador = document.querySelector('#zap-msgs audio[data-ouvir]'); pintarConversaGuardando(); });
   conf("na conversa, o tocador continua o mesmo depois da repintura (mensagem nova chegando)",
     await p.evaluate(() => document.querySelector('#zap-msgs audio[data-ouvir="zap/x/a1.ogg"]') === window._tocador));

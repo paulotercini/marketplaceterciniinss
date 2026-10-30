@@ -173,7 +173,7 @@ for (const d of new Set([quartas(1)[0], q[0]])) {
   await p.click(`[data-aqdata="${q[0]}"]`); await p.click('[data-aqhora="08:00"]'); await p.click("#aq-seg5");
   await p.waitForSelector("#aq-aviso002"); await p.click("#aq-gravar");   // F307 · 002 é aviso
   await p.waitForSelector(".aq-whats");
-  const evM = g.eventos.find(e => /Aurélia/.test(e.summary) && e.colorId === "10");
+  const evM = g.eventos.find(e => /Aurélia/.test(e.summary) && e.colorId === "2");
   conf("F152 · o mesmo horário (08h00) vale para o Marcos, gravado em verde", !!evM && new Date(evM.start.dateTime).getTime() === new Date(q[0] + "T08:00:00-03:00").getTime());
   conf("F152 · a mensagem cita o profissional escolhido", /com o Dr\. Marcos/.test(await p.textContent(".aq-whats")));
   await p.evaluate(() => fecharCaixa());
