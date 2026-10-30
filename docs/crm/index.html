@@ -4016,6 +4016,8 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .paq-cab h3{margin:0;flex:1 1 auto;display:flex;align-items:center;gap:8px;font-family:'Zilla Slab',Georgia,serif;font-weight:600;font-size:18px}
 .paq-cab h3 i{flex:none;width:24px;height:24px;border-radius:50%;background:var(--pa-t);color:#fff;display:grid;place-items:center;font-style:normal;font-size:12px;font-family:inherit}
 .paq-n{font-size:12px;color:var(--pa-c2)}
+.paq-prob{font-size:14px;color:var(--pa-warn,#b45309)}.paq-prob.ok{color:var(--verde,#15803d)}
+.paq-resto{margin-top:8px}.paq-resto>summary{cursor:pointer;color:var(--cinza);font-size:13px}
 .paq p{margin:6px 0 0}.paq-oque{color:var(--pa-c1)}.paq-achado{font-size:14px}.paq-vazio{color:var(--pa-warn)}.paq-importa{color:var(--pa-c2);font-size:12.5px}
 .paq-blocos{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin:10px 0}
 .paq-bloco{border:1px solid var(--pa-b);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -19380,6 +19382,7 @@ const IND_CNIS = {
 "IREL-PREV-POSSUI-COMPA-JUST":"Relação previdenciária com competência ajustada (favorecida ou desfavorecida)",
 "IREM-ACD":"Remuneração com parcela de acordo, convenção ou dissídio coletivo",
 "IREM-INDPEND":"Remunerações com indicadores ou pendência",
+"IREM-SEM-DIAS-INTERM":"Remuneração do trabalhador intermitente sem dias trabalhados informados",
 "IREM-PARC-CEDIDO":"Remuneração com parcela decorrente de trabalhador cedido",
 "IREM-PARC-DIR-SIND":"Remuneração com parcela decorrente de dirigente sindical",
 "IREM-PARC-DIRSIND":"Remuneração com parcela decorrente de dirigente sindical",
@@ -19678,12 +19681,19 @@ function ciPagasEmAtraso(vs){
 }
 function lerVinculosCnis(itens){
   const linhas = linhasDoPdf(palavrasDoPdf(itens));
+  // F302 · o indicador que não coube na coluna continua na linha de baixo ("IREM-" e "SEM-DIAS-INTERM"): emenda antes de ler
+  linhas.forEach((l, i)=>{ const seg = linhas[i+1];
+    if(seg && /[A-Z]-$/.test(l.txt) && /^[A-Z]{2,}(?:-[A-Z0-9]+)*,?(?:\s|$)/.test(seg.txt)){
+      const [p0, ...resto] = seg.txt.split(/\s+/); l.txt += p0; seg.txt = resto.join(" "); } });
   const out = [];
   linhas.forEach((l, i)=>{
     const m = l.txt.match(/^(\d{1,3})\s+(\d{3}\.\d{5}\.\d{2}-\d)\s+(.*)$/);
     if(!m){
-      // F127 · linha de competências: pertence ao último vínculo aberto acima
       const ult = out[out.length-1];
+      // F302 · os indicadores do vínculo vêm numa linha própria ("Indicadores: PEXT"), abaixo dele
+      const iv = l.txt.match(/^Indicadores:\s*(.+)$/);
+      if(iv){ if(ult && ult.tipo!=="Benefício") ult.indicadores = [...new Set([...(ult.indicadores||[]), ...(iv[1].match(/[A-Z]{3,}(?:[-_][A-Z0-9]{2,})*/g)||[])])]; return; }
+      // F127 · linha de competências: pertence ao último vínculo aberto acima
       if(ult && ult.tipo!=="Benefício"){
         const cps = competenciasDaLinha(l.txt);
         if(cps.length) ult.comps = (ult.comps||[]).concat(cps);
@@ -19702,9 +19712,10 @@ function lerVinculosCnis(itens){
     // [onda 1 do dossiê, 10.10.2026] o benefício INDEFERIDO vem sem data
     // nenhuma ("42 - APOSENTADORIA POR TEMPO DE 99 - INDEFERIDO"): as datas são
     // opcionais, e o indeferido não fica "em aberto" nem conta como ativo
-    const b = resto.match(/^(\d{9,11})\s+Benefício\s+(\d+)\s*-\s*(.+?)(?:\s+(\d{2}\/\d{2}\/\d{4}))?(?:\s+(\d{2}\/\d{2}\/\d{4}))?(?:\s+(\d+)\s*-\s*([A-ZÇÃÕÁÉÍÓÚ]+))?\s*$/);
+    // F302 · há extrato que traz a situação sem o número ("CESSADO" no lugar de "2 - CESSADO")
+    const b = resto.match(/^(\d{9,11})\s+Benefício\s+(\d+)\s*-\s*(.+?)(?:\s+(\d{2}\/\d{2}\/\d{4}))?(?:\s+(\d{2}\/\d{2}\/\d{4}))?(?:\s+(?:(\d+)\s*-\s*([A-ZÇÃÕÁÉÍÓÚ]+)|(ATIVO|CESSADO|SUSPENSO|INDEFERIDO)))?\s*$/);
     if(b){
-      const situacao = b[7] || SIT_BEN[b[6]] || "";
+      const situacao = b[7] || b[8] || SIT_BEN[b[6]] || "";
       out.push({seq:+seq, nit, tipo:"Benefício", especie:b[2], origem:b[3].trim(),
         nb:b[1], inicio:b[4]||"", fim:b[5]||"", situacao, aberto:!b[5] && !!b[4] && !/INDEFER|CESSAD/i.test(situacao)});
       return;
@@ -19721,7 +19732,9 @@ function lerVinculosCnis(itens){
     const ind   = depois.match(/\b[A-Z]{3,}(?:-[A-Z0-9]{2,})*\b/g) || [];
     // o código do empregador vem antes do nome: CNPJ, CEI ou número solto
     const cod = antes.match(/^(\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}|[\d.\/-]{8,})\s+/);
-    out.push({seq:+seq, nit, tipo, origem:(cod ? antes.slice(cod[0].length) : antes).trim(),
+    // F302 · o nome do empregador que não coube continua na linha de baixo, antes do "Público" ("LTDA - FALIDO")
+    const nome2 = seg && !/\d/.test(seg.txt) && !/^Indicadores:/.test(seg.txt) ? seg.txt.replace(/\s*P\S?blico$/, "").trim() : "";
+    out.push({seq:+seq, nit, tipo, origem:((cod ? antes.slice(cod[0].length) : antes).trim() + (/^[A-Z]/.test(nome2) && nome2===nome2.toUpperCase() ? " " + nome2 : "")).trim(),
       codigo: cod ? cod[1] : "", inicio:datas[0]||"", fim:datas[1]||"",
       ultRemun: comp ? comp[1] : "", indicadores: ind, aberto: !datas[1]});
   });
@@ -20011,7 +20024,31 @@ function analisarCnis(lido, ref){
   const benefAtivos = bens.filter(v=>!/INDEFER|CESSAD|SUSPENS/i.test(v.situacao||"") && (!v.fim || /ATIVO/i.test(v.situacao||"")))
     .map(v=>({especie:v.especie, origem:v.origem, nb:v.nb, inicio:v.inicio, situacao:v.situacao}));
   return {abertos, errosEmp, abaixo, mesAnt, agora, benefAtivos,
-    qtComps: vs.reduce((n,v)=>n+((v.comps||[]).length),0), contagem: contagemCnis(vs, abaixo)};
+    qtComps: vs.reduce((n,v)=>n+((v.comps||[]).length),0), contagem: contagemCnis(vs, abaixo),
+    concomitantes: concomitantesDoCnis(vs), indComps: indicadoresDasComps(vs)};
+}
+// F302 · os meses com salário em dois ou mais lugares ao mesmo tempo: é a soma do art. 32 da Lei 8.213/91 no cálculo e a
+// revisão do Tema 1070/STJ. O mês de entrada e o de saída do empregado não contam (na troca de emprego, as duas folhas
+// caem no mesmo mês), nem o salário lançado fora das datas do vínculo
+function concomitantesDoCnis(vs){
+  const por = new Map(), ym = d => { const m = String(d||"").match(/(\d{2})\/(\d{4})$/); return m ? `${m[2]}-${m[1]}` : ""; };
+  for(const v of vs){ const emp = TIPO_REMUN.test(v.tipo||""), a = ym(v.inicio), b = ym(v.fim);
+    for(const cp of v.comps||[]){ if(!(cp.v > 0) || +String(cp.c).slice(0,2) > 12) continue;
+      const k = chaveComp(cp.c); if(emp && (!a || k <= a || (b && k >= b))) continue;
+      if(!por.has(k)) por.set(k, new Set()); por.get(k).add(v.origem || v.tipo); } }
+  const ks = [...por].filter(([, o])=>o.size > 1).map(([k])=>k).sort(), out = [];
+  for(const k of ks){ const u = out[out.length-1];
+    if(u && mesesEntreYm(u.ate, k)===2){ u.ate = k; u.n++; por.get(k).forEach(o=>u.origens.add(o)); }
+    else out.push({de:k, ate:k, n:1, origens:new Set(por.get(k))}); }
+  return out.map(f=>({...f, origens:[...f.origens]}));
+}
+// F302 · o indicador de competência, com o vínculo e os meses em que aparece (o vínculo gravado não guarda as competências)
+function indicadoresDasComps(vs){
+  const out = {};
+  for(const v of vs) for(const cp of v.comps||[]) for(const i of cp.ind||[]){
+    const l = out[i] = out[i] || [], u = l.find(x=>x.origem===v.origem && x.inicio===v.inicio);
+    if(u) u.comps.push(cp.c); else l.push({origem:v.origem, inicio:v.inicio, fim:v.fim||"", tipo:v.tipo, comps:[cp.c]}); }
+  return out;
 }
 // Onda 3 · a contagem do CNIS por competência: cada mês de vínculo de
 // empregado (da admissão à saída, ou à última remuneração quando falta a
@@ -20021,23 +20058,34 @@ function analisarCnis(lido, ref){
 // uma data qualquer, como a DER de uma contagem do INSS.
 function contagemCnis(vs, abaixo){
   const meses = new Set(), fora = new Set((abaixo||[]).map(x=>chaveComp(x.comp)));
+  // F302 · o mês que só vem de vínculo ou de recolhimento com pendência fica de fora do que o INSS conta hoje (Decreto 3.048/99, arts. 19 a 19-F)
+  const ok = new Set();
   const mesDe = d => { const m = String(d||"").match(/(\d{2})\/(\d{4})$/); return m ? `${m[2]}-${m[1]}` : ""; };
   for(const v of vs){
-    const comps = (v.comps||[]).filter(x=>+String(x.c).slice(0,2)<=12).map(x=>chaveComp(x.c)).sort();
-    if(!TIPO_REMUN.test(v.tipo||"")){ comps.forEach(k=>meses.add(k)); continue; }
-    const a = mesDe(v.inicio), b = v.fim ? mesDe(v.fim) : (comps[comps.length-1] || chaveComp(v.ultRemun||""));
-    if(!a || !b || b < a){ comps.forEach(k=>meses.add(k)); continue; }
+    const vp = vinculoPendente(v), compPend = x => !TIPO_REMUN.test(v.tipo||"") && (x.ind||[]).some(i=>tipoIndicador(i)==="P" && !RX_PEND_JA.test(i));
+    const comps = (v.comps||[]).filter(x=>+String(x.c).slice(0,2)<=12);
+    const add = (k, pend) => { meses.add(k); if(!vp && !pend) ok.add(k); };
+    if(!TIPO_REMUN.test(v.tipo||"")){ comps.forEach(x=>add(chaveComp(x.c), compPend(x))); continue; }
+    const ks = comps.map(x=>chaveComp(x.c)).sort();
+    const a = mesDe(v.inicio), b = v.fim ? mesDe(v.fim) : (ks[ks.length-1] || chaveComp(v.ultRemun||""));
+    if(!a || !b || b < a){ ks.forEach(k=>add(k)); continue; }
     let [y, m] = a.split("-").map(Number);
-    for(let k = a; k <= b; k = `${y}-${String(m).padStart(2,"0")}`){ meses.add(k); if(++m > 12){ m = 1; y++; } }
+    for(let k = a; k <= b; k = `${y}-${String(m).padStart(2,"0")}`){ add(k); if(++m > 12){ m = 1; y++; } }
   }
+  const pend = [...meses].filter(k=>!ok.has(k) && !fora.has(k)).sort();
   const conta = [...meses].filter(k=>!fora.has(k)).sort(), periodos = [];
   for(const k of conta){
     const ult = periodos[periodos.length-1];
     if(ult && chaveComp(competenciaMais(ult[1].split("-").reverse().join("/"), 1)) === k) ult[1] = k; else periodos.push([k, k]);
   }
   return {carencia: conta.length, anos: Math.floor(conta.length/12), meses: conta.length % 12, periodos,
-    foraMinimo: [...meses].filter(k=>fora.has(k)).length};
+    foraMinimo: [...meses].filter(k=>fora.has(k)).length, pendentes: pend.length, pendMeses: pend};
 }
+// F302 · a pendência do vínculo inteiro: o INSS não conta nenhum mês dele até o acerto. Fica de fora o que já tem conta
+// própria (abaixo do mínimo, baixa renda, plano simplificado) e o regime próprio, que não se acerta no INSS
+const RX_VIN_PEND = /^(PEXT|PADM-|PRES-EMPR|PVIN-|PEMP-|PCEI-|PNIT-|PDT-NASC|PSUC-|PDIV-DADOS|NDET$)/;
+const RX_PEND_JA = /MENOR-MIN|PSC-MEN|FBR|LC123/;
+const vinculoPendente = v => (v.indicadores||[]).some(i=>RX_VIN_PEND.test(String(i)));
 // os meses contados até uma competência "AAAA-MM", inclusive
 const mesesContadosAte = (periodos, ate) => (periodos||[]).reduce((n, [a, b])=>{
   if(a > ate) return n;
@@ -20048,11 +20096,13 @@ const mesesContadosAte = (periodos, ate) => (periodos||[]).reduce((n, [a, b])=>{
 // A leitura grava o extrato (o arquivo e o que foi lido) e as respostas
 // PRÉ-PRONTAS dos passos que o CNIS responde. Quem atende confirma passo a
 // passo; até lá o estado fica marcado como automático.
+// F302 · a versão do leitor: o CNIS do dossiê lido por um leitor mais antigo se relê uma vez, calado
+const CNIS_LEITOR_V = 302;
 async function gravarCnisLido(cliId, lido, anexo, opc={}){
   const c = D.cliPorId.get(cliId); if(!c) return;
   const t = {...triagemDe(c)};
   const an = analisarCnis(lido, hoje());
-  t.pdf = {...(t.pdf||{}), cnis:{em:hoje(), quem:eu.id, paginas:lido.paginas,
+  t.pdf = {...(t.pdf||{}), cnis:{em:hoje(), quem:eu.id, paginas:lido.paginas, v:CNIS_LEITOR_V,
     qtVinculos:lido.vinculos, nits:lido.nits||[],
     indicadores:lido.indicadores.map(i=>({codigo:i.codigo, descricao:i.descricao, ocorrencias:i.ocorrencias})),
     // a última remuneração fica no vínculo mesmo quando só as competências a
@@ -20102,6 +20152,7 @@ async function gravarCnisLido(cliId, lido, anexo, opc={}){
       }catch(e2){}
     }
   }
+  if(opc.releitura){ if(clienteAberto===cliId) repintarFicha(); return; }
   await lancarNoCaso(cliId, `${opc.dossie?"CNIS do dossiê lido pelo CRM":"CNIS inserido no CRM"}: ${lido.paginas} página(s), ${lido.vinculos} vínculo(s), `
     + (lido.indicadores.length
         ? `indicadores ${lido.indicadores.map(i=>i.codigo+(i.ocorrencias?`(${i.ocorrencias})`:"")).join(", ")}.`
@@ -25407,14 +25458,15 @@ function empregosDosPapeis(cliId){
 function contagemComAcerto(c, g, ct){
   if(!ct || !g) return null;
   const meses = v => { const a = ymDe(isoBr(v.inicio||"")), b = ymDe(isoBr(v.fim||"") || isoBr(fimDoMes(v.ultRemun||"")) || hoje()); return a && b && a <= b ? mesesEntreYm(a, b) : 0; };
-  const vs = (g.vinculos||[]).filter(v=>v.tipo!=="Benefício" && (v.indicadores||[]).some(i=>/^PEXT/.test(String(i))));
+  const vs = (g.vinculos||[]).filter(v=>v.tipo!=="Benefício" && vinculoPendente(v));
   const red = (g.vinculos||[]).filter(v=>v.tipo!=="Benefício" && (v.indicadores||[]).some(i=>/LC123|IREC-MEI|FBR/.test(String(i)))).reduce((n, v)=>n + meses(v), 0);
-  const pext = vs.reduce((n, v)=>n + meses(v), 0), fora = ctpsForaDoCnis(c).filter(k=>k.admissao && k.saida);
+  // F302 · a contagem nova já sabe quais meses só vêm de pendência, sem contar duas vezes o mês coberto por outro vínculo
+  const pext = ct.pendentes!=null ? ct.pendentes : vs.reduce((n, v)=>n + meses(v), 0), fora = ctpsForaDoCnis(c).filter(k=>k.admissao && k.saida);
   const mf = fora.reduce((n, k)=>n + mesesEntreYm(ymDe(isoBr(k.admissao)), ymDe(isoBr(k.saida))), 0);
   if(!pext && !mf) return null;
   const am = n => anosMeses(Math.floor(n/12), n%12), hojeN = ct.carencia - pext, comN = ct.carencia + mf;
   return {hoje:hojeN, com:comN, pext, mf, red,
-    txt:`hoje o INSS conta ${plu(hojeN, "mês", "meses")} de contribuição (${am(hojeN)})${pext ? `, sem os ${pext} do vínculo com pendência (PEXT) em ${vs.map(v=>tituloOrgao(v.origem||"")).join(" e ")}, que só entram depois de provados` : ""}; com o acerto${mf ? `, e a inclusão do que a carteira mostra (${fora.map(k=>tituloOrgao(k.empregador)).join(" e ")}, ${mf} meses)` : ""}, passam a ser ${comN} (${am(comN)})${red ? `; ${red} desses meses são de alíquota reduzida (MEI ou plano simplificado): contam na aposentadoria por idade, mas não na por tempo sem completar para 20 %` : ""}`};
+    txt:`hoje o INSS conta ${plu(hojeN, "mês", "meses")} de contribuição (${am(hojeN)})${pext ? `, sem ${pext===1 ? "o mês" : `os ${pext} meses`} com pendência${vs.length ? ` (${vs.map(v=>`${tituloOrgao(v.origem||"")}, ${v.indicadores.filter(i=>RX_VIN_PEND.test(i)).join(", ")}`).join("; ")})` : ""}, que só ${pext===1 ? "entra" : "entram"} depois do acerto` : ""}; com o acerto${mf ? `, e a inclusão do que a carteira mostra (${fora.map(k=>tituloOrgao(k.empregador)).join(" e ")}, ${mf} meses)` : ""}, passam a ser ${comN} (${am(comN)})${red ? `; ${red} desses meses são de alíquota reduzida (MEI ou plano simplificado): contam na aposentadoria por idade, mas não na por tempo sem completar para 20 %` : ""}`};
 }
 // o contrato da carteira que o CNIS não tem (nem pelo nome, nem pela admissão)
 function ctpsForaDoCnis(c){
@@ -25621,17 +25673,18 @@ async function lerLeitoresDoDossie(cliId){
   const pdf = triagemDe(c).pdf || {};
   const dia = a => String(a.criado_em||"").slice(0,10);
   const novo = (a, lido) => a && !_leitoresTentados.has(a.id) && (!lido || (lido.anexo_id!==a.id && dia(a) >= (lido.em||"")));
-  if(!novo(cnis, pdf.cnis) && !novo(decl, pdf.declaracao)) return;
+  const reler = cnis && !_leitoresTentados.has(cnis.id) && pdf.cnis && pdf.cnis.anexo_id===cnis.id && pdf.cnis.v!==CNIS_LEITOR_V;
+  if(!novo(cnis, pdf.cnis) && !reler && !novo(decl, pdf.declaracao)) return;
   _lendoLeitores = cliId;
   try{
-    if(novo(cnis, pdf.cnis)){
+    if(novo(cnis, pdf.cnis) || reler){
       _leitoresTentados.add(cnis.id);
       try{
         const lido = lerCnisPdf(await itensDoPdf(await pdfDoAnexo(cnis)));
         const conf = conferePdfComCliente(lido, c);
         if(!(lido.indicadores.length || lido.filiado.nit || lido.ehExtrato)) console.warn("dossiê: CNIS não reconhecido", cnis.nome);
         else if(!conf.ok) aviso("CNIS do dossiê: " + conf.aviso, true);
-        else await gravarCnisLido(cliId, lido, cnis, {dossie:true});
+        else await gravarCnisLido(cliId, lido, cnis, {dossie:true, releitura:reler});
       }catch(e){ console.warn("dossiê: CNIS não lido", e); }
     }
     const pdf2 = triagemDe(D.cliPorId.get(cliId)).pdf || {};
@@ -32678,16 +32731,38 @@ function quadrosDoPACalc(c, ks){
       + (b.de ? `: de ${fmtBarra(b.de)}${b.ate ? ` a ${fmtBarra(b.ate)}, ${fimBen(b)}` : b.ativo ? ", recebendo" : ""}` : b.situacao ? `: ${b.situacao.toLowerCase()}` : ""), b.ativo ? "ok" : "info", "CNIS");
     for(const i of g.indicadores||[]){ const tp = tipoIndicador(i.codigo);
       const vs = (g.vinculos||[]).filter(v=>v.tipo!=="Benefício" && (v.indicadores||[]).includes(i.codigo));
-      const onde = vs.map(v=>`${v.origem ? `na ${tituloOrgao(v.origem)}` : `como ${String(v.tipo||"").toLowerCase()}`} (${v.inicio}${v.fim ? ` a ${v.fim}` : ""})`).join(" e ");
+      // F302 · o indicador de competência diz o vínculo e os meses; no empregado não muda o tempo, que se conta pelas datas do vínculo
+      const nc = vs.length ? [] : (((an||{}).indComps||{})[i.codigo]||[]), soEmp = nc.length && nc.every(x=>TIPO_REMUN.test(x.tipo||""));
+      const onde = vs.length ? vs.map(v=>`${v.origem ? `na ${tituloOrgao(v.origem)}` : `como ${String(v.tipo||"").toLowerCase()}`} (${v.inicio}${v.fim ? ` a ${v.fim}` : ""})`).join(" e ")
+        : nc.map(x=>`${x.origem ? `na ${tituloOrgao(x.origem)}` : `como ${String(x.tipo||"").toLowerCase()}`}, em ${juntaE(faixasDeComps(x.comps))}`).join(" e ");
+      const nPend = tp==="P" && !soEmp ? (vs.length ? vs.filter(vinculoPendente).reduce((n, v)=>n + _paMeses(v), 0) : nc.reduce((n, x)=>n + x.comps.length, 0)) : 0;
       // F235 · a RAIS do mesmo empregador confirma o vínculo com pendência: entra no pedido com a carteira
       const raisOk = /^PEXT/.test(i.codigo) ? [...new Set((fd.rais||[]).filter(r=>vs.some(v=>r.raiz && r.raiz===raizCnpj(v.codigo||""))).map(r=>r.ano))].sort() : [];
       const noPed = /^PEXT/.test(i.codigo) && fd.processos.find(p=>((p.comunicacoes||[]).slice(-1)[0]||{}).contra && anexosDoPedido(p).some(l=>/carteira de trabalho|ctps/i.test(l) && vs.some(v=>(dsa(v.origem||"").match(/[a-z]{4,}/g)||[]).filter(w=>!/ltda|ficticia|ficticio/.test(w)).every(w=>dsa(l).includes(w)))));
       it("cnis", `cnis.ind:${i.codigo}`, noPed ? `O vínculo ${onde} entrou no CNIS fora do prazo (PEXT), e a carteira de trabalho com esse contrato já está no pedido de ${noPed.entrada}, que o INSS negou sem contá-lo: não peça a carteira de novo (documento novo só vale da entrega); ela é a prova do recurso`
-        : PEDIR_IND[i.codigo] ? PEDIR_IND[i.codigo](onde) + (raisOk.length ? `; a RAIS de ${raisOk.join(" e ")} do dossiê confirma o emprego e a saída: junte ao pedido` : "")
-        : `${tp==="P" ? "Pendência, que bloqueia o período até o acerto" : tp==="A" ? "Acerto já feito" : "Alerta"}${onde ? ` ${onde}` : ""}: ${descIndicador(i.codigo, i.descricao)}`,
-        tp==="P" ? "warn" : tp==="A" ? "ok" : "info", `CNIS · indicador ${i.codigo}`); }
+        : PEDIR_IND[i.codigo] ? PEDIR_IND[i.codigo](onde) + (nPend ? `; até lá, ${plu(nPend, "mês fica", "meses ficam")} fora da conta do INSS` : "") + (raisOk.length ? `; a RAIS de ${raisOk.join(" e ")} do dossiê confirma o emprego e a saída: junte ao pedido` : "")
+        : soEmp ? `${descIndicador(i.codigo, i.descricao)} (${i.codigo}) ${onde}: não muda o tempo do vínculo, que se conta pelas datas de entrada e de saída; só importa se a data de saída estiver errada`
+        : `${tp==="P" ? `Pendência (${i.codigo})` : tp==="A" ? "Acerto já feito" : "Alerta"}${onde ? ` ${onde}` : ""}: ${descIndicador(i.codigo, i.descricao)}`
+          + (nPend ? `. Até o acerto, o INSS não conta ${nPend===1 ? "esse mês" : `esses ${nPend} meses`}` : ""),
+        soEmp ? "info" : tp==="P" ? "warn" : tp==="A" ? "ok" : "info", `CNIS · indicador ${i.codigo}`); }
     if(an && (an.abaixo||[]).length){ const nAb = an.abaixo.length;
       it("cnis", "cnis.min", `${nAb===1 ? "1 mês foi pago" : `${nAb} meses foram pagos`} abaixo do mínimo (${an.abaixo.slice(0,3).map(x=>x.comp).join(", ")}${nAb>3?" e outros":""}): só ${nAb===1?"conta":"contam"} depois de completar a diferença`, "warn", "CNIS"); }
+    // F302 · a empresa falida não emite PPP: o tempo especial do período se prova de outro jeito
+    const espOp = opcoesSel(c).some(o=>(o.mods||[]).includes("especial"));
+    for(const v of (g.vinculos||[]).filter(v=>v.tipo!=="Benefício" && /FALID|MASSA FAL/i.test(v.origem||""))){
+      const iean = (v.indicadores||[]).includes("IEAN");
+      it("cnis", `cnis.falida:${raizCnpj(v.codigo)||v.origem}`, `${tituloOrgao(v.origem)} (${v.inicio}${v.fim ? ` a ${v.fim}` : ""}) consta como falida: o PPP e o laudo técnico não se pedem à empresa. `
+        + `Se o trabalho ali foi insalubre, a prova do tempo especial vem do administrador judicial da massa falida, de laudo de empresa do mesmo ramo ou de perícia indireta${iean ? "; o próprio CNIS traz a exposição informada pelo empregador (IEAN)" : ""}`,
+        espOp || iean ? "warn" : "info", "CNIS"); }
+    // F302 · salário em dois lugares no mesmo mês: soma no cálculo (Lei 8.213/91, art. 32) e, no benefício de antes da soma, a revisão do Tema 1070/STJ
+    { const cc = (an && an.concomitantes) || []; if(cc.length){
+      const br = k => k.split("-").reverse().join("/"), nCc = cc.reduce((n, f)=>n + f.n, 0), de1 = cc[0].de;
+      const rev = beneficiosDoCnis(g).filter(b=>/^(31|32|41|42|46|57|91|92|94)$/.test(b.especie) && b.de >= "1999-11-29" && b.de <= "2019-06-17" && de1 < b.de.slice(0, 7))
+        .map(b=>({b, dec: somarAnos(somarMeses(b.de.slice(0, 7)+"-01", 1), 10)})).filter(x=>x.dec > hoje());
+      const onde = [...new Set(cc.flatMap(f=>f.origens))].slice(0, 3).map(o=>tituloOrgao(o)), fx = cc.map(f=>f.de===f.ate ? br(f.de) : `${br(f.de)} a ${br(f.ate)}`);
+      it("cnis", "cnis.concom", `Salário em dois lugares no mesmo mês em ${plu(nCc, "mês", "meses")} (${juntaE(fx.slice(0, 4))}${fx.length > 4 ? " e outros" : ""}), em ${juntaE(onde)}: no cálculo, os salários do mesmo mês se somam até o teto (Lei 8.213/91, art. 32)`
+        + (rev.length ? `. ${rev.map(({b, dec})=>`O ${nomeBenef(b.especie).toLowerCase()} (B${b.especie}), com DIB em ${fmtBarra(b.de)}, foi calculado antes da soma: cabe a revisão das atividades concomitantes (Tema 1070/STJ), e a decadência, contada da DIB, se consuma em ${fmtBarra(dec)}; a carta de concessão dá a data exata`).join(". ")}` : ""),
+        rev.length ? "warn" : "info", "CNIS"); } }
     const abertos = new Map(vinculosSemSaida(g).map(v=>[`${v.origem}|${v.inicio}`, v]));
     for(const v of (g.vinculos||[]).filter(v=>v.tipo!=="Benefício" && v.aberto && !v.fim)){
       const a = abertos.get(`${v.origem}|${v.inicio}`) || {}, onde = v.origem ? tituloOrgao(v.origem) : "empregador";
@@ -32917,6 +32992,13 @@ function paPintarMarca(li, vai){
   const tot = pa.querySelectorAll(".paq [data-k]").length - pa.querySelectorAll(".paq [data-k].fora").length, b = pa.querySelector(".paq-barra-n");
   if(b) b.textContent = `${tot} ${tot===1?"item":"itens"} do dossiê`;
 }
+// F302 · o CNIS mostra à vista só o que tem problema; o resto, que não pede providência, fica fechado logo abaixo
+function itensDoCnis(itens, li){
+  const prob = itens.filter(x=>/warn|crit/.test(x.est)), resto = itens.filter(x=>!/warn|crit/.test(x.est));
+  return `<p class="paq-prob${prob.length ? "" : " ok"}"><b>${prob.length ? `${plu(prob.length, "problema", "problemas")} no CNIS` : "Nenhum problema no CNIS"}</b>${prob.length ? ", cada um com o que fazer:" : "."}</p>
+    ${prob.length ? `<ul class="paq-itens">${prob.map(li).join("")}</ul>` : ""}
+    ${resto.length ? `<details class="paq-resto"><summary>Os demais dados do CNIS, sem problema (${resto.length})</summary><ul class="paq-itens">${resto.map(li).join("")}</ul></details>` : ""}`;
+}
 function painelPA(c, ks){
   if(telaSimples("pa", c)) return paSimples(c, ks);   // F249 · nível 1 e 2 antes da onda 5
   // F220 · sem dossiê não há quadro: o relato da recepção e a escolha do benefício
@@ -32944,7 +33026,8 @@ function painelPA(c, ks){
       ${q.importa ? `<p class="paq-importa"><b>Importa para:</b> ${esc(q.importa)}.</p>` : ""}
       ${q.blocos.length ? `<div class="paq-blocos">${q.blocos.map(([r, val, est])=>`<div class="paq-bloco"><small>${esc(r)}</small><b class="mono${est==="crit"?" crit":""}">${esc(val)}</b></div>`).join("")}</div>` : ""}
       ${q.extra==="linha" ? `<div class="paq-rola">${paLinhaDoTempo(c, qd)}</div>` : ""}
-      ${q.itens.length ? `<ul class="paq-itens${q.itens.length > PA_VISIVEIS ? " recolhido" : ""}">${q.itens.map(itemLi).join("")}</ul>
+      ${q.id==="cnis" && q.itens.length ? itensDoCnis(q.itens, x=>itemLi(x, 0))
+      : q.itens.length ? `<ul class="paq-itens${q.itens.length > PA_VISIVEIS ? " recolhido" : ""}">${q.itens.map(itemLi).join("")}</ul>
         ${q.itens.length > PA_VISIVEIS ? `<button type="button" class="adr-link paq-mais" aria-expanded="false" data-n="${q.itens.length - PA_VISIVEIS}" onclick="paMais(this)">mostrar mais ${q.itens.length - PA_VISIVEIS}</button>` : ""}` : ""}
       ${q.extra==="tabela" ? `<div class="paq-rola">${tabelaRaisCaged(qd.fd, qd.g)}</div>` : ""}
       ${q.extra==="transp" ? `<div class="paq-rola">${quadroTransparencia(c)}</div>` : ""}
