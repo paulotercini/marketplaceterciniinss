@@ -1,7 +1,7 @@
-// F302 · nenhum texto passa da borda do quadro (pedido do Paulo, 30.10.2026). Abre as telas mais usadas no computador
+// F303 · nenhum texto passa da borda do quadro (pedido do Paulo, 30.10.2026). Abre as telas mais usadas no computador
 // (1280 e 1480 px) e no celular (390 px) e mede cada pedaço de texto contra o quadro que o contém: texto que sai da caixa
 // ou fica cortado sem reticências é falha. Banco simulado e dados fictícios.
-// Uso: node f302.js [fotos]
+// Uso: node f303.js [fotos]
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
@@ -9,7 +9,7 @@ const path = require("path");
 const { FIX, SESSAO } = require("./fixturas");
 const { Banco, instalarBanco } = require("./banco-simulado");
 const SUPA = "https://ficticio.supabase.co";
-const OUT = process.argv[2] || "/tmp/f302";
+const OUT = process.argv[2] || "/tmp/f303";
 fs.mkdirSync(OUT, { recursive: true });
 
 const PAULO = FIX.colaboradores[0].id;
