@@ -11,11 +11,12 @@ Onda 179, 16/10/2026. O titular determinou que a peça dirigida a Catanduva trag
 
 O corpus tem 53 documentos do JEF e 25 da Vara. Os resultados são 26 improcedências, 14 embargos de declaração rejeitados, 9 acordos homologados, 9 procedências, 7 procedências parciais, 4 extinções e 6 decisões de instrução e de cumprimento. **Nenhuma tutela de urgência foi concedida.**
 
-Os três arquivos se leem nesta ordem.
+Os arquivos se leem nesta ordem.
 
 1. Este `SKILL.md`, com o perfil, as regras de redação e a tabela de precedentes.
 2. `references/BLOCOS-BENEFICIOS.md`, com os blocos-modelo literais e o raciocínio do juízo em incapacidade, auxílio-acidente, BPC, pensão por morte, auxílio-reclusão, idade, qualidade de segurado, carência, coisa julgada e ausência à perícia.
 3. `references/BLOCOS-ESPECIAL-PROCESSO.md`, com os blocos de tempo especial, ruído, agentes biológicos e químicos, EPI, PPP e LTCAT, categoria profissional, tempo de contribuição, reafirmação da DER, revisões e as questões processuais, mais o esqueleto completo da sentença do JEF e da Vara e o vocabulário com contagem.
+4. `references/DESFECHOS.md` e `references/desfechos.jsonl` (19/10/2026), com o desfecho de 262 processos de Catanduva: 254 tirados dos acórdãos das Turmas Recursais e do TRF3 que julgaram recurso contra sentença do juízo, de todos os advogados, e 8 sentenças do Drive. Para cada processo há a matéria, o resultado e o motivo da sentença e o que a instância de recurso fez com ela. Use a tabela para a taxa de cada resultado por matéria e o `.jsonl` para achar o caso parecido (busque por `materia` e por palavra do motivo).
 
 ## Quem escreve
 
@@ -74,6 +75,12 @@ Os critérios abaixo se repetem no corpus. Cada um traz a frase do juízo e o qu
 12. **Tutela e cumprimento.** A implantação ocorre após o trânsito, pela CEAB-DJ e pelo PREVJUD, e os cálculos vêm da Cecalc no JEF ou do INSS na Vara, com 5 dias úteis para impugnar. O pedido de tutela, quando o titular o decidir, traz fundamentação autônoma do perigo.
 13. **Acordo.** Homologa nos termos da proposta. A cláusula de cálculo se lê antes de aceitar, porque a cláusula "que constam na Carta de Concessão" limitou uma revisão do Tema 1070/STJ.
 14. **Revisão da vida toda.** Improcedente pelo Tema 1102/STF, com dispensa de honorários pela modulação.
+15. **A data da sentença manda no precedente.** O juízo decide pelos temas julgados até a data em que sentencia. Pedido de suspensão nos autos não prova que o processo ficou suspenso. Sem a data, preveja pelos precedentes vigentes na última peça dos autos e dê a saída do tema novo como segunda leitura. No vigia, as sentenças lidas aplicaram o Tema 1031/STJ e enquadraram pela categoria (item 2.5.7) até 05/03/1997. O Tema 1209/STF [NÃO CONFIRMADO] só vale para a sentença posterior ao seu julgamento.
+16. **Ruído depois de 18/11/2003: decide o que o PPP diz da técnica.** Se o PPP diz NHO-01, NR-15, dosimetria ou nível normalizado, o juízo reconhece ("metodologia que mede a exposição durante toda a jornada"). Se diz só "decibelímetro" ou medição pontual, nega. Quando o PPP está só em imagem, procure a técnica no que a inicial, a contestação e a réplica transcrevem dele; sem essa informação, dê as duas saídas. A recusa do INSS na via administrativa, sozinha, não prova falha de metodologia: numa sentença lida, o juízo reconheceu de 2003 a 2013 períodos que o INSS tinha recusado.
+17. **Rediscussão do que se decidiu no cumprimento é coisa julgada, e não improcedência.** Na opção entre benefício judicial e administrativo (Tema 1018/STJ) já resolvida na execução, o juízo extinguiu pelo art. 485, V, e § 3º, do CPC, mesmo com pedido formalmente diverso ("não cabe rediscussão acerca do cumprimento de título executivo judicial já decidido de forma definitiva").
+18. **Gratuidade no JEF não é previsível.** Com renda perto de R$ 4.000 e impugnação do INSS, uma sentença negou pelo critério de 40% do teto e outra concedeu. Dê as duas saídas e trate o ponto só como risco de preparo do recurso.
+19. **O modelo B também escreve no JEF.** Restituição contra a União e incapacidade com subtítulos por tema e ementas transcritas vieram no modelo B. Não presuma o modelo A só porque o rito é o JEF.
+20. **Pedido alternativo concedido sai "procedente".** Quando a inicial pede aposentadoria por incapacidade "ou" auxílio, e o juízo concede só o auxílio, o dispositivo diz "julgo procedente o pedido", e não "parcialmente procedente". O "parcialmente" fica para quando um pedido cumulado (outro período, outro benefício somado) é negado.
 
 ## Precedentes que o juízo cita
 
@@ -104,6 +111,55 @@ A conferência de 16/10/2026 não abriu as fontes oficiais, que estavam inacess�
 | Enunciado 52 dos JEFs da 3ª Região | gratuidade em 40% do teto | **não localizado**, não se cita |
 | Res. CNJ 595/2024, art. 6º | prazo de cumprimento | o artigo delega o prazo ao comitê do art. 7º |
 | Tema 1124 do STJ | prova apresentada apenas em juízo | vigente, não citado pelo juízo |
+
+## Desfechos por matéria (262 processos)
+
+A tabela completa está em `references/DESFECHOS.md`. Nas sentenças que chegaram ao recurso, houve 27 procedências, 62 parciais, 146 improcedências e 25 extinções. A amostra é só do que foi recorrido, então a improcedência pesa mais do que na pauta inteira. Mesmo assim, ela é o ponto de partida do juízo em quase todas as matérias.
+
+| Matéria | Casos | Sentença mais comum | Reforma quando o autor recorre |
+|---|---|---|---|
+| Pensão por morte | 42 | improcedente (28) | 28% |
+| Incapacidade | 41 | improcedente (24) | 31% |
+| Tempo de contribuição | 40 | parcial (22) | 27% |
+| Auxílio-acidente | 34 | improcedente (24) | 8% |
+| Tempo especial | 32 | parcial (15) ou improcedente (15), nunca procedente | **71%** |
+| Idade rural ou híbrida | 22 | improcedente (17) | 33% |
+| BPC da pessoa com deficiência | 21 | improcedente (12) | 36% |
+| Revisão | 19 | extinção (7) | 54% |
+
+O que os recursos ensinam sobre o juízo:
+
+1. **Tempo especial.** O juízo é mais restritivo do que as Turmas e o TRF3. As reformas reconhecem a categoria até 28/04/1995, o agente biológico com contato com pacientes, o agente cancerígeno por avaliação qualitativa e a lavanderia hospitalar. As Turmas mantêm a negativa quando o PPP falha no Tema 208/TNU, quando o ruído fica abaixo do limite e quando o hidrocarboneto é genérico. Preveja a sentença restritiva e diga, em linha própria, o que a Turma tende a reverter.
+2. **Pensão por morte.** O juízo nega a união estável sem prova material robusta. A Turma reforma com início de prova contemporâneo e testemunhas coesas: termo de internação que qualifica como cônjuge, plano de saúde ou seguro em comum, conta no endereço comum, declaração de IR.
+3. **Rural e híbrida.** A Turma reverte com documento em nome do pai, do marido ou do sogro em regime de economia familiar, e com o vínculo rural em CTPS anterior a 1991 contando como carência (Tema 1007/STJ).
+4. **Incapacidade.** O laudo decide em primeiro grau. A Turma reforma pelas condições pessoais (idade, analfabetismo, trabalho braçal), quando a reabilitação é inviável, e pela isenção de carência por doença grave.
+5. **Falta de prova vira extinção, e não improcedência, no recurso.** Na prova rural insuficiente (Tema 629/STJ) e na ausência à perícia do JEF (art. 51, I, da Lei 9.099/95), a Turma converte a improcedência em extinção sem mérito, o que permite ajuizar de novo.
+6. **BPC.** Com impugnação específica da miserabilidade pelo INSS, a falta do estudo social anula a sentença (Tema 187/TNU).
+7. **Auxílio-acidente.** A sentença quase nunca muda. O que muda é a DIB, que vai para o dia seguinte à cessação do auxílio-doença quando o perito situa a sequela no acidente.
+
+## Prova cega de 18/10/2026
+
+O agente `juiz-catanduva` recebeu os autos de 15 processos já sentenciados (3 procedentes, 4 parcialmente procedentes, 6 improcedentes e 2 extintos), só com as peças anteriores à sentença. Em cada um, leu uma cópia desta skill sem os trechos tirados daquele processo, e a previsão foi comparada com a sentença real.
+
+| Medida | Acerto |
+|---|---|
+| Resultado (procedente, parcial, improcedente, extinção) | 13 de 15 (87%) |
+| Termo inicial, onde houve condenação | 5 de 5 |
+| Períodos reconhecidos, nas parciais de tempo especial | 3 de 4 |
+
+Os dois erros de resultado viraram os critérios 15 e 17, e o erro de período virou o critério 16. A limpeza apagou o id do processo nas linhas que citavam outros documentos e deixou a descrição, então a prova foi quase cega. Com a skill inteira, sem a limpeza, o acerto de resultado foi de 14 de 15.
+
+**Rodada 2 (19/10/2026), depois dos 262 desfechos.** Mesmos 15 casos, com limpeza mais rigorosa: saíram as linhas inteiras que descreviam o caso, os critérios 15 a 19 (nascidos destes casos) e o próprio processo da tabela de desfechos.
+
+| Medida | Rodada 1 | Rodada 2 |
+|---|---|---|
+| Resultado | 13 de 15 | 12 de 15 (80%) |
+| Termo inicial | 5 de 5 | 4 de 5 |
+| Períodos, nas parciais de tempo especial | 3 de 4 | 2 de 4 |
+
+A queda vem da limpeza mais dura, e não dos dados novos. Dois dos três erros (vigia e Tema 1018) são exatamente os que os critérios 15 e 17 corrigem, e eles estavam fora da prova. O terceiro virou o critério 20. Os dois erros de período mostraram que o critério 16 estava torto nos dois sentidos e foi reescrito. O ganho dos desfechos apareceu fora do placar: todos os 15 pareceres passaram a citar casos parecidos com o resultado no recurso, e os de tempo especial anteciparam a reforma pela Turma. Com 15 casos, um acerto a mais ou a menos é ruído. A medida que vale daqui em diante é a prospectiva.
+
+Para a próxima prova, guarde 10 sentenças novas fora do corpus antes de qualquer atualização desta skill. Melhor ainda, rode o agente antes da sentença, registre a previsão no andamento do caso e confira quando ela sair.
 
 ## Repetir o estudo
 
