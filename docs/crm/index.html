@@ -3438,10 +3438,10 @@ html[data-tema="v10"] .seg-colab{max-width:100%;overflow-x:auto;scrollbar-width:
   html[data-tema="v10"] #conteudo-meio .ag-linha .acoes{grid-column:4;width:auto;gap:0;align-self:start;margin-top:-7px}
   html[data-tema="v10"] #conteudo-meio .ag-linha .avatares{grid-column:5;width:auto;min-width:0;justify-content:flex-start;margin-left:4px;align-self:start;margin-top:-2px}
   html[data-tema="v10"] #conteudo-meio .ag-linha .ag-selos{grid-column:3/-1;grid-row:2;flex-wrap:nowrap;overflow:hidden}
-  /* o filtro por pessoa quebra em linhas dentro da largura da tela, na mesma margem dos cartões (no Safari a rolagem interna vazava) */
+  /* o filtro por pessoa numa linha só, na mesma margem dos cartões: os botões dividem a largura (no Safari a rolagem interna vazava) */
   html[data-tema="v10"] .meio.ag-v10 .topo-extra{margin-left:0;flex:1 1 100%;width:100%;max-width:100%;min-width:0}
-  html[data-tema="v10"] .meio.ag-v10 .seg-colab{display:flex;flex-wrap:wrap;width:100%;max-width:100%;box-sizing:border-box;overflow:hidden}
-  html[data-tema="v10"] .meio.ag-v10 .seg-colab button{flex:none}
+  html[data-tema="v10"] .meio.ag-v10 .seg-colab{display:flex;flex-wrap:nowrap;width:100%;max-width:100%;box-sizing:border-box;overflow:hidden}
+  html[data-tema="v10"] .meio.ag-v10 .seg-colab button{flex:1 1 auto;min-width:0;padding:5px 3px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 }
 
 /* ══ F145 · a tela do caso em duas colunas (pedido do Paulo, 27.09.2026) ══
