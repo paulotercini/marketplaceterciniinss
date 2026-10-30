@@ -51061,7 +51061,7 @@ function ligarFluxo(){
   // F309 · o horário livre (fora das vagas), só do administrador: o Apps Script confere de novo
   on("aq-lusar", ()=>{ const d=$("aq-ldata").value, h=$("aq-lhora").value;
     if(!d || !h){ f.msg="Informe a data e o horário."; return pintarFluxo(); }
-    Object.assign(f, {data:d, inicio:h, eventoId:null, livre:true, msg:""}); pintarFluxo(); });
+    Object.assign(f, {data:d, inicio:h, eventoId:null, livre:true, sobrepor:false, msg:""}); pintarFluxo(); });
   on("aq-seg5", async ()=>{ if(!f.remarcar){ f.etapa=6; return pintarFluxo(); } await gravarFluxo(); });
   const o1=$("aq-o1"), o2=$("aq-o2"), obs=$("aq-obs");
   if(o1) o1.onchange=()=>{ f.o1=o1.checked; $("aq-gravar").disabled=!orientou(f); };
@@ -51079,7 +51079,7 @@ async function gravarFluxo(){
   try{
     let r;
     if(f.remarcar){
-      r = await agendaApi("remarcar", {eventId:f.remarcar.id, profissional:f.prof, data:f.data, inicio:f.inicio, eventoId:f.eventoId||"", foraDaVaga:!!f.livre});
+      r = await agendaApi("remarcar", {eventId:f.remarcar.id, profissional:f.prof, data:f.data, inicio:f.inicio, eventoId:f.eventoId||"", foraDaVaga:!!f.livre, sobrepor:!!f.sobrepor});
     } else {
       // primeiro atendimento: o pré-cadastro nasce antes, para o evento já levar o cliente
       if(f.novo && !f.preCli){
@@ -51091,7 +51091,7 @@ async function gravarFluxo(){
       }
       const cli = f.cli || f.preCli;
       r = await agendaApi("agendar", {profissional:f.prof, tipo:f.tipo, nome:f.nome, telefone:f.tel, clienteId:cli?cli.id:"",
-        data:f.data, inicio:f.inicio, eventoId:f.eventoId||"", observacoes:f.obs, orientacoesConfirmadas: orientou(f), foraDaVaga:!!f.livre});
+        data:f.data, inicio:f.inicio, eventoId:f.eventoId||"", observacoes:f.obs, orientacoesConfirmadas: orientou(f), foraDaVaga:!!f.livre, sobrepor:!!f.sobrepor});
     }
     const ev = r.evento; f.feito = ev; f.msg = "";
     const c = f.cli || f.preCli || clienteDoEvento(ev);
@@ -51100,6 +51100,9 @@ async function gravarFluxo(){
     if(agq.prof===f.prof) agq.sel = ev.data;
   }catch(e){
     f.msg = e.message;
+    // F309b · horário livre que bate com outro atendimento: o administrador confirma e agenda junto
+    if(e.codigo==="SOBREPOSICAO" && f.livre && !f.sobrepor && confirm(`${e.message} Agendar mesmo assim?`)){ f.sobrepor = true; f.msg = ""; return gravarFluxo(); }
+    if(e.codigo==="SOBREPOSICAO"){ f.sobrepor = false; f.etapa = 5; }
     if(e.codigo==="HORARIO_INDISPONIVEL"){ f.inicio=null; f.eventoId=null; f.livre=false; f.etapa=5; await carregarAgenda(f.prof); }
   }
   pintarFluxo();
