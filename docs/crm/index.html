@@ -5344,6 +5344,24 @@ html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) #and
   html[data-tema="v10"] .painel[data-p="2"] .timeline li:is(:hover,:focus-within) .tl-barra{box-shadow:-12px 0 10px -4px #FFFFFF}
   html[data-tema="v10"] .painel[data-p="2"] .timeline li .tl-barra .tl-bt:not(.tl-bt-ic){min-height:26px;padding:0 9px;font-size:12px}
 }
+/* F298 · a ficha no celular (pedido do Paulo, 30.10.2026): o voltar, o nome e o 📋 numa linha; CPF, Meu INSS e telefone
+   juntos e menores; o ⋯ do tamanho dos outros botões e o menu dele dentro da tela; o campo de escrever numa linha
+   até o toque; e o ✎ Sugestões redondo, acima do campo, sem cobrir o Sugestões dele */
+.app.celular .det-topo{padding-top:6px}
+.app.celular .det-topo .linha1{gap:6px 8px}
+.app.celular .det-topo .linha1 > .cel-voltar{min-width:32px;padding:0}
+.app.celular .det-topo .linha1 > .cli-bloco{flex:1 1 0;min-width:0}
+.app.celular .det-topo .linha1 > .resumo-lado{order:1;flex:1 1 100%;margin:0;row-gap:2px;column-gap:14px;font-size:13px}
+.app.celular .det-topo .linha1 > .resumo-lado .id-min{min-height:24px}
+.app.celular .det-topo .linha1 > :not(.cel-voltar):not(.cli-bloco):not(.olho):not(.resumo-lado){order:2}
+.app.celular .det-topo .linha1 > .det-canto{margin-left:auto}
+.app.celular :is(.det-mais,.lc-menu) > summary{width:36px;min-width:36px;height:32px;min-height:32px}
+.app.celular .det-mais .tl-mais-menu,html .app.celular .tipo-mais.mais-baixo .tl-mais-menu{left:0;right:auto}
+.app.celular .cel-tudo{margin:4px 0 0;padding:6px}
+.app.celular .escrever:not(.esc-aberto) textarea#and-texto{height:40px!important;min-height:0!important;padding-top:9px;padding-bottom:9px;resize:none}
+.app.celular .escrever:not(.esc-aberto) .tipo-fila > :not(.tipo-sr):not(.tipo-pc){display:none}
+.app.celular.detalhe-aberto ~ .fab-sug{width:40px;height:40px;padding:0;border-radius:50%;justify-content:center}
+.app.celular.detalhe-aberto ~ .fab-sug .fab-sug-t{display:none}
 </style>
 </head>
 <body>
@@ -5479,7 +5497,7 @@ html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) #and
 <button class="fab-rapida" id="fab-rapida" onclick="anotacaoRapida()"
   title="anotação rápida (ligação ou balcão) — o registro nasce urgente">⚡</button>
 <button class="fab-sug" id="fab-sug" onclick="abrirSugestao()"
-  title="anotar um erro, uma correção ou uma melhoria do CRM; somente o Paulo lê">✎ Sugestões</button>
+  title="anotar um erro, uma correção ou uma melhoria do CRM; somente o Paulo lê" aria-label="Sugestões">✎<span class="fab-sug-t"> Sugestões</span></button>
 <div id="modal" style="display:none"></div>
 
 <script>

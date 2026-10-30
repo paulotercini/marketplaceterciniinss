@@ -286,6 +286,8 @@ A **F296** (Onda E, as etapas da tarefa do To Do como ficha): `classificar_item_
 
 A **F297** (a sincronização vigiada, pedido do Paulo de 30.10.2026): o administrador recebe aviso e notificação quando o carimbo `todo_sync_em` passa do atraso de `syncAtrasada` (duas rodadas seguidas sem entrar), uma vez por carimbo (`avisoSyncParada`, `crm_aviso_sync`, no `vigiarLembretes`); o evento que o CRM remarcou ou levou a outro caso deixou de contar como recusa (`_pkey` no `ignore-duplicates` do `migrar.py`); e as pontes `ponte_cards.py` e `ponte_despacho.py` voltaram a rodar: a variável não criada vale nulo, e nulo != '0' dá falso no GitHub, por isso `(vars.X || '1') != '0'`. Testes: `f295.js` e `tests/test_crm_fase2.py`.
 
+A **F298** (a ficha no celular, pedido do Paulo de 30.10.2026): o voltar, o nome e o 📋 numa linha; CPF, Meu INSS e telefone juntos e menores; o ⋯ do cabeçalho e do caso do tamanho dos outros botões, com o menu dentro da tela; o campo de escrever numa linha até o toque (`.esc-aberto`, como no computador, com Sem resposta e Pedir ao cliente à vista); e o ✎ Sugestões redondo acima do campo (`.fab-sug-t`). Só CSS. Teste: `testes/cadastro/f298.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
