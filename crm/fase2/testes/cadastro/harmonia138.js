@@ -66,13 +66,13 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
     const l0 = cs[0];
     return { n: cs.length, colados: cs.every(c => c.closest(".pl-grupo") && getComputedStyle(c).borderRadius === "0px"),
       dataPrimeiro: !!(l0 && l0.children[1] && l0.children[1].classList.contains("ag-data")),
-      espMono: !!(document.querySelector(".ag-esp") && /mono/i.test(getComputedStyle(document.querySelector(".ag-esp")).fontFamily)),
+      espMono: !!(document.querySelector(".ag-esp") && /Plex Sans/i.test(getComputedStyle(document.querySelector(".ag-esp")).fontFamily)),
       segLinha: !!(seg && new Set([...seg.children].map(b => Math.round(b.getBoundingClientRect().top))).size === 1),
       sub: document.getElementById("sub-lista").textContent };
   });
   conf(`cada seção é um bloco, com as linhas separadas por um fio (${plan.n})`, plan.n >= 4 && plan.colados);
   conf("F144 · a data abre a linha, logo depois da caixa de concluir", plan.dataPrimeiro);
-  conf("F144 · a espécie com a lista vai em selo de letra mono", plan.espMono);
+  conf("F144 · a espécie com a lista vai em selo (F304: na letra da interface, a mono é só do número que se copia)", plan.espMono);
   conf("F144 · o filtro por pessoa cabe numa linha só", plan.segLinha);
   conf("F144 · a frase do topo diz o dia e o que vence", /\d+ (vencidas?|para hoje)/.test(plan.sub) && /de \p{L}+\./u.test(plan.sub));
 
