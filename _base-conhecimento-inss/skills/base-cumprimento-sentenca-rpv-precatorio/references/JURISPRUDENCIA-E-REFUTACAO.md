@@ -26,9 +26,9 @@ RRA e IR.
 
 Honorários sobre parcelas vencidas.
 
-### Súmula 443 STJ
+### Honorários em execução
 
-Honorários em execução.
+O cumprimento de sentença contra a Fazenda que enseje precatório não impugnado não gera honorários (art. 85, § 7º, do CPC), e o Tema 1190/STJ estendeu a regra à RPV não impugnada. A Súmula 443 STJ, antes citada aqui, é de direito penal e foi retirada (auditoria 30/10/2026).
 
 ### Tema 1050 STJ
 
