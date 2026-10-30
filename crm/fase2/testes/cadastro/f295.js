@@ -99,20 +99,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     return { a, b, c0 }; });
   conf("sincronização parada avisa o administrador uma vez, e em dia não", sp.a === null && /não entra desde/.test(sp.b) && sp.c0 === null);
 
-  // 3 · a matriz importante × urgente
+  // 3 · F306: o urgente saiu da tela, e a matriz importante × urgente com ele
   await p.evaluate(() => { filtroColab = null; irPara("importante"); });
   await p.waitForTimeout(400);
-  await p.click("#chip-matriz");
-  await p.waitForTimeout(300);
-  const qs = await p.$$eval(".mz-q", qq => qq.map(q => q.textContent));
-  conf("a matriz tem quatro quadros", qs.length === 4);
-  conf("⭐⚡ traz o caso importante e urgente", /Rodrigo/.test(qs[0]) && !/Bruna|Carla/.test(qs[0]));
-  conf("⚡ sem ⭐ traz o urgente que não é importante", /Bruna/.test(qs[1]) && !/Rodrigo/.test(qs[1]));
-  conf("⭐ sem ⚡ traz o importante sem urgência", /Carla/.test(qs[2]));
-  await p.screenshot({ path: path.join(OUT, "02-matriz.png") });
-  await p.click("#chip-matriz");
-  await p.waitForTimeout(300);
-  conf("desligada, a lista volta a ser a da ⭐", !(await p.$(".mz-grade")));
+  conf("a ⭐ Importante não oferece a matriz", !(await p.isVisible("#chip-matriz")));
+  conf("nenhum botão de urgente à vista", !(await p.$$eval(".acao-card.fogo, .tl-sinal.urg, .esc-ic.urg", bs => bs.some(b => b.offsetParent))));
 
   // 4 · as notas das etapas do To Do na Identificação
   await p.evaluate(async c => { await abrirFicha(c); }, cA.id);
