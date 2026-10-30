@@ -1228,6 +1228,20 @@ NORMAS = {
     "NR-32.md": (
         "nr-32", "norma-regulamentadora", "32", 0,
         "Norma Regulamentadora NR-32, do Ministério do Trabalho e Emprego"),
+
+    # --- Boletim IBDP 899, transcrição conferida no Planalto e no DOU em 30/10/2026 ---
+    "LC-238-2026.md": (
+        "lc-238-2026", "lei-complementar", "238", 2026,
+        "Lei Complementar nº 238, de 21/10/2026"),
+    "Decreto-13140-2026.md": (
+        "decreto-13140-2026", "decreto", "13140", 2026,
+        "Decreto nº 13.140, de 21/10/2026"),
+    "Portaria-MPS-1489-2026.md": (
+        "portaria-mps-1489-2026", "portaria", "1489", 2026,
+        "Portaria MPS nº 1.489, de 16/10/2026"),
+    "Portaria-MPS-1491-2026.md": (
+        "portaria-mps-1491-2026", "portaria", "1491", 2026,
+        "Portaria MPS nº 1.491, de 19/10/2026"),
 }
 
 # arquivo -> motivo de ficar fora do banco. Sai na visão geral, para o vazio ser declarado e

@@ -264,6 +264,20 @@ O § 1º é o ponto PRÓ-SEGURADO e precisa ser invocado sempre. O período com 
 
 Três cuidados. Primeiro, não aceitar recusa de cômputo em aposentadoria programada ou por idade. Segundo, quantificar o custo da complementação antes de recomendá-la, comparando com o cenário sem ela. Terceiro, discutir a aplicação a período anterior a 11/08/2026, porque norma interna não retroage para restringir. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.
 
+## MEI após a LC 238/2026 e o Decreto 13.140/2026 (Onda 186)
+
+Os dois atos foram publicados no DOU de 21/10/2026, edição extra, e o texto integral está no MCP `normas` (`lc-238-2026`, `decreto-13140-2026`), conferido no Planalto e no DOU em 30/10/2026 [CONFERIDO]. O compilado da LC 123/2006 no corpus é de 04/10/2026 e ainda não traz as alterações.
+
+**Limite de receita do MEI.** O art. 2º da LC 238/2026 fixa o limite em R$ 110.000,00 para o ano-calendário de 2027, e o art. 18-A, § 1º, da LC 123/2006, na nova redação, o fixa em R$ 140.000,00 a partir de 1º/01/2028 (art. 10, I). O art. 18-C passa a admitir até dois empregados no MEI rural, com efeitos em 1º/01/2027 (art. 10, II). Para o segurado, o limite maior reduz o desenquadramento e mantém mais trabalhadores no recolhimento de 5% sobre o salário mínimo, que continua sem valer para aposentadoria por tempo de contribuição e contagem recíproca sem complementação (seção acima).
+
+**Remissão das contribuições do MEI.** O art. 5º remite integralmente os créditos da União de responsabilidade do MEI até 13/10/2026, inclusive a contribuição previdenciária do art. 18-A, § 3º, V, "a", da LC 123/2006, com juros e multas. A remissão extingue a dívida e não equivale a recolhimento. A LC 238/2026 não atribui à competência remitida efeito para carência, tempo de contribuição ou qualidade de segurado, e nenhum ato do INSS sobre o ponto foi localizado. Antes de orientar o cliente MEI inadimplente, a equipe apura se as competências em atraso fazem falta à carência ou à qualidade de segurado, porque a remissão não as preenche.
+
+Três condições da remissão. Primeiro, a adimplência das contribuições que vencerem nos seis meses seguintes à entrada em vigor, sob pena de cancelamento (art. 5º, § 4º). Segundo, a baixa depende de requerimento com a desistência das ações judiciais sobre os créditos remitidos, sem honorários pela extinção (art. 6º). Terceiro, o valor já pago não se restitui (art. 5º, § 3º). O art. 9º remete a disciplina a ato da PGFN. Você deve verificar no ato da PGFN se os seis meses contam da publicação, em 21/10/2026, ou de 1º/01/2027, data dos efeitos do art. 5º pelo art. 10, II.
+
+**Nanoempreendedor e documento fiscal.** O Decreto 13.140/2026 dispensa o nanoempreendedor, no âmbito da União, da inscrição no CNPJ e da emissão de documento fiscal eletrônico do IBS e da CBS (art. 1º), e admite a DASN-SIMEI como documento fiscal do MEI nas vendas a consumidor final (art. 2º). A norma é tributária. A repercussão previdenciária é probatória. O nanoempreendedor sem CNPJ não é MEI, filia-se como contribuinte individual, e a atividade se prova pelos demais documentos do art. 94 da IN 128/2022, com a DASN-SIMEI mantida como prova da atividade do MEI.
+
+**Portarias MPS 1.489 e 1.491/2026.** Tratam da avaliação de desempenho dos servidores do INSS e da meta institucional do MPS (`portaria-mps-1489-2026`, `portaria-mps-1491-2026`). Não alteram direito do segurado e ficam no corpus apenas como registro.
+
 ## MCPs da casa
 
 Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
