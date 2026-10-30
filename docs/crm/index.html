@@ -4230,6 +4230,8 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .zag-mais{display:block;width:100%;margin-top:8px;padding:7px;border:1px dashed var(--borda);border-radius:8px;background:none;font:inherit;font-size:12px;cursor:pointer;color:var(--azul)}
 .aq-dia-livres{display:block;font-size:11px;color:#1E6F50;font-weight:600}
 .aq-horarios small{display:block;font-size:11px;opacity:.8}
+.aq-livre{margin-top:10px;font-size:12px;color:var(--cinza)}.aq-livre summary{cursor:pointer;width:max-content}
+.aq-livre .aq-inp{width:auto;display:inline-block}
 .cli-todos-l{list-style:none;margin:10px 0 0;padding:0}
 .semcpf-g{margin:6px 0}.semcpf-g summary{cursor:pointer;padding:4px 0}
 .semcpf-it{display:flex;align-items:center;gap:8px;padding:4px 0 4px 6px;border-bottom:1px solid var(--borda)}
@@ -50840,7 +50842,7 @@ function pintarFluxo(){
     const dias = (dispP&&dispP.dias||[]).filter(d=>!d.bloqueado);
     // dia sem vaga (hoje depois do expediente, ou lotado) não serve de ponto de
     // partida: o fluxo abre no primeiro dia que tem horário livre
-    if(dias.length && (!f.data || !dias.some(d=>d.data===f.data && livresDoDia(d, f.tipo).length)))
+    if(!f.livre && dias.length && (!f.data || !dias.some(d=>d.data===f.data && livresDoDia(d, f.tipo).length)))
       f.data = (dias.find(d=>livresDoDia(d, f.tipo).length)||dias[0]||{}).data;
     const dia = dias.find(d=>d.data===f.data);
     const livres = dia ? livresDoDia(dia, f.tipo) : [], soVagas = livres.some(s=>s.vaga);
@@ -50852,7 +50854,11 @@ function pintarFluxo(){
       ${soVagas ? grupo("Vagas livres no Google Agenda", livres) : grupo("Horários recomendados", livres.filter(s=>s.encaixado && !s.reserva))}
       ${soVagas ? "" : grupo("Outros horários", livres.filter(s=>!s.encaixado && !s.reserva))}
       ${grupo("Encaixe urgente", livres.filter(s=>s.reserva))}
-      ${!livres.length?`<p class="meio-sub">Sem vaga livre neste dia.</p>`:""}
+      ${!livres.length && !f.livre?`<p class="meio-sub">Sem vaga livre neste dia.</p>`:""}
+      ${((dispP||agq.disp||{}).papel==="admin") ? `<details class="aq-livre"${f.livre?" open":""}><summary>outro horário</summary>
+        <p class="meio-sub">Fora das vagas, só para caso específico.</p>
+        <input type="date" id="aq-ldata" class="aq-inp" value="${esc(f.livre?f.data:"")}"> <input type="time" id="aq-lhora" class="aq-inp" step="300" value="${esc(f.livre?f.inicio:"")}">
+        <button class="btn-rap" id="aq-lusar">Usar este horário</button></details>` : ""}
       <div class="aq-bts"><button class="btn-rap" data-aqvolta="1" ${f.remarcar?"hidden":""}>Voltar</button>
         <button class="btn-rap forte" id="aq-seg5" ${f.inicio?"":"disabled"}>${f.remarcar?"Remarcar":"Continuar"}</button></div>`;
   } else if(f.etapa===6){
@@ -50917,9 +50923,13 @@ function ligarFluxo(){
   on("aq-seg4", async ()=>{ f.etapa=5; pintarFluxo(); if(!agq.cache[f.prof]){ await carregarAgenda(f.prof); pintarFluxo(); } });
   document.querySelectorAll("[data-aqfprof]").forEach(b=>b.onclick=async()=>{ f.prof=b.dataset.aqfprof; f.data=null; f.inicio=null; pintarFluxo();
     if(!agq.cache[f.prof]){ await carregarAgenda(f.prof); } if(fluxo===f && f.etapa===5) pintarFluxo(); });
-  document.querySelectorAll("[data-aqdata]").forEach(b=>b.onclick=()=>{ f.data=b.dataset.aqdata; f.inicio=null; f.eventoId=null; pintarFluxo(); });
-  document.querySelectorAll("[data-aqhora]").forEach(b=>b.onclick=()=>{ f.inicio=b.dataset.aqhora;
+  document.querySelectorAll("[data-aqdata]").forEach(b=>b.onclick=()=>{ f.data=b.dataset.aqdata; f.inicio=null; f.eventoId=null; f.livre=false; pintarFluxo(); });
+  document.querySelectorAll("[data-aqhora]").forEach(b=>b.onclick=()=>{ f.inicio=b.dataset.aqhora; f.livre=false;
     f.eventoId = b.dataset.aqvev || null; if(b.dataset.aqtipo) f.tipo = b.dataset.aqtipo; pintarFluxo(); });   // F250 · a vaga leva o tipo dela
+  // F309 · o horário livre (fora das vagas), só do administrador: o Apps Script confere de novo
+  on("aq-lusar", ()=>{ const d=$("aq-ldata").value, h=$("aq-lhora").value;
+    if(!d || !h){ f.msg="Informe a data e o horário."; return pintarFluxo(); }
+    Object.assign(f, {data:d, inicio:h, eventoId:null, livre:true, msg:""}); pintarFluxo(); });
   on("aq-seg5", async ()=>{ if(!f.remarcar){ f.etapa=6; return pintarFluxo(); } await gravarFluxo(); });
   const o1=$("aq-o1"), o2=$("aq-o2"), obs=$("aq-obs");
   if(o1) o1.onchange=()=>{ f.o1=o1.checked; $("aq-gravar").disabled=!orientou(f); };
@@ -50937,7 +50947,7 @@ async function gravarFluxo(){
   try{
     let r;
     if(f.remarcar){
-      r = await agendaApi("remarcar", {eventId:f.remarcar.id, profissional:f.prof, data:f.data, inicio:f.inicio, eventoId:f.eventoId||""});
+      r = await agendaApi("remarcar", {eventId:f.remarcar.id, profissional:f.prof, data:f.data, inicio:f.inicio, eventoId:f.eventoId||"", foraDaVaga:!!f.livre});
     } else {
       // primeiro atendimento: o pré-cadastro nasce antes, para o evento já levar o cliente
       if(f.novo && !f.preCli){
@@ -50949,7 +50959,7 @@ async function gravarFluxo(){
       }
       const cli = f.cli || f.preCli;
       r = await agendaApi("agendar", {profissional:f.prof, tipo:f.tipo, nome:f.nome, telefone:f.tel, clienteId:cli?cli.id:"",
-        data:f.data, inicio:f.inicio, eventoId:f.eventoId||"", observacoes:f.obs, orientacoesConfirmadas: orientou(f)});
+        data:f.data, inicio:f.inicio, eventoId:f.eventoId||"", observacoes:f.obs, orientacoesConfirmadas: orientou(f), foraDaVaga:!!f.livre});
     }
     const ev = r.evento; f.feito = ev; f.msg = "";
     const c = f.cli || f.preCli || clienteDoEvento(ev);
@@ -50958,7 +50968,7 @@ async function gravarFluxo(){
     if(agq.prof===f.prof) agq.sel = ev.data;
   }catch(e){
     f.msg = e.message;
-    if(e.codigo==="HORARIO_INDISPONIVEL"){ f.inicio=null; f.eventoId=null; f.etapa=5; await carregarAgenda(f.prof); }
+    if(e.codigo==="HORARIO_INDISPONIVEL"){ f.inicio=null; f.eventoId=null; f.livre=false; f.etapa=5; await carregarAgenda(f.prof); }
   }
   pintarFluxo();
   await carregarAgenda(f.prof); if(f.prof!==agq.prof) await carregarAgenda(); if(f.prof!=="paulo") await carregarAgenda("paulo");
