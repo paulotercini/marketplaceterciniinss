@@ -181,7 +181,7 @@ As opções de resposta são três — "Não", "Não é possível prognosticar" 
 
 **Terceiro quesito — Resolução em menos de 2 anos (art. 7º, III)**
 
-O perito responde ao quesito "É possível afirmar que as alterações em Funções e/ou Estruturas do Corpo serão resolvidas em menos de dois anos?" Este NÃO é gatilho de elevação, mas sim gatilho de indeferimento autônomo nos termos do art. 8º, III (mantido pela Portaria 37/2026). Se o perito responde "Sim", o benefício é indeferido independentemente do resultado da TCQ.
+O perito responde ao quesito "É possível afirmar que as alterações em Funções e/ou Estruturas do Corpo serão resolvidas em menos de dois anos?" Este NÃO é gatilho de elevação, mas sim gatilho de indeferimento autônomo nos termos do art. 8º, parágrafo único, na redação da Portaria 37/2026 (antigo inciso III). Se o perito responde "Sim", o benefício é indeferido independentemente do resultado da TCQ.
 
 ### Distinção do Método Fuzzy (IF-BrA) — NÃO APLICÁVEL AO BPC
 
@@ -415,10 +415,10 @@ Em TODA análise de avaliação biopsicossocial, a skill DEVE realizar a verific
 2. Identificar o qualificador final de Atividades e Participação (Q2 – N, L, M, G ou C), calculado pela fórmula [(d1+d2+d3+d4+d5+d6+d7+d8+d9) x 2,777777777777780] – 0,1
 3. Identificar o qualificador final de Funções do Corpo (Q3 – N, L, M, G ou C), ANTES da aplicação dos gatilhos
 4. Verificar se o Gatilho 1 (Agravante de Estrutura) ou Gatilho 2 (Prognóstico Desfavorável) foi acionado. Se sim, elevar Q3 em um nível (não cumulativo)
-5. Confrontar a combinação Q1 | Q2 | Q3 (após eventual elevação) com a TCQ (Anexo IV da Portaria 2/2015)
+5. Confrontar a combinação Q1 | Q2 | Q3 (após eventual elevação) com a TCQ (Anexo IV da Portaria 2/2015), sempre nesta ordem, Fatores Ambientais (e), Atividades e Participação (d) e Funções do Corpo (b). A ordem decide o resultado: M-M-G (b = G) é a linha 38, "Sim"; G-M-M (b = M) é a linha 62, "Sim"; M-M-M é a linha 63, "Não". Tabela integral, conferida no PDF oficial, e regra-resumo em `references/TCQ-ANEXO-IV.md`
 6. Verificar se o resultado é FAVORÁVEL ou NÃO FAVORÁVEL
 7. Se NÃO FAVORÁVEL, identificar quais domínios precisariam ser elevados para inverter o resultado. SIMULAR especialmente o impacto do acionamento dos gatilhos quando não acionados pelo perito
-8. **ALERTA PORTARIA 37/2026** – Se o resultado NF decorrer de qualificadores N ou L em Funções do Corpo ou Atividades e Participação, registrar expressamente que os incisos I e II do art. 8º da Portaria 2/2015 foram suprimidos pela Portaria 37/2026, e que o indeferimento por qualificador N ou L isolado carece de base normativa vigente. A TCQ (Anexo IV) não foi alterada, mas a norma que sustentava esses NFs foi revogada, configurando argumento de conflito normativo interno.
+8. **ALERTA PORTARIA 37/2026** – A nova redação do art. 8º não reproduziu os antigos incisos I e II (Funções do Corpo ou Atividades e Participação N ou L), mas a TCQ dá "Não" em TODAS as linhas com Funções do Corpo L ou N e em todas com Atividades e Participação L ou N. A supressão não altera resultado algum e não sustenta, sozinha, a nulidade do indeferimento. O ataque útil continua sendo o qualificador subavaliado, o gatilho não acionado e a barreira desconsiderada.
 9. Verificar se o perito registrou a resposta ao campo de impedimento permanente/irreversível/irrecuperável (Portaria 37/2026). Se marcou "Sim", registrar a dispensa de reavaliação periódica (§5º art. 21 LOAS, Lei 15.157/2025). Se marcou "Não" em caso de impedimento evidentemente permanente, identificar como ponto impugnável.
 
 ## Diferenciação Menor de 16 Anos
@@ -451,7 +451,8 @@ Este parecer é a ferramenta central para impugnar a avaliação, seja no CRPS, 
 Antes de realizar qualquer análise, leia obrigatoriamente os seguintes arquivos
 
 - `references/LEGISLACAO-BPC.md` – Quadro normativo completo com Lei 8.742/93, Lei 13.146/2015, Decreto 6.214/2007, Portaria Conjunta MDS/INSS nº 34/2025, e jurisprudência relevante da TNU, TRF3 e TRF4 sobre BPC
-- `references/PORTARIA-2-2015-TCQ.md` – Portaria Conjunta MDS/INSS nº 2/2015 completa com estrutura da avaliação, os 3 componentes da CIF, divisão de competências entre assistente social e perito médico, qualificadores 0-4, todos os domínios de Fatores Ambientais (e1-e5), Atividades e Participação (d1-d9), Funções do Corpo (b1-b8), fórmula de cálculo dos qualificadores finais, Tabela Conclusiva de Qualificadores (TCQ) completa com todas as 125 combinações, diferenciação por faixa etária (16+ e menor de 16), gatilhos de elevação de Funções do Corpo (Agravante de Estrutura e Prognóstico Desfavorável), e método detalhado de identificação de subavaliação por profissional
+- `references/TCQ-ANEXO-IV.md` – as 125 linhas do Anexo IV com o rótulo de cada coluna (e, d, b), conferidas no PDF oficial em 30/10/2026, e a regra que as resume
+- `references/PORTARIA-2-2015-TCQ.md` – Portaria Conjunta MDS/INSS nº 2/2015 consolidada com a Portaria 37/2026 (artigos e Anexos I a V, códigos e itens dos formulários, cortes de idade do Anexo II, fórmulas e somas dos qualificadores finais, SIS), completa com estrutura da avaliação, os 3 componentes da CIF, divisão de competências entre assistente social e perito médico, qualificadores 0-4, todos os domínios de Fatores Ambientais (e1-e5), Atividades e Participação (d1-d9), Funções do Corpo (b1-b8), fórmula de cálculo dos qualificadores finais, Tabela Conclusiva de Qualificadores (TCQ) completa com todas as 125 combinações, diferenciação por faixa etária (16+ e menor de 16), gatilhos de elevação de Funções do Corpo (Agravante de Estrutura e Prognóstico Desfavorável), e método detalhado de identificação de subavaliação por profissional
 
 ## Skills Complementares (acionar conforme pertinência)
 

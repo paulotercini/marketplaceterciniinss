@@ -55,6 +55,8 @@ Qualificadores. 0 (sem dificuldade), 1 (leve), 2 (moderada), 3 (grave), 4 (compl
 
 Na Portaria Conjunta MDS/INSS nº 2/2015 os qualificadores vêm em letras. N (nenhuma), L (leve), M (moderada), G (grave) e C (completa), na mesma escala acima (auditoria 03/10/2026).
 
+A combinação se lê na ordem fixa do Anexo IV, Fatores Ambientais (e), Atividades e Participação (d) e Funções do Corpo (b), e a ordem decide o resultado. Com Funções do Corpo C ou G, "Sim" quando Atividades e Participação for C, G ou M. Com Funções do Corpo M, "Sim" quando Atividades e Participação for C ou G, ou for M com Fatores Ambientais C ou G (linhas 61 e 62). Com Funções do Corpo L ou N, sempre "Não". Tabela integral em `analise-bpc-loas/references/TCQ-ANEXO-IV.md` (conferida no PDF oficial em 30/10/2026).
+
 Lei 15.157/2025. Deu nova redação ao §5º do art. 21 da LOAS, que dispensa da avaliação médico-pericial periódica o beneficiário com impedimento permanente, irreversível ou irrecuperável, salvo fundamentada suspeita de fraude ou erro. A supressão dos antigos incisos I e II do art. 8º veio da Portaria Conjunta 37/2026, que reescreveu esse artigo da Portaria Conjunta 2/2015 (auditoria 03/10/2026).
 
 ## IFBrM (Índice de Funcionalidade Brasileiro Modificado, aplicado ao BPC)

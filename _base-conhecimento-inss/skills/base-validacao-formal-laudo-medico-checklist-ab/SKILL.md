@@ -73,7 +73,7 @@ Decreto 6.214/2007.
 
 Portaria Conjunta MDS/INSS 2/2015 (auditoria 03/10/2026). Avaliação biopsicossocial.
 
-Portaria 34/2025. TCQ.
+Anexo IV da Portaria Conjunta 2/2015. TCQ.
 
 Portaria 37/2026. IFBrM.
 
