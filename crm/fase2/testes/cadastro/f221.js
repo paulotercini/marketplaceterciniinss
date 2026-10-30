@@ -220,7 +220,7 @@ function conf(peso, nome, ok) {
   await p.evaluate(([cli, k]) => { casoSel = k; return abrirFicha(cli).then(() => { document.getElementById("modal").style.display = "none"; casoSel = k; abaAtiva = 2; subAba = "crps"; repintarFicha(); }); }, [C, C3]);
   await espera(800);
   const crpsC = await p.evaluate(() => ({ chip: [...document.querySelectorAll(".nb-num")].map(x => x.textContent), sel: !!document.querySelector(".sel-levar"),
-    fora: [...document.querySelectorAll(".num-fora")].map(x => x.textContent.replace(/\s+/g, " ")),
+    fora: [...document.querySelectorAll(".num-fora")].filter(x => !x.closest("#modal")).map(x => x.textContent.replace(/\s+/g, " ")),
     bt: [...document.querySelectorAll("button.btn-mini")].some(b => /levar ao caso do NB/.test(b.textContent)) }));
   await foto(p, "recurso-nb-de-outro-caso");
   await p.evaluate(nup => { const sel = [...document.querySelectorAll(".sel-levar")].find(x => x.getAttribute("aria-label").includes("Recurso")); sel.value = sel.options[1].value; sel.dispatchEvent(new Event("change")); }, NUPC);
