@@ -4140,19 +4140,29 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .aq-vaga[class*=" t00"]{background:#fff;border:1.5px dashed var(--tom);color:var(--tom)}
 .aq-vaga[class*=" t00"] b{color:var(--tom)}
 .aq-leg-tipos{display:inline-flex;gap:10px;align-items:center}.aq-leg .aq-sw[class*=" t00"]{background:var(--tom)}.aq-leg-tipos i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}
-/* F281 · a agenda no canto de baixo à direita do WhatsApp: os dias com vaga de cada profissional, na cor dele, e o
-   agendamento ali mesmo, sem sair da conversa. Recolhida, vira a pílula "Agenda · N vagas". */
-.zap-ag{position:fixed;right:16px;bottom:120px;z-index:40;font-size:13px}   /* acima do ⚡ e do enviar */
-.app.celular .zap-ag{right:10px;bottom:calc(166px + env(safe-area-inset-bottom))}
-.app.celular.zap-conv-aberta .zap-ag{z-index:92;bottom:calc(176px + env(safe-area-inset-bottom))}
-.app.celular.zap-conv-aberta .zag-cx{max-height:calc(100dvh - 300px)}
-/* no celular, a pílula recolhida cobria o áudio gravado, o Descartar e os balões: com a conversa aberta ela sai, e a
-   agenda abre pelo ⋯ ("Agenda de atendimentos") */
-.app.celular .zap-ag:has(> .zag-pilula){display:none}   /* 29.10.2026: também sobre a lista, onde cobria a hora das conversas */
+/* F281 · a agenda no canto de baixo à direita: os dias com vaga de cada profissional, na cor dele, e o agendamento
+   ali mesmo. Recolhida, vira a pílula "Agenda · N vagas". F305 (30.10.2026): flutua em todas as telas, na mesma
+   coluna do ⚡ e do ✎ Sugestões, logo acima deles. */
+#zap-ag{position:fixed;right:16px;bottom:120px;z-index:79;font-size:13px}   /* acima do ⚡, do ✎ e do enviar */
+.app:not(.logado) ~ #zap-ag,#zap-ag[hidden]{display:none}
+.app.celular ~ #zap-ag{bottom:calc(166px + env(safe-area-inset-bottom))}
+.app.celular.detalhe-aberto ~ #zap-ag{bottom:180px}
+.app.celular.zap-conv-aberta ~ #zap-ag{z-index:92;bottom:calc(176px + env(safe-area-inset-bottom))}
+.app.celular ~ #zap-ag .zag-cx{max-height:calc(100dvh - 260px)}
+.app.celular.zap-conv-aberta ~ #zap-ag .zag-cx{max-height:calc(100dvh - 300px)}
+/* no celular a pílula vira o botão redondo do tamanho do ⚡, com o calendário */
+.app.celular ~ #zap-ag .zag-pilula{width:48px;height:48px;padding:0;border-radius:50%;justify-content:center}
+.app.celular ~ #zap-ag .zag-pilula .zag-t{display:none}
+.app.celular.detalhe-aberto ~ #zap-ag .zag-pilula{width:40px;height:40px;margin-right:4px}
+/* com a conversa aberta no celular, o botão cobria o áudio gravado, o Descartar e os balões: ali ele sai, e a agenda
+   abre pelo ⋯ ("Agenda de atendimentos") */
+.app.celular.zap-conv-aberta ~ #zap-ag:has(> .zag-pilula){display:none}
 .modal-fundo:has(.aq-fluxo){z-index:95}
 .zag-pilula{display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:22px;border:1px solid var(--borda);background:var(--branco,#fff);
   color:var(--texto);font:inherit;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.16)}
 .zag-pilula .aq-bola{margin:0}
+.zag-pilula .zag-t{display:flex;align-items:center;gap:8px}
+.zag-pilula .zic{flex:none;color:var(--azul,#2F6FB0)}
 .zag-cx{width:340px;max-width:calc(100vw - 20px);max-height:min(62vh,520px);display:flex;flex-direction:column;background:var(--branco,#fff);
   border:1px solid var(--borda);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.2);overflow:hidden}
 .zag-cab{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--borda);background:#f0f2f5}
@@ -5555,6 +5565,7 @@ html[data-tema="v10"] .aq-ligar h3{font-size:15px}
   title="anotação rápida (ligação ou balcão) — o registro nasce urgente">⚡</button>
 <button class="fab-sug" id="fab-sug" onclick="abrirSugestao()"
   title="anotar um erro, uma correção ou uma melhoria do CRM; somente o Paulo lê" aria-label="Sugestões">✎<span class="fab-sug-t"> Sugestões</span></button>
+<div class="zap-ag" id="zap-ag"></div>
 <div id="modal" style="display:none"></div>
 
 <script>
@@ -6007,6 +6018,7 @@ async function iniciar(){
   app.classList.add("logado");
   marcarCelular();
   aplicarMenu();
+  pintarAgendaZap();   // F305 · o botão da agenda flutua em todas as telas
   document.getElementById("u-nome").textContent = eu.nome;
   // no lugar do texto de versão que ficava aqui: quem você é para o sistema
   document.getElementById("u-papel").textContent =
@@ -12723,7 +12735,7 @@ function linhaMencaoDia(m){
     <span class="acoes">${m.caso_id?botoesResposta(m):""}</span>
   </div>`;
 }
-function irPara(v){ visao=v; limparBusca(); fecharFicha(false); montarSidebar(); render(); }
+function irPara(v){ visao=v; zag.fora=false; limparBusca(); fecharFicha(false); montarSidebar(); render(); pintarAgendaZap(); }
 
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
 let filtroPlan="todas", filtroPlanColab=null;   // Planejado abre mostrando tudo, em seções
@@ -13945,7 +13957,6 @@ async function renderWhats(){
        <div class="zap-dir" id="zap-dir"></div>
        <aside class="zap-painel" id="zap-painel"></aside>
        <button class="zp-fechar" onclick="alternarFichaZap()" aria-label="Fechar a ficha">✕</button>
-       <div class="zap-ag" id="zap-ag"></div>
      </div>`;
   zagCarregar();
   await recarregarZap();
@@ -50339,8 +50350,11 @@ function agendarNaVaga(dia, eventoId){
 // com vaga do Paulo, do Marcos e da Amanda, cada um na sua cor, e o clique na vaga abre o agendamento ali mesmo, já com
 // o cliente da conversa aberta (ou o nome e o telefone do contato, se não for cliente). Lê a agenda Completa.
 let zag = { aberta:null, prof:"todos", dia:null, desde:null, longe:null, longePor:null, longeErro:null, longeCarr:false };
-function zagAberta(){ if(zag.aberta===null){ const v = ler("crm_zap_agenda"); zag.aberta = v ? v==="1" : !celular() && innerWidth>=1440; /* abaixo de 1440 não há coluna da ficha e a agenda aberta cobriria a conversa */ } return zag.aberta; }
-function zagAlternar(){ zag.aberta = !zagAberta(); guardar("crm_zap_agenda", zag.aberta ? "1" : "0"); pintarAgendaZap(); }
+function zagAberta(){ if(visao!=="whatsapp") return !!zag.fora; if(zag.aberta===null){ const v = ler("crm_zap_agenda"); zag.aberta = v ? v==="1" : !celular() && innerWidth>=1440; /* abaixo de 1440 não há coluna da ficha e a agenda aberta cobriria a conversa */ } return zag.aberta; }
+function zagAlternar(){
+  if(visao==="whatsapp"){ zag.aberta = !zagAberta(); guardar("crm_zap_agenda", zag.aberta ? "1" : "0"); } else zag.fora = !zag.fora;
+  pintarAgendaZap(); if(zagAberta()) zagCarregar();
+}
 function zagProf(pr){ zag.prof = pr; zag.dia = null; pintarAgendaZap(); }
 function zagDia(d){ zag.dia = zag.dia===d ? "" : d; pintarAgendaZap(); }
 // as vagas da Completa por dia, só dos profissionais escolhidos
@@ -50349,15 +50363,16 @@ function zagDias(){
   return r.dias.map(d=>({d, v:vagasDoDia(d).map(s=>({...s, profissional:s.profissional||"paulo"})).filter(s=>zag.prof==="todos" || s.profissional===zag.prof)}))
     .filter(x=>x.v.length);
 }
-function zagConversa(){ return zapAberta ? zapConvs.find(c=>c.id===zapAberta) || null : null; }
+function zagConversa(){ return visao==="whatsapp" && zapAberta ? zapConvs.find(c=>c.id===zapAberta) || null : null; }
 const telDaConversa = c => { const d = String((c&&c.telefone)||"").replace(/\D/g,""); return /^55\d{10,11}$/.test(d) ? d.slice(2) : d; };
 function pintarAgendaZap(){
   const el = document.getElementById("zap-ag"); if(!el) return;
+  el.hidden = visao==="agendaq";   // na própria Agenda o botão sobra
   const profs = PROFS_AGENDA, todos = zag.desde ? !!zag.longe : profs.every(pr=>agq.cache[pr]);
   const dias = zagDias(), total = dias.reduce((n, x)=>n + x.v.length, 0);
   if(!zagAberta()){
-    el.innerHTML = `<button class="zag-pilula" onclick="zagAlternar()" aria-expanded="false" title="abrir a agenda de atendimentos">
-      ${profs.map(pr=>`<i class="aq-bola p-${pr}"></i>`).join("")}Agenda${todos?` · ${total} ${total===1?"vaga":"vagas"}`:""}</button>`;
+    el.innerHTML = `<button class="zag-pilula" onclick="zagAlternar()" aria-expanded="false" aria-label="Agenda de atendimentos" title="abrir a agenda de atendimentos">
+      ${zic("agenda",20)}<span class="zag-t">${profs.map(pr=>`<i class="aq-bola p-${pr}"></i>`).join("")}Agenda${todos?` · ${total} ${total===1?"vaga":"vagas"}`:""}</span></button>`;
     return;
   }
   let corpo;
@@ -50412,7 +50427,7 @@ async function zagBuscar(desde){
     if(rs.some(r=>r.dias.length && r.dias[0].data < desde)) zag.longeErro = "Para procurar datas adiante, a agenda do Google precisa da versão nova do Apps Script (F281). Até lá, aparecem só as próximas datas.";
     else { zag.longePor = Object.fromEntries(PROFS_AGENDA.map((pr, i)=>[pr, rs[i]])); zag.longe = {dias: juntarDias(rs)}; }
   }catch(e){ if(zag.desde===desde) zag.longeErro = e.message; }
-  if(zag.desde===desde && visao==="whatsapp") pintarAgendaZap();
+  if(zag.desde===desde) pintarAgendaZap();
 }
 // as três agendas: a primeira vez, e de novo quando passou um minuto (ou no ↻)
 async function zagCarregar(forcar){
@@ -50421,7 +50436,7 @@ async function zagCarregar(forcar){
   if(!forcar && !velho){ if(!agq.cache.todos){ juntarCompleta(); pintarAgendaZap(); } return; }
   pintarAgendaZap();
   await carregarCompleta().catch(()=>{});
-  if(visao==="whatsapp") pintarAgendaZap();
+  pintarAgendaZap();
 }
 function agendarPeloZap(data, eventoId){
   const dia = ((zag.desde ? zag.longe : agq.cache.todos)||{dias:[]}).dias.find(d=>d.data===data);
@@ -50823,7 +50838,7 @@ async function gravarFluxo(){
   pintarFluxo();
   await carregarAgenda(f.prof); if(f.prof!==agq.prof) await carregarAgenda(); if(f.prof!=="paulo") await carregarAgenda("paulo");
   montarSidebar(); if(visao==="agendaq") pintarAgenda();
-  if(visao==="whatsapp"){ juntarCompleta(); if(zag.desde) zagBuscar(zag.desde); else pintarAgendaZap(); }
+  juntarCompleta(); if(zag.desde) zagBuscar(zag.desde); else pintarAgendaZap();
 }
 
 // ── atalhos de teclado ────────────────────────────────────────────────────
