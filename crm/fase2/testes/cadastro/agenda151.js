@@ -110,7 +110,7 @@ for (const d of new Set([quartas(1)[0], q[0]])) {
   const ev1 = g.eventos.find(e => /Aurélia/.test(e.summary || ""));
   const dur1 = ev1 && (new Date(ev1.end.dateTime) - new Date(ev1.start.dateTime)) / 60000;
   conf(`F151 · gravou '002 - Aurélia Ficta de Souza - Não confirmado', 30 minutos (${ev1 && ev1.summary}, ${dur1})`, ev1 && /^002 - Aurélia Ficta de Souza - Não confirmado$/.test(ev1.summary) && dur1 === 30);
-  conf("F151 · a mensagem de WhatsApp sai pronta, com a senha do Meu INSS", /senha do Meu INSS/.test(await p.textContent(".aq-whats")) && await p.locator("text=Abrir no WhatsApp").count() === 1);
+  conf("F151 · a mensagem de WhatsApp sai pronta, com a senha do Meu INSS", /senha do Meu INSS/.test(await p.textContent(".aq-whats")) && await p.locator('[aria-label="Abrir no WhatsApp"]').count() === 1);
   conf("F151 · o cliente recebe o registro (andamento) e o próximo atendimento no cadastro",
     escritas.some(w => w.t === "andamentos" && /Atendimento presencial com Paulo agendado para/.test(w.corpo)) && escritas.some(w => w.t === "clientes" && /agenda_quarta/.test(w.corpo || "")));
   conf("F151 · para o Paulo aparece o encaixe urgente das 18h00", temUrgente);
