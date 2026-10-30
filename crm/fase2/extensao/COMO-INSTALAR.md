@@ -273,3 +273,10 @@ eproc), onde corre a ação acidentária contra o INSS. Antes, ele só era lido 
 Agora o "Atualizar tudo", o "PJe e eproc", os "Prazos dos tribunais" e o "Completar processos" leem
 sempre também esse host: sem aba dele, a rodada abre a do painel em segundo plano. Se a sessão desse
 host pedir login, o aviso do fim mostra "eproc eproc1g-ef" com o erro; entre pelo perfil EF e rode de novo.
+
+## ⚡ Downloads mais cedo e sem prazos — desde 1.28.0
+
+No "Atualizar tudo" e no "PJe e eproc", cada tribunal baixa as peças (completar processos) logo que
+o acervo dele termina: o PJe do TRF3 não espera mais o e-SAJ. A busca dos prazos dos tribunais
+(expedientes do PJe, prazos do eproc, intimações do e-SAJ) saiu da rodada e o botão
+"⏰ Prazos dos tribunais" saiu do popup (pedido do Paulo, 30.10.2026).
