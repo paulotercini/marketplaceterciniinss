@@ -48,6 +48,7 @@ const kB = caso(cB, { beneficio: "Apos. por Idade", especie: "B41", fase: "inss"
 and(kB, dUtil, "Pedido de documento enviado.");
 const cC = cli("Carla Fictícia Estrela");
 caso(cC, { beneficio: "Pensão por Morte", especie: "B21", fase: "inss", importante: true });
+caso(cli("Roseli Maria Fictícia Custodio Schisatti"), { beneficio: "Aux. Incapacidade", especie: "B46", fase: "inss", prazo: iso(-90) });
 
 const ok = [];
 const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : "FALHOU  ") + nome); };
@@ -112,6 +113,15 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     d.remove(); return r; }, [cA.id, kA.id]);
   conf("no Meu Dia do celular, o texto da anotação e as etiquetas somem", !linha.res && !linha.selo);
   conf("ficam data, nome, espécie e lista, prazo fatal e os botões", linha.data && linha.nome && linha.esp && linha.fatal && linha.botoes);
+  // F303 · a linha do Meu Dia alinhada e o filtro por pessoa dentro da margem
+  await p.evaluate(() => irPara("meudia")); await p.waitForTimeout(1000);
+  const al = await p.evaluate(() => { const l = [...document.querySelectorAll("#conteudo-meio .ag-linha")].find(e => e.querySelector(".acoes .acao-card") && e.querySelector(".avatares .avatar")); if (!l) return null;
+    const m = s => { const b = l.querySelector(s).getClientRects()[0]; return (b.top + b.bottom) / 2; };  // a primeira linha do nome
+    const seg = document.querySelector(".seg-colab").getBoundingClientRect(), card = l.getBoundingClientRect();
+    return { d: m(".ag-data"), n: Math.min(m(".ag-txt b"), 1e9), f: m(".acoes .acao-card"), a: m(".avatares .avatar"), segR: seg.right, cardR: card.right }; });
+  conf("data, nome, fogo, estrela e responsável na mesma linha", al && [al.d, al.f, al.a].every(y => Math.abs(y - al.n) < 6));
+  conf("o filtro por pessoa não passa da margem", al && al.segR <= al.cardR + 1);
+  await p.screenshot({ path: OUT + "/cel-meudia.png" });
   conf("sem erro de página", !erros.length);
   console.log(`${ok.filter(x => x[1]).length}/${ok.length} passaram`);
   await nav.close(); s.close();
