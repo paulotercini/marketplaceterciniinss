@@ -67,8 +67,15 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
     await p.waitForSelector("#app.logado.celular");
     await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
-    await p.evaluate(() => { zapFiltro = "todas"; irPara("whatsapp"); });
+    // F306 · a barra de baixo traz o WhatsApp no lugar do Buscar; a busca fica no alto
+    const barra = await p.$$eval("#barra-cel button", b => b.filter(x => x.offsetParent !== null).map(x => x.dataset.cel));
+    conf(`a barra de baixo é Meu Dia, WhatsApp, Menções e Listas (${barra.join(", ")})`, barra.join() === "meudia,whatsapp,mencoes,menu");
+    conf("o WhatsApp da barra tem a marca", await p.$eval('#barra-cel [data-cel="whatsapp"] b svg', e => !!e.querySelector('path[fill="#25D366"]')).catch(() => false));
+    conf("a busca continua no alto da tela", await vis("#busca-cel"));
+    await p.evaluate(() => { zapFiltro = "todas"; });
+    await p.tap('#barra-cel [data-cel="whatsapp"]');
     await p.waitForSelector(".zap-conv");
+    conf("o botão abre o WhatsApp e fica aceso", await p.evaluate(() => visao === "whatsapp") && await p.$eval('#barra-cel [data-cel="whatsapp"]', e => e.classList.contains("on")));
     conf("sem conversa aberta, não aparece o quadro vazio “Escolha uma conversa”", !(await vis("#zap-dir")));
     await p.tap(".zap-conv");
     await p.waitForSelector("#zap-msgs .zap-b");
