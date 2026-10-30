@@ -306,6 +306,8 @@ A **F305** (a agenda flutuante em todas as telas, pedido do Paulo de 30.10.2026)
 
 A **F306** (só o visual novo e sem o urgente, pedido do Paulo de 30.10.2026): o CRM abre sempre no v10; saíram o botão "visual" e o "Voltar ao visual anterior" do menu da conta, e `alternarTema` (a suíte de tela, em navegador automatizado e sem `crm_tema`, ainda roda o clássico das provas antigas). O botão de urgente (o fogo das linhas, o raio dos andamentos e do campo de escrever) e a Matriz importante × urgente ficam escondidos por CSS, porque se confundiam com a ⭐; a coluna `urgente` continua no banco. Na linha das listas e do Meu Dia, a inicial do responsável é um quadrado, à esquerda da ⭐, como no To Do. Testes: `f295.js` e `f298.js`.
 
+A **F309** (agendar fora das vagas, pedido do Paulo de 30.10.2026): no passo do horário do agendamento, o "outro horário" (`.aq-livre`, fechado no pé) aceita qualquer data e hora (`f.livre`, `aq-lusar`), só para quem a agenda diz administrador (`papel` da disponibilidade); o Apps Script confere de novo (`foraDaVaga`, só `admin`), dispensa a vaga, o dia de atendimento e o bloqueio, e recusa apenas o horário que bate com outro atendimento do profissional; vale também para remarcar. Teste: `testes/cadastro/f309.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
