@@ -9008,10 +9008,23 @@ let planoPat = null, arquivoPat = null;
 function normalizarColeta(bruto){
   const b = bruto || {};
   if (Array.isArray(b.detalhes) && b.detalhes.some(d => 'tipo' in d)) return b;  // já traduzido
+  const detalhes = (b.detalhes || []).map(d => ('tipo' in d) ? d : resumoDoDetalhe(d));
+  // O REQUERIMENTO SEM DETALHE TAMBÉM ENTRA. O plano só lia `detalhes`, e a
+  // extensão até a 1.28.0 não buscava o detalhe do concluído: a janela com
+  // três decisões chegava como "0 requerimentos". Sem detalhe, a linha da
+  // lista basta para situação, serviço, espécie e o caso certo (30.10.2026).
+  const com = new Set(detalhes.map(d => digitos(d.protocolo)));
+  for (const t of (b.lista || [])) {
+    if (('situacao' in t) || com.has(digitos(t.protocolo))) continue;
+    const d = resumoDoDetalhe(t);
+    if (!d.protocolo) continue;
+    delete d.desconhecido;
+    com.add(digitos(d.protocolo)); detalhes.push(d);
+  }
   return {
     ...b,
     lista: (b.lista || []).map(t => ('situacao' in t) ? t : resumoDaLista(t)),
-    detalhes: (b.detalhes || []).map(d => ('tipo' in d) ? d : resumoDoDetalhe(d)),
+    detalhes,
   };
 }
 

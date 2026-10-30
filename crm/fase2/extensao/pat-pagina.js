@@ -91,14 +91,15 @@
     if (!coletando) { coletando = true; setTimeout(detalhar, 1200); }
   }
 
-  // Concluído não precisa de detalhe, e o portal tem limite de velocidade:
-  // 3 segundos entre chamadas, e para na primeira recusa em vez de insistir.
+  // O concluído TAMBÉM tem detalhe: é nele que vem a decisão do INSS. Pular
+  // o concluído entregava "0 requerimentos" quando a janela só tinha decisão
+  // (30.10.2026, três concluídos na tela). Ele vai por último, e o portal tem
+  // limite de velocidade: 3 segundos entre chamadas, para na primeira recusa.
   async function detalhar() {
     const feitos = new Set([...OUT.detalhes.map(d => String(d.protocolo)),
                             ...OUT.falhas.map(f => f.protocolo)]);
-    const ativo = t => !/conclu|cancel/i.test(t.status || '');
-    const peso = t => /exig/i.test(t.status || '') ? 0 : 1;
-    const fila = OUT.lista.filter(t => ativo(t) && !feitos.has(String(t.protocolo)))
+    const peso = t => /exig/i.test(t.status || '') ? 0 : /conclu|cancel/i.test(t.status || '') ? 2 : 1;
+    const fila = OUT.lista.filter(t => !feitos.has(String(t.protocolo)))
                           .sort((a, b) => peso(a) - peso(b));
     if (!fila.length) { coletando = false; return entregar(); }
     let seguidas = 0;
@@ -137,9 +138,9 @@
   function entregar() {
     esperando = false;
     OUT.quando = new Date().toISOString();
-    diga('entregando', OUT.detalhes.length, 'detalhe(s) à extensão.');
+    diga('entregando', OUT.lista.length, 'requerimento(s),', OUT.detalhes.length, 'com detalhe, à extensão.');
     // F184 · o crachá vai junto: é com ele que a ponte baixa os anexos
-    dizer('entregar', { dados: OUT, quando: OUT.quando, quantos: OUT.detalhes.length, cracha });
+    dizer('entregar', { dados: OUT, quando: OUT.quando, quantos: OUT.lista.length, cracha });
   }
 
   // ── recados que vêm da ponte ────────────────────────────────────────────
