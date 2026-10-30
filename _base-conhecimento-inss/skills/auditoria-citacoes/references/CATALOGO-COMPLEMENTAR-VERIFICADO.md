@@ -1006,7 +1006,29 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/doc.jsp?sumula=627
 - Conferido em. 30/10/2026 (auditoria 30/10/2026)
 
+### SUMULA 336/STJ
+- Situação. vigente, sem notícia de cancelamento (vigência não informada na página oficial)
+- Tese literal. "A mulher que renunciou aos alimentos na separação judicial tem direito à pensão previdenciária por morte do ex-marido, comprovada a necessidade econômica superveniente."
+- Órgão e leading case. STJ, DJ 07/05/2007 (órgão julgador não lido na página oficial).
+- Fonte oficial. https://arquivocidadao.stj.jus.br/index.php/sumula-336
+- Conferido em. 30/10/2026 (auditoria 30/10/2026, Modelos Ouro)
+
+### SUMULA 576/STJ
+- Situação. vigente, sem notícia de cancelamento (vigência não informada na página oficial)
+- Tese literal. "Ausente requerimento administrativo no INSS, o termo inicial para a implantação da aposentadoria por invalidez concedida judicialmente será a data da citação válida."
+- Órgão e leading case. STJ, DJe 27/06/2016 (órgão julgador não lido na página oficial).
+- Fonte oficial. https://arquivocidadao.stj.jus.br/index.php/sumula-576
+- Conferido em. 30/10/2026 (auditoria 30/10/2026, Modelos Ouro)
+
+### SUMULA 182/STJ
+- Situação. vigente, sem notícia de cancelamento; o texto remete ao art. 545 do CPC/73, e sob o CPC/2015 a regra está no art. 932, III, e no art. 1.021, § 1º
+- Tese literal. "É inviável o agravo do art. 545 do CPC que deixa de atacar especificamente os fundamentos da decisão agravada."
+- Órgão e leading case. STJ, DJ 17/02/1997 (órgão julgador não lido na página oficial).
+- Fonte oficial. https://arquivocidadao.stj.jus.br/index.php/sumula-182
+- Conferido em. 30/10/2026 (auditoria 30/10/2026, Modelos Ouro)
+
 Fonte secundária, não conta como conferido (auditoria 03/10/2026). Ficam sem título ### para que o script não os registre como conferidos. O texto foi lido fora do portal oficial e precisa ser confirmado na fonte oficial antes de citar em peça.
+- SUMULA 632/STF, SUMULA 266/STF, SUMULA 68/TNU, SUMULA 46/TNU, SUMULA 6/TNU, SUMULA 78/TNU, SUMULA 44/TNU, SUMULA 24/TNU e TEMA 131/TNU. Situação. PROVAVEL_FONTE_SECUNDARIA (auditoria 30/10/2026, Modelos Ouro). O CJF e o portal do STF recusaram a leitura automática; o texto foi lido em acórdãos da TNU e em sites de súmulas, e nenhum aparece cancelado. Ressalvas de uso: a Súmula 68/TNU vai com o Tema 208/TNU; a Súmula 78/TNU não presume incapacidade; a Súmula 44/TNU é da aposentadoria urbana por idade; o Tema 131/TNU, quanto ao tempo rural remoto, desdobrou-se no Tema 168/TNU e no Tema 1007/STJ. Conferir no portal oficial antes de marcar CONFERIDO.
 - ENUNCIADO 225/FONAJEF. Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Não lido em portal oficial, porque a lista do CJF só vai até o Enunciado 110. Texto lido na página da AJUFE, que organiza o FONAJEF. Confirmar na fonte oficial antes de citar em peça. Tese literal. Texto da página da AJUFE, "A prova técnica simplificada é legítima para análise de pedidos de benefícios previdenciários e assistenciais". Órgão e leading case. XVIII FONAJEF. Fonte secundária. https://www.ajufe.org.br/foruns/fonajef/enunciados-fonajef/enunciados-xviii-fonajef/enunciado-n-225. Lido em 03/10/2026.
 - SUMULA 160/TFR. Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Texto lido só na LegJur, que declara pendente a conferência com a fonte oficial. Confirmar na fonte oficial antes de citar em peça. Tese literal. Trecho, como transcrito no relatório C3, "A suspeita de fraude ... não enseja, de plano, a sua suspensão ou cancelamento, mas dependerá de apuração em procedimento administrativo". Órgão e leading case. TFR. Data não registrada no relatório C3. Fonte secundária. https://www.legjur.com/sumula/tfr/160. Uso indevido corrigido em 03/10/2026: a base dizia que a súmula admite dano moral. Ela exige apuração em procedimento administrativo antes da suspensão ou do cancelamento por suspeita de fraude. Lido em 03/10/2026.
 - SUMULA 260/TFR. Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Texto lido só na LegJur, que declara pendente a conferência com a fonte oficial. Confirmar na fonte oficial antes de citar em peça. A expressão "anteriores à CF/88", que aparece na base, é glosa e não texto da súmula. Tese literal. Trecho, como transcrito no relatório C3, "No primeiro reajuste do benefício previdenciário deve-se aplicar o índice integral do aumento verificado, independentemente do mês da concessão ...". Órgão e leading case. TFR. Data não registrada no relatório C3. Fonte secundária. https://www.legjur.com/sumula/tfr/260. Lido em 03/10/2026.
