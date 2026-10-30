@@ -51,14 +51,15 @@ async function esperarAba(tabId, tetoMs = 20000) {
 // `ativar`, a aba ATIVA vem primeiro — no PJe, com um processo aberto na
 // frente, o clique coleta o histórico completo DELE — e a aba vem para a
 // frente. Sem `ativar` (o "atualizar tudo"), roda em segundo plano.
-async function rodarFonte(fonte, { aba = null, ativar = true, extra = null } = {}) {
+async function rodarFonte(fonte, { aba = null, ativar = true, extra = null, url = null } = {}) {
   const dominios = DOMINIOS[fonte];
-  if (!aba && ativar) {
+  if (!aba && ativar && !url) {
     const [ativa] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (ativa && casa(ativa.url, dominios)) aba = ativa;
   }
-  if (!aba) aba = abaPreferida(await chrome.tabs.query({ url: dominios }));
-  const usar = aba || await chrome.tabs.create({ url: ALVO[fonte], active: ativar });
+  // `url`: abrir ESTE host, e não aproveitar a aba de outro host do mesmo portal
+  if (!aba && !url) aba = abaPreferida(await chrome.tabs.query({ url: dominios }));
+  const usar = aba || await chrome.tabs.create({ url: url || ALVO[fonte], active: ativar });
   if (aba) { if (ativar) await chrome.tabs.update(aba.id, { active: true }); }
   else await esperarAba(usar.id);                      // deixa a página carregar de verdade
   // quem tem acesso ao chrome.storage é este worker: a data da última coleta
@@ -126,22 +127,32 @@ async function esperarConclusao(fonte, antes, tetoMs = 15 * 60000) {
 }
 // cada fonte roda em segundo plano na sua aba; o que responde "retomando"
 // termina quando a data da última coleta muda no storage
-const rodadorDeFundo = (tarefas, antes) => (fonte, aba, rotulo) => tarefas.push((async () => {
-  let r = await rodarFonte(fonte, { aba, ativar: false });
+const rodadorDeFundo = (tarefas, antes) => (fonte, aba, rotulo, url) => tarefas.push((async () => {
+  let r = await rodarFonte(fonte, { aba, ativar: false, url });
   if (r && r.erro === 'retomando') r = await esperarConclusao(fonte, antes[CHAVE_ULTIMA[fonte]]);
   return { rotulo, ...r };
 })());
-// PJe e eproc: uma rodada por aba aberta (1º e 2º grau; os hosts do eproc);
-// sem aba nenhuma, abre a do 1º grau
-async function acervoPorAba(roda) {
-  for (const fonte of ['pje', 'eproc']) {
-    const abas = await chrome.tabs.query({ url: DOMINIOS[fonte] });
-    const porHost = new Map();
-    for (const a of abas) { const h = new URL(a.url).host; if (!porHost.has(h)) porHost.set(h, []); porHost.get(h).push(a); }
-    for (const [h, lista] of porHost) porHost.set(h, abaPreferida(lista));
-    if (!porHost.size) roda(fonte, null, fonte === 'pje' ? 'PJe' : 'eproc');
-    for (const [h, a] of porHost) roda(fonte, a, `${fonte === 'pje' ? 'PJe' : 'eproc'} ${h.split('.')[0]}`);
+// PJe e eproc: uma rodada por host com aba aberta (1º e 2º grau; os hosts do
+// eproc); sem aba nenhuma, abre a do 1º grau. 1.27 · o eproc da Fazenda
+// Pública (eproc1g-ef) entra sempre: sem aba dele, a rodada a abre, porque
+// ninguém lembrava de deixá-la aberta e o host nunca chegou ao CRM.
+const SEMPRE = { eproc: ['https://eproc1g-ef.tjsp.jus.br/eproc/controlador.php?acao=painel_adv_listar'] };
+async function alvosPorHost(fonte, nome) {
+  const porHost = new Map();
+  for (const a of await chrome.tabs.query({ url: DOMINIOS[fonte] })) {
+    const h = new URL(a.url).host; if (!porHost.has(h)) porHost.set(h, []); porHost.get(h).push(a);
   }
+  const alvos = [...porHost].map(([h, l]) => [abaPreferida(l), `${nome} ${h.split('.')[0]}`, null]);
+  if (!alvos.length) alvos.push([null, nome, null]);
+  for (const url of SEMPRE[fonte] || []) {
+    const h = new URL(url).host;
+    if (!porHost.has(h)) alvos.push([null, `${nome} ${h.split('.')[0]}`, url]);
+  }
+  return alvos;
+}
+async function acervoPorAba(roda) {
+  for (const fonte of ['pje', 'eproc'])
+    for (const [aba, rotulo, url] of await alvosPorHost(fonte, fonte === 'pje' ? 'PJe' : 'eproc')) roda(fonte, aba, rotulo, url);
 }
 // 1.25 · o "atualizar tudo" leva também os prazos e o completar, que eram dois
 // botões à parte: primeiro as coletas (vão logo ao 📥 Importar), depois os
@@ -295,20 +306,25 @@ async function completarPje() {
   }
   return parou ? { rotulo: 'PJe', erro: parou, ok: feitos, falhas } : { rotulo: 'PJe', ok: feitos, falhas };
 }
+// um host por vez: o completar percorre a relação e baixa peças, e dois
+// hosts juntos dobram a carga na mesma sessão do TJSP
 async function completarEproc() {
-  const abas = await chrome.tabs.query({ url: DOMINIOS.eproc });
-  const r = await rodarFonte('eproc', { aba: abaPreferida(abas) || null, ativar: false, extra: { completo: true } });
-  return { rotulo: 'eproc', ...r };
+  const feitos = [];
+  for (const [aba, rotulo, url] of await alvosPorHost('eproc', 'eproc'))
+    feitos.push({ rotulo, ...(await rodarFonte('eproc', { aba, ativar: false, url, extra: { completo: true } })) });
+  const erros = feitos.filter(f => f.erro);
+  return feitos.length === 1 ? feitos[0]
+    : { rotulo: 'eproc', ...(erros.length ? { erro: erros.map(f => `${f.rotulo}: ${f.erro}`).join('; ') } : { ok: feitos.length }) };
 }
 // F192 · OS PRAZOS DOS TRIBUNAIS: a tela de prazos de cada portal, uma aba
 // por host (os dois graus do PJe, os hosts do eproc); sem aba, abre a padrão.
 // O PJe vai ao Painel e responde "retomando": o fim é a data no storage.
 async function rodarPrazos() {
-  const um = async (fonte, aba, rotulo, frente) => {
+  const um = async (fonte, aba, rotulo, frente, url) => {
     const chave = 'ultima_prazos_' + fonte;
     const antes = (await chrome.storage.local.get([chave]))[chave];
     if (frente && aba) await chrome.windows.update(aba.windowId, { focused: true }).catch(() => {});
-    let r = await rodarFonte(fonte, { aba, ativar: !!frente, extra: { prazos: true, acervo: false } });
+    let r = await rodarFonte(fonte, { aba, ativar: !!frente, url, extra: { prazos: true, acervo: false } });
     if (r && r.erro === 'retomando') {
       r = { erro: 'não terminou no tempo — veja a faixa na aba' };
       for (let t = 0; t < 10 * 60000; t += 5000) {
@@ -322,23 +338,16 @@ async function rodarPrazos() {
     }
     return { rotulo, ...r };
   };
-  const alvos = async (fonte, nome) => {
-    const porHost = new Map();
-    for (const a of await chrome.tabs.query({ url: DOMINIOS[fonte] })) {
-      const h = new URL(a.url).host; if (!porHost.has(h)) porHost.set(h, []); porHost.get(h).push(a);
-    }
-    return porHost.size ? [...porHost].map(([h, l]) => [abaPreferida(l), `${nome} ${h.split('.')[0]}`]) : [[null, nome]];
-  };
   // eproc e e-SAJ leem por fetch: correm juntos, por trás. O PJe opera a
   // tela (cliques na árvore) e o Chrome freia o relógio da aba escondida —
   // a rodada de 11.10.2026 parou meia hora numa jurisdição. Por isso cada
   // aba do PJe vem para a frente, uma de cada vez.
   const tarefas = [];
   for (const [fonte, nome] of [['eproc', 'eproc'], ['esaj', 'e-SAJ']])
-    for (const [aba, rotulo] of await alvos(fonte, nome)) tarefas.push(um(fonte, aba, rotulo, false));
+    for (const [aba, rotulo, url] of await alvosPorHost(fonte, nome)) tarefas.push(um(fonte, aba, rotulo, false, url));
   tarefas.push((async () => {
     const feitos = [];
-    for (const [aba, rotulo] of await alvos('pje', 'PJe')) feitos.push(await um('pje', aba, rotulo, true));
+    for (const [aba, rotulo, url] of await alvosPorHost('pje', 'PJe')) feitos.push(await um('pje', aba, rotulo, true, url));
     return feitos;
   })());
   return { feitos: (await Promise.all(tarefas)).flat() };

@@ -265,3 +265,11 @@ exige o seu clique em "Buscar" — é o único passo humano que sobra, e ele
 acontece enquanto os outros já rodam. Onde faltar login, a fonte falha sozinha e o resumo no popup avisa.
 
 O que continua igual: nada é gravado no CRM sem você conferir em 📥 Importar.
+
+## 🏛 eproc da Fazenda Pública — desde 1.27.0
+
+O TJSP tem um eproc à parte para a Fazenda Pública (`eproc1g-ef.tjsp.jus.br`, perfil EF no topo do
+eproc), onde corre a ação acidentária contra o INSS. Antes, ele só era lido com a aba dele aberta.
+Agora o "Atualizar tudo", o "PJe e eproc", os "Prazos dos tribunais" e o "Completar processos" leem
+sempre também esse host: sem aba dele, a rodada abre a do painel em segundo plano. Se a sessão desse
+host pedir login, o aviso do fim mostra "eproc eproc1g-ef" com o erro; entre pelo perfil EF e rode de novo.
