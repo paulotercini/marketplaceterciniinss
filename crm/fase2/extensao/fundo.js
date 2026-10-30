@@ -150,13 +150,20 @@ async function alvosPorHost(fonte, nome) {
   }
   return alvos;
 }
-async function acervoPorAba(roda) {
-  for (const fonte of ['pje', 'eproc'])
-    for (const [aba, rotulo, url] of await alvosPorHost(fonte, fonte === 'pje' ? 'PJe' : 'eproc')) roda(fonte, aba, rotulo, url);
+// 1.28 · cada tribunal baixa as peças logo que o acervo DELE termina: o
+// completar do PJe esperava o e-SAJ, o mais lento, sem precisar de nada dele
+const COMPLETAR = { pje: () => completarPje(), eproc: () => completarEproc() };
+async function acervoECompletar(fonte, antes) {
+  const tarefas = [];
+  const roda = rodadorDeFundo(tarefas, antes);
+  for (const [aba, rotulo, url] of await alvosPorHost(fonte, fonte === 'pje' ? 'PJe' : 'eproc')) roda(fonte, aba, rotulo, url);
+  const acervo = await Promise.all(tarefas);
+  const c = await COMPLETAR[fonte]();
+  return [...acervo, { ...c, rotulo: c.rotulo + ' completar' }];
 }
-// 1.25 · o "atualizar tudo" leva também os prazos e o completar, que eram dois
-// botões à parte: primeiro as coletas (vão logo ao 📥 Importar), depois os
-// prazos, e por último o completar, que escolhe o que baixar pelo acervo novo
+const judicialAoMesmoTempo = antes =>
+  Promise.all(['pje', 'eproc'].map(f => acervoECompletar(f, antes))).then(l => l.flat());
+// 1.28 · sem os prazos dos tribunais (pedido do Paulo, 30.10.2026: não eram úteis)
 async function rodarTudo() {
   const antes = await chrome.storage.local.get(Object.values(CHAVE_ULTIMA));
   const pat = await rodarFonte('pat', { ativar: true });   // prepara a tela e devolve na hora
@@ -164,12 +171,8 @@ async function rodarTudo() {
   const roda = rodadorDeFundo(tarefas, antes);
   roda('crps', null, 'e-Recursos');
   roda('esaj', null, 'e-SAJ');
-  await acervoPorAba(roda);
-  const feitos = await Promise.all(tarefas);
-  feitos.push(...(await rodarPrazos()).feitos.map(f => ({ ...f, rotulo: f.rotulo + ' prazos' })));
-  const completo = await Promise.all([completarEproc(), completarPje()]);
-  feitos.push(...completo.map(f => ({ ...f, rotulo: f.rotulo + ' completar' })));
-  return { feitos, pat };
+  tarefas.push(judicialAoMesmoTempo(antes));
+  return { feitos: (await Promise.all(tarefas)).flat(), pat };
 }
 
 // 1.25 · CONFERÊNCIA DAS SESSÕES antes de rodar. Só as abas abertas: a aba
@@ -316,58 +319,13 @@ async function completarEproc() {
   return feitos.length === 1 ? feitos[0]
     : { rotulo: 'eproc', ...(erros.length ? { erro: erros.map(f => `${f.rotulo}: ${f.erro}`).join('; ') } : { ok: feitos.length }) };
 }
-// F192 · OS PRAZOS DOS TRIBUNAIS: a tela de prazos de cada portal, uma aba
-// por host (os dois graus do PJe, os hosts do eproc); sem aba, abre a padrão.
-// O PJe vai ao Painel e responde "retomando": o fim é a data no storage.
-async function rodarPrazos() {
-  const um = async (fonte, aba, rotulo, frente, url) => {
-    const chave = 'ultima_prazos_' + fonte;
-    const antes = (await chrome.storage.local.get([chave]))[chave];
-    if (frente && aba) await chrome.windows.update(aba.windowId, { focused: true }).catch(() => {});
-    let r = await rodarFonte(fonte, { aba, ativar: !!frente, url, extra: { prazos: true, acervo: false } });
-    if (r && r.erro === 'retomando') {
-      r = { erro: 'não terminou no tempo — veja a faixa na aba' };
-      for (let t = 0; t < 10 * 60000; t += 5000) {
-        await pausa(5000);
-        if ((await chrome.storage.local.get([chave]))[chave] !== antes) { r = { ok: 'feito' }; break; }
-        // sessão vencida: o PJe manda o Painel para o login e a retomada nunca chega
-        const tab = aba && await chrome.tabs.get(aba.id).catch(() => null);
-        if (tab && /sso\.|auth\/realms|login\.seam/i.test(tab.url || '')) { r = { erro: 'a sessão caiu (tela de login) — entre de novo e clique outra vez' }; break; }
-        if (tab && fonte === 'pje' && /\/home\.seam/.test(tab.url || '') && t > 30000) { r = { erro: 'o PJe voltou para a página inicial no meio da leitura — clique outra vez' }; break; }
-      }
-    }
-    return { rotulo, ...r };
-  };
-  // eproc e e-SAJ leem por fetch: correm juntos, por trás. O PJe opera a
-  // tela (cliques na árvore) e o Chrome freia o relógio da aba escondida —
-  // a rodada de 11.10.2026 parou meia hora numa jurisdição. Por isso cada
-  // aba do PJe vem para a frente, uma de cada vez.
-  const tarefas = [];
-  for (const [fonte, nome] of [['eproc', 'eproc'], ['esaj', 'e-SAJ']])
-    for (const [aba, rotulo, url] of await alvosPorHost(fonte, nome)) tarefas.push(um(fonte, aba, rotulo, false, url));
-  tarefas.push((async () => {
-    const feitos = [];
-    for (const [aba, rotulo, url] of await alvosPorHost('pje', 'PJe')) feitos.push(await um('pje', aba, rotulo, true, url));
-    return feitos;
-  })());
-  return { feitos: (await Promise.all(tarefas)).flat() };
-}
-chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
-  if (msg.tipo !== 'rodar-prazos') return;
-  responderComAviso('Prazos dos tribunais', rodarPrazos, responder);
-  return true;
-});
 
 // 1.23 · PJe E eproc NUM CLIQUE: o acervo e a relação primeiro, para as
 // coletas já irem ao 📥 Importar e a conferência começar; depois o completar,
 // que escolhe o que baixar pelo último movimento que o acervo acabou de trazer
 async function rodarJudicial() {
   const antes = await chrome.storage.local.get(Object.values(CHAVE_ULTIMA));
-  const tarefas = [];
-  await acervoPorAba(rodadorDeFundo(tarefas, antes));
-  const acervo = await Promise.all(tarefas);
-  const completo = await Promise.all([completarEproc(), completarPje()]);
-  return { feitos: [...acervo, ...completo.map(f => ({ ...f, rotulo: f.rotulo + ' completar' }))] };
+  return { feitos: await judicialAoMesmoTempo(antes) };
 }
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-judicial') return;

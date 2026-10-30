@@ -70,8 +70,8 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   conf("em 1100 px a conversa fica com espaço (ficha fechada)", await p.$eval("#zap-dir", e => e.offsetWidth > 350)
     && await p.$eval("#zap-painel", e => getComputedStyle(e).display === "none"));
   await p.click(".zt-id h2");
-  await p.waitForSelector("#zap-painel .zp-card");
-  const cards = await p.$$eval("#zap-painel .zp-card", es => es.map(e => e.textContent));
+  await p.waitForSelector("#zap-painel .zp-card:not(.zp-conv-cel)");
+  const cards = await p.$$eval("#zap-painel .zp-card:not(.zp-conv-cel)", es => es.map(e => e.textContent));
   conf("o clique no nome abre a ficha na tela de 1100 px", await p.$eval("#zap-painel", e => getComputedStyle(e).display !== "none"));
   conf("a primeira ficha é a de quem fala", /Ficha do cliente/.test(cards[0]) && cards[0].includes("Rosa Fictícia Lima"));
   const rep = await p.$$eval("#zap-painel .zp-rep", es => es.map(e => e.textContent));
@@ -93,8 +93,8 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   await p.evaluate(() => document.querySelector(".zt-mais")?.removeAttribute("open"));
   // 29.10.2026 · sem a coluna da ficha, o ⚡ e o Sugestões não cobrem o Enviar, e o telefone do topo fica numa linha
   conf("o Enviar não fica sob os botões flutuantes", await p.evaluate(() => { const t = document.querySelector(".zap-tela"), on = t.classList.contains("ficha-on");
-    t.classList.remove("ficha-on"); const r = document.getElementById("zap-enviar").getBoundingClientRect();
-    const ok = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest("#zap-enviar") != null; if (on) t.classList.add("ficha-on"); return ok; }));
+    t.classList.remove("ficha-on"); document.getElementById("zap-txt").value = "x"; const r = document.getElementById("zap-enviar").getBoundingClientRect();
+    const ok = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest("#zap-enviar") != null; if (on) t.classList.add("ficha-on"); document.getElementById("zap-txt").value = ""; return ok; }));
   conf("o telefone do topo ocupa uma linha", await p.evaluate(() => { const m = document.querySelector(".zt-sub .mono"); return m.getBoundingClientRect().height < 24; }));
   await p.click("#zap-painel .zp-rep button");
   await p.waitForTimeout(400);
