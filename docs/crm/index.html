@@ -7758,7 +7758,7 @@ function montarSidebar(){
       item("meudia","☀️ Meu Dia",nMd, nVenc?`<span class="cont venc" title="${nVenc} vencida${nVenc>1?"s":""} · ${nMd} hoje">${nVenc} · ${nMd}</span>`:"")
       + item("mencoes","📥 Menções",D.mencoes.length)
       // F236 · as Novidades saem do "Mais": é por elas que os prazos e as perícias entram no escritório
-      + ((ns, np)=>item("novidades","📣 Novidades", ns.length, np ? `<span class="cont venc" title="${np} pede${np>1?"m":""} ação (prazo do tribunal ou agenda) · ${ns.length} ao todo">${np} · ${ns.length}</span>` : ""))(novidades(), novidades().filter(a=>novPede(a)).length)   // F236 · o que pede ação à frente do total
+      + ((ns, np)=>item("novidades","📣 Novidades", ns.length, np ? `<span class="cont venc" title="${np} pede${np>1?"m":""} ação (perícia, audiência ou julgamento a agendar) · ${ns.length} ao todo">${np} · ${ns.length}</span>` : ""))(novidades(), novidades().filter(a=>novPede(a)).length)   // F236 · o que pede ação à frente do total
       + item("planejado","🗓️ Planejado",dd.planejado[2])
       + item("agendaq","📅 Agenda",dd.agendaq[2])
       + item("minhas","👤 Atribuídas a mim",dd.minhas[2]);
@@ -11297,17 +11297,8 @@ async function aplicarPrazos(coletaId){
     const lista = [...(k.prazos_tribunal||[]).filter(p=>p.origem!==origem), ...ficam, ...agora];
     try{
       await patchCaso(k.id, {prazos_tribunal:lista}); k.prazos_tribunal = lista; feitos++;
-      // o prazo novo é novidade em 📣 (o índice único de origem_id não deixa repetir)
-      for(const p of agora.filter(p=>!antes.some(a=>chave(a)===chave(p)))){
-        novos++;
-        await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-          body:JSON.stringify({caso_id:k.id, autor_id:eu.id, origem:"pje", publico:false,
-            origem_id:`prazo:${chave(p)}`,
-            texto:`⏰ Prazo no ${ROT_PRAZO[p.sistema]||p.sistema}: ${p.ato||"intimação"}${p.dias?` (${p.dias} dias)`:""} — `
-              + (p.situacao==="findo" ? `venceu em ${fmt(p.fim)} sem resposta.`
-                : p.fim ? `vence em ${fmt(p.fim)}.`
-                : `aguardando ciência (tácita em ${fmt(dataDoPrazo(p))}).`)})}).catch(()=>{});
-      }
+      // F304 · o prazo novo deixou de ser novidade em 📣: o Paulo controla o expediente à mão
+      novos += agora.filter(p=>!antes.some(a=>chave(a)===chave(p))).length;
     }catch(e){ falhas.push(`${tituloCaso(k)}: ${String(e.message||e).slice(0,100)}`); }
   }
   await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
@@ -11386,12 +11377,62 @@ const ROTULO_ORIGEM = {pat:"🌻 INSS", crps:"🖥 Recursos", dou:"📰 DOU", pj
 
 function novidades(){
   const euLi = a => (a.andamentos_lidos||[]).some(l=>l.colaborador_id===eu.id);
-  const ns = (D.novid||[]).filter(a=>!euLi(a));
+  // F304 · o prazo do expediente o Paulo controla à mão e saiu das Novidades; a mudança repetida sai também
+  const rep = repetidasDasNovidades();
+  const ns = (D.novid||[]).filter(a=>!euLi(a) && !rep.has(a.id) && !/^⏰ Prazo no /.test(a.texto||""));
   // F236 · as novidades chegam a quem trabalha o caso: o administrador vê todas (é quem distribui);
   // os demais, as dos casos que são deles; a recepção, também as que pedem agendar e avisar o cliente
   if(souAdmin() && !visaoColab()) return ns;
   const recep = eu.cargo==="recepcao";
   return ns.filter(a=>{ const k = D.casoPorId.get(a.caso_id); return (k && ehDoColab(k, eu.id)) || (recep && !!eventoDaNovidade(a)); });
+}
+// F304 · A MESMA MUDANÇA UMA VEZ SÓ (pedido do Paulo de 30.10.2026). O acervo grava cada movimento
+// sozinho e a leitura dos documentos grava o mesmo movimento junto dos que o PJe agrupa nele
+// ("Disponibilizado no DJ Eletrônico em 29/10/2026 · Juntada de ato ordinatório · 📎 Ato Ordinatório");
+// o e-SAJ repete o movimento em cada incidente do processo (a RPV 01 e a 02). A novidade cujas partes
+// já estão todas noutra do mesmo caso e da mesma origem, lida ou não, sai da caixa; entre iguais fica a
+// lida ou a mais antiga. A parte sem data própria só casa a até 3 dias, para não juntar duas petições
+// iguais de semanas diferentes. Devolve repetida → a que fica.
+const _partesNov = new Map(), _repNov = {sig:"", m:new Map()};
+function partesDaNovidade(a){
+  if(!_partesNov.has(a.id)){
+    const t = String(a.texto||"");
+    // PJe, e-SAJ e eproc: "Sistema (grau): parte · parte — em dd.mm.aaaa hh:mm — classe número"
+    const m = a.origem==="pje" ? /^([^:]{0,60}):\s*([\s\S]*?)(?:\s+— em (\d{2})\.(\d{2})\.(\d{4})\b[\s\S]*)?$/.exec(t) : null;
+    _partesNov.set(a.id, { fonte: m ? m[1] : "", dia: m && m[5] ? `${m[5]}-${m[4]}-${m[3]}` : dataSP(a.criado_em),
+      ps: [...new Set((m ? m[2] : t).split(" · ").map(x=>dsa(x).replace(/\s+/g," ").trim()).filter(Boolean))] });
+  }
+  return _partesNov.get(a.id);
+}
+function repetidasDasNovidades(){
+  const todas = D.novid||[];
+  const euLi = a => (a.andamentos_lidos||[]).some(l=>l.colaborador_id===eu.id);
+  const sig = `${todas.length}|${todas[0]&&todas[0].id}|${todas.filter(euLi).length}`;
+  if(_repNov.sig===sig) return _repNov.m;
+  const porCaso = new Map();
+  for(const a of todas){ const g = `${a.caso_id}|${a.origem}`; if(!porCaso.has(g)) porCaso.set(g, []); porCaso.get(g).push(a); }
+  const dist = (d1, d2) => Math.abs(new Date(d1) - new Date(d2)) / 864e5;
+  // o sistema e o grau também ("eproc TJSP (1º grau)" ≠ "e-SAJ TJSP (1º grau)")
+  const cobre = (x, y) => x.fonte===y.fonte && x.ps.every(p => y.ps.includes(p) && (/\d{2}\/\d{2}\/\d{4}/.test(p) || dist(x.dia, y.dia) <= 3));
+  const antes = (y, x) => (y.criado_em||"") < (x.criado_em||"") || ((y.criado_em||"")===(x.criado_em||"") && String(y.id) < String(x.id));
+  const m = new Map();
+  for(const as of porCaso.values()){
+    if(as.length < 2) continue;
+    for(const x of as){
+      if(euLi(x)) continue;
+      const px = partesDaNovidade(x);
+      if(!px.ps.length) continue;
+      const y = as.find(y => {
+        if(y===x) return false;
+        const py = partesDaNovidade(y);
+        if(!cobre(px, py)) return false;
+        return py.ps.length > px.ps.length || euLi(y) || antes(y, x);
+      });
+      if(y) m.set(x.id, y.id);
+    }
+  }
+  _repNov.sig = sig; _repNov.m = m;
+  return m;
 }
 // F236 · a leitura da data de agendamento de cada novidade é feita uma vez por sessão (o texto não muda)
 const _evNov = new Map();
@@ -11399,7 +11440,6 @@ const _evNov = new Map();
 const eventoDaNovidade = a => { if(!_evNov.has(a.id)) _evNov.set(a.id, eventoNoTexto(a.texto)||null); return eventoDoMovimento(a, _evNov.get(a.id)); };
 // F236 · a novidade que pede ação: prazo do tribunal, ou perícia, audiência e julgamento ainda sem agenda
 function novPede(a){
-  if(/^⏰ Prazo no /.test(a.texto||"")) return "prazo";
   const ev = eventoDaNovidade(a);
   return ev && !evJaAgendado(a.caso_id, ev.data) ? "evento" : "";
 }
@@ -12158,9 +12198,9 @@ function renderNovidades(){
   // por dia, porque é assim que a pergunta é feita: "o que aconteceu hoje?"
   // — e o dia é o de BRASÍLIA: cortar o ISO cru pegava a data UTC e o que
   // entrou às 22h30 aparecia sob o cabeçalho "amanhã"
-  // F236 · o que pede ação vem primeiro, separado: os prazos dos tribunais e as perícias, audiências e
-  // julgamentos ainda sem agenda; o resto segue por dia
-  const topo = [["prazo","⏰ Prazos dos tribunais"],["evento","🩺 Perícias, audiências e julgamentos a agendar"]].map(([g,t])=>{
+  // F236 · o que pede ação vem primeiro, separado: as perícias, audiências e julgamentos ainda sem
+  // agenda; o resto segue por dia (F304 · os prazos dos tribunais saíram)
+  const topo = [["evento","🩺 Perícias, audiências e julgamentos a agendar"]].map(([g,t])=>{
     const as = ns.filter(a=>novPede(a)===g);
     return as.length ? `<h3 class="secao">${t} (${as.length})</h3>` + as.map(linhaNovidade).join("") : ""; }).join("");
   const porDia = new Map();
@@ -12173,10 +12213,10 @@ function renderNovidades(){
   const corpo = [...porDia].map(([d,as])=>`<h3 class="secao">${esc(dataRelativa(d))} (${as.length})</h3>`
       + as.map(linhaNovidade).join("")).join("");
   const nPer = ns.filter(a=>novPede(a)==="evento").length;
-  // F236 · "marcar como lidas" leva só o informativo: o prazo do tribunal e o que pede agenda ficam até alguém dar seguimento
+  // F236 · "marcar como lidas" leva só o informativo: o que pede agenda fica até alguém dar seguimento
   const info = ns.filter(a=>!novPede(a));
   document.getElementById("conteudo-meio").innerHTML =
-    `<div class="filtros">${info.length?`<button class="fchip" id="ler-tudo" title="os prazos e o que pede agenda continuam na lista até alguém dar seguimento">✔ marcar as informativas como lidas (${info.length})</button>`:""}${
+    `<div class="filtros">${info.length?`<button class="fchip" id="ler-tudo" title="o que pede agenda continua na lista até alguém dar seguimento">✔ marcar as informativas como lidas (${info.length})</button>`:""}${
       nLinks?`<button class="fchip" id="abrir-tudo" title="abre o processo de cada novidade numa aba — PJe ou PAT, conforme a origem">↗ abrir todos os links (${nLinks})</button>`:""}${
       nPer?`<button class="fchip" id="agendar-tudo" title="para cada perícia/audiência detectada: agenda na aba 🩺 e cria o aviso 3 dias úteis antes (seg–sex)">🩺 agendar ${nPer} perícia(s) + avisos</button>`:""}</div>`
     + topo + corpo;
@@ -12200,6 +12240,10 @@ async function liNaFicha(id){
 // devolve true quando o lido ficou gravado
 async function marcarLidas(ids){
   if(!ids.length) return false;
+  // F304 · lida a novidade, as repetições dela escondidas da caixa vão junto
+  { const rep = repetidasDasNovidades(), set = new Set(ids); let mudou = true;
+    while(mudou){ mudou = false; for(const [x, y] of rep) if(set.has(y) && !set.has(x)){ set.add(x); mudou = true; } }
+    ids = [...set]; }
   try{
     await api(`/rest/v1/andamentos_lidos`,{method:"POST",
       headers:{Prefer:"return=minimal,resolution=ignore-duplicates"},
