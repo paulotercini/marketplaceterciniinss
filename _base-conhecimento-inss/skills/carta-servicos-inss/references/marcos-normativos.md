@@ -108,7 +108,7 @@ LC 142/2013 art. 3º III. Mesmo critério de avaliação biopsicossocial.
 
 Art. 203 V CF. Lei 8.742/1993, art. 20. Decreto 6.214/2007. Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026).
 
-Avaliação biopsicossocial pelo IFBrM. TCQ atualizado pela Portaria 37/2026. Portaria 34/2025 (renda e despesas dedutíveis).
+Avaliação biopsicossocial pelo IFBrM. TCQ no Anexo IV da Portaria Conjunta 2/2015, mantido pela Portaria 37/2026. Portaria 34/2025 (renda e despesas dedutíveis).
 
 Lei 15.157/2025 (dispensa de reavaliação para impedimento permanente). Decreto 12.534/2025 (controvérsia Bolsa Família na renda).
 

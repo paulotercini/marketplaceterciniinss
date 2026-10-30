@@ -112,7 +112,7 @@ Refutação. Estabilização não é cura. Impedimento permanece se as limitaç�
 
 Argumento adversário. Qualificadores moderados afastam o direito.
 
-Refutação. TCQ aceita que moderação em múltiplos domínios e interação com barreiras configure impedimento.
+Refutação. A TCQ reconhece a deficiência com Atividades e Participação M e Funções do Corpo M quando Fatores Ambientais forem G ou C (Anexo IV, linhas 61 e 62), e com Funções do Corpo G ou C basta Atividades e Participação M (linhas 13 e 38). A moderação, somada às barreiras, configura impedimento.
 
 ## 3. Estratégia integrada
 

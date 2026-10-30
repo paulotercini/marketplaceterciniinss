@@ -588,7 +588,7 @@ Avaliação funcional para aposentadoria PCD da LC 142/2013. Cruzar com `aposent
 
 Avaliação funcional para BPC LOAS de deficiente.
 
-### TCQ - Termo Consensual de Qualificação (BPC)
+### TCQ - Tabela Conclusiva de Qualificadores (BPC, Anexo IV da Portaria Conjunta MDS/INSS 2/2015)
 
 ### CIF - Classificação Internacional de Funcionalidade
 
