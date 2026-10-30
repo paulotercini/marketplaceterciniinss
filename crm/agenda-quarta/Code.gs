@@ -22,14 +22,14 @@ const CONFIG = {
   // F250f · o Marcos e a Amanda deixam o horário livre como "LIVRE 10:30-11:00" ou "LIVRE 09h30-10h00", sem o código:
   // é vaga sem tipo; o tipo vem do cliente na hora de agendar (001 primeiro atendimento, 002 cliente do escritório)
   REGEX_VAGA_LIVRE: /^\s*livre\b(?:(?!\d{4}[\s.-]?\d{4}).)*$/i,
-  VERSAO: 'F310 · o atendimento marcado na vaga leva a cor do profissional',
+  VERSAO: 'F310b · o Marcos no verde sálvia das vagas dele',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
-  // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
+  // quem ele é (colorId do Google: 9 = mirtilo/azul, 2 = sálvia/verde, o das vagas do Marcos,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
   // dias: 0 domingo ... 6 sábado. limite/reservas: só o Paulo tem.
   PROFISSIONAIS: {
     paulo:  { nome: 'Paulo',  tratamento: 'o Dr. Paulo Roberto Tercini Filho', cor: '9',  tons: ['9', '7', '1'],  dias: [3],             limite: 14,   reservas: [['18:00', '18:30']], exibir: 6 },
-    marcos: { nome: 'Marcos', tratamento: 'o Dr. Marcos',                      cor: '10', tons: ['10', '2'], dias: [1, 2, 3, 4, 5], limite: null, reservas: [],                   exibir: 10 },
+    marcos: { nome: 'Marcos', tratamento: 'o Dr. Marcos',                      cor: '2',  tons: ['2', '10'], dias: [1, 2, 3, 4, 5], limite: null, reservas: [],                   exibir: 10 },
     amanda: { nome: 'Amanda', tratamento: 'a Dra. Amanda',                     cor: '5',  tons: ['5', '6'],  dias: [1, 2, 3, 4, 5], limite: null, reservas: [],                   exibir: 10 }
   },
   PADRAO: 'paulo',
