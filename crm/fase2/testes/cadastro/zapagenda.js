@@ -224,6 +224,32 @@ const conf = (pts, nome, v) => { ok.push([pts, nome, !!v]); console.log((v ? "PA
   const fab2 = await rect(".fab-rapida");
   conf(2, "no celular, na lista, a pílula não fica sob o ⚡", !fab2 || !cruza(await caixaAg(), fab2));
 
+  // 7 · F305 (30.10.2026): a agenda flutua em todas as telas, na coluna do ⚡ e do ✎ Sugestões, sem cobrir nenhum dos dois
+  const caixas = () => p.evaluate(() => Object.fromEntries(["#zap-ag", ".fab-rapida", ".fab-sug"].map(x => { const e = document.querySelector(x);
+    if (!e || getComputedStyle(e).display === "none") return [x, null]; const r = (x === "#zap-ag" ? e.firstElementChild || e : e).getBoundingClientRect();
+    return [x, r.width ? { l: r.left, t: r.top, r: r.right, b: r.bottom } : null]; })));
+  const alinhada = c => !!c["#zap-ag"] && [".fab-rapida", ".fab-sug"].every(x => !c[x] || !cruza(c["#zap-ag"], c[x]))
+    && (!c[".fab-rapida"] || Math.abs(c["#zap-ag"].r - c[".fab-rapida"].r) <= 2);
+  await p.setViewportSize({ width: 1440, height: 900 });
+  await p.evaluate(() => irPara("meudia")); await p.waitForTimeout(300);
+  const cMd = await caixas();
+  conf(4, "no Meu Dia, o botão da agenda está à vista, recolhido, na coluna do ⚡ e sem cobrir o ✎",
+    alinhada(cMd) && !!(await p.$("#zap-ag .zag-pilula")));
+  await foto("04-meu-dia");
+  await p.click("#zap-ag .zag-pilula");
+  await p.waitForSelector("#zap-ag .zag-dia", { timeout: 5000 }).catch(() => {});
+  conf(4, "o clique abre a agenda com as vagas fora do WhatsApp", !!(await p.$("#zap-ag .zag-dia")));
+  await foto("05-meu-dia-aberta");
+  await p.evaluate(() => irPara("agendaq")); await p.waitForTimeout(200);
+  conf(2, "na própria Agenda o botão some", await p.evaluate(() => document.getElementById("zap-ag").hidden));
+  await p.evaluate(() => irPara("meudia")); await p.waitForTimeout(200);
+  conf(2, "trocar de tela recolhe a agenda aberta fora do WhatsApp", !!(await p.$("#zap-ag .zag-pilula")));
+  await p.setViewportSize({ width: 390, height: 800 }); await p.waitForTimeout(400);
+  const cCel = await caixas(), bt = cCel["#zap-ag"];
+  conf(4, "no celular, o botão é redondo, do tamanho do ⚡, na mesma coluna e sem cobrir o ✎",
+    alinhada(cCel) && !!bt && Math.abs((bt.r - bt.l) - (bt.b - bt.t)) <= 1 && bt.r - bt.l >= 44);
+  await foto("06-celular-meu-dia");
+
   conf(4, "sem erro de página", !erros.length);
   if (erros.length) console.log(erros);
   const total = ok.reduce((n, [pt]) => n + pt, 0), feitos = ok.filter(x => x[2]).reduce((n, [pt]) => n + pt, 0);
