@@ -3426,6 +3426,22 @@ html[data-tema="v10"] .seg-colab{max-width:100%;overflow-x:auto;scrollbar-width:
 @media (max-width:760px){
   html[data-tema="v10"] .ag-linha :is(.ag-res,.ag-conf),
   html[data-tema="v10"] .ag-linha .ag-selos > span:not(.ag-fatal,.ag-esp){display:none}
+  /* uma linha só: data e nome na mesma altura, fogo, estrela e responsável juntos à direita, selos embaixo do nome */
+  html[data-tema="v10"] #conteudo-meio .ag-linha{grid-template-columns:auto max-content minmax(0,1fr) auto auto;column-gap:0;row-gap:4px;padding:10px 12px 10px 14px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha > *{padding-top:0;margin-top:0;grid-row:1;align-self:center}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-slot{grid-column:1;margin-right:8px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-slot:empty{display:none}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-data{grid-column:2;margin-right:12px;min-width:0;align-self:first baseline}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt{grid-column:3;align-self:first baseline;font-size:15px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt{line-height:20px}
+  /* os botões centrados na primeira linha do nome, também quando o nome ocupa duas */
+  html[data-tema="v10"] #conteudo-meio .ag-linha .acoes{grid-column:4;width:auto;gap:0;align-self:start;margin-top:-7px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .avatares{grid-column:5;width:auto;min-width:0;justify-content:flex-start;margin-left:4px;align-self:start;margin-top:-2px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-selos{grid-column:3/-1;grid-row:2;flex-wrap:nowrap;overflow:hidden}
+  /* o filtro por pessoa ocupa a largura da tela e rola dentro dela, sem passar da margem */
+  html[data-tema="v10"] .meio.ag-v10 .topo-extra{margin-left:0;width:100%;max-width:100%;min-width:0}
+  html[data-tema="v10"] .meio.ag-v10 .seg-colab{display:flex;max-width:100%;box-sizing:border-box}
+  html[data-tema="v10"] .meio.ag-v10 .seg-colab button{flex:none}
 }
 
 /* ══ F145 · a tela do caso em duas colunas (pedido do Paulo, 27.09.2026) ══
