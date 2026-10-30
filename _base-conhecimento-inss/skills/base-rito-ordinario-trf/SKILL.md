@@ -45,7 +45,7 @@ Art. 1.009 CPC. 15 dias, duplicado. Efeito suspensivo, salvo exceção.
 
 ### Reexame necessário
 
-Art. 496 CPC. Sentenças contra a Fazenda Pública estão sujeitas, com limites da Súmula 490 STJ (valor de alçada).
+Art. 496 CPC. Sentenças contra a Fazenda Pública estão sujeitas ao reexame, dispensado quando a condenação ou o proveito econômico for de valor certo e líquido inferior a 1.000 salários mínimos para a União e suas autarquias, como o INSS (art. 496, § 3º, I). A Súmula 490 STJ serve apenas para afirmar que a sentença ilíquida não dispensa o reexame; o limite de 60 salários mínimos que ela pressupõe é do CPC/1973 (auditoria 30/10/2026).
 
 ### Recurso especial
 

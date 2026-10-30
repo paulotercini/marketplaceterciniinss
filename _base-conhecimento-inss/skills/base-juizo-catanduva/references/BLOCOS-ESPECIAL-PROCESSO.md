@@ -63,7 +63,7 @@ Convenções: [PARTE], [EMPRESA], [ENTE PÚBLICO], [MUNICÍPIO], [DATA], [NB], [
   - Lei n.º 8.213/91, arts. 57, §§ 3.º, 4.º e 5.º, e 58, § 1.º
   - Lei n.º 9.032/95; Lei n.º 9.528/97; Lei n.º 9.711/98; Lei n.º 9.732/98; MP n.º 1.523/96; MP n.º 1.663/98
   - Decreto n.º 3.048/99, arts. 65, caput, 68, § 11, e 70; Decreto n.º 53.831/64; Decreto n.º 83.080/79; Decreto n.º 2.172/97 (anexo IV, art. 261); Decreto 611/92; Decreto n. 4.882/2003; NR 15 (Anexo I)
-  - Súmula 32 da TNU; PET 9059/RS; Resp 551917; agravo regimental no recurso especial 139103/PR; REsp 1.151.363/MG
+  - Súmula 32 da TNU [cancelada em 09/10/2013, não se cita; (auditoria 30/10/2026)]; PET 9059/RS; Resp 551917; agravo regimental no recurso especial 139103/PR; REsp 1.151.363/MG
   - Súmula nº 198 do extinto TFR; IN INSS/DC nº 95/2003; EC 103/2019, arts. 19, § 1º, I, e 21; EC 20/1998, art. 15
   - Doutrina: Fábio Zambitte Ibrahim, Curso de Direito Previdenciário, 17. ed., Impetus, 2012, p. 624, 633 e 635
 - **O que a petição deve trazer**:

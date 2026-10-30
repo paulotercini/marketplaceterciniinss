@@ -22,7 +22,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Súmula 378 TST
 
-Estabilidade acidentária.
+Estabilidade provisória do art. 118 da Lei 8.213/91 ao empregado que recebeu auxílio por incapacidade acidentário (B91), de interesse na volta ao trabalho após a reabilitação [NÃO CONFIRMADO] (auditoria 30/10/2026).
 
 Fonte oficial em https://www.tst.jus.br
 

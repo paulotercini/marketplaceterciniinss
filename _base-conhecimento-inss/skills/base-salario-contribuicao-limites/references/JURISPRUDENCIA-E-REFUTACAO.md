@@ -4,7 +4,7 @@
 
 ### Tema 985 STF
 
-Incidência da contribuição patronal sobre o terço constitucional de férias gozadas, tema já julgado [NÃO CONFIRMADO] (auditoria 03/10/2026).
+Natureza jurídica do terço constitucional de férias, indenizadas ou gozadas, para a incidência da contribuição patronal, tema com trânsito em julgado (auditoria 30/10/2026); tese a ler no acórdão do leading case [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 

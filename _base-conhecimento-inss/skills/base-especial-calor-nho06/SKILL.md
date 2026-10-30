@@ -27,7 +27,7 @@ IN 128/2022.
 
 ### Súmula 198 TFR
 
-Categoria profissional.
+Perícia que constate atividade perigosa, insalubre ou penosa autoriza o reconhecimento do tempo especial ainda que o agente não conste do regulamento, porque o rol é exemplificativo. Paráfrase, texto literal [NÃO CONFIRMADO] (auditoria 30/10/2026, corrigida a atribuição anterior a categoria profissional).
 
 ### Tema 174 TNU
 

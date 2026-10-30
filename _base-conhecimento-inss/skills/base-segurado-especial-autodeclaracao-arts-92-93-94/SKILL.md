@@ -329,7 +329,7 @@ Súmula 41/TNU. Atividade urbana de membro da família não descaracteriza, por 
 
 Súmula 46/TNU. Atividade urbana intercalada não impede o benefício rural.
 
-Súmula 5/TNU. Labor rural a partir de 12 anos cômputável.
+Súmula 5/TNU. O trabalho rural do menor de 12 a 14 anos, prestado até a Lei 8.213/91 e comprovado, pode ser computado; o trabalho anterior aos 12 anos se discute pelo Tema 219/TNU [NÃO CONFIRMADO] (auditoria 30/10/2026).
 
 Súmula 6/TNU. Certidão de casamento aproveita ao outro cônjuge.
 
