@@ -3422,6 +3422,11 @@ html[data-tema="v10"] .seg-colab{max-width:100%;overflow-x:auto;scrollbar-width:
   html[data-tema="v10"] .ag-linha .acoes{grid-column:4;grid-row:1;width:auto;align-self:start}
   html[data-tema="v10"] .ag-linha .avatares{grid-column:4;grid-row:2;width:auto}
 }
+/* F303 · no celular, a linha do Meu Dia diz só data, nome, espécie e lista e o prazo fatal (pedido do Paulo, 30.10.2026) */
+@media (max-width:760px){
+  html[data-tema="v10"] .ag-linha :is(.ag-res,.ag-conf),
+  html[data-tema="v10"] .ag-linha .ag-selos > span:not(.ag-fatal,.ag-esp){display:none}
+}
 
 /* ══ F145 · a tela do caso em duas colunas (pedido do Paulo, 27.09.2026) ══
    Esquerda, parada enquanto os andamentos rolam: o nome do pedido, a placa em
