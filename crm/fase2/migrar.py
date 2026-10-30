@@ -1497,6 +1497,10 @@ def subir_rest(mapa):
                 pulando.add(tabela)
                 sem_schema[tabela] = msg[:300]
                 return
+            # o evento que o CRM remarcou ou levou a outro caso guarda o id do original:
+            # a chave primária repetida é o "já existe" do ignore-duplicates, não recusa
+            if len(linhas) == 1 and res == "ignore-duplicates" and "_pkey" in msg:
+                return
             if len(linhas) == 1:
                 recusadas.append((tabela, linhas[0].get("id"), msg[:300]))
                 return
