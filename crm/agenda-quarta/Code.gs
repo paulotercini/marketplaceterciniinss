@@ -22,7 +22,7 @@ const CONFIG = {
   // F250f · o Marcos e a Amanda deixam o horário livre como "LIVRE 10:30-11:00" ou "LIVRE 09h30-10h00", sem o código:
   // é vaga sem tipo; o tipo vem do cliente na hora de agendar (001 primeiro atendimento, 002 cliente do escritório)
   REGEX_VAGA_LIVRE: /^\s*livre\b(?:(?!\d{4}[\s.-]?\d{4}).)*$/i,
-  VERSAO: 'F290 · a vaga vale acima do limite',
+  VERSAO: 'F310 · o atendimento marcado na vaga leva a cor do profissional',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
   // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
@@ -441,7 +441,8 @@ function agendar_(user, r) {
     const privado = { origem: 'crm-agenda', tipo, nome, telefone: tel, profissional: prof.id,
       clienteId: r.clienteId ? String(r.clienteId) : '', agendadoPor: user.nome };
     const ev = vaga
-      ? Calendar.Events.patch({ summary: tipo + ' - ' + nome + ' - Não confirmado', description: descricao,
+      // a vaga pode vir sem cor ou em outro tom: o atendimento marcado leva sempre a cor do profissional
+      ? Calendar.Events.patch({ summary: tipo + ' - ' + nome + ' - Não confirmado', description: descricao, colorId: prof.cor,
           extendedProperties: { private: Object.assign(privado, { vaga: '1', tituloVaga: vaga.summary }) } }, CONFIG.CALENDAR_ID, vaga.id)
       : Calendar.Events.insert({
           summary: tipo + ' - ' + nome + ' - Não confirmado',
