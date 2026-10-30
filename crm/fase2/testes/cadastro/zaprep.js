@@ -93,8 +93,8 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   await p.evaluate(() => document.querySelector(".zt-mais")?.removeAttribute("open"));
   // 29.10.2026 · sem a coluna da ficha, o ⚡ e o Sugestões não cobrem o Enviar, e o telefone do topo fica numa linha
   conf("o Enviar não fica sob os botões flutuantes", await p.evaluate(() => { const t = document.querySelector(".zap-tela"), on = t.classList.contains("ficha-on");
-    t.classList.remove("ficha-on"); const r = document.getElementById("zap-enviar").getBoundingClientRect();
-    const ok = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest("#zap-enviar") != null; if (on) t.classList.add("ficha-on"); return ok; }));
+    t.classList.remove("ficha-on"); document.getElementById("zap-txt").value = "x"; const r = document.getElementById("zap-enviar").getBoundingClientRect();
+    const ok = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest("#zap-enviar") != null; if (on) t.classList.add("ficha-on"); document.getElementById("zap-txt").value = ""; return ok; }));
   conf("o telefone do topo ocupa uma linha", await p.evaluate(() => { const m = document.querySelector(".zt-sub .mono"); return m.getBoundingClientRect().height < 24; }));
   await p.click("#zap-painel .zp-rep button");
   await p.waitForTimeout(400);
