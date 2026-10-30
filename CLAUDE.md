@@ -284,6 +284,10 @@ A **F295** (Onda D do fluxo do To Do, pedido do Paulo de 29.10.2026): o Meu Dia 
 
 A **F296** (Onda E, as etapas da tarefa do To Do como ficha): `classificar_item_checklist` (`migrar.py`) lê o NB (`RE_NB_ITEM`, `RE_NB_FMT`) para `casos.nb` vazio, a senha do gov.br (`RE_GOV`) para as credenciais, o parente com "#CPF" ("Filho da Rosmeire … #CPF") como vínculo pelo CPF, e não mais como CPF do cliente, e o que não tem campo (CNPJ, e-mail, telefone com recado, a data provável da aposentadoria, o parente que não é cliente) como nota da ficha: `mapa["notas_ficha"]`, gravada em `clientes.campos.notas_todo` (a chave é do To Do e se regrava; o resto do `campos` é lido antes do PATCH) e mostrada na Identificação (`caixaNotasTodo`). As subtarefas que essas etapas já tinham criado (`mapa["subtarefas_dado"]`) só saem com `LIMPAR_ETAPAS_DADO=1`. Testes: `tests/test_etapas_ficha.py` e `f295.js`.
 
+A **F297** (a sincronização vigiada, pedido do Paulo de 30.10.2026): o administrador recebe aviso e notificação quando o carimbo `todo_sync_em` passa do atraso de `syncAtrasada` (duas rodadas seguidas sem entrar), uma vez por carimbo (`avisoSyncParada`, `crm_aviso_sync`, no `vigiarLembretes`); o evento que o CRM remarcou ou levou a outro caso deixou de contar como recusa (`_pkey` no `ignore-duplicates` do `migrar.py`); e as pontes `ponte_cards.py` e `ponte_despacho.py` voltaram a rodar: a variável não criada vale nulo, e nulo != '0' dá falso no GitHub, por isso `(vars.X || '1') != '0'`. Testes: `f295.js` e `tests/test_crm_fase2.py`.
+
+A **F298** (a ficha no celular, pedido do Paulo de 30.10.2026): o voltar, o nome e o 📋 numa linha; CPF, Meu INSS e telefone juntos e menores; o ⋯ do cabeçalho e do caso do tamanho dos outros botões, com o menu dentro da tela; o campo de escrever numa linha até o toque (`.esc-aberto`, como no computador, com Sem resposta e Pedir ao cliente à vista); e o ✎ Sugestões redondo acima do campo (`.fab-sug-t`). Só CSS. Teste: `testes/cadastro/f298.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

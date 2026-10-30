@@ -92,6 +92,13 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     return { a, b, c0, util: ehDiaUtil(hoje()) }; });
   conf("às 8h avisa o Meu Dia uma vez, e antes das 8h não", av.util ? (/para hoje/.test(av.a) && av.b === null && av.c0 === null) : av.a === null);
 
+  // 2b · F297 · a sincronização parada avisa o administrador uma vez por carimbo velho
+  const sp = await p.evaluate(() => { const ago = m => new Date(Date.now() - m * 60000).toISOString();
+    D.config.set("todo_sync_em", ago(5)); guardar("crm_aviso_sync", ""); const a = avisoSyncParada();
+    D.config.set("todo_sync_em", ago(20 * 60)); const b = avisoSyncParada(), c0 = avisoSyncParada();
+    return { a, b, c0 }; });
+  conf("sincronização parada avisa o administrador uma vez, e em dia não", sp.a === null && /não entra desde/.test(sp.b) && sp.c0 === null);
+
   // 3 · a matriz importante × urgente
   await p.evaluate(() => { filtroColab = null; irPara("importante"); });
   await p.waitForTimeout(400);
