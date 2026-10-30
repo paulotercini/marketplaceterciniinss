@@ -86,13 +86,14 @@ const SUPA = "https://ficticio.supabase.co";
         larga: document.querySelector(".detalhe").scrollWidth <= 392,
         colunas: placa ? (getComputedStyle(placa).flexDirection === "column" ? 2 : getComputedStyle(placa).gridTemplateColumns.split(" ").length) : 0,   // F182 · lista rótulo/valor conta como as duas colunas
         folga: det ? parseInt(getComputedStyle(det).paddingBottom, 10) : 0,
+        esc: (e => e ? e.offsetHeight : 0)(document.querySelector(".escrever")),
         fila: (() => { const f = document.querySelector(".escrever .tipo-fila"); return f ? getComputedStyle(f).flexWrap : ""; })(),
         campo16: (() => { const t = document.querySelector("#and-texto"); return t ? parseFloat(getComputedStyle(t).fontSize) : 0; })() };
     });
     conf("o app está em modo celular", r.celular);
     conf("a ficha não estoura a largura da tela (o SMBot quebra de linha)", r.larga);
     conf("a placa fica em duas colunas no celular", r.colunas === 2);
-    conf(`a rolagem da ficha deixa folga para o campo fixo (${r.folga}px)`, r.folga >= 160);
+    conf(`a rolagem da ficha deixa folga para o campo fixo (${r.folga}px)`, r.esc > 0 && r.folga >= r.esc);   // F298 · o campo fechado tem uma linha: a folga acompanha a altura dele
     conf("os tipos de andamento correm numa faixa só", r.fila === "nowrap");
     conf("o campo de escrever tem 16px e não dá zoom no iPhone", r.campo16 >= 16);
     await p.screenshot({ path: path.join(__dirname, "f134-celular.png") });
