@@ -1164,3 +1164,23 @@ def test_ponte_dos_cards_so_conclui_o_que_o_crm_decidiu():
     assert [l["id"] for l in ponte_cards.cards_para_concluir(ls)] == ["1", "2"]
     assert ponte_cards.linha_do_card(ls[1], "2026-10-13") == "13.10.2026 (CRM): Card arquivado no CRM: Faleceu."
     assert ponte_cards.linha_do_card(ls[0], "2026-10-13") == "13.10.2026 (CRM): Card concluído no CRM: virou caso."
+
+
+def test_evento_remarcado_no_crm_nao_conta_como_recusa(monkeypatch):
+    # [BUG 30.10.2026] o evento remarcado ou levado a outro caso no CRM guarda o id do
+    # original: o upsert por (caso_id, tipo, data_hora) batia na chave primária e 8
+    # agendamentos viravam "recusados" a cada rodada. É o "já existe" do ignore-duplicates.
+    ev = [{"id": f"e{n}", "caso_id": "k1", "tipo": "pericia", "data_hora": f"2026-11-0{n % 9 + 1}T09:00:00-03:00"}
+          for n in range(migrar.LIMITE_RECUSADAS + 5)]
+    mapa = {"andamentos": [], "casos": [], "eventos": ev}
+    _, enviados, _ = _sobe(monkeypatch, "nenhuma", "", mapa)
+    base = migrar._rest
+
+    def pk_repetida(url, chave, metodo, caminho, corpo=None, prefer=None):
+        if metodo == "POST" and "/eventos" in caminho:
+            raise migrar.BancoRecusou("o banco recusou POST em 'eventos' (409): "
+                                      "duplicate key value violates unique constraint \"eventos_pkey\"")
+        return base(url, chave, metodo, caminho, corpo, prefer)
+    monkeypatch.setattr(migrar, "_rest", pk_repetida)
+    migrar.subir_rest(mapa)                      # NÃO levanta BancoRecusou
+    assert any(l.get("chave") == "todo_sync_em" for l in enviados)

@@ -17287,9 +17287,25 @@ function lembretesNaHora(tarefas, hojeIso, horaAgora, avisados){
     && String(t.lembrar_hora).slice(0,5)<=horaAgora
     && !avisados.has(`${t.id}|${t.lembrar_em}|${String(t.lembrar_hora).slice(0,5)}`));
 }
+// F297 · a sincronização parada avisa o administrador uma vez por carimbo velho: com a
+// rodada de 10 em 10 minutos, o atraso de syncAtrasada são duas rodadas seguidas sem entrar
+function avisoSyncParada(agora = Date.now()){
+  const t = cfgApp("todo_sync_em");
+  if(!souAdmin() || !t || ler("crm_aviso_sync")===t) return null;
+  const min = Math.round((agora - new Date(t))/60000);
+  if(!syncAtrasada(min)) return null;
+  guardar("crm_aviso_sync", t);
+  const txt = `A sincronização do To Do não entra desde ${fmtTS(t)} às ${horaSP(t)}. Veja no 🩺 qual passo falhou.`;
+  aviso(`⚠ ${txt}`, false);
+  if(window.Notification && Notification.permission==="granted") try{
+    const n = new Notification("⚠ Sincronização parada · CRM", {body: txt, tag: "crm-sync-parada"});
+    n.onclick = ()=>{ window.focus(); saudeSync(); n.close(); };
+  }catch(e){}
+  return txt;
+}
 function vigiarLembretes(){
   if(!eu || !D || !D.tarefasPorCaso) return;
-  atualizarBadge(); avisoDas8();
+  atualizarBadge(); avisoDas8(); avisoSyncParada();
   const avisados = new Set(JSON.parse(ler("crm_lemb_avisados")||"[]"));
   const minhas = [...D.tarefasPorCaso.values()].flat().filter(t=>t.colaborador_id===eu.id);
   const vez = lembretesNaHora(minhas, hoje(), agoraSP().toTimeString().slice(0,5), avisados);
