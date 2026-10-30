@@ -294,6 +294,8 @@ A **F300** (a data de pagamento das guias do CNIS, pedido do Paulo de 30.10.2026
 
 A **F301** (a marca no lugar do nome, pedido do Paulo de 30.10.2026): os botões de serviço mostram o ícone conhecido no lugar da palavra, pelo mesmo `iconeFonte` da F141: o WhatsApp é um SVG próprio em `FONTES_SIS.zap` (não espera a rede), e `gcal` (Google Agenda) e `falabr` (Fala.BR) entram pelo favicon. Vale no topo da ficha (a marca com o número das novas), no atendimento, nos lembretes, nos documentos, no Sem resposta, na agenda, na cobrança, no Fala.BR, no e-Recursos e nos acessos do caso (`acessosDoCaso`: INSS, e-SISREC, PJe, e-SAJ e eproc com a marca antes do nome). O botão só com ícone leva `aria-label` ou o `title` da marca, para o leitor de tela; a lista "💬 WhatsApp" do menu e os títulos de tela continuam escritos. Testes ajustados: `agenda151.js` e `zapficha.js`.
 
+A **F303** (o Meu Dia no celular, pedido do Paulo de 30.10.2026): abaixo de 760 px, a linha do Meu Dia (`linhaAgenda`) mostra só a data, o nome, a espécie e a lista (`.ag-esp`), o "Prazo fatal" (`.ag-fatal`) e os botões do lado (fogo, estrela, responsável); o texto da anotação (`.ag-res`), as demais etiquetas e o "Em análise" (`.ag-conf`) ficam escondidos. Só CSS; o computador não muda. Teste: `f298.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
