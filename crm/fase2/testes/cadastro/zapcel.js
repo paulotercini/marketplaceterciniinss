@@ -78,6 +78,7 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     const t = await p.$eval("#zap-txt", e => e.getBoundingClientRect().bottom);
     conf("o campo de escrever fica à vista, no pé da tela", t > 600 && t <= 780);
     conf("os botões do topo ficam só com o ícone", await p.$eval(".zt-acoes .zt-btn.pri .lbl", e => getComputedStyle(e).display === "none"));
+    await p.tap("#zb-m1 .txt");
     const sobre = await p.$eval("#zb-m1 .zap-acoes", e => getComputedStyle(e).position);
     conf("as ações do balão não cobrem o texto", sobre === "static");
     await p.tap(".zt-id h2");
