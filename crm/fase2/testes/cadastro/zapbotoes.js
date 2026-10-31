@@ -23,6 +23,7 @@ const T = {
   zap_mensagens: [{ id: "m1", seq: 1, conversa_id: CONV, direcao: "entrada", tipo: "imagem", texto: "o laudo", midia_url: "zap/x/laudo.jpg", midia_nome: "laudo.jpg", status: "entregue", criado_em: agora },
     { id: "m3", seq: 3, conversa_id: CONV, direcao: "entrada", tipo: "audio", texto: null, midia_url: "zap/x/a.ogg", midia_nome: "a.ogg", status: "entregue", criado_em: agora },
     { id: "m4", seq: 4, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Bom dia, doutor", status: "entregue", criado_em: agora },
+    { id: "m5", seq: 5, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Veja https://www.gov.br/inss.", status: "entregue", criado_em: agora },
     { id: "m2", seq: 2, conversa_id: CONV, direcao: "saida", tipo: "documento", texto: null, midia_url: "zap/x/contrato.pdf", midia_nome: "contrato.pdf", status: "enviada", criado_em: agora }],
 };
 T.zap_setores = [{ id: "s1", nome: "Jurídico", cor: "#2a6", ativo: true, ordem: 1 }];
@@ -51,6 +52,8 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     if (/token=/.test(u)) return rota.fulfill({ status: 200, contentType: "image/png", body: PNG });
     if (/storage\/v1\/object\/sign\//.test(u)) return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ signedURL: "/object/sign/anexos/" + u.split("/sign/anexos/")[1] + "?token=t" }) });
     if (/storage\/v1\/object\/sign\/anexos\/.*token=/.test(u)) return rota.fulfill({ status: 200, contentType: "image/png", body: PNG });
+    if (/functions\/v1\/link_previa/.test(u)) return rota.fulfill({ status: 200, contentType: "application/json",
+      body: JSON.stringify({ titulo: "Meu INSS", descricao: "Serviços do INSS", imagem: "", site: "gov.br" }) });
     if (m !== "GET") {
       let corpo = null; try { corpo = rota.request().postData(); JSON.parse(corpo); } catch { corpo = null; }
       escritas.push({ u, m, b: corpo ? JSON.parse(corpo) : null });
@@ -109,6 +112,23 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.tap('.zm-emojis [data-zm-r="👍"]'); await p.waitForTimeout(300);
     conf("o emoji do menu grava a reação", escritas.some(e => /zap_reacoes/.test(e.u) && e.b && e.b.emoji === "👍" && e.b.mensagem_id === "m4"));
     await p.evaluate(() => document.dispatchEvent(new TouchEvent("touchend", { bubbles: true })));
+    // F328 · o link vira link e ganha a prévia do site; a lupa busca na conversa; o seletor põe o emoji no campo
+    conf("o link da mensagem é clicável", !!(await p.$('#zb-m5 .txt a[href="https://www.gov.br/inss"]')));
+    await p.waitForSelector("#zb-m5 .zap-link b", { timeout: 3000 }).catch(() => {});
+    conf("o link mostra a prévia com o título do site", (await p.$eval("#zb-m5 .zap-link", e => e.textContent).catch(() => "")).includes("Meu INSS"));
+    await p.tap('.zt-acoes button[aria-label="Buscar na conversa"]'); await p.waitForTimeout(100);
+    await p.fill("#zap-bq", "bom dia"); await p.waitForTimeout(100);
+    conf("a busca acha a mensagem sem diferença de maiúsculas", await p.$eval("#zb-m4", e => e.classList.contains("achou-atual"))
+      && (await p.$eval("#zap-bn", e => e.textContent)) === "1 de 1");
+    await p.fill("#zap-bq", "inexistente"); await p.waitForTimeout(100);
+    conf("a busca sem resultado diz nenhuma", (await p.$eval("#zap-bn", e => e.textContent)) === "nenhuma");
+    await p.press("#zap-bq", "Escape"); await p.waitForTimeout(100);
+    conf("Esc fecha a busca", !(await p.$(".zap-busca")));
+    await p.tap(".ze-emo summary"); await p.waitForTimeout(100);
+    conf("o seletor de emojis abre", await vis(".ze-emo-grade"));
+    await p.tap(".ze-emo-grade button"); await p.waitForTimeout(100);
+    conf("o emoji entra no campo de escrever", (await p.$eval("#zap-txt", e => e.value)) === "😀");
+    await p.evaluate(() => { document.querySelector(".ze-emo").open = false; const t = document.getElementById("zap-txt"); t.value = ""; t.style.height = ""; });
     conf("o topo não mostra o número de protocolo", !(await p.$(".zap-proto")) && !/Protocolo/.test(await p.$eval(".zap-topo", e => e.textContent)));
     // F310 · o topo numa linha; atendente, setor e etiquetas ficam no cartão "Conversa" da ficha que o nome abre
     conf("o topo da conversa ocupa uma linha (≤ 56 px)", await p.$eval(".zap-topo", e => e.getBoundingClientRect().height) <= 56);
