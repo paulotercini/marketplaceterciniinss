@@ -5577,6 +5577,38 @@ html[data-tema="v10"] .app:not(.celular) .tr-compacta .tr-corpo{padding:6px 14px
 html[data-tema="v10"] .tr-alca.tr-alca-et{height:24px;font-size:12px}
 html[data-tema="v10"] .tr-corpo[hidden],html[data-tema="v10"] .tr-resumo[hidden]{display:none!important}
 html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-a .jn-nome::after{display:none}
+/* F323 · o que passou fica em cinza (pedido do Paulo, 31.10.2026): fases encerradas e etapas cumpridas em cinza com ✓; a etapa atual
+   é a única peça colorida; a próxima tem o contorno; a fase em paralelo (o MS ao lado do recurso) continua na cor dela */
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-f:not(.jn-par){background:#F5F4F1;border-color:#ECEAE5;color:#75726B}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-f.jn-ver:not(.jn-par){background:#ECEBE7;border-color:#B9B6AE}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-f:not(.jn-par) .jn-nome i{width:16px;height:16px;background:#B9B6AE;display:inline-grid;place-items:center}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-f:not(.jn-par) .jn-nome i::before{content:"✓";color:#FFFFFF;font-size:10px;font-style:normal;line-height:1}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-n{color:#8E8B84;border-style:dashed}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-n .jn-txt{text-decoration:line-through;text-decoration-color:#B9B6AE}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-a{background:var(--ff)}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-a .jn-txt{font-weight:500;color:var(--ft)}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-a .jn-st::before{content:none}
+html[data-tema="v10"] .jn-atual{display:inline-block;font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;border-radius:999px;padding:1px 7px;line-height:16px;background:var(--fc);color:#FFFFFF}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-par{background:var(--ff);border-color:var(--fc);color:var(--ft)}
+html[data-tema="v10"] .tr-sf .tr-b{background:#C9C6BF}
+html[data-tema="v10"] .tr-sf .tr-nm{color:#75726B}
+html[data-tema="v10"] .tr-et.tr-sf .tr-nm::before{content:"✓ ";color:#9C9991}
+html[data-tema="v10"] .tr-sf .tr-d{color:#8E8B84}
+html[data-tema="v10"] .tr-grp.tr-sf{background:#F5F4F1}
+html[data-tema="v10"] .tr-et.tr-sa{background:color-mix(in srgb,var(--tc) 10%,#FFFFFF);box-shadow:inset 0 0 0 1.5px var(--tc)}
+html[data-tema="v10"] .tr-sa .tr-b{box-shadow:none}
+html[data-tema="v10"] .tr-sa .tr-nm{font-weight:500}
+html[data-tema="v10"] .tr-sa .tr-d,html[data-tema="v10"] .tr-px .tr-d{font-family:var(--f-ui);color:var(--tt)}
+html[data-tema="v10"] .tr-px .tr-b{background:transparent;border:1.5px solid var(--tc)}
+html[data-tema="v10"] .tr-px .tr-nm{color:#121212;font-weight:500}
+html[data-tema="v10"] .tr-sn .tr-b{border-color:#CFCCC5}
+html[data-tema="v10"] .tr-et.tr-sn .tr-nm{color:#8E8B84}
+html[data-tema="v10"] .tr-prog i.f{background:#C9C6BF}
+html[data-tema="v10"] .tr-prog i.a{width:26px;height:8px;border-radius:3px;box-shadow:none}
+html[data-tema="v10"] .tr-resumo .tr-agora .tr-aguarda::before{content:","}
+html[data-tema="v10"] .tr-rol{scrollbar-width:none}
+html[data-tema="v10"] .tr-rol::-webkit-scrollbar{display:none}
+html[data-tema="v10"] .tr-leg i.tr-lf{background:#C9C6BF}
 /* o cabeçalho da ficha em duas linhas: o nome e os botões; embaixo CPF, Meu INSS, telefone, advogado e a situação */
 html[data-tema="v10"] :is(.cli-adv,.atend-acoes) .fp2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 html[data-tema="v10"] .app:not(.celular) .det-topo .cli-casos .avatar{display:none}
@@ -5731,7 +5763,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.97</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.99</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12669,7 +12701,7 @@ function renderAcervo(){
   document.getElementById("sub-lista").textContent =
     "O trabalho sem data marcada: rotina, conferências e processos parados. Nada aqui vence hoje.";
   const corpo = blocoRotinas() + blocoCrpsManual() + blocoCadunico()
-    + blocoCardsPagamento() + blocoDocsSemData() + blocoCardsRever() + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoEtapasLote() + blocoSemCpf();
+    + blocoCardsPagamento() + blocoDocsSemData() + blocoCardsRever() + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoQuadrosLote() + blocoEtapasLote() + blocoSemCpf();
   document.getElementById("conteudo-meio").innerHTML = corpo
     || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
@@ -12801,7 +12833,7 @@ function itensAgendaTodos(){
       resumo:`até ${fmt(msd)}: 120 dias da decisão de ${fmt(k.decisao_em)} (confirme a ciência)`}, donos);
     const mora = prazoMora(k);
     // F236 · com o mandado de segurança já decidido (a tarefa de redigi-lo, a ordem de impetrar), a mora não pede avaliação
-    if(mora && mora.vencido && !msDecidido(k)) por({data:mora.data, k, cli, prazo:true, selo:"Mora do INSS",
+    if(mora && mora.vencido && !msDecidido(k) && !moraVista(k, mora)) por({data:mora.data, k, cli, prazo:true, selo:"Mora do INSS",
       resumo:`o INSS passou dos ${mora.dias} dias para decidir: avaliar o mandado de segurança`}, donos);
   }
   [...D.tarefas.filter(t=>!t.concluida && t.prazo), ...docsPreCasoComData()].forEach(t=>{
@@ -12856,7 +12888,8 @@ function itensAgendaTodos(){
     const cli = D.cliPorId.get(l.cliente_id)||null;
     const donos = l.responsavel_id ? [l.responsavel_id] : advogadoDoCliente(l.cliente_id);
     const dd = ehCardApos(l) && dataDireitoDoCard(l);
-    if(dd && dd.data<=hj) por({data:dd.data, cli, cardDir:l, prazo:true, selo:"Aposentadoria",
+    // 31.10.2026 · a data marcada para rever o card (o "Concluir em" do To Do ou o rever em) adia a cobrança do direito
+    if(dd && dd.data<=hj && !(proxDoCard(l) > hj)) por({data:dd.data, cli, cardDir:l, prazo:true, selo:"Aposentadoria",
       resumo:`${especieDoCard(l)||"aposentadoria"}: direito desde ${fmt(dd.data)}, protocolar já`}, donos);
     else por({data:ehCardApos(l) ? proxDoCard(l) : l.proximo_em, cli, l, resumo:l.titulo}, donos);
   }
@@ -12980,6 +13013,9 @@ function renderAgendaV10(qual){
   const rotUtil = util===em(1) ? "Amanhã" : `Até ${SIGLA_DIA[new Date(util+"T12:00:00").getDay()]}, ${util.slice(8,10)}/${util.slice(5,7)}`;
   const nV = itens.filter(i=>i.data<hj).length, nH = itens.filter(i=>i.data===hj).length,
         n7 = itens.filter(i=>i.data>hj && i.data<=em(7)).length, nU = itens.filter(i=>i.data>hj && i.data<=util).length;
+  // de onde vêm as vencidas, no title do número: "Mora do INSS 12 · Tarefa 8 · …"
+  const porSelo = Object.entries(itens.filter(i=>i.data<hj).reduce((m,i)=>{ const s = i.selo||(i.tc?"Tarefa":i.l?"Lembrete":"Outro"); m[s]=(m[s]||0)+1; return m; }, {}))
+    .sort((a,b)=>b[1]-a[1]).map(([s,n])=>`${s} ${n}`).join(" · ");
   const secoes = planej ? [
     ["Vencidas", d=>d<hj, "venc"], ["Hoje", d=>d===hj, "hoje"], ["Amanhã", d=>d===em(1), ""],
     ["Próximos sete dias", d=>d>em(1) && d<=em(7), ""], ["Mais tarde", d=>d>em(7), ""],
@@ -12989,9 +13025,9 @@ function renderAgendaV10(qual){
     .map(m=>m.caso_id && D.casoPorId.get(m.caso_id)).filter(Boolean));
   const dia = new Date(hj+"T12:00:00").toLocaleDateString(IDIOMA,{weekday:"long", day:"numeric", month:"long"});
   const partes = planej
-    ? [nV?`<b class="ag-venc">${nV} ${nV===1?"vencida":"vencidas"}</b>`:"", nH?`${nH} para hoje`:"",
+    ? [nV?`<b class="ag-venc" title="${esc(porSelo)}">${nV} ${nV===1?"vencida":"vencidas"}</b>`:"", nH?`${nH} para hoje`:"",
        n7?`${n7} nos próximos sete dias`:""].filter(Boolean)
-    : [nV?`<b class="ag-venc">${nV} ${nV===1?"vencida":"vencidas"}</b>`:"", nH?`${nH} para hoje`:"nada vence hoje",
+    : [nV?`<b class="ag-venc" title="${esc(porSelo)}">${nV} ${nV===1?"vencida":"vencidas"}</b>`:"", nH?`${nH} para hoje`:"nada vence hoje",
        nU?`${nU} ${util===em(1)?"para amanhã":`até ${rotUtil.slice(4)}`}`:""].filter(Boolean);
   const frase = partes.length>1 ? partes.slice(0,-1).join(", ")+" e "+partes.at(-1) : (partes[0]||"agenda limpa");
   // F236 · o atalho leva ao Planejado já filtrado na mesma pessoa, e só aparece para quem tem o Planejado
@@ -35386,6 +35422,14 @@ const pedidoDecidido = k => !!(k.resultado || (k.decisao_em && (!k.der || k.deci
 // F236 · o que abre a contagem é a perícia médica ou a avaliação social do INSS; o atendimento de preparação do
 // escritório ("Atendimento pré-perícia") e o estudo do processo não são perícia
 const ehPericiaInss = e => /per[ií]cia|avalia[çc][ãa]o social/i.test(e.tipo||"") && !/atendimento|pr[ée][- ]?per[ií]cia|estudo/i.test(e.tipo||"");
+// 31.10.2026 · a mora vencida já vista: a equipe marcou quando olhar de novo (o "Concluir em", o Concluir por hoje, o
+// "Em análise · +7 d", o ✓ de checado ou um lembrete adiante). Até essa data o Meu Dia não a cobra todo dia
+function moraVista(k, mora){
+  const hj = hoje(), r = k.ronda||{};
+  return (k.prazo && k.prazo > hj) || (r.despacho && dataSP(r.despacho.em) >= mora.data)
+    || (k.checado_em && dataSP(k.checado_em) >= mora.data)
+    || (D.tarefasPorCaso.get(k.id)||[]).some(t=>!t.concluida_em && t.lembrar_em && t.lembrar_em > hj);
+}
 function prazoMora(k){
   if(!k || faseEfetiva(k)!=="inss" || !k.der || k.exigencia_prazo || pedidoDecidido(k)) return null;
   // F236 · mandado de segurança por mora já impetrado: a demora está na Justiça e o prazo que vale é o da liminar
@@ -35661,7 +35705,7 @@ function datasDosJulgados(k){
 }
 async function adotarQuadro(cliId){
   const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado" && !ehPreCaso(k));
-  if(!ks.length) return;
+  if(!ks.length) return 0;
   const f = fontesDoDossie(cliId), feitos = [];
   for(const k of ks){
     const r = k.ronda||{}, recusou = r.recusou||{}, fontes = {...(r.fontes||{})}, sugere = {...(r.sugere||{})}, corpo = {};
@@ -35678,6 +35722,7 @@ async function adotarQuadro(cliId){
     catch(e){ console.warn("quadro não gravou:", e); }
   }
   const n = feitos.reduce((t, x)=>t+x.n, 0);
+  if(_loteQuadro) _loteQuadro.feitos.push(...feitos);
   if(n && clienteAberto===cliId){
     repintarFicha();
     avisoDesfazer(`${n} dado(s) do quadro do caso lido(s) dos documentos`, async ()=>{
@@ -35685,6 +35730,45 @@ async function adotarQuadro(cliId){
       aviso("Desfeito"); repintarFicha();
     });
   }
+}
+// F321c (onda 4) · o mesmo preenchimento em todos os clientes de caso aberto, no 🧹 Cuidar do acervo: lê os
+// documentos de cada um (dadosDoCliente), grava o campo vazio e a sugestão como na ficha, e o desfazer volta tudo
+let _loteQuadro = null;
+function blocoQuadrosLote(){
+  const n = new Set(D.casos.filter(k=>k.fase!=="encerrado" && !ehPreCaso(k)).map(k=>k.cliente_id)).size;
+  if(!n) return "";
+  return `<details class="sem-acao neutro" id="acervo-quadros"><summary>Quadro do benefício pelos documentos (${n} clientes com caso aberto)</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">Lê a carta de concessão, o CNIS, a sentença, o acórdão, a inicial e o NB dos documentos de cada cliente e grava a DER, a DIB, a DCB, o NB e a espécie que estiverem vazios, com a fonte. O valor diferente do gravado vira sugestão na placa do caso.</p>
+    <div class="form-linha" style="margin:4px 0 8px"><button class="btn-mini forte" onclick="preencherQuadrosTodos()">Preencher os quadros pelos documentos…</button></div></details>`;
+}
+async function preencherQuadrosTodos(){
+  const clis = [...new Set(D.casos.filter(k=>k.fase!=="encerrado" && !ehPreCaso(k)).map(k=>k.cliente_id))];
+  if(!clis.length) return;
+  if(clienteAberto) fecharFicha(false);
+  _loteQuadro = {feitos:[]};
+  caixa(`<div class="org-lote" role="dialog" aria-labelledby="qd-lote-t"><h3 id="qd-lote-t">Quadro do benefício pelos documentos</h3>
+    <p class="meio-sub" id="qd-lote-st" aria-live="polite">Lendo 0 de ${clis.length} clientes…</p>
+    <progress id="qd-lote-pb" max="${clis.length}" value="0"></progress><div id="qd-lote-res"></div></div>`);
+  for(let i=0; i<clis.length; i++){
+    if(!document.getElementById("qd-lote-pb")) break;   // fechou a janela: para
+    const dados = await dadosDoCliente(clis[i]);
+    D._andsFicha = dados.ands; D.anexos = dados.anexos; _evCache = null;
+    await adotarDcbDosAutos(clis[i]).catch(()=>{});
+    await adotarQuadro(clis[i]).catch(e=>console.warn("quadro do lote:", e));
+    const pb = document.getElementById("qd-lote-pb"), st = document.getElementById("qd-lote-st");
+    if(pb) pb.value = i+1;
+    if(st) st.textContent = `Lendo ${i+1} de ${clis.length} clientes…`;
+  }
+  D._andsFicha = []; D.anexos = []; _evCache = null;
+  const L = _loteQuadro; _loteQuadro = null;
+  const campos = L.feitos.reduce((t, x)=>t+x.n, 0), sug = D.casos.filter(k=>Object.keys((k.ronda||{}).sugere||{}).length).length;
+  const st = document.getElementById("qd-lote-st"), res = document.getElementById("qd-lote-res");
+  if(st) st.textContent = `${campos} dado(s) gravado(s) em ${L.feitos.filter(x=>x.n).length} caso(s). ${sug} caso(s) com sugestão a conferir na placa.`;
+  if(res && L.feitos.length) res.innerHTML = `<button class="btn-mini" id="qd-lote-desf">Desfazer o lote</button>`;
+  const b = document.getElementById("qd-lote-desf");
+  if(b) b.onclick = async () => { b.disabled = true;
+    for(const x of L.feitos){ await patchCaso(x.k.id, x.antes).catch(()=>{}); Object.assign(x.k, x.antes); }
+    if(st) st.textContent = "Desfeito."; b.remove(); };
 }
 const valQuadro = (campo, v) => !v ? "" : FATOS[campo] && FATOS[campo].tipo==="data" ? fmtBarra(v) : campo==="nb" ? fmtNb(v) : String(v);
 // de onde veio o valor que está no campo, para o title da placa
@@ -37794,7 +37878,8 @@ function faixaTrilha(k){
     const c = COR_FASE[f], txt = st==="a" ? (agora || "em curso") : st==="f" ? resumoFase(k, f) : st==="n" ? "não houve" : "a vir";
     const mkA = st==="a" ? MK0(f) : null, aguarda = mkA ? (i=>i>=0 && !mkA[i].d ? ` · aguardando ${esc(ets[i].n)}` : "")(mkA.findIndex(m=>m.s==="a")) : "";
     const stHtml = st==="a" && !celular() ? `<span class="jn-atual">atual</span>` : st==="a" ? `<span class="tr-agora"><b>${esc(agora||"a definir")}</b>${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}${aguarda}</span>` : esc(txt);
-    return `<button role="tab" aria-selected="${ver===f}" class="jn-b jn-${st}${ver===f?" jn-ver":""}" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}"
+    const par = st!=="a" && f==="judicial" && !!trilhaParalela(k);   // F323 · o MS ao lado do recurso não é passado
+    return `<button role="tab" aria-selected="${ver===f}" class="jn-b jn-${st}${par?" jn-par":""}${ver===f?" jn-ver":""}" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}"
       onclick="trVerFase('${k.id}','${f}')" title="${esc(`${c.n}: ${String(txt)}`)}"><span class="jn-nome"><i></i><span class="jn-txt">${c.n}</span></span><span class="jn-st">${stHtml}</span></button>`; }).join("");
   const alt = Object.entries(TRILHAS).filter(([,t])=>t.fase===ver);
   // o tipo de processo é uma escolha rara: um seletor, e não cinco pílulas
@@ -37806,6 +37891,9 @@ function faixaTrilha(k){
     `<option value="${id}" ${id===rito?"selected":""}>${esc(t.nome)}</option>`).join("")}</select></label>` : "";
   // fase passada: dá para dizer que não houve (ou que houve)
   const houveBt = (stVer==="f"||stVer==="n") ? `<button class="tr-houve" onclick="trFaseHouve('${k.id}','${ver}','${stVer==="n"?"f":"n"}')">${stVer==="n"?"esta fase houve":"esta fase não houve"}</button>` : "";
+  // F323 · a próxima etapa (a primeira depois da atual que não foi cumprida nem pulada) ganha o contorno e a palavra "próxima"
+  const iAt = ets.findIndex(e=>mk(e).s==="a");
+  const pxI = iAt<0 ? -1 : ets.findIndex((e,j)=>j>iAt && !["f","n"].includes(mk(e).s) && !(e.op && !mk(e).s));
   // os grupos cumpridos (e a execução ainda não começada) ficam recolhidos
   const itens = [];
   for(const G of gruposTrilha(ets)){
@@ -37824,8 +37912,8 @@ function faixaTrilha(k){
       const cor = e.ex ? COR_EXEC : C;
       const rot = n===0 && G.g ? `<span class="tr-g${e.ex?" tr-g-ex":""}">${esc(G.g)}${(feito||execVazia)&&trAbre[chave]?` <a href="#" onclick="trGrupo('${chave}');return false" class="tr-rec">recolher</a>`:""}</span>` : `<span class="tr-g"></span>`;
       itens.push(`<li style="--tc:${cor.c};--tt:${cor.t}"${e.ex?" data-ex":""}>${rot}
-        <button class="tr-et tr-s${m.s||(e.op?"o":"v")}${i===sel?" tr-sel":""}" data-tri="${i}" onclick="trEscolher('${k.id}','${rito}',${i})" aria-pressed="${i===sel}"
-          title="${esc(e.n)}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"aguardando":"")}</span></button></li>`);
+        <button class="tr-et tr-s${m.s||(e.op?"o":"v")}${i===sel?" tr-sel":""}${i===pxI?" tr-px":""}" data-tri="${i}" onclick="trEscolher('${k.id}','${rito}',${i})" aria-pressed="${i===sel}"
+          title="${esc(e.n)}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"aguardando":i===pxI?"próxima":"")}</span></button></li>`);
     });
   }
   let pnl = "";
@@ -37857,8 +37945,8 @@ function faixaTrilha(k){
     const ia = vis.findIndex(x=>x.m.s==="a"), at = ia>=0 ? vis[ia] : null;
     const prox = ia>=0 ? vis.slice(ia+1).find(x=>x.m.s!=="f" && x.m.s!=="n") : null;
     const seg = vis.map((x,j)=>`<i class="${x.m.s==="f"?"f":x.m.s==="a"?"a":x.m.s==="n"?"n":""}"></i>`).join("");
-    return `<div class="tr-resumo"${ver===faseAt?"":" hidden"}><span class="tr-agora"><small>Etapa</small> <b>${esc(agora||"a definir")}</b>${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}</span>
-      ${at ? `<span class="tr-pos">${at.m.d ? `desde ${dCurta(at.m.d)} · ` : `aguardando ${esc(minusc1(at.e.n))} · `}${ia+1} de ${vis.length}</span>` : ""}
+    return `<div class="tr-resumo"${ver===faseAt?"":" hidden"}><span class="tr-agora"><small>Etapa</small> <b>${esc(agora||"a definir")}</b>${at && !at.m.d ? `<span class="tr-aguarda"> aguardando ${esc(minusc1(at.e.n))}</span>` : ""}${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}</span>
+      ${at ? `<span class="tr-pos">${at.m.d ? `desde ${dCurta(at.m.d)} · ` : ""}${ia+1} de ${vis.length}</span>` : ""}
       <span class="tr-prog" aria-hidden="true">${seg}</span>
       ${prox ? `<span class="tr-prox">Próximo: ${esc(minusc1(prox.e.n))}</span>` : ""}</div>`; })();
   return `<section class="tr-faixa tr tr-compacta${aberta?" tr-aberta":" tr-fechada"}" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}" aria-label="Jornada e trilha do caso">
@@ -45254,7 +45342,7 @@ async function dadosDoCliente(cliId){
   const ids = (D.casosDoCliente.get(cliId)||[]).map(k=>k.id).join(",");
   const [ands, anexos] = await Promise.all([
     ids ? todas("andamentos", `select=id,caso_id,origem,origem_id,texto,criado_em,responde_a&caso_id=in.(${ids})`).catch(()=>[]) : [],
-    todas("anexos", `select=id,caso_id,cliente_id,andamento_id,nome,caminho,origem,texto&cliente_id=eq.${cliId}`).catch(()=>[])]);
+    todas("anexos", `select=id,caso_id,cliente_id,andamento_id,nome,caminho,origem,texto,criado_em&cliente_id=eq.${cliId}`).catch(()=>[])]);
   return {ands, anexos};
 }
 let _loteOrg = null;   // {planos:[{c, passos, duvidas, ands}], aplicando}
