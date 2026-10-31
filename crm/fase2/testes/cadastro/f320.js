@@ -132,7 +132,15 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const abas = await m.$$eval(".cel-abas button", a => a.map(b => b.textContent.trim().replace(/\s*\d+$/, "")));
   conf(`no celular, as abas do topo (${abas.join(", ")})`, ["Andamentos", "Prazos", "Caso", "Cadastro", "Honorários"].every(x => abas.includes(x)));
   const and = await m.$$eval(".caso-dir .menu-andamentos button", a => a.filter(b => b.offsetParent).map(b => b.textContent.trim().replace(/\s*\d+$/, "")));
-  conf(`nos Andamentos, os botões das origens (${and.join(", ")})`, and.join() === "Escritório,INSS,CRPS,Judicial,Tudo");
+  // F330 · sem andamento nem número, INSS, CRPS e Judicial não aparecem; o "+ número" os faz nascer
+  conf(`nos Andamentos, sem número nem andamento, só Escritório, + número e Tudo (${and.join(", ")})`, and.join() === "Escritório,+ número,Tudo");
+  await m.evaluate(kid => { D.casoPorId.get(kid).protocolos = ["123456789"]; repintarFicha(); }, kA.id); await m.waitForTimeout(300);
+  const and2 = await m.$$eval(".caso-dir .menu-andamentos button", a => a.filter(b => b.offsetParent).map(b => b.textContent.trim().replace(/\s*\d+$/, "")));
+  conf(`com o protocolo, a aba INSS aparece (${and2.join(", ")})`, and2.join() === "Escritório,INSS,+ número,Tudo");
+  await m.click(".caso-dir .menu-andamentos .aba-num"); await m.waitForTimeout(200);
+  const ops = await m.$$eval(".modal-fundo .form-linha button", a => a.map(b => b.textContent.trim()));
+  conf(`o + número oferece só o que falta (${ops.join(", ")})`, ops.join() === "Recurso no CRPS (e-Sisrec),Processo judicial");
+  await m.evaluate(kid => { fecharCaixa(); D.casoPorId.get(kid).protocolos = []; repintarFicha(); }, kA.id); await m.waitForTimeout(300);
   await m.evaluate(() => celIr("caso")); await m.waitForTimeout(300);
   conf("a aba Caso mostra o cartão do caso e esconde os andamentos", await vis(m, ".linha-caso") && !(await vis(m, ".caso-dir .timeline")));
   await m.evaluate(() => celIr("cad")); await m.waitForTimeout(400);
