@@ -5300,7 +5300,9 @@ html .desf .desf-outras{align-items:center}
 }
 html .outras-abas .oa-txt{flex-direction:row;align-items:baseline;gap:8px}
 html .outras-abas .oa-txt > span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-html .faixa-prazos .fp-cab{display:flex;align-items:center;gap:8px}
+html .faixa-prazos .fp-cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mt-pzv{color:var(--venc,#b42318);font-weight:400}
+.fp-outros{white-space:nowrap}
 html .faixa-prazos .fp-menu{margin-left:auto;position:relative}
 /* F274 · o ⋯ que abre para baixo (no alto da tela não há espaço acima) */
 html .tl-mais.mais-baixo{position:relative}
@@ -5729,7 +5731,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.94</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.96</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12664,7 +12666,7 @@ function renderAcervo(){
   document.getElementById("sub-lista").textContent =
     "O trabalho sem data marcada: rotina, conferências e processos parados. Nada aqui vence hoje.";
   const corpo = blocoRotinas() + blocoCrpsManual() + blocoCadunico()
-    + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoSemCpf();
+    + blocoCardsPagamento() + blocoDocsSemData() + blocoCardsRever() + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoSemCpf();
   document.getElementById("conteudo-meio").innerHTML = corpo
     || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
@@ -12790,6 +12792,10 @@ function itensAgendaTodos(){
     // F236 · a descrição da exigência cortada na palavra, com reticências (cortava no meio: "Tecelagem Fictícia São Jos")
     if(k.exigencia_prazo) por({data:k.exigencia_prazo, k, cli, prazo:true, avisa:true, fatal: igual==="exig", selo:k.fase==="conselho"?"Diligência":"Exigência",
       resumo:`cumprir a ${k.fase==="conselho"?"diligência do CRPS":"exigência do INSS"}${k.exigencia_descricao?`: ${cortaFrase(String(k.exigencia_descricao).replace(/\s*·\s*prazo estimado:[\s\S]*$/i,"").replace(/\s+/g," ").trim(), 70)}`:""}`}, donos);
+    // P1 · o mandado de segurança contra o indeferimento: avisa a 5, 2 e 1 dia útil
+    const msd = msAte(k);
+    if(msd) por({data:msd, k, cli, prazo:true, avisa:true, selo:"Mandado de segurança",
+      resumo:`até ${fmt(msd)}: 120 dias da decisão de ${fmt(k.decisao_em)} (confirme a ciência)`}, donos);
     const mora = prazoMora(k);
     // F236 · com o mandado de segurança já decidido (a tarefa de redigi-lo, a ordem de impetrar), a mora não pede avaliação
     if(mora && mora.vencido && !msDecidido(k)) por({data:mora.data, k, cli, prazo:true, selo:"Mora do INSS",
@@ -12814,6 +12820,32 @@ function itensAgendaTodos(){
     por({data:pg.vencimento, k, cli, pg, selo:"Honorários",
       resumo:`cobrar ${pg.valor?moedaBR(pg.valor):"o honorário"}${pg.descricao?` · ${pg.descricao}`:""}`}, advogadoDoCliente(cliId, k));
   }
+  // P1 · a perda da qualidade de segurado de quem tem caso aberto: entra 30 dias antes, com o advogado do cliente
+  const vistos = new Set();
+  for(const k of ativos()){
+    const cli = D.cliPorId.get(k.cliente_id); if(!cli || vistos.has(cli.id) || foraDoFluxo(k)) continue;
+    vistos.add(cli.id);
+    const gq = gracaDoCliente(cli); if(!gq) continue;
+    por({data:somaDias(gq.perda, -30), cli, prazo:true, selo:"Qualidade",
+      resumo:`a qualidade de segurado se perde em ${fmt(gq.perda)}: avaliar o recolhimento`}, advogadoDoCliente(cli.id));
+  }
+  // P2 · o vencimento de cada plano de contribuições: a recepção confere se o cliente pagou (sem recepção, o advogado)
+  const recepQ = equipeAtiva().filter(c=>c.cargo==="recepcao").map(c=>c.id);
+  for(const q of (D.qualidade||[])){
+    if(q.ativo===false) continue;
+    const cli = D.cliPorId.get(q.cliente_id), px = cli && qualidadeProximos(q, 1)[0];
+    if(px) por({data:px, cli, selo:"Contribuição", resumo:`pagar até ${fmt(px)}: ${qualGuia(q)}${q.valor ? ` de ${qualValor(q.valor)}` : ""} (${qualFim(q).toLowerCase()})`},
+      recepQ.length ? recepQ : advogadoDoCliente(q.cliente_id));
+  }
+  // P5 · o CadÚnico do BPC: 60 dias antes do vencimento, à recepção (sem recepção, ao advogado), uma vez por cliente
+  const vistosCu = new Set();
+  for(const k of (D.casos||[])){
+    if(vistosCu.has(k.cliente_id) || !ehLoas(k)) continue;
+    vistosCu.add(k.cliente_id);
+    const cli = D.cliPorId.get(k.cliente_id), cu = cli && cadunicoDoCliente(cli.id); if(!cu) continue;
+    por({data:somaDias(cu.ate, -60), cli, selo:"CadÚnico", resumo:`atualizar o CadÚnico no CRAS até ${fmt(cu.ate)}: avisar o cliente`},
+      recepQ.length ? recepQ : advogadoDoCliente(cli.id));
+  }
   // F236 · o card de aposentadoria tem dono: o responsável dele ou o advogado do cliente. Com o direito
   // já alcançado e sem caso, cobra todo dia, na data do direito, até virar caso ou ser arquivado
   for(const l of (D.lembretes||[])){
@@ -12823,7 +12855,7 @@ function itensAgendaTodos(){
     const dd = ehCardApos(l) && dataDireitoDoCard(l);
     if(dd && dd.data<=hj) por({data:dd.data, cli, cardDir:l, prazo:true, selo:"Aposentadoria",
       resumo:`${especieDoCard(l)||"aposentadoria"}: direito desde ${fmt(dd.data)}, protocolar já`}, donos);
-    else por({data:l.proximo_em, cli, l, resumo:l.titulo}, donos);
+    else por({data:ehCardApos(l) ? proxDoCard(l) : l.proximo_em, cli, l, resumo:l.titulo}, donos);
   }
   // F236 · a rotina do escritório entra no Meu Dia de quem a faz, no dia programado, com o "já fiz"
   for(const r of (D.rotinas||[])) if(r.ativo!==false && rotinaVenceHoje(r) && !rotinaFeitaHoje(r))
@@ -16767,7 +16799,7 @@ function itensDoCalendario(){
   // CadÚnico: percorre TODOS os casos, encerrados inclusive
   (D.casos||[]).forEach(k=>{
     const c=D.cliPorId.get(k.cliente_id);
-    if(!c || !ehLoasIdoso(k,c)) return;
+    if(!c || !ehLoas(k)) return;
     const venc=renovaCadunico(k);
     if(venc) push(venc,"cadunico",`${c.nome} — renovar CadÚnico`,c.id);
   });
@@ -18645,6 +18677,8 @@ function pintarFicha(){
       ${ks.length ? `<button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
         title="${(kk=>kk?"caso aberto: "+esc(tituloCaso(kk)):"escolher o caso do cliente")(casoSel&&D.casoPorId.get(casoSel))}">Casos${
           (n=>n>1?` (${n})`:"")(processosDe(ks).length)} ▾</button>` : ""}
+      ${/* P3 · a aba Prazos junta as datas de todos os casos e as do cliente (decisão do Paulo, 31.10.2026) */""}
+      ${(z=>(z.total||abaAtiva===5) ? `<button class="mt ${abaAtiva===5?"on":""}" data-vv="5">Prazos${z.total?` (${z.total})`:""}${z.venc?` <span class="mt-pzv">· ${z.venc} vencido${z.venc>1?"s":""}</span>`:""}</button>` : "")((()=>{ try{ return prazosDoCliente(cliId); }catch(e){ return {total:0, venc:0}; } })())}
       ${/* F170 · Perícias só com perícia AGENDADA (de hoje em diante, não
            cancelada). A anotação do caso "perícia agendada para 05/10 às
            9h40" já cria o agendamento (extrairEvento), e a aba aparece */""}
@@ -18736,6 +18770,10 @@ function pintarFicha(){
       <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
       <datalist id="lista-especies">${ESPECIES.map(([c,n])=>`<option value="${c}">${esc(n)}</option>`).join("")}</datalist>`;
     })()}
+  </div>
+
+  <div class="painel ${abaAtiva===5?"ativo":""}" data-p="5">
+    ${abaAtiva===5 ? painelPrazosCliente(cliId) : ""}
   </div>
 
   <div class="painel ${abaAtiva===3?"ativo":""}" data-p="3">
@@ -19238,6 +19276,8 @@ async function gravarDocsAnotados(c, muda){
   let p = peds.find(x=>x.origem==="anotacoes" && (x.precaso_id||null)===pcDoPedido(pc));
   if(!p){ p = {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], origem:"anotacoes", especie:(pc && pc.especie) || "benefício a definir", ...(pcDoPedido(pc) ? {precaso_id:pc.id} : {}), itens:[]}; peds.push(p); }
   muda(p.itens);
+  // P4 · o pedido anotado ganha a data de entrega pelo papel mais demorado (o que já tinha data a mantém)
+  if(!p.ate && p.itens.some(i=>!i.entregue)) p.ate = p.itens.filter(i=>!i.entregue).map(i=>prazoDocPadrao(i.nome)).sort().pop();
   const campos = {...(c.campos||{}), docs_pedidos:peds.filter(x=>x!==p || x.itens.length)};
   try{ await api(`/rest/v1/clientes?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos})}); }
   catch(e){ aviso("Não consegui gravar o documento — tente de novo"); return false; }
@@ -22812,8 +22852,25 @@ function ehLoasIdoso(k, cli){
   const i=idadeDe(cli && cli.dn);
   return i!=null && i>=IDADE_LOAS_IDOSO;
 }
+// P5 (prazos, 31.10.2026) · vale para todo BPC, do idoso e da pessoa com deficiência (Lei 8.742/93, art. 20, § 12: o
+// CadÚnico é requisito da concessão, da manutenção e da revisão). Sem a data anotada no caso, vale a atualização que a
+// extensão leu no Meu CadÚnico (dossie.cadunico.familia.atualizada_em)
+function baseCadunico(k){
+  if(!k) return null;
+  if(k.cadunico) return k.cadunico;
+  const fz = familiaCadunico(D.cliPorId.get(k.cliente_id)), at = fz && fz.atualizada_em;
+  return at ? (isoBr(at) || (/^\d{4}-\d{2}-\d{2}/.test(String(at)) ? String(at).slice(0,10) : null)) : null;
+}
 function renovaCadunico(k){                       // a data em que vence
-  return k && k.cadunico ? somarAnos(k.cadunico, CADUNICO_ANOS) : null;
+  const b = baseCadunico(k);
+  return b ? somarAnos(b, CADUNICO_ANOS) : null;
+}
+// a renovação do CadÚnico de quem tem BPC, uma vez por cliente (o caso mais recente), quando não há lembrete dele
+function cadunicoDoCliente(cliId){
+  const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>ehLoas(k) && !ehPreCaso(k) && renovaCadunico(k));
+  if(!ks.length || (D.lembretes||[]).some(l=>l.cliente_id===cliId && l.tipo==="cadunico" && l.ativo!==false)) return null;
+  const k = ks.sort((a, b)=>String(b.criado_em||"").localeCompare(String(a.criado_em||"")))[0];
+  return {k, ate:renovaCadunico(k), base:baseCadunico(k), doDossie:!k.cadunico};
 }
 function msgCadunico(cli, k){
   const venc=renovaCadunico(k);
@@ -22826,13 +22883,13 @@ function msgCadunico(cli, k){
     `Qualquer dúvida, fale com a gente. 🙏`;
 }
 function caixaCadunico(k, cli){
-  if(!ehLoasIdoso(k, cli)) return "";
+  if(!ehLoas(k)) return "";
   const venc=renovaCadunico(k);
   const dias=venc ? diasAte(venc) : null;
   const estado = !venc ? "sem" : dias<0 ? "venc" : dias<=90 ? "perto" : "ok";
   const tel=(cli.telefone||"").replace(/\D/g,"");
   return `<div class="cad-cx ${estado}">
-    <div class="cad-cab"><strong>🧓 LOAS idoso</strong>
+    <div class="cad-cab"><strong>${ehLoasIdoso(k, cli) ? "🧓 BPC do idoso" : "BPC da pessoa com deficiência"}</strong>
       <span class="cad-sub">CadÚnico precisa ser renovado a cada ${CADUNICO_ANOS} anos</span></div>
     <div class="form-linha" style="align-items:center;margin:8px 0 0">
       <label class="cad-lb">Última atualização:
@@ -23082,7 +23139,7 @@ function blocoCadunico(){
   const itens=[];
   (D.casos||[]).forEach(k=>{
     const c=D.cliPorId.get(k.cliente_id);
-    if(!c || !ehLoasIdoso(k,c)) return;
+    if(!c || !ehLoas(k)) return;
     const venc=renovaCadunico(k);
     if(!venc) return;
     // caso que já virou lembrete (F10) aparece pelo bloco dos lembretes; sem
@@ -23645,7 +23702,34 @@ async function cardGravar(lid, muda, extra){
 }
 async function cardDataDireito(lid, v){
   if(!v) return;
-  if(await cardGravar(lid, c=>{ c.data_direito = v; c.data_fonte = "informada no CRM"; })){ aviso(`Direito provável em ${fmt(v)} ✔`, false); repintarFicha(); }
+  if(await cardGravar(lid, c=>{ c.data_direito = v; c.data_fonte = "informada no CRM"; })){ aviso(`Direito provável em ${fmt(v)} ✔`, false); if(clienteAberto) repintarFicha(); else render(); }
+}
+// P6 (prazos, 31.10.2026) · a revisão do card: o "Rever em" do CRM (crm.rever_em) adia o lembrete vencido sem esperar o To Do,
+// cuja data (proximo_em) a sincronização regrava; vale a mais adiante das duas
+const proxDoCard = l => [l.proximo_em, cardCrm(l).rever_em].filter(Boolean).sort().pop() || null;
+async function cardReverEm(lid, v){
+  if(!v) return;
+  if(await cardGravar(lid, c=>{ c.rever_em = v; })){ aviso(`Card a rever em ${fmt(v)} ✔`, false); render(); }
+}
+// a fila do 🧹 Cuidar do acervo: o card vivo com o lembrete vencido (e o direito ainda não alcançado) ou sem data nenhuma
+function cardsARever(){
+  const hj = hoje();
+  return (D.lembretes||[]).filter(l=>l.ativo!==false && ehCardApos(l) && cardVivo(l)).map(l=>{
+    const dd = dataDireitoDoCard(l), px = proxDoCard(l);
+    const motivo = !px && !dd ? "sem data" : px && px<hj && !(dd && dd.data<=hj) ? "vencido" : "";
+    return {l, cli:D.cliPorId.get(l.cliente_id), dd, px, motivo};
+  }).filter(x=>x.cli && x.motivo).sort((a, b)=>(a.px||"") < (b.px||"") ? -1 : 1);
+}
+function blocoCardsRever(){
+  const xs = cardsARever(); if(!xs.length) return "";
+  return `<details class="sem-acao neutro" id="acervo-cardsrever"><summary>Aposentadorias futuras a rever (${xs.length}) — o lembrete venceu ou o card não tem data</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">Dê a nova data de revisão, a data provável do direito ou arquive. O card que já alcançou o direito não está aqui: ele cobra no Meu Dia até virar caso.</p>
+    ${xs.map(({l, cli, dd, px, motivo})=>`<div class="semcpf-it cardrever" data-lemb="${l.id}"><b class="semcpf-nome" style="cursor:pointer" onclick="abrirFicha('${cli.id}')">${esc(cli.nome)}</b>
+      <span class="meio-sub">${esc(cortaFrase(l.titulo||"", 80))} · ${motivo==="sem data" ? "sem data" : `lembrete venceu em ${fmt(px)}`}${dd ? ` · direito provável em ${fmt(dd.data)}` : ""}</span>
+      <span><label class="meio-sub">rever em <input type="date" min="${hoje()}" onchange="cardReverEm('${l.id}',this.value)"></label>
+      <label class="meio-sub">direito em <input type="date" value="${dd ? dd.data : ""}" onchange="cardDataDireito('${l.id}',this.value)"></label>
+      <select class="card-arquivar" aria-label="Arquivar o card" onchange="if(this.value){arquivarCard('${l.id}',this.value)}"><option value="">Arquivar…</option>${APOS_MOTIVOS.map(m=>`<option>${m}</option>`).join("")}</select></span></div>`).join("")}
+  </details>`;
 }
 async function arquivarCard(lid, motivo){
   if(!motivo) return;
@@ -33975,6 +34059,23 @@ const QUAL_MODOS = {seis_semestral:"Pagar 6 meses e depois uma vez a cada 6 mese
   semestral:"Pagar uma vez a cada 6 meses", anual:"Pagar uma vez a cada 12 meses", caso_a_caso:"Outra forma"};
 const QUAL_CODIGOS = () => [["MEI","MEI (DAS)"], ...GPS_CATEGORIAS.map(([v,r])=>[v,`${v} — ${r}`]), ["outro","Outro"]];
 function qualidadeDe(cliId){ return (D.qualidade||[]).filter(q=>q.cliente_id===cliId && q.ativo!==false); }
+// P2 (prazos, 31.10.2026) · para que serve o pagamento: o plano deixou de ser só da qualidade de segurado
+const QUAL_FIM = {qualidade:"Manter a qualidade de segurado", carencia:"Completar a carência", aposentadoria:"Alcançar a aposentadoria",
+  complementacao:"Complementar competências abaixo do mínimo", indenizacao:"Indenizar período em atraso"};
+const qualFim = q => QUAL_FIM[q.finalidade] || QUAL_FIM.qualidade;
+// o texto do card das Aposentadorias futuras que fala em pagar o INSS ("tempo de contribuição" é o nome da espécie, e não pagamento)
+const RX_PAGAR_CARD = /\bgps\b|\bguia\b|carn[eê]|recolh|\bpagar\b|pagando|\bpague\b|voltar a contribuir|\bcontribuir\b|contribui[cç][oõ]es|\bdas\b|facultativ|complementa|indeniza/i;
+function trechosDePagamento(l){
+  const d = l.detalhes||{}, tx = [l.titulo, ...((d.checklist||[]).map(x=>x && (x.texto||x))), ...((d.anotacoes||[]).map(x=>x && (x.texto||x)))];
+  return tx.map(t=>String(t||"").replace(/tempo de contribui[cç][aã]o/gi, "TC")).filter(t=>RX_PAGAR_CARD.test(t))
+    .map(t=>t.replace(/\bTC\b/g, "tempo de contribuição").replace(/\s+/g, " ").trim());
+}
+// a sugestão do plano lida do trecho: o código da guia e a primeira competência ("a partir de 07/2026")
+function sugestaoDoTrecho(t){
+  const cod = (String(t).match(/\b(1007|1163|1406|1473|1929|1287|1236)\b/)||[])[1] || (/\bmei\b|\bdas\b/i.test(t) ? "MEI" : "");
+  const m = String(t).match(/(?:a partir d[aeo]|compet[eê]ncia(?: de)?|desde)\D{0,12}(\d{1,2})\/(\d{4})/i);
+  return {codigo:cod, inicio: m ? `${m[2]}-${m[1].padStart(2,"0")}` : ""};
+}
 // o mês de pagamento ('AAAA-MM'), a mesma conta do banco (qualidade_paga_no_mes): conta do mês do primeiro vencimento
 // (pagar_ate; nos planos da primeira versão, o início)
 function qualidadePagaNoMes(q, ym){
@@ -34020,7 +34121,7 @@ function blocoManutencao(c, onde){
     : onde==="analise" ? "O parecer: como o cliente paga o INSS para não perder a qualidade de segurado. Fica no cadastro dele, com o aviso pelo WhatsApp."
     : onde==="doc" ? "A folha para entregar ao cliente, com a guia, o valor e o calendário." : "";
   return `<div class="mq-bloco">${qs.length ? qs.map(q=>`<div class="mq-plano"><b>${esc(qualResumo(q))}</b>
-      <small>${q.aviso_zap ? "WhatsApp automático ligado" : "sem aviso pelo WhatsApp"}${q.fim ? ` · até ${fmtBarra(String(q.fim).slice(0,10))}` : ""}${q.motivo ? ` · ${esc(q.motivo)}` : ""}</small>
+      <small>${esc(qualFim(q))} · ${q.aviso_zap ? "WhatsApp automático ligado" : "sem aviso pelo WhatsApp"}${q.fim ? ` · até ${fmtBarra(String(q.fim).slice(0,10))}` : ""}${q.motivo ? ` · ${esc(q.motivo)}` : ""}</small>
       <span class="mq-bts"><button type="button" class="btn-mini" onclick="verQualidade('${c.id}')">Abrir</button>
       ${onde==="doc" || onde==="analise" ? `<button type="button" class="btn-mini" onclick="imprimirQualidade('${c.id}','${q.id}')">Imprimir para o cliente</button>` : ""}</span></div>`).join("")
     : `${intro ? `<p class="meio-sub">${intro}</p>` : `<p class="meio-sub">Nenhum plano de pagamento.</p>`}
@@ -34028,16 +34129,20 @@ function blocoManutencao(c, onde){
 }
 function caixaQualidade(c){
   return `<section class="idf-card idf-qual" aria-labelledby="idf-qual">
-    <h3 class="adr-h" id="idf-qual">Manutenção da qualidade${qualidadeDe(c.id).length ? `<button type="button" class="cad-mini ac-mais" onclick="formQualidade('${c.id}','','')" title="outro plano" aria-label="acrescentar plano">${CAD_IC.mais}</button>` : ""}</h3>
+    <h3 class="adr-h" id="idf-qual">Contribuições a pagar${qualidadeDe(c.id).length ? `<button type="button" class="cad-mini ac-mais" onclick="formQualidade('${c.id}','','')" title="outro plano" aria-label="acrescentar plano">${CAD_IC.mais}</button>` : ""}</h3>
     ${blocoManutencao(c, "")}</section>`;
 }
 function quadroManutencaoDoc(c){
-  return `<section class="doc-quadro" id="dq-qualidade"><div class="rotulo-caso">Manutenção da Qualidade de Segurado</div>${blocoManutencao(c, "doc")}</section>`;
+  return `<section class="doc-quadro" id="dq-qualidade"><div class="rotulo-caso">Contribuições a pagar</div>${blocoManutencao(c, "doc")}</section>`;
 }
-function formQualidade(cliId, id, onde){
-  const q = (D.qualidade||[]).find(x=>x.id===id) || {modalidade:"seis_semestral", codigo:"MEI", inicio:hoje(), aviso_zap:true, meses:[]};
-  caixa(`<div class="mq-modal" role="dialog" aria-labelledby="mq-t"><h3 id="mq-t">Manutenção da Qualidade de Segurado</h3>
+let _qPre = null;   // P2 · o plano que nasce de um card: o card e a sugestão lida do texto dele
+function formQualidade(cliId, id, onde, pre){
+  _qPre = id ? null : (pre||null);
+  const q = (D.qualidade||[]).find(x=>x.id===id) || {modalidade:"seis_semestral", codigo:"MEI", inicio:hoje(), aviso_zap:true, meses:[], finalidade: pre && pre.lembrete_id ? "aposentadoria" : "qualidade", ...((pre||{}).q||{})};
+  caixa(`<div class="mq-modal" role="dialog" aria-labelledby="mq-t"><h3 id="mq-t">Contribuições a pagar</h3>
+    ${pre && pre.trecho ? `<p class="meio-sub mq-trecho">Do card: “${esc(pre.trecho)}”</p>` : ""}
     <div class="mq-form">
+      <label class="mq-largo">Para quê <select id="mq-fim-de">${Object.entries(QUAL_FIM).map(([v,r])=>`<option value="${v}"${(q.finalidade||"qualidade")===v?" selected":""}>${esc(r)}</option>`).join("")}</select></label>
       <label class="mq-largo">Como paga <select id="mq-mod" onchange="document.getElementById('mq-meses-l').hidden=this.value!=='caso_a_caso'">${Object.entries(QUAL_MODOS).map(([v,r])=>`<option value="${v}"${q.modalidade===v?" selected":""}>${r}</option>`).join("")}</select></label>
       <label>Guia <select id="mq-cod">${QUAL_CODIGOS().map(([v,r])=>`<option value="${v}"${q.codigo===v?" selected":""}>${esc(r)}</option>`).join("")}</select></label>
       <label>Valor (R$) <input id="mq-valor" type="number" step="0.01" min="0" value="${q.valor==null?"":esc(String(q.valor))}"></label>
@@ -34063,13 +34168,14 @@ async function salvarQualidade(cliId, id, onde){
   const c = D.cliPorId.get(cliId), an = onde==="analise" && c ? (analisesDaVez(c)[0]||null) : null;
   const corpo = {cliente_id:cliId, modalidade:mod, codigo:v("mq-cod")||null, valor:v("mq-valor") ? Number(v("mq-valor")) : null, dia:+ate.slice(8,10), pagar_ate:ate,
     inicio:`${ini}-01`, fim: fim ? `${fim}-28` : null, meses: mod==="caso_a_caso" ? meses : [], motivo:v("mq-mot")||null,
-    aviso_zap:!!(document.getElementById("mq-zap")||{}).checked, ativo:true, ...(an ? {analise_id:an.id} : {})};
+    aviso_zap:!!(document.getElementById("mq-zap")||{}).checked, ativo:true, ...(an ? {analise_id:an.id} : {}),
+    finalidade: v("mq-fim-de") || "qualidade", ...(_qPre && _qPre.lembrete_id ? {lembrete_id:_qPre.lembrete_id} : {})};
   try{
     if(id){ await api(`/rest/v1/qualidade_planos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(corpo)});
       Object.assign((D.qualidade||[]).find(x=>x.id===id)||{}, corpo); }
     else { const [q] = await api(`/rest/v1/qualidade_planos`,{method:"POST",headers:{Prefer:"return=representation"},body:JSON.stringify(corpo)});
       if(q) (D.qualidade = D.qualidade||[]).push(q); }
-  }catch(e){ return aviso(/qualidade_planos|pagar_ate|modalidade_check|42P01|42703|PGRST20[45]/.test(String(e.message||e)) ? "Rode o crm/fase2/schema_qualidade.sql no Supabase (a versão nova)" : "Não consegui guardar o plano — tente de novo"); }
+  }catch(e){ return aviso(/qualidade_planos|pagar_ate|finalidade|lembrete_id|modalidade_check|42P01|42703|PGRST20[45]/.test(String(e.message||e)) ? "Rode o crm/fase2/schema_qualidade.sql no Supabase (a versão nova)" : "Não consegui guardar o plano — tente de novo"); }
   fecharCaixa(); aviso(corpo.aviso_zap ? "Plano guardado: o WhatsApp lembra o cliente no primeiro dia útil do mês de cada pagamento" : "Plano guardado", false);
   if(clienteAberto) repintarFicha();
 }
@@ -34092,7 +34198,7 @@ async function verQualidade(cliId){
   const qs = qualidadeDe(cliId);
   let env = [];
   try{ if(qs.length) env = await api(`/rest/v1/zap_mensagens?select=aviso_ref,aviso_chave,criado_em,status&aviso_ref=in.(${qs.map(q=>q.id).join(",")})&aviso_chave=like.qualidade*&order=criado_em.desc`) || []; }catch(e){}
-  caixa(`<div class="mq-modal"><h3>Manutenção da Qualidade de Segurado · ${esc(String(c.nome||"").split(" ")[0])}</h3>
+  caixa(`<div class="mq-modal"><h3>Contribuições a pagar · ${esc(String(c.nome||"").split(" ")[0])}</h3>
     ${qs.map(q=>`<section class="mq-sec"><b>${esc(qualResumo(q))}</b>${q.motivo ? `<p class="meio-sub">${esc(q.motivo)}</p>` : ""}
       <label class="cfg-ck"><input type="checkbox"${q.aviso_zap?" checked":""} onchange="alternarZapQualidade('${q.id}',this.checked)"> WhatsApp automático no primeiro dia útil do mês de cada pagamento</label>
       <div class="rotulo-caso">Próximos pagamentos</div>${(px=>px.length ? `<ul class="mq-cal">${px.map(d=>`<li><span>pagar até <b>${fmtBarra(d)}</b></span>${q.aviso_zap ? `<small>aviso em ${fmtBarra(qualidadeAviso(d))}</small>` : ""}</li>`).join("")}</ul>` : `<p class="meio-sub">nenhum</p>`)(qualidadeProximos(q, 6))}
@@ -35779,10 +35885,74 @@ async function tarefasDaDiligencia(casoId){
 // F104 · a COLETA das datas do cliente, separada do desenho: o quadro (tema
 // desligado) e os quadros horizontais da linha do caso (tema v10) leem a
 // mesma lista. Cada linha: {data, ico, rot, casoId?, andId?, ehPrazo?, filhas}
+// P1 (prazos, 31.10.2026) · as datas que custam o direito e não tinham linha: o mandado de segurança contra o
+// indeferimento do INSS, a perda da qualidade de segurado e a decadência da revisão. Todas lidas do que a ficha já tem.
+// O mandado de segurança: 120 dias da ciência (Lei 12.016/2009, art. 23), contados da decisão, o dia mais cedo em que a
+// ciência pode ter ocorrido; enquanto cabe o recurso e nada decidiu pelo mandado de segurança
+function msAte(k){
+  if(!k || faseEfetiva(k)!=="inss" || !recorrerAte(k) || msDecidido(k)) return null;
+  const d = somaDias(k.decisao_em, 120);
+  return d && d>=hoje() ? d : null;
+}
+// a qualidade de segurado pelo CNIS lido na triagem (Lei 8.213/91, art. 15); null sem CNIS, com benefício em
+// manutenção ou já perdida. Guardada por cliente enquanto o CNIS e o dia não mudam (o Meu Dia lê todos os clientes)
+const _gracaMemo = new Map();
+function gracaDoCliente(c){
+  const g = c && cnisDe(c); if(!g || !(g.vinculos||[]).length) return null;
+  const m = _gracaMemo.get(c.id), hj = hoje();
+  if(m && m.g===g && m.hj===hj) return m.r;
+  const an = g.analise, fd = fontesDoDossie(c.id);
+  let gr = null;
+  try{ gr = calcularGraca(g.vinculos, contribSemPerda(g), !!(triagemDe(c).graca||{}).desempregado, an && an.abaixo, an && an.contagem && an.contagem.periodos, fd.seguros); }catch(e){}
+  const r = gr && !gr.semLimite && !gr.vencida && gr.perda && gr.mantidaAte ? gr : null;
+  _gracaMemo.set(c.id, {g, hj, r});
+  return r;
+}
+// a decadência da revisão de cada carta de concessão do dossiê (art. 103 da Lei 8.213/91), nos dois anos que antecedem o fim
+function decadenciasDoCliente(cliId){
+  const f = fontesDoDossie(cliId), hj = hoje(), out = [];
+  for(const ca of f.cartas){
+    const dec = decadenciaDe(ca, f.extratos); if(!dec) continue;
+    const ate = dec.cedo || dec.ate;
+    if(ate>=hj && diasAte(ate)<=730) out.push({ca, dec, ate});
+  }
+  return out;
+}
 function linhasDeDatas(cliId){
   const c=D.cliPorId.get(cliId)||{}, hj=hoje();
   const linhas=[];
   const lembs=lembretesDo(cliId);
+  // P1 · a perda da qualidade e a decadência da revisão são do cliente: sem caso, valem em todos
+  const gq = gracaDoCliente(c);
+  if(gq) linhas.push({data:gq.mantidaAte, ico:"🛡", natureza:"lembrete", cru:true, rotulo:"Qualidade de segurado até", curto:"Qualidade de segurado até",
+    resumo:`perde em ${fmtBarra(gq.perda).slice(0,5)}`,
+    rot:`<b>A qualidade de segurado se mantém até ${fmt(gq.mantidaAte)} e se perde em ${fmt(gq.perda)}</b>
+         <small class="qd-de">${gq.base} meses a partir de ${esc(gq.ultima||"")} (Lei 8.213/91, art. 15), pelo CNIS lido na triagem. Um recolhimento a tempo ou um vínculo novo mantém a qualidade</small>`,
+    edita:"", acao:""});
+  // P2 · o próximo pagamento de cada plano de contribuições
+  for(const q of qualidadeDe(cliId)){
+    const px = qualidadeProximos(q, 1)[0]; if(!px) continue;
+    linhas.push({data:px, ico:"🧾", natureza:"lembrete", cru:true, rotulo:"Contribuição a pagar", curto:"Contribuição: pagar até",
+      resumo:`${qualGuia(q)}${q.valor ? ` · ${qualValor(q.valor)}` : ""}`,
+      rot:`<b>Pagar até ${fmt(px)}: ${esc(qualGuia(q))}${q.valor ? `, ${esc(qualValor(q.valor))}` : ""}</b>
+           <small class="qd-de">${esc(qualFim(q))}${q.motivo ? ` · ${esc(q.motivo)}` : ""}${q.aviso_zap ? " · o WhatsApp lembra o cliente no primeiro dia útil do mês" : ""}</small>`,
+      edita:"", acao:`<button class="btn-mini" onclick="verQualidade('${cliId}')">Abrir</button>`});
+  }
+  // P5 · a renovação do CadÚnico do BPC, a 180 dias ou vencida
+  const cu = cadunicoDoCliente(cliId);
+  if(cu && diasAte(cu.ate)<=180) linhas.push({data:cu.ate, ico:"🏠", natureza:"lembrete", cru:true, rotulo:"CadÚnico até", curto:"CadÚnico: atualizar até",
+    resumo:"atualizar no CRAS",
+    rot:`<b>Atualizar o CadÚnico no CRAS até ${fmt(cu.ate)}</b> <small class="qd-de">última atualização em ${fmt(cu.base)}${cu.doDossie ? ", lida no Meu CadÚnico pela extensão" : ""}; sem ela o INSS bloqueia o BPC (Lei 8.742/93, art. 20, § 12)</small>`,
+    edita:"", acao:""});
+  const ksCli = (D.casosDoCliente.get(cliId))||[];
+  try{ for(const {ca, dec, ate} of decadenciasDoCliente(cliId)){
+    const d = soDig(ca.nb), kd = d ? ksCli.find(k=>k.fase!=="encerrado" && nbsDoCaso(k).some(x=>soDig(x)===d)) : null;
+    linhas.push({data:ate, ico:"📜", natureza:"lembrete", casoId:kd ? kd.id : undefined, cru:true, rotulo:"Revisão até", curto:"Revisão: decadência",
+      resumo: ca.nb ? `NB ${fmtNb(ca.nb)}` : "carta de concessão",
+      rot:`<b>A revisão do ato de concessão${ca.nb?` do NB ${esc(fmtNb(ca.nb))}`:""} pode ser pedida até ${fmt(ate)}</b>
+           <small class="qd-de">Dez anos do dia 1º do mês seguinte ao primeiro pagamento (Lei 8.213/91, art. 103); ${esc(dec.base)}</small>`,
+      edita:"", acao:""});
+  } }catch(e){}
   // anotações datadas não resolvidas — pulando a que já virou lembrete
   // (salvarNotaAtendimento2 cria o gêmeo com título "Anotação: {60}")
   // F59 · o responsável vira a bolinha colorida com a inicial (identificação
@@ -35917,6 +36087,13 @@ function linhasDeDatas(cliId){
       if(igualA==="rec") tambem(l);
       linhas.push(l);
     }
+    // P1 · o mandado de segurança contra o indeferimento, ao lado do recurso: o escritório escolhe a via, e a data corre
+    const msd = msAte(x);
+    if(msd) linhas.push({data:msd, ico:"⚖️", natureza:"compromisso", casoId:x.id, cru:true, rotulo:"Mandado de segurança até", curto:"MS: 120 dias",
+      resumo:"contados da decisão; confirme a ciência",
+      rot:`<b>Mandado de segurança contra o indeferimento até ${fmt(msd)}</b>
+           <small class="qd-de">120 dias da ciência do ato (Lei 12.016/2009, art. 23), contados aqui da decisão de ${fmt(x.decisao_em)}, o dia mais cedo; a ciência posterior adia a data · ${tit}</small>`,
+      edita:"", acao:""});
     // F236 · a sustentação oral da sessão que vale: se as razões não a pediram, até 3 dias úteis antes da sessão (Regimento
     // do CRPS, art. 81, III), com a procuração no recurso até a mesma data (§ 3º). Proposta num clique (a tarefa vai ao
     // administrador, que decide se pede); criada a tarefa, é ela que ocupa a linha
@@ -36141,10 +36318,8 @@ function linhasDeDatas(cliId){
   if(temaV10()) soltas.sort((a,b)=>(b.ehPrazo?1:0)-(a.ehPrazo?1:0) || (chave(a)<chave(b)?-1:1));
   return {linhas, soltas};
 }
-function quadroDatas(k){
-  const cliId=k.cliente_id, hj=hoje();
-  const {linhas, soltas}=linhasDeDatas(cliId);
-  const linha=(x, filha)=>{
+// P3 · a linha do quadro de datas, usada pelo quadro do caso e pela aba Prazos do cliente
+function linhaQuadro(x, filha, hj){
     const venceu=x.data<hj && !x.aConfirmar, logo=!venceu && somaDias(hj,7)>=x.data;   // F236 · a perícia a confirmar não "venceu"
     return `<li class="qd-linha${venceu?" qd-venceu":logo?" qd-logo":""}${filha?" qd-filha":""}${x.ehPrazo?" qd-prazo":""}${x.semMotivo?" qd-semmotivo":""}">
       ${filha?`<span class="qd-elo" title="decorrente do prazo acima">↳ lembrar</span>`:""}
@@ -36155,10 +36330,16 @@ function quadroDatas(k){
         ${x.clique?`title="clique para ver a anotação que criou esta data"`:""}>${
         venceu?`<b class="qd-cobra">venceu ${fmt(x.data)}</b> · `:""}${filha||x.cru?"":x.ico+" "}${x.cru?x.rot:esc(x.rot)}</span>
       ${x.avs||""}${x.acao}</li>`;
-  };
-  const grupo=x=>!x.filhas||!x.filhas.length?linha(x)
-    :`<li class="qd-grupo"><ul class="qd-lista-filhas">${linha(x)}${
-      x.filhas.sort((a,b)=>a.data<b.data?-1:1).map(f=>linha(f,true)).join("")}</ul></li>`;
+}
+function grupoQuadro(x, hj){
+  return !x.filhas||!x.filhas.length?linhaQuadro(x, false, hj)
+    :`<li class="qd-grupo"><ul class="qd-lista-filhas">${linhaQuadro(x, false, hj)}${
+      x.filhas.sort((a,b)=>a.data<b.data?-1:1).map(f=>linhaQuadro(f, true, hj)).join("")}</ul></li>`;
+}
+function quadroDatas(k){
+  const cliId=k.cliente_id, hj=hoje();
+  const {linhas, soltas}=linhasDeDatas(cliId);
+  const grupo=x=>grupoQuadro(x, hj);
   const nPrazos=linhas.filter(x=>x.ehPrazo).length;
   return `<div class="qd" id="quadro-datas">
     <div class="rotulo-caso">${temaV10()?`Prazos e providências${linhas.length?` · ${nPrazos?`${nPrazos} prazo${nPrazos>1?"s":""}`:""}${nPrazos&&linhas.length>nPrazos?" e ":""}${linhas.length>nPrazos?`${linhas.length-nPrazos} lembrete${linhas.length-nPrazos>1?"s":""}`:""}`:""}`:`📅 Lembretes e datas${linhas.length?` (${linhas.length})`:""}`}</div>
@@ -36166,6 +36347,28 @@ function quadroDatas(k){
          próprios — andamentos do escritório, aba Lembretes, Perícias */""}
     ${linhas.length?`<ul class="qd-lista">${soltas.map(grupo).join("")}</ul>`
       :`<p class="meio-sub" style="margin:2px 0 4px">${temaV10()?"Sem prazos ou providências em aberto. Registre um andamento com data para criar o lembrete.":"Nenhuma data marcada para este cliente."}</p>`}
+  </div>`;
+}
+// P3 (prazos, 31.10.2026) · a aba Prazos da ficha: todas as datas do cliente numa tela, as do cliente primeiro (qualidade,
+// decadência, contribuições, cards) e depois as de cada caso aberto, do caso mais urgente ao menos. Vencido conta à parte.
+function prazosDoCliente(cliId){
+  const {soltas} = linhasDeDatas(cliId), grupos = new Map();
+  for(const x of soltas){ const g = x.casoId || ""; if(!grupos.has(g)) grupos.set(g, []); grupos.get(g).push(x); }
+  const hj = hoje(), venc = soltas.filter(x=>x.data<hj && !x.aConfirmar).length;
+  return {grupos, total: soltas.length, venc};
+}
+function painelPrazosCliente(cliId){
+  const {grupos, total, venc} = prazosDoCliente(cliId), hj = hoje();
+  if(!total) return `<p class="meio-sub">Sem prazos ou lembretes em aberto para este cliente.</p>`;
+  const ordem = [...grupos.keys()].sort((a, b)=>(a==="" ? -1 : b==="" ? 1 : 0) || (grupos.get(a)[0].data < grupos.get(b)[0].data ? -1 : 1));
+  return `<div class="pz-cli">
+    <p class="meio-sub">${total} data${total>1?"s":""} em aberto${venc ? `, <b class="qd-cobra">${venc} vencida${venc>1?"s":""}</b>` : ""}. Cada caso continua com o seu quadro Prazos; aqui ficam todas juntas.</p>
+    ${ordem.map(g=>{
+      const k = g && D.casoPorId.get(g), xs = grupos.get(g).sort((a, b)=>a.data<b.data?-1:1);
+      const tit = k ? `${esc(tituloCaso(k))} · ${esc(NOME_FASE[faseEfetiva(k)]||k.fase||"")}` : "Do cliente";
+      return `<section class="qd pz-cli-g" data-caso="${g}"><div class="rotulo-caso">${tit}${k ? ` <button class="btn-mini" onclick="casoSel='${k.id}';abaAtiva=2;repintarFicha()">abrir o caso</button>` : ""}</div>
+        <ul class="qd-lista">${xs.map(x=>grupoQuadro(x, hj)).join("")}</ul></section>`;
+    }).join("")}
   </div>`;
 }
 // ══════════════════════════════════════════════════════════════════════════
@@ -36211,7 +36414,10 @@ function faixaPrazos(k){
   faixaAtual = minhas;
   // F182 · F245 · a conferência em um clique; F276 · ela mora no "⋯" ao lado do título, para o quadro ficar só com as datas
   const conf = botoesConferir(k, "fp-conf");
-  const tit = `<div class="fp-cab"><h3 class="fp-tit">Prazos</h3>${conf ? `<details class="tl-mais fp-menu"><summary class="tl-bt tl-bt-ic" aria-label="Conferir o caso" title="conferir o caso: sem novidade ou movimentou">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${conf}</span></details>` : ""}</div>`;
+  // P3 · as datas dos outros casos do cliente não entram aqui: um link leva à aba Prazos da ficha, onde ficam todas
+  const fora = soltas.filter(x=>x.casoId && x.casoId!==k.id).length;
+  const outros = fora ? ` <button type="button" class="btn-mini fp-outros" onclick="abaAtiva=5;repintarFicha()" title="ver as datas de todos os casos do cliente">+${fora} em outros casos</button>` : "";
+  const tit = `<div class="fp-cab"><h3 class="fp-tit">Prazos</h3>${outros}${conf ? `<details class="tl-mais fp-menu"><summary class="tl-bt tl-bt-ic" aria-label="Conferir o caso" title="conferir o caso: sem novidade ou movimentou">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${conf}</span></details>` : ""}</div>`;
   if(!minhas.length) return `<div class="faixa-prazos vazia" aria-label="Prazos e providências">${tit}
     <span class="meio-sub">Sem prazos ou lembretes em aberto. Um andamento com data cria o lembrete; a anotação com ⏰ cria o prazo.</span></div>`;
   // F236 · sem mexer na ordem (F145), o que não pode passar despercebido: o PRÓXIMO (a menor data de hoje em diante
@@ -42866,6 +43072,45 @@ function docsPreCasoComData(){
   return out;
 }
 
+// P4 (prazos, 31.10.2026) · o pedido de documento nasce com data de entrega: 15 dias para o que o cliente tem em casa,
+// 30 para o que depende de terceiro (empresa, hospital, cartório, sindicato), sempre em dia útil
+const RX_DOC_TERCEIRO = /\bppp\b|ltcat|pcmso|prontu[aá]rio|hospital|empresa|empregador|cart[oó]rio|inteiro teor|sindicato|prefeitura|escola|declara[cç][aã]o d[aeo] (empresa|empregador|escola|sindicato|prefeitura)|ficha de registro|laudo t[eé]cnico/i;
+const diasDoDoc = nome => RX_DOC_TERCEIRO.test(String(nome||"")) ? 30 : 15;
+const prazoDocPadrao = nome => proxDiaUtil(somaDias(hoje(), diasDoDoc(nome)));
+// a fila do 🧹 Cuidar do acervo: o 📄 do caso aberto sem data (vieram do To Do e das anotações, todos sem data)
+function docsSemData(){
+  return (D.tarefas||[]).filter(t=>!t.concluida && !t.prazo && !t.particular_de && /^📄/.test(t.titulo||""))
+    .map(t=>({t, k:D.casoPorId.get(t.caso_id)})).filter(x=>x.k && x.k.fase!=="encerrado" && !ehPreCaso(x.k))
+    .map(x=>({...x, cli:D.cliPorId.get(x.k.cliente_id), nome:x.t.titulo.replace(/^📄\s*/, ""), sug:prazoDocPadrao(x.t.titulo)}))
+    .filter(x=>x.cli).sort((a, b)=>dsa(a.cli.nome).localeCompare(dsa(b.cli.nome)));
+}
+function blocoDocsSemData(){
+  const xs = docsSemData(); if(!xs.length) return "";
+  return `<details class="sem-acao neutro" id="acervo-docsdata"><summary>Documentos pedidos sem data (${xs.length}) — sem data o pedido não cobra ninguém</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">A data sugerida é de 15 dias para o papel que o cliente tem e de 30 para o que depende de empresa, hospital ou cartório. Com data, o pedido entra no quadro Prazos do caso e no Meu Dia.</p>
+    <p><button class="btn-mini forte" onclick="datarDocs()">Dar a data sugerida aos ${xs.length}</button></p>
+    ${xs.map(x=>`<div class="semcpf-it docdata" data-tarefa="${x.t.id}"><b class="semcpf-nome" style="cursor:pointer" onclick="abrirFicha('${x.cli.id}')">${esc(x.cli.nome)}</b>
+      <span class="meio-sub">${esc(cortaFrase(x.nome, 120))} · ${esc(tituloCaso(x.k))}</span>
+      <span><input type="date" value="${x.sug}" aria-label="entrega até" onchange="datarDocs(['${x.t.id}'], this.value)">
+      <button class="btn-mini" onclick="datarDocs(['${x.t.id}'])">Dar ${fmt(x.sug).slice(0,5)}</button>
+      <button class="btn-mini" onclick="concluirTarefaSolta('${x.t.id}')">Já recebido</button></span></div>`).join("")}
+  </details>`;
+}
+// grava a data de entrega dos pedidos (todos os da fila sem argumento); um PATCH por data, para o lote não pesar
+async function datarDocs(ids, data){
+  const fila = docsSemData().filter(x=>!ids || ids.includes(x.t.id));
+  if(!fila.length) return;
+  const porData = new Map();
+  for(const x of fila){ const d = data || x.sug; if(!porData.has(d)) porData.set(d, []); porData.get(d).push(x.t.id); }
+  try{
+    for(const [d, ts] of porData)
+      await api(`/rest/v1/tarefas?id=in.(${ts.join(",")})`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({prazo:d})});
+  }catch(e){ return aviso("Não consegui gravar as datas — tente de novo"); }
+  for(const [d, ts] of porData) for(const id of ts){ const t = D.tarefas.find(x=>x.id===id); if(t) t.prazo = d; }
+  aviso(fila.length>1 ? `📅 ${fila.length} pedidos com data de entrega` : `📅 entrega até ${fmt(data || fila[0].sug)}`, false);
+  render();
+}
+
 // datas em linguagem natural ("amanhã", "sexta", "dia 15") no adicionar tarefa
 const DIAS_SEMANA={domingo:0,segunda:1,terca:2,"terça":2,quarta:3,quinta:4,sexta:5,sabado:6,"sábado":6};
 function dataNatural(texto){
@@ -44736,6 +44981,34 @@ function blocoVariosCasos(){
   </details>`;
 }
 // F254 · os cadastros sem CPF, em três grupos: o que não parece cliente vem marcado; o Paulo confirma e eles saem da lista
+// P2 (prazos, 31.10.2026) · os cards das Aposentadorias futuras que trazem o pagamento escrito no texto: um clique cria o
+// plano de contribuições com a sugestão lida do texto, ou marca que o trecho não é pagamento (lembretes.crm.sem_plano)
+function cardsComPagamento(){
+  const comPlano = new Set((D.qualidade||[]).filter(q=>q.lembrete_id).map(q=>q.lembrete_id));
+  return (D.lembretes||[]).filter(l=>l.ativo!==false && ehCardApos(l) && cardVivo(l) && !comPlano.has(l.id) && !cardCrm(l).sem_plano)
+    .map(l=>({l, cli:D.cliPorId.get(l.cliente_id), tr:trechosDePagamento(l)})).filter(x=>x.cli && x.tr.length)
+    .sort((a, b)=>dsa(a.cli.nome).localeCompare(dsa(b.cli.nome)));
+}
+function blocoCardsPagamento(){
+  if(D.qualidade===null) return "";
+  const xs = cardsComPagamento(); if(!xs.length) return "";
+  return `<details class="sem-acao neutro" id="acervo-cardspg"><summary>Cards com pagamento a separar (${xs.length}) — o pagamento escrito no card vira plano de contribuições</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">O plano lembra o cliente pelo WhatsApp e entra nos Prazos e no Meu Dia. A sugestão vem do texto do card; confira antes de guardar.</p>
+    ${xs.slice(0, 60).map(({l, cli, tr})=>`<div class="semcpf-it cardpg" data-lemb="${l.id}"><b class="semcpf-nome" style="cursor:pointer" onclick="abrirFicha('${cli.id}')">${esc(cli.nome)}</b>
+      <span class="meio-sub">${esc(cortaFrase(tr.join(" · "), 220))}</span>
+      <span><button class="btn-mini forte" onclick="planoDoCard('${l.id}')">Criar o plano</button>
+      <button class="btn-mini" onclick="cardSemPlano('${l.id}')">Não é pagamento</button></span></div>`).join("")}
+    ${xs.length>60 ? `<p class="meio-sub">e mais ${xs.length-60}; os primeiros saem da lista ao serem resolvidos.</p>` : ""}
+  </details>`;
+}
+function planoDoCard(lid){
+  const l = (D.lembretes||[]).find(x=>x.id===lid); if(!l) return;
+  const tr = trechosDePagamento(l)[0] || "", sg = sugestaoDoTrecho(trechosDePagamento(l).join(" "));
+  formQualidade(l.cliente_id, "", "", {lembrete_id:lid, trecho:tr, q:{...(sg.codigo ? {codigo:sg.codigo} : {}), ...(sg.inicio ? {inicio:sg.inicio+"-01"} : {}), motivo:cortaFrase(tr, 200)}});
+}
+async function cardSemPlano(lid){
+  if(await cardGravar(lid, c=>{ c.sem_plano = true; })){ aviso("O card saiu da fila", false); render(); }
+}
 function blocoSemCpf(){
   if(!souAdmin()) return "";
   const sem = (D.clientes||[]).filter(c=>c.nome && String(c.cpf||"").replace(/\D/g,"").length!==11 && !(c.campos||{}).e_cliente)
@@ -49533,6 +49806,7 @@ const AJUDA = {
   "ficha:caso": ["Caso", `<p>À esquerda fica o cartão do caso (espécie, números e tramitação); no meio, os andamentos; à direita, os prazos.</p>
     <p>Nas abas, <b>Escritório</b> traz as anotações da equipe; <b>INSS</b>, <b>Recurso</b> e <b>Judicial</b>, o que veio dos portais; <b>Caso Completo</b>, tudo junto.</p>
     <p>Escreva a anotação no campo do alto. Ao terminar o que havia a fazer hoje, use <b>Concluir por hoje</b> e escolha quando o cliente volta à fila.</p>`],
+  "ficha:prazos": ["Prazos do cliente", `<p>Junta numa tela as datas de todos os casos do cliente e as que são do cliente: qualidade de segurado, decadência da revisão, contribuições a pagar e o card das Aposentadorias futuras. Cada caso continua com o seu quadro Prazos.</p>`],
   "ficha:pericias": ["Perícias", `<p>Lista as perícias e audiências do cliente. Agende com aviso para o cliente ser avisado; depois da data, responda se compareceu.</p>`],
   "ficha:honorarios": ["Honorários", `<p>Lista as parcelas dos honorários de cada caso. Registre o recebimento na parcela; a concessão do benefício propõe as parcelas do contrato.</p>`],
   "ficha:novocaso": ["Novo caso", `<p>Informe o benefício ou serviço pedido para abrir um caso novo para o cliente.</p>`],
@@ -49568,7 +49842,7 @@ const AJUDA = {
 const AJUDA_GRUPOS = [
   ["O dia", ["meudia","mencoes","novidades","planejado","agendaq","minhas","importante","particulares","calendario","agenda"]],
   ["As listas", ["fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial","fase:aposentadoria_futura","fase:prazo","checagem","clientes","direito","rotinas","acervo"]],
-  ["A ficha e o caso", ["busca","novocliente","ficha","ficha:cadastro","ficha:caso","caso:abas","caso:cartao","caso:etapas","caso:prazos","caso:escrever","caso:concluir","caso:conferir","trouxe","ficha:pericias","ficha:honorarios","ficha:novocaso"]],
+  ["A ficha e o caso", ["busca","novocliente","ficha","ficha:cadastro","ficha:caso","caso:abas","caso:cartao","caso:etapas","caso:prazos","caso:escrever","caso:concluir","caso:conferir","trouxe","ficha:prazos","ficha:pericias","ficha:honorarios","ficha:novocaso"]],
   ["O atendimento", ["atend","atend:identificacao","atend:pa","atend:direito","atend:documentos"]],
   ["Outras telas", ["whatsapp","recebimentos","patinss","quadro","vendas","parcerias","marketing","dashboard","claude","docmodelos","config"]],
   ["Os botões do canto", ["sugestoes","agendaflut","rapida"]],
@@ -49580,7 +49854,7 @@ function ajudaChave(){
       if(!_atendAberto.has(clienteAberto)) return "ficha:cadastro";
       return {pa:"atend:pa", mapa:"atend:pa", direito:"atend:direito", documentos:"atend:documentos"}[subCad] || "atend:identificacao";
     }
-    return {2:"ficha:caso", 3:"ficha:pericias", 4:"ficha:honorarios", 7:"ficha:novocaso"}[abaAtiva] || "ficha";
+    return {2:"ficha:caso", 5:"ficha:prazos", 3:"ficha:pericias", 4:"ficha:honorarios", 7:"ficha:novocaso"}[abaAtiva] || "ficha";
   }
   if(buscaTxt) return "busca";
   return AJUDA[visao] ? visao : "meudia";
