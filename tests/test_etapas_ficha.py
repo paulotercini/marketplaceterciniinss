@@ -48,3 +48,11 @@ def test_etapas_vao_ao_campo_certo():
     assert {n["tipo"] for n in m["notas_ficha"][filho]} == {"telefone", "aposentadoria", "parente"}
     assert [x["titulo"] for x in m["tarefas"]] == ["Pedir laudo ao médico"]     # só a tarefa de verdade
     assert len(m["subtarefas_dado"]) == 5
+
+
+def test_nascimento_sem_barras_nao_e_protocolo():
+    """Teste 11.88, DAD-07: a etapa "30101977" (o nascimento) virava protocolo do caso."""
+    assert f("30101977") == ("dado", None)
+    assert f("30/10/1977") == ("dado", None)
+    assert f("1609576474") == ("protocolo", "1609576474")    # o protocolo de dez dígitos continua
+    assert f("99245700") == ("protocolo", "99245700")        # oito dígitos que não formam data
