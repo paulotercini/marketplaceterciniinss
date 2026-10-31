@@ -64,6 +64,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const caixa = () => p.evaluate(() => { const e = document.getElementById("atend-conversa"); if (!e || e.offsetParent === null && getComputedStyle(e).position !== "fixed") return null;
     const r = e.getBoundingClientRect(); return { fixo: getComputedStyle(e).position === "fixed", dir: Math.round(innerWidth - r.right), larg: Math.round(r.width), aberto: e.open }; });
   await p.evaluate(([a, x]) => abrirAtendimentoDe(a, x), [A, "pc_r1"]); await p.waitForTimeout(500);
+  // F320 · as anotações são gaveta: nascem fechadas, com a aba vertical; o botão "Anotações N" do cabeçalho abre
+  conf("a gaveta das anotações nasce fechada, com a aba vertical à direita", await p.evaluate(() => getComputedStyle(document.getElementById("atend-conversa")).display === "none") && await p.evaluate(() => { const b = document.querySelector(".atend-aba-notas"); const r = b && b.getBoundingClientRect(); return !!r && r.width > 0 && innerWidth - r.right < 4; }));
+  await p.click(".atend-notas-bt"); await p.waitForTimeout(200);
+  conf("o botão Anotações do cabeçalho abre a gaveta e a escolha fica no navegador", await p.evaluate(() => localStorage.getItem("crm_atend_notas") === "1" && document.querySelector(".atend-notas-bt").getAttribute("aria-expanded") === "true"));
   for (const v of ["identificacao", "pa", "direito", "documentos"]) {
     await ir(v); const b = await caixa();
     conf(`em ${v}, as anotações ficam abertas e fixas à direita (${JSON.stringify(b)})`, b && b.fixo && b.dir < 90 && b.aberto);   // 11.92 · TRI-09: à esquerda da coluna dos flutuantes (76 px)
@@ -101,7 +105,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const at = await p.evaluate(() => [...document.querySelectorAll(".atend-atalhos button")].map(b => [b.textContent, b.disabled, (b.getAttribute("onclick") || "")]));
   conf(`no pé das anotações, CNIS Resumido, CNIS Completo e Declaração de Beneficiário (${at.map(x => x[0]).join(", ")})`, at.map(x => x[0]).join("|") === "CNIS Resumido|CNIS Completo|Declaração de Beneficiário");
   conf("o que está no dossiê abre o anexo; o que falta fica desligado", /ax_res/.test(at[0][2]) && at[1][1] && /ax_dec/.test(at[2][2]) && !at[0][1] && !at[2][1]);
-  conf("os atalhos ficam no canto de baixo à direita, abaixo das anotações", await p.evaluate(() => { const b = document.querySelector(".atend-atalhos").getBoundingClientRect(), c = document.getElementById("atend-conversa").getBoundingClientRect(); return b.top >= c.bottom && b.bottom >= innerHeight - 30 && b.right >= innerWidth - 90; }));   // 11.92 · TRI-09: ao lado da coluna dos flutuantes
+  conf("os atalhos ficam dentro da gaveta, abaixo dos documentos a pedir", await p.evaluate(() => { const b = document.querySelector(".atend-atalhos"), d = document.querySelector(".atend-docs"); return !!b.closest("#atend-conversa") && b.getBoundingClientRect().top >= d.getBoundingClientRect().bottom; }));   // F313
   // fora do atendimento, sem quadro nem painel
   await p.evaluate(a => { _atendAberto.delete(a); irSubCad("direito"); }, A); await p.waitForTimeout(300);
   conf("fora do atendimento, nem as pendências nem as anotações fixas", await p.evaluate(() => !document.querySelector(".pa-prob") && !document.getElementById("atend-conversa")));

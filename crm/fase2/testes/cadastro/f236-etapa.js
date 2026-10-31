@@ -105,7 +105,7 @@ const casoDe = id => T.casos.find(k => k.id === id);
   await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
-    localStorage.setItem("crm_tema", "v10");
+    localStorage.setItem("crm_tema", "v10"); localStorage.setItem("crm_etapas", "1");   // F320 · as etapas abertas (no computador nascem recolhidas)
   }, [SUPA, SESSAO]);
   await instalarBanco(ctx, { SUPA, SESSAO, banco });
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
@@ -138,7 +138,7 @@ const casoDe = id => T.casos.find(k => k.id === id);
     v.etapa === "aguardando perícia" && v.velha === "etapa desatualizada"
     && v.sug === `Sugestão: decidido · indeferido (pela situação do PAT “Concluída - Indeferida” de ${curta(-8)}) — Aceitar`);
   conf("A2 uma etapa só na tela: a placa, o 'Agora:' da trilha e a aba da fase dizem a mesma coisa",
-    v.agora === "aguardando perícia" && v.atual.startsWith("aguardando perícia"));   // F243 · a aba da fase atual traz a etapa (e o passo por vir)
+    v.agora === "aguardando perícia" && v.atual === "atual");   // F320 · a etapa fica na linha do resumo; a aba da fase diz só "atual"
   await p.waitForTimeout(400);
   conf("A3 a etapa contrariada ganha a marca para o portal (trilha.velha), e a etapa em si não muda",
     (casoDe(A.id).trilha || {}).velha && casoDe(A.id).trilha.velha.etapa === "aguardando perícia" && casoDe(A.id).trilha.velha.proposta === "decidido"
