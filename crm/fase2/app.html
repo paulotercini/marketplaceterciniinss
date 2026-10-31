@@ -5300,7 +5300,9 @@ html .desf .desf-outras{align-items:center}
 }
 html .outras-abas .oa-txt{flex-direction:row;align-items:baseline;gap:8px}
 html .outras-abas .oa-txt > span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-html .faixa-prazos .fp-cab{display:flex;align-items:center;gap:8px}
+html .faixa-prazos .fp-cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mt-pzv{color:var(--venc,#b42318);font-weight:400}
+.fp-outros{white-space:nowrap}
 html .faixa-prazos .fp-menu{margin-left:auto;position:relative}
 /* F274 · o ⋯ que abre para baixo (no alto da tela não há espaço acima) */
 html .tl-mais.mais-baixo{position:relative}
@@ -18655,6 +18657,8 @@ function pintarFicha(){
       ${ks.length ? `<button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
         title="${(kk=>kk?"caso aberto: "+esc(tituloCaso(kk)):"escolher o caso do cliente")(casoSel&&D.casoPorId.get(casoSel))}">Casos${
           (n=>n>1?` (${n})`:"")(processosDe(ks).length)} ▾</button>` : ""}
+      ${/* P3 · a aba Prazos junta as datas de todos os casos e as do cliente (decisão do Paulo, 31.10.2026) */""}
+      ${(z=>(z.total||abaAtiva===5) ? `<button class="mt ${abaAtiva===5?"on":""}" data-vv="5">Prazos${z.total?` (${z.total})`:""}${z.venc?` <span class="mt-pzv">· ${z.venc} vencido${z.venc>1?"s":""}</span>`:""}</button>` : "")((()=>{ try{ return prazosDoCliente(cliId); }catch(e){ return {total:0, venc:0}; } })())}
       ${/* F170 · Perícias só com perícia AGENDADA (de hoje em diante, não
            cancelada). A anotação do caso "perícia agendada para 05/10 às
            9h40" já cria o agendamento (extrairEvento), e a aba aparece */""}
@@ -18746,6 +18750,10 @@ function pintarFicha(){
       <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
       <datalist id="lista-especies">${ESPECIES.map(([c,n])=>`<option value="${c}">${esc(n)}</option>`).join("")}</datalist>`;
     })()}
+  </div>
+
+  <div class="painel ${abaAtiva===5?"ativo":""}" data-p="5">
+    ${abaAtiva===5 ? painelPrazosCliente(cliId) : ""}
   </div>
 
   <div class="painel ${abaAtiva===3?"ativo":""}" data-p="3">
@@ -36160,10 +36168,8 @@ function linhasDeDatas(cliId){
   if(temaV10()) soltas.sort((a,b)=>(b.ehPrazo?1:0)-(a.ehPrazo?1:0) || (chave(a)<chave(b)?-1:1));
   return {linhas, soltas};
 }
-function quadroDatas(k){
-  const cliId=k.cliente_id, hj=hoje();
-  const {linhas, soltas}=linhasDeDatas(cliId);
-  const linha=(x, filha)=>{
+// P3 · a linha do quadro de datas, usada pelo quadro do caso e pela aba Prazos do cliente
+function linhaQuadro(x, filha, hj){
     const venceu=x.data<hj && !x.aConfirmar, logo=!venceu && somaDias(hj,7)>=x.data;   // F236 · a perícia a confirmar não "venceu"
     return `<li class="qd-linha${venceu?" qd-venceu":logo?" qd-logo":""}${filha?" qd-filha":""}${x.ehPrazo?" qd-prazo":""}${x.semMotivo?" qd-semmotivo":""}">
       ${filha?`<span class="qd-elo" title="decorrente do prazo acima">↳ lembrar</span>`:""}
@@ -36174,10 +36180,16 @@ function quadroDatas(k){
         ${x.clique?`title="clique para ver a anotação que criou esta data"`:""}>${
         venceu?`<b class="qd-cobra">venceu ${fmt(x.data)}</b> · `:""}${filha||x.cru?"":x.ico+" "}${x.cru?x.rot:esc(x.rot)}</span>
       ${x.avs||""}${x.acao}</li>`;
-  };
-  const grupo=x=>!x.filhas||!x.filhas.length?linha(x)
-    :`<li class="qd-grupo"><ul class="qd-lista-filhas">${linha(x)}${
-      x.filhas.sort((a,b)=>a.data<b.data?-1:1).map(f=>linha(f,true)).join("")}</ul></li>`;
+}
+function grupoQuadro(x, hj){
+  return !x.filhas||!x.filhas.length?linhaQuadro(x, false, hj)
+    :`<li class="qd-grupo"><ul class="qd-lista-filhas">${linhaQuadro(x, false, hj)}${
+      x.filhas.sort((a,b)=>a.data<b.data?-1:1).map(f=>linhaQuadro(f, true, hj)).join("")}</ul></li>`;
+}
+function quadroDatas(k){
+  const cliId=k.cliente_id, hj=hoje();
+  const {linhas, soltas}=linhasDeDatas(cliId);
+  const grupo=x=>grupoQuadro(x, hj);
   const nPrazos=linhas.filter(x=>x.ehPrazo).length;
   return `<div class="qd" id="quadro-datas">
     <div class="rotulo-caso">${temaV10()?`Prazos e providências${linhas.length?` · ${nPrazos?`${nPrazos} prazo${nPrazos>1?"s":""}`:""}${nPrazos&&linhas.length>nPrazos?" e ":""}${linhas.length>nPrazos?`${linhas.length-nPrazos} lembrete${linhas.length-nPrazos>1?"s":""}`:""}`:""}`:`📅 Lembretes e datas${linhas.length?` (${linhas.length})`:""}`}</div>
@@ -36185,6 +36197,28 @@ function quadroDatas(k){
          próprios — andamentos do escritório, aba Lembretes, Perícias */""}
     ${linhas.length?`<ul class="qd-lista">${soltas.map(grupo).join("")}</ul>`
       :`<p class="meio-sub" style="margin:2px 0 4px">${temaV10()?"Sem prazos ou providências em aberto. Registre um andamento com data para criar o lembrete.":"Nenhuma data marcada para este cliente."}</p>`}
+  </div>`;
+}
+// P3 (prazos, 31.10.2026) · a aba Prazos da ficha: todas as datas do cliente numa tela, as do cliente primeiro (qualidade,
+// decadência, contribuições, cards) e depois as de cada caso aberto, do caso mais urgente ao menos. Vencido conta à parte.
+function prazosDoCliente(cliId){
+  const {soltas} = linhasDeDatas(cliId), grupos = new Map();
+  for(const x of soltas){ const g = x.casoId || ""; if(!grupos.has(g)) grupos.set(g, []); grupos.get(g).push(x); }
+  const hj = hoje(), venc = soltas.filter(x=>x.data<hj && !x.aConfirmar).length;
+  return {grupos, total: soltas.length, venc};
+}
+function painelPrazosCliente(cliId){
+  const {grupos, total, venc} = prazosDoCliente(cliId), hj = hoje();
+  if(!total) return `<p class="meio-sub">Sem prazos ou lembretes em aberto para este cliente.</p>`;
+  const ordem = [...grupos.keys()].sort((a, b)=>(a==="" ? -1 : b==="" ? 1 : 0) || (grupos.get(a)[0].data < grupos.get(b)[0].data ? -1 : 1));
+  return `<div class="pz-cli">
+    <p class="meio-sub">${total} data${total>1?"s":""} em aberto${venc ? `, <b class="qd-cobra">${venc} vencida${venc>1?"s":""}</b>` : ""}. Cada caso continua com o seu quadro Prazos; aqui ficam todas juntas.</p>
+    ${ordem.map(g=>{
+      const k = g && D.casoPorId.get(g), xs = grupos.get(g).sort((a, b)=>a.data<b.data?-1:1);
+      const tit = k ? `${esc(tituloCaso(k))} · ${esc(NOME_FASE[faseEfetiva(k)]||k.fase||"")}` : "Do cliente";
+      return `<section class="qd pz-cli-g" data-caso="${g}"><div class="rotulo-caso">${tit}${k ? ` <button class="btn-mini" onclick="casoSel='${k.id}';abaAtiva=2;repintarFicha()">abrir o caso</button>` : ""}</div>
+        <ul class="qd-lista">${xs.map(x=>grupoQuadro(x, hj)).join("")}</ul></section>`;
+    }).join("")}
   </div>`;
 }
 // ══════════════════════════════════════════════════════════════════════════
@@ -36230,7 +36264,10 @@ function faixaPrazos(k){
   faixaAtual = minhas;
   // F182 · F245 · a conferência em um clique; F276 · ela mora no "⋯" ao lado do título, para o quadro ficar só com as datas
   const conf = botoesConferir(k, "fp-conf");
-  const tit = `<div class="fp-cab"><h3 class="fp-tit">Prazos</h3>${conf ? `<details class="tl-mais fp-menu"><summary class="tl-bt tl-bt-ic" aria-label="Conferir o caso" title="conferir o caso: sem novidade ou movimentou">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${conf}</span></details>` : ""}</div>`;
+  // P3 · as datas dos outros casos do cliente não entram aqui: um link leva à aba Prazos da ficha, onde ficam todas
+  const fora = soltas.filter(x=>x.casoId && x.casoId!==k.id).length;
+  const outros = fora ? ` <button type="button" class="btn-mini fp-outros" onclick="abaAtiva=5;repintarFicha()" title="ver as datas de todos os casos do cliente">+${fora} em outros casos</button>` : "";
+  const tit = `<div class="fp-cab"><h3 class="fp-tit">Prazos</h3>${outros}${conf ? `<details class="tl-mais fp-menu"><summary class="tl-bt tl-bt-ic" aria-label="Conferir o caso" title="conferir o caso: sem novidade ou movimentou">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${conf}</span></details>` : ""}</div>`;
   if(!minhas.length) return `<div class="faixa-prazos vazia" aria-label="Prazos e providências">${tit}
     <span class="meio-sub">Sem prazos ou lembretes em aberto. Um andamento com data cria o lembrete; a anotação com ⏰ cria o prazo.</span></div>`;
   // F236 · sem mexer na ordem (F145), o que não pode passar despercebido: o PRÓXIMO (a menor data de hoje em diante
@@ -49579,6 +49616,7 @@ const AJUDA = {
   "ficha:caso": ["Caso", `<p>À esquerda fica o cartão do caso (espécie, números e tramitação); no meio, os andamentos; à direita, os prazos.</p>
     <p>Nas abas, <b>Escritório</b> traz as anotações da equipe; <b>INSS</b>, <b>Recurso</b> e <b>Judicial</b>, o que veio dos portais; <b>Caso Completo</b>, tudo junto.</p>
     <p>Escreva a anotação no campo do alto. Ao terminar o que havia a fazer hoje, use <b>Concluir por hoje</b> e escolha quando o cliente volta à fila.</p>`],
+  "ficha:prazos": ["Prazos do cliente", `<p>Junta numa tela as datas de todos os casos do cliente e as que são do cliente: qualidade de segurado, decadência da revisão, contribuições a pagar e o card das Aposentadorias futuras. Cada caso continua com o seu quadro Prazos.</p>`],
   "ficha:pericias": ["Perícias", `<p>Lista as perícias e audiências do cliente. Agende com aviso para o cliente ser avisado; depois da data, responda se compareceu.</p>`],
   "ficha:honorarios": ["Honorários", `<p>Lista as parcelas dos honorários de cada caso. Registre o recebimento na parcela; a concessão do benefício propõe as parcelas do contrato.</p>`],
   "ficha:novocaso": ["Novo caso", `<p>Informe o benefício ou serviço pedido para abrir um caso novo para o cliente.</p>`],
@@ -49614,7 +49652,7 @@ const AJUDA = {
 const AJUDA_GRUPOS = [
   ["O dia", ["meudia","mencoes","novidades","planejado","agendaq","minhas","importante","particulares","calendario","agenda"]],
   ["As listas", ["fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial","fase:aposentadoria_futura","fase:prazo","checagem","clientes","direito","rotinas","acervo"]],
-  ["A ficha e o caso", ["busca","novocliente","ficha","ficha:cadastro","ficha:caso","caso:abas","caso:cartao","caso:etapas","caso:prazos","caso:escrever","caso:concluir","caso:conferir","trouxe","ficha:pericias","ficha:honorarios","ficha:novocaso"]],
+  ["A ficha e o caso", ["busca","novocliente","ficha","ficha:cadastro","ficha:caso","caso:abas","caso:cartao","caso:etapas","caso:prazos","caso:escrever","caso:concluir","caso:conferir","trouxe","ficha:prazos","ficha:pericias","ficha:honorarios","ficha:novocaso"]],
   ["O atendimento", ["atend","atend:identificacao","atend:pa","atend:direito","atend:documentos"]],
   ["Outras telas", ["whatsapp","recebimentos","patinss","quadro","vendas","parcerias","marketing","dashboard","claude","docmodelos","config"]],
   ["Os botões do canto", ["sugestoes","agendaflut","rapida"]],
@@ -49626,7 +49664,7 @@ function ajudaChave(){
       if(!_atendAberto.has(clienteAberto)) return "ficha:cadastro";
       return {pa:"atend:pa", mapa:"atend:pa", direito:"atend:direito", documentos:"atend:documentos"}[subCad] || "atend:identificacao";
     }
-    return {2:"ficha:caso", 3:"ficha:pericias", 4:"ficha:honorarios", 7:"ficha:novocaso"}[abaAtiva] || "ficha";
+    return {2:"ficha:caso", 5:"ficha:prazos", 3:"ficha:pericias", 4:"ficha:honorarios", 7:"ficha:novocaso"}[abaAtiva] || "ficha";
   }
   if(buscaTxt) return "busca";
   return AJUDA[visao] ? visao : "meudia";
