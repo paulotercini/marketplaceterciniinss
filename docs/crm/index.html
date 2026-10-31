@@ -5731,7 +5731,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.95</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.96</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12655,7 +12655,7 @@ function renderAcervo(){
   document.getElementById("sub-lista").textContent =
     "O trabalho sem data marcada: rotina, conferências e processos parados. Nada aqui vence hoje.";
   const corpo = blocoRotinas() + blocoCrpsManual() + blocoCadunico()
-    + blocoCardsPagamento() + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoSemCpf();
+    + blocoCardsPagamento() + blocoDocsSemData() + blocoCardsRever() + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoSemCpf();
   document.getElementById("conteudo-meio").innerHTML = corpo
     || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
@@ -12826,6 +12826,15 @@ function itensAgendaTodos(){
     if(px) por({data:px, cli, selo:"Contribuição", resumo:`pagar até ${fmt(px)}: ${qualGuia(q)}${q.valor ? ` de ${qualValor(q.valor)}` : ""} (${qualFim(q).toLowerCase()})`},
       recepQ.length ? recepQ : advogadoDoCliente(q.cliente_id));
   }
+  // P5 · o CadÚnico do BPC: 60 dias antes do vencimento, à recepção (sem recepção, ao advogado), uma vez por cliente
+  const vistosCu = new Set();
+  for(const k of (D.casos||[])){
+    if(vistosCu.has(k.cliente_id) || !ehLoas(k)) continue;
+    vistosCu.add(k.cliente_id);
+    const cli = D.cliPorId.get(k.cliente_id), cu = cli && cadunicoDoCliente(cli.id); if(!cu) continue;
+    por({data:somaDias(cu.ate, -60), cli, selo:"CadÚnico", resumo:`atualizar o CadÚnico no CRAS até ${fmt(cu.ate)}: avisar o cliente`},
+      recepQ.length ? recepQ : advogadoDoCliente(cli.id));
+  }
   // F236 · o card de aposentadoria tem dono: o responsável dele ou o advogado do cliente. Com o direito
   // já alcançado e sem caso, cobra todo dia, na data do direito, até virar caso ou ser arquivado
   for(const l of (D.lembretes||[])){
@@ -12835,7 +12844,7 @@ function itensAgendaTodos(){
     const dd = ehCardApos(l) && dataDireitoDoCard(l);
     if(dd && dd.data<=hj) por({data:dd.data, cli, cardDir:l, prazo:true, selo:"Aposentadoria",
       resumo:`${especieDoCard(l)||"aposentadoria"}: direito desde ${fmt(dd.data)}, protocolar já`}, donos);
-    else por({data:l.proximo_em, cli, l, resumo:l.titulo}, donos);
+    else por({data:ehCardApos(l) ? proxDoCard(l) : l.proximo_em, cli, l, resumo:l.titulo}, donos);
   }
   // F236 · a rotina do escritório entra no Meu Dia de quem a faz, no dia programado, com o "já fiz"
   for(const r of (D.rotinas||[])) if(r.ativo!==false && rotinaVenceHoje(r) && !rotinaFeitaHoje(r))
@@ -16779,7 +16788,7 @@ function itensDoCalendario(){
   // CadÚnico: percorre TODOS os casos, encerrados inclusive
   (D.casos||[]).forEach(k=>{
     const c=D.cliPorId.get(k.cliente_id);
-    if(!c || !ehLoasIdoso(k,c)) return;
+    if(!c || !ehLoas(k)) return;
     const venc=renovaCadunico(k);
     if(venc) push(venc,"cadunico",`${c.nome} — renovar CadÚnico`,c.id);
   });
@@ -19256,6 +19265,8 @@ async function gravarDocsAnotados(c, muda){
   let p = peds.find(x=>x.origem==="anotacoes" && (x.precaso_id||null)===pcDoPedido(pc));
   if(!p){ p = {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], origem:"anotacoes", especie:(pc && pc.especie) || "benefício a definir", ...(pcDoPedido(pc) ? {precaso_id:pc.id} : {}), itens:[]}; peds.push(p); }
   muda(p.itens);
+  // P4 · o pedido anotado ganha a data de entrega pelo papel mais demorado (o que já tinha data a mantém)
+  if(!p.ate && p.itens.some(i=>!i.entregue)) p.ate = p.itens.filter(i=>!i.entregue).map(i=>prazoDocPadrao(i.nome)).sort().pop();
   const campos = {...(c.campos||{}), docs_pedidos:peds.filter(x=>x!==p || x.itens.length)};
   try{ await api(`/rest/v1/clientes?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos})}); }
   catch(e){ aviso("Não consegui gravar o documento — tente de novo"); return false; }
@@ -22830,8 +22841,25 @@ function ehLoasIdoso(k, cli){
   const i=idadeDe(cli && cli.dn);
   return i!=null && i>=IDADE_LOAS_IDOSO;
 }
+// P5 (prazos, 31.10.2026) · vale para todo BPC, do idoso e da pessoa com deficiência (Lei 8.742/93, art. 20, § 12: o
+// CadÚnico é requisito da concessão, da manutenção e da revisão). Sem a data anotada no caso, vale a atualização que a
+// extensão leu no Meu CadÚnico (dossie.cadunico.familia.atualizada_em)
+function baseCadunico(k){
+  if(!k) return null;
+  if(k.cadunico) return k.cadunico;
+  const fz = familiaCadunico(D.cliPorId.get(k.cliente_id)), at = fz && fz.atualizada_em;
+  return at ? (isoBr(at) || (/^\d{4}-\d{2}-\d{2}/.test(String(at)) ? String(at).slice(0,10) : null)) : null;
+}
 function renovaCadunico(k){                       // a data em que vence
-  return k && k.cadunico ? somarAnos(k.cadunico, CADUNICO_ANOS) : null;
+  const b = baseCadunico(k);
+  return b ? somarAnos(b, CADUNICO_ANOS) : null;
+}
+// a renovação do CadÚnico de quem tem BPC, uma vez por cliente (o caso mais recente), quando não há lembrete dele
+function cadunicoDoCliente(cliId){
+  const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>ehLoas(k) && !ehPreCaso(k) && renovaCadunico(k));
+  if(!ks.length || (D.lembretes||[]).some(l=>l.cliente_id===cliId && l.tipo==="cadunico" && l.ativo!==false)) return null;
+  const k = ks.sort((a, b)=>String(b.criado_em||"").localeCompare(String(a.criado_em||"")))[0];
+  return {k, ate:renovaCadunico(k), base:baseCadunico(k), doDossie:!k.cadunico};
 }
 function msgCadunico(cli, k){
   const venc=renovaCadunico(k);
@@ -22844,13 +22872,13 @@ function msgCadunico(cli, k){
     `Qualquer dúvida, fale com a gente. 🙏`;
 }
 function caixaCadunico(k, cli){
-  if(!ehLoasIdoso(k, cli)) return "";
+  if(!ehLoas(k)) return "";
   const venc=renovaCadunico(k);
   const dias=venc ? diasAte(venc) : null;
   const estado = !venc ? "sem" : dias<0 ? "venc" : dias<=90 ? "perto" : "ok";
   const tel=(cli.telefone||"").replace(/\D/g,"");
   return `<div class="cad-cx ${estado}">
-    <div class="cad-cab"><strong>🧓 LOAS idoso</strong>
+    <div class="cad-cab"><strong>${ehLoasIdoso(k, cli) ? "🧓 BPC do idoso" : "BPC da pessoa com deficiência"}</strong>
       <span class="cad-sub">CadÚnico precisa ser renovado a cada ${CADUNICO_ANOS} anos</span></div>
     <div class="form-linha" style="align-items:center;margin:8px 0 0">
       <label class="cad-lb">Última atualização:
@@ -23100,7 +23128,7 @@ function blocoCadunico(){
   const itens=[];
   (D.casos||[]).forEach(k=>{
     const c=D.cliPorId.get(k.cliente_id);
-    if(!c || !ehLoasIdoso(k,c)) return;
+    if(!c || !ehLoas(k)) return;
     const venc=renovaCadunico(k);
     if(!venc) return;
     // caso que já virou lembrete (F10) aparece pelo bloco dos lembretes; sem
@@ -23663,7 +23691,34 @@ async function cardGravar(lid, muda, extra){
 }
 async function cardDataDireito(lid, v){
   if(!v) return;
-  if(await cardGravar(lid, c=>{ c.data_direito = v; c.data_fonte = "informada no CRM"; })){ aviso(`Direito provável em ${fmt(v)} ✔`, false); repintarFicha(); }
+  if(await cardGravar(lid, c=>{ c.data_direito = v; c.data_fonte = "informada no CRM"; })){ aviso(`Direito provável em ${fmt(v)} ✔`, false); if(clienteAberto) repintarFicha(); else render(); }
+}
+// P6 (prazos, 31.10.2026) · a revisão do card: o "Rever em" do CRM (crm.rever_em) adia o lembrete vencido sem esperar o To Do,
+// cuja data (proximo_em) a sincronização regrava; vale a mais adiante das duas
+const proxDoCard = l => [l.proximo_em, cardCrm(l).rever_em].filter(Boolean).sort().pop() || null;
+async function cardReverEm(lid, v){
+  if(!v) return;
+  if(await cardGravar(lid, c=>{ c.rever_em = v; })){ aviso(`Card a rever em ${fmt(v)} ✔`, false); render(); }
+}
+// a fila do 🧹 Cuidar do acervo: o card vivo com o lembrete vencido (e o direito ainda não alcançado) ou sem data nenhuma
+function cardsARever(){
+  const hj = hoje();
+  return (D.lembretes||[]).filter(l=>l.ativo!==false && ehCardApos(l) && cardVivo(l)).map(l=>{
+    const dd = dataDireitoDoCard(l), px = proxDoCard(l);
+    const motivo = !px && !dd ? "sem data" : px && px<hj && !(dd && dd.data<=hj) ? "vencido" : "";
+    return {l, cli:D.cliPorId.get(l.cliente_id), dd, px, motivo};
+  }).filter(x=>x.cli && x.motivo).sort((a, b)=>(a.px||"") < (b.px||"") ? -1 : 1);
+}
+function blocoCardsRever(){
+  const xs = cardsARever(); if(!xs.length) return "";
+  return `<details class="sem-acao neutro" id="acervo-cardsrever"><summary>Aposentadorias futuras a rever (${xs.length}) — o lembrete venceu ou o card não tem data</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">Dê a nova data de revisão, a data provável do direito ou arquive. O card que já alcançou o direito não está aqui: ele cobra no Meu Dia até virar caso.</p>
+    ${xs.map(({l, cli, dd, px, motivo})=>`<div class="semcpf-it cardrever" data-lemb="${l.id}"><b class="semcpf-nome" style="cursor:pointer" onclick="abrirFicha('${cli.id}')">${esc(cli.nome)}</b>
+      <span class="meio-sub">${esc(cortaFrase(l.titulo||"", 80))} · ${motivo==="sem data" ? "sem data" : `lembrete venceu em ${fmt(px)}`}${dd ? ` · direito provável em ${fmt(dd.data)}` : ""}</span>
+      <span><label class="meio-sub">rever em <input type="date" min="${hoje()}" onchange="cardReverEm('${l.id}',this.value)"></label>
+      <label class="meio-sub">direito em <input type="date" value="${dd ? dd.data : ""}" onchange="cardDataDireito('${l.id}',this.value)"></label>
+      <select class="card-arquivar" aria-label="Arquivar o card" onchange="if(this.value){arquivarCard('${l.id}',this.value)}"><option value="">Arquivar…</option>${APOS_MOTIVOS.map(m=>`<option>${m}</option>`).join("")}</select></span></div>`).join("")}
+  </details>`;
 }
 async function arquivarCard(lid, motivo){
   if(!motivo) return;
@@ -35794,6 +35849,12 @@ function linhasDeDatas(cliId){
            <small class="qd-de">${esc(qualFim(q))}${q.motivo ? ` · ${esc(q.motivo)}` : ""}${q.aviso_zap ? " · o WhatsApp lembra o cliente no primeiro dia útil do mês" : ""}</small>`,
       edita:"", acao:`<button class="btn-mini" onclick="verQualidade('${cliId}')">Abrir</button>`});
   }
+  // P5 · a renovação do CadÚnico do BPC, a 180 dias ou vencida
+  const cu = cadunicoDoCliente(cliId);
+  if(cu && diasAte(cu.ate)<=180) linhas.push({data:cu.ate, ico:"🏠", natureza:"lembrete", cru:true, rotulo:"CadÚnico até", curto:"CadÚnico: atualizar até",
+    resumo:"atualizar no CRAS",
+    rot:`<b>Atualizar o CadÚnico no CRAS até ${fmt(cu.ate)}</b> <small class="qd-de">última atualização em ${fmt(cu.base)}${cu.doDossie ? ", lida no Meu CadÚnico pela extensão" : ""}; sem ela o INSS bloqueia o BPC (Lei 8.742/93, art. 20, § 12)</small>`,
+    edita:"", acao:""});
   const ksCli = (D.casosDoCliente.get(cliId))||[];
   try{ for(const {ca, dec, ate} of decadenciasDoCliente(cliId)){
     const d = soDig(ca.nb), kd = d ? ksCli.find(k=>k.fase!=="encerrado" && nbsDoCaso(k).some(x=>soDig(x)===d)) : null;
@@ -42919,6 +42980,45 @@ function docsPreCasoComData(){
     });
   }
   return out;
+}
+
+// P4 (prazos, 31.10.2026) · o pedido de documento nasce com data de entrega: 15 dias para o que o cliente tem em casa,
+// 30 para o que depende de terceiro (empresa, hospital, cartório, sindicato), sempre em dia útil
+const RX_DOC_TERCEIRO = /\bppp\b|ltcat|pcmso|prontu[aá]rio|hospital|empresa|empregador|cart[oó]rio|inteiro teor|sindicato|prefeitura|escola|declara[cç][aã]o d[aeo] (empresa|empregador|escola|sindicato|prefeitura)|ficha de registro|laudo t[eé]cnico/i;
+const diasDoDoc = nome => RX_DOC_TERCEIRO.test(String(nome||"")) ? 30 : 15;
+const prazoDocPadrao = nome => proxDiaUtil(somaDias(hoje(), diasDoDoc(nome)));
+// a fila do 🧹 Cuidar do acervo: o 📄 do caso aberto sem data (vieram do To Do e das anotações, todos sem data)
+function docsSemData(){
+  return (D.tarefas||[]).filter(t=>!t.concluida && !t.prazo && !t.particular_de && /^📄/.test(t.titulo||""))
+    .map(t=>({t, k:D.casoPorId.get(t.caso_id)})).filter(x=>x.k && x.k.fase!=="encerrado" && !ehPreCaso(x.k))
+    .map(x=>({...x, cli:D.cliPorId.get(x.k.cliente_id), nome:x.t.titulo.replace(/^📄\s*/, ""), sug:prazoDocPadrao(x.t.titulo)}))
+    .filter(x=>x.cli).sort((a, b)=>dsa(a.cli.nome).localeCompare(dsa(b.cli.nome)));
+}
+function blocoDocsSemData(){
+  const xs = docsSemData(); if(!xs.length) return "";
+  return `<details class="sem-acao neutro" id="acervo-docsdata"><summary>Documentos pedidos sem data (${xs.length}) — sem data o pedido não cobra ninguém</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">A data sugerida é de 15 dias para o papel que o cliente tem e de 30 para o que depende de empresa, hospital ou cartório. Com data, o pedido entra no quadro Prazos do caso e no Meu Dia.</p>
+    <p><button class="btn-mini forte" onclick="datarDocs()">Dar a data sugerida aos ${xs.length}</button></p>
+    ${xs.map(x=>`<div class="semcpf-it docdata" data-tarefa="${x.t.id}"><b class="semcpf-nome" style="cursor:pointer" onclick="abrirFicha('${x.cli.id}')">${esc(x.cli.nome)}</b>
+      <span class="meio-sub">${esc(cortaFrase(x.nome, 120))} · ${esc(tituloCaso(x.k))}</span>
+      <span><input type="date" value="${x.sug}" aria-label="entrega até" onchange="datarDocs(['${x.t.id}'], this.value)">
+      <button class="btn-mini" onclick="datarDocs(['${x.t.id}'])">Dar ${fmt(x.sug).slice(0,5)}</button>
+      <button class="btn-mini" onclick="concluirTarefaSolta('${x.t.id}')">Já recebido</button></span></div>`).join("")}
+  </details>`;
+}
+// grava a data de entrega dos pedidos (todos os da fila sem argumento); um PATCH por data, para o lote não pesar
+async function datarDocs(ids, data){
+  const fila = docsSemData().filter(x=>!ids || ids.includes(x.t.id));
+  if(!fila.length) return;
+  const porData = new Map();
+  for(const x of fila){ const d = data || x.sug; if(!porData.has(d)) porData.set(d, []); porData.get(d).push(x.t.id); }
+  try{
+    for(const [d, ts] of porData)
+      await api(`/rest/v1/tarefas?id=in.(${ts.join(",")})`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({prazo:d})});
+  }catch(e){ return aviso("Não consegui gravar as datas — tente de novo"); }
+  for(const [d, ts] of porData) for(const id of ts){ const t = D.tarefas.find(x=>x.id===id); if(t) t.prazo = d; }
+  aviso(fila.length>1 ? `📅 ${fila.length} pedidos com data de entrega` : `📅 entrega até ${fmt(data || fila[0].sug)}`, false);
+  render();
 }
 
 // datas em linguagem natural ("amanhã", "sexta", "dia 15") no adicionar tarefa
