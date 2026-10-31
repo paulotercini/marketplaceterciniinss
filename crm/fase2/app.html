@@ -9031,9 +9031,19 @@ function porQueParecido(item, k, quantos) {
 // escritório escreveu à mão vale mais que o que o portal devolve, e
 // sobrescrever DER conferida por DER do sistema é perder trabalho humano.
 // A exceção é a situação, que é justamente o que se quer atualizado.
+// O PROTOCOLO DO RECURSO NÃO TEM DER. A "data de entrada" da tarefa do
+// recurso é a data do recurso: gravada como DER, ela pôs a data do recurso no
+// lugar da DER do pedido em 74 casos do Conselho (31.10.2026). Ela vai ao
+// protocolo do recurso ordinário ou do especial, e a DER fica para o pedido.
+function datasDoProtocolo(det) {
+  if (!det.der) return {};
+  if (det.tipo !== 'recurso') return { der: det.der };
+  const especial = /RECESP/i.test(det.sigla || '') || /especial|incidente/i.test(det.servico || '');
+  return { [especial ? 're_protocolado_em' : 'ro_protocolado_em']: det.der };
+}
 function mudancasDoCaso(k, det) {
   const m = {};
-  if (det.der && !k.der) m.der = det.der;
+  for (const [c, v] of Object.entries(datasDoProtocolo(det))) if (!k[c]) m[c] = v;
   if (det.especie && !k.especie) m.especie = det.especie;
   if (det.beneficio && !k.beneficio) m.beneficio = det.beneficio;
   if (det.link && k.processo_link !== det.link) m.processo_link = det.link;
@@ -9123,7 +9133,8 @@ function planoDeImportacao(pat, D, hoje) {
     const cpf = digitos(daLista.cpf);
     const k = porProtocolo.get(proto);
     const item = { protocolo: proto, cpf, tipo: det.tipo, situacao: det.situacao,
-                   beneficio: det.beneficio, especie: det.especie, der: det.der,
+                   beneficio: det.beneficio, especie: det.especie, der: det.tipo === 'recurso' ? null : det.der,
+                   datas: datasDoProtocolo(det),
                    link: det.link, marcadores: det.marcadores || [],
                    urgente: !!det.urgente, a_confirmar: det.especie_a_confirmar || null,
                    quem_protocolou: det.quem_protocolou || null };
@@ -9705,7 +9716,7 @@ async function aplicarPatDeVerdade(){
   for(const novo of plano.novos) await tentar(novo.protocolo, async () => {
     const [k] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({cliente_id:novo.cliente_id, titulo:novo.nome, fase:novo.lista,
-        beneficio:novo.beneficio, especie:novo.especie, der:novo.der,
+        beneficio:novo.beneficio, especie:novo.especie, der:novo.der, ...(novo.datas||{}),
         protocolos:[novo.protocolo], marcadores:novo.marcadores,
         urgente:novo.urgente, processo_link:novo.link, situacao_inss:novo.situacao})}) || [];
     if(k){ D.casos.push(k); D.casoPorId.set(k.id,k); }
@@ -9809,7 +9820,7 @@ async function criarMesmoAssim(protocolo){
   try{
     const [k] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({cliente_id:n.cliente_id, titulo:n.nome, fase:n.lista,
-        beneficio:n.beneficio, especie:n.especie, der:n.der, protocolos:[n.protocolo],
+        beneficio:n.beneficio, especie:n.especie, der:n.der, ...(n.datas||{}), protocolos:[n.protocolo],
         marcadores:n.marcadores, urgente:n.urgente, processo_link:n.link,
         situacao_inss:n.situacao})}) || [];
     if(k){ D.casos.push(k); D.casoPorId.set(k.id,k); }
@@ -9905,7 +9916,7 @@ const resumoIngestao = r => (r.coms||r.evs)
 async function juntarUm(n){
   const k = D.casoPorId.get(n.caso_id); if(!k) return;
   const campos = { ...(corpoProtocolos(k, [n.protocolo])||{}), situacao_inss:n.situacao,
-    processo_link:n.link, ...(k.der?{}:{der:n.der}), ...(k.especie?{}:{especie:n.especie}) };
+    processo_link:n.link, ...(k.der||!n.der?{}:{der:n.der}), ...Object.fromEntries(Object.entries(n.datas||{}).filter(([c])=>!k[c])), ...(k.especie?{}:{especie:n.especie}) };
   await patchCaso(k.id, campos);
   Object.assign(k, campos);
   // F40: o que a coleta trouxe deste protocolo entra AGORA (e passa por 📣)
@@ -18440,7 +18451,7 @@ async function abrirFicha(cliId){
     D._ficha = { cliId, creds, vincs };
     retraduzirCrps(ands);   // F236 · o movimento do e-Recursos gravado com a regra velha se lê pelo bloco relido   // o que a pintura usa além do D global
     pintarFicha();
-    adotarDcbDosAutos(cliId).catch(e=>console.warn("DCB dos autos:", e));   // F236
+    adotarDcbDosAutos(cliId).then(()=>adotarQuadro(cliId)).catch(e=>console.warn("DCB dos autos / quadro:", e));   // F236, F321
     repararCardsDoCliente(cliId).catch(e=>console.warn("cards:", e));   // F236
     repararCasosDoAtendimento(cliId).catch(e=>console.warn("natureza:", e));   // F236
     // ondas 0 e 1 · em segundo plano, sem esperar: o texto do dossiê e,
@@ -25420,6 +25431,7 @@ async function lerTextoDoDossie(cliId){
     }
   } finally { _lendoDossie = null; }
   if(desde && clienteAberto===cliId) repintarSeLivre();
+  if(n && clienteAberto===cliId) adotarQuadro(cliId).catch(e=>console.warn("quadro:", e));   // F321 · a carta e o laudo lidos agora
   // trocou de cliente no meio: a leitura do que está aberto começa agora
   if(clienteAberto && clienteAberto!==cliId) lerTextoDoDossie(clienteAberto).catch(()=>{});
   return n;
@@ -35465,6 +35477,83 @@ async function adotarDcbDosAutos(cliId){
   }
   if(n && clienteAberto===cliId){ aviso("🩸 DCB lida da decisão e gravada no caso: o lembrete da prorrogação já está nos prazos", false); repintarFicha(); }
 }
+// ══ F321 · O QUADRO DO BENEFÍCIO PELOS DOCUMENTOS (onda 1, decisão do Paulo, 31.10.2026) ══
+// O campo vazio da placa (NB, espécie, DER, DIB, DCB) se preenche sozinho pelo
+// documento oficial, com a fonte em casos.ronda.fontes; o que difere do valor já
+// gravado não troca nada e vira sugestão (ronda.sugere), com Aceitar e Manter.
+// Fontes: o NB pela evidência dos documentos do número (F221), e a carta de
+// concessão e o CNIS do dossiê, casados pelo NB do caso. A DCB da decisão segue
+// em adotarDcbDosAutos.
+const CAMPOS_QUADRO = ["nb","especie","der","dib","dcb"];
+const espDoCnis = e => /^\d{1,2}$/.test(String(e||"")) ? "B"+String(e).padStart(2,"0") : "";
+function candidatosDoQuadro(k, ks, f){
+  const c = {}, por = (campo, v, fonte) => { if(v && !c[campo]) c[campo] = {v, fonte}; };
+  // o NB: cada número do caso que aponta, com folga, o mesmo NB, e NB que não é de outro caso aberto
+  const nums = numerosDoCaso(k), ev = evidenciaNbs(ks), achados = new Set();
+  for(const tipo of Object.keys(nums)) for(const d of nums[tipo]){ const r = nbDoNumero(ev, tipo, d); if(r && r.conf==="alta") achados.add(r.nb); }
+  const outros = new Set(ks.filter(x=>x!==k).flatMap(x=>nbsDoCaso(x).map(soDig)));
+  if(achados.size===1){ const nb = [...achados][0]; if(!outros.has(soDig(nb))) por("nb", soDig(nb), "documentos do processo"); }
+  const nbs = new Set([...nbsDoCaso(k), k.nb || (c.nb||{}).v].filter(Boolean).map(soDig));
+  if(!nbs.size) return c;
+  const meu = nb => nbs.has(soDig(nb));
+  const carta = (f.cartas||[]).find(x=>meu(x.nb));
+  if(carta){ por("der", isoBr(carta.der), "carta de concessão"); por("dib", isoBr(carta.dib), "carta de concessão"); }
+  const b = beneficiosDoCnis(cnisDe(D.cliPorId.get(k.cliente_id)||{})).find(x=>meu(x.nb));
+  if(b){ por("especie", espDoCnis(b.especie), "CNIS"); por("dib", b.de, "CNIS");
+    if(!b.ativo && /^(31|91)$/.test(b.especie)) por("dcb", b.ate, "CNIS"); }
+  // a DCB do laudo e da comunicação do dossiê fica no clique do Mapa e da Análise de Direito, que grava o andamento da origem
+  return c;
+}
+async function adotarQuadro(cliId){
+  const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado" && !ehPreCaso(k));
+  if(!ks.length) return;
+  const f = fontesDoDossie(cliId), feitos = [];
+  for(const k of ks){
+    const r = k.ronda||{}, recusou = r.recusou||{}, fontes = {...(r.fontes||{})}, sugere = {...(r.sugere||{})}, corpo = {};
+    for(const [campo, x] of Object.entries(candidatosDoQuadro(k, ks, f))){
+      if(!k[campo]){ corpo[campo] = x.v; fontes[campo] = {...x, em:hoje()}; delete sugere[campo]; }
+      else if(String(k[campo])!==String(x.v) && recusou[campo]!==x.v && !(sugere[campo] && sugere[campo].v===x.v)) sugere[campo] = x;
+    }
+    if(corpo.dcb){ corpo.dcb_prorrogacao_pedida = false; corpo.dcb_prorrogar_em = null; }
+    const mudouSug = JSON.stringify(sugere)!==JSON.stringify(r.sugere||{});
+    if(!Object.keys(corpo).length && !mudouSug) continue;
+    const antes = Object.fromEntries([...Object.keys(corpo), "ronda"].map(c=>[c, k[c]===undefined ? null : k[c]]));
+    corpo.ronda = {...r, fontes, sugere};
+    try{ await patchCaso(k.id, corpo); Object.assign(k, corpo); feitos.push({k, antes, n:Object.keys(corpo).length-1}); }
+    catch(e){ console.warn("quadro não gravou:", e); }
+  }
+  const n = feitos.reduce((t, x)=>t+x.n, 0);
+  if(n && clienteAberto===cliId){
+    repintarFicha();
+    avisoDesfazer(`${n} dado(s) do quadro do caso lido(s) dos documentos`, async ()=>{
+      for(const x of feitos){ await patchCaso(x.k.id, x.antes).catch(()=>{}); Object.assign(x.k, x.antes); }
+      aviso("Desfeito"); repintarFicha();
+    });
+  }
+}
+const valQuadro = (campo, v) => !v ? "" : FATOS[campo] && FATOS[campo].tipo==="data" ? fmtBarra(v) : campo==="nb" ? fmtNb(v) : String(v);
+// de onde veio o valor que está no campo, para o title da placa
+const fonteQuadro = (k, campo) => { const x = ((k.ronda||{}).fontes||{})[campo]; return x && String(x.v)===String(k[campo]) ? ` · lido de: ${x.fonte}` : ""; };
+function avisoQuadro(k){
+  return Object.entries((k.ronda||{}).sugere||{}).filter(([c])=>FATOS[c]).map(([c, x])=>`<span class="lc-f lc-etapa-aviso lc-sug-q"><span class="et-sug">${
+    x.v ? `${esc(FATOS[c].rot)} ${esc(valQuadro(c, x.v))}, pela ${esc(x.fonte)} (no caso: ${esc(valQuadro(c, k[c]))})`
+        : `${esc(FATOS[c].rot)} ${esc(valQuadro(c, k[c]))}: ${esc(x.motivo||"a conferir")}`}
+    <button type="button" class="btn-mini" onclick="quadroSugestao('${k.id}','${c}',1)">${x.v ? "Aceitar" : "Apagar"}</button>
+    <button type="button" class="btn-mini" onclick="quadroSugestao('${k.id}','${c}',0)">Manter</button></span></span>`).join("");
+}
+async function quadroSugestao(casoId, campo, aceita){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const r = k.ronda||{}, x = (r.sugere||{})[campo]; if(!x) return;
+  const sugere = {...r.sugere}; delete sugere[campo];
+  const corpo = {ronda:{...r, sugere, recusou:{...(r.recusou||{}), ...(aceita ? {} : {[campo]: x.v||""})},
+    fontes:{...(r.fontes||{}), ...(aceita && x.v ? {[campo]:{...x, em:hoje()}} : {})}}};
+  if(aceita) corpo[campo] = x.v || null;
+  const antes = Object.fromEntries(Object.keys(corpo).map(c=>[c, k[c]===undefined ? null : k[c]]));
+  try{ await patchCaso(casoId, corpo); }catch(e){ return aviso("Não gravou — tente de novo"); }
+  Object.assign(k, corpo); repintarFicha();
+  avisoDesfazer(aceita ? `${FATOS[campo].rot} ${x.v ? "trocada" : "apagada"}` : `${FATOS[campo].rot} mantida`, async ()=>{
+    await patchCaso(casoId, antes).catch(()=>{}); Object.assign(k, antes); aviso("Desfeito"); repintarFicha(); });
+}
 // F236 · a ordem ao INSS com prazo, lida da decisão: "implante o benefício no prazo de 30 (trinta) dias úteis, a contar
 // da intimação" (tutela), "conclua a análise … no prazo de 30 (trinta) dias, contados da notificação" (liminar no MS).
 // Conta da notificação certificada nos autos ou, sem ela, da ciência tácita do INSS; os dias corridos, conservadores,
@@ -37096,7 +37185,7 @@ function lcCampo(k, token){
   const mostra = !v ? `<span class="lc-vazio">a informar</span>`
     : f.tipo==="data" ? `<span class="cop lc-num" data-cop="${fmtBarra(v)}" data-cop-msg="${esc(f.rot)} copiada" title="clique para copiar">${fmtBarra(v)}</span>`
     : `<b class="lc-manual">${esc(v)}</b>`;
-  return `<span class="lc-f" title="${esc(f.dica)}"><span class="lc-k">${esc(f.rot)}</span>
+  return `<span class="lc-f" title="${esc(f.dica + fonteQuadro(k, campo))}"><span class="lc-k">${esc(f.rot)}</span>
     <span id="lc-${campo}-${k.id}">${mostra}</span>${lcJanela(k, campo)}
     <button class="lapis" title="alterar ${esc(f.rot)}" onclick="editarFato('${k.id}','${campo}','lc')">✎</button></span>`;
 }
@@ -37234,7 +37323,7 @@ function linhaCaso(k){
       </div>
       <div class="lc-placa">
       ${k.fase==="encerrado" && !k.der ? "" : `<span class="lc-f"><span class="lc-k">DER</span>${k.der
-        ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar">${fmtBarra(k.der)}</span>`
+        ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar${esc(fonteQuadro(k,"der"))}">${fmtBarra(k.der)}</span>`
         : `<span class="lc-vazio">não informada</span>`}<button class="lapis" title="alterar a DER" onclick="editarFato('${k.id}','der')">✎</button></span>`}
       ${/* F114 · o que decide ESTA espécie, e só isso; o resto em gestão do caso */""}
       ${camposEssenciais(k).map(c=>lcCampo(k,c)).join("")}
@@ -37255,6 +37344,7 @@ function linhaCaso(k){
       ${recursoParado(k)}
       ${/* F287 · a etapa mora na faixa das fases, no alto do caso; aqui fica só o aviso, quando há (etapa velha, sugestão) */""}
       ${(a=>a?`<span class="lc-f lc-etapa-aviso" title="etapa do caso: ${esc(k.etapa||"a definir")}">${a}</span>`:"")(etapasDaFase(k).length ? avisoEtapa(k) : "")}
+      ${avisoQuadro(k)}
       ${lcVerificacao(k)}
       </div>
       ${/* F287 · a flecha no meio da borda de baixo, como a alça das fases (F286) */""}
