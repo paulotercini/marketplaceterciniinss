@@ -103,7 +103,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     importa: !!q.querySelector(".paq-importa"), blocos: [...q.querySelectorAll(".paq-bloco small")].map(x => x.textContent), itens: [...q.querySelectorAll(".paq-it")].map(x => x.textContent.replace(/\s+/g, " ")) }; });
   conf("cada quadro diz o que é, o que encontramos e para que importa", cnis.oque && /O que encontramos/.test(cnis.achado) && cnis.importa);
   conf(`o CNIS traz qualidade, carência, tempo, último mês pago e o benefício pelo nome (${cnis.blocos.join(" · ")})`,
-    ["Qualidade de segurado", "Carência (meses de contribuição)", "Tempo pelo CNIS", "Último mês pago"].every(b => cnis.blocos.includes(b)) && cnis.blocos.some(b => /Auxílio-doença|Aposentadoria|Benefício/.test(b)));
+    ["Qualidade", "Carência", "Tempo", "Último mês pago"].every(b => cnis.blocos.includes(b)) && cnis.blocos.some(b => /Auxílio-doença|Aposentadoria|Benefício/.test(b)));
   conf("o indicador do CNIS aparece traduzido, com o vínculo e o que pedir", cnis.itens.some(t => /fora do prazo/.test(t) && /Peça/.test(t) && /PEXT/.test(t)));
   conf("o benefício do CNIS vira item, pelo nome (B31 de 2018)", cnis.itens.some(t => /Auxílio-doença \(B31\)/.test(t) && /2018/.test(t)));
   const rais = await p.evaluate(() => { const q = document.getElementById("paq-rais"); return { achado: (q.querySelector(".paq-achado") || {}).textContent || "",
@@ -121,7 +121,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const marca = await p.evaluate(k => { const li = document.querySelector(`.paq-it[data-k="${k}"]`); return { fora: li.classList.contains("fora"), aria: li.querySelector(".paq-cx").getAttribute("aria-checked"),
     rep: window.__rep, n: document.querySelector("#paq-rais .paq-n").textContent, foco: document.activeElement && document.activeElement.className }; }, kLic);
   conf("desmarcar risca o item e muda a caixinha, sem repintar a ficha", rep0 && marca.fora && marca.aria === "false" && marca.rep === 0);
-  conf(`o contador do quadro acompanha (${marca.n})`, /^\d+ de \d+ vão$/.test(marca.n) && !/^(\d+) de \1 vão$/.test(marca.n));
+  conf(`o contador do quadro acompanha (${marca.n})`, /^\d+ de \d+ vão à Análise$/.test(marca.n) && !/^(\d+) de \1 vão/.test(marca.n));
   await p.waitForTimeout(900);
   conf("a escolha vai para a linha do pré-caso (casos.ad.fora)", ((T.casos.find(k => k.id === KP).ad || {}).fora || []).includes(kLic));
   conf("o item desmarcado sai do que vai à Análise de Direito", await p.evaluate(([c, k]) => !itensLevados(D.cliPorId.get(c)).some(x => x.k === k) && itensLevados(D.cliPorId.get(c)).some(x => x.q === "cnis"), [P, kLic]));

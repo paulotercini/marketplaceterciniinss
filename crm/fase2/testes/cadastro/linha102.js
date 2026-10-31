@@ -75,15 +75,16 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
 
   // ── F101 · cabeçalho ─────────────────────────────────────────────────────
   const cab = await p.evaluate(() => {
-    const l1 = document.querySelector(".det-topo .linha1"), parc = l1.querySelector(".cli-parc"), st = l1.querySelector(".cli-st"), x = l1.querySelector(".fechar");
+    // F320 · a pílula do status e o advogado descem à segunda linha do cabeçalho; a parceria fica ao lado do nome
+    const l1 = document.querySelector(".det-topo .linha1"), l2 = document.querySelector(".det-topo .linha2"), parc = document.querySelector(".det-topo .cli-parc"), st = l2 && l2.querySelector(".cli-st"), x = l2 && l2.querySelector(".cli-adv");
     const cpf = document.querySelector(".det-topo .resumo [data-cop]");
-    return { parc: parc && parc.textContent.trim(), parcAntesDoStatus: parc && st && parc.getBoundingClientRect().left < st.getBoundingClientRect().left,
-      stNoCanto: st && x && (x.getBoundingClientRect().left - st.getBoundingClientRect().right) < 20,
+    return { parc: parc && parc.textContent.trim(), parcAntesDoStatus: !!(parc && l1.contains(parc)),
+      stNoCanto: !!(st && x && (x.compareDocumentPosition(st) & Node.DOCUMENT_POSITION_FOLLOWING) && st.getBoundingClientRect().width > 0),
       cpfCop: cpf && cpf.dataset.cop, cursor: cpf && getComputedStyle(cpf).cursor };
   });
   // F127 · o chip limpa o "Dr./Dra." e o "com a/o" do To Do e fica só com o nome
-  conf("a parceria aparece ao lado do nome, só porque existe", /Fictício Parceiro/.test(cab.parc || "") && !/Dr\./.test(cab.parc || "") && cab.parcAntesDoStatus);
-  conf("a pílula 'Cliente ativo' está no canto direito, colada no ✕", cab.stNoCanto);
+  conf("a parceria aparece ao lado do nome, só porque existe", /Fictício Parceiro/.test(cab.parc || "") && !/Dr\./.test(cab.parc || "") && cab.parcAntesDoStatus !== false);
+  conf("a pílula 'Cliente ativo' fica na segunda linha, depois do advogado (F320)", cab.stNoCanto);
   conf("o CPF copia no clique (cursor de copiar, sem botão)", cab.cpfCop === "12345678909" && cab.cursor === "copy");
   conf("a pílula 'volta dd.mm.aaaa' saiu do cabeçalho (F108)", await p.evaluate(() => !document.querySelector(".det-topo .volta-pilula")));
 
@@ -300,7 +301,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   // ── F114 · o essencial da espécie na linha, o resto em gestão do caso ───
   conf("a aposentadoria por idade não enche a linha: sem DIB nem DCB, a DER basta", await p.evaluate(() =>
     camposEssenciais(D.casoPorId.get(casoSel)).every(t => t[0] === "?") &&
-    ![...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()).some(r => !["DER","Tramitação","Verificação","Etapa"].includes(r))));
+    ![...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()).some(r => !["DER","Tramitação","Verificação","Etapa","Protocolo"].includes(r))));   // F320 · o protocolo do INSS com copiar
   await p.evaluate((id) => gravarEspecie(id, "B31", "B31"), CASO1); await p.waitForTimeout(300);
   const rotsDa = () => p.evaluate(() => [...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()));
   const b31 = await rotsDa();

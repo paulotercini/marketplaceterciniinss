@@ -88,6 +88,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o ✎ Sugestões fica acima do campo de escrever", fab.b <= esc.t);
   // F299 · a trilha e a placa do caso fechadas até o toque
   const vis = sel => p.$$eval(sel, a => a.some(e => e.offsetParent));
+  await p.evaluate(() => celIr("caso")); await p.waitForTimeout(400);   // F320 · as etapas e a placa moram na aba Caso
   conf("a trilha das etapas nasce recolhida", !(await vis(".tr-rol")) && (await vis(".tr-recolhida .tr-alca")));
   conf("a placa do caso nasce fechada", !(await vis(".linha-caso .lc-placa")));
   await p.screenshot({ path: OUT + "/cel-fechada.png" });
@@ -96,6 +97,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.tap(".linha-caso .lc-mais-pe"); await p.waitForTimeout(400);
   conf("o toque na flecha abre a placa do caso", await vis(".linha-caso .lc-placa"));
   await p.tap(".linha-caso .lc-mais-pe"); await p.waitForTimeout(300);
+  await p.evaluate(() => celIr("and")); await p.waitForTimeout(400);
   await p.tap(".det-mais > summary"); await p.waitForTimeout(200);
   const m = await box(".det-mais .tl-mais-menu");
   conf("o menu do ⋯ abre dentro da tela", m.l >= 0 && m.r <= 390);
