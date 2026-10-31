@@ -32,19 +32,28 @@
     const cliente = st.cliente || { cpf: String(sessao.sub || '').replace(/\D/g, ''), nome: sessao.name || '' };
 
     D.faixa('pedindo a lista de recursos…');
-    let achado = null;
+    let achado = null, vazia = false;
     for (const tok of crachas()) {
       for (const sis of SISTEMAS) {
         try {
           const r = await fetch(`/api/v1/${sis}/`, { credentials: 'include', headers: cab(tok) });
           if (r.ok) {
-            const l = R.nupsDaLista(await r.json(), cliente.cpf);
+            const lista = await r.json();
+            if (tok && Array.isArray(lista) && !lista.length) vazia = true;   // logado e a lista veio vazia
+            const l = R.nupsDaLista(lista, cliente.cpf);
             if (l.nups.length) { achado = { tok, sis, ...l }; break; }
           }
         } catch (e) {}
         await D.pausa(900);
       }
       if (achado) break;
+    }
+    // "Não foram encontrados processos para você." é fato negativo (sem recurso), e não falha de login
+    if (!achado && (vazia || /n[aã]o foram encontrados processos/i.test(document.body.innerText || ''))) {
+      const inexistentes = ['e-Recursos: o segurado não tem recurso ao CRPS'];
+      const avisoCrm = await D.resumo(cliente, 'recursos', { baixados: [], inexistentes, falhas: [] });
+      D.faixa(`0 documento(s) do e-Recursos\n• ${inexistentes[0]}` + avisoCrm, '#9A6700');
+      return { ok: 0, falhas: [] };
     }
     if (!achado) { D.faixa('o e-Recursos não devolveu recurso nenhum — refaça o login e clique de novo', '#B3261E'); return { erro: 'sem lista' }; }
     if (!achado.filtrouPorCpf && achado.nups.length > 5) {
