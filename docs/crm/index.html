@@ -6127,7 +6127,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 12.06</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 12.07</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -13161,8 +13161,11 @@ function itensAgendaTodos(){
     const igual = !k.prazo ? "" : rec===k.prazo ? "rec" : k.exigencia_prazo===k.prazo ? "exig"
       : (k.prazos_tribunal||[]).some(p=>p.fim===k.prazo && dataDoPrazo(p) && !respostaAoPrazo(k, p)) ? "trib" : "";
     const volta = k.prazo && ((k.ronda||{}).despacho||{}).prazo===k.prazo;   // F291 · a volta à fila não é prazo fatal
-    if(k.prazo && !igual) por(volta ? {data:k.prazo, k, cli, selo:"Volta à fila", resumo:k.lembrar_motivo||tituloCaso(k)}
-      : {data:k.prazo, k, cli, fatal:true, resumo:k.lembrar_motivo||tituloCaso(k)}, donos);
+    // o prazo fatal anotado com tarefa já entra pela tarefa (acima): o casos.prazo do mesmo dia não repete o item a quem a tem
+    const comTf = k.prazo && !volta ? (D.tarefasPorCaso.get(k.id)||[]).filter(t=>t.natureza==="fatal" && !t.concluida_em && t.lembrar_em===k.prazo).map(t=>t.colaborador_id) : [];
+    const donosPz = comTf.length ? (donos||[]).filter(d=>!comTf.includes(d)) : donos;
+    if(k.prazo && !igual && (!comTf.length || donosPz.length)) por(volta ? {data:k.prazo, k, cli, selo:"Volta à fila", resumo:k.lembrar_motivo||tituloCaso(k)}
+      : {data:k.prazo, k, cli, fatal:true, resumo:k.lembrar_motivo||tituloCaso(k)}, donosPz);
     // a data de início do Planner: o prazo fatal entra na agenda também no dia de começar
     if(k.prazo && k.prazo_inicio && k.prazo_inicio<k.prazo) por({data:k.prazo_inicio<hj ? hj : k.prazo_inicio, k, cli, selo:"Começar",
       resumo:`começar: prazo fatal em ${fmt(k.prazo)} (${k.lembrar_motivo||tituloCaso(k)})`}, donos);
