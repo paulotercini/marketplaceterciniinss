@@ -374,6 +374,10 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   conf("na agenda, o respondido não cobra e o da pergunta cobra", !ia.some(i => i.cli === X.c.id && i.prazo) && ia.some(i => i.cli === X2.c.id && i.prazo && /^Prazo PJe/.test(i.selo)), ia.filter(i => [X.c.id, X2.c.id].includes(i.cli)));
   conf("a mora com a tarefa de redigir o mandado de segurança não pede mais avaliação; sem ela, pede",
     !ia.some(i => i.cli === Y.c.id && i.selo === "Mora do INSS") && ia.some(i => i.cli === Y2.c.id && i.selo === "Mora do INSS"), ia.filter(i => [Y.c.id, Y2.c.id].includes(i.cli)));
+  // 31.10.2026 · a mora já vista (o "Concluir em" marcado adiante) sai do Meu Dia até essa data
+  const moraAdiada = await paulo.evaluate(id => { const k = D.casoPorId.get(id), antes = k.prazo; k.prazo = somaDias(hoje(), 7);
+    const r = itensAgenda(null).some(i => i.k && i.k.id === id && i.selo === "Mora do INSS"); k.prazo = antes; return r; }, Y2.k.id);
+  conf("a mora com a volta marcada adiante não cobra no Meu Dia", moraAdiada === false, moraAdiada);
   const exZ = ia.find(i => i.cli === Z.c.id && i.selo === "Diligência");
   conf("a descrição da diligência na agenda corta na palavra, com reticências", exZ && /…$/.test(exZ.resumo) && !/prazo estimado/.test(exZ.resumo), exZ);
   const confK = ia.some(i => i.cli === K.c.id && i.conf), confS = ia.some(i => i.cli === S.c.id && i.conf);

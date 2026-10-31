@@ -5763,7 +5763,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.98</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.99</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12833,7 +12833,7 @@ function itensAgendaTodos(){
       resumo:`até ${fmt(msd)}: 120 dias da decisão de ${fmt(k.decisao_em)} (confirme a ciência)`}, donos);
     const mora = prazoMora(k);
     // F236 · com o mandado de segurança já decidido (a tarefa de redigi-lo, a ordem de impetrar), a mora não pede avaliação
-    if(mora && mora.vencido && !msDecidido(k)) por({data:mora.data, k, cli, prazo:true, selo:"Mora do INSS",
+    if(mora && mora.vencido && !msDecidido(k) && !moraVista(k, mora)) por({data:mora.data, k, cli, prazo:true, selo:"Mora do INSS",
       resumo:`o INSS passou dos ${mora.dias} dias para decidir: avaliar o mandado de segurança`}, donos);
   }
   [...D.tarefas.filter(t=>!t.concluida && t.prazo), ...docsPreCasoComData()].forEach(t=>{
@@ -12888,7 +12888,8 @@ function itensAgendaTodos(){
     const cli = D.cliPorId.get(l.cliente_id)||null;
     const donos = l.responsavel_id ? [l.responsavel_id] : advogadoDoCliente(l.cliente_id);
     const dd = ehCardApos(l) && dataDireitoDoCard(l);
-    if(dd && dd.data<=hj) por({data:dd.data, cli, cardDir:l, prazo:true, selo:"Aposentadoria",
+    // 31.10.2026 · a data marcada para rever o card (o "Concluir em" do To Do ou o rever em) adia a cobrança do direito
+    if(dd && dd.data<=hj && !(proxDoCard(l) > hj)) por({data:dd.data, cli, cardDir:l, prazo:true, selo:"Aposentadoria",
       resumo:`${especieDoCard(l)||"aposentadoria"}: direito desde ${fmt(dd.data)}, protocolar já`}, donos);
     else por({data:ehCardApos(l) ? proxDoCard(l) : l.proximo_em, cli, l, resumo:l.titulo}, donos);
   }
@@ -13012,6 +13013,9 @@ function renderAgendaV10(qual){
   const rotUtil = util===em(1) ? "Amanhã" : `Até ${SIGLA_DIA[new Date(util+"T12:00:00").getDay()]}, ${util.slice(8,10)}/${util.slice(5,7)}`;
   const nV = itens.filter(i=>i.data<hj).length, nH = itens.filter(i=>i.data===hj).length,
         n7 = itens.filter(i=>i.data>hj && i.data<=em(7)).length, nU = itens.filter(i=>i.data>hj && i.data<=util).length;
+  // de onde vêm as vencidas, no title do número: "Mora do INSS 12 · Tarefa 8 · …"
+  const porSelo = Object.entries(itens.filter(i=>i.data<hj).reduce((m,i)=>{ const s = i.selo||(i.tc?"Tarefa":i.l?"Lembrete":"Outro"); m[s]=(m[s]||0)+1; return m; }, {}))
+    .sort((a,b)=>b[1]-a[1]).map(([s,n])=>`${s} ${n}`).join(" · ");
   const secoes = planej ? [
     ["Vencidas", d=>d<hj, "venc"], ["Hoje", d=>d===hj, "hoje"], ["Amanhã", d=>d===em(1), ""],
     ["Próximos sete dias", d=>d>em(1) && d<=em(7), ""], ["Mais tarde", d=>d>em(7), ""],
@@ -13021,9 +13025,9 @@ function renderAgendaV10(qual){
     .map(m=>m.caso_id && D.casoPorId.get(m.caso_id)).filter(Boolean));
   const dia = new Date(hj+"T12:00:00").toLocaleDateString(IDIOMA,{weekday:"long", day:"numeric", month:"long"});
   const partes = planej
-    ? [nV?`<b class="ag-venc">${nV} ${nV===1?"vencida":"vencidas"}</b>`:"", nH?`${nH} para hoje`:"",
+    ? [nV?`<b class="ag-venc" title="${esc(porSelo)}">${nV} ${nV===1?"vencida":"vencidas"}</b>`:"", nH?`${nH} para hoje`:"",
        n7?`${n7} nos próximos sete dias`:""].filter(Boolean)
-    : [nV?`<b class="ag-venc">${nV} ${nV===1?"vencida":"vencidas"}</b>`:"", nH?`${nH} para hoje`:"nada vence hoje",
+    : [nV?`<b class="ag-venc" title="${esc(porSelo)}">${nV} ${nV===1?"vencida":"vencidas"}</b>`:"", nH?`${nH} para hoje`:"nada vence hoje",
        nU?`${nU} ${util===em(1)?"para amanhã":`até ${rotUtil.slice(4)}`}`:""].filter(Boolean);
   const frase = partes.length>1 ? partes.slice(0,-1).join(", ")+" e "+partes.at(-1) : (partes[0]||"agenda limpa");
   // F236 · o atalho leva ao Planejado já filtrado na mesma pessoa, e só aparece para quem tem o Planejado
@@ -35418,6 +35422,14 @@ const pedidoDecidido = k => !!(k.resultado || (k.decisao_em && (!k.der || k.deci
 // F236 · o que abre a contagem é a perícia médica ou a avaliação social do INSS; o atendimento de preparação do
 // escritório ("Atendimento pré-perícia") e o estudo do processo não são perícia
 const ehPericiaInss = e => /per[ií]cia|avalia[çc][ãa]o social/i.test(e.tipo||"") && !/atendimento|pr[ée][- ]?per[ií]cia|estudo/i.test(e.tipo||"");
+// 31.10.2026 · a mora vencida já vista: a equipe marcou quando olhar de novo (o "Concluir em", o Concluir por hoje, o
+// "Em análise · +7 d", o ✓ de checado ou um lembrete adiante). Até essa data o Meu Dia não a cobra todo dia
+function moraVista(k, mora){
+  const hj = hoje(), r = k.ronda||{};
+  return (k.prazo && k.prazo > hj) || (r.despacho && dataSP(r.despacho.em) >= mora.data)
+    || (k.checado_em && dataSP(k.checado_em) >= mora.data)
+    || (D.tarefasPorCaso.get(k.id)||[]).some(t=>!t.concluida_em && t.lembrar_em && t.lembrar_em > hj);
+}
 function prazoMora(k){
   if(!k || faseEfetiva(k)!=="inss" || !k.der || k.exigencia_prazo || pedidoDecidido(k)) return null;
   // F236 · mandado de segurança por mora já impetrado: a demora está na Justiça e o prazo que vale é o da liminar
