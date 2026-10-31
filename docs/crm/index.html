@@ -263,7 +263,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .esc-fase.jud{color:#5b3f8c} .esc-fase.cons{color:#8a5a00}
   .esc-onde{color:var(--cinza)} .esc-voce{margin-left:auto;font-size:11px;font-weight:600;color:var(--verde,#1d5c4a)}
   .esc-tit{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;margin:0}
-  .esc-ed{font:400 11px var(--f-txt,inherit);color:var(--cinza);background:none;border:0;border-bottom:1px dotted var(--cinza);padding:0;cursor:pointer}
+  .esc-ed{font:400 13px var(--f-txt,inherit);color:var(--cinza);background:none;border:0;padding:0 4px;min-width:24px;min-height:24px;cursor:pointer}
   .esc-nome{font:inherit;font-size:14px;flex:1;min-width:160px;padding:3px 6px}
   .esc-grade{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1px 10px;font-size:13px;margin:2px 0 0}
   .esc-grade dt{color:var(--cinza)} .esc-grade dd{margin:0;min-width:0;overflow-wrap:anywhere}
@@ -272,7 +272,17 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .esc-prz.fatal{background:#f8e6e3;color:#a3332a} .esc-prz.fila{background:#fbf0d9;color:#8a5a00}
   .esc-velha{font-size:11px;color:#8a5a00}
   .esc-pe{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:2px}
-  .esc-num{font-family:var(--f-num,ui-monospace,monospace);font-size:12px;color:var(--cinza);overflow-wrap:anywhere;min-width:0}
+  .esc-gnb{font-size:11px}
+  /* F308b · no celular, só o que separa um caso do outro (pedido do Paulo, 31.10.2026) */
+  .app.celular ~ #modal .esc-cx :is(.esc-sub,.proc-sub,.esc-quem,.esc-ult-txt,.esc-avisos,.esc-pe .lc-acesso,.esc-pe a){display:none}
+  .app.celular ~ #modal .esc-pe{display:none}
+  .app.celular ~ #modal .proc-op.esc-caso{grid-template-columns:minmax(0,1fr) 22px}
+  .app.celular ~ #modal .esc-tecla{display:none}
+  .app.celular ~ #modal .esc-caso::after{content:"›";align-self:center;font-size:22px;color:var(--cinza)}
+  .app.celular ~ #modal .esc-tit{display:block}
+  .app.celular ~ #modal .proc-org .meio-sub{display:none}
+  .app.celular ~ #modal .esc-voce{margin-left:0;flex-basis:100%}
+  .app.celular ~ :is(#fab-sug,#fab-ajuda,#fab-rapida,#zap-ag):has(~ #modal[style*="block"] .esc-cx){display:none}
   .esc-abrir{margin-left:auto}
   .esc-caso .num-fora{font-size:12px;margin:0;padding:6px 10px}
   .vistos{display:inline-flex;align-items:center;gap:3px;margin-left:8px;vertical-align:middle}
@@ -18818,8 +18828,8 @@ function tituloDaEscolha(k){
   const t = tituloCaso(k);
   return t==="Benefício não definido" && justicaDoNumeroCnj(k.processo)==="estadual" ? "Ação na Justiça Estadual, espécie não definida" : t;
 }
-function cartaoEscolha(cliId, k, i, meu){
-  const n = numerosDoCaso(k), fe = faseEfetiva(k), hj = hoje();
+function cartaoEscolha(cliId, k, i, meu, destaque){
+  const fe = faseEfetiva(k), hj = hoje();
   const datas = [k.der && `DER ${fmtBarra(k.der)}`, k.dib && `DIB ${fmtBarra(k.dib)}`, k.dcb && `DCB ${fmtBarra(k.dcb)}`,
     k.ajuizado_em && `ajuizado em ${fmtBarra(String(k.ajuizado_em).slice(0,10))}`].filter(Boolean);
   const velha = (trilhaDe(k)||{}).velha;
@@ -18833,27 +18843,26 @@ function cartaoEscolha(cliId, k, i, meu){
     : /^(PJe|eproc|e-SAJ)/.test(a.texto||"") ? sisCurtoDoMov(a) : ({pat:"PAT", crps:"e-Recursos", dou:"DOU"}[a.origem] || "portal"));
   const txtAnd = a ? String(a.texto||"").replace(/^(PJe|eproc TJSP|e-SAJ TJSP)\s*\([^)]*\)\s*:?\s*/,"").split("\n")[0] : "";
   const quem = donosDoCaso(k).map(id=>((D.colPorId.get(id)||{}).nome||"").split(" ")[0]).filter(Boolean).join(", ");
-  const nums = Object.keys(TIPO_NUM).filter(t=>t!=="nb").flatMap(t=>n[t].map(d=>`${t==="proc"?"proc.":t==="nup"?"recurso":"protocolo"} ${fmtNum(t, d)}`));
   const avisos = ["proc","nup","prot"].map(t=>avisoNumeroFora(k, t)).join("")
     + (!k.especie && !k.beneficio ? `<div class="num-fora" role="note"><span>Espécie não definida${justicaDoNumeroCnj(k.processo)==="estadual" ? ": o número 8.26 indica a Justiça Estadual, onde corre a ação acidentária" : ""}. Defina na ficha do caso.</span></div>` : "");
   const portal = acessosDoCaso(k).atual.join("");
   const faseCls = fe==="judicial" || fe==="pagamento" ? "jud" : fe==="conselho" ? "cons" : "inss";
-  return `<div class="proc-op esc-caso${meu?" esc-meu":""}" data-caso="${k.id}" onclick="if(!event.target.closest('a,button,input'))escolhido('${cliId}','${k.id}')">
+  return `<div class="proc-op esc-caso${destaque?" esc-meu":""}" data-caso="${k.id}" onclick="if(!event.target.closest('a,button,input'))escolhido('${cliId}','${k.id}')">
     <span class="esc-tecla ${faseCls}" aria-hidden="true">${i<9?i+1:""}</span>
     <div class="esc-corpo">
       <div class="esc-l1"><span class="esc-fase ${faseCls}">${esc(NOME_FASE[fe]||fe||"")}</span>${ondeCorre(k)?`<span class="esc-onde">${esc(ondeCorre(k))}</span>`:""}
         ${meu?`<span class="esc-voce">você escreveu aqui em ${fmtTS(meu)}</span>`:""}</div>
-      <div class="proc-nome esc-tit" data-tit="${k.id}">${esc(tituloDaEscolha(k))}<button type="button" class="esc-ed" onclick="nomearCaso('${cliId}','${k.id}')" title="dar um nome próprio a este caso">✎ nome</button></div>
+      <div class="proc-nome esc-tit" data-tit="${k.id}">${esc(tituloDaEscolha(k))}<button type="button" class="esc-ed" onclick="nomearCaso('${cliId}','${k.id}')" title="dar um nome próprio a este caso" aria-label="dar um nome próprio a este caso">✎</button></div>
       ${datas.length?`<div class="proc-sub">${esc(datas.join(" · "))}</div>`:""}
       <dl class="esc-grade">
         ${k.etapa?`<dt>Etapa</dt><dd>${esc(k.etapa)}${velha?` <span class="esc-velha">desatualizada</span>`:""}</dd>`:""}
         ${prox||selo?`<dt>Agora</dt><dd class="esc-agora">${prox?esc(prox.txt):""}${selo}</dd>`:""}
-        <dt>Último</dt><dd>${a?`${fmtBarra(dataSP(a.criado_em))} · ${esc(quemAnd)} · ${esc(txtAnd.length>90?txtAnd.slice(0,90)+"…":txtAnd)}`:"sem andamento"}</dd>
-        ${quem?`<dt>Quem</dt><dd>${esc(quem)}</dd>`:""}
+        <dt>Último</dt><dd>${a?`${fmtBarra(dataSP(a.criado_em))} · ${esc(quemAnd)}<span class="esc-ult-txt"> · ${esc(txtAnd.length>90?txtAnd.slice(0,90)+"…":txtAnd)}</span>`:"sem andamento"}</dd>
+        ${quem?`<dt class="esc-quem">Quem</dt><dd class="esc-quem">${esc(quem)}</dd>`:""}
       </dl>
       ${k.urgente||k.exigencia_prazo?`<div>${k.urgente?`<span class="chip urg">🔥 URGENTE</span>`:""}${chipExig(k)}</div>`:""}
-      ${avisos}
-      <div class="esc-pe">${portal}${nums.length?`<span class="esc-num">${esc(nums.join(" · "))}</span>`:""}
+      <div class="esc-avisos">${avisos}</div>
+      <div class="esc-pe">${portal}
         <button type="button" class="btn-mini forte esc-abrir" onclick="escolhido('${cliId}','${k.id}')">Abrir este caso</button></div>
     </div>
   </div>`;
@@ -18871,10 +18880,10 @@ function escolherProcesso(cliId, ativos){
   // o caso em que eu escrevi por último fica marcado: em regra é o que se procura
   const minhas = new Map(); for(const a of (D._andsFicha||[])) if(a.autor_id===eu.id && ordem.some(k=>k.id===a.caso_id))
     if(!minhas.has(a.caso_id) || a.criado_em>minhas.get(a.caso_id)) minhas.set(a.caso_id, a.criado_em);
-  const meuId = [...minhas].sort((a,b)=>String(b[1]).localeCompare(String(a[1])))[0];
+  const meuId = ([...minhas].sort((a,b)=>String(b[1]).localeCompare(String(a[1])))[0]||[])[0];
   const cab = g => { if(!g.nb) return `<div class="esc-gcab"><b>Sem NB</b></div>`;
     const r = incap.find(x=>x.nb===g.nb), esp = String((g.ks.find(k=>k.especie)||{}).especie||"");
-    return `<div class="esc-gcab"><b>NB ${esc(fmtNb(g.nb))}</b>${esp?`<span>${esc(nomeDaEspecie(esp)||esp)}</span>`:""}${
+    return `<div class="esc-gcab">${esp?`<b>${esc(nomeDaEspecie(esp)||esp)}</b>`:""}<span class="esc-gnb">NB ${esc(fmtNb(g.nb))}</span>${
       r&&(r.ini||r.dcb)?`<span>${r.ini && (!r.dcb || r.ini<=r.dcb) ? `${fmtBarra(r.ini)} → ${r.dcb?fmtBarra(r.dcb):"…"}` : `DCB ${fmtBarra(r.dcb)}`}</span>`:""}${r&&r.sit?`<span class="esc-sit">${esc(r.sit)}</span>`:""}</div>`; };
   let i = 0;
   document.getElementById("modal").innerHTML=`
@@ -18882,10 +18891,10 @@ function escolherProcesso(cliId, ativos){
       <div class="modal-cx esc-cx" role="dialog" aria-labelledby="esc-t">
         <div class="modal-cab">
           <div id="esc-t"><strong>${esc(c.nome||"Cliente")}</strong> tem <b>${ativos.length} processos em aberto</b>
-            <div class="meio-sub">Clique no caso para registrar nele. O botão do portal abre o processo sem escolher o caso.</div></div>
+            <div class="meio-sub esc-sub">Clique no caso para registrar nele. O botão do portal abre o processo sem escolher o caso.</div></div>
           <button class="btn-mini" onclick="fecharEscolha()" title="voltar para a lista">✕</button>
         </div>
-        ${lista.map(g=>`<div class="esc-grupo">${cab(g)}${g.ks.map(k=>cartaoEscolha(cliId, k, i++, meuId && meuId[0]===k.id ? meuId[1] : null)).join("")}</div>`).join("")}
+        ${lista.map(g=>`<div class="esc-grupo">${cab(g)}${g.ks.map(k=>cartaoEscolha(cliId, k, i++, minhas.get(k.id) || null, meuId===k.id)).join("")}</div>`).join("")}
         <div class="proc-org"><span class="meio-sub">${ordem.length<10?`Teclas 1 a ${ordem.length} escolhem o caso.`:""}</span><button class="btn-mini" onclick="fecharEscolha();abrirOrganizar('${cliId}')"
           title="levar NB, protocolo, recurso e processo ao caso certo, ou juntar os casos que são o mesmo benefício">⇄ Organizar os números destes casos</button></div>
       </div>

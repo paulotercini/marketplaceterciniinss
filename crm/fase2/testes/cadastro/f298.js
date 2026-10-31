@@ -162,7 +162,17 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.evaluate(() => { window.scrollTo(0, 0); document.querySelectorAll("*").forEach(e => { if (e.scrollTop) e.scrollTop = 0; }); });
   await p.screenshot({ path: OUT + "/cel-meudia.png" });
   for (const v of ["agendaq", "zap", "mencoes", "recebimentos"]) { await p.evaluate(v => irPara(v), v).catch(()=>{}); await p.waitForTimeout(900); const pq = await PEQ(); conf(`em ${v}, nenhum alvo de toque abaixo de 24 px`, !pq.length) || pq.length && console.log(JSON.stringify(pq)); }
-  conf("sem erro de página", !erros.length);
+  conf("sem erro de página", !erros.length) || console.log(erros.slice(0,3));
+  // F307b · a mesma coluna em todas as listas do menu e nas abas da ficha
+  { const ruins = [];
+    const olha = async rot => { const f = await FABS(); if (!f.sug) return; const c = colunaOk(f, !!f.raio); if (!c.ok) ruins.push([rot, c]); };
+    const vs = await p.evaluate(() => [...new Set([...document.querySelectorAll(".lista-item[data-v]")].map(x => x.dataset.v))]);
+    for (const v of vs) { await p.evaluate(v => { try { fecharFicha && fecharFicha(); } catch (e) {} visao = v; buscaTxt = ""; render(); }, v).catch(() => {}); await p.waitForTimeout(500); await olha("lista " + v); }
+    await p.evaluate(id => abrirFicha(id), cA.id); await p.waitForTimeout(900);
+    await p.evaluate(() => document.querySelectorAll(".modal-fundo,#janela").forEach(x => x.remove()));
+    for (const a of [0, 1, 2, 3, 4, 5]) { await p.evaluate(a => { abaAtiva = a; repintarFicha(); }, a).catch(() => {}); await p.waitForTimeout(400); await olha("ficha aba " + a); }
+    for (const c of ["and", "pz", "caso", "cad", "hon"]) { await p.evaluate(c => { try { celIr(c); } catch (e) {} }, c); await p.waitForTimeout(300); await olha("ficha celular " + c); }
+    conf(`a coluna dos flutuantes certa em ${vs.length} listas e nas abas da ficha (F307)`, !ruins.length) || ruins.forEach(r => console.log(JSON.stringify(r))); }
   console.log(`${ok.filter(x => x[1]).length}/${ok.length} passaram`);
   await nav.close(); s.close();
   process.exit(ok.every(x => x[1]) ? 0 : 1);
