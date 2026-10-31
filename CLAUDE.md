@@ -340,6 +340,8 @@ A **F322** (etapas em lote, ondas E1 a E4 do Claude Doc "Etapas dos casos pelos 
 
 A **F323** (11.98, o que passou fica em cinza, pedido do Paulo de 31.10.2026, proposta "Etapas do caso em cinza"): na faixa das fases do computador, a fase encerrada fica em cinza com ✓ e a que não houve tracejada e riscada; a atual tem o fundo da cor dela e o selo "atual" preenchido (`.jn-atual`); a fase judicial com o mandado de segurança em curso ao lado do recurso (`trilhaParalela`) continua na cor dela (`.jn-par`), porque as duas frentes estão vivas. Na trilha, a etapa cumprida (e o grupo cumprido) fica em cinza com ✓, a atual é a única peça colorida, e a primeira seguinte não cumprida nem pulada é a "próxima" (`pxI`, `.tr-px`, barra só com o contorno). O resumo recolhido lê "Etapa <b>…</b>, aguardando …" numa frase só (`.tr-aguarda` dentro de `.tr-agora`), com a posição e a barra em cinza até a atual; a trilha aberta perde a barra de rolagem e fica com as setas. Só o visual: as marcas e a etapa do caso não mudam. Teste: `trilha183.js`.
 
+A **F321** (pedido do Paulo de 31.10.2026, versão 12.00): na coluna estreita do caso, a Fila lê em texto corrido à direita do rótulo, cada valor inteiro ("1098º de 3.173 em 30/10 previsão ~março de 2027"), e a tramitação quebra a linha em vez de terminar em reticências; a inicial de quem responde ou escreveu (`.avatar`, `.visto-av`, `.fx-av`, `.eq-ini`) é quadrada em todo o CRM, como na linha das listas, e só a foto do WhatsApp segue redonda. Teste: `f320.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
