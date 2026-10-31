@@ -163,6 +163,24 @@ function reacaoDe(m) {
   return { id: r.key.id, emoji: r.text || "" };
 }
 
+// F332 · o cliente apagou ou editou a mensagem: chega um protocolMessage com a chave
+// da original (tipo 0 = apagar para todos, 14 = editar). Editada traz o texto novo.
+function alteracaoDe(m) {
+  let c = (m && m.message) || {};
+  if (c.editedMessage) c = c.editedMessage.message || {};
+  const p = c.protocolMessage;
+  if (!p || !p.key || !p.key.id) return null;
+  const tipo = Number(p.type);
+  if (tipo === 0) return { id: p.key.id, apagada: true };
+  if (tipo === 14 && p.editedMessage) {
+    const e = p.editedMessage;
+    const texto = e.conversation || (e.extendedTextMessage && e.extendedTextMessage.text)
+      || (e.imageMessage && e.imageMessage.caption) || (e.videoMessage && e.videoMessage.caption) || "";
+    return texto ? { id: p.key.id, texto } : null;
+  }
+  return null;
+}
+
 // O que o Baileys precisa para citar (quoted) ou reagir a uma mensagem nossa
 function chaveDaMensagem(jid, original) {
   return { remoteJid: jid, id: original.externo_id, fromMe: original.direcao !== "entrada" };
@@ -193,4 +211,4 @@ const variantesFone = t => {
 
 module.exports = { variantesFone, soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem, foneDaLigacao, agruparHistorico,
                    miolo, tipoDaMensagem, textoDaMensagem, deveIgnorar,
-                   nomeSeguro, quandoWa, citacaoDe, reacaoDe, chaveDaMensagem, recente };
+                   nomeSeguro, quandoWa, citacaoDe, reacaoDe, alteracaoDe, chaveDaMensagem, recente };

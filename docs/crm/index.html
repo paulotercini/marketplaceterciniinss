@@ -1983,6 +1983,12 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-link .zl-txt span:not(.zl-site){color:#54656f;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .zap-link .zl-site{color:#8696a0;font-size:11px}
   .zap-link.carregando{padding:6px 8px}
+  .zap-b.apagada .txt{opacity:.55;text-decoration:line-through}
+  .zap-apag{display:flex;align-items:center;gap:4px;font-size:12px;font-style:italic;color:var(--muted,#667)}
+  .zap-edit{font-size:11px;color:var(--muted,#667);font-style:italic}
+  .zap-fav{color:#c9a227;font-size:12px}
+  .zap-favs{display:flex;flex-direction:column;gap:6px;max-height:60vh;overflow:auto}
+  .zap-fav-it{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:8px 10px;border:1px solid var(--linha,#ddd);border-radius:8px;background:none;cursor:pointer}
   .ze-emo{position:relative}
   .ze-emo>summary{list-style:none;cursor:pointer}
   .ze-emo>summary::-webkit-details-marker{display:none}
@@ -6124,7 +6130,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 12.07</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 12.08</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14867,6 +14873,7 @@ const ZIC = {
   mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
   agenda:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4m6-4v4"/>',
   baixo:'<path d="m6 9 6 6 6-6"/>',
+  proibido:'<circle cx="12" cy="12" r="8"/><path d="m6.5 6.5 11 11"/>',
   emoji:'<circle cx="12" cy="12" r="8.5"/><path d="M8.5 14a4 4 0 0 0 7 0"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.4"/>',
 };
 const zic = (n, t=16) => `<svg class="zic" width="${t}" height="${t}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ZIC[n]}</svg>`;
@@ -15149,12 +15156,14 @@ async function abrirConversa(id){
 }
 async function recarregarMsgs(){
   if(!zapAberta) return;
-  const antes = zapMsgs.length, comTexto = zapMsgs.filter(m=>m.texto).length;
+  // F332 · apagada, editada e favorita também repintam
+  const sig = () => zapMsgs.map(m=>`${m.id}${(m.texto||"").length}${m.apagada_em||""}${m.editada_em||""}${m.favorita_em||""}`).join("|");
+  const antes = sig();
   zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${zapAberta}&order=momento,seq`).catch(()=>zapMsgs);
   const reacAntes = JSON.stringify([...zapReacoes]);
   await carregarReacoes();
   // a transcrição do áudio chega segundos depois: um texto novo também repinta
-  if(zapMsgs.length!==antes || zapMsgs.filter(m=>m.texto).length!==comTexto
+  if(sig()!==antes
      || JSON.stringify([...zapReacoes])!==reacAntes) pintarConversaGuardando();
   else atualizarVistos();
 }
@@ -15243,6 +15252,7 @@ ${dz.sub}             ${falaPor(c)?`<span class="zt-curto">${esc(falaPor(c))}</s
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
              <div class="zt-menu">
                <button onclick="this.closest('details').open=false;zagAlternar()">Agenda de atendimentos</button>
+               <button onclick="this.closest('details').open=false;verFavoritasZap()">Mensagens favoritas${zapMsgs.some(m=>m.favorita_em)?` (${zapMsgs.filter(m=>m.favorita_em).length})`:""}</button>
                <button onclick="marcarNaoLida()">Marcar como não lida</button>
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
                ${pode?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>`:""}
@@ -15326,7 +15336,9 @@ ${dz.sub}             ${falaPor(c)?`<span class="zt-curto">${esc(falaPor(c))}</s
      </div>`;
   pintarPainelZap(c);
   const t = document.getElementById("zap-txt");
-  t.oninput = ()=>{ t.style.height="auto"; t.style.height=Math.min(t.scrollHeight,140)+"px"; sugerirFrases(); };
+  t.oninput = ()=>{ t.style.height="auto"; t.style.height=Math.min(t.scrollHeight,140)+"px"; sugerirFrases(); guardarRascZap(c.id, t.value); };
+  // F332 · o texto não enviado espera na conversa, como no aplicativo
+  if(!t.value && rascZap()[c.id]) t.value = rascZap()[c.id];
   // Enter manda, Shift+Enter pula linha — é o que a mão da equipe já espera.
   // Com as sugestões do "/" abertas, Enter escolhe a primeira
   t.onkeydown = e=>{
@@ -15635,12 +15647,14 @@ function bolhaZap(m, cli, seguida){
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${m.tipo==="audio"?"🎤 ":""}${esc(m.texto)}</div>`:"")
     : m.texto ? linksZap(m.texto) : esc(`[${m.tipo}]`);
-  const lk = !m.midia_url && m.texto ? (m.texto.match(RX_LINK_ZAP)||[])[0] : null;
+  // F332 · apagada no WhatsApp: a equipe continua vendo o que foi escrito, riscado
+  const apag = m.apagada_em ? `<div class="zap-apag">${zic("proibido",13)}${m.direcao==="entrada"?"O cliente apagou esta mensagem":"Apagada no celular"} em ${diaZap(m.apagada_em)}, ${horaSP(m.apagada_em)}</div>` : "";
+  const lk = !m.apagada_em && !m.midia_url && m.texto ? (m.texto.match(RX_LINK_ZAP)||[])[0] : null;
   // a citada pode estar no CRM (responde_a) ou só ter o id do WhatsApp
   const citada = m.responde_a ? zapMsgs.find(x=>x.id===m.responde_a)
                : m.responde_externo ? zapMsgs.find(x=>x.externo_id===m.responde_externo) : null;
   const reac = zapReacoes.get(m.id)||[];
-  return `<div class="zap-b ${m.direcao} ${m.por_bot?"bot":""} ${m.status==="erro"?"ruim":""}
+  return `<div class="zap-b ${m.direcao} ${m.por_bot?"bot":""} ${m.status==="erro"?"ruim":""} ${m.apagada_em?"apagada":""}
       ${m.status==="rascunho"?"rascunho":""} ${m.status==="agendada"?"agendada":""} ${seguida?"seguida":""}" id="zb-${m.id}">
     ${quem?`<div class="autor">${esc(m.aviso_chave?"aviso automático":quem)}${m.encaminhada_de?" · ↪ encaminhada":""}</div>`:""}
     ${citada?`<div class="zap-cit" onclick="irParaMsg('${citada.id}')">${esc(textoCurto(citada))}</div>`
@@ -15648,7 +15662,7 @@ function bolhaZap(m, cli, seguida){
     ${m.status==="agendada"?`<div class="zap-ag">${zic("agenda",14)}Agendada para ${diaZap(m.enviar_em)}, ${horaSP(m.enviar_em)}
         <button class="zl-link" onclick="cancelarAgendada('${m.id}')">cancelar</button></div>`:""}
     ${lk?previaHtml(limpaLink(lk)):""}
-    <div class="txt">${corpo}</div>
+    ${apag}<div class="txt">${corpo}</div>
     ${m.status==="rascunho"?`<div class="zap-rev">
         <span>escrito pelo sistema — confira antes de mandar</span>
         <button class="btn-mini" onclick="soltarRascunho('${m.id}')">enviar</button>
@@ -15658,7 +15672,10 @@ function bolhaZap(m, cli, seguida){
       ${m.externo_id||m.direcao==="entrada"?`<span class="zap-acoes">
         <button onclick="responderMsg('${m.id}')" title="responder citando">↩</button>
         <button onclick="reagirMsg('${m.id}')" title="reagir">😀</button>
-        <button onclick="encaminharMsg('${m.id}')" title="encaminhar para outra conversa">↪</button></span>`:""}
+        <button onclick="encaminharMsg('${m.id}')" title="encaminhar para outra conversa">↪</button>
+        <button onclick="favoritarMsg('${m.id}')" title="${m.favorita_em?"tirar dos favoritos":"favoritar"}" aria-label="${m.favorita_em?"Tirar dos favoritos":"Favoritar"}">${m.favorita_em?"★":"☆"}</button></span>`:""}
+      ${m.favorita_em?`<span class="zap-fav" title="favorita${m.favorita_por?" de "+esc((D.colPorId.get(m.favorita_por)||{}).nome||""):""}" aria-label="Favorita">★</span>`:""}
+      ${m.editada_em?`<span class="zap-edit" title="${esc("Antes: "+(m.texto_antes||""))}">Editada</span>`:""}
       ${horaSP(m.quando_wa||m.criado_em)}
       <span id="zs-${m.id}" data-st="${m.direcao==="saida"?esc(m.status||""):""}">${seloZap(m)}</span>
       ${m.status==="erro"?`<span title="${esc(m.erro||"")}">não enviou</span>`:""}
@@ -15668,6 +15685,28 @@ function bolhaZap(m, cli, seguida){
          title="a IA diz que documento é e a qual caso vai; você confere e junta">✨ juntar ao caso</button>`:""}
     </div></div>`
     + (reac.length?`<span class="zap-reac ${m.direcao==="saida"?"saida":""}" title="${esc(reac.map(r=>(r.de==="cliente"?"cliente":"escritório")+" "+r.emoji).join(" · "))}">${reac.map(r=>esc(r.emoji)).join("")}</span>`:"");
+}
+// F332 · rascunho por conversa, só neste navegador (localStorage pode faltar: segue sem)
+function rascZap(){ try{ return JSON.parse(localStorage.getItem("crm_zap_rasc")||"{}"); }catch(e){ return {}; } }
+function guardarRascZap(id, txt){
+  try{ const r = rascZap(); if(txt && txt.trim()) r[id] = txt; else delete r[id];
+       localStorage.setItem("crm_zap_rasc", JSON.stringify(r)); }catch(e){}
+}
+// F332 · a estrela do WhatsApp: favorita para a equipe toda, com quem marcou
+async function favoritarMsg(id){
+  const m = zapMsgs.find(x=>x.id===id); if(!m) return;
+  const corpo = m.favorita_em ? {favorita_em:null, favorita_por:null} : {favorita_em:new Date().toISOString(), favorita_por:eu.id};
+  try{ await api(`/rest/v1/zap_mensagens?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}); }
+  catch(e){ return aviso(msgErro(e), true); }
+  Object.assign(m, corpo); pintarConversaGuardando();
+  aviso(corpo.favorita_em ? "★ Mensagem favoritada" : "Mensagem tirada dos favoritos");
+}
+function verFavoritasZap(){
+  const fs = zapMsgs.filter(m=>m.favorita_em);
+  caixa(`<h3>★ Mensagens favoritas</h3>${fs.length ? `<div class="zap-favs">${fs.map(m=>`<button class="zap-fav-it" onclick="fecharCaixa();irParaMsg('${m.id}')">
+      <span class="meio-sub">${m.direcao==="entrada"?"Cliente":"Escritório"} · ${diaZap(m.quando_wa||m.criado_em)}, ${horaSP(m.quando_wa||m.criado_em)}</span>
+      <span>${esc(textoCurto(m))}</span></button>`).join("")}</div>`
+    : `<p class="meio-sub">Nenhuma mensagem favorita nesta conversa. Segure o balão (ou passe o mouse) e toque em ★ para guardar uma.</p>`}`);
 }
 const textoCurto = m => !m ? "" : ((m.tipo&&m.tipo!=="texto"?"["+m.tipo+"] ":"") + (m.texto||"")).replace(/\s+/g," ").slice(0,90);
 function irParaMsg(id){ const el=document.getElementById("zb-"+id); if(el){ el.scrollIntoView({block:"center"}); el.style.outline="2px solid #4a9b6f"; setTimeout(()=>el.style.outline="",1500); } }
@@ -15720,7 +15759,7 @@ async function verMidiaZap(id){
 async function enviarZap(){
   const t = document.getElementById("zap-txt"), txt = (t.value||"").trim();
   if(!txt || !zapAberta) return;
-  t.value=""; t.style.height="auto";
+  t.value=""; t.style.height="auto"; guardarRascZap(zapAberta, "");
   // nota interna nasce com direcao E status 'interna' — o banco recusa
   // qualquer nota que tente entrar na fila de envio
   try{
@@ -15769,7 +15808,7 @@ async function mandarArquivoZap(){
   aviso("Enviando "+nome+"…", false);
   try{ await subirArquivo(caminho, arq); }
   catch(e){ return aviso("Não consegui subir o arquivo: "+e.message); }
-  document.getElementById("zap-txt").value="";
+  document.getElementById("zap-txt").value=""; guardarRascZap(zapAberta, "");
   await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({conversa_id:zapAberta, direcao:"saida", autor_id:eu.id,
       tipo:tipoDoArquivo(arq), texto:legenda||null, midia_url:caminho,
@@ -15996,7 +16035,7 @@ function agendarZap(){
     await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({conversa_id:zapAberta, direcao:"saida", autor_id:eu.id, texto:txt,
         status:"agendada", enviar_em:quando.toISOString(), responde_a:zapResponder||null})});
-    zapResponder = null; t.value = "";
+    zapResponder = null; t.value = ""; guardarRascZap(zapAberta, "");
     aviso(`Agendada para ${fmtTS(quando.toISOString())} às ${h} 🗓`);
     await abrirConversa(zapAberta);
   };
@@ -16073,6 +16112,7 @@ function menuBalaoZap(id){
       ${tem('[onclick^="encaminharMsg"]')?`<button role="menuitem" data-zm="e">↪ Encaminhar</button>`:""}
       ${tem('[onclick^="virarAndamento"]')?`<button role="menuitem" data-zm="a">Registrar como andamento</button>`:""}
       ${minha?`<button role="menuitem" data-zm="x">Tirar reação</button>`:""}
+      ${m.direcao!=="interna"?`<button role="menuitem" data-zm="f">${m.favorita_em?"Tirar dos favoritos":"★ Favoritar"}</button>`:""}
     </div>`);
   document.querySelectorAll("[data-zm-r]").forEach(x=>x.onclick=()=>reagirCom(id, x.dataset.zmR));
   document.querySelectorAll("[data-zm]").forEach(x=>x.onclick=()=>{
@@ -16082,6 +16122,7 @@ function menuBalaoZap(id){
     else if(k==="e") encaminharMsg(id);
     else if(k==="a") virarAndamento(id);
     else if(k==="x") reagirCom(id, "");
+    else if(k==="f") favoritarMsg(id);
   });
 }
 
