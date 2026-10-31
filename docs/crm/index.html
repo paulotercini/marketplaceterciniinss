@@ -5729,7 +5729,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.94</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.97</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7665,6 +7665,8 @@ function fatosDaEtapa(k, ands){
     else if(/sessao de julgamento|inclusao em pauta|data\/hora da sessao/.test(s) && !/retirad|cancelad/.test(s)) ef("em pauta",["Pautado"],"pela pauta no e-Recursos");
     else if(/aguardando distribuicao|para crps\b|(\d{5,}|crps) para \d+\S* ?(jr|caj)\b/.test(s)) ef("aguardando distribuição",["Encaminhado à Junta","Encaminhado à Câmara"],"pelo e-Recursos");   // F236 · sem repetir a etapa
     else if(/distribuido ao conselheiro|redistribuido/.test(s)) ef(null,["Distribuído ao relator"]);
+    // F321 · o e-Recursos registra o recurso como "Requerimento protocolado - Tarefa: <número>", sem dizer a espécie
+    else if(/^requerimento protocolado\s*-\s*tarefa/.test(s)) ef("recurso protocolado",["Recurso ordinário protocolado"],"pelo recurso protocolado no e-Recursos");
   }
   if(k.ro_protocolado_em) add("conselho","recurso protocolado",["Recurso ordinário protocolado"],k.ro_protocolado_em,null,"pelo recurso ordinário protocolado");
   if(k.re_protocolado_em) add("conselho","recurso protocolado",["Recurso especial protocolado"],k.re_protocolado_em,null,"pelo recurso especial protocolado");
@@ -12653,7 +12655,7 @@ function renderAcervo(){
   document.getElementById("sub-lista").textContent =
     "O trabalho sem data marcada: rotina, conferências e processos parados. Nada aqui vence hoje.";
   const corpo = blocoRotinas() + blocoCrpsManual() + blocoCadunico()
-    + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoSemCpf();
+    + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoEtapasLote() + blocoSemCpf();
   document.getElementById("conteudo-meio").innerHTML = corpo
     || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
@@ -44911,6 +44913,159 @@ async function aplicarLoteOrg(){
   if(st) st.textContent = `${feitos} de ${total} passos aplicados em ${marcados.length} clientes ✔`;
   const res = document.getElementById("org-lote-res");
   if(res) res.innerHTML = `<p class="org-ok">Pronto. Os clientes com dúvida continuam na fila do Cuidar do acervo; o Desfazer de cada um fica na janela de organizar.</p>`;
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// F321 · ETAPAS EM LOTE (pedido do Paulo, 31.10.2026; plano no Claude Doc "Etapas dos casos pelos andamentos").
+// Roda a mesma proposta da placa (propostaDeEtapa, F236) em todos os casos abertos, com os andamentos do PAT, do
+// PJe e do e-Recursos lidos de uma vez, e separa em quatro grupos: A pronto (grava de uma vez, decisão do Paulo),
+// B a conferir (etapa contrariada ou fato duvidoso), C pede outra fase, D sem fato. A etapa vai ao portal do
+// cliente; por isso só o grupo A grava em bloco, e só no clique (F119).
+// ══════════════════════════════════════════════════════════════════════════
+const LOTE_ET_FASES = new Set(["inss","conselho","judicial","pagamento","peticao_inicial"]);
+const LOTE_ET_VELHO = 180;   // dias: o fato mais novo com mais tempo que isso descreve o passado
+function casosDoLoteEtapa(){
+  return D.casos.filter(k => k.fase!=="encerrado" && !ehPreCaso(k) && LOTE_ET_FASES.has(faseDaEtapa(k)));
+}
+// a dúvida que tira o caso do grupo A, ou ""
+function duvidaDaProposta(k, p, hj){
+  if(/sem confirma/.test(p.por||"")) return "perícia sem confirmação de comparecimento";
+  const ult = crpsBlocos(k).flatMap(b=>b.eventos||[]).map(e=>({d:(CRPS.dataParaISO(e.data)||""), s:dsa(e.bruto||e.resumo||"")}))
+    .sort((a,b)=>a.d<b.d?-1:1).pop();
+  if(ult && /^arquiv/.test(ult.s.trim())) return "recurso arquivado no e-Recursos";
+  const lim = new Date(hj+"T12:00:00"); lim.setDate(lim.getDate()-LOTE_ET_VELHO);
+  if(p.data < lim.toLocaleDateString("sv")) return `fato de ${fmtBarra(p.data)}, sem nada mais novo`;
+  return "";
+}
+// classifica um caso: {g:"A"|"B"|"C"|"D"|null, p, motivo}; null = a etapa já está de acordo
+function grupoDaEtapa(k, ands, hj){
+  const p = propostaDeEtapa(k, ands);
+  if(!p) return {g: k.etapa ? null : "D", p:null, motivo: k.etapa ? "" : "nenhum andamento oficial reconhecido"};
+  if(p.mover) return {g:"C", p, motivo:`o fato pede a fase ${NOME_FASE[p.mover]||p.mover}`};
+  if(p.velha || p.fora) return {g:"B", p, motivo: p.fora ? "etapa atual de outra fase" : `etapa atual “${k.etapa}” contrariada`};
+  const d = duvidaDaProposta(k, p, hj);
+  return d ? {g:"B", p, motivo:d} : {g:"A", p, motivo:""};
+}
+let _loteEt = null;   // {itens:[{k, g, p, motivo}], ands:Map(caso_id → andamentos), gravados:[{k, antes, andId}]}
+async function etapasEmLote(){
+  if(!souAdmin()) return aviso("Apenas o administrador roda as etapas em lote");
+  const ks = casosDoLoteEtapa();
+  if(clienteAberto) fecharFicha(false);
+  _loteEt = {itens:[], ands:new Map(), gravados:[]};
+  caixa(`<div class="org-lote et-lote" role="dialog" aria-labelledby="et-lote-t">
+    <h3 id="et-lote-t">Etapas dos casos pelos andamentos</h3>
+    <p class="meio-sub" id="et-lote-st" aria-live="polite">Lendo os andamentos de 0 de ${ks.length} casos…</p>
+    <progress id="et-lote-pb" max="${ks.length}" value="0"></progress>
+    <div id="et-lote-res"></div></div>`);
+  // os andamentos oficiais e as anotações de exigência, de 80 em 80 casos (a URL do in.() tem limite)
+  for(let i=0; i<ks.length; i+=80){
+    if(!document.getElementById("et-lote-pb")){ _loteEt = null; return; }   // fechou a janela: para
+    const ids = ks.slice(i, i+80).map(k=>k.id).join(",");
+    const r = await todas("andamentos", `select=id,caso_id,origem,origem_id,texto,criado_em,excluir&caso_id=in.(${ids})`
+      + `&or=(origem.in.(pat,pje,crps),texto.ilike.*exig*)`).catch(()=>null);
+    if(r===null){ _loteEt = null; return aviso("Não foi possível ler os andamentos; tente de novo"); }
+    for(const a of r){ const l = _loteEt.ands.get(a.caso_id); l ? l.push(a) : _loteEt.ands.set(a.caso_id, [a]); }
+    const pb = document.getElementById("et-lote-pb"), st = document.getElementById("et-lote-st");
+    if(pb) pb.value = Math.min(i+80, ks.length);
+    if(st) st.textContent = `Lendo os andamentos de ${Math.min(i+80, ks.length)} de ${ks.length} casos…`;
+  }
+  const hj = hoje();
+  for(const k of ks){
+    const x = grupoDaEtapa(k, _loteEt.ands.get(k.id)||[], hj);
+    if(x.g) _loteEt.itens.push({k, ...x});
+  }
+  pintarLoteEtapa();
+}
+const nomeDoCasoLote = k => { const c = D.cliPorId.get(k.cliente_id); return (c && c.nome) || k.titulo || "(sem nome)"; };
+function linhaLoteEtapa(it, i, ck){
+  const k = it.k, fase = NOME_FASE[faseDaEtapa(k)] || faseDaEtapa(k);
+  return `<li>${ck?`<label><input type="checkbox" class="et-lote-ck" data-i="${i}" checked> `:""}<b>${esc(nomeDoCasoLote(k))}</b>
+    <span class="meio-sub">${esc(fase)}${k.especie?` · ${esc(k.especie)}`:""}</span>${ck?"</label>":""}
+    ${it.p ? `<span class="et-lote-de">${k.etapa?`${esc(k.etapa)} → `:""}<b>${esc(rotuloProposta(it.p))}</b> <small class="meio-sub">(${esc(porDaProposta(it.p))})</small></span>` : ""}
+    ${it.motivo?`<small class="meio-sub et-lote-mot">${esc(it.motivo)}</small>`:""}
+    ${ck?"":`<button type="button" class="adr-bt" onclick="fecharCaixa();abrirFicha('${k.cliente_id}')">abrir</button>`}</li>`;
+}
+function pintarLoteEtapa(){
+  const L = _loteEt, res = document.getElementById("et-lote-res"); if(!L || !res) return;
+  const por = g => L.itens.map((it,i)=>[it,i]).filter(([it])=>it.g===g);
+  const A = por("A"), B = por("B"), C = por("C"), Dd = por("D");
+  const st = document.getElementById("et-lote-st");
+  if(st) st.textContent = `${L.itens.length} casos sem a etapa de acordo com os fatos: ${A.length} prontos, ${B.length} a conferir, ${C.length} pedem outra fase e ${Dd.length} sem fato oficial.`;
+  const lista = (xs, ck) => `<ul class="org-lote-lista">${xs.map(([it,i])=>linhaLoteEtapa(it, i, ck)).join("")}</ul>`;
+  res.innerHTML = `${A.length ? `<section class="org-plano"><h4>A · Prontos para gravar (${A.length})</h4>
+      <p class="meio-sub">Caso sem etapa, fato oficial da mesma fase, sem dúvida. Cada caso ganha o andamento curto "Etapa: …".</p>
+      ${lista(A, true)}
+      <div class="org-acoes"><button type="button" class="adr-bt adr-primario" id="et-lote-ok" onclick="gravarLoteEtapa()">Gravar as etapas marcadas</button>
+        <span class="meio-sub">a etapa gravada vai ao portal do cliente na próxima geração das fichas</span></div></section>` : ""}
+    ${B.length ? `<details class="org-sug" open><summary><b>B · A conferir (${B.length})</b></summary>
+      <p class="meio-sub">A etapa atual que um fato mais novo contradiz, a perícia sem confirmação, o recurso arquivado e o fato antigo. Abra a ficha e use o Aceitar da placa.</p>${lista(B)}</details>` : ""}
+    ${C.length ? `<details class="org-sug"><summary><b>C · Pedem outra fase (${C.length})</b></summary>
+      <p class="meio-sub">Trânsito, cálculos, RPV ou levantamento: o caso deve ir a outra lista. O Aceitar da placa move com a etapa.</p>${lista(C)}</details>` : ""}
+    ${Dd.length ? `<details class="org-lote-sem"><summary>D · Sem fato oficial (${Dd.length})</summary>
+      <p class="meio-sub">Nenhum andamento do PAT, do e-Recursos ou dos tribunais diz a etapa. Escolha à mão na ficha.</p>${lista(Dd)}</details>` : ""}
+    ${!L.itens.length ? `<p class="org-ok">Todos os casos abertos estão com a etapa de acordo com os fatos ✔</p>` : ""}`;
+}
+// grava a proposta num caso, sem repintar: etapa (com a trilha), resultado e data da decisão do INSS, e o andamento curto
+async function gravarPropostaEtapa(k, p){
+  const antes = {etapa:k.etapa||null, trilha:k.trilha||null, resultado:k.resultado||null, decisao_em:k.decisao_em||null};
+  const c = {etapa:p.etapa};
+  const tr = trilhaSegueEtapa(k, p.etapa); if(tr) c.trilha = tr;
+  if(p.etapa==="decidido" && p.fase==="inss"){
+    if(p.resultado && (!k.resultado || (k.decisao_em||"") < p.data)) c.resultado = p.resultado;
+    if(!k.decisao_em || k.decisao_em < p.data) c.decisao_em = p.data;
+  }
+  await patchCaso(k.id, c); Object.assign(k, c);
+  let andId = null;
+  try{
+    const [a] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto:`Etapa: ${rotuloProposta(p)} (${porDaProposta(p)})`, publico:false})}) || [];
+    if(a) andId = a.id;
+  }catch(e){}
+  return {k, antes, andId};
+}
+async function gravarLoteEtapa(){
+  const L = _loteEt; if(!L || L.gravando) return;
+  const marc = [...document.querySelectorAll(".et-lote-ck:checked")].map(x=>L.itens[+x.dataset.i]).filter(it=>it && it.g==="A");
+  if(!marc.length) return aviso("Marque ao menos um caso");
+  if(!await confirmar(`Gravar a etapa de ${marc.length} casos?\n\nCada caso ganha o andamento "Etapa: …" com o fato que a sustenta, e a etapa vai ao portal do cliente. O lote pode ser desfeito nesta janela.`)) return;
+  L.gravando = true;
+  const bt = document.getElementById("et-lote-ok"); if(bt) bt.disabled = true;
+  const st = document.getElementById("et-lote-st"), pb = document.getElementById("et-lote-pb");
+  if(pb){ pb.max = marc.length; pb.value = 0; }
+  let falhas = 0;
+  for(const it of marc){
+    try{ L.gravados.push(await gravarPropostaEtapa(it.k, it.p)); it.g = "feito"; }catch(e){ falhas++; }
+    if(pb) pb.value = L.gravados.length + falhas;
+    if(st) st.textContent = `Gravando ${L.gravados.length + falhas} de ${marc.length} etapas…`;
+  }
+  L.gravando = false;
+  montarSidebar(); if(visao==="acervo") render();
+  pintarLoteEtapa();
+  if(st) st.textContent = `${L.gravados.length} etapas gravadas${falhas?`, ${falhas} não gravaram`:""} ✔ ${st.textContent}`;
+  const res = document.getElementById("et-lote-res");
+  if(res && L.gravados.length) res.insertAdjacentHTML("afterbegin", `<p class="org-ok">${L.gravados.length} etapas gravadas.
+    <button type="button" class="adr-bt" id="et-lote-desf" onclick="desfazerLoteEtapa()">Desfazer o lote</button></p>`);
+}
+async function desfazerLoteEtapa(){
+  const L = _loteEt; if(!L || !L.gravados.length) return;
+  if(!await confirmar(`Devolver as ${L.gravados.length} etapas gravadas ao que eram e apagar os andamentos "Etapa: …"?`)) return;
+  for(const g of L.gravados){
+    Object.assign(g.k, g.antes); await patchCaso(g.k.id, g.antes).catch(()=>{});
+    if(g.andId) await api(`/rest/v1/andamentos?id=eq.${g.andId}`,{method:"DELETE"}).catch(()=>{});
+  }
+  const n = L.gravados.length; L.gravados = [];
+  L.itens.forEach(it=>{ if(it.g==="feito") it.g = "A"; });
+  montarSidebar(); if(visao==="acervo") render(); pintarLoteEtapa();
+  aviso(`${n} etapas voltaram como estavam`, false);
+}
+// no 🧹 Cuidar do acervo: quantos casos abertos ainda não têm etapa
+function blocoEtapasLote(){
+  if(!souAdmin()) return "";
+  const ks = casosDoLoteEtapa(), sem = ks.filter(k=>!k.etapa).length;
+  return `<details class="sem-acao neutro" id="acervo-etapas"><summary>Etapas dos casos (${sem} de ${ks.length} casos abertos sem etapa)</summary>
+    <div class="form-linha" style="margin:8px 0"><button class="btn-mini forte" onclick="etapasEmLote()"
+      title="lê os andamentos do PAT, do e-Recursos e dos tribunais e mostra a etapa de cada caso antes de gravar">Etapas em lote…</button>
+      <span class="meio-sub">o CRM propõe a etapa pelos andamentos oficiais e grava apenas o que você marcar</span></div></details>`;
 }
 
 // ── o repasse em um clique: número e anotação vão ao caso certo ─────────
