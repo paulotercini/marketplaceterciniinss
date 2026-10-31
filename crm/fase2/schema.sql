@@ -4748,7 +4748,7 @@ alter table zap_mensagens add column if not exists texto_antes text;
 alter table zap_mensagens add column if not exists favorita_em timestamptz;
 alter table zap_mensagens add column if not exists favorita_por uuid references colaboradores(id) on delete set null;
 create index if not exists zap_msg_favorita on zap_mensagens (conversa_id) where favorita_em is not null;
--- F334 · A NOTIFICAÇÃO DO WHATSAPP NO CELULAR (Web Push, pedido do Paulo de 31.10.2026)
+-- F335 · A NOTIFICAÇÃO DO WHATSAPP NO CELULAR (Web Push, pedido do Paulo de 31.10.2026)
 -- Cada aparelho que liga "Avisar neste aparelho" grava a inscrição do navegador.
 -- A mensagem nova do cliente chama a Edge Function zap_push, que avisa o atendente
 -- da conversa ou, sem atendente, todos os inscritos (a mesma regra do aviso sonoro).

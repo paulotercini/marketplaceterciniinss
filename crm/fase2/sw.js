@@ -43,7 +43,7 @@ self.addEventListener("notificationclick", e => {
   const d = e.notification.data || {};
   e.waitUntil((async () => {
     const cls = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
-    // F334 · o aviso do WhatsApp abre a conversa: na janela aberta, ou numa nova com ?zap=
+    // F335 · o aviso do WhatsApp abre a conversa: na janela aberta, ou numa nova com ?zap=
     if (d.crm === "zap") {
       if (cls[0]) { cls[0].postMessage(d); return cls[0].focus(); }
       return self.clients.openWindow(d.conversa ? "./?zap=" + d.conversa : "./");
@@ -55,7 +55,7 @@ self.addEventListener("notificationclick", e => {
   })());
 });
 
-// F334 · a notificação do WhatsApp que o banco manda (Edge Function zap_push), também com o CRM fechado
+// F335 · a notificação do WhatsApp que o banco manda (Edge Function zap_push), também com o CRM fechado
 self.addEventListener("push", e => {
   let d = {};
   try { d = e.data ? e.data.json() : {}; } catch (x) {}

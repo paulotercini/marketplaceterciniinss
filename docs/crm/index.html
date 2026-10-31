@@ -6178,7 +6178,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 12.11</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 12.12</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6849,7 +6849,7 @@ async function iniciar(){
     vigiarLembretes(); setInterval(vigiarLembretes, 30000); }
   // F187 · "online agora" no painel do gestor: um ponto por minuto
   if(!zapSomLigado){ zapSomLigado = true; vigiarZapSom(); setInterval(vigiarZapSom, 20000); }
-  // F334 · o toque na notificação com o CRM fechado abre ?zap=<conversa>
+  // F335 · o toque na notificação com o CRM fechado abre ?zap=<conversa>
   const zq = new URLSearchParams(location.search).get("zap");
   if(zq){ history.replaceState(null, "", location.pathname); abrirConversaDaMencao(zq); }
   if(!presencaLigada){ presencaLigada = true;
@@ -6874,7 +6874,7 @@ function tocarAvisoZap(texto){
       g.gain.exponentialRampToValueAtTime(0.0001, t0+0.14); o.start(t0); o.stop(t0+0.15);
     });
   }catch(e){}
-  // com o aviso no aparelho ligado (F334), quem avisa é o zap_push: aqui não repete
+  // com o aviso no aparelho ligado (F335), quem avisa é o zap_push: aqui não repete
   if(document.hidden && ler("crm_push")!=="1" && window.Notification && Notification.permission==="granted")
     try{ new Notification("WhatsApp · CRM", {body: texto, tag: "crm-zap"}); }catch(e){}
 }
@@ -6894,7 +6894,7 @@ async function vigiarZapSom(){
   }
   zapSomVisto = agora;
 }
-// F334 · A NOTIFICAÇÃO DO WHATSAPP NO CELULAR (Web Push): o aparelho se inscreve no navegador e grava a
+// F335 · A NOTIFICAÇÃO DO WHATSAPP NO CELULAR (Web Push): o aparelho se inscreve no navegador e grava a
 // inscrição em push_inscricoes; a mensagem nova do cliente chega pela Edge Function zap_push, mesmo com o
 // CRM fechado. No iPhone, só com o CRM adicionado à tela de início (iOS 16.4 ou posterior).
 const pushZapLigado = () => ler("crm_push")==="1";

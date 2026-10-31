@@ -1,4 +1,4 @@
--- F334 · A NOTIFICAÇÃO DO WHATSAPP NO CELULAR (Web Push, pedido do Paulo de 31.10.2026)
+-- F335 · A NOTIFICAÇÃO DO WHATSAPP NO CELULAR (Web Push, pedido do Paulo de 31.10.2026)
 -- Cada aparelho que liga "Avisar neste aparelho" grava a inscrição do navegador.
 -- A mensagem nova do cliente chama a Edge Function zap_push, que avisa o atendente
 -- da conversa ou, sem atendente, todos os inscritos (a mesma regra do aviso sonoro).

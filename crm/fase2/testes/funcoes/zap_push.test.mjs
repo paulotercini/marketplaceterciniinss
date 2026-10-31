@@ -1,4 +1,4 @@
-// F334 · node --experimental-strip-types --test crm/fase2/testes/funcoes/zap_push.test.mjs
+// F335 · node --experimental-strip-types --test crm/fase2/testes/funcoes/zap_push.test.mjs
 import { test } from "node:test";
 import assert from "node:assert/strict";
 const { aviso, destinatarios, mascarar } = await import("../../zap_push/index.ts");
