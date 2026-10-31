@@ -12701,7 +12701,7 @@ function renderAcervo(){
   document.getElementById("sub-lista").textContent =
     "O trabalho sem data marcada: rotina, conferências e processos parados. Nada aqui vence hoje.";
   const corpo = blocoRotinas() + blocoCrpsManual() + blocoCadunico()
-    + blocoCardsPagamento() + blocoDocsSemData() + blocoCardsRever() + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoEtapasLote() + blocoSemCpf();
+    + blocoCardsPagamento() + blocoDocsSemData() + blocoCardsRever() + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoQuadrosLote() + blocoEtapasLote() + blocoSemCpf();
   document.getElementById("conteudo-meio").innerHTML = corpo
     || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
@@ -35693,7 +35693,7 @@ function datasDosJulgados(k){
 }
 async function adotarQuadro(cliId){
   const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado" && !ehPreCaso(k));
-  if(!ks.length) return;
+  if(!ks.length) return 0;
   const f = fontesDoDossie(cliId), feitos = [];
   for(const k of ks){
     const r = k.ronda||{}, recusou = r.recusou||{}, fontes = {...(r.fontes||{})}, sugere = {...(r.sugere||{})}, corpo = {};
@@ -35710,6 +35710,7 @@ async function adotarQuadro(cliId){
     catch(e){ console.warn("quadro não gravou:", e); }
   }
   const n = feitos.reduce((t, x)=>t+x.n, 0);
+  if(_loteQuadro) _loteQuadro.feitos.push(...feitos);
   if(n && clienteAberto===cliId){
     repintarFicha();
     avisoDesfazer(`${n} dado(s) do quadro do caso lido(s) dos documentos`, async ()=>{
@@ -35717,6 +35718,45 @@ async function adotarQuadro(cliId){
       aviso("Desfeito"); repintarFicha();
     });
   }
+}
+// F321c (onda 4) · o mesmo preenchimento em todos os clientes de caso aberto, no 🧹 Cuidar do acervo: lê os
+// documentos de cada um (dadosDoCliente), grava o campo vazio e a sugestão como na ficha, e o desfazer volta tudo
+let _loteQuadro = null;
+function blocoQuadrosLote(){
+  const n = new Set(D.casos.filter(k=>k.fase!=="encerrado" && !ehPreCaso(k)).map(k=>k.cliente_id)).size;
+  if(!n) return "";
+  return `<details class="sem-acao neutro" id="acervo-quadros"><summary>Quadro do benefício pelos documentos (${n} clientes com caso aberto)</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">Lê a carta de concessão, o CNIS, a sentença, o acórdão, a inicial e o NB dos documentos de cada cliente e grava a DER, a DIB, a DCB, o NB e a espécie que estiverem vazios, com a fonte. O valor diferente do gravado vira sugestão na placa do caso.</p>
+    <div class="form-linha" style="margin:4px 0 8px"><button class="btn-mini forte" onclick="preencherQuadrosTodos()">Preencher os quadros pelos documentos…</button></div></details>`;
+}
+async function preencherQuadrosTodos(){
+  const clis = [...new Set(D.casos.filter(k=>k.fase!=="encerrado" && !ehPreCaso(k)).map(k=>k.cliente_id))];
+  if(!clis.length) return;
+  if(clienteAberto) fecharFicha(false);
+  _loteQuadro = {feitos:[]};
+  caixa(`<div class="org-lote" role="dialog" aria-labelledby="qd-lote-t"><h3 id="qd-lote-t">Quadro do benefício pelos documentos</h3>
+    <p class="meio-sub" id="qd-lote-st" aria-live="polite">Lendo 0 de ${clis.length} clientes…</p>
+    <progress id="qd-lote-pb" max="${clis.length}" value="0"></progress><div id="qd-lote-res"></div></div>`);
+  for(let i=0; i<clis.length; i++){
+    if(!document.getElementById("qd-lote-pb")) break;   // fechou a janela: para
+    const dados = await dadosDoCliente(clis[i]);
+    D._andsFicha = dados.ands; D.anexos = dados.anexos; _evCache = null;
+    await adotarDcbDosAutos(clis[i]).catch(()=>{});
+    await adotarQuadro(clis[i]).catch(e=>console.warn("quadro do lote:", e));
+    const pb = document.getElementById("qd-lote-pb"), st = document.getElementById("qd-lote-st");
+    if(pb) pb.value = i+1;
+    if(st) st.textContent = `Lendo ${i+1} de ${clis.length} clientes…`;
+  }
+  D._andsFicha = []; D.anexos = []; _evCache = null;
+  const L = _loteQuadro; _loteQuadro = null;
+  const campos = L.feitos.reduce((t, x)=>t+x.n, 0), sug = D.casos.filter(k=>Object.keys((k.ronda||{}).sugere||{}).length).length;
+  const st = document.getElementById("qd-lote-st"), res = document.getElementById("qd-lote-res");
+  if(st) st.textContent = `${campos} dado(s) gravado(s) em ${L.feitos.filter(x=>x.n).length} caso(s). ${sug} caso(s) com sugestão a conferir na placa.`;
+  if(res && L.feitos.length) res.innerHTML = `<button class="btn-mini" id="qd-lote-desf">Desfazer o lote</button>`;
+  const b = document.getElementById("qd-lote-desf");
+  if(b) b.onclick = async () => { b.disabled = true;
+    for(const x of L.feitos){ await patchCaso(x.k.id, x.antes).catch(()=>{}); Object.assign(x.k, x.antes); }
+    if(st) st.textContent = "Desfeito."; b.remove(); };
 }
 const valQuadro = (campo, v) => !v ? "" : FATOS[campo] && FATOS[campo].tipo==="data" ? fmtBarra(v) : campo==="nb" ? fmtNb(v) : String(v);
 // de onde veio o valor que está no campo, para o title da placa
@@ -45290,7 +45330,7 @@ async function dadosDoCliente(cliId){
   const ids = (D.casosDoCliente.get(cliId)||[]).map(k=>k.id).join(",");
   const [ands, anexos] = await Promise.all([
     ids ? todas("andamentos", `select=id,caso_id,origem,origem_id,texto,criado_em,responde_a&caso_id=in.(${ids})`).catch(()=>[]) : [],
-    todas("anexos", `select=id,caso_id,cliente_id,andamento_id,nome,caminho,origem,texto&cliente_id=eq.${cliId}`).catch(()=>[])]);
+    todas("anexos", `select=id,caso_id,cliente_id,andamento_id,nome,caminho,origem,texto,criado_em&cliente_id=eq.${cliId}`).catch(()=>[])]);
   return {ands, anexos};
 }
 let _loteOrg = null;   // {planos:[{c, passos, duvidas, ands}], aplicando}
