@@ -43,9 +43,23 @@ self.addEventListener("notificationclick", e => {
   const d = e.notification.data || {};
   e.waitUntil((async () => {
     const cls = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+    // F334 · o aviso do WhatsApp abre a conversa: na janela aberta, ou numa nova com ?zap=
+    if (d.crm === "zap") {
+      if (cls[0]) { cls[0].postMessage(d); return cls[0].focus(); }
+      return self.clients.openWindow(d.conversa ? "./?zap=" + d.conversa : "./");
+    }
     if (cls[0]) {
       cls[0].postMessage({ crm: "lembrete", acao: e.action || "abrir", ...d });
       if (!e.action) return cls[0].focus();
     } else if (!e.action) return self.clients.openWindow("./");
   })());
+});
+
+// F334 · a notificação do WhatsApp que o banco manda (Edge Function zap_push), também com o CRM fechado
+self.addEventListener("push", e => {
+  let d = {};
+  try { d = e.data ? e.data.json() : {}; } catch (x) {}
+  e.waitUntil(self.registration.showNotification(d.title || "WhatsApp · CRM", {
+    body: d.body || "", tag: d.tag || "crm-zap", renotify: true,
+    icon: "icone-192.png", badge: "icone-192.png", data: d.data || { crm: "zap" } }));
 });
