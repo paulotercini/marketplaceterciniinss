@@ -4300,7 +4300,7 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
    coluna do ⚡ e do ✎ Sugestões, logo acima deles. */
 #zap-ag{position:fixed;right:16px;bottom:120px;z-index:79;font-size:13px}   /* acima do ⚡, do ✎ e do enviar */
 .app:not(.logado) ~ #zap-ag,#zap-ag[hidden]{display:none}
-.app.celular ~ #zap-ag{bottom:calc(166px + env(safe-area-inset-bottom))}
+.app.celular ~ #zap-ag{bottom:calc(165px + env(safe-area-inset-bottom))}
 .app.celular.detalhe-aberto ~ #zap-ag{bottom:180px}
 .app.celular.zap-conv-aberta ~ #zap-ag{z-index:92;bottom:calc(176px + env(safe-area-inset-bottom))}
 .app.celular ~ #zap-ag .zag-cx{max-height:calc(100dvh - 260px)}
@@ -5880,8 +5880,12 @@ html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) #and
 .app.celular .cel-tudo{margin:4px 0 0;padding:6px}
 .app.celular .escrever:not(.esc-aberto) textarea#and-texto{height:40px!important;min-height:0!important;padding-top:9px;padding-bottom:9px;resize:none}
 .app.celular .escrever:not(.esc-aberto) .tipo-fila > :not(.tipo-sr):not(.tipo-pc){display:none}
-.app.celular.detalhe-aberto ~ .fab-sug{width:40px;height:40px;padding:0;border-radius:50%;justify-content:center}
-.app.celular.detalhe-aberto ~ .fab-sug .fab-sug-t{display:none}
+/* F307 · no celular os flutuantes numa coluna só (pedido do Paulo, 31.10.2026): o ✎ redondo em todas as telas, centrado
+   com o ⚡ e a agenda (48 px a 16 px da borda), 8 px entre eles, e o "?" na altura do ✎, 8 px à esquerda */
+.app.celular ~ .fab-sug{width:40px;height:40px;padding:0;border-radius:50%;justify-content:center;right:20px}
+.app.celular ~ .fab-sug .fab-sug-t{display:none}
+.app.celular ~ .fab-ajuda{bottom:122px;right:68px}
+.app.celular.detalhe-aberto ~ .fab-ajuda{right:68px}
 /* F303 · nenhum texto passa da borda do quadro (pedido do Paulo, 30.10.2026): na coluna estreita do caso o texto quebra a linha */
 html[data-tema="v10"] .caso-esq .lc-sobre-l{flex-wrap:wrap;row-gap:4px;height:auto}
 html[data-tema="v10"] .caso-esq :is(.lc-sobre,.lc-placa>.lc-f,.lc-placa>.lc-f>*,.lc-tram,.lc-tram-link,.et-sug){white-space:normal;min-width:0;overflow-wrap:anywhere}
@@ -6054,17 +6058,15 @@ html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos{display
 html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button{flex:1 1 auto;min-width:0;min-height:36px;margin:0!important;padding:0 3px;border:0;border-radius:8px;font-size:13px;color:var(--cinza);background:transparent;white-space:nowrap}
 html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button.on{background:#fff;color:var(--texto);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
 html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button::after{display:none}
-/* F330 · o "+ número" fica discreto, em azul, sem disputar com as abas */
-html[data-tema="v10"] .sub-menu.menu-andamentos button.aba-num{color:var(--azul);font-weight:500}
-html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button.aba-num{flex:0 0 auto;padding:0 8px}
 html[data-tema="v10"] .app.celular.detalhe-aberto ~ .barra-cel{display:flex}
 html[data-tema="v10"] .app.celular .det-principal:not([data-cel-aba="and"]) ~ * .escrever,html[data-tema="v10"] .app.celular .escrever{bottom:calc(56px + env(safe-area-inset-bottom,0px))}
 html[data-tema="v10"] .app.celular .caso-dir .timeline > li:not(.toque) .tl-cab-fim .tl-barra{display:none}
 html[data-tema="v10"] .app.celular .det-topo .det-mais .tl-mais-menu{left:auto;right:0}
 html[data-tema="v10"] .app.celular .linha-caso .lc-mais-pe{min-height:32px}   /* alvo de toque (11.93 · VCE-05) */   /* o ⋯ ficou no canto direito */
 /* com a barra de baixo visível na ficha, os flutuantes sobem a altura dela (56 px) */
-html[data-tema="v10"] .app.celular.detalhe-aberto ~ .fab-sug,html[data-tema="v10"] .app.celular.detalhe-aberto ~ .fab-ajuda{bottom:calc(186px + env(safe-area-inset-bottom,0px))}
-html[data-tema="v10"] .app.celular.detalhe-aberto ~ #zap-ag{bottom:calc(236px + env(safe-area-inset-bottom,0px))}
+html[data-tema="v10"] .app.celular.detalhe-aberto ~ .fab-sug{bottom:calc(186px + env(safe-area-inset-bottom,0px))}
+html[data-tema="v10"] .app.celular.detalhe-aberto ~ .fab-ajuda{bottom:calc(188px + env(safe-area-inset-bottom,0px))}
+html[data-tema="v10"] .app.celular.detalhe-aberto ~ #zap-ag{bottom:calc(231px + env(safe-area-inset-bottom,0px))}
 html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
 
 /* F320 · atendimento (imagem 3-atendimento.png): cabeçalho mínimo, prazo uma vez, passos sem subtítulo, CNIS em números,
@@ -6160,7 +6162,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 12.09</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 12.10</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19351,7 +19353,7 @@ function pintarFicha(){
           // F294 · o nível 1 lê só os andamentos dos portais (INSS, Recurso, Judicial), onde não há campo de escrever
           const nv1 = meuNivel()===1;
           // F320 · no celular os rótulos são curtos (Escritório, INSS, CRPS, Judicial e Tudo)
-          // F330 · INSS, CRPS e Judicial só aparecem com andamento ou número; o "+ número" os faz nascer (pedido do Paulo, 31.10.2026)
+          // F330 · INSS, CRPS e Judicial só aparecem com andamento ou número; o número entra pela gestão do caso (protocolo ou NB abre o INSS, e-Sisrec o CRPS, CNJ o Judicial; pedido do Paulo, 31.10.2026)
           const v10Cel = temaV10() && celular();
           const aba = nv1 ? (["inss","crps","cnj"].find(a=>a===subAba && visiveis[a]) || ["inss","crps","cnj"].find(a=>visiveis[a]) || "")
             : visiveis[subAba] ? subAba : "escritorio";
@@ -19373,7 +19375,6 @@ function pintarFicha(){
           ${temINSS?`<button class="${cls("inss",faseEncerrada(k,"pat"))}" onclick="irSubAba('inss')">${v10?"INSS":"Andamentos INSS"}${v10Cel?"":rot(comentariosPat(andsVis).length, abaPatArquivada(k), faseEncerrada(k,"pat"))}</button>`:""}
           ${temCRPS?`<button class="${cls("crps",faseEncerrada(k,"crps"))}" onclick="irSubAba('crps')">${v10Cel?"CRPS":"Recurso (CRPS)"}${v10Cel?"":rot(crpsTotalEventos(k), abaCrpsArquivada(k), faseEncerrada(k,"crps"))}</button>`:""}
           ${temCNJ?`<button class="${cls("cnj",faseEncerrada(k,"cnj"))}" onclick="irSubAba('cnj')">${v10?"Judicial":"Andamentos do CNJ"}${v10Cel?"":rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k), faseEncerrada(k,"cnj"))}</button>`:""}
-          ${nv1 || (temINSS && temCRPS && temCNJ) ? "" : `<button class="aba-num" onclick="inserirNumeroAba('${k.id}','${[!temINSS&&"inss",!temCRPS&&"crps",!temCNJ&&"cnj"].filter(Boolean).join(",")}')" title="inserir o número do INSS, do CRPS ou do Judicial: a aba aparece" aria-label="inserir número do INSS, do CRPS ou do Judicial">+ número</button>`}
           ${nv1 ? "" : `<button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
             title="todas as fontes juntas, em ordem cronológica">${v10Cel?"Tudo":v10?"Caso Completo":"Caso completo"}</button>`}
         </div>`;
@@ -39470,15 +39471,6 @@ function editarFato(casoId, campo, pref){
 }
 
 // F102 · a mesma janela dos outros números (era um prompt() do navegador)
-// F330 · as abas INSS, CRPS e Judicial nascem do número: o "+ número" oferece só as que faltam
-function inserirNumeroAba(casoId, faltam){
-  const f = String(faltam||"inss,crps,cnj").split(",");
-  const op = [["inss","Protocolo do INSS","novoProtocolo"],["crps","Recurso no CRPS (e-Sisrec)","lcNovoNup"],["cnj","Processo judicial","lcNovoProc"]].filter(o=>f.includes(o[0]));
-  caixa(`<h3 style="margin:0 0 6px">Inserir número</h3>
-    <p class="meio-sub" style="margin:0 0 8px">A aba aparece no caso assim que o número é guardado.</p>
-    <div class="form-linha" style="flex-wrap:wrap;gap:6px">${op.map(([a,r,f])=>
-      `<button class="btn-mini" onclick="fecharCaixa();subAba='${a}';${f}('${casoId}')">${r}</button>`).join("")}</div>`);
-}
 function novoProtocolo(casoId){
   caixa(`<h3 style="margin:0 0 6px">＋ Protocolo do INSS</h3>
     <div class="form-linha"><input id="lc-prot-inp" placeholder="só os dígitos" inputmode="numeric" style="flex:1"
@@ -41348,9 +41340,9 @@ function abasVisiveis(k, ands){
   k = k || {};
   return {
     escritorio: true,
-    inss: !!(comentariosPat(ands).length || protocolosDe(k).length || faseEncerrada(k,"pat")),
+    inss: !!(comentariosPat(ands).length || protocolosDe(k).length || k.nb || (Array.isArray(k.nbs) && k.nbs.length) || faseEncerrada(k,"pat")),
     crps: !!(crpsNups(k).length || crpsTotalEventos(k) || faseEncerrada(k,"crps")),
-    cnj:  !!(k.processo
+    cnj:  !!(k.processo || (Array.isArray(k.processos) && k.processos.length)
       || (k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length))
       || andamentosPje(ands).length || faseEncerrada(k,"cnj")),
     tudo: true,
