@@ -86,7 +86,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
       itens: [...document.querySelectorAll(".pa-prob li")].map(li => ({ quem: li.querySelector(".pp-quem").textContent, acao: li.dataset.txt })) }; });
   await p.screenshot({ path: path.join(OUT, "01-pendencias.png") });
   conf(`a trilha é Pendências, Análise do Benefício e Conclusão, e abre nas Pendências (${pend.ids} · ${pend.aqui})`, pend.ids === "pend,benef,concl" && pend.aqui === "pend");
-  conf(`cada pendência diz o que deve ser feito e por quem (${pend.itens.length})`, pend.itens.length > 0 && pend.itens.every(x => /^Deve /.test(x.acao) && /^(Cliente|Escritório)$/.test(x.quem)));
+  conf(`cada pendência diz o que deve ser feito e por quem (${pend.itens.length})`, pend.itens.length > 0 && pend.itens.every(x => /^(Deve |Se [^,]+, deve )/.test(x.acao) && /^(Cliente|Escritório)$/.test(x.quem)));
   conf("a qualidade perdida pede a pergunta do desemprego", pend.itens.some(x => /desempregada/.test(x.acao)));
   conf("as competências abaixo do mínimo pedem o pagamento, com as faixas", pend.itens.some(x => x.quem === "Cliente" && /Deve pagar a complementação das competências 03\/2018 a 05\/2018 e 09\/2018/.test(x.acao)));
   conf("o que falta no dossiê vira providência (rodar o Emprega Brasil)", pend.itens.some(x => /rodar o Emprega Brasil/.test(x.acao)));
