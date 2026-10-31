@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <meta name="theme-color" content="#EDEFF2">
+<script>/* 11.92 · VCE-06: manifesto e ícone da tela de início, só no endereço publicado (no arquivo solto e nas provas eles não existem) */
+if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icone-180.png">');</script>
 <title>CRM Tercini</title>
 <style>
   :root{
@@ -73,13 +75,7 @@
      no pé da caixa. As três travas abaixo são de propósito: por mais que o
      texto cresça na próxima onda, ele não empurra mais o formulário.  */
   .login .versao{font-size:11px;font-weight:400;color:var(--cinza);white-space:nowrap}
-  .login .novidades{font-size:12px;color:var(--cinza);border-top:1px solid var(--borda);
-    padding-top:8px;margin-top:2px}
-  .login .novidades summary{cursor:pointer;user-select:none;padding:2px 0}
-  @media (hover:hover) and (pointer:fine){.login .novidades summary:hover{color:var(--azul)}}
-  .login .novidades-txt{max-height:42vh;max-height:42dvh;overflow-y:auto;margin-top:6px;padding-right:6px;
-    line-height:1.55;text-align:left;overflow-wrap:anywhere}
-  @media (max-width:760px){
+  @media (max-width:760px), (pointer:coarse) and (max-height:500px){
     .login{align-items:flex-start;padding:22px 14px}
     .login .cx-login{width:100%;max-width:380px}
   }
@@ -398,6 +394,8 @@
   .meio{overflow-y:auto;padding:18px 22px;transition:background .2s;
     display:flex;flex-direction:column}
   #conteudo-meio{flex:1}
+  /* 11.92 · VCP-01 e VCE-04: o fim da lista e da ficha rola acima dos flutuantes (⚡, ✎, ?, Agenda), que cobriam a ⭐ e o "abrir" */
+  #conteudo-meio::after,.det-rolagem::after{content:"";display:block;height:150px}
   /* ＋ Adicionar: sempre no pé da lista, como no To Do */
   .add-rodape{position:sticky;bottom:0;margin:12px -22px -18px;padding:12px 22px 14px;
     display:flex;gap:8px;align-items:center;background:inherit;
@@ -627,7 +625,7 @@
   .campo .valor a{color:var(--azul);text-decoration:none}
   .olho{border:none;background:none;cursor:pointer;font-size:13px}
   .lapis{border:none;background:none;cursor:pointer;font-size:12px;color:var(--azul);
-    padding:0 3px;opacity:.65}
+    padding:0 3px;opacity:.8}   /* 11.92 · VCP-05: 3:1 de contraste */
   @media (hover:hover) and (pointer:fine){.lapis:hover{opacity:1}}
   .caso{border:1px solid var(--borda);border-radius:10px;padding:12px 14px;margin-bottom:10px;background:var(--branco)}
   .caso .cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -1196,7 +1194,7 @@
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
   @media (hover:hover) and (pointer:fine){.cal-it:hover{-webkit-line-clamp:unset}}
   .cal-mais{font-size:11px;color:var(--cinza);padding-left:4px}
-  @media (max-width:760px){
+  @media (max-width:760px), (pointer:coarse) and (max-height:500px){
     .app.celular .cal-grade{grid-template-columns:1fr;gap:4px}
     .app.celular .cal-cab{display:none}
     .app.celular .cal-dia{min-height:0;display:flex;gap:8px;align-items:flex-start}
@@ -1557,6 +1555,13 @@
       font-size:18px;color:var(--cinza);cursor:pointer;padding:4px 8px}
   }
   @media (max-width:1023px){.zap-painel{display:none}}
+  /* 11.92 · VCE-01: entre 761 e 1023 px (tablet, celular deitado) uma coluna por vez, como no celular: a conversa tinha 82 px */
+  @media (min-width:761px) and (max-width:1023px){
+    .app.zap-conv-aberta .zap-tela .zap-lado{display:none}
+    .app:not(.zap-conv-aberta) .zap-tela .zap-dir{display:none}
+    .app:not(.zap-conv-aberta) .zap-tela .zap-lado{flex:1}
+    .app.zap-conv-aberta .zt-voltar{display:block;border:0;background:none;font-size:22px;line-height:1;padding:6px 4px;color:var(--texto);cursor:pointer;flex:none}
+  }
   .zt-id h2[role=button]{cursor:pointer}
   .zap-topo{display:flex;flex-direction:column;gap:8px;padding:12px 16px;border-bottom:1px solid var(--borda);background:var(--branco)}
   .zap-frame{flex:1;width:100%;border:0;background:#fff}
@@ -2344,7 +2349,7 @@
      de espremer quatro colunas num aparelho de 6 polegadas.            */
   /* nada disso existe no computador — só o @media abaixo acende */
   .so-cel,.barra-cel,.cel-fundo,.busca-cel,.cel-tudo{display:none}
-  @media (max-width:760px){
+  @media (max-width:760px), (pointer:coarse) and (max-height:500px){
     .so-cel{display:revert}
     .nao-cel{display:none!important}
     body{height:100dvh}
@@ -2685,6 +2690,7 @@ button:active,.lista-item:active,.barra-cel button:active{transform:scale(.97)}
 button{transition:transform 120ms var(--ease-out)}
 /* foco visível para quem usa teclado, em todo controle */
 :focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+.lista-item:focus-visible{outline:2px solid #8FB6F5;outline-offset:-2px}
 /* F135 · o registrar responde no clique, enquanto o banco grava */
 .escrever button.enviando{opacity:.6;cursor:progress}
 /* F135 · confirmação dentro da página (<dialog> nativo) */
@@ -2927,7 +2933,7 @@ html[data-tema="v10"] .lc-auto{color:var(--feito);font-weight:600}
 html[data-tema="v10"] .lc-check{font-family:var(--f-mono);font-size:12px;color:var(--cinza-claro);border:1px solid var(--borda);border-radius:4px;padding:0 5px;background:#FFFFFF}
 html[data-tema="v10"] .lc-check.ok{color:var(--feito);border-color:#BFDCC2;background:#E4F1E8}
 html[data-tema="v10"] .lc-verif{cursor:pointer}
-html[data-tema="v10"] .lc-topo .lapis{opacity:.55}
+html[data-tema="v10"] .lc-topo .lapis{opacity:.8}
 html[data-tema="v10"] .lc-mais{margin-left:auto;width:28px;height:28px;border:1px solid var(--borda);border-radius:6px;background:#FFFFFF;color:var(--azul-escuro);font-size:18px;line-height:1;cursor:pointer;flex:none;padding:0}
 @media (hover:hover) and (pointer:fine){html[data-tema="v10"] .lc-mais:hover,html[data-tema="v10"] .lc-add:hover{border-color:var(--azul)}}
 html[data-tema="v10"] .lc-numeros,html[data-tema="v10"] .lc-gestao{padding:6px 22px 10px;border-top:1px dashed var(--borda);display:flex;flex-direction:column;gap:6px}
@@ -3216,7 +3222,7 @@ html[data-tema="v10"] .lc-placa{display:grid;grid-auto-flow:column;grid-auto-col
 html[data-tema="v10"] .lc-placa>.lc-f{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0;padding:10px 34px 10px 16px;white-space:normal;box-shadow:1px 0 0 var(--borda),0 1px 0 var(--borda)}
 html[data-tema="v10"] .lc-placa>.lc-f>.lc-k{font-size:11px;letter-spacing:.08em}
 html[data-tema="v10"] .lc-placa>.lc-f>:not(.lc-k):not(.lapis):not(.lc-jan){font-size:14px}
-html[data-tema="v10"] .lc-placa .lapis{position:absolute;top:7px;right:8px;opacity:.45}
+html[data-tema="v10"] .lc-placa .lapis{position:absolute;top:7px;right:8px;opacity:.8}
 html[data-tema="v10"] .lc-placa .lc-vazio{font-style:normal;color:var(--cinza)}
 html[data-tema="v10"] .lc-placa .lc-tram{background:none;border:0;padding:0;color:var(--sist);font-weight:500}
 html[data-tema="v10"] .lc-placa .lc-verif{display:grid;grid-template-columns:auto 1fr;justify-items:start;align-items:center;column-gap:6px;row-gap:3px}
@@ -3524,7 +3530,7 @@ html[data-tema="v10"] .seg-colab{max-width:100%;overflow-x:auto;scrollbar-width:
   html[data-tema="v10"] .ag-linha .avatares{grid-column:4;grid-row:2;width:auto}
 }
 /* F303 · no celular, a linha do Meu Dia diz só data, nome, espécie e lista e o prazo fatal (pedido do Paulo, 30.10.2026) */
-@media (max-width:760px){
+@media (max-width:760px), (pointer:coarse) and (max-height:500px){
   html[data-tema="v10"] .ag-linha :is(.ag-res,.ag-conf),
   html[data-tema="v10"] .ag-linha .ag-selos > span:not(.ag-fatal,.ag-esp){display:none}
   /* uma linha só: data e nome na mesma altura, fogo, estrela e responsável juntos à direita, selos embaixo do nome */
@@ -4090,9 +4096,10 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .atend-conv-nova{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
 /* F283 · as anotações fixas à direita no modo atendimento; na tela estreita ficam no pé, como antes */
 @media (min-width:1100px){
-  #detalhe.atend-tela{padding-right:392px}
-  #detalhe.atend-tela .atend-conversa{position:fixed;top:14px;right:16px;bottom:14px;width:360px;margin:0;overflow:auto;z-index:61;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-  #detalhe.atend-tela .atend-conversa{bottom:126px}#detalhe.atend-tela .atend-atalhos{position:fixed;right:16px;bottom:14px;width:360px;box-sizing:border-box;margin:0;padding:8px 10px;z-index:61;background:#FFFFFF;border:1px solid var(--borda);border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+  /* 11.92 · TRI-09: as anotações e os atalhos ficam à esquerda da coluna dos flutuantes (✎, ?, ⚡), que cobria o CNIS Completo */
+  #detalhe.atend-tela{padding-right:452px}
+  #detalhe.atend-tela .atend-conversa{position:fixed;top:14px;right:76px;bottom:14px;width:360px;margin:0;overflow:auto;z-index:61;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+  #detalhe.atend-tela .atend-conversa{bottom:126px}#detalhe.atend-tela .atend-atalhos{position:fixed;right:76px;bottom:14px;width:360px;box-sizing:border-box;margin:0;padding:8px 10px;z-index:61;background:#FFFFFF;border:1px solid var(--borda);border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
 }
 .atend-docs{font-size:13px}.atend-docs ul{margin:4px 0 6px;padding-left:18px}.atend-docs li.entregue{color:#686660}
 .atend-docs input{flex:1 1 200px;box-sizing:border-box;padding:8px 10px;border:1px solid var(--borda);border-radius:8px;font:inherit;font-size:14px}
@@ -4366,6 +4373,9 @@ html[data-tema="v10"] .tr-compacta .jn-l{grid-template-columns:repeat(var(--nf,4
 html[data-tema="v10"] .tr-compacta .jn-b{min-height:36px;padding:6px 12px;flex-direction:row;align-items:center;justify-content:flex-start;gap:8px;white-space:nowrap;overflow:hidden}
 html[data-tema="v10"] .tr-compacta .jn-st{overflow:hidden;text-overflow:ellipsis;min-width:0}html[data-tema="v10"] .tr-compacta .jn-st .tr-agora b{font-weight:500}
 html[data-tema="v10"] .tr-compacta .jn-nome{flex:none}
+/* 11.92 · VCP-04: na aba da fase atual a etapa quebra em até duas linhas, em vez de "concl…" */
+html[data-tema="v10"] .tr-compacta .jn-b.jn-a{white-space:normal;flex-wrap:wrap;row-gap:2px;align-content:center}
+html[data-tema="v10"] .tr-compacta .jn-a .jn-st{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-height:1.25}
 html[data-tema="v10"] .tr-compacta .jn-l .tr-ajuda{align-self:center;margin:0 8px;position:relative}
 html[data-tema="v10"] .tr-ajuda-pend::after{content:"";position:absolute;top:-2px;right:-2px;width:8px;height:8px;border-radius:50%;background:#B3261E}
 html[data-tema="v10"] .tr-compacta .tr-corpo{padding:6px 14px 6px;gap:6px}
@@ -4716,7 +4726,7 @@ html[data-tema="v10"] .tr-compacta{margin-bottom:10px}
 .cad-preencher:focus-visible{outline:2px solid #9B3B3B;outline-offset:2px}
 .idf-card .cad-mini{min-height:40px}
 .idf-card .cad-tel .cad-lap{min-width:40px;min-height:40px;justify-content:center;align-items:center}
-@media (max-width:760px){ .adr-regra{grid-template-columns:1fr 1fr} .adr-barra{grid-column:1/-1} .adr-valor,.adr-regra-acao{text-align:left} }
+@media (max-width:760px), (pointer:coarse) and (max-height:500px){ .adr-regra{grid-template-columns:1fr 1fr} .adr-barra{grid-column:1/-1} .adr-valor,.adr-regra-acao{text-align:left} }
 /* ══ F182 · Casos e anotações (canvas aprovado em 05.10.2026) ══ */
 html[data-tema="v10"] .lc-trilha{list-style:none;margin:10px 0 4px;padding:0;display:flex;flex-wrap:wrap;gap:8px 4px;align-items:flex-start;align-content:flex-start;white-space:normal;height:auto;min-height:0;flex:none}
 html[data-tema="v10"] .lc-trilha > li{flex:1 1 96px}
@@ -4922,7 +4932,7 @@ html[data-tema="v10"] .cc-acao-n.zero{opacity:.55;cursor:default}
 html[data-tema="v10"] .cc-acao-fim{margin-left:auto;display:inline-flex;gap:6px;flex-wrap:wrap}
 html[data-tema="v10"] .cc-acao-fim .tl-bt{display:inline-flex;align-items:center;gap:5px}
 html[data-tema="v10"] .fase-c li.tl-card,html[data-tema="v10"] .painel[data-p="2"] .fatos .timeline li.tl-card,html[data-tema="v10"] .painel[data-p="2"] .caso .timeline li.tl-card{padding:14px 16px}
-@media (max-width:760px){html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card{padding:12px}}
+@media (max-width:760px), (pointer:coarse) and (max-height:500px){html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card{padding:12px}}
 /* integração, etapa 3 · uma régua para a ficha inteira: a faixa do caso, os
    títulos de seção, dois tamanhos de botão (40px na seção, 32px no cartão) e
    as fontes do processo como filtro, não como mais um nível de abas */
@@ -4961,7 +4971,7 @@ html[data-tema="v10"] .painel .sub-menu.fontes>button{font:500 12px/1 var(--f-ui
 html[data-tema="v10"] .painel .sub-menu.fontes>button.on{background:var(--texto);border-color:var(--texto);color:#FFFFFF;font-weight:500}
 html[data-tema="v10"] .sub-menu.fontes .fontes-fim{margin-left:auto;display:inline-flex;gap:6px;align-items:center}
 html[data-tema="v10"] .caixa-pje{margin-top:2px}
-@media (max-width:760px){html[data-tema="v10"] .ad-topo-fim{margin-left:0}html[data-tema="v10"] .fc-caso{min-height:44px}html[data-tema="v10"] .hon-lanc>.hon-novo>summary{position:static;margin-top:4px}}
+@media (max-width:760px), (pointer:coarse) and (max-height:500px){html[data-tema="v10"] .ad-topo-fim{margin-left:0}html[data-tema="v10"] .fc-caso{min-height:44px}html[data-tema="v10"] .hon-lanc>.hon-novo>summary{position:static;margin-top:4px}}
 /* integração, etapa 2 · a aba Perícias usa o cartão do andamento oficial */
 html[data-tema="v10"] .timeline.tl-per{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
 html[data-tema="v10"] .timeline.tl-per::before{display:none}
@@ -5087,7 +5097,7 @@ html[data-tema="v10"] .app.celular .jn-b{padding:6px 6px}
 html[data-tema="v10"] .tr-l li[data-ex] .tr-sv .tr-b{background:#F3DDEC}
 html[data-tema="v10"] .tr-l{list-style:none;margin:0;padding:0;min-width:calc(var(--n) * 106px);display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:0 4px}
 html[data-tema="v10"] .tr-l>li{min-width:0;display:flex;flex-direction:column;gap:3px}
-html[data-tema="v10"] .tr-g{font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#8A8780;height:15px;line-height:15px;white-space:nowrap;overflow:visible;display:flex;align-items:center;gap:4px}
+html[data-tema="v10"] .tr-g{font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#6B6862;height:15px;line-height:15px;white-space:nowrap;overflow:visible;display:flex;align-items:center;gap:4px}
 html[data-tema="v10"] .tr-g-ex{color:#A5187F}
 html[data-tema="v10"] .tr-rec{margin:0;font-size:11px;line-height:15px;height:15px;display:inline-flex;align-items:center;text-underline-offset:2px;text-transform:none;letter-spacing:0;color:#686660}
 html[data-tema="v10"] .tr-et{all:unset;cursor:pointer;box-sizing:border-box;min-height:60px;display:flex;flex-direction:column;gap:5px;padding:4px 5px 6px;border-radius:8px;transition:background-color .15s ease}
@@ -5547,7 +5557,7 @@ html[data-tema="v10"] .aq-ligar h3{font-size:15px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.91</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.92</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5565,10 +5575,7 @@ html[data-tema="v10"] .aq-ligar h3{font-size:15px}
     <div class="erro" id="login-erro"></div>
     <button type="button" class="cfg-link" onclick="pedirConfig()"
       title="usar outro endereço de banco neste aparelho">configurar este aparelho</button>
-    <details class="novidades">
-      <summary>o que mudou (histórico das versões)</summary>
-      <div class="novidades-txt">F160 — GESTÃO DOS CASOS (lição do Tramitação Inteligente). Cinco acréscimos. A ORIGEM do cliente, que o funil 💼 Vendas já perguntava, desce ao cadastro quando o prospecto vira cliente, pode ser escolhida na Identificação e vira a coluna “De onde vêm os clientes” no painel. O REPRESENTANTE LEGAL (curador, mãe, tutor) ganha campo na Identificação e entra sozinho na qualificação da procuração, do contrato e das declarações, logo depois do CEP. O REVISOR da tarefa: ao lado de quem faz, o 📌, o compositor e o ＋ do comentário aceitam “Fulano revisa”, e a pastilha tracejada marca quem confere (pede o schema_papel_tarefa.sql no Supabase). DELEGADAS POR MIM, seção do Meu Dia com o que você passou a outra pessoa e ainda está aberto. E a CARGA DA EQUIPE no painel passa a contar tarefas abertas, de hoje e vencidas por pessoa.<br><br>F159 — O PRÓXIMO PASSO SAI DO MOVIMENTO. Ao dar seguimento (📌) a um andamento do PJe, do e-SAJ ou do eproc, o CRM lê o movimento: a data dele vira o “intimado em”, o ato escolhe o prazo do catálogo (sentença no JEF, recurso inominado; acórdão, embargos; laudo, manifestação) e o passo já vem escrito, para conferir e registrar. Na aba Judicial e nas Novidades, cada movimento mostra o que já se fez a partir dele, prazo marcado e tarefa de quem, e deixa de parecer intocado.<br><br>F158 — OS EMBARGOS NO 2º GRAU DO e-SAJ. A coleta do e-SAJ passa a ler os recursos que correm dentro do recurso, como os embargos de declaração e o agravo interno de uma apelação, que têm o mesmo número e não aparecem nos favoritos nem na consulta por OAB. Cada processo chega com as cinco movimentações mais recentes, e não só a última, e o CRM grava as que ainda não conhece, de modo que o julgamento não se perde atrás da certidão expedida no dia seguinte. Requer a extensão 1.12.0.<br><br>F157 — O CRM MAIS LEVE E EM DIA COM O TO DO. Depois da primeira abertura, o CRM baixa só o que mudou desde a anterior, e a tela aberta se atualiza sozinha a cada 3 minutos, sem mexer em ficha, caixa ou texto em digitação. A sincronização com o To Do passa a rodar a cada 10 minutos, das 07h00 às 20h50, disparada pelo próprio banco. No menu da conta, o administrador tem a Auditoria To Do, que compara todo dia às 06h50, lista por lista e cliente por cliente, o To Do com o CRM, e pode ser disparada na hora.<br><br>F156 — PAPEL DE CADA PROCESSO. No quadro de processos judiciais do caso, cada número ganha a escolha Ação, MS ou Cumprimento, e os que não são o principal ganham o botão “tornar principal”. O papel aparece ao lado do número na linha do caso e na trilha processual. Ao trocar o principal, a classe, o órgão e a data de ajuizamento da ficha passam a ser os do novo principal, e os do antigo ficam guardados no número dele.<br><br>F155 — COMENTÁRIO FIXO À VISTA. Na tela de Casos, o botão “Fixar comentário” fica na coluna do caso, sem passar pela gestão do caso. Fixado, o comentário aparece em itálico numa faixa sobre as duas colunas, a primeira coisa que se lê ao abrir o caso; um clique nela edita.<br><br>F154 — TELEFONE NA AGENDA. Ao agendar cliente sem telefone no cadastro, o campo aparece para preencher, e o número digitado é gravado no cadastro do cliente antes de seguir.<br><br>F153 — COLABORADOR NOVO NA AGENDA. Em Configurações, no cartão da agenda, o Paulo tem o passo a passo para criar o token de quem entra no escritório, tirar o acesso de quem sai e reenviar o token a quem perdeu, sem trocar o token dos demais.<br><br>F152 — A AGENDA DE TODOS. A agenda deixou de ser só de quarta: Paulo (azul), Marcos (verde) e Amanda (amarela) agendam na mesma agenda do Google, cada um na sua cor, e dois deles podem atender no mesmo horário. O Paulo atende às quartas; Marcos e Amanda, de segunda a sexta. Um compromisso na cor de alguém bloqueia só essa pessoa; sem cor, bloqueia todos. O limite de 14 e o encaixe das 18h00 continuam só do Paulo. Em "Dias de atendimento", o Paulo muda os dias fixos de cada um e troca um dia pontual (por exemplo, a quarta 07/10 pela quinta 08/10).<br><br>F151 — AGENDA DE QUARTA. Nova tela em HOJE, com a ocupação da próxima quarta na barra ("9/14"). Ela mostra as seis próximas quartas e a linha do tempo do dia, das 08h00 às 18h30, com os atendimentos 001 e 002 em cores próprias, os demais compromissos em cinza, o almoço e o encaixe urgente do Paulo. O botão + Agendar conduz em etapas: quem é (busca por nome ou CPF), o tipo, que sai sozinho (cliente do cadastro é 002, com 30 minutos; pessoa nova é 001, com 45 minutos e pré-cadastro), agendamento já existente, acompanhante, horário e as duas orientações obrigatórias. No fim, sai a mensagem de WhatsApp pronta. Quem grava no Google Agenda é o Apps Script do Paulo, que impede dois atendimentos no mesmo horário. Cada pessoa liga a agenda com o próprio token.<br><br>F150 — O CRM MAIS RÁPIDO DE ABRIR. Quatro mudanças: (1) passar o mouse sobre um cliente, ou encostar o dedo, já começa a buscar a ficha, que costuma abrir sem espera; (2) o CRM aparece assim que chegam clientes, casos e tarefas, e o resto (modelos, frases, WhatsApp, análises) completa em seguida; (3) o programa fica guardado no navegador e abre na hora; quando há versão nova, um aviso oferece recarregar; (4) a última sessão fica guardada neste aparelho, o CRM abre com ela, marcado “atualizando…”, e troca pelos dados do banco em seguida. Essa cópia vale por 7 dias e é apagada ao clicar em Sair.<br><br>F149 — O ESQUELETO NAS OUTRAS ESPERAS. Enquanto o CRM abre e busca os dados, a lista e a barra lateral já mostram o desenho delas em cinza; ao abrir um cliente, a ficha mostra o cabeçalho, a coluna do caso e a linha do tempo em cinza até os andamentos chegarem. Como na dashboard, o desenho só aparece se a espera passar de um instante.<br><br>F148 — A DASHBOARD NOVA. No visual novo, a dashboard responde numa tela o que vence, quanto entra e como anda a carteira. No alto, quatro números: prazos vencidos, os que vencem em 7 dias, o que há para receber em 30 dias e as concessões do mês, com a tendência ao lado. Embaixo, os prazos dos próximos 30 dias por natureza e os cinco mais urgentes; o financeiro com o recebido e o previsto por mês e o que está em aberto por tempo de atraso; a carteira por fase e as espécies mais frequentes com a taxa de êxito; e cinco indicadores a mais: risco de cessação, carteira parada, êxito por via, receita futura e carga da equipe. Há filtro por período e por pessoa, e cada número e cada barra levam à lista. Enquanto a conta é feita, a tela mostra o desenho dela em cinza, que só aparece se a espera passar de um instante, para não piscar.<br><br>F147 — TODAS AS LISTAS NA LINHA DA AGENDA. No visual novo, as listas do escritório, as visões e a busca usam a mesma linha do Planejado e do Meu Dia: a data, o cliente com o que é o caso, os selos, quem está com ele, a estrela e o fogo. O #CPF saiu das listas; a busca continua achando o cliente pelo CPF. Com a ficha aberta, a lista estreita mostra cada item numa linha só, com a data, o nome, quem está com o caso, a estrela e o fogo.<br><br>F146 — O NÚMERO DO PROCESSO DIZ O SISTEMA. A coleta que chega pela extensão chamava de PJe movimentos do e-SAJ. Agora o sistema sai do número CNJ: quando o número tem 8.26, o processo é da Justiça estadual (e-SAJ ou eproc), e quando tem 4.03 é da Justiça Federal, que é sempre PJe. O botão da coleta, o título do quadro, o nome e o símbolo de cada movimento seguem essa regra.<br><br>F145 — O CASO EM DUAS COLUNAS. No visual novo, a tela de Casos voltou a ter duas colunas. À esquerda, parada enquanto os andamentos rolam, ficam o nome do pedido, a placa em pares (quatro ou seis quadros, conforme o benefício), o botão + e os prazos em linhas finas, do mais distante ao mais próximo; clicar na linha abre o prazo. À direita fica o campo de escrever em cima e, embaixo, os andamentos em Escritório, INSS, Recurso (CRPS), Judicial e Caso Completo.<br><br>F144 — A AGENDA E A BARRA DO MOCK. No visual novo, o Planejado virou uma linha por data, como no To Do: a data, o cliente, o que é para fazer, o selo de prazo fatal, a espécie com a lista, quem está com ela, a estrela e o fogo. As seções são blocos com faixa de cor (vencidas em vermelho, hoje em âmbar) e o filtro de período saiu, porque as seções já fazem esse papel. No topo, uma frase diz o dia e quantas vencem, e o filtro por pessoa fica à direita. O Meu Dia usa a mesma linha e mostra só o que vence hoje. A barra lateral ganhou a marca ADVOCACIA PREVIDENCIÁRIA, o botão da conta (com Sincronizar e Configurações), os botões Cliente e Anotar, a busca com o atalho /, o grupo HOJE e as seis listas do escritório; as demais listas e visões ficam em Mais visões.<br><br>F143 — PAPEL QUENTE. O visual novo trocou o cinza frio por um papel quente: fundo em tom de papel, placa e campo de escrever em pedra clara, cartões brancos, texto em quase preto e cinzas quentes, bordas num fio só. O petróleo continua sendo a cor de tudo que é ação do escritório, e o vermelho, o âmbar e o verde dos prazos não mudaram. O ponto do marco no Caso completo passou ao tom de barro, a única marca de cor nova, e os cartões ganharam cantos um pouco mais arredondados.<br><br>F142 — O SÍMBOLO CERTO E DO TAMANHO CERTO. O andamento do e-SAJ e do eproc que chega pela coleta do PJe passou a mostrar o símbolo e o nome do próprio sistema, e não mais o do PJe. O símbolo agora ocupa a bolinha inteira, do mesmo tamanho da inicial de quem fez a anotação.<br><br>F141 — O SÍMBOLO DE CADA SISTEMA NO CASO COMPLETO. A bolinha de cada registro passou a mostrar o símbolo do sistema de onde ele veio: PJe, e-SAJ, eproc, INSS (perícias e avaliações incluídas), e-Sisrec e CNJ. Quando o andamento chega pelo CNJ, o CRM usa o sistema em que o processo corre e escreve, por exemplo, "PJe · CNJ". A <b>⭐ ficou só para o importante</b>; o marco do caso é o ponto no trilho. Os símbolos são os ícones dos próprios sites oficiais; se algum não carregar, aparece a sigla em cinza.<br><br>F140 — ACABAMENTO PELA REFERÊNCIA DO CLAUDE E DO SPELL UI. Na ficha do visual novo, o negrito passou a ficar só no nome do cliente e no título do caso; o resto usa um peso intermediário, e a hierarquia vem do tamanho. O texto dos registros subiu para 14 px, que é o tamanho de leitura. Os cantos ficaram em três medidas (botões e campos, cartões, placa e prazos) e as bordas finas num tom só. A inicial do cliente ganhou um tom próprio, tirado do nome, sempre o mesmo para a mesma pessoa. Ao copiar CPF, DER ou número, aparece um selo "copiado" em cima do próprio número. Nas tarefas, o <b>círculo de concluir</b>, que estava invisível, voltou a aparecer, e a tarefa concluída é riscada da esquerda para a direita. No celular, a bolinha do autor fica na mesma linha do nome.<br><br>F139 — A TELA DO CASO COM UMA FONTE SÓ. No visual novo, a maior parte da ficha ainda saía na fonte antiga (Segoe UI) misturada à do tema (IBM Plex Sans), por causa de uma regra do começo do sistema que fixava a fonte em todo elemento; agora a ficha inteira usa a fonte do tema. Os rótulos pequenos subiram para 11 px, o texto dos andamentos voltou ao peso normal e os tipos de andamento do campo de escrever ficaram discretos até o uso. A Verificação "a definir" deixou de ser vermelha e ficou cinza como a Etapa, porque as duas dizem o mesmo: dado ainda não preenchido. Nas abas dos andamentos, o <b>Caso completo</b> vem primeiro, ao lado das outras, e o título repetido deu lugar à contagem de registros. Na linha do tempo, a bolinha da fonte mostra o ícone de onde o registro veio, e a ⭐ ficou só para o botão de importante; o marco é o ponto no trilho, e a legenda diz isso. O texto longo tem largura de leitura, os botões pequenos cresceram para 24 px e, no celular, o CPF e o telefone ficaram com o sublinhado junto do número.<br><br>F138 — PLANEJADO E FICHA EM HARMONIA. No visual novo, as listas viraram um bloco só, com um fio entre os clientes em vez de uma pilha de cartões. A <b>data</b> abre a segunda linha de cada cliente, porque no fim da linha era a primeira coisa cortada; o nome da lista vem depois, em letra comum e com o mesmo ícone do menu. O CPF sai da linha quando a coluna é estreita, o ＋ de atribuir só aparece ao passar o mouse e a bolinha de quem tem a tarefa não se repete. O período do Planejado virou um seletor numa linha só (Vencidas, Hoje, 3 dias, 7 dias, Todas). Na ficha, os prazos têm a mesma forma, e só o prazo fatal continua vermelho cheio; a DER da placa é sublinhada como o CPF, e não mais uma caixa. No Caso completo, os dias deixaram de alternar cinza e branco e se separam por um fio; um trilho fino liga os registros, o marco é um ponto nele (e não mais uma faixa marrom com o texto em negrito), e os botões ✔ li, ⭐ e ⚡ ficam alinhados numa coluna à direita.<br><br>F137 — QUATRO ACERTOS VISÍVEIS. No celular com o visual novo, a barra de baixo voltou a ser legível (a aba ativa sumia, branca sobre o fundo claro) e ganhou os mesmos ícones do menu lateral. No computador, o botão "ver como colaborador" não passa mais por cima do botão "visual". No celular, <b>tocar e segurar</b> um cliente abre o menu que o botão direito abre no computador (Adicionar ao Meu Dia e Mover para…), e o Meu Dia vazio passou a ensinar esse gesto. O selo "Cliente ativo" perdeu a bolinha verde repetida.<br><br>F136 — CELULAR. Os campos de digitar não dão mais zoom no iPhone, inclusive o de acrescentar cliente na lista, que ainda dava. O voltar da ficha e os itens do menu ganharam área de toque do tamanho do dedo. A rolagem do menu, da ficha e das janelas não puxa mais a página de trás quando chega no fim. No Android, o teclado encolhe a tela em vez de cobrir o campo de escrever, e as janelas acompanham a barra do navegador.<br><br>F135 — MAIS RÁPIDO E SEM JANELA DO NAVEGADOR. A abertura busca as páginas de cada tabela em paralelo e ficou cerca de duas vezes mais rápida no teste. O Planejado mostra 50 datas por seção, com o botão <b>Mostrar mais</b>, e deixou de travar a tela. As perguntas de confirmação ("Apagar este comentário?") abrem dentro do próprio sistema, com o botão dizendo o que vai acontecer, vermelho quando é para apagar, e o Esc desiste. O <b>Registrar</b> responde no clique e não grava duas vezes se clicado de novo. Em aparelho de toque, o destaque de passar o mouse não fica mais preso depois do toque, e quem usa teclado vê onde está o foco.<br><br>F134 — FICHA v11 E CELULAR COM CARA DE APLICATIVO. No visual novo, a faixa do caso ganhou duas partes: no alto o nome do pedido com os selos; embaixo uma <b>placa</b> com um quadro por dado fixo (DER, tramitação, etapa, verificação e os dados da espécie), rótulo em cima e valor embaixo, em colunas alinhadas. A tramitação aparece em azul-aço, a cor do que vem de sistema. No celular a placa fica em duas colunas. Em qualquer visual, o toque deixou de piscar cinza, os botões respondem no instante em que o dedo encosta, o puxar-para-recarregar não rouba mais a rolagem, a altura acompanha a barra do navegador e os campos não dão mais zoom no iPhone.<br><br>F89 — O ROTEIRO DA PERÍCIA. Quando o 📌 dar seguimento reconhece uma perícia ou avaliação social com data, o modal passa a trazer o caminho inteiro do escritório, com as datas já calculadas: <b>quesitos</b> (apresentar até, ou só registrar que já foram — o CRM entende quando o próprio texto diz que foram apresentados), <b>atendimento de preparação</b> 3 dias úteis antes (atribuído a quem o escritório escolher — e o CRM guarda quem é, para a próxima), <b>documentos médicos novos</b> pedidos até o dia da perícia, <b>mensagem de lembrete</b> na véspera, <b>estudar o processo</b> 1 dia útil antes do atendimento, e a <b>conclusão do caso</b> movida para o dia do estudo. Trocar a data do atendimento arrasta o estudo e a conclusão junto. Cada passo pode ser desmarcado. Perícia de 16/11 → atendimento 11/11 → estudo e conclusão 10/11, que é a regra que o Paulo já usava à mão. Julgamento no CRPS segue sem roteiro, porque não há preparação nem presença.<br><br>F88 — O RECURSO SEM CASO PASSA A TER DONO. Na importação, os NUPs que não casavam com nenhum caso morriam numa contagem ("46 número de recurso não tem caso — esses não entram") e os movimentos deles ficavam de fora de toda coleta. Agora cada um aparece com o NUP formatado, o NOME DO RECORRENTE e o NB, e três saídas: <b>vincular ao caso de Fulano</b> quando o nome bate com um cliente que tem um caso ativo sem NUP (e o botão "vincular os N" faz isso em lote), <b>🔍 escolher</b> para buscar o cliente e apontar o caso (ou criar um caso no Conselho já com o NUP), e <b>🚫</b> para o que não é nosso parar de perguntar. Vincular grava só o NUP em crps_nups — da coleta seguinte em diante o recurso entra sozinho, com todos os movimentos. É o mesmo caminho que o acervo do PJe já tinha.<br><br>F87 — VOCABULÁRIO DE ESCRITÓRIO e NATUREZA DO PEDIDO. Os rótulos inventados saíram da tela: "Duas trilhas vivas" virou <b>Tramitação em paralelo</b> (e "Onde está" virou <b>Tramitação</b>), "O que cobra ação" virou <b>Prazos e providências</b>, "a atribuir" virou "não informado", "N números de fase anterior" virou "Números anteriores · N", e o prazo sem descrição agora diz "Sem descrição — clique para descrever este prazo". Entrou também a <b>natureza do pedido</b> no cartão do caso, três botões (Concessão, Revisão, Acerto de cadastro) e o chip no topo — é ela que separa a carteira quando se pergunta quantas revisões estão em andamento. A natureza precisa de uma coluna nova: rode <b>crm/fase2/schema_natureza.sql</b> (ou o schema_por_em_dia.sql, que já a inclui) no SQL Editor do Supabase. Enquanto não rodar, os botões avisam e não gravam; o resto do CRM segue igual.<br><br>F86 — TRILHA PARALELA e o resto da parte visual do protótipo. O mandado de segurança impetrado enquanto o recurso dorme no Conselho deixou de ser tratado como fase seguinte: a régua mostra as DUAS trilhas vivas, com Principal (a fase administrativa) e Instrumental (o MS, com o órgão), e o Caso completo não inventa mais uma "Fase · Ação judicial" — os registros do MS ficam na fase atual. Entraram também o telefone com copiar na faixa do cliente, ao lado do CPF e da senha, e o ✔ li no que o robô trouxe, dentro do Caso completo.<br><br>F85 — DE QUE É O PRAZO (pedido do Paulo: "consta o prazo, mas não sei do que é"). Com o visual novo, cada prazo mostra o TEXTO da anotação que o criou, com o caso, quem anotou e quando; clicar leva ao próprio comentário. Prazo sem motivo (o "Concluir em" que veio do To Do) avisa em âmbar e o clique abre a caixa para escrever do que é — vira a anotação de origem. O ✔ cumprido agora pergunta o que foi feito, guarda como comentário no caso pendurado na anotação do prazo, e só então tira o prazo da lista: fica só o que ainda cobra ação. A exigência do INSS mostra o que o INSS pediu.<br><br>F84 — O QUE COBRA AÇÃO (pedido do Paulo: prazo é o que o escritório não pode perder, então é o destaque). Com o visual novo ligado, o quadro de datas sai de dentro do cartão do caso e vira o PRIMEIRO bloco da coluna da esquerda, acima dos fatos. Os prazos vêm no topo, prazo fatal, prazo da exigência do INSS (com o ✔ cumprida), recorrer até (30 dias da decisão) e DCB, depois os lembretes e a perícia marcada. Vencido em vermelho, próximos 7 dias em âmbar. Desligado, o quadro segue dentro do cartão como antes.<br><br>F83 — a BARRA LATERAL fecha o protótipo v10: com o visual novo ligado, o primeiro grupo ganha o título "Trabalho de hoje" (os outros dois já tinham) e o contador do ☀️ Meu Dia fica VERMELHO quando há prazo vencido, com o número de vencidas no título ao passar o mouse. Em qualquer visual, o Meu Dia sem nada para hoje mas com vencidas passa a mostrar quantas são, em cinza. Nada saiu do menu.<br><br>F82 — o CASO COMPLETO POR FASE, só com o visual novo ligado: a mesma lista de todas as fontes, cortada nas datas em que o caso mudou de fase (DER, protocolo do recurso ordinário ou 1º evento do e-Sisrec, distribuição da ação, encerramento). Cada fase é um bloco com nome, período e contagem; só a atual nasce aberta, e a antiga que você abrir fica aberta nas repinturas. Os botões "só os marcos" e "copiar em texto" continuam. Desligado, a lista segue plana.<br><br>F81 — a RÉGUA POR FASE, só com o visual novo ligado: uma linha acima do trabalho com as âncoras do pedido (DER e NB, editáveis e copiáveis), ONDE ESTÁ com a lista da fase e o número vivo (protocolo no INSS, NUP do e-Sisrec no Conselho, número CNJ no judicial, com o 📋 e o clique que abre os andamentos daquela fase) e os números das fases anteriores dobrados à direita. A DER sai do cartão porque mora na régua. Desligado, o cartão segue como na 09.75.<br><br>F80 — VISUAL NOVO atrás de interruptor (papel e petróleo, v10): o botão "visual" ao lado do nome, na barra lateral, liga e desliga o tema; ?tema=v10 na URL também liga. Só cor, tipografia e hierarquia mudam, a lógica é a mesma: petróleo para a ação do escritório, azul-aço para o que veio de sistema, vermelho venceu, âmbar vence em breve, verde feito, placa cinza para os fatos do caso; barra lateral clara; abas do cliente e do caso rotuladas pelo escopo; números em fonte mono. Padrão desligado, quem não ligar vê o CRM como sempre.<br><br>F79 — as SEÇÕES do ☀️ Meu Dia recolhem (pedido do Paulo): clicar no título (🎂 Aposentadorias a tratar, 🔔 Lembretes a fazer, ☀️ Adicionados ao dia, 🟡 Vencem hoje e qualquer outra) esconde as linhas da seção e a flechinha vira ▸; clicar de novo traz tudo de volta. O contador do título continua à vista com a seção fechada, e o recolhimento sobrevive às repinturas da tela (desfaz só ao recarregar a página). · F78 — a CAUSA RAIZ da sincronização enfim nomeada (documentação oficial do Supabase): a chave nova (sb_secret_…) NÃO é JWT — mandada também no header Authorization, o gateway tenta ler como JWT e recusa TUDO com "Invalid API key", mesmo com a chave CERTA. O migrar.py e o testador do 🩺 mandavam a chave nos DOIS headers, então o robô caía e o testador carimbava ❌ em chave boa. Agora os dois mandam a sb_secret_ só no apikey (a legada eyJ… continua indo nos dois) e o ❌/✅ mostram a impressão digital da chave (tamanho e começo) para conferência. · F77 — o TESTADOR de chave na caixa do 🩺 (a sincronização segue caindo em "Invalid API key" e a troca às cegas não fecha): cole a chave copiada do Supabase no campo novo e o CRM responde NA HORA — ✅ válida com força de service (é a que vai no segredo SUPABASE_SERVICE_KEY), ⚠ aceita mas é a anon/publishable (não serve para o robô) ou ❌ inválida (chave de outro projeto ou copiada errada); a chave testada NÃO é gravada em lugar nenhum. · F76 — diagnóstico FECHADO da sincronização (lido por mim direto do log da Action, pelo navegador): o To Do é lido normalmente (token do Graph OK) e a falha é "Invalid API key (401)" na conversa com o Supabase — o segredo SUPABASE_SERVICE_KEY do repositório está vencido/rotacionado; a caixa do 🩺 agora ensina também esse conserto (copiar a service key no painel do Supabase e atualizar o segredo no GitHub). · F75 F75 — o 🩺 agora mostra o MOTIVO (o print do Paulo cravou: todas as rodadas caem no passo "Espelho -> banco", o migrar.py): clicar em "qual passo falhou?" também baixa o log do job no GitHub e mostra as últimas linhas relevantes — o migrar.py imprime ali "o banco recusou POST em 'tabela' (código): detalhe" e nomeia a linha culpada, então o veredito aparece na própria caixa, sem abrir o GitHub. · F74 — as datas do Recurso (CRPS) no formato certo (print do Paulo: "20./2.26/0" e pílulas ", 20/2" no Caso completo): a API do e-Recursos manda a data em dd/mm/aaaa e três consumidores formatavam a data CRUA — a aba Recurso (blocoRecurso), o Caso completo (fatosDoCasoTodo) e o menu dos NUPs; agora isoCrps() normaliza (aceita os dois formatos) e a ordenação por data volta a valer; de quebra, o chip "decidido em" da trilha processual chamava dataParaISO sem o prefixo CRPS. (função que não existia) e QUEBRAVA o render inteiro do ➕ sempre que o recurso tinha decisão — consertado com o mesmo isoCrps. · F72+F73 — a sincronização vigiada e o prazo fatal honesto: F72, o rodapé do To Do ganhou o 🩺 — abre as últimas rodadas da sincronização no GitHub (verde/vermelha, de hora em hora ou disparo manual) e, na falha, UM clique mostra QUAL passo caiu (se for "Renova token Microsoft Graph", o segredo GRAPH_REFRESH_TOKEN venceu — a caixa explica onde trocar); usa o mesmo token do 🔄. F73 (pedido do Paulo: prazo fatal aparecendo para caso SEM data de conclusão no To Do): a data escrita solta num comentário ("verificar em 24/08") NÃO vira mais casos.prazo — vira tarefa de lembrete (andamento_tarefas), que é o lugar dela; o PRAZO FATAL agora só nasce de três portas conscientes: o ⏰ do composer (checkbox com data fatal), o campo do quadro 📅 e o "Concluir em" do To Do (a sincronização já espelha e limpa — sem data lá, sem prazo aqui). · F71 — três consertos de uma vez (pedidos do Paulo com prints): (1) a aba Andamentos do CNJ NÃO fica mais com a parte em branco — o menu das fontes precisava de uma linha inteira do grid e o auto-placement jogava ele (e todo o conteúdo atrás) para DEPOIS do cartão; agora os botões ⚡ Coleta do PJe e ⚖️ Coleta oficial (CNJ) vivem no TOPO da coluna dos andamentos, o PJe vem PRIMEIRO e é a fonte padrão; (2) o detector do 📌 dar seguimento ficou desconfiado como o leitor do composer (F67): data SEM palavra de agendamento por perto não vira mais perícia — era o "Prazo: 02/02/2027" de movimento do PJe virando "Perícia 02.02.2027" com o checkbox já ligado; o agendamento do 📌 agora nasce com a obs do trecho de origem (auditável, e o banner 🕵️ do Calendário pega); (3) movimento do PJe que caiu no caso ERRADO (caso real: andamento de um processo na ficha de outro cliente) tem saída: o botão "⚠ não é deste caso" na linha da coleta remove o intruso e o aviso denuncia a causa quando o número do processo estranho está gravado na ficha do caso (é por ele que a coleta casa — tirar o número em ➕ mais informações impede a volta). · F70 — dois retoques na faxina (pedido do Paulo): espécie sem marcador ficou em SILÊNCIO (saiu a frase "Nesta espécie o próprio código já diz o que é o pedido…" — B31 e afins não mostram linha nenhuma) e o ➕ mais informações desceu para LOGO ABAIXO da DER (a vaga ao lado da DER ficou reservada para o dado relevante do INSS que o Paulo ainda vai escolher). · F69 — a FAXINA do cartão do caso (pedido do Paulo, item a item): a ESPÉCIE saiu do quadro e virou o código B na frente do nome (B42 ✎ — o lápis abre a lista das espécies cabíveis); os marcadores (Rural, Especial, Deficiência…) logo abaixo; o Acompanhamento ficou só com os dois chips (cinza; o escolhido acende) e o ✓; a DER divide a linha com o ➕ mais informações (o protocolo agora mora DENTRO do mais, junto de NB, DIB e etapas anteriores — o details virou botão); a janela 📅 Lembretes e datas vem em seguida com a TAREFA COM PRAZO em destaque (faixa vermelha à esquerda, sempre — não só vencida), a frase do vazio encurtou para "Nenhuma data marcada para este cliente." e o quadro segue consolidando TODAS as datas de TODOS os casos do cliente; a linha RESPONSÁVEL (atribuição de caso) SAIU do cartão — fica o 📎 Documentos solicitados e, por último, fundir / não é caso / Encerrar caso. · F68 — ACOMPANHAMENTO Manual ou Automático (pedido do Paulo): caso na lista INSS ou no Conselho de Recursos ganhou, logo abaixo da espécie, a pergunta que separa quem o portal/robô vigia sozinho de quem a equipe precisa abrir de tempos em tempos (ex.: E-SISREC com a senha do cliente) — dois chips (Manual/Automático) e ao lado o ✓ da checagem: cinza enquanto ninguém checou, VERDE ao clicar, e o mouse em cima conta quem checou e quando (qualquer colaborador); os casos marcados como MANUAL aparecem na lista própria 🔎 Checagem manual na barra lateral, ordenada como fila de trabalho (nunca checados primeiro, depois os checados há mais tempo). Precisa rodar schema_acompanhamento.sql no Supabase. · F65+F66+F67 — três pedidos do Paulo no mesmo dia: F65, a ⚡ Anotação rápida perdeu a LUPA (que a fazia parecer a busca) e subiu para CIMA do botão Novo Cliente — o ícone agora é o próprio raio; F66, perícia CANCELADA some de verdade: sai do 📖 Caso completo, do quadro 📅 Lembretes e datas e da pílula "volta em" (três filtros que olhavam um campo que não existia ou não olhavam nada — a aba Perícias continua guardando o histórico, canceladas incluídas); F67, o leitor que transforma "Perícia agendada para 19/08 às 8:50" em agendamento ficou DESCONFIADO: só cria evento quando o texto fala em agendada/marcada/remarcada/designada — "a perícia foi indeferida em 24/07" criava perícia fantasma com a data empurrada para o ANO SEGUINTE (o 24/07/2027 que nunca existiu) — e o 📅 Calendário ganhou o banner da caça: lista os agendamentos futuros nascidos de texto sem palavra de agendamento, cada um com ✕ fantasma (cancela) e ✔ é real (confirma) em um clique. · F64 — concluir a tarefa BAIXA o prazo fatal junto (pedido do Paulo: escrever o comentário de conclusão e ainda ter que clicar em ✔ feito no prazo era clique sem necessidade): quando a tarefa concluída (pelo ✔ rápido ou pelo ✎ escrever) nasceu de uma anotação com carimbo [PRAZO dd.mm.aaaa] igual ao prazo vigente do caso, a conclusão também tira o prazo — e se a F38 tinha movido o caso para 🗓 Tarefas com Prazo, ele volta sozinho para a lista de onde veio (regra da volta, sem perguntar); o aviso conta ("prazo fatal baixado junto") e o desfazer devolve tudo como estava (prazo, fase, lista). · F63 — o 📖 Caso completo aprendeu a RESPOSTA (bug apontado pelo Paulo: concluir a tarefa pelo ✎ escrever mostrava o comentário como registro novo e solto): a conclusão que responde um pedido (responde_a) agora fica EMBAIXO do próprio pedido, recuada com a faixa verde — a mesma leitura "o que foi pedido → o que foi feito" da conversa do Escritório; órfã (pai apagado) continua à mostra no nível de cima, e o 📋 copiar em texto sai com a resposta indentada (↳). · F62 — o quadro 📅 aprendeu parentesco (pedido do Paulo: a anotação com prazo cria DUAS datas — lembrar antes e a fatal — e soltas bagunçavam): o PRAZO FATAL agora ADOTA o lembrete decorrente — o grupo mostra a mãe (data fatal) com a filha aninhada embaixo ("↳ lembrar dd/mm"), ordenado pela primeira ação necessária; e a tarefa ganhou o SEGUNDO jeito de concluir, igual ao do andamento: além do ✔ rápido (com desfazer), o ✎ escrever abre a janela oficial de contar o que foi feito, com protocolo e repetição. · F61 — o quadro 📅 Lembretes e datas virou RESUMO puro (pedido do Paulo): saiu o "criar lembrete" do rodapé — as datas nascem nos lugares próprios (andamentos do escritório, aba Lembretes, Perícias) e o quadro só reúne, mostra e deixa alterar; e cada lembrete ganhou uma SEPARAÇÃO SUTIL (linha fina entre um e outro, com mais respiro) para a leitura contar as linhas sem esforço. · F60 — a data escrita no COMPOSER do caso ("verificar em 24/08", o 📌, o ＋ do comentário) agora aparece no quadro 📅 Lembretes e datas (pedido do Paulo: a anotação com lembrete não aparecia): a linha traz o texto do andamento, a bolinha do responsável, a data aberta para alterar (adia pelo fluxo oficial) e o ✔ feito que conclui a tarefa (com desfazer); CLICAR leva direto ao andamento que criou o lembrete — a tela vai à sub-aba do Escritório, rola até o comentário e o acende por um instante; a tarefa também passou a contar para a pílula "volta em" do topo da ficha. · F59 — no quadro 📅 Lembretes e datas, a LINHA É CLICÁVEL: clicou, aparece a ANOTAÇÃO que criou a data (o lembrete gêmeo acha a nota pelo título; lembrete avulso mostra a própria ficha, com atalho para a aba Lembretes) — tudo sincronizado e fácil de encontrar; e o responsável agora é a BOLINHA COLORIDA com a inicial (a mesma identidade visual da equipe no resto do CRM), no lugar do nome escrito. · F58 — o cartão do caso na ordem do Paulo, enxuto: ESPÉCIE primeiro (com a lista do caso ao lado, no topo), depois só o essencial DA FASE — INSS mostra as subespécies (rural, especial, deficiência…), a DER e o protocolo; JUDICIAL mostra "Distribuído em", "Onde está" (JEF, Turma Recursal, vara) e os números dos processos vinculados; CONSELHO mostra as datas de protocolo do Recurso Ordinário, dos Embargos e do Recurso Especial (dinâmico — cada campo aparece quando a peça anterior existe; precisa do schema_recursos_crps.sql); auxílio-doença/incapacidade mantém a janelinha própria com DCB e o "prorrogar a partir de" (15 dias antes preenchido sozinho ao gravar a DCB); a JANELA DE LEMBRETES E DATAS vem logo abaixo (agora com o atribuído de cada anotação e o ✔ feito também no prazo fatal); depois o botão "➕ mais informações" guarda dobrado o que não precisa ficar à vista (etapas anteriores — De onde partiu/No que ramificou —, NB, DIB, decisão, classe e o resto, tudo editável como sempre); e as ações fundir / não é caso / Encerrar caso agora moram POR ÚLTIMO. · F57 — TODOS os lembretes à vista no caso (pedido do Paulo: a pílula sozinha não bastou): quadro "📅 Lembretes e datas" EM CIMA dos dados do caso com uma linha por data — anotações datadas, lembretes (com responsável e recorrência), prazos fatais e agendamentos — cada uma com o campo de data ABERTO (trocou, gravou na hora: anotação remarca, lembrete adia pelo fluxo oficial, prazo fatal move) e o "✔ feito" que resolve ali mesmo (lembrete único desliga, recorrente avança); vencida fica vermelha, a que chega em 7 dias fica azul; e o rodapé do quadro cria lembrete novo sem sair do caso (o quê + quando + quem). A pílula do topo (F56) continua como resumo de qualquer aba. · F56 — o "Concluir em" do To Do chegou ao CRM (pedido do Paulo: a data da próxima tarefa era fácil de ver no To Do e não estava sendo no CRM): o topo da ficha agora mostra UMA pílula com a data em que o cliente volta à mesa — calculada sozinha, a menor entre lembretes ativos, anotações com data, prazos fatais e agendamentos; vencida grita "⏰ venceu DD.MM" em vermelho (a cobrança mais antiga primeiro), futura avisa "📅 volta DD.MM" em azul com o motivo, e sem data nenhuma a pílula cinza denuncia "sem próxima data" (cliente sem cobrança marcada é cliente esquecido); o clique leva até onde a data mora; nas Anotações, a nota com data ganha a pílula colorida no começo da linha (azul futura, vermelha vencida) e a data vencida sem resolução entra SOZINHA nas Pendências em aberto. · F55 — a ficha respira (pedido do Paulo: menos informação de uma vez, sem flechinha misteriosa, fácil para quem tem pouco contato): a MESA SE ARRUMA SOZINHA — bloco resolvido recolhe numa linha verde que já INFORMA a decisão (espécie · natureza · via · cidade; análise de hoje; honorários com o padrão ou o ajuste à vista) e reabre num toque em "alterar"; a LINHA-GUIA no topo diz numa frase o que falta fazer no atendimento (ou que só resta a decisão final); e o rodapé da anotação virou CÁPSULAS COM PERGUNTA (Como marcar? · Quem cuida disso? com nome e cor · Lembrar quando? · ⏰ Prazo fatal?) com a FRASE-VIVA embaixo confirmando em português o que vai acontecer ao guardar — o prazo fatal agora sai direto da anotação (caso vai para 🗓 Tarefas com Prazo) e o 📌 dar seguimento fala a mesma língua (mesmas perguntas, mesma frase-viva). · F54 — pacote do Paulo: (1) a tela do PJe voltou na aba CNJ (caso com um só processo na lista casava errado e escondia a coleta); (2) cliente novo e interessado pela anotação rápida exigem NOME COMPLETO e TELEFONE; (3) a triagem pergunta o vínculo de hoje (empregado desde / CI / facultativo / não contribui) e a resposta viaja para a análise de direito; (4) benefício por incapacidade no atendimento pergunta a CIDADE e o checklist de documentos nasce aberto; (5) PENDÊNCIAS EM ABERTO — anotação marcada ⏳, urgente ou com checklist por fazer fica presa num quadro no topo das Anotações até alguém Resolver (o selo fica na lista). · F53 — na anotação rápida, qualquer parte do nome já lista os clientes embaixo, e SEMPRE há saída embaixo da lista: "➕ Cadastrar como CLIENTE novo" (cadastro mínimo com a anotação entrando como atendimento urgente e a ficha abrindo para completar) e "➕ Anotar como INTERESSADO" (funil 💼 Vendas) — mesmo quando a busca acha homônimos parciais. · F52 — a ANOTAÇÃO RÁPIDA ganhou porta fixa no TOPO da barra lateral, acima da busca (pedido do Paulo: mais fácil que pesquisar, mínimo de clique): clicou no campo ⚡, o painel abre já procurando o nome; Enter no texto guarda; e quem liga SEM ser cliente vira INTERESSADO no funil 💼 Vendas com a anotação como interesse — nenhuma ligação fica sem registro. O botão ⚡ do canto continua (é ele no celular). · F51 — JULGAMENTO no seguimento das Novidades corrigido (pedido do Paulo): nada de "avisar o cliente para preparação" — o texto vira "⚖️ Julgamento agendado para DD.MM.AAAA às HH:MM. Verificar o resultado no dia seguinte.", a tarefa nasce no dia útil seguinte ao julgamento e a atribuição padrão é do admin (Paulo), no modal 📌 (chip já marcado) e no 1 clique/lote; a véspera de "mensagem ao cliente" não nasce para julgamento. Perícia/audiência seguem como eram. · F50 — ⚡ ANOTAÇÃO RÁPIDA, o botão que atende o telefone: fixo no canto da tela (desktop e celular), abre nome + anotação + 🔥 urgente já ligado; com caso em andamento vira andamento E marca o caso URGENTE (sobe em toda lista), sem caso vira anotação urgente do atendimento na ficha — a ligação e o balcão nunca mais passam sem registro. · F49 — a análise de direito NO TRILHO do primeiro atendimento: passo "4 · ⚖️ Análise de Direito" na mesa das Anotações com os campos preenchíveis (o mesmo formulário da aba ⚖️), linha de estado verde/âmbar na TRIAGEM (com atalho) e nas Anotações, o fecho da triagem registra "análise feita em X / PENDENTE", e análise salva SEM caso ativo vira anotação do atendimento (que migra para os andamentos quando o pré-caso virar caso, pela regra do F30). · F48 — ⚖️ ANÁLISE DE DIREITO, a memória dos atendimentos: aba própria na ficha e visão na barra lateral (com Dashboard), cada análise com a data em que foi feita (retroativa entra com a data original), o que foi combinado e os cenários da época (regra, data prevista, valor; ⭐ no melhor, verde quando o direito já chegou); grava comentário nos andamentos de TODOS os casos ativos, cria o aviso 🎂 de época por cenário, e as anotações antigas do To Do (lista 🙏) viram análise em um clique. Precisa rodar schema_analise_direito.sql. · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</div>
-    </details>
+    <!-- 11.92 · ADM-06: o histórico das versões (parado na F160, 40 mil caracteres) saiu; ele mora no CLAUDE.md e no git -->
   </div>
   <noscript>
     <div class="cx-login" style="margin-top:12px;color:var(--vermelho)">
@@ -7672,7 +7679,8 @@ function etapaAgora(k){
 // número que pinta o contador do Meu Dia de vermelho (tema v10).
 function quantosVencidos(){
   const hj = hoje();
-  if(temaV10()) return itensAgenda(eu.id).filter(i=>i.data<hj).length;   // F236 · da pessoa, não do escritório
+  // F236 · da pessoa, não do escritório; 11.92 · DAD-06: com o Meu Dia sem o que vence, o menu também não conta as vencidas
+  if(temaV10()) return mdMostraVence() ? itensAgenda(eu.id).filter(i=>i.data<hj).length : 0;
   const tfVenc = k => (D.tarefasPorCaso.get(k.id)||[]).some(t=>!t.concluida_em && t.lembrar_em && t.lembrar_em<hj);
   const vencK = ativos().filter(k=>(k.prazo && k.prazo<hj) || tfVenc(k)).length;
   const tVenc = (D.tarefas||[]).filter(t=>!t.concluida && t.prazo && t.prazo<hj).length
@@ -7820,7 +7828,7 @@ function montarSidebar(){
   // e faz o número que importa (Menções 3) se perder no meio deles
   const nVenc = quantosVencidos();   // F83 · vencidas pintam o contador do Meu Dia
   document.getElementById("grupo-dinamicas").innerHTML = din.map(([id,rot,n])=>
-    `<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}`+
+    `<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}`+
     (n==="🔒"?`<span class="priv">🔒 só você</span>`
       // Meu Dia com vencidas e nada de hoje: o contador mostra as vencidas (em
       // vermelho no tema v10), porque prazo passado é o que mais cobra alguém
@@ -7839,24 +7847,24 @@ function montarSidebar(){
         ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && dataSP(e.data_hora)>=hoje()).length],
         ["clientes","👥 Clientes", (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length]]   // F250 · a lista de todos os clientes (nível 0)
       .filter(([id])=>pode.includes(id) && !["particulares","rotinas"].includes(id))
-      .map(([id,rot,n])=>`<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
+      .map(([id,rot,n])=>`<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
         (id==="meudia"&&nVenc)?`<span class="cont venc" title="${nVenc} vencida${nVenc>1?"s":""} · ${n||0} hoje">${n?`${nVenc} · ${n}`:nVenc}</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("");   // F236 · vencidas · hoje, como a tela
     document.getElementById("grupo-fases").innerHTML =
       din.filter(([id])=>["particulares","rotinas"].includes(id)).map(([id,rot,n])=>
-        `<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n==="🔒"?`<span class="priv">🔒 só você</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("")
+        `<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n==="🔒"?`<span class="priv">🔒 só você</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("")
       + fasesColab.map(f=>{ const rot=(FASES.find(x=>x[0]===f)||[f,"🙏 Aposentadorias futuras"])[1];
           const n = f==="aposentadoria_futura" ? cardsApos().length : casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
-          return `<div class="lista-item" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`; }).join("");
+          return `<div class="lista-item" role="button" tabindex="0" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`; }).join("");
     document.getElementById("grupo-visoes").innerHTML = "";
     document.getElementById("grupo-visoes").parentElement.style.display = "none";
   } else {
   document.getElementById("grupo-visoes").parentElement.style.display = "";
   document.getElementById("grupo-fases").innerHTML = ordemDasFases().map(([f,rot])=>{
     const n = casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
-    return `<div class="lista-item" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`;
+    return `<div class="lista-item" role="button" tabindex="0" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`;
   }).join("")
   // F68 · os casos de acompanhamento MANUAL têm a lista própria de checagem
-  + (m=>`<div class="lista-item" data-v="checagem" aria-label="Checagem manual">${
+  + (m=>`<div class="lista-item" role="button" tabindex="0" data-v="checagem" aria-label="Checagem manual">${
       rotu("🔎 Checagem manual")}${m?`<span class="cont">${m}</span>`:""}</div>`)(
       ativos().filter(k=>k.acompanhamento==="manual").length);
   document.getElementById("grupo-visoes").innerHTML = [
@@ -7880,7 +7888,7 @@ function montarSidebar(){
     ["dashboard","📊 Dashboard", null],
     ["patinss","📥 Importar do INSS", null],
     ...(souAdmin() ? [["config","⚙️ Configurações", null]] : []),
-  ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`).join("");
+  ].map(([id,rot,n])=>`<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`).join("");
   }
   // F144 · a barra do visual novo, como no mock do Paulo (27.09.2026): HOJE
   // com as quatro telas do dia, as seis listas do escritório e duas visões à
@@ -7888,7 +7896,7 @@ function montarSidebar(){
   const gm = document.getElementById("grupo-mais");
   gm.innerHTML = "";
   if(temaV10() && !visaoColab()){
-    const item = (id,rot,n,extra="") => `<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
+    const item = (id,rot,n,extra="") => `<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
       extra || (n?`<span class="cont">${n}</span>`:"")}</div>`;
     const nMd = quantosNoMeuDia();
     const dd = Object.fromEntries(din.map(x=>[x[0],x]));
@@ -7924,7 +7932,7 @@ function montarSidebar(){
     const nMais = (mais.match(/class="lista-item"/g)||[]).length;
     const dentro = mais.includes(`data-v="${visao}"`);
     const aberto = dentro || ler("crm_mais_visoes")==="1";
-    gm.innerHTML = `<button class="mais-visoes" id="btn-mais-visoes" aria-expanded="${aberto}"><span class="txt">${
+    gm.innerHTML = `<button class="mais-visoes" id="btn-mais-visoes" aria-expanded="${aberto}" aria-label="${aberto?"Menos visões":`Mais ${nMais} visões`}"><span class="txt">${
       aberto?"Menos visões":`Mais ${nMais} visões`}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${aberto?"m6 15 6-6 6 6":"m6 9 6 6 6-6"}"/></svg></button>`
       + `<div class="mais-lista"${aberto?"":" hidden"}>${mais}</div>`;
     document.getElementById("btn-mais-visoes").onclick=()=>{ guardar("crm_mais_visoes", aberto?"0":"1"); montarSidebar(); };
@@ -8134,14 +8142,6 @@ const ANCORAS = [
   /CRPS\s+([\s\S]{0,90}?)\s*Data\/Hora:/i,
   /Data\/Hora:\s*\d{2}\/\d{2}\/\d{4}[\s\d:]*([\s\S]{0,90}?)\s*MINIST[ÉE]RIO/i,
 ];
-function orgaoDoAcordao(texto) {
-  for (const ancora of ANCORAS) {
-    const m = String(texto || '').match(ancora);
-    const o = m && orgaoJulgador(m[1]);
-    if (o && o.instancia) return o;
-  }
-  return null;
-}
 
 // a versão curta, para caber no fim da linha do andamento ("(25ª Junta)")
 function orgaoCurto(bruto) {
@@ -12447,10 +12447,9 @@ function quantosNoAcervo(){
   const dias = +(cfgApp("revisao_dias")||90);
   const lim = (()=>{ const d=new Date(hoje()+"T12:00:00");
                      d.setDate(d.getDate()-dias); return d.toLocaleDateString("sv"); })();
-  const parados = ativos().filter(k=>{ const u=ultimoRegistro(k); return !u || u<=lim; }).length;   // F236
-  const semAcao = ativos().filter(k=>!k.prazo && !k.exigencia_prazo
-    && !(D.tarefasPorCaso.get(k.id)||[]).length).length;
-  return parados + semAcao;
+  // 11.92 · ADM-04: o caso parado e sem ação conta uma vez só (antes as duas listas se somavam)
+  return ativos().filter(k=>{ const u=ultimoRegistro(k); return !u || u<=lim
+    || (!k.prazo && !k.exigencia_prazo && !(D.tarefasPorCaso.get(k.id)||[]).length); }).length;
 }
 
 // ── F144 · A AGENDA DO VISUAL NOVO (mock do Paulo, 27.09.2026) ────────────
@@ -13103,7 +13102,6 @@ function renderNovoCliente(){
     </div>`;
   if(e2) nclPreencher();
 }
-function nclRecomecar(){ _ncl = {etapa:1, id:null}; renderNovoCliente(); }
 function irNovoCliente(){
   document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
   visao="novocliente"; limparBusca(); fecharMenuCel(); fecharFicha(false); render();
@@ -13665,7 +13663,7 @@ async function criarMencoes(texto, casoId, andamentoId, extras, conversaId){
     await api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({de_id:eu.id, para_id:co.id, caso_id:casoId,
         andamento_id:andamentoId, texto, ...(conversaId?{conversa_id:conversaId}:{})})});
-  if(alvos.length) aviso("📥 "+alvos.map(a=>a.nome).join(", ")+" será(ão) avisado(s)");
+  if(alvos.length) aviso("📥 "+alvos.map(a=>a.nome).join(", ")+(alvos.length>1?" serão avisados":" será avisado"));
 }
 
 // F10 · CASO NOVO AVISA QUEM DECIDE
@@ -15886,33 +15884,6 @@ const ultimoPagamento   = () => (D.inssCal||[]).reduce((m,x)=>x.pagamento>m?x.pa
 const mesPorExtenso = iso => new Date(iso+"T12:00:00")
   .toLocaleDateString(IDIOMA,{month:"long",year:"numeric"});
 
-function blocoPagamentoINSS(k){
-  if(!k.nb) return "";                       // sem NB não há o que calcular
-  const f = finalDoNB(k.nb);
-  if(f===null) return "";
-  if(!(D.inssCal||[]).length)
-    return `<div class="pg-cx"><b>💰 Pagamento</b>
-      <span class="meio-sub">tabela do INSS não cadastrada no banco — rode o schema.sql</span></div>`;
-  const prox = pagamentosDoNB(k.nb, k.renda_acima_minimo, 3) || [];
-  return `<div class="pg-cx">
-    <div class="pg-cab"><b>💰 Pagamento do benefício</b>
-      <span class="chip neutro" title="último algarismo antes do traço, sem o verificador">final ${f}</span>
-      <label class="pg-fx"><input type="checkbox" ${k.renda_acima_minimo?"checked":""}
-        onchange="salvarFaixaRenda('${k.id}', this.checked)"> recebe acima de 1 salário mínimo</label>
-    </div>
-    ${prox.length ? `<div class="pg-datas">${prox.map((x,i)=>`
-        <span class="pg-d ${i?"":"prox"}">
-          <b>${fmt(x.pagamento)}</b>
-          <small>competência ${mesPorExtenso(x.competencia)}</small>
-        </span>`).join("")}</div>`
-      : `<div class="meio-sub">Nada mais neste calendário.</div>`}
-    <div class="pg-nota">Calendário oficial do INSS — última competência
-      ${mesPorExtenso(ultimaCompetencia())}, paga até ${fmt(ultimoPagamento())}.
-      ${prox.length<3
-        ? `<b>Daí em diante, a tabela do ano novo precisa ser cadastrada no sistema.</b>`
-        : `Depois disso, a tabela do ano novo precisa ser cadastrada no sistema.`}</div>
-  </div>`;
-}
 async function salvarFaixaRenda(casoId, acima){
   await patchCaso(casoId, {renda_acima_minimo:acima});
   const k = D.casoPorId.get(casoId); if(k) k.renda_acima_minimo = acima;
@@ -21768,7 +21739,6 @@ function contratosAssinadosDe(c){
       || (gerado && String(a.criado_em||"")>=gerado && !/procura|declara|termo|requerim|autoriza|substabelec/i.test(a.nome||"")))))
     .sort((x,y)=>String(y.criado_em||"").localeCompare(String(x.criado_em||"")));
 }
-function contratoAssinadoDe(c){ return contratosAssinadosDe(c)[0] || null; }
 async function anexarContratoAssinado(cliId, inp){
   const arq=inp&&inp.files&&inp.files[0]; if(!arq) return;
   inp.value="";
@@ -22052,19 +22022,6 @@ function menuProcessos(ev, ks){
   setTimeout(()=>document.addEventListener("click", fecharMenuProcessos, {once:true}));
 }
 
-// vínculos entre clientes (parentes/amigos — o antigo checklist do To Do)
-async function novoVinculo(cliId){
-  const nome=document.getElementById("vin-nome").value.trim();
-  if(!nome) return aviso("Digite o nome do outro cliente");
-  const achados=D.clientes.filter(x=>x.id!==cliId && x.nome.toLowerCase()===nome.toLowerCase());
-  if(!achados.length) return aviso("Cliente não encontrado — escolha um nome da lista");
-  const rel=document.getElementById("vin-rel").value.trim()||null;
-  try{
-    await api(`/rest/v1/vinculos`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({cliente_id:cliId, ligado_a:achados[0].id, relacao:rel})});
-  }catch(e){ if(e.status!==409) throw e; }
-  aviso("Vinculado 👪"); abaAtiva=0; abrirFicha(cliId);
-}
 async function removerVinculo(vid){
   await api(`/rest/v1/vinculos?id=eq.${vid}`,{method:"DELETE"});
   aviso("Vínculo removido"); abaAtiva=0; abrirFicha(clienteAberto);
@@ -24301,7 +24258,7 @@ async function salvarAnalise(cliId){
 // lê os campos do formulário; só entra o que foi preenchido e está à vista
 // F195 · para onde vai cada campo da análise, e o estado dele no formulário
 const AD_VAI = {tempo:"o resumo da análise e Documentos", carencia:"a ficha da análise e Documentos", valor:"a ficha da análise e Documentos",
-  data_direito:"o resumo e o aviso de época no Lembretes", did:"a ficha da análise e Documentos", grau:"a ficha da análise e Documentos",
+  data_direito:"o resumo e o aviso de época nas Aposentadorias futuras", did:"a ficha da análise e Documentos", grau:"a ficha da análise e Documentos",
   recolhe:"o resumo, com a qualidade de segurado, e o planejamento", ultima_contribuicao:"a qualidade de segurado no resumo"};
 function adEstados(){
   const ls = [...document.querySelectorAll("#ad-campos .adr-campo[data-campo]")].filter(l=>!l.hidden);
@@ -26561,9 +26518,6 @@ const _mapaLente = new Map(), _mapaAberto = new Map();
 // F195 · cada ponto do mapa vai à Análise de Direito, salvo o que se tirar
 const _mapaFora = new Map();
 const mapaVai = (cliId, ramo) => !(_mapaFora.get(cliId)||new Set()).has(ramo);
-function mapaLevar(cliId, ramo){
-  const s = new Set(_mapaFora.get(cliId)||[]); s.has(ramo) ? s.delete(ramo) : s.add(ramo); _mapaFora.set(cliId, s);
-}
 function familiaDoMapa(c, ks){
   const ch = _mapaLente.get(c.id);
   return (ch && PONTOS_ESPECIE.find(f=>f.chave===ch)) || familiaDaTriagem(c, ks);
@@ -26867,10 +26821,6 @@ function paFaltas(c, fd){
   for(const b of beneficiosDoCnis(g).filter(b=>b.nb && !(fd.extratos||[]).some(e=>e.nb===soDig(b.nb))).slice(0, 2))
     out.push(`Extrato de pagamento ${/^(aposentadoria|pens)/i.test(nomeBenef(b.especie)) ? "da" : "do"} ${nomeBenef(b.especie).toLowerCase()} (NB ${fmtNb(b.nb)}): não veio. Baixe no Meu INSS; mostra o valor e os meses pagos`);
   return out;
-}
-function paEscolhidos(cliId, trabalhos){
-  if(!_paEsc.has(cliId)) _paEsc.set(cliId, new Set(trabalhos.filter(t=>t.est!=="ok" && !t.impedido).slice(0, 4).map(t=>t.f.chave)));
-  return _paEsc.get(cliId);
 }
 // a linha do tempo da qualidade: contribuições, seguro, qualidade, saúde e pedidos
 function paLinhaDoTempo(c, d){
@@ -27803,17 +27753,6 @@ function admTemposDoCnis(cliId){
       if(!tem.has(`${r.de}|${r.onde}`)) a.tempos.push(r); }
     a.tempos = a.tempos.filter(r=>r.de||r.ate||r.onde); });
   admTemposPintar(cliId);
-}
-// os quadros da Análise de Direito, na ordem fixa, cada um dizendo para que benefícios serve
-function modulosDireito(c){
-  const ks = D.casosDoCliente.get(c.id)||[], x = admCtx(c, ks), mods = modulosDe(c), faixa = faixaBeneficios(c, x.d);
-  if(!mods.length) return faixa;
-  return faixa + mods.map(m=>`<section class="adx-sec adm" id="adm-${m}" data-mod="${m}"><div class="adm-cab"><h3>${esc(MOD_AD[m].rot)}</h3>
-      <span class="adm-para">${x.ops.filter(o=>o.mods.includes(m)).map(o=>`<small>${esc(o.rot)}</small>`).join("")}</span></div>
-    ${m==="tempos" ? caixaTempos(c) : ""}
-    <div class="adm-calc" data-mod="${m}">${admCalcHtml(m, c, x)}</div>
-    ${camposModulo(c, m)}</section>`).join("")
-    + `<p class="meio-sub adm-nota">Os requisitos numéricos vêm da base de conhecimento do escritório e não foram conferidos na fonte oficial nesta tela.</p>`;
 }
 // a cópia que entra na análise registrada
 function admSnapshot(c){
@@ -36138,11 +36077,6 @@ function abrirPainelPrazo(i){
 document.addEventListener("keydown", e=>{ if(e.key==="Escape" && painelPz && !document.querySelector("#modal:not([style*='none']) *"))
   document.getElementById("painel-prazo-esq") ? fecharPrazoEsq() : fecharPainelPrazo(); });
 const _pzTodos = new Set();   // F241 · os casos em que se abriram todas as datas, na sessão
-function pzVerTodos(bt, casoId){
-  _pzTodos.add(casoId);
-  bt.closest(".faixa-prazos").querySelectorAll(".pz-quieto").forEach(e=>{ e.hidden = false; });
-  bt.remove();
-}
 function prazoSaberMais(i){
   const x = faixaAtual[i]; if(!x) return;
   caixa(`<h3 style="margin:0 0 6px">${esc(x.titulo || x.rotulo || (x.ehPrazo?"Prazo processual":x.ico==="🩺"?"Perícia":NAT_ROT[natDaLinha(x)]||"Lembrete"))} · ${fmtBarra(x.data)}</h3>
@@ -37649,12 +37583,6 @@ function faixaFixo(k){
     <span class="fixo-ico">${ICO_PIN}</span><span class="fixo-txt">${esc(fx.texto)}</span>
     <small class="fixo-de">${quem?esc(quem.nome.split(" ")[0]):""}${fx.em?` · ${fmt(dataSP(fx.em))}`:""}${fx.lembrar_em?` · lembrar ${fmtBarra(fx.lembrar_em)}`:""}</small>
   </div>`;
-}
-// F155 · sem comentário fixo, um botão na coluna do caso abre a caixa direto,
-// sem passar pela gestão do caso; fixado, some e a faixa faz o papel dele
-function botaoFixar(k){
-  if(k.fixo && k.fixo.texto) return "";
-  return `<button class="fixar-caso" onclick="lcEditarFixo('${k.id}')" title="fixar um comentário que aparece em destaque ao abrir o caso">${ICO_PIN} Fixar comentário</button>`;
 }
 function blocoFatos(k){
   const incap = ehIncapacidade(k) || /^B(31|32|91|92|94|36)$/.test(k.especie||"") || k.dcb || k.dii;
@@ -41613,29 +41541,6 @@ function copiarMarco(casoId){
   copiar(msg,"Mensagem do marco do processo copiada 💬");
 }
 
-function datajudCaso(k){
-  const t=k.datajud, u=t&&t.ultimo;
-  if(!u || !u.data) return "";
-  const comp=u.complemento?` (${esc(u.complemento)})`:"";
-  const claro=u.claro?`<div style="margin-top:2px">💡 ${esc(u.claro)}</div>`:"";
-  const onde=t.orgao?` · ${esc(tituloOrgao(t.orgao))}`:"";
-  const grau={G1:"1º grau",G2:"2º grau",JE:"Juizado Especial",TR:"Turma Recursal"}[t.grau]||t.grau||"";
-  const recentes=(t.recentes||[]).slice(1);
-  return `<div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--branco);border:1px solid var(--borda);font-size:13px">
-    📜 <b>Andamento oficial (CNJ):</b> ${esc(u.nome||"")}${comp} em <b>${fmt(u.data)}</b>${onde}
-    ${grau?`<span class="chip neutro">${esc(grau)}</span>`:""}
-    ${claro}
-    ${recentes.length?`<div id="dj-mais-${k.id}" style="display:none;margin-top:6px;border-top:1px dashed var(--borda);padding-top:5px">
-      ${recentes.map(m=>`<div style="color:var(--cinza)">${fmt(m.data)} — ${esc(m.nome||"")}${m.complemento?` (${esc(m.complemento)})`:""}</div>`).join("")}
-      ${(t.outras||[]).map(o=>`<div style="color:var(--cinza);margin-top:3px">↪ ${esc({G1:"1º grau",G2:"2º grau",JE:"Juizado",TR:"Turma Recursal"}[o.grau]||o.grau||"outra instância")}: ${esc(o.ultimo_nome||"—")} em ${fmt(o.ultimo_data)}${o.orgao?` · ${esc(tituloOrgao(o.orgao))}`:""}</div>`).join("")}
-    </div>`:""}
-    <div style="margin-top:4px">
-      ${recentes.length?`<button class="btn-mini" onclick="const e=document.getElementById('dj-mais-${k.id}');e.style.display=e.style.display==='none'?'block':'none';this.textContent=e.style.display==='none'?'📖 ver últimos movimentos':'🔽 esconder';">📖 ver últimos movimentos</button>`:""}
-      <button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarDatajud('${k.id}')" title="a situação do processo inteiro, pronta para o cliente">${temaV10()?"":"💬 "}Copiar situação para o cliente</button>
-      <span class="meio-sub">consulta de ${fmt(t.consultado_em)}</span>
-    </div>
-  </div>`;
-}
 function copiarDatajud(casoId){
   const k=D.casoPorId.get(casoId); const t=k&&k.datajud, u=t&&t.ultimo;
   if(!u||!u.data) return;
@@ -41648,25 +41553,6 @@ function copiarDatajud(casoId){
   copiar(msg,"Mensagem do andamento oficial copiada 💬");
 }
 
-// Ordem de julgamento no TRF3 (casos.trf3, gravado pelo trf3_ordem.py diário)
-function trf3Caso(k){
-  const t=k.trf3;
-  if(!t || !t.ordem) return "";
-  const total=t.total?` de <b>${t.total}</b> processos`:"";
-  const turma=t.turma?` (${esc(t.turma)})`:"";
-  const pri=t.prioridade==="S"?` <span class="chip ben">⚡ prioridade</span>`:"";
-  const desde=t.fase_desde?` · concluso desde ${fmt(t.fase_desde)}`:"";
-  return `<div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--branco);border:1px solid var(--borda);font-size:13px">
-    ⚖️ <b>Ordem de julgamento no TRF3:</b> posição <b>${t.ordem}º</b>${total} na fila de
-    ${esc(t.orgao||"órgão julgador")}${turma}${pri}${desde}
-    · consulta de ${fmt(t.consultado_em)}
-    ${projecaoTrf3(t)}
-    <div style="margin-top:4px">
-      <button class="${temaV10()?"tl-bt":"btn-mini"}" onclick="copiarTrf3('${k.id}')">${temaV10()?"":"💬 "}Copiar situação para o cliente</button>
-      ${t.projecao?`<button class="btn-mini" onclick="copiarPrevisao('${k.id}')">📈 copiar previsão estimada</button>`:""}
-    </div>
-  </div>`;
-}
 // Previsão pelo ritmo REAL da fila deste processo (histórico das consultas).
 // É estimativa nossa — a tela e a mensagem dizem isso com todas as letras.
 const MESES_PT=["janeiro","fevereiro","março","abril","maio","junho","julho",
@@ -41715,22 +41601,6 @@ function copiarTrf3(casoId){
     (t.prioridade==="S"?" O processo tramita com prioridade.":"")+
     ` Fonte: painel público de estatísticas do TRF3 (consulta de ${dbr(t.consultado_em)}).`;
   copiar(msg,"Mensagem da ordem de julgamento copiada 💬");
-}
-function trilhaCaso(k){
-  const passos=[...TRILHA, "pagamento", "encerrado"];
-  const i=passos.indexOf(k.fase);
-  const rot=f=> f==="pagamento" ? "💰 Pagamentos"
-    : f==="encerrado" ? (k.fase==="encerrado"&&k.resultado?`✔ ${esc(k.resultado)}`:"✔ Encerrado")
-    : NOME_FASE[f];
-  return `<div class="fases-trilha">`
-    + (i<0?`<button class="fase-et atual" disabled>${esc(NOME_FASE[k.fase]||k.fase)}</button>`:"")
-    + passos.map((f,j)=>{
-      const feita=i>=0&&j<i, atual=j===i;
-      const acao = atual ? "disabled"
-        : f==="encerrado" ? `onclick="janelaEncerrar('${k.id}')" title="encerrar: resultado + honorários"`
-        : `onclick="moverFase('${k.id}','${f}')" title="clique para mover o caso para ${rot(f)}"`;
-      return `<button class="fase-et ${feita?"feita":""} ${atual?"atual":""}" ${acao}>${feita?"✔ ":""}${rot(f)}</button>`;
-    }).join("")+`</div>`;
 }
 async function toggleImp(casoId){
   const k=D.casoPorId.get(casoId); if(!k) return;
@@ -42122,6 +41992,7 @@ async function registrarMovimento(casoId, i){
     if(dib && !k.dib) muda.dib = dib;
     muda.ronda = {...(k.ronda||{}), implantado:hoje()};
   }
+  const antes = Object.fromEntries(Object.keys(muda).map(c=>[c, k[c]===undefined ? null : k[c]]));   // 11.92 · JUR-06
   Object.assign(k, muda);
   if(Object.keys(muda).length) await patchCaso(casoId, muda).catch(()=>{});
   // a data da perícia ou da pauta vira lembrete do advogado responsável, nesse dia
@@ -42129,7 +42000,16 @@ async function registrarMovimento(casoId, i){
       body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:advId || eu.id, atribuido_por:eu.id, lembrar_em:data, natureza:"lembrete"})}); tarefaNaMemoria(tf); }catch(e){}
   if(advId && advId!==eu.id) criarMencoes(texto, casoId, and.id, [advId]).catch(()=>{});
   montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha();
-  aviso(`${rot}${adv && adv.id!==eu.id ? ` · ${adv.nome.split(" ")[0]} avisado` : ""}`, false);
+  // 11.92 · JUR-06: desfazer como no "Em análise": o caso volta e a anotação sai (com a menção e o lembrete, em cascata no banco)
+  avisoDesfazer(`${rot}${adv && adv.id!==eu.id ? ` · ${adv.nome.split(" ")[0]} avisado` : ""}`, async ()=>{
+    Object.assign(k, antes);
+    if(Object.keys(antes).length) await patchCaso(casoId, antes).catch(()=>{});
+    await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"DELETE"}).catch(()=>{});
+    if(Array.isArray(D._andsFicha)) D._andsFicha = D._andsFicha.filter(a=>a.id!==and.id);
+    D.sinalizados = (D.sinalizados||[]).filter(a=>a.id!==and.id);
+    const ts = D.tarefasPorCaso.get(casoId); if(ts) D.tarefasPorCaso.set(casoId, ts.filter(t=>t.andamento_id!==and.id));
+    aviso("Desfeito"); montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha();
+  });
 }
 // o advogado responsável, abaixo do nome do cliente: o escolhido ou o advogado dos casos
 function linhaAdvogado(c){
@@ -42638,7 +42518,7 @@ function fecharFicha(rerender=true){
 // espremer tudo, o celular mostra UMA tela por vez e leva na barra de baixo
 // as quatro coisas que se faz na rua: o dia, achar o cliente, as menções e
 // as listas. A ficha abre por cima e volta pelo "‹".
-const CEL = window.matchMedia("(max-width:760px)");
+const CEL = window.matchMedia("(max-width:760px), (pointer:coarse) and (max-height:500px)");
 function celular(){ return CEL.matches; }
 function marcarCelular(){
   const app=document.getElementById("app");
@@ -44991,6 +44871,8 @@ async function solicitarDocsCatalogo(){
 
 async function cumprirExigencia(casoId){
   const k=D.casoPorId.get(casoId);
+  // 11.92 · JUR-06: o que o clique muda, para o desfazer
+  const antes = {exigencia_prazo:k.exigencia_prazo, exigencia_descricao:k.exigencia_descricao, ronda:k.ronda||null, etapa:k.etapa||null};
   k.exigencia_prazo=null; k.exigencia_descricao=null;
   await patchCaso(casoId, {exigencia_prazo:null, exigencia_descricao:null});
   // F236 · a nota diz a data da entrega e entra na memória da ficha: é o fato "aguardando análise" que a placa lê (fatosDaEtapa)
@@ -45003,7 +44885,15 @@ async function cumprirExigencia(casoId){
   if(k.etapa==="em exigência") await marcarEtapa(casoId, "aguardando análise");
   // o painel do prazo cumprido ficava aberto e desatualizado (teste 11.88, JUR-01)
   if(painelZapCli) fecharPrazoEsq(); else if(painelPz) fecharPainelPrazo();
-  aviso("Exigência cumprida ✔"); abrirFicha(clienteAberto);
+  avisoDesfazer("Exigência cumprida ✔", async ()=>{
+    Object.assign(k, {exigencia_prazo:antes.exigencia_prazo, exigencia_descricao:antes.exigencia_descricao, ronda:antes.ronda});
+    await patchCaso(casoId, {exigencia_prazo:antes.exigencia_prazo, exigencia_descricao:antes.exigencia_descricao, ronda:antes.ronda});
+    if(antes.etapa!==k.etapa) await marcarEtapa(casoId, antes.etapa);
+    if(na) await api(`/rest/v1/andamentos?id=eq.${na.id}`,{method:"DELETE"});
+    if(Array.isArray(D._andsFicha)) D._andsFicha = D._andsFicha.filter(a=>a!==na);
+    aviso("Desfeito"); abrirFicha(clienteAberto);
+  });
+  abrirFicha(clienteAberto);
 }
 async function copiarMsgExigencia(casoId){
   const k=D.casoPorId.get(casoId), c=D.cliPorId.get(k.cliente_id);
@@ -50416,15 +50306,6 @@ function imprimirListaDocs(c, beneficio, itens, obs){
   <script>window.print()<\/script></body></html>`);
   w.document.close();
 }
-function editarDocs(casoId){
-  const k=D.casoPorId.get(casoId), doc=docDe(k.beneficio), div=document.getElementById("doc-editor-"+casoId);
-  if(!doc||!div) return;
-  if(div.innerHTML){ div.innerHTML=""; return; }
-  div.innerHTML=`<textarea class="doc-edit" id="doc-txt-${casoId}">${esc(doc.itens)}</textarea>
-    <div class="form-linha"><input id="doc-obs-${casoId}" placeholder="observação (opcional)" value="${esc(doc.observacoes||"")}" style="flex:1">
-    <button onclick="salvarDocs('${casoId}')">Salvar lista</button></div>
-    <p style="font-size:12px;color:var(--cinza)">Um documento por linha — vale para TODOS os clientes deste benefício. Pode colar aqui o texto do site interno.</p>`;
-}
 async function salvarDocs(casoId){
   const k=D.casoPorId.get(casoId), doc=docDe(k.beneficio);
   doc.itens=document.getElementById("doc-txt-"+casoId).value;
@@ -50520,13 +50401,6 @@ async function verCred(id){
     body:JSON.stringify({credencial_id:id,colaborador_id:eu.id})});
   setTimeout(()=>{const el=document.getElementById("cred-"+id); if(el) el.textContent="••••••••";},15000);
 }
-async function novaCred(cliId){
-  const v=document.getElementById("nc-valor").value.trim();
-  if(!v) return;
-  await api(`/rest/v1/credenciais`,{method:"POST",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({cliente_id:cliId,tipo:document.getElementById("nc-tipo").value,valor:v})});
-  aviso("Credencial guardada 🔒"); abrirFicha(cliId);
-}
 
 // ── arranque ──────────────────────────────────────────────────────────────
 let timerBusca=null;
@@ -50544,6 +50418,17 @@ document.getElementById("busca").addEventListener("input",e=>{
     }
     render();
   },200);
+});
+// 11.92 · VCP-03: Enter na pesquisa abre o primeiro cliente achado ("/", o nome e Enter)
+document.getElementById("busca").addEventListener("keydown",e=>{
+  if(e.key!=="Enter" || e.isComposing) return;
+  e.preventDefault();
+  const v=e.target.value.trim(); if(!v) return;
+  if(v!==buscaTxt){ clearTimeout(timerBusca); e.target.dispatchEvent(new Event("input")); clearTimeout(timerBusca);
+    buscaTxt=v; if(clienteAberto){ clienteAberto=null; abaAtiva=2;
+      document.getElementById("app").classList.remove("detalhe-aberto","busca-aberta"); aplicarMenu(); }
+    render(); }
+  const c=document.querySelector("#conteudo-meio .cartao[data-cli]"); if(c) c.click();
 });
 // com o menu recolhido a pesquisa vira uma lupa: clicar estende o menu
 document.getElementById("busca").addEventListener("mousedown",e=>{
@@ -50673,9 +50558,11 @@ function preCarregarAgendas(){ PROFS_AGENDA.filter(pr=>pr!==agq.prof && !agq.cac
 function nomeProf(id){ if(id==="todos") return "Completa"; const l = ((agq.disp||agq.cache.paulo||{}).profissionais)||[]; return (l.find(x=>x.id===id)||{}).nome || (id ? id[0].toUpperCase()+id.slice(1) : ""); }
 function tratamentoProf(id){ const l = ((agq.disp||agq.cache.paulo||{}).profissionais)||[]; return (l.find(x=>x.id===id)||{}).tratamento || "o Dr. Paulo Roberto Tercini Filho"; }
 // o contador da barra: a ocupação do próximo dia de atendimento do Paulo ("9/14")
+// 11.92 · ADM-05 e DAD-15: o número é da agenda de quem está logado (o titular e quem não atende veem a do Paulo), com ⚠ acima do limite
 function contadorAgenda(){
-  const r = agq.cache.paulo, d = r && r.dias.find(x=>!x.bloqueado);
-  return d ? (d.limite ? `${d.atendimentos}/${d.limite}` : `${d.atendimentos}`) : null;
+  const meu = semAcento(String((eu&&eu.nome)||"").split(" ")[0]).toLowerCase();
+  const r = agq.cache[PROFS_AGENDA.includes(meu) ? meu : "paulo"], d = r && r.dias.find(x=>!x.bloqueado);
+  return d ? (d.limite ? `${d.atendimentos}/${d.limite}${d.atendimentos>d.limite?" ⚠":""}` : `${d.atendimentos}`) : null;
 }
 const hmMin = hm => { const [h,m] = String(hm).split(":").map(Number); return h*60+m; };
 const hmTxt = hm => String(hm).replace(":","h");
@@ -51357,6 +51244,8 @@ function digitando(){
 }
 document.addEventListener("keydown",e=>{
   const busca=document.getElementById("busca");
+  // 11.92 · VCP-02: o item do menu (div com role="button") abre com Enter e Espaço, como um botão
+  if((e.key==="Enter" || e.key===" ") && e.target.matches && e.target.matches('.lista-item[role="button"]')){ e.preventDefault(); return e.target.click(); }
   if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==="f" && busca){
     e.preventDefault(); return irParaPesquisa();          // no lugar do localizar do navegador
   }
@@ -51392,7 +51281,9 @@ function cartoesDaLista(){
 }
 function pintarCursor(){
   const cs = cartoesDaLista();
-  cs.forEach((el,i)=>el.classList.toggle("no-cursor", i===cursorLista));
+  // 11.92 · VCP-03: o leitor de tela sabe qual linha o cursor marca
+  cs.forEach((el,i)=>{ el.classList.toggle("no-cursor", i===cursorLista);
+    if(i===cursorLista) el.setAttribute("aria-current","true"); else el.removeAttribute("aria-current"); });
   const alvo = cs[cursorLista];
   if(alvo) alvo.scrollIntoView({block:"nearest"});
 }
