@@ -352,6 +352,8 @@ A **F327** (12.04, as etapas mais legíveis, pedido do Paulo de 31.10.2026): o r
 
 A **F330** (12.06, pedido do Paulo de 31.10.2026): no celular, como já era no computador, as abas INSS, CRPS e Judicial dos andamentos só aparecem com andamento ou número (`abasVisiveis`; o protocolo do INSS passou a abrir a aba INSS), e o botão **+ número** (`inserirNumeroAba`) oferece só o que falta (protocolo, recurso do e-Sisrec, processo judicial); guardado o número, a aba aparece. Testes: `f320.js`, `linha102.js`.
 
+A **F332** (mensagem apagada ou editada, favoritas e rascunho no WhatsApp, pedido do Paulo de 31.10.2026): a ponte deixou de descartar o aviso de mensagem apagada ou editada (`alteracaoDe` em `normalizar.js`: `protocolMessage` tipo 0 apaga, tipo 14 edita, também pelo `messages.update`) e grava na linha que o CRM conhece (`guardarAlteracao`: `zap_mensagens.apagada_em`, ou `texto` novo com `editada_em` e o `texto_antes` original); o balão apagado fica riscado com "O cliente apagou esta mensagem" (`.zap-apag`), e o editado diz "Editada" com o texto de antes no `title`. A estrela do WhatsApp é `favorita_em`/`favorita_por`, para a equipe toda (`favoritarMsg`, no ☆ do balão e no menu de segurar), e o ⋯ da conversa tem "Mensagens favoritas" (`verFavoritasZap`). O texto não enviado espera em cada conversa, neste navegador (`rascZap`, `guardarRascZap`, `crm_zap_rasc`). SQL em `crm/fase2/migracoes/f332_zap_apagada_favorita.sql` (aplicada). A parte da ponte vale depois de atualizar a ponte no servidor. Teste: `zapbotoes.js` e `ponte/testes/normalizar.test.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

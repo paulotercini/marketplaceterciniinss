@@ -227,6 +227,13 @@ async function conectar() {
   // recibos: entregue e lida, para a tela mostrar o mesmo que o celular
   sock.ev.on("messages.update", async atualizacoes => {
     for (const u of atualizacoes) {
+      // F332 · o Baileys também avisa a mensagem apagada (message nulo, stub 1) e a editada por aqui
+      const up = u.update || {};
+      if (u.key && u.key.id && (up.message === null && up.messageStubType === 1)) await guardarAlteracao({ id: u.key.id, apagada: true }).catch(() => {});
+      else if (u.key && u.key.id && up.message && up.message.editedMessage) {
+        const alt = N.alteracaoDe({ message: up.message });
+        if (alt) await guardarAlteracao(alt).catch(() => {});
+      }
       const st = u.update && u.update.status;
       if (!st || !u.key || !u.key.id) continue;
       const novo = st >= 4 ? "lida" : st >= 3 ? "entregue" : null;
@@ -292,6 +299,8 @@ setInterval(() => {
 async function entrou(m, baixar) {
   const reacao = N.reacaoDe(m);
   if (reacao) return guardarReacao(m, reacao);
+  const alt = N.alteracaoDe(m);
+  if (alt) return guardarAlteracao(alt);
   if (N.deveIgnorar(m)) return;
   const fone = N.foneDaMensagem(m, lidParaFone);
   if (N.chaveFone(fone).length < 8) return;
@@ -321,6 +330,18 @@ async function guardarReacao(m, reacao) {
     body: JSON.stringify({ mensagem_id: alvo.id, de: m.key.fromMe ? "escritorio" : "cliente",
                            emoji: reacao.emoji, status: "enviada" }),
   });
+}
+
+// F332 · apagada ou editada no WhatsApp: a linha fica, com a marca e o texto de antes
+// (a equipe continua vendo o que foi escrito). Só a mensagem que o CRM conhece.
+async function guardarAlteracao(alt) {
+  const [alvo] = await sb(`/rest/v1/zap_mensagens?externo_id=eq.${encodeURIComponent(alt.id)}&select=id,texto,texto_antes`);
+  if (!alvo) return;
+  const agora = new Date().toISOString();
+  const corpo = alt.apagada ? { apagada_em: agora }
+    : { texto: alt.texto, editada_em: agora, texto_antes: alvo.texto_antes ?? alvo.texto };
+  await sb(`/rest/v1/zap_mensagens?id=eq.${alvo.id}`, { method: "PATCH",
+    headers: { Prefer: "return=minimal" }, body: JSON.stringify(corpo) });
 }
 
 // Uma mensagem do WhatsApp vira uma linha de zap_mensagens, com a mídia no
