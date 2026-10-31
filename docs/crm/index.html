@@ -1015,6 +1015,8 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   #proc-inteiro .pi-it input{margin:9px 0 0 10px;flex:none}
   #proc-inteiro .pi-peca h4 .pi-ler{float:right;font-weight:400}
   body:has(#proc-inteiro) .modal-fundo{z-index:2100}
+  /* a caixa aberta da janela do prazo (+ Etapa, Corrigir a data, Detalhes) vem por cima dela, e não atrás */
+  body:has(#painel-prazo.aberto) .modal-fundo{z-index:950}
   #proc-inteiro .pi-arvore button{display:block;flex:1;min-width:0;text-align:left;border:0;background:none;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--texto);border-left:3px solid transparent}
   @media (hover:hover){#proc-inteiro .pi-arvore button:hover{background:var(--azul-fundo)}}
   #proc-inteiro .pi-arvore button.on{background:var(--azul-fundo);border-left-color:var(--azul)}
@@ -5393,6 +5395,7 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini.hora{color:var(--azul-escuro);font-w
 #painel-prazo{position:fixed;top:0;right:0;bottom:0;width:min(420px,100vw);z-index:900;display:flex;flex-direction:column;overflow-y:auto;
   background:#fff;border-left:1px solid var(--borda);box-shadow:-12px 0 32px rgba(0,0,0,.12);transform:translateX(105%);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
 #painel-prazo.aberto{transform:none}
+#painel-prazo:not(.aberto){pointer-events:none}   /* fechando, a janela não segura o toque destinado à caixa que abriu */
 @media (prefers-reduced-motion:reduce){#painel-prazo{transition:opacity .2s;transform:none;opacity:0;pointer-events:none}#painel-prazo.aberto{opacity:1;pointer-events:auto}}
 :is(#painel-prazo,#painel-prazo-esq) header{display:flex;gap:10px;align-items:flex-start;padding:16px 18px 12px;border-bottom:1px solid var(--borda)}
 :is(#painel-prazo,#painel-prazo-esq) header div{flex:1}
@@ -41288,7 +41291,8 @@ function linhaDoTempo(ands){
   const ultimaNova = raiz.map(naoLi).lastIndexOf(true);
   const casoId = vivos.length ? vivos[0].caso_id : null;
   const li = a => {
-    const filhasTodas = (porPai.get(a.id)||[]).sort((x,y)=>(x.criado_em||"")<(y.criado_em||"")?-1:1);
+    // as respostas também do mais recente ao mais antigo, como a linha do tempo (pedido do Paulo, 31.10.2026)
+    const filhasTodas = (porPai.get(a.id)||[]).sort((x,y)=>(x.criado_em||"")<(y.criado_em||"")?1:-1);
     const reacoes = filhasTodas.filter(ehReacao);
     const filhas = filhasTodas.filter(f=>!ehReacao(f));
     const sub = filhas.length ? `<span class="resp">${filhas.map(f=>
