@@ -35632,15 +35632,61 @@ function candidatosDoQuadro(k, ks, f){
   const outros = new Set(ks.filter(x=>x!==k).flatMap(x=>nbsDoCaso(x).map(soDig)));
   if(achados.size===1){ const nb = [...achados][0]; if(!outros.has(soDig(nb))) por("nb", soDig(nb), "documentos do processo"); }
   const nbs = new Set([...nbsDoCaso(k), k.nb || (c.nb||{}).v].filter(Boolean).map(soDig));
-  if(!nbs.size) return c;
+  const j = datasDosJulgados(k);   // F321b · depois da carta e do CNIS, que falam do benefício implantado
+  if(!nbs.size){ for(const campo of ["der","dib"]) if(j[campo]) por(campo, j[campo].v, j[campo].fonte); return c; }
   const meu = nb => nbs.has(soDig(nb));
   const carta = (f.cartas||[]).find(x=>meu(x.nb));
   if(carta){ por("der", isoBr(carta.der), "carta de concessão"); por("dib", isoBr(carta.dib), "carta de concessão"); }
   const b = beneficiosDoCnis(cnisDe(D.cliPorId.get(k.cliente_id)||{})).find(x=>meu(x.nb));
   if(b){ por("especie", espDoCnis(b.especie), "CNIS"); por("dib", b.de, "CNIS");
     if(!b.ativo && /^(31|91)$/.test(b.especie)) por("dcb", b.ate, "CNIS"); }
+  for(const campo of ["der","dib"]) if(j[campo]) por(campo, j[campo].v, j[campo].fonte);
   // a DCB do laudo e da comunicação do dossiê fica no clique do Mapa e da Análise de Direito, que grava o andamento da origem
   return c;
+}
+// F321b (onda 2) · só a forma rotulada: "DER: 9/5/2017", "D.E.R. 22.11.2010", "em 6 de março de 2015 (DER)",
+// "requerimento administrativo (27/06/2017)", "DIB: 09/05/2017". Datas diferentes no mesmo papel: nada (pode ser
+// a reafirmação, ou a DER de outro pedido citado).
+const _MES_JULG = {janeiro:1,fevereiro:2,"março":3,marco:3,abril:4,maio:5,junho:6,julho:7,agosto:8,setembro:9,outubro:10,novembro:11,dezembro:12};
+const _DT_JULG = String.raw`(\d{1,2}[\/.]\d{1,2}[\/.](?:19|20)\d{2}|\d{1,2}º? de (?:janeiro|fevereiro|mar[çc]o|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro) de (?:19|20)\d{2})`;
+const RX_JULG = {
+  der: [new RegExp(String.raw`\b(?:DER|D\.E\.R\.?)\s*(?:[:\-–]|em|,)?\s*` + _DT_JULG, "g"),
+        new RegExp(_DT_JULG + String.raw`\s*\(\s*DER\s*\)`, "g"),
+        new RegExp(String.raw`requerimento administrativo\s*(?:\(|em\s+|,\s*)(?:NB[^)]{0,20}?,?\s*)?` + _DT_JULG, "gi")],
+  dib: [new RegExp(String.raw`\bDIB\s*(?:[:\-–]|em)?\s*` + _DT_JULG, "g")],
+};
+function dataDoJulgado(t){
+  let m = /^(\d{1,2})[\/.](\d{1,2})[\/.](\d{4})$/.exec(t);
+  if(!m){ const x = /^(\d{1,2})º? de (\S+) de (\d{4})$/i.exec(t); if(!x) return null; m = [0, x[1], _MES_JULG[x[2].toLowerCase()], x[3]]; }
+  const d = +m[1], mes = +m[2]; if(!mes || mes>12 || d<1 || d>31) return null;
+  return `${m[3]}-${String(mes).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+}
+function lerDatasDoJulgado(texto){
+  const t = String(texto||"").replace(/\s+/g," "), out = {};
+  for(const campo of Object.keys(RX_JULG)){
+    const vs = new Set();
+    for(const rx of RX_JULG[campo]) for(const m of t.matchAll(rx)){ const v = dataDoJulgado(m[1]); if(v) vs.add(v); }
+    if(vs.size===1) out[campo] = [...vs][0];
+  }
+  return out;
+}
+function datasDosJulgados(k){
+  const docs = [];
+  for(const x of (D.anexos||[])){
+    if(x.caso_id!==k.id || !x.texto) continue;
+    const ini = /inicial/i.test(x.nome||""), jul = /senten|ac[óo]rd/i.test(x.nome||"");
+    if(!ini && !jul) continue;
+    const a = x.andamento_id && (D._andsFicha||[]).find(y=>y.id===x.andamento_id), mv = a && movimentoJudicial(a.texto);
+    const d = (mv && mv.data) || dataSP(x.criado_em), r = lerDatasDoJulgado(x.texto);
+    if(ini) delete r.dib;   // a DIB da inicial é a pedida, e não a concedida
+    const quem = ini ? "petição inicial" : /senten/i.test(x.nome) ? "sentença" : "acórdão";
+    docs.push({d, ini, r, fonte:`${quem} de ${fmt(d)}`});
+  }
+  // o julgado mais novo manda; a inicial fica por último
+  docs.sort((a,b)=>(a.ini-b.ini) || String(b.d).localeCompare(String(a.d)));
+  const out = {};
+  for(const x of docs) for(const campo of ["der","dib"]) if(x.r[campo] && !out[campo] && x.r[campo] <= (x.d||"9999")) out[campo] = {v:x.r[campo], fonte:x.fonte};
+  return out;
 }
 async function adotarQuadro(cliId){
   const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado" && !ehPreCaso(k));

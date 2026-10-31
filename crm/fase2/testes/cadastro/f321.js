@@ -26,12 +26,20 @@ const caso1 = T.casos.find(k => k.id === CASO1);
 Object.assign(caso1, { nb: "1234567890", der: null, dib: null, especie: "B41" });
 T.casos.push(Object.assign(JSON.parse(JSON.stringify(caso1)), { id: B, fase: "judicial", especie: "B31", nb: "9876543210", der: "2025-05-01",
   protocolos: [], titulo: "Auxílio por incapacidade" }));
+// F321b · o caso judicial sem NB lê a DER e a DIB da sentença; a DIB da inicial (a pedida) não vale
+const C = "b0000000-0000-0000-0000-0000000003b3";
+T.casos.push(Object.assign(JSON.parse(JSON.stringify(caso1)), { id: C, fase: "judicial", especie: "B42", nb: null, der: null, dib: null,
+  protocolos: [], titulo: "Aposentadoria por tempo" }));
 const carta = (nb, der, dib) => `CARTA DE\nCONCESSÃO\nNÚMERO DO BENEFÍCIO\n${nb} R$ 1.621,00\nComunicamos que foi concedido\nAPOSENTADORIA\nSolicitado em\n${der} 20/02/2026\nInício do benefício\n${dib} 01/03/2026`;
 T.anexos.push(
   { id: "a0000000-0000-0000-0000-000000000321", cliente_id: CLI_CHEIO, caso_id: null, origem: "dossie", nome: "Cartas de concessao · carta 1",
     caminho: "dossie/12345678909/Cartas de concessao/1.pdf", texto: carta("123.456.789-0", "10/01/2026", "12/01/2026") },
   { id: "a0000000-0000-0000-0000-000000000322", cliente_id: CLI_CHEIO, caso_id: null, origem: "dossie", nome: "Cartas de concessao · carta 2",
-    caminho: "dossie/12345678909/Cartas de concessao/2.pdf", texto: carta("987.654.321-0", "02/05/2025", "02/05/2025") });
+    caminho: "dossie/12345678909/Cartas de concessao/2.pdf", texto: carta("987.654.321-0", "02/05/2025", "02/05/2025")  },
+  { id: "a0000000-0000-0000-0000-000000000323", cliente_id: CLI_CHEIO, caso_id: C, origem: "pje", nome: "Petição inicial",
+    caminho: "pje/1/ini.pdf", criado_em: "2024-01-10T12:00:00Z", texto: "requer a aposentadoria desde a DER: 09/05/2017, com DIB: 01/01/2017." },
+  { id: "a0000000-0000-0000-0000-000000000324", cliente_id: CLI_CHEIO, caso_id: C, origem: "pje", nome: "Sentença",
+    caminho: "pje/1/sent.pdf", criado_em: "2025-03-10T12:00:00Z", texto: "julgo procedente. Segurado: X Benefício: Aposentadoria DIB: 09/05/2017 RMI: a calcular. Reafirmação? Não." });
 
 const ok = [];
 const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : "FALHOU  ") + nome); };
@@ -80,6 +88,13 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const t = await p.evaluate(id => lcCampo(D.casoPorId.get(id), "dib"), CASO1);
   conf("a placa diz de onde veio o valor", /lido de: carta de concessão/.test(t));
 
+  const c3 = T.casos.find(k => k.id === C);
+  conf("o caso sem carta lê a DER da inicial e a DIB da sentença", c3.der === "2017-05-09" && c3.dib === "2017-05-09"
+    && /sentença/.test(c3.ronda.fontes.dib.fonte) && /inicial/.test(c3.ronda.fontes.der.fonte));
+  const lidos = await p.evaluate(() => [lerDatasDoJulgado("desde a data do requerimento administrativo (D.E.R. 22.11.2010), observada"),
+    lerDatasDoJulgado("em 6 de março de 2015 (DER), deu entrada"), lerDatasDoJulgado("DER: 01/01/2019 e a reafirmação da DER 01/06/2020"),
+    lerDatasDoJulgado("em que se der a aposentadoria 10/10/2010")]);
+  conf("o leitor do julgado só aceita a data rotulada e única", lidos[0].der === "2010-11-22" && lidos[1].der === "2015-03-06" && !lidos[2].der && !lidos[3].der);
   conf("sem erro de página", !p._erros.length);
   if (p._erros.length) console.log(p._erros.join("\n"));
   const bons = ok.filter(x => x[1]).length;

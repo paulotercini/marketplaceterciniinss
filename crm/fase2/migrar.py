@@ -361,6 +361,7 @@ def mapear(dados, cpf_por_nome=None):
             "protocolos": protocolos,
             "fase": "encerrado" if t["concluida"] else fase,
             "nb": t["nb"], "processo": t["processo"], "prazo": t["prazo"],
+            "todo_prazo": t["prazo"],     # a data do To Do na última rodada (manter_dados_do_banco)
             "importante": t["importante"], "origem_lista": lista,
             "todo_task_id": t["id"],
             "encerrado_em": t["concluida_em"] and t["concluida_em"] + "T12:00:00" + TZ,
@@ -706,12 +707,19 @@ def manter_dados_do_banco(mapa, banco, tabela="clientes", campos=("telefone", "d
     tarefa tinha (ou a nada) a cada 10 minutos. O To Do ainda preenche o caso
     sem prazo e acende a ⭐ apagada, mas não a apaga.
 
+    Exceção (31.10.2026): a data que MUDOU no To Do desde a rodada anterior
+    (casos.todo_prazo) vence a do CRM. Sem isso, o "Concluir em" adiado ou
+    apagado no To Do nunca chegava, e o CRM guardava 185 datas vencidas.
+
     O lote do PostgREST exige as mesmas chaves em todas as linhas, então o
     valor do banco entra na linha em vez de a coluna sair dela."""
     por_id = {b["id"]: b for b in banco or []}
     for linha in mapa.get(tabela) or []:
         b = por_id.get(linha.get("id")) or {}
         for campo in campos:
+            if (campo == "prazo" and "todo_prazo" in b
+                    and (linha.get("todo_prazo") or None) != (b["todo_prazo"] or None)):
+                continue                  # a data mudou no To Do: o To Do vence
             v = b.get(campo)
             if v and not (campo == "nome" and RE_NOME_PROVISORIO.fullmatch(v)):
                 linha[campo] = v
@@ -977,7 +985,10 @@ def gerar_sql(mapa):
         _sql_insert("credenciais", mapa.get("credenciais", [])),
         _sql_insert("vinculos", mapa.get("vinculos", []), chave="cliente_id, ligado_a"),
         _sql_insert("casos", mapa["casos"],
-                    update_cols=("fase", "prazo = coalesce(casos.prazo, excluded.prazo)",
+                    update_cols=("fase", "prazo = case when excluded.todo_prazo is distinct from "
+                                 "casos.todo_prazo then excluded.prazo "
+                                 "else coalesce(casos.prazo, excluded.prazo) end",
+                                 "todo_prazo",
                                  "importante = casos.importante or excluded.importante",
                                  "beneficio = coalesce(casos.beneficio, excluded.beneficio)",
                                  "parceria", "protocolos",
@@ -1238,7 +1249,7 @@ def subir_rest(mapa):
     manter_dados_do_banco(mapa, _rest_todas(
         url, chave, "/rest/v1/casos?todo_task_id=not.is.null&fase=neq.encerrado"
                     "&or=(prazo.not.is.null,importante.is.true,beneficio.not.is.null)"
-                    "&select=id,prazo,importante,beneficio"),
+                    "&select=id,prazo,todo_prazo,importante,beneficio"),
         "casos", ("prazo", "importante", "beneficio"))
     n_desp = respeitar_despacho(mapa, _rest_todas(
         url, chave, "/rest/v1/casos?todo_task_id=not.is.null&ronda->despacho=not.is.null"
