@@ -91,14 +91,14 @@ const DADOS = {
   // ── o cartão ─────────────────────────────────────────────────────────────
   const cart = await p.evaluate(() => {
     const li = [...document.querySelectorAll(".timeline li:not(.dia-bloco)")].find(x => /declaração do empregador/.test(x.textContent));
-    return { tipo: !!li.querySelector(".tl-cab .tipo-tl"), pz: (li.querySelector(".tl-pz-chip") || {}).textContent || "",
+    return { tipo: !!li.querySelector(".tl-cab .tipo-tl"), pz: (li.querySelector(".tl-pz .tl-pz-pill") || {}).textContent || "", pzM: (li.querySelector(".tl-pz .tl-pz-m") || {}).textContent || "",
       semCarimbo: !/\[PRAZO/.test(li.querySelector(".tl-corpo").textContent),
       tarefa: (li.querySelector(".tl-tarefa") || {}).textContent || "", bola: !!li.querySelector(".tl-tarefa .tf-ok"),
       bts: [...li.querySelectorAll(".tl-barra .tl-bt")].map(b => b.textContent.trim()) };
   });
-  conf("o cabeçalho traz o tipo e o prazo fatal; o carimbo sai do texto", cart.tipo && /^prazo fatal \d\d\/\d\d$/.test(cart.pz) && cart.semCarimbo);
+  conf("o cabeçalho traz o tipo e a faixa do prazo fatal (F324); o carimbo sai do texto", cart.tipo && /Prazo fatal/.test(cart.pz) && /vence .*\d\d\/\d\d/.test(cart.pzM) && cart.semCarimbo);
   conf("a tarefa tem faixa própria com quem, quando e o círculo de concluir", /Paulo · .* · tarefa/.test(cart.tarefa) && cart.bola);
-  conf("a barra traz Responder, Concluir tarefa, + prazo e Reagendar", ["Responder", "Concluir tarefa", "+ prazo", "Reagendar"].every(x => cart.bts.includes(x)));
+  conf("a barra traz Responder, Cumpri o prazo (F324), + prazo e Reagendar", ["Responder", "Cumpri o prazo", "+ prazo", "Reagendar"].every(x => cart.bts.includes(x)));
   const outro = await p.evaluate(() => [...[...document.querySelectorAll(".timeline li:not(.dia-bloco)")].find(x => /Cliente avisado/.test(x.textContent)).querySelectorAll(".tl-barra .tl-bt")].map(b => b.textContent.trim()));
   conf("sem tarefa, o cartão não oferece Concluir nem Reagendar", outro.includes("Responder") && !outro.includes("Concluir tarefa") && !outro.includes("Reagendar"));
 
