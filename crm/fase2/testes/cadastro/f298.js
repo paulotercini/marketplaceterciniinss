@@ -49,6 +49,8 @@ and(kB, dUtil, "Pedido de documento enviado.");
 const cC = cli("Carla Fictícia Estrela");
 caso(cC, { beneficio: "Pensão por Morte", especie: "B21", fase: "inss", importante: true });
 caso(cli("Roseli Maria Fictícia Custodio Schisatti"), { beneficio: "Aux. Incapacidade", especie: "B46", fase: "inss", prazo: iso(-90) });
+// F307 · linhas bastantes para rolar o Meu Dia até o fim e ver se os flutuantes cobrem a última
+for (let i = 0; i < 12; i++) caso(cli(`Cliente Fictício Número ${i + 1}`), { beneficio: "Apos. por Idade", especie: "B41", fase: "inss", prazo: iso(-5 - i) });
 
 const ok = [];
 const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : "FALHOU  ") + nome); };
@@ -97,6 +99,16 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a trilha das etapas nasce recolhida", !(await vis(".tr-rol")) && (await vis(".tr-recolhida .tr-alca")));
   conf("a placa do caso nasce fechada", !(await vis(".linha-caso .lc-placa")));
   conf("na ficha, nenhum alvo de toque abaixo de 24 px", !(await PEQ()).length);
+  // F307 · os flutuantes numa coluna só: agenda, ✎ e ⚡ no mesmo eixo, 8 px entre eles, e o "?" na altura do ✎
+  const FABS = () => p.evaluate(() => { const r = s => { const e = document.querySelector(s); if (!e || !e.offsetParent && getComputedStyle(e).position !== "fixed") return null;
+      const b = (e.querySelector(".zag-pilula") || e).getBoundingClientRect(); return b.width ? { l: b.left, r: b.right, t: b.top, b: b.bottom, x: (b.left + b.right) / 2, y: (b.top + b.bottom) / 2 } : null; };
+    return { ag: r("#zap-ag"), sug: r("#fab-sug"), raio: r("#fab-rapida"), aj: r("#fab-ajuda") }; });
+  const colunaOk = (f, comRaio) => { const col = [f.ag, f.sug, comRaio && f.raio].filter(Boolean);
+    const eixo = col.every(b => Math.abs(b.x - f.sug.x) <= 1.5);
+    const gaps = col.slice(1).map((b, i) => b.t - col[i].b), vao = gaps.every(g => g >= 7 && g <= 9);
+    const aj = !f.aj || Math.abs(f.aj.y - f.sug.y) <= 1.5 && f.sug.l - f.aj.r >= 7 && f.sug.l - f.aj.r <= 9;
+    return { eixo, vao, aj, ok: eixo && vao && aj && col.length === (comRaio ? 3 : 2), f }; };
+
   await p.screenshot({ path: OUT + "/cel-fechada.png" });
   await p.tap(".tr-recolhida .tr-alca"); await p.waitForTimeout(400);
   conf("o toque na alça abre a trilha", await vis(".tr-rol"));
@@ -108,6 +120,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const m = await box(".det-mais .tl-mais-menu");
   conf("o menu do ⋯ abre dentro da tela", m.l >= 0 && m.r <= 390);
   await p.screenshot({ path: OUT + "/cel-ficha.png" });
+  { const cf = colunaOk(await FABS(), false); conf("na ficha, agenda e ✎ no mesmo eixo, 8 px entre eles, e o \"?\" na altura do ✎ (F307)", cf.ok) || console.log(JSON.stringify(cf)); }
   await p.tap(".det-mais > summary");
   await p.tap("#and-texto"); await p.waitForTimeout(300);
   conf("tocado, o campo mostra os tipos", (await p.$$eval("#tipo-fila > *", a => a.filter(e => e.offsetParent).length)) > 2);
@@ -122,6 +135,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("no Meu Dia do celular, o texto da anotação e as etiquetas somem", !linha.res && !linha.selo);
   conf("ficam data, nome, espécie e lista, prazo fatal e os botões", linha.data && linha.nome && linha.esp && linha.fatal && linha.botoes);
   conf("sem o botão de urgente (F306)", !linha.fogo);
+
   // F303 · a linha do Meu Dia alinhada e o filtro por pessoa dentro da margem
   await p.evaluate(() => irPara("meudia")); await p.waitForTimeout(1000);
   const al = await p.evaluate(() => { const l = [...document.querySelectorAll("#conteudo-meio .ag-linha")].find(e => e.querySelector(".acoes .acao-card[data-estrela]") && e.querySelector(".avatares .avatar")); if (!l) return null;
@@ -134,6 +148,18 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a inicial do responsável em quadrado, à esquerda da estrela (F306)", al && al.raio <= 8 && al.aR <= al.eL);
   conf("o filtro por pessoa não passa da margem", al && al.segR <= al.cardR + 1);
   conf("no Meu Dia, nenhum alvo de toque abaixo de 24 px", !(await PEQ()).length);
+  const cm = colunaOk(await FABS(), true);
+  conf("no Meu Dia, agenda, ✎ e ⚡ no mesmo eixo, 8 px entre eles, e o \"?\" na altura do ✎ (F307)", cm.ok) || console.log(JSON.stringify(cm));
+  const cobre = await p.evaluate(async () => { window.scrollTo(0, 1e6); document.querySelectorAll("*").forEach(e => { if (e.scrollHeight > e.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(e).overflowY)) e.scrollTop = 1e6; });
+    await new Promise(r => setTimeout(r, 300));
+    const ls = [...document.querySelectorAll("#conteudo-meio .ag-linha")].filter(e => e.offsetParent), u = ls[ls.length - 1]; if (!u) return "sem linha";
+    const fabs = ["#zap-ag .zag-pilula", "#fab-sug", "#fab-rapida", "#fab-ajuda"].map(s => document.querySelector(s)).filter(e => e && e.getBoundingClientRect().width);
+    const alvos = [...u.querySelectorAll(".acoes .acao-card, .avatares .avatar, .ag-txt b")];
+    const x = (a, b) => a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+    return alvos.filter(a => fabs.some(f => x(a.getBoundingClientRect(), f.getBoundingClientRect()))).map(a => a.className || a.tagName); });
+  conf("rolado até o fim, nenhum flutuante cobre a última linha do Meu Dia (F307)", Array.isArray(cobre) && !cobre.length) || console.log(JSON.stringify(cobre));
+  await p.screenshot({ path: OUT + "/cel-meudia-fim.png" });
+  await p.evaluate(() => { window.scrollTo(0, 0); document.querySelectorAll("*").forEach(e => { if (e.scrollTop) e.scrollTop = 0; }); });
   await p.screenshot({ path: OUT + "/cel-meudia.png" });
   for (const v of ["agendaq", "zap", "mencoes", "recebimentos"]) { await p.evaluate(v => irPara(v), v).catch(()=>{}); await p.waitForTimeout(900); const pq = await PEQ(); conf(`em ${v}, nenhum alvo de toque abaixo de 24 px`, !pq.length) || pq.length && console.log(JSON.stringify(pq)); }
   conf("sem erro de página", !erros.length);

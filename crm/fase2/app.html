@@ -4300,7 +4300,7 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
    coluna do ⚡ e do ✎ Sugestões, logo acima deles. */
 #zap-ag{position:fixed;right:16px;bottom:120px;z-index:79;font-size:13px}   /* acima do ⚡, do ✎ e do enviar */
 .app:not(.logado) ~ #zap-ag,#zap-ag[hidden]{display:none}
-.app.celular ~ #zap-ag{bottom:calc(166px + env(safe-area-inset-bottom))}
+.app.celular ~ #zap-ag{bottom:calc(165px + env(safe-area-inset-bottom))}
 .app.celular.detalhe-aberto ~ #zap-ag{bottom:180px}
 .app.celular.zap-conv-aberta ~ #zap-ag{z-index:92;bottom:calc(176px + env(safe-area-inset-bottom))}
 .app.celular ~ #zap-ag .zag-cx{max-height:calc(100dvh - 260px)}
@@ -5880,8 +5880,12 @@ html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) #and
 .app.celular .cel-tudo{margin:4px 0 0;padding:6px}
 .app.celular .escrever:not(.esc-aberto) textarea#and-texto{height:40px!important;min-height:0!important;padding-top:9px;padding-bottom:9px;resize:none}
 .app.celular .escrever:not(.esc-aberto) .tipo-fila > :not(.tipo-sr):not(.tipo-pc){display:none}
-.app.celular.detalhe-aberto ~ .fab-sug{width:40px;height:40px;padding:0;border-radius:50%;justify-content:center}
-.app.celular.detalhe-aberto ~ .fab-sug .fab-sug-t{display:none}
+/* F307 · no celular os flutuantes numa coluna só (pedido do Paulo, 31.10.2026): o ✎ redondo em todas as telas, centrado
+   com o ⚡ e a agenda (48 px a 16 px da borda), 8 px entre eles, e o "?" na altura do ✎, 8 px à esquerda */
+.app.celular ~ .fab-sug{width:40px;height:40px;padding:0;border-radius:50%;justify-content:center;right:20px}
+.app.celular ~ .fab-sug .fab-sug-t{display:none}
+.app.celular ~ .fab-ajuda{bottom:122px;right:68px}
+.app.celular.detalhe-aberto ~ .fab-ajuda{right:68px}
 /* F303 · nenhum texto passa da borda do quadro (pedido do Paulo, 30.10.2026): na coluna estreita do caso o texto quebra a linha */
 html[data-tema="v10"] .caso-esq .lc-sobre-l{flex-wrap:wrap;row-gap:4px;height:auto}
 html[data-tema="v10"] .caso-esq :is(.lc-sobre,.lc-placa>.lc-f,.lc-placa>.lc-f>*,.lc-tram,.lc-tram-link,.et-sug){white-space:normal;min-width:0;overflow-wrap:anywhere}
@@ -6060,8 +6064,9 @@ html[data-tema="v10"] .app.celular .caso-dir .timeline > li:not(.toque) .tl-cab-
 html[data-tema="v10"] .app.celular .det-topo .det-mais .tl-mais-menu{left:auto;right:0}
 html[data-tema="v10"] .app.celular .linha-caso .lc-mais-pe{min-height:32px}   /* alvo de toque (11.93 · VCE-05) */   /* o ⋯ ficou no canto direito */
 /* com a barra de baixo visível na ficha, os flutuantes sobem a altura dela (56 px) */
-html[data-tema="v10"] .app.celular.detalhe-aberto ~ .fab-sug,html[data-tema="v10"] .app.celular.detalhe-aberto ~ .fab-ajuda{bottom:calc(186px + env(safe-area-inset-bottom,0px))}
-html[data-tema="v10"] .app.celular.detalhe-aberto ~ #zap-ag{bottom:calc(236px + env(safe-area-inset-bottom,0px))}
+html[data-tema="v10"] .app.celular.detalhe-aberto ~ .fab-sug{bottom:calc(186px + env(safe-area-inset-bottom,0px))}
+html[data-tema="v10"] .app.celular.detalhe-aberto ~ .fab-ajuda{bottom:calc(188px + env(safe-area-inset-bottom,0px))}
+html[data-tema="v10"] .app.celular.detalhe-aberto ~ #zap-ag{bottom:calc(231px + env(safe-area-inset-bottom,0px))}
 html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
 
 /* F320 · atendimento (imagem 3-atendimento.png): cabeçalho mínimo, prazo uma vez, passos sem subtítulo, CNIS em números,
