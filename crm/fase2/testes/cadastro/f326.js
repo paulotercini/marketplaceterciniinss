@@ -54,6 +54,13 @@ const nVenc = and(kA2, -20, `⏰ [PRAZO ${br(iso(dVenc))}] Apelação contra a s
 tarefa(nVenc, MARCOS, { lembrar_em: iso(dVenc) });
 const nOk = and(kA2, -40, `⏰ [PRAZO ${br(iso(-30))}] Réplica à contestação do INSS.`);
 and(kA2, -33, `✔ [PRAZO CUMPRIDO] Réplica protocolada no PJe. (cumprido em ${iso(-33).split("-").reverse().join("/")})`, { responde_a: nOk.id });
+// o prazo fatal com a minha tarefa, para tocar cada botão da janela no celular
+const dCel = util(14);
+const kA3 = caso(cA, { beneficio: "Pensão por morte", especie: "B21", fase: "inss", protocolos: ["1700000699"], prazo: iso(dCel) });
+const nCel = and(kA3, -4, `⏰ [PRAZO ${br(iso(dCel))}] Cumprir a exigência do INSS: certidão de óbito atualizada.`);
+const tCel = tarefa(nCel, PAULO, { lembrar_em: iso(dCel), etapas: [{ t: "Pedir a certidão", feito: false }] });
+and(kA3, -3, "Primeira resposta: pedimos a certidão ao cartório.", { responde_a: nCel.id });
+and(kA3, -2, "Segunda resposta: o cartório prometeu para sexta.", { responde_a: nCel.id });
 
 const ok = [];
 const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : "FALHOU  ") + nome); };
@@ -238,6 +245,75 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(500);
   conf("o Concluir da janela conclui a tarefa e fecha a janela", banco.escritas.some(e => e.m === "PATCH" && e.t === "andamento_tarefas" && e.ids.includes(tAd.id))
     && await p.evaluate(() => !document.querySelector("#painel-prazo.aberto")));
+
+  // ── 7. cada botão da janela do prazo, no celular ────────────────────────
+  const abrirCel = async () => { await abrir(5); await p.waitForSelector(".pzc-lin");
+    await p.evaluate(() => [...document.querySelectorAll(".pzc-lin")].find(l => /exig/i.test(l.textContent)).querySelector(".pzc-abrir").click());
+    await p.waitForSelector("#painel-prazo.aberto"); await p.waitForTimeout(350); };
+  const noAlto = sel => p.evaluate(sel => { const el = document.querySelector(sel); if (!el || !el.offsetParent) return false;
+    const r = el.getBoundingClientRect(), t = document.elementFromPoint(r.left + r.width / 2, r.top + Math.min(r.height / 2, 20)); return !!t && (el === t || el.contains(t)); }, sel);
+  const aberta = () => p.evaluate(() => !!document.querySelector("#painel-prazo.aberto"));
+  const fecharCx = () => p.evaluate(() => typeof fecharCaixa === "function" && fecharCaixa());
+  await abrirCel();
+  const hist7 = await p.evaluate(() => [...document.querySelectorAll("#painel-prazo .ppz-hist li p")].map(x => x.textContent));
+  conf("7 · o histórico da janela vem do mais recente ao mais antigo", /Segunda resposta/.test(hist7[0]) && hist7.findIndex(t => /Primeira/.test(t)) > 0);
+  banco.escritas.length = 0;
+  await p.click("#painel-prazo .ppz-est");
+  await p.waitForTimeout(600);
+  conf("7 · o estado da tarefa passa a Em andamento e a janela fica aberta", banco.escritas.some(e => e.m === "PATCH" && e.t === "andamento_tarefas" && e.corpo.iniciada_em)
+    && await aberta() && /Em andamento/.test(await p.textContent("#painel-prazo .ppz-est")));
+  banco.escritas.length = 0;
+  await p.click("#painel-prazo .ppz-ets input");
+  await p.waitForTimeout(600);
+  conf("7 · marcar a etapa grava e a janela fica aberta", banco.escritas.some(e => e.m === "PATCH" && e.t === "andamento_tarefas" && e.corpo.etapas) && await aberta()
+    && await p.evaluate(() => !!document.querySelector("#painel-prazo .ppz-ets input:checked")));
+  await p.click("#painel-prazo .pp-add");
+  await p.waitForSelector("#et-txt");
+  conf("7 · o + Etapa abre a caixa por cima da janela", await noAlto("#et-txt"));
+  await p.fill("#et-txt", "Juntar a certidão no Meu INSS");
+  banco.escritas.length = 0;
+  await p.press("#et-txt", "Enter");
+  await p.waitForTimeout(600);
+  conf("7 · a etapa nova grava e aparece na janela", banco.escritas.some(e => e.m === "PATCH" && e.t === "andamento_tarefas" && JSON.stringify(e.corpo).includes("Juntar a certidão"))
+    && await aberta() && /Juntar a certidão/.test(await p.textContent("#painel-prazo .ppz-ets")));
+  await p.fill("#pp-com", "Terceira resposta: certidão recebida.");
+  banco.escritas.length = 0;
+  await p.click("#painel-prazo .pp-com-bt");
+  await p.waitForTimeout(700);
+  conf("7 · o Comentar grava a resposta ao prazo e ela abre o histórico", banco.escritas.some(e => e.m === "POST" && e.t === "andamentos" && e.corpo.responde_a === nCel.id)
+    && await aberta() && /Terceira resposta/.test(await p.evaluate(() => (document.querySelector("#painel-prazo .ppz-hist li p") || {}).textContent || "")));
+  await p.click("#painel-prazo .pp-mais > summary, #painel-prazo .pp-mais button").catch(() => {});
+  await p.waitForTimeout(200);
+  const itens = await p.evaluate(() => [...document.querySelectorAll("#painel-prazo .pp-sec-bt")].filter(b => b.offsetParent).map(b => ({ t: b.textContent.trim(), r: b.getBoundingClientRect().right, b: b.getBoundingClientRect().bottom })));
+  conf("7 · o ⋯ abre os itens dentro da tela", itens.length >= 2 && itens.every(i => i.r <= 391 && i.b <= 845));
+  if (!(itens.length >= 2)) console.log(JSON.stringify(itens));
+  const item = async re => { await p.click("#painel-prazo .pp-mais > summary, #painel-prazo .pp-mais button").catch(() => {}); await p.waitForTimeout(150);
+    return p.evaluate(src => { const b = [...document.querySelectorAll("#painel-prazo .pp-sec-bt")].find(x => new RegExp(src).test(x.textContent)); if (b) b.click(); return !!b; }, re.source); };
+  conf("7 · Corrigir a data abre a caixa com a data por cima", await item(/Corrigir a data/) && await p.waitForSelector("#modal input[type=date], .caixa input[type=date]", { timeout: 2000 }).then(() => true, () => false)
+    && await noAlto("#modal input[type=date]"));
+  await fecharCx(); await p.waitForTimeout(200);
+  if (!await aberta()) await abrirCel();
+  conf("7 · Não se aplica abre a caixa do motivo por cima", await item(/Não se aplica/) && await p.waitForSelector("#pzs-txt", { timeout: 2000 }).then(() => true, () => false) && await noAlto("#pzs-txt"));
+  await fecharCx(); await p.waitForTimeout(200);
+  if (!await aberta()) await abrirCel();
+  conf("7 · Abrir o caso fecha a janela e abre o caso", await item(/Abrir o caso/) && await p.waitForTimeout(500).then(aberta).then(v => !v)
+    && await p.evaluate(k => casoSel === k && abaAtiva === 2, kA3.id));
+  await abrirCel();
+  await p.click("#painel-prazo .pp-pri");
+  await p.waitForTimeout(700);
+  conf("7 · Cumpri o prazo fecha a janela e abre a caixa do cumprimento por cima", !await aberta() && await noAlto("#pz-txt"));
+  await foto("11-celular-cumpri");
+  await p.evaluate(() => typeof fecharJanela === "function" && fecharJanela());
+  await abrirCel();
+  await p.click("#painel-prazo .ppz-volta");
+  await p.waitForTimeout(300);
+  conf("7 · ‹ Prazos fecha a janela", !await aberta());
+  // as respostas do cartão na linha do tempo também do mais recente ao mais antigo
+  await abrir(2, kA3.id);
+  const resp7 = await p.evaluate(id => { const li = [...document.querySelectorAll(".timeline li.tl-card")].find(x => /Cumprir a exigência/.test(x.textContent));
+    return li ? [...li.querySelectorAll(".resp-item")].map(x => x.textContent) : []; }, nCel.id);
+  conf("7 · as respostas da anotação vêm da mais recente à mais antiga", resp7.length >= 2 && resp7.findIndex(t => /Segunda/.test(t)) < resp7.findIndex(t => /Primeira/.test(t)));
+  if (resp7.length < 2) console.log(JSON.stringify(resp7));
 
   conf("sem erro de página", !erros.length);
   if (erros.length) console.log(erros);
