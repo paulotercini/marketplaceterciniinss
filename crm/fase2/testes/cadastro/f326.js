@@ -46,6 +46,9 @@ const kA1 = caso(cA, { beneficio: "Auxílio por incapacidade", especie: "B31", f
 const nVivo = and(kA1, -2, `⏰ [PRAZO ${br(iso(dVivo))}] Recurso ao CRPS (ordinário ou especial) — 30 dias corridos (art. 77 do Regimento Interno do CRPS), intimação de ${br(iso(dVivo - 30))}. Indeferido o B31 pela perícia. Recorrer ao CRPS com o relatório novo do ortopedista.`);
 const tVivo = tarefa(nVivo, PAULO, { lembrar_em: iso(dVivo), etapas: [{ t: "Pedir o relatório", feito: true, por: PAULO, em: ts(-1) }, { t: "Redigir o recurso", feito: false }] });
 const tRev = tarefa(nVivo, MARCOS, { lembrar_em: iso(dVivo), papel: "revisa" });
+// a minha tarefa comum (o prazo adicional da resposta), que a janela conclui pelo "Concluir a minha tarefa"
+const nAd = and(kA1, -1, `Prazo adicional · prazo adicional até ${iso(util(9)).split("-").reverse().join("/")}`);
+const tAd = tarefa(nAd, PAULO, { lembrar_em: iso(util(9)), natureza: "compromisso" });
 const kA2 = caso(cA, { beneficio: "Apos. por Idade", especie: "B41", fase: "judicial", processo: "50000000000000000001", prazo: iso(dVenc) });
 const nVenc = and(kA2, -20, `⏰ [PRAZO ${br(iso(dVenc))}] Apelação contra a sentença de improcedência.`);
 tarefa(nVenc, MARCOS, { lembrar_em: iso(dVenc) });
@@ -218,6 +221,23 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     return { larg: Math.round(el.getBoundingClientRect().width), volta: getComputedStyle(el.querySelector(".ppz-volta")).display !== "none" }; });
   conf("no celular a janela ocupa a tela e volta por ‹ Prazos", celJ.larg === 390 && celJ.volta);
   await foto("09-celular-janela");
+  await p.evaluate(() => fecharPainelPrazo());
+  await p.evaluate(() => [...document.querySelectorAll(".pzc-lin")].find(l => /prazo adicional/i.test(l.textContent)).querySelector(".pzc-abrir").click());
+  await p.waitForSelector("#painel-prazo.aberto"); await p.waitForTimeout(350);
+  const peAd = await p.evaluate(() => { const el = document.getElementById("painel-prazo"), pe = el.querySelector(".ppz-pe");
+    const vis = [...pe.children].filter(b => b.offsetParent && b.textContent.trim());
+    return { bts: vis.map(b => b.textContent.trim()), dentro: vis.every(b => b.getBoundingClientRect().right <= 391), x: el.getBoundingClientRect().left,
+      larg: document.documentElement.scrollWidth }; });
+  conf("no celular a janela da minha tarefa tem só Concluir e o ⋯, dentro da tela", peAd.dentro && peAd.x === 0 && peAd.larg <= 390
+    && peAd.bts.some(t => /Concluir a minha tarefa/.test(t)) && !peAd.bts.some(t => /✔ feito|✎ escrever/.test(t)));
+  if (!peAd.dentro || peAd.x) console.log(JSON.stringify(peAd));
+  await p.evaluate(() => { const c = document.querySelector("#painel-prazo .ppz-corpo"); c.parentNode.scrollTop = 1e5; document.getElementById("painel-prazo").scrollTop = 1e5; });
+  await foto("10-celular-minha-tarefa");
+  banco.escritas.length = 0;
+  await p.evaluate(() => document.querySelector("#painel-prazo .pp-pri").click());
+  await p.waitForTimeout(500);
+  conf("o Concluir da janela conclui a tarefa e fecha a janela", banco.escritas.some(e => e.m === "PATCH" && e.t === "andamento_tarefas" && e.ids.includes(tAd.id))
+    && await p.evaluate(() => !document.querySelector("#painel-prazo.aberto")));
 
   conf("sem erro de página", !erros.length);
   if (erros.length) console.log(erros);
