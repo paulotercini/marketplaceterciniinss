@@ -96,6 +96,17 @@ RE_EMAIL = re.compile(r"[\w.+\-]+@[\w\-]+\.[\w.\-]+")
 RE_DATA_APOS = re.compile(r"aposent\w*.*?\b(\d{1,2}/\d{1,2}/\d{2,4}|\d{1,2}/\d{4})\b", re.I)
 
 
+def _parece_data(dig):
+    """Oito dígitos que formam uma data DDMMAAAA de 1900 a 2099 (o nascimento escrito sem barras)."""
+    if len(dig) != 8:
+        return False
+    try:
+        datetime.date(int(dig[4:]), int(dig[2:4]), int(dig[:2]))
+    except ValueError:
+        return False
+    return 1900 <= int(dig[4:]) <= 2099
+
+
 def classificar_item_checklist(txt, cpf_cliente=None):
     """O checklist do To Do é onde o escritório guarda dados soltos do cliente.
     Classifica cada item: ('senha_padrao'|'senha'|'cpf'|'telefone'|'protocolo'|
@@ -146,6 +157,8 @@ def classificar_item_checklist(txt, cpf_cliente=None):
             return ("dado", None)
         if len(dig) == 11 and not cpf_cliente:
             return ("cpf", dig)
+        if _parece_data(dig):
+            return ("dado", None)                  # teste 11.88, DAD-07: "30101977" é o nascimento, e não protocolo
         return ("protocolo", dig)                  # o INSS divulga só o protocolo
     m = re.fullmatch(r"#\s*([A-Za-zÀ-ÿ][\wÀ-ÿ]*)", t)
     if m:

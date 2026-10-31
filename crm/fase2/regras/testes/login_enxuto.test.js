@@ -32,18 +32,16 @@ test("o <h1> do login leva o nome e o número da versão, nada mais", () => {
   assert.match(m[1], /versão \d+\.\d+/, "o número da versão sumiu do título");
 });
 
-test("e-mail, senha e Entrar vêm ANTES do histórico", () => {
+test("e-mail e senha vêm antes do Entrar", () => {
   const pos = t => { const i = caixa.indexOf(t); assert.ok(i >= 0, `sumiu: ${t}`); return i; };
   const entrar = pos('id="btn-entrar"');
   assert.ok(pos('id="login-email"') < entrar, "o campo de e-mail tem de vir antes do botão");
   assert.ok(pos('id="login-senha"') < entrar, "o campo de senha tem de vir antes do botão");
-  assert.ok(entrar < pos('<details class="novidades">'),
-    "o histórico está acima do botão Entrar — é isso que empurra o login para fora da tela");
 });
 
-test("o histórico continua no arquivo, só que dobrado e com altura travada", () => {
-  const m = /<div class="novidades-txt">(.*?)<\/div>/s.exec(caixa);
-  assert.ok(m && m[1].length > 1000, "o histórico das versões se perdeu");
-  assert.match(fonte, /\.login \.novidades-txt\{[^}]*max-height:[^}]*overflow-y:auto/,
-    "sem max-height + overflow, o histórico aberto volta a estourar a caixa");
+// 11.92 · teste integral 11.88, ADM-06: o histórico dobrado no pé parou na F160 com 40 mil caracteres;
+// saiu da caixa, porque o histórico mora no CLAUDE.md e no git
+test("a caixa de login não carrega o histórico das versões", () => {
+  assert.ok(!/class="novidades/.test(caixa), "o histórico das versões voltou à caixa de login");
+  assert.ok(caixa.length < 6000, `a caixa de login tem ${caixa.length} caracteres`);
 });
