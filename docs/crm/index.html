@@ -5130,7 +5130,7 @@ html[data-tema="v10"] .tr-rol-box.tr-mais-esq::before{left:-2px;background:linea
 html[data-tema="v10"] .tr-l{padding-right:8px}
 html[data-tema="v10"] .jn-nome{min-width:0}
 html[data-tema="v10"] .jn-txt{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-html[data-tema="v10"] .app.celular .jn-f .jn-nome::after{content:"✓";flex:none;margin-left:-2px;font-size:11px}
+html[data-tema="v10"] .app.celular .jn-f:not(.jn-par) .jn-nome::after{content:"✓";flex:none;margin-left:-2px;font-size:11px}
 html[data-tema="v10"] .app.celular .jn-n .jn-txt{text-decoration:line-through}
 html[data-tema="v10"] .app.celular .jn-b{padding:6px 6px}
 html[data-tema="v10"] .tr-l li[data-ex] .tr-sv .tr-b{background:#F3DDEC}
@@ -5957,6 +5957,14 @@ html[data-tema="v10"] .tr-resumo .tr-agora .tr-aguarda::before{content:","}
 html[data-tema="v10"] .tr-rol{scrollbar-width:none}
 html[data-tema="v10"] .tr-rol::-webkit-scrollbar{display:none}
 html[data-tema="v10"] .tr-leg i.tr-lf{background:#C9C6BF}
+/* F327 · o mesmo cinza no celular, o tempo na etapa e o selo da etapa na cor da fase (pedido do Paulo, 31.10.2026) */
+html[data-tema="v10"] .app.celular .jn-b.jn-f:not(.jn-par){background:#F5F4F1;border-color:#ECEAE5;color:#75726B}
+html[data-tema="v10"] .app.celular .jn-f:not(.jn-par) .jn-nome i{background:#B9B6AE}
+html[data-tema="v10"] .app.celular .jn-b.jn-n{color:#8E8B84;border-style:dashed}
+html[data-tema="v10"] .app.celular .jn-b.jn-par{background:var(--ff);border-color:var(--fc);color:var(--ft)}
+html[data-tema="v10"] .tr-ha{color:#6B6862}
+html[data-tema="v10"] .tr-ha.tr-longo{color:#B42318;font-weight:500}
+html[data-tema="v10"] .ag-tipo.ag-etapa:not(.ag-velha){background:var(--ff);color:var(--ft);border-color:color-mix(in srgb,var(--fc) 35%,#FFFFFF)}
 /* o cabeçalho da ficha em duas linhas: o nome e os botões; embaixo CPF, Meu INSS, telefone, advogado e a situação */
 html[data-tema="v10"] :is(.cli-adv,.atend-acoes) .fp2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 html[data-tema="v10"] .app:not(.celular) .det-topo .cli-casos .avatar{display:none}
@@ -6116,7 +6124,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 12.03</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 12.04</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8209,7 +8217,8 @@ const etapaEstaVelha = k => !!k.etapa && (!etapasAceitas(faseDaEtapa(k)).include
 // F236 · o selo da etapa na linha das listas por fase: a desmentida diz "(desatualizada)", com a sugestão no title, como a placa
 function seloEtapaLista(k){
   const d = etapaDesmentida(k);
-  return `<span class="ag-tipo${d?" ag-velha":""}" title="${d ? `etapa do caso, desatualizada${d.sug ? `: os fatos dizem ${esc(d.sug)}` : ", de outra fase"} — abra o caso para aceitar a sugestão` : "etapa do caso"}">${esc(k.etapa)}${d ? " (desatualizada)" : ""}</span>`;
+  const c = COR_FASE[faseDaTrilha(k)], cor = c ? ` ag-etapa" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}` : "";
+  return `<span class="ag-tipo${d?" ag-velha":""}${cor}" title="${d ? `etapa do caso, desatualizada${d.sug ? `: os fatos dizem ${esc(d.sug)}` : ", de outra fase"} — abra o caso para aceitar a sugestão` : "etapa do caso"}">${esc(k.etapa)}${d ? " (desatualizada)" : ""}</span>`;
 }
 // F236 · o clássico também vê e muda a etapa, que é o que o cliente lê no portal
 function linhaEtapaClassica(k){
@@ -8257,7 +8266,7 @@ function passoDaEtapa(k, ets, ms){
 function marcasDaTrilha(k, ver, faseAt, rito, ets){
   const virt = {};
   for(const f of fatosDaEtapa(k, andsDoCaso(k))) if(f.fase===ver) for(const n of (f.passos||[]))
-    if(!virt[n] || f.data < (virt[n].d||"9")) virt[n] = {s:"f", d:f.data, v:1};   // cumprida na data do primeiro fato
+    if(!virt[n] || f.data < (virt[n].d||"9")) virt[n] = {s:"f", d:f.data, v:1, por:f.por||""};   // cumprida na data do primeiro fato
   // indeferido: a prorrogação, a DCB e a carta de concessão não houve
   if(ver==="inss" && (decisaoDoInss(k)||{}).resultado==="indeferido")
     for(const n of ["Pedido de prorrogação","DCB","Carta de concessão"]) virt[n] = {s:"n", v:1};
@@ -38621,6 +38630,24 @@ function resumoFase(k, f){
   // a data vem na frente: é ela que some primeiro quando a aba aperta
   return ult ? `${ult.m.d?`${dCurta(ult.m.d)} · `:""}${ult.e.n.toLowerCase()}` : "concluída";
 }
+// F327 · o title da etapa diz quando e por qual fonte ela foi cumprida (pedido do Paulo, 31.10.2026)
+function tituloEtapa(e, m){
+  if(m.s==="f") return `${e.n} · cumprida${m.d?` em ${fmtBarra(m.d)}`:""}${m.por ? ` ${m.por}` : m.v ? " pelos fatos oficiais" : " (marcada pela equipe)"}`;
+  if(m.s==="a") return `${e.n} · etapa atual${m.d?` desde ${fmtBarra(m.d)}`:""}${m.por?` ${m.por}`:""}`;
+  if(m.s==="n") return `${e.n} · não houve`;
+  return e.op ? `${e.n} · só se houver` : `${e.n} · a vir`;
+}
+// F327 · há quanto tempo o caso está na etapa e se passou do prazo: o prazo de análise do INSS (RE 1.171.152) quando
+// corre; fora dele, o tempo habitual da fase, que é estimativa do escritório (shortcut: valores fixos, ajustar com o uso)
+const ETAPA_HABITUAL = {inss:90, conselho:180, judicial:180, pagamento:60};
+function tempoNaEtapa(k, desde, fase){
+  if(!desde) return null;
+  const dias = diasEntreIso(desde, hoje()); if(!(dias>=0)) return null;
+  const mora = fase==="inss" ? prazoMora(k) : null;
+  if(mora && mora.vencido) return {dias, longo:true, por:`prazo de análise do INSS vencido em ${fmtBarra(mora.data)}`};
+  const lim = ETAPA_HABITUAL[fase];
+  return {dias, longo: !mora && !!lim && dias>lim, por: mora ? `prazo de análise até ${fmtBarra(mora.data)}` : lim ? `tempo habitual da fase: até ${lim} dias (estimativa)` : ""};
+}
 // os grupos da trilha (Ajuizamento, Instrução...); trilha sem grupo = um só
 function gruposTrilha(ets){
   const gs = [];
@@ -38678,7 +38705,7 @@ function faixaTrilha(k){
       const rot = n===0 && G.g ? `<span class="tr-g${e.ex?" tr-g-ex":""}">${esc(G.g)}${(feito||execVazia)&&trAbre[chave]?` <a href="#" onclick="trGrupo('${chave}');return false" class="tr-rec">recolher</a>`:""}</span>` : `<span class="tr-g"></span>`;
       itens.push(`<li style="--tc:${cor.c};--tt:${cor.t}"${e.ex?" data-ex":""}>${rot}
         <button class="tr-et tr-s${m.s||(e.op?"o":"v")}${i===sel?" tr-sel":""}${i===pxI?" tr-px":""}" data-tri="${i}" onclick="trEscolher('${k.id}','${rito}',${i})" aria-pressed="${i===sel}"
-          title="${esc(e.n)}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"aguardando":i===pxI?"próxima":"")}</span></button></li>`);
+          title="${esc(tituloEtapa(e, m))}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"aguardando":i===pxI?"próxima":"")}</span></button></li>`);
     });
   }
   let pnl = "";
@@ -38711,7 +38738,9 @@ function faixaTrilha(k){
     const prox = ia>=0 ? vis.slice(ia+1).find(x=>x.m.s!=="f" && x.m.s!=="n") : null;
     const seg = vis.map((x,j)=>`<i class="${x.m.s==="f"?"f":x.m.s==="a"?"a":x.m.s==="n"?"n":""}"></i>`).join("");
     return `<div class="tr-resumo"${ver===faseAt?"":" hidden"}><span class="tr-agora"><small>Etapa</small> <b>${esc(agora||"a definir")}</b>${at && !at.m.d ? `<span class="tr-aguarda"> aguardando ${esc(minusc1(at.e.n))}</span>` : ""}${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}</span>
-      ${at ? `<span class="tr-pos">${at.m.d ? `desde ${dCurta(at.m.d)} · ` : ""}${ia+1} de ${vis.length}</span>` : ""}
+      ${at ? (()=>{ const t = ver===faseAt ? tempoNaEtapa(k, at.m.d, faseDaEtapa(k)==="pagamento" ? "pagamento" : ver) : null;
+        const ha = t ? ` <span class="tr-ha${t.longo?" tr-longo":""}" title="${esc(t.por)}">(há ${t.dias} ${t.dias===1?"dia":"dias"})</span>` : "";
+        return `<span class="tr-pos">${at.m.d ? `desde ${dCurta(at.m.d)}${ha} · ` : ""}${ia+1} de ${vis.length}</span>`; })() : ""}
       <span class="tr-prog" aria-hidden="true">${seg}</span>
       ${prox ? `<span class="tr-prox">Próximo: ${esc(minusc1(prox.e.n))}</span>` : ""}</div>`; })();
   return `<section class="tr-faixa tr tr-compacta${aberta?" tr-aberta":" tr-fechada"}" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}" aria-label="Jornada e trilha do caso">
