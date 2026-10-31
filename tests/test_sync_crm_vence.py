@@ -409,3 +409,15 @@ def test_carga_por_sql_tambem_deixa_o_crm_vencer():
                        ("clientes", "nome = excluded.nome"), ("pagamentos", "status = excluded.status"),
                        ("pagamentos", "pago_em = excluded.pago_em")):
         assert velho not in sql[tab], velho
+
+
+def test_etapa_do_caso_sem_data_nao_apaga_a_data_do_crm():
+    """P4 dos prazos: a etapa do caso sem data vai sem a coluna prazo; a tarefa pessoal e a etapa com data vão com ela."""
+    mapa = {"tarefas": [
+        {"id": "a", "caso_id": "k1", "titulo": "📄 CTPS", "prazo": None},
+        {"id": "b", "caso_id": "k1", "titulo": "📄 Laudo", "prazo": "2026-11-20"},
+        {"id": "c", "caso_id": None, "titulo": "Pagar conta", "prazo": None},
+    ]}
+    migrar.separar_prazo_vazio(mapa)
+    assert [t["id"] for t in mapa["tarefas"]] == ["b", "c"]
+    assert mapa["tarefas_sem_prazo"] == [{"id": "a", "caso_id": "k1", "titulo": "📄 CTPS"}]
