@@ -37638,7 +37638,9 @@ function abrirPainelPrazo(i, fonte){
   const principal = x.cumprir ? `<button type="button" class="pp-pri" onclick="${fechar};${x.cumprir}">${IC_OK_PZ}Cumpri o prazo</button>`
     : minha && !gq ? `<button type="button" class="pp-pri" onclick="${fechar};concluirDeVez('${minha.id}')">${IC_OK_PZ}Concluir a minha tarefa</button>` : "";
   // o ✔ feito e o ✎ escrever da linha repetiam o "Concluir a minha tarefa": com ele, o escrever vai ao ⋯
-  const acaoPe = principal ? "" : String(x.acao || "").replace(/onclick="/g, `onclick="${fechar};`);
+  // os demais botões da linha (✔ cumprida da exigência, Ouvidoria) ficam
+  const acaoPe = x.cumprir ? "" : String(x.acao || "").replace(principal ? /<button\b[^>]*>(?:(?!<\/button>)[\s\S])*?(?:✔ feito|✎ escrever)<\/button>/g : /$^/, "")
+    .replace(/onclick="/g, `onclick="${fechar};`);
   const abrirCaso = k && (sobre || celular()) ? `<button type="button" class="ppz-bt ppz-caso" onclick="${fechar};casoSel='${k.id}';abaAtiva=2;subAba='escritorio';repintarFicha()">Abrir o caso</button>` : "";
   const extra = gq ? `<button type="button" class="ppz-bt" onclick="verQualidade('${cliId}')">Contribuições a pagar</button>${(cn => cn ? `<button type="button" class="ppz-bt" onclick="abrirAnexo('${cn.id}')">Abrir o CNIS</button>` : "")(docsDoDossie(cliId).filter(d=>/CNIS completo/i.test(fonteDoDossie(d)[1])).sort((p, q)=>String(q.criado_em||"").localeCompare(String(p.criado_em||"")))[0])}` : "";
   const mais = menuMais([
