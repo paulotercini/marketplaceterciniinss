@@ -155,3 +155,13 @@ t.test("recente: o lote da reconexão entra só com o que chegou nos últimos di
   a.strictEqual(N.recente(m("2026-10-10T11:59:00Z"), 3 * 864e5, agora), false);
   a.strictEqual(N.recente({}, 3 * 864e5, agora), false);
 });
+
+t.test("F332: apagada e editada no WhatsApp", () => {
+  const pm = p => ({ key: { remoteJid: "5516999990000@s.whatsapp.net" }, message: { protocolMessage: p } });
+  a.deepEqual(N.alteracaoDe(pm({ type: 0, key: { id: "X1" } })), { id: "X1", apagada: true });
+  a.deepEqual(N.alteracaoDe(pm({ type: 14, key: { id: "X2" }, editedMessage: { conversation: "corrigido" } })), { id: "X2", texto: "corrigido" });
+  a.deepEqual(N.alteracaoDe({ message: { editedMessage: { message: { protocolMessage: { type: 14, key: { id: "X3" },
+    editedMessage: { extendedTextMessage: { text: "novo" } } } } } } }), { id: "X3", texto: "novo" });
+  a.equal(N.alteracaoDe(pm({ type: 3, key: { id: "X4" } })), null);
+  a.equal(N.alteracaoDe({ message: { conversation: "oi" } }), null);
+});
