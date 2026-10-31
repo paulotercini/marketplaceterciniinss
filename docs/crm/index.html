@@ -3469,6 +3469,9 @@ html[data-tema="v10"] .seg-colab button.on{background:#fff;color:var(--texto);fo
 html[data-tema="v10"] .ag-venc{color:var(--venc-tinta);font-weight:600}
 /* a linha da agenda */
 html[data-tema="v10"] #conteudo-meio .ag-linha{display:flex;align-items:center;gap:12px;padding:0 12px 0 16px;min-height:46px;background:#fff;cursor:pointer}
+html[data-tema="v10"] #conteudo-meio .ag-grupo-cli{border-left:3px solid var(--borda);margin:6px 0}
+html[data-tema="v10"] #conteudo-meio .ag-cli-cab{display:flex;align-items:center;gap:6px;padding:8px 12px 4px 13px;font-size:13px;background:transparent;box-shadow:none;border:0;cursor:pointer}
+html[data-tema="v10"] #conteudo-meio .ag-grupo-cli .ag-linha .ag-txt b{font-weight:400;color:var(--cinza)}
 html[data-tema="v10"] .ag-slot{flex:none;width:24px;display:inline-flex;justify-content:center;color:var(--cinza)}
 /* F291 · o círculo do To Do volta à linha: concluir por hoje (data de volta, ⭐ apagada, fora do Meu Dia) */
 .desp-circ{width:24px;height:24px;border:none;background:none;padding:0;cursor:pointer;flex:none;position:relative;display:grid;place-items:center}
@@ -6088,7 +6091,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 12.01</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 12.02</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -13383,7 +13386,7 @@ function renderAgendaV10(qual){
     const g = itens.filter(i=>f(i.data)); if(!g.length) return "";
     const lim = limAg[tit]||50;
     return `<section class="pl-grupo"${tom?` data-tom="${tom}"`:""}><h3 class="secao">${tit} <span class="pl-n">${g.length}</span></h3>`
-      + g.slice(0,lim).map(linhaAgenda).join("")
+      + (planej ? g.slice(0,lim).map(linhaAgenda).join("") : porClienteDia(g.slice(0,lim)))
       + (g.length>lim?`<button class="btn-rap mais-plan" data-mais="${esc(tit)}">Mostrar mais ${Math.min(200,g.length-lim)} de ${g.length-lim}</button>`:"")
       + `</section>`;
   };
@@ -13423,6 +13426,16 @@ function renderAgendaV10(qual){
   document.querySelectorAll("[data-li-nov]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); marcarLidas([b.dataset.liNov]); });
   ligarCartoes(); ligarTarefas();
   buscarTextosAgenda([...itens, ...deleg].filter(i=>i.andId && !i.resumo).map(i=>i.andId));
+}
+// 31.10.2026 · O MEU DIA AGRUPADO POR CLIENTE (decisão do Paulo): dentro de cada seção, o que é do
+// mesmo cliente fica junto, sob o nome dele, na ordem da primeira data; o cliente de um item só
+// continua como linha solta. As linhas não mudam (a caixa, a data e os selos de cada uma ficam)
+function porClienteDia(g){
+  const grupos = new Map();
+  g.forEach((it, i)=>{ const ch = it.cli ? it.cli.id : "_"+i; if(!grupos.has(ch)) grupos.set(ch, []); grupos.get(ch).push(it); });
+  return [...grupos.values()].map(its=> its.length<2 ? linhaAgenda(its[0])
+    : `<div class="ag-grupo-cli"><div class="ag-cli-cab cartao" data-cli="${its[0].cli.id}"><b>${esc(its[0].cli.nome)}</b> <span class="pl-n">${its.length}</span></div>`
+      + its.map(linhaAgenda).join("") + `</div>`).join("");
 }
 function avisoSeMeuDia(planej){ return planej ? "" : avisoCRPS(); }
 // F295 · o resumo de ontem (Onda D do fluxo do To Do): no último dia útil, quantas anotações eu fiz, em quantos
