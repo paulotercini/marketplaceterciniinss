@@ -38,9 +38,10 @@ function extrairConst(nome) {
 const ctx = { console };
 vm.createContext(ctx);
 vm.runInContext(extrairConst("dsa"), ctx);
+vm.runInContext(extrairConst("digitos"), ctx);
 for (const f of ["arqInfo", "faseEncerrada", "ehComentarioPat", "comentariosPat",
                  "crpsNups", "crpsBlocos", "crpsTotalEventos", "andamentosPje",
-                 "abasVisiveis", "hashDjb", "chaveSinalCnj"])
+                 "protocolosDe", "abasVisiveis", "hashDjb", "chaveSinalCnj"])
   vm.runInContext(extrair(f), ctx);
 const { abasVisiveis, faseEncerrada, chaveSinalCnj } = ctx;
 
@@ -55,6 +56,10 @@ test("caso pelado: só Escritório e Caso completo", () => {
   assert.equal(v.inss, false, "aba INSS vazia não pode aparecer");
   assert.equal(v.crps, false, "aba Recurso vazia não pode aparecer");
   assert.equal(v.cnj, false, "aba CNJ vazia não pode aparecer");
+});
+
+test("o INSS abre com o protocolo, antes de existir evento (F330)", () => {
+  assert.equal(abasVisiveis({ protocolos: ["123.456.789"] }, []).inss, true);
 });
 
 test("o INSS abre com comentário do portal", () => {
