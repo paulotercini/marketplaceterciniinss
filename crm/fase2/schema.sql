@@ -4737,7 +4737,7 @@ end $$;
 alter default privileges for role postgres in schema public revoke execute on functions from public, anon;
 alter default privileges for role postgres in schema public grant execute on functions to authenticated, service_role;
 
--- F331 · mensagem apagada ou editada no WhatsApp e mensagem favorita
+-- F332 · mensagem apagada ou editada no WhatsApp e mensagem favorita
 -- O cliente que apaga ou edita a mensagem manda um aviso (protocolMessage) que a
 -- ponte descartava. Agora a linha guarda quando foi apagada ou editada e o texto de
 -- antes, que fica para a equipe: o que o cliente escreveu continua registrado.

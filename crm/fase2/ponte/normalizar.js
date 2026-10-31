@@ -163,7 +163,7 @@ function reacaoDe(m) {
   return { id: r.key.id, emoji: r.text || "" };
 }
 
-// F331 · o cliente apagou ou editou a mensagem: chega um protocolMessage com a chave
+// F332 · o cliente apagou ou editou a mensagem: chega um protocolMessage com a chave
 // da original (tipo 0 = apagar para todos, 14 = editar). Editada traz o texto novo.
 function alteracaoDe(m) {
   let c = (m && m.message) || {};

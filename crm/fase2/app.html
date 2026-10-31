@@ -6133,7 +6133,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 12.07</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 12.08</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15159,7 +15159,7 @@ async function abrirConversa(id){
 }
 async function recarregarMsgs(){
   if(!zapAberta) return;
-  // F331 · apagada, editada e favorita também repintam
+  // F332 · apagada, editada e favorita também repintam
   const sig = () => zapMsgs.map(m=>`${m.id}${(m.texto||"").length}${m.apagada_em||""}${m.editada_em||""}${m.favorita_em||""}`).join("|");
   const antes = sig();
   zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${zapAberta}&order=momento,seq`).catch(()=>zapMsgs);
@@ -15340,7 +15340,7 @@ ${dz.sub}             ${falaPor(c)?`<span class="zt-curto">${esc(falaPor(c))}</s
   pintarPainelZap(c);
   const t = document.getElementById("zap-txt");
   t.oninput = ()=>{ t.style.height="auto"; t.style.height=Math.min(t.scrollHeight,140)+"px"; sugerirFrases(); guardarRascZap(c.id, t.value); };
-  // F331 · o texto não enviado espera na conversa, como no aplicativo
+  // F332 · o texto não enviado espera na conversa, como no aplicativo
   if(!t.value && rascZap()[c.id]) t.value = rascZap()[c.id];
   // Enter manda, Shift+Enter pula linha — é o que a mão da equipe já espera.
   // Com as sugestões do "/" abertas, Enter escolhe a primeira
@@ -15650,7 +15650,7 @@ function bolhaZap(m, cli, seguida){
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${m.tipo==="audio"?"🎤 ":""}${esc(m.texto)}</div>`:"")
     : m.texto ? linksZap(m.texto) : esc(`[${m.tipo}]`);
-  // F331 · apagada no WhatsApp: a equipe continua vendo o que foi escrito, riscado
+  // F332 · apagada no WhatsApp: a equipe continua vendo o que foi escrito, riscado
   const apag = m.apagada_em ? `<div class="zap-apag">${zic("proibido",13)}${m.direcao==="entrada"?"O cliente apagou esta mensagem":"Apagada no celular"} em ${diaZap(m.apagada_em)}, ${horaSP(m.apagada_em)}</div>` : "";
   const lk = !m.apagada_em && !m.midia_url && m.texto ? (m.texto.match(RX_LINK_ZAP)||[])[0] : null;
   // a citada pode estar no CRM (responde_a) ou só ter o id do WhatsApp
@@ -15689,13 +15689,13 @@ function bolhaZap(m, cli, seguida){
     </div></div>`
     + (reac.length?`<span class="zap-reac ${m.direcao==="saida"?"saida":""}" title="${esc(reac.map(r=>(r.de==="cliente"?"cliente":"escritório")+" "+r.emoji).join(" · "))}">${reac.map(r=>esc(r.emoji)).join("")}</span>`:"");
 }
-// F331 · rascunho por conversa, só neste navegador (localStorage pode faltar: segue sem)
+// F332 · rascunho por conversa, só neste navegador (localStorage pode faltar: segue sem)
 function rascZap(){ try{ return JSON.parse(localStorage.getItem("crm_zap_rasc")||"{}"); }catch(e){ return {}; } }
 function guardarRascZap(id, txt){
   try{ const r = rascZap(); if(txt && txt.trim()) r[id] = txt; else delete r[id];
        localStorage.setItem("crm_zap_rasc", JSON.stringify(r)); }catch(e){}
 }
-// F331 · a estrela do WhatsApp: favorita para a equipe toda, com quem marcou
+// F332 · a estrela do WhatsApp: favorita para a equipe toda, com quem marcou
 async function favoritarMsg(id){
   const m = zapMsgs.find(x=>x.id===id); if(!m) return;
   const corpo = m.favorita_em ? {favorita_em:null, favorita_por:null} : {favorita_em:new Date().toISOString(), favorita_por:eu.id};

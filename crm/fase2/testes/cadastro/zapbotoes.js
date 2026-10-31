@@ -131,7 +131,7 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.tap(".ze-emo-grade button"); await p.waitForTimeout(100);
     conf("o emoji entra no campo de escrever", (await p.$eval("#zap-txt", e => e.value)) === "😀");
     await p.evaluate(() => { document.querySelector(".ze-emo").open = false; const t = document.getElementById("zap-txt"); t.value = ""; t.style.height = ""; localStorage.removeItem("crm_zap_rasc"); });
-    // F331 · apagada, editada, favorita e o rascunho que espera na conversa
+    // F332 · apagada, editada, favorita e o rascunho que espera na conversa
     conf("a mensagem apagada fica riscada e avisa", await p.$eval("#zb-m6", e => e.classList.contains("apagada") && /apagou/.test(e.querySelector(".zap-apag").textContent)));
     conf("a editada diz Editada e guarda o texto de antes", (await p.$eval("#zb-m7 .zap-edit", e => e.title).catch(() => "")).includes("Chego às 9h"));
     await p.evaluate(() => favoritarMsg("m4")); await p.waitForTimeout(200);
