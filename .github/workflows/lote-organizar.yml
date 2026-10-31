@@ -17,4 +17,4 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           AUTH_ID: 741525d4-5852-4c9e-b9cb-0e3ad92e1100
-          ESCREVER: "0"
+          ESCREVER: "1"
