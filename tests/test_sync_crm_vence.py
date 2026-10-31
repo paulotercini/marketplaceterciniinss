@@ -31,6 +31,20 @@ def t(lista, titulo, **kw):
 
 # ── prazo fatal e ⭐ do caso ──────────────────────────────────────────────
 
+def test_data_que_mudou_no_todo_vence_a_do_crm():
+    """31.10.2026: o "Concluir em" adiado ou apagado no To Do não chegava ao CRM."""
+    mapa = {"casos": [
+        {"id": "adiou", "prazo": "2026-11-20", "todo_prazo": "2026-11-20"},
+        {"id": "apagou", "prazo": None, "todo_prazo": None},
+        {"id": "igual", "prazo": "2026-09-01", "todo_prazo": "2026-09-01"},   # o CRM mudou, o To Do não
+    ]}
+    banco = [{"id": "adiou", "prazo": "2026-10-10", "todo_prazo": "2026-10-10"},
+             {"id": "apagou", "prazo": "2026-10-10", "todo_prazo": "2026-10-10"},
+             {"id": "igual", "prazo": "2026-10-30", "todo_prazo": "2026-09-01"}]
+    migrar.manter_dados_do_banco(mapa, banco, "casos", ("prazo",))
+    assert [k["prazo"] for k in mapa["casos"]] == ["2026-11-20", None, "2026-10-30"]
+
+
 def test_prazo_e_estrela_do_crm_nao_voltam_ao_do_todo():
     mapa = {"casos": [
         {"id": "a", "prazo": None, "importante": False},          # tarefa sem data apagava o prazo
@@ -294,7 +308,7 @@ def _roda(monkeypatch, recusa=(), rpc=False):
     marcados = [
         caso(id="caso-esc", todo_task_id="esc", fase="outro", mover_para="🗓 Tarefas com Prazo",
              prazo="2026-10-20", beneficio="BPC/LOAS — idoso"),
-        caso(id="caso-jud", todo_task_id="jud", fase="judicial", prazo="2026-10-30", importante=True,
+        caso(id="caso-jud", todo_task_id="jud", fase="judicial", prazo="2026-10-30", todo_prazo="2026-09-01", importante=True,
              arquivados={"add:prot:888888888": {"de": "app"}},
              beneficio="Aposentadoria por tempo de contribuição da pessoa com deficiência"),
     ]
@@ -398,7 +412,8 @@ def test_carga_por_sql_tambem_deixa_o_crm_vencer():
     m["tarefas_docs"] = []
     sql = {s.split(" (")[0].removeprefix("insert into "): s
            for s in migrar.gerar_sql(m).split(";\n\n") if s.startswith("insert into")}
-    assert "prazo = coalesce(casos.prazo, excluded.prazo)" in sql["casos"]
+    assert "else coalesce(casos.prazo, excluded.prazo) end" in sql["casos"]
+    assert "excluded.todo_prazo is distinct from casos.todo_prazo" in sql["casos"]
     assert "importante = casos.importante or excluded.importante" in sql["casos"]
     assert "beneficio = coalesce(casos.beneficio, excluded.beneficio)" in sql["casos"]
     assert "then excluded.nome else clientes.nome end" in sql["clientes"]
