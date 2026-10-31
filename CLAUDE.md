@@ -311,6 +311,8 @@ A **F310** (a conversa do WhatsApp no celular, pedido do Paulo de 30.10.2026): a
 
 A **F311** (a importação do PAT lê o concluído, pedido do Paulo de 30.10.2026): a extensão (1.28.1) busca também o detalhe do requerimento concluído ou cancelado, por último, porque é nele que vem a decisão, e o "entregues" conta a lista inteira; o CRM (`normalizarColeta`) põe no plano a linha da lista que chegou sem detalhe (falha ou extensão antiga), com situação, serviço e espécie da própria lista. Antes, a janela só com decisões chegava como "0 requerimentos". Teste: `testes/cadastro/f311.js`.
 
+A **F312** (a ajuda em todas as telas, pedido do Paulo de 31.10.2026): o "?" ao lado do título de cada lista (`.ajuda-tit`), o "?" fixo à esquerda do ✎ Sugestões (`#fab-ajuda`) e o "?" pequeno da barra da ficha, do cabeçalho do atendimento, da trilha de passos e do quadro Prazos (`AJUDA_ALVOS`, posto por `pintarAjudas` num `MutationObserver`) abrem `ajuda(chave)`: o texto do assunto (`AJUDA`) e, em "Outros assuntos", todos os assuntos por grupo (`AJUDA_GRUPOS`). Sem chave, vale o assunto da tela (`ajudaChave`: a lista, a aba da ficha ou o passo do atendimento). O "?" fica fora das abas do caso, do campo de escrever, do cartão do caso e dos botões de conferir, que ele deformava; esses assuntos abrem pela lista. Assunto novo entra em `AJUDA` e num grupo. Teste: `testes/cadastro/f312.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
