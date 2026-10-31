@@ -70,6 +70,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await instalarBanco(ctx, { SUPA, SESSAO, banco });
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
   const p = await ctx.newPage();
+
+  // 11.93 · VCE-05: nenhum alvo de toque abaixo de 24 px (mínimo AA)
+  const PEQ = async () => p.evaluate(() => [...document.querySelectorAll("button,a[href],[role=button],summary,select,input[type=checkbox],[onclick]")]
+    .filter(e => e.offsetParent && getComputedStyle(e).visibility!=="hidden").map(e => { const r = e.getBoundingClientRect(); return { w: r.width, h: r.height, d: (e.className||e.tagName)+"|"+(e.textContent||"").trim().slice(0,20) }; })
+    .filter(r => r.w && r.h && (r.w < 24 || r.h < 24)));
   const erros = [];
   p.on("pageerror", e => erros.push(e.message));
   p.on("dialog", d => d.accept());
@@ -90,6 +95,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const vis = sel => p.$$eval(sel, a => a.some(e => e.offsetParent));
   conf("a trilha das etapas nasce recolhida", !(await vis(".tr-rol")) && (await vis(".tr-recolhida .tr-alca")));
   conf("a placa do caso nasce fechada", !(await vis(".linha-caso .lc-placa")));
+  conf("na ficha, nenhum alvo de toque abaixo de 24 px", !(await PEQ()).length);
   await p.screenshot({ path: OUT + "/cel-fechada.png" });
   await p.tap(".tr-recolhida .tr-alca"); await p.waitForTimeout(400);
   conf("o toque na alça abre a trilha", await vis(".tr-rol"));
@@ -125,7 +131,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("data, nome, estrela e responsável na mesma linha", al && [al.d, al.f, al.a].every(y => Math.abs(y - al.n) < 6));
   conf("a inicial do responsável em quadrado, à esquerda da estrela (F306)", al && al.raio <= 8 && al.aR <= al.eL);
   conf("o filtro por pessoa não passa da margem", al && al.segR <= al.cardR + 1);
+  conf("no Meu Dia, nenhum alvo de toque abaixo de 24 px", !(await PEQ()).length);
   await p.screenshot({ path: OUT + "/cel-meudia.png" });
+  for (const v of ["agendaq", "zap", "mencoes", "recebimentos"]) { await p.evaluate(v => irPara(v), v).catch(()=>{}); await p.waitForTimeout(900); const pq = await PEQ(); conf(`em ${v}, nenhum alvo de toque abaixo de 24 px`, !pq.length) || pq.length && console.log(JSON.stringify(pq)); }
   conf("sem erro de página", !erros.length);
   console.log(`${ok.filter(x => x[1]).length}/${ok.length} passaram`);
   await nav.close(); s.close();
