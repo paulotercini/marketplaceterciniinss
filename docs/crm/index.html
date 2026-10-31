@@ -974,7 +974,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   /* o azul cheio é só dos botões SEM classe própria (ex.: "Registrar
      exigência"). Sem o :not, ele pintava também os chips claros da barra —
      texto branco em fundo branco, botão invisível. */
-  .escrever button:not(.btn-rap):not(.eq-ini):not(.esc-ic):not(.esc-reg):not(.fx-av):not(.sug-abrir):not(.tipo-ch):not(.esc-tg):not(.esc-pill){
+  .escrever button:not(.btn-rap):not(.eq-ini):not(.esc-ic):not(.esc-reg):not(.fx-av):not(.sug-abrir):not(.tipo-ch):not(.esc-tg):not(.esc-pill):not(.pzx-q){
     padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
   /* Os chips claros da barra (Hoje, Amanhã, Escolher a data, sem lembrete).
      A regra nasceu para ⭐/🔥 em emoji — que não obedecem cor do CSS — e
@@ -5411,6 +5411,319 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 
 #painel-prazo .pp-zap-com{padding:8px 16px;font-size:12px;background:#FFF7E6;border-bottom:1px solid #F0D9A8;color:#6B4A00}
 #painel-prazo .pp-zap-com b{font-weight:500}
+/* F326 · A TELA PRAZOS, A JANELA DO PRAZO E O PRAZO NA ANOTAÇÃO (desenho aprovado pelo Paulo em 31.10.2026) */
+/* a etiqueta da aba e as etiquetas da natureza */
+.mt-pzn{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-width:20px;height:20px;padding:0 6px;margin-left:4px;border-radius:10px;background:var(--azul-fundo,#E6F0EF);color:var(--azul,#0E5C58);font-size:12px;font-weight:500;font-variant-numeric:tabular-nums}
+.mt-pzv{margin-left:4px;font-size:12px}
+.pz-pill{display:inline-flex;align-items:center;gap:5px;flex:none;height:22px;padding:0 9px;border-radius:11px;font-size:11px;font-weight:500;white-space:nowrap;line-height:1}
+.pz-pill i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.pz-pill-fatal{background:#FBE9E8;color:#A8231B}.pz-pill-fatal i{background:#B3261E}
+.pz-pill-compromisso{background:#FBF1E0;color:#7A4800}.pz-pill-compromisso i{background:#B7791F}
+.pz-pill-lembrete{background:#E9EFF7;color:#2A5788}.pz-pill-lembrete i{background:#2F6FB0}
+.pz-pill-venc{background:#B3261E;color:#FFFFFF}
+.pz-av{display:inline-flex;align-items:center;justify-content:center;flex:none;width:26px;height:26px;border-radius:6px;color:#FFFFFF;font-size:12px;font-weight:500;line-height:1}
+.pz-av-sis{background:#9A9890}
+/* a aba Prazos do cliente */
+.pzc{display:flex;flex-direction:column;gap:16px;padding:4px 0 150px;font-variant-numeric:tabular-nums}
+.pzc-top{display:flex;flex-wrap:wrap;gap:16px;align-items:stretch}
+.pzc-hero{flex:999 1 520px;min-width:0;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;padding:20px 22px;background:#FFFFFF;border:1px solid var(--borda,#E7E6E1);border-radius:12px}
+.pzc-hero-cab{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.pzc-hero-txt{min-width:0}
+.pzc-sobre{display:block;font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro,#686660)}
+.pzc .pzc-hero h2{margin:4px 0 2px;font-family:var(--f-ui,inherit);font-size:20px;line-height:1.3;font-weight:500;color:var(--texto,#121212)}
+.pzc-hero-txt p{margin:0;font-size:13px;color:var(--cinza,#4A4944)}
+.pzc-hero-n{flex:none;display:flex;flex-direction:column;align-items:flex-end;text-align:right;gap:2px}
+.pzc-hero-n small{font-size:12px;color:var(--cinza,#4A4944)}
+.pzc-hero-n b{font-size:44px;line-height:1;font-weight:500;letter-spacing:-.02em}
+.pzc-hero-n span{font-size:13px;font-weight:500}
+.pzc-hero-n em{font-style:normal;font-size:12px;color:var(--cinza,#4A4944)}
+.pzc-u-venc .pzc-hero-n :is(b,span),.pzc-u-crit .pzc-hero-n :is(b,span){color:#B3261E}
+.pzc-u-hoje .pzc-hero-n :is(b,span),.pzc-u-perto .pzc-hero-n :is(b,span){color:#8F5400}
+.pzc-u-medio .pzc-hero-n :is(b,span){color:var(--cinza,#4A4944)}
+.pzc-u-normal .pzc-hero-n :is(b,span){color:var(--cinza-claro,#686660)}
+:is(.pzc,.ppz-quanto) :is(.pzc-barra,.ppz-barra){position:relative;height:8px;margin-top:18px;border-radius:4px;background:var(--placa,#EFEEEB)}
+:is(.pzc,.ppz-quanto) :is(.pzc-barra,.ppz-barra) i{display:block;height:100%;border-radius:4px;background:var(--azul,#0E5C58)}
+:is(.pzc-u-venc,.pzc-u-crit,.ppz-u-venc,.ppz-u-crit) :is(.pzc-barra,.ppz-barra) i{background:#B3261E}
+:is(.pzc-u-hoje,.pzc-u-perto,.ppz-u-hoje,.ppz-u-perto) :is(.pzc-barra,.ppz-barra) i{background:#8F5400}
+:is(.pzc-barra,.ppz-barra) em{position:absolute;top:-4px;width:2px;height:16px;margin-left:-1px;border-radius:1px;background:var(--texto,#121212)}
+:is(.pzc-barra,.ppz-barra) em span{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-style:normal;font-size:11px;font-weight:500;color:var(--texto,#121212)}
+:is(.pzc-bl,.ppz-bl){display:flex;justify-content:space-between;gap:12px;margin-top:6px;font-size:12px;color:var(--cinza-claro,#686660)}
+.pzc-hero-pe{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px}
+.pzc-pri{height:36px;padding:0 16px;border:0;border-radius:8px;background:var(--azul,#0E5C58);color:#FFFFFF;font-weight:500;cursor:pointer}
+.pzc-nota{flex:1 1 220px;min-width:0;font-size:12px;line-height:1.45;color:var(--cinza-claro,#686660)}
+.pzc-tiles{flex:1 1 240px;display:grid;grid-template-rows:repeat(3,1fr);gap:8px}
+.pzc-top-so .pzc-tiles{grid-template-rows:none;grid-template-columns:repeat(3,minmax(0,1fr))}
+.pzc-tile{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;background:#FFFFFF;border:1px solid var(--borda,#E7E6E1);border-radius:12px}
+.pzc-tile span{font-size:13px;color:var(--cinza,#4A4944)}
+.pzc-tile b{order:2;font-size:24px;line-height:1;font-weight:500;color:var(--texto,#121212)}
+.pzc-tile-venc b{color:#B3261E}.pzc-tile-hoje b{color:#8F5400}
+.pzc-ferr{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.pzc-seg{display:inline-flex;gap:2px;padding:3px;border-radius:9px;background:var(--placa,#EFEEEB)}
+.pzc-seg button{height:30px;padding:0 12px;border:0;border-radius:7px;background:transparent;color:var(--cinza,#4A4944);font-weight:500;cursor:pointer}
+.pzc-seg button.on{background:#FFFFFF;color:var(--texto,#121212);font-weight:500;box-shadow:0 1px 2px rgba(18,18,18,.12)}
+.pzc-chips{display:flex;flex-wrap:wrap;gap:6px}
+.pzc-chip{height:30px;padding:0 12px;border:1px solid var(--borda,#E7E6E1);border-radius:15px;background:#FFFFFF;color:var(--cinza,#4A4944);font-weight:500;cursor:pointer;white-space:nowrap}
+.pzc-chip span{font-variant-numeric:tabular-nums;color:var(--cinza-claro,#686660)}
+.pzc-chip.on{background:var(--azul,#0E5C58);border-color:var(--azul,#0E5C58);color:#FFFFFF}
+.pzc-chip.on span{color:#FFFFFF}
+.pzc-chip:disabled{opacity:.5;cursor:default}
+.pzc-g{display:flex;flex-direction:column;gap:8px}
+.pzc .pzc-gt{display:flex;align-items:center;gap:8px;margin:4px 0 0;font-size:14px;font-weight:500;color:var(--texto,#121212)}
+.pzc-g-venc .pzc-gt > span:first-child{color:#B3261E}
+.pzc-gn{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 7px;box-sizing:border-box;border-radius:11px;background:var(--placa,#EFEEEB);font-size:12px;font-weight:500;color:var(--cinza,#4A4944)}
+.pzc-g-abrir{margin-left:auto;height:28px;padding:0 10px;border:1px solid #C9D9D7;border-radius:7px;background:#FFFFFF;color:var(--azul,#0E5C58);font-size:12px;font-weight:500;cursor:pointer}
+.pzc-lista{list-style:none;margin:0;padding:0;background:#FFFFFF;border:1px solid var(--borda,#E7E6E1);border-radius:12px;overflow:hidden}
+.pzc-lin{display:grid;grid-template-columns:86px minmax(0,1fr) 150px 128px 128px 72px;align-items:center;gap:12px;min-height:60px;padding:10px 16px;border-top:1px solid var(--placa,#EFEEEB)}
+.pzc-sem-caso .pzc-lin{grid-template-columns:86px minmax(0,1fr) 128px 128px 72px}
+.pzc-lin:first-child{border-top:0}
+.pzc-lin.pzc-venc{background:#FFF7F6}
+.pzc-dia{display:flex;flex-direction:column;line-height:1.15}
+.pzc-dia small{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;color:var(--cinza-claro,#686660)}
+.pzc-dia b{font-size:18px;font-weight:500;color:var(--texto,#121212)}
+.pzc-venc .pzc-dia :is(small,b){color:#B3261E}
+.pzc-o{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pzc-t{font-size:14px;font-weight:500;line-height:1.35;color:var(--texto,#121212);overflow-wrap:anywhere}
+.pzc-sub{display:flex;align-items:center;gap:8px;min-width:0}
+.pzc-meta{min-width:0;font-size:12px;color:var(--cinza,#4A4944);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pzc-cel{display:none}
+.pzc-caso{justify-self:start;max-width:100%;height:24px;line-height:24px;padding:0 9px;border-radius:12px;background:var(--placa,#EFEEEB);font-size:12px;color:var(--cinza,#4A4944);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-sizing:border-box}
+.pzc-quem{display:flex;align-items:center;gap:8px;min-width:0;font-size:13px;color:var(--texto,#121212)}
+.pzc-quem > span:last-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pzc-falta{text-align:right;font-size:13px;white-space:nowrap}
+.pzc-u-venc .pzc-falta,.pzc-u-crit .pzc-falta,.pzc-u-venc .pzc-falta-c,.pzc-u-crit .pzc-falta-c{color:#B3261E;font-weight:500}
+.pzc-u-hoje .pzc-falta,.pzc-u-perto .pzc-falta,.pzc-u-hoje .pzc-falta-c,.pzc-u-perto .pzc-falta-c{color:#8F5400}
+.pzc-u-medio .pzc-falta{color:var(--cinza,#4A4944)}.pzc-u-normal .pzc-falta{color:var(--cinza-claro,#686660)}
+.pzc-abrir{justify-self:end;height:32px;padding:0 12px;border:1px solid #C9D9D7;border-radius:8px;background:#FFFFFF;color:var(--azul,#0E5C58);font-weight:500;cursor:pointer}
+.pzc-vazio{display:flex;flex-direction:column;gap:4px;padding:24px;background:#FFFFFF;border:1px solid var(--borda,#E7E6E1);border-radius:12px;color:var(--cinza,#4A4944)}
+.pzc-vazio b{font-size:14px;color:var(--texto,#121212)}
+.pzc-nada{margin:0;color:var(--cinza,#4A4944)}
+@media (hover:hover) and (pointer:fine){
+  .pzc-abrir:hover,.pzc-g-abrir:hover{background:var(--azul-fundo,#E6F0EF)}
+  .pzc-pri:hover{background:var(--azul-escuro,#0B4744)}
+  .pzc-chip:not(.on):not(:disabled):hover{border-color:#C9D9D7}
+  .pzc-lin:hover{background:#FBFBFA}.pzc-lin.pzc-venc:hover{background:#FDF1EF}
+}
+/* no celular: cartões que se tocam inteiros, a data na coluna da esquerda e a chevron */
+@media (max-width:760px){
+  .pzc{gap:12px;padding-bottom:150px}
+  .pzc-top{gap:10px}
+  .pzc-hero{position:relative;flex-basis:100%;padding:16px}
+  .pzc .pzc-hero h2{font-size:17px}
+  .pzc-hero-n b{font-size:36px}
+  .pzc-pri::after{content:"";position:absolute;inset:0;border-radius:12px}
+  .pzc-pri{position:static}
+  .pzc-tiles,.pzc-top-so .pzc-tiles{flex-basis:100%;grid-template-rows:none;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .pzc-tile{flex-direction:column;align-items:flex-start;gap:4px;padding:10px 12px}
+  .pzc-tile b{order:0;font-size:22px}
+  .pzc-tile span{font-size:12px}
+  .pzc-seg{display:none}
+  .pzc-chips{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px;padding:0 16px;scrollbar-width:none}
+  .pzc-chip{height:36px;border-radius:18px}
+  .pzc-lista{background:transparent;border:0;border-radius:0;display:flex;flex-direction:column;gap:8px;overflow:visible}
+  .pzc-lin,.pzc-sem-caso .pzc-lin{position:relative;grid-template-columns:46px minmax(0,1fr) 16px;gap:12px;padding:12px 14px;border:1px solid var(--borda,#E7E6E1);border-radius:12px;background:#FFFFFF}
+  .pzc-lin.pzc-venc{border-color:#F3D3D0}
+  .pzc-lin::after{content:"";width:8px;height:8px;border-right:2px solid var(--cinza-claro,#686660);border-bottom:2px solid var(--cinza-claro,#686660);transform:rotate(-45deg);justify-self:center}
+  .pzc-meta,.pzc-caso,.pzc-quem,.pzc-falta{display:none}
+  .pzc-cel{display:contents}
+  .pzc-sub{flex-wrap:wrap;gap:6px 8px}
+  .pzc-caso-c{height:22px;line-height:22px;padding:0 8px;border-radius:11px;background:var(--placa,#EFEEEB);font-size:12px;color:var(--cinza,#4A4944);white-space:nowrap}
+  .pzc-falta-c{font-size:12px;white-space:nowrap}
+  .pzc-abrir{position:absolute;inset:0;width:100%;height:100%;opacity:0;border-radius:12px}
+}
+/* a janela do prazo: 480 px à direita (e por cima da aba, com o véu); no celular, tela cheia */
+#painel-prazo.pp-prazo{width:min(480px,100vw);background:#FFFFFF;border-left:1px solid var(--borda,#E7E6E1);box-shadow:-8px 0 24px rgba(18,18,18,.08);font-variant-numeric:tabular-nums}
+@media (min-width:1200px){body.lado-aberto.pz-largo #app{margin-right:480px}}
+#pp-veu{position:fixed;inset:0;z-index:899;background:rgba(18,18,18,.22)}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo header.ppz-cab{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:18px 22px;border-bottom:1px solid var(--borda,#E7E6E1)}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-cab-l{display:flex;align-items:center;gap:8px;width:100%}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .pp-cli{flex:1;min-width:0;margin:0;font-size:12px;color:var(--cinza,#4A4944)}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .pp-x{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;margin:-6px -8px -6px 0;color:var(--cinza,#4A4944)}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-volta{display:none}
+.ppz-pills{display:flex;flex-wrap:wrap;gap:6px}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo h2{margin:0;font-family:var(--f-ui,inherit);font-size:22px;line-height:1.3;font-weight:500;color:var(--texto,#121212);overflow-wrap:anywhere}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-corpo{display:flex;flex-direction:column;gap:24px;padding:20px 22px 24px}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-sec{display:flex;flex-direction:column;gap:10px}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-h{margin:0;font-family:var(--f-ui,inherit);font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro,#686660)}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-quanto{gap:0;padding:16px 18px;border:1px solid var(--borda,#E7E6E1);border-radius:12px}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-quanto .ppz-barra{margin-top:30px}
+.ppz-q-lin{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.ppz-q-n{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px}
+.ppz-q-n small{flex-basis:100%;font-size:12px;color:var(--cinza,#4A4944)}
+.ppz-q-n b{font-size:48px;line-height:1;font-weight:500;letter-spacing:-.02em}
+.ppz-q-n span{font-size:14px;font-weight:500}
+.ppz-u-venc .ppz-q-n :is(b,span),.ppz-u-crit .ppz-q-n :is(b,span){color:#B3261E}
+.ppz-u-hoje .ppz-q-n :is(b,span),.ppz-u-perto .ppz-q-n :is(b,span){color:#8F5400}
+.ppz-u-medio .ppz-q-n :is(b,span){color:var(--cinza,#4A4944)}.ppz-u-normal .ppz-q-n :is(b,span){color:var(--cinza-claro,#686660)}
+.ppz-q-d{display:flex;flex-direction:column;align-items:flex-end;text-align:right}
+.ppz-q-d b{font-size:15px;font-weight:500;color:var(--texto,#121212)}
+.ppz-q-d span{font-size:12px;color:var(--cinza-claro,#686660)}
+.ppz-conta{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--placa,#EFEEEB);font-size:12px;line-height:1.5;color:var(--cinza,#4A4944)}
+.ppz-orig{display:flex;gap:12px;align-items:flex-start}
+.ppz-orig-ic{flex:none;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:#E9EFF6;color:#3A6491}
+.ppz-orig-c{min-width:0;display:flex;flex-direction:column;gap:4px}
+.ppz-orig-c b{font-size:13px;font-weight:500;color:var(--texto,#121212)}
+.ppz-orig-c p,.ppz-p,.ppz-nota{margin:0;font-size:13px;line-height:1.5;color:var(--cinza,#4A4944);overflow-wrap:anywhere}
+.ppz-nota{font-size:12px}
+.ppz-links{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:2px}
+.ppz-link{min-height:28px;padding:0;border:0;background:none;color:var(--azul,#0E5C58);font-size:13px;font-weight:500;cursor:pointer;text-align:left}
+.ppz-base{margin:0;font-size:12px;color:var(--cinza-claro,#686660)}
+.ppz-passos{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.ppz-passos li{display:flex;gap:10px;align-items:flex-start}
+.ppz-passos li > span{flex:none;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--placa,#EFEEEB);font-size:12px;font-weight:500}
+.ppz-passos p{margin:0;font-size:13px;line-height:1.5}.ppz-passos small{color:var(--cinza-claro,#686660);font-size:12px}
+.ppz-tarefa{border:1px solid var(--borda,#E7E6E1);border-radius:12px;overflow:hidden}
+.ppz-tf-cab{display:flex;align-items:center;gap:10px;padding:12px 14px}
+.ppz-tf-cab .pz-av{width:30px;height:30px;border-radius:7px}
+.ppz-tf-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ppz-tf-t b{font-size:13px;font-weight:500;line-height:1.35}.ppz-tf-t small{font-size:12px;color:var(--cinza,#4A4944)}
+.ppz-est{flex:none;height:28px;padding:0 10px;border-radius:14px;font-size:12px;font-weight:500;white-space:nowrap;cursor:pointer}
+.ppz-est-0{background:#FFFFFF;color:var(--cinza,#4A4944);border:1px solid var(--borda,#E7E6E1)}
+.ppz-est-1{background:#FBF1E0;color:#7A4800;border:1px solid #F1DDB8}
+.ppz-est-2{background:#E4F1EA;color:#1B6E38;border:1px solid #C7E2D2}
+.ppz-est:disabled{cursor:default}
+.ppz-ets{list-style:none;margin:0;padding:4px 14px;border-top:1px solid var(--placa,#EFEEEB)}
+.ppz-ets li .pp-et{min-height:40px}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-ets .pp-et input{accent-color:var(--azul,#0E5C58)}
+.ppz-tf-pe{padding:4px 14px 12px}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .pp-add{height:30px;border:1px dashed #C9C7C0;border-radius:8px;color:var(--azul,#0E5C58);font-weight:500}
+.ppz-vazio{display:flex;align-items:center;gap:10px;margin:0;padding:12px 14px;border:1px dashed var(--borda,#E7E6E1);border-radius:12px;font-size:13px;color:var(--cinza,#4A4944)}
+.ppz-lig{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:var(--fundo,#F8F8F6)}
+.ppz-lig-b{flex:none;width:8px;height:8px;border-radius:50%;background:#2F6FB0}
+.ppz-b-fatal{background:#B3261E}.ppz-b-compromisso{background:#B7791F}.ppz-b-doc{background:#3A6491}
+.ppz-lig-c{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ppz-lig-c > b{font-size:13px;font-weight:500}.ppz-lig-c small{font-size:12px;color:var(--cinza,#4A4944)}
+.ppz-lig-c small b{font-weight:500}
+.ppz-lig-c .ppz-u-venc,.ppz-lig-c .ppz-u-crit{color:#B3261E}.ppz-lig-c .ppz-u-hoje,.ppz-lig-c .ppz-u-perto{color:#8F5400}
+.ppz-quemac{display:flex;align-items:center;gap:10px}.ppz-quemac div{display:flex;flex-direction:column;gap:2px}
+.ppz-quemac b{font-size:13px;font-weight:500}.ppz-quemac small{font-size:12px;color:var(--cinza,#4A4944)}
+.ppz-hist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.ppz-hist li{display:flex;gap:10px;align-items:flex-start}
+.ppz-hist .pz-av{width:24px;height:24px;font-size:11px}
+.ppz-hist div{min-width:0}.ppz-hist small{font-size:12px;color:var(--cinza-claro,#686660)}.ppz-hist small b{color:var(--texto,#121212);font-weight:500}
+.ppz-hist p{margin:2px 0 0;font-size:13px;line-height:1.45;overflow-wrap:anywhere}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-com{gap:8px}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-com label{cursor:default}
+.ppz-bt{height:36px;padding:0 14px;border:1px solid #C9D9D7;border-radius:8px;background:#FFFFFF;color:var(--azul,#0E5C58);font-weight:500;cursor:pointer;white-space:nowrap}
+.ppz-com .ppz-bt{align-self:flex-start}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo footer.ppz-pe{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;padding:14px 22px;border-top:1px solid var(--borda,#E7E6E1);background:#FFFFFF}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .pp-pri{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 18px;border-radius:8px;background:var(--azul,#0E5C58);font-weight:500;white-space:nowrap}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-pe .ppz-bt{height:40px;color:var(--texto,#121212);border-color:var(--borda,#E7E6E1)}
+.ppz-acoes{display:contents}
+.ppz-acoes :is(button,a){height:40px}
+.ppz-esp{flex:1}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .pp-mais > summary{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid var(--borda,#E7E6E1);border-radius:8px}
+:is(#painel-prazo,#painel-prazo-esq).pp-prazo .pp-mais .tl-mais-menu{bottom:46px;top:auto;right:0}
+@media (hover:hover) and (pointer:fine){
+  :is(#painel-prazo,#painel-prazo-esq).pp-prazo .pp-pri:hover{background:var(--azul-escuro,#0B4744)}
+  .ppz-bt:hover,.ppz-est:not(:disabled):hover{filter:brightness(.97)}
+  .ppz-link:hover{text-decoration:underline}
+}
+@media (max-width:760px){
+  #painel-prazo.pp-prazo{width:100vw;border-left:0;box-shadow:none}
+  :is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-volta{display:inline-flex;align-items:center;height:36px;padding:0 6px;margin-left:-6px;border:0;background:none;color:var(--azul,#0E5C58);font-size:15px;font-weight:500;cursor:pointer}
+  :is(#painel-prazo,#painel-prazo-esq).pp-prazo .pp-x{display:none}
+  :is(#painel-prazo,#painel-prazo-esq).pp-prazo .pp-cli{text-align:right}
+  :is(#painel-prazo,#painel-prazo-esq).pp-prazo header.ppz-cab{padding:12px 16px 14px}
+  :is(#painel-prazo,#painel-prazo-esq).pp-prazo h2{font-size:19px}
+  :is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-corpo{padding:16px 16px 24px;gap:20px}
+  :is(#painel-prazo,#painel-prazo-esq).pp-prazo footer.ppz-pe{padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+  :is(#painel-prazo,#painel-prazo-esq).pp-prazo .pp-pri{flex:1;justify-content:center}
+  .ppz-q-n b{font-size:40px}
+}
+/* o cumprimento (a janela) */
+.pzj{display:flex;flex-direction:column;gap:12px;max-width:520px}
+.pzj h3{margin:0;font-size:16px;font-weight:500}
+.pzj textarea{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--borda,#E7E6E1);border-radius:8px;font:inherit;font-size:13px;line-height:1.5;resize:vertical}
+.pzj-lin{display:flex;flex-wrap:wrap;gap:10px 18px}
+.pzj-campo{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:12px;font-weight:500;color:var(--cinza,#4A4944)}
+.pzj-campo :is(input,select){height:34px;padding:0 10px;border:1px solid var(--borda,#E7E6E1);border-radius:8px;background:#FFFFFF;font-weight:400;color:var(--texto,#121212)}
+.pzj-arq input{max-width:230px;padding-top:6px}
+.pzj-ck,.tl-pz-f-ck{display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer}
+.pzj-ck input,.tl-pz-f-ck input{width:17px;height:17px;margin:0;accent-color:var(--azul,#0E5C58)}
+.pzj-pe,.tl-pz-f-pe{display:flex;justify-content:flex-end;gap:8px}
+.pzj-ok,.tl-pz-f-ok{height:36px;padding:0 16px;border:0;border-radius:8px;background:var(--azul,#0E5C58);color:#FFFFFF;font-weight:500;cursor:pointer}
+/* o prazo na anotação: viva, cumprindo, cumprida, vencida */
+html[data-tema="v10"] .timeline li.tl-card.tl-pz-venc{border-color:#E8B4AF}
+.tl-pz,.tl-pz-alerta{display:flex;align-items:center;gap:12px;margin-top:10px;padding:10px 12px;border-radius:10px;font-variant-numeric:tabular-nums}
+.tl-pz-o{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.tl-pz-t{font-size:13px;font-weight:500;color:var(--texto,#121212);overflow-wrap:anywhere}
+.tl-pz-m{font-size:12px}
+.tl-pz-m b{font-weight:500}
+.tl-pz-vivo{background:#FBE9E8}
+.tl-pz-vivo .tl-pz-m{color:#6E1A14}
+.tl-pz-pill{flex:none;display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 9px;border-radius:11px;background:#FFFFFF;color:#A8231B;font-size:11px;font-weight:500;white-space:nowrap}
+.tl-pz-pill i{width:6px;height:6px;border-radius:50%;background:#B3261E}
+.tl-pz-abrir{flex:none;height:30px;padding:0 12px;border:0;border-radius:7px;background:#FFFFFF;color:#A8231B;font-size:12px;font-weight:500;cursor:pointer}
+.tl-pz-ok{background:#E4F1EA}
+.tl-pz-ok .tl-pz-m{color:#14532A}
+.tl-pz-ck{flex:none;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#1B6E38;color:#FFFFFF}
+.tl-pz-ck svg{width:13px;height:13px}
+.tl-pz-fim,.tl-pz-antigo{background:var(--fundo,#F8F8F6)}
+.tl-pz-fim .tl-pz-m,.tl-pz-antigo .tl-pz-m{color:var(--cinza,#4A4944)}
+.tl-pz-antigo{padding:6px 12px}
+.tl-pz-alerta{flex-direction:column;align-items:stretch;gap:10px;padding:12px 14px;background:#B3261E;color:#FFFFFF}
+.tl-pz-al-cab{display:flex;align-items:flex-start;gap:10px}
+.tl-pz-al-cab svg{flex:none;margin-top:1px}
+.tl-pz-alerta .tl-pz-t{font-size:14px;color:#FFFFFF}
+.tl-pz-alerta .tl-pz-m{opacity:.92}
+.tl-pz-al-bts{display:flex;flex-wrap:wrap;gap:8px}
+.tl-pz-sim,.tl-pz-nao{height:34px;padding:0 14px;border-radius:8px;font-weight:500;cursor:pointer}
+.tl-pz-sim{border:0;background:#FFFFFF;color:#A8231B}
+.tl-pz-nao{border:1px solid rgba(255,255,255,.7);background:transparent;color:#FFFFFF}
+html[data-tema="v10"] .timeline .tl-bt.tl-pz-cumpri{display:inline-flex;align-items:center;gap:5px;border:1px solid #C9D9D7;background:#FFFFFF;color:var(--azul,#0E5C58);font-weight:500}
+.tl-pz-cumpri svg{width:13px;height:13px}
+.tl-pz-form{display:flex;flex-direction:column;gap:12px;margin-top:10px;padding:16px;border:1px solid #C9D9D7;border-radius:10px;background:#F4F8F7}
+html[data-tema="v10"] .timeline .tl-pz-form h3{margin:0;font-size:14px;font-weight:500}
+.tl-pz-form textarea{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--borda,#E7E6E1);border-radius:8px;background:#FFFFFF;font:inherit;font-size:13px;line-height:1.5;resize:vertical}
+.tl-pz-f-lin{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.tl-pz-f-campo{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:12px;font-weight:500;color:var(--cinza,#4A4944)}
+.tl-pz-f-campo :is(input,select){height:34px;padding:0 10px;border:1px solid var(--borda,#E7E6E1);border-radius:8px;background:#FFFFFF;font-weight:400;color:var(--texto,#121212)}
+.tl-pz-f-arq{display:inline-flex;align-items:center;gap:8px;height:34px;max-width:100%;padding:0 10px;border:1px solid var(--borda,#E7E6E1);border-radius:8px;background:#FFFFFF;font-size:13px;color:var(--texto,#121212);cursor:pointer}
+.tl-pz-f-arq svg{flex:none;color:#3A6491}
+.tl-pz-f-arq span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl-pz-f-arq:focus-within{outline:2px solid var(--azul,#0E5C58);outline-offset:1px}
+.chip.tl-pz-resp{font-weight:500}
+.tl-pz-resp-ok{background:#E4F1EA;color:#14532A}
+.tl-pz-resp-x{background:#FBE9E8;color:#A8231B}
+.tl-pz-anx{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tl-pz-doc{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 10px;border:0;border-radius:8px;background:var(--fundo,#F8F8F6);font-size:12px;font-weight:500;color:var(--texto,#121212);cursor:pointer}
+.tl-pz-doc svg{width:14px;height:14px;color:#3A6491}
+@media (hover:hover) and (pointer:fine){
+  .tl-pz-abrir:hover{background:#FFF5F4}
+  .tl-pz-sim:hover{background:#FFF5F4}.tl-pz-nao:hover{background:rgba(255,255,255,.12)}
+  .tl-pz-f-ok:hover,.pzj-ok:hover{background:var(--azul-escuro,#0B4744)}
+  .tl-pz-doc:hover{background:var(--placa,#EFEEEB)}
+}
+/* o prazo fatal no campo de escrever */
+html[data-tema="v10"] .esc-v12 .esc-pnl-pz.pzx{display:flex;flex-direction:column;gap:14px;margin:0 0 8px;padding:16px;border-radius:10px;background:var(--fundo,#F8F8F6);color:var(--texto,#121212);font-size:13px;font-weight:400}
+html[data-tema="v10"] .esc-v12 .esc-pnl-pz.pzx[hidden]{display:none}
+.pzx-grade{display:grid;grid-template-columns:96px minmax(0,1fr);align-items:center;gap:12px}
+.pzx-r{font-size:12px;font-weight:500;color:var(--cinza,#4A4944)}
+.pzx-cat select{max-width:100%;height:36px;padding:0 10px;border:1px solid var(--borda,#E7E6E1);border-radius:8px;background:#FFFFFF;color:var(--texto,#121212)}
+.pzx-de{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px}
+.pzx-de small{font-size:12px;color:var(--cinza,#4A4944)}
+html[data-tema="v10"] .esc-v12 .pzx input[type=date]{height:36px;min-height:36px;padding:0 10px;border:1px solid var(--borda,#E7E6E1);border-radius:8px;background:#FFFFFF;color:var(--texto,#121212)}
+.pzx-res{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:10px;background:#FFFFFF;border:1px solid #F3D3D0}
+.pzx-res-o{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+html[data-tema="v10"] .esc-v12 .pzx .pzx-vence{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:500;color:#A8231B}
+.pzx-res-o small{font-size:12px;line-height:1.45;color:var(--cinza,#4A4944)}
+.pzx-res-n{flex:none;display:flex;flex-direction:column;align-items:flex-end;text-align:right}
+html[data-tema="v10"] .pzx .pzx-res-n b{font-size:22px;line-height:1;font-weight:500;color:#B3261E;font-variant-numeric:tabular-nums}
+html[data-tema="v10"] .pzx .pzx-res-n small{font-size:11px;font-weight:500;color:#B3261E}
+html[data-tema="v10"] .pzx .pzx-res-n :is(.pzx-u-medio,.pzx-u-normal),html[data-tema="v10"] .pzx .pzx-res-n :is(.pzx-u-medio,.pzx-u-normal) + small{color:var(--cinza,#4A4944)}
+html[data-tema="v10"] .pzx .pzx-res-n :is(.pzx-u-hoje,.pzx-u-perto),html[data-tema="v10"] .pzx .pzx-res-n :is(.pzx-u-hoje,.pzx-u-perto) + small{color:#8F5400}
+.pzx-quem{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.pzx-quem > .pzx-r{width:96px;margin-right:12px}
+html[data-tema="v10"] .pzx .pzx-q{height:30px;padding:0 12px;border:1px solid var(--borda,#E7E6E1);border-radius:15px;background:#FFFFFF;color:var(--cinza,#4A4944);font-weight:500;cursor:pointer}
+html[data-tema="v10"] .pzx .pzx-q.on{background:var(--azul,#0E5C58);border-color:var(--azul,#0E5C58);color:#FFFFFF;font-weight:500}
+.pzx-esp{flex:1}
+.pzx-rv{font-size:12px;color:var(--cinza,#4A4944)}
+.pzx-quem .tf-rev{height:30px;padding:0 8px;border:1px solid var(--borda,#E7E6E1);border-radius:8px;background:#FFFFFF}
+@media (max-width:760px){
+  .pzx-grade{grid-template-columns:1fr;gap:6px}
+  .pzx-quem > .pzx-r{width:100%;margin:0}
+  .pzx-esp{display:none}
+}
 #painel-prazo .pp-ic{flex:none;width:36px;height:36px;border:1px solid var(--borda);border-radius:50%;background:#fff;font-size:16px;cursor:pointer}
 @media (hover:hover) and (pointer:fine){#painel-prazo .pp-ic:hover{border-color:var(--azul)}}
 #painel-prazo .pp-ic.gravando{background:var(--dk-fatal,#B3261E);border-color:var(--dk-fatal,#B3261E);color:#fff}
@@ -5675,12 +5988,10 @@ html[data-tema="v10"] .app.celular .cel-abas button{all:unset;flex:none;display:
 html[data-tema="v10"] .app.celular .cel-abas button.on{color:var(--texto);font-weight:600;border-bottom-color:var(--azul)}
 html[data-tema="v10"] .app.celular .cel-abas button:focus-visible{outline:2px solid var(--azul);outline-offset:-2px}
 html[data-tema="v10"] .app.celular .cel-abas .ca-n{min-width:18px;height:18px;border-radius:9px;background:var(--azul);color:#fff;font-size:11px;display:inline-flex;align-items:center;justify-content:center;padding:0 4px}
-html[data-tema="v10"] .app.celular .cel-abas .ca-ponto{width:7px;height:7px;border-radius:50%;background:var(--venc)}
+html[data-tema="v10"] .app.celular .cel-abas .ca-n.ca-venc{background:var(--venc,#B3261E)}
 html[data-tema="v10"] .app.celular [data-cel-aba="and"] .painel[data-p="2"] :is(.tr-faixa,.tr-recolhida,details.incap,.caso-esq){display:none!important}
-html[data-tema="v10"] .app.celular [data-cel-aba="pz"] .painel[data-p="2"] :is(.tr-faixa,.tr-recolhida,details.incap,.caso-esq:not(.caso-pz),.caso-dir,.faixa-fixo){display:none!important}
 html[data-tema="v10"] .app.celular [data-cel-aba="caso"] .painel[data-p="2"] :is(.caso-dir,.caso-pz){display:none!important}
 html[data-tema="v10"] .app.celular [data-cel-aba="caso"] .painel[data-p="2"] .outras-abas[hidden]{display:block!important}
-html[data-tema="v10"] .app.celular [data-cel-aba="pz"] .caso-pz .faixa-prazos{margin-top:12px}
 html[data-tema="v10"] .app.celular [data-cel-cad="principal"] .painel[data-p="0"] > :not(.cel-principal){display:none!important}
 html[data-tema="v10"] .app.celular [data-cel-cad="mais"] .cel-principal > :not(.cel-cad-seg){display:none}
 html[data-tema="v10"] .app.celular .cel-principal{padding:12px 0 4px}
@@ -5777,7 +6088,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 12.00</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 12.01</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6105,18 +6416,19 @@ let fasesAbertas = new Set();   // F82: fases do Caso completo abertas à mão (
 let celAba = "and", celCad = "principal";
 function celIr(qual){
   celAba = qual;
-  abaAtiva = qual==="cad" ? 0 : qual==="hon" ? 4 : qual==="per" ? 3 : 2;
+  abaAtiva = qual==="cad" ? 0 : qual==="hon" ? 4 : qual==="per" ? 3 : qual==="pz" ? 5 : 2;   // F326 · Prazos é a aba do cliente
   repintarFicha();
   const r = document.querySelector(".det-rolagem"); if(r) r.scrollTop = 0;
 }
-const celAbaNorm = () => abaAtiva===0 ? "cad" : abaAtiva===4 ? "hon" : abaAtiva===3 ? "per" : ["cad","hon","per"].includes(celAba) ? "and" : celAba;
+const celAbaNorm = () => abaAtiva===0 ? "cad" : abaAtiva===4 ? "hon" : abaAtiva===3 ? "per" : abaAtiva===5 ? "pz" : ["cad","hon","per","pz"].includes(celAba) ? "and" : celAba;
 function celCadIr(qual){ celCad = qual; const d = document.querySelector(".det-principal"); if(d) d.dataset.celCad = qual;
   document.querySelectorAll(".cel-cad-seg button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.cc===qual))); }
 function celAbasHtml(c, ks, k, nPer, temHon){
   celAba = celAbaNorm();
   const nNov = k ? (D.novid||[]).filter(a=>a.caso_id===k.id).length : 0;
-  const pzVenc = k ? (()=>{ try{ return linhasDeDatas(c.id).soltas.some(x=>(!x.casoId || x.casoId===k.id) && x.data<hoje() && !x.aConfirmar); }catch(e){ return false; } })() : false;
-  const it = [k && ["and", `Andamentos${nNov?` <span class="ca-n">${nNov}</span>`:""}`], k && ["pz", `Prazos${pzVenc?` <i class="ca-ponto" aria-label="há prazo vencido"></i>`:""}`],
+  // F326 · a aba Prazos do celular é a do cliente (todos os casos), com o número dos vencidos em vermelho
+  const z = (()=>{ try{ return prazosDoCliente(c.id); }catch(e){ return {total:0, venc:0}; } })();
+  const it = [k && ["and", `Andamentos${nNov?` <span class="ca-n">${nNov}</span>`:""}`], (k || z.total || abaAtiva===5) && ["pz", `Prazos${z.venc?` <span class="ca-n ca-venc" aria-label="${z.venc} vencido${z.venc>1?"s":""}">${z.venc}</span>`:""}`],
     k && ["caso", "Caso"], ["cad", "Cadastro"], nPer && ["per", "Perícias"], temHon && ["hon", "Honorários"]].filter(Boolean);
   return `<nav class="cel-abas" role="tablist" aria-label="Partes da ficha">${it.map(([q, r])=>
     `<button role="tab" aria-selected="${celAba===q}" class="${celAba===q?"on":""}" onclick="celIr('${q}')">${r}</button>`).join("")}</nav>`;
@@ -16031,7 +16343,8 @@ async function verZapCliente(cliId){
   document.body.classList.add("zap-aberto");   // F263 · com a conversa ao lado, a lista da esquerda recolhe e a ficha ganha a largura
   let el = document.getElementById("painel-prazo");
   if(!el){ el = document.createElement("aside"); el.id = "painel-prazo"; document.body.appendChild(el); }
-  el.setAttribute("aria-label", "Conversa de WhatsApp");
+  el.setAttribute("aria-label", "Conversa de WhatsApp"); el.classList.remove("pp-prazo","pp-sobre");
+  (v => v && v.remove())(document.getElementById("pp-veu"));
   el.innerHTML = `<header><div><div class="pp-cli">${zs.map(z=>esc(z.cliente_id && z.cliente_id!==cliId
         ? `${z.telefone||""} (conversa de ${D.cliPorId.get(z.cliente_id)?.nome||z.nome_perfil||"outro contato"}${obsDoNumero(cliId,z.telefone)?", "+obsDoNumero(cliId,z.telefone):""})`
         : (z.telefone||""))).join(" · ")}</div><small class="pp-tag pp-zap">WhatsApp</small><h3>${esc(cli?.nome||"")}</h3></div>
@@ -18762,7 +19075,7 @@ function pintarFicha(){
         title="${(kk=>kk?"caso aberto: "+esc(tituloCaso(kk)):"escolher o caso do cliente")(casoSel&&D.casoPorId.get(casoSel))}">Casos${
           (n=>n>1?` (${n})`:"")(processosDe(ks).length)} ▾</button>` : ""}
       ${/* P3 · a aba Prazos junta as datas de todos os casos e as do cliente (decisão do Paulo, 31.10.2026) */""}
-      ${(z=>(z.total||abaAtiva===5) ? `<button class="mt ${abaAtiva===5?"on":""}" data-vv="5">Prazos${z.total?` (${z.total})`:""}${z.venc?` <span class="mt-pzv">· ${z.venc} vencido${z.venc>1?"s":""}</span>`:""}</button>` : "")((()=>{ try{ return prazosDoCliente(cliId); }catch(e){ return {total:0, venc:0}; } })())}
+      ${(z=>(z.total||abaAtiva===5) ? `<button class="mt ${abaAtiva===5?"on":""}" data-vv="5">Prazos${z.total?` <span class="mt-pzn">${z.total}</span>`:""}${z.venc?` <span class="mt-pzv">${z.venc} vencido${z.venc>1?"s":""}</span>`:""}</button>` : "")((()=>{ try{ return prazosDoCliente(cliId); }catch(e){ return {total:0, venc:0}; } })())}
       ${/* F170 · Perícias só com perícia AGENDADA (de hoje em diante, não
            cancelada). A anotação do caso "perícia agendada para 05/10 às
            9h40" já cria o agendamento (extrairEvento), e a aba aparece */""}
@@ -36168,7 +36481,9 @@ function linhasDeDatas(cliId){
     const a=(D._andsFicha||[]).find(x=>x.id===t.andamento_id);
     const texto=a?(a.texto||"").replace(/<[^>]*>/g,""):"";
     const co=D.colPorId.get(t.colaborador_id);
-    linhas.push({data:t.lembrar_em, ico:"🗓", natureza:(t.natureza||"compromisso"),
+    // F326 · a revisão que fica depois do prazo registrado (cumprido ou não) já não é prazo fatal: é compromisso
+    const pzFim = t.papel==="revisa" && a && ["cumprido","nao","nsa"].includes((estadoPrazoNota(a)||{}).est);
+    linhas.push({data:t.lembrar_em, ico:"🗓", natureza:pzFim ? "compromisso" : (t.natureza||"compromisso"),
       rot:(texto?texto.slice(0,70):"Tarefa do andamento")+(t.papel==="revisa"?" (revisão)":""),
       // F236 · o cartão diz o que fazer e quem faz: o pedido feito à pessoa ("@André, ligue na véspera…", pelo mesmo
       // resumoAgenda da agenda) e não o começo da anotação; na revisão, que é revisão, e do quê (o pedido feito a quem
@@ -36213,7 +36528,7 @@ function linhasDeDatas(cliId){
     const igualA = !x.prazo ? "" : rec===x.prazo ? "rec" : x.exigencia_prazo===x.prazo ? "exig"
       : tribs.some(t=>t.p.fim===x.prazo && !t.fav && !t.resp) ? "trib" : "";
     const og = x.prazo ? origemDoPrazo(x) : null;
-    const cumprir = !x.prazo ? "" : temaV10() ? `janelaPrazoCumprido('${x.id}')` : `qdMudarPrazo('${x.id}','')`;
+    const cumprir = !x.prazo ? "" : temaV10() ? `janelaPrazoCumprido('${x.id}'${og ? `,'${og.id}'` : ""})` : `qdMudarPrazo('${x.id}','')`;
     const btCumprir = !x.prazo ? "" : temaV10()
       ? `<button class="btn-mini" onclick="janelaPrazoCumprido('${x.id}')"
           title="cumpriu: escreve o que foi feito no caso, tira o prazo daqui e devolve o caso à lista de onde veio">✔ cumprido</button>`
@@ -36533,21 +36848,92 @@ function prazosDoCliente(cliId){
   const {soltas} = linhasDeDatas(cliId), grupos = new Map();
   for(const x of soltas){ const g = x.casoId || ""; if(!grupos.has(g)) grupos.set(g, []); grupos.get(g).push(x); }
   const hj = hoje(), venc = soltas.filter(x=>x.data<hj && !x.aConfirmar).length;
-  return {grupos, total: soltas.length, venc};
+  const lista = soltas.slice().sort((a, b)=>a.data<b.data?-1:a.data>b.data?1:(natDaLinha(a)==="fatal"?-1:0)-(natDaLinha(b)==="fatal"?-1:0));
+  return {grupos, total: soltas.length, venc, lista};
 }
-function painelPrazosCliente(cliId){
-  const {grupos, total, venc} = prazosDoCliente(cliId), hj = hoje();
-  if(!total) return `<p class="meio-sub">Sem prazos ou lembretes em aberto para este cliente.</p>`;
-  const ordem = [...grupos.keys()].sort((a, b)=>(a==="" ? -1 : b==="" ? 1 : 0) || (grupos.get(a)[0].data < grupos.get(b)[0].data ? -1 : 1));
-  return `<div class="pz-cli">
-    <p class="meio-sub">${total} data${total>1?"s":""} em aberto${venc ? `, <b class="qd-cobra">${venc} vencida${venc>1?"s":""}</b>` : ""}. Cada caso continua com o seu quadro Prazos; aqui ficam todas juntas.</p>
-    ${ordem.map(g=>{
-      const k = g && D.casoPorId.get(g), xs = grupos.get(g).sort((a, b)=>a.data<b.data?-1:1);
-      const tit = k ? `${esc(tituloCaso(k))} · ${esc(NOME_FASE[faseEfetiva(k)]||k.fase||"")}` : "Do cliente";
-      return `<section class="qd pz-cli-g" data-caso="${g}"><div class="rotulo-caso">${tit}${k ? ` <button class="btn-mini" onclick="casoSel='${k.id}';abaAtiva=2;repintarFicha()">abrir o caso</button>` : ""}</div>
-        <ul class="qd-lista">${xs.map(x=>grupoQuadro(x, hj)).join("")}</ul></section>`;
-    }).join("")}
+// F326 · A ABA PRAZOS DO CLIENTE (desenho aprovado pelo Paulo, 31.10.2026). No alto, o próximo prazo fatal, com quanto
+// falta em dias úteis e a barra do tempo; depois Vencidos, Hoje e Próximos 7 dias; por data ou por caso; o filtro por
+// natureza; e cada linha diz o que fazer, de onde veio, de que caso é, quem faz e quanto falta. O Abrir leva à janela.
+// A escolha (por data ou por caso, a natureza) vale na sessão; mudar repinta só a aba.
+let _pzVer = "data", _pzNat = "todos", _pzCli = [], _pzCliId = null;
+function painelPrazosCliente(cliId){ return `<div class="pz-cli pzc" id="pz-cli">${pzConteudo(cliId)}</div>`; }
+function pzPintar(cliId){ const el = document.getElementById("pz-cli"); if(el) el.innerHTML = pzConteudo(cliId || _pzCliId); }
+function pzVer(v){ _pzVer = v; pzPintar(); }
+function pzNat(v){ _pzNat = v; pzPintar(); }
+function barraPz(ini, x, cls, fimLab){
+  const hj = hoje();
+  if(!ini || !(x.data>ini.data)) return "";
+  const pct = Math.max(0, Math.min(100, Math.round(100*diasEntreIso(ini.data, hj)/diasEntreIso(ini.data, x.data))));
+  return `<div class="${cls}-barra" role="progressbar" aria-label="tempo do prazo já passado" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i>${ini.data<=hj && hj<=x.data ? `<em style="left:${pct}%"><span>hoje</span></em>` : ""}</div>
+    <div class="${cls}-bl"><span>${esc(ini.lab || `${ini.rot} · ${diaCurtoPz(ini.data)}`)}</span><span>${esc(fimLab || `Vence · ${diaCurtoPz(x.data)}`)}</span></div>`;
+}
+function pzHero(x){
+  const f = x._f, k = x.casoId && D.casoPorId.get(x.casoId), q = D.colPorId.get(quemDaLinha(x, _pzCliId)), i = _pzCli.indexOf(x);
+  const venc = x.data<hoje(), meta = (contagemPz(x)||{}).txt || metaDaLinha(x);
+  return `<section class="pzc-hero pzc-u-${f.urg}" aria-label="${venc ? "Prazo fatal vencido" : "Próximo prazo fatal"}">
+    <div class="pzc-hero-cab">
+      <div class="pzc-hero-txt"><span class="pzc-sobre">${venc ? "Prazo fatal vencido" : "Próximo prazo fatal"}</span>
+        <h2>${esc(x._titulo)}</h2>
+        <p>${esc([k ? tituloCaso(k) : "Do cliente", k ? NOME_FASE[faseEfetiva(k)] || "" : "", q ? `com ${q.nome.split(" ")[0]}` : ""].filter(Boolean).join(" · "))}</p></div>
+      <div class="pzc-hero-n">${f.pre && f.pre!=="vence" ? `<small>${esc(f.pre)}</small>` : ""}<b>${esc(String(f.n))}</b><span>${esc(f.un)}</span><em>${esc(diaAnoPz(x.data))}</em></div>
+    </div>
+    ${barraPz(inicioDaLinha(x), x, "pzc")}
+    <div class="pzc-hero-pe"><button type="button" class="pzc-pri" onclick="abrirPainelPrazo(${i},'cli')">Abrir o prazo</button>${meta ? `<span class="pzc-nota">${esc(meta)}</span>` : ""}</div>
+  </section>`;
+}
+function pzConteudo(cliId){
+  const hj = hoje(), em = n => somaDias(hj, n);
+  _pzCliId = cliId;
+  _pzCli = prazosDoCliente(cliId).lista;
+  _pzCli.forEach((x, i)=>prepPz(x, i, "cli"));
+  if(painelPz && painelPz.fonte==="cli"){ const j = _pzCli.findIndex(x=>x.data===painelPz.data && (x.andId||"")===painelPz.andId && (x.rotulo||"")===painelPz.rotulo);
+    if(j>=0) setTimeout(()=>abrirPainelPrazo(j, "cli")); }
+  if(!_pzCli.length) return `<div class="pzc-vazio"><b>Sem prazos em aberto</b><span>O prazo fatal nasce da anotação com a chave Prazo fatal; o lembrete, da anotação com data.</span></div>`;
+  const pend = x => x.data<hj && !x.aConfirmar;
+  const nNat = v => _pzCli.filter(x=>v==="todos" || x._nat===v).length;
+  if(!nNat(_pzNat)) _pzNat = "todos";
+  const fatais = _pzCli.filter(x=>x._nat==="fatal" && !x.aConfirmar);
+  const heroX = fatais.find(x=>x.data>=hj) || fatais.find(pend) || null;
+  const tile = (n, rot, tom) => `<div class="pzc-tile${n && tom ? ` pzc-tile-${tom}` : ""}"><b>${n}</b><span>${rot}</span></div>`;
+  const tiles = `<div class="pzc-tiles">${tile(_pzCli.filter(pend).length, "Vencidos", "venc")}${tile(_pzCli.filter(x=>x.data===hj).length, "Hoje", "hoje")}${
+    tile(_pzCli.filter(x=>x.data>hj && x.data<=em(7)).length, "Próximos 7 dias", "")}</div>`;
+  const ferr = `<div class="pzc-ferr">
+    <div class="pzc-seg" role="group" aria-label="Agrupar os prazos">${[["data","Por data"],["caso","Por caso"]].map(([v, r])=>
+      `<button type="button" aria-pressed="${_pzVer===v}" class="${_pzVer===v?"on":""}" onclick="pzVer('${v}')">${r}</button>`).join("")}</div>
+    <div class="pzc-chips" role="group" aria-label="Filtrar pela natureza">${[["todos","Todos"],["fatal","Prazos fatais"],["compromisso","Compromissos"],["lembrete","Lembretes"]].map(([v, r])=>
+      `<button type="button" aria-pressed="${_pzNat===v}" class="pzc-chip${_pzNat===v?" on":""}" onclick="pzNat('${v}')"${!nNat(v) && v!=="todos" ? " disabled" : ""}>${r} <span>${nNat(v)}</span></button>`).join("")}</div>
   </div>`;
+  const vis = _pzCli.filter(x=>_pzNat==="todos" || x._nat===_pzNat);
+  const porData = _pzVer!=="caso" || celular();
+  let grupos;
+  if(porData){
+    const G = [["Vencidos", pend, "venc"], ["A confirmar", x=>x.aConfirmar, "conf"], [`Hoje · ${diaCurtoPz(hj)}`, x=>x.data===hj, "hoje"],
+      [`Próximos 7 dias · até ${diaCurtoPz(em(7))}`, x=>x.data>hj && x.data<=em(7), ""], [`Até 30 dias · até ${diaCurtoPz(em(30))}`, x=>x.data>em(7) && x.data<=em(30), ""],
+      ["Mais adiante", x=>x.data>em(30), ""]];
+    const ja = new Set();
+    grupos = G.map(([rot, f, tom])=>{ const g = vis.filter(x=>!ja.has(x) && f(x)); g.forEach(x=>ja.add(x)); return {rot, g, tom}; }).filter(o=>o.g.length);
+  }else{
+    const m = new Map(); for(const x of vis){ const c = x.casoId || ""; if(!m.has(c)) m.set(c, []); m.get(c).push(x); }
+    grupos = [...m.keys()].sort((a, b)=>(a==="" ? -1 : b==="" ? 1 : 0) || (m.get(a)[0].data<m.get(b)[0].data ? -1 : 1)).map(c=>{
+      const k = c && D.casoPorId.get(c);
+      return {rot: k ? `${tituloCaso(k)} · ${NOME_FASE[faseEfetiva(k)] || k.fase || ""}` : "Do cliente", g: m.get(c), caso: c, k}; });
+  }
+  const linha = x => {
+    const i = _pzCli.indexOf(x), f = x._f, k = x.casoId && D.casoPorId.get(x.casoId), q = D.colPorId.get(quemDaLinha(x, cliId)), meta = metaDaLinha(x);
+    return `<li class="pzc-lin pzc-u-${f.urg}${pend(x) ? " pzc-venc" : ""}" data-nat="${x._nat}" data-data="${x.data}">
+      <span class="pzc-dia"><small>${esc(SIGLA_DIA[new Date(x.data+"T12:00:00").getDay()])}.</small><b>${fmtBarra(x.data).slice(0,5)}</b></span>
+      <span class="pzc-o"><b class="pzc-t">${esc(x._titulo)}</b><span class="pzc-sub">${pillNat(x._nat)}${meta ? `<small class="pzc-meta" title="${esc(meta)}">${esc(meta)}</small>` : ""}<span class="pzc-cel"><span class="pzc-caso-c">${esc(casoCurtoPz(k))}</span><span class="pzc-falta-c">${esc(f.txt)}</span></span></span></span>
+      ${porData ? `<span class="pzc-caso" title="${esc(k ? `${tituloCaso(k)} · ${NOME_FASE[faseEfetiva(k)]||""}` : "Do cliente")}">${esc(casoCurtoPz(k))}</span>` : ""}
+      <span class="pzc-quem">${q ? `${avPz(q.id)}<span>${esc(q.nome.split(" ")[0])}</span>` : ""}</span>
+      <span class="pzc-falta">${esc(f.txt)}</span>
+      <button type="button" class="pzc-abrir" onclick="abrirPainelPrazo(${i},'cli')" aria-label="Abrir o prazo: ${esc(x._titulo)}">Abrir</button>
+    </li>`;
+  };
+  const lista = grupos.length ? grupos.map(o=>`<section class="pzc-g${o.tom ? ` pzc-g-${o.tom}` : ""}${porData ? "" : " pz-cli-g"}"${porData ? "" : ` data-caso="${o.caso||""}"`}>
+      <h3 class="pzc-gt"><span>${esc(o.rot)}</span> <span class="pzc-gn">${o.g.length}</span>${o.k ? `<button type="button" class="pzc-g-abrir" onclick="casoSel='${o.k.id}';abaAtiva=2;subAba='escritorio';repintarFicha()">Abrir o caso</button>` : ""}</h3>
+      <ul class="pzc-lista${porData ? "" : " pzc-sem-caso"}">${o.g.map(linha).join("")}</ul></section>`).join("")
+    : `<p class="pzc-nada">Nenhum prazo desta natureza.</p>`;
+  return `<section class="pzc-top${heroX ? "" : " pzc-top-so"}" aria-label="Resumo dos prazos">${heroX ? pzHero(heroX) : ""}${tiles}</section>${ferr}${lista}`;
 }
 // ══════════════════════════════════════════════════════════════════════════
 // F104 · OS QUADROS DE PRAZO (tema v10). Um quadro por prazo, lado a lado,
@@ -36570,6 +36956,98 @@ const resumoDaLinha = x => x.resumo || (x.cru ? "" : cortaFrase(String(x.rot||""
 const RX_TIPO_GENERICO = /^(Compromisso|Lembrete|Lembrar antes|Prazo fatal|Tarefa|Documento pedido)$/;
 const visivelDaLinha = x => { const t = tipoDaLinha(x), r = resumoDaLinha(x);
   return x.curto || (RX_TIPO_GENERICO.test(t) && r ? r : t); };
+// ══════════════════════════════════════════════════════════════════════════
+// F326 · A TELA PRAZOS (desenho aprovado pelo Paulo em 31.10.2026). O título, quanto falta, de onde vem, quem faz e
+// de quando se conta são os mesmos na faixa do caso, na aba Prazos do cliente e na janela do prazo.
+// ══════════════════════════════════════════════════════════════════════════
+function tituloDaLinha(x){
+  const nat = natDaLinha(x), tipo = tipoDaLinha(x), resumo = resumoDaLinha(x), vis = visivelDaLinha(x), kx = D.casoPorId.get(x.casoId),
+        motivo = nat==="fatal" && kx && kx.prazo===x.data && kx.lembrar_motivo;
+  // "Recurso ordinário à Junta de Recursos", e não "Recurso ordinário: à Junta de Recursos"
+  const junta = (a, b) => /^(à|às|ao|aos|de|da|do|no|na|pelo|pela|para)\s/i.test(b) ? `${a} ${b}` : `${a}: ${b}`;
+  const t = (RX_TIPO_GENERICO.test(resumo || vis) && motivo)
+    || (RX_TIPO_GENERICO.test(tipo) ? (resumo || vis) : resumo && resumo!==vis ? junta(vis, resumo) : vis);
+  // o prazo que veio do "Concluir em" do To Do sem descrição pede a descrição, em vez de repetir "Prazo fatal"
+  return {titulo: x.semMotivo && !motivo && RX_TIPO_GENERICO.test(t) ? "Diga do que é este prazo" : t, motivo};
+}
+const DIA_EXT = ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
+const diaCurtoPz = iso => `${SIGLA_DIA[new Date(iso+"T12:00:00").getDay()]}., ${fmtBarra(iso).slice(0,5)}`;
+const diaLongoPz = iso => `${DIA_EXT[new Date(iso+"T12:00:00").getDay()]}, ${fmtBarra(iso)}`;
+const diaAnoPz = iso => `${SIGLA_DIA[new Date(iso+"T12:00:00").getDay()]}., ${fmtBarra(iso)}`;
+const isoDoCarimbo = s => String(s||"").replace(/^(\d{2})\.(\d{2})\.(\d{4})$/, "$3-$2-$1");
+// os dias úteis entre duas datas (negativo quando "ate" é antes de "de"), sem contar o primeiro dia
+function uteisEntre(de, ate){
+  const passo = ate>=de ? 1 : -1; let n = 0, d = de;
+  for(let i=0; d!==ate && i<4000; i++){ d = somaDias(d, passo); if(ehDiaUtil(d)) n++; }
+  return passo*n;
+}
+// quanto falta: o prazo fatal em dias úteis, o resto em dias corridos; urg dá a cor (venc, hoje, crit, perto, medio, normal)
+function faltaPz(x){
+  // a janela da prorrogação (até a véspera da DCB) conta como o prazo fatal que ela é, em dias úteis
+  const hj = hoje(), d = diasAte(x.data), fatal = natDaLinha(x)==="fatal" || !!x.prorrogDe;
+  const pl = (n, um, mais) => `${n} ${n===1?um:mais}`;
+  if(x.aConfirmar) return {txt:"a confirmar", urg:"perto", pre:"", n:"?", un:"a confirmar"};
+  if(d===0) return {txt:"vence hoje", urg:"hoje", pre:"vence", n:"hoje", un:fatal ? "é o último dia" : ""};
+  if(fatal){
+    const u = Math.abs(uteisEntre(hj, x.data));
+    if(d<0){ const v = Math.max(1, u); return {txt:`venceu há ${pl(v,"dia útil","dias úteis")}`, urg:"venc", pre:"venceu há", n:v, un:v===1?"dia útil":"dias úteis"}; }
+    if(!u) return {txt:`faltam ${pl(d,"dia corrido","dias corridos")}`, urg:"crit", pre:"", n:d, un:d===1?"dia corrido":"dias corridos"};
+    return {txt:`${u===1?"falta":"faltam"} ${pl(u,"dia útil","dias úteis")}`, urg:u<=3?"crit":d<=7?"perto":d<=30?"medio":"normal", pre:"", n:u, un:u===1?"dia útil":"dias úteis"};
+  }
+  if(d<0) return {txt:`venceu há ${pl(-d,"dia","dias")}`, urg:"venc", pre:"venceu há", n:-d, un:-d===1?"dia":"dias"};
+  return {txt:d===1?"amanhã":`em ${d} dias`, urg:d<=7?"perto":d<=30?"medio":"normal", pre:"", n:d, un:d===1?"dia":"dias"};
+}
+const desEsc = s => String(s||"").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&amp;/g,"&");
+// de onde vem: o título e a explicação que a linha traz (o <small class="qd-de"> do quadro), em texto
+function deOndeDaLinha(x){
+  const rot = String(x.rot||""), limpa = s => desEsc(s.replace(/<[^>]*>/g, "")).replace(/\s+/g, " ").trim();
+  return {tit: limpa(rot.replace(/<small[\s\S]*?<\/small>/g, "")),
+    txt: [...rot.matchAll(/<small[^>]*>([\s\S]*?)<\/small>/g)].map(m=>limpa(m[1])).filter(Boolean).join(" ")};
+}
+// a linha de baixo de cada prazo na aba: quem anotou e quando, ou a explicação sem o nome do caso (que já está ao lado)
+function metaDaLinha(x){
+  if(x.andId){ const a = (D._andsFicha||[]).find(y=>y.id===x.andId);
+    if(a){ const q = D.colPorId.get(a.autor_id); return `Anotado${q ? ` por ${q.nome.split(" ")[0]}` : ""} em ${diaCurtoPz(dataSP(a.criado_em))}`; } }
+  let s = deOndeDaLinha(x).txt;
+  const k = x.casoId && D.casoPorId.get(x.casoId), t = k ? " · " + tituloCaso(k) : "";
+  if(t && s.endsWith(t)) s = s.slice(0, -t.length);
+  return s;
+}
+// quem faz: o executor da tarefa da anotação (ou da tarefa decorrente), senão quem cuida do caso, senão o advogado
+function quemDaLinha(x, cliId){
+  const ts = D.tarefasFicha || [];
+  for(const id of [x.andId, ...(x.filhas||[]).map(f=>f.andId)].filter(Boolean)){
+    const t = ts.filter(y=>y.andamento_id===id && !y.concluida_em), ex = t.find(y=>y.papel!=="revisa") || t[0];
+    if(ex) return ex.colaborador_id;
+  }
+  const k = x.casoId && D.casoPorId.get(x.casoId);
+  return (k ? donosDoCaso(k)[0] : null) || advogadoDoCliente(cliId || (k && k.cliente_id) || clienteAberto, k)[0] || null;
+}
+// de quando o prazo conta: o início marcado, a decisão, a ciência, o "contado de" do carimbo ou o dia da anotação
+function inicioDaLinha(x){
+  if(x.inicio) return {data:x.inicio, rot:x.inicioRot || "Início"};
+  const k = x.casoId && D.casoPorId.get(x.casoId);
+  if(k && k.prazo===x.data && k.prazo_inicio) return {data:k.prazo_inicio, rot:"Começar"};
+  const a = x.andId && (D._andsFicha||[]).find(y=>y.id===x.andId);
+  if(a){ const m = /(?:intimação|contado|ciência) de (\d{2}\.\d{2}\.\d{4})/.exec(a.texto||"");
+    return m ? {data:isoDoCarimbo(m[1]), rot:/intimação de/.test(m[0]) ? "Intimação" : "Contado de"} : {data:dataSP(a.criado_em), rot:"Anotado"}; }
+  return null;
+}
+// a linha pronta para a janela do prazo (os campos que ela lê começam com "_")
+function prepPz(x, i, fonte){
+  const {titulo, motivo} = tituloDaLinha(x), f = faltaPz(x), cont = contagemPz(x);
+  // o prazo do catálogo se chama pelo item ("Recurso ao CRPS"), e não pelo carimbo com a conta
+  return Object.assign(x, {_nat: natDaLinha(x), _titulo: cont && x.ico!=="🗓" ? cont.rot : titulo.replace(/ — \d+ dias (?:úteis|corridos)\b.*$/, ""), _motivo: motivo, _f: f, _falta: f.txt, _quando: diaLongoPz(x.data),
+    _ir: x.andId ? `qdIrParaAndamento('${x.casoId}','${x.andId}')` : x.semMotivo ? `explicarPrazo('${x.casoId}')` : `prazoSaberMais(${i}${fonte ? `,'${fonte}'` : ""})`});
+}
+const pillNat = nat => `<span class="pz-pill pz-pill-${nat}"><i aria-hidden="true"></i>${esc(NAT_ROT[nat]||"Lembrete")}</span>`;
+const avPz = id => { const c = D.colPorId.get(id); return c ? `<span class="pz-av" style="background:${c.cor}" aria-hidden="true">${esc(c.inicial)}</span>` : ""; };
+// o caso numa etiqueta curta: a espécie (B31) e a fase; o nome inteiro fica no title
+function casoCurtoPz(k){
+  if(!k) return "Do cliente";
+  const sig = (/\bB?(\d{2})\b/.exec(String(k.especie||""))||[])[1];
+  return `${sig ? `B${sig}` : cortaFrase(tituloCaso(k), 18)} · ${NOME_FASE[faseEfetiva(k)] || k.fase || ""}`;
+}
 function faixaPrazos(k){
   const {soltas} = linhasDeDatas(k.cliente_id), hj = hoje();
   const minhas = [];
@@ -36584,7 +37062,8 @@ function faixaPrazos(k){
     // F236 · o lembrete do card de aposentadoria futura é do cliente, não deste caso: mora na aba Aposentadorias futuras
     if(x.lembTipo==="aposentadoria_futura") continue;
     minhas.push(x);
-    for(const f of (x.filhas||[]).sort((a,b)=>a.data<b.data?-1:1)) minhas.push({...f, filha:true});
+    // F326 · a tarefa da própria anotação no mesmo dia já está na janela do prazo (O que fazer): não repete a data
+    for(const f of (x.filhas||[]).filter(f=>!(x.andId && f.andId===x.andId && f.data===x.data)).sort((a,b)=>a.data<b.data?-1:1)) minhas.push({...f, filha:true});
   }
   // F254 · do mais próximo para o mais distante, como o Planejado do To Do (decisão do Paulo, 24.10.2026,
   // que substitui a ordem decrescente da F145)
@@ -36612,40 +37091,19 @@ function faixaPrazos(k){
   // F254 · A FAIXA COMO O PLANEJADO DO TO DO. O prazo fatal abre a faixa numa linha própria, que diz o que
   // fazer e quanto falta em DIAS ÚTEIS; o resto vem nos grupos do Planejado (Vencidas, Hoje, Amanhã, Próximos sete
   // dias, Mais tarde), cada linha com a bolinha da natureza. "Mais tarde" fica recolhido.
-  const uteis = iso => { const passo = iso>=hj ? 1 : -1; let n = 0, d = hj;
-    for(let i=0; d!==iso && i<4000; i++){ d = somaDias(d, passo); if(ehDiaUtil(d)) n++; } return n; };
-  const quando = iso => { const d = diasAte(iso);
-    return d===0 ? "Hoje" : d===1 ? "Amanhã" : d===-1 ? "Ontem"
-      : `${SIGLA_DIA[new Date(iso+"T12:00:00").getDay()]}., ${fmtBarra(iso).slice(0,5)}`; };
-  const falta = iso => { const d = diasAte(iso), u = uteis(iso), du = n => `${n} ${n===1?"dia útil":"dias úteis"}`;
-    return d===0 ? "vence hoje" : d<0 ? `venceu há ${du(Math.max(1,u))}` : u ? `faltam ${du(u)}` : `faltam ${d} dias corridos`; };
   // F275 · A LINHA SÓ COM A DATA E O "ABRIR" (pedido do Paulo, 24.10.2026: a ficha tem informação demais). O título,
-  // o motivo, quem faz e o "cumpri" moram no painel; aqui ficam a bolinha da natureza, a data e o título no passar do mouse
+  // o motivo, quem faz e o "cumpri" moram no painel; aqui ficam a bolinha da natureza, a data e o título no passar do mouse.
+  // F326 · o título e o quanto falta vêm das mesmas funções da aba Prazos e da janela (tituloDaLinha, faltaPz, prepPz)
   const linha = (x, destaque) => {
-    const i = minhas.indexOf(x), d = diasAte(x.data), nat = natDaLinha(x), tipo = tipoDaLinha(x),
-          resumo = resumoDaLinha(x), vis = visivelDaLinha(x), kx = D.casoPorId.get(x.casoId),
-          // o prazo fatal sem anotação diz o motivo gravado no caso (o "Lembrar em" do To Do), e não "Prazo fatal" de novo
-          motivo = nat==="fatal" && kx && kx.prazo===x.data && kx.lembrar_motivo,
-          // o tipo específico vem na frente do que fazer ("Pedir a prorrogação: DCB 05/11"), como no cartão antigo
-          titulo0 = (RX_TIPO_GENERICO.test(resumo || vis) && motivo)
-            || (RX_TIPO_GENERICO.test(tipo) ? (resumo || vis) : resumo && resumo!==vis ? `${vis}: ${resumo}` : vis);
-    let titulo = titulo0;
-    const ir = x.andId ? `qdIrParaAndamento('${x.casoId}','${x.andId}')`
-      : x.semMotivo ? `explicarPrazo('${x.casoId}')` : `prazoSaberMais(${i})`;
-    // o prazo que veio do "Concluir em" do To Do sem descrição (258 no teste real de 24.10): o título pede a descrição,
-    // em vez de repetir "Prazo fatal" debaixo da etiqueta "Prazo fatal"
-    const semDesc = x.semMotivo && !motivo && RX_TIPO_GENERICO.test(titulo);
-    if(semDesc) titulo = "Diga do que é este prazo";
-    // o grupo já diz "Hoje" ou "Amanhã": a linha mostra o dia da semana e a data; o prazo fatal diz também quanto falta
-    const dia = `${SIGLA_DIA[new Date(x.data+"T12:00:00").getDay()]}., ${fmtBarra(x.data).slice(0,5)}`;
+    const i = minhas.indexOf(x), nat = natDaLinha(x), tipo = tipoDaLinha(x);
+    prepPz(x, i);
+    const titulo = x._titulo;
     // F287 · a data e o "abrir" numa linha só; o "Prazo fatal · venceu há…" desce, menor (pedido do Paulo, 27.10.2026)
-    const data = dia;
-    Object.assign(x, {_nat: nat, _titulo: titulo, _motivo: motivo, _ir: ir, _quando: quando(x.data), _falta: falta(x.data)});   // para o painel
     return `<div class="pz fp2-lin pz-${nat}${pend(x)?" pz-venceu":""}${destaque?" fp2-fatal":""}${x.semMotivo?" pz-semmotivo":""}${x.aConfirmar?" pz-confirmar":""}" data-nat="${nat}" data-tipo="${esc(tipo)}" data-data="${x.data}" title="${esc(titulo)}">
       <span class="fp2-bola" aria-hidden="true"></span>
-      <span class="fp2-data">${esc(data)}</span><span class="fp2-sr">${esc(titulo)}</span>
+      <span class="fp2-data">${esc(diaCurtoPz(x.data))}</span><span class="fp2-sr">${esc(titulo)}</span>
       <button class="fp2-mais pz-mais" onclick="abrirPainelPrazo(${i})">abrir</button>
-      ${destaque ? `<small class="fp2-falta"><span class="fp2-tag fp2-sr">Prazo fatal: </span>${esc(falta(x.data))}</small>` : ""}
+      ${destaque ? `<small class="fp2-falta"><span class="fp2-tag fp2-sr">Prazo fatal: </span>${esc(x._falta)}</small>` : ""}
     </div>`;
   };
   const destaque = proxFatal || minhas.filter(x=>natDaLinha(x)==="fatal" && pend(x))[0] || null;
@@ -36661,7 +37119,7 @@ function faixaPrazos(k){
     : `<section class="fp2-grupo"${tom?` data-tom="${tom}"`:""}>${cab(rot, g.length)}${g.map(x=>linha(x)).join("")}</section>`).join("");
   const sem = destaque ? "" : `<p class="fp2-sem meio-sub">Sem prazo fatal em aberto neste caso.</p>`;
   const nv = minhas.length ? `<button type="button" class="tl-bt fp-nv" onclick="this.closest('.faixa-prazos').classList.add('nv-ver')" title="no nível 1 as datas ficam recolhidas">ver as datas</button>` : "";   // F249
-  if(painelPz && painelPz.casoId===k.id){ const j = minhas.findIndex(x=>x.data===painelPz.data && (x.andId||"")===painelPz.andId);
+  if(painelPz && painelPz.casoId===k.id && painelPz.fonte!=="cli"){ const j = minhas.findIndex(x=>x.data===painelPz.data && (x.andId||"")===painelPz.andId);
     if(j>=0) setTimeout(()=>abrirPainelPrazo(j));
     else if(painelPz.andId){ const pz = painelPz; setTimeout(()=>abrirPainelTarefa(pz.casoId, pz.andId)); } }
   return `<div class="faixa-prazos fp2" aria-label="Prazos e providências">${tit}${nv}${destaque ? linha(destaque, true) : sem}${blocos}</div>`;
@@ -36695,16 +37153,21 @@ async function gravarInicioPrazo(casoId, data){
 // início ao vencimento), quem está fazendo, as etapas, o início, a origem e o histórico. Fecha no ✕ ou no Esc,
 // e continua aberto quando a ficha se repinta depois de uma ação feita dentro dele.
 let painelPz = null, painelZapCli = null;   // o painel mostra um prazo (painelPz) ou a conversa de um cliente (painelZapCli)
+// a tarefa aberta pela linha do tempo ou pelo Meu Dia: vira uma linha da faixa, com os mesmos campos da janela
 function abrirPainelTarefa(casoId, andId){
   let i = (faixaAtual||[]).findIndex(x=>x.casoId===casoId && x.andId===andId);
   if(i<0){
-    const t = (D.tarefasPorCaso.get(casoId)||[]).find(x=>x.andamento_id===andId && !x.concluida_em); if(!t) return;
-    const a = (D._andsFicha||[]).find(x=>x.id===andId), d = diasAte(t.lembrar_em);
-    faixaAtual.push({casoId, andId, data: t.lembrar_em, _nat: t.natureza==="fatal" ? "fatal" : "lembrete",
-      _titulo: cortaFrase(String(a && a.texto || "Tarefa").replace(/\s+/g," "), 90), _ir: `qdIrParaAndamento('${casoId}','${andId}')`,
-      _quando: diaTarefa(t.lembrar_em), _falta: d===0 ? "vence hoje" : d<0 ? `venceu há ${-d} ${-d===1?"dia":"dias"}` : `faltam ${d} ${d===1?"dia":"dias"}`});
+    // F326 · a anotação do prazo sem tarefa aberta também abre: a data vem do carimbo
+    const t = (D.tarefasPorCaso.get(casoId)||[]).find(x=>x.andamento_id===andId && !x.concluida_em);
+    const a = (D._andsFicha||[]).find(x=>x.id===andId), m = /^[⏰🔥\s]*\[PRAZO ([0-9.]+)\]/u.exec(a && a.texto || "");
+    if(!t && !m) return;
+    const nat = m ? "fatal" : ["fatal","compromisso"].includes(t.natureza) ? t.natureza : "lembrete";
+    faixaAtual.push({casoId, andId, data: m ? isoDoCarimbo(m[1]) : t.lembrar_em, natureza: nat, ehPrazo: nat==="fatal", rotulo: NAT_ROT[nat],
+      resumo: cortaFrase(m ? tituloNotaPz(a) : fazerDaNota(a && a.texto) || "Tarefa", 90), tc: t || null,
+      ...(m && ["vivo","vencido"].includes((estadoPrazoNota(a)||{}).est) ? {cumprir: `janelaPrazoCumprido('${casoId}','${andId}')`} : {})});
     i = faixaAtual.length - 1;
   }
+  prepPz(faixaAtual[i], i);
   abrirPainelPrazo(i);
 }
 // "Comentar neste prazo": o comentário entra na linha do tempo como RESPOSTA à anotação que criou o prazo (o
@@ -36712,6 +37175,7 @@ function abrirPainelTarefa(casoId, andId){
 async function comentarNoPrazo(casoId, andId){
   const el = document.getElementById("pp-com"), texto = (el && el.value || "").trim();
   if(!texto) return el && el.focus();
+  if(!casoId) return aviso("Este prazo é do cliente, sem caso: anote no caso a que ele se refere");
   try{
     const [a] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({caso_id: casoId, autor_id: eu.id, texto, ...(andId ? {responde_a: andId} : {})})});
@@ -36725,8 +37189,9 @@ function fecharPainelPrazo(){
   // o conteúdo sai junto: o painel fechado não guarda a conversa ou o prazo de antes (que reaparecia por um instante)
   if(zapLadoRec) zapLadoRec.stop();
   if(zapLadoPend) descartarPendZap();
-  const el = document.getElementById("painel-prazo"); if(el){ el.classList.remove("aberto"); el.innerHTML = ""; }
-  document.body.classList.remove("lado-aberto","zap-aberto");
+  const el = document.getElementById("painel-prazo"); if(el){ el.classList.remove("aberto","pp-prazo","pp-sobre"); el.innerHTML = ""; }
+  const veu = document.getElementById("pp-veu"); if(veu) veu.remove();
+  document.body.classList.remove("lado-aberto","zap-aberto","pz-largo");
   fecharPrazoEsq();
 }
 // F264 · com a conversa de WhatsApp aberta à direita, o prazo abre À ESQUERDA, no lugar de "Prazos e compromissos"
@@ -36737,84 +37202,197 @@ function fecharPrazoEsq(){
   if(!painelZapCli) return;
   painelPz = null;
 }
-function abrirPainelPrazo(i){
-  const x = faixaAtual[i]; if(!x) return;
+// ══════════════════════════════════════════════════════════════════════════
+// F326 · A JANELA DO PRAZO (desenho aprovado pelo Paulo, 31.10.2026). Abre da faixa do caso (fonte vazia) ou da aba
+// Prazos do cliente (fonte "cli", por cima da aba, com o véu). Quanto falta em número grande, com a barra do início ao
+// vencimento e o hoje; de onde vem (a anotação, o documento, a base); o que fazer (a tarefa de quem executa, com as
+// etapas); o que está ligado (o lembrete antes, o papel pedido ao cliente); o histórico; o comentário. O principal é
+// "Cumpri o prazo". A qualidade de segurado mostra como se chega à data e quem acompanha. No celular, tela cheia.
+// ══════════════════════════════════════════════════════════════════════════
+const linhaDoPz = (i, fonte) => (fonte==="cli" ? _pzCli : faixaAtual)[i];
+const quandoPz = iso => { const h = horaLocal(iso); return h ? `${diaCurtoPz(dataSP(iso))}, ${h.slice(-5).replace(":","h")}` : ""; };
+const DIA_NO = ["no domingo","na segunda-feira","na terça-feira","na quarta-feira","na quinta-feira","na sexta-feira","no sábado"];
+const RX_PZ_CARIMBO = /^[⏰🔥\s]*\[PRAZO [0-9.]+\]\s*/u;
+const RX_PZ_CONTAGEM = /^(.+?) — (\d+) dias (úteis|corridos) \(([^)]*)\), intimação de (\d{2}\.\d{2}\.\d{4})\.\s*/;
+const semCarimboPz = t => String(t||"").replace(RX_PZ_CARIMBO, "").replace(RX_PZ_CONTAGEM, "").replace(/<[^>]*>/g, "").trim();
+// o que fazer, na anotação: a primeira frase que começa por um verbo ("Recorrer ao CRPS…"), senão a primeira
+function fazerDaNota(t){
+  const fr = semCarimboPz(t).split(/(?<=[.!?])\s+/).map(s=>s.trim()).filter(Boolean);
+  return (fr.find(s=>/^[A-ZÀ-Ú][a-zà-úç]+(?:ar|er|ir|or)\b/.test(s)) || fr[0] || "").replace(/\.$/, "");
+}
+// a conta do carimbo do catálogo: "São 30 dias corridos da ciência… o trigésimo dia cai no sábado, e o prazo passa…"
+function contagemPz(x){
+  const a = x.andId && (D._andsFicha||[]).find(y=>y.id===x.andId);
+  const m = a && RX_PZ_CONTAGEM.exec(String(a.texto||"").replace(RX_PZ_CARIMBO, ""));
+  if(!m) return null;
+  const n = +m[2], uteis = m[3]==="úteis", de = isoDoCarimbo(m[5]), item = PRAZOS_CATALOGO.find(c=>c.rot===m[1]);
+  return {rot: m[1], n, uteis, base: m[4], de, txt: textoContagemPz(n, uteis, de, x.data, item && item.dec)};
+}
+function textoContagemPz(n, uteis, de, data, dec){
+  const cru = somaDias(de, n);
+  return uteis ? `São ${n} dias úteis da intimação de ${fmtBarra(de).slice(0,5)}, sem contar o dia da intimação, os fins de semana e os feriados.`
+    : `São ${n} dias corridos da ciência, em ${fmtBarra(de).slice(0,5)}.${cru!==data ? ` O ${n}º dia cai ${DIA_NO[new Date(cru+"T12:00:00").getDay()]}, ${fmtBarra(cru).slice(0,5)}, e o prazo passa ${dec ? "ao último dia útil antes dele" : "ao primeiro dia útil"}.` : ""}`;
+}
+const IC_DOC_PZ = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>`;
+const IC_OK_PZ = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17 19 7"/></svg>`;
+const IC_X_PZ = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>`;
+function abrirPainelPrazo(i, fonte){
+  const x = linhaDoPz(i, fonte); if(!x) return;
+  if(!x._titulo) prepPz(x, i, fonte);
+  const sobre = fonte==="cli";   // da aba Prazos: por cima, com o véu
   // no celular não há espaço para duas janelas: o prazo toma o lugar da conversa, como antes
-  const esq = painelZapCli && !celular() && document.querySelector(".caso-esq");
-  painelPz = {casoId: x.casoId, data: x.data, andId: x.andId || ""};
+  const esq = !sobre && painelZapCli && !celular() && document.querySelector(".caso-esq");
+  painelPz = {casoId: x.casoId, data: x.data, andId: x.andId || "", fonte: fonte || "", rotulo: x.rotulo || ""};
   if(!esq){ painelZapCli = null; document.body.classList.remove("zap-aberto"); }
-  const fechar = esq ? "fecharPrazoEsq()" : "fecharPainelPrazo()";
-  const hj = hoje(), k = D.casoPorId.get(x.casoId), nome = id => ((D.colPorId.get(id)||{}).nome||"alguém").split(" ")[0];
+  const fechar = esq ? "fecharPrazoEsq()" : "fecharPainelPrazo()", src = fonte ? `,'${fonte}'` : "";
+  const hj = hoje(), k = x.casoId && D.casoPorId.get(x.casoId), cliId = (k && k.cliente_id) || (sobre && _pzCliId) || clienteAberto;
+  const c = D.cliPorId.get(cliId), nome = id => ((D.colPorId.get(id)||{}).nome||"alguém").split(" ")[0];
+  const f = x._f || faltaPz(x), nat = x._nat || natDaLinha(x), venc = x.data<hj && !x.aConfirmar;
+  const gq = x.rotulo==="Qualidade de segurado até" && c ? gracaDoCliente(c) : null;
   const abertas = (D.tarefasPorCaso.get(x.casoId)||[]).filter(t=>!t.concluida_em);
-  const ts = x.andId ? abertas.filter(t=>t.andamento_id===x.andId) : x.tc ? [x.tc] : x._nat==="fatal" ? abertas : [];
-  const minha = ts.find(t=>t.colaborador_id===eu.id);
-  // a barra: do início (o marcado no prazo, ou a criação da tarefa mais antiga) ao vencimento, com o hoje
-  const ini = (k && k.prazo===x.data && k.prazo_inicio) || ts.map(t=>String(t.criado_em||"").slice(0,10)).filter(Boolean).sort()[0] || null;
-  const pct = ini && x.data>ini ? Math.max(0, Math.min(100, Math.round(100*diasEntreIso(ini, hj)/diasEntreIso(ini, x.data)))) : null;
-  const tom = x.data<hj ? "venc" : pct!=null && pct>=70 ? "perto" : "";
-  const barra = pct==null ? "" : `<div class="pp-barra pp-${tom}" role="progressbar" aria-label="tempo do prazo já passado" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i><em style="left:${pct}%" title="hoje"></em></div>
-    <div class="pp-lin"><span>Início ${fmtBarra(ini).slice(0,5)}</span><span>Vence ${fmtBarra(x.data).slice(0,5)}</span></div>`;
-  const inicio = k && k.prazo===x.data ? `<div class="pp-linha"><span>Começar</span><span>${k.prazo_inicio
-    ? `${k.prazo_inicio<=hj?"já é hora (desde ":"em "}${fmtBarra(k.prazo_inicio).slice(0,5)}${k.prazo_inicio<=hj?")":""}` : "sem data"} · <a href="#" onclick="event.preventDefault();marcarInicioPrazo('${k.id}')">${k.prazo_inicio?"mudar":"marcar"}</a></span></div>` : "";
-  const estado = t => { const minhaT = t.colaborador_id===eu.id, e = t.iniciada_em ? 1 : 0;
-    const op = (n, rot, acao) => `<button class="${n===e?"on":""}"${minhaT && n!==e ? ` onclick="${acao}"` : " disabled"}>${rot}</button>`;
-    return `<div class="pp-seg" aria-label="andamento de ${esc(nome(t.colaborador_id))}">${op(0, "Não iniciada", `alternarAndamento('${t.id}')`)}${
-      op(1, "Em andamento", `alternarAndamento('${t.id}')`)}${op(2, "Concluída", `concluirDeVez('${t.id}')`)}</div>`; };
-  const etapas = t => { const ets = Array.isArray(t.etapas) ? t.etapas : [];
-    const nOk = ets.filter(e=>e.feito).length;
-    return `<div class="pp-rot">Etapas${ets.length?` · ${nOk} de ${ets.length}`:""}</div>${ets.length ? `<div class="pp-mini"><i style="width:${Math.round(100*nOk/ets.length)}%"></i></div>` : ""}${ets.map((e,j)=>
-      `<label class="pp-et${e.feito?" ok":""}"><input type="checkbox"${e.feito?" checked":""} onchange="marcarEtapaTarefa('${t.id}',${j},this.checked)"><span>${esc(e.t)}</span></label>`).join("")
-      }<button class="pp-add" onclick="novaEtapaTarefa('${t.id}')">+ etapa</button>`; };
-  const tarefa = t => `<section class="pp-sec"><div class="pp-quem">${av(t.colaborador_id)}<b>${esc(nome(t.colaborador_id))}</b>${t.atribuido_por && t.atribuido_por!==t.colaborador_id ? ` · atribuída por ${esc(nome(t.atribuido_por))}` : ""}${
-      t.lembrar_hora ? ` · ⏰ ${String(t.lembrar_hora).slice(0,5)}` : ""}</div>${estado(t)}${etapas(t)}</section>`;
+  const ts = x.andId ? abertas.filter(t=>t.andamento_id===x.andId) : x.tc ? [x.tc] : nat==="fatal" ? abertas.filter(t=>t.natureza==="fatal") : [];
+  const exec = ts.filter(t=>t.papel!=="revisa"), rev = ts.filter(t=>t.papel==="revisa");
+  const minha = exec.find(t=>t.colaborador_id===eu.id) || rev.find(t=>t.colaborador_id===eu.id);
+  const a = x.andId && (D._andsFicha||[]).find(y=>y.id===x.andId), cont = contagemPz(x);
+  const rot = t => `<h3 class="ppz-h">${t}</h3>`;
+  // QUANTO FALTA: o número grande, a data por extenso, a barra do início ao vencimento e a conta do catálogo
+  const ini = gq ? {data: `${gq.janela.ini.slice(3)}-${gq.janela.ini.slice(0,2)}-01`, lab: `Última contribuição · ${gq.ultima}`} : inicioDaLinha(x);
+  const ultimo = gq ? "o último dia com a qualidade" : nat==="fatal" ? "o último dia do prazo" : nat==="compromisso" ? "o dia do compromisso" : "o dia do lembrete";
+  const quanto = `<section class="ppz-sec ppz-quanto ppz-u-${f.urg}" aria-label="Quanto falta">
+      <div class="ppz-q-lin"><div class="ppz-q-n">${f.pre && f.pre!=="vence" ? `<small>${esc(f.pre)}</small>` : ""}<b>${esc(String(f.n))}</b><span>${esc(f.un)}</span></div>
+        <div class="ppz-q-d"><b>${esc(`${SIGLA_DIA[new Date(x.data+"T12:00:00").getDay()]}., ${fmtBarra(x.data)}`)}</b><span>${ultimo}</span></div></div>
+      ${barraPz(ini, x, "ppz", gq ? `Mantida até · ${fmtBarra(gq.mantidaAte)}` : "")}
+      ${cont ? `<p class="ppz-conta">${esc(cont.txt)}</p>` : ""}
+    </section>`;
+  // DE ONDE VEM: a anotação que criou o prazo (com quem e quando), ou a explicação da linha; o documento, se houver
+  const doc = a && (D.anexos||[]).find(y=>y.andamento_id===a.id);
+  const dw = deOndeDaLinha(x), autor = a && D.colPorId.get(a.autor_id);
+  const deTit = a ? `Anotação de ${autor ? autor.nome.split(" ")[0] : "alguém"}, ${quandoPz(a.criado_em)}` : dw.tit;
+  const deTxt = a ? cortaFrase(semCarimboPz(a.texto).replace(/\s+/g, " "), 240) : dw.txt;
+  const links = [doc ? `<button type="button" class="ppz-link" onclick="abrirAnexo('${doc.id}')">Ver o documento</button>` : "",
+    a ? `<button type="button" class="ppz-link" onclick="${fechar};qdIrParaAndamento('${x.casoId}','${x.andId}')">Ver na linha do tempo</button>`
+      : x.semMotivo && !x._motivo ? `<button type="button" class="ppz-link" onclick="${fechar};explicarPrazo('${x.casoId}')">Dizer do que é</button>`
+      : gq ? "" : `<button type="button" class="ppz-link" onclick="prazoSaberMais(${i}${src})">Detalhes</button>`].filter(Boolean).join("");
+  const origem = gq ? "" : `<section class="ppz-sec" aria-labelledby="ppz-origem">${rot('<span id="ppz-origem">De onde vem</span>')}
+      <div class="ppz-orig"><span class="ppz-orig-ic">${IC_DOC_PZ}</span><div class="ppz-orig-c"><b>${esc(deTit)}</b>${deTxt ? `<p>${esc(deTxt)}</p>` : ""}${links ? `<div class="ppz-links">${links}</div>` : ""}</div></div>
+      ${cont ? `<p class="ppz-base">Base: ${esc(cont.base)}.</p>` : ""}
+    </section>`;
+  // COMO SE CHEGA A ESTA DATA (só a qualidade de segurado): a conta do art. 15 em passos
+  const g = gq && cnisDe(c);
+  const conta = gq ? `<section class="ppz-sec" aria-labelledby="ppz-conta">${rot('<span id="ppz-conta">Como se chega a esta data</span>')}
+      <ol class="ppz-passos">
+        <li><span>1</span><p>A última contribuição no CNIS é da competência ${esc(gq.ultima)}.</p></li>
+        <li><span>2</span><p>A qualidade se mantém por ${gq.base} meses, até a competência ${esc(gq.fim||"")}. <small>Lei 8.213/91, art. 15.</small></p></li>
+        <li><span>3</span><p>Mantida até ${esc(fmtBarra(gq.mantidaAte))}, a qualidade se perde em ${esc(fmtBarra(gq.perda))}. <small>Art. 15, § 4º.</small></p></li>
+      </ol>
+      ${(gq.premissas||[]).length ? `<p class="ppz-nota">${esc(gq.premissas.map(p=>p.charAt(0).toUpperCase()+p.slice(1)).join(". "))}.</p>` : ""}
+    </section>` : "";
+  // O QUE FAZER: a tarefa de quem executa (o estado anda num clique, só para quem a tem), as etapas e o "+ Etapa"
+  const EST = ["Não iniciada", "Em andamento", "Concluída"];
+  const cartao = t => {
+    const ets = Array.isArray(t.etapas) ? t.etapas : [], nOk = ets.filter(e=>e.feito).length, minhaT = t.colaborador_id===eu.id;
+    const rv = rev.filter(r=>r.colaborador_id!==t.colaborador_id).map(r=>nome(r.colaborador_id));
+    const e = t.iniciada_em || nOk ? 1 : 0, prox = e ? `concluirDeVez('${t.id}')` : `alternarAndamento('${t.id}')`;
+    return `<div class="ppz-tarefa"><div class="ppz-tf-cab">${avPz(t.colaborador_id)}
+        <div class="ppz-tf-t"><b>${t.papel==="revisa" ? "Revisar: " : ""}${esc(cortaFrase(fazerDaNota(a && a.texto) || x._titulo, 90))}</b>
+          <small>${esc([nome(t.colaborador_id), rv.length ? `revisão de ${rv.join(" e ")}` : "", t.atribuido_por && t.atribuido_por!==t.colaborador_id ? `pedida por ${nome(t.atribuido_por)}` : "", ets.length ? `${nOk} de ${ets.length} etapas` : ""].filter(Boolean).join(" · "))}</small></div>
+        <button type="button" class="ppz-est ppz-est-${e}"${minhaT ? ` onclick="${prox}" title="passa a ${EST[e+1].toLowerCase()}"` : " disabled"} aria-label="Estado da tarefa de ${esc(nome(t.colaborador_id))}: ${EST[e]}">${EST[e]}</button></div>
+      ${ets.length ? `<ul class="ppz-ets">${ets.map((et, j)=>`<li><label class="pp-et${et.feito ? " ok" : ""}"><input type="checkbox"${et.feito ? " checked" : ""}${minhaT || t.atribuido_por===eu.id ? "" : " disabled"} onchange="marcarEtapaTarefa('${t.id}',${j},this.checked)"><span>${esc(et.t)}</span></label></li>`).join("")}</ul>` : ""}
+      ${minhaT || t.atribuido_por===eu.id ? `<div class="ppz-tf-pe"><button type="button" class="pp-add" onclick="novaEtapaTarefa('${t.id}')">+ Etapa</button></div>` : ""}
+    </div>`;
+  };
+  // sem tarefa de quem faz (o prazo já registrado), a revisão que ficou é o que há para fazer
+  const fazerTs = exec.length ? exec : rev;
+  const quem = !gq && !fazerTs.length ? (q => q ? `<p class="ppz-vazio">${avPz(q)}<span>Ninguém tem tarefa aberta para este prazo. Quem cuida: <b>${esc(nome(q))}</b>.</span></p>` : `<p class="ppz-vazio"><span>Ninguém tem tarefa aberta para este prazo.</span></p>`)(quemDaLinha(x, cliId)) : "";
+  // a qualidade: o plano de contribuições ligado, que leva a qualidade adiante
+  const plano = gq ? qualidadeDe(cliId).map(q=>({q, px: qualidadeProximos(q, 1)[0]})).filter(o=>o.px)[0] : null;
+  const fazer = gq ? `<section class="ppz-sec" aria-labelledby="ppz-fazer">${rot('<span id="ppz-fazer">O que fazer</span>')}
+      ${plano ? `<p class="ppz-p">Paga a contribuição a tempo, a qualidade continua. O plano de contribuições deste cliente:</p>
+        ${ligadoPz("lembrete", `Contribuição a pagar · ${qualGuia(plano.q)}`, `vence ${diaCurtoPz(plano.px)}`, faltaPz({data: plano.px, natureza: "lembrete"}), `verQualidade('${cliId}')`)}`
+        : `<p class="ppz-p">Um recolhimento a tempo ou um vínculo novo mantém a qualidade. Este cliente não tem plano de contribuições.</p>`}
+    </section>` : `<section class="ppz-sec" aria-labelledby="ppz-fazer">${rot('<span id="ppz-fazer">O que fazer</span>')}${fazerTs.map(cartao).join("")}${quem}</section>`;
+  // LIGADO A ESTE PRAZO: o "lembrar antes" e os papéis pedidos ao cliente no mesmo caso, ainda não entregues
+  const lig = [];
+  // as tarefas da própria anotação já estão em O que fazer; aqui ficam o lembrar antes e o que é de outra anotação
+  for(const fl of (x.filhas||[]).filter(fl=>!(x.andId && fl.andId===x.andId))){ const tt = tituloDaLinha(fl).titulo;
+    lig.push(ligadoPz(natDaLinha(fl), tt, `${NAT_ROT[natDaLinha(fl)]||"Lembrete"} · ${diaCurtoPz(fl.data)}`, faltaPz(fl), fl.andId ? `${fechar};qdIrParaAndamento('${fl.casoId||x.casoId}','${fl.andId}')` : "")); }
+  if(x.casoId && c) for(const p of ((c.campos||{}).docs_pedidos||[]).filter(p=>p.caso_id===x.casoId))
+    for(const it of (p.itens||[]).filter(it=>!it.entregue))
+      lig.push(ligadoPz("doc", String(it.nome||it), `Pedido ao cliente${p.ate ? ` · entrega até ${diaCurtoPz(p.ate)}` : ""}`, p.ate ? faltaPz({data: p.ate, natureza: "lembrete"}) : null, `trouxeDocumentos('${cliId}')`));
+  const ligado = lig.length ? `<section class="ppz-sec" aria-labelledby="ppz-ligado">${rot('<span id="ppz-ligado">Ligado a este prazo</span>')}${lig.join("")}</section>` : "";
+  // QUEM ACOMPANHA (a qualidade): o advogado do cliente, que a recebe no Meu Dia 30 dias antes
+  const adv = gq ? advogadoDoCliente(cliId, k)[0] : null;
+  const acompanha = gq ? `<section class="ppz-sec" aria-labelledby="ppz-quem">${rot('<span id="ppz-quem">Quem acompanha</span>')}
+      <div class="ppz-quemac">${adv ? avPz(adv) : ""}<div><b>${adv ? `${esc(nome(adv))}, responsável pelo cliente` : "O advogado do cliente"}</b>
+        <small>Entra no Meu Dia em ${esc(fmtBarra(somaDias(gq.mantidaAte, -30)))}, 30 dias antes.</small></div></div></section>
+    <section class="ppz-sec" aria-labelledby="ppz-fonte">${rot('<span id="ppz-fonte">Fonte</span>')}
+      <p class="ppz-p">CNIS do dossiê, lido na triagem${g && g.em ? ` em ${esc(diaCurtoPz(String(g.em).slice(0,10)))}/${String(g.em).slice(0,4)}` : ""}. A data se refaz quando o CNIS muda.</p></section>` : "";
+  // HISTÓRICO, o mais recente primeiro (pedido do Paulo, 24.10.2026), com quem e quando
   const hist = [];
+  if(a) hist.push([a.criado_em, a.autor_id, `Anotou o prazo${x.data ? ` de ${fmtBarra(x.data).slice(0,5)}` : ""}.`]);
   for(const t of ts){
-    if(t.criado_em) hist.push([t.criado_em, t.atribuido_por && t.atribuido_por!==t.colaborador_id
-      ? `${nome(t.atribuido_por)} atribuiu a ${nome(t.colaborador_id)}` : `${nome(t.colaborador_id)} criou a tarefa`]);
-    if(t.iniciada_em) hist.push([t.iniciada_em, `${nome(t.colaborador_id)} começou`]);
-    for(const e of (t.etapas||[])) if(e.feito && e.em) hist.push([e.em, `${nome(e.por)} fez “${e.t}”`]);
+    if(t.criado_em) hist.push([t.criado_em, t.atribuido_por || t.colaborador_id, t.atribuido_por && t.atribuido_por!==t.colaborador_id
+      ? `Pediu ${t.papel==="revisa" ? "a revisão" : "a tarefa"} a ${nome(t.colaborador_id)}.` : `Criou a tarefa.`]);
+    if(t.iniciada_em) hist.push([t.iniciada_em, t.colaborador_id, "Começou a tarefa."]);
+    for(const e of (t.etapas||[])) if(e.feito && e.em) hist.push([e.em, e.por, `Fez a etapa “${e.t}”.`]);
   }
-  if(x.andId) for(const c of (D._andsFicha||[]).filter(a=>a.responde_a===x.andId))
-    hist.push([c.criado_em, `${nome(c.autor_id)}: ${cortaFrase(String(c.texto||"").replace(/\s+/g," "), 120)}`]);
-  hist.sort((a,b)=>String(b[0]).localeCompare(String(a[0])));   // o mais recente primeiro (pedido do Paulo, 24.10.2026)
-  const origem = x.andId ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="${fechar};${x._ir}">Ver na linha do tempo</button>`
-    : `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="${x._ir}">${x.semMotivo && !x._motivo ? "Dizer do que é" : "Detalhes"}</button>`;
-  const principal = x.cumprir ? `<button class="pp-pri" onclick="${fechar};${x.cumprir}">✔ Cumpri</button>`
-    : minha ? `<button class="pp-pri" onclick="concluirDeVez('${minha.id}')">✔ Concluir a minha tarefa</button>` : "";
+  if(x.andId) for(const r of (D._andsFicha||[]).filter(y=>y.responde_a===x.andId))
+    hist.push([r.criado_em, r.autor_id, cortaFrase(String(r.texto||"").replace(/\s+/g," "), 160)]);
+  hist.sort((p, q)=>String(q[0]).localeCompare(String(p[0])));
+  const historico = hist.length ? `<section class="ppz-sec" aria-labelledby="ppz-hist">${rot('<span id="ppz-hist">Histórico</span>')}
+      <ol class="ppz-hist">${hist.slice(0, 8).map(([q, id, t])=>`<li>${avPz(id) || `<span class="pz-av pz-av-sis" aria-hidden="true">·</span>`}<div><small><b>${esc(id ? nome(id) : "Sistema")}</b> · ${esc(quandoPz(q))}</small><p>${esc(t)}</p></div></li>`).join("")}</ol></section>` : "";
+  const comentar = x.casoId ? `<section class="ppz-sec ppz-com"><label for="pp-com" class="ppz-h">Comentar neste prazo</label>
+      <textarea id="pp-com" rows="3" placeholder="Escreva o que foi feito ou o que falta"
+        onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();comentarNoPrazo('${x.casoId}','${x.andId||""}')}"></textarea>
+      <button type="button" class="ppz-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Comentar</button></section>` : "";
+  // O PÉ: "Cumpri o prazo" (o prazo fatal do caso) ou "Concluir a minha tarefa"; as ações da linha; "Abrir o caso"; o ⋯
+  const principal = x.cumprir ? `<button type="button" class="pp-pri" onclick="${fechar};${x.cumprir}">${IC_OK_PZ}Cumpri o prazo</button>`
+    : minha && !gq ? `<button type="button" class="pp-pri" onclick="concluirDeVez('${minha.id}')">${IC_OK_PZ}Concluir a minha tarefa</button>` : "";
+  const abrirCaso = k && (sobre || celular()) ? `<button type="button" class="ppz-bt ppz-caso" onclick="${fechar};casoSel='${k.id}';abaAtiva=2;subAba='escritorio';repintarFicha()">Abrir o caso</button>` : "";
+  const extra = gq ? `<button type="button" class="ppz-bt" onclick="verQualidade('${cliId}')">Contribuições a pagar</button>${(cn => cn ? `<button type="button" class="ppz-bt" onclick="abrirAnexo('${cn.id}')">Abrir o CNIS</button>` : "")(docsDoDossie(cliId).filter(d=>/CNIS completo/i.test(fonteDoDossie(d)[1])).sort((p, q)=>String(q.criado_em||"").localeCompare(String(p.criado_em||"")))[0])}` : "";
+  const mais = menuMais([
+    x.edita ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="prazoSaberMais(${i}${src})">Corrigir a data</button>` : "",
+    x.cumprir && k && k.prazo===x.data ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="${fechar};naoSeAplica('${k.id}','${x.andId||""}')">Não se aplica</button>` : "",
+    minha && nat!=="fatal" ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="adiarTarefa('${minha.id}')">Adiar</button>` : "",
+    abrirCaso && celular() ? abrirCaso.replace('class="ppz-bt ppz-caso"', 'class="tl-mais-it pp-sec-bt" role="menuitem"') : ""]);
   let el;
   if(esq){
     el = document.getElementById("painel-prazo-esq") || Object.assign(document.createElement("aside"), {id: "painel-prazo-esq"});
-    el.setAttribute("aria-label", "Progresso do prazo");
     if(el.parentNode!==esq) esq.prepend(el);
     document.body.classList.add("prazo-esq");
   }else{
     fecharPrazoEsq();
     el = document.getElementById("painel-prazo");
     if(!el){ el = document.createElement("aside"); el.id = "painel-prazo"; document.body.appendChild(el); }
-    el.setAttribute("aria-label", "Progresso do prazo");
   }
-  const cli = k && D.cliPorId.get(k.cliente_id);
-  const av = id => { const c = D.colPorId.get(id); return c ? `<span class="avatar mini" style="background:${c.cor}" aria-hidden="true">${esc(c.inicial)}</span>` : ""; };
-  el.innerHTML = `<header><div>${cli ? `<div class="pp-cli">${esc(cli.nome)}${k.beneficio ? ` · ${esc(k.beneficio)}` : ""}</div>` : ""}<small class="pp-tag pp-${x._nat}">${esc(NAT_ROT[x._nat]||"Prazo")}</small><h3>${esc(x._titulo)}</h3></div>
-      <button class="pp-x" onclick="${fechar}" aria-label="fechar">✕</button></header>
-    <section class="pp-sec"><div class="pp-rot">Quanto falta</div><div class="pp-falta pp-${tom}">${(m => m ? `${/^faltam/.test(m[1]) ? "" : esc(m[1])}<b>${m[2]}</b> ${esc(m[3].trim())}` : esc(x._falta || ""))(/^(.*?)(\d+)(.*)$/.exec(x._falta||""))}</div><div class="pp-qdo">${esc(x._quando)}</div>${barra}${inicio}</section>
-    ${ts.length ? ts.map(tarefa).join("") : `<section class="pp-sec"><p class="meio-sub">Ninguém tem tarefa aberta para este prazo.</p></section>`}
-    ${hist.length ? `<section class="pp-sec"><div class="pp-rot">Histórico</div><ol class="pp-tl">${hist.map(([q, t])=>`<li><span>${esc(horaLocal(q))}</span>${esc(t)}</li>`).join("")}</ol></section>` : ""}
-    <section class="pp-sec"><div class="pp-rot">Comentar neste prazo</div>
-      <textarea id="pp-com" rows="2" placeholder="O que aconteceu? Vai para a linha do tempo do caso."
-        onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();comentarNoPrazo('${x.casoId}','${x.andId||""}')}"></textarea>
-      <button class="pp-sec-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Comentar</button></section>
-    <footer>${principal}${x.cumprir ? "" : x.acao || ""}${/* F274 · o principal à vista; adiar e o caminho para a origem no ⋯ */""}${menuMais([
-      minha ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="adiarTarefa('${minha.id}')">Adiar</button>` : "", origem]).replace('class="tl-mais"', 'class="tl-mais pp-mais"')}</footer>`;
+  el.setAttribute("aria-label", "Prazo: " + x._titulo);
+  el.classList.add("pp-prazo"); el.classList.toggle("pp-sobre", sobre);
+  el.innerHTML = `<header class="ppz-cab">
+      <div class="ppz-cab-l"><button type="button" class="ppz-volta" onclick="${fechar}">‹ Prazos</button><span class="pp-cli">${esc([c && c.nome, k ? casoCurtoPz(k) : "Do cliente"].filter(Boolean).join(" · "))}</span>
+        <button type="button" class="pp-x" onclick="${fechar}" aria-label="Fechar">${IC_X_PZ}</button></div>
+      <div class="ppz-pills">${pillNat(nat)}${venc ? `<span class="pz-pill pz-pill-venc">Vencido sem registro</span>` : ""}</div>
+      <h2>${esc(x._titulo)}</h2>
+    </header>
+    <div class="ppz-corpo">${quanto}${origem}${conta}${fazer}${ligado}${acompanha}${historico}${comentar}</div>
+    <footer class="ppz-pe">${principal}${x.cumprir ? "" : `<span class="ppz-acoes">${x.acao || ""}</span>`}${extra}${celular() ? "" : abrirCaso}<span class="ppz-esp"></span>${mais.replace('class="tl-mais"', 'class="tl-mais pp-mais"')}</footer>`;
   if(esq) return;
-  requestAnimationFrame(()=>{ el.classList.add("aberto"); document.body.classList.add("lado-aberto"); });
+  let veu = document.getElementById("pp-veu");
+  if(sobre && !veu){ veu = document.createElement("div"); veu.id = "pp-veu"; veu.onclick = fecharPainelPrazo; document.body.appendChild(veu); }
+  if(!sobre && veu) veu.remove();
+  requestAnimationFrame(()=>{ el.classList.add("aberto"); if(!sobre) document.body.classList.add("lado-aberto","pz-largo");
+    const h = el.querySelector("h2"); if(h && sobre){ h.tabIndex = -1; h.focus({preventScroll: true}); } });
+}
+// um item de "Ligado a este prazo": a bolinha da natureza, o título, a data e quanto falta, e o Abrir
+function ligadoPz(nat, tit, meta, f, acao){
+  return `<div class="ppz-lig"><span class="ppz-lig-b ppz-b-${nat}" aria-hidden="true"></span><div class="ppz-lig-c"><b>${esc(tit)}</b>
+    <small>${esc(meta)}${f ? ` · <b class="ppz-u-${f.urg}">${esc(f.txt)}</b>` : ""}</small></div>${acao ? `<button type="button" class="ppz-link" onclick="${acao}">Abrir</button>` : ""}</div>`;
 }
 document.addEventListener("keydown", e=>{ if(e.key==="Escape" && painelPz && !document.querySelector("#modal:not([style*='none']) *"))
   document.getElementById("painel-prazo-esq") ? fecharPrazoEsq() : fecharPainelPrazo(); });
 const _pzTodos = new Set();   // F241 · os casos em que se abriram todas as datas, na sessão
-function prazoSaberMais(i){
-  const x = faixaAtual[i]; if(!x) return;
-  caixa(`<h3 style="margin:0 0 6px">${esc(x.titulo || x.rotulo || (x.ehPrazo?"Prazo processual":x.ico==="🩺"?"Perícia":NAT_ROT[natDaLinha(x)]||"Lembrete"))} · ${fmtBarra(x.data)}</h3>
+function prazoSaberMais(i, fonte){
+  const x = linhaDoPz(i, fonte); if(!x) return;
+  caixa(`<h3 style="margin:0 0 6px">${esc(x._titulo || x.titulo || x.rotulo || (x.ehPrazo?"Prazo processual":x.ico==="🩺"?"Perícia":NAT_ROT[natDaLinha(x)]||"Lembrete"))} · ${fmtBarra(x.data)}</h3>
     <div style="font-size:13px;line-height:1.4;margin-bottom:10px">${x.cru?x.rot:esc(x.rot)}</div>
     <div class="form-linha" style="align-items:center;gap:8px;flex-wrap:wrap">
       ${x.edita?`<label class="meio-sub">data <input type="date" value="${x.data}" ${x.edita}></label>`:""}
@@ -38739,9 +39317,7 @@ function composerCaso(k){
         <div class="esc-pnl esc-pnl-tf" id="esc-pnl-tf"${tfNatureza?"":" hidden"}>
           <span class="rotulo-rap">Quem faz</span>${pessoas}
           <span class="rotulo-rap esc-quando">Quando</span>${quando}</div>
-        ${listaDe(k)!=="🗓 Tarefas com Prazo" ? `<div class="esc-pnl esc-pnl-pz" id="esc-pnl-pz" hidden>
-          <label>Prazo fatal <input type="date" id="and-prazo-data" min="${hoje()}" title="a data fatal do prazo"></label>
-          <span id="and-prazo-mais" class="esc-pz-cat">ou pelo catálogo ${catalogoPrazoHtml("and","and-prazo-data")}</span></div>` : ""}
+        ${listaDe(k)!=="🗓 Tarefas com Prazo" ? painelPrazoEscrever(k) : ""}
         <div class="esc-linha esc-fim"><span class="esc-frase" id="esc-frase"></span>
           <button class="esc-reg" onclick="novoAndamento('${k.id}')">Registrar</button></div>
       </div>
@@ -40108,9 +40684,129 @@ async function responderInline(andId){
   aviso(prazo ? `Respondido · prazo até ${fmtBarra(prazo)} 🗓` : "Respondido ✔", false);
   if(clienteAberto) abrirFicha(clienteAberto);
 }
+// ══════════════════════════════════════════════════════════════════════════
+// F326 · O PRAZO NA ANOTAÇÃO (desenho aprovado pelo Paulo, 31.10.2026). A anotação com ⏰ mostra a faixa do prazo: viva,
+// com o Abrir da janela; o formulário do cumprimento no próprio cartão; a faixa verde do cumprido; o alerta do vencido
+// sem registro, com "Foi cumprido" e "Não foi cumprido". Cumprido = resposta "✔ [PRAZO CUMPRIDO]" à anotação ou tarefa
+// de quem executa concluída (regra de 31.10.2026). O prazo que saiu do caso sem registro, antes desta regra, fica neutro.
+// ══════════════════════════════════════════════════════════════════════════
+const RX_PZ_RESP = /^(✔|✖) \[PRAZO (CUMPRIDO|NÃO CUMPRIDO|NÃO SE APLICA)\]\s*/;
+let _cumprindo = null;   // a anotação com o formulário do cumprimento aberto
+const tituloNotaPz = a => (RX_PZ_CONTAGEM.exec(String(a.texto||"").replace(RX_PZ_CARIMBO, ""))||[])[1] || cortaFrase(fazerDaNota(a.texto) || "Prazo fatal", 80);
+function estadoPrazoNota(a){
+  const m = a && RX_PRAZO_AND.exec(a.texto||""); if(!m) return null;
+  const data = isoDoCarimbo((/\d{2}\.\d{2}\.\d{4}/.exec(m[1])||[])[0]), k = D.casoPorId.get(a.caso_id);
+  const resp = (D._andsFicha||[]).filter(f=>f.responde_a===a.id && !f.excluir && RX_PZ_RESP.test(f.texto||""))
+    .sort((x,y)=>(x.criado_em||"")<(y.criado_em||"")?1:-1)[0];
+  if(resp){ const r = RX_PZ_RESP.exec(resp.texto), q = /\(cumprido em (\d{2}\/\d{2}\/\d{4})\)/.exec(resp.texto);
+    return {est: r[2]==="CUMPRIDO" ? "cumprido" : r[2]==="NÃO CUMPRIDO" ? "nao" : "nsa", data, resp,
+      em: q ? q[1].split("/").reverse().join("-") : dataSP(resp.criado_em), por: resp.autor_id}; }
+  const exec = tarefasDe(a).filter(t=>t.papel!=="revisa");
+  if(exec.length && exec.every(t=>t.concluida_em)){
+    const t = [...exec].sort((x,y)=>x.concluida_em<y.concluida_em?1:-1)[0];
+    return {est: "cumprido", data, em: dataSP(t.concluida_em), por: t.colaborador_id};
+  }
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(data)) return {est: "antigo", data: null};
+  const vivo = k && k.fase!=="encerrado", aberta = exec.some(t=>!t.concluida_em);
+  if(data >= hoje()) return {est: vivo ? "vivo" : "antigo", data};
+  // vencido sem registro: o prazo ainda é o do caso ou a tarefa de quem executa segue aberta
+  return {est: vivo && (k.prazo===data || aberta) ? "vencido" : "antigo", data, exec: exec.filter(t=>!t.concluida_em)};
+}
+const IC_ALERTA_PZ = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17.5v.01"/></svg>`;
+function faixaPrazoNota(a, e){
+  const tit = esc(tituloNotaPz(a)), nome = id => ((D.colPorId.get(id)||{}).nome||"alguém").split(" ")[0];
+  const pill = `<span class="tl-pz-pill"><i aria-hidden="true"></i>Prazo fatal</span>`;
+  if(_cumprindo===a.id && (e.est==="vivo" || e.est==="vencido"))
+    return `<div class="tl-pz tl-pz-vivo">${pill}<div class="tl-pz-o"><b class="tl-pz-t">${tit} · vence ${esc(diaCurtoPz(e.data))}</b></div></div>${formCumprirNota(a)}`;
+  if(e.est==="vivo"){
+    const f = faltaPz({data: e.data, natureza: "fatal"});
+    const meta = f.urg==="hoje" ? `hoje, ${esc(diaCurtoPz(e.data))} · <b>é o último dia</b>` : `vence ${esc(diaCurtoPz(e.data))} · <b>${esc(f.txt)}</b>`;
+    return `<div class="tl-pz tl-pz-vivo">${pill}<div class="tl-pz-o"><b class="tl-pz-t">${tit}</b><small class="tl-pz-m">${meta}</small></div>
+      <button type="button" class="tl-pz-abrir" onclick="abrirPainelTarefa('${a.caso_id}','${a.id}')" aria-label="Abrir o prazo: ${tit}">Abrir</button></div>`;
+  }
+  if(e.est==="vencido"){
+    const ex = [...new Set((e.exec||[]).map(t=>nome(t.colaborador_id)))].join(" e ");
+    return `<div class="tl-pz-alerta" role="alert"><div class="tl-pz-al-cab">${IC_ALERTA_PZ}<div class="tl-pz-o">
+      <b class="tl-pz-t">${tit} venceu ${esc(diaCurtoPz(e.data))}</b>
+      <small class="tl-pz-m">Ninguém registrou o cumprimento.${ex ? ` A tarefa de ${esc(ex)} segue aberta.` : ""}</small></div></div>
+      <div class="tl-pz-al-bts"><button type="button" class="tl-pz-sim" onclick="cumpriNaNota('${a.id}')">Foi cumprido</button>
+      <button type="button" class="tl-pz-nao" onclick="registrarNaoCumprido('${a.caso_id}','${a.id}')">Não foi cumprido</button></div></div>`;
+  }
+  if(e.est==="cumprido"){
+    const u = e.data && e.em ? uteisEntre(e.em, e.data) : null, pl = n => `${n} ${n===1?"dia útil":"dias úteis"}`;
+    const rel = u===null ? "" : u>0 ? ` · ${pl(u)} antes do vencimento, ${diaCurtoPz(e.data)}` : u<0 ? ` · ${pl(-u)} depois do vencimento, ${diaCurtoPz(e.data)}` : " · no último dia";
+    return `<div class="tl-pz tl-pz-ok"><span class="tl-pz-ck" aria-hidden="true">${IC_OK_PZ}</span><div class="tl-pz-o">
+      <b class="tl-pz-t">${tit} · cumprido</b><small class="tl-pz-m">${esc(diaCurtoPz(e.em))}, por ${esc(nome(e.por))}${esc(rel)}</small></div></div>`;
+  }
+  if(e.est==="nao" || e.est==="nsa")
+    return `<div class="tl-pz tl-pz-fim"><div class="tl-pz-o"><b class="tl-pz-t">${tit} · ${e.est==="nao" ? "não foi cumprido" : "não se aplica"}</b>
+      <small class="tl-pz-m">registrado ${esc(diaCurtoPz(dataSP(e.resp.criado_em)))}, por ${esc(nome(e.por))}</small></div></div>`;
+  return e.data ? `<div class="tl-pz tl-pz-antigo"><small class="tl-pz-m">Prazo fatal de ${esc(diaAnoPz(e.data))}</small></div>` : "";
+}
+function formCumprirNota(a){
+  const k = D.casoPorId.get(a.caso_id); if(!k) return "";
+  const {exec, rev} = prazoDaAnotacao(k, a.id), nome = id => ((D.colPorId.get(id)||{}).nome||"").split(" ")[0];
+  const ex = [...new Set(exec.map(t=>nome(t.colaborador_id)))].join(" e "), rv = [...new Set(rev.map(t=>nome(t.colaborador_id)))].join(" e ");
+  const sugerida = listaDeVolta(k);
+  return `<section class="tl-pz-form" aria-labelledby="tpf-t">
+    <h3 id="tpf-t">Como o prazo foi cumprido</h3>
+    <label class="sr-so" for="tpf-txt">O que foi feito</label>
+    <textarea id="tpf-txt" rows="2" placeholder="O que foi feito: protocolo, número, resultado"></textarea>
+    <div class="tl-pz-f-lin">
+      <label class="tl-pz-f-campo">Cumprido em <input type="date" id="tpf-data" value="${hoje()}" max="${hoje()}"></label>
+      <label class="tl-pz-f-arq">${IC_DOC_PZ}<span id="tpf-arq-n">Anexar o comprovante</span><input type="file" id="tpf-arq" class="sr-so" accept="application/pdf,image/*"
+        onchange="document.getElementById('tpf-arq-n').textContent=this.files[0]?this.files[0].name:'Anexar o comprovante'"></label>
+    </div>
+    ${exec.length ? `<label class="tl-pz-f-ck"><input type="checkbox" id="tpf-concluir" checked>Concluir a tarefa de ${esc(ex)}${rv ? ` e avisar ${esc(rv)}, que revisa` : ""}</label>` : ""}
+    ${naFilaDoPrazo(k) ? `<label class="tl-pz-f-campo">O caso sai de 🗓 Tarefas com Prazo e volta para <select id="tpf-volta">${LISTAS_VOLTA.map(([l])=>
+      `<option value="${esc(l)}" ${l===sugerida?"selected":""}>${esc(l)}</option>`).join("")}</select></label>` : ""}
+    <div class="tl-pz-f-pe"><button type="button" class="tl-bt" onclick="cumpriNaNota('${a.id}')">Cancelar</button>
+      <button type="button" class="tl-pz-f-ok" onclick="confirmarCumprirNota('${a.caso_id}','${a.id}')">Confirmar o cumprimento</button></div>
+  </section>`;
+}
+function cumpriNaNota(andId){
+  _cumprindo = _cumprindo===andId ? null : andId;
+  repintarFicha();
+  if(_cumprindo) setTimeout(()=>{ const t = document.getElementById("tpf-txt"); if(t){ t.focus(); t.scrollIntoView({block:"nearest"}); } });
+}
+async function confirmarCumprirNota(casoId, andId){
+  const v = id => document.getElementById(id);
+  const o = {andId, texto: (v("tpf-txt").value||"").trim(), data: v("tpf-data").value || hoje(),
+    arquivo: (v("tpf-arq").files||[])[0] || null, concluir: v("tpf-concluir") ? v("tpf-concluir").checked : true,
+    volta: v("tpf-volta") ? v("tpf-volta").value : null};
+  if(o.data > hoje()) return aviso("O cumprimento não pode ter data futura");
+  await registrarCumprimento(casoId, o);
+}
+// desfazer o registro depois do aviso: a resposta sai, o prazo volta ao caso e as tarefas concluídas com ela reabrem
+async function desfazerCumprimento(respId){
+  const r = (D._andsFicha||[]).find(x=>x.id===respId); if(!r) return;
+  const og = (D._andsFicha||[]).find(x=>x.id===r.responde_a), k = D.casoPorId.get(r.caso_id);
+  if(!await confirmar("Desfazer o registro deste prazo? O prazo volta ao caso e a tarefa concluída junto reabre.")) return;
+  try{ await api(`/rest/v1/andamentos?id=eq.${r.id}`,{method:"DELETE",headers:{Prefer:"return=minimal"}}); }
+  catch(e){ return aviso("Não consegui desfazer"); }
+  D._andsFicha = (D._andsFicha||[]).filter(a=>a.id!==r.id);
+  const m = og && /\[PRAZO (\d{2}\.\d{2}\.\d{4})\]/.exec(og.texto||""), data = m && isoDoCarimbo(m[1]);
+  if(k && data && !k.prazo && k.fase!=="encerrado"){ await patchCaso(k.id, {prazo: data}).catch(()=>{}); k.prazo = data; }
+  const junto = og ? tarefasDe(og).filter(t=>t.concluida_em && Math.abs(new Date(t.concluida_em) - new Date(r.criado_em)) < 120000) : [];
+  for(const t of junto){ await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({concluida_em: null})}).catch(()=>{}); t.concluida_em = null; }
+  if(k && junto.length) D.tarefasPorCaso.set(k.id, [...(D.tarefasPorCaso.get(k.id)||[]), ...junto.filter(t=>!(D.tarefasPorCaso.get(k.id)||[]).includes(t))]);
+  aviso("Registro desfeito: o prazo voltou ao caso", false);
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
+}
+// a resposta do registro: o selo no lugar do colchete e o comprovante preso a ela
+function respPrazoHtml(a){
+  const r = RX_PZ_RESP.exec(a.texto||""); if(!r) return null;
+  const rot = r[2]==="CUMPRIDO" ? "Prazo cumprido" : r[2]==="NÃO CUMPRIDO" ? "Prazo não cumprido" : "Prazo não se aplica";
+  const anx = (D.anexos||[]).filter(an=>an.andamento_id===a.id);
+  return {corpo: a.texto.slice(r[0].length), chip: `<span class="chip tl-pz-resp tl-pz-resp-${r[2]==="CUMPRIDO"?"ok":"x"}">${rot}</span>`,
+    anexos: anx.length ? `<span class="tl-pz-anx">${anx.map(an=>`<button type="button" class="tl-pz-doc" onclick="abrirAnexo('${an.id}')">${IC_DOC_PZ}${esc(an.nome||"comprovante")}</button>`).join("")}</span>` : ""};
+}
 function comentarioV12(a, resposta, reacoes, raiz, co, cor){
   const pz = RX_PRAZO_AND.exec(a.texto||"");
-  const corpo = pz ? a.texto.slice(pz[0].length) : (a.texto||"");
+  // F326 · a anotação do prazo traz a faixa do estado; a resposta do registro traz o selo e o comprovante
+  const pzE = pz && raiz ? estadoPrazoNota(a) : null, rp = !pz && respPrazoHtml(a);
+  const corpo = pz ? a.texto.slice(pz[0].length).replace(RX_PZ_CONTAGEM, "") : rp ? rp.corpo : (a.texto||"");
   const tp = tipoDoComentario(corpo);
   const chipsReacao = (reacoes&&reacoes.length)
     ? `<span class="tl-reacoes">${[...reacoes.reduce((m,r)=>{
@@ -40126,7 +40822,8 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
     ? `<button class="tl-bt tl-bt-ic tl-apaga" title="apagar este meu comentário" aria-label="apagar" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>` : "";
   const barra = raiz ? `<span class="tl-barra">
       <button class="tl-bt resp-liga" onclick="abrirRespInline('${a.id}')" title="responder a este comentário — a resposta fica grudada nele">Responder</button>
-      ${minha?`<button class="tl-bt tl-bt-ok tf-acao" onclick="concluirDeVez('${minha.id}')" title="concluir a sua tarefa — dá para desfazer logo depois">Concluir tarefa</button>`:""}
+      ${pzE && (pzE.est==="vivo" || pzE.est==="vencido") ? `<button class="tl-bt tl-pz-cumpri" onclick="cumpriNaNota('${a.id}')" title="registrar como o prazo foi cumprido">${IC_OK_PZ}Cumpri o prazo</button>`
+        : minha?`<button class="tl-bt tl-bt-ok tf-acao" onclick="concluirDeVez('${minha.id}')" title="concluir a sua tarefa — dá para desfazer logo depois">Concluir tarefa</button>`:""}
       <button class="tl-bt" onclick="abrirRespInline('${a.id}',1)" title="responder dando prazo adicional">+ prazo</button>
       ${alvo?`<button class="tl-bt tf-acao" onclick="adiarTarefa('${alvo.id}')" title="mudar a data da tarefa">Reagendar</button>`:""}
       <span class="tl-barra-fim">
@@ -40137,11 +40834,12 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
           `<button class="tl-mais-it" role="menuitem" onclick="novaTarefaComentario('${a.id}','${a.caso_id}')">Mais uma tarefa neste comentário</button>`,
           `<button class="tl-mais-it" role="menuitem" onclick="copiar(${esc(JSON.stringify(corpo))},'Texto copiado')">Copiar o texto</button>`,
           itemLevarAndamento(a),
+          pzE && pzE.resp ? `<button class="tl-mais-it" role="menuitem" onclick="desfazerCumprimento('${pzE.resp.id}')">Desfazer o registro do prazo</button>` : "",
           a.autor_id===eu.id&&a.origem==="app" ? `<button class="tl-mais-it perigo" role="menuitem" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">Apagar este comentário</button>` : "",
         ])}</span>
     </span>` : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
-    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${(h=>`<span class="tl-dt">${fmtTS(a.criado_em).slice(0,5)}${h?" · ":""}</span>${h}`)(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}<span class="tl-cab-fim">${barra}${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${tarefasCartao(a)}${chipsReacao}${resposta||""}${raiz?caixaRespInline(a):""}</span>`;   // F244 · as ações na linha do autor
+    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${(h=>`<span class="tl-dt">${fmtTS(a.criado_em).slice(0,5)}${h?" · ":""}</span>${h}`)(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz && !pzE?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}${rp?rp.chip:""}<span class="tl-cab-fim">${barra}${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${rp?rp.anexos:""}${pzE?faixaPrazoNota(a, pzE):""}${tarefasCartao(a)}${chipsReacao}${resposta||""}${raiz?caixaRespInline(a):""}</span>`;   // F244 · as ações na linha do autor
 }
 // F41 · RESPONDER de qualquer comentário: arma o responde_a e o próximo
 // Registrar entra aninhado no comentário original (como a conclusão de
@@ -40248,7 +40946,8 @@ function linhaDoTempo(ands){
     const menc = (D.mencoes||[]).some(m=>m.andamento_id===a.id && m.para_id===eu.id);
     const html0 = comentario(a, sub, reacoes, true);
     const html = a._confMais ? html0.replace('<span class="tl-corpo">', `<span class="tl-conf-mais" title="conferências iguais anteriores, uma por linha no Caso completo">conferido mais ${a._confMais} ${a._confMais===1?"vez":"vezes"} desde ${fmt(a._confDesde)}</span><span class="tl-corpo">`) : html0;
-    return `<li class="${temaV10()?"tl-card ":""}${naoLi(a)?"tl-nao-lida":""}${clsSinal(a)}">${menc ? html.replace('<span class="tl-cab-fim">', '<span class="chip tl-menc" title="esta anotação cita você e a menção ainda não foi lida">@ menciona você</span><span class="tl-cab-fim">') : html}</li>`;
+    const pzV = (e=>e && e.est==="vencido" && _cumprindo!==a.id ? " tl-pz-venc" : "")(estadoPrazoNota(a));   // F326 · o cartão do prazo vencido sem registro
+    return `<li class="${temaV10()?"tl-card ":""}${naoLi(a)?"tl-nao-lida":""}${clsSinal(a)}${pzV}">${menc ? html.replace('<span class="tl-cab-fim">', '<span class="chip tl-menc" title="esta anotação cita você e a menção ainda não foi lida">@ menciona você</span><span class="tl-cab-fim">') : html}</li>`;
   };
   // a linha do tempo vem do mais novo para o mais velho: os dias separam a
   // leitura, e a fronteira do "não lido" mostra até onde você precisa descer
@@ -43495,13 +44194,53 @@ function tfNat(v, bt){
   const pnl = document.getElementById("esc-pnl-tf"); if(pnl) pnl.hidden = !tfNatureza;
   pintarFrase();
 }
+// F326 · O PRAZO FATAL NO CAMPO DE ESCREVER (desenho aprovado em 31.10.2026): do que é (o catálogo), contado de quando,
+// o resultado com o dia da semana e quanto falta (a data se corrige à mão), quem faz e quem revisa. Os ids and-cat, and-de,
+// and-prazo-data e and-prazo-mais continuam, porque o cálculo (aplicarCatalogoPrazo) e o carimbo (carimboCatalogo) são os mesmos.
+function painelPrazoEscrever(k){
+  const ex = advogadoDoCliente(k.cliente_id, k)[0], adm = (colAdmin()||{}).id, rev = adm && adm!==ex ? adm : "";
+  return `<div class="esc-pnl esc-pnl-pz pzx" id="esc-pnl-pz" hidden>
+    <div class="pzx-grade">
+      <label class="pzx-r" for="and-cat">Do que é</label>
+      <span id="and-prazo-mais" class="cat-prazo pzx-cat" data-alvo="and-prazo-data"><select id="and-cat" onchange="aplicarCatalogoPrazo('and');pzxPintar()">
+        <option value="">Outro prazo: digito a data</option>
+        ${PRAZOS_CATALOGO.map(x=>`<option value="${x.id}">${esc(x.rot)} · ${x.n} dias${x.uteis?" úteis":""}</option>`).join("")}</select></span>
+      <label class="pzx-r" for="and-de">Contado de</label>
+      <span class="pzx-de"><input type="date" id="and-de" value="${hoje()}" max="${hoje()}" onchange="aplicarCatalogoPrazo('and');pzxPintar()"><small id="pzx-de-txt">escolha do que é o prazo</small></span>
+    </div>
+    <div class="pzx-res" id="and-pz-res">
+      <div class="pzx-res-o"><label class="pzx-vence">Vence <input type="date" id="and-prazo-data" min="${hoje()}" title="a data fatal do prazo; corrija à mão se precisar" onchange="pzxPintar()"></label>
+        <small id="pzx-expl">Escolha do que é o prazo, ou digite a data.</small></div>
+      <div class="pzx-res-n" id="pzx-n" aria-live="polite"></div>
+    </div>
+    <div class="pzx-quem"><span class="pzx-r">Quem faz</span>${equipeAtiva().map(co=>`<button type="button" class="pzx-q${co.id===ex?" on":""}" data-pzq="${co.id}" aria-pressed="${co.id===ex}" onclick="pzxQuem(this)">${esc(co.nome.split(" ")[0])}</button>`).join("")}
+      <span class="pzx-esp"></span><label class="pzx-rv" for="pz-rev">Revisa</label>${seletorRevisor("pz-rev", rev)}</div>
+  </div>`;
+}
+function pzxQuem(bt){
+  const on = !bt.classList.contains("on");
+  document.querySelectorAll("#esc-pnl-pz .pzx-q").forEach(b=>{ b.classList.toggle("on", on && b===bt); b.setAttribute("aria-pressed", on && b===bt); });
+  pintarFrase();
+}
+// o resultado: o dia da semana, a conta do catálogo e quanto falta, em dias úteis
+function pzxPintar(){
+  const d = (document.getElementById("and-prazo-data")||{}).value, c = catPrazo.and, n = document.getElementById("pzx-n"), ex = document.getElementById("pzx-expl"),
+        de = document.getElementById("pzx-de-txt");
+  if(de) de.textContent = c ? (c.uteis ? "intimação (o dia da intimação não conta)" : "ciência da decisão") : "escolha do que é o prazo";
+  if(ex) ex.textContent = !d ? "Escolha do que é o prazo, ou digite a data."
+    : `${diaLongoPz(d)}. ${c && c.fatal===d ? textoContagemPz(c.n, c.uteis, c.de, d, c.dec) + ` Base: ${c.base}.` : "Data digitada à mão."}`;
+  const f = d ? faltaPz({data: d, natureza: "fatal"}) : null;
+  if(n) n.innerHTML = f ? `<b class="pzx-u-${f.urg}">${esc(String(f.n))}</b><small>${esc(f.urg==="venc" ? "dias úteis vencido" : f.un || f.txt)}</small>` : "";
+  document.getElementById("and-pz-res")?.classList.toggle("pzx-venc", !!f && f.urg==="venc");
+  pintarFrase();
+}
 // F182 · o Prazo fatal do compositor novo é uma chave que abre o quadro da data
 function pzToggle(ck){
   const pnl = document.getElementById("esc-pnl-pz"); if(pnl) pnl.hidden = !ck.checked;
   ck.closest(".esc-tg")?.classList.toggle("on", ck.checked);
   const d = document.getElementById("and-prazo-data");
   if(ck.checked && d && prazoDetectado && !d.value) d.value = prazoDetectado;
-  pintarFrase();
+  if(document.getElementById("pzx-n")) pzxPintar(); else pintarFrase();
 }
 // a frase "Ao registrar": o que o clique em Registrar vai criar, dito antes
 function fraseRegistro(){
@@ -43516,7 +44255,12 @@ function fraseRegistro(){
   if(tfNatureza==="lembrete")
     p.push(`agenda lembrete para ${tfQuem&&tfQuem.length?lista(nomes(tfQuem)):"você"}${dia?` em ${dia}`:" (falta quando)"}`);
   const ck = document.getElementById("and-prazo-ck"), pd = (document.getElementById("and-prazo-data")||{}).value;
-  if(ck && ck.checked) p.push(pd ? `marca prazo fatal em ${fmtBarra(pd)}` : "marca prazo fatal (falta a data)");
+  if(ck && ck.checked){
+    // F326 · quem faz e quem revisa o prazo fatal entram na frase
+    const q = document.querySelector("#esc-pnl-pz .pzx-q.on"), rv = (document.getElementById("pz-rev")||{}).value;
+    p.push((pd ? `marca prazo fatal em ${fmtBarra(pd)}` : "marca prazo fatal (falta a data)")
+      + (q ? `, com a tarefa de ${nomes([q.dataset.pzq])[0]}${rv && rv!==q.dataset.pzq ? ` e a revisão de ${nomes([rv])[0]}` : ""}` : ""));
+  }
   else if(!tfNatureza && prazoDetectado && !prazoCancelado) p.push(`${prazoDespachar?"volta à fila em":"lembra você em"} ${fmtBarra(prazoDetectado).slice(0,5)}`);
   return p.join(", ");
 }
@@ -43715,53 +44459,145 @@ async function marcarTarefaComPrazo(casoId, data){
   aviso(`⏰ Prazo fatal ${fmt(data)} — o caso foi para 🗓 Tarefas com Prazo (veio de ${de})`);
   montarSidebar();
 }
-function janelaPrazoCumprido(casoId){
-  fecharJanela();
-  const k=D.casoPorId.get(casoId); if(!k) return;
-  const de=(k.ronda||{}).prazo_de;
-  const sugerida=LISTAS_VOLTA.some(([l])=>l===de) ? de
+// a lista para onde o caso volta ao sair de 🗓 Tarefas com Prazo: a de onde veio, senão a da fase
+function listaDeVolta(k){
+  const de = (k.ronda||{}).prazo_de;
+  return LISTAS_VOLTA.some(([l])=>l===de) ? de
     : (LISTAS_VOLTA.some(([l])=>l===k.origem_lista) ? k.origem_lista
     : ((LISTAS_VOLTA.find(([,f])=>f===faseEfetiva(k))||[])[0] || "👪 Judicial"));   // F236
-  const div=document.createElement("div"); div.id="janela";
-  // F85 · o que foi feito FICA REGISTRADO: o prazo sai do "O que cobra ação"
-  // e vira comentário no caso, pendurado no que criou o prazo (quando há)
-  const og=origemDoPrazo(k);
-  div.innerHTML=`<div class="jan-caixa">
-    <h3>✔ Prazo cumprido: ${esc(tituloCaso(k))}</h3>
-    ${og?`<p class="meio-sub" style="margin-top:6px">Prazo: <b>${esc(og.texto.slice(0,140))}</b></p>`:""}
-    <p class="meio-sub" style="margin-top:6px">Registre a providência cumprida — vira andamento no caso,
-      ${og?"vinculado ao andamento que criou o prazo":"na linha do tempo"}.</p>
-    <div class="form-linha" style="margin-top:6px">${CONCLUIR_PRESETS.map(t=>
-      `<button class="btn-rap" onclick="document.getElementById('pz-txt').value=this.textContent">${t}</button>`).join("")}</div>
-    <textarea id="pz-txt" rows="2" placeholder="providência cumprida (protocolo, número, resultado)…"
-      style="width:100%;margin-top:8px;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px"></textarea>
-    <p class="meio-sub" style="margin-top:8px">O caso sai de 🗓 Tarefas com Prazo e volta
-      para a lista de onde veio — troque se o cumprimento mudou a fase (ex.: protocolou
-      recurso e agora é Conselho).</p>
-    <div class="form-linha" style="margin-top:10px">
-      <select id="pz-volta">${LISTAS_VOLTA.map(([l])=>
-        `<option value="${esc(l)}" ${l===sugerida?"selected":""}>${esc(l)}</option>`).join("")}</select>
-      <button id="pz-ok">Devolver o caso</button>
-      <button class="btn-mini" id="pz-cancela">cancelar</button>
+}
+const naFilaDoPrazo = k => k.mover_para==="🗓 Tarefas com Prazo" || (k.fase==="outro" && !!(k.ronda||{}).prazo_de);
+// a anotação que criou o prazo, as tarefas abertas de quem executa e de quem revisa
+function prazoDaAnotacao(k, andId){
+  const og = andId ? (D._andsFicha||[]).find(a=>a.id===andId) : null;
+  const o = og ? {id: og.id, texto: semCarimboPz(og.texto)} : origemDoPrazo(k);
+  const ogA = o && (D._andsFicha||[]).find(a=>a.id===o.id);
+  const m = ogA && /\[PRAZO ([0-9.]+)\]/.exec(ogA.texto||"");
+  const ts = o ? (D.tarefasPorCaso.get(k.id)||[]).filter(t=>t.andamento_id===o.id && !t.concluida_em) : [];
+  return {og: o, data: m ? isoDoCarimbo(m[1]) : k.prazo, exec: ts.filter(t=>t.papel!=="revisa"), rev: ts.filter(t=>t.papel==="revisa")};
+}
+// F326 · REGISTRAR O CUMPRIMENTO (regra combinada em 31.10.2026): o prazo fatal está cumprido com o andamento
+// "✔ [PRAZO CUMPRIDO]" em resposta à anotação que o criou, ou com a tarefa fatal concluída. Aqui se grava a resposta
+// (com a data, quando não é hoje, e o comprovante), se baixa o prazo do caso, se concluem as tarefas de quem executa,
+// se avisa quem revisa e, na fila 🗓 Tarefas com Prazo, o caso volta à lista de onde veio. Tudo com desfazer.
+// tipo "nao" registra o prazo perdido (✖ [PRAZO NÃO CUMPRIDO], avisa o advogado) e "nsa" o prazo que não se aplica.
+async function registrarCumprimento(casoId, o){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const tipo = o.tipo || "cumprido", {og, data: dataPz, exec, rev} = prazoDaAnotacao(k, o.andId);
+  const antes = {prazo: k.prazo, fase: k.fase, mover_para: k.mover_para||null, ronda: k.ronda||null};
+  const corpo = {};
+  if(k.prazo && (!dataPz || k.prazo===dataPz)) corpo.prazo = null;
+  const lista = o.volta || (naFilaDoPrazo(k) ? listaDeVolta(k) : null);
+  if(lista){
+    corpo.fase = (LISTAS_VOLTA.find(([l])=>l===lista)||[])[1] || "outro";
+    corpo.mover_para = lista;
+    corpo.ronda = {...(k.ronda||{})}; delete corpo.ronda.prazo_de;
+  }
+  const pre = tipo==="nao" ? "✖ [PRAZO NÃO CUMPRIDO]" : tipo==="nsa" ? "✖ [PRAZO NÃO SE APLICA]" : "✔ [PRAZO CUMPRIDO]";
+  const feito = (o.texto||"").trim() || (tipo==="nao" ? "O prazo não foi cumprido" : tipo==="nsa" ? "O prazo não se aplica" : "Prazo cumprido");
+  const texto = `${pre} ${feito}${tipo==="cumprido" && o.data && o.data!==hoje() ? ` (cumprido em ${fmtBarra(o.data)})` : ""}${
+    og || !lista ? "" : ` — o caso saiu de 🗓 Tarefas com Prazo e voltou para ${lista}.`}`;
+  let and = null;
+  try{
+    if(Object.keys(corpo).length){ await patchCaso(k.id, corpo); Object.assign(k, corpo); }
+    [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id: k.id, autor_id: eu.id, texto, ...(og ? {responde_a: og.id} : {})})});
+  }catch(e){ return aviso("Não consegui registrar: " + String(e.message||e).slice(0, 80)); }
+  if(and){ (D._andsFicha = D._andsFicha || []).unshift(and);
+    api(`/rest/v1/andamentos_lidos`,{method:"POST",headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
+      body:JSON.stringify({andamento_id: and.id, colaborador_id: eu.id})}).catch(()=>{}); }
+  // as tarefas de quem executa saem concluídas, também no não cumprido (o prazo acabou; a resposta diz como); a revisão
+  // fica, e quem revisa recebe o aviso
+  const concluidas = [];
+  if(o.concluir!==false) for(const t of exec){
+    try{ await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({concluida_em: new Date().toISOString()})}); t.concluida_em = new Date().toISOString(); concluidas.push(t); }catch(e){}
+  }
+  if(concluidas.length) D.tarefasPorCaso.set(k.id, (D.tarefasPorCaso.get(k.id)||[]).filter(t=>!concluidas.includes(t)));
+  const avisar = [...new Set([...rev.map(t=>t.colaborador_id), ...(tipo==="nao" ? advogadoDoCliente(k.cliente_id, k) : [])])].filter(id=>id && id!==eu.id);
+  if(and && avisar.length) await criarMencoes(texto, k.id, and.id, avisar).catch(()=>{});
+  // o comprovante vai junto, preso à resposta
+  if(and && o.arquivo){
+    if(o.arquivo.size > MAX_ARQ) aviso("O comprovante passa de 20 MB e não foi anexado");
+    else try{
+      const caminho = `prazos/${k.cliente_id}/${hoje()}-${Date.now()}-${nomeSeguro(o.arquivo.name || "comprovante")}`;
+      await subirArquivo(caminho, o.arquivo);
+      const [an] = await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id: k.id, cliente_id: k.cliente_id, autor_id: eu.id, andamento_id: and.id, origem: "prazo",
+          nome: o.arquivo.name || "comprovante", caminho, tipo: o.arquivo.type || null, tamanho: o.arquivo.size})});
+      if(an) (D.anexos = D.anexos || []).unshift(an);
+    }catch(e){ aviso("Registrei o cumprimento, mas o comprovante não subiu: " + String(e.message||e).slice(0, 60)); }
+  }
+  _cumprindo = null;
+  const msg = tipo==="nao" ? "✖ Registrado: o prazo não foi cumprido" : tipo==="nsa" ? "Registrado: o prazo não se aplica"
+    : `✔ Prazo cumprido${lista ? ` · o caso voltou para ${lista}` : ""}`;
+  avisoDesfazer(msg, async ()=>{
+    if(and) await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"DELETE",headers:{Prefer:"return=minimal"}}).catch(()=>{});
+    for(const t of concluidas){ await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({concluida_em: null})}).catch(()=>{}); t.concluida_em = null; }
+    if(concluidas.length) D.tarefasPorCaso.set(k.id, [...(D.tarefasPorCaso.get(k.id)||[]), ...concluidas]);
+    if(Object.keys(corpo).length){ await patchCaso(k.id, antes).catch(()=>{}); Object.assign(k, antes); }
+    if(and) D._andsFicha = (D._andsFicha||[]).filter(a=>a.id!==and.id);
+    montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
+  });
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
+}
+// a janela do cumprimento (o "Cumpri o prazo" da janela do prazo e o ✔ cumprido das listas): o que foi feito, quando,
+// o comprovante, concluir a tarefa de quem executa e, na fila 🗓 Tarefas com Prazo, para onde o caso volta
+function janelaPrazoCumprido(casoId, andId){
+  fecharJanela();
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const {og, exec, rev} = prazoDaAnotacao(k, andId), nome = id => ((D.colPorId.get(id)||{}).nome||"").split(" ")[0];
+  const sugerida = listaDeVolta(k), naFila = naFilaDoPrazo(k);
+  const div = document.createElement("div"); div.id = "janela";
+  const ex = [...new Set(exec.map(t=>nome(t.colaborador_id)))].join(" e "), rv = [...new Set(rev.map(t=>nome(t.colaborador_id)))].join(" e ");
+  div.innerHTML = `<div class="jan-caixa pzj" role="dialog" aria-labelledby="pzj-t">
+    <h3 id="pzj-t">Como o prazo foi cumprido</h3>
+    <p class="meio-sub">${esc(tituloCaso(k))}${og ? ` · Prazo: <b>${esc(og.texto.slice(0,140))}</b>` : ""}</p>
+    <div class="form-linha pzj-pre">${CONCLUIR_PRESETS.map(t=>
+      `<button type="button" class="btn-rap" onclick="document.getElementById('pz-txt').value=this.textContent">${t}</button>`).join("")}</div>
+    <label class="sr-so" for="pz-txt">O que foi feito</label>
+    <textarea id="pz-txt" rows="2" placeholder="O que foi feito: protocolo, número, resultado"></textarea>
+    <div class="pzj-lin">
+      <label class="pzj-campo">Cumprido em <input type="date" id="pz-data" value="${hoje()}" max="${hoje()}"></label>
+      <label class="pzj-campo pzj-arq">Comprovante <input type="file" id="pz-arq" accept="application/pdf,image/*"></label>
+    </div>
+    ${exec.length ? `<label class="pzj-ck"><input type="checkbox" id="pz-concluir" checked>Concluir a tarefa de ${esc(ex)}${rv ? ` e avisar ${esc(rv)}, que revisa` : ""}</label>` : ""}
+    ${naFila ? `<label class="pzj-campo">O caso sai de 🗓 Tarefas com Prazo e volta para <select id="pz-volta">${LISTAS_VOLTA.map(([l])=>
+      `<option value="${esc(l)}" ${l===sugerida?"selected":""}>${esc(l)}</option>`).join("")}</select></label>` : ""}
+    <div class="form-linha pzj-pe">
+      <button type="button" class="btn-mini" id="pz-cancela">Cancelar</button>
+      <button type="button" class="pzj-ok" id="pz-ok">Confirmar o cumprimento</button>
     </div>
   </div>`;
   document.body.appendChild(div);
-  document.getElementById("pz-cancela").onclick=fecharJanela;
-  document.getElementById("pz-ok").onclick=async()=>{
-    const lista=document.getElementById("pz-volta").value;
-    const fase=(LISTAS_VOLTA.find(([l])=>l===lista)||[])[1]||"outro";
-    const ronda={...(k.ronda||{})}; delete ronda.prazo_de;
-    k.fase=fase; k.mover_para=lista; k.prazo=null; k.ronda=ronda;
-    await patchCaso(k.id, {fase, mover_para:lista, prazo:null, ronda}).catch(()=>{});
-    const feito=((document.getElementById("pz-txt")||{}).value||"").trim();
-    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
-        ...(og?{responde_a:og.id}:{}),
-        texto:`✔ [PRAZO CUMPRIDO] ${feito||"Prazo cumprido"}${
-          og?"":` — o caso saiu de 🗓 Tarefas com Prazo e voltou para ${lista}.`}`})}).catch(()=>{});
-    fecharJanela(); aviso(`✔ Prazo cumprido — o caso voltou para ${lista}`);
-    montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
+  document.getElementById("pz-cancela").onclick = fecharJanela;
+  document.getElementById("pz-ok").onclick = async ()=>{
+    const v = id => document.getElementById(id);
+    const o = {andId: og && og.id, texto: (v("pz-txt").value||"").trim(), data: v("pz-data").value || hoje(),
+      arquivo: (v("pz-arq").files||[])[0] || null, concluir: v("pz-concluir") ? v("pz-concluir").checked : true,
+      volta: v("pz-volta") ? v("pz-volta").value : null};
+    fecharJanela();
+    await registrarCumprimento(casoId, o);
   };
+  setTimeout(()=>{ const t = document.getElementById("pz-txt"); if(t) t.focus(); });
+}
+// o prazo que passou sem o ato: o registro diz o que houve e avisa o advogado do cliente
+function registrarNaoCumprido(casoId, andId){
+  caixa(`<h3>O prazo não foi cumprido</h3>
+    <p class="meio-sub">Diga o que houve. O registro fica na linha do tempo, em resposta à anotação do prazo, e o advogado do cliente é avisado.</p>
+    <label class="sr-so" for="pzn-txt">O que houve</label>
+    <textarea id="pzn-txt" rows="3" style="width:100%;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px" placeholder="Ex.: a cliente não trouxe o relatório a tempo; vamos pedir de novo ao INSS"></textarea>
+    <div class="form-linha" style="margin-top:8px"><button class="btn-rap" onclick="fecharCaixa()">Cancelar</button>
+      <button class="btn-mini forte" style="margin-left:auto" onclick="(t=>{fecharCaixa();registrarCumprimento('${casoId}',{andId:'${andId||""}',tipo:'nao',texto:t})})(document.getElementById('pzn-txt').value)">Registrar</button></div>`);
+}
+function naoSeAplica(casoId, andId){
+  caixa(`<h3>O prazo não se aplica</h3>
+    <p class="meio-sub">Diga por quê. O prazo sai do caso e o registro fica na linha do tempo.</p>
+    <label class="sr-so" for="pzs-txt">Por que não se aplica</label>
+    <textarea id="pzs-txt" rows="2" style="width:100%;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px" placeholder="Ex.: a decisão foi favorável e não há o que recorrer"></textarea>
+    <div class="form-linha" style="margin-top:8px"><button class="btn-rap" onclick="fecharCaixa()">Cancelar</button>
+      <button class="btn-mini forte" style="margin-left:auto" onclick="(t=>{fecharCaixa();registrarCumprimento('${casoId}',{andId:'${andId||""}',tipo:'nsa',texto:t})})(document.getElementById('pzs-txt').value)">Registrar</button></div>`);
 }
 async function novoAndamento(casoUnico){
   const sel=document.getElementById("and-caso");
@@ -43811,6 +44647,10 @@ async function novoAndamento(casoUnico){
   delete catPrazo.and;   // F92 · o cálculo desta anotação não vaza para a próxima
   desarmarResposta();
   if(prazoCk && prazoCk.checked && prazoData) await marcarTarefaComPrazo(casoId, prazoData);
+  // F326 · o prazo fatal nasce com a tarefa de quem faz (natureza fatal) e a revisão: é ela que diz cumprido
+  const pzQ = prazoCk && prazoCk.checked && prazoData && and && document.querySelector("#esc-pnl-pz .pzx-q.on");
+  if(pzQ){ try{ await criarTarefasDe(and.id, casoId, [pzQ.dataset.pzq], (document.getElementById("pz-rev")||{}).value||"", prazoData, "fatal"); }
+    catch(e){ aviso("⚠ a tarefa do prazo não gravou: "+String(e.message||e).slice(0,80)); } }
   // data sem pessoa: quem escreveu "cobrar em 30 dias" quer ELE MESMO lembrar
   let tfCriouLembrete = false;   // F73: o detector do texto não duplica o tf-box
   let executores = [];
@@ -43829,7 +44669,7 @@ async function novoAndamento(casoUnico){
   // além de quem for citado com @ no texto
   await Promise.all([
     // teste 11.88, REC-07: quem recebe a tarefa também é avisado, e não só quem está atribuído ao caso
-    criarMencoes(texto, casoId, and?and.id:null, [...(D.atrDoCaso.get(casoId)||[]), ...executores]),
+    criarMencoes(texto, casoId, and?and.id:null, [...(D.atrDoCaso.get(casoId)||[]), ...executores, ...(pzQ ? [pzQ.dataset.pzq] : [])]),
     and ? api(`/rest/v1/andamentos_lidos`,{method:"POST",       // autor já leu
       headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
       body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{}) : null]);
