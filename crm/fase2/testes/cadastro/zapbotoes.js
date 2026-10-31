@@ -19,7 +19,7 @@ const T = {
     { id: AVO, nome: "Antônio Fictício Lima", cpf: "33344455514", telefones: [{ numero: "16999990002", obs: "é a nora, cuida do benefício" }] },
     { id: OUTRO, nome: "Carla Fictícia Souza", cpf: "44455566623", campos: { representante: { nome: "Outra Pessoa", cpf: "99988877766" } } }],
   zap_conversas: [{ id: CONV, telefone: "5516999990002", chave: "99990002", nome_perfil: "Rosa", cliente_id: MAE,
-    atendente_id: null, status: "aberta", nao_lidas: 0, ultima_em: agora, ultimo_texto: "oi", atendimento_id: "e1" }],
+    atendente_id: null, status: "aberta", nao_lidas: 0, ultima_em: agora, ultimo_texto: "[audio]", atendimento_id: "e1" }],
   zap_mensagens: [{ id: "m1", seq: 1, conversa_id: CONV, direcao: "entrada", tipo: "imagem", texto: "o laudo", midia_url: "zap/x/laudo.jpg", midia_nome: "laudo.jpg", status: "entregue", criado_em: agora },
     { id: "m3", seq: 3, conversa_id: CONV, direcao: "entrada", tipo: "audio", texto: null, midia_url: "zap/x/a.ogg", midia_nome: "a.ogg", status: "entregue", criado_em: agora },
     { id: "m4", seq: 4, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Bom dia, doutor", status: "entregue", criado_em: agora },
@@ -96,8 +96,19 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
       && new Set([...document.querySelectorAll(".zl-chips > *")].map(e => Math.round(e.getBoundingClientRect().top))).size === 1
       && [...document.querySelectorAll(".zap-conv")].every(e => getComputedStyle(e).borderTopWidth === "0px")
       && getComputedStyle(document.querySelector(".zl-sel-rot") || document.body).fontSize !== "16px"));
+    conf("a prévia da lista diz o tipo da mensagem (🎤 Áudio)", (await p.$eval(".zap-conv .l2", e => e.textContent)).trim() === "🎤 Áudio");
     await p.tap(".zap-conv");
     await p.waitForSelector("#zap-msgs .zap-b");
+    conf("o fundo da conversa tem o desenho do aplicativo", await p.$eval("#zap-msgs", e => /svg/.test(getComputedStyle(e).backgroundImage)));
+    // F324 · tocar e segurar o balão abre a fileira de emojis e as ações
+    await p.evaluate(() => { const el = document.querySelector("#zb-m4 .txt"), r = el.getBoundingClientRect();
+      const t = new Touch({ identifier: 1, target: el, clientX: r.left + 5, clientY: r.top + 5 });
+      el.dispatchEvent(new TouchEvent("touchstart", { touches: [t], changedTouches: [t], bubbles: true })); });
+    await p.waitForTimeout(650);
+    conf("segurar o balão abre os emojis e as ações", await vis(".zm-emojis") && await vis('.zm-acoes [data-zm="r"]') && await vis('.zm-acoes [data-zm="c"]'));
+    await p.tap('.zm-emojis [data-zm-r="👍"]'); await p.waitForTimeout(300);
+    conf("o emoji do menu grava a reação", escritas.some(e => /zap_reacoes/.test(e.u) && e.b && e.b.emoji === "👍" && e.b.mensagem_id === "m4"));
+    await p.evaluate(() => document.dispatchEvent(new TouchEvent("touchend", { bubbles: true })));
     conf("o topo não mostra o número de protocolo", !(await p.$(".zap-proto")) && !/Protocolo/.test(await p.$eval(".zap-topo", e => e.textContent)));
     // F310 · o topo numa linha; atendente, setor e etiquetas ficam no cartão "Conversa" da ficha que o nome abre
     conf("o topo da conversa ocupa uma linha (≤ 56 px)", await p.$eval(".zap-topo", e => e.getBoundingClientRect().height) <= 56);
