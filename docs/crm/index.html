@@ -5575,6 +5575,8 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
   .pzc-sub{flex-wrap:wrap;gap:6px 8px}
   .pzc-caso-c{height:22px;line-height:22px;padding:0 8px;border-radius:11px;background:var(--placa,#EFEEEB);font-size:12px;color:var(--cinza,#4A4944);white-space:nowrap}
   .pzc-falta-c{font-size:12px;white-space:nowrap}
+  .pzc-quem-c{display:inline-flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap}
+  .pzc-quem-c .pz-av{width:20px;height:20px;font-size:11px;border-radius:5px}
   .pzc-abrir{position:absolute;inset:0;width:100%;height:100%;opacity:0;border-radius:12px}
 }
 /* a janela do prazo: 480 px à direita (e por cima da aba, com o véu); no celular, tela cheia */
@@ -37211,7 +37213,7 @@ function pzConteudo(cliId){
     const i = _pzCli.indexOf(x), f = x._f, k = x.casoId && D.casoPorId.get(x.casoId), q = D.colPorId.get(quemDaLinha(x, cliId)), meta = metaDaLinha(x);
     return `<li class="pzc-lin pzc-u-${f.urg}${pend(x) ? " pzc-venc" : ""}" data-nat="${x._nat}" data-data="${x.data}">
       <span class="pzc-dia"><small>${esc(SIGLA_DIA[new Date(x.data+"T12:00:00").getDay()])}.</small><b>${fmtBarra(x.data).slice(0,5)}</b></span>
-      <span class="pzc-o"><b class="pzc-t">${esc(x._titulo)}</b><span class="pzc-sub">${pillNat(x._nat)}${meta ? `<small class="pzc-meta" title="${esc(meta)}">${esc(meta)}</small>` : ""}<span class="pzc-cel"><span class="pzc-caso-c">${esc(casoCurtoPz(k))}</span><span class="pzc-falta-c">${esc(f.txt)}</span></span></span></span>
+      <span class="pzc-o"><b class="pzc-t">${esc(x._titulo)}</b><span class="pzc-sub">${pillNat(x._nat)}${meta ? `<small class="pzc-meta" title="${esc(meta)}">${esc(meta)}</small>` : ""}<span class="pzc-cel">${q ? `<span class="pzc-quem-c">${avPz(q.id)}<span>${esc(q.nome.split(" ")[0])}</span></span>` : ""}<span class="pzc-caso-c">${esc(casoCurtoPz(k))}</span><span class="pzc-falta-c">${esc(f.txt)}</span></span></span></span>
       ${porData ? `<span class="pzc-caso" title="${esc(k ? `${tituloCaso(k)} · ${NOME_FASE[faseEfetiva(k)]||""}` : "Do cliente")}">${esc(casoCurtoPz(k))}</span>` : ""}
       <span class="pzc-quem">${q ? `${avPz(q.id)}<span>${esc(q.nome.split(" ")[0])}</span>` : ""}</span>
       <span class="pzc-falta">${esc(f.txt)}</span>
@@ -37310,7 +37312,9 @@ function quemDaLinha(x, cliId){
     if(ex) return ex.colaborador_id;
   }
   const k = x.casoId && D.casoPorId.get(x.casoId);
-  return (k ? donosDoCaso(k)[0] : null) || advogadoDoCliente(cliId || (k && k.cliente_id) || clienteAberto, k)[0] || null;
+  // sem tarefa e sem atribuição no caso, responde o advogado responsável pelo cliente (e não o administrador)
+  const atr = k ? ((D.atrDoCaso.get(k.id)||[])[0] || (donoDaLista(k)||{}).id) : null;
+  return atr || advogadoDoCliente(cliId || (k && k.cliente_id) || clienteAberto, k)[0] || null;
 }
 // de quando o prazo conta: o início marcado, a decisão, a ciência, o "contado de" do carimbo ou o dia da anotação
 function inicioDaLinha(x){
