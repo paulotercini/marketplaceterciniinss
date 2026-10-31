@@ -5671,7 +5671,8 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
   :is(#painel-prazo,#painel-prazo-esq).pp-prazo h2{font-size:19px}
   :is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-corpo{padding:16px 16px 24px;gap:20px}
   :is(#painel-prazo,#painel-prazo-esq).pp-prazo footer.ppz-pe{padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
-  :is(#painel-prazo,#painel-prazo-esq).pp-prazo .pp-pri{flex:1;justify-content:center}
+  :is(#painel-prazo,#painel-prazo-esq).pp-prazo .pp-pri{flex:1;justify-content:center;min-width:0}
+  :is(#painel-prazo,#painel-prazo-esq).pp-prazo footer.ppz-pe{flex-wrap:wrap}
   .ppz-q-n b{font-size:40px}
 }
 /* o cumprimento (a janela) */
@@ -37632,13 +37633,16 @@ function abrirPainelPrazo(i, fonte){
       <button type="button" class="ppz-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Comentar</button></section>` : "";
   // O PÉ: "Cumpri o prazo" (o prazo fatal do caso) ou "Concluir a minha tarefa"; as ações da linha; "Abrir o caso"; o ⋯
   const principal = x.cumprir ? `<button type="button" class="pp-pri" onclick="${fechar};${x.cumprir}">${IC_OK_PZ}Cumpri o prazo</button>`
-    : minha && !gq ? `<button type="button" class="pp-pri" onclick="concluirDeVez('${minha.id}')">${IC_OK_PZ}Concluir a minha tarefa</button>` : "";
+    : minha && !gq ? `<button type="button" class="pp-pri" onclick="${fechar};concluirDeVez('${minha.id}')">${IC_OK_PZ}Concluir a minha tarefa</button>` : "";
+  // o ✔ feito e o ✎ escrever da linha repetiam o "Concluir a minha tarefa": com ele, o escrever vai ao ⋯
+  const acaoPe = principal ? "" : String(x.acao || "").replace(/onclick="/g, `onclick="${fechar};`);
   const abrirCaso = k && (sobre || celular()) ? `<button type="button" class="ppz-bt ppz-caso" onclick="${fechar};casoSel='${k.id}';abaAtiva=2;subAba='escritorio';repintarFicha()">Abrir o caso</button>` : "";
   const extra = gq ? `<button type="button" class="ppz-bt" onclick="verQualidade('${cliId}')">Contribuições a pagar</button>${(cn => cn ? `<button type="button" class="ppz-bt" onclick="abrirAnexo('${cn.id}')">Abrir o CNIS</button>` : "")(docsDoDossie(cliId).filter(d=>/CNIS completo/i.test(fonteDoDossie(d)[1])).sort((p, q)=>String(q.criado_em||"").localeCompare(String(p.criado_em||"")))[0])}` : "";
   const mais = menuMais([
     x.edita ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="prazoSaberMais(${i}${src})">Corrigir a data</button>` : "",
     x.cumprir && k && k.prazo===x.data ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="${fechar};naoSeAplica('${k.id}','${x.andId||""}')">Não se aplica</button>` : "",
-    minha && nat!=="fatal" ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="adiarTarefa('${minha.id}')">Adiar</button>` : "",
+    minha && !gq && !x.cumprir ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="${fechar};concluirTarefa('${minha.id}')">Concluir escrevendo o que foi feito</button>` : "",
+    minha && nat!=="fatal" ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="${fechar};adiarTarefa('${minha.id}')">Adiar</button>` : "",
     abrirCaso && celular() ? abrirCaso.replace('class="ppz-bt ppz-caso"', 'class="tl-mais-it pp-sec-bt" role="menuitem"') : ""]);
   let el;
   if(esq){
@@ -37659,7 +37663,7 @@ function abrirPainelPrazo(i, fonte){
       <h2>${esc(x._titulo)}</h2>
     </header>
     <div class="ppz-corpo">${quanto}${origem}${conta}${fazer}${ligado}${acompanha}${historico}${comentar}</div>
-    <footer class="ppz-pe">${principal}${x.cumprir ? "" : `<span class="ppz-acoes">${x.acao || ""}</span>`}${extra}${celular() ? "" : abrirCaso}<span class="ppz-esp"></span>${mais.replace('class="tl-mais"', 'class="tl-mais pp-mais"')}</footer>`;
+    <footer class="ppz-pe">${principal}${acaoPe ? `<span class="ppz-acoes">${acaoPe}</span>` : ""}${extra}${celular() ? "" : abrirCaso}<span class="ppz-esp"></span>${mais.replace('class="tl-mais"', 'class="tl-mais pp-mais"')}</footer>`;
   if(esq) return;
   let veu = document.getElementById("pp-veu");
   if(sobre && !veu){ veu = document.createElement("div"); veu.id = "pp-veu"; veu.onclick = fecharPainelPrazo; document.body.appendChild(veu); }
@@ -40919,7 +40923,7 @@ function caixaRespInline(a){
   const ts = tarefasDe(a).filter(t=>!t.concluida_em);
   const alvo = ts.find(t=>t.colaborador_id===eu.id) || ts[0];
   const dono = alvo && ((D.colPorId.get(alvo.colaborador_id)||{}).nome||"").split(" ")[0];
-  const pill = (q, rot) => `<button class="tl-pill ${riPrazo&&riPrazo===maisDias(q)?"on":""}" onclick="riDia(${q})">${rot}</button>`;
+  const pill = (q, rot) => `<button type="button" class="tl-pill ${riPrazo&&riPrazo===maisDias(q)?"on":""}" data-ri="${maisDias(q)}" onclick="riDia(${q})">${rot}</button>`;
   const escolhida = riPrazo && riPrazo!==maisDias(5) && riPrazo!==maisDias(15);
   return `<span class="tl-resp-box${riFocoPrazo?" foco-prazo":""}" id="ri-box">
     <textarea id="ri-txt" rows="2" placeholder="Resposta"></textarea>
@@ -40927,8 +40931,8 @@ function caixaRespInline(a){
       ${alvo?`<label class="tl-resp-ck"><input type="checkbox" id="ri-concluir"${alvo.colaborador_id===eu.id?" checked":""}> concluir a tarefa${alvo.colaborador_id===eu.id?"":` de ${esc(dono)}`} ao responder</label>`:""}
       <span class="tl-resp-rot">Prazo adicional</span>
       ${pill(5,"+5 dias")}${pill(15,"+15 dias")}
-      <label class="tl-pill ${escolhida?"on":""}">${escolhida?fmtBarra(riPrazo).slice(0,5):"escolher data"}
-        <input type="date" min="${hoje()}" onchange="riDia(this.value)"></label>
+      <label class="tl-pill ri-outra ${escolhida?"on":""}"><span>${escolhida?fmtBarra(riPrazo).slice(0,5):"escolher data"}</span>
+        <input type="date" min="${hoje()}" value="${escolhida?riPrazo:""}" aria-label="escolher a data do prazo adicional" onchange="riDia(this.value, true)"></label>
       <span class="tl-resp-fim">
         <button class="tl-bt" onclick="fecharRespInline()">Cancelar</button>
         <button class="tl-bt forte" onclick="responderInline('${a.id}')">Responder</button></span>
@@ -40942,14 +40946,16 @@ function abrirRespInline(andId, prazo){
     document.getElementById("ri-box")?.scrollIntoView({block:"nearest"}); });
 }
 function fecharRespInline(){ respInline = null; riPrazo = null; repintarFicha(); }
-function riDia(q){
+// muda só os botões no lugar: repintar a ficha destruía o seletor de data do
+// iPhone, que dispara o change ao abrir, e a data não podia ser escolhida
+function riDia(q, daData){
   const d = /^\d{1,3}$/.test(String(q)) ? maisDias(+q) : q;
-  riPrazo = riPrazo===d ? null : (d||null);
-  const txt = (document.getElementById("ri-txt")||{}).value||"";
-  const ck = (document.getElementById("ri-concluir")||{}).checked;
-  repintarFicha();
-  const t = document.getElementById("ri-txt"); if(t) t.value = txt;
-  const c = document.getElementById("ri-concluir"); if(c && ck!==undefined) c.checked = ck;
+  riPrazo = riPrazo===d && !daData ? null : (d||null);
+  const box = document.getElementById("ri-box"); if(!box) return;
+  box.querySelectorAll("[data-ri]").forEach(b=>b.classList.toggle("on", !!riPrazo && b.dataset.ri===riPrazo));
+  const outra = box.querySelector(".ri-outra"), esc = !!riPrazo && ![...box.querySelectorAll("[data-ri]")].some(b=>b.dataset.ri===riPrazo);
+  if(outra){ outra.classList.toggle("on", esc); outra.querySelector("span").textContent = esc ? fmtBarra(riPrazo).slice(0,5) : "escolher data";
+    const inp = outra.querySelector("input"); if(!esc && inp) inp.value = ""; }
 }
 async function responderInline(andId){
   const a = (D._andsFicha||[]).find(x=>x.id===andId); if(!a) return;
