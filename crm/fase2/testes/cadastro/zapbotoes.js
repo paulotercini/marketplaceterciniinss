@@ -197,7 +197,7 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.tap(".zap-conv"); await p.waitForSelector("#zap-msgs .zap-b");
     await p.waitForSelector(".zt-mais summary", { state: "visible" });
     await p.tap(".zt-mais summary"); await p.waitForTimeout(100);
-    await p.tap('.zt-mais button[onclick="marcarNaoLida()"]'); await p.waitForTimeout(300);
+    await p.tap('.zt-mais button[onclick="marcarNaoLida()"]'); await p.waitForSelector(".zap-conv.nova .bolha", { timeout: 3000 }).catch(() => {});
     conf("Marcar como não lida grava e volta à lista com a bolinha", escritas.some(e => /zap_conversas/.test(e.u) && e.m === "PATCH" && e.b && e.b.nao_lidas === 1)
       && await vis(".zap-conv.nova .bolha"));
   } catch (e) { conf("FALHA " + e.message.split("\n")[0], false); }
