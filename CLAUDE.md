@@ -350,6 +350,8 @@ A **F328** (busca, emojis e prévia do link no WhatsApp, pedido do Paulo de 31.1
 
 A **F327** (12.04, as etapas mais legíveis, pedido do Paulo de 31.10.2026): o resumo recolhido diz há quantos dias o caso está na etapa ("desde 14/10 (há 17 dias)", `tempoNaEtapa`), em vermelho quando o prazo de análise do INSS venceu (`prazoMora`) ou, fora dele, quando passa do tempo habitual da fase (`ETAPA_HABITUAL`: INSS 90, Conselho 180, Judicial 180, Pagamento 60 dias, estimativa do escritório, dita no title); o title de cada etapa diz quando e por qual fonte ela foi cumprida (`tituloEtapa`, a marca virtual guarda `por`); o cinza com ✓ da fase encerrada vale também no celular; e o selo da etapa nas listas e no Meu Dia segue a cor da fase (`seloEtapaLista`, `.ag-etapa`). Teste: `trilha183.js`.
 
+A **F330** (12.06, pedido do Paulo de 31.10.2026): no celular, como já era no computador, as abas INSS, CRPS e Judicial dos andamentos só aparecem com andamento ou número (`abasVisiveis`; o protocolo do INSS passou a abrir a aba INSS), e o botão **+ número** (`inserirNumeroAba`) oferece só o que falta (protocolo, recurso do e-Sisrec, processo judicial); guardado o número, a aba aparece. Testes: `f320.js`, `linha102.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
