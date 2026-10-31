@@ -1277,6 +1277,18 @@
   .app.celular ~ .fab-sug{bottom:120px}
   .app.celular.detalhe-aberto ~ .fab-sug{bottom:130px}
   .app.celular.zap-conv-aberta ~ .fab-sug{bottom:calc(132px + env(safe-area-inset-bottom))}
+  /* F313 · ajuda: o "?" fixo à esquerda do ✎ Sugestões e o "?" pequeno das barras e quadros */
+  .fab-ajuda{position:fixed;right:146px;bottom:72px;z-index:80;width:36px;height:36px;border-radius:50%;border:none;
+    background:#1F4E79;color:#fff;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+  .app.celular ~ .fab-ajuda{bottom:120px}
+  .app.celular.detalhe-aberto ~ .fab-ajuda{bottom:130px;right:64px}
+  .app.celular.zap-conv-aberta ~ .fab-ajuda{display:none}
+  .ajuda-bt{flex:none;width:24px;height:24px;padding:0;margin:0 0 0 6px;border-radius:50%;border:1px solid #B9C7D6;background:#F3F7FB;
+    color:#1F4E79;font-size:12px;font-weight:500;line-height:22px;text-align:center;cursor:pointer;vertical-align:middle;align-self:center}
+  @media (hover:hover) and (pointer:fine){.ajuda-bt:hover,.fab-ajuda:hover{background:#1F4E79;color:#fff}}
+  .ajuda-txt p,.ajuda-txt ul{margin:0 0 8px} .ajuda-txt li{margin:2px 0}
+  .ajuda-outros summary{cursor:pointer;font-weight:600;margin-top:6px}
+  .ajuda-lista{display:flex;flex-wrap:wrap;gap:4px} .ajuda-lista .on{font-weight:700;text-decoration:underline}
   .sug-tipos{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
   .sug-tipos label{border:1px solid var(--borda);border-radius:14px;padding:3px 10px;cursor:pointer}
   .sug-tipos label:has(input:checked){border-color:#B45309;background:#FEF3C7}
@@ -4315,7 +4327,7 @@ html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .men
 /* F294 · o nível 1 só navega nos andamentos dos portais: sem os prazos, que têm botões de gravar */
 html[data-nivel="1"] :is(.caso-pz,.td-classif){display:none!important}
 /* F294 · no caso, o nível 1 vê só os botões de ler (trocar de aba, abrir o documento, copiar); os que gravam somem */
-html[data-nivel="1"] .painel[data-p="2"] [onclick]:not([onclick^="irSubAba"]):not([onclick^="trVerFase"]):not([onclick^="trAjuda"]):not([onclick^="guardar("]):not([onclick^="lcAbrir"]):not([onclick^="irOutraAba"]):not([onclick^="abrirMeuInss"]):not([onclick^="fonte"]):not([onclick^="filtroTudo"]):not([onclick^="procSel"]):not([onclick^="nupSel"]):not([onclick^="instSel"]):not([onclick^="tudoSoMarcos"]):not([onclick^="copiar"]):not([onclick^="liNaFicha"]):not([onclick^="liTudoNaFicha"]):not([onclick^="abrirAnexo"]):not([onclick^="abrirDecisao"]):not([onclick^="document."]):not([onclick^="fecharCaixa"]):not([onclick^="this."]):not([onclick^="trEscolher"]),html[data-nivel="1"] #detalhe :is(.cli-adv-bt,.cli-nao){display:none!important}
+html[data-nivel="1"] .painel[data-p="2"] [onclick]:not([onclick^="ajuda("]):not([onclick^="irSubAba"]):not([onclick^="trVerFase"]):not([onclick^="trAjuda"]):not([onclick^="guardar("]):not([onclick^="lcAbrir"]):not([onclick^="irOutraAba"]):not([onclick^="abrirMeuInss"]):not([onclick^="fonte"]):not([onclick^="filtroTudo"]):not([onclick^="procSel"]):not([onclick^="nupSel"]):not([onclick^="instSel"]):not([onclick^="tudoSoMarcos"]):not([onclick^="copiar"]):not([onclick^="liNaFicha"]):not([onclick^="liTudoNaFicha"]):not([onclick^="abrirAnexo"]):not([onclick^="abrirDecisao"]):not([onclick^="document."]):not([onclick^="fecharCaixa"]):not([onclick^="this."]):not([onclick^="trEscolher"]),html[data-nivel="1"] #detalhe :is(.cli-adv-bt,.cli-nao){display:none!important}
 html[data-nivel="1"] .painel[data-p="2"] [onclick^="trEscolher"]{pointer-events:none}
 html[data-nivel="1"] .mp-it.mp-novo{display:none!important}
 /* F253 · a faixa de quem olha como outro nível */
@@ -5534,7 +5546,7 @@ html[data-tema="v10"] .aq-ligar h3{font-size:15px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.88</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.89</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5616,6 +5628,7 @@ html[data-tema="v10"] .aq-ligar h3{font-size:15px}
     </div>
     <div class="meio-topo">
       <h1 id="titulo-lista"></h1>
+      <button class="ajuda-bt ajuda-tit" type="button" onclick="ajuda(null,event)" title="como usar esta tela" aria-label="Ajuda desta tela">?</button>
       <div class="topo-extra" id="topo-extra"></div>
       <!-- F274 · o fundo da lista e a ordem moram no ⋯ ao lado do título, como no To Do -->
       <details class="tl-mais mais-baixo topo-mais" id="topo-mais"><summary class="tl-bt tl-bt-ic" aria-label="Opções da lista" title="opções da lista: ordem e fundo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg></summary>
@@ -5655,6 +5668,7 @@ html[data-tema="v10"] .aq-ligar h3{font-size:15px}
 <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
 <button class="fab-rapida" id="fab-rapida" onclick="anotacaoRapida()"
   title="anotação rápida (ligação ou balcão) — o registro nasce urgente">⚡</button>
+<button class="fab-ajuda" id="fab-ajuda" type="button" onclick="ajuda(null,event)" title="como usar esta tela" aria-label="Ajuda">?</button>
 <button class="fab-sug" id="fab-sug" onclick="abrirSugestao()"
   title="anotar um erro, uma correção ou uma melhoria do CRM; somente o Paulo lê" aria-label="Sugestões">✎<span class="fab-sug-t"> Sugestões</span></button>
 <div class="zap-ag" id="zap-ag"></div>
@@ -12543,10 +12557,10 @@ function itensAgendaTodos(){
       por({data:d, k, cli, prazo:true, fatal: igual==="trib" && p.fim===k.prazo, selo:`Prazo ${ROT_PRAZO[p.sistema]||p.sistema||""}`.trim(),
         resumo: p.situacao==="findo" ? `venceu sem resposta: ${p.ato||"intimação"}` : `${p.ato||"intimação"}${p.dias?` (${p.dias} dias)`:""}${p.fim?"":", ciência tácita"}`}, donos);
     }
-    if(rec) por({data:rec, k, cli, prazo:true, fatal: igual==="rec", selo:"Prazo do recurso",
+    if(rec) por({data:rec, k, cli, prazo:true, avisa:true, fatal: igual==="rec", selo:"Prazo do recurso",
       resumo:`recorrer da decisão de ${fmt(k.decisao_em)} (recurso ${k.fase==="conselho"?"especial":"ordinário"})`}, donos);
     // F236 · a descrição da exigência cortada na palavra, com reticências (cortava no meio: "Tecelagem Fictícia São Jos")
-    if(k.exigencia_prazo) por({data:k.exigencia_prazo, k, cli, prazo:true, fatal: igual==="exig", selo:k.fase==="conselho"?"Diligência":"Exigência",
+    if(k.exigencia_prazo) por({data:k.exigencia_prazo, k, cli, prazo:true, avisa:true, fatal: igual==="exig", selo:k.fase==="conselho"?"Diligência":"Exigência",
       resumo:`cumprir a ${k.fase==="conselho"?"diligência do CRPS":"exigência do INSS"}${k.exigencia_descricao?`: ${cortaFrase(String(k.exigencia_descricao).replace(/\s*·\s*prazo estimado:[\s\S]*$/i,"").replace(/\s+/g," ").trim(), 70)}`:""}`}, donos);
     const mora = prazoMora(k);
     // F236 · com o mandado de segurança já decidido (a tarefa de redigi-lo, a ordem de impetrar), a mora não pede avaliação
@@ -12642,8 +12656,9 @@ function itensAgendaTodos(){
     if(RX_NOV_DECISAO.test(txt) && !/conclus[oa]s? para/i.test(txt) && naoLeram.length && !(ultHumano.get(k.id) > String(a.criado_em||"")))
       por({data:chegou(), k, cli, novLer:a, selo:"Decisão", resumo:resumoAgenda(txt)}, naoLeram);
   }
-  // F292 · o prazo fatal avisa antes, no Meu Dia de quem já o tinha: a 5, a 2 e a 1 dia útil (Onda B do fluxo do To Do)
-  for(const it of out.filter(i=>i.fatal && i.data>hj)){
+  // F292 · o prazo fatal avisa antes, no Meu Dia de quem já o tinha: a 5, a 2 e a 1 dia útil (Onda B do fluxo do To Do);
+  // o recurso e a exigência também (teste 11.88, JUR-03), mesmo sem o "Concluir em" do To Do na mesma data
+  for(const it of out.filter(i=>(i.fatal || i.avisa) && i.data>hj)){
     const n = uteisAte(it.data);
     if(n===5 || n===2 || n===1) out.push({...it, data:hj, fatal:false, prazo:true, antes:it.data, selo:`Vence em ${n} dia${n>1?"s":""} út${n>1?"eis":"il"}`,
       resumo:`prazo fatal em ${fmt(it.data).slice(0,5)}: ${it.resumo||(it.k?tituloCaso(it.k):"")}`});
@@ -16959,11 +16974,16 @@ function metricasDash(col, dias){
     recebido: pgs.filter(p=>p.status==="recebido" && mesDe(p.pago_em)===m).reduce((s,p)=>s+Number(p.valor||0),0),
     previsto: pgs.filter(p=>mesDe(p.vencimento)===m).reduce((s,p)=>s+Number(p.valor||0),0)}));
   const atraso = p => Math.round((new Date(hj+"T12:00:00")-new Date(p.vencimento+"T12:00:00"))/864e5);
-  const aging = [["A vencer", p=>!p.vencimento || p.vencimento>=hj, "ok"],
-    ["Até 30 dias", p=>p.vencimento<hj && atraso(p)<=30, "aviso"],
-    ["31 a 90 dias", p=>p.vencimento<hj && atraso(p)>30 && atraso(p)<=90, "serio"],
-    ["Mais de 90 dias", p=>p.vencimento<hj && atraso(p)>90, "critico"]]
+  // teste 11.88, ADM-03: o critério do 💰 Recebimentos (a parcela sem valor é "a calcular", não atraso; a sem data não "vence")
+  const venceu = p => !pgSemValor(p) && p.vencimento && p.vencimento<hj;
+  const aging = [["A vencer", p=>!pgSemValor(p) && p.vencimento && p.vencimento>=hj, "ok"],
+    ["Até 30 dias", p=>venceu(p) && atraso(p)<=30, "aviso"],
+    ["31 a 90 dias", p=>venceu(p) && atraso(p)>30 && atraso(p)<=90, "serio"],
+    ["Mais de 90 dias", p=>venceu(p) && atraso(p)>90, "critico"],
+    ["Sem data", p=>!pgSemValor(p) && !p.vencimento, "ok"]]
     .map(([rot,f,tom])=>{ const l=abertos.filter(f); return {rot, tom, n:l.length, v:l.reduce((s,p)=>s+Number(p.valor||0),0)}; });
+  const nCalc = abertos.filter(pgSemValor).length;
+  if(nCalc) aging.push({rot:`A calcular (${nCalc})`, tom:"ok", n:nCalc, v:0});
   // benefícios
   const conc = D.casos.filter(k=>k.resultado==="deferido" && dataDoResultado(k));
   const concMes = m => conc.filter(k=>mesDe(dataDoResultado(k))===m).length;
@@ -21476,12 +21496,23 @@ async function confirmarRecebido(pgId){
   if(data>hoje()) return aviso("O dia do recebimento não pode ser futuro");
   if(sel && !casoId) return aviso("Diga de qual caso é este dinheiro");
   const corpo = {status:"recebido", pago_em:data, conferencias:[...(p.conferencias||[]),{c:eu.id,em:new Date().toISOString()}]};
+  // teste 11.88, ADM-01: o valor lançado de verdade que entrou a menos deixa o saldo a receber, em vez de sumir
+  const saldo = (pgEstimado(p) || pgSemValor(p)) ? 0 : Math.round((+p.valor - valor)*100)/100;
   if(+p.valor!==valor) corpo.valor = valor;
   if(notaPgto(p)) corpo.descricao = semNota(p.descricao);   // recebido, sai a conta da estimativa: vale o que entrou
   if(casoId) corpo.caso_id = casoId;
   try{ await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}); }
   catch(e){ return aviso("Não gravei o recebimento — tente de novo"); }
   Object.assign(p, corpo); fecharCaixa();
+  if(saldo > 0){
+    try{
+      const [r] = await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:p.caso_id, cliente_id:p.cliente_id, descricao:`${semNota(p.descricao)} · saldo`, valor:saldo,
+          vencimento:p.vencimento, status:"aberto", pago_em:null, conferencias:[]})});
+      if(r) D.pagamentos.push(r);
+      aviso(`Ficou o saldo de ${moeda(saldo)} a receber`, false);
+    }catch(e){ aviso(`Recebido, mas o saldo de ${moeda(saldo)} não foi lançado: lance-o à mão`); }
+  }
   await desligarLembreteCobranca(D.cliPorId.get(p.cliente_id || (D.casoPorId.get(p.caso_id)||{}).cliente_id), p.id);
   aviso("Recebido 💵 — você consta como quem recebeu");
   await correnteConferencia(casoDaParcela(p), `Pagamento de ${moeda(p.valor)} recebido em ${fmt(data)}`);
@@ -42058,7 +42089,7 @@ async function registrarMovimento(casoId, i){
   const muda = {};   // F291 · a anotação leva ⭐, mas a do caso só a pessoa acende (a fila de hoje, como no To Do)
   if(etapa && etapasDaFase(k).includes(etapa)) muda.etapa = etapa;
   if(efeito==="deferido" || efeito==="indeferido"){ muda.resultado = efeito; muda.decisao_em = data || hoje(); }
-  if(efeito==="exig"){ muda.exigencia_prazo = data || somaDias(hoje(), 30); muda.exigencia_descricao = det || "Exigência do INSS"; }
+  if(efeito==="exig"){ muda.exigencia_prazo = data || proxDiaUtil(somaDias(hoje(), 30)); muda.exigencia_descricao = det || "Exigência do INSS"; }
   if(efeito==="impl"){
     if(nb && nb!==soDig(k.nb||"") && !(k.nbs||[]).map(soDig).includes(nb)) Object.assign(muda, k.nb ? {nbs:[...(Array.isArray(k.nbs)?k.nbs:[]), nb]} : {nb});
     if(dib && !k.dib) muda.dib = dib;
@@ -42768,10 +42799,11 @@ function pintarFrase(){
   const el = document.getElementById("esc-frase");
   if(el) el.innerHTML = `Ao registrar: <b>${esc(fraseRegistro())}</b>`;
 }
+// pula também o feriado nacional e o do escritório (teste 11.88, JUR-02/04/05: 20/11 e 02/11 passavam)
 function proxDiaUtil(iso){
-  const d=new Date(iso+"T12:00:00");
-  while(d.getDay()===0||d.getDay()===6) d.setDate(d.getDate()+1);
-  return d.toLocaleDateString("sv");
+  let d = iso;
+  while(!ehDiaUtil(d)) d = somaDias(d, 1);
+  return d;
 }
 function maisDias(n){
   const d=new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+n);
@@ -49121,6 +49153,145 @@ let arCliSel=null, arLead=null, arNovo=null;
 // F290 · SUGESTÕES DA EQUIPE. Qualquer colaborador anota um erro, uma correção ou uma melhoria, com a tela
 // em que estava; somente o titular lê (RLS em schema_sugestoes.sql). Quem escreve não lê nem o que gravou,
 // por isso o POST vai com return=minimal
+// F313 · AJUDA (pedido do Paulo de 31.10.2026: "botões de ajuda em tudo para que o
+// colaborador possa aprender a mexer"). O "?" ao lado do título da lista, o "? Ajuda"
+// fixo no canto e o "?" pequeno das barras e quadros abrem o texto do assunto, com a
+// lista de todos os assuntos no pé. Os textos moram em AJUDA; os lugares, em AJUDA_ALVOS.
+const AJUDA = {
+  // as listas do menu
+  meudia: ["Meu Dia", `<p>Reúne o que você deve fazer hoje: as tarefas que vencem hoje, as vencidas, os prazos dos tribunais, as perícias sem confirmação e as menções.</p>
+    <p>Clique no nome do cliente para abrir a ficha. O resumo do último dia útil fica no alto, recolhido. Use os botões das pessoas para ver o dia de outro colega.</p>`],
+  mencoes: ["Menções", `<p>Lista as anotações em que alguém escreveu @ e o seu nome. Responda com <b>Ok</b> ou <b>Feito</b>: a resposta entra no caso e quem citou recebe o aviso.</p>`],
+  novidades: ["Novidades", `<p>Mostra o que os portais trouxeram e ninguém leu: movimentos do PJe, do e-SAJ, do eproc, do e-Recursos e do Meu INSS. O que pede ação (perícia, audiência ou julgamento a agendar) aparece em destaque.</p>
+    <p>Leia, tome a providência no caso e marque como lida.</p>`],
+  planejado: ["Planejado", `<p>Mostra, por data, tudo o que tem dia marcado: casos com prazo, tarefas e lembretes. Serve para ver a semana e o mês antes de chegarem.</p>`],
+  agendaq: ["Agenda", `<p>É a agenda do Google do escritório. Os horários tracejados são <b>vagas</b>: clique na vaga para agendar o cliente nela. O 001 é o primeiro atendimento (45 minutos) e o 002 é o retorno de quem já é cliente (30 minutos).</p>
+    <p>No atendimento marcado, use <b>Editar</b> para corrigir nome e telefone, ou remarque e cancele: a vaga volta a ficar livre. A opção <b>Completa</b> junta as agendas do Paulo, do Marcos e da Amanda.</p>`],
+  minhas: ["Atribuídas a mim", `<p>Lista os casos em que você é responsável ou tem tarefa. Abra o caso, faça o que a tarefa pede e conclua a tarefa no próprio andamento.</p>`],
+  importante: ["Importante", `<p>Lista os casos e as anotações marcados com a estrela. A estrela é a fila de hoje: quem a acende é a pessoa, e o <b>Concluir por hoje</b> a apaga.</p>`],
+  particulares: ["Minhas Tarefas", `<p>São as suas tarefas pessoais, que somente você vê. A tarefa com data entra também no seu Meu Dia.</p>`],
+  rotinas: ["Organizacional", `<p>São as rotinas do escritório que se repetem (semanal, mensal). Marque como feita quando cumprir; ela volta na próxima data.</p>`],
+  acervo: ["Cuidar do acervo", `<p>Reúne as filas de arrumação: clientes com mais de um caso aberto, cadastros sem CPF, casos sem etapa. Cada fila diz o que conferir e oferece o botão que resolve.</p>`],
+  calendario: ["Calendário", `<p>Mostra o mês com as perícias, audiências, prazos e tarefas. Clique no dia para ver o que há nele.</p>`],
+  checagem: ["Checagem manual", `<p>São os casos que nenhum robô acompanha (por exemplo, o e-SISREC com a senha do cliente). Confira o portal e registre a checagem pelo botão do cartão do caso. Os nunca checados vêm primeiro.</p>`],
+  "fase:prazo": ["Tarefas com Prazo", `<p>Casos com prazo fatal, na ordem da data: o mais urgente no alto. Ao cumprir, use o botão de feito do caso, que o devolve à lista de origem.</p>`],
+  "fase:escritorio": ["Escritório", `<p>São os clientes em atendimento no escritório, antes de o pedido chegar ao INSS: pré-casos e casos em formação. O selo do cartão diz em que passo do atendimento está.</p>`],
+  "fase:inss": ["INSS", `<p>São os casos com pedido em andamento no INSS. Abra o caso, confira o Meu INSS e registre o resultado: <b>Em análise</b> quando nada mudou, <b>Movimentou</b> quando houve exigência, perícia ou decisão.</p>`],
+  "fase:conselho": ["Conselho de Recursos", `<p>São os casos com recurso no CRPS (e-Recursos). A aba Recurso do caso mostra o que o portal trouxe; a pauta de julgamento propõe agendar o julgamento e a sustentação oral.</p>`],
+  "fase:judicial": ["Judicial", `<p>São os processos na Justiça. A aba Judicial do caso mostra os movimentos do PJe, do e-SAJ e do eproc, e os prazos aparecem no quadro Prazos à direita.</p>`],
+  "fase:peticao_inicial": ["Petições Iniciais", `<p>São os casos em que a petição inicial está em preparo. Ao protocolar, informe o número do processo no caso, e ele passa ao Judicial.</p>`],
+  "fase:aposentadoria_futura": ["Aposentadorias futuras", `<p>São os clientes que ainda não têm direito e aguardam a data. Cada cartão mostra a data provável do direito e a fonte dela. Três meses antes, o CRM avisa para reunir os documentos.</p>`],
+  direito: ["Análise de Direito", `<p>Lista os clientes cuja análise mais recente diz que o direito já foi alcançado. São os que pedem ação: protocolar o pedido.</p>`],
+  clientes: ["Clientes", `<p>Lista todos os clientes em ordem de nome. Use as letras de A a Z ou digite nome, CPF ou telefone. A bolinha diz a situação: verde com caso ativo, amarela em formação, vermelha sem caso aberto.</p>`],
+  claude: ["Claude", `<p>Reúne os pedidos e as sugestões do Claude sobre os casos. O pedido abre no Claude já escrito, para revisar e enviar.</p>`],
+  docmodelos: ["Modelos", `<p>São os modelos de documento do escritório (procuração, contrato, declarações). O modelo gera o documento já preenchido com os dados do cliente.</p>`],
+  quadro: ["Quadro", `<p>Mostra os casos em colunas. Use "Agrupar por" para trocar a coluna (fase, etapa, responsável) e arraste o cartão para mudá-lo de coluna.</p>`],
+  vendas: ["Vendas", `<p>São os contatos que ainda não contrataram, em etapas até fechado ou perdido. Mova o contato de etapa conforme a conversa avança.</p>`],
+  whatsapp: ["WhatsApp", `<p>São as conversas do WhatsApp do escritório. Assuma a conversa para responder, transfira a quem cuida do assunto e encerre ao terminar. O balão pode virar andamento do caso, e a nota interna não vai ao cliente.</p>
+    <p>À direita fica a ficha de quem fala e dos clientes que essa pessoa representa.</p>`],
+  parcerias: ["Parcerias", `<p>São os casos que vieram de parceiros, com o que cabe a cada um.</p>`],
+  marketing: ["Marketing", `<p>Reúne as ações de divulgação do escritório e os números delas.</p>`],
+  recebimentos: ["Recebimentos", `<p>Lista os honorários parcela por parcela, com o vencido mais antigo primeiro. Registre o recebimento na própria parcela; valor marcado "conferir valor" fica fora dos totais até ser corrigido.</p>`],
+  agenda: ["Perícias e Audiências", `<p>Lista as perícias, audiências e julgamentos marcados. Depois da data, o CRM pergunta <b>Compareceu?</b>: responda para registrar o andamento e seguir a etapa do caso.</p>`],
+  dashboard: ["Dashboard", `<p>Mostra os números do escritório: casos por fase, entradas, concessões e recebimentos.</p>`],
+  patinss: ["Importar", `<p>Recebe o que as extensões coletaram nos portais (Meu INSS, PJe, e-SAJ, eproc, e-Recursos). Confira cada coleta e aplique: os andamentos entram nos casos certos. Com várias coletas, use "conferir e aplicar todas".</p>`],
+  config: ["Configurações", `<p>Ajustes do escritório: equipe, WhatsApp, robô e IA, avisos e níveis da equipe. Somente o administrador vê esta tela.</p>`],
+  novocliente: ["Novo Cliente", `<p>A etapa 1 pede apenas o CPF, a senha do gov.br e o telefone, e abre os portais para a extensão do dossiê baixar os documentos. A etapa 2 confere o que o dossiê trouxe e completa o cadastro.</p>`],
+  busca: ["Pesquisa", `<p>Procure por nome, CPF, NB, protocolo ou número do processo. Se a pessoa não estiver no CRM, use <b>+ Cliente</b> para cadastrá-la.</p>`],
+  // a ficha e o caso
+  ficha: ["Ficha do cliente", `<p>As abas da ficha:</p><ul>
+    <li><b>Cadastro</b>: identificação, contato, aposentadoria e o botão <b>+ atendimento</b>.</li>
+    <li><b>Casos</b>: os casos do cliente; com mais de um, a seta escolhe qual abrir.</li>
+    <li><b>Perícias</b>: as perícias e audiências do cliente.</li>
+    <li><b>Honorários</b>: as parcelas do contrato.</li></ul>
+    <p>O menu do cabeçalho tem <b>Trouxe documentos</b> e <b>Imprimir e separar para o cliente</b>.</p>`],
+  "ficha:cadastro": ["Cadastro", `<p>Mostra a identificação do cliente. <b>Atualizar dossiê</b> busca de novo o que a extensão baixou e preenche os campos vazios, sem apagar o que foi digitado. O quadro Aposentadoria mostra a data provável da aposentadoria por idade.</p>
+    <p>Para atender o cliente, use <b>+ atendimento</b> (somente o advogado).</p>`],
+  "ficha:caso": ["Caso", `<p>À esquerda fica o cartão do caso (espécie, números e tramitação); no meio, os andamentos; à direita, os prazos.</p>
+    <p>Nas abas, <b>Escritório</b> traz as anotações da equipe; <b>INSS</b>, <b>Recurso</b> e <b>Judicial</b>, o que veio dos portais; <b>Caso Completo</b>, tudo junto.</p>
+    <p>Escreva a anotação no campo do alto. Ao terminar o que havia a fazer hoje, use <b>Concluir por hoje</b> e escolha quando o cliente volta à fila.</p>`],
+  "ficha:pericias": ["Perícias", `<p>Lista as perícias e audiências do cliente. Agende com aviso para o cliente ser avisado; depois da data, responda se compareceu.</p>`],
+  "ficha:honorarios": ["Honorários", `<p>Lista as parcelas dos honorários de cada caso. Registre o recebimento na parcela; a concessão do benefício propõe as parcelas do contrato.</p>`],
+  "ficha:novocaso": ["Novo caso", `<p>Informe o benefício ou serviço pedido para abrir um caso novo para o cliente.</p>`],
+  "caso:abas": ["Abas do caso", `<ul>
+    <li><b>Escritório</b>: as anotações da equipe e o campo de escrever.</li>
+    <li><b>INSS</b>, <b>Recurso</b> e <b>Judicial</b>: somente o que veio dos portais, sem campo de escrever.</li>
+    <li><b>Caso Completo</b>: tudo junto, por fase e por mês.</li></ul>`],
+  "caso:prazos": ["Prazos", `<p>Lista as datas do caso: prazo fatal, perícia, volta à fila e o que vence em sete dias. O prazo fatal mostra quanto falta. "Ver mais datas" abre as que ficam mais adiante.</p>
+    <p>No caso do INSS, do Conselho e do Judicial, <b>Em análise</b> registra que o portal não mudou e <b>Movimentou</b> registra o que aconteceu.</p>`],
+  "caso:cartao": ["Cartão do caso", `<p>Mostra a espécie, a fase e a tramitação; a tramitação é o link do portal. A seta no pé abre os números do caso (NB, protocolo, processo) e a gestão.</p>`],
+  "caso:etapas": ["Fases e etapas", `<p>A faixa mostra as fases do caso e a etapa atual. Quando um fato novo contradiz a etapa, aparece a sugestão com <b>Aceitar</b>. A etapa é a que o cliente lê no portal.</p>`],
+  "caso:escrever": ["Escrever no caso", `<p>Escreva a anotação e escolha o tipo. Uma data escrita no texto vira lembrete. Escreva @ e o nome para avisar um colega.</p>
+    <p><b>Sem resposta</b> registra a tentativa de contato e marca a próxima. <b>Pedir ao cliente</b> registra o documento pedido e a data de entrega.</p>`],
+  "caso:concluir": ["Concluir por hoje", `<p>Use quando terminou o que havia a fazer no caso hoje. Escolha quando o cliente volta à fila (amanhã, próxima semana, 15 dias, um mês ou uma data); a estrela se apaga e, se quiser, o caso passa a outra pessoa.</p>`],
+  "caso:conferir": ["Conferir o caso", `<p><b>Em análise</b>: o portal não mudou; o CRM anota e marca nova conferência (a seta ▾ escolhe 3, 7, 15 ou 30 dias). <b>Movimentou</b>: houve exigência, perícia, decisão ou implantação; escolha o que aconteceu e o CRM grava a anotação, a etapa e o lembrete.</p>`],
+  trouxe: ["Trouxe documentos", `<p>No balcão, marque o que o cliente entregou. O CRM junta o papel ao caso que o pediu e avisa o advogado. O papel que ninguém pediu recebe a sugestão do caso ou fica "a classificar".</p>`],
+  // o atendimento
+  atend: ["Atendimento", `<p>O atendimento tem quatro passos: <b>Identificação</b>, <b>Primeiro atendimento</b>, <b>Análise de Direito</b> e <b>Documentos</b>. As anotações do atendimento ficam à direita.</p>
+    <p><b>Salvar pré-caso</b> grava o que foi feito. O fim de Documentos tem as saídas: criar o caso, enviar a Aposentadorias futuras ou encerrar.</p>`],
+  "atend:identificacao": ["Identificação", `<p>Confira os dados do cliente que o dossiê trouxe e complete o que falta. Em seguida, passe ao Primeiro atendimento.</p>`],
+  "atend:pa": ["Primeiro atendimento", `<p>É a leitura do dossiê, um quadro por documento: CNIS, RAIS, CNPJs, pedidos ao INSS, benefícios, saúde, CadÚnico. Os itens marcados vão à Análise de Direito; desmarque o que não importa.</p>
+    <p>No último passo, escolha os benefícios e use <b>Concluir e levar à Análise de Direito</b>.</p>`],
+  "atend:direito": ["Análise de Direito", `<p>Os passos: <b>Pendências</b> (o que o cliente ou o escritório deve providenciar), <b>Análise do Benefício</b> (requisitos já cumpridos e os que faltam) e <b>Conclusão</b>.</p>
+    <p>Responda os campos que faltam; o veredito se recalcula na hora. O desfecho fica no fim de Documentos.</p>`],
+  "atend:documentos": ["Documentos", `<p>Os passos: <b>Assinar</b> (procuração e contrato), <b>Pedir ao cliente</b> (o que falta, com a data de entrega), <b>Guia do pedido</b> e <b>Desfecho</b>.</p>
+    <p>No Desfecho, escolha <b>Criar caso</b>, <b>Criar aposentadoria futura</b> ou <b>Encerrar</b>. As consultas ficam na gaveta Ferramentas.</p>`],
+  // os botões fixos
+  sugestoes: ["Sugestões", `<p>O botão Sugestões, no canto, serve para anotar um erro, uma correção ou uma melhoria do CRM, com print ou vídeo. Somente o Paulo lê.</p>`],
+  agendaflut: ["Agenda flutuante", `<p>O botão Agenda, no canto, mostra as vagas dos próximos dias sem sair da tela. Clique na vaga para agendar.</p>`],
+  rapida: ["Anotação rápida", `<p>O botão do raio, no canto, abre a anotação rápida: escolha o cliente e escreva, sem abrir a ficha.</p>`],
+};
+// os grupos da lista de assuntos, na ordem em que se aprende
+const AJUDA_GRUPOS = [
+  ["O dia", ["meudia","mencoes","novidades","planejado","agendaq","minhas","importante","particulares","calendario","agenda"]],
+  ["As listas", ["fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial","fase:aposentadoria_futura","fase:prazo","checagem","clientes","direito","rotinas","acervo"]],
+  ["A ficha e o caso", ["busca","novocliente","ficha","ficha:cadastro","ficha:caso","caso:abas","caso:cartao","caso:etapas","caso:prazos","caso:escrever","caso:concluir","caso:conferir","trouxe","ficha:pericias","ficha:honorarios","ficha:novocaso"]],
+  ["O atendimento", ["atend","atend:identificacao","atend:pa","atend:direito","atend:documentos"]],
+  ["Outras telas", ["whatsapp","recebimentos","patinss","quadro","vendas","parcerias","marketing","dashboard","claude","docmodelos","config"]],
+  ["Os botões do canto", ["sugestoes","agendaflut","rapida"]],
+];
+// o assunto da tela em que a pessoa está
+function ajudaChave(){
+  if(clienteAberto){
+    if(abaAtiva===0){
+      if(!_atendAberto.has(clienteAberto)) return "ficha:cadastro";
+      return {pa:"atend:pa", mapa:"atend:pa", direito:"atend:direito", documentos:"atend:documentos"}[subCad] || "atend:identificacao";
+    }
+    return {2:"ficha:caso", 3:"ficha:pericias", 4:"ficha:honorarios", 7:"ficha:novocaso"}[abaAtiva] || "ficha";
+  }
+  if(buscaTxt) return "busca";
+  return AJUDA[visao] ? visao : "meudia";
+}
+function ajuda(chave, ev){
+  if(ev){ ev.preventDefault(); ev.stopPropagation(); }
+  const k = AJUDA[chave] ? chave : ajudaChave(), [t, x] = AJUDA[k];
+  caixa(`<h3 style="margin:0 0 6px">Ajuda: ${esc(t)}</h3><div class="ajuda-txt">${x}</div>
+    <details class="ajuda-outros"><summary>Outros assuntos</summary>${AJUDA_GRUPOS.map(([g, ks])=>
+      `<p class="meio-sub" style="margin:8px 0 4px">${g}</p><div class="ajuda-lista">${ks.map(c=>
+        `<button class="btn-mini${c===k?" on":""}" onclick="ajuda('${c}')">${esc(AJUDA[c][0])}</button>`).join("")}</div>`).join("")}</details>`);
+}
+// o "?" fica fora das abas do caso, do campo de escrever, do cartão do caso, dos botões de conferir e da faixa
+// das fases (que já tem o seu): lá ele virava aba, alongava o campo fixo do celular ou quebrava a linha; esses
+// assuntos abrem pelo "? Ajuda" fixo e pela lista de assuntos
+// onde o "?" pequeno entra: o seletor e o assunto (null = o assunto da tela)
+const AJUDA_ALVOS = [
+  [".menu-topo", "ficha"], [".atend-cab", null],
+  [".tp-trilha", null], [".fp-cab", "caso:prazos"],
+];
+function pintarAjudas(){
+  for(const [sel, chave] of AJUDA_ALVOS) document.querySelectorAll(sel).forEach(el=>{
+    if(el.dataset.ajuda) return; el.dataset.ajuda = "1";
+    const b = document.createElement("button");
+    b.className = "ajuda-bt"; b.type = "button"; b.textContent = "?";
+    b.setAttribute("aria-label", "Ajuda" + (chave ? ": " + AJUDA[chave][0] : ""));
+    b.title = "como usar" + (chave ? ": " + AJUDA[chave][0] : " esta tela");
+    b.setAttribute("onclick", chave ? `ajuda('${chave}',event)` : "ajuda(null,event)");
+    el.appendChild(b);
+  });
+}
+{ let fila = 0;   // um passo por quadro, por mais que a tela se repinte
+  new MutationObserver(()=>{ if(!fila) fila = requestAnimationFrame(()=>{ fila = 0; pintarAjudas(); }); })
+    .observe(document.body, {childList:true, subtree:true}); }
 const SUG_TIPOS = [["erro","Erro"],["correcao","Correção"],["melhoria","Melhoria"]];
 function telaAtual(){
   const c = clienteAberto && D.cliPorId && D.cliPorId.get(clienteAberto);

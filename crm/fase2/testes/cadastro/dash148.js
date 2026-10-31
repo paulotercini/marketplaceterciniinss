@@ -19,6 +19,8 @@ FIX.pagamentos = [
   { id: "f1000000-0000-0000-0000-000000000004", caso_id: K[0].id, descricao: "Atrasada", valor: 400, vencimento: dia(-40), status: "aberto" },
   { id: "f1000000-0000-0000-0000-000000000005", caso_id: K[0].id, descricao: "Paga", valor: 900, vencimento: dia(-3), status: "recebido", pago_em: dia(-2) },
   { id: "f1000000-0000-0000-0000-000000000006", caso_id: K[0].id, descricao: "Cancelada", valor: 9999, vencimento: dia(3), status: "cancelado" },
+  { id: "f1000000-0000-0000-0000-000000000007", caso_id: K[0].id, descricao: "A calcular", valor: null, vencimento: dia(-10), status: "aberto" },
+  { id: "f1000000-0000-0000-0000-000000000008", caso_id: K[0].id, descricao: "Sem data", valor: 300, vencimento: null, status: "aberto" },
 ];
 
 (async () => {
@@ -73,6 +75,8 @@ FIX.pagamentos = [
   conf(`F148 · os prazos batem com a agenda (${r.m.kpi.vencidos} vencidos, ${r.m.kpi.sete} em 7 dias)`, r.venc >= 1 && r.sete >= 1 && r.m.kpi.vencidos === r.venc && r.m.kpi.sete === r.sete && r.num0 === String(r.venc));
   conf(`F148 · a receber em 30 dias soma só o aberto no prazo (${r.m.kpi.aReceber30})`, r.m.kpi.aReceber30 === 3500);
   conf("F148 · o atraso cai na faixa certa e o cancelado fica fora", r.m.aging.find(a => a.rot === "31 a 90 dias").v === 400 && r.m.aging.find(a => a.rot === "A vencer").v === 4200);
+  conf("teste 11.88 · ADM-03: sem valor é 'a calcular' e não atraso; sem data fica em faixa própria, como no Recebimentos",
+    r.m.aging.find(a => a.rot === "Até 30 dias").n === 0 && r.m.aging.find(a => a.rot === "Sem data").v === 300 && r.m.aging.some(a => a.rot === "A calcular (1)"));
   conf("F148 · o recebido do mês entra no gráfico", r.m.fin[r.m.fin.length - 1].recebido === 900 || r.m.fin[r.m.fin.length - 2].recebido === 900);
   conf(`F148 · a tela pronta tem quatro números e nenhum pedaço de esqueleto (${r.ordem})`, r.kpis === 4 && r.sobra === 0 && r.ordem === "dk-kpis,dk-faixa,dk-bloco,dk-extras");
   // o funil por fase leva à lista

@@ -1,6 +1,6 @@
-// F312 · a ajuda: o "?" do título, o "? Ajuda" fixo e o "?" das barras abrem o texto do assunto
+// F313 · a ajuda: o "?" do título, o "? Ajuda" fixo e o "?" das barras abrem o texto do assunto
 // da tela, e todo assunto da lista existe. Banco simulado.
-// Uso: node f312.js
+// Uso: node f313.js
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
