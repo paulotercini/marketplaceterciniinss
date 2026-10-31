@@ -311,6 +311,8 @@ A **F310** (a conversa do WhatsApp no celular, pedido do Paulo de 30.10.2026): a
 
 A **F311** (a importação do PAT lê o concluído, pedido do Paulo de 30.10.2026): a extensão (1.28.1) busca também o detalhe do requerimento concluído ou cancelado, por último, porque é nele que vem a decisão, e o "entregues" conta a lista inteira; o CRM (`normalizarColeta`) põe no plano a linha da lista que chegou sem detalhe (falha ou extensão antiga), com situação, serviço e espécie da própria lista. Antes, a janela só com decisões chegava como "0 requerimentos". Teste: `testes/cadastro/f311.js`.
 
+A **F312** (as correções do teste integral 11.88, etapas 1 e 2, pedido do Paulo de 31.10.2026): nenhuma função SECURITY DEFINER do `public` executa com a chave anônima, salvo as duas portas do SMBot, que conferem o token (`migracoes/f312_anon_sem_funcoes.sql`, aplicada; teste `testes/anon_funcoes.sql`); a conta Teste ficou inativa e fora de `avisar_caso_novo`. A senha do Meu INSS legível por colaborador logado não é defeito (decisão do Paulo). `proxDiaUtil` pula também os feriados (`ehDiaUtil`), e a exigência sem data nasce em dia útil; o recurso e a exigência ganham o aviso "Vence em N dias úteis" (`avisa`); o recebido a menos do valor lançado lança o saldo a receber (`confirmarRecebido`); o Dashboard separa "Sem data" e "A calcular" no aging, como o Recebimentos. Testes: `f236-honorarios.js`, `f292.js`, `dash148.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

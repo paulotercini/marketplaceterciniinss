@@ -135,6 +135,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.evaluate(([kid, d]) => { D.casoPorId.get(kid).prazo = d; }, [kD.id, tres]);
   conf("a 3 dias úteis não avisa", !(await p.evaluate(kid => itensAgenda(null).some(i => i.k && i.k.id === kid && /^Vence em/.test(i.selo || "")), kD.id)));
 
+  // teste 11.88, JUR-03: a exigência (sem o "Concluir em" do To Do igual) também avisa a 2 dias úteis
+  await p.evaluate(([kid, d]) => { const k = D.casoPorId.get(kid); k.prazo = null; k.exigencia_prazo = d; }, [kD.id, alvo]);
+  conf("a exigência a 2 dias úteis também ganha o aviso", await p.evaluate(kid => itensAgenda(null).some(i => i.k && i.k.id === kid && i.selo === "Vence em 2 dias úteis"), kD.id));
+  await p.evaluate(kid => { D.casoPorId.get(kid).exigencia_prazo = null; }, kD.id);
+
   conf("sem erro de página", !erros.length);
   if (erros.length) console.log(erros);
   const ruins = ok.filter(x => !x[1]).length;
