@@ -148,7 +148,7 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
       .filter(e => { const r = e.getBoundingClientRect(); return Math.min(r.width, r.height) < 24; });
     return { segoe: fam.filter(x => /Segoe/.test(x)).length, plex: fam.filter(x => /IBM Plex Sans/.test(x)).length,
       primeira: abas[0] && abas[0].textContent.trim(), ultima: abas.at(-1) && abas.at(-1).textContent.trim(),
-      esq: (e => e && getComputedStyle(e).position === "sticky" && !!e.querySelector(".lc-placa") && !!document.querySelector(".caso-pz .faixa-prazos"))(document.querySelector(".caso-esq")),   // F278 · os prazos na coluna da direita
+      esq: (e => e && !!e.querySelector(".lc-placa") && !!document.querySelector(".caso-pz .faixa-prazos") && document.querySelector(".caso-pz").getBoundingClientRect().right <= document.querySelector(".caso-dir").getBoundingClientRect().left + 1)(document.querySelector(".caso-esq")),   // F320 · duas colunas: placa e prazos à esquerda   // F278 · os prazos na coluna da direita
       dir: (e => !!(e && e.firstElementChild.classList.contains("menu-andamentos") && e.querySelector(".menu-andamentos + .caso-acoes") && e.querySelector(".caso-acoes ~ .fatos")))(document.querySelector(".caso-dir")),   // F242 · as abas em cima, o campo de escrever e os andamentos
       placa2: (e => e && getComputedStyle(e).flexDirection === "column" && [...e.children].every(f => getComputedStyle(f).flexDirection === "row"))(document.querySelector(".caso-esq .lc-placa")),   // F182 · rótulo e valor na mesma linha, como no canvas
       pzDesc: (d => d.every((x, i) => !i || d[i-1] <= x))([...document.querySelectorAll(".caso-esq .pz:not(.fp2-fatal)")].map(b => b.dataset.data)),

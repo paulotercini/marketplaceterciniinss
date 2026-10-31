@@ -5549,6 +5549,174 @@ html[data-tema="v10"] body :is(.ag-data,.ag-esp,.tl-hora,.pl-n,.dk-num,.dk-hbar 
   .id-min .meio-sub,.pa-cartao-data,.tp-onde,.ramo-num,.tl-doc-nome small,.timeline li.tl-sys .texto){font-family:var(--f-ui);font-variant-numeric:tabular-nums}
 html[data-tema="v10"] :is(.dk-rot,.dk-hrot) small{font-size:11px}
 html[data-tema="v10"] .aq-ligar h3{font-size:15px}
+/* F320 · interface limpa (plano de 31.10.2026, imagens aprovadas pelo Paulo) */
+/* a faixa das fases: quatro quadros soltos, a fase atual com a borda da cor dela, e as etapas recolhidas numa linha */
+html[data-tema="v10"] .app:not(.celular) .tr-compacta{background:#FFFFFF;border:1px solid var(--borda);border-radius:12px;padding:0 0 6px}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-l{gap:8px;padding:10px 10px 6px;border:0;background:transparent;border-radius:12px}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b{border:1px solid var(--borda);border-radius:8px;background:#FFFFFF;min-height:38px;padding:6px 12px;white-space:nowrap}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-a{border:2px solid var(--fc);padding:5px 11px;color:var(--texto);white-space:nowrap}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-a .jn-txt,html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-a .jn-st{font-weight:500;color:var(--texto)}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-ver:not(.jn-a){background:var(--ff)}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-st{font-size:13px;display:inline}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-st::before{content:"· "}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b::after{display:none}
+html[data-tema="v10"] .tr-resumo{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;padding:4px 16px 14px;font-size:13px;color:var(--cinza)}
+html[data-tema="v10"] .tr-aberta .tr-resumo{display:none}
+html[data-tema="v10"] .tr-resumo .tr-agora small{font-size:13px;color:var(--cinza-claro)}
+html[data-tema="v10"] .tr-resumo .tr-agora b{font-weight:600;color:var(--texto)}
+html[data-tema="v10"] .tr-resumo .tr-agora .et-velha{color:var(--venc)}
+html[data-tema="v10"] .tr-prog{display:inline-flex;gap:4px;align-items:center}
+html[data-tema="v10"] .tr-prog i{display:block;width:22px;height:4px;border-radius:2px;background:var(--borda)}
+html[data-tema="v10"] .tr-prog i.f{background:var(--tc)}
+html[data-tema="v10"] .tr-prog i.a{background:var(--tc);height:6px;box-shadow:0 0 0 2px #FFFFFF,0 0 0 3px var(--tc)}
+html[data-tema="v10"] .tr-prog i.n{background:repeating-linear-gradient(90deg,var(--borda) 0 3px,transparent 3px 5px)}
+html[data-tema="v10"] .tr-prox{margin-left:auto;color:var(--cinza)}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .tr-corpo{padding:6px 14px 16px}
+html[data-tema="v10"] .tr-alca.tr-alca-et{height:24px;font-size:12px}
+html[data-tema="v10"] .tr-corpo[hidden],html[data-tema="v10"] .tr-resumo[hidden]{display:none!important}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-a .jn-nome::after{display:none}
+/* o cabeçalho da ficha em duas linhas: o nome e os botões; embaixo CPF, Meu INSS, telefone, advogado e a situação */
+html[data-tema="v10"] :is(.cli-adv,.atend-acoes) .fp2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+html[data-tema="v10"] .app:not(.celular) .det-topo .cli-casos .avatar{display:none}
+html[data-tema="v10"] .app:not(.celular) .det-topo .linha2{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;margin:2px 0 8px;font-size:13px;color:var(--cinza)}
+html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .resumo-lado{margin:0;gap:6px 18px}
+html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .id-min b{font-weight:400;font-size:13px;letter-spacing:0;text-transform:none;color:var(--cinza-claro)}
+html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .cli-adv{font-size:13px;color:var(--cinza-claro)}
+html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .cli-adv-bt{color:var(--texto)}
+html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .cli-st{margin:0}
+/* o ponto da aba no menu da ficha (substitui o quadro "Nas outras abas") */
+html[data-tema="v10"] .mt .mt-ponto{display:inline-flex;align-items:center;gap:4px;margin-left:4px;font-size:12px;font-weight:400;color:var(--pc)}
+html[data-tema="v10"] .mt .mt-ponto i{width:7px;height:7px;border-radius:50%;background:var(--pc)}
+html[data-tema="v10"] .menu-topo::before{content:none}
+/* o caso em duas colunas: o cartão do caso e os prazos à esquerda, os andamentos à direita */
+@media (min-width:761px){
+  html[data-tema="v10"] .app:not(.celular) .caso-2col.caso-3col{grid-template-columns:minmax(280px,320px) minmax(0,1fr);grid-template-areas:"esq dir" "pz dir";grid-template-rows:auto 1fr;gap:14px 18px}
+  html[data-tema="v10"] .app:not(.celular) .caso-3col > .caso-esq{position:static;max-height:none}
+}
+/* o cartão do caso: a espécie em selo, o protocolo com copiar, a tramitação que abre o portal e a dobra dos números */
+html[data-tema="v10"] .linha-caso .lc-sobre{background:var(--placa);border-radius:4px;padding:1px 6px}
+html[data-tema="v10"] .linha-caso .lc-copiar{all:unset;cursor:pointer;margin-left:8px;font:500 11px var(--f-mono);color:var(--azul);border:1px solid var(--borda);border-radius:4px;padding:0 5px;line-height:18px}
+html[data-tema="v10"] .linha-caso .lc-copiar:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+html[data-tema="v10"] .linha-caso .lc-tram-link{color:var(--azul)}
+html[data-tema="v10"] .linha-caso .lc-verif{white-space:nowrap}
+html[data-tema="v10"] .caso-esq .linha-caso .lc-mais-pe.lc-dobra{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:4px;margin:10px 0 2px;font-size:13px;color:var(--azul)}
+html[data-tema="v10"] .caso-esq .linha-caso .lc-mais-pe.lc-dobra:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+/* o campo de escrever numa linha, com Sem resposta e Pedir ao cliente dentro dele, à direita */
+html[data-tema="v10"] .app:not(.celular) .caso-3col .escrever.esc-v12:not(.esc-aberto){flex-wrap:nowrap}
+html[data-tema="v10"] .app:not(.celular) .caso-3col .escrever.esc-v12:not(.esc-aberto) #and-texto{flex:1 1 0;min-width:120px}
+html[data-tema="v10"] .app:not(.celular) .caso-3col .escrever.esc-v12:not(.esc-aberto) .tipo-fila button{color:var(--azul)}
+html[data-tema="v10"] .app:not(.celular) .det-topo .linha1 > .det-mais{margin-left:auto;order:20}
+html[data-tema="v10"] .app:not(.celular) .det-topo .linha1 > .det-canto{margin-left:0;order:21}
+html[data-tema="v10"] .linha-caso .lc-prot .lc-num,html[data-tema="v10"] .linha-caso .lc-tram-link{white-space:nowrap}
+html[data-tema="v10"] .caso-esq .linha-caso .lc-tram-link{font-size:13px}
+html[data-tema="v10"] .caso-esq .lc-placa>.lc-prot>:is(.lc-num,.lc-copiar){flex:none;white-space:nowrap;overflow-wrap:normal}
+html[data-tema="v10"] .caso-esq .lc-placa>.lc-f>.lc-tram-link{flex:0 1 auto;min-width:0;white-space:nowrap;overflow-wrap:normal;overflow:hidden;text-overflow:ellipsis;display:block}
+html[data-tema="v10"] .app:not(.celular) .caso-3col > .caso-esq,html[data-tema="v10"] .app:not(.celular) .caso-3col .linha-caso{min-width:0}
+html[data-tema="v10"] .app:not(.celular) .caso-esq .lc-placa>.lc-f{gap:10px}html[data-tema="v10"] .app:not(.celular) .caso-esq .lc-placa>.lc-f>.lc-k{width:82px}
+html[data-tema="v10"] .app:not(.celular) .caso-3col > .caso-pz{align-self:start}
+html[data-tema="v10"] .caso-esq .linha-caso .lc-topo > *,html[data-tema="v10"] .caso-esq .lc-placa>.lc-f{min-width:0;max-width:100%}
+/* F320 · a ficha no celular em abas: Andamentos, Prazos, Caso, Cadastro e Honorários; a barra de baixo fica à vista */
+html[data-tema="v10"] .app.celular .det-topo .linha1 .resumo-lado,html[data-tema="v10"] .app.celular .det-topo .cli-adv,
+html[data-tema="v10"] .app.celular .det-topo .det-canto .cli-st,html[data-tema="v10"] .app.celular .det-topo .cel-tudo,
+html[data-tema="v10"] .app.celular .det-topo .menu-topo,html[data-tema="v10"] .app.celular .det-topo .cli-casos .avatar{display:none!important}
+html[data-tema="v10"] .app.celular .det-topo .linha1 h2{font-size:20px}
+html[data-tema="v10"] .app.celular .cel-sub{margin:-2px 0 6px 34px;font-size:13px;color:var(--cinza)}
+html[data-tema="v10"] .app.celular .cel-abas{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;margin:0 -12px;padding:0 12px;border-bottom:1px solid var(--borda)}
+html[data-tema="v10"] .app.celular .cel-abas::-webkit-scrollbar{display:none}
+html[data-tema="v10"] .app.celular .cel-abas button{all:unset;flex:none;display:inline-flex;align-items:center;gap:5px;min-height:44px;font-size:14px;color:var(--cinza);border-bottom:2px solid transparent;cursor:pointer}
+html[data-tema="v10"] .app.celular .cel-abas button.on{color:var(--texto);font-weight:600;border-bottom-color:var(--azul)}
+html[data-tema="v10"] .app.celular .cel-abas button:focus-visible{outline:2px solid var(--azul);outline-offset:-2px}
+html[data-tema="v10"] .app.celular .cel-abas .ca-n{min-width:18px;height:18px;border-radius:9px;background:var(--azul);color:#fff;font-size:11px;display:inline-flex;align-items:center;justify-content:center;padding:0 4px}
+html[data-tema="v10"] .app.celular .cel-abas .ca-ponto{width:7px;height:7px;border-radius:50%;background:var(--venc)}
+html[data-tema="v10"] .app.celular [data-cel-aba="and"] .painel[data-p="2"] :is(.tr-faixa,.tr-recolhida,details.incap,.caso-esq){display:none!important}
+html[data-tema="v10"] .app.celular [data-cel-aba="pz"] .painel[data-p="2"] :is(.tr-faixa,.tr-recolhida,details.incap,.caso-esq:not(.caso-pz),.caso-dir,.faixa-fixo){display:none!important}
+html[data-tema="v10"] .app.celular [data-cel-aba="caso"] .painel[data-p="2"] :is(.caso-dir,.caso-pz){display:none!important}
+html[data-tema="v10"] .app.celular [data-cel-aba="caso"] .painel[data-p="2"] .outras-abas[hidden]{display:block!important}
+html[data-tema="v10"] .app.celular [data-cel-aba="pz"] .caso-pz .faixa-prazos{margin-top:12px}
+html[data-tema="v10"] .app.celular [data-cel-cad="principal"] .painel[data-p="0"] > :not(.cel-principal){display:none!important}
+html[data-tema="v10"] .app.celular [data-cel-cad="mais"] .cel-principal > :not(.cel-cad-seg){display:none}
+html[data-tema="v10"] .app.celular .cel-principal{padding:12px 0 4px}
+html[data-tema="v10"] .app.celular .cel-cad-seg{display:inline-flex;margin-bottom:12px}
+html[data-tema="v10"] .app.celular .cel-cad-seg button{min-height:36px;padding:0 14px}
+html[data-tema="v10"] .app.celular .cel-cad-seg button[aria-pressed="true"]{background:#fff;color:var(--texto);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+html[data-tema="v10"] .app.celular .cel-dados{display:flex;flex-direction:column;gap:10px}
+html[data-tema="v10"] .app.celular .cel-dado{display:grid;grid-template-columns:1fr auto;grid-template-areas:"r b" "v b";align-items:center;column-gap:8px;padding:12px 14px;background:#fff;border:1px solid var(--borda);border-radius:10px}
+html[data-tema="v10"] .app.celular .cel-dado .cel-rot{grid-area:r;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro)}
+html[data-tema="v10"] .app.celular .cel-dado .cel-val{grid-area:v;font:500 18px var(--f-mono);color:var(--texto);font-variant-numeric:tabular-nums}
+html[data-tema="v10"] .app.celular .cel-dado .cel-val.cel-txt{font:400 17px var(--f-ui)}
+html[data-tema="v10"] .app.celular .cel-dado > :is(button,a){grid-area:b;min-height:36px;display:inline-flex;align-items:center;text-decoration:none}
+html[data-tema="v10"] .app.celular .cel-dado > :is(button,a) + :is(button,a){grid-row:2}
+html[data-tema="v10"] .app.celular .cel-rodape{margin:10px 2px 0;font-size:13px}
+html[data-tema="v10"] .app.celular .cel-rodape .cli-adv-bt{all:unset;cursor:pointer;color:var(--texto);text-decoration:underline;text-underline-offset:3px}
+html[data-tema="v10"] .app.celular .cel-alerta{all:unset;box-sizing:border-box;display:block;width:100%;margin:10px 0 4px;padding:10px 12px;border-left:3px solid var(--venc);border-radius:6px;background:#FBE9E7;color:var(--venc);font-size:13px;cursor:pointer}
+html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos{display:flex;gap:2px;margin:12px 0 6px;padding:3px;background:var(--placa);border:0;border-radius:10px}
+html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button{flex:1 1 auto;min-width:0;min-height:36px;margin:0!important;padding:0 3px;border:0;border-radius:8px;font-size:13px;color:var(--cinza);background:transparent;white-space:nowrap}
+html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button.on{background:#fff;color:var(--texto);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button::after{display:none}
+html[data-tema="v10"] .app.celular.detalhe-aberto ~ .barra-cel{display:flex}
+html[data-tema="v10"] .app.celular .det-principal:not([data-cel-aba="and"]) ~ * .escrever,html[data-tema="v10"] .app.celular .escrever{bottom:calc(56px + env(safe-area-inset-bottom,0px))}
+html[data-tema="v10"] .app.celular .caso-dir .timeline > li:not(.toque) .tl-cab-fim .tl-barra{display:none}
+html[data-tema="v10"] .app.celular .det-topo .det-mais .tl-mais-menu{left:auto;right:0}
+html[data-tema="v10"] .app.celular .linha-caso .lc-mais-pe{min-height:32px}   /* alvo de toque (11.93 · VCE-05) */   /* o ⋯ ficou no canto direito */
+/* com a barra de baixo visível na ficha, os flutuantes sobem a altura dela (56 px) */
+html[data-tema="v10"] .app.celular.detalhe-aberto ~ .fab-sug,html[data-tema="v10"] .app.celular.detalhe-aberto ~ .fab-ajuda{bottom:calc(186px + env(safe-area-inset-bottom,0px))}
+html[data-tema="v10"] .app.celular.detalhe-aberto ~ #zap-ag{bottom:calc(236px + env(safe-area-inset-bottom,0px))}
+html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
+
+/* F320 · atendimento (imagem 3-atendimento.png): cabeçalho mínimo, prazo uma vez, passos sem subtítulo, CNIS em números,
+   problemas com quem providencia, pé com o passo à esquerda, anotações em gaveta à direita */
+#detalhe.atend-tela .atend-cab{gap:16px;margin-bottom:12px}
+.atend-l1{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.atend-l1 .atend-nome{margin:0;font-family:var(--f-tit,Georgia,serif);font-size:20px;font-weight:600}
+.atend-l1 .mono{font-size:13px}
+#detalhe.atend-tela .atend-dados{font-size:12px;color:#686660;margin-top:2px}
+#detalhe.atend-tela .atend-acoes{align-items:center}
+.atend-acoes .atend-concluir{font-weight:600}
+.atend-faixa-prazo{border:1px solid #F1C9C4;border-left:4px solid #B3261E;background:#FCEDEC;margin:0 0 10px}
+.atend-faixa-prazo .atend-prazo{font-size:13px}
+#detalhe.atend-tela .atend-passos .pa-passo small{display:none}
+#detalhe.atend-tela .atend-passos .pa-passo{padding:8px 4px 10px}
+#detalhe.atend-tela .atend-passos .pa-passo i{width:20px;height:20px;font-size:11px}
+#detalhe.atend-tela .pa{padding:12px 18px 18px}
+#detalhe.atend-tela .pa .tp-rola{margin:0 -4px 10px;padding:4px}
+#detalhe.atend-tela .pa .tp-trilha{gap:6px}
+#detalhe.atend-tela .pa .tp-trilha button{clip-path:none;margin-left:0;padding:0 10px;min-height:28px;border-radius:6px;border:1px solid #E7E6E1;font-size:12px}
+#detalhe.atend-tela .pa .tp-trilha .aqui button{border-color:var(--pa-t)}
+#detalhe.atend-tela .pa .tp-n{width:auto;height:auto;border:0;background:none!important;color:inherit!important;font-weight:600}
+#detalhe.atend-tela .pa .tp-conta{display:none}
+.paq-sobre{position:relative;flex:none}
+.paq-sobre>summary{list-style:none;cursor:pointer;width:22px;height:22px;border-radius:50%;border:1px solid #CFCDC6;display:grid;place-items:center;font-size:12px;color:#4A4944;background:#fff}
+.paq-sobre>summary::-webkit-details-marker{display:none}
+.paq-sobre-c{position:absolute;z-index:5;left:0;top:28px;width:min(440px,80vw);padding:10px 12px;border:1px solid #E7E6E1;border-radius:10px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.1);font-size:13px}
+.paq-sobre:not([open]) .paq-sobre-c{display:none}
+@media (max-width:640px){.paq-sobre-c{position:fixed;left:16px;right:16px;top:auto;width:auto}}
+.paq-sobre-c p{margin:0 0 6px}.paq-sobre-c p:last-child{margin:0}
+.paq-cab h3{flex:0 1 auto}.paq-n{margin-left:auto;font-size:12px;color:#686660}
+.paq-todos{font-size:12px}
+.paq-blocos{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.paq-bloco{background:#FAFAF8;padding:8px 12px}.paq-bloco b{font-size:15px;font-weight:600}
+.paq-prob{margin:12px 0 4px;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#B3261E}.paq-prob.ok{color:#1B6E38}
+.paq-it .pp-quem{margin-left:auto}
+.paq-acao{flex:0 1 220px;font-size:12px;color:#4A4944;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.paq-it .pp-quem + .paq-acao + .paq-orig{display:none}
+.paq-resto>summary{color:#0E5C58;font-size:13px}
+#paq-cnis .paq-it .paq-txt{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
+#paq-cnis .paq-it .paq-txt.aberto{display:block}
+.paq-barra .paq-mapa{font-size:12px;margin-right:auto}
+.paq-barra{justify-content:flex-end}
+.paq-barra .tp-nav{flex:1 1 auto}
+.paq-barra .tp-onde{margin-right:auto;order:-1}
+.paq-barra .tp-chave{font-size:11px;color:#686660}
+.atend-aba-notas{display:none}
+@media (min-width:1100px){
+  #detalhe.atend-tela{padding-right:120px}
+  #detalhe.atend-tela.notas-on{padding-right:452px}
+  #detalhe.atend-tela .atend-conversa.gaveta-fechada{display:none}
+  #detalhe.atend-tela .atend-conversa{bottom:14px}
+  #detalhe.atend-tela .atend-conversa .atend-atalhos{position:static;width:auto;padding:0;border:0;box-shadow:none;background:none}
+  #detalhe.atend-tela .atend-aba-notas{display:block;position:fixed;top:120px;right:0;z-index:62;writing-mode:vertical-rl;padding:14px 7px;border:1px solid #E7E6E1;border-right:0;border-radius:10px 0 0 10px;background:#fff;color:#4A4944;font:inherit;font-size:12px;cursor:pointer;box-shadow:-2px 2px 8px rgba(0,0,0,.06)}
+  #detalhe.atend-tela.notas-on .atend-aba-notas{color:#0E5C58;border-color:#0E5C58}
+}
 </style>
 </head>
 <body>
@@ -5561,7 +5729,7 @@ html[data-tema="v10"] .aq-ligar h3{font-size:15px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.93</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.94</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5884,6 +6052,48 @@ let visao = new URLSearchParams(location.search).get("ir")==="patinss" ? "patins
 let filtroDia = null;
 let secRecolhida = new Set();   // F79: seções do Meu Dia recolhidas (sobrevive às repinturas)
 let fasesAbertas = new Set();   // F82: fases do Caso completo abertas à mão (tema v10), por caso:fase
+// F320 · no celular a ficha se lê em abas no alto (plano de interface limpa, 31.10.2026): Andamentos, Prazos, Caso,
+// Cadastro e Honorários; o Cadastro abre no Principal (CPF, Meu INSS e telefone, cada um com o seu botão)
+let celAba = "and", celCad = "principal";
+function celIr(qual){
+  celAba = qual;
+  abaAtiva = qual==="cad" ? 0 : qual==="hon" ? 4 : qual==="per" ? 3 : 2;
+  repintarFicha();
+  const r = document.querySelector(".det-rolagem"); if(r) r.scrollTop = 0;
+}
+const celAbaNorm = () => abaAtiva===0 ? "cad" : abaAtiva===4 ? "hon" : abaAtiva===3 ? "per" : ["cad","hon","per"].includes(celAba) ? "and" : celAba;
+function celCadIr(qual){ celCad = qual; const d = document.querySelector(".det-principal"); if(d) d.dataset.celCad = qual;
+  document.querySelectorAll(".cel-cad-seg button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.cc===qual))); }
+function celAbasHtml(c, ks, k, nPer, temHon){
+  celAba = celAbaNorm();
+  const nNov = k ? (D.novid||[]).filter(a=>a.caso_id===k.id).length : 0;
+  const pzVenc = k ? (()=>{ try{ return linhasDeDatas(c.id).soltas.some(x=>(!x.casoId || x.casoId===k.id) && x.data<hoje() && !x.aConfirmar); }catch(e){ return false; } })() : false;
+  const it = [k && ["and", `Andamentos${nNov?` <span class="ca-n">${nNov}</span>`:""}`], k && ["pz", `Prazos${pzVenc?` <i class="ca-ponto" aria-label="há prazo vencido"></i>`:""}`],
+    k && ["caso", "Caso"], ["cad", "Cadastro"], nPer && ["per", "Perícias"], temHon && ["hon", "Honorários"]].filter(Boolean);
+  return `<nav class="cel-abas" role="tablist" aria-label="Partes da ficha">${it.map(([q, r])=>
+    `<button role="tab" aria-selected="${celAba===q}" class="${celAba===q?"on":""}" onclick="celIr('${q}')">${r}</button>`).join("")}</nav>`;
+}
+function alertaVencidoCel(k){
+  let x; try{ x = linhasDeDatas(k.cliente_id).soltas.filter(y=>(!y.casoId || y.casoId===k.id) && y.data<hoje() && !y.aConfirmar && y.lembTipo!=="aposentadoria_futura")
+    .sort((a,b)=>a.data<b.data?-1:1)[0]; }catch(e){ return ""; }
+  if(!x) return "";
+  const txt = x.resumo || x.rotulo || String(x.rot||"").replace(/<[^>]*>/g, "").trim();
+  return `<button type="button" class="cel-alerta" onclick="celIr('pz')">Vencido ${fmtBarra(x.data).slice(0,5)}${txt ? ` · ${esc(cortaFrase(txt, 60))}` : ""}</button>`;
+}
+function celPrincipalHtml(c, creds, k){
+  const cr = (creds||[]).find(x=>x.tipo==="meu_inss");
+  const adv = D.colPorId.get(advogadoDoCliente(c.id)[0]);
+  const ativos = (D.casosDoCliente.get(c.id)||[]).filter(x=>!x.pre_caso && x.fase!=="encerrado").length;
+  return `<div class="cel-principal">
+    <div class="cel-cad-seg seg-colab" role="group" aria-label="Dados do cadastro"><button data-cc="principal" aria-pressed="${celCad==="principal"}" onclick="celCadIr('principal')">Principal</button><button data-cc="mais" aria-pressed="${celCad==="mais"}" onclick="celCadIr('mais')">Mais dados</button></div>
+    <div class="cel-dados">
+      <div class="cel-dado"><span class="cel-rot">CPF</span><b class="cel-val">${c.cpf ? fmtCpf(c.cpf) : "não informado"}</b>${c.cpf ? `<button class="btn-mini" onclick="copiar('${escJs(c.cpf)}','CPF copiado')">Copiar</button>` : ""}</div>
+      <div class="cel-dado"><span class="cel-rot">Meu INSS</span><b class="cel-val cel-txt">${cr ? "••••••" : "sem senha"}</b>${cr ? `<button class="btn-mini" onclick="copiarCred('${cr.id}')">Copiar senha</button>` : ""}${c.cpf ? `<button class="btn-mini" onclick="entrarMeuInss('${c.id}')">Abrir ↗</button>` : ""}</div>
+      <div class="cel-dado"><span class="cel-rot">Telefone</span><b class="cel-val">${c.telefone ? esc(fmtTelBR(c.telefone)) : "não informado"}</b>${c.telefone ? `<a class="btn-mini" href="tel:${esc(soDig(c.telefone))}">Ligar</a>` : ""}</div>
+    </div>
+    <p class="meio-sub cel-rodape">Advogado responsável: <button type="button" class="cli-adv-bt" onclick="escolherAdvogado('${c.id}')">${esc(adv ? adv.nome : "escolher")}</button> · ${ativos ? "Cliente ativo" : "Sem caso em andamento"}</p>
+  </div>`;
+}
 let subAba = ler("crm_subaba") || "escritorio", instSel = 0;   // F166 · o caso abre nos andamentos do Escritório
 let subCad = ler("crm_subcad") || "";   // divisão aberta do Cadastro
 // qual PROCESSO do caso está sendo olhado (número, "" = o principal) e de que
@@ -12695,7 +12905,7 @@ function linhaAgenda(it){
   return `<div class="cartao ag-linha${k&&k.urgente?" urg":""}"${cli?` data-cli="${cli.id}"`:""}${t?` data-tarefa="${t.id}"`:""}>
     <span class="ag-slot">${slot}</span>
     <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
-    <div class="ag-txt"><b>${nome}</b>${cli&&resumo?`<span class="ag-res">, ${esc(resumo)}</span>`:""}</div>
+    <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b></div>
     <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${it.tc && Array.isArray(it.tc.etapas) && it.tc.etapas.length?`<span class="ag-tipo">etapas ${it.tc.etapas.filter(e=>e.feito).length}/${it.tc.etapas.length}</span>`:""}${
       it.selo?`<span class="${it.prazo?"ag-prazo":"ag-tipo"}">${esc(it.selo)}</span>`:""}${
       it.extra?`<span class="ag-tipo" title="a menção que acompanha a tarefa ainda não foi lida">${esc(it.extra)}</span>`:""}${
@@ -12855,9 +13065,7 @@ function linhaMencaoDia(m){
   return `<div class="cartao ag-linha"${c?` data-cli="${c.id}"`:""}>
     <span class="ag-slot"><button class="check" data-menc-lida="${m.id}" aria-label="marcar como lida" title="lida — sai daqui e das Menções"></button></span>
     <span class="ag-data${d===hj?" hoje":""}">${d===hj?"hoje":`${d.slice(8,10)}/${d.slice(5,7)}`}</span>
-    <div class="ag-txt"><b>${esc(c?c.nome:"Menção")}</b><span class="ag-res">, ${esc(resumoAgenda(m.texto, eu)||m.texto||"")}</span></div>
-    <span class="ag-selos"><span class="ag-tipo">@ ${esc(de?de.nome.split(" ")[0]:"menção")}</span></span>
-    <span class="avatares">${de?`<span class="avatar mini" style="background:${de.cor}" title="${esc(de.nome)}">${esc(de.inicial)}</span>`:""}</span>
+    <div class="ag-txt"><b>${esc(c?c.nome:"Menção")}</b><span class="ag-res"> · ${de?`${esc(de.nome.split(" ")[0])}: `:""}${esc(resumoAgenda(m.texto, eu)||m.texto||"")}</span></div>
     <span class="acoes">${m.caso_id?botoesResposta(m):""}</span>
   </div>`;
 }
@@ -15241,6 +15449,13 @@ document.addEventListener("click", e => {
   const b = e.target.closest(".zap-b"), ant = document.querySelector(".zap-b.toque");
   if(ant && ant!==b) ant.classList.remove("toque");
   if(b && b.querySelector(".zap-acoes,.virar")) b.classList.toggle("toque");
+});
+// F320 · no celular, as ações do andamento (Responder, + prazo, ⋯) aparecem só no cartão tocado, como no balão do WhatsApp
+document.addEventListener("click", e => {
+  if(!document.querySelector(".app.celular") || e.target.closest("button,a,input,textarea,select,summary,details,.tl-cab-fim")) return;
+  const li = e.target.closest(".caso-dir .timeline > li"), ant = document.querySelector(".caso-dir .timeline > li.toque");
+  if(ant && ant!==li) ant.classList.remove("toque");
+  if(li) li.classList.toggle("toque");
 });
 let zapArrasto = null;
 document.addEventListener("touchstart", e=>{
@@ -18362,7 +18577,7 @@ function pintarFicha(){
         :`<span class="volta-pilula vazia" title="nenhuma data marcada para este cliente — sem lembrete, ninguém é cobrado de voltar aqui">📅 sem próxima data — marque nas Anotações</span>`)(proximaDataDe(cliId))}
 `;
   document.getElementById("detalhe").innerHTML=`
-  <div class="det-principal">
+  <div class="det-principal"${temaV10() && celular() ? ` data-cel-aba="${celAba = celAbaNorm()}" data-cel-cad="${celCad}"` : ""}>
   <div class="det-rolagem">
   <div class="det-topo">
     <div class="linha1">
@@ -18374,7 +18589,7 @@ function pintarFicha(){
         ${(u=>u?`<img class="avatar foto-zap" src="${esc(u)}" alt="foto de ${esc(c.nome)} no WhatsApp" title="foto do WhatsApp — clique para ampliar" onclick="verFotoGrande(this.src)">`
           :`<span class="avatar" style="--av:${corDoNome(c.nome)}">${esc(c.nome[0])}</span>`)(fotoDoCliente(c.id))}<h2>${esc(c.nome)}</h2>
         <span class="cli-casos-seta">▾</span>
-      </span>${temaV10() ? linhaAdvogado(c) : ""}</span>
+      </span>${temaV10() && celular() ? linhaAdvogado(c) : ""}</span>
       ${/* F278 · o copiar o nome volta ao lado do nome (pedido do Paulo, 25.10.2026) */""}
       <button class="olho" title="copiar o nome do cliente"
         onclick="copiar('${escJs(c.nome)}','Nome copiado')">📋</button>
@@ -18383,7 +18598,7 @@ function pintarFicha(){
       ${chipParceria(c, ks)}
       ${chipsParentes(c)}${chipEntregar(c)}
       ${botaoZapCliente(cliId)}
-      ${temaV10() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
+      ${temaV10() && celular() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
       ${/* F274 · o que não se usa a toda hora vai ao ⋯ do cabeçalho; CPF e a senha do Meu INSS ficam à vista (pedido do Paulo) */""}
       ${menuMais([
         casosDoBalcao(cliId).length ? `<button class="tl-mais-it td-abrir" role="menuitem" onclick="trouxeDocumentos('${cliId}')">Trouxe documentos</button>` : "",
@@ -18392,9 +18607,11 @@ function pintarFicha(){
         temaV10() ? itemNaoCliente(c) : "",
       ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo det-mais"')}
       ${/* F274 · a situação do cliente e o ✕ andam juntos no canto direito, mesmo quando a linha quebra */""}
-      <span class="det-canto">${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}
+      <span class="det-canto">${temaV10() && !celular() ? "" : `${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}`}
       ${chipAgendaCliente(c)}
-      <button class="fechar nao-cel" onclick="fecharFicha()">✕</button></span></div>
+      <button class="fechar nao-cel" onclick="fecharFicha()" title="fechar a ficha" aria-label="fechar a ficha">✕</button></span></div>
+    ${/* F320 · a segunda linha do cabeçalho (plano de interface limpa, 31.10.2026): CPF, Meu INSS, telefone, advogado e a situação */""}
+    ${temaV10() && !celular() ? `<div class="linha2"><span class="resumo resumo-lado">${resumoIn}</span>${linhaAdvogado(c)}${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}</div>` : ""}
     ${/* abaixo do nome só o que a equipe usa o tempo todo: CPF e a senha do
          Meu INSS. O resto do cadastro fica na aba 📇, sem poluir aqui. */""}
     ${temaV10() ? "" : `<div class="resumo">${resumoIn}</div>`}
@@ -18402,7 +18619,7 @@ function pintarFicha(){
       ${/* abas em pivot claro (espec. 7.2): texto limpo, sem emoji de ícone */""}
       ${/* Documentos saiu do menu (08.98): ele é passo do atendimento, e o
            atendimento começa no Cadastro — o botão está lá dentro */""}
-      <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">Cadastro</button>
+      <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">Cadastro${pontoAba(casoSel && D.casoPorId.get(casoSel), "cad")}</button>
       ${/* ⚖️ F48 · sempre visível: cliente sem análise vê o convite a fazer
            a primeira — é assim que o histórico começa a existir */""}
       ${/* F171 · a Análise de Direito mudou-se para dentro do Cadastro */""}
@@ -18421,16 +18638,19 @@ function pintarFicha(){
            cancelada). A anotação do caso "perícia agendada para 05/10 às
            9h40" já cria o agendamento (extrairEvento), e a aba aparece */""}
       ${/* F236 · e também com a que passou sem confirmação ou a que só o processo conhece, cada uma contada */""}
-      ${(n=>(n.f||n.c||n.p||abaAtiva===3) ? `<button class="mt ${abaAtiva===3?"on":""}" data-vv="3">Perícias${n.f?` (${n.f})`:""}${n.c?` · ${n.c} a confirmar`:""}${n.p?` · ${n.p} a agendar`:""}</button>` : "")({
+      ${(n=>(n.f||n.c||n.p||abaAtiva===3) ? `<button class="mt ${abaAtiva===3?"on":""}" data-vv="3">Perícias${n.f?` (${n.f})`:""}${n.c?` · ${n.c} a confirmar`:""}${n.p?` · ${n.p} a agendar`:""}${n.c?"":pontoAba(casoSel && D.casoPorId.get(casoSel), "per")}</button>` : "")({
         f:evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length,
         c:evs.filter(e=>dataSP(e.data_hora)<hoje()&&e.status==="agendada"&&(D.casoPorId.get(e.caso_id)||{}).fase!=="encerrado").length,
         p:periciasDoProcesso(ands, true).length})}
-      ${(ks.length || pagK.length || pgs.length) ? `<button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Honorários${(n=>n?` (${n})`:"")(pgs.filter(p=>p.status==="aberto").length)}${/* F236 · o vencido na própria aba */""}${(v=>v?` <span class="mt-venc">· ${v} vencido${v>1?"s":""}</span>`:"")(pgs.filter(p=>p.status==="aberto" && p.vencimento && p.vencimento<hoje() && !pgSemValor(p) && !valorSuspeito(p)).length)}</button>` : ""}
+      ${(ks.length || pagK.length || pgs.length) ? `<button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Honorários${(n=>n?` (${n})`:"")(pgs.filter(p=>p.status==="aberto").length)}${/* F236 · o vencido na própria aba */""}${(v=>v?` <span class="mt-venc">· ${v} vencido${v>1?"s":""}</span>`:"")(pgs.filter(p=>p.status==="aberto" && p.vencimento && p.vencimento<hoje() && !pgSemValor(p) && !valorSuspeito(p)).length)}${pontoAba(casoSel && D.casoPorId.get(casoSel), "hon")}</button>` : ""}
     </div>
     <button class="cel-tudo" onclick="fichaTudo()">⋯ mostrar tudo da ficha</button>
+    ${temaV10() && celular() ? (k=>`${k ? `<p class="cel-sub">${esc([k.especie, NOME_FASE[faseEfetiva(k)]||NOME_FASE[k.fase], k.etapa].filter(Boolean).join(" · "))}</p>` : ""}${celAbasHtml(c, ks, k,
+      evs.some(e=>dataSP(e.data_hora)>=hoje() && e.status!=="cancelada"), !!(ks.length || pagK.length || pgs.length))}`)(casoSel && D.casoPorId.get(casoSel)) : ""}
   </div>
 
   <div class="painel ${abaAtiva===0?"ativo":""}" data-p="0">
+    ${temaV10() && celular() ? celPrincipalHtml(c, creds) : ""}
     ${painelCadastroFicha(c, ks, creds, vincs, evs)}
   </div>
 
@@ -18463,8 +18683,10 @@ function pintarFicha(){
           const {inss:temINSS, crps:temCRPS, cnj:temCNJ} = visiveis;
           // F294 · o nível 1 lê só os andamentos dos portais (INSS, Recurso, Judicial), onde não há campo de escrever
           const nv1 = meuNivel()===1;
+          // F320 · no celular os andamentos têm os cinco botões sempre: Escritório, INSS, CRPS, Judicial e Tudo
+          const v10Cel = temaV10() && celular();
           const aba = nv1 ? (["inss","crps","cnj"].find(a=>a===subAba && visiveis[a]) || ["inss","crps","cnj"].find(a=>visiveis[a]) || "")
-            : visiveis[subAba] ? subAba : "escritorio";
+            : visiveis[subAba] || (v10Cel && /^(inss|crps|cnj)$/.test(subAba)) ? subAba : "escritorio";
           // a etiqueta da aba diz o estado sem abrir: ✔ quando a fase foi
           // encerrada à mão, 🗄 quando TODOS os processos daquela fonte estão
           // arquivados (um só arquivado não marca a aba — o outro segue vivo),
@@ -18480,11 +18702,11 @@ function pintarFicha(){
           const v10 = temaV10();
           const menu = `<div class="sub-menu${v10?" menu-andamentos":""}" style="width:100%">
           ${nv1 ? "" : `<button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">${v10?"Escritório":"Andamentos do Escritório"}</button>`}
-          ${temINSS?`<button class="${cls("inss",faseEncerrada(k,"pat"))}" onclick="irSubAba('inss')">${v10?"INSS":"Andamentos INSS"}${rot(comentariosPat(andsVis).length, abaPatArquivada(k), faseEncerrada(k,"pat"))}</button>`:""}
-          ${temCRPS?`<button class="${cls("crps",faseEncerrada(k,"crps"))}" onclick="irSubAba('crps')">Recurso (CRPS)${rot(crpsTotalEventos(k), abaCrpsArquivada(k), faseEncerrada(k,"crps"))}</button>`:""}
-          ${temCNJ?`<button class="${cls("cnj",faseEncerrada(k,"cnj"))}" onclick="irSubAba('cnj')">${v10?"Judicial":"Andamentos do CNJ"}${rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k), faseEncerrada(k,"cnj"))}</button>`:""}
+          ${temINSS || v10Cel?`<button class="${cls("inss",faseEncerrada(k,"pat"))}" onclick="irSubAba('inss')">${v10?"INSS":"Andamentos INSS"}${v10Cel?"":rot(comentariosPat(andsVis).length, abaPatArquivada(k), faseEncerrada(k,"pat"))}</button>`:""}
+          ${temCRPS || v10Cel?`<button class="${cls("crps",faseEncerrada(k,"crps"))}" onclick="irSubAba('crps')">${v10Cel?"CRPS":"Recurso (CRPS)"}${v10Cel?"":rot(crpsTotalEventos(k), abaCrpsArquivada(k), faseEncerrada(k,"crps"))}</button>`:""}
+          ${temCNJ || v10Cel?`<button class="${cls("cnj",faseEncerrada(k,"cnj"))}" onclick="irSubAba('cnj')">${v10?"Judicial":"Andamentos do CNJ"}${v10Cel?"":rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k), faseEncerrada(k,"cnj"))}</button>`:""}
           ${nv1 ? "" : `<button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
-            title="todas as fontes juntas, em ordem cronológica">${v10?"Caso Completo":"Caso completo"}</button>`}
+            title="todas as fontes juntas, em ordem cronológica">${v10Cel?"Tudo":v10?"Caso Completo":"Caso completo"}</button>`}
         </div>`;
           return (v10
         // F145 · duas colunas (pedido do Paulo, 27.09.2026): à esquerda, parada,
@@ -18492,8 +18714,8 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col"><aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${painelOutrasAbas(k)}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir">${bannerAClassificar(k)}${menu}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || nv1 ? "" : composerCaso(k)}${painelDaAba()}</div>
+        ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col"><aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
+           <div class="caso-dir">${bannerAClassificar(k)}${menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || nv1 ? "" : composerCaso(k)}${painelDaAba()}</div>
            <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return !aba ? `<p class="meio-sub">Este caso ainda não tem andamento do INSS, do Conselho de Recursos nem do Judicial.</p>` : aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
@@ -18752,7 +18974,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // qualquer tempo (e fechar registra na Análise de Direito o que foi preenchido)
   // só na aba Cadastro e só depois do + atendimento (ou Abrir atendimento)
   const tela = abaAtiva===0 && pcsVivos.length>0 && _atendAberto.has(c.id) && (ATEND_SUBS.has(cd) || cd==="identificacao");
-  queueMicrotask(()=>{ const d = document.getElementById("detalhe"); if(d){ d.classList.toggle("atend-tela", tela); d.classList.toggle("id-bege", abaAtiva===0 && ["identificacao","direito","documentos"].includes(cd)); } });
+  queueMicrotask(()=>{ const d = document.getElementById("detalhe"); if(d){ d.classList.toggle("atend-tela", tela); d.classList.toggle("notas-on", tela && notasAbertas()); d.classList.toggle("id-bege", abaAtiva===0 && ["identificacao","direito","documentos"].includes(cd)); } });
   if(tela) for(const v of Object.keys(vis)) if(v!=="identificacao" && !ATEND_SUBS.has(v)) vis[v] = false;
   if(meuNivel()<=1) for(const v of Object.keys(vis)) vis[v] = v==="identificacao";   // F249 · primeiro acesso; F294 · e o nível 1
   return `
@@ -18885,17 +19107,20 @@ function cabecalhoAtendimento(c, cd, vis){
   const pc = preCasoAberto(c), et = (pc && pc.etapas) || {};
   const feita = v => et[ETAPA_DE[v]];
   const quemFez = e => { const co = D.colPorId.get(e.quem); return `✔ ${co ? co.nome.split(" ")[0] : "concluída"}, ${fmt(e.em)}`; };
-  const passo = (n, v, rot, sub) => vis[v]===false ? "" : `<button type="button" class="pa-passo${cd===v?" cur":""}${feita(v)?" feita":""}" ${cd===v?'aria-current="step"':""} onclick="irSubCad('${v}')"><i>${feita(v)?"✔":n}</i><span><b>${rot}</b><small>${esc(feita(v) ? quemFez(feita(v)) : sub)}</small></span></button>`;
+  const passo = (n, v, rot, sub) => vis[v]===false ? "" : `<button type="button" class="pa-passo${cd===v?" cur":""}${feita(v)?" feita":""}" ${cd===v?'aria-current="step"':""} onclick="irSubCad('${v}')"><i>${feita(v)?"✔":n}</i><span title="${esc(feita(v) ? quemFez(feita(v)) : sub)}"><b>${rot}</b><small>${esc(feita(v) ? quemFez(feita(v)) : sub)}</small></span></button>`;
   const concluir = pc && ETAPA_DE[cd] && !feita(cd) ? `<button type="button" class="btn-mini atend-concluir" onclick="concluirEtapa('${c.id}','${cd}')" title="grava o pré-caso (vai para a lista Escritório), marca quem concluiu este passo e abre o seguinte">Salvar pré-caso →</button>` : "";
+  // F320 · o cabeçalho mínimo da imagem aprovada: nome, CPF e idade; à direita Anotações, Salvar pré-caso e Sair.
+  // Telefone, Meu INSS e WhatsApp ficam numa linha menor, sem o selo "Modo atendimento" e sem o avatar.
+  const nNotas = ((c.campos||{}).atendimento||[]).filter(n=>!pc || !n.precaso_id || n.precaso_id===pc.id).length;
   return `<div class="atend-cab">
-    <span class="avatar" style="--av:${corDoNome(c.nome)}">${esc((c.nome||"?")[0])}</span>
-    <div class="atend-id"><div><b class="atend-nome">${esc(c.nome||"")}</b> <span class="atend-chip">Modo atendimento</span></div>
-      <div class="atend-dados mono">CPF ${c.cpf ? `<span class="cop" data-cop="${esc(c.cpf)}" data-cop-msg="CPF copiado" title="clique para copiar">${fmtCpf(c.cpf)}</span>` : "—"}
-        ${dn ? `· ${esc(fmt(dn))}, ${idadeDe(c.dn)} anos` : ""} ${c.telefone ? `· ${esc(c.telefone)}` : ""}
-        <span class="meio-sub">${cr ? `· Meu INSS com senha guardada <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button><button class="olho" title="ver (fica registrado)" onclick="verCred('${cr.id}')">👁</button>` : `· Meu INSS: senha não guardada; peça agora <button type="button" class="btn-mini" onclick="irSubCad('identificacao')">Guardar</button>`}</span></div></div>
-    <span class="atend-acoes">${zap ? `<button type="button" class="btn-mini" onclick="${zap}" title="${(D.zapFicha||[]).length ? "ler o histórico do WhatsApp" : "abrir o WhatsApp"}">${iconeFonte("zap")}</button>` : ""}
+    <div class="atend-id"><div class="atend-l1"><h2 class="atend-nome">${esc(c.nome||"")}</h2>
+      <span class="mono">${c.cpf ? `<span class="cop" data-cop="${esc(c.cpf)}" data-cop-msg="CPF copiado" title="clique para copiar">${fmtCpf(c.cpf)}</span>` : "CPF —"}</span>
+      ${dn ? `<span class="meio-sub" title="${esc(fmt(dn))}">${idadeDe(c.dn)} anos</span>` : ""}</div>
+      <div class="atend-dados">${c.telefone ? `${esc(c.telefone)} · ` : ""}${cr ? `Meu INSS com senha guardada <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button><button class="olho" title="ver (fica registrado)" onclick="verCred('${cr.id}')">👁</button>` : `Meu INSS: senha não guardada <button type="button" class="adr-link" onclick="irSubCad('identificacao')">Guardar</button>`}</div></div>
+    <span class="atend-acoes">${zap ? `<button type="button" class="btn-mini" onclick="${zap}" title="${(D.zapFicha||[]).length ? "ler o histórico do WhatsApp" : "abrir o WhatsApp"}" aria-label="WhatsApp">${iconeFonte("zap")}</button>` : ""}
+      <button type="button" class="btn-mini atend-notas-bt" onclick="atendNotas()" aria-controls="atend-conversa" aria-expanded="${notasAbertas()}">Anotações ${nNotas}</button>
       ${concluir}
-      <button type="button" class="btn-mini" onclick="sairModoAtendimento('${c.id}')">Sair do modo atendimento</button></span>
+      <button type="button" class="btn-mini" onclick="sairModoAtendimento('${c.id}')" title="Sair do modo atendimento">Sair<span class="fp2-sr"> do modo atendimento</span></button></span>
   </div>
   <nav class="pa-passos atend-passos" aria-label="Passos do atendimento">
     ${passo("1","identificacao","Identificação","dados do cliente")}${passo("2","pa","Primeiro atendimento","situação e benefícios")}
@@ -18933,6 +19158,9 @@ function faixaAtendimento(c, pc){
   const terc = terceiroSemProcuracao(c);
   if(!nota && !prazos.length && !terc) return "";
   const t = nota ? String(nota.texto) : "";
+  // F320 · com o prazo correndo, a faixa é só ele, em vermelho, uma vez; o relato da recepção fica nas Anotações
+  if(prazos.length) return `<div class="atend-faixa atend-faixa-prazo" role="note">${prazos.map(p=>`<p class="atend-prazo"><b>Prazo correndo:</b> ${esc(p.texto)} · <b>${esc(faltamTxt(p.fatal))}</b></p>`).join("")}
+    ${terc ? `<p class="atend-prazo" role="alert"><b>Quem veio não é o titular.</b> ${esc(terc)}</p>` : ""}</div>`;
   return `<div class="atend-faixa" role="note">${nota ? (t.length > 280 ? `<details class="atend-relato"><summary><b>Por que veio:</b> ${esc(t.slice(0, 220).replace(/\s+\S*$/, ""))}… <span class="meio-sub">ver tudo</span></summary><p>${esc(t)}</p></details>` : `<p><b>Por que veio:</b> ${esc(t)}</p>`) : ""}
     ${prazos.map(p=>`<p class="atend-prazo"><b>Prazo:</b> ${esc(cap1(p.texto))} · <b>${esc(faltamTxt(p.fatal))}</b></p>`).join("")}
     ${terc ? `<p class="atend-prazo" role="alert"><b>Quem veio não é o titular.</b> ${esc(terc)}</p>` : ""}</div>`;
@@ -18951,7 +19179,7 @@ function conversaAtendimento(c){
   const pc = preCasoAberto(c);
   const ns = ((c.campos||{}).atendimento||[]).filter(n=>!pc || !n.precaso_id || n.precaso_id===pc.id).slice(-30).reverse();
   // F283 · no modo atendimento as anotações ficam abertas, fixas à direita em todos os passos (pedido do Paulo, 26.10.2026)
-  return `<details class="atend-conversa" id="atend-conversa" open ondragover="event.preventDefault()" ondrop="probSoltar(event)">
+  return `<details class="atend-conversa${notasAbertas() ? "" : " gaveta-fechada"}" id="atend-conversa" open ondragover="event.preventDefault()" ondrop="probSoltar(event)">
     <summary>Anotações do atendimento${ns.length?` (${ns.length})`:""} <span class="meio-sub">@nome avisa a pessoa</span></summary>
     <div class="atend-conv-corpo">
       ${/* F283b · o campo de escrever primeiro e maior; as anotações em cartões; os documentos em bloco próprio */""}
@@ -18961,7 +19189,19 @@ function conversaAtendimento(c){
       ${ns.length ? `<ol class="atend-notas">${ns.map(n=>`<li class="atend-nota"><div class="atend-nota-cab"><b>${esc(n.quem||"")}</b><span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span></div><div class="atend-nota-txt">${destacarMencoes(esc(String(n.texto||"")))}</div></li>`).join("")}</ol>`
         : `<p class="meio-sub">Nenhuma anotação ainda neste atendimento.</p>`}</div>
       ${docsAnotadosHtml(c, pc)}
-    </div></details>${atalhosDossie(c)}`;
+      ${atalhosDossie(c)}
+    </div></details>
+    <button type="button" class="atend-aba-notas" onclick="atendNotas()" aria-controls="atend-conversa" aria-expanded="${notasAbertas()}">Anotações · Documentos a pedir</button>`;
+}
+// F320 · as anotações viram gaveta à direita (imagem aprovada): fechada, fica a aba vertical; abre pelo botão do cabeçalho.
+// A escolha fica no navegador. Abaixo de 1100 px continuam no pé, sempre abertas.
+const notasAbertas = () => ler("crm_atend_notas")==="1";
+function atendNotas(abrir){
+  const on = abrir==null ? !notasAbertas() : !!abrir; guardar("crm_atend_notas", on ? "1" : "0");
+  const g = document.getElementById("atend-conversa"); if(g) g.classList.toggle("gaveta-fechada", !on);
+  document.querySelectorAll('[aria-controls="atend-conversa"]').forEach(b=>b.setAttribute("aria-expanded", String(on)));
+  const d = document.getElementById("detalhe"); if(d) d.classList.toggle("notas-on", on);
+  if(on){ const ta = document.getElementById("atend-nota"); if(ta) ta.focus(); }
 }
 // F283c · no pé das anotações, os três papéis que mais se consultam no atendimento, direto do dossiê (pedido do Paulo, 26.10.2026)
 const ATALHOS_DZ = [["CNIS Resumido", /CNIS resumido/i], ["CNIS Completo", /CNIS completo/i], ["Declaração de Beneficiário", /declara[çc][ãa]o de benefici/i]];
@@ -33358,17 +33598,24 @@ function paPintarMarca(li, vai){
   const cx = li.querySelector(".paq-cx"); if(cx) cx.setAttribute("aria-checked", String(vai));
   const pa = li.closest(".pa"); if(!pa) return;
   for(const sec of pa.querySelectorAll(".paq[data-q]")){ const t = sec.querySelectorAll("[data-k]").length, n = t - sec.querySelectorAll("[data-k].fora").length;
-    const ct = sec.querySelector(".paq-n"); if(ct) ct.textContent = t ? `${n} de ${t} vão` : "";
+    const ct = sec.querySelector(".paq-n"); if(ct) ct.textContent = t ? `${n} de ${t} vão à Análise` : "";
     const ix = pa.querySelector(`.tp-trilha li[data-passo="${sec.dataset.q}"] .tp-conta`); if(ix) ix.textContent = t ? `${n}/${t}` : ""; }
   const tot = pa.querySelectorAll(".paq [data-k]").length - pa.querySelectorAll(".paq [data-k].fora").length, b = pa.querySelector(".paq-barra-n");
   if(b) b.textContent = `${tot} ${tot===1?"item":"itens"} do dossiê`;
 }
 // F302 · o CNIS mostra à vista só o que tem problema; o resto, que não pede providência, fica fechado logo abaixo
-function itensDoCnis(itens, li){
+// F320 · cada problema diz quem providencia (Cliente ou Escritório, pela mesma regra das Pendências) e a providência curta;
+// a linha do tempo vai para dentro do "Ver os dados sem problema"
+function quemDoProblema(x, ctx){
+  let r; try{ r = providenciaDe(x, ctx||{}); }catch(e){ return ""; }
+  const [quem, acao] = r, curto = acao.replace(/^Deve /, "").split(/[,;:(]|\s(?:para|porque|que|com|depois|antes)\s/)[0].trim();
+  return `<span class="pp-quem ${quem==="Cliente" ? "cli" : "esc"}">${quem}</span><span class="paq-acao" title="${esc(acao)}">${esc(curto)}</span>`;
+}
+function itensDoCnis(itens, li, ctx, linha){
   const prob = itens.filter(x=>/warn|crit/.test(x.est)), resto = itens.filter(x=>!/warn|crit/.test(x.est));
-  return `<p class="paq-prob${prob.length ? "" : " ok"}"><b>${prob.length ? `${plu(prob.length, "problema", "problemas")} no CNIS` : "Nenhum problema no CNIS"}</b>${prob.length ? ", cada um com o que fazer:" : "."}</p>
-    ${prob.length ? `<ul class="paq-itens">${prob.map(li).join("")}</ul>` : ""}
-    ${resto.length ? `<details class="paq-resto"><summary>Os demais dados do CNIS, sem problema (${resto.length})</summary><ul class="paq-itens">${resto.map(li).join("")}</ul></details>` : ""}`;
+  return `<p class="paq-prob${prob.length ? "" : " ok"}"><b>${prob.length ? `Problemas · ${prob.length}` : "Nenhum problema no CNIS"}</b></p>
+    ${prob.length ? `<ul class="paq-itens">${prob.map(x=>li(x, quemDoProblema(x, ctx))).join("")}</ul>` : ""}
+    ${resto.length || linha ? `<details class="paq-resto"><summary>Ver os ${plu(resto.length, "dado", "dados")} sem problema</summary>${linha||""}${resto.length ? `<ul class="paq-itens">${resto.map(x=>li(x, "")).join("")}</ul>` : ""}</details>` : ""}`;
 }
 function painelPA(c, ks){
   if(telaSimples("pa", c)) return paSimples(c, ks);   // F249 · nível 1 e 2 antes da onda 5
@@ -33381,23 +33628,27 @@ function painelPA(c, ks){
   const conta = q => { const xs = [...q.itens, ...q.docs]; return [xs.filter(x=>!fora.has(x.k)).length, xs.length]; };
   const tot = qd.quadros.reduce((n, q)=>n + conta(q)[0], 0);
   const cx = (k) => `<button type="button" class="paq-cx" role="checkbox" aria-checked="${!fora.has(k)}" aria-label="Levar à Análise de Direito" onclick="paMarcar('${c.id}',this)"></button>`;
-  const itemLi = (x, i) => `<li class="paq-it${fora.has(x.k)?" fora":""}${i>=PA_VISIVEIS?" paq-extra":""}" data-k="${esc(x.k)}">${cx(x.k)}
-      <i class="pa-bola ${x.est}" aria-hidden="true"></i><span class="paq-txt">${esc(x.txt)}</span>
-      <span class="paq-orig">${esc(x.fonte||"")}${x.anexo ? ` · <button type="button" class="adr-link" onclick="abrirAnexo('${x.anexo}')">ver</button>` : ""}</span>
+  const itemLi = (x, i, quem) => `<li class="paq-it${fora.has(x.k)?" fora":""}${i>=PA_VISIVEIS?" paq-extra":""}" data-k="${esc(x.k)}">${cx(x.k)}
+      <i class="pa-bola ${x.est}" aria-hidden="true"></i><span class="paq-txt" title="${esc(x.txt)}" onclick="this.classList.toggle('aberto')">${esc(x.txt)}</span>
+      ${quem||""}<span class="paq-orig">${esc(x.fonte||"")}${x.anexo ? ` · <button type="button" class="adr-link" onclick="abrirAnexo('${x.anexo}')">ver</button>` : ""}</span>
       ${x.acao ? `<button type="button" class="tl-bt" onclick="${x.acao.js}">${esc(x.acao.rot)}</button>` : ""}</li>`;
   const docLi = a => `<li class="paq-doc${fora.has(a.k)?" fora":""}" data-k="${esc(a.k)}">${cx(a.k)}<button type="button" class="adr-link" onclick="abrirAnexo('${a.id}')">${esc(fonteDoDossie(a)[1])}</button>
       <small>${a.texto ? "lido" : a.paginas!=null ? "digitalizado" : "em leitura"}</small></li>`;
   const quadro = (q, n) => { const [v, t] = conta(q);
     return `<section class="paq" id="paq-${q.id}" data-q="${q.id}" aria-labelledby="paq-t-${q.id}">
-      <div class="paq-cab"><h3 id="paq-t-${q.id}"><i>${n}</i>${esc(q.rot)}</h3><span class="paq-n">${t ? `${v} de ${t} vão` : ""}</span>
-        ${t ? `<button type="button" class="btn-mini paq-todos" onclick="paMarcarQuadro('${c.id}','${q.id}')">marcar ou desmarcar todos</button>` : ""}</div>
-      <p class="paq-oque"><b>O que é:</b> ${esc(q.oque)}</p>
-      ${q.achado ? `<p class="paq-achado"><b>O que encontramos:</b> ${esc(q.achado)}.</p>` : ""}
+      ${/* F320 · o título com o "?" que abre o que é e para que importa; à direita, quantos vão à Análise */""}
+      <div class="paq-cab"><h3 id="paq-t-${q.id}"><i>${n}</i>${esc(q.rot)}</h3>
+        <details class="paq-sobre"><summary aria-label="O que é este quadro">?</summary><div class="paq-sobre-c">
+          <p class="paq-oque"><b>O que é:</b> ${esc(q.oque)}</p>
+          ${q.achado && q.blocos.length ? `<p class="paq-achado"><b>O que encontramos:</b> ${esc(q.achado)}.</p>` : ""}
+          ${q.importa ? `<p class="paq-importa"><b>Importa para:</b> ${esc(q.importa)}.</p>` : ""}</div></details>
+        <span class="paq-n">${t ? `${v} de ${t} vão à Análise` : ""}</span>
+        ${t ? `<button type="button" class="adr-link paq-todos" onclick="paMarcarQuadro('${c.id}','${q.id}')">marcar ou desmarcar todos</button>` : ""}</div>
+      ${q.achado && !q.blocos.length ? `<p class="paq-achado"><b>O que encontramos:</b> ${esc(q.achado)}.</p>` : ""}
       ${q.vazio ? `<p class="paq-vazio">Sem dado: ${esc(q.vazio)}.</p>` : ""}
-      ${q.importa ? `<p class="paq-importa"><b>Importa para:</b> ${esc(q.importa)}.</p>` : ""}
-      ${q.blocos.length ? `<div class="paq-blocos">${q.blocos.map(([r, val, est])=>`<div class="paq-bloco"><small>${esc(r)}</small><b class="mono${est==="crit"?" crit":""}">${esc(val)}</b></div>`).join("")}</div>` : ""}
-      ${q.extra==="linha" ? `<div class="paq-rola">${paLinhaDoTempo(c, qd)}</div>` : ""}
-      ${q.id==="cnis" && q.itens.length ? itensDoCnis(q.itens, x=>itemLi(x, 0))
+      ${q.blocos.length ? `<div class="paq-blocos">${q.blocos.map(([r, val, est])=>`<div class="paq-bloco"><small title="${esc(r)}">${esc(PA_BLOCO_ROT[r] || r)}</small><b class="${est==="crit"?" crit":""}">${esc(PA_BLOCO_VAL(val))}</b></div>`).join("")}</div>` : ""}
+      ${q.extra==="linha" && !(q.id==="cnis" && q.itens.length) ? `<div class="paq-rola">${paLinhaDoTempo(c, qd)}</div>` : ""}
+      ${q.id==="cnis" && q.itens.length ? itensDoCnis(q.itens, (x, quem)=>itemLi(x, 0, quem), qd, q.extra==="linha" ? `<div class="paq-rola">${paLinhaDoTempo(c, qd)}</div>` : "")
       : q.itens.length ? `<ul class="paq-itens${q.itens.length > PA_VISIVEIS ? " recolhido" : ""}">${q.itens.map(itemLi).join("")}</ul>
         ${q.itens.length > PA_VISIVEIS ? `<button type="button" class="adr-link paq-mais" aria-expanded="false" data-n="${q.itens.length - PA_VISIVEIS}" onclick="paMais(this)">mostrar mais ${q.itens.length - PA_VISIVEIS}</button>` : ""}` : ""}
       ${q.extra==="tabela" ? `<div class="paq-rola">${tabelaRaisCaged(qd.fd, qd.g)}</div>` : ""}
@@ -33427,17 +33678,13 @@ function painelPA(c, ks){
       ${passo(3, "Análise de Direito", nEsc ? `${nEsc} ${nEsc===1?"benefício":"benefícios"}` : "nenhum benefício", false, `paIrAnalise('${c.id}')`)}
       ${passo(4, "Documentos", "pedido, guias e geração", false, "irSubCad('documentos')")}
     </nav>
-    <div class="pa-cab"><div><h2>Primeiro atendimento</h2>
-      ${(n => n ? `<p class="meio-sub" role="status">Lendo o dossiê: faltam ${n} ${n===1?"documento":"documentos"}; os quadros se completam sozinhos.</p>` : "")(dossieFaltaLer(c.id))}
-      ${semDz ? "" : `<p>Leitura do dossiê baixado em <span class="mono">${ems.length ? esc(fmtBarra(ems[ems.length-1].slice(0,10))) : "—"}</span> · ${nDocs} ${nDocs===1?"documento":"documentos"} · ${esc(Object.keys(dz).map(k=>PORT[k]||k).join(", ")||"nenhum portal")}.</p>`}</div>
-      <button type="button" class="btn-mini" onclick="irSubCad('mapa')">Mapa do dossiê</button></div>
+    ${/* F320 · sem o título, a linha da leitura e a legenda: a data do dossiê fica no title do Mapa, no pé */""}
+    ${(n => n ? `<p class="meio-sub" role="status">Lendo o dossiê: faltam ${n} ${n===1?"documento":"documentos"}; os quadros se completam sozinhos.</p>` : "")(dossieFaltaLer(c.id))}
     ${(n => n && !nomeIgual(n, c.nome) ? `<p class="pa-nome-dif" role="alert"><b>Nome diferente do CNIS.</b> No CRM consta <b>${esc(c.nome||"")}</b>, e no CNIS consta <b>${esc(n)}</b>. <button type="button" class="btn-mini" onclick="usarNomeCnis('${c.id}')">Usar o nome do CNIS</button></p>` : "")(nomeDoCnis(c))}
     ${semDz ? `<section class="pa-sem-dz" aria-label="Sem dossiê">
       <p><b>O dossiê ainda não foi baixado.</b> Os quadros nascem quando a extensão trouxer os documentos dos portais com o gov.br do cliente. Até lá, escolha o benefício abaixo e siga para a Análise de Direito.</p>
       ${(ns=>ns.length ? `<div class="pa-relato"><span class="meio-sub">O que a recepção registrou</span>${ns.map(n=>`<p><b>${esc(n.quem||"")}</b> <span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span> ${esc(String(n.texto||"").slice(0,1500))}</p>`).join("")}</div>` : "")(((c.campos||{}).atendimento||[]).slice(-3))}
-    </section>` : `<ul class="pa-legenda paq-legenda"><li><i class="pa-bola crit"></i>Em risco ou prazo correndo</li><li><i class="pa-bola warn"></i>Falta ou a conferir</li><li><i class="pa-bola ok"></i>Em ordem</li><li><i class="pa-bola info"></i>Informativo</li><li><span class="paq-cx" aria-hidden="true"></span>Vai para a Análise de Direito (desmarque só o que não tem a ver com a visita)</li></ul>
-    ${[...urg.reduce((m, t)=>m.set(t.prazo.texto, [...(m.get(t.prazo.texto)||[]), t.f.rot]), new Map())].map(([txt, rots])=>`<p class="tp-urgente" role="note"><b>Prazo correndo:</b> ${esc(juntaE([...new Set(rots)]))}: ${esc(txt)}</p>`).join("")}
-    ${tp ? tp.trilha : ""}
+    </section>` : `${tp ? tp.trilha : ""}
     ${grupos.map(g=>`<div class="tp-passo" data-passo="${g.id}"${oculto(g.id)}>${g.qs.map(q=>quadro(q, ++nq)).join("")}</div>`).join("")}`}
     <section class="paq paq-escolha${tp ? " tp-passo" : ""}" id="paq-escolha" data-passo="escolha"${oculto("escolha")} aria-labelledby="paq-t-escolha">
       <div class="paq-cab"><h3 id="paq-t-escolha"><i>✓</i>Benefícios para a Análise de Direito</h3></div>
@@ -33446,11 +33693,14 @@ function painelPA(c, ks){
       ${faixaBeneficios(c, semDz ? null : d)}
       ${roteiroPerguntas(c, ks)}
     </section>
-    <div class="paq-barra"><span><b>Vão:</b> ${nEsc ? esc(ops.map(o=>o.rot).join(", ")) : "nenhum benefício marcado"}${semDz ? "" : ` · <span class="paq-barra-n">${tot} ${tot===1?"item":"itens"} do dossiê</span>`}</span>
+    <div class="paq-barra">${semDz ? "" : `<button type="button" class="adr-link paq-mapa" onclick="irSubCad('mapa')" title="dossiê baixado em ${ems.length ? esc(fmtBarra(ems[ems.length-1].slice(0,10))) : "—"} · ${nDocs} ${nDocs===1?"documento":"documentos"} · ${esc(Object.keys(dz).map(k=>PORT[k]||k).join(", ")||"nenhum portal")}">Mapa do dossiê</button>`}
       <span class="tp-nav">${tp ? tp.nav : ""}<button type="button" class="pa-prim tp-fim" ${nEsc?"":"disabled"}${tp && !tp.ult ? " hidden" : ""} onclick="paConcluir('${c.id}')">${pc ? "Concluir e levar" : "Levar"} à Análise de Direito →</button></span></div>
   </div>`;
 }
-const PA_PASSO_ROT = {roca:"Roça e pesca", cad:"CadÚnico", ben:"Cartas e extratos", falta:"Não encontrado"};
+// F320 · os rótulos curtos dos números do CNIS (o completo fica no title)
+const PA_BLOCO_ROT = {"Qualidade de segurado":"Qualidade", "Carência (meses de contribuição)":"Carência", "Tempo pelo CNIS":"Tempo"};
+const PA_BLOCO_VAL = v => String(v).replace(/^(\d+) hoje; (\d+) com o acerto$/, "$1 · $2 com acerto");
+const PA_PASSO_ROT = {cnis:"CNIS", ped:"Pedidos ao INSS", roca:"Roça e pesca", cad:"CadÚnico", ben:"Cartas e extratos", falta:"Não encontrado"};
 // ══════════════════════════════════════════════════════════════════════════
 // F238 · PASSOS DENTRO DE UMA PÁGINA LONGA (crm/fase2/docs/ATENDIMENTO-EM-ETAPAS.md)
 // ══════════════════════════════════════════════════════════════════════════
@@ -36989,8 +37239,10 @@ function linhaCaso(k){
       ${/* F114 · o que decide ESTA espécie, e só isso; o resto em gestão do caso */""}
       ${camposEssenciais(k).map(c=>lcCampo(k,c)).join("")}
       ${/* F287 · o acesso da fase (PAT, Meu INSS, e-SISREC, autos) é a própria tramitação, com o ícone de ir */""}
+      ${/* F320 · o protocolo do INSS à vista, com copiar, como nas imagens aprovadas (plano de interface limpa) */""}
+      ${(pr=>pr && /^(inss|conselho)$/.test(fe) ? `<span class="lc-f lc-prot"><span class="lc-k">Protocolo</span>${lcCop(pr,"Protocolo")}<button type="button" class="lc-copiar" onclick="copiar('${escJs(pr)}','Protocolo copiado')">copiar</button></span>` : "")((k.protocolos||[]).map(String).filter(Boolean)[0])}
       <span class="lc-f"><span class="lc-k">Tramitação</span>${(a=>a
-        ? a.replace('class="lc-acesso"', 'class="lc-tram lc-tram-link"').replace(/>[^<]*<\/(a|button)>\s*$/, `>${esc(tram)}${IC_SVG.ir}</$1>`)
+        ? (rotA=>a.replace('class="lc-acesso"', 'class="lc-tram lc-tram-link"').replace(/^(<(a|button)\b[^>]*>)[\s\S]*$/, (_, ab, tg)=>`${ab}<span class="lc-tram-n">${esc(tram)}</span> · abrir no ${esc(rotA)}${IC_SVG.ir}</${tg}>`))(a.replace(/<[^>]*>/g, "").replace("↗", "").trim())
         : `<span class="lc-tram">${esc(tram)}</span>`)(acessosDoCaso(k).atual[0])}</span>
       ${/* F119 · a etapa, o passo dentro da fase. É ela que responde ao
            cliente quando ele pergunta como está o processo. */""}
@@ -37006,8 +37258,8 @@ function linhaCaso(k){
       ${lcVerificacao(k)}
       </div>
       ${/* F287 · a flecha no meio da borda de baixo, como a alça das fases (F286) */""}
-      <button type="button" class="lc-mais lc-mais-pe tr-alca" onclick="lcAbrir('${k.id}',${n?0:1})" aria-expanded="${n?"true":"false"}"
-        aria-label="${n?"fechar os números do caso":"abrir os números do caso"}" title="${n?"fechar":"os números do caso: NB, e-Sisrec, processo judicial"}">${setaAlca(!n)}</button>
+      <button type="button" class="lc-mais lc-mais-pe lc-dobra" onclick="lcAbrir('${k.id}',${n?0:1})" aria-expanded="${n?"true":"false"}"
+        title="${n?"fechar":"os números do caso: NB, e-Sisrec, processo judicial, e a gestão do caso"}">${setaAlca(!n)}<span>Números do caso e gestão</span></button>
     </div>
     ${n>=1?lcNumeros(k):""}
     ${n>=2?lcGestao(k):""}
@@ -37196,7 +37448,7 @@ function faixaTrilha(k){
   const abas = fases.map(({f,st})=>{
     const c = COR_FASE[f], txt = st==="a" ? (agora || "em curso") : st==="f" ? resumoFase(k, f) : st==="n" ? "não houve" : "a vir";
     const mkA = st==="a" ? MK0(f) : null, aguarda = mkA ? (i=>i>=0 && !mkA[i].d ? ` · aguardando ${esc(ets[i].n)}` : "")(mkA.findIndex(m=>m.s==="a")) : "";
-    const stHtml = st==="a" ? `<span class="tr-agora"><b>${esc(agora||"a definir")}</b>${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}${aguarda}</span>` : esc(txt);
+    const stHtml = st==="a" && !celular() ? `<span class="jn-atual">atual</span>` : st==="a" ? `<span class="tr-agora"><b>${esc(agora||"a definir")}</b>${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}${aguarda}</span>` : esc(txt);
     return `<button role="tab" aria-selected="${ver===f}" class="jn-b jn-${st}${ver===f?" jn-ver":""}" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}"
       onclick="trVerFase('${k.id}','${f}')" title="${esc(`${c.n}: ${String(txt)}`)}"><span class="jn-nome"><i></i><span class="jn-txt">${c.n}</span></span><span class="jn-st">${stHtml}</span></button>`; }).join("");
   const alt = Object.entries(TRILHAS).filter(([,t])=>t.fase===ver);
@@ -37250,11 +37502,26 @@ function faixaTrilha(k){
       <span>A data vem da anotação que cumpriu a etapa. Grupos cumpridos ficam recolhidos; clique para abrir.</span></div>` : "";
   // F243 · a faixa compacta (pedido do Paulo, 18.10.2026): as fases numa linha e as etapas logo abaixo; o nome da trilha, o
   // tipo de processo, a legenda e "esta fase não houve" ficam no "?", que ganha um ponto quando o tipo pede confirmação
-  return `<section class="tr-faixa tr tr-compacta" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}" aria-label="Jornada e trilha do caso">
+  // F320 · as etapas recolhidas (plano de interface limpa, 31.10.2026): no computador a faixa nasce com as fases e uma linha
+  // só, com a etapa, desde quando, a barra de progresso e o próximo passo; "ver as etapas" abre a trilha inteira
+  // a inicial minúscula só na palavra comum ("Acórdão do TRF3" fica "acórdão do TRF3"; "INSS" fica)
+  const minusc1 = t => /^[A-ZÀ-Ú][a-zà-ú]/.test(t) ? t[0].toLowerCase() + t.slice(1) : t;
+  const cel = celular(), aberta = cel || etapasAbertas() || sel!=null || trAjuda;
+  const resumo = cel ? "" : (()=>{
+    const vis = ets.map((e,i)=>({e, i, m:MK[i]||{}})).filter(x=>!x.e.op || x.m.s);
+    const ia = vis.findIndex(x=>x.m.s==="a"), at = ia>=0 ? vis[ia] : null;
+    const prox = ia>=0 ? vis.slice(ia+1).find(x=>x.m.s!=="f" && x.m.s!=="n") : null;
+    const seg = vis.map((x,j)=>`<i class="${x.m.s==="f"?"f":x.m.s==="a"?"a":x.m.s==="n"?"n":""}"></i>`).join("");
+    return `<div class="tr-resumo"${ver===faseAt?"":" hidden"}><span class="tr-agora"><small>Etapa</small> <b>${esc(agora||"a definir")}</b>${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}</span>
+      ${at ? `<span class="tr-pos">${at.m.d ? `desde ${dCurta(at.m.d)} · ` : `aguardando ${esc(minusc1(at.e.n))} · `}${ia+1} de ${vis.length}</span>` : ""}
+      <span class="tr-prog" aria-hidden="true">${seg}</span>
+      ${prox ? `<span class="tr-prox">Próximo: ${esc(minusc1(prox.e.n))}</span>` : ""}</div>`; })();
+  return `<section class="tr-faixa tr tr-compacta${aberta?" tr-aberta":" tr-fechada"}" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}" aria-label="Jornada e trilha do caso">
     <div class="jn-l" role="tablist" aria-label="Fases do caso">${abas}<button class="tr-ajuda${confirma ? " tr-ajuda-pend" : ""}" aria-expanded="${trAjuda}" aria-controls="tr-leg"
       title="${esc(`${T.nome}: o tipo de processo e o que cada marca quer dizer`)}" onclick="trAjuda=!trAjuda;trRepintar()">?</button>
 </div>
-    <div class="tr-corpo">
+    ${resumo}
+    <div class="tr-corpo"${aberta?"":" hidden"}>
       ${trAjuda ? `<div class="tr-cab"><h3>${esc(T.nome)}</h3>${ver===faseAt ? "" : `<span class="meio-sub">${stVer==="v"?"fase ainda não alcançada":"fase anterior"}</span>`}
         ${houveBt}${chips}</div>` : ""}
       ${leg}
@@ -37278,9 +37545,13 @@ function alcaTrilha(fechada){
   return `<button type="button" class="tr-alca" aria-expanded="${!fechada}" title="${fechada ? "mostrar as fases e as etapas do caso" : "recolher as fases e as etapas"}"
     aria-label="${fechada ? "mostrar as fases e as etapas do caso" : "recolher as fases e as etapas"}" onclick="trAlternar(${fechada ? 0 : 1})">${seta}${fechada ? "<span>Fases e etapas</span>" : ""}</button>`;
 }
+const etapasAbertas = () => ler("crm_etapas")==="1";
+function etapasAlternar(abrir){ guardar("crm_etapas", abrir ? "1" : ""); if(!abrir){ trAjuda = false; trSel = {}; } trRepintar(); }
 function faixaTrilhaComAlca(k){
   const t = faixaTrilha(k);
   if(!t) return faixaIncapacidade(k);
+  if(!celular()){ const ab = /tr-aberta/.test(t.slice(0, 200));
+    return t.replace(/<\/section>\s*$/, `${faixaIncapacidade(k)}<button type="button" class="tr-alca tr-alca-et" aria-expanded="${ab}" onclick="etapasAlternar(${ab?0:1})">${setaAlca(!ab)}<span>${ab ? "recolher etapas" : "ver as etapas"}</span></button></section>`); }
   if(trOculta()) return `<div class="tr-recolhida">${alcaTrilha(true)}</div>`;
   return t.replace(/<\/section>\s*$/, `${faixaIncapacidade(k)}${alcaTrilha(false)}</section>`);
 }
@@ -37451,7 +37722,29 @@ function irOutraAba(qual){
   repintarFicha();
 }
 function painelOutrasAbas(k){
-  const c = D.cliPorId.get(k.cliente_id); if(!c) return "";
+  const linhas = linhasOutrasAbas(k);
+  if(!linhas.length) return "";
+  return `<section class="outras-abas" aria-label="Nas outras abas"><h3>Nas outras abas</h3>
+    ${linhas.map(([q,aba,txt,cor])=>`<button class="oa-linha" onclick="irOutraAba('${q}')">
+      <span class="oa-ponto" style="background:${cor}"></span>
+      <span class="oa-txt" title="${esc(txt)}"><small>${aba}</small><span class="fp2-sr">${esc(txt)}</span><span aria-hidden="true">${esc(String(txt).split(" · ")[0].split(": ")[0])}</span></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`).join("")}
+  </section>`;
+}
+// F320 · o aviso de cada aba vira um ponto ao lado do nome dela no menu da ficha (plano de interface limpa, 31.10.2026):
+// "Cadastro ● 8 dados faltam"; o vermelho vence o âmbar, e o azul (a data do direito) só entra no title
+const ABA_DA_LINHA = {identificacao:"cad", direito:"cad", documentos:"cad", pericias:"per", honorarios:"hon"};
+function pontoAba(k, qual){
+  if(!k || !temaV10()) return "";
+  let ls; try{ ls = linhasOutrasAbas(k).filter(l=>ABA_DA_LINHA[l[0]]===qual); }catch(e){ return ""; }
+  const alerta = ls.filter(l=>l[3]!=="var(--azul)" && l[3]!=="var(--prox)" && l[3]!=="var(--cinza)");
+  const vm = alerta.find(l=>l[3]==="var(--venc)"), x = vm || alerta[0];
+  if(!x) return "";
+  const curto = String(x[2]).split(" · ")[0].split(": ")[0].replace(/ às peças$/, "");
+  return ` <span class="mt-ponto" style="--pc:${x[3]}" title="${esc(ls.map(l=>`${l[1]}: ${l[2]}`).join("\n"))}"><i aria-hidden="true"></i>${esc(curto)}</span>`;
+}
+function linhasOutrasAbas(k){
+  const c = D.cliPorId.get(k.cliente_id); if(!c) return [];
   const hj = hoje(), ks = D.casosDoCliente.get(c.id)||[k], linhas = [];
   // F236 · o cadastro que falta às peças (a mesma régua da Identificação), o que deixa de existir sem CPF e nascimento, a senha
   // do Meu INSS no caso que corre lá e o estado civil que a certidão de óbito da pensão desmente
@@ -37516,13 +37809,7 @@ function painelOutrasAbas(k){
     || fatosDaEtapa(k, andsDoCaso(k)).some(f=>f.fase==="judicial" && f.etapa==="em recurso" && f.data>pr.motivo.em)));
   if(lanc.length) linhas.push(["honorarios","Honorários a lançar", `${lanc.length} pelo contrato${(t=>t?` · ${lanc.some(x=>x.valor && /^≈/.test(x.nota||""))?"≈ ":""}${moedaBR(t)}`:"")(somaV(lanc))} · ${pr.motivo.rot}${pr.motivo.em?` em ${dCurta(pr.motivo.em)}`:""}${sobRec?" · previsão: a sentença está em recurso":""}`, "#B7791F"]);
   if(linhaCad) linhas.push(linhaCad);   // F236 · por último: o que é do caso vem antes do cadastro
-  if(!linhas.length) return "";
-  return `<section class="outras-abas" aria-label="Nas outras abas"><h3>Nas outras abas</h3>
-    ${linhas.map(([q,aba,txt,cor])=>`<button class="oa-linha" onclick="irOutraAba('${q}')">
-      <span class="oa-ponto" style="background:${cor}"></span>
-      <span class="oa-txt" title="${esc(txt)}"><small>${aba}</small><span class="fp2-sr">${esc(txt)}</span><span aria-hidden="true">${esc(String(txt).split(" · ")[0].split(": ")[0])}</span></span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`).join("")}
-  </section>`;
+  return linhas;
 }
 function lcNovoNb(casoId){
   caixa(`<h3 style="margin:0 0 6px">＋ NB</h3>
@@ -42028,7 +42315,7 @@ function linhaAdvogado(c){
   const id = advogadoDoCliente(c.id)[0], co = D.colPorId.get(id);
   // F254 · o "fora da lista" segue à vista; o botão de mudar foi ao ⋯ do cabeçalho (F274, itemNaoCliente)
   const nc = souAdmin() && !ehClienteDaLista(c) ? ` · <span class="chip neutro">fora da lista Clientes</span>` : "";
-  return `<span class="cli-adv">Advogado responsável: <button type="button" class="cli-adv-bt" onclick="escolherAdvogado('${c.id}')"
+  return `<span class="cli-adv">Advogado<span class="fp2-sr"> responsável:</span> <button type="button" class="cli-adv-bt" onclick="escolherAdvogado('${c.id}')"
     title="trocar o advogado responsável por este cliente: é quem a ⭐ e a movimentação avisam">${esc(co ? co.nome : "escolher")} ▾</button>${nc}</span>`;
 }
 function itemNaoCliente(c){

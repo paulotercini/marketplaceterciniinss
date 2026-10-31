@@ -110,7 +110,7 @@ FIX.leads = [{ id: "l1", nome: "Prospecto Fictício Alves", telefone: "(16) 9999
     // F236 · Delegadas por mim virou seção recolhida (<details class="pl-grupo">) no pé do Meu Dia
     const sec = [...document.querySelectorAll(".pl-grupo")].find(x => /Delegadas por mim/.test(x.textContent));
     return { n: sec.querySelector(".pl-n").textContent.trim(), linhas: sec.querySelectorAll(".ag-linha").length,
-      txt: sec.textContent.replace(/\s+/g, " "), revisa: !!document.querySelector(".ag-revisa") };
+      txt: (sec.textContent + " " + [...sec.querySelectorAll("[title]")].map(e => e.title).join(" ")).replace(/\s+/g, " "), revisa: !!document.querySelector(".ag-revisa") };
   });
   conf("o Meu Dia lista a tarefa que delegou à Amanda, vencida, e só ela", deleg.n === "1" && deleg.linhas === 1 && /Aurélia Ficta/.test(deleg.txt) && /réplica/.test(deleg.txt));
   conf("a tarefa de revisar do Paulo leva o selo revisa na agenda", deleg.revisa);

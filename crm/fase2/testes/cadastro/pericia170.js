@@ -44,7 +44,7 @@ const SUPA = "https://ficticio.supabase.co";
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   const caso = await p.evaluate(cli => D.casos.find(k => k.cliente_id === cli), CLI_CHEIO);
-  const abas = () => p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].map(b => b.textContent.trim()));
+  const abas = () => p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].map(b => [...b.childNodes].filter(n => !(n.classList && n.classList.contains("mt-ponto"))).map(n => n.textContent).join("").trim()));
   await p.evaluate(id => { D.eventos = (D.eventos || []).filter(e => e.caso_id !== id);
     D.eventos.push({ id: "ev-velho", caso_id: id, tipo: "Perícia", status: "realizada", data_hora: "2026-01-10T09:00:00-03:00" });
     abaAtiva = 2; casoSel = id; repintarFicha(); }, caso.id);
