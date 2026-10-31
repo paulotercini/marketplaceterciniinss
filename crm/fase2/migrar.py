@@ -796,6 +796,16 @@ def remapear_clientes(mapa, cpf_para_id_existente):
     return len(troca)
 
 
+def separar_prazo_vazio(mapa):
+    """P4 dos prazos (31.10.2026): a etapa do caso que o To Do manda sem data não leva a coluna prazo,
+    porque o upsert apagava a data de entrega que o CRM deu ao pedido de documento. A tarefa pessoal
+    (sem caso) segue como antes: nela a data é do To Do."""
+    ts = mapa.get("tarefas") or []
+    mapa["tarefas"] = [t for t in ts if not (t.get("caso_id") and t.get("prazo") is None)]
+    mapa["tarefas_sem_prazo"] = [{c: v for c, v in t.items() if c != "prazo"}
+                                 for t in ts if t.get("caso_id") and t.get("prazo") is None]
+
+
 def tarefas_docs_de(andamentos):
     """Andamentos com "documentos solicitados: X; Y" viram itens 📄 do
     Checklist de Documentos Solicitados (ids determinísticos, inserção única).
@@ -975,7 +985,7 @@ def gerar_sql(mapa):
         _sql_insert("andamentos", mapa["andamentos"]),
         _sql_insert("eventos", mapa["eventos"], chave="caso_id,tipo,data_hora"),
         _sql_insert("tarefas", mapa["tarefas"],
-                    update_cols=("prazo", "concluida", "concluida_em")),
+                    update_cols=("prazo = coalesce(excluded.prazo, tarefas.prazo)", "concluida", "concluida_em")),
         # só o item marcado mexe no status: aberto -> recebido, nunca o contrário
         _sql_insert("pagamentos", mapa.get("pagamentos", []), chave="todo_item_id",
                     update_cols=("descricao", "valor",
@@ -1459,6 +1469,8 @@ def subir_rest(mapa):
         ("andamentos", "andamentos", "ignore-duplicates", "id"),
         ("eventos", "eventos", "ignore-duplicates", "caso_id,tipo,data_hora"),
         ("tarefas", "tarefas", "merge-duplicates", "id"),
+        # P4 · a etapa do caso sem data no To Do vai sem a coluna: a data de entrega dada no CRM fica
+        ("tarefas_sem_prazo", "tarefas", "merge-duplicates", "id"),
         # parcelas do To Do: o item concluído atualiza a MESMA linha (o
         # unique parcial em todo_item_id é a trava); conferências do app
         # ficam intactas — o upsert só toca as colunas enviadas
@@ -1559,6 +1571,8 @@ def subir_rest(mapa):
     mapa["casos"] = [k for k in ks if k.get("beneficio")]
     mapa["casos_sem_especie"] = [{col: v for col, v in k.items() if col != "beneficio"}
                                  for k in ks if not k.get("beneficio")]
+
+    separar_prazo_vazio(mapa)
 
     for chave_mapa, tabela, res, conflito in ordem:
         linhas = resolver(mapa.get(chave_mapa, []))
