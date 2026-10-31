@@ -9477,6 +9477,7 @@ function telaImportarPat(){
       Nada é gravado até você conferir e mandar aplicar.</p>
     ${linhaUltimasColetas()}
     ${avisoSemCaso()}
+    ${linhaEtapasDoImportar()}
     ${(()=>{ const {novas, velhas} = coletasPorFonte();
       if(!novas.length) return `<p class="meio-sub">Nenhuma coleta esperando. Use a extensão do navegador,
         ou solte um arquivo aqui embaixo.</p>`;
@@ -45098,6 +45099,14 @@ async function desfazerLoteEtapa(){
   L.itens.forEach(it=>{ if(it.g==="feito") it.g = "A"; if(it.feito && !/^movido/.test(it.feito)) it.feito = ""; });
   montarSidebar(); if(visao==="acervo") render(); pintarLoteEtapa();
   aviso(`${n} etapas voltaram como estavam`, false);
+}
+// F321 · E4: no 📥 Importar, depois de aplicar as coletas, as etapas que elas sugerem gravam pela mesma janela
+function linhaEtapasDoImportar(){
+  if(!souAdmin()) return "";
+  const sem = casosDoLoteEtapa().filter(k=>!k.etapa).length;
+  return `<p class="meio-sub et-importar">Depois de aplicar as coletas: <button class="btn-mini forte" onclick="etapasEmLote()"
+    title="as coletas aplicadas propõem a etapa de cada caso; o grupo A grava de uma vez">Etapas sugeridas…</button>
+    ${sem?`${sem} caso(s) aberto(s) ainda sem etapa`:"todos os casos abertos têm etapa; a janela mostra as que os fatos novos contradizem"}</p>`;
 }
 // no 🧹 Cuidar do acervo: quantos casos abertos ainda não têm etapa
 function blocoEtapasLote(){

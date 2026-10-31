@@ -182,6 +182,15 @@ const casoDe = id => T.casos.find(k => k.id === id);
   await p.waitForTimeout(500);
   conf("E3.3 D: o seletor do Pagamento oferece 'benefício implantado' e grava a etapa escolhida",
     casoDe(D1.id).etapa === "benefício implantado" && await p.evaluate(() => /já resolvidos aqui/.test(document.getElementById("et-lote-st").textContent)));
+  // ── E4: o 📥 Importar oferece as etapas sugeridas pelas coletas ──
+  await p.evaluate(() => { fecharCaixa(); visao = "patinss"; render(); });
+  await p.waitForTimeout(400);
+  const imp = await p.evaluate(() => ((document.querySelector(".et-importar") || {}).textContent || "").replace(/\s+/g, " "));
+  conf("E4.1 o Importar mostra 'Etapas sugeridas…' com quantos casos abertos seguem sem etapa",
+    /Etapas sugeridas/.test(imp) && /\d+ caso\(s\) aberto\(s\) ainda sem etapa/.test(imp));
+  await p.evaluate(() => document.querySelector(".et-importar button").click());
+  await p.waitForFunction(() => /prontos/.test((document.getElementById("et-lote-st") || {}).textContent || ""), null, { timeout: 30000 });
+  conf("E4.2 o botão abre a mesma janela das etapas em lote", true);
   conf("E2.5 nenhum erro de página", !erros.length || (console.log(erros), false));
 
   await nav.close(); s.close();
