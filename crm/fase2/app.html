@@ -1967,6 +1967,31 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .ze-caixa:focus-within{border-color:var(--azul)}
   .zap-escrever.modo-nota .ze-caixa{background:#fffbea;border-color:#e0b955}
   .ze-ferr{display:flex;gap:2px;min-height:4px}
+  /* F326 · busca na conversa, prévia do link e seletor de emojis */
+  .zap-busca{display:flex;align-items:center;gap:6px;padding:6px 12px;background:#f0f2f5;border-bottom:1px solid var(--linha,#e5e5e5)}
+  .zap-busca input{flex:1;min-width:0;border:0;border-radius:8px;padding:7px 10px;font-size:14px;background:#fff}
+  .zap-busca .zb-n{font-size:12px;color:#667781;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .zap-busca .zb-nav{border:0;background:none;width:30px;height:30px;border-radius:50%;cursor:pointer;color:#54656f;display:grid;place-items:center}
+  .zap-busca .zb-nav:first-of-type .zic{transform:rotate(180deg)}
+  .zap-b.achou .txt{background:rgba(255,213,79,.35);border-radius:4px}
+  .zap-b.achou-atual{box-shadow:0 0 0 2px #f5b800}
+  .zap-b .txt a{color:#027eb5;word-break:break-all}
+  .zap-link{display:flex;flex-direction:column;max-width:320px;margin:2px 0 4px;background:rgba(0,0,0,.05);border-radius:6px;overflow:hidden;color:inherit;text-decoration:none}
+  .zap-link img{width:100%;max-height:170px;object-fit:cover;display:block}
+  .zap-link .zl-txt{display:flex;flex-direction:column;gap:2px;padding:6px 8px;font-size:12px;line-height:1.35}
+  .zap-link .zl-txt b{font-size:13px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .zap-link .zl-txt span:not(.zl-site){color:#54656f;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .zap-link .zl-site{color:#8696a0;font-size:11px}
+  .zap-link.carregando{padding:6px 8px}
+  .ze-emo{position:relative}
+  .ze-emo>summary{list-style:none;cursor:pointer}
+  .ze-emo>summary::-webkit-details-marker{display:none}
+  .ze-emo-grade{position:absolute;bottom:calc(100% + 6px);left:0;z-index:30;display:grid;grid-template-columns:repeat(8,34px);gap:2px;padding:8px;
+    background:#fff;border-radius:10px;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+  .ze-emo-grade button{border:0;background:none;font-size:20px;width:34px;height:34px;border-radius:6px;cursor:pointer}
+  @media (hover:hover){.ze-emo-grade button:hover{background:#f0f2f5}}
+  .app.celular .ze-emo-grade{position:fixed;left:8px;right:8px;bottom:70px;grid-template-columns:repeat(8,1fr)}
+  .app.celular .ze-emo-grade button{width:auto;height:40px}
   .ze-ferr .zap-icone{border:0;background:none;padding:6px;border-radius:6px;color:var(--cinza);display:inline-flex;align-items:center;font-size:12px;font-weight:600}
   .ze-ferr .zap-icone.gravando{background:#fde7e7;color:#b3261e}
   .zap-escrever .btn-rap.ze-enviar{height:40px;padding:0 18px;border-radius:8px;background:var(--azul);border:1px solid var(--azul);color:#fff}
@@ -5105,7 +5130,7 @@ html[data-tema="v10"] .tr-rol-box.tr-mais-esq::before{left:-2px;background:linea
 html[data-tema="v10"] .tr-l{padding-right:8px}
 html[data-tema="v10"] .jn-nome{min-width:0}
 html[data-tema="v10"] .jn-txt{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-html[data-tema="v10"] .app.celular .jn-f .jn-nome::after{content:"✓";flex:none;margin-left:-2px;font-size:11px}
+html[data-tema="v10"] .app.celular .jn-f:not(.jn-par) .jn-nome::after{content:"✓";flex:none;margin-left:-2px;font-size:11px}
 html[data-tema="v10"] .app.celular .jn-n .jn-txt{text-decoration:line-through}
 html[data-tema="v10"] .app.celular .jn-b{padding:6px 6px}
 html[data-tema="v10"] .tr-l li[data-ex] .tr-sv .tr-b{background:#F3DDEC}
@@ -5932,6 +5957,14 @@ html[data-tema="v10"] .tr-resumo .tr-agora .tr-aguarda::before{content:","}
 html[data-tema="v10"] .tr-rol{scrollbar-width:none}
 html[data-tema="v10"] .tr-rol::-webkit-scrollbar{display:none}
 html[data-tema="v10"] .tr-leg i.tr-lf{background:#C9C6BF}
+/* F327 · o mesmo cinza no celular, o tempo na etapa e o selo da etapa na cor da fase (pedido do Paulo, 31.10.2026) */
+html[data-tema="v10"] .app.celular .jn-b.jn-f:not(.jn-par){background:#F5F4F1;border-color:#ECEAE5;color:#75726B}
+html[data-tema="v10"] .app.celular .jn-f:not(.jn-par) .jn-nome i{background:#B9B6AE}
+html[data-tema="v10"] .app.celular .jn-b.jn-n{color:#8E8B84;border-style:dashed}
+html[data-tema="v10"] .app.celular .jn-b.jn-par{background:var(--ff);border-color:var(--fc);color:var(--ft)}
+html[data-tema="v10"] .tr-ha{color:#6B6862}
+html[data-tema="v10"] .tr-ha.tr-longo{color:#B42318;font-weight:500}
+html[data-tema="v10"] .ag-tipo.ag-etapa:not(.ag-velha){background:var(--ff);color:var(--ft);border-color:color-mix(in srgb,var(--fc) 35%,#FFFFFF)}
 /* o cabeçalho da ficha em duas linhas: o nome e os botões; embaixo CPF, Meu INSS, telefone, advogado e a situação */
 html[data-tema="v10"] :is(.cli-adv,.atend-acoes) .fp2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 html[data-tema="v10"] .app:not(.celular) .det-topo .cli-casos .avatar{display:none}
@@ -6015,6 +6048,9 @@ html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos{display
 html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button{flex:1 1 auto;min-width:0;min-height:36px;margin:0!important;padding:0 3px;border:0;border-radius:8px;font-size:13px;color:var(--cinza);background:transparent;white-space:nowrap}
 html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button.on{background:#fff;color:var(--texto);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
 html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button::after{display:none}
+/* F330 · o "+ número" fica discreto, em azul, sem disputar com as abas */
+html[data-tema="v10"] .sub-menu.menu-andamentos button.aba-num{color:var(--azul);font-weight:500}
+html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button.aba-num{flex:0 0 auto;padding:0 8px}
 html[data-tema="v10"] .app.celular.detalhe-aberto ~ .barra-cel{display:flex}
 html[data-tema="v10"] .app.celular .det-principal:not([data-cel-aba="and"]) ~ * .escrever,html[data-tema="v10"] .app.celular .escrever{bottom:calc(56px + env(safe-area-inset-bottom,0px))}
 html[data-tema="v10"] .app.celular .caso-dir .timeline > li:not(.toque) .tl-cab-fim .tl-barra{display:none}
@@ -6091,7 +6127,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 12.02</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 12.06</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8184,7 +8220,8 @@ const etapaEstaVelha = k => !!k.etapa && (!etapasAceitas(faseDaEtapa(k)).include
 // F236 · o selo da etapa na linha das listas por fase: a desmentida diz "(desatualizada)", com a sugestão no title, como a placa
 function seloEtapaLista(k){
   const d = etapaDesmentida(k);
-  return `<span class="ag-tipo${d?" ag-velha":""}" title="${d ? `etapa do caso, desatualizada${d.sug ? `: os fatos dizem ${esc(d.sug)}` : ", de outra fase"} — abra o caso para aceitar a sugestão` : "etapa do caso"}">${esc(k.etapa)}${d ? " (desatualizada)" : ""}</span>`;
+  const c = COR_FASE[faseDaTrilha(k)], cor = c ? ` ag-etapa" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}` : "";
+  return `<span class="ag-tipo${d?" ag-velha":""}${cor}" title="${d ? `etapa do caso, desatualizada${d.sug ? `: os fatos dizem ${esc(d.sug)}` : ", de outra fase"} — abra o caso para aceitar a sugestão` : "etapa do caso"}">${esc(k.etapa)}${d ? " (desatualizada)" : ""}</span>`;
 }
 // F236 · o clássico também vê e muda a etapa, que é o que o cliente lê no portal
 function linhaEtapaClassica(k){
@@ -8232,7 +8269,7 @@ function passoDaEtapa(k, ets, ms){
 function marcasDaTrilha(k, ver, faseAt, rito, ets){
   const virt = {};
   for(const f of fatosDaEtapa(k, andsDoCaso(k))) if(f.fase===ver) for(const n of (f.passos||[]))
-    if(!virt[n] || f.data < (virt[n].d||"9")) virt[n] = {s:"f", d:f.data, v:1};   // cumprida na data do primeiro fato
+    if(!virt[n] || f.data < (virt[n].d||"9")) virt[n] = {s:"f", d:f.data, v:1, por:f.por||""};   // cumprida na data do primeiro fato
   // indeferido: a prorrogação, a DCB e a carta de concessão não houve
   if(ver==="inss" && (decisaoDoInss(k)||{}).resultado==="indeferido")
     for(const n of ["Pedido de prorrogação","DCB","Carta de concessão"]) virt[n] = {s:"n", v:1};
@@ -14830,6 +14867,7 @@ const ZIC = {
   mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
   agenda:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4m6-4v4"/>',
   baixo:'<path d="m6 9 6 6 6-6"/>',
+  emoji:'<circle cx="12" cy="12" r="8.5"/><path d="M8.5 14a4 4 0 0 0 7 0"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.4"/>',
 };
 const zic = (n, t=16) => `<svg class="zic" width="${t}" height="${t}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ZIC[n]}</svg>`;
 
@@ -15174,6 +15212,8 @@ function pintarConversa(){
   const at = c.atendente_id && D.colPorId.get(c.atendente_id);
   const tel = (c.telefone||"").replace(/\D/g,"");
   const fim = c.status==="resolvida", dz = dadosDaConversaZap(c);
+  // F328 · a busca e o seletor de emojis atravessam a repintura (mensagem nova chegando)
+  const bqAtivo = document.activeElement?.id==="zap-bq", emoAberto = !!document.querySelector(".ze-emo[open]");
   // F187 · conversa de outro atendente: o atendente só lê e anota (nota interna
   // com @nome chama quem atende); o gestor pode tirar para si
   const pode = podeAgirZap(c), deOutro = !!at && at.id!==eu.id;
@@ -15194,6 +15234,7 @@ ${dz.sub}             ${falaPor(c)?`<span class="zt-curto">${esc(falaPor(c))}</s
            </div>
          </div>
          <div class="zt-acoes">
+           <button class="zt-btn ic ${zapBuscaConv?"on":""}" onclick="abrirBuscaZap()" title="buscar nesta conversa" aria-label="Buscar na conversa">${zic("busca")}</button>
            ${cfgApp("zap_ia_equipe")==="sim"?`<button class="zt-btn" onclick="iaZap('resumo')" title="a IA resume a conversa para você (nada vai ao cliente)" aria-label="Resumo">✨<span class="lbl">Resumo</span></button>
            ${pode&&!fim?`<button class="zt-btn" onclick="iaZap('rascunho')" title="a IA escreve uma resposta no campo; confira antes de enviar" aria-label="Rascunho">✨<span class="lbl">Rascunho</span></button>`:""}`:""}
            ${fim||!pode?"":`<button class="zt-btn" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
@@ -15225,6 +15266,12 @@ ${dz.sub}             ${falaPor(c)?`<span class="zt-curto">${esc(falaPor(c))}</s
           É outra pessoa que fala por ele? <button class="zl-link" onclick="quemConversa()">Informar quem conversa</button></p>`:""}
        <div class="zt-l2">${dz.l2}</div>
      </div>
+     ${zapBuscaConv?`<div class="zap-busca" role="search">
+        ${zic("busca")}<input id="zap-bq" type="search" placeholder="Buscar nesta conversa" aria-label="Buscar nesta conversa" value="${esc(zapBuscaConv.q)}" autocomplete="off">
+        <span id="zap-bn" class="zb-n" aria-live="polite"></span>
+        <button class="zb-nav" onclick="navBuscaZap(-1)" aria-label="Resultado anterior" title="mais antigo">${zic("baixo")}</button>
+        <button class="zb-nav" onclick="navBuscaZap(1)" aria-label="Próximo resultado" title="mais recente">${zic("baixo")}</button>
+        <button class="zb-nav" onclick="fecharBuscaZap()" aria-label="Fechar a busca">✕</button></div>`:""}
      <div class="zap-msgs" id="zap-msgs">${zapMsgs.map((m,i)=>{
         // a data entra entre as mensagens quando o dia muda, como no aparelho
         const d = dataSP(m.quando_wa||m.criado_em), ant = i && dataSP(zapMsgs[i-1].quando_wa||zapMsgs[i-1].criado_em);
@@ -15263,6 +15310,8 @@ ${dz.sub}             ${falaPor(c)?`<span class="zt-curto">${esc(falaPor(c))}</s
              : `Escreva para ${esc(c.cliente_id?nomeDaConversa(c).split(" ")[0]:nomeDaConversa(c))}…  digite / para mensagens prontas`}"></textarea>
            <div class="ze-ferr">
              <input type="file" id="zap-arq" hidden onchange="mandarArquivoZap()">
+             <details class="ze-emo"${emoAberto?" open":""}><summary class="zap-icone" title="emojis" aria-label="Emojis">${zic("emoji")}</summary>
+               <div class="ze-emo-grade" role="group" aria-label="Emojis">${EMOJIS_ESCREVER.map(e=>`<button type="button" onclick="emojiZap('${e}')">${e}</button>`).join("")}</div></details>
              ${zapNota?"":`<button class="zap-icone" onclick="document.getElementById('zap-arq').click()"
                title="mandar foto, PDF ou áudio" aria-label="Anexar arquivo">${zic("clipe")}</button>
              <button class="zap-icone ze-so-pc" onclick="frasesZap()" title="mensagens prontas (ou digite / no campo)" aria-label="Mensagens prontas">${zic("frases")}</button>
@@ -15288,7 +15337,8 @@ ${dz.sub}             ${falaPor(c)?`<span class="zt-curto">${esc(falaPor(c))}</s
   };
   document.getElementById("app").classList.add("zap-conv-aberta");
   const cx = document.getElementById("zap-msgs"); cx.scrollTop = cx.scrollHeight;
-  carregarMinis(cx);
+  carregarMinis(cx); carregarPrevias(cx);
+  if(zapBuscaConv) ligarBuscaZap(bqAtivo);
   // F270 · como no WhatsApp: rolou para cima, aparece o botão que desce à última mensagem
   const desce = Object.assign(document.createElement("button"), {className:"zap-desce", hidden:true, textContent:"⌄",
     title:"ir para a última mensagem", onclick:()=>cx.scrollTo({top:cx.scrollHeight, behavior:"smooth"})});
@@ -15307,7 +15357,7 @@ async function marcarNaoLida(){
   c.nao_lidas = n; voltarListaZap(); aviso("Marcada como não lida");
 }
 function voltarListaZap(){
-  zapAberta = null; zapResponder = null;
+  zapAberta = null; zapResponder = null; zapBuscaConv = null;
   document.getElementById("app").classList.remove("zap-conv-aberta"); pintarAgendaZap();
   document.querySelector(".zap-tela")?.classList.remove("ficha-on");
   document.getElementById("zap-dir").innerHTML = telaVaziaZap(); pintarPainelZap(null); pintarListaZap();
@@ -15479,6 +15529,95 @@ document.addEventListener("click", e=>{
   document.querySelectorAll(".zt-mais[open]").forEach(d=>{ if(!d.contains(e.target)) d.open = false; });
 });
 
+// F328 · o link do texto vira link, e o primeiro ganha a prévia do site (título, descrição e imagem), como no
+// aplicativo. A página do site se lê pela Edge Function `link_previa`; a resposta fica na memória da sessão
+const RX_LINK_ZAP = /\b(?:https?:\/\/|www\.)[^\s<>"']+/gi;
+const limpaLink = u => u.replace(/[.,;:!?)\]]+$/, "");
+const hrefLink = u => /^www\./i.test(u) ? "https://"+u : u;
+function linksZap(t){
+  let out = "", i = 0;
+  for(const m of String(t).matchAll(RX_LINK_ZAP)){
+    const u = limpaLink(m[0]);
+    out += esc(t.slice(i, m.index)) + `<a href="${esc(hrefLink(u))}" target="_blank" rel="noopener noreferrer">${esc(u)}</a>`;
+    i = m.index + u.length;
+  }
+  return out + esc(t.slice(i));
+}
+const _previa = new Map();
+function previaHtml(u){
+  const p = _previa.get(u);
+  if(p && p.erro) return "";
+  if(!p || p.carregando) return `<a class="zap-link carregando" data-link="${esc(u)}" href="${esc(hrefLink(u))}" target="_blank" rel="noopener noreferrer"><span class="zl-site">${esc(u.replace(/^(https?:\/\/)?(www\.)?/i,"").split("/")[0])}</span></a>`;
+  if(!p.titulo && !p.imagem) return "";
+  return `<a class="zap-link" href="${esc(hrefLink(u))}" target="_blank" rel="noopener noreferrer">
+    ${p.imagem?`<img src="${esc(p.imagem)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}
+    <span class="zl-txt">${p.titulo?`<b>${esc(p.titulo)}</b>`:""}${p.descricao?`<span>${esc(p.descricao)}</span>`:""}<span class="zl-site">${esc(p.site||"")}</span></span></a>`;
+}
+async function carregarPrevias(raiz){
+  for(const a of (raiz||document).querySelectorAll(".zap-link.carregando[data-link]")){
+    const u = a.dataset.link;
+    if(_previa.has(u)) continue;
+    _previa.set(u, {carregando:true});
+    let r; try{ r = await api("/functions/v1/link_previa", {method:"POST", body:JSON.stringify({url: hrefLink(u)})}); }catch(e){ r = {erro: msgErro(e)}; }
+    _previa.set(u, r && !r.erro ? r : {erro: (r&&r.erro)||"sem prévia"});
+    document.querySelectorAll(`.zap-link.carregando[data-link="${CSS.escape(u)}"]`).forEach(x=>{
+      const novo = previaHtml(u); if(novo) x.outerHTML = novo; else x.remove(); });
+  }
+}
+
+// F328 · buscar nesta conversa, como a lupa do aplicativo: acende os balões que têm o texto, do mais recente
+// ao mais antigo (↑ volta, ↓ avança), e Esc fecha. Procura sem acento e sem diferença de maiúsculas
+let zapBuscaConv = null;
+const semAcentoZap = s => String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+function abrirBuscaZap(){
+  if(zapBuscaConv) return fecharBuscaZap();
+  zapBuscaConv = {q:"", i:-1}; pintarConversaGuardando();
+  document.getElementById("zap-bq")?.focus();
+}
+function fecharBuscaZap(){ zapBuscaConv = null; pintarConversaGuardando(); }
+function ligarBuscaZap(foco){
+  const q = document.getElementById("zap-bq"); if(!q) return;
+  q.oninput = ()=>{ zapBuscaConv.q = q.value; zapBuscaConv.i = -1; marcarBuscaZap(true); };
+  q.onkeydown = e=>{
+    if(e.key==="Escape"){ e.preventDefault(); fecharBuscaZap(); }
+    else if(e.key==="Enter"){ e.preventDefault(); navBuscaZap(e.shiftKey?1:-1); }
+  };
+  if(foco){ q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
+  marcarBuscaZap(false);
+}
+function achadosZap(){
+  const t = semAcentoZap(zapBuscaConv && zapBuscaConv.q).trim();
+  const todos = [...document.querySelectorAll("#zap-msgs .zap-b")];
+  todos.forEach(b=>b.classList.remove("achou","achou-atual"));
+  return t.length < 2 ? [] : todos.filter(b=>semAcentoZap(b.querySelector(".txt")?.textContent).includes(t));
+}
+function marcarBuscaZap(rolar){
+  const ach = achadosZap(), n = document.getElementById("zap-bn");
+  if(!zapBuscaConv) return;
+  if(zapBuscaConv.i < 0 || zapBuscaConv.i >= ach.length) zapBuscaConv.i = ach.length - 1;
+  ach.forEach(b=>b.classList.add("achou"));
+  const atual = ach[zapBuscaConv.i];
+  if(atual){ atual.classList.add("achou-atual"); if(rolar) atual.scrollIntoView({block:"center"}); }
+  if(n) n.textContent = semAcentoZap(zapBuscaConv.q).trim().length < 2 ? "" : ach.length ? `${zapBuscaConv.i+1} de ${ach.length}` : "nenhuma";
+}
+function navBuscaZap(d){
+  if(!zapBuscaConv) return;
+  const total = achadosZap().length; if(!total) return marcarBuscaZap(false);
+  zapBuscaConv.i = Math.min(total-1, Math.max(0, zapBuscaConv.i + d)); marcarBuscaZap(true);
+}
+
+// F328 · o seletor de emojis do campo de escrever: o emoji entra onde está o cursor
+const EMOJIS_ESCREVER = ["😀","😃","😄","😊","🙂","😉","😍","🥰","😘","😂","🤣","😅","😢","😭","😮","😔","😕","🙁","😟","🤔",
+  "🙏","👍","👎","👏","🙌","👋","🤝","💪","✌️","👌","❤️","💚","💙","🌹","🎉","🎂","✅","☑️","❌","⚠️","📄","📎","📅","⏰","📞","🏥","⚖️","💰"];
+function emojiZap(e){
+  const t = document.getElementById("zap-txt"); if(!t) return;
+  const a = t.selectionStart ?? t.value.length, b = t.selectionEnd ?? a;
+  t.value = t.value.slice(0,a) + e + t.value.slice(b);
+  t.selectionStart = t.selectionEnd = a + e.length;
+  if(!document.querySelector(".app.celular")) t.focus();
+  t.oninput && t.oninput();
+}
+
 function bolhaZap(m, cli, seguida){
   const quem = m.por_bot ? "🤖 robô"
             : m.autor_id ? (D.colPorId.get(m.autor_id)||{}).nome || "escritório" : "";
@@ -15495,7 +15634,8 @@ function bolhaZap(m, cli, seguida){
     : m.midia_url
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${m.tipo==="audio"?"🎤 ":""}${esc(m.texto)}</div>`:"")
-    : esc(m.texto||`[${m.tipo}]`);
+    : m.texto ? linksZap(m.texto) : esc(`[${m.tipo}]`);
+  const lk = !m.midia_url && m.texto ? (m.texto.match(RX_LINK_ZAP)||[])[0] : null;
   // a citada pode estar no CRM (responde_a) ou só ter o id do WhatsApp
   const citada = m.responde_a ? zapMsgs.find(x=>x.id===m.responde_a)
                : m.responde_externo ? zapMsgs.find(x=>x.externo_id===m.responde_externo) : null;
@@ -15507,6 +15647,7 @@ function bolhaZap(m, cli, seguida){
       : m.responde_a||m.responde_externo?`<div class="zap-cit">mensagem citada (antiga)</div>`:""}
     ${m.status==="agendada"?`<div class="zap-ag">${zic("agenda",14)}Agendada para ${diaZap(m.enviar_em)}, ${horaSP(m.enviar_em)}
         <button class="zl-link" onclick="cancelarAgendada('${m.id}')">cancelar</button></div>`:""}
+    ${lk?previaHtml(limpaLink(lk)):""}
     <div class="txt">${corpo}</div>
     ${m.status==="rascunho"?`<div class="zap-rev">
         <span>escrito pelo sistema — confira antes de mandar</span>
@@ -19138,10 +19279,11 @@ function pintarFicha(){
           const {inss:temINSS, crps:temCRPS, cnj:temCNJ} = visiveis;
           // F294 · o nível 1 lê só os andamentos dos portais (INSS, Recurso, Judicial), onde não há campo de escrever
           const nv1 = meuNivel()===1;
-          // F320 · no celular os andamentos têm os cinco botões sempre: Escritório, INSS, CRPS, Judicial e Tudo
+          // F320 · no celular os rótulos são curtos (Escritório, INSS, CRPS, Judicial e Tudo)
+          // F330 · INSS, CRPS e Judicial só aparecem com andamento ou número; o "+ número" os faz nascer (pedido do Paulo, 31.10.2026)
           const v10Cel = temaV10() && celular();
           const aba = nv1 ? (["inss","crps","cnj"].find(a=>a===subAba && visiveis[a]) || ["inss","crps","cnj"].find(a=>visiveis[a]) || "")
-            : visiveis[subAba] || (v10Cel && /^(inss|crps|cnj)$/.test(subAba)) ? subAba : "escritorio";
+            : visiveis[subAba] ? subAba : "escritorio";
           // a etiqueta da aba diz o estado sem abrir: ✔ quando a fase foi
           // encerrada à mão, 🗄 quando TODOS os processos daquela fonte estão
           // arquivados (um só arquivado não marca a aba — o outro segue vivo),
@@ -19157,9 +19299,10 @@ function pintarFicha(){
           const v10 = temaV10();
           const menu = `<div class="sub-menu${v10?" menu-andamentos":""}" style="width:100%">
           ${nv1 ? "" : `<button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">${v10?"Escritório":"Andamentos do Escritório"}</button>`}
-          ${temINSS || v10Cel?`<button class="${cls("inss",faseEncerrada(k,"pat"))}" onclick="irSubAba('inss')">${v10?"INSS":"Andamentos INSS"}${v10Cel?"":rot(comentariosPat(andsVis).length, abaPatArquivada(k), faseEncerrada(k,"pat"))}</button>`:""}
-          ${temCRPS || v10Cel?`<button class="${cls("crps",faseEncerrada(k,"crps"))}" onclick="irSubAba('crps')">${v10Cel?"CRPS":"Recurso (CRPS)"}${v10Cel?"":rot(crpsTotalEventos(k), abaCrpsArquivada(k), faseEncerrada(k,"crps"))}</button>`:""}
-          ${temCNJ || v10Cel?`<button class="${cls("cnj",faseEncerrada(k,"cnj"))}" onclick="irSubAba('cnj')">${v10?"Judicial":"Andamentos do CNJ"}${v10Cel?"":rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k), faseEncerrada(k,"cnj"))}</button>`:""}
+          ${temINSS?`<button class="${cls("inss",faseEncerrada(k,"pat"))}" onclick="irSubAba('inss')">${v10?"INSS":"Andamentos INSS"}${v10Cel?"":rot(comentariosPat(andsVis).length, abaPatArquivada(k), faseEncerrada(k,"pat"))}</button>`:""}
+          ${temCRPS?`<button class="${cls("crps",faseEncerrada(k,"crps"))}" onclick="irSubAba('crps')">${v10Cel?"CRPS":"Recurso (CRPS)"}${v10Cel?"":rot(crpsTotalEventos(k), abaCrpsArquivada(k), faseEncerrada(k,"crps"))}</button>`:""}
+          ${temCNJ?`<button class="${cls("cnj",faseEncerrada(k,"cnj"))}" onclick="irSubAba('cnj')">${v10?"Judicial":"Andamentos do CNJ"}${v10Cel?"":rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k), faseEncerrada(k,"cnj"))}</button>`:""}
+          ${nv1 || (temINSS && temCRPS && temCNJ) ? "" : `<button class="aba-num" onclick="inserirNumeroAba('${k.id}','${[!temINSS&&"inss",!temCRPS&&"crps",!temCNJ&&"cnj"].filter(Boolean).join(",")}')" title="inserir o número do INSS, do CRPS ou do Judicial: a aba aparece" aria-label="inserir número do INSS, do CRPS ou do Judicial">+ número</button>`}
           ${nv1 ? "" : `<button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
             title="todas as fontes juntas, em ordem cronológica">${v10Cel?"Tudo":v10?"Caso Completo":"Caso completo"}</button>`}
         </div>`;
@@ -38492,6 +38635,24 @@ function resumoFase(k, f){
   // a data vem na frente: é ela que some primeiro quando a aba aperta
   return ult ? `${ult.m.d?`${dCurta(ult.m.d)} · `:""}${ult.e.n.toLowerCase()}` : "concluída";
 }
+// F327 · o title da etapa diz quando e por qual fonte ela foi cumprida (pedido do Paulo, 31.10.2026)
+function tituloEtapa(e, m){
+  if(m.s==="f") return `${e.n} · cumprida${m.d?` em ${fmtBarra(m.d)}`:""}${m.por ? ` ${m.por}` : m.v ? " pelos fatos oficiais" : " (marcada pela equipe)"}`;
+  if(m.s==="a") return `${e.n} · etapa atual${m.d?` desde ${fmtBarra(m.d)}`:""}${m.por?` ${m.por}`:""}`;
+  if(m.s==="n") return `${e.n} · não houve`;
+  return e.op ? `${e.n} · só se houver` : `${e.n} · a vir`;
+}
+// F327 · há quanto tempo o caso está na etapa e se passou do prazo: o prazo de análise do INSS (RE 1.171.152) quando
+// corre; fora dele, o tempo habitual da fase, que é estimativa do escritório (shortcut: valores fixos, ajustar com o uso)
+const ETAPA_HABITUAL = {inss:90, conselho:180, judicial:180, pagamento:60};
+function tempoNaEtapa(k, desde, fase){
+  if(!desde) return null;
+  const dias = diasEntreIso(desde, hoje()); if(!(dias>=0)) return null;
+  const mora = fase==="inss" ? prazoMora(k) : null;
+  if(mora && mora.vencido) return {dias, longo:true, por:`prazo de análise do INSS vencido em ${fmtBarra(mora.data)}`};
+  const lim = ETAPA_HABITUAL[fase];
+  return {dias, longo: !mora && !!lim && dias>lim, por: mora ? `prazo de análise até ${fmtBarra(mora.data)}` : lim ? `tempo habitual da fase: até ${lim} dias (estimativa)` : ""};
+}
 // os grupos da trilha (Ajuizamento, Instrução...); trilha sem grupo = um só
 function gruposTrilha(ets){
   const gs = [];
@@ -38549,7 +38710,7 @@ function faixaTrilha(k){
       const rot = n===0 && G.g ? `<span class="tr-g${e.ex?" tr-g-ex":""}">${esc(G.g)}${(feito||execVazia)&&trAbre[chave]?` <a href="#" onclick="trGrupo('${chave}');return false" class="tr-rec">recolher</a>`:""}</span>` : `<span class="tr-g"></span>`;
       itens.push(`<li style="--tc:${cor.c};--tt:${cor.t}"${e.ex?" data-ex":""}>${rot}
         <button class="tr-et tr-s${m.s||(e.op?"o":"v")}${i===sel?" tr-sel":""}${i===pxI?" tr-px":""}" data-tri="${i}" onclick="trEscolher('${k.id}','${rito}',${i})" aria-pressed="${i===sel}"
-          title="${esc(e.n)}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"aguardando":i===pxI?"próxima":"")}</span></button></li>`);
+          title="${esc(tituloEtapa(e, m))}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"aguardando":i===pxI?"próxima":"")}</span></button></li>`);
     });
   }
   let pnl = "";
@@ -38582,7 +38743,9 @@ function faixaTrilha(k){
     const prox = ia>=0 ? vis.slice(ia+1).find(x=>x.m.s!=="f" && x.m.s!=="n") : null;
     const seg = vis.map((x,j)=>`<i class="${x.m.s==="f"?"f":x.m.s==="a"?"a":x.m.s==="n"?"n":""}"></i>`).join("");
     return `<div class="tr-resumo"${ver===faseAt?"":" hidden"}><span class="tr-agora"><small>Etapa</small> <b>${esc(agora||"a definir")}</b>${at && !at.m.d ? `<span class="tr-aguarda"> aguardando ${esc(minusc1(at.e.n))}</span>` : ""}${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}</span>
-      ${at ? `<span class="tr-pos">${at.m.d ? `desde ${dCurta(at.m.d)} · ` : ""}${ia+1} de ${vis.length}</span>` : ""}
+      ${at ? (()=>{ const t = ver===faseAt ? tempoNaEtapa(k, at.m.d, faseDaEtapa(k)==="pagamento" ? "pagamento" : ver) : null;
+        const ha = t ? ` <span class="tr-ha${t.longo?" tr-longo":""}" title="${esc(t.por)}">(há ${t.dias} ${t.dias===1?"dia":"dias"})</span>` : "";
+        return `<span class="tr-pos">${at.m.d ? `desde ${dCurta(at.m.d)}${ha} · ` : ""}${ia+1} de ${vis.length}</span>`; })() : ""}
       <span class="tr-prog" aria-hidden="true">${seg}</span>
       ${prox ? `<span class="tr-prox">Próximo: ${esc(minusc1(prox.e.n))}</span>` : ""}</div>`; })();
   return `<section class="tr-faixa tr tr-compacta${aberta?" tr-aberta":" tr-fechada"}" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}" aria-label="Jornada e trilha do caso">
@@ -39188,6 +39351,15 @@ function editarFato(casoId, campo, pref){
 }
 
 // F102 · a mesma janela dos outros números (era um prompt() do navegador)
+// F330 · as abas INSS, CRPS e Judicial nascem do número: o "+ número" oferece só as que faltam
+function inserirNumeroAba(casoId, faltam){
+  const f = String(faltam||"inss,crps,cnj").split(",");
+  const op = [["inss","Protocolo do INSS","novoProtocolo"],["crps","Recurso no CRPS (e-Sisrec)","lcNovoNup"],["cnj","Processo judicial","lcNovoProc"]].filter(o=>f.includes(o[0]));
+  caixa(`<h3 style="margin:0 0 6px">Inserir número</h3>
+    <p class="meio-sub" style="margin:0 0 8px">A aba aparece no caso assim que o número é guardado.</p>
+    <div class="form-linha" style="flex-wrap:wrap;gap:6px">${op.map(([a,r,f])=>
+      `<button class="btn-mini" onclick="fecharCaixa();subAba='${a}';${f}('${casoId}')">${r}</button>`).join("")}</div>`);
+}
 function novoProtocolo(casoId){
   caixa(`<h3 style="margin:0 0 6px">＋ Protocolo do INSS</h3>
     <div class="form-linha"><input id="lc-prot-inp" placeholder="só os dígitos" inputmode="numeric" style="flex:1"
@@ -41057,7 +41229,7 @@ function abasVisiveis(k, ands){
   k = k || {};
   return {
     escritorio: true,
-    inss: !!(comentariosPat(ands).length || faseEncerrada(k,"pat")),
+    inss: !!(comentariosPat(ands).length || protocolosDe(k).length || faseEncerrada(k,"pat")),
     crps: !!(crpsNups(k).length || crpsTotalEventos(k) || faseEncerrada(k,"crps")),
     cnj:  !!(k.processo
       || (k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length))
