@@ -77,12 +77,14 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(300);
   console.log(await p.evaluate(() => [abaAtiva, [...document.querySelectorAll(".mt")].map(b => b.dataset.vv + ":" + b.textContent.trim().slice(0,20))]));
   const bt = await p.$('.mt[data-vv="5"]');
-  conf("o menu da ficha tem a aba Prazos com a contagem", bt && /^Prazos \(\d+\)/.test((await bt.textContent()).trim()));
+  conf("o menu da ficha tem a aba Prazos com a contagem", bt && /^Prazos \d+/.test((await bt.textContent()).trim()) && !!(await p.$('.mt[data-vv="5"] .mt-pzn')));
   await bt.click();
   await p.waitForSelector(".pz-cli");
+  conf("F324 · a aba abre por data, com o próximo prazo fatal no alto", !!(await p.$(".pzc-hero")) && !(await p.$(".pz-cli-g")));
+  await p.evaluate(() => pzVer("caso"));
   const secs = await p.$$eval(".pz-cli-g", s => s.map(x => x.dataset.caso));
   conf("a aba mostra um bloco por caso", secs.includes(kA1.id) && secs.includes(kA2.id));
-  conf("o texto do prazo aparece", (await p.textContent(".pz-cli")).match(/PRAZO FATAL/g).length === 2);
+  conf("cada prazo fatal leva a etiqueta da natureza", (await p.$$(".pz-cli .pzc-lin .pz-pill-fatal")).length === 2);
   await p.screenshot({ path: path.join(OUT, "01-aba.png") });
 
   await p.evaluate(kid => { casoSel = kid; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); }, kA1.id);
