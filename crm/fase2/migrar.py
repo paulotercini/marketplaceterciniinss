@@ -345,6 +345,7 @@ def mapear(dados, cpf_por_nome=None):
                 },
                 "intervalo_meses": None,
                 "proximo_em": t["prazo"],
+                "todo_prazo": t["prazo"],     # a data do To Do na última rodada (manter_lembrete)
                 "ativo": not t["concluida"],
             }
             continue
@@ -725,6 +726,22 @@ def manter_dados_do_banco(mapa, banco, tabela="clientes", campos=("telefone", "d
                 linha[campo] = v
 
 
+def manter_lembrete(l, b):
+    """O card das Aposentadorias futuras: título, data e intervalo editados no CRM
+    vencem (responsavel_id não é enviado, o banco já o preserva). Exceção
+    (31.10.2026): a data que MUDOU no To Do desde a rodada anterior
+    (lembretes.todo_prazo) vence, como no casos.prazo; sem isso o lembrete adiado
+    no To Do continuava vencido no Meu Dia. Só a conclusão no To Do desliga."""
+    for campo in ("titulo", "proximo_em", "intervalo_meses"):
+        if (campo == "proximo_em" and "todo_prazo" in b
+                and (l.get("todo_prazo") or None) != (b["todo_prazo"] or None)):
+            continue
+        if b.get(campo) is not None:
+            l[campo] = b[campo]
+    if l["ativo"]:
+        l["ativo"] = b.get("ativo", True)
+
+
 def respeitar_despacho(mapa, pendentes):
     """F291 · o "Concluir por hoje" do CRM apaga a ⭐ e marca a volta. Enquanto a ponte
     (ponte_despacho.py) não leva isso ao To Do, a tarefa ainda tem a estrela e a
@@ -1006,7 +1023,11 @@ def gerar_sql(mapa):
                                  "then excluded.pago_em else pagamentos.pago_em end",
                                  "vencimento")),
         _sql_insert("lembretes", mapa.get("lembretes", []),
-                    update_cols=("detalhes", "proximo_em", "ativo")),
+                    update_cols=("detalhes",
+                                 "proximo_em = case when excluded.todo_prazo is distinct from "
+                                 "lembretes.todo_prazo then excluded.proximo_em "
+                                 "else coalesce(lembretes.proximo_em, excluded.proximo_em) end",
+                                 "todo_prazo", "ativo")),
         _sql_insert("tarefas", mapa.get("tarefas_docs", [])),
         "commit;",
     ]))
@@ -1432,7 +1453,7 @@ def subir_rest(mapa):
     #    lugar deles agora é a aba 🔔 Lembretes.
     try:
         lemb_exist = {l["id"]: l for l in _rest_todas(
-            url, chave, "/rest/v1/lembretes?select=id,titulo,proximo_em,"
+            url, chave, "/rest/v1/lembretes?select=id,titulo,proximo_em,todo_prazo,"
                         "intervalo_meses,ativo,responsavel_id,origem_caso")}
     except BancoRecusou:
         lemb_exist = None                    # banco sem a tabela: só avisa adiante
@@ -1446,12 +1467,7 @@ def subir_rest(mapa):
                 continue                     # já virou lembrete à mão
             b = lemb_exist.get(l["id"])
             if b:
-                # responsavel_id não é enviado — o banco já preserva sozinho
-                for campo in ("titulo", "proximo_em", "intervalo_meses"):
-                    if b.get(campo) is not None:
-                        l[campo] = b[campo]
-                if l["ativo"]:               # só a conclusão no To Do desliga
-                    l["ativo"] = b.get("ativo", True)
+                manter_lembrete(l, b)
             mantidos.append(l)
         mapa["lembretes"] = mantidos
     elif lemb_exist is None and mapa.get("lembretes"):
