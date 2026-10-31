@@ -38,7 +38,7 @@ const clientes = [
   cli("c1", "Ana Ficta Prazo"), cli("c2", "Bruno Ficto Recurso"), cli("c3", "Carla Ficta Card"), cli("c4", "Dora Ficta Virou"),
   cli("c5", "Edu Ficto Pessoal"), cli("c6", "Fábio Ficto Cessado"), cli("c7", "Gil Ficto Prorroga"), cli("c8", "Hilda Ficta Avaliação"),
   cli("c9", "Ivo Ficto Honorário"), cli("c10", "Joana Ficta Perícia", { agenda_quarta: { data: dia(1), inicio: "09:00", profissional: "paulo" } }),
-  cli("c11", "Kátia Ficta Pauta"), cli("c12", "Lia Ficta Decisão"), cli("c13", "Mara Ficta Comentada"),
+  cli("c11", "Kátia Ficta Pauta"), cli("c12", "Lia Ficta Decisão"), cli("c13", "Mara Ficta Comentada"), cli("c14", "Nair Ficta Lista Pessoal"),
 ];
 const casos = [
   caso("k1", "c1", "judicial", { prazos_tribunal: [{ numero: "5000001-11.2026.4.03.6302", sistema: "pje", origem: "pje:x", ato: "Sentença", dias: 10, fim: dia(3), expedido_em: dia(-5), situacao: "aberto" }] }),
@@ -46,6 +46,7 @@ const casos = [
   caso("k2", "c2", "inss", { decisao_em: dia(-10), origem_lista: "🌻 INSS" }),
   caso("k4", "c4", "inss", { beneficio: "Apos. por Idade", especie: "B41", origem_lista: "🌻 INSS" }),
   caso("k5", "c5", "outro", { origem_lista: "☕ Ficto", prazo: dia(1), beneficio: null, especie: null }),
+  caso("k5b", "c14", "outro", { origem_lista: "☕ Amanda", prazo: dia(1), beneficio: null, especie: null }),
   caso("k6", "c6", "judicial", { dcb: dia(-100) }),
   caso("k7", "c7", "inss", { dcb: dia(10), origem_lista: "🌻 INSS" }),
   caso("k8", "c8", "inss", { beneficio: "BPC/LOAS — deficiência", especie: "B87", origem_lista: "🌻 INSS" }),
@@ -233,6 +234,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // ══ 2 · a Amanda (advogada) ═══════════════════════════════════════════
   const amanda = await entrar("amanda");
   const ia = await itens(amanda, AM);
+  // 11.93 · a lista pessoal de um colaborador (☕ Amanda) entra no Meu Dia dele, e só dele (decisão do Paulo, 31.10.2026)
+  conf("a lista ☕ de um colaborador entra no Meu Dia dele", ia.some(i => i.cli === "c14") && !ip.some(i => i.cli === "c14"));
   conf("o prazo do PJe chega à atribuída, como Prazo, na data do fim", ia.some(i => i.cli === "c1" && i.prazo && /^Prazo PJe/.test(i.selo) && i.data === dia(3)));
   conf("a tarefa solta do caso vai a quem responde pelo caso", ia.some(i => i.cli === "c1" && /Laudo novo/.test(i.resumo)));
   conf("o honorário vencido vai à advogada do caso, com o valor", ia.some(i => i.cli === "c9" && i.selo === "Honorários" && /R\$\s?1\.000,00/.test(i.resumo)));

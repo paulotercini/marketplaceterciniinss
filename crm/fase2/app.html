@@ -1006,7 +1006,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   #proc-inteiro .pi-peca h4 .pi-ler{float:right;font-weight:400}
   body:has(#proc-inteiro) .modal-fundo{z-index:2100}
   #proc-inteiro .pi-arvore button{display:block;flex:1;min-width:0;text-align:left;border:0;background:none;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--texto);border-left:3px solid transparent}
-  #proc-inteiro .pi-arvore button:hover{background:var(--azul-fundo)}
+  @media (hover:hover){#proc-inteiro .pi-arvore button:hover{background:var(--azul-fundo)}}
   #proc-inteiro .pi-arvore button.on{background:var(--azul-fundo);border-left-color:var(--azul)}
   #proc-inteiro .pi-arvore small{display:block;color:var(--cinza-claro)}
   #proc-inteiro .pi-autos{flex:1;overflow:auto;padding:14px}
@@ -1892,7 +1892,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
            border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.12);max-height:220px;overflow:auto;z-index:5}
   .zap-sug button{display:block;width:100%;text-align:left;border:0;background:none;padding:6px 10px;
                   font-size:12px;cursor:pointer}
-  .zap-sug button:hover,.zap-sug button.on{background:#eaf1fc}
+  .zap-sug button.on{background:#eaf1fc}@media (hover:hover){.zap-sug button:hover{background:#eaf1fc}}
   .zap-sug b{color:var(--azul)}
   .zap-escrever{position:relative}
   .zap-icone.gravando{background:#fde7e7;border-color:#e57373;animation:piscaRec 1s infinite}
@@ -2678,6 +2678,9 @@ button,[role="button"],.lista-item,.cartao,.barra-cel button{-webkit-user-select
   /* alvo de toque de 44px no voltar da ficha (media 22px) e nos itens do menu */
   .cel-voltar{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
   .app.celular .sidebar .lista-item{min-height:44px}
+  /* 11.93 · VCE-05: os alvos pequenos que sobravam na ficha do celular */
+  .tr-alca,.lc-mais-pe,.desp-bt,.visto-bt{min-height:44px}
+  .visto-bt{min-width:44px}
 }
 /* F136 · a rolagem de dentro não puxa a página de trás ao chegar no fim */
 .app.celular .sidebar,.app.celular .detalhe,.app.celular .det-rolagem,.modal-cx,.jan-caixa,dialog.confirmar{overscroll-behavior:contain}
@@ -2920,7 +2923,7 @@ html[data-tema="v10"] .lc-etapa.lc-vazio{font-weight:400}
   background:#F3F6FB;border-left:3px solid #1E4FA3;border-radius:4px}
 .et-aceitar{font:inherit;font-size:12px;font-weight:600;border:1px solid #1E4FA3;background:#FFFFFF;color:#1E4FA3;border-radius:6px;
   padding:1px 8px;cursor:pointer;white-space:nowrap}
-.et-aceitar:hover{background:#1E4FA3;color:#FFFFFF}
+@media (hover:hover){.et-aceitar:hover{background:#1E4FA3;color:#FFFFFF}}
 .fx dd .et-velha{color:#B3261E;font-weight:600;font-size:11px}
 html[data-tema="v10"] .lc-jan.et-sug{font-size:12px;color:#3E4F68;white-space:normal;margin-left:0}
 html[data-tema="v10"] .lc-jan.et-aceitar{font-size:12px;color:#1E4FA3}
@@ -3082,7 +3085,7 @@ html[data-tema="v10"] .fixo-caso{border-radius:10px;border:none}
 html[data-tema="v10"] .fixo-caso{margin:0 0 14px;padding:10px 14px;border-radius:0 10px 10px 0;border-left:3px solid var(--prox);align-items:center}
 html[data-tema="v10"] .fixo-caso .fixo-txt{font-style:italic;font-weight:500;font-size:14px}
 html[data-tema="v10"] .fixar-caso{display:inline-flex;align-items:center;gap:6px;margin:10px 0 0;padding:4px 10px;border:1px dashed var(--borda);border-radius:8px;background:none;color:var(--cinza);font-size:12px;cursor:pointer}
-html[data-tema="v10"] .fixar-caso:hover{color:var(--prox);border-color:var(--prox)}
+@media (hover:hover){html[data-tema="v10"] .fixar-caso:hover{color:var(--prox);border-color:var(--prox)}}
 html[data-tema="v10"] .painel[data-p="2"] .caso{border:none;background:#F3F2EE;border-radius:10px}
 /* ── F113 · a janela das espécies ──────────────────────────────────────── */
 .lc-claude{border:1px solid var(--borda);background:var(--branco);color:var(--azul-escuro);border-radius:999px;padding:3px 11px;font:inherit;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap}
@@ -3213,7 +3216,7 @@ html[data-tema="v10"] .lc-topo{display:flex;flex-direction:column;align-items:st
 html[data-tema="v10"] .lc-cab{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0}
 .lc-acessos{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 2px}
 .lc-acesso{font:600 12px/1 inherit;padding:5px 9px;border-radius:6px;border:1px solid var(--borda);background:var(--fundo-card,#fff);color:var(--azul-escuro,#1d3f8a);text-decoration:none;cursor:pointer;white-space:nowrap}
-.lc-acesso:hover{border-color:var(--azul,#2564cf);background:var(--azul-fundo,#eef3fc)}
+@media (hover:hover){.lc-acesso:hover{border-color:var(--azul,#2564cf);background:var(--azul-fundo,#eef3fc)}}
 .chip.lc-sem-grat{background:#FCE8E6;color:#A50E0E;border:1px solid #F1B6B0;font-weight:700}
 html[data-tema="v10"] .lc-cab .lc-ben{font-size:20px;letter-spacing:-.005em}
 html[data-tema="v10"] .lc-cab .lc-mais{margin-left:auto}
@@ -4005,7 +4008,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 section.ben{background:#fff;border:1px solid #E7E6E1;border-radius:12px;padding:14px 16px;margin:0 0 12px}.ben-cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin:0 0 10px}.ben-cab h3{margin:0;font-size:15px}
 .ben-chips{display:flex;flex-wrap:wrap;gap:8px}
 .ben-chip,.ben-opc{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:0 14px;border-radius:999px;border:1.5px solid #CFCDC6;background:#fff;color:#121212;font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:background-color 160ms cubic-bezier(.23,1,.32,1),border-color 160ms cubic-bezier(.23,1,.32,1),color 160ms cubic-bezier(.23,1,.32,1),transform 160ms cubic-bezier(.23,1,.32,1)}
-.ben-chip:hover,.ben-opc:hover{border-color:#686660}.ben-chip:active,.ben-opc:active{transform:scale(.97)}.ben-chip:focus-visible,.ben-opc:focus-visible{outline:2px solid #0E5C58;outline-offset:2px}
+@media (hover:hover){.ben-chip:hover,.ben-opc:hover{border-color:#686660}}.ben-chip:active,.ben-opc:active{transform:scale(.97)}.ben-chip:focus-visible,.ben-opc:focus-visible{outline:2px solid #0E5C58;outline-offset:2px}
 .ben-chip.on{border-color:#0E5C58;background:#0E5C58;color:#fff}.ben-chip.on .pa-bola{box-shadow:0 0 0 2px #fff}.ben-chip small{font-size:11px;font-weight:700;background:rgba(255,255,255,.25);border-radius:999px;padding:1px 7px}
 .ben-ramo{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 0 12px;padding:2px 0 2px 14px;border-left:2px solid #B5D3CF}.ben-ramo-rot{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#686660;margin-right:4px}
 .ben-opc{min-height:30px;padding:0 12px;font-weight:500;font-size:12px}.ben-opc.on{border-color:#0E5C58;background:#E6F0EF;color:#0E5C58;font-weight:600}
@@ -4014,7 +4017,7 @@ section.ben{background:#fff;border:1px solid #E7E6E1;border-radius:12px;padding:
 .adm-calc{margin:0 0 10px}.adm-calc ul{list-style:none;margin:0;padding:0}.adm-calc li{display:flex;gap:8px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #F3F2EE;font-size:13px}.adm-calc li .mapa-bola{margin-top:5px}.adm-calc li:last-child{border-bottom:0}.adm-calc li.est-info .mapa-bola{background:#3A6491}
 .adm-campos{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px 12px}.adm-campo{display:flex;flex-direction:column;gap:3px;font-size:12px;color:#4A4944}.adm-campo input,.adm-campo select{font:inherit;font-size:13px;padding:6px 8px;border:1px solid #CFCDC6;border-radius:6px;background:#fff;color:#121212}
 .adm-tempos input,.adm-tempos select{font:inherit;font-size:12px;padding:5px 6px;border:1px solid #CFCDC6;border-radius:6px;width:100%;box-sizing:border-box;background:#fff;color:#121212}.adm-tempos td{padding:4px 4px}
-.adm-x{border:0;background:none;color:#686660;font-size:18px;cursor:pointer;line-height:1;padding:4px 6px;border-radius:6px}.adm-x:hover{background:#F3F2EE;color:#B3261E}
+.adm-x{border:0;background:none;color:#686660;font-size:18px;cursor:pointer;line-height:1;padding:4px 6px;border-radius:6px}@media (hover:hover){.adm-x:hover{background:#F3F2EE;color:#B3261E}}
 .adm-tempos-bt{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:6px 0 10px}
 .adm-tot{display:flex;flex-wrap:wrap;gap:12px 24px;margin:0 0 8px}.adm-tot small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#686660}.adm-tot b{font-size:15px}
 .adm-nota{margin:0 0 12px}.adr-modulos ul{margin:2px 0 0;padding-left:18px}
@@ -4176,11 +4179,11 @@ html[data-tema="v10"] button.cli-st.alarme{background:#F9E7E5;color:var(--venc)}
 .tp-trilha{display:flex;min-width:max-content;list-style:none;margin:0;padding:0}
 .tp-trilha button{font:inherit;font-size:12px;color:var(--pa-c1);background:#fff;border:0;cursor:pointer;min-height:36px;padding:0 20px 0 24px;margin-left:-9px;display:flex;gap:7px;align-items:center;white-space:nowrap;clip-path:polygon(0 0,calc(100% - 11px) 0,100% 50%,calc(100% - 11px) 100%,0 100%,11px 50%)}
 .tp-trilha li:first-child button{margin-left:0;padding-left:12px;clip-path:polygon(0 0,calc(100% - 11px) 0,100% 50%,calc(100% - 11px) 100%,0 100%)}
-.tp-trilha button:hover{background:#FBFBFA;color:#121212}
+@media (hover:hover){.tp-trilha button:hover{background:#FBFBFA;color:#121212}}
 .tp-n{flex:none;width:20px;height:20px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;font:500 11px 'IBM Plex Mono',ui-monospace,Consolas,monospace}
 .tp-conta{font:11px 'IBM Plex Mono',ui-monospace,Consolas,monospace;opacity:.8}
 .tp-trilha .feito button{background:#E4F1EA;color:var(--pa-t)}.tp-trilha .feito .tp-n{background:var(--pa-t);border-color:var(--pa-t);color:#fff}
-.tp-trilha .aqui button,.tp-trilha .aqui button:hover{background:var(--pa-t);color:#fff;font-weight:600}
+.tp-trilha .aqui button,.tp-trilha .aqui button:is(:hover,:focus){background:var(--pa-t);color:#fff;font-weight:600}
 .tp-trilha .alerta .tp-n{border-color:var(--pa-crit);color:var(--pa-crit)}.tp-trilha .aqui.alerta .tp-n{border-color:#fff;color:#fff}.tp-trilha .feito.alerta .tp-n{background:var(--pa-crit);border-color:var(--pa-crit);color:#fff}
 .tp-trilha button:focus-visible{outline:2px solid var(--pa-t);outline-offset:-4px}
 /* F306 · o botão de urgente saiu de toda a tela, porque se confundia com o de importante (pedido do Paulo, 30.10.2026) */
@@ -4913,7 +4916,7 @@ html[data-tema="v10"] .tl-mais>summary{list-style:none;display:inline-flex;align
 html[data-tema="v10"] .tl-mais>summary::-webkit-details-marker{display:none}
 html[data-tema="v10"] .tl-mais-menu{position:absolute;right:0;bottom:calc(100% + 6px);z-index:30;min-width:220px;display:flex;flex-direction:column;padding:6px;background:#FFFFFF;border:1px solid var(--borda);border-radius:10px;box-shadow:0 10px 28px rgba(18,18,18,.12)}
 html[data-tema="v10"] .tl-mais-it{text-align:left;font:500 13px/1.2 var(--f-ui);padding:9px 10px;border:0;border-radius:6px;background:transparent;color:var(--texto);cursor:pointer}
-html[data-tema="v10"] .tl-mais-it:hover,html[data-tema="v10"] .tl-mais-it:focus-visible{background:var(--placa)}
+html[data-tema="v10"] .tl-mais-it:focus-visible{background:var(--placa)}@media (hover:hover){html[data-tema="v10"] .tl-mais-it:hover{background:var(--placa)}}
 html[data-tema="v10"] .tl-mais-it.perigo{color:var(--venc)}
 html[data-tema="v10"] li.tl-rotina{list-style:none}
 .docs-sel-barra{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 0;padding:8px 10px;border-radius:10px;background:var(--azul-fundo,#E6F0EF)}
@@ -5022,6 +5025,7 @@ html[data-tema="v10"] .timeline .tl-cab-fim{margin-left:auto;display:inline-flex
 html[data-tema="v10"] .timeline .tl-cab-fim .vistos{display:inline-flex;align-items:center;gap:3px;margin:0}
 html[data-tema="v10"] .timeline .tl-cab-fim .visto-av{width:18px;height:18px;font-size:10px}
 html[data-tema="v10"] .timeline .tl-cab-fim .visto-bt{min-width:22px;min-height:22px;border-radius:999px;font-size:11px}
+@media (pointer:coarse){html[data-tema="v10"] .timeline .tl-cab-fim .visto-bt{min-width:44px;min-height:44px} .cli-adv-bt{display:inline-block;min-height:32px;line-height:32px} .aq-passos>summary{padding:12px 0}}
 html[data-tema="v10"] .timeline .tl-corpo{margin-top:8px;max-width:none;font-size:14px;line-height:1.55}
 html[data-tema="v10"] .tl-barra{align-items:center}
 html[data-tema="v10"] .tl-barra-fim{margin-left:auto;display:inline-flex;align-items:center;gap:4px}
@@ -5262,7 +5266,7 @@ html .idf-apos .ac-it b{font-weight:500;font-size:13px;min-width:0}
 html .idf-apos .ac-it .ac-data{font-variant-numeric:tabular-nums;font-size:13px}
 html .idf-apos .ac-it small{grid-column:1 / -1;color:var(--cinza);font-size:12px}
 html .idf-apos .ac-card{all:unset;cursor:pointer;min-width:0}
-html .idf-apos .ac-card:hover b,html .idf-apos .ac-card:focus-visible b{text-decoration:underline}
+html .idf-apos .ac-card:focus-visible b{text-decoration:underline}@media (hover:hover){html .idf-apos .ac-card:hover b{text-decoration:underline}}
 html .idf-apos .ac-nota{margin:8px 0 0}
 html .idf-apos .ac-form{display:flex;flex-direction:column;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--borda)}
 html .idf-apos .ac-form label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--cinza)}
@@ -5557,7 +5561,7 @@ html[data-tema="v10"] .aq-ligar h3{font-size:15px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.92</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.93</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6975,7 +6979,11 @@ const doAtendimentoDe = (c, col) => ((c.campos||{}).precasos||[]).some(p=>p.quem
   || ((c.campos||{}).atendimento||[]).some(n=>n.autor_id===col || n.atribuido===col || (n.atribuidos||[]).includes(col));
 // F236 · QUEM RESPONDE PELO ITEM DA AGENDA: o que é do caso, os atribuídos; sem atribuído, o
 // administrador. Antes, o item sem dono aparecia no Meu Dia de todos e não era de ninguém.
-const donosDoCaso = k => { const a = (k && D.atrDoCaso.get(k.id))||[]; return a.length ? a : [colAdmin().id]; };
+// 11.93 · a lista pessoal "☕ <Nome>" de um colaborador ativo é dele (decisão do Paulo, 31.10.2026: os casos do ☕ Marcos entram no Meu Dia e nos prazos dele)
+function donoDaLista(k){ const m = k && /^☕\s*(\S+)/.exec(listaDe(k)); if(!m) return null;
+  const n = semAcento(m[1]).toLowerCase();
+  return [...D.colPorId.values()].find(c=>c.ativo!==false && semAcento((c.nome||"").split(" ")[0]).toLowerCase()===n) || null; }
+const donosDoCaso = k => { const a = (k && D.atrDoCaso.get(k.id))||[]; if(a.length) return a; const d = donoDaLista(k); return d ? [d.id] : [colAdmin().id]; };
 function donosDoCliente(cliId){
   const a = [...new Set((D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado").flatMap(k=>D.atrDoCaso.get(k.id)||[]))];
   return a.length ? a : [colAdmin().id];
@@ -6992,7 +7000,7 @@ function advogadoDoCliente(cliId, k){
 }
 // F236 · a lista pessoal do To Do (☕) vira caso na fase "outro" sem estar em lista nenhuma do
 // escritório: não é agenda de ninguém (Tarefas com Prazo continua sendo)
-const foraDoFluxo = k => k.fase==="outro" && listaDe(k)!=="🗓 Tarefas com Prazo";
+const foraDoFluxo = k => k.fase==="outro" && listaDe(k)!=="🗓 Tarefas com Prazo" && !donoDaLista(k);
 // F236 · o card de aposentadoria que virou caso (ou foi arquivado) não cobra mais nada: vale a marca
 // do CRM e, enquanto o "Gerar o caso" não desliga o card, o caso aberto do mesmo benefício
 function cardVivo(l){
@@ -7844,7 +7852,7 @@ function montarSidebar(){
     // entra nas listas, porque é onde o atendente trabalha
     document.getElementById("grupo-dinamicas").innerHTML = [...din, ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
         ["direito","⚖️ Análise de Direito", direitoAlcancado().length||null],
-        ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && dataSP(e.data_hora)>=hoje()).length],
+        ["agenda","🩺 Perícias & Audiências", quantasPericias()],
         ["clientes","👥 Clientes", (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length]]   // F250 · a lista de todos os clientes (nível 0)
       .filter(([id])=>pode.includes(id) && !["particulares","rotinas"].includes(id))
       .map(([id,rot,n])=>`<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
@@ -7884,7 +7892,7 @@ function montarSidebar(){
     ["marketing","📣 Marketing", null],
     // F236 · o número de 💰 Recebimentos é o dinheiro vencido (antes contava os casos da fase Pagamentos)
     ["recebimentos","💰 Recebimentos", (D.pagamentos||[]).filter(p=>p.status==="aberto" && p.vencimento && p.vencimento<hoje() && !pgSemValor(p) && !valorSuspeito(p)).length || null],
-    ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && dataSP(e.data_hora)>=hoje()).length],
+    ["agenda","🩺 Perícias & Audiências", quantasPericias()],
     ["dashboard","📊 Dashboard", null],
     ["patinss","📥 Importar do INSS", null],
     ...(souAdmin() ? [["config","⚙️ Configurações", null]] : []),
@@ -16426,6 +16434,9 @@ function pintarClientesTodos(){
   if(l.querySelector("[data-foto]")) assinarFotosZap(achados.slice(0, MAX)).then(()=>l.querySelectorAll("[data-foto]").forEach(a=>{
     const u = zapFotos.get(a.dataset.foto); if(u) a.outerHTML = `<img class="avatar foto-zap" src="${esc(u)}" alt="">`; }));
 }
+// 11.93 · DAD-12: o número do menu é o da tela: as futuras e as passadas sem confirmação de caso aberto
+function quantasPericias(){ const hj = hoje();
+  return D.eventos.filter(e=>e.status==="agendada" && (dataSP(e.data_hora)>=hj || (k=>!!k && k.fase!=="encerrado")(D.casoPorId.get(e.caso_id)))).length; }
 function renderAgenda(){
   tituloLista("🩺 Perícias & Audiências");
   document.getElementById("sub-lista").textContent="Agenda estruturada — adicione novas pela ficha do cliente.";
@@ -19035,8 +19046,9 @@ function providenciaDe(p, ctx){
     if(/Emprega Brasil|CTPS, RAIS/i.test(t)) return [esc_, `Deve rodar o Emprega Brasil na extensão do dossiê (carteira de trabalho, RAIS e CAGED)`];
     if(/HC Ribeir/i.test(t)) return [esc_, `Deve rodar o portal do HC Ribeirão na extensão do dossiê, se a pessoa se trata lá`];
     if(/Redesim|CNPJ/i.test(t)) return [esc_, `Deve rodar a Redesim na extensão do dossiê, para conferir as empresas em nome da pessoa`];
-    if(/PPP/.test(t)) return [cli, `Deve pedir ao empregador o PPP de cada vínculo com atividade especial`];
-    if(/laudo m[ée]dico|relat[óo]rio m[ée]dico/i.test(t)) return [cli, `Deve trazer laudo e relatório médico atuais, com data, CID e o que impede o trabalho`];
+    // TRI-10 · a pendência leva a condição do quadro ("se houve atividade especial", "se envolver doença")
+    if(/PPP/.test(t)) return [cli, /se houve atividade especial/i.test(t) ? `Se houve atividade especial, deve pedir ao empregador o PPP de cada vínculo com ela` : `Deve pedir ao empregador o PPP de cada vínculo com atividade especial`];
+    if(/laudo m[ée]dico|relat[óo]rio m[ée]dico/i.test(t)) return [cli, `${/só importa se/i.test(t) ? "Se o pedido envolver doença, deve" : "Deve"} trazer laudo e relatório médico atuais, com data, CID e o que impede o trabalho`];
     if(/Extrato de pagamento/i.test(t)) return [esc_, `Deve baixar no Meu INSS o ${t.split(":")[0].replace(/^Extrato/, "extrato")}`];
     if(/c[óo]pia/i.test(t) && /agendamento/i.test(t)) return [esc_, `Deve agendar no INSS a cópia do processo do benefício concedido`];
     if(/pedido administrativo|processo|Laudo da per[íi]cia/i.test(t)) return [esc_, `Deve baixar no Meu INSS a cópia integral do processo administrativo`];
@@ -33424,7 +33436,7 @@ function painelPA(c, ks){
       <p><b>O dossiê ainda não foi baixado.</b> Os quadros nascem quando a extensão trouxer os documentos dos portais com o gov.br do cliente. Até lá, escolha o benefício abaixo e siga para a Análise de Direito.</p>
       ${(ns=>ns.length ? `<div class="pa-relato"><span class="meio-sub">O que a recepção registrou</span>${ns.map(n=>`<p><b>${esc(n.quem||"")}</b> <span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span> ${esc(String(n.texto||"").slice(0,1500))}</p>`).join("")}</div>` : "")(((c.campos||{}).atendimento||[]).slice(-3))}
     </section>` : `<ul class="pa-legenda paq-legenda"><li><i class="pa-bola crit"></i>Em risco ou prazo correndo</li><li><i class="pa-bola warn"></i>Falta ou a conferir</li><li><i class="pa-bola ok"></i>Em ordem</li><li><i class="pa-bola info"></i>Informativo</li><li><span class="paq-cx" aria-hidden="true"></span>Vai para a Análise de Direito (desmarque só o que não tem a ver com a visita)</li></ul>
-    ${urg.map(t=>`<p class="tp-urgente" role="note"><b>Prazo correndo:</b> ${esc(t.f.rot)}: ${esc(t.prazo.texto)}</p>`).join("")}
+    ${[...urg.reduce((m, t)=>m.set(t.prazo.texto, [...(m.get(t.prazo.texto)||[]), t.f.rot]), new Map())].map(([txt, rots])=>`<p class="tp-urgente" role="note"><b>Prazo correndo:</b> ${esc(juntaE([...new Set(rots)]))}: ${esc(txt)}</p>`).join("")}
     ${tp ? tp.trilha : ""}
     ${grupos.map(g=>`<div class="tp-passo" data-passo="${g.id}"${oculto(g.id)}>${g.qs.map(q=>quadro(q, ++nq)).join("")}</div>`).join("")}`}
     <section class="paq paq-escolha${tp ? " tp-passo" : ""}" id="paq-escolha" data-passo="escolha"${oculto("escolha")} aria-labelledby="paq-t-escolha">
