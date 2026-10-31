@@ -28,7 +28,7 @@ A fonte de dados dos geradores é o **Microsoft To Do** (Graph API, conta pessoa
 
 ## Dossiê do cliente (crm/fase2/dossie) — o que chega ao CRM
 
-<!-- dossie-versao: 0.13.0 — ao mudar manifest.json da extensão, atualize esta seção e este número;
+<!-- dossie-versao: 0.13.1 — ao mudar manifest.json da extensão, atualize esta seção e este número;
      tests em crm/fase2/dossie/testes/regras.test.js conferem que batem. -->
 
 Extensão de navegador (versão **0.13.1**). Com o gov.br do cliente logado, um clique baixa os documentos
