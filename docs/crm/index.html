@@ -2076,7 +2076,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   /* F259 · o acabamento do WhatsApp (ideia do Kapso): fundo bege, balão branco
      de quem escreve e verde do escritório, sem borda. Nota interna, agendada,
      rascunho e falha mantêm o seu desenho. Volta ao anterior nas Configurações. */
-  .zap-tela.wa .zap-msgs{background:#efeae2}
+  .zap-tela.wa .zap-msgs{background:#efeae2 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' fill='none' stroke='%23000' stroke-opacity='.06' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M14 18h20a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H22l-6 5v-5h-2a4 4 0 0 1-4-4V22a4 4 0 0 1 4-4z'/%3E%3Ccircle cx='82' cy='22' r='7'/%3E%3Cpath d='M76 70l4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z'/%3E%3Cpath d='M22 78c4-6 10-6 14 0s10 6 14 0'/%3E%3Cpath d='M96 52l8 8m0-8l-8 8'/%3E%3Crect x='88' y='92' width='16' height='12' rx='2'/%3E%3Cpath d='M40 102a6 6 0 1 1 12 0'/%3E%3Cpath d='M60 34l6 6 10-12'/%3E%3C/svg%3E") repeat}
   .zap-tela.wa .zap-b:not(.interna):not(.agendada):not(.rascunho):not(.ruim){background:#fff;border-color:transparent;
     box-shadow:0 1px .5px rgba(11,20,26,.13);border-radius:8px;border-top-left-radius:0}
   .zap-tela.wa .zap-b.saida:not(.interna):not(.agendada):not(.rascunho):not(.ruim){background:#d9fdd3;
@@ -2102,6 +2102,13 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-tela.wa .zap-conv .bolha{background:#25d366;color:#fff;border-radius:10px;min-width:20px;text-align:center}
   .zap-tela.wa .zap-conv.nova .l1 .hora{color:#1fa855;font-weight:600}
   .zap-tela.wa .zap-conv.nova .l1 b{color:inherit}
+  /* F324 · menu de segurar o balão */
+  .zm-emojis{display:flex;justify-content:space-between;gap:4px;background:#fff;border-radius:24px;padding:6px 8px;box-shadow:0 1px 3px rgba(11,20,26,.2);margin-bottom:10px}
+  .zm-emojis button{font-size:24px;line-height:1;width:40px;height:40px;border:0;border-radius:50%;background:transparent;cursor:pointer}
+  .zm-emojis button.on{background:#e9edef}
+  .zm-acoes{display:flex;flex-direction:column}
+  .zm-acoes button{text-align:left;padding:12px 8px;border:0;border-top:1px solid #e9edef;background:transparent;font-size:15px;cursor:pointer}
+  .zm-acoes button:first-child{border-top:0}
   /* 29.10.2026 · a lista sem letra sobre letra, também na coluna estreita (~290 px) e no celular: a fila mostra o número
      embaixo do nome, os filtros ficam numa linha que rola de lado, e a linha do nome leva só o nome e a hora (o advogado
      desce para a linha de baixo) */
@@ -5404,7 +5411,7 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 
 #painel-prazo .pp-zap-com{padding:8px 16px;font-size:12px;background:#FFF7E6;border-bottom:1px solid #F0D9A8;color:#6B4A00}
 #painel-prazo .pp-zap-com b{font-weight:500}
-/* F324 · A TELA PRAZOS, A JANELA DO PRAZO E O PRAZO NA ANOTAÇÃO (desenho aprovado pelo Paulo em 31.10.2026) */
+/* F326 · A TELA PRAZOS, A JANELA DO PRAZO E O PRAZO NA ANOTAÇÃO (desenho aprovado pelo Paulo em 31.10.2026) */
 /* a etiqueta da aba e as etiquetas da natureza */
 .mt-pzn{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-width:20px;height:20px;padding:0 6px;margin-left:4px;border-radius:10px;background:var(--azul-fundo,#E6F0EF);color:var(--azul,#0E5C58);font-size:12px;font-weight:500;font-variant-numeric:tabular-nums}
 .mt-pzv{margin-left:4px;font-size:12px}
@@ -5957,7 +5964,14 @@ html[data-tema="v10"] .app:not(.celular) .det-topo .linha1 > .det-canto{margin-l
 html[data-tema="v10"] .linha-caso .lc-prot .lc-num,html[data-tema="v10"] .linha-caso .lc-tram-link{white-space:nowrap}
 html[data-tema="v10"] .caso-esq .linha-caso .lc-tram-link{font-size:13px}
 html[data-tema="v10"] .caso-esq .lc-placa>.lc-prot>:is(.lc-num,.lc-copiar){flex:none;white-space:nowrap;overflow-wrap:normal}
-html[data-tema="v10"] .caso-esq .lc-placa>.lc-f>.lc-tram-link{flex:0 1 auto;min-width:0;white-space:nowrap;overflow-wrap:normal;overflow:hidden;text-overflow:ellipsis;display:block}
+html[data-tema="v10"] .caso-esq .lc-placa>.lc-f>.lc-tram-link{flex:0 1 auto;min-width:0;white-space:normal;overflow-wrap:anywhere;display:inline}
+/* F325 · a Fila na coluna estreita: rótulo à esquerda e os valores em texto corrido, que quebra inteiro (pedido do Paulo, 31.10.2026) */
+html[data-tema="v10"] .caso-esq .lc-placa>.lc-f:has(.lc-fila){display:block;padding-left:106px;line-height:1.45}
+html[data-tema="v10"] .app:not(.celular) .caso-esq .lc-placa>.lc-f:has(.lc-fila){padding-left:92px}
+html[data-tema="v10"] .caso-esq .lc-placa>.lc-f:has(.lc-fila)>.lc-k{position:absolute;left:0;top:0}
+html[data-tema="v10"] .caso-esq .lc-placa>.lc-f:has(.lc-fila)>:not(.lc-k){display:inline-block;white-space:nowrap;margin-right:6px}
+/* F325 · a inicial de quem responde ou escreveu é quadrada em todo o CRM, como na linha das listas (pedido do Paulo, 31.10.2026); a foto do WhatsApp segue redonda */
+html[data-tema="v10"] :is(.avatar:not(img),.visto-av,.fx-av,.eq-ini){border-radius:25%}
 html[data-tema="v10"] .app:not(.celular) .caso-3col > .caso-esq,html[data-tema="v10"] .app:not(.celular) .caso-3col .linha-caso{min-width:0}
 html[data-tema="v10"] .app:not(.celular) .caso-esq .lc-placa>.lc-f{gap:10px}html[data-tema="v10"] .app:not(.celular) .caso-esq .lc-placa>.lc-f>.lc-k{width:82px}
 html[data-tema="v10"] .app:not(.celular) .caso-3col > .caso-pz{align-self:start}
@@ -6074,7 +6088,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 12.00</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 12.01</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6402,7 +6416,7 @@ let fasesAbertas = new Set();   // F82: fases do Caso completo abertas à mão (
 let celAba = "and", celCad = "principal";
 function celIr(qual){
   celAba = qual;
-  abaAtiva = qual==="cad" ? 0 : qual==="hon" ? 4 : qual==="per" ? 3 : qual==="pz" ? 5 : 2;   // F324 · Prazos é a aba do cliente
+  abaAtiva = qual==="cad" ? 0 : qual==="hon" ? 4 : qual==="per" ? 3 : qual==="pz" ? 5 : 2;   // F326 · Prazos é a aba do cliente
   repintarFicha();
   const r = document.querySelector(".det-rolagem"); if(r) r.scrollTop = 0;
 }
@@ -6412,7 +6426,7 @@ function celCadIr(qual){ celCad = qual; const d = document.querySelector(".det-p
 function celAbasHtml(c, ks, k, nPer, temHon){
   celAba = celAbaNorm();
   const nNov = k ? (D.novid||[]).filter(a=>a.caso_id===k.id).length : 0;
-  // F324 · a aba Prazos do celular é a do cliente (todos os casos), com o número dos vencidos em vermelho
+  // F326 · a aba Prazos do celular é a do cliente (todos os casos), com o número dos vencidos em vermelho
   const z = (()=>{ try{ return prazosDoCliente(c.id); }catch(e){ return {total:0, venc:0}; } })();
   const it = [k && ["and", `Andamentos${nNov?` <span class="ca-n">${nNov}</span>`:""}`], (k || z.total || abaAtiva===5) && ["pz", `Prazos${z.venc?` <span class="ca-n ca-venc" aria-label="${z.venc} vencido${z.venc>1?"s":""}">${z.venc}</span>`:""}`],
     k && ["caso", "Caso"], ["cad", "Cadastro"], nPer && ["per", "Perícias"], temHon && ["hon", "Honorários"]].filter(Boolean);
@@ -15022,6 +15036,8 @@ function quemConversa(){
   };
 }
 
+const PREVIA_TIPO = {audio:"🎤 Áudio", imagem:"📷 Foto", video:"🎥 Vídeo", documento:"📄 Documento", figurinha:"Figurinha"};
+const previaZap = t => { const k = /^\[(\w+)\]$/.exec(String(t||"").trim()); return k && PREVIA_TIPO[k[1]] || t || ""; };
 function cartaoConversa(c){
   const at = c.atendente_id && D.colPorId.get(c.atendente_id);
   const cli = c.cliente_id && D.cliPorId.get(c.cliente_id);
@@ -15033,7 +15049,7 @@ function cartaoConversa(c){
     <div class="zc-corpo">
       <div class="l1"><b>${esc(nomeDaConversa(c))}</b>
         <span class="hora">${c.ultima_em?quandoFalou(c.ultima_em):""}</span></div>
-      <div class="l2">${esc((c.ultimo_texto||"").slice(0,80))}</div>
+      <div class="l2">${esc(previaZap(c.ultimo_texto).slice(0,80))}</div>
       <div class="l3">
         ${advDaConversa(c)?`<span class="zc-adv" title="advogado responsável: ${esc(advDaConversa(c))}">${esc(advDaConversa(c).split(" ")[0])}</span>`:""}
         ${s?`<span class="zc-setor"><i style="background:${esc(s.cor)}"></i>${esc(s.nome)}</span>`:""}
@@ -15855,17 +15871,20 @@ let zapArrasto = null;
 document.addEventListener("touchstart", e=>{
   const b = e.target.closest("#zap-msgs .zap-b");
   if(!b || !b.querySelector('[onclick^="responderMsg"]') || e.touches.length>1) return;
-  zapArrasto = {b, x:e.touches[0].clientX, y:e.touches[0].clientY, dx:0};
+  zapArrasto = {b, x:e.touches[0].clientX, y:e.touches[0].clientY, dx:0,
+    seg: setTimeout(()=>{ if(zapArrasto && zapArrasto.b===b && zapArrasto.dx<8){ zapArrasto = null; b.style.transform = ""; menuBalaoZap(b.id.slice(3)); } }, 500)};
 }, {passive:true});
 document.addEventListener("touchmove", e=>{
   const z = zapArrasto; if(!z) return;
   const dx = e.touches[0].clientX - z.x, dy = e.touches[0].clientY - z.y;
+  if(Math.abs(dx) > 8 || Math.abs(dy) > 8) clearTimeout(z.seg);   // dedo que anda não é segurar
   if(!z.dx && Math.abs(dy) > Math.abs(dx)){ zapArrasto = null; return; }   // rolar a conversa não é responder
   z.dx = Math.max(0, dx);
   z.b.style.transition = "none"; z.b.style.transform = `translateX(${Math.min(z.dx, 80)}px)`;
 }, {passive:true});
 document.addEventListener("touchend", ()=>{
   const z = zapArrasto; zapArrasto = null; if(!z) return;
+  clearTimeout(z.seg);
   z.b.style.transition = ""; z.b.style.transform = "";
   if(z.dx > 60) responderMsg(z.b.id.slice(3));
 });
@@ -15877,12 +15896,38 @@ function reagirMsg(id){
   caixa(`<h3>Reagir</h3><div class="form-linha" style="font-size:22px">${EMOJIS_ZAP.map(e=>
       `<button class="btn-mini" style="font-size:20px" data-zr="${e}">${e}</button>`).join("")}
     ${minha?`<button class="btn-mini" data-zr="">tirar reação</button>`:""}</div>`);
-  document.querySelectorAll("[data-zr]").forEach(b=>b.onclick=async()=>{
-    fecharCaixa();
-    await api(`/rest/v1/zap_reacoes?on_conflict=mensagem_id,de`,{method:"POST",
-      headers:{Prefer:"resolution=merge-duplicates,return=minimal"},
-      body:JSON.stringify({mensagem_id:id, de:"escritorio", autor_id:eu.id, emoji:b.dataset.zr, status:"fila"})});
-    await carregarReacoes(); pintarConversaGuardando();
+  document.querySelectorAll("[data-zr]").forEach(b=>b.onclick=()=>reagirCom(id, b.dataset.zr));
+}
+async function reagirCom(id, emoji){
+  fecharCaixa();
+  await api(`/rest/v1/zap_reacoes?on_conflict=mensagem_id,de`,{method:"POST",
+    headers:{Prefer:"resolution=merge-duplicates,return=minimal"},
+    body:JSON.stringify({mensagem_id:id, de:"escritorio", autor_id:eu.id, emoji, status:"fila"})});
+  await carregarReacoes(); pintarConversaGuardando();
+}
+// F324 · tocar e segurar o balão abre, como no aplicativo, a fileira de emojis e as ações dele
+function menuBalaoZap(id){
+  const m = zapMsgs.find(x=>x.id===id); if(!m) return;
+  const b = document.getElementById("zb-"+id);
+  const tem = sel => b && b.querySelector(sel);
+  const minha = (zapReacoes.get(id)||[]).find(r=>r.de==="escritorio");
+  caixa(`<div class="zm-emojis" role="group" aria-label="Reagir">${EMOJIS_ZAP.map(e=>
+      `<button class="${minha&&minha.emoji===e?"on":""}" data-zm-r="${e}" aria-label="Reagir com ${e}">${e}</button>`).join("")}</div>
+    <div class="zm-acoes" role="menu">
+      ${tem('[onclick^="responderMsg"]')?`<button role="menuitem" data-zm="r">↩ Responder</button>`:""}
+      ${m.texto?`<button role="menuitem" data-zm="c">Copiar</button>`:""}
+      ${tem('[onclick^="encaminharMsg"]')?`<button role="menuitem" data-zm="e">↪ Encaminhar</button>`:""}
+      ${tem('[onclick^="virarAndamento"]')?`<button role="menuitem" data-zm="a">Registrar como andamento</button>`:""}
+      ${minha?`<button role="menuitem" data-zm="x">Tirar reação</button>`:""}
+    </div>`);
+  document.querySelectorAll("[data-zm-r]").forEach(x=>x.onclick=()=>reagirCom(id, x.dataset.zmR));
+  document.querySelectorAll("[data-zm]").forEach(x=>x.onclick=()=>{
+    const k = x.dataset.zm; fecharCaixa();
+    if(k==="r") responderMsg(id);
+    else if(k==="c") navigator.clipboard.writeText(m.texto).then(()=>aviso("Texto copiado"), ()=>aviso("Não foi possível copiar", true));
+    else if(k==="e") encaminharMsg(id);
+    else if(k==="a") virarAndamento(id);
+    else if(k==="x") reagirCom(id, "");
   });
 }
 
@@ -36436,7 +36481,7 @@ function linhasDeDatas(cliId){
     const a=(D._andsFicha||[]).find(x=>x.id===t.andamento_id);
     const texto=a?(a.texto||"").replace(/<[^>]*>/g,""):"";
     const co=D.colPorId.get(t.colaborador_id);
-    // F324 · a revisão que fica depois do prazo registrado (cumprido ou não) já não é prazo fatal: é compromisso
+    // F326 · a revisão que fica depois do prazo registrado (cumprido ou não) já não é prazo fatal: é compromisso
     const pzFim = t.papel==="revisa" && a && ["cumprido","nao","nsa"].includes((estadoPrazoNota(a)||{}).est);
     linhas.push({data:t.lembrar_em, ico:"🗓", natureza:pzFim ? "compromisso" : (t.natureza||"compromisso"),
       rot:(texto?texto.slice(0,70):"Tarefa do andamento")+(t.papel==="revisa"?" (revisão)":""),
@@ -36806,7 +36851,7 @@ function prazosDoCliente(cliId){
   const lista = soltas.slice().sort((a, b)=>a.data<b.data?-1:a.data>b.data?1:(natDaLinha(a)==="fatal"?-1:0)-(natDaLinha(b)==="fatal"?-1:0));
   return {grupos, total: soltas.length, venc, lista};
 }
-// F324 · A ABA PRAZOS DO CLIENTE (desenho aprovado pelo Paulo, 31.10.2026). No alto, o próximo prazo fatal, com quanto
+// F326 · A ABA PRAZOS DO CLIENTE (desenho aprovado pelo Paulo, 31.10.2026). No alto, o próximo prazo fatal, com quanto
 // falta em dias úteis e a barra do tempo; depois Vencidos, Hoje e Próximos 7 dias; por data ou por caso; o filtro por
 // natureza; e cada linha diz o que fazer, de onde veio, de que caso é, quem faz e quanto falta. O Abrir leva à janela.
 // A escolha (por data ou por caso, a natureza) vale na sessão; mudar repinta só a aba.
@@ -36912,7 +36957,7 @@ const RX_TIPO_GENERICO = /^(Compromisso|Lembrete|Lembrar antes|Prazo fatal|Taref
 const visivelDaLinha = x => { const t = tipoDaLinha(x), r = resumoDaLinha(x);
   return x.curto || (RX_TIPO_GENERICO.test(t) && r ? r : t); };
 // ══════════════════════════════════════════════════════════════════════════
-// F324 · A TELA PRAZOS (desenho aprovado pelo Paulo em 31.10.2026). O título, quanto falta, de onde vem, quem faz e
+// F326 · A TELA PRAZOS (desenho aprovado pelo Paulo em 31.10.2026). O título, quanto falta, de onde vem, quem faz e
 // de quando se conta são os mesmos na faixa do caso, na aba Prazos do cliente e na janela do prazo.
 // ══════════════════════════════════════════════════════════════════════════
 function tituloDaLinha(x){
@@ -37017,7 +37062,7 @@ function faixaPrazos(k){
     // F236 · o lembrete do card de aposentadoria futura é do cliente, não deste caso: mora na aba Aposentadorias futuras
     if(x.lembTipo==="aposentadoria_futura") continue;
     minhas.push(x);
-    // F324 · a tarefa da própria anotação no mesmo dia já está na janela do prazo (O que fazer): não repete a data
+    // F326 · a tarefa da própria anotação no mesmo dia já está na janela do prazo (O que fazer): não repete a data
     for(const f of (x.filhas||[]).filter(f=>!(x.andId && f.andId===x.andId && f.data===x.data)).sort((a,b)=>a.data<b.data?-1:1)) minhas.push({...f, filha:true});
   }
   // F254 · do mais próximo para o mais distante, como o Planejado do To Do (decisão do Paulo, 24.10.2026,
@@ -37048,7 +37093,7 @@ function faixaPrazos(k){
   // dias, Mais tarde), cada linha com a bolinha da natureza. "Mais tarde" fica recolhido.
   // F275 · A LINHA SÓ COM A DATA E O "ABRIR" (pedido do Paulo, 24.10.2026: a ficha tem informação demais). O título,
   // o motivo, quem faz e o "cumpri" moram no painel; aqui ficam a bolinha da natureza, a data e o título no passar do mouse.
-  // F324 · o título e o quanto falta vêm das mesmas funções da aba Prazos e da janela (tituloDaLinha, faltaPz, prepPz)
+  // F326 · o título e o quanto falta vêm das mesmas funções da aba Prazos e da janela (tituloDaLinha, faltaPz, prepPz)
   const linha = (x, destaque) => {
     const i = minhas.indexOf(x), nat = natDaLinha(x), tipo = tipoDaLinha(x);
     prepPz(x, i);
@@ -37112,7 +37157,7 @@ let painelPz = null, painelZapCli = null;   // o painel mostra um prazo (painelP
 function abrirPainelTarefa(casoId, andId){
   let i = (faixaAtual||[]).findIndex(x=>x.casoId===casoId && x.andId===andId);
   if(i<0){
-    // F324 · a anotação do prazo sem tarefa aberta também abre: a data vem do carimbo
+    // F326 · a anotação do prazo sem tarefa aberta também abre: a data vem do carimbo
     const t = (D.tarefasPorCaso.get(casoId)||[]).find(x=>x.andamento_id===andId && !x.concluida_em);
     const a = (D._andsFicha||[]).find(x=>x.id===andId), m = /^[⏰🔥\s]*\[PRAZO ([0-9.]+)\]/u.exec(a && a.texto || "");
     if(!t && !m) return;
@@ -37158,7 +37203,7 @@ function fecharPrazoEsq(){
   painelPz = null;
 }
 // ══════════════════════════════════════════════════════════════════════════
-// F324 · A JANELA DO PRAZO (desenho aprovado pelo Paulo, 31.10.2026). Abre da faixa do caso (fonte vazia) ou da aba
+// F326 · A JANELA DO PRAZO (desenho aprovado pelo Paulo, 31.10.2026). Abre da faixa do caso (fonte vazia) ou da aba
 // Prazos do cliente (fonte "cli", por cima da aba, com o véu). Quanto falta em número grande, com a barra do início ao
 // vencimento e o hoje; de onde vem (a anotação, o documento, a base); o que fazer (a tarefa de quem executa, com as
 // etapas); o que está ligado (o lembrete antes, o papel pedido ao cliente); o histórico; o comentário. O principal é
@@ -40640,7 +40685,7 @@ async function responderInline(andId){
   if(clienteAberto) abrirFicha(clienteAberto);
 }
 // ══════════════════════════════════════════════════════════════════════════
-// F324 · O PRAZO NA ANOTAÇÃO (desenho aprovado pelo Paulo, 31.10.2026). A anotação com ⏰ mostra a faixa do prazo: viva,
+// F326 · O PRAZO NA ANOTAÇÃO (desenho aprovado pelo Paulo, 31.10.2026). A anotação com ⏰ mostra a faixa do prazo: viva,
 // com o Abrir da janela; o formulário do cumprimento no próprio cartão; a faixa verde do cumprido; o alerta do vencido
 // sem registro, com "Foi cumprido" e "Não foi cumprido". Cumprido = resposta "✔ [PRAZO CUMPRIDO]" à anotação ou tarefa
 // de quem executa concluída (regra de 31.10.2026). O prazo que saiu do caso sem registro, antes desta regra, fica neutro.
@@ -40759,7 +40804,7 @@ function respPrazoHtml(a){
 }
 function comentarioV12(a, resposta, reacoes, raiz, co, cor){
   const pz = RX_PRAZO_AND.exec(a.texto||"");
-  // F324 · a anotação do prazo traz a faixa do estado; a resposta do registro traz o selo e o comprovante
+  // F326 · a anotação do prazo traz a faixa do estado; a resposta do registro traz o selo e o comprovante
   const pzE = pz && raiz ? estadoPrazoNota(a) : null, rp = !pz && respPrazoHtml(a);
   const corpo = pz ? a.texto.slice(pz[0].length).replace(RX_PZ_CONTAGEM, "") : rp ? rp.corpo : (a.texto||"");
   const tp = tipoDoComentario(corpo);
@@ -40901,7 +40946,7 @@ function linhaDoTempo(ands){
     const menc = (D.mencoes||[]).some(m=>m.andamento_id===a.id && m.para_id===eu.id);
     const html0 = comentario(a, sub, reacoes, true);
     const html = a._confMais ? html0.replace('<span class="tl-corpo">', `<span class="tl-conf-mais" title="conferências iguais anteriores, uma por linha no Caso completo">conferido mais ${a._confMais} ${a._confMais===1?"vez":"vezes"} desde ${fmt(a._confDesde)}</span><span class="tl-corpo">`) : html0;
-    const pzV = (e=>e && e.est==="vencido" && _cumprindo!==a.id ? " tl-pz-venc" : "")(estadoPrazoNota(a));   // F324 · o cartão do prazo vencido sem registro
+    const pzV = (e=>e && e.est==="vencido" && _cumprindo!==a.id ? " tl-pz-venc" : "")(estadoPrazoNota(a));   // F326 · o cartão do prazo vencido sem registro
     return `<li class="${temaV10()?"tl-card ":""}${naoLi(a)?"tl-nao-lida":""}${clsSinal(a)}${pzV}">${menc ? html.replace('<span class="tl-cab-fim">', '<span class="chip tl-menc" title="esta anotação cita você e a menção ainda não foi lida">@ menciona você</span><span class="tl-cab-fim">') : html}</li>`;
   };
   // a linha do tempo vem do mais novo para o mais velho: os dias separam a
@@ -44149,7 +44194,7 @@ function tfNat(v, bt){
   const pnl = document.getElementById("esc-pnl-tf"); if(pnl) pnl.hidden = !tfNatureza;
   pintarFrase();
 }
-// F324 · O PRAZO FATAL NO CAMPO DE ESCREVER (desenho aprovado em 31.10.2026): do que é (o catálogo), contado de quando,
+// F326 · O PRAZO FATAL NO CAMPO DE ESCREVER (desenho aprovado em 31.10.2026): do que é (o catálogo), contado de quando,
 // o resultado com o dia da semana e quanto falta (a data se corrige à mão), quem faz e quem revisa. Os ids and-cat, and-de,
 // and-prazo-data e and-prazo-mais continuam, porque o cálculo (aplicarCatalogoPrazo) e o carimbo (carimboCatalogo) são os mesmos.
 function painelPrazoEscrever(k){
@@ -44211,7 +44256,7 @@ function fraseRegistro(){
     p.push(`agenda lembrete para ${tfQuem&&tfQuem.length?lista(nomes(tfQuem)):"você"}${dia?` em ${dia}`:" (falta quando)"}`);
   const ck = document.getElementById("and-prazo-ck"), pd = (document.getElementById("and-prazo-data")||{}).value;
   if(ck && ck.checked){
-    // F324 · quem faz e quem revisa o prazo fatal entram na frase
+    // F326 · quem faz e quem revisa o prazo fatal entram na frase
     const q = document.querySelector("#esc-pnl-pz .pzx-q.on"), rv = (document.getElementById("pz-rev")||{}).value;
     p.push((pd ? `marca prazo fatal em ${fmtBarra(pd)}` : "marca prazo fatal (falta a data)")
       + (q ? `, com a tarefa de ${nomes([q.dataset.pzq])[0]}${rv && rv!==q.dataset.pzq ? ` e a revisão de ${nomes([rv])[0]}` : ""}` : ""));
@@ -44431,7 +44476,7 @@ function prazoDaAnotacao(k, andId){
   const ts = o ? (D.tarefasPorCaso.get(k.id)||[]).filter(t=>t.andamento_id===o.id && !t.concluida_em) : [];
   return {og: o, data: m ? isoDoCarimbo(m[1]) : k.prazo, exec: ts.filter(t=>t.papel!=="revisa"), rev: ts.filter(t=>t.papel==="revisa")};
 }
-// F324 · REGISTRAR O CUMPRIMENTO (regra combinada em 31.10.2026): o prazo fatal está cumprido com o andamento
+// F326 · REGISTRAR O CUMPRIMENTO (regra combinada em 31.10.2026): o prazo fatal está cumprido com o andamento
 // "✔ [PRAZO CUMPRIDO]" em resposta à anotação que o criou, ou com a tarefa fatal concluída. Aqui se grava a resposta
 // (com a data, quando não é hoje, e o comprovante), se baixa o prazo do caso, se concluem as tarefas de quem executa,
 // se avisa quem revisa e, na fila 🗓 Tarefas com Prazo, o caso volta à lista de onde veio. Tudo com desfazer.
@@ -44602,7 +44647,7 @@ async function novoAndamento(casoUnico){
   delete catPrazo.and;   // F92 · o cálculo desta anotação não vaza para a próxima
   desarmarResposta();
   if(prazoCk && prazoCk.checked && prazoData) await marcarTarefaComPrazo(casoId, prazoData);
-  // F324 · o prazo fatal nasce com a tarefa de quem faz (natureza fatal) e a revisão: é ela que diz cumprido
+  // F326 · o prazo fatal nasce com a tarefa de quem faz (natureza fatal) e a revisão: é ela que diz cumprido
   const pzQ = prazoCk && prazoCk.checked && prazoData && and && document.querySelector("#esc-pnl-pz .pzx-q.on");
   if(pzQ){ try{ await criarTarefasDe(and.id, casoId, [pzQ.dataset.pzq], (document.getElementById("pz-rev")||{}).value||"", prazoData, "fatal"); }
     catch(e){ aviso("⚠ a tarefa do prazo não gravou: "+String(e.message||e).slice(0,80)); } }

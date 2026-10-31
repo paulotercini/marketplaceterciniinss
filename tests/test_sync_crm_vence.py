@@ -436,3 +436,19 @@ def test_etapa_do_caso_sem_data_nao_apaga_a_data_do_crm():
     migrar.separar_prazo_vazio(mapa)
     assert [t["id"] for t in mapa["tarefas"]] == ["b", "c"]
     assert mapa["tarefas_sem_prazo"] == [{"id": "a", "caso_id": "k1", "titulo": "📄 CTPS"}]
+
+
+def test_lembrete_data_que_mudou_no_todo_vence_a_do_crm():
+    def l(d): return {"id": "x", "titulo": "Apos", "proximo_em": d, "todo_prazo": d,
+                      "intervalo_meses": None, "ativo": True}
+    adiou = l("2026-11-05")
+    migrar.manter_lembrete(adiou, {"titulo": "Apos", "proximo_em": "2026-08-07",
+                                   "todo_prazo": "2026-08-07", "ativo": True})
+    assert adiou["proximo_em"] == "2026-11-05"
+    igual = l("2026-08-07")          # o CRM mudou, o To Do não: o CRM vence
+    migrar.manter_lembrete(igual, {"titulo": "Apos", "proximo_em": "2026-12-01",
+                                   "todo_prazo": "2026-08-07", "ativo": True})
+    assert igual["proximo_em"] == "2026-12-01"
+    antigo = l("2026-11-05")         # banco sem todo_prazo: comportamento de antes
+    migrar.manter_lembrete(antigo, {"titulo": "Apos", "proximo_em": "2026-08-07", "ativo": True})
+    assert antigo["proximo_em"] == "2026-08-07"
