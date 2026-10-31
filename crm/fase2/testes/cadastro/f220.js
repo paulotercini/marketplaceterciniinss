@@ -123,6 +123,7 @@ function conf(peso, nome, ok) {
     chip: !!document.querySelector('.ben-chip[data-fam="tempo"].on'), opc: !!document.querySelector('.ben-opc[data-opc="tempo.idade"].on') }));
   conf(3, "2.3 sem dossiê o passo mostra o relato e já marca a aposentadoria por idade", pa.semDz && pa.relato && pa.chip && pa.opc);
   await foto(amanda, "amanda-primeiro-atendimento", true);
+  await amanda.evaluate(() => atendNotas(true)); // F320: as anotações são gaveta
   await amanda.fill("#atend-nota", "Conferir a CTPS antiga da costura com a cliente, @Marcos");
   await amanda.click(".atend-conv-nova button:has-text('Anotar')");
   await amanda.waitForTimeout(800);
