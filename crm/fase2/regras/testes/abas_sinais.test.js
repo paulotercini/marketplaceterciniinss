@@ -62,6 +62,12 @@ test("o INSS abre com o protocolo, antes de existir evento (F330)", () => {
   assert.equal(abasVisiveis({ protocolos: ["123.456.789"] }, []).inss, true);
 });
 
+test("o INSS abre com o NB, e o Judicial com a lista de processos (F330)", () => {
+  assert.equal(abasVisiveis({ nb: "2161976766" }, []).inss, true);
+  assert.equal(abasVisiveis({ nbs: ["2161976766"] }, []).inss, true);
+  assert.equal(abasVisiveis({ processos: [{ numero: "5000001-02.2024.4.03.6136" }] }, []).cnj, true);
+});
+
 test("o INSS abre com comentário do portal", () => {
   assert.equal(abasVisiveis({}, [comentarioInss]).inss, true);
   // mudança de situação NÃO é comentário: mora na linha do tempo do Escritório
