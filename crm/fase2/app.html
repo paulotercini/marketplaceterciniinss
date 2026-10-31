@@ -1277,7 +1277,7 @@
   .app.celular ~ .fab-sug{bottom:120px}
   .app.celular.detalhe-aberto ~ .fab-sug{bottom:130px}
   .app.celular.zap-conv-aberta ~ .fab-sug{bottom:calc(132px + env(safe-area-inset-bottom))}
-  /* F312 · ajuda: o "?" fixo à esquerda do ✎ Sugestões e o "?" pequeno das barras e quadros */
+  /* F313 · ajuda: o "?" fixo à esquerda do ✎ Sugestões e o "?" pequeno das barras e quadros */
   .fab-ajuda{position:fixed;right:146px;bottom:72px;z-index:80;width:36px;height:36px;border-radius:50%;border:none;
     background:#1F4E79;color:#fff;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25)}
   .app.celular ~ .fab-ajuda{bottom:120px}
@@ -5546,7 +5546,7 @@ html[data-tema="v10"] .aq-ligar h3{font-size:15px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.88</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.89</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12557,10 +12557,10 @@ function itensAgendaTodos(){
       por({data:d, k, cli, prazo:true, fatal: igual==="trib" && p.fim===k.prazo, selo:`Prazo ${ROT_PRAZO[p.sistema]||p.sistema||""}`.trim(),
         resumo: p.situacao==="findo" ? `venceu sem resposta: ${p.ato||"intimação"}` : `${p.ato||"intimação"}${p.dias?` (${p.dias} dias)`:""}${p.fim?"":", ciência tácita"}`}, donos);
     }
-    if(rec) por({data:rec, k, cli, prazo:true, fatal: igual==="rec", selo:"Prazo do recurso",
+    if(rec) por({data:rec, k, cli, prazo:true, avisa:true, fatal: igual==="rec", selo:"Prazo do recurso",
       resumo:`recorrer da decisão de ${fmt(k.decisao_em)} (recurso ${k.fase==="conselho"?"especial":"ordinário"})`}, donos);
     // F236 · a descrição da exigência cortada na palavra, com reticências (cortava no meio: "Tecelagem Fictícia São Jos")
-    if(k.exigencia_prazo) por({data:k.exigencia_prazo, k, cli, prazo:true, fatal: igual==="exig", selo:k.fase==="conselho"?"Diligência":"Exigência",
+    if(k.exigencia_prazo) por({data:k.exigencia_prazo, k, cli, prazo:true, avisa:true, fatal: igual==="exig", selo:k.fase==="conselho"?"Diligência":"Exigência",
       resumo:`cumprir a ${k.fase==="conselho"?"diligência do CRPS":"exigência do INSS"}${k.exigencia_descricao?`: ${cortaFrase(String(k.exigencia_descricao).replace(/\s*·\s*prazo estimado:[\s\S]*$/i,"").replace(/\s+/g," ").trim(), 70)}`:""}`}, donos);
     const mora = prazoMora(k);
     // F236 · com o mandado de segurança já decidido (a tarefa de redigi-lo, a ordem de impetrar), a mora não pede avaliação
@@ -12656,8 +12656,9 @@ function itensAgendaTodos(){
     if(RX_NOV_DECISAO.test(txt) && !/conclus[oa]s? para/i.test(txt) && naoLeram.length && !(ultHumano.get(k.id) > String(a.criado_em||"")))
       por({data:chegou(), k, cli, novLer:a, selo:"Decisão", resumo:resumoAgenda(txt)}, naoLeram);
   }
-  // F292 · o prazo fatal avisa antes, no Meu Dia de quem já o tinha: a 5, a 2 e a 1 dia útil (Onda B do fluxo do To Do)
-  for(const it of out.filter(i=>i.fatal && i.data>hj)){
+  // F292 · o prazo fatal avisa antes, no Meu Dia de quem já o tinha: a 5, a 2 e a 1 dia útil (Onda B do fluxo do To Do);
+  // o recurso e a exigência também (teste 11.88, JUR-03), mesmo sem o "Concluir em" do To Do na mesma data
+  for(const it of out.filter(i=>(i.fatal || i.avisa) && i.data>hj)){
     const n = uteisAte(it.data);
     if(n===5 || n===2 || n===1) out.push({...it, data:hj, fatal:false, prazo:true, antes:it.data, selo:`Vence em ${n} dia${n>1?"s":""} út${n>1?"eis":"il"}`,
       resumo:`prazo fatal em ${fmt(it.data).slice(0,5)}: ${it.resumo||(it.k?tituloCaso(it.k):"")}`});
@@ -16973,11 +16974,16 @@ function metricasDash(col, dias){
     recebido: pgs.filter(p=>p.status==="recebido" && mesDe(p.pago_em)===m).reduce((s,p)=>s+Number(p.valor||0),0),
     previsto: pgs.filter(p=>mesDe(p.vencimento)===m).reduce((s,p)=>s+Number(p.valor||0),0)}));
   const atraso = p => Math.round((new Date(hj+"T12:00:00")-new Date(p.vencimento+"T12:00:00"))/864e5);
-  const aging = [["A vencer", p=>!p.vencimento || p.vencimento>=hj, "ok"],
-    ["Até 30 dias", p=>p.vencimento<hj && atraso(p)<=30, "aviso"],
-    ["31 a 90 dias", p=>p.vencimento<hj && atraso(p)>30 && atraso(p)<=90, "serio"],
-    ["Mais de 90 dias", p=>p.vencimento<hj && atraso(p)>90, "critico"]]
+  // teste 11.88, ADM-03: o critério do 💰 Recebimentos (a parcela sem valor é "a calcular", não atraso; a sem data não "vence")
+  const venceu = p => !pgSemValor(p) && p.vencimento && p.vencimento<hj;
+  const aging = [["A vencer", p=>!pgSemValor(p) && p.vencimento && p.vencimento>=hj, "ok"],
+    ["Até 30 dias", p=>venceu(p) && atraso(p)<=30, "aviso"],
+    ["31 a 90 dias", p=>venceu(p) && atraso(p)>30 && atraso(p)<=90, "serio"],
+    ["Mais de 90 dias", p=>venceu(p) && atraso(p)>90, "critico"],
+    ["Sem data", p=>!pgSemValor(p) && !p.vencimento, "ok"]]
     .map(([rot,f,tom])=>{ const l=abertos.filter(f); return {rot, tom, n:l.length, v:l.reduce((s,p)=>s+Number(p.valor||0),0)}; });
+  const nCalc = abertos.filter(pgSemValor).length;
+  if(nCalc) aging.push({rot:`A calcular (${nCalc})`, tom:"ok", n:nCalc, v:0});
   // benefícios
   const conc = D.casos.filter(k=>k.resultado==="deferido" && dataDoResultado(k));
   const concMes = m => conc.filter(k=>mesDe(dataDoResultado(k))===m).length;
@@ -21490,12 +21496,23 @@ async function confirmarRecebido(pgId){
   if(data>hoje()) return aviso("O dia do recebimento não pode ser futuro");
   if(sel && !casoId) return aviso("Diga de qual caso é este dinheiro");
   const corpo = {status:"recebido", pago_em:data, conferencias:[...(p.conferencias||[]),{c:eu.id,em:new Date().toISOString()}]};
+  // teste 11.88, ADM-01: o valor lançado de verdade que entrou a menos deixa o saldo a receber, em vez de sumir
+  const saldo = (pgEstimado(p) || pgSemValor(p)) ? 0 : Math.round((+p.valor - valor)*100)/100;
   if(+p.valor!==valor) corpo.valor = valor;
   if(notaPgto(p)) corpo.descricao = semNota(p.descricao);   // recebido, sai a conta da estimativa: vale o que entrou
   if(casoId) corpo.caso_id = casoId;
   try{ await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}); }
   catch(e){ return aviso("Não gravei o recebimento — tente de novo"); }
   Object.assign(p, corpo); fecharCaixa();
+  if(saldo > 0){
+    try{
+      const [r] = await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:p.caso_id, cliente_id:p.cliente_id, descricao:`${semNota(p.descricao)} · saldo`, valor:saldo,
+          vencimento:p.vencimento, status:"aberto", pago_em:null, conferencias:[]})});
+      if(r) D.pagamentos.push(r);
+      aviso(`Ficou o saldo de ${moeda(saldo)} a receber`, false);
+    }catch(e){ aviso(`Recebido, mas o saldo de ${moeda(saldo)} não foi lançado: lance-o à mão`); }
+  }
   await desligarLembreteCobranca(D.cliPorId.get(p.cliente_id || (D.casoPorId.get(p.caso_id)||{}).cliente_id), p.id);
   aviso("Recebido 💵 — você consta como quem recebeu");
   await correnteConferencia(casoDaParcela(p), `Pagamento de ${moeda(p.valor)} recebido em ${fmt(data)}`);
@@ -42072,7 +42089,7 @@ async function registrarMovimento(casoId, i){
   const muda = {};   // F291 · a anotação leva ⭐, mas a do caso só a pessoa acende (a fila de hoje, como no To Do)
   if(etapa && etapasDaFase(k).includes(etapa)) muda.etapa = etapa;
   if(efeito==="deferido" || efeito==="indeferido"){ muda.resultado = efeito; muda.decisao_em = data || hoje(); }
-  if(efeito==="exig"){ muda.exigencia_prazo = data || somaDias(hoje(), 30); muda.exigencia_descricao = det || "Exigência do INSS"; }
+  if(efeito==="exig"){ muda.exigencia_prazo = data || proxDiaUtil(somaDias(hoje(), 30)); muda.exigencia_descricao = det || "Exigência do INSS"; }
   if(efeito==="impl"){
     if(nb && nb!==soDig(k.nb||"") && !(k.nbs||[]).map(soDig).includes(nb)) Object.assign(muda, k.nb ? {nbs:[...(Array.isArray(k.nbs)?k.nbs:[]), nb]} : {nb});
     if(dib && !k.dib) muda.dib = dib;
@@ -42782,10 +42799,11 @@ function pintarFrase(){
   const el = document.getElementById("esc-frase");
   if(el) el.innerHTML = `Ao registrar: <b>${esc(fraseRegistro())}</b>`;
 }
+// pula também o feriado nacional e o do escritório (teste 11.88, JUR-02/04/05: 20/11 e 02/11 passavam)
 function proxDiaUtil(iso){
-  const d=new Date(iso+"T12:00:00");
-  while(d.getDay()===0||d.getDay()===6) d.setDate(d.getDate()+1);
-  return d.toLocaleDateString("sv");
+  let d = iso;
+  while(!ehDiaUtil(d)) d = somaDias(d, 1);
+  return d;
 }
 function maisDias(n){
   const d=new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+n);
@@ -49135,7 +49153,7 @@ let arCliSel=null, arLead=null, arNovo=null;
 // F290 · SUGESTÕES DA EQUIPE. Qualquer colaborador anota um erro, uma correção ou uma melhoria, com a tela
 // em que estava; somente o titular lê (RLS em schema_sugestoes.sql). Quem escreve não lê nem o que gravou,
 // por isso o POST vai com return=minimal
-// F312 · AJUDA (pedido do Paulo de 31.10.2026: "botões de ajuda em tudo para que o
+// F313 · AJUDA (pedido do Paulo de 31.10.2026: "botões de ajuda em tudo para que o
 // colaborador possa aprender a mexer"). O "?" ao lado do título da lista, o "? Ajuda"
 // fixo no canto e o "?" pequeno das barras e quadros abrem o texto do assunto, com a
 // lista de todos os assuntos no pé. Os textos moram em AJUDA; os lugares, em AJUDA_ALVOS.

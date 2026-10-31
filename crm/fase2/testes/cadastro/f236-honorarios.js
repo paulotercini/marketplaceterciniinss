@@ -257,6 +257,16 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("“o valor está certo” devolve o lançamento aos totais (campos.valor_conferido)",
     await p.evaluate(([e, c]) => !valorSuspeito(D.pagamentos.find(x => x.id === e)) && D.cliPorId.get(c).campos.valor_conferido[e] === 6200000, [id("e", 4), CV]));
 
+  // ── teste 11.88, ADM-01: recebido a menos do valor lançado deixa o saldo a receber ──
+  await p.evaluate(e => receberPgto(e), id("e", 6));
+  await p.waitForSelector("#rc-valor");
+  await p.evaluate(() => { document.getElementById("rc-valor").value = "300"; });
+  await p.click('#modal button:has-text("Confirmar")');
+  await p.waitForTimeout(800);
+  const e6 = T.pagamentos.find(x => x.id === id("e", 6)), sd = T.pagamentos.find(x => x.caso_id === KR && /parcela 1\/2 · saldo/.test(x.descricao));
+  conf("recebido a menos (R$ 300 de R$ 800) grava o que entrou e lança o saldo de R$ 500 a receber, no mesmo vencimento",
+    e6.status === "recebido" && +e6.valor === 300 && sd && +sd.valor === 500 && sd.status === "aberto" && sd.vencimento === dia(25) && sd.cliente_id === CR);
+
   conf("sem erro de página", !p._erros.length);
   if (p._erros.length) console.log(p._erros.join("\n"));
   const bons = ok.filter(x => x[1]).length;
