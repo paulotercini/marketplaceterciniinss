@@ -1,7 +1,7 @@
-// F324 · a tela Prazos (31.10.2026, desenho aprovado pelo Paulo): a aba Prazos do cliente com o próximo prazo fatal no
+// F326 · a tela Prazos (31.10.2026, desenho aprovado pelo Paulo): a aba Prazos do cliente com o próximo prazo fatal no
 // alto, a janela do prazo (por cima da aba, com o véu; no celular, tela cheia), o prazo na anotação (viva, cumprindo,
 // cumprida, vencida sem registro) e o campo de escrever com o catálogo, quem faz e quem revisa. Banco simulado, dados fictícios.
-// Uso: node f324.js [pasta-das-fotos]
+// Uso: node f326.js [pasta-das-fotos]
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
@@ -9,7 +9,7 @@ const path = require("path");
 const { FIX, SESSAO } = require("./fixturas");
 const { Banco, instalarBanco } = require("./banco-simulado");
 const SUPA = "https://ficticio.supabase.co";
-const OUT = process.argv[2] || "/tmp/f324";
+const OUT = process.argv[2] || "/tmp/f326";
 fs.mkdirSync(OUT, { recursive: true });
 
 const PAULO = FIX.colaboradores[0].id, MARCOS = "22222222-2222-2222-2222-222222222222";
