@@ -5729,7 +5729,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.94</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.95</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12653,7 +12653,7 @@ function renderAcervo(){
   document.getElementById("sub-lista").textContent =
     "O trabalho sem data marcada: rotina, conferências e processos parados. Nada aqui vence hoje.";
   const corpo = blocoRotinas() + blocoCrpsManual() + blocoCadunico()
-    + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoSemCpf();
+    + blocoCardsPagamento() + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoSemCpf();
   document.getElementById("conteudo-meio").innerHTML = corpo
     || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
@@ -12815,6 +12815,14 @@ function itensAgendaTodos(){
     const gq = gracaDoCliente(cli); if(!gq) continue;
     por({data:somaDias(gq.perda, -30), cli, prazo:true, selo:"Qualidade",
       resumo:`a qualidade de segurado se perde em ${fmt(gq.perda)}: avaliar o recolhimento`}, advogadoDoCliente(cli.id));
+  }
+  // P2 · o vencimento de cada plano de contribuições: a recepção confere se o cliente pagou (sem recepção, o advogado)
+  const recepQ = equipeAtiva().filter(c=>c.cargo==="recepcao").map(c=>c.id);
+  for(const q of (D.qualidade||[])){
+    if(q.ativo===false) continue;
+    const cli = D.cliPorId.get(q.cliente_id), px = cli && qualidadeProximos(q, 1)[0];
+    if(px) por({data:px, cli, selo:"Contribuição", resumo:`pagar até ${fmt(px)}: ${qualGuia(q)}${q.valor ? ` de ${qualValor(q.valor)}` : ""} (${qualFim(q).toLowerCase()})`},
+      recepQ.length ? recepQ : advogadoDoCliente(q.cliente_id));
   }
   // F236 · o card de aposentadoria tem dono: o responsável dele ou o advogado do cliente. Com o direito
   // já alcançado e sem caso, cobra todo dia, na data do direito, até virar caso ou ser arquivado
@@ -33976,6 +33984,23 @@ const QUAL_MODOS = {seis_semestral:"Pagar 6 meses e depois uma vez a cada 6 mese
   semestral:"Pagar uma vez a cada 6 meses", anual:"Pagar uma vez a cada 12 meses", caso_a_caso:"Outra forma"};
 const QUAL_CODIGOS = () => [["MEI","MEI (DAS)"], ...GPS_CATEGORIAS.map(([v,r])=>[v,`${v} — ${r}`]), ["outro","Outro"]];
 function qualidadeDe(cliId){ return (D.qualidade||[]).filter(q=>q.cliente_id===cliId && q.ativo!==false); }
+// P2 (prazos, 31.10.2026) · para que serve o pagamento: o plano deixou de ser só da qualidade de segurado
+const QUAL_FIM = {qualidade:"Manter a qualidade de segurado", carencia:"Completar a carência", aposentadoria:"Alcançar a aposentadoria",
+  complementacao:"Complementar competências abaixo do mínimo", indenizacao:"Indenizar período em atraso"};
+const qualFim = q => QUAL_FIM[q.finalidade] || QUAL_FIM.qualidade;
+// o texto do card das Aposentadorias futuras que fala em pagar o INSS ("tempo de contribuição" é o nome da espécie, e não pagamento)
+const RX_PAGAR_CARD = /\bgps\b|\bguia\b|carn[eê]|recolh|\bpagar\b|pagando|\bpague\b|voltar a contribuir|\bcontribuir\b|contribui[cç][oõ]es|\bdas\b|facultativ|complementa|indeniza/i;
+function trechosDePagamento(l){
+  const d = l.detalhes||{}, tx = [l.titulo, ...((d.checklist||[]).map(x=>x && (x.texto||x))), ...((d.anotacoes||[]).map(x=>x && (x.texto||x)))];
+  return tx.map(t=>String(t||"").replace(/tempo de contribui[cç][aã]o/gi, "TC")).filter(t=>RX_PAGAR_CARD.test(t))
+    .map(t=>t.replace(/\bTC\b/g, "tempo de contribuição").replace(/\s+/g, " ").trim());
+}
+// a sugestão do plano lida do trecho: o código da guia e a primeira competência ("a partir de 07/2026")
+function sugestaoDoTrecho(t){
+  const cod = (String(t).match(/\b(1007|1163|1406|1473|1929|1287|1236)\b/)||[])[1] || (/\bmei\b|\bdas\b/i.test(t) ? "MEI" : "");
+  const m = String(t).match(/(?:a partir d[aeo]|compet[eê]ncia(?: de)?|desde)\D{0,12}(\d{1,2})\/(\d{4})/i);
+  return {codigo:cod, inicio: m ? `${m[2]}-${m[1].padStart(2,"0")}` : ""};
+}
 // o mês de pagamento ('AAAA-MM'), a mesma conta do banco (qualidade_paga_no_mes): conta do mês do primeiro vencimento
 // (pagar_ate; nos planos da primeira versão, o início)
 function qualidadePagaNoMes(q, ym){
@@ -34021,7 +34046,7 @@ function blocoManutencao(c, onde){
     : onde==="analise" ? "O parecer: como o cliente paga o INSS para não perder a qualidade de segurado. Fica no cadastro dele, com o aviso pelo WhatsApp."
     : onde==="doc" ? "A folha para entregar ao cliente, com a guia, o valor e o calendário." : "";
   return `<div class="mq-bloco">${qs.length ? qs.map(q=>`<div class="mq-plano"><b>${esc(qualResumo(q))}</b>
-      <small>${q.aviso_zap ? "WhatsApp automático ligado" : "sem aviso pelo WhatsApp"}${q.fim ? ` · até ${fmtBarra(String(q.fim).slice(0,10))}` : ""}${q.motivo ? ` · ${esc(q.motivo)}` : ""}</small>
+      <small>${esc(qualFim(q))} · ${q.aviso_zap ? "WhatsApp automático ligado" : "sem aviso pelo WhatsApp"}${q.fim ? ` · até ${fmtBarra(String(q.fim).slice(0,10))}` : ""}${q.motivo ? ` · ${esc(q.motivo)}` : ""}</small>
       <span class="mq-bts"><button type="button" class="btn-mini" onclick="verQualidade('${c.id}')">Abrir</button>
       ${onde==="doc" || onde==="analise" ? `<button type="button" class="btn-mini" onclick="imprimirQualidade('${c.id}','${q.id}')">Imprimir para o cliente</button>` : ""}</span></div>`).join("")
     : `${intro ? `<p class="meio-sub">${intro}</p>` : `<p class="meio-sub">Nenhum plano de pagamento.</p>`}
@@ -34029,16 +34054,20 @@ function blocoManutencao(c, onde){
 }
 function caixaQualidade(c){
   return `<section class="idf-card idf-qual" aria-labelledby="idf-qual">
-    <h3 class="adr-h" id="idf-qual">Manutenção da qualidade${qualidadeDe(c.id).length ? `<button type="button" class="cad-mini ac-mais" onclick="formQualidade('${c.id}','','')" title="outro plano" aria-label="acrescentar plano">${CAD_IC.mais}</button>` : ""}</h3>
+    <h3 class="adr-h" id="idf-qual">Contribuições a pagar${qualidadeDe(c.id).length ? `<button type="button" class="cad-mini ac-mais" onclick="formQualidade('${c.id}','','')" title="outro plano" aria-label="acrescentar plano">${CAD_IC.mais}</button>` : ""}</h3>
     ${blocoManutencao(c, "")}</section>`;
 }
 function quadroManutencaoDoc(c){
-  return `<section class="doc-quadro" id="dq-qualidade"><div class="rotulo-caso">Manutenção da Qualidade de Segurado</div>${blocoManutencao(c, "doc")}</section>`;
+  return `<section class="doc-quadro" id="dq-qualidade"><div class="rotulo-caso">Contribuições a pagar</div>${blocoManutencao(c, "doc")}</section>`;
 }
-function formQualidade(cliId, id, onde){
-  const q = (D.qualidade||[]).find(x=>x.id===id) || {modalidade:"seis_semestral", codigo:"MEI", inicio:hoje(), aviso_zap:true, meses:[]};
-  caixa(`<div class="mq-modal" role="dialog" aria-labelledby="mq-t"><h3 id="mq-t">Manutenção da Qualidade de Segurado</h3>
+let _qPre = null;   // P2 · o plano que nasce de um card: o card e a sugestão lida do texto dele
+function formQualidade(cliId, id, onde, pre){
+  _qPre = id ? null : (pre||null);
+  const q = (D.qualidade||[]).find(x=>x.id===id) || {modalidade:"seis_semestral", codigo:"MEI", inicio:hoje(), aviso_zap:true, meses:[], finalidade: pre && pre.lembrete_id ? "aposentadoria" : "qualidade", ...((pre||{}).q||{})};
+  caixa(`<div class="mq-modal" role="dialog" aria-labelledby="mq-t"><h3 id="mq-t">Contribuições a pagar</h3>
+    ${pre && pre.trecho ? `<p class="meio-sub mq-trecho">Do card: “${esc(pre.trecho)}”</p>` : ""}
     <div class="mq-form">
+      <label class="mq-largo">Para quê <select id="mq-fim-de">${Object.entries(QUAL_FIM).map(([v,r])=>`<option value="${v}"${(q.finalidade||"qualidade")===v?" selected":""}>${esc(r)}</option>`).join("")}</select></label>
       <label class="mq-largo">Como paga <select id="mq-mod" onchange="document.getElementById('mq-meses-l').hidden=this.value!=='caso_a_caso'">${Object.entries(QUAL_MODOS).map(([v,r])=>`<option value="${v}"${q.modalidade===v?" selected":""}>${r}</option>`).join("")}</select></label>
       <label>Guia <select id="mq-cod">${QUAL_CODIGOS().map(([v,r])=>`<option value="${v}"${q.codigo===v?" selected":""}>${esc(r)}</option>`).join("")}</select></label>
       <label>Valor (R$) <input id="mq-valor" type="number" step="0.01" min="0" value="${q.valor==null?"":esc(String(q.valor))}"></label>
@@ -34064,13 +34093,14 @@ async function salvarQualidade(cliId, id, onde){
   const c = D.cliPorId.get(cliId), an = onde==="analise" && c ? (analisesDaVez(c)[0]||null) : null;
   const corpo = {cliente_id:cliId, modalidade:mod, codigo:v("mq-cod")||null, valor:v("mq-valor") ? Number(v("mq-valor")) : null, dia:+ate.slice(8,10), pagar_ate:ate,
     inicio:`${ini}-01`, fim: fim ? `${fim}-28` : null, meses: mod==="caso_a_caso" ? meses : [], motivo:v("mq-mot")||null,
-    aviso_zap:!!(document.getElementById("mq-zap")||{}).checked, ativo:true, ...(an ? {analise_id:an.id} : {})};
+    aviso_zap:!!(document.getElementById("mq-zap")||{}).checked, ativo:true, ...(an ? {analise_id:an.id} : {}),
+    finalidade: v("mq-fim-de") || "qualidade", ...(_qPre && _qPre.lembrete_id ? {lembrete_id:_qPre.lembrete_id} : {})};
   try{
     if(id){ await api(`/rest/v1/qualidade_planos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(corpo)});
       Object.assign((D.qualidade||[]).find(x=>x.id===id)||{}, corpo); }
     else { const [q] = await api(`/rest/v1/qualidade_planos`,{method:"POST",headers:{Prefer:"return=representation"},body:JSON.stringify(corpo)});
       if(q) (D.qualidade = D.qualidade||[]).push(q); }
-  }catch(e){ return aviso(/qualidade_planos|pagar_ate|modalidade_check|42P01|42703|PGRST20[45]/.test(String(e.message||e)) ? "Rode o crm/fase2/schema_qualidade.sql no Supabase (a versão nova)" : "Não consegui guardar o plano — tente de novo"); }
+  }catch(e){ return aviso(/qualidade_planos|pagar_ate|finalidade|lembrete_id|modalidade_check|42P01|42703|PGRST20[45]/.test(String(e.message||e)) ? "Rode o crm/fase2/schema_qualidade.sql no Supabase (a versão nova)" : "Não consegui guardar o plano — tente de novo"); }
   fecharCaixa(); aviso(corpo.aviso_zap ? "Plano guardado: o WhatsApp lembra o cliente no primeiro dia útil do mês de cada pagamento" : "Plano guardado", false);
   if(clienteAberto) repintarFicha();
 }
@@ -34093,7 +34123,7 @@ async function verQualidade(cliId){
   const qs = qualidadeDe(cliId);
   let env = [];
   try{ if(qs.length) env = await api(`/rest/v1/zap_mensagens?select=aviso_ref,aviso_chave,criado_em,status&aviso_ref=in.(${qs.map(q=>q.id).join(",")})&aviso_chave=like.qualidade*&order=criado_em.desc`) || []; }catch(e){}
-  caixa(`<div class="mq-modal"><h3>Manutenção da Qualidade de Segurado · ${esc(String(c.nome||"").split(" ")[0])}</h3>
+  caixa(`<div class="mq-modal"><h3>Contribuições a pagar · ${esc(String(c.nome||"").split(" ")[0])}</h3>
     ${qs.map(q=>`<section class="mq-sec"><b>${esc(qualResumo(q))}</b>${q.motivo ? `<p class="meio-sub">${esc(q.motivo)}</p>` : ""}
       <label class="cfg-ck"><input type="checkbox"${q.aviso_zap?" checked":""} onchange="alternarZapQualidade('${q.id}',this.checked)"> WhatsApp automático no primeiro dia útil do mês de cada pagamento</label>
       <div class="rotulo-caso">Próximos pagamentos</div>${(px=>px.length ? `<ul class="mq-cal">${px.map(d=>`<li><span>pagar até <b>${fmtBarra(d)}</b></span>${q.aviso_zap ? `<small>aviso em ${fmtBarra(qualidadeAviso(d))}</small>` : ""}</li>`).join("")}</ul>` : `<p class="meio-sub">nenhum</p>`)(qualidadeProximos(q, 6))}
@@ -35747,6 +35777,15 @@ function linhasDeDatas(cliId){
     rot:`<b>A qualidade de segurado se mantém até ${fmt(gq.mantidaAte)} e se perde em ${fmt(gq.perda)}</b>
          <small class="qd-de">${gq.base} meses a partir de ${esc(gq.ultima||"")} (Lei 8.213/91, art. 15), pelo CNIS lido na triagem. Um recolhimento a tempo ou um vínculo novo mantém a qualidade</small>`,
     edita:"", acao:""});
+  // P2 · o próximo pagamento de cada plano de contribuições
+  for(const q of qualidadeDe(cliId)){
+    const px = qualidadeProximos(q, 1)[0]; if(!px) continue;
+    linhas.push({data:px, ico:"🧾", natureza:"lembrete", cru:true, rotulo:"Contribuição a pagar", curto:"Contribuição: pagar até",
+      resumo:`${qualGuia(q)}${q.valor ? ` · ${qualValor(q.valor)}` : ""}`,
+      rot:`<b>Pagar até ${fmt(px)}: ${esc(qualGuia(q))}${q.valor ? `, ${esc(qualValor(q.valor))}` : ""}</b>
+           <small class="qd-de">${esc(qualFim(q))}${q.motivo ? ` · ${esc(q.motivo)}` : ""}${q.aviso_zap ? " · o WhatsApp lembra o cliente no primeiro dia útil do mês" : ""}</small>`,
+      edita:"", acao:`<button class="btn-mini" onclick="verQualidade('${cliId}')">Abrir</button>`});
+  }
   const ksCli = (D.casosDoCliente.get(cliId))||[];
   try{ for(const {ca, dec, ate} of decadenciasDoCliente(cliId)){
     const d = soDig(ca.nb), kd = d ? ksCli.find(k=>k.fase!=="encerrado" && nbsDoCaso(k).some(x=>soDig(x)===d)) : null;
@@ -44715,6 +44754,34 @@ function blocoVariosCasos(){
   </details>`;
 }
 // F254 · os cadastros sem CPF, em três grupos: o que não parece cliente vem marcado; o Paulo confirma e eles saem da lista
+// P2 (prazos, 31.10.2026) · os cards das Aposentadorias futuras que trazem o pagamento escrito no texto: um clique cria o
+// plano de contribuições com a sugestão lida do texto, ou marca que o trecho não é pagamento (lembretes.crm.sem_plano)
+function cardsComPagamento(){
+  const comPlano = new Set((D.qualidade||[]).filter(q=>q.lembrete_id).map(q=>q.lembrete_id));
+  return (D.lembretes||[]).filter(l=>l.ativo!==false && ehCardApos(l) && cardVivo(l) && !comPlano.has(l.id) && !cardCrm(l).sem_plano)
+    .map(l=>({l, cli:D.cliPorId.get(l.cliente_id), tr:trechosDePagamento(l)})).filter(x=>x.cli && x.tr.length)
+    .sort((a, b)=>dsa(a.cli.nome).localeCompare(dsa(b.cli.nome)));
+}
+function blocoCardsPagamento(){
+  if(D.qualidade===null) return "";
+  const xs = cardsComPagamento(); if(!xs.length) return "";
+  return `<details class="sem-acao neutro" id="acervo-cardspg"><summary>Cards com pagamento a separar (${xs.length}) — o pagamento escrito no card vira plano de contribuições</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">O plano lembra o cliente pelo WhatsApp e entra nos Prazos e no Meu Dia. A sugestão vem do texto do card; confira antes de guardar.</p>
+    ${xs.slice(0, 60).map(({l, cli, tr})=>`<div class="semcpf-it cardpg" data-lemb="${l.id}"><b class="semcpf-nome" style="cursor:pointer" onclick="abrirFicha('${cli.id}')">${esc(cli.nome)}</b>
+      <span class="meio-sub">${esc(cortaFrase(tr.join(" · "), 220))}</span>
+      <span><button class="btn-mini forte" onclick="planoDoCard('${l.id}')">Criar o plano</button>
+      <button class="btn-mini" onclick="cardSemPlano('${l.id}')">Não é pagamento</button></span></div>`).join("")}
+    ${xs.length>60 ? `<p class="meio-sub">e mais ${xs.length-60}; os primeiros saem da lista ao serem resolvidos.</p>` : ""}
+  </details>`;
+}
+function planoDoCard(lid){
+  const l = (D.lembretes||[]).find(x=>x.id===lid); if(!l) return;
+  const tr = trechosDePagamento(l)[0] || "", sg = sugestaoDoTrecho(trechosDePagamento(l).join(" "));
+  formQualidade(l.cliente_id, "", "", {lembrete_id:lid, trecho:tr, q:{...(sg.codigo ? {codigo:sg.codigo} : {}), ...(sg.inicio ? {inicio:sg.inicio+"-01"} : {}), motivo:cortaFrase(tr, 200)}});
+}
+async function cardSemPlano(lid){
+  if(await cardGravar(lid, c=>{ c.sem_plano = true; })){ aviso("O card saiu da fila", false); render(); }
+}
 function blocoSemCpf(){
   if(!souAdmin()) return "";
   const sem = (D.clientes||[]).filter(c=>c.nome && String(c.cpf||"").replace(/\D/g,"").length!==11 && !(c.campos||{}).e_cliente)
