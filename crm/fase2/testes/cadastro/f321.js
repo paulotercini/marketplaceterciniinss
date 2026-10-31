@@ -95,6 +95,16 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     lerDatasDoJulgado("em 6 de março de 2015 (DER), deu entrada"), lerDatasDoJulgado("DER: 01/01/2019 e a reafirmação da DER 01/06/2020"),
     lerDatasDoJulgado("em que se der a aposentadoria 10/10/2010")]);
   conf("o leitor do julgado só aceita a data rotulada e única", lidos[0].der === "2010-11-22" && lidos[1].der === "2015-03-06" && !lidos[2].der && !lidos[3].der);
+  // F321c · o lote do Cuidar do acervo preenche sem a ficha aberta
+  await p.evaluate(id => { const k = D.casoPorId.get(id); k.dib = null; fecharFicha(false); }, CASO1);
+  T.casos.find(k => k.id === CASO1).dib = null;
+  await p.evaluate(() => preencherQuadrosTodos());
+  await p.waitForFunction(() => /gravado/.test((document.getElementById("qd-lote-st") || {}).textContent || ""), null, { timeout: 15000 }).catch(() => {});
+  const stLote = await p.evaluate(() => (document.getElementById("qd-lote-st") || {}).textContent || "");
+  conf("o lote do acervo preenche a DIB vazia e diz quantos", T.casos.find(k => k.id === CASO1).dib === "2026-01-12" && /dado\(s\) gravado/.test(stLote));
+  await p.evaluate(() => document.getElementById("qd-lote-desf").click());
+  await p.waitForFunction(() => /Desfeito/.test(document.getElementById("qd-lote-st").textContent), null, { timeout: 5000 }).catch(() => {});
+  conf("o desfazer do lote volta o campo", T.casos.find(k => k.id === CASO1).dib === null);
   conf("sem erro de página", !p._erros.length);
   if (p._erros.length) console.log(p._erros.join("\n"));
   const bons = ok.filter(x => x[1]).length;
