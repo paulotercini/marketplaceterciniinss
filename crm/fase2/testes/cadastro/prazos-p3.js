@@ -90,7 +90,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.evaluate(kid => { casoSel = kid; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); }, kA1.id);
   await p.waitForTimeout(300);
   const link = await p.$(".fp-outros");
-  conf("o quadro Prazos do caso avisa as datas dos outros casos", link && /\+1 em outros casos/.test(await link.textContent()));
+  conf("o quadro Prazos do caso avisa as datas dos outros casos", link && /Outros casos do cliente: 1 data/.test(await link.evaluate(b => b.closest(".fp3-out").textContent)));
   if (link) { await link.click(); await p.waitForSelector(".pz-cli"); }
   conf("o link abre a aba Prazos", await p.evaluate(() => abaAtiva === 5));
 

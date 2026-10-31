@@ -101,8 +101,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click(".tr-alca-et"); await p.waitForTimeout(300);
   conf("recolher etapas volta à linha do resumo", await p.evaluate(() => !!document.querySelector(".tr-faixa.tr-fechada") && !localStorage.getItem("crm_etapas")));
   const col = await p.evaluate(() => { const e = document.querySelector(".caso-esq:not(.caso-pz)").getBoundingClientRect(), pz = document.querySelector(".caso-pz").getBoundingClientRect(), d = document.querySelector(".caso-dir").getBoundingClientRect();
-    return { e: e.right <= d.left + 1, pz: pz.top >= e.bottom - 1 && pz.right <= d.left + 1 }; });
-  conf("duas colunas: o cartão e os prazos à esquerda, os andamentos à direita", col.e && col.pz);
+    return { e: e.right <= d.left + 1, pz: pz.bottom <= e.top + 1 && pz.right <= d.left + 1 }; });
+  conf("duas colunas: os prazos acima do cartão, à esquerda, e os andamentos à direita (F331)", col.e && col.pz);
   conf("a segunda linha do cabeçalho traz os dados, o advogado e a situação", await p.evaluate(() => { const l = document.querySelector(".det-topo .linha2"); return !!(l && l.querySelector(".resumo-lado") && l.querySelector(".cli-adv") && l.querySelector(".cli-st")); }));
   await p.screenshot({ path: OUT + "/ficha.png" });
   // F325 · a Fila na coluna estreita: cada valor numa peça só, em texto corrido, e a tramitação sem reticências
