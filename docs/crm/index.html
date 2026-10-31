@@ -2076,7 +2076,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   /* F259 · o acabamento do WhatsApp (ideia do Kapso): fundo bege, balão branco
      de quem escreve e verde do escritório, sem borda. Nota interna, agendada,
      rascunho e falha mantêm o seu desenho. Volta ao anterior nas Configurações. */
-  .zap-tela.wa .zap-msgs{background:#efeae2}
+  .zap-tela.wa .zap-msgs{background:#efeae2 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' fill='none' stroke='%23000' stroke-opacity='.06' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M14 18h20a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H22l-6 5v-5h-2a4 4 0 0 1-4-4V22a4 4 0 0 1 4-4z'/%3E%3Ccircle cx='82' cy='22' r='7'/%3E%3Cpath d='M76 70l4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z'/%3E%3Cpath d='M22 78c4-6 10-6 14 0s10 6 14 0'/%3E%3Cpath d='M96 52l8 8m0-8l-8 8'/%3E%3Crect x='88' y='92' width='16' height='12' rx='2'/%3E%3Cpath d='M40 102a6 6 0 1 1 12 0'/%3E%3Cpath d='M60 34l6 6 10-12'/%3E%3C/svg%3E") repeat}
   .zap-tela.wa .zap-b:not(.interna):not(.agendada):not(.rascunho):not(.ruim){background:#fff;border-color:transparent;
     box-shadow:0 1px .5px rgba(11,20,26,.13);border-radius:8px;border-top-left-radius:0}
   .zap-tela.wa .zap-b.saida:not(.interna):not(.agendada):not(.rascunho):not(.ruim){background:#d9fdd3;
@@ -2102,6 +2102,13 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-tela.wa .zap-conv .bolha{background:#25d366;color:#fff;border-radius:10px;min-width:20px;text-align:center}
   .zap-tela.wa .zap-conv.nova .l1 .hora{color:#1fa855;font-weight:600}
   .zap-tela.wa .zap-conv.nova .l1 b{color:inherit}
+  /* F324 · menu de segurar o balão */
+  .zm-emojis{display:flex;justify-content:space-between;gap:4px;background:#fff;border-radius:24px;padding:6px 8px;box-shadow:0 1px 3px rgba(11,20,26,.2);margin-bottom:10px}
+  .zm-emojis button{font-size:24px;line-height:1;width:40px;height:40px;border:0;border-radius:50%;background:transparent;cursor:pointer}
+  .zm-emojis button.on{background:#e9edef}
+  .zm-acoes{display:flex;flex-direction:column}
+  .zm-acoes button{text-align:left;padding:12px 8px;border:0;border-top:1px solid #e9edef;background:transparent;font-size:15px;cursor:pointer}
+  .zm-acoes button:first-child{border-top:0}
   /* 29.10.2026 · a lista sem letra sobre letra, também na coluna estreita (~290 px) e no celular: a fila mostra o número
      embaixo do nome, os filtros ficam numa linha que rola de lado, e a linha do nome leva só o nome e a hora (o advogado
      desce para a linha de baixo) */
@@ -5645,12 +5652,12 @@ html[data-tema="v10"] .linha-caso .lc-prot .lc-num,html[data-tema="v10"] .linha-
 html[data-tema="v10"] .caso-esq .linha-caso .lc-tram-link{font-size:13px}
 html[data-tema="v10"] .caso-esq .lc-placa>.lc-prot>:is(.lc-num,.lc-copiar){flex:none;white-space:nowrap;overflow-wrap:normal}
 html[data-tema="v10"] .caso-esq .lc-placa>.lc-f>.lc-tram-link{flex:0 1 auto;min-width:0;white-space:normal;overflow-wrap:anywhere;display:inline}
-/* F321 · a Fila na coluna estreita: rótulo à esquerda e os valores em texto corrido, que quebra inteiro (pedido do Paulo, 31.10.2026) */
+/* F325 · a Fila na coluna estreita: rótulo à esquerda e os valores em texto corrido, que quebra inteiro (pedido do Paulo, 31.10.2026) */
 html[data-tema="v10"] .caso-esq .lc-placa>.lc-f:has(.lc-fila){display:block;padding-left:106px;line-height:1.45}
 html[data-tema="v10"] .app:not(.celular) .caso-esq .lc-placa>.lc-f:has(.lc-fila){padding-left:92px}
 html[data-tema="v10"] .caso-esq .lc-placa>.lc-f:has(.lc-fila)>.lc-k{position:absolute;left:0;top:0}
 html[data-tema="v10"] .caso-esq .lc-placa>.lc-f:has(.lc-fila)>:not(.lc-k){display:inline-block;white-space:nowrap;margin-right:6px}
-/* F321 · a inicial de quem responde ou escreveu é quadrada em todo o CRM, como na linha das listas (pedido do Paulo, 31.10.2026); a foto do WhatsApp segue redonda */
+/* F325 · a inicial de quem responde ou escreveu é quadrada em todo o CRM, como na linha das listas (pedido do Paulo, 31.10.2026); a foto do WhatsApp segue redonda */
 html[data-tema="v10"] :is(.avatar:not(img),.visto-av,.fx-av,.eq-ini){border-radius:25%}
 html[data-tema="v10"] .app:not(.celular) .caso-3col > .caso-esq,html[data-tema="v10"] .app:not(.celular) .caso-3col .linha-caso{min-width:0}
 html[data-tema="v10"] .app:not(.celular) .caso-esq .lc-placa>.lc-f{gap:10px}html[data-tema="v10"] .app:not(.celular) .caso-esq .lc-placa>.lc-f>.lc-k{width:82px}
@@ -14717,6 +14724,8 @@ function quemConversa(){
   };
 }
 
+const PREVIA_TIPO = {audio:"🎤 Áudio", imagem:"📷 Foto", video:"🎥 Vídeo", documento:"📄 Documento", figurinha:"Figurinha"};
+const previaZap = t => { const k = /^\[(\w+)\]$/.exec(String(t||"").trim()); return k && PREVIA_TIPO[k[1]] || t || ""; };
 function cartaoConversa(c){
   const at = c.atendente_id && D.colPorId.get(c.atendente_id);
   const cli = c.cliente_id && D.cliPorId.get(c.cliente_id);
@@ -14728,7 +14737,7 @@ function cartaoConversa(c){
     <div class="zc-corpo">
       <div class="l1"><b>${esc(nomeDaConversa(c))}</b>
         <span class="hora">${c.ultima_em?quandoFalou(c.ultima_em):""}</span></div>
-      <div class="l2">${esc((c.ultimo_texto||"").slice(0,80))}</div>
+      <div class="l2">${esc(previaZap(c.ultimo_texto).slice(0,80))}</div>
       <div class="l3">
         ${advDaConversa(c)?`<span class="zc-adv" title="advogado responsável: ${esc(advDaConversa(c))}">${esc(advDaConversa(c).split(" ")[0])}</span>`:""}
         ${s?`<span class="zc-setor"><i style="background:${esc(s.cor)}"></i>${esc(s.nome)}</span>`:""}
@@ -15550,17 +15559,20 @@ let zapArrasto = null;
 document.addEventListener("touchstart", e=>{
   const b = e.target.closest("#zap-msgs .zap-b");
   if(!b || !b.querySelector('[onclick^="responderMsg"]') || e.touches.length>1) return;
-  zapArrasto = {b, x:e.touches[0].clientX, y:e.touches[0].clientY, dx:0};
+  zapArrasto = {b, x:e.touches[0].clientX, y:e.touches[0].clientY, dx:0,
+    seg: setTimeout(()=>{ if(zapArrasto && zapArrasto.b===b && zapArrasto.dx<8){ zapArrasto = null; b.style.transform = ""; menuBalaoZap(b.id.slice(3)); } }, 500)};
 }, {passive:true});
 document.addEventListener("touchmove", e=>{
   const z = zapArrasto; if(!z) return;
   const dx = e.touches[0].clientX - z.x, dy = e.touches[0].clientY - z.y;
+  if(Math.abs(dx) > 8 || Math.abs(dy) > 8) clearTimeout(z.seg);   // dedo que anda não é segurar
   if(!z.dx && Math.abs(dy) > Math.abs(dx)){ zapArrasto = null; return; }   // rolar a conversa não é responder
   z.dx = Math.max(0, dx);
   z.b.style.transition = "none"; z.b.style.transform = `translateX(${Math.min(z.dx, 80)}px)`;
 }, {passive:true});
 document.addEventListener("touchend", ()=>{
   const z = zapArrasto; zapArrasto = null; if(!z) return;
+  clearTimeout(z.seg);
   z.b.style.transition = ""; z.b.style.transform = "";
   if(z.dx > 60) responderMsg(z.b.id.slice(3));
 });
@@ -15572,12 +15584,38 @@ function reagirMsg(id){
   caixa(`<h3>Reagir</h3><div class="form-linha" style="font-size:22px">${EMOJIS_ZAP.map(e=>
       `<button class="btn-mini" style="font-size:20px" data-zr="${e}">${e}</button>`).join("")}
     ${minha?`<button class="btn-mini" data-zr="">tirar reação</button>`:""}</div>`);
-  document.querySelectorAll("[data-zr]").forEach(b=>b.onclick=async()=>{
-    fecharCaixa();
-    await api(`/rest/v1/zap_reacoes?on_conflict=mensagem_id,de`,{method:"POST",
-      headers:{Prefer:"resolution=merge-duplicates,return=minimal"},
-      body:JSON.stringify({mensagem_id:id, de:"escritorio", autor_id:eu.id, emoji:b.dataset.zr, status:"fila"})});
-    await carregarReacoes(); pintarConversaGuardando();
+  document.querySelectorAll("[data-zr]").forEach(b=>b.onclick=()=>reagirCom(id, b.dataset.zr));
+}
+async function reagirCom(id, emoji){
+  fecharCaixa();
+  await api(`/rest/v1/zap_reacoes?on_conflict=mensagem_id,de`,{method:"POST",
+    headers:{Prefer:"resolution=merge-duplicates,return=minimal"},
+    body:JSON.stringify({mensagem_id:id, de:"escritorio", autor_id:eu.id, emoji, status:"fila"})});
+  await carregarReacoes(); pintarConversaGuardando();
+}
+// F324 · tocar e segurar o balão abre, como no aplicativo, a fileira de emojis e as ações dele
+function menuBalaoZap(id){
+  const m = zapMsgs.find(x=>x.id===id); if(!m) return;
+  const b = document.getElementById("zb-"+id);
+  const tem = sel => b && b.querySelector(sel);
+  const minha = (zapReacoes.get(id)||[]).find(r=>r.de==="escritorio");
+  caixa(`<div class="zm-emojis" role="group" aria-label="Reagir">${EMOJIS_ZAP.map(e=>
+      `<button class="${minha&&minha.emoji===e?"on":""}" data-zm-r="${e}" aria-label="Reagir com ${e}">${e}</button>`).join("")}</div>
+    <div class="zm-acoes" role="menu">
+      ${tem('[onclick^="responderMsg"]')?`<button role="menuitem" data-zm="r">↩ Responder</button>`:""}
+      ${m.texto?`<button role="menuitem" data-zm="c">Copiar</button>`:""}
+      ${tem('[onclick^="encaminharMsg"]')?`<button role="menuitem" data-zm="e">↪ Encaminhar</button>`:""}
+      ${tem('[onclick^="virarAndamento"]')?`<button role="menuitem" data-zm="a">Registrar como andamento</button>`:""}
+      ${minha?`<button role="menuitem" data-zm="x">Tirar reação</button>`:""}
+    </div>`);
+  document.querySelectorAll("[data-zm-r]").forEach(x=>x.onclick=()=>reagirCom(id, x.dataset.zmR));
+  document.querySelectorAll("[data-zm]").forEach(x=>x.onclick=()=>{
+    const k = x.dataset.zm; fecharCaixa();
+    if(k==="r") responderMsg(id);
+    else if(k==="c") navigator.clipboard.writeText(m.texto).then(()=>aviso("Texto copiado"), ()=>aviso("Não foi possível copiar", true));
+    else if(k==="e") encaminharMsg(id);
+    else if(k==="a") virarAndamento(id);
+    else if(k==="x") reagirCom(id, "");
   });
 }
 

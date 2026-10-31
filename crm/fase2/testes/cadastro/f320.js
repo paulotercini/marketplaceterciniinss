@@ -105,7 +105,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("duas colunas: o cartão e os prazos à esquerda, os andamentos à direita", col.e && col.pz);
   conf("a segunda linha do cabeçalho traz os dados, o advogado e a situação", await p.evaluate(() => { const l = document.querySelector(".det-topo .linha2"); return !!(l && l.querySelector(".resumo-lado") && l.querySelector(".cli-adv") && l.querySelector(".cli-st")); }));
   await p.screenshot({ path: OUT + "/ficha.png" });
-  // F321 · a Fila na coluna estreita: cada valor numa peça só, em texto corrido, e a tramitação sem reticências
+  // F325 · a Fila na coluna estreita: cada valor numa peça só, em texto corrido, e a tramitação sem reticências
   const fila = await p.evaluate(([kid, ontem]) => { const k = D.casoPorId.get(kid), antes = { fase: k.fase, trf3: k.trf3 };
     k.fase = "judicial"; k.trf3 = { ordem: 1098, total: 3173, consultado_em: ontem, projecao: { previsao: "2027-03-01" }, orgao: "Gab. Fictício" };
     repintarFicha();
