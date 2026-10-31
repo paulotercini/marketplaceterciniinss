@@ -158,7 +158,10 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
       cadastro_em_branco: [...(c.dn ? [] : ["nascimento"]), ...Object.keys(CIVIS).filter(k => !civil(c)[k] && k !== "complemento").map(k => CIVIS[k])],
       representante_legal: campos.representante ?? null, cliente_desde: br(String(c.criado_em).slice(0, 10)),
       casos: casos.map((k: any) => ({ ...Object.fromEntries(Object.entries(k).map(([c, v]) => [c, DATAS_FICHA.has(c) && v ? br(String(v)) : v])),
-        prazo_fatal: br(k.prazo), prazo: undefined, cliente_id: undefined })),
+        // teste 11.88, DAD-14: sem prazo vai null (era ""), o caso encerrado não tem prazo fatal e a exigência vem sem HTML
+        prazo_fatal: k.prazo && k.fase !== "encerrado" ? br(k.prazo) : null,
+        exigencia_descricao: k.exigencia_descricao ? String(k.exigencia_descricao).replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim() : null,
+        prazo: undefined, cliente_id: undefined })),
     });
   });
 

@@ -121,7 +121,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(400);
   conf("no nível 0, a tela inicial é a Agenda do Google", (await nivel()) === "0" && await p.evaluate(() => visao) === "agendaq");
   const itens = await p.evaluate(() => [...document.querySelectorAll(".lista-item")].filter(e => e.offsetParent !== null).map(e => e.dataset.v));
-  conf(`a barra mostra só a Agenda e os Clientes (${itens.join(", ")})`, itens.join() === "agendaq,clientes");
+  conf(`a barra mostra as Menções, a Agenda e os Clientes (REC-09) (${itens.join(", ")})`, itens.join() === "mencoes,agendaq,clientes");
   conf("o Novo Cliente continua no botão fixo e a anotação rápida some", await vis("#btn-v10-cli") && !(await vis("#btn-v10-anotar")));
   await p.click("#btn-v10-cli"); await p.waitForTimeout(400);
   conf("o Novo Cliente abre", await p.evaluate(() => visao) === "novocliente");
@@ -137,7 +137,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(400);
   conf("no nível 1, o html leva data-nivel=1 e a tela inicial é a Agenda", (await nivel()) === "1" && await p.evaluate(() => visao) === "agendaq");
   const itens1 = await p.evaluate(() => [...document.querySelectorAll(".lista-item")].filter(e => e.offsetParent !== null).map(e => e.dataset.v));
-  conf(`no nível 1 a barra mostra a Agenda e os Clientes (${itens1.join(", ")})`, itens1.join() === "agendaq,clientes");
+  conf(`no nível 1 a barra mostra as Menções, a Agenda e os Clientes (${itens1.join(", ")})`, itens1.join() === "mencoes,agendaq,clientes");
   await p.evaluate(id => abrirFicha(id), cX.id); await p.waitForTimeout(600);
   const abas1 = await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].filter(e => e.offsetParent !== null).map(e => e.textContent.trim()));
   conf(`a ficha do nível 1 abre no Cadastro e mostra os Casos (${abas1.join(", ")})`, abas1.length === 2 && abas1[0] === "Cadastro" && /^Casos/.test(abas1[1]));
