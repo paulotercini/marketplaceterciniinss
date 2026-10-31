@@ -78,6 +78,11 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   conf("a fila Automáticas mostra o robô de outra empresa", (await p.textContent(".zl-lista")).includes("Banco X"));
   await p.evaluate(() => { const d = document.querySelector(".zl-mais"); if (d) d.open = true; }); await p.click('[data-zf="fim"]');
   conf("e as Encerradas não o misturam", !(await p.textContent(".zl-lista")).includes("Banco X"));
+  // F334 · o aviso no aparelho fica no ⋯ da lista, e o toque na notificação abre a conversa
+  conf("F334 · o ⋯ tem Avisar neste aparelho", (await p.textContent(".zl-mais")).includes("Avisar neste aparelho"));
+  await p.evaluate(id => { visao = "meudia"; render(); cliqueNoAviso({ crm: "zap", conversa: id }); }, AUTO);
+  await p.waitForTimeout(300);
+  conf("F334 · o toque na notificação abre a conversa", await p.evaluate(id => visao === "whatsapp" && zapAberta === id, AUTO));
 
   await p.evaluate(id => abrirConversa(id), AUTO);
   await p.waitForSelector(".zap-topo");
