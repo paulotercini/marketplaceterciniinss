@@ -5577,6 +5577,38 @@ html[data-tema="v10"] .app:not(.celular) .tr-compacta .tr-corpo{padding:6px 14px
 html[data-tema="v10"] .tr-alca.tr-alca-et{height:24px;font-size:12px}
 html[data-tema="v10"] .tr-corpo[hidden],html[data-tema="v10"] .tr-resumo[hidden]{display:none!important}
 html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-a .jn-nome::after{display:none}
+/* F323 · o que passou fica em cinza (pedido do Paulo, 31.10.2026): fases encerradas e etapas cumpridas em cinza com ✓; a etapa atual
+   é a única peça colorida; a próxima tem o contorno; a fase em paralelo (o MS ao lado do recurso) continua na cor dela */
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-f:not(.jn-par){background:#F5F4F1;border-color:#ECEAE5;color:#75726B}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-f.jn-ver:not(.jn-par){background:#ECEBE7;border-color:#B9B6AE}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-f:not(.jn-par) .jn-nome i{width:16px;height:16px;background:#B9B6AE;display:inline-grid;place-items:center}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-f:not(.jn-par) .jn-nome i::before{content:"✓";color:#FFFFFF;font-size:10px;font-style:normal;line-height:1}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-n{color:#8E8B84;border-style:dashed}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-n .jn-txt{text-decoration:line-through;text-decoration-color:#B9B6AE}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-a{background:var(--ff)}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-a .jn-txt{font-weight:500;color:var(--ft)}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-a .jn-st::before{content:none}
+html[data-tema="v10"] .jn-atual{display:inline-block;font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;border-radius:999px;padding:1px 7px;line-height:16px;background:var(--fc);color:#FFFFFF}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-par{background:var(--ff);border-color:var(--fc);color:var(--ft)}
+html[data-tema="v10"] .tr-sf .tr-b{background:#C9C6BF}
+html[data-tema="v10"] .tr-sf .tr-nm{color:#75726B}
+html[data-tema="v10"] .tr-et.tr-sf .tr-nm::before{content:"✓ ";color:#9C9991}
+html[data-tema="v10"] .tr-sf .tr-d{color:#8E8B84}
+html[data-tema="v10"] .tr-grp.tr-sf{background:#F5F4F1}
+html[data-tema="v10"] .tr-et.tr-sa{background:color-mix(in srgb,var(--tc) 10%,#FFFFFF);box-shadow:inset 0 0 0 1.5px var(--tc)}
+html[data-tema="v10"] .tr-sa .tr-b{box-shadow:none}
+html[data-tema="v10"] .tr-sa .tr-nm{font-weight:500}
+html[data-tema="v10"] .tr-sa .tr-d,html[data-tema="v10"] .tr-px .tr-d{font-family:var(--f-ui);color:var(--tt)}
+html[data-tema="v10"] .tr-px .tr-b{background:transparent;border:1.5px solid var(--tc)}
+html[data-tema="v10"] .tr-px .tr-nm{color:#121212;font-weight:500}
+html[data-tema="v10"] .tr-sn .tr-b{border-color:#CFCCC5}
+html[data-tema="v10"] .tr-et.tr-sn .tr-nm{color:#8E8B84}
+html[data-tema="v10"] .tr-prog i.f{background:#C9C6BF}
+html[data-tema="v10"] .tr-prog i.a{width:26px;height:8px;border-radius:3px;box-shadow:none}
+html[data-tema="v10"] .tr-resumo .tr-agora .tr-aguarda::before{content:","}
+html[data-tema="v10"] .tr-rol{scrollbar-width:none}
+html[data-tema="v10"] .tr-rol::-webkit-scrollbar{display:none}
+html[data-tema="v10"] .tr-leg i.tr-lf{background:#C9C6BF}
 /* o cabeçalho da ficha em duas linhas: o nome e os botões; embaixo CPF, Meu INSS, telefone, advogado e a situação */
 html[data-tema="v10"] :is(.cli-adv,.atend-acoes) .fp2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 html[data-tema="v10"] .app:not(.celular) .det-topo .cli-casos .avatar{display:none}
@@ -5731,7 +5763,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.97</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.98</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -37794,7 +37826,8 @@ function faixaTrilha(k){
     const c = COR_FASE[f], txt = st==="a" ? (agora || "em curso") : st==="f" ? resumoFase(k, f) : st==="n" ? "não houve" : "a vir";
     const mkA = st==="a" ? MK0(f) : null, aguarda = mkA ? (i=>i>=0 && !mkA[i].d ? ` · aguardando ${esc(ets[i].n)}` : "")(mkA.findIndex(m=>m.s==="a")) : "";
     const stHtml = st==="a" && !celular() ? `<span class="jn-atual">atual</span>` : st==="a" ? `<span class="tr-agora"><b>${esc(agora||"a definir")}</b>${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}${aguarda}</span>` : esc(txt);
-    return `<button role="tab" aria-selected="${ver===f}" class="jn-b jn-${st}${ver===f?" jn-ver":""}" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}"
+    const par = st!=="a" && f==="judicial" && !!trilhaParalela(k);   // F323 · o MS ao lado do recurso não é passado
+    return `<button role="tab" aria-selected="${ver===f}" class="jn-b jn-${st}${par?" jn-par":""}${ver===f?" jn-ver":""}" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}"
       onclick="trVerFase('${k.id}','${f}')" title="${esc(`${c.n}: ${String(txt)}`)}"><span class="jn-nome"><i></i><span class="jn-txt">${c.n}</span></span><span class="jn-st">${stHtml}</span></button>`; }).join("");
   const alt = Object.entries(TRILHAS).filter(([,t])=>t.fase===ver);
   // o tipo de processo é uma escolha rara: um seletor, e não cinco pílulas
@@ -37806,6 +37839,9 @@ function faixaTrilha(k){
     `<option value="${id}" ${id===rito?"selected":""}>${esc(t.nome)}</option>`).join("")}</select></label>` : "";
   // fase passada: dá para dizer que não houve (ou que houve)
   const houveBt = (stVer==="f"||stVer==="n") ? `<button class="tr-houve" onclick="trFaseHouve('${k.id}','${ver}','${stVer==="n"?"f":"n"}')">${stVer==="n"?"esta fase houve":"esta fase não houve"}</button>` : "";
+  // F323 · a próxima etapa (a primeira depois da atual que não foi cumprida nem pulada) ganha o contorno e a palavra "próxima"
+  const iAt = ets.findIndex(e=>mk(e).s==="a");
+  const pxI = iAt<0 ? -1 : ets.findIndex((e,j)=>j>iAt && !["f","n"].includes(mk(e).s) && !(e.op && !mk(e).s));
   // os grupos cumpridos (e a execução ainda não começada) ficam recolhidos
   const itens = [];
   for(const G of gruposTrilha(ets)){
@@ -37824,8 +37860,8 @@ function faixaTrilha(k){
       const cor = e.ex ? COR_EXEC : C;
       const rot = n===0 && G.g ? `<span class="tr-g${e.ex?" tr-g-ex":""}">${esc(G.g)}${(feito||execVazia)&&trAbre[chave]?` <a href="#" onclick="trGrupo('${chave}');return false" class="tr-rec">recolher</a>`:""}</span>` : `<span class="tr-g"></span>`;
       itens.push(`<li style="--tc:${cor.c};--tt:${cor.t}"${e.ex?" data-ex":""}>${rot}
-        <button class="tr-et tr-s${m.s||(e.op?"o":"v")}${i===sel?" tr-sel":""}" data-tri="${i}" onclick="trEscolher('${k.id}','${rito}',${i})" aria-pressed="${i===sel}"
-          title="${esc(e.n)}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"aguardando":"")}</span></button></li>`);
+        <button class="tr-et tr-s${m.s||(e.op?"o":"v")}${i===sel?" tr-sel":""}${i===pxI?" tr-px":""}" data-tri="${i}" onclick="trEscolher('${k.id}','${rito}',${i})" aria-pressed="${i===sel}"
+          title="${esc(e.n)}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"aguardando":i===pxI?"próxima":"")}</span></button></li>`);
     });
   }
   let pnl = "";
@@ -37857,8 +37893,8 @@ function faixaTrilha(k){
     const ia = vis.findIndex(x=>x.m.s==="a"), at = ia>=0 ? vis[ia] : null;
     const prox = ia>=0 ? vis.slice(ia+1).find(x=>x.m.s!=="f" && x.m.s!=="n") : null;
     const seg = vis.map((x,j)=>`<i class="${x.m.s==="f"?"f":x.m.s==="a"?"a":x.m.s==="n"?"n":""}"></i>`).join("");
-    return `<div class="tr-resumo"${ver===faseAt?"":" hidden"}><span class="tr-agora"><small>Etapa</small> <b>${esc(agora||"a definir")}</b>${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}</span>
-      ${at ? `<span class="tr-pos">${at.m.d ? `desde ${dCurta(at.m.d)} · ` : `aguardando ${esc(minusc1(at.e.n))} · `}${ia+1} de ${vis.length}</span>` : ""}
+    return `<div class="tr-resumo"${ver===faseAt?"":" hidden"}><span class="tr-agora"><small>Etapa</small> <b>${esc(agora||"a definir")}</b>${at && !at.m.d ? `<span class="tr-aguarda"> aguardando ${esc(minusc1(at.e.n))}</span>` : ""}${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}</span>
+      ${at ? `<span class="tr-pos">${at.m.d ? `desde ${dCurta(at.m.d)} · ` : ""}${ia+1} de ${vis.length}</span>` : ""}
       <span class="tr-prog" aria-hidden="true">${seg}</span>
       ${prox ? `<span class="tr-prox">Próximo: ${esc(minusc1(prox.e.n))}</span>` : ""}</div>`; })();
   return `<section class="tr-faixa tr tr-compacta${aberta?" tr-aberta":" tr-fechada"}" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}" aria-label="Jornada e trilha do caso">
