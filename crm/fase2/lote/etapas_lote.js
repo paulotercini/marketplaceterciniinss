@@ -29,9 +29,10 @@ let gravando = false; const barrados = {}, gravados = { patch: 0, post: 0 };
     let pode = m === "GET" || m === "HEAD" || (rest && /^\/rest\/v1\/rpc\//.test(resto) && false);
     if (!pode && ESCREVER && gravando && rest) {
       const corpo = q.postData() || "";
-      if (m === "PATCH" && /^\/rest\/v1\/casos\?id=eq\.[0-9a-f-]{36}$/.test(resto)
+      if (m === "PATCH" && /^\/rest\/v1\/casos\?id=eq\.[0-9a-f-]{36}(&mudou_em=eq\.[^&]+)?&select=[a-z_*]+$/.test(resto)
         && Object.keys(JSON.parse(corpo)).every(c => ["etapa", "trilha", "resultado", "decisao_em"].includes(c))) { pode = true; gravados.patch++; }
-      if (m === "POST" && /^\/rest\/v1\/andamentos$/.test(resto) && /^Etapa: /.test(JSON.parse(corpo).texto || "")) { pode = true; gravados.post++; }
+      // a primeira rodada (31.10.2026) já gravou os andamentos "Etapa: …" e teve o PATCH barrado: SO_PATCH=1 grava só a etapa
+      if (m === "POST" && process.env.SO_PATCH !== "1" && /^\/rest\/v1\/andamentos$/.test(resto) && /^Etapa: /.test(JSON.parse(corpo).texto || "")) { pode = true; gravados.post++; }
     }
     if (!pode) {
       const ch = `${m} ${resto.split("?")[0]}`; barrados[ch] = (barrados[ch] || 0) + 1;

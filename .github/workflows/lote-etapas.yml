@@ -18,3 +18,4 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           AUTH_ID: 741525d4-5852-4c9e-b9cb-0e3ad92e1100
           ESCREVER: "1"
+          SO_PATCH: "1"
