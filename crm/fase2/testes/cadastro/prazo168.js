@@ -51,7 +51,7 @@ const SUPA = "https://ficticio.supabase.co";
     const lum = ([r, g, b]) => { const f = v => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }; return .2126 * f(r) + .7152 * f(g) + .0722 * f(b); };
     let el = pz, fundo = "rgba(0, 0, 0, 0)";
     while (el && /rgba\(0, 0, 0, 0\)|transparent/.test(fundo)) { fundo = getComputedStyle(el).backgroundColor; el = el.parentElement; }
-    const partes = [...pz.querySelectorAll(".fp2-tag,.fp2-txt b,.fp2-quando,.fp2-data")].map(e => getComputedStyle(e).color);
+    const partes = [...pz.querySelectorAll(".fp2-tag,.fp2-txt b,.fp2-quando,.fp2-data,.fp3-tit,.fp3-n,.fp3-bl span")].map(e => getComputedStyle(e).color);
     const lf = lum(rgb(fundo));
     return partes.map(c => { const l = lum(rgb(c)); return (Math.max(l, lf) + .05) / (Math.min(l, lf) + .05); });
   });
