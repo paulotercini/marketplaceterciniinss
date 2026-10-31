@@ -100,7 +100,7 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.tap(".zap-conv");
     await p.waitForSelector("#zap-msgs .zap-b");
     conf("o fundo da conversa tem o desenho do aplicativo", await p.$eval("#zap-msgs", e => /svg/.test(getComputedStyle(e).backgroundImage)));
-    // F321 · tocar e segurar o balão abre a fileira de emojis e as ações
+    // F324 · tocar e segurar o balão abre a fileira de emojis e as ações
     await p.evaluate(() => { const el = document.querySelector("#zb-m4 .txt"), r = el.getBoundingClientRect();
       const t = new Touch({ identifier: 1, target: el, clientX: r.left + 5, clientY: r.top + 5 });
       el.dispatchEvent(new TouchEvent("touchstart", { touches: [t], changedTouches: [t], bubbles: true })); });

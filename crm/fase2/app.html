@@ -2102,7 +2102,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-tela.wa .zap-conv .bolha{background:#25d366;color:#fff;border-radius:10px;min-width:20px;text-align:center}
   .zap-tela.wa .zap-conv.nova .l1 .hora{color:#1fa855;font-weight:600}
   .zap-tela.wa .zap-conv.nova .l1 b{color:inherit}
-  /* F321 · menu de segurar o balão */
+  /* F324 · menu de segurar o balão */
   .zm-emojis{display:flex;justify-content:space-between;gap:4px;background:#fff;border-radius:24px;padding:6px 8px;box-shadow:0 1px 3px rgba(11,20,26,.2);margin-bottom:10px}
   .zm-emojis button{font-size:24px;line-height:1;width:40px;height:40px;border:0;border-radius:50%;background:transparent;cursor:pointer}
   .zm-emojis button.on{background:#e9edef}
@@ -15586,7 +15586,7 @@ async function reagirCom(id, emoji){
     body:JSON.stringify({mensagem_id:id, de:"escritorio", autor_id:eu.id, emoji, status:"fila"})});
   await carregarReacoes(); pintarConversaGuardando();
 }
-// F321 · tocar e segurar o balão abre, como no aplicativo, a fileira de emojis e as ações dele
+// F324 · tocar e segurar o balão abre, como no aplicativo, a fileira de emojis e as ações dele
 function menuBalaoZap(id){
   const m = zapMsgs.find(x=>x.id===id); if(!m) return;
   const b = document.getElementById("zb-"+id);
