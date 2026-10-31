@@ -133,8 +133,11 @@ const DADOS = {
   const comp = await p.evaluate(() => ({
     tgs: [...document.querySelectorAll("#tf-box .esc-tgs .esc-tg")].map(b => b.textContent.trim()),
     pnl: !document.getElementById("esc-pnl-tf").hidden, frase: document.getElementById("esc-frase").textContent }));
-  conf("as três chaves: Tarefa, Prazo fatal e Lembrete, com a Tarefa ligada", comp.tgs.join("|") === "Tarefa|Prazo fatal|Lembrete" && comp.pnl);
-  conf("a frase diz o que falta antes de registrar", /^Ao registrar: anota no Escritório, cria tarefa \(falta quem faz\)/.test(comp.frase));
+  // teste 11.88, REC-06: a Tarefa nasce desligada; ligada, a frase diz o que falta
+  conf("as três chaves: Tarefa, Prazo fatal e Lembrete, com a Tarefa desligada", comp.tgs.join("|") === "Tarefa|Prazo fatal|Lembrete" && !comp.pnl && /^Ao registrar: anota no Escritório$/.test(comp.frase));
+  await p.evaluate(() => document.querySelector('.tf-nt[data-nat="compromisso"]').click());
+  conf("ligada a Tarefa, a frase diz o que falta antes de registrar", await p.evaluate(() => !document.getElementById("esc-pnl-tf").hidden &&
+    /^Ao registrar: anota no Escritório, cria tarefa \(falta quem faz\)/.test(document.getElementById("esc-frase").textContent)));
   await p.evaluate(() => { const t = document.getElementById("and-texto"); t.value = "[CONTATO] Cliente orientado"; t.dispatchEvent(new Event("input", { bubbles: true })); });
   await p.evaluate(() => document.querySelector('#tf-box .tf-eq').click());
   await p.evaluate(() => document.querySelector('#tf-box [data-tfd="3"]').click());
