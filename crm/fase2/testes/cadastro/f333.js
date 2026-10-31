@@ -1,6 +1,6 @@
-// F331 · a tela do caso integrada com a aba Prazos (proposta aprovada pelo Paulo, 31.10.2026): o quadro do caso acima do
+// F333 · a tela do caso integrada com a aba Prazos (proposta aprovada pelo Paulo, 31.10.2026): o quadro do caso acima do
 // cartão, o próximo prazo fatal em destaque com o "Cumpri o prazo", as linhas com o que são, o pé com os outros casos e o
-// prazo oferecido pela etapa (Criar o prazo, Não se aplica). Banco simulado, dados fictícios. Uso: node f331.js [pasta-das-fotos]
+// prazo oferecido pela etapa (Criar o prazo, Não se aplica). Banco simulado, dados fictícios. Uso: node f333.js [pasta-das-fotos]
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
@@ -8,7 +8,7 @@ const path = require("path");
 const { FIX, SESSAO } = require("./fixturas");
 const { Banco, instalarBanco } = require("./banco-simulado");
 const SUPA = "https://ficticio.supabase.co";
-const OUT = process.argv[2] || "/tmp/f331";
+const OUT = process.argv[2] || "/tmp/f333";
 fs.mkdirSync(OUT, { recursive: true });
 
 const PAULO = FIX.colaboradores[0].id, MARCOS = "22222222-2222-2222-2222-222222222222";
