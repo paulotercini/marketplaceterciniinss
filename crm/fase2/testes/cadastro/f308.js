@@ -82,12 +82,42 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o caso do INSS mostra a DER", /DER 02\/09\/2026/.test(tInss));
   conf("o caso estadual tem o botão do e-SAJ", await p.$(`.esc-caso[data-caso="${EST}"] a.lc-acesso[href*="esaj"]`));
   conf("o caso do INSS tem o botão do Meu INSS", /Meu INSS/.test(tInss));
+  conf("o cartão não traz protocolo nem número de processo", !/1479410049|147941004|5002340|1003595/.test(tInss + tJef + tEst));
+  conf("o ✎ do nome é só o ícone", await p.$eval(`.esc-caso[data-caso="${INSS}"] .esc-ed`, x => x.textContent.trim()) === "✎");
+  conf("o grupo abre pelo nome do benefício, e o NB vem depois", /^Auxílio/.test(grupos[0].trim()) && /NB 719/.test(grupos[0]));
 
   await p.evaluate(([c, id]) => nomearCaso(c, id), [CLI, INSS]);
   await p.fill(`[data-tit="${INSS}"] input`, "Novo pedido de setembro");
   await p.press(`[data-tit="${INSS}"] input`, "Enter");
   await p.waitForFunction(id => /Novo pedido de setembro/.test((document.querySelector(`.esc-caso[data-caso="${id}"]`) || {}).innerText || ""), INSS);
   conf("o ✎ grava o nome próprio do caso", T.casos.find(k => k.id === INSS).apelido === "Novo pedido de setembro");
+
+  // F308b · no celular, só o que separa um caso do outro
+  await p.evaluate(() => fecharEscolha());
+  await p.setViewportSize({ width: 390, height: 844 });
+  await p.waitForFunction(() => document.querySelector("#app.celular"));
+  await p.evaluate(c => { casoSel = "__auto__"; abrirFicha(c); }, CLI);
+  await p.waitForSelector(".esc-caso", { timeout: 10000 });
+  await p.waitForTimeout(600);
+  await p.screenshot({ path: path.join(__dirname, "f308-escolha-cel.png") });
+  const cel = await p.evaluate(() => {
+    const vis = el => el && el.offsetParent !== null && getComputedStyle(el).display !== "none";
+    const cs = [...document.querySelectorAll(".esc-caso")];
+    return {
+      datas: cs.some(c => vis(c.querySelector(".proc-sub"))), portal: cs.some(c => vis(c.querySelector(".esc-pe a"))),
+      txt: cs.some(c => vis(c.querySelector(".esc-ult-txt"))), quem: cs.some(c => vis(c.querySelector(".esc-quem"))),
+      etapa: /Perícia judicial marcada/.test(cs[0].innerText), agora: cs.every(c => /Agora|Último/.test(c.innerText)),
+      fabs: ["fab-sug", "fab-ajuda", "fab-rapida", "zap-ag"].filter(id => vis(document.getElementById(id))),
+      alto: Math.max(...cs.map(c => c.getBoundingClientRect().height)),
+      larg: document.querySelector(".esc-cx").scrollWidth <= document.querySelector(".esc-cx").clientWidth + 1,
+    };
+  });
+  conf("no celular saem as datas, o portal, o texto do andamento e quem cuida", !cel.datas && !cel.portal && !cel.txt && !cel.quem);
+  conf("no celular ficam a etapa e o próximo passo", cel.etapa && cel.agora);
+  conf("no celular os botões flutuantes não cobrem a escolha", !cel.fabs.length);
+  conf("no celular cada cartão fica baixo (até 190 px)", cel.alto <= 190);
+  conf("no celular nada passa da largura", cel.larg);
+  if (!cel.fabs.length && cel.alto <= 190) {} else console.log(JSON.stringify(cel));
 
   await p.keyboard.press("2");
   await p.waitForFunction(() => document.getElementById("modal").style.display === "none");
