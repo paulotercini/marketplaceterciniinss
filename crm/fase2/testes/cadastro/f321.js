@@ -67,6 +67,16 @@ pje(B4, P4, "Distribuído por sorteio", -300);
 const P5 = "5000005-55.2024.4.03.6302";
 const C1 = cliente("Célia Ficta Rocha", { fase: "judicial", especie: "B41", processo: P5, processos: [{ numero: P5, nosso: true }] });
 pje(C1, P5, "Expedição de Requisição de Pequeno Valor.", -7);
+// duas frentes: o recurso no CRPS e o mandado de segurança no Judicial; a sentença do MS não mexe na etapa do Conselho
+const MS = "5000007-77.2026.4.03.6102";
+const M1 = cliente("Moacir Ficto Brito", { fase: "conselho", especie: "B31", crps_nups: ["44000000000000003"], processo: MS,
+  processos: [{ numero: MS, nosso: true, papel: "ms" }],
+  crps: [{ nup: "44000000000000003", eventos: [{ data: `${barra(-30)} 09:00:00`, tipo: "andamento", bruto: "Requerimento protocolado - Tarefa: 1112223" }] }] });
+pje(M1, MS, "Julgado procedente o pedido", -2); pje(M1, MS, "Expedição de Requisição de Pequeno Valor.", -1);
+const P8 = "5000008-88.2024.4.03.6302", MS2 = "5000009-99.2026.4.03.6102";
+const N1 = cliente("Nair Ficta Prado", { fase: "judicial", especie: "B41", processo: P8,
+  processos: [{ numero: P8, nosso: true }, { numero: MS2, nosso: true, papel: "ms" }] });
+pje(N1, P8, "Expedição de Requisição de Pequeno Valor.", -4);
 // D · sem fato: o pagamento sem andamento oficial
 const D1 = cliente("Dario Ficto Neves", { fase: "pagamento", especie: "B41" });
 // fora do lote: a etapa já de acordo, o encerrado, o pré-caso e a tarefa pessoal
@@ -110,7 +120,7 @@ const casoDe = id => T.casos.find(k => k.id === id);
   await p.waitForTimeout(300);
   const bloco = await p.evaluate(() => ((document.getElementById("acervo-etapas") || {}).textContent || "").replace(/\s+/g, " "));
   conf("E1.1 o 🧹 Cuidar do acervo mostra quantos casos abertos estão sem etapa (pré-caso, encerrado e tarefa pessoal fora)",
-    /Etapas dos casos \(8 de 10 casos abertos sem etapa\)/.test(bloco) && /Etapas em lote/.test(bloco));
+    /Etapas dos casos \(10 de 12 casos abertos sem etapa\)/.test(bloco) && /Etapas em lote/.test(bloco));
   banco.escritas.length = 0;
   await p.evaluate(() => document.querySelector("#acervo-etapas button").click());
   await p.waitForFunction(() => /prontos/.test((document.getElementById("et-lote-st") || {}).textContent || ""), null, { timeout: 30000 });
@@ -121,10 +131,10 @@ const casoDe = id => T.casos.find(k => k.id === id);
       todos: [...document.querySelectorAll("#et-lote-res li")].map(li => li.textContent.replace(/\s+/g, " ").trim()) };
   });
   const linha = nome => grupos.todos.find(t => t.startsWith(nome)) || "";
-  conf("E1.2 a contagem diz 3 prontos, 4 a conferir, 1 em outra fase e 1 sem fato",
-    /3 prontos, 4 a conferir, 1 pedem outra fase e 1 sem fato/.test(grupos.st));
+  conf("E1.2 a contagem diz 4 prontos, 5 a conferir, 1 em outra fase e 1 sem fato",
+    /4 prontos, 5 a conferir, 1 pedem outra fase e 1 sem fato/.test(grupos.st));
   conf("E1.3 o grupo A tem a exigência do PAT, os conclusos para sentença e o recurso do e-Recursos",
-    grupos.A.length === 3 && ["Abel", "Adélia", "Amaro"].every(x => grupos.A.some(a => a.startsWith(x))));
+    grupos.A.length === 4 && ["Abel", "Adélia", "Amaro", "Moacir"].every(x => grupos.A.some(a => a.startsWith(x))));
   conf("E1.4 a regra nova: 'Requerimento protocolado - Tarefa' do e-Recursos propõe 'recurso protocolado'",
     /recurso protocolado.*pelo recurso protocolado no e-Recursos/.test(linha("Amaro")));
   conf("E1.5 a etapa contrariada vai à conferência com a atual e a proposta",
@@ -133,6 +143,10 @@ const casoDe = id => T.casos.find(k => k.id === id);
     /perícia sem confirmação/.test(linha("Bento")) && /recurso arquivado/.test(linha("Berta")) && /sem nada mais novo/.test(linha("Brás")));
   conf("E1.7 a RPV no caso do Judicial pede o Pagamento, e o pagamento sem andamento fica sem fato",
     /Pagamento · RPV expedida/.test(linha("Célia")) && /pedem outra fase|fase Pagamentos?/.test(linha("Célia") + grupos.st) && /nenhum andamento oficial/.test(linha("Dario")));
+  conf("E1.7b o caso no CRPS com mandado de segurança fica no Conselho: a sentença e a RPV do MS não mudam a etapa nem a fase",
+    /recurso protocolado/.test(linha("Moacir")) && !/Pagamento|sentença/.test(linha("Moacir")));
+  conf("E1.7c com mandado de segurança em paralelo, a RPV que pede o Pagamento vai à conferência, e não à mudança direta de fase",
+    /mandado de segurança em paralelo/.test(linha("Nair")) && /Mover e gravar/.test(linha("Nair")));
   conf("E1.8 a etapa já de acordo, o encerrado, o pré-caso e a tarefa pessoal não aparecem",
     !["Xisto", "Xênia", "Xavier", "Xandra"].some(x => grupos.todos.some(t => t.startsWith(x))));
   conf("E1.9 ler o lote não grava nada no banco",
@@ -146,14 +160,28 @@ const casoDe = id => T.casos.find(k => k.id === id);
     && casoDe(B1.id).etapa === "aguardando perícia" && !casoDe(B2.id).etapa && !casoDe(C1.id).etapa && casoDe(C1.id).fase === "judicial");
   const ands = T.andamentos.filter(a => /^Etapa: /.test(a.texto || ""));
   conf("E2.2 cada caso gravado ganha o andamento curto com o fato que sustenta a etapa",
-    ands.length === 3 && ands.some(a => a.caso_id === A1.id && /^Etapa: em exigência \(pela situação do PAT “Em exigência” de /.test(a.texto)));
+    ands.length === 4 && ands.some(a => a.caso_id === A1.id && /^Etapa: em exigência \(pela situação do PAT “Em exigência” de /.test(a.texto)));
   const st2 = await p.evaluate(() => document.getElementById("et-lote-st").textContent);
   conf("E2.3 a janela diz quantas gravou e oferece desfazer o lote",
-    /^3 etapas gravadas/.test(st2) && await p.evaluate(() => !!document.getElementById("et-lote-desf")));
+    /^4 etapas gravadas/.test(st2) && await p.evaluate(() => !!document.getElementById("et-lote-desf")));
   await p.evaluate(() => document.getElementById("et-lote-desf").click());
   await p.waitForTimeout(800);
   conf("E2.4 desfazer o lote devolve as etapas e apaga os andamentos",
     !casoDe(A1.id).etapa && !casoDe(A2.id).etapa && !casoDe(A3.id).etapa && !T.andamentos.some(a => /^Etapa: /.test(a.texto || "")));
+  // ── E3: B, C e D se resolvem na própria janela ──
+  const idx = nome => p.evaluate(nm => _loteEt.itens.findIndex(it => nomeDoCasoLote(it.k).startsWith(nm)), nome);
+  await p.evaluate(i => aceitarDoLote(i), await idx("Bruna")); await p.waitForTimeout(500);
+  conf("E3.1 B: o Aceitar grava a proposta contrariada (decidido, indeferido, com a data) e marca o item como resolvido",
+    casoDe(B1.id).etapa === "decidido" && casoDe(B1.id).resultado === "indeferido" && casoDe(B1.id).decisao_em === dia(-3)
+    && await p.evaluate(() => /✔ gravado: decidido/.test(document.getElementById("et-lote-res").textContent)));
+  await p.evaluate(i => aceitarDoLote(i), await idx("Célia")); await p.waitForTimeout(900);
+  conf("E3.2 C: 'Mover e gravar' leva o caso ao Pagamento com a etapa RPV expedida",
+    casoDe(C1.id).fase === "pagamento" && casoDe(C1.id).etapa === "RPV expedida");
+  const iD = await idx("Dario");
+  await p.evaluate(i => { const sl = document.getElementById(`et-lote-sel-${i}`); sl.value = "benefício implantado"; return gravarEtapaDoLote(i); }, iD);
+  await p.waitForTimeout(500);
+  conf("E3.3 D: o seletor do Pagamento oferece 'benefício implantado' e grava a etapa escolhida",
+    casoDe(D1.id).etapa === "benefício implantado" && await p.evaluate(() => /já resolvidos aqui/.test(document.getElementById("et-lote-st").textContent)));
   conf("E2.5 nenhum erro de página", !erros.length || (console.log(erros), false));
 
   await nav.close(); s.close();
