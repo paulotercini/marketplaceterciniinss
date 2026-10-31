@@ -5546,7 +5546,7 @@ html[data-tema="v10"] .aq-ligar h3{font-size:15px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.89</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 11.90</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6877,14 +6877,7 @@ function montarD(r){
   atribuicoes.forEach(a=>{ if(!D.atrDoCaso.has(a.caso_id)) D.atrDoCaso.set(a.caso_id,[]);
                            D.atrDoCaso.get(a.caso_id).push(a.colaborador_id); });
   // índice de pesquisa por cliente
-  clientes.forEach(c=>{
-    const ks = D.casosDoCliente.get(c.id)||[];
-    const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+(k.beneficio||"")+" "+rotuloDoPedido(k)+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
-    // guarda também só os dígitos: acha o processo tanto por "0000001-14"
-    // quanto por "000000114", e o CPF com ou sem ponto
-    c._ix = texto + " " + texto.replace(/\D/g, "");
-    c._nome_ix = dsa(c.nome);
-  });
+  clientes.forEach(reindexarCliente);
   retraduzirCrps(D.novid);   // F236 · o texto do andamento do e-Recursos segue o bloco relido
 }
 
@@ -17464,6 +17457,9 @@ async function concluirDeVez(id, txt, prot){
   if(and) await api(`/rest/v1/andamentos_lidos`,{method:"POST",
     headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
     body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
+  // teste 11.88, REC-07: quem delegou fica sabendo que a tarefa foi feita
+  if(and && t.atribuido_por && t.atribuido_por!==eu.id)
+    await criarMencoes(corpo, t.caso_id, and.id, [t.atribuido_por]).catch(()=>{});
   // o protocolo digitado aqui é o que ninguém pode esquecer: vai para a ficha
   const k=D.casoPorId.get(t.caso_id);
   const cpT = prot.length>=6 && k && corpoProtocolos(k, [prot]);
@@ -34079,8 +34075,11 @@ async function salvarCampo(campo, cliId){
 // o índice da pesquisa guarda nome, CPF e telefone: mudou o cadastro, refaz
 function reindexarCliente(c){
   const ks = D.casosDoCliente.get(c.id)||[];
+  // todos os números do caso: o segundo processo, o NB extra e o NUP do CRPS também (teste 11.88, REC-03)
+  const nums = k => { try{ return Object.values(numerosDoCaso(k)).flat().join(" "); }catch(e){ return ""; } };
   const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+
-    (k.beneficio||"")+" "+rotuloDoPedido(k)+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
+    (k.beneficio||"")+" "+rotuloDoPedido(k)+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))+" "+nums(k)).join(" ")].join(" "));
+  // guarda também só os dígitos: acha o processo tanto por "0000001-14" quanto por "000000114"
   c._ix = texto + " " + texto.replace(/\D/g, "");
   c._nome_ix = dsa(c.nome);
 }
@@ -37983,6 +37982,8 @@ function composerCaso(k){
   // Lembrete), cada uma abre o seu quadro, e a frase "Ao registrar" diz antes
   // do clique o que vai nascer. Tarefa e Lembrete são as duas naturezas da
   // F116 (uma exclui a outra); desligadas as duas, a anotação vai sem tarefa.
+  // teste 11.88, REC-06: no compositor de chaves a Tarefa nasce desligada, e a anotação simples grava sem clique a mais
+  if(v10 && !tfTocado){ tfNatureza = null; tfQuem = []; tfData = null; }
   const tg = (nat, rot, dica) => `<button class="esc-tg tf-nt ${tfNatureza===nat?"on":""}" data-nat="${nat}"
           aria-pressed="${tfNatureza===nat}" onclick="tfNat('${nat}',this)" title="${dica}">${rot}</button>`;
   const prazoTg = listaDe(k)!=="🗓 Tarefas com Prazo"
@@ -42753,8 +42754,9 @@ async function salvarProrrog(casoId, pedida){
 let tfQuem = null, tfData;
 // F116 · a natureza da data escolhida no compositor. Compromisso é trabalho
 // marcado; lembrete é aviso. O prazo fatal não passa por aqui, ele tem o ⏰.
-let tfNatureza = "compromisso";
+let tfNatureza = "compromisso", tfTocado = false;
 function tfNat(v, bt){
+  tfTocado = true;
   // F182 · no compositor novo as naturezas são chaves: clicar na acesa desliga,
   // e a anotação vai sem tarefa (ninguém, sem data)
   const chave = !!document.getElementById("esc-pnl-tf");
@@ -43088,8 +43090,10 @@ async function novoAndamento(casoUnico){
   if(prazoCk && prazoCk.checked && prazoData) await marcarTarefaComPrazo(casoId, prazoData);
   // data sem pessoa: quem escreveu "cobrar em 30 dias" quer ELE MESMO lembrar
   let tfCriouLembrete = false;   // F73: o detector do texto não duplica o tf-box
+  let executores = [];
   if(and && document.getElementById("tf-box")){
     const pessoas = (tfQuem&&tfQuem.length) ? tfQuem : (tfData ? [eu.id] : []);
+    if(tfNatureza==="compromisso") executores = pessoas;
     tfCriouLembrete = pessoas.length > 0;
     // F160 · o revisor escolhido ao lado dos executores entra com papel próprio
     const revisor = pessoas.length ? ((document.getElementById("tf-rev")||{}).value||"") : "";
@@ -43097,10 +43101,12 @@ async function novoAndamento(casoUnico){
     catch(e){ aviso("⚠ a tarefa do lembrete não gravou: "+String(e.message||e).slice(0,80)); }
     tfQuem=null; tfData=undefined; tfNatureza="compromisso";
   }
+  tfTocado = false;
   // quem está ATRIBUÍDO ao caso fica sabendo (é essa a função do Atribuído a),
   // além de quem for citado com @ no texto
   await Promise.all([
-    criarMencoes(texto, casoId, and?and.id:null, D.atrDoCaso.get(casoId)||[]),
+    // teste 11.88, REC-07: quem recebe a tarefa também é avisado, e não só quem está atribuído ao caso
+    criarMencoes(texto, casoId, and?and.id:null, [...(D.atrDoCaso.get(casoId)||[]), ...executores]),
     and ? api(`/rest/v1/andamentos_lidos`,{method:"POST",       // autor já leu
       headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
       body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{}) : null]);
@@ -49363,7 +49369,7 @@ function anotacaoRapida(pre){
   arCliSel=null; arLead=null; arNovo=null;
   caixa(`<h3 style="margin:0 0 2px">⚡ Anotação rápida</h3>
     <p class="meio-sub" style="margin:0 0 8px">Ligação ou balcão: escreva agora, sem procurar a
-      ficha. O registro nasce marcado como <b>urgente</b>.</p>
+      ficha.</p>
     <input id="ar-busca" placeholder="nome do cliente…" autocomplete="off" style="width:100%"
       oninput="arProcurar(this.value)">
     <div id="ar-achados" style="margin-top:4px;max-height:180px;overflow:auto"></div>
@@ -49373,7 +49379,6 @@ function anotacaoRapida(pre){
       onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();salvarAnotacaoRapida();}"></textarea>
     <div id="ar-sug" class="meio-sub" style="margin-top:4px"></div>
     <div class="form-linha" style="margin-top:6px;align-items:center">
-      <label class="conta-ck" title="o caso sobe com 🔥 em todas as listas"><input type="checkbox" id="ar-urg" checked>🔥 urgente</label>
       <label class="conta-ck"><input type="checkbox" id="ar-imp">⭐ importante</label>
       <button style="margin-left:auto" onclick="salvarAnotacaoRapida()">Guardar agora</button>
     </div>`);
@@ -49474,9 +49479,15 @@ function arMostrarAlvo(){
     .sort((a,b)=>(a.criado_em||"")<(b.criado_em||"")?1:-1);
   div.innerHTML = ks.length
     ? (ks.length>1
-      ? `vai para o caso: <select id="ar-caso">${ks.map(k=>`<option value="${k.id}">${esc(tituloCaso(k))}</option>`).join("")}</select>`
+      ? `vai para o caso: <select id="ar-caso">${ks.map(k=>`<option value="${k.id}">${esc(rotuloCasoEscolha(k))}</option>`).join("")}</select>`
       : `vai para o caso <b>${esc(tituloCaso(ks[0]))}</b><input type="hidden" id="ar-caso" value="${ks[0].id}">`)
     : `cliente sem caso em andamento — vira <b>anotação do atendimento</b> na ficha`;
+}
+// dois B31 abertos se distinguem pela fase e pelo número (teste 11.88, REC-05)
+function rotuloCasoEscolha(k){
+  const n = numerosDoCaso(k), [tipo, d] = n.proc[0] ? ["proc", n.proc[0]] : n.nup[0] ? ["nup", n.nup[0]]
+          : n.nb[0] ? ["nb", n.nb[0]] : n.prot[0] ? ["prot", n.prot[0]] : [];
+  return [k.apelido || tituloCaso(k), NOME_FASE[faseEfetiva(k)] || NOME_FASE[k.fase] || "", d ? fmtNum(tipo, d) : ""].filter(Boolean).join(" · ");
 }
 async function salvarAnotacaoRapida(){
   const cli=arCliSel && D.cliPorId.get(arCliSel);
@@ -49491,7 +49502,7 @@ async function salvarAnotacaoRapida(){
   if((arNovo||arLead) && arTelV.replace(/\D/g,"").length<10)
     return aviso("Telefone com DDD é obrigatório para cadastrar");
   if(arNovo){
-    const urg2=document.getElementById("ar-urg").checked;
+    const urg2=false;
     const imp2=document.getElementById("ar-imp").checked;
     let novoCli;
     try{
@@ -49528,7 +49539,7 @@ async function salvarAnotacaoRapida(){
     montarSidebar(); render();
     return;
   }
-  const urg=document.getElementById("ar-urg").checked;
+  const urg=false;
   const imp=document.getElementById("ar-imp").checked;
   const selCaso=document.getElementById("ar-caso");
   try{

@@ -215,6 +215,10 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     return { sug: !!sug && vis("#tipo-fila .sug-abrir") && sug.textContent.trim() === "Sugestões", campo: vis("#and-texto"), barra: vis("#tf-box"), prazo: vis("#and-prazo-ck") }; })()`);
   conf("F244 · fechado: fica à vista só o campo (os tipos e o Sugestões aparecem ao clicar nele)", !fechado.sug && fechado.campo && !fechado.barra && !fechado.prazo);
   await p.click("#and-texto"); await p.waitForTimeout(250);
+  // teste 11.88, REC-06: a Tarefa nasce desligada; o quadro Quem faz/Quando abre ao ligá-la
+  const semTarefa = await p.evaluate(`(() => { ${VIS} return !vis("#esc-pnl-tf"); })()`);
+  conf("aberto, a Tarefa nasce desligada e o quadro Quem faz/Quando fica fechado", semTarefa);
+  await p.evaluate(() => document.querySelector('.tf-nt[data-nat="compromisso"]').click()); await p.waitForTimeout(250);
   const aberto = await p.evaluate(`(() => { ${VIS}
     const linhas = [...document.querySelectorAll("#tf-box .esc-linha")];
     const y = el => { const r = el.getBoundingClientRect(); return r.top + r.height / 2; };
@@ -437,8 +441,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   await p.waitForTimeout(250);
   conf("o compositor separa as três naturezas: o ⏰ é o PRAZO FATAL, e ao lado se escolhe compromisso ou lembrete", await p.evaluate(() =>
     /Prazo fatal/.test(document.querySelector(".esc-linha .esc-tg-pz").textContent)
-    && [...document.querySelectorAll(".tf-nt")].map(b => b.dataset.nat).join("|") === "compromisso|lembrete"
-    && document.querySelector('.tf-nt[data-nat="compromisso"]').classList.contains("on")));
+    && [...document.querySelectorAll(".tf-nt")].map(b => b.dataset.nat).join("|") === "compromisso|lembrete"));
   await p.evaluate(() => document.querySelector('.tf-nt[data-nat="lembrete"]').click());
   conf("escolher lembrete acende só ele", await p.evaluate(() => tfNatureza === "lembrete"
     && !document.querySelector('.tf-nt[data-nat="compromisso"]').classList.contains("on")));
@@ -455,7 +458,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   // próximo dia útil, e no sábado +7 cai na segunda seguinte
   const dtBotao = await p.evaluate(() => maisDias(7));
   conf("a tarefa nasce com a natureza escolhida no compositor", tf && tf.natureza === "lembrete" && tf.lembrar_em === dtBotao);
-  conf("registrada a anotação, o compositor volta ao padrão compromisso", await p.evaluate(() => tfNatureza === "compromisso"));
+  conf("registrada a anotação, o compositor volta à Tarefa desligada (teste 11.88, REC-06)", await p.evaluate(() => tfNatureza === null && !tfTocado));
   const nats = await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => `${c.dataset.tipo}/${c.dataset.nat}`));
   conf("os cartões dizem a natureza: Prazo fatal em vermelho, Compromisso em âmbar, Lembrete em cinza",
     nats.some(r => r === "Prazo fatal/fatal") && nats.some(r => r.endsWith("/lembrete")));
