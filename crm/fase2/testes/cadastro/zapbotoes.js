@@ -24,6 +24,8 @@ const T = {
     { id: "m3", seq: 3, conversa_id: CONV, direcao: "entrada", tipo: "audio", texto: null, midia_url: "zap/x/a.ogg", midia_nome: "a.ogg", status: "entregue", criado_em: agora },
     { id: "m4", seq: 4, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Bom dia, doutor", status: "entregue", criado_em: agora },
     { id: "m5", seq: 5, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Veja https://www.gov.br/inss.", status: "entregue", criado_em: agora },
+    { id: "m6", seq: 6, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Esqueci o que disse", status: "entregue", criado_em: agora, apagada_em: agora },
+    { id: "m7", seq: 7, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Chego às 10h", texto_antes: "Chego às 9h", editada_em: agora, status: "entregue", criado_em: agora },
     { id: "m2", seq: 2, conversa_id: CONV, direcao: "saida", tipo: "documento", texto: null, midia_url: "zap/x/contrato.pdf", midia_nome: "contrato.pdf", status: "enviada", criado_em: agora }],
 };
 T.zap_setores = [{ id: "s1", nome: "Jurídico", cor: "#2a6", ativo: true, ordem: 1 }];
@@ -128,7 +130,20 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     conf("o seletor de emojis abre", await vis(".ze-emo-grade"));
     await p.tap(".ze-emo-grade button"); await p.waitForTimeout(100);
     conf("o emoji entra no campo de escrever", (await p.$eval("#zap-txt", e => e.value)) === "😀");
-    await p.evaluate(() => { document.querySelector(".ze-emo").open = false; const t = document.getElementById("zap-txt"); t.value = ""; t.style.height = ""; });
+    await p.evaluate(() => { document.querySelector(".ze-emo").open = false; const t = document.getElementById("zap-txt"); t.value = ""; t.style.height = ""; localStorage.removeItem("crm_zap_rasc"); });
+    // F331 · apagada, editada, favorita e o rascunho que espera na conversa
+    conf("a mensagem apagada fica riscada e avisa", await p.$eval("#zb-m6", e => e.classList.contains("apagada") && /apagou/.test(e.querySelector(".zap-apag").textContent)));
+    conf("a editada diz Editada e guarda o texto de antes", (await p.$eval("#zb-m7 .zap-edit", e => e.title).catch(() => "")).includes("Chego às 9h"));
+    await p.evaluate(() => favoritarMsg("m4")); await p.waitForTimeout(200);
+    conf("favoritar grava e mostra a estrela", escritas.some(e => /zap_mensagens\?id=eq\.m4/.test(e.u) && e.b && e.b.favorita_em) && !!(await p.$("#zb-m4 .zap-fav")));
+    await p.evaluate(() => verFavoritasZap()); await p.waitForTimeout(100);
+    conf("a lista de favoritas traz a mensagem", (await p.$$(".zap-fav-it")).length === 1);
+    await p.evaluate(() => fecharCaixa());
+    await p.fill("#zap-txt", "texto pela metade"); await p.waitForTimeout(50);
+    await p.evaluate(() => pintarConversa()); await p.waitForTimeout(100);
+    conf("o rascunho volta ao repintar a conversa", (await p.$eval("#zap-txt", e => e.value)) === "texto pela metade");
+    await p.evaluate(() => { const t = document.getElementById("zap-txt"); t.value = ""; t.oninput(); t.style.height = ""; });
+    conf("apagar o texto apaga o rascunho", await p.evaluate(() => !JSON.parse(localStorage.getItem("crm_zap_rasc") || "{}")[Object.keys(JSON.parse(localStorage.getItem("crm_zap_rasc") || "{}"))[0]]));
     conf("o topo não mostra o número de protocolo", !(await p.$(".zap-proto")) && !/Protocolo/.test(await p.$eval(".zap-topo", e => e.textContent)));
     // F310 · o topo numa linha; atendente, setor e etiquetas ficam no cartão "Conversa" da ficha que o nome abre
     conf("o topo da conversa ocupa uma linha (≤ 56 px)", await p.$eval(".zap-topo", e => e.getBoundingClientRect().height) <= 56);
