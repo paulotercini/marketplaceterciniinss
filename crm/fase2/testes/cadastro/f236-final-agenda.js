@@ -378,6 +378,12 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   const moraAdiada = await paulo.evaluate(id => { const k = D.casoPorId.get(id), antes = k.prazo; k.prazo = somaDias(hoje(), 7);
     const r = itensAgenda(null).some(i => i.k && i.k.id === id && i.selo === "Mora do INSS"); k.prazo = antes; return r; }, Y2.k.id);
   conf("a mora com a volta marcada adiante não cobra no Meu Dia", moraAdiada === false, moraAdiada);
+  const grp = await paulo.evaluate(() => { const c1 = D.clientes[0], c2 = D.clientes[1];
+    const it = (cli, d) => ({ cli, data: d, quem: [], selo: "x" });
+    const h = porClienteDia([it(c1, "2026-01-02"), it(c2, "2026-01-03"), it(c1, "2026-01-04")]);
+    const el = document.createElement("div"); el.innerHTML = h;
+    return { grupos: el.querySelectorAll(".ag-grupo-cli").length, noGrupo: el.querySelectorAll(".ag-grupo-cli .ag-linha").length, soltas: el.querySelectorAll(":scope > .ag-linha").length }; });
+  conf("o Meu Dia junta sob o nome do cliente o que é dele, e o cliente de um item só fica solto", grp.grupos === 1 && grp.noGrupo === 2 && grp.soltas === 1, grp);
   const exZ = ia.find(i => i.cli === Z.c.id && i.selo === "Diligência");
   conf("a descrição da diligência na agenda corta na palavra, com reticências", exZ && /…$/.test(exZ.resumo) && !/prazo estimado/.test(exZ.resumo), exZ);
   const confK = ia.some(i => i.cli === K.c.id && i.conf), confS = ia.some(i => i.cli === S.c.id && i.conf);
