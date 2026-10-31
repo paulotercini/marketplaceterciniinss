@@ -31,7 +31,7 @@ A fonte de dados dos geradores é o **Microsoft To Do** (Graph API, conta pessoa
 <!-- dossie-versao: 0.13.0 — ao mudar manifest.json da extensão, atualize esta seção e este número;
      tests em crm/fase2/dossie/testes/regras.test.js conferem que batem. -->
 
-Extensão de navegador (versão **0.13.0**). Com o gov.br do cliente logado, um clique baixa os documentos
+Extensão de navegador (versão **0.13.1**). Com o gov.br do cliente logado, um clique baixa os documentos
 do portal aberto na aba; **🔁 Rodar todos os portais** percorre Meu INSS → e-Recursos → Emprega Brasil →
 CadÚnico → Redesim → HC (o HC por último, porque é o mais pesado e o CRM precisa do CNIS, da RAIS e do CadÚnico antes; a Redesim só abre a tela para o clique no captcha e segue), cada um na sua aba (abre as do gov.br que faltarem; Emprega Brasil e HC só se a aba logada já
 estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha e não decide nada: coleta e entrega.
@@ -46,7 +46,7 @@ estiver aberta), e o relato fica no popup. Não faz login, não resolve captcha 
   com deficiência · declaração de atividade · por benefício: carta de concessão, laudo médico e extrato
   de informações do benefício (dossiê) · extrato de pagamento dos últimos 12 meses · cópia integral de
   todos os pedidos administrativos (todos os anos) · PPP eletrônico por vínculo · CAT · CTC (se houver protocolo).
-- **e-Recursos (CRPS)**: todos os documentos de cada recurso do cliente.
+- **e-Recursos (CRPS)**: todos os documentos de cada recurso do cliente. Sem recurso ("Não foram encontrados processos para você.", ou a lista vazia com crachá) vira `inexistentes` (0.13.1), e não pedido de novo login.
 - **Emprega Brasil (MTE)**: CTPS digital e de outros vínculos, extratos RAIS e CAGED · **seguro-desemprego**
   (requerimentos, vínculo e parcelas com datas — `.txt` legível + JSON cru; a parcela **recebida dentro da graça**
   prova o desemprego e acresce 12 meses, mas o prazo continua contado da última competência, e não da última
