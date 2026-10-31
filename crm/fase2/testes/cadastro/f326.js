@@ -61,6 +61,10 @@ const nCel = and(kA3, -4, `⏰ [PRAZO ${br(iso(dCel))}] Cumprir a exigência do 
 const tCel = tarefa(nCel, PAULO, { lembrar_em: iso(dCel), etapas: [{ t: "Pedir a certidão", feito: false }] });
 and(kA3, -3, "Primeira resposta: pedimos a certidão ao cartório.", { responde_a: nCel.id });
 and(kA3, -2, "Segunda resposta: o cartório prometeu para sexta.", { responde_a: nCel.id });
+// F334 · caso sem atribuição: o prazo cai no advogado responsável pelo cliente, e não no administrador
+const cB = cli("Bruno Fictício Sem Atribuição", { advogado_id: MARCOS });
+const kB1 = caso(cB, { beneficio: "Auxílio por incapacidade", especie: "B31", fase: "inss", protocolos: ["1700000777"] });
+T.atribuicoes.splice(T.atribuicoes.findIndex(x => x.caso_id === kB1.id), 1);
 
 const ok = [];
 const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : "FALHOU  ") + nome); };
@@ -315,6 +319,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("7 · as respostas da anotação vêm da mais recente à mais antiga", resp7.length >= 2 && resp7.findIndex(t => /Segunda/.test(t)) < resp7.findIndex(t => /Primeira/.test(t)));
   if (resp7.length < 2) console.log(JSON.stringify(resp7));
 
+  conf("F334 · sem atribuição, o prazo é do advogado responsável", await p.evaluate(([k, c]) => quemDaLinha({ casoId: k }, c), [kB1.id, cB.id]) === MARCOS);
   conf("sem erro de página", !erros.length);
   if (erros.length) console.log(erros);
   const ruins = ok.filter(x => !x[1]).length;
