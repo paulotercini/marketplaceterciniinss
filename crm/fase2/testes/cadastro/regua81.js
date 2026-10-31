@@ -66,7 +66,7 @@ FIX.atribuicoes.push({ caso_id: C2, colaborador_id: EU }, { caso_id: C3, colabor
       const r = document.querySelector(".linha-caso"); if (!r) return null;
       const topo = r.querySelector(".lc-topo"), nums = r.querySelector(".lc-numeros");
       return { topo: topo.innerText.replace(/\s+/g, " ").trim(), nums: nums ? nums.innerText.replace(/\s+/g, " ").trim() : "",
-        tram: (r.querySelector(".lc-tram") || {}).textContent || "",
+        tram: (r.querySelector(".lc-tram-n") || r.querySelector(".lc-tram") || {}).textContent || "",   // F320 · o nome da tramitação dentro do link "abrir no …"
         cops: [...r.querySelectorAll("[data-cop]")].map(e => e.dataset.cop),
         cartaoFora: !document.querySelector(".painel[data-p='2'] > .fatos-processo") };
     });

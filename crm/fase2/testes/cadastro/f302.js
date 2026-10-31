@@ -56,7 +56,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o salário em dois lugares sai em faixa, sem o mês de entrada e o de saída", r.cc.length === 1 && r.cc[0].de === "2005-04" && r.cc[0].ate === "2005-11" && r.cc[0].origens.length === 2);
   conf("a troca de emprego não é atividade concomitante", r.troca.length === 0);
   conf("o indicador de competência guarda o vínculo e o mês", r.ic["PREM-FVIN"] && r.ic["PREM-FVIN"][0].comps.join() === "06/2013");
-  conf("o quadro do CNIS mostra à vista só o problema", /1 problema no CNIS/.test(r.html) && /<ul class="paq-itens"><li>pendência<\/li><\/ul>/.test(r.html) && /<details class="paq-resto"><summary>Os demais dados do CNIS, sem problema \(2\)/.test(r.html));
+  conf("o quadro do CNIS mostra à vista só o problema", /Problemas · 1/.test(r.html) && /<ul class="paq-itens"><li>pendência<\/li><\/ul>/.test(r.html) && /<details class="paq-resto"><summary>Ver os 2 dados sem problema/.test(r.html));
   conf("sem problema, o quadro diz", /Nenhum problema no CNIS/.test(r.nada));
   await b.close(); s.close();
   const n = ok.filter(([, v]) => v).length;

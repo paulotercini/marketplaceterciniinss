@@ -150,7 +150,7 @@ const casoDe = id => T.casos.find(k => k.id === id);
   await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
-    localStorage.setItem("crm_tema", "v10");
+    localStorage.setItem("crm_tema", "v10"); localStorage.setItem("crm_etapas", "1");   // F320 · as etapas abertas (no computador nascem recolhidas)
   }, [SUPA, SESSAO]);
   await instalarBanco(ctx, { SUPA, SESSAO, banco });
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
@@ -301,10 +301,10 @@ const casoDe = id => T.casos.find(k => k.id === id);
   conf("F2 com a RPV expedida, o destaque da trilha não fica na sentença: vai ao passo cumprido mais adiantado, e o 'Agora:' avisa",
     tr2.atual === "RPV ou precatório expedido" && /sentença publicada \(desatualizada\)/.test(tr2.agora));
   await abrir(F3);
-  const tr3 = await p.evaluate(() => ({ agora: ((document.querySelector(".tr-agora") || {}).textContent || "").replace(/\s+/g, " "),
+  const tr3 = await p.evaluate(() => ({ agora: ((document.querySelector(".tr-resumo") || {}).textContent || "").replace(/\s+/g, " "),   // F320 · a etapa e o passo por vir na linha do resumo
     passo: [...document.querySelectorAll(".tr-l .tr-et.tr-sa")].map(b => b.textContent.replace(/\s+/g, " ").trim()) }));
   conf("F3 o passo por vir tem a mesma palavra no título e no passo ('aguardando Acórdão do TRF3'), e não 'agora'",
-    /em recurso · aguardando Acórdão do TRF3/.test(tr3.agora) && tr3.passo.some(t => /Acórdão do TRF3\s*aguardando/.test(t)));
+    /Etapa em recurso aguardando acórdão do TRF3/.test(tr3.agora) && tr3.passo.some(t => /Acórdão do TRF3\s*aguardando/.test(t)));
   conf("F4 o topo da revisão do acervo diz o critério da linha (30 dias de anotação, 90 de revisão)",
     await p.evaluate(() => /sem anotação da equipe nos últimos 30 dias e sem revisão nos últimos 90/.test(blocoRevisao())));
   conf("F5 o atalho de honorários põe o ano na data que não é deste ano",

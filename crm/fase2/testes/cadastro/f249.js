@@ -59,7 +59,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
-    localStorage.setItem("crm_tema", "v10");
+    localStorage.setItem("crm_tema", "v10"); localStorage.setItem("crm_etapas", "1");   // F320 · as etapas abertas (no computador nascem recolhidas)
   }, [SUPA, SESSAO]);
   await instalarBanco(ctx, { SUPA, SESSAO, banco });
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
@@ -126,7 +126,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click("#btn-v10-cli"); await p.waitForTimeout(400);
   conf("o Novo Cliente abre", await p.evaluate(() => visao) === "novocliente");
   await p.evaluate(id => abrirFicha(id), cX.id); await p.waitForTimeout(600);
-  const abas = await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].filter(e => e.offsetParent !== null).map(e => e.textContent.trim()));
+  const abas = await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].filter(e => e.offsetParent !== null).map(e => [...e.childNodes].filter(n => !(n.classList && n.classList.contains("mt-ponto"))).map(n => n.textContent).join("").trim()));
   const subs = await p.evaluate(() => [...document.querySelectorAll(".sub-menu button")].filter(e => e.offsetParent !== null).map(e => e.textContent.trim()));
   conf(`a ficha mostra só o Cadastro (${abas.join(", ")}) com a Identificação (${subs.join(", ")})`, abas.join() === "Cadastro" && subs.join() === "Identificação");
   await p.screenshot({ path: path.join(OUT, "00-nivel0-ficha.png") });
@@ -139,7 +139,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const itens1 = await p.evaluate(() => [...document.querySelectorAll(".lista-item")].filter(e => e.offsetParent !== null).map(e => e.dataset.v));
   conf(`no nível 1 a barra mostra as Menções, a Agenda e os Clientes (${itens1.join(", ")})`, itens1.join() === "mencoes,agendaq,clientes");
   await p.evaluate(id => abrirFicha(id), cX.id); await p.waitForTimeout(600);
-  const abas1 = await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].filter(e => e.offsetParent !== null).map(e => e.textContent.trim()));
+  const abas1 = await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].filter(e => e.offsetParent !== null).map(e => [...e.childNodes].filter(n => !(n.classList && n.classList.contains("mt-ponto"))).map(n => n.textContent).join("").trim()));
   conf(`a ficha do nível 1 abre no Cadastro e mostra os Casos (${abas1.join(", ")})`, abas1.length === 2 && abas1[0] === "Cadastro" && /^Casos/.test(abas1[1]));
   await abrir(cX, kX);
   const sub1 = await p.evaluate(() => [...document.querySelectorAll(".menu-andamentos button")].filter(e => e.offsetParent !== null).map(e => e.textContent.trim()));
