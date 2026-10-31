@@ -170,7 +170,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       umCompositor: document.querySelectorAll("#and-texto").length === 1, rotulo: getComputedStyle(m, "::before").content };
   });
   conf("F242 · o menu dos andamentos fica acima de onde se escreve e do que se lê, sem o rótulo 'CASO'", menu.acimaDoCompositor && menu.acimaDaConversa && menu.umCompositor && /none/.test(menu.rotulo));
-  conf("Escritório · INSS · Recurso (CRPS) · + número · Caso Completo — Judicial só existe com número (F330)", menu.botoes.join("|").replace(/ \(sem dados\)/g, "") === "Escritório|INSS|Recurso (CRPS)|+ número|Caso Completo");
+  conf("Escritório · INSS · Recurso (CRPS) · Caso Completo — Judicial só existe com número (F330)", menu.botoes.join("|").replace(/ \(sem dados\)/g, "") === "Escritório|INSS|Recurso (CRPS)|Caso Completo");
   conf("o Caso Completo abre por padrão", /Caso Completo/.test(menu.on || ""));
   const idTudo = await p.evaluate(() => { const li = [...document.querySelectorAll(".painel[data-p='2'] .timeline li.tl-of")].find(l => /Contestar o laudo/.test(l.textContent));
     const av = li && li.querySelector(".tl-cab .avatar"); return av && { ini: av.textContent.trim(), cor: av.style.background, fonte: av.classList.contains("av-fonte"), marco: li.classList.contains("tudo-marco") }; });
