@@ -95,7 +95,7 @@ const DADOS = {
   const est = await p.evaluate(() => [...document.querySelectorAll(".tr-l .tr-et")].map(b => [...b.classList].find(c => /^tr-s/.test(c))));
   const nm = v.nomes;
   conf("a etapa anterior vira cumprida, a pulada fica 'não houve' e a ordem continua", est[nm.indexOf("Perícia realizada")] === "tr-sf" && est[nm.indexOf("Esclarecimentos do perito")] === "tr-sn" && est[nm.indexOf("Citação e contestação")] === "tr-sa" && est[nm.indexOf("Laudo juntado")] === "tr-sv");
-  // F322 · o passado em cinza: a cumprida sem a cor da fase, a atual a única colorida e a seguinte marcada como próxima
+  // F323 · o passado em cinza: a cumprida sem a cor da fase, a atual a única colorida e a seguinte marcada como próxima
   const cz = await p.evaluate(() => { const bs = [...document.querySelectorAll(".tr-l .tr-et")], cor = b => getComputedStyle(b.querySelector(".tr-b")).backgroundColor;
     const f = bs.find(b => b.classList.contains("tr-sf") && !b.classList.contains("tr-grp")), a = bs.find(b => b.classList.contains("tr-sa")), px = bs.filter(b => b.classList.contains("tr-px"));
     return { f: cor(f), a: cor(a), px: px.length, pxDepois: bs.indexOf(px[0]) > bs.indexOf(a), pxTxt: px[0] && px[0].querySelector(".tr-d").textContent }; });
