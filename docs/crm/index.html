@@ -5651,7 +5651,14 @@ html[data-tema="v10"] .app:not(.celular) .det-topo .linha1 > .det-canto{margin-l
 html[data-tema="v10"] .linha-caso .lc-prot .lc-num,html[data-tema="v10"] .linha-caso .lc-tram-link{white-space:nowrap}
 html[data-tema="v10"] .caso-esq .linha-caso .lc-tram-link{font-size:13px}
 html[data-tema="v10"] .caso-esq .lc-placa>.lc-prot>:is(.lc-num,.lc-copiar){flex:none;white-space:nowrap;overflow-wrap:normal}
-html[data-tema="v10"] .caso-esq .lc-placa>.lc-f>.lc-tram-link{flex:0 1 auto;min-width:0;white-space:nowrap;overflow-wrap:normal;overflow:hidden;text-overflow:ellipsis;display:block}
+html[data-tema="v10"] .caso-esq .lc-placa>.lc-f>.lc-tram-link{flex:0 1 auto;min-width:0;white-space:normal;overflow-wrap:anywhere;display:inline}
+/* F325 · a Fila na coluna estreita: rótulo à esquerda e os valores em texto corrido, que quebra inteiro (pedido do Paulo, 31.10.2026) */
+html[data-tema="v10"] .caso-esq .lc-placa>.lc-f:has(.lc-fila){display:block;padding-left:106px;line-height:1.45}
+html[data-tema="v10"] .app:not(.celular) .caso-esq .lc-placa>.lc-f:has(.lc-fila){padding-left:92px}
+html[data-tema="v10"] .caso-esq .lc-placa>.lc-f:has(.lc-fila)>.lc-k{position:absolute;left:0;top:0}
+html[data-tema="v10"] .caso-esq .lc-placa>.lc-f:has(.lc-fila)>:not(.lc-k){display:inline-block;white-space:nowrap;margin-right:6px}
+/* F325 · a inicial de quem responde ou escreveu é quadrada em todo o CRM, como na linha das listas (pedido do Paulo, 31.10.2026); a foto do WhatsApp segue redonda */
+html[data-tema="v10"] :is(.avatar:not(img),.visto-av,.fx-av,.eq-ini){border-radius:25%}
 html[data-tema="v10"] .app:not(.celular) .caso-3col > .caso-esq,html[data-tema="v10"] .app:not(.celular) .caso-3col .linha-caso{min-width:0}
 html[data-tema="v10"] .app:not(.celular) .caso-esq .lc-placa>.lc-f{gap:10px}html[data-tema="v10"] .app:not(.celular) .caso-esq .lc-placa>.lc-f>.lc-k{width:82px}
 html[data-tema="v10"] .app:not(.celular) .caso-3col > .caso-pz{align-self:start}
@@ -5770,7 +5777,7 @@ html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 11.99</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 12.00</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
