@@ -227,7 +227,7 @@ async function conectar() {
   // recibos: entregue e lida, para a tela mostrar o mesmo que o celular
   sock.ev.on("messages.update", async atualizacoes => {
     for (const u of atualizacoes) {
-      // F331 · o Baileys também avisa a mensagem apagada (message nulo, stub 1) e a editada por aqui
+      // F332 · o Baileys também avisa a mensagem apagada (message nulo, stub 1) e a editada por aqui
       const up = u.update || {};
       if (u.key && u.key.id && (up.message === null && up.messageStubType === 1)) await guardarAlteracao({ id: u.key.id, apagada: true }).catch(() => {});
       else if (u.key && u.key.id && up.message && up.message.editedMessage) {
@@ -332,7 +332,7 @@ async function guardarReacao(m, reacao) {
   });
 }
 
-// F331 · apagada ou editada no WhatsApp: a linha fica, com a marca e o texto de antes
+// F332 · apagada ou editada no WhatsApp: a linha fica, com a marca e o texto de antes
 // (a equipe continua vendo o que foi escrito). Só a mensagem que o CRM conhece.
 async function guardarAlteracao(alt) {
   const [alvo] = await sb(`/rest/v1/zap_mensagens?externo_id=eq.${encodeURIComponent(alt.id)}&select=id,texto,texto_antes`);
