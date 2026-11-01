@@ -137,6 +137,21 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     // F332 · apagada, editada, favorita e o rascunho que espera na conversa
     conf("a mensagem apagada fica riscada e avisa", await p.$eval("#zb-m6", e => e.classList.contains("apagada") && /apagou/.test(e.querySelector(".zap-apag").textContent)));
     conf("a editada diz Editada e guarda o texto de antes", (await p.$eval("#zb-m7 .zap-edit", e => e.title).catch(() => "")).includes("Chego às 9h"));
+    // F359 · a ponte grava o externo_id depois do envio: a releitura de 6 s repinta e libera Editar e Apagar
+    await p.evaluate(() => { zapMsgs.find(x => x.id === "m8").externo_id = null; pintarConversa(); });
+    const semAcoes = !(await p.$("#zb-m8 .zap-acoes"));
+    await p.evaluate(() => recarregarMsgs()); await p.waitForTimeout(200);
+    conf("a recém-enviada ganha as ações quando a ponte grava o externo_id, sem reabrir", semAcoes && !!(await p.$("#zb-m8 .zap-acoes")));
+    // F360 · a notificação do navegador tem chave própria e não sai na conversa que está aberta
+    const nots = await p.evaluate(() => {
+      const ditas = []; window.Notification = class { constructor(t, o) { ditas.push(o.body); } close() {} }; Notification.permission = "granted";
+      localStorage.removeItem("crm_push");
+      tocarAvisoZap("de outra conversa", "outra");
+      tocarAvisoZap("desta conversa", zapAberta);
+      localStorage.setItem("crm_zap_nav", "0"); tocarAvisoZap("desligada", "outra"); localStorage.removeItem("crm_zap_nav");
+      return ditas;
+    });
+    conf("notifica no navegador a mensagem de outra conversa, não a da aberta, e respeita o desligar", JSON.stringify(nots) === JSON.stringify(["de outra conversa"]));
     await p.evaluate(() => favoritarMsg("m4")); await p.waitForTimeout(200);
     conf("favoritar grava e mostra a estrela", escritas.some(e => /zap_mensagens\?id=eq\.m4/.test(e.u) && e.b && e.b.favorita_em) && !!(await p.$("#zb-m4 .zap-fav")));
     // F343 · apagar para todos e editar a mensagem enviada

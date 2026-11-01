@@ -6200,7 +6200,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.24</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.25</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6884,9 +6884,11 @@ let presencaLigada = false, zapSomLigado = false;
 // Olha a cada 20 s em qualquer tela do CRM; a primeira volta só aprende.
 let zapSomVisto = null, zapAudioCtx = null;
 const somZapLigado = () => ler("crm_zap_som") !== "0";
-function tocarAvisoZap(texto){
-  if(!somZapLigado()) return;
-  try{
+// F360 · o aviso do navegador tem chave própria (ligado por padrão), separada do som, e sai também com a aba
+// à vista quando a pessoa não está na própria conversa
+const navZapLigado = () => ler("crm_zap_nav") !== "0";
+function tocarAvisoZap(texto, convId, soSom){
+  if(somZapLigado()) try{
     zapAudioCtx = zapAudioCtx || new (window.AudioContext || window.webkitAudioContext)();
     if(zapAudioCtx.state === "suspended") zapAudioCtx.resume();
     [[880, 0], [660, 0.16]].forEach(([f, t])=>{
@@ -6897,22 +6899,24 @@ function tocarAvisoZap(texto){
     });
   }catch(e){}
   // com o aviso no aparelho ligado (F335), quem avisa é o zap_push: aqui não repete
-  if(document.hidden && ler("crm_push")!=="1" && window.Notification && Notification.permission==="granted")
-    try{ new Notification("WhatsApp · CRM", {body: texto, tag: "crm-zap"}); }catch(e){}
+  const vendo = !document.hidden && visao==="whatsapp" && convId && zapAberta===convId;
+  if(!soSom && navZapLigado() && !vendo && ler("crm_push")!=="1" && window.Notification && Notification.permission==="granted")
+    try{ const n = new Notification("WhatsApp · CRM", {body: texto, tag: "crm-zap"});
+         n.onclick = ()=>{ window.focus(); if(convId) abrirConversaDaMencao(convId); else { visao="whatsapp"; render(); } n.close(); }; }catch(e){}
 }
 async function vigiarZapSom(){
   if(!eu) return;
   const [cs, ms] = await Promise.all([
     todas("zap_conversas","select=id,nao_lidas,atendente_id,status,nome_perfil,cliente_id,lead_id,telefone&nao_lidas=gt.0").catch(()=>null),
-    todas("mencoes",`select=id,texto&para_id=eq.${eu.id}&lida_em=is.null&conversa_id=not.is.null`).catch(()=>null)]);
+    todas("mencoes",`select=id,texto,conversa_id&para_id=eq.${eu.id}&lida_em=is.null&conversa_id=not.is.null`).catch(()=>null)]);
   if(!cs || !ms) return;
   const minhas = cs.filter(c=>c.status!=="resolvida" && (c.atendente_id===eu.id || !c.atendente_id));
   const agora = {conv: new Map(minhas.map(c=>[c.id, c.nao_lidas])), menc: new Set(ms.map(m=>m.id))};
   if(zapSomVisto){
     const nova = minhas.find(c=>c.nao_lidas > (zapSomVisto.conv.get(c.id)||0));
     const menc = ms.find(m=>!zapSomVisto.menc.has(m.id));
-    if(menc) tocarAvisoZap(menc.texto.replace(/^💬\s*/,""));
-    else if(nova) tocarAvisoZap(`Mensagem nova de ${nomeDaConversa(nova)}`);
+    if(menc) tocarAvisoZap(menc.texto.replace(/^💬\s*/,""), menc.conversa_id);
+    else if(nova) tocarAvisoZap(`Mensagem nova de ${nomeDaConversa(nova)}`, nova.id);
   }
   zapSomVisto = agora;
 }
@@ -6962,10 +6966,22 @@ async function alternarSomZap(){
   const ligar = !somZapLigado();
   guardar("crm_zap_som", ligar ? "1" : "0");
   if(ligar){
-    tocarAvisoZap("teste");
-    if(window.Notification && Notification.permission==="default") await Notification.requestPermission().catch(()=>{});
+    tocarAvisoZap("teste", null, true);
   }
   aviso(ligar ? "Aviso sonoro ligado 🔔" : "Aviso sonoro desligado", false);
+  pintarListaZap();
+}
+async function alternarNavZap(){
+  const ligar = !navZapLigado();
+  if(ligar && window.Notification && Notification.permission!=="granted"
+     && await Notification.requestPermission().catch(()=>"denied")!=="granted"){
+    guardar("crm_zap_nav","0");
+    aviso("O navegador bloqueou as notificações do CRM. Libere no cadeado ao lado do endereço e ligue de novo.", true);
+    return pintarListaZap();
+  }
+  guardar("crm_zap_nav", ligar ? "1" : "0");
+  if(ligar) try{ new Notification("WhatsApp · CRM", {body: "Notificação no navegador ligada", tag: "crm-zap"}); }catch(e){}
+  aviso(ligar ? "Notificação no navegador ligada" : "Notificação no navegador desligada", false);
   pintarListaZap();
 }
 
@@ -15095,6 +15111,7 @@ function pintarListaZap(){
          <details class="tl-mais mais-baixo zl-mais"${zapMaisAberto?" open":""} ontoggle="zapMaisAberto=this.open"><summary class="tl-bt tl-bt-ic" aria-label="Mais opções do WhatsApp" title="som, encerradas e painel da equipe">${IC_SVG.mais}</summary>
            <span class="tl-mais-menu" role="menu">
              <button class="tl-mais-it zl-som" role="menuitem" onclick="alternarSomZap()" aria-pressed="${somZapLigado()}">${somZapLigado()?"🔔 Aviso sonoro ligado":"🔕 Aviso sonoro desligado"}</button>
+             <button class="tl-mais-it zl-nav" role="menuitem" onclick="alternarNavZap()" aria-pressed="${navZapLigado() && window.Notification && Notification.permission==="granted"}" title="notificação do navegador quando chega mensagem, com o CRM aberto">${navZapLigado() && window.Notification && Notification.permission==="granted"?"🖥 Notificação no navegador ligada":"🖥 Notificar no navegador"}</button>
              <button class="tl-mais-it zl-push" role="menuitem" onclick="alternarPushZap()" aria-pressed="${pushZapLigado()}" title="notificação no celular ou no computador, também com o CRM fechado">${pushZapLigado()?"📱 Aviso neste aparelho ligado":"📱 Avisar neste aparelho"}</button>
              <button class="tl-mais-it zl-link ${zapFiltro==="fim"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="fim">Encerradas${zapFiltro==="fim"?` (${cs.length})`:""}</button>
              ${visiveis.some(c=>c.automatica)?`<button class="tl-mais-it zl-link ${zapFiltro==="auto"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="auto" title="robô de outra empresa (F272)">Automáticas${zapFiltro==="auto"?` (${cs.length})`:""}</button>`:""}
@@ -15309,8 +15326,8 @@ async function abrirConversa(id){
 }
 async function recarregarMsgs(){
   if(!zapAberta) return;
-  // F332 · apagada, editada e favorita também repintam
-  const sig = () => zapMsgs.map(m=>`${m.id}${(m.texto||"").length}${m.apagada_em||""}${m.editada_em||""}${m.favorita_em||""}${(m.alterar||{}).status||""}`).join("|");
+  // F332 · apagada, editada e favorita também repintam; F359 · e o externo_id que a ponte grava depois do envio, que libera Editar e Apagar
+  const sig = () => zapMsgs.map(m=>`${m.id}${m.externo_id?"e":""}${(m.texto||"").length}${m.apagada_em||""}${m.editada_em||""}${m.favorita_em||""}${(m.alterar||{}).status||""}`).join("|");
   const antes = sig();
   zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${zapAberta}&order=momento,seq`).catch(()=>zapMsgs);
   const reacAntes = JSON.stringify([...zapReacoes]);
