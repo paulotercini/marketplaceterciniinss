@@ -124,7 +124,7 @@ t.test("banco fora do ar: a mensagem não se perde, vai para o arquivo do servid
   a.ok(salvo.includes("WA-PERDIDA"));
 });
 
-// F342 · apagar para todos e editar a mensagem enviada pelo CRM
+// F343 · apagar para todos e editar a mensagem enviada pelo CRM
 t.test("apagar: manda o delete com a chave da enviada e marca apagada", async () => {
   fingirBanco();
   let enviado;

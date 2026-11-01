@@ -659,7 +659,7 @@ async function reagir(r, s = sock) {
   }
 }
 
-// F342 · apagar para todos e editar a mensagem que o escritório enviou: o CRM
+// F343 · apagar para todos e editar a mensagem que o escritório enviou: o CRM
 // grava o pedido em `alterar` e a ponte o cumpre. O prazo (apagar ~2 dias,
 // editar 15 minutos) é do WhatsApp; fora dele, o pedido vira erro.
 async function alterarEnviada(msg, s = sock) {
