@@ -3515,6 +3515,10 @@ html[data-tema="v10"] #conteudo-meio .ag-linha{display:flex;align-items:center;g
 html[data-tema="v10"] #conteudo-meio .ag-grupo-cli{border-left:3px solid var(--borda);margin:6px 0}
 html[data-tema="v10"] #conteudo-meio .ag-cli-cab{display:flex;align-items:center;gap:6px;padding:8px 12px 4px 13px;font-size:13px;background:transparent;box-shadow:none;border:0;cursor:pointer}
 html[data-tema="v10"] #conteudo-meio .ag-grupo-cli .ag-linha .ag-txt b{font-weight:400;color:var(--cinza)}
+.ag-mais-cli>summary{cursor:pointer;padding:4px 13px 6px;font-size:12px;color:var(--cinza)}
+.fp-resto>summary{cursor:pointer;padding:6px 0 2px;font-size:12px;color:var(--cinza)}
+.fp-resto-v{color:var(--vermelho,#b42318)}
+.fp-regra{font-size:11px;margin:8px 0 0}
 html[data-tema="v10"] .ag-slot{flex:none;width:24px;display:inline-flex;justify-content:center;color:var(--cinza)}
 /* F291 · o círculo do To Do volta à linha: concluir por hoje (data de volta, ⭐ apagada, fora do Meu Dia) */
 .desp-circ{width:24px;height:24px;border:none;background:none;padding:0;cursor:pointer;flex:none;position:relative;display:grid;place-items:center}
@@ -6178,7 +6182,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 12.11</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 12.12</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -13524,9 +13528,13 @@ function renderAgendaV10(qual){
 function porClienteDia(g){
   const grupos = new Map();
   g.forEach((it, i)=>{ const ch = it.cli ? it.cli.id : "_"+i; if(!grupos.has(ch)) grupos.set(ch, []); grupos.get(ch).push(it); });
-  return [...grupos.values()].map(its=> its.length<2 ? linhaAgenda(its[0])
-    : `<div class="ag-grupo-cli"><div class="ag-cli-cab cartao" data-cli="${its[0].cli.id}"><b>${esc(its[0].cli.nome)}</b> <span class="pl-n">${its.length}</span></div>`
-      + its.map(linhaAgenda).join("") + `</div>`).join("");
+  // F335 · um de cada vez (pedido do Paulo, 01.11.2026): do cliente fica à vista o próximo (a primeira data; no empate,
+  // o prazo fatal), e os demais ficam em "+N", fechado
+  const pri = its => its.reduce((a,b)=> b.data<a.data || (b.data===a.data && b.fatal && !a.fatal) ? b : a);
+  return [...grupos.values()].map(its=>{ if(its.length<2) return linhaAgenda(its[0]);
+    const p = pri(its), resto = its.filter(x=>x!==p);
+    return `<div class="ag-grupo-cli"><div class="ag-cli-cab cartao" data-cli="${its[0].cli.id}"><b>${esc(its[0].cli.nome)}</b> <span class="pl-n">${its.length}</span></div>`
+      + linhaAgenda(p) + `<details class="ag-mais-cli"><summary>+${resto.length} deste cliente</summary>${resto.map(linhaAgenda).join("")}</details></div>`; }).join("");
 }
 function avisoSeMeuDia(planej){ return planej ? "" : avisoCRPS(); }
 // F295 · o resumo de ontem (Onda D do fluxo do To Do): no último dia útil, quantas anotações eu fiz, em quantos
@@ -37362,23 +37370,28 @@ function faixaPrazos(k){
       <button class="fp2-mais pz-mais" onclick="abrirPainelPrazo(${i})" aria-label="abrir: ${esc(titulo)}">abrir</button>
     </div>`;
   };
-  const destaque = proxFatal || minhas.filter(x=>natDaLinha(x)==="fatal" && pend(x))[0] || null;
+  // F335 · o prazo fatal vencido sem registro vem antes do próximo: é o que pede ação primeiro
+  const destaque = minhas.filter(x=>natDaLinha(x)==="fatal" && pend(x))[0] || proxFatal || null;
   const em = n => somaDias(hj, n);
   const GRUPOS = [["Vencidas", pend, "venc"], ["A confirmar", x=>x.aConfirmar, "conf"], ["Hoje", x=>x.data===hj, "hoje"],
     ["Amanhã", x=>x.data===em(1), ""], ["Próximos sete dias", x=>x.data>em(1) && x.data<=em(7), ""], ["Mais tarde", x=>x.data>em(7), ""]];
-  const ja = new Set(destaque ? [destaque] : []);
+  // F335 · UM PRAZO DE CADA VEZ (pedido do Paulo, 01.11.2026, como no To Do): à vista fica só o próximo (o prazo
+  // fatal em destaque ou, sem ele, a primeira data que pede ação); as demais ficam em "Ver as outras N datas", fechado
+  const soUm = destaque ? null : (prox || minhas.filter(pend)[0] || minhas[0]);
+  const ja = new Set([destaque || soUm].filter(Boolean));
   const grupos = GRUPOS.map(([rot, f, tom])=>{ const g = minhas.filter(x=>!ja.has(x) && f(x)); g.forEach(x=>ja.add(x)); return [rot, g, tom]; })
     .filter(([,g])=>g.length);
   const cab = (rot, n) => `<h4 class="fp2-g">${rot} <span class="pl-n">${n}</span></h4>`;
-  const blocos = grupos.map(([rot, g, tom]) => rot==="Mais tarde" && grupos.length>1
-    ? `<details class="fp2-grupo"${_pzTodos.has(k.id)?" open":""} ontoggle="if(this.open)_pzTodos.add('${k.id}')"><summary>${cab(rot, g.length)}</summary>${g.map(x=>linha(x)).join("")}</details>`
-    : `<section class="fp2-grupo"${tom?` data-tom="${tom}"`:""}>${cab(rot, g.length)}${g.map(x=>linha(x)).join("")}</section>`).join("");
+  const nResto = grupos.reduce((n,[,g])=>n+g.length, 0), nRestoV = grupos.filter(([,,t])=>t==="venc").reduce((n,[,g])=>n+g.length, 0);
+  const blocos = !nResto ? "" : `<details class="fp-resto"${_pzTodos.has(k.id)?" open":""} ontoggle="this.open?_pzTodos.add('${k.id}'):_pzTodos.delete('${k.id}')"><summary>Ver as outras ${nResto} ${nResto===1?"data":"datas"}${nRestoV ? ` · <b class="fp-resto-v">${nRestoV} ${nRestoV===1?"vencida":"vencidas"}</b>` : ""}</summary>`
+    + grupos.map(([rot, g, tom]) => `<section class="fp2-grupo"${tom?` data-tom="${tom}"`:""}>${cab(rot, g.length)}${g.map(x=>linha(x)).join("")}</section>`).join("") + `</details>`;
+  const regra = `<p class="fp-regra meio-sub">Anotação com ⏰ cria o prazo fatal; anotação com data cria o lembrete; Concluir por hoje marca a volta à fila.</p>`;
   const sem = destaque ? "" : `<p class="fp2-sem meio-sub">Sem prazo fatal em aberto neste caso.</p>`;
   const nv = minhas.length ? `<button type="button" class="tl-bt fp-nv" onclick="this.closest('.faixa-prazos').classList.add('nv-ver')" title="no nível 1 as datas ficam recolhidas">ver as datas</button>` : "";   // F249
   if(painelPz && painelPz.casoId===k.id && painelPz.fonte!=="cli"){ const j = minhas.findIndex(x=>x.data===painelPz.data && (x.andId||"")===painelPz.andId);
     if(j>=0) setTimeout(()=>abrirPainelPrazo(j));
     else if(painelPz.andId){ const pz = painelPz; setTimeout(()=>abrirPainelTarefa(pz.casoId, pz.andId)); } }
-  return `<div class="faixa-prazos fp2" aria-label="Prazos e providências">${tit}${nv}${destaque ? linha(destaque, true) : sug || sem}${blocos}${outros}</div>`;
+  return `<div class="faixa-prazos fp2" aria-label="Prazos e providências">${tit}${nv}${destaque ? linha(destaque, true) : (sug || sem) + (soUm ? linha(soUm) : "")}${blocos}${outros}${regra}</div>`;
 }
 // F333 · O PRAZO QUE NASCE DA ETAPA (decisão do Paulo, 31.10.2026, depois de comparar com Filevine, MyCase e Astrea):
 // a etapa declarada que abre prazo oferece o item do catálogo, contado da decisão quando ela está no caso. Só oferece:
