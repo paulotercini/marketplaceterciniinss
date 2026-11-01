@@ -120,7 +120,7 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   // escritório
   const esc = await p.evaluate(() => { subAba = "escritorio"; repintarFicha(); const l = document.querySelector('.painel[data-p="2"] li.tl-card');
     return l ? { mais: [...l.querySelectorAll(".tl-mais-it")].map(b => b.textContent.trim()), plus: [...l.querySelectorAll(".tl-barra > button")].some(b => b.textContent.trim() === "＋"), emoji: /👍/.test(l.innerHTML) } : null; });
-  conf("na anotação, mais uma tarefa e apagar foram para o ⋯", esc && esc.mais.includes("Mais uma tarefa neste comentário") && esc.mais.some(m => /Apagar/.test(m)) && !esc.plus && !esc.emoji);
+  conf("na anotação, mais uma tarefa e apagar foram para o ⋯", esc && esc.mais.some(m => /Mais uma tarefa neste comentário/.test(m)) && esc.mais.some(m => /Apagar/.test(m)) && !esc.plus && !esc.emoji);
   conf("na aba Escritório, o movimento do CRPS sai no cartão oficial, sem Responder", await p.evaluate(() => { subAba = "escritorio"; repintarFicha();
     const l = [...document.querySelectorAll('.painel[data-p="2"] li.tl-card')].find(x => /Protocolo recebido/.test(x.textContent));
     return !!l && l.classList.contains("tl-oficial") && !/Responder/.test(l.textContent) && !/CRPS · 01\/10/.test(l.textContent); }));
