@@ -167,10 +167,10 @@ const DADOS = { ...FIX,
     .find(l => /25\.09 · 01:41/.test(l.querySelector(".tl-hora").textContent)).querySelector(".tl-ato").click());
   await p.waitForSelector(".leitura-ato");
   const lei = await p.evaluate(() => ({ h: document.querySelector(".leitura-ato h3").textContent, t: document.querySelector(".leitura-txt").textContent,
-    bts: [...document.querySelectorAll(".leitura-bts button")].map(b => b.textContent.trim()), w: document.querySelector(".modal-cx").getBoundingClientRect().width }));
+    bts: [...document.querySelectorAll(".leitura-bts button")].map(b => [...b.childNodes].filter(n => !(n.classList && n.classList.contains("sr-only"))).map(n => n.textContent).join("").trim()), w: document.querySelector(".modal-cx").getBoundingClientRect().width }));
   conf("a leitura tem o tipo e a data do ato", lei.h === "Despacho · 22.09.2026");
   conf("a leitura é só o miolo, com o acento consertado", lei.t === "Intimem-se as partes para manifestação acerca do laudo pericial anexado aos autos.\nPrazo: 10 (dez) dias.");
-  conf("a leitura oferece copiar, abrir o original e ler com o Claude", lei.bts.join("|") === "Copiar|Abrir o original|Ler com Claude");
+  conf("a leitura oferece copiar, abrir o original e ler com o Claude", lei.bts.join("|") === "Copiar|Original|Claude");
   conf("a caixa de leitura é larga", lei.w > 700);
   if (FOTO) { await p.waitForTimeout(400); await p.screenshot({ path: path.join(FOTO, "f191-leitura.png") }); }
   await p.evaluate(() => fecharCaixa());
