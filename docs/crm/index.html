@@ -2029,6 +2029,8 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zp-card h4{margin:0 0 8px;font-size:12px;font-weight:600;color:var(--cinza-claro,var(--cinza))}
   .zp-cab{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px}
   .zp-sub{font-size:12px;color:var(--cinza);margin:2px 0 8px}
+  .zp-ult{font-size:12px;margin-top:6px;line-height:1.35;overflow-wrap:anywhere}
+  .zp-ult>span{display:block;color:var(--cinza)}
   .zp-tit{font-weight:600;font-size:13px}
   .zap-mini{display:block;width:240px;max-width:100%;height:180px;object-fit:cover;border-radius:8px;cursor:zoom-in;background:#0000000d;margin-bottom:4px}
   .zp-rep-tit{margin:4px 2px 0;font-size:12px;font-weight:600;color:var(--cinza)}
@@ -15520,6 +15522,30 @@ function alternarFichaZap(){ const t = document.querySelector(".zap-tela"); if(t
 // F183 · o cliente ao lado da conversa: o que se pergunta enquanto se
 // responde ("qual é o caso, em que pé está, quando é a próxima data"). Só
 // leitura — mexer no caso continua sendo na ficha, a um clique
+// F354 · o que o painel mostra além do que já está na memória: a senha do Meu INSS e o último
+// andamento de cada caso aberto, buscados uma vez por cliente na sessão (pedido do Paulo, 01.11.2026)
+const _zpExtra = new Map();
+async function carregarExtraZap(cli, ks){
+  _zpExtra.set(cli.id, {carregando:true});
+  const ids = ks.map(k=>k.id).join(",");
+  const [creds, ands] = await Promise.all([
+    api(`/rest/v1/credenciais?select=id,valor&cliente_id=eq.${cli.id}&tipo=eq.meu_inss&limit=1`).catch(()=>[]),
+    ids ? api(`/rest/v1/andamentos?select=caso_id,texto,criado_em,autor_id&caso_id=in.(${ids})&order=criado_em.desc&limit=60`).catch(()=>[]) : []]);
+  const cr = (creds||[])[0], ult = new Map();
+  for(const a of ands||[]) if(!ult.has(a.caso_id)) ult.set(a.caso_id, a);
+  _zpExtra.set(cli.id, {senha: cr ? cr.valor : null, credId: cr ? cr.id : null, ult});
+  if(cr) api(`/rest/v1/credencial_vis`,{method:"POST",headers:{Prefer:"return=minimal"},   // ver fica registrado, como no "ver" da ficha
+    body:JSON.stringify({credencial_id:cr.id, colaborador_id:eu.id})}).catch(()=>{});
+  const aberta = zapConvs.find(x=>x.id===zapAberta);
+  if(aberta && aberta.cliente_id===cli.id) pintarPainelZap(aberta);
+}
+function ultimoAndZap(a){
+  if(!a) return "";
+  const quem = a.autor_id ? ((D.colPorId.get(a.autor_id)||{}).nome||"").split(" ")[0] : "portal";
+  const t = String(a.texto||"").replace(/^(PJe|eproc TJSP|e-SAJ TJSP)\s*\([^)]*\)\s*:?\s*/,"").split("\n")[0].trim();
+  return `<div class="zp-ult"><span>Último andamento · ${dmaZap(dataSP(a.criado_em)).slice(0,5)}${quem?` · ${esc(quem)}`:""}</span>
+    ${esc(t.length>110 ? t.slice(0,110)+"…" : t)}</div>`;
+}
 function pintarPainelZap(c){
   const el = document.getElementById("zap-painel"); if(!el) return;
   const cli = c && c.cliente_id && D.cliPorId.get(c.cliente_id);
@@ -15552,6 +15578,10 @@ function pintarPainelZap(c){
   const chave = String(c.telefone||"").replace(/\D/g,"").slice(-8);
   const outros = telefonesDe(cli).filter(t=>String(t.numero||"").replace(/\D/g,"").slice(-8)!==chave);
   const nasc = cli.dn ? dnIso(cli.dn) : null, idade = nasc ? idadeDe(cli.dn) : null;
+  const ex = _zpExtra.get(cli.id); if(!ex) carregarExtraZap(cli, ks);
+  const adv = D.colPorId.get((advogadoDoCliente(cli.id)||[])[0]);
+  const espera = (()=>{ try{ const b = pedidosDoBalcao(cli.id);
+    return [...b.pessoais, ...b.grupos.flatMap(g=>g.itens)].map(x=>x.nome); }catch{ return []; } })();
   const caso = k => {
     const resp = (D.atrDoCaso.get(k.id)||[]).map(id=>D.colPorId.get(id)).filter(Boolean);
     const lemb = (D.tarefasPorCaso.get(k.id)||[]).map(t=>t.lembrar_em).sort()[0];
@@ -15568,6 +15598,7 @@ function pintarPainelZap(c){
       ${k.etapa?`<div class="zp-etapa"><i></i>Etapa: ${esc(k.etapa)}</div>`:""}
       ${prox?`<div class="zp-kv"><span>Próximo prazo</span><b class="${prox[0]<hoje()?"venc":"prox"}">${dmaZap(prox[0]).slice(0,5)}${prox[1]?` · ${esc(prox[1])}`:""}</b></div>`:""}
       ${resp.length?`<div class="zp-kv"><span>Responsável</span><span>${esc(resp.map(x=>x.nome).join(", "))}</span></div>`:""}
+      ${ex && ex.ult ? (ultimoAndZap(ex.ult.get(k.id)) || `<div class="zp-ult"><span>Último andamento</span>nenhum</div>`) : ""}
     </section>`;
   };
   const tarefas = (D.tarefas||[]).filter(t=>!t.concluida && (t.cliente_id===cli.id || ks.some(k=>k.id===t.caso_id)));
@@ -15585,10 +15616,16 @@ function pintarPainelZap(c){
   el.innerHTML = `${conv}<section class="zp-card">
       <div class="zp-cab"><h3>Ficha do cliente</h3><button class="zl-link" onclick="fichaComZap('${cli.id}')" title="Abrir ficha"><span aria-hidden="true">Ficha</span><span class="sr-only">Abrir ficha</span></button></div>
       <div class="zp-kv"><span>Nome</span><span>${esc(cli.nome)}</span></div>
-      <div class="zp-kv"><span>CPF</span><span class="mono">${esc(cpfMascarado(cli.cpf))}</span></div>
+      <div class="zp-kv"><span>CPF</span>${cli.cpf?`<span class="mono cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="clique para copiar">${fmtCpf(cli.cpf)}</span>`:"<span>sem CPF</span>"}</div>
+      <div class="zp-kv"><span>Meu INSS</span>${!ex || ex.carregando ? `<span class="zp-sub">…</span>`
+        : ex.senha ? `<span class="mono cop" data-cop="${esc(ex.senha)}" data-cop-msg="Senha copiada" title="clique para copiar">${esc(ex.senha)}</span>`
+        : `<span class="zp-sub">sem senha</span>`}</div>
+      ${adv?`<div class="zp-kv"><span>Advogado</span><span>${esc(adv.nome||"")}</span></div>`:""}
       ${nasc?`<div class="zp-kv"><span>Nascimento</span><span>${dmaZap(nasc)}${idade!=null?` · ${idade} anos`:""}</span></div>`:""}
       ${outros.length?`<div class="zp-kv"><span>Outros números</span><span>${outros.map(t=>esc(foneZap(t.numero))+(t.obs&&t.obs!=="principal"?` · ${esc(t.obs)}`:"")).join("<br>")}</span></div>`:""}
     </section>
+    ${espera.length?`<section class="zp-card zp-espera"><h4>Aguardando do cliente (${espera.length})</h4>
+      <p class="zp-sub">${esc(espera.slice(0,4).join(" · "))}${espera.length>4?` e mais ${espera.length-4}`:""}</p></section>`:""}
     ${ks.length ? ks.slice(0,3).map(caso).join("") : `<section class="zp-card"><h4>Caso</h4><p class="zp-sub">Nenhum caso aberto.</p></section>`}
     ${reps.length ? `<h4 class="zp-rep-tit">Clientes que ${esc(String(cli.nome||"").split(" ")[0])} representa (${reps.length})</h4>${reps.map(repCard).join("")}` : ""}
     <section class="zp-card"><h4>Tarefas abertas</h4>

@@ -379,6 +379,8 @@ A **F347** (o apagar e a edição chegam ao cliente, 01.11.2026): mesmo com a F3
 
 A **F349** (a ponte sai depois de gravar as chaves, 01.11.2026): o WhatsApp derruba a conexão com o código 500 a cada 50 minutos, e a ponte sai para o pm2 subi-la de novo; o `process.exit` vinha antes de terminar de gravar as chaves e o creds no disco, e a ponte subia com chaves velhas (Bad MAC, o celular do Paulo pedindo reenvio de toda mensagem e sem Editar até sincronizar). Toda gravação (`keys.set`, `saveCreds`) entra em `gravando` (`seguirGravacao`), e `reiniciar` e o SIGINT/SIGTERM esperam por ela, até 10 s (`esperarGravacoes`). Vale depois de atualizar a ponte no servidor e parear de novo pelo QR. Teste: `ponte/testes/fila.test.js`.
 
+A **F354** (a ficha ao lado do WhatsApp, pedido do Paulo de 01.11.2026): o painel da direita da conversa mostra o CPF inteiro (copia no clique), a senha do Meu INSS à vista (copia no clique; o ver fica em `credencial_vis`, como o "ver" da ficha), o advogado responsável, "Aguardando do cliente" (os papéis pedidos e não entregues, de `pedidosDoBalcao`) e, em cada caso aberto, o último andamento com a data e o autor (`carregarExtraZap`, `_zpExtra`, uma busca por cliente na sessão; `ultimoAndZap`). Teste: `zaprep.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
