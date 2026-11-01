@@ -96,11 +96,9 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
 
   // ── como ATENDENTE (ver como colaborador) ────────────────────────────
   await p.evaluate(() => { localStorage.setItem("crm_ver_como", "colab"); zapFiltro = "todas"; zapAberta = null; irPara("whatsapp"); });
-  await p.waitForSelector(".zap-conv");
+  await p.waitForSelector(".zl-filas");
   const cab = await p.textContent(".zl-cab");
-  conf("atendente: sem a fila Todas e sem o Painel", !cab.includes("Todas") && !cab.includes("Painel da equipe"));
-  await p.click('[data-zf="sem"]');
-  conf("atendente: vê a pendente do seu setor", (await p.textContent(".zl-lista")).includes("Cliente na fila"));
+  conf("atendente: Novas e Minhas, sem Pendentes, Todas e Painel (F346)", cab.includes("Novas") && !cab.includes("Pendentes") && !cab.includes("Todas") && !cab.includes("Painel da equipe"));
   // a conversa da Amanda só aparece porque ele foi mencionado nela
   await p.evaluate(id => abrirConversa(id), DA_AMANDA);
   await p.waitForSelector(".zap-topo");

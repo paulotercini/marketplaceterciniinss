@@ -78,7 +78,7 @@ const T = {
   await p.evaluate(() => { zapFiltro = "todas"; irPara("whatsapp"); });
   await p.waitForSelector(".zap-conv");
   const abas = await p.textContent(".zl-cab");
-  conf("filas Minhas, Pendentes, Todas e Encerradas, sem Retornos (29.10.2026)", ["Minhas", "Pendentes", "Todas", "Encerradas"].every(x => abas.includes(x)) && !abas.includes("Retornos"));
+  conf("filas Novas, Minhas, Pendentes, Todas e Encerradas, sem Retornos (29.10.2026)", ["Novas", "Minhas", "Pendentes", "Todas", "Encerradas"].every(x => abas.includes(x)) && !abas.includes("Retornos"));
   const cartao = await p.textContent(`.zap-conv[data-zc="${Z1}"]`);
   conf("o cartão mostra setor, etiqueta e o retorno marcado, no grupo das fixadas", cartao.includes("Jurídico") && cartao.includes("URGENTE") && cartao.includes("Retorno") && (await p.textContent(".zl-lista")).startsWith("Fixadas"));
   await p.evaluate(() => { const d = document.querySelector(".zl-mais"); if (d) d.open = true; }); await p.click('[data-zf="fim"]');
