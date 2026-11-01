@@ -163,7 +163,7 @@ const T = {
   const qc = escritas.find(e => /zap_conversas\?id=eq/.test(e.u) && e.b && e.b.contato_nome === "Maria Ficta");
   conf("guardar grava quem conversa e a relação", qc && qc.b.contato_relacao === "mãe");
   const topoQ = await p.textContent(".zap-topo");
-  conf("o cabeçalho mostra quem fala e por qual cliente", topoQ.includes("Maria Ficta") && topoQ.includes("mãe de Aurélia"));
+  conf("o cabeçalho mostra quem fala e por qual cliente", topoQ.includes("Maria Ficta") && /Cliente: Aurélia[^·]*· escreve o\(a\) mãe/.test(topoQ));
 
   // F192 · foto grande: sobre a tela inteira, fecha com um clique
   await p.evaluate(() => verFotoGrande("data:image/gif;base64,R0lGODlhAQABAAAAACw="));
