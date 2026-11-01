@@ -15591,11 +15591,16 @@ function pintarPainelZap(c){
     const datas = [ev&&[dataSP(ev.data_hora), String(ev.tipo||"").toLowerCase()], k.prazo&&[k.prazo, k.lembrar_motivo||""],
                    lemb&&[lemb, "lembrete"]].filter(Boolean).sort((a,b)=>a[0]<b[0]?-1:1);
     const prox = datas[0];
+    // F355 · o próximo passo do caso (recurso, exigência, análise do INSS, DCB) quando cai em outra data
+    const px = (()=>{ try{ return proximosDoCaso(k)[0]; }catch{ return null; } })();
+    const pre = ehPreCaso(k);
     const lista = listaDe(k)==="—" ? "" : listaDe(k).replace(/^\S+\s/, "");
-    return `<section class="zp-card"><h4>Caso</h4>
+    return `<section class="zp-card"><h4>${pre?"Pré-caso":"Caso"}</h4>
       <div class="zp-tit">${esc(k.beneficio||k.titulo||"Caso")}</div>
       ${lista?`<div class="zp-sub">Lista ${esc(lista)}</div>`:""}
       ${k.etapa?`<div class="zp-etapa"><i></i>Etapa: ${esc(k.etapa)}</div>`:""}
+      ${pre?`<div class="zp-etapa"><i></i>Atendimento: ${esc(passoDoPreCaso(k))}</div>`:""}
+      ${px && (!prox || px.data!==prox[0])?`<div class="zp-kv"><span>Próximo passo</span><b class="${px.alerta||px.data<hoje()?"venc":"prox"}">${esc(px.txt)}</b></div>`:""}
       ${prox?`<div class="zp-kv"><span>Próximo prazo</span><b class="${prox[0]<hoje()?"venc":"prox"}">${dmaZap(prox[0]).slice(0,5)}${prox[1]?` · ${esc(prox[1])}`:""}</b></div>`:""}
       ${resp.length?`<div class="zp-kv"><span>Responsável</span><span>${esc(resp.map(x=>x.nome).join(", "))}</span></div>`:""}
       ${ex && ex.ult ? (ultimoAndZap(ex.ult.get(k.id)) || `<div class="zp-ult"><span>Último andamento</span>nenhum</div>`) : ""}
