@@ -94,7 +94,7 @@ FIX.eventos = [
   conf("o botão «não é caso» mora ao lado do Encerrar (no rodapé)",
     await p.evaluate(() => {
       const rodape = [...document.querySelectorAll(".fatos-processo .fatos-topo")].pop();
-      return rodape && /não é caso/.test(rodape.innerText) && /Encerrar caso/.test(rodape.innerText);
+      return rodape && /não é caso/.test(rodape.textContent) && /Encerrar caso/.test(rodape.textContent);
     }));
 
   // ── 2. F226 · "não é caso" volta a pré-caso: a MESMA linha, nada apagado ──

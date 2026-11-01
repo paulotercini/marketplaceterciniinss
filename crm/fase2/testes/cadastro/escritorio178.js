@@ -77,7 +77,7 @@ const SUPA = "https://ficticio.supabase.co";
     await p.evaluate(() => subCad === "direito" && document.activeElement && document.activeElement.id === "ad-anot"));
 
   // Gerar procurações
-  await p.click(".adr-barra-esc >> text=Gerar procurações");
+  await p.click(".adr-barra-esc button:has-text(\"Gerar procurações\")");
   const rots = await p.$$eval("#modal .adr-ck", ls => ls.map(l => l.textContent.trim()));
   conf("Gerar procurações lista os seis modelos, com o termo e a declaração de não recebimento",
     rots.length === 6 && /Termo de Representação/.test(rots.join("|")) && /Não Recebimento/.test(rots.join("|")) && /Procuração Administrativa/.test(rots.join("|")) && /Procuração Judicial/.test(rots.join("|")));
@@ -88,7 +88,7 @@ const SUPA = "https://ficticio.supabase.co";
     await p.evaluate(() => JSON.stringify(window.__docs) === JSON.stringify([["proc_adm", "proc_judicial", "termo", "beneficiario", "pobreza"]])));
 
   // Criar caso
-  await p.click(".adr-barra-esc >> text=Criar caso");
+  await p.click(".adr-barra-esc button:has-text(\"Criar caso\")");
   const listas = await p.$$eval("#cc-lista option", o => o.map(x => x.textContent));
   conf("Criar caso: a lista não oferece Aposentadorias Futuras nem Pagamentos, e começa no INSS",
     !listas.some(l => /Aposentadorias Futuras|Pagamentos/.test(l)) && listas.includes("Judicial")

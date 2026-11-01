@@ -77,7 +77,7 @@ FIX.casos[0] = { ...FIX.casos[0], beneficio: "" };
   const ops = await p.evaluate(() =>
     [...document.querySelectorAll(".tri-porta .tri-p")].map(x => x.innerText.trim()));
   conf(`as famílias são as opções (${ops.length}), mais o "ainda não sei"`,
-    ops.length >= 12 && ops.includes("BPC/LOAS") && ops.includes("ainda não sei"));
+    ops.length >= 12 && ops.includes("BPC/LOAS") && ops.some(o => o.startsWith("Indefinido")));
   // F127 · a tela mostra um passo por vez; o TRILHO tem uma etapa por passo,
   // e são nove os fixos (entrou o Vínculo com a Previdência hoje)
   conf("antes de responder, ficam só os passos padrão",

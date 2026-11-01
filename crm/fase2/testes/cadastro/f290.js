@@ -60,7 +60,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.check('input[name="sug-tipo"][value="melhoria"]');
   await p.fill("#sug-texto", "O botão de salvar some no celular.");
   await p.setInputFiles("#sug-arq", { name: "print tela.png", mimeType: "image/png", buffer: Buffer.from("png") });
-  await p.click("text=Enviar ao Paulo");
+  await p.click("button:has-text(\"Enviar ao Paulo\")");
   await p.waitForFunction(() => document.getElementById("modal").style.display === "none");
   const g = T.sugestoes_equipe[0] || {};
   conf("grava tipo, texto, autor e tela", g.tipo === "melhoria" && g.texto === "O botão de salvar some no celular." && g.autor && /ficha de/.test(g.tela || ""));
@@ -72,7 +72,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector(".sug-it");
   conf("o titular vê as recebidas", (await p.locator(".sug-it").innerText()).includes("some no celular"));
   conf("o titular vê o anexo", await p.locator(".sug-it >> text=📎 print tela.png").count() === 1);
-  await p.click(".sug-it >> text=marcar como lida");
+  await p.click(".sug-it button:has-text(\"marcar como lida\")");
   await p.waitForFunction(() => !document.querySelector(".sug-it.nova"));
   conf("marca como lida", !!T.sugestoes_equipe[0].lida_em);
 
