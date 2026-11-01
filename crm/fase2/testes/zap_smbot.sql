@@ -46,10 +46,35 @@ insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'b
 insert into r select 's6 cliente vai direto ao menu',
   (select bot_passo = 'smb:inicio' from zap_conversas where id = (select id from v));
 insert into zap_mensagens (conversa_id, direcao, tipo, texto) select id, 'entrada', 'audio', '' from v;
-insert into r select 's7 áudio não suportado', exists (select 1 from bot where texto = 'Mensagem de áudio não suportada.');
-insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', '4' from v;
-insert into r select 's8 financeiro sem mensagem, fila do Financeiro',
+insert into r select 's7 áudio (F350) espera a transcrição, sem responder',
+  not exists (select 1 from bot where texto like 'Mensagem de áudio%')
+  and exists (select 1 from zap_mensagens where conversa_id = (select id from v) and bot_ia = 'audio:smb:inicio');
+update zap_mensagens set texto = 'Quatro.' where conversa_id = (select id from v) and bot_ia = 'audio:smb:inicio';
+insert into r select 's8 áudio transcrito "Quatro.": fila do Financeiro',
   (select setor = 'Financeiro' and atendente_id is null from zap_conversas where id = (select id from v));
+
+-- F350: nome inválido e limite de erros
+delete from v; insert into v select zap_abrir('5516922220004', 'Fulana');
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'oi' from v;
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'Bom dia' from v;
+insert into r select 's10 "Bom dia" não é nome: pede o nome completo de novo',
+  exists (select 1 from bot where texto like '*Por favor, informe seu nome completo%')
+  and (select bot_passo = 'smb:nome' and nome_informado is null from zap_conversas where id = (select id from v));
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'ana paula souza' from v;
+insert into r select 's11 nome completo vale',
+  (select nome_informado = 'ana paula souza' and bot_passo = 'smb:inicio' from zap_conversas where id = (select id from v));
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'hein' from v;
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'como assim' from v;
+insert into r select 's12 duas respostas erradas: ainda no menu',
+  (select bot_passo = 'smb:inicio' from zap_conversas where id = (select id from v));
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'não sei' from v;
+insert into r select 's13 3ª resposta errada: fila do Atendimento, sem atendente',
+  (select setor = 'Atendimento' and atendente_id is null and bot_passo = 'smb:fila' from zap_conversas where id = (select id from v))
+  and exists (select 1 from bot where texto like '*Vou encaminhar%');
+insert into r select 's14 filtro de robôs de empresas ligado',
+  (select valor = 'sim' from config_app where chave = 'zap_filtro_auto');
+insert into r select 's15 nomes', zap_smb_nome_ok('Élio Conceição') and not zap_smb_nome_ok('João')
+  and not zap_smb_nome_ok('quero saber da minha aposentadoria') and not zap_smb_nome_ok('Ana Maria 123');
 
 -- modelo do CRM: o robô de antes
 update config_app set valor = 'crm' where chave = 'zap_robo_modelo';
