@@ -164,4 +164,7 @@ t.test("F332: apagada e editada no WhatsApp", () => {
     editedMessage: { extendedTextMessage: { text: "novo" } } } } } } }), { id: "X3", texto: "novo" });
   a.equal(N.alteracaoDe(pm({ type: 3, key: { id: "X4" } })), null);
   a.equal(N.alteracaoDe({ message: { conversation: "oi" } }), null);
+  // o messages.update do Baileys 6.7 desembrulha a edição: o id vem da chave do aviso
+  a.deepEqual(N.alteracaoDe({ message: { editedMessage: { message: { conversation: "corrigido" } } } }, "X5"), { id: "X5", texto: "corrigido" });
+  a.equal(N.alteracaoDe({ message: { conversation: "oi" } }), null);
 });
