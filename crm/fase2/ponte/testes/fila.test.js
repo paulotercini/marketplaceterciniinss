@@ -168,3 +168,22 @@ t.test("alterar a mensagem do cliente vira erro, sem mandar nada", async () => {
   const [fim] = patchesFinais();
   a.equal(fim.alterar.status, "erro");
 });
+
+// F347 · o reenvio do Baileys perde o atributo "edit"; a ponte manda a alteração de novo
+t.test("pedido de reenvio do apagar: manda o apagar de novo, uma vez só, e não pelo Baileys", async () => {
+  const { mensagemParaReenvio, _usarSocket } = require("../ponte");
+  process.env.PAUSA_REENVIO = "0";
+  fingirBanco();
+  const enviados = [];
+  let n = 0;
+  const zap = { ...zapOk, sendMessage: async (jid, c) => { enviados.push(c); return { key: { id: "WA-DEL-" + (++n) } }; } };
+  _usarSocket(zap);
+  await alterarEnviada({ id: "m1", conversa_id: "c1", externo_id: "WA-1", direcao: "saida", texto: "oi",
+    alterar: { acao: "apagar", status: "fila" } }, zap);
+  a.equal(await mensagemParaReenvio({ id: "WA-DEL-1" }), undefined);   // o aparelho pede várias vezes
+  a.equal(await mensagemParaReenvio({ id: "WA-DEL-1" }), undefined);
+  await new Promise(r => setTimeout(r, 20));
+  a.equal(enviados.length, 2);
+  a.deepEqual(enviados[1].delete, enviados[0].delete);
+  _usarSocket(undefined);
+});

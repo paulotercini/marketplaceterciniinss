@@ -110,8 +110,29 @@ function lembrar(r) {
   enviadas.set(r.key.id, r.message);
   if (enviadas.size > 500) enviadas.delete(enviadas.keys().next().value);
 }
+// F347 · o reenvio do Baileys refaz a mensagem sem o atributo "edit" do envelope, e sem ele o
+// aparelho de quem recebe ignora o apagar e a edição. Por isso o pedido de reenvio de uma
+// alteração não volta pelo Baileys: a ponte manda a alteração de novo, inteira, até 2 vezes.
+const refazer = new Map();             // id da alteração enviada → { jid, conteudo, vez, agendada }
+function lembrarAlteracao(r, jid, conteudo, vez = 0) {
+  if (!r || !r.key || !r.key.id) return;
+  refazer.set(r.key.id, { jid, conteudo, vez });
+  if (refazer.size > 200) refazer.delete(refazer.keys().next().value);
+}
+function refazerAlteracao(id, s = sock, pausa = Number(process.env.PAUSA_REENVIO ?? 3000)) {
+  const a = refazer.get(id);
+  if (!a || a.agendada || a.vez >= 2) return;
+  a.agendada = true;                   // o aparelho pede 3 ou 4 vezes seguidas: manda uma só
+  setTimeout(async () => {
+    try {
+      lembrarAlteracao(await s.sendMessage(a.jid, a.conteudo), a.jid, a.conteudo, a.vez + 1);
+      log("✎ alteração reenviada", id);
+    } catch (e) { log("✗ reenviar alteração:", e.message); }
+  }, pausa).unref?.();
+}
 async function mensagemParaReenvio(key) {
   log("↻ o aparelho pediu reenvio", key.id, enviadas.has(key.id) ? "(na memória)" : "(do banco)");
+  if (refazer.has(key.id)) { refazerAlteracao(key.id); return undefined; }
   if (enviadas.has(key.id)) return enviadas.get(key.id);
   // reiniciou no meio: o texto ainda está no banco (mídia não dá para remontar)
   const [m] = await sb(`/rest/v1/zap_mensagens?select=texto,tipo&externo_id=eq.${encodeURIComponent(key.id)}`).catch(() => []);
@@ -679,11 +700,13 @@ async function alterarEnviada(msg, s = sock) {
     const key = N.chaveDaMensagem(achado.jid, msg);
     const feita = { ...a, status: "feita", feita_em: agora() };
     if (a.acao === "apagar") {
-      lembrar(await s.sendMessage(achado.jid, { delete: key }));
+      const conteudo = { delete: key };
+      lembrarAlteracao(await s.sendMessage(achado.jid, conteudo), achado.jid, conteudo);
       await gravarNaLinha({ apagada_em: agora(), alterar: feita });
     } else if (a.acao === "editar" && a.texto) {
       // a original saiu assinada ("*Dr. Paulo Tercini:*"): a edição troca o texto inteiro, então assina de novo
-      lembrar(await s.sendMessage(achado.jid, { text: assinar(a.texto, await assinaturaDe(msg)), edit: key }));
+      const conteudo = { text: assinar(a.texto, await assinaturaDe(msg)), edit: key };
+      lembrarAlteracao(await s.sendMessage(achado.jid, conteudo), achado.jid, conteudo);
       await gravarNaLinha({ texto: a.texto, texto_antes: msg.texto_antes ?? msg.texto, editada_em: agora(), alterar: feita });
     } else throw new Error("pedido inválido");
     log("✎", a.acao, msg.externo_id);
@@ -919,6 +942,6 @@ if (require.main === module) {
   process.on("unhandledRejection", e => log("erro solto (seguindo):", (e && e.message) || e));
 }
 
-module.exports = { sb, rpc, enviar, alterarEnviada, entrou, gravar, buscarHistoricosPedidos,
+module.exports = { sb, rpc, enviar, alterarEnviada, mensagemParaReenvio, entrou, gravar, buscarHistoricosPedidos,
                    _ligado: v => { ligado = v; }, _pagina: msgs => esperandoPagina && esperandoPagina(msgs), conteudoDaMensagem, paraOgg, assinar, guardarComInsistencia, FILA_LOCAL,
                    _usarSocket: s => { sock = s; } };   // _usarSocket: só os testes
