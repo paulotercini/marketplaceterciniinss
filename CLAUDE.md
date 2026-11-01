@@ -393,6 +393,8 @@ A **F359** (12.25, pedido do Paulo de 01.11.2026): a mensagem recém-enviada gan
 
 A **F360** (12.25, pedido do Paulo de 01.11.2026): a notificação do navegador da mensagem nova do WhatsApp ganhou chave própria no ⋯ da lista, "Notificar no navegador" (`alternarNavZap`, `navZapLigado`, `crm_zap_nav` no navegador, ligada por padrão), separada do aviso sonoro, que antes a desligava junto. Sai também com a aba à vista, salvo na conversa que está aberta, e o clique abre a conversa (`tocarAvisoZap(texto, convId)`). Com o aviso no aparelho (F335) ligado, quem avisa é o `zap_push`. Teste: `zapbotoes.js`.
 
+A **F361** (12.26, pedido do Paulo de 01.11.2026): na conversa sem atendente, o **Assumir** é o primeiro botão do topo, verde, em negrito e com a palavra também no celular (`.zt-assumir`); antes era um link na linha de baixo e, no celular, ficava escondido no cartão Conversa da ficha. A linha de baixo diz "Atendendo: ninguém". Teste: `zapbotoes.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

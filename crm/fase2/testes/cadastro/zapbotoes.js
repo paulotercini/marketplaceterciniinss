@@ -183,9 +183,13 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     conf("as mensagens ocupam ao menos 75 % da tela", await p.$eval("#zap-msgs", e => e.getBoundingClientRect().height / innerHeight) >= 0.75);
     conf("a hora fica na linha do texto da mensagem curta", await p.evaluate(() => { const b = document.querySelector("#zb-m4");
       return b.getBoundingClientRect().height < 36; }));
+    // F361 · ninguém atende: o Assumir fica no topo, verde e com a palavra, também no celular
+    conf("o Assumir fica em destaque no topo da conversa", await vis(".zap-topo .zt-assumir")
+      && (await p.$eval(".zap-topo .zt-assumir", e => e.innerText)).includes("Assumir")
+      && await p.$eval(".zap-topo .zt-assumir", e => getComputedStyle(e).backgroundColor === "rgb(30, 126, 52)"));
+    await p.tap(".zap-topo .zt-assumir"); await p.waitForTimeout(300);
     await p.tap(".zt-id h2"); await p.waitForTimeout(150);
     conf("o nome abre a ficha com o cartão Conversa", await vis(".zp-conv-cel"));
-    await p.tap('.zp-conv-cel button[onclick="assumirConversa()"]'); await p.waitForTimeout(300);
     conf("Assumir a conversa grava", escritas.some(e => /zap_conversas|assumir/.test(e.u)));
     await toca('.zp-conv-cel button[onclick="escolherSetor()"]', "Setor");
     await toca('.zp-conv-cel button[onclick="editarEtiquetas()"]', "Etiqueta");
