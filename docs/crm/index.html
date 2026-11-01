@@ -15175,7 +15175,10 @@ const advDaConversa = c => { const cli = clienteDaConversa(c); if(!cli) return "
 function clienteDaLinha(c){
   const cli = clienteDaConversa(c);
   if(!cli) return "Sem cliente vinculado";
-  return `Cliente: <b>${esc(cli.nome)}</b>${c.contato_nome?` · escreve ${c.contato_relacao?"o(a) "+esc(c.contato_relacao):"outra pessoa"}`:""}`;
+  // o mesmo número pode ser de mais de um cliente (F191, F268): todos aparecem, o dono primeiro
+  const outros = representadosDe(cli, String(c.telefone||"").replace(/\D/g,"").slice(-8)).map(r=>r.x.nome);
+  const nomes = [cli.nome, ...outros], vis = nomes.slice(0, 2).map(n=>`<b>${esc(n)}</b>`).join(" e ");
+  return `${nomes.length>1?"Clientes":"Cliente"}: ${vis}${nomes.length>2?` e mais ${nomes.length-2}`:""}${c.contato_nome?` · escreve ${c.contato_relacao?"o(a) "+esc(c.contato_relacao):"outra pessoa"}`:""}`;
 }
 // o nome do WhatsApp não é o do cliente e ninguém disse quem conversa: pergunta
 function nomeDiferente(c){

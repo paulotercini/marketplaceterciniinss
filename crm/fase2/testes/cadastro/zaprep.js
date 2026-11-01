@@ -84,7 +84,7 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   conf("quem tem outro representante fica de fora", !rep.join("").includes("Carla"));
   conf("o título diz quantos são", (await p.textContent("#zap-painel .zp-rep-tit")).includes("(2)"));
   // F338 · o topo diz quem é o cliente; o ⋯ tem as ações do dia a dia e o resto em "Outras opções"
-  conf("o topo diz quem é o cliente", /Cliente: /.test(await p.$eval(".zt-sub", e => e.textContent)));
+  conf("o topo diz todos os clientes do número, o dono primeiro", /Clientes: Rosa Fictícia Lima e Antônio Fictício Lima e mais 1/.test(await p.$eval(".zt-sub", e => e.textContent)));
   conf("o ⋯ deixa robô, histórico e IA em Outras opções", await p.evaluate(() => { const m = document.querySelector(".zt-menu"), o = m.querySelector(".zt-outras");
     return !!o && /Buscar histórico/.test(o.textContent) && !/Abrir a ficha do cliente/.test(m.textContent); }));
   // F286 · o ⋯ da conversa pede ao celular o histórico antigo
