@@ -385,6 +385,8 @@ A **F355** (o próximo passo e o pré-caso ao lado do WhatsApp, pedido do Paulo 
 
 A **F356** (o "i" da ficha no topo da conversa, pedido do Paulo de 01.11.2026): no celular e na tela até 1279 px, onde a ficha do cliente é gaveta ou tela cheia, o topo da conversa com cliente traz o botão "i" (`.zt-info`, `alternarFichaZap`), que abre a ficha como o toque no nome; no computador largo a ficha fica fixa ao lado e o botão some. Teste: `zapcel.js`.
 
+A **F357** (toda nota interna é menção, pedido do Paulo de 01.11.2026): a nota interna do WhatsApp sem @ avisa em Menções quem atende a conversa e o advogado responsável pelo cliente (`advogadoDoCliente`), com o link da conversa; com @nome, apenas quem foi citado. Quem escreve não se avisa. Teste: `zapgestor.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

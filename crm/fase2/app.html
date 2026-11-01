@@ -15466,7 +15466,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            </div></details>`}
          <div class="ze-caixa">
            <textarea id="zap-txt" rows="2" placeholder="${zapNota
-             ? "Anotação para a equipe. O cliente não vê."
+             ? "Anotação para a equipe, o cliente não vê. Avisa quem atende e o advogado do cliente; @nome avisa outra pessoa."
              : `Escreva para ${esc(c.cliente_id?nomeDaConversa(c).split(" ")[0]:nomeDaConversa(c))}…  digite / para mensagens prontas`}"></textarea>
            <div class="ze-ferr">
              <input type="file" id="zap-arq" hidden onchange="mandarArquivoZap()">
@@ -15965,10 +15965,12 @@ async function enviarZap(){
         : {conversa_id:zapAberta, direcao:"saida", autor_id:eu.id,
            texto:txt, status:"fila", responde_a:zapResponder||null})});
   }catch(e){ t.value = txt; return aviso(msgErro(e)); }
-  // F187 · @Fulano na nota chama a pessoa: aviso em Menções que abre a conversa
-  if(zapNota && /@\p{L}/u.test(txt)){
-    const c = zapConvs.find(x=>x.id===zapAberta);
-    await criarMencoes(`💬 Nota na conversa com ${c?nomeDaConversa(c):"cliente"}: ${txt}`, null, null, [], zapAberta).catch(()=>{});
+  // F187 · @Fulano na nota chama a pessoa. F357 · toda nota é menção: sem @, vai a quem
+  // atende a conversa e ao advogado responsável pelo cliente (decisão do Paulo, 01.11.2026)
+  if(zapNota){
+    const c = zapConvs.find(x=>x.id===zapAberta), cli = clienteDaConversa(c);
+    const quem = /@\p{L}/u.test(txt) ? [] : [c&&c.atendente_id, ...(cli?advogadoDoCliente(cli.id):[])].filter(Boolean);
+    await criarMencoes(`💬 Nota na conversa com ${c?nomeDaConversa(c):"cliente"}: ${txt}`, null, null, quem, zapAberta).catch(()=>{});
   }
   zapResponder = null;
   if(!zapNota){
