@@ -139,7 +139,7 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     conf("a editada diz Editada e guarda o texto de antes", (await p.$eval("#zb-m7 .zap-edit", e => e.title).catch(() => "")).includes("Chego às 9h"));
     await p.evaluate(() => favoritarMsg("m4")); await p.waitForTimeout(200);
     conf("favoritar grava e mostra a estrela", escritas.some(e => /zap_mensagens\?id=eq\.m4/.test(e.u) && e.b && e.b.favorita_em) && !!(await p.$("#zb-m4 .zap-fav")));
-    // F342 · apagar para todos e editar a mensagem enviada
+    // F343 · apagar para todos e editar a mensagem enviada
     await p.evaluate(() => menuBalaoZap("m8")); await p.waitForTimeout(100);
     conf("a enviada há pouco oferece Editar e Apagar", !!(await p.$('[data-zm="ed"]')) && !!(await p.$('[data-zm="ap"]')));
     await p.evaluate(() => fecharCaixa());
