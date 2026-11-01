@@ -296,7 +296,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   const infos = await paulo.evaluate(([a0, a1]) => { const i0 = infoOficial({ and: D._andsFicha.find(a => a.id === a0) }), i1 = infoOficial({ and: D._andsFicha.find(a => a.id === a1) });
     return { d0: i0.destaque, m0: (i0.menu || []).join(""), d1: i1.destaque }; }, [A_S0.id, A_S1.id]);
   conf("o cartão da pauta antiga não oferece agendar; o da remarcação traz o julgamento e a sustentação oral num clique",
-    !infos.d0 && !/Agendar/.test(infos.m0) && /Agendar julgamento com aviso/.test(infos.d1) && /sustentação oral até/.test(infos.d1), infos);
+    !infos.d0 && !/Agendar/.test(infos.m0) && /Agendar<span class="sr-only"> julgamento com aviso/.test(infos.d1) && /sustentação oral até/.test(infos.d1), infos);
 
   // ── 5 · a sustentação oral nos Prazos ─────────────────────────────────────────────────────────────────────────
   const sust = lP.find(x => x.rotulo === "Sustentação oral");
