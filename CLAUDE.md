@@ -377,6 +377,8 @@ A **F345** (a edição e o apagar chegam ao cliente, 01.11.2026): a edição env
 
 A **F347** (o apagar e a edição chegam ao cliente, 01.11.2026): mesmo com a F345, o aparelho de quem recebe pede o reenvio de toda mensagem da ponte, e o reenvio do Baileys (`sendMessagesAgain`) refaz a mensagem sem o atributo `edit` do envelope (7 no apagar, 1 na edição), que o aparelho exige para aplicar a alteração. Agora o pedido de reenvio de uma alteração não volta pelo Baileys: `mensagemParaReenvio` devolve vazio e `refazerAlteracao` manda o apagar ou a edição de novo, inteira, uma vez por pedido e no máximo 2 vezes (`refazer`, `lembrarAlteracao`, `PAUSA_REENVIO`). Vale depois de atualizar a ponte no servidor. Teste: `ponte/testes/fila.test.js`.
 
+A **F349** (a ponte sai depois de gravar as chaves, 01.11.2026): o WhatsApp derruba a conexão com o código 500 a cada 50 minutos, e a ponte sai para o pm2 subi-la de novo; o `process.exit` vinha antes de terminar de gravar as chaves e o creds no disco, e a ponte subia com chaves velhas (Bad MAC, o celular do Paulo pedindo reenvio de toda mensagem e sem Editar até sincronizar). Toda gravação (`keys.set`, `saveCreds`) entra em `gravando` (`seguirGravacao`), e `reiniciar` e o SIGINT/SIGTERM esperam por ela, até 10 s (`esperarGravacoes`). Vale depois de atualizar a ponte no servidor e parear de novo pelo QR. Teste: `ponte/testes/fila.test.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

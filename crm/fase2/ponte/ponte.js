@@ -91,6 +91,22 @@ function fecharSocket(s) {
   try { s.ev.removeAllListeners(); } catch {}
   try { s.end(undefined); } catch {}
 }
+// F349 · as chaves e o creds se gravam no disco sem esperar; sair no meio perdia a última
+// gravação, e a ponte subia com chaves velhas (Bad MAC, o celular pedindo reenvio de tudo).
+// Toda gravação fica na lista, e sair espera por ela (até 10 s).
+const gravando = new Set();
+let salvarCreds = null;
+function seguirGravacao(p) {
+  const q = Promise.resolve(p).catch(e => log("✗ gravar chaves:", e.message));
+  gravando.add(q); q.finally(() => gravando.delete(q));
+  return p;
+}
+async function esperarGravacoes(teto = 10000) {
+  if (salvarCreds) seguirGravacao(salvarCreds());
+  let fim; const prazo = new Promise(r => { fim = setTimeout(r, teto); });
+  await Promise.race([Promise.allSettled([...gravando]), prazo]);
+  clearTimeout(fim);
+}
 // Sob o pm2, recomeçar é sair: ele sobe a ponte de novo em 10 s (restart_delay
 // no ecosystem.config.js), com uma conexão só e a memória limpa
 async function reiniciar(motivo) {
@@ -98,6 +114,7 @@ async function reiniciar(motivo) {
   ligado = false;
   await anotar("zap_status", "reconectando").catch(() => {});
   fecharSocket(sock);
+  await esperarGravacoes();
   process.exit(1);
 }
 
@@ -147,12 +164,14 @@ async function conectar() {
   const pino = require("pino");
 
   const { state, saveCreds } = await useMultiFileAuthState(PASTA);
+  salvarCreds = saveCreds;
+  const chaves = { ...state.keys, set: d => seguirGravacao(state.keys.set(d)) };
   const { version } = await fetchLatestBaileysVersion().catch(() => ({ version: undefined }));
   sock = makeWASocket({
     // F345 · as chaves de criptografia em cache na memória, como o Baileys recomenda:
     // gravadas arquivo por arquivo a cada mensagem, o reinício perdia gravações e o
     // celular do cliente não abria a edição e o apagar ("Aguardando mensagem", Bad MAC)
-    version, auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "silent" })) },
+    version, auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(chaves, pino({ level: "silent" })) },
     logger: pino({ level: "silent" }),
     // aparecer como um navegador comum é o comportamento normal de quem usa
     // o WhatsApp Web; nada aqui manda mensagem sozinho
@@ -163,7 +182,7 @@ async function conectar() {
     getMessage: mensagemParaReenvio,
   });
 
-  sock.ev.on("creds.update", saveCreds);
+  sock.ev.on("creds.update", () => seguirGravacao(saveCreds()));
 
   sock.ev.on("connection.update", async u => {
     const { connection, lastDisconnect, qr } = u;
@@ -934,7 +953,7 @@ if (require.main === module) {
   setInterval(() => buscarHistoricosPedidos().catch(e => log("histórico pedido:", e.message)), 30000);
   setInterval(() => reprocessarPendentes(require("@whiskeysockets/baileys").downloadMediaMessage)
     .catch(e => log("fila do servidor:", e.message)), 300000);
-  const tchau = async s => { log("saindo por", s); await anotar("zap_status", "parada"); process.exit(0); };
+  const tchau = async s => { log("saindo por", s); await anotar("zap_status", "parada"); fecharSocket(sock); await esperarGravacoes(); process.exit(0); };
   process.on("SIGINT", () => tchau("SIGINT"));
   process.on("SIGTERM", () => tchau("SIGTERM"));
   // o Baileys às vezes rejeita uma promessa do socket que já morreu (retry de
@@ -944,4 +963,4 @@ if (require.main === module) {
 
 module.exports = { sb, rpc, enviar, alterarEnviada, mensagemParaReenvio, entrou, gravar, buscarHistoricosPedidos,
                    _ligado: v => { ligado = v; }, _pagina: msgs => esperandoPagina && esperandoPagina(msgs), conteudoDaMensagem, paraOgg, assinar, guardarComInsistencia, FILA_LOCAL,
-                   _usarSocket: s => { sock = s; } };   // _usarSocket: só os testes
+                   _usarSocket: s => { sock = s; }, seguirGravacao, esperarGravacoes };   // _usarSocket: só os testes
