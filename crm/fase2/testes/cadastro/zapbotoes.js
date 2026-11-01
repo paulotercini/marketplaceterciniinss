@@ -26,6 +26,7 @@ const T = {
     { id: "m5", seq: 5, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Veja https://www.gov.br/inss.", status: "entregue", criado_em: agora },
     { id: "m6", seq: 6, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Esqueci o que disse", status: "entregue", criado_em: agora, apagada_em: agora },
     { id: "m7", seq: 7, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Chego às 10h", texto_antes: "Chego às 9h", editada_em: agora, status: "entregue", criado_em: agora },
+    { id: "m8", seq: 8, conversa_id: CONV, direcao: "saida", tipo: "texto", texto: "Amanha as 9h", externo_id: "WA8", status: "enviada", enviada_em: agora, criado_em: agora },
     { id: "m2", seq: 2, conversa_id: CONV, direcao: "saida", tipo: "documento", texto: null, midia_url: "zap/x/contrato.pdf", midia_nome: "contrato.pdf", status: "enviada", criado_em: agora }],
 };
 T.zap_setores = [{ id: "s1", nome: "Jurídico", cor: "#2a6", ativo: true, ordem: 1 }];
@@ -138,6 +139,20 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     conf("a editada diz Editada e guarda o texto de antes", (await p.$eval("#zb-m7 .zap-edit", e => e.title).catch(() => "")).includes("Chego às 9h"));
     await p.evaluate(() => favoritarMsg("m4")); await p.waitForTimeout(200);
     conf("favoritar grava e mostra a estrela", escritas.some(e => /zap_mensagens\?id=eq\.m4/.test(e.u) && e.b && e.b.favorita_em) && !!(await p.$("#zb-m4 .zap-fav")));
+    // F343 · apagar para todos e editar a mensagem enviada
+    await p.evaluate(() => menuBalaoZap("m8")); await p.waitForTimeout(100);
+    conf("a enviada há pouco oferece Editar e Apagar", !!(await p.$('[data-zm="ed"]')) && !!(await p.$('[data-zm="ap"]')));
+    await p.evaluate(() => fecharCaixa());
+    await p.evaluate(() => menuBalaoZap("m4")); await p.waitForTimeout(100);
+    conf("a do cliente não oferece Editar nem Apagar", !(await p.$('[data-zm="ed"]')) && !(await p.$('[data-zm="ap"]')));
+    await p.evaluate(() => fecharCaixa());
+    await p.evaluate(() => editarMsgZap("m8")); await p.waitForTimeout(100);
+    await p.fill("#zx-txt", "Amanhã às 9h"); await p.click("#zx-ok"); await p.waitForTimeout(200);
+    conf("Editar grava o pedido com o texto novo", escritas.some(e => /zap_mensagens\?id=eq\.m8/.test(e.u) && e.b && e.b.alterar && e.b.alterar.acao === "editar" && e.b.alterar.texto === "Amanhã às 9h" && e.b.alterar.status === "fila"));
+    conf("o balão diz que está editando", /editando/.test(await p.$eval("#zb-m8", e => e.textContent)));
+    await p.evaluate(() => { const m = zapMsgs.find(x => x.id === "m8"); m.alterar = null; window.confirm = () => true; });
+    await p.evaluate(() => apagarMsgZap("m8")); await p.waitForTimeout(200);
+    conf("Apagar grava o pedido de apagar para todos", escritas.some(e => /zap_mensagens\?id=eq\.m8/.test(e.u) && e.b && e.b.alterar && e.b.alterar.acao === "apagar"));
     await p.evaluate(() => verFavoritasZap()); await p.waitForTimeout(100);
     conf("a lista de favoritas traz a mensagem", (await p.$$(".zap-fav-it")).length === 1);
     await p.evaluate(() => fecharCaixa());
