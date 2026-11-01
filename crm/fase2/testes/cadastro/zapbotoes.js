@@ -111,6 +111,8 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
       el.dispatchEvent(new TouchEvent("touchstart", { touches: [t], changedTouches: [t], bubbles: true })); });
     await p.waitForTimeout(650);
     conf("segurar o balão abre os emojis e as ações", await vis(".zm-emojis") && await vis('.zm-acoes [data-zm="r"]') && await vis('.zm-acoes [data-zm="c"]'));
+    conf("o ✕ da janela de segurar fica dentro da tela", await p.evaluate(() => { const b = document.querySelector("#modal .modal-cab>.btn-mini"), r = b && b.getBoundingClientRect();
+      return !!r && r.width > 0 && r.right <= innerWidth && document.elementFromPoint(r.left + r.width/2, r.top + r.height/2)?.closest(".btn-mini") === b; }));
     await p.tap('.zm-emojis [data-zm-r="👍"]'); await p.waitForTimeout(300);
     conf("o emoji do menu grava a reação", escritas.some(e => /zap_reacoes/.test(e.u) && e.b && e.b.emoji === "👍" && e.b.mensagem_id === "m4"));
     await p.evaluate(() => document.dispatchEvent(new TouchEvent("touchend", { bubbles: true })));

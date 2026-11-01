@@ -1347,14 +1347,13 @@ drop trigger if exists zap_zbot_ins on zap_mensagens;
 create trigger zap_zbot_ins after insert on zap_mensagens
   for each row execute function zap_bot();
 
--- Colaborador que responde assume a conversa e cala o bot na mesma hora.
+-- Colaborador que responde cala o bot na mesma hora. F339: responder não assume a
+-- conversa; assumir é o botão "Assumir a conversa" (zap_assumir).
 create or replace function zap_humano_assumiu() returns trigger
 language plpgsql as $$
 begin
   if new.direcao='saida' and new.autor_id is not null and not new.por_bot then
-    update zap_conversas
-       set bot_ativo=false, atendente_id=coalesce(atendente_id, new.autor_id)
-     where id=new.conversa_id;
+    update zap_conversas set bot_ativo=false where id=new.conversa_id;
   end if;
   return new;
 end $$;
