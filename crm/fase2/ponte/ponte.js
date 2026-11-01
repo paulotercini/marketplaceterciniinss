@@ -659,6 +659,34 @@ async function reagir(r, s = sock) {
   }
 }
 
+// F342 · apagar para todos e editar a mensagem que o escritório enviou: o CRM
+// grava o pedido em `alterar` e a ponte o cumpre. O prazo (apagar ~2 dias,
+// editar 15 minutos) é do WhatsApp; fora dele, o pedido vira erro.
+async function alterarEnviada(msg, s = sock) {
+  const a = msg.alterar || {};
+  const gravarNaLinha = corpo => sb(`/rest/v1/zap_mensagens?id=eq.${msg.id}`, { method: "PATCH",
+    headers: { Prefer: "return=minimal" }, body: JSON.stringify(corpo) });
+  try {
+    if (!msg.externo_id || msg.direcao !== "saida") throw new Error("mensagem sem id no WhatsApp");
+    const [c] = await sb(`/rest/v1/zap_conversas?id=eq.${msg.conversa_id}&select=telefone`);
+    const [achado] = c ? await s.onWhatsApp(N.soDigitos(c.telefone)) : [];
+    if (!achado || !achado.exists) throw new Error("número não tem WhatsApp");
+    const key = N.chaveDaMensagem(achado.jid, msg);
+    const feita = { ...a, status: "feita", feita_em: agora() };
+    if (a.acao === "apagar") {
+      lembrar(await s.sendMessage(achado.jid, { delete: key }));
+      await gravarNaLinha({ apagada_em: agora(), alterar: feita });
+    } else if (a.acao === "editar" && a.texto) {
+      lembrar(await s.sendMessage(achado.jid, { text: a.texto, edit: key }));
+      await gravarNaLinha({ texto: a.texto, texto_antes: msg.texto_antes ?? msg.texto, editada_em: agora(), alterar: feita });
+    } else throw new Error("pedido inválido");
+    log("✎", a.acao, msg.externo_id);
+  } catch (e) {
+    log("✗ alterar:", e.message);
+    await gravarNaLinha({ alterar: { ...a, status: "erro", erro: String(e.message).slice(0, 300) } }).catch(() => {});
+  }
+}
+
 async function rodarFila() {
   for (;;) {
     try {
@@ -677,6 +705,9 @@ async function rodarFila() {
         for (const msg of fila || []) await enviar(msg);
         const reacoes = await sb("/rest/v1/zap_reacoes?status=eq.fila&de=eq.escritorio&select=id,mensagem_id,emoji&limit=5");
         for (const r of reacoes || []) await reagir(r);
+        const alteracoes = await sb("/rest/v1/zap_mensagens?alterar->>status=eq.fila"
+          + "&select=id,conversa_id,externo_id,direcao,texto,texto_antes,alterar&limit=5");
+        for (const m of alteracoes || []) await alterarEnviada(m);
       }
     } catch (e) { log("fila:", e.message); }
     await espera(INTERVALO);
@@ -882,6 +913,6 @@ if (require.main === module) {
   process.on("unhandledRejection", e => log("erro solto (seguindo):", (e && e.message) || e));
 }
 
-module.exports = { sb, rpc, enviar, entrou, gravar, buscarHistoricosPedidos,
+module.exports = { sb, rpc, enviar, alterarEnviada, entrou, gravar, buscarHistoricosPedidos,
                    _ligado: v => { ligado = v; }, _pagina: msgs => esperandoPagina && esperandoPagina(msgs), conteudoDaMensagem, paraOgg, assinar, guardarComInsistencia, FILA_LOCAL,
                    _usarSocket: s => { sock = s; } };   // _usarSocket: só os testes
