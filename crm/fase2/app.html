@@ -407,6 +407,8 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   #conteudo-meio{flex:1}
   /* 11.92 · VCP-01 e VCE-04: o fim da lista e da ficha rola acima dos flutuantes (⚡, ✎, ?, Agenda), que cobriam a ⭐ e o "abrir" */
   #conteudo-meio::after,.det-rolagem::after{content:"";display:block;height:150px}
+  /* F344 · o WhatsApp tem altura fixa e rola por dentro: a reserva fazia a tela inteira rolar e cortar o topo */
+  .meio.zap-v #conteudo-meio::after{display:none}
   /* ＋ Adicionar: sempre no pé da lista, como no To Do */
   .add-rodape{position:sticky;bottom:0;margin:12px -22px -18px;padding:12px 22px 14px;
     display:flex;gap:8px;align-items:center;background:inherit;
@@ -6190,7 +6192,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.18</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.19</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
