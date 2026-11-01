@@ -18,7 +18,8 @@ const T = {
     { id: FILHO, nome: "Pedro Fictício Lima", cpf: "22233344405", campos: { representante: { nome: "Rosa Fictícia Lima", cpf: "111.222.333-96", qualidade: "mãe" } } },
     { id: AVO, nome: "Antônio Fictício Lima", cpf: "33344455514", telefones: [{ numero: "16999990002", obs: "é a nora, cuida do benefício" }] },
     { id: OUTRO, nome: "Carla Fictícia Souza", cpf: "44455566623", campos: { representante: { nome: "Outra Pessoa", cpf: "99988877766" } } }],
-  casos: [...(FIX.casos || []), { id: "k9000000-0000-0000-0000-000000000001", cliente_id: MAE, fase: "inss", beneficio: "B31", etapa: "aguardando perícia" }],
+  casos: [...(FIX.casos || []), { id: "k9000000-0000-0000-0000-000000000001", cliente_id: MAE, fase: "inss", beneficio: "B31", etapa: "aguardando perícia", exigencia_prazo: "2099-12-10" },
+    { id: "k9000000-0000-0000-0000-000000000002", cliente_id: MAE, fase: "escritorio", pre_caso: true, beneficio: "B41", precaso: { etapas: { identificacao: { em: "2026-10-30" } } } }],
   credenciais: [{ id: "cr1", cliente_id: MAE, tipo: "meu_inss", valor: "Senha@Ficticia1" }],
   andamentos: [{ caso_id: "k9000000-0000-0000-0000-000000000001", texto: "Perícia agendada para 10/11", criado_em: agora, autor_id: null }],
   zap_conversas: [{ id: CONV, telefone: "5516999990002", chave: "99990002", nome_perfil: "Rosa", cliente_id: MAE,
@@ -85,6 +86,8 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   conf("a senha do Meu INSS aparece e o ver fica registrado", painel.includes("Senha@Ficticia1") && escritas.some(e => /credencial_vis/.test(e.u)));
   conf("o que esperamos do cliente aparece", /Aguardando do cliente \(1\)/.test(painel) && painel.includes("Laudo do ortopedista"));
   conf("cada caso mostra o último andamento", /Último andamento/.test(painel) && painel.includes("Perícia agendada para 10/11"));
+  conf("o próximo passo do caso aparece", painel.includes("Cumprir a exigência até 10/12/2099"));
+  conf("o pré-caso diz em que passo do atendimento está", /Pré-caso/.test(painel) && painel.includes("Atendimento: Primeiro atendimento"));
   const rep = await p.$$eval("#zap-painel .zp-rep", es => es.map(e => e.textContent));
   conf("abaixo, os dois clientes que ela representa", rep.length === 2 && rep[0].includes("Antônio") && rep[1].includes("Pedro"));
   conf("o representante gravado na ficha conta pelo CPF, com a qualidade", rep[1].includes("representante (mãe)"));

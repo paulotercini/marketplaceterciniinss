@@ -381,6 +381,10 @@ A **F349** (a ponte sai depois de gravar as chaves, 01.11.2026): o WhatsApp derr
 
 A **F354** (a ficha ao lado do WhatsApp, pedido do Paulo de 01.11.2026): o painel da direita da conversa mostra o CPF inteiro (copia no clique), a senha do Meu INSS à vista (copia no clique; o ver fica em `credencial_vis`, como o "ver" da ficha), o advogado responsável, "Aguardando do cliente" (os papéis pedidos e não entregues, de `pedidosDoBalcao`) e, em cada caso aberto, o último andamento com a data e o autor (`carregarExtraZap`, `_zpExtra`, uma busca por cliente na sessão; `ultimoAndZap`). Teste: `zaprep.js`.
 
+A **F355** (o próximo passo e o pré-caso ao lado do WhatsApp, pedido do Paulo de 01.11.2026): o cartão de cada caso do painel da direita mostra também o próximo passo de `proximosDoCaso` (recurso, exigência, análise do INSS, DCB) quando cai em data diferente do próximo prazo, e o pré-caso se diz "Pré-caso" com o passo do atendimento (`passoDoPreCaso`). Teste: `zaprep.js`.
+
+A **F356** (o "i" da ficha no topo da conversa, pedido do Paulo de 01.11.2026): no celular e na tela até 1279 px, onde a ficha do cliente é gaveta ou tela cheia, o topo da conversa com cliente traz o botão "i" (`.zt-info`, `alternarFichaZap`), que abre a ficha como o toque no nome; no computador largo a ficha fica fixa ao lado e o botão some. Teste: `zapcel.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
