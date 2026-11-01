@@ -375,6 +375,8 @@ A **F344** (12.19, pedido do Paulo de 01.11.2026): a tela do WhatsApp do computa
 
 A **F345** (a edição e o apagar chegam ao cliente, 01.11.2026): a edição enviada pela ponte aparecia ao destinatário como "Aguardando mensagem" e o apagar não acontecia, porque o aparelho dele não abria o aviso; o servidor somava 362 reinícios e 22 mil "Bad MAC". A ponte passou a guardar as chaves de criptografia com `makeCacheableSignalKeyStore` (cache na memória, gravação no arquivo), como o Baileys recomenda, e registra no log cada pedido de reenvio do aparelho (`mensagemParaReenvio`). A edição sai assinada como a original (`assinar`, `assinaturaDe`). Vale depois de atualizar a ponte no servidor. Teste: `ponte/testes/fila.test.js`.
 
+A **F347** (o apagar e a edição chegam ao cliente, 01.11.2026): mesmo com a F345, o aparelho de quem recebe pede o reenvio de toda mensagem da ponte, e o reenvio do Baileys (`sendMessagesAgain`) refaz a mensagem sem o atributo `edit` do envelope (7 no apagar, 1 na edição), que o aparelho exige para aplicar a alteração. Agora o pedido de reenvio de uma alteração não volta pelo Baileys: `mensagemParaReenvio` devolve vazio e `refazerAlteracao` manda o apagar ou a edição de novo, inteira, uma vez por pedido e no máximo 2 vezes (`refazer`, `lembrarAlteracao`, `PAUSA_REENVIO`). Vale depois de atualizar a ponte no servidor. Teste: `ponte/testes/fila.test.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
