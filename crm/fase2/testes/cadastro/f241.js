@@ -107,7 +107,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const adiante = [90, 60, 40].map(d => br(iso(d)));
   // F335 · um prazo de cada vez: à vista só o próximo; o vencido conta no "Ver as outras", em vermelho
   conf(`à vista só o próximo, e não os de longe (${z.vis.join(", ")})`, z.vis.length === 1 && z.vis.includes(br(iso(3))) && !adiante.some(d => z.vis.includes(d)));
-  conf(`o resto em "Ver as outras N datas", recolhido, com a vencida (${z.bt})`, /Ver as outras \d+ datas/.test(z.bt) && /vencida/.test(z.bt));
+  conf(`o resto em "Ver as outras N datas", recolhido, com a vencida (${z.bt})`, /\+\d+ datas/.test(z.bt) && /vencida/.test(z.bt));
   const q = s => s.split("/").reverse().join("");
   const resto = z.todos.slice(1);
   conf("F254 · depois do prazo fatal, a ordem é crescente", resto.every((d, i) => !i || q(resto[i - 1]) <= q(d)) && adiante.every(d => z.todos.includes(d)));

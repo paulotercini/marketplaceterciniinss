@@ -121,7 +121,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a janela abre por cima da aba, com o véu, em 480 px", jan.sobre && jan.veu && jan.larg === 480);
   conf("o título é o do catálogo e o quanto falta vem em dias úteis", /Recurso ao CRPS/.test(jan.h2) && jan.uteis);
   conf("a conta do catálogo explica a data", /30 dias corridos/.test(jan.conta));
-  conf("o principal é Cumpri o prazo", /Cumpri o prazo/.test(jan.pri));
+  conf("o principal é Cumpri o prazo", /Cumprido/.test(jan.pri));
   conf("a tarefa de quem faz traz o estado e as etapas", jan.tarefa && jan.etapas === 2);
   conf("o histórico traz a anotação, a tarefa e a etapa", jan.hist >= 3);
   await foto("02-janela");
@@ -169,7 +169,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const venc = await p.evaluate(() => { const li = document.querySelector(".timeline li.tl-pz-venc");
     return { li: !!li, al: (li && li.querySelector('.tl-pz-alerta[role="alert"]') || {}).textContent || "", ok: document.querySelectorAll(".timeline .tl-pz-ok").length }; });
   conf("o vencido sem registro tem o cartão vermelho e o alerta", venc.li && /venceu/.test(venc.al) && /A tarefa de Marcos segue aberta/.test(venc.al)
-    && /Foi cumprido/.test(venc.al) && /Não foi cumprido/.test(venc.al));
+    && /Cumprido/.test(venc.al) && /Perdido/.test(venc.al));
   conf("a réplica cumprida pela resposta antiga aparece cumprida", venc.ok === 1);
   await foto("06-vencido");
   await p.evaluate(id => registrarNaoCumprido(id, document.querySelector(".timeline li.tl-pz-venc .tl-pz-nao").getAttribute("onclick").match(/'([^']+)'\)$/)[1]), kA2.id);
@@ -240,7 +240,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     return { bts: vis.map(b => b.textContent.trim()), dentro: vis.every(b => b.getBoundingClientRect().right <= 391), x: el.getBoundingClientRect().left,
       larg: document.documentElement.scrollWidth }; });
   conf("no celular a janela da minha tarefa tem só Concluir e o ⋯, dentro da tela", peAd.dentro && peAd.x === 0 && peAd.larg <= 390
-    && peAd.bts.some(t => /Concluir a minha tarefa/.test(t)) && !peAd.bts.some(t => /✔ feito|✎ escrever/.test(t)));
+    && peAd.bts.some(t => /^\W*Concluir$/.test(t.trim())) && !peAd.bts.some(t => /✔ feito|✎ escrever/.test(t)));
   if (!peAd.dentro || peAd.x) console.log(JSON.stringify(peAd));
   await p.evaluate(() => { const c = document.querySelector("#painel-prazo .ppz-corpo"); c.parentNode.scrollTop = 1e5; document.getElementById("painel-prazo").scrollTop = 1e5; });
   await foto("10-celular-minha-tarefa");
@@ -293,11 +293,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   if (!(itens.length >= 2)) console.log(JSON.stringify(itens));
   const item = async re => { await p.click("#painel-prazo .pp-mais > summary, #painel-prazo .pp-mais button").catch(() => {}); await p.waitForTimeout(150);
     return p.evaluate(src => { const b = [...document.querySelectorAll("#painel-prazo .pp-sec-bt")].find(x => new RegExp(src).test(x.textContent)); if (b) b.click(); return !!b; }, re.source); };
-  conf("7 · Corrigir a data abre a caixa com a data por cima", await item(/Corrigir a data/) && await p.waitForSelector("#modal input[type=date], .caixa input[type=date]", { timeout: 2000 }).then(() => true, () => false)
+  conf("7 · Corrigir a data abre a caixa com a data por cima", await item(/Corrigir/) && await p.waitForSelector("#modal input[type=date], .caixa input[type=date]", { timeout: 2000 }).then(() => true, () => false)
     && await noAlto("#modal input[type=date]"));
   await fecharCx(); await p.waitForTimeout(200);
   if (!await aberta()) await abrirCel();
-  conf("7 · Não se aplica abre a caixa do motivo por cima", await item(/Não se aplica/) && await p.waitForSelector("#pzs-txt", { timeout: 2000 }).then(() => true, () => false) && await noAlto("#pzs-txt"));
+  conf("7 · Não se aplica abre a caixa do motivo por cima", await item(/Dispensar/) && await p.waitForSelector("#pzs-txt", { timeout: 2000 }).then(() => true, () => false) && await noAlto("#pzs-txt"));
   await fecharCx(); await p.waitForTimeout(200);
   if (!await aberta()) await abrirCel();
   conf("7 · Abrir o caso fecha a janela e abre o caso", await item(/Abrir o caso/) && await p.waitForTimeout(500).then(aberta).then(v => !v)

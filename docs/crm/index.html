@@ -6182,7 +6182,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.13</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.14</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -13580,7 +13580,7 @@ function porClienteDia(g){
   return [...grupos.values()].map(its=>{ if(its.length<2) return linhaAgenda(its[0]);
     const p = pri(its), resto = its.filter(x=>x!==p);
     return `<div class="ag-grupo-cli"><div class="ag-cli-cab cartao" data-cli="${its[0].cli.id}"><b>${esc(its[0].cli.nome)}</b> <span class="pl-n">${its.length}</span></div>`
-      + linhaAgenda(p) + `<details class="ag-mais-cli"><summary>+${resto.length} deste cliente</summary>${resto.map(linhaAgenda).join("")}</details></div>`; }).join("");
+      + linhaAgenda(p) + `<details class="ag-mais-cli"><summary title="outros itens deste cliente">+${resto.length}</summary>${resto.map(linhaAgenda).join("")}</details></div>`; }).join("");
 }
 function avisoSeMeuDia(planej){ return planej ? "" : avisoCRPS(); }
 // F295 · o resumo de ontem (Onda D do fluxo do To Do): no último dia útil, quantas anotações eu fiz, em quantos
@@ -37177,7 +37177,7 @@ function pzHero(x){
       <div class="pzc-hero-n">${f.pre && f.pre!=="vence" ? `<small>${esc(f.pre)}</small>` : ""}<b>${esc(String(f.n))}</b><span>${esc(f.un)}</span><em>${esc(diaAnoPz(x.data))}</em></div>
     </div>
     ${barraPz(inicioDaLinha(x), x, "pzc")}
-    <div class="pzc-hero-pe"><button type="button" class="pzc-pri" onclick="abrirPainelPrazo(${i},'cli')">Abrir o prazo</button>${meta ? `<span class="pzc-nota">${esc(meta)}</span>` : ""}</div>
+    <div class="pzc-hero-pe"><button type="button" class="pzc-pri" onclick="abrirPainelPrazo(${i},'cli')" title="Abrir o prazo">Abrir</button>${meta ? `<span class="pzc-nota">${esc(meta)}</span>` : ""}</div>
   </section>`;
 }
 function pzConteudo(cliId){
@@ -37376,7 +37376,7 @@ function faixaPrazos(k){
   const fora = soltas.filter(x=>x.casoId && x.casoId!==k.id).length;
   // F333 · os outros casos do cliente vão ao pé do quadro, com quantos venceram, e levam à aba Prazos
   const nForaV = soltas.filter(x=>x.casoId && x.casoId!==k.id && x.data<hj && !x.aConfirmar).length;
-  const outros = fora ? `<div class="fp3-out"><span>Outros casos do cliente: ${fora} ${fora===1?"data":"datas"}${nForaV ? `, <b>${nForaV} ${nForaV===1?"vencida":"vencidas"}</b>` : ""}</span><button type="button" class="btn-mini fp-outros" onclick="abaAtiva=5;repintarFicha()" title="ver as datas de todos os casos do cliente">ver todos</button></div>` : "";
+  const outros = fora ? `<div class="fp3-out"><span>Outros casos do cliente: ${fora} ${fora===1?"data":"datas"}${nForaV ? `, <b>${nForaV} ${nForaV===1?"vencida":"vencidas"}</b>` : ""}</span><button type="button" class="btn-mini fp-outros" onclick="abaAtiva=5;repintarFicha()" title="ver as datas de todos os casos do cliente">Todos</button></div>` : "";
   const sug = sugestaoPrazoEtapa(k, soltas);
   const tit = `<div class="fp-cab"><h3 class="fp-tit">Prazos deste caso</h3>${conf ? `<details class="tl-mais fp-menu"><summary class="tl-bt tl-bt-ic" aria-label="Conferir o caso" title="conferir o caso: sem novidade ou movimentou">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${conf}</span></details>` : ""}</div>`;
   if(!minhas.length) return `<div class="faixa-prazos vazia" aria-label="Prazos e providências">${tit}
@@ -37409,7 +37409,7 @@ function faixaPrazos(k){
       <span class="fp3-sobre"><span class="fp2-bola" aria-hidden="true"></span> ${pend(x) ? "Prazo fatal vencido" : "Próximo prazo fatal"}</span>
       <div class="fp3-ht"><b class="fp3-tit">${esc(titulo)}</b><span class="fp3-n">${f.pre && f.pre!=="vence" ? `<small>${esc(f.pre)}</small>` : ""}<strong aria-hidden="true">${esc(String(f.n))}</strong><span aria-hidden="true">${esc(f.un)}</span><span class="fp2-sr">${esc(f.txt)}</span></span></div>
       ${barraPz(inicioDaLinha(x), x, "fp3") || `<div class="fp3-bl"><span>Vence · ${esc(diaCurtoPz(x.data))}</span></div>`}
-      <div class="fp3-pe"><button type="button" class="fp3-pri fp2-mais pz-mais" onclick="abrirPainelPrazo(${i})">Abrir o prazo</button>${x.cumprir ? `<button type="button" class="fp3-sec" onclick="${x.cumprir}">Cumpri o prazo</button>` : ""}</div>
+      <div class="fp3-pe"><button type="button" class="fp3-pri fp2-mais pz-mais" onclick="abrirPainelPrazo(${i})" title="Abrir o prazo">Abrir</button>${x.cumprir ? `<button type="button" class="fp3-sec" onclick="${x.cumprir}" title="Registrar que o prazo foi cumprido">Cumprido</button>` : ""}</div>
     </div>`;
     return `<div class="${cls}" ${dados}>
       <span class="fp2-bola" aria-hidden="true"></span>
@@ -37431,7 +37431,7 @@ function faixaPrazos(k){
     .filter(([,g])=>g.length);
   const cab = (rot, n) => `<h4 class="fp2-g">${rot} <span class="pl-n">${n}</span></h4>`;
   const nResto = grupos.reduce((n,[,g])=>n+g.length, 0), nRestoV = grupos.filter(([,,t])=>t==="venc").reduce((n,[,g])=>n+g.length, 0);
-  const blocos = !nResto ? "" : `<details class="fp-resto"${_pzTodos.has(k.id)?" open":""} ontoggle="this.open?_pzTodos.add('${k.id}'):_pzTodos.delete('${k.id}')"><summary>Ver as outras ${nResto} ${nResto===1?"data":"datas"}${nRestoV ? ` · <b class="fp-resto-v">${nRestoV} ${nRestoV===1?"vencida":"vencidas"}</b>` : ""}</summary>`
+  const blocos = !nResto ? "" : `<details class="fp-resto"${_pzTodos.has(k.id)?" open":""} ontoggle="this.open?_pzTodos.add('${k.id}'):_pzTodos.delete('${k.id}')"><summary title="ver as outras datas">+${nResto} ${nResto===1?"data":"datas"}${nRestoV ? ` · <b class="fp-resto-v">${nRestoV} ${nRestoV===1?"vencida":"vencidas"}</b>` : ""}</summary>`
     + grupos.map(([rot, g, tom]) => `<section class="fp2-grupo"${tom?` data-tom="${tom}"`:""}>${cab(rot, g.length)}${g.map(x=>linha(x)).join("")}</section>`).join("") + `</details>`;
   const regra = `<p class="fp-regra meio-sub">Anotação com ⏰ cria o prazo fatal; anotação com data cria o lembrete; Concluir por hoje marca a volta à fila.</p>`;
   const sem = destaque ? "" : `<p class="fp2-sem meio-sub">Sem prazo fatal em aberto neste caso.</p>`;
@@ -37464,7 +37464,7 @@ function sugestaoPrazoEtapa(k, soltas){
   if((soltas||[]).some(x=>x.casoId===k.id && natDaLinha(x)==="fatal" && x.data>=hoje())) return "";
   return `<div class="fp3-etapa" role="note"><span class="fp3-sobre">Pela etapa “${esc(k.etapa)}”</span>
     <b>${esc(s.item.rot)}</b><small>${esc(textoContagemPz(s.item.n, s.item.uteis, s.de, s.fatal, s.item.dec))}</small>
-    <div class="fp3-pe"><button type="button" class="fp3-pri" onclick="criarPrazoDaEtapa('${k.id}')">Criar o prazo</button><button type="button" class="fp3-sec" onclick="_pzEtapaFora.add('${k.id}|'+${JSON.stringify(k.etapa).replace(/"/g,"&quot;")});repintarFicha()">Não se aplica</button></div></div>`;
+    <div class="fp3-pe"><button type="button" class="fp3-pri" onclick="criarPrazoDaEtapa('${k.id}')" title="Criar o prazo desta etapa">Criar</button><button type="button" class="fp3-sec" onclick="_pzEtapaFora.add('${k.id}|'+${JSON.stringify(k.etapa).replace(/"/g,"&quot;")});repintarFicha()" title="Este prazo não se aplica ao caso">Dispensar</button></div></div>`;
 }
 function criarPrazoDaEtapa(casoId){
   const k = D.casoPorId.get(casoId), s = k && prazoDaEtapa(k); if(!s) return;
@@ -37700,18 +37700,18 @@ function abrirPainelPrazo(i, fonte){
         onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();comentarNoPrazo('${x.casoId}','${x.andId||""}')}"></textarea>
       <button type="button" class="ppz-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Comentar</button></section>` : "";
   // O PÉ: "Cumpri o prazo" (o prazo fatal do caso) ou "Concluir a minha tarefa"; as ações da linha; "Abrir o caso"; o ⋯
-  const principal = x.cumprir ? `<button type="button" class="pp-pri" onclick="${fechar};${x.cumprir}">${IC_OK_PZ}Cumpri o prazo</button>`
-    : minha && !gq ? `<button type="button" class="pp-pri" onclick="${fechar};concluirDeVez('${minha.id}')">${IC_OK_PZ}Concluir a minha tarefa</button>` : "";
+  const principal = x.cumprir ? `<button type="button" class="pp-pri" onclick="${fechar};${x.cumprir}" title="Registrar que o prazo foi cumprido">${IC_OK_PZ}Cumprido</button>`
+    : minha && !gq ? `<button type="button" class="pp-pri" onclick="${fechar};concluirDeVez('${minha.id}')" title="Concluir a minha tarefa">${IC_OK_PZ}Concluir</button>` : "";
   // o ✔ feito e o ✎ escrever da linha repetiam o "Concluir a minha tarefa": com ele, o escrever vai ao ⋯
   // os demais botões da linha (✔ cumprida da exigência, Ouvidoria) ficam
   const acaoPe = x.cumprir ? "" : String(x.acao || "").replace(principal ? /<button\b[^>]*>(?:(?!<\/button>)[\s\S])*?(?:✔ feito|✎ escrever)<\/button>/g : /$^/, "")
     .replace(/onclick="/g, `onclick="${fechar};`);
   const abrirCaso = k && (sobre || celular()) ? `<button type="button" class="ppz-bt ppz-caso" onclick="${fechar};casoSel='${k.id}';abaAtiva=2;subAba='escritorio';repintarFicha()">Abrir o caso</button>` : "";
-  const extra = gq ? `<button type="button" class="ppz-bt" onclick="verQualidade('${cliId}')">Contribuições a pagar</button>${(cn => cn ? `<button type="button" class="ppz-bt" onclick="abrirAnexo('${cn.id}')">Abrir o CNIS</button>` : "")(docsDoDossie(cliId).filter(d=>/CNIS completo/i.test(fonteDoDossie(d)[1])).sort((p, q)=>String(q.criado_em||"").localeCompare(String(p.criado_em||"")))[0])}` : "";
+  const extra = gq ? `<button type="button" class="ppz-bt" onclick="verQualidade('${cliId}')" title="Contribuições a pagar">Contribuições</button>${(cn => cn ? `<button type="button" class="ppz-bt" onclick="abrirAnexo('${cn.id}')" title="Abrir o CNIS">CNIS</button>` : "")(docsDoDossie(cliId).filter(d=>/CNIS completo/i.test(fonteDoDossie(d)[1])).sort((p, q)=>String(q.criado_em||"").localeCompare(String(p.criado_em||"")))[0])}` : "";
   const mais = menuMais([
-    x.edita ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="prazoSaberMais(${i}${src})">Corrigir a data</button>` : "",
-    x.cumprir && k && k.prazo===x.data ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="${fechar};naoSeAplica('${k.id}','${x.andId||""}')">Não se aplica</button>` : "",
-    minha && !gq && !x.cumprir ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="${fechar};concluirTarefa('${minha.id}')">Concluir escrevendo o que foi feito</button>` : "",
+    x.edita ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="prazoSaberMais(${i}${src})" title="Corrigir a data">Corrigir</button>` : "",
+    x.cumprir && k && k.prazo===x.data ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="${fechar};naoSeAplica('${k.id}','${x.andId||""}')" title="O prazo não se aplica ao caso">Dispensar</button>` : "",
+    minha && !gq && !x.cumprir ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="${fechar};concluirTarefa('${minha.id}')" title="Concluir escrevendo o que foi feito">Anotar</button>` : "",
     minha && nat!=="fatal" ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="${fechar};adiarTarefa('${minha.id}')">Adiar</button>` : "",
     abrirCaso && celular() ? abrirCaso.replace('class="ppz-bt ppz-caso"', 'class="tl-mais-it pp-sec-bt" role="menuitem"') : ""]);
   let el;
@@ -41110,8 +41110,8 @@ function faixaPrazoNota(a, e){
     return `<div class="tl-pz-alerta" role="alert"><div class="tl-pz-al-cab">${IC_ALERTA_PZ}<div class="tl-pz-o">
       <b class="tl-pz-t">${tit} venceu ${esc(diaCurtoPz(e.data))}</b>
       <small class="tl-pz-m">Ninguém registrou o cumprimento.${ex ? ` A tarefa de ${esc(ex)} segue aberta.` : ""}</small></div></div>
-      <div class="tl-pz-al-bts"><button type="button" class="tl-pz-sim" onclick="cumpriNaNota('${a.id}')">Foi cumprido</button>
-      <button type="button" class="tl-pz-nao" onclick="registrarNaoCumprido('${a.caso_id}','${a.id}')">Não foi cumprido</button></div></div>`;
+      <div class="tl-pz-al-bts"><button type="button" class="tl-pz-sim" onclick="cumpriNaNota('${a.id}')" title="O prazo foi cumprido">Cumprido</button>
+      <button type="button" class="tl-pz-nao" onclick="registrarNaoCumprido('${a.caso_id}','${a.id}')" title="O prazo não foi cumprido">Perdido</button></div></div>`;
   }
   if(e.est==="cumprido"){
     const u = e.data && e.em ? uteisEntre(e.em, e.data) : null, pl = n => `${n} ${n===1?"dia útil":"dias úteis"}`;
@@ -41203,7 +41203,7 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
     ? `<button class="tl-bt tl-bt-ic tl-apaga" title="apagar este meu comentário" aria-label="apagar" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>` : "";
   const barra = raiz ? `<span class="tl-barra">
       <button class="tl-bt resp-liga" onclick="abrirRespInline('${a.id}')" title="responder a este comentário — a resposta fica grudada nele">Responder</button>
-      ${pzE && (pzE.est==="vivo" || pzE.est==="vencido") ? `<button class="tl-bt tl-pz-cumpri" onclick="cumpriNaNota('${a.id}')" title="registrar como o prazo foi cumprido">${IC_OK_PZ}Cumpri o prazo</button>`
+      ${pzE && (pzE.est==="vivo" || pzE.est==="vencido") ? `<button class="tl-bt tl-pz-cumpri" onclick="cumpriNaNota('${a.id}')" title="registrar como o prazo foi cumprido">${IC_OK_PZ}Cumprido</button>`
         : minha?`<button class="tl-bt tl-bt-ok tf-acao" onclick="concluirDeVez('${minha.id}')" title="concluir a sua tarefa — dá para desfazer logo depois">Concluir tarefa</button>`:""}
       <button class="tl-bt" onclick="abrirRespInline('${a.id}',1)" title="responder dando prazo adicional">+ prazo</button>
       ${alvo?`<button class="tl-bt tf-acao" onclick="adiarTarefa('${alvo.id}')" title="mudar a data da tarefa">Reagendar</button>`:""}
