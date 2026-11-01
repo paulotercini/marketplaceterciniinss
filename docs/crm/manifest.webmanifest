@@ -1,6 +1,6 @@
 {
- "name": "CRM Tercini",
- "short_name": "CRM",
+ "name": "AdvPrev",
+ "short_name": "AdvPrev",
  "start_url": "./",
  "scope": "./",
  "display": "standalone",
