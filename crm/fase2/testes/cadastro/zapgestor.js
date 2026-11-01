@@ -114,6 +114,16 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   const nota = escritas.find(e => /zap_mensagens/.test(e.u) && e.b && e.b.direcao === "interna");
   const menc = escritas.find(e => /\/mencoes/.test(e.u) && e.m === "POST");
   conf("a @menção na nota grava a nota e avisa a Amanda com o link da conversa", nota && menc && menc.b.para_id === AMANDA && menc.b.conversa_id === DA_AMANDA);
+  // F357 · a nota sem @ também é menção: vai a quem atende a conversa
+  await p.evaluate(() => abrirConversa(zapAberta));
+  await p.waitForSelector("#zap-txt");
+  await p.evaluate(() => { if(!zapNota) alternarNota(); });
+  const antes = escritas.filter(e => /\/mencoes/.test(e.u) && e.m === "POST").length;
+  await p.fill("#zap-txt", "cliente pediu retorno amanhã");
+  await p.click("#zap-enviar");
+  await p.waitForTimeout(400);
+  const ms = escritas.filter(e => /\/mencoes/.test(e.u) && e.m === "POST");
+  conf("a nota sem @ avisa quem atende a conversa (F357)", ms.length > antes && ms.slice(antes).some(e => e.b.para_id === AMANDA && e.b.conversa_id === DA_AMANDA));
   await p.evaluate(() => { localStorage.removeItem("crm_ver_como"); irPara("mencoes"); });
   await p.waitForTimeout(300);
   conf("Menções: o aviso de conversa tem o botão abrir conversa", (await p.textContent("#conteudo-meio")).includes("abrir conversa"));
