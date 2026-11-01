@@ -389,6 +389,10 @@ A **F357** (toda nota interna é menção, pedido do Paulo de 01.11.2026): a not
 
 A **F358** (o painel ao lado do WhatsApp em leitura rápida, pedido do Paulo de 01.11.2026): o painel da direita (`pintarPainelZap`) traz a ficha do cliente (o nome é botão e, como o Ficha, abre a Identificação com a conversa ao lado), depois **Caso 1, Caso 2…**, cada um com o título e o **Abrir** (`casoComZap`: o caso no Escritório, ou o atendimento do pré-caso para quem atende, com a conversa ao lado), os representados e, por último, os **Prazos** apenas com a data (`.zp-pz`, vermelha quando vencida; `prazoComZap` abre o caso e a janela do prazo pelo quadro Prazos, e a data sem caso abre a aba Prazos). Saíram do painel o aguardando do cliente, o último andamento, o próximo passo, as tarefas, as transferências e o histórico. Teste: `zaprep.js`.
 
+A **F359** (12.25, pedido do Paulo de 01.11.2026): a mensagem recém-enviada ganha Editar e Apagar sem reabrir a conversa. A ponte grava o `externo_id` segundos depois do envio, e a releitura de 6 s (`recarregarMsgs`) só repintava quando a assinatura mudava, sem contar o `externo_id`; agora conta. Teste: `zapbotoes.js`.
+
+A **F360** (12.25, pedido do Paulo de 01.11.2026): a notificação do navegador da mensagem nova do WhatsApp ganhou chave própria no ⋯ da lista, "Notificar no navegador" (`alternarNavZap`, `navZapLigado`, `crm_zap_nav` no navegador, ligada por padrão), separada do aviso sonoro, que antes a desligava junto. Sai também com a aba à vista, salvo na conversa que está aberta, e o clique abre a conversa (`tocarAvisoZap(texto, convId)`). Com o aviso no aparelho (F335) ligado, quem avisa é o `zap_push`. Teste: `zapbotoes.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
