@@ -23,7 +23,7 @@ const caixa = (() => {
 })();
 
 test("o <h1> do login leva o nome e o número da versão, nada mais", () => {
-  const m = /<h1>CRM Tercini(.*?)<\/h1>/s.exec(caixa);
+  const m = /<h1>AdvPrev(.*?)<\/h1>/s.exec(caixa);
   assert.ok(m, "não achei o <h1> do login");
   assert.ok(m[1].length < 300,
     `o rótulo da versão está com ${m[1].length} caracteres — o changelog voltou `
