@@ -84,10 +84,14 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   const painel = await p.$eval("#zap-painel", e => e.textContent);
   conf("o CPF aparece inteiro", painel.includes("111.222.333-96"));
   conf("a senha do Meu INSS aparece e o ver fica registrado", painel.includes("Senha@Ficticia1") && escritas.some(e => /credencial_vis/.test(e.u)));
-  conf("o que esperamos do cliente aparece", /Aguardando do cliente \(1\)/.test(painel) && painel.includes("Laudo do ortopedista"));
-  conf("cada caso mostra o último andamento", /Último andamento/.test(painel) && painel.includes("Perícia agendada para 10/11"));
-  conf("o próximo passo do caso aparece", painel.includes("Cumprir a exigência até 10/12/2099"));
-  conf("o pré-caso diz em que passo do atendimento está", /Pré-caso/.test(painel) && painel.includes("Atendimento: Primeiro atendimento"));
+  // F358 · leitura rápida: casos numerados com Abrir, prazos só com a data, sem o andamento nem o aguardando
+  conf("os casos vêm numerados, com o título e o Abrir", /Caso 1/.test(painel) && /Caso 2/.test(painel)
+    && await p.$$eval("#zap-painel .zp-caso button", es => es.length >= 2 && es.every(b => /Abrir/.test(b.textContent))));
+  conf("o pré-caso se identifica pelo título", /\(pré-caso\)/.test(painel));
+  conf("o painel não traz o último andamento nem o aguardando do cliente", !/Último andamento|Aguardando do cliente/.test(painel));
+  conf("o nome do cliente é clicável", await p.$eval("#zap-painel .zp-nome", e => e.tagName === "BUTTON"));
+  const datas = await p.$$eval("#zap-painel .zp-pz", es => es.map(e => e.textContent.trim()));
+  conf("os prazos mostram somente a data", datas.length > 0 && datas.every(d => /^\d{2}\/\d{2}\/\d{4}$/.test(d)));
   const rep = await p.$$eval("#zap-painel .zp-rep", es => es.map(e => e.textContent));
   conf("abaixo, os dois clientes que ela representa", rep.length === 2 && rep[0].includes("Antônio") && rep[1].includes("Pedro"));
   conf("o representante gravado na ficha conta pelo CPF, com a qualidade", rep[1].includes("representante (mãe)"));
@@ -122,6 +126,12 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   conf("a ficha abre com a conversa do WhatsApp ao lado", await p.evaluate(() => document.body.classList.contains("zap-aberto")
     && !!document.querySelector("#painel-prazo .pp-zap-msgs") && document.getElementById("app").classList.contains("detalhe-aberto")));
   conf("a agenda da tela do WhatsApp não fica por cima da ficha", await p.evaluate(() => { const a = document.getElementById("zap-ag"); return !a || !a.offsetParent; }));
+  // F358 · o Abrir do caso leva ao caso, com a conversa ao lado
+  const alvo = await p.evaluate(() => { const c = zapConvs.find(x => x.id === zapAberta) || zapConvs[0], cli = c && clienteDaConversa(c);
+    const k = cli && (D.casosDoCliente.get(cli.id) || []).find(k => k.fase !== "encerrado" && !ehPreCaso(k)); return k ? [cli.id, k.id] : null; });
+  if (alvo) { await p.evaluate(([c, k]) => casoComZap(c, k), alvo); await p.waitForTimeout(500); }
+  conf("o Abrir do caso abre o caso com a conversa ao lado", !!alvo && await p.evaluate(([c, k]) => clienteAberto === c && casoSel === k
+    && abaAtiva === 2 && document.body.classList.contains("zap-aberto"), alvo));
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);

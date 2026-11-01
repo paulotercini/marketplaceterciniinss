@@ -2127,6 +2127,10 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zp-tarefa input{margin-top:2px}
   .zp-tarefa b{font-weight:600}
   .zp-tarefa .prox{color:var(--prox,#8f5400)}.zp-tarefa .venc{color:var(--venc,#b3261e)}
+  .zp-nome{all:unset;cursor:pointer;font:600 16px var(--f-tit,inherit);color:var(--texto)}.zp-nome:hover{text-decoration:underline}
+  .zp-pzs{display:flex;flex-wrap:wrap;gap:6px}
+  .zp-pz{border:1px solid var(--borda);background:var(--branco);border-radius:6px;padding:4px 8px;font-size:13px;cursor:pointer;font-variant-numeric:tabular-nums}
+  .zp-pz.prox{color:var(--prox,#8f5400)}.zp-pz.venc{color:var(--venc,#b3261e);border-color:currentColor}
   .zp-nova{margin-top:6px;height:28px;font-size:12px}
   /* F259 · o acabamento do WhatsApp (ideia do Kapso): fundo bege, balão branco
      de quem escreve e verde do escritório, sem borda. Nota interna, agendada,
@@ -6196,7 +6200,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.23</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.24</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15587,33 +15591,12 @@ function pintarPainelZap(c){
   const nasc = cli.dn ? dnIso(cli.dn) : null, idade = nasc ? idadeDe(cli.dn) : null;
   const ex = _zpExtra.get(cli.id); if(!ex) carregarExtraZap(cli, ks);
   const adv = D.colPorId.get((advogadoDoCliente(cli.id)||[])[0]);
-  const espera = (()=>{ try{ const b = pedidosDoBalcao(cli.id);
-    return [...b.pessoais, ...b.grupos.flatMap(g=>g.itens)].map(x=>x.nome); }catch{ return []; } })();
-  const caso = k => {
-    const resp = (D.atrDoCaso.get(k.id)||[]).map(id=>D.colPorId.get(id)).filter(Boolean);
-    const lemb = (D.tarefasPorCaso.get(k.id)||[]).map(t=>t.lembrar_em).sort()[0];
-    const ev = (D.eventos||[]).filter(e=>e.caso_id===k.id && e.status==="agendada" && dataSP(e.data_hora)>=hoje())
-                 .sort((a,b)=>a.data_hora<b.data_hora?-1:1)[0];
-    // o próximo prazo é a data mais perto: perícia/audiência, prazo do caso ou lembrete
-    const datas = [ev&&[dataSP(ev.data_hora), String(ev.tipo||"").toLowerCase()], k.prazo&&[k.prazo, k.lembrar_motivo||""],
-                   lemb&&[lemb, "lembrete"]].filter(Boolean).sort((a,b)=>a[0]<b[0]?-1:1);
-    const prox = datas[0];
-    // F355 · o próximo passo do caso (recurso, exigência, análise do INSS, DCB) quando cai em outra data
-    const px = (()=>{ try{ return proximosDoCaso(k)[0]; }catch{ return null; } })();
-    const pre = ehPreCaso(k);
-    const lista = listaDe(k)==="—" ? "" : listaDe(k).replace(/^\S+\s/, "");
-    return `<section class="zp-card"><h4>${pre?"Pré-caso":"Caso"}</h4>
-      <div class="zp-tit">${esc(k.beneficio||k.titulo||"Caso")}</div>
-      ${lista?`<div class="zp-sub">Lista ${esc(lista)}</div>`:""}
-      ${k.etapa?`<div class="zp-etapa"><i></i>Etapa: ${esc(k.etapa)}</div>`:""}
-      ${pre?`<div class="zp-etapa"><i></i>Atendimento: ${esc(passoDoPreCaso(k))}</div>`:""}
-      ${px && (!prox || px.data!==prox[0])?`<div class="zp-kv"><span>Próximo passo</span><b class="${px.alerta||px.data<hoje()?"venc":"prox"}">${esc(px.txt)}</b></div>`:""}
-      ${prox?`<div class="zp-kv"><span>Próximo prazo</span><b class="${prox[0]<hoje()?"venc":"prox"}">${dmaZap(prox[0]).slice(0,5)}${prox[1]?` · ${esc(prox[1])}`:""}</b></div>`:""}
-      ${resp.length?`<div class="zp-kv"><span>Responsável</span><span>${esc(resp.map(x=>x.nome).join(", "))}</span></div>`:""}
-      ${ex && ex.ult ? (ultimoAndZap(ex.ult.get(k.id)) || `<div class="zp-ult"><span>Último andamento</span>nenhum</div>`) : ""}
+  // F358 · leitura rápida (pedido do Paulo, 01.11.2026): a ficha, os casos numerados com Abrir e as datas dos prazos
+  const caso = (k, n) => `<section class="zp-card zp-caso"><h4>Caso ${n}</h4>
+      <div class="zp-tit">${esc(k.beneficio||k.titulo||"Caso")}${ehPreCaso(k)?` <span class="zp-sub">(pré-caso)</span>`:""}</div>
+      <button class="zl-link" onclick="casoComZap('${cli.id}','${k.id}')" title="Abrir o caso com o WhatsApp ao lado"><span aria-hidden="true">Abrir</span><span class="sr-only">Abrir o caso com o WhatsApp ao lado</span></button>
     </section>`;
-  };
-  const tarefas = (D.tarefas||[]).filter(t=>!t.concluida && (t.cliente_id===cli.id || ks.some(k=>k.id===t.caso_id)));
+  _zpPrazos = (()=>{ try{ return prazosDoCliente(cli.id).lista; }catch{ return []; } })();
   const reps = representadosDe(cli, chave);
   const repCard = ({x, por}) => {
     const kx = (D.casosDoCliente.get(x.id)||[]).filter(k=>k.fase!=="encerrado");
@@ -15626,8 +15609,8 @@ function pintarPainelZap(c){
     </section>`;
   };
   el.innerHTML = `${conv}<section class="zp-card">
-      <div class="zp-cab"><h3>Ficha do cliente</h3><button class="zl-link" onclick="fichaComZap('${cli.id}')" title="Abrir ficha"><span aria-hidden="true">Ficha</span><span class="sr-only">Abrir ficha</span></button></div>
-      <div class="zp-kv"><span>Nome</span><span>${esc(cli.nome)}</span></div>
+      <div class="zp-cab"><h3>Ficha do cliente</h3><button class="zl-link" onclick="fichaComZap('${cli.id}')" title="Abrir a Identificação com o WhatsApp ao lado"><span aria-hidden="true">Ficha</span><span class="sr-only">Abrir a Identificação com o WhatsApp ao lado</span></button></div>
+      <div class="zp-kv"><span>Nome</span><button class="zl-link zp-nome" onclick="fichaComZap('${cli.id}')" title="Abrir a Identificação com o WhatsApp ao lado">${esc(cli.nome)}</button></div>
       <div class="zp-kv"><span>CPF</span>${cli.cpf?`<span class="mono cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="clique para copiar">${fmtCpf(cli.cpf)}</span>`:"<span>sem CPF</span>"}</div>
       <div class="zp-kv"><span>Meu INSS</span>${!ex || ex.carregando ? `<span class="zp-sub">…</span>`
         : ex.senha ? `<span class="mono cop" data-cop="${esc(ex.senha)}" data-cop-msg="Senha copiada" title="clique para copiar">${esc(ex.senha)}</span>`
@@ -15636,17 +15619,31 @@ function pintarPainelZap(c){
       ${nasc?`<div class="zp-kv"><span>Nascimento</span><span>${dmaZap(nasc)}${idade!=null?` · ${idade} anos`:""}</span></div>`:""}
       ${outros.length?`<div class="zp-kv"><span>Outros números</span><span>${outros.map(t=>esc(foneZap(t.numero))+(t.obs&&t.obs!=="principal"?` · ${esc(t.obs)}`:"")).join("<br>")}</span></div>`:""}
     </section>
-    ${espera.length?`<section class="zp-card zp-espera"><h4>Aguardando do cliente (${espera.length})</h4>
-      <p class="zp-sub">${esc(espera.slice(0,4).join(" · "))}${espera.length>4?` e mais ${espera.length-4}`:""}</p></section>`:""}
-    ${ks.length ? ks.slice(0,3).map(caso).join("") : `<section class="zp-card"><h4>Caso</h4><p class="zp-sub">Nenhum caso aberto.</p></section>`}
+    ${ks.length ? ks.map((k, n)=>caso(k, n+1)).join("") : `<section class="zp-card"><h4>Caso</h4><p class="zp-sub">Nenhum caso aberto.</p></section>`}
     ${reps.length ? `<h4 class="zp-rep-tit">Clientes que ${esc(String(cli.nome||"").split(" ")[0])} representa (${reps.length})</h4>${reps.map(repCard).join("")}` : ""}
-    <section class="zp-card zp-tarefas"><h4>Tarefas abertas</h4>
-      ${tarefas.slice(0,5).map(t=>`<label class="zp-tarefa"><input type="checkbox" onchange="concluirTarefaZap('${t.id}')">
-        <span>${esc(t.titulo||"")}${t.prazo?` <b class="${t.prazo<hoje()?"venc":"prox"}">${dmaZap(t.prazo).slice(0,5)}</b>`:""}</span></label>`).join("")
-        || `<p class="zp-sub">Nenhuma tarefa aberta.</p>`}
-      <button class="zt-btn zp-nova" onclick="novaTarefaZap()" title="Nova tarefa"><span aria-hidden="true">Tarefa</span><span class="sr-only">Nova tarefa</span></button>
-    </section>
-    ${transf}${hist}`;
+    <section class="zp-card zp-prazos"><h4>Prazos</h4>
+      ${_zpPrazos.slice(0,8).map((x, i)=>`<button class="zp-pz ${x.data<hoje()?"venc":"prox"}" onclick="prazoComZap('${cli.id}',${i})" title="${esc(x.curto||x.rotulo||"Prazo")}">${dmaZap(x.data)}</button>`).join("")
+        || `<p class="zp-sub">Nenhum prazo em aberto.</p>`}
+    </section>`;
+}
+// F358 · os atalhos do painel levam à ficha, ao caso ou ao prazo e deixam a conversa ao lado
+let _zpPrazos = [];
+async function casoComZap(cliId, casoId){
+  const k = D.casoPorId.get(casoId);
+  if(k && ehPreCaso(k) && podeAtender()) { await abrirAtendimentoDe(cliId, casoId); return verZapCliente(cliId); }
+  await abrirFicha(cliId); if(clienteAberto!==cliId) return;
+  document.getElementById("modal").style.display = "none";
+  casoSel = casoId; abaAtiva = meuNivel()<=1 ? 0 : 2; subAba = "escritorio"; repintarFicha();
+  await verZapCliente(cliId);
+}
+async function prazoComZap(cliId, i){
+  const x = _zpPrazos[i]; if(!x) return;
+  if(x.casoId) await casoComZap(cliId, x.casoId); else await fichaComZap(cliId);
+  // a janela do prazo abre pelo quadro Prazos do caso, que fica à esquerda da conversa
+  const j = (faixaAtual||[]).findIndex(y=>y.data===x.data && (y.andId||"")===(x.andId||"") && (y.rotulo||"")===(x.rotulo||""));
+  if(j>=0) return abrirPainelPrazo(j);
+  // a data sem caso (qualidade, decadência, contribuição) mora na aba Prazos do cliente
+  if(meuNivel()>=2 && clienteAberto===cliId){ abaAtiva = 5; repintarFicha(); }
 }
 async function concluirTarefaZap(id){
   if(!podeGravarCaso()) return;   // F355 · o nível 1 conversa, mas não grava no caso

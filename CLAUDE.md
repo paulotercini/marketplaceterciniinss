@@ -387,6 +387,8 @@ A **F356** (o "i" da ficha no topo da conversa, pedido do Paulo de 01.11.2026): 
 
 A **F357** (toda nota interna é menção, pedido do Paulo de 01.11.2026): a nota interna do WhatsApp sem @ avisa em Menções quem atende a conversa e o advogado responsável pelo cliente (`advogadoDoCliente`), com o link da conversa; com @nome, apenas quem foi citado. Quem escreve não se avisa. Teste: `zapgestor.js`.
 
+A **F358** (o painel ao lado do WhatsApp em leitura rápida, pedido do Paulo de 01.11.2026): o painel da direita (`pintarPainelZap`) traz a ficha do cliente (o nome é botão e, como o Ficha, abre a Identificação com a conversa ao lado), depois **Caso 1, Caso 2…**, cada um com o título e o **Abrir** (`casoComZap`: o caso no Escritório, ou o atendimento do pré-caso para quem atende, com a conversa ao lado), os representados e, por último, os **Prazos** apenas com a data (`.zp-pz`, vermelha quando vencida; `prazoComZap` abre o caso e a janela do prazo pelo quadro Prazos, e a data sem caso abre a aba Prazos). Saíram do painel o aguardando do cliente, o último andamento, o próximo passo, as tarefas, as transferências e o histórico. Teste: `zaprep.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
