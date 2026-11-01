@@ -231,7 +231,7 @@ async function conectar() {
       const up = u.update || {};
       if (u.key && u.key.id && (up.message === null && up.messageStubType === 1)) await guardarAlteracao({ id: u.key.id, apagada: true }).catch(() => {});
       else if (u.key && u.key.id && up.message && up.message.editedMessage) {
-        const alt = N.alteracaoDe({ message: up.message });
+        const alt = N.alteracaoDe({ message: up.message }, u.key.id);
         if (alt) await guardarAlteracao(alt).catch(() => {});
       }
       const st = u.update && u.update.status;
