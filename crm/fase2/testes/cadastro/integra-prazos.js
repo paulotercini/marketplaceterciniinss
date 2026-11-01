@@ -194,7 +194,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   await p.waitForSelector(".pzc-hero .pzc-pri");
   await p.click(".pzc-hero .pzc-pri");
   await p.waitForSelector("#painel-prazo.aberto"); await espera(300);
-  const btC = await p.evaluate(() => { const b = [...document.querySelectorAll("#painel-prazo button")].find(x => /Cumpri o prazo/.test(x.textContent)); if (b) b.click(); return !!b; });
+  const btC = await p.evaluate(() => { const b = [...document.querySelectorAll("#painel-prazo button")].find(x => /Cumprido/.test(x.textContent)); if (b) b.click(); return !!b; });
   await p.waitForSelector("#pz-txt", { timeout: 4000 }).catch(() => {});
   conf("a janela do prazo abre o formulário do cumprimento", btC && await p.evaluate(() => !!document.getElementById("pz-txt")));
   await p.fill("#pz-txt", "Certidão juntada no Meu INSS.");

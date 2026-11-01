@@ -90,7 +90,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
       acima: q.bottom <= e.top + 1, out: out ? out.textContent.replace(/\s+/g, " ") : "", etapa: !!document.querySelector(".caso-pz .fp3-etapa") }; });
   conf("o quadro se chama Prazos deste caso e fica acima do cartão do caso", a.tit === "Prazos deste caso" && a.acima);
   conf(`o próximo prazo fatal abre o quadro com o que é e quanto falta (${a.hero.slice(0, 90)})`, /Próximo prazo fatal/.test(a.hero) && /Recurso ao CRPS/.test(a.hero) && /dias? úte?is|dias? corridos/.test(a.hero));
-  conf(`o destaque traz Abrir o prazo e Cumpri o prazo (${a.botoes.join(", ")})`, a.botoes.includes("Abrir o prazo") && a.botoes.includes("Cumpri o prazo"));
+  conf(`o destaque traz Abrir o prazo e Cumpri o prazo (${a.botoes.join(", ")})`, a.botoes.includes("Abrir") && a.botoes.includes("Cumprido"));
   conf(`o pé diz os outros casos do cliente e quantos venceram (${a.out})`, /Outros casos do cliente: \d+ datas?/.test(a.out) && /1 vencida/.test(a.out));
   conf("com prazo fatal em aberto, a etapa não oferece outro", !a.etapa);
   await p.screenshot({ path: OUT + "/1-caso.png" });
