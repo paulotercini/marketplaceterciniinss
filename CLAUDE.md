@@ -371,6 +371,8 @@ A **F340** (a foto de quem fala, pedido do Paulo de 01.11.2026): a foto do Whats
 
 A **F343** (12.18, apagar e editar a mensagem enviada pelo CRM, pedido do Paulo de 01.11.2026): o balão que o escritório enviou ganha, no menu de segurar e no ⋯ das ações (`podeAlterarZap`), **Editar** (só texto, até 15 minutos do envio, `editarMsgZap`) e **Apagar** (para todos, até 2 dias, `apagarMsgZap`). O CRM grava o pedido em `zap_mensagens.alterar` (`{acao, texto, status: fila|feita|erro, erro, por, em}`, `pedirAlteracaoZap`) e a ponte o cumpre (`alterarEnviada`: `sendMessage` com `delete` ou `edit` e a chave da enviada), grava `apagada_em` ou o texto novo com `texto_antes` e `editada_em`; o balão diz "apagando…" ou "editando…", "não apagou" ou "não editou" com o erro, e o apagado pelo escritório diz "Apagada pelo escritório". SQL em `crm/fase2/migracoes/f343_zap_apagar_editar.sql`. Vale depois de atualizar a ponte no servidor. Testes: `zapbotoes.js` e `ponte/testes/fila.test.js`.
 
+A **F344** (12.19, pedido do Paulo de 01.11.2026): a tela do WhatsApp do computador rolava a página inteira e escondia o topo, porque a reserva de 150 px do fim da lista (F316, `#conteudo-meio::after`) somava-se à tela de altura fixa; em `.meio.zap-v` a reserva não existe. Teste: `zapficha.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
