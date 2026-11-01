@@ -383,6 +383,8 @@ A **F354** (a ficha ao lado do WhatsApp, pedido do Paulo de 01.11.2026): o paine
 
 A **F355** (o próximo passo e o pré-caso ao lado do WhatsApp, pedido do Paulo de 01.11.2026): o cartão de cada caso do painel da direita mostra também o próximo passo de `proximosDoCaso` (recurso, exigência, análise do INSS, DCB) quando cai em data diferente do próximo prazo, e o pré-caso se diz "Pré-caso" com o passo do atendimento (`passoDoPreCaso`). Teste: `zaprep.js`.
 
+A **F356** (o "i" da ficha no topo da conversa, pedido do Paulo de 01.11.2026): no celular e na tela até 1279 px, onde a ficha do cliente é gaveta ou tela cheia, o topo da conversa com cliente traz o botão "i" (`.zt-info`, `alternarFichaZap`), que abre a ficha como o toque no nome; no computador largo a ficha fica fixa ao lado e o botão some. Teste: `zapcel.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

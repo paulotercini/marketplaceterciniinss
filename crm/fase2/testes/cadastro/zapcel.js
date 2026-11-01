@@ -92,6 +92,10 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     conf("o nome abre a ficha em tela cheia", await p.$eval("#zap-painel", e => { const r = e.getBoundingClientRect(); return r.width === 390 && getComputedStyle(e).position === "fixed"; }));
     await p.tap(".zp-fechar");
     conf("o ✕ fecha a ficha e volta à conversa", !(await vis("#zap-painel")) && await vis("#zap-msgs"));
+    // F356 · o "i" do topo também abre a ficha
+    await p.tap(".zt-info"); await p.waitForTimeout(200);
+    conf("o botão i abre a ficha do cliente", await vis("#zap-painel"));
+    await p.tap(".zp-fechar"); await p.waitForTimeout(200);
     await p.tap(".zt-voltar");
     await p.waitForTimeout(200);
     conf("a seta volta à lista, com a barra de baixo", await vis(".zap-conv") && !(await vis("#zap-dir")) && await vis(".barra-cel"));
