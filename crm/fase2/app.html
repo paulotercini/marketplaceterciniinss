@@ -4408,7 +4408,7 @@ html[data-nivel="1"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]
 .barra-cel [data-cel="meudia"],.barra-cel [data-cel="menu"],.grupo:has(#grupo-fases)){display:none!important}
 html[data-nivel="0"] .barra-cel [data-cel="whatsapp"]{display:none!important}
 /* F355 · o nível 1 é o WhatsApp: conversa, agenda e Identificação; o que grava no caso fica para o nível 2. Na barra do celular, o WhatsApp no lugar do Buscar */
-html[data-nivel="1"] :is(.barra-cel [data-cel="busca"],.zp-tarefas,[onclick^="levarRobo"]){display:none!important}
+html[data-nivel="1"] :is(.zp-tarefas,[onclick^="levarRobo"]),html[data-nivel="1"] .barra-cel .so-n0[data-cel="busca"]{display:none!important}
 /* F253 · a faixa de quem olha como outro nível */
 #ver-nivel-faixa{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:900;display:flex;align-items:center;gap:12px;padding:8px 10px 8px 16px;border-radius:999px;background:#23231F;color:#fff;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:calc(100vw - 32px)}
 #ver-nivel-faixa button{border:none;border-radius:999px;padding:6px 12px;background:#fff;color:#23231F;font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}
@@ -14393,7 +14393,7 @@ function renderMencoes(){
       <div class="acoes">
         ${m.conversa_id?`<button class="btn-mini" onclick="abrirConversaDaMencao('${m.conversa_id}')" title="abrir conversa"><span aria-hidden="true">Conversa</span><span class="sr-only">abrir conversa</span></button>`:""}
         ${/* F220 · a menção leva ao lugar do trabalho: o caso citado ou o atendimento do cliente novo */""}
-        ${k?`<button class="btn-mini forte" onclick="abrirCasoDaMencao('${k.cliente_id}','${k.id}','${m.andamento_id||""}')" title="abrir o caso"><span aria-hidden="true">Abrir</span><span class="sr-only">abrir o caso</span></button>`
+        ${!podeGravarCaso()?"":k?`<button class="btn-mini forte" onclick="abrirCasoDaMencao('${k.cliente_id}','${k.id}','${m.andamento_id||""}')" title="abrir o caso"><span aria-hidden="true">Abrir</span><span class="sr-only">abrir o caso</span></button>`
           : c && !(D.casosDoCliente.get(c.id)||[]).some(x=>x.fase!=="encerrado" && !ehPreCaso(x)) ? `<button class="btn-mini forte" onclick="abrirAtendimentoDe('${c.id}')" title="abrir o atendimento"><span aria-hidden="true">Atendimento</span><span class="sr-only">abrir o atendimento</span></button>` : ""}
         ${c?`<button class="btn-mini" onclick="abrirFicha('${c.id}')" title="abrir ficha"><span aria-hidden="true">Ficha</span><span class="sr-only">abrir ficha</span></button>`:""}
         ${m.caso_id?botoesResposta(m):""}
@@ -14417,6 +14417,7 @@ async function baixarMencoes(andIds){
 // F292 · responder a menção num clique, como o "(ME): Ok." do To Do: a resposta vai à linha do tempo do caso, em
 // resposta à anotação que citou, quem citou recebe o aviso, e a menção sai da caixa (Onda B do fluxo do To Do)
 function botoesResposta(m){
+  if(!podeGravarCaso()) return "";   // F355 · o "Ok" e o "Feito" gravam no caso
   return ["Ok","Feito"].map(r=>`<button class="btn-mini menc-resp" onclick="event.stopPropagation();responderMencao('${m.id}','${r}.')" title="responder &quot;${r}.&quot; no caso e dar a menção por lida">${r}</button>`).join("");
 }
 async function responderMencao(id, txt){
@@ -15254,8 +15255,9 @@ function cartaoConversa(c){
 
 const telaVaziaZap = () =>
   `<div class="zap-vazio"><h4>Escolha uma conversa</h4>
-     <p>À esquerda estão as conversas do escritório. Pendentes é a fila de quem
-        ainda não foi atendido: é por ali que se começa o dia.</p></div>`;
+     <p>${zapGestor()?`À esquerda estão as conversas do escritório. Pendentes é a fila de quem
+        ainda não foi atendido: é por ali que se começa o dia.`
+        :`À esquerda estão as suas conversas. Novas são as que têm mensagem que você ainda não leu: é por ali que se começa o dia.`}</p></div>`;
 
 async function carregarReacoes(){
   const ids = zapMsgs.map(m=>m.id), lotes = [];
