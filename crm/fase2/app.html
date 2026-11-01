@@ -1952,6 +1952,13 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zt-id h2{margin:0;font:600 18px var(--f-tit,inherit);line-height:1.2;color:var(--texto)}
   .zt-sub{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--cinza);margin-top:2px}
   .zt-sub b{color:var(--azul);font-weight:600}
+  .zt-cli{border:0;background:none;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;max-width:100%}
+  .zc-cli b{color:var(--azul);font-weight:600}
+  .zt-outras{border-top:1px solid var(--linha,#e3e5ea);margin-top:4px;padding-top:4px}
+  .zt-outras>summary{list-style:none;cursor:pointer;padding:8px 10px;font-size:13px;color:var(--cinza)}
+  .zt-outras>summary::-webkit-details-marker{display:none}
+  .zt-outras>summary::after{content:" ▸"}.zt-outras[open]>summary::after{content:" ▾"}
+  .zt-outras>button{display:block;width:100%}
   .zt-acoes{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
   .zt-btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border:1px solid var(--borda);
           border-radius:8px;background:var(--branco);color:var(--texto);font:inherit;font-size:13px;font-weight:500;cursor:pointer;list-style:none}
@@ -6182,7 +6189,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.14</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.15</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15164,8 +15171,12 @@ const clienteDaConversa = c => c && c.cliente_id && D.cliPorId.get(c.cliente_id)
 // o advogado responsável pelo cliente da conversa (F245), ao lado do nome (pedido do Paulo, 25.10.2026)
 const advDaConversa = c => { const cli = clienteDaConversa(c); if(!cli) return "";
   return (D.colPorId.get((advogadoDoCliente(cli.id)||[])[0])||{}).nome || ""; };
-const falaPor = c => { const cli = clienteDaConversa(c);
-  return c.contato_nome && cli ? `${c.contato_relacao?c.contato_relacao+" de ":"fala por "}${cli.nome.split(" ")[0]}` : ""; };
+// F338 · quem é o cliente, sempre à vista: quem escreve pode ser outra pessoa (pai, filho, advogado)
+function clienteDaLinha(c){
+  const cli = clienteDaConversa(c);
+  if(!cli) return "Sem cliente vinculado";
+  return `Cliente: <b>${esc(cli.nome)}</b>${c.contato_nome?` · escreve ${c.contato_relacao?"o(a) "+esc(c.contato_relacao):"outra pessoa"}`:""}`;
+}
 // o nome do WhatsApp não é o do cliente e ninguém disse quem conversa: pergunta
 function nomeDiferente(c){
   const cli = clienteDaConversa(c), p = dsa(c.nome_perfil||"").split(/\s+/)[0];
@@ -15216,7 +15227,7 @@ function cartaoConversa(c){
         ${s?`<span class="zc-setor"><i style="background:${esc(s.cor)}"></i>${esc(s.nome)}</span>`:""}
         ${etq.slice(0,2).map(e=>`<span class="zc-etq" style="color:color-mix(in srgb, ${esc(e.cor)} 85%, #000)">${esc(e.texto)}</span>`).join("")}
         ${etq.length>2?`<span class="zc-etq" title="${esc(etq.slice(2).map(e=>e.texto).join(", "))}">+${etq.length-2}</span>`:""}
-        ${!cli?`<span class="zc-alerta">Sem cliente vinculado</span>`:falaPor(c)?`<span>${esc(falaPor(c))}</span>`:""}
+        ${!cli?`<span class="zc-alerta">Sem cliente vinculado</span>`:c.contato_nome?`<span class="zc-cli">Cliente <b>${esc(cli.nome.split(" ").slice(0,2).join(" "))}</b>${c.contato_relacao?` · ${esc(c.contato_relacao)}`:""}</span>`:""}
         ${!at&&c.status!=="resolvida"?`<span>Pendente</span>`:""}
         ${r?`<span class="zc-ret" title="${esc(r.nota||"")}">Retorno ${diaZap(r.quando)} ${horaSP(r.quando)}</span>`:""}
         ${c.bot_ativo?`<span>Robô</span>`:""}
@@ -15302,7 +15313,7 @@ const seloZap = m => m.direcao==="saida" ? (SELO[m.status]||"") : "";
 function dadosDaConversaZap(c){
   const cli = clienteDaConversa(c), at = c.atendente_id && D.colPorId.get(c.atendente_id);
   const deOutro = !!at && at.id!==eu.id, s = setorDe(c), r = retornoDe(c);
-  return { sub: `             ${falaPor(c)?`<span class="zt-fala">${esc(falaPor(c))} · cliente <b>${esc(cli.nome)}</b></span>`:""}
+  return { sub: `             <span class="zt-fala">${clienteDaLinha(c)}</span>
              <span class="mono">${esc(foneZap(c.telefone))}</span>
              ${advDaConversa(c)?`<span>Advogado: <b>${esc(advDaConversa(c))}</b></span>`:""}
              ${c.bot_ativo&&c.bot_passo?`<span class="zt-robo" title="o passo do robô nesta conversa">Robô: <b>${esc(rotPasso(c.bot_passo))}</b>${c.bot_desde?` desde ${diaZap(c.bot_desde)} ${horaSP(c.bot_desde)}`:""}</span>`:""}
@@ -15342,7 +15353,7 @@ function pintarConversa(){
          <div class="zt-id">
            <h2 role="button" tabindex="0" title="ver a ficha" onclick="alternarFichaZap()" onkeydown="if(event.key==='Enter')alternarFichaZap()">${esc(nomeDaConversa(c))}</h2>
            <div class="zt-sub">
-${dz.sub}             ${falaPor(c)?`<span class="zt-curto">${esc(falaPor(c))}</span>`:""}
+${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConversa()":"vincularConversa()"}" title="${cli?"corrigir quem escreve":"vincular a um cliente"}">${clienteDaLinha(c)}</button>
            </div>
          </div>
          <div class="zt-acoes">
@@ -15354,19 +15365,19 @@ ${dz.sub}             ${falaPor(c)?`<span class="zt-curto">${esc(falaPor(c))}</s
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
              <div class="zt-menu">
+               ${cli?`<button onclick="quemConversa()">Quem escreve…</button>`:`<button onclick="vincularConversa()">Vincular a um cliente</button>`}
                <button onclick="this.closest('details').open=false;zagAlternar()">Agenda de atendimentos</button>
                <button onclick="this.closest('details').open=false;verFavoritasZap()">Mensagens favoritas${zapMsgs.some(m=>m.favorita_em)?` (${zapMsgs.filter(m=>m.favorita_em).length})`:""}</button>
                <button onclick="marcarNaoLida()">Marcar como não lida</button>
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
-               ${pode?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>`:""}
-               ${pode&&!fim&&(zapAux.passos||[]).length?`<button onclick="levarRobo()">Levar o robô a um passo…</button>`:""}
-               ${pode?`<button onclick="pedirHistoricoZap()" title="${esc(c.historico_resultado||"pede ao celular as mensagens anteriores à mais antiga desta conversa")}">${c.historico_pedido&&!c.historico_feito?"Buscando o histórico no celular…":"Buscar histórico no celular"}</button>`:""}
-               ${pode&&cfgApp("zap_ia_plantao")==="sim"?`<button onclick="mudarConversa({ia_conversa:!c.ia_conversa})">${c.ia_conversa?"A IA deixa de conversar com este número":"A IA conversa com este número"}</button>`:""}
-               ${pode&&cfgApp("zap_ia_plantao")==="sim"?`<button onclick="mudarConversa({sem_ia:!c.sem_ia})">${c.sem_ia?"A IA volta a responder esta conversa":"A IA não responde esta conversa"}</button>`:""}
-               ${cli?`<button onclick="quemConversa()">Quem conversa…</button>`:""}
-               ${cli?`<button onclick="abrirFicha('${cli.id}')">Abrir a ficha do cliente</button>`
-                    :`<button onclick="vincularConversa()">Vincular a um cliente</button>`}
                ${tel?`<a href="https://wa.me/55${tel}" target="_blank" rel="noopener" aria-label="Abrir no WhatsApp do aparelho">${iconeFonte("zap")} Abrir no aparelho</a>`:""}
+               ${pode?`<details class="zt-outras"><summary>Outras opções</summary>
+                 ${(cfgApp("zap_bot_ligado")||"sim")==="sim"?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>
+                 ${!fim&&(zapAux.passos||[]).length?`<button onclick="levarRobo()">Levar o robô a um passo…</button>`:""}`:""}
+                 <button onclick="pedirHistoricoZap()" title="${esc(c.historico_resultado||"pede ao celular as mensagens anteriores à mais antiga desta conversa")}">${c.historico_pedido&&!c.historico_feito?"Buscando o histórico no celular…":"Buscar histórico no celular"}</button>
+                 ${cfgApp("zap_ia_plantao")==="sim"?`<button onclick="mudarConversa({ia_conversa:!c.ia_conversa})">${c.ia_conversa?"A IA deixa de conversar com este número":"A IA conversa com este número"}</button>
+                 <button onclick="mudarConversa({sem_ia:!c.sem_ia})">${c.sem_ia?"A IA volta a responder esta conversa":"A IA não responde esta conversa"}</button>`:""}
+               </details>`:""}
              </div>
            </details>
          </div>
