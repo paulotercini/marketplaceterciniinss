@@ -6192,7 +6192,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.20</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.21</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -16059,7 +16059,8 @@ const reabrirConversa = () => mudarConversa({status:"aberta"});
 const ROT_PASSO = {inicio:"menu inicial", processo:"processo", novo:"consulta nova", pericia:"perícia ou audiência",
   documentos:"documentos", financeiro:"financeiro", humano:"falar com alguém", nao_entendi:"não entendeu",
   fora_horario:"fora do horário", situacao:"respondeu a situação do processo", lembrete:"lembrete do menu"};
-const rotPasso = k => ROT_PASSO[k] || k;
+// F348: o passo do robô igual ao SMBot vem como "smb:<chave>"
+const rotPasso = k => ROT_PASSO[k] || (String(k).startsWith("smb:") ? "SMBot · " + String(k).slice(4).replace("_"," ") : k);
 function levarRobo(){
   caixa(`<h3>Levar o robô a um passo</h3>
     <p class="meio-sub">O cliente recebe o texto do passo e a conversa volta ao robô, sem atendente.
@@ -17021,6 +17022,8 @@ async function renderConfig(){
          <div class="cfg-linha">
            <label class="cfg-ck"><input type="checkbox" id="cf-bot"
              ${(cfgApp("zap_bot_ligado")||"sim")==="sim"?"checked":""}> 🤖 robô ligado</label>
+           <label class="cfg-ck" title="o robô de triagem do SMBot: pede o nome de quem não é cliente, mostra o mesmo menu de 5 opções e deixa a conversa na fila do setor (Agendamentos, Atendimento, Financeiro ou Jurídico), sem atendente; desmarcado, vale o robô do CRM"><input type="checkbox" id="cf-robo-smbot"
+             ${cfgApp("zap_robo_modelo")==="smbot"?"checked":""}> robô igual ao do SMBot</label>
            <label class="cfg-ck"><input type="checkbox" id="cf-avisos"
              ${(cfgApp("zap_avisos_ligado")||"sim")==="sim"?"checked":""}> 🔔 avisos automáticos ligados</label>
            <label class="cfg-ck" title="o robô responde a situação do processo com a etapa pública e manda o lembrete do menu sem resposta"><input type="checkbox" id="cf-robo-novo"
@@ -17276,6 +17279,7 @@ function ligarConfig(){
   cfgSalva("cf-pausa","zap_pausa_bot", el=>String(Math.max(0, +el.value||0)));
   cfgSalva("cf-volta-min","zap_volta_min", el=>String(Math.max(0, Math.round(+el.value||0))));
   cfgSalva("cf-bot","zap_bot_ligado",  el=>el.checked?"sim":"nao");
+  cfgSalva("cf-robo-smbot","zap_robo_modelo", el=>el.checked?"smbot":"crm");
   cfgSalva("cf-avisos","zap_avisos_ligado", el=>el.checked?"sim":"nao");
   cfgSalva("cf-robo-novo","zap_robo_novo", el=>el.checked?"sim":"nao");
   cfgSalva("cf-robo-ia","zap_robo_ia", el=>el.checked?"sim":"nao");
