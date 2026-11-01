@@ -373,6 +373,8 @@ A **F343** (12.18, apagar e editar a mensagem enviada pelo CRM, pedido do Paulo 
 
 A **F344** (12.19, pedido do Paulo de 01.11.2026): a tela do WhatsApp do computador rolava a página inteira e escondia o topo, porque a reserva de 150 px do fim da lista (F316, `#conteudo-meio::after`) somava-se à tela de altura fixa; em `.meio.zap-v` a reserva não existe. Teste: `zapficha.js`.
 
+A **F345** (a edição e o apagar chegam ao cliente, 01.11.2026): a edição enviada pela ponte aparecia ao destinatário como "Aguardando mensagem" e o apagar não acontecia, porque o aparelho dele não abria o aviso; o servidor somava 362 reinícios e 22 mil "Bad MAC". A ponte passou a guardar as chaves de criptografia com `makeCacheableSignalKeyStore` (cache na memória, gravação no arquivo), como o Baileys recomenda, e registra no log cada pedido de reenvio do aparelho (`mensagemParaReenvio`). A edição sai assinada como a original (`assinar`, `assinaturaDe`). Vale depois de atualizar a ponte no servidor. Teste: `ponte/testes/fila.test.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
