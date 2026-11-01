@@ -1968,6 +1968,11 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zt-btn::-webkit-details-marker{display:none}
   .zt-btn.ic{width:32px;padding:0;justify-content:center;color:var(--cinza)}
   .zt-btn.pri{background:var(--azul);border-color:var(--azul);color:#fff}
+  /* F361 · ninguém atende: o Assumir é o primeiro botão do topo, verde e com a palavra também no celular */
+  .zt-btn.zt-assumir{background:#1e7e34;border-color:#1e7e34;color:#fff;font-weight:700;padding-inline:14px;box-shadow:0 0 0 3px rgba(30,126,52,.18)}
+  .zt-btn.zt-assumir span{display:inline!important}
+  .zt-btn.zt-assumir span.sr-only{position:absolute!important}
+  @media (hover:hover) and (pointer:fine){.zt-btn.zt-assumir:hover{background:#176429}}
   @media (hover:hover) and (pointer:fine){.zt-btn:hover{background:var(--lateral-hover,#eceef2)}.zt-btn.pri:hover{background:var(--azul-escuro,var(--azul))}}
   .zt-btn:active{transform:scale(.97)}
   .zt-mais{position:relative}
@@ -6200,7 +6205,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.25</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.26</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15374,7 +15379,7 @@ function dadosDaConversaZap(c){
              ${advDaConversa(c)?`<span>Advogado: <b>${esc(advDaConversa(c))}</b></span>`:""}
              ${c.bot_ativo&&c.bot_passo?`<span class="zt-robo" title="o passo do robô nesta conversa">Robô: <b>${esc(rotPasso(c.bot_passo))}</b>${c.bot_desde?` desde ${diaZap(c.bot_desde)} ${horaSP(c.bot_desde)}`:""}</span>`:""}
              ${at?`<span>Atendendo: <b>${esc(at.nome)}</b></span>`
-                 :`<button class="zl-link" onclick="assumirConversa()" title="Assumir a conversa">Assumir<span class="sr-only"> a conversa</span></button>`}
+                 :`<span>Atendendo: <b>ninguém</b></span>`}
              ${deOutro && zapGestor()?`<button class="zl-link" onclick="assumirConversa()">Assumir (tirar de ${esc(at.nome)})</button>`:""}
            `,
     l2: `         <button class="zt-chip" onclick="escolherSetor()" title="setor da conversa" ${s?`style="${tintaZap(esc(s.cor))}"`:""}>${s
@@ -15413,6 +15418,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            </div>
          </div>
          <div class="zt-acoes">
+           ${!at&&!fim?`<button class="zt-btn zt-assumir" onclick="assumirConversa()" title="Assumir a conversa">${zic("ok")}<span>Assumir</span><span class="sr-only"> a conversa</span></button>`:""}
            ${cli?`<button class="zt-btn ic zt-info" onclick="alternarFichaZap()" title="Ficha do cliente" aria-label="Ficha do cliente"><b aria-hidden="true">i</b></button>`:""}
            <button class="zt-btn ic ${zapBuscaConv?"on":""}" onclick="abrirBuscaZap()" title="buscar nesta conversa" aria-label="Buscar na conversa">${zic("busca")}</button>
            ${cfgApp("zap_ia_equipe")==="sim"?`<button class="zt-btn" onclick="iaZap('resumo')" title="a IA resume a conversa para você (nada vai ao cliente)" aria-label="Resumo">✨<span class="lbl">Resumo</span></button>
