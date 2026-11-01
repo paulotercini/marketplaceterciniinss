@@ -6192,7 +6192,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.19</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.20</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7569,9 +7569,9 @@ function completarD(r){
   }
   D.inssCal = r.inssCal||[];
   // conta o que cobra ação: minha conversa com mensagem nova, ou conversa
-  // aberta sem dono nenhum. O resto não precisa de contador piscando.
+  // aberta sem dono nenhum (esta, só para o gestor, F346). O resto não precisa de contador piscando.
   D.zapResumo = (r.zaps||[]).filter(z=>z.status!=="resolvida"
-    && ((z.atendente_id===eu.id && z.nao_lidas>0) || !z.atendente_id)).length;
+    && ((z.atendente_id===eu.id && z.nao_lidas>0) || (!z.atendente_id && zapGestor()))).length;
   // só guarda o que é da segunda leva (a primeira já está em _bruto1)
   D._bruto2 = Object.fromEntries(Object.keys(CARGA_2).map(k=>[k, r[k]]));
 }
@@ -14806,7 +14806,7 @@ async function leadParaCliente(leadId){
 // O que chega vem da ponte (crm/fase2/ponte/). O que sai é gravado como
 // pedido de envio — o CRM nunca fala com o WhatsApp direto. Se a ponte
 // estiver caída, a mensagem espera na fila em vez de sumir.
-let zapFiltro = "minhas", zapAberta = null, zapMsgs = [], zapTimer = null, zapConvs = [];
+let zapFiltro = "novas", zapAberta = null, zapMsgs = [], zapTimer = null, zapConvs = [];
 // modo nota interna: o que for escrito fica só para a equipe
 let zapNota = false;
 // o que veio do SMBot: setores, etiquetas, retornos, reações e o protocolo
@@ -15035,11 +15035,14 @@ function pintarListaZap(){
   const aberta = c => c.status!=="resolvida";
   const gestor = zapGestor();
   // 29.10.2026 · sem a fila Retornos, que o escritório não usa (pedido do Paulo)
-  const filtros = gestor ? [["minhas","Minhas"],["sem","Pendentes"],["todas","Todas"]]
-                         : [["minhas","Minhas"],["sem","Pendentes"]];
-  if(zapFiltro==="retornos") zapFiltro = gestor ? "todas" : "minhas";
-  if(!gestor && zapFiltro==="todas") zapFiltro = "minhas";
-  const naAba = (f,c) => f==="minhas" ? meu(c)&&aberta(c) : f==="sem" ? !c.atendente_id&&aberta(c)
+  // F346 · como no SMBot, o colaborador vê as Novas (as dele com mensagem não lida) e as Minhas;
+  // Pendentes e Todas ficam com o gestor, que distribui (pedido do Paulo de 01.11.2026)
+  const filtros = gestor ? [["novas","Novas"],["minhas","Minhas"],["sem","Pendentes"],["todas","Todas"]]
+                         : [["novas","Novas"],["minhas","Minhas"]];
+  if(zapFiltro==="retornos") zapFiltro = gestor ? "todas" : "novas";
+  if(!gestor && (zapFiltro==="todas" || zapFiltro==="sem")) zapFiltro = "novas";
+  const naAba = (f,c) => f==="novas" ? meu(c)&&aberta(c)&&c.nao_lidas>0
+                       : f==="minhas" ? meu(c)&&aberta(c) : f==="sem" ? !c.atendente_id&&aberta(c)
                        : f==="fim" ? !aberta(c)&&!c.automatica : f==="auto" ? !!c.automatica
                        : f==="retornos" ? !!retornoDe(c) : aberta(c);
   const q = dsa(zapBusca.trim()), qd = zapBusca.replace(/\D/g,"");
