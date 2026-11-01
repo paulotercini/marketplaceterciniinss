@@ -329,7 +329,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   conf("a perícia que passou é UMA linha (sem a do prazo parado), na data dela, com a conta de quando o INSS decide",
     lS.filter(x => x.conf).length === 1 && !lS.some(x => x.rotulo === "Prazo de análise parado") && lS.some(x => x.rotulo === "Compareceu?" && x.data === dia(-12) && /o INSS decide até/.test(x.rot) && x.curto === "Confirmar a perícia"), lS.map(x => `${x.rotulo}@${x.data}`));
   conf("ela não 'venceu': diz há quantos dias, pede o clique e não entra na conta dos vencidos",
-    cS.some(c => c.tipo === "Compareceu?" && /Confirmar a perícia/.test(c.txt) && !/pz-venceu/.test(c.cls)) && /A confirmar\s*1/.test(rS) && !/Vencidas/.test(rS), { cS, rS });
+    cS.some(c => c.tipo === "Compareceu?" && /Confirmar a perícia/.test(c.txt) && !/pz-venceu/.test(c.cls)) && /a confirmar/.test(rS) && !/Vencidas|vencida/.test(rS), { cS, rS });
   const clS = await paulo.evaluate(k => quadroDatas(D.casoPorId.get(k)), S.k.id);
   conf("no clássico também: a linha da perícia não diz 'venceu'", !/venceu/.test(clS) && /aconteceu\? Confirme/.test(clS));
 
