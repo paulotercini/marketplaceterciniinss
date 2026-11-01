@@ -110,6 +110,8 @@ const MSGS = [
   await p.evaluate(() => { window._tocador = document.querySelector('#zap-msgs audio[data-ouvir]'); pintarConversaGuardando(); });
   conf("na conversa, o tocador continua o mesmo depois da repintura (mensagem nova chegando)",
     await p.evaluate(() => document.querySelector('#zap-msgs audio[data-ouvir="zap/x/a1.ogg"]') === window._tocador));
+  // F344 · a tela do WhatsApp tem altura fixa: a página não rola e o topo não some (a reserva de 150 px fazia rolar)
+  conf("a tela do WhatsApp não rola a página inteira", await p.evaluate(() => { const m = document.querySelector("main.meio.zap-v"); return !!m && m.scrollHeight <= m.clientHeight + 1; }));
   conf("conversa de cliente mostra “abrir ficha” e não “vincular”",
     /Cliente: /.test(await p.textContent(".zap-topo")) && !(await p.textContent(".zap-topo")).includes("Vincular"));
 
