@@ -6190,7 +6190,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.15</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.16</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -41192,11 +41192,17 @@ async function confirmarCumprirNota(casoId, andId){
   await registrarCumprimento(casoId, o);
 }
 // desfazer o registro depois do aviso: a resposta sai, o prazo volta ao caso e as tarefas concluídas com ela reabrem
+// o comprovante preso à resposta desfeita sai junto (a FK solta o andamento_id e o papel ficaria avulso no caso)
+async function apagarComprovantes(andId){
+  const anx = (D.anexos||[]).filter(an=>an.andamento_id===andId); if(!anx.length) return;
+  await api(`/rest/v1/anexos?andamento_id=eq.${andId}`,{method:"DELETE",headers:{Prefer:"return=minimal"}}).catch(()=>{});
+  D.anexos = (D.anexos||[]).filter(an=>!anx.includes(an));
+}
 async function desfazerCumprimento(respId){
   const r = (D._andsFicha||[]).find(x=>x.id===respId); if(!r) return;
   const og = (D._andsFicha||[]).find(x=>x.id===r.responde_a), k = D.casoPorId.get(r.caso_id);
   if(!await confirmar("Desfazer o registro deste prazo? O prazo volta ao caso e a tarefa concluída junto reabre.")) return;
-  try{ await api(`/rest/v1/andamentos?id=eq.${r.id}`,{method:"DELETE",headers:{Prefer:"return=minimal"}}); }
+  try{ await apagarComprovantes(r.id); await api(`/rest/v1/andamentos?id=eq.${r.id}`,{method:"DELETE",headers:{Prefer:"return=minimal"}}); }
   catch(e){ return aviso("Não consegui desfazer"); }
   D._andsFicha = (D._andsFicha||[]).filter(a=>a.id!==r.id);
   const m = og && /\[PRAZO (\d{2}\.\d{2}\.\d{4})\]/.exec(og.texto||""), data = m && isoDoCarimbo(m[1]);
@@ -43638,7 +43644,15 @@ function despNota(txt){
   document.querySelectorAll(".desp-datas .btn-mini").forEach(b=>b.classList.toggle("on", b.dataset.dd===a.iso));
 }
 // s = {data, para}; nota = texto da anotação a gravar (vazio quando a anotação já foi gravada)
+// o prazo fatal aberto mais cedo do caso: a tarefa fatal pendente ou o casos.prazo que não é volta à fila
+function fatalAbertoDe(k){
+  const ds = (D.tarefasPorCaso.get(k.id)||[]).filter(t=>t.natureza==="fatal" && !t.concluida_em && t.lembrar_em).map(t=>t.lembrar_em);
+  if(k.prazo && (k.ronda||{}).despacho?.prazo!==k.prazo) ds.push(k.prazo);
+  return ds.filter(d=>d>=hoje()).sort()[0] || null;
+}
 async function aplicarDespacho(k, s, nota){
+  const fat = fatalAbertoDe(k);
+  if(fat && s.data > fat && !await confirmar(`O prazo fatal deste caso vence em ${fmtBarra(fat)}, antes da volta à fila em ${fmtBarra(s.data)}. Concluir por hoje assim mesmo?`)) return;
   const cli = D.cliPorId.get(k.cliente_id) || {};
   const antes = {prazo:k.prazo||null, importante:!!k.importante, ronda:k.ronda||{}};
   const ronda = {...(k.ronda||{}), despacho:{em:new Date().toISOString(), por:eu.id, prazo:s.data, ...(s.para?{para:s.para}:{})}};
@@ -44947,6 +44961,7 @@ async function registrarCumprimento(casoId, o){
   const msg = tipo==="nao" ? "✖ Registrado: o prazo não foi cumprido" : tipo==="nsa" ? "Registrado: o prazo não se aplica"
     : `✔ Prazo cumprido${lista ? ` · o caso voltou para ${lista}` : ""}`;
   avisoDesfazer(msg, async ()=>{
+    if(and) await apagarComprovantes(and.id);
     if(and) await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"DELETE",headers:{Prefer:"return=minimal"}}).catch(()=>{});
     for(const t of concluidas){ await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({concluida_em: null})}).catch(()=>{}); t.concluida_em = null; }
