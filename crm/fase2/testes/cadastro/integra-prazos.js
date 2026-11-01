@@ -54,7 +54,8 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   const p = await ctx.newPage();
   const erros = [];
   p.on("pageerror", e => erros.push(e.message));
-  p.on("dialog", d => d.accept());
+  let recusar = false, dialogos = [];
+  p.on("dialog", d => { dialogos.push(d.message()); recusar ? d.dismiss() : d.accept(); });
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado", { timeout: 15000 });
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
@@ -189,6 +190,17 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   await espera(700);
   conf("o desfazer do Concluir por hoje devolve o prazo ao caso", kPz() === dataPz, kPz());
 
+  // a volta à fila depois do prazo fatal pergunta antes; recusado, nada muda
+  await p.evaluate(k => despachar(k), PRE);
+  await p.waitForSelector(".desp-datas");
+  const depois = await p.evaluate(d => somaDias(d, 3), dataPz);
+  await p.fill("#desp-data", depois); await p.dispatchEvent("#desp-data", "change");
+  recusar = true; dialogos = [];
+  await p.click("#desp-ok");
+  await espera(700); recusar = false;
+  conf("Concluir por hoje depois do prazo fatal pergunta e, recusado, não mexe no caso",
+    dialogos.some(m => /prazo fatal/.test(m)) && kPz() === dataPz, { dialogos, prazo: kPz() });
+
   // ── 6. Cumpri o prazo pela janela da aba e desfazer pelo aviso ──────────
   await abrirCaso(5);
   await p.waitForSelector(".pzc-hero .pzc-pri");
@@ -198,6 +210,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   await p.waitForSelector("#pz-txt", { timeout: 4000 }).catch(() => {});
   conf("a janela do prazo abre o formulário do cumprimento", btC && await p.evaluate(() => !!document.getElementById("pz-txt")));
   await p.fill("#pz-txt", "Certidão juntada no Meu INSS.");
+  await p.setInputFiles("#pz-arq", { name: "comprovante.pdf", mimeType: "application/pdf", buffer: Buffer.from("%PDF-1.4 teste") });
   await p.click("#pz-ok");
   await espera(900);
   const resp = T.andamentos.find(a => a.responde_a === nota.id && /^✔ \[PRAZO CUMPRIDO\]/.test(a.texto || ""));
@@ -207,8 +220,11 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   conf("cumprido, o prazo sai do Meu Dia e do quadro", v.meuDia === 0 && !v.quadro, v);
   const aba1 = await p.evaluate(() => document.querySelectorAll('.pzc-lin[data-nat="fatal"]').length);
   conf("cumprido, a aba Prazos não mostra prazo fatal aberto", aba1 === 0, aba1);
+  const anx = (T.anexos || []).find(a => a.andamento_id === resp.id);
+  conf("o comprovante fica preso à resposta do cumprimento", !!anx, (T.anexos || []).length);
   await p.evaluate(() => desfazerAgora());
   await espera(900);
+  conf("o desfazer tira também o comprovante, que não fica solto no caso", !!anx && !(T.anexos || []).find(a => a.id === anx.id));
   v = await vistas();
   conf("o desfazer do aviso apaga a resposta, devolve o prazo e reabre a tarefa",
     !T.andamentos.find(a => a.id === resp.id) && kPz() === dataPz && !T.andamento_tarefas.find(t => t.id === tf.id).concluida_em, { prazo: kPz() });
