@@ -111,7 +111,7 @@ const MSGS = [
   conf("na conversa, o tocador continua o mesmo depois da repintura (mensagem nova chegando)",
     await p.evaluate(() => document.querySelector('#zap-msgs audio[data-ouvir="zap/x/a1.ogg"]') === window._tocador));
   conf("conversa de cliente mostra “abrir ficha” e não “vincular”",
-    (await p.textContent(".zap-topo")).includes("Abrir a ficha") && !(await p.textContent(".zap-topo")).includes("Vincular"));
+    /Cliente: /.test(await p.textContent(".zap-topo")) && !(await p.textContent(".zap-topo")).includes("Vincular"));
 
   // quem cuida do benefício de outro: o número dele na ficha do outro traz a conversa
   await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.telefone = "(16) 99999-0001";
@@ -146,7 +146,7 @@ const MSGS = [
   const pt = patches.find(x => x.u.includes(`zap_conversas?id=eq.${ZAP_SOLTA}`));
   conf("vincular grava o cliente na conversa e limpa o prospecto", pt && pt.b.cliente_id === CLI_CHEIO && pt.b.lead_id === null);
   conf("depois de vincular o cabeçalho passa a “abrir ficha”", await p.waitForFunction(() =>
-    (document.querySelector(".zap-topo")?.textContent || "").includes("Abrir a ficha"), null, { timeout: 5000 }).then(() => true, () => false));
+    /Clientes?: /.test(document.querySelector(".zap-topo")?.textContent || ""), null, { timeout: 5000 }).then(() => true, () => false));
 
   // a lista Clientes mostra a foto do WhatsApp (clientes.foto_url) no lugar da inicial
   conf("lista Clientes: quem tem foto ganha a foto, quem não tem fica com a inicial", await p.evaluate(async cli => {
@@ -155,6 +155,16 @@ const MSGS = [
     pintarClientesTodos();
     const it = document.querySelector(`#cli-todos-l [data-cli="${cli}"]`), outro = document.querySelector(`#cli-todos-l [data-cli]:not([data-cli="${cli}"])`);
     const r = !!it.querySelector("img.avatar") && (!outro || !!outro.querySelector("span.avatar")); d.remove(); return r;
+  }, CLI_CHEIO));
+
+  // F340 · na ficha, a foto do telefone em que outra pessoa escreve pelo cliente não aparece
+  conf("ficha: sem foto quando quem fala no telefone do cliente é outra pessoa", await p.evaluate(cli => {
+    const c = D.cliPorId.get(cli), antes = [D.zapFicha, c.telefone];
+    c.telefone = "16999990001"; D.zapFicha = [];
+    const com = !!fotoDoCliente(cli);
+    D.zapFicha = [{ cliente_id: cli, telefone: "5516999990001", contato_nome: "Maria", contato_relacao: "filha" }];
+    const sem = fotoDoCliente(cli) === null;
+    [D.zapFicha, c.telefone] = antes; return com && sem;
   }, CLI_CHEIO));
 
   // "Sem telefone": só quem não tem número, e o número se completa na própria linha
