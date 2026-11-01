@@ -369,6 +369,10 @@ A **F339** (12.15, pedidos do Paulo de 01.11.2026): responder a conversa pendent
 
 A **F340** (a foto de quem fala, pedido do Paulo de 01.11.2026): a foto do WhatsApp fica na conversa, de quem escreve; na ficha e na lista Clientes não aparece quando o telefone do cliente é de outra pessoa que fala por ele (`contato_nome`). `fotoDoCliente` não cai em `clientes.foto_url` nesse caso, e no banco `zap_fone_de_outro` apaga a foto da ficha (gatilho `clientes_foto_de_quem_fala`, que barra também a gravação da ponte, e `zap_contato_tira_foto`, ao marcar quem escreve). SQL em `crm/fase2/migracoes/f340_foto_de_quem_fala.sql`. Teste: `zapficha.js`.
 
+A **F343** (12.18, apagar e editar a mensagem enviada pelo CRM, pedido do Paulo de 01.11.2026): o balão que o escritório enviou ganha, no menu de segurar e no ⋯ das ações (`podeAlterarZap`), **Editar** (só texto, até 15 minutos do envio, `editarMsgZap`) e **Apagar** (para todos, até 2 dias, `apagarMsgZap`). O CRM grava o pedido em `zap_mensagens.alterar` (`{acao, texto, status: fila|feita|erro, erro, por, em}`, `pedirAlteracaoZap`) e a ponte o cumpre (`alterarEnviada`: `sendMessage` com `delete` ou `edit` e a chave da enviada), grava `apagada_em` ou o texto novo com `texto_antes` e `editada_em`; o balão diz "apagando…" ou "editando…", "não apagou" ou "não editou" com o erro, e o apagado pelo escritório diz "Apagada pelo escritório". SQL em `crm/fase2/migracoes/f343_zap_apagar_editar.sql`. Vale depois de atualizar a ponte no servidor. Testes: `zapbotoes.js` e `ponte/testes/fila.test.js`.
+
+A **F344** (12.19, pedido do Paulo de 01.11.2026): a tela do WhatsApp do computador rolava a página inteira e escondia o topo, porque a reserva de 150 px do fim da lista (F316, `#conteudo-meio::after`) somava-se à tela de altura fixa; em `.meio.zap-v` a reserva não existe. Teste: `zapficha.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
