@@ -1,6 +1,6 @@
 // F249 · a transição do To Do em níveis (crm/fase2/docs/TRANSICAO.md): o painel do Paulo liga a transição (todos no
-// nível 0, ele no 3), troca a onda e o nível de cada um; o nível 1 (F294) só lê os andamentos do INSS, do CRPS e do
-// Judicial; no nível 2 o que a onda não ligou some, e o atendimento abre simples (relato, veredito e parecer, Documentos com
+// nível 0, ele no 3), troca a onda e o nível de cada um; o nível 1 (F355) é o WhatsApp, com a ficha só na Identificação
+// e sem gravar no caso; o nível 2 lê os andamentos do INSS, do CRPS e do Judicial; no nível 2 o que a onda não ligou some, e o atendimento abre simples (relato, veredito e parecer, Documentos com
 // o Desfecho), com "Ver … completo". Banco simulado e dados fictícios. Uso: node f249.js [fotos]
 const { chromium } = require("playwright");
 const http = require("http");
@@ -39,7 +39,13 @@ const and = (k, n, texto, o = {}) => { const a = { id: id("e"), caso_id: k.id, a
 const cX = cli("Xênia Fictícia Transição");
 const kX = caso(cX, { beneficio: "Apos. por Idade", especie: "B41", fase: "inss", der: iso(-30), prazo: iso(5), protocolos: ["1700000501"] });
 and(kX, -20, "Requerimento protocolado.");
-and(kX, -10, "Em análise.", { origem: "pat", origem_id: "1700000501|c1" });   // F294 · o andamento do INSS que o nível 1 lê
+and(kX, -10, "Em análise.", { origem: "pat", origem_id: "1700000501|c1" });   // o andamento do INSS que o nível 2 lê
+// F355 · a conversa do WhatsApp da Xênia, que o nível 1 atende
+const CONV = "z0000000-0000-4000-8000-000000000001";
+T.zap_conversas.push({ id: CONV, telefone: "5516999990009", chave: "99990009", nome_perfil: "Xênia", cliente_id: cX.id, atendente_id: PAULO,
+  status: "aberta", nao_lidas: 1, ultima_em: ts(0), ultimo_texto: "Bom dia, tem novidade?" });
+T.zap_mensagens = [{ id: "zm1", seq: 1, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Bom dia, tem novidade?", status: "entregue", criado_em: ts(0) }];
+T.mencoes.push({ id: "me000000-0000-4000-8000-000000000001", de_id: MARCOS, para_id: PAULO, caso_id: kX.id, texto: "@Paulo conferir o pedido", criado_em: ts(0), lida_em: null });
 const PC = "pc_f249a";
 const kP = caso(cX, { fase: "escritorio", pre_caso: true, beneficio: "Aposentadoria por idade", origem_lista: "🙋 Escritório",
   precaso: { id: PC, natureza: "", marc: {}, honorarios: "", quem: null, em: iso(-1) } });
@@ -131,33 +137,39 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf(`a ficha mostra só o Cadastro (${abas.join(", ")}) com a Identificação (${subs.join(", ")})`, abas.join() === "Cadastro" && subs.join() === "Identificação");
   await p.screenshot({ path: path.join(OUT, "00-nivel0-ficha.png") });
 
-  // 3 · F294 · o nível 1: a Agenda, os Clientes e os andamentos dos portais, sem escrever
+  // 3 · F355 · o nível 1: o WhatsApp, com a agenda e a Identificação; nada grava no caso
   await p.evaluate(id => gravarTransicao({ col: id, n: 1 }), PAULO); await p.waitForTimeout(400);
   await p.evaluate(() => { fecharCaixa(); fecharFicha && fecharFicha(); visao = "meudia"; render(); montarSidebar(); });
   await p.waitForTimeout(400);
   conf("no nível 1, o html leva data-nivel=1 e a tela inicial é a Agenda", (await nivel()) === "1" && await p.evaluate(() => visao) === "agendaq");
   const itens1 = await p.evaluate(() => [...document.querySelectorAll(".lista-item")].filter(e => e.offsetParent !== null).map(e => e.dataset.v));
-  conf(`no nível 1 a barra mostra as Menções, a Agenda e os Clientes (${itens1.join(", ")})`, itens1.join() === "mencoes,agendaq,clientes");
-  await p.evaluate(id => abrirFicha(id), cX.id); await p.waitForTimeout(600);
+  conf(`no nível 1 a barra mostra as Menções, a Agenda, os Clientes e o WhatsApp (${itens1.join(", ")})`, itens1.slice().sort().join() === "agendaq,clientes,mencoes,whatsapp");
+  await p.click('.lista-item[data-v="whatsapp"]'); await p.waitForTimeout(600);
+  conf("o WhatsApp abre e mostra a conversa", await p.evaluate(() => visao) === "whatsapp" && await vis(".zap-conv"));
+  await p.click(".zap-conv"); await p.waitForTimeout(800);
+  conf("a conversa abre com o campo de escrever", await vis("#zap-txt") && await vis(".zap-msgs"));
+  conf("o balão não oferece registrar como andamento", !(await vis(".zap-msgs .virar")) && await p.evaluate(() => !podeGravarCaso()));
+  const escAntes = banco.escritas.length;
+  await p.evaluate(() => virarAndamento("zm1")); await p.waitForTimeout(300);
+  conf("a mensagem não vira andamento nem pelo atalho", !banco.escritas.slice(escAntes).some(e => e.t === "andamentos") && !(await vis(".modal-fundo")));
+  conf("o painel da ficha não mostra tarefas para concluir", !(await vis("#zap-painel .zp-tarefas")));
+  await p.screenshot({ path: path.join(OUT, "02-nivel1-whatsapp.png") });
+  await p.evaluate(() => irPara("mencoes")); await p.waitForTimeout(400);
+  conf("nas Menções do nível 1, sem Ok e Feito e sem abrir o caso, que gravam no caso", await vis(".mencao") && !(await vis(".mencao .menc-resp")) && !(await vis(".mencao .btn-mini.forte")));
+  await p.evaluate(() => irPara("whatsapp")); await p.waitForTimeout(400);
+  await p.evaluate(id => fichaComZap(id), cX.id); await p.waitForTimeout(800);
   const abas1 = await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].filter(e => e.offsetParent !== null).map(e => [...e.childNodes].filter(n => !(n.classList && n.classList.contains("mt-ponto"))).map(n => n.textContent).join("").trim()));
-  conf(`a ficha do nível 1 abre no Cadastro e mostra os Casos (${abas1.join(", ")})`, abas1.length === 2 && abas1[0] === "Cadastro" && /^Casos/.test(abas1[1]));
-  await abrir(cX, kX);
-  const sub1 = await p.evaluate(() => [...document.querySelectorAll(".menu-andamentos button")].filter(e => e.offsetParent !== null).map(e => e.textContent.trim()));
-  conf(`no caso, só as abas dos portais (${sub1.join(", ")})`, sub1.length >= 1 && sub1.every(t => /^(INSS|Recurso|Judicial)/.test(t)));
-  conf("o caso abre na aba INSS, sem o campo de escrever", await p.evaluate(() => document.querySelector(".menu-andamentos button.on")?.textContent.trim().startsWith("INSS")) && !(await vis(".caso-dir .tipo-fila, .caso-dir #tipo-fila")));
-  conf("os prazos, que têm botões de gravar, não aparecem", !(await vis(".caso-pz")) && !(await vis(".conf-sem")));
-  await p.screenshot({ path: path.join(OUT, "02-nivel1-caso.png") });
-  conf("as etapas aparecem, mas não se escolhem", await vis(".tr-et") && await p.evaluate(() => getComputedStyle(document.querySelector(".tr-et")).pointerEvents === "none"));
-  conf("os botões que gravam somem (arquivar, tarefa, estrela, mensagem, levar, aceitar etapa, advogado)",
-    await p.evaluate(() => !["alternarArquivo", "abrirSeguimento", "alternarSinal", "msgAndamento", "moverAndamento", "aceitarEtapaProposta", "escolherAdvogado", "editarFato"]
-      .some(f => [...document.querySelectorAll(`#detalhe [onclick*="${f}"]`)].some(e => e.offsetParent !== null))));
-  conf("os de ler continuam (copiar o texto e marcar como lido)", await vis('.painel[data-p="2"] [onclick^="copiar"]') && await vis('.painel[data-p="2"] [onclick^="liNaFicha"]'));
+  const subs1 = await p.evaluate(() => [...document.querySelectorAll(".sub-menu button")].filter(e => e.offsetParent !== null).map(e => e.textContent.trim()));
+  conf(`a Ficha do WhatsApp abre só a Identificação (${abas1.join(", ")} · ${subs1.join(", ")})`, abas1.join() === "Cadastro" && subs1.join() === "Identificação");
+  conf("a conversa fica ao lado da Identificação, sem 'anotar' no caso", await vis("#painel-prazo .zap-b") && !(await vis("#painel-prazo .zl-acoes")));
+  await p.evaluate(() => { fecharFicha && fecharFicha(); fecharPainelPrazo && fecharPainelPrazo(); });
 
   // 3b · o nível 2: a anotação, com o que a onda ligou
   await p.evaluate(id => gravarTransicao({ col: id, n: 2 }), PAULO); await p.waitForTimeout(400);
   await p.evaluate(() => fecharCaixa());
   await abrir(cX, kX);
   conf("no nível 2, o html leva data-nivel=2 e o campo de escrever volta", (await nivel()) === "2" && await vis("#tipo-fila"));
+  conf("no nível 2, a aba INSS dos andamentos dos portais aparece", await p.evaluate(() => [...document.querySelectorAll(".menu-andamentos button")].some(e => e.offsetParent !== null && /^INSS/.test(e.textContent.trim()))));
   conf("na onda 1, Sem resposta e Pedir ao cliente ainda não aparecem", !(await vis(".tipo-ch.tipo-sr")) && !(await vis(".tipo-ch.tipo-pc")));
   conf("na onda 1, o 'Em análise · +7 d' já aparece e o Movimentou não", await vis(".faixa-prazos .conf-sem") && !(await vis(".faixa-prazos .conf-mov")));
 
