@@ -13,10 +13,14 @@ const MAE = "c9000000-0000-0000-0000-000000000001", FILHO = "c9000000-0000-0000-
       AVO = "c9000000-0000-0000-0000-000000000003", OUTRO = "c9000000-0000-0000-0000-000000000004";
 const T = {
   clientes: [...FIX.clientes,
-    { id: MAE, nome: "Rosa Fictícia Lima", cpf: "11122233396", telefone: "16999990002", campos: {} },
+    { id: MAE, nome: "Rosa Fictícia Lima", cpf: "11122233396", telefone: "16999990002",
+      campos: { docs_pedidos: [{ caso_id: "k9000000-0000-0000-0000-000000000001", em: "2026-10-30", itens: [{ nome: "Laudo do ortopedista" }] }] } },
     { id: FILHO, nome: "Pedro Fictício Lima", cpf: "22233344405", campos: { representante: { nome: "Rosa Fictícia Lima", cpf: "111.222.333-96", qualidade: "mãe" } } },
     { id: AVO, nome: "Antônio Fictício Lima", cpf: "33344455514", telefones: [{ numero: "16999990002", obs: "é a nora, cuida do benefício" }] },
     { id: OUTRO, nome: "Carla Fictícia Souza", cpf: "44455566623", campos: { representante: { nome: "Outra Pessoa", cpf: "99988877766" } } }],
+  casos: [...(FIX.casos || []), { id: "k9000000-0000-0000-0000-000000000001", cliente_id: MAE, fase: "inss", beneficio: "B31", etapa: "aguardando perícia" }],
+  credenciais: [{ id: "cr1", cliente_id: MAE, tipo: "meu_inss", valor: "Senha@Ficticia1" }],
+  andamentos: [{ caso_id: "k9000000-0000-0000-0000-000000000001", texto: "Perícia agendada para 10/11", criado_em: agora, autor_id: null }],
   zap_conversas: [{ id: CONV, telefone: "5516999990002", chave: "99990002", nome_perfil: "Rosa", cliente_id: MAE,
     atendente_id: null, status: "aberta", nao_lidas: 0, ultima_em: agora, ultimo_texto: "oi" }],
   zap_mensagens: [{ id: "m1", seq: 1, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "oi", status: "entregue", criado_em: agora }],
@@ -74,6 +78,13 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   const cards = await p.$$eval("#zap-painel .zp-card:not(.zp-conv-cel)", es => es.map(e => e.textContent));
   conf("o clique no nome abre a ficha na tela de 1100 px", await p.$eval("#zap-painel", e => getComputedStyle(e).display !== "none"));
   conf("a primeira ficha é a de quem fala", /Ficha do cliente/.test(cards[0]) && cards[0].includes("Rosa Fictícia Lima"));
+  // F354 · CPF inteiro, a senha do Meu INSS à vista, o que se espera do cliente e o último andamento
+  await p.waitForFunction(() => /Senha@Ficticia1/.test(document.getElementById("zap-painel").textContent), null, { timeout: 5000 }).catch(() => {});
+  const painel = await p.$eval("#zap-painel", e => e.textContent);
+  conf("o CPF aparece inteiro", painel.includes("111.222.333-96"));
+  conf("a senha do Meu INSS aparece e o ver fica registrado", painel.includes("Senha@Ficticia1") && escritas.some(e => /credencial_vis/.test(e.u)));
+  conf("o que esperamos do cliente aparece", /Aguardando do cliente \(1\)/.test(painel) && painel.includes("Laudo do ortopedista"));
+  conf("cada caso mostra o último andamento", /Último andamento/.test(painel) && painel.includes("Perícia agendada para 10/11"));
   const rep = await p.$$eval("#zap-painel .zp-rep", es => es.map(e => e.textContent));
   conf("abaixo, os dois clientes que ela representa", rep.length === 2 && rep[0].includes("Antônio") && rep[1].includes("Pedro"));
   conf("o representante gravado na ficha conta pelo CPF, com a qualidade", rep[1].includes("representante (mãe)"));
