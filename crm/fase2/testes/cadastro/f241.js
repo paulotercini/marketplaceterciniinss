@@ -100,18 +100,19 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await abrir(cA, kA);
   const pz = () => p.evaluate(() => { const f = document.querySelector(".faixa-prazos"); const cs = [...f.querySelectorAll(".pz")];
     return { vis: cs.filter(c => c.checkVisibility()).map(c => c.dataset.data.split("-").reverse().join("/")), todos: cs.map(c => c.dataset.data.split("-").reverse().join("/")),
-      bt: (f.querySelector("details.fp2-grupo:not([open]) summary") || {}).textContent || "", resumo: f.textContent }; });
+      bt: (f.querySelector("details.fp-resto:not([open]) summary") || {}).textContent || "", resumo: f.textContent }; });
   let z = await pz();
   await p.screenshot({ path: path.join(OUT, "02-prazos.png") });
   const br = s => `${s.slice(8, 10)}/${s.slice(5, 7)}/${s.slice(0, 4)}`;
   const adiante = [90, 60, 40].map(d => br(iso(d)));
-  conf(`à vista o vencido e o próximo, e não os de longe (${z.vis.join(", ")})`, z.vis.includes(br(iso(-2))) && z.vis.includes(br(iso(3))) && !adiante.some(d => z.vis.includes(d)));
-  conf(`o resto em "Mais tarde", recolhido (${z.bt})`, /Mais tarde\s*3/.test(z.bt));
+  // F335 · um prazo de cada vez: à vista só o próximo; o vencido conta no "Ver as outras", em vermelho
+  conf(`à vista só o próximo, e não os de longe (${z.vis.join(", ")})`, z.vis.length === 1 && z.vis.includes(br(iso(3))) && !adiante.some(d => z.vis.includes(d)));
+  conf(`o resto em "Ver as outras N datas", recolhido, com a vencida (${z.bt})`, /Ver as outras \d+ datas/.test(z.bt) && /vencida/.test(z.bt));
   const q = s => s.split("/").reverse().join("");
   const resto = z.todos.slice(1);
   conf("F254 · depois do prazo fatal, a ordem é crescente", resto.every((d, i) => !i || q(resto[i - 1]) <= q(d)) && adiante.every(d => z.todos.includes(d)));
   conf("os grupos dizem o vencido e o que vem", /Vencidas/.test(z.resumo) && /Mais tarde/.test(z.resumo));
-  await p.click("details.fp2-grupo summary");
+  await p.click("details.fp-resto summary");
   z = await pz();
   conf("o clique mostra todas as datas", z.vis.length === z.todos.length && !z.bt);
 
