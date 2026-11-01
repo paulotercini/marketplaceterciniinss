@@ -14,8 +14,8 @@ está no nível completo vê tudo o que o outro escreveu.
 | Nível | O que se vê |
 |---|---|
 | 0 · Primeiro acesso | Só a 📅 Agenda (a integrada ao Google Agenda), que é a tela inicial e a única lista do menu, e a Identificação do cliente. A pesquisa acha o cliente e abre só a Identificação; o Novo Cliente funciona. |
-| 1 · Andamentos dos portais | O nível 0 e a aba Casos, somente leitura: só as abas INSS, Recurso (CRPS) e Judicial, sem o campo de escrever, sem os prazos e sem os botões que gravam (ficam os de trocar de aba, abrir o documento, copiar e marcar como lido). As etapas aparecem, mas não se escolhem. Decisão do Paulo de 27.10.2026: o colaborador se familiariza com a agenda, o cadastro e os andamentos antes de escrever. |
-| 2 · Anotação | A linha do tempo do Escritório, o campo de escrever com os tipos e as Sugestões, os prazos à vista, o Lembrar em e o que a onda ligou. No atendimento, as telas simples até a onda delas. É o nível em que se deixa o To Do. |
+| 1 · WhatsApp | O nível 0 e o 💬 WhatsApp: as filas Novas e Minhas, responder, nota interna, assumir, encerrar e transferir, a agenda ao lado da conversa e, à direita, a ficha do cliente. O botão Ficha abre só a Identificação. Nada grava no caso: registrar a mensagem como andamento, juntar o documento ao caso, anotar, criar ou concluir tarefa e levar o robô a um passo ficam para o nível 2. Decisão do Paulo de 01.11.2026 (F355): o colaborador aprende a conversar com o cliente depois da agenda e da lista Clientes. |
+| 2 · Anotação | A linha do tempo do Escritório e os andamentos dos portais (INSS, Recurso e Judicial, que eram do nível 1 na F294), o campo de escrever com os tipos e as Sugestões, os prazos à vista, o Lembrar em e o que a onda ligou. No atendimento, as telas simples até a onda delas. É o nível em que se deixa o To Do. |
 | 3 · Completo | O CRM inteiro. |
 
 - O nível é **por colaborador** e quem define é o Paulo (menu da conta, "Níveis da equipe").
