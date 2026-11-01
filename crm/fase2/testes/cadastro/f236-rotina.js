@@ -167,8 +167,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf(`o contador da barra é o da pessoa (${barra.cont}; o escritório tem ${barra.todosV} vencidas)`, barra.venc === barra.mV && barra.hoje === barra.mH
     && barra.venc < barra.todosV && barra.cont.replace(/\s/g, "") === `${barra.venc}·${barra.hoje}`);
   const md = await paulo.evaluate(() => { visao = "meudia"; render();
-    return { secoes: [...document.querySelectorAll("#conteudo-meio .pl-grupo h3.secao")].map(h => h.textContent.replace(/\s+/g, " ").trim()),
-      deleg: (d => d ? { aberta: d.open, txt: d.textContent } : null)(document.querySelector("details.pl-dobra")),
+    return { secoes: [...document.querySelectorAll("#conteudo-meio .pl-grupo:not(.md-ontem) h3.secao")].map(h => h.textContent.replace(/\s+/g, " ").trim()),
+      deleg: (d => d ? { aberta: d.open, txt: d.textContent } : null)(document.querySelector("details.pl-dobra:not(.md-ontem)")),
       sub: document.getElementById("sub-lista").innerHTML, txt: document.getElementById("conteudo-meio").innerText }; });
   // a menção que já está no dia como tarefa minha (a do k10, hoje) não se repete na seção das menções
   conf(`o Meu Dia abre pelas vencidas, depois hoje e as menções (${md.secoes.map(x => x.split(" ")[0]).join(", ")})`,
