@@ -104,8 +104,8 @@ const DADOS = {
   const f7 = await p.evaluate(() => { const k = D.casoPorId.get(casoSel), bs = [...document.querySelectorAll(".tr-l .tr-et.tr-sf:not(.tr-grp)")];
     const t1 = tituloEtapa({ n: "Decisão" }, { s: "f", d: "2026-10-09", v: 1, por: "pela situação do PAT “Concluída - Indeferida”" });
     const t2 = tituloEtapa({ n: "Réplica" }, { s: "f", d: "2026-10-09" });
-    const ha = (() => { const d = new Date(); d.setDate(d.getDate() - 200); return tempoNaEtapa({ id: "x", especie: "B31" }, d.toISOString().slice(0, 10), "judicial"); })();
-    const curto = (() => { const d = new Date(); d.setDate(d.getDate() - 10); return tempoNaEtapa({ id: "x", especie: "B31" }, d.toISOString().slice(0, 10), "judicial"); })();
+    const ha = tempoNaEtapa({ id: "x", especie: "B31" }, somaDias(hoje(), -200), "judicial");
+    const curto = tempoNaEtapa({ id: "x", especie: "B31" }, somaDias(hoje(), -10), "judicial");
     const sel = document.createElement("div"); sel.innerHTML = seloEtapaLista({ ...k, etapa: k.etapa || "perícia realizada" }); document.body.appendChild(sel);
     const sp = sel.querySelector(".ag-tipo"), bg = getComputedStyle(sp).backgroundColor; sel.remove();
     return { t1, t2, todosCom: bs.every(b => / · cumprida/.test(b.title)), ha, curto, etapa: sp.classList.contains("ag-etapa"), bg }; });
