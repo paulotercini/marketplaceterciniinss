@@ -165,17 +165,22 @@ function reacaoDe(m) {
 
 // F332 · o cliente apagou ou editou a mensagem: chega um protocolMessage com a chave
 // da original (tipo 0 = apagar para todos, 14 = editar). Editada traz o texto novo.
-function alteracaoDe(m) {
+const textoEditado = e => (e && (e.conversation || (e.extendedTextMessage && e.extendedTextMessage.text)
+  || (e.imageMessage && e.imageMessage.caption) || (e.videoMessage && e.videoMessage.caption))) || "";
+// idEditada: o messages.update do Baileys 6.7 já entrega a edição desembrulhada
+// ({editedMessage: {message: <conteúdo novo>}}), com o id da original na chave do aviso
+function alteracaoDe(m, idEditada) {
   let c = (m && m.message) || {};
   if (c.editedMessage) c = c.editedMessage.message || {};
   const p = c.protocolMessage;
-  if (!p || !p.key || !p.key.id) return null;
+  if (!p || !p.key || !p.key.id) {
+    const texto = idEditada ? textoEditado(c) : "";
+    return texto ? { id: idEditada, texto } : null;
+  }
   const tipo = Number(p.type);
   if (tipo === 0) return { id: p.key.id, apagada: true };
   if (tipo === 14 && p.editedMessage) {
-    const e = p.editedMessage;
-    const texto = e.conversation || (e.extendedTextMessage && e.extendedTextMessage.text)
-      || (e.imageMessage && e.imageMessage.caption) || (e.videoMessage && e.videoMessage.caption) || "";
+    const texto = textoEditado(p.editedMessage);
     return texto ? { id: p.key.id, texto } : null;
   }
   return null;
