@@ -111,6 +111,7 @@ function lembrar(r) {
   if (enviadas.size > 500) enviadas.delete(enviadas.keys().next().value);
 }
 async function mensagemParaReenvio(key) {
+  log("↻ o aparelho pediu reenvio", key.id, enviadas.has(key.id) ? "(na memória)" : "(do banco)");
   if (enviadas.has(key.id)) return enviadas.get(key.id);
   // reiniciou no meio: o texto ainda está no banco (mídia não dá para remontar)
   const [m] = await sb(`/rest/v1/zap_mensagens?select=texto,tipo&externo_id=eq.${encodeURIComponent(key.id)}`).catch(() => []);
@@ -121,13 +122,17 @@ async function conectar() {
   const baileys = require("@whiskeysockets/baileys");
   const makeWASocket = baileys.default || baileys.makeWASocket;
   const { useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion,
-          downloadMediaMessage } = baileys;
+          downloadMediaMessage, makeCacheableSignalKeyStore } = baileys;
   const pino = require("pino");
 
   const { state, saveCreds } = await useMultiFileAuthState(PASTA);
   const { version } = await fetchLatestBaileysVersion().catch(() => ({ version: undefined }));
   sock = makeWASocket({
-    version, auth: state, logger: pino({ level: "silent" }),
+    // F345 · as chaves de criptografia em cache na memória, como o Baileys recomenda:
+    // gravadas arquivo por arquivo a cada mensagem, o reinício perdia gravações e o
+    // celular do cliente não abria a edição e o apagar ("Aguardando mensagem", Bad MAC)
+    version, auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "silent" })) },
+    logger: pino({ level: "silent" }),
     // aparecer como um navegador comum é o comportamento normal de quem usa
     // o WhatsApp Web; nada aqui manda mensagem sozinho
     browser: ["CRM Tercini", "Desktop", "121.0.0"],  // Desktop: o WhatsApp manda o histórico inteiro, não só os meses recentes
@@ -610,7 +615,7 @@ async function assinaturaDe(msg) {
   if (!assinaturas.has(msg.autor_id)) {
     const [c] = await sb(`/rest/v1/colaboradores?select=nome,assinatura_zap&id=eq.${msg.autor_id}`).catch(() => []);
     assinaturas.set(msg.autor_id, c ? (c.assinatura_zap || c.nome || "").trim() || null : null);
-    setTimeout(() => assinaturas.delete(msg.autor_id), 600000);   // muda na Configuração: vale em 10 min
+    setTimeout(() => assinaturas.delete(msg.autor_id), 600000).unref?.();   // muda na Configuração: vale em 10 min
   }
   return assinaturas.get(msg.autor_id);
 }
@@ -677,7 +682,8 @@ async function alterarEnviada(msg, s = sock) {
       lembrar(await s.sendMessage(achado.jid, { delete: key }));
       await gravarNaLinha({ apagada_em: agora(), alterar: feita });
     } else if (a.acao === "editar" && a.texto) {
-      lembrar(await s.sendMessage(achado.jid, { text: a.texto, edit: key }));
+      // a original saiu assinada ("*Dr. Paulo Tercini:*"): a edição troca o texto inteiro, então assina de novo
+      lembrar(await s.sendMessage(achado.jid, { text: assinar(a.texto, await assinaturaDe(msg)), edit: key }));
       await gravarNaLinha({ texto: a.texto, texto_antes: msg.texto_antes ?? msg.texto, editada_em: agora(), alterar: feita });
     } else throw new Error("pedido inválido");
     log("✎", a.acao, msg.externo_id);
@@ -706,7 +712,7 @@ async function rodarFila() {
         const reacoes = await sb("/rest/v1/zap_reacoes?status=eq.fila&de=eq.escritorio&select=id,mensagem_id,emoji&limit=5");
         for (const r of reacoes || []) await reagir(r);
         const alteracoes = await sb("/rest/v1/zap_mensagens?alterar->>status=eq.fila"
-          + "&select=id,conversa_id,externo_id,direcao,texto,texto_antes,alterar&limit=5");
+          + "&select=id,conversa_id,externo_id,direcao,texto,texto_antes,alterar,autor_id,por_bot,aviso_chave&limit=5");
         for (const m of alteracoes || []) await alterarEnviada(m);
       }
     } catch (e) { log("fila:", e.message); }
