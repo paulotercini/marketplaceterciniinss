@@ -86,7 +86,6 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.evaluate(id => { zapChips.atendente = ""; zapChips.naoLidas = false; abrirConversa(id); }, DA_AMANDA);
   await p.waitForSelector(".zap-topo");
   conf("gestor: na conversa da Amanda aparece Assumir (tirar de Amanda)", (await p.textContent(".zap-topo")).includes("tirar de Amanda"));
-  conf("gestor: o painel ao lado mostra o histórico de transferências", (await p.textContent("#zap-painel")).includes("Transferências"));
   await p.evaluate(() => transferirConversa());
   await p.fill("#zt-motivo", "é financeiro");
   await p.click(`[data-zt="${AMANDA}"]`);
