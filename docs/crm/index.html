@@ -4404,15 +4404,14 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .cli-sit-t{font-style:normal;font-weight:600}.cli-sit-t.ativo{color:#1f6b41}.cli-sit-t.formacao{color:#8a6500}.cli-sit-t.inativo{color:#a3291c}
 @media (hover:hover) and (pointer:fine){.cli-todos-it:hover{background:var(--fundo2,#f5f5f2)}}
 /* F249 · o nível 0 (primeiro acesso): na ficha só o Cadastro (Identificação); na barra só a Agenda, e o Novo Cliente fica no botão fixo */
-html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]):not(#btn-processos),
-:is(html[data-nivel="0"],html[data-nivel="1"]) :is(.lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]),.cel-tudo,#btn-v10-anotar,.rapida-caixa,#fab-rapida,
-.barra-cel [data-cel="meudia"],.barra-cel [data-cel="whatsapp"],.barra-cel [data-cel="menu"],.grupo:has(#grupo-fases)){display:none!important}
-/* F294 · o nível 1 só navega nos andamentos dos portais: sem os prazos, que têm botões de gravar */
-html[data-nivel="1"] :is(.caso-pz,.td-classif){display:none!important}
-/* F294 · no caso, o nível 1 vê só os botões de ler (trocar de aba, abrir o documento, copiar); os que gravam somem */
-html[data-nivel="1"] .painel[data-p="2"] [onclick]:not([onclick^="ajuda("]):not([onclick^="irSubAba"]):not([onclick^="trVerFase"]):not([onclick^="trAjuda"]):not([onclick^="guardar("]):not([onclick^="lcAbrir"]):not([onclick^="irOutraAba"]):not([onclick^="abrirMeuInss"]):not([onclick^="fonte"]):not([onclick^="filtroTudo"]):not([onclick^="procSel"]):not([onclick^="nupSel"]):not([onclick^="instSel"]):not([onclick^="tudoSoMarcos"]):not([onclick^="copiar"]):not([onclick^="liNaFicha"]):not([onclick^="liTudoNaFicha"]):not([onclick^="abrirAnexo"]):not([onclick^="abrirDecisao"]):not([onclick^="document."]):not([onclick^="fecharCaixa"]):not([onclick^="this."]):not([onclick^="trEscolher"]),html[data-nivel="1"] #detalhe :is(.cli-adv-bt,.cli-nao){display:none!important}
-html[data-nivel="1"] .painel[data-p="2"] [onclick^="trEscolher"]{pointer-events:none}
-html[data-nivel="1"] .mp-it.mp-novo{display:none!important}
+html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]),
+html[data-nivel="0"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]),
+html[data-nivel="1"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]),
+:is(html[data-nivel="0"],html[data-nivel="1"]) :is(.cel-tudo,#btn-v10-anotar,.rapida-caixa,#fab-rapida,
+.barra-cel [data-cel="meudia"],.barra-cel [data-cel="menu"],.grupo:has(#grupo-fases)){display:none!important}
+html[data-nivel="0"] .barra-cel [data-cel="whatsapp"]{display:none!important}
+/* F355 · o nível 1 é o WhatsApp: conversa, agenda e Identificação; o que grava no caso fica para o nível 2. Na barra do celular, o WhatsApp no lugar do Buscar */
+html[data-nivel="1"] :is(.zp-tarefas,[onclick^="levarRobo"]),html[data-nivel="1"] .barra-cel .so-n0[data-cel="busca"]{display:none!important}
 /* F253 · a faixa de quem olha como outro nível */
 #ver-nivel-faixa{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:900;display:flex;align-items:center;gap:12px;padding:8px 10px 8px 16px;border-radius:999px;background:#23231F;color:#fff;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:calc(100vw - 32px)}
 #ver-nivel-faixa button{border:none;border-radius:999px;padding:6px 12px;background:#fff;color:#23231F;font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}
@@ -6197,7 +6196,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.21</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.23</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12651,8 +12650,10 @@ const LISTAS_POR_CARGO = {
   advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "direito", "agenda"],
   recepcao: ["meudia","mencoes","whatsapp","calendario","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente"],
 };
-const listasDoColab = () => meuNivel()<=1 ? ["agendaq", "clientes", "mencoes", "novocliente"]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis
+const listasDoColab = () => meuNivel()<=1 ? ["agendaq", "clientes", "mencoes", ...(meuNivel()===1?["whatsapp"]:[]), "novocliente"]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
+// F355 · o nível 1 (WhatsApp) conversa e marca horário, mas não grava no caso: andamento, documento e tarefa são do nível 2
+const podeGravarCaso = () => meuNivel()>=2;
 function alternarVerComo(){
   guardar("crm_ver_como", visaoColab() ? "" : "colab");
   if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = meuNivel()<=1 ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
@@ -14395,7 +14396,7 @@ function renderMencoes(){
       <div class="acoes">
         ${m.conversa_id?`<button class="btn-mini" onclick="abrirConversaDaMencao('${m.conversa_id}')" title="abrir conversa"><span aria-hidden="true">Conversa</span><span class="sr-only">abrir conversa</span></button>`:""}
         ${/* F220 · a menção leva ao lugar do trabalho: o caso citado ou o atendimento do cliente novo */""}
-        ${k?`<button class="btn-mini forte" onclick="abrirCasoDaMencao('${k.cliente_id}','${k.id}','${m.andamento_id||""}')" title="abrir o caso"><span aria-hidden="true">Abrir</span><span class="sr-only">abrir o caso</span></button>`
+        ${!podeGravarCaso()?"":k?`<button class="btn-mini forte" onclick="abrirCasoDaMencao('${k.cliente_id}','${k.id}','${m.andamento_id||""}')" title="abrir o caso"><span aria-hidden="true">Abrir</span><span class="sr-only">abrir o caso</span></button>`
           : c && !(D.casosDoCliente.get(c.id)||[]).some(x=>x.fase!=="encerrado" && !ehPreCaso(x)) ? `<button class="btn-mini forte" onclick="abrirAtendimentoDe('${c.id}')" title="abrir o atendimento"><span aria-hidden="true">Atendimento</span><span class="sr-only">abrir o atendimento</span></button>` : ""}
         ${c?`<button class="btn-mini" onclick="abrirFicha('${c.id}')" title="abrir ficha"><span aria-hidden="true">Ficha</span><span class="sr-only">abrir ficha</span></button>`:""}
         ${m.caso_id?botoesResposta(m):""}
@@ -14419,6 +14420,7 @@ async function baixarMencoes(andIds){
 // F292 · responder a menção num clique, como o "(ME): Ok." do To Do: a resposta vai à linha do tempo do caso, em
 // resposta à anotação que citou, quem citou recebe o aviso, e a menção sai da caixa (Onda B do fluxo do To Do)
 function botoesResposta(m){
+  if(!podeGravarCaso()) return "";   // F355 · o "Ok" e o "Feito" gravam no caso
   return ["Ok","Feito"].map(r=>`<button class="btn-mini menc-resp" onclick="event.stopPropagation();responderMencao('${m.id}','${r}.')" title="responder &quot;${r}.&quot; no caso e dar a menção por lida">${r}</button>`).join("");
 }
 async function responderMencao(id, txt){
@@ -15256,8 +15258,9 @@ function cartaoConversa(c){
 
 const telaVaziaZap = () =>
   `<div class="zap-vazio"><h4>Escolha uma conversa</h4>
-     <p>À esquerda estão as conversas do escritório. Pendentes é a fila de quem
-        ainda não foi atendido: é por ali que se começa o dia.</p></div>`;
+     <p>${zapGestor()?`À esquerda estão as conversas do escritório. Pendentes é a fila de quem
+        ainda não foi atendido: é por ali que se começa o dia.`
+        :`À esquerda estão as suas conversas. Novas são as que têm mensagem que você ainda não leu: é por ali que se começa o dia.`}</p></div>`;
 
 async function carregarReacoes(){
   const ids = zapMsgs.map(m=>m.id), lotes = [];
@@ -15637,7 +15640,7 @@ function pintarPainelZap(c){
       <p class="zp-sub">${esc(espera.slice(0,4).join(" · "))}${espera.length>4?` e mais ${espera.length-4}`:""}</p></section>`:""}
     ${ks.length ? ks.slice(0,3).map(caso).join("") : `<section class="zp-card"><h4>Caso</h4><p class="zp-sub">Nenhum caso aberto.</p></section>`}
     ${reps.length ? `<h4 class="zp-rep-tit">Clientes que ${esc(String(cli.nome||"").split(" ")[0])} representa (${reps.length})</h4>${reps.map(repCard).join("")}` : ""}
-    <section class="zp-card"><h4>Tarefas abertas</h4>
+    <section class="zp-card zp-tarefas"><h4>Tarefas abertas</h4>
       ${tarefas.slice(0,5).map(t=>`<label class="zp-tarefa"><input type="checkbox" onchange="concluirTarefaZap('${t.id}')">
         <span>${esc(t.titulo||"")}${t.prazo?` <b class="${t.prazo<hoje()?"venc":"prox"}">${dmaZap(t.prazo).slice(0,5)}</b>`:""}</span></label>`).join("")
         || `<p class="zp-sub">Nenhuma tarefa aberta.</p>`}
@@ -15646,6 +15649,7 @@ function pintarPainelZap(c){
     ${transf}${hist}`;
 }
 async function concluirTarefaZap(id){
+  if(!podeGravarCaso()) return;   // F355 · o nível 1 conversa, mas não grava no caso
   const t = (D.tarefas||[]).find(x=>x.id===id); if(!t) return;
   t.concluida = true; t.concluida_em = new Date().toISOString();
   await api(`/rest/v1/tarefas?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
@@ -15653,6 +15657,7 @@ async function concluirTarefaZap(id){
   plim(); pintarPainelZap(zapConvs.find(x=>x.id===zapAberta));
 }
 function novaTarefaZap(){
+  if(!podeGravarCaso()) return;   // F355 · o nível 1 conversa, mas não grava no caso
   const c = zapConvs.find(x=>x.id===zapAberta), cli = c && c.cliente_id && D.cliPorId.get(c.cliente_id); if(!cli) return;
   const ks = (D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado");
   caixa(`<h3>Nova tarefa de ${esc(cli.nome)}</h3>
@@ -15823,7 +15828,7 @@ function bolhaZap(m, cli, seguida){
   if(m.direcao==="interna") return `<div class="zap-b interna">
     <div class="txt"><b>Nota interna${quem?` · ${esc(quem)}`:""}:</b> ${esc(m.texto||"")}</div>
     <div class="pe">${horaSP(m.criado_em)}
-      ${cli?`<button class="virar" onclick="virarAndamento('${m.id}')"
+      ${cli&&podeGravarCaso()?`<button class="virar" onclick="virarAndamento('${m.id}')"
         title="registrar no histórico de um processo">↪ andamento</button>`:""}</div></div>`;
   const corpo = m.midia_url && m.tipo==="audio"
     ? playerZap(m.midia_url)
@@ -15869,9 +15874,9 @@ function bolhaZap(m, cli, seguida){
       ${m.status==="erro"?`<span title="${esc(m.erro||"")}">não enviou</span>`:""}
       ${m.alterar&&m.alterar.status==="fila"?`<span>${m.alterar.acao==="apagar"?"apagando…":"editando…"}</span>`:""}
       ${m.alterar&&m.alterar.status==="erro"?`<span title="${esc(m.alterar.erro||"")}">${m.alterar.acao==="apagar"?"não apagou":"não editou"}</span>`:""}
-      ${cli?`<button class="virar" onclick="virarAndamento('${m.id}')"
+      ${cli&&podeGravarCaso()?`<button class="virar" onclick="virarAndamento('${m.id}')"
          title="registrar no histórico de um processo">↪ andamento</button>`:""}
-      ${cli&&m.direcao==="entrada"&&m.midia_url&&/^(imagem|documento)$/.test(m.tipo)&&cfgApp("zap_ia_equipe")==="sim"?`<button class="virar" onclick="identificarDocZap('${m.id}')"
+      ${cli&&podeGravarCaso()&&m.direcao==="entrada"&&m.midia_url&&/^(imagem|documento)$/.test(m.tipo)&&cfgApp("zap_ia_equipe")==="sim"?`<button class="virar" onclick="identificarDocZap('${m.id}')"
          title="a IA diz que documento é e a qual caso vai; você confere e junta"><span aria-hidden="true">✨ Juntar</span><span class="sr-only">✨ juntar ao caso</span></button>`:""}
     </div></div>`
     + (reac.length?`<span class="zap-reac ${m.direcao==="saida"?"saida":""}" title="${esc(reac.map(r=>(r.de==="cliente"?"cliente":"escritório")+" "+r.emoji).join(" · "))}">${reac.map(r=>esc(r.emoji)).join("")}</span>`:"");
@@ -16108,6 +16113,7 @@ const ROT_PASSO = {inicio:"menu inicial", processo:"processo", novo:"consulta no
 // F348: o passo do robô igual ao SMBot vem como "smb:<chave>"
 const rotPasso = k => ROT_PASSO[k] || (String(k).startsWith("smb:") ? "SMBot · " + String(k).slice(4).replace("_"," ") : k);
 function levarRobo(){
+  if(!podeGravarCaso()) return;   // F355 · o nível 1 conversa, mas não grava no caso
   caixa(`<h3>Levar o robô a um passo</h3>
     <p class="meio-sub">O cliente recebe o texto do passo e a conversa volta ao robô, sem atendente.
        O passo que chama a equipe entrega a conversa ao setor dele. Fica uma nota de quem levou.</p>
@@ -16496,6 +16502,7 @@ async function naoEhAutomatica(){
   abrirConversa(zapAberta);
 }
 async function identificarDocZap(msgId){
+  if(!podeGravarCaso()) return;   // F355 · o nível 1 conversa, mas não grava no caso
   const m = zapMsgs.find(x=>x.id===msgId), c = zapConvs.find(x=>x.id===zapAberta);
   const cli = c && c.cliente_id && D.cliPorId.get(c.cliente_id);
   if(!m || !cli) return;
@@ -16529,6 +16536,7 @@ async function identificarDocZap(msgId){
   };
 }
 async function virarAndamento(msgId){
+  if(!podeGravarCaso()) return;   // F355 · o nível 1 conversa, mas não grava no caso
   const c = zapConvs.find(x=>x.id===zapAberta);
   const cli = c && c.cliente_id && D.cliPorId.get(c.cliente_id);
   if(!cli) return aviso("Só dá para registrar no histórico de quem já é cliente");
@@ -16579,6 +16587,7 @@ async function responderZapLado(convId, cliId){
 }
 // "anotar": a mensagem vai à linha do tempo do caso, pelo mesmo caminho do "virar andamento" da tela do WhatsApp
 async function anotarMsgZap(msgId, cliId){
+  if(!podeGravarCaso()) return;   // F355 · o nível 1 conversa, mas não grava no caso
   const ks = processosDe(D.casosDoCliente.get(cliId)||[]);
   if(!ks.length) return aviso("Este cliente ainda não tem processo");
   const gravar = async casoId => {
@@ -16596,6 +16605,7 @@ async function anotarMsgZap(msgId, cliId){
 }
 // "virar tarefa": leva o texto ao campo de escrever no caso, que já lê a data do texto e pede quem faz e quando
 function tarefaDaMsgZap(msgId){
+  if(!podeGravarCaso()) return;   // F355 · o nível 1 conversa, mas não grava no caso
   const m = _zapLado.get(msgId), campo = document.getElementById("and-texto");
   if(!m || !campo) return aviso("Abra o caso na ficha para criar a tarefa");
   campo.value = `WhatsApp do cliente em ${fmtTS(m.q)}: “${m.texto.trim()}” — `;
@@ -16748,7 +16758,7 @@ async function verZapCliente(cliId){
       + (m.texto?`<div>${esc(m.texto)}</div>`:"");
     else corpo = esc(m.texto||`[${m.tipo}]`);
     // só o que tem texto de verdade (a mensagem, ou o áudio já transcrito) vai ao caso; mídia antiga sem arquivo, não
-    const acoes = m.direcao==="entrada" && !semArq && resto
+    const acoes = podeGravarCaso() && m.direcao==="entrada" && !semArq && resto
       ? `<span class="zl-acoes"><button onclick="anotarMsgZap('${m.id}','${cliId}')" title="registrar na linha do tempo do caso">anotar</button><button onclick="tarefaDaMsgZap('${m.id}')" title="levar ao campo de escrever no caso, com a data que estiver no texto"><span aria-hidden="true">Tarefa</span><span class="sr-only">virar tarefa</span></button></span>` : "";
     _zapLado.set(m.id, {texto: m.texto||"", q});
     return sep + `<div class="zap-b ${m.direcao}" style="max-width:85%"${acoes ? ` draggable="true" data-zmsg="${m.id}" title="arraste para a tarefa ou para o campo de escrever no caso"` : ""}>
@@ -19265,7 +19275,7 @@ async function abrirFicha(cliId){
     procSel = ""; nupSel = ""; fonteCnj = ""; fontePat = ""; fonteCrps = "";   // idem: processo e fonte (F71: PJe padrão)
     subAba = "escritorio";   // F166 · abrir um caso é abrir os andamentos do Escritório (era o Caso completo, F45)
   }
-  if(meuNivel()<=1){ if(meuNivel()===0 || abaAtiva!==2) abaAtiva = 0; subCad = "identificacao"; _atendAberto.delete(cliId); }   // F249 · primeiro acesso: só a Identificação; F294 · o nível 1 também os Casos
+  if(meuNivel()<=1){ abaAtiva = 0; subCad = "identificacao"; _atendAberto.delete(cliId); }   // F249 · primeiro acesso: só a Identificação; F355 · o nível 1 também (a leitura dos portais passou ao nível 2)
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
   // em rede lenta a coluna abria branca até as 6 consultas voltarem
@@ -19546,13 +19556,10 @@ function pintarFicha(){
           // histórico não some quando a etapa acaba.
           const visiveis = abasVisiveis(k, andsVis);
           const {inss:temINSS, crps:temCRPS, cnj:temCNJ} = visiveis;
-          // F294 · o nível 1 lê só os andamentos dos portais (INSS, Recurso, Judicial), onde não há campo de escrever
-          const nv1 = meuNivel()===1;
           // F320 · no celular os rótulos são curtos (Escritório, INSS, CRPS, Judicial e Tudo)
           // F330 · INSS, CRPS e Judicial só aparecem com andamento ou número; o número entra pela gestão do caso (protocolo ou NB abre o INSS, e-Sisrec o CRPS, CNJ o Judicial; pedido do Paulo, 31.10.2026)
           const v10Cel = temaV10() && celular();
-          const aba = nv1 ? (["inss","crps","cnj"].find(a=>a===subAba && visiveis[a]) || ["inss","crps","cnj"].find(a=>visiveis[a]) || "")
-            : visiveis[subAba] ? subAba : "escritorio";
+          const aba = visiveis[subAba] ? subAba : "escritorio";
           // a etiqueta da aba diz o estado sem abrir: ✔ quando a fase foi
           // encerrada à mão, 🗄 quando TODOS os processos daquela fonte estão
           // arquivados (um só arquivado não marca a aba — o outro segue vivo),
@@ -19567,12 +19574,12 @@ function pintarFicha(){
           // comentário fixo, os prazos em quadros e só então o trabalho.
           const v10 = temaV10();
           const menu = `<div class="sub-menu${v10?" menu-andamentos":""}" style="width:100%">
-          ${nv1 ? "" : `<button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">${v10?"Escritório":"Andamentos do Escritório"}</button>`}
+          <button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">${v10?"Escritório":"Andamentos do Escritório"}</button>
           ${temINSS?`<button class="${cls("inss",faseEncerrada(k,"pat"))}" onclick="irSubAba('inss')">${v10?"INSS":"Andamentos INSS"}${v10Cel?"":rot(comentariosPat(andsVis).length, abaPatArquivada(k), faseEncerrada(k,"pat"))}</button>`:""}
           ${temCRPS?`<button class="${cls("crps",faseEncerrada(k,"crps"))}" onclick="irSubAba('crps')">${v10Cel?"CRPS":"Recurso (CRPS)"}${v10Cel?"":rot(crpsTotalEventos(k), abaCrpsArquivada(k), faseEncerrada(k,"crps"))}</button>`:""}
           ${temCNJ?`<button class="${cls("cnj",faseEncerrada(k,"cnj"))}" onclick="irSubAba('cnj')">${v10?"Judicial":"Andamentos do CNJ"}${v10Cel?"":rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k), faseEncerrada(k,"cnj"))}</button>`:""}
-          ${nv1 ? "" : `<button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
-            title="todas as fontes juntas, em ordem cronológica">${v10Cel?"Tudo":v10?"Caso Completo":"Caso completo"}</button>`}
+          <button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
+            title="todas as fontes juntas, em ordem cronológica">${v10Cel?"Tudo":v10?"Caso Completo":"Caso completo"}</button>
         </div>`;
           return (v10
         // F145 · duas colunas (pedido do Paulo, 27.09.2026): à esquerda, parada,
@@ -19581,10 +19588,10 @@ function pintarFicha(){
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
         ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col"><aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir">${bannerAClassificar(k)}${menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || nv1 ? "" : composerCaso(k)}${painelDaAba()}</div>
+           <div class="caso-dir">${bannerAClassificar(k)}${menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div>
            <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
-          function painelDaAba(){ return !aba ? `<p class="meio-sub">Este caso ainda não tem andamento do INSS, do Conselho de Recursos nem do Judicial.</p>` : aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
+          function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
             : aba==="inss" ? painelINSS(k, andsVis)
             : aba==="tudo" ? painelTudo(k, andsVis) : painelEscritorio(k, andsVis); }
         })()}
@@ -19846,7 +19853,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   const tela = abaAtiva===0 && pcsVivos.length>0 && _atendAberto.has(c.id) && (ATEND_SUBS.has(cd) || cd==="identificacao");
   queueMicrotask(()=>{ const d = document.getElementById("detalhe"); if(d){ d.classList.toggle("atend-tela", tela); d.classList.toggle("notas-on", tela && notasAbertas()); d.classList.toggle("id-bege", abaAtiva===0 && ["identificacao","direito","documentos"].includes(cd)); } });
   if(tela) for(const v of Object.keys(vis)) if(v!=="identificacao" && !ATEND_SUBS.has(v)) vis[v] = false;
-  if(meuNivel()<=1) for(const v of Object.keys(vis)) vis[v] = v==="identificacao";   // F249 · primeiro acesso; F294 · e o nível 1
+  if(meuNivel()<=1) for(const v of Object.keys(vis)) vis[v] = v==="identificacao";   // F249 · primeiro acesso; F355 · e o nível 1
   return `
     ${tela ? cabecalhoAtendimento(c, cd, vis) : ""}
     <div class="sub-menu" style="width:100%">
@@ -44204,7 +44211,7 @@ function respostaAcordo(andId, tipo){
 }
 // ══════════════════════════════════════════════════════════════════════════
 // F249 · A TRANSIÇÃO EM NÍVEIS (crm/fase2/docs/TRANSICAO.md, decisões do Paulo de 20.10.2026). O To Do era só escrever
-// a anotação; o CRM tem muito mais. Cada colaborador tem um nível (1 · andamentos dos portais, 2 · anotação,
+// a anotação; o CRM tem muito mais. Cada colaborador tem um nível (1 · WhatsApp, 2 · anotação e andamentos dos portais,
 // 3 · completo) e a onda diz quais recursos já foram ligados para os níveis 1 e 2. A anotação é o centro em todos:
 // o que o CRM calcula continua por trás, e o que se escreve no 1 aparece igual no 3. Sem a transição ligada, todos
 // veem o completo, como antes.
@@ -44288,7 +44295,7 @@ function abrirTransicao(){
     <p class="meio-sub" style="margin:0 0 8px">${t ? "Cada colaborador vê o CRM do nível dele." : "Hoje todos veem o CRM completo. Escolher um nível ou uma onda, ou o botão abaixo, liga a transição."}</p>
     <p class="meio-sub" style="margin:0">Onda em vigor para os níveis 1 e 2:</p>
     <div class="trn-ondas">${ONDAS.map(([n, r])=>`<button type="button" class="esp-it trn-onda${n===onda?" on":""}" onclick="gravarTransicao({onda:${n}})">${n} · ${esc(r)}</button>`).join("")}</div>
-    <p class="meio-sub" style="margin:0">Nível de cada um (0 · Agenda e Identificação, 1 · andamentos dos portais, 2 · anotação, 3 · completo):</p>
+    <p class="meio-sub" style="margin:0">Nível de cada um (0 · Agenda e Identificação, 1 · WhatsApp, 2 · anotação e andamentos dos portais, 3 · completo):</p>
     <ul class="trn-lista">${equipeAtiva().map(co=>`<li><b>${esc(co.nome)}</b>${[0, 1, 2, 3].map(n=>`<button type="button" class="btn-mini trn-nv${nv(co.id)===n?" on":""}" data-col="${co.id}" data-n="${n}" aria-pressed="${nv(co.id)===n}" onclick="gravarTransicao({col:'${co.id}', n:${n}})">${n}</button>`).join("")}</li>`).join("")}</ul>
     ${t ? `<p class="meio-sub" style="margin:10px 0 4px">Ver o CRM como o colaborador vê (só para você, nesta sessão):</p>
       <div class="form-linha trn-ver">${[0, 1, 2].map(n=>`<button type="button" class="btn-mini trn-ver-n${verNivel()===n?" on":""}" onclick="verComoNivel(${n})">nível ${n}</button>`).join("")}
