@@ -19,6 +19,7 @@ function fingirBanco({ pegaAFila = true, conversa = { telefone: "5516999990000" 
     if (m === "PATCH" && u.includes("status=eq.fila"))
       return ok(pegaAFila ? [{ id: "m1" }] : []);
     if (m === "GET" && u.includes("zap_conversas")) return ok(conversa ? [conversa] : []);
+    if (m === "GET" && u.includes("colaboradores")) return ok([{ nome: "Paulo", assinatura_zap: "Dr. Paulo Tercini" }]);
     if (m === "GET" && u.includes("zap_mensagens?id=eq.orig")) return ok([{ externo_id: "WA-ORIG", direcao: "entrada", texto: "pode ser amanhã?" }]);
     return ok(null);
   };
@@ -147,6 +148,16 @@ t.test("editar: manda o texto novo e guarda o de antes", async () => {
   a.equal(fim.texto, "amanhã");
   a.equal(fim.texto_antes, "amanha");
   a.equal(fim.alterar.status, "feita");
+});
+
+t.test("editar a mensagem assinada assina de novo, como a original saiu", async () => {
+  fingirBanco();
+  let enviado;
+  await alterarEnviada({ id: "m1", conversa_id: "c1", externo_id: "WA-1", direcao: "saida", texto: "oi",
+    autor_id: "u-edit", alterar: { acao: "editar", texto: "olá", status: "fila" } },
+    { ...zapOk, sendMessage: async (jid, c) => { enviado = c; return {}; } });
+  a.equal(enviado.text, "*Dr. Paulo Tercini:*\n\nolá");
+  a.equal(patchesFinais()[0].texto, "olá");
 });
 
 t.test("alterar a mensagem do cliente vira erro, sem mandar nada", async () => {
