@@ -45,6 +45,7 @@ const CONV = "z0000000-0000-4000-8000-000000000001";
 T.zap_conversas.push({ id: CONV, telefone: "5516999990009", chave: "99990009", nome_perfil: "Xênia", cliente_id: cX.id, atendente_id: PAULO,
   status: "aberta", nao_lidas: 1, ultima_em: ts(0), ultimo_texto: "Bom dia, tem novidade?" });
 T.zap_mensagens = [{ id: "zm1", seq: 1, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Bom dia, tem novidade?", status: "entregue", criado_em: ts(0) }];
+T.mencoes.push({ id: "me000000-0000-4000-8000-000000000001", de_id: MARCOS, para_id: PAULO, caso_id: kX.id, texto: "@Paulo conferir o pedido", criado_em: ts(0), lida_em: null });
 const PC = "pc_f249a";
 const kP = caso(cX, { fase: "escritorio", pre_caso: true, beneficio: "Aposentadoria por idade", origem_lista: "🙋 Escritório",
   precaso: { id: PC, natureza: "", marc: {}, honorarios: "", quem: null, em: iso(-1) } });
@@ -153,6 +154,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a mensagem não vira andamento nem pelo atalho", !banco.escritas.slice(escAntes).some(e => e.t === "andamentos") && !(await vis(".modal-fundo")));
   conf("o painel da ficha não mostra tarefas para concluir", !(await vis("#zap-painel .zp-tarefas")));
   await p.screenshot({ path: path.join(OUT, "02-nivel1-whatsapp.png") });
+  await p.evaluate(() => irPara("mencoes")); await p.waitForTimeout(400);
+  conf("nas Menções do nível 1, sem Ok e Feito e sem abrir o caso, que gravam no caso", await vis(".mencao") && !(await vis(".mencao .menc-resp")) && !(await vis(".mencao .btn-mini.forte")));
+  await p.evaluate(() => irPara("whatsapp")); await p.waitForTimeout(400);
   await p.evaluate(id => fichaComZap(id), cX.id); await p.waitForTimeout(800);
   const abas1 = await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].filter(e => e.offsetParent !== null).map(e => [...e.childNodes].filter(n => !(n.classList && n.classList.contains("mt-ponto"))).map(n => n.textContent).join("").trim()));
   const subs1 = await p.evaluate(() => [...document.querySelectorAll(".sub-menu button")].filter(e => e.offsetParent !== null).map(e => e.textContent.trim()));
