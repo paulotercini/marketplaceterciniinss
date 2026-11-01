@@ -187,3 +187,14 @@ t.test("pedido de reenvio do apagar: manda o apagar de novo, uma vez só, e não
   a.deepEqual(enviados[1].delete, enviados[0].delete);
   _usarSocket(undefined);
 });
+
+t.test("sair espera a gravação das chaves terminar (F349)", async () => {
+  const { seguirGravacao, esperarGravacoes } = require("../ponte");
+  let gravou = false;
+  seguirGravacao(new Promise(r => setTimeout(() => { gravou = true; r(); }, 50)));
+  await esperarGravacoes(2000);
+  a.ok(gravou, "saiu antes de gravar");
+  seguirGravacao(new Promise(() => {}));          // gravação presa não segura a saída para sempre
+  const t0 = Date.now(); await esperarGravacoes(100);
+  a.ok(Date.now() - t0 < 1000);
+});
