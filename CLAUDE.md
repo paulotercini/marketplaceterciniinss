@@ -367,6 +367,8 @@ A **F338** (12.15, quem é o cliente na conversa e o ⋯ mais curto, pedido do P
 
 A **F339** (12.15, pedidos do Paulo de 01.11.2026): responder a conversa pendente não a assume, e ela continua em Pendentes até alguém tocar em "Assumir a conversa" (`zap_humano_assumiu` só cala o robô, `migracoes/f339_responder_sem_assumir.sql`, aplicada; o envio deixou de pôr `atendente_id` na memória). Abrir a conversa ficou mais rápido: mensagens, transferências e atendimentos saem juntos, as reações em lotes paralelos (`carregarReacoes`), o não lido zera sem esperar o banco, a conversa já vista reabre na hora pelo que se guardou na sessão (`_zapCache`) e a resposta que chega depois de trocar de conversa ou de tela é descartada. O ✕ da janela de segurar o balão ficava fora da tela no celular, porque os sete emojis empurravam a janela (`.modal-cab>div{min-width:0}`). Testes: `zapbotoes.js`, `zapficha.js`, `zapatende.js`.
 
+A **F340** (a foto de quem fala, pedido do Paulo de 01.11.2026): a foto do WhatsApp fica na conversa, de quem escreve; na ficha e na lista Clientes não aparece quando o telefone do cliente é de outra pessoa que fala por ele (`contato_nome`). `fotoDoCliente` não cai em `clientes.foto_url` nesse caso, e no banco `zap_fone_de_outro` apaga a foto da ficha (gatilho `clientes_foto_de_quem_fala`, que barra também a gravação da ponte, e `zap_contato_tira_foto`, ao marcar quem escreve). SQL em `crm/fase2/migracoes/f340_foto_de_quem_fala.sql`. Teste: `zapficha.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

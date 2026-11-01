@@ -15135,8 +15135,12 @@ function verFotoGrande(u){
 function fotoDoCliente(cliId){
   const zs = D.zapFicha||[];
   const z = zs.find(x=>x.cliente_id===cliId && !x.contato_nome && zapFotos.get(x.foto_url));
+  if(z) return zapFotos.get(z.foto_url);
+  // F340 · o telefone da ficha em que outra pessoa escreve (contato_nome) dá a foto dela, e não a do cliente
+  const cli = D.cliPorId.get(cliId)||{}, t8 = String(cli.telefone||"").replace(/\D/g,"").slice(-8);
+  if(t8.length===8 && zs.some(x=>x.cliente_id===cliId && x.contato_nome && String(x.telefone||"").replace(/\D/g,"").slice(-8)===t8)) return null;
   // F193 · sem conversa ainda: a foto que a ponte buscou ao cadastrar o telefone
-  return z ? zapFotos.get(z.foto_url) : (zapFotos.get((D.cliPorId.get(cliId)||{}).foto_url) || null);
+  return zapFotos.get(cli.foto_url) || null;
 }
 function avatarZap(c){
   const u = zapFotos.get(c.foto_url);

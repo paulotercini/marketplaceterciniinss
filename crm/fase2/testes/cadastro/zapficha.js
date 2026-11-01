@@ -157,6 +157,16 @@ const MSGS = [
     const r = !!it.querySelector("img.avatar") && (!outro || !!outro.querySelector("span.avatar")); d.remove(); return r;
   }, CLI_CHEIO));
 
+  // F340 · na ficha, a foto do telefone em que outra pessoa escreve pelo cliente não aparece
+  conf("ficha: sem foto quando quem fala no telefone do cliente é outra pessoa", await p.evaluate(cli => {
+    const c = D.cliPorId.get(cli), antes = [D.zapFicha, c.telefone];
+    c.telefone = "16999990001"; D.zapFicha = [];
+    const com = !!fotoDoCliente(cli);
+    D.zapFicha = [{ cliente_id: cli, telefone: "5516999990001", contato_nome: "Maria", contato_relacao: "filha" }];
+    const sem = fotoDoCliente(cli) === null;
+    [D.zapFicha, c.telefone] = antes; return com && sem;
+  }, CLI_CHEIO));
+
   // "Sem telefone": só quem não tem número, e o número se completa na própria linha
   // (o vínculo de vários clientes, acima, deu telefone a esta ficha: aqui ela volta a não ter)
   await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.telefone = null; c.telefones = []; renderClientesTodos(); }, CLI_VAZIO);
