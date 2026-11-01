@@ -2225,6 +2225,9 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
      nem o ⚡, que cobria o enviar), com a seta de volta; o nome abre a ficha em tela cheia; os botões ficam só com o ícone;
      as ações do balão ficam na linha da hora, sem cobrir o texto */
   .zt-voltar{display:none}
+  /* F356 · o "i" abre a ficha do cliente onde ela é gaveta ou tela cheia; no computador largo ela fica fixa ao lado */
+  .zt-info b{font-style:italic;font-weight:700;font-size:15px;line-height:1}
+  @media (min-width:1280px){.app:not(.celular) .zt-info{display:none}}
   .app.celular .zap-dir:has(.zap-vazio){display:none}
   .app.celular .zap-lado{max-height:none}
   .app.celular.zap-conv-aberta .zap-dir{position:fixed;inset:0;z-index:90;height:auto;border-radius:0;border:0;margin:0}
@@ -15386,6 +15389,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            </div>
          </div>
          <div class="zt-acoes">
+           ${cli?`<button class="zt-btn ic zt-info" onclick="alternarFichaZap()" title="Ficha do cliente" aria-label="Ficha do cliente"><b aria-hidden="true">i</b></button>`:""}
            <button class="zt-btn ic ${zapBuscaConv?"on":""}" onclick="abrirBuscaZap()" title="buscar nesta conversa" aria-label="Buscar na conversa">${zic("busca")}</button>
            ${cfgApp("zap_ia_equipe")==="sim"?`<button class="zt-btn" onclick="iaZap('resumo')" title="a IA resume a conversa para você (nada vai ao cliente)" aria-label="Resumo">✨<span class="lbl">Resumo</span></button>
            ${pode&&!fim?`<button class="zt-btn" onclick="iaZap('rascunho')" title="a IA escreve uma resposta no campo; confira antes de enviar" aria-label="Rascunho">✨<span class="lbl">Rascunho</span></button>`:""}`:""}
