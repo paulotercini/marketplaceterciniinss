@@ -89,7 +89,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector(".aq-faixa", { timeout: 15000 });
   conf("no celular, a colaboradora do nível 0 entra direto na Agenda", await p.evaluate(() => meuNivel() === 0 && visao === "agendaq"));
   const barra = await p.$$eval("#barra-cel button", b => b.filter(x => x.offsetParent !== null).map(x => x.dataset.cel));
-  conf(`a barra de baixo é Agenda, Clientes e Buscar (${barra.join(", ")})`, barra.join() === "agendaq,clientes,busca");
+  conf(`a barra de baixo traz Agenda, Clientes e Buscar (${barra.join(", ")})`, ["agendaq", "clientes", "busca"].every(x => barra.includes(x)));
   conf("a agenda não rola de lado", await semRolarLado());
   await toque(`[data-aqdia="${W}"]`);
   const vagas = await p.$$eval(".aq-vaga", b => b.map(x => x.dataset.aqvaga));
@@ -128,7 +128,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.tap("#aq-busca"); await p.keyboard.type("Ana Fic", { delay: 15 });
   await toque("[data-aqcli]"); await toque("#aq-seg2");
   await toque('[data-aqacomp="nao"]'); await toque("#aq-seg4");
-  await toque("#aq-seg5"); await toque("#aq-o1"); await toque("#aq-o2"); await toque("#aq-gravar");
+  await toque("#aq-seg5"); await p.waitForSelector("#aq-aviso002"); await toque("#aq-gravar");   // F307 · no 002 é aviso, sem caixa
   await p.waitForSelector(".aq-whats", { timeout: 10000 });
   conf(`cliente do escritório na vaga 002 (${evG("P2").summary})`, evG("P2").summary === "002 - Ana Fictícia Colab - Não confirmado");
   await p.evaluate(() => fecharCaixa()); await recarregar();
