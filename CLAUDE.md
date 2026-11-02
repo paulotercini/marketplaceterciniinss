@@ -413,6 +413,8 @@ A **F369** (12.33, pedido do Paulo de 02.11.2026): na conversa que está com out
 
 A **F370** (12.33, pedido do Paulo de 02.11.2026): o ＋ do alto da lista do WhatsApp (`novoContatoZap`) conversa com um número novo. O número (com DDD; sem ele vale o 16, `foneZapNovo`) que já está numa ficha (`clientesDoTelefone`) é avisado e abre a ficha com a conversa ao lado (`zap_abrir`, `fichaComZap`; com duas fichas, escolhe-se qual); o que não está em ficha oferece **Conversar** (a conversa nasce ou se reabre pelo `zap_abrir`, já com quem a abriu como atendente) e **Cliente** (o Novo Cliente com o telefone no campo). A ponte envia pelo telefone da conversa. Teste: `zapgestor.js`.
 
+A **F371** (12.34, pedido do Paulo de 02.11.2026): o print colado (Ctrl+V) no campo de escrever do WhatsApp vai como foto (`t.onpaste`, `mandarArquivoZap(colado)`, nome `print-<hora>.png`), depois de "Enviar o print colado?", e o texto já escrito vai como legenda; na nota interna, colar não faz nada além do texto. Teste: `zapbotoes.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
