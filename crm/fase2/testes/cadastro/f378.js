@@ -75,8 +75,9 @@ const TUDO = {
     (await abas()) === "Lista*,Mês,Perícias,Casos" && await p.evaluate(() => document.getElementById("titulo-lista").textContent === "Planejado"));
   const chips = () => p.evaluate(() => [...document.querySelectorAll(".plan-nat [data-pnat]")].map(b => b.textContent.replace(/\s+/g, " ").trim()));
   const c1 = await chips();
-  conf("os filtros da natureza contam cada tipo (Tudo 4, Prazos 1, Tarefas 2, Lembretes 1)",
-    c1.join("|") === "Tudo 4|Prazos 1|Tarefas 2|Lembretes 1");
+  // F379 · o "Concluir em" do To Do de caso fora do 🗓 Tarefas com Prazo é retorno, e não prazo fatal
+  conf("os filtros da natureza contam cada tipo (Tudo 4, Tarefas 2, Retornos 1, Lembretes 1)",
+    c1.join("|") === "Tudo 4|Tarefas 2|Retornos 1|Lembretes 1");
   await p.click('.plan-nat [data-pnat="tarefas"]'); await p.waitForTimeout(250);
   const tx = await p.evaluate(() => document.getElementById("conteudo-meio").innerText);
   conf("o filtro Tarefas deixa só as tarefas (a do caso amanhã, a particular vencida, sem o lembrete)", /VENCIDAS 1/i.test(tx) && /AMANHÃ 1/i.test(tx) && /Levar o carro/.test(tx) && !/MAIS TARDE/i.test(tx));

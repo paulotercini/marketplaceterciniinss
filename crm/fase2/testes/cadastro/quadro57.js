@@ -27,7 +27,7 @@ FIX.lembretes.push(
   { id: "lb-57b", cliente_id: CLI_CHEIO, tipo: "geral",
     titulo: "Anotação: Nota gêmea que já virou lembrete.",
     proximo_em: DAQUI10, responsavel_id: EU, criado_por: EU, ativo: true });
-FIX.casos[0].prazo = DAQUI20;
+FIX.casos[0].prazo = DAQUI20; Object.assign(FIX.casos[0], { fase: "outro", mover_para: "🗓 Tarefas com Prazo", ronda: { prazo_de: "🌻 INSS" } });   // F379
 
 (async () => {
   const s = http.createServer((q, r) => {

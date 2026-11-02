@@ -11,7 +11,7 @@ const SUPA = "https://ficticio.supabase.co";
 
 const D0 = new Date(); const iso = d => d.toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 const mais = n => { const d = new Date(D0); d.setDate(d.getDate() + n); return iso(d); };
-FIX.casos[0].prazo = mais(3);   // um prazo fatal FUTURO — o destaque não depende de vencer
+FIX.casos[0].prazo = mais(3); Object.assign(FIX.casos[0], { fase: "outro", mover_para: "🗓 Tarefas com Prazo", ronda: { prazo_de: "🌻 INSS" } });   // F379 · prazo fatal mora no 🗓 Tarefas com Prazo   // um prazo fatal FUTURO — o destaque não depende de vencer
 
 (async () => {
   const s = http.createServer((q, r) => {

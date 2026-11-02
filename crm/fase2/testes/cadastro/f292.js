@@ -127,7 +127,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a menção sai da caixa", !!T.mencoes.find(m => m.andamento_id === aC.id && m.para_id === PAULO).lida_em && !(await p.$(".mencao .menc-resp")));
 
   // 5 · o prazo fatal avisa a 2 dias úteis, no Meu Dia de hoje
-  await p.evaluate(([kid, d]) => { const k = D.casoPorId.get(kid); k.prazo = d; }, [kD.id, alvo]);
+  await p.evaluate(([kid, d]) => { const k = D.casoPorId.get(kid); k.prazo = d; k.fase = "outro"; k.mover_para = "🗓 Tarefas com Prazo"; k.ronda = { ...(k.ronda||{}), prazo_de: "🌻 INSS" }; }, [kD.id, alvo]);   // F379
   const av = await p.evaluate(kid => itensAgenda(null).filter(i => i.k && i.k.id === kid).map(i => ({ data: i.data, selo: i.selo || "", fatal: !!i.fatal })), kD.id);
   conf("o prazo fatal continua no dia dele", av.some(i => i.fatal && i.data === alvo));
   conf("e ganha hoje o aviso 'Vence em 2 dias úteis'", av.some(i => i.data === new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 10) && i.selo === "Vence em 2 dias úteis" && !i.fatal));
@@ -136,7 +136,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a 3 dias úteis não avisa", !(await p.evaluate(kid => itensAgenda(null).some(i => i.k && i.k.id === kid && /^Vence em/.test(i.selo || "")), kD.id)));
 
   // teste 11.88, JUR-03: a exigência (sem o "Concluir em" do To Do igual) também avisa a 2 dias úteis
-  await p.evaluate(([kid, d]) => { const k = D.casoPorId.get(kid); k.prazo = null; k.exigencia_prazo = d; }, [kD.id, alvo]);
+  await p.evaluate(([kid, d]) => { const k = D.casoPorId.get(kid); k.prazo = null; k.exigencia_prazo = d; k.fase = "inss"; k.mover_para = null; }, [kD.id, alvo]);
   conf("a exigência a 2 dias úteis também ganha o aviso", await p.evaluate(kid => itensAgenda(null).some(i => i.k && i.k.id === kid && i.selo === "Vence em 2 dias úteis"), kD.id));
   await p.evaluate(kid => { D.casoPorId.get(kid).exigencia_prazo = null; }, kD.id);
 
