@@ -296,7 +296,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   const infos = await paulo.evaluate(([a0, a1]) => { const i0 = infoOficial({ and: D._andsFicha.find(a => a.id === a0) }), i1 = infoOficial({ and: D._andsFicha.find(a => a.id === a1) });
     return { d0: i0.destaque, m0: (i0.menu || []).join(""), d1: i1.destaque }; }, [A_S0.id, A_S1.id]);
   conf("o cartão da pauta antiga não oferece agendar; o da remarcação traz o julgamento e a sustentação oral num clique",
-    !infos.d0 && !/Agendar/.test(infos.m0) && /Agendar julgamento com aviso/.test(infos.d1) && /sustentação oral até/.test(infos.d1), infos);
+    !infos.d0 && !/Agendar/.test(infos.m0) && /Agendar<span class="sr-only"> julgamento com aviso/.test(infos.d1) && /sustentação oral até/.test(infos.d1), infos);
 
   // ── 5 · a sustentação oral nos Prazos ─────────────────────────────────────────────────────────────────────────
   const sust = lP.find(x => x.rotulo === "Sustentação oral");
@@ -329,7 +329,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   conf("a perícia que passou é UMA linha (sem a do prazo parado), na data dela, com a conta de quando o INSS decide",
     lS.filter(x => x.conf).length === 1 && !lS.some(x => x.rotulo === "Prazo de análise parado") && lS.some(x => x.rotulo === "Compareceu?" && x.data === dia(-12) && /o INSS decide até/.test(x.rot) && x.curto === "Confirmar a perícia"), lS.map(x => `${x.rotulo}@${x.data}`));
   conf("ela não 'venceu': diz há quantos dias, pede o clique e não entra na conta dos vencidos",
-    cS.some(c => c.tipo === "Compareceu?" && /Confirmar a perícia/.test(c.txt) && !/pz-venceu/.test(c.cls)) && /A confirmar\s*1/.test(rS) && !/Vencidas/.test(rS), { cS, rS });
+    cS.some(c => c.tipo === "Compareceu?" && /Confirmar a perícia/.test(c.txt) && !/pz-venceu/.test(c.cls)) && /a confirmar/.test(rS) && !/Vencidas|vencida/.test(rS), { cS, rS });
   const clS = await paulo.evaluate(k => quadroDatas(D.casoPorId.get(k)), S.k.id);
   conf("no clássico também: a linha da perícia não diz 'venceu'", !/venceu/.test(clS) && /aconteceu\? Confirme/.test(clS));
 
@@ -349,7 +349,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   // ── r12 · a DCB: o resumo dá o prazo fatal à janela da prorrogação ────────────────────────────────────────────
   await ficha(paulo, W.c.id, W.k.id);
   const rW = await resumo(paulo);
-  conf("o prazo fatal em destaque é a janela da prorrogação, e não a DCB", /Pedir a prorrogação[^\n]*\s*abrir\s*Prazo fatal: [^\n]*úteis/.test(rW) && !/(DCB|Benefício cessa)[^\n]*\s*abrir\s*Prazo fatal:/.test(rW), rW);
+  conf("o prazo fatal em destaque é a janela da prorrogação, e não a DCB", /Próximo prazo fatal\s*Pedir a prorrogação[^\n]*úteis/.test(rW) && !/Próximo prazo fatal\s*(DCB|Benefício cessa)/.test(rW), rW);
   await ficha(paulo, W2.c.id, W2.k.id);
   const lW2 = await linhas(paulo, W2.k), jan = lW2.find(x => x.rotulo === "Pedir a prorrogação");
   conf("com a janela aberta: o resumo não repete a data, e a linha traz a tarefa e a mensagem num clique",
@@ -374,6 +374,16 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   conf("na agenda, o respondido não cobra e o da pergunta cobra", !ia.some(i => i.cli === X.c.id && i.prazo) && ia.some(i => i.cli === X2.c.id && i.prazo && /^Prazo PJe/.test(i.selo)), ia.filter(i => [X.c.id, X2.c.id].includes(i.cli)));
   conf("a mora com a tarefa de redigir o mandado de segurança não pede mais avaliação; sem ela, pede",
     !ia.some(i => i.cli === Y.c.id && i.selo === "Mora do INSS") && ia.some(i => i.cli === Y2.c.id && i.selo === "Mora do INSS"), ia.filter(i => [Y.c.id, Y2.c.id].includes(i.cli)));
+  // 31.10.2026 · a mora já vista (o "Concluir em" marcado adiante) sai do Meu Dia até essa data
+  const moraAdiada = await paulo.evaluate(id => { const k = D.casoPorId.get(id), antes = k.prazo; k.prazo = somaDias(hoje(), 7);
+    const r = itensAgenda(null).some(i => i.k && i.k.id === id && i.selo === "Mora do INSS"); k.prazo = antes; return r; }, Y2.k.id);
+  conf("a mora com a volta marcada adiante não cobra no Meu Dia", moraAdiada === false, moraAdiada);
+  const grp = await paulo.evaluate(() => { const c1 = D.clientes[0], c2 = D.clientes[1];
+    const it = (cli, d) => ({ cli, data: d, quem: [], selo: "x" });
+    const h = porClienteDia([it(c1, "2026-01-02"), it(c2, "2026-01-03"), it(c1, "2026-01-04")]);
+    const el = document.createElement("div"); el.innerHTML = h;
+    return { grupos: el.querySelectorAll(".ag-grupo-cli").length, noGrupo: el.querySelectorAll(".ag-grupo-cli .ag-linha").length, soltas: el.querySelectorAll(":scope > .ag-linha").length }; });
+  conf("o Meu Dia junta sob o nome do cliente o que é dele, e o cliente de um item só fica solto", grp.grupos === 1 && grp.noGrupo === 2 && grp.soltas === 1, grp);
   const exZ = ia.find(i => i.cli === Z.c.id && i.selo === "Diligência");
   conf("a descrição da diligência na agenda corta na palavra, com reticências", exZ && /…$/.test(exZ.resumo) && !/prazo estimado/.test(exZ.resumo), exZ);
   const confK = ia.some(i => i.cli === K.c.id && i.conf), confS = ia.some(i => i.cli === S.c.id && i.conf);
@@ -416,8 +426,10 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   await ficha(paulo, F.c.id, F.k.id);
   const sgF = await paulo.evaluate(id => prazoSugeridoHtml(D._andsFicha.find(a => a.id === id), 0), SENT_F.id);
   conf("o cartão da sentença favorável não manda vigiar o recurso do INSS que já veio", /sem recurso nosso/.test(sgF) && /O INSS recorreu em/.test(sgF) && !/pode recorrer até/.test(sgF) && !/vigiar/.test(sgF), sgF);
-  const contNov = await paulo.evaluate(() => { montarSidebar(); return (document.querySelector('#grupo-dinamicas [data-v="novidades"] .cont') || {}).textContent || ""; });
-  conf(`a barra das Novidades diz quantas pedem ação à frente do total (${contNov})`, /^\d+ · \d+$/.test(contNov.trim()), contNov);
+  // F304 · o prazo do tribunal deixou de ser novidade: o "N ·" à frente só aparece com perícia ou julgamento a agendar
+  const contNov = await paulo.evaluate(() => { montarSidebar(); const np = novidades().filter(a => novPede(a)).length;
+    return { np, t: (document.querySelector('#grupo-dinamicas [data-v="novidades"] .cont') || {}).textContent || "" }; });
+  conf(`a barra das Novidades diz quantas pedem ação à frente do total (${contNov.t})`, contNov.np ? /^\d+ · \d+$/.test(contNov.t.trim()) : /^\d+$/.test(contNov.t.trim()), contNov);
 
   // ── 3 · o aviso com um dono só: concluir o 📞 Avisar marca a perícia avisada ───────────────────────────────────
   await paulo.evaluate(id => concluirDeVez(id), TF_L.id); await espera(paulo, 600);

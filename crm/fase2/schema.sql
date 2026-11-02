@@ -1347,14 +1347,13 @@ drop trigger if exists zap_zbot_ins on zap_mensagens;
 create trigger zap_zbot_ins after insert on zap_mensagens
   for each row execute function zap_bot();
 
--- Colaborador que responde assume a conversa e cala o bot na mesma hora.
+-- Colaborador que responde cala o bot na mesma hora. F339: responder não assume a
+-- conversa; assumir é o botão "Assumir a conversa" (zap_assumir).
 create or replace function zap_humano_assumiu() returns trigger
 language plpgsql as $$
 begin
   if new.direcao='saida' and new.autor_id is not null and not new.por_bot then
-    update zap_conversas
-       set bot_ativo=false, atendente_id=coalesce(atendente_id, new.autor_id)
-     where id=new.conversa_id;
+    update zap_conversas set bot_ativo=false where id=new.conversa_id;
   end if;
   return new;
 end $$;
@@ -4705,3 +4704,152 @@ begin
       $a$if new.direcao <> 'entrada' or zap_eh_historico(new) then return new; end if;$a$);
   end if;
 end $$;
+
+-- ══ O nome próprio do caso (F308): cópia de migracoes/f308_apelido_caso.sql ══
+-- F308 · o nome próprio do caso (pedido do Paulo, 30.10.2026): na janela que pede a escolha do caso,
+-- o ✎ grava aqui o nome que separa dois casos da mesma espécie ("Acidentária do joelho").
+-- Vazio, a janela usa o título da espécie. O To Do não escreve nesta coluna.
+alter table casos add column if not exists apelido text;
+
+-- ══ Nenhuma função sem login (F312): cópia de migracoes/f312_anon_sem_funcoes.sql ══
+-- F312 · nenhuma função do banco sem login (teste integral 11.88, defeito DAD-01, 31.10.2026).
+-- O Postgres dá EXECUTE a todos (PUBLIC) em toda função nova, e o Supabase dá também à chave
+-- anônima; as 48 funções SECURITY DEFINER do public podiam ser chamadas pela chave publicável,
+-- que está no site, sem login (zap_buscar lia o texto do WhatsApp; zap_ligacao gravava saída).
+-- Fica a chave anônima só nas duas portas do SMBot, que conferem o token da integração
+-- (INTEGRACAO-SMBOT.md). O navegador entra logado (authenticated) e segue como antes; a ponte,
+-- o plantão e o cron usam service_role ou o dono das funções, que não dependem deste grant.
+do $$
+declare f record;
+begin
+  for f in select p.oid::regprocedure as sig from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+           where n.nspname = 'public' and p.prosecdef
+             and p.proname not in ('smbot_contato', 'smbot_entrada')
+  loop
+    execute format('revoke execute on function %s from public, anon', f.sig);
+    execute format('grant execute on function %s to authenticated, service_role', f.sig);
+  end loop;
+end $$;
+
+-- Função criada daqui em diante nasce sem EXECUTE para PUBLIC e anon; a que precisar de anon
+-- (nova porta como a do SMBot) recebe o grant explícito na própria migração.
+alter default privileges for role postgres in schema public revoke execute on functions from public, anon;
+alter default privileges for role postgres in schema public grant execute on functions to authenticated, service_role;
+
+-- F332 · mensagem apagada ou editada no WhatsApp e mensagem favorita
+-- O cliente que apaga ou edita a mensagem manda um aviso (protocolMessage) que a
+-- ponte descartava. Agora a linha guarda quando foi apagada ou editada e o texto de
+-- antes, que fica para a equipe: o que o cliente escreveu continua registrado.
+alter table zap_mensagens add column if not exists apagada_em timestamptz;
+alter table zap_mensagens add column if not exists editada_em timestamptz;
+alter table zap_mensagens add column if not exists texto_antes text;
+-- a estrela do WhatsApp: a mensagem que a equipe quer achar de novo
+alter table zap_mensagens add column if not exists favorita_em timestamptz;
+alter table zap_mensagens add column if not exists favorita_por uuid references colaboradores(id) on delete set null;
+create index if not exists zap_msg_favorita on zap_mensagens (conversa_id) where favorita_em is not null;
+-- F335 · A NOTIFICAÇÃO DO WHATSAPP NO CELULAR (Web Push, pedido do Paulo de 31.10.2026)
+-- Cada aparelho que liga "Avisar neste aparelho" grava a inscrição do navegador.
+-- A mensagem nova do cliente chama a Edge Function zap_push, que avisa o atendente
+-- da conversa ou, sem atendente, todos os inscritos (a mesma regra do aviso sonoro).
+create table if not exists push_inscricoes (
+  id uuid primary key default gen_random_uuid(),
+  colaborador_id uuid not null references colaboradores(id) on delete cascade,
+  endpoint text not null unique,
+  p256dh text not null,
+  auth text not null,
+  aparelho text,
+  criada_em timestamptz not null default now(),
+  ok_em timestamptz
+);
+alter table push_inscricoes enable row level security;
+do $$ begin
+  if not exists (select 1 from pg_policies where tablename = 'push_inscricoes' and policyname = 'push_minhas') then
+    create policy push_minhas on push_inscricoes for all
+      using (colaborador_id = (select id from colaboradores where auth_id = auth.uid()))
+      with check (colaborador_id = (select id from colaboradores where auth_id = auth.uid()));
+  end if;
+end $$;
+
+-- a chave privada do VAPID: sem política, só a service_role lê (a função a cria no 1º uso)
+create table if not exists push_chave (id int primary key default 1 check (id = 1), publica text not null, privada text not null);
+alter table push_chave enable row level security;
+
+alter table zap_mensagens add column if not exists push_em timestamptz;
+
+insert into config_app (chave, valor) values
+  ('zap_push_url', 'https://bhdyatqaebpzufridwkh.supabase.co/functions/v1/zap_push')
+on conflict (chave) do nothing;
+
+create or replace function zap_push_gatilho() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if new.direcao <> 'entrada' then return new; end if;
+  -- o histórico que o celular reenvia na reconexão não é mensagem nova
+  if coalesce(new.quando_wa, now()) < now() - interval '10 minutes' then return new; end if;
+  if not exists (select 1 from push_inscricoes) then return new; end if;
+  begin
+    perform net.http_post(
+      url := (select valor from config_app where chave = 'zap_push_url'),
+      body := jsonb_build_object('mensagem_id', new.id),
+      headers := '{"Content-Type":"application/json"}'::jsonb,
+      timeout_milliseconds := 20000);
+  exception when others then null;   -- sem pg_net não há aviso, e a mensagem entra igual
+  end;
+  return new;
+end $$;
+revoke execute on function zap_push_gatilho() from public, anon, authenticated;
+-- depois do filtro de mensagem automática (zap_v_filtro_ins), que marca a conversa
+create or replace trigger zap_x_push_ins after insert on zap_mensagens
+  for each row execute function zap_push_gatilho();
+
+-- F340 · a foto do WhatsApp é de quem fala, e não do cliente representado.
+-- O número cuja conversa tem contato_nome (outra pessoa escreve pelo cliente)
+-- não dá foto à ficha: a foto fica apenas na conversa (zap_conversas.foto_url).
+create or replace function public.zap_fone_de_outro(p_cliente uuid, p_tel text)
+returns boolean language sql stable security definer set search_path = public as $$
+  select exists (select 1 from zap_conversas z
+    where z.cliente_id = p_cliente and z.contato_nome is not null
+      and length(regexp_replace(coalesce(p_tel,''),'\D','','g')) >= 8
+      and right(regexp_replace(z.telefone,'\D','','g'),8) = right(regexp_replace(p_tel,'\D','','g'),8));
+$$;
+revoke execute on function public.zap_fone_de_outro(uuid, text) from public, anon;
+
+create or replace function public.clientes_foto_de_quem_fala() returns trigger
+language plpgsql set search_path = public as $$
+begin
+  if new.foto_url is not null and zap_fone_de_outro(new.id, new.telefone) then new.foto_url := null; end if;
+  return new;
+end $$;
+drop trigger if exists clientes_foto_de_quem_fala on clientes;
+create trigger clientes_foto_de_quem_fala before insert or update of foto_url, telefone on clientes
+  for each row execute function clientes_foto_de_quem_fala();
+
+-- marcou na conversa que outra pessoa escreve: a foto sai da ficha
+create or replace function public.zap_contato_tira_foto() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if new.contato_nome is not null and new.cliente_id is not null then
+    update clientes set foto_url = null
+      where id = new.cliente_id and foto_url is not null and zap_fone_de_outro(id, telefone);
+  end if;
+  return new;
+end $$;
+drop trigger if exists zap_contato_tira_foto on zap_conversas;
+create trigger zap_contato_tira_foto after insert or update of contato_nome, cliente_id on zap_conversas
+  for each row execute function zap_contato_tira_foto();
+
+update clientes c set foto_url = null where foto_url is not null and zap_fone_de_outro(c.id, c.telefone);
+
+-- F343 · apagar para todos e editar a mensagem enviada pelo CRM
+-- O CRM não fala com o WhatsApp: grava o pedido na linha e a ponte o cumpre.
+-- alterar = {acao: 'apagar'|'editar', texto, status: 'fila'|'feita'|'erro', erro, por, em}
+alter table zap_mensagens add column if not exists alterar jsonb;
+create index if not exists zap_msg_alterar_fila on zap_mensagens (id) where (alterar->>'status') = 'fila';
+-- F368 · gestor do WhatsApp sem ser administrador do CRM (pedido do Paulo de 02.11.2026):
+-- vê e transfere todas as conversas, como o administrador, sem as Configurações do CRM
+alter table colaboradores add column if not exists gestor_zap boolean not null default false;
+create or replace function public.zap_gestor() returns boolean
+  language sql stable security definer set search_path to 'public' as $$
+  select exists(select 1 from colaboradores where auth_id = auth.uid()
+                and (papel in ('admin','assistente_ia') or gestor_zap));
+$$;

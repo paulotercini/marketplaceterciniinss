@@ -6,7 +6,7 @@ process.env.PAUSA_ENVIO = "0";
 
 const t = require("node:test");
 const a = require("node:assert");
-const { enviar } = require("../ponte");
+const { enviar, alterarEnviada } = require("../ponte");
 
 // ── Supabase de mentira ───────────────────────────────────────────────────
 let chamadas = [];
@@ -19,6 +19,7 @@ function fingirBanco({ pegaAFila = true, conversa = { telefone: "5516999990000" 
     if (m === "PATCH" && u.includes("status=eq.fila"))
       return ok(pegaAFila ? [{ id: "m1" }] : []);
     if (m === "GET" && u.includes("zap_conversas")) return ok(conversa ? [conversa] : []);
+    if (m === "GET" && u.includes("colaboradores")) return ok([{ nome: "Paulo", assinatura_zap: "Dr. Paulo Tercini" }]);
     if (m === "GET" && u.includes("zap_mensagens?id=eq.orig")) return ok([{ externo_id: "WA-ORIG", direcao: "entrada", texto: "pode ser amanhã?" }]);
     return ok(null);
   };
@@ -122,4 +123,78 @@ t.test("banco fora do ar: a mensagem não se perde, vai para o arquivo do servid
   fs.unlinkSync(P.FILA_LOCAL);
   a.strictEqual(ok, false);
   a.ok(salvo.includes("WA-PERDIDA"));
+});
+
+// F343 · apagar para todos e editar a mensagem enviada pelo CRM
+t.test("apagar: manda o delete com a chave da enviada e marca apagada", async () => {
+  fingirBanco();
+  let enviado;
+  await alterarEnviada({ id: "m1", conversa_id: "c1", externo_id: "WA-1", direcao: "saida", texto: "oi",
+    alterar: { acao: "apagar", status: "fila" } }, { ...zapOk, sendMessage: async (jid, c) => { enviado = c; return {}; } });
+  a.deepEqual(enviado.delete, { remoteJid: "5516999990000@s.whatsapp.net", id: "WA-1", fromMe: true });
+  const [fim] = patchesFinais();
+  a.ok(fim.apagada_em);
+  a.equal(fim.alterar.status, "feita");
+});
+
+t.test("editar: manda o texto novo e guarda o de antes", async () => {
+  fingirBanco();
+  let enviado;
+  await alterarEnviada({ id: "m1", conversa_id: "c1", externo_id: "WA-1", direcao: "saida", texto: "amanha",
+    alterar: { acao: "editar", texto: "amanhã", status: "fila" } }, { ...zapOk, sendMessage: async (jid, c) => { enviado = c; return {}; } });
+  a.equal(enviado.text, "amanhã");
+  a.equal(enviado.edit.id, "WA-1");
+  const [fim] = patchesFinais();
+  a.equal(fim.texto, "amanhã");
+  a.equal(fim.texto_antes, "amanha");
+  a.equal(fim.alterar.status, "feita");
+});
+
+t.test("editar a mensagem assinada assina de novo, como a original saiu", async () => {
+  fingirBanco();
+  let enviado;
+  await alterarEnviada({ id: "m1", conversa_id: "c1", externo_id: "WA-1", direcao: "saida", texto: "oi",
+    autor_id: "u-edit", alterar: { acao: "editar", texto: "olá", status: "fila" } },
+    { ...zapOk, sendMessage: async (jid, c) => { enviado = c; return {}; } });
+  a.equal(enviado.text, "*Dr. Paulo Tercini:*\n\nolá");
+  a.equal(patchesFinais()[0].texto, "olá");
+});
+
+t.test("alterar a mensagem do cliente vira erro, sem mandar nada", async () => {
+  fingirBanco();
+  await alterarEnviada({ id: "m1", conversa_id: "c1", externo_id: "WA-1", direcao: "entrada",
+    alterar: { acao: "apagar", status: "fila" } },
+    { ...zapOk, sendMessage: async () => { throw new Error("não podia ter mandado"); } });
+  const [fim] = patchesFinais();
+  a.equal(fim.alterar.status, "erro");
+});
+
+// F347 · o reenvio do Baileys perde o atributo "edit"; a ponte manda a alteração de novo
+t.test("pedido de reenvio do apagar: manda o apagar de novo, uma vez só, e não pelo Baileys", async () => {
+  const { mensagemParaReenvio, _usarSocket } = require("../ponte");
+  process.env.PAUSA_REENVIO = "0";
+  fingirBanco();
+  const enviados = [];
+  let n = 0;
+  const zap = { ...zapOk, sendMessage: async (jid, c) => { enviados.push(c); return { key: { id: "WA-DEL-" + (++n) } }; } };
+  _usarSocket(zap);
+  await alterarEnviada({ id: "m1", conversa_id: "c1", externo_id: "WA-1", direcao: "saida", texto: "oi",
+    alterar: { acao: "apagar", status: "fila" } }, zap);
+  a.equal(await mensagemParaReenvio({ id: "WA-DEL-1" }), undefined);   // o aparelho pede várias vezes
+  a.equal(await mensagemParaReenvio({ id: "WA-DEL-1" }), undefined);
+  await new Promise(r => setTimeout(r, 20));
+  a.equal(enviados.length, 2);
+  a.deepEqual(enviados[1].delete, enviados[0].delete);
+  _usarSocket(undefined);
+});
+
+t.test("sair espera a gravação das chaves terminar (F349)", async () => {
+  const { seguirGravacao, esperarGravacoes } = require("../ponte");
+  let gravou = false;
+  seguirGravacao(new Promise(r => setTimeout(() => { gravou = true; r(); }, 50)));
+  await esperarGravacoes(2000);
+  a.ok(gravou, "saiu antes de gravar");
+  seguirGravacao(new Promise(() => {}));          // gravação presa não segura a saída para sempre
+  const t0 = Date.now(); await esperarGravacoes(100);
+  a.ok(Date.now() - t0 < 1000);
 });

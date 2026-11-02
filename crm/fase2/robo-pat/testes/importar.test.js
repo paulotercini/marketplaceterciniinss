@@ -431,3 +431,20 @@ test('o plano marca o provável, conta e põe na frente', () => {
   assert.equal(p.possiveisDuplicados[1].provavel, false);
   assert.ok(p.possiveisDuplicados[1].motivo, 'o duvidoso também precisa dizer por quê');
 });
+
+// A "data de entrada" da tarefa do recurso é a data do recurso, e não a DER do
+// pedido: gravada como DER, trocou a DER de 74 casos do Conselho (31.10.2026).
+test('protocolo do recurso não grava DER: a data vai ao protocolo do recurso', () => {
+  const D = CRM();
+  D.casos[0].fase = 'conselho';
+  const pat = { lista: [{ protocolo: '1462069078', cpf: '11111111111' }],
+                detalhes: [{ ...det({ protocolo: '1462069078', tipo: 'recurso', der: '2026-07-31' }), sigla: 'TREC' }] };
+  const m = I.planoDeImportacao(pat, D, HOJE).atualizar[0].mudancas;
+  assert.ok(!('der' in m), 'a data do recurso virou DER');
+  assert.equal(m.ro_protocolado_em, '2026-07-31');
+  assert.deepStrictEqual(I.datasDoProtocolo({ tipo: 'recurso', sigla: 'RECESP', der: '2026-08-01' }), { re_protocolado_em: '2026-08-01' });
+  const novo = I.planoDeImportacao({ lista: [{ protocolo: '999', cpf: '22222222222' }],
+    detalhes: [det({ protocolo: '999', tipo: 'recurso', der: '2026-07-31' })] }, CRM(), HOJE).novos[0];
+  assert.equal(novo.der, null);
+  assert.deepStrictEqual(novo.datas, { ro_protocolado_em: '2026-07-31' });
+});

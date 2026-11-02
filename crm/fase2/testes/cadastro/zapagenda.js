@@ -87,9 +87,9 @@ const conf = (pts, nome, v) => { ok.push([pts, nome, !!v]); console.log((v ? "PA
   await p.waitForSelector("#zap-ag .zag-dia", { timeout: 10000 }).catch(() => {});
   await p.waitForTimeout(400);   // a entrada da tela anima por 0,14 s
   const cx = await caixaAg();
-  // logo acima do ⚡ da anotação rápida, que ocupa os últimos 64 px do canto
+  // logo acima do ⚡ da anotação rápida e do ✎ Sugestões (F290), que ocupam os últimos 108 px do canto
   conf(8, `a agenda fica no canto de baixo à direita (${Math.round(cx.w - cx.r)} px da direita, ${Math.round(cx.h - cx.b)} px de baixo)`,
-    cx.w - cx.r <= 30 && cx.h - cx.b <= 100 && cx.l > cx.w / 2 && cx.t > cx.h / 3);
+    cx.w - cx.r <= 30 && cx.h - cx.b <= 140 && cx.l > cx.w / 2 && cx.t > cx.h / 3);
   const rect = sel => p.evaluate(x => { const e = document.querySelector(x); if (!e || !e.offsetParent && getComputedStyle(e).position !== "fixed") return null; const r = e.getBoundingClientRect(); return r.width ? { l: r.left, t: r.top, r: r.right, b: r.bottom } : null; }, sel);
   const fab = await rect(".fab-rapida");
   conf(4, "a agenda não fica sob o botão ⚡ da anotação rápida", !fab || !cruza(cx, fab));
@@ -157,7 +157,7 @@ const conf = (pts, nome, v) => { ok.push([pts, nome, !!v]); console.log((v ? "PA
   await p.waitForSelector('[data-aqacomp="nao"]');
   await p.click('[data-aqacomp="nao"]'); await p.click("#aq-seg4");
   await p.waitForSelector("#aq-seg5"); await p.click("#aq-seg5");
-  await p.check("#aq-o1"); await p.check("#aq-o2");
+  await p.waitForSelector("#aq-aviso002"); // F307 · no 002 é aviso, sem caixa
   await p.click("#aq-gravar");
   await p.waitForSelector(".aq-whats", { timeout: 10000 }).catch(() => {});
   conf(4, `agendado com a Amanda, com o telefone da conversa (${evG("A1").summary})`, /Joana Ficticia Lead/.test(evG("A1").summary || "") && /16988880002/.test(evG("A1").description || ""));
@@ -208,11 +208,11 @@ const conf = (pts, nome, v) => { ok.push([pts, nome, !!v]); console.log((v ? "PA
   await p.setViewportSize({ width: 390, height: 800 }); await p.waitForTimeout(400);
   await p.evaluate(id => abrirConversa(id), C_ANA); await p.waitForTimeout(300);
   await p.evaluate(() => { if (zagAberta()) zagAlternar(); });
-  const env2 = await p.evaluate(() => { const e = document.querySelector(".ze-enviar"); if (!e) return null; const r = e.getBoundingClientRect(); return { l: r.left, t: r.top, r: r.right, b: r.bottom }; });
-  const pil2 = await caixaAg();
-  conf(2, "no celular, com a conversa aberta, a pílula aparece sem cobrir o enviar", !!env2 && pil2.r - pil2.l > 0 && !cruza(pil2, env2)
-    && await p.evaluate(() => { const r = document.querySelector(".zag-pilula").getBoundingClientRect(); return document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest(".zag-pilula") !== null; }));
-  await p.click(".zag-pilula");
+  // 29.10.2026: no celular, com a conversa aberta, a pílula recolhida sai (cobria o áudio gravado e os balões) e a
+  // agenda abre pelo ⋯
+  conf(2, "no celular, com a conversa aberta, a pílula sai e a agenda abre pelo ⋯",
+    await p.evaluate(() => getComputedStyle(document.querySelector("#zap-ag")).display === "none"));
+  await p.click(".zt-mais summary"); await p.click('.zt-mais button[onclick*="zagAlternar"]');
   const escr = await rect(".zap-escrever");
   conf(4, "no celular, a agenda aberta não cobre o campo de escrever", !!escr && !cruza(await caixaAg(), escr));
   await p.click('.zag-vaga[data-zagvaga="P4"]').catch(() => {});
@@ -223,6 +223,32 @@ const conf = (pts, nome, v) => { ok.push([pts, nome, !!v]); console.log((v ? "PA
   await p.evaluate(() => { fecharCaixa(); voltarListaZap(); if (zagAberta()) zagAlternar(); }); await p.waitForTimeout(200);
   const fab2 = await rect(".fab-rapida");
   conf(2, "no celular, na lista, a pílula não fica sob o ⚡", !fab2 || !cruza(await caixaAg(), fab2));
+
+  // 7 · F305 (30.10.2026): a agenda flutua em todas as telas, na coluna do ⚡ e do ✎ Sugestões, sem cobrir nenhum dos dois
+  const caixas = () => p.evaluate(() => Object.fromEntries(["#zap-ag", ".fab-rapida", ".fab-sug"].map(x => { const e = document.querySelector(x);
+    if (!e || getComputedStyle(e).display === "none") return [x, null]; const r = (x === "#zap-ag" ? e.firstElementChild || e : e).getBoundingClientRect();
+    return [x, r.width ? { l: r.left, t: r.top, r: r.right, b: r.bottom } : null]; })));
+  const alinhada = c => !!c["#zap-ag"] && [".fab-rapida", ".fab-sug"].every(x => !c[x] || !cruza(c["#zap-ag"], c[x]))
+    && (!c[".fab-rapida"] || Math.abs(c["#zap-ag"].r - c[".fab-rapida"].r) <= 2);
+  await p.setViewportSize({ width: 1440, height: 900 });
+  await p.evaluate(() => irPara("meudia")); await p.waitForTimeout(300);
+  const cMd = await caixas();
+  conf(4, "no Meu Dia, o botão da agenda está à vista, recolhido, na coluna do ⚡ e sem cobrir o ✎",
+    alinhada(cMd) && !!(await p.$("#zap-ag .zag-pilula")));
+  await foto("04-meu-dia");
+  await p.click("#zap-ag .zag-pilula");
+  await p.waitForSelector("#zap-ag .zag-dia", { timeout: 5000 }).catch(() => {});
+  conf(4, "o clique abre a agenda com as vagas fora do WhatsApp", !!(await p.$("#zap-ag .zag-dia")));
+  await foto("05-meu-dia-aberta");
+  await p.evaluate(() => irPara("agendaq")); await p.waitForTimeout(200);
+  conf(2, "na própria Agenda o botão some", await p.evaluate(() => document.getElementById("zap-ag").hidden));
+  await p.evaluate(() => irPara("meudia")); await p.waitForTimeout(200);
+  conf(2, "trocar de tela recolhe a agenda aberta fora do WhatsApp", !!(await p.$("#zap-ag .zag-pilula")));
+  await p.setViewportSize({ width: 390, height: 800 }); await p.waitForTimeout(400);
+  const cCel = await caixas(), bt = cCel["#zap-ag"];
+  conf(4, "no celular, o botão é redondo, do tamanho do ⚡, na mesma coluna e sem cobrir o ✎",
+    alinhada(cCel) && !!bt && Math.abs((bt.r - bt.l) - (bt.b - bt.t)) <= 1 && bt.r - bt.l >= 44);
+  await foto("06-celular-meu-dia");
 
   conf(4, "sem erro de página", !erros.length);
   if (erros.length) console.log(erros);

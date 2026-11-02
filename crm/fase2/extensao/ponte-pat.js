@@ -67,6 +67,45 @@ async function baixarAnexoPat(protocolo, d, cracha) {
   const ext = (String(d.arquivo || d.nome).match(/\.(\w+)$/) || [])[1];
   return new Response(bin, { headers: { 'content-type': TIPO_POR_EXT[String(ext).toLowerCase()] || 'application/octet-stream' } });
 }
+// F329 · O PROCESSO INTEIRO EM PDF: é o botão "Baixar Processo" da tarefa
+// (micro-frontend de tarefas do PAT, lido em 31.10.2026):
+//   GET /apis/consolidador[EC]Api/pap/metadados?protocolo=&sistema=PAT&cpf=&nome=&async=false
+// devolve JSON com o PDF em base64 em `relatorio`. O perfil de entidade usa
+// consolidadorECApi, o de servidor consolidadorApi: tenta os dois. Com
+// `emissaoAssincrona` o INSS só enfileira e não manda PDF: fica para a próxima.
+function quemEstaLogado() {
+  try {
+    const j = JSON.parse(atob(String(localStorage.getItem('ifs_auth') || '').split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+    return { cpf: String(j.sub || j.cpf || '').replace(/\D/g, ''), nome: j.name || j.nome || '' };
+  } catch (e) { return { cpf: '', nome: '' }; }
+}
+async function baixarPapPat(protocolo, cracha) {
+  const tok = localStorage.getItem('ifs_auth'), srv = localStorage.getItem('srv_auth');
+  const cab = Object.assign({ Accept: 'application/json' },
+    cracha || (tok ? { Authorization: 'Bearer ' + tok } : {}), srv ? { tokenServidor: srv } : {});
+  const eu = quemEstaLogado();
+  const q = `protocolo=${protocolo}&sistema=PAT&cpf=${eu.cpf}&nome=${encodeURIComponent(eu.nome)}&async=false`;
+  let r;
+  for (const api of ['consolidadorECApi', 'consolidadorApi']) {
+    r = await fetch(`/apis/${api}/pap/metadados?${q}`, { credentials: 'include', headers: cab });
+    if (r.ok) break;
+  }
+  if (!r.ok) return r;
+  const j = await r.json().catch(() => ({}));
+  if (!j.relatorio) return new Response(null, { status: 409 });   // assíncrono ou sem PDF: não é documento
+  const bin = Uint8Array.from(atob(String(j.relatorio).replace(/\s+/g, '')), c => c.charCodeAt(0));
+  return new Response(bin, { headers: { 'content-type': 'application/pdf' } });
+}
+// O concluído não muda mais; o que corre ganha a situação no nome, para o
+// PDF ser baixado de novo quando a situação andar.
+function docDoProcessoInteiro(det) {
+  const st = String(det.status || '').trim();
+  const fim = /conclu|cancel/i.test(st);
+  const id = fim ? 'processo-integral' : `processo-integral-${st.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'em-curso'}`;
+  return { id, arquivo: `${id}.pdf`, pap: true,
+           nome: `Processo administrativo integral${fim || !st ? '' : ` (${st})`}.pdf` };
+}
+
 async function guardarAnexosPat(detalhes, cracha) {
   let n = 0;
   for (const det of detalhes) {
@@ -75,10 +114,11 @@ async function guardarAnexosPat(detalhes, cracha) {
       // o nome do arquivo + o que o INSS diz que ele é ("Documento Médico")
       .map(a => ({ id: String(a.id), arquivo: a.nomeArquivo || '',
                    nome: [a.nomeArquivo, a.descricaoArquivo && `(${a.descricaoArquivo})`].filter(Boolean).join(' ') || 'anexo' }));
-    if (!p || !docs.length) continue;
+    if (!p) continue;
+    docs.unshift(docDoProcessoInteiro(det));
     faixa(`guardando os anexos do INSS no CRM (${n} até aqui)…`);
     n += await CRM.guardarDocs('pat', p, docs, { todos: true, pausaMs: 3000,
-                                                 baixar: d => baixarAnexoPat(p, d, cracha) });
+                                                 baixar: d => d.pap ? baixarPapPat(p, cracha) : baixarAnexoPat(p, d, cracha) });
     det.arquivos = docs.filter(d => d.caminho);
   }
   return n;

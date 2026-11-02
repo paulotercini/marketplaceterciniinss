@@ -22,7 +22,7 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
-    localStorage.setItem("crm_tema", "v10");
+    localStorage.setItem("crm_tema", "v10"); localStorage.setItem("crm_etapas", "1");   // F320 · as etapas abertas (no computador nascem recolhidas)
   }, [SUPA, SESSAO]);
   const escritos = [];
   const DADOS = { ...FIX, casos: [caso({ conducao: { v: 1, ritos: { judicial: { r: "delegada", c: "baixa", por: "TJSP (8.26) e benefício comum" } } } })] };

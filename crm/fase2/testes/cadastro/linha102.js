@@ -75,15 +75,16 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
 
   // ── F101 · cabeçalho ─────────────────────────────────────────────────────
   const cab = await p.evaluate(() => {
-    const l1 = document.querySelector(".det-topo .linha1"), parc = l1.querySelector(".cli-parc"), st = l1.querySelector(".cli-st"), x = l1.querySelector(".fechar");
+    // F320 · a pílula do status e o advogado descem à segunda linha do cabeçalho; a parceria fica ao lado do nome
+    const l1 = document.querySelector(".det-topo .linha1"), l2 = document.querySelector(".det-topo .linha2"), parc = document.querySelector(".det-topo .cli-parc"), st = l2 && l2.querySelector(".cli-st"), x = l2 && l2.querySelector(".cli-adv");
     const cpf = document.querySelector(".det-topo .resumo [data-cop]");
-    return { parc: parc && parc.textContent.trim(), parcAntesDoStatus: parc && st && parc.getBoundingClientRect().left < st.getBoundingClientRect().left,
-      stNoCanto: st && x && (x.getBoundingClientRect().left - st.getBoundingClientRect().right) < 20,
+    return { parc: parc && parc.textContent.trim(), parcAntesDoStatus: !!(parc && l1.contains(parc)),
+      stNoCanto: !!(st && x && (x.compareDocumentPosition(st) & Node.DOCUMENT_POSITION_FOLLOWING) && st.getBoundingClientRect().width > 0),
       cpfCop: cpf && cpf.dataset.cop, cursor: cpf && getComputedStyle(cpf).cursor };
   });
   // F127 · o chip limpa o "Dr./Dra." e o "com a/o" do To Do e fica só com o nome
-  conf("a parceria aparece ao lado do nome, só porque existe", /Fictício Parceiro/.test(cab.parc || "") && !/Dr\./.test(cab.parc || "") && cab.parcAntesDoStatus);
-  conf("a pílula 'Cliente ativo' está no canto direito, colada no ✕", cab.stNoCanto);
+  conf("a parceria aparece ao lado do nome, só porque existe", /Fictício Parceiro/.test(cab.parc || "") && !/Dr\./.test(cab.parc || "") && cab.parcAntesDoStatus !== false);
+  conf("a pílula 'Cliente ativo' fica na segunda linha, depois do advogado (F320)", cab.stNoCanto);
   conf("o CPF copia no clique (cursor de copiar, sem botão)", cab.cpfCop === "12345678909" && cab.cursor === "copy");
   conf("a pílula 'volta dd.mm.aaaa' saiu do cabeçalho (F108)", await p.evaluate(() => !document.querySelector(".det-topo .volta-pilula")));
 
@@ -95,7 +96,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       nivel1: !!r.querySelector(".lc-numeros"), semRegua: !document.querySelector(".regua-caso"), semCartaoFora: !document.querySelector(".painel[data-p='2'] > .fatos-processo"),
       semPrazoFatalSolto: !/Prazo fatal do caso/.test(document.querySelector(".painel[data-p='2']").textContent) };
   });
-  conf("uma linha só: o nome do pedido (sem o código), DER em dd/mm/aaaa, tramitação e verificação", /^(B41 · INSS ✎ )?Aposentadoria por idade/.test(lc.txt) && /DER 12\/05\/2024/.test(lc.txt) && /TRAMITAÇÃO INSS/i.test(lc.txt) && /VERIFICAÇÃO Manual/i.test(lc.txt));
+  conf("uma linha só: o nome do pedido (sem o código), DER em dd/mm/aaaa, tramitação e verificação", /^(B41 · INSS ✎ (✔ Concluir )?)?Aposentadoria por idade/.test(lc.txt) && /DER 12\/05\/2024/.test(lc.txt) && /TRAMITAÇÃO INSS/i.test(lc.txt) && /VERIFICAÇÃO Manual/i.test(lc.txt));
   // ── F113 · a espécie pela janela, com subespécies e pedido à mão ─────────
   conf("a canetinha ao lado do nome abre a janela das espécies", await p.evaluate(() => /escolherEspecie/.test((document.querySelector(".lc-topo .lc-sobre + .lapis") || { getAttribute: () => "" }).getAttribute("onclick") || "")));
   await p.evaluate((id) => escolherEspecie(id), CASO1); await p.waitForTimeout(150);
@@ -169,7 +170,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       umCompositor: document.querySelectorAll("#and-texto").length === 1, rotulo: getComputedStyle(m, "::before").content };
   });
   conf("F242 · o menu dos andamentos fica acima de onde se escreve e do que se lê, sem o rótulo 'CASO'", menu.acimaDoCompositor && menu.acimaDaConversa && menu.umCompositor && /none/.test(menu.rotulo));
-  conf("Escritório · INSS · Recurso (CRPS) · Caso Completo — Judicial só existe com número", menu.botoes.join("|").replace(/ \(sem dados\)/g, "") === "Escritório|INSS|Recurso (CRPS)|Caso Completo");
+  conf("Escritório · INSS · Recurso (CRPS) · Caso Completo — Judicial só existe com número (F330)", menu.botoes.join("|").replace(/ \(sem dados\)/g, "") === "Escritório|INSS|Recurso (CRPS)|Caso Completo");
   conf("o Caso Completo abre por padrão", /Caso Completo/.test(menu.on || ""));
   const idTudo = await p.evaluate(() => { const li = [...document.querySelectorAll(".painel[data-p='2'] .timeline li.tl-of")].find(l => /Contestar o laudo/.test(l.textContent));
     const av = li && li.querySelector(".tl-cab .avatar"); return av && { ini: av.textContent.trim(), cor: av.style.background, fonte: av.classList.contains("av-fonte"), marco: li.classList.contains("tudo-marco") }; });
@@ -215,6 +216,10 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     return { sug: !!sug && vis("#tipo-fila .sug-abrir") && sug.textContent.trim() === "Sugestões", campo: vis("#and-texto"), barra: vis("#tf-box"), prazo: vis("#and-prazo-ck") }; })()`);
   conf("F244 · fechado: fica à vista só o campo (os tipos e o Sugestões aparecem ao clicar nele)", !fechado.sug && fechado.campo && !fechado.barra && !fechado.prazo);
   await p.click("#and-texto"); await p.waitForTimeout(250);
+  // teste 11.88, REC-06: a Tarefa nasce desligada; o quadro Quem faz/Quando abre ao ligá-la
+  const semTarefa = await p.evaluate(`(() => { ${VIS} return !vis("#esc-pnl-tf"); })()`);
+  conf("aberto, a Tarefa nasce desligada e o quadro Quem faz/Quando fica fechado", semTarefa);
+  await p.evaluate(() => document.querySelector('.tf-nt[data-nat="compromisso"]').click()); await p.waitForTimeout(250);
   const aberto = await p.evaluate(`(() => { ${VIS}
     const linhas = [...document.querySelectorAll("#tf-box .esc-linha")];
     const y = el => { const r = el.getBoundingClientRect(); return r.top + r.height / 2; };
@@ -296,7 +301,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   // ── F114 · o essencial da espécie na linha, o resto em gestão do caso ───
   conf("a aposentadoria por idade não enche a linha: sem DIB nem DCB, a DER basta", await p.evaluate(() =>
     camposEssenciais(D.casoPorId.get(casoSel)).every(t => t[0] === "?") &&
-    ![...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()).some(r => !["DER","Tramitação","Verificação","Etapa"].includes(r))));
+    ![...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()).some(r => !["DER","Tramitação","Verificação","Etapa","Protocolo"].includes(r))));   // F320 · o protocolo do INSS com copiar
   await p.evaluate((id) => gravarEspecie(id, "B31", "B31"), CASO1); await p.waitForTimeout(300);
   const rotsDa = () => p.evaluate(() => [...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()));
   const b31 = await rotsDa();
@@ -437,8 +442,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   await p.waitForTimeout(250);
   conf("o compositor separa as três naturezas: o ⏰ é o PRAZO FATAL, e ao lado se escolhe compromisso ou lembrete", await p.evaluate(() =>
     /Prazo fatal/.test(document.querySelector(".esc-linha .esc-tg-pz").textContent)
-    && [...document.querySelectorAll(".tf-nt")].map(b => b.dataset.nat).join("|") === "compromisso|lembrete"
-    && document.querySelector('.tf-nt[data-nat="compromisso"]').classList.contains("on")));
+    && [...document.querySelectorAll(".tf-nt")].map(b => b.dataset.nat).join("|") === "compromisso|lembrete"));
   await p.evaluate(() => document.querySelector('.tf-nt[data-nat="lembrete"]').click());
   conf("escolher lembrete acende só ele", await p.evaluate(() => tfNatureza === "lembrete"
     && !document.querySelector('.tf-nt[data-nat="compromisso"]').classList.contains("on")));
@@ -455,7 +459,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   // próximo dia útil, e no sábado +7 cai na segunda seguinte
   const dtBotao = await p.evaluate(() => maisDias(7));
   conf("a tarefa nasce com a natureza escolhida no compositor", tf && tf.natureza === "lembrete" && tf.lembrar_em === dtBotao);
-  conf("registrada a anotação, o compositor volta ao padrão compromisso", await p.evaluate(() => tfNatureza === "compromisso"));
+  conf("registrada a anotação, o compositor volta à Tarefa desligada (teste 11.88, REC-06)", await p.evaluate(() => tfNatureza === null && !tfTocado));
   const nats = await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => `${c.dataset.tipo}/${c.dataset.nat}`));
   conf("os cartões dizem a natureza: Prazo fatal em vermelho, Compromisso em âmbar, Lembrete em cinza",
     nats.some(r => r === "Prazo fatal/fatal") && nats.some(r => r.endsWith("/lembrete")));

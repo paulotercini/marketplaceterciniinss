@@ -289,12 +289,12 @@ export async function acervoPje() {
     for (const p of (Array.isArray(d.lote) ? d.lote : [d]))
       if (p && p.numero && !feitos.has(dig(p.numero))) feitos.set(dig(p.numero), p.itens || []);
   }
-  // documento que devia descer e falhou (`falhou`, marcado pelo coletor) traz
+  // documento sem arquivo guardado (falhou, ou o expediente que até a 1.30 se pulava) traz
   // o processo de volta, até 3 tentativas por documento — contadas no navegador
   // ao entrar na fila. shortcut: rodada que cai antes de chegar nele gasta uma
   // tentativa; se incomodar, contar só na entrega
   const tent = (await chrome.storage.local.get('pje_tentativas')).pje_tentativas || {};
-  const pendentes = itens => (itens || []).flatMap(i => i.docs || []).filter(d => d.falhou && d.id && (tent[d.id] || 0) < 3);
+  const pendentes = itens => (itens || []).flatMap(i => i.docs || []).filter(d => !d.caminho && d.id && (tent[d.id] || 0) < 3);
   const vistos = new Map();
   for (const c of await r.json()) {
     const d = c.dados || {};

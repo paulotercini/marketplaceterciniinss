@@ -179,6 +179,18 @@ quando a publicada na `main` é outra. Para atualizar: na pasta do repositório
 no computador, `git pull`; depois, em `chrome://extensions`, o botão ↻ da
 extensão (ou "Atualizar"). Não precisa reinstalar nem entrar de novo no CRM.
 
+## 🖥 e-Recursos baixa todos os documentos — desde 1.32.0
+
+A rodada do e-Recursos baixa todos os documentos de cada recurso, e não só acórdão e decisão monocrática. No CRM, a aba Recurso (CRPS) tem o botão **e-SISREC**, com a tela do portal: o cabeçalho do processo e a tabela Data, Status e Documentos, cada documento guardado abrindo pelo CRM.
+
+## 📄 Cópia integral, expediente inclusive — desde 1.31.0
+
+O PJe, o eproc e o e-SAJ baixam todas as peças, também certidões, intimações, mandados, publicações e AR, que até a 1.30 se pulavam. O processo arquivado continua sem download. Na primeira rodada do PJe depois de atualizar, o processo com peça ainda sem arquivo na última cronologia volta à fila (até 3 tentativas por peça), por isso a rodada demora mais uma vez.
+
+## 🖥 e-Recursos lê as duas bases — desde 1.30.0
+
+O portal do e-Recursos guarda os recursos em duas bases: o **e-Sisrec** e o **RecBen**, o sistema antigo. A cada rodada a extensão pede a lista das duas e consulta a soma, cada recurso direto na base que o listou. A faixa do alto mostra quantos vieram de cada uma ("o portal lista N recurso(s) (e-Sisrec X, RecBen Y)"), e a coleta leva os números em `portal.por_sistema`.
+
 ## 📄 Um processo só, com as peças — desde 1.26.0
 
 Para baixar as peças de **um** processo sem esperar a rodada inteira: abra o processo no
@@ -265,3 +277,18 @@ exige o seu clique em "Buscar" — é o único passo humano que sobra, e ele
 acontece enquanto os outros já rodam. Onde faltar login, a fonte falha sozinha e o resumo no popup avisa.
 
 O que continua igual: nada é gravado no CRM sem você conferir em 📥 Importar.
+
+## 🏛 eproc da Fazenda Pública — desde 1.27.0
+
+O TJSP tem um eproc à parte para a Fazenda Pública (`eproc1g-ef.tjsp.jus.br`, perfil EF no topo do
+eproc), onde corre a ação acidentária contra o INSS. Antes, ele só era lido com a aba dele aberta.
+Agora o "Atualizar tudo", o "PJe e eproc", os "Prazos dos tribunais" e o "Completar processos" leem
+sempre também esse host: sem aba dele, a rodada abre a do painel em segundo plano. Se a sessão desse
+host pedir login, o aviso do fim mostra "eproc eproc1g-ef" com o erro; entre pelo perfil EF e rode de novo.
+
+## ⚡ Downloads mais cedo e sem prazos — desde 1.28.0
+
+No "Atualizar tudo" e no "PJe e eproc", cada tribunal baixa as peças (completar processos) logo que
+o acervo dele termina: o PJe do TRF3 não espera mais o e-SAJ. A busca dos prazos dos tribunais
+(expedientes do PJe, prazos do eproc, intimações do e-SAJ) saiu da rodada e o botão
+"⏰ Prazos dos tribunais" saiu do popup (pedido do Paulo, 30.10.2026).

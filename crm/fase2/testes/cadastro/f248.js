@@ -110,6 +110,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.screenshot({ path: path.join(OUT, "02-acordo.png") });
   conf(`o movimento da proposta e o dos cálculos trazem os botões (${bts.join(", ")})`, bts.join() === "Concordei com os cálculos,Aceitei o acordo,Recusei,Falar com o cliente" || bts.sort().join() === ["Aceitei o acordo","Concordei com os cálculos","Falar com o cliente","Recusei"].join());
   const n3 = T.andamentos.length;
+  await p.hover('.timeline li:has(.acordo-bt:has-text("Aceitei o acordo"))');   // F288 · com mouse, as ações aparecem ao passar sobre o cartão
   await p.click('.acordo-bt:has-text("Aceitei o acordo")');
   await p.waitForTimeout(700);
   const ac = T.andamentos.slice(n3).find(a => a.caso_id === kJ.id);

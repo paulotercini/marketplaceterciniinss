@@ -70,7 +70,9 @@ const MSGS = [
   // o botão ao lado do nome abre as mensagens, só para ler, com o áudio transcrito
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   await p.waitForSelector('.det-topo button[onclick^="verZapCliente"]');
-  conf("o topo da ficha tem o botão 💬 WhatsApp com as novas", /WhatsApp.*2 novas/.test(await p.textContent('.det-topo button[onclick^="verZapCliente"]')));
+  // F301 · o botão é a marca do WhatsApp com o número das novas
+  conf("o topo da ficha tem o botão do WhatsApp com as novas", await p.$eval('.det-topo button[onclick^="verZapCliente"]', b =>
+    !!b.querySelector('.fonte-ic,.fonte-mono') && /2 novas/.test(b.textContent)));
   await p.click('.det-topo button[onclick^="verZapCliente"]');
   await p.waitForSelector("#painel-prazo .zap-msgs .zap-b");
   const jan = await p.textContent("#painel-prazo .zap-msgs");
@@ -80,7 +82,7 @@ const MSGS = [
     && (await p.$$eval("#painel-prazo .zap-b", bs => bs.filter(b => b.textContent.includes("não baixado") && b.querySelector("button")).length)) === 0);
   const abas = ctx.pages().length;
   await p.click('#painel-prazo .zap-b button[data-ouvir="zap/x/a1.ogg"]');
-  await p.waitForSelector('#painel-prazo audio[data-ouvir="zap/x/a1.ogg"]');
+  await p.waitForSelector('#painel-prazo audio[data-ouvir="zap/x/a1.ogg"]', {state: "attached"});
   conf("▶ ouvir toca o áudio na própria janela, sem abrir outra aba", ctx.pages().length === abas
     && /token=t/.test(await p.getAttribute('#painel-prazo audio[data-ouvir="zap/x/a1.ogg"]', "src")));
   conf("F261 · a conversa abre ao lado da ficha, com a resposta embaixo", !!(await p.$("#painel-prazo #pp-zap-txt")));
@@ -104,12 +106,14 @@ const MSGS = [
   await p.waitForFunction(() => zapConvs.length);
   await p.evaluate(id => abrirConversa(id), ZAP_CLI);
   await p.click('#zap-msgs button[data-ouvir="zap/x/a1.ogg"]');
-  await p.waitForSelector('#zap-msgs audio[data-ouvir="zap/x/a1.ogg"]');
+  await p.waitForSelector('#zap-msgs audio[data-ouvir="zap/x/a1.ogg"]', {state: "attached"});
   await p.evaluate(() => { window._tocador = document.querySelector('#zap-msgs audio[data-ouvir]'); pintarConversaGuardando(); });
   conf("na conversa, o tocador continua o mesmo depois da repintura (mensagem nova chegando)",
     await p.evaluate(() => document.querySelector('#zap-msgs audio[data-ouvir="zap/x/a1.ogg"]') === window._tocador));
+  // F344 · a tela do WhatsApp tem altura fixa: a página não rola e o topo não some (a reserva de 150 px fazia rolar)
+  conf("a tela do WhatsApp não rola a página inteira", await p.evaluate(() => { const m = document.querySelector("main.meio.zap-v"); return !!m && m.scrollHeight <= m.clientHeight + 1; }));
   conf("conversa de cliente mostra “abrir ficha” e não “vincular”",
-    (await p.textContent(".zap-topo")).includes("Abrir a ficha") && !(await p.textContent(".zap-topo")).includes("Vincular"));
+    /Cliente: /.test(await p.textContent(".zap-topo")) && !(await p.textContent(".zap-topo")).includes("Vincular"));
 
   // quem cuida do benefício de outro: o número dele na ficha do outro traz a conversa
   await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.telefone = "(16) 99999-0001";
@@ -144,7 +148,7 @@ const MSGS = [
   const pt = patches.find(x => x.u.includes(`zap_conversas?id=eq.${ZAP_SOLTA}`));
   conf("vincular grava o cliente na conversa e limpa o prospecto", pt && pt.b.cliente_id === CLI_CHEIO && pt.b.lead_id === null);
   conf("depois de vincular o cabeçalho passa a “abrir ficha”", await p.waitForFunction(() =>
-    (document.querySelector(".zap-topo")?.textContent || "").includes("Abrir a ficha"), null, { timeout: 5000 }).then(() => true, () => false));
+    /Clientes?: /.test(document.querySelector(".zap-topo")?.textContent || ""), null, { timeout: 5000 }).then(() => true, () => false));
 
   // a lista Clientes mostra a foto do WhatsApp (clientes.foto_url) no lugar da inicial
   conf("lista Clientes: quem tem foto ganha a foto, quem não tem fica com a inicial", await p.evaluate(async cli => {
@@ -153,6 +157,16 @@ const MSGS = [
     pintarClientesTodos();
     const it = document.querySelector(`#cli-todos-l [data-cli="${cli}"]`), outro = document.querySelector(`#cli-todos-l [data-cli]:not([data-cli="${cli}"])`);
     const r = !!it.querySelector("img.avatar") && (!outro || !!outro.querySelector("span.avatar")); d.remove(); return r;
+  }, CLI_CHEIO));
+
+  // F340 · na ficha, a foto do telefone em que outra pessoa escreve pelo cliente não aparece
+  conf("ficha: sem foto quando quem fala no telefone do cliente é outra pessoa", await p.evaluate(cli => {
+    const c = D.cliPorId.get(cli), antes = [D.zapFicha, c.telefone];
+    c.telefone = "16999990001"; D.zapFicha = [];
+    const com = !!fotoDoCliente(cli);
+    D.zapFicha = [{ cliente_id: cli, telefone: "5516999990001", contato_nome: "Maria", contato_relacao: "filha" }];
+    const sem = fotoDoCliente(cli) === null;
+    [D.zapFicha, c.telefone] = antes; return com && sem;
   }, CLI_CHEIO));
 
   // "Sem telefone": só quem não tem número, e o número se completa na própria linha

@@ -77,9 +77,10 @@ const SUPA = "https://ficticio.supabase.co";
   // 2) abre com a busca focada e o urgente já ligado
   await p.click("#fab-rapida");
   await p.waitForTimeout(300);
-  conf("abre com o campo do cliente focado e 🔥 urgente pré-marcado",
+  // teste 11.88, REC-04: o urgente saiu da tela na F306 e não nasce mais marcado
+  conf("abre com o campo do cliente focado e sem o 🔥 urgente",
     await p.evaluate(() => document.activeElement === document.getElementById("ar-busca") &&
-      document.getElementById("ar-urg").checked));
+      !document.getElementById("ar-urg")));
 
   // 3) guardar sem cliente escolhido não grava nada
   await p.fill("#ar-texto", "texto órfão");
@@ -109,9 +110,8 @@ const SUPA = "https://ficticio.supabase.co";
   conf("grava o andamento no caso ativo",
     escritos.some(x => x.m === "POST" && x.t === "andamentos" &&
       x.corpo.caso_id === CASO1 && /audiência remarcada/.test(x.corpo.texto)));
-  conf("e marca o caso como URGENTE",
-    escritos.some(x => x.m === "PATCH" && x.t === "casos" && x.corpo.urgente === true) &&
-    await p.evaluate(caso => D.casoPorId.get(caso).urgente === true, CASO1));
+  conf("e não marca o caso como urgente",
+    !escritos.some(x => x.m === "PATCH" && x.t === "casos" && x.corpo.urgente === true));
   conf("a caixa fecha sozinha depois de guardar",
     await p.evaluate(() => document.getElementById("modal").style.display === "none"));
 
@@ -128,10 +128,10 @@ const SUPA = "https://ficticio.supabase.co";
   escritos.length = 0;
   await p.evaluate(() => salvarAnotacaoRapida());
   await p.waitForTimeout(500);
-  conf("grava a anotação urgente na ficha do cliente",
+  conf("grava a anotação na ficha do cliente",
     escritos.some(x => x.m === "PATCH" && x.t === "clientes" &&
       ((x.corpo.campos || {}).atendimento || []).some(n =>
-        /balcão: trouxe a carteira/.test(n.texto) && n.urgente === true && n.origem === "rapida")));
+        /balcão: trouxe a carteira/.test(n.texto) && !n.urgente && n.origem === "rapida")));
   conf("e nenhum andamento é tentado (não há caso)",
     !escritos.some(x => x.t === "andamentos" || x.t === "casos"));
 
@@ -176,10 +176,10 @@ const SUPA = "https://ficticio.supabase.co";
   escritos.length = 0;
   await p.evaluate(() => salvarAnotacaoRapida());
   await p.waitForTimeout(600);
-  conf("o cliente novo nasce com nome e recebe a anotação urgente",
+  conf("o cliente novo nasce com nome e recebe a anotação",
     escritos.some(x => x.m === "POST" && x.t === "clientes" && x.corpo.nome === "Otavio Recem Chegado") &&
     escritos.some(x => x.m === "PATCH" && x.t === "clientes" &&
-      ((x.corpo.campos || {}).atendimento || []).some(n => /balcão sem ser cliente/.test(n.texto) && n.urgente === true)));
+      ((x.corpo.campos || {}).atendimento || []).some(n => /balcão sem ser cliente/.test(n.texto) && !n.urgente)));
   conf("o cliente novo entra na memória e na busca",
     await p.evaluate(() => D.clientes.some(c => c.nome === "Otavio Recem Chegado") &&
       pesquisar("Otavio").some(c => c.nome === "Otavio Recem Chegado")));

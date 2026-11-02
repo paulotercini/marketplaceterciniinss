@@ -92,7 +92,7 @@ FIX.analises_direito = [{ id: "a0000000-0000-0000-0000-000000000178", cliente_id
   conf("planejamento aparece para o facultativo, com as datas e a regra dos 6 e 12 meses",
     plano.length === 2 && /15\.10\.2026/.test(plano[0]) && /até 6 meses/.test(await p.textContent(".adr-plano")));
   escritos.length = 0;
-  await p.click(".adr-plano li >> text=levar a Aposentadorias futuras");
+  await p.click(".adr-plano li button:has-text(\"levar a Aposentadorias futuras\")");
   await p.waitForTimeout(400);
   const lemb = escritos.find(x => x.m === "POST" && x.t === "lembretes");
   conf("levar ao Lembretes cria lembrete geral com a data e o item do plano",

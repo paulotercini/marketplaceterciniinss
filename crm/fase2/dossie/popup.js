@@ -62,6 +62,16 @@ const COLETORES = {
     return;
   }
   $('onde').textContent = c.rotulo;
+  // 0.13.0 · no Meu INSS, a consulta do dia: um documento só, sem rodar a aba inteira
+  if (c.arquivo === 'meuinss.js') {
+    $('extrato').style.display = '';
+    $('extrato').onclick = async () => {
+      $('extrato').disabled = true; $('extrato').textContent = 'baixando o extrato — veja a faixa azul da página';
+      await chrome.scripting.executeScript({ target: { tabId: aba.id }, files: ['regras.js', 'pagina.js', c.arquivo] });
+      chrome.scripting.executeScript({ target: { tabId: aba.id }, func: () => window.dossieRodar({ so: 'extrato' }) });
+      setTimeout(() => window.close(), 1200);
+    };
+  }
   $('baixar').disabled = false;
   $('baixar').onclick = async () => {
     $('baixar').disabled = true;

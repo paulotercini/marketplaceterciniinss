@@ -19,7 +19,7 @@
   const API = 'https://vip-pmeuinss-api.inss.gov.br/apis/';
   const ARQ = 'https://vip-pmeuinss-arq.inss.gov.br/apis/';   // SagService (pedidos)
 
-  window.dossieRodar = async () => {
+  window.dossieRodar = async (opcoes = {}) => {
     const tok = localStorage.getItem('ifs_auth');
     const quem = R.jwt(tok);
     if (!quem || !quem.sub) { D.faixa('não achei a sessão do Meu INSS — entre com o gov.br e clique de novo', '#B3261E'); return { erro: 'sem sessão' }; }
@@ -61,6 +61,16 @@
     // primeira lista de objetos dentro da resposta, qualquer que seja o nome do campo
     const lista = j => Array.isArray(j) ? j
       : (j && typeof j === 'object' ? Object.values(j).find(v => Array.isArray(v) && v.some(x => x && typeof x === 'object')) || [] : []);
+
+    // 0.13.0 · só o extrato de pagamento (a consulta do dia, sem a rodada inteira): grava o PDF no Drive e
+    // nos anexos, como na rodada, mas não mexe no resumo do portal (clientes.dossie.meuinss), que é da rodada completa
+    if (opcoes.so === 'extrato') {
+      const [ini, fim] = R.janela12Meses();
+      await pdf('Extrato de pagamento', `Extrato de pagamento ${ini} a ${fim}`, `${API}hiscreServices/historicocreditosPdf/${cpf}/${ini}/${fim}`);
+      D.faixa(ok.length ? `extrato de pagamento baixado (${ini} a ${fim})` : (inexistentes[0] || falhas[0] || 'o portal não devolveu o extrato'),
+        ok.length ? '#1E6F50' : '#9A6700');
+      return { ok: ok.length, falhas };
+    }
 
     // ── CADASTRO: os dados cadastrais do CNIS (JSON → campos do CRM + .txt) e o PDF
     // da tela "Dados Cadastrais" (botão Baixar Documento = dadoscompletosPdf)

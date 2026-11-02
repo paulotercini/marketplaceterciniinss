@@ -37,7 +37,7 @@ const DADOS = {
   await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
-    localStorage.setItem("crm_tema", "v10");
+    localStorage.setItem("crm_tema", "v10"); localStorage.setItem("crm_etapas", "1");   // F320 · as etapas abertas (no computador nascem recolhidas)
   }, [SUPA, SESSAO]);
   const escritos = [];
   await ctx.route(SUPA + "/**", rota => {
@@ -91,14 +91,14 @@ const DADOS = {
   // ── o cartão ─────────────────────────────────────────────────────────────
   const cart = await p.evaluate(() => {
     const li = [...document.querySelectorAll(".timeline li:not(.dia-bloco)")].find(x => /declaração do empregador/.test(x.textContent));
-    return { tipo: !!li.querySelector(".tl-cab .tipo-tl"), pz: (li.querySelector(".tl-pz-chip") || {}).textContent || "",
+    return { tipo: !!li.querySelector(".tl-cab .tipo-tl"), pz: (li.querySelector(".tl-pz .tl-pz-pill") || {}).textContent || "", pzM: (li.querySelector(".tl-pz .tl-pz-m") || {}).textContent || "",
       semCarimbo: !/\[PRAZO/.test(li.querySelector(".tl-corpo").textContent),
       tarefa: (li.querySelector(".tl-tarefa") || {}).textContent || "", bola: !!li.querySelector(".tl-tarefa .tf-ok"),
       bts: [...li.querySelectorAll(".tl-barra .tl-bt")].map(b => b.textContent.trim()) };
   });
-  conf("o cabeçalho traz o tipo e o prazo fatal; o carimbo sai do texto", cart.tipo && /^prazo fatal \d\d\/\d\d$/.test(cart.pz) && cart.semCarimbo);
+  conf("o cabeçalho traz o tipo e a faixa do prazo fatal (F324); o carimbo sai do texto", cart.tipo && /Prazo fatal/.test(cart.pz) && /vence .*\d\d\/\d\d/.test(cart.pzM) && cart.semCarimbo);
   conf("a tarefa tem faixa própria com quem, quando e o círculo de concluir", /Paulo · .* · tarefa/.test(cart.tarefa) && cart.bola);
-  conf("a barra traz Responder, Concluir tarefa, + prazo e Reagendar", ["Responder", "Concluir tarefa", "+ prazo", "Reagendar"].every(x => cart.bts.includes(x)));
+  conf("a barra traz Responder, Cumpri o prazo (F324), + prazo e Reagendar", ["Responder", "Cumprido", "+ prazo", "Reagendar"].every(x => cart.bts.includes(x)));
   const outro = await p.evaluate(() => [...[...document.querySelectorAll(".timeline li:not(.dia-bloco)")].find(x => /Cliente avisado/.test(x.textContent)).querySelectorAll(".tl-barra .tl-bt")].map(b => b.textContent.trim()));
   conf("sem tarefa, o cartão não oferece Concluir nem Reagendar", outro.includes("Responder") && !outro.includes("Concluir tarefa") && !outro.includes("Reagendar"));
 
@@ -107,6 +107,15 @@ const DADOS = {
   await p.waitForSelector("#ri-box.foco-prazo");
   await p.evaluate(() => { document.getElementById("ri-txt").value = "Pedi a declaração ao empregador"; document.getElementById("ri-concluir").checked = false; riDia(15); });
   conf("o prazo escolhido acende e o texto digitado não se perde", await p.evaluate(() => document.querySelector("#ri-box .tl-pill.on") && document.getElementById("ri-txt").value === "Pedi a declaração ao empregador" && document.getElementById("ri-concluir").checked === false));
+  // o seletor de data do iPhone dispara o change ao abrir: o campo não pode ser repintado
+  const dataOk = await p.evaluate(() => { const inp = document.querySelector("#ri-box .ri-outra input");
+    inp.value = "2030-12-20"; inp.dispatchEvent(new Event("change"));
+    const ainda = document.querySelector("#ri-box .ri-outra input") === inp;
+    inp.value = "2030-12-22"; inp.dispatchEvent(new Event("change"));
+    return ainda && riPrazo === "2030-12-22" && /22\/12/.test(document.querySelector(".ri-outra").textContent)
+      && document.querySelector(".ri-outra").classList.contains("on") && document.querySelectorAll("#ri-box .tl-pill.on").length === 1; });
+  conf("a data escolhida fica no mesmo campo e pode ser trocada", dataOk);
+  await p.evaluate(() => riDia(15));
   escritos.length = 0;
   await p.evaluate(id => responderInline(id), "a1820000-0000-0000-0000-000000000001");
   await p.waitForTimeout(400);
@@ -133,8 +142,11 @@ const DADOS = {
   const comp = await p.evaluate(() => ({
     tgs: [...document.querySelectorAll("#tf-box .esc-tgs .esc-tg")].map(b => b.textContent.trim()),
     pnl: !document.getElementById("esc-pnl-tf").hidden, frase: document.getElementById("esc-frase").textContent }));
-  conf("as três chaves: Tarefa, Prazo fatal e Lembrete, com a Tarefa ligada", comp.tgs.join("|") === "Tarefa|Prazo fatal|Lembrete" && comp.pnl);
-  conf("a frase diz o que falta antes de registrar", /^Ao registrar: anota no Escritório, cria tarefa \(falta quem faz\)/.test(comp.frase));
+  // teste 11.88, REC-06: a Tarefa nasce desligada; ligada, a frase diz o que falta
+  conf("as três chaves: Tarefa, Prazo fatal e Lembrete, com a Tarefa desligada", comp.tgs.join("|") === "Tarefa|Prazo fatal|Lembrete" && !comp.pnl && /^Ao registrar: anota no Escritório$/.test(comp.frase));
+  await p.evaluate(() => document.querySelector('.tf-nt[data-nat="compromisso"]').click());
+  conf("ligada a Tarefa, a frase diz o que falta antes de registrar", await p.evaluate(() => !document.getElementById("esc-pnl-tf").hidden &&
+    /^Ao registrar: anota no Escritório, cria tarefa \(falta quem faz\)/.test(document.getElementById("esc-frase").textContent)));
   await p.evaluate(() => { const t = document.getElementById("and-texto"); t.value = "[CONTATO] Cliente orientado"; t.dispatchEvent(new Event("input", { bubbles: true })); });
   await p.evaluate(() => document.querySelector('#tf-box .tf-eq').click());
   await p.evaluate(() => document.querySelector('#tf-box [data-tfd="3"]').click());

@@ -85,7 +85,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector(".aq-faixa", { timeout: 15000 });
   conf("a colaboradora entra no nível 0 e cai direto na Agenda", await p.evaluate(() => meuNivel() === 0 && visao === "agendaq"));
   const itens = await p.evaluate(() => [...document.querySelectorAll(".lista-item")].filter(e => e.offsetParent !== null).map(e => e.dataset.v));
-  conf(`o menu tem só Agenda e Clientes (${itens.join(", ")})`, itens.join() === "agendaq,clientes");
+  conf(`o menu tem Menções, Agenda e Clientes (REC-09) (${itens.join(", ")})`, itens.join() === "mencoes,agendaq,clientes");
   conf("sem o título vazio das listas do escritório", !(await vis(".grupo:has(#grupo-fases) h3")));
   const profs = await p.$$eval("[data-aqprof]", b => b.map(x => x.dataset.aqprof));
   conf(`dá para ver Paulo, Marcos, Amanda e a Completa (${profs.join(", ")})`, profs.join() === "paulo,marcos,amanda,todos");
@@ -121,6 +121,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click("#aq-gravar");
   await p.waitForSelector(".aq-whats", { timeout: 10000 });
   conf(`a vaga vira o atendimento no próprio evento (${evG("P1").summary})`, evG("P1").summary === "001 - Novo Ficticio Cliente - Não confirmado");
+  conf(`a vaga sem cor do Paulo vira atendimento no azul dele (colorId ${evG("P1").colorId})`, evG("P1").colorId === "9");
   const novo = T.clientes.find(c => c.nome === "Novo Ficticio Cliente");
   conf("o pré-cadastro nasce no CRM e o evento leva o cliente", !!novo && ((evG("P1").extendedProperties || {}).private || {}).clienteId === novo.id);
   await foto("02-agendado");
@@ -167,7 +168,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector('[data-aqacomp="nao"]');
   await p.click('[data-aqacomp="nao"]'); await p.click("#aq-seg4");
   await p.click("#aq-seg5");
-  await p.check("#aq-o1"); await p.check("#aq-o2");
+  await p.waitForSelector("#aq-aviso002"); // F307 · no 002 é aviso, sem caixa
   await p.click("#aq-gravar");
   await p.waitForSelector(".aq-whats", { timeout: 10000 });
   conf(`cliente do escritório na vaga 002 (${evG("P2").summary})`, evG("P2").summary === "002 - Ana Fictícia Colab - Não confirmado");
@@ -245,7 +246,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.setViewportSize({ width: 390, height: 800 }); await p.waitForTimeout(300);
   conf("no celular o índice quebra a linha, sem rolar de lado", await p.evaluate(() => { const n = document.getElementById("cli-az"); return n.scrollWidth <= n.clientWidth + 1 && document.documentElement.scrollWidth <= window.innerWidth + 1; }));
   const barra = await p.$$eval("#barra-cel button", b => b.filter(x => x.offsetParent !== null).map(x => x.dataset.cel));
-  conf(`no celular a barra de baixo é Agenda, Clientes e Buscar (${barra.join(", ")})`, barra.join() === "agendaq,clientes,busca" && !(await vis("#fab-rapida")));
+  conf(`no celular a barra de baixo é Agenda, Clientes, Buscar e Menções (${barra.join(", ")})`, barra.join() === "agendaq,clientes,busca,mencoes" && !(await vis("#fab-rapida")));
   conf("os ícones da barra são desenhados, não emoji", await p.evaluate(() => [...document.querySelectorAll("#barra-cel button")].filter(b => b.offsetParent !== null).every(b => !!b.querySelector("b svg"))));
   await foto("07-indice-celular");
   await p.click('#barra-cel [data-cel="agendaq"]'); await p.waitForTimeout(300);

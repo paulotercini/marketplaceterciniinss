@@ -260,7 +260,7 @@ const cli = c => T.clientes.find(x => x.id === c);
   // ── 6 · régua do cadastro e Documentos pela fase do caso (achados B) ──
   conf("a régua da Identificação e a peça contam as mesmas lacunas (9)", await p.evaluate(j => { const c = D.cliPorId.get(j); return faltaParaDocs(c).length === 9 && cadFaltandoChaves(c).length === 9; }, J));
   await abrirCaso(J, KJ);
-  const oa = await texto(".outras-abas");
+  const oa = await p.evaluate(() => { const e = document.querySelector(".outras-abas"); if(!e) return ""; const h = e.hidden; e.hidden = false; const t = e.innerText.replace(/\s+/g, " "); e.hidden = h; return t; });   // F320 · o quadro mora dobrado nos números do caso
   await p.screenshot({ path: path.join(OUT, "03-caso-judicial.png") });
   conf(`o caso avisa o cadastro incompleto (${oa.slice(0, 160)})`, /Cadastro 9 dados faltam às peças/.test(oa) && /sem CPF e nascimento, não há portal do cliente nem dossiê/.test(oa));
   conf("documento e tarefa em linhas próprias, com a data", new RegExp(`Documentos 1 pendente · até ${br(5).slice(0, 5)}`).test(oa) && new RegExp(`Tarefas do caso 1 aberta · até ${br(3).slice(0, 5)}`).test(oa));

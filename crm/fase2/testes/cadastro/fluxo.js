@@ -152,7 +152,7 @@ FIX.documentos_beneficio.push(
     /será gerado somente quando o cliente assinar a procuração/.test(
       await p.evaluate(() => document.querySelector(".caixa-atend").innerText)));
   conf("os três caminhos estão lado a lado",
-    await p.evaluate(() => { const t = document.querySelector(".pc-acao").innerText;
+    await p.evaluate(() => { const t = document.querySelector(".pc-acao").textContent;
       return /Gerar o caso/.test(t) && /Somente gerar lembrete/.test(t) && /Não gerar/.test(t); }));
 
   // ── 3. incapacidade exige a via ─────────────────────────────────────────
@@ -162,7 +162,7 @@ FIX.documentos_beneficio.push(
     /qual a via\?/.test(await p.evaluate(() => document.querySelector(".caixa-atend").innerText)));
   conf("sem a via, o Gerar o caso fica travado",
     await p.evaluate(() => { const b = [...document.querySelectorAll(".pc-acao button")]
-      .find(x => /Gerar o caso/.test(x.innerText)); return b && b.disabled; }));
+      .find(x => /Gerar o caso/.test(x.textContent)); return b && b.disabled; }));
   await p.evaluate(([cli, id]) => mudarPreCaso(cli, id, "via", "adm"), [CLI_VAZIO, pcId]);
   await p.waitForTimeout(400);
   conf("via administrativa: 20% sobre as parcelas aparece nos honorários",
@@ -170,7 +170,7 @@ FIX.documentos_beneficio.push(
       await p.evaluate(() => document.querySelector(".caixa-atend").innerText)));
   conf("e destrava o Gerar o caso, com a fase INSS pré-escolhida",
     await p.evaluate(id => { const b = [...document.querySelectorAll(".pc-acao button")]
-      .find(x => /Gerar o caso/.test(x.innerText));
+      .find(x => /Gerar o caso/.test(x.textContent));
       return b && !b.disabled && document.getElementById("pcf-" + id).value === "inss"; }, pcId));
 
   // ── 4. honorários: o padrão do escritório e o ajuste que entra no contrato

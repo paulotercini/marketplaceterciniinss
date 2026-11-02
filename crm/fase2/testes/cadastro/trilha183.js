@@ -37,7 +37,7 @@ const DADOS = {
   await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
-    localStorage.setItem("crm_tema", "v10");
+    localStorage.setItem("crm_tema", "v10"); localStorage.setItem("crm_etapas", "1");   // F320 · as etapas abertas (no computador nascem recolhidas)
   }, [SUPA, SESSAO]);
   const escritos = [];
   await ctx.route(SUPA + "/**", rota => {
@@ -95,6 +95,24 @@ const DADOS = {
   const est = await p.evaluate(() => [...document.querySelectorAll(".tr-l .tr-et")].map(b => [...b.classList].find(c => /^tr-s/.test(c))));
   const nm = v.nomes;
   conf("a etapa anterior vira cumprida, a pulada fica 'não houve' e a ordem continua", est[nm.indexOf("Perícia realizada")] === "tr-sf" && est[nm.indexOf("Esclarecimentos do perito")] === "tr-sn" && est[nm.indexOf("Citação e contestação")] === "tr-sa" && est[nm.indexOf("Laudo juntado")] === "tr-sv");
+  // F323 · o passado em cinza: a cumprida sem a cor da fase, a atual a única colorida e a seguinte marcada como próxima
+  const cz = await p.evaluate(() => { const bs = [...document.querySelectorAll(".tr-l .tr-et")], cor = b => getComputedStyle(b.querySelector(".tr-b")).backgroundColor;
+    const f = bs.find(b => b.classList.contains("tr-sf") && !b.classList.contains("tr-grp")), a = bs.find(b => b.classList.contains("tr-sa")), px = bs.filter(b => b.classList.contains("tr-px"));
+    return { f: cor(f), a: cor(a), px: px.length, pxDepois: bs.indexOf(px[0]) > bs.indexOf(a), pxTxt: px[0] && px[0].querySelector(".tr-d").textContent }; });
+  conf("a etapa cumprida fica cinza, a atual na cor da fase e a seguinte diz 'próxima'", cz.f === "rgb(201, 198, 191)" && cz.a !== cz.f && cz.px === 1 && cz.pxDepois && cz.pxTxt === "próxima");
+  // F327 · o title da cumprida diz quando e por qual fonte; o tempo na etapa; o vermelho acima do habitual; o selo da etapa na cor da fase
+  const f7 = await p.evaluate(() => { const k = D.casoPorId.get(casoSel), bs = [...document.querySelectorAll(".tr-l .tr-et.tr-sf:not(.tr-grp)")];
+    const t1 = tituloEtapa({ n: "Decisão" }, { s: "f", d: "2026-10-09", v: 1, por: "pela situação do PAT “Concluída - Indeferida”" });
+    const t2 = tituloEtapa({ n: "Réplica" }, { s: "f", d: "2026-10-09" });
+    const ha = tempoNaEtapa({ id: "x", especie: "B31" }, somaDias(hoje(), -200), "judicial");
+    const curto = tempoNaEtapa({ id: "x", especie: "B31" }, somaDias(hoje(), -10), "judicial");
+    const sel = document.createElement("div"); sel.innerHTML = seloEtapaLista({ ...k, etapa: k.etapa || "perícia realizada" }); document.body.appendChild(sel);
+    const sp = sel.querySelector(".ag-tipo"), bg = getComputedStyle(sp).backgroundColor; sel.remove();
+    return { t1, t2, todosCom: bs.every(b => / · cumprida/.test(b.title)), ha, curto, etapa: sp.classList.contains("ag-etapa"), bg }; });
+  conf("F327 o title da etapa cumprida diz a data e a fonte (o fato oficial ou a marca da equipe)",
+    f7.todosCom && /^Decisão · cumprida em 09\/10\/2026 pela situação do PAT/.test(f7.t1) && /marcada pela equipe/.test(f7.t2));
+  conf("F327 o tempo na etapa: 200 dias no Judicial passam do habitual (vermelho), 10 dias não", f7.ha && f7.ha.dias === 200 && f7.ha.longo && f7.curto && !f7.curto.longo);
+  conf("F327 o selo da etapa nas listas leva a cor da fase", f7.etapa && f7.bg !== "rgba(0, 0, 0, 0)");
   // a providência que declara a etapa (anotação) acende a etapa da trilha
   await p.evaluate(() => marcarEtapa(casoSel, "sentença publicada"));
   conf("a anotação que declara 'sentença publicada' acende Sentença na trilha", await p.evaluate(() => (marcaTrilha(D.casoPorId.get(casoSel), "acid", "Sentença") || {}).s === "a"));

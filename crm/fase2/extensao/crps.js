@@ -56,21 +56,28 @@
   // consulta por processo, porque não exige que o CRM já conheça um NUP. Em
   // 04.09 o degrau vencedor foi o `ifs_auth` CRU (o valor guardado é o próprio
   // token, não um JSON com o token dentro), que é o segundo da escada.
+  // 1.30.0 · o portal tem duas bases (e-Sisrec e o RecBen, o sistema antigo) e
+  // cada uma lista só os seus recursos: a lista é a UNIÃO das duas, e cada
+  // NUP guarda a base que o listou, para a consulta ir direto a ela
   async function listaDoPortal() {
     for (const c of crachas()) {
+      const de = new Map(), porSis = {};
       for (const sis of SISTEMAS) {
         try {
           const r = await fetch(`/api/v1/${sis}/`, { credentials: 'include',
             headers: c ? { Authorization: 'Bearer ' + c } : {} });
           if (r.ok) {
-            const nups = nupsDaLista(await r.json());
-            if (nups.length) return { nups, sis, tok: c };
+            const ns = nupsDaLista(await r.json());
+            porSis[sis] = ns.length;
+            for (const n of ns) if (!de.has(n)) de.set(n, sis);
           }
-        } catch (e) { /* sistema que não lista: segue para o próximo */ }
+        } catch (e) { /* base que não lista: segue para a outra */ }
         await pausa(900);
       }
+      if (de.size) return { nups: [...de.keys()], de, porSis, tok: c,
+                            sis: SISTEMAS.filter(s => porSis[s]).join('+') };
     }
-    return { nups: [], sis: null, tok: null };
+    return { nups: [], de: new Map(), porSis: {}, sis: null, tok: null };
   }
 
   window.crmRodar = async () => {
@@ -123,7 +130,9 @@
       const conhecidos = new Set(nups);
       const novos = doPortal.nups.filter(n => !conhecidos.has(n));
       if (doPortal.nups.length)
-        faixa(`o portal lista ${doPortal.nups.length} recurso(s); o CRM conhecia `
+        faixa(`o portal lista ${doPortal.nups.length} recurso(s) (`
+            + SISTEMAS.map(s => `${s === 'recben' ? 'RecBen' : 'e-Sisrec'} ${doPortal.porSis[s] || 0}`).join(', ')
+            + `); o CRM conhecia `
             + `${nups.length}${novos.length ? ` — ${novos.length} novo(s)` : ''}`);
       else
         faixa(`o portal não devolveu a lista — seguindo só com os ${nups.length} do CRM`);
@@ -138,23 +147,25 @@
                     // conhecia: é por aqui que recurso novo deixa de depender
                     // de alguém reparar nele
                     portal: { total: doPortal.nups.length, sistema: doPortal.sis,
-                              novos } };
+                              por_sistema: doPortal.porSis, novos } };
       let seguidas = 0, abortou = false;
       // [03.10.2026] cada recurso vive num sistema só: o que a lista do
       // portal indicou vem primeiro, e achado o recurso não se consulta o
       // outro — antes eram duas consultas (e duas pausas) por recurso
-      const ordem = doPortal.sis ? [doPortal.sis, ...SISTEMAS.filter(s => s !== doPortal.sis)] : SISTEMAS;
+      const primeiro = SISTEMAS.find(s => doPortal.porSis[s]);
       for (let i = 0; i < fila.length; i++) {
         faixa(`recurso ${i + 1} de ${fila.length}…`);
+        const lst = doPortal.de.get(fila[i]) || primeiro;
+        const ordem = lst ? [lst, ...SISTEMAS.filter(s => s !== lst)] : SISTEMAS;
         for (const sis of ordem) {
           try {
             const r = await consultar(sis, fila[i], modo);
             if (r.ok) {
               const j = await r.json();
-              // F184 · acórdão e monocrática descem na hora, com o mesmo crachá
-              // da consulta, para o caminho que o robo-crps/ingerir.js usava
+              // F184 · os documentos descem na hora, com o mesmo crachá da consulta;
+              // desde a 1.32.0 todos, e não só acórdão e monocrática (cópia integral)
               const docs = ((j && j.eventos) || []).flatMap(ev => ev.documentos || [])
-                .filter(d => d && d.path && /ac[oó]rd[aã]o|monocr[aá]tic/i.test(d.nome || ''));
+                .filter(d => d && d.path);
               await CRM.guardarDocs('crps', fila[i], docs, { todos: true,
                 baixar: d => fetch('/api/v1' + String(d.path).split('?')[0], { credentials: 'include',
                   headers: Object.assign({ Accept: 'application/pdf' }, modo ? { Authorization: 'Bearer ' + modo } : {}) }) });

@@ -91,6 +91,22 @@ function fecharSocket(s) {
   try { s.ev.removeAllListeners(); } catch {}
   try { s.end(undefined); } catch {}
 }
+// F349 · as chaves e o creds se gravam no disco sem esperar; sair no meio perdia a última
+// gravação, e a ponte subia com chaves velhas (Bad MAC, o celular pedindo reenvio de tudo).
+// Toda gravação fica na lista, e sair espera por ela (até 10 s).
+const gravando = new Set();
+let salvarCreds = null;
+function seguirGravacao(p) {
+  const q = Promise.resolve(p).catch(e => log("✗ gravar chaves:", e.message));
+  gravando.add(q); q.finally(() => gravando.delete(q));
+  return p;
+}
+async function esperarGravacoes(teto = 10000) {
+  if (salvarCreds) seguirGravacao(salvarCreds());
+  let fim; const prazo = new Promise(r => { fim = setTimeout(r, teto); });
+  await Promise.race([Promise.allSettled([...gravando]), prazo]);
+  clearTimeout(fim);
+}
 // Sob o pm2, recomeçar é sair: ele sobe a ponte de novo em 10 s (restart_delay
 // no ecosystem.config.js), com uma conexão só e a memória limpa
 async function reiniciar(motivo) {
@@ -98,6 +114,7 @@ async function reiniciar(motivo) {
   ligado = false;
   await anotar("zap_status", "reconectando").catch(() => {});
   fecharSocket(sock);
+  await esperarGravacoes();
   process.exit(1);
 }
 
@@ -110,7 +127,29 @@ function lembrar(r) {
   enviadas.set(r.key.id, r.message);
   if (enviadas.size > 500) enviadas.delete(enviadas.keys().next().value);
 }
+// F347 · o reenvio do Baileys refaz a mensagem sem o atributo "edit" do envelope, e sem ele o
+// aparelho de quem recebe ignora o apagar e a edição. Por isso o pedido de reenvio de uma
+// alteração não volta pelo Baileys: a ponte manda a alteração de novo, inteira, até 2 vezes.
+const refazer = new Map();             // id da alteração enviada → { jid, conteudo, vez, agendada }
+function lembrarAlteracao(r, jid, conteudo, vez = 0) {
+  if (!r || !r.key || !r.key.id) return;
+  refazer.set(r.key.id, { jid, conteudo, vez });
+  if (refazer.size > 200) refazer.delete(refazer.keys().next().value);
+}
+function refazerAlteracao(id, s = sock, pausa = Number(process.env.PAUSA_REENVIO ?? 3000)) {
+  const a = refazer.get(id);
+  if (!a || a.agendada || a.vez >= 2) return;
+  a.agendada = true;                   // o aparelho pede 3 ou 4 vezes seguidas: manda uma só
+  setTimeout(async () => {
+    try {
+      lembrarAlteracao(await s.sendMessage(a.jid, a.conteudo), a.jid, a.conteudo, a.vez + 1);
+      log("✎ alteração reenviada", id);
+    } catch (e) { log("✗ reenviar alteração:", e.message); }
+  }, pausa).unref?.();
+}
 async function mensagemParaReenvio(key) {
+  log("↻ o aparelho pediu reenvio", key.id, enviadas.has(key.id) ? "(na memória)" : "(do banco)");
+  if (refazer.has(key.id)) { refazerAlteracao(key.id); return undefined; }
   if (enviadas.has(key.id)) return enviadas.get(key.id);
   // reiniciou no meio: o texto ainda está no banco (mídia não dá para remontar)
   const [m] = await sb(`/rest/v1/zap_mensagens?select=texto,tipo&externo_id=eq.${encodeURIComponent(key.id)}`).catch(() => []);
@@ -121,13 +160,19 @@ async function conectar() {
   const baileys = require("@whiskeysockets/baileys");
   const makeWASocket = baileys.default || baileys.makeWASocket;
   const { useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion,
-          downloadMediaMessage } = baileys;
+          downloadMediaMessage, makeCacheableSignalKeyStore } = baileys;
   const pino = require("pino");
 
   const { state, saveCreds } = await useMultiFileAuthState(PASTA);
+  salvarCreds = saveCreds;
+  const chaves = { ...state.keys, set: d => seguirGravacao(state.keys.set(d)) };
   const { version } = await fetchLatestBaileysVersion().catch(() => ({ version: undefined }));
   sock = makeWASocket({
-    version, auth: state, logger: pino({ level: "silent" }),
+    // F345 · as chaves de criptografia em cache na memória, como o Baileys recomenda:
+    // gravadas arquivo por arquivo a cada mensagem, o reinício perdia gravações e o
+    // celular do cliente não abria a edição e o apagar ("Aguardando mensagem", Bad MAC)
+    version, auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(chaves, pino({ level: "silent" })) },
+    logger: pino({ level: "silent" }),
     // aparecer como um navegador comum é o comportamento normal de quem usa
     // o WhatsApp Web; nada aqui manda mensagem sozinho
     browser: ["CRM Tercini", "Desktop", "121.0.0"],  // Desktop: o WhatsApp manda o histórico inteiro, não só os meses recentes
@@ -137,7 +182,7 @@ async function conectar() {
     getMessage: mensagemParaReenvio,
   });
 
-  sock.ev.on("creds.update", saveCreds);
+  sock.ev.on("creds.update", () => seguirGravacao(saveCreds()));
 
   sock.ev.on("connection.update", async u => {
     const { connection, lastDisconnect, qr } = u;
@@ -227,6 +272,13 @@ async function conectar() {
   // recibos: entregue e lida, para a tela mostrar o mesmo que o celular
   sock.ev.on("messages.update", async atualizacoes => {
     for (const u of atualizacoes) {
+      // F332 · o Baileys também avisa a mensagem apagada (message nulo, stub 1) e a editada por aqui
+      const up = u.update || {};
+      if (u.key && u.key.id && (up.message === null && up.messageStubType === 1)) await guardarAlteracao({ id: u.key.id, apagada: true }).catch(() => {});
+      else if (u.key && u.key.id && up.message && up.message.editedMessage) {
+        const alt = N.alteracaoDe({ message: up.message }, u.key.id);
+        if (alt) await guardarAlteracao(alt).catch(() => {});
+      }
       const st = u.update && u.update.status;
       if (!st || !u.key || !u.key.id) continue;
       const novo = st >= 4 ? "lida" : st >= 3 ? "entregue" : null;
@@ -292,6 +344,8 @@ setInterval(() => {
 async function entrou(m, baixar) {
   const reacao = N.reacaoDe(m);
   if (reacao) return guardarReacao(m, reacao);
+  const alt = N.alteracaoDe(m);
+  if (alt) return guardarAlteracao(alt);
   if (N.deveIgnorar(m)) return;
   const fone = N.foneDaMensagem(m, lidParaFone);
   if (N.chaveFone(fone).length < 8) return;
@@ -321,6 +375,18 @@ async function guardarReacao(m, reacao) {
     body: JSON.stringify({ mensagem_id: alvo.id, de: m.key.fromMe ? "escritorio" : "cliente",
                            emoji: reacao.emoji, status: "enviada" }),
   });
+}
+
+// F332 · apagada ou editada no WhatsApp: a linha fica, com a marca e o texto de antes
+// (a equipe continua vendo o que foi escrito). Só a mensagem que o CRM conhece.
+async function guardarAlteracao(alt) {
+  const [alvo] = await sb(`/rest/v1/zap_mensagens?externo_id=eq.${encodeURIComponent(alt.id)}&select=id,texto,texto_antes`);
+  if (!alvo) return;
+  const agora = new Date().toISOString();
+  const corpo = alt.apagada ? { apagada_em: agora }
+    : { texto: alt.texto, editada_em: agora, texto_antes: alvo.texto_antes ?? alvo.texto };
+  await sb(`/rest/v1/zap_mensagens?id=eq.${alvo.id}`, { method: "PATCH",
+    headers: { Prefer: "return=minimal" }, body: JSON.stringify(corpo) });
 }
 
 // Uma mensagem do WhatsApp vira uma linha de zap_mensagens, com a mídia no
@@ -589,7 +655,7 @@ async function assinaturaDe(msg) {
   if (!assinaturas.has(msg.autor_id)) {
     const [c] = await sb(`/rest/v1/colaboradores?select=nome,assinatura_zap&id=eq.${msg.autor_id}`).catch(() => []);
     assinaturas.set(msg.autor_id, c ? (c.assinatura_zap || c.nome || "").trim() || null : null);
-    setTimeout(() => assinaturas.delete(msg.autor_id), 600000);   // muda na Configuração: vale em 10 min
+    setTimeout(() => assinaturas.delete(msg.autor_id), 600000).unref?.();   // muda na Configuração: vale em 10 min
   }
   return assinaturas.get(msg.autor_id);
 }
@@ -638,6 +704,37 @@ async function reagir(r, s = sock) {
   }
 }
 
+// F343 · apagar para todos e editar a mensagem que o escritório enviou: o CRM
+// grava o pedido em `alterar` e a ponte o cumpre. O prazo (apagar ~2 dias,
+// editar 15 minutos) é do WhatsApp; fora dele, o pedido vira erro.
+async function alterarEnviada(msg, s = sock) {
+  const a = msg.alterar || {};
+  const gravarNaLinha = corpo => sb(`/rest/v1/zap_mensagens?id=eq.${msg.id}`, { method: "PATCH",
+    headers: { Prefer: "return=minimal" }, body: JSON.stringify(corpo) });
+  try {
+    if (!msg.externo_id || msg.direcao !== "saida") throw new Error("mensagem sem id no WhatsApp");
+    const [c] = await sb(`/rest/v1/zap_conversas?id=eq.${msg.conversa_id}&select=telefone`);
+    const [achado] = c ? await s.onWhatsApp(N.soDigitos(c.telefone)) : [];
+    if (!achado || !achado.exists) throw new Error("número não tem WhatsApp");
+    const key = N.chaveDaMensagem(achado.jid, msg);
+    const feita = { ...a, status: "feita", feita_em: agora() };
+    if (a.acao === "apagar") {
+      const conteudo = { delete: key };
+      lembrarAlteracao(await s.sendMessage(achado.jid, conteudo), achado.jid, conteudo);
+      await gravarNaLinha({ apagada_em: agora(), alterar: feita });
+    } else if (a.acao === "editar" && a.texto) {
+      // a original saiu assinada ("*Dr. Paulo Tercini:*"): a edição troca o texto inteiro, então assina de novo
+      const conteudo = { text: assinar(a.texto, await assinaturaDe(msg)), edit: key };
+      lembrarAlteracao(await s.sendMessage(achado.jid, conteudo), achado.jid, conteudo);
+      await gravarNaLinha({ texto: a.texto, texto_antes: msg.texto_antes ?? msg.texto, editada_em: agora(), alterar: feita });
+    } else throw new Error("pedido inválido");
+    log("✎", a.acao, msg.externo_id);
+  } catch (e) {
+    log("✗ alterar:", e.message);
+    await gravarNaLinha({ alterar: { ...a, status: "erro", erro: String(e.message).slice(0, 300) } }).catch(() => {});
+  }
+}
+
 async function rodarFila() {
   for (;;) {
     try {
@@ -656,6 +753,9 @@ async function rodarFila() {
         for (const msg of fila || []) await enviar(msg);
         const reacoes = await sb("/rest/v1/zap_reacoes?status=eq.fila&de=eq.escritorio&select=id,mensagem_id,emoji&limit=5");
         for (const r of reacoes || []) await reagir(r);
+        const alteracoes = await sb("/rest/v1/zap_mensagens?alterar->>status=eq.fila"
+          + "&select=id,conversa_id,externo_id,direcao,texto,texto_antes,alterar,autor_id,por_bot,aviso_chave&limit=5");
+        for (const m of alteracoes || []) await alterarEnviada(m);
       }
     } catch (e) { log("fila:", e.message); }
     await espera(INTERVALO);
@@ -853,7 +953,7 @@ if (require.main === module) {
   setInterval(() => buscarHistoricosPedidos().catch(e => log("histórico pedido:", e.message)), 30000);
   setInterval(() => reprocessarPendentes(require("@whiskeysockets/baileys").downloadMediaMessage)
     .catch(e => log("fila do servidor:", e.message)), 300000);
-  const tchau = async s => { log("saindo por", s); await anotar("zap_status", "parada"); process.exit(0); };
+  const tchau = async s => { log("saindo por", s); await anotar("zap_status", "parada"); fecharSocket(sock); await esperarGravacoes(); process.exit(0); };
   process.on("SIGINT", () => tchau("SIGINT"));
   process.on("SIGTERM", () => tchau("SIGTERM"));
   // o Baileys às vezes rejeita uma promessa do socket que já morreu (retry de
@@ -861,6 +961,6 @@ if (require.main === module) {
   process.on("unhandledRejection", e => log("erro solto (seguindo):", (e && e.message) || e));
 }
 
-module.exports = { sb, rpc, enviar, entrou, gravar, buscarHistoricosPedidos,
+module.exports = { sb, rpc, enviar, alterarEnviada, mensagemParaReenvio, entrou, gravar, buscarHistoricosPedidos,
                    _ligado: v => { ligado = v; }, _pagina: msgs => esperandoPagina && esperandoPagina(msgs), conteudoDaMensagem, paraOgg, assinar, guardarComInsistencia, FILA_LOCAL,
-                   _usarSocket: s => { sock = s; } };   // _usarSocket: só os testes
+                   _usarSocket: s => { sock = s; }, seguirGravacao, esperarGravacoes };   // _usarSocket: só os testes

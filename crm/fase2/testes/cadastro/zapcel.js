@@ -67,8 +67,15 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
     await p.waitForSelector("#app.logado.celular");
     await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
-    await p.evaluate(() => { zapFiltro = "todas"; irPara("whatsapp"); });
+    // F306 · a barra de baixo traz o WhatsApp no lugar do Buscar; a busca fica no alto
+    const barra = await p.$$eval("#barra-cel button", b => b.filter(x => x.offsetParent !== null).map(x => x.dataset.cel));
+    conf(`a barra de baixo é Meu Dia, WhatsApp, Menções e Listas (${barra.join(", ")})`, barra.join() === "meudia,whatsapp,mencoes,menu");
+    conf("o WhatsApp da barra tem a marca", await p.$eval('#barra-cel [data-cel="whatsapp"] b svg', e => !!e.querySelector('path[fill="#25D366"]')).catch(() => false));
+    conf("a busca continua no alto da tela", await vis("#busca-cel"));
+    await p.evaluate(() => { zapFiltro = "todas"; });
+    await p.tap('#barra-cel [data-cel="whatsapp"]');
     await p.waitForSelector(".zap-conv");
+    conf("o botão abre o WhatsApp e fica aceso", await p.evaluate(() => visao === "whatsapp") && await p.$eval('#barra-cel [data-cel="whatsapp"]', e => e.classList.contains("on")));
     conf("sem conversa aberta, não aparece o quadro vazio “Escolha uma conversa”", !(await vis("#zap-dir")));
     await p.tap(".zap-conv");
     await p.waitForSelector("#zap-msgs .zap-b");
@@ -78,12 +85,22 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     const t = await p.$eval("#zap-txt", e => e.getBoundingClientRect().bottom);
     conf("o campo de escrever fica à vista, no pé da tela", t > 600 && t <= 780);
     conf("os botões do topo ficam só com o ícone", await p.$eval(".zt-acoes .zt-btn.pri .lbl", e => getComputedStyle(e).display === "none"));
+    await p.tap("#zb-m1 .txt");
     const sobre = await p.$eval("#zb-m1 .zap-acoes", e => getComputedStyle(e).position);
     conf("as ações do balão não cobrem o texto", sobre === "static");
     await p.tap(".zt-id h2");
     conf("o nome abre a ficha em tela cheia", await p.$eval("#zap-painel", e => { const r = e.getBoundingClientRect(); return r.width === 390 && getComputedStyle(e).position === "fixed"; }));
     await p.tap(".zp-fechar");
     conf("o ✕ fecha a ficha e volta à conversa", !(await vis("#zap-painel")) && await vis("#zap-msgs"));
+    // F356 · o "i" do topo também abre a ficha
+    await p.tap(".zt-info"); await p.waitForTimeout(200);
+    conf("o botão i abre a ficha do cliente", await vis("#zap-painel"));
+    await p.tap(".zp-fechar"); await p.waitForTimeout(200);
+    // F367 · o teclado do iPhone deixava a página rolada: o topo sumia e a metade de baixo ficava em branco
+    const rolou = await p.evaluate(() => { document.body.style.height = "2000px"; document.body.style.overflow = "visible"; document.documentElement.style.overflow = "auto"; window.scrollTo(0, 400); return window.scrollY; });
+    await p.evaluate(() => document.dispatchEvent(new Event("focusout"))); await p.waitForTimeout(300);
+    conf(`a página rolada pelo teclado volta ao topo (${rolou} → ${await p.evaluate(() => window.scrollY)})`, rolou > 0 && await p.evaluate(() => window.scrollY === 0));
+    await p.evaluate(() => { document.body.style.height = ""; document.body.style.overflow = ""; document.documentElement.style.overflow = ""; });
     await p.tap(".zt-voltar");
     await p.waitForTimeout(200);
     conf("a seta volta à lista, com a barra de baixo", await vis(".zap-conv") && !(await vis("#zap-dir")) && await vis(".barra-cel"));
