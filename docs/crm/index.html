@@ -6207,7 +6207,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.32</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.33</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12677,7 +12677,7 @@ const LISTAS_POR_CARGO = {
   advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "direito", "agenda"],
   recepcao: ["meudia","mencoes","whatsapp","calendario","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente"],
 };
-const listasDoColab = () => meuNivel()<=1 ? ["agendaq", "clientes", "mencoes", ...(meuNivel()===1?["whatsapp"]:[]), "novocliente"]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
+const listasDoColab = () => meuNivel()<=1 ? ["agendaq", "clientes", "mencoes", ...(meuNivel()===1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), "novocliente"]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
 // F355 · o nível 1 (WhatsApp) conversa e marca horário, mas não grava no caso: andamento, documento e tarefa são do nível 2
 const podeGravarCaso = () => meuNivel()>=2;
@@ -14865,7 +14865,7 @@ async function carregarAuxZap(){
 // F187 · gestor vê e mexe em tudo; atendente vê as suas, as pendentes dos seus
 // setores e aquelas em que foi chamado com @. O banco confere as ações
 // (zap_guarda_*), aqui é o que cada um enxerga.
-const zapGestor = () => !visaoColab();
+const zapGestor = () => !visaoColab() || !!(eu && eu.gestor_zap);   // F368 · o gestor do WhatsApp vê e transfere todas, sem ser administrador do CRM
 const meusSetoresZap = () => zapAux.colabSetores.filter(x=>x.colaborador_id===eu.id).map(x=>x.setor_id);
 function zapVisivel(c){
   if(zapGestor() || c.atendente_id===eu.id || zapAux.mencionado.has(c.id)) return true;
@@ -15115,6 +15115,7 @@ function pintarListaZap(){
        <div class="zl-topo"><h2>WhatsApp</h2>
          <button class="zap-estado ${zapComProblema()?"ruim":""}" onclick="abrirConexaoZap()" title="conexão do WhatsApp: ${esc(p.txt)}"><i style="background:${p.cor}"></i>${
            zapComProblema()?(cfgApp("zap_qr")?"Ler QR code":"Corrigir conexão"):"conectado"}</button>
+         <button class="tl-bt" onclick="novoContatoZap()" title="Conversar com um número novo" aria-label="Novo contato">＋<span class="sr-only"> Novo contato</span></button>
          ${/* F274 · som, Encerradas e Painel da equipe no ⋯; a lista se repinta a cada 6 s, então o ⋯ lembra se estava aberto */""}
          <details class="tl-mais mais-baixo zl-mais"${zapMaisAberto?" open":""} ontoggle="zapMaisAberto=this.open"><summary class="tl-bt tl-bt-ic" aria-label="Mais opções do WhatsApp" title="som, encerradas e painel da equipe">${IC_SVG.mais}</summary>
            <span class="tl-mais-menu" role="menu">
@@ -15427,6 +15428,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            ${cfgApp("zap_ia_equipe")==="sim"?`<button class="zt-btn" onclick="iaZap('resumo')" title="a IA resume a conversa para você (nada vai ao cliente)" aria-label="Resumo">✨<span class="lbl">Resumo</span></button>
            ${pode&&!fim?`<button class="zt-btn" onclick="iaZap('rascunho')" title="a IA escreve uma resposta no campo; confira antes de enviar" aria-label="Rascunho">✨<span class="lbl">Rascunho</span></button>`:""}`:""}
            ${fim||!pode?"":`<button class="zt-btn" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
+           ${fim||pode||!deOutro?"":`<button class="zt-btn" onclick="pedirTransferencia()" title="pedir a ${esc(at.nome)} e aos gestores que transfiram a conversa" aria-label="Pedir transferência">${zic("seta")}<span class="lbl">Pedir</span></button>`}
            ${pode?`<button class="zt-btn pri" aria-label="${fim?"Reabrir":"Encerrar"}" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}<span class="lbl">Encerrar</span>`}</button>`:""}
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
@@ -16503,6 +16505,105 @@ async function transferirConversa(){
   document.querySelectorAll("[data-zts]").forEach(b=>b.onclick=()=>enviar(null, b.dataset.zts));
 }
 
+// F370 · conversar com um número novo (pedido do Paulo de 02.11.2026): o número de cliente avisa e abre a ficha com a
+// conversa ao lado; o número desconhecido abre a conversa e oferece criar o cliente. A ponte envia pelo telefone da conversa
+function foneZapNovo(t){
+  let d = String(t||"").replace(/\D/g,"").replace(/^0+/,"");
+  if(d.length===8 || d.length===9) d = "16"+d;   // o DDD 16 é o padrão do escritório
+  if(d.length===10 || d.length===11) d = "55"+d;
+  return /^55\d{10,11}$/.test(d) ? d : "";
+}
+function novoContatoZap(){
+  caixa(`<h3>Novo contato</h3>
+    <p class="meio-sub">Digite o número com DDD. O CRM confere se ele já está numa ficha ou numa conversa.</p>
+    <input id="znc-tel" value="(16) " inputmode="tel" aria-label="Telefone com DDD" style="width:100%">
+    <input id="znc-nome" placeholder="nome (opcional)" aria-label="Nome do contato" style="width:100%;margin-top:8px">
+    <div id="znc-res" role="status" style="margin-top:10px"></div>
+    <div class="form-linha" style="margin-top:10px"><button class="btn-sal" id="znc-ok" title="Conferir o número">Conferir</button></div>`);
+  const t = document.getElementById("znc-tel"); t.focus(); t.setSelectionRange(t.value.length, t.value.length);
+  t.onkeydown = e => { if(e.key==="Enter") conferirContatoZap(); };
+  document.getElementById("znc-ok").onclick = conferirContatoZap;
+}
+async function abrirContatoZap(fone, nome){
+  const id = await api(`/rest/v1/rpc/zap_abrir`,{method:"POST", body:JSON.stringify({p_telefone:fone, p_nome:nome||null})});
+  return typeof id==="string" ? id : (id && id.zap_abrir) || id;
+}
+async function conferirContatoZap(){
+  const res = document.getElementById("znc-res"), fone = foneZapNovo(document.getElementById("znc-tel").value);
+  const nome = (document.getElementById("znc-nome").value||"").trim();
+  if(!fone){ res.innerHTML = `<p class="meio-sub" style="color:var(--vermelho,#c0392b)">Número inválido: use o DDD e o número, como (16) 99999-9999.</p>`; return; }
+  const clis = clientesDoTelefone(fone);
+  if(clis.length===1){
+    let conv; try{ conv = await abrirContatoZap(fone, nome); }catch(e){ return aviso("Não abri a conversa: "+msgErro(e)); }
+    fecharCaixa();
+    aviso(`Este número já é de ${clis[0].nome}: abri a ficha com a conversa ao lado`, false);
+    await recarregarZap(true).catch(()=>{});
+    return fichaComZap(clis[0].id);
+  }
+  if(clis.length>1){
+    res.innerHTML = `<p>Este número já está em ${clis.length} fichas. Escolha qual abrir:</p><div class="form-linha">${clis.map(c=>
+      `<button class="btn-rap" data-znc-cli="${c.id}">${esc(c.nome)}</button>`).join("")}</div>`;
+    res.querySelectorAll("[data-znc-cli]").forEach(b=>b.onclick = async ()=>{
+      try{ await abrirContatoZap(fone, nome); }catch(e){ return aviso("Não abri a conversa: "+msgErro(e)); }
+      fecharCaixa(); await recarregarZap(true).catch(()=>{}); fichaComZap(b.dataset.zncCli); });
+    return;
+  }
+  const ja = zapConvs.find(c=>ultimos8(c.telefone)===ultimos8(fone));
+  res.innerHTML = `<p>${ja?`Já existe conversa com este número (${esc(nomeDaConversa(ja))}), sem ficha de cliente.`:"Este número não está em nenhuma ficha."}</p>
+    <div class="form-linha"><button class="btn-sal" id="znc-conv" title="Abrir a conversa com este número">Conversar</button>
+    <button class="btn-rap" id="znc-cli" title="Criar a ficha de cliente com este número">Cliente</button></div>`;
+  document.getElementById("znc-conv").onclick = async ()=>{
+    let conv; try{ conv = ja ? ja.id : await abrirContatoZap(fone, nome); }catch(e){ return aviso("Não abri a conversa: "+msgErro(e)); }
+    fecharCaixa();
+    if(!ja) await api(`/rest/v1/zap_conversas?id=eq.${conv}`,{method:"PATCH", headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({atendente_id:eu.id, bot_ativo:false})}).catch(()=>{});
+    await recarregarZap(true).catch(()=>{});
+    zapFiltro = "minhas";
+    if(visao!=="whatsapp") irPara("whatsapp");
+    abrirConversa(conv);
+  };
+  document.getElementById("znc-cli").onclick = ()=>{
+    fecharCaixa();
+    _ncl = {etapa:1, id:null, nomeBusca: nome && termosBusca(nome).length>=2 ? tituloOrgao(nome.toUpperCase()) : ""};
+    irNovoCliente();
+    const i = document.getElementById("ncl-tel"); if(!i) return;
+    i.value = `(${fone.slice(2,4)}) ${fone.slice(4,-4)}-${fone.slice(-4)}`; nclConferirTel();
+  };
+}
+
+// F369 · quem não atende pede a transferência: menção a quem atende e aos gestores, com o link da conversa;
+// quem recebe transfere pelo Transferir de sempre (pedido do Paulo de 02.11.2026)
+function pedirTransferencia(){
+  const c = zapConvs.find(x=>x.id===zapAberta), at = c && D.colPorId.get(c.atendente_id);
+  if(!c || !at) return;
+  const eqs = equipeAtiva().filter(x=>x.id!==at.id && x.papel!=="assistente_ia");
+  caixa(`<h3>Pedir a transferência</h3>
+    <p class="meio-sub">A conversa está com ${esc(at.nome)}. O pedido vai a ${esc(at.nome)} e aos gestores em Menções, com o link da conversa.</p>
+    <p class="zx-rot">Para quem</p>
+    <div class="form-linha">${eqs.map(x=>`<button class="btn-rap ${x.id===eu.id?"on":""}" data-zpp="${x.id}">${x.id===eu.id?"Para mim":esc(x.nome)}</button>`).join("")}</div>
+    <input id="zpp-motivo" placeholder="motivo (opcional): o cliente é meu…" style="width:100%;margin-top:10px">
+    <div class="form-linha" style="margin-top:10px"><button class="btn-sal" id="zpp-ok">Pedir</button></div>`);
+  let para = eu.id;
+  document.querySelectorAll("[data-zpp]").forEach(b=>b.onclick=()=>{
+    para = b.dataset.zpp; document.querySelectorAll("[data-zpp]").forEach(x=>x.classList.toggle("on", x===b)); });
+  document.getElementById("zpp-ok").onclick = async ()=>{
+    const mt = (document.getElementById("zpp-motivo").value||"").trim(); fecharCaixa();
+    const dest = D.colPorId.get(para), nome = nomeDaConversa(c);
+    const texto = `💬 ${eu.nome} pede que a conversa com ${nome} seja transferida para ${para===eu.id?"ele(a)":dest?dest.nome:"outra pessoa"}`
+      + (mt?` — ${mt}`:"") + `. Para atender, abra a conversa e use Transferir.`;
+    const alvos = [...new Set([at.id, ...equipeAtiva().filter(x=>x.papel==="admin"||x.gestor_zap).map(x=>x.id)])].filter(id=>id!==eu.id);
+    try{
+      await api(`/rest/v1/mencoes`,{method:"POST", headers:{Prefer:"return=minimal"},
+        body:JSON.stringify(alvos.map(id=>({de_id:eu.id, para_id:id, conversa_id:c.id, texto})))});
+      await api(`/rest/v1/zap_mensagens`,{method:"POST", headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({conversa_id:c.id, direcao:"interna", status:"interna", autor_id:eu.id,
+          texto:`↪ ${eu.nome} pediu a transferência para ${para===eu.id?eu.nome:dest?dest.nome:"outra pessoa"}${mt?": "+mt:""}`})});
+    }catch(e){ return aviso("Não gravou o pedido: "+msgErro(e)); }
+    aviso(`Pedido enviado a ${alvos.map(id=>(D.colPorId.get(id)||{}).nome).filter(Boolean).join(", ")} ✔`, false);
+    abrirConversa(c.id);
+  };
+}
+
 // A mensagem NÃO vira andamento sozinha: se virasse, o histórico do processo
 // encheria de "bom dia" e "obrigado". Quem lê é quem decide o que importa —
 // e em qual processo entra, porque o cliente pode ter três.
@@ -17071,9 +17172,10 @@ async function renderConfig(){
             <input type="checkbox" data-casonovo="${c.id}"
               ${quemAvisaCasoNovo().some(x=>x.id===c.id)?"checked":""}> caso novo</label>
           ${/* F187 · papel no WhatsApp e setores de que a pessoa faz parte */""}
-          <select data-papel="${c.id}" title="Gestor vê e mexe em todas as conversas e tem o painel da equipe">
-            <option value="colaborador" ${c.papel!=="admin"?"selected":""}>atendente</option>
-            <option value="admin" ${c.papel==="admin"?"selected":""}>gestor</option>
+          <select data-papel="${c.id}" title="Gestor vê e transfere todas as conversas e tem o painel da equipe; administrador é gestor e tem também as Configurações do CRM">
+            <option value="colaborador" ${c.papel!=="admin"&&!c.gestor_zap?"selected":""}>atendente</option>
+            <option value="gestor" ${c.papel!=="admin"&&c.gestor_zap?"selected":""}>gestor</option>
+            <option value="admin" ${c.papel==="admin"?"selected":""}>administrador</option>
           </select>
           <span class="cfg-sets">${setAtivos.map(st=>`<label class="cfg-ck" title="faz parte do setor ${esc(st.nome)}">
             <input type="checkbox" data-cs="${c.id}|${st.id}" ${ehMembro(c.id, st.id)?"checked":""}>${esc(st.nome)}</label>`).join("")}</span>
@@ -17318,14 +17420,17 @@ function ligarConfig(){
   guarda("[data-papel]", el => el.onchange = async ()=>{
     const c = D.colPorId.get(el.dataset.papel);
     if(c && c.id===eu.id && el.value!=="admin"
-       && !await confirmar("Tirar o seu próprio papel de gestor? Você deixa de ver todas as conversas e perde as Configurações.")){
+       && !await confirmar("Tirar o seu próprio papel de administrador? Você perde as Configurações.")){
       el.value = "admin"; return; }
+    // F368 · gestor do WhatsApp (gestor_zap) sem ser administrador do CRM
+    const corpo = el.value==="admin" ? {papel:"admin"}
+      : {papel: c && c.papel!=="admin" ? c.papel : "colaborador", gestor_zap: el.value==="gestor"};
     try{
       await api(`/rest/v1/colaboradores?id=eq.${el.dataset.papel}`,{method:"PATCH",
-        headers:{Prefer:"return=minimal"}, body:JSON.stringify({papel:el.value})});
-    }catch(e){ el.value = c ? c.papel : el.value; return aviso("Não gravou — só o gestor altera a equipe."); }
-    if(c) c.papel = el.value;
-    aviso(el.value==="admin" ? `${c?c.nome:"A pessoa"} agora é gestor ✔` : `${c?c.nome:"A pessoa"} agora é atendente ✔`, false);
+        headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)});
+    }catch(e){ el.value = c ? (c.papel==="admin"?"admin":c.gestor_zap?"gestor":"colaborador") : el.value; return aviso("Não gravou: apenas o administrador altera a equipe."); }
+    if(c) Object.assign(c, corpo);
+    aviso(`${c?c.nome:"A pessoa"} agora é ${el.value==="admin"?"administrador":el.value==="gestor"?"gestor":"atendente"} ✔`, false);
   });
   guarda("[data-cs]", el => el.onchange = async ()=>{
     const [colab, setor] = el.dataset.cs.split("|");

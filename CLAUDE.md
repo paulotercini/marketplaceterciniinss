@@ -407,6 +407,12 @@ A **F366** (12.31, pedido do Paulo de 02.11.2026): o vídeo (`tipo = video`) toc
 
 A **F367** (12.32, pedido do Paulo de 01.11.2026): no iPhone, o teclado rolava a página inteira para mostrar o campo e, fechado, a deixava rolada; o CRM, da altura da tela, subia, o topo da ficha sumia e a metade de baixo ficava em branco. No celular a página volta ao topo quando o campo perde o foco, quando a tela visível muda de tamanho e a cada rolagem da página sem campo em foco (`voltarTopoPagina`); quem rola são as colunas. Teste: `zapcel.js`.
 
+A **F368** (12.33, pedido do Paulo de 02.11.2026): o **gestor do WhatsApp** deixou de exigir o papel de administrador do CRM. Na equipe das Configurações do WhatsApp, o papel tem três opções: atendente, gestor (`colaboradores.gestor_zap`) e administrador (`papel = 'admin'`). O gestor vê todas as conversas, a fila Todas e o Painel da equipe, e transfere a conversa de qualquer colaborador (`zapGestor`; no banco, `zap_gestor()` aceita `gestor_zap`), sem ganhar as Configurações do CRM; nos níveis 0 e 1 ele tem também a lista 💬 WhatsApp (`listasDoColab`). SQL em `crm/fase2/migracoes/f368_gestor_zap.sql` (aplicada). Teste: `zapgestor.js`.
+
+A **F369** (12.33, pedido do Paulo de 02.11.2026): na conversa que está com outra pessoa, quem não pode transferir tem o botão **Pedir** (`pedirTransferencia`): escolhe para quem (ele mesmo, por padrão) e o motivo, e o pedido vai em Menções a quem atende e aos gestores (`papel = 'admin'` ou `gestor_zap`), com o link da conversa, e fica uma nota interna; quem recebe transfere pelo Transferir. Teste: `zapgestor.js`.
+
+A **F370** (12.33, pedido do Paulo de 02.11.2026): o ＋ do alto da lista do WhatsApp (`novoContatoZap`) conversa com um número novo. O número (com DDD; sem ele vale o 16, `foneZapNovo`) que já está numa ficha (`clientesDoTelefone`) é avisado e abre a ficha com a conversa ao lado (`zap_abrir`, `fichaComZap`; com duas fichas, escolhe-se qual); o que não está em ficha oferece **Conversar** (a conversa nasce ou se reabre pelo `zap_abrir`, já com quem a abriu como atendente) e **Cliente** (o Novo Cliente com o telefone no campo). A ponte envia pelo telefone da conversa. Teste: `zapgestor.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
