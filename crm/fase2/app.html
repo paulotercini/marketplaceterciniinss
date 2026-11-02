@@ -3479,6 +3479,13 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .quando .avatar.av-fonte:has
 .plan-abas button.on{color:var(--azul);border-bottom-color:var(--azul);font-weight:600}
 @media (hover:hover){.plan-abas button:not(.on):hover{color:var(--texto)}}
 .plan-nat{margin-bottom:10px}
+.carga{display:grid;gap:2px;margin:0 0 12px;max-width:560px}.carga-t{margin:0 0 4px;font-size:13px;font-weight:600}
+.carga-l{display:grid;grid-template-columns:24px 80px 1fr 32px;gap:8px;align-items:center;background:none;border:0;padding:4px;border-radius:4px;text-align:left;cursor:pointer;color:inherit}
+.carga-l.on{background:var(--placa)}@media (hover:hover){.carga-l:hover{background:var(--placa)}}
+.carga-b{position:relative;height:8px;background:var(--placa);border-radius:3px}
+.carga-b i{position:absolute;inset:0 auto 0 0;border-radius:3px;background:var(--azul)}.carga-b i.alto{background:var(--venc,#B3261E)}
+.carga-b em{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--texto);opacity:.45}
+.carga-q{text-align:right;font-variant-numeric:tabular-nums}.carga-q.alto{color:var(--venc,#B3261E);font-weight:600}
 /* ══ F144 · Planejado em blocos (mock do Paulo, 27.09.2026) ══
    Cada seção é uma caixa branca com borda fina; o cabeçalho é uma faixa
    tingida pelo estado (vencidas em vermelho, hoje em âmbar, o resto neutro)
@@ -4506,6 +4513,10 @@ html[data-tema="v10"] .tr-compacta{margin-bottom:10px}
 .adb{border-left:3px solid #0E5C58}
 .adb-cont{font-size:12px;color:#4A4944}
 .adb-resumo,.adb-quando{margin:8px 0 0}.adb-quando:empty{display:none}
+.adl{margin:10px 0 4px}.adl-trilho{position:relative;height:8px;background:var(--placa);border-radius:4px;margin:12px 8px}
+.adl-trilho i{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);background:var(--prox,#8F5400);border:2px solid var(--branco)}
+.adl-trilho .adl-hoje{background:var(--cinza)}.adl-trilho .adl-dir{background:var(--azul)}
+.adl-lista{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:4px 16px;color:var(--cinza)}.adl-lista b{color:var(--texto)}
 .adb-der{margin-top:8px}
 .adb-lista{list-style:none;margin:12px 0 0;padding:0;counter-reset:req}
 .adb-req{padding:10px 0;border-top:1px solid #F1EFEA}.adb-req:first-child{border-top:0}
@@ -5549,6 +5560,19 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 .pzc-hero-pe{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px}
 .pzc-pri{height:36px;padding:0 16px;border:0;border-radius:8px;background:var(--azul,#0E5C58);color:#FFFFFF;font-weight:500;cursor:pointer}
 .pzc-nota{flex:1 1 220px;min-width:0;font-size:12px;line-height:1.45;color:var(--cinza-claro,#686660)}
+.pzl{margin:0 0 14px}.pzl-t{margin:0 0 6px;font-size:13px;font-weight:600}.pzl-rolar{overflow-x:auto}
+.pzl-dias{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(31,minmax(24px,1fr));min-width:744px;border-top:2px solid var(--borda)}
+.pzl-d{display:flex;flex-direction:column;align-items:center;gap:2px;padding-top:4px;min-height:60px}
+.pzl-nu{background:var(--placa)}.pzl-hoje{box-shadow:inset 2px 0 0 var(--azul)}
+.pzl-m{width:24px;height:24px;border:0;padding:0;background:none;display:grid;place-items:center;cursor:pointer;color:inherit}
+.pzl-m::before,.pzl-leg i{content:"";width:12px;height:12px;border-radius:50%;background:currentColor}
+.pzl-fatal{color:var(--venc,#B3261E)}.pzl-comp{color:var(--prox,#8F5400)}.pzl-lemb{color:var(--azul)}
+.pzl-m:focus-visible{outline:2px solid var(--azul);outline-offset:1px;border-radius:50%}
+.pzl-n{margin-top:auto;align-self:flex-start;position:relative;z-index:1;padding-left:2px;font-size:12px;color:var(--cinza);white-space:nowrap}
+.pzl-leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--cinza);margin-top:6px}
+.pzl-leg span{display:inline-flex;align-items:center;gap:5px}.pzl-leg span[class]{color:var(--cinza)}
+.pzl-leg .pzl-fatal i{background:var(--venc,#B3261E)}.pzl-leg .pzl-comp i{background:var(--prox,#8F5400)}.pzl-leg .pzl-lemb i{background:var(--azul)}
+.pzl-leg i{display:inline-block}.pzl-leg .pzl-nu-i{border-radius:2px;background:var(--placa);border:1px solid var(--borda)}
 .pzc-tiles{flex:1 1 240px;display:grid;grid-template-rows:repeat(3,1fr);gap:8px}
 .pzc-top-so .pzc-tiles{grid-template-rows:none;grid-template-columns:repeat(3,minmax(0,1fr))}
 .pzc-tile{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;background:#FFFFFF;border:1px solid var(--borda,#E7E6E1);border-radius:12px}
@@ -6230,7 +6254,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.38</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.39</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -13574,9 +13598,10 @@ function renderAgendaV10(qual){
   const hj = hoje();
   let itens = planej || mdMostraVence() ? itensAgenda(col) : [];
   let chipsNat = "";
+  if(planej) chipsNat = blocoCarga(itensAgenda(null));
   if(planej){   // F378 · os filtros da natureza; o número de cada um conta antes do filtro
     const cont = {}; itens.forEach(i=>{ const n = natPlan(i); cont[n] = (cont[n]||0)+1; });
-    chipsNat = `<div class="filtros plan-nat" role="group" aria-label="Natureza">` + [["","Tudo",itens.length,"todas as datas"], ...PLAN_NAT.map(([v,r,t])=>[v,r,cont[v]||0,t])]
+    chipsNat += `<div class="filtros plan-nat" role="group" aria-label="Natureza">` + [["","Tudo",itens.length,"todas as datas"], ...PLAN_NAT.map(([v,r,t])=>[v,r,cont[v]||0,t])]
       .filter(([v,,n])=>!v || n || v===filtroPlanNat).map(([v,r,n,t])=>`<button class="fchip ${filtroPlanNat===v?"on":""}" data-pnat="${v}" aria-pressed="${filtroPlanNat===v}" title="${esc(t)}">${r} <span class="pl-n">${n}</span></button>`).join("") + `</div>`;
     if(filtroPlanNat) itens = itens.filter(i=>natPlan(i)===filtroPlanNat);
   }
@@ -13671,6 +13696,18 @@ function renderAgendaV10(qual){
   document.querySelectorAll("[data-li-nov]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); marcarLidas([b.dataset.liNov]); });
   ligarCartoes(); ligarTarefas();
   buscarTextosAgenda([...itens, ...deleg].filter(i=>i.andId && !i.resumo).map(i=>i.andId));
+}
+// F381 (12.39) · a carga de prazos por pessoa nos próximos 7 dias, no alto do Planejado (ideia do Lovable aprovada pelo
+// Paulo). Conta o que o filtro "Prazos" conta; o retorno do To Do não entra (prazoEhRetorno). O nome filtra o Planejado
+const CARGA_LIM = 6;   // limite semanal sugerido no protótipo aprovado; acima dele a barra fica vermelha
+function blocoCarga(its){
+  const hj = hoje(), fim = somaDias(hj, 6), eq = equipeAtiva(), n = new Map(eq.map(c=>[c.id, 0]));
+  its.forEach(i=>{ if(natPlan(i)!=="prazos" || i.data<hj || i.data>fim) return; (i.donos||[]).forEach(id=>{ if(n.has(id)) n.set(id, n.get(id)+1); }); });
+  const ls = eq.filter(c=>n.get(c.id)); if(!ls.length) return "";
+  const max = Math.max(CARGA_LIM+2, ...ls.map(c=>n.get(c.id)));
+  return `<section class="carga" aria-label="Prazos por pessoa nos próximos 7 dias"><h3 class="carga-t" title="A barra fica vermelha acima de ${CARGA_LIM} prazos">Prazos por pessoa · até ${fmtBarra(fim).slice(0,5)}</h3>${
+    ls.map(c=>{ const q = n.get(c.id), alto = q>CARGA_LIM;
+      return `<button type="button" class="carga-l${filtroPlanColab===c.id ? " on" : ""}" data-agcol="${c.id}" aria-pressed="${filtroPlanColab===c.id}" title="Ver o Planejado de ${esc(c.nome)}">${avPz(c.id)}<span class="carga-nome">${esc(c.nome.split(" ")[0])}</span><span class="carga-b" aria-hidden="true"><i class="${alto ? "alto" : ""}" style="width:${Math.round(100*q/max)}%"></i><em style="left:${Math.round(100*CARGA_LIM/max)}%"></em></span><span class="carga-q${alto ? " alto" : ""}">${q}<span class="sr-only"> ${q===1 ? "prazo" : "prazos"}</span></span></button>`; }).join("")}</section>`;
 }
 // 31.10.2026 · O MEU DIA AGRUPADO POR CLIENTE (decisão do Paulo): dentro de cada seção, o que é do
 // mesmo cliente fica junto, sob o nome dele, na ordem da primeira data; o cliente de um item só
@@ -26246,6 +26283,7 @@ function painelBeneficio(c, ks, op, oc){
       ${agora.length ? `<div class="adb-agora"><b>O que dá para fazer agora</b><ol>${agora.map(t=>`<li>${esc(t)}</li>`).join("")}</ol></div>` : ""}
       ${a.resumo ? `<p class="adb-resumo"><b>Em uma frase:</b> ${esc(a.resumo)}</p>` : ""}
       <p class="adb-quando">${a.quando ? quandoTxt(op, a, x) : ""}</p>
+      ${linhaDireito(a, x)}
       ${tempos}</div>
   </section>`;
   }
@@ -26255,12 +26293,24 @@ function painelBeneficio(c, ks, op, oc){
     ${agora.length ? `<div class="adb-agora"><b>O que dá para fazer agora</b><ol>${agora.map(t=>`<li>${esc(t)}</li>`).join("")}</ol></div>` : ""}
     ${a && a.resumo ? `<p class="adb-resumo"><b>Em uma frase:</b> ${esc(a.resumo)}</p>` : ""}
     <p class="adb-quando">${a && a.quando ? quandoTxt(op, a, x) : ""}</p>
+    ${linhaDireito(a, x)}
     ${der}
     ${a ? `<ol class="adb-lista">${a.rs.filter(r=>!rec.includes(r)).map(linha).join("")}</ol>${rec.length ? `<details class="adb-recolhido"><summary>${esc(ex.recolherRot || "Outros pontos")} (${rec.length})</summary><ol class="adb-lista">${rec.map(linha).join("")}</ol></details>` : ""}` : `<p class="meio-sub">Este benefício ainda não tem requisitos no catálogo.</p>`}
     ${tempos}
     ${mais}
     ${nota}
   </section>`;
+}
+// F381 (12.39) · o caminho até o direito (ideia do Lovable aprovada pelo Paulo): de hoje à data do direito, um marco por
+// requisito ainda por cumprir, na data em que o motor diz que se cumpre; o direito já alcançado não desenha nada
+function linhaDireito(a, x){
+  if(!a || !a.quando || !x || a.quando<=x.hoje) return "";
+  const tot = Math.max(1, diasEntreIso(x.hoje, a.quando)), pct = d => Math.round(100*diasEntreIso(x.hoje, d)/tot);
+  const ms = a.rs.filter(r=>r.quando && r.quando>x.hoje && r.quando<=a.quando && r.est!=="info").sort((p, q)=>p.quando<q.quando ? -1 : 1);
+  const rot = r => cortaFrase(String(r.rot).replace(/\s*[?(:].*$/, "").replace(/^(Já )?(tem|completou|cumpriu) /i, ""), 40);
+  return `<div class="adl"><div class="adl-trilho" aria-hidden="true"><i class="adl-hoje" style="left:0"></i>${
+    ms.map(r=>`<i style="left:${pct(r.quando)}%"></i>`).join("")}<i class="adl-dir" style="left:100%"></i></div>
+    <ol class="adl-lista"><li>hoje, ${fmtBarra(x.hoje)}</li>${ms.map(r=>`<li>${esc(rot(r))}: ${fmtBarra(r.quando)}</li>`).join("")}<li><b>direito em ${fmtBarra(a.quando)}</b></li></ol></div>`;
 }
 // F239 · os passos da Análise de Direito no atendimento: o benefício, o já resolvido, o que falta responder e a conclusão
 // o quadrado é o passo "Benefício" e continua logo acima do painel do benefício aberto
@@ -37625,7 +37675,20 @@ function pzConteudo(cliId){
       <h3 class="pzc-gt"><span>${esc(o.rot)}</span> <span class="pzc-gn">${o.g.length}</span>${o.k ? `<button type="button" class="pzc-g-abrir" onclick="casoSel='${o.k.id}';abaAtiva=2;subAba='escritorio';repintarFicha()" title="Abrir o caso">Abrir<span class="sr-only"> o caso</span></button>` : ""}</h3>
       <ul class="pzc-lista${porData ? "" : " pzc-sem-caso"}">${o.g.map(linha).join("")}</ul></section>`).join("")
     : `<p class="pzc-nada">Nenhum prazo desta natureza.</p>`;
-  return `<section class="pzc-top${heroX ? "" : " pzc-top-so"}" aria-label="Resumo dos prazos">${heroX ? pzHero(heroX) : ""}${tiles}</section>${ferr}${lista}`;
+  return `<section class="pzc-top${heroX ? "" : " pzc-top-so"}" aria-label="Resumo dos prazos">${heroX ? pzHero(heroX) : ""}${tiles}</section>${linha30Pz(hj)}${ferr}${lista}`;
+}
+// F381 (12.39) · os próximos 30 dias numa linha (ideia do Lovable aprovada pelo Paulo): um marco por data, o dia sem
+// expediente em cinza; o marco abre a janela do prazo
+function linha30Pz(hj){
+  const fim = somaDias(hj, 30), its = _pzCli.filter(x=>x.data>=hj && x.data<=fim && !x.aConfirmar);
+  if(!its.length) return "";
+  const cls = n => n==="fatal" ? "fatal" : n==="compromisso" ? "comp" : "lemb", dias = [];
+  for(let j=0; j<=30; j++) dias.push(somaDias(hj, j));
+  return `<section class="pzl" aria-label="Próximos 30 dias"><h3 class="pzl-t">Próximos 30 dias <span class="pzc-gn">${its.length}</span></h3>
+    <div class="pzl-rolar"><ol class="pzl-dias">${dias.map((d, j)=>`<li class="pzl-d${ehDiaUtil(d) ? "" : " pzl-nu"}${j ? "" : " pzl-hoje"}">${
+      its.filter(x=>x.data===d).map(x=>`<button type="button" class="pzl-m pzl-${cls(x._nat)}" onclick="abrirPainelPrazo(${_pzCli.indexOf(x)},'cli')" title="${esc(`${diaCurtoPz(d)} · ${x._titulo}`)}" aria-label="${esc(`${diaCurtoPz(d)}: ${x._titulo}`)}"></button>`).join("")
+      }<span class="pzl-n">${j===0 ? "hoje" : j%5===0 && j<30 ? fmtBarra(d).slice(0,5) : ""}</span></li>`).join("")}</ol></div>
+    <div class="pzl-leg"><span class="pzl-fatal"><i></i>Prazo fatal</span><span class="pzl-comp"><i></i>Compromisso</span><span class="pzl-lemb"><i></i>Lembrete</span><span><i class="pzl-nu-i"></i>Sem expediente</span></div></section>`;
 }
 // ══════════════════════════════════════════════════════════════════════════
 // F104 · OS QUADROS DE PRAZO (tema v10). Um quadro por prazo, lado a lado,
