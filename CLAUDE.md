@@ -401,6 +401,8 @@ A **F363** (12.28, pedido do Paulo de 02.11.2026): a figurinha (`tipo = figurinh
 
 A **F364** (12.29, pedido do Paulo de 02.11.2026): nas Pendentes do colaborador entra apenas a conversa sem atendente com mensagem não lida do cliente, como o contador do menu; o gestor continua vendo todas. Eram 158, quase todas as que a distribuição do SMBot de 01.11 deixou sem atendente. Teste: `zapgestor.js`.
 
+A **F365** (12.30, decisão do Paulo de 02.11.2026) desfaz a F364: a leitura de um colega zerava o não lido e tirava a conversa das Pendentes de todos. O colaborador volta a ver todas as pendentes dos setores dele, e as 155 sem atendente paradas até 30/10/2026 foram encerradas em lote por `zap_encerrar` (cópia em `_bkp_zap_pend_20261102`), ficando as de 31/10 em diante. Teste: `zapgestor.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
