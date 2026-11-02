@@ -27,7 +27,7 @@ const INSS = "b0000000-0000-0000-0000-0000000308a1", EST = "b0000000-0000-0000-0
 T.casos.push(
   { ...base, id: INSS, titulo: "Fulana", especie: "B31", beneficio: "Auxílio por incapacidade temporária", fase: "inss", origem_lista: "🌻 INSS",
     nb: NB, protocolos: ["1479410049"], der: "2026-09-02", prazo: iso(-3), ronda: { despacho: { prazo: iso(-3), por: EU, em: iso(-10) } } },
-  { ...base, id: EST, titulo: "Fulana", especie: null, beneficio: null, fase: "judicial", origem_lista: "👪 Judicial",
+  { ...base, id: EST, titulo: "Fulana", especie: null, beneficio: null, fase: "outro", mover_para: "🗓 Tarefas com Prazo", origem_lista: "👪 Judicial",   // F379 · prazo fatal no 🗓 Tarefas com Prazo
     processo: "1003595-79.2024.8.26.0347", prazo: iso(5), lembrar_motivo: "apelação" },
   { ...base, id: JEF, titulo: "Fulana", especie: "B31", beneficio: "Auxílio por incapacidade temporária", fase: "judicial", origem_lista: "👪 Judicial",
     nb: NB, processo: "5002340-76.2025.4.03.6322", orgao_judicial: "JEF de Catanduva", etapa: "Perícia judicial marcada", dcb: "2025-08-14" });

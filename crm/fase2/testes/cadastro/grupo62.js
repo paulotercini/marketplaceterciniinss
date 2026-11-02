@@ -21,7 +21,7 @@ FIX.andamentos.push({ id: AND1, caso_id: CASO1, autor_id: EU, origem: null,
 FIX.andamento_tarefas = [
   { id: "t-62", andamento_id: AND1, caso_id: CASO1, colaborador_id: EU,
     atribuido_por: EU, lembrar_em: LEMBRA, concluida_em: null }];
-FIX.casos[0].prazo = FATAL;
+FIX.casos[0].prazo = FATAL; Object.assign(FIX.casos[0], { fase: "outro", mover_para: "🗓 Tarefas com Prazo", ronda: { prazo_de: "🌻 INSS" } });   // F379
 // e um lembrete SOLTO, sem parentesco, para provar que continua irmão
 FIX.lembretes = FIX.lembretes || [];
 FIX.lembretes.push({ id: "lb-62", cliente_id: CLI_CHEIO, tipo: "geral",

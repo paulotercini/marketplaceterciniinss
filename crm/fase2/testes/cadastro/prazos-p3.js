@@ -35,8 +35,8 @@ const and = (k, n, texto, o = {}) => { const a = { id: id("e"), caso_id: k.id, a
 
 
 const cA = cli("Ana Fictícia Dois Casos");
-const kA1 = caso(cA, { beneficio: "Auxílio por incapacidade", especie: "B31", fase: "inss", protocolos: ["1700000601"], prazo: iso(5) });
-const kA2 = caso(cA, { beneficio: "Apos. por Idade", especie: "B41", fase: "judicial", processo: "50000000000000000001", prazo: iso(-2) });
+const kA1 = caso(cA, { beneficio: "Auxílio por incapacidade", especie: "B31", fase: "outro", mover_para: "🗓 Tarefas com Prazo", origem_lista: "🌻 INSS", protocolos: ["1700000601"], prazo: iso(5) });
+const kA2 = caso(cA, { beneficio: "Apos. por Idade", especie: "B41", fase: "outro", mover_para: "🗓 Tarefas com Prazo", origem_lista: "👪 Judicial", processo: "50000000000000000001", prazo: iso(-2) });
 const cB = cli("Beto Fictício Sem Data");
 caso(cB, { beneficio: "Apos. por Idade", especie: "B41", fase: "inss" });
 
