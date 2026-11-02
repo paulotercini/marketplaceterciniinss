@@ -407,6 +407,8 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   #conteudo-meio{flex:1}
   /* 11.92 · VCP-01 e VCE-04: o fim da lista e da ficha rola acima dos flutuantes (⚡, ✎, ?, Agenda), que cobriam a ⭐ e o "abrir" */
   #conteudo-meio::after,.det-rolagem::after{content:"";display:block;height:150px}
+  /* F376 · o foco por teclado e o scrollIntoView param acima dos flutuantes e da barra fixa do pé dos passos */
+  #conteudo-meio,.det-rolagem{scroll-padding-bottom:150px}
   /* F344 · o WhatsApp tem altura fixa e rola por dentro: a reserva fazia a tela inteira rolar e cortar o topo */
   .meio.zap-v #conteudo-meio::after{display:none}
   /* ＋ Adicionar: sempre no pé da lista, como no To Do */
@@ -2510,11 +2512,11 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
     /* orientação e ordenação são coisa de tela grande: no celular roubam
        um terço da altura útil sem o dedo pedir */
     .app.celular #sub-lista,.app.celular .ordenar{display:none}
-    .app.celular ~ .aviso{bottom:78px}                    /* acima da barra de baixo */
+    .app.celular ~ .aviso{bottom:calc(78px + env(safe-area-inset-bottom,0px))}   /* acima da barra de baixo, que soma a faixa do iPhone (F376) */
     /* acima do composer RECOLHIDO; quando ele abre, o JS sobe o aviso pela
        altura real. Fixo em 200px, o aviso caía dentro do composer aberto —
        e no celular ele é justamente quem manda usar os botões que cobria */
-    .app.celular.detalhe-aberto ~ .aviso{bottom:96px}
+    .app.celular.detalhe-aberto ~ .aviso{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
     /* dedo não é ponteiro: alvos de toque maiores */
     .app.celular .cartao{padding:11px 13px;margin-bottom:7px}
     .app.celular .visto-bt{font-size:19px;padding:6px 10px}
@@ -5511,6 +5513,8 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 .pz-av-sis{background:#9A9890}
 /* a aba Prazos do cliente */
 .pzc{display:flex;flex-direction:column;gap:16px;padding:4px 0 150px;font-variant-numeric:tabular-nums}
+/* F376 · a coluna dos flutuantes (Agenda, ?, Sugestões e ⚡, 170 px) fica livre: o Abrir das linhas não passa por baixo deles */
+.app:not(.celular) .pzc{padding-right:176px}
 .pzc-top{display:flex;flex-wrap:wrap;gap:16px;align-items:stretch}
 .pzc-hero{flex:999 1 520px;min-width:0;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;padding:20px 22px;background:#FFFFFF;border:1px solid var(--borda,#E7E6E1);border-radius:12px}
 .pzc-hero-cab{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
@@ -6123,7 +6127,7 @@ html[data-tema="v10"] .app.celular .linha-caso .lc-mais-pe{min-height:32px}   /*
 html[data-tema="v10"] .app.celular.detalhe-aberto ~ .fab-sug{bottom:calc(186px + env(safe-area-inset-bottom,0px))}
 html[data-tema="v10"] .app.celular.detalhe-aberto ~ .fab-ajuda{bottom:calc(188px + env(safe-area-inset-bottom,0px))}
 html[data-tema="v10"] .app.celular.detalhe-aberto ~ #zap-ag{bottom:calc(231px + env(safe-area-inset-bottom,0px))}
-html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:152px}
+html[data-tema="v10"] .app.celular.detalhe-aberto ~ .aviso{bottom:calc(152px + env(safe-area-inset-bottom,0px))}
 
 /* F320 · atendimento (imagem 3-atendimento.png): cabeçalho mínimo, prazo uma vez, passos sem subtítulo, CNIS em números,
    problemas com quem providencia, pé com o passo à esquerda, anotações em gaveta à direita */
