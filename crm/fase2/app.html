@@ -4514,6 +4514,7 @@ html[data-tema="v10"] .tr-compacta{margin-bottom:10px}
 .adb{border-left:3px solid #0E5C58}
 .adb-cont{font-size:12px;color:#4A4944}
 .adb-resumo,.adb-quando{margin:8px 0 0}.adb-quando:empty{display:none}
+.adb-valor{margin:8px 0 0}.adb-valor-nota{margin:2px 0 0;font-size:12px}
 .adl{margin:10px 0 4px}.adl-trilho{position:relative;height:8px;background:var(--placa);border-radius:4px;margin:12px 8px}
 .adl-trilho i{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);background:var(--prox,#8F5400);border:2px solid var(--branco)}
 .adl-trilho .adl-hoje{background:var(--cinza)}.adl-trilho .adl-dir{background:var(--azul)}
@@ -6280,7 +6281,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.41</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.42</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -26310,6 +26311,7 @@ function painelBeneficio(c, ks, op, oc){
       ${a.resumo ? `<p class="adb-resumo"><b>Em uma frase:</b> ${esc(a.resumo)}</p>` : ""}
       <p class="adb-quando">${a.quando ? quandoTxt(op, a, x) : ""}</p>
       ${linhaDireito(a, x)}
+      ${valorEstimado(op, x)}
       ${tempos}</div>
   </section>`;
   }
@@ -26320,6 +26322,7 @@ function painelBeneficio(c, ks, op, oc){
     ${a && a.resumo ? `<p class="adb-resumo"><b>Em uma frase:</b> ${esc(a.resumo)}</p>` : ""}
     <p class="adb-quando">${a && a.quando ? quandoTxt(op, a, x) : ""}</p>
     ${linhaDireito(a, x)}
+    ${valorEstimado(op, x)}
     ${der}
     ${a ? `<ol class="adb-lista">${a.rs.filter(r=>!rec.includes(r)).map(linha).join("")}</ol>${rec.length ? `<details class="adb-recolhido"><summary>${esc(ex.recolherRot || "Outros pontos")} (${rec.length})</summary><ol class="adb-lista">${rec.map(linha).join("")}</ol></details>` : ""}` : `<p class="meio-sub">Este benefício ainda não tem requisitos no catálogo.</p>`}
     ${tempos}
@@ -26338,6 +26341,71 @@ function linhaDireito(a, x){
     ms.map(r=>`<i style="left:${pct(r.quando)}%"></i>`).join("")}<i class="adl-dir" style="left:100%"></i></div>
     <ol class="adl-lista"><li>hoje, ${fmtBarra(x.hoje)}</li>${ms.map(r=>`<li>${esc(rot(r))}: ${fmtBarra(r.quando)}</li>`).join("")}<li><b>direito em ${fmtBarra(a.quando)}</b></li></ol></div>`;
 }
+// F384 · O VALOR ESTIMADO DO BENEFÍCIO. A média dos salários de contribuição desde 07/1994 (EC 103, art. 26), cada um
+// corrigido pelo INPC do mês da competência ao mês anterior à DER (Lei 8.213/91, art. 29-B), com o percentual da regra.
+// O INPC é a série oficial do IBGE (SGS 188 do Banco Central), gravada em config_app.indice_inpc e renovada todo dia 15.
+// shortcut: o salário corrigido é limitado ao teto de 2026, e não ao teto da época; a carta de concessão é que vale
+const TETO_2026 = 8475.55;   // Portaria Interministerial MPS/MF nº 13/2026 [CONFERIDO, gov.br]
+let _inpcMemo = null;
+function inpcSerie(){
+  const t = cfgApp("indice_inpc"); if(!t) return null;
+  if(_inpcMemo && _inpcMemo.t===t) return _inpcMemo.v;
+  let v = null; try{ v = JSON.parse(t); }catch(e){}
+  _inpcMemo = {t, v}; return v;
+}
+// comps: [{c:"MM/AAAA", v}] (somadas por mês); devolve {media, n, ult12} ou null. Pura, para o teste
+function mediaCorrigida(comps, der, serie, teto){
+  const fim = ymDe(der), ms = Object.keys(serie||{}).sort(), soma = new Map();
+  for(const cp of comps||[]){ const k = chaveComp(cp.c); if(k < "1994-07" || k >= fim || !(cp.v > 0)) continue;
+    // EC 103, art. 29: depois de 13/11/2019, o mês abaixo do mínimo sem complementação não entra
+    soma.set(k, (soma.get(k)||0) + cp.v); }
+  const ks = [...soma.keys()].filter(k=>!(k >= "2019-11" && soma.get(k) < (salarioMinimo(k.split("-").reverse().join("/"))||0))).sort();
+  if(!ks.length) return null;
+  // o fator acumulado de trás para frente: do mês anterior à DER até a competência
+  const fator = new Map(); let f = 1;
+  for(let m = somarMeses(fim + "-01", -1).slice(0, 7); m >= ks[0]; m = somarMeses(m + "-01", -1).slice(0, 7)){ f *= 1 + (+(serie||{})[m] || 0)/100; fator.set(m, f); }
+  const corr = ks.map(k=>Math.min(teto, soma.get(k) * (fator.get(k) || 1)));
+  const media = corr.reduce((a, b)=>a + b, 0) / corr.length;
+  const u = corr.slice(-12), ult12 = u.reduce((a, b)=>a + b, 0) / u.length;
+  return {media, n: corr.length, ult12, ate: ms[ms.length-1] || null};
+}
+// o percentual pela opção (null: o valor não sai da média do segurado)
+function coefDaOpcao(op, x){
+  const anos = Math.floor(((x.tot||{}).comum||0)/365 + 1e-9);   // como _apoPct
+  const regra = lim => ({p: Math.min(100, 60 + 2*Math.max(0, anos - lim)), txt: `60 % mais 2 % por ano de contribuição acima de ${lim} (EC 103, art. 26, § 2º); ${anos} anos no quadro Tempos`});
+  if(["idade","transicao","professor","b32","hibrida"].includes(op)) return regra(x.sx==="F" ? 15 : 20);
+  if(op==="b46") return regra(x.sx==="F" ? 15 : (+x.v.esp_anos===15 ? 15 : 20));
+  if(op==="acid") return {p:100, txt:"100 % da média na aposentadoria acidentária (EC 103, art. 26, § 3º, II)"};
+  if(op==="pcd") return {p:100, txt:"100 % da média (LC 142/2013, art. 8º, I)"};
+  if(op==="pcd_idade"){ const car = ((x.ct||{}).carencia)||0; const p = Math.min(100, 70 + Math.floor(car/12));
+    return {p, txt:`70 % mais 1 % por grupo de 12 contribuições (LC 142/2013, art. 8º, II); ${car} contribuições`}; }
+  if(op==="b31" || op==="REST") return {p:91, txt:"91 % da média, limitado à média dos 12 últimos salários (Lei 8.213/91, arts. 61 e 29, § 10)", lim12:true};
+  if(op==="b94" || op==="b36") return {p:50, txt:"50 % da média (Lei 8.213/91, art. 86, § 1º)"};
+  return null;
+}
+const SM_FIXO = {idade_rural:"aposentadoria rural do segurado especial (Lei 8.213/91, art. 39, I)", rur:"salário-maternidade da segurada especial (Lei 8.213/91, art. 39, parágrafo único)",
+  def:"BPC (CF, art. 203, V)", idoso:"BPC (CF, art. 203, V)", reclusao:"auxílio-reclusão (EC 103, art. 27, § 1º)"};
+const brl = v => "R$ " + v.toLocaleString("pt-BR", {minimumFractionDigits:2, maximumFractionDigits:2});
+function valorEstimado(op, x){
+  if(!x || !op) return "";
+  if(SM_FIXO[op]) return `<p class="adb-valor"><b>Valor:</b> ${brl(salarioMinimo("01/" + anoDe(x.der)) || SM_2026)}, um salário mínimo no ${esc(SM_FIXO[op])}.</p>`;
+  const co = coefDaOpcao(op, x); if(!co || !x.c) return "";
+  const st = _cnisComps.get(x.c.id);
+  if(!st){ carregarCnisComps(x.c); return `<p class="adb-valor meio-sub">Lendo as remunerações do CNIS para estimar o valor…</p>`; }
+  if(st.carregando) return `<p class="adb-valor meio-sub">Lendo as remunerações do CNIS para estimar o valor…</p>`;
+  const ser = inpcSerie();
+  if(!ser || !ser.serie) return `<p class="adb-valor meio-sub">Valor: sem a tabela do INPC no CRM; a estimativa volta quando ela for gravada.</p>`;
+  const comps = (st.vs||[]).filter(v=>v.tipo!=="Benefício").flatMap(v=>v.comps||[]);
+  const m = mediaCorrigida(comps, x.der, ser.serie, TETO_2026);
+  if(!m) return `<p class="adb-valor meio-sub">Valor: o CNIS lido não tem remuneração desde 07/1994 para a média.</p>`;
+  let rmi = m.media * co.p/100;
+  if(co.lim12) rmi = Math.min(rmi, m.ult12);
+  const sm = salarioMinimo("01/" + anoDe(x.der)) || SM_2026;
+  rmi = Math.max(sm, Math.min(TETO_2026, rmi));
+  return `<p class="adb-valor"><b>Valor estimado: ${brl(rmi)}</b> por mês, na DER de ${fmtBarra(x.der)}. ${esc(co.txt)}, sobre a média de ${brl(m.media)} (${m.n} salários desde 07/1994, corrigidos pelo INPC${m.ate ? ` até ${_mmaaIso(m.ate)}` : ""}).</p>
+    <p class="meio-sub adb-valor-nota">Estimativa: piso de um salário mínimo e teto de ${brl(TETO_2026)} (Portaria Interministerial MPS/MF nº 13/2026); cada salário corrigido limitado ao teto atual. O valor do INSS sai da carta de concessão.</p>`;
+}
+const _mmaaIso = ym => String(ym||"").split("-").reverse().join("/");
 // F239 · os passos da Análise de Direito no atendimento: o benefício, o já resolvido, o que falta responder e a conclusão
 // o quadrado é o passo "Benefício" e continua logo acima do painel do benefício aberto
 const quadradoEmPasso = (h, oc) => h.replace('<section class="adq"', `<section class="adq tp-passo" data-passo="benef"${oc("benef")}`);
@@ -30251,7 +30319,7 @@ const requisitosDe = (c, ks, op) => avaliarReq(op, reqCtx(c, ks||D.casosDoClient
     veredito: (x, a)=>{ const sq = _incSemQual(x, a); if(!sq) return null;
       return {tom:"ainda", txt:`Ainda não. No dia em que ficou incapaz (${fmtBarra(sq.dii)}), a pessoa já não estava coberta pelo INSS: a cobertura acabou em ${fmtBarra(sq.ate)}. Só gere o caso com documento que mostre a incapacidade antes de ${fmtBarra(sq.perda)}${sq.desemp ? ` ou com desemprego registrado até ${fmtBarra(sq.ate)}` : ""}; voltar a pagar agora não resolve.`}; },
     // F235 · só no restabelecimento: o limbo do empregado que a empresa não aceitou de volta, e a prova da recusa
-    soREST: [{id:"limbo_empresa", rot:"Tem carteira assinada e a empresa não aceitou a volta depois do corte?", base:"Tema 300 TNU e Súmula 32 TST (só na skill)", conf:"skill", campos:[],
+    soREST: [{id:"limbo_empresa", rot:"Tem carteira assinada e a empresa não aceitou a volta depois do corte?", base:"Lei 8.213/91, art. 15, II; Tema 300/TNU (em revisão no Tema 1421/STF, mérito pendente)", conf:"conferido", campos:[],
       mede:x=>{ const corte = _incCorte(x), lb = _incLimbo(x, corte);
         if(!lb) return {est:"info", txt:"sem vínculo de emprego aberto e parado depois do corte: não há limbo"};
         const rel = relatoDe(x.c), trouxe = /atestado do m[ée]dico da empresa|\bASO\b/i.test(rel) && /inapt/i.test(rel);
@@ -31010,7 +31078,7 @@ const requisitosDe = (c, ks, op) => avaliarReq(op, reqCtx(c, ks||D.casosDoClient
        const ano = anoDe(x.hoje), velhas = ab.filter(a=>+String(a.comp).slice(-4) < ano).length;
        return {est:"falta", fonte:"CNIS", txt:`${ab.length===1 ? "1 mês foi pago" : `${ab.length} meses foram pagos`} abaixo do mínimo depois de 11/2019 (${ab.slice(0, 4).map(a=>a.comp).join(", ")}${ab.length > 4 ? "…" : ""}) e ${ab.length===1 ? "não conta" : "não contam"} até completar a diferença${velhas ? `. Para ${velhas===1 ? "o mês" : "os meses"} de anos passados, a EC 103 fala em ajuste no mesmo ano civil e o Decreto 3.048 (art. 19-E, § 2º) permite completar a qualquer tempo, com acréscimos: o advogado decide` : ""}. Efeito: ${ab.length===1 ? "1 mês" : `${ab.length} meses`} de contribuição`}; }},
     // F235 · o tempo que o CNIS não mostra e o especial até 13/11/2019 entram na conta: perguntar e lançar no quadro Tempos
-    {id:"tempo_fora_cnis", rot:"Tem trabalho que não aparece no CNIS (carteira antiga, serviço militar, roça, cargo público, escola técnica)?", base:"IN 128/2022, art. 216 (conferir)", conf:"skill", campos:["tra_fora_cnis"],
+    {id:"tempo_fora_cnis", rot:"Tem trabalho que não aparece no CNIS (carteira antiga, serviço militar, roça, cargo público, escola técnica)?", base:"Lei 8.213/91, art. 55, I a VI e § 3º", conf:"conferido", campos:["tra_fora_cnis"],
      mede:x=>{ const lan = (x.tempos||[]).filter(r=>/^(rural|militar|rpps|aprendiz)$/.test(r.nat||""));
        if(lan.length) return {est:"ok", fonte:"quadro Tempos", txt:`${plu(lan.length, "período lançado", "períodos lançados")} no quadro Tempos fora do CNIS`};
        const v = x.v.tra_fora_cnis;
@@ -31130,7 +31198,7 @@ const requisitosDe = (c, ks, op) => avaliarReq(op, reqCtx(c, ks||D.casosDoClient
        return {est: !ok ? "falta" : x.v.mag_declaracao==="Não" ? "risco" : !nivel ? "informar" : "ok", fonte:"quadro Tempos",
          txt:`${tempoFmt(m)} de magistério até ${fmtBarra(x.der)}; exige ${ex} anos${ok ? "" : `, faltam ${tempoFmt(ex*ANO - m)}`}${nt.length ? `; ${nt.join("; ")}` : ""}${ind}`}; }},
     // F235 · a declaração de cada escola (função, nível e período) é o documento do magistério: até chegar, vai ao pedido ao cliente
-    {id:"mag_declaracoes", rot:"Cada escola deu a declaração com a função, o nível de ensino e o período?", base:"IN 128/2022, art. 214 (conferir o documento exigido)", conf:"skill", campos:["mag_declaracao"],
+    {id:"mag_declaracoes", rot:"Cada escola deu a declaração com a função, o nível de ensino e o período?", base:"IN 128/2022, art. 214, I (a declaração prova a função, o nível e o período; modelo próprio não localizado em norma)", conf:"conferido", campos:["mag_declaracao"],
      mede:x=>{ const ls = _magLinhas(x); if(!ls.length) return {est:"info", txt:"sem período de magistério lançado no quadro Tempos"};
        if(x.v.mag_declaracao==="Sim") return {est:"ok", fonte:"campo", txt:"as declarações das escolas estão com o escritório"};
        const es = [...new Map(ls.map(r=>[r.onde||"escola", r])).values()].map(r=>`${r.onde||"escola"}, de ${fmtBarra(r.de).slice(3)} a ${r.ate ? fmtBarra(r.ate).slice(3) : "hoje"}`).join(", e ");
@@ -31828,7 +31896,7 @@ const requisitosDe = (c, ks, op) => avaliarReq(op, reqCtx(c, ks||D.casosDoClient
     {id: "exposicao", rot: "Trabalhou 15, 20 ou 25 anos exposto, de forma permanente, a agente que faz mal à saúde?",
      base: "Lei 8.213/91, art. 57, caput e §§ 3º e 4º; IN 128/2022, arts. 266, 268, 269 e 271", conf: "conferido", campos: ["esp_anos"], mede: _b46Expo},
     {id: "agente_tempo", rot: "Qual é o tempo do agente? 15 anos (mina de subsolo na frente de produção), 20 (amianto, mina afastada da frente) ou 25 (os demais: ruído, químicos, biológicos)",
-     base: "Portaria DIRBEN/INSS 991/2022, art. 285 (segundo a skill); Decreto 3.048/99, Anexo IV", conf: "skill", campos: ["esp_anos"],
+     base: "Portaria DIRBEN/INSS 991/2022, art. 285", conf: "conferido", campos: ["esp_anos"],
      mede: x => { const ls = _peEsp(x, _peAte(x)); if(!ls.length) return {est: "informar", txt: "nenhum período especial lançado no quadro Tempos"};
        const sem = ls.filter(l => !l.ag);
        if(sem.length) return {est: "informar", txt: `informe o tempo do agente de ${sem.length === 1 ? "um período" : `${sem.length} períodos`}: 15 (mina subterrânea na frente de produção), 20 (amianto, mina afastada da frente) ou 25 (os demais)`};
@@ -31992,7 +32060,7 @@ const requisitosDe = (c, ks, op) => avaliarReq(op, reqCtx(c, ks||D.casosDoClient
     {id: "ate_2019", rot: "O trabalho insalubre foi até 13/11/2019? Só esse converte; o de depois entra como tempo comum, sem acréscimo",
      base: "EC 103/2019, art. 25, § 2º; IN 128/2022, art. 206, §§ 3º e 4º, e art. 269, § 2º; Decreto 3.048/99, art. 188-P, § 5º; STF ADI 6309", conf: "conferido", campos: [], mede: _convAte2019},
     {id: "fator", rot: "Qual é o multiplicador? Agente de 25 anos ×1,40 (homem) ou ×1,20 (mulher); de 20 anos ×1,75 ou ×1,50; de 15 anos ×2,33 ou ×2,00",
-     base: "Decreto 3.048/99, art. 188-P, § 5º (tabela vigente); art. 70 na redação do Decreto 4.827/2003, revogada pelo Decreto 10.410/2020", conf: "skill", campos: ["esp_anos"], mede: _convFator},
+     base: "Decreto 3.048/99, art. 188-P, § 5º", conf: "conferido", campos: ["esp_anos"], mede: _convFator},
     {id: "prova", rot: "O período está provado como especial com o documento da época (PPP, formulário, laudo ou a carteira até 1995)?",
      base: "IN 128/2022, arts. 272, 274, 291 e 292; Decreto 3.048/99, art. 188-P, § 6º", conf: "conferido", campos: ["esp_ppp", "esp_ltcat", "esp_epi", "esp_cancerigeno"], mede: _convProva},
     {id: "so_especial_para_comum", rot: "Só o especial vira comum; o contrário (comum virar especial) não existe mais", base: "IN 128/2022, art. 264", conf: "conferido", campos: [],
@@ -33735,8 +33803,8 @@ function provaPcdNoDoc(c, as){
        if(x.v.rev_teto_glosa==="Não") return {est:"impedido", txt:`sem glosa pelo teto na concessão não há readequação${bn}`};
        if(x.v.rev_teto_glosa==="Sim") return {est:"ok", txt:`DIB ${fmtBarra(dib)} com o salário de benefício limitado ao teto: a renda segue os novos tetos das ECs 20 e 41 (Tema 76/STF)${bn}`};
        return {est:"informar", txt:`DIB ${fmtBarra(dib)}: confira na memória de cálculo se o salário de benefício foi limitado ao teto (a carta só traz a RMI)${bn}`}; }},
-    {id:"tese_teto_sem_decadencia", rot:"Na readequação ao teto não se perde o prazo de 10 anos", base:"Skill base-revisao-teto-buraco-negro-verde (sem tema repetitivo localizado)",
-     conf:"skill", campos:["rev_tese"],
+    {id:"tese_teto_sem_decadencia", rot:"Na readequação ao teto não se perde o prazo de 10 anos", base:"Lei 8.213/91, art. 103; jurisprudência do STJ (1ª e 2ª Turmas): a readequação aos tetos não se sujeita à decadência",
+     conf:"conferido", campos:["rev_tese"],
      mede:x=> _revTeses(x).has("teto")
        ? {est:"ok", txt:"a readequação não revê o ato de concessão: não decai, só as parcelas prescrevem; a revisão da renda inicial (art. 144 da Lei 8.213; art. 26 da Lei 8.870) continua sujeita à decadência"}
        : {est:"info", txt:"vale só para a readequação ao teto"}},
@@ -33780,8 +33848,8 @@ function provaPcdNoDoc(c, as){
        if(!_revTeses(x).has("rvt")) return {est:"info", txt:"revisão da vida toda: tese vencida (Tema 1102/STF, trânsito em 15/05/2026), não ajuizar"};
        if(x.v.rev_acao_judicial==="Sim") return {est:"risco", txt:"ação já ajuizada: sustente só a modulação do Tema 1102 (o recebido por decisões até 05/04/2024 não se devolve; sem honorários, custas e perícias nas ações pendentes nessa data)"};
        return {est:"impedido", txt:`tese vencida: o art. 3º da Lei 9.876/1999 é obrigatório (Tema 1102/STF, trânsito em 15/05/2026); não ajuizar${dib && dib < "1999-11-29" ? `; com DIB ${fmtBarra(dib)}, anterior a 29/11/1999, o caso é de direito adquirido comum` : ""}`}; }},
-    {id:"tese_irsm", rot:"IRSM de fevereiro de 1994 (39,67%)", base:"Lei 8.880/1994, art. 21, § 1º; Lei 10.999/2004 (fora da base local)",
-     conf:"skill", campos:["rev_tese","rev_dib"],
+    {id:"tese_irsm", rot:"IRSM de fevereiro de 1994 (39,67%)", base:"Lei 8.880/1994, art. 21, § 1º; Lei 10.999/2004, art. 1º",
+     conf:"conferido", campos:["rev_tese","rev_dib"],
      mede:x=>{ const dib = _revDatas(x).dib, d = _revDec(x);
        if(!_revTeses(x).has("irsm")) return {est:"info", txt:"IRSM de 02/1994: os benefícios alcançados pela tese já decaíram"};
        if(!dib) return {est:"informar", txt:"informe a DIB (ou traga a carta)"};
@@ -33913,8 +33981,8 @@ function provaPcdNoDoc(c, as){
          : {est:"ok", txt:`excluir pelo Meu INSS com declaração expressa do filiado (IN 128, art. 12, § 2º): para ${_min1(cat)} não há modelo simplificado, use o RAC (Anexo I); o I-E é do reconhecimento de filiação após pesquisa do INSS${fim}`};
        const extra = t==="Complementar" ? "; veja as competências abaixo do mínimo" : t==="Indenizar" ? "; veja a indenização do período decaído" : "";
        return {est:"ok", txt:`${_min1(t)} pelo Meu INSS, a qualquer tempo e sem pedir benefício; sem campo no formulário, anexe o RAC (Anexo I da IN 128)${extra}${fim}`}; }},
-    {id:"indicador_classificado", rot:"Cada aviso do CNIS: o que bloqueia, o que só alerta e o que já foi tratado", base:"Portaria DIRBEN/INSS 990/2022, Anexo V (alterada pela 1.316/2025), catálogo da skill",
-     conf:"skill", campos:["cn_pendencia"],
+    {id:"indicador_classificado", rot:"Cada aviso do CNIS: o que bloqueia, o que só alerta e o que já foi tratado", base:"Portaria DIRBEN/INSS 990/2022, art. 8º-A e Anexo V; a classificação em bloqueia, alerta e tratado é do escritório",
+     conf:"conferido", campos:["cn_pendencia"],
      mede:x=>{ const cs = _cnInds(x);
        if(!cs.length) return x.g ? {est:"ok", txt:"nenhum indicador no CNIS", fonte:"CNIS"} : {est:"informar", txt:"leia o CNIS (ou digite o indicador)"};
        const p = cs.filter(c=>tipoIndicador(c)==="P"), i = cs.filter(c=>tipoIndicador(c)==="I"), a = cs.filter(c=>tipoIndicador(c)==="A"), neg = a.filter(_cnNeg), ok = a.filter(c=>!_cnNeg(c)), ls = [];
@@ -33978,12 +34046,12 @@ function provaPcdNoDoc(c, as){
        if(!gaps.length) return {est:"ok", txt:"nenhum vínculo encerrado com meses finais sem salário (os do meio aparecem em Remunerações)", fonte:"CNIS"};
        const m = gaps.reduce((n, g)=>n + mesesEntreYm(g.de, g.ate), 0);
        return {est:"falta", txt:`${_plural(m, "mês", "meses")} de vínculo sem salário (${gaps.map(g=>`${g.v.origem||"vínculo"}, ${_compBr(g.de)} a ${_compBr(g.ate)}`).join("; ")}): no cálculo o INSS usa o mínimo; prove o salário real com holerites, dentro do prazo de decadência (IN 128, art. 223, § 2º, I); jornada parcial ou intermitente pede o contrato (§ 3º)`, fonte:"CNIS"}; }},
-    {id:"licenca_sem_remuneracao_rais", rot:"A RAIS mostra licença sem salário antes de 13/11/2019?", base:"Skill base-cnis-acerto-indicadores (o art. 59 do RPS foi revogado pelo Decreto 10.410/2020)",
-     conf:"skill", campos:[],
+    {id:"licenca_sem_remuneracao_rais", rot:"A RAIS mostra licença sem salário antes de 13/11/2019?", base:"Decreto 3.048/99, art. 59, vigente até o Decreto 10.410/2020",
+     conf:"conferido", campos:[],
      mede:x=>{ if(!(x.fd.rais||[]).length) return {est:"informar", txt:"sem RAIS no dossiê (Emprega Brasil)"};
        const ls = _cnLic(x).filter(l=>!l.d0 || l.d0 < EC103);
        if(!ls.length) return {est:"ok", txt:"nenhuma licença sem remuneração antes de 13/11/2019 na RAIS", fonte:"RAIS"};
-       return {est:"falta", txt:`${_cnLicTxt(ls)}: antes de 13/11/2019 o desconto só tem apoio na skill; saídas: complementar, indenizar (Lei 8.212, art. 45-A), corrigir a RAIS se o código estiver errado ou contar o auxílio-doença intercalado`, fonte:"RAIS"}; }},
+       return {est:"falta", txt:`${_cnLicTxt(ls)}: antes de 13/11/2019 o desconto segue o art. 59 do RPS, então vigente; saídas: complementar, indenizar (Lei 8.212, art. 45-A), corrigir a RAIS se o código estiver errado ou contar o auxílio-doença intercalado`, fonte:"RAIS"}; }},
     {id:"licenca_rais_depois_ec103", rot:"A RAIS mostra licença sem salário depois de 13/11/2019?", base:"Decreto 3.048/99, art. 19-E; skill base-cnis-acerto-indicadores",
      conf:"conferido", campos:[],
      mede:x=>{ if(!(x.fd.rais||[]).length) return {est:"informar", txt:"sem RAIS no dossiê (Emprega Brasil)"};
@@ -34009,8 +34077,8 @@ function provaPcdNoDoc(c, as){
        const multa = rural ? `; sem a multa de 10% no rural anterior a 11/1991 (§ 4º)${b >= "1991-11-01" ? ", com ela no resto" : ""}` : " e multa de 10%";
        const recente = b > somarAnos(x.der, -5) ? "; o trecho dos últimos 5 anos pode não ter decaído e segue a regra geral do atraso (§ 3º)" : "";
        return {est:"falta", txt:`${_plural(n, "mês", "meses")} a indenizar (${fmtBarra(a)} a ${fmtBarra(b)}): 20% da média dos 80% maiores salários desde 07/1994, com juros de 0,5% ao mês (até 50%)${multa}${recente}; prove a atividade`, fonte:"campo"}; }},
-    {id:"limbo_nao_baixar", rot:"Há vínculo aberto sem salário porque o patrão não aceitou a volta (limbo)?", base:"Skills base-cnis-acerto-indicadores e base-limbo-previdenciario-tema300; Tema 300/TNU",
-     conf:"skill", campos:["cn_limbo"],
+    {id:"limbo_nao_baixar", rot:"Há vínculo aberto sem salário porque o patrão não aceitou a volta (limbo)?", base:"Lei 8.213/91, art. 15, II; Tema 300/TNU (em revisão no Tema 1421/STF, mérito pendente)",
+     conf:"conferido", campos:["cn_limbo"],
      mede:x=>{ const lim = x.v.cn_limbo, ref = ymDe(somarMeses(x.der, -3));
        const ab = _cnVs(x).filter(v=>v.aberto && /Empregado|Avulso/.test(v.tipo||"") && (!v.ultRemun || chaveComp(v.ultRemun) < ref));
        const nome = ab.map(v=>`${v.origem||"vínculo"} (última remuneração ${v.ultRemun||"nenhuma"})`).join("; ");
@@ -34024,8 +34092,8 @@ function provaPcdNoDoc(c, as){
        if(ab.length && ab.every(velho)) return {est:"info", txt:`não é limbo: ${ab.map(v=>{ const k = kv(v); return `${tituloOrgao(v.origem||"") || "o vínculo"} está sem salário desde ${v.ultRemun||"o início"}, sem benefício por incapacidade; falta a data de saída no CNIS${k && k.saida ? ` (a carteira mostra ${k.saida}): pedir a correção com a carteira` : ": pedir a correção com a carteira ou a rescisão"}`; }).join("; ")}`, fonte:"CNIS"};
        if(ab.length) return {est:"informar", txt:`${nome}: aberto sem salário; é limbo (o empregador recusou a volta depois da alta)?`, fonte:"CNIS"};
        return x.g ? {est:"ok", txt:"nenhum vínculo aberto sem salário no CNIS", fonte:"CNIS"} : {est:"informar", txt:"leia o CNIS (ou diga se há vínculo em limbo)"}; }},
-    {id:"facultativo_baixa_renda", rot:"Facultativo de baixa renda (5%): a família está no CadÚnico, com renda baixa?", base:"Lei 8.212/91, art. 21, § 2º, II, b, e § 4º (texto da base local ilegível); skill base-facultativo-baixa-renda",
-     conf:"skill", campos:["cn_categoria"],
+    {id:"facultativo_baixa_renda", rot:"Facultativo de baixa renda (5%): a família está no CadÚnico, com renda baixa?", base:"Lei 8.212/91, art. 21, § 2º, II, b, e § 4º; IN 128/2022, art. 107, § 2º, XIV",
+     conf:"conferido", campos:["cn_categoria"],
      mede:x=>{ const fbr = _cnInds(x).filter(c=>/^(FBR|PREC-FBR)/.test(c)), cad = x.cad;
        if(!/baixa renda/i.test(x.v.cn_categoria||"") && !fbr.length) return {est:"info", txt:"só para o facultativo de baixa renda (5%)"};
        if(!cad) return {est:fbr.length ? "risco" : "informar", txt:`${fbr.length ? `validação negada no CNIS (${fbr.join(", ")}); ` : ""}traga o CadÚnico da família (Meu CadÚnico)`, fonte: fbr.length ? "CNIS" : undefined};
@@ -34216,8 +34284,8 @@ function provaPcdNoDoc(c, as){
        if(/car[êe]ncia/i.test(mot) && /maternidade/i.test(mot + " " + (x.v.crp_especie||""))) sug.push("19 (salário-maternidade sem carência)");
        if(sug.length) return {est:"info", txt:`o motivo sugere o Enunciado ${[...new Set(sug)].join("; ")}: confira e cite`, fonte: pc && pc.c.motivo ? "cópia do processo" : "campo"};
        return {est:"info", txt: mot ? "o motivo não casa com nenhum enunciado da lista (1, 2, 3, 5, 7, 11 a 14, 17 a 19)" : "sem o motivo não há enunciado a sugerir"}; }},
-    {id:"sem_efeito_suspensivo", rot:"O recurso não suspende a decisão", base:"Lei 9.784/99, art. 61 (fora da base local); skill base-recurso-crps-peca-enxuta",
-     conf:"skill", campos:[],
+    {id:"sem_efeito_suspensivo", rot:"O recurso não suspende a decisão", base:"Lei 9.784/99, art. 61 (o Regimento do CRPS não trata do efeito no recurso de benefício)",
+     conf:"conferido", campos:[],
      mede:x=>({est:"info", txt:`em regra o recurso não tem efeito suspensivo; com risco de dano de difícil reparação, peça o efeito à autoridade${/cessa|cobran/i.test(x.v.crp_decisao_tipo||"") ? ` (${_min1(x.v.crp_decisao_tipo)}: o pagamento não volta só com o recurso)` : ""}`})},
   ], {
     crp_decisao_tipo:["Que decisão se recorre", "select", ["","Indeferimento","Cessação","Concessão com valor ou espécie errados","Acerto de CNIS negado","Decisão em pedido de revisão","Cobrança de valores"]],
@@ -36686,7 +36754,7 @@ function sugestaoDoAto(a){
     Object.assign(out, {favoravel:true, cat:null, prazo:null, passo:fav.passo, trib:p});
     // o INSS recorre da sentença em 10 dias úteis no JEF, sem prazo em dobro (Lei 10.259/2001, art. 9º; Lei 9.099/1995,
     // arts. 42 e 12-A), e em 15 dias úteis em dobro no rito comum (CPC, arts. 1.003, § 5º, e 183), da ciência tácita dele
-    if(fav.tipo==="sentença") out.vigia = contarPrazo(cienciaTacita(mv.data), {n: mv.jef ? 10 : 30, uteis:true});
+    if(fav.tipo==="sentença") out.vigia = contarPrazo(cienciaTacita(mv.data), {n: mv.jef ? 10 : 30, uteis:true}, D.casoPorId.get(a.caso_id));
     return out;
   }
   if(p && p.fim){ out.trib = p; out.prazo = p.fim; out.de = p.ciencia_em || out.de; }
@@ -36942,7 +37010,7 @@ function ordemAoInss(k){
   }
   if(!base){ base = cienciaTacita(m0.de); baseTxt = `da ciência tácita do INSS, estimada em ${fmt(base)} (10 dias corridos da expedição, Lei 11.419/2006, art. 5º, § 3º)`; }
   let data;
-  if(m0.uteis) data = contarPrazo(base, {n:m0.n, uteis:true});
+  if(m0.uteis) data = contarPrazo(base, {n:m0.n, uteis:true}, k);
   else { data = somaDias(base, m0.n); while(!ehDiaUtil(data)) data = somaDias(data, -1); }
   const implanta = /implant|restabele|reativ/.test(m0.verbo);
   return {data, rotulo: implanta ? "Implantação (tutela)" : "Ordem ao INSS (liminar)", curto: implanta ? "Conferir a implantação" : "INSS decide (liminar)",
@@ -36960,7 +37028,7 @@ function vigiaRecursoInss(k){
   // o recurso já veio, ou o processo andou (trânsito, baixa): nada a vigiar
   if(movs.some(x=>x.a!==s.a && x.mv.data>=s.mv.data && /recurso|apela|transit|baixa definitiva/.test(dsa(x.mv.ato)))) return null;
   const tac = cienciaTacita(s.mv.data);
-  return {ate:contarPrazo(tac, {n: s.mv.jef ? 10 : 30, uteis:true}), tac, jef:s.mv.jef, de:s.mv.data};
+  return {ate:contarPrazo(tac, {n: s.mv.jef ? 10 : 30, uteis:true}, k), tac, jef:s.mv.jef, de:s.mv.data};
 }
 // F236 · citado o INSS, a contestação dele vem em N dias úteis da ciência tácita: no JEF sem prazo em dobro (Lei
 // 10.259/2001, art. 9º), fora dele em dobro (CPC, art. 183). O N é o do despacho; sem ele, nada se estima.
@@ -36973,7 +37041,7 @@ function contestacaoInss(k){
     .map(x=>/contesta[çc][ãa]o[^.]{0,80}?no prazo de (\d{1,3})/i.exec(String(x.texto).replace(/\s+/g," "))).find(Boolean);
   if(!m) return null;
   const tac = cienciaTacita(cit.mv.data), n = +m[1];
-  return {ate:contarPrazo(tac, {n: cit.mv.jef ? n : n*2, uteis:true}), tac, n, jef:cit.mv.jef, de:cit.mv.data};
+  return {ate:contarPrazo(tac, {n: cit.mv.jef ? n : n*2, uteis:true}, k), tac, n, jef:cit.mv.jef, de:cit.mv.data};
 }
 // F236 · o pedido deferido no INSS, pela situação do PAT ("Concluída - Deferida") ou pelo resultado gravado: a data
 function concessaoNoInss(k){
@@ -37940,7 +38008,7 @@ function prazoDaEtapa(k){
   if(jef && PRAZO_ETAPA_JEF[id]) id = PRAZO_ETAPA_JEF[id];
   const item = PRAZOS_CATALOGO.find(x=>x.id===id); if(!item) return null;
   const de = f==="inss" && k.etapa==="decidido" && k.decisao_em ? k.decisao_em : hoje();
-  return {item, de, fatal: contarPrazo(de, item)};
+  return {item, de, fatal: contarPrazo(de, item, k), jf: item.uteis && ehJusticaFederal(k)};
 }
 function sugestaoPrazoEtapa(k, soltas){
   const s = prazoDaEtapa(k);
@@ -37948,7 +38016,7 @@ function sugestaoPrazoEtapa(k, soltas){
   // o caso já tem prazo fatal em aberto (o "Recorrer até" do indeferido, por exemplo): a etapa não oferece outro
   if((soltas||[]).some(x=>x.casoId===k.id && natDaLinha(x)==="fatal" && x.data>=hoje())) return "";
   return `<div class="fp3-etapa" role="note"><span class="fp3-sobre">Pela etapa “${esc(k.etapa)}”</span>
-    <b>${esc(s.item.rot)}</b><small>${esc(textoContagemPz(s.item.n, s.item.uteis, s.de, s.fatal, s.item.dec))}</small>
+    <b>${esc(s.item.rot)}</b><small>${esc(textoContagemPz(s.item.n, s.item.uteis, s.de, s.fatal, s.item.dec, s.jf))}</small>
     <div class="fp3-pe"><button type="button" class="fp3-pri" onclick="criarPrazoDaEtapa('${k.id}')" title="Criar o prazo desta etapa">Criar</button><button type="button" class="fp3-sec" onclick="_pzEtapaFora.add('${k.id}|'+${JSON.stringify(k.etapa).replace(/"/g,"&quot;")});repintarFicha()" title="Este prazo não se aplica ao caso">Dispensar</button></div></div>`;
 }
 function criarPrazoDaEtapa(casoId){
@@ -38067,9 +38135,9 @@ function contagemPz(x){
   const n = +m[2], uteis = m[3]==="úteis", de = isoDoCarimbo(m[5]), item = PRAZOS_CATALOGO.find(c=>c.rot===m[1]);
   return {rot: m[1], n, uteis, base: m[4], de, txt: textoContagemPz(n, uteis, de, x.data, item && item.dec)};
 }
-function textoContagemPz(n, uteis, de, data, dec){
+function textoContagemPz(n, uteis, de, data, dec, jf){
   const cru = somaDias(de, n);
-  return uteis ? `São ${n} dias úteis da intimação de ${fmtBarra(de).slice(0,5)}, sem contar o dia da intimação, os fins de semana e os feriados.`
+  return uteis ? `São ${n} dias úteis da intimação de ${fmtBarra(de).slice(0,5)}, sem contar o dia da intimação, os fins de semana e os feriados${jf ? ", inclusive os da Justiça Federal (Lei 5.010/1966, art. 62)" : ""}.`
     : `São ${n} dias corridos da ciência, em ${fmtBarra(de).slice(0,5)}.${cru!==data ? ` O ${n}º dia cai ${DIA_NO[new Date(cru+"T12:00:00").getDay()]}, ${fmtBarra(cru).slice(0,5)}, e o prazo passa ${dec ? "ao último dia útil antes dele" : "ao primeiro dia útil"}.` : ""}`;
 }
 const IC_DOC_PZ = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>`;
@@ -45418,7 +45486,7 @@ function pzxPintar(){
         de = document.getElementById("pzx-de-txt");
   if(de) de.textContent = c ? (c.uteis ? "intimação (o dia da intimação não conta)" : "ciência da decisão") : "escolha do que é o prazo";
   if(ex) ex.textContent = !d ? "Escolha do que é o prazo, ou digite a data."
-    : `${diaLongoPz(d)}. ${c && c.fatal===d ? textoContagemPz(c.n, c.uteis, c.de, d, c.dec) + ` Base: ${c.base}.` : "Data digitada à mão."}`;
+    : `${diaLongoPz(d)}. ${c && c.fatal===d ? textoContagemPz(c.n, c.uteis, c.de, d, c.dec, c.jf) + ` Base: ${c.base}.` : "Data digitada à mão."}`;
   const f = d ? faltaPz({data: d, natureza: "fatal"}) : null;
   if(n) n.innerHTML = f ? `<b class="pzx-u-${f.urg}">${esc(String(f.n))}</b><small>${esc(f.urg==="venc" ? "dias úteis vencido" : f.un || f.txt)}</small>` : "";
   document.getElementById("and-pz-res")?.classList.toggle("pzx-venc", !!f && f.urg==="venc");
@@ -45506,12 +45574,20 @@ const PRAZOS_CATALOGO = [
   {id:"ques",  rot:"Quesitos e assistente técnico",       n:15,  uteis:true,  base:"art. 465, § 1º, do CPC"},
   {id:"quesj", rot:"Quesitos e assistente técnico (JEF)", n:10,  uteis:true,  base:"art. 12, § 2º, da Lei 10.259/2001; art. 12-A da Lei 9.099/95"},   // F236
   {id:"emen",  rot:"Emenda da inicial",                   n:15,  uteis:true,  base:"art. 321 do CPC"},
+  // F384 · os recursos às cortes superiores (o segurado conta simples; o dobro é do INSS, art. 183 do CPC)
+  {id:"resp",  rot:"Recurso especial ou extraordinário",  n:15,  uteis:true,  base:"art. 1.003, § 5º, do CPC"},
+  {id:"aresp", rot:"Agravo em recurso especial ou extraordinário", n:15, uteis:true, base:"arts. 1.003, § 5º, e 1.042 do CPC"},
+  {id:"aint",  rot:"Agravo interno",                      n:15,  uteis:true,  base:"art. 1.070 do CPC"},
   {id:"u5",    rot:"Outro prazo judicial de 5 dias úteis",  n:5,  uteis:true, base:"art. 219 do CPC"},
   {id:"u10",   rot:"Outro prazo judicial de 10 dias úteis", n:10, uteis:true, base:"art. 219 do CPC"},
   {id:"u15",   rot:"Outro prazo judicial de 15 dias úteis", n:15, uteis:true, base:"art. 219 do CPC"},
   {id:"u30",   rot:"Outro prazo judicial de 30 dias úteis", n:30, uteis:true, base:"art. 219 do CPC"},
   {id:"crps",  rot:"Recurso ao CRPS (ordinário ou especial)", n:30, uteis:false, base:"art. 77 do Regimento Interno do CRPS"},
   {id:"ccrps", rot:"Contrarrazões no CRPS",               n:30,  uteis:false, base:"art. 77 do Regimento Interno do CRPS"},
+  // F384 · contados da ciência do acórdão ou do despacho (Regimento Interno do CRPS, Portaria MPS 125/2026)
+  {id:"edcrps",rot:"Embargos de declaração no CRPS",      n:30,  uteis:false, base:"art. 92, § 2º, do Regimento Interno do CRPS"},
+  {id:"rclcrps",rot:"Reclamação ao Conselho Pleno",       n:30,  uteis:false, base:"art. 123, § 1º, do Regimento Interno do CRPS"},
+  {id:"agcrps",rot:"Agravo no CRPS (inadmissão de uniformização ou reclamação)", n:30, uteis:false, base:"art. 93, § 1º, do Regimento Interno do CRPS"},
   {id:"exig",  rot:"Cumprimento de exigência do INSS",    n:30,  uteis:false, base:"art. 566, caput, da IN 128/2022"},
   {id:"ms",    rot:"Mandado de segurança (decadência)",   n:120, uteis:false, dec:true, base:"art. 23 da Lei 12.016/2009"},
 ];
@@ -45550,13 +45626,26 @@ const ehDiaUtilAdm = iso => { const w=new Date(iso+"T12:00:00").getDay();
   return w!==0 && w!==6 && (ehPontoFacultativo(iso) || !feriadosNacionais(+iso.slice(0,4)).has(iso)); };
 function proxDiaUtilAdm(iso){ let d = iso; while(d && !ehDiaUtilAdm(d)) d = somaDias(d, 1); return d; }
 const emRecessoForense = iso => { const md=iso.slice(5); return md>="12-20" || md<="01-20"; };
-// da data da intimação (excluída) à data fatal, pela regra do item
-function contarPrazo(de, item){
+// F384 · os feriados da Justiça Federal (Lei 5.010/1966, art. 62): a quarta e a quinta-feira da Semana Santa, 11 de agosto,
+// 1º e 2 de novembro e 8 de dezembro. O carnaval e a sexta-feira santa já estão em feriadosNacionais, e o 20/12 a 06/01
+// no recesso. O processo é federal pelo número CNJ (segmento 4) ou pelo rito do JEF; sem isso, o calendário é o geral
+const FERIADOS_JF = ["08-11","11-01","11-02","12-08"];
+const ehFeriadoJF = iso => FERIADOS_JF.includes(iso.slice(5)) || [-4,-3].some(n=>somaDias(pascoa(+iso.slice(0,4)), n)===iso);
+function ehJusticaFederal(k){
+  if(!k) return false;
+  const nums = [k.processo, ...(Array.isArray(k.processos) ? k.processos.map(x=>x && (x.numero||x)) : [])].filter(Boolean);
+  for(const n of nums){ const d = String(n).replace(/\D/g,""); if(d.length===20) return d[13]==="4"; }
+  return (dadosJudiciais(k)||{}).rito==="JEF";
+}
+const casoDaTelaPz = () => (typeof casoSel==="string" && casoSel!=="__auto__" && D.casoPorId && D.casoPorId.get(casoSel)) || null;
+// da data da intimação (excluída) à data fatal, pela regra do item; `k` (o caso) escolhe o calendário do tribunal
+function contarPrazo(de, item, k){
   if(!de || !item) return "";
   let d = de;
   if(item.uteis){
+    const jf = ehJusticaFederal(k);
     let c = 0;
-    while(c < item.n){ d = somaDias(d,1); if(ehDiaUtil(d) && !emRecessoForense(d)) c++; }
+    while(c < item.n){ d = somaDias(d,1); if(ehDiaUtil(d) && !emRecessoForense(d) && !(jf && ehFeriadoJF(d))) c++; }
     return d;
   }
   d = somaDias(de, item.n);
@@ -45581,8 +45670,8 @@ function aplicarCatalogoPrazo(p){
   const item=PRAZOS_CATALOGO.find(x=>x.id===(sel||{}).value);
   const alvo=document.getElementById((sel&&sel.closest(".cat-prazo")||{dataset:{}}).dataset.alvo||`${p}-prazo`);
   if(!item || !de){ delete catPrazo[p]; if(base){ base.textContent=""; base.classList.remove("venceu"); } return; }
-  const fatal=contarPrazo(de, item);
-  catPrazo[p]={...item, de, fatal};
+  const k=casoDaTelaPz(), fatal=contarPrazo(de, item, k);
+  catPrazo[p]={...item, de, fatal, jf: item.uteis && ehJusticaFederal(k)};
   if(alvo){ alvo.value=fatal; alvo.dispatchEvent(new Event("change")); }
   if(base){
     base.textContent=`${item.n} dias ${item.uteis?"úteis":"corridos"} de ${fmt(de)} → fatal ${fmt(fatal)} (${item.base})`
@@ -49808,9 +49897,9 @@ const DESF_IMEDIATO = {rev:"revisão com decadência correndo", acerto:"acerto d
        if(inc) return {est:"risco", txt:`${_nomeS(inc)} em curso: precisa cessar antes do pedido`, fonte:"CNIS"};
        if(aa) return {est:"info", txt:`${_nomeS(aa)}: acaba com a emissão da certidão`, fonte:"CNIS"};
        return {est:"ok", txt:"nenhum benefício em manutenção", fonte: x.g ? "CNIS" : ""}; }},
-    {id:"ctc_especial", rot:"Tem tempo especial ou com deficiência?", base:"Lei 8.213/91, art. 96, I; IN 128/2022, art. 513, I e II", conf:"skill", campos:[],
+    {id:"ctc_especial", rot:"Tem tempo especial ou com deficiência?", base:"Lei 8.213/91, art. 96, I; IN 128/2022, art. 513, I e II", conf:"conferido", campos:[],
      mede:x=>({est:"info", txt:"saem discriminados na certidão, sem conversão; o regime próprio decide como conta (o PPP vai junto)"})},
-    {id:"ctc_aviso", rot:"O que muda no INSS?", base:"Lei 8.213/91, art. 96, III e VIII; IN 128/2022, arts. 517 e 519", conf:"skill", campos:[],
+    {id:"ctc_aviso", rot:"O que muda no INSS?", base:"Lei 8.213/91, art. 96, III e VIII; IN 128/2022, arts. 517 e 519", conf:"conferido", campos:[],
      mede:x=>{ const p = x.g ? _ctcPeriodos(x) : null, n = x.ct ? x.ct.carencia : null;
        return {est:"info", txt:`o tempo que vai para o regime próprio deixa de contar no INSS e não volta depois de render vantagem lá${n!=null && p ? `. Hoje o CNIS tem ${n} contribuições; levando o que vai já (${p.meses} meses), ficam cerca de ${Math.max(0, n - p.meses)}` : ""}. Decidir com o advogado o que levar`}; }},
   ], {ctc_orgao:["Órgão de destino (prefeitura, estado, União)", "text"], ctc_finalidade:["Para quê", "select", ["","Aposentar no regime próprio","Adicional ou licença-prêmio","Outra averbação"]],
@@ -49848,7 +49937,7 @@ const DESF_IMEDIATO = {rev:"revisão com decadência correndo", acerto:"acerto d
     {id:"iir_inicio", rot:"Desde quando vale a isenção?", base:"Portaria DIRBEN/INSS 992/2022, art. 291, §§ 2º e 3º", conf:"conferido", campos:[],
      mede:x=>{ const d = _iirDoc(x), dg = d && d.i.fatos && d.i.fatos.diag;
        return dg ? {est:"info", txt:`desde ${fmtBarra(dg).slice(3)}, o mês do diagnóstico`, fonte:d.i.fonte} : {est:"info", txt:"desde o mês do laudo; com a data do diagnóstico no laudo, desde ela"}; }},
-    {id:"iir_restituicao", rot:"E o imposto já descontado?", base:"Portaria DIRBEN/INSS 992/2022, art. 293, § 1º; CTN, art. 168, I (conferir)", conf:"skill", campos:[],
+    {id:"iir_restituicao", rot:"E o imposto já descontado?", base:"Portaria DIRBEN/INSS 992/2022, art. 293, § 1º; CTN, art. 168, I; Tema 1373/STF", conf:"conferido", campos:[],
      // F235 · o dinheiro do caso: o período descontado (do diagnóstico, ou da aposentadoria, até o extrato mostrar que parou) e o primeiro ano a vencer
      mede:x=>{ const d = _iirDoc(x), dg = d && d.i.fatos && d.i.fatos.diag, exame = (x.clin||[]).filter(i=>/bi[óo]psia|anatomopatol/i.test(`${i.titulo}`)).sort((a, b)=>a.data < b.data ? -1 : 1)[0];
        const ini = dg || (exame && exame.data) || (d && d.i.data) || "", ap = _ativosS(x).find(b=>/^(4[1-6]|57|32|21|93)$/.test(b.especie)), de = [ini, ap && ap.de].filter(Boolean).sort().pop() || "";
@@ -49859,7 +49948,7 @@ const DESF_IMEDIATO = {rev:"revisão com decadência correndo", acerto:"acerto d
        if(ano0 >= anoHoje) return {est:"info", txt:`o imposto descontado ${periodo}, deste ano, volta na declaração do ano que vem, informando o benefício como rendimento isento por doença grave; não há anos anteriores a recuperar`, fonte};
        const vence = ano0 + 6, perto = vence <= anoHoje + 2;
        return {est: perto ? "risco" : "info", txt:`${perto ? "prazo correndo: " : ""}o imposto descontado ${periodo}${fim ? " (desde então o desconto parou, pelo extrato)" : ""} se pede de volta ${via}. Prazo: 5 anos; o desconto de ${ano0} é o primeiro a vencer, em ${vence}, se os 5 anos contarem da declaração entregue em ${ano0 + 1} (conferir). Peça ao cliente os informes de rendimentos e as declarações de ${ano0} a ${fim ? fim.slice(3) : anoHoje - 1}`, fonte}; }},
-    {id:"iir_atual", rot:"Precisa estar doente hoje?", base:"Súmula 627/STJ (conferir)", conf:"skill", campos:[],
+    {id:"iir_atual", rot:"Precisa estar doente hoje?", base:"Súmula 627/STJ", conf:"conferido", campos:[],
      mede:x=>({est:"info", txt:"não: a doença em remissão mantém a isenção"})},
   ], {iir_doenca:["Doença (como está no laudo)", "text"]},
     {resumo:"Tira o desconto do imposto de renda da aposentadoria ou pensão de quem tem doença da lista da lei, desde o diagnóstico; o que já foi descontado pode voltar.",
@@ -49898,7 +49987,7 @@ const DESF_IMEDIATO = {rev:"revisão com decadência correndo", acerto:"acerto d
     for(let n = 0; k <= lim && n < 120; n++){ out.push(k.split("-").reverse().join("/")); k = somarMeses(`${k}-01`, 1).slice(0,7); }
     return out; };
   registrarReq("GPS", [
-    {id:"gps_categoria", rot:"Como a pessoa paga o INSS?", base:"Lei 8.212/91, art. 21; IN 128/2022, art. 107", conf:"skill", campos:[],
+    {id:"gps_categoria", rot:"Como a pessoa paga o INSS?", base:"Lei 8.212/91, art. 21; IN 128/2022, art. 107", conf:"conferido", campos:[],
      mede:x=>{ const w = _vincs(x).filter(w=>/facultativ|individual|MEI/i.test(w.v.tipo||"") || w.ind.some(i=>/LC123|MEI|FBR/.test(i))).sort((a, b)=>a.ate < b.ate ? -1 : 1).pop();
        if(!w) return {est:"informar", txt:"o CNIS não mostra carnê: informe se paga como facultativo, autônomo ou MEI"};
        const al = w.ind.some(i=>/FBR/.test(i)) ? "5 % (baixa renda)" : w.ind.some(i=>/LC123/.test(i)) ? "11 % (plano simplificado)" : w.ind.some(i=>/MEI/.test(i)) ? "5 % (MEI)" : "20 %";
@@ -49918,18 +50007,18 @@ const DESF_IMEDIATO = {rev:"revisão com decadência correndo", acerto:"acerto d
        return {est:"divergente", txt:`${plu(ms, "mês", "meses")} de 5 % sem validação (${ws.map(w=>`${fmtBarra(w.de)} a ${fmtBarra(w.ate)}`).join("; ")}): não contam para a carência até o acerto`, fonte:"CNIS",
          div:{inss:"pagar a diferença até 11 % (IN 128, art. 103, V)", judicial:"atualizar o CadÚnico antes da exclusão e pedir a validação retroativa (Tema 285 TNU, conferir)"}}; }},
     // F235 · o carnê de 5 % só vale com o CadÚnico em dia: o vencido explica os meses sem validação e trava o 5 % de agora
-    {id:"gps_cadunico", rot:"O CadÚnico está atualizado para o carnê de 5 %?", base:"IN 128/2022, art. 107, § 2º (conferir)", conf:"skill", campos:[],
+    {id:"gps_cadunico", rot:"O CadÚnico está atualizado para o carnê de 5 %?", base:"Lei 8.212/91, art. 21, § 4º; IN 128/2022, art. 107, § 2º, XIV, b e d", conf:"conferido", campos:[],
      mede:x=>{ const fbr = _vincs(x).some(w=>w.ind.some(i=>/FBR/.test(i))); if(!fbr) return {est:"info", txt:"não paga o carnê de 5 %"};
        const at = (x.cad||{}).atualizada_em, iso = at ? (isoBr(at) || String(at).slice(0,10)) : null, venceu = iso && somarMeses(iso, 24) < x.hoje;
        if(iso && !venceu) return {est:"ok", fonte:"CadÚnico", txt:`atualizado em ${fmtBarra(iso)}, dentro dos 24 meses`};
        return {est:"informar", fonte: iso ? "CadÚnico" : "", txt:`${iso ? `atualizado em ${fmtBarra(iso)}, passou de 24 meses` : "o dossiê não trouxe a ficha"}: atualize no CRAS antes de voltar a pagar 5 % e traga a folha resumo do CadÚnico atualizada`}; }},
-    {id:"gps_11pc", rot:"O carnê de 11 % precisa de complemento?", base:"Lei 8.212/91, art. 21, §§ 2º e 3º; Lei 8.213/91, art. 55, § 4º", conf:"skill", campos:[],
+    {id:"gps_11pc", rot:"O carnê de 11 % precisa de complemento?", base:"Lei 8.212/91, art. 21, §§ 2º e 3º; Lei 8.213/91, art. 55, § 4º", conf:"conferido", campos:[],
      mede:x=>_vincs(x).some(w=>w.ind.some(i=>/LC123/.test(i))) ? {est:"info", txt:"vale para a aposentadoria por idade; para a por tempo de contribuição e para a certidão, só complementado até 20 %", fonte:"CNIS"}
        : {est:"info", txt:"sem carnê de 11 % no CNIS"}},
-    {id:"gps_valor", rot:"Quanto custa por mês?", base:"Lei 8.212/91, arts. 21 e 30, II", conf:"skill", campos:[],
+    {id:"gps_valor", rot:"Quanto custa por mês?", base:"Lei 8.212/91, arts. 21 e 30, II; Portaria Interministerial MPS/MF 13/2026", conf:"conferido", campos:[],
      mede:x=>{ const sm = smEm(x.hoje), r = v => `R$ ${(sm*v).toLocaleString("pt-BR", {minimumFractionDigits:2, maximumFractionDigits:2})}`;
-       return {est:"info", txt:`sobre o salário mínimo de hoje: 5 % = ${r(0.05)}, 11 % = ${r(0.11)}, 20 % = ${r(0.20)}; vence no dia 15 do mês seguinte (o valor do mínimo de 2026 não foi conferido)`}; }},
-    {id:"gps_efeito", rot:"O que muda na aposentadoria?", base:"Lei 8.213/91, art. 25, II", conf:"skill", campos:[],
+       return {est:"info", txt:`sobre o salário mínimo de hoje: 5 % = ${r(0.05)}, 11 % = ${r(0.11)}, 20 % = ${r(0.20)}; vence no dia 15 do mês seguinte`}; }},
+    {id:"gps_efeito", rot:"O que muda na aposentadoria?", base:"Lei 8.213/91, art. 25, II", conf:"conferido", campos:[],
      // F235 · a conta em datas: a 180ª com e sem os atrasados (ou a diferença do 5 %), e a data provável pela idade; nunca "pagando os atrasados" que não se podem pagar
      mede:x=>{ if(!x.ct) return {est:"informar", txt:"o CNIS não foi lido"};
        const n = x.ct.carencia, at = _gpsPagaveis(x).length, fbr = _gpsFbrMeses(x), d = _gpsQuando(x), ps = [];
@@ -50010,7 +50099,7 @@ const DESF_IMEDIATO = {rev:"revisão com decadência correndo", acerto:"acerto d
        if(!sal) return {est:"info", txt:`${base}; nunca abaixo do salário mínimo`};
        const b93 = sal*pc/100, b21 = sal*0.6*pc/100, sm = smEm(x.der);
        return {est:"info", txt:`${base}. Com a média de ${moedaBR(sal)} do relato (confira no CNIS dele): B93 ${moedaBR(Math.max(b93, sm))}; B21 ${moedaBR(b21)}${b21 < sm ? `, que sobe ao mínimo (${moedaBR(sm)})` : ""}`, fonte:"relato da recepção"}; }},
-    {id:"b93_foro", rot:"Se for à Justiça, qual?", base:"CF, art. 109, I (conferir para o dependente)", conf:"skill", campos:[],
+    {id:"b93_foro", rot:"Se for à Justiça, qual?", base:"CF, art. 109, I (as causas de acidente do trabalho ficam fora da Justiça Federal)", conf:"conferido", campos:[],
      mede:x=>({est:"info", txt:"a ação acidentária vai à Justiça Estadual; a cota da pensão comum por acidente vai à Justiça Federal. Decisão do advogado"})},
     // F235 · a pensão que já saiu como comum: revisão com troca de espécie, o prazo do recurso e o da revisão
     {id:"b93_revisao", rot:"A pensão deste óbito já saiu como comum (B21)?", base:"Lei 8.213/91, arts. 21, IV, d, 77, § 2º-A, e 103; EC 103/2019, art. 26, § 3º, II", conf:"conferido", campos:[],
@@ -50054,11 +50143,11 @@ const DESF_IMEDIATO = {rev:"revisão com decadência correndo", acerto:"acerto d
        if(ps.length) return {est:"ok", txt:`sim: ${ps.map(p=>`${p.servico || "pedido"}${p.protocolo ? ` (protocolo ${p.protocolo})` : ""}${p.entrada ? `, de ${p.entrada}` : ""}`).join("; ")}${ls.length ? `; e ${plu(ls.length, "laudo do INSS", "laudos do INSS")} (${ls.length===1 ? "perícia" : "perícias"} de ${ls.map(l=>l.exame).join(" e ")})` : ""}; baixados com o gov.br do titular: entregue a ele, sem procuração`, fonte:"dossiê"};
        const bronze = /bronze/i.test(relatoDe(x.c));
        return {est:"informar", txt:`${bronze ? "o gov.br bronze não abre tudo no Meu INSS: com o do titular em prata ou ouro, a cópia digital sai pela extensão Dossiê" : "com o gov.br prata ou ouro do titular, a cópia digital sai pela extensão Dossiê"}; sem canal remoto, a cópia sai na agência, com a declaração de que não consegue usar os canais remotos (IN 128, art. 602, § 1º) e a procuração`}; }},
-    {id:"copia_decisao", rot:"Que decisão a cópia vai mostrar? (o pedido, a data e o motivo)", base:"IN 128/2022, art. 602; Regimento do CRPS, art. 80, § 1º (conferir)", conf:"skill", campos:["copia_decisao"],
+    {id:"copia_decisao", rot:"Que decisão a cópia vai mostrar? (o pedido, a data e o motivo)", base:"IN 128/2022, art. 602; Regimento do CRPS, art. 80, § 1º", conf:"conferido", campos:["copia_decisao"],
      mede:x=>{ const pc = (x.fd.processos||[]).filter(p=>((p.comunicacoes||[]).slice(-1)[0]||{}).contra).pop(), d = x.v.copia_decisao;
        if(pc){ const c0 = pc.comunicacoes.slice(-1)[0]; return {est:"ok", txt:`${pc.servico || "pedido"}${pc.entrada ? ` de ${pc.entrada}` : ""}: ${String(c0.decisao||"").toLowerCase()}${pc.atualizado ? ` em ${pc.atualizado}` : ""}${c0.motivo ? ` (${c0.motivo})` : ""}`, fonte:"cópia do processo"}; }
        return d ? {est:"ok", txt:d, fonte:"campo"} : {est:"informar", txt:"anote a decisão da carta: o pedido (espécie, NB ou protocolo), a data da decisão e o motivo"}; }},
-    {id:"copia_prazo", rot:"Há recurso com prazo correndo?", base:"Regimento do CRPS, arts. 77, 78 e 80, § 1º, IV (conferir)", conf:"skill", campos:["copia_ciencia"],
+    {id:"copia_prazo", rot:"Há recurso com prazo correndo?", base:"Regimento do CRPS, arts. 77, 78 e 80, § 1º", conf:"conferido", campos:["copia_ciencia"],
      mede:x=>{ const pz = x.c ? (prazosDoDossie(x.c)||[])[0] : null;
        if(pz) return {est:"risco", txt:`prazo correndo: ${pz.texto} (${faltamTxt(pz.fatal)}); anote já e não espere a cópia`, fonte:"dossiê", quando:pz.fatal};
        if(x.v.copia_ciencia){ const f0 = new Date(Date.parse(x.v.copia_ciencia+"T12:00:00") + 30*864e5).toISOString().slice(0,10), f = typeof proxDiaUtil==="function" ? proxDiaUtil(f0) : f0;
@@ -50178,14 +50267,14 @@ const DESF_IMEDIATO = {rev:"revisão com decadência correndo", acerto:"acerto d
   registrarReq("SD", [
     {id:"sd_canal", rot:"Onde se pede?", base:"Lei 10.779/2003, art. 2º (red. Lei 15.265/2025)", conf:"conferido", campos:[],
      mede:x=>({est:"info", txt:"no Ministério do Trabalho, pelo gov.br (Portal Emprega Brasil) ou pelo app Carteira de Trabalho Digital; não no Meu INSS"})},
-    {id:"sd_prazo", rot:"Até quando pedir, e quanto recebe?", base:"Resolução Codefat 1.027/2025, art. 15 (janela), e Lei 10.779/2003, art. 1º (uma parcela de 1 salário mínimo por mês de defeso); datas da piracema da SEMIL/SP: conferir o ato do defeso", conf:"skill", campos:[],
+    {id:"sd_prazo", rot:"Até quando pedir, e quanto recebe?", base:"Resolução Codefat/MTE 1.027/2025, art. 15, na redação da Resolução 1.045/2026 (30 dias antes a 90 dias depois do início); Lei 10.779/2003, art. 1º, caput e § 13", conf:"conferido", campos:[],
      mede:x=>{ const p = piracemaDe(x.hoje); if(!p) return {est:"info", txt:"confira as datas do defeso no ato do Ministério da Pesca"};
        const per = `piracema de ${fmtBarra(p.ini)} a ${fmtBarra(p.fim)}`, sm = smEm(p.ini);
        const parc = `${p.parcelas} parcelas, uma por mês de defeso, de 1 salário mínimo${sm ? ` (${moedaBR(sm)} em ${anoDe(p.ini)}; as do ano seguinte pelo mínimo novo)` : ""}, pagas durante o defeso`;
        if(_sdOutra(x)) return {est:"info", txt:`${per}, com o pedido de ${fmtBarra(p.abre)} a ${fmtBarra(p.fecha)}: neste caso não se pede, porque houve outra renda no período que tem de ser só de pesca`};
        if(x.hoje < p.abre) return {est:"info", txt:`${per}: o pedido abre em ${fmtBarra(p.abre)} e vai até ${fmtBarra(p.fecha)}; ${parc} (conferir o ato do defeso e a resolução do Codefat)`, quando:p.abre};
        return {est:"risco", txt:`pedido até ${fmtBarra(p.fecha)}: a ${per} tem a janela do pedido de ${fmtBarra(p.abre)} a ${fmtBarra(p.fecha)} (30 dias antes a 90 dias depois do início); ${parc} (conferir o ato do defeso e a resolução do Codefat)`, quando:p.fecha}; }},
-    {id:"sd_local", rot:"Pesca na área do defeso e mora em município do ato, ou vizinho?", base:"Lei 10.779/2003, art. 1º, §§ 2º e 11; Decreto 8.424/2015, art. 2º, VII (conferir)", conf:"skill", campos:[],
+    {id:"sd_local", rot:"Pesca na área do defeso e mora em município do ato, ou vizinho?", base:"Lei 10.779/2003, art. 1º, § 11; Decreto 8.424/2015, art. 2º, VII", conf:"conferido", campos:[],
      mede:x=>{ const r = x.c ? pescaDoDossie(x.c).rgp : null, mora = x.c ? [x.c.cidade, x.c.uf].filter(Boolean).join("/") : "";
        return r && r.local ? {est:"info", txt:`pelo RGP, pesca no ${r.local.replace(/\s*·\s*/g, ", em ")}${r.especies ? ` (${r.especies})` : ""}${mora ? `; mora em ${mora}` : ""}: confira se o município está no ato do defeso da piracema`, fonte:"RGP"}
          : {est:"informar", txt:"pergunte em que rio ou represa pesca, que peixe e em que cidade mora: o defeso vale para quem mora em município do ato ou vizinho"}; }},
@@ -50204,18 +50293,18 @@ const DESF_IMEDIATO = {rev:"revisão com decadência correndo", acerto:"acerto d
     {id:"sd_notas", rot:"Tem notas de venda do pescado em pelo menos 6 dos 12 meses antes do defeso?", base:"Lei 10.779/2003, art. 2º, § 2º, II", conf:"conferido", campos:["sd_notas"],
      mede:x=>x.v.sd_notas==="" || x.v.sd_notas==null ? {est:"informar", txt:"informe em quantos meses há nota de venda (ou contribuição sobre a venda)"}
        : +x.v.sd_notas >= 6 ? {est:"ok", txt:`${x.v.sd_notas} meses com nota`, fonte:"campo"} : {est:"falta", txt:`só ${x.v.sd_notas} meses com nota; a lei pede 6`, fonte:"campo"}},
-    {id:"sd_reap", rot:"Entregou o relatório anual da pesca (REAP)?", base:"Lei 10.779/2003 (red. Lei 15.399/2026, conferir)", conf:"skill", campos:["sd_reap"],
+    {id:"sd_reap", rot:"Entregou o relatório anual da pesca (REAP)?", base:"Lei 10.779/2003, art. 2º, § 12 (redação da Lei 15.399/2026); Decreto 8.424/2015, art. 2º, § 1º, II", conf:"conferido", campos:["sd_reap"],
      mede:x=>x.v.sd_reap==="Sim" ? {est:"ok", txt:"entregue", fonte:"campo"} : x.v.sd_reap==="Não" ? {est:"falta", txt:"sem o relatório anual, o pedido não sai", fonte:"campo"} : {est:"informar", txt:"pergunte se entregou o relatório anual da pesca"}},
-    {id:"sd_beneficio", rot:"Recebe algum benefício continuado?", base:"Lei 10.779/2003, art. 2º, § 2º, III, e art. 3º (conferir)", conf:"skill", campos:[],
+    {id:"sd_beneficio", rot:"Recebe algum benefício continuado?", base:"Lei 10.779/2003, art. 2º, § 1º; Decreto 8.424/2015, art. 2º, IV", conf:"conferido", campos:[],
      mede:x=>{ const b = _ativosS(x).find(b=>!/^(21|93|36|94)$/.test(b.especie));
        return b ? {est:"impedido", txt:`recebe ${_nomeS(b)}: não acumula com o seguro-defeso (pensão e auxílio-acidente podem)`, fonte:"CNIS"} : {est:"ok", txt:"nenhum benefício que impeça", fonte: x.g ? "CNIS" : ""}; }},
-    {id:"sd_cadunico", rot:"Está no CadÚnico, atualizado?", base:"Lei 10.779/2003, art. 1º, § 10 (conferir)", conf:"skill", campos:[],
+    {id:"sd_cadunico", rot:"Está no CadÚnico, atualizado?", base:"Lei 10.779/2003, art. 1º, § 10 (redação da Lei 15.399/2026)", conf:"conferido", campos:[],
      mede:x=>x.cad ? {est:"ok", txt:`família no CadÚnico${x.cad.atualizada_em ? `, atualizada em ${x.cad.atualizada_em}` : ""}: o cadastro é exigido, sem limite de renda, e o Bolsa Família não impede o defeso`, fonte:"CadÚnico"} : {est:"informar", txt:"confira se a família está no CadÚnico, atualizado: o cadastro é exigido"}},
-    {id:"sd_biometria", rot:"Tem documento com biometria (CIN, título ou CNH) e a conta gov.br?", base:"Lei 10.779/2003, art. 1º, § 10 (conferir)", conf:"skill", campos:[],
+    {id:"sd_biometria", rot:"Tem documento com biometria (CIN, título ou CNH) e a conta gov.br?", base:"Lei 10.779/2003, art. 1º, § 10 (redação da Lei 15.399/2026); Decreto 8.424/2015, art. 2º, VI", conf:"conferido", campos:[],
      mede:x=>{ const ci = x.c ? pescaDoDossie(x.c).cin : null, gov = !!(x.c && Object.keys(x.c.dossie||{}).some(k=>k!=="transparencia"));
        return ci ? {est:"ok", txt:`CIN com biometria${ci.emitida ? `, emitida em ${fmtBarra(ci.emitida)}` : ""}${gov ? "; o dossiê foi baixado com o gov.br dele" : ""}`, fonte:"dossiê"}
          : {est:"informar", txt:"confira se tem a identidade nova (CIN), o título ou a CNH com biometria, e o acesso ao gov.br"}; }},
-    {id:"sd_um_por_ano", rot:"Já recebeu seguro-defeso neste defeso, ou de outro peixe neste ano?", base:"Lei 10.779/2003, arts. 1º, § 5º, e 4º-A (conferir); Portaria DIRBEN 990/2022, art. 92, § 4º", conf:"skill", campos:[],
+    {id:"sd_um_por_ano", rot:"Já recebeu seguro-defeso neste defeso, ou de outro peixe neste ano?", base:"Lei 10.779/2003, art. 1º, § 5º", conf:"conferido", campos:[],
      mede:x=>{ const cpf = soDig((x.c||{}).cpf), ps = (x.transp||{}).pessoas||[], p = cpf ? ps.find(p=>soDig(p.cpf)===cpf) : ps.length===1 ? ps[0] : null;
        const d = p && (p.programas||[]).find(g=>/defeso/i.test(`${g.programa} ${g.rotulo||""}`));
        if(!d) return {est:"informar", txt:"pergunte se já pediu ou recebeu seguro-defeso neste ano, de outro peixe: é um por ano"};
