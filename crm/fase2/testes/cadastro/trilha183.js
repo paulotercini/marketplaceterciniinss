@@ -145,6 +145,18 @@ const DADOS = {
   conf("a jornada abre a trilha do Escritório, em vermelho, com o documento aguardado", esc.tit === "Atendimento" && esc.x === "relatório médico" && esc.cor === "#7C8DA6" && esc.sel);
   conf("a trilha do INSS de auxílio-acidente existe", await p.evaluate(() => ritoPadrao({ especie: "B94" }, "inss") === "inss_b94" && ritoPadrao({ especie: "B31", processo: "5000850-63.2023.4.03.6314" }, "judicial") === "jef_inc" && ritoPadrao({ especie: "B42", processo: "5000850-63.2023.4.03.6136" }, "judicial") === "vara"));
 
+  // F383 · o histórico vertical: o resumo fica no alto, a etapa mais nova acima, a fonte de cada etapa e as seguintes escondidas
+  await p.evaluate(() => { trAjuda = false; trSel = {}; trVerFase(casoSel, "judicial"); });
+  const v374 = await p.evaluate(() => { const l = document.querySelector(".tr-aberta .tr-l"), fut = [...document.querySelectorAll(".tr-l>li.tr-fut")];
+    return { dir: l && getComputedStyle(l).flexDirection, resumo: !!document.querySelector(".tr-aberta .tr-resumo") && getComputedStyle(document.querySelector(".tr-resumo")).display !== "none",
+      fonte: [...document.querySelectorAll(".tr-aberta .tr-sf .tr-fonte")].some(x => x.offsetParent && x.textContent.trim()),
+      fut: fut.length, escondidas: fut.every(x => !x.offsetParent), bt: (document.querySelector(".tr-fut-bt") || {}).textContent || "" }; });
+  conf("F383 aberta, a trilha é vertical com a mais nova no alto, o resumo continua e a fonte aparece", v374.dir === "column-reverse" && v374.resumo && v374.fonte || (console.log(JSON.stringify(v374)), false));
+  conf("F383 as etapas depois da próxima ficam escondidas até o botão", v374.fut > 0 && v374.escondidas && /Mostrar as etapas seguintes/.test(v374.bt) || (console.log(JSON.stringify(v374)), false));
+  await p.click(".tr-fut-bt"); await p.waitForTimeout(150);
+  conf("F383 o botão mostra as etapas seguintes", await p.evaluate(() => [...document.querySelectorAll(".tr-l>li.tr-fut")].every(x => x.offsetParent) && /Esconder/.test(document.querySelector(".tr-fut-bt").textContent)));
+  if (FOTO) await p.screenshot({ path: FOTO + "-3.png", clip: { x: 0, y: 0, width: 1440, height: 1100 } });
+
   for (const [nome, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${nome}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);
   const falhas = ok.filter(([, v]) => !v).length + erros.length;

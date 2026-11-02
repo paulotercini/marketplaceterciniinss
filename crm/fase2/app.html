@@ -6013,7 +6013,32 @@ html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-st{font-size:13px;disp
 html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-st::before{content:"· "}
 html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b::after{display:none}
 html[data-tema="v10"] .tr-resumo{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;padding:4px 16px 14px;font-size:13px;color:var(--cinza)}
-html[data-tema="v10"] .tr-aberta .tr-resumo{display:none}
+/* F383 (12.41) · o resumo fica no alto também com o histórico aberto, e o histórico é vertical, a etapa mais nova no alto */
+html[data-tema="v10"] .tr-resumo{margin:0 16px 10px;padding:10px 12px;border-radius:6px;background:color-mix(in srgb,var(--tc) 7%,#FFFFFF);border-left:3px solid var(--tc)}
+html[data-tema="v10"] .tr-resumo.tr-resumo-longo{background:#FBECEC;border-left-color:var(--venc)}
+html[data-tema="v10"] .tr-par{all:unset;cursor:pointer;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;margin:-4px 16px 12px;padding:8px 12px;border-radius:6px;font-size:13px;color:var(--texto);background:color-mix(in srgb,var(--tc) 8%,#FFFFFF);border-left:3px solid var(--tc)}
+html[data-tema="v10"] .tr-par small{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--tt)}
+html[data-tema="v10"] .tr-par:focus-visible{outline:2px solid #121212;outline-offset:1px}
+html[data-tema="v10"] .tr-aberta .tr-rol{overflow:visible}
+html[data-tema="v10"] .tr-aberta .tr-seta{display:none!important}
+html[data-tema="v10"] .tr-aberta .tr-rol-box::before,html[data-tema="v10"] .tr-aberta .tr-rol-box::after{display:none}
+html[data-tema="v10"] .tr-aberta .tr-l{display:flex;flex-direction:column-reverse;min-width:0;gap:0;padding:0}
+html[data-tema="v10"] .tr-aberta .tr-l>li{display:grid;grid-template-columns:minmax(0,120px) minmax(0,1fr);gap:0 10px;align-items:center;border-bottom:1px dashed #E7E6E1}
+html[data-tema="v10"] .tr-aberta .tr-l>li:first-child{border-bottom:0}
+html[data-tema="v10"] .tr-aberta .tr-g{height:auto;white-space:normal}
+html[data-tema="v10"] .tr-aberta .tr-et{flex-direction:row;align-items:center;flex-wrap:wrap;gap:2px 10px;min-height:0;padding:7px 8px}
+html[data-tema="v10"] .tr-aberta .tr-b{width:12px;height:12px;flex:none;border-radius:50%}
+html[data-tema="v10"] .tr-aberta .tr-nm{flex:1 1 160px;font-size:13px}
+html[data-tema="v10"] .tr-aberta .tr-fonte{order:3;flex-basis:100%;padding-left:22px;font-size:12px;color:#8E8B84}
+html[data-tema="v10"] .tr-aberta .tr-d{margin-left:auto;font-size:12px}
+html[data-tema="v10"] .tr-fonte{display:none}
+html[data-tema="v10"] .tr-aberta .tr-fonte{display:block}
+html[data-tema="v10"] .tr-aberta .tr-l>li.tr-fut{display:none}
+html[data-tema="v10"] .tr-fut-ver .tr-l>li.tr-fut{display:grid}
+html[data-tema="v10"] .tr-fut-bt{all:unset;cursor:pointer;margin:6px 8px 0;font-size:12px;color:var(--cinza);text-decoration:underline}
+html[data-tema="v10"] .tr-fechada .tr-fut-bt{display:none}
+html[data-tema="v10"] .tr-fut-bt:focus-visible{outline:2px solid #121212;outline-offset:2px}
+@media (max-width:760px){html[data-tema="v10"] .tr-aberta .tr-l>li{grid-template-columns:minmax(0,1fr)} html[data-tema="v10"] .tr-aberta .tr-g:empty{display:none}}
 html[data-tema="v10"] .tr-resumo .tr-agora small{font-size:13px;color:var(--cinza-claro)}
 html[data-tema="v10"] .tr-resumo .tr-agora b{font-weight:600;color:var(--texto)}
 html[data-tema="v10"] .tr-resumo .tr-agora .et-velha{color:var(--venc)}
@@ -6255,7 +6280,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.40</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.41</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -39268,7 +39293,7 @@ function ritoDe(k, fase){
   return ritoManual(k, fase) || (ritoDados(k, fase)||{}).r || ritoPadrao(k, fase);
 }
 const marcaTrilha = (k, rito, nome) => (trilhaDe(k).m||{})[rito+":"+nome] || null;
-let trVer = {}, trSel = {}, trAbre = {}, trAjuda = false;   // fase em vista, etapa aberta, grupos abertos, legenda
+let trVer = {}, trSel = {}, trAbre = {}, trAjuda = false, trFut = {};   // fase em vista, etapa aberta, grupos abertos, legenda
 function jornadaFases(k){
   const atual = faseDaTrilha(k), ordem = ["escritorio","inss","conselho","judicial"], ia = ordem.indexOf(atual);
   const marcou = (trilhaDe(k).fases)||{};
@@ -39321,6 +39346,22 @@ function gruposTrilha(ets){
   ets.forEach((e,i)=>{ if(e.g || !gs.length) gs.push({g:e.g, ex:e.ex, ix:[]}); gs[gs.length-1].ix.push(i); });
   return gs;
 }
+// F383 (12.41) · o histórico vertical das etapas (proposta aprovada pelo Paulo em 02.11.2026): cada etapa cumprida diz a fonte
+function fonteEtapa(m){
+  if(m.s!=="f" && m.s!=="a") return "";
+  const t = m.por || (m.v ? "pelos fatos oficiais" : m.s==="f" ? "marcada pela equipe" : "");
+  return t ? `<span class="tr-fonte">${esc(t)}</span>` : "";
+}
+// F383 (12.41) · o mandado de segurança em curso ao lado do recurso ganha uma linha própria abaixo do resumo
+function linhaParalela(k, faseAt){
+  const p = trilhaParalela(k); if(!p) return "";
+  let ult = null;
+  try{ const r = ritoDe(k, "judicial"), ets = TRILHAS[r].e.map(lerEtapaTrilha), ms = marcasDaTrilha(k, "judicial", faseAt, r, ets);
+    ms.forEach((m,i)=>{ if(m.s==="f" && (!ult || (m.d||"")>=(ult.d||""))) ult = {n:ets[i].n, d:m.d}; }); }catch(e){}
+  const desde = (ult && ult.d) || p.desde, dias = desde ? diasEntreIso(desde, hoje()) : null, C = COR_FASE.judicial;
+  return `<button type="button" class="tr-par" style="--tc:${C.c};--tt:${C.t}" onclick="trVerFase('${k.id}','judicial')" title="ver as etapas do processo judicial">
+    <small>Em paralelo · Judicial</small> <span>${esc(p.classe || "Mandado de segurança")}${ult ? `: <b>${esc(ult.n.toLowerCase())}</b>` : ""}${desde ? ` desde ${dCurta(desde)}${dias>=0 ? ` (há ${dias} ${dias===1?"dia":"dias"})` : ""}` : ""}</span></button>`;
+}
 function faixaTrilha(k){
   const faseAt = faseDaTrilha(k); if(!faseAt) return "";
   const ver = trVer[k.id] || faseAt, C = COR_FASE[ver], rito = ritoDe(k, ver), T = TRILHAS[rito];
@@ -39353,6 +39394,8 @@ function faixaTrilha(k){
   // F323 · a próxima etapa (a primeira depois da atual que não foi cumprida nem pulada) ganha o contorno e a palavra "próxima"
   const iAt = ets.findIndex(e=>mk(e).s==="a");
   const pxI = iAt<0 ? -1 : ets.findIndex((e,j)=>j>iAt && !["f","n"].includes(mk(e).s) && !(e.op && !mk(e).s));
+  // F383 (12.41) · no histórico vertical, as etapas depois da próxima ficam escondidas até "Mostrar as etapas seguintes"
+  const corte = pxI>=0 ? pxI : iAt, futura = (i, m) => iAt>=0 && i>corte && !["f","n","a"].includes(m.s) && i!==sel;
   // os grupos cumpridos (e a execução ainda não começada) ficam recolhidos
   const itens = [];
   for(const G of gruposTrilha(ets)){
@@ -39362,7 +39405,7 @@ function faixaTrilha(k){
     const chave = k.id+":"+rito+":"+G.g;
     if(G.g && (feito || execVazia) && !trAbre[chave] && !ms.some(x=>x.i===sel)){
       const n = ms.filter(x=>x.m.s==="f").length, tot = ms.filter(x=>!x.e.op || x.m.s==="f").length;
-      itens.push(`<li style="--tc:${(G.ex?COR_EXEC:C).c};--tt:${(G.ex?COR_EXEC:C).t}"><span class="tr-g${G.ex?" tr-g-ex":""}">${esc(G.g)}</span>
+      itens.push(`<li style="--tc:${(G.ex?COR_EXEC:C).c};--tt:${(G.ex?COR_EXEC:C).t}"${futura(G.ix[0], {}) ? ` class="tr-fut"` : ""}><span class="tr-g${G.ex?" tr-g-ex":""}">${esc(G.g)}</span>
         <button class="tr-et tr-grp ${feito?"tr-sf":"tr-sv"}" aria-expanded="false" onclick="trGrupo('${chave}')"
           title="mostrar as etapas de ${esc(G.g)}"><span class="tr-b"></span><span class="tr-nm">${feito?`${n} de ${tot} cumpridas`:`${ms.length} etapas · a vir`}</span><span class="tr-d">mostrar ›</span></button></li>`);
       continue;
@@ -39370,9 +39413,9 @@ function faixaTrilha(k){
     ms.forEach(({i,e,m},n)=>{
       const cor = e.ex ? COR_EXEC : C;
       const rot = n===0 && G.g ? `<span class="tr-g${e.ex?" tr-g-ex":""}">${esc(G.g)}${(feito||execVazia)&&trAbre[chave]?` <a href="#" onclick="trGrupo('${chave}');return false" class="tr-rec">recolher</a>`:""}</span>` : `<span class="tr-g"></span>`;
-      itens.push(`<li style="--tc:${cor.c};--tt:${cor.t}"${e.ex?" data-ex":""}>${rot}
+      itens.push(`<li style="--tc:${cor.c};--tt:${cor.t}"${e.ex?" data-ex":""}${futura(i, m) ? ` class="tr-fut"` : ""}>${rot}
         <button class="tr-et tr-s${m.s||(e.op?"o":"v")}${i===sel?" tr-sel":""}${i===pxI?" tr-px":""}" data-tri="${i}" onclick="trEscolher('${k.id}','${rito}',${i})" aria-pressed="${i===sel}"
-          title="${esc(tituloEtapa(e, m))}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"aguardando":i===pxI?"próxima":"")}</span></button></li>`);
+          title="${esc(tituloEtapa(e, m))}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}${fonteEtapa(m)}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"aguardando":i===pxI?"próxima":"")}</span></button></li>`);
     });
   }
   let pnl = "";
@@ -39404,13 +39447,14 @@ function faixaTrilha(k){
     const ia = vis.findIndex(x=>x.m.s==="a"), at = ia>=0 ? vis[ia] : null;
     const prox = ia>=0 ? vis.slice(ia+1).find(x=>x.m.s!=="f" && x.m.s!=="n") : null;
     const seg = vis.map((x,j)=>`<i class="${x.m.s==="f"?"f":x.m.s==="a"?"a":x.m.s==="n"?"n":""}"></i>`).join("");
-    return `<div class="tr-resumo"${ver===faseAt?"":" hidden"}><span class="tr-agora"><small>Etapa</small> <b>${esc(agora||"a definir")}</b>${at && !at.m.d ? `<span class="tr-aguarda"> aguardando ${esc(minusc1(at.e.n))}</span>` : ""}${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}</span>
-      ${at ? (()=>{ const t = ver===faseAt ? tempoNaEtapa(k, at.m.d, faseDaEtapa(k)==="pagamento" ? "pagamento" : ver) : null;
+    const t = at && ver===faseAt ? tempoNaEtapa(k, at.m.d, faseDaEtapa(k)==="pagamento" ? "pagamento" : ver) : null;
+    return `<div class="tr-resumo${t && t.longo ? " tr-resumo-longo" : ""}"${ver===faseAt?"":" hidden"}><span class="tr-agora"><small>Etapa</small> <b>${esc(agora||"a definir")}</b>${at && !at.m.d ? `<span class="tr-aguarda"> aguardando ${esc(minusc1(at.e.n))}</span>` : ""}${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}</span>
+      ${at ? (()=>{
         const ha = t ? ` <span class="tr-ha${t.longo?" tr-longo":""}" title="${esc(t.por)}">(há ${t.dias} ${t.dias===1?"dia":"dias"})</span>` : "";
         return `<span class="tr-pos">${at.m.d ? `desde ${dCurta(at.m.d)}${ha} · ` : ""}${ia+1} de ${vis.length}</span>`; })() : ""}
       <span class="tr-prog" aria-hidden="true">${seg}</span>
-      ${prox ? `<span class="tr-prox">Próximo: ${esc(minusc1(prox.e.n))}</span>` : ""}</div>`; })();
-  return `<section class="tr-faixa tr tr-compacta${aberta?" tr-aberta":" tr-fechada"}" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}" aria-label="Jornada e trilha do caso">
+      ${prox ? `<span class="tr-prox">Próximo: ${esc(minusc1(prox.e.n))}</span>` : ""}</div>${ver===faseAt ? linhaParalela(k, faseAt) : ""}`; })();
+  return `<section class="tr-faixa tr tr-compacta${aberta?" tr-aberta":" tr-fechada"}${trFut[k.id]?" tr-fut-ver":""}" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}" aria-label="Jornada e trilha do caso">
     <div class="jn-l" role="tablist" aria-label="Fases do caso">${abas}<button class="tr-ajuda${confirma ? " tr-ajuda-pend" : ""}" aria-expanded="${trAjuda}" aria-controls="tr-leg"
       title="${esc(`${T.nome}: o tipo de processo e o que cada marca quer dizer`)}" onclick="trAjuda=!trAjuda;trRepintar()">?</button>
 </div>
@@ -39422,6 +39466,7 @@ function faixaTrilha(k){
       <div class="tr-rol-box"><button class="tr-seta tr-seta-esq" aria-label="etapas anteriores" tabindex="-1" onclick="trRolar(-1)">‹</button>
         <div class="tr-rol" onscroll="trSombra(this)"><ol class="tr-l" style="--n:${itens.length}">${itens.join("")}</ol></div>
         <button class="tr-seta tr-seta-dir" aria-label="próximas etapas" tabindex="-1" onclick="trRolar(1)">›</button></div>
+      ${(n => n ? `<button type="button" class="tr-fut-bt" aria-expanded="${!!trFut[k.id]}" onclick="trFut['${k.id}']=!trFut['${k.id}'];trRepintar()">${trFut[k.id] ? "Esconder as etapas seguintes" : `Mostrar as etapas seguintes (${n})`}</button>` : "")(itens.filter(x=>x.includes(' class="tr-fut"')).length)}
       ${pnl}
     </div></section>`;
 }
@@ -39483,9 +39528,10 @@ document.addEventListener("keydown", e=>{
   const b = e.target && e.target.closest && e.target.closest(".tr-l .tr-et");
   // Esc fecha só o quadro da etapa: sem o stop, o Esc da ficha a fechava junto
   if(e.key==="Escape" && document.querySelector(".tr-pnl")){ e.preventDefault(); e.stopImmediatePropagation(); document.querySelector(".tr-x-bt")?.click(); return; }
-  if(!b || !["ArrowRight","ArrowLeft","Home","End"].includes(e.key)) return;
-  const todos = [...b.closest(".tr-l").querySelectorAll(".tr-et")], i = todos.indexOf(b);
-  const j = e.key==="Home" ? 0 : e.key==="End" ? todos.length-1 : Math.max(0, Math.min(todos.length-1, i + (e.key==="ArrowRight"?1:-1)));
+  if(!b || !["ArrowRight","ArrowLeft","ArrowUp","ArrowDown","Home","End"].includes(e.key)) return;
+  // F383 (12.41) · na lista vertical a mais nova fica no alto: a seta para cima avança, a para baixo volta
+  const todos = [...b.closest(".tr-l").querySelectorAll(".tr-et")].filter(x=>x.offsetParent), i = todos.indexOf(b);
+  const j = e.key==="Home" ? 0 : e.key==="End" ? todos.length-1 : Math.max(0, Math.min(todos.length-1, i + (["ArrowRight","ArrowUp"].includes(e.key)?1:-1)));
   e.preventDefault(); todos[j].focus(); todos[j].scrollIntoView({block:"nearest", inline:"nearest"});
 }, true);   // captura: roda antes do Esc que fecha a ficha
 async function trFaseHouve(casoId, f, st){
