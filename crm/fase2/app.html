@@ -23280,9 +23280,10 @@ function menuProcessos(ev, ks){
   // a linha diz EM QUE LISTA o caso está (com o emoji do To Do — "👪
   // Judicial", "🙏 Aposentadorias Futuras"): é o mapa que o Paulo pediu ao
   // clicar no nome. Caso sem lista de origem cai no nome da fase.
+  // F372 · embaixo: NB, DER, e-Sisrec e processo, sem o protocolo (pedido do Paulo, 02.11.2026)
   const item=k=>`<div class="mp-it ${casoSel===k.id?"sel":""} ${k.fase==="encerrado"?"enc":""}" data-mp="${k.id}" style="${k.fase==="encerrado"?"opacity:.55":""}">
     <b>${k.urgente?"🔥 ":""}${esc(tituloCaso(k))}</b>
-    <small>${k.fase==="encerrado"?"✔ Encerrado":ehPreCaso(k)?`🟡 Pré-caso no escritório · ${esc(passoDoPreCaso(k))}`:esc(listaDe(k)!=="—"?listaDe(k):(NOME_FASE[k.fase]||""))}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠ exigência":""}${(n=>esc(Object.keys(TIPO_NUM).flatMap(t=>n[t].slice(0,1).map(d=>` · ${t==="proc"?"proc.":t==="nup"?"recurso":t==="prot"?"📄":"NB"} ${fmtNum(t,d)}`)).join("")))(numerosDoCaso(k))}</small>
+    <small>${k.fase==="encerrado"?"✔ Encerrado":ehPreCaso(k)?`🟡 Pré-caso no escritório · ${esc(passoDoPreCaso(k))}`:esc(listaDe(k)!=="—"?listaDe(k):(NOME_FASE[k.fase]||""))}${(n=>esc([n.nb[0]&&`NB ${fmtNum("nb",n.nb[0])}`, k.der&&`DER ${fmtBarra(k.der)}`, n.nup[0]&&`e-Sisrec ${fmtNum("nup",n.nup[0])}`, n.proc[0]&&`proc. ${fmtNum("proc",n.proc[0])}`].filter(Boolean).map(x=>" · "+x).join("")))(numerosDoCaso(k))}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠ exigência":""}</small>
   </div>`;
   m.innerHTML =
     // F226 · os pré-casos primeiro, acima dos casos
