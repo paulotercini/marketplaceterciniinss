@@ -84,6 +84,9 @@ const conf = (pts, nome, v) => { ok.push([pts, nome, !!v]); console.log((v ? "PA
   // 1 · a agenda aparece no canto de baixo à direita, aberta
   await p.evaluate(() => { zapFiltro = "todas"; irPara("whatsapp"); });
   await p.waitForSelector(".zap-conv");
+  // 12.36 · nasce recolhida (aberta, cobria a ficha e a conversa); o clique na pílula abre
+  conf(2, "no WhatsApp a agenda nasce recolhida na pílula", !!(await p.$("#zap-ag .zag-pilula")) && !(await p.$("#zap-ag .zag-dia")));
+  await p.click("#zap-ag .zag-pilula");
   await p.waitForSelector("#zap-ag .zag-dia", { timeout: 10000 }).catch(() => {});
   await p.waitForTimeout(400);   // a entrada da tela anima por 0,14 s
   const cx = await caixaAg();
