@@ -42920,6 +42920,17 @@ function menuDocsCrps(k){
 }
 // 1.32.0 · a tela do e-SISREC no CRM: o cabeçalho do processo e a tabela Data · Status · Documentos com TODAS as
 // movimentações, o status como o portal escreve (bruto) e cada documento guardado abrindo pelo CRM
+// os documentos do recurso em árvore: decisões (acórdão e monocrática), recursos e contrarrazões,
+// perícia e demais movimentações, cada arquivo com a data e o status do movimento
+function arvoreEsisrec(t, doc){
+  const grupos = [["Decisões (acórdãos e monocráticas)", []], ["Recursos, embargos e contrarrazões", []], ["Perícia médica", []], ["Demais movimentações", []]];
+  [...(t.eventos||[])].sort(porDataDesc).forEach(e=>(e.arquivos||[]).forEach(a=>{
+    const g = a.decide ? 0 : e.tipo==="recurso" ? 1 : e.tipo==="pericia" ? 2 : 3;
+    grupos[g][1].push(`<li>${doc(a)} <span class="meio-sub">${esc(String(e.data||"").slice(0,10))} · ${esc(e.bruto||e.resumo||"")}</span></li>`); }));
+  const ramos = grupos.filter(([,l])=>l.length).map(([r,l])=>`<li><details><summary>📁 ${esc(r)} (${l.length})</summary><ul class="pat-arv">${l.join("")}</ul></details></li>`).join("");
+  return ramos ? `<h4 style="font-size:13px;margin:8px 0 4px">Documentos</h4><ul class="pat-arv pat-raiz">${ramos}</ul>
+    <h4 style="font-size:13px;margin:10px 0 4px">Movimentações</h4>` : "";
+}
 function telaEsisrec(t){
   const cab = [["Processo", t.num_proc || formatarNup(t.nup||"")], ["NB", t.nb], ["Recorrente(s)", (t.recorrentes||[]).join("; ")],
     ["Recorrido", t.recorrido], ["APS de origem", t.aps_origem], ["Órgão atual", t.orgao_atual]].filter(x=>x[1]);
@@ -42930,6 +42941,7 @@ function telaEsisrec(t){
   return `<div class="fatos" style="margin-bottom:12px">
     <div class="fatos-topo"><h3 style="font-size:14px">e-SISREC · ${esc(formatarNup(t.nup||"") || t.num_proc || "")}</h3></div>
     <table class="tab" style="margin-bottom:10px">${cab.map(([r,v])=>`<tr><th style="text-align:left;white-space:nowrap">${r}</th><td>${esc(v)}</td></tr>`).join("")}</table>
+    ${arvoreEsisrec(t, doc)}
     <table class="tab tab-esisrec"><tr><th>Data</th><th>Status</th><th>Documentos</th></tr>
       ${evs.map(e=>`<tr><td style="white-space:nowrap">${esc(e.data||"")}</td><td>${esc(e.bruto||e.resumo||"")}</td>
         <td>${(e.arquivos||[]).map(doc).join("<br>")}</td></tr>`).join("")}
