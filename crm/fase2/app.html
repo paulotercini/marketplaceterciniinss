@@ -36456,8 +36456,12 @@ function suspensoesDoCaso(k){
 // fatal: fatal é o caso na lista dos prazos (F38, onde o CRM também põe o prazo que registra, marcarTarefaComPrazo) ou o
 // que tem a tarefa fatal da mesma data. A lista pessoal ☕ também é fase "outro", e lá a data é a do trabalho, e não fatal.
 // Eram 207 de 219 datas futuras chamadas de "Prazo fatal" sem serem (02.11.2026)
+// a anotação com o carimbo [PRAZO dd.mm.aaaa] da mesma data também faz do casos.prazo um prazo fatal
+const prazoCarimbado = k => { const c = `[PRAZO ${fmt(k.prazo)}]`;
+  return [D._andsFicha, D.and30].some(l=>(l||[]).some(a=>a.caso_id===k.id && !a.excluir && (a.texto||"").includes(c))); };
 const prazoEhRetorno = k => !!(k && k.prazo && listaDe(k)!=="🗓 Tarefas com Prazo"
-  && !(D.tarefasPorCaso.get(k.id)||[]).some(t=>t.natureza==="fatal" && !t.concluida_em && t.lembrar_em===k.prazo));
+  && !(D.tarefasPorCaso.get(k.id)||[]).some(t=>t.natureza==="fatal" && !t.concluida_em && t.lembrar_em===k.prazo)
+  && !prazoCarimbado(k));
 const pedidoDecidido = k => !!(k.resultado || (k.decisao_em && (!k.der || k.decisao_em >= k.der)) || k.dib
   || (k.dcb && k.dcb >= hoje()) || /^(conclu|cancel|encerr)/i.test(String(k.situacao_inss||"").trim()));
 // F236 · o que abre a contagem é a perícia médica ou a avaliação social do INSS; o atendimento de preparação do
