@@ -6255,7 +6255,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.39</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.40</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -13698,7 +13698,7 @@ function renderAgendaV10(qual){
   ligarCartoes(); ligarTarefas();
   buscarTextosAgenda([...itens, ...deleg].filter(i=>i.andId && !i.resumo).map(i=>i.andId));
 }
-// F381 (12.39) · a carga de prazos por pessoa nos próximos 7 dias, no alto do Planejado (ideia do Lovable aprovada pelo
+// F382 (12.40) · a carga de prazos por pessoa nos próximos 7 dias, no alto do Planejado (ideia do Lovable aprovada pelo
 // Paulo). Conta o que o filtro "Prazos" conta; o retorno do To Do não entra (prazoEhRetorno). O nome filtra o Planejado
 const CARGA_LIM = 6;   // limite semanal sugerido no protótipo aprovado; acima dele a barra fica vermelha
 function blocoCarga(its){
@@ -26302,7 +26302,7 @@ function painelBeneficio(c, ks, op, oc){
     ${nota}
   </section>`;
 }
-// F381 (12.39) · o caminho até o direito (ideia do Lovable aprovada pelo Paulo): de hoje à data do direito, um marco por
+// F382 (12.40) · o caminho até o direito (ideia do Lovable aprovada pelo Paulo): de hoje à data do direito, um marco por
 // requisito ainda por cumprir, na data em que o motor diz que se cumpre; o direito já alcançado não desenha nada
 function linhaDireito(a, x){
   if(!a || !a.quando || !x || a.quando<=x.hoje) return "";
@@ -37682,7 +37682,7 @@ function pzConteudo(cliId){
     : `<p class="pzc-nada">Nenhum prazo desta natureza.</p>`;
   return `<section class="pzc-top${heroX ? "" : " pzc-top-so"}" aria-label="Resumo dos prazos">${heroX ? pzHero(heroX) : ""}${tiles}</section>${linha30Pz(hj)}${ferr}${lista}`;
 }
-// F381 (12.39) · os próximos 30 dias numa linha (ideia do Lovable aprovada pelo Paulo): um marco por data, o dia sem
+// F382 (12.40) · os próximos 30 dias numa linha (ideia do Lovable aprovada pelo Paulo): um marco por data, o dia sem
 // expediente em cinza; o marco abre a janela do prazo
 function linha30Pz(hj){
   const fim = somaDias(hj, 30), its = _pzCli.filter(x=>x.data>=hj && x.data<=fim && !x.aConfirmar);

@@ -1,4 +1,4 @@
-// F381 · as ideias do Lovable aprovadas pelo Paulo (02.11.2026): a linha dos próximos 30 dias na aba Prazos,
+// F382 · as ideias do Lovable aprovadas pelo Paulo (02.11.2026): a linha dos próximos 30 dias na aba Prazos,
 // o caminho até o direito na Análise de Direito e a carga de prazos por pessoa no Planejado. Molde: f378.js
 const { chromium } = require("playwright");
 const http = require("http");
