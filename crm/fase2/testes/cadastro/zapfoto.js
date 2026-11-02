@@ -19,7 +19,8 @@ const T = {
   zap_conversas: [{ id: CONV, telefone: "5516999990002", chave: "99990002", nome_perfil: "Rosa", cliente_id: MAE,
     atendente_id: null, status: "aberta", nao_lidas: 0, ultima_em: agora, ultimo_texto: "oi" }],
   zap_mensagens: [{ id: "m1", seq: 1, conversa_id: CONV, direcao: "entrada", tipo: "imagem", texto: "o laudo", midia_url: "zap/x/laudo.jpg", midia_nome: "laudo.jpg", status: "entregue", criado_em: agora },
-    { id: "m2", seq: 2, conversa_id: CONV, direcao: "saida", tipo: "documento", texto: null, midia_url: "zap/x/contrato.pdf", midia_nome: "contrato.pdf", status: "enviada", criado_em: agora }],
+    { id: "m2", seq: 2, conversa_id: CONV, direcao: "saida", tipo: "documento", texto: null, midia_url: "zap/x/contrato.pdf", midia_nome: "contrato.pdf", status: "enviada", criado_em: agora },
+    { id: "m3", seq: 3, conversa_id: CONV, direcao: "entrada", tipo: "figurinha", texto: null, midia_url: "zap/x/figurinha.webp", midia_nome: "figurinha.webp", status: "entregue", criado_em: agora }],
 };
 const PAINEL = { totais: {}, setores: [], atendentes: [] };
 
@@ -75,10 +76,11 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
   conf("a legenda vem abaixo da foto", (await p.textContent("#zb-m1")).includes("o laudo"));
   conf("F270 · a enviada mostra o tique no lugar da palavra", await p.$eval("#zs-m2", e => e.dataset.st === "enviada" && getComputedStyle(e, "::after").content.includes("✓")));
   conf("o documento continua como anexo", (await p.textContent("#zb-m2")).includes("📎 contrato.pdf") && !(await p.$("#zb-m2 img")));
+  conf("F363 · a figurinha aparece no balão, sem corte", await p.$eval("#zb-m3 img.zap-mini.zap-fig", e => getComputedStyle(e).objectFit === "contain").catch(() => false) && !(await p.textContent("#zb-m3")).includes("📎"));
   await p.evaluate(() => pintarConversaGuardando());
   await p.waitForFunction(() => { const i = document.querySelector("#zap-msgs img.zap-mini"); return i && i.src; });
   const assinou = await p.evaluate(() => _miniUrl.size);
-  conf("a repintura reaproveita o link guardado", assinou === 1);
+  conf("a repintura reaproveita o link guardado", assinou === 2);
   const [guia] = await Promise.all([ctx.waitForEvent("page"), p.click("#zb-m1 img.zap-mini")]);
   conf("o clique abre o original", !!guia);
 
