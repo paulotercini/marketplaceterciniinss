@@ -201,7 +201,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const lG = await linhas(kG);
   conf("G · o expediente da sentença favorável é só ciência: cinza e sem '⏰ é o prazo do caso'",
     lG.some(x => x.rotulo === "Ciência (decisão favorável)" && x.nat === "lembrete" && !/prazo do caso/.test(x.acao)));
-  const implantar = await p.evaluate(d => contarPrazo(cienciaTacita(d), { n: 30, uteis: true }), iso(-6));
+  const implantar = await p.evaluate(([d, kid]) => contarPrazo(cienciaTacita(d), { n: 30, uteis: true }, D.casoPorId.get(kid)), [iso(-6), kG.id]); // F384: caso da JF conta os feriados do art. 62 da Lei 5.010/66
   conf("G · a tutela vira data: conferir a implantação em 30 dias úteis da ciência tácita do INSS", lG.some(x => x.rotulo === "Implantação (tutela)" && x.data === implantar));
   conf("G · a DCB da sentença vira a DCB do caso e nasce o pedido da prorrogação",
     T.casos.find(k => k.id === kG.id).dcb === iso(237) && lG.some(x => x.rotulo === "Pedir a prorrogação" && x.data === iso(222)));
