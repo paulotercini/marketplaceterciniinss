@@ -407,6 +407,8 @@ A **F366** (12.31, pedido do Paulo de 02.11.2026): o vídeo (`tipo = video`) toc
 
 A **F367** (12.32, pedido do Paulo de 01.11.2026): no iPhone, o teclado rolava a página inteira para mostrar o campo e, fechado, a deixava rolada; o CRM, da altura da tela, subia, o topo da ficha sumia e a metade de baixo ficava em branco. No celular a página volta ao topo quando o campo perde o foco, quando a tela visível muda de tamanho e a cada rolagem da página sem campo em foco (`voltarTopoPagina`); quem rola são as colunas. Teste: `zapcel.js`.
 
+A **F368** (12.33, pedido do Paulo de 02.11.2026): o **gestor do WhatsApp** deixou de exigir o papel de administrador do CRM. Na equipe das Configurações do WhatsApp, o papel tem três opções: atendente, gestor (`colaboradores.gestor_zap`) e administrador (`papel = 'admin'`). O gestor vê todas as conversas, a fila Todas e o Painel da equipe, e transfere a conversa de qualquer colaborador (`zapGestor`; no banco, `zap_gestor()` aceita `gestor_zap`), sem ganhar as Configurações do CRM; nos níveis 0 e 1 ele tem também a lista 💬 WhatsApp (`listasDoColab`). SQL em `crm/fase2/migracoes/f368_gestor_zap.sql` (aplicada). Teste: `zapgestor.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
