@@ -405,6 +405,8 @@ A **F365** (12.30, decisão do Paulo de 02.11.2026) desfaz a F364: a leitura de 
 
 A **F366** (12.31, pedido do Paulo de 02.11.2026): o vídeo (`tipo = video`) toca no próprio balão e no histórico do WhatsApp da ficha (`vidZap`, `video.zap-vid` com controles, `preload="metadata"`), pelo mesmo link assinado da foto (`carregarMinis`), no lugar do anexo "video.mp4". Teste: `zapfoto.js`.
 
+A **F367** (12.32, pedido do Paulo de 01.11.2026): no iPhone, o teclado rolava a página inteira para mostrar o campo e, fechado, a deixava rolada; o CRM, da altura da tela, subia, o topo da ficha sumia e a metade de baixo ficava em branco. No celular a página volta ao topo quando o campo perde o foco, quando a tela visível muda de tamanho e a cada rolagem da página sem campo em foco (`voltarTopoPagina`); quem rola são as colunas. Teste: `zapcel.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

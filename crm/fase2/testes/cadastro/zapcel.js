@@ -96,6 +96,11 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.tap(".zt-info"); await p.waitForTimeout(200);
     conf("o botão i abre a ficha do cliente", await vis("#zap-painel"));
     await p.tap(".zp-fechar"); await p.waitForTimeout(200);
+    // F367 · o teclado do iPhone deixava a página rolada: o topo sumia e a metade de baixo ficava em branco
+    const rolou = await p.evaluate(() => { document.body.style.height = "2000px"; document.body.style.overflow = "visible"; document.documentElement.style.overflow = "auto"; window.scrollTo(0, 400); return window.scrollY; });
+    await p.evaluate(() => document.dispatchEvent(new Event("focusout"))); await p.waitForTimeout(300);
+    conf(`a página rolada pelo teclado volta ao topo (${rolou} → ${await p.evaluate(() => window.scrollY)})`, rolou > 0 && await p.evaluate(() => window.scrollY === 0));
+    await p.evaluate(() => { document.body.style.height = ""; document.body.style.overflow = ""; document.documentElement.style.overflow = ""; });
     await p.tap(".zt-voltar");
     await p.waitForTimeout(200);
     conf("a seta volta à lista, com a barra de baixo", await vis(".zap-conv") && !(await vis("#zap-dir")) && await vis(".barra-cel"));

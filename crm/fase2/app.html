@@ -6207,7 +6207,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.31</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.32</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -16716,6 +16716,17 @@ function colocarNoCampo(campo, texto){
   if(campo.oninput) campo.oninput();
   campo.dispatchEvent(new Event("input", {bubbles: true}));
 }
+// F367 · no iPhone, o teclado rola a página inteira para mostrar o campo e, fechado, a deixa rolada: o CRM, da altura
+// da tela, sobe, o topo some e a metade de baixo fica em branco. No celular a página não rola, quem rola são as colunas
+function voltarTopoPagina(){
+  const a = document.activeElement;
+  if(!document.getElementById("app")?.classList.contains("celular") || !window.scrollY) return;
+  if(a && a.matches && a.matches("input,textarea,select,[contenteditable]")) return;
+  window.scrollTo(0, 0);
+}
+document.addEventListener("focusout", ()=>setTimeout(voltarTopoPagina, 150));
+window.visualViewport?.addEventListener("resize", ()=>setTimeout(voltarTopoPagina, 150));
+window.addEventListener("scroll", voltarTopoPagina, {passive:true});
 document.addEventListener("mouseover", e=>{   // o item da linha do tempo só fica arrastável com a conversa aberta
   const li = document.body.classList.contains("zap-aberto") && e.target.closest && e.target.closest(".timeline li");
   if(li && !li.draggable) li.draggable = true;
