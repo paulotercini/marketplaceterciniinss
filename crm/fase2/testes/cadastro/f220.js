@@ -83,7 +83,7 @@ function conf(peso, nome, ok) {
   // ══ 1 · RECEPÇÃO (8) ═══════════════════════════════════════════════════
   const bruna = await entrar("bruna");
   const lateralB = (await textoDe(bruna, "#grupo-dinamicas .lista-item, #grupo-fases .lista-item")).join(" | ");
-  conf(2, "1.1 a recepção vê Escritório e o Planejado (F377: Perícias é aba dele), sem as listas de processo", /Escritório/.test(lateralB) && /Planejado/.test(lateralB) && !/Judicial|Conselho/.test(lateralB));
+  conf(2, "1.1 a recepção vê Escritório e o Planejado (F378: Perícias é aba dele), sem as listas de processo", /Escritório/.test(lateralB) && /Planejado/.test(lateralB) && !/Judicial|Conselho/.test(lateralB));
   await bruna.evaluate(() => { visao = "novocliente"; render(); });
   await bruna.waitForSelector("#ncl-cpf");
   const cpf = cpfFicticio("391845726");
