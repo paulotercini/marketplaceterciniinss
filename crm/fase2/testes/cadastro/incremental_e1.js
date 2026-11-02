@@ -86,7 +86,7 @@ function filtrar(linhas, q) {
   // 1) primeira abertura, sem cópia no aparelho: carga completa e carimbos
   let p = await abrir();
   conf("primeira abertura: casos vêm inteiros, sem filtro de mudou_em",
-    casosPedidos().length && casosPedidos().every(q => !/mudou_em/.test(q)));
+    casosPedidos().length && casosPedidos().every(q => !/mudou_em=gte/.test(q)));   // F379 · a coluna mudou_em vai na lista dos encerrados
   const marca = await p.evaluate(() => D._marcas && D._marcas.casos);
   conf("o carimbo dos casos é o mudou_em mais novo da carga", marca === Date.parse(T0));
 
