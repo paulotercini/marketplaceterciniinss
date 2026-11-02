@@ -183,7 +183,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   await p.click(`.desp-datas button[data-dd="${amanha}"]`);
   await p.click("#desp-ok");
   await espera(700);
-  conf("Concluir por hoje marca a volta à fila e apaga a ⭐", kPz() === amanha && T.casos.find(k => k.id === PRE).importante === false, kPz());
+  conf("Concluir por hoje marca a volta à fila sem mexer na ⭐ (F373)", kPz() === amanha && !T.casos.find(k => k.id === PRE).importante, kPz());
   v = await vistas();
   conf("depois do Concluir por hoje, o prazo fatal continua no quadro e no Meu Dia (a tarefa guarda a data)", v.quadro && v.meuDia === 1, v);
   await p.evaluate(() => desfazerAgora());

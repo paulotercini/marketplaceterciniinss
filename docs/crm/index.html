@@ -3546,7 +3546,7 @@ html[data-tema="v10"] #conteudo-meio .ag-grupo-cli .ag-linha .ag-txt b{font-weig
 .fp-resto-v{color:var(--vermelho,#b42318)}
 .fp-regra{font-size:11px;margin:8px 0 0}
 html[data-tema="v10"] .ag-slot{flex:none;width:24px;display:inline-flex;justify-content:center;color:var(--cinza)}
-/* F291 · o círculo do To Do volta à linha: concluir por hoje (data de volta, ⭐ apagada, fora do Meu Dia) */
+/* F291 · o círculo do To Do volta à linha: concluir por hoje (data de volta, fora do Meu Dia) */
 .desp-circ{width:24px;height:24px;border:none;background:none;padding:0;cursor:pointer;flex:none;position:relative;display:grid;place-items:center}
 .desp-circ::before{content:"";width:18px;height:18px;box-sizing:border-box;border-radius:50%;border:1.5px solid var(--cinza-claro);background:#fff}
 @media (hover:hover) and (pointer:fine){.desp-circ:hover::before{border-color:var(--azul)}.desp-circ:hover::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;font-size:11px;color:var(--azul)}}
@@ -5392,6 +5392,15 @@ html .tl-mais.mais-baixo{position:relative}
 :is(#painel-prazo,#painel-prazo-esq) .pp-mais .tl-mais-it{justify-content:flex-start;width:100%;border:0;background:none}
 html .meio-topo .topo-mais{margin-left:auto}
 html .tipo-mais.mais-baixo .tl-mais-menu{left:0;right:auto}
+/* F373 · a ⭐ do canto da ficha, abaixo do ⋯ e um pouco maior */
+.det-imp{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid var(--borda,#ddd);border-radius:8px;background:var(--fundo-card,#fff);color:var(--cinza,#888);cursor:pointer;padding:0}
+.det-imp.on{color:#d64570;border-color:#d64570;background:#fdeef3}
+.det-imp.on svg path{fill:currentColor}
+.det-mais-col{display:inline-flex;align-items:center;gap:6px}
+/* no computador a ⭐ desce para baixo do ⋯, no espaço vazio à direita da segunda linha */
+.app:not(.celular) .det-mais-col{position:relative}
+.app:not(.celular) .det-mais-col > .det-imp{position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);z-index:2}
+html[data-tema="v10"] .app:not(.celular) .det-topo:has(.det-imp) .linha2{padding-right:64px}
 html .det-topo .linha1 > .det-canto{margin-left:auto;display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 html .lc-cab .lc-menu{margin-left:auto}
 html .zl-mais .zl-link{text-decoration:none;color:inherit}
@@ -6050,7 +6059,7 @@ html[data-tema="v10"] .caso-esq .linha-caso .lc-mais-pe.lc-dobra:focus-visible{o
 html[data-tema="v10"] .app:not(.celular) .caso-3col .escrever.esc-v12:not(.esc-aberto){flex-wrap:nowrap}
 html[data-tema="v10"] .app:not(.celular) .caso-3col .escrever.esc-v12:not(.esc-aberto) #and-texto{flex:1 1 0;min-width:120px}
 html[data-tema="v10"] .app:not(.celular) .caso-3col .escrever.esc-v12:not(.esc-aberto) .tipo-fila button{color:var(--azul)}
-html[data-tema="v10"] .app:not(.celular) .det-topo .linha1 > .det-mais{margin-left:auto;order:20}
+html[data-tema="v10"] .app:not(.celular) .det-topo .linha1 > :is(.det-mais,.det-mais-col){margin-left:auto;order:20}
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha1 > .det-canto{margin-left:0;order:21}
 html[data-tema="v10"] .linha-caso .lc-prot .lc-num,html[data-tema="v10"] .linha-caso .lc-tram-link{white-space:nowrap}
 html[data-tema="v10"] .caso-esq .linha-caso .lc-tram-link{font-size:13px}
@@ -6207,7 +6216,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.34</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.35</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19631,12 +19640,12 @@ function pintarFicha(){
       ${botaoZapCliente(cliId)}
       ${temaV10() && celular() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
       ${/* F274 · o que não se usa a toda hora vai ao ⋯ do cabeçalho; CPF e a senha do Meu INSS ficam à vista (pedido do Paulo) */""}
-      ${menuMais([
+      <span class="det-mais-col">${menuMais([
         casosDoBalcao(cliId).length ? `<button class="tl-mais-it td-abrir" role="menuitem" onclick="trouxeDocumentos('${cliId}')" title="Trouxe documentos"><span aria-hidden="true">Recebidos</span><span class="sr-only">Trouxe documentos</span></button>` : "",
         casoDoDoc(cliId) ? `<button class="tl-mais-it sep-abrir" role="menuitem" onclick="separarParaCliente('${cliId}')" title="Imprimir e separar para o cliente"><span aria-hidden="true">Separar</span><span class="sr-only">Imprimir e separar para o cliente</span></button>` : "",
         c.telefone ? `<button class="tl-mais-it" role="menuitem" onclick="abrirSmbot('${c.id}')" title="Abrir no SMBot"><span aria-hidden="true">SMBot</span><span class="sr-only">Abrir no SMBot</span></button>` : "",
         temaV10() ? itemNaoCliente(c) : "",
-      ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo det-mais"')}
+      ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo det-mais"')}${botaoEstrelaFicha(cliId)}</span>
       ${/* F274 · a situação do cliente e o ✕ andam juntos no canto direito, mesmo quando a linha quebra */""}
       <span class="det-canto">${temaV10() && !celular() ? "" : `${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}`}
       ${chipAgendaCliente(c)}
@@ -23571,7 +23580,7 @@ function pintarPrazoDoTexto(k){
     ? `<span class="chip-prazo">🗓 ${prazoDespachar?"volta à fila":"lembrete"}: <b>${fmt(achado.iso)}</b> (${diaSemana(achado.iso).slice(0,3)})
         <a title="não criar lembrete" onclick="prazoCancelado=true;prazoDetectado=null;prazoDespachar=false;pintarPrazoDoTexto()">✕</a></span>${achado.iso>hoje() ? `
         <button type="button" class="btn-mini chip-desp${prazoDespachar?" on":""}" aria-pressed="${prazoDespachar}" onclick="chipDespachar()"
-          title="ao registrar, conclui por hoje: a data vira o Concluir em, a ⭐ apaga e o cliente sai do seu Meu Dia"><span aria-hidden="true">✔ Concluir</span><span class="sr-only">✔ e concluir por hoje</span></button>` : ""}`
+          title="ao registrar, conclui por hoje: a data vira o Concluir em e o cliente sai do seu Meu Dia"><span aria-hidden="true">✔ Concluir</span><span class="sr-only">✔ e concluir por hoje</span></button>` : ""}`
     : "";
 }
 // F292 · prazoDespachar: a data lida no texto vira a volta à fila (Concluir por hoje), no lugar do lembrete
@@ -38919,7 +38928,7 @@ function linhaCaso(k){
       ${/* F287 · a canetinha da espécie ao lado do "B42 · INSS" e o ⋯ no canto, onde ficava o + (pedido do Paulo, 27.10.2026) */""}
       <div class="lc-sobre-l"><span class="lc-sobre">${esc([k.especie, k.fase==="outro" ? listaDoOutro(k) : tram].filter(Boolean).join(" · "))}</span>
       <button class="lapis" title="trocar a espécie ou o pedido deste caso" aria-label="trocar a espécie ou o pedido deste caso" onclick="escolherEspecie('${k.id}')">✎</button>
-      ${k.fase!=="encerrado" && !ehPreCaso(k) ? `<button class="desp-bt" onclick="despachar('${k.id}',event)" title="Concluir por hoje: escolher quando o cliente volta à fila, apagar a ⭐ e tirar do Meu Dia; se quiser, passar a outra pessoa" aria-label="Concluir por hoje">✔ Concluir</button>` : ""}
+      ${k.fase!=="encerrado" && !ehPreCaso(k) ? `<button class="desp-bt" onclick="despachar('${k.id}',event)" title="Concluir por hoje: escolher quando o cliente volta à fila e tirar do Meu Dia; se quiser, passar a outra pessoa" aria-label="Concluir por hoje">✔ Concluir</button>` : ""}
       ${/* F274 · Claude e Fixar comentário no ⋯ do cartão do caso */""}
       ${menuMais([
         `<button class="tl-mais-it lc-claude" role="menuitem" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)"><span aria-hidden="true">✦ Claude</span><span class="sr-only">✦ Pedir ao Claude</span></button>`,
@@ -43757,6 +43766,26 @@ function copiarTrf3(casoId){
     ` Fonte: painel público de estatísticas do TRF3 (consulta de ${dbr(t.consultado_em)}).`;
   copiar(msg,"Mensagem da ordem de julgamento copiada 💬");
 }
+// F373 · a ⭐ do canto da ficha (pedido do Paulo, 02.11.2026): um clique marca ou desmarca TODOS os casos
+// abertos do cliente; acesa se algum está marcado. É a mesma casos.importante da lista ⭐ Importante, que a
+// ponte_despacho.py espelha na tarefa do To Do. A ⭐ da anotação é outra e não muda.
+function botaoEstrelaFicha(cliId){
+  const ks = ativos().filter(k=>k.cliente_id===cliId);
+  if(!ks.length || !podeGravarCaso()) return "";
+  const on = ks.some(k=>k.importante);
+  const t = on ? "Importante: desmarcar todos os casos deste cliente" : "Importante: marcar todos os casos deste cliente";
+  return `<button class="det-imp ${on?"on":""}" onclick="estrelaFicha('${cliId}')" title="${t}" aria-label="${t}" aria-pressed="${on}">${IC_ESTRELA.replace(/width="13" height="13"/,'width="20" height="20"')}</button>`;
+}
+async function estrelaFicha(cliId){
+  const ks = ativos().filter(k=>k.cliente_id===cliId); if(!ks.length) return;
+  const v = !ks.some(k=>k.importante), muda = ks.filter(k=>!!k.importante!==v);
+  try{ await api(`/rest/v1/casos?id=in.(${muda.map(k=>k.id).join(",")})`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"}, body:JSON.stringify({importante:v})}); }
+  catch(e){ return aviso("Não gravou — tente de novo"); }
+  muda.forEach(k=>k.importante=v);
+  aviso(v ? `⭐ Importante${ks.length>1?` em ${ks.length} casos`:""}` : "Importante removido");
+  montarSidebar(); if(clienteAberto===cliId) repintarFicha(); if(visao==="importante") render();
+}
 async function toggleImp(casoId){
   const k=D.casoPorId.get(casoId); if(!k) return;
   k.importante=!k.importante;
@@ -43845,7 +43874,7 @@ async function semNovidade(casoId, dias, ev){
 // pessoa acende (decisão do Paulo, 29.10.2026). A ponte (crm/fase2/ponte_despacho.py) leva a data e a
 // estrela apagada ao To Do antes da sincronização, que de outro modo devolveria a estrela.
 function botaoDespacho(k){
-  return `<button class="desp-circ" data-despachar="${k.id}" title="Concluir por hoje: escolher quando volta, apagar a ⭐ e tirar do Meu Dia" aria-label="Concluir por hoje"></button>`;
+  return `<button class="desp-circ" data-despachar="${k.id}" title="Concluir por hoje: escolher quando volta e tirar do Meu Dia" aria-label="Concluir por hoje"></button>`;
 }
 function proxSegunda(base){
   const b = base || hoje(), d = new Date(b + "T12:00:00");
@@ -43863,7 +43892,7 @@ function despachar(casoId, ev){
   _desp = {casoId, data:ja, para:null};
   const eq = equipeAtiva().filter(c=>c.id!==eu.id);
   caixa(`<h3 style="margin:0 0 4px">✔ Concluir por hoje <small class="meio-sub">· ${esc(cli.nome||"")} · ${esc(tituloCaso(k))}</small></h3>
-    <p class="meio-sub" style="margin:0 0 10px">Quando o cliente volta à fila? A ⭐ apaga e ele sai do seu Meu Dia.</p>
+    <p class="meio-sub" style="margin:0 0 10px">Quando o cliente volta à fila? Ele sai do seu Meu Dia.</p>
     <div class="desp-datas">${DESP_DATAS.map(([r,f])=>{ const d=f();
       return `<button type="button" class="btn-mini${d===ja?" on":""}" data-dd="${d}" onclick="despData(this.dataset.dd,this)">${r}<small>${fmtBarra(d).slice(0,5)}</small></button>`; }).join("")}
       <input type="date" id="desp-data" aria-label="escolher a data" value="${ja && !DESP_DATAS.some(([,f])=>f()===ja) ? ja : ""}" onchange="despData(this.value,this)"></div>
@@ -43912,9 +43941,9 @@ async function aplicarDespacho(k, s, nota){
   const fat = fatalAbertoDe(k);
   if(fat && s.data > fat && !await confirmar(`O prazo fatal deste caso vence em ${fmtBarra(fat)}, antes da volta à fila em ${fmtBarra(s.data)}. Concluir por hoje assim mesmo?`)) return;
   const cli = D.cliPorId.get(k.cliente_id) || {};
-  const antes = {prazo:k.prazo||null, importante:!!k.importante, ronda:k.ronda||{}};
+  const antes = {prazo:k.prazo||null, ronda:k.ronda||{}};
   const ronda = {...(k.ronda||{}), despacho:{em:new Date().toISOString(), por:eu.id, prazo:s.data, ...(s.para?{para:s.para}:{})}};
-  const muda = {prazo:s.data, importante:false, ronda};
+  const muda = {prazo:s.data, ronda};   // F373 · a ⭐ fica (decisão do Paulo, 02.11.2026)
   try{ await patchCaso(k.id, muda); }catch(e){ return aviso("Não gravou — tente de novo"); }
   Object.assign(k, muda);
   const dias = (D.meudia||[]).filter(x=>x.caso_id===k.id && x.colaborador_id===eu.id);
@@ -43946,7 +43975,7 @@ async function aplicarDespacho(k, s, nota){
   const repinta = () => { montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha(); };
   repinta();
   avisoDesfazer(`✔ ${cli.nome||"Cliente"} volta em ${fmtBarra(s.data)}${passou?` · com ${passou.nome.split(" ")[0]}`:""}`, async ()=>{
-    const volta = {prazo:antes.prazo, importante:antes.importante, ronda:antes.ronda};
+    const volta = {prazo:antes.prazo, ronda:antes.ronda};
     await patchCaso(k.id, volta).catch(()=>{}); Object.assign(k, volta);
     for(const x of dias){ try{ const [m] = await api(`/rest/v1/meu_dia`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({colaborador_id:eu.id, caso_id:k.id, dia:x.dia||hoje()})}) || []; if(m) D.meudia.push(m); }catch(e){} }
@@ -51676,7 +51705,7 @@ const AJUDA = {
   agendaq: ["Agenda", `<p>É a agenda do Google do escritório. Os horários tracejados são <b>vagas</b>: clique na vaga para agendar o cliente nela. O 001 é o primeiro atendimento (45 minutos) e o 002 é o retorno de quem já é cliente (30 minutos).</p>
     <p>No atendimento marcado, use <b>Editar</b> para corrigir nome e telefone, ou remarque e cancele: a vaga volta a ficar livre. A opção <b>Completa</b> junta as agendas do Paulo, do Marcos e da Amanda.</p>`],
   minhas: ["Atribuídas a mim", `<p>Lista os casos em que você é responsável ou tem tarefa. Abra o caso, faça o que a tarefa pede e conclua a tarefa no próprio andamento.</p>`],
-  importante: ["Importante", `<p>Lista os casos e as anotações marcados com a estrela. A estrela é a fila de hoje: quem a acende é a pessoa, e o <b>Concluir por hoje</b> a apaga.</p>`],
+  importante: ["Importante", `<p>Lista os casos e as anotações marcados com a estrela. Quem acende e apaga a estrela é a pessoa: o <b>Concluir por hoje</b> não a apaga. A estrela do canto da ficha marca todos os casos abertos do cliente, e a estrela vai junto à tarefa do Microsoft To Do.</p>`],
   particulares: ["Minhas Tarefas", `<p>São as suas tarefas pessoais, que somente você vê. A tarefa com data entra também no seu Meu Dia.</p>`],
   rotinas: ["Organizacional", `<p>São as rotinas do escritório que se repetem (semanal, mensal). Marque como feita quando cumprir; ela volta na próxima data.</p>`],
   acervo: ["Cuidar do acervo", `<p>Reúne as filas de arrumação: clientes com mais de um caso aberto, cadastros sem CPF, casos sem etapa. Cada fila diz o que conferir e oferece o botão que resolve.</p>`],
@@ -51732,7 +51761,7 @@ const AJUDA = {
   "caso:etapas": ["Fases e etapas", `<p>A faixa mostra as fases do caso e a etapa atual. Quando um fato novo contradiz a etapa, aparece a sugestão com <b>Aceitar</b>. A etapa é a que o cliente lê no portal.</p>`],
   "caso:escrever": ["Escrever no caso", `<p>Escreva a anotação e escolha o tipo. Uma data escrita no texto vira lembrete. Escreva @ e o nome para avisar um colega.</p>
     <p><b>Sem resposta</b> registra a tentativa de contato e marca a próxima. <b>Pedir ao cliente</b> registra o documento pedido e a data de entrega.</p>`],
-  "caso:concluir": ["Concluir por hoje", `<p>Use quando terminou o que havia a fazer no caso hoje. Escolha quando o cliente volta à fila (amanhã, próxima semana, 15 dias, um mês ou uma data); a estrela se apaga e, se quiser, o caso passa a outra pessoa.</p>`],
+  "caso:concluir": ["Concluir por hoje", `<p>Use quando terminou o que havia a fazer no caso hoje. Escolha quando o cliente volta à fila (amanhã, próxima semana, 15 dias, um mês ou uma data); a estrela fica e, se quiser, o caso passa a outra pessoa.</p>`],
   "caso:conferir": ["Conferir o caso", `<p><b>Em análise</b>: o portal não mudou; o CRM anota e marca nova conferência (a seta ▾ escolhe 3, 7, 15 ou 30 dias). <b>Movimentou</b>: houve exigência, perícia, decisão ou implantação; escolha o que aconteceu e o CRM grava a anotação, a etapa e o lembrete.</p>`],
   trouxe: ["Trouxe documentos", `<p>No balcão, marque o que o cliente entregou. O CRM junta o papel ao caso que o pediu e avisa o advogado. O papel que ninguém pediu recebe a sugestão do caso ou fica "a classificar".</p>`],
   // o atendimento

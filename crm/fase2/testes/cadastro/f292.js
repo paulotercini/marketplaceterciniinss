@@ -93,7 +93,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf(`"aguardar até ${br5(alvo)}" na anotação escolhe a data de volta`, await p.evaluate(a => _desp && _desp.data === a, alvo));
   await p.click("#desp-ok");
   await p.waitForTimeout(800);
-  conf("o despacho grava a data lida da anotação", kt(kA).prazo === alvo && kt(kA).importante === false);
+  conf("o despacho grava a data lida da anotação", kt(kA).prazo === alvo && kt(kA).importante === true);   // F373 · a ⭐ fica
 
   // 3 · no campo de escrever do caso, a data lida vira o "Concluir em" com um clique
   await p.evaluate(async c => { await abrirFicha(c); }, cB.id);
@@ -110,8 +110,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const nTar = T.andamento_tarefas.length;
   await p.evaluate(kid => novoAndamento(kid), kB.id);
   await p.waitForTimeout(1000);
-  conf("registrar grava a anotação, a data como 'Concluir em' e apaga a ⭐", T.andamentos.some(a => a.caso_id === kB.id && /Cliente avisado/.test(a.texto))
-    && kt(kB).prazo === alvo && kt(kB).importante === false && (kt(kB).ronda.despacho || {}).prazo === alvo);
+  conf("registrar grava a anotação, a data como 'Concluir em' e mantém a ⭐ (F373)", T.andamentos.some(a => a.caso_id === kB.id && /Cliente avisado/.test(a.texto))
+    && kt(kB).prazo === alvo && kt(kB).importante === true && (kt(kB).ronda.despacho || {}).prazo === alvo);
   conf("e não cria o lembrete, que seria duplicado", T.andamento_tarefas.length === nTar);
 
   // 4 · "Feito" na menção

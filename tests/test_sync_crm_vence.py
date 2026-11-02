@@ -414,7 +414,7 @@ def test_carga_por_sql_tambem_deixa_o_crm_vencer():
            for s in migrar.gerar_sql(m).split(";\n\n") if s.startswith("insert into")}
     assert "else coalesce(casos.prazo, excluded.prazo) end" in sql["casos"]
     assert "excluded.todo_prazo is distinct from casos.todo_prazo" in sql["casos"]
-    assert "importante = casos.importante or excluded.importante" in sql["casos"]
+    assert "excluded.todo_importante is distinct from casos.todo_importante" in sql["casos"]   # F373
     assert "beneficio = coalesce(casos.beneficio, excluded.beneficio)" in sql["casos"]
     assert "then excluded.nome else clientes.nome end" in sql["clientes"]
     assert "dn = coalesce(nullif(clientes.dn, ''), excluded.dn)" in sql["clientes"]
