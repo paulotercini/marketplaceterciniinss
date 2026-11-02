@@ -3473,6 +3473,12 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .quando .avatar.av-fonte:has
   letter-spacing:-.02em;color:var(--cinza);text-transform:lowercase}
 .cc-ponto{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--marco,#B7791F);margin-right:5px;vertical-align:0}
 
+/* F377 · as abas do Planejado (Lista, Mês, Perícias, Casos) */
+.plan-abas{display:flex;gap:2px;border-bottom:1px solid var(--borda);margin:0 0 12px;overflow-x:auto}
+.plan-abas button{background:none;border:0;border-bottom:2px solid transparent;border-radius:0;padding:7px 14px;color:var(--cinza);font-weight:500;cursor:pointer;margin-bottom:-1px;white-space:nowrap}
+.plan-abas button.on{color:var(--azul);border-bottom-color:var(--azul);font-weight:600}
+@media (hover:hover){.plan-abas button:not(.on):hover{color:var(--texto)}}
+.plan-nat{margin-bottom:10px}
 /* ══ F144 · Planejado em blocos (mock do Paulo, 27.09.2026) ══
    Cada seção é uma caixa branca com borda fina; o cabeçalho é uma faixa
    tingida pelo estado (vencidas em vermelho, hoje em âmbar, o resto neutro)
@@ -8577,7 +8583,6 @@ function montarSidebar(){
     ["meudia","☀️ Meu Dia", quantosNoMeuDia()],
     ["novidades","📣 Novidades", novidades().length],
     ["mencoes","📥 Menções", D.mencoes.length],
-    ["calendario","📅 Calendário", null],
     // F124 · o mesmo que a tela mostra: caso, tarefa e lembrete com data
     ["planejado","🗓️ Planejado", quantosNoPlanejado()],
     // F151 · a ocupação da próxima quarta ("9/14"), quando a agenda está ligada
@@ -8617,12 +8622,11 @@ function montarSidebar(){
     // Listas do escritório, antes das fases; Visões some inteira
     // F220 · as listas e as fases dependem do cargo (listasDoColab)
     const pode = listasDoColab();
-    const fasesColab = ["prazo","escritorio","inss","conselho","judicial","peticao_inicial","aposentadoria_futura"].filter(f=>pode.includes("fase:"+f));
+    const fasesColab = ["escritorio","inss","conselho","judicial","peticao_inicial","aposentadoria_futura"].filter(f=>pode.includes("fase:"+f));
     // F187 · o WhatsApp mora em Visões (que some para o colaborador): aqui ele
     // entra nas listas, porque é onde o atendente trabalha
     document.getElementById("grupo-dinamicas").innerHTML = [...din, ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
         ["direito","⚖️ Análise de Direito", direitoAlcancado().length||null],
-        ["agenda","🩺 Perícias & Audiências", quantasPericias()],
         ["clientes","👥 Clientes", (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length]]   // F250 · a lista de todos os clientes (nível 0)
       .filter(([id])=>pode.includes(id) && !["particulares","rotinas"].includes(id))
       .map(([id,rot,n])=>`<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
@@ -8637,7 +8641,7 @@ function montarSidebar(){
     document.getElementById("grupo-visoes").parentElement.style.display = "none";
   } else {
   document.getElementById("grupo-visoes").parentElement.style.display = "";
-  document.getElementById("grupo-fases").innerHTML = ordemDasFases().map(([f,rot])=>{
+  document.getElementById("grupo-fases").innerHTML = ordemDasFases().filter(([f])=>f!=="prazo").map(([f,rot])=>{   // F377 · Tarefas com Prazo é aba do Planejado
     const n = casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
     return `<div class="lista-item" role="button" tabindex="0" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`;
   }).join("")
@@ -8662,7 +8666,6 @@ function montarSidebar(){
     ["marketing","📣 Marketing", null],
     // F236 · o número de 💰 Recebimentos é o dinheiro vencido (antes contava os casos da fase Pagamentos)
     ["recebimentos","💰 Recebimentos", (D.pagamentos||[]).filter(p=>p.status==="aberto" && p.vencimento && p.vencimento<hoje() && !pgSemValor(p) && !valorSuspeito(p)).length || null],
-    ["agenda","🩺 Perícias & Audiências", quantasPericias()],
     ["dashboard","📊 Dashboard", null],
     ["patinss","📥 Importar do INSS", null],
     ...(souAdmin() ? [["config","⚙️ Configurações", null]] : []),
@@ -8696,15 +8699,14 @@ function montarSidebar(){
     const tmp = document.createElement("div"); tmp.innerHTML = vis.innerHTML;
     const tira = id => { const el=tmp.querySelector(`[data-v="${id}"]`); if(el) el.remove(); return el; };
     tira("clientes"); tira("direito"); tira("agenda"); tira("patinss");
-    const nDir = direitoAlcancado().length, nAg = D.eventos.filter(e=>e.status==="agendada" && dataSP(e.data_hora)>=hoje()).length;
+    const nDir = direitoAlcancado().length;
     // F236 · o Importar fica à vista de quem aplica, com o número de coletas esperando
     vis.innerHTML = item("clientes","👥 Clientes",(D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length)   // à vista do titular, e não no "Mais"
-      + item("direito","⚖️ Análise de Direito",nDir) + item("agenda","🩺 Perícias & Audiências",nAg)
+      + item("direito","⚖️ Análise de Direito",nDir)
       + item("patinss","📥 Importar do INSS",coletasPorFonte().novas.length, (()=>{ const n=coletasPorFonte().novas.length, v=semCasoAntigos().length;
           return v ? `${n?`<span class="cont">${n}</span>`:""}<span class="cont" style="background:#c0392b;color:#fff" title="processos do acervo sem caso no CRM há mais de 7 dias">⚠ ${v}</span>` : ""; })());
-    const mais = ["calendario","importante","particulares","rotinas","acervo"].map(id=>{ const x=dd[id];
+    const mais = ["importante","particulares","rotinas","acervo"].map(id=>{ const x=dd[id];
         return item(id,x[1],x[2]==="🔒"?null:x[2], x[2]==="🔒"?`<span class="priv">🔒 só você</span>`:""); }).join("")
-      + item("fase:prazo","🗓 Tarefas com Prazo",nFase("prazo"))
       + item("checagem","🔎 Checagem manual",ativos().filter(k=>k.acompanhamento==="manual").length)
       + tmp.innerHTML;
     const nMais = (mais.match(/class="lista-item"/g)||[]).length;
@@ -8771,7 +8773,7 @@ function montarSidebar(){
       st.style.color = syncAtrasada(min) || disparo ? "#E8A13D" : "";
     }
   }
-  const at = document.querySelector(`.lista-item[data-v="${visao}"]`);
+  const at = document.querySelector(`.lista-item[data-v="${ehAbaPlan(visao) ? "planejado" : visao}"]`);   // F377 · as abas acendem o Planejado
   // são 26 destinos: recolhido, o trilho não cabe na tela e rola. Sem isto,
   // abrir uma lista do fim deixava o menu mostrando um trecho onde nada está
   // aceso — parecia que nenhuma lista estava selecionada.
@@ -10788,7 +10790,10 @@ function ligarCartoes(){
 }
 
 let vistaAnimada="";
-function render(){
+// F377 · as visões de data viram abas do Planejado (decisão do Paulo, 02.11.2026): a tela de cada aba é a de antes, com a
+// barra das abas no alto e o nome Planejado
+function render(){ renderBase(); if(!buscaTxt && ehAbaPlan(visao)) barraPlanejado(); }
+function renderBase(){
   aplicarTema(); marcarBarraCel();
   if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = meuNivel()<=1 ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
   // o fade só quando a VISTA muda (trocar de lista, pesquisar) — render()
@@ -12700,7 +12705,7 @@ const LISTAS_COLAB = ["meudia","mencoes","whatsapp","calendario","planejado","ag
 // (cadastro, Escritório, agenda, perícias), sem as listas de processo
 const LISTAS_POR_CARGO = {
   advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "direito", "agenda"],
-  recepcao: ["meudia","mencoes","whatsapp","calendario","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente"],
+  recepcao: ["meudia","mencoes","whatsapp","planejado","calendario","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente"],
 };
 const listasDoColab = () => meuNivel()<=1 ? ["agendaq", "clientes", "mencoes", ...(meuNivel()===1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), "novocliente"]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
@@ -13545,6 +13550,13 @@ function renderAgendaV10(qual){
   const em = n=>{ const x=new Date(hoje()+"T12:00:00"); x.setDate(x.getDate()+n); return x.toLocaleDateString("sv"); };
   const hj = hoje();
   let itens = planej || mdMostraVence() ? itensAgenda(col) : [];
+  let chipsNat = "";
+  if(planej){   // F377 · os filtros da natureza; o número de cada um conta antes do filtro
+    const cont = {}; itens.forEach(i=>{ const n = natPlan(i); cont[n] = (cont[n]||0)+1; });
+    chipsNat = `<div class="filtros plan-nat" role="group" aria-label="Natureza">` + [["","Tudo",itens.length,"todas as datas"], ...PLAN_NAT.map(([v,r,t])=>[v,r,cont[v]||0,t])]
+      .filter(([v,,n])=>!v || n || v===filtroPlanNat).map(([v,r,n,t])=>`<button class="fchip ${filtroPlanNat===v?"on":""}" data-pnat="${v}" aria-pressed="${filtroPlanNat===v}" title="${esc(t)}">${r} <span class="pl-n">${n}</span></button>`).join("") + `</div>`;
+    if(filtroPlanNat) itens = itens.filter(i=>natPlan(i)===filtroPlanNat);
+  }
   // F236 · O MEU DIA COMEÇA PELO ATRASADO DA PESSOA e mostra o próximo dia útil (no sábado, até a
   // segunda): a perícia de amanhã e o prazo de segunda não esperam alguém abrir o Planejado
   const util = (()=>{ let d=em(1); while(!ehDiaUtil(d)) d=somaDias(d,1); return d; })();
@@ -13616,13 +13628,14 @@ function renderAgendaV10(qual){
       + deleg.slice(0,limAg["Delegadas por mim"]||50).map(linhaAgenda).join("")
       + (deleg.length>(limAg["Delegadas por mim"]||50)?`<button class="btn-rap mais-plan" data-mais="Delegadas por mim">Mostrar mais ${Math.min(200,deleg.length-(limAg["Delegadas por mim"]||50))} de ${deleg.length-(limAg["Delegadas por mim"]||50)}</button>`:"")
       + `</details>` : "");
-  document.getElementById("conteudo-meio").innerHTML = avisoSeMeuDia(planej) + (corpo
+  document.getElementById("conteudo-meio").innerHTML = chipsNat + avisoSeMeuDia(planej) + (corpo
     || `<p class="meio-sub">${planej?"Nada com data, agenda limpa.":`Nada vence hoje. Para pôr um cliente no dia, ${
       celular()?"toque e segure":"clique com o botão direito"} no cartão dele e escolha Adicionar ao Meu Dia.`}</p>`);
   document.querySelectorAll("[data-agcol]").forEach(b=>b.onclick=()=>{
     if(planej) filtroPlanColab=b.dataset.agcol||null; else filtroDia=b.dataset.agcol||null;
     limAg={}; render(); });
   document.querySelectorAll("[data-mais]").forEach(b=>b.onclick=()=>{ const t=b.dataset.mais; limAg[t]=(limAg[t]||50)+200; render(); });
+  document.querySelectorAll("[data-pnat]").forEach(b=>b.onclick=()=>{ filtroPlanNat=b.dataset.pnat; limAg={}; render(); });
   document.querySelectorAll("[data-conclui-and]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); concluirDeVez(b.dataset.concluiAnd); });
   document.querySelectorAll("[data-avisado]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); lembreteAvisado(b.dataset.avisado,"manual"); });
   // F236 · a caixa de cada origem nova: a rotina feita, a perícia que aconteceu, o cliente avisado, a menção lida
@@ -13703,6 +13716,26 @@ function linhaMencaoDia(m){
     <span class="acoes">${m.caso_id?botoesResposta(m):""}</span>
   </div>`;
 }
+// F377 · O PLANEJADO JUNTA AS VISÕES DE DATA (decisão do Paulo, 02.11.2026): Calendário, Perícias & Audiências e Tarefas com
+// Prazo saem do menu e viram abas do Planejado; a 📅 Agenda (os atendimentos) continua à parte, para não se confundir com ele
+const PLAN_ABAS = [["planejado","Lista","tudo o que tem data, por dia"],["calendario","Mês","o calendário do mês"],
+  ["agenda","Perícias","perícias e audiências, futuras, a confirmar e passadas"],["fase:prazo","Casos","os casos da lista Tarefas com Prazo, pela data fatal"]];
+const ehAbaPlan = v => PLAN_ABAS.some(a=>a[0]===v);
+function barraPlanejado(){
+  const pode = visaoColab() ? listasDoColab() : null;
+  const abas = PLAN_ABAS.filter(([v])=>!pode || pode.includes(v));
+  const h = document.getElementById("titulo-lista"); if(h) h.textContent = "Planejado";
+  const m = document.getElementById("conteudo-meio"); if(!m || m.querySelector(":scope > .plan-abas")) return;
+  m.insertAdjacentHTML("afterbegin", `<div class="plan-abas" role="tablist" aria-label="Visões do Planejado">${abas.map(([v,r,t])=>
+    `<button role="tab" aria-selected="${v===visao}" class="${v===visao?"on":""}" data-plan-aba="${v}" title="${esc(t)}">${r}</button>`).join("")}</div>`);
+  m.querySelectorAll("[data-plan-aba]").forEach(b=>b.onclick=()=>{ if(b.dataset.planAba!==visao) irPara(b.dataset.planAba); });
+}
+// a natureza de cada item da Lista, para os filtros do alto
+const PLAN_NAT = [["prazos","Prazos","prazos fatais, recursos, exigências e prazos dos tribunais"],["pericias","Perícias","perícias, audiências e julgamentos"],
+  ["tarefas","Tarefas","tarefas das anotações e tarefas soltas"],["fila","Retornos","casos que voltam à fila (Concluir por hoje)"],["lembretes","Lembretes","lembretes, cards, honorários e o resto"]];
+const natPlan = i => i.ev||i.evPassado||i.avisar||i.novEv||i.selo==="Pauta" ? "pericias" : i.selo==="Volta à fila" ? "fila"
+  : i.fatal||i.prazo ? "prazos" : i.tc||i.t||i.rotina ? "tarefas" : "lembretes";
+let filtroPlanNat = "";
 function irPara(v){ visao=v; zag.fora=false; limparBusca(); fecharFicha(false); montarSidebar(); render(); pintarAgendaZap(); }
 
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
@@ -51799,7 +51832,7 @@ const AJUDA = {
   mencoes: ["Menções", `<p>Lista as anotações em que alguém escreveu @ e o seu nome. Responda com <b>Ok</b> ou <b>Feito</b>: a resposta entra no caso e quem citou recebe o aviso.</p>`],
   novidades: ["Novidades", `<p>Mostra o que os portais trouxeram e ninguém leu: movimentos do PJe, do e-SAJ, do eproc, do e-Recursos e do Meu INSS. O que pede ação (perícia, audiência ou julgamento a agendar) aparece em destaque.</p>
     <p>Leia, tome a providência no caso e marque como lida.</p>`],
-  planejado: ["Planejado", `<p>Mostra, por data, tudo o que tem dia marcado: casos com prazo, tarefas e lembretes. Serve para ver a semana e o mês antes de chegarem.</p>`],
+  planejado: ["Planejado", `<p>Mostra, por data, tudo o que tem dia marcado: casos com prazo, tarefas e lembretes. Serve para ver a semana e o mês antes de chegarem.</p><p>As abas do alto trocam a visão: Lista (por dia, com os filtros Prazos, Perícias, Tarefas, Retornos e Lembretes), Mês (o calendário), Perícias (perícias e audiências, inclusive as que pedem confirmação) e Casos (a lista Tarefas com Prazo, pela data fatal). A 📅 Agenda dos atendimentos continua à parte.</p>`],
   agendaq: ["Agenda", `<p>É a agenda do Google do escritório. Os horários tracejados são <b>vagas</b>: clique na vaga para agendar o cliente nela. O 001 é o primeiro atendimento (45 minutos) e o 002 é o retorno de quem já é cliente (30 minutos).</p>
     <p>No atendimento marcado, use <b>Editar</b> para corrigir nome e telefone, ou remarque e cancele: a vaga volta a ficar livre. A opção <b>Completa</b> junta as agendas do Paulo, do Marcos e da Amanda.</p>`],
   minhas: ["Atribuídas a mim", `<p>Lista os casos em que você é responsável ou tem tarefa. Abra o caso, faça o que a tarefa pede e conclua a tarefa no próprio andamento.</p>`],
