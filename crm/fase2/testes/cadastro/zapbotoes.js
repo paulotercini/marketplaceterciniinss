@@ -251,6 +251,12 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.setInputFiles("#zap-arq", { name: "rg.pdf", mimeType: "application/pdf", buffer: Buffer.from("%PDF-1.4") });
     await p.waitForTimeout(200);
     conf("o clipe envia o arquivo", escritas.some(e => /zap_mensagens/.test(e.u) && e.b && e.b.tipo === "documento"));
+    escritas.length = 0;
+    p.once("dialog", d => d.accept());
+    await p.$eval("#zap-txt", t => { const dt = new DataTransfer(); dt.items.add(new File([new Uint8Array([137,80,78,71])], "image.png", {type: "image/png"}));
+      t.dispatchEvent(new ClipboardEvent("paste", {clipboardData: dt, bubbles: true, cancelable: true})); });
+    await p.waitForTimeout(300);
+    conf("F371 · colar um print envia a foto", escritas.some(e => /zap_mensagens/.test(e.u) && e.b && e.b.tipo === "imagem" && /^print-/.test(e.b.midia_nome)));
     await p.tap(".ze-nota-cel"); await p.waitForTimeout(100);
     await p.fill("#zap-txt", "nota de teste"); await p.tap("#zap-enviar"); await p.waitForTimeout(300);
     conf("a nota interna é gravada", escritas.some(e => /zap_mensagens/.test(e.u) && e.b && e.b.texto === "nota de teste"));

@@ -6207,7 +6207,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.33</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.34</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15519,6 +15519,17 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
   pintarPainelZap(c);
   const t = document.getElementById("zap-txt");
   t.oninput = ()=>{ t.style.height="auto"; t.style.height=Math.min(t.scrollHeight,140)+"px"; sugerirFrases(); guardarRascZap(c.id, t.value); };
+  // F371 · o print colado (Ctrl+V) vai como foto, com o texto escrito de legenda
+  t.onpaste = async e=>{
+    if(zapNota) return;
+    const it = [...((e.clipboardData && e.clipboardData.items) || [])].find(i=>i.kind==="file" && /^image\//.test(i.type));
+    const f = it && it.getAsFile();
+    if(!f) return;
+    e.preventDefault();
+    if(!(await confirmar("Enviar o print colado? O texto escrito vai como legenda."))) return;
+    const ext = (f.type.split("/")[1]||"png").replace("jpeg","jpg");
+    mandarArquivoZap(new File([f], `print-${Date.now()}.${ext}`, {type: f.type}));
+  };
   // F332 · o texto não enviado espera na conversa, como no aplicativo
   if(!t.value && rascZap()[c.id]) t.value = rascZap()[c.id];
   // Enter manda, Shift+Enter pula linha — é o que a mão da equipe já espera.
@@ -16022,11 +16033,11 @@ function tipoDoArquivo(f){
   if(m.startsWith("audio/")) return "audio";
   return "documento";
 }
-async function mandarArquivoZap(){
+async function mandarArquivoZap(colado){
   const inp = document.getElementById("zap-arq");
-  const arq = inp && inp.files && inp.files[0];
+  const arq = colado || (inp && inp.files && inp.files[0]);
   if(!arq || !zapAberta) return;
-  inp.value = "";                               // permite mandar o mesmo de novo
+  if(inp) inp.value = "";                       // permite mandar o mesmo de novo
   // 60 MB é o teto do WhatsApp; barrar aqui evita o arquivo subir para nada
   if(arq.size > 60*1024*1024) return aviso("Arquivo grande demais para o WhatsApp (máx. 60 MB)");
   const nome = nomeSeguro(arq.name || "arquivo");
