@@ -85,6 +85,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # F381 · o programa sai da página para app.<hash>.js, que o celular guarda já
+      # compilado. Roda só aqui, no artefato: o repositório continua com o app.html testado.
+      - name: Separar o programa da página
+        run: python3 crm/separar.py docs/crm
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 

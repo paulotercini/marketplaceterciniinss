@@ -433,6 +433,8 @@ A **F377** (12.36, a segunda análise visual de 02.11.2026, pedido do Paulo): o 
 
 A **F379** (12.37, pedido do Paulo de 02.11.2026, a carga inicial no celular): os casos encerrados vêm na carga inicial sem o histórico do DataJud (`datajud`, `datajud_multi`, cerca de 2 MB dos 7 MB deles), com as demais colunas tiradas de uma linha de amostra (`casosDaCarga`, `CASO_PESADO`, a linha leva `_semDj`); os abertos continuam com `select=*`, porque o Meu Dia lê o histórico deles (`provaForaDaFicha`). A ficha completa o caso (`buscarFicha` → `casoInteiro`), e quem grava esses campos completa antes (`fundirCasos`, `desfazerFusao`, `moverNumero`, `salvarProcessos`): gravar a partir do caso sem eles apagaria o histórico no banco. A carga incremental segue trazendo a linha inteira do caso que mudou. Teste: `testes/cadastro/f379.js`.
 
+A **F381** (12.39, pedido do Paulo de 02.11.2026, o programa grande no celular): o deploy (`deploy-pages.yml`, passo "Separar o programa da página") roda `crm/separar.py` sobre o artefato e grava o maior `<script>` do `docs/crm/index.html` em `app.<hash>.js`, deixando na página só o `<script src>`; o texto não muda um byte (`juntar` devolve o original, `tests/test_separar.py`), e o repositório continua com a página idêntica ao `app.html`. O navegador guarda o programa já compilado: no celular simulado (CPU 4x), a abertura caiu de 3 a 9 s para 0,3 a 1,3 s. O `sw.js` guarda o `app.<hash>.js` (cache-first, só o da versão atual) e só põe a página nova na caixa depois de guardar o programa dela, para abrir sem rede e não abrir uma página sem o seu programa.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
