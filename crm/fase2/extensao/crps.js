@@ -162,10 +162,12 @@
             const r = await consultar(sis, fila[i], modo);
             if (r.ok) {
               const j = await r.json();
-              // F184 · acórdão e monocrática descem na hora, com o mesmo crachá
-              // da consulta, para o caminho que o robo-crps/ingerir.js usava
+              // F184 · os documentos descem na hora, com o mesmo crachá da
+              // consulta, para o caminho que o robo-crps/ingerir.js usava.
+              // 1.32 · TODOS, como na tela do e-Sisrec (antes, só acórdão e
+              // monocrática); o que já está no CRM é pulado
               const docs = ((j && j.eventos) || []).flatMap(ev => ev.documentos || [])
-                .filter(d => d && d.path && /ac[oó]rd[aã]o|monocr[aá]tic/i.test(d.nome || ''));
+                .filter(d => d && d.path);
               await CRM.guardarDocs('crps', fila[i], docs, { todos: true,
                 baixar: d => fetch('/api/v1' + String(d.path).split('?')[0], { credentials: 'include',
                   headers: Object.assign({ Accept: 'application/pdf' }, modo ? { Authorization: 'Bearer ' + modo } : {}) }) });
