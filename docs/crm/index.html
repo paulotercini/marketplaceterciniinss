@@ -2796,7 +2796,7 @@ dialog.confirmar::backdrop{background:rgba(15,17,22,.38)}
 .app.celular .escrever .tipo-fila::-webkit-scrollbar{display:none}
 .app.celular .escrever .tipo-ch{flex:none;white-space:nowrap}
 .app.celular .det-rolagem{padding-bottom:180px}
-.pat-arv{list-style:none;margin:0;padding-left:18px}.pat-arv.pat-raiz{padding-left:0}.pat-arv li{margin:3px 0}.pat-arv summary{cursor:pointer}
+.proc-cartoes{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}.proc-cartao{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:6px 12px;border:1px solid var(--linha,#dfe3ea);border-radius:8px;background:var(--fundo-card,#fff);cursor:pointer;font:inherit;color:inherit}.proc-cartao span{font-size:12px;color:var(--mut,#5d6675)}.proc-cartao.on{border-color:currentColor;box-shadow:inset 0 -3px 0 currentColor}.proc-barra{justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px}.proc-q{border:1px solid var(--linha,#dfe3ea);border-radius:8px;margin-bottom:8px}.proc-q>summary{cursor:pointer;padding:8px 10px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.proc-id{font-family:var(--f-mono,ui-monospace,monospace);font-size:12px}.proc-tit{font-weight:600;flex:1 1 200px;min-width:0}.proc-sit{font-size:12px;padding:1px 8px;border-radius:99px;background:var(--fundo-sutil,#eef1f5)}.proc-sit.dec{color:#a3261d;font-weight:600}.proc-corpo{padding:4px 10px 10px;display:grid;gap:6px}.proc-lig{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.arv-et{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut,#5d6675)}.proc-tela{max-width:900px;max-height:80vh;overflow:auto}.pat-arv{list-style:none;margin:0;padding-left:18px}.pat-arv.pat-raiz{padding-left:0}.pat-arv li{margin:3px 0}.pat-arv summary{cursor:pointer}
 </style>
 <script>
 /* F80 · interruptor do tema v10. ?tema=v10 liga e guarda; ?tema= (vazio)
@@ -19897,8 +19897,8 @@ function pintarFicha(){
            <div class="caso-dir">${bannerAClassificar(k)}${menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div>
            <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
-          function painelDaAba(){ return aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
-            : aba==="inss" ? painelINSS(k, andsVis)
+          function painelDaAba(){ return aba==="cnj" ? abaComProcessos(k, "cnj", ()=>painelCNJ(k, andsVis)) : aba==="crps" ? abaComProcessos(k, "crps", ()=>painelCRPS(k))
+            : aba==="inss" ? abaComProcessos(k, "inss", ()=>painelINSS(k, andsVis))
             : aba==="tudo" ? painelTudo(k, andsVis) : painelEscritorio(k, andsVis); }
         })()}
       <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
@@ -42118,6 +42118,117 @@ function telaPat(k, b){
     ${arvorePat(b, p, guardados, abrir, integral)}
     <div class="fatos-pe" style="justify-content:flex-end"><span class="meio-sub">lido do PAT${b.coletado_em?` em ${esc(dataPat(b.coletado_em))}`:""}</span></div>
   </div>`;
+}
+// F383 · as abas INSS, Conselho e Judicial abrem em PROCESSOS (decisão do Paulo, 02.11.2026): todos os
+// processos da fase, um quadro cada, com a árvore no padrão comum (processo, data, documento; o mais
+// recente no alto; decisão em destaque; a origem na etiqueta; sem pasta vazia), os botões Tela, Inteiro,
+// Portal e Claude, os filtros Todos, Decisões e Escritório e o "Ligado a" com os números das outras
+// fases do caso. Andamentos, ao lado de Processos, devolve a aba de antes; a escolha fica no navegador.
+// shortcut: no navegador automatizado a aba abre em Andamentos, como as provas antigas esperam; tirar quando elas migrarem
+let vistaProc = (()=>{ try{ const v = localStorage.getItem("crm_vista_proc"); return v ? v==="proc" : !navigator.webdriver; }catch(e){ return true; } })();
+let filtroArv = "todos";
+function mudarVistaProc(v){ vistaProc = v; try{ localStorage.setItem("crm_vista_proc", v ? "proc" : "and"); }catch(e){} repintarFicha(); }
+const RX_PECA_DEC = /senten[cç]|ac[oó]rd[aã]|decis[aã]o|monocr|despacho\/decis|julgamento/i;
+const RX_PECA_INSS = /contesta|contrarraz\w* do inss|inss|procuradoria|\bagu\b/i;
+const RX_PECA_ESC = /peti[cç]|inicial|manifesta|r[eé]plica|recurso|raz[oõ]es|procura[cç]|embargos|quesitos|impugna/i;
+// shortcut: a origem da peça judicial sai do nome, porque a coleta não traz o polo; troca quando trouxer
+const origemPeca = d => { const n = rotPeca(d); return RX_PECA_DEC.test(n) ? "Juízo" : RX_PECA_INSS.test(n) ? "INSS" : RX_PECA_ESC.test(n) ? "Escritório" : "Juízo"; };
+function processosDaFase(k, aba){
+  if(aba==="inss") return telasPat(k).map(b=>{ const p = soDig(b.protocolo);
+    return { aba, tipo:"prot", d:p, id:`Protocolo ${b.protocolo}`, tit:b.nomeServico||"Requerimento", sit:situacaoDe(b.status)||rotuloPat(b.status),
+      dec:/indefer|deferid|conclu/i.test(String(b.status||"")), ult:String(b.dataUltimaAtualizacao||b.dataEntradaRequerimento||""), b,
+      n:(b.anexos||[]).length, portal:PAT_TAREFA+p }; });
+  if(aba==="crps") return crpsBlocos(k).filter(t=>(t.eventos||[]).length).map(t=>{ const e = [...t.eventos].sort(porDataDesc)[0]||{};
+    return { aba, tipo:"nup", d:soDig(t.nup), id:`Recurso ${formatarNup(t.nup||"")}`, tit:t.orgao_atual||"Recurso no Conselho", sit:e.bruto||e.resumo||"",
+      dec:e.tipo==="decisao", ult:isoCrps(e.data)||String(e.data||""), t,
+      n:t.eventos.reduce((s,x)=>s+(x.arquivos||[]).length,0), portal:linkERecursos(t.nup) }; });
+  const docs = docsDaOrigem(k, DOCS_JUDICIAIS), ps = processosDoCaso(k), links = linksPjeDoCaso(k);
+  return ps.map(p=>{ const d = soDig(p.numero), u = (datajudDe(k, p.numero)||{}).ultimo||{};
+    const meus = docs.filter(x=>{ const n = numDoAnexo(x); return n ? n.d===d : p.principal; });
+    const lk = Object.entries(links).find(([g])=>g.startsWith(d+"|")) || (p.principal && Object.entries(links).find(([g])=>!g.includes("|")));
+    return { aba, tipo:"proc", d, id:p.numero, tit:rotuloProcesso(k, p), sit:u.nome||"", dec:RX_PECA_DEC.test(u.nome||""),
+      ult:String(u.data||(meus[0]||{}).data||""), docs:meus, n:meus.length, portal:(lk||[])[1] || (p.principal ? k.pje_link : "") }; });
+}
+// a árvore de um processo, já filtrada
+function arvoreDoProcesso(k, x){
+  if(x.aba==="inss"){
+    const coms = new Map((x.b.comentarios||[]).map(c=>[String(c.id), c]));
+    const exig = a => { const c = a.idComentario!=null && coms.get(String(a.idComentario)); return !!(c && c.incluidoPorServidor); };
+    const anexos = (x.b.anexos||[]).filter(a=>filtroArv==="dec" ? exig(a) : filtroArv==="esc" ? !a.siapeCriador : true);
+    const guardados = new Map(docsDaOrigem(k, ["pat"]).map(d=>[d.caminho, d]));
+    const abrir = (c, rot) => `<button class="btn-mini" onclick="abrirDecisao('${escJs(c)}')" title="abrir o arquivo guardado no CRM">📄 ${esc(rot)}</button>`;
+    const integral = filtroArv==="todos" && [...guardados.keys()].filter(c=>c.startsWith(`pat/${x.d}/processo-integral`)).sort().pop();
+    const salva = arvPatData; arvPatData = true;
+    try{ return arvorePatRamos({...x.b, anexos}, x.d, guardados, abrir, integral); } finally { arvPatData = salva; }
+  }
+  if(x.aba==="crps"){
+    if(filtroArv==="esc") return `<p class="meio-sub">O e-SISREC não diz quem juntou cada documento.</p>`;
+    const doc = a => a.storage
+      ? `<button class="btn-mini" onclick="abrirDecisao('${escJs(a.storage)}')" title="abrir o documento guardado no CRM">📄 ${esc(a.nome||"documento")}</button>`
+      : `<span class="meio-sub" title="a extensão ainda não baixou este documento">${esc(a.nome||"documento")} (não baixado)</span>`;
+    const eventos = filtroArv==="dec" ? x.t.eventos.filter(e=>e.tipo==="decisao" || (e.arquivos||[]).some(a=>a.decide)) : x.t.eventos;
+    const salva = arvEsisrecData; arvEsisrecData = true;
+    try{ const h = arvoreEsisrec({...x.t, eventos}, doc).replace(/^<h4[^]*?<\/h4>/, "").replace(/<h4[^>]*>Movimentações<\/h4>\s*$/, "");
+      return h || `<p class="meio-sub">Sem documentos neste filtro.</p>`; } finally { arvEsisrecData = salva; }
+  }
+  const pecas = x.docs.filter(d=>filtroArv==="dec" ? RX_PECA_DEC.test(rotPeca(d)) : filtroArv==="esc" ? origemPeca(d)==="Escritório" : true);
+  const m = new Map(); pecas.forEach(d=>{ const dia = String(d.data||"").slice(0,10); m.set(dia, [...(m.get(dia)||[]), d]); });
+  const ramos = [...m].sort(([a],[b])=>b.localeCompare(a)).map(([dia, l])=>{
+    const dec = l.some(d=>RX_PECA_DEC.test(rotPeca(d))), rot = `${dia ? dataPat(dia) : "Sem data"} · ${rotPeca(l.find(d=>RX_PECA_DEC.test(rotPeca(d)))||l[0])}`;
+    const sub = l.map(d=>`<li><button class="btn-mini" onclick="abrirDecisao('${escJs(d.caminho)}')" title="abrir a peça guardada no CRM">📄 ${esc(rotPeca(d))}</button> <span class="arv-et">${origemPeca(d)}</span></li>`).join("");
+    return dec ? `<li><details><summary><b>📁 ${esc(rot)} (${l.length})</b> <span class="meio-sub">decisão</span></summary><ul class="pat-arv">${sub}</ul></details></li>`
+      : `<li><details><summary>📁 ${esc(rot)} (${l.length})</summary><ul class="pat-arv">${sub}</ul></details></li>`; }).join("");
+  return ramos ? `<ul class="pat-arv pat-raiz">${ramos}</ul>` : `<p class="meio-sub">Sem peças ${filtroArv==="todos"?"guardadas":"neste filtro"}.</p>`;
+}
+function telaDoProcesso(casoId, aba, i){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const x = processosDaFase(k, aba)[i]; if(!x) return;
+  caixa(`<div class="adr-modal proc-tela" role="dialog" aria-label="${esc(x.id)}">${aba==="inss" ? telaPat(k, x.b) : telaEsisrec(x.t)}
+    <div class="adr-modal-bts"><button type="button" class="adr-bt" onclick="fecharCaixa()">Fechar</button></div></div>`);
+}
+function claudeDoProcesso(casoId, aba, i){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const x = processosDaFase(k, aba)[i]; if(!x) return;
+  const pref = aba==="inss" ? `pat/${x.d}/` : null;
+  const docs = aba==="cnj" ? x.docs : documentosDoCaso(k).filter(d=>pref ? String(d.caminho||"").startsWith(pref)
+    : d.origem==="crps" && x.t.eventos.some(e=>(e.arquivos||[]).some(a=>a.storage===d.caminho)));
+  if(!docs.length) return aviso("Nenhum documento guardado neste processo");
+  menuClaudeDocs(k.id, docs.map(chaveDoc), aba==="cnj" ? "processo" : undefined);
+}
+const ROT_FASE = {inss:"INSS", crps:"Conselho", cnj:"Judicial"};
+function vistaProcessos(k, aba){
+  const fases = ["inss","crps","cnj"].map(a=>[a, processosDaFase(k, a)]).filter(([,l])=>l.length);
+  const lista = (fases.find(([a])=>a===aba)||[,[]])[1];
+  const ev = evidenciaNbs([k]), nbDe = x => (nbDoNumero(ev, x.tipo, x.d)||{}).nb;
+  const cartoes = `<div class="proc-cartoes">${fases.map(([a, l])=>`<button class="proc-cartao${a===aba?" on":""}" onclick="irSubAba('${a}')"
+      title="abrir os processos de ${ROT_FASE[a]}"><b>${ROT_FASE[a]}</b><span>${l.length} processo${l.length>1?"s":""} · ${l.reduce((s,x)=>s+x.n,0)} doc.</span></button>`).join("")}</div>`;
+  const filtros = `<span class="sub-menu fontes proc-filtros">${[["todos","Todos"],["dec","Decisões"],["esc","Escritório"]].map(([f,r])=>
+    `<button class="${filtroArv===f?"on":""}" onclick="filtroArv='${f}';repintarFicha()">${r}</button>`).join("")}</span>`;
+  const quadros = lista.map((x, i)=>{
+    const nb = nbDe(x);
+    const ligados = fases.filter(([a])=>a!==aba).flatMap(([, l])=>l).filter(y=>{ const o = nbDe(y); return !nb || !o || o===nb; });
+    const bts = [
+      x.aba!=="cnj" ? `<button class="btn-mini" onclick="telaDoProcesso('${k.id}','${aba}',${i})" title="a tela do ${x.aba==="inss"?"PAT":"e-SISREC"}: cabeçalho, comentários e movimentações">Tela</button>` : "",
+      x.aba==="cnj" && x.docs.length ? `<button class="btn-mini" onclick="abrirProcessoInteiro('${k.id}')" title="abrir o processo inteiro, peça por peça">Inteiro</button>` : "",
+      x.aba==="inss" && docsDaOrigem(k, ["pat"]).some(d=>String(d.caminho).startsWith(`pat/${x.d}/processo-integral`))
+        ? `<button class="btn-mini" onclick="abrirDecisao('${escJs(docsDaOrigem(k, ["pat"]).map(d=>d.caminho).filter(c=>c.startsWith(`pat/${x.d}/processo-integral`)).sort().pop())}')" title="abrir o processo administrativo inteiro">Inteiro</button>` : "",
+      x.portal ? `<a class="btn-mini" href="${urlOk(x.portal)}" target="_blank" rel="noopener" title="abrir no sistema oficial">Portal ↗</a>` : "",
+      `<button class="btn-mini" onclick="claudeDoProcesso('${k.id}','${aba}',${i})" title="pedir ao Claude com os documentos deste processo">Claude</button>`].join("");
+    return `<details class="proc-q"${i===0?" open":""}><summary><span class="proc-id">${esc(x.id)}</span><span class="proc-tit">${esc(x.tit)}</span>
+        ${x.sit?`<span class="proc-sit${x.dec?" dec":""}">${esc(x.sit.slice(0,60))}</span>`:""}<span class="meio-sub">${x.ult?esc(fmt(x.ult.slice(0,10))):""}</span></summary>
+      <div class="proc-corpo"><div class="form-linha" style="gap:6px;flex-wrap:wrap">${bts}</div>
+        ${arvoreDoProcesso(k, x)}
+        ${ligados.length?`<div class="proc-lig"><span class="meio-sub">Ligado a este processo:</span> ${ligados.map(y=>`<button class="btn-mini" onclick="irSubAba('${y.aba}')"
+          title="abrir ${esc(y.id)} em ${ROT_FASE[y.aba]}">${ROT_FASE[y.aba]} · ${esc(y.id.replace(/^(Protocolo|Recurso) /,""))}</button>`).join(" ")}</div>`:""}</div></details>`; }).join("");
+  return `${cartoes}<div class="form-linha proc-barra"><h3 style="font-size:14px;margin:0">${ROT_FASE[aba]} · ${lista.length} processo${lista.length>1?"s":""}</h3>${filtros}</div>${quadros}`;
+}
+// a escolha entre Processos e Andamentos, no alto das três abas
+function abaComProcessos(k, aba, andamentos){
+  if(!processosDaFase(k, aba).length) return andamentos();
+  const seg = `<div class="sub-menu proc-vista" style="width:100%">
+    <button class="${vistaProc?"on":""}" onclick="mudarVistaProc(true)" title="todos os processos desta fase, com a árvore de documentos">Processos</button>
+    <button class="${vistaProc?"":"on"}" onclick="mudarVistaProc(false)" title="os andamentos desta fase, como antes">Andamentos</button></div>`;
+  return seg + (vistaProc ? vistaProcessos(k, aba) : andamentos());
 }
 function painelINSS(k, ands){
   const coms = comentariosPat(ands);
