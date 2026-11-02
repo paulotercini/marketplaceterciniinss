@@ -179,6 +179,10 @@ quando a publicada na `main` é outra. Para atualizar: na pasta do repositório
 no computador, `git pull`; depois, em `chrome://extensions`, o botão ↻ da
 extensão (ou "Atualizar"). Não precisa reinstalar nem entrar de novo no CRM.
 
+## 📄 Cópia integral, expediente inclusive — desde 1.31.0
+
+O PJe, o eproc e o e-SAJ baixam todas as peças, também certidões, intimações, mandados, publicações e AR, que até a 1.30 se pulavam. O processo arquivado continua sem download. Na primeira rodada do PJe depois de atualizar, o processo com peça ainda sem arquivo na última cronologia volta à fila (até 3 tentativas por peça), por isso a rodada demora mais uma vez.
+
 ## 🖥 e-Recursos lê as duas bases — desde 1.30.0
 
 O portal do e-Recursos guarda os recursos em duas bases: o **e-Sisrec** e o **RecBen**, o sistema antigo. A cada rodada a extensão pede a lista das duas e consulta a soma, cada recurso direto na base que o listou. A faixa do alto mostra quantos vieram de cada uma ("o portal lista N recurso(s) (e-Sisrec X, RecBen Y)"), e a coleta leva os números em `portal.por_sistema`.
