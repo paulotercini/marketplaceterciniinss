@@ -63,9 +63,9 @@ test('recurso que o portal não lista mas o CRM conhece ainda é procurado nos d
   assert.equal(enviados[0].falhas.length, 0, '404 não é falha');
 });
 
-test('F184 · o acórdão desce junto e volta com o caminho; o CNIS não', async () => {
+test('1.32.0 · todos os documentos descem e voltam com o caminho, o CNIS inclusive', async () => {
   const { enviados } = await rodada();
   const docs = enviados[0].itens[`${NUP1}_esisrec`].eventos[0].documentos;
   assert.equal(docs[0].caminho, `crps/${NUP1}/7`);
-  assert.equal(docs[1].caminho, undefined);
+  assert.equal(docs[1].caminho, `crps/${NUP1}/8`);
 });
