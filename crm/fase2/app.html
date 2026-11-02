@@ -6206,7 +6206,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.28</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.29</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15069,13 +15069,14 @@ function pintarListaZap(){
   const gestor = zapGestor();
   // 29.10.2026 · sem a fila Retornos, que o escritório não usa (pedido do Paulo)
   // F346 · como no SMBot, o colaborador vê as Novas (as dele com mensagem não lida) e as Minhas;
-  // Todas fica com o gestor; F362 · Pendentes voltou ao colaborador, para ele assumir quem escreveu e ninguém atende (pedido do Paulo de 02.11.2026)
+  // Todas fica com o gestor; F362 · Pendentes voltou ao colaborador, para ele assumir quem escreveu e ninguém atende (pedido do Paulo de 02.11.2026);
+  // F364 · para o colaborador, apenas a pendente com mensagem não lida, como o contador do menu
   const filtros = gestor ? [["novas","Novas"],["minhas","Minhas"],["sem","Pendentes"],["todas","Todas"]]
                          : [["novas","Novas"],["minhas","Minhas"],["sem","Pendentes"]];
   if(zapFiltro==="retornos") zapFiltro = gestor ? "todas" : "novas";
   if(!gestor && zapFiltro==="todas") zapFiltro = "novas";
   const naAba = (f,c) => f==="novas" ? meu(c)&&aberta(c)&&c.nao_lidas>0
-                       : f==="minhas" ? meu(c)&&aberta(c) : f==="sem" ? !c.atendente_id&&aberta(c)
+                       : f==="minhas" ? meu(c)&&aberta(c) : f==="sem" ? !c.atendente_id&&aberta(c)&&(gestor||c.nao_lidas>0)
                        : f==="fim" ? !aberta(c)&&!c.automatica : f==="auto" ? !!c.automatica
                        : f==="retornos" ? !!retornoDe(c) : aberta(c);
   const q = dsa(zapBusca.trim()), qd = zapBusca.replace(/\D/g,"");
