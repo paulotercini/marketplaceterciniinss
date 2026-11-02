@@ -129,6 +129,14 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.waitForTimeout(400);
   const ms = escritas.filter(e => /\/mencoes/.test(e.u) && e.m === "POST");
   conf("a nota sem @ avisa quem atende a conversa (F357)", ms.length > antes && ms.slice(antes).some(e => e.b.para_id === AMANDA && e.b.conversa_id === DA_AMANDA));
+  // F368 · o atendente marcado como gestor do WhatsApp vê todas e transfere a conversa de outra pessoa, sem ser administrador
+  await p.evaluate(() => { eu.gestor_zap = true; zapFiltro = "todas"; zapAberta = null; irPara("whatsapp"); });
+  await p.waitForSelector(".zl-filas");
+  conf("gestor do WhatsApp: tem Todas e vê as 4 conversas (F368)", (await p.textContent(".zl-cab")).includes("Todas") && (await p.$$eval(".zap-conv", cs => cs.length)) === 4);
+  await p.evaluate(id => abrirConversa(id), DA_AMANDA);
+  await p.waitForSelector(".zap-topo");
+  conf("gestor do WhatsApp: na conversa da Amanda há Transferir (F368)", (await p.textContent(".zap-topo")).includes("Transferir"));
+  await p.evaluate(() => { eu.gestor_zap = false; });
   await p.evaluate(() => { localStorage.removeItem("crm_ver_como"); irPara("mencoes"); });
   await p.waitForTimeout(300);
   conf("Menções: o aviso de conversa tem o botão abrir conversa", (await p.textContent("#conteudo-meio")).includes("abrir conversa"));

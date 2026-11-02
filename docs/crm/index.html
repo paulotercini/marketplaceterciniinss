@@ -6207,7 +6207,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.32</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.33</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12677,7 +12677,7 @@ const LISTAS_POR_CARGO = {
   advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "direito", "agenda"],
   recepcao: ["meudia","mencoes","whatsapp","calendario","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente"],
 };
-const listasDoColab = () => meuNivel()<=1 ? ["agendaq", "clientes", "mencoes", ...(meuNivel()===1?["whatsapp"]:[]), "novocliente"]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
+const listasDoColab = () => meuNivel()<=1 ? ["agendaq", "clientes", "mencoes", ...(meuNivel()===1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), "novocliente"]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
 // F355 · o nível 1 (WhatsApp) conversa e marca horário, mas não grava no caso: andamento, documento e tarefa são do nível 2
 const podeGravarCaso = () => meuNivel()>=2;
@@ -14865,7 +14865,7 @@ async function carregarAuxZap(){
 // F187 · gestor vê e mexe em tudo; atendente vê as suas, as pendentes dos seus
 // setores e aquelas em que foi chamado com @. O banco confere as ações
 // (zap_guarda_*), aqui é o que cada um enxerga.
-const zapGestor = () => !visaoColab();
+const zapGestor = () => !visaoColab() || !!(eu && eu.gestor_zap);   // F368 · o gestor do WhatsApp vê e transfere todas, sem ser administrador do CRM
 const meusSetoresZap = () => zapAux.colabSetores.filter(x=>x.colaborador_id===eu.id).map(x=>x.setor_id);
 function zapVisivel(c){
   if(zapGestor() || c.atendente_id===eu.id || zapAux.mencionado.has(c.id)) return true;
@@ -17071,9 +17071,10 @@ async function renderConfig(){
             <input type="checkbox" data-casonovo="${c.id}"
               ${quemAvisaCasoNovo().some(x=>x.id===c.id)?"checked":""}> caso novo</label>
           ${/* F187 · papel no WhatsApp e setores de que a pessoa faz parte */""}
-          <select data-papel="${c.id}" title="Gestor vê e mexe em todas as conversas e tem o painel da equipe">
-            <option value="colaborador" ${c.papel!=="admin"?"selected":""}>atendente</option>
-            <option value="admin" ${c.papel==="admin"?"selected":""}>gestor</option>
+          <select data-papel="${c.id}" title="Gestor vê e transfere todas as conversas e tem o painel da equipe; administrador é gestor e tem também as Configurações do CRM">
+            <option value="colaborador" ${c.papel!=="admin"&&!c.gestor_zap?"selected":""}>atendente</option>
+            <option value="gestor" ${c.papel!=="admin"&&c.gestor_zap?"selected":""}>gestor</option>
+            <option value="admin" ${c.papel==="admin"?"selected":""}>administrador</option>
           </select>
           <span class="cfg-sets">${setAtivos.map(st=>`<label class="cfg-ck" title="faz parte do setor ${esc(st.nome)}">
             <input type="checkbox" data-cs="${c.id}|${st.id}" ${ehMembro(c.id, st.id)?"checked":""}>${esc(st.nome)}</label>`).join("")}</span>
@@ -17318,14 +17319,17 @@ function ligarConfig(){
   guarda("[data-papel]", el => el.onchange = async ()=>{
     const c = D.colPorId.get(el.dataset.papel);
     if(c && c.id===eu.id && el.value!=="admin"
-       && !await confirmar("Tirar o seu próprio papel de gestor? Você deixa de ver todas as conversas e perde as Configurações.")){
+       && !await confirmar("Tirar o seu próprio papel de administrador? Você perde as Configurações.")){
       el.value = "admin"; return; }
+    // F368 · gestor do WhatsApp (gestor_zap) sem ser administrador do CRM
+    const corpo = el.value==="admin" ? {papel:"admin"}
+      : {papel: c && c.papel!=="admin" ? c.papel : "colaborador", gestor_zap: el.value==="gestor"};
     try{
       await api(`/rest/v1/colaboradores?id=eq.${el.dataset.papel}`,{method:"PATCH",
-        headers:{Prefer:"return=minimal"}, body:JSON.stringify({papel:el.value})});
-    }catch(e){ el.value = c ? c.papel : el.value; return aviso("Não gravou — só o gestor altera a equipe."); }
-    if(c) c.papel = el.value;
-    aviso(el.value==="admin" ? `${c?c.nome:"A pessoa"} agora é gestor ✔` : `${c?c.nome:"A pessoa"} agora é atendente ✔`, false);
+        headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)});
+    }catch(e){ el.value = c ? (c.papel==="admin"?"admin":c.gestor_zap?"gestor":"colaborador") : el.value; return aviso("Não gravou: apenas o administrador altera a equipe."); }
+    if(c) Object.assign(c, corpo);
+    aviso(`${c?c.nome:"A pessoa"} agora é ${el.value==="admin"?"administrador":el.value==="gestor"?"gestor":"atendente"} ✔`, false);
   });
   guarda("[data-cs]", el => el.onchange = async ()=>{
     const [colab, setor] = el.dataset.cs.split("|");
