@@ -9173,6 +9173,10 @@ function traduzirProcesso(json, opts = {}) {
     nup: limpar(json.proc || ''),
     num_proc: limpar(json.numProc || ''),
     orgao_atual: limpar(json.orgaoAtual || ''),
+    // o cabeçalho da tela do e-SISREC (1.32.0): número do benefício, APS de origem e recorrido
+    nb: limpar(json.nb || ''),
+    aps_origem: limpar(json.apsOrigem || ''),
+    recorrido: limpar(json.recorrido || ''),
     recorrentes,
     status: sit.status,
     ultimo_em: sit.ultimo_em,
@@ -42736,16 +42740,38 @@ function linhaNumerosDasAbas(k){
 // F185 · o submenu do Recurso, no mesmo padrão do Judicial e do INSS: os
 // andamentos do recurso e os acórdãos/monocráticas guardados no CRM
 function menuDocsCrps(k){
-  if(!docsDaOrigem(k, ["crps"]).length) return "";
-  const ver = fonteCrps==="docs";
+  const tela = crpsBlocos(k).some(b=>(b.eventos||[]).length);
+  if(!tela && !docsDaOrigem(k, ["crps"]).length) return "";
+  const ver = fonteCrps==="docs", es = fonteCrps==="esisrec";
   return `<div class="sub-menu fontes" style="width:100%">
-    <button class="${ver?"":"on"}" onclick="fonteCrps='';repintarFicha()">${temaV10()?"":"⚖️ "}Andamentos do recurso</button>
+    <button class="${ver||es?"":"on"}" onclick="fonteCrps='';repintarFicha()">${temaV10()?"":"⚖️ "}Andamentos do recurso</button>
+    ${tela?`<button class="${es?"on":""}" onclick="fonteCrps='esisrec';repintarFicha()" title="o recurso como a tela do e-SISREC: cabeçalho, todas as movimentações e os documentos">e-SISREC</button>`:""}
     ${botaoDocs(k, ["crps"], ver, "fonteCrps='docs';repintarFicha()")}
+  </div>`;
+}
+// 1.32.0 · a tela do e-SISREC no CRM: o cabeçalho do processo e a tabela Data · Status · Documentos com TODAS as
+// movimentações, o status como o portal escreve (bruto) e cada documento guardado abrindo pelo CRM
+function telaEsisrec(t){
+  const cab = [["Processo", t.num_proc || formatarNup(t.nup||"")], ["NB", t.nb], ["Recorrente(s)", (t.recorrentes||[]).join("; ")],
+    ["Recorrido", t.recorrido], ["APS de origem", t.aps_origem], ["Órgão atual", t.orgao_atual]].filter(x=>x[1]);
+  const evs = [...(t.eventos||[])].sort(porDataDesc);
+  const doc = a => a.storage
+    ? `<button class="btn-mini" onclick="abrirDecisao('${escJs(a.storage)}')" title="abrir o documento guardado no CRM">📄 ${esc(a.nome||"documento")}</button>`
+    : `<span class="meio-sub" title="a extensão ainda não baixou este documento">${esc(a.nome||"documento")} (não baixado)</span>`;
+  return `<div class="fatos" style="margin-bottom:12px">
+    <div class="fatos-topo"><h3 style="font-size:14px">e-SISREC · ${esc(formatarNup(t.nup||"") || t.num_proc || "")}</h3></div>
+    <table class="tab" style="margin-bottom:10px">${cab.map(([r,v])=>`<tr><th style="text-align:left;white-space:nowrap">${r}</th><td>${esc(v)}</td></tr>`).join("")}</table>
+    <table class="tab tab-esisrec"><tr><th>Data</th><th>Status</th><th>Documentos</th></tr>
+      ${evs.map(e=>`<tr><td style="white-space:nowrap">${esc(e.data||"")}</td><td>${esc(e.bruto||e.resumo||"")}</td>
+        <td>${(e.arquivos||[]).map(doc).join("<br>")}</td></tr>`).join("")}
+    </table>
   </div>`;
 }
 function painelCRPS(k){
   if(fonteCrps==="docs" && docsDaOrigem(k, ["crps"]).length)
     return `${composerNoPainel(k)}${avisoNumeroFora(k, "nup")}${menuDocsCrps(k)}${painelDocumentos(k, ["crps"])}`;
+  if(fonteCrps==="esisrec" && crpsBlocos(k).some(b=>(b.eventos||[]).length))
+    return `${composerNoPainel(k)}${avisoNumeroFora(k, "nup")}${menuDocsCrps(k)}${crpsBlocos(k).filter(b=>(b.eventos||[]).length).map(telaEsisrec).join("")}`;
   const nups = crpsNups(k), blocos = crpsBlocos(k);
   const manual = n => crpsBlocos(k).find(b=>soDig(b.nup)===soDig(n) && b.manual);
   // gerência dos números: lista com remover + campo para acrescentar

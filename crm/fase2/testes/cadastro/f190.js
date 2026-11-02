@@ -139,6 +139,11 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
     return { bar: l.querySelector(".tl-barra").textContent.replace(/\s+/g, " "), docs: b2, link: (l.querySelector(".tl-link") || {}).href || "" }; });
   conf("o acórdão do e-SISREC sai no cartão oficial, com documento, portal e mensagem", cr && /Criar tarefa ou prazo/.test(cr.bar) && /Mensagem ao cliente/.test(cr.bar) && /e\/p\/44233139765202537/.test(cr.link) && cr.docs.length === 2);
   conf("o caminho do acórdão com aspas e < não quebra o clique", cr && cr.docs.every(o => { try { new Function(o); return true; } catch (e) { return false; } }) && /fic\\'tício/.test(cr.docs[1]));
+  // 1.32.0 · a tela do e-SISREC: cabeçalho, tabela Data · Status · Documentos e o documento guardado abrindo pelo CRM
+  const es = await p.evaluate(() => { fonteCrps = "esisrec"; repintarFicha(); const t = document.querySelector(".tab-esisrec");
+    const r = t ? { linhas: t.querySelectorAll("tr").length, txt: t.textContent, onc: [...t.querySelectorAll("button")].map(b => b.getAttribute("onclick")) } : null;
+    fonteCrps = ""; repintarFicha(); return r; });
+  conf("a aba e-SISREC mostra a tabela do portal com o documento clicável", es && es.linhas === 2 && /provido em parte/.test(es.txt) && es.onc.length === 1 && es.onc.every(o => { try { new Function(o); return true; } catch (e) { return false; } }));
   await p.evaluate(() => { const b2 = [...document.querySelectorAll('.painel[data-p="2"] li.tl-oficial .tl-barra button')].find(b => /Mensagem ao cliente/.test(b.textContent)); b2.click(); }); await p.waitForTimeout(200);
   conf("a mensagem do CRPS sai pronta, com WhatsApp alcançável pelo teclado", /provido em parte/.test(await p.evaluate(() => document.getElementById("msg-and").value)) && await p.evaluate(() => /^https:\/\/wa\.me\/55/.test(document.getElementById("msg-wa").getAttribute("href") || "")));
   await p.evaluate(() => fecharCaixa());
