@@ -6230,7 +6230,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.36</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.37</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -13341,6 +13341,7 @@ function itensAgendaTodos(){
     const comTf = k.prazo && !volta ? (D.tarefasPorCaso.get(k.id)||[]).filter(t=>t.natureza==="fatal" && !t.concluida_em && t.lembrar_em===k.prazo).map(t=>t.colaborador_id) : [];
     const donosPz = comTf.length ? (donos||[]).filter(d=>!comTf.includes(d)) : donos;
     if(k.prazo && !igual && (!comTf.length || donosPz.length)) por(volta ? {data:k.prazo, k, cli, selo:"Volta à fila", resumo:k.lembrar_motivo||tituloCaso(k)}
+      : prazoEhRetorno(k) ? {data:k.prazo, k, cli, selo:"Retorno", resumo:k.lembrar_motivo||tituloCaso(k)}
       : {data:k.prazo, k, cli, fatal:true, resumo:k.lembrar_motivo||tituloCaso(k)}, donosPz);
     // a data de início do Planner: o prazo fatal entra na agenda também no dia de começar
     if(k.prazo && k.prazo_inicio && k.prazo_inicio<k.prazo) por({data:k.prazo_inicio<hj ? hj : k.prazo_inicio, k, cli, selo:"Começar",
@@ -13735,7 +13736,7 @@ function barraPlanejado(){
 // a natureza de cada item da Lista, para os filtros do alto
 const PLAN_NAT = [["prazos","Prazos","prazos fatais, recursos, exigências e prazos dos tribunais"],["pericias","Perícias","perícias, audiências e julgamentos"],
   ["tarefas","Tarefas","tarefas das anotações e tarefas soltas"],["fila","Retornos","casos que voltam à fila (Concluir por hoje)"],["lembretes","Lembretes","lembretes, cards, honorários e o resto"]];
-const natPlan = i => i.ev||i.evPassado||i.avisar||i.novEv||i.selo==="Pauta" ? "pericias" : i.selo==="Volta à fila" ? "fila"
+const natPlan = i => i.ev||i.evPassado||i.avisar||i.novEv||i.selo==="Pauta" ? "pericias" : i.selo==="Volta à fila"||i.selo==="Retorno" ? "fila"
   : i.fatal||i.prazo ? "prazos" : i.tc||i.t||i.rotina ? "tarefas" : "lembretes";
 let filtroPlanNat = "";
 function irPara(v){ visao=v; zag.fora=false; limparBusca(); fecharFicha(false); montarSidebar(); render(); pintarAgendaZap(); }
@@ -14712,7 +14713,7 @@ function providenciasComData(){
   const donos = k => (D.atrDoCaso.get(k.id)||[]);
   ativos().forEach(k=>{
     if(k.prazo){ const og = origemDoPrazo(k);
-      out.push({data:k.prazo, ico:"⏰", tipo:"Prazo fatal", txt: og?og.texto:tituloCaso(k), nome:nomeC(k), cli:k.cliente_id, donos:donos(k)}); }
+      out.push({data:k.prazo, ico:prazoEhRetorno(k)?"↩":"⏰", tipo:prazoEhRetorno(k)?"Retorno":"Prazo fatal", txt: og?og.texto:tituloCaso(k), nome:nomeC(k), cli:k.cliente_id, donos:donos(k)}); }
     const pe = prorrogarEm(k);
     if(pe) out.push({data:pe, ico:"🩹", tipo:"Pedir prorrogação", txt:`DCB ${fmt(k.dcb)}`, nome:nomeC(k), cli:k.cliente_id, donos:donos(k)});
     (D.tarefasPorCaso.get(k.id)||[]).filter(t=>t.lembrar_em && !t.concluida_em).forEach(t=>
@@ -17815,7 +17816,8 @@ function itensDoCalendario(){
     // F236 · o prazo fatal é prazo, e não lembrete: vai na cor dos prazos (era o azul do lembrete); no dia de um prazo que o
     // CRM já conhece (recorrer até, exigência) é um item só, como no quadro do caso e no Planejado
     const rec = recorrerAte(k), igual = !k.prazo ? "" : rec===k.prazo ? "rec" : k.exigencia_prazo===k.prazo ? "exig" : "";
-    if(k.prazo && !igual) push(k.prazo,"prazo",`${c.nome}: ${k.lembrar_motivo||tituloCaso(k)} (prazo fatal)`,c.id);
+    if(k.prazo && !igual) push(k.prazo, prazoEhRetorno(k) ? "lembre" : "prazo",
+      `${c.nome}: ${k.lembrar_motivo||tituloCaso(k)} (${prazoEhRetorno(k) ? "retorno" : "prazo fatal"})`, c.id);
     if(k.exigencia_prazo) push(k.exigencia_prazo,"exig",`${c.nome}: exigência vence${igual==="exig"?" (prazo fatal)":""}`,c.id);
     if(k.dcb && !k.dcb_prorrogacao_pedida){
       push(k.dcb,"dcb",`${c.nome}: benefício cessa (pedir prorrogação)`,c.id);
@@ -19204,8 +19206,8 @@ function cartaoEscolha(cliId, k, i, meu, destaque){
   const velha = (trilhaDe(k)||{}).velha;
   const prox = proximosDoCaso(k)[0];
   const volta = k.prazo && ((k.ronda||{}).despacho||{}).prazo===k.prazo;
-  const selo = !k.prazo ? "" : volta
-    ? `<span class="esc-prz fila">volta à fila ${fmtBarra(k.prazo)}${k.prazo<hj?" · vencida":""}</span>`
+  const selo = !k.prazo ? "" : volta || prazoEhRetorno(k)
+    ? `<span class="esc-prz fila">${volta ? "volta à fila" : "retorno"} ${fmtBarra(k.prazo)}${k.prazo<hj?(volta?" · vencida":" · vencido"):""}</span>`
     : `<span class="esc-prz fatal" title="${esc(k.lembrar_motivo||"")}">prazo ${fmtBarra(k.prazo)}${k.prazo<hj?" · vencido":""}</span>`;
   const a = (D._andsFicha||[]).filter(x=>x.caso_id===k.id).sort((x,y)=>String(y.criado_em).localeCompare(String(x.criado_em)))[0];
   const quemAnd = a && (a.autor_id ? ((D.colPorId.get(a.autor_id)||{}).nome||"").split(" ")[0]
@@ -20232,7 +20234,7 @@ function prazoDoRelato(c){
   const t = relatoDe(c), m = t.match(/\b(?:AR|aviso de recebimento|ci[êe]ncia)\b[^.\n]{0,50}?(\d{2}\/\d{2}\/\d{4})/i);
   if(!m || !/negad|indeferid|cessad|cortad/i.test(t)) return null;
   const ci = isoBr(m[1]); if(!ci) return null;
-  let f = proxDiaUtil(somaDias(ci, 30)); while(feriadosNacionais(+f.slice(0, 4)).has(f)) f = proxDiaUtil(somaDias(f, 1));
+  const f = proxDiaUtilAdm(somaDias(ci, 30));
   return f >= hoje() ? {fatal:f, ciencia:ci, texto:`recurso ao CRPS até ${fmtBarra(f)}, contado da ciência em ${fmtBarra(ci)} (aviso de recebimento, pelo relato da recepção)`} : null;
 }
 // F235 · o parente ou o amigo que veio sem procuração não leva cópia nem detalhe do processo (IN 128, art. 602, § 2º)
@@ -33422,7 +33424,7 @@ function provaPcdNoDoc(c, as){
   const _min1 = s => s ? s[0].toLowerCase() + s.slice(1) : s;
   // o prazo que vence sem expediente vai ao 1º dia útil: fim de semana e feriado nacional (Regimento do CRPS, art. 78, § 4º);
   // o proxDiaUtil só pula o fim de semana. O feriado local o colaborador marca (crp_feriado_local)
-  const _diaUtil = iso => { let d = proxDiaUtil(iso); while(feriadosNacionais(+d.slice(0,4)).has(d)) d = proxDiaUtil(somaDias(d, 1)); return d; };
+  const _diaUtil = proxDiaUtilAdm;
 
   // ── REVISÃO ─────────────────────────────────────────────────────────────
   // a tese escolhida: o rótulo atual "art. 29, II (melhor benefício)" junta duas teses e marca as duas
@@ -36382,7 +36384,7 @@ function atoDaExigencia(det){
 }
 // F236 · 30 dias corridos contados da ciência (IN 128/2022, art. 566, caput; prorrogáveis por igual período a pedido,
 // § 2º); o vencimento em dia sem expediente vai ao dia útil
-const prazoDaExigencia = ato => ato ? proxDiaUtil(somaDias(ato, 30)) : null;
+const prazoDaExigencia = ato => ato ? proxDiaUtilAdm(somaDias(ato, 30)) : null;
 // F220/F221 · os prazos de análise do acordo homologado no RE 1.171.152 (STF,
 // Plenário, 08.02.2021), conferidos no acórdão: cláusula 1ª, aposentadorias
 // 90 dias, aposentadoria por invalidez comum e acidentária 45, auxílio-doença
@@ -36395,7 +36397,9 @@ const prazoDaExigencia = ato => ato ? proxDiaUtil(somaDias(ato, 30)) : null;
 // Exigência em aberto: a linha some (o prazo está parado); decidido, também.
 const MORA_DIAS = {B41:90, B42:90, B46:90, B57:90, B21:60, B25:60, B80:30, B87:90, B88:90,
   B31:45, B91:45, B32:45, B92:45, B36:60, B94:60};
-const MORA_PERICIA = new Set(["B31","B91","B32","B92","B36","B94","B87","B88"]);
+// 02.11.2026 · sem o B88: o BPC do idoso não passa por perícia nem por avaliação social (a avaliação do art. 20, § 6º, da
+// Lei 8.742/1993 é da pessoa com deficiência), e exigir uma delas apagava o prazo de análise; ele conta do requerimento
+const MORA_PERICIA = new Set(["B31","B91","B32","B92","B36","B94","B87"]);
 const diasEntreIso = (a, b) => Math.round((new Date(b+"T12:00:00") - new Date(a+"T12:00:00"))/864e5);
 // as exigências do caso já cumpridas, pelas anotações: quando parou e quando recomeçou
 function suspensoesDoCaso(k){
@@ -36420,13 +36424,19 @@ function suspensoesDoCaso(k){
     if(out.some(s=>s.inicio<=inicio && inicio<=s.reinicio)) continue;   // a anotação da equipe já conta esta exigência
     const fim = ands.find(b=>b!==a && dataSP(b.criado_em)>=inicio
       && ((sit(b) && !/^em exig/i.test(sit(b))) || /cumprimento de exig[êe]ncia|exig[êe]ncia cumprida/i.test(b.texto||"")));
-    const reinicio = [proxDiaUtil(somaDias(inicio, 30)), fim ? dataSP(fim.criado_em) : null].filter(Boolean).sort()[0];
+    const reinicio = [proxDiaUtilAdm(somaDias(inicio, 30)), fim ? dataSP(fim.criado_em) : null].filter(Boolean).sort()[0];
     if(fim || reinicio<=hoje()) out.push({inicio, reinicio});
   }
   return out.sort((a,b)=>a.inicio.localeCompare(b.inicio));
 }
 // F236 · decidido o pedido, não há prazo de análise: o resultado ou a decisão gravados, a situação do PAT concluída
 // ("Concluída - Deferida", "Concluída - Indeferida"), o benefício que já saiu (DIB) ou que ainda corre (DCB à frente)
+// 02.11.2026 · o "Concluir em" do To Do fora do 🗓 Tarefas com Prazo é a data de voltar ao caso (retorno), e não prazo
+// fatal: fatal é o caso na lista dos prazos (F38, onde o CRM também põe o prazo que registra, marcarTarefaComPrazo) ou o
+// que tem a tarefa fatal da mesma data. A lista pessoal ☕ também é fase "outro", e lá a data é a do trabalho, e não fatal.
+// Eram 207 de 219 datas futuras chamadas de "Prazo fatal" sem serem (02.11.2026)
+const prazoEhRetorno = k => !!(k && k.prazo && listaDe(k)!=="🗓 Tarefas com Prazo"
+  && !(D.tarefasPorCaso.get(k.id)||[]).some(t=>t.natureza==="fatal" && !t.concluida_em && t.lembrar_em===k.prazo));
 const pedidoDecidido = k => !!(k.resultado || (k.decisao_em && (!k.der || k.decisao_em >= k.der)) || k.dib
   || (k.dcb && k.dcb >= hoje()) || /^(conclu|cancel|encerr)/i.test(String(k.situacao_inss||"").trim()));
 // F236 · o que abre a contagem é a perícia médica ou a avaliação social do INSS; o atendimento de preparação do
@@ -36516,7 +36526,7 @@ function recorrerAte(k){
   // matéria médica, art. 89, §§ 3º e 4º; alcadaJunta), mesmo sem o resumo do acórdão dizer "alçada"
   if(fe==="conselho"){ const u = ultimaDecisaoCrps(k); if(u && (u.favoravel || u.alcada || u.instancia===2 || (u.instancia!==2 && alcadaJunta(k)==="certa"))) return null; }
   const d = somaDias(k.decisao_em, 30);
-  return d ? proxDiaUtil(d) : null;
+  return d ? proxDiaUtilAdm(d) : null;
 }
 // ══════════════════════════════════════════════════════════════════════════
 // F236 · O QUE AS DECISÕES DIZEM DE PRAZO. Leitores puros do que a ficha já
@@ -37379,6 +37389,15 @@ function linhasDeDatas(cliId){
       linhas.push({data:x.prazo, ico:"↩", natureza:"lembrete", casoId:x.id, cru:true, rotulo:"Volta à fila", resumo:`concluído por hoje${por?` por ${por.nome.split(" ")[0]}`:""}`,
         rot:`<b>Volta à fila: ${tit}</b>
                   <small class="qd-de">Concluído por hoje${por?` por ${esc(por.nome.split(" ")[0])}`:""} em ${fmt(String(desp.em||"").slice(0,10))}</small>`,
+        edita:`onchange="qdMudarPrazo('${x.id}',this.value)"`});
+    }
+    // 02.11.2026 · o "Concluir em" do To Do fora do 🗓 Tarefas com Prazo é retorno, e não prazo fatal (prazoEhRetorno)
+    else if(x.prazo && !igualA && prazoEhRetorno(x)){
+      linhas.push({data:x.prazo, ico:"↩", natureza:"lembrete", casoId:x.id, cru:true, rotulo:"Retorno",
+        resumo:og?cortaFrase(fraseDaData(og.texto, x.prazo), 70):"", andId:og?og.id:null,
+        rot:`<b>Retorno: ${og ? esc(og.texto.slice(0,110))+(og.texto.length>110?"…":"") : tit}</b>
+                  <small class="qd-de">Data de voltar ao caso, o “Concluir em” do To Do${og?` · anotado por ${esc(og.quem)} em ${fmt(og.em)}`:""}</small>`,
+        clique:og?`onclick="qdIrParaAndamento('${x.id}','${og.id}')"`:"",
         edita:`onchange="qdMudarPrazo('${x.id}',this.value)"`});
     }
     else if(x.prazo && !igualA){
@@ -44065,7 +44084,7 @@ function despNota(txt){
 // o prazo fatal aberto mais cedo do caso: a tarefa fatal pendente ou o casos.prazo que não é volta à fila
 function fatalAbertoDe(k){
   const ds = (D.tarefasPorCaso.get(k.id)||[]).filter(t=>t.natureza==="fatal" && !t.concluida_em && t.lembrar_em).map(t=>t.lembrar_em);
-  if(k.prazo && (k.ronda||{}).despacho?.prazo!==k.prazo) ds.push(k.prazo);
+  if(k.prazo && (k.ronda||{}).despacho?.prazo!==k.prazo && !prazoEhRetorno(k)) ds.push(k.prazo);
   return ds.filter(d=>d>=hoje()).sort()[0] || null;
 }
 async function aplicarDespacho(k, s, nota){
@@ -44309,7 +44328,7 @@ async function registrarMovimento(casoId, i){
   const muda = {};   // F291 · a anotação leva ⭐, mas a do caso só a pessoa acende (a fila de hoje, como no To Do)
   if(etapa && etapasDaFase(k).includes(etapa)) muda.etapa = etapa;
   if(efeito==="deferido" || efeito==="indeferido"){ muda.resultado = efeito; muda.decisao_em = data || hoje(); }
-  if(efeito==="exig"){ muda.exigencia_prazo = data || proxDiaUtil(somaDias(hoje(), 30)); muda.exigencia_descricao = det || "Exigência do INSS"; }
+  if(efeito==="exig"){ muda.exigencia_prazo = data || proxDiaUtilAdm(somaDias(hoje(), 30)); muda.exigencia_descricao = det || "Exigência do INSS"; }
   if(efeito==="impl"){
     if(nb && nb!==soDig(k.nb||"") && !(k.nbs||[]).map(soDig).includes(nb)) Object.assign(muda, k.nb ? {nbs:[...(Array.isArray(k.nbs)?k.nbs:[]), nb]} : {nb});
     if(dib && !k.dib) muda.dib = dib;
@@ -45198,6 +45217,14 @@ function ehFeriado(iso){
   return feriadosExtra().some(f=>f===dm || f===dm+"/"+iso.slice(0,4));
 }
 const ehDiaUtil = iso => { const w=new Date(iso+"T12:00:00").getDay(); return w!==0 && w!==6 && !ehFeriado(iso); };
+// 02.11.2026 · no prazo administrativo (INSS e CRPS) o ponto facultativo NÃO prorroga: carnaval e Corpus Christi não
+// são feriado em lei federal (Lei 9.093/1995), e o vencimento que cai neles vale no próprio dia. A conta judicial segue
+// o ehDiaUtil, porque o tribunal não tem expediente nesses dias
+const PONTO_FACULTATIVO = [-48,-47,60];   // dias contados da Páscoa: segunda e terça de carnaval, Corpus Christi
+const ehPontoFacultativo = iso => PONTO_FACULTATIVO.some(n=>somaDias(pascoa(+iso.slice(0,4)), n)===iso);
+const ehDiaUtilAdm = iso => { const w=new Date(iso+"T12:00:00").getDay();
+  return w!==0 && w!==6 && (ehPontoFacultativo(iso) || !feriadosNacionais(+iso.slice(0,4)).has(iso)); };
+function proxDiaUtilAdm(iso){ let d = iso; while(d && !ehDiaUtilAdm(d)) d = somaDias(d, 1); return d; }
 const emRecessoForense = iso => { const md=iso.slice(5); return md>="12-20" || md<="01-20"; };
 // da data da intimação (excluída) à data fatal, pela regra do item
 function contarPrazo(de, item){
@@ -45209,7 +45236,7 @@ function contarPrazo(de, item){
     return d;
   }
   d = somaDias(de, item.n);
-  while(!ehDiaUtil(d)) d = somaDias(d, item.dec ? -1 : 1);
+  while(!(item.dec ? ehDiaUtil(d) : ehDiaUtilAdm(d))) d = somaDias(d, item.dec ? -1 : 1);
   return d;
 }
 // o widget: catálogo + "intimado em", ao lado de um campo de data fatal.

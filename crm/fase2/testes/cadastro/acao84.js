@@ -17,7 +17,8 @@ const hojeSP = () => new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 10
 const emDias = n => new Date(new Date(hojeSP() + "T12:00:00Z").getTime() + n * 864e5).toISOString().slice(0, 10);
 const mais = emDias;
 const fmtBR = iso => `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
-FIX.casos[0] = { ...FIX.casos[0], prazo: mais(-1), exigencia_prazo: mais(3), decisao_em: mais(-10) };
+FIX.casos[0] = { ...FIX.casos[0], fase: "outro", mover_para: "🗓 Tarefas com Prazo", ronda: { prazo_de: "🌻 INSS" }, prazo: mais(-1),   // F379 · prazo fatal mora no 🗓 Tarefas com Prazo
+  exigencia_prazo: mais(3), decisao_em: mais(-10) };
 FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tipo: "Perícia",
   data_hora: mais(12) + "T09:30:00", local: "JEF", status: "agendada" }];
 

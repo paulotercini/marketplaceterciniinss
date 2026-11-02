@@ -42,7 +42,7 @@ const SUPA = "https://ficticio.supabase.co";
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   const caso = await p.evaluate(cli => D.casos.find(k => k.cliente_id === cli), CLI_CHEIO);
-  await p.evaluate(id => { const k = D.casoPorId.get(id); k.prazo = hoje(); casoSel = id; abaAtiva = 2; repintarFicha(); }, caso.id);
+  await p.evaluate(id => { const k = D.casoPorId.get(id); k.prazo = hoje(); k.fase = "outro"; k.mover_para = "🗓 Tarefas com Prazo"; k.ronda = { ...(k.ronda||{}), prazo_de: "🌻 INSS" }; casoSel = id; abaAtiva = 2; repintarFicha(); }, caso.id);
   await p.waitForSelector(".caso-esq .pz.pz-fatal");
   const cor = await p.evaluate(() => {
     const pz = document.querySelector(".caso-esq .pz.pz-fatal");
