@@ -42920,6 +42920,26 @@ function menuDocsCrps(k){
 }
 // 1.32.0 · a tela do e-SISREC no CRM: o cabeçalho do processo e a tabela Data · Status · Documentos com TODAS as
 // movimentações, o status como o portal escreve (bruto) e cada documento guardado abrindo pelo CRM
+// os documentos do recurso em árvore. O e-SISREC não dá tipo ao documento (muitos são
+// "temporario.pdf"), por isso a árvore segue a tramitação: as decisões à parte e, nas demais,
+// a instância lida do texto do movimento e uma pasta por movimento (data · status)
+const INST_ESISREC = [["Câmara de Julgamento", /\bCAJ\b|c[aâ]mara|recurso especial|embargo/i],
+  ["Cumprimento", /cumpri|devolv\w* ao inss|para (o )?inss|baixa/i], ["Junta de Recursos", /\bJR\b|junta|recurso ordin|distribu|conselheiro|sess[aã]o|pauta/i]];
+function arvoreEsisrec(t, doc){
+  const dec = [], inst = new Map([["Protocolo e INSS", []], ["Junta de Recursos", []], ["Câmara de Julgamento", []], ["Cumprimento", []]]);
+  [...(t.eventos||[])].sort((a,b)=>-porDataDesc(a,b)).forEach(e=>{
+    const st = e.bruto||e.resumo||"", rot = `${String(e.data||"").slice(0,10)} · ${st}`;
+    const resto = (e.arquivos||[]).filter(a=>{ if(a.decide || e.tipo==="decisao"){ dec.push(`<li>${doc(a)} <span class="meio-sub">${esc(rot)}</span></li>`); return false; } return true; });
+    if(!resto.length) return;
+    const g = (INST_ESISREC.find(([,rx])=>rx.test(st))||["Protocolo e INSS"])[0];
+    inst.get(g).push([rot, resto]); });
+  const pasta = (r, n, sub) => `<li><details><summary>📁 ${esc(r)} (${n})</summary><ul class="pat-arv">${sub}</ul></details></li>`;
+  const ramos = (dec.length ? pasta("Decisões (acórdãos e monocráticas)", dec.length, dec.join("")) : "")
+    + [...inst].filter(([,l])=>l.length).map(([r,l])=>pasta(r, l.reduce((n,[,a])=>n+a.length,0),
+        l.map(([rot,a])=>pasta(rot, a.length, a.map(x=>`<li>${doc(x)}</li>`).join(""))).join(""))).join("");
+  return ramos ? `<h4 style="font-size:13px;margin:8px 0 4px">Documentos</h4><ul class="pat-arv pat-raiz">${ramos}</ul>
+    <h4 style="font-size:13px;margin:10px 0 4px">Movimentações</h4>` : "";
+}
 function telaEsisrec(t){
   const cab = [["Processo", t.num_proc || formatarNup(t.nup||"")], ["NB", t.nb], ["Recorrente(s)", (t.recorrentes||[]).join("; ")],
     ["Recorrido", t.recorrido], ["APS de origem", t.aps_origem], ["Órgão atual", t.orgao_atual]].filter(x=>x[1]);
@@ -42930,6 +42950,7 @@ function telaEsisrec(t){
   return `<div class="fatos" style="margin-bottom:12px">
     <div class="fatos-topo"><h3 style="font-size:14px">e-SISREC · ${esc(formatarNup(t.nup||"") || t.num_proc || "")}</h3></div>
     <table class="tab" style="margin-bottom:10px">${cab.map(([r,v])=>`<tr><th style="text-align:left;white-space:nowrap">${r}</th><td>${esc(v)}</td></tr>`).join("")}</table>
+    ${arvoreEsisrec(t, doc)}
     <table class="tab tab-esisrec"><tr><th>Data</th><th>Status</th><th>Documentos</th></tr>
       ${evs.map(e=>`<tr><td style="white-space:nowrap">${esc(e.data||"")}</td><td>${esc(e.bruto||e.resumo||"")}</td>
         <td>${(e.arquivos||[]).map(doc).join("<br>")}</td></tr>`).join("")}
