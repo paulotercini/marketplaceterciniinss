@@ -2796,6 +2796,7 @@ dialog.confirmar::backdrop{background:rgba(15,17,22,.38)}
 .app.celular .escrever .tipo-fila::-webkit-scrollbar{display:none}
 .app.celular .escrever .tipo-ch{flex:none;white-space:nowrap}
 .app.celular .det-rolagem{padding-bottom:180px}
+.pat-arv{list-style:none;margin:0;padding-left:18px}.pat-arv.pat-raiz{padding-left:0}.pat-arv li{margin:3px 0}.pat-arv summary{cursor:pointer}
 </style>
 <script>
 /* F80 · interruptor do tema v10. ?tema=v10 liga e guarda; ?tema= (vazio)
@@ -36506,8 +36507,12 @@ function suspensoesDoCaso(k){
 // fatal: fatal é o caso na lista dos prazos (F38, onde o CRM também põe o prazo que registra, marcarTarefaComPrazo) ou o
 // que tem a tarefa fatal da mesma data. A lista pessoal ☕ também é fase "outro", e lá a data é a do trabalho, e não fatal.
 // Eram 207 de 219 datas futuras chamadas de "Prazo fatal" sem serem (02.11.2026)
+// a anotação com o carimbo [PRAZO dd.mm.aaaa] da mesma data também faz do casos.prazo um prazo fatal
+const prazoCarimbado = k => { const c = `[PRAZO ${fmt(k.prazo)}]`;
+  return [D._andsFicha, D.and30].some(l=>(l||[]).some(a=>a.caso_id===k.id && !a.excluir && (a.texto||"").includes(c))); };
 const prazoEhRetorno = k => !!(k && k.prazo && listaDe(k)!=="🗓 Tarefas com Prazo"
-  && !(D.tarefasPorCaso.get(k.id)||[]).some(t=>t.natureza==="fatal" && !t.concluida_em && t.lembrar_em===k.prazo));
+  && !(D.tarefasPorCaso.get(k.id)||[]).some(t=>t.natureza==="fatal" && !t.concluida_em && t.lembrar_em===k.prazo)
+  && !prazoCarimbado(k));
 const pedidoDecidido = k => !!(k.resultado || (k.decisao_em && (!k.der || k.decisao_em >= k.der)) || k.dib
   || (k.dcb && k.dcb >= hoje()) || /^(conclu|cancel|encerr)/i.test(String(k.situacao_inss||"").trim()));
 // F236 · o que abre a contagem é a perícia médica ou a avaliação social do INSS; o atendimento de preparação do
@@ -41982,7 +41987,7 @@ function blocoPat(det, linha, em){
     ...escolherCampos(linha, ["dataUltimaAtualizacao"]),
     comentarios: (det.comentarios||[]).filter(c=>c && c.visivel!==false)
       .map(c=>escolherCampos(c, ["id","dataCriacao","conteudo","incluidoPorServidor"])),
-    anexos: (det.anexos||[]).map(a=>escolherCampos(a, ["id","nomeArquivo","descricaoArquivo","categoria","tamanho"])),
+    anexos: (det.anexos||[]).map(a=>escolherCampos(a, ["id","nomeArquivo","descricaoArquivo","categoria","tamanho","siapeCriador","idComentario","dataCriacao"])),
     agendamentos: [...ag(det.agendamentosPericia, "Perícia médica"), ...ag(det.agendamentosAvaliacaoSocial, "Avaliação social")],
     coletado_em: em || null };
 }
@@ -41993,6 +41998,29 @@ const telasPat = k => { const ps = new Set((k.protocolos||[]).map(soDig));
 const dataPat = s => { const m = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}:\d{2}))?/.exec(String(s||""));
   return m ? `${m[3]}/${m[2]}/${m[1]}${m[4]?` ${m[4]}`:""}` : String(s||""); };
 const rotuloPat = s => { const t = String(s||"").replace(/_/g," ").toLowerCase(); return t.charAt(0).toUpperCase()+t.slice(1); };
+// os anexos em árvore: o processo inteiro, as respostas a cada exigência (idComentario),
+// o que o INSS juntou (siapeCriador) e o que o escritório enviou, por tipo do documento
+function arvorePat(b, p, guardados, abrir, integral){
+  const coms = new Map((b.comentarios||[]).map(c=>[String(c.id), c]));
+  const arq = a => { const c = `pat/${p}/${a.id}`;
+    return `<li>${guardados.has(c) ? abrir(c, a.nomeArquivo||"anexo") : `<span class="meio-sub" title="a extensão ainda não baixou este anexo">${esc(a.nomeArquivo||"anexo")} (não baixado)</span>`}${a.dataCriacao?` <span class="meio-sub">${esc(dataPat(a.dataCriacao))}</span>`:""}</li>`; };
+  const pasta = (rot, itens, sub) => `<li><details><summary>📁 ${esc(rot)} (${itens})</summary><ul class="pat-arv">${sub}</ul></details></li>`;
+  const porGrupo = (lista, chave) => { const m = new Map(); lista.forEach(a=>{ const g = chave(a); m.set(g, [...(m.get(g)||[]), a]); }); return m; };
+  const exig = [], inss = [], esc_ = [];
+  (b.anexos||[]).forEach(a=>{ const c = a.idComentario!=null && coms.get(String(a.idComentario));
+    (c && c.incluidoPorServidor ? exig : a.siapeCriador ? inss : esc_).push(a); });
+  const rotExig = id => { const c = coms.get(String(id)); const t = limparHtmlPat(c.conteudo).slice(0, 70);
+    return `${dataPat(c.dataCriacao).slice(0,10)} · ${t}${t.length>=70?"…":""}`; };
+  const tipo = a => { const d = String(a.descricaoArquivo||"").trim(); return !d || /^outros documentos$/i.test(d) ? "Outros" : d; };
+  const tipos = [...porGrupo(esc_, tipo)].sort(([x],[y])=>x==="Outros"?1:y==="Outros"?-1:x.localeCompare(y));
+  const ramos = [
+    integral ? `<li>📄 ${abrir(integral, "Processo administrativo inteiro")}</li>` : "",
+    exig.length ? pasta("Respostas a exigências", exig.length, [...porGrupo(exig, a=>a.idComentario)].map(([id, l])=>pasta(rotExig(id), l.length, l.map(arq).join(""))).join("")) : "",
+    inss.length ? pasta("Juntados pelo INSS", inss.length, inss.map(arq).join("")) : "",
+    esc_.length ? pasta("Enviados pelo escritório", esc_.length, tipos.map(([t, l])=>pasta(t, l.length, l.map(arq).join(""))).join("")) : ""
+  ].join("");
+  return ramos ? `<ul class="pat-arv pat-raiz">${ramos}</ul>` : `<p class="meio-sub">Sem documentos neste requerimento.</p>`;
+}
 function telaPat(k, b){
   const p = soDig(b.protocolo);
   const guardados = new Map(docsDaOrigem(k, ["pat"]).map(d=>[d.caminho, d]));
@@ -42016,12 +42044,8 @@ function telaPat(k, b){
     <table class="tab pat-com"><tr><th>Data</th><th>Autor</th><th>Comentário</th></tr>
       ${coms.map(c=>`<tr><td style="white-space:nowrap">${esc(dataPat(c.dataCriacao))}</td><td>${c.incluidoPorServidor?"INSS":"Escritório"}</td><td>${esc(limparHtmlPat(c.conteudo))}</td></tr>`).join("")}
     </table>
-    <h4 style="font-size:13px;margin:8px 0 4px">Anexos (${(b.anexos||[]).length})</h4>
-    <table class="tab pat-anx"><tr><th>Arquivo</th><th>Descrição</th><th>Categoria</th></tr>
-      ${(b.anexos||[]).map(a=>{ const c = `pat/${p}/${a.id}`;
-        return `<tr><td>${guardados.has(c) ? abrir(c, a.nomeArquivo||"anexo") : `<span class="meio-sub" title="a extensão ainda não baixou este anexo">${esc(a.nomeArquivo||"anexo")} (não baixado)</span>`}</td>
-          <td>${esc(a.descricaoArquivo||"")}</td><td>${esc(rotuloPat(a.categoria))}</td></tr>`; }).join("")}
-    </table>
+    <h4 style="font-size:13px;margin:8px 0 4px">Documentos (${(b.anexos||[]).length})</h4>
+    ${arvorePat(b, p, guardados, abrir, integral)}
     <div class="fatos-pe" style="justify-content:flex-end"><span class="meio-sub">lido do PAT${b.coletado_em?` em ${esc(dataPat(b.coletado_em))}`:""}</span></div>
   </div>`;
 }
