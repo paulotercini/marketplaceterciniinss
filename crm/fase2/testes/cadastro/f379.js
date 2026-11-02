@@ -1,14 +1,40 @@
-// F379 · três correções dos prazos (02.11.2026): o "Concluir em" do To Do fora do 🗓 Tarefas com Prazo é retorno, e não
-// prazo fatal; no prazo administrativo o ponto facultativo (carnaval, Corpus Christi) não prorroga; o BPC do idoso (B88)
-// tem prazo de análise contado do requerimento, sem esperar perícia
+// F379 · os casos encerrados vêm na carga inicial sem o histórico do DataJud
+// (datajud, datajud_multi); a ficha os completa, e mover um número a partir do
+// caso sem eles busca antes, para não apagar o histórico no banco. Banco simulado.
+// Uso: node f379.js [pasta-das-fotos]
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-const { FIX, SESSAO, EU, CLI_CHEIO, CASO1 } = require("./fixturas");
+const { FIX, SESSAO, CLI_CHEIO, CASO1 } = require("./fixturas");
+const { Banco, instalarBanco } = require("./banco-simulado");
 const SUPA = "https://ficticio.supabase.co";
-const dia = n => new Date(Date.now() + n * 864e5).toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
-const TUDO = { ...FIX, casos: [{ ...FIX.casos[0], prazo: dia(3) }] };
+const OUT = process.argv[2] || "/tmp/f379";
+fs.mkdirSync(OUT, { recursive: true });
+
+const dados = {};
+for (const t of ["tarefas", "eventos", "pagamentos", "meu_dia", "andamentos", "sugestoes", "mencoes", "leads", "checklist_modelo", "frases_prontas",
+  "lembrar_motivos", "rotinas", "rotinas_feitas", "aposentadorias", "lista_pref", "zap_conversas", "inss_calendario", "andamento_tarefas", "lembretes",
+  "vinculos", "anexos", "conversas", "coletas", "modelos_mensagem", "andamentos_lidos", "credencial_vis", "analises_direito", "apagados", "credenciais"]) dados[t] = [];
+Object.assign(dados, { colaboradores: FIX.colaboradores, clientes: JSON.parse(JSON.stringify(FIX.clientes)), casos: JSON.parse(JSON.stringify(FIX.casos)),
+  atribuicoes: FIX.atribuicoes, documentos_beneficio: FIX.documentos_beneficio || [], modelos_documento: FIX.modelos_documento, config_app: FIX.config_app });
+const banco = new Banco(dados);
+const T = banco.t;
+
+
+const NUM = "50024535420254036314", OUTRO_NUM = "50011112220244036136";
+const FECHADO = "b0000000-0000-0000-0000-0000000000f1", ABERTO = "b0000000-0000-0000-0000-0000000000a1";
+const caso = (id, extra) => Object.assign(JSON.parse(JSON.stringify(FIX.casos[0])), { id, fase: "judicial", origem_lista: "👪 Judicial", protocolos: [],
+  titulo: "Auxílio por incapacidade", criado_em: "2025-06-01T12:00:00Z" }, extra);
+const hist = n => ({ processo: n, ultimo: { data: "2026-01-05", nome: "Baixa definitiva" }, instancias: [{ rotulo: "1º grau", historico: [{ data: "2026-01-05", nome: "Baixa definitiva" }] }] });
+T.casos.push(
+  caso(FECHADO, { encerrado_em: "2026-01-10T12:00:00Z", processo: "5002453-54.2025.4.03.6314",
+    processos: [{ numero: "5002453-54.2025.4.03.6314", nosso: true, acompanhar: true }, { numero: "5001111-22.2024.4.03.6136", nosso: true, acompanhar: true }],
+    datajud: hist(NUM), datajud_multi: { [NUM]: hist(NUM), [OUTRO_NUM]: hist(OUTRO_NUM) } }),
+  caso(ABERTO, { processo: null, datajud: hist("aberto") }));
+
+const ok = [];
+const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : "FALHOU  ") + nome); };
 
 (async () => {
   const s = http.createServer((q, r) => {
@@ -18,79 +44,52 @@ const TUDO = { ...FIX, casos: [{ ...FIX.casos[0], prazo: dia(3) }] };
   }).listen(0, "127.0.0.1");
   await new Promise(r => s.on("listening", r));
   const nav = await chromium.launch();
-  const ctx = await nav.newContext({ viewport: { width: 1440, height: 1000 } });
+  const ctx = await nav.newContext({ viewport: { width: 1440, height: 900 } });
   await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
     localStorage.setItem("crm_tema", "v10");
   }, [SUPA, SESSAO]);
-  await ctx.route(SUPA + "/**", rota => {
-    const u = rota.request().url();
-    if (/\/auth\/v1\//.test(u))
-      return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(SESSAO) });
-    if (rota.request().method() !== "GET")
-      return rota.fulfill({ status: 201, contentType: "application/json", body: "[]" });
-    const t = (u.match(/\/rest\/v1\/([a-z_]+)/) || [])[1];
-    let corpo = TUDO[t] || [];
-    const f = u.match(/cliente_id=eq\.([0-9a-f-]+)/);
-    if (f) corpo = corpo.filter(x => x.cliente_id === f[1]);
-    return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(corpo) });
-  });
+  await instalarBanco(ctx, { SUPA, SESSAO, banco });
   const p = await ctx.newPage();
-  const erros = [];
-  p.on("pageerror", e => erros.push("pageerror: " + e.message));
-  p.on("console", m => { if (m.type() === "error") erros.push("console: " + m.text()); });
+  p._erros = [];
+  p.on("pageerror", e => p._erros.push(e.message));
+  p.on("dialog", d => d.accept());
+  const pedidos = [];
+  p.on("request", q => { if (/\/rest\/v1\/casos\?/.test(q.url())) pedidos.push(decodeURIComponent(q.url())); });
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
-  await p.waitForSelector("#app.logado");
-  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
-  const ok = []; const conf = (n, v) => ok.push([n, !!v]);
-  const r = await p.evaluate((caso) => {
-    const k = D.casoPorId.get(caso);
-    const out = {};
-    out.retornoInss = prazoEhRetorno(k);
-    out.agendaRet = itensAgendaTodos().some(i => i.k && i.k.id === k.id && i.selo === "Retorno" && !i.fatal);
-    out.quadroRet = (x => [...(x.soltas||[]), ...(x.linhas||[])])(linhasDeDatas(k.cliente_id)).some(l => l.casoId === k.id && l.rotulo === "Retorno" && natDaLinha(l) === "lembrete");
-    out.fatalAberto = fatalAbertoDe(k);
-    const outro = { ...k, fase: "outro", mover_para: "🗓 Tarefas com Prazo" };
-    out.outroFatal = !prazoEhRetorno(outro);
-    out.cafeRetorno = prazoEhRetorno({ ...k, fase: "outro", mover_para: "☕ Marcos" });
-    D.tarefasPorCaso.set(k.id, [{ natureza: "fatal", lembrar_em: k.prazo, concluida_em: null }]);
-    out.tarefaFatal = !prazoEhRetorno(k);
-    D.tarefasPorCaso.set(k.id, []);
-    // 2027: Páscoa em 28/03; carnaval em 08 e 09/02; Corpus Christi em 27/05
-    const crps = PRAZOS_CATALOGO.find(x => x.id === "crps"), ms = PRAZOS_CATALOGO.find(x => x.id === "ms"), ap = PRAZOS_CATALOGO.find(x => x.id === "ap");
-    out.crpsCarnaval = contarPrazo("2027-01-09", crps);          // 30 dias caem na segunda de carnaval
-    out.crpsCorpus = contarPrazo("2027-04-27", crps);            // 30 dias caem na quinta de Corpus Christi
-    out.crpsNatal = contarPrazo("2026-11-25", crps);             // 25/12, feriado em lei: vai a 28/12
-    out.msCarnaval = contarPrazo(somaDias("2027-02-08", -120), ms);   // decadencial antecipa: sexta 05/02
-    out.apCarnaval = contarPrazo("2027-02-05", ap);              // judicial segue sem contar o carnaval
-    out.exig = prazoDaExigencia("2027-01-09");
-    const b88 = { ...k, fase: "inss", especie: "B88", der: somaDias(hoje(), -10), resultado: null, decisao_em: null, dib: null, dcb: null, exigencia_prazo: null, situacao_inss: "" };
-    out.moraB88 = prazoMora(b88);
-    out.esperado88 = somaDias(somaDias(hoje(), -10), 90);
-    const b87 = { ...b88, especie: "B87" };
-    out.moraB87 = prazoMora(b87);
-    return out;
-  }, CASO1);
-  conf("o Concluir em do To Do de caso no INSS é retorno", r.retornoInss);
-  conf("no Meu Dia ele entra com o selo Retorno, sem ser prazo fatal", r.agendaRet);
-  conf("no quadro Prazos ele é a linha Retorno, de natureza lembrete", r.quadroRet);
-  conf("o Concluir por hoje não o trata como prazo fatal aberto", r.fatalAberto === null);
-  conf("no 🗓 Tarefas com Prazo a mesma data continua prazo fatal", r.outroFatal);
-  conf("na lista pessoal ☕ (também fase outro) a data é retorno", r.cafeRetorno);
-  conf("com a tarefa fatal da mesma data continua prazo fatal", r.tarefaFatal);
-  conf("recurso ao CRPS que cai na segunda de carnaval vence nela (08/02/2027)", r.crpsCarnaval === "2027-02-08");
-  conf("recurso ao CRPS que cai em Corpus Christi vence nele (27/05/2027)", r.crpsCorpus === "2027-05-27");
-  conf("feriado em lei ainda prorroga: 25/12/2026 vai a 28/12/2026", r.crpsNatal === "2026-12-28");
-  conf("exigência que cai no carnaval vence nele", r.exig === "2027-02-08");
-  conf("mandado de segurança no carnaval antecipa para 05/02/2027", r.msCarnaval === "2027-02-05");
-  conf("a apelação não conta o carnaval como dia útil", r.apCarnaval === "2027-03-02");
-  conf("BPC do idoso tem prazo de análise de 90 dias da DER", r.moraB88 && r.moraB88.data === r.esperado88 && !r.moraB88.pericia);
-  conf("BPC da pessoa com deficiência continua esperando as avaliações", r.moraB87 === null);
+  await p.waitForSelector("#app.logado", { timeout: 15000 });
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0 && D._completo);
+
+  const fech = pedidos.find(u => /encerrado_em=not\.is\.null/.test(u) && !/limit=1/.test(u)) || "";
+  conf("os encerrados são pedidos sem datajud e datajud_multi, com as demais colunas",
+    /select=id,/.test(fech) && !/datajud/.test(fech) && /encerrado_em,/.test(fech) && /processos/.test(fech));
+  conf("os abertos continuam inteiros (select=*)", pedidos.some(u => /select=\*&encerrado_em=is\.null/.test(u)));
+  const est = await p.evaluate(([f, a]) => ({ n: D.casos.length, ids: new Set(D.casos.map(k => k.id)).size,
+    leve: !!D.casoPorId.get(f)._semDj, abertoLeve: !!D.casoPorId.get(a)._semDj, abertoDj: !!D.casoPorId.get(a).datajud }), [FECHADO, ABERTO]);
+  conf("nenhum caso repetido, o encerrado marcado como leve e o aberto inteiro",
+    est.n === T.casos.length && est.ids === est.n && est.leve && !est.abertoLeve && est.abertoDj);
+
+  // o banco simulado não recorta colunas: tira-se na memória o que a carga não teria trazido
+  await p.evaluate(f => { const k = D.casoPorId.get(f); delete k.datajud; delete k.datajud_multi; }, FECHADO);
+  const movido = await p.evaluate(([f, a, n]) => moverNumero("proc", n, f, a, { quieto: true }), [FECHADO, ABERTO, NUM]);
+  const fb = T.casos.find(k => k.id === FECHADO), ab = T.casos.find(k => k.id === ABERTO);
+  conf("mover o processo a partir do encerrado leve não apaga o histórico do outro número",
+    movido !== false && fb.datajud_multi && fb.datajud_multi[OUTRO_NUM] && !fb.datajud_multi[NUM]);
+  conf("o histórico do número movido vai junto ao caso de destino", ab.datajud_multi && ab.datajud_multi[NUM] && ab.datajud && ab.datajud.processo === NUM);
+
+  // a ficha completa o caso encerrado
+  await p.evaluate(f => { const k = D.casoPorId.get(f); k._semDj = true; delete k.datajud_multi; }, FECHADO);
+  await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
+  await p.waitForFunction(f => !D.casoPorId.get(f)._semDj, FECHADO, { timeout: 10000 }).catch(() => {});
+  conf("abrir a ficha traz o histórico do DataJud do caso encerrado",
+    await p.evaluate(([f, o]) => { const k = D.casoPorId.get(f); return !k._semDj && !!(k.datajud_multi || {})[o]; }, [FECHADO, OUTRO_NUM]));
+
+  conf("sem erro de página", !p._erros.length);
+  if (p._erros.length) console.log(p._erros.join("\n"));
+  await p.screenshot({ path: path.join(OUT, "f379.png") });
+  const bons = ok.filter(x => x[1]).length;
+  console.log(`\n${bons}/${ok.length} passaram`);
   await nav.close(); s.close();
-  const n = ok.filter(x => x[1]).length;
-  ok.forEach(([t, v]) => console.log(`${v ? "✓" : "✗"} ${t}`));
-  if (erros.length) console.log(erros.join("\n"));
-  console.log(`${n}/${ok.length}`);
-  process.exit(n === ok.length ? 0 : 1);
-})();
+  process.exit(bons === ok.length ? 0 : 1);
+})().catch(e => { console.error(e); process.exit(2); });

@@ -6230,7 +6230,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.37</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.38</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7397,10 +7397,30 @@ function eventoFalso(e){
   const partes = meio.split(/[.;!?]\s/);
   return partes.length > 1 && !/agend|marcad|design|remarc/i.test(partes[partes.length-1]);
 }
+// F379 (12.37) · os casos encerrados vêm sem o histórico do DataJud (datajud, datajud_multi): eram 2 MB dos 7 MB
+// deles, e só a ficha os mostra. A lista de colunas sai de uma linha de amostra, para coluna nova não ficar de fora.
+// A ficha (buscarFicha) e quem grava esses campos (casoInteiro: fundir, desfazer a fusão, mover número, trocar o
+// processo principal) completam o caso antes; gravar a partir do caso sem eles apagaria o histórico no banco.
+const CASO_PESADO = ["datajud","datajud_multi"];
+async function casosDaCarga(){
+  const [abertos, amostra] = await Promise.all([todas("casos","select=*&encerrado_em=is.null"),
+    api("/rest/v1/casos?select=*&encerrado_em=not.is.null&limit=1").catch(()=>null)]);
+  const cols = amostra && amostra[0] ? Object.keys(amostra[0]).filter(c=>!CASO_PESADO.includes(c)) : null;
+  if(!cols) return [...abertos, ...await todas("casos","select=*&encerrado_em=not.is.null")];
+  const ja = new Set(abertos.map(k=>k.id));   // nunca o mesmo caso duas vezes, mesmo se o filtro não valer
+  const fechados = (await todas("casos",`select=${cols.join(",")}&encerrado_em=not.is.null`)).filter(k=>k.encerrado_em && !ja.has(k.id));
+  for(const k of fechados) k._semDj = true;
+  return [...abertos, ...fechados];
+}
+async function casoInteiro(...ks){
+  const faltam = ks.filter(k=>k && k._semDj); if(!faltam.length) return;
+  const l = await todas("casos",`select=id,${CASO_PESADO.join(",")}&id=in.(${faltam.map(k=>k.id).join(",")})`);
+  for(const r of l){ const k = faltam.find(x=>x.id===r.id); if(k){ Object.assign(k, r); delete k._semDj; } }
+}
 const CARGA_1 = {
     colaboradores: ()=>todas("colaboradores","select=*&order=nome"),
     clientes: ()=>todas("clientes","select=*&order=nome"),
-    casos: ()=>todas("casos","select=*"),
+    casos: ()=>casosDaCarga(),
     atribuicoes: ()=>todas("atribuicoes","select=*"),
     tarefas: ()=>todas("tarefas","select=*"),
     eventos: ()=>todas("eventos","select=*&order=data_hora").then(l=>l.filter(e=>!eventoFalso(e))),
@@ -19423,6 +19443,7 @@ function buscarFicha(cliId, ids){
       // F285 · a linha do cliente de novo: a extensão grava o dossiê e o cadastro
       // depois que o CRM carregou a lista, e a ficha mostrava o da abertura
       adot.then(()=>api(`/rest/v1/clientes?select=*&id=eq.${cliId}`)).catch(()=>[]),
+      casoInteiro(...(D.casosDoCliente.get(cliId)||[])).catch(()=>{}),   // F379
     ]);
 }
 // F285 · só o que a extensão escreve: o resumo dos portais e os campos vazios
@@ -43534,6 +43555,7 @@ const fmtProc = n => {
 };
 async function salvarProcessos(casoId, lista, principalNum){
   const k = D.casoPorId.get(casoId); if(!k) return false;
+  await casoInteiro(k);   // F379
   // o principal é o que o DataJud consulta e a busca do CRM encontra. F156 ·
   // ele só muda quando alguém escolhe outro, ou quando deixa de ser nosso ou
   // de ser acompanhado; aí passa ao primeiro número nosso e acompanhado
@@ -46380,6 +46402,7 @@ function janelaFundir(destinoId){
 async function fundirCasos(absorvidoId, destinoId, opts={}){
   const a=D.casoPorId.get(absorvidoId), d=D.casoPorId.get(destinoId);
   if(!a || !d || a.id===d.id) return null;
+  await casoInteiro(a, d);   // F379
   if(!opts.quieto && !await confirmar(`Fundir "${tituloCaso(a)}" para dentro de "${tituloCaso(d)}"?\n\n`
     +`Todo o histórico passa para o destino. `
     +(a.todo_task_id
@@ -46492,6 +46515,7 @@ async function fundirCasos(absorvidoId, destinoId, opts={}){
 // de origem e a casca reabre na fase em que estava
 async function desfazerFusao(r){
   if(!r || !r.de || !r.ids) return false;
+  await casoInteiro(D.casoPorId.get(r.de), D.casoPorId.get(r.para));   // F379
   for(const [tab, ids] of Object.entries(r.ids))
     for(let i=0; i<ids.length; i+=80)
       await api(`/rest/v1/${tab}?id=in.(${ids.slice(i, i+80).join(",")})`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:r.de})}).catch(()=>{});
@@ -46747,6 +46771,7 @@ function organizarCasos(cliId){
 async function moverNumero(tipo, d, deId, paraId, opts={}){
   const de = D.casoPorId.get(deId), para = D.casoPorId.get(paraId);
   if(!de || !para || de.id===para.id || !TIPO_NUM[tipo]) return false;
+  await casoInteiro(de, para);   // F379
   const agora = new Date().toISOString();
   const mDe = {...(de.arquivados||{}), [`mov:${tipo}:${d}`]:{para:paraId, por:eu.id, em:agora}}, mPara = {...(para.arquivados||{})};
   delete mPara[`mov:${tipo}:${d}`];             // voltou a este caso: a marca antiga sai
