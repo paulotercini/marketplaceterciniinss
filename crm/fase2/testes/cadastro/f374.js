@@ -54,7 +54,10 @@ const SUPA = "https://ficticio.supabase.co";
                     { id: 2, dataCriacao: "2026-10-20T10:00:00", conteudo: "Compare&ccedil;a &agrave; per&iacute;cia", incluidoPorServidor: true },
                     { id: 3, dataCriacao: "2026-10-21T10:00:00", conteudo: "oculto", visivel: false }],
       anexos: [{ id: 981264918, nomeArquivo: "Relatório Médico.pdf", descricaoArquivo: "Documento Médico", categoria: "INICIAL" },
-               { id: 981264910, nomeArquivo: "RG 2.pdf", descricaoArquivo: "Identificação", categoria: "INICIAL" }],
+               { id: 981264910, nomeArquivo: "RG 2.pdf", descricaoArquivo: "Identificação", categoria: "INICIAL" },
+               { id: 7001, nomeArquivo: "CNIS.pdf", descricaoArquivo: "Outros documentos", siapeCriador: "1234567" },
+               { id: 7002, nomeArquivo: "Laudo novo.pdf", descricaoArquivo: "Documento Médico", idComentario: 2 },
+               { id: 7003, nomeArquivo: "Foto.jpg", descricaoArquivo: "Outros documentos" }],
       agendamentosPericia: [{ data: "19/10/2026", horario: "09:20", nomeUnidade: "APS MONTE ALTO", situacaoAgendamento: "CUMPRIDO" }] };
     const b = blocoPat(det, { dataUltimaAtualizacao: "2026-10-21T08:00:00" }, "2026-11-02T14:33:06Z");
     const k = { id: "kpat", cliente_id: cli, protocolos: ["2370340440736"], fase: "inss", titulo: "t",
@@ -70,9 +73,10 @@ const SUPA = "https://ficticio.supabase.co";
     const botoes = [...div.querySelectorAll(".tela-pat button")].map(x => x.getAttribute("onclick"));
     let parse = 0; for (const o of botoes) { try { new Function(o); parse++; } catch (e) {} }
     return { b, temBotao: /fontePat='tela'/.test(menu), telas: div.querySelectorAll(".tela-pat").length,
-      txt, coms: div.querySelectorAll(".pat-com tr").length, anx: div.querySelectorAll(".pat-anx tr").length,
+      txt, coms: div.querySelectorAll(".pat-com tr").length, anx: div.querySelectorAll(".pat-arv li").length,
+      pastas: [...div.querySelectorAll(".pat-arv summary")].map(x=>x.textContent),
       ag: div.querySelectorAll(".pat-ag tr").length, botoes: botoes.length, parse,
-      naoBaixado: /RG 2\.pdf \(não baixado\)/.test(txt), integral: botoes.some(o => /processo-integral/.test(o)) };
+      naoBaixado: /RG 2\.pdf \(não baixado\)/.test(div.textContent), tc: div.textContent, integral: botoes.some(o => /processo-integral/.test(o)) };
   }, [CLI_CHEIO]);
   conf("blocoPat guarda só os comentários visíveis", r.b.comentarios.length === 2);
   conf("blocoPat leva a última atualização da lista e o agendamento com o tipo",
@@ -84,8 +88,12 @@ const SUPA = "https://ficticio.supabase.co";
        /Benefício Assistencial/.test(r.txt) && /Falta agendamento avs pericia/.test(r.txt) && /05\/10\/2026 15:56/.test(r.txt));
   conf("comentários do INSS e do escritório, sem HTML", r.coms === 3 && /Compareça à perícia/.test(r.txt) && !/<p>/.test(r.txt));
   conf("agendamento da perícia", r.ag === 2 && /19\/10\/2026 09:20/.test(r.txt));
-  conf("anexos: o guardado abre, o que falta diz não baixado", r.anx === 3 && r.naoBaixado);
-  conf("processo integral e anexos com onclick válido", r.integral && r.botoes === 2 && r.parse === 2);
+  conf("anexos: o guardado abre, o que falta diz não baixado", r.naoBaixado && /Relatório Médico\.pdf/.test(r.tc));
+  conf("árvore: exigência, INSS e escritório por tipo, Outros por último", JSON.stringify(r.pastas) === JSON.stringify(
+    ["📁 Respostas a exigências (1)", "📁 20/10/2026 · Compareça à perícia (1)", "📁 Juntados pelo INSS (1)",
+     "📁 Enviados pelo escritório (3)", "📁 Documento Médico (1)", "📁 Identificação (1)", "📁 Outros (1)"]));
+  conf("árvore traz o processo administrativo inteiro", /Processo administrativo inteiro/.test(r.txt));
+  conf("processo integral e anexos com onclick válido", r.integral && r.botoes === 3 && r.parse === 3);
 
   console.log("=== F374: tela do PAT na aba INSS ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
