@@ -128,7 +128,7 @@ const U = cliente("Luzia Ficta Ramalho", { fase: "conselho", origem_lista: "🖥
   decisao_em: dia(-20), resultado: "indeferido", ro_protocolado_em: dia(-185), crps_nups: [NUP_U], crps: [bloco(NUP_U, "12ª Junta de Recursos", [
     evC(dia(-185), "14:06", "Requerimento protocolado - Tarefa de Recurso Ordinário - 997654321"),
     evC(dia(-20), "10:58", "Conhecer do Recurso e negar-lhe provimento, por unanimidade - Acórdão: 12ª JR/5873/2026")])] }, [AM, EU]);
-const V = cliente("Valdir Ficto Nogueira", { fase: "judicial", origem_lista: "👪 Judicial", especie: "B31", beneficio: "Aux. Incapacidade Temporária", prazo: dia(6), lembrar_motivo: "Redigir as razões" }, [AM, EU]);
+const V = cliente("Valdir Ficto Nogueira", { fase: "outro", mover_para: "🗓 Tarefas com Prazo", ronda: { prazo_de: "👪 Judicial" }, origem_lista: "👪 Judicial", especie: "B31", beneficio: "Aux. Incapacidade Temporária", prazo: dia(6), lembrar_motivo: "Redigir as razões" }, [AM, EU]);
 
 // ── r12 · a DCB: o prazo fatal do resumo é a janela da prorrogação (W); com a janela aberta, tarefa e mensagem (W2) ───
 const W = cliente("Wilson Ficto Prado", { fase: "inss", especie: "B31", beneficio: "Aux. Incapacidade Temporária", der: dia(-90), dib: dia(-80), dcb: dia(60), situacao_inss: "Concluída - Deferida" }, [AM]);
@@ -169,7 +169,7 @@ const Z = cliente("Benedita Ficta Carvalho", { fase: "conselho", origem_lista: "
     evC(dia(-12), "17:15", "Solicitação de Providências Complementares (via canais remotos) - Alterado o status da tarefa: 998431207")])] }, [AM]);
 and(Z.k, { origem: "pat", origem_id: "48931104", criado_em: `${dia(-12)}T12:00:00+00:00`, texto: `INSS · ${PEDIDO_Z}` });
 // ── extras · o prazo fatal diz a frase da data (Q) ──────────────────────────────────────────────────────────────────
-const Q = cliente("Valdir Ficto Teixeira", { fase: "peticao_inicial", origem_lista: "⚖️ Petições Iniciais", especie: "B31", beneficio: "Aux. Incapacidade Temporária", prazo: dia(6) }, [AM, EU]);
+const Q = cliente("Valdir Ficto Teixeira", { fase: "outro", mover_para: "🗓 Tarefas com Prazo", ronda: { prazo_de: "⚖️ Petições Iniciais" }, origem_lista: "⚖️ Petições Iniciais", especie: "B31", beneficio: "Aux. Incapacidade Temporária", prazo: dia(6) }, [AM, EU]);
 const ORDEM_Q = and(Q.k, { criado_em: ts(-10, "09:00"), texto: `@Amanda, redija a inicial até ${br(dia(3))}; @Paulo revisa até ${br(dia(5))}; protocolamos até ${br(dia(6))}.` });
 tarefa(ORDEM_Q, AM, dia(3));
 tarefa(ORDEM_Q, EU, dia(5), { papel: "revisa" });
