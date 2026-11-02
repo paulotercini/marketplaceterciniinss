@@ -429,6 +429,8 @@ A **F374** (a tela do PAT, pedido do Paulo de 02.11.2026): a aba INSS do caso te
 
 A **F377** (12.36, a segunda análise visual de 02.11.2026, pedido do Paulo): o painel da agenda flutuante deixa de cobrir a tela. O clique no menu lateral passou a recolher o painel aberto fora do WhatsApp e a escondê-lo na própria Agenda, como o `irPara` já fazia (`zag.fora`, `pintarAgendaZap`). No WhatsApp o painel nasce recolhido na pílula, sem a abertura automática a partir de 1440 px, que cobria a ficha do cliente; a escolha guardada em `crm_zap_agenda` continua valendo. O pé dos passos do atendimento (`.tp-pe`) reserva 64 px à direita no computador, para o "Próximo" não ficar sob os flutuantes. Testes: `f240.js` (sobreposição medida em 1440 e 1280 px), `zapagenda.js`, `colab-integrado.js`.
 
+A **F379** (12.37, pedido do Paulo de 02.11.2026, a carga inicial no celular): os casos encerrados vêm na carga inicial sem o histórico do DataJud (`datajud`, `datajud_multi`, cerca de 2 MB dos 7 MB deles), com as demais colunas tiradas de uma linha de amostra (`casosDaCarga`, `CASO_PESADO`, a linha leva `_semDj`); os abertos continuam com `select=*`, porque o Meu Dia lê o histórico deles (`provaForaDaFicha`). A ficha completa o caso (`buscarFicha` → `casoInteiro`), e quem grava esses campos completa antes (`fundirCasos`, `desfazerFusao`, `moverNumero`, `salvarProcessos`): gravar a partir do caso sem eles apagaria o histórico no banco. A carga incremental segue trazendo a linha inteira do caso que mudou. Teste: `testes/cadastro/f379.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
