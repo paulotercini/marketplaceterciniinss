@@ -145,7 +145,7 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
       arv: [...document.querySelectorAll(".pat-arv summary")].map(x => x.textContent), arvBt: document.querySelectorAll(".pat-arv button").length } : null;
     fonteCrps = ""; repintarFicha(); return r; });
   conf("a aba e-SISREC mostra a tabela do portal com o documento clicável", es && es.linhas === 2 && /provido em parte/.test(es.txt) && es.onc.length === 1 && es.onc.every(o => { try { new Function(o); return true; } catch (e) { return false; } }));
-  conf(`a aba e-SISREC mostra os documentos em árvore (${es && es.arv.join(" | ")})`, es && es.arv.length >= 1 && es.arv.every(x => /^📁 .+ \(\d+\)$/.test(x)) && es.arvBt === es.onc.length);
+  conf(`a aba e-SISREC mostra os documentos em árvore (${es && es.arv.join(" | ")})`, es && es.arv.length >= 1 && es.arv.every(x => /^📁 [\s\S]+ \(\d+\)$/.test(x)) && es.arvBt === es.onc.length);
   await p.evaluate(() => { const b2 = [...document.querySelectorAll('.painel[data-p="2"] li.tl-oficial .tl-barra button')].find(b => /Mensagem ao cliente/.test(b.textContent)); b2.click(); }); await p.waitForTimeout(200);
   conf("a mensagem do CRPS sai pronta, com WhatsApp alcançável pelo teclado", /provido em parte/.test(await p.evaluate(() => document.getElementById("msg-and").value)) && await p.evaluate(() => /^https:\/\/wa\.me\/55/.test(document.getElementById("msg-wa").getAttribute("href") || "")));
   await p.evaluate(() => fecharCaixa());

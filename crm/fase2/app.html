@@ -42920,14 +42920,23 @@ function menuDocsCrps(k){
 }
 // 1.32.0 · a tela do e-SISREC no CRM: o cabeçalho do processo e a tabela Data · Status · Documentos com TODAS as
 // movimentações, o status como o portal escreve (bruto) e cada documento guardado abrindo pelo CRM
-// os documentos do recurso em árvore: decisões (acórdão e monocrática), recursos e contrarrazões,
-// perícia e demais movimentações, cada arquivo com a data e o status do movimento
+// os documentos do recurso em árvore. O e-SISREC não dá tipo ao documento (muitos são
+// "temporario.pdf"), por isso a árvore segue a tramitação: as decisões à parte e, nas demais,
+// a instância lida do texto do movimento e uma pasta por movimento (data · status)
+const INST_ESISREC = [["Câmara de Julgamento", /\bCAJ\b|c[aâ]mara|recurso especial|embargo/i],
+  ["Cumprimento", /cumpri|devolv\w* ao inss|para (o )?inss|baixa/i], ["Junta de Recursos", /\bJR\b|junta|recurso ordin|distribu|conselheiro|sess[aã]o|pauta/i]];
 function arvoreEsisrec(t, doc){
-  const grupos = [["Decisões (acórdãos e monocráticas)", []], ["Recursos, embargos e contrarrazões", []], ["Perícia médica", []], ["Demais movimentações", []]];
-  [...(t.eventos||[])].sort(porDataDesc).forEach(e=>(e.arquivos||[]).forEach(a=>{
-    const g = a.decide ? 0 : e.tipo==="recurso" ? 1 : e.tipo==="pericia" ? 2 : 3;
-    grupos[g][1].push(`<li>${doc(a)} <span class="meio-sub">${esc(String(e.data||"").slice(0,10))} · ${esc(e.bruto||e.resumo||"")}</span></li>`); }));
-  const ramos = grupos.filter(([,l])=>l.length).map(([r,l])=>`<li><details><summary>📁 ${esc(r)} (${l.length})</summary><ul class="pat-arv">${l.join("")}</ul></details></li>`).join("");
+  const dec = [], inst = new Map([["Protocolo e INSS", []], ["Junta de Recursos", []], ["Câmara de Julgamento", []], ["Cumprimento", []]]);
+  [...(t.eventos||[])].sort((a,b)=>-porDataDesc(a,b)).forEach(e=>{
+    const st = e.bruto||e.resumo||"", rot = `${String(e.data||"").slice(0,10)} · ${st}`;
+    const resto = (e.arquivos||[]).filter(a=>{ if(a.decide || e.tipo==="decisao"){ dec.push(`<li>${doc(a)} <span class="meio-sub">${esc(rot)}</span></li>`); return false; } return true; });
+    if(!resto.length) return;
+    const g = (INST_ESISREC.find(([,rx])=>rx.test(st))||["Protocolo e INSS"])[0];
+    inst.get(g).push([rot, resto]); });
+  const pasta = (r, n, sub) => `<li><details><summary>📁 ${esc(r)} (${n})</summary><ul class="pat-arv">${sub}</ul></details></li>`;
+  const ramos = (dec.length ? pasta("Decisões (acórdãos e monocráticas)", dec.length, dec.join("")) : "")
+    + [...inst].filter(([,l])=>l.length).map(([r,l])=>pasta(r, l.reduce((n,[,a])=>n+a.length,0),
+        l.map(([rot,a])=>pasta(rot, a.length, a.map(x=>`<li>${doc(x)}</li>`).join(""))).join(""))).join("");
   return ramos ? `<h4 style="font-size:13px;margin:8px 0 4px">Documentos</h4><ul class="pat-arv pat-raiz">${ramos}</ul>
     <h4 style="font-size:13px;margin:10px 0 4px">Movimentações</h4>` : "";
 }
