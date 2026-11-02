@@ -419,6 +419,8 @@ A **F373** (12.35, a ⭐ do canto da ficha, decisões do Paulo de 02.11.2026): a
 
 A **tela do e-SISREC** (extensão 1.32.0, pedido do Paulo de 02.11.2026): a rodada do e-Recursos (`crps.js`) baixa todos os documentos de cada recurso, e não só acórdão e monocrática; o bloco `casos.crps` guarda também `nb`, `aps_origem` e `recorrido` (`traduzirProcesso`, no app e em `robo-crps/traduzir.js`); a aba Recurso (CRPS) tem o botão **e-SISREC** (`fonteCrps = "esisrec"`, `telaEsisrec`): o cabeçalho do processo e a tabela Data · Status (o texto cru) · Documentos, com todas as movimentações e o documento guardado abrindo por `abrirDecisao`. Teste: `f190.js`.
 
+A **F374** (a tela do PAT, pedido do Paulo de 02.11.2026): a aba INSS do caso tem o botão **PAT** (`fontePat = "tela"`, `telaPat`): por protocolo do caso, o cabeçalho do requerimento (serviço, situação, exigência, data de entrada, última atualização, unidade, etapas da perícia e da avaliação social), os agendamentos, os comentários do INSS e do escritório e os anexos, cada um abrindo o arquivo guardado em `pat/<protocolo>/<id>`, e o processo integral. A extensão já coletava tudo; o CRM grava o detalhe em `casos.pat` (`{"<protocolo>": blocoPat(...)}`, sem o CPF) ao aplicar a coleta do INSS (`aplicarPatDeVerdade`), e `moverNumero` leva a tela junto com o protocolo. SQL em `crm/fase2/migracoes/f374_tela_pat.sql`. Teste: `testes/cadastro/f374.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
