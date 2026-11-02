@@ -129,6 +129,44 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.waitForTimeout(400);
   const ms = escritas.filter(e => /\/mencoes/.test(e.u) && e.m === "POST");
   conf("a nota sem @ avisa quem atende a conversa (F357)", ms.length > antes && ms.slice(antes).some(e => e.b.para_id === AMANDA && e.b.conversa_id === DA_AMANDA));
+  // F369 · quem não atende pede a transferência: menção a quem atende (e aos gestores) e nota interna
+  await p.evaluate(id => abrirConversa(id), DA_AMANDA);
+  await p.waitForSelector(".zap-topo");
+  await p.click('.zap-topo button[aria-label="Pedir transferência"]');
+  await p.fill("#zpp-motivo", "cliente meu");
+  await p.click("#zpp-ok");
+  await p.waitForTimeout(400);
+  const ped = escritas.filter(e => /\/mencoes/.test(e.u) && e.m === "POST" && Array.isArray(e.b)).pop();
+  const notaPed = escritas.filter(e => /zap_mensagens/.test(e.u) && e.b && e.b.direcao === "interna").pop();
+  conf("Pedir transferência avisa a Amanda com o link da conversa e deixa a nota (F369)", ped && ped.b.some(x => x.para_id === AMANDA && x.conversa_id === DA_AMANDA && x.texto.includes("cliente meu"))
+    && notaPed && notaPed.b.texto.includes("pediu a transferência"));
+  // F368 · o atendente marcado como gestor do WhatsApp vê todas e transfere a conversa de outra pessoa, sem ser administrador
+  await p.evaluate(() => { eu.gestor_zap = true; zapFiltro = "todas"; zapAberta = null; irPara("whatsapp"); });
+  await p.waitForSelector(".zl-filas");
+  conf("gestor do WhatsApp: tem Todas e vê as 4 conversas (F368)", (await p.textContent(".zl-cab")).includes("Todas") && (await p.$$eval(".zap-conv", cs => cs.length)) === 4);
+  await p.evaluate(id => abrirConversa(id), DA_AMANDA);
+  await p.waitForSelector(".zap-topo");
+  conf("gestor do WhatsApp: na conversa da Amanda há Transferir (F368)", (await p.textContent(".zap-topo")).includes("Transferir"));
+  await p.evaluate(() => { eu.gestor_zap = false; });
+  // F370 · novo contato: número de cliente abre a ficha; número novo oferece Conversar e Cliente
+  await p.evaluate(() => { irPara("whatsapp"); });
+  await p.waitForSelector(".zl-cab");
+  await p.click('.zl-cab button[aria-label="Novo contato"]');
+  await p.fill("#znc-tel", "(16) 99999-0001");
+  await p.click("#znc-ok");
+  await p.waitForTimeout(500);
+  conf("novo contato: número de cliente chama zap_abrir e abre a ficha (F370)", escritas.some(e => /rpc\/zap_abrir/.test(e.u) && e.b.p_telefone === "5516999990001")
+    && await p.evaluate(() => !!clienteAberto));
+  await p.evaluate(() => { fecharFicha(false); irPara("whatsapp"); });
+  await p.waitForSelector(".zl-cab");
+  await p.click('.zl-cab button[aria-label="Novo contato"]');
+  await p.fill("#znc-tel", "(17) 98888-7777");
+  await p.click("#znc-ok");
+  await p.waitForSelector("#znc-cli");
+  conf("novo contato: número desconhecido oferece Conversar e Cliente (F370)", (await p.textContent("#znc-res")).includes("não está em nenhuma ficha"));
+  await p.click("#znc-cli");
+  await p.waitForSelector("#ncl-tel");
+  conf("novo contato: Cliente abre o Novo Cliente com o telefone (F370)", (await p.inputValue("#ncl-tel")) === "(17) 98888-7777");
   await p.evaluate(() => { localStorage.removeItem("crm_ver_como"); irPara("mencoes"); });
   await p.waitForTimeout(300);
   conf("Menções: o aviso de conversa tem o botão abrir conversa", (await p.textContent("#conteudo-meio")).includes("abrir conversa"));
