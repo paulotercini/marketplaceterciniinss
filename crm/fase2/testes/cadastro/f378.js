@@ -1,4 +1,4 @@
-// F377 · o Planejado junta as visões de data em abas (Lista, Mês, Perícias, Casos), com os filtros da natureza na Lista,
+// F378 · o Planejado junta as visões de data em abas (Lista, Mês, Perícias, Casos), com os filtros da natureza na Lista,
 // e o menu perde Calendário, Perícias & Audiências e Tarefas com Prazo. Molde: planejado124.js
 // F124 — o 🗓️ Planejado é o do To Do: TODA data, não só a do caso. Entram o
 // caso, a tarefa (inclusive o documento pedido ao cliente) e o lembrete, que é
@@ -101,7 +101,7 @@ const TUDO = {
 
   conf("nenhum erro de página", erros.length === 0);
 
-  console.log("=== F377 · Planejado com as visões de data em abas ===");
+  console.log("=== F378 · Planejado com as visões de data em abas ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
   console.log("erros de console:", erros.length ? erros : "nenhum");
   const ruins = ok.filter(x => !x[1]).length;
