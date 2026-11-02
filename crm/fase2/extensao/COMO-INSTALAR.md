@@ -179,6 +179,10 @@ quando a publicada na `main` é outra. Para atualizar: na pasta do repositório
 no computador, `git pull`; depois, em `chrome://extensions`, o botão ↻ da
 extensão (ou "Atualizar"). Não precisa reinstalar nem entrar de novo no CRM.
 
+## 🖥 e-Recursos baixa todos os documentos — desde 1.32.0
+
+A rodada do e-Recursos baixa todos os documentos de cada recurso, e não só acórdão e decisão monocrática. No CRM, a aba Recurso (CRPS) tem o botão **e-SISREC**, com a tela do portal: o cabeçalho do processo e a tabela Data, Status e Documentos, cada documento guardado abrindo pelo CRM.
+
 ## 📄 Cópia integral, expediente inclusive — desde 1.31.0
 
 O PJe, o eproc e o e-SAJ baixam todas as peças, também certidões, intimações, mandados, publicações e AR, que até a 1.30 se pulavam. O processo arquivado continua sem download. Na primeira rodada do PJe depois de atualizar, o processo com peça ainda sem arquivo na última cronologia volta à fila (até 3 tentativas por peça), por isso a rodada demora mais uma vez.
