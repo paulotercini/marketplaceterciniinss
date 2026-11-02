@@ -427,6 +427,8 @@ A **tela do e-SISREC** (extensão 1.32.0, pedido do Paulo de 02.11.2026): a roda
 
 A **F374** (a tela do PAT, pedido do Paulo de 02.11.2026): a aba INSS do caso tem o botão **PAT** (`fontePat = "tela"`, `telaPat`): por protocolo do caso, o cabeçalho do requerimento (serviço, situação, exigência, data de entrada, última atualização, unidade, etapas da perícia e da avaliação social), os agendamentos, os comentários do INSS e do escritório e os anexos, cada um abrindo o arquivo guardado em `pat/<protocolo>/<id>`, e o processo integral. A extensão já coletava tudo; o CRM grava o detalhe em `casos.pat` (`{"<protocolo>": blocoPat(...)}`, sem o CPF) ao aplicar a coleta do INSS (`aplicarPatDeVerdade`), e `moverNumero` leva a tela junto com o protocolo. SQL em `crm/fase2/migracoes/f374_tela_pat.sql`. Teste: `testes/cadastro/f374.js`.
 
+A **F377** (12.36, a segunda análise visual de 02.11.2026, pedido do Paulo): o painel da agenda flutuante deixa de cobrir a tela. O clique no menu lateral passou a recolher o painel aberto fora do WhatsApp e a escondê-lo na própria Agenda, como o `irPara` já fazia (`zag.fora`, `pintarAgendaZap`). No WhatsApp o painel nasce recolhido na pílula, sem a abertura automática a partir de 1440 px, que cobria a ficha do cliente; a escolha guardada em `crm_zap_agenda` continua valendo. O pé dos passos do atendimento (`.tp-pe`) reserva 64 px à direita no computador, para o "Próximo" não ficar sob os flutuantes. Testes: `f240.js` (sobreposição medida em 1440 e 1280 px), `zapagenda.js`, `colab-integrado.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

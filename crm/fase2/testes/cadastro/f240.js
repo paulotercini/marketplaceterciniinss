@@ -82,6 +82,18 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   e = await estado();
   conf(`Pedir ao cliente traz a lista do que providenciar (${e.vis})`, e.vis.join() === "pedir" && await visivel("dq-prov") && e.feitos.includes("assinar"));
   await p.screenshot({ path: path.join(OUT, "02-pedir.png") });
+  // 12.36 · os botões do pé dos passos não passam por baixo dos flutuantes (Agenda, ?, Sugestões, ⚡)
+  for (const w of [1440, 1280]) {
+    await p.setViewportSize({ width: w, height: 1000 });
+    const cobre = await p.evaluate(() => {
+      const fl = ["#zap-ag", "#fab-sug", "#fab-ajuda", "#fab-rapida"].map(s => document.querySelector(s)).filter(x => x && x.checkVisibility())
+        .flatMap(x => [x, ...x.querySelectorAll("button")]).map(x => x.getBoundingClientRect()).filter(r => r.width);
+      return [...document.querySelectorAll(".tp-pe button, .tp-pe label")].filter(b => b.offsetParent !== null).map(b => [b.textContent.trim().slice(0, 20), b.getBoundingClientRect()])
+        .filter(([, r]) => fl.some(f => r.left < f.right && f.left < r.right && r.top < f.bottom && f.top < r.bottom)).map(([t]) => t);
+    });
+    conf(`em ${w} px nenhum botão do pé fica sob os flutuantes (${cobre.join(", ") || "nenhum"})`, !cobre.length);
+  }
+  await p.setViewportSize({ width: 1440, height: 1000 });
   await p.click(".tp-prox");
   e = await estado();
   conf("Guia do pedido traz as guias e formulários", e.vis.join() === "guias" && await visivel("dq-guias"));

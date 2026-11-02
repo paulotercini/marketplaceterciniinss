@@ -134,7 +134,8 @@ async function abrir(nav, porta, viewport, extra) {
   conf("o nível 1 não registra mensagem como andamento do caso", !(await p.$(".zap-msgs .virar")));
   await foto("01-whatsapp-respondido");
 
-  // 3 · a agenda da conversa: cliente do escritório numa vaga 002
+  // 3 · a agenda da conversa: cliente do escritório numa vaga 002 (12.36 · nasce recolhida, abre no clique)
+  await p.click("#zap-ag .zag-pilula").catch(() => {});
   await p.waitForSelector("#zap-ag .zag-dia", { timeout: 10000 }).catch(() => {});
   conf("a agenda de atendimentos aparece ao lado da conversa", !!(await p.$("#zap-ag .zag-dia")));
   conf("a agenda diz para quem vai agendar", /Ana Fictícia Colab/.test(await p.textContent(".zag-para").catch(() => "")));
@@ -214,6 +215,7 @@ async function abrir(nav, porta, viewport, extra) {
   await p.click(`[data-aqdia="${QUA}"]`);
   conf("na Agenda, os dois atendimentos marcados aparecem no dia", !!(await p.$('[data-aqev="P1"]')) && !!(await p.$('[data-aqev="P2"]')));
   await foto("05-agenda");
+  conf("na Agenda, o painel flutuante da agenda some e não cobre os horários", !(await p.evaluate(() => { const z = document.getElementById("zap-ag"); return !!z && z.checkVisibility(); })));
 
   // ═══ CELULAR ═══
   const cel = await abrir(nav, porta, { width: 390, height: 844 }, { isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
