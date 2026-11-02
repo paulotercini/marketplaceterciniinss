@@ -7,11 +7,30 @@
 const CAIXA = "crm-programa-v1";
 self.addEventListener("install", e => { self.skipWaiting(); });
 self.addEventListener("activate", e => { e.waitUntil(self.clients.claim()); });
+async function guardarPrograma(caixa, href) {
+  const r = await fetch(href);
+  if (r.ok) {
+    await caixa.put(href, r.clone());
+    for (const k of await caixa.keys())
+      if (/\/app\.[0-9a-f]{12}\.js$/.test(k.url) && k.url !== href) await caixa.delete(k);
+  }
+  return r;
+}
 self.addEventListener("fetch", e => {
   const req = e.request;
-  if (req.method !== "GET" || req.mode !== "navigate") return;
+  if (req.method !== "GET") return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
+  // F381 · o programa separado na publicação (app.<hash>.js): o nome muda com o conteúdo,
+  // então a cópia guardada vale para sempre, abre sem rede e fica só a da versão atual
+  if (/\/app\.[0-9a-f]{12}\.js$/.test(url.pathname)) {
+    e.respondWith((async () => {
+      const caixa = await caches.open(CAIXA);
+      return (await caixa.match(req)) || guardarPrograma(caixa, req.url);
+    })());
+    return;
+  }
+  if (req.mode !== "navigate") return;
   e.respondWith((async () => {
     const caixa = await caches.open(CAIXA);
     const chave = new Request(url.origin + url.pathname);
@@ -23,6 +42,12 @@ self.addEventListener("fetch", e => {
       if (r && r.ok) {
         const nova = await r.clone().text();
         const velha = await velhaP;
+        // a página nova só vai à caixa com o programa dela: senão abriria sem ele
+        const prog = nova.match(/app\.[0-9a-f]{12}\.js/);
+        if (prog && !(await caixa.match(new URL(prog[0], url).href))) {
+          const j = await guardarPrograma(caixa, new URL(prog[0], url).href);
+          if (!j.ok) return r;
+        }
         await caixa.put(chave, r.clone());
         if (velha !== null && velha !== nova) {
           const cls = await self.clients.matchAll({ type: "window" });
