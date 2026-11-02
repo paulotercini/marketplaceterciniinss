@@ -69,10 +69,13 @@ const SUPA = "https://ficticio.supabase.co";
     const menu = painelINSS(k, []);
     fontePat = "tela";
     const div = document.createElement("div"); div.innerHTML = painelINSS(k, []); document.body.appendChild(div);
+    const pastasData = [...div.querySelectorAll(".pat-arv summary")].map(x=>x.textContent);
+    arvPatData = false; div.innerHTML = painelINSS(k, []);
     const txt = div.innerText;
-    const botoes = [...div.querySelectorAll(".tela-pat button")].map(x => x.getAttribute("onclick"));
+    const botoes = [...div.querySelectorAll(".tela-pat button")].map(x => x.getAttribute("onclick")).filter(o => /abrirDecisao/.test(o));
     let parse = 0; for (const o of botoes) { try { new Function(o); parse++; } catch (e) {} }
-    return { b, temBotao: /fontePat='tela'/.test(menu), telas: div.querySelectorAll(".tela-pat").length,
+    arvPatData = true;
+    return { b, pastasData, temBotao: /fontePat='tela'/.test(menu), telas: div.querySelectorAll(".tela-pat").length,
       txt, coms: div.querySelectorAll(".pat-com tr").length, anx: div.querySelectorAll(".pat-arv li").length,
       pastas: [...div.querySelectorAll(".pat-arv summary")].map(x=>x.textContent),
       ag: div.querySelectorAll(".pat-ag tr").length, botoes: botoes.length, parse,
@@ -92,6 +95,8 @@ const SUPA = "https://ficticio.supabase.co";
   conf("árvore: exigência, INSS e escritório por tipo, Outros por último", JSON.stringify(r.pastas) === JSON.stringify(
     ["📁 Respostas a exigências (1)", "📁 20/10/2026 · Compareça à perícia (1)", "📁 Juntados pelo INSS (1)",
      "📁 Enviados pelo escritório (3)", "📁 Documento Médico (1)", "📁 Identificação (1)", "📁 Outros (1)"]));
+  conf("árvore por data: a exigência do INSS no topo e a entrada do requerimento", JSON.stringify(r.pastasData) === JSON.stringify(
+    ["📁 20/10/2026 · Exigência do INSS · Compareça à perícia (1)", "📁 05/10/2026 · Entrada do requerimento (4)"]));
   conf("árvore traz o processo administrativo inteiro", /Processo administrativo inteiro/.test(r.txt));
   conf("processo integral e anexos com onclick válido", r.integral && r.botoes === 3 && r.parse === 3);
 

@@ -41998,9 +41998,18 @@ const telasPat = k => { const ps = new Set((k.protocolos||[]).map(soDig));
 const dataPat = s => { const m = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}:\d{2}))?/.exec(String(s||""));
   return m ? `${m[3]}/${m[2]}/${m[1]}${m[4]?` ${m[4]}`:""}` : String(s||""); };
 const rotuloPat = s => { const t = String(s||"").replace(/_/g," ").toLowerCase(); return t.charAt(0).toUpperCase()+t.slice(1); };
-// os anexos em árvore: o processo inteiro, as respostas a cada exigência (idComentario),
-// o que o INSS juntou (siapeCriador) e o que o escritório enviou, por tipo do documento
+// os anexos em árvore. Por data (padrão, pedido do Paulo): o anexo preso a um comentário fica na
+// data dele; o resto, na data de entrada do requerimento (o anexo do PAT não tem data própria).
+// Por tipo: as respostas a cada exigência (idComentario), o que o INSS juntou (siapeCriador) e o
+// que o escritório enviou, por tipo do documento
+let arvPatData = true;
 function arvorePat(b, p, guardados, abrir, integral){
+  const modo = `<span class="sub-menu fontes" style="margin-left:8px;display:inline-flex">
+    <button class="${arvPatData?"on":""}" onclick="arvPatData=true;repintarFicha()" title="uma pasta por data, da mais recente à mais antiga">Data</button>
+    <button class="${arvPatData?"":"on"}" onclick="arvPatData=false;repintarFicha()" title="exigências, juntados pelo INSS e enviados pelo escritório por tipo">Tipo</button></span>`;
+  return `<h4 style="font-size:13px;margin:8px 0 4px">Documentos (${(b.anexos||[]).length})${modo}</h4>` + arvorePatRamos(b, p, guardados, abrir, integral);
+}
+function arvorePatRamos(b, p, guardados, abrir, integral){
   const coms = new Map((b.comentarios||[]).map(c=>[String(c.id), c]));
   const arq = a => { const c = `pat/${p}/${a.id}`;
     return `<li>${guardados.has(c) ? abrir(c, a.nomeArquivo||"anexo") : `<span class="meio-sub" title="a extensão ainda não baixou este anexo">${esc(a.nomeArquivo||"anexo")} (não baixado)</span>`}${a.dataCriacao?` <span class="meio-sub">${esc(dataPat(a.dataCriacao))}</span>`:""}</li>`; };
@@ -42013,6 +42022,22 @@ function arvorePat(b, p, guardados, abrir, integral){
     return `${dataPat(c.dataCriacao).slice(0,10)} · ${t}${t.length>=70?"…":""}`; };
   const tipo = a => { const d = String(a.descricaoArquivo||"").trim(); return !d || /^outros documentos$/i.test(d) ? "Outros" : d; };
   const tipos = [...porGrupo(esc_, tipo)].sort(([x],[y])=>x==="Outros"?1:y==="Outros"?-1:x.localeCompare(y));
+  if(arvPatData){
+    const entrada = String(b.dataEntradaRequerimento||"").slice(0,10), m = new Map();
+    (b.anexos||[]).forEach(a=>{ const c = a.idComentario!=null && coms.get(String(a.idComentario));
+      const ch = c ? `c${c.id}` : `e${String(a.dataCriacao||entrada).slice(0,10)}`;
+      if(!m.has(ch)) m.set(ch, {iso: c ? String(c.dataCriacao||"") : String(a.dataCriacao||entrada), c, l: []});
+      m.get(ch).l.push(a); });
+    const ramos = (integral ? `<li>📄 ${abrir(integral, "Processo administrativo inteiro")}</li>` : "")
+      + [...m.values()].sort((x,y)=>y.iso<x.iso?-1:1).map(({iso, c, l})=>{
+        const dia = dataPat(iso).slice(0,10);
+        if(!c) return pasta(`${dia} · ${iso.slice(0,10)===entrada?"Entrada do requerimento":"Documentos juntados"}`, l.length, l.map(arq).join(""));
+        const t = limparHtmlPat(c.conteudo).slice(0, 70), rot = `${dia} · ${c.incluidoPorServidor?"Exigência do INSS":"Comentário do escritório"} · ${t}${t.length>=70?"…":""}`;
+        return c.incluidoPorServidor
+          ? `<li><details><summary><b>📁 ${esc(rot)} (${l.length})</b></summary><ul class="pat-arv">${l.map(arq).join("")}</ul></details></li>`
+          : pasta(rot, l.length, l.map(arq).join("")); }).join("");
+    return ramos ? `<ul class="pat-arv pat-raiz">${ramos}</ul>` : `<p class="meio-sub">Sem documentos neste requerimento.</p>`;
+  }
   const ramos = [
     integral ? `<li>📄 ${abrir(integral, "Processo administrativo inteiro")}</li>` : "",
     exig.length ? pasta("Respostas a exigências", exig.length, [...porGrupo(exig, a=>a.idComentario)].map(([id, l])=>pasta(rotExig(id), l.length, l.map(arq).join(""))).join("")) : "",
@@ -42044,7 +42069,6 @@ function telaPat(k, b){
     <table class="tab pat-com"><tr><th>Data</th><th>Autor</th><th>Comentário</th></tr>
       ${coms.map(c=>`<tr><td style="white-space:nowrap">${esc(dataPat(c.dataCriacao))}</td><td>${c.incluidoPorServidor?"INSS":"Escritório"}</td><td>${esc(limparHtmlPat(c.conteudo))}</td></tr>`).join("")}
     </table>
-    <h4 style="font-size:13px;margin:8px 0 4px">Documentos (${(b.anexos||[]).length})</h4>
     ${arvorePat(b, p, guardados, abrir, integral)}
     <div class="fatos-pe" style="justify-content:flex-end"><span class="meio-sub">lido do PAT${b.coletado_em?` em ${esc(dataPat(b.coletado_em))}`:""}</span></div>
   </div>`;
