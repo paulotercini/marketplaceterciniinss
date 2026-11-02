@@ -403,6 +403,8 @@ A **F364** (12.29, pedido do Paulo de 02.11.2026): nas Pendentes do colaborador 
 
 A **F365** (12.30, decisão do Paulo de 02.11.2026) desfaz a F364: a leitura de um colega zerava o não lido e tirava a conversa das Pendentes de todos. O colaborador volta a ver todas as pendentes dos setores dele, e as 155 sem atendente paradas até 30/10/2026 foram encerradas em lote por `zap_encerrar` (cópia em `_bkp_zap_pend_20261102`), ficando as de 31/10 em diante. Teste: `zapgestor.js`.
 
+A **F366** (12.31, pedido do Paulo de 02.11.2026): o vídeo (`tipo = video`) toca no próprio balão e no histórico do WhatsApp da ficha (`vidZap`, `video.zap-vid` com controles, `preload="metadata"`), pelo mesmo link assinado da foto (`carregarMinis`), no lugar do anexo "video.mp4". Teste: `zapfoto.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
