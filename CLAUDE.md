@@ -411,6 +411,8 @@ A **F368** (12.33, pedido do Paulo de 02.11.2026): o **gestor do WhatsApp** deix
 
 A **F369** (12.33, pedido do Paulo de 02.11.2026): na conversa que está com outra pessoa, quem não pode transferir tem o botão **Pedir** (`pedirTransferencia`): escolhe para quem (ele mesmo, por padrão) e o motivo, e o pedido vai em Menções a quem atende e aos gestores (`papel = 'admin'` ou `gestor_zap`), com o link da conversa, e fica uma nota interna; quem recebe transfere pelo Transferir. Teste: `zapgestor.js`.
 
+A **F370** (12.33, pedido do Paulo de 02.11.2026): o ＋ do alto da lista do WhatsApp (`novoContatoZap`) conversa com um número novo. O número (com DDD; sem ele vale o 16, `foneZapNovo`) que já está numa ficha (`clientesDoTelefone`) é avisado e abre a ficha com a conversa ao lado (`zap_abrir`, `fichaComZap`; com duas fichas, escolhe-se qual); o que não está em ficha oferece **Conversar** (a conversa nasce ou se reabre pelo `zap_abrir`, já com quem a abriu como atendente) e **Cliente** (o Novo Cliente com o telefone no campo). A ponte envia pelo telefone da conversa. Teste: `zapgestor.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
