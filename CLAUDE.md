@@ -395,6 +395,8 @@ A **F360** (12.25, pedido do Paulo de 01.11.2026): a notificação do navegador 
 
 A **F361** (12.26, pedido do Paulo de 01.11.2026): na conversa sem atendente, o **Assumir** é o primeiro botão do topo, verde, em negrito e com a palavra também no celular (`.zt-assumir`); antes era um link na linha de baixo e, no celular, ficava escondido no cartão Conversa da ficha. A linha de baixo diz "Atendendo: ninguém". Teste: `zapbotoes.js`.
 
+A **F362** (12.27, pedido do Paulo de 02.11.2026): o colaborador voltou a ver a fila **Pendentes** (as conversas abertas sem atendente, dos setores dele), ao lado de Novas e Minhas, porque quem escrevia e ninguém atendia não aparecia para ele; Todas e o Painel da equipe continuam com o gestor. O contador do menu conta, para o colaborador, a pendente com mensagem não lida. Teste: `zapgestor.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
