@@ -4482,6 +4482,8 @@ html[data-tema="v10"] .tr-compacta{margin-bottom:10px}
 .doc-quadros .tp-rola,.adx-main .tp-rola{margin:0 0 12px;padding:6px 0;background:var(--fundo,#F8F8F6)}
 .adx-main .tp-trilha button{border:1px solid transparent}
 .tp-pe{position:sticky;bottom:0;z-index:2;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;justify-content:flex-end;margin-top:12px;padding:10px 12px;background:#fff;border:1px solid var(--pa-b);border-radius:10px;box-shadow:0 -4px 12px rgba(0,0,0,.05)}
+/* F377 (12.36) · o "Próximo" do pé dos passos fica à esquerda da coluna dos flutuantes (Agenda, ?, Sugestões, ⚡), que o cobria */
+.app:not(.celular) .tp-pe{padding-right:64px}
 .adb-passo-sub{margin:4px 0 8px;color:var(--pa-c2,#686660);font-size:12px}
 .adr-desf-ir{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px}.adr-desf-ir p{margin:0}
 @media (max-width:640px){.tp-rola{position:static}.tp-nav{justify-content:flex-start}}
@@ -6222,7 +6224,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.35</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.36</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8739,9 +8741,9 @@ function montarSidebar(){
     el.onclick=()=>{
       document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
       el.classList.add("ativa");
-      visao = el.dataset.v; limparBusca(); esconderEtiqueta();
+      visao = el.dataset.v; zag.fora = false; limparBusca(); esconderEtiqueta();
       if(visao==="novocliente" && !_ncl.id) _ncl = {etapa:1, id:null};   // F222 · o nome de uma pesquisa antiga não vale aqui
-      fecharMenuCel(); fecharFicha(false); render();
+      fecharMenuCel(); fecharFicha(false); render(); pintarAgendaZap();   // F377 · como o irPara: na Agenda o painel some
     };
     el.onmouseenter=()=>etiquetaMenu(el);
     el.onmouseleave=esconderEtiqueta;
@@ -53430,7 +53432,7 @@ function agendarNaVaga(dia, eventoId){
 // com vaga do Paulo, do Marcos e da Amanda, cada um na sua cor, e o clique na vaga abre o agendamento ali mesmo, já com
 // o cliente da conversa aberta (ou o nome e o telefone do contato, se não for cliente). Lê a agenda Completa.
 let zag = { aberta:null, prof:"todos", dia:null, desde:null, longe:null, longePor:null, longeErro:null, longeCarr:false };
-function zagAberta(){ if(visao!=="whatsapp") return !!zag.fora; if(zag.aberta===null){ const v = ler("crm_zap_agenda"); zag.aberta = v ? v==="1" : !celular() && innerWidth>=1440; /* abaixo de 1440 não há coluna da ficha e a agenda aberta cobriria a conversa */ } return zag.aberta; }
+function zagAberta(){ if(visao!=="whatsapp") return !!zag.fora; if(zag.aberta===null){ const v = ler("crm_zap_agenda"); zag.aberta = v==="1"; /* F377 · nasce recolhida: aberta, cobria a ficha do cliente e a conversa */ } return zag.aberta; }
 function zagAlternar(){
   if(visao==="whatsapp"){ zag.aberta = !zagAberta(); guardar("crm_zap_agenda", zag.aberta ? "1" : "0"); } else zag.fora = !zag.fora;
   pintarAgendaZap(); if(zagAberta()) zagCarregar();
