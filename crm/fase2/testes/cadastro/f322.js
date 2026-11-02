@@ -191,6 +191,8 @@ const casoDe = id => T.casos.find(k => k.id === id);
   await p.evaluate(() => document.querySelector(".et-importar button").click());
   await p.waitForFunction(() => /prontos/.test((document.getElementById("et-lote-st") || {}).textContent || ""), null, { timeout: 30000 });
   conf("E4.2 o botão abre a mesma janela das etapas em lote", true);
+  const lev = await p.evaluate(() => [etapaDoMovimento("Cumprimento de Levantamento da Suspensão"), (etapaDoMovimento("Expedição de documento (Alvará)") || {}).etapa]);
+  conf("E2.6 o levantamento da suspensão não é pagamento; o alvará continua recebido", lev[0] === null && lev[1] === "recebido" || (console.log(JSON.stringify(lev)), false));
   conf("E2.5 nenhum erro de página", !erros.length || (console.log(erros), false));
 
   await nav.close(); s.close();
