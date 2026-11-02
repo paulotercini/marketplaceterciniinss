@@ -28,7 +28,10 @@
   // Nomes do PJe ("Ato Ordinatório"), do eproc ("CERT1", "ATOORD1", "INTM1")
   // e do e-SAJ (o título da movimentação: "Certidão de Publicação Expedida")
   const RE_EXPEDIENTE = /^\s*(?:certid|intima[cç]|mandado|comprovante de protocolo|aviso|expedi[cç][aã]o de|publica[cç][aã]o|remessa|recebimento(?! de of[ií]cio)|conclus[aã]o|decurso de prazo|movimento processual|depre\b|ci[eê]ncia de recebimento|juntada de (?:ar|aviso|mandado|certid))|^\s*(?:CERT|INTM|INTIM|MAND|AR)\d+\s*$/i;
-  const vaiBaixar = nome => !RE_EXPEDIENTE.test(String(nome || ''));
+  // 1.31.0 (02.11.2026): o Paulo quer a cópia integral, expediente inclusive;
+  // a regex fica só para dizer o que é expediente; nada mais é pulado
+  const ehExpediente = nome => RE_EXPEDIENTE.test(String(nome || ''));
+  const vaiBaixar = () => true;
 
   // o mesmo nomeSeguro do robo-crps/ingerir.js — o CRPS mantém o caminho de lá
   function nomeSeguro(s) {
@@ -112,7 +115,7 @@
   }
   const desEntidade = s => String(s).replace(/&amp;/g, '&');
 
-  const API = { ehDecisao, vaiBaixar, caminhoDoc, tipoDoConteudo, nomeSeguro, enderecoDoMiolo, charsetDoHtml };
+  const API = { ehDecisao, vaiBaixar, ehExpediente, caminhoDoc, tipoDoConteudo, nomeSeguro, enderecoDoMiolo, charsetDoHtml };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.DOCS_REGRAS = raiz.DOCS_REGRAS || API;
 })(typeof window !== 'undefined' ? window : globalThis);

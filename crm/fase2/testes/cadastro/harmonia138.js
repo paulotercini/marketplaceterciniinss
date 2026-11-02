@@ -66,13 +66,13 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
     const l0 = cs[0];
     return { n: cs.length, colados: cs.every(c => c.closest(".pl-grupo") && getComputedStyle(c).borderRadius === "0px"),
       dataPrimeiro: !!(l0 && l0.children[1] && l0.children[1].classList.contains("ag-data")),
-      espMono: !!(document.querySelector(".ag-esp") && /mono/i.test(getComputedStyle(document.querySelector(".ag-esp")).fontFamily)),
+      espMono: !!(document.querySelector(".ag-esp") && /Plex Sans/i.test(getComputedStyle(document.querySelector(".ag-esp")).fontFamily)),
       segLinha: !!(seg && new Set([...seg.children].map(b => Math.round(b.getBoundingClientRect().top))).size === 1),
       sub: document.getElementById("sub-lista").textContent };
   });
   conf(`cada seção é um bloco, com as linhas separadas por um fio (${plan.n})`, plan.n >= 4 && plan.colados);
   conf("F144 · a data abre a linha, logo depois da caixa de concluir", plan.dataPrimeiro);
-  conf("F144 · a espécie com a lista vai em selo de letra mono", plan.espMono);
+  conf("F144 · a espécie com a lista vai em selo (F304: na letra da interface, a mono é só do número que se copia)", plan.espMono);
   conf("F144 · o filtro por pessoa cabe numa linha só", plan.segLinha);
   conf("F144 · a frase do topo diz o dia e o que vence", /\d+ (vencidas?|para hoje)/.test(plan.sub) && /de \p{L}+\./u.test(plan.sub));
 
@@ -148,7 +148,7 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
       .filter(e => { const r = e.getBoundingClientRect(); return Math.min(r.width, r.height) < 24; });
     return { segoe: fam.filter(x => /Segoe/.test(x)).length, plex: fam.filter(x => /IBM Plex Sans/.test(x)).length,
       primeira: abas[0] && abas[0].textContent.trim(), ultima: abas.at(-1) && abas.at(-1).textContent.trim(),
-      esq: (e => e && getComputedStyle(e).position === "sticky" && !!e.querySelector(".lc-placa") && !!document.querySelector(".caso-pz .faixa-prazos"))(document.querySelector(".caso-esq")),   // F278 · os prazos na coluna da direita
+      esq: (e => e && !!e.querySelector(".lc-placa") && !!document.querySelector(".caso-pz .faixa-prazos") && document.querySelector(".caso-pz").getBoundingClientRect().right <= document.querySelector(".caso-dir").getBoundingClientRect().left + 1)(document.querySelector(".caso-esq")),   // F320 · duas colunas: placa e prazos à esquerda   // F278 · os prazos na coluna da direita
       dir: (e => !!(e && e.firstElementChild.classList.contains("menu-andamentos") && e.querySelector(".menu-andamentos + .caso-acoes") && e.querySelector(".caso-acoes ~ .fatos")))(document.querySelector(".caso-dir")),   // F242 · as abas em cima, o campo de escrever e os andamentos
       placa2: (e => e && getComputedStyle(e).flexDirection === "column" && [...e.children].every(f => getComputedStyle(f).flexDirection === "row"))(document.querySelector(".caso-esq .lc-placa")),   // F182 · rótulo e valor na mesma linha, como no canvas
       pzDesc: (d => d.every((x, i) => !i || d[i-1] <= x))([...document.querySelectorAll(".caso-esq .pz:not(.fp2-fatal)")].map(b => b.dataset.data)),

@@ -84,6 +84,29 @@ def _norm(s):
                    if not unicodedata.combining(ch)).strip()
 
 
+# F296 · Onda E do fluxo do To Do (29.10.2026): a etapa da tarefa é a ficha do cliente. O NB vai ao caso, o parente com
+# "#CPF" vira vínculo (e não o CPF do cliente), a senha do gov.br vai às credenciais, e o que não tem campo (CNPJ,
+# e-mail, telefone com recado, a data provável da aposentadoria, o parente que não é cliente) vira nota da ficha
+RE_NB_ITEM = re.compile(r"^(?:nb|n[º°.]?\s*(?:do\s+)?benef[ií]cio|benef[ií]cio)\b\s*[:\-nº°.]*\s*(\d[\d.\-/ ]{8,14}\d)\s*$", re.I)
+RE_NB_FMT = re.compile(r"^\d{3}\.\d{3}\.\d{3}-\d$")
+RE_CNPJ = re.compile(r"\b\d{2}\.?\d{3}\.?\d{3}/\d{4}-?\d{2}\b")
+RE_GOV = re.compile(r"^(?:senha\s+(?:do\s+)?)?(?:gov\.?\s?br|meu\s*inss)\s*[:\-]\s*(\S+)\s*$", re.I)
+RE_TEL_EM = re.compile(r"\(?\b\d{2}\)?[\s.\-]+9?\s?\d{4}[.\-\s]?\d{4}\b")
+RE_EMAIL = re.compile(r"[\w.+\-]+@[\w\-]+\.[\w.\-]+")
+RE_DATA_APOS = re.compile(r"aposent\w*.*?\b(\d{1,2}/\d{1,2}/\d{2,4}|\d{1,2}/\d{4})\b", re.I)
+
+
+def _parece_data(dig):
+    """Oito dígitos que formam uma data DDMMAAAA de 1900 a 2099 (o nascimento escrito sem barras)."""
+    if len(dig) != 8:
+        return False
+    try:
+        datetime.date(int(dig[4:]), int(dig[2:4]), int(dig[:2]))
+    except ValueError:
+        return False
+    return 1900 <= int(dig[4:]) <= 2099
+
+
 def classificar_item_checklist(txt, cpf_cliente=None):
     """O checklist do To Do é onde o escritório guarda dados soltos do cliente.
     Classifica cada item: ('senha_padrao'|'senha'|'cpf'|'telefone'|'protocolo'|
@@ -96,22 +119,46 @@ def classificar_item_checklist(txt, cpf_cliente=None):
         return ("dado", None)                      # data de nascimento já é tratada
     if re.fullmatch(r"padr[ãa]o\.?", t, re.I):
         return ("senha_padrao", None)              # senha padrão do escritório
-    m = re.match(r"senha\b.*?[:\-\s]\s*(\S+)\s*$", t, re.I)
+    m = RE_GOV.match(t) or re.match(r"senha\b.*?[:\-\s]\s*(\S+)\s*$", t, re.I)
     if m:
         return ("senha", m.group(1))
+    m = RE_NB_ITEM.match(t)
+    if m and len(re.sub(r"\D", "", m.group(1))) == 10:
+        return ("nb", re.sub(r"\D", "", m.group(1)))
+    if RE_NB_FMT.match(t):
+        return ("nb", re.sub(r"\D", "", t))
+    if RE_CNPJ.search(t):
+        return ("nota", ("cnpj", t))
+    if RE_EMAIL.search(t):
+        return ("nota", ("email", t))
+    if RE_DATA_APOS.search(t):
+        return ("nota", ("aposentadoria", t))
     m = RE_CPF_FMT.search(t)
     if m:
+        # "Filho da Rosmeire Soares Costa #CPF": o CPF é do parente, e não do cliente
+        resto = re.sub(r"\b(cpf|n[º°o]?)\b[:.\s]*", " ", (t[:m.start()] + t[m.end():]).replace("#", " "), flags=re.I).strip(" :-")
+        mrel = RE_RELACAO.match(resto)
+        nome = re.sub(r"^d[aoe]s?\s+", "", resto[mrel.end():].strip() if mrel else resto, flags=re.I).strip(" :-")
+        if len(nome.split()) >= 2 and all(re.fullmatch(r"[A-Za-zÀ-ÿ'.]+", p) for p in nome.split()):
+            return ("nome", (mrel.group(1).strip().lower() if mrel else None, nome, "".join(m.groups())))
         return ("cpf", "".join(m.groups()))
     if RE_TEL_ITEM.fullmatch(t):
         dig = re.sub(r"\D", "", t)
         if 10 <= len(dig) <= 11:
             return ("telefone", dig)
+    m = RE_TEL_EM.search(t)
+    if m and re.search(r"[A-Za-zÀ-ÿ]", t):
+        dig = re.sub(r"\D", "", m.group(0))
+        if 10 <= len(dig) <= 11:
+            return ("telefone_nota", (dig, t))      # "16 99711-2233 (filha)": o número e o recado
     if re.fullmatch(r"[\d\s./\-]+", t):            # só números (com separadores)
         dig = re.sub(r"\D", "", t)
         if len(dig) < 6 or (cpf_cliente and dig == cpf_cliente):
             return ("dado", None)
         if len(dig) == 11 and not cpf_cliente:
             return ("cpf", dig)
+        if _parece_data(dig):
+            return ("dado", None)                  # teste 11.88, DAD-07: "30101977" é o nascimento, e não protocolo
         return ("protocolo", dig)                  # o INSS divulga só o protocolo
     m = re.fullmatch(r"#\s*([A-Za-zÀ-ÿ][\wÀ-ÿ]*)", t)
     if m:
@@ -126,10 +173,13 @@ def classificar_item_checklist(txt, cpf_cliente=None):
     mrel = RE_RELACAO.match(t)
     resto = t[mrel.end():].strip() if mrel else t
     palavras = resto.split()
+    if mrel:
+        resto = re.sub(r"^d[aoe]s?\s+", "", resto, flags=re.I)
+        palavras = resto.split()
     if 2 <= len(palavras) <= 6 and all(
             re.fullmatch(r"[A-Za-zÀ-ÿ'.]+", p) for p in palavras):
         rel = mrel.group(1).strip().lower() if mrel else None
-        return ("nome", (rel, resto))              # candidato a parente/amigo
+        return ("nome", (rel, resto, None))        # candidato a parente/amigo
     return ("tarefa", t)
 
 
@@ -202,7 +252,7 @@ def cpf_pelo_nome(nome, cpf_por_nome):
     else:
         pri = k.split()[0]
         cpfs = {c for kk, cs in cpf_por_nome.items()
-                if kk.split()[0] == pri and _distancia(k, kk) <= 2 for c in cs}
+                if kk.split()[:1] == [pri] and _distancia(k, kk) <= 2 for c in cs}
     return next(iter(cpfs)) if len(cpfs) == 1 else None
 
 
@@ -216,6 +266,7 @@ def mapear(dados, cpf_por_nome=None):
     clientes, casos, andamentos, eventos, tarefas = {}, {}, {}, {}, {}
     pagamentos, lembretes, fora_de_pagamentos = {}, {}, []
     credenciais, vinculos, pend_vinculos = {}, {}, []
+    notas, subtarefas_dado = {}, []   # F296 · nota da ficha por cliente; ids das etapas que eram dado e viraram subtarefa
     pulados, sem_senha_padrao = {}, 0
 
     for t in dados["tarefas"]:
@@ -294,6 +345,7 @@ def mapear(dados, cpf_por_nome=None):
                 },
                 "intervalo_meses": None,
                 "proximo_em": t["prazo"],
+                "todo_prazo": t["prazo"],     # a data do To Do na última rodada (manter_lembrete)
                 "ativo": not t["concluida"],
             }
             continue
@@ -310,7 +362,9 @@ def mapear(dados, cpf_por_nome=None):
             "protocolos": protocolos,
             "fase": "encerrado" if t["concluida"] else fase,
             "nb": t["nb"], "processo": t["processo"], "prazo": t["prazo"],
+            "todo_prazo": t["prazo"],     # a data do To Do na última rodada (manter_dados_do_banco)
             "importante": t["importante"], "origem_lista": lista,
+            "todo_importante": t["importante"],   # F373 · a ⭐ do To Do na última rodada (manter_dados_do_banco)
             "todo_task_id": t["id"],
             "encerrado_em": t["concluida_em"] and t["concluida_em"] + "T12:00:00" + TZ,
         }
@@ -345,6 +399,17 @@ def mapear(dados, cpf_por_nome=None):
             tipo_it, valor = classificar_item_checklist(txt, c["cpf"])
             if tipo_it in ("vazio", "dado"):
                 continue
+            if tipo_it not in ("tarefa", "nome"):
+                subtarefas_dado.append(uid("subtarefa", kid, md5(txt)))
+            if tipo_it == "nb":
+                casos[kid]["nb"] = casos[kid]["nb"] or valor
+                continue
+            if tipo_it == "telefone_nota":
+                c["telefone"] = c["telefone"] or valor[0]
+                tipo_it, valor = "nota", ("telefone", valor[1])
+            if tipo_it == "nota":
+                _nota(notas, cid, valor[0], valor[1], kid)
+                continue
             if tipo_it in ("senha_padrao", "senha"):
                 if tipo_it == "senha_padrao" and not SENHA_PADRAO:
                     sem_senha_padrao += 1
@@ -373,7 +438,7 @@ def mapear(dados, cpf_por_nome=None):
                 continue
             if tipo_it == "nome":
                 pend_vinculos.append((cid, valor[0], valor[1], kid, txt,
-                                      bool(c_it.get("feito"))))
+                                      bool(c_it.get("feito")), valor[2]))
                 continue
             tid = uid("subtarefa", kid, md5(txt))
             tarefas[tid] = {
@@ -397,15 +462,22 @@ def mapear(dados, cpf_por_nome=None):
 
     # segunda passada: item de checklist com nome de gente vira vínculo se o
     # nome bater com OUTRO cliente da base; senão volta a ser subtarefa
-    nome_idx = {}
+    nome_idx, cpf_idx = {}, {}
     for cli in clientes.values():
         nome_idx.setdefault(_norm(cli["nome"]), cli["id"])
-    for cid, relacao, nome_txt, kid, txt, feito in pend_vinculos:
-        outro = nome_idx.get(_norm(nome_txt))
+        if cli.get("cpf"):
+            cpf_idx.setdefault(cli["cpf"], cli["id"])
+    for cid, relacao, nome_txt, kid, txt, feito, cpf_rel in pend_vinculos:
+        outro = (cpf_rel and cpf_idx.get(cpf_rel)) or nome_idx.get(_norm(nome_txt))
         if outro and outro != cid:
             vid = uid("vinculo", cid, outro)
             vinculos[vid] = {"id": vid, "cliente_id": cid,
                              "ligado_a": outro, "relacao": relacao}
+            subtarefas_dado.append(uid("subtarefa", kid, md5(txt)))
+        elif relacao or cpf_rel:
+            # F296 · parente que não é cliente: nota da ficha, e não tarefa
+            _nota(notas, cid, "parente", txt, kid)
+            subtarefas_dado.append(uid("subtarefa", kid, md5(txt)))
         else:
             tid = uid("subtarefa", kid, md5(txt))
             tarefas[tid] = {
@@ -429,7 +501,15 @@ def mapear(dados, cpf_por_nome=None):
         "fora_de_pagamentos": [i for i in fora_de_pagamentos if i],
         "lembretes": list(lembretes.values()),
         "pulados": pulados,
+        "notas_ficha": notas,
+        "subtarefas_dado": sorted(set(subtarefas_dado)),
     }
+
+
+def _nota(notas, cid, tipo, texto, kid=None):
+    lst = notas.setdefault(cid, [])
+    if not any(n["texto"] == texto for n in lst):
+        lst.append({"tipo": tipo, "texto": texto, "caso_id": kid})
 
 
 def remapear_casos(mapa, task_para_id_existente):
@@ -629,15 +709,64 @@ def manter_dados_do_banco(mapa, banco, tabela="clientes", campos=("telefone", "d
     tarefa tinha (ou a nada) a cada 10 minutos. O To Do ainda preenche o caso
     sem prazo e acende a ⭐ apagada, mas não a apaga.
 
+    Exceção (31.10.2026): a data que MUDOU no To Do desde a rodada anterior
+    (casos.todo_prazo) vence a do CRM. Sem isso, o "Concluir em" adiado ou
+    apagado no To Do nunca chegava, e o CRM guardava 185 datas vencidas.
+
     O lote do PostgREST exige as mesmas chaves em todas as linhas, então o
     valor do banco entra na linha em vez de a coluna sair dela."""
     por_id = {b["id"]: b for b in banco or []}
     for linha in mapa.get(tabela) or []:
         b = por_id.get(linha.get("id")) or {}
         for campo in campos:
+            if (campo == "prazo" and "todo_prazo" in b
+                    and (linha.get("todo_prazo") or None) != (b["todo_prazo"] or None)):
+                continue                  # a data mudou no To Do: o To Do vence
+            if campo == "importante" and b.get("todo_importante") is not None:
+                # F373 · a ⭐ que mudou no To Do vence; a que não mudou é a do CRM, acesa ou apagada
+                if bool(linha.get("todo_importante")) == bool(b["todo_importante"]):
+                    linha[campo] = bool(b.get("importante"))
+                continue
             v = b.get(campo)
             if v and not (campo == "nome" and RE_NOME_PROVISORIO.fullmatch(v)):
                 linha[campo] = v
+
+
+def manter_lembrete(l, b):
+    """O card das Aposentadorias futuras: título, data e intervalo editados no CRM
+    vencem (responsavel_id não é enviado, o banco já o preserva). Exceção
+    (31.10.2026): a data que MUDOU no To Do desde a rodada anterior
+    (lembretes.todo_prazo) vence, como no casos.prazo; sem isso o lembrete adiado
+    no To Do continuava vencido no Meu Dia. Só a conclusão no To Do desliga."""
+    for campo in ("titulo", "proximo_em", "intervalo_meses"):
+        if (campo == "proximo_em" and "todo_prazo" in b
+                and (l.get("todo_prazo") or None) != (b["todo_prazo"] or None)):
+            continue
+        if b.get(campo) is not None:
+            l[campo] = b[campo]
+    if l["ativo"]:
+        l["ativo"] = b.get("ativo", True)
+
+
+def respeitar_despacho(mapa, pendentes):
+    """F291 · o "Concluir por hoje" do CRM marca a volta. Enquanto a ponte
+    (ponte_despacho.py) não leva isso ao To Do, o caso despachado e ainda não levado
+    entra com a data do despacho. Desde a F373 (02.11.2026) o despacho não apaga a ⭐,
+    que segue a regra do todo_importante (manter_dados_do_banco)."""
+    por_id = {}
+    for p in pendentes or []:
+        d = (p.get("ronda") or {}).get("despacho") or {}
+        if d.get("prazo") and not d.get("todo"):      # a consulta já filtra; a regra vale também sem ela
+            por_id[p["id"]] = d
+    n = 0
+    for linha in mapa.get("casos") or []:
+        d = por_id.get(linha.get("id"))
+        if d is None:
+            continue
+        if d.get("prazo"):
+            linha["prazo"] = d["prazo"]
+        n += 1
+    return n
 
 
 def remapear_clientes(mapa, cpf_para_id_existente):
@@ -688,7 +817,23 @@ def remapear_clientes(mapa, cpf_para_id_existente):
             for campo in ("cliente_id", "ligado_a"):
                 if v.get(campo):
                     v[campo] = troca.get(v[campo], v[campo])
+        notas = {}
+        for cid, lst in (mapa.get("notas_ficha") or {}).items():
+            dest = notas.setdefault(troca.get(cid, cid), [])
+            dest += [n for n in lst if n not in dest]
+        if "notas_ficha" in mapa:
+            mapa["notas_ficha"] = notas
     return len(troca)
+
+
+def separar_prazo_vazio(mapa):
+    """P4 dos prazos (31.10.2026): a etapa do caso que o To Do manda sem data não leva a coluna prazo,
+    porque o upsert apagava a data de entrega que o CRM deu ao pedido de documento. A tarefa pessoal
+    (sem caso) segue como antes: nela a data é do To Do."""
+    ts = mapa.get("tarefas") or []
+    mapa["tarefas"] = [t for t in ts if not (t.get("caso_id") and t.get("prazo") is None)]
+    mapa["tarefas_sem_prazo"] = [{c: v for c, v in t.items() if c != "prazo"}
+                                 for t in ts if t.get("caso_id") and t.get("prazo") is None]
 
 
 def tarefas_docs_de(andamentos):
@@ -862,15 +1007,23 @@ def gerar_sql(mapa):
         _sql_insert("credenciais", mapa.get("credenciais", [])),
         _sql_insert("vinculos", mapa.get("vinculos", []), chave="cliente_id, ligado_a"),
         _sql_insert("casos", mapa["casos"],
-                    update_cols=("fase", "prazo = coalesce(casos.prazo, excluded.prazo)",
-                                 "importante = casos.importante or excluded.importante",
+                    update_cols=("fase", "prazo = case when excluded.todo_prazo is distinct from "
+                                 "casos.todo_prazo then excluded.prazo "
+                                 "else coalesce(casos.prazo, excluded.prazo) end",
+                                 "todo_prazo",
+                                 # F373 · a ⭐ que mudou no To Do vence; a que não mudou fica a do CRM
+                                 "importante = case when casos.todo_importante is null "
+                                 "then casos.importante or excluded.importante "
+                                 "when excluded.todo_importante is distinct from casos.todo_importante "
+                                 "then excluded.importante else casos.importante end",
+                                 "todo_importante",
                                  "beneficio = coalesce(casos.beneficio, excluded.beneficio)",
                                  "parceria", "protocolos",
                                  "nb", "processo", "origem_lista", "encerrado_em")),
         _sql_insert("andamentos", mapa["andamentos"]),
         _sql_insert("eventos", mapa["eventos"], chave="caso_id,tipo,data_hora"),
         _sql_insert("tarefas", mapa["tarefas"],
-                    update_cols=("prazo", "concluida", "concluida_em")),
+                    update_cols=("prazo = coalesce(excluded.prazo, tarefas.prazo)", "concluida", "concluida_em")),
         # só o item marcado mexe no status: aberto -> recebido, nunca o contrário
         _sql_insert("pagamentos", mapa.get("pagamentos", []), chave="todo_item_id",
                     update_cols=("descricao", "valor",
@@ -880,7 +1033,11 @@ def gerar_sql(mapa):
                                  "then excluded.pago_em else pagamentos.pago_em end",
                                  "vencimento")),
         _sql_insert("lembretes", mapa.get("lembretes", []),
-                    update_cols=("detalhes", "proximo_em", "ativo")),
+                    update_cols=("detalhes",
+                                 "proximo_em = case when excluded.todo_prazo is distinct from "
+                                 "lembretes.todo_prazo then excluded.proximo_em "
+                                 "else coalesce(lembretes.proximo_em, excluded.proximo_em) end",
+                                 "todo_prazo", "ativo")),
         _sql_insert("tarefas", mapa.get("tarefas_docs", [])),
         "commit;",
     ]))
@@ -1122,9 +1279,14 @@ def subir_rest(mapa):
     # deles, e não a carteira (E2); no encerrado, a espécie vazia não vai (abaixo).
     manter_dados_do_banco(mapa, _rest_todas(
         url, chave, "/rest/v1/casos?todo_task_id=not.is.null&fase=neq.encerrado"
-                    "&or=(prazo.not.is.null,importante.is.true,beneficio.not.is.null)"
-                    "&select=id,prazo,importante,beneficio"),
+                    "&or=(prazo.not.is.null,importante.is.true,todo_importante.not.is.null,beneficio.not.is.null)"
+                    "&select=id,prazo,todo_prazo,importante,todo_importante,beneficio"),
         "casos", ("prazo", "importante", "beneficio"))
+    n_desp = respeitar_despacho(mapa, _rest_todas(
+        url, chave, "/rest/v1/casos?todo_task_id=not.is.null&ronda->despacho=not.is.null"
+                    "&ronda->despacho->>todo=is.null&select=id,ronda"))
+    if n_desp:
+        print(f"  despachados no CRM ainda sem ponte (data de volta mantida): {n_desp}")
 
     # A LISTA 💵 PAGAMENTOS É A ABA PAGAMENTOS DO CLIENTE, NÃO UM CASO.
     # Mesmo princípio de 🙏 Aposentadorias Futuras -> aba 🔔 Lembretes: lista do
@@ -1301,7 +1463,7 @@ def subir_rest(mapa):
     #    lugar deles agora é a aba 🔔 Lembretes.
     try:
         lemb_exist = {l["id"]: l for l in _rest_todas(
-            url, chave, "/rest/v1/lembretes?select=id,titulo,proximo_em,"
+            url, chave, "/rest/v1/lembretes?select=id,titulo,proximo_em,todo_prazo,"
                         "intervalo_meses,ativo,responsavel_id,origem_caso")}
     except BancoRecusou:
         lemb_exist = None                    # banco sem a tabela: só avisa adiante
@@ -1315,12 +1477,7 @@ def subir_rest(mapa):
                 continue                     # já virou lembrete à mão
             b = lemb_exist.get(l["id"])
             if b:
-                # responsavel_id não é enviado — o banco já preserva sozinho
-                for campo in ("titulo", "proximo_em", "intervalo_meses"):
-                    if b.get(campo) is not None:
-                        l[campo] = b[campo]
-                if l["ativo"]:               # só a conclusão no To Do desliga
-                    l["ativo"] = b.get("ativo", True)
+                manter_lembrete(l, b)
             mantidos.append(l)
         mapa["lembretes"] = mantidos
     elif lemb_exist is None and mapa.get("lembretes"):
@@ -1349,6 +1506,8 @@ def subir_rest(mapa):
         ("andamentos", "andamentos", "ignore-duplicates", "id"),
         ("eventos", "eventos", "ignore-duplicates", "caso_id,tipo,data_hora"),
         ("tarefas", "tarefas", "merge-duplicates", "id"),
+        # P4 · a etapa do caso sem data no To Do vai sem a coluna: a data de entrega dada no CRM fica
+        ("tarefas_sem_prazo", "tarefas", "merge-duplicates", "id"),
         # parcelas do To Do: o item concluído atualiza a MESMA linha (o
         # unique parcial em todo_item_id é a trava); conferências do app
         # ficam intactas — o upsert só toca as colunas enviadas
@@ -1400,6 +1559,10 @@ def subir_rest(mapa):
                 pulando.add(tabela)
                 sem_schema[tabela] = msg[:300]
                 return
+            # o evento que o CRM remarcou ou levou a outro caso guarda o id do original:
+            # a chave primária repetida é o "já existe" do ignore-duplicates, não recusa
+            if len(linhas) == 1 and res == "ignore-duplicates" and "_pkey" in msg:
+                return
             if len(linhas) == 1:
                 recusadas.append((tabela, linhas[0].get("id"), msg[:300]))
                 return
@@ -1446,6 +1609,8 @@ def subir_rest(mapa):
     mapa["casos_sem_especie"] = [{col: v for col, v in k.items() if col != "beneficio"}
                                  for k in ks if not k.get("beneficio")]
 
+    separar_prazo_vazio(mapa)
+
     for chave_mapa, tabela, res, conflito in ordem:
         linhas = resolver(mapa.get(chave_mapa, []))
         antes = len(recusadas)
@@ -1457,6 +1622,41 @@ def subir_rest(mapa):
         else:
             print(f"  {chave_mapa}: {len(linhas) - caiu} linhas enviadas"
                   + (f", {caiu} recusada(s)" if caiu else ""))
+
+    # F296 · as etapas do To Do que não têm campo vão à ficha como nota (clientes.campos.notas_todo, a chave inteira é
+    # do To Do e se regrava). Lê o campos de quem tem nota, para o PATCH não apagar o resto do jsonb.
+    # shortcut: o cliente que perdeu todas as notas no To Do fica com as antigas, até a próxima nota dele
+    notas = mapa.get("notas_ficha") or {}
+    ids_cli = {c["id"] for c in mapa.get("clientes") or []}
+    alvo = sorted(cid for cid in notas if cid in ids_cli)
+    gravadas = 0
+    try:
+        campos_de = {}
+        for i in range(0, len(alvo), 100):
+            for c in _rest_todas(url, chave, "/rest/v1/clientes?select=id,campos&id=in.(" + ",".join(alvo[i:i + 100]) + ")"):
+                campos_de[c["id"]] = c.get("campos") or {}
+        for cid in alvo:
+            if cid not in campos_de or campos_de[cid].get("notas_todo") == notas[cid]:
+                continue
+            _rest(url, chave, "PATCH", f"/rest/v1/clientes?id=eq.{cid}",
+                  {"campos": {**campos_de[cid], "notas_todo": notas[cid]}}, "return=minimal")
+            gravadas += 1
+    except Exception as e:                      # noqa: BLE001 — a nota não derruba a rodada
+        print(f"  aviso: notas da ficha vindas do To Do não gravadas ({e})")
+    if gravadas:
+        print(f"  🗒 fichas com notas do To Do atualizadas: {gravadas}")
+    # a etapa que é dado (NB, senha, parente, CNPJ...) e já tinha virado subtarefa sai da lista de tarefas do caso;
+    # o dado continua na ficha. Apagar é decisão do escritório: só com LIMPAR_ETAPAS_DADO=1
+    if os.environ.get("LIMPAR_ETAPAS_DADO") == "1":
+        sub = mapa.get("subtarefas_dado") or []
+        tiradas = 0
+        try:
+            for i in range(0, len(sub), 100):
+                tiradas += len(_rest(url, chave, "DELETE", "/rest/v1/tarefas?id=in.(" + ",".join(sub[i:i + 100]) + ")&select=id",
+                                     prefer="return=representation") or [])
+        except Exception as e:                  # noqa: BLE001
+            print(f"  aviso: não tirei as etapas que eram dado da ficha ({e})")
+        print(f"  etapas do To Do que eram dado da ficha, tiradas das tarefas: {tiradas}")
 
     # 💵 o item que é dado do cliente (senha, CPF, telefone...) e já tinha virado
     # parcela sai da aba. Só a linha que nasceu deste item do To Do e que o CRM

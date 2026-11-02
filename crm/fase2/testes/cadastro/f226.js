@@ -96,6 +96,13 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     menuProcessos({ stopPropagation() {}, currentTarget: el }, D.casosDoCliente.get(b));
     const r = [...document.querySelectorAll("#menu-processos .mp-it small")].map(x => x.textContent); fecharMenuProcessos(); return r; }, B);
   conf("no Casos ▾ o pré-caso vem antes do caso, marcado como pré-caso no escritório", /Pré-caso no escritório/.test(menu[0] || "") && !/Pré-caso/.test(menu[1] || ""));
+  // F372 · a linha de baixo traz NB, DER, e-Sisrec e processo, nessa ordem, e não o protocolo
+  const linha = await p.evaluate(() => { const el = document.createElement("button"); document.body.appendChild(el);
+    menuProcessos({ stopPropagation() {}, currentTarget: el }, [{ id: "k_f372", cliente_id: "x", fase: "conselho", beneficio: "Aposentadoria por idade",
+      nb: "2313935894", der: "2025-04-17", protocolos: ["107940630"], crps_nups: ["44236965532202562"], processo: "50323132920264036100" }]);
+    const t = (document.querySelector("#menu-processos .mp-it small") || {}).textContent || ""; fecharMenuProcessos(); return t; });
+  conf("Casos ▾: NB, DER, e-Sisrec e processo em ordem, sem o protocolo",
+    /NB .*DER 17\/04\/2025.*e-Sisrec .*proc\. /.test(linha) && !/107940630|📄/.test(linha));
 
   // F227 · onda 2: o cartão abre o atendimento DAQUELE pré-caso, o seletor troca, e o Desfecho tem as três saídas em ordem
   await p.evaluate(() => { visao = "fase:escritorio"; filtroColab = null; render(); });

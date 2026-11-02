@@ -207,7 +207,7 @@ test('acervoPje: documento que falhou traz o processo de volta, até 3 tentativa
   const acervo = [{ dados: { host, processos: [{ numero, id: '2', ca: 'b', movimento: { data: '2026-10-10', texto: 'Juntada' } }] } }];
   const casos = [{ processo: numero, processos: [] }];
   const entregues = [{ dados: { lote: [{ numero, itens: [{ data: '2026-10-10', textos: ['Juntada'],
-    docs: [{ id: '900', nome: 'Sentença', falhou: true }, { id: '901', nome: 'Laudo', caminho: 'pje/x/901' }] }] }] } }];
+    docs: [{ id: '900', nome: 'Certidão' }, { id: '901', nome: 'Laudo', caminho: 'pje/x/901' }] }] }] } }];
   const rodar = async tentativas => {
     const { api, memoria } = await carregar({ guardado: { refresh: 'r', quem: 'eu', pje_tentativas: tentativas },
       respostas: [{ corpo: { access_token: 't', refresh_token: 'r', expires_in: 3600 } },

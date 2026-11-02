@@ -33,7 +33,7 @@ test('conteúdo: PDF pelos bytes; HTML de login não é documento', () => {
   assert.equal(R.tipoDoConteudo(painel, 'text/html'), null, 'o painel do eproc não é documento');
 });
 
-test('desce tudo, menos o expediente; o ato ordinatório desce (F191)', () => {
+test('1.31.0 · desce tudo, expediente inclusive', () => {
   for (const n of ['Petição inicial', 'Documento Comprobatório (DECLARAÇÃO DE POBREZA)', 'Contestação (CONTESTAÇÃO PADRONIZADA LOAS.pdf)',
                    'Réplica', 'Petição Intercorrente', 'Manifestação', 'Parecer', 'Recurso Inominado', 'Ofício (Ofício de pagamento: 1)',
                    'Sentença tipo B', 'Laudo Pericial', 'INIC1', 'PET1', 'CONT1', 'SENT1', 'Documento de Identificação (RG E CPF)',
@@ -42,7 +42,7 @@ test('desce tudo, menos o expediente; o ato ordinatório desce (F191)', () => {
   for (const n of ['Certidão', 'Certidão Trânsito em Julgado', 'Intimação', 'Mandado', 'Comprovante de protocolo',
                    'Certidão de Publicação Expedida', 'Remessa', 'Conclusão', 'CERT1', 'INTM2', 'AR1',
                    'Decurso de Prazo', 'DEPRE Ciência de Recebimento no Portal', 'Movimento Processual', 'Aviso de Recebimento (AR) - Positivo', 'Recebimento'])
-    assert.ok(!R.vaiBaixar(n), n);
+    assert.ok(R.vaiBaixar(n) && R.ehExpediente(n), n);
 });
 
 test('o visualizador não é o documento: segue o iframe do eproc e monta o getPDF do e-SAJ', () => {

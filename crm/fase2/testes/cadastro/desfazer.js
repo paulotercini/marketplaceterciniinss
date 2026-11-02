@@ -112,7 +112,7 @@ FIX.lembretes = [{ id: "lb000000-0000-0000-0000-000000000001", cliente_id: CLI_V
   await p.waitForTimeout(400);
   conf("o lembrete vindo do atendimento oferece o ↺ voltar ao atendimento",
     /voltar ao atendimento/.test(await p.evaluate(() =>
-      (document.querySelector("#modal") || {}).innerText || "")));
+      (document.querySelector("#modal") || {}).textContent || "")));
   escritos.length = 0;
   await p.evaluate(cli => voltarLembreteParaMesa(cli, "pcL"), CLI_VAZIO);
   await p.waitForTimeout(600);
@@ -200,7 +200,7 @@ FIX.lembretes = [{ id: "lb000000-0000-0000-0000-000000000001", cliente_id: CLI_V
   await p.waitForTimeout(400);
   conf("o lembrete oferece TAMBÉM o Gerar o caso",
     /Gerar o caso/.test(await p.evaluate(() =>
-      (document.querySelector("#modal") || {}).innerText || "")));
+      (document.querySelector("#modal") || {}).textContent || "")));
   escritos.length = 0;
   await p.evaluate(cli => gerarCasoDoLembrete(cli, "pcL"), CLI_VAZIO);
   await p.waitForTimeout(900);

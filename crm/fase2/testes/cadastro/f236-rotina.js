@@ -15,6 +15,7 @@ const SUPA = "https://ficticio.supabase.co";
 const hoje = new Date().toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 const dia = n => { const d = new Date(hoje + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
 const br = iso => `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
+const pt = iso => `${iso.slice(8, 10)}.${iso.slice(5, 7)}.${iso.slice(0, 4)}`;
 const ts = (n, h = "10:00") => `${dia(n)}T${h}:00-03:00`;
 
 const EU = FIX.colaboradores[0].id;
@@ -37,7 +38,7 @@ const clientes = [
   cli("c1", "Ana Ficta Prazo"), cli("c2", "Bruno Ficto Recurso"), cli("c3", "Carla Ficta Card"), cli("c4", "Dora Ficta Virou"),
   cli("c5", "Edu Ficto Pessoal"), cli("c6", "Fábio Ficto Cessado"), cli("c7", "Gil Ficto Prorroga"), cli("c8", "Hilda Ficta Avaliação"),
   cli("c9", "Ivo Ficto Honorário"), cli("c10", "Joana Ficta Perícia", { agenda_quarta: { data: dia(1), inicio: "09:00", profissional: "paulo" } }),
-  cli("c11", "Kátia Ficta Pauta"), cli("c12", "Lia Ficta Decisão"), cli("c13", "Mara Ficta Comentada"),
+  cli("c11", "Kátia Ficta Pauta"), cli("c12", "Lia Ficta Decisão"), cli("c13", "Mara Ficta Comentada"), cli("c14", "Nair Ficta Lista Pessoal"),
 ];
 const casos = [
   caso("k1", "c1", "judicial", { prazos_tribunal: [{ numero: "5000001-11.2026.4.03.6302", sistema: "pje", origem: "pje:x", ato: "Sentença", dias: 10, fim: dia(3), expedido_em: dia(-5), situacao: "aberto" }] }),
@@ -45,6 +46,7 @@ const casos = [
   caso("k2", "c2", "inss", { decisao_em: dia(-10), origem_lista: "🌻 INSS" }),
   caso("k4", "c4", "inss", { beneficio: "Apos. por Idade", especie: "B41", origem_lista: "🌻 INSS" }),
   caso("k5", "c5", "outro", { origem_lista: "☕ Ficto", prazo: dia(1), beneficio: null, especie: null }),
+  caso("k5b", "c14", "outro", { origem_lista: "☕ Amanda", prazo: dia(1), beneficio: null, especie: null }),
   caso("k6", "c6", "judicial", { dcb: dia(-100) }),
   caso("k7", "c7", "inss", { dcb: dia(10), origem_lista: "🌻 INSS" }),
   caso("k8", "c8", "inss", { beneficio: "BPC/LOAS — deficiência", especie: "B87", origem_lista: "🌻 INSS" }),
@@ -71,6 +73,13 @@ const andamentos = [
   and("n-k13", "k13", EU, "INSS: Em análise → Concluída - Indeferida", -3, { origem: "pat" }),
   and("a-k13", "k13", AM, "Indeferido: vamos recorrer à Junta.", -1),
   and("n-k1", "k1", EU, `⏰ Prazo no PJe: Sentença (10 dias) — vence em ${br(dia(3))}.`, -1, { origem: "pje" }),
+  // F304 · a mesma mudança vinda do acervo e da leitura dos documentos, e o mesmo movimento em duas RPVs do e-SAJ
+  and("r-acervo", "k6", EU, `PJe (1º grau): Disponibilizado no DJ Eletrônico em ${br(dia(-1))} — em ${pt(dia(0))} 01:12 — CumSenFaz 5001644-98.2024.4.03.6314`, 0, { origem: "pje" }),
+  and("r-docs", "k6", EU, `PJe (1º grau): Disponibilizado no DJ Eletrônico em ${br(dia(-1))} · Juntada de ato ordinatório · 📎 Ato Ordinatório — em ${pt(dia(-2))} 15:13 — CumSenFaz 5001644-98.2024.4.03.6314`, -2, { origem: "pje" }),
+  and("r-rpv1", "k6", EU, `e-SAJ TJSP (1º grau): Suspensão do Prazo — em ${pt(dia(-1))} 00:00 — Requisição de Pequeno Valor (01) 0000035-73.2026.8.26.0381`, -1, { origem: "pje" }),
+  and("r-rpv2", "k6", EU, `e-SAJ TJSP (1º grau): Suspensão do Prazo — em ${pt(dia(-1))} 00:00 — Requisição de Pequeno Valor (02) 0000035-73.2026.8.26.0381`, -1, { origem: "pje" }),
+  and("r-pet1", "k6", EU, `PJe (1º grau): Juntada de Petição de manifestação — em ${pt(dia(-1))} 10:00 — CumSenFaz 5001644-98.2024.4.03.6314`, -1, { origem: "pje" }),
+  and("r-pet2", "k6", EU, `PJe (1º grau): Juntada de Petição de manifestação — em ${pt(dia(-12))} 10:00 — CumSenFaz 5001644-98.2024.4.03.6314`, -12, { origem: "pje" }),
 ];
 const dados = {};
 for (const t of ["eventos", "pagamentos", "meu_dia", "sugestoes", "leads", "checklist_modelo", "frases_prontas", "lembrar_motivos", "rotinas_feitas", "aposentadorias",
@@ -158,8 +167,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf(`o contador da barra é o da pessoa (${barra.cont}; o escritório tem ${barra.todosV} vencidas)`, barra.venc === barra.mV && barra.hoje === barra.mH
     && barra.venc < barra.todosV && barra.cont.replace(/\s/g, "") === `${barra.venc}·${barra.hoje}`);
   const md = await paulo.evaluate(() => { visao = "meudia"; render();
-    return { secoes: [...document.querySelectorAll("#conteudo-meio .pl-grupo h3.secao")].map(h => h.textContent.replace(/\s+/g, " ").trim()),
-      deleg: (d => d ? { aberta: d.open, txt: d.textContent } : null)(document.querySelector("details.pl-dobra")),
+    return { secoes: [...document.querySelectorAll("#conteudo-meio .pl-grupo:not(.md-ontem) h3.secao")].map(h => h.textContent.replace(/\s+/g, " ").trim()),
+      deleg: (d => d ? { aberta: d.open, txt: d.textContent } : null)(document.querySelector("details.pl-dobra:not(.md-ontem)")),
       sub: document.getElementById("sub-lista").innerHTML, txt: document.getElementById("conteudo-meio").innerText }; });
   // a menção que já está no dia como tarefa minha (a do k10, hoje) não se repete na seção das menções
   conf(`o Meu Dia abre pelas vencidas, depois hoje e as menções (${md.secoes.map(x => x.split(" ")[0]).join(", ")})`,
@@ -187,7 +196,16 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const nov = await paulo.evaluate(() => { visao = "novidades"; render();
     return [...document.querySelectorAll("#conteudo-meio h3.secao")].map(h => h.textContent.trim()); });
   // a perícia do PJe e o julgamento do CRPS em pauta: os dois pedem agendar (a pauta virou julgamento na frente crps)
-  conf(`as Novidades abrem pelo que pede ação (${nov.slice(0, 2).join(" | ")})`, /^⏰ Prazos dos tribunais \(1\)/.test(nov[0]) && /^🩺 Perícias, audiências e julgamentos a agendar \(2\)/.test(nov[1]));
+  conf(`as Novidades abrem pelo que pede ação, sem os prazos dos tribunais (${nov.slice(0, 2).join(" | ")})`, /^🩺 Perícias, audiências e julgamentos a agendar \(2\)/.test(nov[0]) && !nov.some(t => /Prazos dos tribunais/.test(t)));
+  const rep = await paulo.evaluate(() => [...document.querySelectorAll("#conteudo-meio .nov")].map(e => e.dataset.and));
+  conf("F304 · o prazo do expediente não é novidade", !rep.includes("n-k1"), rep);
+  conf("F304 · o movimento do acervo que a leitura dos documentos já trouxe aparece uma vez, na linha mais completa", rep.includes("r-docs") && !rep.includes("r-acervo"), rep);
+  conf("F304 · o mesmo movimento em duas RPVs do e-SAJ aparece uma vez", rep.filter(x => /^r-rpv/.test(x)).length === 1, rep);
+  conf("F304 · a mesma petição em semanas diferentes continua duas vezes", rep.includes("r-pet1") && rep.includes("r-pet2"), rep);
+  const lidoJunto = await paulo.evaluate(async () => { await marcarLidas(["r-docs"]);
+    const li = id => ((D.novid || []).find(a => a.id === id).andamentos_lidos || []).some(l => l.colaborador_id === eu.id);
+    return li("r-acervo"); });
+  conf("F304 · lida a linha que ficou, a repetida escondida fica lida também", lidoJunto);
   const lat = await paulo.evaluate(() => ({ hoje: [...document.querySelectorAll("#grupo-dinamicas .lista-item")].map(e => e.dataset.v).join(","),
     imp: (document.querySelector('#grupo-visoes [data-v="patinss"] .cont') || {}).textContent || "" }));
   conf("as Novidades saem do Mais e entram na faixa do dia do administrador", /meudia,mencoes,novidades/.test(lat.hoje));
@@ -216,6 +234,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // ══ 2 · a Amanda (advogada) ═══════════════════════════════════════════
   const amanda = await entrar("amanda");
   const ia = await itens(amanda, AM);
+  // 11.93 · a lista pessoal de um colaborador (☕ Amanda) entra no Meu Dia dele, e só dele (decisão do Paulo, 31.10.2026)
+  conf("a lista ☕ de um colaborador entra no Meu Dia dele", ia.some(i => i.cli === "c14") && !ip.some(i => i.cli === "c14"));
   conf("o prazo do PJe chega à atribuída, como Prazo, na data do fim", ia.some(i => i.cli === "c1" && i.prazo && /^Prazo PJe/.test(i.selo) && i.data === dia(3)));
   conf("a tarefa solta do caso vai a quem responde pelo caso", ia.some(i => i.cli === "c1" && /Laudo novo/.test(i.resumo)));
   conf("o honorário vencido vai à advogada do caso, com o valor", ia.some(i => i.cli === "c9" && i.selo === "Honorários" && /R\$\s?1\.000,00/.test(i.resumo)));

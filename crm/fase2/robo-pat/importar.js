@@ -107,9 +107,19 @@ function porQueParecido(item, k, quantos) {
 // escritório escreveu à mão vale mais que o que o portal devolve, e
 // sobrescrever DER conferida por DER do sistema é perder trabalho humano.
 // A exceção é a situação, que é justamente o que se quer atualizado.
+// O PROTOCOLO DO RECURSO NÃO TEM DER. A "data de entrada" da tarefa do
+// recurso é a data do recurso: gravada como DER, ela pôs a data do recurso no
+// lugar da DER do pedido em 74 casos do Conselho (31.10.2026). Ela vai ao
+// protocolo do recurso ordinário ou do especial, e a DER fica para o pedido.
+function datasDoProtocolo(det) {
+  if (!det.der) return {};
+  if (det.tipo !== 'recurso') return { der: det.der };
+  const especial = /RECESP/i.test(det.sigla || '') || /especial|incidente/i.test(det.servico || '');
+  return { [especial ? 're_protocolado_em' : 'ro_protocolado_em']: det.der };
+}
 function mudancasDoCaso(k, det) {
   const m = {};
-  if (det.der && !k.der) m.der = det.der;
+  for (const [c, v] of Object.entries(datasDoProtocolo(det))) if (!k[c]) m[c] = v;
   if (det.especie && !k.especie) m.especie = det.especie;
   if (det.beneficio && !k.beneficio) m.beneficio = det.beneficio;
   if (det.link && k.processo_link !== det.link) m.processo_link = det.link;
@@ -208,7 +218,8 @@ function planoDeImportacao(pat, D, hoje) {
     const cpf = digitos(daLista.cpf);
     const k = porProtocolo.get(proto);
     const item = { protocolo: proto, cpf, tipo: det.tipo, situacao: det.situacao,
-                   beneficio: det.beneficio, especie: det.especie, der: det.der,
+                   beneficio: det.beneficio, especie: det.especie, der: det.tipo === 'recurso' ? null : det.der,
+                   datas: datasDoProtocolo(det),
                    link: det.link, marcadores: det.marcadores || [],
                    urgente: !!det.urgente, a_confirmar: det.especie_a_confirmar || null,
                    quem_protocolou: det.quem_protocolou || null };
@@ -313,6 +324,6 @@ function conferirPlanoPat(pat, plano) {
   return null;
 }
 
-module.exports = { LISTA_POR_TIPO, NAO_ABRE_CASO, digitos, protocolosDe, indexar, casoParecido,
+module.exports = { datasDoProtocolo, LISTA_POR_TIPO, NAO_ABRE_CASO, digitos, protocolosDe, indexar, casoParecido,
   casosParecidos, palavrasDoBeneficio, mesmoBeneficio, porQueParecido, limparHtmlPat,
   mudancasDoCaso, eventosNovos, comentariosNovos, andamentoDaMudanca, planoDeImportacao, conferirPlanoPat };

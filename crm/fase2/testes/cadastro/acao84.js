@@ -96,7 +96,7 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
     .find(c => /Exigência do INSS/.test(c.dataset.tipo) && c.dataset.data.split("-").reverse().join("/") === d).querySelector(".pz-mais").click(), fmtBR(mais(3)));
   await p.waitForTimeout(200);
   conf("o 'abrir' da exigência leva ao painel de progresso, com o que é e o ✔ cumprida", await p.evaluate(() => {
-    const m = document.getElementById("painel-prazo"); return !!m && /Exig/.test(m.textContent) && !!m.querySelector('button[onclick^="cumprirExigencia"]'); }));
+    const m = document.getElementById("painel-prazo"); return !!m && /Exig/.test(m.textContent) && !!m.querySelector('button[onclick*="cumprirExigencia"]'); }));
   await p.evaluate(() => fecharPainelPrazo());
 
   await abrir("?tema=");

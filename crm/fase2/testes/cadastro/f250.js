@@ -163,7 +163,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // 4 · nível 0: a lista Clientes
   await p.evaluate(() => verComoNivel(0)); await p.waitForTimeout(400);
   const itens = await p.evaluate(() => [...document.querySelectorAll(".lista-item")].filter(e => e.offsetParent !== null).map(e => e.dataset.v));
-  conf(`no nível 0 a barra traz Agenda e Clientes (${itens.join(", ")})`, itens.join() === "agendaq,clientes");
+  conf(`no nível 0 a barra traz Menções, Agenda e Clientes (REC-09) (${itens.join(", ")})`, itens.join() === "mencoes,agendaq,clientes");
   await p.click('.lista-item[data-v="clientes"]'); await p.waitForTimeout(400);
   const nCli = await p.$$eval(".cli-todos-it", b => b.length);
   conf(`a lista Clientes mostra todos, em ordem (${nCli})`, nCli === 3 && /Ana/.test(await p.textContent(".cli-todos-it")));

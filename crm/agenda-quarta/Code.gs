@@ -22,14 +22,14 @@ const CONFIG = {
   // F250f · o Marcos e a Amanda deixam o horário livre como "LIVRE 10:30-11:00" ou "LIVRE 09h30-10h00", sem o código:
   // é vaga sem tipo; o tipo vem do cliente na hora de agendar (001 primeiro atendimento, 002 cliente do escritório)
   REGEX_VAGA_LIVRE: /^\s*livre\b(?:(?!\d{4}[\s.-]?\d{4}).)*$/i,
-  VERSAO: 'F281 · procurar a partir de uma data',
+  VERSAO: 'F310b · o Marcos no verde sálvia das vagas dele',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
-  // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
+  // quem ele é (colorId do Google: 9 = mirtilo/azul, 2 = sálvia/verde, o das vagas do Marcos,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
   // dias: 0 domingo ... 6 sábado. limite/reservas: só o Paulo tem.
   PROFISSIONAIS: {
     paulo:  { nome: 'Paulo',  tratamento: 'o Dr. Paulo Roberto Tercini Filho', cor: '9',  tons: ['9', '7', '1'],  dias: [3],             limite: 14,   reservas: [['18:00', '18:30']], exibir: 6 },
-    marcos: { nome: 'Marcos', tratamento: 'o Dr. Marcos',                      cor: '10', tons: ['10', '2'], dias: [1, 2, 3, 4, 5], limite: null, reservas: [],                   exibir: 10 },
+    marcos: { nome: 'Marcos', tratamento: 'o Dr. Marcos',                      cor: '2',  tons: ['2', '10'], dias: [1, 2, 3, 4, 5], limite: null, reservas: [],                   exibir: 10 },
     amanda: { nome: 'Amanda', tratamento: 'a Dra. Amanda',                     cor: '5',  tons: ['5', '6'],  dias: [1, 2, 3, 4, 5], limite: null, reservas: [],                   exibir: 10 }
   },
   PADRAO: 'paulo',
@@ -347,7 +347,8 @@ function disponibilidade_(user, r) {
     const vagas = evs.filter(ev => ehVaga_(ev) && contaPara_(ev, prof));
     const ocupados = evs.filter(ev => !ehVaga_(ev)).map(ev => [new Date(ev.start.dateTime), new Date(ev.end.dateTime)]);
     const atend = evs.filter(ev => ehAtendimento_(ev) && contaPara_(ev, prof)).length;
-    const lotado = !!prof.limite && atend >= prof.limite;
+    // a vaga marcada no Google é o horário que o escritório abriu, e vale mesmo acima do limite (28.10.2026: a 15ª vaga do Paulo aparecia e não aceitava)
+    const lotado = !!prof.limite && atend >= prof.limite && !vagas.length;
     const livres = {};
     Object.keys(CONFIG.DURACAO).forEach(tipo => {
       // com vagas no dia, só elas valem; sem nenhuma, o horário livre é calculado como antes
@@ -391,15 +392,18 @@ function agendar_(user, r) {
   if (r.orientacoesConfirmadas !== true) {
     throw erro_('ORIENTACOES', 'Confirme que o cliente foi orientado sobre a senha do Meu INSS e sobre o agendamento individual.');
   }
-  if (!atendeNoDia_(prof, r.data)) throw erro_('PARAMETRO', prof.nome + ' não atende nesta data.');
-  if (diaBloqueado_(r.data, prof)) throw erro_('DIA_BLOQUEADO', 'Data bloqueada por feriado ou férias.');
+  // F309 · horário livre, fora das vagas e dos dias de atendimento: só o administrador, nos casos específicos
+  const livre = r.foraDaVaga === true && !r.eventoId;
+  if (livre && user.papel !== 'admin') throw erro_('NAO_PERMITIDO', 'Só o administrador agenda fora das vagas.');
+  if (!livre && !atendeNoDia_(prof, r.data)) throw erro_('PARAMETRO', prof.nome + ' não atende nesta data.');
+  if (!livre && diaBloqueado_(r.data, prof)) throw erro_('DIA_BLOQUEADO', 'Data bloqueada por feriado ou férias.');
 
   const lock = LockService.getScriptLock();
   if (!lock.tryLock(20000)) throw erro_('OCUPADO', 'Sistema ocupado. Tente novamente em alguns segundos.');
   try {
     const evs = eventosDoProfissional_(eventosDoDia_(r.data), prof);
     const atend = evs.filter(ev => ehAtendimento_(ev) && contaPara_(ev, prof)).length;
-    if (prof.limite && atend >= prof.limite && user.papel !== 'admin') {
+    if (prof.limite && atend >= prof.limite && user.papel !== 'admin' && !r.eventoId) {
       throw erro_('LOTADO', 'Limite de ' + prof.limite + ' atendimentos de ' + prof.nome + ' atingido neste dia.');
     }
     // F250 · na vaga, o horário é o do próprio evento, e ele só serve se ainda for vaga
@@ -408,6 +412,13 @@ function agendar_(user, r) {
       vaga = Calendar.Events.get(CONFIG.CALENDAR_ID, String(r.eventoId));
       if (!vaga || vaga.status === 'cancelled' || !ehVaga_(vaga) || (tipoDaVaga_(vaga) && tipoDaVaga_(vaga) !== tipo) || !contaPara_(vaga, prof)) {
         throw erro_('HORARIO_INDISPONIVEL', 'Esta vaga acabou de ser preenchida. A agenda será atualizada.');
+      }
+    } else if (livre) {
+      const a = dt_(r.data, r.inicio).getTime(), b = a + CONFIG.DURACAO[tipo] * 60000;
+      // F309b · o que bate com outro atendimento pede confirmação; confirmado (sobrepor), o administrador agenda junto
+      const bate = evs.find(ev => ev.id !== r.ignorar && ehAtendimento_(ev) && contaPara_(ev, prof) && new Date(ev.start.dateTime) < b && new Date(ev.end.dateTime) > a);
+      if (bate && r.sobrepor !== true) {
+        throw erro_('SOBREPOSICAO', 'Das ' + hm_(new Date(bate.start.dateTime)) + ' às ' + hm_(new Date(bate.end.dateTime)) + ' já há atendimento de ' + prof.nome + ' (' + bate.summary + ').');
       }
     } else {
       if (prof.soVagas) throw erro_('HORARIO_INDISPONIVEL', 'Escolha uma das vagas livres da agenda.');
@@ -430,7 +441,8 @@ function agendar_(user, r) {
     const privado = { origem: 'crm-agenda', tipo, nome, telefone: tel, profissional: prof.id,
       clienteId: r.clienteId ? String(r.clienteId) : '', agendadoPor: user.nome };
     const ev = vaga
-      ? Calendar.Events.patch({ summary: tipo + ' - ' + nome + ' - Não confirmado', description: descricao,
+      // a vaga pode vir sem cor ou em outro tom: o atendimento marcado leva sempre a cor do profissional
+      ? Calendar.Events.patch({ summary: tipo + ' - ' + nome + ' - Não confirmado', description: descricao, colorId: prof.cor,
           extendedProperties: { private: Object.assign(privado, { vaga: '1', tituloVaga: vaga.summary }) } }, CONFIG.CALENDAR_ID, vaga.id)
       : Calendar.Events.insert({
           summary: tipo + ' - ' + nome + ' - Não confirmado',
@@ -503,7 +515,7 @@ function remarcar_(user, r) {
   const novo = agendar_(user, {
     profissional: r.profissional || donoDoEvento_(antigo) || CONFIG.PADRAO,
     tipo: p.tipo || r.tipo, nome: p.nome || r.nome, telefone: p.telefone || r.telefone,
-    clienteId: p.clienteId || r.clienteId, data: r.data, inicio: r.inicio, eventoId: r.eventoId,
+    clienteId: p.clienteId || r.clienteId, data: r.data, inicio: r.inicio, eventoId: r.eventoId, foraDaVaga: r.foraDaVaga, sobrepor: r.sobrepor, ignorar: antigo.id,
     observacoes: r.observacoes, orientacoesConfirmadas: true
   });
   liberar_(antigo);

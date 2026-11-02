@@ -13,10 +13,15 @@ const MAE = "c9000000-0000-0000-0000-000000000001", FILHO = "c9000000-0000-0000-
       AVO = "c9000000-0000-0000-0000-000000000003", OUTRO = "c9000000-0000-0000-0000-000000000004";
 const T = {
   clientes: [...FIX.clientes,
-    { id: MAE, nome: "Rosa Fictícia Lima", cpf: "11122233396", telefone: "16999990002", campos: {} },
+    { id: MAE, nome: "Rosa Fictícia Lima", cpf: "11122233396", telefone: "16999990002",
+      campos: { docs_pedidos: [{ caso_id: "k9000000-0000-0000-0000-000000000001", em: "2026-10-30", itens: [{ nome: "Laudo do ortopedista" }] }] } },
     { id: FILHO, nome: "Pedro Fictício Lima", cpf: "22233344405", campos: { representante: { nome: "Rosa Fictícia Lima", cpf: "111.222.333-96", qualidade: "mãe" } } },
     { id: AVO, nome: "Antônio Fictício Lima", cpf: "33344455514", telefones: [{ numero: "16999990002", obs: "é a nora, cuida do benefício" }] },
     { id: OUTRO, nome: "Carla Fictícia Souza", cpf: "44455566623", campos: { representante: { nome: "Outra Pessoa", cpf: "99988877766" } } }],
+  casos: [...(FIX.casos || []), { id: "k9000000-0000-0000-0000-000000000001", cliente_id: MAE, fase: "inss", beneficio: "B31", etapa: "aguardando perícia", exigencia_prazo: "2099-12-10" },
+    { id: "k9000000-0000-0000-0000-000000000002", cliente_id: MAE, fase: "escritorio", pre_caso: true, beneficio: "B41", precaso: { etapas: { identificacao: { em: "2026-10-30" } } } }],
+  credenciais: [{ id: "cr1", cliente_id: MAE, tipo: "meu_inss", valor: "Senha@Ficticia1" }],
+  andamentos: [{ caso_id: "k9000000-0000-0000-0000-000000000001", texto: "Perícia agendada para 10/11", criado_em: agora, autor_id: null }],
   zap_conversas: [{ id: CONV, telefone: "5516999990002", chave: "99990002", nome_perfil: "Rosa", cliente_id: MAE,
     atendente_id: null, status: "aberta", nao_lidas: 0, ultima_em: agora, ultimo_texto: "oi" }],
   zap_mensagens: [{ id: "m1", seq: 1, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "oi", status: "entregue", criado_em: agora }],
@@ -70,10 +75,23 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   conf("em 1100 px a conversa fica com espaço (ficha fechada)", await p.$eval("#zap-dir", e => e.offsetWidth > 350)
     && await p.$eval("#zap-painel", e => getComputedStyle(e).display === "none"));
   await p.click(".zt-id h2");
-  await p.waitForSelector("#zap-painel .zp-card");
-  const cards = await p.$$eval("#zap-painel .zp-card", es => es.map(e => e.textContent));
+  await p.waitForSelector("#zap-painel .zp-card:not(.zp-conv-cel)");
+  const cards = await p.$$eval("#zap-painel .zp-card:not(.zp-conv-cel)", es => es.map(e => e.textContent));
   conf("o clique no nome abre a ficha na tela de 1100 px", await p.$eval("#zap-painel", e => getComputedStyle(e).display !== "none"));
   conf("a primeira ficha é a de quem fala", /Ficha do cliente/.test(cards[0]) && cards[0].includes("Rosa Fictícia Lima"));
+  // F354 · CPF inteiro, a senha do Meu INSS à vista, o que se espera do cliente e o último andamento
+  await p.waitForFunction(() => /Senha@Ficticia1/.test(document.getElementById("zap-painel").textContent), null, { timeout: 5000 }).catch(() => {});
+  const painel = await p.$eval("#zap-painel", e => e.textContent);
+  conf("o CPF aparece inteiro", painel.includes("111.222.333-96"));
+  conf("a senha do Meu INSS aparece e o ver fica registrado", painel.includes("Senha@Ficticia1") && escritas.some(e => /credencial_vis/.test(e.u)));
+  // F358 · leitura rápida: casos numerados com Abrir, prazos só com a data, sem o andamento nem o aguardando
+  conf("os casos vêm numerados, com o título e o Abrir", /Caso 1/.test(painel) && /Caso 2/.test(painel)
+    && await p.$$eval("#zap-painel .zp-caso button", es => es.length >= 2 && es.every(b => /Abrir/.test(b.textContent))));
+  conf("o pré-caso se identifica pelo título", /\(pré-caso\)/.test(painel));
+  conf("o painel não traz o último andamento nem o aguardando do cliente", !/Último andamento|Aguardando do cliente/.test(painel));
+  conf("o nome do cliente é clicável", await p.$eval("#zap-painel .zp-nome", e => e.tagName === "BUTTON"));
+  const datas = await p.$$eval("#zap-painel .zp-pz", es => es.map(e => e.textContent.trim()));
+  conf("os prazos mostram somente a data", datas.length > 0 && datas.every(d => /^\d{2}\/\d{2}\/\d{4}$/.test(d)));
   const rep = await p.$$eval("#zap-painel .zp-rep", es => es.map(e => e.textContent));
   conf("abaixo, os dois clientes que ela representa", rep.length === 2 && rep[0].includes("Antônio") && rep[1].includes("Pedro"));
   conf("o representante gravado na ficha conta pelo CPF, com a qualidade", rep[1].includes("representante (mãe)"));
@@ -83,6 +101,10 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   conf("o mesmo número conta com a observação do telefone", rep[0].includes("é a nora, cuida do benefício"));
   conf("quem tem outro representante fica de fora", !rep.join("").includes("Carla"));
   conf("o título diz quantos são", (await p.textContent("#zap-painel .zp-rep-tit")).includes("(2)"));
+  // F338 · o topo diz quem é o cliente; o ⋯ tem as ações do dia a dia e o resto em "Outras opções"
+  conf("o topo diz todos os clientes do número, o dono primeiro", /Clientes: Rosa Fictícia Lima e Antônio Fictício Lima e mais 1/.test(await p.$eval(".zt-sub", e => e.textContent)));
+  conf("o ⋯ deixa robô, histórico e IA em Outras opções", await p.evaluate(() => { const m = document.querySelector(".zt-menu"), o = m.querySelector(".zt-outras");
+    return !!o && /Buscar histórico/.test(o.textContent) && !/Abrir a ficha do cliente/.test(m.textContent); }));
   // F286 · o ⋯ da conversa pede ao celular o histórico antigo
   // a gaveta da ficha cobre o ⋯ em 1100 px: o clique vai pelo próprio botão
   await p.evaluate(() => [...document.querySelectorAll(".zt-menu button")].find(b => /Buscar histórico/.test(b.textContent)).click());
@@ -91,6 +113,11 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   conf("Buscar histórico no celular grava o pedido na conversa", ped && ped.b.historico_feito === null);
   conf("e o botão passa a dizer que está buscando", await p.evaluate(() => /Buscando o histórico no celular/.test(document.querySelector(".zt-menu").textContent)));
   await p.evaluate(() => document.querySelector(".zt-mais")?.removeAttribute("open"));
+  // 29.10.2026 · sem a coluna da ficha, o ⚡ e o Sugestões não cobrem o Enviar, e o telefone do topo fica numa linha
+  conf("o Enviar não fica sob os botões flutuantes", await p.evaluate(() => { const t = document.querySelector(".zap-tela"), on = t.classList.contains("ficha-on");
+    t.classList.remove("ficha-on"); document.getElementById("zap-txt").value = "x"; const r = document.getElementById("zap-enviar").getBoundingClientRect();
+    const ok = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest("#zap-enviar") != null; if (on) t.classList.add("ficha-on"); document.getElementById("zap-txt").value = ""; return ok; }));
+  conf("o telefone do topo ocupa uma linha", await p.evaluate(() => { const m = document.querySelector(".zt-sub .mono"); return m.getBoundingClientRect().height < 24; }));
   await p.click("#zap-painel .zp-rep button");
   await p.waitForTimeout(400);
   conf("Abrir ficha leva à ficha do representado", await p.evaluate(id => clienteAberto === id, AVO));
@@ -99,6 +126,12 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   conf("a ficha abre com a conversa do WhatsApp ao lado", await p.evaluate(() => document.body.classList.contains("zap-aberto")
     && !!document.querySelector("#painel-prazo .pp-zap-msgs") && document.getElementById("app").classList.contains("detalhe-aberto")));
   conf("a agenda da tela do WhatsApp não fica por cima da ficha", await p.evaluate(() => { const a = document.getElementById("zap-ag"); return !a || !a.offsetParent; }));
+  // F358 · o Abrir do caso leva ao caso, com a conversa ao lado
+  const alvo = await p.evaluate(() => { const c = zapConvs.find(x => x.id === zapAberta) || zapConvs[0], cli = c && clienteDaConversa(c);
+    const k = cli && (D.casosDoCliente.get(cli.id) || []).find(k => k.fase !== "encerrado" && !ehPreCaso(k)); return k ? [cli.id, k.id] : null; });
+  if (alvo) { await p.evaluate(([c, k]) => casoComZap(c, k), alvo); await p.waitForTimeout(500); }
+  conf("o Abrir do caso abre o caso com a conversa ao lado", !!alvo && await p.evaluate(([c, k]) => clienteAberto === c && casoSel === k
+    && abaAtiva === 2 && document.body.classList.contains("zap-aberto"), alvo));
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);

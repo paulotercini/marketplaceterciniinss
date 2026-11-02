@@ -22,7 +22,8 @@ const T = {
     { id: AMANDA, nome: "Amanda", inicial: "A", cor: "#0a7d43", papel: "colaborador", ativo: true, atende_zap: true, cargo: "advogado" }],
   zap_conversas: [conv(DA_AMANDA, "Cliente da Amanda", AMANDA, { nao_lidas: 2 }),
                   conv(PENDENTE, "Cliente na fila", null, { setor_id: S1 }),
-                  conv(MINHA, "Cliente do Paulo", EU)],
+                  conv(MINHA, "Cliente do Paulo", EU),
+                  conv("d2000000-0000-0000-0000-000000000004", "Cliente que escreveu", null, { setor_id: S1, nao_lidas: 1 })],
   zap_mensagens: [{ id: "m1", seq: 1, conversa_id: DA_AMANDA, direcao: "entrada", tipo: "texto", texto: "Oi, doutora", status: "entregue", criado_em: agora }],
   zap_setores: [{ id: S1, nome: "Atendimento", cor: "#5b7fd6", ordem: 1, ativo: true }],
   colaborador_setores: [{ colaborador_id: EU, setor_id: S1 }],
@@ -76,7 +77,7 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.evaluate(() => { zapFiltro = "todas"; irPara("whatsapp"); });
   await p.waitForSelector(".zap-conv");
   conf("gestor: a lista tem a fila Todas e o Painel da equipe", (await p.textContent(".zl-cab")).includes("Todas") && (await p.textContent(".zl-cab")).includes("Painel da equipe"));
-  conf("gestor: vê a conversa que está com a Amanda", (await p.$$eval(".zap-conv", cs => cs.length)) === 3);
+  conf("gestor: vê a conversa que está com a Amanda", (await p.$$eval(".zap-conv", cs => cs.length)) === 4);
   await p.evaluate(() => abrirPainelZap());
   await p.waitForSelector(".zg");
   const painel = await p.textContent(".zg");
@@ -86,7 +87,6 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.evaluate(id => { zapChips.atendente = ""; zapChips.naoLidas = false; abrirConversa(id); }, DA_AMANDA);
   await p.waitForSelector(".zap-topo");
   conf("gestor: na conversa da Amanda aparece Assumir (tirar de Amanda)", (await p.textContent(".zap-topo")).includes("tirar de Amanda"));
-  conf("gestor: o painel ao lado mostra o histórico de transferências", (await p.textContent("#zap-painel")).includes("Transferências"));
   await p.evaluate(() => transferirConversa());
   await p.fill("#zt-motivo", "é financeiro");
   await p.click(`[data-zt="${AMANDA}"]`);
@@ -96,11 +96,14 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
 
   // ── como ATENDENTE (ver como colaborador) ────────────────────────────
   await p.evaluate(() => { localStorage.setItem("crm_ver_como", "colab"); zapFiltro = "todas"; zapAberta = null; irPara("whatsapp"); });
-  await p.waitForSelector(".zap-conv");
+  await p.waitForSelector(".zl-filas");
   const cab = await p.textContent(".zl-cab");
-  conf("atendente: sem a fila Todas e sem o Painel", !cab.includes("Todas") && !cab.includes("Painel da equipe"));
-  await p.click('[data-zf="sem"]');
-  conf("atendente: vê a pendente do seu setor", (await p.textContent(".zl-lista")).includes("Cliente na fila"));
+  conf("atendente: Novas, Minhas e Pendentes, sem Todas e Painel (F346, F362)", cab.includes("Novas") && cab.includes("Pendentes") && !cab.includes("Todas") && !cab.includes("Painel da equipe"));
+  // F365 · nas Pendentes do colaborador, todas as sem atendente, lidas ou não
+  await p.evaluate(() => { zapFiltro = "sem"; irPara("whatsapp"); });
+  await p.waitForSelector(".zl-filas");
+  const pend = await p.textContent("#app");
+  conf("atendente: Pendentes mostra também a conversa já lida (F365)", pend.includes("Cliente que escreveu") && pend.includes("Cliente na fila"));
   // a conversa da Amanda só aparece porque ele foi mencionado nela
   await p.evaluate(id => abrirConversa(id), DA_AMANDA);
   await p.waitForSelector(".zap-topo");
@@ -116,6 +119,54 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   const nota = escritas.find(e => /zap_mensagens/.test(e.u) && e.b && e.b.direcao === "interna");
   const menc = escritas.find(e => /\/mencoes/.test(e.u) && e.m === "POST");
   conf("a @menção na nota grava a nota e avisa a Amanda com o link da conversa", nota && menc && menc.b.para_id === AMANDA && menc.b.conversa_id === DA_AMANDA);
+  // F357 · a nota sem @ também é menção: vai a quem atende a conversa
+  await p.evaluate(() => abrirConversa(zapAberta));
+  await p.waitForSelector("#zap-txt");
+  await p.evaluate(() => { if(!zapNota) alternarNota(); });
+  const antes = escritas.filter(e => /\/mencoes/.test(e.u) && e.m === "POST").length;
+  await p.fill("#zap-txt", "cliente pediu retorno amanhã");
+  await p.click("#zap-enviar");
+  await p.waitForTimeout(400);
+  const ms = escritas.filter(e => /\/mencoes/.test(e.u) && e.m === "POST");
+  conf("a nota sem @ avisa quem atende a conversa (F357)", ms.length > antes && ms.slice(antes).some(e => e.b.para_id === AMANDA && e.b.conversa_id === DA_AMANDA));
+  // F369 · quem não atende pede a transferência: menção a quem atende (e aos gestores) e nota interna
+  await p.evaluate(id => abrirConversa(id), DA_AMANDA);
+  await p.waitForSelector(".zap-topo");
+  await p.click('.zap-topo button[aria-label="Pedir transferência"]');
+  await p.fill("#zpp-motivo", "cliente meu");
+  await p.click("#zpp-ok");
+  await p.waitForTimeout(400);
+  const ped = escritas.filter(e => /\/mencoes/.test(e.u) && e.m === "POST" && Array.isArray(e.b)).pop();
+  const notaPed = escritas.filter(e => /zap_mensagens/.test(e.u) && e.b && e.b.direcao === "interna").pop();
+  conf("Pedir transferência avisa a Amanda com o link da conversa e deixa a nota (F369)", ped && ped.b.some(x => x.para_id === AMANDA && x.conversa_id === DA_AMANDA && x.texto.includes("cliente meu"))
+    && notaPed && notaPed.b.texto.includes("pediu a transferência"));
+  // F368 · o atendente marcado como gestor do WhatsApp vê todas e transfere a conversa de outra pessoa, sem ser administrador
+  await p.evaluate(() => { eu.gestor_zap = true; zapFiltro = "todas"; zapAberta = null; irPara("whatsapp"); });
+  await p.waitForSelector(".zl-filas");
+  conf("gestor do WhatsApp: tem Todas e vê as 4 conversas (F368)", (await p.textContent(".zl-cab")).includes("Todas") && (await p.$$eval(".zap-conv", cs => cs.length)) === 4);
+  await p.evaluate(id => abrirConversa(id), DA_AMANDA);
+  await p.waitForSelector(".zap-topo");
+  conf("gestor do WhatsApp: na conversa da Amanda há Transferir (F368)", (await p.textContent(".zap-topo")).includes("Transferir"));
+  await p.evaluate(() => { eu.gestor_zap = false; });
+  // F370 · novo contato: número de cliente abre a ficha; número novo oferece Conversar e Cliente
+  await p.evaluate(() => { irPara("whatsapp"); });
+  await p.waitForSelector(".zl-cab");
+  await p.click('.zl-cab button[aria-label="Novo contato"]');
+  await p.fill("#znc-tel", "(16) 99999-0001");
+  await p.click("#znc-ok");
+  await p.waitForTimeout(500);
+  conf("novo contato: número de cliente chama zap_abrir e abre a ficha (F370)", escritas.some(e => /rpc\/zap_abrir/.test(e.u) && e.b.p_telefone === "5516999990001")
+    && await p.evaluate(() => !!clienteAberto));
+  await p.evaluate(() => { fecharFicha(false); irPara("whatsapp"); });
+  await p.waitForSelector(".zl-cab");
+  await p.click('.zl-cab button[aria-label="Novo contato"]');
+  await p.fill("#znc-tel", "(17) 98888-7777");
+  await p.click("#znc-ok");
+  await p.waitForSelector("#znc-cli");
+  conf("novo contato: número desconhecido oferece Conversar e Cliente (F370)", (await p.textContent("#znc-res")).includes("não está em nenhuma ficha"));
+  await p.click("#znc-cli");
+  await p.waitForSelector("#ncl-tel");
+  conf("novo contato: Cliente abre o Novo Cliente com o telefone (F370)", (await p.inputValue("#ncl-tel")) === "(17) 98888-7777");
   await p.evaluate(() => { localStorage.removeItem("crm_ver_como"); irPara("mencoes"); });
   await p.waitForTimeout(300);
   conf("Menções: o aviso de conversa tem o botão abrir conversa", (await p.textContent("#conteudo-meio")).includes("abrir conversa"));

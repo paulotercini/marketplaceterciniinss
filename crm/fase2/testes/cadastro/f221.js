@@ -220,7 +220,7 @@ function conf(peso, nome, ok) {
   await p.evaluate(([cli, k]) => { casoSel = k; return abrirFicha(cli).then(() => { document.getElementById("modal").style.display = "none"; casoSel = k; abaAtiva = 2; subAba = "crps"; repintarFicha(); }); }, [C, C3]);
   await espera(800);
   const crpsC = await p.evaluate(() => ({ chip: [...document.querySelectorAll(".nb-num")].map(x => x.textContent), sel: !!document.querySelector(".sel-levar"),
-    fora: [...document.querySelectorAll(".num-fora")].map(x => x.textContent.replace(/\s+/g, " ")),
+    fora: [...document.querySelectorAll(".num-fora")].filter(x => !x.closest("#modal")).map(x => x.textContent.replace(/\s+/g, " ")),
     bt: [...document.querySelectorAll("button.btn-mini")].some(b => /levar ao caso do NB/.test(b.textContent)) }));
   await foto(p, "recurso-nb-de-outro-caso");
   await p.evaluate(nup => { const sel = [...document.querySelectorAll(".sel-levar")].find(x => x.getAttribute("aria-label").includes("Recurso")); sel.value = sel.options[1].value; sel.dispatchEvent(new Event("change")); }, NUPC);
@@ -287,7 +287,8 @@ function conf(peso, nome, ok) {
 
   // ══ E · DESENHO E ERROS (10) ═══════════════════════════════════════════
   const cel = await entrar(390);
-  await cel.evaluate(([cli, k]) => abrirFicha(cli).then(() => { document.getElementById("modal").style.display = "none"; casoSel = k; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); }), [C, C1]);
+  // F299 · no celular a trilha (com a linha da incapacidade) nasce recolhida; aqui ela vem aberta
+  await cel.evaluate(([cli, k]) => (guardar("crm_trilha_oculta_cel", "0"), abrirFicha(cli)).then(() => { document.getElementById("modal").style.display = "none"; casoSel = k; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); }), [C, C1]);
   await espera(800);
   await cel.evaluate(() => { const d = document.querySelector("details.incap"); if (d && !d.open) d.querySelector("summary").click(); });
   await espera(300);
