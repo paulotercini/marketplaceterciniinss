@@ -1,5 +1,5 @@
 // F291 · Concluir por hoje (Onda A do fluxo do To Do, pedido do Paulo de 29.10.2026): o círculo da linha e o
-// botão do caso escolhem quando o cliente volta, apagam a ⭐, tiram do Meu Dia e, se pedido, passam a outra
+// botão do caso escolhem quando o cliente volta, tiram do Meu Dia e, se pedido, passam a outra
 // pessoa, com anotação opcional e desfazer. A ⭐ do caso não acende sozinha. Banco simulado e dados fictícios.
 // Uso: node f291.js [fotos]
 const { chromium } = require("playwright");
@@ -97,7 +97,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click("#desp-ok");
   await p.waitForTimeout(900);
   const k1 = kAt();
-  conf("a ⭐ apaga e o 'Concluir em' vira a data de volta", k1.importante === false && k1.prazo === semana);
+  conf("a ⭐ fica (F373) e o 'Concluir em' vira a data de volta", k1.importante === true && k1.prazo === semana);
   conf("o despacho fica registrado para a ponte do To Do", k1.ronda && k1.ronda.despacho && k1.ronda.despacho.prazo === semana && k1.ronda.despacho.por === PAULO && !k1.ronda.despacho.todo);
   conf("sai do Meu Dia de quem concluiu", !T.meu_dia.some(m => m.caso_id === kA.id));
   const nota = T.andamentos.slice(nAnd).find(a => a.caso_id === kA.id);
@@ -105,7 +105,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const atr = T.atribuicoes.filter(a => a.caso_id === kA.id).map(a => a.colaborador_id);
   conf("passa ao Marcos e sai do Paulo, como trocar o 'Atribuído a'", atr.includes(MARCOS) && !atr.includes(PAULO));
   conf("o Marcos é avisado por menção", T.mencoes.slice(nMenc).some(m => m.para_id === MARCOS && /passou a você/.test(m.texto) && m.texto.includes(br(semana).slice(0, 5))));
-  conf("o cliente sai da fila", !(await p.$(`.ag-linha[data-cli="${cA.id}"]`)));
+  conf("passou ao Marcos: sai da lista do Paulo", !(await p.$(`.ag-linha[data-cli="${cA.id}"]`)));
   conf("aparece o desfazer", /desfazer/.test(await p.textContent("#aviso")));
   await p.screenshot({ path: path.join(OUT, "03-depois.png") });
 
@@ -113,7 +113,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click("#aviso .aviso-bt");
   await p.waitForTimeout(900);
   const k2 = kAt(), atr2 = T.atribuicoes.filter(a => a.caso_id === kA.id).map(a => a.colaborador_id);
-  conf("desfazer acende a ⭐, devolve a data e o Meu Dia", k2.importante === true && !k2.prazo && !(k2.ronda || {}).despacho && T.meu_dia.some(m => m.caso_id === kA.id));
+  conf("desfazer mantém a ⭐, devolve a data e o Meu Dia", k2.importante === true && !k2.prazo && !(k2.ronda || {}).despacho && T.meu_dia.some(m => m.caso_id === kA.id));
   conf("desfazer apaga a anotação e devolve a atribuição", !T.andamentos.find(a => a.id === nota.id) && atr2.includes(PAULO) && !atr2.includes(MARCOS));
 
   // 4 · o botão do caso faz o mesmo
@@ -128,7 +128,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click("#desp-ok");
   await p.waitForTimeout(800);
   const em6 = await p.evaluate(() => somaMeses(hoje(), 6));
-  conf(`no caso, "Em 6 meses" (${em6}) apaga a ⭐ sem anotação nem troca de pessoa`, kBt().importante === false && kBt().prazo === em6
+  conf(`no caso, "Em 6 meses" (${em6}) mantém a ⭐ sem anotação nem troca de pessoa`, kBt().importante === true && kBt().prazo === em6
     && !T.andamentos.some(a => a.caso_id === kB.id) && T.atribuicoes.some(a => a.caso_id === kB.id && a.colaborador_id === PAULO));
   await p.screenshot({ path: path.join(OUT, "04-caso.png") });
   const fx = await p.evaluate(() => document.querySelector(".faixa-prazos").textContent);

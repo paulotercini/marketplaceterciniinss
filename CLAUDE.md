@@ -415,6 +415,8 @@ A **F370** (12.33, pedido do Paulo de 02.11.2026): o ＋ do alto da lista do Wha
 
 A **F371** (12.34, pedido do Paulo de 02.11.2026): o print colado (Ctrl+V) no campo de escrever do WhatsApp vai como foto (`t.onpaste`, `mandarArquivoZap(colado)`, nome `print-<hora>.png`), depois de "Enviar o print colado?", e o texto já escrito vai como legenda; na nota interna, colar não faz nada além do texto. Teste: `zapbotoes.js`.
 
+A **F373** (12.35, a ⭐ do canto da ficha, decisões do Paulo de 02.11.2026): abaixo do ⋯ do cabeçalho, um pouco maior que os botões vizinhos, a estrela (`botaoEstrelaFicha`, `estrelaFicha`, `.det-imp` dentro de `.det-mais-col`; no celular, ao lado do ⋯) marca ou desmarca com um clique **todos** os casos abertos do cliente (`casos.importante`, a mesma da lista ⭐ Importante); acende quando algum está marcado e só aparece no nível 2 em diante. A ⭐ da anotação é outra e não muda. O **Concluir por hoje deixou de apagar a ⭐** (revoga essa parte da F291). A ⭐ é **espelhada no To Do**: `casos.todo_importante` guarda a estrela da tarefa na rodada anterior (`migracoes/f373_todo_importante.sql`, aplicada); a `ponte_despacho.py` leva ao To Do a ⭐ que mudou no CRM (`estrelas_a_levar`, `levar_estrelas`) e grava `todo_importante`, e o `migrar.py` deixa a ⭐ que mudou no To Do vencer e, fora disso, mantém a do CRM, acesa ou apagada (`manter_dados_do_banco`, e o `case` do caminho SQL). Testes: `testes/cadastro/f373.js` e `tests/test_despacho.py`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

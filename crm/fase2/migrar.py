@@ -364,6 +364,7 @@ def mapear(dados, cpf_por_nome=None):
             "nb": t["nb"], "processo": t["processo"], "prazo": t["prazo"],
             "todo_prazo": t["prazo"],     # a data do To Do na última rodada (manter_dados_do_banco)
             "importante": t["importante"], "origem_lista": lista,
+            "todo_importante": t["importante"],   # F373 · a ⭐ do To Do na última rodada (manter_dados_do_banco)
             "todo_task_id": t["id"],
             "encerrado_em": t["concluida_em"] and t["concluida_em"] + "T12:00:00" + TZ,
         }
@@ -721,6 +722,11 @@ def manter_dados_do_banco(mapa, banco, tabela="clientes", campos=("telefone", "d
             if (campo == "prazo" and "todo_prazo" in b
                     and (linha.get("todo_prazo") or None) != (b["todo_prazo"] or None)):
                 continue                  # a data mudou no To Do: o To Do vence
+            if campo == "importante" and b.get("todo_importante") is not None:
+                # F373 · a ⭐ que mudou no To Do vence; a que não mudou é a do CRM, acesa ou apagada
+                if bool(linha.get("todo_importante")) == bool(b["todo_importante"]):
+                    linha[campo] = bool(b.get("importante"))
+                continue
             v = b.get(campo)
             if v and not (campo == "nome" and RE_NOME_PROVISORIO.fullmatch(v)):
                 linha[campo] = v
@@ -743,10 +749,10 @@ def manter_lembrete(l, b):
 
 
 def respeitar_despacho(mapa, pendentes):
-    """F291 · o "Concluir por hoje" do CRM apaga a ⭐ e marca a volta. Enquanto a ponte
-    (ponte_despacho.py) não leva isso ao To Do, a tarefa ainda tem a estrela e a
-    regra "casos.importante or excluded.importante" a acenderia de novo. O caso
-    despachado e ainda não levado entra com a ⭐ apagada e a data do despacho."""
+    """F291 · o "Concluir por hoje" do CRM marca a volta. Enquanto a ponte
+    (ponte_despacho.py) não leva isso ao To Do, o caso despachado e ainda não levado
+    entra com a data do despacho. Desde a F373 (02.11.2026) o despacho não apaga a ⭐,
+    que segue a regra do todo_importante (manter_dados_do_banco)."""
     por_id = {}
     for p in pendentes or []:
         d = (p.get("ronda") or {}).get("despacho") or {}
@@ -757,7 +763,6 @@ def respeitar_despacho(mapa, pendentes):
         d = por_id.get(linha.get("id"))
         if d is None:
             continue
-        linha["importante"] = False
         if d.get("prazo"):
             linha["prazo"] = d["prazo"]
         n += 1
@@ -1006,7 +1011,12 @@ def gerar_sql(mapa):
                                  "casos.todo_prazo then excluded.prazo "
                                  "else coalesce(casos.prazo, excluded.prazo) end",
                                  "todo_prazo",
-                                 "importante = casos.importante or excluded.importante",
+                                 # F373 · a ⭐ que mudou no To Do vence; a que não mudou fica a do CRM
+                                 "importante = case when casos.todo_importante is null "
+                                 "then casos.importante or excluded.importante "
+                                 "when excluded.todo_importante is distinct from casos.todo_importante "
+                                 "then excluded.importante else casos.importante end",
+                                 "todo_importante",
                                  "beneficio = coalesce(casos.beneficio, excluded.beneficio)",
                                  "parceria", "protocolos",
                                  "nb", "processo", "origem_lista", "encerrado_em")),
@@ -1269,14 +1279,14 @@ def subir_rest(mapa):
     # deles, e não a carteira (E2); no encerrado, a espécie vazia não vai (abaixo).
     manter_dados_do_banco(mapa, _rest_todas(
         url, chave, "/rest/v1/casos?todo_task_id=not.is.null&fase=neq.encerrado"
-                    "&or=(prazo.not.is.null,importante.is.true,beneficio.not.is.null)"
-                    "&select=id,prazo,todo_prazo,importante,beneficio"),
+                    "&or=(prazo.not.is.null,importante.is.true,todo_importante.not.is.null,beneficio.not.is.null)"
+                    "&select=id,prazo,todo_prazo,importante,todo_importante,beneficio"),
         "casos", ("prazo", "importante", "beneficio"))
     n_desp = respeitar_despacho(mapa, _rest_todas(
         url, chave, "/rest/v1/casos?todo_task_id=not.is.null&ronda->despacho=not.is.null"
                     "&ronda->despacho->>todo=is.null&select=id,ronda"))
     if n_desp:
-        print(f"  despachados no CRM ainda sem ponte (⭐ apagada mantida): {n_desp}")
+        print(f"  despachados no CRM ainda sem ponte (data de volta mantida): {n_desp}")
 
     # A LISTA 💵 PAGAMENTOS É A ABA PAGAMENTOS DO CLIENTE, NÃO UM CASO.
     # Mesmo princípio de 🙏 Aposentadorias Futuras -> aba 🔔 Lembretes: lista do
