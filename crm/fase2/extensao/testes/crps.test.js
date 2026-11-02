@@ -8,16 +8,16 @@ const fs = require('fs');
 const path = require('path');
 
 const NUP1 = '123456789012345678', NUP2 = '223456789012345678';
-function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [] } = {}) {
+function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [], listas = null } = {}) {
   const pedidos = [], enviados = [];
   const resp = (status, corpo) => ({ ok: status === 200, status, json: async () => corpo });
   const fetch = async (u, o = {}) => {
     pedidos.push(u);
-    const lista = new RegExp(`^/api/v1/${sistemaQueLista}/$`);
-    if (lista.test(u)) return resp(200, [{ proc: NUP1, nb: '123' }, { proc: NUP2, nb: '456' }]);
-    if (/^\/api\/v1\/[a-z]+\/$/.test(u)) return resp(404, {});
+    const base = listas || { [sistemaQueLista]: [NUP1, NUP2] };
+    const l = u.match(/^\/api\/v1\/([a-z]+)\/$/);
+    if (l) return base[l[1]] ? resp(200, base[l[1]].map(n => ({ proc: n, nb: '1' }))) : resp(404, {});
     const m = u.match(/^\/api\/v1\/([a-z]+)\/(\d+)$/);
-    if (m) return m[1] === sistemaQueLista && [NUP1, NUP2].includes(m[2]) ? resp(200, { nup: m[2], andamento: 'x',
+    if (m) return (base[m[1]] || []).includes(m[2]) ? resp(200, { nup: m[2], andamento: 'x',
       eventos: [{ status: 'Julgado', documentos: [{ id: 7, nome: 'Acórdão.pdf', path: '/doc/7' }, { id: 8, nome: 'CNIS.pdf', path: '/doc/8' }] }] }) : resp(404, {});
     throw new Error('pedido inesperado ' + u);
   };
@@ -42,7 +42,17 @@ test('o acervo vem do portal e cada recurso é consultado uma vez só, no sistem
   const consultas = pedidos.filter(u => /\/\d+$/.test(u));
   assert.deepStrictEqual(consultas, [`/api/v1/esisrec/${NUP1}`, `/api/v1/esisrec/${NUP2}`], 'consultou o outro sistema sem precisar');
   assert.deepStrictEqual(Object.keys(enviados[0].itens), [`${NUP1}_esisrec`, `${NUP2}_esisrec`]);
-  assert.deepStrictEqual(enviados[0].portal, { total: 2, sistema: 'esisrec', novos: [NUP1, NUP2] });
+  assert.deepStrictEqual(enviados[0].portal, { total: 2, sistema: 'esisrec', por_sistema: { esisrec: 2 }, novos: [NUP1, NUP2] });
+});
+
+test('1.30.0 · a lista do RecBen também é lida, e cada recurso vai direto à base que o listou', async () => {
+  const { r, pedidos, enviados } = await rodada({ listas: { esisrec: [NUP1], recben: [NUP2] } });
+  assert.deepStrictEqual(r, { ok: 2, falhas: 0 });
+  assert.ok(pedidos.includes('/api/v1/recben/'), 'não pediu a lista do RecBen');
+  const consultas = pedidos.filter(u => /\/\d+$/.test(u));
+  assert.deepStrictEqual(consultas, [`/api/v1/esisrec/${NUP1}`, `/api/v1/recben/${NUP2}`]);
+  assert.deepStrictEqual(enviados[0].portal, { total: 2, sistema: 'esisrec+recben',
+    por_sistema: { esisrec: 1, recben: 1 }, novos: [NUP1, NUP2] });
 });
 
 test('recurso que o portal não lista mas o CRM conhece ainda é procurado nos dois sistemas', async () => {
