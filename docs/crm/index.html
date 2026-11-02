@@ -15115,6 +15115,7 @@ function pintarListaZap(){
        <div class="zl-topo"><h2>WhatsApp</h2>
          <button class="zap-estado ${zapComProblema()?"ruim":""}" onclick="abrirConexaoZap()" title="conexão do WhatsApp: ${esc(p.txt)}"><i style="background:${p.cor}"></i>${
            zapComProblema()?(cfgApp("zap_qr")?"Ler QR code":"Corrigir conexão"):"conectado"}</button>
+         <button class="tl-bt" onclick="novoContatoZap()" title="Conversar com um número novo" aria-label="Novo contato">＋<span class="sr-only"> Novo contato</span></button>
          ${/* F274 · som, Encerradas e Painel da equipe no ⋯; a lista se repinta a cada 6 s, então o ⋯ lembra se estava aberto */""}
          <details class="tl-mais mais-baixo zl-mais"${zapMaisAberto?" open":""} ontoggle="zapMaisAberto=this.open"><summary class="tl-bt tl-bt-ic" aria-label="Mais opções do WhatsApp" title="som, encerradas e painel da equipe">${IC_SVG.mais}</summary>
            <span class="tl-mais-menu" role="menu">
@@ -16502,6 +16503,72 @@ async function transferirConversa(){
   };
   document.querySelectorAll("[data-zt]").forEach(b=>b.onclick=()=>enviar(b.dataset.zt, null));
   document.querySelectorAll("[data-zts]").forEach(b=>b.onclick=()=>enviar(null, b.dataset.zts));
+}
+
+// F370 · conversar com um número novo (pedido do Paulo de 02.11.2026): o número de cliente avisa e abre a ficha com a
+// conversa ao lado; o número desconhecido abre a conversa e oferece criar o cliente. A ponte envia pelo telefone da conversa
+function foneZapNovo(t){
+  let d = String(t||"").replace(/\D/g,"").replace(/^0+/,"");
+  if(d.length===8 || d.length===9) d = "16"+d;   // o DDD 16 é o padrão do escritório
+  if(d.length===10 || d.length===11) d = "55"+d;
+  return /^55\d{10,11}$/.test(d) ? d : "";
+}
+function novoContatoZap(){
+  caixa(`<h3>Novo contato</h3>
+    <p class="meio-sub">Digite o número com DDD. O CRM confere se ele já está numa ficha ou numa conversa.</p>
+    <input id="znc-tel" value="(16) " inputmode="tel" aria-label="Telefone com DDD" style="width:100%">
+    <input id="znc-nome" placeholder="nome (opcional)" aria-label="Nome do contato" style="width:100%;margin-top:8px">
+    <div id="znc-res" role="status" style="margin-top:10px"></div>
+    <div class="form-linha" style="margin-top:10px"><button class="btn-sal" id="znc-ok" title="Conferir o número">Conferir</button></div>`);
+  const t = document.getElementById("znc-tel"); t.focus(); t.setSelectionRange(t.value.length, t.value.length);
+  t.onkeydown = e => { if(e.key==="Enter") conferirContatoZap(); };
+  document.getElementById("znc-ok").onclick = conferirContatoZap;
+}
+async function abrirContatoZap(fone, nome){
+  const id = await api(`/rest/v1/rpc/zap_abrir`,{method:"POST", body:JSON.stringify({p_telefone:fone, p_nome:nome||null})});
+  return typeof id==="string" ? id : (id && id.zap_abrir) || id;
+}
+async function conferirContatoZap(){
+  const res = document.getElementById("znc-res"), fone = foneZapNovo(document.getElementById("znc-tel").value);
+  const nome = (document.getElementById("znc-nome").value||"").trim();
+  if(!fone){ res.innerHTML = `<p class="meio-sub" style="color:var(--vermelho,#c0392b)">Número inválido: use o DDD e o número, como (16) 99999-9999.</p>`; return; }
+  const clis = clientesDoTelefone(fone);
+  if(clis.length===1){
+    let conv; try{ conv = await abrirContatoZap(fone, nome); }catch(e){ return aviso("Não abri a conversa: "+msgErro(e)); }
+    fecharCaixa();
+    aviso(`Este número já é de ${clis[0].nome}: abri a ficha com a conversa ao lado`, false);
+    await recarregarZap(true).catch(()=>{});
+    return fichaComZap(clis[0].id);
+  }
+  if(clis.length>1){
+    res.innerHTML = `<p>Este número já está em ${clis.length} fichas. Escolha qual abrir:</p><div class="form-linha">${clis.map(c=>
+      `<button class="btn-rap" data-znc-cli="${c.id}">${esc(c.nome)}</button>`).join("")}</div>`;
+    res.querySelectorAll("[data-znc-cli]").forEach(b=>b.onclick = async ()=>{
+      try{ await abrirContatoZap(fone, nome); }catch(e){ return aviso("Não abri a conversa: "+msgErro(e)); }
+      fecharCaixa(); await recarregarZap(true).catch(()=>{}); fichaComZap(b.dataset.zncCli); });
+    return;
+  }
+  const ja = zapConvs.find(c=>ultimos8(c.telefone)===ultimos8(fone));
+  res.innerHTML = `<p>${ja?`Já existe conversa com este número (${esc(nomeDaConversa(ja))}), sem ficha de cliente.`:"Este número não está em nenhuma ficha."}</p>
+    <div class="form-linha"><button class="btn-sal" id="znc-conv" title="Abrir a conversa com este número">Conversar</button>
+    <button class="btn-rap" id="znc-cli" title="Criar a ficha de cliente com este número">Cliente</button></div>`;
+  document.getElementById("znc-conv").onclick = async ()=>{
+    let conv; try{ conv = ja ? ja.id : await abrirContatoZap(fone, nome); }catch(e){ return aviso("Não abri a conversa: "+msgErro(e)); }
+    fecharCaixa();
+    if(!ja) await api(`/rest/v1/zap_conversas?id=eq.${conv}`,{method:"PATCH", headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({atendente_id:eu.id, bot_ativo:false})}).catch(()=>{});
+    await recarregarZap(true).catch(()=>{});
+    zapFiltro = "minhas";
+    if(visao!=="whatsapp") irPara("whatsapp");
+    abrirConversa(conv);
+  };
+  document.getElementById("znc-cli").onclick = ()=>{
+    fecharCaixa();
+    _ncl = {etapa:1, id:null, nomeBusca: nome && termosBusca(nome).length>=2 ? tituloOrgao(nome.toUpperCase()) : ""};
+    irNovoCliente();
+    const i = document.getElementById("ncl-tel"); if(!i) return;
+    i.value = `(${fone.slice(2,4)}) ${fone.slice(4,-4)}-${fone.slice(-4)}`; nclConferirTel();
+  };
 }
 
 // F369 · quem não atende pede a transferência: menção a quem atende e aos gestores, com o link da conversa;

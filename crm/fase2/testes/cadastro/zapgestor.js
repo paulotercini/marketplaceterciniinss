@@ -148,6 +148,25 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.waitForSelector(".zap-topo");
   conf("gestor do WhatsApp: na conversa da Amanda há Transferir (F368)", (await p.textContent(".zap-topo")).includes("Transferir"));
   await p.evaluate(() => { eu.gestor_zap = false; });
+  // F370 · novo contato: número de cliente abre a ficha; número novo oferece Conversar e Cliente
+  await p.evaluate(() => { irPara("whatsapp"); });
+  await p.waitForSelector(".zl-cab");
+  await p.click('.zl-cab button[aria-label="Novo contato"]');
+  await p.fill("#znc-tel", "(16) 99999-0001");
+  await p.click("#znc-ok");
+  await p.waitForTimeout(500);
+  conf("novo contato: número de cliente chama zap_abrir e abre a ficha (F370)", escritas.some(e => /rpc\/zap_abrir/.test(e.u) && e.b.p_telefone === "5516999990001")
+    && await p.evaluate(() => !!clienteAberto));
+  await p.evaluate(() => { fecharFicha(false); irPara("whatsapp"); });
+  await p.waitForSelector(".zl-cab");
+  await p.click('.zl-cab button[aria-label="Novo contato"]');
+  await p.fill("#znc-tel", "(17) 98888-7777");
+  await p.click("#znc-ok");
+  await p.waitForSelector("#znc-cli");
+  conf("novo contato: número desconhecido oferece Conversar e Cliente (F370)", (await p.textContent("#znc-res")).includes("não está em nenhuma ficha"));
+  await p.click("#znc-cli");
+  await p.waitForSelector("#ncl-tel");
+  conf("novo contato: Cliente abre o Novo Cliente com o telefone (F370)", (await p.inputValue("#ncl-tel")) === "(17) 98888-7777");
   await p.evaluate(() => { localStorage.removeItem("crm_ver_como"); irPara("mencoes"); });
   await p.waitForTimeout(300);
   conf("Menções: o aviso de conversa tem o botão abrir conversa", (await p.textContent("#conteudo-meio")).includes("abrir conversa"));
