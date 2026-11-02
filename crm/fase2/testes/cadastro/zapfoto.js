@@ -20,7 +20,8 @@ const T = {
     atendente_id: null, status: "aberta", nao_lidas: 0, ultima_em: agora, ultimo_texto: "oi" }],
   zap_mensagens: [{ id: "m1", seq: 1, conversa_id: CONV, direcao: "entrada", tipo: "imagem", texto: "o laudo", midia_url: "zap/x/laudo.jpg", midia_nome: "laudo.jpg", status: "entregue", criado_em: agora },
     { id: "m2", seq: 2, conversa_id: CONV, direcao: "saida", tipo: "documento", texto: null, midia_url: "zap/x/contrato.pdf", midia_nome: "contrato.pdf", status: "enviada", criado_em: agora },
-    { id: "m3", seq: 3, conversa_id: CONV, direcao: "entrada", tipo: "figurinha", texto: null, midia_url: "zap/x/figurinha.webp", midia_nome: "figurinha.webp", status: "entregue", criado_em: agora }],
+    { id: "m3", seq: 3, conversa_id: CONV, direcao: "entrada", tipo: "figurinha", texto: null, midia_url: "zap/x/figurinha.webp", midia_nome: "figurinha.webp", status: "entregue", criado_em: agora },
+    { id: "m4", seq: 4, conversa_id: CONV, direcao: "entrada", tipo: "video", texto: null, midia_url: "zap/x/video.mp4", midia_nome: "video.mp4", status: "entregue", criado_em: agora }],
 };
 const PAINEL = { totais: {}, setores: [], atendentes: [] };
 
@@ -79,8 +80,9 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
   conf("F363 · a figurinha aparece no balão, sem corte", await p.$eval("#zb-m3 img.zap-mini.zap-fig", e => getComputedStyle(e).objectFit === "contain").catch(() => false) && !(await p.textContent("#zb-m3")).includes("📎"));
   await p.evaluate(() => pintarConversaGuardando());
   await p.waitForFunction(() => { const i = document.querySelector("#zap-msgs img.zap-mini"); return i && i.src; });
+  conf("F366 · o vídeo toca no próprio balão", await p.$eval("#zb-m4 video.zap-vid", e => e.controls && !!e.getAttribute("src")).catch(() => false) && !(await p.textContent("#zb-m4")).includes("📎"));
   const assinou = await p.evaluate(() => _miniUrl.size);
-  conf("a repintura reaproveita o link guardado", assinou === 2);
+  conf("a repintura reaproveita o link guardado", assinou === 3);
   const [guia] = await Promise.all([ctx.waitForEvent("page"), p.click("#zb-m1 img.zap-mini")]);
   conf("o clique abre o original", !!guia);
 

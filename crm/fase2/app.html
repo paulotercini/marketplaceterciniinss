@@ -2038,6 +2038,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zp-ult>span{display:block;color:var(--cinza)}
   .zp-tit{font-weight:600;font-size:13px}
   .zap-mini{display:block;width:240px;max-width:100%;height:180px;object-fit:cover;border-radius:8px;cursor:zoom-in;background:#0000000d;margin-bottom:4px}
+  .zap-mini.zap-vid{height:auto;cursor:auto;max-height:320px;background:#000;object-fit:contain}
   .zap-mini.zap-fig{width:140px;height:140px;object-fit:contain;background:none;border-radius:0}
   .zp-rep-tit{margin:4px 2px 0;font-size:12px;font-weight:600;color:var(--cinza)}
   .zp-rep{border-left:3px solid var(--verde,#2E7D4F)}
@@ -6206,7 +6207,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.30</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.31</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15857,6 +15858,8 @@ function bolhaZap(m, cli, seguida){
       + (m.texto?`<div>🎤 ${esc(m.texto)}</div>`:"")
     : m.midia_url && (m.tipo==="imagem"||m.tipo==="figurinha")
     ? miniZap(m.midia_url, `verMidiaZap('${m.id}')`, m.tipo==="figurinha") + (m.texto?`<div>${esc(m.texto)}</div>`:"")
+    : m.midia_url && m.tipo==="video"
+    ? vidZap(m.midia_url) + (m.texto?`<div>${esc(m.texto)}</div>`:"")
     : m.midia_url
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${m.tipo==="audio"?"🎤 ":""}${esc(m.texto)}</div>`:"")
@@ -15957,13 +15960,15 @@ function alternarNota(){
 const _miniUrl = new Map();
 // F363 · a figurinha aparece no balão, menor e sem corte, como no WhatsApp
 const miniZap = (caminho, abrir, fig) => `<img class="zap-mini${fig?" zap-fig":""}" data-mini="${esc(caminho)}" alt="${fig?"figurinha":"foto"}" onclick="${abrir}">`;
+// F366 · o vídeo toca no próprio balão, com o mesmo link assinado da foto
+const vidZap = caminho => `<video class="zap-mini zap-vid" data-mini="${esc(caminho)}" controls preload="metadata" playsinline></video>`;
 async function carregarMinis(raiz){
-  for(const im of (raiz||document).querySelectorAll("img.zap-mini[data-mini]:not([src])")){
+  for(const im of (raiz||document).querySelectorAll(".zap-mini[data-mini]:not([src])")){
     const k = im.dataset.mini, g = _miniUrl.get(k);
     try{
       if(!g || g.ate < Date.now()) _miniUrl.set(k, {u: await linkArquivo(k, 3600), ate: Date.now() + 50*60e3});
       im.src = _miniUrl.get(k).u;
-    }catch(e){ im.replaceWith(Object.assign(document.createElement("span"), {className:"meio-sub", textContent:"📷 foto (não carregou)"})); }
+    }catch(e){ im.replaceWith(Object.assign(document.createElement("span"), {className:"meio-sub", textContent:im.tagName==="VIDEO"?"🎬 vídeo (não carregou)":"📷 foto (não carregou)"})); }
   }
 }
 async function verMidiaZap(id){
@@ -16779,6 +16784,7 @@ async function verZapCliente(cliId){
       + (m.texto ? `<i>🎤 ${esc(m.texto)}</i>` : `<span class="meio-sub">🎤 transcrevendo…</span>`);
     else if(m.midia_url && (m.tipo==="imagem"||m.tipo==="figurinha")) corpo = miniZap(m.midia_url, `abrirArquivoZap('${escJs(m.midia_url)}')`, m.tipo==="figurinha")
       + (m.texto?`<div>${esc(m.texto)}</div>`:"");
+    else if(m.midia_url && m.tipo==="video") corpo = vidZap(m.midia_url) + (m.texto?`<div>${esc(m.texto)}</div>`:"");
     else if(m.midia_url) corpo = `<button class="btn-mini" onclick="abrirArquivoZap('${escJs(m.midia_url)}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${esc(m.texto)}</div>`:"");
     else corpo = esc(m.texto||`[${m.tipo}]`);
