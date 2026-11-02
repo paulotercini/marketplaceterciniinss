@@ -5378,6 +5378,7 @@ html .desf .desf-outras{align-items:center}
 @media (hover:hover) and (pointer:fine){
 #sub-lista.sub-dica,p.meio-sub.sub-dica{display:none}
 .dica-tit{cursor:help}
+#titulo-lista.dica-tit::after{display:none}   /* o "?" ao lado já explica a tela */
 .dica-tit::after{content:"i";display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;margin-left:6px;border:1px solid currentColor;border-radius:50%;font:italic 500 10px/1 Georgia,serif;opacity:.45;vertical-align:middle}
 }
 html .outras-abas .oa-txt{flex-direction:row;align-items:baseline;gap:8px}
@@ -8072,7 +8073,7 @@ const porDaProposta = p => p.comData ? p.por : `${p.por} de ${dCurta(p.data)}`;
 const REGRAS_ETAPA_JUD = [
   {rx:/requisicao de pequeno valor|expedicao de (requisi|rpv|precat)|expedid[oa]s? (a |o )?(requisi|rpv|precat)|rpv expedid|precatorio expedid|requisitorio/,
    nao:/pagamento|pago|cancelad|levantad|deposit/, etapa:"RPV expedida", passos:["RPV ou precatório expedido"], mover:"pagamento"},
-  {rx:/deposito (judicial )?(de|da|do) (rpv|requisi|precat)|comprovante de (deposito|pagamento|levantamento)|pagamento (de|da|do) (rpv|requisi|precat)|rpv paga|alvara|levantamento/,
+  {rx:/deposito (judicial )?(de|da|do) (rpv|requisi|precat)|comprovante de (deposito|pagamento|levantamento)|pagamento (de|da|do) (rpv|requisi|precat)|rpv paga|alvara|levantamento/, nao:/suspens/,
    etapa:"recebido", passos:["RPV paga","Levantamento"], mover:"pagamento"},
   {rx:/homolog\w* (de |dos |os |o )?calculo|calculos? homologad/, etapa:"aguardando RPV", passos:["Cálculos homologados"]},
   {rx:/juntada de calculo|calculos? (da contadoria|do inss|de liquida)|(a|para a) contadoria|cumprimento de sentenca/, nao:/prazo|intima/, etapa:"aguardando RPV",
@@ -8674,7 +8675,7 @@ function montarSidebar(){
     const nMd = quantosNoMeuDia();
     const dd = Object.fromEntries(din.map(x=>[x[0],x]));
     document.getElementById("grupo-dinamicas").innerHTML =
-      item("meudia","☀️ Meu Dia",nMd, nVenc?`<span class="cont venc" title="${nVenc} vencida${nVenc>1?"s":""} · ${nMd} hoje">${nVenc} · ${nMd}</span>`:"")
+      item("meudia","☀️ Meu Dia",nMd, nVenc?`<span class="cont venc" title="${nVenc} vencida${nVenc>1?"s":""} · ${nMd} hoje">${nVenc}${nMd?` · ${nMd}`:""}</span>`:"")
       + item("mencoes","📥 Menções",D.mencoes.length)
       // F236 · as Novidades saem do "Mais": é por elas que os prazos e as perícias entram no escritório
       + ((ns, np)=>item("novidades","📣 Novidades", ns.length, np ? `<span class="cont venc" title="${np} pede${np>1?"m":""} ação (perícia, audiência ou julgamento a agendar) · ${ns.length} ao todo">${np} · ${ns.length}</span>` : ""))(novidades(), novidades().filter(a=>novPede(a)).length)   // F236 · o que pede ação à frente do total
@@ -10350,13 +10351,18 @@ async function aplicarPatDeVerdade(){
   // médicos — continuam internos) entram no caso do protocolo, com o texto
   let docsPat = 0;
   if(plano.coleta_id) try{
-    const [c] = await api(`/rest/v1/coletas?select=dados&id=eq.${plano.coleta_id}`) || [];
-    const docs = [];
+    const [c] = await api(`/rest/v1/coletas?select=dados,criado_em&id=eq.${plano.coleta_id}`) || [];
+    const docs = [], telas = new Map();
+    const linhas = new Map(((c&&c.dados&&c.dados.lista)||[]).map(t=>[soDig(t.protocolo), t]));
     for(const det of ((c&&c.dados&&c.dados.detalhes)||[])){
       const p = String(det.protocolo||"").replace(/\D/g,"");
       const k = p && D.casos.find(x=>(x.protocolos||[]).some(y=>String(y).replace(/\D/g,"")===p));
-      if(k) docsDoMovimento(docs, k, "pat", det.arquivos, null);
+      if(!k) continue;
+      docsDoMovimento(docs, k, "pat", det.arquivos, null);
+      // F374 · a tela do PAT do protocolo, para a aba INSS
+      if(det.status || det.comentarios) telas.set(k, {...(telas.get(k)||k.pat||{}), [p]: blocoPat(det, linhas.get(p), c.criado_em)});
     }
+    for(const [k, pat] of telas) await tentar(`tela do PAT ${k.id}`, async () => { await patchCaso(k.id, {pat}); k.pat = pat; });
     docsPat = await gravarDocsDaColeta(docs);
   }catch(e){ falhas.push(`anexos do INSS: ${String(e.message||e).slice(0,120)}`); }
 
@@ -14399,7 +14405,7 @@ function renderClaude(){
         <button class="aceitar" onclick="decidirSugestao('${s.id}','aceita')">✔ Aceitar</button>
         <button class="descartar" onclick="decidirSugestao('${s.id}','descartada')">✕ Descartar</button>
       </div></div>`;
-  }).join("") || `<p class="meio-sub">Nenhuma sugestão pendente — a rotina roda todo dia útil de manhã.</p>`;
+  }).join("") || `<p class="meio-sub">Nenhuma sugestão pendente. A rotina roda todo dia útil de manhã.</p>`;
 }
 async function decidirSugestao(id, status){
   const s=D.sugestoes.find(x=>x.id===id);
@@ -14444,7 +14450,7 @@ function renderMencoes(){
         ${m.caso_id?botoesResposta(m):""}
         <button class="btn-mini" onclick="lerMencao('${m.id}')">✔ resolvida</button>
       </div></div>`;
-  }).join("") || "<p class='meio-sub'>Caixa vazia — nada pendente para você. 🎉</p>";
+  }).join("") || "<p class='meio-sub'>Caixa vazia: nada pendente para você. 🎉</p>";
 }
 // F187 · o aviso de transferência (ou @ na nota) leva direto à conversa
 function abrirConversaDaMencao(conversaId){
@@ -14581,7 +14587,7 @@ function kcardCaso(k){
   const quem=(D.atrDoCaso.get(k.id)||[]).map(id=>D.colPorId.get(id)).filter(Boolean);
   return `<div class="kcard" draggable="true" data-caso="${k.id}" data-cli="${c?c.id:""}">
     <div class="nome">${esc(c?c.nome:k.titulo)}</div>
-    <div class="meta">${k.urgente?`<span class="chip urg">🔥</span>`:""}${k.beneficio?`<span class="chip ben">${esc(k.beneficio)}</span>`:""}
+    <div class="meta">${k.beneficio?`<span class="chip ben">${esc(k.beneficio)}</span>`:""}
       ${chipExig(k)}${chipPrazo(k.prazo)}${quem.map(q=>`<span class="avatar mini" style="background:${q.cor}" title="${esc(q.nome)}">${esc(q.inicial)}</span>`).join("")}</div></div>`;
 }
 // O "Agrupar por" do Planner: o mesmo quadro, em colunas por fase, por responsável ou pelo prazo fatal, numa tela só.
@@ -17325,7 +17331,7 @@ async function renderConfig(){
               ${a.revisar?"checked":""}> conferir antes de enviar</label>
           </div>
           <textarea data-av-txt="${a.chave}" rows="4">${esc(a.texto)}</textarea>
-        </div>`).join("") || `<p class="meio-sub">Nenhuma regra — rode o schema.sql.</p>`}`
+        </div>`).join("") || `<p class="meio-sub">Nenhuma regra. Rode o schema.sql.</p>`}`
 
     // ── o robô ───────────────────────────────────────────────────────────
     + `<h3 class="secao">🤖 O que o robô diz (${cfgPassos.length})</h3>
@@ -17367,7 +17373,7 @@ async function renderConfig(){
             então ele usa um <b>crachá</b> que você renova quando cai:</p>
          <ol class="meio-sub" style="margin:0 0 8px 18px;line-height:1.7">
            <li>Entre no <b>gov.br</b> (consultaprocessos.inss.gov.br) e faça login.</li>
-           <li>Clique no atalho <b>Copiar crachá do CRPS</b> — arraste este botão para a barra de
+           <li>Clique no atalho <b>Copiar crachá do CRPS</b>: arraste este botão para a barra de
                favoritos uma vez: <a class="btn-mini" href="${BOOKMARKLET_CRPS}"
                onclick="return false" style="cursor:grab">🔖 Copiar crachá do CRPS</a></li>
            <li>Volte aqui, cole no campo abaixo e salve.</li>
@@ -17376,12 +17382,12 @@ async function renderConfig(){
            style="width:100%;font-family:var(--f-mono,ui-monospace,Consolas,monospace);font-size:11px"></textarea>
          <div class="form-linha" style="margin-top:6px">
            <button class="btn" id="cf-crps-salvar" title="Salvar crachá">Salvar<span class="sr-only"> crachá</span></button>
-           <span class="meio-sub">o crachá fica guardado num cofre que só o robô abre — não aparece nas telas.</span>
+           <span class="meio-sub">o crachá fica guardado num cofre que só o robô abre e não aparece nas telas.</span>
          </div>
        </div>`; })()
 
     + `<p class="meio-sub" style="margin-top:14px">As mudanças são guardadas assim que você
-          sai do campo. Não há botão de salvar — e nem desfazer.</p>`;
+          sai do campo. Não há botão de salvar nem desfazer.</p>`;
 
   ligarConfig();
 }
@@ -17391,7 +17397,7 @@ function estadoCRPS(){
   const e = cfgApp("crps_estado")||"sem_cracha";
   if(e==="ok")     return {cor:"#2e7d32", txt:"crachá ativo — o robô está consultando"};
   if(e==="vencido")return {cor:"#c62828", txt:"crachá vencido — cole um novo para religar"};
-  return {cor:"#9e9e9e", txt:"sem crachá ainda — cole um para começar"};
+  return {cor:"#9e9e9e", txt:"sem crachá ainda; cole um para começar"};
 }
 // o atalho que copia o crачhá do gov.br: lê o login e joga na área de transferência
 const BOOKMARKLET_CRPS = "javascript:(function(){var t=localStorage.getItem('ifs_auth');"
@@ -17714,7 +17720,7 @@ function renderAgenda(){
     const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id), passou=dataSP(e.data_hora)<hj, pend=conf.includes(e);
     return `<div class="evento ${passou?"passado":"futuro"}${pend?" confirmar":""}${e.status==="cancelada"?" cancelada":""}" data-cli="${c?c.id:""}" style="cursor:pointer">
       <div class="data-box">${fmtTS(e.data_hora).slice(0,5)}<small>${dataSP(e.data_hora).slice(0,4)}</small><small>${horaSP(e.data_hora)}</small></div>
-      <div class="oque"><strong>${esc(e.tipo)} — ${esc(c?c.nome:"?")}</strong>
+      <div class="oque"><strong>${esc(e.tipo)}: ${esc(c?c.nome:"?")}</strong>
         <span>${esc([e.local,e.obs].filter(Boolean).join(" · "))} · ${esc(pend?"aconteceu? confirme":nomeStatusEvento(e.status))}${/* F236 · faltam N dias */""}${!passou && e.status==="agendada" ? ` · ${(n=>n===0?"hoje":n===1?"amanhã":`faltam ${n} dias`)(diasAte(dataSP(e.data_hora)))}` : ""}</span></div>
       ${pend ? botoesDoPassado(e, "event.stopPropagation();")
         : passou || e.status!=="agendada" || !pedeAviso(e) ? ""
@@ -17725,7 +17731,7 @@ function renderAgenda(){
   const blocoProc=({a, k, ev})=>{ const c=D.cliPorId.get(k.cliente_id);
     return `<div class="evento confirmar" data-cli="${c?c.id:""}" style="cursor:pointer">
       <div class="data-box">${fmt(ev.data).slice(0,5)}<small>${ev.data.slice(0,4)}</small><small>${ev.hora}</small></div>
-      <div class="oque"><strong>${esc(ev.tipo)} — ${esc(c?c.nome:"?")}</strong>
+      <div class="oque"><strong>${esc(ev.tipo)}: ${esc(c?c.nome:"?")}</strong>
         <span>${esc([localNoTexto(a.texto), "marcada no processo, ainda sem agendamento nem aviso ao cliente"].filter(Boolean).join(" · "))}</span></div>
       <button class="btn-mini" onclick="event.stopPropagation();periciaRapida(${segRegistrar(a.caso_id, a.texto, a.id)})"
         title="agenda na aba 🩺, com o aviso ao cliente hoje e a mensagem da véspera"><span aria-hidden="true">🩺 Agendar</span><span class="sr-only">🩺 agendar com aviso</span></button>
@@ -17740,7 +17746,7 @@ function renderAgenda(){
 
 // ── 📅 Calendário (o mês inteiro numa tela, como a agenda do Google) ──────
 // Junta tudo o que tem data: lembrete de processo, perícia/audiência, tarefa
-// com prazo e o aviso de aposentadoria — cada tipo na sua cor, para bater o
+// com prazo e o aviso de aposentadoria: cada tipo na sua cor, para bater o
 // olho e saber o que é. O de aposentadoria é verde e é o único que não vem
 // de uma pendência: é oportunidade, não prazo.
 const TIPOS_CAL = {
@@ -17750,9 +17756,9 @@ const TIPOS_CAL = {
   tarefa:  {cor:"#5B6069", fundo:"#ECEDEF", icone:"📋", nome:"Tarefa"},
   exig:    {cor:"#B3261E", fundo:"#FBE9E9", icone:"⚠", nome:"Exigência do INSS"},
   // o CadÚnico é o único que sobrevive ao encerramento do caso, e por isso
-  // tem cor só dele — não se confunde com prazo nosso nenhum
+  // tem cor só dele: não se confunde com prazo nosso nenhum
   cadunico:{cor:"#A5187F", fundo:"#FBE9F5", icone:"🧓", nome:"CadÚnico (LOAS idoso)"},
-  dcb:     {cor:"#C2410C", fundo:"#FDEBDD", icone:"⏳", nome:"DCB — cessação do benefício"},
+  dcb:     {cor:"#C2410C", fundo:"#FDEBDD", icone:"⏳", nome:"DCB: cessação do benefício"},
   prorrog: {cor:"#B4530A", fundo:"#FBEEE1", icone:"🔁", nome:"Pedir prorrogação"},
   // F236 · PRAZO: o do tribunal (PJe, eproc, e-SAJ) e o de recorrer (30 dias da decisão), os que não
   // se podem perder, em vermelho e numa cor só
@@ -17770,24 +17776,24 @@ function itensDoCalendario(){
     // F236 · o prazo fatal é prazo, e não lembrete: vai na cor dos prazos (era o azul do lembrete); no dia de um prazo que o
     // CRM já conhece (recorrer até, exigência) é um item só, como no quadro do caso e no Planejado
     const rec = recorrerAte(k), igual = !k.prazo ? "" : rec===k.prazo ? "rec" : k.exigencia_prazo===k.prazo ? "exig" : "";
-    if(k.prazo && !igual) push(k.prazo,"prazo",`${c.nome} — ${k.lembrar_motivo||tituloCaso(k)} (prazo fatal)`,c.id);
-    if(k.exigencia_prazo) push(k.exigencia_prazo,"exig",`${c.nome} — exigência vence${igual==="exig"?" (prazo fatal)":""}`,c.id);
+    if(k.prazo && !igual) push(k.prazo,"prazo",`${c.nome}: ${k.lembrar_motivo||tituloCaso(k)} (prazo fatal)`,c.id);
+    if(k.exigencia_prazo) push(k.exigencia_prazo,"exig",`${c.nome}: exigência vence${igual==="exig"?" (prazo fatal)":""}`,c.id);
     if(k.dcb && !k.dcb_prorrogacao_pedida){
-      push(k.dcb,"dcb",`${c.nome} — benefício cessa (pedir prorrogação)`,c.id);
+      push(k.dcb,"dcb",`${c.nome}: benefício cessa (pedir prorrogação)`,c.id);
       // a data de PEDIR vem antes da data de cessar: é ela que salva o cliente.
       // F115 · existe sempre que existe DCB, preenchida ou não
-      push(prorrogarEm(k),"prorrog",`${c.nome} — já dá para pedir a prorrogação`,c.id);
+      push(prorrogarEm(k),"prorrog",`${c.nome}: já dá para pedir a prorrogação`,c.id);
     }
-    if(rec) push(rec,"prazo",`${c.nome} — último dia para recorrer${igual==="rec"?" (prazo fatal)":""}`,c.id);
+    if(rec) push(rec,"prazo",`${c.nome}: último dia para recorrer${igual==="rec"?" (prazo fatal)":""}`,c.id);
     // F236 · o prazo do tribunal com fim (ou a ciência tácita) entra no dia em que cobra
     (k.prazos_tribunal||[]).forEach(p=>{ const d=dataDoPrazo(p);
-      if(d && !(p.fim && p.fim===k.prazo) && !respostaAoPrazo(k, p)) push(d,"prazo",`${c.nome} — ${ROT_PRAZO[p.sistema]||p.sistema||"tribunal"}: ${p.ato||"intimação"}${p.situacao==="findo"?" (venceu sem resposta)":""}`,c.id); });
+      if(d && !(p.fim && p.fim===k.prazo) && !respostaAoPrazo(k, p)) push(d,"prazo",`${c.nome}: ${ROT_PRAZO[p.sistema]||p.sistema||"tribunal"}: ${p.ato||"intimação"}${p.situacao==="findo"?" (venceu sem resposta)":""}`,c.id); });
   });
   (D.clientes||[]).forEach(c=>{ const a=(c.campos||{}).agenda_quarta;
-    if(a && a.data) push(a.data,"atend",`${c.nome} — atendimento presencial`,c.id,{hora:a.inicio||""}); });
+    if(a && a.data) push(a.data,"atend",`${c.nome}: atendimento presencial`,c.id,{hora:a.inicio||""}); });
   (D.eventos||[]).filter(e=>e.status!=="cancelada").forEach(e=>{
     const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
-    push(dataSP(e.data_hora),"evento",`${e.tipo} — ${c?c.nome:"?"}`,c?c.id:null,
+    push(dataSP(e.data_hora),"evento",`${e.tipo}: ${c?c.nome:"?"}`,c?c.id:null,
          {hora:horaSP(e.data_hora)});
   });
   (D.tarefas||[]).filter(t=>!t.concluida && t.prazo).forEach(t=>{
@@ -17799,23 +17805,23 @@ function itensDoCalendario(){
     const k=D.casoPorId.get(t.caso_id); if(!k||k.fase==="encerrado"||foraDoFluxo(k)) return;
     const c=D.cliPorId.get(k.cliente_id), co=D.colPorId.get(t.colaborador_id);
     // F236 · o que a pessoa tem de fazer, e não só "(tarefa)"
-    push(t.lembrar_em,"lembre",`${co?co.inicial+" — ":""}${c?c.nome:"?"}: ${resumoAgenda(textoDoAndamento(t.andamento_id), co)||"tarefa"}`,c?c.id:null);
+    push(t.lembrar_em,"lembre",`${co?co.inicial+": ":""}${c?c.nome:"?"}: ${resumoAgenda(textoDoAndamento(t.andamento_id), co)||"tarefa"}`,c?c.id:null);
   });
   // CadÚnico: percorre TODOS os casos, encerrados inclusive
   (D.casos||[]).forEach(k=>{
     const c=D.cliPorId.get(k.cliente_id);
     if(!c || !ehLoas(k)) return;
     const venc=renovaCadunico(k);
-    if(venc) push(venc,"cadunico",`${c.nome} — renovar CadÚnico`,c.id);
+    if(venc) push(venc,"cadunico",`${c.nome}: renovar CadÚnico`,c.id);
   });
   lembretesApos().forEach(a=>
-    push(a.aviso,"apos",`${a.cliente.nome} — ${a.especie} em ${fmt(a.data)}`,a.cliente.id,
+    push(a.aviso,"apos",`${a.cliente.nome}: ${a.especie} em ${fmt(a.data)}`,a.cliente.id,
          {automatica:a.automatica}));
   return it;
 }
 const MESES_NOME = ["janeiro","fevereiro","março","abril","maio","junho","julho",
   "agosto","setembro","outubro","novembro","dezembro"];
-// um dia, três dias ou o mês inteiro — "hoje" precisava ser uma visão, não um
+// um dia, três dias ou o mês inteiro: "hoje" precisava ser uma visão, não um
 // botão que devolve ao mês corrente e parece não fazer nada quando já se está nele
 let calVisao = ler("crm_cal_visao") || "mes";
 let calFiltro = null;                           // um tipo por vez, ou tudo
@@ -19184,7 +19190,7 @@ function cartaoEscolha(cliId, k, i, meu, destaque){
         <dt>Último</dt><dd>${a?`${fmtBarra(dataSP(a.criado_em))} · ${esc(quemAnd)}<span class="esc-ult-txt"> · ${esc(txtAnd.length>90?txtAnd.slice(0,90)+"…":txtAnd)}</span>`:"sem andamento"}</dd>
         ${quem?`<dt class="esc-quem">Quem</dt><dd class="esc-quem">${esc(quem)}</dd>`:""}
       </dl>
-      ${k.urgente||k.exigencia_prazo?`<div>${k.urgente?`<span class="chip urg">🔥 URGENTE</span>`:""}${chipExig(k)}</div>`:""}
+      ${k.exigencia_prazo?`<div>${chipExig(k)}</div>`:""}
       <div class="esc-avisos">${avisos}</div>
       <div class="esc-pe">${portal}
         <button type="button" class="btn-mini forte esc-abrir" onclick="escolhido('${cliId}','${k.id}')" title="Abrir este caso">Abrir<span class="sr-only"> este caso</span></button></div>
@@ -20092,7 +20098,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
         ${blocoParentes(c, vincs, "cad")}
       </div>
     </div>`}
-    <details id="mais-opcoes" style="margin-top:14px"><summary style="cursor:pointer;color:var(--cinza)"><span class="cad-ic">${CAD_IC.engren}</span> Mais opções — cadastrar outra credencial, vincular pasta, agendar atendimento</summary>
+    <details id="mais-opcoes" style="margin-top:14px"><summary style="cursor:pointer;color:var(--cinza)"><span class="cad-ic">${CAD_IC.engren}</span> Mais opções: cadastrar outra credencial, vincular pasta, agendar atendimento</summary>
       ${/* F23 · a credencial saiu daqui (a senha do Meu INSS já se cadastra no
            próprio campo da grade). No lugar, o registro avulso: a observação
            que não é andamento de caso nenhum — "prefere ligação de tarde",
@@ -24004,13 +24010,13 @@ function blocoRevisao(){
   if(!fila.length) return "";
   const grupos = grupoClientes(fila);
   const doseG = grupos.slice(0, dose);
-  return `<h3 class="secao">🔄 Revisão do acervo — a dose de hoje (${doseG.length} de ${grupos.length} na fila)</h3>
+  return `<h3 class="secao">🔄 Revisão do acervo: a dose de hoje (${doseG.length} de ${grupos.length} na fila)</h3>
     <p class="meio-sub">Processos sem anotação da equipe nos últimos 30 dias e sem revisão nos últimos ${dias}, os mais parados primeiro.
        Abrir e comentar conta como revisão — ou marque que nada mudou.</p>
     ${doseG.map(([c,kk])=>`<div class="rev-par">${cartaoCliente(c,kk)}
       <div class="rev-acao"><span class="meio-sub">último registro da equipe:
         ${(u=>u?fmt(u):"nenhum nos últimos 30 dias")(ultimoRegistro(kk[0]))}</span>
-        <button class="btn-mini" data-revks="${kk.map(k=>k.id).join(",")}">✔ revisado — nada mudou</button>
+        <button class="btn-mini" data-revks="${kk.map(k=>k.id).join(",")}">✔ revisado, nada mudou</button>
       </div></div>`).join("")}`;
 }
 async function marcarRevisado(ids){
@@ -24044,8 +24050,8 @@ function blocoSemAcao(){
     && !(D.tarefasPorCaso.get(k.id)||[]).length);
   if(!ks.length) return "";
   const grupos = grupoClientes(ks);
-  return `<details class="sem-acao"><summary>🧭 Sem próxima ação (${grupos.length} cliente${grupos.length>1?"s":""})
-      — processos sem tarefa aberta e sem lembrete</summary>
+  return `<details class="sem-acao"><summary>🧭 Sem próxima ação (${grupos.length} cliente${grupos.length>1?"s":""}):
+      processos sem tarefa aberta e sem lembrete</summary>
     ${grupos.slice(0,10).map(([c,kk])=>cartaoCliente(c,kk)).join("")}
     ${grupos.length>10?`<p class="meio-sub">…e mais ${grupos.length-10}. Abra cada um e registre um comentário com tarefa.</p>`:""}
   </details>`;
@@ -24069,7 +24075,7 @@ function blocoSemEndereco(){
   if(!clis.length) return "";
   const mostra = clis.slice(0,25);
   return `<details class="sem-acao neutro"><summary>Sem endereço no cadastro (${clis.length} cliente${
-      clis.length>1?"s":""}) — a procuração e o contrato desses saem com a linha da rua em branco</summary>
+      clis.length>1?"s":""}): a procuração e o contrato desses saem com a linha da rua em branco</summary>
     <div class="form-linha" style="margin:8px 0 4px;align-items:center">
       <span class="meio-sub" style="flex:1">O botão abre a ficha com os sete campos já abertos.
         Com o CEP em mãos, são dois cliques e o número da casa.</span>
@@ -26346,7 +26352,7 @@ function renderDireito(){
           ${cnisDe(g.c)&&cnisDe(g.c).caminho?`<button class="btn-mini" onclick="event.stopPropagation();abrirCnis('${g.c.id}')" title="Abrir CNIS ↗"><span aria-hidden="true">CNIS ↗</span><span class="sr-only">Abrir CNIS ↗</span></button>`:""}
         </div></div></div>`;
   }).join("") : `<p class="meio-sub">Nenhuma análise registrada ainda. Abra a ficha de um cliente na aba
-    <b>Análise de Direito</b> e registre a primeira — análise antiga entra com a data original
+    <b>Análise de Direito</b> e registre a primeira. A análise antiga entra com a data original
     (a de 2020 entra como 2020).</p>`);
 }
 function dashDireito(){
@@ -36190,8 +36196,8 @@ function abrirCatalogoEspecies(titulo, atual, escolher){
     <div id="esp-lista" class="esp-lista"></div>
     <div class="form-linha" style="margin-top:10px;align-items:center;gap:8px">
       <input id="esp-livre" placeholder="outro pedido, à mão (ex.: Repetição de Indébito)" style="flex:1;min-width:220px"
-        onkeydown="if(event.key==='Enter')espCtx.escolher(null,null,this.value)">
-      <button class="btn-mini" onclick="espCtx.escolher(null,null,document.getElementById('esp-livre').value)" title="usar este nome"><span aria-hidden="true">Usar</span><span class="sr-only">usar este nome</span></button>
+        onkeydown="if(event.key==='Enter')espCtx.escolherCampos(null,null,this.value)">
+      <button class="btn-mini" onclick="espCtx.escolherCampos(null,null,document.getElementById('esp-livre').value)" title="usar este nome"><span aria-hidden="true">Usar</span><span class="sr-only">usar este nome</span></button>
     </div>`);
   pintarEspecies();
   document.getElementById("esp-busca").focus();
@@ -36207,7 +36213,7 @@ function pintarEspecies(){
   const html = FAMILIAS_ESPECIE.map(([fam, cods]) => {
     const itens = cods.flatMap(cod => subespeciesDe(cod).filter(([ch, nome]) => bate(`${cod} ${ch} ${nome}`)).map(([ch, nome]) => {
       const on = at.chave ? at.chave===ch : (at.cod===cod && ch===cod);
-      return `<button class="esp-it ${on?"on":""} ${ch===cod?"":"sub"}" onclick="espCtx.escolher('${cod}','${ch}')">
+      return `<button class="esp-it ${on?"on":""} ${ch===cod?"":"sub"}" onclick="espCtx.escolherCampos('${cod}','${ch}')">
         <span class="esp-cod-mini">${esc(cod)}</span>${esc(nome)}</button>`; }));
     return itens.length ? `<div class="esp-fam"><div class="esp-fam-rot">${esc(fam)}</div>${itens.join("")}</div>` : "";
   }).join("");
@@ -37331,8 +37337,8 @@ function linhasDeDatas(cliId){
     const desp = x.prazo && ((x.ronda||{}).despacho||{}).prazo===x.prazo ? x.ronda.despacho : null;
     if(desp){
       const por = D.colPorId.get(desp.por);
-      linhas.push({data:x.prazo, ico:"↩", natureza:"lembrete", casoId:x.id, cru:true, rotulo:"Volta à fila", resumo:"volta à fila",
-        rot:`<b>Volta à fila — ${tit}</b>
+      linhas.push({data:x.prazo, ico:"↩", natureza:"lembrete", casoId:x.id, cru:true, rotulo:"Volta à fila", resumo:`concluído por hoje${por?` por ${por.nome.split(" ")[0]}`:""}`,
+        rot:`<b>Volta à fila: ${tit}</b>
                   <small class="qd-de">Concluído por hoje${por?` por ${esc(por.nome.split(" ")[0])}`:""} em ${fmt(String(desp.em||"").slice(0,10))}</small>`,
         edita:`onchange="qdMudarPrazo('${x.id}',this.value)"`});
     }
@@ -37741,13 +37747,12 @@ function faixaPrazos(k){
   const nResto = grupos.reduce((n,[,g])=>n+g.length, 0), nRestoV = grupos.filter(([,,t])=>t==="venc").reduce((n,[,g])=>n+g.length, 0);
   const blocos = !nResto ? "" : `<details class="fp-resto"${_pzTodos.has(k.id)?" open":""} ontoggle="this.open?_pzTodos.add('${k.id}'):_pzTodos.delete('${k.id}')"><summary title="ver as outras datas">+${nResto} ${nResto===1?"data":"datas"}${nRestoV ? ` · <b class="fp-resto-v">${nRestoV} ${nRestoV===1?"vencida":"vencidas"}</b>` : ""}</summary>`
     + grupos.map(([rot, g, tom]) => `<section class="fp2-grupo"${tom?` data-tom="${tom}"`:""}>${cab(rot, g.length)}${g.map(x=>linha(x)).join("")}</section>`).join("") + `</details>`;
-  const regra = `<p class="fp-regra meio-sub">Anotação com ⏰ cria o prazo fatal; anotação com data cria o lembrete; Concluir por hoje marca a volta à fila.</p>`;
   const sem = destaque ? "" : `<p class="fp2-sem meio-sub">Sem prazo fatal em aberto neste caso.</p>`;
   const nv = minhas.length ? `<button type="button" class="tl-bt fp-nv" onclick="this.closest('.faixa-prazos').classList.add('nv-ver')" title="no nível 1 as datas ficam recolhidas"><span aria-hidden="true">Datas</span><span class="sr-only">ver as datas</span></button>` : "";   // F249
   if(painelPz && painelPz.casoId===k.id && painelPz.fonte!=="cli"){ const j = minhas.findIndex(x=>x.data===painelPz.data && (x.andId||"")===painelPz.andId);
     if(j>=0) setTimeout(()=>abrirPainelPrazo(j));
     else if(painelPz.andId){ const pz = painelPz; setTimeout(()=>abrirPainelTarefa(pz.casoId, pz.andId)); } }
-  return `<div class="faixa-prazos fp2" aria-label="Prazos e providências">${tit}${nv}${destaque ? linha(destaque, true) : (sug || sem) + (soUm ? linha(soUm) : "")}${blocos}${outros}${regra}</div>`;
+  return `<div class="faixa-prazos fp2" aria-label="Prazos e providências">${tit}${nv}${destaque ? linha(destaque, true) : (sug || sem) + (soUm ? linha(soUm) : "")}${blocos}${outros}</div>`;
 }
 // F333 · O PRAZO QUE NASCE DA ETAPA (decisão do Paulo, 31.10.2026, depois de comparar com Filevine, MyCase e Astrea):
 // a etapa declarada que abre prazo oferece o item do catálogo, contado da decisão quando ela está no caso. Só oferece:
@@ -38944,11 +38949,10 @@ function linhaCaso(k){
       ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo lc-menu"')}</div>
       <div class="lc-cab">
       ${/* F113 · só o nome do pedido e a canetinha; o código do INSS fica no title e na janela */""}
-      <b class="lc-ben ${(k.especie||k.beneficio||tituloProprio(k))?"":"lc-vazio"}" title="${esc(k.especie?`${k.especie} · `:"")}${esc((k.especie||k.beneficio) ? tituloCaso(k) : tituloProprio(k) || tituloCaso(k))} — clique na canetinha para trocar">${
+      <b class="lc-ben ${(k.especie||k.beneficio||tituloProprio(k))?"":"lc-vazio"}" title="${esc(k.especie?`${k.especie} · `:"")}${esc((k.especie||k.beneficio) ? tituloCaso(k) : tituloProprio(k) || tituloCaso(k))}. Clique na canetinha para trocar">${
         (k.especie||k.beneficio) ? esc(tituloCaso(k)) : tituloProprio(k) ? esc(tituloProprio(k)) : "definir o pedido"}</b>
       ${k.natureza?`<span class="chip nat-chip" title="natureza do pedido">${esc(rotNatureza(k.natureza))}</span>`:""}
-      ${k.urgente?`<span class="chip urg">Urgente</span>`:""}
-      ${semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo — custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:""}
+      ${semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo: custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:""}
       </div>
       <div class="lc-placa">
       ${k.fase==="encerrado" && !k.der ? "" : `<span class="lc-f"><span class="lc-k">DER</span>${k.der
@@ -39740,7 +39744,6 @@ function blocoFatos(k){
       ${!k.beneficio?`<input id="ben-${k.id}" list="lista-beneficios" placeholder="qual é o benefício?"
         style="padding:4px 8px;border:1px solid var(--borda);border-radius:6px;font-size:13px">
         <button class="btn-mini" onclick="salvarBeneficio('${k.id}')">definir</button>`:""}
-      ${k.urgente?`<span class="chip urg">🔥 URGENTE</span>`:""}
       ${chipExig(k)}
       ${k.parceria?`<span class="chip ben">🤝 ${esc(k.parceria)}</span>`:""}
       ${k.exigencia_prazo?`<button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')" title="💬 msg ao cliente"><span aria-hidden="true">💬 Mensagem</span><span class="sr-only">💬 msg ao cliente</span></button>
@@ -41824,6 +41827,62 @@ function seloArquivo(k, chave){
 // com a data à esquerda, sem misturar com o que o escritório escreve. O texto
 // já vem gravado com quem falou na frente ("INSS · " ou "Escritório · ") —
 // aqui isso vira etiqueta, porque é o que muda o que se faz a seguir.
+// F374 · A TELA DO PAT: o requerimento como o portal do INSS o mostra, a partir
+// do detalhe que a extensão já coleta (casos.pat, por protocolo, gravado ao
+// aplicar a coleta). Os anexos abrem o arquivo guardado em pat/<protocolo>/<id>.
+const PAT_CAMPOS = ["protocolo","status","nomeServico","siglaServico","especieBeneficio","nomeUnidade",
+  "nomeUnidadeCriacao","dataEntradaRequerimento","dataCriacao","tipoExigencia","descricaoEtapaPericia",
+  "descricaoEtapaAvaliacao","tipoCanalAtendimento"];
+const escolherCampos = (o, ks) => Object.fromEntries(ks.filter(x=>o && o[x]!=null && o[x]!=="").map(x=>[x, o[x]]));
+function blocoPat(det, linha, em){
+  const ag = (l, tipo) => (l||[]).map(a=>({...escolherCampos(a, ["data","horario","nomeUnidade","situacaoAgendamento"]), tipo}));
+  return { ...escolherCampos(det, PAT_CAMPOS),
+    ...escolherCampos(linha, ["dataUltimaAtualizacao"]),
+    comentarios: (det.comentarios||[]).filter(c=>c && c.visivel!==false)
+      .map(c=>escolherCampos(c, ["id","dataCriacao","conteudo","incluidoPorServidor"])),
+    anexos: (det.anexos||[]).map(a=>escolherCampos(a, ["id","nomeArquivo","descricaoArquivo","categoria","tamanho"])),
+    agendamentos: [...ag(det.agendamentosPericia, "Perícia médica"), ...ag(det.agendamentosAvaliacaoSocial, "Avaliação social")],
+    coletado_em: em || null };
+}
+// só os protocolos que o caso tem hoje, do mais recente ao mais antigo
+const telasPat = k => { const ps = new Set((k.protocolos||[]).map(soDig));
+  return Object.values(k.pat||{}).filter(b=>ps.has(soDig(b.protocolo)))
+    .sort((a,b)=>String(b.dataEntradaRequerimento||"")<String(a.dataEntradaRequerimento||"")?-1:1); };
+const dataPat = s => { const m = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}:\d{2}))?/.exec(String(s||""));
+  return m ? `${m[3]}/${m[2]}/${m[1]}${m[4]?` ${m[4]}`:""}` : String(s||""); };
+const rotuloPat = s => { const t = String(s||"").replace(/_/g," ").toLowerCase(); return t.charAt(0).toUpperCase()+t.slice(1); };
+function telaPat(k, b){
+  const p = soDig(b.protocolo);
+  const guardados = new Map(docsDaOrigem(k, ["pat"]).map(d=>[d.caminho, d]));
+  const abrir = (caminho, rot) => `<button class="btn-mini" onclick="abrirDecisao('${escJs(caminho)}')" title="abrir o arquivo guardado no CRM">📄 ${esc(rot)}</button>`;
+  const integral = [...guardados.keys()].filter(c=>c.startsWith(`pat/${p}/processo-integral`)).sort().pop();
+  const cab = [["Protocolo", b.protocolo], ["Serviço", b.nomeServico], ["Situação", situacaoDe(b.status) || rotuloPat(b.status)],
+    ["Exigência", b.tipoExigencia && rotuloPat(b.tipoExigencia)], ["Data de entrada", dataPat(b.dataEntradaRequerimento)],
+    ["Última atualização", dataPat(b.dataUltimaAtualizacao)], ["Unidade", b.nomeUnidade], ["Unidade de criação", b.nomeUnidadeCriacao],
+    ["Etapa da perícia", b.descricaoEtapaPericia], ["Etapa da avaliação social", b.descricaoEtapaAvaliacao]].filter(x=>x[1]);
+  const coms = [...(b.comentarios||[])].sort((x,y)=>String(y.dataCriacao||"")<String(x.dataCriacao||"")?-1:1);
+  const ags = b.agendamentos||[];
+  return `<div class="fatos tela-pat" style="margin-bottom:12px">
+    <div class="fatos-topo"><h3 style="font-size:14px">PAT · ${esc(b.protocolo||"")}</h3>
+      <span style="margin-left:auto">${integral ? abrir(integral, "Processo integral") : ""}</span></div>
+    <table class="tab" style="margin-bottom:10px">${cab.map(([r,v])=>`<tr><th style="text-align:left;white-space:nowrap">${r}</th><td>${esc(v)}</td></tr>`).join("")}</table>
+    ${ags.length ? `<h4 style="font-size:13px;margin:8px 0 4px">Agendamentos</h4>
+    <table class="tab pat-ag"><tr><th>Data</th><th>Tipo</th><th>Local</th><th>Situação</th></tr>
+      ${ags.map(a=>`<tr><td style="white-space:nowrap">${esc(a.data||"")} ${esc(a.horario||"")}</td><td>${esc(a.tipo)}</td><td>${esc(a.nomeUnidade||"")}</td><td>${esc(rotuloPat(a.situacaoAgendamento))}</td></tr>`).join("")}
+    </table>` : ""}
+    <h4 style="font-size:13px;margin:8px 0 4px">Comentários (${coms.length})</h4>
+    <table class="tab pat-com"><tr><th>Data</th><th>Autor</th><th>Comentário</th></tr>
+      ${coms.map(c=>`<tr><td style="white-space:nowrap">${esc(dataPat(c.dataCriacao))}</td><td>${c.incluidoPorServidor?"INSS":"Escritório"}</td><td>${esc(limparHtmlPat(c.conteudo))}</td></tr>`).join("")}
+    </table>
+    <h4 style="font-size:13px;margin:8px 0 4px">Anexos (${(b.anexos||[]).length})</h4>
+    <table class="tab pat-anx"><tr><th>Arquivo</th><th>Descrição</th><th>Categoria</th></tr>
+      ${(b.anexos||[]).map(a=>{ const c = `pat/${p}/${a.id}`;
+        return `<tr><td>${guardados.has(c) ? abrir(c, a.nomeArquivo||"anexo") : `<span class="meio-sub" title="a extensão ainda não baixou este anexo">${esc(a.nomeArquivo||"anexo")} (não baixado)</span>`}</td>
+          <td>${esc(a.descricaoArquivo||"")}</td><td>${esc(rotuloPat(a.categoria))}</td></tr>`; }).join("")}
+    </table>
+    <div class="fatos-pe" style="justify-content:flex-end"><span class="meio-sub">lido do PAT${b.coletado_em?` em ${esc(dataPat(b.coletado_em))}`:""}</span></div>
+  </div>`;
+}
 function painelINSS(k, ands){
   const coms = comentariosPat(ands);
   // F103 · no tema, o compositor acompanha toda aba de andamentos: a
@@ -41831,12 +41890,15 @@ function painelINSS(k, ands){
   const comp0 = composerNoPainel(k) + avisoNumeroFora(k, "prot");
   // F185 · o submenu do INSS: os comentários e os anexos do requerimento
   const temDocs = docsDaOrigem(k, ["pat"]).length > 0;
-  const verDocs = fontePat==="docs" && temDocs;
-  const menu = temDocs ? `<div class="sub-menu fontes" style="width:100%">
-    <button class="${verDocs?"":"on"}" onclick="fontePat='';repintarFicha()">${temaV10()?"":"🌻 "}Comentários (${coms.length})</button>
+  const telas = telasPat(k);
+  const verDocs = fontePat==="docs" && temDocs, verTela = fontePat==="tela" && telas.length;
+  const menu = temDocs || telas.length ? `<div class="sub-menu fontes" style="width:100%">
+    <button class="${verDocs||verTela?"":"on"}" onclick="fontePat='';repintarFicha()">${temaV10()?"":"🌻 "}Comentários (${coms.length})</button>
+    ${telas.length?`<button class="${verTela?"on":""}" onclick="fontePat='tela';repintarFicha()" title="o requerimento como o PAT mostra: situação, exigência, agendamentos, comentários e anexos">PAT</button>`:""}
     ${botaoDocs(k, ["pat"], verDocs, "fontePat='docs';repintarFicha()")}
   </div>` : "";
   if(verDocs) return comp0 + menu + painelDocumentos(k, ["pat"]);
+  if(verTela) return comp0 + menu + telas.map(b=>telaPat(k, b)).join("");
   const comp = comp0 + menu;
   if(!coms.length)
     return comp + `<div class="caso">
@@ -46632,6 +46694,8 @@ async function moverNumero(tipo, d, deId, paraId, opts={}){
   } else if(tipo==="prot"){
     cDe.protocolos = (de.protocolos||[]).filter(p=>soDig(p)!==d); delete mDe[`add:prot:${d}`];
     cPara.protocolos = [...new Set([...(para.protocolos||[]), d])]; mPara[`add:prot:${d}`] = {de:deId, por:eu.id, em:agora};
+    // F374 · a tela do PAT do protocolo vai junto
+    if(de.pat && de.pat[d]){ const {[d]:tela, ...resto} = de.pat; cDe.pat = resto; cPara.pat = {...(para.pat||{}), [d]: tela}; }
     ands = (D._andsFicha||[]).filter(a=>a.caso_id===deId && a.origem==="pat" && String(a.origem_id||"").includes(":"+d));
   } else if(tipo==="nup"){
     const bloco = crpsBlocos(de).find(b=>soDig(b.nup)===d);
@@ -46792,7 +46856,7 @@ function blocoSemCpf(){
     <span class="meio-sub">${casos(c).length} caso${casos(c).length===1?"":"s"}${casos(c).some(k=>k.fase!=="encerrado")?" · com caso aberto":""}</span></label>`;
   const grupo = (tit, sub, l, marcado, aberto) => l.length ? `<details class="semcpf-g"${aberto?" open":""}><summary><b>${tit} (${l.length})</b> <span class="meio-sub">${sub}</span></summary>
     ${l.map(c=>linha(c, marcado)).join("")}</details>` : "";
-  return `<details class="sem-acao neutro" id="acervo-semcpf"><summary>Conferir cadastros sem CPF (${vivos.length}) — o que não é cliente sai da lista Clientes</summary>
+  return `<details class="sem-acao neutro" id="acervo-semcpf"><summary>Conferir cadastros sem CPF (${vivos.length}): o que não é cliente sai da lista Clientes</summary>
     <p class="meio-sub" style="margin:8px 0 4px">Nada é apagado: os marcados só saem da lista Clientes, com os casos e o histórico, e voltam pelo “É cliente” da ficha.</p>
     ${grupo("Não parecem clientes", "tarefas do To Do e contatos (Imprimir, iCloud, Pai…), já marcados", g1, true, true)}
     ${grupo("Só o primeiro nome", "confira na ficha antes de marcar", g2, false, false)}
@@ -48171,7 +48235,7 @@ function cadCampoPasta(c){
     <div class="cad-v">
       <button class="cad-mini" onclick="abrirDrive('${c.id}')" title="abre no Google Drive (navegador)">${CAD_IC.pasta}Drive</button>
       <button class="cad-mini" onclick="abrirExplorer('${c.id}')" title="abre no Windows Explorer (requer o atalho instalado)">${CAD_IC.tela}Explorer</button>
-      ${(c.campos||{}).pasta_drive?"":`<span class="cad-apoio">sem link fixo — a busca vai pelo nome</span>`}</div>
+      ${(c.campos||{}).pasta_drive?"":`<span class="cad-apoio">sem link fixo; a busca vai pelo nome</span>`}</div>
   </div>`;
 }
 // F23 · registro avulso: anotação de cliente que não pertence a caso nenhum.
@@ -51786,6 +51850,7 @@ const AJUDA = {
     <li><b>INSS</b>, <b>Recurso</b> e <b>Judicial</b>: somente o que veio dos portais, sem campo de escrever.</li>
     <li><b>Caso Completo</b>: tudo junto, por fase e por mês.</li></ul>`],
   "caso:prazos": ["Prazos", `<p>Lista as datas do caso: prazo fatal, perícia, volta à fila e o que vence em sete dias. O prazo fatal mostra quanto falta. "Ver mais datas" abre as que ficam mais adiante.</p>
+<p>Anotação com ⏰ cria o prazo fatal; anotação com data cria o lembrete; Concluir por hoje marca a volta à fila.</p>
     <p>No caso do INSS, do Conselho e do Judicial, <b>Em análise</b> registra que o portal não mudou e <b>Movimentou</b> registra o que aconteceu.</p>`],
   "caso:cartao": ["Cartão do caso", `<p>Mostra a espécie, a fase e a tramitação; a tramitação é o link do portal. A seta no pé abre os números do caso (NB, protocolo, processo) e a gestão.</p>`],
   "caso:etapas": ["Fases e etapas", `<p>A faixa mostra as fases do caso e a etapa atual. Quando um fato novo contradiz a etapa, aparece a sugestão com <b>Aceitar</b>. A etapa é a que o cliente lê no portal.</p>`],
@@ -54078,7 +54143,7 @@ new MutationObserver(ms=>{
     document.getElementById("login-config").innerHTML=`
       <div class="cfg-cx">
         <strong>Primeiro acesso neste navegador</strong>
-        <p>Cole o endereço e a chave <b>anon</b> do projeto — no Supabase, em
+        <p>Cole o endereço e a chave <b>anon</b> do projeto, que no Supabase fica em
            <i>Settings → API</i>. Fica guardado aqui: você só faz isto uma vez,
            mesmo trocando o arquivo por uma versão nova.</p>
         <input id="cfg-url" placeholder="https://xxxxx.supabase.co" autocomplete="off">
