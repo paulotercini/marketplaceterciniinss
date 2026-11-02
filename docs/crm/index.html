@@ -8070,7 +8070,7 @@ const porDaProposta = p => p.comData ? p.por : `${p.por} de ${dCurta(p.data)}`;
 const REGRAS_ETAPA_JUD = [
   {rx:/requisicao de pequeno valor|expedicao de (requisi|rpv|precat)|expedid[oa]s? (a |o )?(requisi|rpv|precat)|rpv expedid|precatorio expedid|requisitorio/,
    nao:/pagamento|pago|cancelad|levantad|deposit/, etapa:"RPV expedida", passos:["RPV ou precatório expedido"], mover:"pagamento"},
-  {rx:/deposito (judicial )?(de|da|do) (rpv|requisi|precat)|comprovante de (deposito|pagamento|levantamento)|pagamento (de|da|do) (rpv|requisi|precat)|rpv paga|alvara|levantamento/,
+  {rx:/deposito (judicial )?(de|da|do) (rpv|requisi|precat)|comprovante de (deposito|pagamento|levantamento)|pagamento (de|da|do) (rpv|requisi|precat)|rpv paga|alvara|levantamento/, nao:/suspens/,
    etapa:"recebido", passos:["RPV paga","Levantamento"], mover:"pagamento"},
   {rx:/homolog\w* (de |dos |os |o )?calculo|calculos? homologad/, etapa:"aguardando RPV", passos:["Cálculos homologados"]},
   {rx:/juntada de calculo|calculos? (da contadoria|do inss|de liquida)|(a|para a) contadoria|cumprimento de sentenca/, nao:/prazo|intima/, etapa:"aguardando RPV",

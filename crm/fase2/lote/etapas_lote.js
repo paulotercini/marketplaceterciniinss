@@ -64,6 +64,21 @@ let gravando = false; const barrados = {}, gravados = { patch: 0, post: 0 };
     return { st: document.getElementById("et-lote-st").textContent, cont, mot, prop, idsA: _loteEt.itens.filter(i => i.g === "A").map(i => i.k.id) };
   });
   console.log(res.st); console.log("grupos", res.cont); console.log("motivos", res.mot); console.log("A por fase e etapa", res.prop);
+  if (process.env.DUMP === "1") {
+    // grava B, C e D numa tabela privada (RLS sem política) para a conferência; o log continua só com contagens
+    const linhas = await p.evaluate(() => _loteEt.itens.filter(i => i.g && i.g !== "A").map(i => {
+      const k = i.k, f = faseDaEtapa(k), cli = (D.clientes.find(c => c.id === k.cliente_id) || {}).nome || "";
+      const ands = (_loteEt.ands.get(k.id) || []).filter(a => !a.excluir).sort((a, b) => a.criado_em < b.criado_em ? 1 : -1);
+      const of = ands.filter(a => a.origem && !/^(todo|crm|manual)$/.test(a.origem)).slice(0, 6), nt = ands.filter(a => !of.includes(a)).slice(0, 6);
+      const lim = a => ({ d: String(a.criado_em || "").slice(0, 10), o: a.origem || "", t: String(a.texto || "").replace(/\s+/g, " ").slice(0, 300) });
+      return { caso_id: k.id, g: i.g, fase: f, etapa_atual: k.etapa || null, motivo: String(i.motivo || ""),
+        proposta: i.p ? { etapa: i.p.etapa, data: i.p.data, por: i.p.por, mover: i.p.mover || null, cli, ben: k.beneficio || "", lista: k.lista || "" } : { cli, ben: k.beneficio || "", lista: k.lista || "" },
+        oficiais: of.map(lim), notas: nt.map(lim), opcoes: (ETAPAS_POR_FASE[f] || []) };
+    }));
+    const r = await fetch(URL0 + "/rest/v1/_lote_etapas_rev", { method: "POST", headers: { apikey: KEY, authorization: `Bearer ${KEY}`,
+      "content-type": "application/json", prefer: "resolution=merge-duplicates,return=minimal" }, body: JSON.stringify(linhas) });
+    console.log("dump", linhas.length, "status", r.status);
+  }
   if (ESCREVER && res.idsA.length) {
     gravando = true;
     await p.evaluate(() => gravarLoteEtapa());
