@@ -399,6 +399,8 @@ A **F362** (12.27, pedido do Paulo de 02.11.2026): o colaborador voltou a ver a 
 
 A **F363** (12.28, pedido do Paulo de 02.11.2026): a figurinha (`tipo = figurinha`) aparece no balão e no histórico do WhatsApp da ficha como imagem de 140 px, sem corte (`miniZap(caminho, abrir, fig)`, `.zap-fig`), no lugar do anexo "figurinha.webp"; o clique abre o original. Teste: `zapfoto.js`.
 
+A **F364** (12.29, pedido do Paulo de 02.11.2026): nas Pendentes do colaborador entra apenas a conversa sem atendente com mensagem não lida do cliente, como o contador do menu; o gestor continua vendo todas. Eram 158, quase todas as que a distribuição do SMBot de 01.11 deixou sem atendente. Teste: `zapgestor.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
