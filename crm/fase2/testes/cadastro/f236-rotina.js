@@ -267,7 +267,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a recepção avisa o cliente das perícias da semana", ir.some(i => i.cli === "c8" && i.avisar));
   conf("e vê os atendimentos presenciais", ir.some(i => i.cli === "c10" && i.selo === "Atendimento"));
   const mr = await rita.evaluate(() => { visao = "meudia"; render(); return document.getElementById("sub-lista").innerHTML; });
-  conf("sem o Planejado na barra, o Meu Dia da recepção não oferece o atalho para ele", !/irPara\('planejado'\)/.test(mr));
+  conf("F377 · a recepção tem o Planejado (as abas Mês, Perícias e Casos moram nele), e o Meu Dia oferece o atalho", /irPara\('planejado'\)/.test(mr));
   // o recado de retorno sugere a menção, e a anotação rápida passa a criá-la
   await rita.evaluate(() => { anotacaoRapida(""); arEscolher("c3");
     const ta = document.getElementById("ar-texto"); ta.value = "Ligou perguntando da aposentadoria. Pedi para aguardar o retorno do Dr. Paulo.";
