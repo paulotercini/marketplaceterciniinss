@@ -6104,6 +6104,7 @@ html[data-tema="v10"] .app.celular .cel-dado .cel-rot{grid-area:r;font-size:11px
 html[data-tema="v10"] .app.celular .cel-dado .cel-val{grid-area:v;font:500 18px var(--f-mono);color:var(--texto);font-variant-numeric:tabular-nums}
 html[data-tema="v10"] .app.celular .cel-dado .cel-val.cel-txt{font:400 17px var(--f-ui)}
 html[data-tema="v10"] .app.celular .cel-dado > :is(button,a){grid-area:b;min-height:36px;display:inline-flex;align-items:center;text-decoration:none}
+html[data-tema="v10"] .app.celular .cel-dado > :is(button,a):has(+ :is(button,a)){grid-row:1}
 html[data-tema="v10"] .app.celular .cel-dado > :is(button,a) + :is(button,a){grid-row:2}
 html[data-tema="v10"] .app.celular .cel-rodape{margin:10px 2px 0;font-size:13px}
 html[data-tema="v10"] .app.celular .cel-rodape .cli-adv-bt{all:unset;cursor:pointer;color:var(--texto);text-decoration:underline;text-underline-offset:3px}
@@ -6552,6 +6553,7 @@ const celAbaNorm = () => abaAtiva===0 ? "cad" : abaAtiva===4 ? "hon" : abaAtiva=
 function celCadIr(qual){ celCad = qual; const d = document.querySelector(".det-principal"); if(d) d.dataset.celCad = qual;
   document.querySelectorAll(".cel-cad-seg button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.cc===qual))); }
 function celAbasHtml(c, ks, k, nPer, temHon){
+  if(meuNivel()<=1) return "";   // os níveis 0 e 1 ficam na Identificação: as abas do caso não abririam (teste da colaboradora, 02.11.2026)
   celAba = celAbaNorm();
   const nNov = k ? (D.novid||[]).filter(a=>a.caso_id===k.id).length : 0;
   // F326 · a aba Prazos do celular é a do cliente (todos os casos), com o número dos vencidos em vermelho
@@ -15682,11 +15684,11 @@ function pintarPainelZap(c){
 let _zpPrazos = [];
 async function casoComZap(cliId, casoId){
   const k = D.casoPorId.get(casoId);
-  if(k && ehPreCaso(k) && podeAtender()) { await abrirAtendimentoDe(cliId, casoId); return verZapCliente(cliId); }
+  if(k && ehPreCaso(k) && podeAtender()) { await abrirAtendimentoDe(cliId, casoId); return zapAoLado(cliId); }
   await abrirFicha(cliId); if(clienteAberto!==cliId) return;
   document.getElementById("modal").style.display = "none";
   casoSel = casoId; abaAtiva = meuNivel()<=1 ? 0 : 2; subAba = "escritorio"; repintarFicha();
-  await verZapCliente(cliId);
+  await zapAoLado(cliId);
 }
 async function prazoComZap(cliId, i){
   const x = _zpPrazos[i]; if(!x) return;
@@ -16895,7 +16897,9 @@ function botaoZapCliente(cliId){
     title="ler as mensagens de WhatsApp deste cliente">${iconeFonte("zap")}${n?` <b>${n}</b><span class="sr-only"> nova${n>1?"s":""}</span>`:""}</button>`;
 }
 // F282 · o "Abrir ficha" do WhatsApp abre a ficha (o caso, quando há) com a conversa ao lado, como o botão WhatsApp da ficha
-async function fichaComZap(cliId){ await abrirFicha(cliId); if(clienteAberto===cliId) await verZapCliente(cliId); }
+async function fichaComZap(cliId){ await abrirFicha(cliId); if(clienteAberto===cliId) await zapAoLado(cliId); }
+// no celular não há "ao lado": a conversa cobriria a ficha que a pessoa pediu para ver (teste da colaboradora, 02.11.2026)
+const zapAoLado = cliId => celular() ? null : verZapCliente(cliId);
 async function verZapCliente(cliId){
   const zs = D.zapFicha||[]; if(!zs.length) return;
   const ids = zs.map(z=>z.id).join(",");
