@@ -19,6 +19,10 @@ const feriados = html.slice(html.indexOf('const FERIADOS_FIXOS'), html.indexOf('
 new Function('ctx', `${extrair('atoDaExigencia')}; ${extrair('proxDiaUtil')}; ${extrair('somaDias')};
   ${feriados}; const ehFeriado = iso => feriadosNacionais(+iso.slice(0,4)).has(iso);
   ${html.match(/const ehDiaUtil = [^\n]+/)[0]}
+  ${html.match(/const PONTO_FACULTATIVO = [^\n]+/)[0]}
+  ${html.match(/const ehPontoFacultativo = [^\n]+/)[0]}
+  ${html.slice(html.indexOf('const ehDiaUtilAdm = '), html.indexOf('function proxDiaUtilAdm('))}
+  ${extrair('proxDiaUtilAdm')}
   ${html.match(/const prazoDaExigencia = [^\n]+/)[0]}
   ctx.atoDaExigencia = atoDaExigencia; ctx.prazoDaExigencia = prazoDaExigencia;`)(ctx);
 
