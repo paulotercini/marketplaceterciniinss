@@ -99,11 +99,11 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.waitForSelector(".zl-filas");
   const cab = await p.textContent(".zl-cab");
   conf("atendente: Novas, Minhas e Pendentes, sem Todas e Painel (F346, F362)", cab.includes("Novas") && cab.includes("Pendentes") && !cab.includes("Todas") && !cab.includes("Painel da equipe"));
-  // F364 · nas Pendentes do colaborador, apenas a sem atendente com mensagem não lida
+  // F365 · nas Pendentes do colaborador, todas as sem atendente, lidas ou não
   await p.evaluate(() => { zapFiltro = "sem"; irPara("whatsapp"); });
   await p.waitForSelector(".zl-filas");
   const pend = await p.textContent("#app");
-  conf("atendente: Pendentes mostra apenas a conversa com mensagem não lida (F364)", pend.includes("Cliente que escreveu") && !pend.includes("Cliente na fila"));
+  conf("atendente: Pendentes mostra também a conversa já lida (F365)", pend.includes("Cliente que escreveu") && pend.includes("Cliente na fila"));
   // a conversa da Amanda só aparece porque ele foi mencionado nela
   await p.evaluate(id => abrirConversa(id), DA_AMANDA);
   await p.waitForSelector(".zap-topo");
