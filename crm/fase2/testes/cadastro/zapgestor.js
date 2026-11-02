@@ -129,6 +129,17 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.waitForTimeout(400);
   const ms = escritas.filter(e => /\/mencoes/.test(e.u) && e.m === "POST");
   conf("a nota sem @ avisa quem atende a conversa (F357)", ms.length > antes && ms.slice(antes).some(e => e.b.para_id === AMANDA && e.b.conversa_id === DA_AMANDA));
+  // F369 · quem não atende pede a transferência: menção a quem atende (e aos gestores) e nota interna
+  await p.evaluate(id => abrirConversa(id), DA_AMANDA);
+  await p.waitForSelector(".zap-topo");
+  await p.click('.zap-topo button[aria-label="Pedir transferência"]');
+  await p.fill("#zpp-motivo", "cliente meu");
+  await p.click("#zpp-ok");
+  await p.waitForTimeout(400);
+  const ped = escritas.filter(e => /\/mencoes/.test(e.u) && e.m === "POST" && Array.isArray(e.b)).pop();
+  const notaPed = escritas.filter(e => /zap_mensagens/.test(e.u) && e.b && e.b.direcao === "interna").pop();
+  conf("Pedir transferência avisa a Amanda com o link da conversa e deixa a nota (F369)", ped && ped.b.some(x => x.para_id === AMANDA && x.conversa_id === DA_AMANDA && x.texto.includes("cliente meu"))
+    && notaPed && notaPed.b.texto.includes("pediu a transferência"));
   // F368 · o atendente marcado como gestor do WhatsApp vê todas e transfere a conversa de outra pessoa, sem ser administrador
   await p.evaluate(() => { eu.gestor_zap = true; zapFiltro = "todas"; zapAberta = null; irPara("whatsapp"); });
   await p.waitForSelector(".zl-filas");

@@ -15427,6 +15427,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            ${cfgApp("zap_ia_equipe")==="sim"?`<button class="zt-btn" onclick="iaZap('resumo')" title="a IA resume a conversa para você (nada vai ao cliente)" aria-label="Resumo">✨<span class="lbl">Resumo</span></button>
            ${pode&&!fim?`<button class="zt-btn" onclick="iaZap('rascunho')" title="a IA escreve uma resposta no campo; confira antes de enviar" aria-label="Rascunho">✨<span class="lbl">Rascunho</span></button>`:""}`:""}
            ${fim||!pode?"":`<button class="zt-btn" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
+           ${fim||pode||!deOutro?"":`<button class="zt-btn" onclick="pedirTransferencia()" title="pedir a ${esc(at.nome)} e aos gestores que transfiram a conversa" aria-label="Pedir transferência">${zic("seta")}<span class="lbl">Pedir</span></button>`}
            ${pode?`<button class="zt-btn pri" aria-label="${fim?"Reabrir":"Encerrar"}" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}<span class="lbl">Encerrar</span>`}</button>`:""}
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
@@ -16501,6 +16502,39 @@ async function transferirConversa(){
   };
   document.querySelectorAll("[data-zt]").forEach(b=>b.onclick=()=>enviar(b.dataset.zt, null));
   document.querySelectorAll("[data-zts]").forEach(b=>b.onclick=()=>enviar(null, b.dataset.zts));
+}
+
+// F369 · quem não atende pede a transferência: menção a quem atende e aos gestores, com o link da conversa;
+// quem recebe transfere pelo Transferir de sempre (pedido do Paulo de 02.11.2026)
+function pedirTransferencia(){
+  const c = zapConvs.find(x=>x.id===zapAberta), at = c && D.colPorId.get(c.atendente_id);
+  if(!c || !at) return;
+  const eqs = equipeAtiva().filter(x=>x.id!==at.id && x.papel!=="assistente_ia");
+  caixa(`<h3>Pedir a transferência</h3>
+    <p class="meio-sub">A conversa está com ${esc(at.nome)}. O pedido vai a ${esc(at.nome)} e aos gestores em Menções, com o link da conversa.</p>
+    <p class="zx-rot">Para quem</p>
+    <div class="form-linha">${eqs.map(x=>`<button class="btn-rap ${x.id===eu.id?"on":""}" data-zpp="${x.id}">${x.id===eu.id?"Para mim":esc(x.nome)}</button>`).join("")}</div>
+    <input id="zpp-motivo" placeholder="motivo (opcional): o cliente é meu…" style="width:100%;margin-top:10px">
+    <div class="form-linha" style="margin-top:10px"><button class="btn-sal" id="zpp-ok">Pedir</button></div>`);
+  let para = eu.id;
+  document.querySelectorAll("[data-zpp]").forEach(b=>b.onclick=()=>{
+    para = b.dataset.zpp; document.querySelectorAll("[data-zpp]").forEach(x=>x.classList.toggle("on", x===b)); });
+  document.getElementById("zpp-ok").onclick = async ()=>{
+    const mt = (document.getElementById("zpp-motivo").value||"").trim(); fecharCaixa();
+    const dest = D.colPorId.get(para), nome = nomeDaConversa(c);
+    const texto = `💬 ${eu.nome} pede que a conversa com ${nome} seja transferida para ${para===eu.id?"ele(a)":dest?dest.nome:"outra pessoa"}`
+      + (mt?` — ${mt}`:"") + `. Para atender, abra a conversa e use Transferir.`;
+    const alvos = [...new Set([at.id, ...equipeAtiva().filter(x=>x.papel==="admin"||x.gestor_zap).map(x=>x.id)])].filter(id=>id!==eu.id);
+    try{
+      await api(`/rest/v1/mencoes`,{method:"POST", headers:{Prefer:"return=minimal"},
+        body:JSON.stringify(alvos.map(id=>({de_id:eu.id, para_id:id, conversa_id:c.id, texto})))});
+      await api(`/rest/v1/zap_mensagens`,{method:"POST", headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({conversa_id:c.id, direcao:"interna", status:"interna", autor_id:eu.id,
+          texto:`↪ ${eu.nome} pediu a transferência para ${para===eu.id?eu.nome:dest?dest.nome:"outra pessoa"}${mt?": "+mt:""}`})});
+    }catch(e){ return aviso("Não gravou o pedido: "+msgErro(e)); }
+    aviso(`Pedido enviado a ${alvos.map(id=>(D.colPorId.get(id)||{}).nome).filter(Boolean).join(", ")} ✔`, false);
+    abrirConversa(c.id);
+  };
 }
 
 // A mensagem NÃO vira andamento sozinha: se virasse, o histórico do processo
