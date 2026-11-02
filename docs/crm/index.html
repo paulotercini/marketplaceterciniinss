@@ -9173,6 +9173,10 @@ function traduzirProcesso(json, opts = {}) {
     nup: limpar(json.proc || ''),
     num_proc: limpar(json.numProc || ''),
     orgao_atual: limpar(json.orgaoAtual || ''),
+    // 1.32 · o cabeçalho da tela do e-Sisrec, para a aba Recurso repeti-lo
+    nb: limpar(json.nb || ''),
+    aps_origem: limpar(json.apsOrigem || ''),
+    recorrido: limpar((json.recorrido && json.recorrido.nome) || json.recorrido || ''),
     recorrentes,
     status: sit.status,
     ultimo_em: sit.ultimo_em,
@@ -40397,9 +40401,10 @@ function oficCrps(t, e, casoId, selo, guardados, alv){
     msgJs:`msgCrpsEv('${escJs(casoId)}','${escJs(t.nup||"")}',${(t.eventos||[]).indexOf(e)})`,
     agendarJs: sv && ss.data===sv.data && sv.data>=hoje() && !evJaAgendado(casoId, sv.data) ? `agendarSessaoCrps('${escJs(casoId)}')` : "",
     portal: {href:linkERecursos(t.nup), rot:"e-SISREC"},
-    antes: (selo||"") + (e.docs ? `<span class="meio-sub" style="display:block;margin-top:4px">${e.docs} documento${e.docs>1?"s":""} no e-SISREC</span>` : ""),
-    docs: guardados.map(a => docRow(a.nome || (/monocr/i.test(a.nome||"")?"Decisão":"Acórdão"), /monocr/i.test(a.nome||"") ? "decisão monocrática" : "acórdão",
-        `abrirDecisao('${escJs(a.storage)}')`, `menuClaudeDocs('${escJs(casoId)}',['crps:${escJs(a.storage)}'])`) + caixaResumo(casoId, t.nup, a)).join(""),
+    antes: (selo||"") + (e.docs>guardados.length ? `<span class="meio-sub" style="display:block;margin-top:4px">${e.docs-guardados.length} documento${e.docs-guardados.length>1?"s":""} ainda no e-SISREC</span>` : ""),
+    // 1.32 · todos os documentos da movimentação, como na tela do e-Sisrec; o resumo conferível é só da decisão
+    docs: guardados.map(a => docRow(a.nome || "Documento", !ehDecisaoCrps(a) ? "documento" : /monocr/i.test(a.nome||"") ? "decisão monocrática" : "acórdão",
+        `abrirDecisao('${escJs(a.storage)}')`, `menuClaudeDocs('${escJs(casoId)}',['crps:${escJs(a.storage)}'])`) + (ehDecisaoCrps(a) ? caixaResumo(casoId, t.nup, a) : "")).join(""),
     sinais: `<span class="tl-sinais">
       <button class="tl-sinal imp ${e.importante?"on":""}" onclick="toggleSinalCrps(${alv},'importante')" aria-label="importante"
         title="${e.importante?"tirar o destaque desta movimentação":"destacar esta movimentação — acende o ⭐ do processo"}">${IC_ESTRELA}</button>
@@ -42660,9 +42665,17 @@ function itemRecurso(t, e, casoId){
         </span>
         ${segBtnHtml(segRegistrar(casoId, String(e.resumo||e.bruto||""), null))}
         ${guardados.map(a=>`<button class="crps-pdf" title="${esc(a.nome)}"
-          onclick="abrirDecisao('${esc(a.storage)}')">📄 abrir ${/monocr/i.test(a.nome)?"decisão":"acórdão"}</button>`).join("")}
-        ${e.docs?`<span class="meio-sub">📎 ${e.docs} documento${e.docs>1?"s":""}</span>`:""}
-        ${guardados.map(a=>caixaResumo(casoId, t.nup, a)).join("")}` };
+          onclick="abrirDecisao('${esc(a.storage)}')">📄 ${ehDecisaoCrps(a)?(/monocr/i.test(a.nome)?"decisão":"acórdão"):esc(a.nome)}</button>`).join("")}
+        ${e.docs>guardados.length?`<span class="meio-sub">📎 ${e.docs-guardados.length} documento${e.docs-guardados.length>1?"s":""} ainda no e-SISREC</span>`:""}
+        ${guardados.filter(a=>ehDecisaoCrps(a)).map(a=>caixaResumo(casoId, t.nup, a)).join("")}` };
+}
+// o arquivo gravado antes do campo `decide` se reconhece pelo nome
+const ehDecisaoCrps = a => a.decide || /ac[oó]rd[aã]o|monocr[aá]tic/i.test(a.nome||"");
+// 1.32 · o cabeçalho da tela do e-Sisrec: benefício, APS de origem e as partes (bloco gravado antes da 1.32 não os tem)
+function cabecalhoEsisrec(t){
+  const l = [["NB", t.nb], ["APS de origem", t.aps_origem], ["Recorrente", (t.recorrentes||[]).join(", ")], ["Recorrido", t.recorrido]]
+    .filter(x=>x[1]);
+  return l.length ? `<div class="meio-sub" style="margin-top:3px">${l.map(x=>`${x[0]}: <b>${esc(x[1])}</b>`).join(" · ")}</div>` : "";
 }
 function blocoRecurso(t, casoId){
   const evs = t.eventos||[], ruido = evs.filter(e=>e.tipo==="ruido");
@@ -42690,6 +42703,7 @@ function blocoRecurso(t, casoId){
       <span class="fx-rot">Situação</span> <b${cor}>${esc(st)}</b>
       ${ultima?seloOrgao(ultima, (ultima.arquivos||[]).find(a=>a.storage), k):""}
       ${t.orgao_atual?`<div class="meio-sub" style="margin-top:3px">📍 onde está agora: ${esc(tituloOrgao(t.orgao_atual))}</div>`:""}
+      ${cabecalhoEsisrec(t)}
       ${passosDoRecurso(k, t)}
     </div>
     ${tlOficial(cheios.map(linha), "Sem andamentos.")}

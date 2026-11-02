@@ -27,7 +27,7 @@ function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [], listas = null } =
     localStorage: { getItem: k => k === 'ifs_auth' ? 'token-cru' : null },
     chrome: { storage: { local: { get: async () => ({}), set: async () => {} } } },
     CRM: { nupsDoCrm: async () => ({ nups: nupsDoCrm, arquivados: [], fichas: 10 }),
-           // F184 · só o acórdão desce; o caminho volta marcado no documento
+           // F184 · o caminho volta marcado no documento (1.32: todos descem)
            guardarDocs: async (origem, nup, docs) => { docs.forEach(d => { d.caminho = `${origem}/${nup}/${d.id}`; }); return docs.length; },
            enviar: async (fonte, dados) => { enviados.push(dados); return true; } } };
   ctx.window = ctx; ctx.top = ctx;
@@ -63,9 +63,9 @@ test('recurso que o portal não lista mas o CRM conhece ainda é procurado nos d
   assert.equal(enviados[0].falhas.length, 0, '404 não é falha');
 });
 
-test('F184 · o acórdão desce junto e volta com o caminho; o CNIS não', async () => {
+test('1.32 · todos os documentos descem e voltam com o caminho, como na tela do e-Sisrec', async () => {
   const { enviados } = await rodada();
   const docs = enviados[0].itens[`${NUP1}_esisrec`].eventos[0].documentos;
   assert.equal(docs[0].caminho, `crps/${NUP1}/7`);
-  assert.equal(docs[1].caminho, undefined);
+  assert.equal(docs[1].caminho, `crps/${NUP1}/8`);
 });
