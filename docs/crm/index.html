@@ -6206,7 +6206,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.29</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.30</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7415,7 +7415,7 @@ const CARGA_2 = {
     lembrarMotivos: ()=>todas("lembrar_motivos","select=*&order=ordem").catch(()=>[]),
     rotinas: ()=>todas("rotinas","select=*&ativo=is.true&order=criada_em").catch(()=>[]),
     rotinasFeitas: ()=>todas("rotinas_feitas",`select=*&dia=eq.${hoje()}`).catch(()=>[]),
-    zaps: ()=>todas("zap_conversas","select=id,nao_lidas,atendente_id,status").catch(()=>[]),
+    zaps: ()=>todas("zap_conversas","select=id,nao_lidas,atendente_id,status,aguarda_desde").catch(()=>[]),
     inssCal: ()=>todas("inss_calendario","select=*").catch(()=>[]),
     anals: ()=>todas("analises_direito","select=*&order=data_analise.desc").catch(()=>null),
       // ⭐/⚡ as anotações marcadas, de TODOS os clientes — é a lista ⭐
@@ -7601,7 +7601,7 @@ function completarD(r){
   // conta o que cobra ação: minha conversa com mensagem nova, ou conversa
   // aberta sem dono nenhum (para o gestor, toda; para o colaborador, F362, a que tem mensagem não lida). O resto não precisa de contador piscando.
   D.zapResumo = (r.zaps||[]).filter(z=>z.status!=="resolvida"
-    && ((z.atendente_id===eu.id && z.nao_lidas>0) || (!z.atendente_id && (zapGestor() || z.nao_lidas>0)))).length;
+    && ((z.atendente_id===eu.id && z.nao_lidas>0) || (!z.atendente_id && (zapGestor() || aguardaResposta(z))))).length;
   // só guarda o que é da segunda leva (a primeira já está em _bruto1)
   D._bruto2 = Object.fromEntries(Object.keys(CARGA_2).map(k=>[k, r[k]]));
 }
@@ -15070,13 +15070,13 @@ function pintarListaZap(){
   // 29.10.2026 · sem a fila Retornos, que o escritório não usa (pedido do Paulo)
   // F346 · como no SMBot, o colaborador vê as Novas (as dele com mensagem não lida) e as Minhas;
   // Todas fica com o gestor; F362 · Pendentes voltou ao colaborador, para ele assumir quem escreveu e ninguém atende (pedido do Paulo de 02.11.2026);
-  // F364 · para o colaborador, apenas a pendente com mensagem não lida, como o contador do menu
+  // F365 · para o colaborador, apenas a pendente em que o cliente escreveu por último, há até 30 dias (aguardaResposta)
   const filtros = gestor ? [["novas","Novas"],["minhas","Minhas"],["sem","Pendentes"],["todas","Todas"]]
                          : [["novas","Novas"],["minhas","Minhas"],["sem","Pendentes"]];
   if(zapFiltro==="retornos") zapFiltro = gestor ? "todas" : "novas";
   if(!gestor && zapFiltro==="todas") zapFiltro = "novas";
   const naAba = (f,c) => f==="novas" ? meu(c)&&aberta(c)&&c.nao_lidas>0
-                       : f==="minhas" ? meu(c)&&aberta(c) : f==="sem" ? !c.atendente_id&&aberta(c)&&(gestor||c.nao_lidas>0)
+                       : f==="minhas" ? meu(c)&&aberta(c) : f==="sem" ? !c.atendente_id&&aberta(c)&&(gestor||aguardaResposta(c))
                        : f==="fim" ? !aberta(c)&&!c.automatica : f==="auto" ? !!c.automatica
                        : f==="retornos" ? !!retornoDe(c) : aberta(c);
   const q = dsa(zapBusca.trim()), qd = zapBusca.replace(/\D/g,"");
@@ -15955,6 +15955,10 @@ function alternarNota(){
 // F269 · a foto aparece em miniatura no balão, como no WhatsApp; o clique abre o original.
 // O link assinado vale 1 hora e fica guardado 50 minutos, porque a conversa repinta a cada 6 s
 const _miniUrl = new Map();
+// F365 · espera resposta: a última mensagem (sem robô e sem nota) é do cliente, há até 30 dias;
+// ler não tira, apenas responder ou assumir (zap_aguarda no banco). Sem a coluna, vale o não lido.
+const aguardaResposta = c => c.aguarda_desde === undefined ? c.nao_lidas > 0
+  : !!c.aguarda_desde && Date.now() - new Date(c.aguarda_desde) < 30*864e5;
 // F363 · a figurinha aparece no balão, menor e sem corte, como no WhatsApp
 const miniZap = (caminho, abrir, fig) => `<img class="zap-mini${fig?" zap-fig":""}" data-mini="${esc(caminho)}" alt="${fig?"figurinha":"foto"}" onclick="${abrir}">`;
 async function carregarMinis(raiz){

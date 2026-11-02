@@ -21,9 +21,9 @@ const T = {
   colaboradores: [...FIX.colaboradores,
     { id: AMANDA, nome: "Amanda", inicial: "A", cor: "#0a7d43", papel: "colaborador", ativo: true, atende_zap: true, cargo: "advogado" }],
   zap_conversas: [conv(DA_AMANDA, "Cliente da Amanda", AMANDA, { nao_lidas: 2 }),
-                  conv(PENDENTE, "Cliente na fila", null, { setor_id: S1 }),
+                  conv(PENDENTE, "Cliente na fila", null, { setor_id: S1, nao_lidas: 3, aguarda_desde: null }),
                   conv(MINHA, "Cliente do Paulo", EU),
-                  conv("d2000000-0000-0000-0000-000000000004", "Cliente que escreveu", null, { setor_id: S1, nao_lidas: 1 })],
+                  conv("d2000000-0000-0000-0000-000000000004", "Cliente que escreveu", null, { setor_id: S1, nao_lidas: 0, aguarda_desde: agora })],
   zap_mensagens: [{ id: "m1", seq: 1, conversa_id: DA_AMANDA, direcao: "entrada", tipo: "texto", texto: "Oi, doutora", status: "entregue", criado_em: agora }],
   zap_setores: [{ id: S1, nome: "Atendimento", cor: "#5b7fd6", ordem: 1, ativo: true }],
   colaborador_setores: [{ colaborador_id: EU, setor_id: S1 }],
@@ -99,11 +99,11 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.waitForSelector(".zl-filas");
   const cab = await p.textContent(".zl-cab");
   conf("atendente: Novas, Minhas e Pendentes, sem Todas e Painel (F346, F362)", cab.includes("Novas") && cab.includes("Pendentes") && !cab.includes("Todas") && !cab.includes("Painel da equipe"));
-  // F364 · nas Pendentes do colaborador, apenas a sem atendente com mensagem não lida
+  // F365 · nas Pendentes do colaborador, apenas a sem atendente em que o cliente escreveu por último (lida ou não)
   await p.evaluate(() => { zapFiltro = "sem"; irPara("whatsapp"); });
   await p.waitForSelector(".zl-filas");
   const pend = await p.textContent("#app");
-  conf("atendente: Pendentes mostra apenas a conversa com mensagem não lida (F364)", pend.includes("Cliente que escreveu") && !pend.includes("Cliente na fila"));
+  conf("atendente: Pendentes mostra a que espera resposta, mesmo lida, e não a respondida (F365)", pend.includes("Cliente que escreveu") && !pend.includes("Cliente na fila"));
   // a conversa da Amanda só aparece porque ele foi mencionado nela
   await p.evaluate(id => abrirConversa(id), DA_AMANDA);
   await p.waitForSelector(".zap-topo");
