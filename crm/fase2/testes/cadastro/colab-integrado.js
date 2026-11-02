@@ -112,7 +112,7 @@ async function abrir(nav, porta, viewport, extra) {
 
   // 2 · o WhatsApp: as duas conversas pendentes, assumir, responder e anotar
   await p.click('.lista-item[data-v="whatsapp"]');
-  await p.waitForSelector(".zap-lado");
+  await p.waitForSelector(".zap-lado .zl-filas button", { timeout: 10000 }).catch(() => {});   // a lista chega depois da leitura do banco
   const abas = await p.$$eval(".zap-lado [data-zf], .zap-filtros button", b => b.map(x => x.textContent.trim()));
   conf(`a colaboradora vê Novas, Minhas e Pendentes, sem Todas (${abas.join(" · ")})`, abas.some(a => /Pendentes/.test(a)) && !abas.some(a => /^Todas/.test(a)));
   await p.evaluate(() => { zapFiltro = "sem"; pintarListaZap(); });
