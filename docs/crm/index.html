@@ -6291,6 +6291,38 @@ html .faixa-prazos .fp3-out b{color:var(--dk-fatal,#B3261E)}
 html .faixa-prazos .fp3-etapa{display:flex;flex-direction:column;gap:4px;padding:12px;margin:4px 0 10px;border:1px dashed #9BB8AE;border-radius:10px;background:#F4F9F7}
 html .faixa-prazos .fp3-etapa small{font-size:12px;color:var(--cinza,#6B6A65)}
 html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
+/* F388 · as anotações em linha do tempo (proposta B, escolha do Paulo de 03.11.2026): um trilho vertical com a inicial
+   de quem escreveu sobre ele, o dia à esquerda no computador, um sinal só para a não lida, o prazo num quadro cinza sem
+   repetir o texto, a resposta com a seta e sem caixa, e a menção como texto */
+html[data-tema="v10"] .painel[data-p="2"] .timeline .dia-itens{position:relative;border-left:0;padding-left:42px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .dia-itens::before{content:"";position:absolute;left:15px;top:0;bottom:-12px;width:2px;background:#E4E2DC;border-radius:1px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .dia-bloco .tl-dia{padding-left:42px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .dia-itens>li.tl-card>.texto>.tl-cab>.tl-av{position:absolute;left:-43px;top:8px;width:30px;height:30px;border-radius:6px;font-size:13px;box-shadow:0 0 0 3px var(--fundo,#F7F6F2);z-index:1}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .dia-itens>li.tl-card>.texto>.tl-cab>.tl-av.av-fonte{background:#fff;border:1px solid var(--borda)}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .dia-itens li.tudo-marco::before{left:-31px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-card.tl-nao-lida{border-color:color-mix(in srgb,var(--azul) 55%,transparent);box-shadow:none}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .dia-itens li.tl-card.tl-imp,
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-card.tl-imp{box-shadow:none;padding-left:14px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .chip.tl-menc{background:transparent;border:0;padding:0;color:var(--azul);font-size:12px;font-weight:500}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-vivo{background:var(--placa,#F3F2EE);border:0;border-radius:8px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-corpo.tl-corpo-rep{display:none}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-vivo .tl-pz-pill{background:transparent;color:var(--cinza);padding:0}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-vivo .tl-pz-pill i{background:var(--dk-fatal,#B3261E)}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-vivo .tl-pz-m b{color:var(--dk-fatal,#B3261E)}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-tarefa:not(.atras){background:transparent;color:var(--cinza);border:1px solid var(--borda)}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item{position:relative;background:transparent;border:0;border-radius:0;padding:6px 0 0 22px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .resp-item::before{content:"\21B3";position:absolute;left:2px;top:6px;color:var(--cinza);font-size:14px;line-height:20px}
+html[data-tema="v10"] .painel[data-p="2"] .tl-banner.tl-banner-um{background:transparent;border:0;padding:0 2px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-fim-novas,
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-sys{padding-left:42px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-fim-novas{text-align:left;padding-top:2px;padding-bottom:10px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-fim-novas::before{display:none}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-fim-novas span{background:transparent;padding:0;color:var(--cinza);font-weight:500;font-size:12px}
+@media (min-width:761px){
+html[data-tema="v10"] body:not(.zap-aberto) .app:not(.celular) .painel[data-p="2"] .timeline li.dia-bloco{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:start}
+html[data-tema="v10"] body:not(.zap-aberto) .app:not(.celular) .painel[data-p="2"] .timeline .dia-bloco>.tl-dia{padding:10px 8px 0 0;text-align:right}
+html[data-tema="v10"] body:not(.zap-aberto) .app:not(.celular) .painel[data-p="2"] .timeline .dia-bloco>.tl-dia span{font-size:11px;line-height:1.3}
+}
 </style>
 </head>
 <body>
@@ -6303,7 +6335,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.43</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.45</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -41773,6 +41805,8 @@ async function responderInline(andId){
 // ══════════════════════════════════════════════════════════════════════════
 const RX_PZ_RESP = /^(✔|✖) \[PRAZO (CUMPRIDO|NÃO CUMPRIDO|NÃO SE APLICA)\]\s*/;
 let _cumprindo = null;   // a anotação com o formulário do cumprimento aberto
+// F388 · o texto da anotação que só repete o título do prazo não aparece duas vezes
+const limpaRepPz = t => String(t||"").trim().replace(/[\s.]+$/,"").toLowerCase();
 const tituloNotaPz = a => (RX_PZ_CONTAGEM.exec(String(a.texto||"").replace(RX_PZ_CARIMBO, ""))||[])[1] || cortaFrase(fazerDaNota(a.texto) || "Prazo fatal", 80);
 function estadoPrazoNota(a){
   const m = a && RX_PRAZO_AND.exec(a.texto||""); if(!m) return null;
@@ -41926,7 +41960,7 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
         ])}</span>
     </span>` : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
-    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${(h=>`<span class="tl-dt">${fmtTS(a.criado_em).slice(0,5)}${h?" · ":""}</span>${h}`)(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz && !pzE?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}${rp?rp.chip:""}<span class="tl-cab-fim">${barra}${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${rp?rp.anexos:""}${pzE?faixaPrazoNota(a, pzE):""}${tarefasCartao(a)}${chipsReacao}${resposta||""}${raiz?caixaRespInline(a):""}</span>`;   // F244 · as ações na linha do autor
+    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${(h=>`<span class="tl-dt">${fmtTS(a.criado_em).slice(0,5)}${h?" · ":""}</span>${h}`)(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz && !pzE?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}${rp?rp.chip:""}<span class="tl-cab-fim">${barra}${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo${pzE && pzE.est==="vivo" && limpaRepPz(tp?tp.resto:corpo)===limpaRepPz(tituloNotaPz(a)) ? " tl-corpo-rep" : ""}">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${rp?rp.anexos:""}${pzE?faixaPrazoNota(a, pzE):""}${tarefasCartao(a)}${chipsReacao}${resposta||""}${raiz?caixaRespInline(a):""}</span>`;   // F244 · as ações na linha do autor
 }
 // F41 · RESPONDER de qualquer comentário: arma o responde_a e o próximo
 // Registrar entra aninhado no comentário original (como a conclusão de
@@ -42052,7 +42086,7 @@ function linhaDoTempo(ands){
     }
     // F236 · a linha vai depois da ÚLTIMA nova: abaixo dela não sobra nada por ler
     if(passouNova && !fronteira && i>ultimaNova){
-      corpo+=`<li class="tl-fim-novas"><span>— você já tinha visto daqui para baixo —</span></li>`;
+      corpo+=`<li class="tl-fim-novas"><span>Você já tinha visto daqui para baixo</span></li>`;
       fronteira=true;
     }
     if(d!==diaAtual){ if(diaAtual!==null) corpo+=fecharDia(); corpo+=abrirDia(dataRelativa(d)); diaAtual=d; }
