@@ -86,5 +86,5 @@ self.addEventListener("push", e => {
   try { d = e.data ? e.data.json() : {}; } catch (x) {}
   e.waitUntil(self.registration.showNotification(d.title || "WhatsApp · CRM", {
     body: d.body || "", tag: d.tag || "crm-zap", renotify: true,
-    icon: "icone-192.png", badge: "icone-192.png", data: d.data || { crm: "zap" } }));
+    icon: d.icon || "icone-192.png", badge: "icone-192.png", data: d.data || { crm: "zap" } }));
 });
