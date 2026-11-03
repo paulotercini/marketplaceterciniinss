@@ -38,7 +38,9 @@ const and = (k, n, texto, o = {}) => { const a = { id: id("e"), caso_id: k.id, a
 
 
 // o último dia útil antes de hoje, como o CRM conta
-const dUtil = (() => { let n = -1; for (;;) { const d = new Date(iso(n) + "T12:00:00"); if (d.getDay() % 6) return n; n--; } })();
+// fim de semana e os feriados nacionais fixos (02/11 já fez a prova falhar); os móveis o CRM conta, a prova não
+const FIXOS = ["01-01", "04-21", "05-01", "09-07", "10-12", "11-02", "11-15", "11-20", "12-25"];
+const dUtil = (() => { let n = -1; for (;;) { const d = new Date(iso(n) + "T12:00:00"); if (d.getDay() % 6 && !FIXOS.includes(iso(n).slice(5))) return n; n--; } })();
 const cA = cli("Rodrigo Fictício Ontem"); cA.cpf = "52998224725";
 cA.campos = { notas_todo: [{ tipo: "cnpj", texto: "12.345.678/0001-90" }, { tipo: "aposentadoria", texto: "Possível aposentadoria especial em 22/10/2027" }] };
 const kA = caso(cA, { beneficio: "Aux. Incapacidade Temporária", especie: "B31", fase: "inss", importante: true, urgente: true, prazo: iso(10),
