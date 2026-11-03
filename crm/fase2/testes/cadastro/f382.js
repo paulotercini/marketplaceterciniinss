@@ -68,6 +68,35 @@ const SUPA = "https://ficticio.supabase.co";
   conf("quatro marcos no trilho (hoje, dois requisitos, direito)", dir.marcos === 4);
   conf("direito já alcançado ou sem análise não desenha nada", dir.ja === "" && dir.nulo === "");
 
+  // F386 · o rótulo do prazo fatal abaixo do marco e o progresso até o direito completo (protótipo do Lovable)
+  const lab = await p.evaluate(() => { const hj = hoje();
+    _pzCli = [{data: somaDias(hj, 7), _nat: "fatal", _titulo: "Recurso inominado"}, {data: somaDias(hj, 3), _nat: "compromisso", _titulo: "Perícia"}];
+    const d = document.createElement("div"); d.innerHTML = linha30Pz(hj); return [...d.querySelectorAll(".pzl-lab")].map(x => x.textContent); });
+  conf("F386 o nome do prazo fatal aparece abaixo do marco, e só o do fatal", lab.join("|") === "Recurso inominado");
+  const pg = await p.evaluate(() => {
+    const c = D.clientes[0], x = {hoje: "2026-11-02", dn: "1965-03-15", ct: {periodos: [["2013-01", "2026-10"]]}, c};
+    const a = {quando: "2027-11-01", rs: [
+      {id: "idade_minima", rot: "Já tem a idade mínima?", base: "EC 103/2019, art. 18", quando: "2027-03-15", est: "falta"},
+      {id: "carencia_180", rot: "Tem 180 contribuições mensais de carência?", base: "Lei 8.213/91, art. 25, II", quando: "2027-11-01", est: "falta"}]};
+    const d = document.createElement("div"); d.innerHTML = linhaDireito(a, x);
+    const q = [...d.querySelectorAll(".adp-q")].map(e => e.textContent.replace(/\s+/g, ""));
+    const sem = document.createElement("div"); sem.innerHTML = linhaDireito({...a, rs: [a.rs[0]], quando: "2027-03-15"}, x);
+    return {q, paths: d.querySelectorAll(".adp-g path").length, ex: !!d.querySelector(".adp-ex"), pag: (d.querySelector(".adp-pag") || {}).textContent || "",
+      contrib: (d.querySelector(".adp-pag button[onclick^='formQualidade']") || {}).getAttribute ? d.querySelector(".adp-pag button[onclick^='formQualidade']").getAttribute("onclick") : "",
+      semPag: !sem.querySelector(".adp-pag"), semGraf: sem.querySelectorAll(".adp-g path").length};
+  });
+  conf("F386 três quadros: carência de hoje e o exigido, idade e a data do direito",
+    pg.q.length === 3 && pg.q[1] === "Carência166de178mesescompletaem11/2027" && pg.q[0] === "Idade61de62anoscompletaem15/03/2027" && pg.q[2] === "Datadodireito01/11/2027" || (console.log(JSON.stringify(pg.q)), false));
+  conf("F386 o gráfico tem as duas curvas e a linha do exigido", pg.paths === 2 && pg.ex);
+  conf("F386 a linha das competências a pagar e o Contribuições com o plano pré-preenchido",
+    /Pagar de 12\/2026 a 11\/2027 e protocolar em 01\/11\/2027/.test(pg.pag) && /finalidade&quot;:&quot;aposentadoria|"finalidade":"aposentadoria"/.test(pg.contrib) || (console.log(pg.pag, pg.contrib), false));
+  conf("F386 sem carência a pagar, não há a linha de pagar; o gráfico fica só com a idade", pg.semPag && pg.semGraf === 1);
+  const fq = await p.evaluate(() => { const c = D.clientes[0];
+    formQualidade(c.id, "", "analise", {q: {finalidade: "aposentadoria", modalidade: "mensal", inicio: "2026-12-01", fim: "2027-11-28"}});
+    const r = {fim: document.getElementById("mq-fim-de").value, mod: document.getElementById("mq-mod").value, ini: document.getElementById("mq-ini").value, ate: document.getElementById("mq-fim").value};
+    fecharCaixa(); return r; });
+  conf("F386 o Contribuições abre o plano já com a finalidade, o mensal e as competências", fq.fim === "aposentadoria" && fq.mod === "mensal" && fq.ini === "2026-12" && fq.ate === "2027-11");
+
   // 3. a carga por pessoa
   const cg = await p.evaluate(eu => {
     const hj = hoje(), its = [];
