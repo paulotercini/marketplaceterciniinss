@@ -22,3 +22,10 @@ test("destinatários: o atendente, e sem atendente todos", () => {
   assert.equal(destinatarios({ atendente_id: null }, i).length, 3);
   assert.equal(mascarar("NB 1234567"), "NB 1234567");
 });
+
+test("F388 · a foto de quem escreve vai como ícone do aviso; sem foto, fica o do CRM", () => {
+  const c = { id: "c", atendente_id: null, automatica: false, nome_perfil: "Maria", telefone: null };
+  const m = { id: "m", conversa_id: "c", tipo: "texto", texto: "oi" };
+  assert.equal(aviso(m, c, null, "https://x/foto.jpg").icon, "https://x/foto.jpg");
+  assert.equal("icon" in aviso(m, c, null), false);
+});

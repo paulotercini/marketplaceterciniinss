@@ -6303,7 +6303,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.44</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.45</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6991,7 +6991,7 @@ const somZapLigado = () => ler("crm_zap_som") !== "0";
 // F360 · o aviso do navegador tem chave própria (ligado por padrão), separada do som, e sai também com a aba
 // à vista quando a pessoa não está na própria conversa
 const navZapLigado = () => ler("crm_zap_nav") !== "0";
-function tocarAvisoZap(texto, convId, soSom){
+function tocarAvisoZap(texto, convId, soSom, icone){
   if(somZapLigado()) try{
     zapAudioCtx = zapAudioCtx || new (window.AudioContext || window.webkitAudioContext)();
     if(zapAudioCtx.state === "suspended") zapAudioCtx.resume();
@@ -7005,13 +7005,13 @@ function tocarAvisoZap(texto, convId, soSom){
   // com o aviso no aparelho ligado (F335), quem avisa é o zap_push: aqui não repete
   const vendo = !document.hidden && visao==="whatsapp" && convId && zapAberta===convId;
   if(!soSom && navZapLigado() && !vendo && ler("crm_push")!=="1" && window.Notification && Notification.permission==="granted")
-    try{ const n = new Notification("WhatsApp · CRM", {body: texto, tag: "crm-zap"});
+    try{ const n = new Notification("WhatsApp · CRM", {body: texto, tag: "crm-zap", ...(icone?{icon: icone}:{})});   // F388 · a foto de quem escreve
          n.onclick = ()=>{ window.focus(); if(convId) abrirConversaDaMencao(convId); else { visao="whatsapp"; render(); } n.close(); }; }catch(e){}
 }
 async function vigiarZapSom(){
   if(!eu) return;
   const [cs, ms] = await Promise.all([
-    todas("zap_conversas","select=id,nao_lidas,atendente_id,status,nome_perfil,cliente_id,lead_id,telefone&nao_lidas=gt.0").catch(()=>null),
+    todas("zap_conversas","select=id,nao_lidas,atendente_id,status,nome_perfil,cliente_id,lead_id,telefone,foto_url,contato_nome&nao_lidas=gt.0").catch(()=>null),
     todas("mencoes",`select=id,texto,conversa_id&para_id=eq.${eu.id}&lida_em=is.null&conversa_id=not.is.null`).catch(()=>null)]);
   if(!cs || !ms) return;
   const minhas = cs.filter(c=>c.status!=="resolvida" && (c.atendente_id===eu.id || !c.atendente_id));
@@ -7019,8 +7019,10 @@ async function vigiarZapSom(){
   if(zapSomVisto){
     const nova = minhas.find(c=>c.nao_lidas > (zapSomVisto.conv.get(c.id)||0));
     const menc = ms.find(m=>!zapSomVisto.menc.has(m.id));
-    if(menc) tocarAvisoZap(menc.texto.replace(/^💬\s*/,""), menc.conversa_id);
-    else if(nova) tocarAvisoZap(`Mensagem nova de ${nomeDaConversa(nova)}`, nova.id);
+    const fotoDe = async id=>{ const c = cs.find(x=>x.id===id); if(!c || !c.foto_url) return null;
+      await assinarFotosZap([c]); return zapFotos.get(c.foto_url) || null; };   // F388
+    if(menc) tocarAvisoZap(menc.texto.replace(/^💬\s*/,""), menc.conversa_id, false, await fotoDe(menc.conversa_id));
+    else if(nova) tocarAvisoZap(`Mensagem nova de ${nomeDaConversa(nova)}`, nova.id, false, await fotoDe(nova.id));
   }
   zapSomVisto = agora;
 }
