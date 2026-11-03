@@ -94,6 +94,12 @@
       // qual das duas falhou, que é o que separa "não tenho recurso" de
       // "não estou enxergando".
       let modo = doPortal.tok;
+      // 1.33.1 · o portal renova o ifs_auth na página durante a rodada longa (desde a 1.32 baixa
+      // todos os documentos): o crachá fixado no início vencia por volta do 28º recurso (401).
+      // Cada consulta relê o crachá do mesmo degrau da escada.
+      const grau = () => crachas().indexOf(modo);
+      let deg = -1;
+      const cracha = () => (deg < 0 ? modo : (crachas()[deg] ?? modo));
       if (!doPortal.nups.length) {
         if (!nups.length) {
           faixaErr(fichas
@@ -152,6 +158,7 @@
       // [03.10.2026] cada recurso vive num sistema só: o que a lista do
       // portal indicou vem primeiro, e achado o recurso não se consulta o
       // outro — antes eram duas consultas (e duas pausas) por recurso
+      deg = grau();
       const primeiro = SISTEMAS.find(s => doPortal.porSis[s]);
       for (let i = 0; i < fila.length; i++) {
         faixa(`recurso ${i + 1} de ${fila.length}…`);
@@ -159,7 +166,7 @@
         const ordem = lst ? [lst, ...SISTEMAS.filter(s => s !== lst)] : SISTEMAS;
         for (const sis of ordem) {
           try {
-            const r = await consultar(sis, fila[i], modo);
+            const r = await consultar(sis, fila[i], cracha());
             if (r.ok) {
               const j = await r.json();
               // F184 · os documentos descem na hora, com o mesmo crachá da consulta;
@@ -168,7 +175,7 @@
                 .filter(d => d && d.path);
               await CRM.guardarDocs('crps', fila[i], docs, { todos: true,
                 baixar: d => fetch('/api/v1' + String(d.path).split('?')[0], { credentials: 'include',
-                  headers: Object.assign({ Accept: 'application/pdf' }, modo ? { Authorization: 'Bearer ' + modo } : {}) }) });
+                  headers: Object.assign({ Accept: 'application/pdf' }, cracha() ? { Authorization: 'Bearer ' + cracha() } : {}) }) });
               OUT.itens[`${fila[i]}_${sis}`] = j; seguidas = 0; await pausa(2500); break;
             }
             else if (r.status !== 404) {
