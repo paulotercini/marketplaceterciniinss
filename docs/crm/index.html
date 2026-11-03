@@ -35744,7 +35744,29 @@ function documentosDoCaso(k){
     if(f.storage && !docs.some(d=>d.caminho===f.storage))
       docs.push({ nome:f.nome||"acórdão", caminho:f.storage, tipo:"application/pdf", tamanho:f.bytes||null,
                   texto:null, origem:"crps", data:isoCrps(e.data)||e.data||null });
-  return docs.sort((a,b)=>String(b.data||"").localeCompare(String(a.data||"")));
+  marcarIniciais(docs);
+  return docs.sort((a,b)=>ordemPeca(b, a));
+}
+// F385 · a ordem da juntada no mesmo dia vem do número do documento no
+// tribunal (fim do caminho), e não do nome: "Documentos Diversos" vinha antes
+// da petição que ele acompanha
+const idDaPeca = d => String(d.caminho||"").split("/").pop().replace(/\D/g,"").padStart(40,"0");
+const ordemPeca = (a,b) => String(a.data||"").slice(0,10).localeCompare(String(b.data||"").slice(0,10))
+  || (DOCS_JUDICIAIS.includes(a.origem) && a.origem===b.origem ? idDaPeca(a).localeCompare(idDaPeca(b)) : String(a.data||"").localeCompare(String(b.data||"")));
+// a petição inicial pelo que o tribunal mostra: o eproc dá o código INIC, o
+// e-SAJ a junta com o tipo escolhido no protocolo ("Petição (Outras)") e só a
+// folha 1 da pasta a identifica; vale para a primeira peça do processo
+const RX_TIPO_PETICAO = /^(peti[cç][aã]o( \(outras\))?|PET\d+)$/i;
+function marcarIniciais(docs){
+  const prim = new Map();
+  for(const d of docs){
+    if(!DOCS_JUDICIAIS.includes(d.origem)) continue;
+    if(d.origem==="eproc" && /^INIC\d*$/.test(String(d.nome||"").trim())){ d.inicial = true; continue; }
+    const p = String(d.caminho||"").split("/").slice(0,2).join("/"), q = prim.get(p);
+    if(!q || ordemPeca(d, q) < 0) prim.set(p, d);
+  }
+  for(const d of prim.values()) if(!d.inicial && RX_TIPO_PETICAO.test(String(d.nome||"").trim())
+    && (d.origem!=="esaj" || !d.texto || /^\s*fls\.?\s*1\b/i.test(d.texto))) d.inicial = true;
 }
 // F185 · cada aba mostra os SEUS documentos (Judicial: PJe/eproc/e-SAJ; INSS:
 // PAT); os botões de levar para fora pegam o caso inteiro
@@ -35870,7 +35892,7 @@ function painelDocumentos(k, origens){
         <input type="checkbox" class="doc-ck" aria-label="selecionar ${esc(d.nome||"documento")}" ${docsSel.has(chaveDoc(d))?"checked":""}
           onchange="marcarDoc('${escJs(chaveDoc(d))}', this.checked)">
         <button class="arq-abrir" onclick="${d.id?`abrirAnexo('${escJs(d.id)}')`:`abrirDecisao('${escJs(d.caminho)}')`}" title="abrir o documento">
-          ${(d.tipo||"").startsWith("image/")?"🖼":"📄"} ${esc(d.nome||"documento")}</button>
+          ${(d.tipo||"").startsWith("image/")?"🖼":"📄"} ${esc(d.inicial?"Petição inicial":d.nome||"documento")}</button>
         <span class="meio-sub">${d.data?fmt(String(d.data).slice(0,10)):""}${d.tamanho?" · "+tamArq(d.tamanho):""}${
           d.origem==="escritorio"||d.origem==="crps" ? "" : !d.texto ? " · digitalizado" : (paginasImagem(d)||[]).length ? ` · ${paginasImagem(d).length} de ${d.paginas} pág. em imagem` : " · com texto"}</span>
         <button class="${bt} doc-claude" onclick="menuClaudeDocs('${k.id}',['${escJs(chaveDoc(d))}'])">${temaV10()?IC_SVG.claude+" ":"✦ "}<span aria-hidden="true">Claude</span><span class="sr-only">Ler com Claude</span></button>
@@ -35884,7 +35906,7 @@ function painelDocumentos(k, origens){
 // junta num PDF: cada peça se busca e se desenha só quando chega perto da tela.
 function pecasDoProcesso(k){
   return docsDaOrigem(k, DOCS_JUDICIAIS).slice()
-    .sort((a,b)=>String(a.data||"").localeCompare(String(b.data||"")) || String(a.nome||"").localeCompare(String(b.nome||"")));
+    .sort(ordemPeca);
 }
 // a folha (fls.) de cada peça: a contagem só vale onde o número de páginas é conhecido
 function flsDasPecas(pecas){
@@ -35892,7 +35914,7 @@ function flsDasPecas(pecas){
   return pecas.map(d=>{ const n = d.tipo==="application/pdf" ? +d.paginas||0 : 1;
     const r = conhecido ? fl : null; if(!n) conhecido = false; fl += n; return r; });
 }
-const rotPeca = d => d.evento || String(d.nome||"documento").replace(/\.(pdf|html?)$/i,"");
+const rotPeca = d => d.inicial ? "Petição inicial" : d.evento || String(d.nome||"documento").replace(/\.(pdf|html?)$/i,"");
 function indiceDoProcesso(k, chaves){
   const pecas = pecasDoProcesso(k), fls = flsDasPecas(pecas);
   return pecas.map((d,i)=>chaves.includes(chaveDoc(d))
@@ -42240,7 +42262,7 @@ function arvoreDoProcesso(k, x){
       return h || `<p class="meio-sub">Sem documentos neste filtro.</p>`; } finally { arvEsisrecData = salva; }
   }
   const pecas = x.docs.filter(d=>filtroArv==="dec" ? RX_PECA_DEC.test(rotPeca(d)) : filtroArv==="esc" ? origemPeca(d)==="Escritório" : true);
-  const m = new Map(); pecas.forEach(d=>{ const dia = String(d.data||"").slice(0,10); m.set(dia, [...(m.get(dia)||[]), d]); });
+  const m = new Map(); pecas.slice().sort(ordemPeca).forEach(d=>{ const dia = String(d.data||"").slice(0,10); m.set(dia, [...(m.get(dia)||[]), d]); });
   const ramos = [...m].sort(([a],[b])=>b.localeCompare(a)).map(([dia, l])=>{
     const dec = l.some(d=>RX_PECA_DEC.test(rotPeca(d))), rot = `${dia ? dataPat(dia) : "Sem data"} · ${rotPeca(l.find(d=>RX_PECA_DEC.test(rotPeca(d)))||l[0])}`;
     const sub = l.map(d=>`<li><button class="btn-mini" onclick="abrirDecisao('${escJs(d.caminho)}')" title="abrir a peça guardada no CRM">📄 ${esc(rotPeca(d))}</button> <span class="arv-et">${origemPeca(d)}</span></li>`).join("");

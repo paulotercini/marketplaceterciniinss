@@ -108,3 +108,12 @@ test('o cabeçalho do processo dá número, classe e órgão julgador', () => {
 test('página sem número CNJ não vira cabeçalho', () => {
   assert.equal(R.lerCabecalhoProcesso('<h1>login</h1>'), null);
 });
+
+// F385 · a cronologia só termina no primeiro movimento do processo
+{
+  const assert = require('assert');
+  const R = require('../pje-regras.js');
+  assert.strictEqual(R.chegouAoInicio([{ textos: ['Juntada de petição'] }, { textos: ['Distribuído por sorteio'] }]), true);
+  assert.strictEqual(R.chegouAoInicio([{ textos: ['Juntada de petição'] }]), false);
+  assert.strictEqual(R.chegouAoInicio('Recebido pelo Distribuidor'), true);
+}
