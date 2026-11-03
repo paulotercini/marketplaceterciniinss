@@ -198,7 +198,10 @@
     // F184 · 3 rodadas quietas cortaram o começo da cronologia (a inicial e
     // seus documentos sumiram numa coleta real): o PJe às vezes demora mais
     // de 3 s para trazer a página seguinte
-    for (let i = 0; i < 120 && quietos < 6; i++) {
+    // F385 · parar por 6 rodadas quietas ainda cortava a inicial (54 processos
+    // sem o "Distribuído"): sem o primeiro movimento na tela, espera até 25
+    let chegou = false;
+    for (let i = 0; i < 160 && quietos < (chegou ? 6 : 25); i++) {
       if (paginaMorreu()) { morreuNoMeio = true; break; }   // entrega o que carregou
       const n = tl.querySelectorAll('.media').length;
       if (n === antes) quietos++;
@@ -206,7 +209,7 @@
       await esperarLivre();
       tl.scrollTop = tl.scrollHeight;
       const fim = tl.querySelector('.media:last-child');
-      if (fim) fim.scrollIntoView({ block: 'end' });
+      if (fim) { fim.scrollIntoView({ block: 'end' }); chegou = chegou || REG.chegouAoInicio(fim.textContent); }
       await pausa(1200);
     }
     if (morreuNoMeio) faixa('⚠ o PJe derrubou a conversa durante a rolagem — entrego o que já carregou');
