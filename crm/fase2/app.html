@@ -15994,13 +15994,14 @@ function navBuscaZap(d){
 // F328 · o seletor de emojis do campo de escrever: o emoji entra onde está o cursor
 const EMOJIS_ESCREVER = ["😀","😃","😄","😊","🙂","😉","😍","🥰","😘","😂","🤣","😅","😢","😭","😮","😔","😕","🙁","😟","🤔",
   "🙏","👍","👎","👏","🙌","👋","🤝","💪","✌️","👌","❤️","💚","💙","🌹","🎉","🎂","✅","☑️","❌","⚠️","📄","📎","📅","⏰","📞","🏥","⚖️","💰"];
-function emojiZap(e){
-  const t = document.getElementById("zap-txt"); if(!t) return;
+function emojiZap(e, campo){
+  const t = document.getElementById(campo||"zap-txt"); if(!t) return;
   const a = t.selectionStart ?? t.value.length, b = t.selectionEnd ?? a;
   t.value = t.value.slice(0,a) + e + t.value.slice(b);
   t.selectionStart = t.selectionEnd = a + e.length;
   if(!document.querySelector(".app.celular")) t.focus();
   t.oninput && t.oninput();
+  (d => d && d.removeAttribute("open"))(t.closest("footer")?.querySelector(".ze-emo[open]"));
 }
 
 function bolhaZap(m, cli, seguida){
@@ -16202,7 +16203,7 @@ async function mandarArquivoZap(colado){
   await abrirConversa(zapAberta);
   focarCampoZap();
 }
-// F373 · depois de enviar, o cursor volta ao campo de escrever (a repintura o tirava); no toque, não reabre o teclado
+// F386 · depois de enviar, o cursor volta ao campo de escrever (a repintura o tirava); no toque, não reabre o teclado
 function focarCampoZap(){
   if(matchMedia("(pointer:coarse)").matches) return;
   const t = document.getElementById("zap-txt"); if(t) t.focus();
@@ -16879,7 +16880,7 @@ async function responderZapLado(convId, cliId){
   }catch(e){ t.value = txt; return aviso(msgErro(e)); }
   if(estadoPonte().txt!=="ponte ligada") aviso("Guardado na fila: a ponte está fora do ar e envia quando voltar", false);
   await verZapCliente(cliId);
-  if(!matchMedia("(pointer:coarse)").matches) document.getElementById("pp-zap-txt")?.focus();   // F373
+  if(!matchMedia("(pointer:coarse)").matches) document.getElementById("pp-zap-txt")?.focus();   // F386
 }
 // "anotar": a mensagem vai à linha do tempo do caso, pelo mesmo caminho do "virar andamento" da tela do WhatsApp
 async function anotarMsgZap(msgId, cliId){
@@ -16951,6 +16952,22 @@ async function gravarAudioLado(convId){
   rec.start(); zapLadoRec = rec;
   const b = document.getElementById("pp-zap-rec");
   if(b){ b.classList.add("gravando"); b.textContent = "■"; b.title = "parar a gravação (o envio é depois, no Enviar)"; }
+}
+// F386 · o print colado (Ctrl+V) na conversa ao lado da ficha fica à espera, como o anexo do 📎: confere e envia
+function colarPrintLado(e, convId){
+  const it = [...((e.clipboardData && e.clipboardData.items) || [])].find(i=>i.kind==="file" && /^image\//.test(i.type));
+  const f = it && it.getAsFile(); if(!f) return;
+  e.preventDefault();
+  const ext = (f.type.split("/")[1]||"png").replace("jpeg","jpg");
+  descartarPendZap();
+  zapLadoPend = {tipo: "arquivo", file: new File([f], `print-${Date.now()}.${ext}`, {type: f.type}), nome: "print colado", conversa: convId};
+  pintarPendZap();
+}
+// F386 · a conversa ao lado abre na tela do WhatsApp do CRM, pelo mesmo caminho da menção
+function zapNaTela(convId){
+  fecharPainelPrazo();
+  zapAberta = convId; zapPainelAberto = false;
+  irPara("whatsapp");
 }
 function escolherArquivoLado(convId, inp){
   const f = inp.files && inp.files[0]; inp.value = "";
@@ -17068,7 +17085,7 @@ async function verZapCliente(cliId){
       + (m.texto?`<div>${esc(m.texto)}</div>`:"");
     else corpo = esc(m.texto||`[${m.tipo}]`);
     // só o que tem texto de verdade (a mensagem, ou o áudio já transcrito) vai ao caso; mídia antiga sem arquivo, não
-    const acoes = podeGravarCaso() && (m.direcao==="entrada" || m.direcao==="saida") && !semArq && resto   // F373 · a enviada também vai ao caso
+    const acoes = podeGravarCaso() && (m.direcao==="entrada" || m.direcao==="saida") && !semArq && resto   // F386 · a enviada também vai ao caso
       ? `<span class="zl-acoes"><button onclick="anotarMsgZap('${m.id}','${cliId}')" title="registrar na linha do tempo do caso">anotar</button><button onclick="tarefaDaMsgZap('${m.id}')" title="levar ao campo de escrever no caso, com a data que estiver no texto"><span aria-hidden="true">Tarefa</span><span class="sr-only">virar tarefa</span></button></span>` : "";
     _zapLado.set(m.id, {texto: m.texto||"", q, dir: m.direcao});
     return sep + `<div class="zap-b ${m.direcao}" style="max-width:85%"${acoes ? ` draggable="true" data-zmsg="${m.id}" title="arraste para a tarefa ou para o campo de escrever no caso"` : ""}>
@@ -17088,6 +17105,7 @@ async function verZapCliente(cliId){
   el.innerHTML = `<header><div><div class="pp-cli">${zs.map(z=>esc(z.cliente_id && z.cliente_id!==cliId
         ? `${z.telefone||""} (conversa de ${D.cliPorId.get(z.cliente_id)?.nome||z.nome_perfil||"outro contato"}${obsDoNumero(cliId,z.telefone)?", "+obsDoNumero(cliId,z.telefone):""})`
         : (z.telefone||""))).join(" · ")}</div><small class="pp-tag pp-zap">WhatsApp</small><h3>${esc(cli?.nome||"")}</h3></div>
+      <button class="btn-mini pp-zap-tela" onclick="zapNaTela('${minha.id}')" title="Abrir esta conversa na tela do WhatsApp do CRM"><span aria-hidden="true">Tela</span><span class="sr-only">Abrir esta conversa na tela do WhatsApp do CRM</span></button>
       <button class="pp-x" onclick="fecharPainelPrazo()" aria-label="fechar">✕</button></header>
     ${(at => at && at.id!==eu.id ? `<div class="pp-zap-com" role="status">Em atendimento com <b>${esc(at.nome.split(" ")[0])}</b>. Você pode responder: ${esc(at.nome.split(" ")[0])} recebe o aviso e a conversa continua com ${esc(at.nome.split(" ")[0])}.</div>` : "")(minha.atendente_id && D.colPorId.get(minha.atendente_id))}
     <div class="zap-msgs pp-zap-msgs">${linhas.join("") || `<p class="meio-sub">Nenhuma mensagem ainda.</p>`}</div>
@@ -17096,7 +17114,9 @@ async function verZapCliente(cliId){
       <input type="file" id="pp-zap-arq" hidden onchange="escolherArquivoLado('${minha.id}',this)">
       <button class="pp-ic" onclick="document.getElementById('pp-zap-arq').click()" title="anexar documento: você confere e depois envia" aria-label="anexar documento">📎</button>
       <button class="pp-ic" id="pp-zap-rec" onclick="gravarAudioLado('${minha.id}')" title="gravar áudio: você ouve e depois envia" aria-label="gravar áudio">🎤</button>
-      <textarea id="pp-zap-txt" rows="2" placeholder="Responder pelo WhatsApp…"
+      <details class="ze-emo"><summary class="pp-ic" title="emojis" aria-label="Emojis">😊</summary>
+        <div class="ze-emo-grade" role="group" aria-label="Emojis">${EMOJIS_ESCREVER.map(e=>`<button type="button" onclick="emojiZap('${e}','pp-zap-txt')">${e}</button>`).join("")}</div></details>
+      <textarea id="pp-zap-txt" rows="2" placeholder="Responder pelo WhatsApp…" onpaste="colarPrintLado(event,'${minha.id}')"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();responderZapLado('${minha.id}','${cliId}')}"></textarea>
       <button class="pp-pri" id="pp-zap-env" onclick="responderZapLado('${minha.id}','${cliId}')">Enviar</button></footer>`;
   if(zapLadoPend && zapLadoPend.conversa!==minha.id) descartarPendZap();
