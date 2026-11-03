@@ -98,6 +98,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
       respSemCaixa: resp && getComputedStyle(resp).backgroundColor === "rgba(0, 0, 0, 0)" && /21B3|↳/.test(getComputedStyle(resp, "::before").content),
       pzQuadro: (q => q && getComputedStyle(q).backgroundColor !== "rgba(0, 0, 0, 0)" && q.querySelector(".tl-pz-t").offsetParent !== null)(pz && pz.querySelector(".tl-pz-vivo")),
       pzSemRep: pz && pz.querySelector(".tl-corpo").offsetParent === null && /Cumprir a exigência/.test(pz.querySelector(".tl-pz-t").textContent),
+      horaAoLado: (h => !!h && r(h).right <= r(h.closest("li.tl-card")).left - 30 && h.offsetParent !== null)(imp && imp.querySelector(".tl-cab>.autor-nome+.tl-hora")),
+      horaNoCartao: (h => !!h && r(h).left >= r(h.closest("li.tl-card")).left)(imp && imp.querySelector(".tl-cab>.autor-nome+.tl-hora")),
+      novaVerde: nova && (c => { const m = c.match(/\d+/g).map(Number); return m[1] > m[0] && m[1] > m[2]; })(getComputedStyle(nova).borderTopColor),
+      pzGrade: (q => !!q && getComputedStyle(q).display === "grid" && /Tarefa/.test((q.querySelector(".tl-pz-k") || {}).textContent || "") && !!q.querySelector(".tl-pz-tf .tl-tarefa"))(pz && pz.querySelector(".tl-pz-vivo")),
+      tfUmaVez: pz && pz.querySelectorAll(".tl-tarefa").length === 1,
       semVazar: [...document.querySelectorAll(".timeline li.tl-card")].every(li => r(li).right <= r(li.closest(".dia-itens")).right + 1),
     };
   }, [nImp.id, nNova.id, nPz.id]);
@@ -115,6 +120,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o texto que só repete o título do prazo não aparece duas vezes", d.pzSemRep);
   conf("nenhum cartão passa da borda", d.semVazar);
   conf("a importante mantém a estrela no cabeçalho", d.estrela);
+  conf("no computador, a hora fica na coluna da esquerda, abaixo do dia", d.horaAoLado);
+  conf("a não lida tem o contorno verde suave", d.novaVerde);
+  conf("o prazo vem em grade, com a tarefa dentro do quadro e uma vez só", d.pzGrade && d.tfUmaVez);
   await p.locator(".caso-dir").first().screenshot({ path: OUT + "/computador.png" });
 
   // ── 2 · celular ──
@@ -123,6 +131,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("no celular, a inicial também fica sobre o trilho", e.noTrilho && e.dentro);
   conf("no celular, o dia fica acima dos cartões", e.diaEmCima);
   conf("no celular, nenhum cartão passa da borda", e.semVazar);
+  conf("no celular, a hora fica no cartão", e.horaNoCartao);
   await m.screenshot({ path: OUT + "/celular.png", fullPage: false });
 
   conf("sem erro de página", !erros.length);

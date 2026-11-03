@@ -59,11 +59,12 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   await shot("tudo", "u-completo.png");
   const r = await p.evaluate(() => { const ofs = [...document.querySelectorAll('.painel[data-p="2"] li.tl-card.tl-oficial')];
     return { n: ofs.length, resp: ofs.some(l => /Responder|apagar/.test(l.innerHTML)), esc: document.querySelectorAll('.painel[data-p="2"] li.tl-card:not(.tl-oficial)').length,
-      fundo: ofs[0] ? getComputedStyle(ofs[0]).backgroundColor : "" }; });
+      fundo: ofs.map(l => [l.classList.contains("tl-nao-lida"), getComputedStyle(l).backgroundColor]) }; });
   conf("no Caso completo, os andamentos do INSS e do PJe são cartões oficiais", r.n === 2);
   conf("a anotação do escritório continua cartão do escritório", r.esc >= 1);
   conf("o cartão oficial não tem responder nem apagar", !r.resp);
-  conf("o cartão oficial tem fundo próprio", r.fundo === "rgb(246, 247, 244)");
+  // F390 · o lido é linha no trilho, sem fundo; o não lido conserva o fundo próprio
+  conf("o cartão oficial lido não tem caixa, o não lido tem fundo próprio", r.fundo.length > 0 && r.fundo.every(([nl, f]) => nl ? f === "rgb(246, 247, 244)" : f === "rgba(0, 0, 0, 0)"));
 
   console.log("=== Andamentos no padrão do escritório ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
