@@ -86,6 +86,7 @@ const MSGS = [
   conf("▶ ouvir toca o áudio na própria janela, sem abrir outra aba", ctx.pages().length === abas
     && /token=t/.test(await p.getAttribute('#painel-prazo audio[data-ouvir="zap/x/a1.ogg"]', "src")));
   conf("F261 · a conversa abre ao lado da ficha, com a resposta embaixo", !!(await p.$("#painel-prazo #pp-zap-txt")));
+  conf("F373 · a mensagem enviada ao cliente também se arrasta ao caso", !!(await p.$('#painel-prazo .zap-b.saida[draggable="true"][data-zmsg="m4"]')));
   await p.waitForFunction(() => !(D.zapFicha || []).some(z => z.nao_lidas));
   conf("abrir zera as novas", patches.some(x => /zap_conversas\?id=in\./.test(x.u) && x.b.nao_lidas === 0));
   await p.evaluate(() => fecharPainelPrazo());
@@ -112,6 +113,8 @@ const MSGS = [
     await p.evaluate(() => document.querySelector('#zap-msgs audio[data-ouvir="zap/x/a1.ogg"]') === window._tocador));
   // F344 · a tela do WhatsApp tem altura fixa: a página não rola e o topo não some (a reserva de 150 px fazia rolar)
   conf("a tela do WhatsApp não rola a página inteira", await p.evaluate(() => { const m = document.querySelector("main.meio.zap-v"); return !!m && m.scrollHeight <= m.clientHeight + 1; }));
+  await p.fill("#zap-txt", "teste do cursor"); await p.click("#zap-enviar"); await p.waitForTimeout(300);
+  conf("F373 · depois de enviar, o cursor continua no campo de escrever", await p.evaluate(() => document.activeElement && document.activeElement.id === "zap-txt"));
   conf("conversa de cliente mostra “abrir ficha” e não “vincular”",
     /Cliente: /.test(await p.textContent(".zap-topo")) && !(await p.textContent(".zap-topo")).includes("Vincular"));
 
