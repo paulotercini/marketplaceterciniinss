@@ -133,7 +133,13 @@
     return false;
   }
 
-  const API = { lerLinhaAcervo, lerAcervoHtml, lerTimelineHtml, lerCabecalhoProcesso, arquivado };
+  // F385 · a cronologia só está inteira quando chega ao primeiro movimento do
+  // processo: a rolagem que parava por tempo cortava a petição inicial
+  const RX_INICIO = /distribu[ií]d|recebido pelo distribuidor|autuad|redistribu/i;
+  const chegouAoInicio = textoOuItens => Array.isArray(textoOuItens)
+    ? textoOuItens.some(i => (i.textos || []).some(t => RX_INICIO.test(t)))
+    : RX_INICIO.test(String(textoOuItens || ''));
+  const API = { lerLinhaAcervo, lerAcervoHtml, lerTimelineHtml, lerCabecalhoProcesso, arquivado, chegouAoInicio };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.PJE_REGRAS = raiz.PJE_REGRAS || API;
 })(typeof window !== 'undefined' ? window : globalThis);

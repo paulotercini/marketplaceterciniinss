@@ -73,6 +73,12 @@ const SUPA = "https://ficticio.supabase.co";
     const jud = pinta("cnj");
     res.judPastas = [...jud.querySelectorAll(".pat-arv summary")].map(x=>x.textContent);
     res.judEt = [...jud.querySelectorAll(".arv-et")].map(x=>x.textContent);
+    // F385 · a inicial do e-SAJ vem como "Petição (Outras)" e a ordem do dia é a da juntada
+    const ds = [{origem:"esaj", nome:"Documentos Diversos", caminho:"esaj/1/454289457", data:"2025-06-02", texto:"fls. 20"},
+      {origem:"esaj", nome:"Petição (Outras)", caminho:"esaj/1/454289365", data:"2025-06-02", texto:"fls. 1 EXCELENTÍSSIMO"},
+      {origem:"esaj", nome:"Petição (Outras)", caminho:"esaj/1/474864039", data:"2025-10-06", texto:"fls. 60"},
+      {origem:"eproc", nome:"INIC1", caminho:"eproc/2/9", data:"2025-01-01"}];
+    marcarIniciais(ds); res.esaj = ds.sort(ordemPeca).map(rotPeca);
     filtroArv = "dec"; res.judDec = [...pinta("cnj").querySelectorAll(".pat-arv summary")].length;
     filtroArv = "esc"; res.inssEsc = [...pinta("inss").querySelectorAll(".pat-arv ul li")].map(x=>x.textContent);
     filtroArv = "todos"; vistaProc = false; res.and = !!pinta("inss").querySelector("#ands");
@@ -89,6 +95,7 @@ const SUPA = "https://ficticio.supabase.co";
   conf("Judicial: pastas por data, a sentença no alto", /30\/10\/2026/.test(r.judPastas[0]||"") && /decisão/.test(r.judPastas[0]) && r.judPastas.length === 3);
   conf("Judicial: origem na etiqueta", ["Juízo","Escritório","INSS"].every(e=>r.judEt.includes(e)));
   conf("filtro Decisões no Judicial", r.judDec === 1);
+  conf("e-SAJ e eproc: a inicial reconhecida e primeiro no dia", JSON.stringify(r.esaj) === JSON.stringify(["Petição inicial","Petição inicial","Documentos Diversos","Petição (Outras)"]));
   conf("filtro Escritório no PAT tira o juntado pelo INSS", r.inssEsc.length === 2 && !r.inssEsc.some(t=>/CNIS/.test(t)));
   conf("Andamentos devolve a aba de antes", r.and);
   conf("onclick válidos", r.parse); 

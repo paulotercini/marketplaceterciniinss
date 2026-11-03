@@ -261,6 +261,8 @@ export function movimentou(mov, itens) {
   return !itens.some(i => i.data === topo && (i.textos || []).some(x => String(x).trim().toLowerCase() === t));
 }
 
+// F385 · a mesma regra do PJE_REGRAS.chegouAoInicio (o módulo do worker não o carrega)
+const chegouAoInicio = itens => (itens || []).some(i => (i.textos || []).some(t => /distribu[ií]d|recebido pelo distribuidor|autuad|redistribu/i.test(t)));
 // F187 · os processos do PJe para completar: o endereço dos "Autos Digitais"
 // (id + ca) sai das últimas coletas do acervo, e só entra processo que tem
 // caso aberto no CRM — sem caso, os documentos não teriam onde morar.
@@ -303,8 +305,13 @@ export async function acervoPje() {
       const num = dig(p.numero), chave = d.host + ':' + num;
       if (!p.id || !p.ca || !doCrm.has(num) || vistos.has(chave)) continue;
       const faltam = pendentes(feitos.get(num));
-      if (!movimentou(p.movimento, feitos.get(num)) && !faltam.length) continue;
+      // F385 · a cronologia nascida no PJe (número 5…) que não chegou ao primeiro
+      // movimento volta, até 3 vezes: faltam a inicial e a distribuição
+      const ini = 'inicio:' + num, cortada = feitos.has(num) && /^5/.test(num)
+        && !chegouAoInicio(feitos.get(num)) && (tent[ini] || 0) < 3;
+      if (!movimentou(p.movimento, feitos.get(num)) && !faltam.length && !cortada) continue;
       for (const x of faltam) tent[x.id] = (tent[x.id] || 0) + 1;
+      if (cortada) tent[ini] = (tent[ini] || 0) + 1;
       vistos.set(chave, { numero: p.numero, host: d.host,
         url: `https://${d.host}/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompletoAdvogado.seam?id=${p.id}&ca=${p.ca}` });
     }
