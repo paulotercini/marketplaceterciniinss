@@ -117,11 +117,11 @@ if (typeof Deno !== "undefined") Deno.serve(async (req) => {
     }
     // F388 · a foto de quem escreve vira o ícone do aviso (link assinado de 7 dias; sem foto, o ícone do CRM)
     let icone: string | null = null;
-    if (c.foto_url) {
+    if (c.foto_url) try {
       const rf = await sb(`/storage/v1/object/sign/anexos/${c.foto_url}`, { method: "POST", body: JSON.stringify({ expiresIn: 7 * 86400 }) });
       const su = rf.ok ? (await rf.json()).signedURL : null;
       if (su) icone = URL_SB + "/storage/v1" + su;
-    }
+    } catch { /* sem a foto, o aviso sai com o ícone do CRM */ }
     const ri = await sb("/rest/v1/push_inscricoes?select=*");
     const n = await enviar(destinatarios(c, ri.ok ? await ri.json() : []), aviso(m, c, nome, icone));
     return json({ enviados: n });
