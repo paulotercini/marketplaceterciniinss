@@ -157,10 +157,12 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   await p.evaluate(() => { subAba = "tudo"; repintarFicha(); document.querySelector(".tl-prazo-sug button").click(); }); await p.waitForTimeout(250);
   conf("Criar prazo abre com o prazo do catálogo e a data já preenchidos", await p.evaluate(() => !!(document.getElementById("seg-cat") || {}).value && !!(document.getElementById("seg-prazo") || {}).value));
   await p.evaluate(() => fecharCaixa());
-  conf("todo cartão oficial tem respiro interno, em toda aba", await p.evaluate(() => { const r = [];
+  // F390 · o movimento lido é linha simples no trilho; o não lido conserva a caixa com respiro
+  conf("todo cartão oficial é linha no trilho ou caixa com respiro, em toda aba", await p.evaluate(() => { const r = [];
     for (const a of ["tudo", "inss", "crps", "cnj"]) { if (a === "crps") irSubAba("crps"); else { subAba = a; fonteCnj = "pje"; repintarFicha(); }
-      for (const l of document.querySelectorAll('.painel[data-p="2"] li.tl-oficial')) { if (!l.offsetParent) continue; r.push(parseFloat(getComputedStyle(l).paddingLeft)); } }
-    subAba = "tudo"; repintarFicha(); return r.length > 0 && r.every(v => v >= 12); }));
+      for (const l of document.querySelectorAll('.painel[data-p="2"] li.tl-oficial')) { if (!l.offsetParent) continue; const cs = getComputedStyle(l);
+        r.push(l.classList.contains("tl-nao-lida") ? parseFloat(cs.paddingLeft) >= 12 : cs.backgroundColor === "rgba(0, 0, 0, 0)"); } }
+    subAba = "tudo"; repintarFicha(); return r.length > 0 && r.every(Boolean); }));
   // terceira rodada
   const t3 = await p.evaluate(() => { subAba = "tudo"; filtroTudo = "tudo"; repintarFicha();
     const cs = [...document.querySelectorAll('.painel[data-p="2"] li.tl-card')];
