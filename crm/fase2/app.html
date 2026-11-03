@@ -6281,7 +6281,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.42</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.43</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -16164,6 +16164,7 @@ async function enviarZap(){
     if(c){ c.bot_ativo=false; }
   }
   await abrirConversa(zapAberta);
+  focarCampoZap();
   if(zapNota) aviso("Anotado — só a equipe vê 🕵", false);
   else if(estadoPonte().txt!=="ponte ligada")
     aviso("Guardado na fila — a ponte está fora do ar e envia quando voltar", false);
@@ -16199,6 +16200,12 @@ async function mandarArquivoZap(colado){
   const c = zapConvs.find(x=>x.id===zapAberta);
   if(c){ c.bot_ativo=false; }
   await abrirConversa(zapAberta);
+  focarCampoZap();
+}
+// F373 · depois de enviar, o cursor volta ao campo de escrever (a repintura o tirava); no toque, não reabre o teclado
+function focarCampoZap(){
+  if(matchMedia("(pointer:coarse)").matches) return;
+  const t = document.getElementById("zap-txt"); if(t) t.focus();
 }
 // Preenche um modelo com quem está DO OUTRO LADO da conversa. O que não der
 // para preencher (dois processos, benefício sem cadastro) fica visível como
@@ -16849,6 +16856,7 @@ async function virarAndamento(msgId){
 // tudo o que o cliente mandou e o que o escritório respondeu, em ordem. Áudio
 // vem transcrito (crm/fase2/ponte/transcrever.py, Whisper nesta máquina);
 // enquanto a transcrição não chega, aparece "transcrevendo…".
+const rotZapLado = m => m.dir==="saida" ? "WhatsApp enviado ao cliente" : "WhatsApp do cliente";
 const _zapLado = new Map();   // as mensagens que o painel mostra, para anotar sem buscar de novo
 async function responderZapLado(convId, cliId){
   const t = document.getElementById("pp-zap-txt"), txt = (t && t.value || "").trim(), pend = zapLadoPend;
@@ -16870,7 +16878,8 @@ async function responderZapLado(convId, cliId){
     }else await msg({texto: txt});
   }catch(e){ t.value = txt; return aviso(msgErro(e)); }
   if(estadoPonte().txt!=="ponte ligada") aviso("Guardado na fila: a ponte está fora do ar e envia quando voltar", false);
-  verZapCliente(cliId);
+  await verZapCliente(cliId);
+  if(!matchMedia("(pointer:coarse)").matches) document.getElementById("pp-zap-txt")?.focus();   // F373
 }
 // "anotar": a mensagem vai à linha do tempo do caso, pelo mesmo caminho do "virar andamento" da tela do WhatsApp
 async function anotarMsgZap(msgId, cliId){
@@ -16895,7 +16904,7 @@ function tarefaDaMsgZap(msgId){
   if(!podeGravarCaso()) return;   // F355 · o nível 1 conversa, mas não grava no caso
   const m = _zapLado.get(msgId), campo = document.getElementById("and-texto");
   if(!m || !campo) return aviso("Abra o caso na ficha para criar a tarefa");
-  campo.value = `WhatsApp do cliente em ${fmtTS(m.q)}: “${m.texto.trim()}” — `;
+  campo.value = `${rotZapLado(m)} em ${fmtTS(m.q)}: “${m.texto.trim()}” — `;
   campo.focus();
   if(campo.oninput) campo.oninput();
   campo.setSelectionRange(campo.value.length, campo.value.length);
@@ -17010,7 +17019,7 @@ document.addEventListener("drop", e=>{
     const m = _zapLado.get(e.dataTransfer.getData("text/crm-zap")); if(!m) return;
     const campo = alvo.id==="painel-prazo-esq" ? document.getElementById("pp-com") : document.getElementById("and-texto");
     if(!campo) return;
-    colocarNoCampo(campo, `WhatsApp do cliente em ${fmtTS(m.q)}: “${m.texto.trim()}”`);
+    colocarNoCampo(campo, `${rotZapLado(m)} em ${fmtTS(m.q)}: “${m.texto.trim()}”`);
     aviso(alvo.id==="painel-prazo-esq" ? "Confira e clique em Comentar" : "Complete e registre no caso", false);
   }else{
     const campo = document.getElementById("pp-zap-txt"); if(!campo) return;
@@ -17059,9 +17068,9 @@ async function verZapCliente(cliId){
       + (m.texto?`<div>${esc(m.texto)}</div>`:"");
     else corpo = esc(m.texto||`[${m.tipo}]`);
     // só o que tem texto de verdade (a mensagem, ou o áudio já transcrito) vai ao caso; mídia antiga sem arquivo, não
-    const acoes = podeGravarCaso() && m.direcao==="entrada" && !semArq && resto
+    const acoes = podeGravarCaso() && (m.direcao==="entrada" || m.direcao==="saida") && !semArq && resto   // F373 · a enviada também vai ao caso
       ? `<span class="zl-acoes"><button onclick="anotarMsgZap('${m.id}','${cliId}')" title="registrar na linha do tempo do caso">anotar</button><button onclick="tarefaDaMsgZap('${m.id}')" title="levar ao campo de escrever no caso, com a data que estiver no texto"><span aria-hidden="true">Tarefa</span><span class="sr-only">virar tarefa</span></button></span>` : "";
-    _zapLado.set(m.id, {texto: m.texto||"", q});
+    _zapLado.set(m.id, {texto: m.texto||"", q, dir: m.direcao});
     return sep + `<div class="zap-b ${m.direcao}" style="max-width:85%"${acoes ? ` draggable="true" data-zmsg="${m.id}" title="arraste para a tarefa ou para o campo de escrever no caso"` : ""}>
       ${quem?`<div class="autor">${esc(quem)}</div>`:""}<div class="txt">${corpo}</div>
       <div class="pe">${horaSP(q)}${m.status==="erro"?" · não enviou":""}</div>${acoes}</div>`;
