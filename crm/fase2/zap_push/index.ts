@@ -115,7 +115,7 @@ if (typeof Deno !== "undefined") Deno.serve(async (req) => {
       const rn = await sb(`/rest/v1/clientes?id=eq.${c.cliente_id}&select=nome`);
       nome = rn.ok ? ((await rn.json())[0] || {}).nome || null : null;
     }
-    // F388 · a foto de quem escreve vira o ícone do aviso (link assinado de 7 dias; sem foto, o ícone do CRM)
+    // F389 · a foto de quem escreve vira o ícone do aviso (link assinado de 7 dias; sem foto, o ícone do CRM)
     let icone: string | null = null;
     if (c.foto_url) try {
       const rf = await sb(`/storage/v1/object/sign/anexos/${c.foto_url}`, { method: "POST", body: JSON.stringify({ expiresIn: 7 * 86400 }) });
