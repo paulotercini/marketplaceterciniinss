@@ -4515,6 +4515,16 @@ html[data-tema="v10"] .tr-compacta{margin-bottom:10px}
 .adb-cont{font-size:12px;color:#4A4944}
 .adb-resumo,.adb-quando{margin:8px 0 0}.adb-quando:empty{display:none}
 .adb-valor{margin:8px 0 0}.adb-valor-nota{margin:2px 0 0;font-size:12px}
+.adp{margin:12px 0 6px}.adp-t{margin:0 0 8px;font-size:13px}.adp-qs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.adp-q{border:1px solid var(--borda);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:2px;background:var(--branco)}
+.adp-q small{color:var(--cinza);font-size:12px}.adp-q b{font-size:18px;font-variant-numeric:tabular-nums}.adp-q b span{font-size:13px;font-weight:400;color:var(--cinza)}
+.adp-em{font-size:12px;color:var(--cinza)}.adp-dir b{color:var(--azul)}
+.adp-g{width:100%;max-width:720px;height:auto;margin-top:10px;display:block}.adp-g path{stroke-width:2.5}
+.adp-ex{stroke:var(--cinza);stroke-dasharray:4 4}.adp-dl{stroke:var(--verde,#2E7D32);stroke-width:2}.adp-tx{font-size:11px;fill:var(--cinza)}.adp-dt{fill:var(--verde,#2E7D32);font-weight:600}
+path.adp-car{stroke:var(--azul)}path.adp-ida{stroke:var(--prox,#8F5400)}
+.adp-leg{display:flex;gap:14px;font-size:12px;color:var(--cinza);margin-top:2px}.adp-leg span{display:inline-flex;align-items:center;gap:5px}
+.adp-leg i{display:inline-block;width:16px;height:3px}.adp-leg .adp-car i{background:var(--azul)}.adp-leg .adp-ida i{background:var(--prox,#8F5400)}
+.adp-pag{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px;padding:8px 10px;border-radius:8px;background:var(--placa)}.adp-pag>span{flex:1 1 240px}
 .adl{margin:10px 0 4px}.adl-trilho{position:relative;height:8px;background:var(--placa);border-radius:4px;margin:12px 8px}
 .adl-trilho i{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);background:var(--prox,#8F5400);border:2px solid var(--branco)}
 .adl-trilho .adl-hoje{background:var(--cinza)}.adl-trilho .adl-dir{background:var(--azul)}
@@ -5564,7 +5574,9 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 .pzc-nota{flex:1 1 220px;min-width:0;font-size:12px;line-height:1.45;color:var(--cinza-claro,#686660)}
 .pzl{margin:0 0 14px}.pzl-t{margin:0 0 6px;font-size:13px;font-weight:600}.pzl-rolar{overflow-x:auto}
 .pzl-dias{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(31,minmax(24px,1fr));min-width:744px;border-top:2px solid var(--borda)}
-.pzl-d{display:flex;flex-direction:column;align-items:center;gap:2px;padding-top:4px;min-height:60px}
+.pzl-d{display:flex;flex-direction:column;align-items:center;gap:2px;padding-top:4px;min-height:60px;position:relative}
+.pzl-rolar{padding-bottom:18px}.pzl-lab{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:2px;font-size:11px;font-weight:600;color:var(--venc,#B3261E);white-space:nowrap;pointer-events:none}
+.pzl-d:first-child .pzl-lab{left:0;transform:none}.pzl-d:nth-last-child(-n+4) .pzl-lab{left:auto;right:0;transform:none}
 .pzl-nu{background:var(--placa)}.pzl-hoje{box-shadow:inset 2px 0 0 var(--azul)}
 .pzl-m{width:24px;height:24px;border:0;padding:0;background:none;display:grid;place-items:center;cursor:pointer;color:inherit}
 .pzl-m::before,.pzl-leg i{content:"";width:12px;height:12px;border-radius:50%;background:currentColor}
@@ -6032,12 +6044,22 @@ html[data-tema="v10"] .tr-aberta .tr-b{width:12px;height:12px;flex:none;border-r
 html[data-tema="v10"] .tr-aberta .tr-nm{flex:1 1 160px;font-size:13px}
 html[data-tema="v10"] .tr-aberta .tr-fonte{order:3;flex-basis:100%;padding-left:22px;font-size:12px;color:#8E8B84}
 html[data-tema="v10"] .tr-aberta .tr-d{margin-left:auto;font-size:12px}
+html[data-tema="v10"] .tr-dur{display:none}html[data-tema="v10"] .tr-aberta .tr-dur{display:block;font-size:12px;color:var(--cinza);min-width:64px;text-align:right;font-variant-numeric:tabular-nums}
+html[data-tema="v10"] .tr-aberta .tr-sa .tr-dur{color:var(--tt);font-weight:600}html[data-tema="v10"] .tr-resumo-longo~.tr-corpo .tr-sa .tr-dur{color:var(--venc)}
+.tr-gt{margin:4px 16px 8px;overflow-x:auto}.tr-gt-r,.tr-gt-l{display:flex;min-width:560px}.tr-gt-n{flex:0 0 110px;font-size:12px;color:var(--cinza);padding-right:8px;line-height:1.2}
+.tr-gt-n small{display:block;font-size:11px}.tr-gt-a .tr-gt-n{color:var(--tt);font-weight:600}.tr-gt-n:empty{visibility:hidden}
+.tr-gt-m{position:relative;flex:1;height:20px;border-bottom:1px solid var(--borda);font-size:11px;color:var(--cinza)}.tr-gt-m span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.tr-gt-c{position:relative;min-width:560px}.tr-gt-l{align-items:center;height:40px;border-bottom:1px solid var(--borda)}.tr-gt-l:last-of-type{border-bottom:0}
+.tr-gt-t{position:relative;flex:1;height:22px}.tr-gt-n~.tr-gt-t:empty{border:1px dashed var(--borda);border-radius:4px}
+.tr-gt-b{position:absolute;top:0;bottom:0;border-radius:3px;background:#D9D7D0;border:1px solid var(--branco,#fff);overflow:hidden;font-style:normal;font-size:11px;line-height:20px;color:#5F5C55;padding:0 4px;box-sizing:border-box}
+.tr-gt-b span{white-space:nowrap}.tr-gt-at{background:var(--tc);color:#fff;font-weight:600}.tr-resumo-longo~.tr-corpo .tr-gt-at{background:var(--venc)}
+.tr-gt-n-x{text-decoration:line-through}.tr-gt-hoje{position:absolute;top:0;bottom:0;border-left:1px dashed #555;pointer-events:none}.tr-gt-hoje span{position:absolute;top:-2px;left:3px;font-size:10px;font-weight:600}
 html[data-tema="v10"] .tr-fonte{display:none}
 html[data-tema="v10"] .tr-aberta .tr-fonte{display:block}
 html[data-tema="v10"] .tr-aberta .tr-l>li.tr-fut{display:none}
 html[data-tema="v10"] .tr-fut-ver .tr-l>li.tr-fut{display:grid}
-html[data-tema="v10"] .tr-fut-bt{all:unset;cursor:pointer;margin:6px 8px 0;font-size:12px;color:var(--cinza);text-decoration:underline}
-html[data-tema="v10"] .tr-fechada .tr-fut-bt{display:none}
+html[data-tema="v10"] .tr-tempo-bt,html[data-tema="v10"] .tr-fut-bt{all:unset;cursor:pointer;margin:6px 8px 0;font-size:12px;color:var(--cinza);text-decoration:underline}
+html[data-tema="v10"] .tr-fechada .tr-fut-bt,html[data-tema="v10"] .tr-fechada .tr-tempo-bt{display:none}
 html[data-tema="v10"] .tr-fut-bt:focus-visible{outline:2px solid #121212;outline-offset:2px}
 @media (max-width:760px){html[data-tema="v10"] .tr-aberta .tr-l>li{grid-template-columns:minmax(0,1fr)} html[data-tema="v10"] .tr-aberta .tr-g:empty{display:none}}
 html[data-tema="v10"] .tr-resumo .tr-agora small{font-size:13px;color:var(--cinza-claro)}
@@ -6281,7 +6303,7 @@ html .faixa-prazos .fp3-etapa .fp3-pe{margin-top:4px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.42</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.43</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -26337,9 +26359,56 @@ function linhaDireito(a, x){
   const tot = Math.max(1, diasEntreIso(x.hoje, a.quando)), pct = d => Math.round(100*diasEntreIso(x.hoje, d)/tot);
   const ms = a.rs.filter(r=>r.quando && r.quando>x.hoje && r.quando<=a.quando && r.est!=="info").sort((p, q)=>p.quando<q.quando ? -1 : 1);
   const rot = r => cortaFrase(String(r.rot).replace(/\s*[?(:].*$/, "").replace(/^(Já )?(tem|completou|cumpriu) /i, ""), 40);
-  return `<div class="adl"><div class="adl-trilho" aria-hidden="true"><i class="adl-hoje" style="left:0"></i>${
+  const linha = `<div class="adl"><div class="adl-trilho" aria-hidden="true"><i class="adl-hoje" style="left:0"></i>${
     ms.map(r=>`<i style="left:${pct(r.quando)}%"></i>`).join("")}<i class="adl-dir" style="left:100%"></i></div>
     <ol class="adl-lista"><li>hoje, ${fmtBarra(x.hoje)}</li>${ms.map(r=>`<li>${esc(rot(r))}: ${fmtBarra(r.quando)}</li>`).join("")}<li><b>direito em ${fmtBarra(a.quando)}</b></li></ol></div>`;
+  return progressoDireito(a, x, ms, rot) + linha;
+}
+// F386 · o progresso até o direito (protótipo do Lovable, escolha do Paulo de 03.11.2026): um quadro por requisito ainda por
+// cumprir (a carência e a idade com o número de hoje e o exigido), o da data do direito, o gráfico das curvas em % do exigido
+// e, quando falta carência, as competências a pagar com Futura e Contribuições.
+// shortcut: o exigido sai da data em que o motor diz que o requisito se cumpre, supondo um mês pago por mês; a carência paga
+// com atraso ou com lacuna muda a conta, e o requisito do motor continua sendo o que vale
+const mesesEntreIso = (a, b) => (+b.slice(0,4) - +a.slice(0,4))*12 + (+b.slice(5,7) - +a.slice(5,7));
+function seriesDireito(ms, x){
+  return ms.map(r=>{
+    if(/carencia/i.test(r.id||"") && x.ct){ const ate = mesesEntreIso(x.hoje, r.quando), hj = carenciaAte(x, x.hoje) || 0;
+      return {r, tipo:"car", rot:"Carência", hj, ex: hj + ate, un:"meses", fim:r.quando}; }
+    if(/idade/i.test(r.id||"") && x.dn){ const hj = idadeEm(x.dn, x.hoje), ex = idadeEm(x.dn, r.quando);
+      if(hj!=null && ex!=null) return {r, tipo:"ida", rot:"Idade", hj, ex, un:"anos", fim:r.quando}; }
+    return {r, tipo:"", fim:r.quando};
+  });
+}
+function progressoDireito(a, x, ms, rot){
+  if(!ms.length) return "";
+  const ss = seriesDireito(ms, x), num = ss.filter(s=>s.tipo), car = ss.find(s=>s.tipo==="car");
+  const quadros = ss.map(s=>`<div class="adp-q" title="${esc(s.r.base||"")}"><small>${esc(s.tipo ? s.rot : rot(s.r))}</small>${
+    s.tipo ? `<b>${s.hj} <span>de ${s.ex} ${s.un}</span></b>` : ""}<span class="adp-em">completa em ${s.tipo==="car" ? fmtBarra(s.fim).slice(3) : fmtBarra(s.fim)}</span></div>`).join("")
+    + `<div class="adp-q adp-dir"><small>Data do direito</small><b>${fmtBarra(a.quando)}</b></div>`;
+  let graf = "";
+  if(num.length){
+    const W = 640, H = 170, P = 34, tot = Math.max(1, diasEntreIso(x.hoje, a.quando)),
+      gx = d => P + (W - 2*P) * Math.min(1, diasEntreIso(x.hoje, d)/tot), v0 = s => s.ex ? s.hj/s.ex : 1,
+      // a escala começa um pouco abaixo da curva mais baixa, para a subida aparecer (166 de 178 é 93 % do exigido)
+      lo = Math.max(0, Math.min(...num.map(v0)) - 0.05), gy = v => H - P - (H - 2*P) * Math.min(1, (v - lo)/(1 - lo || 1));
+    const curva = s => { return `M${gx(x.hoje)},${gy(v0(s))} L${gx(s.fim)},${gy(1)} L${gx(a.quando)},${gy(1)}`; };
+    graf = `<svg class="adp-g" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(`Progresso até o direito: ${num.map(s=>`${s.rot.toLowerCase()} de ${s.hj} para ${s.ex} ${s.un} até ${fmtBarra(s.fim)}`).join("; ")}; direito em ${fmtBarra(a.quando)}`)}">
+      <line class="adp-ex" x1="${P}" x2="${W-P}" y1="${gy(1)}" y2="${gy(1)}"/><text class="adp-tx" x="${P}" y="${gy(1)-6}">exigido</text>
+      <line class="adp-dl" x1="${gx(a.quando)}" x2="${gx(a.quando)}" y1="${P-12}" y2="${H-P}"/><text class="adp-tx adp-dt" x="${gx(a.quando)-4}" y="${P-16}" text-anchor="end">direito em ${fmtBarra(a.quando)}</text>
+      ${num.map(s=>`<path class="adp-${s.tipo}" d="${curva(s)}" fill="none"/>`).join("")}
+      <text class="adp-tx" x="${P}" y="${H-12}">hoje</text><text class="adp-tx" x="${W-P}" y="${H-12}" text-anchor="end">${fmtBarra(a.quando).slice(3)}</text></svg>
+      <div class="adp-leg">${num.map(s=>`<span class="adp-${s.tipo}"><i></i>${s.rot} (${s.un})</span>`).join("")}</div>`;
+  }
+  let pagar = "";
+  if(car && car.ex > car.hj){
+    const de = somarMeses(x.hoje.slice(0,7)+"-01", 1), ate = car.fim.slice(0,7)+"-01", c = x.c, pc = c && typeof preCasoAberto==="function" ? preCasoAberto(c) : null;
+    const pre = c ? JSON.stringify({q:{finalidade:"aposentadoria", modalidade:"mensal", inicio:de, fim:car.fim.slice(0,7)+"-28",
+      motivo:`carência de ${car.ex} meses para a aposentadoria em ${fmtBarra(a.quando)}`}}).replace(/"/g, "&quot;") : "";
+    pagar = `<div class="adp-pag"><span>Pagar de <b>${fmtBarra(de).slice(3)}</b> a <b>${fmtBarra(ate).slice(3)}</b> e protocolar em <b>${fmtBarra(a.quando)}</b></span>
+      ${pc ? `<button type="button" class="btn-mini" onclick="irDesfecho()" title="Criar a aposentadoria futura no Desfecho, com o aviso antes da data do direito">Futura<span class="sr-only"> (criar a aposentadoria futura)</span></button>` : ""}
+      ${c ? `<button type="button" class="btn-mini" onclick="formQualidade('${c.id}','','analise',${pre})" title="Criar o plano de contribuições a pagar">Contribuições<span class="sr-only"> (criar o plano)</span></button>` : ""}</div>`;
+  }
+  return `<section class="adp" aria-label="Progresso até o direito"><h4 class="adp-t">Progresso até o direito</h4><div class="adp-qs">${quadros}</div>${graf}${pagar}</section>`;
 }
 // F384 · O VALOR ESTIMADO DO BENEFÍCIO. A média dos salários de contribuição desde 07/1994 (EC 103, art. 26), cada um
 // corrigido pelo INPC do mês da competência ao mês anterior à DER (Lei 8.213/91, art. 29-B), com o percentual da regra.
@@ -35747,7 +35816,7 @@ function documentosDoCaso(k){
   marcarIniciais(docs);
   return docs.sort((a,b)=>ordemPeca(b, a));
 }
-// F385 · a ordem da juntada no mesmo dia vem do número do documento no
+// F386 · a ordem da juntada no mesmo dia vem do número do documento no
 // tribunal (fim do caminho), e não do nome: "Documentos Diversos" vinha antes
 // da petição que ele acompanha
 const idDaPeca = d => String(d.caminho||"").split("/").pop().replace(/\D/g,"").padStart(40,"0");
@@ -37807,7 +37876,7 @@ function linha30Pz(hj){
   return `<section class="pzl" aria-label="Próximos 30 dias"><h3 class="pzl-t">Próximos 30 dias <span class="pzc-gn">${its.length}</span></h3>
     <div class="pzl-rolar"><ol class="pzl-dias">${dias.map((d, j)=>`<li class="pzl-d${ehDiaUtil(d) ? "" : " pzl-nu"}${j ? "" : " pzl-hoje"}">${
       its.filter(x=>x.data===d).map(x=>`<button type="button" class="pzl-m pzl-${cls(x._nat)}" onclick="abrirPainelPrazo(${_pzCli.indexOf(x)},'cli')" title="${esc(`${diaCurtoPz(d)} · ${x._titulo}`)}" aria-label="${esc(`${diaCurtoPz(d)}: ${x._titulo}`)}"></button>`).join("")
-      }<span class="pzl-n">${j===0 ? "hoje" : j%5===0 && j<30 ? fmtBarra(d).slice(0,5) : ""}</span></li>`).join("")}</ol></div>
+      }${(f => f ? `<span class="pzl-lab" aria-hidden="true">${esc(cortaFrase(f._titulo, 22))}</span>` : "")(its.find(x=>x.data===d && x._nat==="fatal"))}<span class="pzl-n">${j===0 ? "hoje" : j%5===0 && j<30 ? fmtBarra(d).slice(0,5) : ""}</span></li>`).join("")}</ol></div>
     <div class="pzl-leg"><span class="pzl-fatal"><i></i>Prazo fatal</span><span class="pzl-comp"><i></i>Compromisso</span><span class="pzl-lemb"><i></i>Lembrete</span><span><i class="pzl-nu-i"></i>Sem expediente</span></div></section>`;
 }
 // ══════════════════════════════════════════════════════════════════════════
@@ -39383,7 +39452,7 @@ function ritoDe(k, fase){
   return ritoManual(k, fase) || (ritoDados(k, fase)||{}).r || ritoPadrao(k, fase);
 }
 const marcaTrilha = (k, rito, nome) => (trilhaDe(k).m||{})[rito+":"+nome] || null;
-let trVer = {}, trSel = {}, trAbre = {}, trAjuda = false, trFut = {};   // fase em vista, etapa aberta, grupos abertos, legenda
+let trVer = {}, trSel = {}, trAbre = {}, trAjuda = false, trFut = {}, trTempo = {};   // fase em vista, etapa aberta, grupos abertos, legenda
 function jornadaFases(k){
   const atual = faseDaTrilha(k), ordem = ["escritorio","inss","conselho","judicial"], ia = ordem.indexOf(atual);
   const marcou = (trilhaDe(k).fases)||{};
@@ -39452,6 +39521,36 @@ function linhaParalela(k, faseAt){
   return `<button type="button" class="tr-par" style="--tc:${C.c};--tt:${C.t}" onclick="trVerFase('${k.id}','judicial')" title="ver as etapas do processo judicial">
     <small>Em paralelo · Judicial</small> <span>${esc(p.classe || "Mandado de segurança")}${ult ? `: <b>${esc(ult.n.toLowerCase())}</b>` : ""}${desde ? ` desde ${dCurta(desde)}${dias>=0 ? ` (há ${dias} ${dias===1?"dia":"dias"})` : ""}` : ""}</span></button>`;
 }
+// F386 · as etapas numa linha do tempo, por meses (variação C do protótipo do Lovable, escolha do Paulo de 03.11.2026): uma
+// faixa por fase que houve, uma barra por etapa datada, da data dela à da etapa seguinte (a atual vai até hoje) e a linha de hoje
+function ganttEtapas(k, faseAt){
+  const h = hoje(), lanes = [];
+  for(const {f, st} of jornadaFases(k)){
+    if(st==="v") continue;
+    let ets = [], ms = [];
+    try{ const r = ritoDe(k, f); ets = TRILHAS[r].e.map(lerEtapaTrilha); ms = marcasDaTrilha(k, f, faseAt, r, ets); }catch(e){}
+    const ds = ets.map((e,i)=>({n:e.n, m:ms[i]||{}})).filter(x=>x.m.d && (x.m.s==="f" || x.m.s==="a")).sort((a,b)=>a.m.d<b.m.d ? -1 : 1);
+    lanes.push({f, st, ds});
+  }
+  const todas = lanes.flatMap(l=>l.ds.map(x=>x.m.d));
+  if(!todas.length) return `<p class="meio-sub tr-gt-vazio">Nenhuma etapa com data para pôr na linha do tempo.</p>`;
+  const ini = todas.reduce((a,b)=>a<b ? a : b).slice(0,7)+"-01", fim = somarMeses(h.slice(0,7)+"-01", 1), tot = Math.max(1, diasEntreIso(ini, fim));
+  const pos = d => Math.max(0, Math.min(100, 100*diasEntreIso(ini, d)/tot));
+  // o fim da última etapa de uma fase encerrada é o começo da fase seguinte que tem data
+  const proxIni = f => { const l = lanes.slice(lanes.findIndex(x=>x.f===f)+1).find(x=>x.ds.length); return l ? l.ds[0].m.d : h; };
+  const meses = []; for(let m = ini; m < fim; m = somarMeses(m, 1)) meses.push(m);
+  const passo = Math.max(1, Math.ceil(meses.length/8));
+  const MES = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+  const regua = meses.map((m, n)=>n % passo ? "" : `<span style="left:${pos(m)}%">${MES[+m.slice(5,7)-1]}/${m.slice(2,4)}</span>`).join("");
+  const faixa = l => { const C = COR_FASE[l.f];
+    const barras = l.ds.map((x, j)=>{ const cur = x.m.s==="a" && l.f===faseAt, de = x.m.d, ate = l.ds[j+1] ? l.ds[j+1].m.d : cur ? h : proxIni(l.f);
+      const n = Math.max(0, diasEntreIso(de, ate)), w = Math.max(pos(ate) - pos(de), 0.8);
+      const t = `${x.n}: desde ${fmtBarra(de)}, ${cur ? "há " : ""}${n} ${n===1 ? "dia" : "dias"}${x.m.por ? `, ${x.m.por}` : ""}`;
+      return `<i class="tr-gt-b${cur ? " tr-gt-at" : ""}" style="left:${pos(de)}%;width:${w}%" title="${esc(t)}"><span>${w > 9 ? esc(x.n) : ""}</span><b class="sr-only">${esc(t)}</b></i>`; }).join("");
+    return `<div class="tr-gt-l tr-gt-${l.st}" style="--tc:${C.c};--tt:${C.t}"><span class="tr-gt-n">${esc(C.n)}${l.st==="n" ? "<small>não houve</small>" : ""}</span><div class="tr-gt-t">${barras}</div></div>`; };
+  return `<div class="tr-gt" role="group" aria-label="Etapas do caso por meses"><div class="tr-gt-r"><span class="tr-gt-n"></span><div class="tr-gt-m">${regua}</div></div>
+    <div class="tr-gt-c">${lanes.map(faixa).join("")}<div class="tr-gt-hoje" style="left:calc(110px + (100% - 110px) * ${pos(h)/100})"><span>hoje</span></div></div></div>`;
+}
 function faixaTrilha(k){
   const faseAt = faseDaTrilha(k); if(!faseAt) return "";
   const ver = trVer[k.id] || faseAt, C = COR_FASE[ver], rito = ritoDe(k, ver), T = TRILHAS[rito];
@@ -39486,6 +39585,12 @@ function faixaTrilha(k){
   const pxI = iAt<0 ? -1 : ets.findIndex((e,j)=>j>iAt && !["f","n"].includes(mk(e).s) && !(e.op && !mk(e).s));
   // F383 (12.41) · no histórico vertical, as etapas depois da próxima ficam escondidas até "Mostrar as etapas seguintes"
   const corte = pxI>=0 ? pxI : iAt, futura = (i, m) => iAt>=0 && i>corte && !["f","n","a"].includes(m.s) && i!==sel;
+  // F386 · quantos dias durou cada etapa (protótipo do Lovable): da data dela à da próxima etapa datada; a atual, até hoje
+  const datadas = ets.map((e,i)=>({i, m:MK[i]||{}})).filter(x=>x.m.d && (x.m.s==="f" || x.m.s==="a"));
+  const durDe = i => { const j = datadas.findIndex(x=>x.i===i); if(j<0) return "";
+    const fim = datadas[j+1] ? datadas[j+1].m.d : datadas[j].m.s==="a" ? hoje() : null; if(!fim || fim<datadas[j].m.d) return "";
+    const n = diasEntreIso(datadas[j].m.d, fim), cur = datadas[j].m.s==="a";
+    return `<span class="tr-dur">${cur ? "há " : ""}${n} ${n===1 ? "dia" : "dias"}</span>`; };
   // os grupos cumpridos (e a execução ainda não começada) ficam recolhidos
   const itens = [];
   for(const G of gruposTrilha(ets)){
@@ -39505,7 +39610,7 @@ function faixaTrilha(k){
       const rot = n===0 && G.g ? `<span class="tr-g${e.ex?" tr-g-ex":""}">${esc(G.g)}${(feito||execVazia)&&trAbre[chave]?` <a href="#" onclick="trGrupo('${chave}');return false" class="tr-rec">recolher</a>`:""}</span>` : `<span class="tr-g"></span>`;
       itens.push(`<li style="--tc:${cor.c};--tt:${cor.t}"${e.ex?" data-ex":""}${futura(i, m) ? ` class="tr-fut"` : ""}>${rot}
         <button class="tr-et tr-s${m.s||(e.op?"o":"v")}${i===sel?" tr-sel":""}${i===pxI?" tr-px":""}" data-tri="${i}" onclick="trEscolher('${k.id}','${rito}',${i})" aria-pressed="${i===sel}"
-          title="${esc(tituloEtapa(e, m))}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}${fonteEtapa(m)}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"aguardando":i===pxI?"próxima":"")}</span></button></li>`);
+          title="${esc(tituloEtapa(e, m))}"><span class="tr-b"></span><span class="tr-nm">${esc(e.n)}</span>${m.x?`<span class="tr-x">${esc(m.x)}</span>`:""}${fonteEtapa(m)}<span class="tr-d">${esc(m.d?fmtBarra(m.d):m.s==="a"?"aguardando":i===pxI?"próxima":"")}</span>${durDe(i)}</button></li>`);
     });
   }
   let pnl = "";
@@ -39553,10 +39658,11 @@ function faixaTrilha(k){
       ${trAjuda ? `<div class="tr-cab"><h3>${esc(T.nome)}</h3>${ver===faseAt ? "" : `<span class="meio-sub">${stVer==="v"?"fase ainda não alcançada":"fase anterior"}</span>`}
         ${houveBt}${chips}</div>` : ""}
       ${leg}
-      <div class="tr-rol-box"><button class="tr-seta tr-seta-esq" aria-label="etapas anteriores" tabindex="-1" onclick="trRolar(-1)">‹</button>
+      ${trTempo[k.id] ? ganttEtapas(k, faseAt) : ""}<div class="tr-rol-box"${trTempo[k.id] ? " hidden" : ""}><button class="tr-seta tr-seta-esq" aria-label="etapas anteriores" tabindex="-1" onclick="trRolar(-1)">‹</button>
         <div class="tr-rol" onscroll="trSombra(this)"><ol class="tr-l" style="--n:${itens.length}">${itens.join("")}</ol></div>
         <button class="tr-seta tr-seta-dir" aria-label="próximas etapas" tabindex="-1" onclick="trRolar(1)">›</button></div>
-      ${(n => n ? `<button type="button" class="tr-fut-bt" aria-expanded="${!!trFut[k.id]}" onclick="trFut['${k.id}']=!trFut['${k.id}'];trRepintar()">${trFut[k.id] ? "Esconder as etapas seguintes" : `Mostrar as etapas seguintes (${n})`}</button>` : "")(itens.filter(x=>x.includes(' class="tr-fut"')).length)}
+      <button type="button" class="tr-tempo-bt" aria-pressed="${!!trTempo[k.id]}" onclick="trTempo['${k.id}']=!trTempo['${k.id}'];trRepintar()" title="${trTempo[k.id] ? "voltar à lista das etapas" : "ver as etapas de todas as fases numa linha do tempo, por meses"}">${trTempo[k.id] ? "Lista" : "Meses"}</button>
+      ${trTempo[k.id] ? "" : (n => n ? `<button type="button" class="tr-fut-bt" aria-expanded="${!!trFut[k.id]}" onclick="trFut['${k.id}']=!trFut['${k.id}'];trRepintar()">${trFut[k.id] ? "Esconder as etapas seguintes" : `Mostrar as etapas seguintes (${n})`}</button>` : "")(itens.filter(x=>x.includes(' class="tr-fut"')).length)}
       ${pnl}
     </div></section>`;
 }
