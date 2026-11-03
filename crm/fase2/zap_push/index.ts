@@ -26,15 +26,15 @@ export const mascarar = (s: unknown) => String(s ?? "").replace(/\d[\d.\-/ ]{6,}
 const TIPO: Record<string, string> = { audio: "🎤 Áudio", imagem: "📷 Foto", video: "🎥 Vídeo", documento: "📄 Documento", figurinha: "Figurinha", localizacao: "📍 Localização", contato: "👤 Contato" };
 
 type Msg = { id: string; conversa_id: string; tipo: string; texto: string | null };
-type Conv = { id: string; atendente_id: string | null; automatica: boolean | null; nome_perfil: string | null; telefone: string | null };
+type Conv = { id: string; atendente_id: string | null; automatica: boolean | null; nome_perfil: string | null; telefone: string | null; foto_url?: string | null };
 type Insc = { id: string; colaborador_id: string; endpoint: string; p256dh: string; auth: string };
 
 // o que aparece na tela do celular: quem escreveu e o começo da mensagem, sem número longo (CPF, NB, processo)
-export function aviso(m: Msg, c: Conv, nomeCliente: string | null) {
+export function aviso(m: Msg, c: Conv, nomeCliente: string | null, icone?: string | null) {
   const quem = (nomeCliente || c.nome_perfil || c.telefone || "Cliente").trim();
   const txt = mascarar(m.texto || "").replace(/\s+/g, " ").trim();
   const corpo = txt ? (txt.length > 120 ? txt.slice(0, 117) + "…" : txt) : (TIPO[m.tipo] || "Mensagem nova");
-  return { title: quem, body: corpo, tag: "crm-zap-" + c.id, data: { crm: "zap", conversa: c.id } };
+  return { title: quem, body: corpo, tag: "crm-zap-" + c.id, data: { crm: "zap", conversa: c.id }, ...(icone ? { icon: icone } : {}) };
 }
 // o atendente da conversa, e sem atendente todos (como o aviso sonoro do CRM, F191)
 export function destinatarios(c: Conv, inscs: Insc[]) {
@@ -107,7 +107,7 @@ if (typeof Deno !== "undefined") Deno.serve(async (req) => {
       { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ push_em: new Date().toISOString() }) });
     const [m] = r.ok ? await r.json() as Msg[] : [];
     if (!m) return json({ enviados: 0 });
-    const rc = await sb(`/rest/v1/zap_conversas?id=eq.${m.conversa_id}&select=id,atendente_id,automatica,nome_perfil,telefone,cliente_id`);
+    const rc = await sb(`/rest/v1/zap_conversas?id=eq.${m.conversa_id}&select=id,atendente_id,automatica,nome_perfil,telefone,cliente_id,foto_url`);
     const [c] = rc.ok ? await rc.json() : [];
     if (!c || c.automatica) return json({ enviados: 0 });
     let nome: string | null = null;
@@ -115,8 +115,15 @@ if (typeof Deno !== "undefined") Deno.serve(async (req) => {
       const rn = await sb(`/rest/v1/clientes?id=eq.${c.cliente_id}&select=nome`);
       nome = rn.ok ? ((await rn.json())[0] || {}).nome || null : null;
     }
+    // F389 · a foto de quem escreve vira o ícone do aviso (link assinado de 7 dias; sem foto, o ícone do CRM)
+    let icone: string | null = null;
+    if (c.foto_url) try {
+      const rf = await sb(`/storage/v1/object/sign/anexos/${c.foto_url}`, { method: "POST", body: JSON.stringify({ expiresIn: 7 * 86400 }) });
+      const su = rf.ok ? (await rf.json()).signedURL : null;
+      if (su) icone = URL_SB + "/storage/v1" + su;
+    } catch { /* sem a foto, o aviso sai com o ícone do CRM */ }
     const ri = await sb("/rest/v1/push_inscricoes?select=*");
-    const n = await enviar(destinatarios(c, ri.ok ? await ri.json() : []), aviso(m, c, nome));
+    const n = await enviar(destinatarios(c, ri.ok ? await ri.json() : []), aviso(m, c, nome, icone));
     return json({ enviados: n });
   } catch (e) {
     return json({ erro: String((e as Error).message || e) }, 500);

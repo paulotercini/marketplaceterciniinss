@@ -86,6 +86,21 @@ const MSGS = [
   conf("▶ ouvir toca o áudio na própria janela, sem abrir outra aba", ctx.pages().length === abas
     && /token=t/.test(await p.getAttribute('#painel-prazo audio[data-ouvir="zap/x/a1.ogg"]', "src")));
   conf("F261 · a conversa abre ao lado da ficha, com a resposta embaixo", !!(await p.$("#painel-prazo #pp-zap-txt")));
+  conf("F387 · a mensagem enviada ao cliente também se arrasta ao caso", !!(await p.$('#painel-prazo .zap-b.saida[draggable="true"][data-zmsg="m4"]')));
+  // F387 · ao lado da ficha: emoji, print colado e o cursor depois de enviar
+  await p.click('#painel-prazo .ze-emo > summary');
+  await p.click('#painel-prazo .ze-emo-grade button');
+  conf("F387 · o emoji entra no campo da conversa ao lado", (await p.inputValue("#pp-zap-txt")).includes("😀"));
+  await p.evaluate(() => {
+    const dt = new DataTransfer(); dt.items.add(new File([new Uint8Array([137,80,78,71])], "x.png", {type: "image/png"}));
+    document.getElementById("pp-zap-txt").dispatchEvent(new ClipboardEvent("paste", {clipboardData: dt, bubbles: true, cancelable: true}));
+  });
+  conf("F387 · o print colado fica à espera para enviar", await p.evaluate(() => !!zapLadoPend && /^print-\d+\.png$/.test(zapLadoPend.file.name)
+    && !document.getElementById("pp-zap-pend").hidden));
+  await p.evaluate(() => descartarPendZap());
+  await p.fill("#pp-zap-txt", "teste do cursor ao lado"); await p.click("#pp-zap-env");
+  await p.waitForFunction(() => document.activeElement && document.activeElement.id === "pp-zap-txt", null, {timeout: 3000}).catch(() => {});
+  conf("F387 · depois de enviar ao lado, o cursor continua no campo", await p.evaluate(() => document.activeElement && document.activeElement.id === "pp-zap-txt"));
   await p.waitForFunction(() => !(D.zapFicha || []).some(z => z.nao_lidas));
   conf("abrir zera as novas", patches.some(x => /zap_conversas\?id=in\./.test(x.u) && x.b.nao_lidas === 0));
   await p.evaluate(() => fecharPainelPrazo());
@@ -99,7 +114,10 @@ const MSGS = [
   await p.click('.painel[data-p="0"].ativo .zap-ping button');
   await p.waitForSelector("#painel-prazo .zap-msgs .zap-b");
   conf("“ler mensagens” abre a conversa ao lado", (await p.textContent("#painel-prazo header")).includes("WhatsApp"));
-  await p.evaluate(() => fecharPainelPrazo()); await p.waitForTimeout(400);
+  await p.click("#painel-prazo .pp-zap-tela");
+  await p.waitForTimeout(300);
+  conf("F387 · o botão Tela abre a conversa na tela do WhatsApp", await p.evaluate(id => visao === "whatsapp" && zapAberta === id
+    && !document.querySelector("#painel-prazo.aberto"), ZAP_CLI));
 
   // na tela do WhatsApp, a conversa de cliente mostra “abrir ficha”
   await p.evaluate(() => irPara("whatsapp"));
@@ -112,6 +130,8 @@ const MSGS = [
     await p.evaluate(() => document.querySelector('#zap-msgs audio[data-ouvir="zap/x/a1.ogg"]') === window._tocador));
   // F344 · a tela do WhatsApp tem altura fixa: a página não rola e o topo não some (a reserva de 150 px fazia rolar)
   conf("a tela do WhatsApp não rola a página inteira", await p.evaluate(() => { const m = document.querySelector("main.meio.zap-v"); return !!m && m.scrollHeight <= m.clientHeight + 1; }));
+  await p.fill("#zap-txt", "teste do cursor"); await p.click("#zap-enviar"); await p.waitForTimeout(300);
+  conf("F387 · depois de enviar, o cursor continua no campo de escrever", await p.evaluate(() => document.activeElement && document.activeElement.id === "zap-txt"));
   conf("conversa de cliente mostra “abrir ficha” e não “vincular”",
     /Cliente: /.test(await p.textContent(".zap-topo")) && !(await p.textContent(".zap-topo")).includes("Vincular"));
 
