@@ -156,6 +156,18 @@ const DADOS = {
   await p.click(".tr-fut-bt"); await p.waitForTimeout(150);
   conf("F383 o botão mostra as etapas seguintes", await p.evaluate(() => [...document.querySelectorAll(".tr-l>li.tr-fut")].every(x => x.offsetParent) && /Esconder/.test(document.querySelector(".tr-fut-bt").textContent)));
   if (FOTO) await p.screenshot({ path: FOTO + "-3.png", clip: { x: 0, y: 0, width: 1440, height: 1100 } });
+  // F386 · os dias de cada etapa no histórico e a linha do tempo por meses (variação C do protótipo do Lovable)
+  const v385 = await p.evaluate(() => ({ dur: [...document.querySelectorAll(".tr-aberta .tr-sf .tr-dur")].filter(x => x.offsetParent).map(x => x.textContent),
+    atual: (document.querySelector(".tr-aberta .tr-sa .tr-dur") || {}).textContent || "" }));
+  conf("F386 a etapa cumprida diz quantos dias durou e a atual há quantos dias está", v385.dur.length > 0 && v385.dur.every(t => /^\d+ dias?$/.test(t)) && /^há \d+ dias?$/.test(v385.atual) || (console.log(JSON.stringify(v385)), false));
+  await p.click(".tr-tempo-bt"); await p.waitForTimeout(150);
+  const gt = await p.evaluate(() => ({ faixas: [...document.querySelectorAll(".tr-gt-l")].map(l => l.querySelector(".tr-gt-n").textContent),
+    barras: document.querySelectorAll(".tr-gt-b").length, atual: document.querySelectorAll(".tr-gt-b.tr-gt-at").length, hoje: !!document.querySelector(".tr-gt-hoje"),
+    lista: !document.querySelector(".tr-rol-box").offsetParent, bt: document.querySelector(".tr-tempo-bt").textContent }));
+  conf("F386 Meses mostra uma faixa por fase, as barras das etapas, a atual em cor e a linha de hoje, no lugar da lista",
+    gt.faixas.length >= 2 && gt.barras >= 3 && gt.atual === 1 && gt.hoje && gt.lista && gt.bt === "Lista" || (console.log(JSON.stringify(gt)), false));
+  await p.click(".tr-tempo-bt"); await p.waitForTimeout(150);
+  conf("F386 Lista volta ao histórico vertical", await p.evaluate(() => !document.querySelector(".tr-gt") && !!document.querySelector(".tr-rol-box").offsetParent));
 
   for (const [nome, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${nome}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);
