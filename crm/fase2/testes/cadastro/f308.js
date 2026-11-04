@@ -70,9 +70,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const ordem = await p.$$eval(".esc-caso", xs => xs.map(x => x.dataset.caso));
   conf("o caso judicial do NB vem primeiro, o do INSS em seguida e o sem NB por último", ordem.join() === [JEF, INSS, EST].join());
   const nbs = await p.$$eval(".esc-nb", xs => xs.map(x => x.innerText));
-  conf("F392 · cada coluna diz o NB, e os do mesmo NB ficam lado a lado", /NB 719\.370\.158-5/.test(nbs[0]) && nbs[0] === nbs[1] && /Sem NB/.test(nbs[2]));
+  conf("F393 · cada coluna diz o NB, e os do mesmo NB ficam lado a lado", /NB 719\.370\.158-5/.test(nbs[0]) && nbs[0] === nbs[1] && /Sem NB/.test(nbs[2]));
   const lin = await p.$$eval(".esc-caso", xs => xs.map(x => [...x.querySelectorAll(".esc-cel")].map(c => Math.round(c.getBoundingClientRect().top))));
-  conf("F392 · as linhas Agora, Etapa, Datas e Último ficam na mesma altura em todas as colunas", lin.every(l => l.join() === lin[0].join()));
+  conf("F393 · as linhas Agora, Etapa, Datas e Último ficam na mesma altura em todas as colunas", lin.every(l => l.join() === lin[0].join()));
   const txt = id => p.$eval(`.esc-caso[data-caso="${id}"]`, x => x.innerText);
   const tJef = await txt(JEF), tEst = await txt(EST), tInss = await txt(INSS);
   conf("o caso judicial diz onde está (JEF de Catanduva) e a etapa", /JEF de Catanduva/.test(tJef) && /Perícia judicial marcada/.test(tJef));
@@ -114,7 +114,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
       larg: document.querySelector(".esc-cx").scrollWidth <= document.querySelector(".esc-cx").clientWidth + 1,
     };
   });
-  conf("F392 · no celular a coluna ocupa a maior parte da tela e as outras deslizam", cel.colLarg > 220 && cel.colLarg < 340);
+  conf("F393 · no celular a coluna ocupa a maior parte da tela e as outras deslizam", cel.colLarg > 220 && cel.colLarg < 340);
   conf("no celular ficam a etapa e o próximo passo", cel.etapa && cel.agora);
   conf("no celular os botões flutuantes não cobrem a escolha", !cel.fabs.length);
   conf("no celular nada passa da largura", cel.larg);
