@@ -99,6 +99,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o campo de escrever traz 'Sem resposta' e 'Pedir ao cliente'", !!(await p.$(".tipo-ch.tipo-sr")) && !!(await p.$(".tipo-ch.tipo-pc")));
   const em2 = await util(2);
   for (let i = 1; i <= 3; i++) {
+    await p.click("#and-texto"); await p.waitForTimeout(200);   // F391b: os gestos de um clique ficam no pé do campo aberto
     await p.click(".tipo-ch.tipo-sr");
     await p.click('.esp-lista .esp-it:has-text("telefone")');
     await p.waitForTimeout(600);
@@ -112,6 +113,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.evaluate(() => fecharCaixa());
 
   // 3 · Pedir ao cliente no caso em andamento
+  await p.click("#and-texto"); await p.waitForTimeout(200);
   await p.click(".tipo-ch.tipo-pc");
   await p.fill("#pc-itens", "Relatório médico atualizado\nSenha do Meu INSS");
   const ate = await p.inputValue("#pc-ate");

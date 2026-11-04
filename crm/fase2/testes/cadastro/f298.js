@@ -123,7 +123,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   { const cf = colunaOk(await FABS(), false); conf("na ficha, agenda e ✎ no mesmo eixo, 8 px entre eles, e o \"?\" na altura do ✎ (F307)", cf.ok) || console.log(JSON.stringify(cf)); }
   await p.tap(".det-mais > summary");
   await p.tap("#and-texto"); await p.waitForTimeout(300);
-  conf("tocado, o campo mostra os tipos", (await p.$$eval("#tipo-fila > *", a => a.filter(e => e.offsetParent).length)) > 2);
+  conf("tocado, o campo mostra os tipos", (await p.$$eval(".esc-tgs > *", a => a.filter(e => e.offsetParent).length)) > 2);
   // F303 · a linha do Meu Dia no celular: data, nome, espécie e lista, prazo fatal e os botões do lado
   const linha = await p.evaluate(([cid, kid]) => {
     const d = document.createElement("div"); d.id = "f303"; document.body.appendChild(d);
