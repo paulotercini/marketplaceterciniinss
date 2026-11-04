@@ -87,7 +87,7 @@ const SUPA = "https://ficticio.supabase.co";
     vistaProc = true;
     const onc = [...pinta("cnj").querySelectorAll("[onclick]"), ...pinta("inss").querySelectorAll("[onclick]")].map(x=>x.getAttribute("onclick"));
     res.parse = onc.every(o=>{ try{ new Function(o); return true; }catch(e){ return false; } });
-    // F393 · o leitor ao lado da árvore: o documento escolhido, ↑ ↓, zoom e a escolha pelo clique
+    // F394 · o leitor ao lado da árvore: o documento escolhido, ↑ ↓, zoom e a escolha pelo clique
     desenharPeca = () => {};
     div.style.width = "1100px";
     const j2 = pinta("cnj"), pl = j2.querySelector(".proc-leitor");
