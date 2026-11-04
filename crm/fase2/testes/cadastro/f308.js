@@ -69,22 +69,24 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   const ordem = await p.$$eval(".esc-caso", xs => xs.map(x => x.dataset.caso));
   conf("o caso judicial do NB vem primeiro, o do INSS em seguida e o sem NB por último", ordem.join() === [JEF, INSS, EST].join());
-  const grupos = await p.$$eval(".esc-gcab", xs => xs.map(x => x.innerText));
-  conf("os casos do mesmo NB ficam no mesmo grupo", grupos.length === 2 && /NB 719\.370\.158-5/.test(grupos[0]) && /Sem NB/.test(grupos[1]));
+  const nbs = await p.$$eval(".esc-nb", xs => xs.map(x => x.innerText));
+  conf("F392 · cada coluna diz o NB, e os do mesmo NB ficam lado a lado", /NB 719\.370\.158-5/.test(nbs[0]) && nbs[0] === nbs[1] && /Sem NB/.test(nbs[2]));
+  const lin = await p.$$eval(".esc-caso", xs => xs.map(x => [...x.querySelectorAll(".esc-cel")].map(c => Math.round(c.getBoundingClientRect().top))));
+  conf("F392 · as linhas Agora, Etapa, Datas e Último ficam na mesma altura em todas as colunas", lin.every(l => l.join() === lin[0].join()));
   const txt = id => p.$eval(`.esc-caso[data-caso="${id}"]`, x => x.innerText);
   const tJef = await txt(JEF), tEst = await txt(EST), tInss = await txt(INSS);
   conf("o caso judicial diz onde está (JEF de Catanduva) e a etapa", /JEF de Catanduva/.test(tJef) && /Perícia judicial marcada/.test(tJef));
   conf("o último andamento aparece por extenso, com quem escreveu", /Juntada de laudo do assistente técnico/.test(tJef) && /Paulo/.test(tJef));
   conf("o caso em que você escreveu por último fica marcado", await p.$(`.esc-caso.esc-meu[data-caso="${JEF}"]`) && /você escreveu aqui/.test(tJef));
   conf("a ação estadual sem espécie se identifica pela Justiça Estadual", /Justiça Estadual de SP/.test(tEst) && /Ação na Justiça Estadual, espécie não definida/.test(tEst));
-  conf("o movimento do e-SAJ aparece sem o rótulo da coleta", /e-SAJ · Sentença de improcedência publicada/.test(tEst));
+  conf("o movimento do e-SAJ aparece sem o rótulo da coleta", /e-SAJ: Sentença de improcedência publicada/.test(tEst));
   conf("o prazo do caso aparece como prazo, e a volta à fila como volta à fila", /prazo \d\d\/\d\d\/\d{4}/.test(tEst) && /volta à fila .* vencida/.test(tInss));
   conf("o caso do INSS mostra a DER", /DER 02\/09\/2026/.test(tInss));
   conf("o caso estadual tem o botão do e-SAJ", await p.$(`.esc-caso[data-caso="${EST}"] a.lc-acesso[href*="esaj"]`));
   conf("o caso do INSS tem o botão do Meu INSS", /Meu INSS/.test(tInss));
   conf("o cartão não traz protocolo nem número de processo", !/1479410049|147941004|5002340|1003595/.test(tInss + tJef + tEst));
   conf("o ✎ do nome é só o ícone", await p.$eval(`.esc-caso[data-caso="${INSS}"] .esc-ed`, x => x.textContent.trim()) === "✎");
-  conf("o grupo abre pelo nome do benefício, e o NB vem depois", /^Auxílio/.test(grupos[0].trim()) && /NB 719/.test(grupos[0]));
+  conf("o NB diz o benefício no title", /^Auxílio/.test(await p.$eval(".esc-nb", x => x.title)));
 
   await p.evaluate(([c, id]) => nomearCaso(c, id), [CLI, INSS]);
   await p.fill(`[data-tit="${INSS}"] input`, "Novo pedido de setembro");
@@ -105,19 +107,18 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     const cs = [...document.querySelectorAll(".esc-caso")];
     return {
       datas: cs.some(c => vis(c.querySelector(".proc-sub"))), portal: cs.some(c => vis(c.querySelector(".esc-pe a"))),
-      txt: cs.some(c => vis(c.querySelector(".esc-ult-txt"))), quem: cs.some(c => vis(c.querySelector(".esc-quem"))),
-      etapa: /Perícia judicial marcada/.test(cs[0].innerText), agora: cs.every(c => /Agora|Último/.test(c.innerText)),
+      txt: cs.some(c => vis(c.querySelector(".esc-ult-txt"))), quem: cs.some(c => vis(c.querySelector(".esc-resp"))),
+      etapa: /Perícia judicial marcada/.test(cs[0].innerText), agora: cs.every(c => /Agora|Último/i.test(c.innerText)),
       fabs: ["fab-sug", "fab-ajuda", "fab-rapida", "zap-ag"].filter(id => vis(document.getElementById(id))),
-      alto: Math.max(...cs.map(c => c.getBoundingClientRect().height)),
+      colLarg: cs[0].getBoundingClientRect().width,
       larg: document.querySelector(".esc-cx").scrollWidth <= document.querySelector(".esc-cx").clientWidth + 1,
     };
   });
-  conf("no celular saem as datas, o portal, o texto do andamento e quem cuida", !cel.datas && !cel.portal && !cel.txt && !cel.quem);
+  conf("F392 · no celular a coluna ocupa a maior parte da tela e as outras deslizam", cel.colLarg > 220 && cel.colLarg < 340);
   conf("no celular ficam a etapa e o próximo passo", cel.etapa && cel.agora);
   conf("no celular os botões flutuantes não cobrem a escolha", !cel.fabs.length);
-  conf("no celular cada cartão fica baixo (até 190 px)", cel.alto <= 190);
   conf("no celular nada passa da largura", cel.larg);
-  if (!cel.fabs.length && cel.alto <= 190) {} else console.log(JSON.stringify(cel));
+  console.log(JSON.stringify(cel));
 
   await p.keyboard.press("2");
   await p.waitForFunction(() => document.getElementById("modal").style.display === "none");
