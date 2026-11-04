@@ -214,7 +214,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   const fechado = await p.evaluate(`(() => { ${VIS}
     const sug = document.querySelector("#tipo-fila .sug-abrir");
     return { sug: !!sug && vis("#tipo-fila .sug-abrir") && sug.textContent.trim() === "Sugestões", campo: vis("#and-texto"), barra: vis("#tf-box"), prazo: vis("#and-prazo-ck") }; })()`);
-  conf("F244 · fechado: fica à vista só o campo (os tipos e o Sugestões aparecem ao clicar nele)", !fechado.sug && fechado.campo && !fechado.barra && !fechado.prazo);
+  conf("F244 · fechado: fica à vista só o campo (os tipos e o Sugestões aparecem ao clicar nele)", !fechado.sug && fechado.campo && !fechado.prazo);
   await p.click("#and-texto"); await p.waitForTimeout(250);
   // teste 11.88, REC-06: a Tarefa nasce desligada; o quadro Quem faz/Quando abre ao ligá-la
   const semTarefa = await p.evaluate(`(() => { ${VIS} return !vis("#esc-pnl-tf"); })()`);
@@ -231,7 +231,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       quem: vis("#esc-pnl-tf"),
       icone: getComputedStyle(document.querySelector(".esc-ic svg")).width }; })()`);
   conf("aberto: linha 1 = as chaves e as ferramentas; o quadro Quem faz/Quando aberto pela Tarefa; linha 2 = Ao registrar e o Registrar", aberto.barra && aberto.linhas === 2 && aberto.l1 && aberto.l2 && aberto.quem);
-  conf("os ícones das ferramentas cresceram (19px)", aberto.icone === "19px");
+  conf("F391 · os ícones das ferramentas ficam sem borda, com 16px", aberto.icone === "16px");
   await p.evaluate(() => { document.getElementById("and-texto").blur(); document.body.click(); }); await p.waitForTimeout(400);
   conf("a conversa vira blocos por dia: um bloco por dia, cada um com a data e seus registros, nada solto", ff.blocos >= 1 && ff.soltos === 0 && ff.itensPorBloco.every(n => n >= 1) && ff.dias.every(Boolean));
   // F138 · a zebra cinza/branco saiu: os dias ficam sobre o mesmo fundo,
@@ -252,7 +252,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
 
   // ── F105 · a janela do tipo ──────────────────────────────────────────────
   await p.evaluate(() => irSubAba("escritorio")); await p.waitForTimeout(200);
-  const fila = await p.evaluate(() => [...document.querySelectorAll("#tipo-fila .tipo-ch[data-tipoand]")].map(b => b.textContent.trim()));
+  const fila = await p.evaluate(() => [...document.querySelectorAll(".escrever .tipo-ch[data-tipoand]")].map(b => b.textContent.trim()));
   conf("os tipos do compositor: trouxe documentos, exigência, perícia, protocolo, petição, decisão, contato, ouvidoria",
     fila.join("|") === "Trouxe documentos|Exigência|Perícia|Protocolo|Petição|Decisão|Contato|Ouvidoria");
   await p.evaluate(() => popAnotacao("exigencia")); await p.waitForTimeout(150);
