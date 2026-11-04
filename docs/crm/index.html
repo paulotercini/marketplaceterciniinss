@@ -2798,10 +2798,22 @@ dialog.confirmar::backdrop{background:rgba(15,17,22,.38)}
 .app.celular .escrever .tipo-ch{flex:none;white-space:nowrap}
 .app.celular .det-rolagem{padding-bottom:180px}
 .proc-cartoes{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}.proc-cartao{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:6px 12px;border:1px solid var(--linha,#dfe3ea);border-radius:8px;background:var(--fundo-card,#fff);cursor:pointer;font:inherit;color:inherit}.proc-cartao span{font-size:12px;color:var(--mut,#5d6675)}.proc-cartao.on{border-color:currentColor;box-shadow:inset 0 -3px 0 currentColor}.proc-barra{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px}.proc-bts{display:flex;gap:6px;flex-wrap:wrap}.proc-pri{background:#1E6F50;border-color:#1E6F50;color:#fff;font-weight:600}.proc-sel{max-width:100%;min-width:0;flex:1 1 240px;font:inherit}.proc-barra2{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-bottom:8px}.proc-arv{margin-bottom:10px}
+.proc-v{container-type:inline-size}.proc-barra{justify-content:flex-start}.proc-barra .proc-tit{flex:0 1 auto}.proc-bts{margin-left:auto}
+.proc-situ{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;background:var(--fundo-card,#fff);border:1px solid var(--linha,#dfe3ea);border-radius:6px;padding:7px 12px;margin-bottom:10px;font-size:13px}.proc-situ .dec{color:#a3261d;font-weight:600}.proc-situ .proc-lig{margin-left:auto}
+.proc-grade{display:grid;grid-template-columns:minmax(240px,340px) minmax(0,1fr);gap:12px;align-items:start}.proc-grade.so-arv{grid-template-columns:minmax(0,1fr)}
+.proc-grade .proc-arv{background:var(--fundo-card,#fff);border:1px solid var(--linha,#dfe3ea);border-radius:6px;margin:0;max-height:78vh;overflow:auto;padding:0 10px 8px}
+.proc-arv-cab{position:sticky;top:0;background:inherit;padding:8px 2px;margin-bottom:6px;border-bottom:1px solid var(--linha,#e7e9ee);z-index:1}
+.arv-doc.sel{background:#F3F7FE;box-shadow:inset 3px 0 0 #2B5FC7;border-radius:2px}
+.proc-leitor{position:sticky;top:8px;height:78vh;display:flex;flex-direction:column;border:1px solid var(--linha,#dfe3ea);border-radius:6px;overflow:hidden;background:#E3E6EB}
+.pl-cab{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;background:var(--fundo-card,#fff);padding:7px 10px;border-bottom:1px solid var(--linha,#dfe3ea)}.pl-tit{font-weight:600}.pl-bts{margin-left:auto;display:inline-flex;gap:4px;align-items:center}.pl-bts .pi-zoom{display:inline-flex;gap:2px;align-items:center;margin-right:4px}.pl-bts output{font-size:12px;min-width:44px;text-align:center}
+.pl-corpo{flex:1;overflow:auto;padding:14px 24px}.pl-corpo .pi-peca{max-width:900px;margin:0 auto 12px;zoom:var(--pi-zoom,1)}.pl-corpo .pi-folha{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18);margin-bottom:10px;min-height:200px}.pl-corpo .pi-folha canvas,.pl-corpo .pi-folha img{display:block;width:100%;height:auto}.pl-corpo .pi-folha iframe{display:block;width:100%;border:0;min-height:300px}.pl-corpo .pi-folha .meio-sub{padding:16px}
+.pl-prox{display:block;width:100%;max-width:900px;margin:0 auto;border:0;border-top:1px solid #C9CDD4;background:none;padding:8px 0;font:inherit;font-size:12px;color:var(--mut,#5d6675);cursor:pointer;text-align:center}
+.arv-et{font-size:11px;text-transform:none;letter-spacing:0;padding:1px 6px;border-radius:9px;background:#EBEEF3;color:#5B6069;white-space:nowrap}.arv-et.dec{background:#FBE9E8;color:#a3261d}
+@container (max-width:760px){.proc-grade{grid-template-columns:minmax(0,1fr)}.proc-leitor{display:none}.proc-grade .proc-arv{max-height:none}}
 .arv-u{list-style:none;margin:0;padding:0}.arv-u ul{list-style:none;margin:0;padding:0 0 0 12px;border-left:2px solid var(--linha,#dfe3ea)}.arv-dia{margin:0 0 10px}.arv-data{display:block;font-size:12px;font-weight:600;color:var(--mut,#5d6675);margin-bottom:3px;font-variant-numeric:tabular-nums}
 .arv-doc,.arv-and{padding:3px 0 3px 4px;font-size:13px;line-height:1.4}.arv-doc{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px}.arv-and{font-style:italic;color:var(--mut,#5d6675)}.arv-and.dec{color:#a3261d;font-style:normal;font-weight:600}
 .arv-nome{border:0;background:none;padding:0;font:inherit;font-weight:500;color:var(--azul,#2B5FC7);cursor:pointer;text-align:left}span.arv-nome{color:var(--mut,#5d6675);cursor:default}.arv-doc.dec .arv-nome{color:#a3261d;font-weight:600}
-.arv-et.dec{color:#a3261d;font-weight:600}.arv-mov{font-size:12px;color:var(--mut,#5d6675)}.arv-txt{flex-basis:100%;font-size:12px;color:var(--mut,#5d6675);overflow-wrap:anywhere}.arv-antes>summary,.arv-dia details>summary{cursor:pointer;font-size:12px;color:var(--azul,#2B5FC7);padding:3px 0}.proc-q{border:1px solid var(--linha,#dfe3ea);border-radius:8px;margin-bottom:8px}.proc-q>summary{cursor:pointer;padding:8px 10px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.proc-id{font-family:var(--f-mono,ui-monospace,monospace);font-size:12px}.proc-tit{font-weight:600;flex:1 1 200px;min-width:0}.proc-sit{font-size:12px;padding:1px 8px;border-radius:99px;background:var(--fundo-sutil,#eef1f5)}.proc-sit.dec{color:#a3261d;font-weight:600}.proc-corpo{padding:4px 10px 10px;display:grid;gap:6px}.proc-lig{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.arv-et{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut,#5d6675)}.proc-tela{max-width:900px;max-height:80vh;overflow:auto}.pat-arv{list-style:none;margin:0;padding-left:18px}.pat-arv.pat-raiz{padding-left:0}.pat-arv li{margin:3px 0}.pat-arv summary{cursor:pointer}
+.arv-et.dec{font-weight:600}.arv-mov{font-size:12px;color:var(--mut,#5d6675)}.arv-txt{flex-basis:100%;font-size:12px;color:var(--mut,#5d6675);overflow-wrap:anywhere}.arv-antes>summary,.arv-dia details>summary{cursor:pointer;font-size:12px;color:var(--azul,#2B5FC7);padding:3px 0}.proc-q{border:1px solid var(--linha,#dfe3ea);border-radius:8px;margin-bottom:8px}.proc-q>summary{cursor:pointer;padding:8px 10px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.proc-id{font-family:var(--f-mono,ui-monospace,monospace);font-size:12px}.proc-tit{font-weight:600;flex:1 1 200px;min-width:0}.proc-sit{font-size:12px;padding:1px 8px;border-radius:99px;background:var(--fundo-sutil,#eef1f5)}.proc-sit.dec{color:#a3261d;font-weight:600}.proc-corpo{padding:4px 10px 10px;display:grid;gap:6px}.proc-lig{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.proc-tela{max-width:900px;max-height:80vh;overflow:auto}.pat-arv{list-style:none;margin:0;padding-left:18px}.pat-arv.pat-raiz{padding-left:0}.pat-arv li{margin:3px 0}.pat-arv summary{cursor:pointer}
 </style>
 <script>
 /* F80 · interruptor do tema v10. ?tema=v10 liga e guarda; ?tema= (vazio)
@@ -6399,7 +6411,7 @@ body:has(.app.celular.detalhe-aberto .escrever.esc-aberto) :is(#fab-sug,#fab-rap
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.49</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.50</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -36148,13 +36160,14 @@ function _piTecla(e){
 // F392 · zoom das peças no leitor (pedido do Paulo, 04.11.2026): de 50 % a 300 %, guardado no navegador
 const PI_ZOOM = [.5,.67,.8,.9,1,1.1,1.25,1.5,1.75,2,2.5,3];
 function piZoom(passo){
-  const el = document.getElementById("proc-inteiro"); if(!el) return;
+  const el = document.getElementById("proc-inteiro") || document.querySelector(".proc-leitor .pl-corpo"); if(!el) return;
+  const pane = el.closest(".proc-leitor") || el;
   let z = +el.style.getPropertyValue("--pi-zoom") || 1;
   if(passo===0) z = 1;
   else { const i = PI_ZOOM.findIndex(v=>v>=z-.001); z = PI_ZOOM[Math.max(0, Math.min(PI_ZOOM.length-1, (i<0?PI_ZOOM.length-1:i) + passo))]; }
-  const autos = el.querySelector(".pi-autos"), alvo = autos && autos.scrollHeight ? autos.scrollTop / autos.scrollHeight : 0;
+  const autos = el.querySelector(".pi-autos") || (el.classList.contains("pl-corpo") ? el : null), alvo = autos && autos.scrollHeight ? autos.scrollTop / autos.scrollHeight : 0;
   el.style.setProperty("--pi-zoom", z);
-  const o = el.querySelector(".pi-zoom output"); if(o) o.textContent = Math.round(z*100) + " %";
+  const o = pane.querySelector(".pi-zoom output"); if(o) o.textContent = Math.round(z*100) + " %";
   if(autos) autos.scrollTop = alvo * autos.scrollHeight;   // a leitura fica na mesma altura do processo
   try{ localStorage.setItem("crm_pi_zoom", z); }catch(e){}
 }
@@ -42560,18 +42573,20 @@ function itensDoProcesso(k, x){
   }
   return it;
 }
-function arvoreUnica(k, aba, i, x){
-  const it = itensDoProcesso(k, x).filter(y=>filtroArv==="dec" ? y.dec : filtroArv==="doc" ? y.tipo==="doc" : filtroArv==="and" ? y.tipo==="and" : true);
+// a ordem da árvore: a data mais nova no alto e, no mesmo dia, a decisão e a juntada
+const ordemArvDia = (a,b) => (b.dec-a.dec) || (a.tipo===b.tipo ? (a.tipo==="doc" ? ordemPeca(a.d, b.d) : 0) : a.tipo==="doc" ? -1 : 1);
+const ordemArv = (a,b) => String(b.data).localeCompare(String(a.data)) || ordemArvDia(a,b);
+function arvoreUnica(k, aba, i, x, todos, sel){
+  const it = (todos || itensDoProcesso(k, x)).filter(y=>filtroArv==="dec" ? y.dec : filtroArv==="doc" ? y.tipo==="doc" : filtroArv==="and" ? y.tipo==="and" : true);
   if(!it.length) return `<p class="meio-sub">${filtroArv==="todos" ? "Nada guardado deste processo ainda." : "Nada neste filtro."}</p>`;
   const dias = new Map(); it.forEach(y=>dias.set(y.data, [...(dias.get(y.data)||[]), y]));
   const lin = y => { const et = `${y.dec?` <span class="arv-et dec">Decisão</span>`:""}${y.ori?` <span class="arv-et">${esc(y.ori)}</span>`:""}`;
     if(y.tipo==="and") return `<li class="arv-and${y.dec?" dec":""}">${esc(y.txt)}${et}</li>`;
     const nome = y.d.caminho
-      ? `<button class="arv-nome" onclick="lerProcesso('${k.id}','${aba}',${i},'${escJs(y.d.caminho)}')" title="abrir no leitor, com os demais documentos do processo">${esc(y.rot)}</button>`
+      ? `<button class="arv-nome" onclick="procVer('${k.id}','${aba}',${i},'${escJs(y.d.caminho)}')" title="ler este documento">${esc(y.rot)}</button>`
       : `<span class="arv-nome" title="a extensão ainda não baixou este documento">${esc(y.rot)} (não baixado)</span>`;
-    return `<li class="arv-doc${y.dec?" dec":""}">${nome}${et}${y.mov?`<span class="arv-mov">${esc(y.mov)}</span>`:""}${y.txt?`<span class="arv-txt">${esc(y.txt)}</span>`:""}</li>`; };
-  const ordem = (a,b) => (b.dec-a.dec) || (a.tipo===b.tipo ? (a.tipo==="doc" ? ordemPeca(a.d, b.d) : 0) : a.tipo==="doc" ? -1 : 1);
-  const dia = ([d, l]) => { l.sort(ordem); const ver = l.length>5 ? l.slice(0,4) : l, resto = l.length>5 ? l.slice(4) : [];
+    return `<li class="arv-doc${y.dec?" dec":""}${sel && y.d.caminho===sel?" sel":""}"${y.d.caminho?` data-cam="${esc(y.d.caminho)}"`:""}>${nome}${et}${y.mov?`<span class="arv-mov">${esc(y.mov)}</span>`:""}${y.txt?`<span class="arv-txt">${esc(y.txt)}</span>`:""}</li>`; };
+  const dia = ([d, l]) => { l.sort(ordemArvDia); const ver = l.length>5 ? l.slice(0,4) : l, resto = l.length>5 ? l.slice(4) : [];
     return `<li class="arv-dia"><span class="arv-data">${d ? dataPat(d) : "Sem data"}</span><ul>${ver.map(lin).join("")}${resto.length
       ? `<li><details><summary>Mais ${resto.length} deste dia</summary><ul>${resto.map(lin).join("")}</ul></details></li>` : ""}</ul></li>`; };
   const ord = [...dias].sort(([a],[b])=>b.localeCompare(a)), VIS = 12;
@@ -42603,6 +42618,57 @@ function claudeDoProcesso(casoId, aba, i){
   menuClaudeDocs(k.id, docs.map(chaveDoc), aba==="cnj" ? "processo" : undefined);
 }
 const ROT_FASE = {inss:"INSS", crps:"Conselho", cnj:"Judicial"};
+// F393 · a proposta A inteira (04.11.2026): a árvore à esquerda e o documento escolhido à direita, no leitor
+// da própria aba, com ↑ ↓, o zoom e Abrir; a situação e os processos ligados numa faixa só. Na coluna
+// estreita (celular, WhatsApp aberto) o leitor some e o documento abre no leitor de tela cheia.
+let docEscolhido = {}, _leitorNo = null;
+const docsDaArvore = (k, x) => itensDoProcesso(k, x).filter(y=>y.tipo==="doc" && y.d.caminho).sort(ordemArv);
+function procEscolhido(k, aba, i, x){
+  const l = docsDaArvore(k, x), c = docEscolhido[`${k.id}|${aba}|${i}`];
+  return (l.find(y=>y.d.caminho===c) || l.find(y=>y.dec) || l[0] || {}).d;
+}
+function leitorMiolo(k, aba, i, x, d){
+  if(!d) return `<p class="meio-sub" style="padding:16px">Nenhum documento guardado deste processo.</p>`;
+  const l = docsDaArvore(k, x), j = l.findIndex(y=>y.d.caminho===d.caminho), y = l[j] || {d, rot:rotPeca(d)};
+  const cron = docsLegiveis(k, x), n = cron.findIndex(z=>z.caminho===d.caminho), fl = (flsDasPecas(cron)[n]);
+  const ir = z => z ? `procVer('${k.id}','${aba}',${i},'${escJs(z.d.caminho)}')` : "";
+  const prox = l[j+1];
+  let z0 = 1; try{ z0 = +localStorage.getItem("crm_pi_zoom") || 1; }catch(e){}
+  return `<div class="pl-cab">
+      <b class="pl-tit">${esc(y.rot)}</b>${y.dec?`<span class="arv-et dec">Decisão</span>`:""}${y.ori?`<span class="arv-et">${esc(y.ori)}</span>`:""}
+      <span class="meio-sub">${[y.data?dataPat(y.data):"", fl?`fls. ${fl}`:"", n>=0?`documento ${n+1} de ${cron.length}`:""].filter(Boolean).join(" · ")}</span>
+      <span class="pl-bts"><span class="pi-zoom" role="group" aria-label="zoom do documento"><button class="btn-mini" onclick="piZoom(-1)" title="diminuir (Ctrl + roda)" aria-label="diminuir o zoom">−</button><output aria-live="polite">${Math.round(z0*100)} %</output><button class="btn-mini" onclick="piZoom(1)" title="aumentar (Ctrl + roda)" aria-label="aumentar o zoom">+</button></span>
+      <button class="btn-mini" ${j>0?`onclick="${ir(l[j-1])}"`:"disabled"} title="documento anterior (mais recente)" aria-label="documento anterior">↑</button>
+      <button class="btn-mini" ${prox?`onclick="${ir(prox)}"`:"disabled"} title="próximo documento (mais antigo)" aria-label="próximo documento">↓</button>
+      <button class="btn-mini" onclick="${d.id?`abrirAnexo('${escJs(d.id)}')`:`abrirDecisao('${escJs(d.caminho)}')`}" title="abrir este documento em outra guia">Abrir</button></span></div>
+    <div class="pl-corpo" style="--pi-zoom:${z0}"><section class="pi-peca" data-cam="${esc(d.caminho)}"><div class="pi-folha"><p class="meio-sub">Carregando…</p></div></section>
+      ${prox?`<button class="pl-prox" onclick="${ir(prox)}" title="ler o documento seguinte">${esc(prox.rot)}${prox.ori?` · ${esc(prox.ori)}`:""}${prox.data?` · ${dataPat(prox.data)}`:""}</button>`:""}</div>`;
+}
+// o documento do leitor: o desenhado fica guardado e volta na repintura, sem buscar de novo
+function procDesenhar(){
+  const pane = document.querySelector(".proc-leitor"); if(!pane || !pane.offsetParent) return;
+  const sec = pane.querySelector(".pi-peca"); if(!sec) return;
+  const cam = sec.dataset.cam, k = D.casoPorId.get(pane.dataset.caso); if(!k) return;
+  const corpo = pane.querySelector(".pl-corpo");
+  if(corpo && !corpo._roda){ corpo._roda = 1; corpo.addEventListener("wheel", e=>{ if(!e.ctrlKey) return; e.preventDefault(); piZoom(e.deltaY<0 ? 1 : -1); }, {passive:false}); }
+  if(_leitorNo && _leitorNo.cam===cam && _leitorNo.caso===k.id){ sec.replaceWith(_leitorNo.el); return; }
+  const x = processosDaFase(k, pane.dataset.aba)[+pane.dataset.i]; if(!x) return;
+  const d = docsLegiveis(k, x).find(z=>z.caminho===cam); if(!d) return;
+  _leitorNo = {cam, caso:k.id, el:sec};
+  desenharPeca(d, sec.querySelector(".pi-folha"));
+}
+function procVer(casoId, aba, i, cam){
+  const pane = document.querySelector(".proc-leitor");
+  if(!pane || !pane.offsetParent) return lerProcesso(casoId, aba, i, cam);
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const x = processosDaFase(k, aba)[i]; if(!x) return;
+  docEscolhido[`${casoId}|${aba}|${i}`] = cam;
+  const d = docsLegiveis(k, x).find(z=>z.caminho===cam);
+  pane.innerHTML = leitorMiolo(k, aba, i, x, d);
+  document.querySelectorAll(".proc-arv .arv-doc").forEach(li=>li.classList.toggle("sel", li.dataset.cam===cam));
+  const li = document.querySelector(`.proc-arv .arv-doc.sel`); if(li) li.scrollIntoView({block:"nearest"});
+  procDesenhar();
+}
 function vistaProcessos(k, aba){
   const lista = processosDaFase(k, aba);
   const i = Math.max(0, Math.min(procIdx[aba]||0, lista.length-1)), x = lista[i];
@@ -42613,22 +42679,29 @@ function vistaProcessos(k, aba){
   const escolha = lista.length>1
     ? `<select class="proc-sel" aria-label="processo desta fase" onchange="procIdx['${aba}']=+this.value;repintarFicha()">${lista.map((y,j)=>
         `<option value="${j}"${j===i?" selected":""}>${esc(y.id)} · ${esc(y.tit)}</option>`).join("")}</select>`
-    : `<span class="proc-id">${esc(x.id)}</span><span class="proc-tit">${esc(x.tit)}</span>`;
+    : `${soDig(x.tit).includes(soDig(x.id))?"":`<span class="proc-id">${esc(x.id)}</span>`}<span class="proc-tit">${esc(x.tit)}</span>`;
   const filtros = `<span class="sub-menu fontes proc-filtros">${[["todos","Tudo"],["dec","Decisões"],["doc","Documentos"],["and","Andamentos"]].map(([f,r])=>
     `<button class="${filtroArv===f?"on":""}" onclick="filtroArv='${f}';repintarFicha()">${r}</button>`).join("")}</span>`;
   const bts = [
-    n ? `<button class="btn-mini proc-pri" onclick="lerProcesso('${k.id}','${aba}',${i})" title="abrir os ${n} documentos deste processo num leitor contínuo, com a árvore ao lado">Ler</button>` : "",
+    n ? `<button class="btn-mini proc-pri" onclick="lerProcesso('${k.id}','${aba}',${i})" title="abrir os ${n} documentos deste processo num leitor contínuo, em tela cheia">Ler</button>` : "",
     n ? `<button class="btn-mini" onclick="baixarProcesso('${k.id}','${aba}',${i})" title="baixar os ${n} documentos deste processo em .zip">Baixar</button>` : "",
     n ? `<button class="btn-mini" onclick="claudeDoProcesso('${k.id}','${aba}',${i})" title="pedir ao Claude com os documentos deste processo">Claude</button>` : "",
     x.portal ? `<a class="btn-mini" href="${urlOk(x.portal)}" target="_blank" rel="noopener" title="abrir no sistema oficial">Portal</a>` : "",
     x.aba!=="cnj" ? `<button class="btn-mini" onclick="telaDoProcesso('${k.id}','${aba}',${i})" title="a tela do ${x.aba==="inss"?"PAT":"e-SISREC"}: cabeçalho, comentários e movimentações">Tela</button>` : "",
     `<button class="btn-mini" onclick="mudarVistaProc(false)" title="a tela anterior desta aba: as fontes, a fase e a gestão dos processos">Detalhes</button>`].join("");
+  const todos = itensDoProcesso(k, x), nd = todos.filter(y=>y.tipo==="doc").length, na = todos.length - nd;
+  const d = n ? procEscolhido(k, aba, i, x) : null;
+  if(d) setTimeout(procDesenhar, 0);
+  const sit = x.sit ? `<span class="proc-sit-r"><b>Situação:</b> <span class="${x.dec?"dec":""}">${esc(x.sit.slice(0,80))}</span>${x.ult?` <span class="meio-sub">${esc(fmt(x.ult.slice(0,10)))}</span>`:""}</span>` : "";
+  const lig = ligados.length ? `<span class="proc-lig"><span class="meio-sub">Ligado a</span> ${ligados.map(y=>`<button class="btn-mini" onclick="irSubAba('${y.aba}')"
+      title="abrir ${esc(y.id)} em ${ROT_FASE[y.aba]}">${ROT_FASE[y.aba]} · ${esc(y.id.replace(/^(Protocolo|Recurso) /,""))}</button>`).join(" ")}</span>` : "";
   return `<div class="proc-v">
-    <div class="proc-barra">${escolha}<span class="proc-bts">${bts}</span></div>
-    <div class="proc-barra2">${filtros}${x.sit?`<span class="proc-sit${x.dec?" dec":""}" title="situação">${esc(x.sit.slice(0,80))}</span>`:""}${x.ult?`<span class="meio-sub">${esc(fmt(x.ult.slice(0,10)))}</span>`:""}</div>
-    <div class="proc-arv">${arvoreUnica(k, aba, i, x)}</div>
-    ${ligados.length?`<div class="proc-lig"><span class="meio-sub">Ligado a</span> ${ligados.map(y=>`<button class="btn-mini" onclick="irSubAba('${y.aba}')"
-      title="abrir ${esc(y.id)} em ${ROT_FASE[y.aba]}">${ROT_FASE[y.aba]} · ${esc(y.id.replace(/^(Protocolo|Recurso) /,""))}</button>`).join(" ")}</div>`:""}
+    <div class="proc-barra">${escolha}${filtros}<span class="proc-bts">${bts}</span></div>
+    ${sit||lig?`<div class="proc-situ">${sit}${lig}</div>`:""}
+    <div class="proc-grade${d?"":" so-arv"}">
+      <div class="proc-arv"><div class="proc-arv-cab"><b>Processo</b> <span class="meio-sub">${nd} documento${nd===1?"":"s"} · ${na} andamento${na===1?"":"s"}</span></div>${arvoreUnica(k, aba, i, x, todos, d && d.caminho)}</div>
+      ${d?`<div class="proc-leitor" data-caso="${k.id}" data-aba="${aba}" data-i="${i}" role="region" aria-label="documento escolhido">${leitorMiolo(k, aba, i, x, d)}</div>`:""}
+    </div>
   </div>`;
 }
 // a árvore é a aba; Detalhes leva à tela anterior, e a seta volta

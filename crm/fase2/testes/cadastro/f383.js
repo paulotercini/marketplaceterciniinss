@@ -87,8 +87,16 @@ const SUPA = "https://ficticio.supabase.co";
     vistaProc = true;
     const onc = [...pinta("cnj").querySelectorAll("[onclick]"), ...pinta("inss").querySelectorAll("[onclick]")].map(x=>x.getAttribute("onclick"));
     res.parse = onc.every(o=>{ try{ new Function(o); return true; }catch(e){ return false; } });
-    // Ler abre o leitor contínuo com os documentos do processo, no documento clicado
+    // F393 · o leitor ao lado da árvore: o documento escolhido, ↑ ↓, zoom e a escolha pelo clique
     desenharPeca = () => {};
+    div.style.width = "1100px";
+    const j2 = pinta("cnj"), pl = j2.querySelector(".proc-leitor");
+    res.leitor = pl ? { tit: pl.querySelector(".pl-tit").textContent, sel: txt(j2, ".arv-doc.sel .arv-nome"),
+      bts: [...pl.querySelectorAll(".pl-bts button")].length, cab: txt(j2, ".proc-arv-cab")[0], situ: !!j2.querySelector(".proc-situ .proc-lig") } : null;
+    if(pl){ procVer("kproc", "cnj", 0, "pje/00012345620264036314/2");
+      res.ver = { tit: document.querySelector(".proc-leitor .pl-tit").textContent, sel: txt(j2, ".arv-doc.sel .arv-nome"), pi: !!document.getElementById("proc-inteiro") }; }
+    docEscolhido = {}; div.style.width = "";
+    // Ler abre o leitor contínuo com os documentos do processo, no documento clicado
     lerProcesso("kproc", "cnj", 0, "pje/00012345620264036314/3");
     const pi = document.getElementById("proc-inteiro");
     res.ler = pi ? { n: pi.querySelectorAll(".pi-peca").length, tit: pi.querySelector(".pi-cab b").textContent,
@@ -120,6 +128,8 @@ const SUPA = "https://ficticio.supabase.co";
   conf("zoom das peças: + aumenta, 0 volta, a escolha fica", r.z1 === "1.25|125 %" && r.zPeca === "1.25" && r.z0 === "1" && r.zGuard === "0.9");
   conf("Ler no Conselho leva os documentos do recurso", r.lerCrps === 2);
   conf("onclick válidos", r.parse);
+  conf("leitor ao lado: abre na decisão, marcada na árvore", r.leitor && /Senten/.test(r.leitor.tit) && /Senten/.test(r.leitor.sel[0]||"") && r.leitor.bts >= 5 && /3 documentos/.test(r.leitor.cab) && r.leitor.situ);
+  conf("clique na árvore troca o documento do leitor sem tela cheia", r.ver && /inicial/i.test(r.ver.tit) && /inicial/i.test(r.ver.sel[0]||"") && !r.ver.pi);
 
   console.log("=== F383/F391: árvore do processo ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
