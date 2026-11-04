@@ -136,9 +136,14 @@
   // F385 · a cronologia só está inteira quando chega ao primeiro movimento do
   // processo: a rolagem que parava por tempo cortava a petição inicial
   const RX_INICIO = /distribu[ií]d|recebido pelo distribuidor|autuad|redistribu/i;
-  const chegouAoInicio = textoOuItens => Array.isArray(textoOuItens)
-    ? textoOuItens.some(i => (i.textos || []).some(t => RX_INICIO.test(t)))
-    : RX_INICIO.test(String(textoOuItens || ''));
+  // 1.33.2 · a petição inicial vem DEPOIS do "Distribuído por sorteio", no fim
+  // da lista (5000042-04.2026): o fim é a inicial, ou algo depois da distribuição
+  const RX_INICIAL = /peti[cç][aã]o inicial/i;
+  const chegouAoInicio = textoOuItens => {
+    if (!Array.isArray(textoOuItens)) return RX_INICIAL.test(String(textoOuItens || ''));
+    const it = textoOuItens, k = it.findIndex(i => (i.textos || []).some(t => RX_INICIO.test(t)));
+    return it.some(i => (i.docs || []).some(d => RX_INICIAL.test(d.nome || ''))) || (k >= 0 && k < it.length - 1);
+  };
   const API = { lerLinhaAcervo, lerAcervoHtml, lerTimelineHtml, lerCabecalhoProcesso, arquivado, chegouAoInicio };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.PJE_REGRAS = raiz.PJE_REGRAS || API;

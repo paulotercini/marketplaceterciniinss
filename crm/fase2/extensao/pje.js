@@ -208,6 +208,20 @@
       else { quietos = 0; antes = n; faixa(`processo ${cab.numero}: ${n} itens da cronologia…`); }
       await esperarLivre();
       tl.scrollTop = tl.scrollHeight;
+      // 1.33.2 · 10 processos paravam sempre no mesmo item (5000042-04.2026 em
+      // 39): a rolagem ao fundo não dispara a carga seguinte do PJe em toda
+      // altura de lista; parada, sobe um pouco e desce de novo, com o evento
+      if (quietos) {
+        for (const el of [tl, tl.parentElement, document.scrollingElement]) {
+          if (!el) continue;
+          el.scrollTop = Math.max(0, el.scrollHeight - el.clientHeight - 120);
+          el.dispatchEvent(new Event('scroll', { bubbles: true }));
+          await pausa(150);
+          el.scrollTop = el.scrollHeight;
+          el.dispatchEvent(new Event('scroll', { bubbles: true }));
+        }
+        window.dispatchEvent(new Event('scroll'));
+      }
       const fim = tl.querySelector('.media:last-child');
       if (fim) { fim.scrollIntoView({ block: 'end' }); chegou = chegou || REG.chegouAoInicio(fim.textContent); }
       await pausa(1200);
