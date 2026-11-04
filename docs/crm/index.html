@@ -1027,7 +1027,8 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   #proc-inteiro .pi-arvore button.on{background:var(--azul-fundo);border-left-color:var(--azul)}
   #proc-inteiro .pi-arvore small{display:block;color:var(--cinza-claro)}
   #proc-inteiro .pi-autos{flex:1;overflow:auto;padding:14px}
-  #proc-inteiro .pi-peca{max-width:900px;margin:0 auto 18px}
+  #proc-inteiro .pi-peca{max-width:900px;margin:0 auto 18px;zoom:var(--pi-zoom,1)}
+  #proc-inteiro .pi-zoom{display:flex;align-items:center;gap:2px}#proc-inteiro .pi-zoom output{min-width:44px;text-align:center;font-size:12px;font-variant-numeric:tabular-nums}
   #proc-inteiro .pi-peca h4{margin:0 0 6px;font-size:14px;color:var(--cinza)}
   #proc-inteiro .pi-folha{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18);margin-bottom:10px;min-height:200px}
   #proc-inteiro .pi-folha canvas,#proc-inteiro .pi-folha img{display:block;width:100%;height:auto}
@@ -2796,7 +2797,11 @@ dialog.confirmar::backdrop{background:rgba(15,17,22,.38)}
 .app.celular .escrever .tipo-fila::-webkit-scrollbar{display:none}
 .app.celular .escrever .tipo-ch{flex:none;white-space:nowrap}
 .app.celular .det-rolagem{padding-bottom:180px}
-.proc-cartoes{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}.proc-cartao{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:6px 12px;border:1px solid var(--linha,#dfe3ea);border-radius:8px;background:var(--fundo-card,#fff);cursor:pointer;font:inherit;color:inherit}.proc-cartao span{font-size:12px;color:var(--mut,#5d6675)}.proc-cartao.on{border-color:currentColor;box-shadow:inset 0 -3px 0 currentColor}.proc-barra{justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px}.proc-q{border:1px solid var(--linha,#dfe3ea);border-radius:8px;margin-bottom:8px}.proc-q>summary{cursor:pointer;padding:8px 10px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.proc-id{font-family:var(--f-mono,ui-monospace,monospace);font-size:12px}.proc-tit{font-weight:600;flex:1 1 200px;min-width:0}.proc-sit{font-size:12px;padding:1px 8px;border-radius:99px;background:var(--fundo-sutil,#eef1f5)}.proc-sit.dec{color:#a3261d;font-weight:600}.proc-corpo{padding:4px 10px 10px;display:grid;gap:6px}.proc-lig{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.arv-et{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut,#5d6675)}.proc-tela{max-width:900px;max-height:80vh;overflow:auto}.pat-arv{list-style:none;margin:0;padding-left:18px}.pat-arv.pat-raiz{padding-left:0}.pat-arv li{margin:3px 0}.pat-arv summary{cursor:pointer}
+.proc-cartoes{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}.proc-cartao{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:6px 12px;border:1px solid var(--linha,#dfe3ea);border-radius:8px;background:var(--fundo-card,#fff);cursor:pointer;font:inherit;color:inherit}.proc-cartao span{font-size:12px;color:var(--mut,#5d6675)}.proc-cartao.on{border-color:currentColor;box-shadow:inset 0 -3px 0 currentColor}.proc-barra{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px}.proc-bts{display:flex;gap:6px;flex-wrap:wrap}.proc-pri{background:#1E6F50;border-color:#1E6F50;color:#fff;font-weight:600}.proc-sel{max-width:100%;min-width:0;flex:1 1 240px;font:inherit}.proc-barra2{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-bottom:8px}.proc-arv{margin-bottom:10px}
+.arv-u{list-style:none;margin:0;padding:0}.arv-u ul{list-style:none;margin:0;padding:0 0 0 12px;border-left:2px solid var(--linha,#dfe3ea)}.arv-dia{margin:0 0 10px}.arv-data{display:block;font-size:12px;font-weight:600;color:var(--mut,#5d6675);margin-bottom:3px;font-variant-numeric:tabular-nums}
+.arv-doc,.arv-and{padding:3px 0 3px 4px;font-size:13px;line-height:1.4}.arv-doc{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px}.arv-and{font-style:italic;color:var(--mut,#5d6675)}.arv-and.dec{color:#a3261d;font-style:normal;font-weight:600}
+.arv-nome{border:0;background:none;padding:0;font:inherit;font-weight:500;color:var(--azul,#2B5FC7);cursor:pointer;text-align:left}span.arv-nome{color:var(--mut,#5d6675);cursor:default}.arv-doc.dec .arv-nome{color:#a3261d;font-weight:600}
+.arv-et.dec{color:#a3261d;font-weight:600}.arv-mov{font-size:12px;color:var(--mut,#5d6675)}.arv-txt{flex-basis:100%;font-size:12px;color:var(--mut,#5d6675);overflow-wrap:anywhere}.arv-antes>summary,.arv-dia details>summary{cursor:pointer;font-size:12px;color:var(--azul,#2B5FC7);padding:3px 0}.proc-q{border:1px solid var(--linha,#dfe3ea);border-radius:8px;margin-bottom:8px}.proc-q>summary{cursor:pointer;padding:8px 10px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.proc-id{font-family:var(--f-mono,ui-monospace,monospace);font-size:12px}.proc-tit{font-weight:600;flex:1 1 200px;min-width:0}.proc-sit{font-size:12px;padding:1px 8px;border-radius:99px;background:var(--fundo-sutil,#eef1f5)}.proc-sit.dec{color:#a3261d;font-weight:600}.proc-corpo{padding:4px 10px 10px;display:grid;gap:6px}.proc-lig{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.arv-et{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut,#5d6675)}.proc-tela{max-width:900px;max-height:80vh;overflow:auto}.pat-arv{list-style:none;margin:0;padding-left:18px}.pat-arv.pat-raiz{padding-left:0}.pat-arv li{margin:3px 0}.pat-arv summary{cursor:pointer}
 </style>
 <script>
 /* F80 · interruptor do tema v10. ?tema=v10 liga e guarda; ?tema= (vazio)
@@ -6394,7 +6399,7 @@ body:has(.app.celular.detalhe-aberto .escrever.esc-aberto) :is(#fab-sug,#fab-rap
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.48</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.49</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -35930,7 +35935,7 @@ function documentosDoCaso(k){
     data:dataDoMovimento(a.andamento_id && andPorId.get(a.andamento_id)) || a.criado_em,
     // o que o movimento diz ("Despacho/Decisão", "Distribuído por sorteio"):
     // no eproc o nome do arquivo é só código (DESPADEC1, COMP6)
-    evento:eventoDoAndamento(a.andamento_id && andPorId.get(a.andamento_id)) }));
+    evento:eventoDoAndamento(a.andamento_id && andPorId.get(a.andamento_id)), and_id:a.andamento_id }));
   for(const b of crpsBlocos(k)) for(const e of (b.eventos||[])) for(const f of (e.arquivos||[]))
     if(f.storage && !docs.some(d=>d.caminho===f.storage))
       docs.push({ nome:f.nome||"acórdão", caminho:f.storage, tipo:"application/pdf", tamanho:f.bytes||null,
@@ -36116,7 +36121,7 @@ function indiceDoProcesso(k, chaves){
 function piClaude(i){
   const el = document.getElementById("proc-inteiro"); if(!el) return;
   const k = D.casoPorId.get(el.dataset.caso); if(!k) return;
-  const pecas = pecasDoProcesso(k);
+  const pecas = el._pecas || pecasDoProcesso(k);
   const marcadas = [...el.querySelectorAll(".pi-it input:checked")].map(x=>pecas[+x.dataset.i]);
   const sel = i!=null ? [pecas[i]] : (marcadas.length ? marcadas : pecas);
   menuClaudeDocs(k.id, sel.filter(Boolean).map(chaveDoc), "processo");
@@ -36133,10 +36138,29 @@ function fecharProcessoInteiro(){
   document.body.style.overflow = "";
   document.removeEventListener("keydown", _piTecla, true);
 }
-function _piTecla(e){ if(e.key==="Escape" && !document.querySelector("#modal:not([style*='none']) *")) fecharProcessoInteiro(); }
-function abrirProcessoInteiro(casoId){
+function _piTecla(e){
+  if(e.key==="Escape" && !document.querySelector("#modal:not([style*='none']) *")) return fecharProcessoInteiro();
+  // F392 · zoom pelo teclado: + e - aumentam e diminuem, 0 volta a 100 %
+  if(/^(input|textarea|select)$/i.test((e.target||{}).tagName||"") || e.altKey) return;
+  const z = {"+":1, "=":1, "-":-1, "0":0}[e.key];
+  if(z!==undefined){ e.preventDefault(); piZoom(z); }
+}
+// F392 · zoom das peças no leitor (pedido do Paulo, 04.11.2026): de 50 % a 300 %, guardado no navegador
+const PI_ZOOM = [.5,.67,.8,.9,1,1.1,1.25,1.5,1.75,2,2.5,3];
+function piZoom(passo){
+  const el = document.getElementById("proc-inteiro"); if(!el) return;
+  let z = +el.style.getPropertyValue("--pi-zoom") || 1;
+  if(passo===0) z = 1;
+  else { const i = PI_ZOOM.findIndex(v=>v>=z-.001); z = PI_ZOOM[Math.max(0, Math.min(PI_ZOOM.length-1, (i<0?PI_ZOOM.length-1:i) + passo))]; }
+  const autos = el.querySelector(".pi-autos"), alvo = autos && autos.scrollHeight ? autos.scrollTop / autos.scrollHeight : 0;
+  el.style.setProperty("--pi-zoom", z);
+  const o = el.querySelector(".pi-zoom output"); if(o) o.textContent = Math.round(z*100) + " %";
+  if(autos) autos.scrollTop = alvo * autos.scrollHeight;   // a leitura fica na mesma altura do processo
+  try{ localStorage.setItem("crm_pi_zoom", z); }catch(e){}
+}
+function abrirProcessoInteiro(casoId, lista, caminho, titulo){
   const k = D.casoPorId.get(casoId); if(!k) return;
-  const pecas = pecasDoProcesso(k); if(!pecas.length) return aviso("Nenhuma peça judicial no CRM");
+  const pecas = lista || pecasDoProcesso(k); if(!pecas.length) return aviso(lista ? "Nenhum documento neste processo" : "Nenhuma peça judicial no CRM");
   fecharProcessoInteiro();
   const c = D.cliPorId.get(k.cliente_id) || {};
   const fls = flsDasPecas(pecas), rot = rotPeca;
@@ -36144,8 +36168,9 @@ function abrirProcessoInteiro(casoId){
   el.id = "proc-inteiro"; el.dataset.caso = k.id; el.setAttribute("role","dialog"); el.setAttribute("aria-label","processo inteiro");
   el.innerHTML = `<div class="pi-cab">
       <button class="btn-mini pi-ver-arvore" onclick="this.closest('#proc-inteiro').classList.toggle('arvore-on')">Peças</button>
-      <b>${esc(c.nome||"cliente")}${k.processo?` · ${esc(k.processo)}`:""} · ${pecas.length} peça${pecas.length>1?"s":""}</b>
+      <b>${esc(c.nome||"cliente")}${titulo?` · ${esc(titulo)}`:k.processo?` · ${esc(k.processo)}`:""} · ${pecas.length} peça${pecas.length>1?"s":""}</b>
       <button class="tl-bt forte pi-claude" onclick="piClaude()" title="pedido pronto ao Claude sobre as peças marcadas na árvore, ou sobre todas">${IC_SVG.claude} Pedir ao Claude<span class="pi-claude-n"></span></button>
+      <span class="pi-zoom" role="group" aria-label="zoom das peças"><button class="btn-mini" onclick="piZoom(-1)" title="diminuir (tecla -)" aria-label="diminuir o zoom">−</button><output aria-live="polite">100 %</output><button class="btn-mini" onclick="piZoom(1)" title="aumentar (tecla +)" aria-label="aumentar o zoom">+</button><button class="btn-mini" onclick="piZoom(0)" title="voltar a 100 % (tecla 0)"><span aria-hidden="true">100%</span><span class="sr-only">voltar o zoom a 100 %</span></button></span>
       <button class="btn-mini" onclick="fecharProcessoInteiro()" title="fechar (Esc)">✕</button></div>
     <div class="pi-corpo">
       <nav class="pi-arvore" aria-label="peças do processo">${pecas.map((d,i)=>`<div class="pi-it"><input type="checkbox" data-i="${i}" onchange="piMarcou()" aria-label="marcar ${esc(rot(d))} para o Claude"><button data-i="${i}" onclick="piIr(${i})">
@@ -36154,10 +36179,15 @@ function abrirProcessoInteiro(casoId){
         <h4><button class="btn-mini pi-ler" onclick="piClaude(${i})" title="Ler esta peça com o Claude"><span aria-hidden="true">Claude</span><span class="sr-only">Ler esta peça com o Claude</span></button>${esc(rot(d))}${d.data?` · ${fmt(String(d.data).slice(0,10))}`:""}${fls[i]?` · fls. ${fls[i]}`:""}</h4>
         <div class="pi-folha"><p class="meio-sub">Carregando…</p></div></section>`).join("")}</div>
     </div>`;
+  el._pecas = pecas;
   document.body.appendChild(el);
+  let z0 = 1; try{ z0 = +localStorage.getItem("crm_pi_zoom") || 1; }catch(e){}
+  if(z0!==1){ el.style.setProperty("--pi-zoom", z0); el.querySelector(".pi-zoom output").textContent = Math.round(z0*100) + " %"; }
   document.body.style.overflow = "hidden";
   document.addEventListener("keydown", _piTecla, true);   // captura: vê a caixa aberta antes de outro Esc a fechar
   const autos = el.querySelector(".pi-autos");
+  // Ctrl + roda do mouse (e a pinça do touchpad) aumentam só as peças, não a página
+  autos.addEventListener("wheel", e=>{ if(!e.ctrlKey) return; e.preventDefault(); piZoom(e.deltaY<0 ? 1 : -1); }, {passive:false});
   // a peça que entra na tela se desenha e acende na árvore
   _piObs = new IntersectionObserver(ents=>{
     for(const e of ents){
@@ -36176,6 +36206,7 @@ function abrirProcessoInteiro(casoId){
   autos.addEventListener("scroll", acender, {passive:true}); acender();
   for(const ev of ["wheel","touchstart","keydown"]) autos.addEventListener(ev, ()=>{ el._alvo = null; }, {passive:true});
   el._acender = acender;   // a folha que cresce ao carregar muda quem está no alto
+  if(caminho){ const i = pecas.findIndex(d=>d.caminho===caminho); if(i>0) piIr(i); }
 }
 function piIr(i){
   const el = document.getElementById("proc-inteiro"); if(!el) return;
@@ -36208,7 +36239,7 @@ async function desenharPeca(d, caixaEl){
     for(let n=1; n<=pdf.numPages; n++){
       const pag = await pdf.getPage(n);
       const vp1 = pag.getViewport({scale:1});
-      const larg = Math.min(sec.clientWidth || 900, 900) * (window.devicePixelRatio||1);
+      const larg = Math.min(sec.clientWidth || 900, 900) * Math.max(window.devicePixelRatio||1, 2);   // folga para o zoom
       const vp = pag.getViewport({scale: larg / vp1.width});
       const cv = document.createElement("canvas"); cv.width = vp.width; cv.height = vp.height;
       const folha = document.createElement("div"); folha.className = "pi-folha"; folha.appendChild(cv);
@@ -36238,9 +36269,9 @@ function rotuloDoCaso(k){
   tit = tit || k.especie || k.beneficio || "";
   return { cliente:c.nome||"cliente", titulo:tit, arquivo:nomeSeguro(tit ? `${c.nome||"cliente"}-${tit}` : (c.nome||"cliente")) };
 }
-async function baixarDocsZip(casoId, soSel){
+async function baixarDocsZip(casoId, soSel, lista){
   const k = D.casoPorId.get(casoId); if(!k) return;
-  const docs = docsEscolhidos(k, soSel);
+  const docs = lista || docsEscolhidos(k, soSel);
   aviso(`Juntando ${docs.length} documento(s)…`, false);
   try{
     if(!window.JSZip) await new Promise((ok, erro)=>{
@@ -42469,39 +42500,94 @@ function processosDaFase(k, aba){
   return ps.map(p=>{ const d = soDig(p.numero), u = (datajudDe(k, p.numero)||{}).ultimo||{};
     const meus = docs.filter(x=>{ const n = numDoAnexo(x); return n ? n.d===d : p.principal; });
     const lk = Object.entries(links).find(([g])=>g.startsWith(d+"|")) || (p.principal && Object.entries(links).find(([g])=>!g.includes("|")));
-    return { aba, tipo:"proc", d, id:p.numero, tit:rotuloProcesso(k, p), sit:u.nome||"", dec:RX_PECA_DEC.test(u.nome||""),
+    return { aba, tipo:"proc", d, id:p.numero, principal:p.principal||ps.length===1, tit:rotuloProcesso(k, p), sit:u.nome||"", dec:RX_PECA_DEC.test(u.nome||""),
       ult:String(u.data||(meus[0]||{}).data||""), docs:meus, n:meus.length, portal:(lk||[])[1] || (p.principal ? k.pje_link : "") }; });
 }
-// a árvore de um processo, já filtrada
-function arvoreDoProcesso(k, x){
+// F392 · a árvore do processo com o conteúdo (pedido do Paulo, 04.11.2026, proposta A): documentos e
+// andamentos da fase numa árvore só, por data, a mais recente no alto, cada documento com a primeira
+// frase do texto; Ler abre todos no leitor contínuo (o do processo inteiro, F289), Baixar faz o .zip
+// do processo. A tela anterior fica em Detalhes.
+let procIdx = {};
+// a primeira frase de conteúdo: pula o cabeçalho em caixa alta, o carimbo e o endereço
+function trechoDoc(d){
+  for(const l0 of String((d&&d.texto)||"").split(/\n+/)){
+    const l = l0.replace(/\s+/g," ").trim();
+    if(l.length < 40 || /assinad[oa] eletronicamente|https?:|www\.|num\.\s*\d+\s*-\s*p[áa]g|p[áa]gina \d+ de \d+/i.test(l)) continue;
+    const letras = l.replace(/[^A-Za-zÀ-ÿ]/g,"");
+    if(letras.length < 20 || letras.replace(/[^a-zß-ÿ]/g,"").length / letras.length < .5) continue;
+    return l.length > 150 ? l.slice(0,147).replace(/\s+\S*$/,"") + "…" : l;
+  }
+  return "";
+}
+function docsDoProcesso(k, x){
+  if(x.aba==="cnj") return x.docs;
+  if(x.aba==="inss") return documentosDoCaso(k).filter(d=>String(d.caminho||"").startsWith(`pat/${x.d}/`));
+  const cams = new Set(x.t.eventos.flatMap(e=>(e.arquivos||[]).map(a=>a.storage)).filter(Boolean));
+  return documentosDoCaso(k).filter(d=>cams.has(d.caminho));
+}
+// documentos e andamentos do processo, cada um com a data, a origem e se decide
+function itensDoProcesso(k, x){
+  const docs = docsDoProcesso(k, x), porCam = new Map(docs.map(d=>[d.caminho, d])), it = [];
+  const doc = (d, data, dec, ori, rot, mov) => it.push({tipo:"doc", d, data:String(data||d.data||"").slice(0,10), rot:rot||rotPeca(d), dec:!!dec, ori, mov, txt:trechoDoc(d)});
+  const and = (data, txt, dec, ori) => txt && it.push({tipo:"and", data:String(data||"").slice(0,10), txt, dec:!!dec, ori});
   if(x.aba==="inss"){
     const coms = new Map((x.b.comentarios||[]).map(c=>[String(c.id), c]));
-    const exig = a => { const c = a.idComentario!=null && coms.get(String(a.idComentario)); return !!(c && c.incluidoPorServidor); };
-    const anexos = (x.b.anexos||[]).filter(a=>filtroArv==="dec" ? exig(a) : filtroArv==="esc" ? !a.siapeCriador : true);
-    const guardados = new Map(docsDaOrigem(k, ["pat"]).map(d=>[d.caminho, d]));
-    const abrir = (c, rot) => `<button class="btn-mini" onclick="abrirDecisao('${escJs(c)}')" title="abrir o arquivo guardado no CRM">📄 ${esc(rot)}</button>`;
-    const integral = filtroArv==="todos" && [...guardados.keys()].filter(c=>c.startsWith(`pat/${x.d}/processo-integral`)).sort().pop();
-    const salva = arvPatData; arvPatData = true;
-    try{ return arvorePatRamos({...x.b, anexos}, x.d, guardados, abrir, integral); } finally { arvPatData = salva; }
+    const entrada = String(x.b.dataEntradaRequerimento||"").slice(0,10);
+    docs.filter(d=>/\/processo-integral/.test(d.caminho)).sort((a,b)=>String(b.caminho).localeCompare(String(a.caminho))).slice(0,1)
+      .forEach(d=>doc(d, x.ult||d.data, false, "INSS", "Processo administrativo inteiro"));
+    (x.b.anexos||[]).forEach(a=>{ const c = a.idComentario!=null && coms.get(String(a.idComentario));
+      const d = porCam.get(`pat/${x.d}/${a.id}`) || {nome:a.nomeArquivo, caminho:null};
+      doc(d, c ? c.dataCriacao : (a.dataCriacao||entrada), false, a.siapeCriador || (c && c.incluidoPorServidor) ? "INSS" : "Escritório", a.nomeArquivo||rotPeca(d)); });
+    (x.b.comentarios||[]).forEach(c=>{ const t = limparHtmlPat(c.conteudo);
+      and(c.dataCriacao, (c.incluidoPorServidor ? "Exigência do INSS: " : "Comentário do escritório: ") + (t.length>160 ? t.slice(0,157)+"…" : t),
+        c.incluidoPorServidor, c.incluidoPorServidor ? "INSS" : "Escritório"); });
+    and(entrada, "Entrada do requerimento", false, "");
+    if(x.dec) and(x.ult, `Situação: ${x.sit}`, true, "INSS");
+  } else if(x.aba==="crps"){
+    x.t.eventos.forEach(e=>{ const dia = isoCrps(e.data)||e.data, rot = e.bruto||e.resumo||"";
+      if((e.arquivos||[]).length) e.arquivos.forEach(a=>{ const d = porCam.get(a.storage) || {nome:a.nome, caminho:a.storage||null};
+        doc(d, dia, e.tipo==="decisao" || a.decide, "Conselho", a.nome||"documento", rot); });
+      else and(dia, rot, e.tipo==="decisao", ""); });
+  } else {
+    x.docs.forEach(d=>doc(d, d.data, RX_PECA_DEC.test(rotPeca(d)), origemPeca(d)));
+    const comDoc = new Set(x.docs.map(d=>d.and_id).filter(Boolean));
+    const ands = (D._andsFicha||[]).filter(a=>a.caso_id===k.id);
+    const pje = pjeDoProcesso(ands, x.id, x.principal).filter(a=>!comDoc.has(a.id));
+    if(pje.length) pje.forEach(a=>{ const t = eventoDoAndamento(a) || String(a.texto||"").replace(/^[^:]{0,60}:\s*/,"").slice(0,160);
+      and(dataDoMovimento(a), t, RX_PECA_DEC.test(t), ""); });
+    else { const t = datajudDe(k, x.id);
+      if(t) cnjInstancias(k, t).forEach(inst=>(inst.historico||[]).forEach(m=>and(m.data, m.nome + (m.complemento?` · ${m.complemento}`:""), m.decisao, ""))); }
   }
-  if(x.aba==="crps"){
-    if(filtroArv==="esc") return `<p class="meio-sub">O e-SISREC não diz quem juntou cada documento.</p>`;
-    const doc = a => a.storage
-      ? `<button class="btn-mini" onclick="abrirDecisao('${escJs(a.storage)}')" title="abrir o documento guardado no CRM">📄 ${esc(a.nome||"documento")}</button>`
-      : `<span class="meio-sub" title="a extensão ainda não baixou este documento">${esc(a.nome||"documento")} (não baixado)</span>`;
-    const eventos = filtroArv==="dec" ? x.t.eventos.filter(e=>e.tipo==="decisao" || (e.arquivos||[]).some(a=>a.decide)) : x.t.eventos;
-    const salva = arvEsisrecData; arvEsisrecData = true;
-    try{ const h = arvoreEsisrec({...x.t, eventos}, doc).replace(/^<h4[^]*?<\/h4>/, "").replace(/<h4[^>]*>Movimentações<\/h4>\s*$/, "");
-      return h || `<p class="meio-sub">Sem documentos neste filtro.</p>`; } finally { arvEsisrecData = salva; }
-  }
-  const pecas = x.docs.filter(d=>filtroArv==="dec" ? RX_PECA_DEC.test(rotPeca(d)) : filtroArv==="esc" ? origemPeca(d)==="Escritório" : true);
-  const m = new Map(); pecas.slice().sort(ordemPeca).forEach(d=>{ const dia = String(d.data||"").slice(0,10); m.set(dia, [...(m.get(dia)||[]), d]); });
-  const ramos = [...m].sort(([a],[b])=>b.localeCompare(a)).map(([dia, l])=>{
-    const dec = l.some(d=>RX_PECA_DEC.test(rotPeca(d))), rot = `${dia ? dataPat(dia) : "Sem data"} · ${rotPeca(l.find(d=>RX_PECA_DEC.test(rotPeca(d)))||l[0])}`;
-    const sub = l.map(d=>`<li><button class="btn-mini" onclick="abrirDecisao('${escJs(d.caminho)}')" title="abrir a peça guardada no CRM">📄 ${esc(rotPeca(d))}</button> <span class="arv-et">${origemPeca(d)}</span></li>`).join("");
-    return dec ? `<li><details><summary><b>📁 ${esc(rot)} (${l.length})</b> <span class="meio-sub">decisão</span></summary><ul class="pat-arv">${sub}</ul></details></li>`
-      : `<li><details><summary>📁 ${esc(rot)} (${l.length})</summary><ul class="pat-arv">${sub}</ul></details></li>`; }).join("");
-  return ramos ? `<ul class="pat-arv pat-raiz">${ramos}</ul>` : `<p class="meio-sub">Sem peças ${filtroArv==="todos"?"guardadas":"neste filtro"}.</p>`;
+  return it;
+}
+function arvoreUnica(k, aba, i, x){
+  const it = itensDoProcesso(k, x).filter(y=>filtroArv==="dec" ? y.dec : filtroArv==="doc" ? y.tipo==="doc" : filtroArv==="and" ? y.tipo==="and" : true);
+  if(!it.length) return `<p class="meio-sub">${filtroArv==="todos" ? "Nada guardado deste processo ainda." : "Nada neste filtro."}</p>`;
+  const dias = new Map(); it.forEach(y=>dias.set(y.data, [...(dias.get(y.data)||[]), y]));
+  const lin = y => { const et = `${y.dec?` <span class="arv-et dec">Decisão</span>`:""}${y.ori?` <span class="arv-et">${esc(y.ori)}</span>`:""}`;
+    if(y.tipo==="and") return `<li class="arv-and${y.dec?" dec":""}">${esc(y.txt)}${et}</li>`;
+    const nome = y.d.caminho
+      ? `<button class="arv-nome" onclick="lerProcesso('${k.id}','${aba}',${i},'${escJs(y.d.caminho)}')" title="abrir no leitor, com os demais documentos do processo">${esc(y.rot)}</button>`
+      : `<span class="arv-nome" title="a extensão ainda não baixou este documento">${esc(y.rot)} (não baixado)</span>`;
+    return `<li class="arv-doc${y.dec?" dec":""}">${nome}${et}${y.mov?`<span class="arv-mov">${esc(y.mov)}</span>`:""}${y.txt?`<span class="arv-txt">${esc(y.txt)}</span>`:""}</li>`; };
+  const ordem = (a,b) => (b.dec-a.dec) || (a.tipo===b.tipo ? (a.tipo==="doc" ? ordemPeca(a.d, b.d) : 0) : a.tipo==="doc" ? -1 : 1);
+  const dia = ([d, l]) => { l.sort(ordem); const ver = l.length>5 ? l.slice(0,4) : l, resto = l.length>5 ? l.slice(4) : [];
+    return `<li class="arv-dia"><span class="arv-data">${d ? dataPat(d) : "Sem data"}</span><ul>${ver.map(lin).join("")}${resto.length
+      ? `<li><details><summary>Mais ${resto.length} deste dia</summary><ul>${resto.map(lin).join("")}</ul></details></li>` : ""}</ul></li>`; };
+  const ord = [...dias].sort(([a],[b])=>b.localeCompare(a)), VIS = 12;
+  return `<ul class="arv-u">${ord.slice(0,VIS).map(dia).join("")}</ul>${ord.length>VIS
+    ? `<details class="arv-antes"><summary>Mais ${ord.length-VIS} datas anteriores</summary><ul class="arv-u">${ord.slice(VIS).map(dia).join("")}</ul></details>` : ""}`;
+}
+const docsLegiveis = (k, x) => docsDoProcesso(k, x).filter(d=>d.caminho).slice().sort(ordemPeca);
+function lerProcesso(casoId, aba, i, caminho){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const x = processosDaFase(k, aba)[i]; if(!x) return;
+  abrirProcessoInteiro(casoId, docsLegiveis(k, x), caminho, `${ROT_FASE[aba]} · ${x.id}`);
+}
+function baixarProcesso(casoId, aba, i){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const x = processosDaFase(k, aba)[i]; if(!x) return;
+  baixarDocsZip(casoId, false, docsLegiveis(k, x));
 }
 function telaDoProcesso(casoId, aba, i){
   const k = D.casoPorId.get(casoId); if(!k) return;
@@ -42512,46 +42598,44 @@ function telaDoProcesso(casoId, aba, i){
 function claudeDoProcesso(casoId, aba, i){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const x = processosDaFase(k, aba)[i]; if(!x) return;
-  const pref = aba==="inss" ? `pat/${x.d}/` : null;
-  const docs = aba==="cnj" ? x.docs : documentosDoCaso(k).filter(d=>pref ? String(d.caminho||"").startsWith(pref)
-    : d.origem==="crps" && x.t.eventos.some(e=>(e.arquivos||[]).some(a=>a.storage===d.caminho)));
+  const docs = docsDoProcesso(k, x).filter(d=>d.caminho);
   if(!docs.length) return aviso("Nenhum documento guardado neste processo");
   menuClaudeDocs(k.id, docs.map(chaveDoc), aba==="cnj" ? "processo" : undefined);
 }
 const ROT_FASE = {inss:"INSS", crps:"Conselho", cnj:"Judicial"};
 function vistaProcessos(k, aba){
-  const fases = ["inss","crps","cnj"].map(a=>[a, processosDaFase(k, a)]).filter(([,l])=>l.length);
-  const lista = (fases.find(([a])=>a===aba)||[,[]])[1];
-  const ev = evidenciaNbs([k]), nbDe = x => (nbDoNumero(ev, x.tipo, x.d)||{}).nb;
-  const cartoes = `<div class="proc-cartoes">${fases.map(([a, l])=>`<button class="proc-cartao${a===aba?" on":""}" onclick="irSubAba('${a}')"
-      title="abrir os processos de ${ROT_FASE[a]}"><b>${ROT_FASE[a]}</b><span>${l.length} processo${l.length>1?"s":""} · ${l.reduce((s,x)=>s+x.n,0)} doc.</span></button>`).join("")}</div>`;
-  const filtros = `<span class="sub-menu fontes proc-filtros">${[["todos","Todos"],["dec","Decisões"],["esc","Escritório"]].map(([f,r])=>
+  const lista = processosDaFase(k, aba);
+  const i = Math.max(0, Math.min(procIdx[aba]||0, lista.length-1)), x = lista[i];
+  const ev = evidenciaNbs([k]), nbDe = y => (nbDoNumero(ev, y.tipo, y.d)||{}).nb, nb = nbDe(x);
+  const ligados = ["inss","crps","cnj"].filter(a=>a!==aba).flatMap(a=>processosDaFase(k, a))
+    .filter(y=>{ const o = nbDe(y); return !nb || !o || o===nb; });
+  const n = docsLegiveis(k, x).length;
+  const escolha = lista.length>1
+    ? `<select class="proc-sel" aria-label="processo desta fase" onchange="procIdx['${aba}']=+this.value;repintarFicha()">${lista.map((y,j)=>
+        `<option value="${j}"${j===i?" selected":""}>${esc(y.id)} · ${esc(y.tit)}</option>`).join("")}</select>`
+    : `<span class="proc-id">${esc(x.id)}</span><span class="proc-tit">${esc(x.tit)}</span>`;
+  const filtros = `<span class="sub-menu fontes proc-filtros">${[["todos","Tudo"],["dec","Decisões"],["doc","Documentos"],["and","Andamentos"]].map(([f,r])=>
     `<button class="${filtroArv===f?"on":""}" onclick="filtroArv='${f}';repintarFicha()">${r}</button>`).join("")}</span>`;
-  const quadros = lista.map((x, i)=>{
-    const nb = nbDe(x);
-    const ligados = fases.filter(([a])=>a!==aba).flatMap(([, l])=>l).filter(y=>{ const o = nbDe(y); return !nb || !o || o===nb; });
-    const bts = [
-      x.aba!=="cnj" ? `<button class="btn-mini" onclick="telaDoProcesso('${k.id}','${aba}',${i})" title="a tela do ${x.aba==="inss"?"PAT":"e-SISREC"}: cabeçalho, comentários e movimentações">Tela</button>` : "",
-      x.aba==="cnj" && x.docs.length ? `<button class="btn-mini" onclick="abrirProcessoInteiro('${k.id}')" title="abrir o processo inteiro, peça por peça">Inteiro</button>` : "",
-      x.aba==="inss" && docsDaOrigem(k, ["pat"]).some(d=>String(d.caminho).startsWith(`pat/${x.d}/processo-integral`))
-        ? `<button class="btn-mini" onclick="abrirDecisao('${escJs(docsDaOrigem(k, ["pat"]).map(d=>d.caminho).filter(c=>c.startsWith(`pat/${x.d}/processo-integral`)).sort().pop())}')" title="abrir o processo administrativo inteiro">Inteiro</button>` : "",
-      x.portal ? `<a class="btn-mini" href="${urlOk(x.portal)}" target="_blank" rel="noopener" title="abrir no sistema oficial">Portal ↗</a>` : "",
-      `<button class="btn-mini" onclick="claudeDoProcesso('${k.id}','${aba}',${i})" title="pedir ao Claude com os documentos deste processo">Claude</button>`].join("");
-    return `<details class="proc-q"${i===0?" open":""}><summary><span class="proc-id">${esc(x.id)}</span><span class="proc-tit">${esc(x.tit)}</span>
-        ${x.sit?`<span class="proc-sit${x.dec?" dec":""}">${esc(x.sit.slice(0,60))}</span>`:""}<span class="meio-sub">${x.ult?esc(fmt(x.ult.slice(0,10))):""}</span></summary>
-      <div class="proc-corpo"><div class="form-linha" style="gap:6px;flex-wrap:wrap">${bts}</div>
-        ${arvoreDoProcesso(k, x)}
-        ${ligados.length?`<div class="proc-lig"><span class="meio-sub">Ligado a este processo:</span> ${ligados.map(y=>`<button class="btn-mini" onclick="irSubAba('${y.aba}')"
-          title="abrir ${esc(y.id)} em ${ROT_FASE[y.aba]}">${ROT_FASE[y.aba]} · ${esc(y.id.replace(/^(Protocolo|Recurso) /,""))}</button>`).join(" ")}</div>`:""}</div></details>`; }).join("");
-  return `${cartoes}<div class="form-linha proc-barra"><h3 style="font-size:14px;margin:0">${ROT_FASE[aba]} · ${lista.length} processo${lista.length>1?"s":""}</h3>${filtros}</div>${quadros}`;
+  const bts = [
+    n ? `<button class="btn-mini proc-pri" onclick="lerProcesso('${k.id}','${aba}',${i})" title="abrir os ${n} documentos deste processo num leitor contínuo, com a árvore ao lado">Ler</button>` : "",
+    n ? `<button class="btn-mini" onclick="baixarProcesso('${k.id}','${aba}',${i})" title="baixar os ${n} documentos deste processo em .zip">Baixar</button>` : "",
+    n ? `<button class="btn-mini" onclick="claudeDoProcesso('${k.id}','${aba}',${i})" title="pedir ao Claude com os documentos deste processo">Claude</button>` : "",
+    x.portal ? `<a class="btn-mini" href="${urlOk(x.portal)}" target="_blank" rel="noopener" title="abrir no sistema oficial">Portal</a>` : "",
+    x.aba!=="cnj" ? `<button class="btn-mini" onclick="telaDoProcesso('${k.id}','${aba}',${i})" title="a tela do ${x.aba==="inss"?"PAT":"e-SISREC"}: cabeçalho, comentários e movimentações">Tela</button>` : "",
+    `<button class="btn-mini" onclick="mudarVistaProc(false)" title="a tela anterior desta aba: as fontes, a fase e a gestão dos processos">Detalhes</button>`].join("");
+  return `<div class="proc-v">
+    <div class="proc-barra">${escolha}<span class="proc-bts">${bts}</span></div>
+    <div class="proc-barra2">${filtros}${x.sit?`<span class="proc-sit${x.dec?" dec":""}" title="situação">${esc(x.sit.slice(0,80))}</span>`:""}${x.ult?`<span class="meio-sub">${esc(fmt(x.ult.slice(0,10)))}</span>`:""}</div>
+    <div class="proc-arv">${arvoreUnica(k, aba, i, x)}</div>
+    ${ligados.length?`<div class="proc-lig"><span class="meio-sub">Ligado a</span> ${ligados.map(y=>`<button class="btn-mini" onclick="irSubAba('${y.aba}')"
+      title="abrir ${esc(y.id)} em ${ROT_FASE[y.aba]}">${ROT_FASE[y.aba]} · ${esc(y.id.replace(/^(Protocolo|Recurso) /,""))}</button>`).join(" ")}</div>`:""}
+  </div>`;
 }
-// a escolha entre Processos e Andamentos, no alto das três abas
+// a árvore é a aba; Detalhes leva à tela anterior, e a seta volta
 function abaComProcessos(k, aba, andamentos){
   if(!processosDaFase(k, aba).length) return andamentos();
-  const seg = `<div class="sub-menu proc-vista" style="width:100%">
-    <button class="${vistaProc?"on":""}" onclick="mudarVistaProc(true)" title="todos os processos desta fase, com a árvore de documentos">Processos</button>
-    <button class="${vistaProc?"":"on"}" onclick="mudarVistaProc(false)" title="os andamentos desta fase, como antes">Andamentos</button></div>`;
-  return seg + (vistaProc ? vistaProcessos(k, aba) : andamentos());
+  if(vistaProc) return vistaProcessos(k, aba);
+  return `<div class="sub-menu proc-vista" style="width:100%"><button onclick="mudarVistaProc(true)" title="voltar à árvore do processo">‹ Árvore</button></div>` + andamentos();
 }
 function painelINSS(k, ands){
   const coms = comentariosPat(ands);
