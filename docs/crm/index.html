@@ -248,44 +248,48 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .proc-nome{display:block;font-size:15px;font-weight:700;color:var(--texto);margin:1px 0 2px}
   .proc-sub{display:block;font-size:13px;color:var(--cinza)}
   .proc-prazo{display:inline-block;font-size:13px;color:var(--azul);margin-top:4px}
-  /* F308 · a escolha do caso: tecla à esquerda, o caso por extenso à direita */
-  .esc-cx{width:min(680px,96vw)}
-  .esc-grupo{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
-  .esc-gcab{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;font-size:12px;color:var(--cinza);padding:0 2px}
-  .esc-gcab b{color:var(--texto);font-size:13px}
-  .esc-sit{font-weight:600}
-  .proc-op.esc-caso{display:grid;grid-template-columns:36px minmax(0,1fr);padding:0;margin:0;overflow:hidden;cursor:pointer}
-  .esc-caso.esc-meu{border-color:var(--verde,#1d5c4a);box-shadow:0 0 0 1px var(--verde,#1d5c4a) inset}
-  .esc-tecla{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;border-right:1px solid var(--borda);background:#eef1fa;color:#24508f}
-  .esc-tecla.jud{background:#f1ecf8;color:#5b3f8c} .esc-tecla.cons{background:#fbf3e3;color:#8a5a00}
-  .esc-corpo{padding:9px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
-  .esc-l1{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;font-size:12px}
-  .esc-fase{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#24508f}
+  /* F393 · a escolha do caso em colunas (proposta C do Paulo, 04.11.2026): os casos lado a lado,
+     cada linha (Agora, Etapa, Datas, Último) na mesma altura em todos, pelo subgrid */
+  .esc-cx{width:min(760px,96vw)}
+  .esc-tit-sub{font-size:13px;color:var(--cinza);margin-top:2px}
+  .esc-cols{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(210px,1fr);grid-template-rows:repeat(7,auto);
+    column-gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 6px;margin:0 -2px}
+  .proc-op.esc-caso{display:grid;grid-row:span 7;grid-template-rows:subgrid;row-gap:0;padding:0;margin:0;min-width:0;
+    border-top:4px solid #24508f;border-radius:12px;cursor:pointer;scroll-snap-align:start;background:var(--branco,#fff)}
+  .esc-caso.jud{border-top-color:#5b3f8c} .esc-caso.cons{border-top-color:#b07800}
+  .esc-caso.esc-meu{border-color:var(--texto);border-top-color:inherit;box-shadow:0 4px 14px rgba(20,30,50,.14)}
+  .esc-caso.esc-meu.inss{border-top-color:#24508f} .esc-caso.esc-meu.jud{border-top-color:#5b3f8c} .esc-caso.esc-meu.cons{border-top-color:#b07800}
+  .esc-cab{padding:9px 12px 8px;min-width:0}
+  .esc-l0{display:flex;justify-content:space-between;align-items:center;gap:6px}
+  .esc-tecla{display:inline-grid;place-items:center;width:24px;height:24px;border:1px solid var(--borda);border-radius:6px;
+    font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--cinza)}
+  .esc-meu .esc-tecla{background:var(--texto);border-color:var(--texto);color:#fff}
+  .esc-nb{font-family:var(--f-mono,ui-monospace,Consolas,monospace);font-size:11px;color:var(--cinza)}
+  .esc-fase{display:block;margin-top:8px;font-size:12px;font-weight:700;color:#24508f}
   .esc-fase.jud{color:#5b3f8c} .esc-fase.cons{color:#8a5a00}
-  .esc-onde{color:var(--cinza)} .esc-voce{margin-left:auto;font-size:11px;font-weight:600;color:var(--verde,#1d5c4a)}
-  .esc-tit{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;margin:0}
+  .esc-onde{display:block;font-size:12px;color:var(--cinza)}
+  .esc-tit{display:flex;gap:4px;align-items:baseline;margin:4px 0 0;font-size:14px;font-weight:700;min-width:0;overflow-wrap:anywhere}
   .esc-ed{font:400 13px var(--f-txt,inherit);color:var(--cinza);background:none;border:0;padding:0 4px;min-width:24px;min-height:24px;cursor:pointer}
-  .esc-nome{font:inherit;font-size:14px;flex:1;min-width:160px;padding:3px 6px}
-  .esc-grade{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1px 10px;font-size:13px;margin:2px 0 0}
-  .esc-grade dt{color:var(--cinza)} .esc-grade dd{margin:0;min-width:0;overflow-wrap:anywhere}
+  .esc-nome{font:inherit;font-size:14px;flex:1;min-width:0;padding:3px 6px}
+  .esc-voce{display:block;min-height:16px;font-size:11px;font-weight:600;color:var(--verde,#1d5c4a)}
+  .esc-cel{border-top:1px solid var(--borda);padding:7px 12px;min-height:52px;min-width:0;font-size:13px;overflow-wrap:anywhere}
+  .esc-rot{display:block;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--cinza);margin-bottom:2px}
   .esc-agora{font-weight:600}
-  .esc-prz{display:inline-block;font-size:11px;font-weight:600;padding:1px 6px;border-radius:4px;margin-left:6px}
-  .esc-prz.fatal{background:#f8e6e3;color:#a3332a} .esc-prz.fila{background:#fbf0d9;color:#8a5a00}
-  .esc-velha{font-size:11px;color:#8a5a00}
-  .esc-pe{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:2px}
-  .esc-gnb{font-size:11px}
-  /* F308b · no celular, só o que separa um caso do outro (pedido do Paulo, 31.10.2026) */
-  .app.celular ~ #modal .esc-cx :is(.esc-sub,.proc-sub,.esc-quem,.esc-ult-txt,.esc-avisos,.esc-pe .lc-acesso,.esc-pe a){display:none}
-  .app.celular ~ #modal .esc-pe{display:none}
-  .app.celular ~ #modal .proc-op.esc-caso{grid-template-columns:minmax(0,1fr) 22px}
-  .app.celular ~ #modal .esc-tecla{display:none}
-  .app.celular ~ #modal .esc-caso::after{content:"›";align-self:center;font-size:22px;color:var(--cinza)}
-  .app.celular ~ #modal .esc-tit{display:block}
-  .app.celular ~ #modal .proc-org .meio-sub{display:none}
-  .app.celular ~ #modal .esc-voce{margin-left:0;flex-basis:100%}
-  .app.celular ~ :is(#fab-sug,#fab-ajuda,#fab-rapida,#zap-ag):has(~ #modal[style*="block"] .esc-cx){display:none}
+  .esc-agora.venc{color:#a3332a}
+  .esc-prz{display:inline-block;font-size:11px;font-weight:600;padding:1px 6px;border-radius:4px;margin-top:3px}
+  .esc-prz.fatal{background:#f8e6e3;color:#a3332a} .esc-prz.fatal.venc{background:#a3332a;color:#fff} .esc-prz.fila{background:#fbf0d9;color:#8a5a00}
+  .esc-velha{display:block;font-size:11px;color:#8a5a00}
+  .proc-sub.esc-datas{font-size:12px}
+  .esc-datas span{display:block}
+  .esc-ult{font-size:12px;color:var(--cinza);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .esc-avisos{min-width:0} .esc-avisos:empty{display:block;padding:0}
+  .esc-caso .num-fora{font-size:12px;margin:0;padding:6px 12px;border-top:1px solid var(--borda)}
+  .esc-pe{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border-top:1px solid var(--borda);padding:8px 12px;align-self:end}
+  .esc-resp{font-size:12px;color:var(--cinza);margin-right:auto}
   .esc-abrir{margin-left:auto}
-  .esc-caso .num-fora{font-size:12px;margin:0;padding:6px 10px}
+  /* no celular, a coluna ocupa 78 % e as outras aparecem ao deslizar */
+  .app.celular ~ #modal .esc-cols{grid-auto-columns:78%}
+  .app.celular ~ :is(#fab-sug,#fab-ajuda,#fab-rapida,#zap-ag):has(~ #modal[style*="block"] .esc-cx){display:none}
   .vistos{display:inline-flex;align-items:center;gap:3px;margin-left:8px;vertical-align:middle}
   /* na linha do tempo o li alinha pelo topo: as ações da tarefa ficam na
      LINHA do comentário, não boiando no meio da altura do cartão */
@@ -6399,7 +6403,7 @@ body:has(.app.celular.detalhe-aberto .escrever.esc-aberto) :is(#fab-sug,#fab-rap
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.49</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.50</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19432,16 +19436,17 @@ function tituloDaEscolha(k){
   const t = tituloCaso(k);
   return t==="Benefício não definido" && justicaDoNumeroCnj(k.processo)==="estadual" ? "Ação na Justiça Estadual, espécie não definida" : t;
 }
-function cartaoEscolha(cliId, k, i, meu, destaque){
+function cartaoEscolha(cliId, k, i, meu, destaque, nb){
   const fe = faseEfetiva(k), hj = hoje();
   const datas = [k.der && `DER ${fmtBarra(k.der)}`, k.dib && `DIB ${fmtBarra(k.dib)}`, k.dcb && `DCB ${fmtBarra(k.dcb)}`,
-    k.ajuizado_em && `ajuizado em ${fmtBarra(String(k.ajuizado_em).slice(0,10))}`].filter(Boolean);
+    k.ajuizado_em && `Ajuizado ${fmtBarra(String(k.ajuizado_em).slice(0,10))}`].filter(Boolean);
   const velha = (trilhaDe(k)||{}).velha;
   const prox = proximosDoCaso(k)[0];
   const volta = k.prazo && ((k.ronda||{}).despacho||{}).prazo===k.prazo;
+  const venc = k.prazo && k.prazo<hj;
   const selo = !k.prazo ? "" : volta || prazoEhRetorno(k)
-    ? `<span class="esc-prz fila">${volta ? "volta à fila" : "retorno"} ${fmtBarra(k.prazo)}${k.prazo<hj?(volta?" · vencida":" · vencido"):""}</span>`
-    : `<span class="esc-prz fatal" title="${esc(k.lembrar_motivo||"")}">prazo ${fmtBarra(k.prazo)}${k.prazo<hj?" · vencido":""}</span>`;
+    ? `<span class="esc-prz fila">${volta ? "volta à fila" : "retorno"} ${fmtBarra(k.prazo)}${venc?(volta?" · vencida":" · vencido"):""}</span>`
+    : `<span class="esc-prz fatal${venc?" venc":""}" title="${esc(k.lembrar_motivo||"")}">prazo ${fmtBarra(k.prazo)}${venc?" · vencido":""}</span>`;
   const a = (D._andsFicha||[]).filter(x=>x.caso_id===k.id).sort((x,y)=>String(y.criado_em).localeCompare(String(x.criado_em)))[0];
   const quemAnd = a && (a.autor_id ? ((D.colPorId.get(a.autor_id)||{}).nome||"").split(" ")[0]
     : /^(PJe|eproc|e-SAJ)/.test(a.texto||"") ? sisCurtoDoMov(a) : ({pat:"PAT", crps:"e-Recursos", dou:"DOU"}[a.origem] || "portal"));
@@ -19451,24 +19456,21 @@ function cartaoEscolha(cliId, k, i, meu, destaque){
     + (!k.especie && !k.beneficio ? `<div class="num-fora" role="note"><span>Espécie não definida${justicaDoNumeroCnj(k.processo)==="estadual" ? ": o número 8.26 indica a Justiça Estadual, onde corre a ação acidentária" : ""}. Defina na ficha do caso.</span></div>` : "");
   const portal = acessosDoCaso(k).atual.join("");
   const faseCls = fe==="judicial" || fe==="pagamento" ? "jud" : fe==="conselho" ? "cons" : "inss";
-  return `<div class="proc-op esc-caso${destaque?" esc-meu":""}" data-caso="${k.id}" onclick="if(!event.target.closest('a,button,input'))escolhido('${cliId}','${k.id}')">
-    <span class="esc-tecla ${faseCls}" aria-hidden="true">${i<9?i+1:""}</span>
-    <div class="esc-corpo">
-      <div class="esc-l1"><span class="esc-fase ${faseCls}">${esc(NOME_FASE[fe]||fe||"")}</span>${ondeCorre(k)?`<span class="esc-onde">${esc(ondeCorre(k))}</span>`:""}
-        ${meu?`<span class="esc-voce">você escreveu aqui em ${fmtTS(meu)}</span>`:""}</div>
+  const urg = venc && !volta && !prazoEhRetorno(k);
+  return `<div class="proc-op esc-caso ${faseCls}${destaque?" esc-meu":""}" data-caso="${k.id}" onclick="if(!event.target.closest('a,button,input'))escolhido('${cliId}','${k.id}')">
+    <div class="esc-cab">
+      <div class="esc-l0"><span class="esc-tecla" aria-hidden="true">${i<9?i+1:""}</span><span class="esc-nb"${nb&&nb.tit?` title="${esc(nb.tit)}"`:""}>${nb&&nb.nb?`NB ${esc(fmtNb(nb.nb))}`:"Sem NB"}</span></div>
+      <span class="esc-fase ${faseCls}">${esc(NOME_FASE[fe]||fe||"")}</span>${ondeCorre(k)?`<span class="esc-onde">${esc(ondeCorre(k))}</span>`:""}
       <div class="proc-nome esc-tit" data-tit="${k.id}">${esc(tituloDaEscolha(k))}<button type="button" class="esc-ed" onclick="nomearCaso('${cliId}','${k.id}')" title="dar um nome próprio a este caso" aria-label="dar um nome próprio a este caso">✎</button></div>
-      ${datas.length?`<div class="proc-sub">${esc(datas.join(" · "))}</div>`:""}
-      <dl class="esc-grade">
-        ${k.etapa?`<dt>Etapa</dt><dd>${esc(k.etapa)}${velha?` <span class="esc-velha">desatualizada</span>`:""}</dd>`:""}
-        ${prox||selo?`<dt>Agora</dt><dd class="esc-agora">${prox?esc(prox.txt):""}${selo}</dd>`:""}
-        <dt>Último</dt><dd>${a?`${fmtBarra(dataSP(a.criado_em))} · ${esc(quemAnd)}<span class="esc-ult-txt"> · ${esc(txtAnd.length>90?txtAnd.slice(0,90)+"…":txtAnd)}</span>`:"sem andamento"}</dd>
-        ${quem?`<dt class="esc-quem">Quem</dt><dd class="esc-quem">${esc(quem)}</dd>`:""}
-      </dl>
-      ${k.exigencia_prazo?`<div>${chipExig(k)}</div>`:""}
-      <div class="esc-avisos">${avisos}</div>
-      <div class="esc-pe">${portal}
-        <button type="button" class="btn-mini forte esc-abrir" onclick="escolhido('${cliId}','${k.id}')" title="Abrir este caso">Abrir<span class="sr-only"> este caso</span></button></div>
+      <span class="esc-voce">${meu?`você escreveu aqui em ${fmtTS(meu)}`:""}</span>
     </div>
+    <div class="esc-cel"><span class="esc-rot">Agora</span>${prox?`<div class="esc-agora${urg?" venc":""}">${esc(prox.txt)}</div>`:selo?"":`<span class="esc-ult">sem próximo passo</span>`}${selo}${k.exigencia_prazo?`<div>${chipExig(k)}</div>`:""}</div>
+    <div class="esc-cel"><span class="esc-rot">Etapa</span>${k.etapa?esc(k.etapa):`<span class="esc-ult">sem etapa</span>`}${velha?`<span class="esc-velha">desatualizada</span>`:""}</div>
+    <div class="esc-cel"><span class="esc-rot">Datas</span><span class="proc-sub esc-datas">${datas.length?datas.map(d=>`<span>${esc(d)}</span>`).join(""):"sem datas"}</span></div>
+    <div class="esc-cel"><span class="esc-rot">Último</span><span class="esc-ult">${a?`${fmtBarra(dataSP(a.criado_em))}, ${esc(quemAnd)}<span class="esc-ult-txt">: ${esc(txtAnd)}</span>`:"sem andamento"}</span></div>
+    <div class="esc-avisos">${avisos}</div>
+    <div class="esc-pe">${quem?`<span class="esc-resp">com ${esc(quem)}</span>`:""}${portal}
+      <button type="button" class="btn-mini forte esc-abrir" onclick="escolhido('${cliId}','${k.id}')" title="Abrir este caso">Abrir<span class="sr-only"> este caso</span></button></div>
   </div>`;
 }
 function escolherProcesso(cliId, ativos){
@@ -19485,20 +19487,21 @@ function escolherProcesso(cliId, ativos){
   const minhas = new Map(); for(const a of (D._andsFicha||[])) if(a.autor_id===eu.id && ordem.some(k=>k.id===a.caso_id))
     if(!minhas.has(a.caso_id) || a.criado_em>minhas.get(a.caso_id)) minhas.set(a.caso_id, a.criado_em);
   const meuId = ([...minhas].sort((a,b)=>String(b[1]).localeCompare(String(a[1])))[0]||[])[0];
-  const cab = g => { if(!g.nb) return `<div class="esc-gcab"><b>Sem NB</b></div>`;
+  // o grupo do NB vira o rótulo da coluna: espécie, período e situação no title
+  const nbDe = g => { if(!g.nb) return null;
     const r = incap.find(x=>x.nb===g.nb), esp = String((g.ks.find(k=>k.especie)||{}).especie||"");
-    return `<div class="esc-gcab">${esp?`<b>${esc(nomeDaEspecie(esp)||esp)}</b>`:""}<span class="esc-gnb">NB ${esc(fmtNb(g.nb))}</span>${
-      r&&(r.ini||r.dcb)?`<span>${r.ini && (!r.dcb || r.ini<=r.dcb) ? `${fmtBarra(r.ini)} → ${r.dcb?fmtBarra(r.dcb):"…"}` : `DCB ${fmtBarra(r.dcb)}`}</span>`:""}${r&&r.sit?`<span class="esc-sit">${esc(r.sit)}</span>`:""}</div>`; };
+    const per = r&&(r.ini||r.dcb) ? (r.ini && (!r.dcb || r.ini<=r.dcb) ? `${fmtBarra(r.ini)} a ${r.dcb?fmtBarra(r.dcb):"hoje"}` : `DCB ${fmtBarra(r.dcb)}`) : "";
+    return {nb:g.nb, tit:[esp&&(nomeDaEspecie(esp)||esp), per, r&&r.sit].filter(Boolean).join(" · ")}; };
   let i = 0;
   document.getElementById("modal").innerHTML=`
     <div class="modal-fundo" onclick="event.stopPropagation()">
       <div class="modal-cx esc-cx" role="dialog" aria-labelledby="esc-t">
         <div class="modal-cab">
-          <div id="esc-t"><strong>${esc(c.nome||"Cliente")}</strong> tem <b>${ativos.length} processos em aberto</b>
-            <div class="meio-sub esc-sub">Clique no caso para registrar nele. O botão do portal abre o processo sem escolher o caso.</div></div>
+          <div id="esc-t"><strong>${esc(c.nome||"Cliente")}</strong> <span class="meio-sub">tem ${ativos.length} casos em aberto</span>
+            <div class="esc-tit-sub">Em qual caso registrar?</div></div>
           <button class="btn-mini" onclick="fecharEscolha()" title="voltar para a lista">✕</button>
         </div>
-        ${lista.map(g=>`<div class="esc-grupo">${cab(g)}${g.ks.map(k=>cartaoEscolha(cliId, k, i++, minhas.get(k.id) || null, meuId===k.id)).join("")}</div>`).join("")}
+        <div class="esc-cols">${lista.map(g=>{ const nb = nbDe(g); return g.ks.map(k=>cartaoEscolha(cliId, k, i++, minhas.get(k.id) || null, meuId===k.id, nb)).join(""); }).join("")}</div>
         <div class="proc-org"><span class="meio-sub">${ordem.length<10?`Teclas 1 a ${ordem.length} escolhem o caso.`:""}</span><button class="btn-mini" onclick="fecharEscolha();abrirOrganizar('${cliId}')"
           title="levar NB, protocolo, recurso e processo ao caso certo, ou juntar os casos que são o mesmo benefício">⇄ Organizar<span class="sr-only"> os números destes casos</span></button></div>
       </div>
