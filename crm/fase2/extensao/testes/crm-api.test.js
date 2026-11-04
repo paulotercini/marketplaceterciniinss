@@ -192,7 +192,7 @@ test('acervoPje: só entra o processo que movimentou desde a última cronologia'
   const casos = [{ processo: '5000000-11.2020.4.03.9999', processos: ['5000000-22.2020.4.03.9999', '5000000-33.2020.4.03.9999'] }];
   const entregues = [{ dados: { lote: [
     { numero: '5000000-11.2020.4.03.9999', itens: [{ data: '2026-10-10', textos: ['Juntada'] }] },
-    { numero: '5000000-22.2020.4.03.9999', itens: [{ data: '2026-10-10', textos: ['Juntada'] }, { data: '2020-01-10', textos: ['Distribuído por sorteio'] }] },
+    { numero: '5000000-22.2020.4.03.9999', itens: [{ data: '2026-10-10', textos: ['Juntada'] }, { data: '2020-01-10', textos: ['Distribuído por sorteio'] }, { data: '2020-01-10', textos: [], docs: [{ id: '1', nome: 'Petição inicial', caminho: 'x' }] }] },
   ] } }];
   const { api } = await carregar({ guardado: { refresh: 'r', quem: 'eu' },
     respostas: [{ corpo: { access_token: 't', refresh_token: 'r', expires_in: 3600 } },
@@ -208,7 +208,7 @@ test('acervoPje: documento que falhou traz o processo de volta, até 3 tentativa
   const casos = [{ processo: numero, processos: [] }];
   const entregues = [{ dados: { lote: [{ numero, itens: [{ data: '2026-10-10', textos: ['Juntada'],
     docs: [{ id: '900', nome: 'Certidão' }, { id: '901', nome: 'Laudo', caminho: 'pje/x/901' }] },
-    { data: '2020-01-10', textos: ['Distribuído por sorteio'] }] }] } }];   // F385 · já chegou ao início
+    { data: '2020-01-10', textos: ['Distribuído por sorteio'] }, { data: '2020-01-10', textos: [], docs: [{ id: '1', nome: 'Petição inicial', caminho: 'x' }] }] }] } }];   // F385 · já chegou ao início
   const rodar = async tentativas => {
     const { api, memoria } = await carregar({ guardado: { refresh: 'r', quem: 'eu', pje_tentativas: tentativas },
       respostas: [{ corpo: { access_token: 't', refresh_token: 'r', expires_in: 3600 } },

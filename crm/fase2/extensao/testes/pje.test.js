@@ -113,7 +113,11 @@ test('página sem número CNJ não vira cabeçalho', () => {
 {
   const assert = require('assert');
   const R = require('../pje-regras.js');
-  assert.strictEqual(R.chegouAoInicio([{ textos: ['Juntada de petição'] }, { textos: ['Distribuído por sorteio'] }]), true);
+  // 1.33.2 · a inicial vem depois do "Distribuído": parar nele a cortava
+  assert.strictEqual(R.chegouAoInicio([{ textos: ['Juntada de petição'] }, { textos: ['Distribuído por sorteio'] }]), false);
+  assert.strictEqual(R.chegouAoInicio([{ textos: ['Distribuído por sorteio'] }, { textos: [], docs: [{ nome: 'Petição inicial' }] }]), true);
+  assert.strictEqual(R.chegouAoInicio([{ textos: ['Distribuído por sorteio'] }, { textos: [], docs: [{ nome: 'Procuração' }] }]), true);
   assert.strictEqual(R.chegouAoInicio([{ textos: ['Juntada de petição'] }]), false);
-  assert.strictEqual(R.chegouAoInicio('Recebido pelo Distribuidor'), true);
+  assert.strictEqual(R.chegouAoInicio('Distribuído por sorteio'), false);
+  assert.strictEqual(R.chegouAoInicio('516521361 - Petição inicial'), true);
 }
