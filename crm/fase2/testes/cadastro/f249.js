@@ -89,6 +89,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // 1 · desligada: ninguém muda de tela
   await abrir(cX, kX);
+  await p.click("#and-texto"); await p.waitForTimeout(200);   // F391b: Sem resposta e Pedir ficam no pé do campo aberto
   conf("sem a transição, o CRM é o completo (sem nível)", (await nivel()) === null && await vis(".tipo-ch.tipo-sr"));
   conf("o botão 'níveis' existe para o administrador (no menu, ao lado de 'visual')", await p.evaluate(() => document.getElementById("btn-niveis").style.display !== "none"));
 
@@ -170,12 +171,14 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await abrir(cX, kX);
   conf("no nível 2, o html leva data-nivel=2 e o campo de escrever volta", (await nivel()) === "2" && await vis("#tipo-fila"));
   conf("no nível 2, a aba INSS dos andamentos dos portais aparece", await p.evaluate(() => [...document.querySelectorAll(".menu-andamentos button")].some(e => e.offsetParent !== null && /^INSS/.test(e.textContent.trim()))));
+  await p.click("#and-texto"); await p.waitForTimeout(200);   // F391b: Sem resposta e Pedir ficam no pé do campo aberto
   conf("na onda 1, Sem resposta e Pedir ao cliente ainda não aparecem", !(await vis(".tipo-ch.tipo-sr")) && !(await vis(".tipo-ch.tipo-pc")));
   conf("na onda 1, o 'Em análise · +7 d' já aparece e o Movimentou não", await vis(".faixa-prazos .conf-sem") && !(await vis(".faixa-prazos .conf-mov")));
 
   // 4 · a onda 2 liga Sem resposta e Pedir ao cliente
   await p.evaluate(() => gravarTransicao({ onda: 2 })); await p.waitForTimeout(400); await p.evaluate(() => fecharCaixa());
   await abrir(cX, kX);
+  await p.click("#and-texto"); await p.waitForTimeout(200);   // F391b: Sem resposta e Pedir ficam no pé do campo aberto
   conf("na onda 2, Sem resposta e Pedir ao cliente aparecem", await vis(".tipo-ch.tipo-sr") && await vis(".tipo-ch.tipo-pc"));
 
   // 5 · o atendimento no nível 2

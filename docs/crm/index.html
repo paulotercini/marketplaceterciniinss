@@ -6391,6 +6391,39 @@ html[data-tema="v10"] .timeline .tl-barra:not(.tl-barra-of) > .tl-bt-ok{color:va
 @media (hover:hover) and (pointer:fine){html[data-tema="v10"] .timeline .tl-barra:not(.tl-barra-of) > .tl-bt:not(.forte):hover{border-color:transparent;background:var(--fundo)}}
 /* no celular, o campo aberto não fica sob os flutuantes */
 body:has(.app.celular.detalhe-aberto .escrever.esc-aberto) :is(#fab-sug,#fab-rapida,#zap-ag,#fab-ajuda){display:none!important}
+/* F394 · igual ao desenho A (conferência do Paulo de 04.11.2026): fechado, um quadro com o lápis, "Escrever no caso…" e a lembrança
+   das chaves, sem os gestos de um clique, que ficam no pé do aberto; o texto sem caixa própria; com uma chave ligada, o pé fica com
+   Ao registrar e o Registrar; as pílulas com contorno; no celular os ícones vão ao ⋯ e o pé é Sem resposta, Pedir e Registrar */
+html[data-tema="v10"] .escrever.esc-v12:not(.esc-aberto)::before{content:"";flex:none;width:16px;height:16px;background:var(--cinza);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='M4 20h4L19 9l-4-4L4 16v4Z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='M4 20h4L19 9l-4-4L4 16v4Z'/%3E%3C/svg%3E") center/contain no-repeat}
+html[data-tema="v10"] .escrever.esc-v12 #and-texto{border:0!important;border-radius:0!important;background:none;box-shadow:none;padding:4px 0!important;outline:0}
+html[data-tema="v10"] .painel[data-p="2"] .escrever.esc-v12:focus-within{border-color:var(--azul)}
+html[data-tema="v10"] .escrever.esc-v12:not(.esc-aberto) .tipo-fila > :not(.esc-dica){display:none!important}
+html[data-tema="v10"] .esc-v12:has(.esc-tg.on,#and-prazo-ck:checked) .esc-fim .tipo-fila > :not(.esc-dica){display:none!important}
+html[data-tema="v10"] .esc-v12 .esc-pnl{border:1px solid var(--borda)}
+html[data-tema="v10"] .esc-v12 .esc-pnl .esc-pill{min-height:28px;padding:0 10px;border:1px solid var(--borda)!important;border-radius:999px;background:var(--branco);color:var(--texto);font-size:12.5px}
+html[data-tema="v10"] .esc-v12 .esc-pnl .esc-pill.on{background:var(--azul)!important;border-color:var(--azul)!important;color:#fff!important}
+html[data-tema="v10"] .esc-v12 .esc-mais-ic{display:none}
+.app.celular .esc-v12 .esc-mais-ic{display:inline-grid;place-items:center;margin-left:auto;font-weight:700}
+.app.celular .esc-v12 .esc-tgs:not(.ics) .esc-ferr{display:none}
+.app.celular .esc-v12 .esc-tgs.ics{flex-wrap:wrap}.app.celular .esc-v12 .esc-tgs.ics .esc-ferr{order:9;flex-basis:100%;justify-content:flex-end}
+.app.celular .esc-v12 .esc-fim .sug-abrir{display:none!important}
+.app.celular .esc-v12:not(:has(.esc-tg.on,#and-prazo-ck:checked)) .esc-fim .esc-frase{display:none}
+.app.celular .esc-v12 .esc-fim{flex-wrap:wrap}.app.celular .esc-v12 .esc-fim .tipo-fila{flex:1 1 0;min-width:0}
+/* o quadro do Prazo em grade, como o da Tarefa: Do que é, Contado de, Vence, Quem faz e Revisa, o rótulo à esquerda */
+html[data-tema="v10"] .esc-v12 .esc-pnl-pz.pzx{align-items:stretch;gap:10px;padding:12px;background:var(--fundo,#F8F8F6)}
+html[data-tema="v10"] .esc-v12 .pzx .pzx-grade{gap:10px 12px}
+html[data-tema="v10"] .esc-v12 .pzx .pzx-res{display:grid;grid-template-columns:96px minmax(0,1fr) auto;align-items:center;gap:4px 12px;padding:0;border:0;background:none}
+html[data-tema="v10"] .esc-v12 .pzx .pzx-res-o{display:contents}
+html[data-tema="v10"] .esc-v12 .pzx .pzx-vence{display:contents;font-size:12px;color:var(--cinza)}
+html[data-tema="v10"] .esc-v12 .pzx #and-prazo-data{grid-column:2;justify-self:start;background:#FBEAE7;border-color:#E8B4AE;color:#8B1D16;font-weight:600}
+html[data-tema="v10"] .esc-v12 .pzx #pzx-expl{grid-column:2/4;grid-row:2}
+html[data-tema="v10"] .esc-v12 .pzx .pzx-res-n{grid-column:3;grid-row:1}
+html[data-tema="v10"] .esc-v12 .pzx .pzx-quem{display:grid;grid-template-columns:96px minmax(0,1fr);align-items:center;gap:10px 12px}
+html[data-tema="v10"] .esc-v12 .pzx .pzx-quem > .pzx-r{width:auto;margin:0}
+html[data-tema="v10"] .esc-v12 .pzx .pzx-quem{grid-template-columns:96px repeat(var(--nq,3),max-content) minmax(0,1fr)}
+html[data-tema="v10"] .esc-v12 .pzx .pzx-esp{grid-column:1/-1;height:0;display:block}
+html[data-tema="v10"] .esc-v12 .pzx .pzx-rv{grid-column:1}
+html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-self:start}
 </style>
 </head>
 <body>
@@ -6403,7 +6436,7 @@ body:has(.app.celular.detalhe-aberto .escrever.esc-aberto) :is(#fab-sug,#fab-rap
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.50</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.51</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -40453,7 +40486,7 @@ function composerCaso(k){
     : TIPOS_ANOTACAO.map(([ch,rot])=>
           `<button class="tipo-ch" data-tipoand="${ch}" onclick="escolherTipoAnotacao('${ch}')">${esc(rot)}</button>`).join(""));
   // F247 · os dois gestos que mais se escreviam à mão, em um clique
-  const area = `<textarea id="and-texto" rows="2" placeholder="Escrever no caso…" data-dica="Escreva o andamento…  a data pode vir no texto: “verificar em 24/08” — ou clique num tipo acima e preencha as lacunas"></textarea>`;
+  const area = `<textarea id="and-texto" rows="2" placeholder="Escrever no caso…" ${v10?"data-v12":"data-dica"}="Escreva o andamento…  a data pode vir no texto: “verificar em 24/08” — ou clique num tipo acima e preencha as lacunas"></textarea>`;
   // o id tf-box é a chave da TRAVA: é por ele que novoAndamento sabe que
   // precisa exigir responsável e data. Renomear sem manter o id já derrubou
   // a obrigatoriedade uma vez.
@@ -40548,7 +40581,7 @@ function composerCaso(k){
     ? `<div class="escrever esc-v12">
       ${area}
       <div class="esc-barra" id="tf-box">
-        <div class="esc-linha esc-tgs">${chips}<span class="esc-sep" aria-hidden="true"></span>${tg("compromisso","Tarefa","trabalho marcado para alguém num dia")}${prazoTg}${tg("lembrete","Lembrete","só um aviso no dia, por padrão para você")}${ferr}</div>
+        <div class="esc-linha esc-tgs">${chips}<span class="esc-sep" aria-hidden="true"></span>${tg("compromisso","Tarefa","trabalho marcado para alguém num dia")}${prazoTg}${tg("lembrete","Lembrete","só um aviso no dia, por padrão para você")}${ferr}<button class="esc-ic esc-mais-ic" aria-expanded="false" onclick="const l=this.parentNode;l.classList.toggle('ics');this.setAttribute('aria-expanded',l.classList.contains('ics'))" title="Mais: anexar, mencionar, documentos, importante">⋯<span class="sr-only"> mais</span></button></div>
         <div class="esc-pnl esc-pnl-tf" id="esc-pnl-tf"${tfNatureza?"":" hidden"}>
           <span class="rotulo-rap">Quem faz</span><span class="esc-pes">${pessoas}</span>
           <span class="rotulo-rap esc-quando">Quando</span><span class="esc-pes">${quando}</span></div>
