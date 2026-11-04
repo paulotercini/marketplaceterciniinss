@@ -1,5 +1,5 @@
 // F391 · o campo de escrever compacto e os botões da anotação sem borda (proposta A, escolha do Paulo de 04.11.2026):
-// fechado numa linha com Sem resposta e Pedir; aberto, uma barra só com Tipo, as chaves e os ícones, e o pé com Ao registrar,
+// fechado numa linha com o lápis e a lembrança das chaves (F391b: Sem resposta e Pedir no pé do aberto); aberto, uma barra só com Tipo, as chaves e os ícones, e o pé com Ao registrar,
 // os gestos de um clique e o Registrar, vermelho com prazo fatal; a Tarefa em grade; no celular, os flutuantes somem.
 // Banco simulado e dados fictícios. Uso: node f391.js [fotos]
 const { chromium } = require("playwright");
@@ -82,8 +82,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // ── 1 · computador, fechado ──
   const p = await pagina({ viewport: { width: 1440, height: 1000 } });
   await p.evaluate(() => irSubAba("escritorio")); await p.waitForTimeout(300);
-  const tx = await r(p, "#and-texto"), sr = await r(p, ".esc-v12 .tipo-sr");
-  conf("fechado, o campo é uma linha com Sem resposta e Pedir ao lado", tx && sr && tx.r <= sr.l && Math.abs((tx.t + tx.h / 2) - (sr.t + sr.h / 2)) < 8 && await vis(p, ".esc-v12 .tipo-pc"));
+  const tx = await r(p, "#and-texto"), dc = await r(p, ".esc-v12 .esc-dica");
+  conf("fechado, o campo é uma linha com a lembrança das chaves ao lado", tx && dc && tx.r <= dc.l && Math.abs((tx.t + tx.h / 2) - (dc.t + dc.h / 2)) < 8);
+  conf("fechado, Sem resposta e Pedir ficam para o pé do aberto (desenho A)", !(await vis(p, ".esc-v12 .tipo-sr")) && !(await vis(p, ".esc-v12 .tipo-pc")));
+  conf("fechado, o lápis antes do texto e o texto sem caixa própria", await p.evaluate(() => getComputedStyle(document.querySelector(".escrever.esc-v12"), "::before").width === "16px"
+    && getComputedStyle(document.getElementById("and-texto")).borderTopWidth === "0px"));
   conf("fechado, as chaves ficam escondidas", !(await vis(p, ".esc-v12 .esc-tgs")));
   conf("o Pedir mostra uma palavra e diz 'ao cliente' ao leitor de tela", await p.evaluate(() => { const b = document.querySelector(".tipo-pc"); return b.firstChild.textContent.trim() === "Pedir" && b.textContent.trim() === "Pedir ao cliente"; }));
 
@@ -92,7 +95,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click("#and-texto"); await p.waitForTimeout(250);
   const barra = await p.evaluate(() => {
     const l = document.querySelector(".esc-v12 .esc-tgs"), y = e => { const b = e.getBoundingClientRect(); return b.top + b.height / 2; };
-    const it = [l.querySelector(".tipo-mais > summary"), ...l.querySelectorAll(".esc-tg"), ...l.querySelectorAll(".esc-ic:not(.urg)")];
+    const it = [l.querySelector(".tipo-mais > summary"), ...l.querySelectorAll(".esc-tg"), ...l.querySelectorAll(".esc-ic:not(.urg):not(.esc-mais-ic)")];
     return { umaLinha: it.every(e => Math.abs(y(e) - y(it[0])) < 6), semBorda: [...l.querySelectorAll(".esc-tg,.esc-ic")].every(e => getComputedStyle(e).borderTopWidth === "0px"),
       tipoNaBarra: !!l.querySelector(".tipo-ch[data-tipoand]"), prazo: [...l.querySelector(".esc-tg-pz").childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join("").trim() };
   });
@@ -107,11 +110,14 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.evaluate(() => document.querySelector(".esc-tg-pz").click()); await p.waitForTimeout(250);
   const cor1 = await p.evaluate(() => getComputedStyle(document.querySelector(".esc-v12 .esc-reg")).backgroundColor);
   conf("com o Prazo ligado, o Registrar fica vermelho", cor1 === "rgb(179, 38, 30)" && cor0 !== cor1);
+  conf("com o Prazo ligado, o pé fica com Ao registrar e o Registrar", !(await vis(p, ".esc-fim .tipo-sr")) && !(await vis(p, ".esc-fim .sug-abrir")));
+  await p.locator(".escrever.esc-v12").screenshot({ path: OUT + "/prazo.png" });
   await p.evaluate(() => document.querySelector(".esc-tg-pz").click());
   await p.evaluate(() => document.querySelector('.tf-nt[data-nat="compromisso"]').click()); await p.waitForTimeout(250);
   const grade = await p.evaluate(() => { const q = document.getElementById("esc-pnl-tf"), [a, b] = q.querySelectorAll(".rotulo-rap"), [pa, pb] = q.querySelectorAll(".esc-pes");
     const L = e => e.getBoundingClientRect().left; return getComputedStyle(q).display === "grid" && Math.abs(L(a) - L(b)) < 2 && Math.abs(L(pa) - L(pb)) < 2; });
   conf("na Tarefa, Quem faz e Quando ficam alinhados em grade", grade);
+  conf("as pílulas da Tarefa têm contorno", await p.evaluate(() => [...document.querySelectorAll("#esc-pnl-tf .esc-pill")].every(b => getComputedStyle(b).borderTopWidth === "1px")));
   await p.locator(".escrever.esc-v12").screenshot({ path: OUT + "/aberto.png" });
 
   // ── 3 · o cartão ──
@@ -123,9 +129,12 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // ── 4 · celular ──
   const m = await pagina({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
   await m.evaluate(() => irSubAba("escritorio")); await m.waitForTimeout(300);
-  conf("no celular, fechado, Sem resposta e Pedir à vista", await vis(m, ".esc-v12 .tipo-sr") && await vis(m, ".esc-v12 .tipo-pc"));
+  conf("no celular, fechado, apenas o campo", !(await vis(m, ".esc-v12 .tipo-sr")));
   conf("no celular, o lembrete das chaves não aparece", !(await vis(m, ".esc-v12 .esc-dica")));
   await m.tap("#and-texto"); await m.waitForTimeout(300);
+  conf("no celular, os ícones ficam no ⋯ e o pé tem Sem resposta, Pedir e Registrar", await vis(m, ".esc-mais-ic") && !(await vis(m, ".esc-v12 .esc-ferr")) && await vis(m, ".esc-fim .tipo-sr")
+    && await vis(m, ".esc-fim .tipo-pc") && !(await vis(m, ".esc-fim .sug-abrir")) && !(await vis(m, ".esc-fim .esc-frase")));
+  conf("no celular, o ⋯ mostra os ícones", await m.evaluate(() => { document.querySelector(".esc-mais-ic").click(); const f = document.querySelector(".esc-v12 .esc-ferr"); const v = getComputedStyle(f).display !== "none"; document.querySelector(".esc-mais-ic").click(); return v; }));
   conf("no celular, com o campo aberto, os flutuantes somem", !(await vis(m, "#fab-rapida")) && !(await vis(m, "#fab-sug")));
   const larg = await m.evaluate(() => { const e = document.querySelector(".escrever.esc-v12"); return [...e.querySelectorAll("button,label,summary")].filter(x => x.offsetParent && !x.closest(".sugestoes")).filter(x => x.getBoundingClientRect().right > e.getBoundingClientRect().right + 1).map(x => x.className + "|" + x.textContent.trim().slice(0, 20)); });
   console.log(JSON.stringify(larg));
