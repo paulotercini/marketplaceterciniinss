@@ -457,6 +457,8 @@ A **F388** (12.45, as anotações do caso em linha do tempo, proposta B escolhid
 
 A **F390** (12.47, o que faltava da proposta B, pedido do Paulo de 03.11.2026): no computador a hora da anotação fica na coluna da esquerda, abaixo do dia (`.tl-cab>.autor-nome+.tl-hora` posta fora do cartão; no celular e com o WhatsApp aberto, continua no cartão), e a coluna do dia passou a 88 px sem quebra; o movimento dos portais (`li.tl-of`) fica como linha simples no trilho, sem o fundo e a borda do cartão, salvo o não lido; a não lida tem o contorno verde suave; o prazo vivo é uma grade "Prazo fatal" e "Tarefa" (`.tl-pz-grade`, `.tl-pz-k`, `.tl-pz-tf`), com a tarefa dentro do quadro e não repetida abaixo dele. Teste: `f388.js`.
 
+A **F392** (12.49, a escolha do caso em colunas, proposta C escolhida pelo Paulo em 04.11.2026 no Lovable, https://lovable.dev/projects/d06b52fb-d4b7-464f-b29c-54996d83f730): a janela "tem N casos em aberto" (`escolherProcesso`, `cartaoEscolha`) põe os casos lado a lado (`.esc-cols`, grade em colunas com `subgrid`, para Agora, Etapa, Datas e Último ficarem na mesma altura em todas): no alto de cada coluna a tecla, o NB (o grupo antigo virou o `title` do NB, com espécie, período e situação), a fase na cor dela (borda de cima), onde corre, o título com ✎ e "você escreveu aqui em"; no pé quem cuida, o portal e Abrir. A ordem e as teclas 1 a 9 não mudaram. No celular cada coluna ocupa 78 % e as outras deslizam. Teste: `f308.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
