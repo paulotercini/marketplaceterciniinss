@@ -29,3 +29,9 @@ test("F389 · a foto de quem escreve vai como ícone do aviso; sem foto, fica o 
   assert.equal(aviso(m, c, null, "https://x/foto.jpg").icon, "https://x/foto.jpg");
   assert.equal("icon" in aviso(m, c, null), false);
 });
+
+test("F395 · o áudio mostra a transcrição; a que falhou volta a dizer Áudio", () => {
+  const c = { id: "c", atendente_id: null, automatica: false, nome_perfil: "Maria", telefone: null };
+  assert.equal(aviso({ id: "m", conversa_id: "c", tipo: "audio", texto: "Bom dia, saiu a perícia?" }, c, null).body, "🎤 Bom dia, saiu a perícia?");
+  assert.equal(aviso({ id: "m", conversa_id: "c", tipo: "audio", texto: "[áudio não transcrito]" }, c, null).body, "🎤 Áudio");
+});
