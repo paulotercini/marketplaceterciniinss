@@ -32,8 +32,11 @@ type Insc = { id: string; colaborador_id: string; endpoint: string; p256dh: stri
 // o que aparece na tela do celular: quem escreveu e o começo da mensagem, sem número longo (CPF, NB, processo)
 export function aviso(m: Msg, c: Conv, nomeCliente: string | null, icone?: string | null) {
   const quem = (nomeCliente || c.nome_perfil || c.telefone || "Cliente").trim();
-  const txt = mascarar(m.texto || "").replace(/\s+/g, " ").trim();
-  const corpo = txt ? (txt.length > 120 ? txt.slice(0, 117) + "…" : txt) : (TIPO[m.tipo] || "Mensagem nova");
+  // F395 · o áudio mostra a transcrição; a que falhou ("[áudio não transcrito]") vale como vazia
+  const bruto = m.tipo === "audio" && /^\[áudio não transcrito\]$/.test((m.texto || "").trim()) ? "" : m.texto || "";
+  const txt = mascarar(bruto).replace(/\s+/g, " ").trim();
+  const pre = m.tipo === "audio" && txt ? "🎤 " : "";
+  const corpo = txt ? pre + (txt.length > 120 ? txt.slice(0, 117) + "…" : txt) : (TIPO[m.tipo] || "Mensagem nova");
   return { title: quem, body: corpo, tag: "crm-zap-" + c.id, data: { crm: "zap", conversa: c.id }, ...(icone ? { icon: icone } : {}) };
 }
 // o atendente da conversa, e sem atendente todos (como o aviso sonoro do CRM, F191)
