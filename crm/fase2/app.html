@@ -5459,7 +5459,6 @@ html .tipo-mais.mais-baixo .tl-mais-menu{left:0;right:auto}
 /* no computador a ⭐ desce para baixo do ⋯, no espaço vazio à direita da segunda linha */
 .app:not(.celular) .det-mais-col{position:relative}
 .app:not(.celular) .det-mais-col > .det-imp{position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);z-index:2}
-html[data-tema="v10"] .app:not(.celular) .det-topo:has(.det-imp) .linha2{padding-right:64px}
 html .det-topo .linha1 > .det-canto{margin-left:auto;display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 html .lc-cab .lc-menu{margin-left:auto}
 html .zl-mais .zl-link{text-decoration:none;color:inherit}
@@ -6143,7 +6142,7 @@ html[data-tema="v10"] .ag-tipo.ag-etapa:not(.ag-velha){background:var(--ff);colo
 /* o cabeçalho da ficha em duas linhas: o nome e os botões; embaixo CPF, Meu INSS, telefone, advogado e a situação */
 html[data-tema="v10"] :is(.cli-adv,.atend-acoes) .fp2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 html[data-tema="v10"] .app:not(.celular) .det-topo .cli-casos .avatar{display:none}
-html[data-tema="v10"] .app:not(.celular) .det-topo .linha2{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;margin:2px 0 8px;font-size:13px;color:var(--cinza)}
+html[data-tema="v10"] .app:not(.celular) .det-topo .linha2{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;margin:0 0 0 12px;min-width:0;font-size:13px;color:var(--cinza)}
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .resumo-lado{margin:0;gap:6px 18px}
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .id-min b{font-weight:400;font-size:13px;letter-spacing:0;text-transform:none;color:var(--cinza-claro)}
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .cli-adv{font-size:13px;color:var(--cinza-claro)}
@@ -6452,7 +6451,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.53</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.54</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -20040,6 +20039,8 @@ function pintarFicha(){
       ${chipParceria(c, ks)}
       ${chipsParentes(c)}${chipEntregar(c)}
       ${botaoZapCliente(cliId)}
+      ${/* F401 · CPF, Meu INSS, telefone, advogado e a situação na linha do nome, sem a segunda linha (pedido do Paulo, 05.11.2026) */""}
+      ${temaV10() && !celular() ? `<span class="linha2"><span class="resumo resumo-lado">${resumoIn}</span>${linhaAdvogado(c)}${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}</span>` : ""}
       ${temaV10() && celular() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
       ${/* F274 · o que não se usa a toda hora vai ao ⋯ do cabeçalho; CPF e a senha do Meu INSS ficam à vista (pedido do Paulo) */""}
       <span class="det-mais-col">${menuMais([
@@ -20052,8 +20053,6 @@ function pintarFicha(){
       <span class="det-canto">${temaV10() && !celular() ? "" : `${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}`}
       ${chipAgendaCliente(c)}
       <button class="fechar nao-cel" onclick="fecharFicha()" title="fechar a ficha" aria-label="fechar a ficha">✕</button></span></div>
-    ${/* F320 · a segunda linha do cabeçalho (plano de interface limpa, 31.10.2026): CPF, Meu INSS, telefone, advogado e a situação */""}
-    ${temaV10() && !celular() ? `<div class="linha2"><span class="resumo resumo-lado">${resumoIn}</span>${linhaAdvogado(c)}${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}</div>` : ""}
     ${/* abaixo do nome só o que a equipe usa o tempo todo: CPF e a senha do
          Meu INSS. O resto do cadastro fica na aba 📇, sem poluir aqui. */""}
     ${temaV10() ? "" : `<div class="resumo">${resumoIn}</div>`}
