@@ -11,6 +11,8 @@
 //   { mensagem_id }   avisa a mensagem nova               → { enviados }
 //   { preparar: true } devolve a chave pública            → { publica }
 //   { teste: true }    com o token de quem pede, avisa os aparelhos dele → { enviados }
+//   { mencao_id }      F396 · avisa quem foi citado                       → { enviados }
+//   { resumo: true }   F396 · o resumo das 8h, uma notificação por pessoa → { enviados }
 // importado só no uso: o teste do node lê as funções puras sem o pacote
 const wp = async () => (await import("npm:web-push@3.6.7")).default;
 
@@ -25,8 +27,8 @@ const json = (o: unknown, status = 200) => new Response(JSON.stringify(o), { sta
 export const mascarar = (s: unknown) => String(s ?? "").replace(/\d[\d.\-/ ]{6,}\d/g, (m) => (m.replace(/\D/g, "").length >= 8 ? "[número]" : m));
 const TIPO: Record<string, string> = { audio: "🎤 Áudio", imagem: "📷 Foto", video: "🎥 Vídeo", documento: "📄 Documento", figurinha: "Figurinha", localizacao: "📍 Localização", contato: "👤 Contato" };
 
-type Msg = { id: string; conversa_id: string; tipo: string; texto: string | null };
-type Conv = { id: string; atendente_id: string | null; automatica: boolean | null; nome_perfil: string | null; telefone: string | null; foto_url?: string | null };
+type Msg = { id: string; conversa_id: string; tipo: string; texto: string | null; midia_url?: string | null };
+type Conv = { id: string; atendente_id: string | null; automatica: boolean | null; nome_perfil: string | null; telefone: string | null; foto_url?: string | null; nao_lidas?: number | null };
 type Insc = { id: string; colaborador_id: string; endpoint: string; p256dh: string; auth: string };
 
 // o que aparece na tela do celular: quem escreveu e o começo da mensagem, sem número longo (CPF, NB, processo)
@@ -37,7 +39,17 @@ export function aviso(m: Msg, c: Conv, nomeCliente: string | null, icone?: strin
   const txt = mascarar(bruto).replace(/\s+/g, " ").trim();
   const pre = m.tipo === "audio" && txt ? "🎤 " : "";
   const corpo = txt ? pre + (txt.length > 120 ? txt.slice(0, 117) + "…" : txt) : (TIPO[m.tipo] || "Mensagem nova");
-  return { title: quem, body: corpo, tag: "crm-zap-" + c.id, data: { crm: "zap", conversa: c.id }, ...(icone ? { icon: icone } : {}) };
+  // F396 · a mesma conversa troca o aviso (tag) e diz quantas chegaram; Responder e Ouvir valem no Android e no computador
+  const n = c.nao_lidas || 0;
+  const actions = [{ action: "responder", title: "Responder" }, ...(m.tipo === "audio" && m.midia_url ? [{ action: "ouvir", title: "Ouvir" }] : [])];
+  return { title: n > 1 ? `${quem} · ${n} mensagens` : quem, body: corpo, tag: "crm-zap-" + c.id, actions,
+    data: { crm: "zap", conversa: c.id, mensagem: m.id }, ...(icone ? { icon: icone } : {}) };
+}
+// F396 · a menção: quem citou e o texto, sem número longo; a de conversa abre a conversa
+export function avisoMencao(x: { id: string; texto: string; conversa_id: string | null }, de: string | null) {
+  const t = mascarar(x.texto).replace(/\s+/g, " ").trim();
+  return { title: de ? "Menção de " + de : "Menção para você", body: t.length > 140 ? t.slice(0, 137) + "…" : t, tag: "crm-men-" + x.id,
+    data: x.conversa_id ? { crm: "zap", conversa: x.conversa_id } : { crm: "mencao" } };
 }
 // o atendente da conversa, e sem atendente todos (como o aviso sonoro do CRM, F191)
 export function destinatarios(c: Conv, inscs: Insc[]) {
@@ -92,7 +104,7 @@ async function quemPede(req: Request) {
 if (typeof Deno !== "undefined") Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
   if (req.method !== "POST") return json({ erro: "use POST" }, 405);
-  let p: { mensagem_id?: string; preparar?: boolean; teste?: boolean };
+  let p: { mensagem_id?: string; mencao_id?: string; resumo?: boolean; preparar?: boolean; teste?: boolean };
   try { p = await req.json(); } catch { return json({ erro: "pedido inválido" }, 400); }
   try {
     if (p.preparar) return json({ publica: (await chaves()).publica });
@@ -103,14 +115,39 @@ if (typeof Deno !== "undefined") Deno.serve(async (req) => {
       const n = await enviar(r.ok ? await r.json() : [], { title: "WhatsApp · CRM", body: "Teste: o aviso chega neste aparelho.", tag: "crm-zap-teste", data: { crm: "zap" } });
       return json({ enviados: n });
     }
+    if (p.resumo) {
+      // o banco escolhe e marca o que vai no resumo (push_resumo_preparar); aqui só se envia
+      const rr = await sb("/rest/v1/rpc/push_resumo_preparar", { method: "POST", body: "{}" });
+      const linhas: { colaborador_id: string; titulo: string; corpo: string }[] = rr.ok ? await rr.json() : [];
+      const ri = await sb("/rest/v1/push_inscricoes?select=*");
+      const todas: Insc[] = ri.ok ? await ri.json() : [];
+      let n = 0;
+      for (const l of linhas) n += await enviar(todas.filter((i) => i.colaborador_id === l.colaborador_id),
+        { title: l.titulo, body: l.corpo, tag: "crm-resumo", data: { crm: "zap" } });
+      return json({ enviados: n });
+    }
+    if (p.mencao_id) {
+      if (!/^[0-9a-f-]{36}$/i.test(p.mencao_id)) return json({ erro: "mencao_id" }, 400);
+      const r = await sb(`/rest/v1/mencoes?id=eq.${p.mencao_id}&push_em=is.null&select=id,de_id,para_id,texto,conversa_id`,
+        { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ push_em: new Date().toISOString() }) });
+      const [x] = r.ok ? await r.json() : [];
+      if (!x) return json({ enviados: 0 });
+      let de: string | null = null;
+      if (x.de_id) {
+        const rd = await sb(`/rest/v1/colaboradores?id=eq.${x.de_id}&select=nome`);
+        de = rd.ok ? (((await rd.json())[0] || {}).nome || "").split(" ")[0] || null : null;
+      }
+      const ri = await sb(`/rest/v1/push_inscricoes?select=*&colaborador_id=eq.${x.para_id}`);
+      return json({ enviados: await enviar(ri.ok ? await ri.json() : [], avisoMencao(x, de)) });
+    }
     if (!/^[0-9a-f-]{36}$/i.test(p.mensagem_id || "")) return json({ erro: "mensagem_id" }, 400);
     // pega a mensagem uma vez só (push_em), e só a do cliente dos últimos 10 minutos
     const desde = new Date(Date.now() - 10 * 60000).toISOString();
-    const r = await sb(`/rest/v1/zap_mensagens?id=eq.${p.mensagem_id}&push_em=is.null&direcao=eq.entrada&momento=gte.${desde}&select=id,conversa_id,tipo,texto`,
+    const r = await sb(`/rest/v1/zap_mensagens?id=eq.${p.mensagem_id}&push_em=is.null&direcao=eq.entrada&momento=gte.${desde}&select=id,conversa_id,tipo,texto,midia_url`,
       { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ push_em: new Date().toISOString() }) });
     const [m] = r.ok ? await r.json() as Msg[] : [];
     if (!m) return json({ enviados: 0 });
-    const rc = await sb(`/rest/v1/zap_conversas?id=eq.${m.conversa_id}&select=id,atendente_id,automatica,nome_perfil,telefone,cliente_id,foto_url`);
+    const rc = await sb(`/rest/v1/zap_conversas?id=eq.${m.conversa_id}&select=id,atendente_id,automatica,nome_perfil,telefone,cliente_id,foto_url,nao_lidas`);
     const [c] = rc.ok ? await rc.json() : [];
     if (!c || c.automatica) return json({ enviados: 0 });
     let nome: string | null = null;
