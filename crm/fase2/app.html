@@ -15473,6 +15473,7 @@ function pintarListaZap(){
              <button class="tl-mais-it zl-som" role="menuitem" onclick="alternarSomZap()" aria-pressed="${somZapLigado()}">${somZapLigado()?"🔔 Aviso sonoro ligado":"🔕 Aviso sonoro desligado"}</button>
              <button class="tl-mais-it zl-nav" role="menuitem" onclick="alternarNavZap()" aria-pressed="${navZapLigado() && window.Notification && Notification.permission==="granted"}" title="notificação do navegador quando chega mensagem, com o CRM aberto">${navZapLigado() && window.Notification && Notification.permission==="granted"?"🖥 Notificação no navegador ligada":"🖥 Notificar no navegador"}</button>
              <button class="tl-mais-it zl-push" role="menuitem" onclick="alternarPushZap()" aria-pressed="${pushZapLigado()}" title="notificação no celular ou no computador, também com o CRM fechado">${pushZapLigado()?"📱 Aviso neste aparelho ligado":"📱 Avisar neste aparelho"}</button>
+             <button class="tl-mais-it zl-hora" role="menuitem" onclick="horarioAvisos()" title="das quantas às quantas o aviso chega no aparelho">🕘 Horário dos avisos: ${horaAvisosTxt()}</button>
              <button class="tl-mais-it zl-link ${zapFiltro==="fim"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="fim">Encerradas${zapFiltro==="fim"?` (${cs.length})`:""}</button>
              ${visiveis.some(c=>c.automatica)?`<button class="tl-mais-it zl-link ${zapFiltro==="auto"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="auto" title="robô de outra empresa (F272)">Automáticas${zapFiltro==="auto"?` (${cs.length})`:""}</button>`:""}
              ${gestor?`<button class="tl-mais-it zl-link ${zapPainelAberto?"on":""}" role="menuitem" onclick="abrirPainelZap()" title="Painel da equipe"><span aria-hidden="true">Equipe</span><span class="sr-only">Painel da equipe</span></button>`:""}
@@ -16909,6 +16910,31 @@ function estadoZap(){
   if(b("zof-on")) b("zof-on").onclick = () => gravarEstadoZap(false, txt());
   if(b("zof-sal")) b("zof-sal").onclick = () => gravarEstadoZap(true, txt());
   if(b("zof-off")) b("zof-off").onclick = () => gravarEstadoZap(true, txt());
+}
+// F399 · o horário dos avisos no aparelho, de cada pessoa (colaboradores.push_de e push_ate; vazio = a qualquer hora)
+const hhmm = t => (t||"").slice(0,5);
+function horaAvisosTxt(){ return eu && eu.push_de && eu.push_ate ? `${hhmm(eu.push_de)} às ${hhmm(eu.push_ate)}` : "a qualquer hora"; }
+function horarioAvisos(){
+  const tem = !!(eu.push_de && eu.push_ate);
+  caixa(`<h3>Horário dos avisos</h3>
+    <p class="meio-sub">Fora do horário, mensagem e menção não avisam no aparelho; quando ele abre, chega o resumo do que veio. Com horário, só de segunda a sexta, sem feriado.</p>
+    <label><input type="checkbox" id="zh-livre"${tem?"":" checked"}> A qualquer hora</label>
+    <div class="form-linha" style="margin-top:8px">
+      <label>Das <input type="time" id="zh-de" value="${hhmm(eu.push_de)||"08:00"}"${tem?"":" disabled"}></label>
+      <label>às <input type="time" id="zh-ate" value="${hhmm(eu.push_ate)||"18:00"}"${tem?"":" disabled"}></label>
+    </div>
+    <div class="form-linha" style="margin-top:10px"><button class="btn-sal" id="zh-ok" title="Salvar o horário dos avisos">Salvar</button></div>`);
+  const b = id => document.getElementById(id);
+  b("zh-livre").onchange = () => { b("zh-de").disabled = b("zh-ate").disabled = b("zh-livre").checked; };
+  b("zh-ok").onclick = async () => {
+    const livre = b("zh-livre").checked, de = b("zh-de").value, ate = b("zh-ate").value;
+    if(!livre && !(de && ate && de < ate)) return aviso("O início precisa vir antes do fim", true);
+    try{ await api(`/rest/v1/rpc/push_meu_horario`,{method:"POST", body:JSON.stringify({p_de: livre?null:de, p_ate: livre?null:ate})}); }
+    catch(e){ return aviso("Não gravou: tente de novo"); }
+    eu.push_de = livre ? null : de; eu.push_ate = livre ? null : ate;
+    fecharCaixa(); pintarListaZap();
+    aviso(`Avisos ${horaAvisosTxt()}`);
+  };
 }
 function novoContatoZap(){
   caixa(`<h3>Novo contato</h3>
