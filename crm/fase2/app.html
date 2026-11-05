@@ -1585,6 +1585,9 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
     .app.zap-conv-aberta .zt-voltar{display:block;border:0;background:none;font-size:22px;line-height:1;padding:6px 4px;color:var(--texto);cursor:pointer;flex:none}
   }
   .zt-id h2[role=button]{cursor:pointer}
+  .zt-nm{display:flex;align-items:center;gap:4px;min-width:0}
+  .zt-renomear{flex:none;border:0;background:none;cursor:pointer;color:var(--sub,#5f6b6a);font-size:15px;padding:2px 4px;border-radius:4px}
+  .zt-renomear:hover{background:var(--fundo-2,#eef1f0)}
   .zap-topo{display:flex;flex-direction:column;gap:8px;padding:12px 16px;border-bottom:1px solid var(--borda);background:var(--branco)}
   .zap-frame{flex:1;width:100%;border:0;background:#fff}
   .zap-nota{padding:6px 10px;font-size:11px;color:var(--cinza);border-top:1px solid var(--borda)}
@@ -15616,6 +15619,21 @@ function quemConversa(){
   };
 }
 
+// o contato sem cliente aparece com o nome do perfil do WhatsApp (às vezes um emoji); a equipe dá o nome (pedido do Paulo, 05.11.2026)
+function nomearConversa(){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  caixa(`<h3>Nome do contato</h3>
+    <p class="meio-sub">No WhatsApp o contato aparece como “${esc(c.nome_perfil||c.telefone||"")}”. O nome vale só no CRM.</p>
+    <div class="form-linha"><input id="zn-nome" value="${esc(c.contato_nome||"")}" placeholder="nome do contato" style="min-width:240px"></div>
+    <div class="form-linha" style="margin-top:10px"><button class="btn-rap" id="zn-ok">Guardar</button></div>`);
+  const i = document.getElementById("zn-nome"); i.focus();
+  const ok = async () => { const nome = i.value.trim(); fecharCaixa();
+    await mudarConversa({contato_nome:nome||null});
+    aviso(nome ? `Nome do contato: ${nome} ✔` : "Nome do WhatsApp restaurado ✔", false); };
+  document.getElementById("zn-ok").onclick = ok;
+  i.onkeydown = e => { if(e.key==="Enter") ok(); };
+}
+
 const PREVIA_TIPO = {audio:"🎤 Áudio", imagem:"📷 Foto", video:"🎥 Vídeo", documento:"📄 Documento", figurinha:"Figurinha", localizacao:"📍 Localização", contato:"👤 Contato"};
 const previaZap = t => { const k = /^\[(\w+)\]$/.exec(String(t||"").trim()); return k && PREVIA_TIPO[k[1]] || t || ""; };
 function cartaoConversa(c){
@@ -15775,7 +15793,8 @@ function pintarConversa(){
          <button class="zt-voltar" onclick="voltarListaZap()" aria-label="Voltar às conversas">←</button>
          ${zapFotos.get(c.foto_url)?`<img class="zap-av zt-foto" src="${esc(zapFotos.get(c.foto_url))}" alt="foto do contato" title="clique para ampliar" onclick="verFotoGrande(this.src)">`:avatarZap(c)}
          <div class="zt-id">
-           <h2 role="button" tabindex="0" title="ver a ficha" onclick="alternarFichaZap()" onkeydown="if(event.key==='Enter')alternarFichaZap()">${esc(nomeDaConversa(c))}</h2>
+           <div class="zt-nm"><h2 role="button" tabindex="0" title="ver a ficha" onclick="alternarFichaZap()" onkeydown="if(event.key==='Enter')alternarFichaZap()">${esc(nomeDaConversa(c))}</h2>
+             ${cli?"":`<button class="zt-renomear" onclick="nomearConversa()" title="Alterar o nome do contato" aria-label="Alterar o nome do contato">✎</button>`}</div>
            <div class="zt-sub">
 ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConversa()":"vincularConversa()"}" title="${cli?"corrigir quem escreve":"vincular a um cliente"}">${clienteDaLinha(c)}</button>
            </div>
@@ -15792,7 +15811,8 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
              <div class="zt-menu">
-               ${cli?`<button onclick="quemConversa()">Quem escreve…</button>`:`<button onclick="vincularConversa()" title="Vincular a um cliente">Vincular<span class="sr-only"> a um cliente</span></button>`}
+               ${cli?`<button onclick="quemConversa()">Quem escreve…</button>`:`<button onclick="vincularConversa()" title="Vincular a um cliente">Vincular<span class="sr-only"> a um cliente</span></button>
+               <button onclick="this.closest('details').open=false;nomearConversa()" title="Alterar o nome do contato"><span aria-hidden="true">Renomear</span><span class="sr-only">Alterar o nome do contato</span></button>`}
                <button onclick="this.closest('details').open=false;zagAlternar()">Agenda de atendimentos</button>
                <button onclick="this.closest('details').open=false;verFavoritasZap()">Mensagens favoritas${zapMsgs.some(m=>m.favorita_em)?` (${zapMsgs.filter(m=>m.favorita_em).length})`:""}</button>
                <button onclick="marcarNaoLida()" title="Marcar como não lida"><span aria-hidden="true">Desler</span><span class="sr-only">Marcar como não lida</span></button>
