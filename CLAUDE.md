@@ -472,6 +472,8 @@ A **F396** (as notificações do celular, pedido do Paulo de 05.11.2026): o avis
 
 A **F397** (Online e Offline no WhatsApp, pedido do Paulo de 05.11.2026): no alto da lista do WhatsApp, o botão Online ou Offline (`estadoZap`, `gravarEstadoZap`, RPC `zap_meu_offline`) abre a mensagem automática, que cada colaborador edita (`colaboradores.zap_offline_msg`; vazia, vale `zap_offline_padrao`). Offline (`zap_offline_desde`), a mensagem do contato numa conversa aberta que ele assumiu recebe essa resposta uma vez por conversa em cada período offline (gatilho `zap_y_offline_ins`, `zap_conversas.offline_aviso_em`); histórico e conversa automática ficam de fora. SQL em `crm/fase2/migracoes/f397_zap_offline.sql`.
 
+A **F398** (o aviso do navegador como o do celular, pedido do Paulo de 05.11.2026): a notificação do navegador da mensagem nova do WhatsApp (`vigiarZapSom`) traz "<nome>: <texto>" da última mensagem do cliente, e o áudio vem com "🎤 " e a transcrição (`corpoAvisoZap`, a mesma regra do `aviso` do `zap_push`); o áudio de menos de 3 minutos ainda sem transcrição espera a olhada seguinte, e o "[áudio não transcrito]" ou o mais antigo sai como "🎤 Áudio". Teste: `zapatende.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

@@ -7159,6 +7159,18 @@ function tocarAvisoZap(texto, convId, soSom, icone){
     try{ const n = new Notification("WhatsApp · CRM", {body: texto, tag: "crm-zap", ...(icone?{icon: icone}:{})});   // F389 · a foto de quem escreve
          n.onclick = ()=>{ window.focus(); if(convId) abrirConversaDaMencao(convId); else { visao="whatsapp"; render(); } n.close(); }; }catch(e){}
 }
+// F398 · o corpo do aviso do navegador, igual ao zap_push (F395): o texto, ou "🎤 " + a transcrição; o tipo sem
+// texto vira o rótulo; null = áudio de menos de 3 minutos ainda sem transcrição (esperar)
+const AVISO_TIPO = {audio:"🎤 Áudio", imagem:"📷 Foto", video:"🎥 Vídeo", documento:"📄 Documento", figurinha:"Figurinha", localizacao:"📍 Localização", contato:"👤 Contato"};
+function corpoAvisoZap(m, agora){
+  if(!m) return "";
+  const falhou = m.tipo==="audio" && /^\[áudio não transcrito\]$/.test((m.texto||"").trim());
+  const txt = (falhou ? "" : m.texto||"").replace(/\s+/g," ").trim();
+  if(!txt && m.tipo==="audio" && !falhou && m.momento && (agora||Date.now()) - new Date(m.momento) < 180000) return null;
+  if(!txt) return AVISO_TIPO[m.tipo] || "";
+  const t = txt.length > 120 ? txt.slice(0,117) + "…" : txt;
+  return m.tipo==="audio" ? "🎤 " + t : t;
+}
 async function vigiarZapSom(){
   if(!eu) return;
   const [cs, ms] = await Promise.all([
@@ -7173,7 +7185,14 @@ async function vigiarZapSom(){
     const fotoDe = async id=>{ const c = cs.find(x=>x.id===id); if(!c || !c.foto_url) return null;
       await assinarFotosZap([c]); return zapFotos.get(c.foto_url) || null; };   // F389
     if(menc) tocarAvisoZap(menc.texto.replace(/^💬\s*/,""), menc.conversa_id, false, await fotoDe(menc.conversa_id));
-    else if(nova) tocarAvisoZap(`Mensagem nova de ${nomeDaConversa(nova)}`, nova.id, false, await fotoDe(nova.id));
+    else if(nova){
+      // F398 · como no celular (F395): o texto da última mensagem, e o áudio com a transcrição
+      const [m] = await todas("zap_mensagens",`select=tipo,texto,momento&conversa_id=eq.${nova.id}&direcao=eq.entrada&order=momento.desc&limit=1`).catch(()=>[]);
+      const corpo = corpoAvisoZap(m);
+      // o áudio ainda sem transcrição espera até 3 minutos: a conversa volta à contagem antiga e avisa na próxima olhada
+      if(corpo === null) agora.conv.set(nova.id, zapSomVisto.conv.get(nova.id)||0);
+      else tocarAvisoZap(corpo ? `${nomeDaConversa(nova)}: ${corpo}` : `Mensagem nova de ${nomeDaConversa(nova)}`, nova.id, false, await fotoDe(nova.id));
+    }
   }
   zapSomVisto = agora;
 }
@@ -15590,7 +15609,7 @@ function quemConversa(){
   };
 }
 
-const PREVIA_TIPO = {audio:"🎤 Áudio", imagem:"📷 Foto", video:"🎥 Vídeo", documento:"📄 Documento", figurinha:"Figurinha"};
+const PREVIA_TIPO = {audio:"🎤 Áudio", imagem:"📷 Foto", video:"🎥 Vídeo", documento:"📄 Documento", figurinha:"Figurinha", localizacao:"📍 Localização", contato:"👤 Contato"};
 const previaZap = t => { const k = /^\[(\w+)\]$/.exec(String(t||"").trim()); return k && PREVIA_TIPO[k[1]] || t || ""; };
 function cartaoConversa(c){
   const at = c.atendente_id && D.colPorId.get(c.atendente_id);
