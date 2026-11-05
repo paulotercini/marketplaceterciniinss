@@ -157,6 +157,15 @@ const T = {
     corpoAvisoZap({tipo:"audio", texto:null, momento:"2020-01-01T00:00:00Z"}) === "🎤 Áudio" &&
     corpoAvisoZap({tipo:"audio", texto:"[áudio não transcrito]", momento:new Date().toISOString()}) === "🎤 Áudio"));
 
+  // F400 · a conversa silenciada não toca o aviso do navegador
+  conf("a conversa silenciada não avisa", await p.evaluate(async () => {
+    const id = (await todas("zap_conversas","select=id&nao_lidas=gt.0"))[0].id;
+    zapSilencio.set(id, new Date(Date.now()+3600e3).toISOString());
+    const antes = _toques.length; zapSomVisto = null; await vigiarZapSom();
+    zapSomVisto.conv.set(id, 0); await vigiarZapSom();
+    const ok = silenciadaZap(id) && _toques.length === antes; zapSilencio.clear(); return ok;
+  }));
+
   // F192 · quem conversa não é o cliente (a mãe fala pelo filho)
   await p.evaluate(id => abrirConversa(id), Z1);
   await p.waitForSelector(".zap-topo");
