@@ -5567,6 +5567,7 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 .pz-pill-compromisso{background:#FBF1E0;color:#7A4800}.pz-pill-compromisso i{background:#B7791F}
 .pz-pill-lembrete{background:#E9EFF7;color:#2A5788}.pz-pill-lembrete i{background:#2F6FB0}
 .pz-pill-venc{background:#B3261E;color:#FFFFFF}
+.pz-pill-todo{background:#EAF1FB;color:#1E4E8C;border:1px solid #C9DAF2}
 .pz-av{display:inline-flex;align-items:center;justify-content:center;flex:none;width:26px;height:26px;border-radius:6px;color:#FFFFFF;font-size:12px;font-weight:500;line-height:1}
 .pz-av-sis{background:#9A9890}
 /* a aba Prazos do cliente */
@@ -5646,7 +5647,7 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 .pzc-venc .pzc-dia :is(small,b){color:#B3261E}
 .pzc-o{display:flex;flex-direction:column;gap:4px;min-width:0}
 .pzc-t{font-size:14px;font-weight:500;line-height:1.35;color:var(--texto,#121212);overflow-wrap:anywhere}
-.pzc-sub{display:flex;align-items:center;gap:8px;min-width:0}
+.pzc-sub{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;min-width:0}
 .pzc-meta{min-width:0;font-size:12px;color:var(--cinza,#4A4944);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pzc-cel{display:none}
 .pzc-caso{justify-self:start;max-width:100%;height:24px;line-height:24px;padding:0 9px;border-radius:12px;background:var(--placa,#EFEEEB);font-size:12px;color:var(--cinza,#4A4944);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-sizing:border-box}
@@ -5770,6 +5771,13 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 :is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-com label{cursor:default}
 .ppz-bt{height:36px;padding:0 14px;border:1px solid #C9D9D7;border-radius:8px;background:#FFFFFF;color:var(--azul,#0E5C58);font-weight:500;cursor:pointer;white-space:nowrap}
 .ppz-com .ppz-bt{align-self:flex-start}
+/* F408 · a anotação inteira no alto, o Acompanhamento (checklist e anotações, o mais recente primeiro) e os novos prazos */
+.ppz-orig-c p.ppz-orig-int{white-space:pre-wrap;color:var(--texto,#121212);font-size:14px}
+.ppz-acomp .ppz-com{display:flex;flex-direction:column;gap:8px}
+.ppz-acomp .ppz-com textarea{width:100%;box-sizing:border-box}
+.ppz-com-bts{display:flex;gap:8px;justify-content:flex-end}
+.ppz-hist .pp-et{display:flex;gap:8px;align-items:flex-start;font-size:13px}.ppz-hist .pp-et.ok span{text-decoration:line-through;color:var(--cinza-claro,#686660)}
+.ppz-hist p{white-space:pre-wrap}
 :is(#painel-prazo,#painel-prazo-esq).pp-prazo footer.ppz-pe{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;padding:14px 22px;border-top:1px solid var(--borda,#E7E6E1);background:#FFFFFF}
 :is(#painel-prazo,#painel-prazo-esq).pp-prazo .pp-pri{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 18px;border-radius:8px;background:var(--azul,#0E5C58);font-weight:500;white-space:nowrap}
 :is(#painel-prazo,#painel-prazo-esq).pp-prazo .ppz-pe .ppz-bt{height:40px;color:var(--texto,#121212);border-color:var(--borda,#E7E6E1)}
@@ -6483,7 +6491,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.59</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.60</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -37028,6 +37036,9 @@ function suspensoesDoCaso(k){
 // a anotação com o carimbo [PRAZO dd.mm.aaaa] da mesma data também faz do casos.prazo um prazo fatal
 const prazoCarimbado = k => { const c = `[PRAZO ${fmt(k.prazo)}]`;
   return [D._andsFicha, D.and30].some(l=>(l||[]).some(a=>a.caso_id===k.id && !a.excluir && (a.texto||"").includes(c))); };
+// F408 · a data é o "Concluir em" da tarefa do Microsoft To Do (a sincronização grava os dois iguais); a data que
+// sai do To Do sai do CRM pela mesma sincronização (casos.todo_prazo, 31.10.2026)
+const prazoDoTodo = k => !!(k && k.prazo && k.todo_prazo===k.prazo);
 const prazoEhRetorno = k => !!(k && k.prazo && listaDe(k)!=="🗓 Tarefas com Prazo"
   && !(D.tarefasPorCaso.get(k.id)||[]).some(t=>t.natureza==="fatal" && !t.concluida_em && t.lembrar_em===k.prazo)
   && !prazoCarimbado(k));
@@ -38046,7 +38057,7 @@ function linhasDeDatas(cliId){
     }
     // 02.11.2026 · o "Concluir em" do To Do fora do 🗓 Tarefas com Prazo é retorno, e não prazo fatal (prazoEhRetorno)
     else if(x.prazo && !igualA && prazoEhRetorno(x)){
-      linhas.push({data:x.prazo, ico:"↩", natureza:"lembrete", casoId:x.id, cru:true, rotulo:"Retorno",
+      linhas.push({data:x.prazo, ico:"↩", natureza:"lembrete", casoId:x.id, cru:true, rotulo:"Retorno", todo:prazoDoTodo(x),
         resumo:og?cortaFrase(fraseDaData(og.texto, x.prazo), 70):"", andId:og?og.id:null,
         rot:`<b>Retorno: ${og ? esc(og.texto.slice(0,110))+(og.texto.length>110?"…":"") : tit}</b>
                   <small class="qd-de">Data de voltar ao caso, o “Concluir em” do To Do${og?` · anotado por ${esc(og.quem)} em ${fmt(og.em)}`:""}</small>`,
@@ -38056,11 +38067,11 @@ function linhasDeDatas(cliId){
     else if(x.prazo && !igualA){
       const txtOg = og ? `${esc(og.texto.slice(0,110))}${og.texto.length>110?"…":""}` : "";
       // F236 · o resumo é a frase da anotação que fala desta data ("protocolamos até 23/10"), e não o começo dela
-      linhas.push({data:x.prazo, ico:"⏰", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true, rotulo:"Prazo fatal",
+      linhas.push({data:x.prazo, ico:"⏰", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true, rotulo:"Prazo fatal", todo:prazoDoTodo(x),
         resumo:og?cortaFrase(fraseDaData(og.texto, x.prazo), 70):"",
         andId:og?og.id:null, semMotivo:!og,
         rot:og ? `<b>PRAZO FATAL — ${txtOg}</b>
-                  <small class="qd-de">Prazo fatal · ${tit} · registrado por ${esc(og.quem)} em ${fmt(og.em)}</small>`
+                  <small class="qd-de">Prazo fatal${prazoDoTodo(x)?" do Microsoft To Do":""} · ${tit} · registrado por ${esc(og.quem)} em ${fmt(og.em)}</small>`
           : `<b>PRAZO FATAL — ${tit}</b>
                   <small class="qd-de qd-semmotivo">Sem descrição — clique para descrever este prazo</small>`,
         clique:og?`onclick="qdIrParaAndamento('${x.id}','${og.id}')"`:`onclick="explicarPrazo('${x.id}')"`,
@@ -38246,7 +38257,7 @@ function pzConteudo(cliId){
     const i = _pzCli.indexOf(x), f = x._f, k = x.casoId && D.casoPorId.get(x.casoId), q = D.colPorId.get(quemDaLinha(x, cliId)), meta = metaDaLinha(x);
     return `<li class="pzc-lin pzc-u-${f.urg}${pend(x) ? " pzc-venc" : ""}" data-nat="${x._nat}" data-data="${x.data}">
       <span class="pzc-dia"><small>${esc(SIGLA_DIA[new Date(x.data+"T12:00:00").getDay()])}.</small><b>${fmtBarra(x.data).slice(0,5)}</b></span>
-      <span class="pzc-o"><b class="pzc-t">${esc(x._titulo)}</b><span class="pzc-sub">${pillNat(x._nat)}${meta ? `<small class="pzc-meta" title="${esc(meta)}">${esc(meta)}</small>` : ""}<span class="pzc-cel">${q ? `<span class="pzc-quem-c">${avPz(q.id)}<span>${esc(q.nome.split(" ")[0])}</span></span>` : ""}<span class="pzc-caso-c">${esc(casoCurtoPz(k))}</span><span class="pzc-falta-c">${esc(f.txt)}</span></span></span></span>
+      <span class="pzc-o"><b class="pzc-t">${esc(x._titulo)}</b><span class="pzc-sub">${pillNat(x._nat)}${pillTodo(x)}${meta ? `<small class="pzc-meta" title="${esc(meta)}">${esc(meta)}</small>` : ""}<span class="pzc-cel">${q ? `<span class="pzc-quem-c">${avPz(q.id)}<span>${esc(q.nome.split(" ")[0])}</span></span>` : ""}<span class="pzc-caso-c">${esc(casoCurtoPz(k))}</span><span class="pzc-falta-c">${esc(f.txt)}</span></span></span></span>
       ${porData ? `<span class="pzc-caso" title="${esc(k ? `${tituloCaso(k)} · ${NOME_FASE[faseEfetiva(k)]||""}` : "Do cliente")}">${esc(casoCurtoPz(k))}</span>` : ""}
       <span class="pzc-quem">${q ? `${avPz(q.id)}<span>${esc(q.nome.split(" ")[0])}</span>` : ""}</span>
       <span class="pzc-falta">${esc(f.txt)}</span>
@@ -38383,6 +38394,7 @@ function prepPz(x, i, fonte){
     _ir: x.andId ? `qdIrParaAndamento('${x.casoId}','${x.andId}')` : x.semMotivo ? `explicarPrazo('${x.casoId}')` : `prazoSaberMais(${i}${fonte ? `,'${fonte}'` : ""})`});
 }
 const pillNat = nat => `<span class="pz-pill pz-pill-${nat}"><i aria-hidden="true"></i>${esc(NAT_ROT[nat]||"Lembrete")}</span>`;
+const pillTodo = x => x && x.todo ? `<span class="pz-pill pz-pill-todo" title="Data do “Concluir em” da tarefa no Microsoft To Do">Microsoft To Do</span>` : "";
 const avPz = id => { const c = D.colPorId.get(id); return c ? `<span class="pz-av" style="background:${c.cor}" aria-hidden="true">${esc(c.inicial)}</span>` : ""; };
 // o caso numa etiqueta curta: a espécie (B31) e a fase; o nome inteiro fica no title
 function casoCurtoPz(k){
@@ -38661,14 +38673,15 @@ function abrirPainelPrazo(i, fonte){
   // DE ONDE VEM: a anotação que criou o prazo (com quem e quando), ou a explicação da linha; o documento, se houver
   const doc = a && (D.anexos||[]).find(y=>y.andamento_id===a.id);
   const dw = deOndeDaLinha(x), autor = a && D.colPorId.get(a.autor_id);
-  const deTit = a ? `Anotação de ${autor ? autor.nome.split(" ")[0] : "alguém"}, ${quandoPz(a.criado_em)}` : dw.tit;
-  const deTxt = a ? cortaFrase(semCarimboPz(a.texto).replace(/\s+/g, " "), 240) : dw.txt;
+  // F408 · a anotação vem inteira, no alto (pedido do Paulo, 05.11.2026); a data do To Do diz que é do To Do
+  const deTit = a ? `Anotação de ${autor ? autor.nome.split(" ")[0] : "alguém"}, ${quandoPz(a.criado_em)}` : x.todo ? "“Concluir em” da tarefa no Microsoft To Do" : dw.tit;
+  const deTxt = a ? semCarimboPz(a.texto) : x.todo ? "A data veio do Microsoft To Do. Adiada ou apagada lá, ela muda ou sai daqui na próxima sincronização." : dw.txt;
   const links = [doc ? `<button type="button" class="ppz-link" onclick="abrirAnexo('${doc.id}')" title="Ver o documento"><span aria-hidden="true">Documento</span><span class="sr-only">Ver o documento</span></button>` : "",
     a ? `<button type="button" class="ppz-link" onclick="${fechar};qdIrParaAndamento('${x.casoId}','${x.andId}')" title="Ver na linha do tempo"><span aria-hidden="true">Localizar</span><span class="sr-only">Ver na linha do tempo</span></button>`
       : x.semMotivo && !x._motivo ? `<button type="button" class="ppz-link" onclick="${fechar};explicarPrazo('${x.casoId}')" title="Dizer do que é"><span aria-hidden="true">Classificar</span><span class="sr-only">Dizer do que é</span></button>`
       : gq ? "" : `<button type="button" class="ppz-link" onclick="prazoSaberMais(${i}${src})">Detalhes</button>`].filter(Boolean).join("");
-  const origem = gq ? "" : `<section class="ppz-sec" aria-labelledby="ppz-origem">${rot('<span id="ppz-origem">De onde vem</span>')}
-      <div class="ppz-orig"><span class="ppz-orig-ic">${IC_DOC_PZ}</span><div class="ppz-orig-c"><b>${esc(deTit)}</b>${deTxt ? `<p>${esc(deTxt)}</p>` : ""}${links ? `<div class="ppz-links">${links}</div>` : ""}</div></div>
+  const origem = gq ? "" : `<section class="ppz-sec" aria-labelledby="ppz-origem">${rot(`<span id="ppz-origem">${a ? "Anotação" : "De onde vem"}</span>`)}
+      <div class="ppz-orig"><span class="ppz-orig-ic">${IC_DOC_PZ}</span><div class="ppz-orig-c"><b>${esc(deTit)}</b>${deTxt ? `<p class="${a ? "ppz-orig-int" : ""}">${esc(deTxt)}</p>` : ""}${a && x.todo ? `<small class="ppz-nota">A data é o “Concluir em” do Microsoft To Do.</small>` : ""}${links ? `<div class="ppz-links">${links}</div>` : ""}</div></div>
       ${cont ? `<p class="ppz-base">Base: ${esc(cont.base)}.</p>` : ""}
     </section>`;
   // COMO SE CHEGA A ESTA DATA (só a qualidade de segurado): a conta do art. 15 em passos
@@ -38691,8 +38704,6 @@ function abrirPainelPrazo(i, fonte){
         <div class="ppz-tf-t"><b>${t.papel==="revisa" ? "Revisar: " : ""}${esc(cortaFrase(fazerDaNota(a && a.texto) || x._titulo, 90))}</b>
           <small>${esc([nome(t.colaborador_id), rv.length ? `revisão de ${rv.join(" e ")}` : "", t.atribuido_por && t.atribuido_por!==t.colaborador_id ? `pedida por ${nome(t.atribuido_por)}` : "", ets.length ? `${nOk} de ${ets.length} etapas` : ""].filter(Boolean).join(" · "))}</small></div>
         <button type="button" class="ppz-est ppz-est-${e}"${minhaT ? ` onclick="${prox}" title="passa a ${EST[e+1].toLowerCase()}"` : " disabled"} aria-label="Estado da tarefa de ${esc(nome(t.colaborador_id))}: ${EST[e]}">${EST[e]}</button></div>
-      ${ets.length ? `<ul class="ppz-ets">${ets.map((et, j)=>`<li><label class="pp-et${et.feito ? " ok" : ""}"><input type="checkbox"${et.feito ? " checked" : ""}${minhaT || t.atribuido_por===eu.id ? "" : " disabled"} onchange="marcarEtapaTarefa('${t.id}',${j},this.checked)"><span>${esc(et.t)}</span></label></li>`).join("")}</ul>` : ""}
-      ${minhaT || t.atribuido_por===eu.id ? `<div class="ppz-tf-pe"><button type="button" class="pp-add" onclick="novaEtapaTarefa('${t.id}')">+ Etapa</button></div>` : ""}
     </div>`;
   };
   // sem tarefa de quem faz (o prazo já registrado), a revisão que ficou é o que há para fazer
@@ -38721,24 +38732,48 @@ function abrirPainelPrazo(i, fonte){
         <small>Entra no Meu Dia em ${esc(fmtBarra(somaDias(gq.mantidaAte, -30)))}, 30 dias antes.</small></div></div></section>
     <section class="ppz-sec" aria-labelledby="ppz-fonte">${rot('<span id="ppz-fonte">Fonte</span>')}
       <p class="ppz-p">CNIS do dossiê, lido na triagem${g && g.em ? ` em ${esc(diaCurtoPz(String(g.em).slice(0,10)))}/${String(g.em).slice(0,4)}` : ""}. A data se refaz quando o CNIS muda.</p></section>` : "";
-  // HISTÓRICO, o mais recente primeiro (pedido do Paulo, 24.10.2026), com quem e quando
-  const hist = [];
-  if(a) hist.push([a.criado_em, a.autor_id, `Anotou o prazo${x.data ? ` de ${fmtBarra(x.data).slice(0,5)}` : ""}.`]);
+  // F408 · ACOMPANHAMENTO (pedido do Paulo, 05.11.2026): as etapas da tarefa como checklist e as anotações feitas
+  // neste prazo, com a data, o mais recente primeiro; a etapa por fazer fica no alto. Na data do To Do sem anotação
+  // própria, as anotações do escritório no caso
+  const itens = [];
   for(const t of ts){
-    if(t.criado_em) hist.push([t.criado_em, t.atribuido_por || t.colaborador_id, t.atribuido_por && t.atribuido_por!==t.colaborador_id
-      ? `Pediu ${t.papel==="revisa" ? "a revisão" : "a tarefa"} a ${nome(t.colaborador_id)}.` : `Criou a tarefa.`]);
-    if(t.iniciada_em) hist.push([t.iniciada_em, t.colaborador_id, "Começou a tarefa."]);
-    for(const e of (t.etapas||[])) if(e.feito && e.em) hist.push([e.em, e.por, `Fez a etapa “${e.t}”.`]);
+    const pode = t.colaborador_id===eu.id || t.atribuido_por===eu.id;
+    (Array.isArray(t.etapas) ? t.etapas : []).forEach((et, j)=>itens.push({q: et.feito ? (et.em || t.criado_em || "") : "9", id: et.feito ? et.por : null,
+      html: `<label class="pp-et${et.feito ? " ok" : ""}"><input type="checkbox"${et.feito ? " checked" : ""}${pode ? "" : " disabled"} onchange="marcarEtapaTarefa('${t.id}',${j},this.checked)"><span>${esc(et.t)}</span></label>`,
+      meta: et.feito ? `Etapa feita` : `Etapa por fazer`}));
+    if(t.criado_em) itens.push({q: t.criado_em, id: t.atribuido_por || t.colaborador_id, p: t.atribuido_por && t.atribuido_por!==t.colaborador_id
+      ? `Pediu ${t.papel==="revisa" ? "a revisão" : "a tarefa"} a ${nome(t.colaborador_id)}.` : `Criou a tarefa.`});
+    if(t.iniciada_em) itens.push({q: t.iniciada_em, id: t.colaborador_id, p: "Começou a tarefa."});
   }
-  if(x.andId) for(const r of (D._andsFicha||[]).filter(y=>y.responde_a===x.andId))
-    hist.push([r.criado_em, r.autor_id, cortaFrase(String(r.texto||"").replace(/\s+/g," "), 160)]);
-  hist.sort((p, q)=>String(q[0]).localeCompare(String(p[0])));
-  const historico = hist.length ? `<section class="ppz-sec" aria-labelledby="ppz-hist">${rot('<span id="ppz-hist">Histórico</span>')}
-      <ol class="ppz-hist">${hist.slice(0, 8).map(([q, id, t])=>`<li>${avPz(id) || `<span class="pz-av pz-av-sis" aria-hidden="true">·</span>`}<div><small><b>${esc(id ? nome(id) : "Sistema")}</b> · ${esc(quandoPz(q))}</small><p>${esc(t)}</p></div></li>`).join("")}</ol></section>` : "";
-  const comentar = x.casoId ? `<section class="ppz-sec ppz-com"><label for="pp-com" class="ppz-h">Comentar neste prazo</label>
-      <textarea id="pp-com" rows="3" placeholder="Escreva o que foi feito ou o que falta"
-        onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();comentarNoPrazo('${x.casoId}','${x.andId||""}')}"></textarea>
-      <button type="button" class="ppz-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Comentar</button></section>` : "";
+  if(a) itens.push({q: a.criado_em, id: a.autor_id, p: `Anotou o prazo${x.data ? ` de ${fmtBarra(x.data).slice(0,5)}` : ""}.`});
+  const resps = x.andId ? (D._andsFicha||[]).filter(y=>y.responde_a===x.andId && !y.excluir) : [];
+  for(const r of resps) itens.push({q: r.criado_em, id: r.autor_id, p: String(r.texto||"").trim()});
+  if(x.todo && !resps.length && x.casoId) (D._andsFicha||[]).filter(y=>y.caso_id===x.casoId && !y.excluir && !ehOficial(y) && y.id!==x.andId && !y.responde_a)
+    .sort((p, q)=>String(q.criado_em).localeCompare(String(p.criado_em))).slice(0, 15)
+    .forEach(y=>itens.push({q: y.criado_em, id: y.autor_id, p: semCarimboPz(y.texto)}));
+  itens.sort((p, q)=>String(q.q).localeCompare(String(p.q)));
+  const tEt = fazerTs.find(t=>t.colaborador_id===eu.id || t.atribuido_por===eu.id);
+  const acompanha2 = gq ? "" : `<section class="ppz-sec ppz-acomp" aria-labelledby="ppz-hist">${rot('<span id="ppz-hist">Acompanhamento</span>')}
+      ${x.casoId ? `<div class="ppz-com"><label for="pp-com" class="sr-only">Anotar neste prazo</label>
+        <textarea id="pp-com" rows="2" placeholder="Anote o que foi feito ou o que falta"
+          onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();comentarNoPrazo('${x.casoId}','${x.andId||""}')}"></textarea>
+        <span class="ppz-com-bts">${tEt ? `<button type="button" class="pp-add" onclick="novaEtapaTarefa('${tEt.id}')">+ Etapa</button>` : ""}<button type="button" class="ppz-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Anotar</button></span></div>` : ""}
+      ${itens.length ? `<ol class="ppz-hist ppz-ets">${itens.slice(0, 30).map(o=>`<li>${o.html ? `<span class="pz-av pz-av-sis" aria-hidden="true">✓</span>` : avPz(o.id) || `<span class="pz-av pz-av-sis" aria-hidden="true">·</span>`}<div>${o.html
+        ? `${o.html}<small>${esc(o.meta)}${o.q!=="9" && o.q ? ` · ${o.id ? `${esc(nome(o.id))} · ` : ""}${esc(quandoPz(o.q))}` : ""}</small>`
+        : `<small><b>${esc(o.id ? nome(o.id) : "Sistema")}</b> · ${esc(quandoPz(o.q))}</small><p>${esc(o.p)}</p>`}</div></li>`).join("")}</ol>` : `<p class="ppz-vazio"><span>Nada anotado neste prazo ainda.</span></p>`}
+    </section>`;
+  // F408 · NOVOS PRAZOS desta mesma tarefa: os prazos adicionais dados nas respostas à anotação
+  const novos = [];
+  for(const r of resps){
+    const trs = (D.tarefasPorCaso.get(x.casoId)||[]).filter(t=>t.andamento_id===r.id && t.lembrar_em);
+    const ds = trs.length ? trs.map(t=>({d: t.lembrar_em, t})) : [...String(r.texto||"").matchAll(/prazo adicional até (\d{2}\/\d{2}\/\d{4})/gi)].map(m=>({d: m[1].split("/").reverse().join("-")}));
+    for(const o of ds) novos.push(ligadoPz(o.t && o.t.natureza==="fatal" ? "fatal" : "compromisso", cortaFrase(semCarimboPz(r.texto).replace(/\s*·\s*prazo adicional até.*$/i, "") || "Prazo adicional", 90),
+      `${o.t && o.t.concluida_em ? "Concluído" : "Prazo adicional"} · ${diaCurtoPz(o.d)} · ${nome(r.autor_id)}`, o.t && o.t.concluida_em ? null : faltaPz({data: o.d, natureza: "compromisso"}), `${fechar};qdIrParaAndamento('${x.casoId}','${r.id}')`));
+  }
+  const novosPz = gq || !x.andId ? "" : `<section class="ppz-sec ppz-novos" aria-labelledby="ppz-novos">${rot('<span id="ppz-novos">Novos prazos desta tarefa</span>')}
+      ${novos.join("") || `<p class="ppz-vazio"><span>Nenhum prazo novo dado nesta tarefa.</span></p>`}
+      <div><button type="button" class="pp-add" onclick="${fechar};casoSel='${x.casoId}';abaAtiva=2;subAba='escritorio';respInline=null;abrirRespInline('${x.andId}', true)" title="Responder à anotação com um prazo adicional">+ Prazo</button></div>
+    </section>`;
   // O PÉ: "Cumpri o prazo" (o prazo fatal do caso) ou "Concluir a minha tarefa"; as ações da linha; "Abrir o caso"; o ⋯
   const principal = x.cumprir ? `<button type="button" class="pp-pri" onclick="${fechar};${x.cumprir}" title="Registrar que o prazo foi cumprido">${IC_OK_PZ}Cumprido</button>`
     : minha && !gq ? `<button type="button" class="pp-pri" onclick="${fechar};concluirDeVez('${minha.id}')" title="Concluir a minha tarefa">${IC_OK_PZ}Concluir</button>` : "";
@@ -38769,10 +38804,10 @@ function abrirPainelPrazo(i, fonte){
   el.innerHTML = `<header class="ppz-cab">
       <div class="ppz-cab-l"><button type="button" class="ppz-volta" onclick="${fechar}">‹ Prazos</button><span class="pp-cli">${esc([c && c.nome, k ? casoCurtoPz(k) : "Do cliente"].filter(Boolean).join(" · "))}</span>
         <button type="button" class="pp-x" onclick="${fechar}" aria-label="Fechar">${IC_X_PZ}</button></div>
-      <div class="ppz-pills">${pillNat(nat)}${venc ? `<span class="pz-pill pz-pill-venc">Vencido sem registro</span>` : ""}</div>
+      <div class="ppz-pills">${pillNat(nat)}${pillTodo(x)}${venc ? `<span class="pz-pill pz-pill-venc">Vencido sem registro</span>` : ""}</div>
       <h2>${esc(x._titulo)}</h2>
     </header>
-    <div class="ppz-corpo">${quanto}${origem}${conta}${fazer}${ligado}${acompanha}${historico}${comentar}</div>
+    <div class="ppz-corpo">${gq ? `${quanto}${conta}${fazer}${acompanha}` : `${origem}${acompanha2}${novosPz}${quanto}${fazer}${ligado}`}</div>
     <footer class="ppz-pe">${principal}${acaoPe ? `<span class="ppz-acoes">${acaoPe}</span>` : ""}${extra}${celular() ? "" : abrirCaso}<span class="ppz-esp"></span>${mais.replace('class="tl-mais"', 'class="tl-mais pp-mais"')}</footer>`;
   if(esq) return;
   let veu = document.getElementById("pp-veu");
