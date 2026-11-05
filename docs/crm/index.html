@@ -3911,6 +3911,8 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .aq-ev b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .aq-ev-h{display:flex;align-items:center;gap:6px;font:11px var(--f-mono,monospace);opacity:.9}
 .aq-ev-h .aq-selo{font-family:var(--f-ui,inherit)}
+.aq-ev-por{font-size:11px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.aq-menu-por{padding:6px 12px 8px;font-size:12px;color:var(--cinza);border-bottom:1px solid var(--borda,#E4E2DC);max-width:260px}
 /* F152 · a cor é do profissional: Paulo azul, Marcos verde, Amanda amarela */
 .aq-ev.p-paulo{background:#E6EEF8;border-color:#2F6FB0;color:#1D4A78}
 .aq-ev.p-marcos{background:#E3F2E6;border-color:#1B7F3B;color:#145C2B}
@@ -54549,9 +54551,11 @@ function pintarAgenda(){
   }
   const r = agq.disp; if(!r) return;
   const dia = r.dias.find(d=>d.data===agq.sel) || r.dias[0];
-  const faixa = r.dias.map(d=>`<button class="aq-dia${d.data===agq.sel?" on":""}${d.bloqueado?" bloq":d.lotado?" lot":""}" data-aqdia="${d.data}">
+  // F406b · o dia em que as vagas foram tiradas no Google e nada foi marcado diz "Sem vagas", em vez de 0/14
+  const semVagas = d => !d.bloqueado && !d.atendimentos && !vagasDoDia(d).length;
+  const faixa = r.dias.map(d=>`<button class="aq-dia${d.data===agq.sel?" on":""}${d.bloqueado||semVagas(d)?" bloq":d.lotado?" lot":""}" data-aqdia="${d.data}">
       <b>${siglaData(d.data)}</b>
-      <span>${d.bloqueado?"Feriado ou férias":d.limite?`${d.atendimentos}/${d.limite}${d.lotado?" · lotado":""}`:`${d.atendimentos} ${d.atendimentos===1?"atendimento":"atendimentos"}`}</span>${(n=>n?`<span class="aq-dia-livres">${n} ${n===1?"vaga":"vagas"}</span>`:"")(vagasDoDia(d).length)}</button>`).join("");
+      <span>${d.bloqueado?"Feriado ou férias":semVagas(d)?"Sem vagas":d.limite?`${d.atendimentos}/${d.limite}${d.lotado?" · lotado":""}`:`${d.atendimentos} ${d.atendimentos===1?"atendimento":"atendimentos"}`}</span>${(n=>n?`<span class="aq-dia-livres">${n} ${n===1?"vaga":"vagas"}</span>`:"")(vagasDoDia(d).length)}</button>`).join("");
   alvo.innerHTML = `<div class="aq">
     ${r.alerta?`<div class="aq-alerta" role="alert">${esc(r.alerta)}</div>`:""}
     <div class="aq-faixa" role="tablist" aria-label="Próximos dias de atendimento de ${esc(nomeProf(agq.prof))}">${faixa}</div>
@@ -54699,16 +54703,17 @@ function linhaDoTempoAgenda(dia, r){
   const raias = []; evs.forEach(e=>{ let i=raias.findIndex(f=>f<=hmMin(e.inicio)); if(i<0){ i=raias.length; raias.push(0); } raias[i]=hmMin(e.fim); e._raia=i; });
   const nR = Math.max(1, raias.length);
   const bloco = e => {
+    const por = autoriaAgenda(e);
     const top = Math.max(0,y(e.inicio)), h = Math.max(AQ_PX-2, y(e.fim)-Math.max(0,y(e.inicio))-2);
     if(e.vaga) return `<button class="aq-ev aq-ev-vaga p-${e.profissional||(agq.prof==="todos"?"paulo":agq.prof)} t${e.tipo}" data-aqvaga="${esc(e.id)}" style="top:${top}px;height:${h}px;left:calc(${e._raia}*100%/${nR});width:calc(100%/${nR} - 4px)"
-      title="vaga livre ${esc(e.tipoFixo===false?"":e.tipo||"")} · ${e.inicio} às ${e.fim} · clique para agendar"><span class="aq-ev-h">${e.inicio}–${e.fim}${e.tipoFixo===false?"":` · ${esc(e.tipo||"")}`}</span><b>Livre · agendar</b></button>`;
+      title="vaga livre ${esc(e.tipoFixo===false?"":e.tipo||"")} · ${e.inicio} às ${e.fim} · clique para agendar${por.longa?" · "+esc(por.longa):""}"><span class="aq-ev-h">${e.inicio}–${e.fim}${e.tipoFixo===false?"":` · ${esc(e.tipo||"")}`}</span><b>Livre · agendar</b>${por.curta?`<span class="aq-ev-por">${esc(por.curta)}</span>`:""}</button>`;
     // a cor é do profissional; compromisso que não é atendimento fica cinza
     const cls = e.atendimento ? `aq-ev p-${e.profissional||(agq.prof==="todos"?"paulo":agq.prof)} t${e.tipo}` : "aq-ev outro";
     const nome = e.atendimento ? (e.nome || e.titulo.replace(/^\s*00[12]\s*-\s*/,"").replace(/\s*-\s*(n[ãa]o confirmado|confirmado)\s*$/i,"")) : e.titulo;
     return `<button class="${cls}" data-aqev="${esc(e.id)}" style="top:${top}px;height:${h}px;left:calc(${e._raia}*100%/${nR});width:calc(100%/${nR} - 4px)"
-      ${e.atendimento?"":"tabindex=\"-1\""} title="${esc(e.titulo)} · ${e.inicio} às ${e.fim}">
+      ${e.atendimento?"":"tabindex=\"-1\""} title="${esc(e.titulo)} · ${e.inicio} às ${e.fim}${por.longa?" · "+esc(por.longa):""}">
       <span class="aq-ev-h">${e.inicio}–${e.fim}${e.atendimento?` · ${e.tipo}<span class="aq-selo ${e.confirmado?"ok":""}">${e.confirmado?"Confirmado":"Não confirmado"}</span>`:""}</span>
-      <b>${esc(nome)}</b></button>`;
+      <b>${esc(nome)}</b>${por.curta?`<span class="aq-ev-por">${esc(por.curta)}</span>`:""}</button>`;
   };
   const reservas = (r.dias.find(d=>d.data===dia.data)||{}).reservas || dia.reservas || [];
   const cab = dia.limite ? `${dia.atendimentos} de ${dia.limite} atendimentos${dia.lotado?" · lotado":""}` : `${dia.atendimentos} ${dia.atendimentos===1?"atendimento":"atendimentos"}`;
@@ -54727,6 +54732,14 @@ function linhaDoTempoAgenda(dia, r){
       </div>
     </div>`;
 }
+// F406 · quem incluiu, quem alterou por último e, na vaga devolvida, quem a liberou (gravado pelo Apps Script no evento)
+function autoriaAgenda(e){
+  const em = d => d ? ` em ${d}` : "";
+  if(e.vaga) return e.liberadoPor ? {curta:`liberada por ${e.liberadoPor}`, longa:`liberada por ${e.liberadoPor}${em(e.liberadoEm)}`} : {curta:"", longa:""};
+  const curta = [e.agendadoPor && `por ${e.agendadoPor}`, e.alteradoPor && `${e.alteradoPor} ${e.alteracao||"alterou"}`].filter(Boolean).join(" · ");
+  const longa = [e.agendadoPor && `Agendado por ${e.agendadoPor}${em(e.agendadoEm)}`, e.alteradoPor && `${e.alteradoPor} ${e.alteracao||"alterou"}${em(e.alteradoEm)}`].filter(Boolean).join(". ");
+  return {curta, longa};
+}
 function menuEventoAgenda(el, ev){
   if(!ev || !ev.atendimento) return;
   document.querySelectorAll(".aq-menu").forEach(m=>m.remove());
@@ -54734,7 +54747,8 @@ function menuEventoAgenda(el, ev){
   const podeMexer = ev.origemCrm;
   const m = document.createElement("div"); m.className = "aq-menu"; m.setAttribute("role","menu");
   const op = (acao, rot) => `<button role="menuitem" data-aqop="${acao}">${rot}</button>`;
-  m.innerHTML = op("editar","Editar") + (ev.confirmado ? "" : op("confirmar","Confirmar"))
+  const por = autoriaAgenda(ev).longa;
+  m.innerHTML = (por ? `<div class="aq-menu-por">${esc(por)}</div>` : "") + op("editar","Editar") + (ev.confirmado ? "" : op("confirmar","Confirmar"))
     + (podeMexer ? op("remarcar","Remarcar") : "")
     + (podeMexer ? op("cancelar","Cancelar") : "")
     + op("abrir","Abrir cliente")
