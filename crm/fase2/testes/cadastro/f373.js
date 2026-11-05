@@ -71,14 +71,14 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector("#app.logado", { timeout: 15000 });
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const abrirA = async () => { await p.evaluate(async c => { await abrirFicha(c); }, cA.id);
-    await p.waitForTimeout(400); await p.keyboard.press("1"); await p.waitForSelector(".det-imp"); };
+    await p.waitForTimeout(400); await p.keyboard.press("1"); await p.waitForSelector(".det-imp:not(.det-notas)"); };
   const kt = k => T.casos.find(x => x.id === k.id);
 
   // 1 · o botão fica abaixo do ⋯, apagado, e é um pouco maior que os botões vizinhos
   await abrirA();
   const g = await p.evaluate(() => {
-    const b = document.querySelector(".det-imp").getBoundingClientRect(), m = document.querySelector(".det-notas").getBoundingClientRect();
-    return { bTop: b.top, mBot: m.bottom, bx: b.left + b.width / 2, mx: m.left + m.width / 2, w: b.width, on: document.querySelector(".det-imp").classList.contains("on") };
+    const b = document.querySelector(".det-imp:not(.det-notas)").getBoundingClientRect(), m = document.querySelector(".det-notas").getBoundingClientRect();
+    return { bTop: b.top, mBot: m.bottom, bx: b.left + b.width / 2, mx: m.left + m.width / 2, w: b.width, on: document.querySelector(".det-imp:not(.det-notas)").classList.contains("on") };
   });
   console.log(JSON.stringify(g), await p.evaluate(() => JSON.stringify(document.querySelector(".det-canto").getBoundingClientRect())));
   conf("a ⭐ fica abaixo do Anotações", g.bTop >= g.mBot - 1 && Math.abs(g.bx - g.mx) < 20);
@@ -86,11 +86,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.screenshot({ path: path.join(OUT, "01-apagada.png"), clip: { x: 0, y: 0, width: 1500, height: 160 } });
 
   // 2 · um clique marca todos os casos abertos, e o encerrado não
-  await p.click(".det-imp");
+  await p.click(".det-imp:not(.det-notas)");
   await p.waitForTimeout(500);
   conf("um clique marca os dois casos abertos", kt(kA1).importante === true && kt(kA2).importante === true);
   conf("o caso encerrado não é marcado", !kt(kA3).importante);
-  conf("a ⭐ acende", await p.evaluate(() => document.querySelector(".det-imp").classList.contains("on")));
+  conf("a ⭐ acende", await p.evaluate(() => document.querySelector(".det-imp:not(.det-notas)").classList.contains("on")));
   await p.screenshot({ path: path.join(OUT, "02-acesa.png"), clip: { x: 0, y: 0, width: 1500, height: 160 } });
   await p.evaluate(() => { fecharFicha(); visao = "importante"; render(); });
   await p.waitForTimeout(400);
@@ -100,17 +100,17 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   T.casos.find(x => x.id === kA1.id).importante = false;
   await p.evaluate(id => { D.casoPorId.get(id).importante = false; }, kA1.id);
   await abrirA();
-  conf("com algum caso marcado, a ⭐ aparece acesa", await p.evaluate(() => document.querySelector(".det-imp").classList.contains("on")));
-  await p.click(".det-imp");
+  conf("com algum caso marcado, a ⭐ aparece acesa", await p.evaluate(() => document.querySelector(".det-imp:not(.det-notas)").classList.contains("on")));
+  await p.click(".det-imp:not(.det-notas)");
   await p.waitForTimeout(500);
   conf("o clique desmarca todos", !kt(kA1).importante && !kt(kA2).importante);
 
   // 4 · sem caso aberto, sem botão; no nível 1, sem botão
   await p.evaluate(async c => { await abrirFicha(c); }, cC.id);
   await p.waitForTimeout(300);
-  conf("sem caso aberto, não há ⭐", !(await p.$(".det-imp")));
+  conf("sem caso aberto, não há ⭐", !(await p.$(".det-imp:not(.det-notas)")));
   await p.evaluate(async c => { await abrirFicha(c); }, cB.id);
-  await p.waitForSelector(".det-imp.on");
+  await p.waitForSelector(".det-imp.on:not(.det-notas)");
   conf("caso único marcado: ⭐ acesa", true);
 
   // 5 · o Concluir por hoje não apaga a ⭐

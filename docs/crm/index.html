@@ -6158,6 +6158,21 @@ html[data-tema="v10"] .menu-topo::before{content:none}
   html[data-tema="v10"] .app:not(.celular) .caso-2col.caso-3col{grid-template-columns:minmax(280px,320px) minmax(0,1fr);grid-template-areas:"pz dir" "esq dir";grid-template-rows:auto 1fr;gap:14px 18px}
   html[data-tema="v10"] .app:not(.celular) .caso-3col > .caso-esq{position:static;max-height:none}
 }
+/* F405 · sem as abas dos andamentos (pedido do Paulo, 05.11.2026): o cartão da fase abre os andamentos dela, o "Tudo" abre o Caso Completo,
+   e a seta no canto dos andamentos recolhe a coluna dos prazos e do cartão do caso */
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-l{grid-template-columns:repeat(var(--nf,4),minmax(0,1fr)) auto auto}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-and{box-shadow:inset 0 -3px 0 var(--fc)}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-and .jn-txt{font-weight:600}
+html[data-tema="v10"] .jn-tudo{all:unset;cursor:pointer;align-self:center;box-sizing:border-box;height:30px;padding:0 12px;border:1px solid #D6D4CE;border-radius:15px;background:#FFFFFF;color:#4A4944;font:500 13px var(--f-ui);margin-left:6px}
+html[data-tema="v10"] .jn-tudo.on{background:#121212;border-color:#121212;color:#FFFFFF}
+html[data-tema="v10"] .jn-tudo:focus-visible,html[data-tema="v10"] .caso-esq-alca:focus-visible{outline:2px solid #121212;outline-offset:2px}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .jn-tudo:not(.on):hover,html[data-tema="v10"] .caso-esq-alca:hover{background:#F3F2EE}}
+html[data-tema="v10"] .app:not(.celular) .caso-3col > .caso-dir{position:relative}
+html[data-tema="v10"] .caso-esq-alca{all:unset;cursor:pointer;box-sizing:border-box;position:absolute;left:-17px;top:8px;z-index:2;width:16px;height:34px;display:grid;place-items:center;border:1px solid var(--borda);border-radius:6px;background:#FFFFFF;color:#4A4944;font-size:15px;line-height:1}
+html[data-tema="v10"] .app:not(.celular) .caso-2col.caso-3col.esq-oculta{grid-template-columns:minmax(0,1fr);grid-template-areas:"dir";grid-template-rows:auto}
+html[data-tema="v10"] .app:not(.celular) .caso-3col.esq-oculta > .caso-esq{display:none}
+html[data-tema="v10"] .app:not(.celular) .caso-3col.esq-oculta > .caso-dir{padding-left:26px}
+html[data-tema="v10"] .app:not(.celular) .caso-3col.esq-oculta .caso-esq-alca{left:0}
 /* o cartão do caso: a espécie em selo, o protocolo com copiar, a tramitação que abre o portal e a dobra dos números */
 html[data-tema="v10"] .linha-caso .lc-sobre{background:var(--placa);border-radius:4px;padding:1px 6px}
 html[data-tema="v10"] .linha-caso .lc-copiar{all:unset;cursor:pointer;margin-left:8px;font:500 11px var(--f-mono);color:var(--azul);border:1px solid var(--borda);border-radius:4px;padding:0 5px;line-height:18px}
@@ -6452,7 +6467,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.57</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.58</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -20123,7 +20138,10 @@ function pintarFicha(){
           // F320 · no celular os rótulos são curtos (Escritório, INSS, CRPS, Judicial e Tudo)
           // F330 · INSS, CRPS e Judicial só aparecem com andamento ou número; o número entra pela gestão do caso (protocolo ou NB abre o INSS, e-Sisrec o CRPS, CNJ o Judicial; pedido do Paulo, 31.10.2026)
           const v10Cel = temaV10() && celular();
-          const aba = visiveis[subAba] ? subAba : "escritorio";
+          // F405 · no computador as abas saem e o cartão da fase abre os andamentos dela (pedido do Paulo, 05.11.2026); a fase pedida abre mesmo sem dados
+          const semMenu = temaV10() && !v10Cel && !!faseDaTrilha(k);
+          const aba = visiveis[subAba] || (semMenu && abaPedida[k.id]===subAba) ? subAba : "escritorio";
+          abaDoCaso = {id:k.id, aba};
           // a etiqueta da aba diz o estado sem abrir: ✔ quando a fase foi
           // encerrada à mão, 🗄 quando TODOS os processos daquela fonte estão
           // arquivados (um só arquivado não marca a aba — o outro segue vivo),
@@ -20151,8 +20169,8 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col"><aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir">${bannerAClassificar(k)}${menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div>
+        ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col${!celular() && esqOculta() ? " esq-oculta" : ""}"><aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
+           <div class="caso-dir">${semMenu ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div>
            <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? abaComProcessos(k, "cnj", ()=>painelCNJ(k, andsVis)) : aba==="crps" ? abaComProcessos(k, "crps", ()=>painelCRPS(k))
@@ -39868,7 +39886,8 @@ function faixaTrilha(k){
     const mkA = st==="a" ? MK0(f) : null, aguarda = mkA ? (i=>i>=0 && !mkA[i].d ? ` · aguardando ${esc(ets[i].n)}` : "")(mkA.findIndex(m=>m.s==="a")) : "";
     const stHtml = st==="a" && !celular() ? `<span class="jn-atual">atual</span>` : st==="a" ? `<span class="tr-agora"><b>${esc(agora||"a definir")}</b>${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}${aguarda}</span>` : esc(txt);
     const par = st!=="a" && f==="judicial" && !!trilhaParalela(k);   // F323 · o MS ao lado do recurso não é passado
-    return `<button role="tab" aria-selected="${ver===f}" class="jn-b jn-${st}${par?" jn-par":""}${ver===f?" jn-ver":""}" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}"
+    const and = !celular() && abaDoCaso.id===k.id && ABA_DA_FASE[f]===abaDoCaso.aba;   // F404 · o cartão dos andamentos abertos
+    return `<button role="tab" aria-selected="${ver===f}" class="jn-b jn-${st}${par?" jn-par":""}${ver===f?" jn-ver":""}${and?" jn-and":""}" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}"
       onclick="trVerFase('${k.id}','${f}')" title="${esc(`${c.n}: ${String(txt)}`)}"><span class="jn-nome"><i></i><span class="jn-txt">${c.n}</span></span><span class="jn-st">${stHtml}</span></button>`; }).join("");
   const alt = Object.entries(TRILHAS).filter(([,t])=>t.fase===ver);
   // o tipo de processo é uma escolha rara: um seletor, e não cinco pílulas
@@ -39950,7 +39969,7 @@ function faixaTrilha(k){
       <span class="tr-prog" aria-hidden="true">${seg}</span>
       ${prox ? `<span class="tr-prox">Próximo: ${esc(minusc1(prox.e.n))}</span>` : ""}</div>${ver===faseAt ? linhaParalela(k, faseAt) : ""}`; })();
   return `<section class="tr-faixa tr tr-compacta${aberta?" tr-aberta":" tr-fechada"}${trFut[k.id]?" tr-fut-ver":""}" style="--tc:${C.c};--tt:${C.t};--tf:${C.f}" aria-label="Jornada e trilha do caso">
-    <div class="jn-l" role="tablist" aria-label="Fases do caso">${abas}<button class="tr-ajuda${confirma ? " tr-ajuda-pend" : ""}" aria-expanded="${trAjuda}" aria-controls="tr-leg"
+    <div class="jn-l" role="tablist" aria-label="Fases do caso">${abas}${cel ? "" : `<button type="button" class="jn-tudo${abaDoCaso.id===k.id && abaDoCaso.aba==="tudo" ? " on" : ""}" aria-pressed="${abaDoCaso.id===k.id && abaDoCaso.aba==="tudo"}" title="Caso Completo: todas as fontes juntas, em ordem cronológica" onclick="irSubAba('tudo')">Tudo<span class="sr-only"> (Caso Completo)</span></button>`}<button class="tr-ajuda${confirma ? " tr-ajuda-pend" : ""}" aria-expanded="${trAjuda}" aria-controls="tr-leg"
       title="${esc(`${T.nome}: o tipo de processo e o que cada marca quer dizer`)}" onclick="trAjuda=!trAjuda;trRepintar()">?</button>
 </div>
     ${resumo}
@@ -40013,7 +40032,17 @@ function trSombra(tr){
   box.classList.toggle("tr-mais-dir", tr.scrollLeft + tr.clientWidth < tr.scrollWidth - 4);
 }
 function trRolar(dir){ const tr = document.querySelector(".tr-rol"); if(tr) tr.scrollBy({left: dir*tr.clientWidth*0.7}); }
-function trVerFase(casoId, f){ trVer[casoId] = f; trRepintar(); trCentrar(); }
+function trVerFase(casoId, f){
+  trVer[casoId] = f;
+  // F405 · no computador o cartão da fase também abre os andamentos dela: Escritório volta às anotações
+  if(!celular() && ABA_DA_FASE[f]){ subAba = abaPedida[casoId] = ABA_DA_FASE[f]; guardar("crm_subaba", subAba); }
+  trRepintar(); trCentrar();
+}
+const ABA_DA_FASE = {escritorio:"escritorio", inss:"inss", conselho:"crps", judicial:"cnj"};
+let abaPedida = {}, abaDoCaso = {};
+// F405 · a seta recolhe a coluna dos prazos e do cartão do caso; fica guardada neste computador
+const esqOculta = () => ler("crm_caso_esq")==="0";
+function esqAlternar(){ guardar("crm_caso_esq", esqOculta() ? "" : "0"); trRepintar(); }
 function trEscolher(casoId, rito, i){
   const c = casoId+":"+rito; trSel[c] = (i==null || trSel[c]===i) ? null : i; trRepintar();
   if(trSel[c]!=null) document.querySelector(`.tr-et[data-tri="${i}"]`)?.focus({preventScroll:true});
