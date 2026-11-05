@@ -476,6 +476,8 @@ A **F397** (Online e Offline no WhatsApp, pedido do Paulo de 05.11.2026): no alt
 
 A **F398** (o aviso do navegador como o do celular, pedido do Paulo de 05.11.2026): a notificação do navegador da mensagem nova do WhatsApp (`vigiarZapSom`) traz "<nome>: <texto>" da última mensagem do cliente, e o áudio vem com "🎤 " e a transcrição (`corpoAvisoZap`, a mesma regra do `aviso` do `zap_push`); o áudio de menos de 3 minutos ainda sem transcrição espera a olhada seguinte, e o "[áudio não transcrito]" ou o mais antigo sai como "🎤 Áudio". Teste: `zapatende.js`.
 
+A **F401** (12.54, pedido do Paulo de 05.11.2026): no computador, CPF, Meu INSS, telefone, advogado e a situação do cliente vão na linha do nome (`span.linha2` dentro de `.linha1`), e o cabeçalho da ficha perde a segunda linha; no celular fica como era.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
