@@ -87,7 +87,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o ↗ ao lado do Meu INSS abre o portal e copia o CPF", mi.abriu.some(u => /meu\.inss\.gov\.br/.test(u)) && mi.copiou.includes("52998224725"));
 
   // 3 · imprimir e separar para o cliente
-  conf("o ⋯ da ficha oferece 'Imprimir e separar para o cliente'", await p.evaluate(() => !!document.querySelector(".det-topo .sep-abrir")));
+  conf("o Cadastro oferece 'Imprimir e separar para o cliente' (F403)", await p.evaluate(() => !!document.querySelector(".idf-dossie .sep-abrir")));
   await p.evaluate(c => separarParaCliente(c), cA.id);
   await p.waitForSelector(".sep-mod");
   conf("quem imprime já vem na recepção (Meissa)", /Meissa/.test(await p.textContent(".desp-quem .btn-mini.on")));

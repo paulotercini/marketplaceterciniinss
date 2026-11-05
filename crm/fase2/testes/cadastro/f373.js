@@ -77,11 +77,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // 1 · o botão fica abaixo do ⋯, apagado, e é um pouco maior que os botões vizinhos
   await abrirA();
   const g = await p.evaluate(() => {
-    const b = document.querySelector(".det-imp").getBoundingClientRect(), m = document.querySelector(".det-mais > summary").getBoundingClientRect();
+    const b = document.querySelector(".det-imp").getBoundingClientRect(), m = document.querySelector(".det-notas").getBoundingClientRect();
     return { bTop: b.top, mBot: m.bottom, bx: b.left + b.width / 2, mx: m.left + m.width / 2, w: b.width, on: document.querySelector(".det-imp").classList.contains("on") };
   });
   console.log(JSON.stringify(g), await p.evaluate(() => JSON.stringify(document.querySelector(".det-canto").getBoundingClientRect())));
-  conf("a ⭐ fica abaixo do ⋯", g.bTop >= g.mBot - 1 && Math.abs(g.bx - g.mx) < 20);
+  conf("a ⭐ fica abaixo do Anotações", g.bTop >= g.mBot - 1 && Math.abs(g.bx - g.mx) < 20);
   conf("a ⭐ tem ao menos 32 px e nasce apagada", g.w >= 32 && !g.on);
   await p.screenshot({ path: path.join(OUT, "01-apagada.png"), clip: { x: 0, y: 0, width: 1500, height: 160 } });
 
