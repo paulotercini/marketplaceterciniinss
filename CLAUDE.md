@@ -480,6 +480,8 @@ A **F401** (12.54, pedido do Paulo de 05.11.2026): no computador, CPF, Meu INSS,
 
 A **F402** (12.55, pedido do Paulo de 05.11.2026): o selo verde da ficha diz "Cliente ativo · N casos", sem "em andamento"; o title mantém a conta completa.
 
+A **F403** (12.56, pedido do Paulo de 05.11.2026): o ⋯ do cabeçalho da ficha saiu. No lugar, o botão **Anotações** (`botaoRapidas`, `verRapidas`) lista as anotações rápidas do cliente (`rapidasDoCliente`: as de `campos.atendimento` com `origem: "rapida"` e a cópia curta das que foram ao caso, `campos.rapidas`) e tem o ponto vermelho quando há anotação de outra pessoa que ninguém abriu desde `campos.rapidas_vistas`, gravado ao abrir a lista. O botão do WhatsApp fica ao lado do telefone; SMBot e Recebidos saíram do cabeçalho (o Trouxe documentos continua pelos prazos); Separar e Não é cliente foram ao Cadastro, junto do Atualizar dossiê. O ⚡ ficou com menos texto, oferece o nome do cliente da ficha aberta (`.ar-cli`) sem impedir digitar outro, nasce com a ⭐ marcada e carrega anexo (`arSubir`: bucket e `anexos`, preso ao cliente, ao caso e ao andamento). Teste: `testes/cadastro/f403.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
