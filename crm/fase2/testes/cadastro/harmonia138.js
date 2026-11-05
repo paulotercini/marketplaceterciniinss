@@ -142,14 +142,14 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
     const vis = e => e.getBoundingClientRect().width > 0;
     const tx = [...document.querySelectorAll(".detalhe *")].filter(e => vis(e) && [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()));
     const fam = tx.map(e => getComputedStyle(e).fontFamily.split(",")[0].replace(/"/g, ""));
-    const abas = [...document.querySelectorAll(".menu-andamentos button")].sort((a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left);
+    const abas = [...document.querySelectorAll(".jn-l .jn-b, .jn-l .jn-tudo")].sort((a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left);
     const verif = document.querySelector(".lc-verif");
     const peq = [...document.querySelectorAll(".timeline .tl-sinal, .timeline .tl-li, .pz .pz-mais")].filter(vis)
       .filter(e => { const r = e.getBoundingClientRect(); return Math.min(r.width, r.height) < 24; });
     return { segoe: fam.filter(x => /Segoe/.test(x)).length, plex: fam.filter(x => /IBM Plex Sans/.test(x)).length,
       primeira: abas[0] && abas[0].textContent.trim(), ultima: abas.at(-1) && abas.at(-1).textContent.trim(),
       esq: (e => e && !!e.querySelector(".lc-placa") && !!document.querySelector(".caso-pz .faixa-prazos") && document.querySelector(".caso-pz").getBoundingClientRect().right <= document.querySelector(".caso-dir").getBoundingClientRect().left + 1)(document.querySelector(".caso-esq")),   // F320 · duas colunas: placa e prazos à esquerda   // F278 · os prazos na coluna da direita
-      dir: (e => !!(e && e.firstElementChild.classList.contains("menu-andamentos") && e.querySelector(".menu-andamentos + .caso-acoes") && e.querySelector(".caso-acoes ~ .fatos")))(document.querySelector(".caso-dir")),   // F242 · as abas em cima, o campo de escrever e os andamentos
+      dir: (e => !!(e && e.firstElementChild.classList.contains("caso-esq-alca") && !e.querySelector(".menu-andamentos") && e.querySelector(".caso-acoes ~ .fatos")))(document.querySelector(".caso-dir")),   // F402 · sem as abas: a seta de recolher, o campo de escrever e os andamentos
       placa2: (e => e && getComputedStyle(e).flexDirection === "column" && [...e.children].every(f => getComputedStyle(f).flexDirection === "row"))(document.querySelector(".caso-esq .lc-placa")),   // F182 · rótulo e valor na mesma linha, como no canvas
       pzDesc: (d => d.every((x, i) => !i || d[i-1] <= x))([...document.querySelectorAll(".caso-esq .pz:not(.fp2-fatal)")].map(b => b.dataset.data)),
       pzFina: [...document.querySelectorAll(".caso-esq .pz:not(.fp2-fatal)")].every(e => e.getBoundingClientRect().height <= 64),
@@ -157,9 +157,9 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
       peq: peq.length };
   });
   conf(`a ficha usa só a fonte do tema (${f.plex} em Plex, ${f.segoe} em Segoe UI)`, f.segoe === 0 && f.plex > 20);
-  conf(`F145 · as abas vão de Escritório a Caso Completo (${f.primeira} … ${f.ultima})`, /^Escritório/.test(f.primeira || "") && /^Caso Completo/.test(f.ultima || ""));
+  conf(`F402 · as fases vão de Escritório ao Tudo (Caso Completo) (${f.primeira} … ${f.ultima})`, /^Escritório/.test(f.primeira || "") && /^Tudo/.test(f.ultima || ""));
   conf("F145 · à esquerda, parada, a placa e os prazos", f.esq);
-  conf("F242 · à direita, as abas em cima, depois o campo de escrever e os andamentos", f.dir);
+  conf("F402 · à direita, sem as abas: a seta, o campo de escrever e os andamentos", f.dir);
   conf("F182 · a placa em linhas: rótulo à esquerda, valor à direita", f.placa2);
   conf("F254 · os prazos em linhas, em ordem crescente depois do prazo fatal", f.pzDesc && f.pzFina);
   conf("Verificação a definir fica cinza como a Etapa, sem o vermelho", f.verifNeutra);

@@ -478,6 +478,8 @@ A **F398** (o aviso do navegador como o do celular, pedido do Paulo de 05.11.202
 
 A **F401** (12.54, pedido do Paulo de 05.11.2026): no computador, CPF, Meu INSS, telefone, advogado e a situação do cliente vão na linha do nome (`span.linha2` dentro de `.linha1`), e o cabeçalho da ficha perde a segunda linha; no celular fica como era.
 
+
+A **F402** (12.55, a tela do caso mais limpa, pedido do Paulo de 05.11.2026): no computador, as abas Escritório, INSS, Conselho, Judicial e Caso Completo saíram de cima do campo de escrever. O cartão da fase na faixa das fases abre também os andamentos dela (`trVerFase` grava `subAba` pela `ABA_DA_FASE`; Escritório volta às anotações; a fase pedida abre mesmo sem dados, `abaPedida`), o cartão dos andamentos abertos tem a borda de baixo na cor da fase (`.jn-and`, pelo `abaDoCaso`), e o botão **Tudo**, antes do "?", abre o Caso Completo; "ver as etapas" continua abrindo as etapas. A seta no canto dos andamentos (`.caso-esq-alca`, `esqAlternar`, `crm_caso_esq` no navegador) recolhe a coluna dos prazos e do cartão do caso e a devolve. No celular as abas continuam. Testes: `linha102.js`, `harmonia138.js`, `f249.js`.
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
