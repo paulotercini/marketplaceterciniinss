@@ -2000,7 +2000,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .ze-modos button{border:0;background:none;padding:0 0 4px;font:inherit;font-size:12px;font-weight:500;color:var(--cinza-claro,var(--cinza));cursor:pointer}
   .ze-modos button.on{font-weight:600;color:var(--azul);box-shadow:inset 0 -2px 0 var(--azul)}
   .ze-modos button.on.nota{color:var(--prox,#8f5400);box-shadow:inset 0 -2px 0 var(--prox,#8f5400)}
-  .ze-linha{display:flex;gap:8px;align-items:flex-end}
+  .ze-linha{display:flex;gap:8px;align-items:center}
   .ze-caixa{flex:1;min-width:0;border:1px solid var(--borda);border-radius:10px;padding:8px 10px 4px;display:flex;flex-direction:column;gap:4px;background:var(--branco)}
   .ze-caixa:focus-within{border-color:var(--azul)}
   .zap-escrever.modo-nota .ze-caixa{background:#fffbea;border-color:#e0b955}
@@ -2236,7 +2236,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-b{transition:transform .15s}
   .zap-escrever:not(.modo-nota) .ze-linha:has(#zap-txt:placeholder-shown) #zap-enviar{display:none}
   .ze-linha:not(:has(#zap-txt:placeholder-shown)) #zap-rec:not(.gravando){display:none}
-  .ze-mic{align-self:flex-end;flex:none;width:44px;height:44px;border-radius:50%;justify-content:center}
+  .ze-mic{align-self:center;flex:none;width:44px;height:44px;border-radius:50%;justify-content:center}
   .zap-tela.wa .ze-mic:not(.gravando){background:#00a884;border-color:#00a884;color:#fff}
   .ze-mic.gravando{width:auto;border-radius:22px;padding:0 14px;color:#b3261e;background:#fde7e7}
   .zt-sub{flex-wrap:nowrap;overflow:hidden;min-width:0;gap:6px}
@@ -15839,7 +15839,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
         <span>Áudio gravado — ouça antes de enviar</span>
         <audio controls src="${zapAudio.url}"></audio>
         <button class="btn-mini" onclick="descartarAudioZap();pintarConversaGuardando()">Descartar</button>
-        <button class="btn-rap ze-enviar" onclick="enviarAudioZap()" title="Enviar áudio"><span aria-hidden="true">Áudio</span><span class="sr-only">Enviar áudio</span></button></div>`:""}
+        <button class="btn-rap ze-enviar" onclick="enviarAudioZap()" title="Enviar áudio"><span aria-hidden="true">Enviar</span><span class="sr-only"> áudio</span></button></div>`:""}
      <div class="zap-escrever ${zapNota?"modo-nota":""}">
        <div class="zap-sug" id="zap-sug" hidden></div>
        ${pode?"":`<p class="ze-so-leitura">Esta conversa está com ${esc(at.nome)}. Você pode responder: ${esc(at.nome.split(" ")[0])} recebe o aviso
