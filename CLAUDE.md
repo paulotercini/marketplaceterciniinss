@@ -478,6 +478,8 @@ A **F398** (o aviso do navegador como o do celular, pedido do Paulo de 05.11.202
 
 A **F401** (12.54, pedido do Paulo de 05.11.2026): no computador, CPF, Meu INSS, telefone, advogado e a situação do cliente vão na linha do nome (`span.linha2` dentro de `.linha1`), e o cabeçalho da ficha perde a segunda linha; no celular fica como era.
 
+A **F402** (12.55, pedido do Paulo de 05.11.2026): o selo verde da ficha diz "Cliente ativo · N casos", sem "em andamento"; o title mantém a conta completa.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

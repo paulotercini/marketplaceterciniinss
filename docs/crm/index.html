@@ -6451,7 +6451,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.54</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.55</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19984,7 +19984,7 @@ function pintarFicha(){
   // processo, mas o escritório avisa (🔔 lembretes ativos — trabalho, só que
   // de outro tipo); vermelho = nada, nem aviso. Cinza é quem nunca teve caso.
   const stCli = ativosCli.length
-    ? `<span class="cli-st ativo" title="${ativosCli.length} de ${ks.length} caso(s) em andamento${lembCli.length?` · e ${lembCli.length} lembrete(s) na aba 🔔`:""}">Cliente ativo · ${ativosCli.length} caso${ativosCli.length>1?"s":""} em andamento</span>`
+    ? `<span class="cli-st ativo" title="${ativosCli.length} de ${ks.length} caso(s) em andamento${lembCli.length?` · e ${lembCli.length} lembrete(s) na aba 🔔`:""}">Cliente ativo · ${ativosCli.length} caso${ativosCli.length>1?"s":""}</span>`
     : lembCli.length
       ? `<span class="cli-st lemb" title="nenhum processo em andamento, mas o escritório avisa de tempos em tempos — veja o quadro Aposentadoria no Cadastro">🟡 Sem processo — ${lembCli.length} lembrete${lembCli.length>1?"s":""} ativo${lembCli.length>1?"s":""}</span>`
       : ksR.length && !precasosDe(c).some(p=>!p.so_lembrete)
