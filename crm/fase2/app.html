@@ -7110,7 +7110,9 @@ async function iniciar(){
   if(!zapSomLigado){ zapSomLigado = true; vigiarZapSom(); setInterval(vigiarZapSom, 20000); }
   // F335 · o toque na notificação com o CRM fechado abre ?zap=<conversa>
   const zq = new URLSearchParams(location.search).get("zap");
-  if(zq){ history.replaceState(null, "", location.pathname); abrirConversaDaMencao(zq); }
+  const qs = new URLSearchParams(location.search);
+  if(zq){ history.replaceState(null, "", location.pathname); abrirConversaDaMencao(zq, qs.get("acao"), qs.get("m")); }
+  else if(qs.get("mencoes")){ history.replaceState(null, "", location.pathname); irPara("mencoes"); }
   if(!presencaLigada){ presencaLigada = true;
     const ponto = () => api(`/rest/v1/rpc/zap_presenca`,{method:"POST", body:"{}"}).catch(()=>{});
     ponto(); setInterval(ponto, 60000); }
@@ -14734,9 +14736,20 @@ function renderMencoes(){
   }).join("") || "<p class='meio-sub'>Caixa vazia: nada pendente para você. 🎉</p>";
 }
 // F187 · o aviso de transferência (ou @ na nota) leva direto à conversa
-function abrirConversaDaMencao(conversaId){
+function abrirConversaDaMencao(conversaId, acao, msgId){
   zapAberta = conversaId; zapPainelAberto = false;
+  // F396 · o botão do aviso: Responder põe o cursor no campo, Ouvir toca o áudio (sem o gesto, o navegador pode barrar: fica o balão em destaque)
+  zapDoAviso = acao ? {conversa: conversaId, acao, msgId} : null;
   visao = "whatsapp"; render();
+}
+let zapDoAviso = null;
+function aplicarZapDoAviso(id){
+  const a = zapDoAviso; if(!a || a.conversa!==id) return; zapDoAviso = null;
+  if(a.acao==="responder"){ const t = document.getElementById("zap-txt"); if(t) t.focus(); return; }
+  if(a.acao==="ouvir" && a.msgId){
+    irParaMsg(a.msgId);
+    const b = document.querySelector(`#zb-${CSS.escape(a.msgId)} .zp-play`); if(b) b.click();
+  }
 }
 // F236 · o mesmo gesto fecha a menção: concluir a tarefa ou marcar o andamento como lido baixa a menção a mim dele
 async function baixarMencoes(andIds){
@@ -15634,6 +15647,7 @@ async function abrirConversa(id){
   if(!document.getElementById("zap-dir")) return;   // saiu da tela do WhatsApp enquanto carregava
   if(cache || mesma) pintarConversaGuardando(); else pintarConversa();
   pintarAgendaZap();
+  aplicarZapDoAviso(id);
 }
 async function recarregarMsgs(){
   if(!zapAberta) return;
@@ -19236,7 +19250,8 @@ async function notificarLembrete(t, c, txt){
   }catch(e){}
 }
 function cliqueNoAviso(d){
-  if(d && d.crm==="zap"){ if(d.conversa) abrirConversaDaMencao(d.conversa); else { visao="whatsapp"; render(); } return; }
+  if(d && d.crm==="zap"){ if(d.conversa) abrirConversaDaMencao(d.conversa, d.acao, d.mensagem); else { visao="whatsapp"; render(); } return; }
+  if(d && d.crm==="mencao"){ irPara("mencoes"); return; }
   if(!d || d.crm!=="lembrete") return;
   if(d.acao==="concluir") concluirDeVez(d.tarefa);
   else if(d.acao==="adiar") sonecaTarefa(d.tarefa, 60);
