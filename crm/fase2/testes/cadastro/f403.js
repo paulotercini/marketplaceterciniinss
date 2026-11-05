@@ -69,7 +69,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.evaluate(async c => { await abrirFicha(c); }, cA.id); await p.waitForTimeout(600);
 
   conf("o cabeçalho não tem mais o ⋯", !(await p.$(".det-topo .det-mais")));
-  conf("o botão Anotações está no cabeçalho, sem sinal", !!(await p.$(".det-topo .det-notas")) && !(await p.$(".det-notas-pt")));
+  conf("o botão das anotações é só o ícone, sem vermelho", await p.evaluate(() => { const b = document.querySelector(".det-topo .det-notas"); return !!b && !b.textContent.trim() && !!b.querySelector("svg") && !b.classList.contains("on"); }));
   conf("Separar e SMBot saíram do cabeçalho", !(await p.$(".det-topo .sep-abrir")) && !(await p.$('.det-topo [onclick^="abrirSmbot"]')));
 
   // o ⚡ oferece o cliente da ficha, nasce com ⭐ e tem anexo
@@ -78,6 +78,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a ⭐ importante nasce marcada", await p.$eval("#ar-imp", e => e.checked));
   conf("há o botão de anexo", !!(await p.$("#ar-arq")));
   await p.click(".ar-cli");
+  conf("o caso nasce em a distribuir", await p.$eval("#ar-caso", e => e.value === ""));
+  await p.selectOption("#ar-caso", kA.id);
   await p.fill("#ar-texto", "Ligou pedindo notícia da pensão");
   await p.setInputFiles("#ar-arq", { name: "rg.pdf", mimeType: "application/pdf", buffer: Buffer.from("%PDF-1.4 teste") });
   await p.evaluate(() => salvarAnotacaoRapida()); await p.waitForTimeout(900);
@@ -89,13 +91,26 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const rs = (T.clientes.find(c => c.id === cA.id).campos || {}).rapidas || [];
   conf("a cópia curta fica em campos.rapidas, com o anexo", rs.length === 1 && rs[0].anexos.length === 1);
 
-  // anotação de outra pessoa sinaliza; abrir a lista apaga o sinal
-  await p.evaluate(c => { const x = D.cliPorId.get(c); x.campos.rapidas[0].autor_id = "outro"; }, cA.id);
+  // F404 · sem escolher o caso, a anotação espera na ficha, o botão fica vermelho, e distribuir a leva ao caso
   await p.evaluate(async c => { await abrirFicha(c); }, cA.id); await p.waitForTimeout(500);
-  conf("a anotação de outra pessoa acende o ponto", !!(await p.$(".det-notas-pt")));
+  await p.evaluate(() => anotacaoRapida()); await p.click(".ar-cli");
+  await p.fill("#ar-texto", "Trouxe o laudo novo");
+  await p.setInputFiles("#ar-arq", { name: "laudo.pdf", mimeType: "application/pdf", buffer: Buffer.from("%PDF-1.4 laudo") });
+  await p.evaluate(() => salvarAnotacaoRapida()); await p.waitForTimeout(1200);
+  const pend = ((T.clientes.find(c => c.id === cA.id).campos || {}).atendimento || []).find(n => n.texto === "Trouxe o laudo novo");
+  conf("a distribuir, a anotação fica na ficha sem andamento", !!pend && !pend.distribuida && !T.andamentos.some(a => a.texto === "Trouxe o laudo novo"));
+  conf("o botão fica vermelho", !!(await p.$(".det-topo .det-notas.on")));
+  await p.screenshot({ path: path.join(OUT, "02-vermelho.png"), clip: { x: 0, y: 0, width: 1500, height: 160 } });
   await p.click(".det-notas"); await p.waitForTimeout(400);
-  conf("a lista mostra a anotação e o anexo", /notícia da pensão/.test(await p.textContent(".sug-it")) && /rg\.pdf/.test(await p.textContent(".sug-it")));
-  conf("abrir a lista apaga o ponto e grava rapidas_vistas", !(await p.$(".det-notas-pt")) && !!T.clientes.find(c => c.id === cA.id).campos.rapidas_vistas);
+  conf("a lista mostra a anotação para distribuir, com o anexo", /laudo novo/.test(await p.textContent(".rp-pend")) && /laudo\.pdf/.test(await p.textContent(".rp-pend")));
+  await p.screenshot({ path: path.join(OUT, "03-distribuir.png") });
+  await p.click('.rp-pend button:has-text("Distribuir")'); await p.waitForTimeout(900);
+  const and2 = T.andamentos.find(a => /Trouxe o laudo novo/.test(a.texto || ""));
+  const an2 = T.anexos.find(a => a.nome === "laudo.pdf");
+  conf("distribuir cria o andamento no caso", !!and2 && and2.caso_id === kA.id);
+  conf("o anexo vai junto ao caso e ao andamento", !!an2 && an2.caso_id === kA.id && an2.andamento_id === and2.id);
+  const d2 = ((T.clientes.find(c => c.id === cA.id).campos || {}).atendimento || []).find(n => n.texto === "Trouxe o laudo novo");
+  conf("a anotação fica marcada como distribuída e o vermelho apaga", !!(d2 && d2.distribuida && d2.distribuida.caso_id === kA.id) && !(await p.$(".det-notas.on")));
   await p.evaluate(() => fecharCaixa());
 
   // cliente sem caso: a anotação vai à ficha; digitar continua possível
