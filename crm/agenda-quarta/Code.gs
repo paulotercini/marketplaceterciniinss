@@ -22,7 +22,7 @@ const CONFIG = {
   // F250f · o Marcos e a Amanda deixam o horário livre como "LIVRE 10:30-11:00" ou "LIVRE 09h30-10h00", sem o código:
   // é vaga sem tipo; o tipo vem do cliente na hora de agendar (001 primeiro atendimento, 002 cliente do escritório)
   REGEX_VAGA_LIVRE: /^\s*livre\b(?:(?!\d{4}[\s.-]?\d{4}).)*$/i,
-  VERSAO: 'F310b · o Marcos no verde sálvia das vagas dele',
+  VERSAO: 'F406 · quem agendou, alterou e liberou cada horário',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
   // quem ele é (colorId do Google: 9 = mirtilo/azul, 2 = sálvia/verde, o das vagas do Marcos,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
@@ -156,6 +156,7 @@ function listarColaboradores() {
 
 /* ---------------------------- Utilitários ---------------------------- */
 
+function agora_() { return Utilities.formatDate(new Date(), CONFIG.TZ, 'dd/MM/yyyy HH:mm'); }
 function json_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
@@ -299,7 +300,10 @@ function resumo_(ev) {
     confirmado: /(^|\s)confirmado\s*$/i.test(titulo) && !/n[ãa]o confirmado\s*$/i.test(titulo),
     origemCrm: p.origem === 'crm-agenda',
     clienteId: p.clienteId || null, nome: p.nome || null,
-    telefone: p.telefone || null, agendadoPor: p.agendadoPor || null
+    telefone: p.telefone || null, agendadoPor: p.agendadoPor || null, agendadoEm: p.agendadoEm || null,
+    // F406 · quem mexeu por último (confirmou, editou, remarcou) e, na vaga devolvida, quem a liberou
+    alteradoPor: p.alteradoPor || null, alteradoEm: p.alteradoEm || null, alteracao: p.alteracao || null,
+    liberadoPor: p.liberadoPor || null, liberadoEm: p.liberadoEm || null
   };
 }
 
@@ -429,17 +433,22 @@ function agendar_(user, r) {
 
     const ini = vaga ? new Date(vaga.start.dateTime) : dt_(r.data, r.inicio);
     const fim = vaga ? new Date(vaga.end.dateTime) : new Date(ini.getTime() + CONFIG.DURACAO[tipo] * 60000);
+    const autorEm = r.autor ? (r.autorEm || '') : agora_();
     const descricao = [
       'Telefone: ' + tel,
       'Tipo: ' + (tipo === '001' ? 'Primeiro atendimento' : 'Cliente do escritório'),
       'Com: ' + prof.nome,
-      'Agendado por: ' + user.nome + ' em ' + Utilities.formatDate(new Date(), CONFIG.TZ, 'dd/MM/yyyy HH:mm'),
+      'Agendado por: ' + (r.autor || user.nome) + (autorEm ? ' em ' + autorEm : ''),
+      r.autor ? 'Remarcado por: ' + user.nome + ' em ' + agora_() : '',
       'Orientações dadas: senha do Meu INSS atualizada; agendamento individual.',
       r.observacoes ? 'Observações: ' + String(r.observacoes).trim() : ''
     ].filter(Boolean).join('\n');
 
     const privado = { origem: 'crm-agenda', tipo, nome, telefone: tel, profissional: prof.id,
-      clienteId: r.clienteId ? String(r.clienteId) : '', agendadoPor: user.nome };
+      clienteId: r.clienteId ? String(r.clienteId) : '', agendadoPor: r.autor || user.nome, agendadoEm: autorEm,
+      // na remarcação o autor da inclusão continua o mesmo, e quem remarcou fica como a alteração
+      alteradoPor: r.autor ? user.nome : '', alteradoEm: r.autor ? agora_() : '', alteracao: r.autor ? 'remarcou' : '',
+      liberadoPor: '', liberadoEm: '' };
     const ev = vaga
       // a vaga pode vir sem cor ou em outro tom: o atendimento marcado leva sempre a cor do profissional
       ? Calendar.Events.patch({ summary: tipo + ' - ' + nome + ' - Não confirmado', description: descricao, colorId: prof.cor,
@@ -462,7 +471,10 @@ function confirmar_(user, r) {
   const ev = Calendar.Events.get(CONFIG.CALENDAR_ID, String(r.eventId || ''));
   if (!ehAtendimento_(ev)) throw erro_('NAO_PERMITIDO', 'O evento não é um atendimento 001 ou 002.');
   const base = (ev.summary || '').replace(/\s*-\s*(n[ãa]o confirmado|confirmado)\s*$/i, '');
-  const novo = Calendar.Events.patch({ summary: base + ' - Confirmado' }, CONFIG.CALENDAR_ID, ev.id);
+  const p = Object.assign({}, (ev.extendedProperties && ev.extendedProperties.private) || {}, { alteradoPor: user.nome, alteradoEm: agora_(), alteracao: 'confirmou' });
+  const novo = Calendar.Events.patch({ summary: base + ' - Confirmado',
+    description: String(ev.description || '').trim() + '\nConfirmado por: ' + user.nome + ' em ' + p.alteradoEm,
+    extendedProperties: { private: p } }, CONFIG.CALENDAR_ID, ev.id);
   return { ok: true, evento: resumo_(novo) };
 }
 
@@ -472,16 +484,20 @@ function cancelar_(user, r) {
   if (!(origemCrm || (user.papel === 'admin' && ehAtendimento_(ev)))) {
     throw erro_('NAO_PERMITIDO', 'Somente agendamentos feitos pelo CRM podem ser cancelados por aqui.');
   }
-  liberar_(ev);
+  liberar_(ev, user, 'Cancelado');
   return { ok: true };
 }
 
 /** O atendimento que nasceu de uma vaga volta a ser vaga ("001" ou "002"); o outro é apagado. */
-function liberar_(ev) {
+function liberar_(ev, user, como) {
   const p = (ev.extendedProperties && ev.extendedProperties.private) || {};
   if (p.vaga === '1') {
-    Calendar.Events.patch({ summary: p.tituloVaga || p.tipo || tipoDaVaga_(ev) || '001', description: '',
-      extendedProperties: { private: { origem: '', vaga: '', tituloVaga: '', nome: '', telefone: '', clienteId: '', agendadoPor: '' } } },
+    // F406 · a vaga devolvida guarda quem a liberou e de quem era o atendimento
+    const quem = (user && user.nome) || '', em = agora_();
+    Calendar.Events.patch({ summary: p.tituloVaga || p.tipo || tipoDaVaga_(ev) || '001',
+      description: quem ? (como || 'Liberada') + ' por: ' + quem + ' em ' + em + (p.nome ? ' (era ' + p.nome + ')' : '') : '',
+      extendedProperties: { private: { origem: '', vaga: '', tituloVaga: '', nome: '', telefone: '', clienteId: '', agendadoPor: '', agendadoEm: '',
+        alteradoPor: '', alteradoEm: '', alteracao: '', liberadoPor: quem, liberadoEm: quem ? em : '' } } },
       CONFIG.CALENDAR_ID, ev.id);
   } else {
     Calendar.Events.remove(CONFIG.CALENDAR_ID, ev.id);
@@ -496,11 +512,11 @@ function editar_(user, r) {
   const tipo = (ev.summary.match(CONFIG.REGEX_ATENDIMENTO) || [])[1];
   const st = /(^|\s)confirmado\s*$/i.test(ev.summary) && !/n[ãa]o confirmado\s*$/i.test(ev.summary) ? 'Confirmado' : 'Não confirmado';
   const tel = String(r.telefone || '').replace(/\D/g, '');
-  const p = Object.assign({}, (ev.extendedProperties && ev.extendedProperties.private) || {}, { nome });
+  const p = Object.assign({}, (ev.extendedProperties && ev.extendedProperties.private) || {}, { nome, alteradoPor: user.nome, alteradoEm: agora_(), alteracao: 'editou' });
   if (tel) p.telefone = tel;
   const desc = String(ev.description || '').replace(/^Telefone: .*$/m, '').trim();
   const novo = Calendar.Events.patch({ summary: tipo + ' - ' + nome + ' - ' + st,
-    description: (tel ? 'Telefone: ' + tel + '\n' : '') + desc + '\nEditado por: ' + user.nome + ' em ' + Utilities.formatDate(new Date(), CONFIG.TZ, 'dd/MM/yyyy HH:mm'),
+    description: (tel ? 'Telefone: ' + tel + '\n' : '') + desc + '\nEditado por: ' + user.nome + ' em ' + p.alteradoEm,
     extendedProperties: { private: p } }, CONFIG.CALENDAR_ID, ev.id);
   return { ok: true, evento: resumo_(novo) };
 }
@@ -516,9 +532,10 @@ function remarcar_(user, r) {
     profissional: r.profissional || donoDoEvento_(antigo) || CONFIG.PADRAO,
     tipo: p.tipo || r.tipo, nome: p.nome || r.nome, telefone: p.telefone || r.telefone,
     clienteId: p.clienteId || r.clienteId, data: r.data, inicio: r.inicio, eventoId: r.eventoId, foraDaVaga: r.foraDaVaga, sobrepor: r.sobrepor, ignorar: antigo.id,
-    observacoes: r.observacoes, orientacoesConfirmadas: true
+    observacoes: r.observacoes, orientacoesConfirmadas: true,
+    autor: p.agendadoPor || '(lançado no Google)', autorEm: p.agendadoEm || ''
   });
-  liberar_(antigo);
+  liberar_(antigo, user, 'Remarcado');
   return novo;
 }
 
