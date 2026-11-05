@@ -2038,6 +2038,9 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .app.celular .ze-emo-grade button{width:auto;height:40px}
   .ze-ferr .zap-icone{border:0;background:none;padding:6px;border-radius:6px;color:var(--cinza);display:inline-flex;align-items:center;font-size:12px;font-weight:600}
   .ze-ferr .zap-icone.gravando{background:#fde7e7;color:#b3261e}
+  .zap-escrever .btn-rap.ze-enviar:disabled{opacity:.45;cursor:not-allowed}
+  .zap-escrever .ze-linha:has(.zap-falta:not([hidden])){flex-wrap:wrap}
+  .zap-falta{order:-1;flex-basis:100%;font-size:12px;color:var(--venc,#b3261e);font-weight:600}
   .zap-escrever .btn-rap.ze-enviar{height:40px;padding:0 18px;border-radius:8px;background:var(--azul);border:1px solid var(--azul);color:#fff}
   .zap-escrever.modo-nota .btn-rap.ze-enviar{background:var(--prox,#8f5400);border-color:var(--prox,#8f5400)}
   .zp-card{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:12px}
@@ -15869,13 +15872,15 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
          </div>
          <button class="ze-nota-cel so-cel-ze ${zapNota?"on":""}" aria-pressed="${zapNota}" onclick="alternarNota()"
            title="nota interna: fica na conversa, o cliente não vê">Nota</button>
+         <span id="zap-falta" class="zap-falta" role="status" hidden></span>
          <button class="btn-rap ze-enviar" id="zap-enviar" aria-label="${zapNota?"Anotar":"Enviar"}" onclick="enviarZap()">${zapNota?"Anotar":"Enviar"}</button>
          ${zapNota?"":`<button class="zap-icone ze-mic" id="zap-rec" onclick="gravarAudioZap()" title="gravar áudio" aria-label="Gravar áudio">${zic("mic")}</button>`}
        </div>
      </div>`;
   pintarPainelZap(c);
   const t = document.getElementById("zap-txt");
-  t.oninput = ()=>{ t.style.height="auto"; t.style.height=Math.min(t.scrollHeight,140)+"px"; sugerirFrases(); guardarRascZap(c.id, t.value); };
+  t.oninput = ()=>{ t.style.height="auto"; t.style.height=Math.min(t.scrollHeight,140)+"px"; sugerirFrases(); travaZap(); guardarRascZap(c.id, t.value); };
+  travaZap();
   // F371 · o print colado (Ctrl+V) vai como foto, com o texto escrito de legenda
   t.onpaste = async e=>{
     if(zapNota) return;
@@ -16353,6 +16358,7 @@ async function verMidiaZap(id){
 async function enviarZap(){
   const t = document.getElementById("zap-txt"), txt = (t.value||"").trim();
   if(!txt || !zapAberta) return;
+  if(!zapNota && /\{[a-z_]+\}/.test(txt)){ travaZap(); return aviso("Há dado do caso sem preencher na mensagem"); }
   t.value=""; t.style.height="auto"; guardarRascZap(zapAberta, "");
   // nota interna nasce com direcao E status 'interna' — o banco recusa
   // qualquer nota que tente entrar na fila de envio
@@ -16423,20 +16429,75 @@ function focarCampoZap(){
 // Preenche um modelo com quem está DO OUTRO LADO da conversa. O que não der
 // para preencher (dois processos, benefício sem cadastro) fica visível como
 // {placeholder} — melhor um buraco à vista do que um chute enviado.
-function preencheZap(txt){
+// F402 · os dados do caso nas mensagens prontas (Onda 1 do plano de 05.11.2026, decisões do Paulo):
+// o campo sem dado fica entre chaves no texto, e o Enviar não sai enquanto houver um
+const RX_CAMPO_ZAP = /\{[a-z_]+\}/g;
+const RX_CAMPO_CASO = /\{(beneficio|nb|processo|protocolo|etapa|der|dib|dcb|pericia_\w+|audiencia_\w+|prazo|documentos)\}/;
+const casosZap = cli => cli ? processosDe(D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado" && !ehPreCaso(k)) : [];
+// a mesma barreira do portal e do robô: só a etapa do catálogo da fase atual, e não a desatualizada
+const etapaPublicaZap = k => k && k.etapa && etapasDaFase(k).includes(k.etapa) && !trilhaDe(k).velha ? k.etapa : "";
+const proxEventoZap = (k, rx) => k ? eventosFuturos(k.id).filter(e=>rx.test(tipoEv(e.tipo)))
+  .sort((a,b)=>String(a.data_hora).localeCompare(String(b.data_hora)))[0] || null : null;
+const hZap = h => String(h||"").replace(/^0?(\d{1,2}):(\d{2})$/, (x, hh, mm)=>`${hh}h${mm==="00"?"":mm}`);
+const horaZap = ts => hZap(horaSP(ts));
+// o próximo atendimento da Agenda (o que já está carregado), pela ficha ou pelo telefone da conversa
+function atendimentoZap(cli, c0){
+  const hj = hoje(), u8 = ultimos8(c0 && c0.telefone);
+  return Object.entries(agq.cache||{}).filter(([p])=>p!=="todos").flatMap(([, r])=>(r&&r.dias||[]).flatMap(d=>(d.eventos||[])
+    .filter(e=>e.atendimento && d.data>=hj && ((cli && clienteDoEvento(e)===cli) || (u8.length===8 && ultimos8(e.telefone)===u8)))
+    .map(e=>({data:d.data, hora:e.inicio}))))
+    .sort((a,b)=>(a.data+a.hora).localeCompare(b.data+b.hora))[0] || null;
+}
+function docsZap(cli, k){
+  if(!cli || !k) return "";
+  const {grupos, pessoais} = pedidosDoBalcao(cli.id), g = grupos.find(x=>x.k.id===k.id);
+  return [...(g?g.itens:[]), ...pessoais].map((it, i)=>`${i+1}. ${it.nome}`).join("\n");
+}
+// shortcut: Dr./Dra. pela última letra do primeiro nome, até o cadastro da equipe ter o tratamento
+const advZap = cli => { const n = cli ? ((D.colPorId.get((advogadoDoCliente(cli.id)||[])[0])||{}).nome||"").split(" ")[0] : "";
+  return n ? `${/a$/i.test(n)?"Dra.":"Dr."} ${n}` : ""; };
+function preencheZap(txt, k, ctx){
   const c0 = zapConvs.find(x=>x.id===zapAberta);
   const cli = c0 && c0.cliente_id && D.cliPorId.get(c0.cliente_id);
-  const ks = cli ? processosDe(D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado") : [];
-  const k = ks.length===1 ? ks[0] : null;
+  if(k===undefined){ const ks = casosZap(cli); k = ks.length===1 ? ks[0] : null; }
   const nome = (c0 && c0.contato_nome) || (cli && cli.nome) || (c0 && c0.nome_perfil) || "";
+  const per = proxEventoZap(k, /per[íi]cia/i), aud = proxEventoZap(k, /audi[êe]ncia/i), at = atendimentoZap(cli, c0);
+  const ev = ctx==="pericia" ? per : ctx==="audiencia" ? aud : null;
+  const docPrazo = cli && k ? (((cli.campos||{}).docs_pedidos)||[]).filter(p=>p.ate && (!p.caso_id || p.caso_id===k.id) && (p.itens||[]).some(i=>i && !i.entregue)).map(p=>p.ate).sort()[0] : "";
   const map = {
     "{cliente}": (cli && cli.nome) || "",
     "{nome}": nome, "{primeiro_nome}": (nome||"").trim().split(/\s+/)[0]||"",
-    "{data}": fmt(hoje()),
+    "{data}": ev ? fmtBarra(dataSP(ev.data_hora)) : ctx==="pericia"||ctx==="audiencia" ? "" : fmtBarra(hoje()),
+    "{hora}": ev ? horaZap(ev.data_hora) : "", "{local}": ev ? (ev.local||"") : "",
     "{beneficio}": especieDoCaso(k), "{processo}": (k&&k.processo)||"", "{nb}": (k&&k.nb)||"",
-    "{dcb}": k&&k.dcb ? fmtBarra(k.dcb) : "",
+    "{protocolo}": (k && (k.protocolos||[]).slice(-1)[0]) || "",
+    "{etapa}": etapaPublicaZap(k),
+    "{der}": k&&k.der ? fmtBarra(k.der) : "", "{dib}": k&&k.dib ? fmtBarra(k.dib) : "", "{dcb}": k&&k.dcb ? fmtBarra(k.dcb) : "",
+    "{pericia_data}": per ? fmtBarra(dataSP(per.data_hora)) : "", "{pericia_hora}": per ? horaZap(per.data_hora) : "", "{pericia_local}": (per && per.local) || "",
+    "{audiencia_data}": aud ? fmtBarra(dataSP(aud.data_hora)) : "", "{audiencia_hora}": aud ? horaZap(aud.data_hora) : "", "{audiencia_local}": (aud && aud.local) || "",
+    "{prazo}": k && k.exigencia_prazo ? fmtBarra(k.exigencia_prazo) : docPrazo ? fmtBarra(docPrazo) : "",
+    "{documentos}": docsZap(cli, k), "{advogado}": advZap(cli),
+    "{atendimento_data}": at ? fmtBarra(at.data) : "", "{atendimento_hora}": at ? hZap(at.hora) : "",
   };
   return Object.entries(map).reduce((t,[a,v])=>v?t.split(a).join(v):t, txt);
+}
+// com mais de um caso aberto, o modelo que usa dado de caso pergunta de qual caso é, antes de preencher
+function usarModeloZap(m){
+  const c0 = zapConvs.find(x=>x.id===zapAberta), cli = c0 && c0.cliente_id && D.cliPorId.get(c0.cliente_id), ks = casosZap(cli);
+  const poe = k => { const t = document.getElementById("zap-txt"); if(!t) return;
+    t.value = preencheZap(m.texto, k, m.contexto); fecharCaixa(); t.focus(); t.dispatchEvent(new Event("input")); };
+  if(ks.length<2 || !RX_CAMPO_CASO.test(m.texto) && !/^(pericia|audiencia)$/.test(m.contexto||"")) return poe(undefined);
+  caixa(`<h3>De qual caso é a mensagem?</h3><p class="meio-sub">${esc(m.titulo)}</p>
+    <div class="form-linha">${ks.map((k, i)=>`<button class="btn-rap" data-zk="${i}">${esc(especieDoCaso(k)||"caso")} · ${esc(NOME_FASE[faseEfetiva(k)]||k.fase||"")}</button>`).join("")}</div>`);
+  document.querySelectorAll("[data-zk]").forEach(b=>b.onclick=()=>poe(ks[+b.dataset.zk]));
+}
+// o trecho entre chaves que ficou é o dado que o CRM não tem: trava o Enviar e diz qual falta
+function travaZap(){
+  const t = document.getElementById("zap-txt"), b = document.getElementById("zap-enviar"), av = document.getElementById("zap-falta");
+  if(!t || !b) return;
+  const faltam = zapNota ? [] : [...new Set((t.value||"").match(RX_CAMPO_ZAP)||[])];
+  b.disabled = !!faltam.length;
+  if(av){ av.hidden = !faltam.length; av.textContent = faltam.length ? `Preencha ou apague antes de enviar: ${faltam.join(", ")}` : ""; }
 }
 // O ⚡ mostra as mensagens PARA O CLIENTE (modelos), não a taquigrafia
 // interna do composer — "Cliente orientado por telefone sobre __" enviada ao
@@ -16455,7 +16516,7 @@ function frasesZap(){
        Entram no campo para você conferir antes de mandar.</p>
     ${[...grupos].map(([g,list])=>`<h4 class="zap-gr">${CTX_ROTULO[g]||g}</h4>
       <div class="form-linha">${list.map(m=>`<button class="btn-rap" data-mz="${m.id}"
-        title="${esc(preencheZap(m.texto).slice(0,220))}">${esc(m.titulo)}</button>`).join("")}</div>`).join("")}
+        title="${esc(preencheZap(m.texto, undefined, m.contexto).slice(0,220))}">${esc(m.titulo)}</button>`).join("")}</div>`).join("")}
     ${docs.length?`<h4 class="zap-gr">📄 Lista de documentos do benefício</h4>
       <select id="zap-doc" style="width:100%;padding:7px">
         <option value="">escolha o benefício…</option>
@@ -16463,9 +16524,7 @@ function frasesZap(){
       </select>`:""}`);
   document.querySelectorAll("[data-mz]").forEach(b=>b.onclick=()=>{
     const m = ms.find(x=>x.id===b.dataset.mz); if(!m) return;
-    const t = document.getElementById("zap-txt");
-    t.value = preencheZap(m.texto);
-    fecharCaixa(); t.focus(); t.dispatchEvent(new Event("input"));
+    usarModeloZap(m);
   });
   const sel = document.getElementById("zap-doc");
   if(sel) sel.onchange = ()=>{
@@ -16852,7 +16911,7 @@ function sugerirFrases(){
   sug.hidden = false;
   sug.querySelectorAll("[data-zsg]").forEach(b=>b.onclick=()=>{
     const x = (D.modelos||[]).find(y=>y.id===b.dataset.zsg); if(!x) return;
-    t.value = preencheZap(x.texto); sug.hidden = true; t.focus(); t.dispatchEvent(new Event("input"));
+    sug.hidden = true; t.value = ""; usarModeloZap(x);
   });
 }
 
