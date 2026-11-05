@@ -148,7 +148,14 @@ const T = {
   conf("a primeira olhada só aprende, sem tocar", (await p.evaluate(() => _toques.length)) === 0);
   T.zap_conversas[0].nao_lidas = 3;
   await p.evaluate(() => vigiarZapSom());
-  conf("mensagem nova numa conversa sem dono toca o aviso", (await p.evaluate(() => _toques.join("|"))).includes("Mensagem nova de"));
+  conf("mensagem nova numa conversa sem dono toca o aviso com o texto dela", /: (pode ser de manhã\?|Chegou carta)/.test(await p.evaluate(() => _toques.join("|"))));
+  // F398 · o aviso do navegador traz o texto e a transcrição do áudio, como no celular
+  conf("o corpo do aviso traz o texto e o áudio transcrito", await p.evaluate(() =>
+    corpoAvisoZap({tipo:"texto", texto:"Bom dia"}) === "Bom dia" &&
+    corpoAvisoZap({tipo:"audio", texto:"quero saber do meu processo"}) === "🎤 quero saber do meu processo" &&
+    corpoAvisoZap({tipo:"audio", texto:null, momento:new Date().toISOString()}) === null &&
+    corpoAvisoZap({tipo:"audio", texto:null, momento:"2020-01-01T00:00:00Z"}) === "🎤 Áudio" &&
+    corpoAvisoZap({tipo:"audio", texto:"[áudio não transcrito]", momento:new Date().toISOString()}) === "🎤 Áudio"));
 
   // F192 · quem conversa não é o cliente (a mãe fala pelo filho)
   await p.evaluate(id => abrirConversa(id), Z1);
