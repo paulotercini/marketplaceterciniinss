@@ -2,7 +2,7 @@
 --   1. fora do expediente (antes das 8h, depois das 19h, sábado, domingo e feriado nacional) a
 --      mensagem do cliente não avisa, salvo cliente com prazo fatal nos próximos 5 dias; às 8h do
 --      dia útil sai um resumo por pessoa (mensagens, menções e prazos fatais do dia);
---   2. a menção a mim avisa no celular, no expediente;
+--   2. a menção a mim avisa no celular a qualquer hora (decisão do Paulo, 05.11.2026);
 --   3. o resumo das 8h traz também os prazos fatais do dia de quem faz.
 -- O agrupamento por conversa e os botões Responder e Ouvir ficam na Edge Function zap_push.
 alter table public.mencoes add column if not exists push_em timestamptz;
@@ -48,12 +48,11 @@ begin
 end $$;
 revoke execute on function public.zap_push_chamar(uuid) from public, anon, authenticated;
 
--- a menção nova avisa quem foi citado, no expediente (fora dele, vai ao resumo das 8h)
+-- a menção nova avisa quem foi citado, a qualquer hora
 create or replace function public.push_mencao_gatilho() returns trigger
 language plpgsql security definer set search_path to 'public' as $$
 begin
   if new.de_id is not distinct from new.para_id then return new; end if;
-  if not push_no_expediente() then return new; end if;
   if not exists (select 1 from push_inscricoes where colaborador_id = new.para_id) then return new; end if;
   begin
     perform net.http_post(
