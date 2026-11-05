@@ -1926,6 +1926,10 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zl-cab{padding:14px 14px 10px;display:flex;flex-direction:column;gap:10px}
   .zl-topo{display:flex;align-items:center;gap:8px}
   .zl-topo h2{margin:0;font:600 20px var(--f-tit,inherit);color:var(--texto)}
+  .zl-on{display:inline-flex;align-items:center;gap:5px;font-size:12px}
+  .zl-on i{width:8px;height:8px;border-radius:50%;background:#25a35a}
+  .zl-on.off i{background:#9aa0a6}
+  .zl-on.off{color:var(--cinza)}
   .zl-topo .zap-estado{margin:0 0 0 auto;font-weight:500;font-size:12px;max-width:170px;min-width:0;
                        white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .zl-busca{display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;background:var(--branco);
@@ -7122,7 +7126,9 @@ async function iniciar(){
   if(!zapSomLigado){ zapSomLigado = true; vigiarZapSom(); setInterval(vigiarZapSom, 20000); }
   // F335 · o toque na notificação com o CRM fechado abre ?zap=<conversa>
   const zq = new URLSearchParams(location.search).get("zap");
-  if(zq){ history.replaceState(null, "", location.pathname); abrirConversaDaMencao(zq); }
+  const qs = new URLSearchParams(location.search);
+  if(zq){ history.replaceState(null, "", location.pathname); abrirConversaDaMencao(zq, qs.get("acao"), qs.get("m")); }
+  else if(qs.get("mencoes")){ history.replaceState(null, "", location.pathname); irPara("mencoes"); }
   if(!presencaLigada){ presencaLigada = true;
     const ponto = () => api(`/rest/v1/rpc/zap_presenca`,{method:"POST", body:"{}"}).catch(()=>{});
     ponto(); setInterval(ponto, 60000); }
@@ -14746,9 +14752,20 @@ function renderMencoes(){
   }).join("") || "<p class='meio-sub'>Caixa vazia: nada pendente para você. 🎉</p>";
 }
 // F187 · o aviso de transferência (ou @ na nota) leva direto à conversa
-function abrirConversaDaMencao(conversaId){
+function abrirConversaDaMencao(conversaId, acao, msgId){
   zapAberta = conversaId; zapPainelAberto = false;
+  // F396 · o botão do aviso: Responder põe o cursor no campo, Ouvir toca o áudio (sem o gesto, o navegador pode barrar: fica o balão em destaque)
+  zapDoAviso = acao ? {conversa: conversaId, acao, msgId} : null;
   visao = "whatsapp"; render();
+}
+let zapDoAviso = null;
+function aplicarZapDoAviso(id){
+  const a = zapDoAviso; if(!a || a.conversa!==id) return; zapDoAviso = null;
+  if(a.acao==="responder"){ const t = document.getElementById("zap-txt"); if(t) t.focus(); return; }
+  if(a.acao==="ouvir" && a.msgId){
+    irParaMsg(a.msgId);
+    const b = document.querySelector(`#zb-${CSS.escape(a.msgId)} .zp-play`); if(b) b.click();
+  }
 }
 // F236 · o mesmo gesto fecha a menção: concluir a tarefa ou marcar o andamento como lido baixa a menção a mim dele
 async function baixarMencoes(andIds){
@@ -15429,6 +15446,7 @@ function pintarListaZap(){
        <div class="zl-topo"><h2>WhatsApp</h2>
          <button class="zap-estado ${zapComProblema()?"ruim":""}" onclick="abrirConexaoZap()" title="conexão do WhatsApp: ${esc(p.txt)}"><i style="background:${p.cor}"></i>${
            zapComProblema()?(cfgApp("zap_qr")?"Ler QR code":"Corrigir conexão"):"conectado"}</button>
+         <button class="tl-bt zl-on ${eu&&eu.zap_offline_desde?"off":""}" onclick="estadoZap()" aria-pressed="${!(eu&&eu.zap_offline_desde)}" title="${eu&&eu.zap_offline_desde?"Offline: o contato que você assumiu recebe a mensagem automática. Toque para ficar online.":"Online. Toque para ficar offline e editar a mensagem automática."}"><i aria-hidden="true"></i>${eu&&eu.zap_offline_desde?"Offline":"Online"}</button>
          <button class="tl-bt" onclick="novoContatoZap()" title="Conversar com um número novo" aria-label="Novo contato">＋<span class="sr-only"> Novo contato</span></button>
          ${/* F274 · som, Encerradas e Painel da equipe no ⋯; a lista se repinta a cada 6 s, então o ⋯ lembra se estava aberto */""}
          <details class="tl-mais mais-baixo zl-mais"${zapMaisAberto?" open":""} ontoggle="zapMaisAberto=this.open"><summary class="tl-bt tl-bt-ic" aria-label="Mais opções do WhatsApp" title="som, encerradas e painel da equipe">${IC_SVG.mais}</summary>
@@ -15646,6 +15664,7 @@ async function abrirConversa(id){
   if(!document.getElementById("zap-dir")) return;   // saiu da tela do WhatsApp enquanto carregava
   if(cache || mesma) pintarConversaGuardando(); else pintarConversa();
   pintarAgendaZap();
+  aplicarZapDoAviso(id);
 }
 async function recarregarMsgs(){
   if(!zapAberta) return;
@@ -16845,6 +16864,32 @@ function foneZapNovo(t){
   if(d.length===8 || d.length===9) d = "16"+d;   // o DDD 16 é o padrão do escritório
   if(d.length===10 || d.length===11) d = "55"+d;
   return /^55\d{10,11}$/.test(d) ? d : "";
+}
+// F397 · Online e Offline: offline, o contato que eu assumi recebe uma vez a mensagem automática que eu escrevi
+const offlinePadrao = () => `Olá! ${(eu.nome||"").trim().split(" ")[0]||"Quem atende você"} está fora do atendimento no momento e responderá a sua mensagem assim que retornar.`;
+async function gravarEstadoZap(off, msg){
+  try{ await api(`/rest/v1/rpc/zap_meu_offline`,{method:"POST", body:JSON.stringify({p_offline:off, p_msg:msg||null})}); }
+  catch(e){ return aviso("Não gravou: tente de novo"); }
+  eu.zap_offline_desde = off ? (eu.zap_offline_desde || new Date().toISOString()) : null;
+  if(msg) eu.zap_offline_msg = msg;
+  fecharCaixa(); pintarListaZap();
+  aviso(off ? "Offline: a mensagem automática vai ao contato que você assumiu" : "Online");
+}
+function estadoZap(){
+  const off = !!eu.zap_offline_desde;
+  caixa(`<h3>${off?"Você está offline":"Ficar offline"}</h3>
+    <p class="meio-sub">Offline, quem escrever numa conversa que você assumiu recebe esta mensagem, uma vez por conversa, até você voltar.</p>
+    <textarea id="zof-msg" rows="4" style="width:100%" aria-label="Mensagem automática">${esc(eu.zap_offline_msg||offlinePadrao())}</textarea>
+    <div class="form-linha" style="margin-top:10px">
+      ${off?`<button class="btn-sal" id="zof-on" title="Voltar a ficar online">Online</button>
+             <button class="btn-sec" id="zof-sal" title="Salvar a mensagem e continuar offline">Salvar</button>`
+           :`<button class="btn-sal" id="zof-off" title="Ficar offline com esta mensagem">Offline</button>`}
+    </div>`);
+  const txt = () => document.getElementById("zof-msg").value.trim();
+  const b = id => document.getElementById(id);
+  if(b("zof-on")) b("zof-on").onclick = () => gravarEstadoZap(false, txt());
+  if(b("zof-sal")) b("zof-sal").onclick = () => gravarEstadoZap(true, txt());
+  if(b("zof-off")) b("zof-off").onclick = () => gravarEstadoZap(true, txt());
 }
 function novoContatoZap(){
   caixa(`<h3>Novo contato</h3>
@@ -19248,7 +19293,8 @@ async function notificarLembrete(t, c, txt){
   }catch(e){}
 }
 function cliqueNoAviso(d){
-  if(d && d.crm==="zap"){ if(d.conversa) abrirConversaDaMencao(d.conversa); else { visao="whatsapp"; render(); } return; }
+  if(d && d.crm==="zap"){ if(d.conversa) abrirConversaDaMencao(d.conversa, d.acao, d.mensagem); else { visao="whatsapp"; render(); } return; }
+  if(d && d.crm==="mencao"){ irPara("mencoes"); return; }
   if(!d || d.crm!=="lembrete") return;
   if(d.acao==="concluir") concluirDeVez(d.tarefa);
   else if(d.acao==="adiar") sonecaTarefa(d.tarefa, 60);
