@@ -5454,15 +5454,12 @@ html .tipo-mais.mais-baixo .tl-mais-menu{left:0;right:auto}
 /* F373 · a ⭐ do canto da ficha, abaixo do ⋯ e um pouco maior */
 .det-imp{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid var(--borda,#ddd);border-radius:8px;background:var(--fundo-card,#fff);color:var(--cinza,#888);cursor:pointer;padding:0}
 .det-imp.on{color:#d64570;border-color:#d64570;background:#fdeef3}
-.det-imp.on svg path{fill:currentColor}
+.det-imp.on:not(.det-notas) svg path{fill:currentColor}
 .det-mais-col{display:inline-flex;align-items:center;gap:6px}
 /* F403 · Anotações rápidas no lugar do ⋯; o ponto vermelho avisa a anotação que ninguém abriu */
-.det-notas{position:relative}
-.det-notas-pt{position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--vermelho,#C62828);border:1.5px solid var(--fundo,#fff)}
-.det-notas.nova{border-color:var(--vermelho,#C62828)}
 /* no computador a ⭐ desce para baixo do ⋯, no espaço vazio à direita da segunda linha */
 .app:not(.celular) .det-mais-col{position:relative}
-.app:not(.celular) .det-mais-col > .det-imp{position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);z-index:2}
+.app:not(.celular) .det-mais-col > .det-imp:not(.det-notas){position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);z-index:2}
 html .det-topo .linha1 > .det-canto{margin-left:auto;display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 html .lc-cab .lc-menu{margin-left:auto}
 html .zl-mais .zl-link{text-decoration:none;color:inherit}
@@ -6455,7 +6452,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.56</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.57</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -53034,26 +53031,71 @@ function rapidasDoCliente(c){
   const cp = (c && c.campos) || {};
   return [...(cp.atendimento||[]).filter(n=>n.origem==="rapida"), ...(cp.rapidas||[])].sort((a,b)=>(b.em||"").localeCompare(a.em||""));
 }
-const rapidaNova = c => { const v = ((c && c.campos) || {}).rapidas_vistas || ""; return rapidasDoCliente(c).some(n=>(n.em||"") > v && n.autor_id !== (eu && eu.id)); };
+// F404 · a anotação rápida que ficou na ficha espera ser distribuída a um caso; enquanto espera, o botão fica vermelho
+const rapidaPendente = n => n && n.origem==="rapida" && !n.distribuida;
+const rapidasPendentes = c => (((c && c.campos) || {}).atendimento || []).filter(rapidaPendente);
+const IC_NOTA = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M8 13h5M8 17h7"/><path d="m18.4 2.6 3 3L14 13l-4 1 1-4 7.4-7.4Z"/></svg>`;
 function botaoRapidas(c){
-  const n = rapidasDoCliente(c).length, nova = n && rapidaNova(c);
-  return `<button class="btn-mini det-notas${nova?" nova":""}" onclick="verRapidas('${c.id}')" title="Anotações rápidas deste cliente${n?` (${n})`:""}">Anotações${n?` <b>${n}</b>`:""}${nova?`<span class="det-notas-pt" aria-hidden="true"></span><span class="sr-only"> · há anotação nova</span>`:""}</button>`;
+  const p = rapidasPendentes(c).length;
+  const t = p ? `Anotações rápidas: ${p} para distribuir a um caso` : "Anotações rápidas";
+  return `<button class="det-imp det-notas${p?" on":""}" onclick="verRapidas('${c.id}')" title="${t}" aria-label="${t}">${IC_NOTA}</button>`;
 }
 function verRapidas(cliId){
   const c = D.cliPorId.get(cliId); if(!c) return;
-  const ns = rapidasDoCliente(c);
+  const at = (c.campos||{}).atendimento || [];
+  const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
   const an = id => (D.anexos||[]).find(a=>a.id===id);
+  const quando = n => esc(new Date(n.em).toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo"}));
+  const anexos = n => (n.anexos||[]).map(a=>`<button class="btn-mini" onclick="abrirAnexo('${a.id}')">📎 ${esc((an(a.id)||a).nome||"anexo")}</button>`).join(" ");
+  const casoDe = n => { const id = n.caso_id || (n.distribuida||{}).caso_id, k = id && D.casoPorId.get(id); return k ? ` · ${esc(tituloCaso(k))}` : ""; };
+  const pend = at.map((n,i)=>[n,i]).filter(([n])=>rapidaPendente(n)).sort((a,b)=>(b[0].em||"").localeCompare(a[0].em||""));
+  const feitas = rapidasDoCliente(c).filter(n=>!rapidaPendente(n));
   caixa(`<h3 style="margin:0 0 8px">Anotações rápidas <small class="meio-sub">· ${esc(c.nome)}</small></h3>
     <div class="form-linha"><button style="margin-left:auto" onclick="anotacaoRapida(null,'${cliId}')" title="Nova anotação rápida">Nova<span class="sr-only"> anotação rápida</span></button></div>
-    ${ns.length ? ns.map(n=>`<div class="sug-it"><b>${esc(n.quem||"")}</b> · ${esc(new Date(n.em).toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo"}))}${n.importante?" · ⭐":""}${n.caso_id && D.casoPorId.get(n.caso_id)?` · ${esc(tituloCaso(D.casoPorId.get(n.caso_id)))}`:""}
-      <div style="white-space:pre-wrap">${esc(n.texto||"")}</div>
-      ${(n.anexos||[]).map(a=>`<button class="btn-mini" onclick="abrirAnexo('${a.id}')">📎 ${esc((an(a.id)||a).nome||"anexo")}</button>`).join(" ")}</div>`).join("")
-      : `<p class="meio-sub">Nenhuma anotação rápida.</p>`}`);
-  if(rapidaNova(c)){
-    c.campos = {...(c.campos||{}), rapidas_vistas:new Date().toISOString()};
-    api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}).catch(()=>{});
-    document.querySelectorAll(".det-notas").forEach(b=>{ b.classList.remove("nova"); b.querySelector(".det-notas-pt")?.remove(); });
-  }
+    ${pend.length ? `<h4 style="margin:8px 0 4px;color:#d64570">Para distribuir · ${pend.length}</h4>` + pend.map(([n,i])=>`<div class="sug-it rp-pend">
+      <b>${esc(n.quem||"")}</b> · ${quando(n)}${n.importante?" · ⭐":""}
+      <div style="white-space:pre-wrap">${esc(n.texto||"")}</div>${anexos(n)}
+      <div class="form-linha" style="margin-top:4px;align-items:center">
+        ${ks.length ? `<select id="rp-caso-${i}" aria-label="caso que recebe a anotação">${ks.map(k=>`<option value="${k.id}">${esc(rotuloCasoEscolha(k))}</option>`).join("")}</select>
+        <button onclick="distribuirRapida('${cliId}',${i})" title="Levar a anotação e os anexos ao caso escolhido">Distribuir<span class="sr-only"> ao caso escolhido</span></button>` : `<span class="meio-sub">Sem caso aberto.</span>`}
+        <button class="btn-mini" onclick="distribuirRapida('${cliId}',${i},true)" title="Deixar na ficha, sem caso">Concluir<span class="sr-only"> sem levar a caso</span></button>
+      </div></div>`).join("") : ""}
+    ${feitas.length ? `<h4 style="margin:10px 0 4px">Distribuídas</h4>` + feitas.map(n=>`<div class="sug-it"><b>${esc(n.quem||"")}</b> · ${quando(n)}${n.importante?" · ⭐":""}${casoDe(n)}
+      <div style="white-space:pre-wrap">${esc(n.texto||"")}</div>${anexos(n)}</div>`).join("") : ""}
+    ${!pend.length && !feitas.length ? `<p class="meio-sub">Nenhuma anotação rápida.</p>` : ""}`);
+}
+// F404 · leva a anotação da ficha ao caso (andamento com o autor e a data de origem, anexos junto, ⭐ no caso) ou a conclui sem caso
+async function distribuirRapida(cliId, i, semCaso){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const at = [...((c.campos||{}).atendimento || [])], n = at[i]; if(!rapidaPendente(n)) return;
+  const casoId = semCaso ? null : (document.getElementById(`rp-caso-${i}`)||{}).value, k = casoId && D.casoPorId.get(casoId);
+  if(!semCaso && !k) return aviso("Escolha o caso");
+  const d = {em:new Date().toISOString(), por:eu.id};
+  try{
+    if(k){
+      const data = new Date(n.em).toLocaleDateString("pt-BR",{timeZone:"America/Sao_Paulo"});
+      const [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:casoId, autor_id:eu.id, origem:"app", texto:`Anotação rápida de ${n.quem||"—"} (${data}): ${n.texto||""}`})}) || [];
+      d.caso_id = casoId; if(and) d.and_id = and.id;
+      const ids = (n.anexos||[]).map(a=>a.id);
+      if(ids.length){
+        const mud = {caso_id: ehPreCaso(k) ? null : casoId, ...(and ? {andamento_id:and.id} : {})};
+        await api(`/rest/v1/anexos?id=in.(${ids.join(",")})`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(mud)});
+        (D.anexos||[]).forEach(a=>{ if(ids.includes(a.id)) Object.assign(a, mud); });
+      }
+      if(n.importante && !k.importante){
+        await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({importante:true})});
+        k.importante = true;
+      }
+    }
+    at[i] = {...n, distribuida:d};
+    c.campos = {...(c.campos||{}), atendimento:at};
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})});
+  }catch(e){ return aviso("Não gravou — tente de novo"); }
+  aviso(k ? `Anotação levada a ${tituloCaso(k)}` : "Anotação concluída", false);
+  document.querySelectorAll(".det-notas").forEach(b=>{ const x=document.createElement("span"); x.innerHTML=botaoRapidas(c); b.replaceWith(x.firstChild); });
+  rapidasPendentes(c).length ? verRapidas(cliId) : fecharCaixa();
+  if(k && clienteAberto===cliId) repintarFicha();
 }
 function arArquivos(el){
   const n = (el.files||[]).length, r = document.getElementById("ar-arq-n");
@@ -53170,10 +53212,9 @@ function arMostrarAlvo(){
   if(!arCliSel){ div.innerHTML=""; return; }
   const ks=(D.casosDoCliente.get(arCliSel)||[]).filter(k=>k.fase!=="encerrado")
     .sort((a,b)=>(a.criado_em||"")<(b.criado_em||"")?1:-1);
+  // F404 · sem escolher o caso, a anotação fica na ficha para distribuir depois (o botão do cabeçalho fica vermelho)
   div.innerHTML = ks.length
-    ? (ks.length>1
-      ? `Caso: <select id="ar-caso">${ks.map(k=>`<option value="${k.id}">${esc(rotuloCasoEscolha(k))}</option>`).join("")}</select>`
-      : `Caso: <b>${esc(tituloCaso(ks[0]))}</b><input type="hidden" id="ar-caso" value="${ks[0].id}">`)
+    ? `Caso: <select id="ar-caso"><option value="">a distribuir</option>${ks.map(k=>`<option value="${k.id}">${esc(rotuloCasoEscolha(k))}</option>`).join("")}</select>`
     : `Sem caso: vai à ficha`;
 }
 // dois B31 abertos se distinguem pela fase e pelo número (teste 11.88, REC-05)
@@ -53255,7 +53296,7 @@ async function salvarAnotacaoRapida(){
   const imp=document.getElementById("ar-imp").checked;
   const selCaso=document.getElementById("ar-caso");
   try{
-    if(selCaso){
+    if(selCaso && selCaso.value){
       const casoId=selCaso.value, k=D.casoPorId.get(casoId);
       const [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
         body:JSON.stringify({caso_id:casoId, autor_id:eu.id, origem:"app", texto:t})})||[];

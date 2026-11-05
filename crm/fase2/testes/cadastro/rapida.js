@@ -103,6 +103,7 @@ const SUPA = "https://ficticio.supabase.co";
     await p.evaluate(() => /Caso:/.test(document.getElementById("ar-alvo").textContent)));
 
   // 5) guardar: andamento no caso + caso marcado 🔥 URGENTE + modal fecha
+  await p.evaluate(() => { const s = document.getElementById("ar-caso"); s.value = s.options[1].value; });   // F404 · sem escolha fica a distribuir
   await p.fill("#ar-texto", "Cliente ligou: audiência remarcada, avisar hoje.");
   escritos.length = 0;
   await p.evaluate(() => salvarAnotacaoRapida());
