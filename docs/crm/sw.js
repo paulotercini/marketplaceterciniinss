@@ -69,9 +69,12 @@ self.addEventListener("notificationclick", e => {
   e.waitUntil((async () => {
     const cls = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
     // F335 · o aviso do WhatsApp abre a conversa: na janela aberta, ou numa nova com ?zap=
-    if (d.crm === "zap") {
-      if (cls[0]) { cls[0].postMessage(d); return cls[0].focus(); }
-      return self.clients.openWindow(d.conversa ? "./?zap=" + d.conversa : "./");
+    // F396 · Responder põe o cursor no campo; Ouvir toca o áudio do aviso; a menção abre as Menções
+    if (d.crm === "zap" || d.crm === "mencao") {
+      const q = { ...d, acao: e.action || "" };
+      if (cls[0]) { cls[0].postMessage(q); return cls[0].focus(); }
+      if (d.crm === "mencao") return self.clients.openWindow("./?mencoes=1");
+      return self.clients.openWindow(d.conversa ? "./?zap=" + d.conversa + (q.acao ? "&acao=" + q.acao + "&m=" + (d.mensagem || "") : "") : "./");
     }
     if (cls[0]) {
       cls[0].postMessage({ crm: "lembrete", acao: e.action || "abrir", ...d });
@@ -86,5 +89,5 @@ self.addEventListener("push", e => {
   try { d = e.data ? e.data.json() : {}; } catch (x) {}
   e.waitUntil(self.registration.showNotification(d.title || "WhatsApp · CRM", {
     body: d.body || "", tag: d.tag || "crm-zap", renotify: true,
-    icon: d.icon || "icone-192.png", badge: "icone-192.png", data: d.data || { crm: "zap" } }));
+    icon: d.icon || "icone-192.png", badge: "icone-192.png", actions: d.actions || [], data: d.data || { crm: "zap" } }));
 });
