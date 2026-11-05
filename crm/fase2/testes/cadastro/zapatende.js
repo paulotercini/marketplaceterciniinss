@@ -141,6 +141,15 @@ const T = {
   await p.waitForSelector(".zl-achado", { timeout: 5000 }).catch(() => {});
   conf("a busca procura dentro das mensagens e marca o trecho", ((await p.textContent(".zl-lista").catch(() => "")) || "").includes("Nas mensagens") && !!(await p.$(".zl-achado mark")));
   await p.fill("#zl-busca", ""); await p.dispatchEvent("#zl-busca", "input");
+  // F401 · a busca procura em todas as filas: a encerrada aparece estando em Novas
+  await p.evaluate(() => { zapFiltro = "novas"; pintarListaZap(); });
+  const semBusca = await p.textContent(".zl-lista");
+  await p.fill("#zl-busca", "outra pes"); await p.dispatchEvent("#zl-busca", "input");
+  await p.waitForTimeout(200);
+  const comBusca = await p.textContent(".zl-lista");
+  conf("a busca acha a conversa encerrada fora da fila aberta", !semBusca.includes("Outra pessoa") && comBusca.includes("Outra pessoa") && comBusca.includes("Encerradas"));
+  await p.fill("#zl-busca", ""); await p.dispatchEvent("#zl-busca", "input");
+  await p.evaluate(() => { zapFiltro = "todas"; pintarListaZap(); });
 
   // F191 · aviso sonoro: mensagem nova numa conversa minha ou sem dono toca
   await p.evaluate(() => { window._toques = []; tocarAvisoZap = t => _toques.push(t); zapSomVisto = null; });

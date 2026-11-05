@@ -15433,7 +15433,9 @@ function pintarListaZap(){
                        : f==="retornos" ? !!retornoDe(c) : aberta(c);
   const q = dsa(zapBusca.trim()), qd = zapBusca.replace(/\D/g,"");
   const visiveis = zapConvs.filter(zapVisivel);
-  let cs = visiveis.filter(c=>naAba(zapFiltro,c)
+  // F401 · com texto na busca, procura em todas as filas, encerradas inclusive (pedido do Paulo de 05.11.2026)
+  const buscando = q.length>=2 || qd.length>=4;
+  let cs = visiveis.filter(c=>(buscando || naAba(zapFiltro,c))
     && (!zapChips.atendente || c.atendente_id===zapChips.atendente)
     && (!q || dsa(nomeDaConversa(c)+" "+((clienteDaConversa(c)||{}).nome||"")).includes(q) || (qd.length>=4 && String(c.telefone||"").includes(qd)))
     && (!zapChips.naoLidas || c.nao_lidas)
@@ -15445,9 +15447,9 @@ function pintarListaZap(){
     lista = cs.sort((a,b)=>(retornoDe(a).quando<retornoDe(b).quando?-1:1)).map(c=>cartaoConversa(c)).join("");
   } else {
     const hj = hoje(), ont = dataSP(new Date(Date.now()-864e5).toISOString());
-    const grupo = c => c.fixada ? "Fixadas" : !c.ultima_em ? "Antes" : dataSP(c.ultima_em)===hj ? "Hoje"
+    const grupo = c => buscando && !aberta(c) ? "Encerradas" : c.fixada ? "Fixadas" : !c.ultima_em ? "Antes" : dataSP(c.ultima_em)===hj ? "Hoje"
                      : dataSP(c.ultima_em)===ont ? "Ontem" : "Antes";
-    lista = ["Fixadas","Hoje","Ontem","Antes"].map(g=>{
+    lista = ["Fixadas","Hoje","Ontem","Antes","Encerradas"].map(g=>{
       const gs = cs.filter(c=>grupo(c)===g);
       return gs.length ? `<p class="zl-grupo">${g}</p>${gs.map(c=>cartaoConversa(c)).join("")}` : "";
     }).join("");
@@ -15480,7 +15482,7 @@ function pintarListaZap(){
              ${gestor?`<button class="tl-mais-it zl-link ${zapPainelAberto?"on":""}" role="menuitem" onclick="abrirPainelZap()" title="Painel da equipe"><span aria-hidden="true">Equipe</span><span class="sr-only">Painel da equipe</span></button>`:""}
            </span></details></div>
        <label class="zl-busca">${zic("busca")}<input type="search" id="zl-busca" value="${esc(zapBusca)}"
-         placeholder="Buscar nome ou telefone" aria-label="Buscar conversa"></label>
+         placeholder="Buscar em todas: nome, telefone ou mensagem" aria-label="Buscar em todas as conversas"></label>
        <div class="zl-filas" role="tablist" aria-label="Filas" style="grid-template-columns:repeat(${filtros.length},minmax(0,1fr))">${filtros.map(([f,r])=>{
           const n = visiveis.filter(c=>naAba(f,c)).length;
           return `<button role="tab" aria-selected="${zapFiltro===f}" class="${zapFiltro===f?"on":""} ${f}" data-zf="${f}">${r}${n?` <span class="n">${n}</span>`:""}</button>`;
