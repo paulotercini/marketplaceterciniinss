@@ -6370,6 +6370,20 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz-grade>.tl-pz-pill,
 html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz-grade>.tl-pz-k{font-size:13px;color:var(--cinza);font-weight:400;padding-top:1px}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz-grade>.tl-pz-tf{grid-column:2 / 4;min-width:0}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz-grade .tl-tarefas{margin:0}
+/* F407 · a proposta A: a faixa no cartão em três partes (o prazo com a barra, a tarefa e os botões), uma embaixo da outra na coluna estreita */
+.tl-pz.tl-pz-a,html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-a{display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px 18px;padding:10px 12px}
+.tl-pz-a>.tl-pz-col{flex:1 1 200px;min-width:0;display:flex;flex-direction:column;gap:3px}
+.tl-pz-a .tl-pz-pill,.tl-pz-a .tl-pz-k,html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-a .tl-pz-pill{height:auto;padding:0;background:transparent;color:var(--cinza,#4A4944);font-size:11px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.tl-pz-a .tl-pz-m{color:var(--dk-fatal,#B3261E)}
+.tl-pz-a .tl-pz-tf .tl-tarefas{margin:0}
+.tl-pz-barra{position:relative;height:4px;margin-top:6px;border-radius:3px;background:var(--borda,#E7E6E1);overflow:hidden}
+.tl-pz-barra i{display:block;height:100%;background:var(--dk-fatal,#B3261E)}
+.tl-pz-barra em,.tl-pz-bl{display:none}
+.tl-pz-bts{flex:none;display:flex;flex-wrap:wrap;gap:6px;margin-left:auto;align-self:center}
+.tl-pz-bts button{height:30px;padding:0 12px;border-radius:7px;font:inherit;font-size:12px;font-weight:500;cursor:pointer}
+.tl-pz-bts .tl-pz-cumpri{border:1px solid var(--dk-fatal,#B3261E);background:var(--dk-fatal,#B3261E);color:#FFFFFF}
+.tl-pz-bts .tl-pz-perdi,.tl-pz-bts .tl-pz-abrir{border:1px solid var(--borda,#E7E6E1);background:#FFFFFF;color:var(--texto,#121212)}
+@media (hover:hover){.tl-pz-bts .tl-pz-perdi:hover,.tl-pz-bts .tl-pz-abrir:hover{background:var(--fundo,#F8F8F6)}.tl-pz-bts .tl-pz-cumpri:hover{filter:brightness(.92)}}
 @media (min-width:761px){
 html[data-tema="v10"] body:not(.zap-aberto) .app:not(.celular) .painel[data-p="2"] .timeline li.dia-bloco{display:grid;grid-template-columns:88px minmax(0,1fr);align-items:start}
 html[data-tema="v10"] body:not(.zap-aberto) .app:not(.celular) .painel[data-p="2"] .timeline .dia-bloco>.tl-dia{padding:10px 8px 0 0;text-align:right}
@@ -6469,7 +6483,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.58</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.59</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19899,7 +19913,7 @@ async function abrirFicha(cliId){
     D._ficha = { cliId, creds, vincs };
     retraduzirCrps(ands);   // F236 · o movimento do e-Recursos gravado com a regra velha se lê pelo bloco relido   // o que a pintura usa além do D global
     pintarFicha();
-    adotarDcbDosAutos(cliId).then(()=>adotarQuadro(cliId)).catch(e=>console.warn("DCB dos autos / quadro:", e));   // F236, F321
+    adotarDcbDosAutos(cliId).then(()=>adotarQuadro(cliId)).then(()=>adotarPrazosAssistente(cliId)).catch(e=>console.warn("DCB dos autos / quadro:", e));   // F236, F321, F406
     repararCardsDoCliente(cliId).catch(e=>console.warn("cards:", e));   // F236
     repararCasosDoAtendimento(cliId).catch(e=>console.warn("natureza:", e));   // F236
     // ondas 0 e 1 · em segundo plano, sem esperar: o texto do dossiê e,
@@ -37303,6 +37317,65 @@ function datasDosJulgados(k){
   for(const x of docs) for(const campo of ["der","dib"]) if(x.r[campo] && !out[campo] && x.r[campo] <= (x.d||"9999")) out[campo] = {v:x.r[campo], fonte:x.fonte};
   return out;
 }
+// F407 · o prazo que o assistente aponta ("⏳ Prazo: … até dd/mm/aaaa") vira prazo de verdade ao abrir a ficha: a anotação
+// ganha o carimbo [PRAZO], o caso sem prazo ganha a data, e a tarefa aberta que a anotação cita (pelo começo do id ou por um
+// número em comum, como a RPV) passa a ela, para ficar na mesma faixa. Uma vez por anotação; o desfazer não volta a adotar.
+const ACERTO_PZ_ASS = 10;   // a anotação de até 10 dias ainda adota o prazo que já venceu; a mais antiga, só o que vem
+function tarefasCitadas(a, p, k){
+  const ands = D._andsFicha||[], grande = s => (String(s||"").toUpperCase().match(/\b(?=[A-Z0-9]*\d)[A-Z0-9]{8,}\b/g)||[]);
+  const toks = new Set([...grande(p.linha), ...(p.linha.match(/\d[\d.\-\/]{13,}\d/g)||[]).map(x=>x.replace(/\D/g, ""))]);
+  return (D.tarefasFicha||[]).filter(t=>{
+    if(t.caso_id!==k.id || t.concluida_em || t.papel==="revisa" || t.andamento_id===a.id) return false;
+    const og = ands.find(b=>b.id===t.andamento_id);
+    if(!og || og.criado_em > a.criado_em || RX_PRAZO_AND.test(og.texto||"")) return false;
+    if((a.texto||"").includes(String(t.id).slice(0, 8))) return true;
+    const ot = String(og.texto||"");
+    return [...toks].some(x=>x.length>=8 && (ot.toUpperCase().includes(x) || ot.replace(/\D/g, "").includes(x)));
+  });
+}
+function moverTarefaMem(id, andId){
+  for(const t of [...(D.tarefasFicha||[]), ...[...D.tarefasPorCaso.values()].flat()]) if(t.id===id) t.andamento_id = andId;
+}
+async function adotarPrazosAssistente(cliId){
+  const ands = D._andsFicha||[], hj = hoje(), feitos = [];
+  for(const a of ands){
+    if(a.excluir || a.responde_a || !String(a.origem_id||"").startsWith("mcp:") || RX_PRAZO_AND.test(a.texto||"")) continue;
+    const k = D.casoPorId.get(a.caso_id);
+    if(!k || k.cliente_id!==cliId || k.fase==="encerrado" || ehPreCaso(k) || ((k.ronda||{}).pz_ass_fora||[]).includes(a.id)) continue;
+    const p = pzDoAssistente(a.texto), criado = dataSP(a.criado_em);
+    if(!p || p.data < criado || (p.data < hj && diasEntreIso(criado, hj) > ACERTO_PZ_ASS)) continue;
+    const carimbo = `[PRAZO ${fmt(p.data)}]`;
+    if(ands.some(b=>b.caso_id===k.id && !b.excluir && (b.texto||"").includes(carimbo))) continue;
+    const tfs = tarefasCitadas(a, p, k), x = {a, k, texto: a.texto, prazo: k.prazo===undefined ? null : k.prazo, tfs: tfs.map(t=>[t.id, t.andamento_id])};
+    try{
+      const texto = `⏰ ${carimbo} ${a.texto}`;
+      await api(`/rest/v1/andamentos?id=eq.${a.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify({texto})});
+      a.texto = texto;
+      if(!k.prazo){ await patchCaso(k.id, {prazo: p.data}); k.prazo = p.data; }
+      for(const t of tfs){ await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({andamento_id: a.id})}); moverTarefaMem(t.id, a.id); }
+      feitos.push(x);
+    }catch(e){ console.warn("prazo do assistente não gravou:", e); }
+  }
+  if(!feitos.length) return 0;
+  if(clienteAberto===cliId){
+    repintarFicha();
+    avisoDesfazer(feitos.length===1 ? `Prazo do assistente lançado: ${tituloNotaPz(feitos[0].a)}, vence ${fmtBarra(pzDoAssistente(feitos[0].a.texto).data)}`
+      : `${feitos.length} prazos do assistente lançados`, async ()=>{
+      for(const x of feitos){
+        await api(`/rest/v1/andamentos?id=eq.${x.a.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify({texto: x.texto})}).catch(()=>{});
+        x.a.texto = x.texto;
+        for(const [id, og] of x.tfs){ await api(`/rest/v1/andamento_tarefas?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+          body:JSON.stringify({andamento_id: og})}).catch(()=>{}); moverTarefaMem(id, og); }
+        const r = {...(x.k.ronda||{})}; r.pz_ass_fora = [...(r.pz_ass_fora||[]), x.a.id];
+        const corpo = {ronda: r, ...(x.k.prazo!==x.prazo ? {prazo: x.prazo} : {})};
+        await patchCaso(x.k.id, corpo).catch(()=>{}); Object.assign(x.k, corpo);
+      }
+      aviso("Desfeito"); repintarFicha();
+    });
+  }
+  return feitos.length;
+}
 async function adotarQuadro(cliId){
   const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado" && !ehPreCaso(k));
   if(!ks.length) return 0;
@@ -38214,7 +38287,10 @@ const natDaLinha = x => x.natureza || (x.ehPrazo ? "fatal" : "lembrete");
 // F236 · o tipo da linha (o que é) e o resumo (o que fazer, o ato, a tarefa), para o cartão e para o resumo do topo
 const tipoDaLinha = x => x.rotulo || (x.ico==="🩺" && !x.ehPrazo ? "Perícia" : x.ico==="📌" ? "Comentário fixo"
   : x.filha ? "Lembrar antes" : NAT_ROT[natDaLinha(x)]);
-const resumoDaLinha = x => x.resumo || (x.cru ? "" : cortaFrase(String(x.rot||"").replace(/^[⏰🔥\s]*\[PRAZO [0-9.]+\]\s*/u,"").replace(/\s+/g," ").trim(), 70));
+// F407 · a linha do prazo do assistente se chama pelo que a linha "⏳ Prazo:" diz, e não pela primeira frase da avaliação
+const pzAssDaLinha = x => { const a = x.andId && (D._andsFicha||[]).find(b=>b.id===x.andId);
+  return a && /^⏰ \[PRAZO /.test(a.texto||"") ? (pzDoAssistente(a.texto)||{}).desc || "" : ""; };
+const resumoDaLinha = x => pzAssDaLinha(x) || x.resumo || (x.cru ? "" : cortaFrase(String(x.rot||"").replace(/^[⏰🔥\s]*\[PRAZO [0-9.]+\]\s*/u,"").replace(/\s+/g," ").trim(), 70));
 // a linha da coluna é fina (F145): à vista vai o nome curto do que é; no tipo genérico (compromisso, lembrete, prazo
 // fatal com motivo) vale mais o resumo, que diz o que fazer e de quem é. O nome inteiro fica no title e no "saber mais".
 const RX_TIPO_GENERICO = /^(Compromisso|Lembrete|Lembrar antes|Prazo fatal|Tarefa|Documento pedido)$/;
@@ -42107,7 +42183,23 @@ const RX_PZ_RESP = /^(✔|✖) \[PRAZO (CUMPRIDO|NÃO CUMPRIDO|NÃO SE APLICA)\]
 let _cumprindo = null;   // a anotação com o formulário do cumprimento aberto
 // F388 · o texto da anotação que só repete o título do prazo não aparece duas vezes
 const limpaRepPz = t => String(t||"").trim().replace(/[\s.]+$/,"").toLowerCase();
-const tituloNotaPz = a => (RX_PZ_CONTAGEM.exec(String(a.texto||"").replace(RX_PZ_CARIMBO, ""))||[])[1] || cortaFrase(fazerDaNota(a.texto) || "Prazo fatal", 80);
+const tituloNotaPz = a => (RX_PZ_CONTAGEM.exec(String(a.texto||"").replace(RX_PZ_CARIMBO, ""))||[])[1] || (pzDoAssistente(a.texto)||{}).desc
+  || cortaFrase(fazerDaNota(a.texto) || "Prazo fatal", 80);
+// F407 · o prazo que o assistente aponta na linha "⏳ Prazo: <o quê>, … até dd/mm/aaaa (…)" ou "… vence dd/mm/aaaa". Vale só a
+// data dita como fim ("até", "vence"); estimativa, data a conferir, perícia, sessão e DCB ficam como texto. Duas datas: a mais cedo
+const RX_PZ_ASS = /^⏳ Prazo:[ \t]*(.+)$/gmu, RX_PZ_ASS_FIM = /(?:\bvence(?: em)?|\baté)[ \t]+(\d{2})\/(\d{2})\/(\d{4})\b/giu;
+function pzDoAssistente(t){
+  let o = null;
+  for(const m of String(t||"").matchAll(RX_PZ_ASS)){
+    if(/estimativ|cerca de|a confirmar|a conferir|não certificad/i.test(m[1])) continue;
+    const fins = [...m[1].matchAll(RX_PZ_ASS_FIM)]; if(!fins.length) continue;
+    const data = fins.map(f=>`${f[3]}-${f[2]}-${f[1]}`).sort()[0]; if(o && o.data <= data) continue;
+    const ini = /(?:publicação|intimação|comunicação|notificação|ciência|decisão|despacho)[^0-9\n]{0,14}(\d{2})\/(\d{2})\/(\d{4})/i.exec(m[1]);
+    const desc = m[1].slice(0, fins[0].index).split(/,\s*/)[0].replace(/[\s,;.:(]+$/, "") || "Prazo";
+    o = {data, linha: m[0], desc: desc.charAt(0).toUpperCase() + desc.slice(1), ini: ini ? `${ini[3]}-${ini[2]}-${ini[1]}` : null};
+  }
+  return o;
+}
 function estadoPrazoNota(a){
   const m = a && RX_PRAZO_AND.exec(a.texto||""); if(!m) return null;
   const data = isoDoCarimbo((/\d{2}\.\d{2}\.\d{4}/.exec(m[1])||[])[0]), k = D.casoPorId.get(a.caso_id);
@@ -42136,10 +42228,16 @@ function faixaPrazoNota(a, e){
   if(e.est==="vivo"){
     const f = faltaPz({data: e.data, natureza: "fatal"});
     const meta = f.urg==="hoje" ? `hoje, ${esc(diaCurtoPz(e.data))} · <b>é o último dia</b>` : `vence ${esc(diaCurtoPz(e.data))} · <b>${esc(f.txt)}</b>`;
-    // F390 · a grade da proposta B: "Prazo fatal" e "Tarefa" em duas linhas, a tarefa dentro do quadro
-    const tf = tarefasCartao(a);
-    return `<div class="tl-pz tl-pz-vivo tl-pz-grade">${pill}<div class="tl-pz-o"><b class="tl-pz-t">${tit}</b><small class="tl-pz-m">${meta}</small></div>
-      <button type="button" class="tl-pz-abrir" onclick="abrirPainelTarefa('${a.caso_id}','${a.id}')" aria-label="Abrir o prazo: ${tit}">Abrir</button>${tf?`<span class="tl-pz-k">Tarefa</span><div class="tl-pz-tf">${tf}</div>`:""}</div>`;
+    // F407 · a proposta A (escolha do Paulo, 05.11.2026): a faixa no cartão com o prazo (o que é, quando vence, quanto falta e
+    // a barra da intimação ao vencimento), a tarefa de quem faz e os botões Cumprido, Perdido e Abrir
+    const tf = tarefasCartao(a), ct = RX_PZ_CONTAGEM.exec(String(a.texto||"").replace(RX_PZ_CARIMBO, "")), pa = pzDoAssistente(a.texto);
+    const ini = ct ? isoDoCarimbo(ct[5]) : pa && pa.ini || dataSP(a.criado_em);
+    const barra = barraPz({data: ini, rot: ct || (pa && pa.ini) ? "Intimação" : "Anotação"}, {data: e.data}, "tl-pz");
+    return `<div class="tl-pz tl-pz-vivo tl-pz-grade tl-pz-a"><div class="tl-pz-col">${pill}<div class="tl-pz-o"><b class="tl-pz-t">${tit}</b><small class="tl-pz-m">${meta}</small>${barra}</div></div>
+      ${tf?`<div class="tl-pz-col"><span class="tl-pz-k">Tarefa</span><div class="tl-pz-tf">${tf}</div></div>`:""}
+      <div class="tl-pz-bts"><button type="button" class="tl-pz-cumpri" onclick="cumpriNaNota('${a.id}')" title="Registrar como o prazo foi cumprido">Cumprido</button>
+        <button type="button" class="tl-pz-perdi" onclick="registrarNaoCumprido('${a.caso_id}','${a.id}')" title="O prazo não foi cumprido">Perdido</button>
+        <button type="button" class="tl-pz-abrir" onclick="abrirPainelTarefa('${a.caso_id}','${a.id}')" aria-label="Abrir o prazo: ${tit}">Abrir</button></div></div>`;
   }
   if(e.est==="vencido"){
     const ex = [...new Set((e.exec||[]).map(t=>nome(t.colaborador_id)))].join(" e ");
@@ -42225,11 +42323,14 @@ function respPrazoHtml(a){
   return {corpo: a.texto.slice(r[0].length), chip: `<span class="chip tl-pz-resp tl-pz-resp-${r[2]==="CUMPRIDO"?"ok":"x"}">${rot}</span>`,
     anexos: anx.length ? `<span class="tl-pz-anx">${anx.map(an=>`<button type="button" class="tl-pz-doc" onclick="abrirAnexo('${an.id}')">${IC_DOC_PZ}${esc(an.nome||"comprovante")}</button>`).join("")}</span>` : ""};
 }
+// F407 · a linha "⏳ Prazo:" do assistente com a data do carimbo sai do texto, porque a faixa a mostra
+const semLinhaPzAss = (t, carimbo) => { const d = String(carimbo||"").replace(/\./g, "/");
+  return String(t||"").split("\n").filter(l=>!(/^⏳ Prazo:/u.test(l) && l.includes(d))).join("\n").trim(); };
 function comentarioV12(a, resposta, reacoes, raiz, co, cor){
   const pz = RX_PRAZO_AND.exec(a.texto||"");
   // F326 · a anotação do prazo traz a faixa do estado; a resposta do registro traz o selo e o comprovante
   const pzE = pz && raiz ? estadoPrazoNota(a) : null, rp = !pz && respPrazoHtml(a);
-  const corpo = pz ? a.texto.slice(pz[0].length).replace(RX_PZ_CONTAGEM, "") : rp ? rp.corpo : (a.texto||"");
+  const corpo = pz ? semLinhaPzAss(a.texto.slice(pz[0].length).replace(RX_PZ_CONTAGEM, ""), pz[1]) : rp ? rp.corpo : (a.texto||"");
   const tp = tipoDoComentario(corpo);
   const chipsReacao = (reacoes&&reacoes.length)
     ? `<span class="tl-reacoes">${[...reacoes.reduce((m,r)=>{
@@ -42245,7 +42346,7 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
     ? `<button class="tl-bt tl-bt-ic tl-apaga" title="apagar este meu comentário" aria-label="apagar" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>` : "";
   const barra = raiz ? `<span class="tl-barra">
       <button class="tl-bt tl-bt-nota resp-liga" onclick="abrirRespInline('${a.id}')" title="responder a este comentário — a resposta fica grudada nele">Responder</button>
-      ${pzE && (pzE.est==="vivo" || pzE.est==="vencido") ? `<button class="tl-bt tl-pz-cumpri" onclick="cumpriNaNota('${a.id}')" title="registrar como o prazo foi cumprido">${IC_OK_PZ}Cumprido</button>`
+      ${pzE && (pzE.est==="vivo" || pzE.est==="vencido") ? ""
         : minha?`<button class="tl-bt tl-bt-ok tf-acao" onclick="concluirDeVez('${minha.id}')" title="concluir a sua tarefa — dá para desfazer logo depois">Concluir<span class="sr-only"> tarefa</span></button>`:""}
       <button class="tl-bt" onclick="abrirRespInline('${a.id}',1)" title="responder dando prazo adicional">Prazo<span class="sr-only"> adicional</span></button>
       ${alvo?`<button class="tl-bt tf-acao" onclick="adiarTarefa('${alvo.id}')" title="mudar a data da tarefa">Reagendar</button>`:""}
