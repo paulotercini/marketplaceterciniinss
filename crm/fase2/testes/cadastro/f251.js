@@ -99,6 +99,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a vaga do Marcos e o atendimento dele não aparecem na agenda do Paulo", !(await p.$('[data-aqvaga="M2"]')) && !(await p.$('[data-aqev="M1"]')));
   conf("o atendimento lançado à mão (sem cor) aparece como do Paulo, no tom do 002", await p.evaluate(() => { const e = document.querySelector('[data-aqev="P3"]'); return !!e && e.classList.contains("p-paulo") && e.classList.contains("t002"); }));
   conf("o dia conta 1 atendimento (a vaga não conta)", /1\/14/.test(await p.textContent(`[data-aqdia="${W}"]`)));
+  conf("F406b · a quarta sem vaga no Google diz \"Sem vagas\", e não 0/14", await p.evaluate(d => { const o = [...document.querySelectorAll("[data-aqdia]")].filter(b => b.dataset.aqdia !== d && !/Feriado/.test(b.textContent));
+    return o.length > 0 && o.every(b => /Sem vagas/.test(b.textContent) && !/0\/14/.test(b.textContent)); }, W));
   await foto("01-quarta-do-paulo");
 
   // 2 · primeiro atendimento numa vaga 001
@@ -128,6 +130,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.evaluate(() => fecharCaixa());
   await recarregar();
   conf("na agenda, o horário agendado fica no tom do 001 e a vaga sai da lista", await p.evaluate(() => { const e = document.querySelector('[data-aqev="P1"]'); return !!e && e.classList.contains("t001") && !document.querySelector('.aq-vaga[data-aqvaga="P1"]'); }));
+  conf("F406 · o cartão diz quem agendou", /por Ingrid/.test(await p.textContent('[data-aqev="P1"]')));
 
   // 3 · Editar o atendimento lançado à mão
   await p.click('[data-aqev="P3"]');
@@ -140,6 +143,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf(`editar troca o nome e guarda o telefone (${evG("P3").summary})`, evG("P3").summary === "002 - Rafael Fictício Souza - Não confirmado"
     && /Telefone: 16988887777/.test(evG("P3").description || ""));
   await recarregar();
+  conf("F406 · o lançado à mão editado diz quem editou", /Ingrid editou/.test(await p.textContent('[data-aqev="P3"]')));
 
   // 4 · Remarcar para outra vaga 001
   await p.click('[data-aqev="P1"]');
@@ -152,6 +156,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf(`e devolve a antiga com o título original (${evG("P1").summary})`, evG("P1").summary === LIVRE("001"));
   await p.evaluate(() => fecharCaixa());
   await recarregar();
+  conf("F406 · remarcado, o cartão mantém quem agendou e diz quem remarcou", /por Ingrid · Ingrid remarcou/.test(await p.textContent('[data-aqev="P4"]')));
+  await p.click('[data-aqev="P4"]');
+  conf("F406 · o menu do atendimento diz quem agendou e quando", /Agendado por Ingrid em \d\d\/\d\d\/\d{4}/.test(await p.textContent(".aq-menu-por")));
+  await p.keyboard.press("Escape"); await p.mouse.click(5, 5);
 
   // 5 · Cancelar: a vaga volta
   await p.click('[data-aqev="P4"]');
@@ -159,6 +167,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf(`cancelar devolve a vaga com o título original (${evG("P4").summary})`, evG("P4").summary === LIVRE("001") && !((evG("P4").extendedProperties || {}).private || {}).clienteId);
   await recarregar();
   conf("e ela volta à lista de vagas", !!(await p.$('.aq-vaga[data-aqvaga="P4"]')));
+  conf("F406 · a vaga devolvida diz quem a liberou", /liberada por Ingrid/.test(await p.textContent('.aq-ev-vaga[data-aqvaga="P4"]'))
+    && /Cancelado por: Ingrid .*era Novo Ficticio Cliente/.test(evG("P4").description || ""));
 
   // 6 · cliente do escritório numa vaga 002
   await p.click('.aq-vaga[data-aqvaga="P2"]');
