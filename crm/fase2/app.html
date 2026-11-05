@@ -5456,6 +5456,10 @@ html .tipo-mais.mais-baixo .tl-mais-menu{left:0;right:auto}
 .det-imp.on{color:#d64570;border-color:#d64570;background:#fdeef3}
 .det-imp.on svg path{fill:currentColor}
 .det-mais-col{display:inline-flex;align-items:center;gap:6px}
+/* F403 · Anotações rápidas no lugar do ⋯; o ponto vermelho avisa a anotação que ninguém abriu */
+.det-notas{position:relative}
+.det-notas-pt{position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--vermelho,#C62828);border:1.5px solid var(--fundo,#fff)}
+.det-notas.nova{border-color:var(--vermelho,#C62828)}
 /* no computador a ⭐ desce para baixo do ⋯, no espaço vazio à direita da segunda linha */
 .app:not(.celular) .det-mais-col{position:relative}
 .app:not(.celular) .det-mais-col > .det-imp{position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);z-index:2}
@@ -6157,7 +6161,7 @@ html[data-tema="v10"] .menu-topo::before{content:none}
   html[data-tema="v10"] .app:not(.celular) .caso-2col.caso-3col{grid-template-columns:minmax(280px,320px) minmax(0,1fr);grid-template-areas:"pz dir" "esq dir";grid-template-rows:auto 1fr;gap:14px 18px}
   html[data-tema="v10"] .app:not(.celular) .caso-3col > .caso-esq{position:static;max-height:none}
 }
-/* F402 · sem as abas dos andamentos (pedido do Paulo, 05.11.2026): o cartão da fase abre os andamentos dela, o "Tudo" abre o Caso Completo,
+/* F404 · sem as abas dos andamentos (pedido do Paulo, 05.11.2026): o cartão da fase abre os andamentos dela, o "Tudo" abre o Caso Completo,
    e a seta no canto dos andamentos recolhe a coluna dos prazos e do cartão do caso */
 html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-l{grid-template-columns:repeat(var(--nf,4),minmax(0,1fr)) auto auto}
 html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-and{box-shadow:inset 0 -3px 0 var(--fc)}
@@ -6466,7 +6470,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.55</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.57</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19999,7 +20003,7 @@ function pintarFicha(){
   // processo, mas o escritório avisa (🔔 lembretes ativos — trabalho, só que
   // de outro tipo); vermelho = nada, nem aviso. Cinza é quem nunca teve caso.
   const stCli = ativosCli.length
-    ? `<span class="cli-st ativo" title="${ativosCli.length} de ${ks.length} caso(s) em andamento${lembCli.length?` · e ${lembCli.length} lembrete(s) na aba 🔔`:""}">Cliente ativo · ${ativosCli.length} caso${ativosCli.length>1?"s":""} em andamento</span>`
+    ? `<span class="cli-st ativo" title="${ativosCli.length} de ${ks.length} caso(s) em andamento${lembCli.length?` · e ${lembCli.length} lembrete(s) na aba 🔔`:""}">Cliente ativo · ${ativosCli.length} caso${ativosCli.length>1?"s":""}</span>`
     : lembCli.length
       ? `<span class="cli-st lemb" title="nenhum processo em andamento, mas o escritório avisa de tempos em tempos — veja o quadro Aposentadoria no Cadastro">🟡 Sem processo — ${lembCli.length} lembrete${lembCli.length>1?"s":""} ativo${lembCli.length>1?"s":""}</span>`
       : ksR.length && !precasosDe(c).some(p=>!p.so_lembrete)
@@ -20018,7 +20022,7 @@ function pintarFicha(){
       ${/* F86 · o telefone ao lado do CPF e da senha: é o terceiro dado que a
            equipe copia o dia inteiro (o protótipo o mostrava na faixa) */""}
       ${(temaV10() && c.telefone)?`<span class="id-min"><b>Telefone</b> <span class="cop" data-cop="${esc(c.telefone)}" data-cop-msg="Telefone copiado" title="clique para copiar">${esc(c.telefone)}</span>
-        <button class="olho" title="copiar o telefone" onclick="copiar('${escJs(c.telefone)}','Telefone copiado')">📋</button></span>`:""}
+        <button class="olho" title="copiar o telefone" onclick="copiar('${escJs(c.telefone)}','Telefone copiado')">📋</button>${botaoZapCliente(cliId)}</span>`:""}
       ${/* F56 · o "Concluir em" do To Do agora mora aqui: UMA data à vista
            dizendo quando este cliente volta — vencida grita em vermelho,
            futura avisa em azul, e a ausência de data também é informação */""}
@@ -20053,17 +20057,12 @@ function pintarFicha(){
            ficha vê de cara que o caso é dividido com outro advogado */""}
       ${chipParceria(c, ks)}
       ${chipsParentes(c)}${chipEntregar(c)}
-      ${botaoZapCliente(cliId)}
+      ${temaV10() && c.telefone ? "" : botaoZapCliente(cliId)}
       ${/* F401 · CPF, Meu INSS, telefone, advogado e a situação na linha do nome, sem a segunda linha (pedido do Paulo, 05.11.2026) */""}
       ${temaV10() && !celular() ? `<span class="linha2"><span class="resumo resumo-lado">${resumoIn}</span>${linhaAdvogado(c)}${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}</span>` : ""}
       ${temaV10() && celular() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
-      ${/* F274 · o que não se usa a toda hora vai ao ⋯ do cabeçalho; CPF e a senha do Meu INSS ficam à vista (pedido do Paulo) */""}
-      <span class="det-mais-col">${menuMais([
-        casosDoBalcao(cliId).length ? `<button class="tl-mais-it td-abrir" role="menuitem" onclick="trouxeDocumentos('${cliId}')" title="Trouxe documentos"><span aria-hidden="true">Recebidos</span><span class="sr-only">Trouxe documentos</span></button>` : "",
-        casoDoDoc(cliId) ? `<button class="tl-mais-it sep-abrir" role="menuitem" onclick="separarParaCliente('${cliId}')" title="Imprimir e separar para o cliente"><span aria-hidden="true">Separar</span><span class="sr-only">Imprimir e separar para o cliente</span></button>` : "",
-        c.telefone ? `<button class="tl-mais-it" role="menuitem" onclick="abrirSmbot('${c.id}')" title="Abrir no SMBot"><span aria-hidden="true">SMBot</span><span class="sr-only">Abrir no SMBot</span></button>` : "",
-        temaV10() ? itemNaoCliente(c) : "",
-      ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo det-mais"')}${botaoEstrelaFicha(cliId)}</span>
+      ${/* F403 · o ⋯ do cabeçalho saiu: no lugar, as Anotações rápidas do cliente; Separar e Não é cliente foram ao Cadastro (pedido do Paulo, 05.11.2026) */""}
+      <span class="det-mais-col">${botaoRapidas(c)}${botaoEstrelaFicha(cliId)}</span>
       ${/* F274 · a situação do cliente e o ✕ andam juntos no canto direito, mesmo quando a linha quebra */""}
       <span class="det-canto">${temaV10() && !celular() ? "" : `${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}`}
       ${chipAgendaCliente(c)}
@@ -20142,7 +20141,7 @@ function pintarFicha(){
           // F320 · no celular os rótulos são curtos (Escritório, INSS, CRPS, Judicial e Tudo)
           // F330 · INSS, CRPS e Judicial só aparecem com andamento ou número; o número entra pela gestão do caso (protocolo ou NB abre o INSS, e-Sisrec o CRPS, CNJ o Judicial; pedido do Paulo, 31.10.2026)
           const v10Cel = temaV10() && celular();
-          // F402 · no computador as abas saem e o cartão da fase abre os andamentos dela (pedido do Paulo, 05.11.2026); a fase pedida abre mesmo sem dados
+          // F404 · no computador as abas saem e o cartão da fase abre os andamentos dela (pedido do Paulo, 05.11.2026); a fase pedida abre mesmo sem dados
           const semMenu = temaV10() && !v10Cel && !!faseDaTrilha(k);
           const aba = visiveis[subAba] || (semMenu && abaPedida[k.id]===subAba) ? subAba : "escritorio";
           abaDoCaso = {id:k.id, aba};
@@ -39890,7 +39889,7 @@ function faixaTrilha(k){
     const mkA = st==="a" ? MK0(f) : null, aguarda = mkA ? (i=>i>=0 && !mkA[i].d ? ` · aguardando ${esc(ets[i].n)}` : "")(mkA.findIndex(m=>m.s==="a")) : "";
     const stHtml = st==="a" && !celular() ? `<span class="jn-atual">atual</span>` : st==="a" ? `<span class="tr-agora"><b>${esc(agora||"a definir")}</b>${etapaDesmentida(k) ? ` <small class="et-velha" title="um fato oficial mais novo diz outra coisa: veja a sugestão na placa">(desatualizada)</small>` : ""}${aguarda}</span>` : esc(txt);
     const par = st!=="a" && f==="judicial" && !!trilhaParalela(k);   // F323 · o MS ao lado do recurso não é passado
-    const and = !celular() && abaDoCaso.id===k.id && ABA_DA_FASE[f]===abaDoCaso.aba;   // F402 · o cartão dos andamentos abertos
+    const and = !celular() && abaDoCaso.id===k.id && ABA_DA_FASE[f]===abaDoCaso.aba;   // F404 · o cartão dos andamentos abertos
     return `<button role="tab" aria-selected="${ver===f}" class="jn-b jn-${st}${par?" jn-par":""}${ver===f?" jn-ver":""}${and?" jn-and":""}" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}"
       onclick="trVerFase('${k.id}','${f}')" title="${esc(`${c.n}: ${String(txt)}`)}"><span class="jn-nome"><i></i><span class="jn-txt">${c.n}</span></span><span class="jn-st">${stHtml}</span></button>`; }).join("");
   const alt = Object.entries(TRILHAS).filter(([,t])=>t.fase===ver);
@@ -40038,13 +40037,13 @@ function trSombra(tr){
 function trRolar(dir){ const tr = document.querySelector(".tr-rol"); if(tr) tr.scrollBy({left: dir*tr.clientWidth*0.7}); }
 function trVerFase(casoId, f){
   trVer[casoId] = f;
-  // F402 · no computador o cartão da fase também abre os andamentos dela: Escritório volta às anotações
+  // F404 · no computador o cartão da fase também abre os andamentos dela: Escritório volta às anotações
   if(!celular() && ABA_DA_FASE[f]){ subAba = abaPedida[casoId] = ABA_DA_FASE[f]; guardar("crm_subaba", subAba); }
   trRepintar(); trCentrar();
 }
 const ABA_DA_FASE = {escritorio:"escritorio", inss:"inss", conselho:"crps", judicial:"cnj"};
 let abaPedida = {}, abaDoCaso = {};
-// F402 · a seta recolhe a coluna dos prazos e do cartão do caso; fica guardada neste computador
+// F404 · a seta recolhe a coluna dos prazos e do cartão do caso; fica guardada neste computador
 const esqOculta = () => ler("crm_caso_esq")==="0";
 function esqAlternar(){ guardar("crm_caso_esq", esqOculta() ? "" : "0"); trRepintar(); }
 function trEscolher(casoId, rito, i){
@@ -49502,7 +49501,9 @@ function fichaIdentificacao(c, creds){
       ${/* onda 0 · o dossiê também na Identificação, que está sempre à vista */""}
       <div class="idf-dossie">${caixaDossie(c)}
         <button class="cad-mini" style="margin-top:6px" title="busca de novo o que a extensão do gov.br baixou para este CPF"
-          onclick="atualizarDossie('${c.id}')">Atualizar<span class="sr-only"> dossiê</span></button></div>
+          onclick="atualizarDossie('${c.id}')">Atualizar<span class="sr-only"> dossiê</span></button>
+        ${casoDoDoc(c.id) ? `<button class="cad-mini sep-abrir" style="margin-top:6px" onclick="separarParaCliente('${c.id}')" title="Imprimir e separar para o cliente"><span aria-hidden="true">Separar</span><span class="sr-only">Imprimir e separar para o cliente</span></button>` : ""}
+        ${itemNaoCliente(c).replace('class="tl-mais-it', 'style="margin-top:6px" class="cad-mini').replace(' role="menuitem"', "")}</div>
     </div>
   </div>`;
 }
@@ -53057,24 +53058,57 @@ async function lerSugestao(id){
   catch(e){ aviso("Não foi possível marcar: "+e.message); return; }
   carregarSugestoes();
 }
-function anotacaoRapida(pre){
+// F403 · a anotação rápida do cliente: a da ficha (campos.atendimento) e a do caso (campos.rapidas, cópia curta do andamento)
+function rapidasDoCliente(c){
+  const cp = (c && c.campos) || {};
+  return [...(cp.atendimento||[]).filter(n=>n.origem==="rapida"), ...(cp.rapidas||[])].sort((a,b)=>(b.em||"").localeCompare(a.em||""));
+}
+const rapidaNova = c => { const v = ((c && c.campos) || {}).rapidas_vistas || ""; return rapidasDoCliente(c).some(n=>(n.em||"") > v && n.autor_id !== (eu && eu.id)); };
+function botaoRapidas(c){
+  const n = rapidasDoCliente(c).length, nova = n && rapidaNova(c);
+  return `<button class="btn-mini det-notas${nova?" nova":""}" onclick="verRapidas('${c.id}')" title="Anotações rápidas deste cliente${n?` (${n})`:""}">Anotações${n?` <b>${n}</b>`:""}${nova?`<span class="det-notas-pt" aria-hidden="true"></span><span class="sr-only"> · há anotação nova</span>`:""}</button>`;
+}
+function verRapidas(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const ns = rapidasDoCliente(c);
+  const an = id => (D.anexos||[]).find(a=>a.id===id);
+  caixa(`<h3 style="margin:0 0 8px">Anotações rápidas <small class="meio-sub">· ${esc(c.nome)}</small></h3>
+    <div class="form-linha"><button style="margin-left:auto" onclick="anotacaoRapida(null,'${cliId}')" title="Nova anotação rápida">Nova<span class="sr-only"> anotação rápida</span></button></div>
+    ${ns.length ? ns.map(n=>`<div class="sug-it"><b>${esc(n.quem||"")}</b> · ${esc(new Date(n.em).toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo"}))}${n.importante?" · ⭐":""}${n.caso_id && D.casoPorId.get(n.caso_id)?` · ${esc(tituloCaso(D.casoPorId.get(n.caso_id)))}`:""}
+      <div style="white-space:pre-wrap">${esc(n.texto||"")}</div>
+      ${(n.anexos||[]).map(a=>`<button class="btn-mini" onclick="abrirAnexo('${a.id}')">📎 ${esc((an(a.id)||a).nome||"anexo")}</button>`).join(" ")}</div>`).join("")
+      : `<p class="meio-sub">Nenhuma anotação rápida.</p>`}`);
+  if(rapidaNova(c)){
+    c.campos = {...(c.campos||{}), rapidas_vistas:new Date().toISOString()};
+    api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+    document.querySelectorAll(".det-notas").forEach(b=>{ b.classList.remove("nova"); b.querySelector(".det-notas-pt")?.remove(); });
+  }
+}
+function arArquivos(el){
+  const n = (el.files||[]).length, r = document.getElementById("ar-arq-n");
+  if(r) r.textContent = n ? (n>1 ? `${n} arquivos` : el.files[0].name) : "";
+}
+function anotacaoRapida(pre, cliId){
   arCliSel=null; arLead=null; arNovo=null;
-  caixa(`<h3 style="margin:0 0 2px">⚡ Anotação rápida</h3>
-    <p class="meio-sub" style="margin:0 0 8px">Ligação ou balcão: escreva agora, sem procurar a
-      ficha.</p>
-    <input id="ar-busca" placeholder="nome do cliente…" autocomplete="off" style="width:100%"
+  const aberto = !cliId && clienteAberto && D.cliPorId.get(clienteAberto);
+  caixa(`<h3 style="margin:0 0 6px">⚡ Anotação rápida</h3>
+    ${aberto ? `<button type="button" class="btn-mini ar-cli" style="margin-bottom:4px" onclick="arEscolher('${aberto.id}')" title="anotar para o cliente desta ficha">${esc(aberto.nome)}</button>` : ""}
+    <input id="ar-busca" placeholder="cliente" autocomplete="off" style="width:100%"
       oninput="arProcurar(this.value)">
     <div id="ar-achados" style="margin-top:4px;max-height:180px;overflow:auto"></div>
     <div id="ar-alvo" class="meio-sub" style="margin-top:6px"></div>
-    <textarea id="ar-texto" rows="3" placeholder="o que a pessoa disse e o que precisa ser feito — Enter guarda"
+    <textarea id="ar-texto" rows="3" placeholder="anotação"
       style="width:100%;margin-top:6px;resize:vertical" oninput="sugerirRetorno('ar-texto','ar-sug',arCliSel)"
       onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();salvarAnotacaoRapida();}"></textarea>
     <div id="ar-sug" class="meio-sub" style="margin-top:4px"></div>
     <div class="form-linha" style="margin-top:6px;align-items:center">
-      <label class="conta-ck"><input type="checkbox" id="ar-imp">⭐ importante</label>
+      <label class="conta-ck"><input type="checkbox" id="ar-imp" checked>⭐ importante</label>
+      <label class="btn-mini" title="carregar anexo">📎 Anexo<input type="file" id="ar-arq" multiple hidden onchange="arArquivos(this)"></label>
+      <span id="ar-arq-n" class="meio-sub"></span>
       <button style="margin-left:auto" onclick="salvarAnotacaoRapida()" title="Guardar agora">Guardar<span class="sr-only"> agora</span></button>
     </div>`);
   const b=document.getElementById("ar-busca");
+  if(cliId && D.cliPorId.get(cliId)){ arEscolher(cliId); return; }
   if(b){ b.focus(); if(pre&&String(pre).trim()){ b.value=String(pre); arProcurar(b.value); } }
 }
 function arProcurar(txt){
@@ -53089,15 +53123,13 @@ function arProcurar(txt){
   div.innerHTML = (achados.length ? achados.map(c=>`<button class="proc-op" style="padding:6px 10px"
       onclick="arEscolher('${c.id}')"><span class="proc-nome">${esc(c.nome)}</span>
       <span class="proc-sub">${c.cpf?`CPF ${esc(c.cpf)}`:"sem CPF"}</span></button>`).join("")
-    : `<p class="meio-sub" style="margin:2px 0 4px">Ninguém com esse nome no CRM.</p>`)
+    : `<p class="meio-sub" style="margin:2px 0 4px">Ninguém com esse nome.</p>`)
     + (t.length>=3 ? `
       <button class="proc-op" style="padding:6px 10px;border-top:1px dashed var(--borda)" onclick="arNovoCliente()">
-        <span class="proc-nome">➕ Cadastrar “${esc(t)}” como CLIENTE novo</span>
-        <span class="proc-sub">cadastro mínimo agora (complete a ficha depois) — a anotação entra como atendimento</span>
+        <span class="proc-nome">➕ Cliente novo: “${esc(t)}”</span>
       </button>
       <button class="proc-op" style="padding:6px 10px" onclick="arNaoCliente()">
-        <span class="proc-nome">➕ Anotar “${esc(t)}” como INTERESSADO</span>
-        <span class="proc-sub">ainda não é cliente — entra no funil 💼 Vendas com a anotação</span>
+        <span class="proc-nome">➕ Interessado: “${esc(t)}”</span>
       </button>` : "");
 }
 function arNovoCliente(){
@@ -53160,20 +53192,18 @@ function arMostrarAlvo(){
   // F54 · quem entra novo (cliente ou interessado) entra com nome completo E
   // telefone — sem contato, o registro não serve para ligar de volta
   const telHtml=`<div class="form-linha" style="margin-top:6px;align-items:center">
-    <input id="ar-tel" type="tel" placeholder="telefone com DDD (obrigatório)" style="flex:1;min-width:170px">
+    <input id="ar-tel" type="tel" placeholder="telefone com DDD" style="flex:1;min-width:170px">
   </div>`;
-  if(arNovo){ div.innerHTML=`<b>${esc(arNovo.nome)}</b> será cadastrado como <b>cliente novo</b>
-    (nome e telefone — complete a ficha depois), e a anotação entra como atendimento.${telHtml}`; return; }
-  if(arLead){ div.innerHTML=`<b>${esc(arLead.nome)}</b> vira <b>interessado</b> no funil 💼 Vendas,
-    com a anotação como interesse — de lá, um clique transforma em cliente.${telHtml}`; return; }
+  if(arNovo){ div.innerHTML=`Cliente novo: <b>${esc(arNovo.nome)}</b>${telHtml}`; return; }
+  if(arLead){ div.innerHTML=`Interessado: <b>${esc(arLead.nome)}</b>${telHtml}`; return; }
   if(!arCliSel){ div.innerHTML=""; return; }
   const ks=(D.casosDoCliente.get(arCliSel)||[]).filter(k=>k.fase!=="encerrado")
     .sort((a,b)=>(a.criado_em||"")<(b.criado_em||"")?1:-1);
   div.innerHTML = ks.length
     ? (ks.length>1
-      ? `vai para o caso: <select id="ar-caso">${ks.map(k=>`<option value="${k.id}">${esc(rotuloCasoEscolha(k))}</option>`).join("")}</select>`
-      : `vai para o caso <b>${esc(tituloCaso(ks[0]))}</b><input type="hidden" id="ar-caso" value="${ks[0].id}">`)
-    : `cliente sem caso em andamento — vira <b>anotação do atendimento</b> na ficha`;
+      ? `Caso: <select id="ar-caso">${ks.map(k=>`<option value="${k.id}">${esc(rotuloCasoEscolha(k))}</option>`).join("")}</select>`
+      : `Caso: <b>${esc(tituloCaso(ks[0]))}</b><input type="hidden" id="ar-caso" value="${ks[0].id}">`)
+    : `Sem caso: vai à ficha`;
 }
 // dois B31 abertos se distinguem pela fase e pelo número (teste 11.88, REC-05)
 function rotuloCasoEscolha(k){
@@ -53181,8 +53211,25 @@ function rotuloCasoEscolha(k){
           : n.nb[0] ? ["nb", n.nb[0]] : n.prot[0] ? ["prot", n.prot[0]] : [];
   return [k.apelido || tituloCaso(k), NOME_FASE[faseEfetiva(k)] || NOME_FASE[k.fase] || "", d ? fmtNum(tipo, d) : ""].filter(Boolean).join(" · ");
 }
+// F403 · o anexo da anotação rápida vai ao bucket e a anexos, preso ao cliente, ao caso e ao andamento quando houver
+async function arSubir(cliId, casoId, andId, arqs){
+  const feitos = [];
+  for(const arq of arqs){
+    if(arq.size > MAX_ARQ){ aviso("Arquivo grande demais (máximo 20 MB)"); continue; }
+    const caminho = `${cliId}/${new Date().toISOString().replace(/[:.]/g,"-").toLowerCase()}-${nomeSeguro(arq.name)}`;
+    try{ await subirArquivo(caminho, arq);
+      const [an] = await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:casoId||null, cliente_id:cliId, autor_id:eu.id, nome:arq.name, caminho, tipo:arq.type||null, tamanho:arq.size,
+          ...(andId ? {andamento_id:andId} : {})})});
+      if(an){ (D.anexos = D.anexos||[]).unshift(an); feitos.push({id:an.id, nome:an.nome}); } }
+    catch(e){ aviso("Um arquivo não subiu — anexe de novo"); }
+  }
+  return feitos;
+}
 async function salvarAnotacaoRapida(){
   const cli=arCliSel && D.cliPorId.get(arCliSel);
+  const arqs=[...((document.getElementById("ar-arq")||{}).files||[])];
+  if(arLead && arqs.length) return aviso("Interessado não recebe anexo: cadastre como cliente novo");
   if(!cli && !arLead && !arNovo)
     return aviso("Escolha o cliente na lista — ou crie o cadastro/interessado embaixo dela");
   const t=(document.getElementById("ar-texto").value||"").trim();
@@ -53205,6 +53252,8 @@ async function salvarAnotacaoRapida(){
         texto:t, origem:"rapida"};
       if(urg2) nota.urgente=true;
       if(imp2) nota.importante=true;
+      const anx = arqs.length ? await arSubir(novoCli.id, null, null, arqs) : [];
+      if(anx.length) nota.anexos = anx;
       novoCli.campos={atendimento:[nota]};
       await api(`/rest/v1/clientes?id=eq.${novoCli.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
         body:JSON.stringify({campos:novoCli.campos})});
@@ -53240,6 +53289,12 @@ async function salvarAnotacaoRapida(){
       const [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
         body:JSON.stringify({caso_id:casoId, autor_id:eu.id, origem:"app", texto:t})})||[];
       if(and && /@\p{L}/u.test(t)) await criarMencoes(t, casoId, and.id);   // F236 · o @ da anotação rápida avisa a pessoa
+      const anx = arqs.length ? await arSubir(arCliSel, ehPreCaso(k) ? null : casoId, and && and.id, arqs) : [];
+      // F403 · a cópia curta fica no cliente: é ela que o botão Anotações do cabeçalho lista e sinaliza
+      const r = {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], autor_id:eu.id, texto:t, caso_id:casoId, and_id:and && and.id};
+      if(imp) r.importante = true; if(anx.length) r.anexos = anx;
+      cli.campos = {...(cli.campos||{}), rapidas:[...((cli.campos||{}).rapidas||[]), r].slice(-50)};
+      await api(`/rest/v1/clientes?id=eq.${arCliSel}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:cli.campos})}).catch(()=>{});
       if(urg||imp){
         const mud={}; if(urg) mud.urgente=true; if(imp) mud.importante=true;
         await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
@@ -53252,6 +53307,8 @@ async function salvarAnotacaoRapida(){
         texto:t, origem:"rapida"};
       if(urg) nota.urgente=true;
       if(imp) nota.importante=true;
+      const anx = arqs.length ? await arSubir(arCliSel, null, null, arqs) : [];
+      if(anx.length) nota.anexos = anx;
       const notas=[...((cli.campos||{}).atendimento||[]), nota];
       cli.campos={...(cli.campos||{}), atendimento:notas};
       await api(`/rest/v1/clientes?id=eq.${arCliSel}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
