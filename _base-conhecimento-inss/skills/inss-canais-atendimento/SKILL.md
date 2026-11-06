@@ -10,7 +10,7 @@ description: Skill de canais de atendimento e protocolos do INSS para advocacia 
 - Carta de Serviços INSS (março de 2025) — documento oficial
 - IN PRES/INSS nº 128/2022 e nº 164/2024
 - Portaria DIRBEN/INSS nº 990/2022, nº 1.240/2024 e nº 1.251/2025
-- Portaria Conjunta MPS/INSS nº 13/2026, nº 14/2026 e nº 15/2026 (análise documental B31/B91/B94)
+- Portaria Conjunta MPS/INSS nº 13/2026, nº 14/2026 e nº 15/2026 (análise documental B31/B91/B94), e nº 54/2026 (altera a 13/2026: reanálise em 10 dias, dois indeferimentos, prazo do recurso)
 - Comunicado oficial do INSS — Agência Gov (novembro de 2023)
 - Portal gov.br/inss e gov.br/receitafederal
 
@@ -69,7 +69,7 @@ Lista resumida dos serviços digitais da Carta:
 26. Pedir Aposentadoria (todas as modalidades urbanas)
 27. Pedir Aposentadoria da PCD — Acordo Internacional
 28. Pedir Aposentadoria por Incapacidade Permanente (início online; perícia presencial)
-29. Pedir Auxílio por Incapacidade Temporária / Atestmed (início online; análise documental pela PMF — Portaria Conjunta MPS/INSS nº 13/2026; perícia presencial quando ultrapassado teto de 30/90 dias ou após 3 indeferimentos documentais)
+29. Pedir Auxílio por Incapacidade Temporária / Atestmed (início online; análise documental pela PMF — Portaria Conjunta MPS/INSS nº 13/2026; perícia presencial quando ultrapassado teto de 30/90 dias ou após 2 indeferimentos documentais, Portaria Conjunta MPS/INSS nº 54/2026; reanálise da documentação médica em 10 dias da ciência do indeferimento, antes do recurso)
 30. Pedir Auxílio-Acidente (início pelo Meu INSS ou 135; análise documental prévia obrigatória pela PMF — Portaria Conjunta MPS/INSS nº 15/2026; perícia presencial somente se aprovado na triagem documental)
 31. Pedir BPC à Pessoa com Deficiência (início online; avaliação social presencial)
 32. Pedir BPC ao Idoso
@@ -212,7 +212,7 @@ Aplicável ao auxílio por incapacidade temporária, aposentadoria por incapacid
 
 **Regime de análise documental (Portarias Conjuntas MPS/INSS nº 13 e 15/2026):**
 
-Para auxílio por incapacidade temporária (B31/B91), a análise documental pela PMF é a porta de entrada. A perícia presencial é obrigatória apenas quando (a) o teto de 30/90 dias for ultrapassado (art. 6º, II), (b) após três indeferimentos documentais sucessivos (art. 8º), ou (c) na prorrogação (art. 5º). Posição do escritório — o segurado tem direito à perícia presencial desde o primeiro requerimento; o art. 8º é norma de garantia, não barreira. Consultar skill analise-documental-incapacidade.
+Para auxílio por incapacidade temporária (B31/B91), a análise documental pela PMF é a porta de entrada. A perícia presencial é obrigatória apenas quando (a) o teto de 30/90 dias for ultrapassado (art. 6º, II), (b) após dois indeferimentos documentais sucessivos (art. 8º, redação da Portaria Conjunta 54/2026; três, para ciência anterior a 06/11/2026), ou (c) na prorrogação (art. 5º). Posição do escritório — o segurado tem direito à perícia presencial desde o primeiro requerimento; o art. 8º é norma de garantia, não barreira. Consultar skill analise-documental-incapacidade.
 
 Para auxílio-acidente (B94), a análise documental prévia é etapa obrigatória anterior ao agendamento de perícia presencial (Portaria 15/2026). A PMF pode indeferir sem exame presencial se a documentação for insuficiente. A perícia presencial só é agendada quando a triagem documental constatar os requisitos legais mínimos (art. 4º, I).
 

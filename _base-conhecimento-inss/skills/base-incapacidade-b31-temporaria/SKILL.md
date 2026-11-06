@@ -17,6 +17,8 @@ Lei 8.213/91, art. 60, §11-A. Na redação da Lei 15.265/2025, autoriza o exame
 
 Portaria Conjunta MPS/INSS 13/2026. Regulamenta a análise documental do B31. Acionar `analise-documental-incapacidade`.
 
+Portaria Conjunta MPS/INSS 54/2026 (DOU de 06/11/2026) [CONFERIDO]. Altera a 13/2026. Cria a reanálise da documentação médica em dez dias da ciência do indeferimento (art. 8º-A), que preserva a DER e admite documento novo; o recurso interposto antes preclui a reanálise (art. 9º, § 1º); o prazo do recurso conta da ciência da decisão ou da decisão da reanálise (art. 9º, § 2º); a perícia presencial obrigatória vem após dois indeferimentos documentais, e não três (art. 8º); e a perícia presencial favorável no requerimento anterior reinicia a soma do limite de duração (art. 3º, § 2º). Vale para indeferimentos com ciência a partir de 06/11/2026 (art. 2º).
+
 Lei 8.213/91, art. 26, II. Isenção de carência para acidente de qualquer natureza, acidente de trabalho e doenças constantes da lista do Ministério da Saúde.
 
 Lei 8.213/91, art. 27-A. Reabertura de qualidade exige 1/2 da carência após novo vínculo para quem perdeu qualidade (com matizes jurisprudenciais).
@@ -45,7 +47,7 @@ Segundo, segurado com doença do art. 151 da Lei 8.213/91 (AIDS, neoplasia, tube
 
 Terceiro, segurado especial rural com incapacidade. Carência cumprida pela atividade rural. Direito ao B31 no valor de um salário mínimo, conforme art. 39, I, da Lei 8.213/91.
 
-Quarto, segurado com B31 indeferido por perícia documental inconclusiva. Cabe P1 (pedido de prorrogação) ou recurso ao CRPS com fundamento em atestados e exames complementares. Acionar `analise-documental-incapacidade`.
+Quarto, segurado com B31 indeferido por perícia documental inconclusiva. Com ciência a partir de 06/11/2026, examinar primeiro a reanálise da documentação médica em dez dias (art. 8º-A da Portaria Conjunta 13/2026, redação da 54/2026), que o recurso direto preclui. Cabe também P1 (pedido de prorrogação) ou recurso ao CRPS com fundamento em atestados e exames complementares. Acionar `analise-documental-incapacidade`.
 
 Quinto, segurado em limbo previdenciário-trabalhista. INSS cessou o B31 mas a empresa não aceitou o retorno. O fundamento é o **Tema 300 da TNU**, que mantém a qualidade de segurado até a rescisão contratual, quando só então começa a correr o período de graça do art. 15, II. O Tema 1421 do STF é a pendência que pode superá-lo, mérito não julgado, citar como risco e não como fundamento. A aplicação exige prova do impedimento patronal, vínculo aberto no CNIS não basta, e não se deve requerer RAC de baixa desse vínculo. Acionar `base-limbo-previdenciario-tema300`.
 
@@ -57,7 +59,7 @@ A regra geral é que a incapacidade temporária comprovada e a qualidade de segu
 
 Sempre pedir P1 antes da DCB. Acumular atestados, receitas e exames complementares. Em caso de cessação abrupta, impugnar imediatamente com pedido de restabelecimento.
 
-Em caso de perícia documental com parecer desfavorável, recurso ao CRPS com novos documentos ou ação judicial com perícia médica judicial. Acionar `auditoria-laudo-pericial` para laudo pericial judicial.
+Em caso de perícia documental com parecer desfavorável, reanálise em dez dias com documento novo (art. 8º-A) ou recurso ao CRPS com novos documentos ou ação judicial com perícia médica judicial. Acionar `auditoria-laudo-pericial` para laudo pericial judicial.
 
 Sempre verificar a possibilidade de conversão em B32 quando a incapacidade se protrair ou se agravar. Acionar `base-incapacidade-b32-permanente`.
 
@@ -96,7 +98,7 @@ Primeiro, a DIB do B31 é o 16º dia do afastamento para o segurado empregado e 
 
 Segundo, a cessação antecipada (Alta Programada) pode ser impugnada via P1 ou MS. Acumular prova médica e contestar a DCB fixada sem perícia.
 
-Terceiro, a trava de 180 dias não vem do art. 60, §11-A, que só autoriza telemedicina ou análise documental; a Portaria Conjunta 13/2026 [NÃO CONFIRMADO] a aplica à nova análise documental após prorrogação indeferida, e três indeferimentos sucessivos levam à perícia presencial (auditoria 03/10/2026). Contra essa barreira, em caso de agravamento, MS pela urgência e pela violação do direito ao requerimento.
+Terceiro, a trava de 180 dias não vem do art. 60, §11-A, que só autoriza telemedicina ou análise documental; a Portaria Conjunta 13/2026, art. 6º, V [CONFERIDO], a aplica à nova análise documental após prorrogação indeferida, e dois indeferimentos sucessivos levam à perícia presencial (art. 8º, na redação da Portaria Conjunta 54/2026; três, para ciência anterior a 06/11/2026). Contra essa barreira, em caso de agravamento, MS pela urgência e pela violação do direito ao requerimento.
 
 ## Fungibilidade aplicável
 

@@ -58,7 +58,7 @@ Lista B Anexo II Decreto 3.048/99 (NTEP por CID e CNAE). Burnout QD85 (Portaria 
 
 Art. 59 Lei 8.213/91. Carência 12 meses, art. 25 I. Isenção art. 26 II e art. 151.
 
-Portaria Conjunta MPS/INSS 13/2026 (análise documental, 30/90 dias, trava 180 dias). Portaria DPMF/INSS 19/2026 (Teleperícia).
+Portaria Conjunta MPS/INSS 13/2026 (análise documental, 30/90 dias, trava 180 dias), alterada pela Portaria Conjunta MPS/INSS 54/2026 (reanálise em 10 dias, dois indeferimentos, prazo do recurso da ciência). Portaria DPMF/INSS 19/2026 (Teleperícia).
 
 Tema 1421 STF (limbo previdenciário-trabalhista).
 

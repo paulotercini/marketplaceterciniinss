@@ -34,6 +34,10 @@ Expirado o prazo para contrarrazões, os autos estarão aptos para julgamento in
 
 Reinclusão em sessão de julgamento no prazo máximo de 60 dias.
 
+### Auxílio por incapacidade temporária indeferido por análise documental (Portaria Conjunta MPS/INSS 13/2026, redação da 54/2026)
+
+Para indeferimento com ciência a partir de 06/11/2026 (art. 2º da Portaria Conjunta 54/2026), o termo inicial dos 30 dias do recurso é a ciência da decisão do benefício, sem reanálise (art. 9º, § 2º, I), ou a ciência da decisão que apreciar o requerimento de reanálise da documentação médica, quando pedido (art. 9º, § 2º, II). A reanálise cabe em dez dias da ciência do indeferimento (art. 8º-A). O recurso interposto dentro desses dez dias sem a reanálise importa opção pela via recursal e preclusão da reanálise (art. 9º, § 1º). O § 2º afasta a literalidade do caput do art. 9º ("contados da data da decisão") e harmoniza a Portaria com o art. 77 do Regimento e com o art. 305 do Decreto 3.048/99. Na peça, defender a tempestividade pelo § 2º e juntar a comunicação da decisão da reanálise com a data da ciência.
+
 ## 2. Contagem de Prazos (Art. 78)
 
 ### Regra (Art. 78, caput)

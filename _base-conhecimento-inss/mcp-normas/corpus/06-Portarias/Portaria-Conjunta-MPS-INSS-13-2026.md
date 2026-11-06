@@ -3,7 +3,7 @@ fonte_oficial: https://www.in.gov.br/web/dou/-/portaria-conjunta-mps/inss-n-13-d
 data_download: 2026-10-04
 hash_sha256: 16ba1db48f8336bded46e397a1f179c286e99d75683043d3a7970a3e8e83fab2
 metodo_captura: coletor.py, HTTP com User-Agent de navegador
-ultima_alteracao_conhecida: não identificada (sem marcador de alteração no texto)
+ultima_alteracao_conhecida: 2026 (Portaria Conjunta MPS/INSS nº 54, de 05/11/2026, DOU de 06/11/2026: art. 3º, § 2º, art. 8º, art. 8º-A e art. 9º, §§ 1º e 2º; o texto abaixo é a redação original, e a redação nova está em Portaria-Conjunta-MPS-INSS-54-2026.md)
 total_artigos_aprox: 13
 ---
 

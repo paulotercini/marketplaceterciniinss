@@ -14,13 +14,13 @@ sys.stdout.reconfigure(encoding="utf-8")
 # ---------------------------------------------------------------- 1. tabela de identidade
 
 todos = [p.name for p in __import__("ingestor").arquivos(incluir_fora=True)]
-assert len(todos) == 400, f"o corpus tinha 400 arquivos .md em 05/10/2026 (399 da coleta de 04/10/2026 + Portaria Conjunta 45/2026), agora tem {len(todos)}"
+assert len(todos) == 401, f"o corpus tinha 401 arquivos .md em 06/11/2026 (399 da coleta de 04/10/2026 + Portarias Conjuntas 45/2026 e 54/2026), agora tem {len(todos)}"
 faltam = [n for n in todos if n not in identidade.NORMAS]
 assert not faltam, f"arquivos fora da tabela de identidade: {faltam}"
 sobram = [n for n in identidade.NORMAS if n not in todos]
 assert not sobram, f"tabela de identidade aponta arquivo que não existe: {sobram}"
 assert all(n in identidade.NORMAS for n in identidade.FORA), "FORA cita arquivo fora da tabela"
-assert len({v[0] for v in identidade.NORMAS.values()}) == 392, "392 normas em 400 arquivos"
+assert len({v[0] for v in identidade.NORMAS.values()}) == 393, "393 normas em 401 arquivos"
 try:
     identidade.identidade("Lei-inexistente.md")
     raise SystemExit("arquivo fora da tabela tinha de levantar KeyError")

@@ -260,6 +260,9 @@ NORMAS = {
     "Portaria-Conjunta-MPS-INSS-43-2026.md": (
         "portaria-conjunta-43-2026", "portaria", "43", 2026,
         "Portaria Conjunta MPS/INSS nº 43, de 18 de setembro de 2026 — prorroga o limite de 90 dias do B31 documental"),
+    "Portaria-Conjunta-MPS-INSS-54-2026.md": (
+        "portaria-conjunta-54-2026", "portaria", "54", 2026,
+        "Portaria Conjunta MPS/INSS nº 54, de 5 de novembro de 2026 — reanálise documental em 10 dias, dois indeferimentos e prazo do recurso no B31 documental"),
     "Portaria-Conjunta-MDS-INSS-45-2026.md": (
         "portaria-conjunta-45-2026", "portaria", "45", 2026,
         "Portaria Conjunta MDS/INSS nº 45, de 29 de setembro de 2026 — novos valores dedutíveis do Anexo I da Portaria Conjunta 34/2025 (BPC)"),
