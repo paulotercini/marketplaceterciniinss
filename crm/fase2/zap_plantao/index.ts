@@ -217,6 +217,16 @@ async function rpc(nome: string, corpo: unknown) {
   return t ? JSON.parse(t) : null;
 }
 
+// F421 · com o atendente Offline (F397) a mensagem automática dele já respondeu: a IA entra só na urgência
+async function atendenteOffline(conversa: string) {
+  const h = { apikey: SERVICO, Authorization: `Bearer ${SERVICO}` };
+  const c = await (await fetch(`${URL_SB}/rest/v1/zap_conversas?id=eq.${conversa}&select=atendente_id`, { headers: h })).json();
+  const at = c?.[0]?.atendente_id;
+  if (!at) return false;
+  const k = await (await fetch(`${URL_SB}/rest/v1/colaboradores?id=eq.${at}&select=zap_offline_desde`, { headers: h })).json();
+  return !!k?.[0]?.zap_offline_desde;
+}
+
 async function claude(texto: string) {
   const r = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -572,6 +582,7 @@ if (typeof Deno !== "undefined") {
       } else r = await claude(promptPlantao(x));
       let acao = ACOES.includes(r.acao) ? r.acao : "responder";
       if (acao === "conversa" && !x.interativa) acao = "responder";   // com a equipe na conversa, a IA não conversa
+      if (acao !== "equipe" && acao !== "nada" && x.conversa_id && await atendenteOffline(x.conversa_id).catch(() => false)) acao = "nada";
       await rpc("zap_plantao_aplicar", {
         p_msg: msg, p_acao: acao, p_resposta: emLinhas(r.resposta), p_advogado: String(r.advogado || ""),
         p_urgente: r.urgente === true, p_assunto: String(r.assunto || ""), p_relato: String(r.relato || ""),
