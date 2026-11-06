@@ -170,7 +170,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.evaluate(() => fecharCaixa());
   await abrir(cX, kX);
   conf("no nível 2, o html leva data-nivel=2 e o campo de escrever volta", (await nivel()) === "2" && await vis("#tipo-fila"));
-  conf("no nível 2, a aba INSS dos andamentos dos portais aparece", await p.evaluate(() => [...document.querySelectorAll(".menu-andamentos button")].some(e => e.offsetParent !== null && /^INSS/.test(e.textContent.trim()))));
+  conf("no nível 2, o cartão INSS das fases (que abre os andamentos dos portais) aparece", await p.evaluate(() => [...document.querySelectorAll(".menu-andamentos button, .jn-l .jn-b")].some(e => e.offsetParent !== null && /^INSS/.test(e.textContent.trim()))));   // F402
   await p.click("#and-texto"); await p.waitForTimeout(200);   // F391b: Sem resposta e Pedir ficam no pé do campo aberto
   conf("na onda 1, Sem resposta e Pedir ao cliente ainda não aparecem", !(await vis(".tipo-ch.tipo-sr")) && !(await vis(".tipo-ch.tipo-pc")));
   conf("na onda 1, o 'Em análise · +7 d' já aparece e o Movimentou não", await vis(".faixa-prazos .conf-sem") && !(await vis(".faixa-prazos .conf-mov")));

@@ -140,7 +140,7 @@ revoke execute on function public.push_resumo_vez() from public, anon, authentic
 -- o primeiro resumo conta daqui (sem isso, juntaria 24 horas já avisadas)
 update colaboradores set push_resumo_em = now() where push_resumo_em is null;
 
--- F400 · silenciar uma conversa por algumas horas, de cada pessoa (pedido do Paulo de 05.11.2026):
+-- F409 · silenciar uma conversa por algumas horas, de cada pessoa (pedido do Paulo de 05.11.2026):
 -- o aviso do aparelho e o do navegador não saem para quem silenciou, até a hora marcada.
 create table if not exists public.zap_silencio (
   colaborador_id uuid not null references colaboradores(id) on delete cascade,

@@ -100,9 +100,10 @@ const SUPA = "https://ficticio.supabase.co";
   await p.evaluate(cli => arEscolher(cli), CLI_CHEIO);
   await p.waitForTimeout(200);
   conf("escolhido, mostra para qual caso a anotação vai",
-    await p.evaluate(() => /vai para o caso/.test(document.getElementById("ar-alvo").textContent)));
+    await p.evaluate(() => /Caso:/.test(document.getElementById("ar-alvo").textContent)));
 
   // 5) guardar: andamento no caso + caso marcado 🔥 URGENTE + modal fecha
+  await p.evaluate(() => { const s = document.getElementById("ar-caso"); s.value = s.options[1].value; });   // F404 · sem escolha fica a distribuir
   await p.fill("#ar-texto", "Cliente ligou: audiência remarcada, avisar hoje.");
   escritos.length = 0;
   await p.evaluate(() => salvarAnotacaoRapida());
@@ -123,7 +124,7 @@ const SUPA = "https://ficticio.supabase.co";
   await p.evaluate(cli => arEscolher(cli), CLI_VAZIO);
   await p.waitForTimeout(200);
   conf("sem caso, avisa que vira anotação do atendimento",
-    await p.evaluate(() => /anotação do atendimento/.test(document.getElementById("ar-alvo").textContent)));
+    await p.evaluate(() => /Sem caso: vai à ficha/.test(document.getElementById("ar-alvo").textContent)));
   await p.fill("#ar-texto", "Passou no balcão: trouxe a carteira de trabalho.");
   escritos.length = 0;
   await p.evaluate(() => salvarAnotacaoRapida());
@@ -142,7 +143,7 @@ const SUPA = "https://ficticio.supabase.co";
   await p.evaluate(() => arProcurar("Zuleica Inexistente"));
   await p.waitForTimeout(200);
   conf("sem resultado, oferece anotar como interessado",
-    await p.evaluate(() => /ainda não é cliente/.test(document.getElementById("ar-achados").textContent)));
+    await p.evaluate(() => /Interessado:/.test(document.getElementById("ar-achados").textContent)));
   await p.evaluate(() => arNaoCliente());
   await p.fill("#ar-tel", "16 98888-7777"); // F54: telefone obrigatório
   await p.fill("#ar-texto", "Ligou perguntando de aposentadoria rural, retornar amanhã.");
@@ -164,7 +165,7 @@ const SUPA = "https://ficticio.supabase.co";
   await p.waitForTimeout(200);
   conf("com resultado na lista, as saídas de criar continuam embaixo",
     await p.evaluate(() => { const h = document.getElementById("ar-achados").textContent;
-      return /Aurélia/.test(h) && /CLIENTE novo/.test(h) && /INTERESSADO/.test(h); }));
+      return /Aurélia/.test(h) && /Cliente novo:/.test(h) && /Interessado:/.test(h); }));
 
   // 9) F53 · cadastrar CLIENTE novo no ato, com a anotação como atendimento
   await p.evaluate(() => { document.getElementById("ar-busca").value = "Otavio Recem Chegado"; arNovoCliente(); });

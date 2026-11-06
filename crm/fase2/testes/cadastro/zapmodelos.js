@@ -1,4 +1,4 @@
-// F402 · AS MENSAGENS PRONTAS COM OS DADOS DO CASO (Onda 1, decisões do Paulo de 05.11.2026): a perícia sai
+// F411 · AS MENSAGENS PRONTAS COM OS DADOS DO CASO (Onda 1, decisões do Paulo de 05.11.2026): a perícia sai
 // com data, hora e local do agendamento; o campo sem dado fica entre chaves e trava o Enviar; com dois
 // casos abertos, o modelo pergunta de qual caso é. Dados fictícios.
 const { chromium } = require("playwright");
