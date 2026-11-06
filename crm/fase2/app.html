@@ -2830,6 +2830,8 @@ dialog.confirmar::backdrop{background:rgba(15,17,22,.38)}
 .arv-doc,.arv-and{padding:3px 0 3px 4px;font-size:13px;line-height:1.4}.arv-doc{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px}.arv-and{font-style:italic;color:var(--mut,#5d6675)}.arv-and.dec{color:#a3261d;font-style:normal;font-weight:600}
 .arv-nome{border:0;background:none;padding:0;font:inherit;font-weight:500;color:var(--azul,#2B5FC7);cursor:pointer;text-align:left}span.arv-nome{color:var(--mut,#5d6675);cursor:default}.arv-doc.dec .arv-nome{color:#a3261d;font-weight:600}
 .arv-et.dec{font-weight:600}.arv-mov{font-size:12px;color:var(--mut,#5d6675)}.arv-txt{flex-basis:100%;font-size:12px;color:var(--mut,#5d6675);overflow-wrap:anywhere}.arv-antes>summary,.arv-dia details>summary{cursor:pointer;font-size:12px;color:var(--azul,#2B5FC7);padding:3px 0}.proc-q{border:1px solid var(--linha,#dfe3ea);border-radius:8px;margin-bottom:8px}.proc-q>summary{cursor:pointer;padding:8px 10px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.proc-id{font-family:var(--f-mono,ui-monospace,monospace);font-size:12px}.proc-tit{font-weight:600;flex:1 1 200px;min-width:0}.proc-sit{font-size:12px;padding:1px 8px;border-radius:99px;background:var(--fundo-sutil,#eef1f5)}.proc-sit.dec{color:#a3261d;font-weight:600}.proc-corpo{padding:4px 10px 10px;display:grid;gap:6px}.proc-lig{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.proc-tela{max-width:900px;max-height:80vh;overflow:auto}.pat-arv{list-style:none;margin:0;padding-left:18px}.pat-arv.pat-raiz{padding-left:0}.pat-arv li{margin:3px 0}.pat-arv summary{cursor:pointer}
+.exp-tab{width:100%;border-collapse:collapse;font-size:13px}.exp-tab th,.exp-tab td{border-bottom:1px solid var(--linha,#e2e2e2);padding:6px 8px;text-align:left;vertical-align:top}
+.exp-tab th{font-weight:600;background:var(--fundo2,#f5f5f2)}.exp-tab td:nth-child(2){white-space:nowrap}.exp-tela{max-width:960px;width:100%}.exp-tela .exp-tab{display:block;overflow-x:auto}
 </style>
 <script>
 /* F80 · interruptor do tema v10. ?tema=v10 liga e guarda; ?tema= (vazio)
@@ -12216,7 +12218,7 @@ async function conferirPjeProc(coletaId){
     const casoDe = dig => D.casos.find(x=>!x.encerrado_em && casaNum(x, dig)) || D.casos.find(x=>casaNum(x, dig)) || null;
     const plano = { coleta_id: coletaId, numero: lote.length>1 ? `${lote.length} processos` : (c0.numero||"?"),
                     grau: lote.length>1 ? "" : (c0.grau||""), caso_id: null, semCaso: [],
-                    fichas: [], andamentos: [], docs: [],
+                    fichas: [], andamentos: [], docs: [], exps: [],
                     resumo: { itens:0, movimentos:0, conhecidos:0, docs:0 } };
     const bancoPje = await todas("andamentos",
       "select=origem_id,texto&origem=eq.pje&origem_id=not.is.null").catch(()=>[]);
@@ -12233,6 +12235,9 @@ async function conferirPjeProc(coletaId){
     if(dados.orgao && !k.orgao_judicial) campos.orgao_judicial=dados.orgao;
     Object.assign(campos, camposLinkPje(k, dados.grau, dados.link, dados.numero));
     if(Object.keys(campos).length){ plano.fichas.push({caso_id:k.id, campos}); }
+    // F418 · a aba Expedientes do processo (extensão 1.35), só para mostrar: grava no aplicar
+    if(Array.isArray(dados.expedientes)) plano.exps.push({caso_id:k.id, chave:`${dig}|${dados.grau||""}`,
+      valor:{em:dados.quando||new Date().toISOString(), grau:dados.grau||"", host:dados.host||"", itens:dados.expedientes}});
     for(const it of (dados.itens||[])){
       const texto=[...(it.textos||[]), ...(it.docs||[]).map(d=>`📎 ${d.nome}`)].join(" · ");
       if(!texto) continue;
@@ -12265,6 +12270,12 @@ async function aplicarPjeProc(coletaId){
       await patchCaso(f.caso_id, f.campos);
       Object.assign(D.casoPorId.get(f.caso_id)||{}, f.campos); fichas++;
     }catch(e){}
+  }
+  // F418 · os expedientes vão a casos.ronda.expedientes, lidos do caso NA HORA (a ronda tem outros escritores)
+  for(const ex of (plano.exps||[])){
+    const k = D.casoPorId.get(ex.caso_id); if(!k) continue;
+    const ronda = {...(k.ronda||{}), expedientes:{...((k.ronda||{}).expedientes||{}), [ex.chave]:ex.valor}};
+    try{ await patchCaso(k.id, {ronda}); k.ronda = ronda; fichas++; }catch(e){}
   }
   for(const a of plano.andamentos){
     const corpo={caso_id:a.caso_id, autor_id:eu.id, origem:"pje",
@@ -20279,7 +20290,7 @@ function pintarFicha(){
   // três estados a pedido do Paulo: verde = processo andando; amarelo = sem
   // processo, mas o escritório avisa (🔔 lembretes ativos — trabalho, só que
   // de outro tipo); vermelho = nada, nem aviso. Cinza é quem nunca teve caso.
-  // F417 · todos os casos em andamento suspensos por tema: o selo muda de cor e diz o tema
+  // F418 · todos os casos em andamento suspensos por tema: o selo muda de cor e diz o tema
   const suspCli = ativosCli.filter(suspensaoDe), todosSusp = suspCli.length && suspCli.length===ativosCli.length;
   const stCli = ativosCli.length
     ? `<span class="cli-st ${todosSusp?"susp":"ativo"}" title="${ativosCli.length} de ${ks.length} caso(s) em andamento${suspCli.length?` · ${suspCli.map(k=>`${tituloCaso(k)}: ${tituloSusp(suspensaoDe(k))}`).join("; ")}`:""}${lembCli.length?` · e ${lembCli.length} lembrete(s) na aba 🔔`:""}">${todosSusp
@@ -37438,7 +37449,7 @@ async function gravarReanalise(casoId, muda){
 function pedirReanalise(casoId){ gravarReanalise(casoId, {pedida_em:hoje()}); }
 function decidirReanalise(casoId, resultado){ gravarReanalise(casoId, {decidida_em:hoje(), resultado}); }
 // ══════════════════════════════════════════════════════════════════════════
-// F417 · O CASO SUSPENSO POR TEMA DOS TRIBUNAIS SUPERIORES (pedido do Paulo,
+// F418 · O CASO SUSPENSO POR TEMA DOS TRIBUNAIS SUPERIORES (pedido do Paulo,
 // 06.11.2026). A suspensão mora em casos.ronda.suspensao = {trib, tema,
 // assunto, desde, por, em}; o cartão do caso, o selo do cliente e a linha das
 // listas a mostram, e o 🧹 Cuidar do acervo junta todos os suspensos por tema.
@@ -43331,6 +43342,35 @@ function telaDoProcesso(casoId, aba, i){
   caixa(`<div class="adr-modal proc-tela" role="dialog" aria-label="${esc(x.id)}">${aba==="inss" ? telaPat(k, x.b) : telaEsisrec(x.t)}
     <div class="adr-modal-bts"><button type="button" class="adr-bt" onclick="fecharCaixa()">Fechar</button></div></div>`);
 }
+// F418 · a aba Expedientes do PJe replicada (pedido do Paulo, 06.11.2026): as quatro colunas do PJe,
+// um quadro por grau, sem criar prazo. Vem de casos.ronda.expedientes, gravado pela coleta do processo.
+function expedientesDe(k, dig){
+  return Object.entries((k.ronda||{}).expedientes||{}).filter(([c])=>c.split("|")[0]===dig)
+    .map(([, v])=>v).sort((a,b)=>String(a.grau).localeCompare(String(b.grau)));
+}
+const dtExp = s => s ? `${fmt(String(s).slice(0,10))}${String(s).length>10?" "+String(s).slice(11,16):""}` : "";
+function tabelaExpedientes(v){
+  const lin = e => `<tr${e.fechado?"":` class="exp-aberto"`}>
+    <td><b>${esc(e.ato||"")}</b>${e.expediente_id?` <span class="meio-sub">(${esc(e.expediente_id)})</span>`:""}${e.prioridade?` <span class="meio-sub">· Prioridade: ${esc(e.prioridade)}</span>`:""}
+      ${e.destinatario?`<div>${esc(e.destinatario)}</div>`:""}
+      ${e.meio?`<div class="meio-sub">${esc(e.meio)}${e.enviado_em?` (${dtExp(e.enviado_em)})`:""}</div>`:""}
+      ${e.ciencia_em?`<div class="meio-sub">O sistema registrou ciência em ${dtExp(e.ciencia_em)}</div>`:""}
+      ${e.prazo_dias?`<div class="meio-sub">Prazo: ${e.prazo_dias} dias</div>`:""}</td>
+    <td>${e.limite?`${dtExp(e.limite)}${e.limite_para?`<div class="meio-sub">(${esc(e.limite_para)})</div>`:""}`:esc(e.limite_txt||"")}</td>
+    <td>${e.ver&&v.host?`<a class="btn-mini" href="${urlOk(/^https?:/.test(e.ver) ? e.ver : `https://${v.host}${e.ver}`)}" target="_blank" rel="noopener" title="visualizar o ato no PJe (pede o login)">Ver</a>`:""}</td>
+    <td>${e.fechado?"SIM":"<b>NÃO</b>"}</td></tr>`;
+  return `<table class="exp-tab"><thead><tr><th>Ato de comunicação</th><th>Data limite prevista para ciência ou manifestação</th><th>Ações</th><th>Fechado</th></tr></thead>
+    <tbody>${(v.itens||[]).map(lin).join("")||`<tr><td colspan="4" class="meio-sub">Nenhum expediente.</td></tr>`}</tbody></table>
+    <p class="meio-sub">${(v.itens||[]).length} resultado${(v.itens||[]).length===1?"":"s"} encontrado${(v.itens||[]).length===1?"":"s"} · lido em ${dtExp(String(v.em||"").slice(0,16))}</p>`;
+}
+function telaExpedientes(casoId, i){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const x = processosDaFase(k, "cnj")[i]; if(!x) return;
+  const vs = expedientesDe(k, x.d);
+  caixa(`<div class="adr-modal proc-tela exp-tela" role="dialog" aria-label="Expedientes de ${esc(x.id)}">
+    <h3>Expedientes · ${esc(x.id)}</h3>${vs.map(v=>`${vs.length>1?`<h4>${esc(v.grau||"")}</h4>`:""}${tabelaExpedientes(v)}`).join("")}
+    <div class="adr-modal-bts"><button type="button" class="adr-bt" onclick="fecharCaixa()">Fechar</button></div></div>`);
+}
 function claudeDoProcesso(casoId, aba, i){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const x = processosDaFase(k, aba)[i]; if(!x) return;
@@ -43413,6 +43453,7 @@ function vistaProcessos(k, aba){
     n ? `<button class="btn-mini" onclick="claudeDoProcesso('${k.id}','${aba}',${i})" title="pedir ao Claude com os documentos deste processo">Claude</button>` : "",
     x.portal ? `<a class="btn-mini" href="${urlOk(x.portal)}" target="_blank" rel="noopener" title="abrir no sistema oficial">Portal</a>` : "",
     x.aba!=="cnj" ? `<button class="btn-mini" onclick="telaDoProcesso('${k.id}','${aba}',${i})" title="a tela do ${x.aba==="inss"?"PAT":"e-SISREC"}: cabeçalho, comentários e movimentações">Tela</button>` : "",
+    x.aba==="cnj" && expedientesDe(k, x.d).length ? `<button class="btn-mini" onclick="telaExpedientes('${k.id}',${i})" title="a aba Expedientes do PJe: atos de comunicação, data limite e fechado">Expedientes</button>` : "",
     `<button class="btn-mini" onclick="mudarVistaProc(false)" title="a tela anterior desta aba: as fontes, a fase e a gestão dos processos">Detalhes</button>`].join("");
   const todos = itensDoProcesso(k, x), nd = todos.filter(y=>y.tipo==="doc").length, na = todos.length - nd;
   const d = n ? procEscolhido(k, aba, i, x) : null;
