@@ -2332,6 +2332,10 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   }
   /* tela estreita: Retorno e Transferir ficam só com o ícone, para o nome caber inteiro */
   @media (max-width:1700px){.zt-acoes .zt-btn:not(.pri) .lbl{display:none}.zt-acoes .zt-btn:not(.pri){width:32px;padding:0;justify-content:center}}
+  /* F396 · o Assumir mostra a palavra inteira em qualquer largura (a regra acima e a do celular o cortavam em "Assu") */
+  .app .zt-acoes .zt-btn.zt-assumir{width:auto;padding:0 9px;flex-shrink:0}
+  .app .zt-acoes .zt-btn.zt-assumir svg{display:none}
+  .app .zt-l1 .zt-id{min-width:64px}   /* o nome do cliente continua à vista e clicável ao lado do Assumir */
   /* .id-secao só vive dentro do cartão "Ligações do cliente" (F9.2): o rótulo
      segue a mesma régua do rótulo de campo da grade, senão o mesmo cartão
      teria dois tamanhos de etiqueta */
@@ -4472,19 +4476,24 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .cli-sit-t{font-style:normal;font-weight:600}.cli-sit-t.ativo{color:#1f6b41}.cli-sit-t.formacao{color:#8a6500}.cli-sit-t.inativo{color:#a3291c}
 @media (hover:hover) and (pointer:fine){.cli-todos-it:hover{background:var(--fundo2,#f5f5f2)}}
 /* F249 · o nível 0 (primeiro acesso): na ficha só o Cadastro (Identificação); na barra só a Agenda, e o Novo Cliente fica no botão fixo */
-html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]),
+html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="2"] .menu-topo .mt:not([data-vv="0"]),
 html[data-nivel="0"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]),
 html[data-nivel="1"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]),
-:is(html[data-nivel="0"],html[data-nivel="1"]) :is(.cel-tudo,#btn-v10-anotar,.rapida-caixa,#fab-rapida,
+html[data-nivel="2"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]):not([data-v="novocliente"]),
+:is(html[data-nivel="0"],html[data-nivel="1"],html[data-nivel="2"]) :is(.cel-tudo,#btn-v10-anotar,.rapida-caixa,#fab-rapida,
 .barra-cel [data-cel="meudia"],.barra-cel [data-cel="menu"],.grupo:has(#grupo-fases)){display:none!important}
 html[data-nivel="0"] .barra-cel [data-cel="whatsapp"]{display:none!important}
 /* F355 · o nível 1 é o WhatsApp: conversa, agenda e Identificação; o que grava no caso fica para o nível 2. Na barra do celular, o WhatsApp no lugar do Buscar */
 html[data-nivel="1"] :is(.zp-tarefas,[onclick^="levarRobo"]),html[data-nivel="1"] .barra-cel .so-n0[data-cel="busca"]{display:none!important}
+html[data-nivel="2"] :is(.zp-tarefas,[onclick^="levarRobo"]),html[data-nivel="2"] .barra-cel .so-n0[data-cel="busca"]{display:none!important}
+/* F396 · criar o cliente e mudar o cadastro ficam a partir do nível 2: nos níveis 0 e 1 a Identificação só se lê */
+html[data-sem-cad] :is(#btn-novo-cli,#btn-v10-cli,.bn-cli,.cad-lap,.cad-preencher,.cad-mini[onclick^="marcarZap"],.cad-mini[onclick^="novoTelefone"],#cad-tel-novo,#cad-tel-obs,.cad-mini[onclick^="atualizarDossie"],.idf-dz-run,#znc-cli){display:none!important}
+html[data-sem-cad] .cad-campo{cursor:default!important}
 /* F253 · a faixa de quem olha como outro nível */
 #ver-nivel-faixa{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:900;display:flex;align-items:center;gap:12px;padding:8px 10px 8px 16px;border-radius:999px;background:#23231F;color:#fff;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:calc(100vw - 32px)}
 #ver-nivel-faixa button{border:none;border-radius:999px;padding:6px 12px;background:#fff;color:#23231F;font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}
 /* F252 · no celular do nível 0, a barra de baixo é Agenda, Clientes e Buscar; F306 · nos demais, o WhatsApp no lugar do Buscar (a busca fica no alto) */
-.barra-cel .so-n0{display:none!important}:is(html[data-nivel="0"],html[data-nivel="1"]) .barra-cel .so-n0{display:block!important}
+.barra-cel .so-n0{display:none!important}:is(html[data-nivel="0"],html[data-nivel="1"],html[data-nivel="2"]) .barra-cel .so-n0{display:block!important}
 .fp-nv{display:none}
 .nv-simples{background:var(--branco,#fff);border:1px solid var(--borda);border-radius:12px;padding:16px;margin:10px 0}
 .nv-simples h3{margin:0 0 6px}.nv-simples .nv-completo{margin-top:12px}
@@ -6505,7 +6514,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.65</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.66</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6842,7 +6851,7 @@ const celAbaNorm = () => abaAtiva===0 ? "cad" : abaAtiva===4 ? "hon" : abaAtiva=
 function celCadIr(qual){ celCad = qual; const d = document.querySelector(".det-principal"); if(d) d.dataset.celCad = qual;
   document.querySelectorAll(".cel-cad-seg button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.cc===qual))); }
 function celAbasHtml(c, ks, k, nPer, temHon){
-  if(meuNivel()<=1) return "";   // os níveis 0 e 1 ficam na Identificação: as abas do caso não abririam (teste da colaboradora, 02.11.2026)
+  if(soIdentificacao()) return "";   // os níveis 0 a 2 ficam na Identificação: as abas do caso não abririam (teste da colaboradora, 02.11.2026)
   celAba = celAbaNorm();
   const nNov = k ? (D.novid||[]).filter(a=>a.caso_id===k.id).length : 0;
   // F326 · a aba Prazos do celular é a do cliente (todos os casos), com o número dos vencidos em vermelho
@@ -11161,7 +11170,7 @@ let vistaAnimada="";
 function render(){ renderBase(); if(!buscaTxt && ehAbaPlan(visao)) barraPlanejado(); }
 function renderBase(){
   aplicarTema(); marcarBarraCel();
-  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = meuNivel()<=1 ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
+  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = soIdentificacao() ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
   // o fade só quando a VISTA muda (trocar de lista, pesquisar) — render()
   // também roda em clique de chip/estrela e piscaria a cada toque
   const chaveVista=visao+"|"+(buscaTxt||"");
@@ -13076,7 +13085,7 @@ const colAdmin = () => equipeAtiva().find(c=>c.papel==="admin") || eu;
 const souAdmin = () => !!eu && eu.papel==="admin";
 // F131 · a barra do colaborador é a do To Do: só as listas que a equipe já
 // conhece. O admin vê a mesma barra ligando "ver como colaborador".
-const visaoColab = () => !souAdmin() || ler("crm_ver_como")==="colab" || meuNivel()<=1;   // F249 · os níveis 0 e 1 também
+const visaoColab = () => !souAdmin() || ler("crm_ver_como")==="colab" || soIdentificacao();   // F249 · os níveis 0 e 1 também
 // F187 · o atendente precisa do WhatsApp e das Menções (aviso de transferência e @)
 const LISTAS_COLAB = ["meudia","mencoes","whatsapp","calendario","planejado","agendaq","importante","particulares","rotinas",
   "fase:prazo","fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial",
@@ -13089,13 +13098,16 @@ const LISTAS_POR_CARGO = {
   advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "direito", "agenda"],
   recepcao: ["meudia","mencoes","whatsapp","planejado","calendario","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente"],
 };
-const listasDoColab = () => meuNivel()<=1 ? ["agendaq", "clientes", "mencoes", ...(meuNivel()===1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), "novocliente"]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
+const listasDoColab = () => soIdentificacao() ? ["agendaq", "clientes", "mencoes", ...(meuNivel()>=1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), ...(podeCadastrar()?["novocliente"]:[])]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
 // F355 · o nível 1 (WhatsApp) conversa e marca horário, mas não grava no caso: andamento, documento e tarefa são do nível 2
-const podeGravarCaso = () => meuNivel()>=2;
+const podeGravarCaso = () => meuNivel()>=3;   // F396 · o nível 2 é cadastro e dossiê; a anotação passou ao 3
+const soIdentificacao = () => meuNivel()<=2;   // os níveis 0 a 2 ficam na Identificação do cliente
+const podeCadastrar = () => meuNivel()>=2;     // F396 · criar o cliente e mudar o cadastro, a partir do nível 2
+function semCadastro(){ if(podeCadastrar()) return false; aviso("Criar o cliente e mudar o cadastro é do nível 2"); return true; }
 function alternarVerComo(){
   guardar("crm_ver_como", visaoColab() ? "" : "colab");
-  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = meuNivel()<=1 ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
+  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = soIdentificacao() ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
   montarSidebar(); render();
 }
 let segAberto = null;
@@ -14421,12 +14433,14 @@ function renderNovoCliente(){
   if(e2) nclPreencher();
 }
 function irNovoCliente(){
+  if(semCadastro()) return;   // F396
   document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
   visao="novocliente"; limparBusca(); fecharMenuCel(); fecharFicha(false); render();
 }
 // F222 · o ＋ Cliente da pesquisa: o Novo Cliente abre do começo com o CPF no
 // campo ou com o nome guardado para a ficha (só nome e sobrenome, ao menos)
 function novoClienteDaBusca(t){
+  if(semCadastro()) return;   // F396
   const d = String(t||"").replace(/\D/g,""), cpf = d.length===11 && cpfValido(d) ? d : "";
   const nome = !cpf && termosBusca(t).length>=2 ? tituloOrgao(String(t).trim().replace(/\s+/g," ").toUpperCase()) : "";
   _ncl = {etapa:1, id:null, nomeBusca:nome};
@@ -15577,6 +15591,7 @@ function achadoZap(m){
 }
 let zapMaisAberto = false;   // F274 · o ⋯ da lista do WhatsApp continua aberto quando a lista se repinta
 function pintarListaZap(){
+  if(!document.querySelector(".zap-lado")) return;   // a carga terminou depois de sair do WhatsApp
   const meu = c => c.atendente_id===eu.id;
   const aberta = c => c.status!=="resolvida";
   const gestor = zapGestor();
@@ -16213,7 +16228,7 @@ async function casoComZap(cliId, casoId){
   if(k && ehPreCaso(k) && podeAtender()) { await abrirAtendimentoDe(cliId, casoId); return zapAoLado(cliId); }
   await abrirFicha(cliId); if(clienteAberto!==cliId) return;
   document.getElementById("modal").style.display = "none";
-  casoSel = casoId; abaAtiva = meuNivel()<=1 ? 0 : 2; subAba = "escritorio"; repintarFicha();
+  casoSel = casoId; abaAtiva = soIdentificacao() ? 0 : 2; subAba = "escritorio"; repintarFicha();
   await zapAoLado(cliId);
 }
 async function prazoComZap(cliId, i){
@@ -16223,7 +16238,7 @@ async function prazoComZap(cliId, i){
   const j = (faixaAtual||[]).findIndex(y=>y.data===x.data && (y.andId||"")===(x.andId||"") && (y.rotulo||"")===(x.rotulo||""));
   if(j>=0) return abrirPainelPrazo(j);
   // a data sem caso (qualidade, decadência, contribuição) mora na aba Prazos do cliente
-  if(meuNivel()>=2 && clienteAberto===cliId){ abaAtiva = 5; repintarFicha(); }
+  if(!soIdentificacao() && clienteAberto===cliId){ abaAtiva = 5; repintarFicha(); }
 }
 async function concluirTarefaZap(id){
   if(!podeGravarCaso()) return;   // F355 · o nível 1 conversa, mas não grava no caso
@@ -20093,6 +20108,7 @@ function fundirClienteDoBanco(cliId, row){
 // completa os campos vazios com os dados cadastrais do CNIS. A caixa
 // (Primeira Letra Maiúscula) é do gatilho clientes_caixa (F282).
 async function atualizarDossie(cliId){
+  if(semCadastro()) return;   // F396
   const c = D.cliPorId.get(cliId); if(!c) return;
   if(digitosCpf(c.cpf).length!==11) return aviso("A ficha não tem CPF. A extensão prende o dossiê pelo CPF: preencha o CPF e rode o dossiê de novo.");
   aviso("Buscando o dossiê deste CPF…", false);
@@ -20152,7 +20168,7 @@ async function abrirFicha(cliId){
     procSel = ""; nupSel = ""; fonteCnj = ""; fontePat = ""; fonteCrps = "";   // idem: processo e fonte (F71: PJe padrão)
     subAba = "escritorio";   // F166 · abrir um caso é abrir os andamentos do Escritório (era o Caso completo, F45)
   }
-  if(meuNivel()<=1){ abaAtiva = 0; subCad = "identificacao"; _atendAberto.delete(cliId); }   // F249 · primeiro acesso: só a Identificação; F355 · o nível 1 também (a leitura dos portais passou ao nível 2)
+  if(soIdentificacao()){ abaAtiva = 0; subCad = "identificacao"; _atendAberto.delete(cliId); }   // F249 · primeiro acesso: só a Identificação; F355 · o nível 1 também (a leitura dos portais passou ao nível 2)
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
   // em rede lenta a coluna abria branca até as 6 consultas voltarem
@@ -20732,7 +20748,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   const tela = abaAtiva===0 && pcsVivos.length>0 && _atendAberto.has(c.id) && (ATEND_SUBS.has(cd) || cd==="identificacao");
   queueMicrotask(()=>{ const d = document.getElementById("detalhe"); if(d){ d.classList.toggle("atend-tela", tela); d.classList.toggle("notas-on", tela && notasAbertas()); d.classList.toggle("id-bege", abaAtiva===0 && ["identificacao","direito","documentos"].includes(cd)); } });
   if(tela) for(const v of Object.keys(vis)) if(v!=="identificacao" && !ATEND_SUBS.has(v)) vis[v] = false;
-  if(meuNivel()<=1) for(const v of Object.keys(vis)) vis[v] = v==="identificacao";   // F249 · primeiro acesso; F355 · e o nível 1
+  if(soIdentificacao()) for(const v of Object.keys(vis)) vis[v] = v==="identificacao";   // F249 · primeiro acesso; F355 · e o nível 1
   return `
     ${tela ? cabecalhoAtendimento(c, cd, vis) : ""}
     <div class="sub-menu" style="width:100%">
@@ -20742,7 +20758,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
         .map(([v,r])=>`<button class="${cd===v?"on":""}" onclick="irSubCad('${v}')">${r}${
         v==="direito"&&analisesDe(c.id).length?` (${analisesDe(c.id).length})`:""}${
         v==="anotacoes"&&semCaso?` <span class="meio-sub">•</span>`:""}</button>`).join("")}
-      ${meuNivel()<=1 || !podeAtender() ? "" : !pcsVivos.length ? `<button class="trilho-mais atend-novo" style="align-self:center;margin-left:auto"
+      ${soIdentificacao() || !podeAtender() ? "" : !pcsVivos.length ? `<button class="trilho-mais atend-novo" style="align-self:center;margin-left:auto"
         title="abrir um atendimento novo — pode virar caso novo ou só lembrete"
         onclick="novoAtendimento('${c.id}')">+ atendimento</button>`
         : !tela ? `<button class="trilho-mais atend-novo" style="align-self:center;margin-left:auto"
@@ -45957,6 +45973,22 @@ function chipsParentes(c){
 }
 // F293 · a consulta do dia no Meu INSS: o CPF vai à área de transferência e o portal abre no login do gov.br;
 // a senha copia no 📋 ao lado. Com a extensão do dossiê, "Só o extrato de pagamento" baixa um documento só
+// F396 · o dossiê antes de todo atendimento (primeiro ou retorno): as duas guias do gov.br que a extensão percorre
+// primeiro, com o CPF já copiado; a extensão grava no cliente pelo CPF, e o Atualizar relê a ficha
+function dossieDoAtendimento(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return; if(semCadastro()) return;
+  if(!c.cpf) return aviso("Sem CPF no cadastro: o dossiê se prende à ficha pelo CPF");
+  copiar(c.cpf, "CPF copiado: cole no gov.br");
+  const abertas = [MEU_INSS, "https://servicos.mte.gov.br/spme-v2/#/login"].map(u=>window.open(u, "_blank", "noopener")).filter(Boolean).length;
+  caixa(`<h3 style="margin:0 0 6px">Dossiê de ${esc(c.nome||"")}</h3>
+    ${abertas<2 ? `<p class="meio-sub" style="color:#a3291c">O navegador bloqueou ${2-abertas} guia(s). Clique no ícone de pop-up bloqueado, escolha <b>Sempre permitir</b> e clique de novo em Dossiê.</p>` : ""}
+    <ol class="dz-passos" style="margin:0 0 10px;padding-left:20px;line-height:1.6">
+      <li>Na guia do <b>Meu INSS</b>, entre com o gov.br do cliente (o CPF já está copiado).</li>
+      <li>Na guia do <b>Emprega Brasil</b>, clique em Entrar com gov.br e espere abrir a área do trabalhador.</li>
+      <li>Clique no ícone da extensão do dossiê e em <b>Rodar todos os portais</b>. Espere a faixa azul dizer que terminou.</li>
+      <li>Volte a esta ficha e clique em <b>Atualizar</b>, no quadro do dossiê.</li></ol>
+    <div class="form-linha"><button class="btn-rap" onclick="fecharCaixa();atualizarDossie('${c.id}')" title="Atualizar a ficha com o dossiê">Atualizar<span class="sr-only"> a ficha com o dossiê</span></button></div>`);
+}
 function entrarMeuInss(cliId){
   const c = D.cliPorId.get(cliId); if(!c || !c.cpf) return aviso("Sem CPF no cadastro");
   copiar(c.cpf, "CPF copiado: cole no gov.br. A senha copia no 📋 ao lado");
@@ -46249,16 +46281,25 @@ const ONDAS = [[1, "Lembrar em, “Em análise · +7 d” e Concluir"], [2, "Sem
 const REC_ONDA = {2:".tipo-sr,.tipo-pc,.td-abrir", 3:".tl-pericia .tl-barra-of", 4:".conf-mov,.acordo-bt,.ouv-abrir,.ouv-resp"};
 const ONDA_TELA = {pa:5, doc:5, ad:6};
 // config_app.valor é texto: a transição vai em JSON
-function lerTransicao(){ const v = cfgApp(TRANS_CHAVE); if(v && typeof v==="object") return v; try{ return v ? JSON.parse(v) : null; }catch(e){ return null; } }
+// F396 · o nível 2 passou a ser cadastro e dossiê (decisão do Paulo de 06.11.2026): a gravação antiga (sem v) tinha
+// 2 · anotação e 3 · completo, que se leem como 3 e 4
+const NV_MAX = 4, NIVEIS = [0, 1, 2, 3, 4];
+function lerTransicao(){
+  const v = cfgApp(TRANS_CHAVE); let t;
+  if(v && typeof v==="object") t = v; else { try{ t = v ? JSON.parse(v) : null; }catch(e){ t = null; } }
+  if(!t || (t.v||1) >= 2) return t;
+  const niveis = {}; for(const [k, n] of Object.entries(t.niveis||{})) niveis[k] = n>=2 ? n + 1 : n;
+  return {...t, niveis, v:2};
+}
 function transicao(){ const t = lerTransicao(); return t && t.ligada ? t : null; }
 function nivelDe(colId){
-  const t = transicao(); if(!t) return 3;
+  const t = transicao(); if(!t) return NV_MAX;
   const n = (t.niveis||{})[colId], co = D.colPorId && D.colPorId.get(colId);
-  return [0, 1, 2, 3].includes(n) ? n : (co && co.papel==="admin" ? 3 : 0);
+  return NIVEIS.includes(n) ? n : (co && co.papel==="admin" ? NV_MAX : 0);
 }
 // o administrador pode olhar o CRM como um nível, nesta sessão, sem trocar de usuário
 const verNivel = () => { try{ const v = sessionStorage.getItem("crm_ver_nivel"); return v==null || v==="" ? null : +v; }catch(e){ return null; } };
-const meuNivel = () => !eu ? 3 : (souAdmin() && transicao() && verNivel()!=null) ? verNivel() : nivelDe(eu.id);
+const meuNivel = () => !eu ? NV_MAX : (souAdmin() && transicao() && verNivel()!=null) ? verNivel() : nivelDe(eu.id);
 function verComoNivel(n){
   try{ if(n==null) sessionStorage.removeItem("crm_ver_nivel"); else sessionStorage.setItem("crm_ver_nivel", String(n)); }catch(e){}
   fecharCaixa(); aplicarNivel(); if(clienteAberto) fecharFicha(false); visao = "meudia"; montarSidebar(); render();
@@ -46266,7 +46307,7 @@ function verComoNivel(n){
 }
 const ondaAtual = () => (transicao()||{}).onda || ONDAS.length;
 const _verCompleto = new Set();   // as telas abertas por inteiro nesta sessão
-const telaSimples = (tela, c) => meuNivel()<3 && ondaAtual()<ONDA_TELA[tela] && _atendAberto.has(c.id) && !_verCompleto.has(tela);
+const telaSimples = (tela, c) => meuNivel()<NV_MAX && ondaAtual()<ONDA_TELA[tela] && _atendAberto.has(c.id) && !_verCompleto.has(tela);
 function verCompleto(tela){ _verCompleto.add(tela); repintarFicha(); }
 function aplicarNivel(){
   const n = meuNivel(), o = ondaAtual(), h = document.documentElement;
@@ -46276,8 +46317,9 @@ function aplicarNivel(){
     if(!fx){ fx = document.createElement("div"); fx.id = "ver-nivel-faixa"; document.body.appendChild(fx); }
     fx.innerHTML = `<span>Você está vendo o CRM como o <b>nível ${verNivel()}</b>.</span><button type="button" onclick="verComoNivel(null)" title="Voltar à minha visão">Voltar<span class="sr-only"> à minha visão</span></button>`;
   } else if(fx) fx.remove();
-  if(n<3) h.setAttribute("data-nivel", String(n)); else h.removeAttribute("data-nivel");
-  const css = n<3 ? Object.entries(REC_ONDA).filter(([w])=>n===1 || o < +w)
+  if(n<NV_MAX) h.setAttribute("data-nivel", String(n)); else h.removeAttribute("data-nivel");
+  if(podeCadastrar()) h.removeAttribute("data-sem-cad"); else h.setAttribute("data-sem-cad", "");   // F396
+  const css = n<NV_MAX ? Object.entries(REC_ONDA).filter(([w])=>n<=2 || o < +w)
     .map(([, sel])=>sel.split(",").map(x=>`html[data-nivel] ${x}`).join(",") + "{display:none!important}").join("\n") : "";
   let st = document.getElementById("css-ondas");
   if(!st){ st = document.createElement("style"); st.id = "css-ondas"; document.head.appendChild(st); }
@@ -46315,24 +46357,24 @@ function abrirTransicao(){
   // nível ou uma onda já liga a transição (antes só havia "Ligar", e os números do texto não eram botões)
   const t = transicao(), atual = lerTransicao() || {}, onda = t ? t.onda : 1;
   const nv = id => { const n = (atual.niveis||{})[id], co = D.colPorId.get(id);
-    return [0, 1, 2, 3].includes(n) ? n : (co && co.papel==="admin" ? 3 : 0); };
+    return NIVEIS.includes(n) ? n : (co && co.papel==="admin" ? NV_MAX : 0); };
   caixa(`<h3 style="margin:0 0 6px">Transição do To Do · <span class="trn-estado">${t ? "ligada" : "desligada"}</span></h3>
     <p class="meio-sub" style="margin:0 0 8px">${t ? "Cada colaborador vê o CRM do nível dele." : "Hoje todos veem o CRM completo. Escolher um nível ou uma onda, ou o botão abaixo, liga a transição."}</p>
     <p class="meio-sub" style="margin:0">Onda em vigor para os níveis 1 e 2:</p>
     <div class="trn-ondas">${ONDAS.map(([n, r])=>`<button type="button" class="esp-it trn-onda${n===onda?" on":""}" onclick="gravarTransicao({onda:${n}})">${n} · ${esc(r)}</button>`).join("")}</div>
-    <p class="meio-sub" style="margin:0">Nível de cada um (0 · Agenda e Identificação, 1 · WhatsApp, 2 · anotação e andamentos dos portais, 3 · completo):</p>
-    <ul class="trn-lista">${equipeAtiva().map(co=>`<li><b>${esc(co.nome)}</b>${[0, 1, 2, 3].map(n=>`<button type="button" class="btn-mini trn-nv${nv(co.id)===n?" on":""}" data-col="${co.id}" data-n="${n}" aria-pressed="${nv(co.id)===n}" onclick="gravarTransicao({col:'${co.id}', n:${n}})">${n}</button>`).join("")}</li>`).join("")}</ul>
+    <p class="meio-sub" style="margin:0">Nível de cada um (0 · Agenda e Identificação, 1 · WhatsApp, 2 · cadastro e dossiê, 3 · anotação e andamentos dos portais, 4 · completo):</p>
+    <ul class="trn-lista">${equipeAtiva().map(co=>`<li><b>${esc(co.nome)}</b>${NIVEIS.map(n=>`<button type="button" class="btn-mini trn-nv${nv(co.id)===n?" on":""}" data-col="${co.id}" data-n="${n}" aria-pressed="${nv(co.id)===n}" onclick="gravarTransicao({col:'${co.id}', n:${n}})">${n}</button>`).join("")}</li>`).join("")}</ul>
     ${t ? `<p class="meio-sub" style="margin:10px 0 4px">Ver o CRM como o colaborador vê (só para você, nesta sessão):</p>
-      <div class="form-linha trn-ver">${[0, 1, 2].map(n=>`<button type="button" class="btn-mini trn-ver-n${verNivel()===n?" on":""}" onclick="verComoNivel(${n})">nível ${n}</button>`).join("")}
+      <div class="form-linha trn-ver">${[0, 1, 2, 3].map(n=>`<button type="button" class="btn-mini trn-ver-n${verNivel()===n?" on":""}" onclick="verComoNivel(${n})">nível ${n}</button>`).join("")}
         ${verNivel()!=null ? `<button type="button" class="btn-mini trn-ver-volta" onclick="verComoNivel(null)" title="Voltar à minha visão">Voltar<span class="sr-only"> à minha visão</span></button>` : ""}</div>` : ""}
     ${t ? `<button class="btn-rap trn-desligar" onclick="gravarTransicao({ligada:false})" title="Desligar a transição">Desligar<span class="sr-only"> a transição</span></button>`
         : `<button class="btn-rap trn-ligar" onclick="gravarTransicao({ligada:true, onda:1})" title="Ligar a transição">Ligar<span class="sr-only"> a transição</span></button>`}`);
 }
 async function gravarTransicao(o){
-  const atual = lerTransicao() || {}, t = {...atual, niveis:{...(atual.niveis||{})}};
+  const atual = lerTransicao() || {}, t = {...atual, niveis:{...(atual.niveis||{})}, v:2};
   if("ligada" in o) t.ligada = o.ligada;
   else if(!t.ligada) t.ligada = true;   // escolher um nível ou uma onda com ela desligada liga a transição
-  if(t.ligada){ t.onda = o.onda || t.onda || 1; if(t.niveis[eu.id]==null) t.niveis[eu.id] = 3; }
+  if(t.ligada){ t.onda = o.onda || t.onda || 1; if(t.niveis[eu.id]==null) t.niveis[eu.id] = NV_MAX; }
   if(o.col) t.niveis[o.col] = o.n;
   try{ await guardarCfgApp(TRANS_CHAVE, JSON.stringify(t)); }catch(e){ return aviso("Não gravou — tente de novo"); }
   aplicarNivel(); montarSidebar(); render(); if(clienteAberto) repintarFicha();
@@ -49552,6 +49594,7 @@ async function salvarCliCampo(cliId, campo, valor){
 }
 // editor no lugar: o campo vira input/select sem sair da grade
 function editarCad(campo, cliId){
+  if(semCadastro()) return;   // F396
   const c = D.cliPorId.get(cliId), cx = document.getElementById("cad-"+campo);
   if(!c || !cx) return;
   const cfg = CAD_CAMPOS[campo] || {rot:campo, tipo:"texto"};
@@ -49614,6 +49657,7 @@ async function salvarTelefones(cliId, lista){
   abrirFicha(cliId);
 }
 function novoTelefone(cliId){
+  if(semCadastro()) return;   // F396
   const c = D.cliPorId.get(cliId); if(!c) return;
   const num = (document.getElementById("cad-tel-novo")||{}).value||"";
   const obs = (document.getElementById("cad-tel-obs")||{}).value||"";
@@ -49622,12 +49666,14 @@ function novoTelefone(cliId){
   salvarTelefones(cliId, lista);
 }
 function removerTelefone(cliId, i){
+  if(semCadastro()) return;   // F396
   const c = D.cliPorId.get(cliId); if(!c) return;
   const lista = telefonesDe(c).filter((_,n)=>n!==i);
   salvarTelefones(cliId, lista);
 }
 // o telefone se corrige no lugar: número e de quem é
 function editarTelefone(cliId, i){
+  if(semCadastro()) return;   // F396
   const c = D.cliPorId.get(cliId); if(!c) return;
   const t = telefonesDe(c)[i]; if(!t) return;
   caixa(`<h3>Editar telefone</h3>
@@ -49657,6 +49703,7 @@ async function zapDoNumero(numero){
   abrirConversa(conv);
 }
 function marcarZap(cliId, i){
+  if(semCadastro()) return;   // F396
   const c = D.cliPorId.get(cliId); if(!c) return;
   const lista = telefonesDe(c).map((t,n)=>({...t, zap:n===i}));
   salvarTelefones(cliId, lista);
@@ -49757,6 +49804,7 @@ function cadCampoEndereco(c){
 }
 // sete campos no lugar, sem sair da grade — o mesmo caminho que o RG já usa
 function editarEndereco(cliId){
+  if(semCadastro()) return;   // F396
   const c = D.cliPorId.get(cliId), cx = document.getElementById("campo-endereco");
   if(!c || !cx) return;
   const v = civilDe(c);
@@ -49894,6 +49942,7 @@ function cadLinhaRepresentante(c){
       <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button>`:""}</div>`;
 }
 function editarRepresentante(cliId){
+  if(semCadastro()) return;   // F396
   const c = D.cliPorId.get(cliId), cx = document.getElementById("campo-representante");
   if(!c || !cx) return;
   const r = representanteDe(c) || {};
@@ -50253,6 +50302,8 @@ function fichaIdentificacao(c, creds){
       ${caixaQualidade(c)}
       ${/* onda 0 · o dossiê também na Identificação, que está sempre à vista */""}
       <div class="idf-dossie">${caixaDossie(c)}
+        <button class="cad-mini idf-dz-run" style="margin-top:6px" title="Rodar o dossiê antes do atendimento: copia o CPF e abre o Meu INSS e o Emprega Brasil"
+          onclick="dossieDoAtendimento('${c.id}')"><span aria-hidden="true">Dossiê</span><span class="sr-only">Rodar o dossiê antes do atendimento</span></button>
         <button class="cad-mini" style="margin-top:6px" title="busca de novo o que a extensão do gov.br baixou para este CPF"
           onclick="atualizarDossie('${c.id}')">Atualizar<span class="sr-only"> dossiê</span></button>
         ${casoDoDoc(c.id) ? `<button class="cad-mini sep-abrir" style="margin-top:6px" onclick="separarParaCliente('${c.id}')" title="Imprimir e separar para o cliente"><span aria-hidden="true">Separar</span><span class="sr-only">Imprimir e separar para o cliente</span></button>` : ""}

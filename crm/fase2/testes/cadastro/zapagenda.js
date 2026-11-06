@@ -218,7 +218,7 @@ const conf = (pts, nome, v) => { ok.push([pts, nome, !!v]); console.log((v ? "PA
   await p.click(".zt-mais summary"); await p.click('.zt-mais button[onclick*="zagAlternar"]');
   const escr = await rect(".zap-escrever");
   conf(4, "no celular, a agenda aberta não cobre o campo de escrever", !!escr && !cruza(await caixaAg(), escr));
-  await p.click('.zag-vaga[data-zagvaga="P4"]').catch(() => {});
+  await p.click('#zap-ag .zag-vaga').catch(() => {});   // a primeira vaga do dia aberto (P4 fica fechado quando hoje é quarta)
   await p.waitForSelector(".aq-fluxo", { timeout: 3000 }).catch(() => {});
   conf(2, "no celular, a janela do agendamento fica por cima da conversa", await p.evaluate(() => { const j = document.querySelector(".aq-fluxo"); if (!j) return false;
     const r = j.getBoundingClientRect(); return !!document.elementFromPoint(r.left + r.width / 2, r.top + 20)?.closest(".aq-fluxo"); }));

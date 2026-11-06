@@ -15,17 +15,18 @@ está no nível completo vê tudo o que o outro escreveu.
 |---|---|
 | 0 · Primeiro acesso | Só a 📅 Agenda (a integrada ao Google Agenda), que é a tela inicial e a única lista do menu, e a Identificação do cliente. A pesquisa acha o cliente e abre só a Identificação; o Novo Cliente funciona. |
 | 1 · WhatsApp | O nível 0 e o 💬 WhatsApp: as filas Novas e Minhas, responder, nota interna, assumir, encerrar e transferir, a agenda ao lado da conversa e, à direita, a ficha do cliente. O botão Ficha abre só a Identificação. Nada grava no caso: registrar a mensagem como andamento, juntar o documento ao caso, anotar, criar ou concluir tarefa e levar o robô a um passo ficam para o nível 2. Decisão do Paulo de 01.11.2026 (F355): o colaborador aprende a conversar com o cliente depois da agenda e da lista Clientes. |
-| 2 · Anotação | A linha do tempo do Escritório e os andamentos dos portais (INSS, Recurso e Judicial, que eram do nível 1 na F294), o campo de escrever com os tipos e as Sugestões, os prazos à vista, o Lembrar em e o que a onda ligou. No atendimento, as telas simples até a onda delas. É o nível em que se deixa o To Do. |
-| 3 · Completo | O CRM inteiro. |
+| 2 · Cadastro e dossiê | O nível 1, o ➕ Novo Cliente e a Identificação editável, para o atendimento presencial: antes de todo atendimento (primeiro ou retorno), o botão **Dossiê** da Identificação copia o CPF e abre o Meu INSS e o Emprega Brasil; com o gov.br do cliente logado, a extensão do dossiê roda os portais e o **Atualizar** relê a ficha. Nada grava no caso. Decisão do Paulo de 06.11.2026 (F396): nos níveis 0 e 1 a Identificação só se lê. |
+| 3 · Anotação | A linha do tempo do Escritório e os andamentos dos portais (INSS, Recurso e Judicial, que eram do nível 1 na F294), o campo de escrever com os tipos e as Sugestões, os prazos à vista, o Lembrar em e o que a onda ligou. No atendimento, as telas simples até a onda delas. É o nível em que se deixa o To Do. |
+| 4 · Completo | O CRM inteiro. |
 
 - O nível é **por colaborador** e quem define é o Paulo (menu da conta, "Níveis da equipe").
-- Ao ligar a transição, **todos começam no nível 0 (primeiro acesso), menos o Paulo**, que fica no 3 (ajuste do Paulo de 21.10.2026).
+- Ao ligar a transição, **todos começam no nível 0 (primeiro acesso), menos o Paulo**, que fica no 4 (ajuste do Paulo de 21.10.2026).
 - Em qualquer tela simples há "Ver … completo", que vale para a sessão: nada fica trancado.
 - Sem a transição ligada, todos veem o CRM completo, como antes.
 
 ## As ondas
 
-Cada onda liga um conjunto de recursos para quem está nos níveis 1 e 2. A ordem vai do gesto mais repetido ao mais
+Cada onda liga um conjunto de recursos para quem está no nível 3 (anotação). A ordem vai do gesto mais repetido ao mais
 complexo:
 
 1. Lembrar em, "Em análise · +7 d" e Concluir.
