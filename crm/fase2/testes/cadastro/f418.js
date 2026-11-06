@@ -1,12 +1,10 @@
-// F418 · a suspensão por tema lida dos movimentos do PJe, do e-SAJ e do eproc: grava sozinha, retoma no levantamento, pede conferência sem tema
+// F418 · a aba Expedientes do PJe replicada no CRM (06.11.2026).
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-const { FIX, SESSAO, EU, CLI_CHEIO, CASO1 } = require("./fixturas");
+const { FIX, SESSAO, CLI_CHEIO, CASO1, EU } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
-const dia = n => new Date(Date.now() + n * 864e5).toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
-const TUDO = FIX;
 
 (async () => {
   const s = http.createServer((q, r) => {
@@ -20,16 +18,19 @@ const TUDO = FIX;
   await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
-    localStorage.setItem("crm_tema", "v10");
   }, [SUPA, SESSAO]);
+  const escritos = [];
   await ctx.route(SUPA + "/**", rota => {
-    const u = rota.request().url();
+    const u = rota.request().url(), m = rota.request().method();
     if (/\/auth\/v1\//.test(u))
       return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(SESSAO) });
-    if (rota.request().method() !== "GET")
-      return rota.fulfill({ status: 201, contentType: "application/json", body: "[]" });
     const t = (u.match(/\/rest\/v1\/([a-z_]+)/) || [])[1];
-    let corpo = TUDO[t] || [];
+    if (m !== "GET") {
+      const corpo = JSON.parse(rota.request().postData() || "{}");
+      escritos.push({ m, t, corpo });
+      return rota.fulfill({ status: 204, contentType: "application/json", body: "" });
+    }
+    let corpo = FIX[t] || [];
     const f = u.match(/cliente_id=eq\.([0-9a-f-]+)/);
     if (f) corpo = corpo.filter(x => x.cliente_id === f[1]);
     return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(corpo) });
@@ -42,64 +43,50 @@ const TUDO = FIX;
   await p.waitForSelector("#app.logado");
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
-  const cli = await p.evaluate(c => D.casoPorId.get(c).cliente_id, CASO1);
-  await p.evaluate(c => abrirFicha(c), cli);
-  await p.waitForSelector(".linha-caso");
-  // o leitor das partes do movimento, com os textos reais do PJe, do e-SAJ e do eproc
-  const le = await p.evaluate(() => [
-    "Processo suspenso por Recurso Especial Repetitivo 1124",
-    "Processo Suspenso por Recurso Extraordinário com repercussão geral 1209",
-    "Processo Suspenso por depender do julgamento de outra causa, de outro juízo ou declaração incidente (TNU - Tema - 317)",
-    "Recurso Especial repetitivo - SUSPENSÃO/SOBRESTAMENTO RECURSO ESPECIAL REPETITIVO - RECURSO ESPECIAL REPETITIVO - TEMA STJ Nº 1090",
-    "Levantada a Causa Suspensiva ou de Sobrestamento - Suspensão / Sobrestamento por Recurso Extraordinário com Repercussão Geral de número 1209",
-    "Autos Suspensos ou Sobrestados",
-    "Suspensão do Prazo",
-    "Processo suspenso em razão de expedição de precatório",
-    "Recebido o recurso Com efeito suspensivo",
-  ].map(leSuspensao));
-  conf("lê o REsp repetitivo como STJ", le[0] && le[0].tipo === "susp" && le[0].trib === "STJ" && le[0].tema === "1124");
-  conf("lê a repercussão geral como STF", le[1] && le[1].trib === "STF" && le[1].tema === "1209");
-  conf("lê o tema da TNU", le[2] && le[2].trib === "TNU" && le[2].tema === "317");
-  conf("lê o 'TEMA STJ Nº' do e-SAJ", le[3] && le[3].trib === "STJ" && le[3].tema === "1090");
-  conf("o levantamento não vira suspensão", le[4] && le[4].tipo === "lev");
-  conf("sem número de tema pede conferência", le[5] && le[5].tipo === "sem");
-  conf("prazo, precatório e efeito suspensivo não contam", !le[6] && !le[7] && !le[8]);
-  // grava sozinho pelo movimento do caso, com a nota e o desfazer
-  const r = await p.evaluate(async c => {
-    const k = D.casoPorId.get(c); k.ronda = {}; k.fase = "judicial";
-    D._andsFicha = [{id:"a1", caso_id:c, origem:"pje", criado_em:"2026-09-15T12:00:00Z",
-      texto:"PJe (2º grau): Processo Suspenso por Recurso Extraordinário com repercussão geral 1209 · 📎 Decisão — em 15.09.2026 22:13 — ApCiv 5025427-35.2018.4.03.9999"}];
-    await adotarSuspensao(k.cliente_id);
-    const s1 = suspensaoDe(k) ? {...suspensaoDe(k)} : null;
-    // o mesmo movimento não manda de novo: retomado à mão, não volta
-    await retomarCaso(c, true); await adotarSuspensao(k.cliente_id);
-    const volta = !!suspensaoDe(k);
-    // o levantamento retoma
-    k.ronda = {}; D._andsFicha.push({id:"a2", caso_id:c, origem:"pje", criado_em:"2026-10-01T12:00:00Z",
-      texto:"PJe (2º grau): Levantada a suspensão ou sobrestamento dos autos — em 01.10.2026 10:00 — ApCiv 5025427-35.2018.4.03.9999"});
-    k.ronda = {suspensao:{trib:"STF", tema:"1209", desde:"2026-09-15"}};
-    await adotarSuspensao(k.cliente_id);
-    const ret = !suspensaoDe(k);
-    // sem tema: não grava, pede conferência no cartão
-    k.ronda = {}; D._andsFicha = [{id:"a3", caso_id:c, origem:"pje", criado_em:"2026-10-02T12:00:00Z",
-      texto:"PJe (2º grau): Autos Suspensos ou Sobrestados — em 02.10.2026 12:34 — RecInoCiv 5001446-32.2022.4.03.6314"}];
-    await adotarSuspensao(k.cliente_id); irAoCaso(c); repintarFicha();
-    await new Promise(r=>setTimeout(r, 200));
-    return { s1, volta, ret, conf: !!(k.ronda.susp_conferir) && !suspensaoDe(k),
-      chip: (document.querySelector(".lc-susp-conf")||{}).textContent || "" };
-  }, CASO1);
-  conf("grava STF, Tema 1209, desde a data do movimento, por: auto", r.s1 && r.s1.trib === "STF" && r.s1.tema === "1209" && r.s1.desde === "2026-09-15" && r.s1.por === "auto");
-  conf("o movimento já lido não volta a suspender", r.volta === false);
-  conf("o levantamento retoma o caso", r.ret);
-  conf("sem tema fica a conferir, sem gravar", r.conf);
-  conf("o cartão pede a conferência", /Suspensão sem tema/.test(r.chip));
-  await p.evaluate(() => { visao = "acervo"; render(); });
-  conf("o Cuidar do acervo oferece a leitura do acervo", await p.$$eval('#acervo-suspensos button:has-text("Ler as suspensões")', b => b.length) === 1);
-  conf("sem erro na página", !erros.length);
+
+  const r = await p.evaluate(async ([cli]) => {
+    const k = { id: "kexp", cliente_id: cli, fase: "judicial", titulo: "t", processo: "50000154120244036136", ronda: {} };
+    D.casoPorId.set("kexp", k); D.casos.push(k);
+    const itens = [
+      { ato: "Sentença tipo M", expediente_id: "62094626", prioridade: "Normal", documento_id: "615119049", destinatario: "FULANA DE TAL",
+        meio: "Diário Eletrônico", enviado_em: "2026-11-03T16:38", ciencia_em: "2026-11-05T00:00", prazo_dias: 15,
+        limite: "2026-11-27T23:59", limite_para: "para manifestação", fechado: false,
+        ver: "/pje/Painel/painel_usuario/popup/visualizarExpediente.seam?idProcessoParteExpediente=62094626&idProcesso=1&paramIdProcessoDocumento=615119049" },
+      { ato: "Intimação", expediente_id: "57135099", destinatario: "INSTITUTO NACIONAL DO SEGURO SOCIAL - INSS", limite: "2026-06-26T23:59", limite_para: "para manifestação", fechado: true }];
+    // o plano e o aplicar gravam em ronda.expedientes, sem prazo
+    const id = "c-exp"; const dados = { fonte: "pje-processo", grau: "1º grau", host: "pje1g.trf3.jus.br", quando: "2026-11-06T17:00:00Z",
+      numero: "5000015-41.2024.4.03.6136", itens: [], expedientes: itens };
+    window.api = (async (u, o) => /coletas\?select/.test(u) ? [{ id, dados }] : (/andamentos/.test(u) && !o ? [] : null));
+    window.todas = async () => [];
+    await conferirPjeProc(id);
+    const plano = planoPjeProcAtual;
+    window.patchCaso = async (cid, campos) => { window._patch = campos; };
+    await aplicarPjeProc(id).catch(e => e);
+    const res = { exps: plano && plano.exps.length, patch: JSON.stringify(window._patch || {}), prazoNao: !("prazo" in (window._patch||{})) };
+    const div = document.createElement("div"); document.body.appendChild(div);
+    vistaProc = true; D.casoPorId.set("kexp", k);   // o aplicar recarrega o D
+    div.innerHTML = abaComProcessos(k, "cnj", () => "");
+    res.bt = [...div.querySelectorAll(".proc-bts .btn-mini")].map(b => b.textContent.trim());
+    telaExpedientes("kexp", 0);
+    const m = document.querySelector(".exp-tela");
+    res.th = m ? [...m.querySelectorAll("th")].map(x => x.textContent.trim()) : [];
+    res.linhas = m ? m.querySelectorAll("tbody tr").length : 0;
+    res.txt = m ? m.textContent.replace(/\s+/g, " ") : "";
+    res.ver = m ? (m.querySelector("a.btn-mini") || {}).href : "";
+    return res;
+  }, [CLI_CHEIO]);
+  conf("o plano leva os expedientes do processo", r.exps === 1);
+  conf("o aplicar grava em ronda.expedientes com grau, sem prazo", /"50000154120244036136\|1º grau"/.test(r.patch) && /Sentença tipo M/.test(r.patch) && r.prazoNao);
+  conf("botão Expedientes na aba Judicial", r.bt.includes("Expedientes"));
+  conf("as quatro colunas do PJe", JSON.stringify(r.th) === JSON.stringify(["Ato de comunicação","Data limite prevista para ciência ou manifestação","Ações","Fechado"]));
+  conf("duas linhas, com ciência, prazo e fechado", r.linhas === 2 && /ciência em 05.11.2026/.test(r.txt) && /Prazo: 15 dias/.test(r.txt) && /27.11.2026 23:59/.test(r.txt) && /SIM/.test(r.txt) && /2 resultados encontrados/.test(r.txt));
+  conf("Ver abre o ato no PJe", /^https:\/\/pje1g\.trf3\.jus\.br\/pje\/Painel/.test(r.ver || ""));
+
+  console.log("=== F418: expedientes do PJe ===");
+  ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
+  console.log("erros de console:", erros.length ? erros : "nenhum");
+  const ruins = ok.filter(x => !x[1]).length;
+  console.log(`${ok.length - ruins}/${ok.length} passaram`);
   await nav.close(); s.close();
-  const n = ok.filter(x => x[1]).length;
-  ok.forEach(([t, v]) => console.log(`${v ? "✓" : "✗"} ${t}`));
-  if (erros.length) console.log(erros.join("\n"));
-  console.log(`${n}/${ok.length}`);
-  process.exit(n === ok.length ? 0 : 1);
-})();
+  process.exit(ruins ? 1 : 0);
+})().catch(e => { console.error("FALHOU:", e.message); process.exit(1); });
