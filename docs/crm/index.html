@@ -20748,7 +20748,7 @@ let subAnot = ler("crm_subanot") || "atendimento";
 // e idade, telefone, senha do Meu INSS, WhatsApp e os quatro passos
 function cabecalhoAtendimento(c, cd, vis){
   const cr = ((D._ficha||{}).creds||[]).find(x=>x.tipo==="meu_inss"), dn = dnIso(c.dn), tel = String(c.telefone||"").replace(/\D/g,"");
-  const zap = (D.zapFicha||[]).length ? `verZapCliente('${c.id}')` : tel ? `window.open('https://wa.me/55${tel}','_blank','noopener')` : "";
+  const zap = (D.zapFicha||[]).length ? `verZapCliente('${c.id}')` : tel ? `zapDoNumero('${tel}')` : "";
   // F219 · o passo fechado mostra quem fechou e quando (precaso.etapas); o botão conclui o passo aberto
   const pc = preCasoAberto(c), et = (pc && pc.etapas) || {};
   const feita = v => et[ETAPA_DE[v]];
@@ -49165,8 +49165,16 @@ async function guardarCad(campo, cliId){
 function telefonesDe(c){
   const lista = Array.isArray(c.telefones) ? c.telefones
               : Array.isArray((c.campos||{}).telefones) ? c.campos.telefones : [];
-  if(lista.length) return lista;
-  return c.telefone ? [{numero:c.telefone, obs:"principal", zap:true}] : [];
+  if(!lista.length) return c.telefone ? [{numero:c.telefone, obs:"principal", zap:true}] : [];
+  // o mesmo número gravado em dois formatos ("16) 99368-1262" e "16993681262") é um telefone só
+  const vistos = new Map(), out = [];
+  for(const t of lista){
+    const k = String(t.numero||"").replace(/\D/g,"").replace(/^55(?=\d{10,11}$)/,"");
+    const ja = k && vistos.get(k);
+    if(ja){ ja.zap = ja.zap || t.zap; ja.obs = ja.obs || t.obs; continue; }
+    const n = {...t}; out.push(n); if(k) vistos.set(k, n);
+  }
+  return out;
 }
 async function salvarTelefones(cliId, lista){
   const c = D.cliPorId.get(cliId); if(!c) return;
@@ -49200,6 +49208,36 @@ function removerTelefone(cliId, i){
   const c = D.cliPorId.get(cliId); if(!c) return;
   const lista = telefonesDe(c).filter((_,n)=>n!==i);
   salvarTelefones(cliId, lista);
+}
+// o telefone se corrige no lugar: número e de quem é
+function editarTelefone(cliId, i){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const t = telefonesDe(c)[i]; if(!t) return;
+  caixa(`<h3>Editar telefone</h3>
+    <input id="et-num" value="${esc(foneZap(t.numero))}" inputmode="tel" aria-label="Telefone com DDD" style="width:100%">
+    <input id="et-obs" value="${esc(t.obs||"")}" placeholder="de quem é (recado, filha…)" aria-label="De quem é o telefone" style="width:100%;margin-top:8px">
+    <div class="form-linha" style="margin-top:10px"><button class="btn-sal" id="et-ok" title="Salvar o telefone">Salvar</button></div>`);
+  const ok = () => {
+    const num = document.getElementById("et-num").value.trim();
+    if(!num) return aviso("Escreva o número");
+    const lista = telefonesDe(c).map((x,n)=> n===i ? {...x, numero:num, obs:document.getElementById("et-obs").value.trim()} : x);
+    fecharCaixa(); salvarTelefones(cliId, lista);
+  };
+  document.getElementById("et-ok").onclick = ok;
+  ["et-num","et-obs"].forEach(id => document.getElementById(id).onkeydown = e => { if(e.key==="Enter") ok(); });
+}
+// "Conversa" abre a conversa do número no WhatsApp do CRM (o SMBot e o WhatsApp Web saíram em 06.11.2026)
+async function zapDoTelefone(cliId, i){
+  const c = D.cliPorId.get(cliId), t = c && telefonesDe(c)[i]; if(t) return zapDoNumero(t.numero);
+}
+async function zapDoNumero(numero){
+  const fone = foneZapNovo(numero);
+  if(!fone) return aviso("Número inválido: corrija o telefone com o DDD", true);
+  let conv; try{ conv = await abrirContatoZap(fone, null); }catch(e){ return aviso("Não abri a conversa: "+msgErro(e)); }
+  await recarregarZap(true).catch(()=>{});
+  fecharPainelPrazo();
+  if(visao!=="whatsapp") irPara("whatsapp");
+  abrirConversa(conv);
 }
 function marcarZap(cliId, i){
   const c = D.cliPorId.get(cliId); if(!c) return;
@@ -49774,12 +49812,12 @@ function fichaIdentificacao(c, creds){
         <div class="cad-campo cad-c6 idf-bloco${tels.length?"":" vazio"}">
           <label>Telefones</label>
           ${tels.map((t,i)=>`<div class="cad-tel">
-            <span class="cad-tel-n">${esc(t.numero||"")}</span>
+            <span class="cad-tel-n">${esc(foneZap(t.numero))}</span>
+            <button class="cad-lap" title="editar o telefone" aria-label="editar ${esc(foneZap(t.numero))}" onclick="editarTelefone('${c.id}',${i})">${CAD_IC.lapis}</button>
             ${t.zap?`<span class="cad-tag">WhatsApp</span>`
               :`<button class="cad-mini" title="marcar como o WhatsApp do cliente" onclick="marcarZap('${c.id}',${i})">${CAD_IC.zap}é o WhatsApp</button>`}
             ${t.obs?`<span class="cad-tel-obs">${esc(t.obs)}</span>`:""}
-            <a class="cad-mini" style="margin-left:auto;text-decoration:none" target="_blank" rel="noopener"
-              href="https://wa.me/55${String(t.numero||"").replace(/\D/g,"")}">abrir conversa</a>
+            <button class="cad-mini" style="margin-left:auto" title="abrir a conversa no WhatsApp do CRM" onclick="zapDoTelefone('${c.id}',${i})"><span aria-hidden="true">Conversa</span><span class="sr-only">abrir conversa no WhatsApp do CRM</span></button>
             <button class="cad-lap" title="remover" aria-label="remover ${esc(t.numero||"")}" onclick="removerTelefone('${c.id}',${i})">${CAD_IC.fechar}</button>
           </div>`).join("") || `<div class="cad-v">nenhum telefone anotado</div>`}
           <div class="cad-linha">

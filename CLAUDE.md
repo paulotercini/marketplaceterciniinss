@@ -495,6 +495,8 @@ A **F399** (o horário dos avisos de cada pessoa, pedido do Paulo de 05.11.2026)
 
 A **F412** (pedido do Paulo de 06.11.2026, início do uso exclusivo do WhatsApp do CRM no lugar do SMBot): o colaborador assume a conversa antes de responder ao cliente (`precisaAssumir`, `barraAssumir`): sem atendente, o campo de escrever dá lugar ao Assumir; com outra pessoa, ao Pedir da transferência (F369); a nota interna continua livre. Vale para o texto, o anexo, o áudio, o agendar e a resposta ao lado da ficha (que pergunta e assume). O gestor e o administrador respondem sem assumir. Substitui a parte da F339 em que o colaborador respondia sem assumir. Na mesma versão, o contato sem cliente ganhou nome próprio no CRM (`nomearConversa`, `contato_nome`) e o áudio gravado, o botão Enviar. Teste: `zapgestor.js`, `zaprenome.js`.
 
+A **F413** (pedido do Paulo de 06.11.2026): no quadro Contato da Identificação, o botão **Conversa** de cada telefone abre a conversa do número no WhatsApp do CRM (`zapDoTelefone`, `zapDoNumero`: `zap_abrir` e a tela do WhatsApp), no lugar do link do WhatsApp Web; o mesmo vale para o WhatsApp do cabeçalho do atendimento sem conversa. O telefone se edita no lápis (`editarTelefone`: número e de quem é), aparece formatado (`foneZap`) e o mesmo número gravado em dois formatos vira uma linha só (`telefonesDe` junta pelos dígitos, a marca WhatsApp e a observação), e a próxima gravação da lista já sai sem a duplicata. Teste: `testes/cadastro/f413.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
