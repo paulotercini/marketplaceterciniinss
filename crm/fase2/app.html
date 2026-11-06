@@ -6823,7 +6823,8 @@ let sessao = null;   // {access_token, refresh_token, user}
 let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
 // 1.25 da extensão · o aviso de fim da rodada abre o CRM com ?ir=patinss, já no 📥 Importar
-let visao = new URLSearchParams(location.search).get("ir")==="patinss" ? "patinss" : "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
+// F420 · o Paulo confere só as Novidades: o aviso da extensão (?ir=patinss) abre nelas, e as coletas entram sozinhas
+let visao = new URLSearchParams(location.search).get("ir")==="patinss" ? "novidades" : "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
 // F236 · o Meu Dia tem filtro próprio e abre no dia de quem entrou; as listas (filtroColab) abrem na pessoa
 let filtroDia = null;
 let secRecolhida = new Set();   // F79: seções do Meu Dia recolhidas (sobrevive às repinturas)
@@ -7167,7 +7168,9 @@ async function iniciar(){
   if(souAdmin()) buscarColetas().then(()=>montarSidebar()).catch(()=>{});
   if(souAdmin() && !window._autoColetas && !navigator.webdriver){
     window._autoColetas = setInterval(()=>autoAplicarColetas().catch(()=>{}), AUTO_COLETAS_MS);
-    setTimeout(()=>autoAplicarColetas().catch(()=>{}), 20000);
+    setTimeout(()=>autoAplicarColetas().catch(()=>{}), 1500);
+    // F420 · a aba que volta à frente (depois de rodar a extensão) aplica na hora, sem esperar o intervalo
+    document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) autoAplicarColetas().catch(()=>{}); });
   }
   document.getElementById("app").classList.remove("dados-guardados");
   if(!veioDoCache) primeiroFiltro();
@@ -9023,13 +9026,12 @@ function montarSidebar(){
     const vis = document.getElementById("grupo-visoes");
     const tmp = document.createElement("div"); tmp.innerHTML = vis.innerHTML;
     const tira = id => { const el=tmp.querySelector(`[data-v="${id}"]`); if(el) el.remove(); return el; };
-    tira("clientes"); tira("direito"); tira("agenda"); tira("patinss");
+    tira("clientes"); tira("direito"); tira("agenda");
     const nDir = direitoAlcancado().length;
     // F236 · o Importar fica à vista de quem aplica, com o número de coletas esperando
     vis.innerHTML = item("clientes","👥 Clientes",(D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length)   // à vista do titular, e não no "Mais"
       + item("direito","⚖️ Análise de Direito",nDir)
-      + item("patinss","📥 Importar do INSS",coletasPorFonte().novas.length, (()=>{ const n=coletasPorFonte().novas.length, v=semCasoAntigos().length;
-          return v ? `${n?`<span class="cont">${n}</span>`:""}<span class="cont" style="background:#c0392b;color:#fff" title="processos do acervo sem caso no CRM há mais de 7 dias">⚠ ${v}</span>` : ""; })());
+      ;   // F420 · o Importar saiu da vista e perdeu o contador: as coletas entram sozinhas e o que pede escolha vai às Novidades
     const mais = ["importante","particulares","rotinas","acervo"].map(id=>{ const x=dd[id];
         return item(id,x[1],x[2]==="🔒"?null:x[2], x[2]==="🔒"?`<span class="priv">🔒 só você</span>`:""); }).join("")
       + item("checagem","🔎 Checagem manual",ativos().filter(k=>k.acompanhamento==="manual").length)
@@ -10233,7 +10235,7 @@ async function aplicarTodasColetas(auto){
 // pede escolha (possível duplicado, requerimento sem ficha, processo sem caso) vai às 📣 Novidades.
 // A trava em config_app impede duas aberturas do CRM de aplicarem a mesma fila.
 // shortcut: trava por carimbo, sem transação; duas aberturas no mesmo segundo ainda podem coincidir
-const AUTO_COLETAS_MS = 5*60*1000, AUTO_TRAVA_MS = 10*60*1000;
+const AUTO_COLETAS_MS = 60*1000, AUTO_TRAVA_MS = 10*60*1000;
 async function autoAplicarColetas(){
   if(!souAdmin() || aplicandoTodas || document.hidden) return;
   const ae = document.activeElement;   // não repinta por cima de quem digita ou tem uma janela aberta

@@ -209,7 +209,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const lat = await paulo.evaluate(() => ({ hoje: [...document.querySelectorAll("#grupo-dinamicas .lista-item")].map(e => e.dataset.v).join(","),
     imp: (document.querySelector('#grupo-visoes [data-v="patinss"] .cont') || {}).textContent || "" }));
   conf("as Novidades saem do Mais e entram na faixa do dia do administrador", /meudia,mencoes,novidades/.test(lat.hoje));
-  conf(`o Importar mostra na barra quantas coletas esperam (${lat.imp})`, lat.imp === "1");
+  conf(`F420 · o Importar não mostra contagem na barra (${lat.imp})`, lat.imp === "");
   const ult = await paulo.evaluate(async () => { visao = "patinss"; render(); await new Promise(r => setTimeout(r, 500));
     return (document.querySelector(".ult-coletas") || {}).textContent || ""; });
   conf(`o Importar diz quando cada portal foi lido (${ult.replace(/\s+/g, " ").trim()})`, /Última leitura de cada portal: 🌻 INSS \d{2}\.\d{2}/.test(ult));

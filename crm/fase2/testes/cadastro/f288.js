@@ -68,7 +68,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o Importar avisa o processo sem caso há mais de 7 dias", /1 processo\(s\).*mais de 7 dias/.test(txt) && txt.includes(VELHO));
   conf("o processo sem caso há menos de 7 dias ainda não entra no aviso", !txt.includes(NOVO));
   const barra = await p.evaluate(() => document.querySelector('[data-v="patinss"]').innerText);
-  conf("a barra mostra o ⚠ com a contagem", /⚠ 1/.test(barra));
+  conf("F420 · a barra não chama ao Importar: sem ⚠ nem contagem", !/⚠|\d/.test(barra.replace(/INSS/,"")));
   await p.evaluate(v => ignorarProcessoPje(v), VELHO);
   await p.evaluate(() => { planoPjeAtual = null; render(); });
   conf("o ignorado sai do aviso", !(await p.locator(".aviso-sem-caso").count()));
