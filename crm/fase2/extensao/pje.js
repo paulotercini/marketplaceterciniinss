@@ -248,10 +248,13 @@
     // F190 · o que devia descer e não desceu vai marcado: a rodada seguinte
     // do "completar" reabre o processo só por causa dele (até 3 tentativas)
     for (const d of docs) if (!d.caminho && DOCS_REGRAS.vaiBaixar(d.nome)) d.falhou = true;
+    // 1.35.0 · a aba Expedientes do processo vai junto (pedido do Paulo, 06.11.2026); falhar não perde a coleta
+    let expedientes = null;
+    try { expedientes = await lerAbaExpedientes(cab.numero); } catch (e) { console.warn('expedientes:', e); }
     const OUT = { versao: 1, fonte: 'pje-processo', grau, host: location.host,
                   quando: new Date().toISOString(), numero: cab.numero,
                   classe: cab.classe || null, orgao: cab.orgao || null,
-                  link: location.href.split('#')[0], itens };
+                  link: location.href.split('#')[0], itens, ...(expedientes ? { expedientes } : {}) };
     // F187 · na rodada "completar processos" quem entrega (em lotes) é o
     // service worker: aqui só se devolve o processo lido
     if (!entregar) return { ok: itens.length, out: OUT };
@@ -259,6 +262,40 @@
     faixaOk(`✔ ${itens.length} itens do processo ${cab.numero} entregues ao CRM — confira em 📥 Importar.`);
     someFaixa();
     return { ok: itens.length };
+  }
+
+  // a aba Expedientes dos Autos Digitais (A4J, form navbar): clica, espera a tabela e lê as linhas.
+  // A tabela não tem botão de ciência; ler não registra nada. Devolve null se a aba não abrir.
+  const tabProcExp = () => document.getElementById('processoParteExpedienteMenuGridList');
+  async function lerAbaExpedientes(numero) {
+    const lk = document.getElementById('navbar:linkAbaExpedientes');
+    if (!lk && !tabProcExp()) return null;
+    if (lk) {
+      faixa(`processo ${numero}: lendo os expedientes…`);
+      await esperarLivre(); lk.click();
+      for (let i = 0; i < 40 && !tabProcExp(); i++) await pausa(400);
+      await esperarLivre(); await esperarQuieto(700, 8000);
+    }
+    const lidos = new Map();
+    const ler = () => { const t = tabProcExp(); if (!t || !t.tBodies[0]) return;
+      for (const tr of t.tBodies[0].rows) {
+        if (!tr.cells || tr.cells.length < 4) continue;
+        const e = REG.lerExpedienteProcesso([...tr.cells].map(c => c.innerText),
+          [...tr.querySelectorAll('a[href]')].map(a => a.getAttribute('href')));
+        if (e) lidos.set(e.expediente_id || e.texto, e);
+      } };
+    if (!tabProcExp()) return null;
+    ler();
+    for (let pg = 0; pg < 30; pg++) {
+      const prox = [...document.querySelectorAll('[id^="processoParteExpedienteMenuGrid"] .rich-datascr-button')]
+        .find(el => /»|>>|next/i.test(el.textContent + (el.getAttribute('onclick') || '')) && !/dsbld/.test(el.className));
+      if (!prox) break;
+      const a2 = tabProcExp().innerHTML;
+      prox.click();
+      for (let i = 0; i < 30 && tabProcExp() && tabProcExp().innerHTML === a2; i++) await pausa(400);
+      await esperarLivre(); ler();
+    }
+    return [...lidos.values()];
   }
 
   const PAINEL = '/pje/Painel/painel_usuario/advogado.seam';

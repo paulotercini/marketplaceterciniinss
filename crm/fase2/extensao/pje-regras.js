@@ -144,7 +144,39 @@
     const it = textoOuItens, k = it.findIndex(i => (i.textos || []).some(t => RX_INICIO.test(t)));
     return it.some(i => (i.docs || []).some(d => RX_INICIAL.test(d.nome || ''))) || (k >= 0 && k < it.length - 1);
   };
-  const API = { lerLinhaAcervo, lerAcervoHtml, lerTimelineHtml, lerCabecalhoProcesso, arquivado, chegouAoInicio };
+  // aba EXPEDIENTES dos Autos Digitais (lida do HTML salvo pelo Paulo, 06.11.2026):
+  // table#processoParteExpedienteMenuGridList, 4 colunas: "Ato de comunicação", "Data limite
+  // prevista para ciência ou manifestação", "Ações" e "Fechado". Recebe o texto de cada célula
+  // e os href da linha; o CRM mostra a mesma tabela (sem prazo, pedido do Paulo).
+  const isoBr = s => { const m = String(s || '').match(/(\d{2})\/(\d{2})\/(\d{4})(?:\s+(\d{2}:\d{2}))?/);
+    return m ? `${m[3]}-${m[2]}-${m[1]}${m[4] ? 'T' + m[4] : ''}` : null; };
+  const RX_MEIO = /(Di[áa]rio Eletr[ôo]nico|Expedi[çc][ãa]o eletr[ôo]nica|Sistema|Correios|Central de Mandados|Edital|Pessoalmente|Telefone|E-mail|Carta)\s*\((\d{2}\/\d{2}\/\d{4}(?:\s+\d{2}:\d{2})?)[^)]*\)/i;
+  function lerExpedienteProcesso(cels, hrefs) {
+    const t0 = String((cels || [])[0] || '').replace(/\s+/g, ' ').trim();
+    if (!t0) return null;
+    const cab = t0.match(/^(.+?)\s*\((\d+)\)(?:\s*-\s*Prioridade:\s*([^-]+?))?(?=\s*-|\s*ID do documento|$)/);
+    const doc = t0.match(/ID do documento\s*\((\d+)\)/i);
+    const meio = t0.match(RX_MEIO);
+    const resto = doc ? t0.slice(doc.index + doc[0].length) : '';
+    const corte = [meio ? resto.indexOf(meio[0]) : -1, resto.search(/O sistema registrou|Prazo:/i)].filter(i => i >= 0);
+    const dest = (corte.length ? resto.slice(0, Math.min(...corte)) : resto).trim();
+    const t1 = String((cels || [])[1] || '').replace(/\s+/g, ' ').trim();
+    const ver = (hrefs || []).map(h => String(h || '').replace(/&amp;/g, '&')).find(h => /visualizarExpediente/i.test(h)) || '';
+    const q = n => (ver.match(new RegExp(`[?&]${n}=(\\d+)`)) || [])[1] || null;
+    const dias = (t0.match(/Prazo:\s*(\d+)\s*dia/i) || [])[1];
+    return {
+      ato: cab ? cab[1].trim() : t0.slice(0, 80), expediente_id: cab ? cab[2] : q('idProcessoParteExpediente'),
+      prioridade: cab && cab[3] ? cab[3].trim() : null, documento_id: doc ? doc[1] : q('paramIdProcessoDocumento'),
+      destinatario: dest.slice(0, 300) || null, meio: meio ? meio[1] : null, enviado_em: meio ? isoBr(meio[2]) : null,
+      ciencia_em: isoBr((t0.match(/ci[êe]ncia em (\d{2}\/\d{2}\/\d{4}(?:\s+\d{2}:\d{2})?)/i) || [])[1]),
+      prazo_dias: dias ? +dias : null,
+      limite: isoBr(t1), limite_para: (t1.match(/\(([^)]+)\)/) || [])[1] || null, limite_txt: t1 || null,
+      fechado: /^\s*sim\b/i.test(String((cels || [])[3] || '')),
+      ver: ver ? ver.replace(/[?&]cid=\d+/, '') : null, processo_id: q('idProcesso'),
+      texto: t0.slice(0, 600),
+    };
+  }
+  const API = { lerLinhaAcervo, lerAcervoHtml, lerTimelineHtml, lerCabecalhoProcesso, arquivado, chegouAoInicio, lerExpedienteProcesso };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.PJE_REGRAS = raiz.PJE_REGRAS || API;
 })(typeof window !== 'undefined' ? window : globalThis);
