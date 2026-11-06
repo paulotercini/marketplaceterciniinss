@@ -10223,7 +10223,8 @@ async function aplicarTodasColetas(auto){
 }
 // Pedido do Paulo (06.11.2026): o Importar era um clique a mais. As coletas que só acrescentam ao caso que
 // já existe pelo número (tribunais, e-Recursos, prazos) entram sozinhas no CRM aberto do administrador,
-// ao abrir e a cada 5 minutos; o INSS (cria casos) e o processo sem caso continuam esperando o clique.
+// ao abrir e a cada 5 minutos. Decisão do Paulo (mesmo dia): o INSS também, criando os casos novos; o que
+// pede escolha (possível duplicado, requerimento sem ficha, processo sem caso) vai às 📣 Novidades.
 // A trava em config_app impede duas aberturas do CRM de aplicarem a mesma fila.
 // shortcut: trava por carimbo, sem transação; duas aberturas no mesmo segundo ainda podem coincidir
 const AUTO_COLETAS_MS = 5*60*1000, AUTO_TRAVA_MS = 10*60*1000;
@@ -10232,8 +10233,9 @@ async function autoAplicarColetas(){
   const ae = document.activeElement;   // não repinta por cima de quem digita ou tem uma janela aberta
   if((ae && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) || document.querySelector(".modal-fundo")) return;
   await buscarColetas();
-  const velhas = coletasPorFonte().velhas.filter(c => LOTE_FONTES[c.fonte]);
-  if(!coletasDoLote().length && !velhas.length) return;
+  const velhas = coletasPorFonte().velhas.filter(c => LOTE_FONTES[c.fonte] || c.fonte==="pat");
+  const pat = coletasPorFonte().novas.find(c => c.fonte==="pat");
+  if(!coletasDoLote().length && !velhas.length && !pat) return;
   const [t] = await api(`/rest/v1/config_app?select=valor&chave=eq.coletas_auto_em`).catch(()=>null) || [];
   if(t && Date.now() - Date.parse(t.valor) < AUTO_TRAVA_MS) return;
   await guardarCfgApp("coletas_auto_em", new Date().toISOString());
@@ -10242,6 +10244,17 @@ async function autoAplicarColetas(){
       headers:{Prefer:"return=minimal"}, body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
     await buscarColetas();
     await aplicarTodasColetas(true);
+    if(pat){
+      await usarColeta(pat.id);
+      const pl = planoPat;
+      if(pl && !pl.erro && pl.coleta_id===pat.id){
+        const itens = [...(pl.possiveisDuplicados||[]).map(n=>({protocolo:n.protocolo, nome:n.nome, beneficio:n.beneficio, tipo:"dup",
+            motivo:`já tem caso: ${n.titulo_existente||""}${n.motivo?` · ${n.motivo}`:""}`})),
+          ...(pl.semCliente||[]).map(n=>({protocolo:n.protocolo, nome:n.nome, beneficio:n.beneficio, tipo:"sem", motivo:"requerimento sem ficha no CRM"}))];
+        await guardarCfgApp("pat_sem_caso", JSON.stringify({coleta_id:pat.id, em:new Date().toISOString(), itens}));
+        await aplicarPatDeVerdade();
+      }
+    }
   }finally{ await guardarCfgApp("coletas_auto_em", new Date(0).toISOString()).catch(()=>{}); }
   montarSidebar();
 }
@@ -13492,15 +13505,54 @@ async function carregarSegNovidades(ns){
   const filhos = await todas("andamentos", `select=id,caso_id,responde_a,texto,excluir&responde_a=in.(${ids.join(",")})`).catch(()=>[]);
   for(const f of filhos) (segNovidades.get(f.responde_a)||[]).push(f);
 }
+// Decisão do Paulo (06.11.2026): tudo o que os portais trouxeram aparece nas Novidades, também o que ainda não
+// tem caso; ele confere ali e não abre o 📥 Importar. Conferir leva à coleta, onde ficam os botões de sempre.
+function patSemCaso(){ try{ return JSON.parse(cfgApp("pat_sem_caso")||"{}"); }catch(e){ return {}; } }
+function novSemCaso(){
+  const pat = patSemCaso(), fora = new Set(patIgnorados().map(String));
+  const prots = new Set((D.casos||[]).flatMap(k=>(k.protocolos||[]).map(soDig)));
+  const ps = (pat.itens||[]).filter(x=>!prots.has(soDig(x.protocolo)) && !fora.has(String(x.protocolo)));
+  const comCaso = new Set();
+  for(const k of D.casos||[]){
+    if(soDig(k.processo)) comCaso.add(soDig(k.processo));
+    for(const px of (Array.isArray(k.processos)?k.processos:[])) if(soDig(px && (px.numero||px))) comCaso.add(soDig(px.numero||px));
+  }
+  const pjFora = new Set(pjeIgnorados());
+  const js = Object.entries(pjeSemCaso()).filter(([d])=>!comCaso.has(d) && !pjFora.has(d)).map(([,x])=>x);
+  if(!ps.length && !js.length) return "";
+  return `<h3 class="secao">📥 Sem caso no CRM (${ps.length+js.length})</h3>
+    ${ps.map(x=>`<div class="nov-linha"><strong>INSS · ${esc(x.nome||"sem nome")}</strong> · protocolo ${esc(x.protocolo)}
+      ${x.beneficio?` · ${esc(x.beneficio)}`:""} <span class="meio-sub">${esc(x.motivo||"")}</span>
+      ${x.tipo==="sem"
+        ? `<button class="btn-mini" onclick="resolverPat('cadastrar','${esc(x.protocolo)}')" title="cadastrar a ficha com o que o PAT trouxe e criar o caso">Cadastrar</button>`
+        : `<button class="btn-mini" onclick="resolverPat('juntar','${esc(x.protocolo)}')" title="é o mesmo caso: juntar o protocolo">Juntar</button>
+           <button class="btn-mini" onclick="resolverPat('criar','${esc(x.protocolo)}')" title="é outro: criar o caso">Criar</button>`}
+      <button class="btn-mini" onclick="ignorarProtocolo('${esc(x.protocolo)}')" title="parar de perguntar por este protocolo">Ignorar</button></div>`).join("")}
+    ${js.map(x=>`<div class="nov-linha"><strong>${esc(x.sistema==="esaj"?"e-SAJ":x.sistema==="eproc"?"eproc":"PJe")} · ${esc(x.partes||"")}</strong>
+      · processo ${esc(x.numero)} <span class="meio-sub">sem caso desde ${esc(fmt(dataSP(x.desde)))}</span>
+      <button class="btn-mini" onclick="irPara('patinss')" title="abrir a coleta do tribunal para vincular ou criar o caso">Vincular</button>
+      <button class="btn-mini" onclick="ignorarProcessoPje('${esc(x.numero)}')" title="parar de perguntar por este processo">Ignorar</button></div>`).join("")}`;
+}
+// resolve na própria Novidades: refaz o plano da coleta do INSS (contra o banco) e usa os botões de sempre
+async function resolverPat(acao, protocolo){
+  const id = patSemCaso().coleta_id; if(!id) return;
+  await usarColeta(id);
+  if(acao==="juntar") await juntarAoCaso(protocolo);
+  else if(acao==="criar") await criarMesmoAssim(protocolo);
+  else if(acao==="cadastrar"){ await cadastrarDoPat(protocolo);
+    if(planoPat && (planoPat.novos||[]).some(x=>x.protocolo===protocolo)) await aplicarPatDeVerdade(); }
+  render();
+}
 function renderNovidades(){
   tituloLista("📣 Novidades");
   const ns = novidades();
+  const semCaso = novSemCaso();
   if(ns.some(a=>!segNovidades.has(a.id))){ carregarSegNovidades(ns).then(()=>{ if(visao==="novidades") render(); }); }
   document.getElementById("sub-lista").textContent = ns.length
     ? "O que os portais trouxeram e você ainda não leu. Marcar como lido tira daqui, não da ficha."
     : "Nada novo. Tudo o que os portais trouxeram já foi lido.";
   if(!ns.length){
-    document.getElementById("conteudo-meio").innerHTML =
+    document.getElementById("conteudo-meio").innerHTML = semCaso ||
       "<p class='meio-sub'>Caixa vazia. 👏 Rode a extensão para buscar o que mudou hoje.</p>";
     return;
   }
@@ -13528,7 +13580,7 @@ function renderNovidades(){
     `<div class="filtros">${info.length?`<button class="fchip" id="ler-tudo" title="o que pede agenda continua na lista até alguém dar seguimento">✔ marcar as informativas como lidas (${info.length})</button>`:""}${
       nLinks?`<button class="fchip" id="abrir-tudo" title="abre o processo de cada novidade numa aba — PJe ou PAT, conforme a origem">↗ abrir todos os links (${nLinks})</button>`:""}${
       nPer?`<button class="fchip" id="agendar-tudo" title="para cada perícia/audiência detectada: agenda na aba 🩺 e cria o aviso 3 dias úteis antes (seg–sex)">🩺 agendar ${nPer} perícia(s) + avisos</button>`:""}</div>`
-    + topo + corpo;
+    + semCaso + topo + corpo;
   const bAbrir=document.getElementById("abrir-tudo");
   if(bAbrir) bAbrir.onclick=abrirTodasNovidades;
   const bAg=document.getElementById("agendar-tudo");
