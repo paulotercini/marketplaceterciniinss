@@ -6499,7 +6499,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.60</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.61</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -30863,7 +30863,7 @@ const requisitosDe = (c, ks, op) => avaliarReq(op, reqCtx(c, ks||D.casosDoClient
            : {est:"info", txt:`pedido em ${fmtBarra(b.der.iso)}, depois de ${fmtBarra(b.prazo)}: DIB na DER, sem os dias de ${fmtBarra(b.dib)} a ${fmtBarra(b.der.iso)} (o direito não se perde)`, fonte:b.der.fonte}; }
        return x.hoje <= b.prazo ? {est:"risco", txt:`prazo correndo: pedir até ${fmtBarra(b.prazo)}; ${b.quem}`, fonte, quando:b.prazo}
          : {est:"info", txt:`o prazo de 30 dias terminou em ${fmtBarra(b.prazo)}: a DIB será a DER; ${b.quem}`, fonte}; }},
-    {id:"documentos_analise_documental", rot:"Tem atestado ou relatório médico recente para pedir só com o documento, sem perícia (Atestmed)?", base:"Lei 8.213/91, art. 60, §§ 11-A, 11-F, 11-G e 11-I (Lei 15.265/2025); Portaria Conjunta MPS/INSS 13/2026, art. 2º; Portaria Conjunta 14/2026, art. 2º; Portaria Conjunta 43/2026, art. 1º", conf:"divergente", campos:["inc_docs","inc_dcb"],
+    {id:"documentos_analise_documental", rot:"Tem atestado ou relatório médico recente para pedir só com o documento, sem perícia (Atestmed)?", base:"Lei 8.213/91, art. 60, §§ 11-A, 11-F, 11-G e 11-I (Lei 15.265/2025); Portaria Conjunta MPS/INSS 13/2026, arts. 2º, 3º, § 2º, e 8º, com a redação da Portaria Conjunta 54/2026; Portaria Conjunta 14/2026, art. 2º; Portaria Conjunta 43/2026, art. 1º", conf:"divergente", campos:["inc_docs","inc_dcb"],
      mede:x=>{ const div = {inss:"Portarias Conjuntas 14/2026 e 43/2026: até 90 dias somados por análise documental (ampliação prorrogada por 365 dias; data final não conferida)", judicial:"Lei 8.213/91, art. 60, § 11-F (Lei 15.265/2025): no máximo 30 dias somados"};
        // F235 · a prorrogação negada por parecer contrário fecha o pedido só com atestado por 180 dias do corte (Portaria Conjunta 13/2026, art. 6º, V)
        const corte = _incCorte(x), negP = corte && (x.fd.processos||[]).some(p=>/prorroga/i.test(p.servico||"") && ((p.comunicacoes||[]).slice(-1)[0]||{}).contra);
@@ -30875,7 +30875,7 @@ const requisitosDe = (c, ks, op) => avaliarReq(op, reqCtx(c, ks||D.casosDoClient
        if(n <= 30) return {est:"ok", txt:`atestado completo e repouso de ${n} dias: cabe na análise documental nas duas regras`, fonte:"campo"};
        if(n <= 90) return {est:"divergente", txt:`repouso de ${n} dias: a via administrativa aceita até 90 dias somados, a lei fala em 30`, fonte:"campo", div};
        return {est:"info", txt:`repouso de ${n} dias, acima de 90: vai à perícia (presencial ou por telemedicina)`, fonte:"campo"}; }},
-    {id:"prorrogacao_novo_pedido", rot:"Se já recebe ou recebeu, ainda dá para pedir prorrogação ou um novo pedido?", base:"IN 128/2022, arts. 339, § 3º (red. IN 212/2026), 340, 346 e 347; Portaria Conjunta 13/2026, arts. 6º, I, III a VIII, e 9º", conf:"conferido", campos:["inc_dcb"],
+    {id:"prorrogacao_novo_pedido", rot:"Se já recebe ou recebeu, ainda dá para pedir prorrogação ou um novo pedido?", base:"IN 128/2022, arts. 339, § 3º (red. IN 212/2026), 340, 346 e 347; Portaria Conjunta 13/2026, arts. 6º, I, III a VIII, 8º-A e 9º, com a redação da Portaria Conjunta 54/2026", conf:"conferido", campos:["inc_dcb"],
      mede:x=>{ const l = _incLaudo(x, "dcb"), lr = _incLaudo(x, "resultado"), at = _incAtivos(x).find(b=>/^(31|91)$/.test(b.especie));
        // F235 · a DCB presumida do relatório (fim do afastamento) só vale com benefício em curso: sem ele, é pedido novo
        const dcbDig = (x.vDig||x.v).inc_dcb, dcbAt = dcbDig || (l && isoBr(l.dcb)) || (at && at.ate) || (at ? x.v.inc_dcb : null) || null, fonteD = dcbDig ? "campo" : l && l.dcb ? _incFonteL(l) : "CNIS";
@@ -37377,9 +37377,53 @@ function recorrerAte(k){
   // F236 · e também quando a alçada da Junta é certa pelo próprio recurso (o parecer da Perícia Médica Federal ouvida em
   // matéria médica, art. 89, §§ 3º e 4º; alcadaJunta), mesmo sem o resumo do acórdão dizer "alçada"
   if(fe==="conselho"){ const u = ultimaDecisaoCrps(k); if(u && (u.favoravel || u.alcada || u.instancia===2 || (u.instancia!==2 && alcadaJunta(k)==="certa"))) return null; }
-  const d = somaDias(k.decisao_em, 30);
+  // F415 · com a reanálise pedida, os 30 dias contam da ciência da decisão dela (Portaria Conjunta 13/2026, art. 9º, § 2º, II,
+  // com a redação da Portaria Conjunta 54/2026): enquanto não decide, não há "Recorrer até"; deferida, não há o que recorrer
+  const ra = fe==="inss" ? reanalisePedida(k) : null;
+  if(ra && (ra.resultado==="deferido" || !ra.decidida_em)) return null;
+  const d = somaDias(ra ? ra.decidida_em : k.decisao_em, 30);
   return d ? proxDiaUtilAdm(d) : null;
 }
+// ══════════════════════════════════════════════════════════════════════════
+// F415 · A REANÁLISE DA ANÁLISE DOCUMENTAL (Portaria Conjunta MPS/INSS 54/2026, DOU de 06/11/2026, que altera a 13/2026).
+// Negado o B31 por parecer técnico na análise documental (Atestmed), cabe pedir a reanálise em 10 dias da ciência, com
+// documento novo, sem perder a DER (art. 8º-A); o recurso dentro desses 10 dias sem a reanálise a preclui (art. 9º, § 1º).
+// Vale para a ciência a partir de 06/11/2026 (art. 2º). O CRM toma a decisao_em como a ciência, como no "Recorrer até".
+// A reanálise mora em casos.ronda.reanalise = {pedida_em, decidida_em, resultado}.
+// ══════════════════════════════════════════════════════════════════════════
+const PC54_DESDE = "2026-11-06";
+const RX_DOCUMENTAL = /an[áa]lise documental|atestmed/i;
+function indefDocumental(k){
+  if(!k || !k.decisao_em || k.resultado==="deferido" || !ehIncapacidade(k)) return false;
+  if((k.ronda||{}).reanalise) return true;
+  if(RX_DOCUMENTAL.test(k.situacao_inss||"") && /indefer|negad/i.test(k.situacao_inss||"")) return true;
+  if(k.resultado!=="indeferido" && k.etapa!=="decidido") return false;
+  return (D.anexos||[]).some(x=>x.caso_id===k.id && /comunica/i.test(x.nome||"") && RX_DOCUMENTAL.test(x.texto||"") && /indefer/i.test(x.texto||""));
+}
+const reanalisePedida = k => { const r = (k && k.ronda||{}).reanalise; return r && r.pedida_em ? r : null; };
+// o último dia da reanálise, enquanto ela cabe: indeferimento documental com ciência na vigência, sem reanálise pedida
+// e sem recurso protocolado depois da decisão (que a preclui)
+function reanaliseAte(k){
+  if(!indefDocumental(k) || k.decisao_em < PC54_DESDE || reanalisePedida(k)) return null;
+  if([k.ro_protocolado_em, k.re_protocolado_em].some(d=>d && d >= k.decisao_em)) return null;
+  return contarPrazo(k.decisao_em, PRAZOS_CATALOGO.find(x=>x.id==="reanl"), k);
+}
+// o recurso protocolado dentro dos 10 dias, sem a reanálise, a preclui (art. 9º, § 1º)
+function reanalisePreclusa(k){
+  if(!indefDocumental(k) || k.decisao_em < PC54_DESDE || reanalisePedida(k) || !k.ro_protocolado_em || k.ro_protocolado_em < k.decisao_em) return false;
+  return k.ro_protocolado_em <= contarPrazo(k.decisao_em, PRAZOS_CATALOGO.find(x=>x.id==="reanl"), k);
+}
+async function gravarReanalise(casoId, muda){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const antes = k.ronda || null, ronda = {...(k.ronda||{}), reanalise:{...((k.ronda||{}).reanalise||{}), ...muda}};
+  k.ronda = ronda;
+  try{ await patchCaso(casoId, {ronda}); }catch(e){ k.ronda = antes; return aviso("Não gravou — tente de novo"); }
+  repintarFicha();
+  avisoDesfazer(muda.pedida_em ? "Reanálise pedida" : `Reanálise ${muda.resultado==="deferido" ? "deferida" : "mantida"}`, async ()=>{
+    k.ronda = antes; await patchCaso(casoId, {ronda:antes}).catch(()=>{}); aviso("Desfeito"); repintarFicha(); });
+}
+function pedirReanalise(casoId){ gravarReanalise(casoId, {pedida_em:hoje()}); }
+function decidirReanalise(casoId, resultado){ gravarReanalise(casoId, {decidida_em:hoje(), resultado}); }
 // ══════════════════════════════════════════════════════════════════════════
 // F236 · O QUE AS DECISÕES DIZEM DE PRAZO. Leitores puros do que a ficha já
 // carregou (andamentos, documentos com texto, prazos dos tribunais): o ato
@@ -38153,6 +38197,16 @@ function linhasDeDatas(cliId){
       if(igualA==="rec") tambem(l);
       linhas.push(l);
     }
+    // F415 · a reanálise da análise documental (Portaria Conjunta 13/2026, art. 8º-A, com a redação da Portaria Conjunta 54/2026)
+    const rea = reanaliseAte(x), rp = reanalisePedida(x);
+    if(rea) linhas.push({data:rea, ico:"⚖️", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true, rotulo:"Reanálise documental", curto:"Reanálise até",
+      resumo:"10 dias da ciência, com relatório médico novo",
+      rot:`<b>Pedir a reanálise da análise documental até ${fmt(rea)}</b> <small class="qd-de">10 dias corridos da decisão de ${fmt(x.decisao_em)} (conte da ciência, se ela veio depois), com documento médico novo; mantém a DER. Recorrer antes disso sem pedir a reanálise a impede (Portaria Conjunta 13/2026, arts. 8º-A e 9º, § 1º, com a redação da Portaria Conjunta 54/2026) · ${tit}</small>`,
+      edita:"", acao:`<button type="button" class="tl-bt" onclick="pedirReanalise('${x.id}')" title="registra a reanálise pedida hoje: o recurso passa a contar da decisão dela">Pedida</button>`});
+    else if(rp && !rp.decidida_em && fe==="inss") linhas.push({data:hj, ico:"⌛", natureza:"compromisso", casoId:x.id, cru:true, rotulo:"Reanálise documental pedida", curto:"Reanálise pedida",
+      resumo:`desde ${fmtBarra(rp.pedida_em)}; o recurso conta da decisão dela`,
+      rot:`<b>Reanálise pedida em ${fmt(rp.pedida_em)}, aguardando a Perícia Médica Federal</b> <small class="qd-de">O recurso ao CRPS conta 30 dias da ciência da decisão da reanálise (art. 9º, § 2º, II). A Portaria não fixa prazo para decidir: a demora abre o mandado de segurança por mora · ${tit}</small>`,
+      edita:"", acao:`<button type="button" class="tl-bt" onclick="decidirReanalise('${x.id}','indeferido')" title="a reanálise manteve o indeferimento hoje: o recurso conta 30 dias daqui">Mantida</button><button type="button" class="tl-bt" onclick="decidirReanalise('${x.id}','deferido')" title="a reanálise concedeu o benefício: não há recurso">Deferida</button>`});
     // P1 · o mandado de segurança contra o indeferimento, ao lado do recurso: o escritório escolhe a via, e a data corre
     const msd = msAte(x);
     if(msd) linhas.push({data:msd, ico:"⚖️", natureza:"compromisso", casoId:x.id, cru:true, rotulo:"Mandado de segurança até", curto:"MS: 120 dias",
@@ -38752,17 +38806,23 @@ function prazoDaEtapa(k){
   let id = ((PRAZO_DA_ETAPA[f]||{})[k.etapa||""]) || "";
   if(!id || (id==="crps" && k.resultado==="deferido")) return null;
   if(jef && PRAZO_ETAPA_JEF[id]) id = PRAZO_ETAPA_JEF[id];
+  // F415 · o B31 negado por análise documental com ciência a partir de 06/11/2026: primeiro a reanálise de 10 dias, e o
+  // recurso de 30 ao lado (Portaria Conjunta 13/2026, arts. 8º-A e 9º, com a redação da Portaria Conjunta 54/2026)
+  if(id==="crps" && f==="inss" && reanaliseAte(k)) id = "reanl";
   const item = PRAZOS_CATALOGO.find(x=>x.id===id); if(!item) return null;
   const de = f==="inss" && k.etapa==="decidido" && k.decisao_em ? k.decisao_em : hoje();
-  return {item, de, fatal: contarPrazo(de, item, k), jf: item.uteis && ehJusticaFederal(k)};
+  const alt = id==="reanl" ? {item:PRAZOS_CATALOGO.find(x=>x.id==="crps"), fatal:recorrerAte(k)} : null;
+  return {item, de, fatal: contarPrazo(de, item, k), jf: item.uteis && ehJusticaFederal(k), alt};
 }
 function sugestaoPrazoEtapa(k, soltas){
   const s = prazoDaEtapa(k);
   if(!s || s.fatal<hoje() || _pzEtapaFora.has(k.id+"|"+k.etapa)) return "";
   // o caso já tem prazo fatal em aberto (o "Recorrer até" do indeferido, por exemplo): a etapa não oferece outro
-  if((soltas||[]).some(x=>x.casoId===k.id && natDaLinha(x)==="fatal" && x.data>=hoje())) return "";
+  // (a reanálise convive com o "Recorrer até": só some se já houver prazo fatal no mesmo dia)
+  if((soltas||[]).some(x=>x.casoId===k.id && natDaLinha(x)==="fatal" && x.data>=hoje() && (s.item.id!=="reanl" || x.data===s.fatal))) return "";
   return `<div class="fp3-etapa" role="note"><span class="fp3-sobre">Pela etapa “${esc(k.etapa)}”</span>
-    <b>${esc(s.item.rot)}</b><small>${esc(textoContagemPz(s.item.n, s.item.uteis, s.de, s.fatal, s.item.dec, s.jf))}</small>
+    <b>${esc(s.item.rot)}</b><small>${esc(textoContagemPz(s.item.n, s.item.uteis, s.de, s.fatal, s.item.dec, s.jf))}</small>${s.alt && s.alt.fatal ? `
+    <small class="fp3-alt">Ao lado: ${esc(s.alt.item.rot)} até ${fmtBarra(s.alt.fatal)}. Recorrer antes de ${fmtBarra(s.fatal)} sem pedir a reanálise a impede (art. 9º, § 1º).</small>` : ""}
     <div class="fp3-pe"><button type="button" class="fp3-pri" onclick="criarPrazoDaEtapa('${k.id}')" title="Criar o prazo desta etapa">Criar</button><button type="button" class="fp3-sec" onclick="_pzEtapaFora.add('${k.id}|'+${JSON.stringify(k.etapa).replace(/"/g,"&quot;")});repintarFicha()" title="Este prazo não se aplica ao caso">Dispensar</button></div></div>`;
 }
 function criarPrazoDaEtapa(casoId){
@@ -40031,7 +40091,7 @@ const TRILHAS = {
   futura:{fase:"escritorio", nome:"Aposentadoria futura", e:["Monitorando","*Contribuição orientada","Documentação em dia","Pronto para protocolar"]},
   inss_apos:{fase:"inss", nome:"Aposentadorias e pensão", e:["Requerimento protocolado","Em análise","*Em exigência",
     "*Exigência cumprida","*Justificação administrativa","Decisão","Carta de concessão"]},
-  inss_inc:{fase:"inss", nome:"Incapacidade", e:["Requerimento protocolado","*Análise documental (Atestmed)","Perícia agendada",
+  inss_inc:{fase:"inss", nome:"Incapacidade", e:["Requerimento protocolado","*Análise documental (Atestmed)","*Reanálise documental","Perícia agendada",
     "Perícia realizada","Decisão","*Pedido de prorrogação","DCB"]},
   inss_b94:{fase:"inss", nome:"Auxílio-acidente", e:["Requerimento protocolado","*Em exigência","Perícia agendada",
     "Perícia realizada","Decisão","Carta de concessão"]},
@@ -40089,7 +40149,7 @@ const PUB_TRILHA = {"Primeiro contato":"em atendimento","Atendimento presencial"
   "Pedido de uniformização":"em recurso","Recurso especial ou extraordinário":"em recurso","Remessa necessária ao TRF3":"em recurso",
   "Trânsito em julgado":"aguardando implantação","Manifestação sobre os cálculos":"aguardando RPV","Impugnação do INSS":"aguardando RPV",
   "Cálculos homologados":"aguardando RPV","Levantamento":"recebido","Honorários recebidos":"recebido",
-  "Análise documental (Atestmed)":"aguardando análise","Justificação administrativa":"aguardando análise",
+  "Análise documental (Atestmed)":"aguardando análise","Reanálise documental":"aguardando análise","Justificação administrativa":"aguardando análise",
   "Contrarrazões do INSS":"recurso protocolado","Cumprimento pelo INSS":"julgado","Contribuição orientada":"monitorando"};
 const lerEtapaTrilha = x => { const ex = x.startsWith("#"); x = ex ? x.slice(1) : x;
   const op = x.startsWith("*"); x = op ? x.slice(1) : x;
@@ -40747,7 +40807,7 @@ function blocoFatos(k){
     const temRO=!!k.ro_protocolado_em, temED=!!k.ed_protocolado_em;
     miolo = `${linhaAcomp(k)}
     <dl class="fx-grade">
-      ${campoFato(k,"ro_protocolado_em")}
+      ${campoFato(k,"ro_protocolado_em")}${reanalisePreclusa(k) ? `<p class="fx-nota meio-sub">O recurso veio dentro dos 10 dias sem a reanálise: a reanálise ficou preclusa (Portaria Conjunta 13/2026, art. 9º, § 1º, com a redação da Portaria Conjunta 54/2026).</p>` : ""}
       ${(temRO||temED)?campoFato(k,"ed_protocolado_em"):""}
       ${(temED||k.re_protocolado_em)?campoFato(k,"re_protocolado_em"):""}
     </dl>`;
@@ -42156,6 +42216,9 @@ async function popInserir(chave){
     v[c.id] = c.tipo==="check" ? el.checked : (el.value||"").trim();
     if(c.req && !v[c.id]) return aviso(`Falta: ${c.rot}`);
   }
+  // F415 · o recurso dentro dos 10 dias da reanálise, sem pedi-la, a preclui (Portaria Conjunta 13/2026, art. 9º, § 1º, com a redação da 54/2026)
+  if(chave==="peticao" && v.onde==="CRPS" && v.qual==="Recurso Ordinário"){ const ra = reanaliseAte(k);
+    if(ra && (v.data||hoje()) <= ra && !await confirmar("Protocolar o recurso agora impede a reanálise. Seguir?")) return; }
   const obs = (document.getElementById("pa-obs")||{value:""}).value.trim();
   const texto = P.texto(v) + (obs ? `\n${obs}` : "");
   const inp = document.getElementById("and-texto");
@@ -45314,7 +45377,11 @@ const aguardaImplantacao = k => !!k && k.resultado==="deferido" && ["inss","cons
 const confDaFase = k => { const f = faseEfetiva(k), x = CONF_FASE[f] || CONF_FASE.inss;
   return aguardaImplantacao(k) ? {f, rot:"Não implantado", txt:"Conferi: o benefício ainda não foi implantado.", dias:7, impl:true}
     : {f, rot:x[0], txt:x[1], dias:x[2]}; };
-const movOps = k => { const c = confDaFase(k), ops = MOV_FASE[c.f] || MOV_FASE.inss;
+const movOps = k => { const c = confDaFase(k); let ops = MOV_FASE[c.f] || MOV_FASE.inss;
+  // F415 · a reanálise da análise documental: pedida enquanto cabe; decidida enquanto pedida
+  const rp = c.f==="inss" && reanalisePedida(k);
+  if(c.f==="inss" && reanaliseAte(k)) ops = [["Reanálise pedida", null, "reanl_ped"], ...ops];
+  else if(rp && !rp.decidida_em) ops = [["Reanálise mantida", "decidido", "reanl_ind"], ["Reanálise deferida", "decidido", "reanl_def"], ...ops];
   return c.impl ? [["Benefício implantado", "benefício implantado", "impl"], ...ops.filter(o=>!/implantado/i.test(o[0]))] : ops; };
 // o caso que se confere: em andamento no INSS, no Conselho, no Judicial ou no Pagamento
 const conferivel = k => !!k && !ehPreCaso(k) && !!CONF_FASE[faseEfetiva(k)];
@@ -45684,6 +45751,10 @@ async function registrarMovimento(casoId, i){
   const muda = {};   // F291 · a anotação leva ⭐, mas a do caso só a pessoa acende (a fila de hoje, como no To Do)
   if(etapa && etapasDaFase(k).includes(etapa)) muda.etapa = etapa;
   if(efeito==="deferido" || efeito==="indeferido"){ muda.resultado = efeito; muda.decisao_em = data || hoje(); }
+  if(/^reanl_/.test(efeito)){ const r = {...((k.ronda||{}).reanalise||{})};
+    if(efeito==="reanl_ped") r.pedida_em = data || hoje(); else { r.decidida_em = data || hoje(); r.resultado = efeito==="reanl_def" ? "deferido" : "indeferido"; }
+    muda.ronda = {...(k.ronda||{}), reanalise:r};
+    if(efeito==="reanl_def"){ muda.resultado = "deferido"; muda.decisao_em = r.decidida_em; } }
   if(efeito==="exig"){ muda.exigencia_prazo = data || proxDiaUtilAdm(somaDias(hoje(), 30)); muda.exigencia_descricao = det || "Exigência do INSS"; }
   if(efeito==="impl"){
     if(nb && nb!==soDig(k.nb||"") && !(k.nbs||[]).map(soDig).includes(nb)) Object.assign(muda, k.nb ? {nbs:[...(Array.isArray(k.nbs)?k.nbs:[]), nb]} : {nb});
@@ -46552,6 +46623,8 @@ const PRAZOS_CATALOGO = [
   {id:"edcrps",rot:"Embargos de declaração no CRPS",      n:30,  uteis:false, base:"art. 92, § 2º, do Regimento Interno do CRPS"},
   {id:"rclcrps",rot:"Reclamação ao Conselho Pleno",       n:30,  uteis:false, base:"art. 123, § 1º, do Regimento Interno do CRPS"},
   {id:"agcrps",rot:"Agravo no CRPS (inadmissão de uniformização ou reclamação)", n:30, uteis:false, base:"art. 93, § 1º, do Regimento Interno do CRPS"},
+  // F415 · contados em dias corridos da ciência, como o art. 66 da Lei 9.784/99; a Portaria não diz como se contam (conferir)
+  {id:"reanl", rot:"Reanálise da análise documental (B31)", n:10, uteis:false, base:"art. 8º-A da Portaria Conjunta MPS/INSS 13/2026, incluído pela Portaria Conjunta 54/2026; Lei 9.784/99, art. 66"},
   {id:"exig",  rot:"Cumprimento de exigência do INSS",    n:30,  uteis:false, base:"art. 566, caput, da IN 128/2022"},
   {id:"ms",    rot:"Mandado de segurança (decadência)",   n:120, uteis:false, dec:true, base:"art. 23 da Lei 12.016/2009"},
 ];
@@ -51172,7 +51245,7 @@ const DESF_IMEDIATO = {rev:"revisão com decadência correndo", acerto:"acerto d
        if(prazo) ps.push(`O prazo corre: ${prazo}${/anote/.test(prazo) ? "" : "; anote já e não espere a cópia"}.`);
        const neg = (x.fd.processos||[]).filter(p=>((p.comunicacoes||[]).slice(-1)[0]||{}).contra).pop(), mot = neg ? String(((neg.comunicacoes||[]).slice(-1)[0]||{}).motivo||"") : String(x.v.copia_decisao||relatoDe(x.c));
        const med = /incapacidade|per[íi]cia|m[ée]dic/i.test(mot), doc = /an[áa]lise documental/i.test(mot), dd = (String(x.v.copia_decisao||relatoDe(x.c)).match(/negad[oa] em (\d{2}\/\d{2}\/\d{4})/i)||[])[1];
-       if(prazo) ps.push(`O advogado escolhe entre o recurso à Junta${med ? " (matéria médica: a Junta decide em definitivo, ouvida a Perícia Médica Federal; Regimento do CRPS, art. 89, § 3º)" : ""} e um pedido novo${doc && dd ? ` por análise documental, só a partir de ${fmtBarra(somaDias(isoBr(dd), 30))} (30 dias da decisão; Portaria Conjunta 13/2026, art. 6º, VI; conferir)` : ""}.`);
+       if(prazo) ps.push(`O advogado escolhe entre o recurso à Junta${med ? " (matéria médica: a Junta decide em definitivo, ouvida a Perícia Médica Federal; Regimento do CRPS, art. 89, § 3º)" : ""} e um pedido novo${doc && indefDocumentaisSeguidos(x) >= 2 ? `, que vai à perícia (presencial ou por telemedicina), e não só com atestado: são dois indeferimentos seguidos por análise documental (Portaria Conjunta 13/2026, art. 8º, com a redação da Portaria Conjunta 54/2026; conferir se o mantido na reanálise e o de ciência anterior a 06/11/2026 entram na conta)` : doc && dd ? ` por análise documental, só a partir de ${fmtBarra(somaDias(isoBr(dd), 30))} (30 dias da decisão; Portaria Conjunta 13/2026, art. 6º, VI, com a redação da Portaria Conjunta 54/2026; conferir se os 30 dias contam da decisão original ou da reanálise)` : ""}${doc && dd && isoBr(dd) >= PC54_DESDE ? `; antes dos dois, a reanálise em 10 dias da ciência, com relatório médico novo, mantém a DER (art. 8º-A)` : ""}.`);
        if(!ps.length) return null;
        return {tom: prazo ? "sim" : "informar", txt:ps.join(" "), ...(prazo ? {desf:{acao:"caso", prazo:true, txt:`gere o caso já: ${prazo.replace(/;\s*anote já e não espere a cópia$/, "")}; anote o prazo e não espere a cópia${quem && quem.est==="risco" ? "; a procuração do titular vem antes de qualquer entrega" : ""}`}} : {})}; },
      agora: (x, a) => { const out = [], quem = a.rs.find(r=>r.id==="copia_quem"), dz = a.rs.find(r=>r.id==="copia_dossie"), pz = a.rs.find(r=>r.id==="copia_prazo");
@@ -51422,8 +51495,39 @@ const DESF_IMEDIATO = {rev:"revisão com decadência correndo", acerto:"acerto d
   { const ra = _b31("documentos_analise_documental"); if(ra){ const m0 = ra.mede;
     ra.mede = x => { const l = (x.fd.laudos||[]).find(l=>l.resultado==="incapaz");
       if(l && recursoDoBenef(x, RE_RECURSO.b31)) return {est:"info", txt:`a perícia de ${l.exame || "do pedido"} já reconheceu a incapacidade: o atestado (Atestmed) não é a questão; o que falta é o recurso`, fonte:"laudo do INSS"};
-      return m0(x); }; } }
+      // F415 · dois indeferimentos sucessivos por análise documental levam o pedido seguinte à perícia (art. 8º)
+      if(indefDocumentaisSeguidos(x) >= 2) return {est:"info", txt:`dois indeferimentos seguidos por análise documental: o pedido seguinte vai à perícia (presencial ou por telemedicina), e não só com atestado (Portaria Conjunta 13/2026, art. 8º, com a redação da Portaria Conjunta 54/2026). Conferir se o indeferimento mantido na reanálise e o de ciência anterior a 06/11/2026 entram na conta`, fonte:"cópia do processo"};
+      const m = m0(x), soma = _incSomaDocumental(x);
+      if(!soma || !m || !/repouso de \d+ dias/.test(m.txt||"")) return m;
+      const n = +((m.txt.match(/repouso de (\d+) dias/)||[])[1]||0), tot = n + soma;
+      const pre = `já foram ${soma} dias por análise documental desde a última perícia favorável, ${tot} com este repouso (a soma recomeça com a perícia favorável: Portaria Conjunta 13/2026, art. 3º, § 2º, com a redação da Portaria Conjunta 54/2026)`;
+      if(tot <= 30) return {...m, txt:`${m.txt}; ${pre}`};
+      if(tot <= 90) return {...m, est:"divergente", txt:`${pre}: a via administrativa aceita até 90 dias somados, a lei fala em 30`, div:m.div || {inss:"Portarias Conjuntas 14/2026 e 43/2026: até 90 dias somados", judicial:"Lei 8.213/91, art. 60, § 11-F: no máximo 30 dias somados"}};
+      return {est:"info", txt:`${pre}, acima de 90: vai à perícia (presencial ou por telemedicina)`, fonte:m.fonte}; }; } }
 })();
+// F415 · quantos indeferimentos do auxílio por análise documental vêm seguidos no fim do histórico do dossiê
+// (cópia do processo: a última comunicação de cada pedido de incapacidade, do mais novo ao mais antigo)
+function indefDocumentaisSeguidos(x){
+  const dt = p => isoBr(p.atualizado || p.entrada || "") || "";
+  const ps = (x.fd.processos||[]).filter(p=>/incapacidade|aux[íi]lio|doen[çc]a/i.test(p.servico||"") && (p.comunicacoes||[]).length)
+    .sort((a, b)=>dt(a) < dt(b) ? 1 : -1);
+  let n = 0;
+  for(const p of ps){ const c = p.comunicacoes.slice(-1)[0] || {};
+    if(c.contra && RX_DOCUMENTAL.test(`${c.motivo||""} ${c.decisao||""}`)) n++; else break; }
+  return n;
+}
+// F415 · os dias já concedidos por análise documental, somados desde a última perícia favorável (presencial ou por
+// telemedicina), que reinicia a soma (Portaria Conjunta 13/2026, art. 3º, § 2º, com a redação da Portaria Conjunta 54/2026)
+function _incSomaDocumental(x){
+  const ls = (x.fd.laudos||[]).filter(l=>l.resultado==="incapaz").sort((a, b)=>isoBr(a.exame||"") < isoBr(b.exame||"") ? -1 : 1);
+  let soma = 0;
+  for(const l of ls){
+    if(!/documental|atestmed/i.test(l.tipo||"")){ soma = 0; continue; }
+    const de = isoBr(l.dii||""), ate = isoBr(l.dcb||"");
+    if(de && ate && ate >= de) soma += Math.round((Date.parse(ate) - Date.parse(de)) / 864e5) + 1;
+  }
+  return soma;
+}
 // F232 · a data do direito das opções marcadas pelo motor de requisitos (filiação, escada
 // da mulher, direito adquirido, transições do professor): a mais cedo; null se nenhuma se completa
 function dataDoDireito(c){
@@ -52079,7 +52183,7 @@ const GUIAS_ESPECIE = {
   // F235 · o Anexo XXIX é do administrador provisório (IN 128, art. 527, §§ 6º e 7º): não é papel de todo pedido
   def:{anexos:[], servico:"Pedir BPC à Pessoa com Deficiência — Meu INSS (avaliação social presencial)", nota:"CadÚnico atualizado em até 24 meses. O Termo de Compromisso (Anexo XXIX) só quando quem pede não pode responder por si e ainda não tem tutor, curador ou guarda: assina o parente que pede por ele, como administrador provisório (IN 128, art. 527, §§ 6º e 7º); pai ou mãe de criança não precisa dele."},
   idoso:{anexos:[], servico:"Pedir BPC ao Idoso — Meu INSS", nota:"CadÚnico atualizado em até 24 meses. O Termo de Compromisso (Anexo XXIX) só quando o idoso não pode responder por si e ainda não tem curador: assina o parente que pede por ele, como administrador provisório (IN 128, art. 527, §§ 6º e 7º)."},
-  b31:{anexos:[], servico:"Pedir Auxílio por Incapacidade Temporária — Meu INSS (só com atestado, o Atestmed, ou com perícia)", nota:"No Meu INSS, escreva com cuidado quando os sintomas começaram e quais são: o INSS fica preso ao que foi escrito."},
+  b31:{anexos:[], servico:"Pedir Auxílio por Incapacidade Temporária — Meu INSS (só com atestado, o Atestmed, ou com perícia)", nota:"No Meu INSS, escreva com cuidado quando os sintomas começaram e quais são: o INSS fica preso ao que foi escrito. Negado por análise documental: pedir a reanálise em 10 dias da ciência, com relatório médico novo, antes do recurso; recorrer dentro dos 10 dias sem pedir a reanálise a impede."},
   b32:{anexos:[], servico:"Pedir Aposentadoria por Incapacidade Permanente — Meu INSS (perícia presencial)", nota:"Sem anexo; o acréscimo de 25 % é pedido à parte."},
   acid:{anexos:[], servico:"Cadastrar CAT e Pedir Auxílio por Incapacidade — Meu INSS", nota:"Sem CAT da empresa, requerer a CAT equiparada (art. 22, § 2º, da Lei 8.213/91)."},
   b94:{anexos:[], servico:"Pedir Auxílio-Acidente — Meu INSS", nota:"O INSS confere antes o relatório médico com os 7 itens (análise documental prévia, Portaria Conjunta 15/2026, art. 2º); passando, marca a perícia presencial, e o prazo de análise é de 60 dias (acordo do RE 1.171.152, conferir). Se negar: recurso em 30 dias ou ação acidentária na Justiça Estadual, nunca no Juizado Federal."},
