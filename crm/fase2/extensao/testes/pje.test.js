@@ -121,3 +121,32 @@ test('página sem número CNJ não vira cabeçalho', () => {
   assert.strictEqual(R.chegouAoInicio('Distribuído por sorteio'), false);
   assert.strictEqual(R.chegouAoInicio('516521361 - Petição inicial'), true);
 }
+
+// aba Expedientes dos Autos Digitais (estrutura do HTML salvo em 06.11.2026; nomes fictícios)
+test('lê a linha da aba Expedientes do processo', () => {
+  const e = R.lerExpedienteProcesso([
+    'Sentença tipo M (62094626) - Prioridade: Normal - ID do documento (615119049)\nFULANA DE TAL\nDiário Eletrônico (03/11/2026 16:38:27)\nO sistema registrou ciência em 05/11/2026 00:00:00\nPrazo: 15 dias',
+    '27/11/2026 23:59:59 (para manifestação)', 'Visualizar ato Validar Assinatura Digital', 'NÃO'],
+    ['/pje/Painel/painel_usuario/popup/visualizarExpediente.seam?idProcessoParteExpediente=62094626&amp;idProcesso=10346553&amp;paramIdProcessoDocumento=615119049&amp;cid=123',
+     '/pje/Processo/Consulta/validaDocumento.seam?idProcessoDocumento=615119049&cid=123']);
+  assert.equal(e.ato, 'Sentença tipo M');
+  assert.equal(e.expediente_id, '62094626');
+  assert.equal(e.prioridade, 'Normal');
+  assert.equal(e.documento_id, '615119049');
+  assert.equal(e.destinatario, 'FULANA DE TAL');
+  assert.equal(e.meio, 'Diário Eletrônico');
+  assert.equal(e.enviado_em, '2026-11-03T16:38');
+  assert.equal(e.ciencia_em, '2026-11-05T00:00');
+  assert.equal(e.prazo_dias, 15);
+  assert.equal(e.limite, '2026-11-27T23:59');
+  assert.equal(e.limite_para, 'para manifestação');
+  assert.equal(e.fechado, false);
+  assert.equal(e.processo_id, '10346553');
+  assert.ok(!/cid=/.test(e.ver));
+  const f = R.lerExpedienteProcesso(['Intimação (57135099) - Prioridade: Normal - ID do documento (587045255) INSTITUTO NACIONAL DO SEGURO SOCIAL - INSS Representante: Procuradoria-Regional Federal da 3ª Região',
+    '26/06/2026 23:59:59 (para manifestação)', '', 'SIM'], []);
+  assert.equal(f.ato, 'Intimação');
+  assert.match(f.destinatario, /^INSTITUTO NACIONAL/);
+  assert.equal(f.meio, null);
+  assert.equal(f.fechado, true);
+});
