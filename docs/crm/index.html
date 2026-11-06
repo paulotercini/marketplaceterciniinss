@@ -3329,6 +3329,10 @@ html[data-tema="v10"] .lc-cab{display:flex;align-items:center;gap:10px;flex-wrap
 .lc-acessos{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 2px}
 .lc-acesso{font:600 12px/1 inherit;padding:5px 9px;border-radius:6px;border:1px solid var(--borda);background:var(--fundo-card,#fff);color:var(--azul-escuro,#1d3f8a);text-decoration:none;cursor:pointer;white-space:nowrap}
 @media (hover:hover){.lc-acesso:hover{border-color:var(--azul,#2564cf);background:var(--azul-fundo,#eef3fc)}}
+.chip.lc-susp{background:#EEE8F7;color:#5B3A99;border:1px solid #CDBDEB;font-weight:700;cursor:pointer}
+.cli-st.susp,html[data-tema="v10"] .cli-st.susp{background:#EEE8F7;color:#5B3A99}
+.ag-tipo.ag-susp{background:#EEE8F7;color:#5B3A99}
+.susp-grupo{margin:8px 0 12px}.susp-cab{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px}
 .chip.lc-sem-grat{background:#FCE8E6;color:#A50E0E;border:1px solid #F1B6B0;font-weight:700}
 html[data-tema="v10"] .lc-cab .lc-ben{font-size:20px;letter-spacing:-.005em}
 html[data-tema="v10"] .lc-cab .lc-mais{margin-left:auto}
@@ -6499,7 +6503,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.62</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.63</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10993,6 +10997,7 @@ function cartaoCliente(cli, casosMostrar){
         : prazoMin && dataProx===prazoMin ? `<span class="ag-fatal">Prazo fatal</span>` : "",
       evFut && !(pDia && pDia.ev && pDia.ev.id===evFut.id) ? `<span class="ag-tipo" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">${esc(evFut.tipo.split(" ")[0])} ${fmtBarra(dataSP(evFut.data_hora)).slice(0,5)} ${horaSP(evFut.data_hora)}</span>` : "",
       pTrib && !(pDia && pDia.prazo && pDia.data===pTrib.d) ? `<span class="ag-prazo" title="prazo do tribunal">Prazo ${esc(pTrib.s)} ${pTrib.d.slice(8,10)}/${pTrib.d.slice(5,7)}</span>` : "",
+      (s=>s ? `<span class="ag-tipo ag-susp" title="${esc(tituloSusp(s))}">⏸ ${esc(rotSusp(s))}</span>` : "")(ks.map(suspensaoDe).find(Boolean)),   // F417
       kP && kP.etapa ? seloEtapaLista(kP) : "",   // F236 · a desatualizada avisa; F292 · em todas as listas, como o objetivo da tarefa no To Do
       fila ? `<span class="ag-tipo" title="posição na ordem de julgamento do TRF3, na data da consulta">Fila ${fila.ordem}º${fila.consultado_em?` em ${esc(fmtBarra(fila.consultado_em).slice(0,5))}`:""}</span>` : "",
       exig, dcb,
@@ -13643,7 +13648,7 @@ function renderAcervo(){
   tituloLista("🧹 Cuidar do acervo");
   document.getElementById("sub-lista").textContent =
     "O trabalho sem data marcada: rotina, conferências e processos parados. Nada aqui vence hoje.";
-  const corpo = blocoRotinas() + blocoCrpsManual() + blocoCadunico()
+  const corpo = blocoSuspensos() + blocoRotinas() + blocoCrpsManual() + blocoCadunico()
     + blocoCardsPagamento() + blocoDocsSemData() + blocoCardsRever() + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoQuadrosLote() + blocoEtapasLote() + blocoSemCpf();
   document.getElementById("conteudo-meio").innerHTML = corpo
     || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
@@ -20274,8 +20279,12 @@ function pintarFicha(){
   // três estados a pedido do Paulo: verde = processo andando; amarelo = sem
   // processo, mas o escritório avisa (🔔 lembretes ativos — trabalho, só que
   // de outro tipo); vermelho = nada, nem aviso. Cinza é quem nunca teve caso.
+  // F417 · todos os casos em andamento suspensos por tema: o selo muda de cor e diz o tema
+  const suspCli = ativosCli.filter(suspensaoDe), todosSusp = suspCli.length && suspCli.length===ativosCli.length;
   const stCli = ativosCli.length
-    ? `<span class="cli-st ativo" title="${ativosCli.length} de ${ks.length} caso(s) em andamento${lembCli.length?` · e ${lembCli.length} lembrete(s) na aba 🔔`:""}">Cliente ativo · ${ativosCli.length} caso${ativosCli.length>1?"s":""}</span>`
+    ? `<span class="cli-st ${todosSusp?"susp":"ativo"}" title="${ativosCli.length} de ${ks.length} caso(s) em andamento${suspCli.length?` · ${suspCli.map(k=>`${tituloCaso(k)}: ${tituloSusp(suspensaoDe(k))}`).join("; ")}`:""}${lembCli.length?` · e ${lembCli.length} lembrete(s) na aba 🔔`:""}">${todosSusp
+        ? `⏸ Cliente ativo · suspenso${(t=>t.length===1?` · ${t[0]}`:"")([...new Set(suspCli.map(k=>rotSusp(suspensaoDe(k))))])}`
+        : `Cliente ativo · ${ativosCli.length} caso${ativosCli.length>1?"s":""}${suspCli.length?` · ${suspCli.length} suspenso${suspCli.length>1?"s":""}`:""}`}</span>`
     : lembCli.length
       ? `<span class="cli-st lemb" title="nenhum processo em andamento, mas o escritório avisa de tempos em tempos — veja o quadro Aposentadoria no Cadastro">🟡 Sem processo — ${lembCli.length} lembrete${lembCli.length>1?"s":""} ativo${lembCli.length>1?"s":""}</span>`
       : ksR.length && !precasosDe(c).some(p=>!p.so_lembrete)
@@ -36234,7 +36243,7 @@ function reindexarCliente(c){
   // todos os números do caso: o segundo processo, o NB extra e o NUP do CRPS também (teste 11.88, REC-03)
   const nums = k => { try{ return Object.values(numerosDoCaso(k)).flat().join(" "); }catch(e){ return ""; } };
   const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+
-    (k.beneficio||"")+" "+rotuloDoPedido(k)+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))+" "+nums(k)).join(" ")].join(" "));
+    (k.beneficio||"")+" "+rotuloDoPedido(k)+" "+(k.parceria||"")+" "+((s=>s?`suspenso tema ${s.tema} ${s.trib} ${s.assunto||""}`:"")(suspensaoDe(k)))+" "+((k.protocolos||[]).join(" "))+" "+nums(k)).join(" ")].join(" "));
   // guarda também só os dígitos: acha o processo tanto por "0000001-14" quanto por "000000114"
   c._ix = texto + " " + texto.replace(/\D/g, "");
   c._nome_ix = dsa(c.nome);
@@ -37428,6 +37437,90 @@ async function gravarReanalise(casoId, muda){
 }
 function pedirReanalise(casoId){ gravarReanalise(casoId, {pedida_em:hoje()}); }
 function decidirReanalise(casoId, resultado){ gravarReanalise(casoId, {decidida_em:hoje(), resultado}); }
+// ══════════════════════════════════════════════════════════════════════════
+// F417 · O CASO SUSPENSO POR TEMA DOS TRIBUNAIS SUPERIORES (pedido do Paulo,
+// 06.11.2026). A suspensão mora em casos.ronda.suspensao = {trib, tema,
+// assunto, desde, por, em}; o cartão do caso, o selo do cliente e a linha das
+// listas a mostram, e o 🧹 Cuidar do acervo junta todos os suspensos por tema.
+// ══════════════════════════════════════════════════════════════════════════
+const TRIB_SUSP = ["STF", "STJ", "TNU", "TRF3"];
+const suspensaoDe = k => k && k.fase!=="encerrado" && (k.ronda||{}).suspensao && (k.ronda.suspensao.tema || k.ronda.suspensao.trib) ? k.ronda.suspensao : null;
+const rotSusp = s => `Tema ${s.tema||"?"}/${s.trib||"?"}`;
+const tituloSusp = s => `suspenso pelo ${rotSusp(s)}${s.assunto ? ` (${s.assunto})` : ""}${s.desde ? ` desde ${fmtBarra(s.desde)}` : ""}`;
+function suspenderCaso(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const s = suspensaoDe(k) || {};
+  caixa(`<h3 style="margin:0 0 4px">Suspensão por tema <small class="meio-sub">· ${esc(tituloCaso(k))}</small></h3>
+    <p class="meio-sub" style="margin:0 0 8px">O caso fica marcado no cartão, na ficha e nas listas, e entra em “Casos suspensos por tema” no 🧹 Cuidar do acervo.</p>
+    <div class="form-linha" style="flex-wrap:wrap;gap:8px;align-items:center">
+      <label class="meio-sub">Tribunal <select id="su-trib">${TRIB_SUSP.map(t=>`<option${(s.trib||"STJ")===t?" selected":""}>${t}</option>`).join("")}</select></label>
+      <label class="meio-sub">Tema nº <input id="su-tema" inputmode="numeric" maxlength="6" size="6" value="${esc(s.tema||"")}"></label>
+      <label class="meio-sub">desde <input type="date" id="su-desde" value="${esc(s.desde||hoje())}"></label></div>
+    <label class="meio-sub" style="display:block;margin-top:8px">Assunto <input id="su-assunto" maxlength="120" style="width:100%" placeholder="revisão da vida toda" value="${esc(s.assunto||"")}"></label>
+    <div class="form-linha" style="margin-top:10px;align-items:center;gap:8px">
+      ${s.tema ? `<button class="btn-mini" onclick="retomarCaso('${casoId}')" title="Encerrar a suspensão e retomar o caso">Retomar<span class="sr-only"> o caso</span></button>` : ""}
+      <button class="btn-rap" style="margin-left:auto" onclick="gravarSuspensao('${casoId}')" title="Gravar a suspensão">Gravar<span class="sr-only"> a suspensão</span></button></div>`);
+  setTimeout(()=>{ const i = document.getElementById("su-tema"); if(i) i.focus(); }, 30);
+}
+async function gravarSuspensao(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const v = id => ((document.getElementById(id)||{}).value||"").trim();
+  const tema = v("su-tema").replace(/\D/g, ""), trib = v("su-trib");
+  if(!tema || !TRIB_SUSP.includes(trib)) return aviso("Informe o tribunal e o número do tema");
+  const s = {trib, tema, assunto:v("su-assunto")||null, desde:v("su-desde")||hoje(), por:eu.id, em:new Date().toISOString()};
+  const antes = k.ronda || null, ronda = {...(k.ronda||{}), suspensao:s};
+  try{ await patchCaso(casoId, {ronda}); }catch(e){ return aviso("Não gravou — tente de novo"); }
+  k.ronda = ronda; fecharCaixa();
+  anotarSuspensao(k, `[SUSPENSÃO] Processo ${tituloSusp(s)}.`);
+  reindexarSusp(k); repintarSusp();
+  avisoDesfazer(`Suspenso pelo ${rotSusp(s)}`, async ()=>{
+    k.ronda = antes; await patchCaso(casoId, {ronda:antes}).catch(()=>{}); aviso("Desfeito"); reindexarSusp(k); repintarSusp(); });
+}
+async function retomarCaso(casoId, silencioso){
+  const k = D.casoPorId.get(casoId); if(!k || !(k.ronda||{}).suspensao) return;
+  const s = k.ronda.suspensao, antes = k.ronda, ronda = {...k.ronda}; delete ronda.suspensao;
+  try{ await patchCaso(casoId, {ronda}); }catch(e){ if(!silencioso) aviso("Não gravou — tente de novo"); return false; }
+  k.ronda = ronda;
+  anotarSuspensao(k, `[SUSPENSÃO] Suspensão pelo ${rotSusp(s)} encerrada; o caso foi retomado.`);
+  reindexarSusp(k);
+  if(silencioso) return true;
+  fecharCaixa(); repintarSusp();
+  avisoDesfazer("Caso retomado", async ()=>{
+    k.ronda = antes; await patchCaso(casoId, {ronda:antes}).catch(()=>{}); aviso("Desfeito"); reindexarSusp(k); repintarSusp(); });
+  return true;
+}
+// o tema julgado retoma todos os casos dele de uma vez
+async function retomarTema(trib, tema){
+  const ks = (D.casos||[]).filter(k=>{ const s = suspensaoDe(k); return s && s.trib===trib && s.tema===tema; });
+  if(!ks.length || !await confirmar(`Retomar os ${ks.length} caso(s) suspensos pelo Tema ${tema}/${trib}?`)) return;
+  let n = 0; for(const k of ks) if(await retomarCaso(k.id, true)) n++;
+  aviso(`${n} caso(s) retomado(s)`, false); render();
+}
+async function anotarSuspensao(k, texto){
+  try{ const [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto})});
+    if(and && Array.isArray(D._andsFicha) && k.cliente_id===clienteAberto) D._andsFicha.unshift(and); }catch(e){}
+}
+async function abrirCasoSusp(cliId, casoId){ await abrirFicha(cliId); if(clienteAberto===cliId) irAoCaso(casoId); }
+function reindexarSusp(k){ const c = D.cliPorId.get(k.cliente_id); if(c) reindexarCliente(c); }
+function repintarSusp(){ if(clienteAberto) repintarFicha(); else if(typeof render==="function") render(); }
+// o bloco do 🧹 Cuidar do acervo: um grupo por tema, com os casos e o Retomar do tema inteiro
+function blocoSuspensos(){
+  const grupos = new Map();
+  for(const k of D.casos||[]){ const s = suspensaoDe(k); if(!s) continue;
+    const ch = `${s.trib}|${s.tema}`; if(!grupos.has(ch)) grupos.set(ch, {s, ks:[]}); grupos.get(ch).ks.push(k); }
+  if(!grupos.size) return "";
+  const total = [...grupos.values()].reduce((n, g)=>n + g.ks.length, 0);
+  const ord = [...grupos.values()].sort((a, b)=>b.ks.length - a.ks.length || (a.s.trib+a.s.tema).localeCompare(b.s.trib+b.s.tema));
+  return `<details class="sem-acao neutro" id="acervo-suspensos"><summary>⏸ Casos suspensos por tema (${total} caso${total>1?"s":""} em ${grupos.size} tema${grupos.size>1?"s":""})</summary>
+    ${ord.map(({s, ks})=>`<div class="susp-grupo">
+      <div class="susp-cab"><b>${esc(rotSusp(s))}</b>${s.assunto ? ` <span class="meio-sub">${esc(s.assunto)}</span>` : ""} <span class="meio-sub">· ${ks.length} caso${ks.length>1?"s":""}</span>
+        <button class="btn-mini" style="margin-left:auto" onclick="retomarTema('${escJs(s.trib)}','${escJs(s.tema)}')" title="Tema julgado: retomar todos os casos dele">Retomar<span class="sr-only"> todos os casos do tema</span></button></div>
+      ${ks.map(k=>{ const c = D.cliPorId.get(k.cliente_id), sk = suspensaoDe(k);
+        return `<div class="man-item"><button class="man-nome" onclick="abrirCasoSusp('${k.cliente_id}','${k.id}')">${esc(c ? c.nome : "cliente")}</button>
+          <span class="meio-sub">${esc(tituloCaso(k))} · ${esc(NOME_FASE[k.fase]||k.fase||"")}${sk.desde ? ` · desde ${esc(fmtBarra(sk.desde))}` : ""}</span></div>`; }).join("")}
+    </div>`).join("")}</details>`;
+}
 // ══════════════════════════════════════════════════════════════════════════
 // F236 · O QUE AS DECISÕES DIZEM DE PRAZO. Leitores puros do que a ficha já
 // carregou (andamentos, documentos com texto, prazos dos tribunais): o ato
@@ -40018,6 +40111,7 @@ function linhaCaso(k){
       ${/* F274 · Claude e Fixar comentário no ⋯ do cartão do caso */""}
       ${menuMais([
         `<button class="tl-mais-it lc-claude" role="menuitem" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)"><span aria-hidden="true">✦ Claude</span><span class="sr-only">✦ Pedir ao Claude</span></button>`,
+        k.fase!=="encerrado" && !ehPreCaso(k) && !suspensaoDe(k) ? `<button class="tl-mais-it lc-suspender" role="menuitem" onclick="suspenderCaso('${k.id}')" title="marcar o caso como suspenso por tema do STF, do STJ, da TNU ou do TRF3">⏸ Suspender<span class="sr-only"> por tema</span></button>` : "",
         k.fixo && k.fixo.texto ? "" : `<button class="tl-mais-it fixar-caso" role="menuitem" onclick="lcEditarFixo('${k.id}')" title="fixar um comentário que aparece em destaque ao abrir o caso">${ICO_PIN} Fixar<span class="sr-only"> comentário</span></button>`,
       ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo lc-menu"')}</div>
       <div class="lc-cab">
@@ -40025,6 +40119,7 @@ function linhaCaso(k){
       <b class="lc-ben ${(k.especie||k.beneficio||tituloProprio(k))?"":"lc-vazio"}" title="${esc(k.especie?`${k.especie} · `:"")}${esc((k.especie||k.beneficio) ? tituloCaso(k) : tituloProprio(k) || tituloCaso(k))}. Clique na canetinha para trocar">${
         (k.especie||k.beneficio) ? esc(tituloCaso(k)) : tituloProprio(k) ? esc(tituloProprio(k)) : "definir o pedido"}</b>
       ${k.natureza?`<span class="chip nat-chip" title="natureza do pedido">${esc(rotNatureza(k.natureza))}</span>`:""}
+      ${(s=>s?`<button type="button" class="chip lc-susp" onclick="suspenderCaso('${k.id}')" title="${esc(tituloSusp(s))}: clique para alterar ou retomar">⏸ Suspenso · ${esc(rotSusp(s))}</button>`:"")(suspensaoDe(k))}
       ${semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo: custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:""}
       </div>
       <div class="lc-placa">
