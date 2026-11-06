@@ -86,7 +86,7 @@ Refutação. Art. 59, §1º, da Lei 8.213/91. Ainda que preexistente, se a incap
 
 Argumento adversário. O parecer de verossimilhança concluiu pela capacidade.
 
-Refutação. Portaria Conjunta 13/2026 não afasta a perícia judicial. O parecer de verossimilhança é triagem documental, não substitui a perícia médica pericial. Acionar `analise-documental-incapacidade`.
+Refutação. Portaria Conjunta 13/2026 não afasta a perícia judicial. Na via administrativa, com ciência a partir de 06/11/2026, a reanálise do art. 8º-A (redação da Portaria Conjunta 54/2026) permite levar documento novo à PMF sem perder a DER. O parecer de verossimilhança é triagem documental, não substitui a perícia médica pericial. Acionar `analise-documental-incapacidade`.
 
 ### Argumento 5 — Cessação por alta programada
 
@@ -94,7 +94,7 @@ Argumento adversário. A cessação antecipada é legítima por alta programada.
 
 Refutação. A cessação sem perícia médica específica viola o direito ao contraditório e ampla defesa. Cabe P1 e recurso ou MS, com tutela de urgência para a implantação (auditoria 03/10/2026, retirada a Súmula 47/TNU, que trata das condições pessoais na incapacidade parcial).
 
-### Argumento 6 — Trava dos três indeferimentos
+### Argumento 6 — Trava dos dois indeferimentos
 
 Argumento adversário. O segurado não pode requerer novo benefício pelos próximos 180 dias.
 

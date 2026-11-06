@@ -117,6 +117,7 @@ ALERTA. A Portaria 992 NÃO é cálculo de RMI. Cálculo está em IN 128/2022 e 
 - 1.056/2022, 1.231/2024, 1.309/2025, 1.318/2025. IEA.
 - 1.310/2025, 1.333/2026. Reabilitação Profissional.
 - Conjuntas MPS/INSS 13, 14, 15/2026. Análise documental B31/B91/B94.
+- Conjunta MPS/INSS 54/2026 (altera a 13/2026). No B31 documental com ciência a partir de 06/11/2026, a reanálise em dez dias vem antes do recurso (art. 8º-A); o recurso direto preclui a reanálise (art. 9º, § 1º); o prazo conta da ciência da decisão ou da decisão da reanálise (art. 9º, § 2º). Na tempestividade, citar o § 2º.
 - DPMF/INSS 19/2026. Teleperícia.
 
 ## NÍVEL 7 - PORTARIA MPS 125/2026 (RICRPS)

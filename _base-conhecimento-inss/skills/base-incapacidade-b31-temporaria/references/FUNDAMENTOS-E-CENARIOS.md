@@ -46,13 +46,13 @@ Segurada rural com incapacidade. Carência pela atividade rural nos 12 meses ant
 
 Segurado com B31 concedido até 01/05/2026. Cessado antecipadamente por alta programada em 10/04/2026 sem perícia. Cabe P1 com documentação médica atualizada. Se indeferido, ação judicial com pedido de restabelecimento e perícia judicial.
 
-### Cenário 6 — Trava dos três indeferimentos
+### Cenário 6 — Trava dos dois indeferimentos
 
-Segurado com três requerimentos indeferidos por análise documental. O pedido seguinte vai à perícia presencial; a espera de 180 dias da Portaria Conjunta 13/2026 [NÃO CONFIRMADO] vale para nova análise documental após prorrogação indeferida e não nasce do art. 60, §11-A (auditoria 03/10/2026). Em caso de agravamento, MS pela urgência e direito ao requerimento.
+Segurado com dois requerimentos indeferidos por análise documental (três, para indeferimento com ciência anterior a 06/11/2026; art. 8º da Portaria Conjunta 13/2026, redação da 54/2026). O pedido seguinte vai à perícia presencial; a espera de 180 dias da Portaria Conjunta 13/2026, art. 6º, V [CONFERIDO], vale para nova análise documental após prorrogação indeferida e não nasce do art. 60, §11-A (auditoria 03/10/2026). Em caso de agravamento, MS pela urgência e direito ao requerimento.
 
 ### Cenário 7 — Perícia documental inconclusiva
 
-Segurado com B31 indeferido no exame médico-pericial, presencial, por telemedicina ou por análise documental (art. 60, §11-A, da Lei 8.213/91; auditoria 03/10/2026). Cabe recurso ao CRPS com novos atestados, exames e laudos. Ou ação judicial com perícia médica. Acionar `auditoria-laudo-pericial`.
+Segurado com B31 indeferido no exame médico-pericial, presencial, por telemedicina ou por análise documental (art. 60, §11-A, da Lei 8.213/91; auditoria 03/10/2026). Indeferido por análise documental com ciência a partir de 06/11/2026, cabe primeiro a reanálise em dez dias com documento novo (art. 8º-A), e o recurso conta da ciência da decisão da reanálise (art. 9º, § 2º, II). Cabe recurso ao CRPS com novos atestados, exames e laudos. Ou ação judicial com perícia médica. Acionar `auditoria-laudo-pericial`.
 
 ### Cenário 8 — Limbo previdenciário-trabalhista
 
@@ -100,6 +100,6 @@ Primeiro, nunca aceitar cessação antecipada sem prova de recuperação laborat
 
 Segundo, em perícia documental, apresentar conjunto robusto (atestados, exames, relatórios) para afastar a inconclusão.
 
-Terceiro, em trava dos três indeferimentos, usar MS para afastar a barreira em caso de agravamento comprovado.
+Terceiro, em trava dos dois indeferimentos, usar MS para afastar a barreira em caso de agravamento comprovado.
 
 Quarto, em limbo previdenciário-trabalhista, acionar via trabalhista contra empresa paralelamente, com fundamento na responsabilidade subsidiária do empregador.
