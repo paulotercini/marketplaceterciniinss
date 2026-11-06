@@ -6505,7 +6505,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.63</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.65</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -20188,7 +20188,7 @@ async function abrirFicha(cliId){
     D._ficha = { cliId, creds, vincs };
     retraduzirCrps(ands);   // F236 · o movimento do e-Recursos gravado com a regra velha se lê pelo bloco relido   // o que a pintura usa além do D global
     pintarFicha();
-    adotarDcbDosAutos(cliId).then(()=>adotarQuadro(cliId)).then(()=>adotarPrazosAssistente(cliId)).catch(e=>console.warn("DCB dos autos / quadro:", e));   // F236, F321, F406
+    adotarDcbDosAutos(cliId).then(()=>adotarQuadro(cliId)).then(()=>adotarPrazosAssistente(cliId)).then(()=>adotarSuspensao(cliId)).catch(e=>console.warn("DCB dos autos / quadro:", e));   // F236, F321, F406
     repararCardsDoCliente(cliId).catch(e=>console.warn("cards:", e));   // F236
     repararCasosDoAtendimento(cliId).catch(e=>console.warn("natureza:", e));   // F236
     // ondas 0 e 1 · em segundo plano, sem esperar: o texto do dossiê e,
@@ -37460,7 +37460,7 @@ const rotSusp = s => `Tema ${s.tema||"?"}/${s.trib||"?"}`;
 const tituloSusp = s => `suspenso pelo ${rotSusp(s)}${s.assunto ? ` (${s.assunto})` : ""}${s.desde ? ` desde ${fmtBarra(s.desde)}` : ""}`;
 function suspenderCaso(casoId){
   const k = D.casoPorId.get(casoId); if(!k) return;
-  const s = suspensaoDe(k) || {};
+  const cf = (k.ronda||{}).susp_conferir, s = suspensaoDe(k) || (cf ? {trib:cf.trib, desde:cf.data} : {});
   caixa(`<h3 style="margin:0 0 4px">Suspensão por tema <small class="meio-sub">· ${esc(tituloCaso(k))}</small></h3>
     <p class="meio-sub" style="margin:0 0 8px">O caso fica marcado no cartão, na ficha e nas listas, e entra em “Casos suspensos por tema” no 🧹 Cuidar do acervo.</p>
     <div class="form-linha" style="flex-wrap:wrap;gap:8px;align-items:center">
@@ -37480,6 +37480,7 @@ async function gravarSuspensao(casoId){
   if(!tema || !TRIB_SUSP.includes(trib)) return aviso("Informe o tribunal e o número do tema");
   const s = {trib, tema, assunto:v("su-assunto")||null, desde:v("su-desde")||hoje(), por:eu.id, em:new Date().toISOString()};
   const antes = k.ronda || null, ronda = {...(k.ronda||{}), suspensao:s};
+  delete ronda.susp_conferir;
   try{ await patchCaso(casoId, {ronda}); }catch(e){ return aviso("Não gravou — tente de novo"); }
   k.ronda = ronda; fecharCaixa();
   anotarSuspensao(k, `[SUSPENSÃO] Processo ${tituloSusp(s)}.`);
@@ -37512,6 +37513,108 @@ async function anotarSuspensao(k, texto){
       body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto})});
     if(and && Array.isArray(D._andsFicha) && k.cliente_id===clienteAberto) D._andsFicha.unshift(and); }catch(e){}
 }
+// F419 · a suspensão lida dos movimentos do PJe, do e-SAJ e do eproc (decisão do Paulo, 06.11.2026: grava
+// sozinho, com desfazer). O último movimento de suspensão ou de levantamento manda: "suspenso por Recurso Especial
+// Repetitivo 1124" marca o Tema 1124/STJ, "repercussão geral 1209" o STF, "(TNU - Tema - 317)" a TNU, e "Levantada a
+// suspensão" retoma. A suspensão sem número de tema não grava: pede conferência no cartão (ronda.susp_conferir).
+// Cada movimento manda uma vez só (ronda.susp_lida): o que a equipe corrigir depois não volta.
+const RX_SUSP_LEV = /levantad[ao] a (suspens|causa suspensiva)|levantamento da suspens|dessobrest/i;
+const RX_SUSP_NAO = /prazo|precat[óo]rio|efeito suspensivo|feriado|requisi[çc][ãa]o|^📎|juntada/i;
+function leSuspensao(parte){
+  const t = String(parte||"").trim();
+  if(RX_SUSP_LEV.test(t)) return {tipo:"lev"};
+  if(!/suspens|sobrest/i.test(t) || RX_SUSP_NAO.test(t)) return null;
+  const tb = (/tema\s*-?\s*(STJ|STF|TNU)\b/i.exec(t)||[])[1];
+  const trib = tb ? tb.toUpperCase() : /\bTNU\b/i.test(t) ? "TNU" : /repercuss/i.test(t) ? "STF" : /especial repetitivo/i.test(t) ? "STJ" : null;
+  const tema = (/(?:tema\D{0,10}|repetitivo\s+|repercuss[ãa]o geral\s+(?:de n[úu]mero\s+)?)(\d{2,5})\b/i.exec(t)||[])[1];
+  return tema && trib ? {tipo:"susp", trib, tema} : {tipo:"sem", trib};
+}
+// o levantamento mais novo encerra o que veio antes; depois dele, a suspensão com tema vale mais que a sem tema
+// (o "Autos Suspensos ou Sobrestados" do 1º grau costuma só repetir a do tribunal)
+function suspensaoDosMovimentos(k){
+  const evs = [];
+  for(const a of (D._andsFicha||[])){
+    if(a.caso_id!==k.id || a.origem!=="pje") continue;
+    const mv = movimentoJudicial(a.texto); if(!mv) continue;
+    for(const parte of String(mv.ato).split(" · ")){
+      const e = leSuspensao(parte);
+      if(e) evs.push({...e, data:mv.data, id:"and:"+a.id, fonte:`${mv.fonte} de ${fmtBarra(mv.data)}`});
+    }
+  }
+  if(!evs.length) return null;
+  evs.sort((a, b)=>a.data.localeCompare(b.data));
+  const iLev = evs.map(e=>e.tipo).lastIndexOf("lev"), depois = evs.slice(iLev+1);
+  if(!depois.length) return evs[iLev];
+  return depois.filter(e=>e.tipo==="susp").pop() || depois.pop();
+}
+async function adotarSuspensao(cliId){
+  const feitos = [];
+  for(const k of (D.casosDoCliente.get(cliId)||[])){
+    if(k.fase==="encerrado" || ehPreCaso(k)) continue;
+    const e = suspensaoDosMovimentos(k), r = k.ronda||{};
+    if(!e || r.susp_lida===e.id) continue;
+    const cur = suspensaoDe(k), ronda = {...r, susp_lida:e.id}, notas = [];
+    delete ronda.susp_conferir;
+    if(e.tipo==="susp" && !cur){
+      ronda.suspensao = {trib:e.trib, tema:e.tema, assunto:null, desde:e.data, por:"auto", fonte:e.fonte, em:new Date().toISOString()};
+      notas.push(`[SUSPENSÃO] Processo ${tituloSusp(ronda.suspensao)}, lido do movimento do ${e.fonte}.`);
+    } else if(e.tipo==="lev" && cur && (!cur.desde || cur.desde <= e.data)){
+      delete ronda.suspensao;
+      notas.push(`[SUSPENSÃO] Suspensão pelo ${rotSusp(cur)} encerrada pelo movimento do ${e.fonte}; o caso foi retomado.`);
+    } else if(e.tipo==="sem" && !cur) ronda.susp_conferir = {data:e.data, fonte:e.fonte, trib:e.trib||null};
+    const antes = r;
+    try{ await patchCaso(k.id, {ronda}); k.ronda = ronda; }catch(err){ console.warn("suspensão não gravou:", err); continue; }
+    notas.forEach(t=>anotarSuspensao(k, t));
+    if(notas.length || ronda.susp_conferir){ feitos.push({k, antes, notas:notas.length}); reindexarSusp(k); }
+  }
+  if(_loteSusp) _loteSusp.push(...feitos);
+  const n = feitos.filter(x=>x.notas).length;
+  if(feitos.length && clienteAberto===cliId){
+    repintarFicha();
+    if(n) avisoDesfazer(`⏸ Suspensão por tema lida do processo em ${n} caso(s)`, async ()=>{
+      for(const x of feitos){ await patchCaso(x.k.id, {ronda:x.antes}).catch(()=>{}); x.k.ronda = x.antes; reindexarSusp(x.k); }
+      aviso("Desfeito"); repintarFicha(); });
+  }
+  return feitos;
+}
+// a suspensão sem número de tema: o cartão pede conferência; "não" encerra o aviso, Suspender abre a janela
+async function suspConferirNao(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const ronda = {...(k.ronda||{})}; delete ronda.susp_conferir;
+  try{ await patchCaso(casoId, {ronda}); k.ronda = ronda; }catch(e){ return aviso("Não gravou — tente de novo"); }
+  repintarSusp();
+}
+// o acervo de antes: a mesma leitura em todos os clientes de caso judicial aberto, com o desfazer do lote
+let _loteSusp = null;
+async function lerSuspensoesTodos(){
+  const clis = [...new Set(D.casos.filter(k=>k.fase!=="encerrado" && !ehPreCaso(k) && (k.processo || (k.processos||[]).length)).map(k=>k.cliente_id))];
+  if(!clis.length) return;
+  if(clienteAberto) fecharFicha(false);
+  _loteSusp = [];
+  caixa(`<div class="org-lote" role="dialog" aria-labelledby="su-lote-t"><h3 id="su-lote-t">Suspensões pelos movimentos</h3>
+    <p class="meio-sub" id="su-lote-st" aria-live="polite">Lendo 0 de ${clis.length} clientes…</p>
+    <progress id="su-lote-pb" max="${clis.length}" value="0"></progress><div id="su-lote-res"></div></div>`);
+  for(let i=0; i<clis.length; i++){
+    if(!document.getElementById("su-lote-pb")) break;
+    const dados = await dadosDoCliente(clis[i]);
+    D._andsFicha = dados.ands; D.anexos = dados.anexos; _evCache = null;
+    await adotarSuspensao(clis[i]).catch(e=>console.warn("suspensão do lote:", e));
+    const pb = document.getElementById("su-lote-pb"), st = document.getElementById("su-lote-st");
+    if(pb) pb.value = i+1; if(st) st.textContent = `Lendo ${i+1} de ${clis.length} clientes…`;
+  }
+  D._andsFicha = []; D.anexos = []; _evCache = null;
+  const L = _loteSusp; _loteSusp = null;
+  const st = document.getElementById("su-lote-st"), res = document.getElementById("su-lote-res");
+  const susp = L.filter(x=>suspensaoDe(x.k) && !suspensaoDe({...x.k, ronda:x.antes})).length, ret = L.filter(x=>x.notas && !suspensaoDe(x.k)).length;
+  const conf = L.filter(x=>(x.k.ronda||{}).susp_conferir).length;
+  if(st) st.textContent = `${susp} caso(s) marcado(s) como suspensos, ${ret} retomado(s) e ${conf} a conferir no cartão do caso.`;
+  if(res && L.length) res.innerHTML = `<button class="btn-mini" id="su-lote-desf" title="Desfazer o lote">Desfazer<span class="sr-only"> o lote</span></button>`;
+  const b = document.getElementById("su-lote-desf");
+  if(b) b.onclick = async () => { b.disabled = true;
+    for(const x of L){ await patchCaso(x.k.id, {ronda:x.antes}).catch(()=>{}); x.k.ronda = x.antes; reindexarSusp(x.k); }
+    if(st) st.textContent = "Desfeito."; b.remove(); };
+  render();
+}
 async function abrirCasoSusp(cliId, casoId){ await abrirFicha(cliId); if(clienteAberto===cliId) irAoCaso(casoId); }
 function reindexarSusp(k){ const c = D.cliPorId.get(k.cliente_id); if(c) reindexarCliente(c); }
 function repintarSusp(){ if(clienteAberto) repintarFicha(); else if(typeof render==="function") render(); }
@@ -37520,10 +37623,13 @@ function blocoSuspensos(){
   const grupos = new Map();
   for(const k of D.casos||[]){ const s = suspensaoDe(k); if(!s) continue;
     const ch = `${s.trib}|${s.tema}`; if(!grupos.has(ch)) grupos.set(ch, {s, ks:[]}); grupos.get(ch).ks.push(k); }
-  if(!grupos.size) return "";
+  const ler = `<button class="btn-mini" onclick="lerSuspensoesTodos()" title="Ler as suspensões e os levantamentos nos movimentos de todos os processos judiciais abertos"><span aria-hidden="true">Ler…</span><span class="sr-only">Ler as suspensões nos movimentos dos processos</span></button>`;
+  // sem suspenso, uma linha só (sem .sem-acao, que é a fila do acervo e vem primeiro)
+  if(!grupos.size) return `<div class="meio-sub form-linha" id="acervo-suspensos" style="align-items:center;gap:8px;margin:0 0 8px">⏸ Nenhum caso suspenso por tema. A ficha lê a suspensão nos movimentos ao abrir; para o acervo inteiro: ${ler}</div>`;
   const total = [...grupos.values()].reduce((n, g)=>n + g.ks.length, 0);
   const ord = [...grupos.values()].sort((a, b)=>b.ks.length - a.ks.length || (a.s.trib+a.s.tema).localeCompare(b.s.trib+b.s.tema));
   return `<details class="sem-acao neutro" id="acervo-suspensos"><summary>⏸ Casos suspensos por tema (${total} caso${total>1?"s":""} em ${grupos.size} tema${grupos.size>1?"s":""})</summary>
+    <div class="form-linha" style="margin:6px 0">${ler}</div>
     ${ord.map(({s, ks})=>`<div class="susp-grupo">
       <div class="susp-cab"><b>${esc(rotSusp(s))}</b>${s.assunto ? ` <span class="meio-sub">${esc(s.assunto)}</span>` : ""} <span class="meio-sub">· ${ks.length} caso${ks.length>1?"s":""}</span>
         <button class="btn-mini" style="margin-left:auto" onclick="retomarTema('${escJs(s.trib)}','${escJs(s.tema)}')" title="Tema julgado: retomar todos os casos dele">Retomar<span class="sr-only"> todos os casos do tema</span></button></div>
@@ -40131,6 +40237,7 @@ function linhaCaso(k){
         (k.especie||k.beneficio) ? esc(tituloCaso(k)) : tituloProprio(k) ? esc(tituloProprio(k)) : "definir o pedido"}</b>
       ${k.natureza?`<span class="chip nat-chip" title="natureza do pedido">${esc(rotNatureza(k.natureza))}</span>`:""}
       ${(s=>s?`<button type="button" class="chip lc-susp" onclick="suspenderCaso('${k.id}')" title="${esc(tituloSusp(s))}: clique para alterar ou retomar">⏸ Suspenso · ${esc(rotSusp(s))}</button>`:"")(suspensaoDe(k))}
+      ${(c=>c && !suspensaoDe(k) && k.fase!=="encerrado" ? `<span class="chip lc-susp lc-susp-conf" title="o movimento do ${esc(c.fonte)} fala em suspensão, mas não traz o número do tema">⏸ Suspensão sem tema · <button type="button" class="btn-mini" onclick="suspenderCaso('${k.id}')" title="Informar o tema da suspensão">Suspender<span class="sr-only"> informando o tema</span></button> <button type="button" class="btn-mini" onclick="suspConferirNao('${k.id}')" title="O caso não está suspenso por tema">Não<span class="sr-only"> está suspenso por tema</span></button></span>` : "")((k.ronda||{}).susp_conferir)}
       ${semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo: custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:""}
       </div>
       <div class="lc-placa">
