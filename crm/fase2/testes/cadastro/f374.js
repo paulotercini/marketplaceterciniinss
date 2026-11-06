@@ -100,7 +100,7 @@ const SUPA = "https://ficticio.supabase.co";
   conf("árvore por data: a exigência do INSS no topo e a entrada do requerimento", JSON.stringify(r.pastasData) === JSON.stringify(
     ["📁 20/10/2026 · Exigência do INSS · Compareça à perícia (1)", "📁 05/10/2026 · Entrada do requerimento (4)"]));
   conf("F416 · o parcial do requerimento em curso não se diz processo inteiro",
-       /Informações da tarefa \(cumprimento de exigencia\)/.test(r.txt) && !/Processo administrativo inteiro/.test(r.txt));
+       /Cópia parcial \(cumprimento de exigencia\)/.test(r.txt) && !/Processo administrativo inteiro/.test(r.txt));
   conf("F416 · com o concluído guardado, vale o inteiro e não o parcial",
        r.ambos.caminho === "pat/9/processo-integral" && r.ambos.rot === "Processo administrativo inteiro" && r.nenhum === null);
   conf("processo integral e anexos com onclick válido", r.integral && r.botoes === 3 && r.parse === 3);

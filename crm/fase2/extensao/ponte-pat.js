@@ -104,7 +104,7 @@ function docDoProcessoInteiro(det) {
   const id = fim ? 'processo-integral' : `processo-integral-${st.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'em-curso'}`;
   return { id, arquivo: `${id}.pdf`, pap: true,
            // F416 · antes de concluir, o "Baixar Processo" dá só as Informações da Tarefa
-           nome: fim || !st ? 'Processo administrativo integral.pdf' : `Informações da tarefa (${st}).pdf` };
+           nome: fim || !st ? 'Processo administrativo integral.pdf' : `Cópia parcial (${st}).pdf` };
 }
 
 async function guardarAnexosPat(detalhes, cracha) {
