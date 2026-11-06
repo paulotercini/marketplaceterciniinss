@@ -7159,6 +7159,10 @@ async function iniciar(){
   if(agendaUrl() && agendaToken()) carregarAgenda("paulo").then(()=>montarSidebar()).catch(()=>{});
   // F236 · quem aplica as coletas vê na barra quantas esperam, sem abrir o Importar
   if(souAdmin()) buscarColetas().then(()=>montarSidebar()).catch(()=>{});
+  if(souAdmin() && !window._autoColetas && !navigator.webdriver){
+    window._autoColetas = setInterval(()=>autoAplicarColetas().catch(()=>{}), AUTO_COLETAS_MS);
+    setTimeout(()=>autoAplicarColetas().catch(()=>{}), 20000);
+  }
   document.getElementById("app").classList.remove("dados-guardados");
   if(!veioDoCache) primeiroFiltro();
   montarSidebar();
@@ -10195,10 +10199,10 @@ const LOTE_FONTES = { pje:["conferirPje","aplicarPje"], "pje-processo":["conferi
   crps:[null,"aplicarCrps"], prazos:[null,"aplicarPrazos"] };
 const coletasDoLote = () => coletasPorFonte().novas.filter(c => LOTE_FONTES[c.fonte]);
 let aplicandoTodas = false;
-async function aplicarTodasColetas(){
+async function aplicarTodasColetas(auto){
   const lista = coletasDoLote();
   if(aplicandoTodas || !lista.length) return;
-  if(!confirm(`Conferir e aplicar ${lista.length} coleta(s) dos tribunais, recursos e prazos, uma depois da outra?`)) return;
+  if(!auto && !confirm(`Conferir e aplicar ${lista.length} coleta(s) dos tribunais, recursos e prazos, uma depois da outra?`)) return;
   aplicandoTodas = true;
   try{
     for(const [i, c] of lista.entries()){
@@ -10214,7 +10218,32 @@ async function aplicarTodasColetas(){
   }finally{ aplicandoTodas = false; }
   await buscarColetas(); render();
   const resta = coletasPendentes.filter(c => lista.some(x => x.id===c.id)).length;
+  if(auto && resta===lista.length) return;
   aviso(`✔ ${lista.length-resta} coleta(s) aplicada(s)${resta?`; ${resta} ficaram na fila para conferir uma a uma (sem caso no CRM ou com falha)`:""}`);
+}
+// Pedido do Paulo (06.11.2026): o Importar era um clique a mais. As coletas que só acrescentam ao caso que
+// já existe pelo número (tribunais, e-Recursos, prazos) entram sozinhas no CRM aberto do administrador,
+// ao abrir e a cada 5 minutos; o INSS (cria casos) e o processo sem caso continuam esperando o clique.
+// A trava em config_app impede duas aberturas do CRM de aplicarem a mesma fila.
+// shortcut: trava por carimbo, sem transação; duas aberturas no mesmo segundo ainda podem coincidir
+const AUTO_COLETAS_MS = 5*60*1000, AUTO_TRAVA_MS = 10*60*1000;
+async function autoAplicarColetas(){
+  if(!souAdmin() || aplicandoTodas || document.hidden) return;
+  const ae = document.activeElement;   // não repinta por cima de quem digita ou tem uma janela aberta
+  if((ae && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) || document.querySelector(".modal-fundo")) return;
+  await buscarColetas();
+  const velhas = coletasPorFonte().velhas.filter(c => LOTE_FONTES[c.fonte]);
+  if(!coletasDoLote().length && !velhas.length) return;
+  const [t] = await api(`/rest/v1/config_app?select=valor&chave=eq.coletas_auto_em`).catch(()=>null) || [];
+  if(t && Date.now() - Date.parse(t.valor) < AUTO_TRAVA_MS) return;
+  await guardarCfgApp("coletas_auto_em", new Date().toISOString());
+  try{
+    if(velhas.length) await api(`/rest/v1/coletas?id=in.(${velhas.map(c=>c.id).join(",")})`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
+    await buscarColetas();
+    await aplicarTodasColetas(true);
+  }finally{ await guardarCfgApp("coletas_auto_em", new Date(0).toISOString()).catch(()=>{}); }
+  montarSidebar();
 }
 async function usarColeta(id){
   try{
