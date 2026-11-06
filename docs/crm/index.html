@@ -6499,7 +6499,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.61</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.62</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12694,6 +12694,10 @@ function alternarFrase(inp, frase, conhecidas){
 // ficha do cliente para sempre, só sai desta caixa de entrada.
 const ORIGENS_ROBO = ["pat","crps","dou","pje"];
 const ROTULO_ORIGEM = {pat:"🌻 INSS", crps:"🖥 Recursos", dou:"📰 DOU", pje:"⚖️ PJe"};
+// a origem "pje" junta PJe, e-SAJ e eproc: o rótulo segue o sistema do próprio andamento (F416)
+function rotuloOrigem(a){
+  return a.origem==="pje" ? "⚖️ "+sisCurtoDoMov(a) : (ROTULO_ORIGEM[a.origem]||a.origem);
+}
 
 function novidades(){
   const euLi = a => (a.andamentos_lidos||[]).some(l=>l.colaborador_id===eu.id);
@@ -13469,7 +13473,7 @@ function linhaNovidade(a){
   const k = D.casoPorId.get(a.caso_id) || {};
   const c = D.cliPorId.get(k.cliente_id) || {};
   return `<div class="nov" data-and="${a.id}">
-    <span class="nov-fonte">${ROTULO_ORIGEM[a.origem]||a.origem}</span>
+    <span class="nov-fonte">${esc(rotuloOrigem(a))}</span>
     ${k.acompanhamento==="manual"?`<span class="nov-manual" title="este caso está marcado como acompanhamento MANUAL: a equipe precisa abrir o portal e checar, o robô não cobre">⚠ CASO MANUAL</span>`:""}
     <div class="nov-corpo">
       <div class="nov-cli" data-cli="${c.id||""}"><span class="nov-nome">${esc(c.nome||"cliente sem ficha")}</span>
@@ -42383,7 +42387,7 @@ function sinaisCnjHtml(k, chave, txt, q){
 function comentario(a, resposta, reacoes, raiz){
   // F236 · no visual clássico o movimento que veio de um portal (e-Recursos, PAT, PJe, DOU) tinha o avatar e o nome
   // de quem o importou ("Paulo 09:00"): o autor é a fonte, como no cartão do v10
-  const robo = !temaV10() && ORIGENS_ROBO.includes(a.origem) ? ROTULO_ORIGEM[a.origem] : null;
+  const robo = !temaV10() && ORIGENS_ROBO.includes(a.origem) ? rotuloOrigem(a) : null;
   const co=robo ? {nome:robo.replace(/^\S+\s/,""), inicial:robo.split(" ")[0], cor:"#8A9099"} : D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
   if(temaV10()) return comentarioV12(a, resposta, reacoes, raiz, co, cor);
   const tp = tipoDoComentario(a.texto);
