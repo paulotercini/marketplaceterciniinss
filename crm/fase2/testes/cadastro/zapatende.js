@@ -141,6 +141,15 @@ const T = {
   await p.waitForSelector(".zl-achado", { timeout: 5000 }).catch(() => {});
   conf("a busca procura dentro das mensagens e marca o trecho", ((await p.textContent(".zl-lista").catch(() => "")) || "").includes("Nas mensagens") && !!(await p.$(".zl-achado mark")));
   await p.fill("#zl-busca", ""); await p.dispatchEvent("#zl-busca", "input");
+  // F410 · a busca procura em todas as filas: a encerrada aparece estando em Novas
+  await p.evaluate(() => { zapFiltro = "novas"; pintarListaZap(); });
+  const semBusca = await p.textContent(".zl-lista");
+  await p.fill("#zl-busca", "outra pes"); await p.dispatchEvent("#zl-busca", "input");
+  await p.waitForTimeout(200);
+  const comBusca = await p.textContent(".zl-lista");
+  conf("a busca acha a conversa encerrada fora da fila aberta", !semBusca.includes("Outra pessoa") && comBusca.includes("Outra pessoa") && comBusca.includes("Encerradas"));
+  await p.fill("#zl-busca", ""); await p.dispatchEvent("#zl-busca", "input");
+  await p.evaluate(() => { zapFiltro = "todas"; pintarListaZap(); });
 
   // F191 · aviso sonoro: mensagem nova numa conversa minha ou sem dono toca
   await p.evaluate(() => { window._toques = []; tocarAvisoZap = t => _toques.push(t); zapSomVisto = null; });
@@ -156,6 +165,15 @@ const T = {
     corpoAvisoZap({tipo:"audio", texto:null, momento:new Date().toISOString()}) === null &&
     corpoAvisoZap({tipo:"audio", texto:null, momento:"2020-01-01T00:00:00Z"}) === "🎤 Áudio" &&
     corpoAvisoZap({tipo:"audio", texto:"[áudio não transcrito]", momento:new Date().toISOString()}) === "🎤 Áudio"));
+
+  // F409 · a conversa silenciada não toca o aviso do navegador
+  conf("a conversa silenciada não avisa", await p.evaluate(async () => {
+    const id = (await todas("zap_conversas","select=id&nao_lidas=gt.0"))[0].id;
+    zapSilencio.set(id, new Date(Date.now()+3600e3).toISOString());
+    const antes = _toques.length; zapSomVisto = null; await vigiarZapSom();
+    zapSomVisto.conv.set(id, 0); await vigiarZapSom();
+    const ok = silenciadaZap(id) && _toques.length === antes; zapSilencio.clear(); return ok;
+  }));
 
   // F192 · quem conversa não é o cliente (a mãe fala pelo filho)
   await p.evaluate(id => abrirConversa(id), Z1);

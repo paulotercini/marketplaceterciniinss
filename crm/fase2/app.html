@@ -1585,6 +1585,9 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
     .app.zap-conv-aberta .zt-voltar{display:block;border:0;background:none;font-size:22px;line-height:1;padding:6px 4px;color:var(--texto);cursor:pointer;flex:none}
   }
   .zt-id h2[role=button]{cursor:pointer}
+  .zt-nm{display:flex;align-items:center;gap:4px;min-width:0}
+  .zt-renomear{flex:none;border:0;background:none;cursor:pointer;color:var(--sub,#5f6b6a);font-size:15px;padding:2px 4px;border-radius:4px}
+  .zt-renomear:hover{background:var(--fundo-2,#eef1f0)}
   .zap-topo{display:flex;flex-direction:column;gap:8px;padding:12px 16px;border-bottom:1px solid var(--borda);background:var(--branco)}
   .zap-frame{flex:1;width:100%;border:0;background:#fff}
   .zap-nota{padding:6px 10px;font-size:11px;color:var(--cinza);border-top:1px solid var(--borda)}
@@ -2038,6 +2041,9 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .app.celular .ze-emo-grade button{width:auto;height:40px}
   .ze-ferr .zap-icone{border:0;background:none;padding:6px;border-radius:6px;color:var(--cinza);display:inline-flex;align-items:center;font-size:12px;font-weight:600}
   .ze-ferr .zap-icone.gravando{background:#fde7e7;color:#b3261e}
+  .zap-escrever .btn-rap.ze-enviar:disabled{opacity:.45;cursor:not-allowed}
+  .zap-escrever .ze-linha:has(.zap-falta:not([hidden])){flex-wrap:wrap}
+  .zap-falta{order:-1;flex-basis:100%;font-size:12px;color:var(--venc,#b3261e);font-weight:600}
   .zap-escrever .btn-rap.ze-enviar{height:40px;padding:0 18px;border-radius:8px;background:var(--azul);border:1px solid var(--azul);color:#fff}
   .zap-escrever.modo-nota .btn-rap.ze-enviar{background:var(--prox,#8f5400);border-color:var(--prox,#8f5400)}
   .zp-card{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:12px}
@@ -2233,6 +2239,8 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-b{transition:transform .15s}
   .zap-escrever:not(.modo-nota) .ze-linha:has(#zap-txt:placeholder-shown) #zap-enviar{display:none}
   .ze-linha:not(:has(#zap-txt:placeholder-shown)) #zap-rec:not(.gravando){display:none}
+  .ze-travado .ze-linha>:not(.ze-nota-cel){display:none}
+  .ze-assumir-aviso .btn-rap{margin-left:6px}
   .ze-mic{align-self:flex-end;flex:none;width:44px;height:44px;border-radius:50%;justify-content:center}
   .zap-tela.wa .ze-mic:not(.gravando){background:#00a884;border-color:#00a884;color:#fff}
   .ze-mic.gravando{width:auto;border-radius:22px;padding:0 14px;color:#b3261e;background:#fde7e7}
@@ -7216,7 +7224,8 @@ async function vigiarZapSom(){
     todas("zap_conversas","select=id,nao_lidas,atendente_id,status,nome_perfil,cliente_id,lead_id,telefone,foto_url,contato_nome&nao_lidas=gt.0").catch(()=>null),
     todas("mencoes",`select=id,texto,conversa_id&para_id=eq.${eu.id}&lida_em=is.null&conversa_id=not.is.null`).catch(()=>null)]);
   if(!cs || !ms) return;
-  const minhas = cs.filter(c=>c.status!=="resolvida" && (c.atendente_id===eu.id || !c.atendente_id));
+  await lerSilencioZap();
+  const minhas = cs.filter(c=>c.status!=="resolvida" && (c.atendente_id===eu.id || !c.atendente_id) && !silenciadaZap(c.id));
   const agora = {conv: new Map(minhas.map(c=>[c.id, c.nao_lidas])), menc: new Set(ms.map(m=>m.id))};
   if(zapSomVisto){
     const nova = minhas.find(c=>c.nao_lidas > (zapSomVisto.conv.get(c.id)||0));
@@ -15263,6 +15272,14 @@ function zapVisivel(c){
   return !c.setor_id || !meus.length || meus.includes(c.setor_id);
 }
 const podeAgirZap = c => !!c && (zapGestor() || !c.atendente_id || c.atendente_id===eu.id);
+// o colaborador assume a conversa antes de responder ao cliente; o gestor responde sem assumir (pedido do Paulo, 06.11.2026)
+const precisaAssumir = c => !!c && !zapGestor() && c.atendente_id !== eu.id;
+function barraAssumir(c){
+  if(!precisaAssumir(c)) return false;
+  const at = c.atendente_id && D.colPorId.get(c.atendente_id);
+  aviso(at ? `A conversa está com ${at.nome}. Peça a transferência para responder.` : "Assuma a conversa para responder");
+  return true;
+}
 // o banco explica a recusa em "message": é isso que vai para o aviso
 function msgErro(e){
   try{ const j = JSON.parse(String(e.message).replace(/^\d+:\s*/,"")); return j.message || e.message; }
@@ -15471,7 +15488,9 @@ function pintarListaZap(){
                        : f==="retornos" ? !!retornoDe(c) : aberta(c);
   const q = dsa(zapBusca.trim()), qd = zapBusca.replace(/\D/g,"");
   const visiveis = zapConvs.filter(zapVisivel);
-  let cs = visiveis.filter(c=>naAba(zapFiltro,c)
+  // F410 · com texto na busca, procura em todas as filas, encerradas inclusive (pedido do Paulo de 05.11.2026)
+  const buscando = q.length>=2 || qd.length>=4;
+  let cs = visiveis.filter(c=>(buscando || naAba(zapFiltro,c))
     && (!zapChips.atendente || c.atendente_id===zapChips.atendente)
     && (!q || dsa(nomeDaConversa(c)+" "+((clienteDaConversa(c)||{}).nome||"")).includes(q) || (qd.length>=4 && String(c.telefone||"").includes(qd)))
     && (!zapChips.naoLidas || c.nao_lidas)
@@ -15483,9 +15502,9 @@ function pintarListaZap(){
     lista = cs.sort((a,b)=>(retornoDe(a).quando<retornoDe(b).quando?-1:1)).map(c=>cartaoConversa(c)).join("");
   } else {
     const hj = hoje(), ont = dataSP(new Date(Date.now()-864e5).toISOString());
-    const grupo = c => c.fixada ? "Fixadas" : !c.ultima_em ? "Antes" : dataSP(c.ultima_em)===hj ? "Hoje"
+    const grupo = c => buscando && !aberta(c) ? "Encerradas" : c.fixada ? "Fixadas" : !c.ultima_em ? "Antes" : dataSP(c.ultima_em)===hj ? "Hoje"
                      : dataSP(c.ultima_em)===ont ? "Ontem" : "Antes";
-    lista = ["Fixadas","Hoje","Ontem","Antes"].map(g=>{
+    lista = ["Fixadas","Hoje","Ontem","Antes","Encerradas"].map(g=>{
       const gs = cs.filter(c=>grupo(c)===g);
       return gs.length ? `<p class="zl-grupo">${g}</p>${gs.map(c=>cartaoConversa(c)).join("")}` : "";
     }).join("");
@@ -15512,12 +15531,13 @@ function pintarListaZap(){
              <button class="tl-mais-it zl-som" role="menuitem" onclick="alternarSomZap()" aria-pressed="${somZapLigado()}">${somZapLigado()?"🔔 Aviso sonoro ligado":"🔕 Aviso sonoro desligado"}</button>
              <button class="tl-mais-it zl-nav" role="menuitem" onclick="alternarNavZap()" aria-pressed="${navZapLigado() && window.Notification && Notification.permission==="granted"}" title="notificação do navegador quando chega mensagem, com o CRM aberto">${navZapLigado() && window.Notification && Notification.permission==="granted"?"🖥 Notificação no navegador ligada":"🖥 Notificar no navegador"}</button>
              <button class="tl-mais-it zl-push" role="menuitem" onclick="alternarPushZap()" aria-pressed="${pushZapLigado()}" title="notificação no celular ou no computador, também com o CRM fechado">${pushZapLigado()?"📱 Aviso neste aparelho ligado":"📱 Avisar neste aparelho"}</button>
+             <button class="tl-mais-it zl-hora" role="menuitem" onclick="horarioAvisos()" title="das quantas às quantas o aviso chega no aparelho">🕘 Horário dos avisos: ${horaAvisosTxt()}</button>
              <button class="tl-mais-it zl-link ${zapFiltro==="fim"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="fim">Encerradas${zapFiltro==="fim"?` (${cs.length})`:""}</button>
              ${visiveis.some(c=>c.automatica)?`<button class="tl-mais-it zl-link ${zapFiltro==="auto"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="auto" title="robô de outra empresa (F272)">Automáticas${zapFiltro==="auto"?` (${cs.length})`:""}</button>`:""}
              ${gestor?`<button class="tl-mais-it zl-link ${zapPainelAberto?"on":""}" role="menuitem" onclick="abrirPainelZap()" title="Painel da equipe"><span aria-hidden="true">Equipe</span><span class="sr-only">Painel da equipe</span></button>`:""}
            </span></details></div>
        <label class="zl-busca">${zic("busca")}<input type="search" id="zl-busca" value="${esc(zapBusca)}"
-         placeholder="Buscar nome ou telefone" aria-label="Buscar conversa"></label>
+         placeholder="Buscar em todas: nome, telefone ou mensagem" aria-label="Buscar em todas as conversas"></label>
        <div class="zl-filas" role="tablist" aria-label="Filas" style="grid-template-columns:repeat(${filtros.length},minmax(0,1fr))">${filtros.map(([f,r])=>{
           const n = visiveis.filter(c=>naAba(f,c)).length;
           return `<button role="tab" aria-selected="${zapFiltro===f}" class="${zapFiltro===f?"on":""} ${f}" data-zf="${f}">${r}${n?` <span class="n">${n}</span>`:""}</button>`;
@@ -15646,6 +15666,21 @@ function quemConversa(){
                               : {contato_nome:null, contato_relacao:null});
     aviso(outro ? `Anotado: quem conversa é ${nome} ✔` : "Anotado: quem conversa é o próprio cliente ✔", false);
   };
+}
+
+// o contato sem cliente aparece com o nome do perfil do WhatsApp (às vezes um emoji); a equipe dá o nome (pedido do Paulo, 05.11.2026)
+function nomearConversa(){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  caixa(`<h3>Nome do contato</h3>
+    <p class="meio-sub">No WhatsApp o contato aparece como “${esc(c.nome_perfil||c.telefone||"")}”. O nome vale só no CRM.</p>
+    <div class="form-linha"><input id="zn-nome" value="${esc(c.contato_nome||"")}" placeholder="nome do contato" style="min-width:240px"></div>
+    <div class="form-linha" style="margin-top:10px"><button class="btn-rap" id="zn-ok">Guardar</button></div>`);
+  const i = document.getElementById("zn-nome"); i.focus();
+  const ok = async () => { const nome = i.value.trim(); fecharCaixa();
+    await mudarConversa({contato_nome:nome||null});
+    aviso(nome ? `Nome do contato: ${nome} ✔` : "Nome do WhatsApp restaurado ✔", false); };
+  document.getElementById("zn-ok").onclick = ok;
+  i.onkeydown = e => { if(e.key==="Enter") ok(); };
 }
 
 const PREVIA_TIPO = {audio:"🎤 Áudio", imagem:"📷 Foto", video:"🎥 Vídeo", documento:"📄 Documento", figurinha:"Figurinha", localizacao:"📍 Localização", contato:"👤 Contato"};
@@ -15807,7 +15842,8 @@ function pintarConversa(){
          <button class="zt-voltar" onclick="voltarListaZap()" aria-label="Voltar às conversas">←</button>
          ${zapFotos.get(c.foto_url)?`<img class="zap-av zt-foto" src="${esc(zapFotos.get(c.foto_url))}" alt="foto do contato" title="clique para ampliar" onclick="verFotoGrande(this.src)">`:avatarZap(c)}
          <div class="zt-id">
-           <h2 role="button" tabindex="0" title="ver a ficha" onclick="alternarFichaZap()" onkeydown="if(event.key==='Enter')alternarFichaZap()">${esc(nomeDaConversa(c))}</h2>
+           <div class="zt-nm"><h2 role="button" tabindex="0" title="ver a ficha" onclick="alternarFichaZap()" onkeydown="if(event.key==='Enter')alternarFichaZap()">${esc(nomeDaConversa(c))}</h2>
+             ${cli?"":`<button class="zt-renomear" onclick="nomearConversa()" title="Alterar o nome do contato" aria-label="Alterar o nome do contato">✎</button>`}</div>
            <div class="zt-sub">
 ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConversa()":"vincularConversa()"}" title="${cli?"corrigir quem escreve":"vincular a um cliente"}">${clienteDaLinha(c)}</button>
            </div>
@@ -15824,10 +15860,12 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
              <div class="zt-menu">
-               ${cli?`<button onclick="quemConversa()">Quem escreve…</button>`:`<button onclick="vincularConversa()" title="Vincular a um cliente">Vincular<span class="sr-only"> a um cliente</span></button>`}
+               ${cli?`<button onclick="quemConversa()">Quem escreve…</button>`:`<button onclick="vincularConversa()" title="Vincular a um cliente">Vincular<span class="sr-only"> a um cliente</span></button>
+               <button onclick="this.closest('details').open=false;nomearConversa()" title="Alterar o nome do contato"><span aria-hidden="true">Renomear</span><span class="sr-only">Alterar o nome do contato</span></button>`}
                <button onclick="this.closest('details').open=false;zagAlternar()">Agenda de atendimentos</button>
                <button onclick="this.closest('details').open=false;verFavoritasZap()">Mensagens favoritas${zapMsgs.some(m=>m.favorita_em)?` (${zapMsgs.filter(m=>m.favorita_em).length})`:""}</button>
                <button onclick="marcarNaoLida()" title="Marcar como não lida"><span aria-hidden="true">Desler</span><span class="sr-only">Marcar como não lida</span></button>
+               <button onclick="silenciarZap()" title="sem aviso desta conversa por um tempo">${silenciadaZap(c.id)?`🔕 Silenciada até ${new Date(zapSilencio.get(c.id)).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})}`:"🔕 Silenciar"}</button>
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
                ${tel?`<a href="https://wa.me/55${tel}" target="_blank" rel="noopener" aria-label="Abrir no WhatsApp do aparelho">${iconeFonte("zap")} Abrir no aparelho</a>`:""}
                ${pode?`<details class="zt-outras"><summary>Outras opções</summary>
@@ -15870,11 +15908,15 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
         <span>Áudio gravado — ouça antes de enviar</span>
         <audio controls src="${zapAudio.url}"></audio>
         <button class="btn-mini" onclick="descartarAudioZap();pintarConversaGuardando()">Descartar</button>
-        <button class="btn-rap ze-enviar" onclick="enviarAudioZap()" title="Enviar áudio"><span aria-hidden="true">Áudio</span><span class="sr-only">Enviar áudio</span></button></div>`:""}
-     <div class="zap-escrever ${zapNota?"modo-nota":""}">
+        <button class="btn-rap ze-enviar" onclick="enviarAudioZap()" title="Enviar áudio"><span aria-hidden="true">Enviar</span><span class="sr-only"> áudio</span></button></div>`:""}
+     <div class="zap-escrever ${zapNota?"modo-nota":""} ${!zapNota&&precisaAssumir(c)?"ze-travado":""}">
        <div class="zap-sug" id="zap-sug" hidden></div>
-       ${pode?"":`<p class="ze-so-leitura">Esta conversa está com ${esc(at.nome)}. Você pode responder: ${esc(at.nome.split(" ")[0])} recebe o aviso
-          e a conversa continua com ${esc(at.nome.split(" ")[0])}.</p>`}
+       ${precisaAssumir(c)?`<p class="ze-so-leitura ze-assumir-aviso">${at
+          ? `Esta conversa está com ${esc(at.nome)}. Para responder, peça a transferência.
+             <button class="btn-rap" onclick="pedirTransferencia()" title="Pedir a transferência da conversa">Pedir<span class="sr-only"> a transferência</span></button>`
+          : `Para responder ao cliente, assuma a conversa.
+             <button class="btn-rap zt-assumir" onclick="assumirConversa()" title="Assumir a conversa">Assumir<span class="sr-only"> a conversa</span></button>`}
+          A nota interna continua livre.</p>`:""}
        <div class="ze-modos" role="tablist" aria-label="Para quem é o texto">
          <button role="tab" aria-selected="${!zapNota}" class="${zapNota?"":"on"}" onclick="${zapNota?"alternarNota()":""}" title="Responder ao cliente">Responder<span class="sr-only"> ao cliente</span></button>
          <button role="tab" aria-selected="${zapNota}" class="${zapNota?"on nota":""}" id="zap-btn-nota"
@@ -15903,13 +15945,15 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
          </div>
          <button class="ze-nota-cel so-cel-ze ${zapNota?"on":""}" aria-pressed="${zapNota}" onclick="alternarNota()"
            title="nota interna: fica na conversa, o cliente não vê">Nota</button>
+         <span id="zap-falta" class="zap-falta" role="status" hidden></span>
          <button class="btn-rap ze-enviar" id="zap-enviar" aria-label="${zapNota?"Anotar":"Enviar"}" onclick="enviarZap()">${zapNota?"Anotar":"Enviar"}</button>
          ${zapNota?"":`<button class="zap-icone ze-mic" id="zap-rec" onclick="gravarAudioZap()" title="gravar áudio" aria-label="Gravar áudio">${zic("mic")}</button>`}
        </div>
      </div>`;
   pintarPainelZap(c);
   const t = document.getElementById("zap-txt");
-  t.oninput = ()=>{ t.style.height="auto"; t.style.height=Math.min(t.scrollHeight,140)+"px"; sugerirFrases(); guardarRascZap(c.id, t.value); };
+  t.oninput = ()=>{ t.style.height="auto"; t.style.height=Math.min(t.scrollHeight,140)+"px"; sugerirFrases(); travaZap(); guardarRascZap(c.id, t.value); };
+  travaZap();
   // F371 · o print colado (Ctrl+V) vai como foto, com o texto escrito de legenda
   t.onpaste = async e=>{
     if(zapNota) return;
@@ -16387,6 +16431,8 @@ async function verMidiaZap(id){
 async function enviarZap(){
   const t = document.getElementById("zap-txt"), txt = (t.value||"").trim();
   if(!txt || !zapAberta) return;
+  if(!zapNota && barraAssumir(zapConvs.find(x=>x.id===zapAberta))) return;
+  if(!zapNota && /\{[a-z_]+\}/.test(txt)){ travaZap(); return aviso("Há dado do caso sem preencher na mensagem"); }
   t.value=""; t.style.height="auto"; guardarRascZap(zapAberta, "");
   // nota interna nasce com direcao E status 'interna' — o banco recusa
   // qualquer nota que tente entrar na fila de envio
@@ -16433,6 +16479,7 @@ async function mandarArquivoZap(colado){
   if(inp) inp.value = "";                       // permite mandar o mesmo de novo
   // 60 MB é o teto do WhatsApp; barrar aqui evita o arquivo subir para nada
   if(arq.size > 60*1024*1024) return aviso("Arquivo grande demais para o WhatsApp (máx. 60 MB)");
+  if(barraAssumir(zapConvs.find(x=>x.id===zapAberta))) return;
   const nome = nomeSeguro(arq.name || "arquivo");
   const caminho = `zap/${zapAberta}/enviados/${Date.now()}-${nome}`;
   const legenda = (document.getElementById("zap-txt").value||"").trim();
@@ -16457,20 +16504,75 @@ function focarCampoZap(){
 // Preenche um modelo com quem está DO OUTRO LADO da conversa. O que não der
 // para preencher (dois processos, benefício sem cadastro) fica visível como
 // {placeholder} — melhor um buraco à vista do que um chute enviado.
-function preencheZap(txt){
+// F411 · os dados do caso nas mensagens prontas (Onda 1 do plano de 05.11.2026, decisões do Paulo):
+// o campo sem dado fica entre chaves no texto, e o Enviar não sai enquanto houver um
+const RX_CAMPO_ZAP = /\{[a-z_]+\}/g;
+const RX_CAMPO_CASO = /\{(beneficio|nb|processo|protocolo|etapa|der|dib|dcb|pericia_\w+|audiencia_\w+|prazo|documentos)\}/;
+const casosZap = cli => cli ? processosDe(D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado" && !ehPreCaso(k)) : [];
+// a mesma barreira do portal e do robô: só a etapa do catálogo da fase atual, e não a desatualizada
+const etapaPublicaZap = k => k && k.etapa && etapasDaFase(k).includes(k.etapa) && !trilhaDe(k).velha ? k.etapa : "";
+const proxEventoZap = (k, rx) => k ? eventosFuturos(k.id).filter(e=>rx.test(tipoEv(e.tipo)))
+  .sort((a,b)=>String(a.data_hora).localeCompare(String(b.data_hora)))[0] || null : null;
+const hZap = h => String(h||"").replace(/^0?(\d{1,2}):(\d{2})$/, (x, hh, mm)=>`${hh}h${mm==="00"?"":mm}`);
+const horaZap = ts => hZap(horaSP(ts));
+// o próximo atendimento da Agenda (o que já está carregado), pela ficha ou pelo telefone da conversa
+function atendimentoZap(cli, c0){
+  const hj = hoje(), u8 = ultimos8(c0 && c0.telefone);
+  return Object.entries(agq.cache||{}).filter(([p])=>p!=="todos").flatMap(([, r])=>(r&&r.dias||[]).flatMap(d=>(d.eventos||[])
+    .filter(e=>e.atendimento && d.data>=hj && ((cli && clienteDoEvento(e)===cli) || (u8.length===8 && ultimos8(e.telefone)===u8)))
+    .map(e=>({data:d.data, hora:e.inicio}))))
+    .sort((a,b)=>(a.data+a.hora).localeCompare(b.data+b.hora))[0] || null;
+}
+function docsZap(cli, k){
+  if(!cli || !k) return "";
+  const {grupos, pessoais} = pedidosDoBalcao(cli.id), g = grupos.find(x=>x.k.id===k.id);
+  return [...(g?g.itens:[]), ...pessoais].map((it, i)=>`${i+1}. ${it.nome}`).join("\n");
+}
+// shortcut: Dr./Dra. pela última letra do primeiro nome, até o cadastro da equipe ter o tratamento
+const advZap = cli => { const n = cli ? ((D.colPorId.get((advogadoDoCliente(cli.id)||[])[0])||{}).nome||"").split(" ")[0] : "";
+  return n ? `${/a$/i.test(n)?"Dra.":"Dr."} ${n}` : ""; };
+function preencheZap(txt, k, ctx){
   const c0 = zapConvs.find(x=>x.id===zapAberta);
   const cli = c0 && c0.cliente_id && D.cliPorId.get(c0.cliente_id);
-  const ks = cli ? processosDe(D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado") : [];
-  const k = ks.length===1 ? ks[0] : null;
+  if(k===undefined){ const ks = casosZap(cli); k = ks.length===1 ? ks[0] : null; }
   const nome = (c0 && c0.contato_nome) || (cli && cli.nome) || (c0 && c0.nome_perfil) || "";
+  const per = proxEventoZap(k, /per[íi]cia/i), aud = proxEventoZap(k, /audi[êe]ncia/i), at = atendimentoZap(cli, c0);
+  const ev = ctx==="pericia" ? per : ctx==="audiencia" ? aud : null;
+  const docPrazo = cli && k ? (((cli.campos||{}).docs_pedidos)||[]).filter(p=>p.ate && (!p.caso_id || p.caso_id===k.id) && (p.itens||[]).some(i=>i && !i.entregue)).map(p=>p.ate).sort()[0] : "";
   const map = {
     "{cliente}": (cli && cli.nome) || "",
     "{nome}": nome, "{primeiro_nome}": (nome||"").trim().split(/\s+/)[0]||"",
-    "{data}": fmt(hoje()),
+    "{data}": ev ? fmtBarra(dataSP(ev.data_hora)) : ctx==="pericia"||ctx==="audiencia" ? "" : fmtBarra(hoje()),
+    "{hora}": ev ? horaZap(ev.data_hora) : "", "{local}": ev ? (ev.local||"") : "",
     "{beneficio}": especieDoCaso(k), "{processo}": (k&&k.processo)||"", "{nb}": (k&&k.nb)||"",
-    "{dcb}": k&&k.dcb ? fmtBarra(k.dcb) : "",
+    "{protocolo}": (k && (k.protocolos||[]).slice(-1)[0]) || "",
+    "{etapa}": etapaPublicaZap(k),
+    "{der}": k&&k.der ? fmtBarra(k.der) : "", "{dib}": k&&k.dib ? fmtBarra(k.dib) : "", "{dcb}": k&&k.dcb ? fmtBarra(k.dcb) : "",
+    "{pericia_data}": per ? fmtBarra(dataSP(per.data_hora)) : "", "{pericia_hora}": per ? horaZap(per.data_hora) : "", "{pericia_local}": (per && per.local) || "",
+    "{audiencia_data}": aud ? fmtBarra(dataSP(aud.data_hora)) : "", "{audiencia_hora}": aud ? horaZap(aud.data_hora) : "", "{audiencia_local}": (aud && aud.local) || "",
+    "{prazo}": k && k.exigencia_prazo ? fmtBarra(k.exigencia_prazo) : docPrazo ? fmtBarra(docPrazo) : "",
+    "{documentos}": docsZap(cli, k), "{advogado}": advZap(cli),
+    "{atendimento_data}": at ? fmtBarra(at.data) : "", "{atendimento_hora}": at ? hZap(at.hora) : "",
   };
   return Object.entries(map).reduce((t,[a,v])=>v?t.split(a).join(v):t, txt);
+}
+// com mais de um caso aberto, o modelo que usa dado de caso pergunta de qual caso é, antes de preencher
+function usarModeloZap(m){
+  const c0 = zapConvs.find(x=>x.id===zapAberta), cli = c0 && c0.cliente_id && D.cliPorId.get(c0.cliente_id), ks = casosZap(cli);
+  const poe = k => { const t = document.getElementById("zap-txt"); if(!t) return;
+    t.value = preencheZap(m.texto, k, m.contexto); fecharCaixa(); t.focus(); t.dispatchEvent(new Event("input")); };
+  if(ks.length<2 || !RX_CAMPO_CASO.test(m.texto) && !/^(pericia|audiencia)$/.test(m.contexto||"")) return poe(undefined);
+  caixa(`<h3>De qual caso é a mensagem?</h3><p class="meio-sub">${esc(m.titulo)}</p>
+    <div class="form-linha">${ks.map((k, i)=>`<button class="btn-rap" data-zk="${i}">${esc(especieDoCaso(k)||"caso")} · ${esc(NOME_FASE[faseEfetiva(k)]||k.fase||"")}</button>`).join("")}</div>`);
+  document.querySelectorAll("[data-zk]").forEach(b=>b.onclick=()=>poe(ks[+b.dataset.zk]));
+}
+// o trecho entre chaves que ficou é o dado que o CRM não tem: trava o Enviar e diz qual falta
+function travaZap(){
+  const t = document.getElementById("zap-txt"), b = document.getElementById("zap-enviar"), av = document.getElementById("zap-falta");
+  if(!t || !b) return;
+  const faltam = zapNota ? [] : [...new Set((t.value||"").match(RX_CAMPO_ZAP)||[])];
+  b.disabled = !!faltam.length;
+  if(av){ av.hidden = !faltam.length; av.textContent = faltam.length ? `Preencha ou apague antes de enviar: ${faltam.join(", ")}` : ""; }
 }
 // O ⚡ mostra as mensagens PARA O CLIENTE (modelos), não a taquigrafia
 // interna do composer — "Cliente orientado por telefone sobre __" enviada ao
@@ -16489,7 +16591,7 @@ function frasesZap(){
        Entram no campo para você conferir antes de mandar.</p>
     ${[...grupos].map(([g,list])=>`<h4 class="zap-gr">${CTX_ROTULO[g]||g}</h4>
       <div class="form-linha">${list.map(m=>`<button class="btn-rap" data-mz="${m.id}"
-        title="${esc(preencheZap(m.texto).slice(0,220))}">${esc(m.titulo)}</button>`).join("")}</div>`).join("")}
+        title="${esc(preencheZap(m.texto, undefined, m.contexto).slice(0,220))}">${esc(m.titulo)}</button>`).join("")}</div>`).join("")}
     ${docs.length?`<h4 class="zap-gr">📄 Lista de documentos do benefício</h4>
       <select id="zap-doc" style="width:100%;padding:7px">
         <option value="">escolha o benefício…</option>
@@ -16497,9 +16599,7 @@ function frasesZap(){
       </select>`:""}`);
   document.querySelectorAll("[data-mz]").forEach(b=>b.onclick=()=>{
     const m = ms.find(x=>x.id===b.dataset.mz); if(!m) return;
-    const t = document.getElementById("zap-txt");
-    t.value = preencheZap(m.texto);
-    fecharCaixa(); t.focus(); t.dispatchEvent(new Event("input"));
+    usarModeloZap(m);
   });
   const sel = document.getElementById("zap-doc");
   if(sel) sel.onchange = ()=>{
@@ -16662,6 +16762,7 @@ function novoRetorno(){
 function agendarZap(){
   const t = document.getElementById("zap-txt"), txt = (t&&t.value||"").trim();
   if(!txt) return aviso("Escreva a mensagem antes de agendar");
+  if(barraAssumir(zapConvs.find(x=>x.id===zapAberta))) return;
   const amanha = new Date(Date.now()+864e5).toLocaleDateString("sv");
   caixa(`<h3>🗓 Agendar o envio</h3><p class="meio-sub">${esc(txt.slice(0,160))}</p>
     <div class="form-linha"><input type="date" id="za-dia" value="${amanha}"><input type="time" id="za-hora" value="09:00"></div>
@@ -16858,6 +16959,7 @@ function descartarAudioZap(){
 }
 async function enviarAudioZap(){
   if(!zapAudio) return;
+  if(barraAssumir(zapConvs.find(x=>x.id===zapAudio.conversa))) return;
   const {blob, conversa} = zapAudio;
   descartarAudioZap(); pintarConversaGuardando();
   const caminho = `zap/${conversa}/enviados/${Date.now()}-audio.webm`;
@@ -16886,7 +16988,7 @@ function sugerirFrases(){
   sug.hidden = false;
   sug.querySelectorAll("[data-zsg]").forEach(b=>b.onclick=()=>{
     const x = (D.modelos||[]).find(y=>y.id===b.dataset.zsg); if(!x) return;
-    t.value = preencheZap(x.texto); sug.hidden = true; t.focus(); t.dispatchEvent(new Event("input"));
+    sug.hidden = true; t.value = ""; usarModeloZap(x);
   });
 }
 
@@ -16948,6 +17050,58 @@ function estadoZap(){
   if(b("zof-on")) b("zof-on").onclick = () => gravarEstadoZap(false, txt());
   if(b("zof-sal")) b("zof-sal").onclick = () => gravarEstadoZap(true, txt());
   if(b("zof-off")) b("zof-off").onclick = () => gravarEstadoZap(true, txt());
+}
+// F399 · o horário dos avisos no aparelho, de cada pessoa (colaboradores.push_de e push_ate; vazio = a qualquer hora)
+const hhmm = t => (t||"").slice(0,5);
+function horaAvisosTxt(){ return eu && eu.push_de && eu.push_ate ? `${hhmm(eu.push_de)} às ${hhmm(eu.push_ate)}` : "a qualquer hora"; }
+function horarioAvisos(){
+  const tem = !!(eu.push_de && eu.push_ate);
+  caixa(`<h3>Horário dos avisos</h3>
+    <p class="meio-sub">Fora do horário, mensagem e menção não avisam no aparelho; quando ele abre, chega o resumo do que veio. Com horário, só de segunda a sexta, sem feriado.</p>
+    <label><input type="checkbox" id="zh-livre"${tem?"":" checked"}> A qualquer hora</label>
+    <div class="form-linha" style="margin-top:8px">
+      <label>Das <input type="time" id="zh-de" value="${hhmm(eu.push_de)||"08:00"}"${tem?"":" disabled"}></label>
+      <label>às <input type="time" id="zh-ate" value="${hhmm(eu.push_ate)||"18:00"}"${tem?"":" disabled"}></label>
+    </div>
+    <div class="form-linha" style="margin-top:10px"><button class="btn-sal" id="zh-ok" title="Salvar o horário dos avisos">Salvar</button></div>`);
+  const b = id => document.getElementById(id);
+  b("zh-livre").onchange = () => { b("zh-de").disabled = b("zh-ate").disabled = b("zh-livre").checked; };
+  b("zh-ok").onclick = async () => {
+    const livre = b("zh-livre").checked, de = b("zh-de").value, ate = b("zh-ate").value;
+    if(!livre && !(de && ate && de < ate)) return aviso("O início precisa vir antes do fim", true);
+    try{ await api(`/rest/v1/rpc/push_meu_horario`,{method:"POST", body:JSON.stringify({p_de: livre?null:de, p_ate: livre?null:ate})}); }
+    catch(e){ return aviso("Não gravou: tente de novo"); }
+    eu.push_de = livre ? null : de; eu.push_ate = livre ? null : ate;
+    fecharCaixa(); pintarListaZap();
+    aviso(`Avisos ${horaAvisosTxt()}`);
+  };
+}
+// F409 · silenciar a conversa por um tempo, só para mim (zap_silencio; o zap_push e o aviso do navegador respeitam)
+let zapSilencio = new Map(), zapSilencioLido = false;
+function silenciadaZap(id){ const t = zapSilencio.get(id); return !!t && new Date(t) > new Date(); }
+async function lerSilencioZap(){
+  if(zapSilencioLido) return; zapSilencioLido = true;
+  const r = await todas("zap_silencio",`select=conversa_id,ate&colaborador_id=eq.${eu.id}&ate=gt.${new Date().toISOString()}`).catch(()=>[]);
+  r.forEach(x=>zapSilencio.set(x.conversa_id, x.ate));
+}
+function silenciarZap(){
+  const id = zapAberta, on = silenciadaZap(id);
+  const amanha = new Date(); amanha.setDate(amanha.getDate()+1); amanha.setHours(8,0,0,0);
+  const op = (rot, ms, t) => `<button class="btn-sec" data-ate="${ms ? new Date(Date.now()+ms).toISOString() : amanha.toISOString()}" title="${t}">${rot}</button>`;
+  caixa(`<h3>Silenciar a conversa</h3>
+    <p class="meio-sub">Sem aviso no aparelho e no navegador, só para você. As mensagens continuam chegando.</p>
+    <div class="form-linha">${op("1 hora",3600e3,"Silenciar por 1 hora")}${op("8 horas",8*3600e3,"Silenciar por 8 horas")}${op("Amanhã",0,"Silenciar até amanhã às 8h")}
+    ${on?`<button class="btn-sal" data-ate="" title="Voltar a avisar desta conversa">Reativar</button>`:""}</div>`);
+  document.querySelectorAll("#modal [data-ate]").forEach(b => b.onclick = async () => {
+    const ate = b.dataset.ate;
+    try{
+      if(ate) await api(`/rest/v1/zap_silencio?on_conflict=colaborador_id,conversa_id`,{method:"POST", headers:{Prefer:"resolution=merge-duplicates,return=minimal"}, body:JSON.stringify({colaborador_id:eu.id, conversa_id:id, ate})});
+      else await api(`/rest/v1/zap_silencio?colaborador_id=eq.${eu.id}&conversa_id=eq.${id}`,{method:"DELETE"});
+    }catch(e){ return aviso("Não gravou: tente de novo"); }
+    if(ate) zapSilencio.set(id, ate); else zapSilencio.delete(id);
+    fecharCaixa(); pintarConversa();
+    aviso(ate ? "Conversa silenciada" : "Avisos desta conversa reativados");
+  });
 }
 function novoContatoZap(){
   caixa(`<h3>Novo contato</h3>
@@ -17135,6 +17289,15 @@ async function responderZapLado(convId, cliId){
   const t = document.getElementById("pp-zap-txt"), txt = (t && t.value || "").trim(), pend = zapLadoPend;
   if(!txt && !pend) return;
   if(zapLadoRec) return aviso("Pare a gravação antes de enviar", false);
+  if(!zapGestor()){
+    const cv = (await todas("zap_conversas",`select=atendente_id&id=eq.${convId}`).catch(()=>[]))[0];
+    if(cv && cv.atendente_id !== eu.id){
+      if(cv.atendente_id) return aviso(`A conversa está com ${(D.colPorId.get(cv.atendente_id)||{}).nome||"outra pessoa"}. Peça a transferência para responder.`);
+      if(!await confirmar("Para responder, a conversa passa a ser sua. Assumir?")) return;
+      try{ await api(`/rest/v1/rpc/zap_assumir`,{method:"POST", body:JSON.stringify({p_conversa:convId})}); }
+      catch(e){ return aviso(msgErro(e)); }
+    }
+  }
   t.value = "";
   const msg = corpo => api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({conversa_id:convId, direcao:"saida", autor_id:eu.id, status:"fila", ...corpo})});

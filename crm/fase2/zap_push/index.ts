@@ -137,7 +137,8 @@ if (typeof Deno !== "undefined") Deno.serve(async (req) => {
         const rd = await sb(`/rest/v1/colaboradores?id=eq.${x.de_id}&select=nome`);
         de = rd.ok ? (((await rd.json())[0] || {}).nome || "").split(" ")[0] || null : null;
       }
-      const ri = await sb(`/rest/v1/push_inscricoes?select=*&colaborador_id=eq.${x.para_id}`);
+      // F399 · só quem está no horário dos avisos dele (push_inscricoes_agora)
+      const ri = await sb(`/rest/v1/rpc/push_inscricoes_agora?colaborador_id=eq.${x.para_id}`);
       return json({ enviados: await enviar(ri.ok ? await ri.json() : [], avisoMencao(x, de)) });
     }
     if (!/^[0-9a-f-]{36}$/i.test(p.mensagem_id || "")) return json({ erro: "mensagem_id" }, 400);
@@ -162,8 +163,11 @@ if (typeof Deno !== "undefined") Deno.serve(async (req) => {
       const su = rf.ok ? (await rf.json()).signedURL : null;
       if (su) icone = URL_SB + "/storage/v1" + su;
     } catch { /* sem a foto, o aviso sai com o ícone do CRM */ }
-    const ri = await sb("/rest/v1/push_inscricoes?select=*");
-    const n = await enviar(destinatarios(c, ri.ok ? await ri.json() : []), aviso(m, c, nome, icone));
+    const ri = await sb("/rest/v1/rpc/push_inscricoes_agora");
+    // F409 · quem silenciou a conversa não recebe até a hora marcada
+    const rs = await sb(`/rest/v1/zap_silencio?conversa_id=eq.${c.id}&ate=gt.${new Date().toISOString()}&select=colaborador_id`);
+    const calados = new Set((rs.ok ? await rs.json() : []).map((x: { colaborador_id: string }) => x.colaborador_id));
+    const n = await enviar(destinatarios(c, ri.ok ? await ri.json() : []).filter((i) => !calados.has(i.colaborador_id)), aviso(m, c, nome, icone));
     return json({ enviados: n });
   } catch (e) {
     return json({ erro: String((e as Error).message || e) }, 500);
