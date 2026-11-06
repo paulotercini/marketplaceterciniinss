@@ -64,6 +64,8 @@ const SUPA = "https://ficticio.supabase.co";
     visao = "novidades"; render();
     out.botoes = [...document.querySelectorAll(".nov a.btn-mini")].map(a => a.textContent.trim() + " → " + a.getAttribute("href"));
     out.todos = linksDasNovidades();
+    out.fontes = [...document.querySelectorAll(".nov .nov-fonte")].map(e => e.textContent.trim());
+    out.pjeFonte = rotuloOrigem(nov("j1", "PJe (2º grau): Recebidos — em 06.11.2026 10:34 — RemNecCiv 5020734-84.2026.4.03.6100"));
     return out;
   }, [CASO1, EPROC]);
   conf("e-SAJ 1º grau sem link guardado: a consulta por número, que cai na ficha (cpopg)",
@@ -76,6 +78,8 @@ const SUPA = "https://ficticio.supabase.co";
   conf("o nome do sistema sai do endereço: eproc, e-SAJ, PJe", r.nome.join("|") === "eproc|e-SAJ|PJe");
   conf("nas Novidades os botões dizem o sistema certo",
     r.botoes.some(b => b.startsWith("abrir no eproc · 1º grau ↗ → " + EPROC)) && r.botoes.some(b => /^abrir no e-SAJ · 1º grau ↗ → https:\/\/esaj/.test(b)));
+  conf("F416 · a etiqueta da novidade diz o sistema: eproc, e-SAJ, e PJe no TRF3",
+    r.fontes.some(f => /eproc$/.test(f)) && r.fontes.some(f => /e-SAJ$/.test(f)) && !r.fontes.some(f => /PJe$/.test(f)) && /PJe$/.test(r.pjeFonte));
   conf("'abrir todos os links' inclui o eproc e o e-SAJ", r.todos.includes(EPROC) && r.todos.some(u => /esaj\.tjsp\.jus\.br\/cpopg/.test(u)));
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
