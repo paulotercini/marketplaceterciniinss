@@ -149,7 +149,9 @@ Portaria Conjunta MPS/INSS 14/2026. Amplia, em caráter transitório, de 30 para
 
 Portaria Conjunta MPS/INSS 15/2026. Análise documental para B94 (auxílio-acidente).
 
-Aplicação. Regime de concessão sem perícia presencial baseado em análise documental rigorosa. Limite 30 dias de afastamento sem perícia. Trava 180 dias para análise documental sucessiva. Trava três indeferimentos consecutivos.
+Portaria Conjunta MPS/INSS 54/2026 (DOU de 06/11/2026). Altera a 13/2026: reanálise da documentação médica em dez dias da ciência (art. 8º-A), preclusão da reanálise pelo recurso direto (art. 9º, § 1º), prazo do recurso da ciência da decisão ou da reanálise (art. 9º, § 2º), perícia presencial após dois indeferimentos (art. 8º) e reinício da soma do limite após perícia presencial favorável (art. 3º, § 2º). Vale para ciência a partir de 06/11/2026.
+
+Aplicação. Regime de concessão sem perícia presencial baseado em análise documental rigorosa. Limite 30 dias de afastamento sem perícia. Trava 180 dias para análise documental sucessiva. Trava dois indeferimentos consecutivos (Portaria Conjunta 54/2026; três, para ciência anterior a 06/11/2026). Reanálise em dez dias antes do recurso.
 
 Detalhamento em `analise-documental-incapacidade`.
 
@@ -200,7 +202,7 @@ Aplicação. Análise do BPC para PCD. Detalhamento em `base-bpc-impedimento-lon
 | Indicação de Erro Administrativo (IEA) | DIRBEN 1056, 1231, 1309, 1318 | base-erro-administrativo-iea-13975 |
 | Reabilitação Profissional | DIRBEN 1310/2025, 1333/2026 | base-reabilitacao-profissional-portaria-1310-1333 |
 | RICRPS (CRPS) | MPS 462/2026 | admissibilidade-barreiras-crps |
-| Análise Documental B31 | Conjunta MPS/INSS 13/2026 | analise-documental-incapacidade |
+| Análise Documental B31 | Conjunta MPS/INSS 13/2026, alterada pela 54/2026 | analise-documental-incapacidade |
 | Análise Documental B91 | Conjunta MPS/INSS 14/2026 | analise-documental-incapacidade |
 | Análise Documental B94 | Conjunta MPS/INSS 15/2026 | analise-documental-incapacidade |
 | Teleperícia | DPMF/INSS 19/2026 | analise-documental-incapacidade |

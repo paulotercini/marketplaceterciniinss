@@ -53,6 +53,8 @@ Pedir B32 sem enfrentar a reabilitação, ou pedir B31 quando o quadro comporta 
 
 Ignorar a trava documental das Portarias Conjuntas 13, 14 e 15/2026 quando o requerimento passou por análise documental.
 
+Ignorar a Portaria Conjunta 54/2026 no B31 documental com ciência a partir de 06/11/2026: a reanálise em dez dias (art. 8º-A) que o recurso direto preclui (art. 9º, § 1º), o prazo do recurso contado da ciência da decisão da reanálise (art. 9º, § 2º, II), a perícia presencial após dois indeferimentos (art. 8º) e o reinício da soma do limite após perícia presencial favorável (art. 3º, § 2º).
+
 ## Fontes internas
 
 Leia no repositório as skills `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `base-incapacidade-acidentaria-b92`, `auditoria-laudo-pericial`, `base-cpc-prova-pericial-arts464-480`, `ntep-nexo-acidentario`, `base-limbo-previdenciario-tema300`, `base-reabilitacao-profissional` e `analise-documental-incapacidade`. Confira toda citação de Tema, Súmula ou Enunciado contra `base-precedentes-catalogo-vinculantes/references/CATALOGO-*`. Citação suspeita de homônimo, superação ou tese divergente NÃO se resolve aqui, despache ao agente `verificador-precedentes`.
