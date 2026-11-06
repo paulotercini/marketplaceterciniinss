@@ -110,8 +110,20 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   const topo = await p.textContent(".zap-topo");
   conf("atendente: na conversa de outra pessoa não há Transferir nem Encerrar", !topo.includes("Transferir") && !topo.includes("Encerrar"));
   // F265 · atendimento compartilhado: quem não atende também responde, e a nota interna continua à mão
-  conf("atendente: o aviso diz com quem a conversa está e que dá para responder", (await p.textContent(".zap-escrever")).includes("está com Amanda")
-    && (await p.textContent(".zap-escrever")).includes("Você pode responder") && (await p.textContent(".ze-modos")).includes("Responder ao cliente"));
+  // pedido do Paulo (06.11.2026): o colaborador assume antes de responder; na conversa de outra pessoa, pede a transferência
+  conf("atendente: na conversa de outra pessoa o aviso manda pedir a transferência e esconde o campo", (await p.textContent(".zap-escrever")).includes("está com Amanda")
+    && (await p.textContent(".zap-escrever")).includes("peça a transferência") && !(await p.isVisible("#zap-txt")));
+  await p.evaluate(() => { document.getElementById("zap-txt").value = "oi"; enviarZap(); });
+  await p.waitForTimeout(300);
+  conf("e a resposta forçada não sai", !escritas.some(e => /zap_mensagens/.test(e.u) && e.b && e.b.direcao === "saida"));
+  await p.evaluate(id => abrirConversa(id), PENDENTE);
+  await p.waitForSelector(".ze-assumir-aviso");
+  conf("na conversa sem atendente, o Assumir fica no lugar do campo", (await p.textContent(".ze-assumir-aviso")).includes("assuma a conversa") && !(await p.isVisible("#zap-txt")));
+  await p.evaluate(() => alternarNota());
+  conf("e a nota interna continua livre", await p.isVisible("#zap-txt"));
+  await p.evaluate(() => alternarNota());
+  await p.evaluate(id => abrirConversa(id), DA_AMANDA);
+  await p.waitForSelector(".zap-topo");
   await p.evaluate(() => { if(!zapNota) alternarNota(); });
   await p.fill("#zap-txt", "@Amanda o cliente pediu retorno");
   await p.click("#zap-enviar");
