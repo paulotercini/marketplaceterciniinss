@@ -2239,6 +2239,8 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-b{transition:transform .15s}
   .zap-escrever:not(.modo-nota) .ze-linha:has(#zap-txt:placeholder-shown) #zap-enviar{display:none}
   .ze-linha:not(:has(#zap-txt:placeholder-shown)) #zap-rec:not(.gravando){display:none}
+  .ze-travado .ze-linha>:not(.ze-nota-cel){display:none}
+  .ze-assumir-aviso .btn-rap{margin-left:6px}
   .ze-mic{align-self:center;flex:none;width:44px;height:44px;border-radius:50%;justify-content:center}
   .zap-tela.wa .ze-mic:not(.gravando){background:#00a884;border-color:#00a884;color:#fff}
   .ze-mic.gravando{width:auto;border-radius:22px;padding:0 14px;color:#b3261e;background:#fde7e7}
@@ -15231,6 +15233,14 @@ function zapVisivel(c){
   return !c.setor_id || !meus.length || meus.includes(c.setor_id);
 }
 const podeAgirZap = c => !!c && (zapGestor() || !c.atendente_id || c.atendente_id===eu.id);
+// o colaborador assume a conversa antes de responder ao cliente; o gestor responde sem assumir (pedido do Paulo, 06.11.2026)
+const precisaAssumir = c => !!c && !zapGestor() && c.atendente_id !== eu.id;
+function barraAssumir(c){
+  if(!precisaAssumir(c)) return false;
+  const at = c.atendente_id && D.colPorId.get(c.atendente_id);
+  aviso(at ? `A conversa está com ${at.nome}. Peça a transferência para responder.` : "Assuma a conversa para responder");
+  return true;
+}
 // o banco explica a recusa em "message": é isso que vai para o aviso
 function msgErro(e){
   try{ const j = JSON.parse(String(e.message).replace(/^\d+:\s*/,"")); return j.message || e.message; }
@@ -15860,10 +15870,14 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
         <audio controls src="${zapAudio.url}"></audio>
         <button class="btn-mini" onclick="descartarAudioZap();pintarConversaGuardando()">Descartar</button>
         <button class="btn-rap ze-enviar" onclick="enviarAudioZap()" title="Enviar áudio"><span aria-hidden="true">Enviar</span><span class="sr-only"> áudio</span></button></div>`:""}
-     <div class="zap-escrever ${zapNota?"modo-nota":""}">
+     <div class="zap-escrever ${zapNota?"modo-nota":""} ${!zapNota&&precisaAssumir(c)?"ze-travado":""}">
        <div class="zap-sug" id="zap-sug" hidden></div>
-       ${pode?"":`<p class="ze-so-leitura">Esta conversa está com ${esc(at.nome)}. Você pode responder: ${esc(at.nome.split(" ")[0])} recebe o aviso
-          e a conversa continua com ${esc(at.nome.split(" ")[0])}.</p>`}
+       ${precisaAssumir(c)?`<p class="ze-so-leitura ze-assumir-aviso">${at
+          ? `Esta conversa está com ${esc(at.nome)}. Para responder, peça a transferência.
+             <button class="btn-rap" onclick="pedirTransferencia()" title="Pedir a transferência da conversa">Pedir<span class="sr-only"> a transferência</span></button>`
+          : `Para responder ao cliente, assuma a conversa.
+             <button class="btn-rap zt-assumir" onclick="assumirConversa()" title="Assumir a conversa">Assumir<span class="sr-only"> a conversa</span></button>`}
+          A nota interna continua livre.</p>`:""}
        <div class="ze-modos" role="tablist" aria-label="Para quem é o texto">
          <button role="tab" aria-selected="${!zapNota}" class="${zapNota?"":"on"}" onclick="${zapNota?"alternarNota()":""}" title="Responder ao cliente">Responder<span class="sr-only"> ao cliente</span></button>
          <button role="tab" aria-selected="${zapNota}" class="${zapNota?"on nota":""}" id="zap-btn-nota"
@@ -16378,6 +16392,7 @@ async function verMidiaZap(id){
 async function enviarZap(){
   const t = document.getElementById("zap-txt"), txt = (t.value||"").trim();
   if(!txt || !zapAberta) return;
+  if(!zapNota && barraAssumir(zapConvs.find(x=>x.id===zapAberta))) return;
   if(!zapNota && /\{[a-z_]+\}/.test(txt)){ travaZap(); return aviso("Há dado do caso sem preencher na mensagem"); }
   t.value=""; t.style.height="auto"; guardarRascZap(zapAberta, "");
   // nota interna nasce com direcao E status 'interna' — o banco recusa
@@ -16425,6 +16440,7 @@ async function mandarArquivoZap(colado){
   if(inp) inp.value = "";                       // permite mandar o mesmo de novo
   // 60 MB é o teto do WhatsApp; barrar aqui evita o arquivo subir para nada
   if(arq.size > 60*1024*1024) return aviso("Arquivo grande demais para o WhatsApp (máx. 60 MB)");
+  if(barraAssumir(zapConvs.find(x=>x.id===zapAberta))) return;
   const nome = nomeSeguro(arq.name || "arquivo");
   const caminho = `zap/${zapAberta}/enviados/${Date.now()}-${nome}`;
   const legenda = (document.getElementById("zap-txt").value||"").trim();
@@ -16707,6 +16723,7 @@ function novoRetorno(){
 function agendarZap(){
   const t = document.getElementById("zap-txt"), txt = (t&&t.value||"").trim();
   if(!txt) return aviso("Escreva a mensagem antes de agendar");
+  if(barraAssumir(zapConvs.find(x=>x.id===zapAberta))) return;
   const amanha = new Date(Date.now()+864e5).toLocaleDateString("sv");
   caixa(`<h3>🗓 Agendar o envio</h3><p class="meio-sub">${esc(txt.slice(0,160))}</p>
     <div class="form-linha"><input type="date" id="za-dia" value="${amanha}"><input type="time" id="za-hora" value="09:00"></div>
@@ -16903,6 +16920,7 @@ function descartarAudioZap(){
 }
 async function enviarAudioZap(){
   if(!zapAudio) return;
+  if(barraAssumir(zapConvs.find(x=>x.id===zapAudio.conversa))) return;
   const {blob, conversa} = zapAudio;
   descartarAudioZap(); pintarConversaGuardando();
   const caminho = `zap/${conversa}/enviados/${Date.now()}-audio.webm`;
@@ -17232,6 +17250,15 @@ async function responderZapLado(convId, cliId){
   const t = document.getElementById("pp-zap-txt"), txt = (t && t.value || "").trim(), pend = zapLadoPend;
   if(!txt && !pend) return;
   if(zapLadoRec) return aviso("Pare a gravação antes de enviar", false);
+  if(!zapGestor()){
+    const cv = (await todas("zap_conversas",`select=atendente_id&id=eq.${convId}`).catch(()=>[]))[0];
+    if(cv && cv.atendente_id !== eu.id){
+      if(cv.atendente_id) return aviso(`A conversa está com ${(D.colPorId.get(cv.atendente_id)||{}).nome||"outra pessoa"}. Peça a transferência para responder.`);
+      if(!await confirmar("Para responder, a conversa passa a ser sua. Assumir?")) return;
+      try{ await api(`/rest/v1/rpc/zap_assumir`,{method:"POST", body:JSON.stringify({p_conversa:convId})}); }
+      catch(e){ return aviso(msgErro(e)); }
+    }
+  }
   t.value = "";
   const msg = corpo => api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({conversa_id:convId, direcao:"saida", autor_id:eu.id, status:"fila", ...corpo})});
