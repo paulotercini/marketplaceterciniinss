@@ -80,13 +80,21 @@
     return { nups: [], de: new Map(), porSis: {}, sis: null, tok: null };
   }
 
-  window.crmRodar = async () => {
+  // 1.34.0 · `cliente`: o login é o gov.br do próprio cliente (pedido do Paulo, 06.11.2026), para o
+  // recurso fora da procuração. A fila é SÓ a lista que esse login enxerga: os NUPs dos outros
+  // clientes dariam 401/403, e seis recusas seguidas abortavam a rodada antes de chegar aos dele.
+  window.crmRodar = async (_desde, opts = {}) => {
+    const cliente = !!(opts && opts.cliente);
     try {
       faixa('pedindo ao portal a lista de todos os recursos…');
       const doPortal = await listaDoPortal();
 
       faixa('lendo os recursos do CRM…');
       const { nups, arquivados = [], fichas } = await CRM.nupsDoCrm();
+      if (cliente && !doPortal.nups.length) {
+        faixaErr('o portal não listou recurso nenhum para este login — confira se entrou com o gov.br do cliente');
+        return { erro: 'sem recurso no login do cliente' };
+      }
 
       // O CRM deixou de ser pré-requisito: se o portal listou, há o que
       // consultar mesmo que nenhuma ficha tenha NUP digitado. Só quando as
@@ -127,12 +135,12 @@
       // ~5s), e uma rodada COMPLETA semanal confere todos mesmo assim.
       const st = await chrome.storage.local.get(['ultima_crps_full']);
       const fullEm = st.ultima_crps_full ? new Date(st.ultima_crps_full).getTime() : 0;
-      const rapido = !!fullEm && (Date.now() - fullEm) < 7 * 86400000;
+      const rapido = !cliente && !!fullEm && (Date.now() - fullEm) < 7 * 86400000;
       // A FILA agora nasce do PORTAL, não da digitação. O que o CRM conhece
       // entra junto (pode haver NUP guardado na ficha que o portal não lista
       // mais — recurso antigo, outro sistema), então a fila é a UNIÃO: nada
       // que era consultado antes deixa de ser.
-      const todos = [...new Set([...doPortal.nups, ...nups])];
+      const todos = cliente ? doPortal.nups : [...new Set([...doPortal.nups, ...nups])];
       const conhecidos = new Set(nups);
       const novos = doPortal.nups.filter(n => !conhecidos.has(n));
       if (doPortal.nups.length)
@@ -153,7 +161,8 @@
                     // conhecia: é por aqui que recurso novo deixa de depender
                     // de alguém reparar nele
                     portal: { total: doPortal.nups.length, sistema: doPortal.sis,
-                              por_sistema: doPortal.porSis, novos } };
+                              por_sistema: doPortal.porSis, novos },
+                    ...(cliente ? { login: 'cliente' } : {}) };
       let seguidas = 0, abortou = false;
       // [03.10.2026] cada recurso vive num sistema só: o que a lista do
       // portal indicou vem primeiro, e achado o recurso não se consulta o
@@ -191,9 +200,9 @@
       await chrome.storage.local.set({ ultima_crps: OUT.quando });
       // a rodada que consultou TODOS (inclusive arquivados) e chegou ao fim
       // é a que renova o ciclo semanal — abortada ou rápida não renova
-      if (!rapido && !abortou)
+      if (!rapido && !abortou && !cliente)
         await chrome.storage.local.set({ ultima_crps_full: OUT.quando });
-      faixaOk(`✔ ${Object.keys(OUT.itens).length} consulta(s) entregues ao CRM${rapido ? ' (modo rápido)' : ''}`
+      faixaOk(`✔ ${Object.keys(OUT.itens).length} consulta(s) entregues ao CRM${rapido ? ' (modo rápido)' : ''}${cliente ? ' (login do cliente)' : ''}`
         + `${novos.length ? ` · ${novos.length} recurso(s) que o CRM ainda não conhecia` : ''}.`);
       someFaixa();
       return { ok: Object.keys(OUT.itens).length, falhas: OUT.falhas.length };

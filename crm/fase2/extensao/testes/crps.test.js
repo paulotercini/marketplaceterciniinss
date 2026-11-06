@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 const NUP1 = '123456789012345678', NUP2 = '223456789012345678';
-function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [], listas = null } = {}) {
+function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [], listas = null, opts } = {}) {
   const pedidos = [], enviados = [];
   const resp = (status, corpo) => ({ ok: status === 200, status, json: async () => corpo });
   const fetch = async (u, o = {}) => {
@@ -33,7 +33,7 @@ function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [], listas = null } =
   ctx.window = ctx; ctx.top = ctx;
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync(path.join(__dirname, '..', 'crps.js'), 'utf8'), ctx);
-  return ctx.window.crmRodar().then(r => JSON.parse(JSON.stringify({ r, pedidos, enviados })));
+  return ctx.window.crmRodar(null, opts).then(r => JSON.parse(JSON.stringify({ r, pedidos, enviados })));
 }
 
 test('o acervo vem do portal e cada recurso é consultado uma vez só, no sistema que o listou', async () => {
@@ -68,4 +68,18 @@ test('1.32.0 · todos os documentos descem e voltam com o caminho, o CNIS inclus
   const docs = enviados[0].itens[`${NUP1}_esisrec`].eventos[0].documentos;
   assert.equal(docs[0].caminho, `crps/${NUP1}/7`);
   assert.equal(docs[1].caminho, `crps/${NUP1}/8`);
+});
+
+test('1.34.0 · com o login do cliente, a fila é só a lista do portal: o NUP do CRM não é consultado', async () => {
+  const NUP3 = '323456789012345678';
+  const { r, pedidos, enviados } = await rodada({ nupsDoCrm: [NUP3], opts: { cliente: true } });
+  assert.deepStrictEqual(r, { ok: 2, falhas: 0 });
+  assert.ok(!pedidos.some(u => u.endsWith('/' + NUP3)), 'consultou recurso de outro cliente');
+  assert.equal(enviados[0].login, 'cliente');
+});
+
+test('1.34.0 · login do cliente sem recurso na lista não consulta o CRM inteiro', async () => {
+  const { r, pedidos } = await rodada({ nupsDoCrm: ['323456789012345678'], listas: {}, opts: { cliente: true } });
+  assert.equal(r.erro, 'sem recurso no login do cliente');
+  assert.ok(!pedidos.some(u => /\/\d+$/.test(u)));
 });
