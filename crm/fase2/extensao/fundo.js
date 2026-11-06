@@ -100,7 +100,7 @@ async function rodarFonte(fonte, { aba = null, ativar = true, extra = null, url 
 
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar') return;
-  rodarFonte(msg.fonte).then(responder);
+  rodarFonte(msg.fonte, msg.extra ? { extra: msg.extra } : {}).then(responder);
   return true;                       // resposta assíncrona
 });
 
