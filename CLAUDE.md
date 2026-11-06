@@ -507,6 +507,8 @@ A **F415** (12.61, a Portaria Conjunta MPS/INSS 54/2026, DOU de 06/11/2026, que 
 
 A **F416** (12.62, pedido do Paulo de 06.11.2026): a etiqueta da origem das Novidades (e do autor do movimento no visual clássico) segue o sistema do próprio andamento (`rotuloOrigem`, pelo `sisCurtoDoMov`: o prefixo do texto e o número CNJ), porque a origem `pje` junta PJe, e-SAJ e eproc e o rótulo fixo dizia "PJe" no movimento do e-SAJ. Vale para as novidades já gravadas, sem mexer no banco. Teste: `links95.js`.
 
+A **F417** (12.63, os casos suspensos por tema, pedido do Paulo de 06.11.2026): o ⋯ do cartão do caso tem **Suspender** (`suspenderCaso`, `gravarSuspensao`): tribunal (STF, STJ, TNU ou TRF3), número do tema, assunto e desde, gravados em `casos.ronda.suspensao` (sem migração), com anotação "[SUSPENSÃO] …" e desfazer. O cartão mostra o chip roxo "⏸ Suspenso · Tema N/Tribunal" (o clique altera ou retoma), o selo do cliente fica roxo ("⏸ Cliente ativo · suspenso · Tema …") quando todos os casos em andamento estão suspensos e diz "· N suspenso" quando apenas parte, a linha das listas leva o selo do tema e a pesquisa acha por "tema 1124" (`reindexarCliente`). O 🧹 Cuidar do acervo abre por "Casos suspensos por tema" (`blocoSuspensos`), um grupo por tema com os casos e o **Retomar** do tema inteiro (`retomarTema`), para o dia em que o tema for julgado. Caso encerrado não conta (`suspensaoDe`). Teste: `testes/cadastro/f417.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
