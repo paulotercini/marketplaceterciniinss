@@ -12488,7 +12488,10 @@ async function aplicarCrps(coletaId){
     const so = x => String(x||"").replace(/\D/g,"");
     const antigo = blocosDoCaso(k).find(x => so(x.nup) === b.nup);
     const outros = blocosDoCaso(k).filter(x => so(x.nup) !== b.nup);
-    const crps = [...outros, fundirBlocoCrps(antigo, b.bloco)];
+    const novo = fundirBlocoCrps(antigo, b.bloco);
+    // extensão 1.34 · lido pelo login do cliente, o recurso deixa de ser consulta manual
+    if(c.dados && c.dados.login === "cliente" && (novo.eventos||[]).length) delete novo.manual;
+    const crps = [...outros, novo];
     await patchCaso(k.id, {crps});
     k.crps = crps;
   });
