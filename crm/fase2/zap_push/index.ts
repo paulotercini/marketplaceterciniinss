@@ -164,7 +164,7 @@ if (typeof Deno !== "undefined") Deno.serve(async (req) => {
       if (su) icone = URL_SB + "/storage/v1" + su;
     } catch { /* sem a foto, o aviso sai com o ícone do CRM */ }
     const ri = await sb("/rest/v1/rpc/push_inscricoes_agora");
-    // F400 · quem silenciou a conversa não recebe até a hora marcada
+    // F409 · quem silenciou a conversa não recebe até a hora marcada
     const rs = await sb(`/rest/v1/zap_silencio?conversa_id=eq.${c.id}&ate=gt.${new Date().toISOString()}&select=colaborador_id`);
     const calados = new Set((rs.ok ? await rs.json() : []).map((x: { colaborador_id: string }) => x.colaborador_id));
     const n = await enviar(destinatarios(c, ri.ok ? await ri.json() : []).filter((i) => !calados.has(i.colaborador_id)), aviso(m, c, nome, icone));

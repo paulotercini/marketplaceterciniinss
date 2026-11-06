@@ -162,19 +162,36 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   if (process.env.FOTO) await p.screenshot({ path: process.env.FOTO + "-fixo.png" });
 
   // ── F103 · o menu dos andamentos ─────────────────────────────────────────
+  // F405 · sem as abas (pedido do Paulo, 05.11.2026): o cartão da fase abre os andamentos dela e o "Tudo" abre o Caso Completo
   const menu = await p.evaluate(() => {
-    const m = document.querySelector(".painel[data-p='2'] .sub-menu.menu-andamentos"), esc = document.querySelector(".escrever"), tl = document.querySelector(".painel[data-p='2'] .timeline");
-    return { botoes: [...m.querySelectorAll("button")].map(b => b.textContent.replace(/\s+/g, " ").trim()), on: (m.querySelector("button.on") || {}).textContent,
-      acimaDoCompositor: m.getBoundingClientRect().bottom <= esc.getBoundingClientRect().top + 1,   // F242 · as abas vêm antes do campo de escrever
-      acimaDaConversa: tl && m.getBoundingClientRect().bottom <= tl.getBoundingClientRect().top + 1,
-      umCompositor: document.querySelectorAll("#and-texto").length === 1, rotulo: getComputedStyle(m, "::before").content };
+    const esc = document.querySelector(".escrever"), tl = document.querySelector(".painel[data-p='2'] .timeline");
+    const fases = [...document.querySelectorAll(".jn-l .jn-b")].map(b => b.querySelector(".jn-txt").textContent.trim());
+    const tudo = document.querySelector(".jn-l .jn-tudo");
+    return { semAbas: !document.querySelector(".caso-dir .menu-andamentos"), fases, tudoOn: !!(tudo && tudo.classList.contains("on")),
+      umCompositor: document.querySelectorAll("#and-texto").length === 1, temTl: !!tl, esc: !!esc };
   });
-  conf("F242 · o menu dos andamentos fica acima de onde se escreve e do que se lê, sem o rótulo 'CASO'", menu.acimaDoCompositor && menu.acimaDaConversa && menu.umCompositor && /none/.test(menu.rotulo));
-  conf("Escritório · INSS · Recurso (CRPS) · Caso Completo — Judicial só existe com número (F330)", menu.botoes.join("|").replace(/ \(sem dados\)/g, "") === "Escritório|INSS|Recurso (CRPS)|Caso Completo");
-  conf("o Caso Completo abre por padrão", /Caso Completo/.test(menu.on || ""));
+  conf("F405 · as abas Escritório, INSS e Judicial saíram de cima do campo de escrever", menu.semAbas && menu.umCompositor && menu.temTl);
+  conf("F405 · os cartões das fases ficam como entrada dos andamentos, com o Tudo no fim", /Escritório/.test(menu.fases.join("|")) && menu.fases.includes("INSS"));
+  conf("o Caso Completo abre por padrão (o Tudo aceso)", menu.tudoOn);
   const idTudo = await p.evaluate(() => { const li = [...document.querySelectorAll(".painel[data-p='2'] .timeline li.tl-of")].find(l => /Contestar o laudo/.test(l.textContent));
     const av = li && li.querySelector(".tl-cab .avatar"); return av && { ini: av.textContent.trim(), cor: av.style.background, fonte: av.classList.contains("av-fonte"), marco: li.classList.contains("tudo-marco") }; });
   conf("no Caso completo quem escreveu aparece com a bolinha da sua cor, mesmo sendo marco", idTudo && idTudo.ini === "P" && /rgb\(37, 100, 207\)|#2564cf/i.test(idTudo.cor) && !idTudo.fonte);
+  // F405 · o cartão Escritório volta às anotações, o INSS abre os andamentos do INSS, e a seta recolhe a coluna da esquerda
+  await p.evaluate(() => [...document.querySelectorAll(".jn-l .jn-b")].find(b => /Escritório/.test(b.textContent)).click()); await p.waitForTimeout(300);
+  const f402a = await p.evaluate(() => ({ sub: subAba, and: (document.querySelector(".jn-b.jn-and .jn-txt") || {}).textContent, esc: !!document.querySelector(".caso-dir .escrever") }));
+  conf("F405 · clicar no cartão Escritório abre as anotações, com o campo de escrever", f402a.sub === "escritorio" && /Escritório/.test(f402a.and || "") && f402a.esc);
+  await p.evaluate(() => [...document.querySelectorAll(".jn-l .jn-b")].find(b => /^INSS/.test(b.textContent.trim())).click()); await p.waitForTimeout(300);
+  const f402b = await p.evaluate(() => ({ sub: subAba, esc: !!document.querySelector(".caso-dir .escrever"), and: (document.querySelector(".jn-b.jn-and .jn-txt") || {}).textContent }));
+  conf("F405 · clicar no cartão INSS abre os andamentos do INSS, sem o campo de escrever", f402b.sub === "inss" && !f402b.esc && f402b.and === "INSS");
+  const larg = () => p.evaluate(() => ({ esq: !!document.querySelector(".caso-esq")?.offsetParent, dir: document.querySelector(".caso-dir").getBoundingClientRect().width, oculta: !!document.querySelector(".caso-3col.esq-oculta") }));
+  const antes = await larg();
+  await p.click(".caso-esq-alca"); await p.waitForTimeout(300);
+  const fechada = await larg();
+  conf("F405 · a seta recolhe a coluna dos prazos e do cartão, e os andamentos ocupam a largura", antes.esq && !fechada.esq && fechada.oculta && fechada.dir > antes.dir + 200);
+  await p.click(".caso-esq-alca"); await p.waitForTimeout(300);
+  const aberta = await larg();
+  conf("F405 · um clique na mesma seta devolve a coluna", aberta.esq && !aberta.oculta);
+  await p.evaluate(() => document.querySelector(".jn-l .jn-tudo").click()); await p.waitForTimeout(300);
   await p.evaluate(() => irSubAba("crps")); await p.waitForTimeout(300);
   const crps = await p.evaluate(() => ({ menu: [...document.querySelectorAll(".sub-menu.instancias button")].map(b => b.textContent.replace(/\s+/g, " ").trim()),
     on: (document.querySelector(".sub-menu.instancias button.on") || {}).textContent || "",

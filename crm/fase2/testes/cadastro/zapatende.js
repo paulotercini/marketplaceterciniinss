@@ -141,7 +141,7 @@ const T = {
   await p.waitForSelector(".zl-achado", { timeout: 5000 }).catch(() => {});
   conf("a busca procura dentro das mensagens e marca o trecho", ((await p.textContent(".zl-lista").catch(() => "")) || "").includes("Nas mensagens") && !!(await p.$(".zl-achado mark")));
   await p.fill("#zl-busca", ""); await p.dispatchEvent("#zl-busca", "input");
-  // F401 · a busca procura em todas as filas: a encerrada aparece estando em Novas
+  // F410 · a busca procura em todas as filas: a encerrada aparece estando em Novas
   await p.evaluate(() => { zapFiltro = "novas"; pintarListaZap(); });
   const semBusca = await p.textContent(".zl-lista");
   await p.fill("#zl-busca", "outra pes"); await p.dispatchEvent("#zl-busca", "input");
@@ -166,7 +166,7 @@ const T = {
     corpoAvisoZap({tipo:"audio", texto:null, momento:"2020-01-01T00:00:00Z"}) === "🎤 Áudio" &&
     corpoAvisoZap({tipo:"audio", texto:"[áudio não transcrito]", momento:new Date().toISOString()}) === "🎤 Áudio"));
 
-  // F400 · a conversa silenciada não toca o aviso do navegador
+  // F409 · a conversa silenciada não toca o aviso do navegador
   conf("a conversa silenciada não avisa", await p.evaluate(async () => {
     const id = (await todas("zap_conversas","select=id&nao_lidas=gt.0"))[0].id;
     zapSilencio.set(id, new Date(Date.now()+3600e3).toISOString());

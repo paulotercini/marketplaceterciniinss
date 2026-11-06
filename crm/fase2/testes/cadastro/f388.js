@@ -101,7 +101,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
       horaAoLado: (h => !!h && r(h).right <= r(h.closest("li.tl-card")).left - 30 && h.offsetParent !== null)(imp && imp.querySelector(".tl-cab>.autor-nome+.tl-hora")),
       horaNoCartao: (h => !!h && r(h).left >= r(h.closest("li.tl-card")).left)(imp && imp.querySelector(".tl-cab>.autor-nome+.tl-hora")),
       novaVerde: nova && (c => { const m = c.match(/\d+/g).map(Number); return m[1] > m[0] && m[1] > m[2]; })(getComputedStyle(nova).borderTopColor),
-      pzGrade: (q => !!q && getComputedStyle(q).display === "grid" && /Tarefa/.test((q.querySelector(".tl-pz-k") || {}).textContent || "") && !!q.querySelector(".tl-pz-tf .tl-tarefa"))(pz && pz.querySelector(".tl-pz-vivo")),
+      pzGrade: (q => !!q && getComputedStyle(q).display === "flex" && /Tarefa/.test((q.querySelector(".tl-pz-k") || {}).textContent || "") && !!q.querySelector(".tl-pz-tf .tl-tarefa"))(pz && pz.querySelector(".tl-pz-vivo")),
       tfUmaVez: pz && pz.querySelectorAll(".tl-tarefa").length === 1,
       semVazar: [...document.querySelectorAll(".timeline li.tl-card")].every(li => r(li).right <= r(li.closest(".dia-itens")).right + 1),
     };
@@ -122,7 +122,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a importante mantém a estrela no cabeçalho", d.estrela);
   conf("no computador, a hora fica na coluna da esquerda, abaixo do dia", d.horaAoLado);
   conf("a não lida tem o contorno verde suave", d.novaVerde);
-  conf("o prazo vem em grade, com a tarefa dentro do quadro e uma vez só", d.pzGrade && d.tfUmaVez);
+  conf("o prazo vem na faixa da proposta A (F407), com a tarefa dentro do quadro e uma vez só", d.pzGrade && d.tfUmaVez);
   await p.locator(".caso-dir").first().screenshot({ path: OUT + "/computador.png" });
 
   // ── 2 · celular ──
