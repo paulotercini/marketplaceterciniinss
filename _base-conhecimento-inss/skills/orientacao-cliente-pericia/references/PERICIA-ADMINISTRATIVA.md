@@ -67,7 +67,9 @@ Sem exame físico detalhado. Sem tempo para anamnese completa. Sem possibilidade
 Modalidade sem exame físico. A decisão é baseada exclusivamente nos documentos médicos que o cliente anexa no Meu INSS no momento do requerimento. Aplica-se a B31, B91 e B94 quando presentes os requisitos das Portarias Conjuntas MPS/INSS 13, 14 e 15/2026.
 
 ### Limites e travas
-Há prazos máximos definidos para cada CID. Há trava de 180 dias para o conjunto de requerimentos na mesma espécie. Há trava de três indeferimentos consecutivos que bloqueia novos requerimentos por 30 dias.
+Há prazos máximos definidos para cada CID. Há trava de 180 dias para nova análise documental depois de prorrogação indeferida por parecer contrário (art. 6º, V, da Portaria Conjunta 13/2026). Depois de indeferimento documental, o novo pedido documental espera 30 dias (art. 6º, VI). Depois de dois indeferimentos documentais sucessivos, o pedido seguinte vai à perícia presencial (art. 8º, redação da Portaria Conjunta 54/2026; três, para ciência anterior a 06/11/2026).
+
+Indeferido o pedido, o cliente tem dez dias da ciência para pedir a reanálise da documentação médica, com documento novo (art. 8º-A, redação da Portaria Conjunta 54/2026). Orientar o cliente a avisar o escritório no mesmo dia em que vir a negativa no Meu INSS, porque o recurso protocolado antes preclui a reanálise.
 
 Essas travas impactam a estratégia. Cliente com quadro que ultrapassa o tempo médio do CID deve ser orientado a não usar análise documental repetidamente, sob pena de esgotar o acesso à modalidade e depois ter que esperar para perícia presencial.
 
