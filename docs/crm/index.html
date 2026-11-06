@@ -37613,8 +37613,8 @@ function blocoSuspensos(){
   for(const k of D.casos||[]){ const s = suspensaoDe(k); if(!s) continue;
     const ch = `${s.trib}|${s.tema}`; if(!grupos.has(ch)) grupos.set(ch, {s, ks:[]}); grupos.get(ch).ks.push(k); }
   const ler = `<button class="btn-mini" onclick="lerSuspensoesTodos()" title="Ler as suspensões e os levantamentos nos movimentos de todos os processos judiciais abertos"><span aria-hidden="true">Ler…</span><span class="sr-only">Ler as suspensões nos movimentos dos processos</span></button>`;
-  if(!grupos.size) return `<details class="sem-acao neutro" id="acervo-suspensos"><summary>⏸ Casos suspensos por tema (nenhum)</summary>
-    <p class="meio-sub" style="margin:8px 0 4px">A ficha lê a suspensão nos movimentos do PJe, do e-SAJ e do eproc ao abrir. Para o acervo inteiro, use o botão.</p><div class="form-linha">${ler}</div></details>`;
+  // sem suspenso, uma linha só (sem .sem-acao, que é a fila do acervo e vem primeiro)
+  if(!grupos.size) return `<div class="meio-sub form-linha" id="acervo-suspensos" style="align-items:center;gap:8px;margin:0 0 8px">⏸ Nenhum caso suspenso por tema. A ficha lê a suspensão nos movimentos ao abrir; para o acervo inteiro: ${ler}</div>`;
   const total = [...grupos.values()].reduce((n, g)=>n + g.ks.length, 0);
   const ord = [...grupos.values()].sort((a, b)=>b.ks.length - a.ks.length || (a.s.trib+a.s.tema).localeCompare(b.s.trib+b.s.tema));
   return `<details class="sem-acao neutro" id="acervo-suspensos"><summary>⏸ Casos suspensos por tema (${total} caso${total>1?"s":""} em ${grupos.size} tema${grupos.size>1?"s":""})</summary>
