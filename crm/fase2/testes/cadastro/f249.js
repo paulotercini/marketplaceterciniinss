@@ -36,7 +36,7 @@ const and = (k, n, texto, o = {}) => { const a = { id: id("e"), caso_id: k.id, a
 
 
 // X · cliente com um caso no INSS (com data à frente) e um pré-caso de atendimento
-const cX = cli("Xênia Fictícia Transição");
+const cX = cli("Xênia Fictícia Transição"); cX.cpf = "52998224725";
 const kX = caso(cX, { beneficio: "Apos. por Idade", especie: "B41", fase: "inss", der: iso(-30), prazo: iso(5), protocolos: ["1700000501"] });
 and(kX, -20, "Requerimento protocolado.");
 and(kX, -10, "Em análise.", { origem: "pat", origem_id: "1700000501|c1" });   // o andamento do INSS que o nível 2 lê
@@ -71,7 +71,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
   const p = await ctx.newPage();
   const erros = [];
-  p.on("pageerror", e => erros.push(e.message));
+  p.on("pageerror", e => erros.push(e.message + " " + (e.stack||"").split("\n").slice(0,3).join(" | ")));
   p.on("dialog", d => d.accept());
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html?tema=v10`);
   await p.waitForSelector("#app.logado", { timeout: 15000 });
@@ -100,15 +100,15 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click(".trn-ligar");
   await p.waitForTimeout(500);
   const c1 = cfg();
-  conf(`ligar grava a transição na onda 1 com o Paulo no 3 (${JSON.stringify(c1)})`, c1 && c1.ligada && c1.onda === 1 && c1.niveis[PAULO] === 3);
-  conf("o painel mostra as seis ondas e um nível por pessoa", (await p.$$(".trn-onda")).length === 6 && (await p.$$(".trn-nv")).length === 4 * (await p.$$(".trn-lista li")).length);
+  conf(`ligar grava a transição na onda 1 com o Paulo no 3 (${JSON.stringify(c1)})`, c1 && c1.ligada && c1.onda === 1 && c1.niveis[PAULO] === 4 && c1.v === 2);
+  conf("o painel mostra as seis ondas e um nível por pessoa", (await p.$$(".trn-onda")).length === 6 && (await p.$$(".trn-nv")).length === 5 * (await p.$$(".trn-lista li")).length);
   conf("quem não foi escolhido começa no 0 (primeiro acesso)", await p.evaluate(id => nivelDe(id), MARCOS) === 0);
   await p.screenshot({ path: path.join(OUT, "01-painel.png") });
 
   // 2a · o Paulo olha como o nível 0 sem trocar de usuário, e volta
-  conf("o painel oferece 'ver como nível 0/1/2'", (await p.$$(".trn-ver-n")).length === 3);
+  conf("o painel oferece 'ver como nível 0/1/2/3'", (await p.$$(".trn-ver-n")).length === 4);
   await p.click(".trn-ver-n >> text=nível 0"); await p.waitForTimeout(500);
-  conf("ver como nível 0 mostra só a Agenda, sem gravar nada", (await nivel()) === "0" && await p.evaluate(() => visao) === "agendaq" && cfg().niveis[PAULO] === 3);
+  conf("ver como nível 0 mostra só a Agenda, sem gravar nada", (await nivel()) === "0" && await p.evaluate(() => visao) === "agendaq" && cfg().niveis[PAULO] === 4);
   conf("vendo como o nível 0, a faixa para voltar fica à vista", await vis("#ver-nivel-faixa button"));
   conf("vendo como o nível 0, a barra monta o menu da conta", await p.evaluate(() => {   // antes, só a visão completa o montava
     document.getElementById("btn-conta").onclick = null; montarSidebar(); return !!document.getElementById("btn-conta").onclick; }));
@@ -119,7 +119,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.evaluate(() => verComoNivel(0)); await p.waitForTimeout(300);
   await p.evaluate(() => abrirTransicao());
   await p.click(".trn-ver-volta"); await p.waitForTimeout(400);
-  conf("'Voltar à minha visão' devolve o nível 3", (await nivel()) === null);
+  conf("'Voltar à minha visão' devolve o nível 4", (await nivel()) === null);
   await p.evaluate(() => abrirTransicao());
   // 2b · o nível 0: só a Agenda e a Identificação
   await p.click(`.trn-nv[data-col="${PAULO}"][data-n="0"]`);
@@ -129,13 +129,17 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("no nível 0, a tela inicial é a Agenda do Google", (await nivel()) === "0" && await p.evaluate(() => visao) === "agendaq");
   const itens = await p.evaluate(() => [...document.querySelectorAll(".lista-item")].filter(e => e.offsetParent !== null).map(e => e.dataset.v));
   conf(`a barra mostra as Menções, a Agenda e os Clientes (REC-09) (${itens.join(", ")})`, itens.join() === "mencoes,agendaq,clientes");
-  conf("o Novo Cliente continua no botão fixo e a anotação rápida some", await vis("#btn-v10-cli") && !(await vis("#btn-v10-anotar")));
-  await p.click("#btn-v10-cli"); await p.waitForTimeout(400);
-  conf("o Novo Cliente abre", await p.evaluate(() => visao) === "novocliente");
+  conf("F396 · no nível 0 o Novo Cliente e a anotação rápida somem", !(await vis("#btn-v10-cli")) && !(await vis("#btn-v10-anotar")));
+  await p.evaluate(() => irNovoCliente()); await p.waitForTimeout(300);
+  conf("F396 · nem pelo atalho o nível 0 abre o Novo Cliente", await p.evaluate(() => visao) !== "novocliente");
   await p.evaluate(id => abrirFicha(id), cX.id); await p.waitForTimeout(600);
   const abas = await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].filter(e => e.offsetParent !== null).map(e => [...e.childNodes].filter(n => !(n.classList && n.classList.contains("mt-ponto"))).map(n => n.textContent).join("").trim()));
   const subs = await p.evaluate(() => [...document.querySelectorAll(".sub-menu button")].filter(e => e.offsetParent !== null).map(e => e.textContent.trim()));
   conf(`a ficha mostra só o Cadastro (${abas.join(", ")}) com a Identificação (${subs.join(", ")})`, abas.join() === "Cadastro" && subs.join() === "Identificação");
+  conf("F396 · no nível 0 a Identificação só se lê (sem lápis, sem Atualizar e sem Dossiê)", !(await vis(".idf-card .cad-lap")) && !(await vis(".idf-dz-run")) && !(await vis('.cad-mini[onclick^="atualizarDossie"]')));
+  const escCad = banco.escritas.length;
+  await p.evaluate(id => { editarCad("nome", id); novoTelefone(id); }, cX.id); await p.waitForTimeout(300);
+  conf("F396 · o nível 0 não muda o cadastro nem pelo atalho", !(await p.$("#cad-ed")) && !banco.escritas.slice(escCad).some(e => e.t === "clientes"));
   await p.screenshot({ path: path.join(OUT, "00-nivel0-ficha.png") });
 
   // 3 · F355 · o nível 1: o WhatsApp, com a agenda e a Identificação; nada grava no caso
@@ -165,12 +169,32 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a conversa fica ao lado da Identificação, sem 'anotar' no caso", await vis("#painel-prazo .zap-b") && !(await vis("#painel-prazo .zl-acoes")));
   await p.evaluate(() => { fecharFicha && fecharFicha(); fecharPainelPrazo && fecharPainelPrazo(); });
 
-  // 3b · o nível 2: a anotação, com o que a onda ligou
+  // 3a · F396 · o nível 2: cadastro e dossiê, ainda sem gravar no caso
   await p.evaluate(id => gravarTransicao({ col: id, n: 2 }), PAULO); await p.waitForTimeout(400);
+  await p.evaluate(() => { fecharCaixa(); fecharFicha && fecharFicha(); visao = "meudia"; render(); montarSidebar(); });
+  await p.waitForTimeout(400);
+  conf("no nível 2, data-nivel=2 e a tela inicial é a Agenda", (await nivel()) === "2" && await p.evaluate(() => visao) === "agendaq");
+  const itens2 = await p.evaluate(() => [...document.querySelectorAll(".lista-item")].filter(e => e.offsetParent !== null).map(e => e.dataset.v));
+  conf(`no nível 2 a barra mostra a do nível 1 (${itens2.join(", ")})`, ["agendaq,clientes,mencoes,novocliente,whatsapp", "agendaq,clientes,mencoes,whatsapp"].includes(itens2.slice().sort().join()));
+  conf("no nível 2 o botão do Novo Cliente aparece", await vis("#btn-v10-cli"));
+  await p.click("#btn-v10-cli"); await p.waitForTimeout(400);
+  conf("o Novo Cliente abre no nível 2", await p.evaluate(() => visao) === "novocliente");
+  await p.evaluate(id => abrirFicha(id), cX.id); await p.waitForTimeout(600);
+  const abas2 = await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].filter(e => e.offsetParent !== null).map(e => [...e.childNodes].filter(n => !(n.classList && n.classList.contains("mt-ponto"))).map(n => n.textContent).join("").trim()));
+  conf(`no nível 2 a ficha continua só no Cadastro e nada grava no caso (${abas2.join(", ")})`, abas2.join() === "Cadastro" && await p.evaluate(() => !podeGravarCaso()));
+  conf("no nível 2 a Identificação se edita e traz Dossiê e Atualizar", await vis(".idf-card .cad-lap") && await vis(".idf-dz-run") && await vis('.cad-mini[onclick^="atualizarDossie"]'));
+  await p.evaluate(() => { window._abertas = []; window.open = u => { window._abertas.push(u); return {}; }; });
+  await p.click(".idf-dz-run"); await p.waitForTimeout(300);
+  conf("o Dossiê abre o Meu INSS e o Emprega Brasil e explica os passos", await p.evaluate(() => _abertas.length === 2 && _abertas[0].includes("meu.inss") && _abertas[1].includes("mte")) && await vis(".dz-passos"));
+  await p.screenshot({ path: path.join(OUT, "02b-nivel2-dossie.png") });
+  await p.evaluate(() => { fecharCaixa(); fecharFicha && fecharFicha(); });
+
+  // 3b · o nível 3: a anotação, com o que a onda ligou
+  await p.evaluate(id => gravarTransicao({ col: id, n: 3 }), PAULO); await p.waitForTimeout(400);
   await p.evaluate(() => fecharCaixa());
   await abrir(cX, kX);
-  conf("no nível 2, o html leva data-nivel=2 e o campo de escrever volta", (await nivel()) === "2" && await vis("#tipo-fila"));
-  conf("no nível 2, o cartão INSS das fases (que abre os andamentos dos portais) aparece", await p.evaluate(() => [...document.querySelectorAll(".menu-andamentos button, .jn-l .jn-b")].some(e => e.offsetParent !== null && /^INSS/.test(e.textContent.trim()))));   // F402
+  conf("no nível 3, o html leva data-nivel=3 e o campo de escrever volta", (await nivel()) === "3" && await vis("#tipo-fila"));
+  conf("no nível 3, o cartão INSS das fases (que abre os andamentos dos portais) aparece", await p.evaluate(() => [...document.querySelectorAll(".menu-andamentos button, .jn-l .jn-b")].some(e => e.offsetParent !== null && /^INSS/.test(e.textContent.trim()))));   // F402
   await p.click("#and-texto"); await p.waitForTimeout(200);   // F391b: Sem resposta e Pedir ficam no pé do campo aberto
   conf("na onda 1, Sem resposta e Pedir ao cliente ainda não aparecem", !(await vis(".tipo-ch.tipo-sr")) && !(await vis(".tipo-ch.tipo-pc")));
   conf("na onda 1, o 'Em análise · +7 d' já aparece e o Movimentou não", await vis(".faixa-prazos .conf-sem") && !(await vis(".faixa-prazos .conf-mov")));
@@ -181,7 +205,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click("#and-texto"); await p.waitForTimeout(200);   // F391b: Sem resposta e Pedir ficam no pé do campo aberto
   conf("na onda 2, Sem resposta e Pedir ao cliente aparecem", await vis(".tipo-ch.tipo-sr") && await vis(".tipo-ch.tipo-pc"));
 
-  // 5 · o atendimento no nível 2
+  // 5 · o atendimento no nível 3
   await p.evaluate(([c, x]) => abrirAtendimentoDe(c, x), [cX.id, PC]);
   await p.waitForTimeout(800);
   await p.evaluate(() => irSubCad("pa")); await p.waitForTimeout(500);
@@ -197,15 +221,15 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(500);
   conf("'Ver Documentos completo' abre a tela inteira na sessão", !(await vis("#doc-simples")) && await vis("#dq-ferramentas"));
 
-  // 6 · voltar ao 3 e desligar
-  await p.evaluate(id => gravarTransicao({ col: id, n: 3 }), PAULO); await p.waitForTimeout(400);
-  conf("no nível 3 o atributo some", (await nivel()) === null);
+  // 6 · voltar ao 4 e desligar
+  await p.evaluate(id => gravarTransicao({ col: id, n: 4 }), PAULO); await p.waitForTimeout(400);
+  conf("no nível 4 o atributo some", (await nivel()) === null);
   await p.evaluate(() => gravarTransicao({ ligada: false })); await p.waitForTimeout(400);
-  conf("desligar volta todos ao completo", cfg().ligada === false && await p.evaluate(id => nivelDe(id), MARCOS) === 3);
+  conf("desligar volta todos ao completo", cfg().ligada === false && await p.evaluate(id => nivelDe(id), MARCOS) === 4);
   await p.evaluate(() => abrirTransicao());
   await p.click(`.trn-nv[data-col="${MARCOS}"][data-n="2"]`);
   await p.waitForTimeout(500);
-  conf("com ela desligada, clicar num nível liga a transição e grava o nível", cfg().ligada === true && cfg().niveis[MARCOS] === 2 && cfg().niveis[PAULO] === 3
+  conf("com ela desligada, clicar num nível liga a transição e grava o nível", cfg().ligada === true && cfg().niveis[MARCOS] === 2 && cfg().niveis[PAULO] === 4
     && await p.evaluate(() => /ligada/.test(document.querySelector(".trn-estado").textContent)));
 
   conf("sem erro de página", !erros.length);

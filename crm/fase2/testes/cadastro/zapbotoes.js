@@ -186,7 +186,8 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     // F361 · ninguém atende: o Assumir fica no topo, verde e com a palavra, também no celular
     conf("o Assumir fica em destaque no topo da conversa", await vis(".zap-topo .zt-assumir")
       && (await p.$eval(".zap-topo .zt-assumir", e => e.innerText)).includes("Assumir")
-      && await p.$eval(".zap-topo .zt-assumir", e => getComputedStyle(e).backgroundColor === "rgb(30, 126, 52)"));
+      && await p.$eval(".zap-topo .zt-assumir", e => getComputedStyle(e).backgroundColor === "rgb(30, 126, 52)")
+      && await p.$eval(".zap-topo .zt-assumir", e => e.scrollWidth <= e.clientWidth + 1));   // a palavra não se corta
     await p.tap(".zap-topo .zt-assumir"); await p.waitForTimeout(300);
     await p.tap(".zt-id h2"); await p.waitForTimeout(150);
     conf("o nome abre a ficha com o cartão Conversa", await vis(".zp-conv-cel"));
