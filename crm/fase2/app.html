@@ -43036,7 +43036,7 @@ function integralDoPat(caminhos, p){
   if(l.includes(base)) return {caminho: base, rot: "Processo administrativo inteiro"};
   if(!l.length) return null;
   const c = l.sort().pop();
-  return {caminho: c, rot: `Informações da tarefa (${c.slice(base.length+1).replace(/-/g," ")}), sem o processo inteiro`};
+  return {caminho: c, rot: `Cópia parcial (${c.slice(base.length+1).replace(/-/g," ")})`};
 }
 function arvorePat(b, p, guardados, abrir, integral){
   const modo = `<span class="sub-menu fontes" style="margin-left:8px;display:inline-flex">
@@ -43094,7 +43094,7 @@ function telaPat(k, b){
   const ags = b.agendamentos||[];
   return `<div class="fatos tela-pat" style="margin-bottom:12px">
     <div class="fatos-topo"><h3 style="font-size:14px">PAT · ${esc(b.protocolo||"")}</h3>
-      <span style="margin-left:auto">${integral ? abrir(integral.caminho, integral.caminho.endsWith("processo-integral") ? "Processo integral" : "Informações da tarefa") : ""}</span></div>
+      <span style="margin-left:auto">${integral ? abrir(integral.caminho, integral.caminho.endsWith("processo-integral") ? "Processo integral" : "Cópia parcial") : ""}</span></div>
     <table class="tab" style="margin-bottom:10px">${cab.map(([r,v])=>`<tr><th style="text-align:left;white-space:nowrap">${r}</th><td>${esc(v)}</td></tr>`).join("")}</table>
     ${ags.length ? `<h4 style="font-size:13px;margin:8px 0 4px">Agendamentos</h4>
     <table class="tab pat-ag"><tr><th>Data</th><th>Tipo</th><th>Local</th><th>Situação</th></tr>

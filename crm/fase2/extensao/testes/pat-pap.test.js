@@ -41,5 +41,5 @@ test('o concluído tem nome fixo; o que corre leva a situação', () => {
   assert.equal(ctx.docDoProcessoInteiro({ status: 'CONCLUÍDA' }).id, 'processo-integral');
   const d = ctx.docDoProcessoInteiro({ status: 'Em análise' });
   assert.equal(d.id, 'processo-integral-em-an-lise');
-  assert.equal(d.nome, 'Informações da tarefa (Em análise).pdf');
+  assert.equal(d.nome, 'Cópia parcial (Em análise).pdf');
 });
