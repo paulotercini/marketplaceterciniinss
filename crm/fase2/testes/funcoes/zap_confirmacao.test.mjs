@@ -14,8 +14,8 @@ assert.deepEqual(datasDeHoje("2026-11-13", "sexta"), ["2026-11-15", "2026-11-16"
 assert.deepEqual(datasDeHoje("2026-11-14"), [], "sábado: nada (terça vai na segunda)");
 assert.equal(nomeDoTitulo("001 - MARIA DA SILVA - Não confirmado"), "MARIA DA SILVA");
 assert.equal(primeiroNome("MARIA DA SILVA"), "Maria");
-const modelo = "Olá, {nome}. Seu atendimento está marcado para {dia}, {data}, às {hora}, com {advogado}. Responda SIM.{govbr}";
+const modelo = "Olá, {nome}. Seu atendimento está agendado para {dia}, {data}, às {hora}, com {advogado}. Responda SIM.{govbr}";
 assert.equal(textoConfirmacao(modelo, "\n\nGov.", { nome: "joão souza", data: "2026-11-11", inicio: "09:30", tratamento: "o Dr. Paulo", profissional: "paulo" }),
-  "Olá, João. Seu atendimento está marcado para quarta-feira, 11/11/2026, às 9h30, com o Dr. Paulo. Responda SIM.\n\nGov.");
+  "Olá, João. Seu atendimento está agendado para quarta-feira, 11/11/2026, às 9h30, com o Dr. Paulo. Responda SIM.\n\nGov.");
 assert.ok(!textoConfirmacao(modelo, "\n\nGov.", { nome: "a b", data: "2026-11-11", inicio: "14:00", tratamento: "o Dr. Marcos", profissional: "marcos" }).includes("Gov."), "Marcos sem gov.br");
 console.log("zap_confirmacao: ok");

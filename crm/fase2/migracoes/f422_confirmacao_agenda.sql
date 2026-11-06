@@ -16,7 +16,7 @@ insert into config_app (chave, valor) values
   ('zap_conf_ligado', 'nao'),
   ('zap_conf_terca', 'segunda'),          -- segunda | sexta | domingo
   ('zap_conf_url', 'https://bhdyatqaebpzufridwkh.supabase.co/functions/v1/zap_confirmacao'),
-  ('zap_conf_texto', E'Olá, {nome}. Seu atendimento está marcado para {dia}, {data}, às {hora}, com {advogado}. Responda SIM para confirmar ou NÃO se precisar remarcar.{govbr}'),
+  ('zap_conf_texto', E'Olá, {nome}. Seu atendimento está agendado para {dia}, {data}, às {hora}, com {advogado}. Responda SIM para confirmar ou NÃO se precisar remarcar.{govbr}'),
   ('zap_conf_govbr', E'\n\nPedimos que compareça com a senha do gov.br.'),
   ('zap_conf_sim', 'Obrigado. Seu atendimento está confirmado.'),
   ('zap_conf_nao', 'Certo. Nossa equipe vai falar com você para remarcar.')
