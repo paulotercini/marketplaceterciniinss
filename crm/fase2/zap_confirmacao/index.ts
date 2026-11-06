@@ -121,7 +121,8 @@ async function enviar(terca: string) {
 async function confirmar(conversa: string, pedido: string) {
   const x = await rpc("zap_conf_pegar", { p_conversa: conversa, p_pedido: pedido });
   if (!x) return { aviso: "pedido já lido" };
-  const r = TOKEN ? await agenda("confirmar", { eventId: x.evento }) : { ok: false, erro: "sem o token do robô" };
+  // o evento "teste" (mensagem de teste mandada à mão) não existe na agenda
+  const r = x.evento === "teste" ? { ok: true } : TOKEN ? await agenda("confirmar", { eventId: x.evento }) : { ok: false, erro: "sem o token do robô" };
   await rpc("zap_conf_confirmado", { p_conversa: conversa, p_ok: !!r.ok, p_erro: r.ok ? null : String(r.erro || r.codigo || "erro") });
   return { confirmado: !!r.ok };
 }
