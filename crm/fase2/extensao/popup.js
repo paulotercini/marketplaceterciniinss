@@ -17,10 +17,10 @@ chrome.storage.local.get(['ultima_pat', 'ultima_crps', 'ultima_pje', 'ultima_epr
   document.getElementById('quem').textContent = c.quem
     ? `CRM: ${c.quem}` : '⚠ ainda não entrou no CRM — clique abaixo';
 });
-const rodar = fonte => {
+const rodar = (fonte, extra) => {
   res.style.color = '#5B6069';
   res.textContent = 'abrindo o portal…';
-  chrome.runtime.sendMessage({ tipo: 'rodar', fonte }, r => {
+  chrome.runtime.sendMessage({ tipo: 'rodar', fonte, extra }, r => {
     if (!r) return (res.textContent = 'sem resposta — a página abriu?');
     if (r.erro) { res.style.color = '#B3261E'; res.textContent = r.erro; return; }
     res.style.color = '#1E6F50';
@@ -139,6 +139,7 @@ chrome.storage.local.get(['completar_pje'], ({ completar_pje: c }) => {
 });
 document.getElementById('b-pat').onclick  = () => rodar('pat');
 document.getElementById('b-crps').onclick = () => rodar('crps');
+document.getElementById('b-crps-cli').onclick = () => rodar('crps', { cliente: true });
 document.getElementById('b-pje').onclick  = () => rodar('pje');
 document.getElementById('b-eproc').onclick = () => rodar('eproc');
 document.getElementById('b-esaj').onclick = () => rodar('esaj');
