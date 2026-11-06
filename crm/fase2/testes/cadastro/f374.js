@@ -79,7 +79,9 @@ const SUPA = "https://ficticio.supabase.co";
       txt, coms: div.querySelectorAll(".pat-com tr").length, anx: div.querySelectorAll(".pat-arv li").length,
       pastas: [...div.querySelectorAll(".pat-arv summary")].map(x=>x.textContent),
       ag: div.querySelectorAll(".pat-ag tr").length, botoes: botoes.length, parse,
-      naoBaixado: /RG 2\.pdf \(não baixado\)/.test(div.textContent), tc: div.textContent, integral: botoes.some(o => /processo-integral/.test(o)) };
+      naoBaixado: /RG 2\.pdf \(não baixado\)/.test(div.textContent), tc: div.textContent, integral: botoes.some(o => /processo-integral/.test(o)),
+      ambos: integralDoPat(["pat/9/processo-integral-pendente", "pat/9/processo-integral", "pat/9/1"], "9"),
+      nenhum: integralDoPat(["pat/9/1"], "9") };
   }, [CLI_CHEIO]);
   conf("blocoPat guarda só os comentários visíveis", r.b.comentarios.length === 2);
   conf("blocoPat leva a última atualização da lista e o agendamento com o tipo",
@@ -97,7 +99,10 @@ const SUPA = "https://ficticio.supabase.co";
      "📁 Enviados pelo escritório (3)", "📁 Documento Médico (1)", "📁 Identificação (1)", "📁 Outros (1)"]));
   conf("árvore por data: a exigência do INSS no topo e a entrada do requerimento", JSON.stringify(r.pastasData) === JSON.stringify(
     ["📁 20/10/2026 · Exigência do INSS · Compareça à perícia (1)", "📁 05/10/2026 · Entrada do requerimento (4)"]));
-  conf("árvore traz o processo administrativo inteiro", /Processo administrativo inteiro/.test(r.txt));
+  conf("F416 · o parcial do requerimento em curso não se diz processo inteiro",
+       /Informações da tarefa \(cumprimento de exigencia\)/.test(r.txt) && !/Processo administrativo inteiro/.test(r.txt));
+  conf("F416 · com o concluído guardado, vale o inteiro e não o parcial",
+       r.ambos.caminho === "pat/9/processo-integral" && r.ambos.rot === "Processo administrativo inteiro" && r.nenhum === null);
   conf("processo integral e anexos com onclick válido", r.integral && r.botoes === 3 && r.parse === 3);
 
   console.log("=== F374: tela do PAT na aba INSS ===");
