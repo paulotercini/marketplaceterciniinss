@@ -1,4 +1,4 @@
-// F416 · o caso suspenso por tema do STF, do STJ ou da TNU: o chip no cartão, o selo do cliente, a pesquisa e o bloco do Cuidar do acervo
+// F417 · o caso suspenso por tema do STF, do STJ ou da TNU: o chip no cartão, o selo do cliente, a pesquisa e o bloco do Cuidar do acervo
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
