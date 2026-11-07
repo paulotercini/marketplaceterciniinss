@@ -78,7 +78,7 @@ export function regras(instrucoes = "") {
     `frases curtas, tom cordial e formal, sem gíria e sem emoji. A equipe assina as mensagens ("*Dr. Marcos:*"); você não assina, ` +
     `mas, na sua primeira resposta da conversa, ou quando a sua última resposta tiver mais de um dia, dê as boas-vindas: ` +
     `cumprimente pelo primeiro nome de quem escreve, dê as boas-vindas em nome da Advocacia Previdenciária, ` +
-    `apresente-se como a assistente virtual do escritório e pergunte em que pode ajudar.` + ESTILO + PADRAO + VOCABULARIO + FORMAL + FATOS + `\n\n` +
+    `apresente-se como a assistente virtual do escritório e pergunte em que pode ajudar.` + ESTILO + PADRAO + VOCABULARIO + FORMAL + FATOS + CORRECOES + `\n\n` +
     `O contexto diz o modo. No modo "conversa na hora" a pessoa não está em conversa com a equipe: converse com ela, ` +
     `responda o que puder e conduza o atendimento, sem mandar esperar a equipe. No modo "plantão" a equipe já conversa com ` +
     `a pessoa e ainda não respondeu: tranquilize e avise o advogado.\n\n` +
@@ -93,9 +93,8 @@ export function regras(instrucoes = "") {
     `falar com ele). Diga que a mensagem foi recebida e que o advogado indicado vai responder (no expediente, assim que possível; ` +
     `fora dele, no próximo dia útil). Se mandou documento, foto ou áudio, confirme o recebimento e diga que o advogado vai conferir. ` +
     `No modo plantão é a ação comum. Uma resposta só, curta.\n` +
-    `- "lead": pessoa que procura o escritório por um caso novo. Acolha e colha, em poucas mensagens, o nome completo, ` +
-    `o benefício ou o problema, a situação (se já pediu ao INSS e o que o INSS respondeu, se trabalha ou contribui, a idade, ` +
-    `a doença ou o acidente) e os documentos que tem. No máximo duas perguntas por mensagem.\n` +
+    `- "lead": pessoa que procura o escritório por um caso novo. Acolha e faça no máximo uma pergunta sobre o caso; ` +
+    `com o assunto, passe ao agendamento.\n` +
     `- "agendar": a pessoa quer marcar o atendimento, ou o caso novo já tem o nome completo e o assunto, ou você já respondeu ` +
     `seis vezes no caso novo. Com a agenda ligada, agradeça em uma frase e não cite horário: o sistema manda os horários livres ` +
     `logo depois. Com a agenda desligada, diga que a equipe vai entrar em contato para marcar.\n` +
@@ -109,6 +108,25 @@ export function regras(instrucoes = "") {
     `passar dado de pagamento, pedir senha do gov.br ou número de documento, e se apresentar como advogado.` +
     (instrucoes.trim() ? `\n\nInstruções do escritório (seguem as proibições acima):\n${instrucoes.trim().slice(0, 4000)}` : "");
 }
+
+// F422r · as correções do teste de 72 conversas (aprovadas pelo Paulo em 07.11.2026); prevalecem sobre o texto anterior
+export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem sobre o que estiver acima):\n` +
+  `- Caso novo: faça no máximo uma pergunta sobre o caso e, em seguida, leve ao agendamento com as datas. Não colha idade, documentos, ` +
+  `trabalho ou o que o INSS respondeu antes de agendar. O nome completo se pede uma vez só, para concluir o agendamento, e é o da pessoa ` +
+  `que será atendida, e não o de quem escreve por ela. Se a pessoa já informou o nome, não peça de novo.\n` +
+  `- Ação "nada" somente para agradecimento, "ok", emoji, despedida ou conversa que não é de cliente. Pergunta, pedido ou relato ` +
+  `(falecimento, doença, pedido para falar com advogado, insistência num advogado) sempre recebe resposta.\n` +
+  `- Advogado: o assunto previdenciário (aposentadoria, benefício do INSS, BPC, pensão, revisão) é sempre com a Dra. Amanda e o Dr. Paulo, ` +
+  `mesmo que a pessoa peça o Dr. Marcos; explique em uma frase que o Dr. Marcos atende os demais assuntos. Quem pede a Dra. Amanda recebe as datas dela. ` +
+  `Dois assuntos de áreas diferentes (por exemplo, aposentadoria e inventário) são dois atendimentos, cada um com o advogado do assunto.\n` +
+  `- Atendimento já agendado: para informar o horário, trocar, remarcar ou cancelar, consulte primeiro os atendimentos agendados do número ` +
+  `(atendimentos_marcados) e resolva pela ferramenta, sem perguntar o que o sistema já sabe e sem passar à equipe antes dessa consulta. ` +
+  `Atraso ou imprevisto no dia do atendimento: avise a equipe e diga que o escritório foi informado; não remarque.\n` +
+  `- Família: cada pessoa tem atendimento individual. Para duas ou mais pessoas, diga isso e agende horários em sequência, com o nome de cada pessoa atendida.\n` +
+  `- Prioridade (urgente) somente em benefício cortado, prazo correndo, perícia ou audiência nos próximos dias, golpe ou reclamação. Dúvida vaga não é urgente.\n` +
+  `- Pergunta direta primeiro: responda o que a pessoa perguntou antes de seguir. Atendimento por vídeo ou telefone é possível quando a pessoa pede (remoto). ` +
+  `O escritório não atende aos sábados, domingos e feriados: ofereça a data mais próxima. O escritório atende clientes de toda a região, presencialmente em Monte Alto ou de forma remota.\n` +
+  `- Não diga à pessoa que "informe ao escritório": você escreve em nome do escritório.`;
 
 // "agendar", e não "marcar": o escritório escreve em português técnico (Paulo, 07.11.2026)
 export const VOCABULARIO = `\n\nVocabulário: escreva "agendar", "agendamento" e "agendado"; nunca "marcar", "marcação" ou "marcado" para atendimento, ` +
@@ -156,8 +174,8 @@ export const AGENDAR_BULLET = `- "agendar": não use. Quem marca, remarca e canc
 // F422k · pedir agendamento sem assunto, advogado ou data não é dúvida: o Agendador pergunta (Paulo, 07.11.2026)
 export const DUVIDA_TRIAGEM = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.2026, revisto): o pedido de agendamento sem assunto, sem advogado ` +
   `ou sem data não é dúvida; encaminhe ao Agendador, que pergunta o assunto e oferece as datas. Use acao "equipe" somente quando ` +
-  `a conversa se contradisser ou a pessoa não souber explicar depois de uma pergunta, por exemplo ao pedir a troca de um atendimento ` +
-  `que não existe ou ao citar dois atendimentos diferentes; diga em uma frase que um colaborador do escritório vai responder ` +
+  `a conversa se contradisser ou a pessoa não souber explicar depois de uma pergunta, depois que o Agendador consultou os atendimentos agendados ` +
+  `e não achou o que a pessoa cita; diga em uma frase que um colaborador do escritório vai responder ` +
   `e escreva a dúvida no assunto. Não presuma acompanhante, parentesco nem outra pessoa que a conversa não citou.`;
 export const COMO_ENCAMINHAR = `\n\nComo encaminhar ao Agendador:\n` +
   `Você não marca, não remarca e não cancela atendimento, e não consulta a agenda. Quando a pessoa quiser marcar, remarcar ou ` +
@@ -196,6 +214,7 @@ export function paraTriagem(system: string) {
   if (!t.includes("\n\nInformações do escritório")) antes(FATOS);
   if (!t.includes("\n\nO jeito do escritório")) antes(PADRAO);
   else t = t.replace(/\n\nO jeito do escritório[^]*?(?=\n\n|$)/, () => PADRAO);
+  t = t.includes("\n\nCorreções do teste") ? t.replace(/\n\nCorreções do teste[^]*?(?=\n\n|$)/, () => CORRECOES) : (antes(CORRECOES), t);
   return t;
 }
 
@@ -250,17 +269,30 @@ export function paraAgendador(system: string) {
   if (!t.includes("\n\nVocabulário:")) t += VOCABULARIO;
   t = t.includes("\n\nRegistro: português formal") ? t.replace(/\n\nRegistro: português formal[^]*?(?=\n\n|$)/, () => FORMAL) : t + FORMAL;
   t = t.includes("\n\nO jeito do escritório") ? t.replace(/\n\nO jeito do escritório[^]*?(?=\n\n|$)/, () => PADRAO) : t + PADRAO;
+  t = t.includes("\n\nCorreções do teste") ? t.replace(/\n\nCorreções do teste[^]*?(?=\n\n|$)/, () => CORRECOES) : t + CORRECOES;
   return t;
 }
 
 // a resposta que veio numa linha só ganha a quebra depois da primeira frase
-export function emLinhas(txt: string) {
+// F422r · as proteções que não dependem do agente (teste de 72 conversas, 07.11.2026); "antes" são os textos já enviados à pessoa
+export function emLinhas(txt: string, antes: string[] = []) {
   // o modelo ainda escrevia "o senhor ou a senhora" sem saber quem é (07.11.2026): o verbo segue na 3ª pessoa
-  const t = String(txt || "").replace(/\s*,?\s*\bo\(a\) senhor\(a\)|\s+(?:o senhor ou a senhora|a senhora ou o senhor)\b/gi, "").trim();
+  let t = String(txt || "").replace(/\s*,?\s*\bo\(a\) senhor\(a\)|\s+(?:o senhor ou a senhora|a senhora ou o senhor)\b/gi, "").trim();
+  // "dona Cida", "seu Valter", "senhor José": o nome vai sem o tratamento (sem a flag i, a maiúscula do nome importa)
+  t = t.replace(/\b(?:[Dd]ona|[Ss]eu|[Ss]enhora|[Ss]enhor|Sra?\.)\s+(?=(?!Meu\b)[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç])/g, "");
+  const ja = antes.join("\n");
+  // a saudação só na primeira resposta: o primeiro parágrafo que cumprimenta sai
+  if (antes.length && /\n\n/.test(t)) t = t.replace(/^(?:olá|oi|bom dia|boa tarde|boa noite)\b[^\n]*\n\n/i, "");
+  // "Compreendi." no máximo uma vez na conversa
+  let vez = /\bCompreendi\b/.test(ja);
+  t = t.replace(/\bCompreendi[.,!]?\s*/g, (m) => (vez ? "" : ((vez = true), m)));
+  // maiúscula depois de ponto final, exclamação e interrogação ("Sr." e "Dra." não encerram a frase)
+  t = t.replace(/((?<!\b(?:Sr|Sra|Srta|Dr|Dra|Prof|Profa|n|nº))[.!?]\s+)([a-záàéíóúâêôãõçü])/g, (_, a, l) => a + l.toUpperCase());
+  t = t.replace(/^([a-záàéíóúâêôãõçü])/, (l) => l.toUpperCase()).trim();
   if (t.includes("\n") || t.length <= 120) return t;
-  // "Sr." e "Dra." não encerram a frase
   return t.replace(/^(.+?(?<!\b(?:Sr|Sra|Srta|Dr|Dra|Prof|Profa))[.!?])\s+(?=\S)/, "$1\n\n");
 }
+const enviados = (ms: Msg[]) => (ms || []).filter((m) => m.direcao === "saida" && m.texto).map((m) => String(m.texto));
 
 // o nome da pessoa no máximo uma vez, como na conversa com a recepção (pedido do Paulo de 07.11.2026)
 export const NOME_UMA_VEZ = `Nome: chame a pessoa pelo nome no máximo uma vez na conversa. Se alguma mensagem do escritório acima já usou o nome ` +
@@ -433,7 +465,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       for (const a of r.agendamentos || []) if (a.atendimento) vistos.set(a.id, a);
     return [...vistos.values()];
   }
-  const doMarcado = (a: Record<string, any>) => ({ atendimentoId: a.id, rotulo: rotulo(a.data, a.inicio, COM[a.profissional] || "a equipe") });
+  const doMarcado = (a: Record<string, any>) => ({ atendimentoId: a.id, rotulo: rotulo(a.data, a.inicio, COM[a.profissional] || "a equipe"), ...(a.nome ? { nome: a.nome } : {}) });
   return {
     encaminhado,
     async consultar_vagas(i: { profissionais?: string[]; dias?: number; tipo?: string }) {
@@ -470,8 +502,10 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       if (!r.ok) return { erro: String(r.erro || r.codigo || "erro da agenda") };
       // F422q · a confirmação diz de quem é o atendimento quando quem escreve agenda para outra pessoa
       const para = v.tipo === "002" ? c.nome_ficha || c.nome_numero : c.cliente_numero ? i.nome : null;
-      await banco("zap_plantao_marcado", { p_conversa: conversa, p_rotulo: rotulo(v.data, v.inicio, COM[v.profissional]),
-        p_modalidade: i.modalidade === "remoto" ? "remoto" : "presencial", p_assunto: String(i.assunto || ""), p_para: para || null });
+      const conf = { p_conversa: conversa, p_rotulo: rotulo(v.data, v.inicio, COM[v.profissional]),
+        p_modalidade: i.modalidade === "remoto" ? "remoto" : "presencial", p_assunto: String(i.assunto || "") };
+      // shortcut: sem a migração f422q no banco, a versão de 4 argumentos confirma; sai quando ela for aplicada
+      await banco("zap_plantao_marcado", { ...conf, p_para: para || null }).catch(() => banco("zap_plantao_marcado", conf));
       return { marcado: true, aviso: "o sistema já enviou ao cliente a confirmação com dia, hora e orientações: não repita; se for presencial, informe somente o endereço" };
     },
     async remarcar_atendimento(i: { atendimentoId?: string; novoEventoId?: string }) {
@@ -512,13 +546,16 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
   } as Record<string, any>;
 }
 
+// o roteiro escreve {data: "10/11/2026", hora: "10:30"}; a agenda devolve id, data ISO, inicio e atendimento
+const doRoteiro = (a: Record<string, any>, k: number) => a.id ? a : { id: `sim${k}`, atendimento: true, profissional: a.profissional, tipo: a.tipo,
+  nome: a.nome || null, inicio: a.hora || a.inicio, data: String(a.data || "").replace(/^(\d{2})\/(\d{2})\/(\d{4})$/, "$3-$2-$1") };
 // simulador (07.11.2026): a agenda é lida de verdade, mas agendar, remarcar e cancelar não gravam
 // e nada é enviado ao cliente; serve para testar a conversa sem um número de verdade
 export function ferramentasSimuladas(dados: Record<string, any>, chamar = agenda) {
   const banco = async (nome: string) => (nome === "zap_plantao_agenda" ? dados : null);
   const falso = async (acao: string, corpo: Record<string, unknown>) =>
     ["agendar", "remarcar", "cancelar"].includes(acao) ? { ok: true, simulado: true }
-      : acao === "agendamentosFuturos" ? { ok: true, agendamentos: dados.marcados || [] } : chamar(acao, corpo);
+      : acao === "agendamentosFuturos" ? { ok: true, agendamentos: (dados.marcados || []).map(doRoteiro) } : chamar(acao, corpo);
   const fer = ferramentasDaConversa("simulada", falso, banco as typeof rpc);
   const uso: { nome: string; entrada: unknown; saida: string }[] = [];
   for (const k of Object.keys(fer)) if (typeof fer[k] === "function") {
@@ -559,7 +596,7 @@ async function simular(s: Cenario) {
     catch (e) { saida.push({ cliente: m.texto, erro: String(e).slice(0, 300) }); break; }
     const enc = fer.encaminhado as { motivo?: string };
     const acao = enc && "motivo" in enc ? "equipe" : r.acao;
-    const resposta = emLinhas(r.resposta);
+    const resposta = emLinhas(r.resposta, enviados(x.mensagens));
     saida.push({ cliente: m.texto, acao, resposta, assunto: r.assunto, ferramentas: uso.slice(antes) });
     if (resposta) x.mensagens.push({ direcao: "saida", por_bot: true, tipo: "texto", texto: resposta, momento: new Date(t0 + i * 120000 + 30000).toISOString() });
     if (acao === "equipe") break;
@@ -835,7 +872,7 @@ if (typeof Deno !== "undefined") {
       // a remarcação da confirmação (F422c) segue mesmo com o atendente Offline
       if (acao !== "equipe" && acao !== "nada" && !x.remarcar && x.conversa_id && await atendenteOffline(x.conversa_id).catch(() => false)) acao = "nada";
       await rpc("zap_plantao_aplicar", {
-        p_msg: msg, p_acao: acao, p_resposta: emLinhas(r.resposta), p_advogado: String(r.advogado || ""),
+        p_msg: msg, p_acao: acao, p_resposta: emLinhas(r.resposta, enviados(x.mensagens)), p_advogado: String(r.advogado || ""),
         p_urgente: r.urgente === true, p_assunto: String(r.assunto || ""), p_relato: String(r.relato || ""),
         p_nome: String(r.nome || ""),
       });

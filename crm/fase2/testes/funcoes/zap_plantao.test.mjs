@@ -106,7 +106,7 @@ assert.ok(!tri.includes("sem mudar o conteúdo") && paraTriagem(tri.replace(/\n\
 assert.equal(emLinhas("Boa noite, Paulo! Seja bem-vindo à Advocacia Previdenciária. Sou a assistente virtual do escritório e posso ajudar no que precisar hoje."),
   "Boa noite, Paulo!\n\nSeja bem-vindo à Advocacia Previdenciária. Sou a assistente virtual do escritório e posso ajudar no que precisar hoje.");
 assert.equal(emLinhas("Recebido, obrigado."), "Recebido, obrigado.");
-assert.ok(emLinhas("Obrigada, Sr. Paulo. Haverá outra pessoa que também será atendida junto com o senhor? Pergunto para já informar o profissional.").startsWith("Obrigada, Sr. Paulo.\n\nHaverá"));
+assert.ok(emLinhas("Obrigada, Sr. Paulo. Haverá outra pessoa que também será atendida junto com o senhor? Pergunto para já informar o profissional.").startsWith("Obrigada, Paulo.\n\nHaverá"));
 const agC = "Você é a assistente.\n\nTriagem:\n1. Pergunte o nome completo.\n2. Pergunte em poucas palavras do que se trata o caso.\n3. Pergunte se prefere atendimento presencial, no escritório, ou remoto, por chamada.\n4. Pergunte se haverá outra pessoa que também será atendida junto.\n5. Escolha.\n6. Chame consultar_vagas (no CRM) e ofereça no máximo 3 horários, numerados.\n7. Confirme.\n8. Antes de marcar, oriente: ter em mãos a senha do GOV.BR. Só depois chame marcar_atendimento.";
 const agN = paraAgendador(agC);
 assert.ok(agN.includes(AG_ASSUNTO) && agN.includes(AG_MODALIDADE) && !agN.includes("ou remoto, por chamada") && !agN.includes("4. Pergunte se haverá outra pessoa") && agN.includes(AG_HORARIOS) && agN.includes(AG_ORIENTA) && !agN.includes("Antes de marcar, oriente"));
@@ -321,4 +321,26 @@ console.log("formal: ok");
   assert.deepEqual(ch.find((c) => c[0] === "agendar")[1].nome, "Pietra Tercini");
   assert.equal(bco.find((b) => b[0] === "zap_plantao_marcado")[1].p_para, "Pietra Tercini");
   console.log("confirmação de quem: ok");
+}
+
+// F422r · as proteções do teste de 72 conversas
+{
+  const { emLinhas: el, paraTriagem: pt, paraAgendador: pa, CORRECOES, regras: rg } = await import("../../zap_plantao/index.ts");
+  assert.equal(el("Olá, dona Cida, bom dia!\n\nVou ajudar."), "Olá, Cida, bom dia!\n\nVou ajudar.");
+  assert.equal(el("Certo, senhor Valter.\n\nQual data?"), "Certo, Valter.\n\nQual data?");
+  assert.ok(el("Pode acessar o seu Meu INSS.").includes("seu Meu INSS"));
+  assert.ok(el("O senhor pode vir na quarta?").startsWith("O senhor pode"));
+  assert.equal(el("Compreendi. Vou verificar.", ["Compreendi. Qual o assunto?"]), "Vou verificar.");
+  assert.equal(el("Compreendi. Vou verificar."), "Compreendi. Vou verificar.");
+  assert.equal(el("Qual data prefere? às 9h ou às 15h?"), "Qual data prefere? Às 9h ou às 15h?");
+  assert.equal(el("Com o Dr. Paulo. ok, combinado."), "Com o Dr. Paulo. Ok, combinado.");
+  assert.equal(el("Boa noite! Agradecemos o contato.\n\nQual data prefere?", ["Boa noite!"]), "Qual data prefere?");
+  assert.equal(el("Boa noite! Agradecemos o contato.\n\nQual data prefere?"), "Boa noite! Agradecemos o contato.\n\nQual data prefere?");
+  const t1 = pt("Texto do Console.\n\nResponda sempre chamando decidir.");
+  assert.equal(t1.split("Correções do teste").length, 2);
+  assert.equal(pt(t1), t1);
+  const a1 = pa("Agendador.\n\n1. Passo.");
+  assert.ok(a1.includes(CORRECOES) && pa(a1) === a1);
+  assert.ok(rg().includes("Correções do teste"));
+  console.log("ok F422r");
 }
