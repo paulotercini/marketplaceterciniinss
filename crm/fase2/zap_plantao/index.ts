@@ -129,7 +129,11 @@ export const COMO_ENCAMINHAR = `\n\nComo encaminhar ao Agendador:\n` +
   `mensagem nova da pessoa vai ao Agendador, na mesma conversa com ele. A resposta do Agendador é a mensagem ao cliente: ` +
   `repasse-a pela decidir sem mudar datas, horários, nomes e dados, escrita como em "Como escrever no WhatsApp", com acao "conversa" no modo conversa na hora e "responder" no modo plantão. ` +
   `Quando o Agendador disser que a confirmação já foi enviada pelo sistema, repasse somente o que ele acrescentar, como o endereço, ` +
-  `ou chame decidir com acao "nada" e resposta vazia. Quando o Agendador passar a conversa à equipe, use acao "equipe".`;
+  `ou chame decidir com acao "nada" e resposta vazia. Quando o Agendador passar a conversa à equipe, use acao "equipe".` +
+  `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.2026): quando não estiver claro o que a pessoa quer, por exemplo com qual ` +
+  `advogado marcar, se o atendimento é novo ou troca de um já marcado, ou de qual atendimento se trata, não decida nem pergunte ` +
+  `de novo: use acao "equipe", diga em uma frase que um colaborador do escritório vai responder e escreva a dúvida no assunto. ` +
+  `Não presuma acompanhante, parentesco nem outra pessoa que a conversa não citou.`;
 // troca, no texto do Console, a marcação própria (F277) pelo encaminhamento; o resto do texto fica
 export function paraTriagem(system: string) {
   let t = String(system || "");
@@ -147,6 +151,7 @@ export function paraTriagem(system: string) {
     t = resp >= 0 ? t.slice(0, resp) + bloco + t.slice(resp) : t + bloco;
   };
   if (!t.includes("\n\nComo encaminhar ao Agendador:")) antes(COMO_ENCAMINHAR);
+  else if (!t.includes("\n\nNa dúvida, a equipe")) t = t.replace(/\n\nComo encaminhar ao Agendador:[^]*?Quando o Agendador passar a conversa à equipe, use acao "equipe"\./, COMO_ENCAMINHAR);
   if (!t.includes("\n\nComo escrever no WhatsApp:")) antes(ESTILO);
   return t;
 }
@@ -159,22 +164,37 @@ export const AG_ASSUNTO = `2. Pergunte se o assunto é de aposentadoria ou de ou
   `"O assunto que gostaria de tratar é relacionado a aposentadoria ou a outro benefício do INSS, ou é outro assunto?", e, na mesma mensagem, quem será a pessoa atendida.`;
 export const AG_MODALIDADE = `3. O atendimento é presencial, no escritório. Não ofereça nem pergunte sobre atendimento remoto; marque remoto somente quando a própria pessoa pedir.`;
 export const AG_OUTRA = `4. Não pergunte agora sobre outra pessoa: a pergunta vem junto dos horários, no passo 6.`;
-export const AG_HORARIOS = `6. Chame consultar_vagas (no CRM) e ofereça dois horários, numerados, com dia da semana, data, hora e advogado: ` +
+export const AG_HORARIOS_F280 = `6. Chame consultar_vagas (no CRM) e ofereça dois horários, numerados, com dia da semana, data, hora e advogado: ` +
   `o mais próximo de manhã e o mais próximo à tarde (o campo periodo de cada vaga diz qual é). Na mesma mensagem, em outra linha, diga: ` +
   `"Se for necessário atender mais de uma pessoa, preciso verificar na agenda se há outro horário disponível na sequência."`;
+// F422i · previdenciário: primeiro as datas da Dra. Amanda e do Dr. Paulo; o horário só depois da escolha do advogado (Paulo, 07.11.2026)
+export const AG_HORARIOS = `6. Chame consultar_vagas (no CRM). Se o assunto é previdenciário (aposentadoria ou outro benefício do INSS), consulte amanda e paulo ` +
+  `e ofereça primeiro somente as datas, sem horário: as próximas datas com a Dra. Amanda e as próximas com o Dr. Paulo, com o dia da semana, ` +
+  `e pergunte com qual advogado e em qual data prefere. Depois da escolha, ofereça os horários desse advogado nessa data: o mais próximo de manhã ` +
+  `e o mais próximo à tarde (o campo periodo de cada vaga diz qual é), numerados. Se for outro assunto, consulte somente marcos e ofereça os ` +
+  `horários do Dr. Marcos da mesma forma. Junto dos horários, em outra linha, diga: ` +
+  `"Se for necessário atender mais de uma pessoa, preciso verificar na agenda se há outro horário disponível na sequência." ` +
+  `Se a pessoa insistir em passar com o Dr. Paulo quando ele não tiver data ou o assunto não for previdenciário, diga que vai encaminhar à equipe, ` +
+  `peça que explique em poucas palavras o motivo do contato e, com a resposta, chame encaminhar_equipe com o motivo.`;
 export const AG_ORIENTA = `8. Não dê orientações antes de marcar. Com a confirmação do passo 7, chame marcar_atendimento: o sistema envia a última mensagem, ` +
   `com a senha do GOV.BR (Meu INSS) quando o assunto é do INSS e o lembrete de que o atendimento é individual.`;
+export const AG_DUVIDA = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.2026): quando não estiver claro com qual advogado marcar, ` +
+  `se o atendimento é novo ou troca de um já marcado, ou quando o atendimento a remarcar ou cancelar não aparecer em atendimentos_marcados, ` +
+  `não ofereça horários nem diga que anotou: chame encaminhar_equipe com a dúvida no motivo e diga em uma frase que um colaborador do escritório vai responder. ` +
+  `Não presuma acompanhante, parentesco nem outra pessoa que a conversa não citou; para confirmar, repita dia, hora e advogado e pergunte somente se pode confirmar.`;
 export function paraAgendador(system: string) {
   let t = String(system || "");
   t = t.replace(/^2\. Pergunte em poucas palavras do que se trata o caso\.$/m, AG_ASSUNTO)
     .replace(/^3\. Pergunte se prefere atendimento presencial[^\n]*$/m, AG_MODALIDADE)
     .replace(/^4\. Pergunte se haverá outra pessoa[^\n]*$/m, AG_OUTRA)
     .replace(/^6\. Chame consultar_vagas \(no CRM\) e ofereça no máximo 3 horários[^\n]*$/m, AG_HORARIOS)
+    .replace(AG_HORARIOS_F280, AG_HORARIOS)
     .replace(/^8\. Antes de marcar, oriente[^\n]*$/m, AG_ORIENTA);
   if (!t.includes("\n\nComo escrever: a Assistente virtual já cumprimentou")) {
     const i = t.indexOf("\n\n");
     t = i >= 0 ? t.slice(0, i) + AG_ABERTURA + t.slice(i) : t + AG_ABERTURA;
   }
+  if (!t.includes("\n\nNa dúvida, a equipe")) t += AG_DUVIDA;
   return t;
 }
 
@@ -342,7 +362,9 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
     return null;
   }
   async function marcados(c: Record<string, any>) {
-    const pedidos = [c.cliente_id ? { clienteId: c.cliente_id } : null, { telefone: foneAgenda(c.telefone) }].filter(Boolean);
+    // quem escreve por outra pessoa marca como 001, mas o atendimento já marcado está na ficha do número
+    const ficha = c.cliente_id || c.cliente_numero;
+    const pedidos = [ficha ? { clienteId: ficha } : null, { telefone: foneAgenda(c.telefone) }].filter(Boolean);
     const vistos = new Map<string, Record<string, any>>();
     for (const r of await Promise.all(pedidos.map((p) => chamar("agendamentosFuturos", p!))))
       for (const a of r.agendamentos || []) if (a.atendimento) vistos.set(a.id, a);

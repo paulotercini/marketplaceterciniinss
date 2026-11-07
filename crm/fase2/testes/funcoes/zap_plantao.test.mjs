@@ -168,3 +168,23 @@ const pi = promptIntencao({ ...base, mensagens: [
 assert.ok(pi.includes("<resposta>Estarei ocupado nesse dia</resposta>") && pi.includes("Podemos contar com a sua presença?"));
 assert.deepEqual(ESQ_INTENCAO.properties.intencao.enum, ["confirmar", "remarcar", "outro"]);
 console.log("zap_plantao: ok");
+
+// F422i · na dúvida, a equipe; o atendimento marcado se acha pela ficha do número mesmo com quem escreve por outra pessoa
+{
+  const { AG_DUVIDA, COMO_ENCAMINHAR: CE } = await import("../../zap_plantao/index.ts");
+  const ag = paraAgendador("Agendador.\n\nPassos.");
+  assert.ok(ag.endsWith(AG_DUVIDA) && paraAgendador(ag) === ag, "o Agendador ganha a regra da dúvida uma vez");
+  const velho = paraTriagem("Texto.\n\nResponda sempre chamando decidir.").replace(CE, CE.split("\n\nNa dúvida")[0]);
+  const novo = paraTriagem(velho);
+  assert.ok(novo.includes("\n\nNa dúvida, a equipe") && paraTriagem(novo) === novo, "a Assistente antiga ganha a regra da dúvida");
+  const chamadas = [];
+  const f = ferramentasDaConversa("c1", async (acao, p) => { chamadas.push([acao, p]); return { ok: true, agendamentos: [], dias: [] }; },
+    async () => ({ ligada: true, telefone: "5516900000000", cliente_id: null, cliente_numero: "cli-9" }));
+  await f.remarcar_atendimento({ atendimentoId: "x" });
+  assert.ok(chamadas.some(([a, p]) => a === "agendamentosFuturos" && p.clienteId === "cli-9"), "busca o marcado pela ficha do número");
+}
+{
+  const { AG_HORARIOS_F280 } = await import("../../zap_plantao/index.ts");
+  const v4 = paraAgendador(`Agendador.\n\n${AG_HORARIOS_F280}\n7. Confirme.`);
+  assert.ok(v4.includes(AG_HORARIOS) && !v4.includes(AG_HORARIOS_F280) && paraAgendador(v4) === v4, "o Agendador da v4 recebe as datas antes dos horários");
+}
