@@ -275,3 +275,11 @@ console.log("formal: ok");
   assert.ok(!novo.includes("Seja bem-vindo antigo") && novo.split("Como escrever no WhatsApp:").length === 2);
   console.log("tratamento: ok");
 }
+{
+  // teste do Paulo de 07.11.2026: o menu já recebeu a pessoa, e a ficha é de outra pessoa
+  const { contexto: cx, PADRAO: pd } = await import("../../zap_plantao/index.ts");
+  const c = cx({ ...base, contato: "Paulo Tercini", relacao: "pai", cliente: { nome: "Pietra Tercini", mesmo_telefone: true, casos: [] } });
+  assert.ok(c.includes("Refira-se a Pietra apenas pelo primeiro nome") && c.includes("o menu automático inclusive"));
+  assert.ok(pd.includes("nunca para abrir uma pergunta"));
+  console.log("menu e representado: ok");
+}

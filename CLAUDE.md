@@ -549,6 +549,8 @@ A **F422m** (pedido do Paulo de 07.11.2026, "parecido com o jeito que atuamos e 
 
 A **F422n** (teste do Paulo de 07.11.2026): a `decidir` que a Assistente deixou do turno anterior (processada antes da mensagem nova, pelo `processed_at` do evento enviado) não responde à mensagem nova, porque o pedido de agendamento recebia de novo a saudação; e `emLinhas` tira o "o senhor ou a senhora" e o "o(a) senhor(a)" da resposta, e o `ESTILO` deixou o exemplo com gênero ("Seja bem-vindo"), trocado também no texto da Assistente pelo `ligar`. Teste: `testes/funcoes/zap_plantao.test.mjs`.
 
+A **F422o** (teste do Paulo de 07.11.2026, conversa real): com a Agenda da IA ligada (`zap_conf_ia_remarca`), a opção 1 do menu do SMBot (agendar) deixou de mandar "Nossa equipe irá fornecer o melhor horário" e, fora do expediente, "não temos atendentes online" antes da resposta da IA: `zap_smb_ir` fala o passo `agendar_ia` (pede o assunto), põe a conversa em `bot_passo = smb:ia` no setor Agendamentos e em `plantao.modo = conversa`, e a IA responde na hora (o `smb:fila` mandava o recado de sem atendente a cada hora). Nas regras da IA: sem saudação nem boas-vindas quando o menu ou a equipe já cumprimentou ou pediu o assunto (`NOME_UMA_VEZ`), a pessoa da ficha de quem fala por outra apenas pelo primeiro nome, sem "senhor", "senhora" ou "dona", e "No caso, …" somente para retomar o que a pessoa contou. SQL em `crm/fase2/migracoes/f422o_menu_agendar_ia.sql`. Teste: `testes/funcoes/zap_plantao.test.mjs`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

@@ -133,7 +133,7 @@ export const PADRAO = `\n\nO jeito do escritório (como a equipe responde no Wha
   `- Saudação curta, com o tratamento antes do primeiro nome: "Olá, senhor José, boa tarde!", "Olá, dona Maria, bom dia!", "Bom dia, Maria Helena!". ` +
   `Sem o nome, apenas "Olá, boa tarde!". Use "senhor", "dona" ou "senhora", e "bem-vindo" ou "bem-vinda", somente quando o nome ou a conversa deixar claro; ` +
   `na dúvida, escreva sem eles ("Agradecemos o seu contato.") e nunca "o senhor ou a senhora".\n` +
-  `- Uma ideia por frase, frases curtas e diretas, sem rodeio. Expressões da casa: "Compreendi.", "No caso, …", "Combinado.", ` +
+  `- Uma ideia por frase, frases curtas e diretas, sem rodeio. Expressões da casa: "Compreendi.", "No caso, …" (somente para retomar o que a pessoa contou, nunca para abrir uma pergunta), "Combinado.", ` +
   `"Aguarde, por favor.", "Vou verificar com o Dr. Paulo.", "Documento recebido, obrigado.", "Qualquer dúvida, estamos à disposição.".\n` +
   `- Agendamento como pergunta objetiva, com dia da semana, data e hora: "Pode ser na quarta-feira, dia 13/11, às 9h30?", ` +
   `"Prefere o período da manhã ou da tarde?"; ao fechar, "Ficou agendado para quarta-feira, dia 13/11, às 9h30.".\n` +
@@ -264,7 +264,10 @@ export function emLinhas(txt: string) {
 
 // o nome da pessoa no máximo uma vez, como na conversa com a recepção (pedido do Paulo de 07.11.2026)
 export const NOME_UMA_VEZ = `Nome: chame a pessoa pelo nome no máximo uma vez na conversa. Se alguma mensagem do escritório acima já usou o nome ` +
-  `(a confirmação do atendimento inclusive), escreva sem ele, também ao repassar a resposta do Agendador.\n`;
+  `(a confirmação do atendimento inclusive), escreva sem ele, também ao repassar a resposta do Agendador.\n` +
+  // o menu automático já recebeu a pessoa e a IA dava as boas-vindas de novo (teste do Paulo de 07.11.2026)
+  `Saudação: se alguma mensagem do escritório acima, de hoje, já cumprimentou a pessoa ou pediu o assunto (o menu automático inclusive), ` +
+  `não cumprimente nem dê boas-vindas: responda ao que ela disse, do ponto em que a conversa está.\n`;
 
 // o que muda a cada mensagem
 export function contexto(x: Contexto) {
@@ -273,7 +276,7 @@ export function contexto(x: Contexto) {
     : `O número é de ${x.cliente.nome}, cliente do escritório.` + (x.cliente.mesmo_telefone
       ? ` Casos abertos: ${x.cliente.casos.map((k) => `${k.beneficio || "caso"} (fase ${k.fase}${k.etapa ? `, etapa: ${k.etapa}` : ""})`).join("; ") || "nenhum"}.`
       : " O número não é o telefone principal da ficha: não fale da situação de processo nenhum.")
-      + (x.relacao && x.contato ? ` Quem escreve é ${x.contato} (${x.relacao} de ${x.cliente.nome}): chame pelo nome de quem escreve, e não pelo nome da ficha.` : "");
+      + (x.relacao && x.contato ? ` Quem escreve é ${x.contato} (${x.relacao} de ${x.cliente.nome}): chame pelo nome de quem escreve, e não pelo nome da ficha. Refira-se a ${x.cliente.nome.split(" ")[0]} apenas pelo primeiro nome, sem "senhor", "senhora" ou "dona".` : "");
   return `Agora: ${x.agora} (horário de Brasília). ${x.horario ? "O escritório está no horário de atendimento." : "O escritório está fora do horário de atendimento."}\n` +
     `Modo: ${x.interativa ? "conversa na hora (ninguém da equipe está na conversa)" : "plantão (a equipe está na conversa e ainda não respondeu)"}.\n` +
     `Advogados: ${advs}. As estagiárias (Ingrid, Meissa) também respondem, mas quem é avisado é o advogado.\n` +
