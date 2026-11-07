@@ -205,7 +205,7 @@ const T = {
   conf("encerrar chama zap_encerrar com a observação", enc && enc.b.p_obs === "Perícia confirmada para dia 10" && enc.b.p_conversa === Z1);
 
   // F185 · corrigir a conexão pelo CRM: o pedido vai para zap_comando
-  conf("sem sinal da ponte, a lista oferece Corrigir conexão", (await p.textContent(".zl-topo .zap-estado")).includes("Corrigir conexão"));
+  conf("sem sinal da ponte, a lista oferece Corrigir conexão", (await p.textContent(".zap-estado.zl-faixa")).includes("Corrigir conexão"));
   await p.evaluate(() => { D.config.set("zap_status", "ligado"); D.config.set("zap_visto_em", new Date().toISOString()); abrirConexaoZap(); });
   await p.click('#zx-painel button:has-text("Reconectar agora")');
   await p.waitForTimeout(300);

@@ -1,9 +1,9 @@
-// F422 · o balcão do atendimento presencial, testado como a recepção (a Ingrid, nível 2 da transição): o cliente novo
+// F425 · o balcão do atendimento presencial, testado como a recepção (a Ingrid, nível 2 da transição): o cliente novo
 // agendado chega (Chegou na agenda, CPF, senha do gov.br, Entrou, dossiê da extensão, Atualizar, estado civil e
 // profissão, Pronto avisa o advogado com o cadastro completo); o evento lançado à mão sem ficha abre o Novo Cliente; o
 // cliente sem gov.br; o cliente que não sabe o CPF; quem já é cliente (copiar a senha, Errada, senha nova, Entrou);
 // o pré-cadastro da agenda de quem já é cliente; e o nível 1, que não chega a nada disso. O Apps Script é o Code.gs de
-// verdade num Google Agenda simulado. Banco simulado e dados fictícios. Uso: node f422.js [pasta das fotos]
+// verdade num Google Agenda simulado. Banco simulado e dados fictícios. Uso: node f425.js [pasta das fotos]
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
@@ -12,7 +12,7 @@ const { FIX, SESSAO } = require("./fixturas");
 const { Banco, instalarBanco } = require("./banco-simulado");
 const { criarGoogle, proximo, quando } = require("./google-simulado");
 const SUPA = "https://ficticio.supabase.co";
-const OUT = process.argv[2] || "/tmp/f422";
+const OUT = process.argv[2] || "/tmp/f425";
 fs.mkdirSync(OUT, { recursive: true });
 
 const INGRID = "33333333-3333-3333-3333-333333333333", AUTH_I = "cccccccc-cccc-cccc-cccc-cccccccccccc";
@@ -84,6 +84,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const botao = t => p.click(`#modal button[title="${t}"]`);
   const recarregar = async () => { await p.evaluate(async () => { await carregarAgenda(); pintarAgenda(); }); await p.waitForTimeout(300); };
 
+  await p.waitForFunction(() => meuNivel() === 2, null, { timeout: 8000 }).catch(() => {});   // a configuração chega depois do login
   conf("a recepção entra no nível 2 (cadastro e dossiê)", await p.evaluate(() => meuNivel() === 2 && podeCadastrar() && !podeGravarCaso()));
   await p.evaluate(() => { visao = "agendaq"; render(); });
   await p.waitForSelector(".aq-faixa", { timeout: 15000 });
