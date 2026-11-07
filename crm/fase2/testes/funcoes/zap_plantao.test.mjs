@@ -74,6 +74,19 @@ const dec4 = await turno("sesn_4", "oi", falso([
 assert.equal(dec4.acao, "conversa"); assert.match(enviados[1].events[0].content[0].text, /sem chamar a ferramenta decidir/);
 await assert.rejects(turno("sesn_1", "oi", falso([{ type: "session.status_idle", id: "e2", stop_reason: { type: "end_turn" } },
   { type: "session.status_idle", id: "e3", stop_reason: { type: "end_turn" } }])), /parou sem decisão/);
+// a decidir que sobrou do turno anterior não responde à mensagem nova (07.11.2026)
+enviados.length = 0;
+const comMarco = async (url, op = {}) => {
+  if (/events\/stream$/.test(url)) return sse([
+    { type: "agent.custom_tool_use", id: "velha", name: "decidir", processed_at: "2026-11-07T19:19:33.7Z", input: { acao: "conversa", resposta: "Olá, boa tarde!" } },
+    { type: "agent.custom_tool_use", id: "nova", name: "decidir", processed_at: "2026-11-07T19:19:40.0Z", input: { acao: "conversa", resposta: "Vamos agendar." } },
+  ]);
+  enviados.push(JSON.parse(op.body));
+  return new Response(JSON.stringify({ data: [{ id: "m", processed_at: "2026-11-07T19:19:34.2Z" }] }), { status: 200 });
+};
+const dec5 = await turno("sesn_5", "Quero agendar um horário", comMarco);
+assert.equal(dec5.resposta, "Vamos agendar.");
+assert.equal(enviados[1].events[0].custom_tool_use_id, "velha"); assert.match(enviados[1].events[0].content[0].text, /turno anterior/);
 // "agendar", e não "marcar", nos dois agentes e nas regras
 assert.ok(regras().includes("Vocabulário:") && paraAgendador("x").includes("Vocabulário:") && paraTriagem("x").includes("Vocabulário:"));
 assert.equal(paraAgendador(paraAgendador("x")), paraAgendador("x")); assert.equal(paraTriagem(paraTriagem("x")), paraTriagem("x"));
@@ -209,4 +222,56 @@ console.log("zap_plantao: ok");
   const { AG_HORARIOS_F280 } = await import("../../zap_plantao/index.ts");
   const v4 = paraAgendador(`Agendador.\n\n${AG_HORARIOS_F280}\n7. Confirme.`);
   assert.ok(v4.includes(AG_HORARIOS) && !v4.includes(AG_HORARIOS_F280) && paraAgendador(v4) === v4, "o Agendador da v4 recebe as datas antes dos horários");
+}
+{
+  // o simulador lê a agenda de verdade, mas agendar não chega ao Apps Script
+  const { ferramentasSimuladas } = await import("../../zap_plantao/index.ts");
+  const chamadas = [];
+  const real = async (acao) => { chamadas.push(acao); return { ok: true, dias: [{ data: "2026-11-09", livres: { "001": [{ inicio: "10:30", eventoId: "ev1" }] } }] }; };
+  const { fer, uso } = ferramentasSimuladas({ telefone: "5516900000000", cliente_id: null, ligada: true }, real);
+  const v = await fer.consultar_vagas({ profissionais: ["amanda"] });
+  assert.equal(v.vagas.amanda[0].eventoId, "ev1");
+  const m = await fer.marcar_atendimento({ profissional: "amanda", eventoId: "ev1", nome: "Teste" });
+  assert.ok(m.marcado && !chamadas.includes("agendar"), "o simulador não agenda de verdade");
+  assert.deepEqual(uso.map((u) => u.nome), ["consultar_vagas", "marcar_atendimento"]);
+}
+console.log("simulador: ok");
+{
+  const { FATOS, FORMAL, AG_PREV } = await import("../../zap_plantao/index.ts");
+  const a = paraTriagem("Assistente.\n\nResponda sempre chamando a ferramenta decidir.");
+  assert.ok(a.includes(FATOS) && a.includes(FORMAL) && paraTriagem(a) === a && a.endsWith("decidir."), "a Assistente recebe as informações do escritório uma vez");
+  const g = paraAgendador("Você é a assistente. Apresente-se sempre como assistente virtual.\n\n5. Escolha:\n   - Assunto previdenciário (INSS, x): ofereça primeiro as vagas da Dra. Amanda.\n6. x");
+  assert.ok(g.includes(AG_PREV) && !g.includes("Apresente-se sempre") && g.includes(FORMAL) && paraAgendador(g) === g, "o Agendador alinha o passo 5 ao 6");
+}
+console.log("fatos: ok");
+{
+  const { PADRAO } = await import("../../zap_plantao/index.ts");
+  const a = paraTriagem("Assistente.\n\nO jeito do escritório (antigo):\n- x\n\nResponda sempre chamando a ferramenta decidir.");
+  assert.ok(a.includes(PADRAO) && !a.includes("(antigo)") && paraTriagem(a) === a, "a Assistente recebe o jeito do escritório e a versão nova troca a antiga");
+  const g = paraAgendador("Agendador.\n\n6. x");
+  assert.ok(g.includes(PADRAO) && paraAgendador(g) === g, "o Agendador recebe o jeito do escritório uma vez");
+  assert.ok(regras().includes(PADRAO));
+}
+console.log("padrao: ok");
+
+// F422m · o tratamento antigo ("o senhor" e "a senhora" sempre) sai do texto dos agentes
+{
+  const { FORMAL } = await import("../../zap_plantao/index.ts");
+  const velho = 'x\n\nRegistro: português formal e técnico, como numa carta do escritório. Trate por "o senhor" e "a senhora". Não use.\n\nFim';
+  for (const f of [paraTriagem, paraAgendador]) {
+    const t = f(velho);
+    assert.ok(!t.includes('"o senhor" e "a senhora"') && t.includes(FORMAL) && t.split("Registro: português").length === 2);
+    assert.equal(f(t), t);
+  }
+}
+console.log("formal: ok");
+{
+  const { emLinhas: el, paraTriagem: pt, ESTILO: es } = await import("../../zap_plantao/index.ts");
+  assert.equal(el("Qual benefício o senhor ou a senhora pediu ao INSS?"), "Qual benefício pediu ao INSS?");
+  assert.equal(el("Conte-nos o que o senhor ou a senhora deseja tratar."), "Conte-nos o que deseja tratar.");
+  assert.ok(!es.includes("Seja bem-vindo"));
+  const velho = "x\n\nComo escrever no WhatsApp:\nSeja bem-vindo antigo.\n\nResto";
+  const novo = pt(velho);
+  assert.ok(!novo.includes("Seja bem-vindo antigo") && novo.split("Como escrever no WhatsApp:").length === 2);
+  console.log("tratamento: ok");
 }
