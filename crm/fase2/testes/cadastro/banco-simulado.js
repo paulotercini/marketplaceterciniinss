@@ -53,7 +53,7 @@ function casa(row, col, expr) {
     case "lt": r = v !== null && v !== undefined && compara(v, val) < 0; break;
     case "lte": r = v !== null && v !== undefined && compara(v, val) <= 0; break;
     case "like": case "ilike": {
-      const rx = new RegExp("^" + val.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*").replace(/%/g, ".*") + "$", op === "ilike" ? "i" : "");
+      const rx = new RegExp("^" + val.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*").replace(/%/g, ".*") + "$", op === "ilike" ? "is" : "s");
       r = v !== null && v !== undefined && rx.test(texto(v)); break;
     }
     case "cs": { try { const alvo = JSON.parse(val.replace(/^\{/, "[").replace(/\}$/, "]")); r = Array.isArray(v) && alvo.every(x => v.map(String).includes(String(x))); } catch (e) { r = false; } break; }
