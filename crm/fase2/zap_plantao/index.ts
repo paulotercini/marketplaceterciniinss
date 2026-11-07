@@ -66,7 +66,7 @@ export type Contexto = {
   motor?: string; ma?: { agente: string | null; ambiente: string | null; versao: string | null };
   sessao?: { id: string; em: string; ate: string; v?: string } | null;
   cliente: { nome: string; mesmo_telefone: boolean; casos: Caso[] } | null;
-  remarcar?: { rotulo: string | null; profissional: string | null } | null;
+  remarcar?: { rotulo: string | null; profissional: string | null; duvida?: boolean } | null;
 };
 
 // as regras fixas: no Managed Agents são o system do agente, e cada mudança das
@@ -186,6 +186,10 @@ export function emLinhas(txt: string) {
   return t.replace(/^(.+?(?<!\b(?:Sr|Sra|Srta|Dr|Dra|Prof|Profa))[.!?])\s+(?=\S)/, "$1\n\n");
 }
 
+// o nome da pessoa no máximo uma vez, como na conversa com a recepção (pedido do Paulo de 07.11.2026)
+export const NOME_UMA_VEZ = `Nome: chame a pessoa pelo nome no máximo uma vez na conversa. Se alguma mensagem do escritório acima já usou o nome ` +
+  `(a confirmação do atendimento inclusive), escreva sem ele, também ao repassar a resposta do Agendador.\n`;
+
 // o que muda a cada mensagem
 export function contexto(x: Contexto) {
   const advs = (x.advogados || []).join(", ") || "a equipe";
@@ -199,7 +203,11 @@ export function contexto(x: Contexto) {
     `Advogados: ${advs}. As estagiárias (Ingrid, Meissa) também respondem, mas quem é avisado é o advogado.\n` +
     `Advogado indicado para esta conversa: ${x.advogado || "a equipe"}.\n${ficha}\n` +
     `Agenda: ${x.agenda ? "ligada" : "desligada"}.\n` +
-    (x.remarcar ? `Remarcação: a pessoa respondeu NÃO à confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"} e quer outro horário. ` +
+    NOME_UMA_VEZ +
+    (x.remarcar?.duvida ? `Confirmação: a pessoa recebeu a confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"} e respondeu sem dizer SIM nem NÃO. ` +
+      `Responda o que ela perguntou ou disse. Se quiser outro horário, peça ao Agendador dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, ` +
+      `um de manhã e outro à tarde, e que remarque esse atendimento. Se confirmar presença, agradeça e diga que o atendimento está mantido. Não cumprimente de novo.\n`
+    : x.remarcar ? `Remarcação: a pessoa respondeu NÃO à confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"} e quer outro horário. ` +
       `Peça ao Agendador que ofereça dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, um de manhã e outro à tarde, ` +
       `e que remarque esse atendimento quando ela escolher. Não cumprimente de novo e não peça o assunto.\n` : "") +
     (x.modo === "lead" ? `Você já está atendendo este caso novo (${x.respostas} respostas suas até aqui; agende depois de ${Math.max(1, 6 - x.respostas)} respostas).\n`
@@ -588,7 +596,8 @@ if (typeof Deno !== "undefined") {
       } else r = await claude(promptPlantao(x));
       let acao = ACOES.includes(r.acao) ? r.acao : "responder";
       if (acao === "conversa" && !x.interativa) acao = "responder";   // com a equipe na conversa, a IA não conversa
-      if (acao !== "equipe" && acao !== "nada" && x.conversa_id && await atendenteOffline(x.conversa_id).catch(() => false)) acao = "nada";
+      // a remarcação da confirmação (F422c) segue mesmo com o atendente Offline
+      if (acao !== "equipe" && acao !== "nada" && !x.remarcar && x.conversa_id && await atendenteOffline(x.conversa_id).catch(() => false)) acao = "nada";
       await rpc("zap_plantao_aplicar", {
         p_msg: msg, p_acao: acao, p_resposta: emLinhas(r.resposta), p_advogado: String(r.advogado || ""),
         p_urgente: r.urgente === true, p_assunto: String(r.assunto || ""), p_relato: String(r.relato || ""),
