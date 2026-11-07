@@ -344,3 +344,40 @@ console.log("formal: ok");
   assert.ok(rg().includes("Correções do teste"));
   console.log("ok F422r");
 }
+
+// F422s · as proteções do segundo teste de 72 conversas
+{
+  const { emLinhas: el, guardaDoTexto: gd, pendentesDoErro: pe, turno: tu } = await import("../../zap_plantao/index.ts");
+  assert.equal(el("O advogado vai responder ao senhor ou à senhora o quanto antes."), "O advogado vai responder o quanto antes.");
+  for (const t of ["ok", "Obrigada!", "ok, obrigado 👍", "Combinado. Até mais", "Bom dia"]) assert.equal(gd(t).semNada, false, t);
+  for (const t of ["Minha mãe faleceu e meu pai quer saber da pensão", "Quero falar com o Dr. Paulo"]) assert.equal(gd(t).semNada, true, t);
+  for (const t of ["Preciso remarcar", "Quero cancelar meu atendimento", "Tenho um horário marcado e não lembro o dia"]) assert.equal(gd(t).agendaPrimeiro, true, t);
+  assert.equal(gd("Vou chegar 20 minutos atrasado").agendaPrimeiro, false);
+  assert.deepEqual(pe('{"message":"waiting on responses to events [sevt_01Ab, sevt_02Cd]; only"}'), ["sevt_01Ab", "sevt_02Cd"]);
+  assert.deepEqual(pe("outro erro sevt_1"), []);
+  const ev = [];
+  const sse2 = (evs) => new Response(new ReadableStream({ start(c) { const e = new TextEncoder(); for (const x of evs) c.enqueue(e.encode(`data: ${JSON.stringify(x)}\n\n`)); c.close(); } }), { status: 200 });
+  const fake = (evs, primeiro400 = false) => { let n = 0; return async (url, op = {}) => {
+    if (/events\/stream$/.test(url)) return sse2(evs);
+    const b = JSON.parse(op.body); ev.push(b);
+    if (primeiro400 && b.events[0].type === "user.message" && !n++) return new Response('{"error":{"message":"waiting on responses to events [sevt_P]; only"}}', { status: 400 });
+    return new Response("{}", { status: 200 });
+  }; };
+  // "nada" para o falecimento é cobrado uma vez
+  let r = await tu("s", "x", fake([{ type: "agent.custom_tool_use", id: "a", name: "decidir", input: { acao: "nada", resposta: "" } },
+    { type: "agent.custom_tool_use", id: "b", name: "decidir", input: { acao: "lead", resposta: "Sentimos muito." } }]), {}, gd("Minha mãe faleceu"));
+  assert.equal(r.acao, "lead"); assert.match(ev[1].events[0].content[0].text, /não é agradecimento/);
+  // remarcar vai ao Agendador antes da equipe
+  ev.length = 0;
+  r = await tu("s", "x", fake([{ type: "agent.custom_tool_use", id: "a", name: "decidir", input: { acao: "equipe", resposta: "Um colaborador vai responder." } },
+    { type: "agent.thread_message_sent", id: "t" }, { type: "agent.thread_message_received", id: "u" },
+    { type: "agent.custom_tool_use", id: "b", name: "decidir", input: { acao: "conversa", resposta: "Há horário na quarta." } }]), {}, gd("Preciso remarcar"));
+  assert.equal(r.acao, "conversa"); assert.match(ev[1].events[0].content[0].text, /encaminhe ao Agendador/);
+  // a ferramenta pendente do turno anterior é fechada e a mensagem vai de novo
+  ev.length = 0;
+  r = await tu("s", "x", fake([{ type: "agent.custom_tool_use", id: "c", name: "decidir", input: { acao: "conversa", resposta: "Ok." } }], true));
+  assert.equal(r.acao, "conversa");
+  assert.deepEqual(ev.slice(0, 3).map((b) => b.events[0].type), ["user.message", "user.custom_tool_result", "user.message"]);
+  assert.equal(ev[1].events[0].custom_tool_use_id, "sevt_P");
+  console.log("ok F422s");
+}
