@@ -2223,6 +2223,23 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-conv .l3 > span{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
   .zap-conv .l3 > .zc-fim,.zap-conv .l3 > .bolha{flex:none;overflow:visible}
   .zap-conv .l3 .zc-adv{color:var(--texto);font-weight:500}
+  /* F428 · as não lidas na linha da prévia, como no WhatsApp; a linha das etiquetas some quando vazia */
+  .zap-conv .l2{display:flex;align-items:center;gap:8px}
+  .zap-conv .l2>span:first-child{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .zap-conv .l2>.bolha{flex:none;margin-left:auto}
+  .zap-conv .l3:not(:has(*)){display:none}
+  /* F428 · no computador a hora fica no fim do texto do balão, como no celular */
+  .app:not(.celular) .zap-tela.wa .zap-b:not(.interna) .txt{display:inline}
+  .app:not(.celular) .zap-tela.wa .zap-b:not(.interna) .pe{float:right;margin:8px 0 -4px 12px;line-height:1}
+  .app:not(.celular) .zap-tela.wa .zap-b:not(.interna) .pe .virar{position:absolute;top:50%;transform:translateY(-50%);left:100%;margin-left:6px;white-space:nowrap}
+  .app:not(.celular) .zap-tela.wa .zap-b.saida .pe .virar{left:auto;right:100%;margin:0 6px 0 0}
+  /* F428 · no WhatsApp do celular fica uma busca só, a das conversas */
+  .app.celular:has(.meio.zap-v) .busca-cel{display:none}
+  /* F428 · toque confirmado: o botão e a conversa encolhem levemente ao pressionar */
+  .zap-conv,.zap-v .zt-btn,.zap-v .zl-topo button,.zap-escrever button{transition:transform 120ms ease-out}
+  .zap-conv:active{transform:scale(.99)}
+  .zap-v .zt-btn:active,.zap-v .zl-topo button:active,.zap-escrever button:active{transform:scale(.96)}
+  @media (prefers-reduced-motion:reduce){.zap-conv,.zap-v .zt-btn,.zap-v .zl-topo button,.zap-escrever button{transition:none}}
   .zap-conv .l3 > span + span:not(.zc-fim)::before{content:"·";margin-right:6px;color:var(--cinza-claro,var(--cinza))}
   /* a classe "nova" é também a do aviso de novidades (cartão branco com borda e 12 px de margem): na lista, a conversa não lida
      pintava um cartão e a lida não, e as duas pareciam de listas diferentes */
@@ -2270,7 +2287,6 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
      as ações do balão ficam na linha da hora, sem cobrir o texto */
   .zt-voltar{display:none}
   /* F356 · o "i" abre a ficha do cliente onde ela é gaveta ou tela cheia; no computador largo ela fica fixa ao lado */
-  .zt-info b{font-style:italic;font-weight:700;font-size:15px;line-height:1}
   @media (min-width:1280px){.app:not(.celular) .zt-info{display:none}}
   .app.celular .zap-dir:has(.zap-vazio){display:none}
   .app.celular .zap-lado{max-height:none}
@@ -2882,7 +2898,7 @@ dialog.confirmar::backdrop{background:rgba(15,17,22,.38)}
 .arv-nome{border:0;background:none;padding:0;font:inherit;font-weight:500;color:var(--azul,#2B5FC7);cursor:pointer;text-align:left}span.arv-nome{color:var(--mut,#5d6675);cursor:default}.arv-doc.dec .arv-nome{color:#a3261d;font-weight:600}
 .arv-et.dec{font-weight:600}.arv-mov{font-size:12px;color:var(--mut,#5d6675)}.arv-txt{flex-basis:100%;font-size:12px;color:var(--mut,#5d6675);overflow-wrap:anywhere}.arv-antes>summary,.arv-dia details>summary{cursor:pointer;font-size:12px;color:var(--azul,#2B5FC7);padding:3px 0}.proc-q{border:1px solid var(--linha,#dfe3ea);border-radius:8px;margin-bottom:8px}.proc-q>summary{cursor:pointer;padding:8px 10px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.proc-id{font-family:var(--f-mono,ui-monospace,monospace);font-size:12px}.proc-tit{font-weight:600;flex:1 1 200px;min-width:0}.proc-sit{font-size:12px;padding:1px 8px;border-radius:99px;background:var(--fundo-sutil,#eef1f5)}.proc-sit.dec{color:#a3261d;font-weight:600}.proc-corpo{padding:4px 10px 10px;display:grid;gap:6px}.proc-lig{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.proc-tela{max-width:900px;max-height:80vh;overflow:auto}.pat-arv{list-style:none;margin:0;padding-left:18px}.pat-arv.pat-raiz{padding-left:0}.pat-arv li{margin:3px 0}.pat-arv summary{cursor:pointer}
 .proc-abas{display:inline-flex;flex-wrap:wrap;gap:2px;padding:2px;background:#EBEEF3;border-radius:8px}.proc-abas button{border:0;background:none;font:inherit;font-size:13px;padding:4px 10px;border-radius:6px;cursor:pointer;color:var(--cinza,#4a4f57);font-variant-numeric:tabular-nums;transition:background-color 150ms ease}.proc-abas button.on{background:#fff;color:#16181d;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}.proc-abas-n{font-size:11px;color:var(--mut,#5d6675);font-weight:400}.proc-abas button:focus-visible{outline:2px solid #2B5FC7;outline-offset:1px}
-/* F428b · o acabamento da árvore e do leitor: resposta ao toque, foco visível e o ⋯ que abre do próprio botão */
+/* F429b · o acabamento da árvore e do leitor: resposta ao toque, foco visível e o ⋯ que abre do próprio botão */
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha2{flex:1 1 320px}
 .arv-doc{border-radius:4px}.arv-nome:focus-visible,.proc-v .btn-mini:focus-visible{outline:2px solid #2B5FC7;outline-offset:2px}
 @media (hover:hover) and (pointer:fine){.arv-doc:not(.sel):hover{background:#F6F8FB}.arv-nome:hover{text-decoration:underline;text-underline-offset:2px}}
@@ -15912,7 +15928,7 @@ function cartaoConversa(c){
     <div class="zc-corpo">
       <div class="l1"><b>${esc(nomeDaConversa(c))}</b>
         <span class="hora">${c.ultima_em?quandoFalou(c.ultima_em):""}</span></div>
-      <div class="l2">${esc(previaZap(c.ultimo_texto).slice(0,80))}</div>
+      <div class="l2"><span>${esc(previaZap(c.ultimo_texto).slice(0,80))}</span>${c.nao_lidas?`<span class="bolha" aria-label="${c.nao_lidas} não lidas">${c.nao_lidas}</span>`:""}</div>
       <div class="l3">
         ${advDaConversa(c)?`<span class="zc-adv" title="advogado responsável: ${esc(advDaConversa(c))}">${esc(advDaConversa(c).split(" ")[0])}</span>`:""}
         ${s?`<span class="zc-setor"><i style="background:${esc(s.cor)}"></i>${esc(s.nome)}</span>`:""}
@@ -15921,7 +15937,6 @@ function cartaoConversa(c){
         ${!cli?"":c.contato_nome?`<span class="zc-cli">Cliente <b>${esc(cli.nome.split(" ").slice(0,2).join(" "))}</b>${c.contato_relacao?` · ${esc(c.contato_relacao)}`:""}</span>`:""}
         ${r?`<span class="zc-ret" title="${esc(r.nota||"")}">Retorno ${diaZap(r.quando)} ${horaSP(r.quando)}</span>`:""}
         ${c.bot_ativo?`<span>Robô</span>`:""}
-        ${c.nao_lidas?`<span class="bolha zc-fim" aria-label="${c.nao_lidas} não lidas">${c.nao_lidas}</span>`:""}
       </div>
     </div></div>`;
 }
@@ -16033,7 +16048,7 @@ function dadosDaConversaZap(c){
          ${etiquetasDe(c).map(e=>`<button class="zt-chip" style="${tintaZap(esc(e.cor))}" onclick="editarEtiquetas()">${esc(e.texto)}</button>`).join("")}
          <button class="zt-chip novo" onclick="editarEtiquetas()">+ etiqueta</button>
          ${r?`<button class="zt-ret" onclick="novoRetorno()" title="mudar o retorno">${zic("relogio",14)}Retorno ${diaZap(r.quando)}, ${horaSP(r.quando)}${r.nota?` · ${esc(r.nota)}`:""}</button>`:""}
-` };
+`, igual };
 }
 
 function pintarConversa(){
@@ -16061,12 +16076,12 @@ function pintarConversa(){
            <div class="zt-nm"><h2 role="button" tabindex="0" title="ver a ficha" onclick="alternarFichaZap()" onkeydown="if(event.key==='Enter')alternarFichaZap()">${esc(nomeDaConversa(c))}</h2>
              ${cli?"":`<button class="zt-renomear" onclick="nomearConversa()" title="Alterar o nome do contato" aria-label="Alterar o nome do contato">✎</button>`}</div>
            <div class="zt-sub">
-${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConversa()":"vincularConversa()"}" title="${cli?"corrigir quem escreve":"vincular a um cliente"}">${clienteDaLinha(c)}</button>
+${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConversa()":"vincularConversa()"}" title="${cli?"corrigir quem escreve":"vincular a um cliente"}">${dz.igual?esc(foneZap(c.telefone)):clienteDaLinha(c)}</button>
            </div>
          </div>
          <div class="zt-acoes">
            ${!at&&!fim?`<button class="zt-btn zt-assumir" onclick="assumirConversa()" title="Assumir a conversa">${zic("ok")}<span>Assumir</span><span class="sr-only"> a conversa</span></button>`:""}
-           ${cli?`<button class="zt-btn ic zt-info" onclick="alternarFichaZap()" title="Ficha do cliente" aria-label="Ficha do cliente"><b aria-hidden="true">i</b></button>`:""}
+           ${cli?`<button class="zt-btn ic zt-info" onclick="alternarFichaZap()" title="Ficha do cliente" aria-label="Ficha do cliente"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>`:""}
            <button class="zt-btn ic ${zapBuscaConv?"on":""}" onclick="abrirBuscaZap()" title="buscar nesta conversa" aria-label="Buscar na conversa">${zic("busca")}</button>
            ${cfgApp("zap_ia_equipe")==="sim"?`<button class="zt-btn" onclick="iaZap('resumo')" title="a IA resume a conversa para você (nada vai ao cliente)" aria-label="Resumo">✨<span class="lbl">Resumo</span></button>
            ${pode&&!fim?`<button class="zt-btn" onclick="iaZap('rascunho')" title="a IA escreve uma resposta no campo; confira antes de enviar" aria-label="Rascunho">✨<span class="lbl">Rascunho</span></button>`:""}`:""}
@@ -16152,9 +16167,9 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
              <button onclick="this.closest('details').open=false;agendarZap()" title="Agendar o envio">Agendar<span class="sr-only"> o envio</span></button>
            </div></details>`}
          <div class="ze-caixa">
-           <textarea id="zap-txt" rows="1" placeholder="${zapNota
+           <textarea id="zap-txt" rows="1" placeholder="${zapNota?"Nota para a equipe":"Mensagem"}" title="${zapNota
              ? "Anotação para a equipe, o cliente não vê. Avisa quem atende e o advogado do cliente; @nome avisa outra pessoa."
-             : `Escreva para ${esc(c.cliente_id?nomeDaConversa(c).split(" ")[0]:nomeDaConversa(c))}…  digite / para mensagens prontas`}"></textarea>
+             : "Digite / para as mensagens prontas"}"></textarea>
            <div class="ze-ferr">
              <input type="file" id="zap-arq" hidden onchange="mandarArquivoZap()">
              <details class="ze-emo"${emoAberto?" open":""}><summary class="zap-icone" title="emojis" aria-label="Emojis">${zic("emoji")}</summary>
@@ -43584,7 +43599,7 @@ function itensDoProcesso(k, x){
 // a ordem da árvore: a data mais nova no alto e, no mesmo dia, a decisão e a juntada
 const ordemArvDia = (a,b) => (b.dec-a.dec) || (a.tipo===b.tipo ? (a.tipo==="doc" ? ordemPeca(a.d, b.d) : 0) : a.tipo==="doc" ? -1 : 1);
 const ordemArv = (a,b) => String(b.data).localeCompare(String(a.data)) || ordemArvDia(a,b);
-// F428 · a etiqueta que se repete em quase todo item some: a origem da maioria (o Juízo no Judicial) fica no
+// F429 · a etiqueta que se repete em quase todo item some: a origem da maioria (o Juízo no Judicial) fica no
 // cabeçalho da árvore, e "Decisão" não se repete quando o nome já diz (Sentença, Decisão, Acórdão)
 function oriComum(l){
   const c = new Map(); l.forEach(y=>y.ori && c.set(y.ori, (c.get(y.ori)||0)+1));
@@ -43727,7 +43742,7 @@ function vistaProcessos(k, aba){
   const ligados = ["inss","crps","cnj"].filter(a=>a!==aba).flatMap(a=>processosDaFase(k, a))
     .filter(y=>{ const o = nbDe(y); return !nb || !o || o===nb; });
   const n = docsLegiveis(k, x).length;
-  // F428c · com dois a quatro processos, uma aba por processo (o nome curto, a Justiça e quantos documentos);
+  // F429c · com dois a quatro processos, uma aba por processo (o nome curto, a Justiça e quantos documentos);
   // acima disso, a lista. O título igual ao número não se repete.
   const rotProc = y => soDig(y.tit).includes(soDig(y.id)) ? y.id : `${y.id} · ${y.tit}`;
   const curtoProc = y => { const g = soDig(y.id);
@@ -43753,7 +43768,7 @@ function vistaProcessos(k, aba){
     x.aba!=="cnj" ? `<button class="btn-mini" onclick="telaDoProcesso('${k.id}','${aba}',${i})" title="a tela do ${x.aba==="inss"?"PAT":"e-SISREC"}: cabeçalho, comentários e movimentações">Tela</button>` : "",
     x.aba==="cnj" && expedientesDe(k, x.d).length ? `<button class="btn-mini" onclick="telaExpedientes('${k.id}',${i})" title="a aba Expedientes do PJe: atos de comunicação, data limite e fechado">Expedientes</button>` : "",
     `<button class="btn-mini" onclick="mudarVistaProc(false)" title="a tela anterior desta aba: as fontes, a fase e a gestão dos processos">Detalhes</button>`];
-  // F428 · uma ação à vista (Ler); as demais no ⋯, para a barra caber numa linha
+  // F429 · uma ação à vista (Ler); as demais no ⋯, para a barra caber numa linha
   const btsHtml = bts[0] + `<details class="tl-mais proc-mais"><summary class="tl-bt tl-bt-ic" aria-label="Mais ações do processo" title="baixar, Claude, portal, tela e detalhes">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${bts.slice(1).join("")}</span></details>`;
   const d = n ? procEscolhido(k, aba, i, x) : null;
   if(d) setTimeout(procDesenhar, 0);
