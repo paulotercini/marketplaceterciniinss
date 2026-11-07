@@ -5502,6 +5502,10 @@ html .desf .desf-outras{align-items:center}
   /* F276 · nas linhas das listas e do Meu Dia, conferir, urgente e importante aparecem ao passar o mouse; o marcado fica */
   html .cartao .conf-bts.ag-conf,html .cartao .acoes .acao-card:not(.on){opacity:0;transition:opacity 120ms ease-out}
   html .cartao:is(:hover,:focus-within) :is(.conf-bts.ag-conf,.acoes .acao-card){opacity:1}
+  /* os botões de conferir não reservam lugar: a linha de hoje deslocava selo e responsável das demais */
+  html #conteudo-meio .cartao.ag-linha{position:relative}
+  html #conteudo-meio .cartao.ag-linha .conf-bts.ag-conf{position:absolute;right:76px;top:50%;transform:translateY(-50%);margin:0;padding-left:8px;background:inherit;pointer-events:none}
+  html #conteudo-meio .cartao.ag-linha:is(:hover,:focus-within) .conf-bts.ag-conf{pointer-events:auto}
 }
 /* F273 · com mouse, a frase de explicação sai da tela e vira a dica do título, que ganha um "i" discreto; no toque
    (celular) não há passar o mouse, e a frase continua à vista */
@@ -6499,7 +6503,8 @@ html[data-tema="v10"] .esc-v12 .esc-pes{display:flex;flex-wrap:wrap;gap:6px;alig
 /* o pé: o que acontece ao registrar, os gestos de um clique em texto e o Registrar, vermelho com prazo fatal */
 html[data-tema="v10"] .esc-v12 .esc-fim{gap:8px;border-top:0;padding-top:4px;flex-wrap:nowrap}
 html[data-tema="v10"] .esc-v12 .esc-fim .esc-frase{flex:1 1 0;min-width:0}
-.app.celular .escrever.esc-v12:not(.esc-aberto){flex-wrap:wrap;gap:4px}.app.celular .escrever.esc-v12:not(.esc-aberto) #and-texto{flex:1 1 100%;width:100%}
+/* fechado no celular, o lápis fica na linha do texto (antes caía para baixo dele) */
+.app.celular .escrever.esc-v12:not(.esc-aberto){flex-wrap:nowrap;align-items:center;gap:8px}.app.celular .escrever.esc-v12:not(.esc-aberto) textarea#and-texto{flex:1 1 auto!important;width:auto;order:0}
 .app.celular .esc-v12 .esc-tgs{flex-wrap:nowrap}.app.celular .esc-v12 :is(.esc-tg,.tipo-mais > summary.tipo-ch){padding:0 6px}.app.celular .esc-v12 .esc-sep{margin:0 2px}.app.celular .esc-v12 .esc-ic{width:28px;height:28px}
 .app.celular .esc-v12 .esc-fim{flex-wrap:wrap}.app.celular .esc-v12 .esc-fim .esc-frase{flex-basis:100%}
 html[data-tema="v10"] .esc-v12 .esc-fim .tipo-fila{display:flex;flex-wrap:nowrap;align-items:center;gap:2px;margin:0;overflow:visible}
@@ -6561,7 +6566,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.70</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.71</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8742,7 +8747,7 @@ function sincronizarEtapaVelha(k, p){
 // o aviso ao lado da etapa (placa do v10 e cartão do clássico): "Sugestão: <etapa> (pelo <fato> de dd/mm) — Aceitar"
 const rotuloProposta = p => `${p.mover?`${NOME_FASE[p.mover]||p.mover} · `:""}${p.etapa}${p.etapa==="decidido"&&p.resultado?` · ${p.resultado}`:""}`;
 function sugestaoEtapa(k, p){
-  return `<span class="lc-jan et-sug">Sugestão: <b>${esc(rotuloProposta(p))}</b> (${esc(porDaProposta(p))}) —
+  return `<span class="lc-jan et-sug">Sugestão: <b>${esc(rotuloProposta(p))}</b> (${esc(porDaProposta(p))})
     <button class="et-aceitar" onclick="aceitarEtapaProposta('${k.id}')" title="grava esta etapa, registra no caso e pode ser desfeito">Aceitar</button></span>`;
 }
 function avisoEtapa(k){
@@ -17964,7 +17969,7 @@ async function renderConfig(){
     +     // ── quem atende ──────────────────────────────────────────────────────
     `<h3 class="secao">👥 Quem atende o WhatsApp</h3>
      <p class="meio-sub">Não é cadastro novo: é a mesma equipe do CRM. Quem não
-        estiver marcado nunca recebe conversa — e quem já cuida do cliente tem
+        estiver marcado nunca recebe conversa, e quem já cuida do cliente tem
         preferência sobre o setor.</p>
      <div class="cfg-cx">${equipeAtiva().map(c=>
        `<div class="cfg-linha">
@@ -18089,7 +18094,7 @@ async function renderConfig(){
     // ── avisos ───────────────────────────────────────────────────────────
     + `<h3 class="secao">🔔 Avisos automáticos (${cfgAvisos.length})</h3>
        <p class="meio-sub">Use <code>{nome}</code>, <code>{data}</code>, <code>{hora}</code>,
-          <code>{local}</code> — o sistema troca na hora de enviar. <b>Conferir antes</b>
+          <code>{local}</code>: o sistema troca na hora de enviar. <b>Conferir antes</b>
           faz a mensagem virar rascunho em vez de sair: bom enquanto ninguém confia no robô.</p>
        ${cfgAvisos.map(a=>`<div class="cfg-reg ${a.ativo?"":"off"}">
           <div class="cfg-linha">
@@ -18363,7 +18368,7 @@ function renderMarketing(){
         <div class="tubo" style="flex:1;height:10px;background:var(--fundo);border-radius:5px;overflow:hidden"><i style="display:block;height:100%;width:${n/max*100}%;background:var(--azul);border-radius:5px"></i></div>
         <span class="chip neutro">${n} andamentos/30d</span>
         <span class="chip fase">${cs.length} clientes ativos</span>
-        ${tels.length?`<button class="btn-mini" onclick='copiar(${JSON.stringify(tels.join("\n"))},"${tels.length} telefones copiados — lista de transmissão 📣")'>📋 telefones (${tels.length})</button>`:""}
+        ${tels.length?`<button class="btn-mini" onclick="copiar(${esc(JSON.stringify(tels.join("\n")))},'${tels.length} telefones copiados, lista de transmissão 📣')">📋 telefones (${tels.length})</button>`:""}
       </div>`;
     }).join("") || "<p class='meio-sub'>Sem atividade registrada nos últimos 30 dias.</p>";
 }
@@ -21503,7 +21508,7 @@ function triagemLeitura(passo, c, ks){
   }
   if(passo==="cadunico"){
     const loas = (ks||[]).filter(k=>ehLoas(k));
-    if(!loas.length) return {cor:"neutro", txt:"nenhum caso de BPC/LOAS — o CadÚnico não é exigido aqui"};
+    if(!loas.length) return {cor:"neutro", txt:"nenhum caso de BPC/LOAS; o CadÚnico não é exigido aqui"};
     const comData = loas.filter(k=>k.cadunico);
     if(!comData.length) return {cor:"alerta", txt:"caso de BPC sem a data do CadÚnico anotada"};
     const venc = comData.map(k=>renovaCadunico(k)).filter(Boolean).sort()[0];
@@ -24049,8 +24054,8 @@ function painelMensagensFicha(c, ks, evs){
       const exigK = ks.find(k=>k.exigencia_prazo);
       const pronto = preencher(m.texto, c, ev, exigK&&exigK.exigencia_prazo);
       return `<div class="modelo"><div class="cab"><strong>${esc(m.titulo)}</strong>
-        <button class="btn-mini" onclick='copiar(${JSON.stringify(pronto)},"Mensagem copiada")'><span class="ic-bt">${CAD_IC.copiar}</span>copiar</button>
-        ${c.telefone?`<button class="btn-mini" onclick='window.open("https://wa.me/55${c.telefone.replace(/\D/g,"")}?text="+encodeURIComponent(${JSON.stringify(pronto)}),"_blank")'>${iconeFonte("zap")}</button>`:""}</div>
+        <button class="btn-mini" onclick="copiar(${esc(JSON.stringify(pronto))},'Mensagem copiada')"><span class="ic-bt">${CAD_IC.copiar}</span>copiar</button>
+        ${c.telefone?`<button class="btn-mini" onclick="window.open('https://wa.me/55${c.telefone.replace(/\D/g,"")}?text='+encodeURIComponent(${esc(JSON.stringify(pronto))}),'_blank')">${iconeFonte("zap")}</button>`:""}</div>
         <div class="previa">${esc(pronto)}</div></div>`;
     }).join("")}
     <p class="meio-sub" style="margin-top:14px">Documentos para imprimir (preenchidos com os dados do cliente):</p>
@@ -25656,7 +25661,7 @@ function painelLembretes(c, naJanela){
         <button class="btn-mini" onclick="lembreteAvisado('${l.id}','manual')"
           title="${l.intervalo_meses?`registra o aviso e rearma para daqui a ${l.intervalo_meses} mês(es)`:"registra e desliga (aviso único)"}"><span aria-hidden="true">✔ Avisado</span><span class="sr-only">✔ avisado hoje</span></button>
         ${c.telefone?`<button class="btn-mini" onclick="zapAvisoLembrete('${l.id}')" title="abre o WhatsApp com a mensagem pronta e registra o aviso">${iconeFonte("zap")}</button>`:""}
-        <button class="btn-mini" onclick='copiar(${JSON.stringify(msgLembrete(l,c))},"Mensagem copiada 💬")' title="📋 copiar msg"><span aria-hidden="true">📋 Copiar</span><span class="sr-only">📋 copiar msg</span></button>
+        <button class="btn-mini" onclick="copiar(${esc(JSON.stringify(msgLembrete(l,c)))},'Mensagem copiada 💬')" title="📋 copiar msg"><span aria-hidden="true">📋 Copiar</span><span class="sr-only">📋 copiar msg</span></button>
         <span class="lembrar-caixa">🗓 adiar para <input type="date" min="${hoje()}" onchange="adiarLembrete('${l.id}',this.value)"></span>
         <button class="btn-mini" style="margin-left:auto" onclick="desligarLembrete('${l.id}')"
           title="desliga sem apagar — o histórico de avisos fica guardado">✕ desligar</button>
@@ -43693,7 +43698,7 @@ function painelINSS(k, ands){
     return comp + `<div class="caso">
       <div style="display:flex;align-items:center;gap:8px">
         <p class="meio-sub" style="flex:1">Sem comentários do INSS neste
-        processo ainda. Eles chegam pela importação do PAT (coleta da extensão) —
+        processo ainda. Eles chegam pela importação do PAT (coleta da extensão):
         quando o INSS escrever algo no processo, aparece aqui, igual ao site.</p>
         ${botaoFaseAba(k, "pat")}
         ${seloArquivo(k, "pat")}
