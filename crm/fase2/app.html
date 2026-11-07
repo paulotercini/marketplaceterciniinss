@@ -2864,8 +2864,8 @@ dialog.confirmar::backdrop{background:rgba(15,17,22,.38)}
 .app.celular .escrever .tipo-fila::-webkit-scrollbar{display:none}
 .app.celular .escrever .tipo-ch{flex:none;white-space:nowrap}
 .app.celular .det-rolagem{padding-bottom:180px}
-.proc-cartoes{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}.proc-cartao{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:6px 12px;border:1px solid var(--linha,#dfe3ea);border-radius:8px;background:var(--fundo-card,#fff);cursor:pointer;font:inherit;color:inherit}.proc-cartao span{font-size:12px;color:var(--mut,#5d6675)}.proc-cartao.on{border-color:currentColor;box-shadow:inset 0 -3px 0 currentColor}.proc-barra{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px}.proc-bts{display:flex;gap:6px;flex-wrap:wrap}.proc-pri{background:#1E6F50;border-color:#1E6F50;color:#fff;font-weight:600}.proc-sel{max-width:100%;min-width:0;flex:1 1 240px;font:inherit}.proc-barra2{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-bottom:8px}.proc-arv{margin-bottom:10px}
-.proc-v{container-type:inline-size}.proc-barra{justify-content:flex-start}.proc-barra .proc-tit{flex:0 1 auto}.proc-bts{margin-left:auto}
+.proc-cartoes{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}.proc-cartao{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:6px 12px;border:1px solid var(--linha,#dfe3ea);border-radius:8px;background:var(--fundo-card,#fff);cursor:pointer;font:inherit;color:inherit}.proc-cartao span{font-size:12px;color:var(--mut,#5d6675)}.proc-cartao.on{border-color:currentColor;box-shadow:inset 0 -3px 0 currentColor}.proc-barra{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px}.proc-bts{display:flex;gap:6px;flex-wrap:wrap}.btn-mini.proc-pri{background:#1E6F50;border-color:#1E6F50;color:#fff;font-weight:600}.proc-sel{max-width:100%;min-width:0;flex:1 1 240px;font:inherit}.proc-barra2{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-bottom:8px}.proc-arv{margin-bottom:10px}
+.proc-v{container-type:inline-size}.app:not(.celular) .proc-leitor .pl-corpo{scroll-padding-bottom:150px}.app:not(.celular) .proc-leitor .pl-corpo::after{content:"";display:block;height:150px}.proc-barra{justify-content:flex-start}.proc-barra .proc-tit{flex:0 1 auto}.proc-bts{margin-left:auto}
 .proc-situ{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;background:var(--fundo-card,#fff);border:1px solid var(--linha,#dfe3ea);border-radius:6px;padding:7px 12px;margin-bottom:10px;font-size:13px}.proc-situ .dec{color:#a3261d;font-weight:600}.proc-situ .proc-lig{margin-left:auto}
 .proc-grade{display:grid;grid-template-columns:minmax(240px,340px) minmax(0,1fr);gap:12px;align-items:start}.proc-grade.so-arv{grid-template-columns:minmax(0,1fr)}
 .proc-grade .proc-arv{background:var(--fundo-card,#fff);border:1px solid var(--linha,#dfe3ea);border-radius:6px;margin:0;max-height:78vh;overflow:auto;padding:0 10px 8px}
@@ -6561,7 +6561,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.70</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.71</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -36644,12 +36644,13 @@ function piMarcou(){
 let _piObs = null;
 function fecharProcessoInteiro(){
   if(_piObs){ _piObs.disconnect(); _piObs = null; }
-  const el = document.getElementById("proc-inteiro"); if(el){ soltarPdfs(el); el.remove(); }
+  const el = document.getElementById("proc-inteiro"); if(el){ if(el._longe) el._longe.disconnect(); soltarPdfs(el); el.remove(); }
   document.body.style.overflow = "";
   document.removeEventListener("keydown", _piTecla, true);
 }
 function _piTecla(e){
-  if(e.key==="Escape" && !document.querySelector("#modal:not([style*='none']) *")) return fecharProcessoInteiro();
+  // o Esc fecha só o processo inteiro, e não a ficha que está por baixo
+  if(e.key==="Escape" && !document.querySelector("#modal:not([style*='none']) *")){ e.preventDefault(); e.stopImmediatePropagation(); return fecharProcessoInteiro(); }
   // F392 · zoom pelo teclado: + e - aumentam e diminuem, 0 volta a 100 %
   if(/^(input|textarea|select)$/i.test((e.target||{}).tagName||"") || e.altKey) return;
   const z = {"+":1, "=":1, "-":-1, "0":0}[e.key];
@@ -36708,6 +36709,19 @@ function abrirProcessoInteiro(casoId, lista, caminho, titulo){
     }
   }, {root:autos, rootMargin:"600px 0px"});
   autos.querySelectorAll(".pi-peca").forEach(x=>_piObs.observe(x));
+  // a peça que ficou longe da tela é solta inteira (o PDF, o HTML do PJe), com a altura guardada,
+  // e se desenha de novo ao voltar: o processo de centenas de peças não enche a memória
+  const longe = new IntersectionObserver(ents=>{
+    for(const e of ents){ const sec = e.target;
+      if(e.isIntersecting || !sec.dataset.feito) continue;
+      const h = sec.offsetHeight; soltarPdfs(sec);
+      sec.querySelectorAll(".pi-pag").forEach(x=>x._obs && x._obs.unobserve(x));
+      sec.querySelectorAll(".pi-pag,.pi-folha").forEach(x=>{ x._fora = 1; x.remove(); });
+      sec.insertAdjacentHTML("beforeend", `<div class="pi-folha" style="min-height:${Math.max(0, h - (sec.querySelector("h4")?.offsetHeight||0))}px"></div>`);
+      delete sec.dataset.feito; }
+  }, {root:autos, rootMargin:"5000px 0px"});
+  autos.querySelectorAll(".pi-peca").forEach(x=>longe.observe(x));
+  el._longe = longe;
   // a árvore acende a peça que está no alto da leitura
   const secs = [...autos.querySelectorAll(".pi-peca")], bts = [...el.querySelectorAll(".pi-arvore button")];
   const acender = ()=>{ const topo = autos.getBoundingClientRect().top + 80;
@@ -36775,7 +36789,7 @@ async function desenharPeca(d, caixaEl){
     if(/^text\//.test(d.tipo||"")){
       // o HTML do PJe sem script nenhum (sandbox sem allow-scripts); a mesma
       // origem serve só para medir a altura da folha
-      const html = await r.text();
+      const html = await r.text(); if(caixaEl._fora) return;
       const f = document.createElement("iframe");
       f.setAttribute("sandbox","allow-same-origin"); f.srcdoc = html;
       f.onload = ()=>{ try{ f.style.height = (f.contentDocument.documentElement.scrollHeight+20)+"px"; }catch(e){} piAcender(); };
@@ -36783,7 +36797,7 @@ async function desenharPeca(d, caixaEl){
     }
     const lib = await carregarPdfJs();
     const pdf = await lib.getDocument({data:new Uint8Array(await r.arrayBuffer()), isEvalSupported:false}).promise;
-    if(!sec.isConnected){ pdf.destroy(); return; }
+    if(!sec.isConnected || caixaEl._fora){ pdf.destroy(); return; }
     (sec._pdfs = sec._pdfs || []).push(pdf);
     // F400 · cada folha nasce vazia, do tamanho certo, e só se desenha perto da tela; a que se afasta
     // é solta. Antes todas as folhas de todas as peças ficavam desenhadas e o processo grande travava.
@@ -36797,6 +36811,7 @@ async function desenharPeca(d, caixaEl){
     }
     piAcender();
   }catch(e){
+    if(caixaEl._fora) return;
     if(!caixaEl.isConnected) sec.appendChild(caixaEl);
     caixaEl.innerHTML = `<p class="meio-sub">Não consegui mostrar esta peça. <button class="btn-mini" onclick="${d.id?`abrirAnexo('${escJs(d.id)}')`:`abrirDecisao('${escJs(d.caminho)}')`}" title="Abrir em outra guia"><span aria-hidden="true">Abrir ↗</span><span class="sr-only">Abrir em outra guia</span></button></p>`;
 
