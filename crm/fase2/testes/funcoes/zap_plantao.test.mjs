@@ -178,6 +178,8 @@ const pi = promptIntencao({ ...base, mensagens: [
   { direcao: "entrada", por_bot: false, tipo: "texto", texto: "Estarei ocupado nesse dia", momento: "2026-11-07T12:01:00Z" }] });
 assert.ok(pi.includes("<resposta>Estarei ocupado nesse dia</resposta>") && pi.includes("Podemos contar com a sua presença?"));
 assert.deepEqual(ESQ_INTENCAO.properties.intencao.enum, ["confirmar", "remarcar", "outro"]);
+{ const antigo = "Agendador.\n\n6. Chame consultar_vagas (no CRM). Se o assunto é previdenciário, ofereça três horários numerados.\n7. Confirme.";
+  const novo = paraAgendador(antigo); assert.ok(novo.includes(AG_HORARIOS) && !novo.includes("três horários numerados") && paraAgendador(novo) === novo); }
 console.log("zap_plantao: ok");
 
 // F422i · na dúvida, a equipe; o atendimento marcado se acha pela ficha do número mesmo com quem escreve por outra pessoa
