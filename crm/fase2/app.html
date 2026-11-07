@@ -3681,6 +3681,7 @@ html[data-tema="v10"] .ag-data.venc{color:var(--venc-tinta)}
 html[data-tema="v10"] .ag-data.hoje{color:var(--hoje-tinta)}
 html[data-tema="v10"] .ag-txt{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px;color:var(--texto)}
 html[data-tema="v10"] .ag-txt b{font-weight:600}
+html[data-tema="v10"] .ag-txt .ag-oque{font-weight:400;color:var(--cinza,#4A4944)}
 html[data-tema="v10"] .ag-res{color:var(--cinza)}
 html[data-tema="v10"] .ag-selos{flex:none;display:inline-flex;align-items:center;gap:4px}
 html[data-tema="v10"] .ag-selos > span{font-size:11px;line-height:18px;padding:0 6px;border-radius:4px;white-space:nowrap}
@@ -6561,7 +6562,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.70</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.71</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -13764,6 +13765,26 @@ async function buscarTextosAgenda(ids){
   }
   if((["planejado","meudia","calendario","minhas","importante"].includes(visao) || String(visao).startsWith("fase:")) && !clienteAberto) render();   // F236 · listas e calendário também
 }
+// F427 · o prazo fatal do caso sem tarefa diz do que é na agenda: a anotação com o carimbo da data ou, no "Concluir em" do
+// To Do, a última anotação do To Do. O texto não vem na carga inicial: busca-se uma vez por caso e data, e repinta
+const motivoPz = new Map(), motivoPedido = new Set(), chaveMotivo = k => `${k.id}|${k.prazo}`;
+async function buscarMotivosPz(ks){
+  const falta = [...new Set(ks)].filter(k=>k && k.prazo && !k.lembrar_motivo && !motivoPedido.has(chaveMotivo(k)));
+  if(!falta.length) return;
+  falta.forEach(k=>motivoPedido.add(chaveMotivo(k)));
+  let achou = false;
+  for(let i=0;i<falta.length;i+=50){
+    const lote = falta.slice(i,i+50);
+    const r = await api(`/rest/v1/andamentos?select=id,caso_id,texto,origem,autor_id,criado_em,responde_a,excluir&caso_id=in.(${lote.map(k=>k.id).join(",")})&or=(origem.eq.todo,texto.like.*%5BPRAZO*)&order=criado_em.desc`).catch(()=>[]);
+    for(const k of lote){
+      const dos = (r||[]).filter(a=>a.caso_id===k.id && !a.excluir), c = dos.find(a=>(a.texto||"").includes(`[PRAZO ${fmt(k.prazo)}]`));
+      const f = c ? fraseDoTodo(c.texto) : prazoDoTodo(k) ? (notaDoTodo(k, dos)||{}).frase : "";
+      if(f){ motivoPz.set(chaveMotivo(k), f); achou = true; }
+    }
+  }
+  if(achou && (["planejado","meudia","minhas","importante"].includes(visao) || String(visao).startsWith("fase:")) && !clienteAberto) render();
+}
+const motivoDoPrazo = k => k.lembrar_motivo || motivoPz.get(chaveMotivo(k)) || "";
 // "⏰ [PRAZO 12.10.2026] Protocolar recurso. Verificar..." -> "protocolar recurso"
 // F236 · com `quem`, a frase que chama a pessoa ("@Paulo, confira…") abre o resumo e a primeira do
 // comentário vem depois: a linha da agenda diz o que ELA tem de fazer, sem perder do que se trata
@@ -13821,7 +13842,7 @@ function itensAgendaTodos(){
     const donosPz = comTf.length ? (donos||[]).filter(d=>!comTf.includes(d)) : donos;
     if(k.prazo && !igual && (!comTf.length || donosPz.length)) por(volta ? {data:k.prazo, k, cli, selo:"Volta à fila", resumo:k.lembrar_motivo||tituloCaso(k)}
       : prazoEhRetorno(k) ? {data:k.prazo, k, cli, selo:"Retorno", resumo:k.lembrar_motivo||tituloCaso(k)}
-      : {data:k.prazo, k, cli, fatal:true, resumo:k.lembrar_motivo||tituloCaso(k)}, donosPz);
+      : {data:k.prazo, k, cli, fatal:true, resumo:motivoDoPrazo(k)||tituloCaso(k), motivo:motivoDoPrazo(k)}, donosPz);
     // a data de início do Planner: o prazo fatal entra na agenda também no dia de começar
     if(k.prazo && k.prazo_inicio && k.prazo_inicio<k.prazo) por({data:k.prazo_inicio<hj ? hj : k.prazo_inicio, k, cli, selo:"Começar",
       resumo:`começar: prazo fatal em ${fmt(k.prazo)} (${k.lembrar_motivo||tituloCaso(k)})`}, donos);
@@ -14003,13 +14024,17 @@ function linhaAgenda(it){
     : it.novEv ? `<button class="check" data-agendar-nov="${it.novEv.id}" aria-label="agendar" title="agendar na aba Perícias, com o aviso ao cliente"></button>`
     : it.novLer ? `<button class="check" data-li-nov="${it.novLer.id}" aria-label="li" title="li — sai do seu Meu Dia"></button>`
     : ev ? `<span class="ag-cal" title="${esc(ev.tipo||"")}">${SVG_CAL}</span>` : "";
-  const esp = k ? [k.especie, NOME_FASE[k.fase]].filter(Boolean).join(" · ") : "";
+  // F427 · a fase "outro" (🗓 Tarefas com Prazo, lista pessoal) diz a fase verdadeira do caso ou o nome da lista, e não "Outros"
+  const fe = k && k.fase==="outro" ? faseEfetiva(k) : k && k.fase, lst = k && k.fase==="outro" ? semEmoji(listaDe(k)).trim() : "";
+  const esp = k ? [k.especie, fe!=="outro" ? NOME_FASE[fe] : lst && lst!=="—" ? lst : NOME_FASE[fe]].filter(Boolean).join(" · ") : "";
   const quem = it.quem.slice(0,2);
   const nome = cli ? esc(cli.nome) : esc(resumo);
+  // F427 · o prazo e o compromisso dizem do que são na própria linha, depois do nome (antes, só no title)
+  const oque = !cli ? "" : it.antes ? resumo : it.motivo || (tc && tc.natureza!=="lembrete" ? resumo : "");
   return `<div class="cartao ag-linha${k&&k.urgente?" urg":""}"${cli?` data-cli="${cli.id}"`:""}${t?` data-tarefa="${t.id}"`:""}>
     <span class="ag-slot">${slot}</span>
     <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
-    <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b></div>
+    <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b>${oque?`<span class="ag-oque"> · ${esc(oque)}</span>`:""}</div>
     <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${it.tc && Array.isArray(it.tc.etapas) && it.tc.etapas.length?`<span class="ag-tipo">etapas ${it.tc.etapas.filter(e=>e.feito).length}/${it.tc.etapas.length}</span>`:""}${
       it.selo?`<span class="${it.prazo?"ag-prazo":"ag-tipo"}">${esc(it.selo)}</span>`:""}${
       it.extra?`<span class="ag-tipo" title="a menção que acompanha a tarefa ainda não foi lida">${esc(it.extra)}</span>`:""}${
@@ -14131,6 +14156,7 @@ function renderAgendaV10(qual){
   document.querySelectorAll("[data-li-nov]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); marcarLidas([b.dataset.liNov]); });
   ligarCartoes(); ligarTarefas();
   buscarTextosAgenda([...itens, ...deleg].filter(i=>i.andId && !i.resumo).map(i=>i.andId));
+  buscarMotivosPz([...itens, ...deleg].filter(i=>i.k && (i.fatal || i.antes) && !i.tc && !i.motivo && i.k.prazo===(i.antes||i.data)).map(i=>i.k));   // F427
 }
 // F382 (12.40) · a carga de prazos por pessoa nos próximos 7 dias, no alto do Planejado (ideia do Lovable aprovada pelo
 // Paulo). Conta o que o filtro "Prazos" conta; o retorno do To Do não entra (prazoEhRetorno). O nome filtra o Planejado
@@ -38199,6 +38225,17 @@ function origemDoPrazo(k){
   return {id:a.id, quem:co?co.nome.split(" ")[0]:"", em:dataSP(a.criado_em),
     texto:(a.texto||"").replace(/^[⏰🔥\s]*\[PRAZO [0-9.]+\]\s*/u,"").replace(/<[^>]*>/g,"").trim()};
 }
+// F427 · o "Concluir em" do To Do sem anotação que cite a data diz do que é pela última anotação do To Do no caso
+// ("Fazer os embargos de declaração."), que é onde o escritório escreve o motivo; sem ela, "Prazo do Microsoft To Do"
+const fraseDoTodo = t => cortaFrase(String(t||"").replace(/<[^>]*>/g," ").replace(/^[⏰🔥\s]*\[PRAZO [0-9.]+\]\s*/u,"")
+  .replace(/^\(\p{L}{1,12}\)\s*:\s*/u,"").replace(/\s+/g," ").trim().split(/(?<=[.;!?])\s/)[0].replace(/[.;]$/,""), 70);
+function notaDoTodo(k, ands){
+  const a = (ands || D._andsFicha || []).filter(x=>x.caso_id===k.id && x.origem==="todo" && !x.excluir && !x.responde_a)
+    .sort((x,y)=>String(y.criado_em||"").localeCompare(String(x.criado_em||"")))[0];
+  if(!a || !fraseDoTodo(a.texto)) return null;
+  const co = D.colPorId.get(a.autor_id);
+  return {id:a.id, quem:co?co.nome.split(" ")[0]:"", em:dataSP(a.criado_em), frase:fraseDoTodo(a.texto)};
+}
 // escrever de que é o prazo = criar o comentário de origem que faltava: o
 // mesmo carimbo do composer, então a linha passa a ter motivo e link
 function explicarPrazo(casoId){
@@ -38408,7 +38445,9 @@ function linhasDeDatas(cliId){
       // F236 · o cartão diz o que fazer e quem faz: o pedido feito à pessoa ("@André, ligue na véspera…", pelo mesmo
       // resumoAgenda da agenda) e não o começo da anotação; na revisão, que é revisão, e do quê (o pedido feito a quem
       // executa, quando a anotação não chama o revisor)
-      resumo:`${co?`${co.nome.split(" ")[0]}${t.papel==="revisa"?" revisa":""}: `:""}${(s=>cortaFrase(t.papel==="revisa"?s.replace(/^revis[ae]\s+/i,""):s, 70))(String(resumoAgenda(texto,
+      // F427 · sem o nome de quem faz no começo (a bolinha e a coluna já o dizem; "Paulo: …" lia como autoria) e sem o
+      // "· prazo adicional até …" da resposta, que repetia a data; a revisão começa por "Revisar:"
+      resumo:`${t.papel==="revisa"?"Revisar: ":""}${(s=>(q=>t.papel==="revisa"?q:q.charAt(0).toUpperCase()+q.slice(1))(cortaFrase(t.papel==="revisa"?s.replace(/^revis[ae]\s+/i,""):s, 70)))(String(resumoAgenda(texto.replace(/\s*·\s*prazo adicional até \d{2}\/\d{2}\/\d{4}/gi, ""),
         t.papel==="revisa" && co && !new RegExp(`@${dsa(co.nome.split(" ")[0])}\\b`).test(dsa(texto))
           ? (D.colPorId.get(((D.tarefasFicha||[]).find(y=>y.andamento_id===t.andamento_id && y.papel!=="revisa")||{}).colaborador_id) || co) : co)||""))||"tarefa do andamento"}`,
       textoCru:texto, casoId:t.caso_id, andId:t.andamento_id,
@@ -38670,14 +38709,17 @@ function linhasDeDatas(cliId){
     }
     else if(x.prazo && !igualA){
       const txtOg = og ? `${esc(og.texto.slice(0,110))}${og.texto.length>110?"…":""}` : "";
+      const ntd = !og && prazoDoTodo(x) ? notaDoTodo(x) : null;   // F427
       // F236 · o resumo é a frase da anotação que fala desta data ("protocolamos até 23/10"), e não o começo dela
       linhas.push({data:x.prazo, ico:"⏰", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true, rotulo:"Prazo fatal", todo:prazoDoTodo(x),
-        resumo:og?cortaFrase(fraseDaData(og.texto, x.prazo), 70):"",
+        resumo:og?cortaFrase(fraseDaData(og.texto, x.prazo), 70):ntd?ntd.frase:"",
         andId:og?og.id:null, semMotivo:!og,
-        rot:og ? `<b>PRAZO FATAL — ${txtOg}</b>
+        rot:og ? `<b>PRAZO FATAL: ${txtOg}</b>
                   <small class="qd-de">Prazo fatal${prazoDoTodo(x)?" do Microsoft To Do":""} · ${tit} · registrado por ${esc(og.quem)} em ${fmt(og.em)}</small>`
-          : `<b>PRAZO FATAL — ${tit}</b>
-                  <small class="qd-de qd-semmotivo">Sem descrição — clique para descrever este prazo</small>`,
+          : ntd ? `<b>PRAZO FATAL: ${esc(ntd.frase)}</b>
+                  <small class="qd-de">Prazo fatal do Microsoft To Do, pela última anotação do To Do${ntd.quem?`, de ${esc(ntd.quem)}`:""} em ${fmtBarra(ntd.em)} · ${tit}</small>`
+          : `<b>PRAZO FATAL: ${tit}</b>
+                  <small class="qd-de qd-semmotivo">Sem descrição: clique para descrever este prazo</small>`,
         clique:og?`onclick="qdIrParaAndamento('${x.id}','${og.id}')"`:`onclick="explicarPrazo('${x.id}')"`,
         edita:`onchange="qdMudarPrazo('${x.id}',this.value)"`,
         acao:btCumprir, cumprir});
@@ -38881,10 +38923,13 @@ function linha30Pz(hj){
   if(!its.length) return "";
   const cls = n => n==="fatal" ? "fatal" : n==="compromisso" ? "comp" : "lemb", dias = [];
   for(let j=0; j<=30; j++) dias.push(somaDias(hj, j));
+  // F427 · o nome do prazo fatal só aparece com folga do anterior, para dois nomes não se sobreporem (no celular, mais folga)
+  const folga = celular() ? 12 : 7, comLab = new Set(); let ult = -99;
+  dias.forEach((d, j)=>{ if(j - ult >= folga && its.some(x=>x.data===d && x._nat==="fatal")){ comLab.add(d); ult = j; } });
   return `<section class="pzl" aria-label="Próximos 30 dias"><h3 class="pzl-t">Próximos 30 dias <span class="pzc-gn">${its.length}</span></h3>
     <div class="pzl-rolar"><ol class="pzl-dias">${dias.map((d, j)=>`<li class="pzl-d${ehDiaUtil(d) ? "" : " pzl-nu"}${j ? "" : " pzl-hoje"}">${
       its.filter(x=>x.data===d).map(x=>`<button type="button" class="pzl-m pzl-${cls(x._nat)}" onclick="abrirPainelPrazo(${_pzCli.indexOf(x)},'cli')" title="${esc(`${diaCurtoPz(d)} · ${x._titulo}`)}" aria-label="${esc(`${diaCurtoPz(d)}: ${x._titulo}`)}"></button>`).join("")
-      }${(f => f ? `<span class="pzl-lab" aria-hidden="true">${esc(cortaFrase(f._titulo, 22))}</span>` : "")(its.find(x=>x.data===d && x._nat==="fatal"))}<span class="pzl-n">${j===0 ? "hoje" : j%5===0 && j<30 ? fmtBarra(d).slice(0,5) : ""}</span></li>`).join("")}</ol></div>
+      }${(f => f ? `<span class="pzl-lab" aria-hidden="true">${esc(cortaFrase(f._titulo, 22))}</span>` : "")(comLab.has(d) && its.find(x=>x.data===d && x._nat==="fatal"))}<span class="pzl-n">${j===0 ? "hoje" : j%5===0 && j<30 ? fmtBarra(d).slice(0,5) : ""}</span></li>`).join("")}</ol></div>
     <div class="pzl-leg"><span class="pzl-fatal"><i></i>Prazo fatal</span><span class="pzl-comp"><i></i>Compromisso</span><span class="pzl-lemb"><i></i>Lembrete</span><span><i class="pzl-nu-i"></i>Sem expediente</span></div></section>`;
 }
 // ══════════════════════════════════════════════════════════════════════════
@@ -38923,7 +38968,7 @@ function tituloDaLinha(x){
   const t = (RX_TIPO_GENERICO.test(resumo || vis) && motivo)
     || (RX_TIPO_GENERICO.test(tipo) ? (resumo || vis) : resumo && resumo!==vis ? junta(vis, resumo) : vis);
   // o prazo que veio do "Concluir em" do To Do sem descrição pede a descrição, em vez de repetir "Prazo fatal"
-  return {titulo: x.semMotivo && !motivo && RX_TIPO_GENERICO.test(t) ? "Diga do que é este prazo" : t, motivo};
+  return {titulo: x.semMotivo && !motivo && RX_TIPO_GENERICO.test(t) ? (x.todo ? "Prazo do Microsoft To Do" : "Prazo sem descrição") : t, motivo};
 }
 const DIA_EXT = ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
 const diaCurtoPz = iso => `${SIGLA_DIA[new Date(iso+"T12:00:00").getDay()]}., ${fmtBarra(iso).slice(0,5)}`;
@@ -39072,7 +39117,7 @@ function faixaPrazos(k){
       <span class="fp2-bola" aria-hidden="true"></span>
       <span class="fp2-data">${esc(diaCurtoPz(x.data))}</span>
       <span class="fp3-t">${esc(titulo)}<small class="fp3-f${f.urg==="venc"?" venc":""}">${esc(f.txt)}</small></span>
-      <button class="fp2-mais pz-mais" onclick="abrirPainelPrazo(${i})" aria-label="abrir: ${esc(titulo)}">abrir</button>
+      <button class="fp2-mais pz-mais" onclick="abrirPainelPrazo(${i})" aria-label="abrir: ${esc(titulo)}">Abrir</button>
     </div>`;
   };
   // F335 · o prazo fatal vencido sem registro vem antes do próximo: é o que pede ação primeiro
@@ -39288,7 +39333,7 @@ function abrirPainelPrazo(i, fonte){
   const deTxt = a ? semCarimboPz(a.texto) : x.todo ? "A data veio do Microsoft To Do. Adiada ou apagada lá, ela muda ou sai daqui na próxima sincronização." : dw.txt;
   const links = [doc ? `<button type="button" class="ppz-link" onclick="abrirAnexo('${doc.id}')" title="Ver o documento"><span aria-hidden="true">Documento</span><span class="sr-only">Ver o documento</span></button>` : "",
     a ? `<button type="button" class="ppz-link" onclick="${fechar};qdIrParaAndamento('${x.casoId}','${x.andId}')" title="Ver na linha do tempo"><span aria-hidden="true">Localizar</span><span class="sr-only">Ver na linha do tempo</span></button>`
-      : x.semMotivo && !x._motivo ? `<button type="button" class="ppz-link" onclick="${fechar};explicarPrazo('${x.casoId}')" title="Dizer do que é"><span aria-hidden="true">Classificar</span><span class="sr-only">Dizer do que é</span></button>`
+      : x.semMotivo && !x._motivo ? `<button type="button" class="ppz-link" onclick="${fechar};explicarPrazo('${x.casoId}')" title="Dizer do que é este prazo"><span aria-hidden="true">Descrever</span><span class="sr-only">Dizer do que é este prazo</span></button>`
       : gq ? "" : `<button type="button" class="ppz-link" onclick="prazoSaberMais(${i}${src})">Detalhes</button>`].filter(Boolean).join("");
   const origem = gq ? "" : `<section class="ppz-sec" aria-labelledby="ppz-origem">${rot(`<span id="ppz-origem">${a ? "Anotação" : "De onde vem"}</span>`)}
       <div class="ppz-orig"><span class="ppz-orig-ic">${IC_DOC_PZ}</span><div class="ppz-orig-c"><b>${esc(deTit)}</b>${deTxt ? `<p class="${a ? "ppz-orig-int" : ""}">${esc(deTxt)}</p>` : ""}${a && x.todo ? `<small class="ppz-nota">A data é o “Concluir em” do Microsoft To Do.</small>` : ""}${links ? `<div class="ppz-links">${links}</div>` : ""}</div></div>
@@ -39318,7 +39363,7 @@ function abrirPainelPrazo(i, fonte){
   };
   // sem tarefa de quem faz (o prazo já registrado), a revisão que ficou é o que há para fazer
   const fazerTs = exec.length ? exec : rev;
-  const quem = !gq && !fazerTs.length ? (q => q ? `<p class="ppz-vazio">${avPz(q)}<span>Ninguém tem tarefa aberta para este prazo. Quem cuida: <b>${esc(nome(q))}</b>.</span></p>` : `<p class="ppz-vazio"><span>Ninguém tem tarefa aberta para este prazo.</span></p>`)(quemDaLinha(x, cliId)) : "";
+  const quem = !gq && !fazerTs.length ? (q => q ? `<p class="ppz-vazio">${avPz(q)}<span>Ninguém tem tarefa aberta para ${nat==="fatal" ? "este prazo" : "esta data"}. Quem cuida: <b>${esc(nome(q))}</b>.</span></p>` : `<p class="ppz-vazio"><span>Ninguém tem tarefa aberta para ${nat==="fatal" ? "este prazo" : "esta data"}.</span></p>`)(quemDaLinha(x, cliId)) : "";
   // a qualidade: o plano de contribuições ligado, que leva a qualidade adiante
   const plano = gq ? qualidadeDe(cliId).map(q=>({q, px: qualidadeProximos(q, 1)[0]})).filter(o=>o.px)[0] : null;
   const fazer = gq ? `<section class="ppz-sec" aria-labelledby="ppz-fazer">${rot('<span id="ppz-fazer">O que fazer</span>')}
@@ -39368,7 +39413,7 @@ function abrirPainelPrazo(i, fonte){
         <textarea id="pp-com" rows="2" placeholder="Anote o que foi feito ou o que falta"
           onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();comentarNoPrazo('${x.casoId}','${x.andId||""}')}"></textarea>
         <span class="ppz-com-bts">${tEt ? `<button type="button" class="pp-add" onclick="novaEtapaTarefa('${tEt.id}')">+ Etapa</button>` : ""}<button type="button" class="ppz-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Anotar</button></span></div>` : ""}
-      ${itens.length ? `<ol class="ppz-hist ppz-ets">${itens.slice(0, 30).map(o=>`<li>${o.html ? `<span class="pz-av pz-av-sis" aria-hidden="true">✓</span>` : avPz(o.id) || `<span class="pz-av pz-av-sis" aria-hidden="true">·</span>`}<div>${o.html
+      ${itens.length ? `<ol class="ppz-hist ppz-ets">${itens.slice(0, 30).map(o=>`<li>${avPz(o.id) || `<span class="pz-av pz-av-sis" aria-hidden="true">·</span>`}<div>${o.html
         ? `${o.html}<small>${esc(o.meta)}${o.q!=="9" && o.q ? ` · ${o.id ? `${esc(nome(o.id))} · ` : ""}${esc(quandoPz(o.q))}` : ""}</small>`
         : `<small><b>${esc(o.id ? nome(o.id) : "Sistema")}</b> · ${esc(quandoPz(o.q))}</small><p>${esc(o.p)}</p>`}</div></li>`).join("")}</ol>` : `<p class="ppz-vazio"><span>Nada anotado neste prazo ainda.</span></p>`}
     </section>`;
@@ -39390,8 +39435,8 @@ function abrirPainelPrazo(i, fonte){
   // o ✔ feito e o ✎ escrever da linha repetiam o "Concluir a minha tarefa": com ele, o escrever vai ao ⋯
   // os demais botões da linha (✔ cumprida da exigência, Ouvidoria) ficam
   const acaoPe = x.cumprir ? "" : String(x.acao || "").replace(principal ? /<button\b[^>]*>(?:(?!<\/button>)[\s\S])*?(?:✔ feito|✎ escrever)<\/button>/g : /$^/, "")
-    .replace(/onclick="/g, `onclick="${fechar};`);
-  const abrirCaso = k && (sobre || celular()) ? `<button type="button" class="ppz-bt ppz-caso" onclick="${fechar};casoSel='${k.id}';abaAtiva=2;subAba='escritorio';repintarFicha()" title="Abrir o caso">Abrir<span class="sr-only"> o caso</span></button>` : "";
+    .replace(/onclick="/g, `onclick="${fechar};`).replace(/>\s*✔ feito\s*</g, ">Feito<").replace(/>\s*✎ escrever\s*</g, ">Escrever<");   // F427 · uma palavra, sem símbolo
+  const abrirCaso = k && (sobre || celular()) ? `<button type="button" class="ppz-bt ppz-caso" onclick="${fechar};casoSel='${k.id}';abaAtiva=2;subAba='escritorio';repintarFicha()" title="Abrir o caso"><span aria-hidden="true">Caso</span><span class="sr-only">Abrir o caso</span></button>` : "";
   const extra = gq ? `<button type="button" class="ppz-bt" onclick="verQualidade('${cliId}')" title="Contribuições a pagar">Contribuições</button>${(cn => cn ? `<button type="button" class="ppz-bt" onclick="abrirAnexo('${cn.id}')" title="Abrir o CNIS">CNIS</button>` : "")(docsDoDossie(cliId).filter(d=>/CNIS completo/i.test(fonteDoDossie(d)[1])).sort((p, q)=>String(q.criado_em||"").localeCompare(String(p.criado_em||"")))[0])}` : "";
   const mais = menuMais([
     x.edita ? `<button class="tl-mais-it pp-sec-bt" role="menuitem" onclick="prazoSaberMais(${i}${src})" title="Corrigir a data">Corrigir</button>` : "",
@@ -39440,7 +39485,7 @@ function prazoSaberMais(i, fonte){
     <div style="font-size:13px;line-height:1.4;margin-bottom:10px">${x.cru?x.rot:esc(x.rot)}</div>
     <div class="form-linha" style="align-items:center;gap:8px;flex-wrap:wrap">
       ${x.edita?`<label class="meio-sub">data <input type="date" value="${x.data}" ${x.edita}></label>`:""}
-      ${x.clique?`<button class="btn-mini" ${x.clique.replace(/^onclick="/,'onclick="fecharCaixa();')}>abrir</button>`:""}
+      ${x.clique?`<button class="btn-mini" ${x.clique.replace(/^onclick="/,'onclick="fecharCaixa();')}>Abrir</button>`:""}
       ${x.acao||""}
       <button class="btn-rap" style="margin-left:auto" onclick="fecharCaixa()">fechar</button>
     </div>`);
