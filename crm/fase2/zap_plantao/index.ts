@@ -249,6 +249,9 @@ export const AG_ORIENTA = `8. Não dê orientações antes de marcar. Com a conf
 // o passo 5 do Console dizia só a Dra. Amanda e contrariava o passo 6 (07.11.2026)
 export const AG_PREV = `   - Assunto previdenciário (INSS, aposentadoria, auxílio, BPC/LOAS, pensão, revisão, perícia): ofereça as datas da Dra. Amanda e as do Dr. Paulo, como no passo 6.`;
 export const AG_DUVIDA = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.2026, revisto): faltar o assunto ou o advogado não é dúvida; ` +
+  // terceira rodada das 72 conversas: o Agendador dizia "não localizei" sem consultar (07.11.2026)
+  `para remarcar, cancelar ou dizer o dia de um atendimento, chame primeiro consultar_vagas com paulo, marcos e amanda e leia atendimentos_marcados, ` +
+  `também quando o número não é o telefone principal da ficha ou não tem ficha; nunca diga que não localizou o atendimento sem essa consulta. ` +
   `pergunte o assunto (passo 2) e siga o passo 6. Chame encaminhar_equipe, com a dúvida no motivo, somente quando, depois de perguntar, ` +
   `continuar sem saber se o atendimento é novo ou troca de um já agendado, ou quando o atendimento a remarcar ou cancelar não aparecer ` +
   `em atendimentos_marcados; nesse caso não ofereça horários nem diga que anotou, e diga em uma frase que um colaborador do escritório vai responder. ` +
@@ -310,7 +313,7 @@ export function contexto(x: Contexto) {
   const ficha = !x.cliente ? "O número não está ligado a nenhuma ficha de cliente do escritório."
     : `O número é de ${x.cliente.nome}, cliente do escritório.` + (x.cliente.mesmo_telefone
       ? ` Casos abertos: ${x.cliente.casos.map((k) => `${k.beneficio || "caso"} (fase ${k.fase}${k.etapa ? `, etapa: ${k.etapa}` : ""})`).join("; ") || "nenhum"}.`
-      : " O número não é o telefone principal da ficha: não fale da situação de processo nenhum.")
+      : " O número não é o telefone principal da ficha: não fale da situação de processo nenhum; os atendimentos agendados o Agendador consulta normalmente.")
       + (x.relacao && x.contato ? ` Quem escreve é ${x.contato} (${x.relacao} de ${x.cliente.nome}): chame pelo nome de quem escreve, e não pelo nome da ficha. Refira-se a ${x.cliente.nome.split(" ")[0]} apenas pelo primeiro nome, sem "senhor", "senhora" ou "dona".` : "");
   return `Agora: ${x.agora} (horário de Brasília). ${x.horario ? "O escritório está no horário de atendimento." : "O escritório está fora do horário de atendimento."}\n` +
     `Modo: ${x.interativa ? "conversa na hora (ninguém da equipe está na conversa)" : "plantão (a equipe está na conversa e ainda não respondeu)"}.\n` +
@@ -446,6 +449,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
   const tipos = (c: Record<string, any>) => (c.cliente_id ? ["002"] : c.cliente_numero ? ["002", "001"] : ["001"]);
   const tipo = (c: Record<string, any>, pedido?: unknown) => (tipos(c).includes(String(pedido)) ? String(pedido) : tipos(c).at(-1)!);
   const encaminhado: { motivo?: string; urgente?: boolean } = {};
+  let consultou = false, cobrou = false;
   const disponiveis = (profs: string[], dias = 15) => Promise.all(profs.map((p) => chamar("disponibilidade", { profissional: p, dias })));
   // a vaga pelo eventoId, relida da agenda: o agente não manda data nem hora
   // a vaga que vale para os dois tipos fica com o tipo pedido (F422q: a esposa saía com o nome da Pietra)
@@ -477,6 +481,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       const profs = (i.profissionais || []).filter((p) => PROFS.includes(p));
       if (!profs.length) return { erro: "indique paulo, marcos ou amanda" };
       const [res, ja] = await Promise.all([disponiveis(profs, Math.min(15, Math.max(1, Number(i.dias) || 15))), marcados(c)]);
+      consultou = true;
       const vagas: Record<string, unknown> = {};
       res.forEach((d, k) => {
         if (!d.ok) { vagas[profs[k]] = { erro: String(d.erro || d.codigo || "erro da agenda") }; return; }
@@ -543,6 +548,11 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
     },
     // a decisão final do turno vira "equipe": o aviso sai pelo zap_plantao_aplicar
     async encaminhar_equipe(i: { motivo?: string; urgente?: boolean }) {
+      // remarcar e cancelar iam à equipe sem a consulta dos agendados (07.11.2026): devolve uma vez
+      if (!consultou && !cobrou && /remarc|cancel|desmarc|agendad|hor[aá]rio|dia d/i.test(String(i.motivo || ""))) {
+        cobrou = true;
+        return { erro: "antes, chame consultar_vagas com paulo, marcos e amanda e confira atendimentos_marcados; passe à equipe somente se o atendimento não aparecer" };
+      }
       encaminhado.motivo = String(i.motivo || "").slice(0, 300); encaminhado.urgente = i.urgente === true;
       return { encaminhado: true, aviso: "a equipe será avisada: diga à pessoa, em uma frase, que o advogado vai responder" };
     },
@@ -581,14 +591,16 @@ async function simular(s: Cenario) {
     conversa_id: undefined, contato: s.contato || "Paulo", relacao: s.relacao || null, advogado: s.advogado || null, advogados,
     modo: "", respostas: 0, interativa: s.interativa !== false, horario: s.horario !== false, agenda: true,
     agora: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "short", timeStyle: "short" }),
-    mensagens: [], instrucoes: await cfg("zap_ia_txt_plantao"), cliente: s.cliente || null, remarcar: s.remarcar || null,
+    mensagens: [], instrucoes: await cfg("zap_ia_txt_plantao"), cliente: s.cliente ? { mesmo_telefone: true, casos: [], ...s.cliente } : null, remarcar: s.remarcar || null,
     ma: { agente: await cfg("zap_ma_agente"), ambiente: await cfg("zap_ma_ambiente"), versao: await cfg("zap_ma_versao") },
   };
   const { agente, ambiente } = await agentePronto(x);
   const sessao = await ma("sessions", { agent: agente, environment_id: ambiente, title: "WhatsApp · simulação do CRM",
     budget: { type: "limit", max_list_cost: { amount: "100", currency: "USD" } } });
-  const { fer, uso } = ferramentasSimuladas({ telefone: "5516900000000", cliente_id: s.cliente ? "simulado" : null, cliente_numero: null,
-    nome_ficha: s.cliente?.nome || null, ligada: true, marcados: s.marcados || [] });
+  // como o zap_plantao_agenda: quem escreve por outra pessoa (relacao) não é a ficha, mas o número é dela
+  const { fer, uso } = ferramentasSimuladas({ telefone: "5516900000000", cliente_id: s.cliente && !s.relacao ? "simulado" : null,
+    cliente_numero: s.cliente ? "simulado" : null, nome_ficha: s.cliente?.nome || null, nome_numero: s.cliente?.nome || null,
+    ligada: true, marcados: s.marcados || [] });
   const t0 = Date.now(), saida: Record<string, unknown>[] = [];
   for (let i = 0; i < s.turnos.length; i++) {
     const m: Msg = { direcao: "entrada", por_bot: false, tipo: "texto", texto: s.turnos[i], momento: new Date(t0 + i * 120000).toISOString() };
