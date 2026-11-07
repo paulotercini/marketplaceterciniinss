@@ -78,7 +78,7 @@ export function regras(instrucoes = "") {
     `frases curtas, tom cordial e formal, sem gíria e sem emoji. A equipe assina as mensagens ("*Dr. Marcos:*"); você não assina, ` +
     `mas, na sua primeira resposta da conversa, ou quando a sua última resposta tiver mais de um dia, dê as boas-vindas: ` +
     `cumprimente pelo primeiro nome de quem escreve, dê as boas-vindas em nome da Advocacia Previdenciária, ` +
-    `apresente-se como a assistente virtual do escritório e pergunte em que pode ajudar.` + ESTILO + VOCABULARIO + `\n\n` +
+    `apresente-se como a assistente virtual do escritório e pergunte em que pode ajudar.` + ESTILO + VOCABULARIO + FORMAL + FATOS + `\n\n` +
     `O contexto diz o modo. No modo "conversa na hora" a pessoa não está em conversa com a equipe: converse com ela, ` +
     `responda o que puder e conduza o atendimento, sem mandar esperar a equipe. No modo "plantão" a equipe já conversa com ` +
     `a pessoa e ainda não respondeu: tranquilize e avise o advogado.\n\n` +
@@ -113,6 +113,20 @@ export function regras(instrucoes = "") {
 // "agendar", e não "marcar": o escritório escreve em português técnico (Paulo, 07.11.2026)
 export const VOCABULARIO = `\n\nVocabulário: escreva "agendar", "agendamento" e "agendado"; nunca "marcar", "marcação" ou "marcado" para atendimento, ` +
   `por exemplo "Deseja agendar com o Dr. Marcos?" e "O seu atendimento está agendado para…".`;
+
+// o que a recepção responde no histórico do WhatsApp (leitura de 07.11.2026)
+export const FATOS = `\n\nInformações do escritório (use quando a pessoa perguntar ou quando completarem a resposta; não invente outras):\n` +
+  `- Endereço: Rua Rui Barbosa, 663, Centro, Monte Alto/SP, em frente à agência do INSS.\n` +
+  `- Atendimento de segunda a sexta-feira, das 7h às 17h. As ligações são feitas somente pelo telefone fixo (16) 3242-2908.\n` +
+  `- Para entregar documentos não é necessário agendamento: a pessoa os deixa na recepção, no horário de atendimento, ou envia a fotografia legível por este WhatsApp; o advogado informa se precisar do original.\n` +
+  `- No primeiro atendimento, a pessoa traz o documento de identificação com CPF e a senha atualizada da conta gov.br (Meu INSS). Não peça a senha nem o número do documento pela conversa.\n` +
+  `- O escritório nunca pede PIX, depósito ou transferência para liberar valores e não realiza audiência por vídeo ou por telefone. Diante de pedido assim, oriente a pessoa a não pagar e use acao "equipe" com urgente.\n` +
+  `- Honorários, valores a receber, data de pagamento e andamento que o contexto não traz: diga que o advogado responsável vai responder, sem informar valor nem prazo; se a pessoa recebeu mensagem ou carta do INSS, peça a fotografia dela para o advogado conferir.\n` +
+  `- Assunto que não é previdenciário (trabalhista, família, consumidor, contratos) é atendido pelo Dr. Marcos.`;
+// o registro da recepção, sem a informalidade que aparece no histórico (pedido do Paulo de 07.11.2026)
+export const FORMAL = `\n\nRegistro: português formal e técnico, como numa carta do escritório. Trate por "o senhor" e "a senhora". ` +
+  `Não use "tudo bem?", "certinho", "joia", "beleza", "tá", "pra", "vc", diminutivos, gíria, emoji nem exclamação repetida. ` +
+  `Escreva "atendimento", e não "consulta"; "documento", e não "papel".`;
 
 // F280 · a resposta em linhas, com a abertura variada, como a recepção escreve (pedido do Paulo de 25.10.2026)
 export const ESTILO = `\n\nComo escrever no WhatsApp:\n` +
@@ -162,6 +176,8 @@ export function paraTriagem(system: string) {
   else t = t.replace(/\n\nNa dúvida, a equipe[^]*?(?=\n\n|$)/, () => DUVIDA_TRIAGEM);
   if (!t.includes("\n\nComo escrever no WhatsApp:")) antes(ESTILO);
   if (!t.includes("\n\nVocabulário:")) antes(VOCABULARIO);
+  if (!t.includes("\n\nRegistro: português formal")) antes(FORMAL);
+  if (!t.includes("\n\nInformações do escritório")) antes(FATOS);
   return t;
 }
 
@@ -190,6 +206,8 @@ export const AG_HORARIOS = `6. Chame consultar_vagas (no CRM). Se o assunto é p
   `peça que explique em poucas palavras o motivo do contato e, com a resposta, chame encaminhar_equipe com o motivo.`;
 export const AG_ORIENTA = `8. Não dê orientações antes de marcar. Com a confirmação do passo 7, chame marcar_atendimento: o sistema envia a última mensagem, ` +
   `com a senha do GOV.BR (Meu INSS) quando o assunto é do INSS e o lembrete de que o atendimento é individual.`;
+// o passo 5 do Console dizia só a Dra. Amanda e contrariava o passo 6 (07.11.2026)
+export const AG_PREV = `   - Assunto previdenciário (INSS, aposentadoria, auxílio, BPC/LOAS, pensão, revisão, perícia): ofereça as datas da Dra. Amanda e as do Dr. Paulo, como no passo 6.`;
 export const AG_DUVIDA = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.2026, revisto): faltar o assunto ou o advogado não é dúvida; ` +
   `pergunte o assunto (passo 2) e siga o passo 6. Chame encaminhar_equipe, com a dúvida no motivo, somente quando, depois de perguntar, ` +
   `continuar sem saber se o atendimento é novo ou troca de um já agendado, ou quando o atendimento a remarcar ou cancelar não aparecer ` +
@@ -203,13 +221,16 @@ export function paraAgendador(system: string) {
     .replace(/^6\. Chame consultar_vagas \(no CRM\) e ofereça no máximo 3 horários[^\n]*$/m, AG_HORARIOS)
     .replace(AG_HORARIOS_F280, AG_HORARIOS)
     .replace(/^6\. Chame consultar_vagas \(no CRM\)\. Se o assunto é previdenciário[^\n]*$/m, () => AG_HORARIOS)   // versões anteriores da F422i
-    .replace(/^8\. Antes de marcar, oriente[^\n]*$/m, AG_ORIENTA);
+    .replace(/^8\. Antes de marcar, oriente[^\n]*$/m, AG_ORIENTA)
+    .replace(/^ *- Assunto previdenciário \(INSS[^\n]*$/m, AG_PREV)
+    .replace(" Apresente-se sempre como assistente virtual.", "");
   if (!t.includes("\n\nComo escrever: a Assistente virtual já cumprimentou")) {
     const i = t.indexOf("\n\n");
     t = i >= 0 ? t.slice(0, i) + AG_ABERTURA + t.slice(i) : t + AG_ABERTURA;
   }
   t = t.includes("\n\nNa dúvida, a equipe") ? t.replace(/\n\nNa dúvida, a equipe[^]*?(?=\n\n|$)/, () => AG_DUVIDA) : t + AG_DUVIDA;
   if (!t.includes("\n\nVocabulário:")) t += VOCABULARIO;
+  if (!t.includes("\n\nRegistro: português formal")) t += FORMAL;
   return t;
 }
 
@@ -457,6 +478,62 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
   } as Record<string, any>;
 }
 
+// simulador (07.11.2026): a agenda é lida de verdade, mas agendar, remarcar e cancelar não gravam
+// e nada é enviado ao cliente; serve para testar a conversa sem um número de verdade
+export function ferramentasSimuladas(dados: Record<string, any>, chamar = agenda) {
+  const banco = async (nome: string) => (nome === "zap_plantao_agenda" ? dados : null);
+  const falso = async (acao: string, corpo: Record<string, unknown>) =>
+    ["agendar", "remarcar", "cancelar"].includes(acao) ? { ok: true, simulado: true }
+      : acao === "agendamentosFuturos" ? { ok: true, agendamentos: dados.marcados || [] } : chamar(acao, corpo);
+  const fer = ferramentasDaConversa("simulada", falso, banco as typeof rpc);
+  const uso: { nome: string; entrada: unknown; saida: string }[] = [];
+  for (const k of Object.keys(fer)) if (typeof fer[k] === "function") {
+    const f = fer[k];
+    fer[k] = async (i: unknown) => { const s = await f(i); uso.push({ nome: k, entrada: i, saida: JSON.stringify(s).slice(0, 1500) }); return s; };
+  }
+  return { fer, uso };
+}
+
+async function cfg(chave: string) {
+  const r = await fetch(`${URL_SB}/rest/v1/config_app?chave=eq.${chave}&select=valor`, { headers: { apikey: SERVICO, Authorization: `Bearer ${SERVICO}` } });
+  return String((await r.json().catch(() => []))?.[0]?.valor ?? "");
+}
+
+type Cenario = { contato?: string; relacao?: string; advogado?: string; cliente?: Contexto["cliente"]; marcados?: unknown[];
+  remarcar?: Contexto["remarcar"]; horario?: boolean; interativa?: boolean; turnos: string[] };
+async function simular(s: Cenario) {
+  const advogados = ((await rpc("zap_advogados", {})) || []).map((a: { assinatura_zap: string }) => a.assinatura_zap);
+  const x: Contexto = {
+    conversa_id: undefined, contato: s.contato || "Paulo", relacao: s.relacao || null, advogado: s.advogado || null, advogados,
+    modo: "", respostas: 0, interativa: s.interativa !== false, horario: s.horario !== false, agenda: true,
+    agora: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "short", timeStyle: "short" }),
+    mensagens: [], instrucoes: await cfg("zap_ia_txt_plantao"), cliente: s.cliente || null, remarcar: s.remarcar || null,
+    ma: { agente: await cfg("zap_ma_agente"), ambiente: await cfg("zap_ma_ambiente"), versao: await cfg("zap_ma_versao") },
+  };
+  const { agente, ambiente } = await agentePronto(x);
+  const sessao = await ma("sessions", { agent: agente, environment_id: ambiente, title: "WhatsApp · simulação do CRM",
+    budget: { type: "limit", max_list_cost: { amount: "100", currency: "USD" } } });
+  const { fer, uso } = ferramentasSimuladas({ telefone: "5516900000000", cliente_id: s.cliente ? "simulado" : null, cliente_numero: null,
+    nome_ficha: s.cliente?.nome || null, ligada: true, marcados: s.marcados || [] });
+  const t0 = Date.now(), saida: Record<string, unknown>[] = [];
+  for (let i = 0; i < s.turnos.length; i++) {
+    const m: Msg = { direcao: "entrada", por_bot: false, tipo: "texto", texto: s.turnos[i], momento: new Date(t0 + i * 120000).toISOString() };
+    x.mensagens.push(m);
+    const antes = uso.length;
+    let r: Record<string, any>;
+    try { r = await turno(sessao.id, textoDoTurno(x, i ? [m] : x.mensagens, !i), fetch, fer); }
+    catch (e) { saida.push({ cliente: m.texto, erro: String(e).slice(0, 300) }); break; }
+    const enc = fer.encaminhado as { motivo?: string };
+    const acao = enc && "motivo" in enc ? "equipe" : r.acao;
+    const resposta = emLinhas(r.resposta);
+    saida.push({ cliente: m.texto, acao, resposta, assunto: r.assunto, ferramentas: uso.slice(antes) });
+    if (resposta) x.mensagens.push({ direcao: "saida", por_bot: true, tipo: "texto", texto: resposta, momento: new Date(t0 + i * 120000 + 30000).toISOString() });
+    if (acao === "equipe") break;
+    x.modo = "conversa"; x.respostas++;
+  }
+  return { sessao: sessao.id, turnos: saida };
+}
+
 async function ma(caminho: string, corpo?: unknown, signal?: AbortSignal) {
   const r = await fetch(`${MA_URL}/${caminho}`, { method: "POST", headers: MA_HDR, body: JSON.stringify(corpo ?? {}), signal });
   if (!r.ok) throw Object.assign(new Error(`Managed Agents ${caminho}: ${r.status} ${(await r.text()).slice(0, 300)}`), { status: r.status });
@@ -649,6 +726,16 @@ if (typeof Deno !== "undefined") {
         const feito = await ma(`agents/${x.ma.agente}`, novo);
         return json({ versao: feito.version, ferramentas: (feito.tools || []).map((t: { name?: string; type: string }) => t.name || t.type),
           multiagent: feito.multiagent, system: feito.system, agendador: { versao: ag.version, system: ag.system } });
+      } catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
+    }
+    if (corpo.simular && typeof corpo.simular === "object") {
+      // a porta fica aberta enquanto config_app.zap_ma_simular = 'sim'; nada vai ao cliente
+      if (!CHAVE_IA) return json({ erro: "sem ANTHROPIC_API_KEY" }, 503);
+      try {
+        if ((await cfg("zap_ma_simular")) !== "sim") return json({ erro: "simulador fechado" }, 403);
+        const s = corpo.simular as Cenario;
+        if (!Array.isArray(s.turnos) || !s.turnos.length || s.turnos.length > 6) return json({ erro: "de 1 a 6 turnos" }, 400);
+        return json(await simular(s));
       } catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
     }
     if (corpo.preparar === true) {
