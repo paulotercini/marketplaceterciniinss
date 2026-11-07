@@ -1,4 +1,4 @@
--- F432 · o histórico das anotações apagadas (pedido do Paulo de 07.11.2026)
+-- F433 · o histórico das anotações apagadas (pedido do Paulo de 07.11.2026)
 -- A anotação ou o prazo escrito no CRM pode ser apagado por quem escreveu: sai das
 -- anotações, mas fica neste histórico do caso, com o texto, o autor, as tarefas que
 -- tinha (o prazo fatal, quem faz, quem revisa), quem apagou e quando.
