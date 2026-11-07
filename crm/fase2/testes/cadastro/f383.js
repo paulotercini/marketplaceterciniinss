@@ -70,7 +70,7 @@ const SUPA = "https://ficticio.supabase.co";
       inssDias: txt(inss, ".arv-data"), inssItens: txt(inss, ".arv-doc,.arv-and"),
       bts: txt(inss, ".proc-bts .btn-mini"), lig: txt(inss, ".proc-lig button") };
     const crps = pinta("crps");
-    res.crpsItens = txt(crps, ".arv-doc,.arv-and");
+    res.crpsItens = txt(crps, ".arv-doc,.arv-and"); res.crpsDec = (crps.querySelector(".arv-doc,.arv-and")||{classList:{contains:()=>false}}).classList.contains("dec");
     const jud = pinta("cnj");
     res.judDias = txt(jud, ".arv-data"); res.judEt = txt(jud, ".arv-et"); res.judPri = txt(jud, ".proc-pri");
     // F385 · a inicial do e-SAJ vem como "Petição (Outras)" e a ordem do dia é a da juntada
@@ -116,7 +116,7 @@ const SUPA = "https://ficticio.supabase.co";
   conf("PAT: exigência no alto, entrada embaixo", /20\/10\/2026/.test(r.inssDias[0]||"") && /Exigência do INSS/.test(r.inssItens.join("|")) && /Entrada do requerimento/.test(r.inssItens[r.inssItens.length-1]||""));
   conf("botões Ler, Baixar, Claude, Portal, Tela e Detalhes", ["Ler","Baixar","Claude","Portal","Tela","Detalhes"].every(b=>r.bts.includes(b)));
   conf("ligado ao recurso e ao processo judicial", r.lig.length === 2);
-  conf("e-SISREC: o acórdão no alto com decisão", /acordao/.test(r.crpsItens[0]||"") && /Decisão/.test(r.crpsItens[0]) && r.crpsItens.length === 2);
+  conf("e-SISREC: o acórdão no alto com decisão", /acordao/.test(r.crpsItens[0]||"") && r.crpsDec && r.crpsItens.length === 2);
   conf("Judicial: dias do mais novo ao mais antigo, com Ler", /30\/10\/2026/.test(r.judDias[0]||"") && r.judDias.length === 3 && r.judPri[0] === "Ler");
   conf("Judicial: origem na etiqueta", ["Juízo","Escritório","INSS"].every(e=>r.judEt.includes(e)));
   conf("filtro Decisões no Judicial", r.judDec === 1);
