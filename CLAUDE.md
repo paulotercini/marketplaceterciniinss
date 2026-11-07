@@ -521,6 +521,8 @@ A **F422** (12.67, o WhatsApp mais limpo, as oito mudanças da proposta aprovada
 
 A **F423** (12.68, pedido do Paulo de 07.11.2026): dentro da conversa do WhatsApp no celular, o ⋯ dos atalhos (`#fab-juntos`) não mostrava a agenda, porque a regra que esconde a pílula na conversa aberta valia também com os atalhos abertos; agora vale só sem `fabs-on`, e o ✕ dos atalhos fecha também a agenda aberta (`alternarFabs`). Teste: `zapcel.js`.
 
+A **F424** (12.69, conferência com o protótipo pedida pelo Paulo em 07.11.2026): o topo da conversa fica com Assumir, o "i" e o ⋯ também no computador (Buscar, Transferir, Pedir, Encerrar ou Reabrir, Setor e Etiquetas passam ao ⋯); a linha abaixo do nome é uma só, "telefone | Adv. …", sem o "Atendendo: ninguém" ao lado do Assumir (`.zt-ninguem`), e a linha do setor e das etiquetas só aparece quando há setor, etiqueta ou retorno; a lista deixou o selo "Sem ficha". Testes ajustados: `zaprep.js`, `zapgestor.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
