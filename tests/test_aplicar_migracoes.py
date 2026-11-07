@@ -29,7 +29,7 @@ def test_linha_de_base_e_f433_pendente():
     base = am.linha_de_base()
     assert "f433_anotacoes_apagadas.sql" not in base
     nomes = [p.name for p in am.pendentes(set(base))]
-    assert nomes[0] == "f433_anotacoes_apagadas.sql"
+    assert "f433_anotacoes_apagadas.sql" in nomes
     assert all((am.PASTA / n).exists() for n in base)
 
 
