@@ -1,0 +1,46 @@
+name: CRM — aplicar coletas da extensão
+
+# F421 · as coletas entravam só com o CRM do administrador aberto e na frente.
+# Aqui entram a cada 10 minutos, das 7h às 20h50 de Brasília, sem o CRM aberto.
+on:
+  schedule:
+    - cron: '*/10 10-23 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: crm-coletas
+  cancel-in-progress: false
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: crm/fase2/testes/cadastro
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+      # chave anon: pública por natureza (o RLS protege os dados)
+      SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoZHlhdHFhZWJwenVmcmlkd2toIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2NTM2OTcsImV4cCI6MjEwMTIyOTY5N30.JuGvGSbe25ilADjOvSznUna9dFgJwaKedgrJEpytYSI
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      # sem coleta esperando, não instala nada
+      - name: Há coleta esperando?
+        id: fila
+        run: |
+          n=$(curl -s "$SUPABASE_URL/rest/v1/coletas?aplicada_em=is.null&select=id" -H "apikey: $SUPABASE_SERVICE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" | grep -o '"id"' | wc -l)
+          echo "n=$n" >> "$GITHUB_OUTPUT"; echo "$n coleta(s) esperando"
+      - name: Cache do navegador
+        if: steps.fila.outputs.n != '0'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ runner.os }}-${{ hashFiles('crm/fase2/testes/cadastro/package.json') }}
+      - if: steps.fila.outputs.n != '0'
+        run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium chromium-headless-shell
+      - if: steps.fila.outputs.n != '0'
+        run: NODE_PATH="$PWD/node_modules" node ../../robo_coletas.js
