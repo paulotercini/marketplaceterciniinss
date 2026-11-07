@@ -50,6 +50,17 @@ t.test("o que sai do escritório numa conversa @lid: o número vem do mapa apren
   a.equal(N.foneDaMensagem(msg({ conversation: "x" }, { key: { remoteJid: "5516977776666@s.whatsapp.net", fromMe: true, id: "S2" } })), "5516977776666");
 });
 
+t.test("Baileys 7: o número vem em key.remoteJidAlt, também no que sai do escritório", () => {
+  const mapa = new Map();
+  const sai = msg({ conversation: "bom dia" }, { key: { remoteJid: "3333@lid", remoteJidAlt: "5516955554444@s.whatsapp.net", fromMe: true, id: "S7" } });
+  a.equal(N.foneDaMensagem(sai, mapa), "5516955554444");
+  a.equal(mapa.get("3333@lid"), "5516955554444@s.whatsapp.net");
+  const h = { key: { remoteJid: "4444@lid", remoteJidAlt: "5516988887777@s.whatsapp.net", id: "H7", fromMe: true },
+    messageTimestamp: 1785000000, message: { conversation: "x" } };
+  const g = N.agruparHistorico([], [h], new Set([N.chaveFone("5516988887777")]));
+  a.equal(g.get("5516988887777").length, 1);
+});
+
 t.test("histórico: só cliente entra, @lid acha o número, ordem por data", () => {
   const h = (jid, ts, extra = {}) => ({ key: { remoteJid: jid, id: "H" + ts, fromMe: false, ...extra },
     messageTimestamp: ts, message: { conversation: "msg " + ts } });
