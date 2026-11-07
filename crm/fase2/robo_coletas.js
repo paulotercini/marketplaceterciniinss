@@ -1,4 +1,4 @@
-// F421 · aplica as coletas da extensão no servidor, sem depender do CRM aberto (pedido do Paulo, 07.11.2026).
+// F426 · aplica as coletas da extensão no servidor, sem depender do CRM aberto (pedido do Paulo, 07.11.2026).
 // Só abre o navegador quando há coleta esperando. Entra como o administrador por um link de uso único
 // gerado com a service key (nenhum e-mail é enviado) e abre o CRM publicado com ?coletas=robo, que roda
 // o mesmo autoAplicarColetas do CRM aberto: mesma regra, mesma trava, o que pede escolha vai às Novidades.
