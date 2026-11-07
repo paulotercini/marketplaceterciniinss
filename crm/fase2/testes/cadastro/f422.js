@@ -191,6 +191,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await botao("A senha não entrou"); await p.waitForSelector("#bal-senha");
   conf("E · Errada explica como recuperar no gov.br", /Esqueci minha senha/.test(await p.textContent("#bal-msg")));
   await p.fill("#bal-senha", "Atual@2026"); await botao("Guardar a senha nova");
+  // o botão Copiar já estava na janela: espera a troca da senha no banco
+  for (let i = 0; i < 40 && !T.credenciais.some(c => c.cliente_id === ANA && c.valor === "Atual@2026" ) ; i++) await p.waitForTimeout(100);
+  for (let i = 0; i < 40 && T.credenciais.filter(c => c.cliente_id === ANA).length > 1; i++) await p.waitForTimeout(100);
   await p.waitForSelector('#modal button[title="Copiar a senha do Meu INSS"]', { timeout: 8000 });
   const crAna = T.credenciais.filter(c => c.cliente_id === ANA);
   conf(`E · a senha nova substitui a velha (${crAna.map(c => c.valor).join(", ")})`, crAna.length === 1 && crAna[0].valor === "Atual@2026");
