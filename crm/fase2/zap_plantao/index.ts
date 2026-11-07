@@ -413,9 +413,11 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
   const encaminhado: { motivo?: string; urgente?: boolean } = {};
   const disponiveis = (profs: string[], dias = 15) => Promise.all(profs.map((p) => chamar("disponibilidade", { profissional: p, dias })));
   // a vaga pelo eventoId, relida da agenda: o agente não manda data nem hora
-  async function vaga(c: Record<string, any>, eventoId: string, profs: string[]) {
+  // a vaga que vale para os dois tipos fica com o tipo pedido (F422q: a esposa saía com o nome da Pietra)
+  async function vaga(c: Record<string, any>, eventoId: string, profs: string[], pedido?: string) {
     const res = await disponiveis(profs);
-    for (let k = 0; k < res.length; k++) for (const d of res[k].dias || []) for (const t of tipos(c)) {
+    const ordem = tipos(c).includes(String(pedido)) ? [String(pedido), ...tipos(c).filter((t) => t !== pedido)] : tipos(c);
+    for (let k = 0; k < res.length; k++) for (const d of res[k].dias || []) for (const t of ordem) {
       if (d.bloqueado) continue;
       const v = (d.livres?.[t] || []).find((x: { eventoId?: string }) => x.eventoId && x.eventoId === eventoId);
       if (v) return { profissional: profs[k], data: d.data as string, inicio: v.inicio as string, tipo: t };
@@ -453,7 +455,10 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       const c = await conv();
       if (!c.ligada) return { erro: "a agenda está desligada" };
       if (!PROFS.includes(i.profissional)) return { erro: "profissional inválido" };
-      const v = await vaga(c, String(i.eventoId || ""), [i.profissional]);
+      // outro nome que não o da ficha do número é atendimento novo (001)
+      const primeiro = (n: unknown) => String(n || "").trim().split(/\s+/)[0].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      const pedido = i.tipo || (c.cliente_numero && i.nome && primeiro(i.nome) !== primeiro(c.nome_numero) ? "001" : undefined);
+      const v = await vaga(c, String(i.eventoId || ""), [i.profissional], pedido);
       if (!v) return { erro: "esta vaga não está mais livre: consulte de novo e ofereça outra" };
       const r = await chamar("agendar", {
         profissional: v.profissional, tipo: v.tipo, nome: (v.tipo === "002" ? c.nome_ficha || c.nome_numero : null) || i.nome, telefone: foneAgenda(c.telefone),
@@ -463,8 +468,10 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       });
       if (r.codigo === "HORARIO_INDISPONIVEL") return { erro: "este horário acabou de ser tomado: consulte de novo e ofereça outro" };
       if (!r.ok) return { erro: String(r.erro || r.codigo || "erro da agenda") };
+      // F422q · a confirmação diz de quem é o atendimento quando quem escreve agenda para outra pessoa
+      const para = v.tipo === "002" ? c.nome_ficha || c.nome_numero : c.cliente_numero ? i.nome : null;
       await banco("zap_plantao_marcado", { p_conversa: conversa, p_rotulo: rotulo(v.data, v.inicio, COM[v.profissional]),
-        p_modalidade: i.modalidade === "remoto" ? "remoto" : "presencial", p_assunto: String(i.assunto || "") });
+        p_modalidade: i.modalidade === "remoto" ? "remoto" : "presencial", p_assunto: String(i.assunto || ""), p_para: para || null });
       return { marcado: true, aviso: "o sistema já enviou ao cliente a confirmação com dia, hora e orientações: não repita; se for presencial, informe somente o endereço" };
     },
     async remarcar_atendimento(i: { atendimentoId?: string; novoEventoId?: string }) {

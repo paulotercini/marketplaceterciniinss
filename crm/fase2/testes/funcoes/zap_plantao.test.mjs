@@ -302,3 +302,23 @@ console.log("formal: ok");
   assert.deepEqual([m.tipo, m.clienteId, m.nome], ["002", "fd86", "Pietra Tercini"]);
   console.log("pessoa da ficha: ok");
 }
+// F422q · a confirmação diz de quem é; a vaga dos dois tipos agendada para a esposa fica 001, com o nome dela
+{
+  const ch = [], bco = [];
+  const ag2 = async (acao, corpo) => { ch.push([acao, corpo]);
+    if (acao === "disponibilidade") return { ok: true, dias: [{ data: "2026-12-02", livres: { "001": [{ inicio: "13:30", eventoId: "v9" }], "002": [{ inicio: "13:30", eventoId: "v9" }] } }] };
+    if (acao === "agendamentosFuturos") return { ok: true, agendamentos: [] };
+    return { ok: true }; };
+  const bc = async (nome, corpo) => { bco.push([nome, corpo]); return nome === "zap_plantao_agenda"
+    ? { telefone: "5516999998888", cliente_id: null, cliente_numero: "fd86", nome_ficha: null, nome_numero: "Pietra Tercini", ligada: true } : null; };
+  const f = ferramentasDaConversa("c3", ag2, bc);
+  await f.marcar_atendimento({ eventoId: "v9", profissional: "paulo", nome: "Patrícia Castro", assunto: "aposentadoria" });
+  const m = ch.find((c) => c[0] === "agendar")[1];
+  assert.deepEqual([m.tipo, m.clienteId, m.nome], ["001", undefined, "Patrícia Castro"]);
+  assert.equal(bco.find((b) => b[0] === "zap_plantao_marcado")[1].p_para, "Patrícia Castro");
+  ch.length = 0; bco.length = 0;
+  await f.marcar_atendimento({ eventoId: "v9", profissional: "paulo", nome: "Pietra", assunto: "aposentadoria" });
+  assert.deepEqual(ch.find((c) => c[0] === "agendar")[1].nome, "Pietra Tercini");
+  assert.equal(bco.find((b) => b[0] === "zap_plantao_marcado")[1].p_para, "Pietra Tercini");
+  console.log("confirmação de quem: ok");
+}
