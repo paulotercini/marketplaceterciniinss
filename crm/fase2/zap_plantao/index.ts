@@ -205,7 +205,10 @@ export function contexto(x: Contexto) {
     `Agenda: ${x.agenda ? "ligada" : "desligada"}.\n` +
     NOME_UMA_VEZ +
     (x.remarcar?.duvida ? `Confirmação: a pessoa recebeu a confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"} e respondeu com uma pergunta, um pedido ou algo que não deixa clara a presença. ` +
-      `Responda o que ela perguntou ou disse. Se quiser outro horário, peça ao Agendador dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, ` +
+      `Leia somente as mensagens posteriores à última confirmação enviada. Responda o que ela perguntou ou disse. ` +
+      `Se ela ainda não sabe se poderá ir, diga que o escritório precisa da confirmação para fechar a agenda e que, sem a certeza, é melhor marcar outro dia, ` +
+      `e pergunte se pode oferecer outro horário; não diga para ficar à vontade nem que ela pode responder depois. ` +
+      `Se quiser outro horário, peça ao Agendador dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, ` +
       `um de manhã e outro à tarde, e que remarque esse atendimento. Se confirmar presença, agradeça e diga que o atendimento está mantido. Não cumprimente de novo.\n`
     : x.remarcar ? `Remarcação: a pessoa disse, em resposta à confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"}, que não pode comparecer e precisa de outro horário. ` +
       `Peça ao Agendador que ofereça dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, um de manhã e outro à tarde, ` +

@@ -150,7 +150,7 @@ assert.ok(rem.includes("mesmo advogado (Amanda), um de manhã e outro à tarde")
 assert.ok(!p1.includes("Remarcação:"), "sem remarcação, nada muda");
 assert.ok(p1.includes("pelo nome no máximo uma vez"), "o nome uma vez só");
 const duv = promptPlantao({ ...base, remarcar: { rotulo: "quarta-feira, 11/11/2026, às 9h30", profissional: "Amanda", duvida: true } });
-assert.ok(duv.includes("não deixa clara a presença") && !duv.includes("que não pode comparecer"), "a dúvida tem o seu contexto");
+assert.ok(duv.includes("precisa da confirmação para fechar a agenda") && duv.includes("não deixa clara a presença") && !duv.includes("que não pode comparecer"), "a dúvida tem o seu contexto");
 // F422f · a IA lê a resposta à confirmação: a confirmação mandada e a resposta do cliente vão ao classificador
 const pi = promptIntencao({ ...base, mensagens: [
   { direcao: "saida", por_bot: true, tipo: "texto", texto: "Seu atendimento está agendado para 11/11. Podemos contar com a sua presença?", momento: "2026-11-07T12:00:00Z" },
