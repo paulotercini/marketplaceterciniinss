@@ -254,8 +254,8 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   const lJ = await linhas(paulo, J.k);
   const avJ = await paulo.evaluate(id => avisoDoEvento(D.eventos.find(e => e.id === id)), EJ.id);
   conf("o aviso feito depois do agendamento vale: 'Perícia · avisado' por Amanda", lJ.some(x => x.rotulo === "Perícia · avisado") && avJ && avJ.quem === "Amanda", { avJ, r: lJ.map(x => x.rotulo) });
-  conf("a tarefa diz o pedido feito à pessoa, e não o começo da anotação (André: ligue… véspera)",
-    lJ.some(x => /^André: ligue para o cliente na véspera da perícia/.test(x.resumo)), lJ.map(x => x.resumo));
+  conf("a tarefa diz o pedido feito à pessoa, e não o começo da anotação (Ligue… véspera, sem o nome na frente)",
+    lJ.some(x => /^Ligue para o cliente na véspera da perícia/.test(x.resumo)), lJ.map(x => x.resumo));
   const rJul = await paulo.evaluate(() => [resumoAgenda("⚖️ Julgamento agendado para 04.11.2026 às 08:00. Verificar o resultado no dia seguinte."),
     resumoAgenda("Perícia agendada para 23.10.2026 às 08:20. Cliente avisada por WhatsApp.")]);
   conf("a tarefa do 'Julgamento agendado… Verificar o resultado' diz a ordem (o registro vem depois); a nota só de registro fica igual",
@@ -409,7 +409,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   const rQ = await resumo(paulo);
   conf("o prazo fatal diz a frase da anotação que fala da data dele ('protocolamos até…')", fQ && /^protocolamos até/.test(fQ.resumo), fQ);
   conf("o resumo do quadro não repete 'prazo fatal: Prazo fatal'", !/prazo fatal: Prazo fatal/.test(rQ), rQ);
-  conf("a revisão diz do que é (o pedido que a anotação faz a quem revisa)", lQ.some(x => /^Paulo revisa: até \d{2}\/\d{2}/.test(x.resumo)), lQ.map(x => x.resumo));
+  conf("a revisão diz do que é (o pedido que a anotação faz a quem revisa)", lQ.some(x => /^Revisar: até \d{2}\/\d{2}/.test(x.resumo)), lQ.map(x => x.resumo));
   const prY = await paulo.evaluate(k => proximosDoCaso(D.casoPorId.get(k)).map(x => x.txt), Y.k.id);
   conf("a linha da incapacidade/próximo passo não manda avaliar o MS já decidido", prY.some(t => /MS por mora já foi decidido/.test(t)), prY);
   await ficha(paulo, G.c.id, G.k.id);
