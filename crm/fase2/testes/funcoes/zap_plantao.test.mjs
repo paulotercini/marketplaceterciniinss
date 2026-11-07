@@ -74,6 +74,19 @@ const dec4 = await turno("sesn_4", "oi", falso([
 assert.equal(dec4.acao, "conversa"); assert.match(enviados[1].events[0].content[0].text, /sem chamar a ferramenta decidir/);
 await assert.rejects(turno("sesn_1", "oi", falso([{ type: "session.status_idle", id: "e2", stop_reason: { type: "end_turn" } },
   { type: "session.status_idle", id: "e3", stop_reason: { type: "end_turn" } }])), /parou sem decisão/);
+// a decidir que sobrou do turno anterior não responde à mensagem nova (07.11.2026)
+enviados.length = 0;
+const comMarco = async (url, op = {}) => {
+  if (/events\/stream$/.test(url)) return sse([
+    { type: "agent.custom_tool_use", id: "velha", name: "decidir", processed_at: "2026-11-07T19:19:33.7Z", input: { acao: "conversa", resposta: "Olá, boa tarde!" } },
+    { type: "agent.custom_tool_use", id: "nova", name: "decidir", processed_at: "2026-11-07T19:19:40.0Z", input: { acao: "conversa", resposta: "Vamos agendar." } },
+  ]);
+  enviados.push(JSON.parse(op.body));
+  return new Response(JSON.stringify({ data: [{ id: "m", processed_at: "2026-11-07T19:19:34.2Z" }] }), { status: 200 });
+};
+const dec5 = await turno("sesn_5", "Quero agendar um horário", comMarco);
+assert.equal(dec5.resposta, "Vamos agendar.");
+assert.equal(enviados[1].events[0].custom_tool_use_id, "velha"); assert.match(enviados[1].events[0].content[0].text, /turno anterior/);
 // "agendar", e não "marcar", nos dois agentes e nas regras
 assert.ok(regras().includes("Vocabulário:") && paraAgendador("x").includes("Vocabulário:") && paraTriagem("x").includes("Vocabulário:"));
 assert.equal(paraAgendador(paraAgendador("x")), paraAgendador("x")); assert.equal(paraTriagem(paraTriagem("x")), paraTriagem("x"));
@@ -252,3 +265,13 @@ console.log("padrao: ok");
   }
 }
 console.log("formal: ok");
+{
+  const { emLinhas: el, paraTriagem: pt, ESTILO: es } = await import("../../zap_plantao/index.ts");
+  assert.equal(el("Qual benefício o senhor ou a senhora pediu ao INSS?"), "Qual benefício pediu ao INSS?");
+  assert.equal(el("Conte-nos o que o senhor ou a senhora deseja tratar."), "Conte-nos o que deseja tratar.");
+  assert.ok(!es.includes("Seja bem-vindo"));
+  const velho = "x\n\nComo escrever no WhatsApp:\nSeja bem-vindo antigo.\n\nResto";
+  const novo = pt(velho);
+  assert.ok(!novo.includes("Seja bem-vindo antigo") && novo.split("Como escrever no WhatsApp:").length === 2);
+  console.log("tratamento: ok");
+}
