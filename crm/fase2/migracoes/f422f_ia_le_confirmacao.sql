@@ -183,6 +183,6 @@ begin
 end $function$;
 
 -- a confirmação sem SIM e NÃO: a IA lê qualquer resposta
-update config_app set valor = E'Olá, {nome}. Seu atendimento com {advogado} está agendado para {dia}, {data}, às {hora}. Podemos contar com a sua presença?' where chave = 'zap_conf_texto';
+update config_app set valor = E'Olá, {nome}. Seu atendimento com {advogado} está agendado para {dia}, {data}, às {hora}. Podemos confirmar a sua presença?' where chave = 'zap_conf_texto';
 -- o nome já está na confirmação: a resposta ao SIM vem sem ele (o nome uma vez só, pedido do Paulo)
 update config_app set valor = E'Obrigado. Seu atendimento de {dia}, {data}, às {hora}, está confirmado.{govbr}' where chave = 'zap_conf_sim';
