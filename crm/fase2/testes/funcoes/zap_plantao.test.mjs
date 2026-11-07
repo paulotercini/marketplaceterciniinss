@@ -381,3 +381,18 @@ console.log("formal: ok");
   assert.equal(ev[1].events[0].custom_tool_use_id, "sevt_P");
   console.log("ok F422s");
 }
+
+// F422t · encaminhar_equipe de remarcação sem a consulta dos agendados volta uma vez ao Agendador
+{
+  const f = ferramentasDaConversa("c1", async () => ({ ok: true, agendamentos: [], dias: [] }), async () => ({ telefone: "5516900000000", ligada: true }));
+  const r1 = await f.encaminhar_equipe({ motivo: "quer remarcar o atendimento" });
+  assert.ok(r1.erro && !("motivo" in f.encaminhado));
+  const r2 = await f.encaminhar_equipe({ motivo: "quer remarcar o atendimento" });
+  assert.equal(r2.encaminhado, true);
+  const g = ferramentasDaConversa("c1", async () => ({ ok: true, agendamentos: [], dias: [] }), async () => ({ telefone: "5516900000000", ligada: true }));
+  await g.consultar_vagas({ profissionais: ["paulo"] });
+  assert.equal((await g.encaminhar_equipe({ motivo: "quer cancelar" })).encaminhado, true);
+  assert.equal((await ferramentasDaConversa("c1", async () => ({}), async () => ({})).encaminhar_equipe({ motivo: "urgente: perícia amanhã" })).encaminhado, true);
+  assert.ok(paraAgendador("x").includes("nunca diga que não localizou o atendimento"));
+  console.log("ok F422t");
+}
