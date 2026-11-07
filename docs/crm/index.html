@@ -2898,7 +2898,7 @@ dialog.confirmar::backdrop{background:rgba(15,17,22,.38)}
 .arv-nome{border:0;background:none;padding:0;font:inherit;font-weight:500;color:var(--azul,#2B5FC7);cursor:pointer;text-align:left}span.arv-nome{color:var(--mut,#5d6675);cursor:default}.arv-doc.dec .arv-nome{color:#a3261d;font-weight:600}
 .arv-et.dec{font-weight:600}.arv-mov{font-size:12px;color:var(--mut,#5d6675)}.arv-txt{flex-basis:100%;font-size:12px;color:var(--mut,#5d6675);overflow-wrap:anywhere}.arv-antes>summary,.arv-dia details>summary{cursor:pointer;font-size:12px;color:var(--azul,#2B5FC7);padding:3px 0}.proc-q{border:1px solid var(--linha,#dfe3ea);border-radius:8px;margin-bottom:8px}.proc-q>summary{cursor:pointer;padding:8px 10px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.proc-id{font-family:var(--f-mono,ui-monospace,monospace);font-size:12px}.proc-tit{font-weight:600;flex:1 1 200px;min-width:0}.proc-sit{font-size:12px;padding:1px 8px;border-radius:99px;background:var(--fundo-sutil,#eef1f5)}.proc-sit.dec{color:#a3261d;font-weight:600}.proc-corpo{padding:4px 10px 10px;display:grid;gap:6px}.proc-lig{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.proc-tela{max-width:900px;max-height:80vh;overflow:auto}.pat-arv{list-style:none;margin:0;padding-left:18px}.pat-arv.pat-raiz{padding-left:0}.pat-arv li{margin:3px 0}.pat-arv summary{cursor:pointer}
 .proc-abas{display:inline-flex;flex-wrap:wrap;gap:2px;padding:2px;background:#EBEEF3;border-radius:8px}.proc-abas button{border:0;background:none;font:inherit;font-size:13px;padding:4px 10px;border-radius:6px;cursor:pointer;color:var(--cinza,#4a4f57);font-variant-numeric:tabular-nums;transition:background-color 150ms ease}.proc-abas button.on{background:#fff;color:#16181d;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}.proc-abas-n{font-size:11px;color:var(--mut,#5d6675);font-weight:400}.proc-abas button:focus-visible{outline:2px solid #2B5FC7;outline-offset:1px}
-/* F429b · o acabamento da árvore e do leitor: resposta ao toque, foco visível e o ⋯ que abre do próprio botão */
+/* F430b · o acabamento da árvore e do leitor: resposta ao toque, foco visível e o ⋯ que abre do próprio botão */
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha2{flex:1 1 320px}
 .arv-doc{border-radius:4px}.arv-nome:focus-visible,.proc-v .btn-mini:focus-visible{outline:2px solid #2B5FC7;outline-offset:2px}
 @media (hover:hover) and (pointer:fine){.arv-doc:not(.sel):hover{background:#F6F8FB}.arv-nome:hover{text-decoration:underline;text-underline-offset:2px}}
@@ -6593,7 +6593,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.73</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.74</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -43624,7 +43624,7 @@ function itensDoProcesso(k, x){
 // a ordem da árvore: a data mais nova no alto e, no mesmo dia, a decisão e a juntada
 const ordemArvDia = (a,b) => (b.dec-a.dec) || (a.tipo===b.tipo ? (a.tipo==="doc" ? ordemPeca(a.d, b.d) : 0) : a.tipo==="doc" ? -1 : 1);
 const ordemArv = (a,b) => String(b.data).localeCompare(String(a.data)) || ordemArvDia(a,b);
-// F429 · a etiqueta que se repete em quase todo item some: a origem da maioria (o Juízo no Judicial) fica no
+// F430 · a etiqueta que se repete em quase todo item some: a origem da maioria (o Juízo no Judicial) fica no
 // cabeçalho da árvore, e "Decisão" não se repete quando o nome já diz (Sentença, Decisão, Acórdão)
 function oriComum(l){
   const c = new Map(); l.forEach(y=>y.ori && c.set(y.ori, (c.get(y.ori)||0)+1));
@@ -43767,7 +43767,7 @@ function vistaProcessos(k, aba){
   const ligados = ["inss","crps","cnj"].filter(a=>a!==aba).flatMap(a=>processosDaFase(k, a))
     .filter(y=>{ const o = nbDe(y); return !nb || !o || o===nb; });
   const n = docsLegiveis(k, x).length;
-  // F429c · com dois a quatro processos, uma aba por processo (o nome curto, a Justiça e quantos documentos);
+  // F430c · com dois a quatro processos, uma aba por processo (o nome curto, a Justiça e quantos documentos);
   // acima disso, a lista. O título igual ao número não se repete.
   const rotProc = y => soDig(y.tit).includes(soDig(y.id)) ? y.id : `${y.id} · ${y.tit}`;
   const curtoProc = y => { const g = soDig(y.id);
@@ -43793,7 +43793,7 @@ function vistaProcessos(k, aba){
     x.aba!=="cnj" ? `<button class="btn-mini" onclick="telaDoProcesso('${k.id}','${aba}',${i})" title="a tela do ${x.aba==="inss"?"PAT":"e-SISREC"}: cabeçalho, comentários e movimentações">Tela</button>` : "",
     x.aba==="cnj" && expedientesDe(k, x.d).length ? `<button class="btn-mini" onclick="telaExpedientes('${k.id}',${i})" title="a aba Expedientes do PJe: atos de comunicação, data limite e fechado">Expedientes</button>` : "",
     `<button class="btn-mini" onclick="mudarVistaProc(false)" title="a tela anterior desta aba: as fontes, a fase e a gestão dos processos">Detalhes</button>`];
-  // F429 · uma ação à vista (Ler); as demais no ⋯, para a barra caber numa linha
+  // F430 · uma ação à vista (Ler); as demais no ⋯, para a barra caber numa linha
   const btsHtml = bts[0] + `<details class="tl-mais proc-mais"><summary class="tl-bt tl-bt-ic" aria-label="Mais ações do processo" title="baixar, Claude, portal, tela e detalhes">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${bts.slice(1).join("")}</span></details>`;
   const d = n ? procEscolhido(k, aba, i, x) : null;
   if(d) setTimeout(procDesenhar, 0);
