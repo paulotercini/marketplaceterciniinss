@@ -8749,7 +8749,7 @@ function sincronizarEtapaVelha(k, p){
   if(_velhaVista.has(ch)) return; _velhaVista.add(ch);
   setTimeout(() => marcarEtapaVelha(k, quer), 0);
 }
-// o aviso ao lado da etapa (placa do v10 e cartão do clássico): "Sugestão: <etapa> (pelo <fato> de dd/mm) — Aceitar"
+// o aviso ao lado da etapa (placa do v10 e cartão do clássico): "Sugestão: <etapa> (pelo <fato> de dd/mm) Aceitar"
 const rotuloProposta = p => `${p.mover?`${NOME_FASE[p.mover]||p.mover} · `:""}${p.etapa}${p.etapa==="decidido"&&p.resultado?` · ${p.resultado}`:""}`;
 function sugestaoEtapa(k, p){
   return `<span class="lc-jan et-sug">Sugestão: <b>${esc(rotuloProposta(p))}</b> (${esc(porDaProposta(p))})
