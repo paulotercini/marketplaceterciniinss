@@ -121,7 +121,7 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     conf("o link da mensagem é clicável", !!(await p.$('#zb-m5 .txt a[href="https://www.gov.br/inss"]')));
     await p.waitForSelector("#zb-m5 .zap-link b", { timeout: 3000 }).catch(() => {});
     conf("o link mostra a prévia com o título do site", (await p.$eval("#zb-m5 .zap-link", e => e.textContent).catch(() => "")).includes("Meu INSS"));
-    await p.tap('.zt-acoes button[aria-label="Buscar na conversa"]'); await p.waitForTimeout(100);
+    await p.tap(".zt-mais summary"); await p.tap('.zt-menu .zt-cel:has-text("Buscar")'); await p.waitForTimeout(100);
     await p.fill("#zap-bq", "bom dia"); await p.waitForTimeout(100);
     conf("a busca acha a mensagem sem diferença de maiúsculas", await p.$eval("#zb-m4", e => e.classList.contains("achou-atual"))
       && (await p.$eval("#zap-bn", e => e.textContent)) === "1 de 1");
@@ -195,8 +195,8 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await toca('.zp-conv-cel button[onclick="escolherSetor()"]', "Setor");
     await toca('.zp-conv-cel button[onclick="editarEtiquetas()"]', "Etiqueta");
     await p.tap(".zp-fechar"); await p.waitForTimeout(100);
-    await toca('.zt-acoes [aria-label="Transferir"]', "Transferir");
-    await toca('.zt-acoes [aria-label="Encerrar"]', "Encerrar");
+    await p.tap(".zt-mais summary"); await toca('.zt-menu .zt-cel[onclick*="transferirConversa()"]', "Transferir");
+    await p.tap(".zt-mais summary"); await toca('.zt-menu .zt-cel[onclick*="encerrarConversa()"]', "Encerrar");
     await p.tap(".zt-mais summary"); await p.waitForTimeout(100);
     conf("o ⋯ abre o menu à vista", await p.evaluate(() => { const b = document.querySelector('.zt-mais button[onclick="quemConversa()"]'); if (!b || !b.offsetWidth) return false; const r = b.getBoundingClientRect(); return b.contains(document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)); }));
     await toca('.zt-mais button[onclick="quemConversa()"]', "Quemconversa");
