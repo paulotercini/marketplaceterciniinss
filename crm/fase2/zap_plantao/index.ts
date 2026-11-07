@@ -78,7 +78,7 @@ export function regras(instrucoes = "") {
     `frases curtas, tom cordial e formal, sem gíria e sem emoji. A equipe assina as mensagens ("*Dr. Marcos:*"); você não assina, ` +
     `mas, na sua primeira resposta da conversa, ou quando a sua última resposta tiver mais de um dia, dê as boas-vindas: ` +
     `cumprimente pelo primeiro nome de quem escreve, dê as boas-vindas em nome da Advocacia Previdenciária, ` +
-    `apresente-se como a assistente virtual do escritório e pergunte em que pode ajudar.` + ESTILO + `\n\n` +
+    `apresente-se como a assistente virtual do escritório e pergunte em que pode ajudar.` + ESTILO + VOCABULARIO + `\n\n` +
     `O contexto diz o modo. No modo "conversa na hora" a pessoa não está em conversa com a equipe: converse com ela, ` +
     `responda o que puder e conduza o atendimento, sem mandar esperar a equipe. No modo "plantão" a equipe já conversa com ` +
     `a pessoa e ainda não respondeu: tranquilize e avise o advogado.\n\n` +
@@ -109,6 +109,10 @@ export function regras(instrucoes = "") {
     `passar dado de pagamento, pedir senha do gov.br ou número de documento, e se apresentar como advogado.` +
     (instrucoes.trim() ? `\n\nInstruções do escritório (seguem as proibições acima):\n${instrucoes.trim().slice(0, 4000)}` : "");
 }
+
+// "agendar", e não "marcar": o escritório escreve em português técnico (Paulo, 07.11.2026)
+export const VOCABULARIO = `\n\nVocabulário: escreva "agendar", "agendamento" e "agendado"; nunca "marcar", "marcação" ou "marcado" para atendimento, ` +
+  `por exemplo "Deseja agendar com o Dr. Marcos?" e "O seu atendimento está agendado para…".`;
 
 // F280 · a resposta em linhas, com a abertura variada, como a recepção escreve (pedido do Paulo de 25.10.2026)
 export const ESTILO = `\n\nComo escrever no WhatsApp:\n` +
@@ -153,6 +157,7 @@ export function paraTriagem(system: string) {
   if (!t.includes("\n\nComo encaminhar ao Agendador:")) antes(COMO_ENCAMINHAR);
   else if (!t.includes("\n\nNa dúvida, a equipe")) t = t.replace(/\n\nComo encaminhar ao Agendador:[^]*?Quando o Agendador passar a conversa à equipe, use acao "equipe"\./, COMO_ENCAMINHAR);
   if (!t.includes("\n\nComo escrever no WhatsApp:")) antes(ESTILO);
+  if (!t.includes("\n\nVocabulário:")) antes(VOCABULARIO);
   return t;
 }
 
@@ -196,6 +201,7 @@ export function paraAgendador(system: string) {
     t = i >= 0 ? t.slice(0, i) + AG_ABERTURA + t.slice(i) : t + AG_ABERTURA;
   }
   if (!t.includes("\n\nNa dúvida, a equipe")) t += AG_DUVIDA;
+  if (!t.includes("\n\nVocabulário:")) t += VOCABULARIO;
   return t;
 }
 
@@ -501,7 +507,7 @@ export async function turno(sessao: string, texto: string, buscar: typeof fetch 
       body: JSON.stringify({ events: [{ type: "user.message", content: [{ type: "text", text: texto }] }] }) });
     if (!env.ok) throw Object.assign(new Error(`envio ${env.status} ${(await env.text()).slice(0, 200)}`), { status: env.status });
     const leitor = st.body.pipeThrough(new TextDecoderStream()).getReader();
-    let resto = "", aoAgendador = 0;   // mensagens à espera da resposta do Agendador neste turno
+    let resto = "", aoAgendador = 0, cobrado = false;   // mensagens à espera da resposta do Agendador neste turno
     for (;;) {
       const { value, done } = await leitor.read();
       if (done) throw new Error("o stream fechou sem decisão");
@@ -536,6 +542,14 @@ export async function turno(sessao: string, texto: string, buscar: typeof fetch 
           await buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
             body: JSON.stringify({ events: [{ type: "user.custom_tool_result", custom_tool_use_id: ev.id, is_error: erro,
               content: [{ type: "text", text: JSON.stringify(saida) }] }] }) });
+          continue;
+        }
+        // a Assistente encerrou sem a decidir (07.11.2026): pede a decisão uma vez antes de cair na reserva
+        if (ev.type === "session.status_idle" && ev.stop_reason?.type === "end_turn" && !cobrado) {
+          cobrado = true;
+          await buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
+            body: JSON.stringify({ events: [{ type: "user.message", content: [{ type: "text",
+              text: "Você encerrou o turno sem chamar a ferramenta decidir. Chame decidir agora com a mensagem ao cliente." }] }] }) });
           continue;
         }
         if (ev.type === "session.error" || ev.type === "session.status_terminated"
@@ -669,7 +683,13 @@ if (typeof Deno !== "undefined") {
           r = await decidirPorAgente(x);
           // o agente marca pelas ferramentas: o "agendar" chamaria o robô fixo da agenda
           if (r.acao === "agendar" && TOKEN_AGENDA) r.acao = x.interativa ? "conversa" : "responder";
-        } catch (e) { console.error("zap_plantao agentes:", String(e)); r = await claude(promptPlantao(x)); }
+        } catch (e) {
+          console.error("zap_plantao agentes:", String(e));
+          r = await claude(promptPlantao(x));
+          // a reserva não agenda nem chama o robô fixo da lista numerada: o pedido vai a um colaborador
+          if (r.acao === "agendar" && TOKEN_AGENDA) r = { ...r, acao: "equipe", urgente: false, assunto: r.assunto || "pedido de agendamento",
+            resposta: "Recebi o seu pedido de agendamento.\n\nUm colaborador do escritório vai responder em seguida com os horários disponíveis." };
+        }
       } else r = await claude(promptPlantao(x));
       let acao = ACOES.includes(r.acao) ? r.acao : "responder";
       if (acao === "conversa" && !x.interativa) acao = "responder";   // com a equipe na conversa, a IA não conversa
