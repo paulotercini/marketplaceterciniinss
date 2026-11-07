@@ -169,10 +169,10 @@ export const AG_HORARIOS_F280 = `6. Chame consultar_vagas (no CRM) e ofereça do
   `"Se for necessário atender mais de uma pessoa, preciso verificar na agenda se há outro horário disponível na sequência."`;
 // F422i · previdenciário: primeiro as datas da Dra. Amanda e do Dr. Paulo; o horário só depois da escolha do advogado (Paulo, 07.11.2026)
 export const AG_HORARIOS = `6. Chame consultar_vagas (no CRM). Se o assunto é previdenciário (aposentadoria ou outro benefício do INSS), consulte amanda e paulo ` +
-  `e ofereça primeiro somente as datas, sem horário: as próximas datas com a Dra. Amanda e as próximas com o Dr. Paulo, com o dia da semana, ` +
-  `e pergunte com qual advogado e em qual data prefere. Depois da escolha, ofereça os horários desse advogado nessa data: o mais próximo de manhã ` +
-  `e o mais próximo à tarde (o campo periodo de cada vaga diz qual é), numerados. Se for outro assunto, consulte somente marcos e ofereça os ` +
-  `horários do Dr. Marcos da mesma forma. Junto dos horários, em outra linha, diga: ` +
+  `e ofereça primeiro somente as datas, sem horário: até quatro datas com a Dra. Amanda e até quatro com o Dr. Paulo, as mais próximas, com o dia da semana, ` +
+  `e pergunte com qual advogado e em qual data prefere. Depois da escolha, ofereça todos os horários livres desse advogado nessa data, até quatro, ` +
+  `numerados, de manhã e à tarde (o campo periodo de cada vaga diz qual é). Se for outro assunto, consulte somente marcos e ofereça as ` +
+  `datas e os horários do Dr. Marcos da mesma forma. Junto dos horários, em outra linha, diga: ` +
   `"Se for necessário atender mais de uma pessoa, preciso verificar na agenda se há outro horário disponível na sequência." ` +
   `Se a pessoa insistir em passar com o Dr. Paulo quando ele não tiver data ou o assunto não for previdenciário, diga que vai encaminhar à equipe, ` +
   `peça que explique em poucas palavras o motivo do contato e, com a resposta, chame encaminhar_equipe com o motivo.`;
@@ -329,7 +329,7 @@ export function rotulo(data: string, inicio: string, com: string) {
 }
 // só a vaga marcada no Google (com eventoId), nunca o horário calculado; a primeira da manhã e a
 // primeira da tarde vêm sempre, porque o Agendador oferece uma de cada (pedido do Paulo, 25.10.2026)
-export function vagasDoDia(dias: any[], tipo: string, com: string, n = 4) {
+export function vagasDoDia(dias: any[], tipo: string, com: string, n = 12) {
   const todas: { rotulo: string; data: string; inicio: string; eventoId: string; periodo: string }[] = [];
   for (const d of dias || []) {
     if (d.bloqueado) continue;

@@ -99,7 +99,7 @@ assert.deepEqual(vagasDoDia([{ data: "2026-10-28", livres: { "001": [{ inicio: "
   { data: "2026-10-27", livres: { "001": [{ inicio: "09:30", eventoId: "a" }] } }, { data: "2026-10-26", bloqueado: true, livres: { "001": [{ inicio: "08:00", eventoId: "z" }] } }],
   "001", "a Dra. Amanda").map((v) => v.eventoId), ["a", "b"], "ordem de data, só vaga marcada, sem dia bloqueado");
 const manhas = [1, 2, 3, 4, 5].map((k) => ({ data: `2026-11-0${k}`, livres: { "001": [{ inicio: "09:00", eventoId: "m" + k }] } }));
-const ofert = vagasDoDia([...manhas, { data: "2026-11-09", livres: { "001": [{ inicio: "14:30", eventoId: "t" }] } }], "001", "o Dr. Marcos");
+const ofert = vagasDoDia([...manhas, { data: "2026-11-09", livres: { "001": [{ inicio: "14:30", eventoId: "t" }] } }], "001", "o Dr. Marcos", 4);
 assert.deepEqual(ofert.map((v) => v.eventoId), ["m1", "m2", "m3", "t"], "a primeira tarde vem mesmo depois de quatro manhãs");
 assert.equal(ofert[3].periodo, "tarde");
 const chamadas = [], noBanco = [];
