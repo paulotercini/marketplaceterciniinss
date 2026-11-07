@@ -3600,6 +3600,17 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .quando .avatar.av-fonte:has
 .plan-abas button.on{color:var(--azul);border-bottom-color:var(--azul);font-weight:600}
 @media (hover:hover){.plan-abas button:not(.on):hover{color:var(--texto)}}
 .plan-nat{margin-bottom:10px}
+/* F436 · ideias do Tiimo: a conta do dia, o Hoje por período e as sugeridas */
+.md-conta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin:0 0 12px;font-size:13px;color:var(--texto2,#4A4944);font-variant-numeric:tabular-nums}
+.md-conta b{color:var(--texto,#1F1E1B)}
+.md-barra{flex:1 1 120px;min-width:120px;max-width:280px;height:6px;border-radius:3px;background:var(--borda,#E7E6E1);overflow:hidden}
+.md-barra i{display:block;height:100%;background:var(--verde,#0E5C58)}
+.md-per{margin:10px 16px 2px;font-size:12px;font-weight:600;color:var(--texto2,#686660);text-transform:none}
+.md-sug-l .acoes{display:flex;gap:6px;align-items:center}
+.md-sug-x{min-width:28px}
+.ar-ia{margin-top:6px;padding:8px 10px;border:1px solid var(--borda,#E7E6E1);border-radius:8px;font-size:13px;display:grid;gap:4px}
+.ar-ia-duv{color:#A12B1E;font-weight:600}
+.ar-ia-lem{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
 .carga{display:grid;gap:2px;margin:0 0 12px;max-width:560px}.carga-t{margin:0 0 4px;font-size:13px;font-weight:600}
 .carga-l{display:grid;grid-template-columns:24px 80px 1fr 32px;gap:8px;align-items:center;background:none;border:0;padding:4px;border-radius:4px;text-align:left;cursor:pointer;color:inherit}
 .carga-l.on{background:var(--placa)}@media (hover:hover){.carga-l:hover{background:var(--placa)}}
@@ -14165,20 +14176,23 @@ function renderAgendaV10(qual){
   // aparece no dia como tarefa minha não se repete)
   const naLista = new Set(itens.filter(i=>i.tc && i.data<=util).map(i=>i.andId));
   const mencs = planej || (col && col!==eu.id) ? [] : (D.mencoes||[]).filter(m=>!naLista.has(m.andamento_id));
+  const meuDia = !planej && (!col || col===eu.id);   // F436 · período, conta do dia e sugeridas: só no Meu Dia da própria pessoa
+  const ats = meuDia ? atendimentosHoje(eu.id) : [];
   const secao = ([tit,f,tom])=>{
-    const g = itens.filter(i=>f(i.data)); if(!g.length) return "";
+    const g = itens.filter(i=>f(i.data)), at = tom==="hoje" ? ats : []; if(!g.length && !at.length) return "";
     const lim = limAg[tit]||50;
-    return `<section class="pl-grupo"${tom?` data-tom="${tom}"`:""}><h3 class="secao">${tit} <span class="pl-n">${g.length}</span></h3>`
-      + (planej ? g.slice(0,lim).map(linhaAgenda).join("") : porClienteDia(g.slice(0,lim)))
+    return `<section class="pl-grupo"${tom?` data-tom="${tom}"`:""}><h3 class="secao">${tit} <span class="pl-n">${g.length+at.length}</span></h3>`
+      + (planej ? g.slice(0,lim).map(linhaAgenda).join("") : tom==="hoje" && meuDia ? hojePorPeriodo(g.slice(0,lim), at) : porClienteDia(g.slice(0,lim)))
       + (g.length>lim?`<button class="btn-rap mais-plan" data-mais="${esc(tit)}">Mostrar mais ${Math.min(200,g.length-lim)} de ${g.length-lim}</button>`:"")
       + `</section>`;
   };
   const nDegNL = deleg.filter(i=>i.extra).length;
-  const corpo = (planej || (col && col!==eu.id) ? "" : blocoOntem())
+  const corpo = (meuDia ? contaDoDia(itens.filter(i=>i.data===hj), ats, eu.id) + blocoOntem() : "")
   + secoes.slice(0,2).map(secao).join("")
   + (mencs.length ? `<section class="pl-grupo" data-tom="menc"><h3 class="secao">Menções a você <span class="pl-n">${mencs.length}</span></h3>`
       + mencs.slice(0,8).map(linhaMencaoDia).join("")
       + (mencs.length>8?`<button class="btn-rap mais-plan" onclick="irPara('mencoes')">ver as ${mencs.length} em Menções</button>`:"") + `</section>` : "")
+  + (meuDia ? secaoSugeridas() : "")
   + secoes.slice(2).map(secao).join("")
   + (adic.length ? `<section class="pl-grupo"><h3 class="secao">Adicionados ao dia <span class="pl-n">${adic.length}</span></h3>`
       + adic.map(([c,ks])=>cartaoCliente(c,ks)).join("") + `</section>` : "")
@@ -14208,6 +14222,8 @@ function renderAgendaV10(qual){
   document.querySelectorAll("[data-agendar-nov]").forEach(b=>b.onclick=e=>{ e.stopPropagation();
     const a = (D.novid||[]).find(x=>x.id===b.dataset.agendarNov); if(a) agendarPericiaDe({casoId:a.caso_id, texto:a.texto, andId:a.id}); });
   document.querySelectorAll("[data-li-nov]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); marcarLidas([b.dataset.liNov]); });
+  document.querySelectorAll("[data-sug-add]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); b.dataset.sugCaso ? alternarMeuDia(b.dataset.sugCaso) : abrirFicha(b.dataset.sugCli); });
+  document.querySelectorAll("[data-sug-fora]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); guardar("crm_sug_fora", JSON.stringify([...sugFora(), b.dataset.sugFora].slice(-500))); render(); });
   ligarCartoes(); ligarTarefas();
   buscarTextosAgenda([...itens, ...deleg].filter(i=>i.andId && !i.resumo).map(i=>i.andId));
   buscarMotivosPz([...itens, ...deleg].filter(i=>i.k && (i.fatal || i.antes) && !i.tc && !i.motivo && i.k.prazo===(i.antes||i.data)).map(i=>i.k));   // F427
@@ -14263,6 +14279,106 @@ function blocoOntem(){
       <span class="ag-selos"><span class="ag-tipo">${esc(k.especie||NOME_FASE[k.fase]||"")}</span></span></div>`; };
   return `<details class="pl-grupo pl-dobra md-ontem" data-tom="ontem"><summary><h3 class="secao">${rot} <span class="pl-n">${partes}</span></h3></summary>`
     + (r.desp.length ? r.desp.map(linha).join("") : `<p class="meio-sub">Nenhum cliente concluído por hoje nesse dia.</p>`) + `</details>`;
+}
+// F436 · IDEIAS DO TIIMO (propostas 1, 3 e 4 aprovadas pelo Paulo em 07.11.2026)
+// 3 · o Hoje do Meu Dia por período: perícia, audiência e o atendimento da 📅 Agenda na hora deles; prazo e retorno em
+// "A qualquer hora". Sem nada com hora, o Hoje fica como era (agrupado por cliente)
+let _mdAgPedida = false;
+function atendimentosHoje(quem){
+  const p = dsa(((D.colPorId.get(quem)||{}).nome||"").split(" ")[0]);
+  if(!PROFS_AGENDA.includes(p)) return [];
+  const r = agq.cache[p];
+  // shortcut: a agenda do Google se lê uma vez por sessão ao abrir o Meu Dia; o atendimento marcado depois aparece ao abrir a 📅 Agenda
+  if(!r){ if(!_mdAgPedida && !agq.carregando[p]){ _mdAgPedida = true;
+    carregarAgenda(p).then(x=>{ if(x && visao==="meudia" && !clienteAberto) render(); }).catch(()=>{}); } return []; }
+  const d = (r.dias||[]).find(x=>x.data===hoje());
+  return ((d && d.eventos)||[]).filter(e=>e.atendimento && !e.vaga).map(e=>({atend:true, hora:e.inicio||"", tipo:e.tipo, cli:clienteDoEvento(e),
+    nome:String(e.nome||e.titulo||"").replace(/^\s*00[12]\s*-\s*/,"")}));
+}
+function linhaAtendimento(a){
+  return `<div class="cartao ag-linha md-atend"${a.cli?` data-cli="${a.cli.id}"`:""}><span class="ag-slot"></span><span class="ag-data hoje">${esc(a.hora)}</span>
+    <div class="ag-txt"><b>${esc(a.cli ? a.cli.nome : a.nome || "Atendimento")}</b><span class="ag-res"> · atendimento ${esc(a.tipo||"")}</span></div>
+    <span class="ag-selos"><span class="ag-tipo">Atendimento</span></span></div>`;
+}
+const horaDoItem = it => it.atend ? it.hora : it.ev && it.ev.data_hora ? horaSP(it.ev.data_hora) : "";
+function hojePorPeriodo(g, ats){
+  const m = [], t = [], q = [];
+  [...g, ...ats].forEach(it=>{ const h = horaDoItem(it); (!h ? q : h<"12:00" ? m : t).push(it); });
+  if(!m.length && !t.length) return porClienteDia(g);
+  const lin = l => l.sort((a,b)=>horaDoItem(a).localeCompare(horaDoItem(b))).map(x=>x.atend ? linhaAtendimento(x) : linhaAgenda(x)).join("");
+  return [["Manhã", m], ["Tarde", t]].filter(([,l])=>l.length).map(([r,l])=>`<h4 class="md-per">${r}</h4>${lin(l)}`).join("")
+    + (q.length ? `<h4 class="md-per">A qualquer hora</h4>${porClienteDia(q)}` : "");
+}
+// 4 · o tempo estimado pela natureza do item e a conta do dia; a tabela se ajusta nas Configurações (config_app.dur_tarefas)
+const DUR_TAREFAS = [["conferir","Conferir ou em análise",5,/confer|em an[aá]lise|verificar/i], ["juntada","Juntada",15,/junt/i],
+  ["replica","Réplica ou impugnação",120,/r[ée]plica|impugna/i], ["recurso","Recurso ou apelação",180,/recurs|apela/i],
+  ["evento","Perícia ou audiência",60,null], ["a001","Atendimento 001",45,null], ["a002","Atendimento 002",30,null], ["outro","Demais itens",15,null]];
+function durTabela(){
+  let o = {}; try{ o = JSON.parse(cfgApp("dur_tarefas")||"{}")||{}; }catch(e){}
+  return DUR_TAREFAS.map(([id, rot, min, rx])=>({id, rot, rx, min: +o[id]>0 ? +o[id] : min}));
+}
+function minutosDe(it, tab = durTabela()){
+  const m = id => tab.find(x=>x.id===id).min;
+  if(it.atend) return m(String(it.tipo)==="002" ? "a002" : "a001");
+  if(it.ev) return m("evento");
+  const txt = [it.selo, it.resumo, it.t && it.t.titulo].filter(Boolean).join(" ");
+  const r = tab.find(x=>x.rx && x.rx.test(txt)); return r ? r.min : m("outro");
+}
+const fmtMin = n => n<60 ? `${n} min` : `${Math.floor(n/60)} h${n%60 ? ` ${n%60} min` : ""}`;
+// o concluído de hoje: as tarefas que a pessoa concluiu hoje (as de outra sessão vêm do banco, uma vez por dia) e os casos
+// concluídos por hoje
+let _feitosHoje = {dia:null, quem:null, ids:new Set()};
+function feitosHoje(quem){
+  const hj = hoje();
+  if(_feitosHoje.dia!==hj || _feitosHoje.quem!==quem){ _feitosHoje = {dia:hj, quem, ids:new Set()};
+    todas("andamento_tarefas", `select=id&colaborador_id=eq.${quem}&concluida_em=gte.${hj}T03:00:00Z`)
+      .then(r=>{ if(!(r||[]).length) return; r.forEach(t=>_feitosHoje.ids.add(t.id)); if(visao==="meudia" && !clienteAberto) render(); }).catch(()=>{}); }
+  const ids = new Set(_feitosHoje.ids);
+  for(const ts of D.tarefasPorCaso.values()) ts.forEach(t=>{ if(t.colaborador_id===quem && t.concluida_em && dataSP(t.concluida_em)===hj) ids.add(t.id); });
+  return ids.size + ativos().filter(k=>{ const d = (k.ronda||{}).despacho; return d && d.por===quem && d.em && dataSP(d.em)===hj; }).length;
+}
+function contaDoDia(its, ats, quem){
+  const feitos = feitosHoje(quem), n = its.length + ats.length; if(!n && !feitos) return "";
+  const tab = durTabela(), min = [...its, ...ats].reduce((s, i)=>s + minutosDe(i, tab), 0), pct = Math.round(100*feitos/(feitos+n));
+  return `<div class="md-conta" role="group" aria-label="Conta do dia"><span><b>${n}</b> ${n===1?"item":"itens"} hoje</span><span><b>${feitos}</b> ${feitos===1?"concluído":"concluídos"}</span>`
+    + (min ? `<span title="estimativa pela natureza de cada item; a tabela fica nas Configurações">cerca de <b>${fmtMin(min)}</b></span>` : "")
+    + `<span class="md-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="${pct}% do dia concluído"><i style="width:${pct}%"></i></span></div>`;
+}
+// 1 · SUGERIDAS PARA HOJE: o que o CRM já sabe dos casos da pessoa e ninguém pôs no dia. Nada grava sozinho: Adicionar põe o
+// caso no Meu Dia (o cliente sem caso abre a ficha), Dispensar a tira deste navegador. A chave leva o motivo, por isso a
+// sugestão volta quando o motivo muda (outra etapa, outra data)
+const sugFora = () => { try{ return new Set(JSON.parse(ler("crm_sug_fora")||"[]")); }catch(e){ return new Set(); } };
+function sugeridasDoDia(quem){
+  const hj = hoje(), fora = sugFora(), noDia = new Set(D.meudia.filter(m=>m.colaborador_id===quem).map(m=>m.caso_id)), out = [];
+  const meu = k => donosDoCaso(k).includes(quem);
+  const add = (ch, cli, k, txt) => { if(cli && !fora.has(ch) && !(k && noDia.has(k.id)) && !out.some(s=>s.ch===ch)) out.push({ch, cli, k, txt}); };
+  for(const k of ativos()){
+    if(ehPreCaso(k) || !meu(k)) continue;
+    const cli = D.cliPorId.get(k.cliente_id);
+    try{
+      if(k.trilha && k.trilha.velha) add(`etapa:${k.id}:${k.etapa}`, cli, k, `Etapa “${k.etapa}” desatualizada: conferir a sugestão do caso`);
+      const s = k.etapa && prazoDaEtapa(k);
+      if(s && s.fatal>=hj && !(k.prazo && k.prazo>=hj) && !_pzEtapaFora.has(k.id+"|"+k.etapa))
+        add(`pzetapa:${k.id}:${k.etapa}`, cli, k, `Criar o prazo da etapa: ${s.item.rot}, até ${fmt(s.fatal).slice(0,5)}`);
+      const mo = prazoMora(k);
+      if(mo && mo.vencido) add(`mora:${k.id}:${mo.data}`, cli, k, `Prazo de análise do INSS vencido em ${fmt(mo.data).slice(0,5)}: abrir a Ouvidoria`);
+      if(k.resultado==="deferido" && propostaHonorarios(cli, k)) add(`hon:${k.id}`, cli, k, "Concessão: lançar os honorários do contrato");
+    }catch(e){}
+  }
+  for(const x of docsSemData()) if(meu(x.k)) add(`doc:${x.t.id}`, x.cli, x.k, `Documento pedido sem data: ${cortaFrase(x.nome, 60)}`);
+  for(const r of direitoAlcancado()) if((advogadoDoCliente(r.cliente.id)||[]).includes(quem))
+    add(`dir:${r.cliente.id}`, r.cliente, null, "Direito à aposentadoria alcançado: falar com o cliente");
+  return out;
+}
+function secaoSugeridas(){
+  if(!podeGravarCaso()) return "";
+  let ss = []; try{ ss = sugeridasDoDia(eu.id); }catch(e){} if(!ss.length) return "";
+  const lim = limAg["Sugeridas"]||6;
+  return `<section class="pl-grupo md-sug" data-tom="sug"><h3 class="secao dica-tit" title="O que o CRM encontrou nos seus casos e ninguém pôs no dia. Nada é gravado sem o seu clique.">Sugeridas para hoje <span class="pl-n">${ss.length}</span></h3>`
+    + ss.slice(0, lim).map(s=>`<div class="cartao ag-linha md-sug-l" data-cli="${s.cli.id}"><span class="ag-slot"></span>
+      <div class="ag-txt"><b>${esc(s.cli.nome)}</b><span class="ag-res"> · ${esc(s.txt)}</span></div>
+      <span class="acoes"><button class="btn-mini" data-sug-add="${esc(s.ch)}" data-sug-caso="${s.k ? s.k.id : ""}" data-sug-cli="${s.cli.id}" title="${s.k ? "Pôr este caso no meu Meu Dia" : "Abrir a ficha"}">${s.k ? "Adicionar" : "Abrir"}</button><button class="btn-mini md-sug-x" data-sug-fora="${esc(s.ch)}" aria-label="Dispensar a sugestão" title="Dispensar">✕</button></span></div>`).join("")
+    + (ss.length>lim ? `<button class="btn-rap mais-plan" data-mais="Sugeridas">Mostrar mais ${ss.length-lim}</button>` : "") + `</section>`;
 }
 // F295 · o aviso das 8h: uma vez por dia útil, a partir das 8h, o que vence hoje e o que está vencido no meu dia
 function avisoDas8(agora = agoraSP()){
@@ -18020,6 +18136,17 @@ async function salvarFaixaRenda(casoId, acima){
 const DIAS_CFG = [["1","seg"],["2","ter"],["3","qua"],["4","qui"],["5","sex"],["6","sáb"],["7","dom"]];
 let cfgAvisos = [], cfgPassos = [], cfgSetores = [], cfgColabSet = [];
 
+// F436 · a tabela do tempo estimado da conta do Meu Dia, em minutos, para o escritório inteiro
+function cfgDuracoes(){
+  return `<h3 class="secao">⏱ Tempo estimado no Meu Dia</h3><p class="meio-sub">Minutos de cada natureza, somados na conta do dia.</p>
+    <div class="cfg-cx">${durTabela().map(x=>`<label class="cfg-linha"><b style="min-width:190px">${esc(x.rot)}</b><input type="number" min="1" max="600" value="${x.min}" data-dur="${x.id}" style="width:80px" onchange="gravarDuracao(this)"> min</label>`).join("")}</div>`;
+}
+async function gravarDuracao(inp){
+  const o = Object.fromEntries(durTabela().map(x=>[x.id, x.min])), v = Math.round(+inp.value);
+  if(!(v>0 && v<=600)) return aviso("Escreva um número de 1 a 600");
+  o[inp.dataset.dur] = v;
+  try{ await guardarCfgApp("dur_tarefas", JSON.stringify(o)); aviso("Tempo guardado"); }catch(e){ aviso("Não consegui guardar"); }
+}
 async function renderConfig(){
   tituloLista("⚙️ Configurações");
   document.getElementById("sub-lista").textContent=
@@ -18040,6 +18167,7 @@ async function renderConfig(){
   meio.innerHTML =
     // F151 · a agenda de quarta: o endereço do Apps Script e o token do Paulo
     `<h3 class="secao">📅 Agenda de atendimentos</h3>${cardLigarAgenda()}`
+    + cfgDuracoes()
     +     // ── quem atende ──────────────────────────────────────────────────────
     `<h3 class="secao">👥 Quem atende o WhatsApp</h3>
      <p class="meio-sub">Não é cadastro novo: é a mesma equipe do CRM. Quem não
@@ -54348,6 +54476,11 @@ function anotacaoRapida(pre, cliId){
       style="width:100%;margin-top:6px;resize:vertical" oninput="sugerirRetorno('ar-texto','ar-sug',arCliSel)"
       onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();salvarAnotacaoRapida();}"></textarea>
     <div id="ar-sug" class="meio-sub" style="margin-top:4px"></div>
+    <div class="form-linha" style="margin-top:4px;align-items:center;gap:6px">${window.SpeechRecognition || window.webkitSpeechRecognition ? `
+      <button type="button" class="btn-mini" onclick="arDitar(this)" title="Ditar a anotação"><span aria-hidden="true">🎤 Ditar</span><span class="sr-only">Ditar a anotação</span></button>` : ""}
+      <button type="button" class="btn-mini" onclick="arOrganizar()" title="A IA propõe cliente, caso, anotação, lembrete e juntada; nada grava sem o seu Gravar"><span aria-hidden="true">✨ Organizar</span><span class="sr-only">Organizar com a IA</span></button>
+    </div>
+    <div id="ar-ia"></div>
     <div class="form-linha" style="margin-top:6px;align-items:center">
       <label class="conta-ck"><input type="checkbox" id="ar-imp" checked>⭐ importante</label>
       <label class="btn-mini" title="carregar anexo">📎 Anexo<input type="file" id="ar-arq" multiple hidden onchange="arArquivos(this)"></label>
@@ -54357,6 +54490,54 @@ function anotacaoRapida(pre, cliId){
   const b=document.getElementById("ar-busca");
   if(cliId && D.cliPorId.get(cliId)){ arEscolher(cliId); return; }
   if(b){ b.focus(); if(pre&&String(pre).trim()){ b.value=String(pre); arProcurar(b.value); } }
+}
+// F436 · ⚡ COM IA (ideia do Tiimo aprovada pelo Paulo, 07.11.2026): o texto livre vai à Edge Function `anotacao_ia`, com os
+// números longos mascarados, e volta como PROPOSTA (cliente, caso, anotação, lembrete, juntada). Gravar usa o mesmo
+// salvarAnotacaoRapida; Corrigir devolve o texto ao campo. A data duvidosa vem marcada para conferir
+let arIa = null;
+const arLembrete = () => { const ck = document.getElementById("ar-lem-ck"), d = document.getElementById("ar-lem");
+  return ck && ck.checked && d && /^\d{4}-\d{2}-\d{2}$/.test(d.value) ? d.value : null; };
+function arDitar(bt){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition, ta = document.getElementById("ar-texto"); if(!SR || !ta) return;
+  const r = new SR(); r.lang = "pt-BR"; r.interimResults = false;
+  r.onresult = e => { ta.value = `${ta.value.trim()} ${[...e.results].map(x=>x[0].transcript).join(" ")}`.trim(); };
+  r.onend = r.onerror = () => bt.classList.remove("on");
+  bt.classList.add("on"); try{ r.start(); }catch(e){ bt.classList.remove("on"); }
+}
+async function arOrganizar(){
+  const ta = document.getElementById("ar-texto"), box = document.getElementById("ar-ia"); if(!ta || !box) return;
+  const texto = (ta.value||"").trim(); if(!texto) return aviso("Escreva ou dite a anotação");
+  const cli = arCliSel && D.cliPorId.get(arCliSel);
+  const casos = cli ? (D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado")
+    .map(k=>({id:k.id, rot:[k.especie||k.beneficio||"", NOME_FASE[faseEfetiva(k)]||NOME_FASE[k.fase]||""].filter(Boolean).join(" · ")})) : [];
+  box.innerHTML = `<p class="meio-sub">Organizando…</p>`;
+  let r; try{ r = await api("/functions/v1/anotacao_ia", {method:"POST", body:JSON.stringify({texto, hoje:hoje(), cliente:cli ? cli.nome : "", casos})}); }
+  catch(e){ r = {erro: msgErro(e)}; }
+  if(!document.getElementById("ar-ia")) return;
+  if(!r || r.erro){ box.innerHTML = `<p class="meio-sub">Não organizou: ${esc((r && r.erro) || "sem resposta")}. Grave como está ou tente de novo.</p>`; return; }
+  arIa = r;
+  if(!cli && r.cliente){ document.getElementById("ar-busca").value = r.cliente; arProcurar(r.cliente); }
+  const sel = document.getElementById("ar-caso"); if(sel && r.caso_id) sel.value = r.caso_id;
+  const k = r.caso_id && D.casoPorId.get(r.caso_id);
+  box.innerHTML = `<div class="ar-ia" role="group" aria-label="Proposta da IA">
+    <div><b>Cliente:</b> ${cli ? esc(cli.nome) : r.cliente ? `${esc(r.cliente)} <span class="meio-sub">(escolha na lista acima)</span>` : `<span class="meio-sub">escolha na lista acima</span>`}</div>
+    ${k ? `<div><b>Caso:</b> ${esc(rotuloCasoEscolha(k))}</div>` : ""}
+    <div><b>Anotação:</b> ${esc(r.anotacao||texto)}</div>
+    ${r.juntada ? `<div><b>Juntada</b> de documento</div>` : ""}
+    ${r.lembrete_data || r.data_duvidosa ? `<label class="ar-ia-lem"><input type="checkbox" id="ar-lem-ck"${r.lembrete_data ? " checked" : ""}> Lembrete em <input type="date" id="ar-lem" value="${esc(r.lembrete_data||"")}">${r.lembrete_texto ? ` <span class="meio-sub">${esc(r.lembrete_texto)}</span>` : ""}</label>` : ""}
+    ${r.data_duvidosa ? `<div class="ar-ia-duv">Conferir a data: ${esc(r.motivo_duvida || "o texto não a deixa clara")}</div>` : ""}
+    <div class="form-linha" style="gap:6px;margin-top:6px"><button type="button" onclick="arIaGravar()" title="Gravar a proposta">Gravar</button><button type="button" class="btn-mini" onclick="arIaCorrigir()" title="Corrigir o texto antes de gravar">Corrigir</button></div></div>`;
+}
+function arIaGravar(){
+  const ta = document.getElementById("ar-texto"); if(!ta || !arIa) return;
+  if(arLembrete() && !((document.getElementById("ar-caso")||{}).value)) return aviso("O lembrete precisa do caso: escolha o caso");
+  if(arIa.anotacao) ta.value = arIa.anotacao;
+  salvarAnotacaoRapida();
+}
+function arIaCorrigir(){
+  const ta = document.getElementById("ar-texto"), box = document.getElementById("ar-ia");
+  if(ta && arIa && arIa.anotacao) ta.value = arIa.anotacao;
+  if(box) box.innerHTML = ""; arIa = null; ta && ta.focus();
 }
 function arProcurar(txt){
   const div=document.getElementById("ar-achados"); if(!div) return;
@@ -54535,6 +54716,10 @@ async function salvarAnotacaoRapida(){
       const [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
         body:JSON.stringify({caso_id:casoId, autor_id:eu.id, origem:"app", texto:t})})||[];
       if(and && /@\p{L}/u.test(t)) await criarMencoes(t, casoId, and.id);   // F236 · o @ da anotação rápida avisa a pessoa
+      const lem = arLembrete();   // F436 · o lembrete que o ✨ Organizar propôs e a pessoa manteve
+      if(and && lem) try{ const [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:eu.id, atribuido_por:eu.id, lembrar_em:lem, natureza:"lembrete"})}); tarefaNaMemoria(tf); }
+        catch(e){ aviso("O lembrete não gravou: ponha a data no caso"); }
       const anx = arqs.length ? await arSubir(arCliSel, ehPreCaso(k) ? null : casoId, and && and.id, arqs) : [];
       // F403 · a cópia curta fica no cliente: é ela que o botão Anotações do cabeçalho lista e sinaliza
       const r = {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], autor_id:eu.id, texto:t, caso_id:casoId, and_id:and && and.id};
