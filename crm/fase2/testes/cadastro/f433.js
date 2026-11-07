@@ -1,7 +1,7 @@
-// F432 · pedido do Paulo de 07.11.2026: quem escreveu apaga a anotação ou o prazo; sai das anotações e fica no
+// F433 · pedido do Paulo de 07.11.2026: quem escreveu apaga a anotação ou o prazo; sai das anotações e fica no
 // histórico do caso (andamentos_apagados, gravado pelo gatilho do banco, aqui emulado), com quem apagou e quando.
 // O prazo apagado leva junto a data do caso, salvo a do Microsoft To Do e a de outro carimbo vivo.
-// Pontua; passa acima de 95 de 100. Banco simulado, dados fictícios. Uso: node f432.js [pasta das capturas]
+// Pontua; passa acima de 95 de 100. Banco simulado, dados fictícios. Uso: node f433.js [pasta das capturas]
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
@@ -9,7 +9,7 @@ const path = require("path");
 const { FIX, SESSAO } = require("./fixturas");
 const { Banco, instalarBanco, filtrar } = require("./banco-simulado");
 const SUPA = "https://ficticio.supabase.co";
-const OUT = process.argv[2] || "/tmp/f432";
+const OUT = process.argv[2] || "/tmp/f433";
 fs.mkdirSync(OUT, { recursive: true });
 
 const PAULO = FIX.colaboradores[0].id, AMANDA = "22222222-2222-2222-2222-222222222222";
@@ -40,7 +40,7 @@ const tarefa = (a, o = {}) => { const t = { id: id("f"), andamento_id: a.id, cas
   lembrar_em: iso(-2), natureza: "compromisso", papel: "executa", concluida_em: null, iniciada_em: null, etapas: [], criado_em: a.criado_em, ...o };
   T().andamento_tarefas.push(t); return t; };
 
-// o gatilho andamento_apagado (migracoes/f432_anotacoes_apagadas.sql) e o ON DELETE CASCADE de andamento_tarefas
+// o gatilho andamento_apagado (migracoes/f433_anotacoes_apagadas.sql) e o ON DELETE CASCADE de andamento_tarefas
 const responder = banco.responder.bind(banco);
 let semTabela = false, nHist = 0;
 banco.responder = (m, url, h, corpo) => {
