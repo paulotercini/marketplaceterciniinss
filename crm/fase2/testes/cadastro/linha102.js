@@ -191,16 +191,16 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   await p.click(".caso-esq-alca"); await p.waitForTimeout(300);
   const aberta = await larg();
   conf("F405 · um clique na mesma seta devolve a coluna", aberta.esq && !aberta.oculta);
-  // F434 · a flecha da coluna dos andamentos a recolhe, e os prazos e o cartão ocupam a largura
+  // F435 · a flecha da coluna dos andamentos a recolhe, e os prazos e o cartão ocupam a largura
   const dirL = () => p.evaluate(() => ({ dir: !!document.querySelector(".caso-dir")?.offsetParent, pz: document.querySelector(".caso-pz").getBoundingClientRect().width, oculta: !!document.querySelector(".caso-3col.dir-oculta"), alca: !!document.querySelector(".caso-dir-alca")?.offsetParent, esqAlca: !!document.querySelector(".caso-esq-alca")?.offsetParent }));
   const d0 = await dirL();
   await p.click(".caso-dir-alca"); await p.waitForTimeout(300);
   const d1 = await dirL();
   await p.screenshot({ path: "/tmp/claude-0/-home-user-marketplaceterciniinss/e22db264-d0df-5ab5-8754-801ac3e96726/scratchpad/f434-fechada.png" });
-  conf("F434 · a flecha recolhe a coluna dos andamentos, e a flecha de volta continua à vista", d0.dir && !d1.dir && d1.oculta && d1.alca && !d1.esqAlca && d1.pz > d0.pz + 100);
+  conf("F435 · a flecha recolhe a coluna dos andamentos, e a flecha de volta continua à vista", d0.dir && !d1.dir && d1.oculta && d1.alca && !d1.esqAlca && d1.pz > d0.pz + 100);
   await p.click(".caso-dir-alca"); await p.waitForTimeout(300);
   const d2 = await dirL();
-  conf("F434 · um clique na mesma flecha devolve os andamentos", d2.dir && !d2.oculta && d2.esqAlca);
+  conf("F435 · um clique na mesma flecha devolve os andamentos", d2.dir && !d2.oculta && d2.esqAlca);
   await p.evaluate(() => document.querySelector(".jn-l .jn-tudo").click()); await p.waitForTimeout(300);
   await p.evaluate(() => irSubAba("crps")); await p.waitForTimeout(300);
   const crps = await p.evaluate(() => ({ menu: [...document.querySelectorAll(".sub-menu.instancias button")].map(b => b.textContent.replace(/\s+/g, " ").trim()),
