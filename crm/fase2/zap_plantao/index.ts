@@ -66,7 +66,7 @@ export type Contexto = {
   motor?: string; ma?: { agente: string | null; ambiente: string | null; versao: string | null };
   sessao?: { id: string; em: string; ate: string; v?: string } | null;
   cliente: { nome: string; mesmo_telefone: boolean; casos: Caso[] } | null;
-  remarcar?: { rotulo: string | null; profissional: string | null; duvida?: boolean } | null;
+  remarcar?: { rotulo: string | null; profissional: string | null; duvida?: boolean; ler?: boolean; classe?: string } | null;
 };
 
 // as regras fixas: no Managed Agents são o system do agente, e cada mudança das
@@ -204,15 +204,32 @@ export function contexto(x: Contexto) {
     `Advogado indicado para esta conversa: ${x.advogado || "a equipe"}.\n${ficha}\n` +
     `Agenda: ${x.agenda ? "ligada" : "desligada"}.\n` +
     NOME_UMA_VEZ +
-    (x.remarcar?.duvida ? `Confirmação: a pessoa recebeu a confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"} e respondeu sem dizer SIM nem NÃO. ` +
+    (x.remarcar?.duvida ? `Confirmação: a pessoa recebeu a confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"} e respondeu com uma pergunta, um pedido ou algo que não deixa clara a presença. ` +
       `Responda o que ela perguntou ou disse. Se quiser outro horário, peça ao Agendador dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, ` +
       `um de manhã e outro à tarde, e que remarque esse atendimento. Se confirmar presença, agradeça e diga que o atendimento está mantido. Não cumprimente de novo.\n`
-    : x.remarcar ? `Remarcação: a pessoa respondeu NÃO à confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"} e quer outro horário. ` +
+    : x.remarcar ? `Remarcação: a pessoa disse, em resposta à confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"}, que não pode comparecer e precisa de outro horário. ` +
       `Peça ao Agendador que ofereça dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, um de manhã e outro à tarde, ` +
       `e que remarque esse atendimento quando ela escolher. Não cumprimente de novo e não peça o assunto.\n` : "") +
     (x.modo === "lead" ? `Você já está atendendo este caso novo (${x.respostas} respostas suas até aqui; agende depois de ${Math.max(1, 6 - x.respostas)} respostas).\n`
       : x.modo === "conversa" ? `Você já está conversando com esta pessoa (${x.respostas} respostas suas até aqui).\n` : "");
 }
+
+// F422f · a IA lê toda resposta à confirmação, sem depender de SIM ou NÃO (pedido do Paulo de 07.11.2026)
+export const ESQ_INTENCAO = {
+  type: "object", additionalProperties: false, required: ["intencao"],
+  properties: { intencao: { type: "string", enum: ["confirmar", "remarcar", "outro"] } },
+};
+export function promptIntencao(x: Contexto) {
+  const ult = [...(x.mensagens || [])].reverse();
+  const cli = ult.find((m) => m.direcao === "entrada");
+  const conf = ult.find((m) => m.direcao === "saida" && m.por_bot && m.momento <= (cli?.momento || "~"));
+  return `O escritório enviou ao cliente a confirmação de um atendimento e o cliente respondeu. Classifique a resposta:\n` +
+    `- "confirmar": a pessoa diz que vai comparecer (sim, ok, estarei lá, pode confirmar, combinado, 👍) e não pergunta nem pede nada.\n` +
+    `- "remarcar": a pessoa não pode ou não quer ir nessa data, quer outro dia ou horário, ou quer cancelar.\n` +
+    `- "outro": pergunta, pedido, confirmação com pergunta junto, ou qualquer coisa que não seja clara. Na dúvida, "outro".\n\n` +
+    `<confirmacao>${mascarar(conf?.texto || "").slice(0, 600)}</confirmacao>\n<resposta>${mascarar(cli?.texto || `[${cli?.tipo || "mensagem"}]`).slice(0, 600)}</resposta>`;
+}
+const DE_CLASSE: Record<string, string> = { sim: "confirmar", nao: "remarcar", duvida: "outro" };
 
 export function promptPlantao(x: Contexto) {
   return `${regras(x.instrucoes)}\n\n<contexto>\n${contexto(x)}</contexto>\n\n<conversa>\n${transcricao(x.mensagens || [])}\n</conversa>`;
@@ -239,13 +256,13 @@ async function atendenteOffline(conversa: string) {
   return !!k?.[0]?.zap_offline_desde;
 }
 
-async function claude(texto: string) {
+async function claude(texto: string, esquema: unknown = ESQUEMA) {
   const r = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: { "x-api-key": CHAVE_IA, "anthropic-version": "2023-06-01", "content-type": "application/json" },
     body: JSON.stringify({
       model: MODELO, max_tokens: 2000,
-      output_config: { effort: "medium", format: { type: "json_schema", schema: ESQUEMA } },
+      output_config: { effort: "medium", format: { type: "json_schema", schema: esquema } },
       messages: [{ role: "user", content: texto }],
     }),
   });
@@ -585,6 +602,19 @@ if (typeof Deno !== "undefined") {
     try {
       const x = await rpc("zap_plantao_pegar", { p_msg: msg });
       if (!x) return json({ acao: null, aviso: "mensagem já lida ou vencida" });
+      if (x.remarcar?.ler && x.conversa_id) {
+        // a primeira resposta à confirmação: confirmar não passa pelo agente; o sistema manda a resposta do SIM
+        let intencao = DE_CLASSE[x.remarcar.classe || ""] || "outro";
+        try { intencao = (await claude(promptIntencao(x), ESQ_INTENCAO)).intencao || intencao; }
+        catch (e) { console.error("zap_plantao intencao:", String(e)); }
+        await rpc("zap_conf_ia_intencao", { p_conversa: x.conversa_id, p_intencao: intencao, p_msg: msg });
+        if (intencao === "confirmar") {
+          await rpc("zap_plantao_aplicar", { p_msg: msg, p_acao: "nada", p_resposta: "", p_advogado: "", p_urgente: false,
+            p_assunto: "confirmou o atendimento", p_relato: "", p_nome: "" });
+          return json({ acao: "nada", intencao });
+        }
+        x.remarcar.duvida = intencao === "outro";
+      }
       let r: Record<string, any>;
       if (x.motor === "agentes") {
         // o Managed Agents falhou: a chamada direta responde no lugar, ainda dentro dos 90 s
