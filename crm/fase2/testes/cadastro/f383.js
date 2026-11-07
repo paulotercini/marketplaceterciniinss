@@ -97,7 +97,8 @@ const SUPA = "https://ficticio.supabase.co";
     div.style.width = "1100px";
     const j2 = pinta("cnj"), pl = j2.querySelector(".proc-leitor");
     res.leitor = pl ? { tit: pl.querySelector(".pl-tit").textContent, sel: txt(j2, ".arv-doc.sel .arv-nome"),
-      bts: [...pl.querySelectorAll(".pl-bts button")].length, cab: txt(j2, ".proc-arv-cab")[0], situ: !!j2.querySelector(".proc-situ .proc-lig") } : null;
+      bts: [...pl.querySelectorAll(".pl-bts button")].length, cab: txt(j2, ".proc-arv-cab")[0], situ: !!j2.querySelector(".proc-mais .proc-lig") && !j2.querySelector(".proc-situ .proc-lig"), filt: txt(j2, ".proc-filtros button"), n: (pl.querySelector(".pl-cab .meio-sub")||{}).textContent,
+      comum: oriComum([{ori:"Juízo"},{ori:"Juízo"},{ori:"Juízo"},{ori:"INSS"},{},{},{},{}]) } : null;
     if(pl){ procVer("kproc", "cnj", 0, "pje/00012345620264036314/2");
       res.ver = { tit: document.querySelector(".proc-leitor .pl-tit").textContent, sel: txt(j2, ".arv-doc.sel .arv-nome"), pi: !!document.getElementById("proc-inteiro") }; }
     docEscolhido = {}; div.style.width = "";
@@ -136,6 +137,8 @@ const SUPA = "https://ficticio.supabase.co";
   conf("Ler no Conselho leva os documentos do recurso", r.lerCrps === 2);
   conf("onclick válidos", r.parse);
   conf("leitor ao lado: abre na decisão, marcada na árvore", r.leitor && /Senten/.test(r.leitor.tit) && /Senten/.test(r.leitor.sel[0]||"") && r.leitor.bts >= 5 && /3 documentos/.test(r.leitor.cab) && r.leitor.situ);
+  conf("F432: sem o Tudo, e a origem comum conta só os documentos", r.leitor && !r.leitor.filt.includes("Tudo") && r.leitor.comum === "Juízo");
+  conf("F432: o leitor conta na ordem da árvore (a decisão no alto é 1)", r.leitor && /\b1 de 3\b/.test(r.leitor.n||""));
   conf("clique na árvore troca o documento do leitor sem tela cheia", r.ver && /inicial/i.test(r.ver.tit) && /inicial/i.test(r.ver.sel[0]||"") && !r.ver.pi);
 
   console.log("=== F383/F391: árvore do processo ===");
