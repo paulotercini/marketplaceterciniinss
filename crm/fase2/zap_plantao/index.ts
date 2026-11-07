@@ -125,6 +125,12 @@ export const ESTILO = `\n\nComo escrever no WhatsApp:\n` +
 // F278 · a Assistente faz a triagem e passa o agendamento ao Agendador de Atendimentos
 // Jurídicos, o agente que o Paulo mantém no Console (pedido de 25.10.2026)
 export const AGENDAR_BULLET = `- "agendar": não use. Quem marca, remarca e cancela é o Agendador de Atendimentos Jurídicos, como explicado em "Como encaminhar ao Agendador".\n`;
+// F422k · pedir agendamento sem assunto, advogado ou data não é dúvida: o Agendador pergunta (Paulo, 07.11.2026)
+export const DUVIDA_TRIAGEM = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.2026, revisto): o pedido de agendamento sem assunto, sem advogado ` +
+  `ou sem data não é dúvida; encaminhe ao Agendador, que pergunta o assunto e oferece as datas. Use acao "equipe" somente quando ` +
+  `a conversa se contradisser ou a pessoa não souber explicar depois de uma pergunta, por exemplo ao pedir a troca de um atendimento ` +
+  `que não existe ou ao citar dois atendimentos diferentes; diga em uma frase que um colaborador do escritório vai responder ` +
+  `e escreva a dúvida no assunto. Não presuma acompanhante, parentesco nem outra pessoa que a conversa não citou.`;
 export const COMO_ENCAMINHAR = `\n\nComo encaminhar ao Agendador:\n` +
   `Você não marca, não remarca e não cancela atendimento, e não consulta a agenda. Quando a pessoa quiser marcar, remarcar ou ` +
   `cancelar um atendimento, ou o caso novo já tiver o nome e o assunto, encaminhe ao Agendador de Atendimentos Jurídicos pela ` +
@@ -134,10 +140,7 @@ export const COMO_ENCAMINHAR = `\n\nComo encaminhar ao Agendador:\n` +
   `repasse-a pela decidir sem mudar datas, horários, nomes e dados, escrita como em "Como escrever no WhatsApp", com acao "conversa" no modo conversa na hora e "responder" no modo plantão. ` +
   `Quando o Agendador disser que a confirmação já foi enviada pelo sistema, repasse somente o que ele acrescentar, como o endereço, ` +
   `ou chame decidir com acao "nada" e resposta vazia. Quando o Agendador passar a conversa à equipe, use acao "equipe".` +
-  `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.2026): quando não estiver claro o que a pessoa quer, por exemplo com qual ` +
-  `advogado marcar, se o atendimento é novo ou troca de um já marcado, ou de qual atendimento se trata, não decida nem pergunte ` +
-  `de novo: use acao "equipe", diga em uma frase que um colaborador do escritório vai responder e escreva a dúvida no assunto. ` +
-  `Não presuma acompanhante, parentesco nem outra pessoa que a conversa não citou.`;
+  DUVIDA_TRIAGEM;
 // troca, no texto do Console, a marcação própria (F277) pelo encaminhamento; o resto do texto fica
 export function paraTriagem(system: string) {
   let t = String(system || "");
@@ -156,6 +159,7 @@ export function paraTriagem(system: string) {
   };
   if (!t.includes("\n\nComo encaminhar ao Agendador:")) antes(COMO_ENCAMINHAR);
   else if (!t.includes("\n\nNa dúvida, a equipe")) t = t.replace(/\n\nComo encaminhar ao Agendador:[^]*?Quando o Agendador passar a conversa à equipe, use acao "equipe"\./, COMO_ENCAMINHAR);
+  else t = t.replace(/\n\nNa dúvida, a equipe[^]*?(?=\n\n|$)/, () => DUVIDA_TRIAGEM);
   if (!t.includes("\n\nComo escrever no WhatsApp:")) antes(ESTILO);
   if (!t.includes("\n\nVocabulário:")) antes(VOCABULARIO);
   return t;
@@ -186,9 +190,10 @@ export const AG_HORARIOS = `6. Chame consultar_vagas (no CRM). Se o assunto é p
   `peça que explique em poucas palavras o motivo do contato e, com a resposta, chame encaminhar_equipe com o motivo.`;
 export const AG_ORIENTA = `8. Não dê orientações antes de marcar. Com a confirmação do passo 7, chame marcar_atendimento: o sistema envia a última mensagem, ` +
   `com a senha do GOV.BR (Meu INSS) quando o assunto é do INSS e o lembrete de que o atendimento é individual.`;
-export const AG_DUVIDA = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.2026): quando não estiver claro com qual advogado marcar, ` +
-  `se o atendimento é novo ou troca de um já marcado, ou quando o atendimento a remarcar ou cancelar não aparecer em atendimentos_marcados, ` +
-  `não ofereça horários nem diga que anotou: chame encaminhar_equipe com a dúvida no motivo e diga em uma frase que um colaborador do escritório vai responder. ` +
+export const AG_DUVIDA = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.2026, revisto): faltar o assunto ou o advogado não é dúvida; ` +
+  `pergunte o assunto (passo 2) e siga o passo 6. Chame encaminhar_equipe, com a dúvida no motivo, somente quando, depois de perguntar, ` +
+  `continuar sem saber se o atendimento é novo ou troca de um já agendado, ou quando o atendimento a remarcar ou cancelar não aparecer ` +
+  `em atendimentos_marcados; nesse caso não ofereça horários nem diga que anotou, e diga em uma frase que um colaborador do escritório vai responder. ` +
   `Não presuma acompanhante, parentesco nem outra pessoa que a conversa não citou; para confirmar, repita dia, hora e advogado e pergunte somente se pode confirmar.`;
 export function paraAgendador(system: string) {
   let t = String(system || "");
@@ -203,7 +208,7 @@ export function paraAgendador(system: string) {
     const i = t.indexOf("\n\n");
     t = i >= 0 ? t.slice(0, i) + AG_ABERTURA + t.slice(i) : t + AG_ABERTURA;
   }
-  if (!t.includes("\n\nNa dúvida, a equipe")) t += AG_DUVIDA;
+  t = t.includes("\n\nNa dúvida, a equipe") ? t.replace(/\n\nNa dúvida, a equipe[^]*?(?=\n\n|$)/, () => AG_DUVIDA) : t + AG_DUVIDA;
   if (!t.includes("\n\nVocabulário:")) t += VOCABULARIO;
   return t;
 }

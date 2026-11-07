@@ -190,6 +190,15 @@ console.log("zap_plantao: ok");
   const velho = paraTriagem("Texto.\n\nResponda sempre chamando decidir.").replace(CE, CE.split("\n\nNa dúvida")[0]);
   const novo = paraTriagem(velho);
   assert.ok(novo.includes("\n\nNa dúvida, a equipe") && paraTriagem(novo) === novo, "a Assistente antiga ganha a regra da dúvida");
+  // F422k · a regra antiga da F422i (pedir sem advogado ia à equipe) dá lugar à revista
+  const { DUVIDA_TRIAGEM } = await import("../../zap_plantao/index.ts");
+  const velhaT = "\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.2026): quando não estiver claro o que a pessoa quer, use acao \"equipe\".";
+  const t422i = paraTriagem("Texto.\n\nResponda sempre chamando decidir.").replace(DUVIDA_TRIAGEM, velhaT);
+  const t422k = paraTriagem(t422i);
+  assert.ok(t422k.includes(DUVIDA_TRIAGEM) && !t422k.includes(velhaT) && paraTriagem(t422k) === t422k, "a Assistente troca a dúvida antiga pela revista");
+  const a422i = paraAgendador("Agendador.\n\nPassos.").replace(AG_DUVIDA, "\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.2026): quando não estiver claro com qual advogado marcar, encaminhe.");
+  const a422k = paraAgendador(a422i);
+  assert.ok(a422k.includes(AG_DUVIDA) && !a422k.includes("com qual advogado marcar") && paraAgendador(a422k) === a422k, "o Agendador troca a dúvida antiga pela revista");
   const chamadas = [];
   const f = ferramentasDaConversa("c1", async (acao, p) => { chamadas.push([acao, p]); return { ok: true, agendamentos: [], dias: [] }; },
     async () => ({ ligada: true, telefone: "5516900000000", cliente_id: null, cliente_numero: "cli-9" }));
