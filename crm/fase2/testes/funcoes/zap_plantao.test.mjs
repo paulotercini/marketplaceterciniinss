@@ -55,6 +55,16 @@ const dec = await turno("sesn_1", "oi", falso([
 assert.equal(dec.acao, "conversa");
 assert.equal(enviados[0].events[0].type, "user.message");
 assert.deepEqual([enviados[1].events[0].type, enviados[1].events[0].custom_tool_use_id], ["user.custom_tool_result", "sevt_9"]);
+// o "nada" logo depois de encaminhar ao Agendador não fecha o turno: espera a resposta dele (07.11.2026)
+enviados.length = 0;
+const dec3 = await turno("sesn_3", "quero marcar", falso([
+  { type: "agent.thread_message_sent", id: "t1" },
+  { type: "agent.custom_tool_use", id: "sevt_a", name: "decidir", input: { acao: "nada", resposta: "" } },
+  { type: "agent.thread_message_received", id: "t2" },
+  { type: "agent.custom_tool_use", id: "sevt_b", name: "decidir", input: { acao: "conversa", resposta: "Vou ajudar com o agendamento." } },
+]));
+assert.equal(dec3.acao, "conversa");
+assert.match(enviados[1].events[0].content[0].text, /espere a resposta do Agendador/);
 await assert.rejects(turno("sesn_1", "oi", falso([{ type: "session.status_idle", id: "e2", stop_reason: { type: "end_turn" } }])), /parou sem decisão/);
 
 // F278 · a Assistente faz a triagem e o Agendador (Console) marca pela agenda do CRM
