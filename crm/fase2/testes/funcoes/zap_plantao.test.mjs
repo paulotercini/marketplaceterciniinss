@@ -148,4 +148,7 @@ const rem = promptPlantao({ ...base, remarcar: { rotulo: "quarta-feira, 11/11/20
 assert.ok(rem.includes("respondeu NÃO à confirmação do atendimento de quarta-feira, 11/11/2026, às 9h30"));
 assert.ok(rem.includes("mesmo advogado (Amanda), um de manhã e outro à tarde"));
 assert.ok(!p1.includes("Remarcação:"), "sem remarcação, nada muda");
+assert.ok(p1.includes("pelo nome no máximo uma vez"), "o nome uma vez só");
+const duv = promptPlantao({ ...base, remarcar: { rotulo: "quarta-feira, 11/11/2026, às 9h30", profissional: "Amanda", duvida: true } });
+assert.ok(duv.includes("respondeu sem dizer SIM nem NÃO") && !duv.includes("respondeu NÃO à confirmação"), "a dúvida tem o seu contexto");
 console.log("zap_plantao: ok");
