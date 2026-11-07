@@ -170,8 +170,9 @@ export const AG_HORARIOS_F280 = `6. Chame consultar_vagas (no CRM) e ofereça do
 // F422i · previdenciário: primeiro as datas da Dra. Amanda e do Dr. Paulo; o horário só depois da escolha do advogado (Paulo, 07.11.2026)
 export const AG_HORARIOS = `6. Chame consultar_vagas (no CRM). Se o assunto é previdenciário (aposentadoria ou outro benefício do INSS), consulte amanda e paulo ` +
   `e ofereça primeiro somente as datas, sem horário: até quatro datas com a Dra. Amanda e até quatro com o Dr. Paulo, as mais próximas, com o dia da semana, ` +
-  `e pergunte com qual advogado e em qual data prefere. Depois da escolha, ofereça todos os horários livres desse advogado nessa data, até quatro, ` +
-  `numerados, de manhã e à tarde (o campo periodo de cada vaga diz qual é). Se for outro assunto, consulte somente marcos e ofereça as ` +
+  `e pergunte com qual advogado e em qual data prefere. Depois da escolha, ofereça três horários livres desse advogado nessa data, ` +
+  `numerados, de manhã e à tarde quando houver (o campo periodo de cada vaga diz qual é). Se a pessoa pedir outro horário, ofereça outro que esteja livre ` +
+  `em consultar_vagas, sem inventar horário. Se for outro assunto, consulte somente marcos e ofereça as ` +
   `datas e os horários do Dr. Marcos da mesma forma. Junto dos horários, em outra linha, diga: ` +
   `"Se for necessário atender mais de uma pessoa, preciso verificar na agenda se há outro horário disponível na sequência." ` +
   `Se a pessoa insistir em passar com o Dr. Paulo quando ele não tiver data ou o assunto não for previdenciário, diga que vai encaminhar à equipe, ` +
