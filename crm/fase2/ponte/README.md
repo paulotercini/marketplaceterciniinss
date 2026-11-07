@@ -104,3 +104,19 @@ mensagem que some, o que ignorar) — sem rede e sem WhatsApp. O lado do banco
 Usa `@whiskeysockets/baileys`, que conversa com o WhatsApp Web. A API dela
 muda com frequência: se um `npm install` novo quebrar a ponte, fixe no
 `package.json` a versão que estava funcionando antes de investigar.
+
+**F434 (07.11.2026) · Baileys 7.0.0-rc14, fixado.** No 6.7, a mensagem enviada pela
+ponte chegava ao celular de quem recebe como "Aguardando mensagem" e só se abria
+depois do reenvio: é a corrida das duas filas de pré-chaves ao abrir a sessão de
+criptografia (WhiskeySockets/Baileys#2115, #2571, #2587), corrigida apenas na linha 7.
+O 7 é módulo ES: o `require` da ponte funciona no Node 20.19 ou mais novo (o 22 serve).
+O número do contato com id de privacidade vem em `key.remoteJidAlt`, `contact.phoneNumber`
+e no evento `lid-mapping.update`; o `onWhatsApp` não devolve mais o `@lid`.
+
+Para atualizar o servidor (a sessão continua, sem ler o QR):
+
+```bash
+cd ~/ponte && node -v            # 20.19 ou mais novo
+git pull   # ou copie ponte.js, normalizar.js e package.json
+npm install && pm2 restart ponte-zap && pm2 logs ponte-zap --lines 50
+```
