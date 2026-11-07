@@ -241,7 +241,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.evaluate(() => { document.documentElement.removeAttribute("data-tema"); });
   await abrir(cJ, kJ);
   const clas = await p.evaluate(kid => { const q = document.getElementById("quadro-datas"); return q ? q.innerHTML : ""; }, kJ.id);
-  conf("J · no clássico, o prazo fatal diz do que é", /PRAZO FATAL — Manifestar sobre a proposta de acordo/.test(clas.replace(/<[^>]+>/g, "")) && /qdMudarPrazo/.test(clas));
+  conf("J · no clássico, o prazo fatal diz do que é", /PRAZO FATAL: Manifestar sobre a proposta de acordo/.test(clas.replace(/<[^>]+>/g, "")) && /qdMudarPrazo/.test(clas));
   await p.evaluate(kid => qdMudarPrazo(kid, ""), kJ.id); await p.waitForTimeout(600);
   const kJ2 = T.casos.find(k => k.id === kJ.id);
   conf("J · o ✔ feito do clássico devolve o caso ao 👪 Judicial e registra o cumprimento",
