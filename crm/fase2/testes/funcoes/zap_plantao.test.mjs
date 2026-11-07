@@ -143,4 +143,9 @@ const pai = promptPlantao({ ...base, contato: "Paulo Tercini", relacao: "pai", c
 assert.ok(pai.includes("Quem escreve é Paulo Tercini (pai de Pietra Tercini): chame pelo nome de quem escreve"));
 assert.ok(!p1.includes("Quem escreve"), "sem relação gravada, nada muda");
 assert.ok(regras().includes("boas-vindas em nome da Advocacia Previdenciária"));
+// F422c · o NÃO da confirmação leva a remarcação ao contexto
+const rem = promptPlantao({ ...base, remarcar: { rotulo: "quarta-feira, 11/11/2026, às 9h30", profissional: "Amanda" } });
+assert.ok(rem.includes("respondeu NÃO à confirmação do atendimento de quarta-feira, 11/11/2026, às 9h30"));
+assert.ok(rem.includes("mesmo advogado (Amanda), um de manhã e outro à tarde"));
+assert.ok(!p1.includes("Remarcação:"), "sem remarcação, nada muda");
 console.log("zap_plantao: ok");

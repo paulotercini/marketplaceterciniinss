@@ -18040,8 +18040,8 @@ async function renderConfig(){
              ${cfgApp("zap_filtro_auto")==="sim"?"checked":""}> tira da fila a mensagem automática de outra empresa</label>
            <label class="cfg-ck" title="botões ✨ na conversa: resumo, rascunho de resposta e identificar o documento recebido; exige a chave ANTHROPIC_API_KEY na função zap_assistente"><input type="checkbox" id="cf-ia-equipe"
              ${cfgApp("zap_ia_equipe")==="sim"?"checked":""}> IA ajuda a equipe (resumo, rascunho e documento recebido)</label>
-           <label class="cfg-ck" title="o menu ganha a opção 6 e o robô oferece as vagas marcadas no Google Agenda; exige o segredo AGENDA_TOKEN_ROBO na função zap_agenda"><input type="checkbox" id="cf-robo-agenda"
-             ${cfgApp("zap_robo_agenda")==="sim"?"checked":""}> robô marca o horário pelas vagas da agenda</label>
+           <label class="cfg-ck" title="a IA oferece e marca horário pelas vagas do Google Agenda em todas as conversas e remarca quem responde NÃO à confirmação; desligada, nenhuma das duas acontece"><input type="checkbox" id="cf-robo-agenda"
+             ${cfgApp("zap_robo_agenda")==="sim"?"checked":""}> Agenda da IA: marca em todas as conversas e remarca quem responde NÃO</label>
            <label class="cfg-ck" title="fora do expediente, quem escolhe caso novo conta o caso por escrito ou por áudio, e o relato fica como nota da equipe"><input type="checkbox" id="cf-robo-noturno"
              ${cfgApp("zap_robo_noturno")==="sim"?"checked":""}> fora do expediente, robô colhe o relato do caso novo</label>
            <label class="cfg-ck" title="quem não está em conversa com a equipe conversa com a IA na hora (dúvidas, caso novo, agenda); com a equipe na conversa, a mensagem sem resposta no prazo abaixo vai à IA, que tranquiliza dizendo qual advogado vai responder; todo aviso vai a todos os advogados e à recepção no CRM; agradecimento e conversa entre colegas ficam sem resposta; nunca dá parecer, chance ou valor"><input type="checkbox" id="cf-ia-plantao"
