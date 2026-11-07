@@ -125,7 +125,10 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `- Família: cada pessoa tem atendimento individual. Para duas ou mais pessoas, diga isso e agende horários em sequência, com o nome de cada pessoa atendida.\n` +
   `- Prioridade (urgente) somente em benefício cortado, prazo correndo, perícia ou audiência nos próximos dias, golpe ou reclamação. Dúvida vaga não é urgente.\n` +
   `- Pergunta direta primeiro: responda o que a pessoa perguntou antes de seguir. Atendimento por vídeo ou telefone é possível quando a pessoa pede (remoto). ` +
-  `O escritório não atende aos sábados, domingos e feriados: ofereça a data mais próxima. O escritório atende clientes de toda a região, presencialmente em Monte Alto ou de forma remota.\n` +
+  `O escritório não atende aos sábados, domingos e feriados: ofereça a data mais próxima. O atendimento é presencial, em Monte Alto; não ofereça nem pergunte sobre o remoto, que vale somente quando a própria pessoa pede ou mora longe.\n` +
+  `- Remarcar, cancelar ou saber o dia de um atendimento: encaminhe sempre ao Agendador, que consulta os atendimentos agendados do número; nunca use acao "equipe" antes da resposta dele. ` +
+  `Dois atendimentos no mesmo dia, um depois do outro: o Agendador oferece dois horários seguidos com o mesmo advogado, sem passar à equipe. ` +
+  `Cliente da ficha (atendimento 002): o sistema já tem o nome; não o peça.\n` +
   `- Não diga à pessoa que "informe ao escritório": você escreve em nome do escritório.`;
 
 // "agendar", e não "marcar": o escritório escreve em português técnico (Paulo, 07.11.2026)
@@ -277,7 +280,7 @@ export function paraAgendador(system: string) {
 // F422r · as proteções que não dependem do agente (teste de 72 conversas, 07.11.2026); "antes" são os textos já enviados à pessoa
 export function emLinhas(txt: string, antes: string[] = []) {
   // o modelo ainda escrevia "o senhor ou a senhora" sem saber quem é (07.11.2026): o verbo segue na 3ª pessoa
-  let t = String(txt || "").replace(/\s*,?\s*\bo\(a\) senhor\(a\)|\s+(?:o senhor ou a senhora|a senhora ou o senhor)\b/gi, "").trim();
+  let t = String(txt || "").replace(/\s*,?\s*\ba?o\(a\) senhor\(a\)|\s+(?:a?o senhor ou [aà] senhora|[aà] senhora ou a?o senhor)\b/gi, "").trim();
   // "dona Cida", "seu Valter", "senhor José": o nome vai sem o tratamento (sem a flag i, a maiúscula do nome importa)
   t = t.replace(/\b(?:[Dd]ona|[Ss]eu|[Ss]enhora|[Ss]enhor|Sra?\.)\s+(?=(?!Meu\b)[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç])/g, "");
   const ja = antes.join("\n");
@@ -592,7 +595,7 @@ async function simular(s: Cenario) {
     x.mensagens.push(m);
     const antes = uso.length;
     let r: Record<string, any>;
-    try { r = await turno(sessao.id, textoDoTurno(x, i ? [m] : x.mensagens, !i), fetch, fer); }
+    try { r = await turno(sessao.id, textoDoTurno(x, i ? [m] : x.mensagens, !i), fetch, fer, guardaDoTexto(m.texto)); }
     catch (e) { saida.push({ cliente: m.texto, erro: String(e).slice(0, 300) }); break; }
     const enc = fer.encaminhado as { motivo?: string };
     const acao = enc && "motivo" in enc ? "equipe" : r.acao;
@@ -651,23 +654,42 @@ export function ligacaoTriagem(assistente: Record<string, any>, agendador: strin
   };
 }
 
+// F422s · proteções do segundo teste de 72 conversas: "nada" só para agradecimento, e remarcar ou cancelar
+// passa pelo Agendador antes da equipe (cada uma cobrada uma vez por turno)
+export type Guarda = { semNada?: boolean; agendaPrimeiro?: boolean };
+const RX_SO_CONFIRMA = /^[\s\p{P}\p{Extended_Pictographic}]*(?:(?:ok\w*|obrigad\w*|agradeç\w*|grat[oa]|valeu|combinado|certo|entendi|t[aá] bom|beleza|perfeito|tchau|at[eé] (?:mais|logo)|fico no aguardo|aguardo|bom dia|boa tarde|boa noite)[\s\p{P}\p{Extended_Pictographic}]*)*$/iu;
+export function guardaDoTexto(texto: string | null | undefined): Guarda {
+  const t = String(texto || "").trim();
+  return { semNada: !!t && !RX_SO_CONFIRMA.test(t), agendaPrimeiro: /remarc|desmarc|reagend|cancel|n[aã]o lembro (?:o dia|a data|o hor)|que dia [eé] (?:o )?meu|hor[aá]rio (?:marcado|agendado)|atendimento (?:marcado|agendado)/i.test(t) };
+}
+// a sessão que ficou com uma ferramenta sem resposta recusa a mensagem nova (400 "waiting on responses to events")
+export const pendentesDoErro = (txt: string) => /waiting on responses/i.test(txt) ? [...new Set(txt.match(/sevt_\w+/g) || [])] : [];
+
 // um turno: abre o stream, manda a mensagem, responde às ferramentas da agenda e espera a decidir
 type Ferramentas = Record<string, (i: any) => Promise<unknown>>;
-export async function turno(sessao: string, texto: string, buscar: typeof fetch = fetch, ferramentas: Ferramentas = {}) {
+export async function turno(sessao: string, texto: string, buscar: typeof fetch = fetch, ferramentas: Ferramentas = {}, guarda: Guarda = {}) {
   const ctl = new AbortController();
   const prazo = setTimeout(() => ctl.abort(), MA_PRAZO_MS);
   try {
     const st = await buscar(`${MA_URL}/sessions/${sessao}/events/stream`, { headers: MA_HDR, signal: ctl.signal });
     if (!st.ok || !st.body) throw Object.assign(new Error(`stream ${st.status}`), { status: st.status });
-    const env = await buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
+    const mandar = () => buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
       body: JSON.stringify({ events: [{ type: "user.message", content: [{ type: "text", text: texto }] }] }) });
+    let env = await mandar();
+    if (env.status === 400) {
+      const erro = await env.text(), ids = pendentesDoErro(erro);
+      if (!ids.length) throw Object.assign(new Error(`envio 400 ${erro.slice(0, 200)}`), { status: 400 });
+      for (const id of ids) await buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
+        body: JSON.stringify({ events: [{ type: "user.custom_tool_result", custom_tool_use_id: id, content: [{ type: "text", text: "Já registrado." }] }] }) });
+      env = await mandar();
+    }
     if (!env.ok) throw Object.assign(new Error(`envio ${env.status} ${(await env.text()).slice(0, 200)}`), { status: env.status });
     // a decidir que sobrou do turno anterior (a Assistente às vezes chama duas vezes) é anterior a esta mensagem
     // e respondia ao cliente com a resposta velha (07.11.2026); sem a data na volta, aceita como antes
     const enviado = await env.json().catch(() => null) as Record<string, any> | null;
     const marco: string = enviado?.data?.[0]?.processed_at || "";
     const leitor = st.body.pipeThrough(new TextDecoderStream()).getReader();
-    let resto = "", aoAgendador = 0, cobrado = false;   // mensagens à espera da resposta do Agendador neste turno
+    let resto = "", aoAgendador = 0, cobrado = false, enviou = false, nadaCobrado = false, agCobrado = false;   // aoAgendador: mensagens à espera da resposta do Agendador neste turno
     for (;;) {
       const { value, done } = await leitor.read();
       if (done) throw new Error("o stream fechou sem decisão");
@@ -679,7 +701,7 @@ export async function turno(sessao: string, texto: string, buscar: typeof fetch 
         if (!dado) continue;
         let ev: Record<string, any>;
         try { ev = JSON.parse(dado); } catch { continue; }
-        if (ev.type === "agent.thread_message_sent") { aoAgendador++; continue; }
+        if (ev.type === "agent.thread_message_sent") { aoAgendador++; enviou = true; continue; }
         if (ev.type === "agent.thread_message_received") { aoAgendador = Math.max(0, aoAgendador - 1); continue; }
         // a Assistente chama decidir "nada" logo depois de encaminhar ao Agendador: a resposta dele
         // chegava depois do turno fechado e se perdia (07.11.2026); espera e pede a decidir de novo
@@ -693,6 +715,15 @@ export async function turno(sessao: string, texto: string, buscar: typeof fetch 
           await buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
             body: JSON.stringify({ events: [{ type: "user.custom_tool_result", custom_tool_use_id: ev.id,
               content: [{ type: "text", text: "Esta decisão era do turno anterior e já foi registrada. Responda à mensagem nova." }] }] }) });
+          continue;
+        }
+        const cobrar = ev.type === "agent.custom_tool_use" && ev.name === "decidir"
+          ? (guarda.semNada && ev.input?.acao === "nada" && !nadaCobrado ? ((nadaCobrado = true), "Ainda não registrado: a mensagem da pessoa não é agradecimento nem despedida. Responda a ela e chame decidir de novo.")
+            : guarda.agendaPrimeiro && ev.input?.acao === "equipe" && !enviou && !agCobrado ? ((agCobrado = true), "Ainda não registrado: antes da equipe, encaminhe ao Agendador pela send_to_agent; ele consulta os atendimentos agendados deste número e resolve. Chame decidir com a resposta dele.")
+            : "") : "";
+        if (cobrar) {
+          await buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
+            body: JSON.stringify({ events: [{ type: "user.custom_tool_result", custom_tool_use_id: ev.id, content: [{ type: "text", text: cobrar }] }] }) });
           continue;
         }
         if (ev.type === "agent.custom_tool_use" && ev.name === "decidir") {
@@ -742,8 +773,9 @@ async function decidirPorAgente(x: Contexto) {
   const viva = s?.id && s.v === versao && Date.now() - Date.parse(s.em) < MA_SESSAO_DIAS * 864e5;
   let r: Record<string, any> | null = null, id = viva ? s!.id : "", em = viva ? s!.em : "";
   const fer = TOKEN_AGENDA && x.conversa_id ? ferramentasDaConversa(x.conversa_id) : {};
+  const guarda = guardaDoTexto([...msgs].reverse().find((m) => m.direcao === "entrada")?.texto);
   if (viva) {
-    try { r = await turno(id, textoDoTurno(x, msgs.filter((m) => m.momento > s!.ate), false), fetch, fer); }
+    try { r = await turno(id, textoDoTurno(x, msgs.filter((m) => m.momento > s!.ate), false), fetch, fer, guarda); }
     catch (e) { if (![400, 404, 409].includes((e as { status?: number }).status || 0)) throw e; }   // sessão parada: abre outra
   }
   if (!r) {
@@ -753,7 +785,7 @@ async function decidirPorAgente(x: Contexto) {
       budget: { type: "limit", max_list_cost: { amount: "300", currency: "USD" } },   // teto de US$ 3 por sessão
     });
     id = nova.id; em = new Date().toISOString();
-    r = await turno(id, textoDoTurno(x, msgs, true), fetch, fer);
+    r = await turno(id, textoDoTurno(x, msgs, true), fetch, fer, guarda);
   }
   if (x.conversa_id) await rpc("zap_plantao_sessao", { p_conversa: x.conversa_id, p_sessao: { id, em, ate, v: versao } });
   const enc = (fer as Record<string, any>).encaminhado;
