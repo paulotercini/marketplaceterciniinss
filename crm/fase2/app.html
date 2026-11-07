@@ -7223,7 +7223,7 @@ async function iniciar(){
   if(agendaUrl() && agendaToken()) carregarAgenda("paulo").then(()=>montarSidebar()).catch(()=>{});
   // F236 · quem aplica as coletas vê na barra quantas esperam, sem abrir o Importar
   if(souAdmin()) buscarColetas().then(()=>montarSidebar()).catch(()=>{});
-  // F421 · o robô do servidor (crm-coletas.yml) abre o CRM com ?coletas=robo, aplica uma vez e diz como terminou
+  // F426 · o robô do servidor (crm-coletas.yml) abre o CRM com ?coletas=robo, aplica uma vez e diz como terminou
   if(souAdmin() && new URLSearchParams(location.search).get("coletas")==="robo"){
     window._coletasRobo = "rodando";
     autoAplicarColetas().then(()=>window._coletasRobo="ok", e=>window._coletasRobo="erro: "+(e&&e.message||e));

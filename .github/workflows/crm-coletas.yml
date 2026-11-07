@@ -1,6 +1,6 @@
 name: CRM — aplicar coletas da extensão
 
-# F421 · as coletas entravam só com o CRM do administrador aberto e na frente.
+# F426 · as coletas entravam só com o CRM do administrador aberto e na frente.
 # Aqui entram a cada 10 minutos, das 7h às 20h50 de Brasília, sem o CRM aberto.
 on:
   schedule:
