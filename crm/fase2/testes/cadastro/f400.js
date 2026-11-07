@@ -26,6 +26,10 @@ for (let n = 1; n <= N; n++) {
     tipo: "application/pdf", origem: "pje", criado_em: `2026-01-${dia}T10:00:00Z`, paginas: 60, texto: "x", tamanho: pdf.length });
   banco.arquivos.set(`anexos/pje/${CASO1}/${n}`, { tipo: "application/pdf", corpo: pdf });
 }
+// e 120 peças em HTML, como o PJe guarda despachos e certidões
+for (let n = 1; n <= 120; n++) { T.anexos.push({ id: `c0000000-0000-0000-0000-${String(n).padStart(12, "0")}`, cliente_id: CLI_CHEIO, caso_id: CASO1,
+  nome: `Certidão ${n}`, caminho: `pje/${CASO1}/h${n}`, tipo: "text/html", origem: "pje", criado_em: `2025-12-01T10:${String(n % 60).padStart(2, "0")}:00Z`, texto: "x" });
+  banco.arquivos.set(`anexos/pje/${CASO1}/h${n}`, { tipo: "text/html", corpo: Buffer.from("<html><body><p>" + "Certifico que. ".repeat(200) + "</p></body></html>") }); }
 const ok = [];
 const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : "FALHOU  ") + nome); };
 
@@ -55,17 +59,17 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector("#app.logado", { timeout: 15000 });
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(([cli, caso]) => abrirFicha(cli).then(() => { casoSel = caso; }), [CLI_CHEIO, CASO1]);
-  await p.waitForFunction(n => (D.anexos || []).length >= n, N);
+  await p.waitForFunction(n => (D.anexos || []).length >= n, N + 120);
 
   const t0 = Date.now();
   await p.evaluate(caso => abrirProcessoInteiro(caso), CASO1);
-  await p.waitForFunction(() => document.querySelectorAll("#pi-0 canvas").length > 0, null, { timeout: 20000 }).catch(() => {});
+  await p.waitForFunction(() => document.querySelectorAll("#pi-0 iframe, #pi-0 canvas").length > 0, null, { timeout: 20000 }).catch(() => {});
   await p.waitForTimeout(4000);
   const medida = () => p.evaluate(() => { const cv = [...document.querySelectorAll("#proc-inteiro canvas")];
     return { n: cv.length, px: cv.reduce((s, c) => s + c.width * c.height, 0), vivos: cv.filter(c => c.width > 0).length }; });
   const m1 = await medida();
   console.log("aberto:", m1, Date.now() - t0, "ms");
-  conf("a primeira peça aparece", m1.vivos > 0);
+  conf("a primeira peça aparece", await p.evaluate(() => !!document.querySelector("#pi-0 iframe, #pi-0 canvas")));
   conf("ao abrir, no máximo 12 folhas desenhadas na memória", m1.vivos <= 12);
   // rola o processo inteiro até o fim, como quem lê depressa
   for (let i = 0; i < 40; i++) { await p.evaluate(() => { const a = document.querySelector("#proc-inteiro .pi-autos"); a.scrollTop += 4000; }); await p.waitForTimeout(80); }
@@ -74,15 +78,22 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   console.log("rolado:", m2);
   conf("depois de rolar, as folhas que saíram da tela são soltas (≤ 12 vivas)", m2.vivos <= 12);
   conf("e a memória das folhas fica abaixo de 60 milhões de pixels", m2.px < 60e6);
+  const vivos = () => p.evaluate(() => ({ ifr: document.querySelectorAll("#proc-inteiro iframe").length,
+    pdfs: [...document.querySelectorAll("#proc-inteiro .pi-peca")].reduce((s, x) => s + (x._pdfs || []).length, 0) }));
+  const v2 = await vivos(); console.log("peças vivas depois de rolar:", v2);
+  conf("as peças que ficaram longe são soltas (HTML e PDF)", v2.ifr <= 40 && v2.pdfs <= 6);
+  await p.evaluate(() => { document.querySelector("#proc-inteiro .pi-autos").scrollTop = 0; }); await p.waitForTimeout(3000);
+  conf("ao voltar ao começo, a primeira peça se desenha de novo", await p.evaluate(() => !!document.querySelector("#pi-0 iframe, #pi-0 canvas")));
   const t1 = Date.now(); await p.evaluate(() => 1); const lat = Date.now() - t1;
   conf("a página responde (menos de 500 ms)", lat < 500);
   // ir a uma peça pela árvore e o zoom
-  await p.evaluate(() => piIr(20)); await p.waitForTimeout(2500);
-  conf("a peça escolhida na árvore se desenha", await p.evaluate(() => [...document.querySelectorAll("#pi-20 canvas")].some(c => c.width > 0)));
+  await p.evaluate(() => piIr(130)); await p.waitForTimeout(2500);
+  conf("a peça escolhida na árvore se desenha", await p.evaluate(() => [...document.querySelectorAll("#pi-130 canvas")].some(c => c.width > 0)));
   await p.evaluate(() => { piZoom(1); piZoom(1); }); await p.waitForTimeout(800);
   conf("o zoom não trava a página", await p.evaluate(() => !!document.getElementById("proc-inteiro")));
   await p.keyboard.press("Escape");
   conf("Esc fecha e solta as folhas", await p.evaluate(() => !document.getElementById("proc-inteiro")));
+  conf("o Esc fecha só o processo inteiro, e a ficha continua aberta", await p.evaluate(() => !!clienteAberto));
   // o leitor ao lado da árvore: a peça de 60 folhas também se desenha aos poucos
   await p.evaluate(() => { const w = document.createElement("div"); w.id = "t-leitor"; w.className = "proc-leitor";
     w.innerHTML = '<div class="pl-corpo" style="height:700px;overflow:auto"><section class="pi-peca"><div class="pi-folha"></div></section></div>';
