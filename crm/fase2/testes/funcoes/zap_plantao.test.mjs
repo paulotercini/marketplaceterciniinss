@@ -65,7 +65,18 @@ const dec3 = await turno("sesn_3", "quero marcar", falso([
 ]));
 assert.equal(dec3.acao, "conversa");
 assert.match(enviados[1].events[0].content[0].text, /espere a resposta do Agendador/);
-await assert.rejects(turno("sesn_1", "oi", falso([{ type: "session.status_idle", id: "e2", stop_reason: { type: "end_turn" } }])), /parou sem decisão/);
+// encerrou sem a decidir: pede uma vez e aceita a decisão que vier depois
+enviados.length = 0;
+const dec4 = await turno("sesn_4", "oi", falso([
+  { type: "session.status_idle", id: "e2", stop_reason: { type: "end_turn" } },
+  { type: "agent.custom_tool_use", id: "sevt_c", name: "decidir", input: { acao: "conversa", resposta: "Bom dia." } },
+]));
+assert.equal(dec4.acao, "conversa"); assert.match(enviados[1].events[0].content[0].text, /sem chamar a ferramenta decidir/);
+await assert.rejects(turno("sesn_1", "oi", falso([{ type: "session.status_idle", id: "e2", stop_reason: { type: "end_turn" } },
+  { type: "session.status_idle", id: "e3", stop_reason: { type: "end_turn" } }])), /parou sem decisão/);
+// "agendar", e não "marcar", nos dois agentes e nas regras
+assert.ok(regras().includes("Vocabulário:") && paraAgendador("x").includes("Vocabulário:") && paraTriagem("x").includes("Vocabulário:"));
+assert.equal(paraAgendador(paraAgendador("x")), paraAgendador("x")); assert.equal(paraTriagem(paraTriagem("x")), paraTriagem("x"));
 
 // F278 · a Assistente faz a triagem e o Agendador (Console) marca pela agenda do CRM
 assert.deepEqual(definicaoAgente("x").tools.map((f) => f.name), ["decidir"]);
@@ -173,7 +184,7 @@ console.log("zap_plantao: ok");
 {
   const { AG_DUVIDA, COMO_ENCAMINHAR: CE } = await import("../../zap_plantao/index.ts");
   const ag = paraAgendador("Agendador.\n\nPassos.");
-  assert.ok(ag.endsWith(AG_DUVIDA) && paraAgendador(ag) === ag, "o Agendador ganha a regra da dúvida uma vez");
+  assert.ok(ag.includes(AG_DUVIDA) && paraAgendador(ag) === ag, "o Agendador ganha a regra da dúvida uma vez");
   const velho = paraTriagem("Texto.\n\nResponda sempre chamando decidir.").replace(CE, CE.split("\n\nNa dúvida")[0]);
   const novo = paraTriagem(velho);
   assert.ok(novo.includes("\n\nNa dúvida, a equipe") && paraTriagem(novo) === novo, "a Assistente antiga ganha a regra da dúvida");
