@@ -210,3 +210,24 @@ console.log("zap_plantao: ok");
   const v4 = paraAgendador(`Agendador.\n\n${AG_HORARIOS_F280}\n7. Confirme.`);
   assert.ok(v4.includes(AG_HORARIOS) && !v4.includes(AG_HORARIOS_F280) && paraAgendador(v4) === v4, "o Agendador da v4 recebe as datas antes dos horários");
 }
+{
+  // o simulador lê a agenda de verdade, mas agendar não chega ao Apps Script
+  const { ferramentasSimuladas } = await import("../../zap_plantao/index.ts");
+  const chamadas = [];
+  const real = async (acao) => { chamadas.push(acao); return { ok: true, dias: [{ data: "2026-11-09", livres: { "001": [{ inicio: "10:30", eventoId: "ev1" }] } }] }; };
+  const { fer, uso } = ferramentasSimuladas({ telefone: "5516900000000", cliente_id: null, ligada: true }, real);
+  const v = await fer.consultar_vagas({ profissionais: ["amanda"] });
+  assert.equal(v.vagas.amanda[0].eventoId, "ev1");
+  const m = await fer.marcar_atendimento({ profissional: "amanda", eventoId: "ev1", nome: "Teste" });
+  assert.ok(m.marcado && !chamadas.includes("agendar"), "o simulador não agenda de verdade");
+  assert.deepEqual(uso.map((u) => u.nome), ["consultar_vagas", "marcar_atendimento"]);
+}
+console.log("simulador: ok");
+{
+  const { FATOS, FORMAL, AG_PREV } = await import("../../zap_plantao/index.ts");
+  const a = paraTriagem("Assistente.\n\nResponda sempre chamando a ferramenta decidir.");
+  assert.ok(a.includes(FATOS) && a.includes(FORMAL) && paraTriagem(a) === a && a.endsWith("decidir."), "a Assistente recebe as informações do escritório uma vez");
+  const g = paraAgendador("Você é a assistente. Apresente-se sempre como assistente virtual.\n\n5. Escolha:\n   - Assunto previdenciário (INSS, x): ofereça primeiro as vagas da Dra. Amanda.\n6. x");
+  assert.ok(g.includes(AG_PREV) && !g.includes("Apresente-se sempre") && g.includes(FORMAL) && paraAgendador(g) === g, "o Agendador alinha o passo 5 ao 6");
+}
+console.log("fatos: ok");
