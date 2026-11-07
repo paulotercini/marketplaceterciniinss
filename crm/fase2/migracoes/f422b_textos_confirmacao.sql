@@ -3,7 +3,7 @@
 -- as respostas ao SIM e ao NÃO passam a levar nome, dia, data e hora (zap_conf_preencher).
 
 update config_app set valor = E'Olá, {nome}.\n\nLembramos que o seu atendimento está agendado para {dia}, {data}, às {hora}, com {advogado}.\n\nPara confirmar, responda *SIM*. Se precisar remarcar, responda *NÃO*.' where chave = 'zap_conf_texto';
-update config_app set valor = E'\n\nTraga a senha do gov.br (Meu INSS), porque vamos consultar os seus dados durante o atendimento.' where chave = 'zap_conf_govbr';
+update config_app set valor = E'\n\nTraga a senha do gov.br (Meu INSS), porque precisamos consultar os seus dados previdenciários durante o atendimento.' where chave = 'zap_conf_govbr';
 update config_app set valor = 'Obrigado, {nome}. Seu atendimento de {dia}, {data}, às {hora}, está confirmado.{govbr}' where chave = 'zap_conf_sim';
 update config_app set valor = 'Tudo bem, {nome}. Nossa equipe vai entrar em contato para combinar um novo horário.' where chave = 'zap_conf_nao';
 
