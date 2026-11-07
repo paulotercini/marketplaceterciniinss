@@ -7228,7 +7228,12 @@ async function iniciar(){
   if(agendaUrl() && agendaToken()) carregarAgenda("paulo").then(()=>montarSidebar()).catch(()=>{});
   // F236 · quem aplica as coletas vê na barra quantas esperam, sem abrir o Importar
   if(souAdmin()) buscarColetas().then(()=>montarSidebar()).catch(()=>{});
-  if(souAdmin() && !window._autoColetas && !navigator.webdriver){
+  // F426 · o robô do servidor (crm-coletas.yml) abre o CRM com ?coletas=robo, aplica uma vez e diz como terminou
+  if(souAdmin() && new URLSearchParams(location.search).get("coletas")==="robo"){
+    window._coletasRobo = "rodando";
+    autoAplicarColetas().then(()=>window._coletasRobo="ok", e=>window._coletasRobo="erro: "+(e&&e.message||e));
+  }
+  else if(souAdmin() && !window._autoColetas && !navigator.webdriver){
     window._autoColetas = setInterval(()=>autoAplicarColetas().catch(()=>{}), AUTO_COLETAS_MS);
     setTimeout(()=>autoAplicarColetas().catch(()=>{}), 1500);
     // F420 · a aba que volta à frente (depois de rodar a extensão) aplica na hora, sem esperar o intervalo
