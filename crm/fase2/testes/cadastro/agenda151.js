@@ -151,7 +151,7 @@ for (const d of new Set([quartas(1)[0], q[0]])) {
   const idManual = g.eventos.find(e => /Fulano Manual/.test(e.summary) && e.start.dateTime.startsWith(q[0])).id;
   await p.click(`[data-aqev="${idManual}"]`);
   const opsManual = await p.evaluate(() => [...document.querySelectorAll(".aq-menu [data-aqop]")].map(b => b.dataset.aqop).join(","));
-  conf(`F151 · atendimento lançado à mão tem Editar, Confirmar e Abrir cliente (${opsManual})`, opsManual === "editar,confirmar,abrir");   // F250e · Editar
+  conf(`F151 · atendimento lançado à mão tem Editar, Confirmar, Chegou e Abrir cliente (${opsManual})`, opsManual === "editar,confirmar,chegou,abrir");   // F250e · Editar; F422 · Chegou
   await p.keyboard.press("Escape"); await p.mouse.click(5, 5);
   const antes = escritas.length;
   await p.click(`[data-aqev="${idA}"]`); await p.click('[data-aqop="cancelar"]');
