@@ -6288,6 +6288,14 @@ html[data-tema="v10"] .app:not(.celular) .caso-2col.caso-3col.esq-oculta{grid-te
 html[data-tema="v10"] .app:not(.celular) .caso-3col.esq-oculta > .caso-esq{display:none}
 html[data-tema="v10"] .app:not(.celular) .caso-3col.esq-oculta > .caso-dir{padding-left:26px}
 html[data-tema="v10"] .app:not(.celular) .caso-3col.esq-oculta .caso-esq-alca{left:0}
+/* F435 · a flecha que recolhe a coluna dos andamentos (pedido do Paulo, 07.11.2026): aponta para a coluna que some */
+html[data-tema="v10"] .app:not(.celular) .caso-3col{position:relative}
+html[data-tema="v10"] .caso-dir-alca{all:unset;cursor:pointer;box-sizing:border-box;grid-area:dir;justify-self:start;align-self:start;margin:48px 0 0 -17px;z-index:2;width:16px;height:34px;display:grid;place-items:center;border:1px solid var(--borda);border-radius:6px;background:#FFFFFF;color:#4A4944;font-size:15px;line-height:1}
+html[data-tema="v10"] .caso-dir-alca:focus-visible{outline:2px solid #121212;outline-offset:2px}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .caso-dir-alca:hover{background:#F3F2EE}}
+html[data-tema="v10"] .app:not(.celular) .caso-2col.caso-3col.dir-oculta{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"pz esq";grid-template-rows:auto;padding-right:26px}
+html[data-tema="v10"] .app:not(.celular) .caso-3col.dir-oculta > .caso-dir{display:none}
+html[data-tema="v10"] .app:not(.celular) .caso-3col.dir-oculta > .caso-dir-alca{grid-area:esq;justify-self:end;margin:8px -26px 0 0}
 /* o cartão do caso: a espécie em selo, o protocolo com copiar, a tramitação que abre o portal e a dobra dos números */
 html[data-tema="v10"] .linha-caso .lc-sobre{background:var(--placa);border-radius:4px;padding:1px 6px}
 html[data-tema="v10"] .linha-caso .lc-copiar{all:unset;cursor:pointer;margin-left:8px;font:500 11px var(--f-mono);color:var(--azul);border:1px solid var(--borda);border-radius:4px;padding:0 5px;line-height:18px}
@@ -6597,7 +6605,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.77</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.78</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -20622,8 +20630,8 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col${!celular() && esqOculta() ? " esq-oculta" : ""}"><aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir">${semMenu ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div>
+        ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
+           <div class="caso-dir">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div>
            <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? abaComProcessos(k, "cnj", ()=>painelCNJ(k, andsVis)) : aba==="crps" ? abaComProcessos(k, "crps", ()=>painelCRPS(k))
@@ -40894,6 +40902,8 @@ let abaPedida = {}, abaDoCaso = {};
 // F405 · a seta recolhe a coluna dos prazos e do cartão do caso; fica guardada neste computador
 const esqOculta = () => ler("crm_caso_esq")==="0";
 function esqAlternar(){ guardar("crm_caso_esq", esqOculta() ? "" : "0"); trRepintar(); }
+const dirOculta = () => ler("crm_caso_dir")==="0";
+function dirAlternar(){ guardar("crm_caso_dir", dirOculta() ? "" : "0"); trRepintar(); }
 function trEscolher(casoId, rito, i){
   const c = casoId+":"+rito; trSel[c] = (i==null || trSel[c]===i) ? null : i; trRepintar();
   if(trSel[c]!=null) document.querySelector(`.tr-et[data-tri="${i}"]`)?.focus({preventScroll:true});
