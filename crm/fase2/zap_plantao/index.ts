@@ -197,6 +197,7 @@ export function paraAgendador(system: string) {
     .replace(/^4\. Pergunte se haverá outra pessoa[^\n]*$/m, AG_OUTRA)
     .replace(/^6\. Chame consultar_vagas \(no CRM\) e ofereça no máximo 3 horários[^\n]*$/m, AG_HORARIOS)
     .replace(AG_HORARIOS_F280, AG_HORARIOS)
+    .replace(/^6\. Chame consultar_vagas \(no CRM\)\. Se o assunto é previdenciário[^\n]*$/m, () => AG_HORARIOS)   // versões anteriores da F422i
     .replace(/^8\. Antes de marcar, oriente[^\n]*$/m, AG_ORIENTA);
   if (!t.includes("\n\nComo escrever: a Assistente virtual já cumprimentou")) {
     const i = t.indexOf("\n\n");
