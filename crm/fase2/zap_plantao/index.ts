@@ -191,6 +191,7 @@ export function paraTriagem(system: string) {
   if (!t.includes("\n\nComo escrever no WhatsApp:")) antes(ESTILO);
   if (!t.includes("\n\nVocabulário:")) antes(VOCABULARIO);
   if (!t.includes("\n\nRegistro: português formal")) antes(FORMAL);
+  else t = t.replace(/\n\nRegistro: português formal[^]*?(?=\n\n|$)/, () => FORMAL);
   if (!t.includes("\n\nInformações do escritório")) antes(FATOS);
   if (!t.includes("\n\nO jeito do escritório")) antes(PADRAO);
   else t = t.replace(/\n\nO jeito do escritório[^]*?(?=\n\n|$)/, () => PADRAO);
@@ -246,7 +247,7 @@ export function paraAgendador(system: string) {
   }
   t = t.includes("\n\nNa dúvida, a equipe") ? t.replace(/\n\nNa dúvida, a equipe[^]*?(?=\n\n|$)/, () => AG_DUVIDA) : t + AG_DUVIDA;
   if (!t.includes("\n\nVocabulário:")) t += VOCABULARIO;
-  if (!t.includes("\n\nRegistro: português formal")) t += FORMAL;
+  t = t.includes("\n\nRegistro: português formal") ? t.replace(/\n\nRegistro: português formal[^]*?(?=\n\n|$)/, () => FORMAL) : t + FORMAL;
   t = t.includes("\n\nO jeito do escritório") ? t.replace(/\n\nO jeito do escritório[^]*?(?=\n\n|$)/, () => PADRAO) : t + PADRAO;
   return t;
 }

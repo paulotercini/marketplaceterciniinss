@@ -240,3 +240,15 @@ console.log("fatos: ok");
   assert.ok(regras().includes(PADRAO));
 }
 console.log("padrao: ok");
+
+// F422m · o tratamento antigo ("o senhor" e "a senhora" sempre) sai do texto dos agentes
+{
+  const { FORMAL } = await import("../../zap_plantao/index.ts");
+  const velho = 'x\n\nRegistro: português formal e técnico, como numa carta do escritório. Trate por "o senhor" e "a senhora". Não use.\n\nFim';
+  for (const f of [paraTriagem, paraAgendador]) {
+    const t = f(velho);
+    assert.ok(!t.includes('"o senhor" e "a senhora"') && t.includes(FORMAL) && t.split("Registro: português").length === 2);
+    assert.equal(f(t), t);
+  }
+}
+console.log("formal: ok");
