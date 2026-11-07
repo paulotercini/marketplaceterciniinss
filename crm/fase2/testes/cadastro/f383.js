@@ -82,6 +82,9 @@ const SUPA = "https://ficticio.supabase.co";
     res.trecho = trechoDoc({texto:"PODER JUDICIÁRIO\nJUSTIÇA FEDERAL\nDefiro à parte autora os benefícios da gratuidade da justiça, nos termos do art. 98 do CPC.\nCite-se."});
     { const ant = k.processos; k.processos = [k.processo, "0001234-56.2024.8.26.0369"];
       const dv = pinta("cnj"); res.abas = txt(dv, ".proc-abas button"); res.abaSel = !dv.querySelector(".proc-sel"); k.processos = ant; }
+    // F431 · no Conselho e no INSS o nome se repete: vai o ano e, no empate, o fim do número
+    { const ant = k.crps; k.crps = [ant[0], {...ant[0], nup:"44233100000202411"}, {...ant[0], nup:"44233100009202411"}];
+      res.abasCrps = txt(pinta("crps"), ".proc-abas button"); k.crps = ant; }
     filtroArv = "dec"; res.judDec = pinta("cnj").querySelectorAll(".arv-doc,.arv-and").length;
     filtroArv = "and"; res.inssAnd = pinta("inss").querySelectorAll(".arv-doc").length;
     filtroArv = "doc"; res.inssDoc = pinta("inss").querySelectorAll(".arv-and").length;
@@ -122,6 +125,7 @@ const SUPA = "https://ficticio.supabase.co";
   conf("Judicial: dias do mais novo ao mais antigo, com Ler", /30\/10\/2026/.test(r.judDias[0]||"") && r.judDias.length === 3 && r.judPri[0] === "Ler");
   conf("Judicial: origem na etiqueta", ["Juízo","Escritório","INSS"].every(e=>r.judEt.includes(e)));
   conf("dois processos viram abas com a Justiça e o número curto", r.abas && r.abas.length === 2 && /^Federal · \d{7}\/\d{4}/.test(r.abas[0]) && /^Estadual · 0001234\/2024/.test(r.abas[1]) && r.abaSel);
+  conf("Conselho: abas com o ano e, no empate, o fim do número", r.abasCrps && /^7ª JR · 2025/.test(r.abasCrps[0]) && /^7ª JR · 2024 · nº 100000\b/.test(r.abasCrps[1]) && /^7ª JR · 2024 · nº 100009\b/.test(r.abasCrps[2]));
   conf("filtro Decisões no Judicial", r.judDec === 1);
   conf("filtros Andamentos e Documentos", r.inssAnd === 0 && r.inssDoc === 0);
   conf("o trecho do conteúdo pula o cabeçalho", /^Defiro à parte autora/.test(r.trecho));
