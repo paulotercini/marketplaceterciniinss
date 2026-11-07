@@ -478,7 +478,7 @@ export async function turno(sessao: string, texto: string, buscar: typeof fetch 
       body: JSON.stringify({ events: [{ type: "user.message", content: [{ type: "text", text: texto }] }] }) });
     if (!env.ok) throw Object.assign(new Error(`envio ${env.status} ${(await env.text()).slice(0, 200)}`), { status: env.status });
     const leitor = st.body.pipeThrough(new TextDecoderStream()).getReader();
-    let resto = "";
+    let resto = "", aoAgendador = 0;   // mensagens à espera da resposta do Agendador neste turno
     for (;;) {
       const { value, done } = await leitor.read();
       if (done) throw new Error("o stream fechou sem decisão");
@@ -490,6 +490,16 @@ export async function turno(sessao: string, texto: string, buscar: typeof fetch 
         if (!dado) continue;
         let ev: Record<string, any>;
         try { ev = JSON.parse(dado); } catch { continue; }
+        if (ev.type === "agent.thread_message_sent") { aoAgendador++; continue; }
+        if (ev.type === "agent.thread_message_received") { aoAgendador = Math.max(0, aoAgendador - 1); continue; }
+        // a Assistente chama decidir "nada" logo depois de encaminhar ao Agendador: a resposta dele
+        // chegava depois do turno fechado e se perdia (07.11.2026); espera e pede a decidir de novo
+        if (ev.type === "agent.custom_tool_use" && ev.name === "decidir" && aoAgendador > 0 && ev.input?.acao === "nada") {
+          await buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
+            body: JSON.stringify({ events: [{ type: "user.custom_tool_result", custom_tool_use_id: ev.id,
+              content: [{ type: "text", text: "Ainda não registrado: espere a resposta do Agendador e chame decidir de novo com a mensagem ao cliente." }] }] }) });
+          continue;
+        }
         if (ev.type === "agent.custom_tool_use" && ev.name === "decidir") {
           // fecha a chamada para a sessão não ficar esperando; a mensagem sai pelo banco
           await buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR,
@@ -564,6 +574,17 @@ if (typeof Deno !== "undefined") {
           id: a.id, nome: a.name, versao: a.version, modelo: a.model, multiagent: a.multiagent ?? null,
           ferramentas: a.tools || [], mcp: (a.mcp_servers || []).map((m: Record<string, any>) => m.name || m.url), system: String(a.system || "") }));
         return json({ agentes: lista });
+      } catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
+    }
+    if (typeof corpo.eventos === "string") {
+      // diagnóstico (07.11.2026): os eventos de uma sessão, pela mesma porta do teste, que se fecha no uso
+      if (!CHAVE_IA) return json({ erro: "sem ANTHROPIC_API_KEY" }, 503);
+      const s = String(corpo.eventos);
+      if (!/^sesn_[A-Za-z0-9]+$/.test(s)) return json({ erro: "sessão inválida" }, 400);
+      try {
+        if (!(await rpc("zap_plantao_ma_teste", {}))) return json({ erro: "teste fechado: ligue zap_ma_teste no banco" }, 403);
+        const r = await fetch(`${MA_URL}/sessions/${s}/events?limit=100`, { headers: MA_HDR });
+        return json({ status: r.status, eventos: (await r.text()).slice(0, 60000) });
       } catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
     }
     if (corpo.ligar === true) {
