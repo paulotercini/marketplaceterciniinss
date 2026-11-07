@@ -65,7 +65,18 @@ const dec3 = await turno("sesn_3", "quero marcar", falso([
 ]));
 assert.equal(dec3.acao, "conversa");
 assert.match(enviados[1].events[0].content[0].text, /espere a resposta do Agendador/);
-await assert.rejects(turno("sesn_1", "oi", falso([{ type: "session.status_idle", id: "e2", stop_reason: { type: "end_turn" } }])), /parou sem decisão/);
+// encerrou sem a decidir: pede uma vez e aceita a decisão que vier depois
+enviados.length = 0;
+const dec4 = await turno("sesn_4", "oi", falso([
+  { type: "session.status_idle", id: "e2", stop_reason: { type: "end_turn" } },
+  { type: "agent.custom_tool_use", id: "sevt_c", name: "decidir", input: { acao: "conversa", resposta: "Bom dia." } },
+]));
+assert.equal(dec4.acao, "conversa"); assert.match(enviados[1].events[0].content[0].text, /sem chamar a ferramenta decidir/);
+await assert.rejects(turno("sesn_1", "oi", falso([{ type: "session.status_idle", id: "e2", stop_reason: { type: "end_turn" } },
+  { type: "session.status_idle", id: "e3", stop_reason: { type: "end_turn" } }])), /parou sem decisão/);
+// "agendar", e não "marcar", nos dois agentes e nas regras
+assert.ok(regras().includes("Vocabulário:") && paraAgendador("x").includes("Vocabulário:") && paraTriagem("x").includes("Vocabulário:"));
+assert.equal(paraAgendador(paraAgendador("x")), paraAgendador("x")); assert.equal(paraTriagem(paraTriagem("x")), paraTriagem("x"));
 
 // F278 · a Assistente faz a triagem e o Agendador (Console) marca pela agenda do CRM
 assert.deepEqual(definicaoAgente("x").tools.map((f) => f.name), ["decidir"]);
@@ -167,13 +178,15 @@ const pi = promptIntencao({ ...base, mensagens: [
   { direcao: "entrada", por_bot: false, tipo: "texto", texto: "Estarei ocupado nesse dia", momento: "2026-11-07T12:01:00Z" }] });
 assert.ok(pi.includes("<resposta>Estarei ocupado nesse dia</resposta>") && pi.includes("Podemos contar com a sua presença?"));
 assert.deepEqual(ESQ_INTENCAO.properties.intencao.enum, ["confirmar", "remarcar", "outro"]);
+{ const antigo = "Agendador.\n\n6. Chame consultar_vagas (no CRM). Se o assunto é previdenciário, ofereça três horários numerados.\n7. Confirme.";
+  const novo = paraAgendador(antigo); assert.ok(novo.includes(AG_HORARIOS) && !novo.includes("três horários numerados") && paraAgendador(novo) === novo); }
 console.log("zap_plantao: ok");
 
 // F422i · na dúvida, a equipe; o atendimento marcado se acha pela ficha do número mesmo com quem escreve por outra pessoa
 {
   const { AG_DUVIDA, COMO_ENCAMINHAR: CE } = await import("../../zap_plantao/index.ts");
   const ag = paraAgendador("Agendador.\n\nPassos.");
-  assert.ok(ag.endsWith(AG_DUVIDA) && paraAgendador(ag) === ag, "o Agendador ganha a regra da dúvida uma vez");
+  assert.ok(ag.includes(AG_DUVIDA) && paraAgendador(ag) === ag, "o Agendador ganha a regra da dúvida uma vez");
   const velho = paraTriagem("Texto.\n\nResponda sempre chamando decidir.").replace(CE, CE.split("\n\nNa dúvida")[0]);
   const novo = paraTriagem(velho);
   assert.ok(novo.includes("\n\nNa dúvida, a equipe") && paraTriagem(novo) === novo, "a Assistente antiga ganha a regra da dúvida");
