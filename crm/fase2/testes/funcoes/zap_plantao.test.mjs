@@ -231,3 +231,12 @@ console.log("simulador: ok");
   assert.ok(g.includes(AG_PREV) && !g.includes("Apresente-se sempre") && g.includes(FORMAL) && paraAgendador(g) === g, "o Agendador alinha o passo 5 ao 6");
 }
 console.log("fatos: ok");
+{
+  const { PADRAO } = await import("../../zap_plantao/index.ts");
+  const a = paraTriagem("Assistente.\n\nO jeito do escritório (antigo):\n- x\n\nResponda sempre chamando a ferramenta decidir.");
+  assert.ok(a.includes(PADRAO) && !a.includes("(antigo)") && paraTriagem(a) === a, "a Assistente recebe o jeito do escritório e a versão nova troca a antiga");
+  const g = paraAgendador("Agendador.\n\n6. x");
+  assert.ok(g.includes(PADRAO) && paraAgendador(g) === g, "o Agendador recebe o jeito do escritório uma vez");
+  assert.ok(regras().includes(PADRAO));
+}
+console.log("padrao: ok");
