@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_plantao.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA } from "../../zap_plantao/index.ts";
+import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO } from "../../zap_plantao/index.ts";
 
 assert.equal(mascarar("CPF 123.456.789-09"), "CPF [número]");
 const msgs = [
@@ -145,10 +145,16 @@ assert.ok(!p1.includes("Quem escreve"), "sem relação gravada, nada muda");
 assert.ok(regras().includes("boas-vindas em nome da Advocacia Previdenciária"));
 // F422c · o NÃO da confirmação leva a remarcação ao contexto
 const rem = promptPlantao({ ...base, remarcar: { rotulo: "quarta-feira, 11/11/2026, às 9h30", profissional: "Amanda" } });
-assert.ok(rem.includes("respondeu NÃO à confirmação do atendimento de quarta-feira, 11/11/2026, às 9h30"));
+assert.ok(rem.includes("confirmação do atendimento de quarta-feira, 11/11/2026, às 9h30, que não pode comparecer"));
 assert.ok(rem.includes("mesmo advogado (Amanda), um de manhã e outro à tarde"));
 assert.ok(!p1.includes("Remarcação:"), "sem remarcação, nada muda");
 assert.ok(p1.includes("pelo nome no máximo uma vez"), "o nome uma vez só");
 const duv = promptPlantao({ ...base, remarcar: { rotulo: "quarta-feira, 11/11/2026, às 9h30", profissional: "Amanda", duvida: true } });
-assert.ok(duv.includes("respondeu sem dizer SIM nem NÃO") && !duv.includes("respondeu NÃO à confirmação"), "a dúvida tem o seu contexto");
+assert.ok(duv.includes("não deixa clara a presença") && !duv.includes("que não pode comparecer"), "a dúvida tem o seu contexto");
+// F422f · a IA lê a resposta à confirmação: a confirmação mandada e a resposta do cliente vão ao classificador
+const pi = promptIntencao({ ...base, mensagens: [
+  { direcao: "saida", por_bot: true, tipo: "texto", texto: "Seu atendimento está agendado para 11/11. Podemos contar com a sua presença?", momento: "2026-11-07T12:00:00Z" },
+  { direcao: "entrada", por_bot: false, tipo: "texto", texto: "Estarei ocupado nesse dia", momento: "2026-11-07T12:01:00Z" }] });
+assert.ok(pi.includes("<resposta>Estarei ocupado nesse dia</resposta>") && pi.includes("Podemos contar com a sua presença?"));
+assert.deepEqual(ESQ_INTENCAO.properties.intencao.enum, ["confirmar", "remarcar", "outro"]);
 console.log("zap_plantao: ok");
