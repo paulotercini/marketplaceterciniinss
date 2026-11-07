@@ -146,7 +146,7 @@ export const PADRAO = `\n\nO jeito do escritório (como a equipe responde no Wha
 export const ESTILO = `\n\nComo escrever no WhatsApp:\n` +
   `Escreva como uma pessoa da recepção, em duas ou três linhas curtas separadas por uma linha em branco: a saudação, ` +
   `o assunto e, se houver, a pergunta. Nunca junte tudo numa linha só. Varie a abertura de uma conversa para outra, ` +
-  `sem repetir a mesma fórmula, por exemplo "Boa noite, Paulo! Seja bem-vindo à Advocacia Previdenciária.", ` +
+  `sem repetir a mesma fórmula, por exemplo "Boa noite, Paulo! Agradecemos o seu contato com a Advocacia Previdenciária.", ` +
   `"Paulo, boa noite! A Advocacia Previdenciária agradece o seu contato.", "Olá, Paulo, boa noite! Que bom receber a sua mensagem.", ` +
   `"Boa tarde, Maria! Obrigada por escrever à Advocacia Previdenciária.". Depois da primeira resposta, não repita saudação nem boas-vindas.`;
 
@@ -189,6 +189,7 @@ export function paraTriagem(system: string) {
   else if (!t.includes("\n\nNa dúvida, a equipe")) t = t.replace(/\n\nComo encaminhar ao Agendador:[^]*?Quando o Agendador passar a conversa à equipe, use acao "equipe"\./, COMO_ENCAMINHAR);
   else t = t.replace(/\n\nNa dúvida, a equipe[^]*?(?=\n\n|$)/, () => DUVIDA_TRIAGEM);
   if (!t.includes("\n\nComo escrever no WhatsApp:")) antes(ESTILO);
+  else t = t.replace(/\n\nComo escrever no WhatsApp:\n[^]*?(?=\n\n|$)/, () => ESTILO);
   if (!t.includes("\n\nVocabulário:")) antes(VOCABULARIO);
   if (!t.includes("\n\nRegistro: português formal")) antes(FORMAL);
   else t = t.replace(/\n\nRegistro: português formal[^]*?(?=\n\n|$)/, () => FORMAL);
@@ -254,7 +255,8 @@ export function paraAgendador(system: string) {
 
 // a resposta que veio numa linha só ganha a quebra depois da primeira frase
 export function emLinhas(txt: string) {
-  const t = String(txt || "").trim();
+  // o modelo ainda escrevia "o senhor ou a senhora" sem saber quem é (07.11.2026): o verbo segue na 3ª pessoa
+  const t = String(txt || "").replace(/\s*,?\s*\bo\(a\) senhor\(a\)|\s+(?:o senhor ou a senhora|a senhora ou o senhor)\b/gi, "").trim();
   if (t.includes("\n") || t.length <= 120) return t;
   // "Sr." e "Dra." não encerram a frase
   return t.replace(/^(.+?(?<!\b(?:Sr|Sra|Srta|Dr|Dra|Prof|Profa))[.!?])\s+(?=\S)/, "$1\n\n");
@@ -609,6 +611,10 @@ export async function turno(sessao: string, texto: string, buscar: typeof fetch 
     const env = await buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
       body: JSON.stringify({ events: [{ type: "user.message", content: [{ type: "text", text: texto }] }] }) });
     if (!env.ok) throw Object.assign(new Error(`envio ${env.status} ${(await env.text()).slice(0, 200)}`), { status: env.status });
+    // a decidir que sobrou do turno anterior (a Assistente às vezes chama duas vezes) é anterior a esta mensagem
+    // e respondia ao cliente com a resposta velha (07.11.2026); sem a data na volta, aceita como antes
+    const enviado = await env.json().catch(() => null) as Record<string, any> | null;
+    const marco: string = enviado?.data?.[0]?.processed_at || "";
     const leitor = st.body.pipeThrough(new TextDecoderStream()).getReader();
     let resto = "", aoAgendador = 0, cobrado = false;   // mensagens à espera da resposta do Agendador neste turno
     for (;;) {
@@ -630,6 +636,12 @@ export async function turno(sessao: string, texto: string, buscar: typeof fetch 
           await buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
             body: JSON.stringify({ events: [{ type: "user.custom_tool_result", custom_tool_use_id: ev.id,
               content: [{ type: "text", text: "Ainda não registrado: espere a resposta do Agendador e chame decidir de novo com a mensagem ao cliente." }] }] }) });
+          continue;
+        }
+        if (ev.type === "agent.custom_tool_use" && ev.name === "decidir" && marco && ev.processed_at && ev.processed_at < marco) {
+          await buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
+            body: JSON.stringify({ events: [{ type: "user.custom_tool_result", custom_tool_use_id: ev.id,
+              content: [{ type: "text", text: "Esta decisão era do turno anterior e já foi registrada. Responda à mensagem nova." }] }] }) });
           continue;
         }
         if (ev.type === "agent.custom_tool_use" && ev.name === "decidir") {
