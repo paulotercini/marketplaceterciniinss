@@ -283,3 +283,22 @@ console.log("formal: ok");
   assert.ok(pd.includes("nunca para abrir uma pergunta"));
   console.log("menu e representado: ok");
 }
+
+// F422p · o pai escreve pelo número da Pietra: 002 para ela (com a ficha), 001 para ele
+{
+  const ch = [];
+  const ag2 = async (acao, corpo) => { ch.push([acao, corpo]);
+    if (acao === "disponibilidade") return { ok: true, dias: [{ data: "2026-11-10", livres: { "001": [{ inicio: "09:00", eventoId: "v1" }], "002": [{ inicio: "09:30", eventoId: "v2" }] } }] };
+    if (acao === "agendamentosFuturos") return { ok: true, agendamentos: [] };
+    return { ok: true }; };
+  const bc = async (nome) => nome === "zap_plantao_agenda"
+    ? { telefone: "5516999998888", cliente_id: null, cliente_numero: "fd86", nome_ficha: null, nome_numero: "Pietra Tercini", ligada: true } : null;
+  const f = ferramentasDaConversa("c2", ag2, bc);
+  const a = await f.consultar_vagas({ profissionais: ["amanda"], tipo: "002" });
+  assert.equal(a.tipo, "002"); assert.equal(a.para, "Pietra Tercini"); assert.equal(a.vagas.amanda[0].eventoId, "v2");
+  assert.equal((await f.consultar_vagas({ profissionais: ["amanda"] })).tipo, "001", "sem pedido, quem escreve é atendimento novo");
+  await f.marcar_atendimento({ eventoId: "v2", profissional: "amanda", modalidade: "presencial", assunto: "aposentadoria" });
+  const m = ch.find((c) => c[0] === "agendar")[1];
+  assert.deepEqual([m.tipo, m.clienteId, m.nome], ["002", "fd86", "Pietra Tercini"]);
+  console.log("pessoa da ficha: ok");
+}
