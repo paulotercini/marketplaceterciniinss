@@ -2864,7 +2864,7 @@ dialog.confirmar::backdrop{background:rgba(15,17,22,.38)}
 .app.celular .escrever .tipo-fila::-webkit-scrollbar{display:none}
 .app.celular .escrever .tipo-ch{flex:none;white-space:nowrap}
 .app.celular .det-rolagem{padding-bottom:180px}
-.proc-cartoes{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}.proc-cartao{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:6px 12px;border:1px solid var(--linha,#dfe3ea);border-radius:8px;background:var(--fundo-card,#fff);cursor:pointer;font:inherit;color:inherit}.proc-cartao span{font-size:12px;color:var(--mut,#5d6675)}.proc-cartao.on{border-color:currentColor;box-shadow:inset 0 -3px 0 currentColor}.proc-barra{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px}.proc-bts{display:flex;gap:6px;flex-wrap:wrap}.btn-mini.proc-pri{background:#1E6F50;border-color:#1E6F50;color:#fff;font-weight:600}.proc-sel{max-width:100%;min-width:0;flex:1 1 240px;font:inherit}.proc-barra2{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-bottom:8px}.proc-arv{margin-bottom:10px}
+.proc-cartoes{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}.proc-cartao{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:6px 12px;border:1px solid var(--linha,#dfe3ea);border-radius:8px;background:var(--fundo-card,#fff);cursor:pointer;font:inherit;color:inherit}.proc-cartao span{font-size:12px;color:var(--mut,#5d6675)}.proc-cartao.on{border-color:currentColor;box-shadow:inset 0 -3px 0 currentColor}.proc-barra{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px}.proc-bts{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-left:auto}html[data-tema] .painel .sub-menu.fontes.proc-filtros{width:auto;margin:0}.proc-barra>.proc-tit{flex:0 1 auto}html[data-tema] .proc-mais .tl-mais-menu{right:0;left:auto;top:calc(100% + 6px);bottom:auto}.proc-mais .tl-mais-menu .btn-mini{display:block;width:100%;text-align:left;border:0;background:none}.btn-mini.proc-pri{background:#1E6F50;border-color:#1E6F50;color:#fff;font-weight:600}.proc-sel{max-width:100%;min-width:0;flex:1 1 240px;font:inherit}.proc-barra2{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-bottom:8px}.proc-arv{margin-bottom:10px}
 .proc-v{container-type:inline-size}.app:not(.celular) .proc-leitor .pl-corpo{scroll-padding-bottom:150px}.app:not(.celular) .proc-leitor .pl-corpo::after{content:"";display:block;height:150px}.proc-barra{justify-content:flex-start}.proc-barra .proc-tit{flex:0 1 auto}.proc-bts{margin-left:auto}
 .proc-situ{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;background:var(--fundo-card,#fff);border:1px solid var(--linha,#dfe3ea);border-radius:6px;padding:7px 12px;margin-bottom:10px;font-size:13px}.proc-situ .dec{color:#a3261d;font-weight:600}.proc-situ .proc-lig{margin-left:auto}
 .proc-grade{display:grid;grid-template-columns:minmax(240px,340px) minmax(0,1fr);gap:12px;align-items:start}.proc-grade.so-arv{grid-template-columns:minmax(0,1fr)}
@@ -6567,7 +6567,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.72</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.73</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -39107,7 +39107,7 @@ function faixaPrazos(k){
   const sug = sugestaoPrazoEtapa(k, soltas);
   const tit = `<div class="fp-cab"><h3 class="fp-tit">Prazos deste caso</h3>${conf ? `<details class="tl-mais fp-menu"><summary class="tl-bt tl-bt-ic" aria-label="Conferir o caso" title="conferir o caso: sem novidade ou movimentou">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${conf}</span></details>` : ""}</div>`;
   if(!minhas.length) return `<div class="faixa-prazos vazia" aria-label="Prazos e providências">${tit}
-    ${sug || `<span class="meio-sub">Sem prazos ou lembretes em aberto. Um andamento com data cria o lembrete; a anotação com ⏰ cria o prazo.</span>`}${outros}</div>`;
+    ${sug || `<span class="meio-sub" title="Um andamento com data cria o lembrete; a anotação com ⏰ cria o prazo.">Sem prazos ou lembretes em aberto.</span>`}${outros}</div>`;
   // F236 · sem mexer na ordem (F145), o que não pode passar despercebido: o PRÓXIMO (a menor data de hoje em diante
   // entre o que pede ação; no empate, o prazo fatal) ganha o selo e o contorno, e o topo diz numa linha o próximo, a
   // perícia (quando não é ela o próximo), o próximo prazo fatal (quando é outro) e quantos venceram. A perícia que passou
@@ -43574,11 +43574,21 @@ function itensDoProcesso(k, x){
 // a ordem da árvore: a data mais nova no alto e, no mesmo dia, a decisão e a juntada
 const ordemArvDia = (a,b) => (b.dec-a.dec) || (a.tipo===b.tipo ? (a.tipo==="doc" ? ordemPeca(a.d, b.d) : 0) : a.tipo==="doc" ? -1 : 1);
 const ordemArv = (a,b) => String(b.data).localeCompare(String(a.data)) || ordemArvDia(a,b);
+// F428 · a etiqueta que se repete em quase todo item some: a origem da maioria (o Juízo no Judicial) fica no
+// cabeçalho da árvore, e "Decisão" não se repete quando o nome já diz (Sentença, Decisão, Acórdão)
+function oriComum(l){
+  const c = new Map(); l.forEach(y=>y.ori && c.set(y.ori, (c.get(y.ori)||0)+1));
+  const [o, n] = [...c].sort((a,b)=>b[1]-a[1])[0] || [];
+  return n>=3 && n*2>l.length ? o : "";
+}
+const RX_NOME_DEC = /decis|senten|ac[óo]rd|monocr/i;
+const etiquetasArv = (y, comum) => `${y.dec && !RX_NOME_DEC.test(y.rot||y.txt||"")?` <span class="arv-et dec">Decisão</span>`:""}${y.ori && y.ori!==comum?` <span class="arv-et">${esc(y.ori)}</span>`:""}`;
 function arvoreUnica(k, aba, i, x, todos, sel){
   const it = (todos || itensDoProcesso(k, x)).filter(y=>filtroArv==="dec" ? y.dec : filtroArv==="doc" ? y.tipo==="doc" : filtroArv==="and" ? y.tipo==="and" : true);
   if(!it.length) return `<p class="meio-sub">${filtroArv==="todos" ? "Nada guardado deste processo ainda." : "Nada neste filtro."}</p>`;
   const dias = new Map(); it.forEach(y=>dias.set(y.data, [...(dias.get(y.data)||[]), y]));
-  const lin = y => { const et = `${y.dec?` <span class="arv-et dec">Decisão</span>`:""}${y.ori?` <span class="arv-et">${esc(y.ori)}</span>`:""}`;
+  const comum = oriComum(todos || it);
+  const lin = y => { const et = etiquetasArv(y, comum);
     if(y.tipo==="and") return `<li class="arv-and${y.dec?" dec":""}">${esc(y.txt)}${et}</li>`;
     const nome = y.d.caminho
       ? `<button class="arv-nome" onclick="procVer('${k.id}','${aba}',${i},'${escJs(y.d.caminho)}')" title="ler este documento">${esc(y.rot)}</button>`
@@ -43662,8 +43672,8 @@ function leitorMiolo(k, aba, i, x, d){
   const prox = l[j+1];
   let z0 = 1; try{ z0 = +localStorage.getItem("crm_pi_zoom") || 1; }catch(e){}
   return `<div class="pl-cab">
-      <b class="pl-tit">${esc(y.rot)}</b>${y.dec?`<span class="arv-et dec">Decisão</span>`:""}${y.ori?`<span class="arv-et">${esc(y.ori)}</span>`:""}
-      <span class="meio-sub">${[y.data?dataPat(y.data):"", fl?`fls. ${fl}`:"", n>=0?`documento ${n+1} de ${cron.length}`:""].filter(Boolean).join(" · ")}</span>
+      <b class="pl-tit">${esc(y.rot)}</b>${etiquetasArv(y, oriComum(itensDoProcesso(k, x)))}
+      <span class="meio-sub">${[y.data?dataPat(y.data):"", fl?`fls. ${fl}`:"", n>=0?`${n+1} de ${cron.length}`:""].filter(Boolean).join(" · ")}</span>
       <span class="pl-bts"><span class="pi-zoom" role="group" aria-label="zoom do documento"><button class="btn-mini" onclick="piZoom(-1)" title="diminuir (Ctrl + roda)" aria-label="diminuir o zoom">−</button><output aria-live="polite">${Math.round(z0*100)} %</output><button class="btn-mini" onclick="piZoom(1)" title="aumentar (Ctrl + roda)" aria-label="aumentar o zoom">+</button></span>
       <button class="btn-mini" ${j>0?`onclick="${ir(l[j-1])}"`:"disabled"} title="documento anterior (mais recente)" aria-label="documento anterior">↑</button>
       <button class="btn-mini" ${prox?`onclick="${ir(prox)}"`:"disabled"} title="próximo documento (mais antigo)" aria-label="próximo documento">↓</button>
@@ -43711,7 +43721,9 @@ function vistaProcessos(k, aba){
     ? `<select class="proc-sel" aria-label="processo desta fase" onchange="procIdx['${aba}']=+this.value;repintarFicha()">${lista.map((y,j)=>
         `<option value="${j}"${j===i?" selected":""}>${esc(y.id)} · ${esc(y.tit)}</option>`).join("")}</select>`
     : `${soDig(x.tit).includes(soDig(x.id))?"":`<span class="proc-id">${esc(x.id)}</span>`}<span class="proc-tit">${esc(x.tit)}</span>`;
-  const filtros = `<span class="sub-menu fontes proc-filtros">${[["todos","Tudo"],["dec","Decisões"],["doc","Documentos"],["and","Andamentos"]].map(([f,r])=>
+  const todos = itensDoProcesso(k, x), nd = todos.filter(y=>y.tipo==="doc").length, na = todos.length - nd;
+  const filtros = `<span class="sub-menu fontes proc-filtros">${[["todos","Tudo"],["dec","Decisões"],["doc","Documentos"],["and","Andamentos"]].filter(([f])=>
+    f==="todos" || filtroArv===f || (f==="dec" ? todos.some(y=>y.dec) : f==="and" ? na && nd : nd && na)).map(([f,r])=>
     `<button class="${filtroArv===f?"on":""}" onclick="filtroArv='${f}';repintarFicha()">${r}</button>`).join("")}</span>`;
   const bts = [
     n ? `<button class="btn-mini proc-pri" onclick="lerProcesso('${k.id}','${aba}',${i})" title="abrir os ${n} documentos deste processo num leitor contínuo, em tela cheia">Ler</button>` : "",
@@ -43720,18 +43732,19 @@ function vistaProcessos(k, aba){
     x.portal ? `<a class="btn-mini" href="${urlOk(x.portal)}" target="_blank" rel="noopener" title="abrir no sistema oficial">Portal</a>` : "",
     x.aba!=="cnj" ? `<button class="btn-mini" onclick="telaDoProcesso('${k.id}','${aba}',${i})" title="a tela do ${x.aba==="inss"?"PAT":"e-SISREC"}: cabeçalho, comentários e movimentações">Tela</button>` : "",
     x.aba==="cnj" && expedientesDe(k, x.d).length ? `<button class="btn-mini" onclick="telaExpedientes('${k.id}',${i})" title="a aba Expedientes do PJe: atos de comunicação, data limite e fechado">Expedientes</button>` : "",
-    `<button class="btn-mini" onclick="mudarVistaProc(false)" title="a tela anterior desta aba: as fontes, a fase e a gestão dos processos">Detalhes</button>`].join("");
-  const todos = itensDoProcesso(k, x), nd = todos.filter(y=>y.tipo==="doc").length, na = todos.length - nd;
+    `<button class="btn-mini" onclick="mudarVistaProc(false)" title="a tela anterior desta aba: as fontes, a fase e a gestão dos processos">Detalhes</button>`];
+  // F428 · uma ação à vista (Ler); as demais no ⋯, para a barra caber numa linha
+  const btsHtml = bts[0] + `<details class="tl-mais proc-mais"><summary class="tl-bt tl-bt-ic" aria-label="Mais ações do processo" title="baixar, Claude, portal, tela e detalhes">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${bts.slice(1).join("")}</span></details>`;
   const d = n ? procEscolhido(k, aba, i, x) : null;
   if(d) setTimeout(procDesenhar, 0);
   const sit = x.sit ? `<span class="proc-sit-r"><b>Situação:</b> <span class="${x.dec?"dec":""}">${esc(x.sit.slice(0,80))}</span>${x.ult?` <span class="meio-sub">${esc(fmt(x.ult.slice(0,10)))}</span>`:""}</span>` : "";
   const lig = ligados.length ? `<span class="proc-lig"><span class="meio-sub">Ligado a</span> ${ligados.map(y=>`<button class="btn-mini" onclick="irSubAba('${y.aba}')"
       title="abrir ${esc(y.id)} em ${ROT_FASE[y.aba]}">${ROT_FASE[y.aba]} · ${esc(y.id.replace(/^(Protocolo|Recurso) /,""))}</button>`).join(" ")}</span>` : "";
   return `<div class="proc-v">
-    <div class="proc-barra">${escolha}${filtros}<span class="proc-bts">${bts}</span></div>
+    <div class="proc-barra">${escolha}${filtros}<span class="proc-bts">${btsHtml}</span></div>
     ${sit||lig?`<div class="proc-situ">${sit}${lig}</div>`:""}
     <div class="proc-grade${d?"":" so-arv"}">
-      <div class="proc-arv"><div class="proc-arv-cab"><b>Processo</b> <span class="meio-sub">${nd} documento${nd===1?"":"s"} · ${na} andamento${na===1?"":"s"}</span></div>${arvoreUnica(k, aba, i, x, todos, d && d.caminho)}</div>
+      <div class="proc-arv"><div class="proc-arv-cab"><b>Processo</b> <span class="meio-sub">${[nd?`${nd} documento${nd===1?"":"s"}`:"", na?`${na} andamento${na===1?"":"s"}`:"", oriComum(todos)].filter(Boolean).join(" · ")}</span></div>${arvoreUnica(k, aba, i, x, todos, d && d.caminho)}</div>
       ${d?`<div class="proc-leitor" data-caso="${k.id}" data-aba="${aba}" data-i="${i}" role="region" aria-label="documento escolhido">${leitorMiolo(k, aba, i, x, d)}</div>`:""}
     </div>
   </div>`;
