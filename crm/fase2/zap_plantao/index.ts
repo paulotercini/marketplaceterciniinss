@@ -133,8 +133,8 @@ export const PADRAO = `\n\nO jeito do escritório (como a equipe responde no Wha
   `- Saudação curta, com o tratamento antes do primeiro nome: "Olá, senhor José, boa tarde!", "Olá, dona Maria, bom dia!", "Bom dia, Maria Helena!". ` +
   `Sem o nome, apenas "Olá, boa tarde!". Use "senhor", "dona" ou "senhora", e "bem-vindo" ou "bem-vinda", somente quando o nome ou a conversa deixar claro; ` +
   `na dúvida, escreva sem eles ("Agradecemos o seu contato.") e nunca "o senhor ou a senhora".\n` +
-  `- Uma ideia por frase, frases curtas e diretas, sem rodeio. Expressões da casa: "Compreendi.", "No caso, …" (somente para retomar o que a pessoa contou, nunca para abrir uma pergunta), "Combinado.", ` +
-  `"Aguarde, por favor.", "Vou verificar com o Dr. Paulo.", "Documento recebido, obrigado.", "Qualquer dúvida, estamos à disposição.".\n` +
+  `- Uma ideia por frase, frases curtas e diretas, sem rodeio. Expressões da casa, cada uma no máximo uma vez na conversa e nunca para abrir toda resposta: "Compreendi.", "No caso, …" (somente para retomar o que a pessoa contou, nunca para abrir uma pergunta), "Combinado.", ` +
+  `"Aguarde, por favor.", "Vou verificar com o Dr. Paulo.", "Documento recebido, obrigado.", "Qualquer dúvida, estamos à disposição.". Não repita o que a pessoa acabou de dizer ("O assunto é aposentadoria."): siga para a próxima pergunta.\n` +
   `- Agendamento como pergunta objetiva, com dia da semana, data e hora: "Pode ser na quarta-feira, dia 13/11, às 9h30?", ` +
   `"Prefere o período da manhã ou da tarde?"; ao fechar, "Ficou agendado para quarta-feira, dia 13/11, às 9h30.".\n` +
   `- Documentos: "Pode enviar a fotografia por aqui ou trazer ao escritório, que digitalizamos.".\n` +
@@ -407,16 +407,18 @@ export const foneAgenda = (t: string) => { const d = String(t || "").replace(/\D
 export function ferramentasDaConversa(conversa: string, chamar = agenda, banco = rpc) {
   let dados: Record<string, any> | null = null;
   const conv = async () => (dados ||= await banco("zap_plantao_agenda", { p_conversa: conversa }) || {});
-  const tipo = (c: Record<string, any>) => (c.cliente_id ? "002" : "001");
+  // F422p · quem escreve por outra pessoa (contato_relacao) agenda 001 para si e 002 para a pessoa da ficha do número
+  const tipos = (c: Record<string, any>) => (c.cliente_id ? ["002"] : c.cliente_numero ? ["002", "001"] : ["001"]);
+  const tipo = (c: Record<string, any>, pedido?: unknown) => (tipos(c).includes(String(pedido)) ? String(pedido) : tipos(c).at(-1)!);
   const encaminhado: { motivo?: string; urgente?: boolean } = {};
   const disponiveis = (profs: string[], dias = 15) => Promise.all(profs.map((p) => chamar("disponibilidade", { profissional: p, dias })));
   // a vaga pelo eventoId, relida da agenda: o agente não manda data nem hora
   async function vaga(c: Record<string, any>, eventoId: string, profs: string[]) {
     const res = await disponiveis(profs);
-    for (let k = 0; k < res.length; k++) for (const d of res[k].dias || []) {
+    for (let k = 0; k < res.length; k++) for (const d of res[k].dias || []) for (const t of tipos(c)) {
       if (d.bloqueado) continue;
-      const v = (d.livres?.[tipo(c)] || []).find((x: { eventoId?: string }) => x.eventoId && x.eventoId === eventoId);
-      if (v) return { profissional: profs[k], data: d.data as string, inicio: v.inicio as string };
+      const v = (d.livres?.[t] || []).find((x: { eventoId?: string }) => x.eventoId && x.eventoId === eventoId);
+      if (v) return { profissional: profs[k], data: d.data as string, inicio: v.inicio as string, tipo: t };
     }
     return null;
   }
@@ -432,7 +434,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
   const doMarcado = (a: Record<string, any>) => ({ atendimentoId: a.id, rotulo: rotulo(a.data, a.inicio, COM[a.profissional] || "a equipe") });
   return {
     encaminhado,
-    async consultar_vagas(i: { profissionais?: string[]; dias?: number }) {
+    async consultar_vagas(i: { profissionais?: string[]; dias?: number; tipo?: string }) {
       const c = await conv();
       if (!c.ligada) return { erro: "a agenda está desligada: diga que a equipe vai entrar em contato para marcar" };
       const profs = (i.profissionais || []).filter((p) => PROFS.includes(p));
@@ -441,9 +443,11 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       const vagas: Record<string, unknown> = {};
       res.forEach((d, k) => {
         if (!d.ok) { vagas[profs[k]] = { erro: String(d.erro || d.codigo || "erro da agenda") }; return; }
-        vagas[profs[k]] = vagasDoDia(d.dias, tipo(c), COM[profs[k]]);
+        vagas[profs[k]] = vagasDoDia(d.dias, tipo(c, i.tipo), COM[profs[k]]);
       });
-      return { tipo: tipo(c), vagas, atendimentos_marcados: ja.map(doMarcado) };
+      const t = tipo(c, i.tipo), para = t === "002" ? c.nome_ficha || c.nome_numero : null;
+      return { tipo: t, ...(para ? { para } : {}), ...(tipos(c).length > 1 ? { aviso: `tipo 002 é para ${c.nome_numero || "a pessoa da ficha"}; para quem escreve ou outra pessoa, consulte com tipo 001` } : {}),
+        vagas, atendimentos_marcados: ja.map(doMarcado) };
     },
     async marcar_atendimento(i: Record<string, any>) {
       const c = await conv();
@@ -452,8 +456,8 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       const v = await vaga(c, String(i.eventoId || ""), [i.profissional]);
       if (!v) return { erro: "esta vaga não está mais livre: consulte de novo e ofereça outra" };
       const r = await chamar("agendar", {
-        profissional: v.profissional, tipo: tipo(c), nome: c.nome_ficha || i.nome, telefone: foneAgenda(c.telefone),
-        data: v.data, inicio: v.inicio, eventoId: i.eventoId, clienteId: c.cliente_id || undefined, orientacoesConfirmadas: true,
+        profissional: v.profissional, tipo: v.tipo, nome: (v.tipo === "002" ? c.nome_ficha || c.nome_numero : null) || i.nome, telefone: foneAgenda(c.telefone),
+        data: v.data, inicio: v.inicio, eventoId: i.eventoId, clienteId: v.tipo === "002" ? c.cliente_id || c.cliente_numero || undefined : undefined, orientacoesConfirmadas: true,
         observacoes: `Marcado pela assistente virtual do WhatsApp. Modalidade: ${i.modalidade === "remoto" ? "remoto" : "presencial"}.` +
           `${i.acompanhante ? " Outra pessoa será atendida junto." : ""} Assunto: ${String(i.assunto || "").slice(0, 300)}`,
       });
