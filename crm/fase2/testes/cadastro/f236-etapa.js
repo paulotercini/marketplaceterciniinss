@@ -1,5 +1,5 @@
 // F236 · frente "etapa" (teste dos clientes ativos): os fatos oficiais PROPÕEM a etapa na placa
-// ("Sugestão: <etapa> (pelo <fato> de dd/mm) — Aceitar") e nada grava sozinho; a etapa contrariada
+// ("Sugestão: <etapa> (pelo <fato> de dd/mm) Aceitar") e nada grava sozinho; a etapa contrariada
 // por fato mais novo avisa "etapa desatualizada" e ganha a marca para o portal; o Aceitar grava pelo
 // gravarEtapa/andarEtapa, com andamento curto e desfazer; placa, "Agora:" e jornada leem a mesma etapa;
 // a jornada não dá ao INSS a vitória do juízo; mudar de fase limpa a etapa da fase anterior.
@@ -136,7 +136,7 @@ const casoDe = id => T.casos.find(k => k.id === id);
   let v = await tela();
   conf("A1 a placa avisa 'etapa desatualizada' e propõe 'decidido · indeferido' pela situação do PAT, com a data",
     v.etapa === "aguardando perícia" && v.velha === "etapa desatualizada"
-    && v.sug === `Sugestão: decidido · indeferido (pela situação do PAT “Concluída - Indeferida” de ${curta(-8)}) — Aceitar`);
+    && v.sug === `Sugestão: decidido · indeferido (pela situação do PAT “Concluída - Indeferida” de ${curta(-8)}) Aceitar`);
   conf("A2 uma etapa só na tela: a placa, o 'Agora:' da trilha e a aba da fase dizem a mesma coisa",
     v.agora === "aguardando perícia" && v.atual === "atual");   // F320 · a etapa fica na linha do resumo; a aba da fase diz só "atual"
   await p.waitForTimeout(400);
@@ -211,7 +211,7 @@ const casoDe = id => T.casos.find(k => k.id === id);
   await abrir(D1);
   v = await tela();
   conf("D1 'decidido' num caso no Conselho é 'etapa de outra fase', com a sugestão 'julgado' pelo acórdão",
-    v.velha === "etapa de outra fase" && v.sug === `Sugestão: julgado (pelo acórdão no e-Recursos de ${curta(-20)}) — Aceitar`);
+    v.velha === "etapa de outra fase" && v.sug === `Sugestão: julgado (pelo acórdão no e-Recursos de ${curta(-20)}) Aceitar`);
   conf("D2 o botão da aba diz a ação ('Encerrar esta fase…') e não aparece na fase em que o caso está",
     await p.evaluate(id => { const k = D.casoPorId.get(id); return botaoFaseAba(k, "crps") === "" && /Encerrar esta fase…/.test(botaoFaseAba(k, "pat")) && !/✔ fase encerrada/.test(botaoFaseAba(k, "pat")); }, D1.id));
   await abrir(D1, "classico");
