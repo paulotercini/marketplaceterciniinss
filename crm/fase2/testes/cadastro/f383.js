@@ -80,6 +80,8 @@ const SUPA = "https://ficticio.supabase.co";
       {origem:"eproc", nome:"INIC1", caminho:"eproc/2/9", data:"2025-01-01"}];
     marcarIniciais(ds); res.esaj = ds.sort(ordemPeca).map(rotPeca);
     res.trecho = trechoDoc({texto:"PODER JUDICIÁRIO\nJUSTIÇA FEDERAL\nDefiro à parte autora os benefícios da gratuidade da justiça, nos termos do art. 98 do CPC.\nCite-se."});
+    { const ant = k.processos; k.processos = [k.processo, "0001234-56.2024.8.26.0369"];
+      const dv = pinta("cnj"); res.abas = txt(dv, ".proc-abas button"); res.abaSel = !dv.querySelector(".proc-sel"); k.processos = ant; }
     filtroArv = "dec"; res.judDec = pinta("cnj").querySelectorAll(".arv-doc,.arv-and").length;
     filtroArv = "and"; res.inssAnd = pinta("inss").querySelectorAll(".arv-doc").length;
     filtroArv = "doc"; res.inssDoc = pinta("inss").querySelectorAll(".arv-and").length;
@@ -119,6 +121,7 @@ const SUPA = "https://ficticio.supabase.co";
   conf("e-SISREC: o acórdão no alto com decisão", /acordao/.test(r.crpsItens[0]||"") && r.crpsDec && r.crpsItens.length === 2);
   conf("Judicial: dias do mais novo ao mais antigo, com Ler", /30\/10\/2026/.test(r.judDias[0]||"") && r.judDias.length === 3 && r.judPri[0] === "Ler");
   conf("Judicial: origem na etiqueta", ["Juízo","Escritório","INSS"].every(e=>r.judEt.includes(e)));
+  conf("dois processos viram abas com a Justiça e o número curto", r.abas && r.abas.length === 2 && /^Federal · \d{7}\/\d{4}/.test(r.abas[0]) && /^Estadual · 0001234\/2024/.test(r.abas[1]) && r.abaSel);
   conf("filtro Decisões no Judicial", r.judDec === 1);
   conf("filtros Andamentos e Documentos", r.inssAnd === 0 && r.inssDoc === 0);
   conf("o trecho do conteúdo pula o cabeçalho", /^Defiro à parte autora/.test(r.trecho));
