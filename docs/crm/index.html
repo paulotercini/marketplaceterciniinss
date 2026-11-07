@@ -2897,7 +2897,7 @@ dialog.confirmar::backdrop{background:rgba(15,17,22,.38)}
 .arv-doc,.arv-and{padding:3px 0 3px 4px;font-size:13px;line-height:1.4}.arv-doc{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px}.arv-and{font-style:italic;color:var(--mut,#5d6675)}.arv-and.dec{color:#a3261d;font-style:normal;font-weight:600}
 .arv-nome{border:0;background:none;padding:0;font:inherit;font-weight:500;color:var(--azul,#2B5FC7);cursor:pointer;text-align:left}span.arv-nome{color:var(--mut,#5d6675);cursor:default}.arv-doc.dec .arv-nome{color:#a3261d;font-weight:600}
 .arv-et.dec{font-weight:600}.arv-mov{font-size:12px;color:var(--mut,#5d6675)}.arv-txt{flex-basis:100%;font-size:12px;color:var(--mut,#5d6675);overflow-wrap:anywhere}.arv-antes>summary,.arv-dia details>summary{cursor:pointer;font-size:12px;color:var(--azul,#2B5FC7);padding:3px 0}.proc-q{border:1px solid var(--linha,#dfe3ea);border-radius:8px;margin-bottom:8px}.proc-q>summary{cursor:pointer;padding:8px 10px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.proc-id{font-family:var(--f-mono,ui-monospace,monospace);font-size:12px}.proc-tit{font-weight:600;flex:1 1 200px;min-width:0}.proc-sit{font-size:12px;padding:1px 8px;border-radius:99px;background:var(--fundo-sutil,#eef1f5)}.proc-sit.dec{color:#a3261d;font-weight:600}.proc-corpo{padding:4px 10px 10px;display:grid;gap:6px}.proc-lig{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.proc-tela{max-width:900px;max-height:80vh;overflow:auto}.pat-arv{list-style:none;margin:0;padding-left:18px}.pat-arv.pat-raiz{padding-left:0}.pat-arv li{margin:3px 0}.pat-arv summary{cursor:pointer}
-.proc-abas{display:inline-flex;flex-wrap:wrap;gap:2px;padding:2px;background:#EBEEF3;border-radius:8px}.proc-abas button{border:0;background:none;font:inherit;font-size:13px;padding:4px 10px;border-radius:6px;cursor:pointer;color:var(--cinza,#4a4f57);font-variant-numeric:tabular-nums;transition:background-color 150ms ease}.proc-abas button.on{background:#fff;color:#16181d;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}.proc-abas-n{font-size:11px;color:var(--mut,#5d6675);font-weight:400}.proc-abas button:focus-visible{outline:2px solid #2B5FC7;outline-offset:1px}
+.proc-abas{display:inline-flex;flex-wrap:wrap;gap:2px;padding:2px;background:#EBEEF3;border-radius:8px}.proc-abas button{max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:0;background:none;font:inherit;font-size:13px;padding:4px 10px;border-radius:6px;cursor:pointer;color:var(--cinza,#4a4f57);font-variant-numeric:tabular-nums;transition:background-color 150ms ease}.proc-abas button.on{background:#fff;color:#16181d;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}.proc-abas-n{font-size:11px;color:var(--mut,#5d6675);font-weight:400}.proc-abas button:focus-visible{outline:2px solid #2B5FC7;outline-offset:1px}
 /* F430b · o acabamento da árvore e do leitor: resposta ao toque, foco visível e o ⋯ que abre do próprio botão */
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha2{flex:1 1 320px}
 .arv-doc{border-radius:4px}.arv-nome:focus-visible,.proc-v .btn-mini:focus-visible{outline:2px solid #2B5FC7;outline-offset:2px}
@@ -6593,7 +6593,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.74</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.75</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -43631,7 +43631,7 @@ function oriComum(l){
   const [o, n] = [...c].sort((a,b)=>b[1]-a[1])[0] || [];
   return n>=3 && n*2>l.length ? o : "";
 }
-const RX_NOME_DEC = /decis|senten|ac[óo]rd|monocr/i;
+const RX_NOME_DEC = /decis|senten|ac[óo]rd|monocr|exig[êe]ncia/i; // F431 · a exigência já se diz no nome
 const etiquetasArv = (y, comum) => `${y.dec && !RX_NOME_DEC.test(y.rot||y.txt||"")?` <span class="arv-et dec">Decisão</span>`:""}${y.ori && y.ori!==comum?` <span class="arv-et">${esc(y.ori)}</span>`:""}`;
 function arvoreUnica(k, aba, i, x, todos, sel){
   const it = (todos || itensDoProcesso(k, x)).filter(y=>filtroArv==="dec" ? y.dec : filtroArv==="doc" ? y.tipo==="doc" : filtroArv==="and" ? y.tipo==="and" : true);
@@ -43770,10 +43770,16 @@ function vistaProcessos(k, aba){
   // F430c · com dois a quatro processos, uma aba por processo (o nome curto, a Justiça e quantos documentos);
   // acima disso, a lista. O título igual ao número não se repete.
   const rotProc = y => soDig(y.tit).includes(soDig(y.id)) ? y.id : `${y.id} · ${y.tit}`;
-  const curtoProc = y => { const g = soDig(y.id);
-    if(y.aba!=="cnj" || g.length!==20) return y.tit && !soDig(y.tit).includes(g) ? y.tit : y.id.replace(/^(Protocolo|Recurso) /,"");
-    const j = {"4":"Federal","8":"Estadual"}[g[13]] || "";
-    return `${j?`${j} · `:""}${g.slice(0,7)}/${g.slice(9,13)}`; };
+  // F431 · no INSS e no Conselho o nome se repete (o mesmo serviço, a mesma Junta): vai o ano e, se ainda empatar, o fim do número
+  const curtoBase = y => { const g = soDig(y.id);
+    if(y.aba==="cnj" && g.length===20){ const j = {"4":"Federal","8":"Estadual"}[g[13]] || "";
+      return `${j?`${j} · `:""}${g.slice(0,7)}/${g.slice(9,13)}`; }
+    const ano = y.aba==="crps" && g.length===17 ? g.slice(11,15) : String((y.b||{}).dataEntradaRequerimento||"").slice(0,4);
+    const nome = y.tit && !soDig(y.tit).includes(g) ? y.tit : y.id.replace(/^(Protocolo|Recurso) /,"");
+    return /^\d{4}$/.test(ano) && !nome.includes(ano) ? `${nome} · ${ano}` : nome; };
+  const curtos = lista.map(curtoBase);
+  const curtoProc = y => { const j = lista.indexOf(y), c = curtos[j];
+    return curtos.filter(o=>o===c).length > 1 ? `${c} · nº ${y.aba==="crps" ? soDig(y.id).slice(5,11) : soDig(y.id).slice(-4)}` : c; };
   const escolha = lista.length>4
     ? `<select class="proc-sel" aria-label="processo desta fase" onchange="procIdx['${aba}']=+this.value;repintarFicha()">${lista.map((y,j)=>
         `<option value="${j}"${j===i?" selected":""}>${esc(rotProc(y))}</option>`).join("")}</select>`
