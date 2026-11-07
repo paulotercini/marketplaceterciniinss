@@ -66,6 +66,7 @@ export type Contexto = {
   motor?: string; ma?: { agente: string | null; ambiente: string | null; versao: string | null };
   sessao?: { id: string; em: string; ate: string; v?: string } | null;
   cliente: { nome: string; mesmo_telefone: boolean; casos: Caso[] } | null;
+  remarcar?: { rotulo: string | null; profissional: string | null } | null;
 };
 
 // as regras fixas: no Managed Agents são o system do agente, e cada mudança das
@@ -198,6 +199,9 @@ export function contexto(x: Contexto) {
     `Advogados: ${advs}. As estagiárias (Ingrid, Meissa) também respondem, mas quem é avisado é o advogado.\n` +
     `Advogado indicado para esta conversa: ${x.advogado || "a equipe"}.\n${ficha}\n` +
     `Agenda: ${x.agenda ? "ligada" : "desligada"}.\n` +
+    (x.remarcar ? `Remarcação: a pessoa respondeu NÃO à confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"} e quer outro horário. ` +
+      `Peça ao Agendador que ofereça dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, um de manhã e outro à tarde, ` +
+      `e que remarque esse atendimento quando ela escolher. Não cumprimente de novo e não peça o assunto.\n` : "") +
     (x.modo === "lead" ? `Você já está atendendo este caso novo (${x.respostas} respostas suas até aqui; agende depois de ${Math.max(1, 6 - x.respostas)} respostas).\n`
       : x.modo === "conversa" ? `Você já está conversando com esta pessoa (${x.respostas} respostas suas até aqui).\n` : "");
 }
@@ -364,6 +368,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       if (!r.ok) return { erro: String(r.erro || r.codigo || "erro da agenda") };
       const de = rotulo(antigo.data, antigo.inicio, COM[antigo.profissional] || "a equipe"), para = rotulo(v.data, v.inicio, COM[v.profissional]);
       await banco("zap_nota_sistema", { p_conversa: conversa, p_autor: null, p_texto: `📅 A assistente virtual remarcou o atendimento de ${de} para ${para}.` });
+      await banco("zap_conf_remarcado", { p_conversa: conversa, p_texto: `A assistente virtual remarcou o atendimento de ${de} para ${para}.` }).catch(() => null);
       return { remarcado: true, novo: para };
     },
     async cancelar_atendimento(i: { atendimentoId?: string; motivo?: string }) {
@@ -376,6 +381,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       if (!r.ok) return { erro: String(r.erro || r.codigo || "erro da agenda") };
       await banco("zap_nota_sistema", { p_conversa: conversa, p_autor: null,
         p_texto: `📅 A assistente virtual cancelou o atendimento de ${doMarcado(a).rotulo}${i.motivo ? `. Motivo: ${String(i.motivo).slice(0, 200)}` : ""}.` });
+      await banco("zap_conf_remarcado", { p_conversa: conversa, p_texto: `A assistente virtual cancelou o atendimento de ${doMarcado(a).rotulo}.` }).catch(() => null);
       return { cancelado: true };
     },
     // a decisão final do turno vira "equipe": o aviso sai pelo zap_plantao_aplicar
