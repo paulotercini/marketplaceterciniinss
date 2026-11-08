@@ -3765,7 +3765,7 @@ html[data-tema="v10"] .ag-txt{flex:1;min-width:0;white-space:nowrap;overflow:hid
 html[data-tema="v10"] .ag-txt b{font-weight:600}
 #ult-anot{position:fixed;z-index:60;width:440px;max-width:calc(100vw - 16px);background:#fff;border:1px solid var(--borda);border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.14);padding:10px 12px;font-size:13px;color:var(--texto);pointer-events:none;display:none}
 #ult-anot.on{display:block}#ult-anot .ua-cab{font-size:12px;color:var(--cinza);margin-bottom:4px}
-#ult-anot .ua-txt{white-space:pre-line;display:-webkit-box;-webkit-line-clamp:8;-webkit-box-orient:vertical;overflow:hidden}
+#ult-anot .ua-txt{white-space:pre-line;display:-webkit-box;-webkit-line-clamp:14;-webkit-box-orient:vertical;overflow:hidden}
 @media (hover:none){#ult-anot{display:none!important}}
 html[data-tema="v10"] #conteudo-meio .ag-ext{grid-column:1/-1;background:#FAFAF8;border-top:1px dashed var(--borda);padding:8px 16px 12px 16px;font-size:13px;color:var(--texto)}
 .cartao.ext-on{background:#F6F8F6!important}
@@ -3774,7 +3774,7 @@ html[data-tema="v10"] #conteudo-meio .ag-ext{grid-column:1/-1;background:#FAFAF8
 .ag-ext .ae-cop .cop{cursor:pointer;font-variant-numeric:tabular-nums}
 .ag-ext .ae-mini{font-size:12px;padding:2px 6px;min-height:24px;border:1px solid var(--borda);border-radius:4px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
 .ag-ext .ae-zap img,.ag-ext .ae-zap svg{width:16px;height:16px}
-.ag-ext .ae-txt{white-space:pre-line;margin:6px 0 8px;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.ag-ext .ae-txt{white-space:pre-line;margin:6px 0 8px;display:-webkit-box;-webkit-line-clamp:14;-webkit-box-orient:vertical;overflow:hidden}
 .ag-ext .ae-cab{display:block;font-size:12px;color:var(--cinza);margin-bottom:2px}
 .ag-ext .ae-acoes{display:flex;gap:6px;flex-wrap:wrap}
 .ag-ext [hidden]{display:none!important}
@@ -6754,7 +6754,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.97</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.98</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11409,7 +11409,7 @@ async function mostrarUltAnot(el){
   let p = document.getElementById("ult-anot");
   if(!p){ p = document.createElement("div"); p.id = "ult-anot"; p.setAttribute("role","tooltip"); document.body.appendChild(p); }
   const de = a && D.colPorId.get(a.autor_id);
-  p.innerHTML = a ? `<div class="ua-cab">Última anotação · ${esc(de?de.nome.split(" ")[0]:"equipe")}, ${esc(fmtBarra(dataSP(a.criado_em)))}</div><div class="ua-txt">${esc((a.texto||"").slice(0,600))}</div>`
+  p.innerHTML = a ? `<div class="ua-cab">Última anotação · ${esc(de?de.nome.split(" ")[0]:"equipe")}, ${esc(fmtBarra(dataSP(a.criado_em)))}</div><div class="ua-txt">${esc((a.texto||"").slice(0,1000))}</div>`
     : `<div class="ua-cab">Sem anotação da equipe nestes casos.</div>`;
   const r = el.getBoundingClientRect(), alto = p.offsetHeight || 140, baixo = r.bottom + 6 + alto < innerHeight;
   p.style.left = Math.max(8, Math.min(r.left + 40, innerWidth - 448)) + "px";
@@ -11470,7 +11470,7 @@ function montarExt(el, it){
   el.after(x); el.classList.add("ext-on"); el.setAttribute("aria-expanded","true");
   ultAnotDe(el.dataset.casos).then(a=>{
     const de = a && D.colPorId.get(a.autor_id), t = x.querySelector(".ae-txt"); if(!t) return;
-    t.innerHTML = a ? `<span class="ae-cab">Última anotação · ${esc(de?de.nome.split(" ")[0]:"equipe")}, ${esc(fmtBarra(dataSP(a.criado_em)))}</span>${esc((a.texto||"").slice(0,600))}`
+    t.innerHTML = a ? `<span class="ae-cab">Última anotação · ${esc(de?de.nome.split(" ")[0]:"equipe")}, ${esc(fmtBarra(dataSP(a.criado_em)))}</span>${esc((a.texto||"").slice(0,1000))}`
       : `<span class="ae-cab">Sem anotação da equipe neste caso.</span>`;
   });
   x.onclick = e=>{ const b = e.target.closest("[data-ae]"); if(!b) return; e.stopPropagation(); acaoExt(x, b.dataset.ae, b); };
