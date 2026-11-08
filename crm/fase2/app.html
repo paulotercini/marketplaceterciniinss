@@ -2498,6 +2498,15 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   /* o cursor do teclado: contorno, não fundo — o cartão já usa fundo para
      dizer outras coisas (arrastando, exigência, importante) */
   .cartao.no-cursor{outline:2px solid var(--azul);outline-offset:1px}
+  #paleta{position:fixed;inset:0;z-index:2000;background:rgba(20,30,25,.28);display:flex;justify-content:center;align-items:flex-start;padding-top:12vh}
+  #paleta .pal-caixa{background:var(--branco,#fff);width:min(560px,92vw);border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.25);overflow:hidden}
+  #paleta input{width:100%;border:0;border-bottom:1px solid var(--borda,#ddd);padding:14px 16px;font-size:16px;outline:none;background:transparent;color:var(--texto)}
+  #paleta ul{list-style:none;margin:0;padding:4px 0;max-height:50vh;overflow:auto}
+  #paleta li{padding:8px 16px;cursor:pointer;display:flex;gap:10px;align-items:baseline;font-size:14px;color:var(--texto)}
+  #paleta li.pal-on{background:#e9f5ef}
+  #paleta .pal-t{font-size:12px;color:var(--cinza);width:52px;flex:none}
+  #paleta .pal-vazio{color:var(--cinza);cursor:default}
+  #paleta .pal-pe{margin:0;padding:6px 16px;font-size:12px;color:var(--cinza);border-top:1px solid var(--borda,#ddd)}
   .atalhos{display:grid;grid-template-columns:auto 1fr;gap:7px 12px;margin-top:10px;align-items:center}
   .atalhos>div{display:contents}
   .atalhos kbd{font:inherit;font-size:12px;font-weight:700;color:var(--texto);
@@ -6711,7 +6720,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.92</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.93</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -39929,7 +39938,7 @@ function prazosDoCliente(cliId){
   const lista = soltas.slice().sort((a, b)=>a.data<b.data?-1:a.data>b.data?1:(natDaLinha(a)==="fatal"?-1:0)-(natDaLinha(b)==="fatal"?-1:0));
   return {grupos, total: soltas.length, venc, lista};
 }
-// F451 · A ABA PRAZOS EM MÊS E LISTA (proposta C escolhida pelo Paulo em 08.11.2026, https://claude.ai/artifact/A2LoP3MwVs5STJyKYzzpHJ,
+// F452 · A ABA PRAZOS EM MÊS E LISTA (proposta C escolhida pelo Paulo em 08.11.2026, https://claude.ai/artifact/A2LoP3MwVs5STJyKYzzpHJ,
 // ideias do Replit e do Base44). No alto, a faixa do próximo prazo fatal; depois a natureza (com Retorno à parte) e Por data
 // ou Por caso; a lista à esquerda e o mês à direita (no celular, o mês no alto). O dia clicado filtra a lista; Limpar volta.
 // O mês substitui a linha dos 30 dias (F382) e os três quadros de contagem (F326). A escolha vale na sessão.
@@ -55192,6 +55201,8 @@ const AJUDA = {
   sugestoes: ["Sugestões", `<p>O botão Sugestões, no canto, serve para anotar um erro, uma correção ou uma melhoria do CRM, com print ou vídeo. Somente o Paulo lê.</p>`],
   agendaflut: ["Agenda flutuante", `<p>O botão Agenda, no canto, mostra as vagas dos próximos dias sem sair da tela. Clique na vaga para agendar.</p>`],
   rapida: ["Anotação rápida", `<p>O botão do raio, no canto, abre a anotação rápida: escolha o cliente e escreva, sem abrir a ficha.</p>`],
+  atalhos: ["Atalhos de teclado", `<p>No computador, <b>Ctrl+K</b> abre a paleta: escreva parte do nome de uma lista, de uma ação ou de um cliente e tecle Enter. As setas escolhem e Esc fecha.</p>
+    <p><b>N</b> abre a anotação rápida (com a ficha aberta, já para aquele cliente), <b>/</b> vai à pesquisa, <b>G</b> e depois <b>D</b> vai ao Meu Dia, <b>G</b> e depois <b>P</b> vai ao Planejado, e <b>?</b> mostra a lista dos atalhos. Os atalhos de uma tecla não valem dentro de um campo de texto.</p>`],
 };
 // os grupos da lista de assuntos, na ordem em que se aprende
 const AJUDA_GRUPOS = [
@@ -55201,6 +55212,7 @@ const AJUDA_GRUPOS = [
   ["O atendimento", ["atend","atend:identificacao","atend:pa","atend:direito","atend:documentos"]],
   ["Outras telas", ["whatsapp","recebimentos","patinss","quadro","tabela","vendas","parcerias","marketing","dashboard","claude","docmodelos","config"]],
   ["Os botões do canto", ["sugestoes","agendaflut","rapida"]],
+  ["O teclado", ["atalhos"]],
 ];
 // o assunto da tela em que a pessoa está
 function ajudaChave(){
@@ -57454,6 +57466,7 @@ document.addEventListener("keydown",e=>{
   // as setas pertencem ao texto que se está escrevendo
   if(!digitando() && !clienteAberto && atalhoDeLista(e)) return;
   if(e.key==="?" && !digitando()){ e.preventDefault(); return janelaAtalhos(); }
+  if(atalhoGeral(e)) return;
   if(e.key==="Escape"){
     // "aberto" é ter conteúdo e não estar escondido — caixa() abre com
     // display:"" e o teste antigo ("block") deixava o Esc passar reto e
@@ -57526,14 +57539,74 @@ function atalhoDeLista(e){
 function janelaAtalhos(){
   const linhas=[["↑ ↓","andar pelos cartões da lista"],["Enter","abrir a ficha do cartão"],
     ["Espaço","concluir a sua tarefa daquele caso"],["N","escrever na linha de acrescentar"],
-    ["/ ou Ctrl+F","ir para a pesquisa"],["Esc","fechar o que estiver aberto"],
+    ["/ ou Ctrl+F","ir para a pesquisa"],["Ctrl+K","paleta: listas, ações e clientes"],
+    ["N","anotação rápida (com a ficha aberta, para este cliente)"],
+    ["G e D","ir ao Meu Dia"],["G e P","ir ao Planejado"],["Esc","fechar o que estiver aberto"],
     ["?","esta lista"]];
   caixa(`<h3>Atalhos de teclado</h3>
-    <p class="meio-sub">Valem na lista, com a ficha fechada. Dentro de um campo de texto
-      o teclado é do texto.</p>
+    <p class="meio-sub">As setas, Enter e Espaço valem na lista, com a ficha fechada. Dentro de um campo de texto
+      o teclado é do texto. No celular não há atalhos.</p>
     <div class="atalhos">${linhas.map(([k,r])=>
       `<div><kbd>${esc(k)}</kbd><span>${esc(r)}</span></div>`).join("")}</div>`);
 }
+
+// F451 (12.92) · Ctrl+K e os atalhos de uma tecla, como no Todoist, só no computador
+let _gEm = 0;
+const caixaAberta = () => { const m = document.getElementById("modal"); return !!(m && m.innerHTML && m.style.display!=="none"); };
+const podeRapida = () => !!document.getElementById("fab-rapida")?.getClientRects().length;   // fixo: offsetParent é sempre nulo   // o nível que não tem o ⚡ não tem o N
+function atalhoGeral(e){
+  if(celular()) return false;
+  if((e.ctrlKey||e.metaKey) && !e.altKey && e.key.toLowerCase()==="k"){ e.preventDefault(); abrirPaleta(); return true; }
+  if(e.ctrlKey || e.metaKey || e.altKey || digitando() || caixaAberta() || document.getElementById("paleta")) return false;
+  const t = e.key.toLowerCase();
+  if(_gEm && Date.now()-_gEm < 1200 && (t==="d" || t==="p")){ _gEm = 0; e.preventDefault(); irPara(t==="d" ? "meudia" : "planejado"); return true; }
+  _gEm = t==="g" ? Date.now() : 0;
+  if(t==="g"){ e.preventDefault(); return true; }
+  if(t==="n" && podeRapida()){ e.preventDefault(); anotacaoRapida(null, clienteAberto || undefined); return true; }
+  return false;
+}
+function itensPaleta(q){
+  const n = s => semAcento(String(s||"")).toLowerCase(), qq = n(q).trim(), dq = soDig(q);
+  const vistos = new Set(), listas = [...document.querySelectorAll(".lista-item[data-v]")].filter(el=>!el.closest("[hidden]") && !vistos.has(el.dataset.v) && vistos.add(el.dataset.v))
+    .map(el=>({tipo:"Lista", rot:el.getAttribute("aria-label")||el.textContent.trim(), ir:()=>el.click()}));
+  const acoes = [
+    podeRapida() && {tipo:"Ação", rot:"Anotação rápida", ir:()=>anotacaoRapida()},
+    document.getElementById("btn-novo-cli") && {tipo:"Ação", rot:"Novo cliente", ir:()=>document.getElementById("btn-novo-cli").click()},
+    {tipo:"Ação", rot:"Pesquisar", ir:irParaPesquisa},
+    {tipo:"Ação", rot:"Atalhos de teclado", ir:janelaAtalhos},
+  ].filter(Boolean);
+  const casa = i => !qq || n(i.rot).includes(qq);
+  const clientes = qq.length < 2 && dq.length < 3 ? [] : (D.clientes||[]).filter(c=>ehClienteDaLista(c) && (n(c.nome).includes(qq) || (dq.length>=3 && soDig(c.cpf).includes(dq))))
+    .slice(0, 8).map(c=>({tipo:"Cliente", rot:c.nome, ir:()=>abrirFicha(c.id)}));
+  return [...acoes.filter(casa), ...listas.filter(casa), ...clientes].slice(0, 14);
+}
+let _palIt = [], _palI = 0;
+function abrirPaleta(){
+  if(document.getElementById("paleta")) return document.querySelector("#paleta input").focus();
+  const d = document.createElement("div"); d.id = "paleta"; d.setAttribute("role","dialog"); d.setAttribute("aria-label","Paleta de comandos");
+  d.innerHTML = `<div class="pal-caixa"><input type="text" placeholder="Lista, ação ou cliente" autocomplete="off" aria-label="procurar lista, ação ou cliente" aria-controls="pal-lista">
+    <ul id="pal-lista" role="listbox"></ul><p class="pal-pe">↑ ↓ escolhem · Enter abre · Esc fecha</p></div>`;
+  document.body.appendChild(d);
+  const inp = d.querySelector("input");
+  d.onclick = e=>{ if(e.target===d) fecharPaleta(); };
+  inp.oninput = ()=>pintarPaleta(inp.value, 0);
+  inp.onkeydown = e=>{
+    if(e.key==="Escape"){ e.preventDefault(); e.stopPropagation(); return fecharPaleta(); }
+    if(e.key==="ArrowDown" || e.key==="ArrowUp"){ e.preventDefault(); return pintarPaleta(inp.value, Math.max(0, Math.min(_palIt.length-1, _palI + (e.key==="ArrowDown"?1:-1)))); }
+    if(e.key==="Enter"){ e.preventDefault(); usarPaleta(_palI); }
+  };
+  pintarPaleta("", 0); inp.focus();
+}
+function pintarPaleta(q, i){
+  _palIt = itensPaleta(q); _palI = i;
+  const ul = document.getElementById("pal-lista"); if(!ul) return;
+  ul.innerHTML = _palIt.length ? _palIt.map((it,j)=>`<li role="option" data-pi="${j}" aria-selected="${j===i}" class="${j===i?"pal-on":""}"><span class="pal-t">${esc(it.tipo)}</span>${esc(it.rot)}</li>`).join("")
+    : `<li class="pal-vazio">Nada encontrado.</li>`;
+  ul.querySelectorAll("li[data-pi]").forEach(li=>li.onclick=()=>usarPaleta(+li.dataset.pi));
+  ul.querySelector(".pal-on")?.scrollIntoView({block:"nearest"});
+}
+function usarPaleta(i){ const it = _palIt[i]; if(!it) return; fecharPaleta(); it.ir(); }
+function fecharPaleta(){ document.getElementById("paleta")?.remove(); }
 
 // sem <form>, o Enter precisa ser ligado à mão nos dois campos do login
 ["login-email","login-senha"].forEach(function(id){
