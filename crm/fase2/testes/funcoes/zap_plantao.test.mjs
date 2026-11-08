@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_plantao.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO } from "../../zap_plantao/index.ts";
+import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO, promptCliente, ESQ_CLIENTE } from "../../zap_plantao/index.ts";
 
 assert.equal(mascarar("CPF 123.456.789-09"), "CPF [número]");
 const msgs = [
@@ -413,4 +413,10 @@ console.log("formal: ok");
   assert.equal((await f.marcar_atendimento({ profissional: "amanda", eventoId: "am", nome: "Ana Souza" })).marcado, true);
   assert.equal(chamadas.find(([a]) => a === "agendar")[1].tipo, "001");
   console.log("ok F422u");
+}
+{
+  const p = promptCliente("Neide, 61 anos, quer aposentadoria", [{ direcao: "entrada", texto: "Oi" }, { direcao: "saida", texto: "Qual o assunto?" }]);
+  assert.ok(p.includes("Neide, 61 anos") && p.includes("Você: Oi") && p.includes("Escritório: Qual o assunto?"));
+  assert.deepEqual(ESQ_CLIENTE.required, ["fala", "fim"]);
+  console.log("ok F422u persona");
 }
