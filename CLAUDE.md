@@ -569,6 +569,8 @@ A **F422u** (pedido do Paulo de 08.11.2026, "para a Amanda pode ser agendado cli
 
 A **F422v** (o teste das 105 conversas, pedido do Paulo de 08.11.2026): a `decidir` da Assistente que chega antes da resposta do Agendador é devolvida também quando não é "nada" ("Vou verificar os horários. Aguarde, por favor."), duas vezes no máximo; a ferramenta que o Agendador chama depois do turno fechado é fechada no turno seguinte com até quatro tentativas e pausa (`ESPERA_REENVIO_MS`), porque o reenvio imediato voltava 400; e o simulador manda à IA também a última fala da persona (confirmar, escolher o horário).
 
+A **F422w** (o teste das 105 conversas, 08.11.2026): a `decidir` cuja resposta repete a anterior (metade ou mais dos parágrafos iguais aos da última resposta enviada, `repete`, `guarda.anterior`) é devolvida uma vez à Assistente, porque ela às vezes respondia de novo à mensagem velha; `emLinhas` tira o fecho "Qualquer dúvida, estamos à disposição." depois da primeira vez e o "Compreendi, Nome." inteiro (deixava "Elisa." solto), e põe maiúscula no começo de cada linha; as `CORRECOES` pedem que não se repita pergunta já respondida, "documento recebido" só com arquivo, a troca de modalidade e o que a IA não sabe à equipe, sem promessa, e o artigo antes do nome.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
