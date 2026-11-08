@@ -424,13 +424,19 @@ export function rotulo(data: string, inicio: string, com: string) {
   const [h, mi] = inicio.split(":");
   return `${SEMANA[new Date(Date.UTC(a, m - 1, d)).getUTCDay()]}, ${String(d).padStart(2, "0")}/${String(m).padStart(2, "0")}, às ${Number(h)}h${mi}, com ${com}`;
 }
+// a vaga sem código no Google ("LIVRE 09h30-10h00", Marcos e Amanda) não tem tipo: o Apps Script a classifica pela duração
+// (30 min = 002), mas ela aceita o 001 ao agendar (pedido do Paulo, 08.11.2026: a Dra. Amanda atende cliente novo)
+export function livresDoTipo(d: any, tipo: string) {
+  const vs = [...(d.livres?.[tipo] || []), ...(tipo === "001" ? (d.livres?.["002"] || []).filter((v: any) => v.tipoFixo === false) : [])];
+  return vs.filter((v: any, k: number) => v.eventoId && vs.findIndex((x: any) => x.eventoId === v.eventoId) === k);
+}
 // só a vaga marcada no Google (com eventoId), nunca o horário calculado; a primeira da manhã e a
 // primeira da tarde vêm sempre, porque o Agendador oferece uma de cada (pedido do Paulo, 25.10.2026)
 export function vagasDoDia(dias: any[], tipo: string, com: string, n = 12) {
   const todas: { rotulo: string; data: string; inicio: string; eventoId: string; periodo: string }[] = [];
   for (const d of dias || []) {
     if (d.bloqueado) continue;
-    for (const v of d.livres?.[tipo] || []) if (v.eventoId) todas.push({ rotulo: rotulo(d.data, v.inicio, com), data: d.data, inicio: v.inicio,
+    for (const v of livresDoTipo(d, tipo)) todas.push({ rotulo: rotulo(d.data, v.inicio, com), data: d.data, inicio: v.inicio,
       eventoId: v.eventoId, periodo: v.inicio < "12:00" ? "manhã" : "tarde" });
   }
   todas.sort((x, y) => (x.data + x.inicio).localeCompare(y.data + y.inicio));
@@ -458,7 +464,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
     const ordem = tipos(c).includes(String(pedido)) ? [String(pedido), ...tipos(c).filter((t) => t !== pedido)] : tipos(c);
     for (let k = 0; k < res.length; k++) for (const d of res[k].dias || []) for (const t of ordem) {
       if (d.bloqueado) continue;
-      const v = (d.livres?.[t] || []).find((x: { eventoId?: string }) => x.eventoId && x.eventoId === eventoId);
+      const v = livresDoTipo(d, t).find((x: { eventoId?: string }) => x.eventoId === eventoId);
       if (v) return { profissional: profs[k], data: d.data as string, inicio: v.inicio as string, tipo: t };
     }
     return null;
@@ -584,7 +590,19 @@ async function cfg(chave: string) {
 }
 
 type Cenario = { contato?: string; relacao?: string; advogado?: string; cliente?: Contexto["cliente"]; marcados?: unknown[];
-  remarcar?: Contexto["remarcar"]; horario?: boolean; interativa?: boolean; turnos: string[] };
+  remarcar?: Contexto["remarcar"]; horario?: boolean; interativa?: boolean; turnos: string[]; persona?: string; max?: number };
+// F422u · o cliente simulado responde ao que a IA disse (persona), em vez de falas fixas que se desencontram da conversa
+export const ESQ_CLIENTE = { type: "object", additionalProperties: false, required: ["fala", "fim"],
+  properties: { fala: { type: "string" }, fim: { type: "boolean" } } };
+export function promptCliente(persona: string, conversa: Msg[]) {
+  return `Você faz o papel de uma pessoa que escreve no WhatsApp de um escritório de advocacia previdenciária, para testar o atendimento.\n` +
+    `Quem você é e o que quer: ${persona}\n\n` +
+    `Responda à última mensagem do escritório como essa pessoa responderia: curto, informal, com os erros e a pressa de quem usa o celular, ` +
+    `sem inventar fatos fora da persona e sem ajudar o escritório além do que a pessoa saberia. Se o escritório perguntar algo que a persona não diz, ` +
+    `responda de forma plausível e coerente. fim = true quando o objetivo foi cumprido (horário agendado, dúvida respondida), quando o escritório ` +
+    `disse que a equipe vai responder, ou quando a pessoa desistiria; então fala é a despedida curta, ou vazia.\n\nConversa até agora:\n` +
+    conversa.map((m) => `${m.direcao === "entrada" ? "Você" : "Escritório"}: ${m.texto}`).join("\n");
+}
 async function simular(s: Cenario) {
   const advogados = ((await rpc("zap_advogados", {})) || []).map((a: { assinatura_zap: string }) => a.assinatura_zap);
   const x: Contexto = {
@@ -602,8 +620,15 @@ async function simular(s: Cenario) {
     cliente_numero: s.cliente ? "simulado" : null, nome_ficha: s.cliente?.nome || null, nome_numero: s.cliente?.nome || null,
     ligada: true, marcados: s.marcados || [] });
   const t0 = Date.now(), saida: Record<string, unknown>[] = [];
-  for (let i = 0; i < s.turnos.length; i++) {
-    const m: Msg = { direcao: "entrada", por_bot: false, tipo: "texto", texto: s.turnos[i], momento: new Date(t0 + i * 120000).toISOString() };
+  const total = s.persona ? Math.min(10, Math.max(s.turnos.length, Number(s.max) || 7)) : s.turnos.length;
+  for (let i = 0; i < total; i++) {
+    let texto = s.turnos[i];
+    if (texto === undefined) {
+      const c = await claude(promptCliente(s.persona!, x.mensagens), ESQ_CLIENTE) as { fala: string; fim: boolean };
+      if (c.fim || !c.fala?.trim()) { if (c.fala?.trim()) saida.push({ cliente: c.fala, fim: true }); break; }
+      texto = c.fala;
+    }
+    const m: Msg = { direcao: "entrada", por_bot: false, tipo: "texto", texto, momento: new Date(t0 + i * 120000).toISOString() };
     x.mensagens.push(m);
     const antes = uso.length;
     let r: Record<string, any>;
