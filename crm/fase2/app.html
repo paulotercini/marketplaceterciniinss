@@ -5801,22 +5801,23 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 .pzc{display:flex;flex-direction:column;gap:16px;padding:4px 0 150px;font-variant-numeric:tabular-nums}
 /* F376 · a coluna dos flutuantes (Agenda, ?, Sugestões e ⚡, 170 px) fica livre: o Abrir das linhas não passa por baixo deles */
 .app:not(.celular) .pzc{padding-right:176px}
-.pzc-top{display:flex;flex-wrap:wrap;gap:16px;align-items:stretch}
-.pzc-hero{flex:999 1 520px;min-width:0;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;padding:20px 22px;background:#FFFFFF;border:1px solid var(--borda,#E7E6E1);border-radius:12px}
-.pzc-hero-cab{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
-.pzc-hero-txt{min-width:0}
+.pzc-hero{box-sizing:border-box;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:18px;padding:14px 18px;background:#FFFFFF;border:1px solid var(--borda,#E7E6E1);border-left:3px solid #B3261E;border-radius:12px}
+.pzc-hero.pzc-u-medio,.pzc-hero.pzc-u-normal{border-left-color:var(--azul,#0E5C58)}
+.pzc-hero.pzc-u-hoje,.pzc-hero.pzc-u-perto{border-left-color:#8F5400}
+.pzc-hero-txt{min-width:0;display:flex;flex-direction:column;gap:3px}
 .pzc-sobre{display:block;font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro,#686660)}
-.pzc .pzc-hero h2{margin:4px 0 2px;font-family:var(--f-ui,inherit);font-size:20px;line-height:1.3;font-weight:500;color:var(--texto,#121212)}
-.pzc-hero-txt p{margin:0;font-size:13px;color:var(--cinza,#4A4944)}
-.pzc-hero-n{flex:none;display:flex;flex-direction:column;align-items:flex-end;text-align:right;gap:2px}
-.pzc-hero-n small{font-size:12px;color:var(--cinza,#4A4944)}
-.pzc-hero-n b{font-size:44px;line-height:1;font-weight:500;letter-spacing:-.02em}
-.pzc-hero-n span{font-size:13px;font-weight:500}
-.pzc-hero-n em{font-style:normal;font-size:12px;color:var(--cinza,#4A4944)}
-.pzc-u-venc .pzc-hero-n :is(b,span),.pzc-u-crit .pzc-hero-n :is(b,span){color:#B3261E}
-.pzc-u-hoje .pzc-hero-n :is(b,span),.pzc-u-perto .pzc-hero-n :is(b,span){color:#8F5400}
-.pzc-u-medio .pzc-hero-n :is(b,span){color:var(--cinza,#4A4944)}
-.pzc-u-normal .pzc-hero-n :is(b,span){color:var(--cinza-claro,#686660)}
+.pzc .pzc-hero h2{margin:0;font-family:var(--f-ui,inherit);font-size:16px;line-height:1.3;font-weight:500;color:var(--texto,#121212);overflow-wrap:anywhere}
+.pzc-hero-txt p{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;font-size:12px;color:var(--cinza,#4A4944)}
+.pzc-hero-txt p .pz-av{width:22px;height:22px;font-size:11px;border-radius:5px}
+.pzc-trilho{max-width:340px;height:5px;margin-top:6px;border-radius:3px;background:var(--placa,#EFEEEB);overflow:hidden}
+.pzc-trilho i{display:block;height:100%;border-radius:3px;background:var(--azul,#0E5C58)}
+.pzc-u-venc .pzc-trilho i,.pzc-u-crit .pzc-trilho i{background:#B3261E}.pzc-u-hoje .pzc-trilho i,.pzc-u-perto .pzc-trilho i{background:#8F5400}
+.pzc-hero-n{display:flex;flex-direction:column;align-items:center;min-width:64px;text-align:center;line-height:1.1}
+.pzc-hero-n small,.pzc-hero-n span{font-size:11px;color:var(--cinza,#4A4944)}
+.pzc-hero-n b{font-size:30px;line-height:1;font-weight:500;letter-spacing:-.02em}
+.pzc-u-venc .pzc-hero-n b,.pzc-u-crit .pzc-hero-n b{color:#B3261E}
+.pzc-u-hoje .pzc-hero-n b,.pzc-u-perto .pzc-hero-n b{color:#8F5400}
+.pzc-u-medio .pzc-hero-n b,.pzc-u-normal .pzc-hero-n b{color:var(--texto,#121212)}
 :is(.pzc,.ppz-quanto) :is(.pzc-barra,.ppz-barra){position:relative;height:8px;margin-top:18px;border-radius:4px;background:var(--placa,#EFEEEB)}
 :is(.pzc,.ppz-quanto) :is(.pzc-barra,.ppz-barra) i{display:block;height:100%;border-radius:4px;background:var(--azul,#0E5C58)}
 :is(.pzc-u-venc,.pzc-u-crit,.ppz-u-venc,.ppz-u-crit) :is(.pzc-barra,.ppz-barra) i{background:#B3261E}
@@ -5824,104 +5825,89 @@ html .tl-tarefa .tl-tf-abrir{border:0;background:transparent;padding:0;font:inhe
 :is(.pzc-barra,.ppz-barra) em{position:absolute;top:-4px;width:2px;height:16px;margin-left:-1px;border-radius:1px;background:var(--texto,#121212)}
 :is(.pzc-barra,.ppz-barra) em span{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-style:normal;font-size:11px;font-weight:500;color:var(--texto,#121212)}
 :is(.pzc-bl,.ppz-bl){display:flex;justify-content:space-between;gap:12px;margin-top:6px;font-size:12px;color:var(--cinza-claro,#686660)}
-.pzc-hero-pe{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px}
 .pzc-pri{height:36px;padding:0 16px;border:0;border-radius:8px;background:var(--azul,#0E5C58);color:#FFFFFF;font-weight:500;cursor:pointer}
-.pzc-nota{flex:1 1 220px;min-width:0;font-size:12px;line-height:1.45;color:var(--cinza-claro,#686660)}
-.pzl{margin:0 0 14px}.pzl-t{margin:0 0 6px;font-size:13px;font-weight:600}.pzl-rolar{overflow-x:auto}
-.pzl-dias{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(31,minmax(24px,1fr));min-width:744px;border-top:2px solid var(--borda)}
-.pzl-d{display:flex;flex-direction:column;align-items:center;gap:2px;padding-top:4px;min-height:60px;position:relative}
-.pzl-rolar{padding-bottom:18px}.pzl-lab{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:2px;font-size:11px;font-weight:600;color:var(--venc,#B3261E);white-space:nowrap;pointer-events:none}
-.pzl-d:first-child .pzl-lab{left:0;transform:none}.pzl-d:nth-last-child(-n+4) .pzl-lab{left:auto;right:0;transform:none}
-.pzl-nu{background:var(--placa)}.pzl-hoje{box-shadow:inset 2px 0 0 var(--azul)}
-.pzl-m{width:24px;height:24px;border:0;padding:0;background:none;display:grid;place-items:center;cursor:pointer;color:inherit}
-.pzl-m::before,.pzl-leg i{content:"";width:12px;height:12px;border-radius:50%;background:currentColor}
-.pzl-fatal{color:var(--venc,#B3261E)}.pzl-comp{color:var(--prox,#8F5400)}.pzl-lemb{color:var(--azul)}
-.pzl-m:focus-visible{outline:2px solid var(--azul);outline-offset:1px;border-radius:50%}
-.pzl-n{margin-top:auto;align-self:flex-start;position:relative;z-index:1;padding-left:2px;font-size:12px;color:var(--cinza);white-space:nowrap}
-.pzl-leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--cinza);margin-top:6px}
-.pzl-leg span{display:inline-flex;align-items:center;gap:5px}.pzl-leg span[class]{color:var(--cinza)}
-.pzl-leg .pzl-fatal i{background:var(--venc,#B3261E)}.pzl-leg .pzl-comp i{background:var(--prox,#8F5400)}.pzl-leg .pzl-lemb i{background:var(--azul)}
-.pzl-leg i{display:inline-block}.pzl-leg .pzl-nu-i{border-radius:2px;background:var(--placa);border:1px solid var(--borda)}
-.pzc-tiles{flex:1 1 240px;display:grid;grid-template-rows:repeat(3,1fr);gap:8px}
-.pzc-top-so .pzc-tiles{grid-template-rows:none;grid-template-columns:repeat(3,minmax(0,1fr))}
-.pzc-tile{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;background:#FFFFFF;border:1px solid var(--borda,#E7E6E1);border-radius:12px}
-.pzc-tile span{font-size:13px;color:var(--cinza,#4A4944)}
-.pzc-tile b{order:2;font-size:24px;line-height:1;font-weight:500;color:var(--texto,#121212)}
-.pzc-tile-venc b{color:#B3261E}.pzc-tile-hoje b{color:#8F5400}
-.pzc-ferr{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.pzc-ferr{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
 .pzc-seg{display:inline-flex;gap:2px;padding:3px;border-radius:9px;background:var(--placa,#EFEEEB)}
 .pzc-seg button{height:30px;padding:0 12px;border:0;border-radius:7px;background:transparent;color:var(--cinza,#4A4944);font-weight:500;cursor:pointer}
-.pzc-seg button.on{background:#FFFFFF;color:var(--texto,#121212);font-weight:500;box-shadow:0 1px 2px rgba(18,18,18,.12)}
-.pzc-chips{display:flex;flex-wrap:wrap;gap:6px}
+.pzc-seg button.on{background:#FFFFFF;color:var(--texto,#121212);box-shadow:0 1px 2px rgba(18,18,18,.12)}
+.pzc-chips{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
 .pzc-chip{height:30px;padding:0 12px;border:1px solid var(--borda,#E7E6E1);border-radius:15px;background:#FFFFFF;color:var(--cinza,#4A4944);font-weight:500;cursor:pointer;white-space:nowrap}
 .pzc-chip span{font-variant-numeric:tabular-nums;color:var(--cinza-claro,#686660)}
 .pzc-chip.on{background:var(--azul,#0E5C58);border-color:var(--azul,#0E5C58);color:#FFFFFF}
 .pzc-chip.on span{color:#FFFFFF}
 .pzc-chip:disabled{opacity:.5;cursor:default}
+.pzc-grade{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+.pzc-col{display:flex;flex-direction:column;gap:14px;min-width:0}
 .pzc-g{display:flex;flex-direction:column;gap:8px}
-.pzc .pzc-gt{display:flex;align-items:center;gap:8px;margin:4px 0 0;font-size:14px;font-weight:500;color:var(--texto,#121212)}
+.pzc .pzc-gt{display:flex;align-items:center;gap:8px;margin:0;font-size:14px;font-weight:500;color:var(--texto,#121212)}
 .pzc-g-venc .pzc-gt > span:first-child{color:#B3261E}
 .pzc-gn{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 7px;box-sizing:border-box;border-radius:11px;background:var(--placa,#EFEEEB);font-size:12px;font-weight:500;color:var(--cinza,#4A4944)}
+.pzc-lk{margin-left:auto;height:28px;padding:0 8px;border:0;border-radius:6px;background:transparent;color:var(--azul,#0E5C58);font-size:13px;font-weight:500;cursor:pointer}
 .pzc-g-abrir{margin-left:auto;height:28px;padding:0 10px;border:1px solid #C9D9D7;border-radius:7px;background:#FFFFFF;color:var(--azul,#0E5C58);font-size:12px;font-weight:500;cursor:pointer}
 .pzc-lista{list-style:none;margin:0;padding:0;background:#FFFFFF;border:1px solid var(--borda,#E7E6E1);border-radius:12px;overflow:hidden}
-.pzc-lin{display:grid;grid-template-columns:86px minmax(0,1fr) 150px 128px 128px 72px;align-items:center;gap:12px;min-height:60px;padding:10px 16px;border-top:1px solid var(--placa,#EFEEEB)}
-.pzc-sem-caso .pzc-lin{grid-template-columns:86px minmax(0,1fr) 128px 128px 72px}
+.pzc-lin{display:grid;grid-template-columns:52px minmax(0,1fr) auto auto;align-items:center;gap:12px;min-height:56px;padding:8px 14px;border-top:1px solid var(--placa,#EFEEEB)}
 .pzc-lin:first-child{border-top:0}
 .pzc-lin.pzc-venc{background:#FFF7F6}
-.pzc-dia{display:flex;flex-direction:column;line-height:1.15}
+.pzc-dia{display:flex;flex-direction:column;align-items:center;justify-content:center;height:44px;line-height:1.1;border-radius:8px;background:var(--placa,#EFEEEB);border-left:3px solid var(--cinza-claro,#686660)}
+.pzc-dia b{font-size:17px;font-weight:500;color:var(--texto,#121212)}
 .pzc-dia small{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;color:var(--cinza-claro,#686660)}
-.pzc-dia b{font-size:18px;font-weight:500;color:var(--texto,#121212)}
+.pzc-c-fatal .pzc-dia{border-left-color:#B3261E}.pzc-c-comp .pzc-dia{border-left-color:#8F5400}.pzc-c-lemb .pzc-dia{border-left-color:var(--azul,#0E5C58)}
 .pzc-venc .pzc-dia :is(small,b){color:#B3261E}
 .pzc-o{display:flex;flex-direction:column;gap:4px;min-width:0}
 .pzc-t{font-size:14px;font-weight:500;line-height:1.35;color:var(--texto,#121212);overflow-wrap:anywhere}
 .pzc-sub{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;min-width:0}
-.pzc-meta{min-width:0;font-size:12px;color:var(--cinza,#4A4944);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pzc-cel{display:none}
-.pzc-caso{justify-self:start;max-width:100%;height:24px;line-height:24px;padding:0 9px;border-radius:12px;background:var(--placa,#EFEEEB);font-size:12px;color:var(--cinza,#4A4944);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-sizing:border-box}
-.pzc-quem{display:flex;align-items:center;gap:8px;min-width:0;font-size:13px;color:var(--texto,#121212)}
-.pzc-quem > span:last-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pzc-caso{max-width:100%;height:22px;line-height:22px;padding:0 8px;border-radius:11px;background:var(--placa,#EFEEEB);font-size:12px;color:var(--cinza,#4A4944);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-sizing:border-box}
+.pzc-quem{display:inline-flex;align-items:center}
+.pzc-quem .pz-av{width:22px;height:22px;font-size:11px;border-radius:5px}
 .pzc-falta{text-align:right;font-size:13px;white-space:nowrap}
-.pzc-u-venc .pzc-falta,.pzc-u-crit .pzc-falta,.pzc-u-venc .pzc-falta-c,.pzc-u-crit .pzc-falta-c{color:#B3261E;font-weight:500}
-.pzc-u-hoje .pzc-falta,.pzc-u-perto .pzc-falta,.pzc-u-hoje .pzc-falta-c,.pzc-u-perto .pzc-falta-c{color:#8F5400}
+.pzc-u-venc .pzc-falta,.pzc-u-crit .pzc-falta{color:#B3261E;font-weight:500}
+.pzc-u-hoje .pzc-falta,.pzc-u-perto .pzc-falta{color:#8F5400}
 .pzc-u-medio .pzc-falta{color:var(--cinza,#4A4944)}.pzc-u-normal .pzc-falta{color:var(--cinza-claro,#686660)}
-.pzc-abrir{justify-self:end;height:32px;padding:0 12px;border:1px solid #C9D9D7;border-radius:8px;background:#FFFFFF;color:var(--azul,#0E5C58);font-weight:500;cursor:pointer}
+.pzc-abrir{height:32px;padding:0 12px;border:1px solid #C9D9D7;border-radius:8px;background:#FFFFFF;color:var(--azul,#0E5C58);font-weight:500;cursor:pointer}
+/* o mês: hoje com contorno, o dia escolhido em azul, um ponto por prazo na cor da natureza */
+.pzm{position:sticky;top:8px;padding:14px;background:#FFFFFF;border:1px solid var(--borda,#E7E6E1);border-radius:12px}
+.pzm-cab{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.pzm-cab b{font-size:14px;font-weight:500}
+.pzm-nav{width:30px;height:30px;border:0;border-radius:7px;background:transparent;color:var(--cinza,#4A4944);font-size:18px;cursor:pointer}
+.pzm-g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}
+.pzm-sem{text-align:center;font-size:11px;font-weight:500;color:var(--cinza-claro,#686660);padding:2px 0 4px}
+.pzm-d{display:flex;flex-direction:column;align-items:center;gap:2px;height:38px;padding:4px 0 0;border:0;border-radius:7px;background:transparent;color:var(--texto,#121212);font-size:13px;cursor:pointer}
+.pzm-nu{color:var(--cinza-claro,#686660)}
+.pzm-fora{opacity:.4}
+.pzm-hoje{box-shadow:inset 0 0 0 1.5px var(--azul,#0E5C58);font-weight:600}
+.pzm-sel{background:var(--azul,#0E5C58);color:#FFFFFF}
+.pzm-pts{display:flex;gap:2px;height:6px}
+.pzm-pts i,.pzm-leg i{display:inline-block;width:6px;height:6px;border-radius:50%}
+.pzm-fatal{background:#B3261E}.pzm-comp{background:#8F5400}.pzm-lemb{background:var(--azul,#0E5C58)}.pzm-ret{background:#9A9890}
+.pzm-sel .pzm-pts i{box-shadow:0 0 0 1px #FFFFFF}
+.pzm-leg{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:10px;font-size:11px;color:var(--cinza,#4A4944)}
+.pzm-leg span{display:inline-flex;align-items:center;gap:5px}
+.pzm-d:focus-visible,.pzm-nav:focus-visible{outline:2px solid var(--azul,#0E5C58);outline-offset:1px}
 .pzc-vazio{display:flex;flex-direction:column;gap:4px;padding:24px;background:#FFFFFF;border:1px solid var(--borda,#E7E6E1);border-radius:12px;color:var(--cinza,#4A4944)}
 .pzc-vazio b{font-size:14px;color:var(--texto,#121212)}
 .pzc-nada{margin:0;color:var(--cinza,#4A4944)}
 @media (hover:hover) and (pointer:fine){
-  .pzc-abrir:hover,.pzc-g-abrir:hover{background:var(--azul-fundo,#E6F0EF)}
+  .pzc-abrir:hover,.pzc-g-abrir:hover,.pzc-lk:hover{background:var(--azul-fundo,#E6F0EF)}
   .pzc-pri:hover{background:var(--azul-escuro,#0B4744)}
   .pzc-chip:not(.on):not(:disabled):hover{border-color:#C9D9D7}
   .pzc-lin:hover{background:#FBFBFA}.pzc-lin.pzc-venc:hover{background:#FDF1EF}
+  .pzm-d:not(.pzm-sel):hover,.pzm-nav:hover{background:var(--placa,#EFEEEB)}
 }
-/* no celular: cartões que se tocam inteiros, a data na coluna da esquerda e a chevron */
+/* no celular: o mês no alto, uma coluna, e a linha inteira se toca */
+@media (max-width:900px){ .pzc-grade{grid-template-columns:minmax(0,1fr)} .pzm{position:static;order:-1} }
 @media (max-width:760px){
   .pzc{gap:12px;padding-bottom:150px}
-  .pzc-top{gap:10px}
-  .pzc-hero{position:relative;flex-basis:100%;padding:16px}
-  .pzc .pzc-hero h2{font-size:17px}
-  .pzc-hero-n b{font-size:36px}
-  .pzc-pri::after{content:"";position:absolute;inset:0;border-radius:12px}
-  .pzc-pri{position:static}
-  .pzc-tiles,.pzc-top-so .pzc-tiles{flex-basis:100%;grid-template-rows:none;grid-template-columns:repeat(3,minmax(0,1fr))}
-  .pzc-tile{flex-direction:column;align-items:flex-start;gap:4px;padding:10px 12px}
-  .pzc-tile b{order:0;font-size:22px}
-  .pzc-tile span{font-size:12px}
+  .pzc-hero{position:relative;grid-template-columns:auto minmax(0,1fr);gap:12px;padding:12px 14px}
+  .pzc .pzc-hero h2{font-size:15px}
+  .pzc-hero-n b{font-size:26px}
+  .pzc-pri{position:absolute;inset:0;width:100%;height:100%;opacity:0;border-radius:12px}
   .pzc-seg{display:none}
   .pzc-chips{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px;padding:0 16px;scrollbar-width:none}
   .pzc-chip{height:36px;border-radius:18px}
-  .pzc-lista{background:transparent;border:0;border-radius:0;display:flex;flex-direction:column;gap:8px;overflow:visible}
-  .pzc-lin,.pzc-sem-caso .pzc-lin{position:relative;grid-template-columns:46px minmax(0,1fr) 16px;gap:12px;padding:12px 14px;border:1px solid var(--borda,#E7E6E1);border-radius:12px;background:#FFFFFF}
-  .pzc-lin.pzc-venc{border-color:#F3D3D0}
-  .pzc-lin::after{content:"";width:8px;height:8px;border-right:2px solid var(--cinza-claro,#686660);border-bottom:2px solid var(--cinza-claro,#686660);transform:rotate(-45deg);justify-self:center}
-  .pzc-meta,.pzc-caso,.pzc-quem,.pzc-falta{display:none}
-  .pzc-cel{display:contents}
-  .pzc-sub{flex-wrap:wrap;gap:6px 8px}
-  .pzc-caso-c{height:22px;line-height:22px;padding:0 8px;border-radius:11px;background:var(--placa,#EFEEEB);font-size:12px;color:var(--cinza,#4A4944);white-space:nowrap}
-  .pzc-falta-c{font-size:12px;white-space:nowrap}
-  .pzc-quem-c{display:inline-flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap}
-  .pzc-quem-c .pz-av{width:20px;height:20px;font-size:11px;border-radius:5px}
-  .pzc-abrir{position:absolute;inset:0;width:100%;height:100%;opacity:0;border-radius:12px}
+  .pzc-lin{position:relative;grid-template-columns:48px minmax(0,1fr) auto;gap:10px;padding:10px 12px}
+  .pzc-falta{font-size:12px}
+  .pzc-abrir{position:absolute;inset:0;width:100%;height:100%;opacity:0;border-radius:0}
+  .pzm-d{height:40px}
 }
 /* a janela do prazo: 480 px à direita (e por cima da aba, com o véu); no celular, tela cheia */
 #painel-prazo.pp-prazo{width:min(480px,100vw);background:#FFFFFF;border-left:1px solid var(--borda,#E7E6E1);box-shadow:-8px 0 24px rgba(18,18,18,.08);font-variant-numeric:tabular-nums}
@@ -6734,7 +6720,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.93</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.94</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -39952,15 +39938,23 @@ function prazosDoCliente(cliId){
   const lista = soltas.slice().sort((a, b)=>a.data<b.data?-1:a.data>b.data?1:(natDaLinha(a)==="fatal"?-1:0)-(natDaLinha(b)==="fatal"?-1:0));
   return {grupos, total: soltas.length, venc, lista};
 }
-// F326 · A ABA PRAZOS DO CLIENTE (desenho aprovado pelo Paulo, 31.10.2026). No alto, o próximo prazo fatal, com quanto
-// falta em dias úteis e a barra do tempo; depois Vencidos, Hoje e Próximos 7 dias; por data ou por caso; o filtro por
-// natureza; e cada linha diz o que fazer, de onde veio, de que caso é, quem faz e quanto falta. O Abrir leva à janela.
-// A escolha (por data ou por caso, a natureza) vale na sessão; mudar repinta só a aba.
-let _pzVer = "data", _pzNat = "todos", _pzCli = [], _pzCliId = null;
-function painelPrazosCliente(cliId){ return `<div class="pz-cli pzc" id="pz-cli">${pzConteudo(cliId)}</div>`; }
+// F453 · A ABA PRAZOS EM MÊS E LISTA (proposta C escolhida pelo Paulo em 08.11.2026, https://claude.ai/artifact/A2LoP3MwVs5STJyKYzzpHJ,
+// ideias do Replit e do Base44). No alto, a faixa do próximo prazo fatal; depois a natureza (com Retorno à parte) e Por data
+// ou Por caso; a lista à esquerda e o mês à direita (no celular, o mês no alto). O dia clicado filtra a lista; Limpar volta.
+// O mês substitui a linha dos 30 dias (F382) e os três quadros de contagem (F326). A escolha vale na sessão.
+let _pzVer = "data", _pzNat = "todos", _pzCli = [], _pzCliId = null, _pzDia = null, _pzMes = null;
+function painelPrazosCliente(cliId){ if(cliId!==_pzCliId){ _pzDia = null; _pzMes = null; } return `<div class="pz-cli pzc" id="pz-cli">${pzConteudo(cliId)}</div>`; }
 function pzPintar(cliId){ const el = document.getElementById("pz-cli"); if(el) el.innerHTML = pzConteudo(cliId || _pzCliId); }
 function pzVer(v){ _pzVer = v; pzPintar(); }
 function pzNat(v){ _pzNat = v; pzPintar(); }
+function pzDia(d){ _pzDia = _pzDia===d ? null : d; pzPintar(); }
+function pzMes(n){ const m = _pzMes || hoje().slice(0,7), d = new Date(m+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _pzMes = d.toISOString().slice(0,7); pzPintar(); }
+// o retorno do To Do e a volta à fila têm chip próprio (Retorno), embora a natureza seja lembrete
+const ehRetornoPz = x => x.rotulo==="Retorno" || x.rotulo==="Volta à fila";
+const natFiltroPz = x => ehRetornoPz(x) ? "retorno" : x._nat;
+const corPz = x => ehRetornoPz(x) ? "ret" : x._nat==="fatal" ? "fatal" : x._nat==="compromisso" ? "comp" : "lemb";
+const pillPz = x => ehRetornoPz(x) ? `<span class="pz-pill pz-pill-lembrete"><i aria-hidden="true"></i>${esc(x.rotulo)}</span>${pillTodo(x)}` : pillNat(x._nat) + pillTodo(x);
+const MES_LONGO = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 function barraPz(ini, x, cls, fimLab){
   const hj = hoje();
   if(!ini || !(x.data>ini.data)) return "";
@@ -39968,19 +39962,46 @@ function barraPz(ini, x, cls, fimLab){
   return `<div class="${cls}-barra" role="progressbar" aria-label="tempo do prazo já passado" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i>${ini.data<=hj && hj<=x.data ? `<em style="left:${pct}%"><span>hoje</span></em>` : ""}</div>
     <div class="${cls}-bl"><span>${esc(ini.lab || `${ini.rot} · ${diaCurtoPz(ini.data)}`)}</span><span>${esc(fimLab || `Vence · ${diaCurtoPz(x.data)}`)}</span></div>`;
 }
+// a faixa do próximo prazo fatal (Base44, proposta B): o número grande à esquerda, o que é no meio, a barra fina e o Abrir
 function pzHero(x){
-  const f = x._f, k = x.casoId && D.casoPorId.get(x.casoId), q = D.colPorId.get(quemDaLinha(x, _pzCliId)), i = _pzCli.indexOf(x);
-  const venc = x.data<hoje(), meta = (contagemPz(x)||{}).txt || metaDaLinha(x);
+  const f = x._f, k = x.casoId && D.casoPorId.get(x.casoId), qid = quemDaLinha(x, _pzCliId), i = _pzCli.indexOf(x);
+  const venc = x.data<hoje(), ini = inicioDaLinha(x);
+  const pct = ini && x.data>ini.data ? Math.max(0, Math.min(100, Math.round(100*diasEntreIso(ini.data, hoje())/diasEntreIso(ini.data, x.data)))) : null;
+  const meta = [k ? casoCurtoPz(k) : "Do cliente", ini && ini.rot!=="Anotado" ? `${ini.rot==="Intimação" ? "Intimação" : ini.rot==="Contado de" ? "Contado de" : "Ciência em"} ${fmtBarra(ini.data)}`.replace(/^(Intimação|Contado de) /, "$1 em ").replace("Contado de em", "Contado de") : "",
+    `${venc ? "Venceu" : "Vence"} em ${fmtBarra(x.data)}, ${DIA_EXT[new Date(x.data+"T12:00:00").getDay()]}`];
   return `<section class="pzc-hero pzc-u-${f.urg}" aria-label="${venc ? "Prazo fatal vencido" : "Próximo prazo fatal"}">
-    <div class="pzc-hero-cab">
-      <div class="pzc-hero-txt"><span class="pzc-sobre">${venc ? "Prazo fatal vencido" : "Próximo prazo fatal"}</span>
-        <h2>${esc(x._titulo)}</h2>
-        <p>${esc([k ? tituloCaso(k) : "Do cliente", k ? NOME_FASE[faseEfetiva(k)] || "" : "", q ? `com ${q.nome.split(" ")[0]}` : ""].filter(Boolean).join(" · "))}</p></div>
-      <div class="pzc-hero-n">${f.pre && f.pre!=="vence" ? `<small>${esc(f.pre)}</small>` : ""}<b>${esc(String(f.n))}</b><span>${esc(f.un)}</span><em>${esc(diaAnoPz(x.data))}</em></div>
-    </div>
-    ${barraPz(inicioDaLinha(x), x, "pzc")}
-    <div class="pzc-hero-pe"><button type="button" class="pzc-pri" onclick="abrirPainelPrazo(${i},'cli')" title="Abrir o prazo">Abrir</button>${meta ? `<span class="pzc-nota">${esc(meta)}</span>` : ""}</div>
+    <div class="pzc-hero-n">${f.pre && f.pre!=="vence" ? `<small>${esc(f.pre)}</small>` : ""}<b>${esc(String(f.n))}</b><span>${esc(f.un)}</span></div>
+    <div class="pzc-hero-txt"><span class="pzc-sobre">${venc ? "Prazo fatal vencido" : "Próximo prazo fatal"}</span>
+      <h2>${esc(x._titulo)}</h2>
+      <p>${meta.filter(Boolean).map(s=>`<span>${esc(s)}</span>`).join("")}${qid ? avPz(qid) : ""}</p>
+      ${pct!==null ? `<div class="pzc-trilho" title="${esc(`${diasEntreIso(ini.data, hoje())} de ${diasEntreIso(ini.data, x.data)} dias corridos`)}"><i style="width:${pct}%"></i></div>` : ""}</div>
+    <button type="button" class="pzc-pri" onclick="abrirPainelPrazo(${i},'cli')" title="Abrir o prazo">Abrir</button>
   </section>`;
+}
+// Reagendar no grupo Vencidos: a mesma janela do Meu Dia (F442), com o retorno, a volta à fila e o lembrete da anotação
+function pzReagendar(){
+  const hj = hoje(), ts = D.tarefasFicha || [];
+  _reagVenc = _pzCli.filter(x=>x.data<hj && !x.aConfirmar).map(x=>{
+    const k = x.casoId && D.casoPorId.get(x.casoId);
+    if(ehRetornoPz(x) && k) return {k, selo:x.rotulo, data:x.data};
+    const tc = x.andId && x._nat!=="fatal" && ts.find(t=>t.andamento_id===x.andId && !t.concluida_em && t.natureza!=="fatal");
+    return tc ? {tc, data:x.data} : {fatal:true};
+  });
+  reagendarVencidas();
+}
+function calendarioPz(){
+  const hj = hoje(), m = _pzMes || hj.slice(0,7), [y, mm] = m.split("-").map(Number), ini = new Date(y, mm-1, 1, 12), off = ini.getDay();
+  const nDias = new Date(y, mm, 0).getDate(), sem = Math.ceil((off + nDias)/7)*7;
+  const por = new Map(); for(const x of _pzCli){ if(!x.aConfirmar){ if(!por.has(x.data)) por.set(x.data, []); por.get(x.data).push(x); } }
+  let h = ["D","S","T","Q","Q","S","S"].map(s=>`<span class="pzm-sem" aria-hidden="true">${s}</span>`).join("");
+  for(let j=0; j<sem; j++){
+    const d = new Date(y, mm-1, 1-off+j, 12), iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    const its = por.get(iso) || [], cls = ["pzm-d", d.getMonth()!==mm-1 ? "pzm-fora" : "", iso===hj ? "pzm-hoje" : "", _pzDia===iso ? "pzm-sel" : "", ehDiaUtil(iso) ? "" : "pzm-nu"].filter(Boolean).join(" ");
+    h += `<button type="button" class="${cls}" onclick="pzDia('${iso}')" aria-pressed="${_pzDia===iso}" aria-label="${esc(`${diaLongoPz(iso)}${its.length ? `, ${its.length} ${its.length===1?"item":"itens"}` : ""}`)}"${its.length ? ` title="${esc(its.map(x=>x._titulo).join(" · "))}"` : ""}>${d.getDate()}<span class="pzm-pts">${its.slice(0,4).map(x=>`<i class="pzm-${corPz(x)}"></i>`).join("")}</span></button>`;
+  }
+  return `<aside class="pzm" aria-label="Mês"><div class="pzm-cab"><button type="button" class="pzm-nav" onclick="pzMes(-1)" aria-label="Mês anterior">‹</button><b>${MES_LONGO[mm-1][0].toUpperCase()+MES_LONGO[mm-1].slice(1)} de ${y}</b><button type="button" class="pzm-nav" onclick="pzMes(1)" aria-label="Mês seguinte">›</button></div>
+    <div class="pzm-g">${h}</div>
+    <div class="pzm-leg"><span><i class="pzm-fatal"></i>Prazo fatal</span><span><i class="pzm-comp"></i>Compromisso</span><span><i class="pzm-lemb"></i>Lembrete</span><span><i class="pzm-ret"></i>Retorno</span></div></aside>`;
 }
 function pzConteudo(cliId){
   const hj = hoje(), em = n => somaDias(hj, n);
@@ -39991,25 +40012,22 @@ function pzConteudo(cliId){
     if(j>=0) setTimeout(()=>abrirPainelPrazo(j, "cli")); }
   if(!_pzCli.length) return `<div class="pzc-vazio"><b>Sem prazos em aberto</b><span>O prazo fatal nasce da anotação com a chave Prazo fatal; o lembrete, da anotação com data.</span></div>`;
   const pend = x => x.data<hj && !x.aConfirmar;
-  const nNat = v => _pzCli.filter(x=>v==="todos" || x._nat===v).length;
+  const nNat = v => _pzCli.filter(x=>v==="todos" || natFiltroPz(x)===v).length;
   if(!nNat(_pzNat)) _pzNat = "todos";
   const fatais = _pzCli.filter(x=>x._nat==="fatal" && !x.aConfirmar);
   const heroX = fatais.find(x=>x.data>=hj) || fatais.find(pend) || null;
-  const tile = (n, rot, tom) => `<div class="pzc-tile${n && tom ? ` pzc-tile-${tom}` : ""}"><b>${n}</b><span>${rot}</span></div>`;
-  const tiles = `<div class="pzc-tiles">${tile(_pzCli.filter(pend).length, "Vencidos", "venc")}${tile(_pzCli.filter(x=>x.data===hj).length, "Hoje", "hoje")}${
-    tile(_pzCli.filter(x=>x.data>hj && x.data<=em(7)).length, "Próximos 7 dias", "")}</div>`;
   const ferr = `<div class="pzc-ferr">
+    <div class="pzc-chips" role="group" aria-label="Filtrar pela natureza">${[["todos","Todos"],["fatal","Prazo fatal"],["compromisso","Compromisso"],["lembrete","Lembrete"],["retorno","Retorno"]].map(([v, r])=>
+      `<button type="button" aria-pressed="${_pzNat===v}" class="pzc-chip${_pzNat===v?" on":""}" onclick="pzNat('${v}')"${!nNat(v) && v!=="todos" ? " disabled" : ""}>${r} <span>${nNat(v)}</span></button>`).join("")}</div>
     <div class="pzc-seg" role="group" aria-label="Agrupar os prazos">${[["data","Por data"],["caso","Por caso"]].map(([v, r])=>
       `<button type="button" aria-pressed="${_pzVer===v}" class="${_pzVer===v?"on":""}" onclick="pzVer('${v}')">${r}</button>`).join("")}</div>
-    <div class="pzc-chips" role="group" aria-label="Filtrar pela natureza">${[["todos","Todos"],["fatal","Prazos fatais"],["compromisso","Compromissos"],["lembrete","Lembretes"]].map(([v, r])=>
-      `<button type="button" aria-pressed="${_pzNat===v}" class="pzc-chip${_pzNat===v?" on":""}" onclick="pzNat('${v}')"${!nNat(v) && v!=="todos" ? " disabled" : ""}>${r} <span>${nNat(v)}</span></button>`).join("")}</div>
   </div>`;
-  const vis = _pzCli.filter(x=>_pzNat==="todos" || x._nat===_pzNat);
+  const vis = _pzCli.filter(x=>(_pzNat==="todos" || natFiltroPz(x)===_pzNat) && (!_pzDia || x.data===_pzDia));
   const porData = _pzVer!=="caso" || celular();
   let grupos;
   if(porData){
-    const G = [["Vencidos", pend, "venc"], ["A confirmar", x=>x.aConfirmar, "conf"], [`Hoje · ${diaCurtoPz(hj)}`, x=>x.data===hj, "hoje"],
-      [`Próximos 7 dias · até ${diaCurtoPz(em(7))}`, x=>x.data>hj && x.data<=em(7), ""], [`Até 30 dias · até ${diaCurtoPz(em(30))}`, x=>x.data>em(7) && x.data<=em(30), ""],
+    const G = [["Vencidos", pend, "venc"], ["A confirmar", x=>x.aConfirmar, "conf"], ["Hoje", x=>x.data===hj, "hoje"],
+      ["Próximos 7 dias", x=>x.data>hj && x.data<=em(7), ""], ["Até 30 dias", x=>x.data>em(7) && x.data<=em(30), ""],
       ["Mais adiante", x=>x.data>em(30), ""]];
     const ja = new Set();
     grupos = G.map(([rot, f, tom])=>{ const g = vis.filter(x=>!ja.has(x) && f(x)); g.forEach(x=>ja.add(x)); return {rot, g, tom}; }).filter(o=>o.g.length);
@@ -40020,37 +40038,20 @@ function pzConteudo(cliId){
       return {rot: k ? `${tituloCaso(k)} · ${NOME_FASE[faseEfetiva(k)] || k.fase || ""}` : "Do cliente", g: m.get(c), caso: c, k}; });
   }
   const linha = x => {
-    const i = _pzCli.indexOf(x), f = x._f, k = x.casoId && D.casoPorId.get(x.casoId), q = D.colPorId.get(quemDaLinha(x, cliId)), meta = metaDaLinha(x);
-    return `<li class="pzc-lin pzc-u-${f.urg}${pend(x) ? " pzc-venc" : ""}" data-nat="${x._nat}" data-data="${x.data}">
-      <span class="pzc-dia"><small>${esc(SIGLA_DIA[new Date(x.data+"T12:00:00").getDay()])}.</small><b>${fmtBarra(x.data).slice(0,5)}</b></span>
-      <span class="pzc-o"><b class="pzc-t">${esc(x._titulo)}</b><span class="pzc-sub">${pillNat(x._nat)}${pillTodo(x)}${meta ? `<small class="pzc-meta" title="${esc(meta)}">${esc(meta)}</small>` : ""}<span class="pzc-cel">${q ? `<span class="pzc-quem-c">${avPz(q.id)}<span>${esc(q.nome.split(" ")[0])}</span></span>` : ""}<span class="pzc-caso-c">${esc(casoCurtoPz(k))}</span><span class="pzc-falta-c">${esc(f.txt)}</span></span></span></span>
-      ${porData ? `<span class="pzc-caso" title="${esc(k ? `${tituloCaso(k)} · ${NOME_FASE[faseEfetiva(k)]||""}` : "Do cliente")}">${esc(casoCurtoPz(k))}</span>` : ""}
-      <span class="pzc-quem">${q ? `${avPz(q.id)}<span>${esc(q.nome.split(" ")[0])}</span>` : ""}</span>
+    const i = _pzCli.indexOf(x), f = x._f, k = x.casoId && D.casoPorId.get(x.casoId), qid = quemDaLinha(x, cliId), q = D.colPorId.get(qid), d = new Date(x.data+"T12:00:00");
+    return `<li class="pzc-lin pzc-c-${corPz(x)} pzc-u-${f.urg}${pend(x) ? " pzc-venc" : ""}" data-nat="${x._nat}" data-data="${x.data}">
+      <span class="pzc-dia" title="${esc(diaLongoPz(x.data))}"><b>${String(d.getDate()).padStart(2,"0")}</b><small>${MES_CURTO[d.getMonth()]}</small></span>
+      <span class="pzc-o"><b class="pzc-t">${esc(x._titulo)}</b><span class="pzc-sub">${pillPz(x)}<span class="pzc-caso" title="${esc(k ? `${tituloCaso(k)} · ${NOME_FASE[faseEfetiva(k)]||""}` : "Do cliente")}">${esc(casoCurtoPz(k))}</span>${q ? `<span class="pzc-quem" title="${esc(q.nome)}">${avPz(qid)}</span>` : ""}</span></span>
       <span class="pzc-falta">${esc(f.txt)}</span>
       <button type="button" class="pzc-abrir" onclick="abrirPainelPrazo(${i},'cli')" aria-label="Abrir o prazo: ${esc(x._titulo)}">Abrir</button>
     </li>`;
   };
-  const lista = grupos.length ? grupos.map(o=>`<section class="pzc-g${o.tom ? ` pzc-g-${o.tom}` : ""}${porData ? "" : " pz-cli-g"}"${porData ? "" : ` data-caso="${o.caso||""}"`}>
-      <h3 class="pzc-gt"><span>${esc(o.rot)}</span> <span class="pzc-gn">${o.g.length}</span>${o.k ? `<button type="button" class="pzc-g-abrir" onclick="casoSel='${o.k.id}';abaAtiva=2;subAba='escritorio';repintarFicha()" title="Abrir o caso">Abrir<span class="sr-only"> o caso</span></button>` : ""}</h3>
-      <ul class="pzc-lista${porData ? "" : " pzc-sem-caso"}">${o.g.map(linha).join("")}</ul></section>`).join("")
-    : `<p class="pzc-nada">Nenhum prazo desta natureza.</p>`;
-  return `<section class="pzc-top${heroX ? "" : " pzc-top-so"}" aria-label="Resumo dos prazos">${heroX ? pzHero(heroX) : ""}${tiles}</section>${linha30Pz(hj)}${ferr}${lista}`;
-}
-// F382 (12.40) · os próximos 30 dias numa linha (ideia do Lovable aprovada pelo Paulo): um marco por data, o dia sem
-// expediente em cinza; o marco abre a janela do prazo
-function linha30Pz(hj){
-  const fim = somaDias(hj, 30), its = _pzCli.filter(x=>x.data>=hj && x.data<=fim && !x.aConfirmar);
-  if(!its.length) return "";
-  const cls = n => n==="fatal" ? "fatal" : n==="compromisso" ? "comp" : "lemb", dias = [];
-  for(let j=0; j<=30; j++) dias.push(somaDias(hj, j));
-  // F427 · o nome do prazo fatal só aparece com folga do anterior, para dois nomes não se sobreporem (no celular, mais folga)
-  const folga = celular() ? 12 : 7, comLab = new Set(); let ult = -99;
-  dias.forEach((d, j)=>{ if(j - ult >= folga && its.some(x=>x.data===d && x._nat==="fatal")){ comLab.add(d); ult = j; } });
-  return `<section class="pzl" aria-label="Próximos 30 dias"><h3 class="pzl-t">Próximos 30 dias <span class="pzc-gn">${its.length}</span></h3>
-    <div class="pzl-rolar"><ol class="pzl-dias">${dias.map((d, j)=>`<li class="pzl-d${ehDiaUtil(d) ? "" : " pzl-nu"}${j ? "" : " pzl-hoje"}">${
-      its.filter(x=>x.data===d).map(x=>`<button type="button" class="pzl-m pzl-${cls(x._nat)}" onclick="abrirPainelPrazo(${_pzCli.indexOf(x)},'cli')" title="${esc(`${diaCurtoPz(d)} · ${x._titulo}`)}" aria-label="${esc(`${diaCurtoPz(d)}: ${x._titulo}`)}"></button>`).join("")
-      }${(f => f ? `<span class="pzl-lab" aria-hidden="true">${esc(cortaFrase(f._titulo, 22))}</span>` : "")(comLab.has(d) && its.find(x=>x.data===d && x._nat==="fatal"))}<span class="pzl-n">${j===0 ? "hoje" : j%5===0 && j<30 ? fmtBarra(d).slice(0,5) : ""}</span></li>`).join("")}</ol></div>
-    <div class="pzl-leg"><span class="pzl-fatal"><i></i>Prazo fatal</span><span class="pzl-comp"><i></i>Compromisso</span><span class="pzl-lemb"><i></i>Lembrete</span><span><i class="pzl-nu-i"></i>Sem expediente</span></div></section>`;
+  const lista = (_pzDia ? `<div class="pzc-gt pzc-dia-sel"><span>Dia ${fmtBarra(_pzDia)}</span><button type="button" class="pzc-lk" onclick="pzDia(null)">Limpar</button></div>` : "")
+    + (grupos.length ? grupos.map(o=>`<section class="pzc-g${o.tom ? ` pzc-g-${o.tom}` : ""}${porData ? "" : " pz-cli-g"}"${porData ? "" : ` data-caso="${o.caso||""}"`}>
+      <h3 class="pzc-gt"><span>${esc(o.rot)}</span> <span class="pzc-gn">${o.g.length}</span>${o.tom==="venc" ? `<button type="button" class="pzc-lk" onclick="pzReagendar()" title="Leva retornos, voltas à fila e lembretes vencidos a outra data. O prazo fatal fica.">Reagendar</button>` : ""}${o.k ? `<button type="button" class="pzc-g-abrir" onclick="casoSel='${o.k.id}';abaAtiva=2;subAba='escritorio';repintarFicha()" title="Abrir o caso">Abrir<span class="sr-only"> o caso</span></button>` : ""}</h3>
+      <ul class="pzc-lista">${o.g.map(linha).join("")}</ul></section>`).join("")
+    : `<p class="pzc-nada">${_pzDia ? "Nenhum prazo neste dia." : "Nenhum prazo desta natureza."}</p>`);
+  return `${heroX ? pzHero(heroX) : ""}${ferr}<div class="pzc-grade"><div class="pzc-col">${lista}</div>${calendarioPz()}</div>`;
 }
 // ══════════════════════════════════════════════════════════════════════════
 // F104 · OS QUADROS DE PRAZO (tema v10). Um quadro por prazo, lado a lado,
