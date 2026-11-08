@@ -455,3 +455,10 @@ console.log("formal: ok");
   assert.equal(emLinhas("Lamentamos.\n\nCompreendi, vou verificar.", ant), "Lamentamos.\n\nVou verificar.");
   console.log("ok F422w compreendi");
 }
+{ // F422x · o FATOS gravado no agente é trocado pela versão nova, e não ignorado
+  const velho = paraTriagem("x").replace(/\n\nInformações do escritório[^]*?(?=\n\n|$)/, "\n\nInformações do escritório (antigo):\n- velho");
+  const novo = paraTriagem(velho);
+  assert.ok(!novo.includes("- velho") && novo.includes("atendimento por vídeo, que existe"));
+  assert.equal(paraTriagem(novo), novo);
+  console.log("ok F422x fatos");
+}
