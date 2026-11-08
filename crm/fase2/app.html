@@ -3877,6 +3877,20 @@ html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:6;width:auto}
   html[data-tema="v10"] #conteudo-meio .ag-linha .ag-slot{grid-area:slot;margin:0 0 0 6px;align-self:start}
   html[data-tema="v10"] #conteudo-meio .ag-linha .acoes{grid-area:est}
 }
+/* F459 · NO CELULAR A LINHA É UMA SÓ (pedido do Paulo, 08.11.2026): a data, o nome, a atribuição (o que fazer) e a ⭐.
+   Espécie, lista, etapa, selos, responsável e caixa saem da linha; o toque abre a extensão com CPF, senha, WhatsApp e a última anotação */
+@media (max-width:760px), (pointer:coarse) and (max-height:500px){
+  html[data-tema="v10"] #conteudo-meio .ag-linha{display:flex;align-items:center;gap:8px;padding:0 12px 0 14px;min-height:44px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha > :is(.ag-selos,.avatares,.ag-slot,.ag-conf,.ag-c-lista,.ag-c-etapa){display:none}
+  html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-data{order:0;flex:none;min-width:0;margin:0;text-align:left;align-self:center}
+  html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-txt{order:1;flex:1 1 auto;min-width:0;align-self:center;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px;line-height:20px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt .ag-ben{display:none}
+  html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:2;flex:none;margin:0;align-self:center}
+  html[data-tema="v10"] #conteudo-meio .ag-ext{padding:8px 14px 10px}
+  .ag-ext .ae-topo{justify-content:flex-start}
+  .ag-ext .ae-quem{display:none}
+  .ag-ext .ae-cop{flex-wrap:wrap;white-space:normal;row-gap:6px}
+}
 /* F444 · a linha C no computador em colunas, como no artefato aprovado (conferência do Paulo, 08.11.2026): cliente com a
    espécie, lista, etapa, selos, data, responsável, caixa e a ⭐ sempre à vista, cada um na mesma coluna em todas as linhas */
 html[data-tema="v10"] .ag-c-lista,html[data-tema="v10"] .ag-c-etapa,html[data-tema="v10"] .ag-th,html[data-tema="v10"] .ag-txt .ag-ben{display:none}
@@ -6765,7 +6779,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.01</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.02</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11472,17 +11486,20 @@ function montarExt(el, it){
   x.innerHTML = `<div class="ae-topo"><span class="ae-quem"><span class="ae-resp">${resp.length ? "Com "+esc(resp.map(c=>c.nome.split(" ")[0]).join(", ")) : "Sem responsável"}</span>${
       it.selo==="Retorno" && prazoDoTodo(k) ? `<span class="ae-todo">Prazo do Microsoft To Do · última anotação do caso</span>` : ""}</span>
     <span class="ae-cop">${cli && cli.cpf ? `<span class="cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">CPF ${esc(fmtCpf(cli.cpf))}</span>` : ""}
-      <button type="button" class="ae-mini" data-ae="senha" title="Copiar a senha do Meu INSS">Meu INSS</button>
+      <button type="button" class="ae-mini" data-ae="senha" title="Copiar a senha do Meu INSS">Meu INSS <span class="ae-senha">…</span></button>
       <button type="button" class="ae-mini ae-zap" data-ae="zap" title="Abrir a conversa do WhatsApp ao lado">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button></span></div>
     <div class="ae-txt">Carregando a última anotação…</div>
     <div class="ae-acoes">${[["abrir","Abrir","Abrir a ficha do cliente"],["anotar","Anotar","Escrever no caso, reagendar e atribuir"],["reagendar","Reagendar","Mudar a data"],["concluir","Concluir","Concluir a tarefa e tirar o prazo"]]
       .map(([a,r,t])=>`<button type="button" class="btn-mini" data-ae="${a}" title="${t}">${r}</button>`).join("")}</div>
     <div class="ae-painel" hidden></div>`;
   el.after(x); el.classList.add("ext-on"); el.setAttribute("aria-expanded","true");
+  // F459 · a senha do Meu INSS à vista (o ver fica registrado, como no painel do WhatsApp da F354)
+  if(cli) senhaMeuInss(cli.id).then(cr=>{ const sp = x.querySelector(".ae-senha"); if(sp) sp.textContent = cr ? cr.valor : "sem senha"; });
   ultAnotDe(el.dataset.casos).then(a=>{
-    const de = a && D.colPorId.get(a.autor_id), t = x.querySelector(".ae-txt"); if(!t) return;
+    const t = x.querySelector(".ae-txt"); if(!t) return;
     const tx = a ? (a.texto||"") : ""; x._texto = tx;
-    t.innerHTML = a ? `<span class="ae-cab">Última anotação · ${esc(de?de.nome.split(" ")[0]:"equipe")}, ${esc(fmtBarra(dataSP(a.criado_em)))}</span>${esc(tx.slice(0,1000))}${tx.length>1000 ? "…" : ""}`
+    // F459 · só a data e o texto (pedido do Paulo, 08.11.2026)
+    t.innerHTML = a ? `<span class="ae-cab">${esc(fmtBarra(dataSP(a.criado_em)))}</span>${esc(tx.slice(0,1000))}${tx.length>1000 ? "…" : ""}`
       : `<span class="ae-cab">Sem anotação da equipe neste caso.</span>`;
     // o corte vem dos 1.000 caracteres ou das 14 linhas; o botão fica fora do texto cortado
     x.querySelector(".ae-mais")?.remove();
@@ -11494,17 +11511,30 @@ function montarExt(el, it){
 async function acaoExt(x, a, b){
   const it = x._it, k = it.k, cli = it.cli || D.cliPorId.get(k.cliente_id) || {};
   if(a==="abrir"){ _ext = null; fecharExt(); return abrirDaLinha(x._el); }
-  if(a==="zap"){ _ext = null; fecharExt(); return fichaComZap(cli.id); }
-  if(a==="senha"){
-    const [cr] = await api(`/rest/v1/credenciais?select=id&cliente_id=eq.${cli.id}&tipo=eq.meu_inss&limit=1`).catch(()=>[]);
-    return cr ? copiarCred(cr.id) : aviso("Sem senha do Meu INSS na ficha");
+  if(a==="zap"){
+    _ext = null; fecharExt();
+    // F459 · no celular vai direto à conversa do número do WhatsApp do cliente (a ficha ao lado não cabe)
+    const tel = celular() && cli.id && (telefonesDe(cli).find(t=>t.zap) || telefonesDe(cli)[0]);
+    return tel ? zapDoNumero(tel.numero) : fichaComZap(cli.id);
   }
+  if(a==="senha"){ const cr = await senhaMeuInss(cli.id); return cr ? copiar(cr.valor, "Senha copiada 📋") : aviso("Sem senha do Meu INSS na ficha"); }
   if(a==="mais"){ const t = x.querySelector(".ae-txt"), c = t.querySelector(".ae-cab"); t.classList.add("todo"); t.innerHTML = (c?c.outerHTML:"") + esc(x._texto||""); x.querySelector(".ae-mais")?.remove(); return; }
   if(a==="cancelar"){ if(_ext) _ext.painel = ""; x.querySelector(".ae-painel").hidden = true; x.querySelector(".ae-acoes").hidden = false; return; }
   if(a==="anotar" || a==="reagendar" || a==="concluir") return painelExt(x, a, "");
   if(a==="anotar-ok") return extAnotar(x);
   if(a==="concluir-ok") return extConcluir(x);
   if(b.dataset.data) return extReagendar(x, b.dataset.data);
+}
+// F459 · a senha do Meu INSS do cliente, uma busca por cliente na sessão; o ver fica registrado em credencial_vis
+const _senhaInss = new Map();
+function senhaMeuInss(cliId){
+  if(!cliId) return Promise.resolve(null);
+  if(!_senhaInss.has(cliId)) _senhaInss.set(cliId, api(`/rest/v1/credenciais?select=id,valor&cliente_id=eq.${cliId}&tipo=eq.meu_inss&limit=1`).then(r=>{
+    const cr = (r||[])[0] || null;
+    if(cr) api(`/rest/v1/credencial_vis`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({credencial_id:cr.id, colaborador_id:eu.id})}).catch(()=>{});
+    return cr;
+  }).catch(()=>{ _senhaInss.delete(cliId); return null; }));
+  return _senhaInss.get(cliId);
 }
 const umMes = d => { const x = new Date(d+"T12:00:00"); x.setMonth(x.getMonth()+1); return x.toLocaleDateString("sv"); };
 function painelExt(x, qual, txt){

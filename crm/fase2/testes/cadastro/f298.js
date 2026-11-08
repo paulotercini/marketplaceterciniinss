@@ -136,15 +136,15 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // F303 · a linha do Meu Dia alinhada e o filtro por pessoa dentro da margem
   await p.evaluate(() => irPara("meudia")); await p.waitForTimeout(1000);
+  // F458 · no celular a linha é uma só: data, nome e ⭐ na mesma altura; responsável, selos e caixa escondidos
   const al = await p.evaluate(() => { const l = [...document.querySelectorAll("#conteudo-meio .ag-linha")].find(e => e.querySelector(".acoes .acao-card[data-estrela]") && e.querySelector(".avatares .avatar")); if (!l) return null;
-    const m = s => { const b = l.querySelector(s).getClientRects()[0]; return (b.top + b.bottom) / 2; };  // a primeira linha do nome
+    const m = s => { const b = l.querySelector(s).getBoundingClientRect(); return (b.top + b.bottom) / 2; };
     const seg = document.querySelector(".seg-colab").getBoundingClientRect(), card = l.getBoundingClientRect();
-    return { d: m(".ag-data"), n: Math.min(m(".ag-txt b"), 1e9), f: m(".acoes .acao-card[data-estrela]"), a: m(".avatares .avatar"),
-      aR: l.querySelector(".avatares .avatar").getBoundingClientRect().right, eL: l.querySelector(".acoes .acao-card[data-estrela]").getBoundingClientRect().left,
-      raio: parseFloat(getComputedStyle(l.querySelector(".avatares .avatar")).borderTopLeftRadius), segR: seg.right, cardR: card.right }; });
-  // F437 · linha C: nome, responsável e estrela em cima; a data desce para a linha das etiquetas
-  conf("nome, estrela e responsável na mesma linha, a data embaixo (F437)", al && [al.f, al.a].every(y => Math.abs(y - al.n) < 6) && al.d > al.n + 6);
-  conf("a inicial do responsável em quadrado, à esquerda da estrela (F306)", al && al.raio <= 8 && al.aR <= al.eL);
+    const vis = s => [...l.querySelectorAll(s)].some(e => e.offsetParent);
+    return { d: m(".ag-data"), n: m(".ag-txt b"), f: m(".acoes .acao-card[data-estrela]"), av: vis(".avatares"), selos: vis(".ag-selos"), slot: vis(".ag-slot"),
+      dL: l.querySelector(".ag-data").getBoundingClientRect().left - card.left, h: card.height, segR: seg.right, cardR: card.right }; });
+  conf("data, nome e estrela na mesma linha, a data à esquerda (F458)", al && [al.d, al.f].every(y => Math.abs(y - al.n) < 6) && al.dL < 30 && al.h <= 56);
+  conf("responsável, selos e caixa escondidos na linha do celular (F458)", al && !al.av && !al.selos && !al.slot);
   conf("o filtro por pessoa não passa da margem", al && al.segR <= al.cardR + 1);
   { const pq = await PEQ(); conf("no Meu Dia, nenhum alvo de toque abaixo de 24 px", !pq.length) || console.log(JSON.stringify(pq)); }
   const cm = colunaOk(await FABS(), true);
