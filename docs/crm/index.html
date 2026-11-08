@@ -6686,7 +6686,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.84</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.85</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6957,7 +6957,9 @@ function pesquisar(txt){
   const termos = termosBusca(txt);
   if(!termos.length) return [];
   // F222 · o cliente gravado agora (etapa 1 do Novo Cliente, CPF achado no banco) entra sem índice e derrubava a pesquisa
-  const achados = D.clientes.filter(c=>{ if(c._ix==null) reindexarCliente(c); return termos.every(t=>c._ix.includes(t)); });
+  let achados = D.clientes.filter(c=>{ if(c._ix==null) reindexarCliente(c); return termos.every(t=>c._ix.includes(t)); });
+  // F444 · o telefone copiado do WhatsApp (+55) ou sem o nono dígito: vale pelos 8 últimos dígitos
+  if(!achados.length && termos.length===1 && /^\d{8,13}$/.test(termos[0])) achados = clientesDoTelefone(termos[0]);
   // quem casa pelo NOME aparece primeiro; depois, nome mais curto (mais exato)
   const noNome = c => termos.every(t=>(c._nome_ix||"").includes(t));
   return achados.sort((a,b)=>{
@@ -15479,7 +15481,7 @@ function renderMencoes(){
         ${!podeGravarCaso()?"":k?`<button class="btn-mini forte" onclick="abrirCasoDaMencao('${k.cliente_id}','${k.id}','${m.andamento_id||""}')" title="abrir o caso"><span aria-hidden="true">Abrir</span><span class="sr-only">abrir o caso</span></button>`
           : c && !(D.casosDoCliente.get(c.id)||[]).some(x=>x.fase!=="encerrado" && !ehPreCaso(x)) ? `<button class="btn-mini forte" onclick="abrirAtendimentoDe('${c.id}')" title="abrir o atendimento"><span aria-hidden="true">Atendimento</span><span class="sr-only">abrir o atendimento</span></button>` : ""}
         ${c?`<button class="btn-mini" onclick="abrirFicha('${c.id}')" title="abrir ficha"><span aria-hidden="true">Ficha</span><span class="sr-only">abrir ficha</span></button>`:""}
-        ${m.caso_id?botoesResposta(m):""}
+        ${botoesResposta(m)}
         <button class="btn-mini" onclick="lerMencao('${m.id}')">✔ resolvida</button>
       </div></div>`;
   }).join("") || "<p class='meio-sub'>Caixa vazia: nada pendente para você. 🎉</p>";
@@ -15511,11 +15513,20 @@ async function baixarMencoes(andIds){
 // F292 · responder a menção num clique, como o "(ME): Ok." do To Do: a resposta vai à linha do tempo do caso, em
 // resposta à anotação que citou, quem citou recebe o aviso, e a menção sai da caixa (Onda B do fluxo do To Do)
 function botoesResposta(m){
-  if(!podeGravarCaso()) return "";   // F355 · o "Ok" e o "Feito" gravam no caso
+  if(m.caso_id ? !podeGravarCaso() : !m.cliente_id) return "";   // F444 · a menção sem caso (cliente novo, balcão) responde a quem citou   // F355 · o "Ok" e o "Feito" gravam no caso
   return ["Ok","Feito"].map(r=>`<button class="btn-mini menc-resp" onclick="event.stopPropagation();responderMencao('${m.id}','${r}.')" title="responder &quot;${r}.&quot; no caso e dar a menção por lida">${r}</button>`).join("");
 }
 async function responderMencao(id, txt){
-  const m = (D.mencoes||[]).find(x=>x.id===id); if(!m || !m.caso_id) return;
+  const m = (D.mencoes||[]).find(x=>x.id===id); if(!m) return;
+  if(!m.caso_id){   // F444 · sem caso não há linha do tempo: a resposta vai a quem citou, presa à ficha
+    if(!m.cliente_id) return;
+    const de = D.colPorId.get(m.de_id), cli = D.cliPorId.get(m.cliente_id);
+    if(de && de.id!==eu.id) await api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({de_id:eu.id, para_id:de.id, cliente_id:m.cliente_id,
+        texto:`${(eu.nome||"").split(" ")[0]} respondeu "${txt}"${cli?` sobre ${cli.nome}`:""}`})}).catch(()=>{});
+    await lerMencao(id).catch(()=>{});
+    return aviso(`✔ Respondido: ${txt}`, false);
+  }
   const de = D.colPorId.get(m.de_id), k = D.casoPorId.get(m.caso_id), cli = k && D.cliPorId.get(k.cliente_id);
   const texto = de && de.id!==eu.id ? `@${de.nome.split(" ")[0]} ${txt}` : txt;
   let and;
@@ -37009,7 +37020,7 @@ function reindexarCliente(c){
   const ks = D.casosDoCliente.get(c.id)||[];
   // todos os números do caso: o segundo processo, o NB extra e o NUP do CRPS também (teste 11.88, REC-03)
   const nums = k => { try{ return Object.values(numerosDoCaso(k)).flat().join(" "); }catch(e){ return ""; } };
-  const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+
+  const texto = dsa([c.nome,c.cpf,c.telefone,telefonesDe(c).map(t=>t.numero).join(" "),ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+
     (k.beneficio||"")+" "+rotuloDoPedido(k)+" "+(k.parceria||"")+" "+((s=>s?`suspenso tema ${s.tema} ${s.trib} ${s.assunto||""}`:"")(suspensaoDe(k)))+" "+((k.protocolos||[]).join(" "))+" "+nums(k)).join(" ")].join(" "));
   // guarda também só os dígitos: acha o processo tanto por "0000001-14" quanto por "000000114"
   c._ix = texto + " " + texto.replace(/\D/g, "");
@@ -47128,6 +47139,10 @@ async function semResposta(casoId, canal){
       D.tarefasPorCaso.set(casoId, (D.tarefasPorCaso.get(casoId)||[]).filter(t=>t.id!==tf.id)); }
     repinta(); aviso("Tentativa desfeita", false);
   });
+  // F444 · três tentativas seguidas sem resposta: o advogado do cliente fica sabendo
+  const adv = n===3 && advogadoDoCliente(k.cliente_id, k)[0];
+  if(adv && adv!==eu.id) api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({de_id:eu.id, para_id:adv, caso_id:casoId, andamento_id:and.id,
+    texto:`☎ ${c.nome||"O cliente"} não respondeu a 3 tentativas de contato (${canal||"telefone"}).`})}).catch(()=>{});
   const tel = soDig(c.telefone);
   if(n>=3 && tel) caixa(`<h3 style="margin:0 0 6px">${n}ª tentativa sem resposta</h3>
     <p class="meio-sub" style="margin:0 0 10px">Mande a mensagem pronta pelo WhatsApp:</p>
@@ -47153,6 +47168,11 @@ function pedirAoCliente(casoId){
       <button class="btn-rap" style="margin-left:auto" onclick="gravarPedidoAoCliente('${casoId}')" title="Registrar o pedido">Registrar<span class="sr-only"> o pedido</span></button></div>`);
   setTimeout(()=>{ const i = document.getElementById("pc-itens"); if(i) i.focus(); }, 30);
 }
+// a recepção do escritório: o cargo recepção e, sem ninguém nele, os estagiários (que fazem a recepção hoje)
+function recepcaoAtiva(){
+  const eq = equipeAtiva(), r = eq.filter(x=>x.cargo==="recepcao");
+  return r.length ? r : eq.filter(x=>x.cargo==="estagiario");
+}
 async function gravarPedidoAoCliente(casoId){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const c = D.cliPorId.get(k.cliente_id); if(!c) return;
@@ -47173,6 +47193,10 @@ async function gravarPedidoAoCliente(casoId){
   if(and && Array.isArray(D._andsFicha)) D._andsFicha.unshift(and);
   if(and && ate) try{ const [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:eu.id, atribuido_por:eu.id, lembrar_em:ate, natureza:"lembrete"})}); tarefaNaMemoria(tf); }catch(e){}
+  // F444 · quem fala com o cliente é a recepção: o pedido do advogado chega a ela
+  if(and) for(const r of recepcaoAtiva().filter(x=>x.id!==eu.id))
+    api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({de_id:eu.id, para_id:r.id, caso_id:casoId, andamento_id:and.id,
+      texto:`📄 ${(eu.nome||"").split(" ")[0]} pediu a ${c.nome}: ${itens.join("; ")}.${ate ? ` Entregar até ${fmtBarra(ate)}.` : ""} Avisar o cliente.`})}).catch(()=>{});
   montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha();
   aviso(`${itens.length} documento(s) pedido(s) ao cliente${ate ? ` até ${fmtBarra(ate)}` : ""}`, false);
 }
