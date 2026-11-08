@@ -3775,6 +3775,8 @@ html[data-tema="v10"] #conteudo-meio .ag-ext{grid-column:1/-1;background:#FAFAF8
 .ag-ext .ae-mini{font-size:12px;padding:2px 6px;min-height:24px;border:1px solid var(--borda);border-radius:4px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
 .ag-ext .ae-zap img,.ag-ext .ae-zap svg{width:16px;height:16px}
 .ag-ext .ae-txt{white-space:pre-line;margin:6px 0 8px;display:-webkit-box;-webkit-line-clamp:14;-webkit-box-orient:vertical;overflow:hidden}
+.ag-ext .ae-txt.todo{display:block;-webkit-line-clamp:unset;overflow:visible}
+.ag-ext .ae-mais{background:none;border:0;padding:0;color:var(--verde,#1f6f4a);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline}
 .ag-ext .ae-cab{display:block;font-size:12px;color:var(--cinza);margin-bottom:2px}
 .ag-ext .ae-acoes{display:flex;gap:6px;flex-wrap:wrap}
 .ag-ext [hidden]{display:none!important}
@@ -11470,7 +11472,8 @@ function montarExt(el, it){
   el.after(x); el.classList.add("ext-on"); el.setAttribute("aria-expanded","true");
   ultAnotDe(el.dataset.casos).then(a=>{
     const de = a && D.colPorId.get(a.autor_id), t = x.querySelector(".ae-txt"); if(!t) return;
-    t.innerHTML = a ? `<span class="ae-cab">Última anotação · ${esc(de?de.nome.split(" ")[0]:"equipe")}, ${esc(fmtBarra(dataSP(a.criado_em)))}</span>${esc((a.texto||"").slice(0,1000))}`
+    const tx = a ? (a.texto||"") : ""; x._texto = tx;
+    t.innerHTML = a ? `<span class="ae-cab">Última anotação · ${esc(de?de.nome.split(" ")[0]:"equipe")}, ${esc(fmtBarra(dataSP(a.criado_em)))}</span>${esc(tx.slice(0,1000))}${tx.length>1000 ? `… <button type="button" class="ae-mais" data-ae="mais" title="Mostrar a anotação inteira">Ver mais</button>` : ""}`
       : `<span class="ae-cab">Sem anotação da equipe neste caso.</span>`;
   });
   x.onclick = e=>{ const b = e.target.closest("[data-ae]"); if(!b) return; e.stopPropagation(); acaoExt(x, b.dataset.ae, b); };
@@ -11484,6 +11487,7 @@ async function acaoExt(x, a, b){
     const [cr] = await api(`/rest/v1/credenciais?select=id&cliente_id=eq.${cli.id}&tipo=eq.meu_inss&limit=1`).catch(()=>[]);
     return cr ? copiarCred(cr.id) : aviso("Sem senha do Meu INSS na ficha");
   }
+  if(a==="mais"){ const t = x.querySelector(".ae-txt"), c = t.querySelector(".ae-cab"); t.classList.add("todo"); t.innerHTML = (c?c.outerHTML:"") + esc(x._texto||""); return; }
   if(a==="cancelar"){ if(_ext) _ext.painel = ""; x.querySelector(".ae-painel").hidden = true; x.querySelector(".ae-acoes").hidden = false; return; }
   if(a==="anotar" || a==="reagendar" || a==="concluir") return painelExt(x, a, "");
   if(a==="anotar-ok") return extAnotar(x);
