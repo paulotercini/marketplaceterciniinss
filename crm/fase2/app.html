@@ -3785,7 +3785,8 @@ html[data-tema="v10"] #conteudo-meio .ag-ext{grid-column:1/-1;background:#FAFAF8
 .ag-ext .ae-fim{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:8px}
 .ag-ext .ae-canc{background:none;border:0;color:var(--cinza);text-decoration:underline;cursor:pointer;min-height:24px}
 .ag-ext .ae-aviso{margin:4px 0;color:var(--cinza)}
-@media (max-width:760px){.ag-ext .ae-acoes .btn-mini{flex:1 1 40%}}
+.ag-ext .ae-resp+.ae-todo::before{content:" · "}
+@media (max-width:760px){.ag-ext .ae-acoes .btn-mini{flex:1 1 40%}.ag-ext .ae-resp{display:none}.ag-ext .ae-resp+.ae-todo::before{content:none}}
 html[data-tema="v10"] .ag-txt .ag-oque{font-weight:400;color:var(--cinza,#4A4944)}
 html[data-tema="v10"] .ag-res{color:var(--cinza)}
 html[data-tema="v10"] .ag-selos{flex:none;display:inline-flex;align-items:center;gap:4px}
@@ -11460,8 +11461,8 @@ function montarExt(el, it){
   const {k, cli} = it, x = document.createElement("div");
   const atr = D.atrDoCaso.get(k.id)||[], resp = atr.map(id=>D.colPorId.get(id)).filter(Boolean);
   x.className = "ag-ext"; x._it = it; x._el = el; x._atual = atr[0] || "";
-  x.innerHTML = `<div class="ae-topo"><span class="ae-quem">${resp.length ? "Com "+esc(resp.map(c=>c.nome.split(" ")[0]).join(", ")) : "Sem responsável"}${
-      it.selo==="Retorno" && prazoDoTodo(k) ? " · Prazo do Microsoft To Do · última anotação do caso" : ""}</span>
+  x.innerHTML = `<div class="ae-topo"><span class="ae-quem"><span class="ae-resp">${resp.length ? "Com "+esc(resp.map(c=>c.nome.split(" ")[0]).join(", ")) : "Sem responsável"}</span>${
+      it.selo==="Retorno" && prazoDoTodo(k) ? `<span class="ae-todo">Prazo do Microsoft To Do · última anotação do caso</span>` : ""}</span>
     <span class="ae-cop">${cli && cli.cpf ? `<span class="cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">CPF ${esc(fmtCpf(cli.cpf))}</span>` : ""}
       <button type="button" class="ae-mini" data-ae="senha" title="Copiar a senha do Meu INSS">Meu INSS</button>
       <button type="button" class="ae-mini ae-zap" data-ae="zap" title="Abrir a conversa do WhatsApp ao lado">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button></span></div>
