@@ -429,3 +429,29 @@ console.log("formal: ok");
   assert.deepEqual(ESQ_CLIENTE.required, ["fala", "fim"]);
   console.log("ok F422u persona");
 }
+
+// F422v · o fecho "Qualquer dúvida, estamos à disposição." uma vez só na conversa
+{
+  const ant = ["O endereço é Rua Rui Barbosa, 663.\n\nQualquer dúvida, estamos à disposição."];
+  assert.equal(emLinhas("Isso mesmo, quinta-feira, dia 12/11, às 10h.\n\nQualquer dúvida, estamos à disposição.", ant), "Isso mesmo, quinta-feira, dia 12/11, às 10h.");
+  assert.match(emLinhas("Combinado.\n\nQualquer dúvida, estamos à disposição.", []), /disposição/);
+  console.log("ok F422v fecho");
+}
+
+
+// F422w · a resposta que repete a anterior é devolvida uma vez à Assistente
+{
+  const { repete, guardaDoTexto: gt } = await import("../../zap_plantao/index.ts");
+  const ant = "Sou a assistente virtual do escritório e posso ajudar com o agendamento de atendimento.\n\nQual assunto deseja tratar?";
+  assert.equal(repete("Sou a assistente virtual do escritório e posso ajudar com o agendamento de atendimento.\n\nQual assunto deseja tratar?", ant), true);
+  assert.equal(repete("Com a Dra. Amanda, há datas na terça-feira, dia 10/11, e na quinta-feira, dia 12/11.\n\nQual data prefere?", ant), false);
+  assert.equal(repete("Qualquer coisa", ""), false);
+  assert.equal(gt("aposentadoria", ant).anterior, ant);
+  console.log("ok F422w repete");
+}
+{
+  const ant = ["Compreendi. O assunto é aposentadoria?"];
+  assert.equal(emLinhas("Compreendi, Elisa. Como o benefício cessou, o advogado foi avisado.", ant), "Como o benefício cessou, o advogado foi avisado.");
+  assert.equal(emLinhas("Lamentamos.\n\nCompreendi, vou verificar.", ant), "Lamentamos.\n\nVou verificar.");
+  console.log("ok F422w compreendi");
+}
