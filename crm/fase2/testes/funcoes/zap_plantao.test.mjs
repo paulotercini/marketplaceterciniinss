@@ -65,6 +65,15 @@ const dec3 = await turno("sesn_3", "quero marcar", falso([
 ]));
 assert.equal(dec3.acao, "conversa");
 assert.match(enviados[1].events[0].content[0].text, /espere a resposta do Agendador/);
+// também a "conversa" que só promete ("vou verificar, aguarde") antes da resposta do Agendador (08.11.2026)
+enviados.length = 0;
+const dec3b = await turno("sesn_3", "pode ser dia 10", falso([
+  { type: "agent.thread_message_sent", id: "t1" },
+  { type: "agent.custom_tool_use", id: "sevt_a", name: "decidir", input: { acao: "conversa", resposta: "Vou verificar os horários. Aguarde, por favor." } },
+  { type: "agent.thread_message_received", id: "t2" },
+  { type: "agent.custom_tool_use", id: "sevt_b", name: "decidir", input: { acao: "conversa", resposta: "Há às 9h30 e às 10h00." } },
+]));
+assert.equal(dec3b.resposta, "Há às 9h30 e às 10h00.");
 // encerrou sem a decidir: pede uma vez e aceita a decisão que vier depois
 enviados.length = 0;
 const dec4 = await turno("sesn_4", "oi", falso([
