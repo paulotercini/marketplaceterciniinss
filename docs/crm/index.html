@@ -6276,6 +6276,14 @@ html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) #and
 .app.celular ~ .fab-sug .fab-sug-t{display:none}
 .app.celular ~ .fab-ajuda{bottom:122px;right:68px}
 .app.celular.detalhe-aberto ~ .fab-ajuda{right:68px}
+/* F457 · o Meu Dia no celular sem nada por cima (pedido do Paulo, 08.11.2026): a faixa da direita das linhas fica livre para
+   a coluna dos flutuantes, o "?" da coluna sai (o título já tem o seu; no WhatsApp ele volta pelo ⋯ dos atalhos), o aviso
+   fica à esquerda da coluna e o ⋯ das listas sobe para a linha do título */
+.app.celular #conteudo-meio :is(.cartao,h3.secao){padding-right:60px}
+.app.celular:not(.fabs-on) ~ .fab-ajuda{display:none}
+.app.celular ~ .aviso{left:12px;right:72px;max-width:none;transform:translateY(8px)}
+.app.celular ~ .aviso.on{transform:none}
+.app.celular .meio-topo .topo-extra{order:2}
 /* F303 · nenhum texto passa da borda do quadro (pedido do Paulo, 30.10.2026): na coluna estreita do caso o texto quebra a linha */
 html[data-tema="v10"] .caso-esq .lc-sobre-l{flex-wrap:wrap;row-gap:4px;height:auto}
 html[data-tema="v10"] .caso-esq :is(.lc-sobre,.lc-placa>.lc-f,.lc-placa>.lc-f>*,.lc-tram,.lc-tram-link,.et-sug){white-space:normal;min-width:0;overflow-wrap:anywhere}
@@ -6757,7 +6765,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.99</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.00</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
