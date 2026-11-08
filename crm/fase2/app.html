@@ -336,6 +336,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .chip-prazo{display:inline-flex;align-items:center;gap:6px;background:#FFF8E7;border:1px solid #E9B44C;
     border-radius:12px;padding:3px 10px;font-size:13px;color:#7A5A00}
   .chip-prazo a{cursor:pointer;font-weight:700;color:#B3261E}
+  .cap-it{margin:2px 4px 2px 0}.cap-it mark{background:#FDE68A;color:inherit;border-radius:3px;padding:0 2px}
   .previsao-box{border:1px solid #E9B44C;background:#FFF8E7;border-radius:10px;padding:10px 12px;margin-bottom:10px}
   .mov-lista{list-style:none;margin:6px 0 0;padding:0;max-height:420px;overflow-y:auto}
   .mov-lista li{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--borda);font-size:13px}
@@ -6722,7 +6723,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.86</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.87</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -21527,7 +21528,7 @@ function pintarFicha(){
     }
     const kAtual=(casoSel&&D.casoPorId.get(casoSel)) || (ks.length===1?ks[0]:null);
     if(kAtual){
-      prazoDetectado=null; prazoCancelado=false; prazoDespachar=false;
+      prazoDetectado=null; prazoCancelado=false; prazoDespachar=false; capFora={};
       pintarSugestoes(kAtual); pintarPrazoDoTexto(kAtual);
       // O RASCUNHO NÃO PODE MORRER NUMA REPINTURA. Anexar uma foto, trocar de
       // sub-aba para conferir um protocolo, abrir o menu de processos — tudo
@@ -25091,15 +25092,20 @@ function irSubAba(qual){
 const GATILHOS_PRAZO = "verificar|aguardar|ver|conferir|cobrar|retornar|checar|"+
   "solicitar|pedir|avisar|ligar|agendar|acompanhar|manifestar|apresentar|entrar em contato";
 const DIAS_SEM = {domingo:0,segunda:1,terca:2,quarta:3,quinta:4,sexta:5,sabado:6};
-function dataDoTexto(txt){
+// F446 · livre (o ⚡): sem o verbo, mas sem "hoje" solto, com "em N dias", e não depois de perícia, audiência ou DIB
+function dataDoTexto(txt, livre){
   const t = dsa(txt||"");
-  const re = new RegExp("\\b(?:"+GATILHOS_PRAZO+")\\b[^.;\\n]{0,40}?\\b("+
+  const re = new RegExp((livre ? "(?:^|[^a-z0-9/])" : "\\b(?:"+GATILHOS_PRAZO+")\\b[^.;\\n]{0,40}?\\b")+"("+
     "(\\d{1,2})[\\/.](\\d{1,2})(?:[\\/.](\\d{2,4}))?"+   // 12/08 · 12/08/2026 · 12.08
-    "|(\\d{1,3})\\s*dias"+                                   // em 30 dias
-    "|amanha|hoje|depois de amanha"+
-    "|segunda|terca|quarta|quinta|sexta|sabado|domingo)");
+    (livre ? "|em (\\d{1,3})\\s*dias" : "|(\\d{1,3})\\s*dias")+   // em 30 dias
+    "|depois de amanha|amanha"+(livre ? "" : "|hoje")+
+    "|segunda|terca|quarta|quinta|sexta|sabado|domingo"+
+    "|seg|qua|qui|sex|sab|dom|ter(?!\\s+[a-z]))(?![a-z0-9])");   // "sex"; "ter" só sozinho, porque "ter o documento" é verbo
   const m = t.match(re);
   if(!m) return null;
+  const ini = m.index + m[0].length - m[1].length;
+  if(livre && /(pericia|audiencia|julgamento|sessao|nasc|\bdib|\bder|\bdcb)[^.;\n]{0,12}$/.test(t.slice(Math.max(0, ini-24), ini))) return null;
+  const trecho = String(txt).substr(ini, m[1].length);
   const hj = new Date(hoje()+"T12:00:00");
   const iso = d => d.toLocaleDateString("sv");
   if(m[2]){                                    // data escrita
@@ -25108,19 +25114,21 @@ function dataDoTexto(txt){
     let a = ano ? (+ano < 100 ? 2000 + +ano : +ano) : hj.getFullYear();
     let d = new Date(a, mes-1, dia, 12);
     if(!ano && d < hj) d = new Date(a+1, mes-1, dia, 12);   // sem ano: o próximo
-    return {iso: iso(d), trecho: m[1]};
+    if(livre && d < hj) return null;
+    return {iso: iso(d), trecho};
   }
   if(m[5]){                                    // "em N dias"
     const d = new Date(hj); d.setDate(d.getDate() + +m[5]);
-    return {iso: iso(d), trecho: m[1]};
+    return {iso: iso(d), trecho};
   }
-  const p = m[1];
-  if(p==="hoje") return {iso: iso(hj), trecho: p};
-  if(p==="amanha"){ const d=new Date(hj); d.setDate(d.getDate()+1); return {iso:iso(d), trecho:p}; }
-  if(p==="depois de amanha"){ const d=new Date(hj); d.setDate(d.getDate()+2); return {iso:iso(d), trecho:p}; }
+  const ABREV = {seg:"segunda",ter:"terca",qua:"quarta",qui:"quinta",sex:"sexta",sab:"sabado",dom:"domingo"};
+  const p = ABREV[m[1]] || m[1];
+  if(p==="hoje") return {iso: iso(hj), trecho};
+  if(p==="amanha"){ const d=new Date(hj); d.setDate(d.getDate()+1); return {iso:iso(d), trecho}; }
+  if(p==="depois de amanha"){ const d=new Date(hj); d.setDate(d.getDate()+2); return {iso:iso(d), trecho}; }
   if(p in DIAS_SEM){
     const d=new Date(hj); const falta=(DIAS_SEM[p]-d.getDay()+7)%7 || 7;
-    d.setDate(d.getDate()+falta); return {iso: iso(d), trecho: p};
+    d.setDate(d.getDate()+falta); return {iso: iso(d), trecho};
   }
   return null;
 }
@@ -25227,19 +25235,54 @@ function tfEscolherData(bt){
   if(inp.showPicker) try{ inp.showPicker(); }catch(e){ inp.focus(); }
   else inp.focus();
 }
+// F446 · CAPTURA QUE ENTENDE A FRASE (ideia do Todoist, 08.11.2026): a data, o @ de quem faz e o * da estrela lidos
+// na hora, sem IA. Cada parte reconhecida aparece destacada, e o ✕ desfaz só ela, enquanto o mesmo trecho estiver no texto
+let capFora = {};
+const RX_ESTRELA = /(^|\s)\*(?=\s|$)/;
+function capturaDoTexto(txt, livre){
+  const t = String(txt||"");
+  let data = dataDoTexto(t) || (livre ? dataDoTexto(t, true) : null);
+  if(data && capFora.data===data.trecho) data = null;
+  let quem = null;
+  for(const m of t.matchAll(/@(\p{L}+)/gu)){
+    const c = equipeAtiva().find(x=>dsa((x.nome||"").split(" ")[0])===dsa(m[1]));
+    if(c){ quem = {id:c.id, nome:c.nome.split(" ")[0], trecho:m[0]}; break; }
+  }
+  if(quem && capFora.quem===quem.trecho) quem = null;
+  return {data, quem, estrela: RX_ESTRELA.test(t) && !capFora.estrela};
+}
+const semEstrela = t => String(t||"").replace(/(^|\s)\*(?=\s|$)/g, "$1").replace(/[ \t]{2,}/g, " ").trim();
+function capDesfazer(tipo, trecho, fn){
+  capFora[tipo] = tipo==="estrela" ? true : trecho;
+  if(tipo==="data"){ prazoCancelado = true; prazoDetectado = null; prazoDespachar = false; }
+  fn==="ar" ? pintarCapturaAr() : pintarPrazoDoTexto();
+}
+function capChips(cap, fn, rotData){
+  const x = (tipo, trecho) => `<a role="button" tabindex="0" title="desfazer o reconhecimento" aria-label="desfazer" onclick="capDesfazer('${tipo}',${esc(JSON.stringify(trecho||""))},'${fn}')">✕</a>`;
+  return [cap.data ? `<span class="chip-prazo cap-it">🗓 <mark>${esc(cap.data.trecho)}</mark> ${rotData}: <b>${fmt(cap.data.iso)}</b> (${diaSemana(cap.data.iso).slice(0,3)}) ${x("data", cap.data.trecho)}</span>` : "",
+    cap.quem ? `<span class="chip-prazo cap-it">👤 <mark>${esc(cap.quem.trecho)}</mark> ${cap.data ? "faz" : "recebe o aviso"} ${x("quem", cap.quem.trecho)}</span>` : "",
+    cap.estrela ? `<span class="chip-prazo cap-it">⭐ <mark>*</mark> importante ${x("estrela")}</span>` : ""].join("");
+}
 // enquanto digita: mostra a data que o sistema entendeu, para confirmar
 function pintarPrazoDoTexto(k){
   const chip=document.getElementById("and-prazo-chip"); if(!chip) return;
   const inp=document.getElementById("and-texto");
-  if(prazoCancelado){ chip.innerHTML=""; return; }
-  const achado=dataDoTexto(inp?inp.value:"");
+  const cap = capturaDoTexto(inp ? inp.value : "");
+  if(prazoCancelado) cap.data = null;
+  const achado = cap.data;
   prazoDetectado = achado ? achado.iso : null;
-  chip.innerHTML = achado
-    ? `<span class="chip-prazo">🗓 ${prazoDespachar?"volta à fila":"lembrete"}: <b>${fmt(achado.iso)}</b> (${diaSemana(achado.iso).slice(0,3)})
-        <a title="não criar lembrete" onclick="prazoCancelado=true;prazoDetectado=null;prazoDespachar=false;pintarPrazoDoTexto()">✕</a></span>${achado.iso>hoje() ? `
+  chip.innerHTML = capChips(cap, "and", prazoDespachar ? "volta à fila" : cap.quem && cap.quem.id!==eu.id ? "tarefa" : "lembrete")
+    + (achado && achado.iso>hoje() ? `
         <button type="button" class="btn-mini chip-desp${prazoDespachar?" on":""}" aria-pressed="${prazoDespachar}" onclick="chipDespachar()"
-          title="ao registrar, conclui por hoje: a data vira o Concluir em e o cliente sai do seu Meu Dia"><span aria-hidden="true">✔ Concluir</span><span class="sr-only">✔ e concluir por hoje</span></button>` : ""}`
-    : "";
+          title="ao registrar, conclui por hoje: a data vira o Concluir em e o cliente sai do seu Meu Dia"><span aria-hidden="true">✔ Concluir</span><span class="sr-only">✔ e concluir por hoje</span></button>` : "");
+}
+// o ⚡: a mesma leitura, mais livre (sem o verbo), e a data vira o lembrete do caso escolhido
+function pintarCapturaAr(){
+  const box = document.getElementById("ar-cap"), ta = document.getElementById("ar-texto"); if(!box || !ta) return;
+  const cap = capturaDoTexto(ta.value, true);
+  if(cap.estrela){ const ck = document.getElementById("ar-imp"); if(ck) ck.checked = true; }
+  box.innerHTML = capChips(cap, "ar", cap.quem && cap.quem.id!==eu.id ? "tarefa" : "lembrete")
+    + (cap.data && !((document.getElementById("ar-caso")||{}).value) ? ` <span class="meio-sub">o lembrete precisa do caso</span>` : "");
 }
 // F292 · prazoDespachar: a data lida no texto vira a volta à fila (Concluir por hoje), no lugar do lembrete
 let prazoDetectado = null, prazoCancelado = false, prazoDespachar = false;
@@ -48416,7 +48459,9 @@ async function novoAndamento(casoUnico){
   if(!casoId || !inp.value.trim()) return;
   const kAlvo=D.casoPorId.get(casoId);
   if(kAlvo && kAlvo.fase==="encerrado" && !honAbertoNoCaso(kAlvo)) return aviso("✔ Processo encerrado — reabra pelo ↺ reabrir, no alto do caso, para comentar");   // F236 · com honorário aberto, a cobrança se anota
-  const texto=inp.value.trim();
+  const capE = capturaDoTexto(inp.value);   // F446 · o @ de quem faz e o * da estrela
+  const texto=semEstrela(inp.value);
+  if(!texto) return;
   // a escolha é OBRIGATÓRIA — mas só onde a caixa de escolha existe
   if(document.getElementById("tf-box")){
     // F182 · chaves desligadas = sem tarefa; lembrete sem pessoa é para quem escreve
@@ -48499,15 +48544,17 @@ async function novoAndamento(casoUnico){
   } else if(prazoDetectado && k && !prazoCancelado && and){
     if(!tfCriouLembrete){
       try{
+        const faz = capE.quem ? capE.quem.id : eu.id;
         const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
-          body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:eu.id,
-                               atribuido_por:eu.id, lembrar_em:prazoDetectado, natureza:"lembrete"})});
+          body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:faz,
+                               atribuido_por:eu.id, lembrar_em:prazoDetectado, natureza:faz===eu.id ? "lembrete" : "compromisso"})});
         tarefaNaMemoria(tf);
-        lembrou=` · 🗓 lembrete para ${fmt(prazoDetectado)}`;
+        lembrou=faz===eu.id ? ` · 🗓 lembrete para ${fmt(prazoDetectado)}` : ` · tarefa de ${capE.quem.nome} para ${fmt(prazoDetectado)}`;
       }catch(e){}
     }
   }
-  prazoDetectado=null; prazoCancelado=false; prazoDespachar=false;
+  if(capE.estrela && k && !k.importante && and){ k.importante = true; patchCaso(casoId, {importante:true}).catch(()=>{}); }
+  prazoDetectado=null; prazoCancelado=false; prazoDespachar=false; capFora={};
   limparRascunho(casoId);      // gravou: o rascunho guardado já cumpriu o papel
   // "DCB 16/09" escrita no comentário vira a data do caso — é assim que a
   // equipe sempre anotou no To Do, e ninguém precisa procurar o campo
@@ -55187,7 +55234,7 @@ function arArquivos(el){
   if(r) r.textContent = n ? (n>1 ? `${n} arquivos` : el.files[0].name) : "";
 }
 function anotacaoRapida(pre, cliId){
-  arCliSel=null; arLead=null; arNovo=null;
+  arCliSel=null; arLead=null; arNovo=null; capFora={};
   const aberto = !cliId && clienteAberto && D.cliPorId.get(clienteAberto);
   caixa(`<h3 style="margin:0 0 6px">⚡ Anotação rápida</h3>
     ${aberto ? `<button type="button" class="btn-mini ar-cli" style="margin-bottom:4px" onclick="arEscolher('${aberto.id}')" title="anotar para o cliente desta ficha">${esc(aberto.nome)}</button>` : ""}
@@ -55196,8 +55243,9 @@ function anotacaoRapida(pre, cliId){
     <div id="ar-achados" style="margin-top:4px;max-height:180px;overflow:auto"></div>
     <div id="ar-alvo" class="meio-sub" style="margin-top:6px"></div>
     <textarea id="ar-texto" rows="3" placeholder="anotação"
-      style="width:100%;margin-top:6px;resize:vertical" oninput="sugerirRetorno('ar-texto','ar-sug',arCliSel)"
+      style="width:100%;margin-top:6px;resize:vertical" oninput="sugerirRetorno('ar-texto','ar-sug',arCliSel);pintarCapturaAr()"
       onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();salvarAnotacaoRapida();}"></textarea>
+    <div id="ar-cap" style="margin-top:4px"></div>
     <div id="ar-sug" class="meio-sub" style="margin-top:4px"></div>
     <div class="form-linha" style="margin-top:4px;align-items:center;gap:6px">${window.SpeechRecognition || window.webkitSpeechRecognition ? `
       <button type="button" class="btn-mini" onclick="arDitar(this)" title="Ditar a anotação"><span aria-hidden="true">🎤 Ditar</span><span class="sr-only">Ditar a anotação</span></button>` : ""}
@@ -55352,7 +55400,7 @@ function arMostrarAlvo(){
     .sort((a,b)=>(a.criado_em||"")<(b.criado_em||"")?1:-1);
   // F404 · sem escolher o caso, a anotação fica na ficha para distribuir depois (o botão do cabeçalho fica vermelho)
   div.innerHTML = ks.length
-    ? `Caso: <select id="ar-caso"><option value="">a distribuir</option>${ks.map(k=>`<option value="${k.id}">${esc(rotuloCasoEscolha(k))}</option>`).join("")}</select>`
+    ? `Caso: <select id="ar-caso" onchange="pintarCapturaAr()"><option value="">a distribuir</option>${ks.map(k=>`<option value="${k.id}">${esc(rotuloCasoEscolha(k))}</option>`).join("")}</select>`
     : `Sem caso: vai à ficha`;
 }
 // dois B31 abertos se distinguem pela fase e pelo número (teste 11.88, REC-05)
@@ -55382,7 +55430,8 @@ async function salvarAnotacaoRapida(){
   if(arLead && arqs.length) return aviso("Interessado não recebe anexo: cadastre como cliente novo");
   if(!cli && !arLead && !arNovo)
     return aviso("Escolha o cliente na lista — ou crie o cadastro/interessado embaixo dela");
-  const t=(document.getElementById("ar-texto").value||"").trim();
+  const tCru=(document.getElementById("ar-texto").value||"").trim();
+  const cap = capturaDoTexto(tCru, true), t = semEstrela(tCru);   // F446 · o * vira a ⭐ e sai do texto
   if(!t) return aviso("Escreva a anotação");
   // F53 · cliente NOVO no ato: cadastro mínimo (nome), a anotação já entra
   // como atendimento urgente, e a ficha abre para completar depois
@@ -55439,9 +55488,10 @@ async function salvarAnotacaoRapida(){
       const [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
         body:JSON.stringify({caso_id:casoId, autor_id:eu.id, origem:"app", texto:t})})||[];
       if(and && /@\p{L}/u.test(t)) await criarMencoes(t, casoId, and.id);   // F236 · o @ da anotação rápida avisa a pessoa
-      const lem = arLembrete();   // F436 · o lembrete que o ✨ Organizar propôs e a pessoa manteve
+      const lem = arLembrete() || (cap.data && cap.data.iso);   // F436 · o lembrete do ✨ Organizar; F446 · ou a data lida na frase
+      const faz = cap.quem ? cap.quem.id : eu.id;   // F446 · o @ diz quem faz
       if(and && lem) try{ const [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
-        body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:eu.id, atribuido_por:eu.id, lembrar_em:lem, natureza:"lembrete"})}); tarefaNaMemoria(tf); }
+        body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:faz, atribuido_por:eu.id, lembrar_em:lem, natureza:faz===eu.id ? "lembrete" : "compromisso"})}); tarefaNaMemoria(tf); }
         catch(e){ aviso("O lembrete não gravou: ponha a data no caso"); }
       const anx = arqs.length ? await arSubir(arCliSel, ehPreCaso(k) ? null : casoId, and && and.id, arqs) : [];
       // F403 · a cópia curta fica no cliente: é ela que o botão Anotações do cabeçalho lista e sinaliza
