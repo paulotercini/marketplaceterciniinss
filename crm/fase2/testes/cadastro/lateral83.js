@@ -55,9 +55,9 @@ FIX.casos[0] = { ...FIX.casos[0], prazo: ontem };   // um caso com prazo VENCIDO
   const ler = () => p.evaluate(() => {
     const cs = getComputedStyle(document.getElementById("grupo-dinamicas"), "::before");
     const cont = document.querySelector('.lista-item[data-v="meudia"] .cont');
-    const titulos = [...document.querySelectorAll(".sidebar .grupo h3")].map(h => h.textContent.trim());
+    const titulos = [...document.querySelectorAll(".sidebar .grupo:not([hidden]) h3")].map(h => h.textContent.trim());
     return { antes: cs.content, cor: cont ? getComputedStyle(cont).color : null, venc: !!cont && cont.classList.contains("venc"),
-      titulo: cont ? cont.title : "", titulos, grupos: document.querySelectorAll(".sidebar .grupo").length,
+      titulo: cont ? cont.title : "", titulos, grupos: document.querySelectorAll(".sidebar .grupo:not([hidden])").length,
       itens: document.querySelectorAll(".sidebar .lista-item").length, vencidos: quantosVencidos() };
   });
 
