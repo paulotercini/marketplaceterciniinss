@@ -575,6 +575,8 @@ A **F437** (12.79, as listas na proposta C, escolha do Paulo de 08.11.2026, arte
 
 A **F422w** (o teste das 105 conversas, 08.11.2026): a `decidir` cuja resposta repete a anterior (metade ou mais dos parágrafos iguais aos da última resposta enviada, `repete`, `guarda.anterior`) é devolvida uma vez à Assistente, porque ela às vezes respondia de novo à mensagem velha; `emLinhas` tira o fecho "Qualquer dúvida, estamos à disposição." depois da primeira vez e o "Compreendi, Nome." inteiro (deixava "Elisa." solto), e põe maiúscula no começo de cada linha; as `CORRECOES` pedem que não se repita pergunta já respondida, "documento recebido" só com arquivo, a troca de modalidade e o que a IA não sabe à equipe, sem promessa, e o artigo antes do nome.
 
+A **F439** (a leitura do processo no celular, pedido do Paulo de 08.11.2026): no processo inteiro (F289), a pinça dá o zoom das peças, de 50 % a 300 %, guardado em `crm_pi_zoom` no fim do gesto (`piZoomPara`; `.pi-autos` com `touch-action: pan-x pan-y`, `gesturestart` barrado para o Safari não ampliar a página), e no toque os botões do zoom saem do topo e o iframe do PJe deixa os dedos à leitura (`pointer-events: none`); o botão do topo diz "Claude"; o alto da lista de Peças (`.pi-arv-cab`) tem **Tudo** (`piTudo`, que vira Limpar com todas marcadas) e a seta que leva à última folha (`piFim`, `el._alvo = "fim"`, que `piAcender` mantém enquanto as peças crescem). A árvore passou a `.pi-it button`. Teste: `f289.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
