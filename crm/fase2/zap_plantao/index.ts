@@ -129,7 +129,12 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `- Remarcar, cancelar ou saber o dia de um atendimento: encaminhe sempre ao Agendador, que consulta os atendimentos agendados do número; nunca use acao "equipe" antes da resposta dele. ` +
   `Dois atendimentos no mesmo dia, um depois do outro: o Agendador oferece dois horários seguidos com o mesmo advogado, sem passar à equipe. ` +
   `Cliente da ficha (atendimento 002): o sistema já tem o nome; não o peça.\n` +
-  `- Não diga à pessoa que "informe ao escritório": você escreve em nome do escritório.`;
+  `- Não diga à pessoa que "informe ao escritório": você escreve em nome do escritório.\n` +
+  `- Teste das 105 conversas: não pergunte de novo o que a pessoa já respondeu (assunto, nome, data, advogado) e não repita a resposta anterior. ` +
+  `"Documento recebido" somente quando a mensagem trouxer arquivo ou fotografia. Pedido de atendimento por vídeo ou telefone de quem já tem atendimento agendado, ` +
+  `ou pergunta que você não sabe responder (estacionamento, por exemplo): não prometa; use acao "equipe" e diga que um colaborador do escritório confirma. ` +
+  `Nome de pessoa com artigo: "do Joaquim", "da Maria". Cumprimente pelo horário de Brasília, mesmo que a pessoa use outro cumprimento. ` +
+  `Toda vaga devolvida por consultar_vagas pode ser oferecida, mesmo depois das 17h. Ofereça dois horários por vez, e não a lista inteira.`;
 
 // "agendar", e não "marcar": o escritório escreve em português técnico (Paulo, 07.11.2026)
 export const VOCABULARIO = `\n\nVocabulário: escreva "agendar", "agendamento" e "agendado"; nunca "marcar", "marcação" ou "marcado" para atendimento, ` +
@@ -291,10 +296,15 @@ export function emLinhas(txt: string, antes: string[] = []) {
   if (antes.length && /\n\n/.test(t)) t = t.replace(/^(?:olá|oi|bom dia|boa tarde|boa noite)\b[^\n]*\n\n/i, "");
   // "Compreendi." no máximo uma vez na conversa
   let vez = /\bCompreendi\b/.test(ja);
-  t = t.replace(/\bCompreendi[.,!]?\s*/g, (m) => (vez ? "" : ((vez = true), m)));
+  // "Compreendi, Elisa." sai inteira: tirar só a palavra deixava "Elisa." solto (teste das 105 conversas)
+  t = t.replace(/\bCompreendi(?:,\s*[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+(?:\s+[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+)?(?=[.!]))?[.,!]?\s*/g, (m) => (vez ? "" : ((vez = true), m)));
+  // o fecho "Qualquer dúvida, estamos à disposição." também uma vez só (teste das 105 conversas, 08.11.2026)
+  const RX_FECHO = /\s*Qualquer d[uú]vida,? (?:estamos|ficamos|seguimos) à disposição[.!]?/gi;
+  let fechou = /Qualquer d[uú]vida,? (?:estamos|ficamos|seguimos) à disposição/i.test(ja);
+  t = t.replace(RX_FECHO, (m) => (fechou ? "" : ((fechou = true), m))).trim();
   // maiúscula depois de ponto final, exclamação e interrogação ("Sr." e "Dra." não encerram a frase)
   t = t.replace(/((?<!\b(?:Sr|Sra|Srta|Dr|Dra|Prof|Profa|n|nº))[.!?]\s+)([a-záàéíóúâêôãõçü])/g, (_, a, l) => a + l.toUpperCase());
-  t = t.replace(/^([a-záàéíóúâêôãõçü])/, (l) => l.toUpperCase()).trim();
+  t = t.replace(/^([a-záàéíóúâêôãõçü])/gm, (l) => l.toUpperCase()).trim();
   if (t.includes("\n") || t.length <= 120) return t;
   return t.replace(/^(.+?(?<!\b(?:Sr|Sra|Srta|Dr|Dra|Prof|Profa))[.!?])\s+(?=\S)/, "$1\n\n");
 }
@@ -635,7 +645,7 @@ async function simular(s: Cenario) {
     x.mensagens.push(m);
     const antes = uso.length;
     let r: Record<string, any>;
-    try { r = await turno(sessao.id, textoDoTurno(x, i ? [m] : x.mensagens, !i), fetch, fer, guardaDoTexto(m.texto)); }
+    try { r = await turno(sessao.id, textoDoTurno(x, i ? [m] : x.mensagens, !i), fetch, fer, guardaDoTexto(m.texto, enviados(x.mensagens).pop())); }
     catch (e) { saida.push({ cliente: m.texto, erro: String(e).slice(0, 300) }); break; }
     const enc = fer.encaminhado as { motivo?: string };
     const acao = enc && "motivo" in enc ? "equipe" : r.acao;
@@ -696,11 +706,18 @@ export function ligacaoTriagem(assistente: Record<string, any>, agendador: strin
 
 // F422s · proteções do segundo teste de 72 conversas: "nada" só para agradecimento, e remarcar ou cancelar
 // passa pelo Agendador antes da equipe (cada uma cobrada uma vez por turno)
-export type Guarda = { semNada?: boolean; agendaPrimeiro?: boolean };
+export type Guarda = { semNada?: boolean; agendaPrimeiro?: boolean; anterior?: string };
 const RX_SO_CONFIRMA = /^[\s\p{P}\p{Extended_Pictographic}]*(?:(?:ok\w*|obrigad\w*|agradeç\w*|grat[oa]|valeu|combinado|certo|entendi|t[aá] bom|beleza|perfeito|tchau|at[eé] (?:mais|logo)|fico no aguardo|aguardo|bom dia|boa tarde|boa noite)[\s\p{P}\p{Extended_Pictographic}]*)*$/iu;
-export function guardaDoTexto(texto: string | null | undefined): Guarda {
+export function guardaDoTexto(texto: string | null | undefined, anterior?: string | null): Guarda {
   const t = String(texto || "").trim();
-  return { semNada: !!t && !RX_SO_CONFIRMA.test(t), agendaPrimeiro: /remarc|desmarc|reagend|cancel|n[aã]o lembro (?:o dia|a data|o hor)|que dia [eé] (?:o )?meu|hor[aá]rio (?:marcado|agendado)|atendimento (?:marcado|agendado)/i.test(t) };
+  return { anterior: anterior || "", semNada: !!t && !RX_SO_CONFIRMA.test(t), agendaPrimeiro: /remarc|desmarc|reagend|cancel|n[aã]o lembro (?:o dia|a data|o hor)|que dia [eé] (?:o )?meu|hor[aá]rio (?:marcado|agendado)|atendimento (?:marcado|agendado)/i.test(t) };
+}
+// a Assistente às vezes devolve a resposta do turno anterior, sem ler a mensagem nova (teste das 105 conversas, 08.11.2026):
+// metade ou mais dos parágrafos iguais aos da última resposta enviada é repetição
+const paragrafos = (t: string) => String(t || "").split(/\n\s*\n/).map((p) => p.trim().toLowerCase().replace(/\s+/g, " ")).filter((p) => p.length > 25);
+export function repete(resposta: string | null | undefined, anterior: string | null | undefined) {
+  const a = new Set(paragrafos(anterior || "")), r = paragrafos(resposta || "");
+  return !!a.size && !!r.length && r.filter((p) => a.has(p)).length * 2 >= r.length;
 }
 // a sessão que ficou com uma ferramenta sem resposta recusa a mensagem nova (400 "waiting on responses to events")
 export const ESPERA_REENVIO_MS = 1500;
@@ -733,7 +750,7 @@ export async function turno(sessao: string, texto: string, buscar: typeof fetch 
     const enviado = await env.json().catch(() => null) as Record<string, any> | null;
     const marco: string = enviado?.data?.[0]?.processed_at || "";
     const leitor = st.body.pipeThrough(new TextDecoderStream()).getReader();
-    let resto = "", esperas = 0, aoAgendador = 0, cobrado = false, enviou = false, nadaCobrado = false, agCobrado = false;   // aoAgendador: mensagens à espera da resposta do Agendador neste turno
+    let resto = "", esperas = 0, aoAgendador = 0, cobrado = false, enviou = false, nadaCobrado = false, agCobrado = false, repCobrado = false;   // aoAgendador: mensagens à espera da resposta do Agendador neste turno
     for (;;) {
       const { value, done } = await leitor.read();
       if (done) throw new Error("o stream fechou sem decisão");
@@ -764,6 +781,7 @@ export async function turno(sessao: string, texto: string, buscar: typeof fetch 
         }
         const cobrar = ev.type === "agent.custom_tool_use" && ev.name === "decidir"
           ? (guarda.semNada && ev.input?.acao === "nada" && !nadaCobrado ? ((nadaCobrado = true), "Ainda não registrado: a mensagem da pessoa não é agradecimento nem despedida. Responda a ela e chame decidir de novo.")
+            : ev.input?.acao !== "nada" && !repCobrado && repete(ev.input?.resposta, guarda.anterior) ? ((repCobrado = true), "Ainda não registrado: essa resposta repete a anterior, já enviada. Leia a mensagem nova da pessoa, que já respondeu, e siga para o próximo passo sem repetir pergunta nem frase.")
             : guarda.agendaPrimeiro && ev.input?.acao === "equipe" && !enviou && !agCobrado ? ((agCobrado = true), "Ainda não registrado: antes da equipe, encaminhe ao Agendador pela send_to_agent; ele consulta os atendimentos agendados deste número e resolve. Chame decidir com a resposta dele.")
             : "") : "";
         if (cobrar) {
@@ -818,7 +836,7 @@ async function decidirPorAgente(x: Contexto) {
   const viva = s?.id && s.v === versao && Date.now() - Date.parse(s.em) < MA_SESSAO_DIAS * 864e5;
   let r: Record<string, any> | null = null, id = viva ? s!.id : "", em = viva ? s!.em : "";
   const fer = TOKEN_AGENDA && x.conversa_id ? ferramentasDaConversa(x.conversa_id) : {};
-  const guarda = guardaDoTexto([...msgs].reverse().find((m) => m.direcao === "entrada")?.texto);
+  const guarda = guardaDoTexto([...msgs].reverse().find((m) => m.direcao === "entrada")?.texto, enviados(msgs).pop());
   if (viva) {
     try { r = await turno(id, textoDoTurno(x, msgs.filter((m) => m.momento > s!.ate), false), fetch, fer, guarda); }
     catch (e) { if (![400, 404, 409].includes((e as { status?: number }).status || 0)) throw e; }   // sessão parada: abre outra
