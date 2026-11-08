@@ -567,6 +567,8 @@ A **F422t** (a terceira rodada das 72 conversas, 07.11.2026): o Agendador dizia 
 
 A **F422u** (pedido do Paulo de 08.11.2026, "para a Amanda pode ser agendado cliente 001 também"): a vaga sem código no Google ("LIVRE 09h30-10h00", da Dra. Amanda e do Dr. Marcos), que o Apps Script classifica pela duração (30 minutos = 002), passa a ser oferecida e agendada também como 001 pela IA (`livresDoTipo` em `vagasDoDia` e na releitura da vaga); o `agendar` do `Code.gs` já aceitava qualquer tipo na vaga sem código. A vaga com código fixo ("002 - Livre") continua só do seu tipo. O simulador aceita `persona` (e `max`, até 10 falas): depois das falas de `turnos`, o cliente é feito pelo Claude a partir da persona e responde ao que a IA disse (`promptCliente`, `ESQ_CLIENTE`), até cumprir o objetivo ou a conversa ir à equipe. Teste: `testes/funcoes/zap_plantao.test.mjs`.
 
+A **F422v** (o teste das 105 conversas, pedido do Paulo de 08.11.2026): a `decidir` da Assistente que chega antes da resposta do Agendador é devolvida também quando não é "nada" ("Vou verificar os horários. Aguarde, por favor."), duas vezes no máximo; a ferramenta que o Agendador chama depois do turno fechado é fechada no turno seguinte com até quatro tentativas e pausa (`ESPERA_REENVIO_MS`), porque o reenvio imediato voltava 400; e o simulador manda à IA também a última fala da persona (confirmar, escolher o horário).
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
