@@ -6656,7 +6656,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.79</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.80</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14356,16 +14356,16 @@ function linhaAtendimento(a){
 }
 const horaDoItem = it => it.atend ? it.hora : it.ev && it.ev.data_hora ? horaSP(it.ev.data_hora) : "";
 // "Manhã e tarde" ou "Sem divisão": a escolha fica no navegador (crm_periodos) e o menu ⋯ da lista a troca
-const periodosLigados = () => ler("crm_periodos")!=="nao";
+const periodosLigados = () => opcLista("per")!=="nao";
 // F437 · O MENU ⋯ DAS LISTAS (proposta C, aprovada pelo Paulo em 08.11.2026): Agrupar, Ordenar, Visualizar e Períodos,
-// como no Microsoft To Do. Cada escolha fica no navegador e vale para todas as listas em que se aplica
+// como no Microsoft To Do. Cada escolha fica no navegador, por lista ("crm_ordem:fase:inss"); a lista sem escolha usa a última feita em qualquer uma
 const OPC_LISTA = {
   agrupar: ["crm_agrupar", [["data","Data"],["lista","Lista"],["resp","Responsável"],["esp","Espécie"]]],
   ordem: ["crm_ordem", [["prazo","Data"],["alfa","Nome"],["imp","Importante"]]],
   vis: ["crm_vis", [["compacta","Compacta"],["cartoes","Cartões"]]],
   per: ["crm_periodos", [["sim","Manhã e tarde"],["nao","Sem divisão"]]],
 };
-const opcLista = q => { const [ch, ops] = OPC_LISTA[q], v = ler(ch); return ops.some(o=>o[0]===v) ? v : ops[0][0]; };
+const opcLista = q => { const [ch, ops] = OPC_LISTA[q], v = ler(ch+":"+visao) || ler(ch); return ops.some(o=>o[0]===v) ? v : ops[0][0]; };
 function pintarOpcLista(){
   const el = document.getElementById("lista-opc"); if(!el) return;
   const agenda = visao==="meudia" || visao==="planejado", fase = String(visao).startsWith("fase:");
@@ -14375,9 +14375,10 @@ function pintarOpcLista(){
   el.innerHTML = linhas.filter(l=>l[2]).map(([q, rot, , fora])=>`<div class="lo-ln"><span>${rot}</span><div class="lo-seg" role="group" aria-label="${rot}">${
     OPC_LISTA[q][1].filter(o=>!fora.includes(o[0])).map(([v, r])=>`<button type="button" data-lopc="${q}" data-v="${v}" aria-pressed="${opcLista(q)===v}">${r}</button>`).join("")}</div></div>`).join("");
   el.querySelectorAll("[data-lopc]").forEach(b=>b.onclick=e=>{ e.stopPropagation();
-    const q = b.dataset.lopc; guardar(OPC_LISTA[q][0], b.dataset.v);
+    const q = b.dataset.lopc; guardar(OPC_LISTA[q][0]+":"+visao, b.dataset.v); guardar(OPC_LISTA[q][0], b.dataset.v);
     if(q==="ordem") document.getElementById("ordem").value = b.dataset.v;
     limAg = {}; render(); });
+  if(temaV10()) document.getElementById("ordem").value = opcLista("ordem");
   const cm = document.getElementById("conteudo-meio"); if(cm) cm.classList.toggle("vis-cartoes", temaV10() && opcLista("vis")==="cartoes");
 }
 // a chave de cada agrupamento: no Planejado sai do item da agenda, na lista de clientes do primeiro caso
