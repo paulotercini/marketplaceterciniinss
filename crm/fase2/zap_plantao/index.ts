@@ -424,13 +424,19 @@ export function rotulo(data: string, inicio: string, com: string) {
   const [h, mi] = inicio.split(":");
   return `${SEMANA[new Date(Date.UTC(a, m - 1, d)).getUTCDay()]}, ${String(d).padStart(2, "0")}/${String(m).padStart(2, "0")}, às ${Number(h)}h${mi}, com ${com}`;
 }
+// a vaga sem código no Google ("LIVRE 09h30-10h00", Marcos e Amanda) não tem tipo: o Apps Script a classifica pela duração
+// (30 min = 002), mas ela aceita o 001 ao agendar (pedido do Paulo, 08.11.2026: a Dra. Amanda atende cliente novo)
+export function livresDoTipo(d: any, tipo: string) {
+  const vs = [...(d.livres?.[tipo] || []), ...(tipo === "001" ? (d.livres?.["002"] || []).filter((v: any) => v.tipoFixo === false) : [])];
+  return vs.filter((v: any, k: number) => v.eventoId && vs.findIndex((x: any) => x.eventoId === v.eventoId) === k);
+}
 // só a vaga marcada no Google (com eventoId), nunca o horário calculado; a primeira da manhã e a
 // primeira da tarde vêm sempre, porque o Agendador oferece uma de cada (pedido do Paulo, 25.10.2026)
 export function vagasDoDia(dias: any[], tipo: string, com: string, n = 12) {
   const todas: { rotulo: string; data: string; inicio: string; eventoId: string; periodo: string }[] = [];
   for (const d of dias || []) {
     if (d.bloqueado) continue;
-    for (const v of d.livres?.[tipo] || []) if (v.eventoId) todas.push({ rotulo: rotulo(d.data, v.inicio, com), data: d.data, inicio: v.inicio,
+    for (const v of livresDoTipo(d, tipo)) todas.push({ rotulo: rotulo(d.data, v.inicio, com), data: d.data, inicio: v.inicio,
       eventoId: v.eventoId, periodo: v.inicio < "12:00" ? "manhã" : "tarde" });
   }
   todas.sort((x, y) => (x.data + x.inicio).localeCompare(y.data + y.inicio));
@@ -458,7 +464,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
     const ordem = tipos(c).includes(String(pedido)) ? [String(pedido), ...tipos(c).filter((t) => t !== pedido)] : tipos(c);
     for (let k = 0; k < res.length; k++) for (const d of res[k].dias || []) for (const t of ordem) {
       if (d.bloqueado) continue;
-      const v = (d.livres?.[t] || []).find((x: { eventoId?: string }) => x.eventoId && x.eventoId === eventoId);
+      const v = livresDoTipo(d, t).find((x: { eventoId?: string }) => x.eventoId === eventoId);
       if (v) return { profissional: profs[k], data: d.data as string, inicio: v.inicio as string, tipo: t };
     }
     return null;
