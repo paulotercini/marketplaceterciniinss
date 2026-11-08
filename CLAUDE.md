@@ -577,6 +577,8 @@ A **F422w** (o teste das 105 conversas, 08.11.2026): a `decidir` cuja resposta r
 
 A **F439** (a leitura do processo no celular, pedido do Paulo de 08.11.2026): no processo inteiro (F289), a pinça dá o zoom das peças, de 50 % a 300 %, guardado em `crm_pi_zoom` no fim do gesto (`piZoomPara`; `.pi-autos` com `touch-action: pan-x pan-y`, `gesturestart` barrado para o Safari não ampliar a página), e no toque os botões do zoom saem do topo e o iframe do PJe deixa os dedos à leitura (`pointer-events: none`); o botão do topo diz "Claude"; o alto da lista de Peças (`.pi-arv-cab`) tem **Tudo** (`piTudo`, que vira Limpar com todas marcadas) e a seta que leva à última folha (`piFim`, `el._alvo = "fim"`, que `piAcender` mantém enquanto as peças crescem). A árvore passou a `.pi-it button`. Teste: `f289.js`.
 
+A **F440** (as três melhorias da leitura no celular aprovadas pelo Paulo em 08.11.2026): no processo inteiro, o toque duplo alterna o zoom entre 100 % e 200 % (`piZoomPara`, guardado), o deslizar de lado com a folha na largura da tela leva à peça seguinte ou à anterior (`piIr`; com zoom, o dedo anda pela folha), e o pé da leitura mostra a folha do alto, "fls. X de N" (`.pi-fls`, no `acender`: o início da peça pelo `flsDasPecas` mais a folha do PDF que está no alto; sem as folhas conhecidas, "peça X de N"). Teste: `f289.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
