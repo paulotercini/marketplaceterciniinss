@@ -756,7 +756,7 @@ def respeitar_despacho(mapa, pendentes):
     por_id = {}
     for p in pendentes or []:
         d = (p.get("ronda") or {}).get("despacho") or {}
-        if d.get("prazo") and not d.get("todo"):      # a consulta já filtra; a regra vale também sem ela
+        if (d.get("prazo") or d.get("concluido")) and not d.get("todo"):   # a consulta já filtra; a regra vale também sem ela
             por_id[p["id"]] = d
     n = 0
     for linha in mapa.get("casos") or []:
@@ -765,6 +765,8 @@ def respeitar_despacho(mapa, pendentes):
             continue
         if d.get("prazo"):
             linha["prazo"] = d["prazo"]
+        elif d.get("concluido"):
+            linha["prazo"] = None          # F455 · o retorno concluído no CRM não volta pelo To Do antes da ponte
         n += 1
     return n
 
