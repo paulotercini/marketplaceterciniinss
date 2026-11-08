@@ -103,6 +103,24 @@ const gravados = [];
   await p.evaluate(() => fecharFicha(false));
   conf("a colaboradora vê a aba Pessoas", await p.evaluate(() => LISTAS_POR_CARGO.recepcao.includes("pessoas") && LISTAS_COLAB.includes("pessoas")));
 
+  // 3 · seleção no Quadro (a base da F443)
+  await p.evaluate(() => { guardar("crm_quadro_agrupar", "etapa"); guardar("crm_quadro_fase", "inss"); irPara("quadro"); });
+  await p.waitForSelector(".kcard[data-casos]");
+  await p.click(".kcard[data-casos]", { modifiers: ["Shift"] });
+  conf("Shift+clique marca o cartão do Quadro sem abrir a ficha", await p.evaluate(() => _sel.size === 1 && !clienteAberto && !!document.querySelector(".kcard.sel")));
+  conf("a barra do Quadro traz Etapa e Passar", await p.$$eval("#sel-barra button", bs => bs.some(b => /Etapa/.test(b.textContent)) && bs.some(b => /Passar/.test(b.textContent))));
+  gravados.length = 0;
+  await p.evaluate(() => loteEtapa());
+  await p.click('.desp-quem button:has-text("perícia realizada")');
+  await p.waitForFunction(c => D.casoPorId.get(c).etapa === "perícia realizada", CASO1, { timeout: 3000 }).catch(() => {});
+  conf("a etapa em lote grava no caso e limpa a seleção", gravados.some(g => g.t === "casos" && g.m === "PATCH" && g.corpo.etapa === "perícia realizada") && await p.evaluate(() => _sel.size === 0));
+  await p.$$eval("#aviso button, .aviso button", bs => { const b = bs.find(b => /Desfazer/i.test(b.textContent)); if (b) b.click(); });
+  await p.waitForFunction(c => D.casoPorId.get(c).etapa === "aguardando perícia", CASO1, { timeout: 3000 }).catch(() => {});
+  conf("o desfazer devolve a etapa", await p.evaluate(c => D.casoPorId.get(c).etapa, CASO1) === "aguardando perícia");
+  conf("casos de fases diferentes não recebem etapa em lote", await p.evaluate(() => { const k = D.casos[0], k2 = {...k, id: "b0000000-0000-0000-0000-0000000000f8", fase: "judicial"};
+    D.casos.push(k2); D.casoPorId.set(k2.id, k2); _sel.set("a", {casos: [k.id]}); _sel.set("b", {casos: [k2.id]}); loteEtapa();
+    const aberta = !!document.querySelector(".desp-quem"); _sel.clear(); D.casos.pop(); D.casoPorId.delete(k2.id); pintarSel(); return !aberta; }));
+
   conf("sem erro na página", !erros.length);
   await nav.close(); s.close();
   const n = ok.filter(x => x[1]).length;
