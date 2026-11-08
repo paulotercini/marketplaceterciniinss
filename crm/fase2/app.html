@@ -6713,7 +6713,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.85</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.86</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -24930,7 +24930,7 @@ function irSubAba(qual){
 const GATILHOS_PRAZO = "verificar|aguardar|ver|conferir|cobrar|retornar|checar|"+
   "solicitar|pedir|avisar|ligar|agendar|acompanhar|manifestar|apresentar|entrar em contato";
 const DIAS_SEM = {domingo:0,segunda:1,terca:2,quarta:3,quinta:4,sexta:5,sabado:6};
-// F444 · livre (o ⚡): sem o verbo, mas sem "hoje" solto, com "em N dias", e não depois de perícia, audiência ou DIB
+// F445 · livre (o ⚡): sem o verbo, mas sem "hoje" solto, com "em N dias", e não depois de perícia, audiência ou DIB
 function dataDoTexto(txt, livre){
   const t = dsa(txt||"");
   const re = new RegExp((livre ? "(?:^|[^a-z0-9/])" : "\\b(?:"+GATILHOS_PRAZO+")\\b[^.;\\n]{0,40}?\\b")+"("+
@@ -25073,7 +25073,7 @@ function tfEscolherData(bt){
   if(inp.showPicker) try{ inp.showPicker(); }catch(e){ inp.focus(); }
   else inp.focus();
 }
-// F444 · CAPTURA QUE ENTENDE A FRASE (ideia do Todoist, 08.11.2026): a data, o @ de quem faz e o * da estrela lidos
+// F445 · CAPTURA QUE ENTENDE A FRASE (ideia do Todoist, 08.11.2026): a data, o @ de quem faz e o * da estrela lidos
 // na hora, sem IA. Cada parte reconhecida aparece destacada, e o ✕ desfaz só ela, enquanto o mesmo trecho estiver no texto
 let capFora = {};
 const RX_ESTRELA = /(^|\s)\*(?=\s|$)/;
@@ -48297,7 +48297,7 @@ async function novoAndamento(casoUnico){
   if(!casoId || !inp.value.trim()) return;
   const kAlvo=D.casoPorId.get(casoId);
   if(kAlvo && kAlvo.fase==="encerrado" && !honAbertoNoCaso(kAlvo)) return aviso("✔ Processo encerrado — reabra pelo ↺ reabrir, no alto do caso, para comentar");   // F236 · com honorário aberto, a cobrança se anota
-  const capE = capturaDoTexto(inp.value);   // F444 · o @ de quem faz e o * da estrela
+  const capE = capturaDoTexto(inp.value);   // F445 · o @ de quem faz e o * da estrela
   const texto=semEstrela(inp.value);
   if(!texto) return;
   // a escolha é OBRIGATÓRIA — mas só onde a caixa de escolha existe
@@ -55267,7 +55267,7 @@ async function salvarAnotacaoRapida(){
   if(!cli && !arLead && !arNovo)
     return aviso("Escolha o cliente na lista — ou crie o cadastro/interessado embaixo dela");
   const tCru=(document.getElementById("ar-texto").value||"").trim();
-  const cap = capturaDoTexto(tCru, true), t = semEstrela(tCru);   // F444 · o * vira a ⭐ e sai do texto
+  const cap = capturaDoTexto(tCru, true), t = semEstrela(tCru);   // F445 · o * vira a ⭐ e sai do texto
   if(!t) return aviso("Escreva a anotação");
   // F53 · cliente NOVO no ato: cadastro mínimo (nome), a anotação já entra
   // como atendimento urgente, e a ficha abre para completar depois
@@ -55324,8 +55324,8 @@ async function salvarAnotacaoRapida(){
       const [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
         body:JSON.stringify({caso_id:casoId, autor_id:eu.id, origem:"app", texto:t})})||[];
       if(and && /@\p{L}/u.test(t)) await criarMencoes(t, casoId, and.id);   // F236 · o @ da anotação rápida avisa a pessoa
-      const lem = arLembrete() || (cap.data && cap.data.iso);   // F436 · o lembrete do ✨ Organizar; F444 · ou a data lida na frase
-      const faz = cap.quem ? cap.quem.id : eu.id;   // F444 · o @ diz quem faz
+      const lem = arLembrete() || (cap.data && cap.data.iso);   // F436 · o lembrete do ✨ Organizar; F445 · ou a data lida na frase
+      const faz = cap.quem ? cap.quem.id : eu.id;   // F445 · o @ diz quem faz
       if(and && lem) try{ const [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
         body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:faz, atribuido_por:eu.id, lembrar_em:lem, natureza:faz===eu.id ? "lembrete" : "compromisso"})}); tarefaNaMemoria(tf); }
         catch(e){ aviso("O lembrete não gravou: ponha a data no caso"); }
