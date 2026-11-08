@@ -58,3 +58,14 @@ def test_sync_estrela_mudou_no_todo_vence_senao_a_do_crm():
                       {"id": "c", "importante": False, "todo_importante": False}]}
     migrar.manter_dados_do_banco(mapa, banco, "casos", ("importante",))
     assert [k["importante"] for k in mapa["casos"]] == [False, False, True]
+
+
+def test_retorno_concluido_na_linha_apaga_a_data_no_todo():
+    """F455 · o Concluir da linha das listas tira a data do caso; a ponte apaga a data da tarefa e a
+    sincronização não a devolve antes disso."""
+    conc = {"despacho": {"em": "2026-11-08T15:00:00Z", "por": "p", "prazo": None, "concluido": True}}
+    assert [k["id"] for k in ponte_despacho.pendentes([{"id": "a", "todo_task_id": "t1", "ronda": conc}])] == ["a"]
+    assert ponte_despacho.corpo_da_tarefa({"prazo": None, "importante": False, "ronda": conc})["dueDateTime"] is None
+    mapa = {"casos": [{"id": "a", "importante": False, "prazo": "2026-11-05"}]}
+    assert migrar.respeitar_despacho(mapa, [{"id": "a", "ronda": conc}]) == 1
+    assert mapa["casos"][0]["prazo"] is None

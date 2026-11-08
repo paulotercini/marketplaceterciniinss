@@ -29,16 +29,17 @@ def pendentes(casos):
     out = []
     for k in casos or []:
         d = (k.get("ronda") or {}).get("despacho") or {}
-        if k.get("todo_task_id") and d.get("prazo") and not d.get("todo") and not d.get("todo_falha"):
+        if k.get("todo_task_id") and (d.get("prazo") or d.get("concluido")) and not d.get("todo") and not d.get("todo_falha"):
             out.append(k)
     return out
 
 
 def corpo_da_tarefa(k):
-    """O que muda na tarefa: a estrela segue a do caso e a data é a volta."""
-    prazo = k.get("prazo") or k["ronda"]["despacho"]["prazo"]
+    """O que muda na tarefa: a estrela segue a do caso e a data é a volta. F455: o retorno concluído
+    na linha das listas (despacho "concluido", sem prazo) apaga a data da tarefa."""
+    prazo = k.get("prazo") or k["ronda"]["despacho"].get("prazo")
     return {"importance": "high" if k.get("importante") else "normal",
-            "dueDateTime": {"dateTime": f"{prazo}T00:00:00", "timeZone": "America/Sao_Paulo"}}
+            "dueDateTime": {"dateTime": f"{prazo}T00:00:00", "timeZone": "America/Sao_Paulo"} if prazo else None}
 
 
 def estrelas_a_levar(casos, ja_vao=()):
