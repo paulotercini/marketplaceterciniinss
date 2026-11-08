@@ -590,7 +590,19 @@ async function cfg(chave: string) {
 }
 
 type Cenario = { contato?: string; relacao?: string; advogado?: string; cliente?: Contexto["cliente"]; marcados?: unknown[];
-  remarcar?: Contexto["remarcar"]; horario?: boolean; interativa?: boolean; turnos: string[] };
+  remarcar?: Contexto["remarcar"]; horario?: boolean; interativa?: boolean; turnos: string[]; persona?: string; max?: number };
+// F422u · o cliente simulado responde ao que a IA disse (persona), em vez de falas fixas que se desencontram da conversa
+export const ESQ_CLIENTE = { type: "object", additionalProperties: false, required: ["fala", "fim"],
+  properties: { fala: { type: "string" }, fim: { type: "boolean" } } };
+export function promptCliente(persona: string, conversa: Msg[]) {
+  return `Você faz o papel de uma pessoa que escreve no WhatsApp de um escritório de advocacia previdenciária, para testar o atendimento.\n` +
+    `Quem você é e o que quer: ${persona}\n\n` +
+    `Responda à última mensagem do escritório como essa pessoa responderia: curto, informal, com os erros e a pressa de quem usa o celular, ` +
+    `sem inventar fatos fora da persona e sem ajudar o escritório além do que a pessoa saberia. Se o escritório perguntar algo que a persona não diz, ` +
+    `responda de forma plausível e coerente. fim = true quando o objetivo foi cumprido (horário agendado, dúvida respondida), quando o escritório ` +
+    `disse que a equipe vai responder, ou quando a pessoa desistiria; então fala é a despedida curta, ou vazia.\n\nConversa até agora:\n` +
+    conversa.map((m) => `${m.direcao === "entrada" ? "Você" : "Escritório"}: ${m.texto}`).join("\n");
+}
 async function simular(s: Cenario) {
   const advogados = ((await rpc("zap_advogados", {})) || []).map((a: { assinatura_zap: string }) => a.assinatura_zap);
   const x: Contexto = {
@@ -608,8 +620,15 @@ async function simular(s: Cenario) {
     cliente_numero: s.cliente ? "simulado" : null, nome_ficha: s.cliente?.nome || null, nome_numero: s.cliente?.nome || null,
     ligada: true, marcados: s.marcados || [] });
   const t0 = Date.now(), saida: Record<string, unknown>[] = [];
-  for (let i = 0; i < s.turnos.length; i++) {
-    const m: Msg = { direcao: "entrada", por_bot: false, tipo: "texto", texto: s.turnos[i], momento: new Date(t0 + i * 120000).toISOString() };
+  const total = s.persona ? Math.min(10, Math.max(s.turnos.length, Number(s.max) || 7)) : s.turnos.length;
+  for (let i = 0; i < total; i++) {
+    let texto = s.turnos[i];
+    if (texto === undefined) {
+      const c = await claude(promptCliente(s.persona!, x.mensagens), ESQ_CLIENTE) as { fala: string; fim: boolean };
+      if (c.fim || !c.fala?.trim()) { if (c.fala?.trim()) saida.push({ cliente: c.fala, fim: true }); break; }
+      texto = c.fala;
+    }
+    const m: Msg = { direcao: "entrada", por_bot: false, tipo: "texto", texto, momento: new Date(t0 + i * 120000).toISOString() };
     x.mensagens.push(m);
     const antes = uso.length;
     let r: Record<string, any>;
