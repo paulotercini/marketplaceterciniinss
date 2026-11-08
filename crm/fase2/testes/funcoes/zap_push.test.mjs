@@ -1,7 +1,7 @@
 // F335 · node --experimental-strip-types --test crm/fase2/testes/funcoes/zap_push.test.mjs
 import { test } from "node:test";
 import assert from "node:assert/strict";
-const { aviso, avisoMencao, destinatarios, mascarar } = await import("../../zap_push/index.ts");
+const { aviso, avisoMencao, avisoLembrete, destinatarios, mascarar } = await import("../../zap_push/index.ts");
 
 test("aviso: nome do cliente, texto curto e sem número longo", () => {
   const a = aviso({ id: "m", conversa_id: "c", tipo: "texto", texto: "Meu CPF é 123.456.789-00, saiu a perícia?" },
@@ -49,4 +49,13 @@ test("F396 · a menção: quem citou, sem número longo; a de conversa abre a co
   const m = avisoMencao({ id: "x", texto: "Ver o NB 123.456.789-0 hoje", conversa_id: null }, "Amanda");
   assert.equal(m.title, "Menção de Amanda"); assert.equal(m.body, "Ver o NB [número] hoje"); assert.equal(m.data.crm, "mencao");
   assert.equal(avisoMencao({ id: "x", texto: "oi", conversa_id: "c" }, null).data.conversa, "c");
+});
+
+test("F452 · o lembrete antes do compromisso mascara o número e abre o CRM", () => {
+  const a = avisoLembrete({ titulo: "Perícia em 2 h (09:30)", corpo: "Maria · Ligar sobre o NB 123.456.789-0", tag: "crm-lem-ev:1", cliente_id: "c1" });
+  assert.equal(a.title, "Perícia em 2 h (09:30)");
+  assert.ok(!/123/.test(a.body) && /\[número\]/.test(a.body));
+  assert.equal(a.tag, "crm-lem-ev:1");
+  assert.equal(a.data.crm, "lembrete");
+  assert.equal(a.data.cliente, "c1");
 });
