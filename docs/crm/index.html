@@ -6203,6 +6203,11 @@ html[data-tema="v10"] .caso-esq .outras-abas .oa-txt{flex-direction:column;align
 html[data-tema="v10"] .caso-esq .outras-abas .oa-txt>span{white-space:normal;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 /* e fora da coluna do caso: a etiqueta do benefício quebra no cartão do quadro, o 📋 das novidades fica fora das reticências, o "Adicionar" desce de linha */
 .kcard .chip{white-space:normal;overflow-wrap:anywhere}
+.kcard.parado{opacity:.62}
+.kcard.parado:hover{opacity:1}
+.ag-parado{color:var(--cinza);border-style:dashed}
+.coluna.acima{border-color:var(--vermelho)}
+.coluna.acima h4 span{color:var(--vermelho);font-weight:700}
 .nov-cli{display:flex;align-items:center;gap:4px;min-width:0}
 .nov-cli .nov-nome{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .nov-cli .olho{flex:none}
@@ -6669,7 +6674,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.81</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.82</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7911,6 +7916,7 @@ const CARGA_1 = {
     qualid: ()=>todas("qualidade_planos","select=*&ativo=is.true&order=criado_em").catch(()=>null),   // F282
     listaPref: ()=>todas("lista_pref","select=*").catch(()=>[]),
     cfgs: ()=>todas("config_app","select=*").catch(()=>[]),
+    seguidores: ()=>todas("caso_seguidores",`select=caso_id,colaborador_id&colaborador_id=eq.${eu.id}`).catch(()=>[]),   // F441
     tarefasAnd: ()=>todas("andamento_tarefas","select=*&concluida_em=is.null").catch(()=>[]),
       // 🔔 lembretes do cliente, com o histórico de avisos embutido — a
       // tabela pode nem existir num banco atrasado, daí o catch,
@@ -8133,7 +8139,8 @@ function completarD(r){
 function montarD(r){
   const {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, mencoes, apos, listaPref, cfgs, tarefasAnd, lembs} = r;
   D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, mencoes, apos, listaPref};
-  D._bruto1 = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, mencoes, apos, listaPref, cfgs, tarefasAnd, lembs, qualid:r.qualid};
+  D._bruto1 = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, mencoes, apos, listaPref, cfgs, tarefasAnd, lembs, qualid:r.qualid, seguidores:r.seguidores};
+  D.seguidores = r.seguidores||[];   // F441
   D.lembretes = lembs||[];
   D.qualidade = r.qualid===undefined ? [] : r.qualid;   // F282 · null: rodar o schema_qualidade.sql
   D.eventos = semEventoRepetido(eventos||[]);   // F236 · "Perícia" e "Perícia médica" do mesmo dia são uma perícia só
@@ -11176,6 +11183,7 @@ function cartaoCliente(cli, casosMostrar){
       evFut && !(pDia && pDia.ev && pDia.ev.id===evFut.id) ? `<span class="ag-tipo" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">${esc(evFut.tipo.split(" ")[0])} ${fmtBarra(dataSP(evFut.data_hora)).slice(0,5)} ${horaSP(evFut.data_hora)}</span>` : "",
       pTrib && !(pDia && pDia.prazo && pDia.data===pTrib.d) ? `<span class="ag-prazo" title="prazo do tribunal">Prazo ${esc(pTrib.s)} ${pTrib.d.slice(8,10)}/${pTrib.d.slice(5,7)}</span>` : "",
       (s=>s ? `<span class="ag-tipo ag-susp" title="${esc(tituloSusp(s))}">⏸ ${esc(rotSusp(s))}</span>` : "")(ks.map(suspensaoDe).find(Boolean)),   // F417
+      kP ? seloParado(kP) : "",   // F441 · caso parado
       kP && kP.etapa ? seloEtapaLista(kP) : "",   // F236 · a desatualizada avisa; F292 · em todas as listas, como o objetivo da tarefa no To Do
       fila ? `<span class="ag-tipo" title="posição na ordem de julgamento do TRF3, na data da consulta">Fila ${fila.ordem}º${fila.consultado_em?` em ${esc(fmtBarra(fila.consultado_em).slice(0,5))}`:""}</span>` : "",
       exig, dcb,
@@ -14312,6 +14320,7 @@ function renderAgendaV10(qual){
     const a = (D.novid||[]).find(x=>x.id===b.dataset.agendarNov); if(a) agendarPericiaDe({casoId:a.caso_id, texto:a.texto, andId:a.id}); });
   document.querySelectorAll("[data-li-nov]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); marcarLidas([b.dataset.liNov]); });
   document.querySelectorAll("[data-sug-add]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); b.dataset.sugCaso ? alternarMeuDia(b.dataset.sugCaso) : abrirFicha(b.dataset.sugCli); });
+  document.querySelectorAll("[data-sug-regra]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); criarTarefaDaRegra(b.dataset.sugCaso, b.dataset.sugRegra); });   // F441
   document.querySelectorAll("[data-sug-fora]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); guardar("crm_sug_fora", JSON.stringify([...sugFora(), b.dataset.sugFora].slice(-500))); render(); });
   ligarCartoes(); ligarTarefas();
   buscarTextosAgenda([...itens, ...deleg].filter(i=>i.andId && !i.resumo).map(i=>i.andId));
@@ -14475,7 +14484,7 @@ const sugFora = () => { try{ return new Set(JSON.parse(ler("crm_sug_fora")||"[]"
 function sugeridasDoDia(quem){
   const hj = hoje(), fora = sugFora(), noDia = new Set(D.meudia.filter(m=>m.colaborador_id===quem).map(m=>m.caso_id)), out = [];
   const meu = k => donosDoCaso(k).includes(quem);
-  const add = (ch, cli, k, txt) => { if(cli && !fora.has(ch) && !(k && noDia.has(k.id)) && !out.some(s=>s.ch===ch)) out.push({ch, cli, k, txt}); };
+  const add = (ch, cli, k, txt, regra) => { if(cli && !fora.has(ch) && !(k && noDia.has(k.id) && !regra) && !out.some(s=>s.ch===ch)) out.push({ch, cli, k, txt, regra}); };
   for(const k of ativos()){
     if(ehPreCaso(k) || !meu(k)) continue;
     const cli = D.cliPorId.get(k.cliente_id);
@@ -14489,6 +14498,11 @@ function sugeridasDoDia(quem){
       if(k.resultado==="deferido" && propostaHonorarios(cli, k)) add(`hon:${k.id}`, cli, k, "Concessão: lançar os honorários do contrato");
     }catch(e){}
   }
+  for(const k of ativos()){   // F441 · regras por etapa: a quem cuida do caso e a quem fará a tarefa
+    let rs = []; try{ rs = regrasDoCaso(k); }catch(e){}
+    for(const r of rs) if(meu(k) || alvosDaRegra(r, k).includes(quem))
+      add(`regra:${k.id}:${r.id}:${k.etapa}`, D.cliPorId.get(k.cliente_id), k, `${r.tarefa} (etapa ${k.etapa})`, r.id);
+  }
   for(const x of docsSemData()) if(meu(x.k)) add(`doc:${x.t.id}`, x.cli, x.k, `Documento pedido sem data: ${cortaFrase(x.nome, 60)}`);
   for(const r of direitoAlcancado()) if((advogadoDoCliente(r.cliente.id)||[]).includes(quem))
     add(`dir:${r.cliente.id}`, r.cliente, null, "Direito à aposentadoria alcançado: falar com o cliente");
@@ -14501,7 +14515,7 @@ function secaoSugeridas(){
   return `<section class="pl-grupo md-sug" data-tom="sug"><h3 class="secao dica-tit" title="O que o CRM encontrou nos seus casos e ninguém pôs no dia. Nada é gravado sem o seu clique.">Sugeridas para hoje <span class="pl-n">${ss.length}</span></h3>`
     + ss.slice(0, lim).map(s=>`<div class="cartao ag-linha md-sug-l" data-cli="${s.cli.id}"><span class="ag-slot"></span>
       <div class="ag-txt"><b>${esc(s.cli.nome)}</b><span class="ag-res"> · ${esc(s.txt)}</span></div>
-      <span class="acoes"><button class="btn-mini" data-sug-add="${esc(s.ch)}" data-sug-caso="${s.k ? s.k.id : ""}" data-sug-cli="${s.cli.id}" title="${s.k ? "Pôr este caso no meu Meu Dia" : "Abrir a ficha"}">${s.k ? "Adicionar" : "Abrir"}</button><button class="btn-mini md-sug-x" data-sug-fora="${esc(s.ch)}" aria-label="Dispensar a sugestão" title="Dispensar">✕</button></span></div>`).join("")
+      <span class="acoes">${s.regra ? `<button class="btn-mini" data-sug-regra="${esc(s.regra)}" data-sug-caso="${s.k.id}" title="Criar a tarefa da regra desta etapa">Criar</button>` : `<button class="btn-mini" data-sug-add="${esc(s.ch)}" data-sug-caso="${s.k ? s.k.id : ""}" data-sug-cli="${s.cli.id}" title="${s.k ? "Pôr este caso no meu Meu Dia" : "Abrir a ficha"}">${s.k ? "Adicionar" : "Abrir"}</button>`}<button class="btn-mini md-sug-x" data-sug-fora="${esc(s.ch)}" aria-label="Dispensar a sugestão" title="Dispensar">✕</button></span></div>`).join("")
     + (ss.length>lim ? `<button class="btn-rap mais-plan" data-mais="Sugeridas">Mostrar mais ${ss.length-lim}</button>` : "") + `</section>`;
 }
 // F295 · o aviso das 8h: uma vez por dia útil, a partir das 8h, o que vence hoje e o que está vencido no meu dia
@@ -15451,17 +15465,36 @@ const COLUNAS_QUADRO=[["escritorio","🙋 Escritório"],["inss","🌻 INSS"],
 function kcardCaso(k){
   const c=D.cliPorId.get(k.cliente_id);
   const quem=(D.atrDoCaso.get(k.id)||[]).map(id=>D.colPorId.get(id)).filter(Boolean);
-  return `<div class="kcard" draggable="true" data-caso="${k.id}" data-cli="${c?c.id:""}">
+  const dp = diasParado(k);
+  return `<div class="kcard${dp!==null?" parado":""}" draggable="true" data-caso="${k.id}" data-cli="${c?c.id:""}">
     <div class="nome">${esc(c?c.nome:k.titulo)}</div>
-    <div class="meta">${k.beneficio?`<span class="chip ben">${esc(k.beneficio)}</span>`:""}
+    <div class="meta">${k.beneficio?`<span class="chip ben">${esc(k.beneficio)}</span>`:""}${seloParado(k)}${k.trilha&&k.trilha.velha?`<span class="chip" title="um fato oficial mais novo contradiz a etapa">etapa desatualizada</span>`:""}
       ${chipExig(k)}${chipPrazo(k.prazo)}${quem.map(q=>`<span class="avatar mini" style="background:${q.cor}" title="${esc(q.nome)}">${esc(q.inicial)}</span>`).join("")}</div></div>`;
 }
 // O "Agrupar por" do Planner: o mesmo quadro, em colunas por fase, por responsável ou pelo prazo fatal, numa tela só.
 // Por fase e por responsável o cartão se arrasta (muda a fase, ou passa o caso de uma pessoa para outra); pelo prazo,
 // não, porque prazo fatal não se muda arrastando.
-const AGRUPAR_QUADRO = [["fase","Fase"],["responsavel","Responsável"],["prazo","Prazo fatal"]];
+const AGRUPAR_QUADRO = [["fase","Fase"],["etapa","Etapa"],["responsavel","Responsável"],["prazo","Prazo fatal"]];
+// F441 · o Quadro por etapa (do Trello): escolhida a fase, uma coluna por etapa do catálogo; arrastar declara a etapa
+// (F119: a etapa continua declarada, agora em massa, sem abrir ficha)
+const FASES_QUADRO_ETAPA = ["escritorio","inss","conselho","judicial","pagamento"];
+const quadroFase = () => { const f = ler("crm_quadro_fase"); return FASES_QUADRO_ETAPA.includes(f) ? f : "inss"; };
+const quadroLim = () => Math.max(0, Math.round(+(ler("crm_quadro_lim")||0)) || 0);
+// F441 · caso parado: sem anotação da equipe há mais de 30 dias (o and30 só alcança 30 dias, daí o "mais de 30")
+function diasParado(k){
+  if(!D.and30 || ehPreCaso(k)) return null;
+  const u = ultimoRegistro(k), n = u ? diasEntreIso(u, hoje()) : null;
+  return !u ? 31 : n>30 ? n : null;
+}
+function seloParado(k){
+  const n = diasParado(k); if(n===null) return "";
+  const u = ultimoRegistro(k);
+  return `<span class="ag-tipo ag-parado" title="caso sem anotação da equipe há mais de 30 dias${n>90?"; acima de 90 dias entra na Esteira de revisão":""}">${u ? `há ${n} dias` : "parado +30 dias"}</span>`;
+}
 function colunasDoQuadro(modo){
   const ks = ativos(), urg = xs => xs.sort((a,b)=>(b.urgente?1:0)-(a.urgente?1:0));
+  if(modo==="etapa"){ const f = quadroFase(), et = ETAPAS_POR_FASE[f]||[], noF = ks.filter(k=>faseEfetiva(k)===f && !ehPreCaso(k));
+    return [...et.map(e=>[e, e, urg(noF.filter(k=>k.etapa===e))]), ["", "Sem etapa", urg(noF.filter(k=>!et.includes(k.etapa)))]]; }
   // "de quem é" segue a regra única da F236 (ehDoColab: atribuído ao caso ou com tarefa aberta nele); no teste real de
   // 24.10, só pela atribuição, 715 casos caíam em "Sem responsável"
   if(modo==="responsavel"){ const eq = equipeAtiva();
@@ -15478,13 +15511,19 @@ function renderQuadro(){
   document.getElementById("sub-lista").innerHTML = `<span style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">Agrupar por: ${AGRUPAR_QUADRO.map(([v,r])=>
     `<button class="fchip ${v===modo?"on":""}" data-agrupar="${v}" style="display:inline-flex">${r}</button>`).join("")} <span class="meio-sub">${
     modo==="fase" ? "arraste o cartão para mudar a fase do caso (o To Do acompanha)."
-    : modo==="responsavel" ? "arraste o cartão para passar o caso a outra pessoa." : "o prazo fatal muda na ficha, não aqui."}</span></span>`;
+    : modo==="etapa" ? "arraste o cartão para declarar a etapa do caso."
+    : modo==="responsavel" ? "arraste o cartão para passar o caso a outra pessoa." : "o prazo fatal muda na ficha, não aqui."}</span>${
+    modo==="etapa" ? `<span style="display:flex;gap:6px;flex-wrap:wrap;width:100%">Fase: ${FASES_QUADRO_ETAPA.map(f=>`<button class="fchip ${f===quadroFase()?"on":""}" data-qfase="${f}" style="display:inline-flex">${esc(NOME_FASE[f]||f)}</button>`).join("")}</span>` : ""}${
+    modo==="etapa"||modo==="responsavel" ? `<label style="font-size:12px;color:var(--cinza)" title="a coluna com mais cartões que o limite fica em vermelho; vazio, sem limite">Limite <input id="q-lim" type="number" min="0" max="500" value="${quadroLim()||""}" style="width:60px"></label>` : ""}</span>`;
+  const lim = (modo==="etapa"||modo==="responsavel") ? quadroLim() : 0, atr = {fase:"fase", etapa:"etapa", responsavel:"colab"}[modo];
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="kanban">`+colunasDoQuadro(modo).map(([id,rot,ks])=>
-      `<div class="coluna" ${modo==="prazo"?"":`data-${modo==="fase"?"fase":"colab"}="${id}"`}><h4>${esc(rot)}<span>${ks.length}</span></h4>
+      `<div class="coluna${lim && ks.length>lim?" acima":""}" ${atr?`data-${atr}="${esc(id)}"`:""}><h4>${esc(rot)}<span${lim && ks.length>lim?` title="acima do limite de ${lim}"`:""}>${ks.length}</span></h4>
         ${ks.slice(0,60).map(kcardCaso).join("")}
         ${ks.length>60?`<p class="meio-sub">+${ks.length-60} — use a pesquisa</p>`:""}</div>`).join("")+`</div>`;
   document.querySelectorAll("[data-agrupar]").forEach(b=>b.onclick=()=>{ guardar("crm_quadro_agrupar", b.dataset.agrupar); renderQuadro(); });
+  document.querySelectorAll("[data-qfase]").forEach(b=>b.onclick=()=>{ guardar("crm_quadro_fase", b.dataset.qfase); renderQuadro(); });
+  const qi = document.getElementById("q-lim"); if(qi) qi.onchange=()=>{ guardar("crm_quadro_lim", String(Math.max(0, Math.round(+qi.value)||0))); setTimeout(renderQuadro); };   // fora do blur, que roda no meio de outra pintura
   ligarQuadro();
 }
 function ligarQuadro(){
@@ -15526,7 +15565,141 @@ function ligarQuadro(){
       aviso("Fase: "+NOME_FASE[k.fase]); montarSidebar(); renderQuadro();
     };
   });
+  document.querySelectorAll(".coluna[data-etapa]").forEach(col=>{
+    col.ondragover=e=>{ e.preventDefault(); col.classList.add("solta"); };
+    col.ondragleave=()=>col.classList.remove("solta");
+    col.ondrop=async e=>{
+      e.preventDefault(); col.classList.remove("solta");
+      const id=e.dataTransfer.getData("text/caso"), k=id && D.casoPorId.get(id); if(!k) return;
+      const para = col.dataset.etapa||"", antes = k.etapa||"", et = ETAPAS_POR_FASE[quadroFase()]||[];
+      if(para===antes || (!para && !et.includes(antes))) return;
+      await gravarEtapa(id, para);
+      if((k.etapa||"")===para) avisoDesfazer(para ? `Etapa: ${para}` : "Etapa retirada", ()=>gravarEtapa(id, antes));
+    };
+  });
 }
+
+// ── F441 · as ideias do Trello (aprovadas pelo Paulo em 08.11.2026) ─────────
+// Regras por etapa: "quando o caso entrar na etapa X, propor a tarefa Y para Z em N dias úteis". A regra só PROPÕE,
+// nas Sugeridas para hoje de quem cuida do caso e de quem fará a tarefa; um clique cria a tarefa (nada grava sozinho)
+const REGRAS_ETAPA_PADRAO = [
+  {id:"r1", fase:"judicial", etapa:"perícia designada", tarefa:"Orientar o cliente sobre a perícia", quem:"recepcao", dias:2},
+  {id:"r2", fase:"inss", etapa:"aguardando perícia", tarefa:"Orientar o cliente sobre a perícia", quem:"recepcao", dias:2},
+];
+const QUEM_REGRA = [["responsavel","Quem cuida do caso"],["recepcao","Recepção"],["advogado","Advogado do cliente"]];
+function lerJsonCfg(chave, padrao){ const v = cfgApp(chave); if(v==null || v==="") return padrao; try{ const o = JSON.parse(v); return Array.isArray(o) ? o : padrao; }catch(e){ return padrao; } }
+const regrasEtapa = () => lerJsonCfg("regras_etapa", REGRAS_ETAPA_PADRAO).filter(r=>r && r.etapa && r.tarefa);
+function alvosDaRegra(r, k){
+  const eq = equipeAtiva();
+  const ids = r.quem==="recepcao" ? eq.filter(c=>c.cargo==="recepcao").map(c=>c.id)
+    : r.quem==="advogado" ? (advogadoDoCliente(k.cliente_id, k)||[]) : donosDoCaso(k);
+  const ok = ids.filter(id=>eq.some(c=>c.id===id));
+  return ok.length ? ok : donosDoCaso(k).filter(id=>eq.some(c=>c.id===id));   // sem ninguém no papel, vai a quem cuida do caso
+}
+function diasUteisDepois(iso, n){ let d = iso; for(let i=0; i<Math.max(0, n|0);){ d = somaDias(d, 1); if(ehDiaUtil(d)) i++; } return proxDiaUtil(d); }
+// as regras que valem para o caso agora e ainda não viraram tarefa (ronda.regras guarda "<regra>|<etapa>")
+function regrasDoCaso(k){
+  if(!k.etapa || ehPreCaso(k)) return [];
+  const f = faseEfetiva(k), feitas = (k.ronda && k.ronda.regras) || {};
+  return regrasEtapa().filter(r=>r.fase===f && r.etapa===k.etapa && !feitas[`${r.id}|${k.etapa}`]);
+}
+async function criarTarefaDaRegra(casoId, rid){
+  const k = D.casoPorId.get(casoId), r = regrasEtapa().find(x=>x.id===rid); if(!k || !r) return;
+  const alvo = alvosDaRegra(r, k)[0];
+  if(!alvo) return aviso("Ninguém da equipe para esta regra: confira em Configurações");
+  const dia = diasUteisDepois(hoje(), +r.dias||0);
+  let and = null;
+  try{ [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:`${r.tarefa} (pela etapa ${k.etapa})`})});
+    await criarTarefasDe(and.id, casoId, [alvo], null, dia, "compromisso");
+    const regras = {...((k.ronda && k.ronda.regras)||{}), [`${r.id}|${k.etapa}`]: hoje()};
+    await patchCaso(casoId, {ronda:{...(k.ronda||{}), regras}}); k.ronda = {...(k.ronda||{}), regras};
+  }catch(e){ return aviso("Não gravou a tarefa: "+String(e.message||e).slice(0,80)); }
+  const c = D.cliPorId.get(k.cliente_id);
+  if(alvo!==eu.id) api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({de_id:eu.id, para_id:alvo, caso_id:casoId, andamento_id:and.id, texto:`📋 ${r.tarefa}: ${c?c.nome:""} até ${fmt(dia).slice(0,5)}`})}).catch(()=>{});
+  aviso(`Tarefa criada para ${((D.colPorId.get(alvo)||{}).nome||"").split(" ")[0]} até ${fmt(dia).slice(0,5)}`, false);
+  montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha();
+}
+// Modelos de etapas: a tarefa nasce com os passos de um modelo do escritório (catálogo nas Configurações)
+const MODELOS_ETAPAS_PADRAO = [
+  {nome:"Réplica", etapas:["Ler a contestação","Conferir o laudo pericial","Redigir a réplica","Revisar","Protocolar"]},
+  {nome:"Recurso ao CRPS", etapas:["Ler a decisão do INSS","Conferir o processo administrativo","Redigir o recurso","Revisar","Protocolar no e-Recursos"]},
+  {nome:"Perícia", etapas:["Orientar o cliente","Conferir os documentos médicos","Confirmar o comparecimento","Conferir o resultado"]},
+];
+const modelosEtapas = () => lerJsonCfg("modelos_etapas", MODELOS_ETAPAS_PADRAO).filter(m=>m && m.nome && Array.isArray(m.etapas) && m.etapas.length);
+function modeloEtapas(id){
+  const ms = modelosEtapas();
+  caixa(`<h3>Modelo de etapas</h3><p class="meio-sub">As etapas do modelo entram depois das que a tarefa já tem.</p>
+    <div style="display:grid;gap:8px">${ms.map((m,i)=>`<button class="btn-mini" style="text-align:left" onclick="aplicarModeloEtapas('${id}',${i})" title="${esc(m.etapas.join("\n"))}"><b>${esc(m.nome)}</b> · ${m.etapas.length} etapas</button>`).join("")}</div>`);
+}
+function aplicarModeloEtapas(id, i){
+  const t = tarefaAberta(id), m = modelosEtapas()[i]; if(!t || !m) return;
+  const ja = new Set((t.etapas||[]).map(e=>e.t));
+  const novas = m.etapas.filter(e=>!ja.has(e)).map(e=>({t:e, feito:false}));
+  return gravarLembrar(id, {etapas:[...(t.etapas||[]), ...novas]}, `Modelo ${m.nome}: ${novas.length} etapas`);
+}
+// Seguir o caso: quem segue recebe menção de cada anotação e de cada movimento oficial (gatilho avisar_seguidores)
+const sigoCaso = id => (D.seguidores||[]).some(s=>s.caso_id===id && s.colaborador_id===eu.id);
+async function seguirCaso(id){
+  const sigo = sigoCaso(id);
+  try{
+    if(sigo) await api(`/rest/v1/caso_seguidores?caso_id=eq.${id}&colaborador_id=eq.${eu.id}`,{method:"DELETE"});
+    else await api(`/rest/v1/caso_seguidores`,{method:"POST",headers:{Prefer:"return=minimal,resolution=ignore-duplicates"},
+      body:JSON.stringify({caso_id:id, colaborador_id:eu.id})});
+  }catch(e){ return aviso(/caso_seguidores/.test(String(e.message||e)) ? "O banco ainda não tem a tabela de seguidores" : "Não gravou"); }
+  D.seguidores = sigo ? (D.seguidores||[]).filter(s=>!(s.caso_id===id && s.colaborador_id===eu.id))
+    : [...(D.seguidores||[]), {caso_id:id, colaborador_id:eu.id}];
+  aviso(sigo ? "Você deixou de seguir o caso" : "Seguindo: cada anotação e movimento chega às suas Menções", false);
+  if(clienteAberto) repintarFicha(); else render();
+}
+// Configurações: as regras por etapa e os modelos de etapas
+function cfgRegrasModelos(){
+  return `<h3 class="secao">🔁 Regras por etapa</h3><p class="meio-sub">Quando o caso entra na etapa, o CRM propõe a tarefa nas Sugeridas para hoje. Nada é criado sem clique.</p>
+    <div class="cfg-cx" id="cfg-regras">${linhasCfgRegras(regrasEtapa())}</div>
+    <h3 class="secao">☑ Modelos de etapas</h3><p class="meio-sub">Os passos que a tarefa recebe pelo botão Modelo, um por linha.</p>
+    <div class="cfg-cx" id="cfg-modelos">${linhasCfgModelos(modelosEtapas())}</div>`;
+}
+function linhasCfgRegras(rs){
+  const fases = FASES_QUADRO_ETAPA;
+  return rs.map(r=>`<div class="cfg-linha cfg-regra" data-rid="${esc(r.id)}" style="flex-wrap:wrap;gap:6px">
+      <select data-r="fase" aria-label="fase" onchange="mudouRegra(true)">${fases.map(f=>`<option value="${f}"${f===r.fase?" selected":""}>${esc(NOME_FASE[f]||f)}</option>`).join("")}</select>
+      <select data-r="etapa" aria-label="etapa" onchange="mudouRegra()">${(ETAPAS_POR_FASE[r.fase]||[]).map(e=>`<option${e===r.etapa?" selected":""}>${esc(e)}</option>`).join("")}</select>
+      <input data-r="tarefa" aria-label="tarefa" value="${esc(r.tarefa)}" style="flex:1;min-width:180px" onchange="mudouRegra()">
+      <select data-r="quem" aria-label="para quem" onchange="mudouRegra()">${QUEM_REGRA.map(([v,t])=>`<option value="${v}"${v===r.quem?" selected":""}>${t}</option>`).join("")}</select>
+      <label>em <input data-r="dias" type="number" min="0" max="60" value="${+r.dias||0}" style="width:56px" onchange="mudouRegra()"> dias úteis</label>
+      <button class="btn-mini" onclick="this.closest('.cfg-regra').remove();mudouRegra()" aria-label="apagar a regra" title="apagar a regra">✕</button></div>`).join("")
+    + `<button class="btn-mini" onclick="novaRegra()">Regra<span class="sr-only"> nova</span></button>`;
+}
+function regrasDaTela(){
+  return [...document.querySelectorAll(".cfg-regra")].map(l=>{ const v = n => (l.querySelector(`[data-r="${n}"]`)||{}).value||"";
+    return {id:l.dataset.rid, fase:v("fase"), etapa:v("etapa"), tarefa:v("tarefa").trim(), quem:v("quem"), dias:Math.max(0, Math.round(+v("dias"))||0)}; });
+}
+async function gravarRegras(rs){ try{ await guardarCfgApp("regras_etapa", JSON.stringify(rs)); aviso("Regras guardadas", false); }catch(e){ aviso("Não consegui guardar"); } }
+function mudouRegra(repinta){
+  const rs = regrasDaTela().map(r=>({...r, etapa:(ETAPAS_POR_FASE[r.fase]||[]).includes(r.etapa) ? r.etapa : (ETAPAS_POR_FASE[r.fase]||[])[0]||""}));
+  if(repinta){ const cx = document.getElementById("cfg-regras"); if(cx) cx.innerHTML = linhasCfgRegras(rs); }
+  return gravarRegras(rs.filter(r=>r.tarefa));
+}
+function novaRegra(){
+  const rs = [...regrasDaTela(), {id:"r"+Date.now().toString(36), fase:"inss", etapa:ETAPAS_POR_FASE.inss[0], tarefa:"", quem:"responsavel", dias:2}];
+  const cx = document.getElementById("cfg-regras"); if(cx) cx.innerHTML = linhasCfgRegras(rs);
+}
+function linhasCfgModelos(ms){
+  return ms.map(m=>`<div class="cfg-linha cfg-modelo" style="flex-wrap:wrap;gap:6px;align-items:flex-start">
+      <input data-m="nome" aria-label="nome do modelo" value="${esc(m.nome)}" style="width:180px" onchange="mudouModelo()">
+      <textarea data-m="etapas" aria-label="etapas, uma por linha" rows="${Math.max(3, m.etapas.length)}" style="flex:1;min-width:220px" onchange="mudouModelo()">${esc(m.etapas.join("\n"))}</textarea>
+      <button class="btn-mini" onclick="this.closest('.cfg-modelo').remove();mudouModelo()" aria-label="apagar o modelo" title="apagar o modelo">✕</button></div>`).join("")
+    + `<button class="btn-mini" onclick="novoModelo()">Modelo<span class="sr-only"> novo</span></button>`;
+}
+function modelosDaTela(){
+  return [...document.querySelectorAll(".cfg-modelo")].map(l=>({nome:(l.querySelector('[data-m="nome"]').value||"").trim(),
+    etapas:(l.querySelector('[data-m="etapas"]').value||"").split("\n").map(x=>x.trim()).filter(Boolean)}));
+}
+async function mudouModelo(){
+  try{ await guardarCfgApp("modelos_etapas", JSON.stringify(modelosDaTela().filter(m=>m.nome && m.etapas.length))); aviso("Modelos guardados", false); }catch(e){ aviso("Não consegui guardar"); }
+}
+function novoModelo(){ const cx = document.getElementById("cfg-modelos"); if(cx) cx.innerHTML = linhasCfgModelos([...modelosDaTela(), {nome:"", etapas:[]}]); }
 
 // ── 📌 Quadros por horizonte (F132, em teste) ──────────────────────────────
 // Uma providência com data por cartão: prazo fatal, lembrete de comentário,
@@ -18292,6 +18465,7 @@ async function renderConfig(){
     // F151 · a agenda de quarta: o endereço do Apps Script e o token do Paulo
     `<h3 class="secao">📅 Agenda de atendimentos</h3>${cardLigarAgenda()}`
     + cfgDuracoes()
+    + cfgRegrasModelos()
     +     // ── quem atende ──────────────────────────────────────────────────────
     `<h3 class="secao">👥 Quem atende o WhatsApp</h3>
      <p class="meio-sub">Não é cadastro novo: é a mesma equipe do CRM. Quem não
@@ -39814,7 +39988,7 @@ function abrirPainelPrazo(i, fonte){
       ${x.casoId ? `<div class="ppz-com"><label for="pp-com" class="sr-only">Anotar neste prazo</label>
         <textarea id="pp-com" rows="2" placeholder="Anote o que foi feito ou o que falta"
           onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();comentarNoPrazo('${x.casoId}','${x.andId||""}')}"></textarea>
-        <span class="ppz-com-bts">${tEt ? `<button type="button" class="pp-add" onclick="novaEtapaTarefa('${tEt.id}')">+ Etapa</button>` : ""}<button type="button" class="ppz-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Anotar</button></span></div>` : ""}
+        <span class="ppz-com-bts">${tEt ? `<button type="button" class="pp-add" onclick="novaEtapaTarefa('${tEt.id}')">+ Etapa</button><button type="button" class="pp-add" onclick="modeloEtapas('${tEt.id}')" title="acrescentar as etapas de um modelo do escritório">Modelo</button>` : ""}<button type="button" class="ppz-bt pp-com-bt" onclick="comentarNoPrazo('${x.casoId}','${x.andId||""}')">Anotar</button></span></div>` : ""}
       ${itens.length ? `<ol class="ppz-hist ppz-ets">${itens.slice(0, 30).map(o=>`<li>${avPz(o.id) || `<span class="pz-av pz-av-sis" aria-hidden="true">·</span>`}<div>${o.html
         ? `${o.html}<small>${esc(o.meta)}${o.q!=="9" && o.q ? ` · ${o.id ? `${esc(nome(o.id))} · ` : ""}${esc(quandoPz(o.q))}` : ""}</small>`
         : `<small><b>${esc(o.id ? nome(o.id) : "Sistema")}</b> · ${esc(quandoPz(o.q))}</small><p>${esc(o.p)}</p>`}</div></li>`).join("")}</ol>` : `<p class="ppz-vazio"><span>Nada anotado neste prazo ainda.</span></p>`}
@@ -40765,6 +40939,7 @@ function linhaCaso(k){
       ${menuMais([
         `<button class="tl-mais-it lc-claude" role="menuitem" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)"><span aria-hidden="true">✦ Claude</span><span class="sr-only">✦ Pedir ao Claude</span></button>`,
         k.fase!=="encerrado" && !ehPreCaso(k) && !suspensaoDe(k) ? `<button class="tl-mais-it lc-suspender" role="menuitem" onclick="suspenderCaso('${k.id}')" title="marcar o caso como suspenso por tema do STF, do STJ, da TNU ou do TRF3">⏸ Suspender<span class="sr-only"> por tema</span></button>` : "",
+        `<button class="tl-mais-it lc-seguir" role="menuitem" onclick="seguirCaso('${k.id}')" title="${sigoCaso(k.id) ? "deixar de receber as anotações e os movimentos deste caso nas Menções" : "receber nas Menções cada anotação e cada movimento oficial deste caso, sem ser responsável"}">${sigoCaso(k.id) ? `Seguindo<span class="sr-only">: deixar de seguir</span>` : `Seguir<span class="sr-only"> o caso</span>`}</button>`,
         `<button class="tl-mais-it lc-apagadas" role="menuitem" onclick="verApagadas('${k.id}')" title="ver as anotações e os prazos apagados deste caso, com quem apagou e quando">Apagadas<span class="sr-only"> anotações</span></button>`,
         k.fixo && k.fixo.texto ? "" : `<button class="tl-mais-it fixar-caso" role="menuitem" onclick="lcEditarFixo('${k.id}')" title="fixar um comentário que aparece em destaque ao abrir o caso">${ICO_PIN} Fixar<span class="sr-only"> comentário</span></button>`,
       ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo lc-menu"')}</div>
