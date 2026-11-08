@@ -6765,7 +6765,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.00</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.01</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11659,7 +11659,7 @@ function ligarCartoes(){
 let vistaAnimada="";
 // F378 · as visões de data viram abas do Planejado (decisão do Paulo, 02.11.2026): a tela de cada aba é a de antes, com a
 // barra das abas no alto e o nome Planejado
-function render(){ renderBase(); if(!buscaTxt && ehAbaPlan(visao)) barraPlanejado(); }
+function render(){ renderBase(); if(!buscaTxt && ehAbaPlan(visao)) barraPlanejado(); armarVoltar(); }
 function renderBase(){
   aplicarTema(); marcarBarraCel();
   if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = soIdentificacao() ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
@@ -17302,7 +17302,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
     if(sug && !sug.hidden && e.key==="Escape"){ sug.hidden = true; return; }
     if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); enviarZap(); }
   };
-  document.getElementById("app").classList.add("zap-conv-aberta");
+  document.getElementById("app").classList.add("zap-conv-aberta"); armarVoltar();
   const cx = document.getElementById("zap-msgs"); cx.scrollTop = cx.scrollHeight;
   carregarMinis(cx); carregarPrevias(cx);
   if(zapBuscaConv) ligarBuscaZap(bqAtivo);
@@ -21293,6 +21293,7 @@ function confirmar(msg){
   });
 }
 function caixa(html){
+  setTimeout(armarVoltar, 0);   // F458
   const m = document.getElementById("modal");
   m.style.display = "";
   m.innerHTML = `<div class="modal-fundo"><div class="modal-cx">
@@ -21341,6 +21342,7 @@ function abrirClaude(casoId, acao){
   else window.open(url, "_blank", "noopener");
 }
 function fecharCaixa(){
+  setTimeout(armarVoltar, 0);   // F458
   const m = document.getElementById("modal");
   m.style.display="none"; m.innerHTML="";
 }
@@ -21477,6 +21479,7 @@ async function abrirFicha(cliId){
   if(soIdentificacao()){ abaAtiva = 0; subCad = "identificacao"; _atendAberto.delete(cliId); }   // F249 · primeiro acesso: só a Identificação; F355 · o nível 1 também (a leitura dos portais passou ao nível 2)
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
+  armarVoltar();
   // em rede lenta a coluna abria branca até as 6 consultas voltarem
   if(trocouCliente){
     const det=document.getElementById("detalhe");
@@ -37939,6 +37942,7 @@ function piFim(){
 }
 let _piObs = null;
 function fecharProcessoInteiro(){
+  setTimeout(armarVoltar, 0);   // F458
   if(_piObs){ _piObs.disconnect(); _piObs = null; }
   const el = document.getElementById("proc-inteiro"); if(el){ if(el._longe) el._longe.disconnect(); soltarPdfs(el); el.remove(); }
   document.body.style.overflow = "";
@@ -37985,6 +37989,7 @@ function piZoomPara(z, guardar, foco){
   if(guardar) try{ localStorage.setItem("crm_pi_zoom", z); }catch(e){}
 }
 function abrirProcessoInteiro(casoId, lista, caminho, titulo){
+  setTimeout(armarVoltar, 0);   // F458
   const k = D.casoPorId.get(casoId); if(!k) return;
   const pecas = lista || pecasDoProcesso(k); if(!pecas.length) return aviso(lista ? "Nenhum documento neste processo" : "Nenhuma peça judicial no CRM");
   fecharProcessoInteiro();
@@ -40623,6 +40628,7 @@ async function comentarNoPrazo(casoId, andId){
   if(clienteAberto) abrirFicha(clienteAberto);
 }
 function fecharPainelPrazo(){
+  setTimeout(armarVoltar, 0);   // F458
   painelPz = null; painelZapCli = null;
   // o conteúdo sai junto: o painel fechado não guarda a conversa ou o prazo de antes (que reaparecia por um instante)
   if(zapLadoRec) zapLadoRec.stop();
@@ -40675,6 +40681,7 @@ const IC_DOC_PZ = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" s
 const IC_OK_PZ = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17 19 7"/></svg>`;
 const IC_X_PZ = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>`;
 function abrirPainelPrazo(i, fonte){
+  setTimeout(armarVoltar, 0);   // F458
   const x = linhaDoPz(i, fonte); if(!x) return;
   if(!x._titulo) prepPz(x, i, fonte);
   const sobre = fonte==="cli";   // da aba Prazos: por cima, com o véu
@@ -48272,6 +48279,61 @@ function fecharFicha(rerender=true){
   document.getElementById("app").classList.remove("detalhe-aberto","ficha-tudo");
   aplicarMenu();
   if(rerender) render();
+}
+
+// F458 · o voltar do aparelho (pedido do Paulo de 08.11.2026: "no iPhone não funciona o voltar pela borda
+// esquerda"). O CRM é uma página só e não gravava nada no histórico, então a borda do Safari saía do CRM ou
+// não fazia nada, e no CRM instalado na tela de início (standalone) o iOS não tem gesto de voltar. Agora, com
+// algo aberto por cima (ficha, conversa, janela, prazo, processo inteiro) ou fora da lista inicial, fica UMA
+// entrada a mais no histórico (`armarVoltar`); o voltar a consome e fecha a camada de cima (`voltarUmPasso`),
+// e a entrada volta se ainda houver o que fechar. No standalone, o deslizar da borda esquerda chama o voltar.
+// var e function: o render pode rodar antes desta linha na carga, e const/let ainda não existiriam
+var _voltarDesarmando = false, _voltarPop = 0;
+function voltarLigado(){ try{ return !navigator.webdriver || localStorage.getItem("crm_voltar")==="1"; }catch(e){ return !navigator.webdriver; } }
+function inicioVoltar(){ return soIdentificacao() ? "agendaq" : "meudia"; }
+function modalAberto(){ const m = document.getElementById("modal"); return !!(m && m.innerHTML && m.style.display!=="none"); }
+function temVoltar(){
+  return !!(document.getElementById("proc-inteiro") || modalAberto() || painelPz || painelZapCli
+    || document.getElementById("app")?.classList.contains("zap-conv-aberta") || clienteAberto || visao!==inicioVoltar());
+}
+function armarVoltar(){
+  if(!voltarLigado() || _voltarDesarmando) return;
+  const armado = history.state && history.state.crm==="voltar";
+  try{
+    if(temVoltar() && !armado) history.pushState({crm:"voltar"}, "");
+    // fechou pelo botão: a entrada sobrando custaria um voltar sem efeito
+    else if(!temVoltar() && armado){ _voltarDesarmando = true; history.back(); }
+  }catch(e){}
+}
+function voltarUmPasso(){
+  if(document.getElementById("proc-inteiro")) return fecharProcessoInteiro();
+  if(modalAberto()) return fecharCaixa();
+  if(painelPz || painelZapCli) return fecharPainelPrazo();
+  if(document.getElementById("app")?.classList.contains("zap-conv-aberta")) return voltarListaZap();
+  if(clienteAberto){
+    if(document.getElementById("detalhe")?.classList.contains("atend-tela")) return sairModoAtendimento(clienteAberto);
+    return fecharFicha();
+  }
+  if(visao!==inicioVoltar()) return irPara(inicioVoltar());
+}
+window.addEventListener("popstate", e=>{
+  if(!voltarLigado()) return;
+  _voltarPop = Date.now();
+  if(e.state && e.state.crm==="voltar") return;   // avançar: nada a fazer
+  if(_voltarDesarmando){ _voltarDesarmando = false; return armarVoltar(); }
+  Promise.resolve(voltarUmPasso()).finally(()=>setTimeout(armarVoltar, 0));
+});
+// standalone do iOS: sem gesto nativo, a borda esquerda desliza para voltar (ignorado se o próprio iOS já voltou)
+if(voltarLigado() && navigator.standalone===true){
+  let ini = null;
+  document.addEventListener("touchstart", e=>{
+    const t = e.touches[0];
+    ini = (e.touches.length===1 && t.clientX<=24) ? {x:t.clientX, y:t.clientY, em:Date.now()} : null;
+  }, {passive:true});
+  document.addEventListener("touchend", e=>{
+    if(!ini) return; const t = e.changedTouches[0], dx = t.clientX-ini.x, dy = Math.abs(t.clientY-ini.y), em = ini.em; ini = null;
+    if(dx>=70 && dy<dx/2 && _voltarPop<em && history.state && history.state.crm==="voltar") history.back();
+  }, {passive:true});
 }
 
 // ── celular ───────────────────────────────────────────────────────────────
