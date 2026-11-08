@@ -1,4 +1,4 @@
-// F447 · visões salvas (etapa 4 das ideias do Todoist): o Salvar do ⋯ guarda a lista, as escolhas e os filtros num item
+// F448 · visões salvas (etapa 4 das ideias do Todoist): o Salvar do ⋯ guarda a lista, as escolhas e os filtros num item
 // do menu lateral, que reabre tudo igual; o Excluir tira o item, com desfazer.
 // Fixturas e servidor do harmonia138.js.
 const { chromium } = require("playwright");
@@ -98,7 +98,7 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
   await p.evaluate(() => { filtroDia = null; irPara("planejado"); document.querySelectorAll("#grupo-salvas .lista-item")[1].click(); }); await p.waitForTimeout(200);
   conf("a visão do Meu Dia devolve a pessoa escolhida", await p.evaluate(() => visao === "meudia" && filtroDia === "ninguem"));
 
-  console.log("=== F447 · visões salvas ===");
+  console.log("=== F448 · visões salvas ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
   console.log("erros de console:", erros.length ? erros : "nenhum");
   const ruins = ok.filter(x => !x[1]).length + erros.length;
