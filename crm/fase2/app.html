@@ -9054,7 +9054,7 @@ function quantosNoMeuDia(){
 // o emoji EXATO que os rótulos usam — assim os rótulos ("☀️ Meu Dia")
 // continuam a fonte única de verdade e o rotu() troca só a apresentação.
 const SVG_MENU = {
-  "🔖":'<path d="M6.5 3.5h11v17L12 16.5l-5.5 4v-17Z"/>',   // F447 · visão salva
+  "🔖":'<path d="M6.5 3.5h11v17L12 16.5l-5.5 4v-17Z"/>',   // F448 · visão salva
   "☀️":'<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M18.7 5.3 17 7M7 17l-1.7 1.7"/>',
   "📣":'<path d="M3 10v4l11 5V5L3 10Z"/><path d="M14 8.5c2.6.6 4.2 1.8 4.2 3.5s-1.6 2.9-4.2 3.5M7 15.5V19a1.5 1.5 0 0 0 3 0v-2.2"/>',
   "📥":'<path d="M3.5 13.5h5l1.5 2.5h4l1.5-2.5h5"/><path d="M5.5 5.5h13l2 8v5a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-5l2-8Z"/>',
@@ -9346,7 +9346,7 @@ function montarSidebar(){
   // são 26 destinos: recolhido, o trilho não cabe na tela e rola. Sem isto,
   // abrir uma lista do fim deixava o menu mostrando um trecho onde nada está
   // aceso — parecia que nenhuma lista estava selecionada.
-  const atS = document.querySelector(".lista-item.salva-on");   // F447 · aberta pela visão salva, acende ela
+  const atS = document.querySelector(".lista-item.salva-on");   // F448 · aberta pela visão salva, acende ela
   if(atS){ atS.classList.add("ativa"); atS.scrollIntoView({block:"nearest"}); }
   else if(at){ at.classList.add("ativa"); at.scrollIntoView({block:"nearest"}); }
   ligarArrasteListas();
@@ -14661,7 +14661,7 @@ function pintarOpcLista(){
     ["ordem", "Ordenar", true, []], ["vis", "Visualizar", temaV10(), []], ["per", "Períodos", agenda, []]];
   el.innerHTML = linhas.filter(l=>l[2]).map(([q, rot, , fora])=>`<div class="lo-ln"><span>${rot}</span><div class="lo-seg" role="group" aria-label="${rot}">${
     OPC_LISTA[q][1].filter(o=>!fora.includes(o[0])).map(([v, r])=>`<button type="button" data-lopc="${q}" data-v="${v}" aria-pressed="${opcLista(q)===v}">${r}</button>`).join("")}</div></div>`).join("");
-  // F447 · Salvar guarda a lista com estas escolhas e os filtros num item do menu lateral; Excluir tira a visão salva aberta
+  // F448 · Salvar guarda a lista com estas escolhas e os filtros num item do menu lateral; Excluir tira a visão salva aberta
   const sv = visoesSalvas().find(x=>x.id===_salvaAtiva && x.visao===visao);
   el.innerHTML += `<div class="lo-ln"><span>Visão</span><div class="lo-seg" role="group" aria-label="Visão salva"><button type="button" onclick="event.stopPropagation();salvarVisao()" title="guardar esta lista, com as escolhas acima e os filtros, no menu lateral"><span aria-hidden="true">Salvar</span><span class="sr-only">Salvar esta visão</span></button>${
     sv ? `<button type="button" onclick="event.stopPropagation();excluirVisaoSalva('${sv.id}')" title="tirar &quot;${esc(sv.nome)}&quot; do menu lateral"><span aria-hidden="true">Excluir</span><span class="sr-only">Excluir a visão salva ${esc(sv.nome)}</span></button>` : ""}</div></div>`;
@@ -14672,7 +14672,7 @@ function pintarOpcLista(){
   if(temaV10()) document.getElementById("ordem").value = opcLista("ordem");
   const cm = document.getElementById("conteudo-meio"); if(cm) cm.classList.toggle("vis-cartoes", temaV10() && opcLista("vis")==="cartoes");
 }
-// F447 · VISÕES SALVAS (etapa 4 das ideias do Todoist, 08.11.2026): a lista, as escolhas do ⋯ e os filtros (pessoa do Meu Dia,
+// F448 · VISÕES SALVAS (etapa 4 das ideias do Todoist, 08.11.2026): a lista, as escolhas do ⋯ e os filtros (pessoa do Meu Dia,
 // pessoa das listas, natureza do Planejado) num item do menu lateral. Fica no navegador (crm_visoes), como as escolhas do ⋯
 let _salvaAtiva = null;
 function visoesSalvas(){ try{ const l = JSON.parse(ler("crm_visoes")||"[]"); return Array.isArray(l) ? l : []; }catch(e){ return []; } }
