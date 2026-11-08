@@ -3678,7 +3678,7 @@ html[data-tema="v10"] .app.mini-lateral .v10-conta{padding:0 4px}
 .topo-extra:empty{display:none}
 html[data-tema="v10"] .topo-extra{margin-left:auto}
 html[data-tema="v10"] .meio.ag-v10 .meio-topo h1{font-size:26px;line-height:1.2}
-html[data-tema="v10"] .meio.ag-v10 #btn-fundo,html[data-tema="v10"] .meio.ag-v10 .ordenar{display:none}
+html[data-tema="v10"] .meio.ag-v10 #btn-fundo,html[data-tema="v10"] .meio.ag-v10:not(.lista-opc) .ordenar{display:none}
 html[data-tema="v10"] .seg-colab{display:inline-flex;gap:2px;padding:3px;background:var(--placa);border-radius:10px}
 html[data-tema="v10"] .seg-colab button{border:0;background:none;padding:5px 12px;border-radius:7px;font:inherit;font-size:13px;color:var(--cinza);cursor:pointer}
 html[data-tema="v10"] .seg-colab button.on{background:#fff;color:var(--texto);font-weight:600;box-shadow:0 1px 2px rgba(18,18,18,.08)}
@@ -3785,6 +3785,46 @@ html[data-tema="v10"] .seg-colab{max-width:100%;overflow-x:auto;scrollbar-width:
   html[data-tema="v10"] .meio.ag-v10 .seg-colab button{flex:1 1 auto;min-width:0;padding:5px 3px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 }
 
+/* F437 · LINHA C das listas (proposta aprovada pelo Paulo em 08.11.2026): o nome abre a linha; depois a espécie, a fase e a
+   etapa, a data, quem responde e, à direita, o concluir e a ⭐ por último. O círculo saiu do canto esquerdo */
+html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-selos{order:1}
+html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-data{order:2;min-width:64px;text-align:right}
+html[data-tema="v10"] #conteudo-meio .ag-linha > .avatares{order:3}
+html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-conf{order:4}
+html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-slot{order:5}
+html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:6;width:auto}
+@container (max-width:620px){
+  html[data-tema="v10"] #conteudo-meio .ag-linha{grid-template-columns:max-content minmax(0,1fr) auto auto auto;grid-template-areas:"txt txt av slot est" "data selos selos selos selos"}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt{grid-area:txt}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-data{grid-area:data;text-align:left;min-width:0;margin-right:8px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-selos{grid-area:selos}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .avatares{grid-area:av}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-slot{grid-area:slot;align-self:start;padding-top:1px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .acoes{grid-area:est}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-conf{display:none}
+}
+@media (max-width:760px), (pointer:coarse) and (max-height:500px){
+  html[data-tema="v10"] #conteudo-meio .ag-linha{grid-template-columns:max-content minmax(0,1fr) auto auto auto;grid-template-areas:"txt txt av slot est" "data selos selos selos selos"}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt{grid-area:txt}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-data{grid-area:data;margin-right:8px;text-align:left;align-self:center}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-selos{grid-area:selos;align-self:center}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .avatares{grid-area:av}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-slot{grid-area:slot;margin:0 0 0 6px;align-self:start}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .acoes{grid-area:est}
+}
+/* Visualizar · Cartões: cada linha num quadro, o nome inteiro e os selos embaixo */
+html[data-tema="v10"] #conteudo-meio.vis-cartoes .ag-linha{flex-wrap:wrap;margin:6px 0;border:1px solid var(--borda);border-radius:10px;padding:10px 12px;min-height:0;row-gap:6px}
+html[data-tema="v10"] #conteudo-meio.vis-cartoes .ag-linha > .ag-txt{white-space:normal;flex-basis:calc(100% - 200px)}
+html[data-tema="v10"] #conteudo-meio.vis-cartoes .ag-linha > .ag-selos{order:7;flex-basis:100%;flex-wrap:wrap}
+/* o ⋯ das listas: Agrupar, Ordenar, Visualizar e Períodos em botões de uma palavra */
+.lista-opc{display:flex;flex-direction:column;gap:8px;min-width:260px}
+.lista-opc:empty{display:none}
+.lo-ln{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px}
+.lo-ln > span{color:var(--cinza)}
+.lo-seg{display:inline-flex;gap:2px;padding:2px;background:var(--placa,#f1f1ef);border-radius:8px}
+.lo-seg button{border:0;background:none;padding:4px 9px;min-height:28px;border-radius:6px;font:inherit;font-size:12px;color:var(--cinza);cursor:pointer;white-space:nowrap}
+.lo-seg button[aria-pressed="true"]{background:#fff;color:var(--texto);font-weight:600;box-shadow:0 1px 2px rgba(18,18,18,.08)}
+.lo-seg button:focus-visible{outline:2px solid var(--azul);outline-offset:1px}
 /* ══ F145 · a tela do caso em duas colunas (pedido do Paulo, 27.09.2026) ══
    Esquerda, parada enquanto os andamentos rolam: o nome do pedido, a placa em
    pares, o ➕ e os prazos em linhas finas. Direita: escrever em cima e ler
@@ -5581,7 +5621,7 @@ html .tipo-mais.mais-baixo .tl-mais-menu{left:0;right:auto}
 html .det-topo .linha1 > .det-canto{margin-left:auto;display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 html .lc-cab .lc-menu{margin-left:auto}
 html .zl-mais .zl-link{text-decoration:none;color:inherit}
-html .meio.ag-v10 #topo-mais{display:none}
+html .meio.ag-v10:not(.lista-opc) #topo-mais{display:none}
 html .meio-topo .topo-mais .tl-mais-menu{gap:8px;padding:10px}
 html .meio-topo .topo-mais .btn-fundo{display:inline-flex;align-items:center;gap:6px;width:100%;justify-content:flex-start}
 html .meio-topo .topo-mais .btn-fundo::after{content:"Mudar o fundo"}
@@ -6616,7 +6656,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.78</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.79</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6702,10 +6742,11 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
       <span class="tl-mais-menu" role="menu">
       <button class="btn-fundo" id="btn-fundo" title="mudar o fundo desta lista" onclick="abrirFundos()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0 0 17c1.2 0 1.8-.7 1.8-1.5 0-1.4-1.3-1.7-1.3-2.9 0-.9.8-1.6 1.9-1.6h1.8a4.3 4.3 0 0 0 4.3-4.3c0-3.9-3.9-6.7-8.5-6.7Z"/><path d="M7.5 10.5h.01M10.5 7h.01M14.5 7h.01M17 10h.01"/></svg></button>
         <!-- F236 · as listas abrem pela data que cobra, vencidos primeiro -->
-        <div class="ordenar">Ordenar: <select id="ordem">
+        <div class="ordenar"><select id="ordem" hidden aria-hidden="true">
           <option value="prazo" selected>Data mais próxima</option>
           <option value="alfa">Alfabética</option>
-        </select></div>
+          <option value="imp">Importante</option>
+        </select><div id="lista-opc" class="lista-opc"></div></div>
       </span></details>
     </div>
     <div class="meio-sub" id="sub-lista"></div>
@@ -9018,7 +9059,7 @@ function tituloLista(rot){
   const h = document.getElementById("titulo-lista");
   // F144 · o que a agenda do v10 põe no topo sai ao trocar de tela
   const tx = document.getElementById("topo-extra"); if(tx) tx.innerHTML = "";
-  const me = document.querySelector(".meio"); if(me) me.classList.remove("ag-v10","zap-v");
+  const me = document.querySelector(".meio"); if(me) me.classList.remove("ag-v10","zap-v","lista-opc");
   document.getElementById("app")?.classList.remove("zap-conv-aberta");
   const i = rot.indexOf(" ");
   const ic = i>0 ? svgIc(rot.slice(0,i), 19) : null;
@@ -11133,7 +11174,6 @@ function cartaoCliente(cli, casosMostrar){
     const quem = [...quemProx, ...resp.filter(c=>!quemProx.includes(c))].slice(0,2);
     const dTxt = !dataProx ? "" : dataProx===hj ? "hoje" : `${dataProx.slice(8,10)}/${dataProx.slice(5,7)}${dataProx.slice(0,4)!==hj.slice(0,4)?"/"+dataProx.slice(2,4):""}`;
     return `<div class="cartao ag-linha${ks.some(k=>k.urgente)?" urg":""}" data-cli="${cli.id}"${ks.length===1 && ehPreCaso(ks[0]) ? ` data-pc="${esc((ks[0].precaso||{}).id||ks[0].id)}"` : ""}>
-    <span class="ag-slot">${(k0=>k0 && !ehPreCaso(k0) ? botaoDespacho(k0) : "")(ks.find(k=>k.importante)||kP||ks[0])}</span>
     <span class="ag-data${!dataProx?"":dataProx<hj?" venc":dataProx===hj?" hoje":""}"${dica?` title="${esc(dica)}"`:""}>${dTxt}</span>
     <div class="ag-txt"><b>${esc(cli.nome)}</b>${/* teste 11.88, TRI-03: na coluna estreita os selos somem e dois pré-casos
       do mesmo cliente ficavam iguais; a espécie do pré-caso vai junto do nome */ ks.length===1 && ehPreCaso(ks[0])
@@ -11141,6 +11181,7 @@ function cartaoCliente(cli, casosMostrar){
     <span class="ag-selos">${selos}</span>
     <span class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${quem.map(c=>
       `<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")}</span>
+    <span class="ag-slot">${(k0=>k0 && !ehPreCaso(k0) ? botaoDespacho(k0) : "")(ks.find(k=>k.importante)||kP||ks[0])}</span>
     <span class="acoes">${ks[0]?`
       <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0].id}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.6 3.2 4.5 5.4 4.5 10a4.5 4.5 0 0 1-9 0c0-2.3 1.2-3.7 2.2-4.8.4 1.6 1.2 2.6 2.3 2.8-.4-2.6-.6-5.4 0-8Z"/></svg></button>
       <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0].id}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9Z"/></svg></button>`:""}</span>
@@ -11218,6 +11259,8 @@ function grupoClientes(casosSel){
   let pares = [...porCli].map(([,ks])=>[D.cliPorId.get(ks[0].cliente_id),ks]).filter(p=>p[0]);
   const ord = document.getElementById("ordem").value;
   if(ord==="alfa") pares.sort((a,b)=>a[0].nome.localeCompare(b[0].nome,"pt"));
+  else if(ord==="imp") pares.sort((a,b)=>{ const pa=dataQueCobra(a[1]), pb=dataQueCobra(b[1]);
+    return (b[1].some(k=>k.importante)?1:0)-(a[1].some(k=>k.importante)?1:0) || (pa<pb?-1:pa>pb?1:0); });
   // F236 · "Data mais próxima" é a data que cobra, da mesma conta da agenda (prazo fatal, tarefa,
   // prazo do tribunal, recurso, exigência, perícia), e não só o prazo fatal do caso
   else pares.sort((a,b)=>{ const pa=dataQueCobra(a[1]), pb=dataQueCobra(b[1]); return pa<pb?-1:pa>pb?1:0; });
@@ -11292,9 +11335,10 @@ function renderBase(){
   }
   // "Ordenar" só faz sentido em lista de clientes; no calendário, no quadro
   // ou no dashboard era um controle morto ocupando o topo
-  const LISTAS_ORDENAVEIS = ["minhas","importante"];   // F236 · 💰 Recebimentos tem ordem própria: o vencido mais antigo primeiro
+  const LISTAS_ORDENAVEIS = ["minhas","importante","meudia","planejado"];   // F236 · 💰 Recebimentos tem ordem própria: o vencido mais antigo primeiro
   document.querySelector(".ordenar").style.display =
     (buscaTxt || visao.startsWith("fase:") || LISTAS_ORDENAVEIS.includes(visao)) ? "" : "none";
+  pintarOpcLista();
   mostrarAddRodape();
   const h1=document.getElementById("titulo-lista"), sub=document.getElementById("sub-lista"),
         meio=document.getElementById("conteudo-meio");
@@ -11397,10 +11441,13 @@ function renderBase(){
           + emAtend.map(c=>cartaoCliente(c,[])).join(""):"")
       + ((visao==="fase:escritorio" && casosSel.length)
           ?`<h3 class="secao">Pré-casos no escritório (${casosSel.length})</h3>`:"")
-      + ((gs=>{ if(visao==="fase:prazo") gs.sort((x,y)=>{
+      + ((gs=>{ const agr = opcLista("agrupar");
+          // F437 · o ⋯ agrupa por lista, responsável ou espécie; "Data" é a lista corrida de antes
+          if(agr!=="data" && !(agr==="lista" && visao.startsWith("fase:"))) return emGrupos(gs, ([c,ks])=>chaveGrupo(agr, ks[0],
+            (D.atrDoCaso.get(ks[0].id)||[]).map(id=>D.colPorId.get(id)).filter(Boolean)), ([c,ks])=>cartaoCliente(c,ks));
+          return gs.map(([c,ks])=>cartaoCliente(c,ks)).join(""); })((gs=>{ if(visao==="fase:prazo" && opcLista("ordem")==="prazo") gs.sort((x,y)=>{
             const m=ks=>ks.map(k=>k.prazo).filter(Boolean).sort()[0]||"9999";
-            return m(x[1]).localeCompare(m(y[1])); }); return gs; })(grupoClientes(casosSel))
-          .map(([c,ks])=>cartaoCliente(c,ks)).join("")
+            return m(x[1]).localeCompare(m(y[1])); }); return gs; })(grupoClientes(casosSel)))
       || (emAtend.length?"":"<p class='meio-sub'>Nenhum cliente aqui.</p>"));
     if(visao==="importante"){
       const v = document.getElementById("ver-novidades");
@@ -14096,8 +14143,8 @@ function linhaAgenda(it){
   const nome = cli ? esc(cli.nome) : esc(resumo);
   // F427 · o prazo e o compromisso dizem do que são na própria linha, depois do nome (antes, só no title)
   const oque = !cli ? "" : it.antes ? resumo : it.motivo || (tc && tc.natureza!=="lembrete" ? resumo : "");
+  // F437 · linha C: o nome à esquerda, a lista e a etapa, a data, o responsável e, à direita, o concluir e a ⭐
   return `<div class="cartao ag-linha${k&&k.urgente?" urg":""}"${cli?` data-cli="${cli.id}"`:""}${t?` data-tarefa="${t.id}"`:""}>
-    <span class="ag-slot">${slot}</span>
     <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
     <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b>${oque?`<span class="ag-oque"> · ${esc(oque)}</span>`:""}</div>
     <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${it.tc && Array.isArray(it.tc.etapas) && it.tc.etapas.length?`<span class="ag-tipo">etapas ${it.tc.etapas.filter(e=>e.feito).length}/${it.tc.etapas.length}</span>`:""}${
@@ -14108,6 +14155,7 @@ function linhaAgenda(it){
     <span class="avatares"${cli?` data-equipe="${cli.id}"`:""}>${quem.map(c=>
       `<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")}</span>
     ${k && d<=hj ? botoesConferir(k, "ag-conf") : ""}
+    <span class="ag-slot">${slot}</span>
     <span class="acoes">${k?`
       <button class="acao-card fogo ${k.urgente?"on":""}" title="Urgente" data-fogo="${k.id}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.6 3.2 4.5 5.4 4.5 10a4.5 4.5 0 0 1-9 0c0-2.3 1.2-3.7 2.2-4.8.4 1.6 1.2 2.6 2.3 2.8-.4-2.6-.6-5.4 0-8Z"/></svg></button>
       <button class="acao-card ${k.importante?"on":""}" title="Importante" data-estrela="${k.id}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9Z"/></svg></button>`:""}</span>
@@ -14176,6 +14224,11 @@ function renderAgendaV10(qual){
   // aparece no dia como tarefa minha não se repete)
   const naLista = new Set(itens.filter(i=>i.tc && i.data<=util).map(i=>i.andId));
   const mencs = planej || (col && col!==eu.id) ? [] : (D.mencoes||[]).filter(m=>!naLista.has(m.andamento_id));
+  // F437 · a ordem escolhida no ⋯ (Data é a ordem da agenda); a ⭐ do caso ou o nome do cliente
+  const ordL = opcLista("ordem");
+  if(ordL==="alfa") itens = [...itens].sort((a,b)=>((a.cli||{}).nome||"").localeCompare((b.cli||{}).nome||"","pt") || (a.data<b.data?-1:a.data>b.data?1:0));
+  else if(ordL==="imp") itens = [...itens].sort((a,b)=>(b.k&&b.k.importante?1:0)-(a.k&&a.k.importante?1:0) || (a.data<b.data?-1:a.data>b.data?1:0));
+  const agrL = planej ? opcLista("agrupar") : "data";
   const meuDia = !planej && (!col || col===eu.id);   // F436 · período, conta do dia e sugeridas: só no Meu Dia da própria pessoa
   const ats = meuDia ? atendimentosHoje(eu.id) : [];
   const secao = ([tit,f,tom])=>{
@@ -14187,7 +14240,7 @@ function renderAgendaV10(qual){
       + `</section>`;
   };
   const nDegNL = deleg.filter(i=>i.extra).length;
-  const corpo = (meuDia ? contaDoDia(itens.filter(i=>i.data===hj), ats, eu.id) + blocoOntem() : "")
+  const corpo = agrL!=="data" ? emGrupos(itens, i=>chaveGrupo(agrL, i.k, i.quem), linhaAgenda) : (meuDia ? contaDoDia(itens.filter(i=>i.data===hj), ats, eu.id) + blocoOntem() : "")
   + secoes.slice(0,2).map(secao).join("")
   + (mencs.length ? `<section class="pl-grupo" data-tom="menc"><h3 class="secao">Menções a você <span class="pl-n">${mencs.length}</span></h3>`
       + mencs.slice(0,8).map(linhaMencaoDia).join("")
@@ -14204,6 +14257,7 @@ function renderAgendaV10(qual){
       + deleg.slice(0,limAg["Delegadas por mim"]||50).map(linhaAgenda).join("")
       + (deleg.length>(limAg["Delegadas por mim"]||50)?`<button class="btn-rap mais-plan" data-mais="Delegadas por mim">Mostrar mais ${Math.min(200,deleg.length-(limAg["Delegadas por mim"]||50))} de ${deleg.length-(limAg["Delegadas por mim"]||50)}</button>`:"")
       + `</details>` : "");
+  document.querySelector(".meio").classList.add("lista-opc");
   document.getElementById("conteudo-meio").innerHTML = chipsNat + avisoSeMeuDia(planej) + (corpo
     || `<p class="meio-sub">${planej?"Nada com data, agenda limpa.":`Nada vence hoje. Para pôr um cliente no dia, ${
       celular()?"toque e segure":"clique com o botão direito"} no cartão dele e escolha Adicionar ao Meu Dia.`}</p>`);
@@ -14303,6 +14357,37 @@ function linhaAtendimento(a){
 const horaDoItem = it => it.atend ? it.hora : it.ev && it.ev.data_hora ? horaSP(it.ev.data_hora) : "";
 // "Manhã e tarde" ou "Sem divisão": a escolha fica no navegador (crm_periodos) e o menu ⋯ da lista a troca
 const periodosLigados = () => ler("crm_periodos")!=="nao";
+// F437 · O MENU ⋯ DAS LISTAS (proposta C, aprovada pelo Paulo em 08.11.2026): Agrupar, Ordenar, Visualizar e Períodos,
+// como no Microsoft To Do. Cada escolha fica no navegador e vale para todas as listas em que se aplica
+const OPC_LISTA = {
+  agrupar: ["crm_agrupar", [["data","Data"],["lista","Lista"],["resp","Responsável"],["esp","Espécie"]]],
+  ordem: ["crm_ordem", [["prazo","Data"],["alfa","Nome"],["imp","Importante"]]],
+  vis: ["crm_vis", [["compacta","Compacta"],["cartoes","Cartões"]]],
+  per: ["crm_periodos", [["sim","Manhã e tarde"],["nao","Sem divisão"]]],
+};
+const opcLista = q => { const [ch, ops] = OPC_LISTA[q], v = ler(ch); return ops.some(o=>o[0]===v) ? v : ops[0][0]; };
+function pintarOpcLista(){
+  const el = document.getElementById("lista-opc"); if(!el) return;
+  const agenda = visao==="meudia" || visao==="planejado", fase = String(visao).startsWith("fase:");
+  // Agrupar: no Meu Dia a data e o período mandam; numa lista de fase, agrupar pela própria lista não divide nada
+  const linhas = [["agrupar", "Agrupar", visao==="planejado" || fase || ["minhas","importante"].includes(visao), fase ? ["lista"] : []],
+    ["ordem", "Ordenar", true, []], ["vis", "Visualizar", temaV10(), []], ["per", "Períodos", agenda, []]];
+  el.innerHTML = linhas.filter(l=>l[2]).map(([q, rot, , fora])=>`<div class="lo-ln"><span>${rot}</span><div class="lo-seg" role="group" aria-label="${rot}">${
+    OPC_LISTA[q][1].filter(o=>!fora.includes(o[0])).map(([v, r])=>`<button type="button" data-lopc="${q}" data-v="${v}" aria-pressed="${opcLista(q)===v}">${r}</button>`).join("")}</div></div>`).join("");
+  el.querySelectorAll("[data-lopc]").forEach(b=>b.onclick=e=>{ e.stopPropagation();
+    const q = b.dataset.lopc; guardar(OPC_LISTA[q][0], b.dataset.v);
+    if(q==="ordem") document.getElementById("ordem").value = b.dataset.v;
+    limAg = {}; render(); });
+  const cm = document.getElementById("conteudo-meio"); if(cm) cm.classList.toggle("vis-cartoes", temaV10() && opcLista("vis")==="cartoes");
+}
+// a chave de cada agrupamento: no Planejado sai do item da agenda, na lista de clientes do primeiro caso
+const chaveGrupo = (q, k, quem) => q==="lista" ? (k ? semEmoji(listaDe(k)).trim() || NOME_FASE[k.fase] || "Sem lista" : "Sem caso")
+  : q==="resp" ? ((quem||[])[0] ? quem[0].nome : "Sem responsável") : (k && k.especie) || "Sem espécie";
+function emGrupos(lista, chave, pinta){
+  const g = new Map(); lista.forEach(x=>{ const c = chave(x); if(!g.has(c)) g.set(c, []); g.get(c).push(x); });
+  return [...g].sort((a,b)=>a[0].localeCompare(b[0],"pt")).map(([c, xs])=>
+    `<section class="pl-grupo"><h3 class="secao">${esc(c)} <span class="pl-n">${xs.length}</span></h3>${xs.map(pinta).join("")}</section>`).join("");
+}
 function hojePorPeriodo(g, ats, planej){
   const solto = l => planej ? l.map(linhaAgenda).join("") : porClienteDia(l);
   const m = [], t = [], q = [];
@@ -56656,6 +56741,7 @@ document.getElementById("busca-x").onclick=()=>{
   b.focus(); render();
 };
 document.getElementById("ordem").onchange=()=>render();
+document.getElementById("ordem").value = ["prazo","alfa","imp"].includes(ler("crm_ordem")) ? ler("crm_ordem") : "prazo";
 // O ☰ é a palavra final sobre o menu. Antes ele só mexia numa classe que a
 // ficha aberta sobrescrevia — com tudo aberto, clicar não fazia nada e o
 // botão parecia quebrado. Agora ele grava a preferência e manda aplicar.
