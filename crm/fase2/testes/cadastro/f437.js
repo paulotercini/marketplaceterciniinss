@@ -80,7 +80,7 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
   if (process.env.SHOT) await p.screenshot({ path: process.env.SHOT });
   await ab();
   const menu = await p.evaluate(() => [...document.querySelectorAll("#lista-opc .lo-ln > span")].map(e => e.textContent));
-  conf(`o ⋯ do Planejado tem Agrupar, Ordenar, Visualizar e Períodos (${menu})`, menu.join() === "Agrupar,Ordenar,Visualizar,Períodos");
+  conf(`o ⋯ do Planejado tem Agrupar, Ordenar, Visualizar, Períodos e Visão (${menu})`, menu.join() === "Agrupar,Ordenar,Visualizar,Períodos,Visão");
   await clic("agrupar", "esp"); await p.waitForTimeout(200);
   const g = await p.evaluate(() => [...document.querySelectorAll("#conteudo-meio h3.secao")].map(h => h.firstChild.textContent.trim()).concat(localStorage.getItem("crm_agrupar")));
   conf(`agrupar por espécie põe uma seção por espécie (${g})`, g.includes("B21") && !g.includes("Hoje") && g.at(-1) === "esp");
@@ -111,7 +111,7 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
   await p.screenshot({ path: "f437-planejado.png" });
   await p.evaluate(() => { visao = "meudia"; render(); }); await ab(); await p.waitForTimeout(200);
   const md = await p.evaluate(() => [...document.querySelectorAll("#lista-opc .lo-ln > span")].map(e => e.textContent));
-  conf(`no Meu Dia, o ⋯ tem Ordenar, Visualizar e Períodos (${md})`, md.join() === "Ordenar,Visualizar,Períodos");
+  conf(`no Meu Dia, o ⋯ tem Ordenar, Visualizar e Períodos (${md})`, md.join() === "Ordenar,Visualizar,Períodos,Visão");
   await p.screenshot({ path: "f437-meudia.png" });
 
   // F438 · o mouse parado sobre a linha mostra a última anotação; o clique continua abrindo a ficha
