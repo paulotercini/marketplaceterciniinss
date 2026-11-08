@@ -127,6 +127,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
     localStorage.setItem("crm_tema", "v10");
+    localStorage.setItem("crm_pi_zoom", "0.5");   // zoom pequeno guardado de antes
   }, [SUPA, SESSAO]);
   await instalarBanco(cel, { SUPA, SESSAO, banco });
   const q = await cel.newPage();
@@ -136,6 +137,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await q.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await q.evaluate(([cli, caso]) => abrirFicha(cli).then(() => abrirProcessoInteiro(caso)), [CLI_CHEIO, CASO1]);
   await q.waitForSelector("#proc-inteiro");
+  conf("no celular, o zoom guardado abaixo de 100 % abre em 100 %", await q.evaluate(() => (+document.getElementById("proc-inteiro").style.getPropertyValue("--pi-zoom") || 1) === 1));
   conf("no celular, os botões do zoom saem do topo", await q.evaluate(() => getComputedStyle(document.querySelector("#proc-inteiro .pi-cab .pi-zoom")).display === "none"));
   const cdp = await cel.newCDPSession(q);
   const toque = (type, pts) => cdp.send("Input.dispatchTouchEvent", { type, touchPoints: pts.map(([x, y], id) => ({ x, y, id })) });
