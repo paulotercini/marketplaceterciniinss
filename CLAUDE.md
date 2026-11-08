@@ -565,6 +565,8 @@ A **F422s** (o segundo teste das 72 conversas, 07.11.2026): a função `zap_plan
 
 A **F422t** (a terceira rodada das 72 conversas, 07.11.2026): o Agendador dizia "não localizei" ao remarcar ou cancelar sem chamar a consulta, por causa da frase "o número não é o telefone principal da ficha". O `AG_DUVIDA` manda chamar `consultar_vagas` com os três profissionais e ler `atendimentos_marcados` antes de responder sobre atendimento agendado, a frase da ficha diz que os agendados se consultam normalmente, e o `encaminhar_equipe` com remarcar, cancelar ou o dia do atendimento, sem consulta na conversa, volta uma vez ao Agendador. O simulador passou a montar a ficha como o `zap_plantao_agenda` (com `relacao`, `cliente_id` nulo e `cliente_numero` da ficha; sem ela, telefone principal). Teste: `testes/funcoes/zap_plantao.test.mjs`.
 
+A **F422u** (pedido do Paulo de 08.11.2026, "para a Amanda pode ser agendado cliente 001 também"): a vaga sem código no Google ("LIVRE 09h30-10h00", da Dra. Amanda e do Dr. Marcos), que o Apps Script classifica pela duração (30 minutos = 002), passa a ser oferecida e agendada também como 001 pela IA (`livresDoTipo` em `vagasDoDia` e na releitura da vaga); o `agendar` do `Code.gs` já aceitava qualquer tipo na vaga sem código. A vaga com código fixo ("002 - Livre") continua só do seu tipo. Teste: `testes/funcoes/zap_plantao.test.mjs`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

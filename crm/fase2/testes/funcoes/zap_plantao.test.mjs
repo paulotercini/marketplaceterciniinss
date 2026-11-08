@@ -396,3 +396,21 @@ console.log("formal: ok");
   assert.ok(paraAgendador("x").includes("nunca diga que não localizou o atendimento"));
   console.log("ok F422t");
 }
+
+// F422u · a vaga sem código ("LIVRE 09h30-10h00") vale para o 001; a vaga "002" fixa não
+{
+  const dia = { data: "2026-11-10", livres: { "001": [], "002": [{ inicio: "09:30", eventoId: "am", tipoFixo: false }, { inicio: "10:00", eventoId: "fx", tipoFixo: true }] } };
+  assert.deepEqual(vagasDoDia([dia], "001", "a Dra. Amanda").map((v) => v.eventoId), ["am"]);
+  assert.equal(vagasDoDia([dia], "002", "a Dra. Amanda").length, 2);
+  const chamadas = [];
+  const f = ferramentasDaConversa("c9", async (acao, corpo) => {
+    chamadas.push([acao, corpo]);
+    if (acao === "disponibilidade") return { ok: true, dias: [dia] };
+    if (acao === "agendamentosFuturos") return { agendamentos: [] };
+    return { ok: true };
+  }, async (fn) => (fn === "zap_plantao_agenda" ? { ligada: true, telefone: "5516999990000" } : {}));
+  assert.deepEqual((await f.consultar_vagas({ profissionais: ["amanda"] })).vagas.amanda.map((v) => v.eventoId), ["am"]);
+  assert.equal((await f.marcar_atendimento({ profissional: "amanda", eventoId: "am", nome: "Ana Souza" })).marcado, true);
+  assert.equal(chamadas.find(([a]) => a === "agendar")[1].tipo, "001");
+  console.log("ok F422u");
+}
