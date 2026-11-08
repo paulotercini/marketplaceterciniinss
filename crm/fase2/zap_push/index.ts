@@ -13,6 +13,7 @@
 //   { teste: true }    com o token de quem pede, avisa os aparelhos dele → { enviados }
 //   { mencao_id }      F396 · avisa quem foi citado                       → { enviados }
 //   { resumo: true }   F396 · o resumo das 8h, uma notificação por pessoa → { enviados }
+//   { lembretes: true } F452 · véspera às 8h, 2 h e 30 min antes da perícia, da audiência e da tarefa com hora → { enviados }
 // importado só no uso: o teste do node lê as funções puras sem o pacote
 const wp = async () => (await import("npm:web-push@3.6.7")).default;
 
@@ -50,6 +51,11 @@ export function avisoMencao(x: { id: string; texto: string; conversa_id: string 
   const t = mascarar(x.texto).replace(/\s+/g, " ").trim();
   return { title: de ? "Menção de " + de : "Menção para você", body: t.length > 140 ? t.slice(0, 137) + "…" : t, tag: "crm-men-" + x.id,
     data: x.conversa_id ? { crm: "zap", conversa: x.conversa_id } : { crm: "mencao" } };
+}
+// F452 · o lembrete antes do compromisso, sem número longo; o toque abre a ficha do cliente (cliqueNoAviso)
+export function avisoLembrete(l: { titulo: string; corpo: string; tag: string; cliente_id?: string | null }) {
+  const t = mascarar(l.corpo).replace(/\s+/g, " ").trim();
+  return { title: l.titulo, body: t.length > 140 ? t.slice(0, 137) + "…" : t, tag: l.tag, data: { crm: "lembrete", cliente: l.cliente_id || null } };
 }
 // o atendente da conversa, e sem atendente todos (como o aviso sonoro do CRM, F191)
 export function destinatarios(c: Conv, inscs: Insc[]) {
@@ -104,7 +110,7 @@ async function quemPede(req: Request) {
 if (typeof Deno !== "undefined") Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
   if (req.method !== "POST") return json({ erro: "use POST" }, 405);
-  let p: { mensagem_id?: string; mencao_id?: string; resumo?: boolean; preparar?: boolean; teste?: boolean };
+  let p: { mensagem_id?: string; mencao_id?: string; resumo?: boolean; lembretes?: boolean; preparar?: boolean; teste?: boolean };
   try { p = await req.json(); } catch { return json({ erro: "pedido inválido" }, 400); }
   try {
     if (p.preparar) return json({ publica: (await chaves()).publica });
@@ -124,6 +130,16 @@ if (typeof Deno !== "undefined") Deno.serve(async (req) => {
       let n = 0;
       for (const l of linhas) n += await enviar(todas.filter((i) => i.colaborador_id === l.colaborador_id),
         { title: l.titulo, body: l.corpo, tag: "crm-resumo", data: { crm: "zap" } });
+      return json({ enviados: n });
+    }
+    if (p.lembretes) {
+      // o banco escolhe e marca (push_lembretes_preparar); sai só para quem está no horário dos avisos (F399)
+      const rl = await sb("/rest/v1/rpc/push_lembretes_preparar", { method: "POST", body: "{}" });
+      const linhas: { colaborador_id: string; titulo: string; corpo: string; tag: string; cliente_id: string }[] = rl.ok ? await rl.json() : [];
+      const ri = await sb("/rest/v1/rpc/push_inscricoes_agora");
+      const agora: Insc[] = ri.ok ? await ri.json() : [];
+      let n = 0;
+      for (const l of linhas) n += await enviar(agora.filter((i) => i.colaborador_id === l.colaborador_id), avisoLembrete(l));
       return json({ enviados: n });
     }
     if (p.mencao_id) {
