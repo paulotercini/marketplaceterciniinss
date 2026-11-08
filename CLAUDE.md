@@ -579,6 +579,8 @@ A **F439** (a leitura do processo no celular, pedido do Paulo de 08.11.2026): no
 
 A **F440** (as três melhorias da leitura no celular aprovadas pelo Paulo em 08.11.2026): no processo inteiro, o toque duplo alterna o zoom entre 100 % e 200 % (`piZoomPara`, guardado), o deslizar de lado com a folha na largura da tela leva à peça seguinte ou à anterior (`piIr`; com zoom, o dedo anda pela folha), e o pé da leitura mostra a folha do alto, "fls. X de N" (`.pi-fls`, no `acender`: o início da peça pelo `flsDasPecas` mais a folha do PDF que está no alto; sem as folhas conhecidas, "peça X de N"). Teste: `f289.js`.
 
+A **F441** (12.82, etapa 1 das ideias do Todoist aprovadas pelo Paulo em 08.11.2026, artefato https://claude.ai/artifact/DYyiVPFGUFoTG1AaBC4EU4): o título "Vencidos" do Meu Dia e do Planejado tem **Reagendar** (`reagendarVencidas`, `reagendavel`, `aplicarReagendar`), que leva de uma vez a outra data (Hoje, Amanhã, Próxima semana ou a data) os retornos do To Do, as voltas à fila, os lembretes e compromissos das anotações e as tarefas pessoais vencidas; prazo fatal, perícia, audiência e pagamento ficam, e a janela diz quantos. A volta à fila reagendada limpa `ronda.despacho.todo`, para a `ponte_despacho.py` levar a data nova ao To Do. Tem desfazer de 30 s. Teste: `testes/cadastro/f441.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

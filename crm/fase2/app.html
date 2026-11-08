@@ -3638,6 +3638,9 @@ html[data-tema="v10"] .pl-grupo h3.secao{margin:0;padding:10px 16px;background:v
   font-size:11px;font-weight:600;letter-spacing:.08em;border-bottom:1px solid var(--borda)}
 html[data-tema="v10"] .pl-grupo h3.secao .pl-n{margin-left:4px;font-family:var(--f-mono);letter-spacing:0}
 html[data-tema="v10"] .pl-grupo[data-tom="venc"] h3.secao{background:var(--venc-fundo);color:var(--venc-tinta);border-bottom-color:#F1D5D0}
+.pl-grupo h3.secao:has(.reag-bt){display:flex;align-items:center;gap:6px}
+.pl-grupo h3.secao .reag-bt{margin-left:auto;background:none;border:1px solid currentColor;border-radius:6px;color:inherit;font:600 12px var(--f-txt,inherit);letter-spacing:0;text-transform:none;padding:3px 10px;min-height:26px;cursor:pointer}
+.pl-grupo h3.secao .reag-bt:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 html[data-tema="v10"] .pl-grupo[data-tom="hoje"] h3.secao{background:var(--hoje-fundo);color:var(--hoje-tinta);border-bottom-color:#EEDCBC}
 html[data-tema="v10"] #conteudo-meio .pl-grupo .cartao{border:0;border-radius:0;margin:0;box-shadow:none}
 html[data-tema="v10"] #conteudo-meio .pl-grupo .cartao + .cartao{margin-top:0;border-top:1px solid var(--borda)}
@@ -6669,7 +6672,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.81</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.82</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14269,7 +14272,9 @@ function renderAgendaV10(qual){
   const secao = ([tit,f,tom])=>{
     const g = itens.filter(i=>f(i.data)), at = tom==="hoje" ? ats : []; if(!g.length && !at.length) return "";
     const lim = limAg[tit]||50;
-    return `<section class="pl-grupo"${tom?` data-tom="${tom}"`:""}><h3 class="secao">${tit} <span class="pl-n">${g.length+at.length}</span></h3>`
+    const nReag = tom==="venc" ? g.filter(reagendavel).length : 0;   // F441 · Reagendar os vencidos (ideia do Todoist)
+    if(tom==="venc") _reagVenc = g;
+    return `<section class="pl-grupo"${tom?` data-tom="${tom}"`:""}><h3 class="secao">${tit} <span class="pl-n">${g.length+at.length}</span>${nReag ? `<button type="button" class="reag-bt" onclick="reagendarVencidas()" title="Levar de uma vez a outra data os ${nReag} retornos, voltas à fila e lembretes vencidos (prazo fatal e perícia ficam)"><span aria-hidden="true">Reagendar</span><span class="sr-only">Reagendar os ${nReag} vencidos que não são prazo fatal</span></button>` : ""}</h3>`
       + (tom==="hoje" ? hojePorPeriodo(g.slice(0,lim), at, planej) : planej ? g.slice(0,lim).map(linhaAgenda).join("") : porClienteDia(g.slice(0,lim)))
       + (g.length>lim?`<button class="btn-rap mais-plan" data-mais="${esc(tit)}">Mostrar mais ${Math.min(200,g.length-lim)} de ${g.length-lim}</button>`:"")
       + `</section>`;
@@ -14316,6 +14321,59 @@ function renderAgendaV10(qual){
   ligarCartoes(); ligarTarefas();
   buscarTextosAgenda([...itens, ...deleg].filter(i=>i.andId && !i.resumo).map(i=>i.andId));
   buscarMotivosPz([...itens, ...deleg].filter(i=>i.k && (i.fatal || i.antes) && !i.tc && !i.motivo && i.k.prazo===(i.antes||i.data)).map(i=>i.k));   // F427
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F441 · REAGENDAR OS VENCIDOS DE UMA VEZ (proposta 1 do Todoist, aprovada pelo Paulo em 08.11.2026)
+// ══════════════════════════════════════════════════════════════════════════
+// O cabeçalho das Vencidas do Meu Dia e do Planejado leva de uma vez a outra data o que é só data de voltar: a tarefa
+// de lembrete ou compromisso da anotação, a volta à fila, o retorno do To Do e a tarefa pessoal. Prazo fatal, prazo do
+// tribunal, recurso, exigência, perícia a confirmar, honorário e qualidade ficam: pedem registro, e não data nova.
+let _reagVenc = [];
+function reagendavel(i){
+  if(i.fatal || i.prazo || i.ev || i.evPassado || i.pg) return false;
+  if(i.tc) return i.tc.natureza!=="fatal" && !i.tc.concluida_em;
+  if(i.t) return !i.t.virtual && !!i.t.id;
+  return !!i.k && (i.selo==="Volta à fila" || i.selo==="Retorno");
+}
+function reagendarVencidas(){
+  const ms = _reagVenc.filter(reagendavel), fica = _reagVenc.length - ms.length;
+  if(!ms.length) return;
+  const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))], ["Próxima semana", proxSegunda()]];
+  caixa(`<h3 style="margin:0 0 6px">Reagendar ${ms.length} ${ms.length===1?"vencido":"vencidos"}</h3>
+    <p class="meio-sub">Retornos, voltas à fila e lembretes vão para a data escolhida.${fica ? ` ${fica} ${fica===1?"item fica":"itens ficam"} (prazo fatal, perícia a confirmar, exigência e outros que pedem registro).` : ""}</p>
+    <div class="conf-dias">${op.map(([r,d])=>`<button type="button" class="esp-it" onclick="aplicarReagendar('${d}')" title="${fmtBarra(d)}">${r}</button>`).join("")}
+      <input type="date" id="reag-data" aria-label="Outra data" min="${hoje()}" onchange="if(this.value)aplicarReagendar(this.value)"></div>`);
+}
+async function aplicarReagendar(data){
+  fecharCaixa();
+  const ms = _reagVenc.filter(reagendavel); if(!ms.length || !data) return;
+  const volta = [], grava = [], vistos = new Set();
+  for(const i of ms){
+    if(i.tc){ if(vistos.has("tc"+i.tc.id)) continue; vistos.add("tc"+i.tc.id);
+      const t = i.tc, antes = t.lembrar_em;
+      grava.push(api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({lembrar_em:data})}));
+      t.lembrar_em = data;
+      volta.push(()=>{ t.lembrar_em = antes; return api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({lembrar_em:antes})}); });
+    } else if(i.t){ if(vistos.has("t"+i.t.id)) continue; vistos.add("t"+i.t.id);
+      const t = i.t, antes = t.prazo;
+      grava.push(api(`/rest/v1/tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({prazo:data})}));
+      t.prazo = data;
+      volta.push(()=>{ t.prazo = antes; return api(`/rest/v1/tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({prazo:antes})}); });
+    } else { if(vistos.has("k"+i.k.id)) continue; vistos.add("k"+i.k.id);
+      // a volta à fila anda com o despacho (ronda.despacho.prazo) e volta a ir ao To Do pela ponte (todo apagado); o retorno
+      // do To Do anda como no "Em análise": o casos.prazo muda e o To Do só o troca quando a data dele mudar
+      const k = i.k, antes = {prazo:k.prazo, ronda:k.ronda}, d = (k.ronda||{}).despacho;
+      const campos = {prazo:data, ...(i.selo==="Volta à fila" && d ? {ronda:{...(k.ronda||{}), despacho:{...d, prazo:data, todo:null}}} : {})};
+      grava.push(patchCaso(k.id, campos)); Object.assign(k, campos);
+      volta.push(()=>{ Object.assign(k, antes); return patchCaso(k.id, {prazo:antes.prazo, ...(campos.ronda ? {ronda:antes.ronda||{}} : {})}); });
+    }
+  }
+  const r = await Promise.allSettled(grava), falhas = r.filter(x=>x.status==="rejected").length;
+  montarSidebar(); render();
+  if(falhas) aviso(`⚠ ${falhas} de ${grava.length} não gravaram: atualize a página e confira`);
+  avisoDesfazer(`${grava.length - falhas} ${grava.length===1?"item reagendado":"itens reagendados"} para ${fmtBarra(data)}`, async ()=>{
+    await Promise.allSettled(volta.map(f=>f())); montarSidebar(); render(); aviso("Reagendamento desfeito", false);
+  }, 30000);
 }
 // F382 (12.40) · a carga de prazos por pessoa nos próximos 7 dias, no alto do Planejado (ideia do Lovable aprovada pelo
 // Paulo). Conta o que o filtro "Prazos" conta; o retorno do To Do não entra (prazoEhRetorno). O nome filtra o Planejado
