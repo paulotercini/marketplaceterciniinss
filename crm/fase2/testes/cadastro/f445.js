@@ -1,4 +1,4 @@
-// F444 · as ideias do Trello, segunda leva: a Tabela dos casos abertos (ordem, filtro, etapa e responsável na linha,
+// F445 · as ideias do Trello, segunda leva: a Tabela dos casos abertos (ordem, filtro, etapa e responsável na linha,
 // com desfazer) e a aba Pessoas do Planejado (o que cada pessoa tem por dia)
 const { chromium } = require("playwright");
 const http = require("http");

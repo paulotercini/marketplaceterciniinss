@@ -6722,7 +6722,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.85</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.86</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14518,7 +14518,7 @@ async function lotePassarA(para){
     for(const u of undos) await u(); montarSidebar(); render(); aviso("Desfeito: os casos voltaram a quem tinha", false);
   }, 30000);
 }
-// F444 · a etapa em lote (no Quadro): só o catálogo da fase, e só com todos os casos na mesma fase (F119)
+// F445 · a etapa em lote (no Quadro): só o catálogo da fase, e só com todos os casos na mesma fase (F119)
 function loteEtapa(){
   const ks = casosDaSel(); if(!ks.length) return aviso("Nenhum caso aberto na seleção");
   const fs = [...new Set(ks.map(k=>faseEfetiva(k)))];
@@ -15781,7 +15781,7 @@ function ligarQuadro(){
     el.ondragstart=e=>{ e.dataTransfer.setData("text/caso", el.dataset.caso);
       const de=el.closest(".coluna[data-colab]"); if(de) e.dataTransfer.setData("text/de", de.dataset.colab); };
     el.onmousedown=e=>{ if(e.shiftKey) e.preventDefault(); };
-    el.onclick=e=>{ if(e.shiftKey){ e.preventDefault(); return alternarSel(el); } if(el.dataset.cli) abrirFicha(el.dataset.cli); };   // F444 · a seleção da F443 no Quadro
+    el.onclick=e=>{ if(e.shiftKey){ e.preventDefault(); return alternarSel(el); } if(el.dataset.cli) abrirFicha(el.dataset.cli); };   // F445 · a seleção da F443 no Quadro
   });
   if(_sel.size) pintarSel();
   document.querySelectorAll(".coluna[data-colab]").forEach(col=>{
@@ -15941,7 +15941,7 @@ async function mudouModelo(){
 }
 function novoModelo(){ const cx = document.getElementById("cfg-modelos"); if(cx) cx.innerHTML = linhasCfgModelos([...modelosDaTela(), {nome:"", etapas:[]}]); }
 
-// ── F444 · as ideias do Trello, segunda leva (aprovadas pelo Paulo em 08.11.2026) ─────────
+// ── F445 · as ideias do Trello, segunda leva (aprovadas pelo Paulo em 08.11.2026) ─────────
 // ▦ Tabela: os casos abertos numa planilha, com ordem pelo cabeçalho, filtro de texto e de fase, e a etapa (só do
 // catálogo, F119) e o responsável trocados na própria linha, com desfazer. A etapa escrita à mão aparece, mas não se oferece
 let tabTxt = "";
