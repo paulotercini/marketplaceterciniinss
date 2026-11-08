@@ -109,7 +109,7 @@ const SUPA = "https://ficticio.supabase.co";
       alvo: (pi._alvo||{}).id||"" } : null;
     // zoom: o + aumenta, o teclado volta a 100 %, e a escolha fica guardada
     if(pi){ piZoom(1); piZoom(1); res.z1 = pi.style.getPropertyValue("--pi-zoom") + "|" + pi.querySelector(".pi-zoom output").textContent;
-      res.zPeca = getComputedStyle(pi.querySelector(".pi-peca")).zoom;
+      res.zPeca = getComputedStyle(pi.querySelector(".pi-folha")).zoom + "|" + getComputedStyle(pi.querySelector(".pi-peca h4")).zoom;
       document.dispatchEvent(new KeyboardEvent("keydown", {key:"0", bubbles:true})); res.z0 = pi.style.getPropertyValue("--pi-zoom");
       piZoom(-1); res.zGuard = localStorage.getItem("crm_pi_zoom"); localStorage.removeItem("crm_pi_zoom"); }
     fecharProcessoInteiro();
@@ -133,7 +133,7 @@ const SUPA = "https://ficticio.supabase.co";
   conf("e-SAJ e eproc: a inicial reconhecida e primeiro no dia", JSON.stringify(r.esaj) === JSON.stringify(["Petição inicial","Petição inicial","Documentos Diversos","Petição (Outras)"]));
   conf("Detalhes devolve a aba de antes, com a volta à árvore", r.and);
   conf("Ler abre o leitor no documento clicado", r.ler && r.ler.n === 3 && /Judicial/.test(r.ler.tit) && r.ler.alvo === "pi-1");
-  conf("zoom das peças: + aumenta, 0 volta, a escolha fica", r.z1 === "1.25|125 %" && r.zPeca === "1.25" && r.z0 === "1" && r.zGuard === "0.9");
+  conf("zoom só na folha (o título fica): + aumenta, 0 volta, a escolha fica", r.z1 === "1.25|125 %" && r.zPeca === "1.25|1" && r.z0 === "1" && r.zGuard === "0.9");
   conf("Ler no Conselho leva os documentos do recurso", r.lerCrps === 2);
   conf("onclick válidos", r.parse);
   conf("leitor ao lado: abre na decisão, marcada na árvore", r.leitor && /Senten/.test(r.leitor.tit) && /Senten/.test(r.leitor.sel[0]||"") && r.leitor.bts >= 5 && /3 documentos/.test(r.leitor.cab) && r.leitor.situ);
