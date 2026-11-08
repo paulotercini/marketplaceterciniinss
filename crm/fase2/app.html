@@ -6720,7 +6720,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.93</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.94</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18154,7 +18154,7 @@ function horaAvisosTxt(){ return eu && eu.push_de && eu.push_ate ? `${hhmm(eu.pu
 function horarioAvisos(){
   const tem = !!(eu.push_de && eu.push_ate);
   caixa(`<h3>Horário dos avisos</h3>
-    <p class="meio-sub">Fora do horário, mensagem e menção não avisam no aparelho; quando ele abre, chega o resumo do que veio. Com horário, só de segunda a sexta, sem feriado.</p>
+    <p class="meio-sub">Fora do horário, mensagem e menção não avisam no aparelho; quando ele abre, chega o resumo do que veio. Com horário, só de segunda a sexta, sem feriado. A perícia, a audiência e a tarefa com hora avisam na véspera às 8h, 2 horas antes e 30 minutos antes, também só dentro do horário.</p>
     <label><input type="checkbox" id="zh-livre"${tem?"":" checked"}> A qualquer hora</label>
     <div class="form-linha" style="margin-top:8px">
       <label>Das <input type="time" id="zh-de" value="${hhmm(eu.push_de)||"08:00"}"${tem?"":" disabled"}></label>
@@ -39938,7 +39938,7 @@ function prazosDoCliente(cliId){
   const lista = soltas.slice().sort((a, b)=>a.data<b.data?-1:a.data>b.data?1:(natDaLinha(a)==="fatal"?-1:0)-(natDaLinha(b)==="fatal"?-1:0));
   return {grupos, total: soltas.length, venc, lista};
 }
-// F452 · A ABA PRAZOS EM MÊS E LISTA (proposta C escolhida pelo Paulo em 08.11.2026, https://claude.ai/artifact/A2LoP3MwVs5STJyKYzzpHJ,
+// F453 · A ABA PRAZOS EM MÊS E LISTA (proposta C escolhida pelo Paulo em 08.11.2026, https://claude.ai/artifact/A2LoP3MwVs5STJyKYzzpHJ,
 // ideias do Replit e do Base44). No alto, a faixa do próximo prazo fatal; depois a natureza (com Retorno à parte) e Por data
 // ou Por caso; a lista à esquerda e o mês à direita (no celular, o mês no alto). O dia clicado filtra a lista; Limpar volta.
 // O mês substitui a linha dos 30 dias (F382) e os três quadros de contagem (F326). A escolha vale na sessão.
