@@ -3842,7 +3842,9 @@ html[data-tema="v10"] .ag-c-lista,html[data-tema="v10"] .ag-c-etapa,html[data-te
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .avatares{grid-column:6;width:auto}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-slot{grid-column:7}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .acoes{grid-column:8;width:auto}
-  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-selos .ag-esp{display:none}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-selos :is(.ag-esp,.ag-etapa){display:none}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-c-etapa .ag-tipo{border:0;background:none;padding:0;color:inherit;font-size:13px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-c-etapa .ag-velha{color:var(--venc-tinta)}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-txt .ag-ben{display:inline}
   html[data-tema="v10"] .ag-c-lista,html[data-tema="v10"] .ag-c-etapa{font-size:13px;color:var(--cinza);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{padding:0 12px 0 16px;min-height:30px;font:600 11px var(--f);letter-spacing:.05em;text-transform:uppercase;color:var(--cinza)}
@@ -11226,7 +11228,9 @@ function cartaoCliente(cli, casosMostrar){
     <span class="ag-data${!dataProx?"":dataProx<hj?" venc":dataProx===hj?" hoje":""}"${dica?` title="${esc(dica)}"`:""}>${dTxt}</span>
     <div class="ag-txt"><b>${esc(cli.nome)}</b>${/* teste 11.88, TRI-03: na coluna estreita os selos somem e dois pré-casos
       do mesmo cliente ficavam iguais; a espécie do pré-caso vai junto do nome */ ks.length===1 && ehPreCaso(ks[0])
-      ? `<span class="ag-pc-esp"> · ${esc(ks[0].beneficio || (ks[0].precaso||{}).especie || "benefício a definir")}</span>` : ""}${resumo?`<span class="ag-res">, ${esc(resumo)}</span>`:""}</div>
+      ? `<span class="ag-pc-esp"> · ${esc(ks[0].beneficio || (ks[0].precaso||{}).especie || "benefício a definir")}</span>` : ""}${kP&&kP.especie?`<span class="ag-ben">${esc(kP.especie)}</span>`:""}${resumo?`<span class="ag-res">, ${esc(resumo)}</span>`:""}</div>
+    <span class="ag-c-lista">${esc(kP ? NOME_FASE[kP.fase==="outro" ? faseEfetiva(kP) : kP.fase]||"" : "")}</span>
+    <span class="ag-c-etapa">${kP && kP.etapa ? seloEtapaLista(kP) : ""}</span>
     <span class="ag-selos">${selos}</span>
     <span class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${quem.map(c=>
       `<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")}</span>
@@ -14219,7 +14223,7 @@ function linhaAgenda(it){
     <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
     <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b>${k&&k.especie?`<span class="ag-ben">${esc(k.especie)}</span>`:""}${oque?`<span class="ag-oque"> · ${esc(oque)}</span>`:""}</div>
     <span class="ag-c-lista">${esc(k ? (fe!=="outro" ? NOME_FASE[fe]||"" : lst && lst!=="—" ? lst : NOME_FASE[fe]||"") : "")}</span>
-    <span class="ag-c-etapa"${k&&k.etapa?` title="etapa do caso"`:""}>${esc(k&&k.etapa||"")}</span>
+    <span class="ag-c-etapa">${k && k.etapa ? seloEtapaLista(k) : ""}</span>
     <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${it.tc && Array.isArray(it.tc.etapas) && it.tc.etapas.length?`<span class="ag-tipo">etapas ${it.tc.etapas.filter(e=>e.feito).length}/${it.tc.etapas.length}</span>`:""}${
       it.selo?`<span class="${it.prazo?"ag-prazo":"ag-tipo"}">${esc(it.selo)}</span>`:""}${
       it.extra?`<span class="ag-tipo" title="a menção que acompanha a tarefa ainda não foi lida">${esc(it.extra)}</span>`:""}${
