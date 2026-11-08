@@ -100,10 +100,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click('.mt[data-vv="5"]');
   await p.waitForSelector(".pzc-hero");
   const aba = await p.evaluate(() => ({ hero: document.querySelector(".pzc-hero h2").textContent, n: document.querySelector(".pzc-hero-n b").textContent,
-    venc: document.querySelector(".pzc-tile-venc b") && document.querySelector(".pzc-tile-venc b").textContent,
+    venc: document.querySelector(".pzc-g-venc .pzc-gn") && document.querySelector(".pzc-g-venc .pzc-gn").textContent,
     grupos: [...document.querySelectorAll(".pzc-gt > span:first-child")].map(x => x.textContent), linhas: document.querySelectorAll(".pzc-lin").length }));
   conf("a aba abre pelo próximo prazo fatal, em número grande", /Recurso ao CRPS/.test(aba.hero) && /^\d+$/.test(aba.n));
-  conf("o quadro dos vencidos conta o vencido", aba.venc === "1");
+  conf("o grupo dos vencidos conta o vencido", aba.venc === "1");
   conf("os prazos vêm por data, com o grupo dos vencidos primeiro", aba.grupos[0] === "Vencidos" && aba.linhas >= 2);
   await foto("01-aba");
   await p.evaluate(() => pzNat("fatal"));
@@ -219,7 +219,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector(".pzc-lin");
   const cel = await p.evaluate(() => { const l = document.querySelector(".pzc-lin"), a = l.querySelector(".pzc-abrir").getBoundingClientRect(), r = l.getBoundingClientRect();
     return { seg: getComputedStyle(document.querySelector(".pzc-seg")).display, cobre: Math.abs(a.width - r.width) < 3 && Math.abs(a.height - r.height) < 3,
-      caso: getComputedStyle(l.querySelector(".pzc-caso-c")).display !== "none", rola: document.documentElement.scrollWidth <= 390 }; });
+      caso: getComputedStyle(l.querySelector(".pzc-caso")).display !== "none", rola: document.documentElement.scrollWidth <= 390 }; });
   conf("no celular a lista vira cartões que se tocam inteiros", cel.seg === "none" && cel.cobre && cel.caso);
   conf("no celular a aba não rola de lado", cel.rola);
   conf("a revisão que fica depois do cumprido é compromisso, e não prazo fatal", await p.evaluate(() =>
