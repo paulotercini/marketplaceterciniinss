@@ -271,6 +271,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(600);
   conf("7 · marcar a etapa grava e a janela fica aberta", banco.escritas.some(e => e.m === "PATCH" && e.t === "andamento_tarefas" && e.corpo.etapas) && await aberta()
     && await p.evaluate(() => !!document.querySelector("#painel-prazo .ppz-ets input:checked")));
+  conf("7 · a última etapa feita oferece concluir a tarefa (F454)", await p.locator("#et-concluir").count() === 1);
+  await fecharCx(); await p.waitForTimeout(200);
   await p.click("#painel-prazo .pp-add");
   await p.waitForSelector("#et-txt");
   conf("7 · o + Etapa abre a caixa por cima da janela", await noAlto("#et-txt"));

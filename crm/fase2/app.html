@@ -6048,6 +6048,9 @@ html[data-tema="v10"] .timeline li.tl-card.tl-pz-venc{border-color:#E8B4AF}
 .tl-pz-abrir{flex:none;height:30px;padding:0 12px;border:0;border-radius:7px;background:#FFFFFF;color:#A8231B;font-size:12px;font-weight:500;cursor:pointer}
 .tl-pz-ok{background:#E4F1EA}
 .tl-pz-ok .tl-pz-m{color:#14532A}
+.tl-pz-ok-tarde{background:#FBE9E8}
+.tl-pz-ok-tarde .tl-pz-ck{background:#B3261E}
+.tl-pz-ok .tl-pz-m .tl-pz-tarde{color:#A8231B;font-weight:600}
 .tl-pz-ck{flex:none;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#1B6E38;color:#FFFFFF}
 .tl-pz-ck svg{width:13px;height:13px}
 .tl-pz-fim,.tl-pz-antigo{background:var(--fundo,#F8F8F6)}
@@ -14439,15 +14442,20 @@ function reagendarVencidas(lote){
 async function aplicarReagendar(data){
   fecharCaixa();
   const ms = _reagVenc.filter(reagendavel); if(!ms.length || !data) return;
-  const volta = [], grava = [], vistos = new Set();
+  const volta = [], grava = [], vistos = new Set(), notas = new Map();
+  // F454 · cada caso recebe a anotação do que andou, porque o Reagendar em lote não deixava rastro no caso
+  const nota = (casoId, rot, antes) => { if(!casoId || !antes || antes===data) return;
+    const n = notas.get(casoId) || []; n.push(`${rot} levado de ${fmtBarra(antes)} para ${fmtBarra(data)}`); notas.set(casoId, n); };
   for(const i of ms){
     if(i.tc){ if(vistos.has("tc"+i.tc.id)) continue; vistos.add("tc"+i.tc.id);
       const t = i.tc, antes = t.lembrar_em;
+      nota(t.caso_id || (i.k||{}).id, t.natureza==="lembrete" ? "Lembrete" : "Tarefa", antes);
       grava.push(api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({lembrar_em:data})}));
       t.lembrar_em = data;
       volta.push(()=>{ t.lembrar_em = antes; return api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({lembrar_em:antes})}); });
     } else if(i.t){ if(vistos.has("t"+i.t.id)) continue; vistos.add("t"+i.t.id);
       const t = i.t, antes = t.prazo;
+      nota(t.caso_id, "Tarefa", antes);
       grava.push(api(`/rest/v1/tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({prazo:data})}));
       t.prazo = data;
       volta.push(()=>{ t.prazo = antes; return api(`/rest/v1/tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({prazo:antes})}); });
@@ -14456,15 +14464,23 @@ async function aplicarReagendar(data){
       // do To Do anda como no "Em análise": o casos.prazo muda e o To Do só o troca quando a data dele mudar
       const k = i.k, antes = {prazo:k.prazo, ronda:k.ronda}, d = (k.ronda||{}).despacho;
       const campos = {prazo:data, ...(i.selo==="Volta à fila" && d ? {ronda:{...(k.ronda||{}), despacho:{...d, prazo:data, todo:null}}} : {})};
+      nota(k.id, i.selo==="Volta à fila" ? "Volta à fila" : "Retorno", antes.prazo);
       grava.push(patchCaso(k.id, campos)); Object.assign(k, campos);
       volta.push(()=>{ Object.assign(k, antes); return patchCaso(k.id, {prazo:antes.prazo, ...(campos.ronda ? {ronda:antes.ronda||{}} : {})}); });
     }
   }
   const r = await Promise.allSettled(grava), falhas = r.filter(x=>x.status==="rejected").length;
+  const quem = (eu.nome||"").split(" ")[0] || "a equipe", ands = [];
+  await Promise.allSettled([...notas].map(async ([casoId, ns])=>{
+    const [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:`${ns.join("; ")} por ${quem} (reagendado em lote).`})});
+    if(and){ ands.push(and); if(Array.isArray(D._andsFicha)) D._andsFicha.unshift(and); }
+  }));
   _sel.clear(); montarSidebar(); render();
   if(falhas) aviso(`⚠ ${falhas} de ${grava.length} não gravaram: atualize a página e confira`);
   avisoDesfazer(`${grava.length - falhas} ${grava.length===1?"item reagendado":"itens reagendados"} para ${fmtBarra(data)}`, async ()=>{
-    await Promise.allSettled(volta.map(f=>f())); montarSidebar(); render(); aviso("Reagendamento desfeito", false);
+    await Promise.allSettled([...volta.map(f=>f()), ...ands.map(a=>api(`/rest/v1/andamentos?id=eq.${a.id}`,{method:"DELETE"}))]);
+    if(Array.isArray(D._andsFicha)) D._andsFicha = D._andsFicha.filter(a=>!ands.includes(a)); montarSidebar(); render(); aviso("Reagendamento desfeito", false);
   }, 30000);
 }
 // F443 · SELEÇÃO MÚLTIPLA NAS LISTAS (proposta 2 do Todoist, aprovada pelo Paulo em 08.11.2026)
@@ -20630,7 +20646,13 @@ function gravarEtapaTarefa(id){
 function marcarEtapaTarefa(id, j, ok){
   const t = tarefaAberta(id); if(!t) return;
   const ets = (t.etapas||[]).map((e,i)=>i===j ? {...e, feito: ok, por: ok ? eu.id : null, em: ok ? new Date().toISOString() : null} : e);
-  return gravarLembrar(id, {etapas: ets}, ok ? `Etapa feita · ${ets.filter(e=>e.feito).length} de ${ets.length}` : "Etapa reaberta");
+  const r = gravarLembrar(id, {etapas: ets}, ok ? `Etapa feita · ${ets.filter(e=>e.feito).length} de ${ets.length}` : "Etapa reaberta");
+  // F454 · a última etapa feita oferece concluir a tarefa no mesmo lugar, como o checklist completo do Trello
+  if(ok && ets.length && ets.every(e=>e.feito) && !t.concluida_em) Promise.resolve(r).then(()=>caixa(`<h3>Todas as etapas feitas</h3>
+    <p class="meio-sub">A tarefa tem ${ets.length} ${ets.length===1?"etapa feita":"etapas feitas"}. Concluir a tarefa agora?</p>
+    <div class="form-linha"><button class="btn-rap" id="et-concluir" onclick="fecharCaixa();concluirDeVez('${id}')" title="Concluir a tarefa">Concluir</button>
+      <button class="btn-mini" onclick="fecharCaixa()" title="Deixar a tarefa aberta">Depois</button></div>`));
+  return r;
 }
 function mudarHoraLembrar(id, hora){
   return gravarLembrar(id, {lembrar_hora: hora || null},
@@ -44062,9 +44084,11 @@ function faixaPrazoNota(a, e){
   }
   if(e.est==="cumprido"){
     const u = e.data && e.em ? uteisEntre(e.em, e.data) : null, pl = n => `${n} ${n===1?"dia útil":"dias úteis"}`;
-    const rel = u===null ? "" : u>0 ? ` · ${pl(u)} antes do vencimento, ${diaCurtoPz(e.data)}` : u<0 ? ` · ${pl(-u)} depois do vencimento, ${diaCurtoPz(e.data)}` : " · no último dia";
-    return `<div class="tl-pz tl-pz-ok"><span class="tl-pz-ck" aria-hidden="true">${IC_OK_PZ}</span><div class="tl-pz-o">
-      <b class="tl-pz-t">${tit} · cumprido</b><small class="tl-pz-m">${esc(diaCurtoPz(e.em))}, por ${esc(nome(e.por))}${esc(rel)}</small></div></div>`;
+    const rel = u===null || u<0 ? "" : u>0 ? ` · ${pl(u)} antes do vencimento, ${diaCurtoPz(e.data)}` : " · no último dia";
+    // F454 · o cumprido depois do vencimento fica em vermelho, para não se ler como cumprido em dia
+    const tarde = u!==null && u<0 ? ` · <b class="tl-pz-tarde">cumprido ${pl(-u)} depois do vencimento, ${esc(diaCurtoPz(e.data))}</b>` : "";
+    return `<div class="tl-pz tl-pz-ok${tarde?" tl-pz-ok-tarde":""}"><span class="tl-pz-ck" aria-hidden="true">${IC_OK_PZ}</span><div class="tl-pz-o">
+      <b class="tl-pz-t">${tit} · cumprido${tarde?" fora do prazo":""}</b><small class="tl-pz-m">${esc(diaCurtoPz(e.em))}, por ${esc(nome(e.por))}${esc(rel)}${tarde}</small></div></div>`;
   }
   if(e.est==="nao" || e.est==="nsa")
     return `<div class="tl-pz tl-pz-fim"><div class="tl-pz-o"><b class="tl-pz-t">${tit} · ${e.est==="nao" ? "não foi cumprido" : "não se aplica"}</b>
@@ -44131,9 +44155,15 @@ async function desfazerCumprimento(respId){
 // a resposta do registro: o selo no lugar do colchete e o comprovante preso a ela
 function respPrazoHtml(a){
   const r = RX_PZ_RESP.exec(a.texto||""); if(!r) return null;
-  const rot = r[2]==="CUMPRIDO" ? "Prazo cumprido" : r[2]==="NÃO CUMPRIDO" ? "Prazo não cumprido" : "Prazo não se aplica";
+  let rot = r[2]==="CUMPRIDO" ? "Prazo cumprido" : r[2]==="NÃO CUMPRIDO" ? "Prazo não cumprido" : "Prazo não se aplica", tarde = false;
+  if(r[2]==="CUMPRIDO"){   // F454 · a resposta diz quando o cumprimento veio depois do vencimento da anotação
+    const pai = (D._andsFicha||[]).find(f=>f.id===a.responde_a), m = pai && RX_PRAZO_AND.exec(pai.texto||"");
+    const venc = m && isoDoCarimbo((/\d{2}\.\d{2}\.\d{4}/.exec(m[1])||[])[0]), q = /\(cumprido em (\d{2}\/\d{2}\/\d{4})\)/.exec(a.texto);
+    const em = q ? q[1].split("/").reverse().join("-") : dataSP(a.criado_em);
+    if(venc && /^\d{4}-\d{2}-\d{2}$/.test(venc) && em > venc){ rot = "Cumprido após o vencimento"; tarde = true; }
+  }
   const anx = (D.anexos||[]).filter(an=>an.andamento_id===a.id);
-  return {corpo: a.texto.slice(r[0].length), chip: `<span class="chip tl-pz-resp tl-pz-resp-${r[2]==="CUMPRIDO"?"ok":"x"}">${rot}</span>`,
+  return {corpo: a.texto.slice(r[0].length), chip: `<span class="chip tl-pz-resp tl-pz-resp-${r[2]==="CUMPRIDO" && !tarde?"ok":"x"}">${rot}</span>`,
     anexos: anx.length ? `<span class="tl-pz-anx">${anx.map(an=>`<button type="button" class="tl-pz-doc" onclick="abrirAnexo('${an.id}')">${IC_DOC_PZ}${esc(an.nome||"comprovante")}</button>`).join("")}</span>` : ""};
 }
 // F407 · a linha "⏳ Prazo:" do assistente com a data do carimbo sai do texto, porque a faixa a mostra
