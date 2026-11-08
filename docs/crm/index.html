@@ -6207,7 +6207,9 @@ html[data-tema="v10"] .caso-esq .outras-abas .oa-txt>span{white-space:normal;ove
 .kcard .chip{white-space:normal;overflow-wrap:anywhere}
 .kcard.parado{opacity:.62}
 .kcard.parado:hover{opacity:1}
-.ag-parado{color:var(--cinza);border-style:dashed}
+.ag-parado{color:var(--cinza);border:1px dashed currentColor;border-radius:4px;padding:0 6px;font-size:12px;box-shadow:none;outline:0}
+.coluna h4{gap:8px}
+#q-lim{width:64px;margin-left:4px;padding:3px 8px;border:1px solid var(--linha,#dfe3ea);border-radius:6px;font:inherit;background:var(--fundo-card,#fff)}
 .coluna.acima{border-color:var(--vermelho)}
 .coluna.acima h4 span{color:var(--vermelho);font-weight:700}
 .nov-cli{display:flex;align-items:center;gap:4px;min-width:0}
@@ -15571,7 +15573,7 @@ function renderQuadro(){
     : modo==="etapa" ? "arraste o cartão para declarar a etapa do caso."
     : modo==="responsavel" ? "arraste o cartão para passar o caso a outra pessoa." : "o prazo fatal muda na ficha, não aqui."}</span>${
     modo==="etapa" ? `<span style="display:flex;gap:6px;flex-wrap:wrap;width:100%">Fase: ${FASES_QUADRO_ETAPA.map(f=>`<button class="fchip ${f===quadroFase()?"on":""}" data-qfase="${f}" style="display:inline-flex">${esc(NOME_FASE[f]||f)}</button>`).join("")}</span>` : ""}${
-    modo==="etapa"||modo==="responsavel" ? `<label style="font-size:12px;color:var(--cinza)" title="a coluna com mais cartões que o limite fica em vermelho; vazio, sem limite">Limite <input id="q-lim" type="number" min="0" max="500" value="${quadroLim()||""}" style="width:60px"></label>` : ""}</span>`;
+    modo==="etapa"||modo==="responsavel" ? `<label style="font-size:12px;color:var(--cinza)" title="a coluna com mais cartões que o limite fica em vermelho; vazio, sem limite">Limite <input id="q-lim" type="number" min="0" max="500" value="${quadroLim()||""}"></label>` : ""}</span>`;
   const lim = (modo==="etapa"||modo==="responsavel") ? quadroLim() : 0, atr = {fase:"fase", etapa:"etapa", responsavel:"colab"}[modo];
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="kanban">`+colunasDoQuadro(modo).map(([id,rot,ks])=>
