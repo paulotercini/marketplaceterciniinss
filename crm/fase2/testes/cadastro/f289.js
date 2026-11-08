@@ -145,6 +145,20 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await q.waitForTimeout(200);
   const zz = await q.evaluate(() => [+document.getElementById("proc-inteiro").style.getPropertyValue("--pi-zoom"), localStorage.getItem("crm_pi_zoom")]);
   conf("a pinça aumenta as peças e guarda o zoom", zz[0] > 2.5 && zz[0] <= 3 && +zz[1] === zz[0]);
+  // F440 · toque duplo alterna 100 % e 200 %; deslizar de lado troca de peça; a folha em leitura fica no pé
+  const zoomQ = () => q.evaluate(() => +document.getElementById("proc-inteiro").style.getPropertyValue("--pi-zoom"));
+  const duplo = async () => { for (let k = 0; k < 2; k++) { await toque("touchStart", [[195, 500]]); await toque("touchEnd", []); await q.waitForTimeout(80); } await q.waitForTimeout(100); };
+  await duplo(); const z1 = await zoomQ(); await duplo(); const z2 = await zoomQ(); await duplo(); const z3 = await zoomQ();
+  conf("o toque duplo volta a 100 % e, de novo, vai a 200 %", z1 === 1 && z2 === 2 && z3 === 1);
+  await q.evaluate(() => { const a = document.querySelector("#proc-inteiro .pi-autos"); a.scrollTop = 0; a.dispatchEvent(new Event("scroll")); });
+  await q.waitForTimeout(150);
+  const antes = await q.evaluate(() => [document.querySelector("#proc-inteiro .pi-it button.on").dataset.i, document.querySelector("#proc-inteiro .pi-fls").textContent]);
+  conf("o pé da leitura diz a folha e o total (fls. 1 de 3)", antes[0] === "0" && antes[1] === "fls. 1 de 3");
+  await toque("touchStart", [[320, 500]]); for (const x of [260, 180, 100]) await toque("touchMove", [[x, 505]]); await toque("touchEnd", []);
+  await q.waitForTimeout(300);
+  // as peças da fixtura são curtas: a seguinte cabe na tela e a leitura para no fim; vale o destino do gesto
+  const depois = await q.evaluate(() => (document.getElementById("proc-inteiro")._alvo || {}).id);
+  conf("deslizar para a esquerda leva à peça seguinte", depois === "pi-1");
   await q.evaluate(() => document.querySelector("#proc-inteiro .pi-ver-arvore").click());
   const cab = await q.evaluate(() => { const c = document.querySelector("#proc-inteiro .pi-arv-cab"), r = c.getBoundingClientRect();
     return r.width > 0 && !!c.querySelector(".pi-tudo") && !!c.querySelector(".pi-fim"); });

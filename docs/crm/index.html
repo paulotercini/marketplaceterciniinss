@@ -1044,6 +1044,9 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   /* F439 · no toque, a pinça dá o zoom das peças, e não da página; os botões do zoom ficam para o mouse */
   #proc-inteiro .pi-autos{touch-action:pan-x pan-y}
   /* o HTML do PJe vem num iframe, que ficaria com os dedos e a pinça; com a altura do conteúdo, nada se perde */
+  /* F440 · a folha em leitura, fixa no pé da leitura */
+  #proc-inteiro .pi-fls{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:2;padding:4px 12px;border-radius:999px;background:rgba(30,30,30,.78);color:#fff;font-size:12px;font-variant-numeric:tabular-nums;pointer-events:none;white-space:nowrap}
+  #proc-inteiro .pi-fls:empty{display:none}
   @media (pointer:coarse){#proc-inteiro .pi-cab .pi-zoom{display:none}#proc-inteiro .pi-folha iframe{pointer-events:none}}
   @media (max-width:800px){
     #proc-inteiro .pi-ver-arvore{display:inline-block}
@@ -37042,7 +37045,7 @@ function abrirProcessoInteiro(casoId, lista, caminho, titulo){
       <div class="pi-autos">${pecas.map((d,i)=>`<section class="pi-peca" id="pi-${i}" data-i="${i}">
         <h4><button class="btn-mini pi-ler" onclick="piClaude(${i})" title="Ler esta peça com o Claude"><span aria-hidden="true">Claude</span><span class="sr-only">Ler esta peça com o Claude</span></button>${esc(rot(d))}${d.data?` · ${fmt(String(d.data).slice(0,10))}`:""}${fls[i]?` · fls. ${fls[i]}`:""}</h4>
         <div class="pi-folha"><p class="meio-sub">Carregando…</p></div></section>`).join("")}</div>
-    </div>`;
+    </div><div class="pi-fls" aria-hidden="true"></div>`;
   el._pecas = pecas;
   document.body.appendChild(el);
   let z0 = 1; try{ z0 = +localStorage.getItem("crm_pi_zoom") || 1; }catch(e){}
@@ -37062,7 +37065,26 @@ function abrirProcessoInteiro(casoId, lista, caminho, titulo){
     pin.alvo = pin.z * dist(e.touches) / pin.d;
     if(!pin.raf) pin.raf = requestAnimationFrame(()=>{ if(pin){ pin.raf = 0; piZoomPara(pin.alvo); } });
   }, {passive:false});
-  autos.addEventListener("touchend", e=>{ if(pin && e.touches.length<2){ piZoomPara(pin.alvo || pin.z, true); pin = null; } }, {passive:true});
+  autos.addEventListener("touchend", e=>{ if(pin && e.touches.length<2){ piZoomPara(pin.alvo || pin.z, true); pin = null; toque = null; } }, {passive:true});
+  // F440 · com um dedo: o toque duplo alterna 100 % e 200 %, e o deslizar de lado leva à peça seguinte ou à anterior
+  let toque = null, ultimo = null;
+  autos.addEventListener("touchstart", e=>{ toque = e.touches.length===1 ? {x:e.touches[0].clientX, y:e.touches[0].clientY, t:Date.now()} : null; }, {passive:true});
+  autos.addEventListener("touchend", e=>{
+    if(!toque || e.touches.length || !e.changedTouches.length) return;
+    const t = e.changedTouches[0], dx = t.clientX - toque.x, dy = t.clientY - toque.y, dt = Date.now() - toque.t; toque = null;
+    if(Math.abs(dx) < 10 && Math.abs(dy) < 10 && dt < 300){
+      if(ultimo && Date.now() - ultimo.t < 320 && Math.hypot(t.clientX - ultimo.x, t.clientY - ultimo.y) < 30){
+        ultimo = null; piZoomPara((+el.style.getPropertyValue("--pi-zoom") || 1) > 1.05 ? 1 : 2, true);
+      } else ultimo = {x:t.clientX, y:t.clientY, t:Date.now()};
+      return;
+    }
+    ultimo = null;
+    // de lado só quando a folha cabe na largura: com zoom, o dedo anda pela folha
+    if(Math.abs(dx) > 70 && Math.abs(dy) < Math.abs(dx) / 2 && dt < 600 && autos.scrollWidth <= autos.clientWidth + 2){
+      const cur = el.querySelector(".pi-it button.on"), i = cur ? +cur.dataset.i : 0, j = i + (dx < 0 ? 1 : -1);
+      if(j >= 0 && j < pecas.length) piIr(j);
+    }
+  }, {passive:true});
   el.addEventListener("gesturestart", e=>e.preventDefault());   // o Safari do iPhone não amplia a página por cima
   // a peça que entra na tela se desenha e acende na árvore
   _piObs = new IntersectionObserver(ents=>{
@@ -37087,11 +37109,17 @@ function abrirProcessoInteiro(casoId, lista, caminho, titulo){
   autos.querySelectorAll(".pi-peca").forEach(x=>longe.observe(x));
   el._longe = longe;
   // a árvore acende a peça que está no alto da leitura
-  const secs = [...autos.querySelectorAll(".pi-peca")], bts = [...el.querySelectorAll(".pi-it button")];
+  const secs = [...autos.querySelectorAll(".pi-peca")], bts = [...el.querySelectorAll(".pi-it button")], flsEl = el.querySelector(".pi-fls");
+  const nPag = d=>d.tipo==="application/pdf" ? +d.paginas||0 : 1, total = pecas.every(nPag) ? pecas.reduce((s,d)=>s+nPag(d), 0) : 0;
   const acender = ()=>{ const topo = autos.getBoundingClientRect().top + 80;
     let i = 0; secs.forEach((x,j)=>{ if(x.getBoundingClientRect().top <= topo) i = j; });
-    if(autos.scrollTop > 0 && autos.scrollTop + autos.clientHeight >= autos.scrollHeight - 2) i = secs.length - 1;   // a última não sobe ao alto
-    bts.forEach((b,j)=>b.classList.toggle("on", j===i)); };
+    const fim = autos.scrollTop > 0 && autos.scrollTop + autos.clientHeight >= autos.scrollHeight - 2;
+    if(fim) i = secs.length - 1;   // a última não sobe ao alto
+    bts.forEach((b,j)=>b.classList.toggle("on", j===i));
+    // F440 · a folha do alto da leitura: o início da peça mais a folha dela que está no alto
+    let n = 1; secs[i] && secs[i].querySelectorAll(".pi-pag").forEach(f=>{ if(f.getBoundingClientRect().top <= topo) n = f._n; });
+    if(fim && secs[i]) n = secs[i].querySelectorAll(".pi-pag").length || 1;
+    flsEl.textContent = fls[i] ? `fls. ${fls[i] + n - 1}${total ? ` de ${total}` : ""}` : `peça ${i+1} de ${pecas.length}`; };
   autos.addEventListener("scroll", acender, {passive:true}); acender();
   for(const ev of ["wheel","touchstart","keydown"]) autos.addEventListener(ev, ()=>{ el._alvo = null; }, {passive:true});
   el._acender = acender;   // a folha que cresce ao carregar muda quem está no alto
