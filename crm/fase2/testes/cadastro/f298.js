@@ -142,10 +142,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     return { d: m(".ag-data"), n: Math.min(m(".ag-txt b"), 1e9), f: m(".acoes .acao-card[data-estrela]"), a: m(".avatares .avatar"),
       aR: l.querySelector(".avatares .avatar").getBoundingClientRect().right, eL: l.querySelector(".acoes .acao-card[data-estrela]").getBoundingClientRect().left,
       raio: parseFloat(getComputedStyle(l.querySelector(".avatares .avatar")).borderTopLeftRadius), segR: seg.right, cardR: card.right }; });
-  conf("data, nome, estrela e responsável na mesma linha", al && [al.d, al.f, al.a].every(y => Math.abs(y - al.n) < 6));
+  // F437 · linha C: nome, responsável e estrela em cima; a data desce para a linha das etiquetas
+  conf("nome, estrela e responsável na mesma linha, a data embaixo (F437)", al && [al.f, al.a].every(y => Math.abs(y - al.n) < 6) && al.d > al.n + 6);
   conf("a inicial do responsável em quadrado, à esquerda da estrela (F306)", al && al.raio <= 8 && al.aR <= al.eL);
   conf("o filtro por pessoa não passa da margem", al && al.segR <= al.cardR + 1);
-  conf("no Meu Dia, nenhum alvo de toque abaixo de 24 px", !(await PEQ()).length);
+  { const pq = await PEQ(); conf("no Meu Dia, nenhum alvo de toque abaixo de 24 px", !pq.length) || console.log(JSON.stringify(pq)); }
   const cm = colunaOk(await FABS(), true);
   conf("no Meu Dia, agenda, ✎ e ⚡ no mesmo eixo, 8 px entre eles, e o \"?\" na altura do ✎ (F307)", cm.ok) || console.log(JSON.stringify(cm));
   const cobre = await p.evaluate(async () => { window.scrollTo(0, 1e6); document.querySelectorAll("*").forEach(e => { if (e.scrollHeight > e.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(e).overflowY)) e.scrollTop = 1e6; });

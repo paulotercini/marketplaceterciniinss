@@ -1,0 +1,78 @@
+# Publica a ponte do WhatsApp no servidor Oracle quando crm/fase2/ponte muda na main:
+# roda os testes, guarda a versão anterior em ~/ponte_bkp/<data>, copia os arquivos,
+# instala as dependências se o package.json mudou e reinicia o pm2 "ponte-zap".
+# Se a ponte não ficar online, volta a versão anterior. Sessão (sessao/) e .env não são tocados.
+name: Ponte do WhatsApp no servidor
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "crm/fase2/ponte/*.js"
+      - "crm/fase2/ponte/package.json"
+      - ".github/workflows/ponte-deploy.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ponte-deploy
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: crm/fase2/ponte
+    env:
+      HOST: ${{ secrets.PONTE_HOST || 'ubuntu@137.131.247.51' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Testes da ponte
+        run: npm install --no-audit --no-fund && npm test
+      - name: Chave SSH
+        env:
+          PONTE_SSH_KEY: ${{ secrets.PONTE_SSH_KEY }}
+        run: |
+          if [ -z "$PONTE_SSH_KEY" ]; then
+            echo "::error::Falta o segredo PONTE_SSH_KEY (Settings > Secrets and variables > Actions)."
+            exit 1
+          fi
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$PONTE_SSH_KEY" > ~/.ssh/ponte && chmod 600 ~/.ssh/ponte
+          ssh-keyscan -T 20 "${HOST#*@}" >> ~/.ssh/known_hosts
+      - name: Copiar e reiniciar
+        run: |
+          SSH="ssh -i $HOME/.ssh/ponte -o BatchMode=yes -o ConnectTimeout=20"
+          $SSH "$HOST" 'rm -rf ~/ponte_novo && mkdir -p ~/ponte_novo'
+          scp -i ~/.ssh/ponte -o BatchMode=yes ponte.js normalizar.js conferir.js package.json "$HOST":ponte_novo/
+          $SSH "$HOST" 'bash -s' <<'REMOTO'
+          set -e
+          cd ~/ponte
+          bkp=~/ponte_bkp/$(date +%Y%m%d-%H%M%S)
+          mkdir -p "$bkp"
+          cp -p ponte.js normalizar.js package.json "$bkp"/
+          cp -p conferir.js package-lock.json "$bkp"/ 2>/dev/null || true
+          echo "versão anterior em $bkp"
+          mudou_pacote=0
+          cmp -s package.json ~/ponte_novo/package.json || mudou_pacote=1
+          cp -p ~/ponte_novo/* ~/ponte/
+          [ "$mudou_pacote" = 1 ] && npm install --omit=dev --no-audit --no-fund
+          pm2 restart ponte-zap --update-env
+          sleep 30
+          estado=$(pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const a=JSON.parse(s).find(p=>p.name==="ponte-zap");console.log(a?a.pm2_env.status+" "+a.pm2_env.restart_time:"ausente")})')
+          echo "ponte-zap: $estado"
+          sleep 30
+          depois=$(pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const a=JSON.parse(s).find(p=>p.name==="ponte-zap");console.log(a?a.pm2_env.status+" "+a.pm2_env.restart_time:"ausente")})')
+          echo "ponte-zap 30 s depois: $depois"
+          if [ "${depois%% *}" != online ] || [ "${estado#* }" != "${depois#* }" ]; then
+            echo "a ponte não ficou estável; voltando a versão anterior"
+            cp -p "$bkp"/* ~/ponte/
+            [ "$mudou_pacote" = 1 ] && npm install --omit=dev --no-audit --no-fund
+            pm2 restart ponte-zap --update-env
+            exit 1
+          fi
+          pm2 save >/dev/null
+          REMOTO

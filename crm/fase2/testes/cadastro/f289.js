@@ -65,7 +65,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   await p.evaluate(caso => abrirProcessoInteiro(caso), CASO1);
   await p.waitForSelector("#proc-inteiro");
-  const arv = await p.evaluate(() => [...document.querySelectorAll("#proc-inteiro .pi-arvore button")].map(b => b.textContent.replace(/\s+/g, " ").trim()));
+  const arv = await p.evaluate(() => [...document.querySelectorAll("#proc-inteiro .pi-it button")].map(b => b.textContent.replace(/\s+/g, " ").trim()));
   conf("a árvore traz só as peças judiciais (3), sem a procuração do escritório", arv.length === 3 && !arv.some(t => /Procuração/.test(t)));
   conf("em ordem cronológica: inicial, contestação, sentença", /^Petição inicial/.test(arv[0]) && /^Contestação/.test(arv[1]) && /^Sentença/.test(arv[2]));
   conf("com a folha de cada peça (fls. 1, 2, 3)", /fls\. 1\b/.test(arv[0]) && /fls\. 2\b/.test(arv[1]) && /fls\. 3\b/.test(arv[2]));
@@ -75,7 +75,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(300);
   const sent = await p.evaluate(() => { const f = document.querySelector("#pi-2 iframe");
     return { txt: f && f.contentDocument && f.contentDocument.body?.textContent, sandbox: f && f.getAttribute("sandbox"), vazou: window.__vazou,
-      on: (document.querySelector("#proc-inteiro .pi-arvore button.on") || { dataset: {} }).dataset.i }; });
+      on: (document.querySelector("#proc-inteiro .pi-it button.on") || { dataset: {} }).dataset.i }; });
   conf("a sentença (HTML do PJe) aparece dentro do CRM", /JULGO PROCEDENTE/.test(sent.txt || ""));
   conf("a árvore acende a peça que está na tela", sent.on === "2");
   conf("sem rodar o script do tribunal", sent.sandbox === "allow-same-origin" && !sent.vazou);
@@ -107,10 +107,64 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click("#modal .esp-it:has-text('Pontos para o recurso')");
   const ped1 = await p.evaluate(() => decodeURIComponent((window.__url || "").split("?q=")[1] || ""));
   conf("'Ler esta peça com o Claude' leva só aquela peça", /Contestação.*fls\. 2/.test(ped1) && !/anexo:a0000001/.test(ped1) && !/anexo:a0000002/.test(ped1));
+  conf("o botão do topo diz apenas 'Claude'", await p.evaluate(() => document.querySelector("#proc-inteiro .pi-claude > span[aria-hidden]").textContent === "Claude"));
+  await p.evaluate(() => { document.querySelectorAll("#proc-inteiro .pi-it input").forEach(x => { x.checked = false; }); piMarcou(); piTudo(); });
+  conf("'Tudo' marca todas as peças", await p.evaluate(() => [...document.querySelectorAll("#proc-inteiro .pi-it input")].every(x => x.checked)
+    && /\(3 peças\)/.test(document.querySelector("#proc-inteiro .pi-claude").textContent) && document.querySelector("#proc-inteiro .pi-tudo").title === "Desmarcar tudo"));
+  await p.evaluate(() => piTudo());
+  conf("e, de novo, desmarca todas", await p.evaluate(() => [...document.querySelectorAll("#proc-inteiro .pi-it input")].every(x => !x.checked)));
+  await p.evaluate(() => piFim());
+  await p.waitForTimeout(600);
+  conf("a seta leva à última folha", await p.evaluate(() => { const a = document.querySelector("#proc-inteiro .pi-autos");
+    return a.scrollTop + a.clientHeight >= a.scrollHeight - 2 && document.querySelector("#proc-inteiro .pi-it button.on").dataset.i === "2"; }));
   conf("cada peça tem o botão 'Ler esta peça com o Claude'", await p.evaluate(() => document.querySelectorAll("#proc-inteiro .pi-peca .pi-ler").length === 3));
   if (process.env.FOTO) { await p.waitForTimeout(800); await p.screenshot({ path: process.env.FOTO }); }
   await p.keyboard.press("Escape");
   conf("Esc fecha o processo inteiro", await p.evaluate(() => !document.getElementById("proc-inteiro") && document.body.style.overflow === ""));
+  // F439 · no celular, a pinça dá o zoom das peças e os botões do zoom saem
+  const cel = await nav.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, deviceScaleFactor: 1 });
+  await cel.addInitScript(([u, ss]) => {
+    localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
+    localStorage.setItem("crm_sessao", JSON.stringify(ss));
+    localStorage.setItem("crm_tema", "v10");
+  }, [SUPA, SESSAO]);
+  await instalarBanco(cel, { SUPA, SESSAO, banco });
+  const q = await cel.newPage();
+  q.on("pageerror", e => erros.push("celular: " + e.message));
+  await q.goto(`http://127.0.0.1:${s.address().port}/app.html`);
+  await q.waitForSelector("#app.logado", { timeout: 15000 });
+  await q.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
+  await q.evaluate(([cli, caso]) => abrirFicha(cli).then(() => abrirProcessoInteiro(caso)), [CLI_CHEIO, CASO1]);
+  await q.waitForSelector("#proc-inteiro");
+  conf("no celular, os botões do zoom saem do topo", await q.evaluate(() => getComputedStyle(document.querySelector("#proc-inteiro .pi-cab .pi-zoom")).display === "none"));
+  const cdp = await cel.newCDPSession(q);
+  const toque = (type, pts) => cdp.send("Input.dispatchTouchEvent", { type, touchPoints: pts.map(([x, y], id) => ({ x, y, id })) });
+  await toque("touchStart", [[150, 400], [240, 400]]);
+  for (const d of [60, 100, 140]) await toque("touchMove", [[195 - d, 400], [195 + d, 400]]);
+  await toque("touchEnd", []);
+  await q.waitForTimeout(200);
+  const zz = await q.evaluate(() => [+document.getElementById("proc-inteiro").style.getPropertyValue("--pi-zoom"), localStorage.getItem("crm_pi_zoom")]);
+  conf("a pinça aumenta as peças e guarda o zoom", zz[0] > 2.5 && zz[0] <= 3 && +zz[1] === zz[0]);
+  // F440 · toque duplo alterna 100 % e 200 %; deslizar de lado troca de peça; a folha em leitura fica no pé
+  const zoomQ = () => q.evaluate(() => +document.getElementById("proc-inteiro").style.getPropertyValue("--pi-zoom"));
+  const duplo = async () => { for (let k = 0; k < 2; k++) { await toque("touchStart", [[195, 500]]); await toque("touchEnd", []); await q.waitForTimeout(80); } await q.waitForTimeout(100); };
+  await duplo(); const z1 = await zoomQ(); await duplo(); const z2 = await zoomQ(); await duplo(); const z3 = await zoomQ();
+  conf("o toque duplo volta a 100 % e, de novo, vai a 200 %", z1 === 1 && z2 === 2 && z3 === 1);
+  await q.evaluate(() => { const a = document.querySelector("#proc-inteiro .pi-autos"); a.scrollTop = 0; a.dispatchEvent(new Event("scroll")); });
+  await q.waitForTimeout(150);
+  const antes = await q.evaluate(() => [document.querySelector("#proc-inteiro .pi-it button.on").dataset.i, document.querySelector("#proc-inteiro .pi-fls").textContent]);
+  conf("o pé da leitura diz a folha e o total (fls. 1 de 3)", antes[0] === "0" && antes[1] === "fls. 1 de 3");
+  await toque("touchStart", [[320, 500]]); for (const x of [260, 180, 100]) await toque("touchMove", [[x, 505]]); await toque("touchEnd", []);
+  await q.waitForTimeout(300);
+  // as peças da fixtura são curtas: a seguinte cabe na tela e a leitura para no fim; vale o destino do gesto
+  const depois = await q.evaluate(() => (document.getElementById("proc-inteiro")._alvo || {}).id);
+  conf("deslizar para a esquerda leva à peça seguinte", depois === "pi-1");
+  await q.evaluate(() => document.querySelector("#proc-inteiro .pi-ver-arvore").click());
+  const cab = await q.evaluate(() => { const c = document.querySelector("#proc-inteiro .pi-arv-cab"), r = c.getBoundingClientRect();
+    return r.width > 0 && !!c.querySelector(".pi-tudo") && !!c.querySelector(".pi-fim"); });
+  conf("a lista de peças abre com 'Tudo' e a seta para baixo", cab);
+  if (process.env.FOTO) await q.screenshot({ path: process.env.FOTO.replace(/\.png$/, "-celular.png") });
+  await cel.close();
   conf("sem erro de página", !erros.length);
   if (erros.length) console.log(erros.join("\n"));
   const falhas = ok.filter(([, v]) => !v).length;

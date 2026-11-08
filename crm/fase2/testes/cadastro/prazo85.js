@@ -95,7 +95,7 @@ FIX.andamentos = [
     c2.some(c => /Prazo fatal/.test(c.tipo) && c.data === fmtBR(PRAZO_B)));
   conf("e o quadro dele pergunta do que é, em âmbar", await p.evaluate(() => {
     const c = document.querySelector(".faixa-prazos .pz.pz-semmotivo");
-    if(!c || !/do que é/.test(c.textContent)) return false;
+    if(!c || !/Prazo do Microsoft To Do|Prazo sem descrição/.test(c.textContent)) return false;
     c.querySelector(".pz-mais").click();
     const ok = [...document.querySelectorAll("#painel-prazo button")].some(b => /do que é/.test(b.textContent) && /explicarPrazo/.test(b.getAttribute("onclick") || ""));
     fecharPainelPrazo(); return ok;
@@ -129,7 +129,7 @@ FIX.andamentos = [
   // desligado: como sempre
   await abrir("?tema=");
   const off = await linhas();
-  conf("desligado: a linha continua sendo 'PRAZO FATAL — título'", off.some(l => /PRAZO FATAL — Auxílio-acidente/.test(l.txt)));
+  conf("desligado: a linha continua sendo 'PRAZO FATAL: título'", off.some(l => /PRAZO FATAL: Auxílio-acidente/.test(l.txt)));
   conf("desligado: o ✔ feito continua tirando o prazo direto", off.some(l => /qdMudarPrazo/.test(l.acao || "")));
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);

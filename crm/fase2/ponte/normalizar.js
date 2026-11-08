@@ -18,14 +18,16 @@ const jidParaFone = jid => soDigitos(String(jid || "").split("@")[0].split(":")[
 // O WhatsApp passou a esconder o número de parte dos contatos atrás de um id
 // de privacidade ('119928724144327@lid'). Esse id não é telefone: não acha o
 // cliente e não serve para responder. O número verdadeiro vem ao lado, em
-// key.senderPn; sem ele, fica o id, que ao menos guarda a conversa.
-// No que SAI do escritório (fromMe), senderPn é o nosso número: aí o número do
+// key.remoteJidAlt (Baileys 7; no 6 era key.senderPn); sem ele, fica o id, que ao menos guarda a conversa.
+// No que SAI do escritório (fromMe), o senderPn do Baileys 6 é o nosso número: aí o número do
 // cliente vem do `mapa` lid -> telefone, que se aprende com o que ele mandou.
 // Sem mapa, devolve "" (não dá para saber de quem é a conversa).
 const foneDaMensagem = (m, mapa) => {
   const k = (m && m.key) || {};
   const jid = String(k.remoteJid || "");
   if (!jid.endsWith("@lid")) return jidParaFone(jid);
+  const alt = String(k.remoteJidAlt || "");
+  if (alt.endsWith("@s.whatsapp.net")) { if (mapa) mapa.set(jid, alt); return jidParaFone(alt); }
   if (!k.fromMe && k.senderPn) { if (mapa) mapa.set(jid, k.senderPn); return jidParaFone(k.senderPn); }
   if (mapa && mapa.has(jid)) return jidParaFone(mapa.get(jid));
   return k.fromMe ? "" : jidParaFone(jid);
@@ -135,7 +137,8 @@ function agruparHistorico(chats, mensagens, chavesClientes) {
     if (deveIgnorar(m)) continue;
     const jid = String(m.key.remoteJid);
     // senderPn só vale para o que o cliente mandou: no que saiu daqui, é o nosso número
-    const alvo = jid.endsWith("@lid") ? (pn.get(jid) || (!m.key.fromMe && m.key.senderPn)) : jid;
+    const alt = String(m.key.remoteJidAlt || "").endsWith("@s.whatsapp.net") && m.key.remoteJidAlt;
+    const alvo = jid.endsWith("@lid") ? (pn.get(jid) || alt || (!m.key.fromMe && m.key.senderPn)) : jid;
     if (!alvo || String(alvo).endsWith("@lid")) continue;
     const fone = jidParaFone(alvo);
     if (!chavesClientes.has(chaveFone(fone))) continue;
