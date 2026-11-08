@@ -48,13 +48,18 @@ const SUPA = "https://ficticio.supabase.co";
     const at = {atend: true, hora: "09:00", tipo: "001", cli: null, nome: "Fulano de Tal"};
     const d = document.createElement("div"); d.innerHTML = hojePorPeriodo([ev, pz], [at]);
     const so = document.createElement("div"); so.innerHTML = hojePorPeriodo([pz], []);
-    return {per: [...d.querySelectorAll(".md-per")].map(h => h.textContent), atend: d.querySelectorAll(".md-atend").length,
+    const pl = document.createElement("div"); pl.innerHTML = hojePorPeriodo([ev, pz], [], true);
+    guardar("crm_periodos", "nao"); const sem = document.createElement("div"); sem.innerHTML = hojePorPeriodo([ev, pz], [at]); guardar("crm_periodos", "sim");
+    return {plan: pl.querySelectorAll(".md-per").length, semDiv: sem.querySelectorAll(".md-per").length, semAt: sem.querySelectorAll(".md-atend").length,
+      per: [...d.querySelectorAll(".md-per")].map(h => h.textContent), atend: d.querySelectorAll(".md-atend").length,
       semHora: so.querySelectorAll(".md-per").length, minutos: [minutosDe(ev), minutosDe(pz), minutosDe(at), minutosDe({...at, tipo: "002"}), minutosDe({data: hj, resumo: "conferir o andamento"})],
       fmt: [fmtMin(45), fmtMin(185)]};
   });
   conf("Manhã, Tarde e A qualquer hora, nessa ordem", per.per.join("|") === "Manhã|Tarde|A qualquer hora");
   conf("o atendimento da Agenda entra na hora dele", per.atend === 1);
   conf("sem nada com hora, o Hoje fica como era", per.semHora === 0);
+  conf("o Planejado também divide o Hoje por período", per.plan === 2);
+  conf("Sem divisão: nada de período, o atendimento continua", per.semDiv === 0 && per.semAt === 1);
   conf("perícia 60, réplica 120, 001 45, 002 30, conferir 5", per.minutos.join(",") === "60,120,45,30,5");
   conf("45 min e 3 h 5 min", per.fmt.join("|") === "45 min|3 h 5 min");
 

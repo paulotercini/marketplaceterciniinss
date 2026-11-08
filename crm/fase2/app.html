@@ -14182,7 +14182,7 @@ function renderAgendaV10(qual){
     const g = itens.filter(i=>f(i.data)), at = tom==="hoje" ? ats : []; if(!g.length && !at.length) return "";
     const lim = limAg[tit]||50;
     return `<section class="pl-grupo"${tom?` data-tom="${tom}"`:""}><h3 class="secao">${tit} <span class="pl-n">${g.length+at.length}</span></h3>`
-      + (planej ? g.slice(0,lim).map(linhaAgenda).join("") : tom==="hoje" && meuDia ? hojePorPeriodo(g.slice(0,lim), at) : porClienteDia(g.slice(0,lim)))
+      + (tom==="hoje" ? hojePorPeriodo(g.slice(0,lim), at, planej) : planej ? g.slice(0,lim).map(linhaAgenda).join("") : porClienteDia(g.slice(0,lim)))
       + (g.length>lim?`<button class="btn-rap mais-plan" data-mais="${esc(tit)}">Mostrar mais ${Math.min(200,g.length-lim)} de ${g.length-lim}</button>`:"")
       + `</section>`;
   };
@@ -14301,13 +14301,16 @@ function linhaAtendimento(a){
     <span class="ag-selos"><span class="ag-tipo">Atendimento</span></span></div>`;
 }
 const horaDoItem = it => it.atend ? it.hora : it.ev && it.ev.data_hora ? horaSP(it.ev.data_hora) : "";
-function hojePorPeriodo(g, ats){
+// "Manhã e tarde" ou "Sem divisão": a escolha fica no navegador (crm_periodos) e o menu ⋯ da lista a troca
+const periodosLigados = () => ler("crm_periodos")!=="nao";
+function hojePorPeriodo(g, ats, planej){
+  const solto = l => planej ? l.map(linhaAgenda).join("") : porClienteDia(l);
   const m = [], t = [], q = [];
   [...g, ...ats].forEach(it=>{ const h = horaDoItem(it); (!h ? q : h<"12:00" ? m : t).push(it); });
-  if(!m.length && !t.length) return porClienteDia(g);
+  if(!periodosLigados() || (!m.length && !t.length)) return solto(g) + ats.map(linhaAtendimento).join("");
   const lin = l => l.sort((a,b)=>horaDoItem(a).localeCompare(horaDoItem(b))).map(x=>x.atend ? linhaAtendimento(x) : linhaAgenda(x)).join("");
   return [["Manhã", m], ["Tarde", t]].filter(([,l])=>l.length).map(([r,l])=>`<h4 class="md-per">${r}</h4>${lin(l)}`).join("")
-    + (q.length ? `<h4 class="md-per">A qualquer hora</h4>${porClienteDia(q)}` : "");
+    + (q.length ? `<h4 class="md-per">A qualquer hora</h4>${solto(q)}` : "");
 }
 // 4 · o tempo estimado pela natureza do item e a conta do dia; a tabela se ajusta nas Configurações (config_app.dur_tarefas)
 const DUR_TAREFAS = [["conferir","Conferir ou em análise",5,/confer|em an[aá]lise|verificar/i], ["juntada","Juntada",15,/junt/i],
