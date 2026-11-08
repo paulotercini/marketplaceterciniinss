@@ -1026,9 +1026,9 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   body:has(#proc-inteiro) .modal-fundo{z-index:2100}
   /* a caixa aberta da janela do prazo (+ Etapa, Corrigir a data, Detalhes) vem por cima dela, e não atrás */
   body:has(#painel-prazo.aberto) .modal-fundo{z-index:950}
-  #proc-inteiro .pi-arvore button{display:block;flex:1;min-width:0;text-align:left;border:0;background:none;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--texto);border-left:3px solid transparent}
-  @media (hover:hover){#proc-inteiro .pi-arvore button:hover{background:var(--azul-fundo)}}
-  #proc-inteiro .pi-arvore button.on{background:var(--azul-fundo);border-left-color:var(--azul)}
+  #proc-inteiro .pi-it button{display:block;flex:1;min-width:0;text-align:left;border:0;background:none;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--texto);border-left:3px solid transparent}
+  @media (hover:hover){#proc-inteiro .pi-it button:hover{background:var(--azul-fundo)}}
+  #proc-inteiro .pi-it button.on{background:var(--azul-fundo);border-left-color:var(--azul)}
   #proc-inteiro .pi-arvore small{display:block;color:var(--cinza-claro)}
   #proc-inteiro .pi-autos{flex:1;overflow:auto;padding:14px}
   #proc-inteiro .pi-peca{max-width:900px;margin:0 auto 18px;zoom:var(--pi-zoom,1)}
@@ -1039,6 +1039,12 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   #proc-inteiro .pi-folha iframe{display:block;width:100%;border:0;min-height:300px}
   #proc-inteiro .pi-folha .meio-sub{padding:16px}
   #proc-inteiro .pi-ver-arvore{display:none}
+  /* F439 · o alto da lista de peças: Tudo e a seta à última folha */
+  #proc-inteiro .pi-arv-cab{position:sticky;top:-6px;z-index:1;display:flex;gap:6px;justify-content:space-between;padding:6px 10px;margin-top:-6px;background:var(--branco);border-bottom:1px solid var(--borda)}
+  /* F439 · no toque, a pinça dá o zoom das peças, e não da página; os botões do zoom ficam para o mouse */
+  #proc-inteiro .pi-autos{touch-action:pan-x pan-y}
+  /* o HTML do PJe vem num iframe, que ficaria com os dedos e a pinça; com a altura do conteúdo, nada se perde */
+  @media (pointer:coarse){#proc-inteiro .pi-cab .pi-zoom{display:none}#proc-inteiro .pi-folha iframe{pointer-events:none}}
   @media (max-width:800px){
     #proc-inteiro .pi-ver-arvore{display:inline-block}
     #proc-inteiro .pi-arvore{position:absolute;top:49px;bottom:0;left:0;z-index:1;display:none;box-shadow:2px 0 8px rgba(0,0,0,.2)}
@@ -36962,6 +36968,23 @@ function piMarcou(){
   const el = document.getElementById("proc-inteiro"); if(!el) return;
   const n = el.querySelectorAll(".pi-it input:checked").length;
   el.querySelector(".pi-claude-n").textContent = n ? ` (${n} peça${n>1?"s":""})` : "";
+  const tudo = el.querySelector(".pi-tudo"), todas = n && n===el.querySelectorAll(".pi-it input").length;
+  if(tudo){ const f = todas ? "Desmarcar tudo" : "Selecionar tudo";
+    tudo.title = f; tudo.innerHTML = `<span aria-hidden="true">${todas?"Limpar":"Tudo"}</span><span class="sr-only">${f}</span>`; }
+}
+// F439 · marca ou desmarca todas as peças para o Claude
+function piTudo(){
+  const el = document.getElementById("proc-inteiro"); if(!el) return;
+  const cx = [...el.querySelectorAll(".pi-it input")], marcar = cx.some(x=>!x.checked);
+  cx.forEach(x=>{ x.checked = marcar; });
+  piMarcou();
+}
+// F439 · a seta da lista de peças leva à última folha do processo; as folhas que crescem ao carregar não a tiram de lá
+function piFim(){
+  const el = document.getElementById("proc-inteiro"); if(!el) return;
+  el.classList.remove("arvore-on");
+  const autos = el.querySelector(".pi-autos"); autos.scrollTop = autos.scrollHeight;
+  el._alvo = "fim";
 }
 let _piObs = null;
 function fecharProcessoInteiro(){
@@ -36986,11 +37009,18 @@ function piZoom(passo){
   let z = +el.style.getPropertyValue("--pi-zoom") || 1;
   if(passo===0) z = 1;
   else { const i = PI_ZOOM.findIndex(v=>v>=z-.001); z = PI_ZOOM[Math.max(0, Math.min(PI_ZOOM.length-1, (i<0?PI_ZOOM.length-1:i) + passo))]; }
+  piZoomPara(z, true);
+}
+// F439 · o zoom num valor qualquer (a pinça), de 50 % a 300 %; guardar só no fim do gesto
+function piZoomPara(z, guardar){
+  const el = document.getElementById("proc-inteiro") || document.querySelector(".proc-leitor .pl-corpo"); if(!el) return;
+  const pane = el.closest(".proc-leitor") || el;
+  z = Math.round(Math.max(.5, Math.min(3, z)) * 100) / 100;
   const autos = el.querySelector(".pi-autos") || (el.classList.contains("pl-corpo") ? el : null), alvo = autos && autos.scrollHeight ? autos.scrollTop / autos.scrollHeight : 0;
   el.style.setProperty("--pi-zoom", z);
   const o = pane.querySelector(".pi-zoom output"); if(o) o.textContent = Math.round(z*100) + " %";
   if(autos) autos.scrollTop = alvo * autos.scrollHeight;   // a leitura fica na mesma altura do processo
-  try{ localStorage.setItem("crm_pi_zoom", z); }catch(e){}
+  if(guardar) try{ localStorage.setItem("crm_pi_zoom", z); }catch(e){}
 }
 function abrirProcessoInteiro(casoId, lista, caminho, titulo){
   const k = D.casoPorId.get(casoId); if(!k) return;
@@ -37003,11 +37033,11 @@ function abrirProcessoInteiro(casoId, lista, caminho, titulo){
   el.innerHTML = `<div class="pi-cab">
       <button class="btn-mini pi-ver-arvore" onclick="this.closest('#proc-inteiro').classList.toggle('arvore-on')">Peças</button>
       <b>${esc(c.nome||"cliente")}${titulo?` · ${esc(titulo)}`:k.processo?` · ${esc(k.processo)}`:""} · ${pecas.length} peça${pecas.length>1?"s":""}</b>
-      <button class="tl-bt forte pi-claude" onclick="piClaude()" title="pedido pronto ao Claude sobre as peças marcadas na árvore, ou sobre todas">${IC_SVG.claude} Pedir ao Claude<span class="pi-claude-n"></span></button>
+      <button class="tl-bt forte pi-claude" onclick="piClaude()" title="pedido pronto ao Claude sobre as peças marcadas na árvore, ou sobre todas">${IC_SVG.claude} <span aria-hidden="true">Claude</span><span class="sr-only">Pedir ao Claude</span><span class="pi-claude-n"></span></button>
       <span class="pi-zoom" role="group" aria-label="zoom das peças"><button class="btn-mini" onclick="piZoom(-1)" title="diminuir (tecla -)" aria-label="diminuir o zoom">−</button><output aria-live="polite">100 %</output><button class="btn-mini" onclick="piZoom(1)" title="aumentar (tecla +)" aria-label="aumentar o zoom">+</button><button class="btn-mini" onclick="piZoom(0)" title="voltar a 100 % (tecla 0)"><span aria-hidden="true">100%</span><span class="sr-only">voltar o zoom a 100 %</span></button></span>
       <button class="btn-mini" onclick="fecharProcessoInteiro()" title="fechar (Esc)">✕</button></div>
     <div class="pi-corpo">
-      <nav class="pi-arvore" aria-label="peças do processo">${pecas.map((d,i)=>`<div class="pi-it"><input type="checkbox" data-i="${i}" onchange="piMarcou()" aria-label="marcar ${esc(rot(d))} para o Claude"><button data-i="${i}" onclick="piIr(${i})">
+      <nav class="pi-arvore" aria-label="peças do processo"><div class="pi-arv-cab"><button class="btn-mini pi-tudo" onclick="piTudo()" title="Selecionar tudo"><span aria-hidden="true">Tudo</span><span class="sr-only">Selecionar tudo</span></button><button class="btn-mini pi-fim" onclick="piFim()" title="Ir à última folha" aria-label="Ir à última folha">↓</button></div>${pecas.map((d,i)=>`<div class="pi-it"><input type="checkbox" data-i="${i}" onchange="piMarcou()" aria-label="marcar ${esc(rot(d))} para o Claude"><button data-i="${i}" onclick="piIr(${i})">
         ${esc(rot(d))}<small>${d.data?fmt(String(d.data).slice(0,10)):""}${fls[i]?` · fls. ${fls[i]}`:""}${d.evento&&d.nome?` · ${esc(d.nome)}`:""}</small></button></div>`).join("")}</nav>
       <div class="pi-autos">${pecas.map((d,i)=>`<section class="pi-peca" id="pi-${i}" data-i="${i}">
         <h4><button class="btn-mini pi-ler" onclick="piClaude(${i})" title="Ler esta peça com o Claude"><span aria-hidden="true">Claude</span><span class="sr-only">Ler esta peça com o Claude</span></button>${esc(rot(d))}${d.data?` · ${fmt(String(d.data).slice(0,10))}`:""}${fls[i]?` · fls. ${fls[i]}`:""}</h4>
@@ -37022,6 +37052,18 @@ function abrirProcessoInteiro(casoId, lista, caminho, titulo){
   const autos = el.querySelector(".pi-autos");
   // Ctrl + roda do mouse (e a pinça do touchpad) aumentam só as peças, não a página
   autos.addEventListener("wheel", e=>{ if(!e.ctrlKey) return; e.preventDefault(); piZoom(e.deltaY<0 ? 1 : -1); }, {passive:false});
+  // F439 · a pinça no celular dá o zoom das peças (pedido do Paulo, 08.11.2026)
+  let pin = null;
+  const dist = t=>Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+  autos.addEventListener("touchstart", e=>{ if(e.touches.length===2) pin = {d: dist(e.touches) || 1, z: +el.style.getPropertyValue("--pi-zoom") || 1}; }, {passive:true});
+  autos.addEventListener("touchmove", e=>{
+    if(!pin || e.touches.length!==2) return;
+    e.preventDefault();
+    pin.alvo = pin.z * dist(e.touches) / pin.d;
+    if(!pin.raf) pin.raf = requestAnimationFrame(()=>{ if(pin){ pin.raf = 0; piZoomPara(pin.alvo); } });
+  }, {passive:false});
+  autos.addEventListener("touchend", e=>{ if(pin && e.touches.length<2){ piZoomPara(pin.alvo || pin.z, true); pin = null; } }, {passive:true});
+  el.addEventListener("gesturestart", e=>e.preventDefault());   // o Safari do iPhone não amplia a página por cima
   // a peça que entra na tela se desenha e acende na árvore
   _piObs = new IntersectionObserver(ents=>{
     for(const e of ents){
@@ -37045,7 +37087,7 @@ function abrirProcessoInteiro(casoId, lista, caminho, titulo){
   autos.querySelectorAll(".pi-peca").forEach(x=>longe.observe(x));
   el._longe = longe;
   // a árvore acende a peça que está no alto da leitura
-  const secs = [...autos.querySelectorAll(".pi-peca")], bts = [...el.querySelectorAll(".pi-arvore button")];
+  const secs = [...autos.querySelectorAll(".pi-peca")], bts = [...el.querySelectorAll(".pi-it button")];
   const acender = ()=>{ const topo = autos.getBoundingClientRect().top + 80;
     let i = 0; secs.forEach((x,j)=>{ if(x.getBoundingClientRect().top <= topo) i = j; });
     if(autos.scrollTop > 0 && autos.scrollTop + autos.clientHeight >= autos.scrollHeight - 2) i = secs.length - 1;   // a última não sobe ao alto
@@ -37064,7 +37106,9 @@ function piIr(i){
   el._alvo = sec;
 }
 const piAcender = ()=>{ const el = document.getElementById("proc-inteiro"); if(!el) return;
-  if(el._alvo) el._alvo.scrollIntoView({block:"start"}); if(el._acender) el._acender(); };
+  if(el._alvo==="fim"){ const a = el.querySelector(".pi-autos"); a.scrollTop = a.scrollHeight; }
+  else if(el._alvo) el._alvo.scrollIntoView({block:"start"});
+  if(el._acender) el._acender(); };
 // F400 · as folhas do PDF: um observador por área de leitura, uma folha desenhada por vez
 function obsFolhas(root){
   if(!root) return null;
