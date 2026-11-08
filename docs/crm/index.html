@@ -37962,11 +37962,14 @@ function piZoom(passo){
   else { const i = PI_ZOOM.findIndex(v=>v>=z-.001); z = PI_ZOOM[Math.max(0, Math.min(PI_ZOOM.length-1, (i<0?PI_ZOOM.length-1:i) + passo))]; }
   piZoomPara(z, true);
 }
+// F441b · no toque a folha nunca fica mais estreita que a tela: o mínimo é 100 %
+function piZoomMin(){ try{ return matchMedia("(pointer:coarse)").matches ? 1 : .5; }catch(e){ return .5; } }
+function piZoomSalvo(){ let z = 1; try{ z = +localStorage.getItem("crm_pi_zoom") || 1; }catch(e){} return Math.max(piZoomMin(), Math.min(3, z)); }
 // F439 · o zoom num valor qualquer (a pinça), de 50 % a 300 %; guardar só no fim do gesto
 function piZoomPara(z, guardar, foco){
   const el = document.getElementById("proc-inteiro") || document.querySelector(".proc-leitor .pl-corpo"); if(!el) return;
   const pane = el.closest(".proc-leitor") || el;
-  z = Math.round(Math.max(.5, Math.min(3, z)) * 100) / 100;
+  z = Math.round(Math.max(piZoomMin(), Math.min(3, z)) * 100) / 100;
   const autos = el.querySelector(".pi-autos") || (el.classList.contains("pl-corpo") ? el : null);
   // o ponto sob os dedos (ou o alto da tela, sem foco) fica no mesmo lugar depois do zoom
   let fx = 0, fy = 0, px = 0, py = 0;
@@ -38004,7 +38007,7 @@ function abrirProcessoInteiro(casoId, lista, caminho, titulo){
     </div><div class="pi-fls" aria-hidden="true"></div>`;
   el._pecas = pecas;
   document.body.appendChild(el);
-  let z0 = 1; try{ z0 = +localStorage.getItem("crm_pi_zoom") || 1; }catch(e){}
+  const z0 = piZoomSalvo();
   if(z0!==1){ el.style.setProperty("--pi-zoom", z0); el.querySelector(".pi-zoom output").textContent = Math.round(z0*100) + " %"; }
   document.body.style.overflow = "hidden";
   document.addEventListener("keydown", _piTecla, true);   // captura: vê a caixa aberta antes de outro Esc a fechar
@@ -45033,7 +45036,7 @@ function leitorMiolo(k, aba, i, x, d){
   const cron = docsLegiveis(k, x), n = cron.findIndex(z=>z.caminho===d.caminho), fl = (flsDasPecas(cron)[n]);
   const ir = z => z ? `procVer('${k.id}','${aba}',${i},'${escJs(z.d.caminho)}')` : "";
   const prox = l[j+1];
-  let z0 = 1; try{ z0 = +localStorage.getItem("crm_pi_zoom") || 1; }catch(e){}
+  const z0 = piZoomSalvo();
   return `<div class="pl-cab">
       <b class="pl-tit">${esc(y.rot)}</b>${etiquetasArv(y, oriComum(itensDoProcesso(k, x)))}
       <span class="meio-sub">${[y.data?dataPat(y.data):"", fl?`fls. ${fl}`:"", j>=0?`${j+1} de ${l.length}`:""].filter(Boolean).join(" · ")}</span>
