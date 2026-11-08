@@ -4596,6 +4596,20 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra .tl-bt:not(.tl-bt-ic){min-height:28p
 html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 /* F250 · as vagas do Google Agenda e a lista Clientes */
 .aq-vagas{margin:10px 0 12px}.aq-vagas h4{margin:0 0 6px;font-size:13px}
+/* F456 · a lista de espera da agenda */
+.aq-esp{margin:10px 0 12px;border:1px solid var(--linha,#dde2dd);border-radius:10px;overflow:hidden}
+.aq-esp-cab{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--linha,#dde2dd)}
+.aq-esp-cab h4{margin:0;font-size:13px}
+.aq-esp-it{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:8px;align-items:start;padding:8px 12px;border-bottom:1px solid var(--linha,#dde2dd);font-size:13px}
+.aq-esp-it:last-child{border-bottom:0}.aq-esp-it.cabe{background:#EAF4EE}.aq-esp-it.venc{opacity:.6}
+.aq-esp-it small{display:block;color:#5d6862;font-size:12px}.aq-esp-o{color:#5d6862;font-variant-numeric:tabular-nums}
+.aq-esp-bts{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.aq-esp-pill{font-size:11.5px;padding:1px 8px;border-radius:999px;background:#EAF4EE;color:#14513A;white-space:nowrap}
+.aq-esp-pill.of{background:#F8E5E1;color:#9a3626}
+.aq-esp-vazio{padding:10px 12px;margin:0;color:#5d6862;font-size:13px}
+.aq-lib{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#F8E5E1;color:#5a1d12;border-radius:8px;padding:10px 12px;margin:10px 0}
+.aq-lib .t{flex:1;min-width:200px}
+.aq-esp-form .aq-semana{display:flex;flex-wrap:wrap;gap:4px 12px}
 .aq-vagas-l{display:flex;flex-wrap:wrap;gap:8px}
 .aq-vaga{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:92px;padding:8px 12px;border:1.5px dashed #1E6F50;border-radius:10px;background:#F2F8F4;color:#14513A;cursor:pointer;font:inherit}
 .aq-vaga b{font-size:15px}.aq-vaga span{font-size:12px}
@@ -6740,7 +6754,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.96</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.97</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -57064,6 +57078,7 @@ function renderAgendaQuarta(){
   const alvo = document.getElementById("conteudo-meio");
   if(!agendaUrl() || !agendaToken()){ alvo.innerHTML = cardLigarAgenda(); return; }
   pintarTopoAgenda();
+  carregarEspera(true).then(()=>{ if(visao==="agendaq" && agq.disp) pintarAgenda(); });   // F456
   agq.disp = agq.cache[agq.prof] || null;
   if(!agq.disp){
     alvo.innerHTML = `<div class="aq" aria-busy="true"><div class="aq-faixa">${Array.from({length:6},()=>`<span class="aq-dia sk-caixa">${skl("60%",11)}${skl("40%",10)}</span>`).join("")}</div>${esqueletoLista(8)}</div>`;
@@ -57107,7 +57122,9 @@ function pintarAgenda(){
   alvo.innerHTML = `<div class="aq">
     ${r.alerta?`<div class="aq-alerta" role="alert">${esc(r.alerta)}</div>`:""}
     <div class="aq-faixa" role="tablist" aria-label="Próximos dias de atendimento de ${esc(nomeProf(agq.prof))}">${faixa}</div>
+    ${faixaLiberada()}
     ${dia ? listaVagas(dia) : ""}
+    ${quadroEspera(dia)}
     ${dia ? linhaDoTempoAgenda(dia, r) : ""}
     <p class="meio-sub">Conectado como ${esc(r.usuario||"")} (${esc(r.papel||"")}). A agenda se atualiza sozinha a cada minuto.
       <a href="#" onclick="event.preventDefault();document.getElementById('conteudo-meio').innerHTML=cardLigarAgenda()">trocar token</a></p>
@@ -57132,6 +57149,138 @@ function listaVagas(dia){
   return `<section class="aq-vagas" aria-label="Vagas livres"><h4>Vagas livres · ${v.length}</h4>
     <div class="aq-vagas-l">${v.map(s=>`<button type="button" class="aq-vaga p-${s.profissional||agq.prof} t${s.tipo}" data-aqvaga="${esc(s.eventoId)}" title="agendar o cliente neste horário${agq.prof==="todos"?` · ${esc(nomeProf(s.profissional||"paulo"))}`:""}">
       <b>${s.inicio}</b><span>${rotVaga(s)}${agq.prof==="todos"?` · ${esc(nomeProf(s.profissional||"paulo"))}`:""}</span></button>`).join("")}</div></section>`;
+}
+// F456 · LISTA DE ESPERA DA AGENDA (projeto aprovado pelo Paulo em 08.11.2026, onda 1, https://claude.ai/artifact/4bMHJrsaQjtVULDSdZxC1x):
+// quem quer horário mais cedo ou não achou vaga entra na lista; a vaga liberada (cancelar ou remarcar) é oferecida, pelo
+// clique da recepção, a quem cabe, na ordem de entrada, uma pessoa por vez, com 30 minutos para responder (15 no dia ou na véspera).
+const ESP_PROF = {paulo:"o Dr. Paulo", marcos:"o Dr. Marcos", amanda:"a Dra. Amanda"};
+async function carregarEspera(forcar){
+  if(agq.espera && !forcar) return agq.espera;
+  try{ agq.espera = await api(`/rest/v1/agenda_espera?estado=in.(aguardando,oferta)&order=criado_em.asc`); agq.esperaErro = null; }
+  catch(e){ agq.espera = []; agq.esperaErro = msgErro(e); }
+  return agq.espera;
+}
+const periodoDe = h => hmMin(h) < 750 ? "manha" : "tarde";
+const profDaVaga = s => s.profissional || (agq.prof==="todos" ? "paulo" : agq.prof);
+function esperaCabe(e, s, data){
+  if((e.ate && data > e.ate) || (e.marcado && data >= e.marcado)) return false;
+  if(!(e.profs||[]).includes(profDaVaga(s))) return false;
+  if(s.tipoFixo!==false && s.tipo!==e.tipo) return false;
+  if((e.dias||[]).length && !e.dias.includes(new Date(data+"T12:00:00").getDay())) return false;
+  return !(e.periodos||[]).length || e.periodos.includes(periodoDe(s.inicio));
+}
+// vaga que começa em menos de 2 horas fica para o encaixe por telefone
+const ofertavel = (data, s) => data > hoje() || (data===hoje() && hmMin(s.inicio) - (new Date().getHours()*60 + new Date().getMinutes()) >= 120);
+// ordem de entrada pelo dia; no mesmo dia, quem está sem horário vem antes de quem quer antecipar
+const ordemEspera = l => [...l].sort((a, b)=>(a.criado_em||"").slice(0,10).localeCompare((b.criado_em||"").slice(0,10)) || (!!a.marcado - !!b.marcado) || (a.criado_em||"").localeCompare(b.criado_em||""));
+const ultOferta = e => (e.ofertas||[]).slice(-1)[0] || null;
+const emOferta = () => new Set((agq.espera||[]).filter(e=>e.estado==="oferta").map(e=>(ultOferta(e)||{}).eventoId));
+function quemCabe(dia, s){ return ordemEspera(agq.espera||[]).filter(e=>e.estado==="aguardando" && esperaCabe(e, s, dia.data)); }
+function faixaLiberada(){
+  const L = agq.liberada; if(!L || !agq.disp) return "";
+  const dia = agq.disp.dias.find(d=>d.data===L.data), s = dia && vagasDoDia(dia).find(x=>x.eventoId===L.id);
+  if(!s || emOferta().has(s.eventoId) || !ofertavel(dia.data, s)) return "";
+  const l = quemCabe(dia, s);
+  return `<div class="aq-lib" role="status"><span class="t"><b>Vaga liberada: ${siglaData(dia.data)} às ${hmTxt(s.inicio)}, ${esc(nomeProf(profDaVaga(s)))}${s.tipoFixo===false?"":`, ${s.tipo}`}.</b>
+    ${l.length ? ` ${l.length===1?"Uma pessoa da lista cabe":`${l.length} pessoas da lista cabem`}; a primeira é ${esc(l[0].nome)}.` : " Ninguém da lista cabe neste horário."}</span>
+    ${l.length?`<button class="btn-rap forte" onclick="oferecerEspera('${l[0].id}','${esc(s.eventoId)}','${dia.data}')" title="oferecer este horário a ${esc(l[0].nome)}">Oferecer<span class="sr-only"> a ${esc(l[0].nome)}</span></button>`:""}
+    <button class="btn-rap" onclick="agq.liberada=null;pintarAgenda()" title="deixar o horário livre na agenda">Livre<span class="sr-only"> na agenda</span></button></div>`;
+}
+function quadroEspera(dia){
+  if(!agq.espera) return `<section class="aq-esp"><p class="aq-esp-vazio">carregando a lista de espera…</p></section>`;
+  const l = ordemEspera(agq.espera), ofert = emOferta();
+  const vs = dia ? vagasDoDia(dia).filter(s=>!ofert.has(s.eventoId) && ofertavel(dia.data, s)) : [];
+  const linha = (e, i) => {
+    const venc = e.ate && e.ate < hoje(), o = e.estado==="oferta" ? ultOferta(e) : null;
+    const s = !o && !venc && e.estado==="aguardando" ? vs.find(x=>esperaCabe(e, x, dia.data)) : null;
+    const desc = `${e.tipo} · ${(e.profs||[]).map(nomeProf).join(" ou ")} · ${(e.periodos||[]).length===2?"qualquer período":(e.periodos||[]).map(p=>p==="manha"?"manhã":"tarde").join("")} · desde ${dataBR((e.criado_em||"").slice(0,10))}${e.ate?` · até ${dataBR(e.ate)}`:""}`;
+    const extra = o ? `oferecida ${siglaData(o.data)} às ${hmTxt(o.inicio)}; responde até ${new Date(o.ate).toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}${new Date(o.ate) < new Date()?" (prazo vencido)":""}`
+      : e.marcado ? `tem atendimento em ${dataBR(e.marcado)}, quer antecipar` : "sem horário marcado";
+    const bts = o ? `<button class="btn-mini" onclick="aceitouEspera('${e.id}')" title="aceitou: agendar neste horário">Aceitou</button><button class="btn-mini" onclick="recusouEspera('${e.id}')" title="recusou ou não respondeu no prazo: volta à lista">Recusou</button>`
+      : s ? `<button class="btn-mini" onclick="oferecerEspera('${e.id}','${esc(s.eventoId)}','${dia.data}')" title="oferecer ${hmTxt(s.inicio)} a ${esc(e.nome)}">Oferecer<span class="sr-only"> ${hmTxt(s.inicio)}</span></button>` : "";
+    return `<div class="aq-esp-it${s?" cabe":""}${venc?" venc":""}"><span class="aq-esp-o">${i+1}</span>
+      <span><b>${esc(e.nome)}</b>${e.telefone?` · ${esc(fmtTelBR(e.telefone))}`:""}<small>${esc(desc)}</small><small>${esc(extra)}${e.obs?` · ${esc(e.obs)}`:""}</small></span>
+      <span class="aq-esp-bts">${o?`<span class="aq-esp-pill of">em oferta</span>`:s?`<span class="aq-esp-pill">cabe às ${hmTxt(s.inicio)}</span>`:venc?`<span class="aq-esp-pill of">vencida</span>`:""}${bts}
+        <button class="btn-mini" onclick="retirarEspera('${e.id}')" title="tirar ${esc(e.nome)} da lista de espera" aria-label="Retirar ${esc(e.nome)} da lista">✕</button></span></div>`;
+  };
+  return `<section class="aq-esp" aria-label="Lista de espera"><div class="aq-esp-cab"><h4>Lista de espera · ${l.length}</h4>
+    <button class="btn-rap" onclick="incluirEspera()" title="incluir uma pessoa na lista de espera">Incluir<span class="sr-only"> na lista de espera</span></button></div>
+    ${agq.esperaErro?`<p class="aq-esp-vazio">${esc(agq.esperaErro)}</p>`:l.length?l.map(linha).join(""):`<p class="aq-esp-vazio">Ninguém na lista. Inclua quem quer um horário mais cedo ou não achou vaga.</p>`}</section>`;
+}
+function incluirEspera(op={}){
+  const c = op.cli || null, at = new Date(Date.now()+30*864e5).toISOString().slice(0,10);
+  const profs = op.prof ? [op.prof] : ["amanda","paulo"];
+  const ck = (nome, v, on, rot) => `<label class="aq-ck"><input type="checkbox" data-esp${nome}="${v}" ${on?"checked":""}> ${rot}</label>`;
+  caixa(`<div class="aq-fluxo aq-esp-form"><h3>Incluir na lista de espera</h3>
+    <label class="aq-campo">Nome<input id="esp-nome" class="aq-inp" value="${esc((c&&c.nome)||op.nome||"")}"></label>
+    <label class="aq-campo">Telefone com DDD<input id="esp-tel" class="aq-inp" inputmode="tel" value="${esc(fmtTelBR((c&&c.telefone)||op.tel||""))}" oninput="mascararTel(this)"></label>
+    <h4>Tipo</h4><div class="aq-semana">${["001","002"].map(t=>`<label class="aq-ck"><input type="radio" name="esp-tipo" value="${t}" ${(op.tipo||(c?"002":"001"))===t?"checked":""}> ${t}</label>`).join("")}</div>
+    <h4>Com</h4><div class="aq-semana">${PROFS_AGENDA.map(pr=>ck("prof", pr, profs.includes(pr), esc(nomeProf(pr)))).join("")}</div>
+    <h4>Dias</h4><div class="aq-semana">${[1,2,3,4,5].map(n=>ck("dia", n, true, DIA_EXTENSO[n].replace("-feira",""))).join("")}</div>
+    <h4>Período</h4><div class="aq-semana">${ck("per","manha",true,"manhã")}${ck("per","tarde",true,"tarde")}</div>
+    <label class="aq-campo">Até<input id="esp-ate" type="date" class="aq-inp" min="${hoje()}" value="${at}"></label>
+    <label class="aq-campo">Já tem atendimento em (opcional)<input id="esp-marc" type="date" class="aq-inp" min="${hoje()}" value="${esc(op.marcado||"")}"></label>
+    <label class="aq-campo">Observação (opcional)<input id="esp-obs" class="aq-inp"></label>
+    <div class="aq-bts"><button class="btn-rap" onclick="fecharCaixa()">Cancelar</button><button class="btn-rap forte" id="esp-salvar">Incluir</button></div></div>`);
+  document.getElementById("esp-salvar").onclick = async ()=>{
+    const v = id => document.getElementById(id).value.trim(), nome = v("esp-nome").replace(/\s+/g," "), tel = v("esp-tel").replace(/\D/g,"");
+    const lis = a => [...document.querySelectorAll(`[data-esp${a}]:checked`)].map(i=>i.dataset["esp"+a]);
+    if(nome.length<3) return aviso("Informe o nome.");
+    if(tel.length<10) return aviso("Informe o telefone com o DDD, para a oferta pelo WhatsApp.");
+    const pr = lis("prof"), dias = lis("dia").map(Number), per = lis("per");
+    if(!pr.length || !dias.length || !per.length) return aviso("Escolha ao menos um profissional, um dia e um período.");
+    const achados = c ? [c] : D.clientes.filter(x=>dsa(x.nome).trim()===dsa(nome));
+    const corpo = {nome, telefone:tel, cliente_id:achados.length===1?achados[0].id:null, tipo:(document.querySelector('[name="esp-tipo"]:checked')||{}).value||"001",
+      profs:pr, dias, periodos:per, ate:v("esp-ate")||null, marcado:v("esp-marc")||null, obs:v("esp-obs")||null, criado_por:eu.id};
+    try{ await api(`/rest/v1/agenda_espera`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}); }
+    catch(e){ return aviso("Não incluí na lista: "+msgErro(e)); }
+    fecharCaixa(); aviso(`${nome} entrou na lista de espera`, false);
+    await carregarEspera(true); if(visao==="agendaq") pintarAgenda();
+  };
+}
+async function mudarEspera(id, corpo){
+  await api(`/rest/v1/agenda_espera?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify({...corpo, atualizado_em:new Date().toISOString()})});
+  await carregarEspera(true); if(visao==="agendaq") pintarAgenda();
+}
+function msgOferta(e, s, data, ate){
+  const h = new Date().getHours(), pn = (e.nome||"").split(" ")[0];
+  return `${h<12?"Bom dia":h<18?"Boa tarde":"Boa noite"}, ${pn}. Surgiu um horário com ${ESP_PROF[profDaVaga(s)]||nomeProf(profDaVaga(s))} na ${diaExt(data)}, dia ${dataBR(data).slice(0,5)}, às ${hmTxt(s.inicio)}, no escritório. Podemos agendar o seu atendimento nesse horário? Aguardamos a sua resposta até as ${ate.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}).replace(":","h")}.`;
+}
+async function oferecerEspera(id, eventoId, data){
+  const e = (agq.espera||[]).find(x=>x.id===id), dia = agq.disp && agq.disp.dias.find(d=>d.data===data);
+  const s = dia && vagasDoDia(dia).find(x=>x.eventoId===eventoId);
+  if(!e || !s) return aviso("A vaga ou a pessoa não está mais disponível. Atualize a agenda.");
+  const amanha = new Date(Date.now()+864e5).toISOString().slice(0,10);
+  const ate = new Date(Date.now() + (data<=amanha ? 15 : 30)*60000);
+  const msg = msgOferta(e, s, data, ate);
+  const oferta = {eventoId, data, inicio:s.inicio, prof:profDaVaga(s), tipo:s.tipoFixo===false?e.tipo:s.tipo, em:new Date().toISOString(), ate:ate.toISOString(), por:eu.id};
+  try{ await mudarEspera(id, {estado:"oferta", ofertas:[...(e.ofertas||[]), oferta]}); }catch(err){ return aviso("Não registrei a oferta: "+msgErro(err)); }
+  if(agq.liberada && agq.liberada.id===eventoId) agq.liberada = null;
+  let copiou = false; try{ await navigator.clipboard.writeText(msg); copiou = true; }catch(err){}
+  if(!e.telefone) return aviso(copiou ? "Oferta registrada e mensagem copiada. A pessoa não tem telefone na lista." : msg);
+  await zapDoNumero(e.telefone);
+  setTimeout(()=>{ const t = document.getElementById("zap-txt");
+    if(t && !t.value){ t.value = msg; t.dispatchEvent(new Event("input", {bubbles:true})); }
+    else aviso(copiou ? "Mensagem da oferta copiada: cole na conversa." : msg, false); }, 700);
+}
+function aceitouEspera(id){
+  const e = (agq.espera||[]).find(x=>x.id===id), o = e && ultOferta(e); if(!o) return;
+  const cli = e.cliente_id ? D.cliPorId.get(e.cliente_id) : null;
+  abrirFluxoAgenda({data:o.data, inicio:o.inicio, prof:o.prof, vaga:{eventoId:o.eventoId, tipo:o.tipo}, cli, busca:cli?"":e.nome, tel:e.telefone||""});
+  fluxo.espera = id; if(!cli) pintarFluxo();
+}
+async function recusouEspera(id){
+  const e = (agq.espera||[]).find(x=>x.id===id); if(!e) return;
+  const of = [...(e.ofertas||[])]; if(of.length) of[of.length-1] = {...of[of.length-1], resposta:"recusou", resp_em:new Date().toISOString()};
+  const o = ultOferta(e);
+  try{ await mudarEspera(id, {estado:"aguardando", ofertas:of}); }catch(err){ return aviso(msgErro(err)); }
+  if(o) agq.liberada = {id:o.eventoId, data:o.data};   // o horário passa ao próximo da lista
+  if(visao==="agendaq") pintarAgenda();
+}
+async function retirarEspera(id){
+  const e = (agq.espera||[]).find(x=>x.id===id); if(!e) return;
+  if(!await confirmar(`Tirar ${e.nome} da lista de espera?`)) return;
+  try{ await mudarEspera(id, {estado:"retirado"}); aviso("Retirado da lista", false); }catch(err){ aviso(msgErro(err)); }
 }
 function agendarNaVaga(dia, eventoId){
   const s = vagasDoDia(dia).find(x=>x.eventoId===eventoId); if(!s) return;
@@ -57340,6 +57489,7 @@ async function acaoEventoAgenda(acao, ev){
     else if(acao==="cancelar"){
       if(!await confirmar(`Cancelar o atendimento de ${ev.nome||ev.titulo} em ${dataBR(ev.data)} às ${hmTxt(ev.inicio)}?`)) return;
       await agendaApi("cancelar",{eventId:ev.id});
+      agq.liberada = {id:ev.id, data:ev.data};   // F456 · a vaga volta e é oferecida à lista de espera
       const c = clienteDoEvento(ev);
       if(c) await registrarAgendaNoCliente(c, `Atendimento presencial com ${nomeProf(ev.profissional)} de ${dataBR(ev.data)} às ${hmTxt(ev.inicio)} (${ev.tipo}) cancelado, por ${(eu.nome||"").split(" ")[0]}.`, null);
       aviso("Atendimento cancelado", false);
@@ -57544,6 +57694,7 @@ function pintarFluxo(){
         <input type="date" id="aq-ldata" class="aq-inp" value="${esc(f.livre?f.data:"")}"> <input type="time" id="aq-lhora" class="aq-inp" step="300" value="${esc(f.livre?f.inicio:"")}">
         <button class="btn-rap" id="aq-lusar" title="Usar este horário">Usar<span class="sr-only"> este horário</span></button></details>` : ""}
       <div class="aq-bts"><button class="btn-rap" data-aqvolta="1" ${f.remarcar?"hidden":""}>Voltar</button>
+        ${f.remarcar||f.espera?"":`<button class="btn-rap" id="aq-espera" title="Incluir na lista de espera, para receber a vaga que abrir">Espera<span class="sr-only"> (incluir na lista de espera)</span></button>`}
         <button class="btn-rap forte" id="aq-seg5" ${f.inicio?"":"disabled"}>${f.remarcar?"Remarcar":"Continuar"}</button></div>`;
   } else if(f.etapa===6){
     corpo = `<h3>Orientações ao cliente</h3>
@@ -57620,6 +57771,7 @@ function ligarFluxo(){
   if(o2) o2.onchange=()=>{ f.o2=o2.checked; $("aq-gravar").disabled=!orientou(f); };
   if(obs) obs.oninput=()=>{ f.obs=obs.value; };
   on("aq-gravar", ()=>gravarFluxo());
+  on("aq-espera", ()=>{ const g = {cli:f.cli||f.preCli, nome:f.nome, tel:f.tel, tipo:f.tipo, prof:f.prof}; fluxo=null; fecharCaixa(); incluirEspera(g); });
   on("aq-copiar", async ()=>{ try{ await navigator.clipboard.writeText(msgAgendaWhats(f.nome, f.feito.data, f.feito.inicio, f.tipo, f.prof)); }catch(e){} aviso("Mensagem copiada", false); });
   on("aq-naconversa", ()=>{ const t = $("zap-txt"); if(!t) return; t.value = msgAgendaWhats(f.nome, f.feito.data, f.feito.inicio, f.tipo, f.prof);
     t.dispatchEvent(new Event("input", {bubbles:true})); fecharCaixa(); t.focus(); });
@@ -57646,6 +57798,10 @@ async function gravarFluxo(){
         data:f.data, inicio:f.inicio, eventoId:f.eventoId||"", observacoes:f.obs, orientacoesConfirmadas: orientou(f), foraDaVaga:!!f.livre, sobrepor:!!f.sobrepor});
     }
     const ev = r.evento; f.feito = ev; f.msg = "";
+    if(f.remarcar) agq.liberada = {id:f.remarcar.id, data:f.remarcar.data};   // F456
+    if(f.espera){ const o = ((agq.espera||[]).find(x=>x.id===f.espera)||{}).ofertas||[];
+      if(o.length) o[o.length-1] = {...o[o.length-1], resposta:"aceitou", resp_em:new Date().toISOString()};
+      await mudarEspera(f.espera, {estado:"agendado", ofertas:o}).catch(()=>{}); }
     const c = f.cli || f.preCli || clienteDoEvento(ev);
     if(c) await registrarAgendaNoCliente(c, `Atendimento presencial com ${nomeProf(f.prof)} ${f.remarcar?"remarcado para":"agendado para"} ${dataBR(ev.data)} às ${hmTxt(ev.inicio)} (${f.tipo}), por ${(eu.nome||"").split(" ")[0]}.`,
       {eventId:ev.id, data:ev.data, inicio:ev.inicio, tipo:f.tipo, profissional:f.prof});
