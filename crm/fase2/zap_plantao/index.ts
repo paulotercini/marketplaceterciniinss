@@ -220,6 +220,7 @@ export function paraTriagem(system: string) {
   if (!t.includes("\n\nRegistro: português formal")) antes(FORMAL);
   else t = t.replace(/\n\nRegistro: português formal[^]*?(?=\n\n|$)/, () => FORMAL);
   if (!t.includes("\n\nInformações do escritório")) antes(FATOS);
+  else t = t.replace(/\n\nInformações do escritório[^]*?(?=\n\n|$)/, () => FATOS);
   if (!t.includes("\n\nO jeito do escritório")) antes(PADRAO);
   else t = t.replace(/\n\nO jeito do escritório[^]*?(?=\n\n|$)/, () => PADRAO);
   t = t.includes("\n\nCorreções do teste") ? t.replace(/\n\nCorreções do teste[^]*?(?=\n\n|$)/, () => CORRECOES) : (antes(CORRECOES), t);
