@@ -89,7 +89,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const ln = await p.evaluate(([cid, kid]) => {
     const d = document.createElement("div"); document.body.appendChild(d);
     d.innerHTML = linhaAgenda({ k: D.casoPorId.get(kid), cli: D.cliPorId.get(cid), data: "2020-10-14", quem: [], resumo: "o INSS passou dos 90 dias", selo: "Mora do INSS", prazo: true, fatal: true });
-    const t = d.querySelector(".ag-txt"), r = { txt: t.textContent.trim(), title: t.title, fatal: !!d.querySelector(".ag-fatal"), conc: /Concluir/.test(d.textContent) };
+    const t = d.querySelector(".ag-txt"), r = { txt: [...t.childNodes].filter(n => !(n.classList && n.classList.contains("ag-ben"))).map(n => n.textContent).join("").trim(), title: t.title, fatal: !!d.querySelector(".ag-fatal"), conc: /Concluir/.test(d.textContent) };
     d.remove(); return r; }, [cA.id, kA.id]);
   conf(`a linha do Meu Dia traz só o nome, e o texto vai ao title (${ln.txt})`, ln.txt === cA.nome && ln.title === "o INSS passou dos 90 dias");
   conf("a linha do Meu Dia mantém o prazo fatal e não ganha botão Concluir", ln.fatal && !ln.conc);
