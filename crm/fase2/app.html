@@ -3638,6 +3638,14 @@ html[data-tema="v10"] .pl-grupo h3.secao{margin:0;padding:10px 16px;background:v
   font-size:11px;font-weight:600;letter-spacing:.08em;border-bottom:1px solid var(--borda)}
 html[data-tema="v10"] .pl-grupo h3.secao .pl-n{margin-left:4px;font-family:var(--f-mono);letter-spacing:0}
 html[data-tema="v10"] .pl-grupo[data-tom="venc"] h3.secao{background:var(--venc-fundo);color:var(--venc-tinta);border-bottom-color:#F1D5D0}
+/* F443 · seleção múltipla: a linha marcada e a barra do pé */
+.cartao.sel,html[data-tema="v10"] #conteudo-meio .ag-linha.sel{background:color-mix(in srgb,var(--verde,#2f6b4f) 10%,#fff);box-shadow:inset 3px 0 0 var(--verde,#2f6b4f)}
+#sel-barra{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:900;display:flex;align-items:center;gap:6px;background:#1d2420;color:#fff;border-radius:10px;padding:6px 8px 6px 14px;box-shadow:0 6px 24px rgba(0,0,0,.25);max-width:calc(100vw - 32px);flex-wrap:wrap}
+#sel-barra .sel-n{font:600 13px var(--f-txt,inherit);margin-right:6px;font-variant-numeric:tabular-nums}
+#sel-barra button{background:none;border:1px solid rgba(255,255,255,.35);color:inherit;border-radius:6px;font:600 13px var(--f-txt,inherit);padding:5px 10px;min-height:32px;cursor:pointer}
+#sel-barra button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+#sel-barra .sel-x{border:0;font-size:16px;padding:5px 8px}
+.app.celular ~ #sel-barra{bottom:calc(72px + env(safe-area-inset-bottom,0px))}
 .pl-grupo h3.secao .reag-bt{float:right;margin-top:-4px;background:none;border:1px solid currentColor;border-radius:6px;color:inherit;font:600 12px var(--f-txt,inherit);letter-spacing:0;text-transform:none;padding:3px 10px;min-height:26px;cursor:pointer}
 .pl-grupo h3.secao .reag-bt:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 html[data-tema="v10"] .pl-grupo[data-tom="hoje"] h3.secao{background:var(--hoje-fundo);color:var(--hoje-tinta);border-bottom-color:#EEDCBC}
@@ -6678,7 +6686,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.83</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.84</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8370,7 +8378,7 @@ const LISTAS_MOVER=[
   ["🙏 Aposentadorias Futuras","aposentadoria_futura"], ["💵 Pagamentos","pagamento"],
 ];
 function fecharMenuMover(){ const m=document.getElementById("menu-mover"); if(m) m.remove(); }
-function menuMover(ev, cliId){
+function menuMover(ev, cliId, linha){
   ev.preventDefault(); fecharMenuMover();
   const ks=(D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
   if(!ks.length) return;
@@ -8378,7 +8386,8 @@ function menuMover(ev, cliId){
   // o ☀️ saiu da linha (era mais um ícone competindo com o nome), mas o Meu
   // Dia continua: a ação mora aqui, no menu que o botão direito já abria
   const noDia = D.meudia.some(x=>x.colaborador_id===eu.id && ks.some(k=>k.id===x.caso_id));
-  m.innerHTML = `<div class="mm-it destaque" data-dia="${ks[0].id}">${
+  m.innerHTML = (linha ? `<div class="mm-it" data-selecionar>${_sel.has(chaveSel(linha)) ? "☐ Tirar da seleção" : "☑ Selecionar"}</div>` : "")   // F443
+    + `<div class="mm-it destaque" data-dia="${ks[0].id}">${
       noDia?"☀️ Tirar do Meu Dia":"☀️ Adicionar ao Meu Dia"}</div>`
     + `<div class="mm-tit">Mover para…</div>` + ks.map(k=>
     (ks.length>1?`<div class="mm-caso">${esc(tituloCaso(k))}</div>`:"") +
@@ -8395,6 +8404,8 @@ function menuMover(ev, cliId){
   });
   const bd = m.querySelector("[data-dia]");
   if(bd) bd.onclick=()=>{ fecharMenuMover(); alternarMeuDia(bd.dataset.dia); };
+  const bs = m.querySelector("[data-selecionar]");
+  if(bs) bs.onclick=()=>{ fecharMenuMover(); alternarSel(linha); };
   setTimeout(()=>document.addEventListener("click", fecharMenuMover, {once:true}));
 }
 // Meu Dia: liga e desliga. Saiu da linha da lista (era mais um ícone
@@ -11322,23 +11333,26 @@ function ligarCartoes(){
     el.onpointerenter=e=>{ if(e.pointerType==="mouse"){ clearTimeout(el._pre); el._pre=setTimeout(()=>preCarregarFicha(el.dataset.cli),100);
       clearTimeout(el._ult); if(el.dataset.casos) el._ult=setTimeout(()=>mostrarUltAnot(el),350); } };   // F438
     el.onpointerleave=()=>{ clearTimeout(el._pre); clearTimeout(el._ult); esconderUltAnot(); };
-    el.onpointerdown=()=>preCarregarFicha(el.dataset.cli);
+    el.onpointerdown=e=>{ el._toque = e.pointerType!=="mouse"; preCarregarFicha(el.dataset.cli); };
+    el.onmousedown=e=>{ if(e.shiftKey) e.preventDefault(); };   // F443 · o Shift+clique não seleciona texto
     el.onclick=e=>{
       if(e.target.dataset.estrela!==undefined) return;
+      if(e.shiftKey || (_sel.size && el._toque)){ e.preventDefault(); return alternarSel(el); }   // F443 · seleção múltipla
       clearTimeout(el._ult); esconderUltAnot();
       if(el.dataset.pc) return abrirAtendimentoDe(el.dataset.cli, el.dataset.pc);   // F227 · o cartão do pré-caso abre o atendimento dele
       abrirFicha(el.dataset.cli);
     };
-    el.oncontextmenu=e=>{ if(el._segurou) return e.preventDefault(); menuMover(e, el.dataset.cli); };   // botão direito = Mover para…
+    el.oncontextmenu=e=>{ if(el._segurou) return e.preventDefault(); menuMover(e, el.dataset.cli, el); };   // botão direito = Mover para…
     // F137 · no celular não há botão direito (o iPhone nem dispara o
     // contextmenu): tocar e segurar meio segundo abre o mesmo menu
     el.ontouchstart=e=>{ const t=e.touches[0]; el._segurou=false; clearTimeout(el._seg);
       el._seg=setTimeout(()=>{ el._segurou=true;
-        menuMover({preventDefault(){}, clientX:t.clientX, clientY:t.clientY}, el.dataset.cli); },500); };
+        menuMover({preventDefault(){}, clientX:t.clientX, clientY:t.clientY}, el.dataset.cli, el); },500); };
     el.ontouchmove=()=>clearTimeout(el._seg);
     el.ontouchend=e=>{ clearTimeout(el._seg); if(el._segurou) e.preventDefault(); };   // sem o clique que abriria a ficha
   });
   ligarArrasteCartoes();
+  pintarSel();
   // ⭐/🔥 acendem NO LUGAR: o render() inteiro aqui jogava a lista de volta
   // ao topo — marcar o 60º cliente devolvia a tela ao 1º. Só a visão
   // ⭐ Importante re-renderiza (lá o cartão precisa entrar/sair da lista).
@@ -14190,8 +14204,10 @@ function linhaAgenda(it){
   const nome = cli ? esc(cli.nome) : esc(resumo);
   // F427 · o prazo e o compromisso dizem do que são na própria linha, depois do nome (antes, só no title)
   const oque = !cli ? "" : it.antes ? resumo : it.motivo || (tc && tc.natureza!=="lembrete" ? resumo : "");
+  const selK = t ? "t"+t.id : tc ? "tc"+tc.id : k ? `k${k.id}|${it.selo||""}|${d}` : "";   // F443 · a linha selecionada sobrevive ao render
+  if(selK) _agIt.set(selK, it);
   // F437 · linha C: o nome à esquerda, a lista e a etapa, a data, o responsável e, à direita, o concluir e a ⭐
-  return `<div class="cartao ag-linha${k&&k.urgente?" urg":""}"${cli?` data-cli="${cli.id}"`:""}${k?` data-casos="${k.id}"`:""}${t?` data-tarefa="${t.id}"`:""}>
+  return `<div class="cartao ag-linha${k&&k.urgente?" urg":""}"${cli?` data-cli="${cli.id}"`:""}${k?` data-casos="${k.id}"`:""}${t?` data-tarefa="${t.id}"`:""}${selK?` data-sel="${esc(selK)}"`:""}>
     <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
     <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b>${oque?`<span class="ag-oque"> · ${esc(oque)}</span>`:""}</div>
     <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${it.tc && Array.isArray(it.tc.etapas) && it.tc.etapas.length?`<span class="ag-tipo">etapas ${it.tc.etapas.filter(e=>e.feito).length}/${it.tc.etapas.length}</span>`:""}${
@@ -14210,7 +14226,7 @@ function linhaAgenda(it){
 }
 let limAg = {};
 function renderAgendaV10(qual){
-  const planej = qual==="planejado";
+  const planej = qual==="planejado"; _agIt.clear();
   tituloLista(planej ? "Planejado" : "Meu Dia");
   document.querySelector(".meio").classList.add("ag-v10");
   const col = planej ? filtroPlanColab : filtroDia;   // F236 · o Meu Dia tem filtro próprio
@@ -14345,11 +14361,11 @@ function reagendavel(i){
   if(i.t) return !i.t.virtual && !!i.t.id;
   return !!i.k && (i.selo==="Volta à fila" || i.selo==="Retorno");
 }
-function reagendarVencidas(){
+function reagendarVencidas(lote){
   const ms = _reagVenc.filter(reagendavel), fica = _reagVenc.length - ms.length;
-  if(!ms.length) return;
+  if(!ms.length) return aviso("Nenhuma linha selecionada tem data que se possa mudar: prazo fatal e perícia pedem registro");
   const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))], ["Próxima semana", proxSegunda()]];
-  caixa(`<h3 style="margin:0 0 6px">Reagendar ${ms.length} ${ms.length===1?"vencido":"vencidos"}</h3>
+  caixa(`<h3 style="margin:0 0 6px">${lote ? `Nova data para ${ms.length} ${ms.length===1?"item":"itens"}` : `Reagendar ${ms.length} ${ms.length===1?"vencido":"vencidos"}`}</h3>
     <p class="meio-sub">Retornos, voltas à fila e lembretes vão para a data escolhida.${fica ? ` ${fica} ${fica===1?"item fica":"itens ficam"} (prazo fatal, perícia a confirmar, exigência e outros que pedem registro).` : ""}</p>
     <div class="conf-dias">${op.map(([r,d])=>`<button type="button" class="esp-it" onclick="aplicarReagendar('${d}')" title="${fmtBarra(d)}">${r}</button>`).join("")}
       <input type="date" id="reag-data" aria-label="Outra data" min="${hoje()}" onchange="if(this.value)aplicarReagendar(this.value)"></div>`);
@@ -14379,11 +14395,99 @@ async function aplicarReagendar(data){
     }
   }
   const r = await Promise.allSettled(grava), falhas = r.filter(x=>x.status==="rejected").length;
-  montarSidebar(); render();
+  _sel.clear(); montarSidebar(); render();
   if(falhas) aviso(`⚠ ${falhas} de ${grava.length} não gravaram: atualize a página e confira`);
   avisoDesfazer(`${grava.length - falhas} ${grava.length===1?"item reagendado":"itens reagendados"} para ${fmtBarra(data)}`, async ()=>{
     await Promise.allSettled(volta.map(f=>f())); montarSidebar(); render(); aviso("Reagendamento desfeito", false);
   }, 30000);
+}
+// F443 · SELEÇÃO MÚLTIPLA NAS LISTAS (proposta 2 do Todoist, aprovada pelo Paulo em 08.11.2026)
+// ══════════════════════════════════════════════════════════════════════════
+// Shift+clique (no celular, tocar e segurar e escolher Selecionar; depois, cada toque marca) junta linhas do Meu Dia, do
+// Planejado e das listas; a barra do pé age em todas: Concluir (por hoje, a janela da volta), Passar (a outra pessoa, com
+// menção), Estrela e Data (a mesma regra do Reagendar). O clique simples continua abrindo a ficha. Nada do lote alcança
+// prazo fatal: o Concluir deixa o caso cujo prazo fatal vence antes da volta, e a Data só move o que o Reagendar move.
+const _sel = new Map(), _agIt = new Map();   // chave da linha → {cli, casos, it}; chave → item do Meu Dia e do Planejado
+const chaveSel = el => el.dataset.sel || `c${el.dataset.cli}|${el.dataset.casos||""}`;
+function alternarSel(el){
+  if(!el.dataset.casos && !el.dataset.sel) return aviso("Esta linha não tem caso para agir em lote");
+  const ch = chaveSel(el);
+  if(_sel.has(ch)) _sel.delete(ch);
+  else _sel.set(ch, {cli:el.dataset.cli, casos:(el.dataset.casos||"").split(",").filter(Boolean), it:el.dataset.sel ? _agIt.get(el.dataset.sel) || null : null});
+  pintarSel();
+}
+function limparSel(){ _sel.clear(); pintarSel(); }
+function pintarSel(){
+  document.querySelectorAll(".cartao[data-cli]").forEach(el=>{ const on = _sel.has(chaveSel(el)); el.classList.toggle("sel", on); if(on) el.setAttribute("aria-selected","true"); else el.removeAttribute("aria-selected"); });
+  let b = document.getElementById("sel-barra");
+  if(!_sel.size){ if(b) b.remove(); return; }
+  if(!b){ b = document.createElement("div"); b.id = "sel-barra"; b.setAttribute("role","toolbar"); b.setAttribute("aria-label","Ações nas linhas selecionadas"); document.body.appendChild(b); }
+  const n = _sel.size, bt = (f, r, t) => `<button type="button" onclick="${f}()" title="${t}"><span aria-hidden="true">${r}</span><span class="sr-only">${t}</span></button>`;
+  b.innerHTML = `<span class="sel-n" aria-live="polite">${n} ${n===1?"selecionada":"selecionadas"}</span>`
+    + bt("loteConcluir","Concluir","Concluir por hoje os casos selecionados") + bt("lotePassar","Passar","Passar os casos selecionados a outra pessoa")
+    + bt("loteEstrela","Estrela","Marcar ou desmarcar a estrela dos casos selecionados") + bt("loteData","Data","Mudar a data dos retornos e lembretes selecionados")
+    + `<button type="button" class="sel-x" onclick="limparSel()" title="Limpar a seleção (Esc)" aria-label="Limpar a seleção">✕</button>`;
+}
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _sel.size && !document.querySelector("#modal[style*='block']")) limparSel(); });
+const casosDaSel = () => [...new Set([..._sel.values()].flatMap(x=>x.casos))].map(id=>D.casoPorId.get(id)).filter(k=>k && k.fase!=="encerrado");
+function loteConcluir(){ const n = casosDaSel().length; if(!n) return aviso("Nenhum caso aberto na seleção"); despachar(null, null, n); }
+async function gravarLote(s, nota){
+  const vai = [], ficam = [];
+  casosDaSel().forEach(k=>{ const f = fatalAbertoDe(k); (f && s.data > f ? ficam : vai).push(k); });
+  const undos = [];
+  for(const k of vai){ const u = await aplicarDespacho(k, s, nota, true); if(u) undos.push(u); }
+  _sel.clear(); montarSidebar(); render(); if(clienteAberto) repintarFicha();
+  const passou = s.para && D.colPorId.get(s.para);
+  avisoDesfazer(`✔ ${undos.length} ${undos.length===1?"caso volta":"casos voltam"} em ${fmtBarra(s.data)}${passou?` · com ${passou.nome.split(" ")[0]}`:""}${ficam.length?` · ${ficam.length} com prazo fatal antes da volta ${ficam.length===1?"ficou":"ficaram"}`:""}`, async ()=>{
+    for(const u of undos) await u(true);
+    montarSidebar(); render(); if(clienteAberto) repintarFicha(); aviso("Desfeito: os casos voltaram à fila", false);
+  }, 30000);
+}
+function lotePassar(){
+  const n = casosDaSel().length; if(!n) return aviso("Nenhum caso aberto na seleção");
+  caixa(`<h3 style="margin:0 0 6px">Passar ${n} ${n===1?"caso":"casos"}</h3>
+    <p class="meio-sub">A pessoa escolhida entra como responsável e recebe uma menção por cliente; quem passa sai. As datas não mudam.</p>
+    <div class="desp-quem">${equipeAtiva().filter(c=>c.id!==eu.id).map(c=>`<button type="button" class="btn-mini" onclick="lotePassarA('${c.id}')">${esc(c.nome.split(" ")[0])}</button>`).join("")}</div>`);
+}
+async function lotePassarA(para){
+  fecharCaixa();
+  const p = D.colPorId.get(para), ks = casosDaSel(); if(!p || !ks.length) return;
+  const undos = [], clis = new Map(), atr = {method:"POST",headers:{Prefer:"return=minimal"}};
+  for(const k of ks){
+    const antes = [...(D.atrDoCaso.get(k.id)||[])];
+    if(!antes.includes(para)) try{ await api(`/rest/v1/atribuicoes`, {...atr, body:JSON.stringify({caso_id:k.id, colaborador_id:para})}); }catch(e){ if(e.status!==409) continue; }
+    if(antes.includes(eu.id)) await api(`/rest/v1/atribuicoes?caso_id=eq.${k.id}&colaborador_id=eq.${eu.id}`,{method:"DELETE"}).catch(()=>{});
+    D.atrDoCaso.set(k.id, [...new Set([...antes.filter(x=>x!==eu.id), para])]);
+    if(!clis.has(k.cliente_id)) clis.set(k.cliente_id, k.id);
+    undos.push(async ()=>{
+      if(!antes.includes(para)) await api(`/rest/v1/atribuicoes?caso_id=eq.${k.id}&colaborador_id=eq.${para}`,{method:"DELETE"}).catch(()=>{});
+      if(antes.includes(eu.id)) await api(`/rest/v1/atribuicoes`, {...atr, body:JSON.stringify({caso_id:k.id, colaborador_id:eu.id})}).catch(()=>{});
+      D.atrDoCaso.set(k.id, antes);
+    });
+  }
+  clis.forEach((casoId, cliId)=>api(`/rest/v1/mencoes`, {...atr, body:JSON.stringify({de_id:eu.id, para_id:para, caso_id:casoId,
+    texto:`👤 ${(eu.nome||"").split(" ")[0]} passou a você o cliente ${(D.cliPorId.get(cliId)||{}).nome||""}`})}).catch(()=>{}));
+  _sel.clear(); montarSidebar(); render();
+  avisoDesfazer(`${undos.length} ${undos.length===1?"caso passado":"casos passados"} a ${p.nome.split(" ")[0]}`, async ()=>{
+    for(const u of undos) await u(); montarSidebar(); render(); aviso("Desfeito: os casos voltaram a quem tinha", false);
+  }, 30000);
+}
+async function loteEstrela(){
+  const ks = casosDaSel(); if(!ks.length) return aviso("Nenhum caso aberto na seleção");
+  const liga = ks.some(k=>!k.importante), muda = ks.filter(k=>!!k.importante!==liga);
+  const r = await Promise.allSettled(muda.map(k=>patchCaso(k.id, {importante:liga}).then(()=>{ k.importante = liga; })));
+  const ok = muda.filter((k,i)=>r[i].status==="fulfilled");
+  _sel.clear(); montarSidebar(); render();
+  avisoDesfazer(`⭐ ${liga?"Estrela marcada":"Estrela desmarcada"} em ${ok.length} ${ok.length===1?"caso":"casos"}`, async ()=>{
+    await Promise.allSettled(ok.map(k=>patchCaso(k.id, {importante:!liga}).then(()=>{ k.importante = !liga; })));
+    montarSidebar(); render(); aviso("Desfeito", false);
+  }, 30000);
+}
+function loteData(){
+  // a linha do Meu Dia e do Planejado leva o próprio item; a das listas, a volta à fila ou o retorno do To Do do caso
+  _reagVenc = [..._sel.values()].flatMap(x=>x.it ? [x.it] : x.casos.map(id=>D.casoPorId.get(id)).filter(k=>k && k.prazo).map(k=>({k, data:k.prazo,
+    selo:((k.ronda||{}).despacho||{}).prazo===k.prazo ? "Volta à fila" : prazoEhRetorno(k) ? "Retorno" : null})));
+  reagendarVencidas(true);
 }
 // F382 (12.40) · a carga de prazos por pessoa nos próximos 7 dias, no alto do Planejado (ideia do Lovable aprovada pelo
 // Paulo). Conta o que o filtro "Prazos" conta; o retorno do To Do não entra (prazoEhRetorno). O nome filtra o Planejado
@@ -14625,7 +14729,7 @@ const natPlan = i => i.ev||i.evPassado||i.avisar||i.novEv||i.selo==="Pauta" ? "p
   : i.fatal||i.prazo ? "prazos" : i.tc||i.t||i.rotina ? "tarefas" : "lembretes";
 let filtroPlanNat = "";
 function alternarFabs(){ const a=document.getElementById("app"), on=a.classList.toggle("fabs-on"), b=document.getElementById("fab-juntos"); if(b){ b.textContent=on?"✕":"⋯"; b.setAttribute("aria-expanded", on); } if(!on && visao==="whatsapp" && zagAberta()) zagAlternar(); }
-function irPara(v){ visao=v; zag.fora=false; limparBusca(); fecharFicha(false); montarSidebar(); render(); pintarAgendaZap(); if(document.getElementById("app")?.classList.contains("fabs-on")) alternarFabs(); }
+function irPara(v){ visao=v; _sel.clear(); zag.fora=false; limparBusca(); fecharFicha(false); montarSidebar(); render(); pintarAgendaZap(); if(document.getElementById("app")?.classList.contains("fabs-on")) alternarFabs(); }
 
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
 let filtroPlan="todas", filtroPlanColab=null;   // Planejado abre mostrando tudo, em seções
@@ -46518,15 +46622,15 @@ function proxSegunda(base){
 const DESP_DATAS = [["Amanhã", ()=>somaDias(hoje(),1)], ["Próxima semana", ()=>proxSegunda()], ["Em 15 dias", ()=>somaDias(hoje(),15)],
   ["Em 1 mês", ()=>somaMeses(hoje(),1)], ["Em 6 meses", ()=>somaMeses(hoje(),6)]];
 let _desp = null;
-function despachar(casoId, ev){
+function despachar(casoId, ev, lote){
   if(ev){ ev.stopPropagation(); if(ev.preventDefault) ev.preventDefault(); }
-  const k = D.casoPorId.get(casoId); if(!k) return;
-  const cli = D.cliPorId.get(k.cliente_id) || {};
+  const k = lote ? null : D.casoPorId.get(casoId); if(!k && !lote) return;   // F443 · lote = quantos casos selecionados
+  const cli = k ? D.cliPorId.get(k.cliente_id) || {} : {};
   // a data que já existe e está adiante vem escolhida: o despacho só confirma
-  const ja = k.prazo && k.prazo > hoje() ? k.prazo : null;
-  _desp = {casoId, data:ja, para:null};
+  const ja = k && k.prazo && k.prazo > hoje() ? k.prazo : null;
+  _desp = {casoId, data:ja, para:null, lote:lote||null};
   const eq = equipeAtiva().filter(c=>c.id!==eu.id);
-  caixa(`<h3 style="margin:0 0 4px">✔ Concluir por hoje <small class="meio-sub">· ${esc(cli.nome||"")} · ${esc(tituloCaso(k))}</small></h3>
+  caixa(`<h3 style="margin:0 0 4px">✔ Concluir por hoje <small class="meio-sub">· ${k ? `${esc(cli.nome||"")} · ${esc(tituloCaso(k))}` : `${lote} ${lote===1?"caso":"casos"}`}</small></h3>
     <p class="meio-sub" style="margin:0 0 10px">Quando o cliente volta à fila? Ele sai do seu Meu Dia.</p>
     <div class="desp-datas">${DESP_DATAS.map(([r,f])=>{ const d=f();
       return `<button type="button" class="btn-mini${d===ja?" on":""}" data-dd="${d}" onclick="despData(this.dataset.dd,this)">${r}<small>${fmtBarra(d).slice(0,5)}</small></button>`; }).join("")}
@@ -46550,11 +46654,12 @@ function despPara(id, el){
 }
 async function gravarDespacho(){
   const s = _desp; if(!s) return;
-  const k = D.casoPorId.get(s.casoId); if(!k) return;
+  const k = D.casoPorId.get(s.casoId); if(!k && !s.lote) return;
   if(!s.data) return aviso("Escolha quando o cliente volta à fila");
   if(s.data <= hoje()) return aviso("A volta precisa ser depois de hoje");
   const nota = ((document.getElementById("desp-nota")||{}).value||"").trim();
   fecharCaixa(); _desp = null;
+  if(s.lote) return gravarLote(s, nota);
   return aplicarDespacho(k, s, nota);
 }
 // F292 · a data escrita na anotação do despacho ("aguardar até 30/11") escolhe a volta, como no To Do
@@ -46572,14 +46677,14 @@ function fatalAbertoDe(k){
   if(k.prazo && (k.ronda||{}).despacho?.prazo!==k.prazo && !prazoEhRetorno(k)) ds.push(k.prazo);
   return ds.filter(d=>d>=hoje()).sort()[0] || null;
 }
-async function aplicarDespacho(k, s, nota){
+async function aplicarDespacho(k, s, nota, lote){
   const fat = fatalAbertoDe(k);
-  if(fat && s.data > fat && !await confirmar(`O prazo fatal deste caso vence em ${fmtBarra(fat)}, antes da volta à fila em ${fmtBarra(s.data)}. Concluir por hoje assim mesmo?`)) return;
+  if(!lote && fat && s.data > fat && !await confirmar(`O prazo fatal deste caso vence em ${fmtBarra(fat)}, antes da volta à fila em ${fmtBarra(s.data)}. Concluir por hoje assim mesmo?`)) return;
   const cli = D.cliPorId.get(k.cliente_id) || {};
   const antes = {prazo:k.prazo||null, ronda:k.ronda||{}};
   const ronda = {...(k.ronda||{}), despacho:{em:new Date().toISOString(), por:eu.id, prazo:s.data, ...(s.para?{para:s.para}:{})}};
   const muda = {prazo:s.data, ronda};   // F373 · a ⭐ fica (decisão do Paulo, 02.11.2026)
-  try{ await patchCaso(k.id, muda); }catch(e){ return aviso("Não gravou — tente de novo"); }
+  try{ await patchCaso(k.id, muda); }catch(e){ return lote ? null : aviso("Não gravou — tente de novo"); }
   Object.assign(k, muda);
   const dias = (D.meudia||[]).filter(x=>x.caso_id===k.id && x.colaborador_id===eu.id);
   for(const x of dias) api(`/rest/v1/meu_dia?id=eq.${x.id}`,{method:"DELETE"}).catch(()=>{});
@@ -46608,8 +46713,7 @@ async function aplicarDespacho(k, s, nota){
     }
   }
   const repinta = () => { montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha(); };
-  repinta();
-  avisoDesfazer(`✔ ${cli.nome||"Cliente"} volta em ${fmtBarra(s.data)}${passou?` · com ${passou.nome.split(" ")[0]}`:""}`, async ()=>{
+  const desfaz = async calado=>{
     const volta = {prazo:antes.prazo, ronda:antes.ronda};
     await patchCaso(k.id, volta).catch(()=>{}); Object.assign(k, volta);
     for(const x of dias){ try{ const [m] = await api(`/rest/v1/meu_dia`,{method:"POST",headers:{Prefer:"return=representation"},
@@ -46622,8 +46726,11 @@ async function aplicarDespacho(k, s, nota){
         body:JSON.stringify({caso_id:k.id, colaborador_id:eu.id})}).catch(()=>{});
       D.atrDoCaso.set(k.id, atrAntes);
     }
-    repinta(); aviso("Desfeito: o cliente voltou à fila", false);
-  });
+    if(!calado){ repinta(); aviso("Desfeito: o cliente voltou à fila", false); }
+  };
+  if(lote) return desfaz;   // F443 · o lote repinta e desfaz de uma vez
+  repinta();
+  avisoDesfazer(`✔ ${cli.nome||"Cliente"} volta em ${fmtBarra(s.data)}${passou?` · com ${passou.nome.split(" ")[0]}`:""}`, ()=>desfaz());
 }
 // ══════════════════════════════════════════════════════════════════════════
 // F293 · PAPEL E PORTAL (Onda C do fluxo do To Do, pedido do Paulo de 29.10.2026)
