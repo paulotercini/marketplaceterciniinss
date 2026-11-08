@@ -142,6 +142,7 @@ FIX.andamentos = (FIX.andamentos || []).concat([{ id: "a454", caso_id: RET, auto
   await cel.p.locator(`.cartao[data-casos="${RET}"]`).first().click(); await cel.p.waitForTimeout(300);
   const larg = await cel.p.evaluate(() => { const x = document.querySelector(".ag-ext"); return x ? [x.scrollWidth, x.clientWidth, document.documentElement.scrollWidth, innerWidth] : null; });
   conf(`no celular a extensão cabe na tela (${larg})`, larg && larg[0] <= larg[1] + 1 && larg[2] <= larg[3] + 1);
+  conf("no celular o nome do responsável não aparece", await cel.p.evaluate(() => { const r = document.querySelector(".ag-ext .ae-resp"); return !!r && getComputedStyle(r).display === "none"; }));
   await cel.p.screenshot({ path: "f455-celular.png" });
   await cel.ctx.close();
 
