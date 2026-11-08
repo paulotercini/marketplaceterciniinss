@@ -621,12 +621,15 @@ async function simular(s: Cenario) {
     ligada: true, marcados: s.marcados || [] });
   const t0 = Date.now(), saida: Record<string, unknown>[] = [];
   const total = s.persona ? Math.min(10, Math.max(s.turnos.length, Number(s.max) || 7)) : s.turnos.length;
-  for (let i = 0; i < total; i++) {
+  let ultima = false;
+  for (let i = 0; i < total && !ultima; i++) {
     let texto = s.turnos[i];
     if (texto === undefined) {
       const c = await claude(promptCliente(s.persona!, x.mensagens), ESQ_CLIENTE) as { fala: string; fim: boolean };
-      if (c.fim || !c.fala?.trim()) { if (c.fala?.trim()) saida.push({ cliente: c.fala, fim: true }); break; }
+      if (!c.fala?.trim()) break;
       texto = c.fala;
+      // a última fala (confirmar, escolher o horário) ainda vai à IA, que agenda ou responde; depois para
+      if (c.fim) ultima = true;
     }
     const m: Msg = { direcao: "entrada", por_bot: false, tipo: "texto", texto, momento: new Date(t0 + i * 120000).toISOString() };
     x.mensagens.push(m);
@@ -700,6 +703,7 @@ export function guardaDoTexto(texto: string | null | undefined): Guarda {
   return { semNada: !!t && !RX_SO_CONFIRMA.test(t), agendaPrimeiro: /remarc|desmarc|reagend|cancel|n[aã]o lembro (?:o dia|a data|o hor)|que dia [eé] (?:o )?meu|hor[aá]rio (?:marcado|agendado)|atendimento (?:marcado|agendado)/i.test(t) };
 }
 // a sessão que ficou com uma ferramenta sem resposta recusa a mensagem nova (400 "waiting on responses to events")
+export const ESPERA_REENVIO_MS = 1500;
 export const pendentesDoErro = (txt: string) => /waiting on responses/i.test(txt) ? [...new Set(txt.match(/sevt_\w+/g) || [])] : [];
 
 // um turno: abre o stream, manda a mensagem, responde às ferramentas da agenda e espera a decidir
@@ -713,11 +717,14 @@ export async function turno(sessao: string, texto: string, buscar: typeof fetch 
     const mandar = () => buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
       body: JSON.stringify({ events: [{ type: "user.message", content: [{ type: "text", text: texto }] }] }) });
     let env = await mandar();
-    if (env.status === 400) {
+    // o Agendador às vezes chama outra ferramenta depois do turno fechado (08.11.2026): fecha e tenta de novo,
+    // com pausa, porque a sessão leva um instante para aceitar a mensagem e pode pedir outra ferramenta
+    for (let tentativa = 0; env.status === 400 && tentativa < 4; tentativa++) {
       const erro = await env.text(), ids = pendentesDoErro(erro);
       if (!ids.length) throw Object.assign(new Error(`envio 400 ${erro.slice(0, 200)}`), { status: 400 });
       for (const id of ids) await buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
-        body: JSON.stringify({ events: [{ type: "user.custom_tool_result", custom_tool_use_id: id, content: [{ type: "text", text: "Já registrado." }] }] }) });
+        body: JSON.stringify({ events: [{ type: "user.custom_tool_result", custom_tool_use_id: id, content: [{ type: "text", text: "Já registrado. Não faça mais nada até a próxima mensagem." }] }] }) });
+      if (tentativa) await new Promise((ok) => setTimeout(ok, ESPERA_REENVIO_MS));
       env = await mandar();
     }
     if (!env.ok) throw Object.assign(new Error(`envio ${env.status} ${(await env.text()).slice(0, 200)}`), { status: env.status });
@@ -726,7 +733,7 @@ export async function turno(sessao: string, texto: string, buscar: typeof fetch 
     const enviado = await env.json().catch(() => null) as Record<string, any> | null;
     const marco: string = enviado?.data?.[0]?.processed_at || "";
     const leitor = st.body.pipeThrough(new TextDecoderStream()).getReader();
-    let resto = "", aoAgendador = 0, cobrado = false, enviou = false, nadaCobrado = false, agCobrado = false;   // aoAgendador: mensagens à espera da resposta do Agendador neste turno
+    let resto = "", esperas = 0, aoAgendador = 0, cobrado = false, enviou = false, nadaCobrado = false, agCobrado = false;   // aoAgendador: mensagens à espera da resposta do Agendador neste turno
     for (;;) {
       const { value, done } = await leitor.read();
       if (done) throw new Error("o stream fechou sem decisão");
@@ -742,7 +749,8 @@ export async function turno(sessao: string, texto: string, buscar: typeof fetch 
         if (ev.type === "agent.thread_message_received") { aoAgendador = Math.max(0, aoAgendador - 1); continue; }
         // a Assistente chama decidir "nada" logo depois de encaminhar ao Agendador: a resposta dele
         // chegava depois do turno fechado e se perdia (07.11.2026); espera e pede a decidir de novo
-        if (ev.type === "agent.custom_tool_use" && ev.name === "decidir" && aoAgendador > 0 && ev.input?.acao === "nada") {
+        // também "conversa" com "vou verificar, aguarde" antes da resposta dele (08.11.2026); duas vezes no máximo
+        if (ev.type === "agent.custom_tool_use" && ev.name === "decidir" && aoAgendador > 0 && ev.input?.acao !== "equipe" && esperas++ < 2) {
           await buscar(`${MA_URL}/sessions/${sessao}/events`, { method: "POST", headers: MA_HDR, signal: ctl.signal,
             body: JSON.stringify({ events: [{ type: "user.custom_tool_result", custom_tool_use_id: ev.id,
               content: [{ type: "text", text: "Ainda não registrado: espere a resposta do Agendador e chame decidir de novo com a mensagem ao cliente." }] }] }) });
