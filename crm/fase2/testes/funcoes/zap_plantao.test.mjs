@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_plantao.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO } from "../../zap_plantao/index.ts";
+import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO, promptCliente, ESQ_CLIENTE } from "../../zap_plantao/index.ts";
 
 assert.equal(mascarar("CPF 123.456.789-09"), "CPF [número]");
 const msgs = [
@@ -395,4 +395,28 @@ console.log("formal: ok");
   assert.equal((await ferramentasDaConversa("c1", async () => ({}), async () => ({})).encaminhar_equipe({ motivo: "urgente: perícia amanhã" })).encaminhado, true);
   assert.ok(paraAgendador("x").includes("nunca diga que não localizou o atendimento"));
   console.log("ok F422t");
+}
+
+// F422u · a vaga sem código ("LIVRE 09h30-10h00") vale para o 001; a vaga "002" fixa não
+{
+  const dia = { data: "2026-11-10", livres: { "001": [], "002": [{ inicio: "09:30", eventoId: "am", tipoFixo: false }, { inicio: "10:00", eventoId: "fx", tipoFixo: true }] } };
+  assert.deepEqual(vagasDoDia([dia], "001", "a Dra. Amanda").map((v) => v.eventoId), ["am"]);
+  assert.equal(vagasDoDia([dia], "002", "a Dra. Amanda").length, 2);
+  const chamadas = [];
+  const f = ferramentasDaConversa("c9", async (acao, corpo) => {
+    chamadas.push([acao, corpo]);
+    if (acao === "disponibilidade") return { ok: true, dias: [dia] };
+    if (acao === "agendamentosFuturos") return { agendamentos: [] };
+    return { ok: true };
+  }, async (fn) => (fn === "zap_plantao_agenda" ? { ligada: true, telefone: "5516999990000" } : {}));
+  assert.deepEqual((await f.consultar_vagas({ profissionais: ["amanda"] })).vagas.amanda.map((v) => v.eventoId), ["am"]);
+  assert.equal((await f.marcar_atendimento({ profissional: "amanda", eventoId: "am", nome: "Ana Souza" })).marcado, true);
+  assert.equal(chamadas.find(([a]) => a === "agendar")[1].tipo, "001");
+  console.log("ok F422u");
+}
+{
+  const p = promptCliente("Neide, 61 anos, quer aposentadoria", [{ direcao: "entrada", texto: "Oi" }, { direcao: "saida", texto: "Qual o assunto?" }]);
+  assert.ok(p.includes("Neide, 61 anos") && p.includes("Você: Oi") && p.includes("Escritório: Qual o assunto?"));
+  assert.deepEqual(ESQ_CLIENTE.required, ["fala", "fim"]);
+  console.log("ok F422u persona");
 }
