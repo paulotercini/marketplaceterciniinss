@@ -16,7 +16,7 @@ FIX.casos.push({ id: RET, cliente_id: "c4540000-0000-0000-0000-000000000001", ti
   { id: FAT, cliente_id: "c4540000-0000-0000-0000-000000000002", titulo: "Recurso", especie: "B31", fase: "outro",
   origem_lista: "🗓 Tarefas com Prazo", mover_para: "🗓 Tarefas com Prazo", prazo: dia(-4), criado_em: "2026-01-01T00:00:00Z" });
 FIX.atribuicoes.push({ caso_id: RET, colaborador_id: FIX.colaboradores[0].id });
-FIX.andamentos = (FIX.andamentos || []).concat([{ id: "a454", caso_id: RET, autor_id: FIX.colaboradores[0].id, texto: "Anotação fictícia: aguardar a carta de concessão.", criado_em: "2026-11-01T12:00:00Z" }]);
+FIX.andamentos = (FIX.andamentos || []).concat([{ id: "a454", caso_id: RET, autor_id: FIX.colaboradores[0].id, texto: "Anotação fictícia: aguardar a carta de concessão. " + "Conferir o andamento. ".repeat(50) + "FIM DA ANOTAÇÃO", criado_em: "2026-11-01T12:00:00Z" }]);
 
 (async () => {
   const s = http.createServer((q, r) => {
@@ -67,6 +67,10 @@ FIX.andamentos = (FIX.andamentos || []).concat([{ id: "a454", caso_id: RET, auto
   const ext = p.locator(".ag-ext");
   conf("o clique estende a linha", await ext.count() === 1 && await p.evaluate(() => document.querySelector(".ag-ext").previousElementSibling.classList.contains("ext-on")));
   conf("a extensão mostra a última anotação", /aguardar a carta de concessão/.test(await ext.innerText()));
+  conf("o texto longo para em 1.000 caracteres", !/FIM DA ANOTAÇÃO/.test(await ext.locator(".ae-txt").textContent()));
+  await ext.locator('[data-ae="mais"]').click(); await p.waitForTimeout(150);
+  conf("Ver mais mostra a anotação inteira", /FIM DA ANOTAÇÃO/.test(await ext.locator(".ae-txt").textContent()) && await ext.locator('[data-ae="mais"]').count() === 0);
+  conf("Ver mais não fecha a extensão nem abre a ficha", await ext.count() === 1 && await p.evaluate(() => !clienteAberto));
   conf("o CPF está à vista para copiar", await ext.locator('[data-cop="45400000001"]').count() === 1);
   conf("há Meu INSS e WhatsApp", await ext.locator('[data-ae="senha"]').count() === 1 && await ext.locator('[data-ae="zap"]').count() === 1);
   const rot = await ext.locator(".ae-acoes button").allTextContents();
