@@ -16,7 +16,8 @@ FIX.casos.push({ id: RET, cliente_id: "c4540000-0000-0000-0000-000000000001", ti
   { id: FAT, cliente_id: "c4540000-0000-0000-0000-000000000002", titulo: "Recurso", especie: "B31", fase: "outro",
   origem_lista: "🗓 Tarefas com Prazo", mover_para: "🗓 Tarefas com Prazo", prazo: dia(-4), criado_em: "2026-01-01T00:00:00Z" });
 FIX.atribuicoes.push({ caso_id: RET, colaborador_id: FIX.colaboradores[0].id });
-FIX.andamentos = (FIX.andamentos || []).concat([{ id: "a454", caso_id: RET, autor_id: FIX.colaboradores[0].id, texto: "Anotação fictícia: aguardar a carta de concessão. " + "Conferir o andamento. ".repeat(50) + "FIM DA ANOTAÇÃO", criado_em: "2026-11-01T12:00:00Z" }]);
+FIX.andamentos = (FIX.andamentos || []).concat([{ id: "a454", caso_id: RET, autor_id: FIX.colaboradores[0].id, texto: "Anotação fictícia: aguardar a carta de concessão. " + "Conferir o andamento. ".repeat(50) + "FIM DA ANOTAÇÃO", criado_em: "2026-11-01T12:00:00Z" },
+  { id: "a455", caso_id: FAT, autor_id: FIX.colaboradores[0].id, texto: Array.from({ length: 20 }, (_, i) => "Linha " + (i + 1) + " da anotação curta.").join("\n") + "\nFIM CURTO", criado_em: "2026-11-01T12:00:00Z" }]);
 
 (async () => {
   const s = http.createServer((q, r) => {
@@ -144,6 +145,11 @@ FIX.andamentos = (FIX.andamentos || []).concat([{ id: "a454", caso_id: RET, auto
   conf(`no celular a extensão cabe na tela (${larg})`, larg && larg[0] <= larg[1] + 1 && larg[2] <= larg[3] + 1);
   conf("no celular o nome do responsável não aparece", await cel.p.evaluate(() => { const r = document.querySelector(".ag-ext .ae-resp"); return !!r && getComputedStyle(r).display === "none"; }));
   await cel.p.screenshot({ path: "f455-celular.png" });
+  await cel.p.locator(`.cartao[data-casos="${FAT}"]`).first().click(); await cel.p.waitForTimeout(300);
+  const extC = cel.p.locator(".ag-ext");
+  conf("no celular o texto curto cortado pelas linhas tem Ver mais", await extC.locator('[data-ae="mais"]').count() === 1 && await extC.locator('[data-ae="mais"]').isVisible());
+  await extC.locator('[data-ae="mais"]').click(); await cel.p.waitForTimeout(150);
+  conf("o Ver mais do celular mostra a anotação inteira", await cel.p.evaluate(() => { const t = document.querySelector(".ag-ext .ae-txt"); return /FIM CURTO/.test(t.textContent) && t.scrollHeight <= t.clientHeight + 2; }));
   await cel.ctx.close();
 
   console.log("=== F455 · a linha que se estende ===");
