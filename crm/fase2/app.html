@@ -6723,7 +6723,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.89</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.90</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7594,6 +7594,12 @@ async function criarTarefa(corpo){
     body:JSON.stringify(c)});
   try{ const [tf]=await post(corpo); return tf; }
   catch(e){
+    // F449 · banco sem a coluna repetir: a tarefa grava sem a regra, e o aviso diz o que falta
+    if(corpo.repetir && /PGRST204|42703|does not exist|schema cache/i.test(String((e&&e.message)||e))){
+      const {repetir, ...sem} = corpo;
+      aviso("A tarefa gravou sem repetir: falta a migração f449 no Supabase", false);
+      return criarTarefa(sem);
+    }
     if(!corpo.papel || !/PGRST204|42703|does not exist|schema cache/i.test(String((e&&e.message)||e))) throw e;
     const {papel, ...sem} = corpo;
     const [tf]=await post(sem);
@@ -7604,11 +7610,12 @@ async function criarTarefa(corpo){
 // as tarefas que nascem de um 📌 ou de uma anotação: os executores na data
 // escolhida e, se houver, o revisor na mesma data. O banco tem UMA tarefa por
 // pessoa e andamento, então quem executa não entra de novo como revisor.
-async function criarTarefasDe(andId, casoId, executores, revisor, dia, natureza){
+async function criarTarefasDe(andId, casoId, executores, revisor, dia, natureza, repetir){
   const feitas=[];
   for(const pid of executores){
     const tf = await criarTarefa({andamento_id:andId, caso_id:casoId, colaborador_id:pid,
-      atribuido_por:eu.id, lembrar_em:dia, ...(natureza?{natureza}:{})});
+      atribuido_por:eu.id, lembrar_em:dia, ...(natureza?{natureza}:{}),
+      ...(repetir && natureza!=="fatal" ? {repetir} : {})});
     tarefaNaMemoria(tf); feitas.push(tf);
   }
   if(revisor && !executores.includes(revisor)){
@@ -20317,11 +20324,37 @@ const CONCLUIR_PRESETS = [
 ];
 // o padrão nº 1 do escritório é o ciclo de vigilância: tentei, não estava
 // pronto, tentar de novo. ctRep guarda a data da PRÓXIMA rodada.
-let ctRep = null;
+let ctRep = null;   // F449 · null = segue a regra da tarefa; false = não repete desta vez
 function ctRepetir(d, el){
-  ctRep = d || null;
+  ctRep = d===false ? false : (d || null);
   document.querySelectorAll(".modal-cx .ct-rep.on").forEach(b=>b.classList.remove("on"));
   if(el && el.tagName==="BUTTON") el.classList.add("on");
+}
+// F449 · A TAREFA QUE SE REPETE (ideia do Todoist): a regra mora em andamento_tarefas.repetir = {n, un: "d"|"m",
+// apos}; sem "apos", a próxima conta da data da tarefa (pulando as que já passaram); com "apos", da conclusão.
+// Prazo fatal nunca se repete.
+const REPETIR_OPC = [["","Não repete"],["1d","Todo dia"],["7d","Toda semana"],["15d","A cada 15 dias"],
+  ["1m","Todo mês"],["3m","A cada 3 meses"],["6m","A cada 6 meses"],["12m","Todo ano"]];
+function regraRepetir(cod, apos){
+  const m = /^(\d+)([dm])$/.exec(cod||""); return m ? {n:+m[1], un:m[2], apos:!!apos} : null;
+}
+function rotRepetir(r){
+  if(!r) return "";
+  const o = REPETIR_OPC.find(([c])=>c===r.n+r.un);
+  return (o ? o[1].toLowerCase() : `a cada ${r.n} ${r.un==="m"?"meses":"dias"}`) + (r.apos?" depois de concluir":"");
+}
+function somarRepetir(iso, r){
+  if(r.un==="d") return maisDiasISO(iso, r.n);
+  const [a,m,d] = iso.split("-").map(Number), alvo = new Date(Date.UTC(a, m-1+r.n, 1));
+  const ult = new Date(Date.UTC(alvo.getUTCFullYear(), alvo.getUTCMonth()+1, 0)).getUTCDate();
+  alvo.setUTCDate(Math.min(d, ult)); return alvo.toISOString().slice(0,10);
+}
+function proximaRepeticao(t, hj){
+  const r = t && t.repetir; if(!r || !r.n || t.natureza==="fatal") return null;
+  hj = hj || hoje();
+  let d = somarRepetir(r.apos || !t.lembrar_em ? hj : t.lembrar_em, r);
+  for(let i=0; d<=hj && i<500; i++) d = somarRepetir(d, r);
+  return d;
 }
 // F247 · o "feito" diz o que foi feito, pelo que a tarefa pedia: "Apresentar réplica" concluída vira "Réplica
 // protocolada", e não "Tarefa concluída". Vale a primeira peça citada no pedido; o lembrete e a revisão ficam genéricos.
@@ -20353,6 +20386,7 @@ const feitoDe = t => t && t.natureza!=="lembrete" && t.papel!=="revisa"
   ? feitoDaTarefa(((D._andsFicha||[]).find(a=>a.id===t.andamento_id)||{}).texto) : null;
 function concluirTarefa(id){
   const tt=(D.tarefasFicha||[]).find(x=>x.id===id), fd=feitoDe(tt);
+  const pr = proximaRepeticao(tt);   // F449 · a regra já escolhe a próxima rodada; Parar encerra a repetição
   caixa(`<h3>✔ Concluir a sua parte</h3>
     <p class="meio-sub">O que você fez vira um comentário no processo — o histórico continua.</p>
     <div class="form-linha">${(fd?[fd]:[]).concat(CONCLUIR_PRESETS).map(t=>
@@ -20366,7 +20400,9 @@ function concluirTarefa(id){
     </div>
     <div class="form-linha" style="margin-top:6px;align-items:center">
       <span class="rotulo-rap">🔁 REPETIR EM:</span>
-      <button class="btn-rap ct-rep on" onclick="ctRepetir(null,this)" title="não repetir"><span aria-hidden="true">Ignorar</span><span class="sr-only">não repetir</span></button>
+      ${pr ? `<button class="btn-rap ct-rep on" onclick="ctRepetir(null,this)" title="repete ${esc(rotRepetir(tt.repetir))}: próxima em ${fmt(pr)}"><span aria-hidden="true">Regra</span><span class="sr-only">pela regra, em ${fmt(pr)}</span></button>
+      <button class="btn-rap ct-rep" onclick="ctRepetir(false,this)" title="encerrar a repetição"><span aria-hidden="true">Parar</span><span class="sr-only">parar de repetir</span></button>`
+      : `<button class="btn-rap ct-rep on" onclick="ctRepetir(null,this)" title="não repetir"><span aria-hidden="true">Ignorar</span><span class="sr-only">não repetir</span></button>`}
       <button class="btn-rap ct-rep" onclick="ctRepetir(maisDias(15),this)">+15 dias</button>
       <button class="btn-rap ct-rep" onclick="ctRepetir(maisDias(30),this)">+30 dias</button>
       <button class="btn-rap ct-rep" onclick="ctRepetir(maisDias(45),this)">+45 dias</button>
@@ -20447,11 +20483,14 @@ async function concluirDeVez(id, txt, prot){
   }
   // repetir: a próxima rodada nasce pendurada no comentário da conclusão —
   // o ciclo fica visível na linha do tempo
-  if(ctRep && and){
+  // F449 · a tarefa com regra de repetição renasce sozinha, com a mesma pessoa, natureza e regra
+  const regra = ctRep!==false && t.repetir && t.natureza!=="fatal" ? t.repetir : null;
+  const prox = ctRep || (regra ? proximaRepeticao(t) : null);
+  if(prox && and){
     try{
-      const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
-        body:JSON.stringify({andamento_id:and.id, caso_id:t.caso_id, colaborador_id:eu.id,
-                             atribuido_por:eu.id, lembrar_em:ctRep})});
+      const tf = await criarTarefa({andamento_id:and.id, caso_id:t.caso_id,
+        colaborador_id: regra ? t.colaborador_id : eu.id, atribuido_por:eu.id, lembrar_em:prox,
+        ...(regra ? {repetir:regra, ...(t.natureza?{natureza:t.natureza}:{}), ...(t.papel?{papel:t.papel}:{})} : {})});
       tarefaNaMemoria(tf);
     }catch(e){ aviso("⚠ a nova rodada não gravou: "+String(e.message||e).slice(0,80)); }
   }
@@ -20462,7 +20501,7 @@ async function concluirDeVez(id, txt, prot){
   const av = await avisoPelaTarefa(t).catch(()=>null);
   if(av) montarSidebar();
   plim();
-  const repetiu = ctRep;
+  const repetiu = and ? prox : null;
   ctRep = null;
   avisoDesfazer((repetiu?`Concluída — nova rodada em ${fmt(repetiu)}`:"Concluída")
     + (prazoBaixado?` · ⏰ prazo fatal de ${fmt(prazoBaixado)} baixado junto`:"")
@@ -42534,7 +42573,9 @@ function composerCaso(k){
         <div class="esc-linha esc-tgs">${chips}<span class="esc-sep" aria-hidden="true"></span>${tg("compromisso","Tarefa","trabalho marcado para alguém num dia")}${prazoTg}${tg("lembrete","Lembrete","só um aviso no dia, por padrão para você")}${ferr}<button class="esc-ic esc-mais-ic" aria-expanded="false" onclick="const l=this.parentNode;l.classList.toggle('ics');this.setAttribute('aria-expanded',l.classList.contains('ics'))" title="Mais: anexar, mencionar, documentos, importante">⋯<span class="sr-only"> mais</span></button></div>
         <div class="esc-pnl esc-pnl-tf" id="esc-pnl-tf"${tfNatureza?"":" hidden"}>
           <span class="rotulo-rap">Quem faz</span><span class="esc-pes">${pessoas}</span>
-          <span class="rotulo-rap esc-quando">Quando</span><span class="esc-pes">${quando}</span></div>
+          <span class="rotulo-rap esc-quando">Quando</span><span class="esc-pes">${quando}</span>
+          <span class="rotulo-rap">Repetir</span><span class="esc-pes"><select id="tf-rep" class="tf-rev tf-rep" title="a tarefa renasce sozinha ao ser concluída">${REPETIR_OPC.map(([c,r])=>`<option value="${c}">${r}</option>`).join("")}</select>
+          <label class="tf-rep-apos" title="conta da conclusão, e não da data da tarefa"><input type="checkbox" id="tf-rep-apos"> depois de concluir</label></span></div>
         ${listaDe(k)!=="🗓 Tarefas com Prazo" ? painelPrazoEscrever(k) : ""}
         <div class="esc-linha esc-fim"><span class="esc-frase" id="esc-frase"></span>
           <div class="tipo-fila" id="tipo-fila">${umClique}${sugBt}<span class="esc-dica" aria-hidden="true">Tarefa · Prazo · Lembrete</span></div>
@@ -43825,7 +43866,7 @@ function tarefasCartao(a){
     // painel de progresso, que abre com um clique nela; aqui fica só o resumo e o círculo de concluir
     const andando = !feita && t.iniciada_em;
     const ets = Array.isArray(t.etapas) ? t.etapas : [], nOk = ets.filter(e=>e.feito).length;
-    const resumo = feita ? "" : `${andando?" · em andamento":""}${ets.length?` · etapas ${nOk}/${ets.length}`:""}`;
+    const resumo = feita ? "" : `${andando?" · em andamento":""}${ets.length?` · etapas ${nOk}/${ets.length}`:""}${t.repetir?` · ↻ ${rotRepetir(t.repetir)}`:""}`;
     return `<span class="tl-tarefa ${feita?"feita":atras?"atras":""}${andando?" andando":""}">${bola}${feita
       ? `<span>${esc(rot)}</span>`
       : `<button class="tl-tf-abrir" onclick="abrirPainelTarefa('${t.caso_id}','${t.andamento_id}')" title="ver o progresso: andamento, etapas e histórico">${esc(rot+resumo)}<span aria-hidden="true"> ›</span></button>`}</span>`;
@@ -48588,7 +48629,8 @@ async function novoAndamento(casoUnico){
     tfCriouLembrete = pessoas.length > 0;
     // F160 · o revisor escolhido ao lado dos executores entra com papel próprio
     const revisor = pessoas.length ? ((document.getElementById("tf-rev")||{}).value||"") : "";
-    try{ await criarTarefasDe(and.id, casoId, pessoas, revisor, tfData, tfNatureza); }
+    const repetir = tfNatureza && tfData ? regraRepetir((document.getElementById("tf-rep")||{}).value, (document.getElementById("tf-rep-apos")||{}).checked) : null;
+    try{ await criarTarefasDe(and.id, casoId, pessoas, revisor, tfData, tfNatureza, repetir); }
     catch(e){ aviso("⚠ a tarefa do lembrete não gravou: "+String(e.message||e).slice(0,80)); }
     tfQuem=null; tfData=undefined; tfNatureza="compromisso";
   }
