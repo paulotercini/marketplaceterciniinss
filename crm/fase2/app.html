@@ -3767,6 +3767,23 @@ html[data-tema="v10"] .ag-txt b{font-weight:600}
 #ult-anot.on{display:block}#ult-anot .ua-cab{font-size:12px;color:var(--cinza);margin-bottom:4px}
 #ult-anot .ua-txt{white-space:pre-line;display:-webkit-box;-webkit-line-clamp:8;-webkit-box-orient:vertical;overflow:hidden}
 @media (hover:none){#ult-anot{display:none!important}}
+html[data-tema="v10"] #conteudo-meio .ag-ext{grid-column:1/-1;background:#FAFAF8;border-top:1px dashed var(--borda);padding:8px 16px 12px 16px;font-size:13px;color:var(--texto)}
+.cartao.ext-on{background:#F6F8F6!important}
+.ag-ext .ae-topo{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--cinza)}
+.ag-ext .ae-cop{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.ag-ext .ae-cop .cop{cursor:pointer;font-variant-numeric:tabular-nums}
+.ag-ext .ae-mini{font-size:12px;padding:2px 6px;min-height:24px;border:1px solid var(--borda);border-radius:4px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.ag-ext .ae-zap img,.ag-ext .ae-zap svg{width:16px;height:16px}
+.ag-ext .ae-txt{white-space:pre-line;margin:6px 0 8px;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.ag-ext .ae-cab{display:block;font-size:12px;color:var(--cinza);margin-bottom:2px}
+.ag-ext .ae-acoes{display:flex;gap:6px;flex-wrap:wrap}
+.ag-ext [hidden]{display:none!important}
+.ag-ext .ae-nota{width:100%;box-sizing:border-box;font:inherit;padding:6px 8px;border:1px solid var(--borda);border-radius:4px}
+.ag-ext .ae-lin,.ag-ext .ae-dias{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.ag-ext .ae-fim{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:8px}
+.ag-ext .ae-canc{background:none;border:0;color:var(--cinza);text-decoration:underline;cursor:pointer;min-height:24px}
+.ag-ext .ae-aviso{margin:4px 0;color:var(--cinza)}
+@media (max-width:760px){.ag-ext .ae-acoes .btn-mini{flex:1 1 40%}}
 html[data-tema="v10"] .ag-txt .ag-oque{font-weight:400;color:var(--cinza,#4A4944)}
 html[data-tema="v10"] .ag-res{color:var(--cinza)}
 html[data-tema="v10"] .ag-selos{flex:none;display:inline-flex;align-items:center;gap:4px}
@@ -6720,7 +6737,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.94</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.95</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11364,11 +11381,13 @@ function grupoClientes(casosSel){
 // F438 · pedido do Paulo de 08.11.2026: o clique da linha continua abrindo a ficha, e o mouse parado em cima mostra a
 // última anotação da equipe nos casos da linha. O texto não vem na carga inicial: busca-se no primeiro hover e guarda-se
 const _ultAnot = new Map();
-async function mostrarUltAnot(el){
-  const ids = el.dataset.casos;
+function ultAnotDe(ids){
   if(!_ultAnot.has(ids)) _ultAnot.set(ids, api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${ids})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&limit=1`)
     .then(r=>(r||[])[0]||null).catch(()=>{ _ultAnot.delete(ids); return null; }));
-  const a = await _ultAnot.get(ids);
+  return _ultAnot.get(ids);
+}
+async function mostrarUltAnot(el){
+  const a = await ultAnotDe(el.dataset.casos);
   if(!el.matches(":hover") || !document.body.contains(el)) return;
   let p = document.getElementById("ult-anot");
   if(!p){ p = document.createElement("div"); p.id = "ult-anot"; p.setAttribute("role","tooltip"); document.body.appendChild(p); }
@@ -11381,6 +11400,174 @@ async function mostrarUltAnot(el){
   p.classList.add("on");
 }
 const esconderUltAnot = () => { const p = document.getElementById("ult-anot"); if(p) p.classList.remove("on"); };
+// F455 · A LINHA QUE SE ESTENDE (artefato v6 aprovado pelo Paulo em 08.11.2026, https://claude.ai/artifact/NhCc6NThwFdMz6GeBXBsL8)
+// O clique na linha das listas abre, logo abaixo do nome, a última anotação da equipe, o CPF, a senha do Meu INSS e o
+// WhatsApp para copiar e abrir, e Abrir, Anotar, Reagendar e Concluir; o segundo clique recolhe. Ctrl+clique abre a ficha.
+// Cada mudança tem Desfazer de 30 s. No navegador automatizado a linha abre a ficha, como as provas antigas esperam,
+// salvo com crm_ext_linha = 1.
+const extLigada = () => podeGravarCaso() && (!navigator.webdriver || (()=>{ try{ return localStorage.getItem("crm_ext_linha")==="1"; }catch(e){ return false; } })());
+const abrirDaLinha = el => el.dataset.pc ? abrirAtendimentoDe(el.dataset.cli, el.dataset.pc) : abrirFicha(el.dataset.cli);   // F227 · o pré-caso abre o atendimento
+let _ext = null;   // {ch, painel, txt}: a extensão aberta, para reabrir depois do render
+function itemDaLinha(el){
+  const it = el.dataset.sel && _agIt.get(el.dataset.sel);
+  if(it && it.k) return it;
+  // a linha das listas do escritório (cartaoCliente) não tem item: vale o caso da data
+  const ks = (el.dataset.casos||"").split(",").map(id=>D.casoPorId.get(id)).filter(Boolean);
+  const k = ks.find(x=>x.prazo) || ks[0]; if(!k) return null;
+  const fatal = !!k.prazo && fatalAbertoDe(k)===k.prazo;
+  return {k, cli:D.cliPorId.get(k.cliente_id), data:k.prazo||"", fatal, quem:[],
+    selo: fatal ? "" : k.prazo && (k.ronda||{}).despacho?.prazo===k.prazo ? "Volta à fila" : "Retorno"};
+}
+function fecharExt(){
+  document.querySelectorAll(".ag-ext").forEach(x=>x.remove());
+  document.querySelectorAll(".cartao.ext-on").forEach(x=>{ x.classList.remove("ext-on"); x.removeAttribute("aria-expanded"); });
+}
+function alternarExt(el){
+  const aberta = el.classList.contains("ext-on");
+  fecharExt(); _ext = null;
+  if(aberta) return;
+  const it = itemDaLinha(el); if(!it) return abrirDaLinha(el);
+  _ext = {ch:chaveSel(el), painel:"", txt:""};
+  montarExt(el, it);
+}
+function reabrirExt(){
+  if(!_ext) return;
+  const el = [...document.querySelectorAll(".cartao[data-cli]")].find(x=>chaveSel(x)===_ext.ch);
+  const it = el && itemDaLinha(el);
+  if(!it){ _ext = null; return; }
+  montarExt(el, it);
+}
+function montarExt(el, it){
+  const {k, cli} = it, x = document.createElement("div");
+  const atr = D.atrDoCaso.get(k.id)||[], resp = atr.map(id=>D.colPorId.get(id)).filter(Boolean);
+  x.className = "ag-ext"; x._it = it; x._el = el; x._atual = atr[0] || "";
+  x.innerHTML = `<div class="ae-topo"><span class="ae-quem">${resp.length ? "Com "+esc(resp.map(c=>c.nome.split(" ")[0]).join(", ")) : "Sem responsável"}${
+      it.selo==="Retorno" && prazoDoTodo(k) ? " · Prazo do Microsoft To Do · última anotação do caso" : ""}</span>
+    <span class="ae-cop">${cli && cli.cpf ? `<span class="cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">CPF ${esc(fmtCpf(cli.cpf))}</span>` : ""}
+      <button type="button" class="ae-mini" data-ae="senha" title="Copiar a senha do Meu INSS">Meu INSS</button>
+      <button type="button" class="ae-mini ae-zap" data-ae="zap" title="Abrir a conversa do WhatsApp ao lado">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button></span></div>
+    <div class="ae-txt">Carregando a última anotação…</div>
+    <div class="ae-acoes">${[["abrir","Abrir","Abrir a ficha do cliente"],["anotar","Anotar","Escrever no caso, reagendar e atribuir"],["reagendar","Reagendar","Mudar a data"],["concluir","Concluir","Concluir a tarefa e tirar o prazo"]]
+      .map(([a,r,t])=>`<button type="button" class="btn-mini" data-ae="${a}" title="${t}">${r}</button>`).join("")}</div>
+    <div class="ae-painel" hidden></div>`;
+  el.after(x); el.classList.add("ext-on"); el.setAttribute("aria-expanded","true");
+  ultAnotDe(el.dataset.casos).then(a=>{
+    const de = a && D.colPorId.get(a.autor_id), t = x.querySelector(".ae-txt"); if(!t) return;
+    t.innerHTML = a ? `<span class="ae-cab">Última anotação · ${esc(de?de.nome.split(" ")[0]:"equipe")}, ${esc(fmtBarra(dataSP(a.criado_em)))}</span>${esc((a.texto||"").slice(0,600))}`
+      : `<span class="ae-cab">Sem anotação da equipe neste caso.</span>`;
+  });
+  x.onclick = e=>{ const b = e.target.closest("[data-ae]"); if(!b) return; e.stopPropagation(); acaoExt(x, b.dataset.ae, b); };
+  if(_ext && _ext.painel) painelExt(x, _ext.painel, _ext.txt);
+}
+async function acaoExt(x, a, b){
+  const it = x._it, k = it.k, cli = it.cli || D.cliPorId.get(k.cliente_id) || {};
+  if(a==="abrir"){ _ext = null; fecharExt(); return abrirDaLinha(x._el); }
+  if(a==="zap"){ _ext = null; fecharExt(); return fichaComZap(cli.id); }
+  if(a==="senha"){
+    const [cr] = await api(`/rest/v1/credenciais?select=id&cliente_id=eq.${cli.id}&tipo=eq.meu_inss&limit=1`).catch(()=>[]);
+    return cr ? copiarCred(cr.id) : aviso("Sem senha do Meu INSS na ficha");
+  }
+  if(a==="cancelar"){ if(_ext) _ext.painel = ""; x.querySelector(".ae-painel").hidden = true; x.querySelector(".ae-acoes").hidden = false; return; }
+  if(a==="anotar" || a==="reagendar" || a==="concluir") return painelExt(x, a, "");
+  if(a==="anotar-ok") return extAnotar(x);
+  if(a==="concluir-ok") return extConcluir(x);
+  if(b.dataset.data) return extReagendar(x, b.dataset.data);
+}
+const umMes = d => { const x = new Date(d+"T12:00:00"); x.setMonth(x.getMonth()+1); return x.toLocaleDateString("sv"); };
+function painelExt(x, qual, txt){
+  const it = x._it, mov = reagendavel(it), p = x.querySelector(".ae-painel");
+  if(_ext) Object.assign(_ext, {painel:qual, txt});
+  const fim = r => `<div class="ae-fim"><button type="button" class="ae-canc" data-ae="cancelar">Cancelar</button>${r}</div>`;
+  const nota = ph => `<textarea class="ae-nota" rows="3" placeholder="${ph}" aria-label="${ph}">${esc(txt||"")}</textarea>`;
+  const naoMove = "Prazo fatal, perícia e exigência não mudam de data aqui: o registro é feito no caso.";
+  if(qual==="anotar"){
+    const atual = x._atual;
+    p.innerHTML = nota("Escrever no caso…") + `<div class="ae-lin">
+      <label>Reagendar <input type="date" class="ae-data" value="${esc(it.data||"")}" min="${hoje()}"${mov?"":` disabled title="${naoMove}"`}></label>
+      <label>Atribuir a <select class="ae-para">${atual?"":`<option value="">Sem responsável</option>`}${equipeAtiva().map(c=>`<option value="${c.id}"${c.id===atual?" selected":""}>${esc(c.nome.split(" ")[0])}</option>`).join("")}</select></label></div>`
+      + fim(`<button type="button" class="btn-mini forte" data-ae="anotar-ok">Anotar</button>`);
+    // a data escrita na anotação vira a data do Reagendar, enquanto a pessoa não a escolher à mão
+    const ta = p.querySelector(".ae-nota"), dt = p.querySelector(".ae-data");
+    dt.oninput = ()=>{ dt._mao = true; };
+    ta.oninput = ()=>{ if(_ext) _ext.txt = ta.value; const d = mov && !dt._mao && dataDoTexto(ta.value, true); if(d) dt.value = d.iso; };
+  } else if(qual==="reagendar"){
+    const op = [["Amanhã", proxDiaUtil(somaDias(hoje(),1))], ["Próxima semana", proxSegunda()], ["Em 15 dias", proxDiaUtil(somaDias(hoje(),15))], ["Em 1 mês", proxDiaUtil(umMes(hoje()))]];
+    p.innerHTML = mov ? `<div class="ae-dias">${op.map(([r,d])=>`<button type="button" class="esp-it" data-ae="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}
+      <input type="date" class="ae-outra" aria-label="Outra data" min="${hoje()}"></div>` + fim("")
+      : `<p class="ae-aviso">${naoMove}</p>` + fim(`<button type="button" class="btn-mini forte" data-ae="abrir">Abrir</button>`);
+    const o = p.querySelector(".ae-outra"); if(o) o.onchange = ()=>{ if(o.value) extReagendar(x, o.value); };
+  } else {
+    p.innerHTML = nota(it.fatal && !it.tc ? "O que foi feito (o prazo fica cumprido)" : "O que foi feito (opcional)")
+      + fim(`<button type="button" class="btn-mini forte" data-ae="concluir-ok">Concluir</button>`);
+    const ta = p.querySelector(".ae-nota"); ta.oninput = ()=>{ if(_ext) _ext.txt = ta.value; };
+  }
+  x.querySelector(".ae-acoes").hidden = true; p.hidden = false;
+  const f = p.querySelector("textarea, .esp-it"); if(f && !txt) f.focus();
+}
+function repintaExt(k){ _ext = null; montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha(); }
+async function notaNoCaso(k, texto){
+  const [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto})});
+  if(!and) throw new Error("sem resposta");
+  api(`/rest/v1/andamentos_lidos`,{method:"POST",headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
+    body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
+  if(Array.isArray(D._andsFicha)) D._andsFicha.unshift(and);
+  if(/@\p{L}/u.test(texto)) criarMencoes(texto, k.id, and.id).catch(()=>{});
+  _ultAnot.clear();
+  return async ()=>{ await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"DELETE"}).catch(()=>{});
+    if(Array.isArray(D._andsFicha)) D._andsFicha = D._andsFicha.filter(a=>a.id!==and.id); _ultAnot.clear(); };
+}
+async function extAnotar(x){
+  const it = x._it, k = it.k, q = s => x.querySelector(s);
+  const nota = q(".ae-nota").value.trim(), data = q(".ae-data").value, para = q(".ae-para").value;
+  const mudaData = !!data && data!==(it.data||"") && reagendavel(it), mudaPara = !!para && para!==x._atual;
+  if(!nota && !mudaData && !mudaPara) return aviso("Escreva a anotação, ou mude a data ou a pessoa");
+  const undos = [], feito = [];
+  try{
+    if(nota){ undos.push(await notaNoCaso(k, nota)); feito.push("Anotado"); }
+    if(mudaData){ const m = moverData(it, data); await m.p; undos.push(m.undo); feito.push(`reagendado para ${fmtBarra(data)}`); }
+    if(mudaPara){ const u = await passarComDesfazer(k, para, x._atual); if(u){ undos.push(u); feito.push(`atribuído a ${D.colPorId.get(para).nome.split(" ")[0]}`);
+      if(para!==eu.id) api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify({de_id:eu.id, para_id:para, caso_id:k.id,
+        texto:`👤 ${(eu.nome||"").split(" ")[0]} atribuiu a você o cliente ${(it.cli||{}).nome||""}${nota?`: ${nota.slice(0,140)}`:""}`})}).catch(()=>{}); } }
+  }catch(e){ aviso("⚠ Não gravou tudo: "+String(e.message||e).slice(0,80)); }
+  repintaExt(k);
+  if(undos.length) avisoDesfazer(feito.join(" · "), async ()=>{ for(const u of undos.reverse()) await u(); repintaExt(k); aviso("Desfeito", false); }, 30000);
+}
+async function extReagendar(x, data){
+  const it = x._it, k = it.k;
+  if(!reagendavel(it)) return;
+  const m = moverData(it, data);
+  try{ await m.p; }catch(e){ await m.undo(); return aviso("Não gravou: tente de novo"); }
+  repintaExt(k);
+  avisoDesfazer(`Reagendado para ${fmtBarra(data)}`, async ()=>{ await m.undo(); repintaExt(k); aviso("Reagendamento desfeito", false); }, 30000);
+}
+async function extConcluir(x){
+  const it = x._it, k = it.k, txt = x.querySelector(".ae-nota").value.trim();
+  _ext = null;
+  if(it.tc) return concluirDeVez(it.tc.id, txt);
+  if(it.fatal) return registrarCumprimento(k.id, {texto:txt, andId:it.andId});
+  if(it.t && !it.t.virtual){   // a tarefa pessoal
+    const t = it.t, muda = c => api(`/rest/v1/tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({concluida:c, concluida_em:c?new Date().toISOString():null})});
+    try{ await muda(true); }catch(e){ return aviso("Não gravou: tente de novo"); }
+    t.concluida = true; plim(); repintaExt(k);
+    return avisoDesfazer("Concluída", async ()=>{ await muda(false); t.concluida = false; repintaExt(k); aviso("Conclusão desfeita", false); }, 30000);
+  }
+  if(it.selo==="Retorno" || it.selo==="Volta à fila"){
+    // concluir o retorno tira a data do caso; o despacho marcado "concluido" leva a data apagada ao To Do (ponte_despacho.py)
+    const antes = {prazo:k.prazo||null, ronda:k.ronda||{}};
+    const muda = {prazo:null, ronda:{...(k.ronda||{}), despacho:{em:new Date().toISOString(), por:eu.id, prazo:null, concluido:true}}};
+    let undoNota = null;
+    try{ await patchCaso(k.id, muda); Object.assign(k, muda); undoNota = await notaNoCaso(k, "✔ " + (txt || "Concluído")); }
+    catch(e){ aviso("⚠ Não gravou tudo: "+String(e.message||e).slice(0,80)); }
+    plim(); repintaExt(k);
+    return avisoDesfazer("Concluído · sem data", async ()=>{ await patchCaso(k.id, antes).catch(()=>{}); Object.assign(k, antes);
+      if(undoNota) await undoNota(); repintaExt(k); aviso("Conclusão desfeita", false); }, 30000);
+  }
+  const chk = x._el.querySelector(".ag-slot .check");   // perícia, aviso, rotina: o concluir que a linha já tem
+  if(chk){ fecharExt(); return chk.click(); }
+  aviso("Esta linha se conclui no caso"); fecharExt(); abrirDaLinha(x._el);
+}
 function ligarCartoes(){
   pintarCursor();                     // o cursor do teclado sobrevive ao render
   document.querySelectorAll(".cartao[data-cli]").forEach(el=>{
@@ -11395,8 +11582,8 @@ function ligarCartoes(){
       if(e.target.dataset.estrela!==undefined) return;
       if(e.shiftKey || (_sel.size && el._toque)){ e.preventDefault(); return alternarSel(el); }   // F443 · seleção múltipla
       clearTimeout(el._ult); esconderUltAnot();
-      if(el.dataset.pc) return abrirAtendimentoDe(el.dataset.cli, el.dataset.pc);   // F227 · o cartão do pré-caso abre o atendimento dele
-      abrirFicha(el.dataset.cli);
+      if(el.dataset.casos && extLigada() && !e.ctrlKey && !e.metaKey) return alternarExt(el);   // F455 · a linha se estende
+      abrirDaLinha(el);
     };
     el.oncontextmenu=e=>{ if(el._segurou) return e.preventDefault(); menuMover(e, el.dataset.cli, el); };   // botão direito = Mover para…
     // F137 · no celular não há botão direito (o iPhone nem dispara o
@@ -11409,6 +11596,7 @@ function ligarCartoes(){
   });
   ligarArrasteCartoes();
   pintarSel();
+  reabrirExt();   // F455 · a extensão aberta atravessa o render, com o texto já escrito
   // ⭐/🔥 acendem NO LUGAR: o render() inteiro aqui jogava a lista de volta
   // ao topo — marcar o 60º cliente devolvia a tela ao 1º. Só a visão
   // ⭐ Importante re-renderiza (lá o cartão precisa entrar/sair da lista).
@@ -14431,29 +14619,27 @@ function reagendarVencidas(lote){
     <div class="conf-dias">${op.map(([r,d])=>`<button type="button" class="esp-it" onclick="aplicarReagendar('${d}')" title="${fmtBarra(d)}">${r}</button>`).join("")}
       <input type="date" id="reag-data" aria-label="Outra data" min="${hoje()}" onchange="if(this.value)aplicarReagendar(this.value)"></div>`);
 }
+// a data nova de uma linha: a tarefa da anotação, a tarefa pessoal ou o casos.prazo (a volta à fila anda com o despacho e volta a
+// ir ao To Do pela ponte, todo apagado; o retorno do To Do anda como no "Em análise": o To Do só o troca quando a data dele mudar)
+function moverData(i, data){
+  const pat = (tab, id, c) => api(`/rest/v1/${tab}?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(c)});
+  if(i.tc){ const t = i.tc, antes = t.lembrar_em; t.lembrar_em = data;
+    return {p:pat("andamento_tarefas", t.id, {lembrar_em:data}), undo:()=>{ t.lembrar_em = antes; return pat("andamento_tarefas", t.id, {lembrar_em:antes}); }}; }
+  if(i.t){ const t = i.t, antes = t.prazo; t.prazo = data;
+    return {p:pat("tarefas", t.id, {prazo:data}), undo:()=>{ t.prazo = antes; return pat("tarefas", t.id, {prazo:antes}); }}; }
+  const k = i.k, antes = {prazo:k.prazo, ronda:k.ronda}, d = (k.ronda||{}).despacho;
+  const campos = {prazo:data, ...(i.selo==="Volta à fila" && d ? {ronda:{...(k.ronda||{}), despacho:{...d, prazo:data, todo:null}}} : {})};
+  const p = patchCaso(k.id, campos); Object.assign(k, campos);
+  return {p, undo:()=>{ Object.assign(k, antes); return patchCaso(k.id, {prazo:antes.prazo, ...(campos.ronda ? {ronda:antes.ronda||{}} : {})}); }};
+}
 async function aplicarReagendar(data){
   fecharCaixa();
   const ms = _reagVenc.filter(reagendavel); if(!ms.length || !data) return;
   const volta = [], grava = [], vistos = new Set();
   for(const i of ms){
-    if(i.tc){ if(vistos.has("tc"+i.tc.id)) continue; vistos.add("tc"+i.tc.id);
-      const t = i.tc, antes = t.lembrar_em;
-      grava.push(api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({lembrar_em:data})}));
-      t.lembrar_em = data;
-      volta.push(()=>{ t.lembrar_em = antes; return api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({lembrar_em:antes})}); });
-    } else if(i.t){ if(vistos.has("t"+i.t.id)) continue; vistos.add("t"+i.t.id);
-      const t = i.t, antes = t.prazo;
-      grava.push(api(`/rest/v1/tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({prazo:data})}));
-      t.prazo = data;
-      volta.push(()=>{ t.prazo = antes; return api(`/rest/v1/tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({prazo:antes})}); });
-    } else { if(vistos.has("k"+i.k.id)) continue; vistos.add("k"+i.k.id);
-      // a volta à fila anda com o despacho (ronda.despacho.prazo) e volta a ir ao To Do pela ponte (todo apagado); o retorno
-      // do To Do anda como no "Em análise": o casos.prazo muda e o To Do só o troca quando a data dele mudar
-      const k = i.k, antes = {prazo:k.prazo, ronda:k.ronda}, d = (k.ronda||{}).despacho;
-      const campos = {prazo:data, ...(i.selo==="Volta à fila" && d ? {ronda:{...(k.ronda||{}), despacho:{...d, prazo:data, todo:null}}} : {})};
-      grava.push(patchCaso(k.id, campos)); Object.assign(k, campos);
-      volta.push(()=>{ Object.assign(k, antes); return patchCaso(k.id, {prazo:antes.prazo, ...(campos.ronda ? {ronda:antes.ronda||{}} : {})}); });
-    }
+    const ch = i.tc ? "tc"+i.tc.id : i.t ? "t"+i.t.id : "k"+i.k.id;
+    if(vistos.has(ch)) continue; vistos.add(ch);
+    const m = moverData(i, data); grava.push(m.p); volta.push(m.undo);
   }
   const r = await Promise.allSettled(grava), falhas = r.filter(x=>x.status==="rejected").length;
   _sel.clear(); montarSidebar(); render();
@@ -14511,21 +14697,27 @@ function lotePassar(){
     <p class="meio-sub">A pessoa escolhida entra como responsável e recebe uma menção por cliente; quem passa sai. As datas não mudam.</p>
     <div class="desp-quem">${equipeAtiva().filter(c=>c.id!==eu.id).map(c=>`<button type="button" class="btn-mini" onclick="lotePassarA('${c.id}')">${esc(c.nome.split(" ")[0])}</button>`).join("")}</div>`);
 }
+// a pessoa entra como responsável e quem passava (eu, ou quem estava atribuído) sai; devolve o desfazer, ou null se não gravou
+async function passarComDesfazer(k, para, sai = eu.id){
+  const atr = {method:"POST",headers:{Prefer:"return=minimal"}}, antes = [...(D.atrDoCaso.get(k.id)||[])];
+  if(!antes.includes(para)) try{ await api(`/rest/v1/atribuicoes`, {...atr, body:JSON.stringify({caso_id:k.id, colaborador_id:para})}); }catch(e){ if(e.status!==409) return null; }
+  const tira = sai && sai!==para && antes.includes(sai);
+  if(tira) await api(`/rest/v1/atribuicoes?caso_id=eq.${k.id}&colaborador_id=eq.${sai}`,{method:"DELETE"}).catch(()=>{});
+  D.atrDoCaso.set(k.id, [...new Set([...antes.filter(x=>!tira || x!==sai), para])]);
+  return async ()=>{
+    if(!antes.includes(para)) await api(`/rest/v1/atribuicoes?caso_id=eq.${k.id}&colaborador_id=eq.${para}`,{method:"DELETE"}).catch(()=>{});
+    if(tira) await api(`/rest/v1/atribuicoes`, {...atr, body:JSON.stringify({caso_id:k.id, colaborador_id:sai})}).catch(()=>{});
+    D.atrDoCaso.set(k.id, antes);
+  };
+}
 async function lotePassarA(para){
   fecharCaixa();
   const p = D.colPorId.get(para), ks = casosDaSel(); if(!p || !ks.length) return;
   const undos = [], clis = new Map(), atr = {method:"POST",headers:{Prefer:"return=minimal"}};
   for(const k of ks){
-    const antes = [...(D.atrDoCaso.get(k.id)||[])];
-    if(!antes.includes(para)) try{ await api(`/rest/v1/atribuicoes`, {...atr, body:JSON.stringify({caso_id:k.id, colaborador_id:para})}); }catch(e){ if(e.status!==409) continue; }
-    if(antes.includes(eu.id)) await api(`/rest/v1/atribuicoes?caso_id=eq.${k.id}&colaborador_id=eq.${eu.id}`,{method:"DELETE"}).catch(()=>{});
-    D.atrDoCaso.set(k.id, [...new Set([...antes.filter(x=>x!==eu.id), para])]);
+    const u = await passarComDesfazer(k, para); if(!u) continue;
     if(!clis.has(k.cliente_id)) clis.set(k.cliente_id, k.id);
-    undos.push(async ()=>{
-      if(!antes.includes(para)) await api(`/rest/v1/atribuicoes?caso_id=eq.${k.id}&colaborador_id=eq.${para}`,{method:"DELETE"}).catch(()=>{});
-      if(antes.includes(eu.id)) await api(`/rest/v1/atribuicoes`, {...atr, body:JSON.stringify({caso_id:k.id, colaborador_id:eu.id})}).catch(()=>{});
-      D.atrDoCaso.set(k.id, antes);
-    });
+    undos.push(u);
   }
   clis.forEach((casoId, cliId)=>api(`/rest/v1/mencoes`, {...atr, body:JSON.stringify({de_id:eu.id, para_id:para, caso_id:casoId,
     texto:`👤 ${(eu.nome||"").split(" ")[0]} passou a você o cliente ${(D.cliPorId.get(cliId)||{}).nome||""}`})}).catch(()=>{}));
