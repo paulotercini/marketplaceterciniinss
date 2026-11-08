@@ -1,4 +1,4 @@
-// F445 · Captura que entende a frase (proposta 3 do Todoist, aprovada pelo Paulo em 08.11.2026): no ⚡ e no campo de
+// F446 · Captura que entende a frase (proposta 3 do Todoist, aprovada pelo Paulo em 08.11.2026): no ⚡ e no campo de
 // escrever, a data ("amanhã", "sex", "15/12", "em 10 dias"), o @ de quem faz e o * da estrela são lidos na hora, cada
 // parte aparece destacada e o ✕ desfaz só ela.
 const { chromium } = require("playwright");
@@ -8,7 +8,7 @@ const path = require("path");
 const { FIX, SESSAO, CASO1 } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 const MEISSA = "e4440000-0000-0000-0000-000000000001";
-FIX.colaboradores.push({ ...FIX.colaboradores[0], id: MEISSA, nome: "Meissa Fictícia", inicial: "M", papel: "colaborador", cargo: "recepcao", user_id: "u-f445" });
+FIX.colaboradores.push({ ...FIX.colaboradores[0], id: MEISSA, nome: "Meissa Fictícia", inicial: "M", papel: "colaborador", cargo: "recepcao", user_id: "u-f446" });
 
 (async () => {
   const s = http.createServer((q, r) => {
@@ -35,7 +35,7 @@ FIX.colaboradores.push({ ...FIX.colaboradores[0], id: MEISSA, nome: "Meissa Fict
       posts.push([u, q.postData() || ""]);
       if (/\/rest\/v1\/(andamentos|andamento_tarefas)\b/.test(u)) {
         const b = JSON.parse(q.postData() || "{}");
-        return rota.fulfill({ status: 201, contentType: "application/json", body: JSON.stringify([{ id: `f445-${++n}`, criado_em: new Date().toISOString(), ...b }]) });
+        return rota.fulfill({ status: 201, contentType: "application/json", body: JSON.stringify([{ id: `f446-${++n}`, criado_em: new Date().toISOString(), ...b }]) });
       }
     }
     if (q.method() !== "GET") return rota.fulfill({ status: 204, body: "" });
@@ -90,7 +90,7 @@ FIX.colaboradores.push({ ...FIX.colaboradores[0], id: MEISSA, nome: "Meissa Fict
   conf(`as três partes aparecem destacadas (${marks})`, marks.join("|") === "sex|@Meissa|*");
   conf("o * marca a ⭐ do ⚡", await p.locator("#ar-imp").isChecked());
   conf("sem caso escolhido, o chip avisa que o lembrete precisa do caso", /precisa do caso/.test(await p.locator("#ar-cap").innerText()));
-  await p.screenshot({ path: "f445-rapida.png" });
+  await p.screenshot({ path: "f446-rapida.png" });
   await p.locator("#ar-cap .cap-it", { hasText: "@Meissa" }).locator("a").click();
   await p.waitForTimeout(100);
   conf("o ✕ desfaz só o @", (await p.locator("#ar-cap mark").allTextContents()).join("|") === "sex|*");
@@ -116,7 +116,7 @@ FIX.colaboradores.push({ ...FIX.colaboradores[0], id: MEISSA, nome: "Meissa Fict
   const m2 = await p.locator("#and-prazo-chip mark").allTextContents();
   conf(`no campo de escrever as três partes aparecem (${m2})`, m2.join("|") === "amanhã|@Meissa|*");
   conf("com o @ de outra pessoa, a data é tarefa dela", /amanhã\s*tarefa/.test(await p.locator("#and-prazo-chip").innerText()));
-  await p.screenshot({ path: "f445-campo.png" });
+  await p.screenshot({ path: "f446-campo.png" });
   const nP2 = posts.length, nPa = patches.length;
   await p.evaluate(k => novoAndamento(k), CASO1); await p.waitForTimeout(900);
   const nv = posts.slice(nP2);
