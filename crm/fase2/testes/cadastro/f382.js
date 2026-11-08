@@ -1,4 +1,4 @@
-// F382 · as ideias do Lovable aprovadas pelo Paulo (02.11.2026): a linha dos próximos 30 dias na aba Prazos,
+// F382 · as ideias do Lovable aprovadas pelo Paulo (02.11.2026): a linha dos próximos 30 dias na aba Prazos (hoje o mês, F451),
 // o caminho até o direito na Análise de Direito e a carga de prazos por pessoa no Planejado. Molde: f378.js
 const { chromium } = require("playwright");
 const http = require("http");
@@ -36,21 +36,20 @@ const SUPA = "https://ficticio.supabase.co";
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
-  // 1. a linha dos 30 dias
+  // 1. F451 · o mês da aba Prazos (substituiu a linha dos 30 dias): um ponto por prazo na cor da natureza, o dia clicado filtra
   const l = await p.evaluate(() => {
-    const hj = hoje();
-    _pzCli = [{data: hj, _nat: "fatal", _titulo: "Recurso inominado"}, {data: somaDias(hj, 9), _nat: "compromisso", _titulo: "Perícia"},
-      {data: somaDias(hj, 40), _nat: "lembrete", _titulo: "Longe"}, {data: somaDias(hj, 3), _nat: "fatal", _titulo: "A confirmar", aConfirmar: true}];
-    const d = document.createElement("div"); d.innerHTML = linha30Pz(hj);
-    const vazio = (_pzCli = [{data: somaDias(hj, 40), _nat: "lembrete", _titulo: "Longe"}], linha30Pz(hj));
-    return {dias: d.querySelectorAll(".pzl-d").length, marcos: [...d.querySelectorAll(".pzl-m")].map(b => b.className + "|" + b.getAttribute("onclick")),
-      hoje: d.querySelector(".pzl-d .pzl-n").textContent, nu: d.querySelectorAll(".pzl-nu").length, vazio};
+    const hj = hoje(); _pzMes = null; _pzDia = null;
+    _pzCli = [{data: hj, _nat: "fatal", _titulo: "Recurso inominado"}, {data: hj, _nat: "lembrete", rotulo: "Retorno", _titulo: "Retorno"},
+      {data: hj, _nat: "fatal", _titulo: "A confirmar", aConfirmar: true}];
+    const d = document.createElement("div"); d.innerHTML = calendarioPz();
+    const h = d.querySelector(".pzm-hoje");
+    return {pts: [...h.querySelectorAll(".pzm-pts i")].map(i => i.className), nu: d.querySelectorAll(".pzm-nu").length,
+      dias: d.querySelectorAll(".pzm-d").length, mes: d.querySelector(".pzm-cab b").textContent, clique: h.getAttribute("onclick")};
   });
-  conf("31 dias, de hoje a hoje + 30", l.dias === 31 && l.hoje === "hoje");
-  conf("dois marcos: fora o de 40 dias e o a confirmar", l.marcos.length === 2);
-  conf("o marco fatal abre a janela do prazo pelo índice", /pzl-fatal\|abrirPainelPrazo\(0,'cli'\)/.test(l.marcos[0]) && /pzl-comp/.test(l.marcos[1]));
+  conf("o mês tem semanas inteiras e diz o mês", l.dias % 7 === 0 && l.dias >= 28 && /de \d{4}$/.test(l.mes));
+  conf("hoje traz um ponto por prazo, fora o a confirmar, e o retorno em cinza", l.pts.join("|") === "pzm-fatal|pzm-ret");
+  conf("o dia clicado filtra a lista", /^pzDia\('\d{4}-\d{2}-\d{2}'\)$/.test(l.clique));
   conf("fim de semana e feriado em cinza", l.nu >= 8);
-  conf("sem prazo nos 30 dias, a linha não aparece", l.vazio === "");
 
   // 2. o caminho até o direito
   const dir = await p.evaluate(() => {
@@ -68,11 +67,6 @@ const SUPA = "https://ficticio.supabase.co";
   conf("quatro marcos no trilho (hoje, dois requisitos, direito)", dir.marcos === 4);
   conf("direito já alcançado ou sem análise não desenha nada", dir.ja === "" && dir.nulo === "");
 
-  // F386 · o rótulo do prazo fatal abaixo do marco e o progresso até o direito completo (protótipo do Lovable)
-  const lab = await p.evaluate(() => { const hj = hoje();
-    _pzCli = [{data: somaDias(hj, 7), _nat: "fatal", _titulo: "Recurso inominado"}, {data: somaDias(hj, 3), _nat: "compromisso", _titulo: "Perícia"}];
-    const d = document.createElement("div"); d.innerHTML = linha30Pz(hj); return [...d.querySelectorAll(".pzl-lab")].map(x => x.textContent); });
-  conf("F386 o nome do prazo fatal aparece abaixo do marco, e só o do fatal", lab.join("|") === "Recurso inominado");
   const pg = await p.evaluate(() => {
     const c = D.clientes[0], x = {hoje: "2026-11-02", dn: "1965-03-15", ct: {periodos: [["2013-01", "2026-10"]]}, c};
     const a = {quando: "2027-11-01", rs: [
