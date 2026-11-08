@@ -104,6 +104,11 @@ async function enviar(terca: string) {
           const c = await rest(`clientes?id=eq.${encodeURIComponent(ev.clienteId)}&select=telefone`);
           tel = String(c?.[0]?.telefone || "").replace(/\D/g, "");
         }
+        // F422aa · evento lançado à mão no Google, sem telefone: a ficha do CRM de nome igual, se for uma só
+        if (!tel && nome.length >= 5) {
+          const c = await rest(`clientes?nome=ilike.${encodeURIComponent(nome.replace(/[%_*,()]/g, ""))}&select=telefone&limit=2`);
+          if (c?.length === 1) tel = String(c[0].telefone || "").replace(/\D/g, "");
+        }
         const rotulo = `${SEMANA[dia(data).getUTCDay()]}, ${data.slice(8)}/${data.slice(5, 7)}, às ${ev.inicio}, com ${prof?.nome || id}`;
         if (tel.length < 10) { semTelefone.push(`${nome} (${rotulo})`); continue; }
         const texto = textoConfirmacao(cfg.zap_conf_texto || "", cfg.zap_conf_govbr || "",
@@ -116,6 +121,18 @@ async function enviar(terca: string) {
   }
   const cobradas = await rpc("zap_conf_relatorio", { p_sem_telefone: semTelefone });
   return { hoje, datas, enviadas, ja, sem_telefone: semTelefone.length, cobradas };
+}
+
+// F422aa · lança pelo CRM (Code.gs editar, o mesmo do botão Editar da agenda) o nome e o
+// telefone do atendimento criado direto no Google, para ele receber a confirmação
+async function editar(eventos: { eventId: string; nome: string; telefone: string }[]) {
+  const res = [];
+  for (const e of eventos.slice(0, 20)) {
+    const r = await agenda("editar", { eventId: e.eventId, nome: e.nome, telefone: e.telefone });
+    res.push({ eventId: e.eventId, ok: !!r.ok, erro: r.ok ? undefined : r.erro || r.codigo,
+      telefone: r.ok ? (r.evento as { telefone?: string })?.telefone : undefined });
+  }
+  return { editados: res };
 }
 
 async function confirmar(conversa: string, pedido: string) {
@@ -140,6 +157,11 @@ if (typeof Deno !== "undefined") {
         if (!(await rpc("zap_conf_pegar_envio", { p_pedido: pedido }))) return json({ erro: "pedido vencido" }, 403);
         if (!TOKEN) return json({ erro: "sem AGENDA_TOKEN_ROBO" }, 500);
         return json(await enviar(String(b.terca || "segunda")));
+      }
+      if (b.acao === "editar" && Array.isArray(b.eventos)) {
+        if (!(await rpc("zap_conf_pegar_envio", { p_pedido: pedido }))) return json({ erro: "pedido vencido" }, 403);
+        if (!TOKEN) return json({ erro: "sem AGENDA_TOKEN_ROBO" }, 500);
+        return json(await editar(b.eventos as { eventId: string; nome: string; telefone: string }[]));
       }
       return json({ erro: "ação" }, 400);
     } catch (e) { return json({ erro: String(e) }, 500); }
