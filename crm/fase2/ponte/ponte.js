@@ -231,10 +231,13 @@ async function conectar() {
   // os contatos trazem o par @lid / número: é o que permite responder a ligação
   const aprenderLids = cs => { for (const c of cs || []) {
     if (c.lid && String(c.id || "").endsWith("@s.whatsapp.net")) lidParaFone.set(c.lid, c.id);
-    if (c.jid && String(c.id || "").endsWith("@lid")) lidParaFone.set(c.id, c.jid);
+    const pn = c.phoneNumber || c.jid;   // Baileys 7: phoneNumber; no 6 era jid
+    if (pn && String(c.id || "").endsWith("@lid")) lidParaFone.set(c.id, pn);
   } };
   sock.ev.on("contacts.upsert", aprenderLids);
   sock.ev.on("contacts.update", aprenderLids);
+  // Baileys 7 avisa cada par @lid / número que aprende
+  sock.ev.on("lid-mapping.update", m => { for (const x of [].concat(m || [])) if (x && x.lid && x.pn) lidParaFone.set(x.lid, x.pn); });
 
   // F194 · o escritório não atende ligação: quem liga recebe uma mensagem
   // pedindo para escrever ou mandar áudio (o banco decide, uma a cada 6 h)
@@ -335,6 +338,8 @@ async function reprocessarPendentes(baixar) {
 const LIDS = path.join(__dirname, "lids.json");
 const lidParaFone = new Map((() => { try { return Object.entries(JSON.parse(fs.readFileSync(LIDS, "utf8"))); } catch { return []; } })());
 let lidsGravados = lidParaFone.size;
+// o onWhatsApp do Baileys 7 não devolve mais o @lid: vem do que já se aprendeu
+const lidDoJid = jid => { for (const [lid, pn] of lidParaFone) if (pn === jid) return lid; return null; };
 setInterval(() => {
   if (lidParaFone.size === lidsGravados) return;
   try { fs.writeFileSync(LIDS, JSON.stringify(Object.fromEntries(lidParaFone))); lidsGravados = lidParaFone.size; }
@@ -518,7 +523,7 @@ async function recuperarMidias(s = sock) {
     // pergunta pelos dois, e fica com o que ele responder
     const fone = N.soDigitos(c.telefone);
     const [w] = await s.onWhatsApp(fone).catch(() => []);
-    let jids = [...new Set([w && w.lid, (w && w.jid) || `${fone}@s.whatsapp.net`].filter(Boolean))];
+    let jids = [...new Set([(w && w.lid) || lidDoJid((w && w.jid) || `${fone}@s.whatsapp.net`), (w && w.jid) || `${fone}@s.whatsapp.net`].filter(Boolean))];
     for (let volta = 0; ancora && volta < 40; volta++) {
       let msgs = null;
       for (const jid of jids) {
@@ -574,7 +579,7 @@ async function historicoDaConversa(s, c) {
   if (!ancora) return 0;
   const fone = N.soDigitos(c.telefone);
   const [w] = await s.onWhatsApp(fone).catch(() => []);
-  let jids = [...new Set([w && w.lid, (w && w.jid) || `${fone}@s.whatsapp.net`].filter(Boolean))];
+  let jids = [...new Set([(w && w.lid) || lidDoJid((w && w.jid) || `${fone}@s.whatsapp.net`), (w && w.jid) || `${fone}@s.whatsapp.net`].filter(Boolean))];
   let n = 0;
   for (let volta = 0; volta < 40; volta++) {
     let msgs = null;
