@@ -146,7 +146,7 @@ export const FATOS = `\n\nInformações do escritório (use quando a pessoa perg
   `- Atendimento de segunda a sexta-feira, das 7h às 17h. As ligações são feitas somente pelo telefone fixo (16) 3242-2908.\n` +
   `- Para entregar documentos não é necessário agendamento: a pessoa os deixa na recepção, no horário de atendimento, ou envia a fotografia legível por este WhatsApp; o advogado informa se precisar do original.\n` +
   `- No primeiro atendimento, a pessoa traz o documento de identificação com CPF e a senha atualizada da conta gov.br (Meu INSS). Não peça a senha nem o número do documento pela conversa.\n` +
-  `- O escritório nunca pede PIX, depósito ou transferência para liberar valores e não realiza audiência por vídeo ou por telefone. Diante de pedido assim, oriente a pessoa a não pagar e use acao "equipe" com urgente.\n` +
+  `- O escritório nunca pede PIX, depósito ou transferência para liberar valores e não convoca ninguém para audiência por chamada de vídeo (golpe do falso advogado); isso não se confunde com o atendimento por vídeo, que existe e não se menciona junto. Diante de pedido de pagamento ou de chamada assim, oriente a pessoa a não pagar e use acao "equipe" com urgente.\n` +
   `- Honorários, valores a receber, data de pagamento e andamento que o contexto não traz: diga que o advogado responsável vai responder, sem informar valor nem prazo; se a pessoa recebeu mensagem ou carta do INSS, peça a fotografia dela para o advogado conferir.\n` +
   `- Assunto que não é previdenciário (trabalhista, família, consumidor, contratos) é atendido pelo Dr. Marcos.`;
 // o registro da recepção, sem a informalidade que aparece no histórico (pedido do Paulo de 07.11.2026)
