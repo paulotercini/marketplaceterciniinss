@@ -92,6 +92,8 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
   await p.evaluate(() => document.querySelector('[data-lopc="agrupar"][data-v="resp"]').click()); await p.waitForTimeout(200);
   const fr = await p.evaluate(() => (filtroColab = null, render(), [...document.querySelectorAll("#conteudo-meio section.pl-grupo h3.secao")].map(h => h.textContent)));
   conf(`na lista de fase, agrupar por responsável põe seções (${fr})`, fr.length > 0);
+  conf("a escolha vale por lista: o Planejado continua agrupado por data", await p.evaluate(() => { visao = "planejado"; return opcLista("agrupar") === "data"
+    && (visao = "fase:judicial", opcLista("agrupar") === "resp") && (visao = "fase:inss", opcLista("agrupar") === "resp"); }));
   await p.evaluate(() => localStorage.removeItem("crm_agrupar"));
   await p.evaluate(() => { visao = "planejado"; render(); }); await p.waitForTimeout(200);
   await p.screenshot({ path: "f437-planejado.png" });
