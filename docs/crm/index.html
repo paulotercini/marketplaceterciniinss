@@ -3722,6 +3722,10 @@ html[data-tema="v10"] .ag-data.venc{color:var(--venc-tinta)}
 html[data-tema="v10"] .ag-data.hoje{color:var(--hoje-tinta)}
 html[data-tema="v10"] .ag-txt{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px;color:var(--texto)}
 html[data-tema="v10"] .ag-txt b{font-weight:600}
+#ult-anot{position:fixed;z-index:60;width:440px;max-width:calc(100vw - 16px);background:#fff;border:1px solid var(--borda);border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.14);padding:10px 12px;font-size:13px;color:var(--texto);pointer-events:none;display:none}
+#ult-anot.on{display:block}#ult-anot .ua-cab{font-size:12px;color:var(--cinza);margin-bottom:4px}
+#ult-anot .ua-txt{white-space:pre-line;display:-webkit-box;-webkit-line-clamp:8;-webkit-box-orient:vertical;overflow:hidden}
+@media (hover:none){#ult-anot{display:none!important}}
 html[data-tema="v10"] .ag-txt .ag-oque{font-weight:400;color:var(--cinza,#4A4944)}
 html[data-tema="v10"] .ag-res{color:var(--cinza)}
 html[data-tema="v10"] .ag-selos{flex:none;display:inline-flex;align-items:center;gap:4px}
@@ -6656,7 +6660,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.80</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.81</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11173,7 +11177,7 @@ function cartaoCliente(cli, casosMostrar){
     ].join("");
     const quem = [...quemProx, ...resp.filter(c=>!quemProx.includes(c))].slice(0,2);
     const dTxt = !dataProx ? "" : dataProx===hj ? "hoje" : `${dataProx.slice(8,10)}/${dataProx.slice(5,7)}${dataProx.slice(0,4)!==hj.slice(0,4)?"/"+dataProx.slice(2,4):""}`;
-    return `<div class="cartao ag-linha${ks.some(k=>k.urgente)?" urg":""}" data-cli="${cli.id}"${ks.length===1 && ehPreCaso(ks[0]) ? ` data-pc="${esc((ks[0].precaso||{}).id||ks[0].id)}"` : ""}>
+    return `<div class="cartao ag-linha${ks.some(k=>k.urgente)?" urg":""}" data-cli="${cli.id}" data-casos="${ks.map(k=>k.id).join(",")}"${ks.length===1 && ehPreCaso(ks[0]) ? ` data-pc="${esc((ks[0].precaso||{}).id||ks[0].id)}"` : ""}>
     <span class="ag-data${!dataProx?"":dataProx<hj?" venc":dataProx===hj?" hoje":""}"${dica?` title="${esc(dica)}"`:""}>${dTxt}</span>
     <div class="ag-txt"><b>${esc(cli.nome)}</b>${/* teste 11.88, TRI-03: na coluna estreita os selos somem e dois pré-casos
       do mesmo cliente ficavam iguais; a espécie do pré-caso vai junto do nome */ ks.length===1 && ehPreCaso(ks[0])
@@ -11269,16 +11273,38 @@ function grupoClientes(casosSel){
   return pares;
 }
 
+// F438 · pedido do Paulo de 08.11.2026: o clique da linha continua abrindo a ficha, e o mouse parado em cima mostra a
+// última anotação da equipe nos casos da linha. O texto não vem na carga inicial: busca-se no primeiro hover e guarda-se
+const _ultAnot = new Map();
+async function mostrarUltAnot(el){
+  const ids = el.dataset.casos;
+  if(!_ultAnot.has(ids)) _ultAnot.set(ids, api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${ids})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&limit=1`)
+    .then(r=>(r||[])[0]||null).catch(()=>{ _ultAnot.delete(ids); return null; }));
+  const a = await _ultAnot.get(ids);
+  if(!el.matches(":hover") || !document.body.contains(el)) return;
+  let p = document.getElementById("ult-anot");
+  if(!p){ p = document.createElement("div"); p.id = "ult-anot"; p.setAttribute("role","tooltip"); document.body.appendChild(p); }
+  const de = a && D.colPorId.get(a.autor_id);
+  p.innerHTML = a ? `<div class="ua-cab">Última anotação · ${esc(de?de.nome.split(" ")[0]:"equipe")}, ${esc(fmtBarra(dataSP(a.criado_em)))}</div><div class="ua-txt">${esc((a.texto||"").slice(0,600))}</div>`
+    : `<div class="ua-cab">Sem anotação da equipe nestes casos.</div>`;
+  const r = el.getBoundingClientRect(), alto = p.offsetHeight || 140, baixo = r.bottom + 6 + alto < innerHeight;
+  p.style.left = Math.max(8, Math.min(r.left + 40, innerWidth - 448)) + "px";
+  p.style.top = (baixo ? r.bottom + 6 : Math.max(8, r.top - 6 - alto)) + "px";
+  p.classList.add("on");
+}
+const esconderUltAnot = () => { const p = document.getElementById("ult-anot"); if(p) p.classList.remove("on"); };
 function ligarCartoes(){
   pintarCursor();                     // o cursor do teclado sobrevive ao render
   document.querySelectorAll(".cartao[data-cli]").forEach(el=>{
     // F150 · intenção de abrir: 100 ms parado em cima (ou o dedo encostou) já
     // busca a ficha, e o clique encontra os dados a caminho ou prontos
-    el.onpointerenter=e=>{ if(e.pointerType==="mouse"){ clearTimeout(el._pre); el._pre=setTimeout(()=>preCarregarFicha(el.dataset.cli),100); } };
-    el.onpointerleave=()=>clearTimeout(el._pre);
+    el.onpointerenter=e=>{ if(e.pointerType==="mouse"){ clearTimeout(el._pre); el._pre=setTimeout(()=>preCarregarFicha(el.dataset.cli),100);
+      clearTimeout(el._ult); if(el.dataset.casos) el._ult=setTimeout(()=>mostrarUltAnot(el),350); } };   // F438
+    el.onpointerleave=()=>{ clearTimeout(el._pre); clearTimeout(el._ult); esconderUltAnot(); };
     el.onpointerdown=()=>preCarregarFicha(el.dataset.cli);
     el.onclick=e=>{
       if(e.target.dataset.estrela!==undefined) return;
+      clearTimeout(el._ult); esconderUltAnot();
       if(el.dataset.pc) return abrirAtendimentoDe(el.dataset.cli, el.dataset.pc);   // F227 · o cartão do pré-caso abre o atendimento dele
       abrirFicha(el.dataset.cli);
     };
@@ -14144,7 +14170,7 @@ function linhaAgenda(it){
   // F427 · o prazo e o compromisso dizem do que são na própria linha, depois do nome (antes, só no title)
   const oque = !cli ? "" : it.antes ? resumo : it.motivo || (tc && tc.natureza!=="lembrete" ? resumo : "");
   // F437 · linha C: o nome à esquerda, a lista e a etapa, a data, o responsável e, à direita, o concluir e a ⭐
-  return `<div class="cartao ag-linha${k&&k.urgente?" urg":""}"${cli?` data-cli="${cli.id}"`:""}${t?` data-tarefa="${t.id}"`:""}>
+  return `<div class="cartao ag-linha${k&&k.urgente?" urg":""}"${cli?` data-cli="${cli.id}"`:""}${k?` data-casos="${k.id}"`:""}${t?` data-tarefa="${t.id}"`:""}>
     <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
     <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b>${oque?`<span class="ag-oque"> · ${esc(oque)}</span>`:""}</div>
     <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${it.tc && Array.isArray(it.tc.etapas) && it.tc.etapas.length?`<span class="ag-tipo">etapas ${it.tc.etapas.filter(e=>e.feito).length}/${it.tc.etapas.length}</span>`:""}${

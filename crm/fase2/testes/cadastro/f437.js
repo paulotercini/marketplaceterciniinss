@@ -102,6 +102,18 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
   conf(`no Meu Dia, o ⋯ tem Ordenar, Visualizar e Períodos (${md})`, md.join() === "Ordenar,Visualizar,Períodos");
   await p.screenshot({ path: "f437-meudia.png" });
 
+  // F438 · o mouse parado sobre a linha mostra a última anotação; o clique continua abrindo a ficha
+  await p.evaluate(() => { document.getElementById("topo-mais").open = false; visao = "planejado"; render(); });
+  await p.waitForTimeout(200);
+  const lin = p.locator("#conteudo-meio .ag-linha[data-casos]").first();
+  await lin.hover({ position: { x: 60, y: 10 } }); await p.waitForTimeout(800);
+  const ua = await p.evaluate(() => { const e = document.getElementById("ult-anot"); return e && e.classList.contains("on") ? e.innerText : ""; });
+  conf(`o mouse sobre a linha mostra a última anotação (${ua.replace(/\n/g, " | ")})`, /Última anotação/.test(ua) && /Registro fictício/.test(ua));
+  await p.mouse.move(5, 5); await p.waitForTimeout(100);
+  conf("o mouse fora da linha esconde a anotação", await p.evaluate(() => !document.getElementById("ult-anot").classList.contains("on")));
+  await lin.click({ position: { x: 60, y: 10 } }); await p.waitForTimeout(600);
+  conf("o clique da linha continua abrindo a ficha", await p.evaluate(() => !!clienteAberto));
+
   console.log("=== F437 · linha C e o menu ⋯ das listas ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
   console.log("erros de console:", erros.length ? erros : "nenhum");
