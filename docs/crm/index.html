@@ -1032,7 +1032,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   #proc-inteiro .pi-it button.on{background:var(--azul-fundo);border-left-color:var(--azul)}
   #proc-inteiro .pi-arvore small{display:block;color:var(--cinza-claro)}
   #proc-inteiro .pi-autos{flex:1;overflow:auto;padding:14px}
-  #proc-inteiro .pi-peca{max-width:900px;margin:0 auto 18px}#proc-inteiro .pi-folha{zoom:var(--pi-zoom,1)}
+  #proc-inteiro .pi-peca{max-width:900px;margin:0 auto 18px}#proc-inteiro .pi-folha{zoom:var(--pi-zoom,1)}#proc-inteiro .pi-folha.pi-pag,#proc-inteiro .pi-folha:has(>img){zoom:1;width:calc(100% * var(--pi-zoom,1))}
   #proc-inteiro .pi-zoom{display:flex;align-items:center;gap:2px}#proc-inteiro .pi-zoom output{min-width:44px;text-align:center;font-size:12px;font-variant-numeric:tabular-nums}
   #proc-inteiro .pi-peca h4{margin:0 0 6px;font-size:14px;color:var(--cinza)}
   #proc-inteiro .pi-folha{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18);margin-bottom:10px;min-height:200px}
@@ -2910,7 +2910,7 @@ dialog.confirmar::backdrop{background:rgba(15,17,22,.38)}
 .arv-doc.sel{background:#F3F7FE;box-shadow:inset 3px 0 0 #2B5FC7;border-radius:2px}
 .proc-leitor{position:sticky;top:8px;height:78vh;display:flex;flex-direction:column;border:1px solid var(--linha,#dfe3ea);border-radius:6px;overflow:hidden;background:#E3E6EB}
 .pl-cab{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;background:var(--fundo-card,#fff);padding:7px 10px;border-bottom:1px solid var(--linha,#dfe3ea)}.pl-tit{font-weight:600}.pl-bts{margin-left:auto;display:inline-flex;gap:4px;align-items:center}.pl-bts .pi-zoom{display:inline-flex;gap:2px;align-items:center;margin-right:4px}.pl-bts output{font-size:12px;min-width:44px;text-align:center}
-.pl-corpo{flex:1;overflow:auto;padding:14px 24px}.pl-corpo .pi-peca{max-width:900px;margin:0 auto 12px}.pl-corpo .pi-folha{zoom:var(--pi-zoom,1)}.pl-corpo .pi-folha{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18);margin-bottom:10px;min-height:200px}.pl-corpo .pi-folha canvas,.pl-corpo .pi-folha img{display:block;width:100%;height:auto}.pl-corpo .pi-folha iframe{display:block;width:100%;border:0;min-height:300px}.pl-corpo .pi-folha .meio-sub{padding:16px}
+.pl-corpo{flex:1;overflow:auto;padding:14px 24px}.pl-corpo .pi-peca{max-width:900px;margin:0 auto 12px}.pl-corpo .pi-folha{zoom:var(--pi-zoom,1)}.pl-corpo .pi-folha.pi-pag,.pl-corpo .pi-folha:has(>img){zoom:1;width:calc(100% * var(--pi-zoom,1))}.pl-corpo .pi-folha{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18);margin-bottom:10px;min-height:200px}.pl-corpo .pi-folha canvas,.pl-corpo .pi-folha img{display:block;width:100%;height:auto}.pl-corpo .pi-folha iframe{display:block;width:100%;border:0;min-height:300px}.pl-corpo .pi-folha .meio-sub{padding:16px}
 .pl-prox{display:block;width:100%;max-width:900px;margin:0 auto;border:0;border-top:1px solid #C9CDD4;background:none;padding:8px 0;font:inherit;font-size:12px;color:var(--mut,#5d6675);cursor:pointer;text-align:center}
 .arv-et{font-size:11px;text-transform:none;letter-spacing:0;padding:1px 6px;border-radius:9px;background:#EBEEF3;color:#5B6069;white-space:nowrap}.arv-et.dec{background:#FBE9E8;color:#a3261d}
 @container (max-width:760px){.proc-grade{grid-template-columns:minmax(0,1fr)}.proc-leitor{display:none}.proc-grade .proc-arv{max-height:none}}
@@ -37955,14 +37955,22 @@ function piZoom(passo){
   piZoomPara(z, true);
 }
 // F439 · o zoom num valor qualquer (a pinça), de 50 % a 300 %; guardar só no fim do gesto
-function piZoomPara(z, guardar){
+function piZoomPara(z, guardar, foco){
   const el = document.getElementById("proc-inteiro") || document.querySelector(".proc-leitor .pl-corpo"); if(!el) return;
   const pane = el.closest(".proc-leitor") || el;
   z = Math.round(Math.max(.5, Math.min(3, z)) * 100) / 100;
-  const autos = el.querySelector(".pi-autos") || (el.classList.contains("pl-corpo") ? el : null), alvo = autos && autos.scrollHeight ? autos.scrollTop / autos.scrollHeight : 0;
+  const autos = el.querySelector(".pi-autos") || (el.classList.contains("pl-corpo") ? el : null);
+  // o ponto sob os dedos (ou o alto da tela, sem foco) fica no mesmo lugar depois do zoom
+  let fx = 0, fy = 0, px = 0, py = 0;
+  if(autos){
+    const r = autos.getBoundingClientRect();
+    if(foco){ fx = foco.x - r.left; fy = foco.y - r.top; }
+    px = autos.scrollWidth ? (autos.scrollLeft + fx) / autos.scrollWidth : 0;
+    py = autos.scrollHeight ? (autos.scrollTop + fy) / autos.scrollHeight : 0;
+  }
   el.style.setProperty("--pi-zoom", z);
   const o = pane.querySelector(".pi-zoom output"); if(o) o.textContent = Math.round(z*100) + " %";
-  if(autos) autos.scrollTop = alvo * autos.scrollHeight;   // a leitura fica na mesma altura do processo
+  if(autos){ autos.scrollTop = py * autos.scrollHeight - fy; autos.scrollLeft = px * autos.scrollWidth - fx; }
   if(guardar) try{ localStorage.setItem("crm_pi_zoom", z); }catch(e){}
 }
 function abrirProcessoInteiro(casoId, lista, caminho, titulo){
@@ -38003,9 +38011,10 @@ function abrirProcessoInteiro(casoId, lista, caminho, titulo){
     if(!pin || e.touches.length!==2) return;
     e.preventDefault();
     pin.alvo = pin.z * dist(e.touches) / pin.d;
-    if(!pin.raf) pin.raf = requestAnimationFrame(()=>{ if(pin){ pin.raf = 0; piZoomPara(pin.alvo); } });
+    pin.foco = {x:(e.touches[0].clientX + e.touches[1].clientX) / 2, y:(e.touches[0].clientY + e.touches[1].clientY) / 2};
+    if(!pin.raf) pin.raf = requestAnimationFrame(()=>{ if(pin){ pin.raf = 0; piZoomPara(pin.alvo, false, pin.foco); } });
   }, {passive:false});
-  autos.addEventListener("touchend", e=>{ if(pin && e.touches.length<2){ piZoomPara(pin.alvo || pin.z, true); pin = null; toque = null; } }, {passive:true});
+  autos.addEventListener("touchend", e=>{ if(pin && e.touches.length<2){ piZoomPara(pin.alvo || pin.z, true, pin.foco); pin = null; toque = null; } }, {passive:true});
   // F440 · com um dedo: o toque duplo alterna 100 % e 200 %, e o deslizar de lado leva à peça seguinte ou à anterior
   let toque = null, ultimo = null;
   autos.addEventListener("touchstart", e=>{ toque = e.touches.length===1 ? {x:e.touches[0].clientX, y:e.touches[0].clientY, t:Date.now()} : null; }, {passive:true});
@@ -38014,7 +38023,7 @@ function abrirProcessoInteiro(casoId, lista, caminho, titulo){
     const t = e.changedTouches[0], dx = t.clientX - toque.x, dy = t.clientY - toque.y, dt = Date.now() - toque.t; toque = null;
     if(Math.abs(dx) < 10 && Math.abs(dy) < 10 && dt < 300){
       if(ultimo && Date.now() - ultimo.t < 320 && Math.hypot(t.clientX - ultimo.x, t.clientY - ultimo.y) < 30){
-        ultimo = null; piZoomPara((+el.style.getPropertyValue("--pi-zoom") || 1) > 1.05 ? 1 : 2, true);
+        ultimo = null; piZoomPara((+el.style.getPropertyValue("--pi-zoom") || 1) > 1.05 ? 1 : 2, true, {x:t.clientX, y:t.clientY});
       } else ultimo = {x:t.clientX, y:t.clientY, t:Date.now()};
       return;
     }
