@@ -66,6 +66,18 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
       ultima: c.lastElementChild.classList.contains("acoes") }; });
   conf("o nome abre a linha, antes da data", l && l.txt < l.data);
   conf("a ⭐ fecha a linha, à direita do responsável e do concluir", l && l.ultima && l.est > l.av && l.est >= l.slot);
+  // F443 · no computador, colunas iguais em todas as linhas, o cabeçalho e a ⭐ à vista sem passar o mouse
+  await p.mouse.move(5, 5);
+  const col = await p.evaluate(() => { const ls = [...document.querySelectorAll("#conteudo-meio .ag-linha")];
+    const xs = s => new Set(ls.map(c => c.querySelector(s)).filter(Boolean).map(e => Math.round(e.getBoundingClientRect().left)));
+    const e = document.querySelector("#conteudo-meio .ag-linha [data-estrela]");
+    return { n: ls.length, data: xs(".ag-data").size, est: xs(".acoes").size, op: e && getComputedStyle(e).opacity,
+      th: [...document.querySelectorAll("#conteudo-meio .ag-th span")].map(x => x.textContent).join(),
+      lista: (document.querySelector("#conteudo-meio .ag-linha .ag-c-lista") || {}).offsetWidth }; });
+  conf(`F443: data e ⭐ na mesma coluna em ${col.n} linhas (${col.data}, ${col.est})`, col.n > 2 && col.data === 1 && col.est === 1);
+  conf(`F443: a ⭐ à vista sem o mouse (${col.op})`, col.op === "1");
+  conf(`F443: cabeçalho Cliente, Lista, Etapa, Prazo e coluna da lista (${col.th})`, col.th === "Cliente,Lista,Etapa,Prazo" && col.lista > 0);
+  if (process.env.SHOT) await p.screenshot({ path: process.env.SHOT });
   await ab();
   const menu = await p.evaluate(() => [...document.querySelectorAll("#lista-opc .lo-ln > span")].map(e => e.textContent));
   conf(`o ⋯ do Planejado tem Agrupar, Ordenar, Visualizar e Períodos (${menu})`, menu.join() === "Agrupar,Ordenar,Visualizar,Períodos");
