@@ -1221,6 +1221,8 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .cal-dia.hoje{border-color:var(--azul);box-shadow:inset 0 0 0 1px var(--azul)}
   .cal-num{font-size:12px;font-weight:700;color:var(--cinza);margin-bottom:3px}
   .cal-dia.hoje .cal-num{color:var(--azul)}
+  .cal-it.cal-arr{cursor:grab} .cal-it.arrastando{opacity:.45}
+  .cal-dia.alvo{outline:2px dashed var(--verde,#1E6F50);outline-offset:-2px}
   .cal-it{font-size:11px;line-height:1.3;border-left:3px solid;border-radius:4px;
     padding:3px 5px;margin-bottom:3px;cursor:pointer;overflow:hidden;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
@@ -6723,7 +6725,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.90</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.91</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19477,19 +19479,22 @@ function itensDoCalendario(){
     // F236 · o prazo fatal é prazo, e não lembrete: vai na cor dos prazos (era o azul do lembrete); no dia de um prazo que o
     // CRM já conhece (recorrer até, exigência) é um item só, como no quadro do caso e no Planejado
     const rec = recorrerAte(k), igual = !k.prazo ? "" : rec===k.prazo ? "rec" : k.exigencia_prazo===k.prazo ? "exig" : "";
+    // F450 · o retorno e a volta à fila se arrastam a outro dia; o prazo fatal, arrastado, abre a janela do prazo
+    const desp = (k.ronda||{}).despacho, pz = {pz:{casoId:k.id}};
     if(k.prazo && !igual) push(k.prazo, prazoEhRetorno(k) ? "lembre" : "prazo",
-      `${c.nome}: ${k.lembrar_motivo||tituloCaso(k)} (${prazoEhRetorno(k) ? "retorno" : "prazo fatal"})`, c.id);
-    if(k.exigencia_prazo) push(k.exigencia_prazo,"exig",`${c.nome}: exigência vence${igual==="exig"?" (prazo fatal)":""}`,c.id);
+      `${c.nome}: ${k.lembrar_motivo||tituloCaso(k)} (${prazoEhRetorno(k) ? "retorno" : "prazo fatal"})`, c.id,
+      prazoEhRetorno(k) ? {mov:{k, selo: desp && desp.prazo===k.prazo ? "Volta à fila" : "Retorno"}} : pz);
+    if(k.exigencia_prazo) push(k.exigencia_prazo,"exig",`${c.nome}: exigência vence${igual==="exig"?" (prazo fatal)":""}`,c.id,pz);
     if(k.dcb && !k.dcb_prorrogacao_pedida){
       push(k.dcb,"dcb",`${c.nome}: benefício cessa (pedir prorrogação)`,c.id);
       // a data de PEDIR vem antes da data de cessar: é ela que salva o cliente.
       // F115 · existe sempre que existe DCB, preenchida ou não
       push(prorrogarEm(k),"prorrog",`${c.nome}: já dá para pedir a prorrogação`,c.id);
     }
-    if(rec) push(rec,"prazo",`${c.nome}: último dia para recorrer${igual==="rec"?" (prazo fatal)":""}`,c.id);
+    if(rec) push(rec,"prazo",`${c.nome}: último dia para recorrer${igual==="rec"?" (prazo fatal)":""}`,c.id,pz);
     // F236 · o prazo do tribunal com fim (ou a ciência tácita) entra no dia em que cobra
     (k.prazos_tribunal||[]).forEach(p=>{ const d=dataDoPrazo(p);
-      if(d && !(p.fim && p.fim===k.prazo) && !respostaAoPrazo(k, p)) push(d,"prazo",`${c.nome}: ${ROT_PRAZO[p.sistema]||p.sistema||"tribunal"}: ${p.ato||"intimação"}${p.situacao==="findo"?" (venceu sem resposta)":""}`,c.id); });
+      if(d && !(p.fim && p.fim===k.prazo) && !respostaAoPrazo(k, p)) push(d,"prazo",`${c.nome}: ${ROT_PRAZO[p.sistema]||p.sistema||"tribunal"}: ${p.ato||"intimação"}${p.situacao==="findo"?" (venceu sem resposta)":""}`,c.id,pz); });
   });
   (D.clientes||[]).forEach(c=>{ const a=(c.campos||{}).agenda_quarta;
     if(a && a.data) push(a.data,"atend",`${c.nome}: atendimento presencial`,c.id,{hora:a.inicio||""}); });
@@ -19500,14 +19505,15 @@ function itensDoCalendario(){
   });
   (D.tarefas||[]).filter(t=>!t.concluida && t.prazo).forEach(t=>{
     const k=t.caso_id&&D.casoPorId.get(t.caso_id), c=D.cliPorId.get(t.cliente_id||(k&&k.cliente_id));
-    push(t.prazo,"tarefa",`${c?c.nome+": ":""}${t.titulo}`,c?c.id:null); });   // F236 · de quem é a tarefa
+    push(t.prazo,"tarefa",`${c?c.nome+": ":""}${t.titulo}`,c?c.id:null,{mov:{t}}); });   // F236 · de quem é a tarefa
   // tarefas dos comentários: o lembrete de cada pessoa, com a inicial dela —
   // duas pessoas no mesmo comentário com datas diferentes são DOIS itens
   [...(D.tarefasPorCaso||new Map()).values()].flat().forEach(t=>{
     const k=D.casoPorId.get(t.caso_id); if(!k||k.fase==="encerrado"||foraDoFluxo(k)) return;
     const c=D.cliPorId.get(k.cliente_id), co=D.colPorId.get(t.colaborador_id);
     // F236 · o que a pessoa tem de fazer, e não só "(tarefa)"
-    push(t.lembrar_em,"lembre",`${co?co.inicial+": ":""}${c?c.nome:"?"}: ${resumoAgenda(textoDoAndamento(t.andamento_id), co)||"tarefa"}`,c?c.id:null);
+    push(t.lembrar_em,"lembre",`${co?co.inicial+": ":""}${c?c.nome:"?"}: ${resumoAgenda(textoDoAndamento(t.andamento_id), co)||"tarefa"}`,c?c.id:null,
+      t.natureza==="fatal" ? {pz:{casoId:k.id}} : t.concluida_em ? {} : {mov:{tc:t}});
   });
   // CadÚnico: percorre TODOS os casos, encerrados inclusive
   (D.casos||[]).forEach(k=>{
@@ -19535,10 +19541,11 @@ function irVisaoCal(v){
   render();
 }
 function filtrarCal(t){ calFiltro = (calFiltro===t) ? null : t; render(); }
+let _calIt = [];   // F450 · os itens arrastáveis do mês, pelo índice do data-ci
 function itemCal(i){
-  const t=TIPOS_CAL[i.tipo];
-  return `<div class="cal-it" style="background:${t.fundo};border-left-color:${t.cor}"
-    ${i.cliId?`data-cli="${i.cliId}"`:""} title="${esc(t.nome)}: ${esc(i.texto)}">
+  const t=TIPOS_CAL[i.tipo], arr = calVisao==="mes" && (i.mov || i.pz) ? _calIt.push(i)-1 : -1;
+  return `<div class="cal-it${arr>=0?" cal-arr":""}" style="background:${t.fundo};border-left-color:${t.cor}"
+    ${i.cliId?`data-cli="${i.cliId}"`:""}${arr>=0?` draggable="true" data-ci="${arr}"`:""} title="${esc(t.nome)}: ${esc(i.texto)}${arr>=0?(i.mov?" · arraste a outro dia para mudar a data":" · arraste para abrir o prazo"):""}">
     ${t.icone} ${i.hora?`<b>${i.hora}</b> `:""}${esc(i.texto)}</div>`;
 }
 function renderCalendario(){
@@ -19560,6 +19567,7 @@ function renderCalendario(){
     `<button class="cal-aba ${calVisao===v?"on":""}" onclick="irVisaoCal('${v}')">${r}</button>`).join("");
 
   let corpo="", barra="", quantos=0;
+  _calIt = [];
   if(calVisao==="mes"){
     const mes=mesAtual(), [ano,mm]=mes.split("-").map(Number);
     const doMes=itens.filter(i=>i.dia.slice(0,7)===mes); quantos=doMes.length;
@@ -19581,7 +19589,7 @@ function renderCalendario(){
     for(let d=1; d<=ultimo.getDate(); d++){
       const iso=`${mes}-${String(d).padStart(2,"0")}`;
       const dd=ordena((porDia.get(iso)||[]).slice());
-      cels.push(`<div class="cal-dia ${iso===hoje()?"hoje":""}">
+      cels.push(`<div class="cal-dia ${iso===hoje()?"hoje":""}" data-dia="${iso}">
         <div class="cal-num">${d}</div>
         ${dd.slice(0,4).map(itemCal).join("")}
         ${dd.length>4?`<div class="cal-mais">+${dd.length-4} neste dia</div>`:""}
@@ -19638,6 +19646,35 @@ function renderCalendario(){
   if(ms) ms.onchange=as.onchange=()=>irMes(`${as.value}-${String(ms.value).padStart(2,"0")}`);
   document.querySelectorAll(".cal-it[data-cli]").forEach(el=>
     el.onclick=()=>abrirFicha(el.dataset.cli));
+  ligarArrastoCal();
+}
+// F450 · ARRASTAR PARA OUTRO DIA NO PLANEJADO (proposta 6 do Todoist, aprovada pelo Paulo em 08.11.2026)
+// No Mês, o retorno do To Do, a volta à fila, o lembrete da anotação e a tarefa pessoal vão ao dia em que se soltam, pela
+// mesma gravação do Reagendar (com desfazer). Prazo fatal, prazo do tribunal, recurso e exigência não mudam de data assim:
+// soltos, abrem a janela do prazo na aba Prazos do cliente. Perícia e audiência não se arrastam.
+function ligarArrastoCal(){
+  document.querySelectorAll(".cal-it[data-ci]").forEach(el=>{
+    el.ondragstart = e=>{ e.dataTransfer.setData("text/plain", el.dataset.ci); e.dataTransfer.effectAllowed = "move"; el.classList.add("arrastando"); };
+    el.ondragend = ()=>{ el.classList.remove("arrastando"); document.querySelectorAll(".cal-dia.alvo").forEach(d=>d.classList.remove("alvo")); };
+  });
+  document.querySelectorAll(".cal-dia[data-dia]").forEach(d=>{
+    d.ondragover = e=>{ e.preventDefault(); d.classList.add("alvo"); };
+    d.ondragleave = ()=>d.classList.remove("alvo");
+    d.ondrop = e=>{ e.preventDefault(); d.classList.remove("alvo"); soltarNoDia(_calIt[+e.dataTransfer.getData("text/plain")], d.dataset.dia); };
+  });
+}
+function soltarNoDia(i, dia){
+  if(!i || !dia || dia===i.dia) return;
+  if(i.pz) return abrirPrazoDoCal(i.cliId, i.pz.casoId, i.dia);
+  if(dia < hoje()) return aviso("Escolha hoje ou um dia adiante");
+  _reagVenc = [i.mov]; aplicarReagendar(dia);
+}
+async function abrirPrazoDoCal(cliId, casoId, data){
+  aviso("Prazo fatal não muda de data pelo calendário: confira na janela do prazo", false);
+  await abrirFicha(cliId); if(clienteAberto!==cliId || soIdentificacao()) return;
+  abaAtiva = 5; repintarFicha();
+  const j = (_pzCli||[]).findIndex(x=>x.data===data && (!x.casoId || x.casoId===casoId));
+  if(j>=0) abrirPainelPrazo(j, "cli");
 }
 function irMes(m){ calMes=m; calVisao="mes"; guardar("crm_cal_visao","mes"); render(); }
 
