@@ -3835,6 +3835,32 @@ html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:6;width:auto}
   html[data-tema="v10"] #conteudo-meio .ag-linha .ag-slot{grid-area:slot;margin:0 0 0 6px;align-self:start}
   html[data-tema="v10"] #conteudo-meio .ag-linha .acoes{grid-area:est}
 }
+/* F443 · a linha C no computador em colunas, como no artefato aprovado (conferência do Paulo, 08.11.2026): cliente com a
+   espécie, lista, etapa, selos, data, responsável, caixa e a ⭐ sempre à vista, cada um na mesma coluna em todas as linhas */
+html[data-tema="v10"] .ag-c-lista,html[data-tema="v10"] .ag-c-etapa,html[data-tema="v10"] .ag-th,html[data-tema="v10"] .ag-txt .ag-ben{display:none}
+@container (min-width:721px){
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{display:grid;
+    grid-template-columns:minmax(0,1.6fr) minmax(0,.8fr) minmax(0,1fr) 170px 64px 28px 24px 32px;column-gap:10px;align-items:center}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > *{grid-row:1;min-width:0}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-txt{grid-column:1}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-c-lista{grid-column:2;display:block}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-c-etapa{grid-column:3;display:block}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-selos{grid-column:4;justify-content:flex-end;overflow:hidden}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-data{grid-column:5;min-width:0}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .avatares{grid-column:6;width:auto}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-slot{grid-column:7}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .acoes{grid-column:8;width:auto}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-selos :is(.ag-esp,.ag-etapa){display:none}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-c-etapa .ag-tipo{border:0;background:none;padding:0;color:inherit;font-size:13px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-c-etapa .ag-velha{color:var(--venc-tinta)}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-txt .ag-ben{display:inline}
+  html[data-tema="v10"] .ag-c-lista,html[data-tema="v10"] .ag-c-etapa{font-size:13px;color:var(--cinza);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{padding:0 12px 0 16px;min-height:30px;font:600 11px var(--f);letter-spacing:.05em;text-transform:uppercase;color:var(--cinza)}
+  html[data-tema="v10"] .ag-th > span:nth-child(4){grid-column:4/6;text-align:right}
+  /* a ⭐ fica à vista, como no artefato; conferir continua aparecendo ao passar o mouse */
+  html #conteudo-meio .cartao.ag-linha .acoes .acao-card{opacity:1!important}
+}
+html[data-tema="v10"] .ag-txt .ag-ben{font:500 11px var(--f-mono);background:#E9EEF0;color:#3E5660;padding:1px 6px;border-radius:4px;margin-left:6px;vertical-align:1px}
 /* Visualizar · Cartões: cada linha num quadro, o nome inteiro e os selos embaixo */
 html[data-tema="v10"] #conteudo-meio.vis-cartoes .ag-linha{flex-wrap:wrap;margin:6px 0;border:1px solid var(--borda);border-radius:10px;padding:10px 12px;min-height:0;row-gap:6px}
 html[data-tema="v10"] #conteudo-meio.vis-cartoes .ag-linha > .ag-txt{white-space:normal;flex-basis:calc(100% - 200px)}
@@ -11213,7 +11239,9 @@ function cartaoCliente(cli, casosMostrar){
     <span class="ag-data${!dataProx?"":dataProx<hj?" venc":dataProx===hj?" hoje":""}"${dica?` title="${esc(dica)}"`:""}>${dTxt}</span>
     <div class="ag-txt"><b>${esc(cli.nome)}</b>${/* teste 11.88, TRI-03: na coluna estreita os selos somem e dois pré-casos
       do mesmo cliente ficavam iguais; a espécie do pré-caso vai junto do nome */ ks.length===1 && ehPreCaso(ks[0])
-      ? `<span class="ag-pc-esp"> · ${esc(ks[0].beneficio || (ks[0].precaso||{}).especie || "benefício a definir")}</span>` : ""}${resumo?`<span class="ag-res">, ${esc(resumo)}</span>`:""}</div>
+      ? `<span class="ag-pc-esp"> · ${esc(ks[0].beneficio || (ks[0].precaso||{}).especie || "benefício a definir")}</span>` : ""}${kP&&kP.especie?`<span class="ag-ben">${esc(kP.especie)}</span>`:""}${resumo?`<span class="ag-res">, ${esc(resumo)}</span>`:""}</div>
+    <span class="ag-c-lista">${esc(kP ? NOME_FASE[kP.fase==="outro" ? faseEfetiva(kP) : kP.fase]||"" : "")}</span>
+    <span class="ag-c-etapa">${kP && kP.etapa ? seloEtapaLista(kP) : ""}</span>
     <span class="ag-selos">${selos}</span>
     <span class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${quem.map(c=>
       `<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")}</span>
@@ -14209,7 +14237,9 @@ function linhaAgenda(it){
   // F437 · linha C: o nome à esquerda, a lista e a etapa, a data, o responsável e, à direita, o concluir e a ⭐
   return `<div class="cartao ag-linha${k&&k.urgente?" urg":""}"${cli?` data-cli="${cli.id}"`:""}${k?` data-casos="${k.id}"`:""}${t?` data-tarefa="${t.id}"`:""}${selK?` data-sel="${esc(selK)}"`:""}>
     <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
-    <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b>${oque?`<span class="ag-oque"> · ${esc(oque)}</span>`:""}</div>
+    <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b>${k&&k.especie?`<span class="ag-ben">${esc(k.especie)}</span>`:""}${oque?`<span class="ag-oque"> · ${esc(oque)}</span>`:""}</div>
+    <span class="ag-c-lista">${esc(k ? (fe!=="outro" ? NOME_FASE[fe]||"" : lst && lst!=="—" ? lst : NOME_FASE[fe]||"") : "")}</span>
+    <span class="ag-c-etapa">${k && k.etapa ? seloEtapaLista(k) : ""}</span>
     <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${it.tc && Array.isArray(it.tc.etapas) && it.tc.etapas.length?`<span class="ag-tipo">etapas ${it.tc.etapas.filter(e=>e.feito).length}/${it.tc.etapas.length}</span>`:""}${
       it.selo?`<span class="${it.prazo?"ag-prazo":"ag-tipo"}">${esc(it.selo)}</span>`:""}${
       it.extra?`<span class="ag-tipo" title="a menção que acompanha a tarefa ainda não foi lida">${esc(it.extra)}</span>`:""}${
@@ -14306,6 +14336,7 @@ function renderAgendaV10(qual){
   };
   const nDegNL = deleg.filter(i=>i.extra).length;
   const corpo = agrL!=="data" ? emGrupos(itens, i=>chaveGrupo(agrL, i.k, i.quem), linhaAgenda) : (meuDia ? contaDoDia(itens.filter(i=>i.data===hj), ats, eu.id) + blocoOntem() : "")
+  + (itens.length ? `<div class="ag-th" aria-hidden="true"><span>Cliente</span><span>Lista</span><span>Etapa</span><span>Prazo</span></div>` : "")
   + secoes.slice(0,2).map(secao).join("")
   + (mencs.length ? `<section class="pl-grupo" data-tom="menc"><h3 class="secao">Menções a você <span class="pl-n">${mencs.length}</span></h3>`
       + mencs.slice(0,8).map(linhaMencaoDia).join("")
