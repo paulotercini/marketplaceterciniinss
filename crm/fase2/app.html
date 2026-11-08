@@ -3620,6 +3620,16 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .quando .avatar.av-fonte:has
 .ar-ia{margin-top:6px;padding:8px 10px;border:1px solid var(--borda,#E7E6E1);border-radius:8px;font-size:13px;display:grid;gap:4px}
 .ar-ia-duv{color:#A12B1E;font-weight:600}
 .ar-ia-lem{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.tab-rola{overflow-x:auto;max-width:100%}.tab-casos th button{background:none;border:0;padding:0;font:inherit;color:inherit;text-transform:inherit;letter-spacing:inherit;cursor:pointer;white-space:nowrap}
+.tab-casos td{vertical-align:middle}.tab-casos select{font:inherit;font-size:13px;max-width:200px;padding:2px 4px;border:1px solid var(--borda);border-radius:6px;background:var(--branco)}
+.tab-cli{background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--azul-escuro);cursor:pointer;text-align:left}.tab-venc{color:var(--vermelho,#b42318);font-weight:600}
+.pes-tab{border-collapse:separate;border-spacing:2px;font-size:12px}.pes-tab th{font-weight:500;color:var(--cinza);text-align:center;padding:2px;min-width:28px}
+.pes-tab tbody th{text-align:left;white-space:nowrap;padding-right:8px;color:inherit}.pes-tab th.hoje{color:var(--azul-escuro);font-weight:700}
+.pes-c{width:30px;height:30px;padding:0;background:var(--placa);border-radius:4px}.pes-c.fds{opacity:.55}
+.pes-c button{position:relative;width:100%;height:30px;border:0;border-radius:4px;cursor:pointer;font:inherit;font-weight:600;color:#fff;background:color-mix(in srgb,var(--azul,#1e4fa3) var(--pes),transparent)}
+.pes-c.venc button{background:color-mix(in srgb,var(--vermelho,#b42318) var(--pes),transparent)}
+.pes-pz,.pes-pe{position:absolute;top:2px;width:6px;height:6px;border-radius:50%}.pes-pz{right:2px;background:#d92d20;box-shadow:0 0 0 1px #fff}.pes-pe{left:2px;background:#7a5af8;box-shadow:0 0 0 1px #fff}
+.pes-lista{display:grid;gap:6px;margin-top:8px}
 .carga{display:grid;gap:2px;margin:0 0 12px;max-width:560px}.carga-t{margin:0 0 4px;font-size:13px;font-weight:600}
 .carga-l{display:grid;grid-template-columns:24px 80px 1fr 32px;gap:8px;align-items:center;background:none;border:0;padding:4px;border-radius:4px;text-align:left;cursor:pointer;color:inherit}
 .carga-l.on{background:var(--placa)}@media (hover:hover){.carga-l:hover{background:var(--placa)}}
@@ -6678,7 +6688,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 12.83</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 12.85</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8088,7 +8098,7 @@ async function carregarJa(op){
 const VIGIA_MS = 180000;
 let vigiaLigada = false, vigiando = false;
 const VISTAS_VIGIADAS = ["meudia","planejado","minhas","importante","recebimentos","checagem",
-  "particulares","mencoes","novidades","calendario","quadro","quadro1","quadro2","quadro3","dashboard",
+  "particulares","mencoes","novidades","calendario","quadro","tabela","pessoas","quadro1","quadro2","quadro3","dashboard",
   "auditoria"];
 function telaOcupada(){
   if(clienteAberto || buscaTxt) return true;
@@ -8208,6 +8218,7 @@ const TEMA = {
   "claude":            ["#7a4dd8", "#f2ecfc"],
   "docmodelos":        ["#4a5568", "#f1f3f5"],
   "quadro":            ["#1e4fa3", "#f3f6fb"],
+  "tabela":            ["#1e4fa3", "#f3f6fb"],
   "vendas":            ["#1e6f50", "#e9f5ef"],
   "parcerias":         ["#6d4c41", "#f4eeeb"],
   "marketing":         ["#d64570", "#fdeef3"],
@@ -9171,6 +9182,7 @@ function montarSidebar(){
     ["claude","🤖 Claude", D.sugestoes.length],
     ["docmodelos","📄 Modelos", D.docModelos.length],
     ["quadro","📌 Quadro", null],
+    ["tabela","▦ Tabela", null],
     // F132 · os Quadros 1, 2 e 3 saíram do menu: o "Agrupar por" do 📌 Quadro faz o mesmo numa tela só (F255)
     ["vendas","💼 Vendas", D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length],
     // o número que aparece é o que exige ação: não lida ou sem dono
@@ -11409,6 +11421,8 @@ function renderBase(){
   if(visao==="mencoes") return renderMencoes();
   if(visao==="docmodelos") return renderModelosDoc();
   if(visao==="quadro") return renderQuadro();
+  if(visao==="tabela") return renderTabela();
+  if(visao==="pessoas") return renderPessoas();
   if(/^quadro[123]$/.test(visao)) return renderQuadroN(+visao.slice(-1));
   if(visao==="vendas") return renderVendas();
   if(visao==="whatsapp") return renderWhats();
@@ -13292,7 +13306,7 @@ const souAdmin = () => !!eu && eu.papel==="admin";
 // conhece. O admin vê a mesma barra ligando "ver como colaborador".
 const visaoColab = () => !souAdmin() || ler("crm_ver_como")==="colab" || soIdentificacao();   // F249 · os níveis 0 e 1 também
 // F187 · o atendente precisa do WhatsApp e das Menções (aviso de transferência e @)
-const LISTAS_COLAB = ["meudia","mencoes","whatsapp","calendario","planejado","agendaq","importante","particulares","rotinas",
+const LISTAS_COLAB = ["meudia","mencoes","whatsapp","calendario","planejado","pessoas","agendaq","importante","particulares","rotinas",
   "fase:prazo","fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial",
   "novocliente"];
 // F220 · a barra por CARGO: o "Atribuídas a mim" é de todos (é por ele que a
@@ -13301,7 +13315,7 @@ const LISTAS_COLAB = ["meudia","mencoes","whatsapp","calendario","planejado","ag
 // (cadastro, Escritório, agenda, perícias), sem as listas de processo
 const LISTAS_POR_CARGO = {
   advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "direito", "agenda"],
-  recepcao: ["meudia","mencoes","whatsapp","planejado","calendario","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente"],
+  recepcao: ["meudia","mencoes","whatsapp","planejado","calendario","pessoas","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente"],
 };
 const listasDoColab = () => soIdentificacao() ? ["agendaq", "clientes", "mencoes", ...(meuNivel()>=1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), ...(podeCadastrar()?["novocliente"]:[])]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
@@ -14607,7 +14621,8 @@ function linhaMencaoDia(m){
 // F378 · O PLANEJADO JUNTA AS VISÕES DE DATA (decisão do Paulo, 02.11.2026): Calendário, Perícias & Audiências e Tarefas com
 // Prazo saem do menu e viram abas do Planejado; a 📅 Agenda (os atendimentos) continua à parte, para não se confundir com ele
 const PLAN_ABAS = [["planejado","Lista","tudo o que tem data, por dia"],["calendario","Mês","o calendário do mês"],
-  ["agenda","Perícias","perícias e audiências, futuras, a confirmar e passadas"],["fase:prazo","Casos","os casos da lista Tarefas com Prazo, pela data fatal"]];
+  ["agenda","Perícias","perícias e audiências, futuras, a confirmar e passadas"],["fase:prazo","Casos","os casos da lista Tarefas com Prazo, pela data fatal"],
+  ["pessoas","Pessoas","o que cada pessoa tem por dia nas próximas três semanas"]];
 const ehAbaPlan = v => PLAN_ABAS.some(a=>a[0]===v);
 function barraPlanejado(){
   const pode = visaoColab() ? listasDoColab() : null;
@@ -15585,6 +15600,22 @@ function renderQuadro(){
   const qi = document.getElementById("q-lim"); if(qi) qi.onchange=()=>{ guardar("crm_quadro_lim", String(Math.max(0, Math.round(+qi.value)||0))); setTimeout(renderQuadro); };   // fora do blur, que roda no meio de outra pintura
   ligarQuadro();
 }
+// passa o caso de uma pessoa a outra (atribuições), com a menção a quem recebe; usada pelo Quadro e pela Tabela
+async function passarCaso(id, de, para){
+  const atr=D.atrDoCaso.get(id)||[];
+  try{
+    if(para && !atr.includes(para)) await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:id, colaborador_id:para})});
+    if(de) await api(`/rest/v1/atribuicoes?caso_id=eq.${id}&colaborador_id=eq.${de}`,{method:"DELETE"});
+  }catch(err){ aviso("Não consegui passar o caso: "+String(err.message||err).slice(0,80)); return false; }
+  D.atrDoCaso.set(id, [...atr.filter(x=>x!==de && x!==para), ...(para?[para]:[])]);
+  const k=D.casoPorId.get(id), c=k && D.cliPorId.get(k.cliente_id);
+  if(para && para!==eu.id) api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({de_id:eu.id, para_id:para, caso_id:id,
+      texto:`👤 ${(eu.nome||"").split(" ")[0]} atribuiu a você o cliente ${c?c.nome:""}`.trim()})}).catch(()=>{});
+  aviso(para ? `Caso passado para ${(D.colPorId.get(para)||{}).nome||""}` : "Caso sem responsável"); montarSidebar();
+  return true;
+}
 function ligarQuadro(){
   document.querySelectorAll(".kcard[data-caso]").forEach(el=>{
     el.ondragstart=e=>{ e.dataTransfer.setData("text/caso", el.dataset.caso);
@@ -15597,19 +15628,7 @@ function ligarQuadro(){
     col.ondrop=async e=>{
       e.preventDefault(); col.classList.remove("solta");
       const id=e.dataTransfer.getData("text/caso"), de=e.dataTransfer.getData("text/de"), para=col.dataset.colab;
-      if(!id || de===para) return;
-      const atr=D.atrDoCaso.get(id)||[];
-      try{
-        if(para && !atr.includes(para)) await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
-          body:JSON.stringify({caso_id:id, colaborador_id:para})});
-        if(de) await api(`/rest/v1/atribuicoes?caso_id=eq.${id}&colaborador_id=eq.${de}`,{method:"DELETE"});
-      }catch(err){ return aviso("Não consegui passar o caso: "+String(err.message||err).slice(0,80)); }
-      D.atrDoCaso.set(id, [...atr.filter(x=>x!==de && x!==para), ...(para?[para]:[])]);
-      const k=D.casoPorId.get(id), c=k && D.cliPorId.get(k.cliente_id);
-      if(para && para!==eu.id) api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
-        body:JSON.stringify({de_id:eu.id, para_id:para, caso_id:id,
-          texto:`👤 ${(eu.nome||"").split(" ")[0]} atribuiu a você o cliente ${c?c.nome:""}`.trim()})}).catch(()=>{});
-      aviso(para ? `Caso passado para ${(D.colPorId.get(para)||{}).nome||""}` : "Caso sem responsável"); montarSidebar(); renderQuadro();
+      if(id && de!==para && await passarCaso(id, de, para)) renderQuadro();
     };
   });
   document.querySelectorAll(".coluna[data-fase]").forEach(col=>{
@@ -15759,6 +15778,122 @@ async function mudouModelo(){
   try{ await guardarCfgApp("modelos_etapas", JSON.stringify(modelosDaTela().filter(m=>m.nome && m.etapas.length))); aviso("Modelos guardados", false); }catch(e){ aviso("Não consegui guardar"); }
 }
 function novoModelo(){ const cx = document.getElementById("cfg-modelos"); if(cx) cx.innerHTML = linhasCfgModelos([...modelosDaTela(), {nome:"", etapas:[]}]); }
+
+// ── F444 · as ideias do Trello, segunda leva (aprovadas pelo Paulo em 08.11.2026) ─────────
+// ▦ Tabela: os casos abertos numa planilha, com ordem pelo cabeçalho, filtro de texto e de fase, e a etapa (só do
+// catálogo, F119) e o responsável trocados na própria linha, com desfazer. A etapa escrita à mão aparece, mas não se oferece
+let tabTxt = "";
+const TAB_LIM = 200;
+const TAB_COLS = [["cliente","Cliente"],["fase","Fase"],["etapa","Etapa"],["resp","Responsável"],["prazo","Prazo"],["especie","Espécie"],["ultima","Última anotação"]];
+const tabFase = () => ler("crm_tab_fase") || "";
+const tabOrd = () => { const [c, d] = (ler("crm_tab_ord")||"prazo:asc").split(":"); return {c: TAB_COLS.some(x=>x[0]===c) ? c : "prazo", d: d==="desc" ? "desc" : "asc"}; };
+const respTab = k => (D.atrDoCaso.get(k.id)||[]).filter(id=>D.colPorId.get(id));
+function valTab(k, c){
+  if(c==="cliente") return ((D.cliPorId.get(k.cliente_id)||{}).nome || k.titulo || "").toLowerCase();
+  if(c==="fase") return NOME_FASE[faseEfetiva(k)] || "";
+  if(c==="etapa") return k.etapa || "";
+  if(c==="resp"){ const r = respTab(k)[0]; return r ? D.colPorId.get(r).nome : ""; }
+  if(c==="prazo") return k.prazo || "";
+  if(c==="especie") return k.especie || k.beneficio || "";
+  return ultimoRegistro(k) || "";
+}
+function linhasTabela(){
+  const f = tabFase(), t = semAcento((tabTxt||"").toLowerCase().trim()), {c, d} = tabOrd();
+  const ks = ativos().filter(k=>!ehPreCaso(k) && (!f || faseEfetiva(k)===f) && (!t || semAcento([valTab(k,"cliente"), valTab(k,"etapa"), valTab(k,"especie"), valTab(k,"resp")].join(" ").toLowerCase()).includes(t)));
+  // o vazio fica sempre no fim, nos dois sentidos
+  return ks.sort((a,b)=>{ const x = valTab(a,c), y = valTab(b,c); if(!x !== !y) return x ? -1 : 1; const r = x<y ? -1 : x>y ? 1 : 0; return d==="desc" ? -r : r; });
+}
+function celEtapa(k, pode){
+  const lista = etapasDaFase(k), manual = k.etapa && !lista.includes(k.etapa);
+  return `<select data-tab-etapa="${k.id}" aria-label="etapa"${pode?"":" disabled"}>${manual?`<option selected disabled>${esc(k.etapa)} (à mão)</option>`:""}<option value=""${!k.etapa?" selected":""}>—</option>${
+    lista.map(e=>`<option${e===k.etapa?" selected":""}>${esc(e)}</option>`).join("")}</select>`;
+}
+function celResp(k, pode){
+  const rs = respTab(k), r = rs[0]||"";
+  return `<select data-tab-resp="${k.id}" data-de="${r}" aria-label="responsável"${pode?"":" disabled"}><option value=""${!r?" selected":""}>—</option>${
+    equipeAtiva().map(c=>`<option value="${c.id}"${c.id===r?" selected":""}>${esc(c.nome.split(" ")[0])}</option>`).join("")}</select>${rs.length>1?` <span class="meio-sub" title="${esc(rs.slice(1).map(id=>D.colPorId.get(id).nome).join(", "))}">+${rs.length-1}</span>`:""}`;
+}
+function linhaTabela(k, pode){
+  const c = D.cliPorId.get(k.cliente_id), u = ultimoRegistro(k), n = u ? diasEntreIso(u, hoje()) : null, ret = k.prazo && prazoEhRetorno(k);
+  return `<tr><td><button class="tab-cli" data-cli="${c?c.id:""}">${esc(c?c.nome:k.titulo||"")}</button></td><td>${esc(NOME_FASE[faseEfetiva(k)]||"")}</td>
+    <td>${celEtapa(k, pode)}</td><td>${celResp(k, pode)}</td>
+    <td class="${k.prazo && !ret && k.prazo<hoje()?"tab-venc":""}">${k.prazo?`${fmt(k.prazo)}${ret?` <span class="meio-sub">retorno</span>`:""}`:""}</td>
+    <td>${esc(k.especie||k.beneficio||"")}</td><td>${u?`${fmt(u)} <span class="meio-sub">${n===0?"hoje":`há ${n} ${n===1?"dia":"dias"}`}</span>`:`<span class="meio-sub">mais de 30 dias</span>`}</td></tr>`;
+}
+function pintarTabela(){
+  const cx = document.getElementById("tab-casos"); if(!cx) return;
+  const ls = linhasTabela(), pode = podeGravarCaso(), {c, d} = tabOrd();
+  cx.innerHTML = `<p class="meio-sub" id="tab-n">${ls.length>TAB_LIM ? `Mostrando ${TAB_LIM} de ${ls.length} casos: use o filtro.` : `${ls.length} ${ls.length===1?"caso":"casos"}`}</p>
+    <div class="tab-rola"><table class="tab tab-casos"><thead><tr>${TAB_COLS.map(([k,r])=>`<th aria-sort="${k===c?(d==="asc"?"ascending":"descending"):"none"}"><button data-tab-ord="${k}" title="ordenar por ${r.toLowerCase()}">${r}${k===c?(d==="asc"?" ▲":" ▼"):""}</button></th>`).join("")}</tr></thead>
+    <tbody>${ls.slice(0, TAB_LIM).map(k=>linhaTabela(k, pode)).join("")}</tbody></table></div>`;
+  cx.querySelectorAll("[data-tab-ord]").forEach(b=>b.onclick=()=>{ const o = tabOrd(), col = b.dataset.tabOrd;
+    guardar("crm_tab_ord", `${col}:${o.c===col && o.d==="asc" ? "desc" : "asc"}`); pintarTabela(); });
+  cx.querySelectorAll(".tab-cli[data-cli]").forEach(b=>b.onclick=()=>{ if(b.dataset.cli) abrirFicha(b.dataset.cli); });
+  cx.querySelectorAll("[data-tab-etapa]").forEach(s=>s.onchange=async()=>{
+    const id = s.dataset.tabEtapa, k = D.casoPorId.get(id), antes = (k&&k.etapa)||"", para = s.value;
+    await gravarEtapa(id, para);
+    if(k && (k.etapa||"")===para) avisoDesfazer(para ? `Etapa: ${para}` : "Etapa retirada", ()=>gravarEtapa(id, antes));
+  });
+  cx.querySelectorAll("[data-tab-resp]").forEach(s=>s.onchange=async()=>{
+    const id = s.dataset.tabResp, de = s.dataset.de, para = s.value;
+    if(de===para || !await passarCaso(id, de, para)) return pintarTabela();
+    pintarTabela();
+    avisoDesfazer(para ? `Caso passado para ${((D.colPorId.get(para)||{}).nome||"").split(" ")[0]}` : "Caso sem responsável",
+      async()=>{ if(await passarCaso(id, para, de)) pintarTabela(); });
+  });
+}
+function renderTabela(){
+  tituloLista("▦ Tabela");
+  const f = tabFase();
+  document.getElementById("sub-lista").innerHTML = `<span style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+    <input id="tab-txt" type="search" placeholder="filtrar por nome, etapa, espécie ou responsável" aria-label="filtrar a tabela" value="${esc(tabTxt)}" style="flex:1;min-width:220px">
+    <button class="fchip${!f?" on":""}" data-tab-fase="" style="display:inline-flex">Todas</button>${FASES_QUADRO_ETAPA.map(x=>`<button class="fchip${x===f?" on":""}" data-tab-fase="${x}" style="display:inline-flex">${esc(NOME_FASE[x]||x)}</button>`).join("")}</span>`;
+  document.getElementById("conteudo-meio").innerHTML = `<div id="tab-casos"></div>`;
+  const i = document.getElementById("tab-txt"); i.oninput=()=>{ tabTxt = i.value; pintarTabela(); };
+  document.querySelectorAll("[data-tab-fase]").forEach(b=>b.onclick=()=>{ guardar("crm_tab_fase", b.dataset.tabFase); renderTabela(); });
+  pintarTabela();
+}
+// Pessoas (aba do Planejado): a linha do tempo de cada pessoa nas próximas três semanas, um quadrado por dia com o que
+// ela tem (a mesma conta da Lista: itensAgenda), o vencido à esquerda; o clique mostra os itens do dia
+const PES_DIAS = 21;
+const ROT_NAT = Object.fromEntries(PLAN_NAT.map(([v,r])=>[v,r]));
+function gradePessoas(){
+  const hj = hoje(), dias = Array.from({length:PES_DIAS}, (_,i)=>somaDias(hj, i)), fim = dias[dias.length-1];
+  const linhas = new Map();   // pessoa → coluna ("venc" ou o dia) → itens
+  for(const i of itensAgenda(null)){
+    if(!i.data || i.data>fim) continue;
+    const col = i.data<hj ? "venc" : i.data;
+    for(const p of (i.donos && i.donos.length ? i.donos : ["_"])){
+      if(p!=="_" && !D.colPorId.get(p)) continue;
+      if(!linhas.has(p)) linhas.set(p, new Map());
+      const m = linhas.get(p); if(!m.has(col)) m.set(col, []); m.get(col).push(i);
+    }
+  }
+  const ordem = [...equipeAtiva().map(c=>c.id).filter(id=>linhas.has(id)), ...[...linhas.keys()].filter(id=>id!=="_" && !equipeAtiva().some(c=>c.id===id)), ...(linhas.has("_")?["_"]:[])];
+  return {dias, ordem, linhas};
+}
+let _pesGrade = null;
+function rotItemPes(i){ return `${i.cli ? i.cli.nome : (i.k ? tituloCaso(i.k) : "")} · ${i.selo || (i.fatal ? "Prazo fatal" : ROT_NAT[natPlan(i)] || "")}`; }
+function renderPessoas(){
+  tituloLista("Planejado");
+  document.getElementById("sub-lista").innerHTML = `<span class="meio-sub">O que cada pessoa tem por dia nas próximas três semanas. O vermelho é prazo fatal; o roxo, perícia ou audiência.</span>`;
+  const g = _pesGrade = gradePessoas(), hj = hoje();
+  if(!g.ordem.length){ document.getElementById("conteudo-meio").innerHTML = `<p class="meio-sub">Nada com data nas próximas três semanas.</p>`; return; }
+  const max = Math.max(1, ...g.ordem.flatMap(p=>[...g.linhas.get(p).entries()].filter(([c])=>c!=="venc").map(([,v])=>v.length)));
+  const cel = (p, col) => { const its = g.linhas.get(p).get(col)||[], n = its.length, fds = col!=="venc" && !ehDiaUtil(col);
+    if(!n) return `<td class="pes-c${fds?" fds":""}"></td>`;
+    const pz = its.some(i=>natPlan(i)==="prazos"), pe = its.some(i=>natPlan(i)==="pericias");
+    return `<td class="pes-c${fds?" fds":""}${col==="venc"?" venc":""}"><button data-pes="${p}|${col}" style="--pes:${Math.round(25+75*Math.min(n,max)/max)}%" title="${esc(its.slice(0,8).map(rotItemPes).join("\n")+(n>8?`\n+${n-8}`:""))}">${n}${pz?`<i class="pes-pz" aria-hidden="true"></i>`:""}${pe?`<i class="pes-pe" aria-hidden="true"></i>`:""}<span class="sr-only"> ${n===1?"item":"itens"}${pz?", com prazo fatal":""}${pe?", com perícia ou audiência":""}</span></button></td>`; };
+  const nomeP = p => p==="_" ? "Sem responsável" : (D.colPorId.get(p).nome||"").split(" ")[0];
+  document.getElementById("conteudo-meio").innerHTML = `<div class="tab-rola"><table class="pes-tab"><thead><tr><th scope="col">Pessoa</th><th scope="col" class="venc">Vencidos</th>${
+    g.dias.map(d=>`<th scope="col" class="${!ehDiaUtil(d)?"fds":""}${d===hj?" hoje":""}" title="${fmt(d)}">${SIGLA_DIA[new Date(d+"T12:00:00").getDay()]}<br>${d.slice(8,10)}</th>`).join("")}</tr></thead><tbody>${
+    g.ordem.map(p=>`<tr><th scope="row">${p==="_"?"":avPz(p)} ${esc(nomeP(p))} <span class="pl-n">${[...g.linhas.get(p).values()].reduce((a,v)=>a+v.length,0)}</span></th>${cel(p,"venc")}${g.dias.map(d=>cel(p,d)).join("")}</tr>`).join("")}</tbody></table></div>`;
+  document.querySelectorAll("[data-pes]").forEach(b=>b.onclick=()=>{
+    const [p, col] = b.dataset.pes.split("|"), its = (_pesGrade.linhas.get(p)||new Map()).get(col)||[];
+    caixa(`<h3>${esc(nomeP(p))} · ${col==="venc" ? "vencidos" : fmt(col)}</h3><div class="pes-lista">${its.map(i=>`<button class="btn-mini" data-cli="${i.cli?i.cli.id:""}" style="text-align:left">${esc(rotItemPes(i))}${i.data<hj?` <span class="meio-sub">${fmt(i.data)}</span>`:""}</button>`).join("")}</div>`);
+    document.querySelectorAll(".pes-lista [data-cli]").forEach(x=>x.onclick=()=>{ if(x.dataset.cli){ fecharCaixa(); abrirFicha(x.dataset.cli); } });
+  });
+}
 
 // ── 📌 Quadros por horizonte (F132, em teste) ──────────────────────────────
 // Uma providência com data por cartão: prazo fatal, lembrete de comentário,
@@ -54634,6 +54769,8 @@ const AJUDA = {
   claude: ["Claude", `<p>Reúne os pedidos e as sugestões do Claude sobre os casos. O pedido abre no Claude já escrito, para revisar e enviar.</p>`],
   docmodelos: ["Modelos", `<p>São os modelos de documento do escritório (procuração, contrato, declarações). O modelo gera o documento já preenchido com os dados do cliente.</p>`],
   quadro: ["Quadro", `<p>Mostra os casos em colunas. Use "Agrupar por" para trocar a coluna (fase, etapa, responsável) e arraste o cartão para mudá-lo de coluna.</p>`],
+  tabela: ["Tabela", `<p>Mostra os casos abertos numa tabela. O cabeçalho ordena, o campo de cima filtra por nome, etapa, espécie ou responsável, e os botões filtram pela fase.</p><p>A etapa e o responsável se trocam na própria linha, com desfazer. A etapa oferece apenas as do catálogo da fase; a escrita à mão aparece, mas se troca na ficha.</p>`],
+  pessoas: ["Pessoas", `<p>Mostra, em linhas, o que cada pessoa tem por dia nas próximas três semanas, com os vencidos à esquerda. É a mesma conta da Lista do Planejado.</p><p>O ponto vermelho indica prazo fatal e o roxo, perícia ou audiência. O clique no dia mostra os itens e abre a ficha.</p>`],
   vendas: ["Vendas", `<p>São os contatos que ainda não contrataram, em etapas até fechado ou perdido. Mova o contato de etapa conforme a conversa avança.</p>`],
   whatsapp: ["WhatsApp", `<p>São as conversas do WhatsApp do escritório. Assuma a conversa para responder, transfira a quem cuida do assunto e encerre ao terminar. O balão pode virar andamento do caso, e a nota interna não vai ao cliente.</p>
     <p>À direita fica a ficha de quem fala e dos clientes que essa pessoa representa.</p>`],
@@ -54693,11 +54830,11 @@ const AJUDA = {
 };
 // os grupos da lista de assuntos, na ordem em que se aprende
 const AJUDA_GRUPOS = [
-  ["O dia", ["meudia","mencoes","novidades","planejado","agendaq","minhas","importante","particulares","calendario","agenda"]],
+  ["O dia", ["meudia","mencoes","novidades","planejado","pessoas","agendaq","minhas","importante","particulares","calendario","agenda"]],
   ["As listas", ["fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial","fase:aposentadoria_futura","fase:prazo","checagem","clientes","direito","rotinas","acervo"]],
   ["A ficha e o caso", ["busca","novocliente","ficha","ficha:cadastro","ficha:caso","caso:abas","caso:cartao","caso:etapas","caso:prazos","caso:escrever","caso:concluir","caso:conferir","trouxe","ficha:prazos","ficha:pericias","ficha:honorarios","ficha:novocaso"]],
   ["O atendimento", ["atend","atend:identificacao","atend:pa","atend:direito","atend:documentos"]],
-  ["Outras telas", ["whatsapp","recebimentos","patinss","quadro","vendas","parcerias","marketing","dashboard","claude","docmodelos","config"]],
+  ["Outras telas", ["whatsapp","recebimentos","patinss","quadro","tabela","vendas","parcerias","marketing","dashboard","claude","docmodelos","config"]],
   ["Os botões do canto", ["sugestoes","agendaflut","rapida"]],
 ];
 // o assunto da tela em que a pessoa está
