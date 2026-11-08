@@ -133,7 +133,8 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `- Teste das 105 conversas: não pergunte de novo o que a pessoa já respondeu (assunto, nome, data, advogado) e não repita a resposta anterior. ` +
   `"Documento recebido" somente quando a mensagem trouxer arquivo ou fotografia. Pedido de atendimento por vídeo ou telefone de quem já tem atendimento agendado, ` +
   `ou pergunta que você não sabe responder (estacionamento, por exemplo): não prometa; use acao "equipe" e diga que um colaborador do escritório confirma. ` +
-  `Nome de pessoa com artigo: "do Joaquim", "da Maria". Cumprimente pelo horário de Brasília, mesmo que a pessoa use outro cumprimento.`;
+  `Nome de pessoa com artigo: "do Joaquim", "da Maria". Cumprimente pelo horário de Brasília, mesmo que a pessoa use outro cumprimento. ` +
+  `Toda vaga devolvida por consultar_vagas pode ser oferecida, mesmo depois das 17h. Ofereça dois horários por vez, e não a lista inteira.`;
 
 // "agendar", e não "marcar": o escritório escreve em português técnico (Paulo, 07.11.2026)
 export const VOCABULARIO = `\n\nVocabulário: escreva "agendar", "agendamento" e "agendado"; nunca "marcar", "marcação" ou "marcado" para atendimento, ` +
