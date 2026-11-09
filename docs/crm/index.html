@@ -6867,7 +6867,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.18</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.19</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17015,6 +17015,8 @@ const ZIC = {
   agenda:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4m6-4v4"/>',
   baixo:'<path d="m6 9 6 6 6-6"/>',
   proibido:'<circle cx="12" cy="12" r="8"/><path d="m6.5 6.5 11 11"/>',
+  ditar:'<rect x="7" y="3" width="5" height="10" rx="2.5"/><path d="M4 10a5.5 5.5 0 0 0 11 0M9.5 16v3M16 8h5m-5 4h5m-3 4h3"/>',
+  corrigir:'<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/>',
   emoji:'<circle cx="12" cy="12" r="8.5"/><path d="M8.5 14a4 4 0 0 0 7 0"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.4"/>',
 };
 const zic = (n, t=16) => `<svg class="zic" width="${t}" height="${t}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ZIC[n]}</svg>`;
@@ -17464,7 +17466,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
                ${pode?`<details class="zt-outras"><summary>Outras opções</summary>
                  ${(cfgApp("zap_bot_ligado")||"sim")==="sim"?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>
                  ${!fim&&(zapAux.passos||[]).length?`<button onclick="levarRobo()" title="Levar o robô a um passo…"><span aria-hidden="true">Robô…</span><span class="sr-only">Levar o robô a um passo…</span></button>`:""}`:""}
-                 <button onclick="pedirHistoricoZap()" title="${esc(c.historico_resultado||"pede ao celular as mensagens anteriores à mais antiga desta conversa")}">${c.historico_pedido&&!c.historico_feito?"Buscando o histórico no celular…":"Buscar histórico no celular"}</button>
+                 <button onclick="pedirHistoricoZap()" title="${esc(c.historico_resultado||"pede ao celular as mensagens que faltam nesta conversa")}">${c.historico_pedido&&!c.historico_feito?"Buscando o histórico no celular…":"Buscar histórico no celular"}</button>
                  ${cfgApp("zap_ia_plantao")==="sim"?`<button onclick="mudarConversa({ia_conversa:!c.ia_conversa})">${c.ia_conversa?"A IA deixa de conversar com este número":"A IA conversa com este número"}</button>
                  <button onclick="mudarConversa({sem_ia:!c.sem_ia})">${c.sem_ia?"A IA volta a responder esta conversa":"A IA não responde esta conversa"}</button>`:""}
                </details>`:""}
@@ -17535,6 +17537,8 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
              <input type="file" id="zap-arq" hidden onchange="mandarArquivoZap()">
              <details class="ze-emo"${emoAberto?" open":""}><summary class="zap-icone" title="emojis" aria-label="Emojis">${zic("emoji")}</summary>
                <div class="ze-emo-grade" role="group" aria-label="Emojis">${EMOJIS_ESCREVER.map(e=>`<button type="button" onclick="emojiZap('${e}')">${e}</button>`).join("")}</div></details>
+             <button class="zap-icone${_ditado?" gravando":""}" id="zap-ditar" onclick="ditarZap()" title="ditar: fale a mensagem, toque de novo para parar e a IA a corrige no campo, sem enviar" aria-label="Ditar a mensagem">${zic("ditar")}</button>
+             <button class="zap-icone" id="zap-corrigir" onclick="corrigirZap()" title="corrigir com a IA o que está escrito, sem enviar" aria-label="Corrigir o texto com a IA">${zic("corrigir")}</button>
              ${zapNota?"":`<button class="zap-icone" onclick="document.getElementById('zap-arq').click()"
                title="mandar foto, PDF ou áudio" aria-label="Anexar arquivo">${zic("clipe")}</button>
              <button class="zap-icone ze-so-pc" onclick="frasesZap()" title="mensagens prontas (ou digite / no campo)" aria-label="Mensagens prontas">${zic("frases")}</button>
@@ -17890,6 +17894,44 @@ function navBuscaZap(d){
 // F328 · o seletor de emojis do campo de escrever: o emoji entra onde está o cursor
 const EMOJIS_ESCREVER = ["😀","😃","😄","😊","🙂","😉","😍","🥰","😘","😂","🤣","😅","😢","😭","😮","😔","😕","🙁","😟","🤔",
   "🙏","👍","👎","👏","🙌","👋","🤝","💪","✌️","👌","❤️","💚","💙","🌹","🎉","🎂","✅","☑️","❌","⚠️","📄","📎","📅","⏰","📞","🏥","⚖️","💰"];
+// F479 · ditar e corrigir com a IA (pedido do Paulo de 09.11.2026): o texto volta ao campo de escrever e nunca é
+// enviado sem o Enviar. O ditado é o do navegador (Web Speech); parado, o texto vai à correção.
+let _ditado = null;
+function ditarZap(){
+  const bt = document.getElementById("zap-ditar"), t = document.getElementById("zap-txt"); if(!t) return;
+  if(_ditado){ try{ _ditado.stop(); }catch(e){} return; }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR) return aviso("Este navegador não faz ditado. Use o microfone do teclado do celular e depois Corrigir.");
+  const r = new SR(), antes = t.value.trim(), conv = zapAberta; let dito = "";
+  r.lang = "pt-BR"; r.continuous = true; r.interimResults = true;
+  r.onresult = e => { let fim = "", parcial = "";
+    for(const x of e.results) (x.isFinal ? (fim += x[0].transcript + " ") : (parcial += x[0].transcript));
+    dito = fim.trim(); const campo = document.getElementById("zap-txt");
+    if(campo && zapAberta===conv) campo.value = [antes, (fim + parcial).trim()].filter(Boolean).join(" "); };
+  r.onerror = e => { if(e.error==="not-allowed") aviso("O navegador não liberou o microfone para o ditado"); };
+  r.onend = () => { _ditado = null; const b = document.getElementById("zap-ditar"); if(b) b.classList.remove("gravando");
+    if(dito && zapAberta===conv) corrigirZap(); };
+  _ditado = r; bt && bt.classList.add("gravando");
+  try{ r.start(); aviso("Ditando… toque de novo no botão para parar", false); }
+  catch(e){ _ditado = null; bt && bt.classList.remove("gravando"); aviso("Não consegui iniciar o ditado"); }
+}
+async function corrigirZap(){
+  const t = document.getElementById("zap-txt"), conv = zapAberta; if(!t || !conv) return;
+  const antes = t.value, texto = antes.trim();
+  if(!texto) return aviso("Escreva ou dite a mensagem para a IA corrigir");
+  const bt = document.getElementById("zap-corrigir"); bt && bt.classList.add("gravando");
+  aviso("Corrigindo o texto…", false);
+  let r; try{ r = await api("/functions/v1/zap_assistente",{method:"POST", body:JSON.stringify({acao:"corrigir", conversa_id:conv, texto, nota:!!zapNota})}); }
+  catch(e){ r = {erro: msgErro(e)}; }
+  finally{ const b = document.getElementById("zap-corrigir"); b && b.classList.remove("gravando"); }
+  if(!r || !r.texto) return aviso("A IA não corrigiu: " + ((r&&r.erro) || "sem resposta"));
+  const c = document.getElementById("zap-txt");
+  if(!c || zapAberta!==conv) return;
+  if(c.value !== antes) return aviso("O texto mudou enquanto a IA corrigia; nada foi trocado");
+  c.value = r.texto; c.dispatchEvent(new Event("input")); focarCampoZap();
+  avisoDesfazer("Texto corrigido no campo. Confira antes de enviar", () => {
+    const d = document.getElementById("zap-txt"); if(d && zapAberta===conv){ d.value = antes; d.dispatchEvent(new Event("input")); } }, 15000);
+}
 function emojiZap(e, campo){
   const t = document.getElementById(campo||"zap-txt"); if(!t) return;
   const a = t.selectionStart ?? t.value.length, b = t.selectionEnd ?? a;
