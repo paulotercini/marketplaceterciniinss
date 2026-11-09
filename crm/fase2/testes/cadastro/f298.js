@@ -144,7 +144,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     return { d: m(".ag-data"), n: m(".ag-txt b"), f: m(".acoes .acao-card[data-estrela]"), av: vis(".avatares"), selos: vis(".ag-selos"), slot: vis(".ag-slot"),
       dL: l.querySelector(".ag-data").getBoundingClientRect().left - card.left, h: card.height, segR: seg.right, cardR: card.right }; });
   conf("data, nome e estrela na mesma linha, a data à esquerda (F458)", al && [al.d, al.f].every(y => Math.abs(y - al.n) < 6) && al.dL < 30 && al.h <= 56);
-  conf("responsável, selos e caixa escondidos na linha do celular (F458)", al && !al.av && !al.selos && !al.slot);
+  conf("selos e caixa escondidos, o responsável à vista na linha do celular (F458, F462)", al && al.av && !al.selos && !al.slot);
   conf("o filtro por pessoa não passa da margem", al && al.segR <= al.cardR + 1);
   { const pq = await PEQ(); conf("no Meu Dia, nenhum alvo de toque abaixo de 24 px", !pq.length) || console.log(JSON.stringify(pq)); }
   const cm = colunaOk(await FABS(), true);

@@ -616,6 +616,8 @@ A **F460** (13.03, pedido do Paulo de 09.11.2026, "faltou as atribuições do la
 
 A **F461** (13.04, pedido do Paulo de 09.11.2026, "continua não aparecendo"): a atribuição do celular da F460 lia só a anotação de origem `app`, e quase todo caso tem apenas anotação do Microsoft To Do, por isso a linha ficava vazia; `preencherAtribCel` passou a usar a última anotação da equipe de qualquer origem (`ultAnotDe` sem filtro, o mesmo do hover da F438), e o `soCrm` saiu. A regra da F429 (o To Do não descreve prazo fatal) continua para o prazo; na linha do celular a anotação do To Do é a atribuição. Teste: `f427.js` ajustado, `f459.js`.
 
+A **F462** (13.05, correção do Paulo de 09.11.2026 com a foto do iPhone): a "atribuição" da linha do celular é a **inicial do responsável** (`.avatares`), à esquerda da ⭐, e não texto; a F460 e a F461 a tinham lido como a anotação do caso, que o Paulo não quer na linha: `.ag-oque-cel` e `preencherAtribCel` saíram, e a linha volta a data, nome (com o `.ag-oque` da F427 quando há), inicial e ⭐. Na extensão do celular, CPF, senha do Meu INSS e WhatsApp ficam numa linha só (`.ae-cop` sem quebra, o CPF em 12 px e inteiro, o rótulo encurtado a "INSS" e a senha é o que se corta), e a anotação abaixo vem com a data e quem escreveu ("05/11/2026 · Paulo", `.ae-cab`, pelo `autor_id`), também no computador. Testes: `f459.js` e `f298.js` ajustados.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

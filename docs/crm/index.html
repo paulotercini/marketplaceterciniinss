@@ -3881,24 +3881,29 @@ html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:6;width:auto}
    Espécie, lista, etapa, selos, responsável e caixa saem da linha; o toque abre a extensão com CPF, senha, WhatsApp e a última anotação */
 @media (max-width:760px), (pointer:coarse) and (max-height:500px){
   html[data-tema="v10"] #conteudo-meio .ag-linha{display:flex;align-items:center;gap:8px;padding:0 12px 0 14px;min-height:44px}
-  html[data-tema="v10"] #conteudo-meio .ag-linha > :is(.ag-selos,.avatares,.ag-slot,.ag-conf,.ag-c-lista,.ag-c-etapa){display:none}
+  html[data-tema="v10"] #conteudo-meio .ag-linha > :is(.ag-selos,.ag-slot,.ag-conf,.ag-c-lista,.ag-c-etapa){display:none}
+  /* F462 · a atribuição é a inicial do responsável, à esquerda da ⭐ (Paulo, 09.11.2026) */
+  html[data-tema="v10"] #conteudo-meio .ag-linha > .avatares{order:2;flex:none;margin:0;align-self:center;display:flex}
   html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-data{order:0;flex:none;min-width:0;margin:0;text-align:left;align-self:center}
   html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-txt{order:1;flex:1 1 auto;min-width:0;align-self:center;display:flex;align-items:baseline;white-space:nowrap;overflow:hidden;font-size:14px;line-height:20px}
   html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt > b{flex:none;max-width:100%;overflow:hidden;text-overflow:ellipsis}
   html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt .ag-ben{display:none}
   /* F460 · a atribuição é o que se corta, com reticências, e o nome fica inteiro; o `.ag-txt` não passa da borda */
   html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt .ag-oque{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:pre}
-  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt .ag-oque-cel{display:inline-block}   /* F460 */
-  html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:2;flex:none;margin:0;align-self:center}
+  html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:3;flex:none;margin:0;align-self:center}
   html[data-tema="v10"] #conteudo-meio .ag-ext{padding:8px 14px 10px}
   .ag-ext .ae-topo{justify-content:flex-start}
   .ag-ext .ae-quem{display:none}
-  .ag-ext .ae-cop{flex-wrap:wrap;white-space:normal;row-gap:6px}
+  /* F462 · CPF, senha e WhatsApp numa linha só, o CPF menor (Paulo, 09.11.2026) */
+  .ag-ext .ae-cop{flex-wrap:nowrap;white-space:nowrap;overflow:hidden;max-width:100%}
+  .ag-ext .ae-cop .cop{font-size:12px;padding:3px 8px;min-height:0;flex:none}
+  .ag-ext .ae-cop .ae-mini{min-width:0;overflow:hidden}
+  .ag-ext .ae-cop .ae-rot{display:none}
+  .ag-ext .ae-cop .ae-senha{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 }
 /* F444 · a linha C no computador em colunas, como no artefato aprovado (conferência do Paulo, 08.11.2026): cliente com a
    espécie, lista, etapa, selos, data, responsável, caixa e a ⭐ sempre à vista, cada um na mesma coluna em todas as linhas */
 html[data-tema="v10"] .ag-c-lista,html[data-tema="v10"] .ag-c-etapa,html[data-tema="v10"] .ag-th,html[data-tema="v10"] .ag-txt .ag-ben{display:none}
-html[data-tema="v10"] .ag-txt .ag-oque-cel{display:none}   /* F460 · só no celular */
 @container (min-width:721px){
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{display:grid;
     grid-template-columns:minmax(0,1.6fr) minmax(0,.8fr) minmax(0,1fr) 170px 64px 28px 24px 32px;column-gap:10px;align-items:center}
@@ -6784,7 +6789,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.04</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.05</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11492,7 +11497,7 @@ function montarExt(el, it){
   x.innerHTML = `<div class="ae-topo"><span class="ae-quem"><span class="ae-resp">${resp.length ? "Com "+esc(resp.map(c=>c.nome.split(" ")[0]).join(", ")) : "Sem responsável"}</span>${
       it.selo==="Retorno" && prazoDoTodo(k) ? `<span class="ae-todo">Prazo do Microsoft To Do · última anotação do caso</span>` : ""}</span>
     <span class="ae-cop">${cli && cli.cpf ? `<span class="cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">CPF ${esc(fmtCpf(cli.cpf))}</span>` : ""}
-      <button type="button" class="ae-mini" data-ae="senha" title="Copiar a senha do Meu INSS">Meu INSS <span class="ae-senha">…</span></button>
+      <button type="button" class="ae-mini" data-ae="senha" title="Copiar a senha do Meu INSS"><span class="ae-rot">Meu </span>INSS <span class="ae-senha">…</span></button>
       <button type="button" class="ae-mini ae-zap" data-ae="zap" title="Abrir a conversa do WhatsApp ao lado">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button></span></div>
     <div class="ae-txt">Carregando a última anotação…</div>
     <div class="ae-acoes">${[["abrir","Abrir","Abrir a ficha do cliente"],["anotar","Anotar","Escrever no caso, reagendar e atribuir"],["reagendar","Reagendar","Mudar a data"],["concluir","Concluir","Concluir a tarefa e tirar o prazo"]]
@@ -11504,8 +11509,9 @@ function montarExt(el, it){
   ultAnotDe(el.dataset.casos).then(a=>{
     const t = x.querySelector(".ae-txt"); if(!t) return;
     const tx = a ? (a.texto||"") : ""; x._texto = tx;
-    // F459 · só a data e o texto (pedido do Paulo, 08.11.2026)
-    t.innerHTML = a ? `<span class="ae-cab">${esc(fmtBarra(dataSP(a.criado_em)))}</span>${esc(tx.slice(0,1000))}${tx.length>1000 ? "…" : ""}`
+    // F459 · só a data e o texto (pedido do Paulo, 08.11.2026); F462 · com quem escreveu (Paulo, 09.11.2026)
+    const au = a && a.autor_id && D.colPorId.get(a.autor_id);
+    t.innerHTML = a ? `<span class="ae-cab">${esc(fmtBarra(dataSP(a.criado_em)))}${au ? " · "+esc(au.nome.split(" ")[0]) : ""}</span>${esc(tx.slice(0,1000))}${tx.length>1000 ? "…" : ""}`
       : `<span class="ae-cab">Sem anotação da equipe neste caso.</span>`;
     // o corte vem dos 1.000 caracteres ou das 14 linhas; o botão fica fora do texto cortado
     x.querySelector(".ae-mais")?.remove();
@@ -14519,15 +14525,12 @@ function linhaAgenda(it){
   const nome = cli ? esc(cli.nome) : esc(resumo);
   // F427 · o prazo e o compromisso dizem do que são na própria linha, depois do nome (antes, só no title)
   const oque = !cli ? "" : it.antes ? resumo : it.motivo || (tc && tc.natureza!=="lembrete" ? resumo : "");
-  // F460 · no celular a atribuição vai sempre na linha (pedido do Paulo, 09.11.2026): o motivo do retorno, senão a última
-  // anotação da equipe, buscada depois de pintar (`preencherAtribCel`, pelo `ultAnotDe` da F438)
-  const oqueCel = !oque && cli && k ? `<span class="ag-oque ag-oque-cel"${k.lembrar_motivo?"":` data-ua="${k.id}"`}>${k.lembrar_motivo?" · "+esc(k.lembrar_motivo):""}</span>` : "";
   const selK = t ? "t"+t.id : tc ? "tc"+tc.id : k ? `k${k.id}|${it.selo||""}|${d}` : "";   // F443 · a linha selecionada sobrevive ao render
   if(selK) _agIt.set(selK, it);
   // F437 · linha C: o nome à esquerda, a lista e a etapa, a data, o responsável e, à direita, o concluir e a ⭐
   return `<div class="cartao ag-linha${k&&k.urgente?" urg":""}"${cli?` data-cli="${cli.id}"`:""}${k?` data-casos="${k.id}"`:""}${t?` data-tarefa="${t.id}"`:""}${selK?` data-sel="${esc(selK)}"`:""}>
     <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
-    <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b>${k&&k.especie?`<span class="ag-ben">${esc(k.especie)}</span>`:""}${oque?`<span class="ag-oque"> · ${esc(oque)}</span>`:oqueCel}</div>
+    <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b>${k&&k.especie?`<span class="ag-ben">${esc(k.especie)}</span>`:""}${oque?`<span class="ag-oque"> · ${esc(oque)}</span>`:""}</div>
     <span class="ag-c-lista">${esc(k ? (fe!=="outro" ? NOME_FASE[fe]||"" : lst && lst!=="—" ? lst : NOME_FASE[fe]||"") : "")}</span>
     <span class="ag-c-etapa">${k && k.etapa ? seloEtapaLista(k) : ""}</span>
     <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${it.tc && Array.isArray(it.tc.etapas) && it.tc.etapas.length?`<span class="ag-tipo">etapas ${it.tc.etapas.filter(e=>e.feito).length}/${it.tc.etapas.length}</span>`:""}${
@@ -14668,15 +14671,6 @@ function renderAgendaV10(qual){
   ligarCartoes(); ligarTarefas();
   buscarTextosAgenda([...itens, ...deleg].filter(i=>i.andId && !i.resumo).map(i=>i.andId));
   buscarMotivosPz([...itens, ...deleg].filter(i=>i.k && (i.fatal || i.antes) && !i.tc && !i.motivo && i.k.prazo===(i.antes||i.data)).map(i=>i.k));   // F427
-  preencherAtribCel();   // F460
-}
-// F460 · a atribuição da linha do celular que não tem motivo escrito é a última anotação escrita no CRM (a do To Do não, F429)
-function preencherAtribCel(){
-  // F461 · a última anotação da equipe, inclusive a do Microsoft To Do: quase todo caso só tem anotação do To Do, e a linha ficava vazia (Paulo, 09.11.2026)
-  if(!celular()) return;
-  document.querySelectorAll("#conteudo-meio .ag-oque-cel[data-ua]").forEach(el=>ultAnotDe(el.dataset.ua).then(a=>{
-    if(a && a.texto && el.isConnected) el.textContent = " · " + resumoAgenda(a.texto);
-  }));
 }
 // ══════════════════════════════════════════════════════════════════════════
 // F442 · REAGENDAR OS VENCIDOS DE UMA VEZ (proposta 1 do Todoist, aprovada pelo Paulo em 08.11.2026)
