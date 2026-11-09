@@ -41,6 +41,7 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   }, [SUPA, SESSAO]);
   const escritas = [];
   const RESP = { resumo: { texto: "O cliente pergunta se a aposentadoria saiu." }, rascunho: { texto: "Bom dia! Vamos conferir e retornamos hoje." },
+    corrigir: { texto: "Bom dia. O atendimento está agendado para o dia 12/11." },
     documento: { tipo: "laudo médico", nome: "Laudo do ortopedista", caso_id: CASO, motivo: "o caso pede laudo" } };
   await ctx.route(SUPA + "/**", rota => {
     const u = decodeURIComponent(rota.request().url()), m = rota.request().method();
@@ -106,6 +107,27 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   await p.waitForTimeout(300);
   conf("o Rascunho vai ao campo de escrever", (await p.inputValue("#zap-txt")) === "Bom dia! Vamos conferir e retornamos hoje.");
   conf("e nada é enviado ao cliente", !escritas.some(e => e.m === "POST" && /rest\/v1\/zap_mensagens/.test(e.u)));
+  // F479 · Corrigir e Ditar: o texto corrigido volta ao campo, com desfazer, e nada é enviado
+  await p.fill("#zap-txt", "bom dia o atendimento ta marcado pro dia 12/11");
+  await p.click("#zap-corrigir");
+  await p.waitForTimeout(400);
+  const co = escritas.find(e => /zap_assistente/.test(e.u) && e.b.acao === "corrigir");
+  conf("F479 · Corrigir manda o texto escrito à função", co && co.b.texto === "bom dia o atendimento ta marcado pro dia 12/11" && co.b.conversa_id === CONV);
+  conf("F479 · e o texto corrigido volta ao campo", (await p.inputValue("#zap-txt")) === "Bom dia. O atendimento está agendado para o dia 12/11.");
+  await p.evaluate(() => desfazerAgora());
+  conf("F479 · o desfazer devolve o texto de antes", (await p.inputValue("#zap-txt")) === "bom dia o atendimento ta marcado pro dia 12/11");
+  await p.evaluate(() => {
+    window.SpeechRecognition = class { start(){ setTimeout(() => this.onresult({ results: [Object.assign([{ transcript: "agendado pro dia 12/11" }], { isFinal: true })] }), 20); }
+      stop(){ setTimeout(() => this.onend(), 10); } };
+    document.getElementById("zap-txt").value = ""; });
+  await p.click("#zap-ditar");
+  await p.waitForTimeout(150);
+  conf("F479 · o ditado escreve no campo", (await p.inputValue("#zap-txt")) === "agendado pro dia 12/11");
+  await p.click("#zap-ditar");
+  await p.waitForTimeout(400);
+  conf("F479 · parar o ditado leva o texto à correção", escritas.filter(e => /zap_assistente/.test(e.u) && e.b.acao === "corrigir").length === 2
+    && (await p.inputValue("#zap-txt")) === "Bom dia. O atendimento está agendado para o dia 12/11.");
+  conf("F479 · nada foi enviado ao cliente", !escritas.some(e => e.m === "POST" && /rest\/v1\/zap_mensagens/.test(e.u)));
 
   conf("a foto do cliente tem o ✨ juntar ao caso", await p.$(`#zb-m2 button[onclick*="identificarDocZap"]`));
   await p.evaluate(() => identificarDocZap("m2"));

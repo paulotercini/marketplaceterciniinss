@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_assistente.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, pedidosAbertos, promptRascunho, primeiroNome } from "../../zap_assistente/index.ts";
+import { mascarar, transcricao, pedidosAbertos, promptRascunho, primeiroNome, guardarNumeros, devolverNumeros, promptCorrigir } from "../../zap_assistente/index.ts";
 
 assert.equal(mascarar("meu CPF 123.456.789-09 e NB 1234567890"), "meu CPF [número] e NB [número]");
 assert.equal(mascarar("dia 12/03 às 9h, 3 filhos"), "dia 12/03 às 9h, 3 filhos", "data curta e número pequeno ficam");
@@ -17,4 +17,9 @@ assert.equal(primeiroNome("Maria da Silva"), "Maria");
 assert.ok(promptRascunho("Maria", [], "x").includes("Não prometa resultado"));
 assert.ok(promptRascunho("Maria", [], "x", "Assine como equipe.").includes("Instruções do escritório (seguem as proibições acima):\nAssine como equipe."));
 assert.ok(!promptRascunho("Maria", [], "x", "  ").includes("Instruções do escritório"));
+// F479 · os números não passam pelo modelo e voltam iguais
+const g = guardarNumeros("o atendimento é dia 12/11 às 9h30, valor R$ 100,00, protocolo 1725551766871");
+assert.ok(!/\d{3,}/.test(g.sem.replace(/⟦\d+⟧/g, "")), "nenhum número fica no texto que vai ao modelo");
+assert.equal(devolverNumeros(g.sem, g.nums), "o atendimento é dia 12/11 às 9h30, valor R$ 100,00, protocolo 1725551766871");
+assert.ok(promptCorrigir("x", "Maria").includes("Não acrescente informação") && promptCorrigir("x", "", true).includes("nota interna"));
 console.log("zap_assistente: ok");
