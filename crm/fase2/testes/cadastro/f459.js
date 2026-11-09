@@ -34,6 +34,13 @@ T.andamentos.push(a);
 T.andamento_tarefas.push({ id: id("f"), andamento_id: a.id, caso_id: k.id, colaborador_id: PAULO, atribuido_por: PAULO, lembrar_em: iso(-2), natureza: "compromisso",
   papel: "executa", concluida_em: null, iniciada_em: null, etapas: [], criado_em: a.criado_em });
 T.credenciais.push({ id: id("d"), cliente_id: c.id, tipo: "meu_inss", valor: "Senha#Ficticia1", criado_em: ts(-100) });
+// F460 · o retorno do To Do, sem motivo escrito: a atribuição da linha é a última anotação da equipe
+const c2 = { id: id("c"), nome: "Osvaldo Fictício Nery", cpf: "11144477735", telefone: "16999990002", campos: {}, criado_em: ts(-400) };
+T.clientes.push(c2);
+const k2 = { id: id("b"), cliente_id: c2.id, titulo: c2.nome, beneficio: "Aposentadoria", especie: "B42", fase: "inss", origem_lista: "🌻 INSS", prazo: iso(0), todo_prazo: iso(0),
+  protocolos: [], processos: [], crps_nups: [], crps: [], nbs: [], arquivados: {}, marcadores: [], ronda: {}, prazos_tribunal: [], pje_links: {}, importante: false, urgente: false, criado_em: ts(-300) };
+T.casos.push(k2); T.atribuicoes.push({ caso_id: k2.id, colaborador_id: PAULO });
+T.andamentos.push({ id: id("e"), caso_id: k2.id, autor_id: PAULO, texto: "Aguardar a análise do INSS e conferir o PAT.", origem: "app", origem_id: null, criado_em: ts(-5), publico: false, excluir: false, importante: false, urgente: false, responde_a: null });
 
 const ok = [];
 const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : "FALHOU  ") + nome); return v; };
@@ -71,6 +78,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   if(!conf("tudo na mesma altura, a data no canto esquerdo", vis.every(x => Math.abs((x.t + x.b) / 2 - (vis[0].t + vis[0].b) / 2) < 10) && vis[0].l < 30)) console.log(JSON.stringify(vis));
   const txt = await linha.locator(".ag-txt").innerText();
   conf("o texto traz o nome e a atribuição, sem a espécie", /Marcia Fictícia Lyra/.test(txt) && /avisar a cliente/i.test(txt) && !/B31/.test(txt)) || console.log(txt);
+  const l2 = p.locator(`.cartao.ag-linha[data-casos="${k2.id}"]`).first();
+  await p.waitForTimeout(800);
+  const txt2 = await l2.innerText().catch(() => "");
+  conf("o retorno do To Do traz a última anotação como atribuição (F460)", /Osvaldo/.test(txt2) && /aguardar a análise do INSS/i.test(txt2)) || console.log(txt2);
   const alt = await linha.evaluate(el => el.getBoundingClientRect().height);
   conf("a linha tem uma altura só (até 48 px)", alt <= 48) || console.log(alt);
   await p.screenshot({ path: OUT + "/linha.png" });
