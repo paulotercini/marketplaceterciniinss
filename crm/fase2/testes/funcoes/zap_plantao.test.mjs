@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_plantao.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO, promptCliente, ESQ_CLIENTE, promptCobranca, ESQ_COBRANCA, promptAndamento, ESQ_ANDAMENTO, mascararMenosDatas } from "../../zap_plantao/index.ts";
+import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO, promptCliente, ESQ_CLIENTE, promptCobranca, ESQ_COBRANCA, promptAndamento, ESQ_ANDAMENTO, mascararMenosDatas, ehGolpe } from "../../zap_plantao/index.ts";
 
 assert.equal(mascarar("CPF 123.456.789-09"), "CPF [número]");
 const msgs = [
@@ -493,4 +493,14 @@ console.log("formal: ok");
   assert.equal(mascararMenosDatas("em 28/09/2026 — 5001864-28.2026.4.03.6314"), "em 28/09/2026 — [número]");
   assert.deepEqual(ESQ_ANDAMENTO.required, ["sugerir", "mensagem"]);
   console.log("ok F422ak andamento");
+}
+
+{ // F476 · o golpe é reconhecido pela decisão e pela fala do cliente
+  const msg = (texto) => [{ direcao: "entrada", por_bot: false, tipo: "texto", texto, momento: "2026-11-09T16:04:27Z" }];
+  const fala = "Boa tarde, ô Paulo, eu estou me ligando com o seu nome, com o seu telefone, eu acho que é trato igual da outra vez";
+  assert.ok(ehGolpe({ acao: "equipe", assunto: "cliente recebeu ligação suspeita", resposta: "" }, msg(fala)), "ligação em nome do escritório");
+  assert.ok(ehGolpe({ acao: "equipe", assunto: "possível golpe do falso advogado", resposta: "" }, msg("oi")), "o assunto diz golpe");
+  assert.ok(!ehGolpe({ acao: "responder", assunto: "golpe", resposta: "" }, msg(fala)), "só na ação equipe");
+  assert.ok(!ehGolpe({ acao: "equipe", assunto: "benefício cortado", resposta: "" }, msg("posso pagar o atendimento por pix?")), "pix comum não é golpe");
+  console.log("ok F476 golpe");
 }

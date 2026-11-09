@@ -180,8 +180,18 @@ const T = {
   }));
 
   // F192 · quem conversa não é o cliente (a mãe fala pelo filho)
-  await p.evaluate(id => abrirConversa(id), Z1);
+  await p.evaluate(id => { zapConvs.find(x => x.id === id).nao_lidas = 2; return abrirConversa(id); }, Z1);   // chega mensagem com a conversa aberta
   await p.waitForSelector(".zap-topo");
+  // F483 · a recarga com a conversa aberta não lê; o clique no nome lê; o botão Lida tira sem responder
+  conf("F483 · a conversa aberta pela recarga continua nova, e o topo oferece Lida", await p.evaluate(id => {
+    const c = zapConvs.find(x => x.id === id); const b = document.querySelector(".zt-acoes>.zt-desler");
+    return c.nao_lidas > 0 && !!b && b.textContent.trim() === "Lida"; }, Z1));
+  await p.evaluate(() => marcarNaoLida());
+  conf("F480 · Lida grava zero e o topo volta a Desler", await p.evaluate(id => zapConvs.find(x => x.id === id).nao_lidas === 0
+    && document.querySelector(".zt-acoes>.zt-desler").textContent.trim() === "Desler", Z1));
+  conf("F483 · o clique no nome lê a conversa", await p.evaluate(async id => {
+    const c = zapConvs.find(x => x.id === id); c.nao_lidas = 2; await abrirConversa(id);
+    const antes = c.nao_lidas === 2; await abrirConversa(id, true); return antes && c.nao_lidas === 0; }, Z1));
   conf("nome do WhatsApp diferente do cliente: o cabeçalho pergunta quem conversa", (await p.textContent(".zap-topo")).includes("Informar quem conversa"));
   await p.evaluate(() => quemConversa());
   await p.click('[name=zq][value=outro]');

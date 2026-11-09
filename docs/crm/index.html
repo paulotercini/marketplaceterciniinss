@@ -7281,7 +7281,9 @@ function lerRascunho(casoId){
 function limparRascunho(casoId){
   try{ sessionStorage.removeItem("rasc:"+casoId); }catch(e){}
 }
-function aviso(msg, som=true){
+let coletaSilenciosa = false;   // F482 · ver autoAplicarColetas
+function aviso(msg, som=true, naColeta=false){
+  if(coletaSilenciosa && !naColeta) return;   // F482 · a importação em segundo plano mostra só o "Importando N de M"
   const el = document.getElementById("aviso");
   clearTimeout(_desfazerTimer); _desfazer = null;
   el.textContent = msg; el.classList.remove("com-bt"); el.classList.add("on");
@@ -10611,7 +10613,7 @@ async function aplicarTodasColetas(auto){
   aplicandoTodas = true;
   try{
     for(const [i, c] of lista.entries()){
-      aviso(`Importando ${i+1} de ${lista.length}…`, false);
+      aviso(`Importando ${i+1} de ${lista.length}…`, false, true);
       const [conferir, aplicar] = LOTE_FONTES[c.fonte].map(f => f && window[f]);
       try{
         if(conferir) await conferir(c.id);
@@ -10621,7 +10623,7 @@ async function aplicarTodasColetas(auto){
       }catch(e){ console.warn("aplicar todas:", c.id, e); }
     }
   }finally{ aplicandoTodas = false; }
-  await buscarColetas(); render();
+  await buscarColetas(); renderColeta();
   const resta = coletasPendentes.filter(c => lista.some(x => x.id===c.id)).length;
   if(auto && resta===lista.length) return;
   aviso(`✔ ${lista.length-resta} coleta(s) aplicada(s)${resta?`; ${resta} ficaram na fila para conferir uma a uma (sem caso no CRM ou com falha)`:""}`);
@@ -10633,10 +10635,14 @@ async function aplicarTodasColetas(auto){
 // A trava em config_app impede duas aberturas do CRM de aplicarem a mesma fila.
 // shortcut: trava por carimbo, sem transação; duas aberturas no mesmo segundo ainda podem coincidir
 const AUTO_COLETAS_MS = 60*1000, AUTO_TRAVA_MS = 10*60*1000;
+// F482 · pedido do Paulo (09.11.2026): a importação piscava a tela e tirava o que ele fazia (a conversa, o texto
+// digitado), porque cada coleta recarregava e repintava o CRM. Em segundo plano, nada se repinta durante a rodada; no
+// fim, a tela livre recarrega uma vez, e a ocupada (ficha, WhatsApp, campo com texto, janela) fica como está e a vigia
+// (E1) traz o que mudou quando ela se liberar.
+function renderColeta(){ if(!coletaSilenciosa) render(); }
+async function recarregarDaColeta(){ if(coletaSilenciosa) return; await carregar(); montarSidebar(); render(); }
 async function autoAplicarColetas(){
-  if(!souAdmin() || aplicandoTodas || document.hidden) return;
-  const ae = document.activeElement;   // não repinta por cima de quem digita ou tem uma janela aberta
-  if((ae && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) || document.querySelector(".modal-fundo")) return;
+  if(!souAdmin() || aplicandoTodas || document.hidden || coletaSilenciosa) return;
   await buscarColetas();
   const velhas = coletasPorFonte().velhas.filter(c => LOTE_FONTES[c.fonte] || c.fonte==="pat");
   const pat = coletasPorFonte().novas.find(c => c.fonte==="pat");
@@ -10644,6 +10650,7 @@ async function autoAplicarColetas(){
   const [t] = await api(`/rest/v1/config_app?select=valor&chave=eq.coletas_auto_em`).catch(()=>null) || [];
   if(t && Date.now() - Date.parse(t.valor) < AUTO_TRAVA_MS) return;
   await guardarCfgApp("coletas_auto_em", new Date().toISOString());
+  coletaSilenciosa = true;
   try{
     if(velhas.length) await api(`/rest/v1/coletas?id=in.(${velhas.map(c=>c.id).join(",")})`,{method:"PATCH",
       headers:{Prefer:"return=minimal"}, body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
@@ -10660,7 +10667,11 @@ async function autoAplicarColetas(){
         await aplicarPatDeVerdade();
       }
     }
-  }finally{ await guardarCfgApp("coletas_auto_em", new Date(0).toISOString()).catch(()=>{}); }
+  }finally{
+    coletaSilenciosa = false;
+    await guardarCfgApp("coletas_auto_em", new Date(0).toISOString()).catch(()=>{});
+  }
+  if(!telaOcupada()){ await carregar(); render(); }
   montarSidebar();
 }
 async function usarColeta(id){
@@ -10670,7 +10681,7 @@ async function usarColeta(id){
     arquivoPat = normalizarColeta(c.dados);
     planoPat = await montarPlanoPat(arquivoPat);
     planoPat.coleta_id = id;
-    render();
+    renderColeta();
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
 }
 
@@ -11141,7 +11152,7 @@ async function aplicarPatDeVerdade(){
       body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
   if(planoPat===plano) planoPat = null;
   await buscarColetas();
-  await carregar(); montarSidebar(); render();
+  await recarregarDaColeta();
   marcarEtapasVelhas(casosDoPlanoPat(plano)).catch(()=>{});   // F236 · só a marca para o portal
   if(!falhas.length) return aviso(`✔ ${feitos} gravação(ões)${docsPat?` · ${docsPat} anexo(s) do INSS com o texto`:""}`);
   aviso(recadoDeFalhas(feitos, falhas));
@@ -12399,7 +12410,7 @@ async function conferirPje(coletaId){
     }
     planoPjeAtual = plano;
     await anotarSemCaso(dados, plano.semCaso, porProcesso, fora).catch(()=>{});
-    render();
+    renderColeta();
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
 }
 // F288 · PROCESSO SEM CASO HÁ MAIS DE 7 DIAS. A extensão do e-SAJ (1.24) só
@@ -13022,7 +13033,7 @@ async function conferirPjeProc(coletaId){
     }
     }
     planoPjeProcAtual = plano;
-    render();
+    renderColeta();
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
 }
 async function aplicarPjeProc(coletaId){
@@ -13066,7 +13077,7 @@ async function aplicarPjeProc(coletaId){
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
   if(planoPjeProcAtual===plano) planoPjeProcAtual = null;
   await buscarColetas();
-  await carregar(); montarSidebar(); render();
+  await recarregarDaColeta();
   marcarEtapasVelhas([...(plano.andamentos||[]), ...(plano.fichas||[])].map(a=>a.caso_id)).catch(()=>{});   // F236
   if(falhas.length){
     console.warn("falhas do histórico PJe:", falhas);
@@ -13108,7 +13119,7 @@ async function aplicarPje(coletaId){
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
   if(planoPjeAtual===plano) planoPjeAtual = null;
   await buscarColetas();
-  await carregar(); montarSidebar(); render();
+  await recarregarDaColeta();
   marcarEtapasVelhas([...(plano.andamentos||[]), ...(plano.fichas||[])].map(a=>a.caso_id)).catch(()=>{});   // F236
   if(falhas.length){
     console.warn("falhas do PJe:", falhas);
@@ -13348,7 +13359,7 @@ async function aplicarCrps(coletaId){
     headers:{Prefer:"return=minimal"},
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
   planoCrpsAtual = null;
-  await buscarColetas(); await carregar(); montarSidebar(); render();
+  await buscarColetas(); await recarregarDaColeta();
   marcarEtapasVelhas([...p.blocos, ...p.andamentos].map(x=>x.caso_id)).catch(()=>{});   // F236 · só a marca para o portal
   const d = p.resumo.decisoes;
   // o número que importa é o de MOVIMENTOS: os blocos dos recursos são
@@ -13406,7 +13417,7 @@ async function aplicarPrazos(coletaId){
   }
   await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
-  await buscarColetas(); await carregar(); montarSidebar(); render();
+  await buscarColetas(); await recarregarDaColeta();
   aviso(falhas.length ? recadoDeFalhas(feitos, falhas)
     : `✔ ${(d.itens||[]).length} prazo(s) do ${ROT_PRAZO[d.sistema]||d.sistema}: ${novos} novo(s) em ${porCaso.size} caso(s)${semCaso?` · ${semCaso} sem caso no CRM`:""}${(d.faltou||[]).length?` · ⚠ o portal não abriu: ${d.faltou.join("; ")}`:""}`);
 }
@@ -16119,7 +16130,7 @@ function renderMencoes(){
 }
 // F187 · o aviso de transferência (ou @ na nota) leva direto à conversa
 function abrirConversaDaMencao(conversaId, acao, msgId){
-  zapAberta = conversaId; zapPainelAberto = false;
+  zapAberta = conversaId; zapPainelAberto = false; zapLerAoAbrir = conversaId;
   // F396 · o botão do aviso: Responder põe o cursor no campo, Ouvir toca o áudio (sem o gesto, o navegador pode barrar: fica o balão em destaque)
   zapDoAviso = acao ? {conversa: conversaId, acao, msgId} : null;
   visao = "whatsapp"; render();
@@ -17015,6 +17026,8 @@ const ZIC = {
   agenda:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4m6-4v4"/>',
   baixo:'<path d="m6 9 6 6 6-6"/>',
   proibido:'<circle cx="12" cy="12" r="8"/><path d="m6.5 6.5 11 11"/>',
+  ditar:'<rect x="7" y="3" width="5" height="10" rx="2.5"/><path d="M4 10a5.5 5.5 0 0 0 11 0M9.5 16v3M16 8h5m-5 4h5m-3 4h3"/>',
+  corrigir:'<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/>',
   emoji:'<circle cx="12" cy="12" r="8.5"/><path d="M8.5 14a4 4 0 0 0 7 0"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.4"/>',
 };
 const zic = (n, t=16) => `<svg class="zic" width="${t}" height="${t}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ZIC[n]}</svg>`;
@@ -17152,11 +17165,11 @@ function pintarListaZap(){
     clearTimeout(zapBuscaT); zapBuscaT = setTimeout(buscarNasMensagens, 400); };
   document.querySelectorAll("[data-za]").forEach(el=>el.onclick=async()=>{
     const [cv, msg] = el.dataset.za.split("|");
-    await abrirConversa(cv); irParaMsg(msg);
+    await abrirConversa(cv, true); irParaMsg(msg);
   });
   // a lista repinta a cada 6 s: quem está digitando a busca não pode perder o cursor
   if(comFoco){ b2.focus(); b2.setSelectionRange(b2.value.length, b2.value.length); }
-  document.querySelectorAll("[data-zc]").forEach(el=>el.onclick=()=>abrirConversa(el.dataset.zc));
+  document.querySelectorAll("[data-zc]").forEach(el=>el.onclick=()=>abrirConversa(el.dataset.zc, true));
 }
 
 // A foto de perfil do WhatsApp é o que faz a lista parecer gente, e não
@@ -17317,17 +17330,21 @@ async function carregarReacoes(){
 }
 // F339 · a conversa já aberta nesta sessão reabre na hora com o que se viu; o banco atualiza em seguida
 const _zapCache = new Map();
-async function abrirConversa(id){
+// F483 · o clique no nome é ler; a mensagem que chega com a conversa já aberta fica nova até outro clique ou a resposta
+let zapLerAoAbrir = null;
+function lerConversaZap(c){
+  if(!c || !c.nao_lidas) return;
+  api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}).catch(()=>{});
+  c.nao_lidas = 0;
+}
+async function abrirConversa(id, ler){
   const mesma = zapAberta===id;   // reabrir a mesma (depois de enviar, na recarga) guarda o que está escrito e a rolagem
   if(zapAberta!==id){ zapResponder = null; zapNota = false; }
   zapPainelAberto = false;
   zapAberta = id;
   const c = zapConvs.find(x=>x.id===id); if(!c) return;
-  if(c.nao_lidas){        // abrir é ler (sem esperar o banco)
-    api(`/rest/v1/zap_conversas?id=eq.${id}`,{method:"PATCH",
-      headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}).catch(()=>{});
-    c.nao_lidas=0;
-  }
+  if(ler || zapLerAoAbrir===id){ zapLerAoAbrir = null; lerConversaZap(c); }   // F483 · a recarga de 6 s não lê
   const cache = _zapCache.get(id), naTela = !!document.getElementById("zap-dir");
   if(cache && naTela){ ({msgs:zapMsgs, reacoes:zapReacoes, transf:zapTransf, hist:zapHist} = cache); mesma ? pintarConversaGuardando() : pintarConversa(); }
   if(naTela) pintarListaZap();
@@ -17340,6 +17357,8 @@ async function abrirConversa(id){
       `select=numero,aberto_em,observacao&conversa_id=eq.${id}&encerrado_em=not.is.null&order=aberto_em.desc&limit=5`).catch(()=>[])]);
   if(zapAberta!==id) return;   // outra conversa foi aberta enquanto esta carregava
   zapMsgs = ms; zapTransf = tr; zapHist = hi;
+  const ult = ms.filter(m=>m.direcao!=="interna").pop();   // F480 · acabou de responder: tira a bolinha sem esperar a lista
+  if(c.nao_lidas && ult && ult.direcao==="saida" && !ult.por_bot){ c.nao_lidas = 0; pintarListaZap(); }
   await carregarReacoes();
   if(zapAberta!==id) return;
   _zapCache.set(id, {msgs:zapMsgs, reacoes:zapReacoes, transf:zapTransf, hist:zapHist});
@@ -17446,7 +17465,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            ${pode&&!fim?`<button class="zt-btn" onclick="iaZap('rascunho')" title="a IA escreve uma resposta no campo; confira antes de enviar" aria-label="Rascunho">✨<span class="lbl">Rascunho</span></button>`:""}`:""}
            ${fim||!pode?"":`<button class="zt-btn zt-trans" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
            ${fim||pode||!deOutro?"":`<button class="zt-btn zt-trans" onclick="pedirTransferencia()" title="pedir a ${esc(at.nome)} e aos gestores que transfiram a conversa" aria-label="Pedir transferência">${zic("seta")}<span class="lbl">Pedir</span></button>`}
-           <button class="zt-btn zt-desler" onclick="marcarNaoLida()" title="Marcar como não lida" aria-label="Marcar como não lida"><span class="lbl">Desler</span></button>
+           <button class="zt-btn zt-desler" onclick="marcarNaoLida()" title="${c.nao_lidas?"Marcar como lida, sem responder":"Marcar como não lida"}" aria-label="${c.nao_lidas?"Marcar como lida":"Marcar como não lida"}"><span class="lbl">${c.nao_lidas?"Lida":"Desler"}</span></button>
            ${pode?`<button class="zt-btn pri zt-fim" aria-label="${fim?"Reabrir":"Encerrar"}" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}<span class="lbl">Encerrar</span>`}</button>`:""}
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
@@ -17458,13 +17477,13 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
                ${cli?`<button onclick="quemConversa()" title="dizer se quem escreve é o próprio cliente ou outra pessoa por ele">Identificar quem escreve</button>`:`<button onclick="vincularConversa()" title="Vincular a um cliente">Vincular<span class="sr-only"> a um cliente</span></button>
                <button onclick="this.closest('details').open=false;nomearConversa()" title="Alterar o nome do contato"><span aria-hidden="true">Renomear</span><span class="sr-only">Alterar o nome do contato</span></button>`}
                <button onclick="this.closest('details').open=false;verFavoritasZap()">Mensagens favoritas${zapMsgs.some(m=>m.favorita_em)?` (${zapMsgs.filter(m=>m.favorita_em).length})`:""}</button>
-               <button class="zt-cel zt-desler" onclick="marcarNaoLida()" title="Marcar como não lida"><span aria-hidden="true">Desler</span><span class="sr-only">Marcar como não lida</span></button>
+               <button class="zt-cel zt-desler" onclick="marcarNaoLida()" title="${c.nao_lidas?"Marcar como lida, sem responder":"Marcar como não lida"}"><span aria-hidden="true">${c.nao_lidas?"Lida":"Desler"}</span><span class="sr-only">${c.nao_lidas?"Marcar como lida":"Marcar como não lida"}</span></button>
                <button onclick="silenciarZap()" title="sem aviso desta conversa por um tempo">${silenciadaZap(c.id)?`🔕 Silenciada até ${new Date(zapSilencio.get(c.id)).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})}`:"🔕 Silenciar"}</button>
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
                ${pode?`<details class="zt-outras"><summary>Outras opções</summary>
                  ${(cfgApp("zap_bot_ligado")||"sim")==="sim"?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>
                  ${!fim&&(zapAux.passos||[]).length?`<button onclick="levarRobo()" title="Levar o robô a um passo…"><span aria-hidden="true">Robô…</span><span class="sr-only">Levar o robô a um passo…</span></button>`:""}`:""}
-                 <button onclick="pedirHistoricoZap()" title="${esc(c.historico_resultado||"pede ao celular as mensagens anteriores à mais antiga desta conversa")}">${c.historico_pedido&&!c.historico_feito?"Buscando o histórico no celular…":"Buscar histórico no celular"}</button>
+                 <button onclick="pedirHistoricoZap()" title="${esc(c.historico_resultado||"pede ao celular as mensagens que faltam nesta conversa")}">${c.historico_pedido&&!c.historico_feito?"Buscando o histórico no celular…":"Buscar histórico no celular"}</button>
                  ${cfgApp("zap_ia_plantao")==="sim"?`<button onclick="mudarConversa({ia_conversa:!c.ia_conversa})">${c.ia_conversa?"A IA deixa de conversar com este número":"A IA conversa com este número"}</button>
                  <button onclick="mudarConversa({sem_ia:!c.sem_ia})">${c.sem_ia?"A IA volta a responder esta conversa":"A IA não responde esta conversa"}</button>`:""}
                </details>`:""}
@@ -17535,6 +17554,8 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
              <input type="file" id="zap-arq" hidden onchange="mandarArquivoZap()">
              <details class="ze-emo"${emoAberto?" open":""}><summary class="zap-icone" title="emojis" aria-label="Emojis">${zic("emoji")}</summary>
                <div class="ze-emo-grade" role="group" aria-label="Emojis">${EMOJIS_ESCREVER.map(e=>`<button type="button" onclick="emojiZap('${e}')">${e}</button>`).join("")}</div></details>
+             <button class="zap-icone${_ditado?" gravando":""}" id="zap-ditar" onclick="ditarZap()" title="ditar: fale a mensagem, toque de novo para parar e a IA a corrige no campo, sem enviar" aria-label="Ditar a mensagem">${zic("ditar")}</button>
+             <button class="zap-icone" id="zap-corrigir" onclick="corrigirZap()" title="corrigir com a IA o que está escrito, sem enviar" aria-label="Corrigir o texto com a IA">${zic("corrigir")}</button>
              ${zapNota?"":`<button class="zap-icone" onclick="document.getElementById('zap-arq').click()"
                title="mandar foto, PDF ou áudio" aria-label="Anexar arquivo">${zic("clipe")}</button>
              <button class="zap-icone ze-so-pc" onclick="frasesZap()" title="mensagens prontas (ou digite / no campo)" aria-label="Mensagens prontas">${zic("frases")}</button>
@@ -17588,6 +17609,12 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
 // como no WhatsApp: a conversa fecha (abrir é ler) e volta à lista com a bolinha, para responder depois
 async function marcarNaoLida(){
   const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  if(c.nao_lidas){   // F480 · a conversa nova sai sem resposta apenas por este botão
+    try{ await api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}); }
+    catch(e){ return aviso(msgErro(e)); }
+    c.nao_lidas = 0; pintarListaZap(); pintarConversaGuardando(); return aviso("Marcada como lida");
+  }
   const n = Math.max(1, c.nao_lidas||0);
   try{ await api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",
     headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:n})}); }
@@ -17890,6 +17917,44 @@ function navBuscaZap(d){
 // F328 · o seletor de emojis do campo de escrever: o emoji entra onde está o cursor
 const EMOJIS_ESCREVER = ["😀","😃","😄","😊","🙂","😉","😍","🥰","😘","😂","🤣","😅","😢","😭","😮","😔","😕","🙁","😟","🤔",
   "🙏","👍","👎","👏","🙌","👋","🤝","💪","✌️","👌","❤️","💚","💙","🌹","🎉","🎂","✅","☑️","❌","⚠️","📄","📎","📅","⏰","📞","🏥","⚖️","💰"];
+// F479 · ditar e corrigir com a IA (pedido do Paulo de 09.11.2026): o texto volta ao campo de escrever e nunca é
+// enviado sem o Enviar. O ditado é o do navegador (Web Speech); parado, o texto vai à correção.
+let _ditado = null;
+function ditarZap(){
+  const bt = document.getElementById("zap-ditar"), t = document.getElementById("zap-txt"); if(!t) return;
+  if(_ditado){ try{ _ditado.stop(); }catch(e){} return; }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR) return aviso("Este navegador não faz ditado. Use o microfone do teclado do celular e depois Corrigir.");
+  const r = new SR(), antes = t.value.trim(), conv = zapAberta; let dito = "";
+  r.lang = "pt-BR"; r.continuous = true; r.interimResults = true;
+  r.onresult = e => { let fim = "", parcial = "";
+    for(const x of e.results) (x.isFinal ? (fim += x[0].transcript + " ") : (parcial += x[0].transcript));
+    dito = fim.trim(); const campo = document.getElementById("zap-txt");
+    if(campo && zapAberta===conv) campo.value = [antes, (fim + parcial).trim()].filter(Boolean).join(" "); };
+  r.onerror = e => { if(e.error==="not-allowed") aviso("O navegador não liberou o microfone para o ditado"); };
+  r.onend = () => { _ditado = null; const b = document.getElementById("zap-ditar"); if(b) b.classList.remove("gravando");
+    if(dito && zapAberta===conv) corrigirZap(); };
+  _ditado = r; bt && bt.classList.add("gravando");
+  try{ r.start(); aviso("Ditando… toque de novo no botão para parar", false); }
+  catch(e){ _ditado = null; bt && bt.classList.remove("gravando"); aviso("Não consegui iniciar o ditado"); }
+}
+async function corrigirZap(){
+  const t = document.getElementById("zap-txt"), conv = zapAberta; if(!t || !conv) return;
+  const antes = t.value, texto = antes.trim();
+  if(!texto) return aviso("Escreva ou dite a mensagem para a IA corrigir");
+  const bt = document.getElementById("zap-corrigir"); bt && bt.classList.add("gravando");
+  aviso("Corrigindo o texto…", false);
+  let r; try{ r = await api("/functions/v1/zap_assistente",{method:"POST", body:JSON.stringify({acao:"corrigir", conversa_id:conv, texto, nota:!!zapNota})}); }
+  catch(e){ r = {erro: msgErro(e)}; }
+  finally{ const b = document.getElementById("zap-corrigir"); b && b.classList.remove("gravando"); }
+  if(!r || !r.texto) return aviso("A IA não corrigiu: " + ((r&&r.erro) || "sem resposta"));
+  const c = document.getElementById("zap-txt");
+  if(!c || zapAberta!==conv) return;
+  if(c.value !== antes) return aviso("O texto mudou enquanto a IA corrigia; nada foi trocado");
+  c.value = r.texto; c.dispatchEvent(new Event("input")); focarCampoZap();
+  avisoDesfazer("Texto corrigido no campo. Confira antes de enviar", () => {
+    const d = document.getElementById("zap-txt"); if(d && zapAberta===conv){ d.value = antes; d.dispatchEvent(new Event("input")); } }, 15000);
+}
 function emojiZap(e, campo){
   const t = document.getElementById(campo||"zap-txt"); if(!t) return;
   const a = t.selectionStart ?? t.value.length, b = t.selectionEnd ?? a;
@@ -18772,7 +18837,7 @@ async function conferirContatoZap(){
     await recarregarZap(true).catch(()=>{});
     zapFiltro = "minhas";
     if(visao!=="whatsapp") irPara("whatsapp");
-    abrirConversa(conv);
+    abrirConversa(conv, true);
   };
   document.getElementById("znc-cli").onclick = ()=>{
     fecharCaixa();
@@ -19023,7 +19088,7 @@ function colarPrintLado(e, convId){
 // F387 · a conversa ao lado abre na tela do WhatsApp do CRM, pelo mesmo caminho da menção
 function zapNaTela(convId){
   fecharPainelPrazo();
-  zapAberta = convId; zapPainelAberto = false;
+  zapAberta = convId; zapPainelAberto = false; zapLerAoAbrir = convId;
   irPara("whatsapp");
 }
 function escolherArquivoLado(convId, inp){
@@ -19181,13 +19246,7 @@ async function verZapCliente(cliId){
   requestAnimationFrame(()=>{ el.classList.add("aberto"); document.body.classList.add("lado-aberto"); });
   const caixaMsgs = el.querySelector(".zap-msgs"); if(caixaMsgs) caixaMsgs.scrollTop = caixaMsgs.scrollHeight;
   carregarMinis(caixaMsgs);
-  // abrir é ler: zera o "novas" do botão
-  const lidas = zs.filter(z=>z.nao_lidas);
-  if(lidas.length){
-    await api(`/rest/v1/zap_conversas?id=in.(${lidas.map(z=>z.id).join(",")})`,{method:"PATCH",
-      headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}).catch(()=>{});
-    lidas.forEach(z=>z.nao_lidas=0);
-  }
+  zs.forEach(lerConversaZap);   // F483 · abrir a conversa ao lado é ler
 }
 // os 8 últimos dígitos de cada telefone da ficha: a mesma chave do zap_conversas
 function chavesDoCliente(cliId){
@@ -51827,7 +51886,7 @@ async function zapDoNumero(numero){
   await recarregarZap(true).catch(()=>{});
   fecharPainelPrazo();
   if(visao!=="whatsapp") irPara("whatsapp");
-  abrirConversa(conv);
+  abrirConversa(conv, true);
 }
 function marcarZap(cliId, i){
   if(semCadastro()) return;   // F396
@@ -58103,7 +58162,7 @@ function ligarTelJa(f){
 }
 function ligarSugAgenda(f){
   document.querySelectorAll("[data-aqcli]").forEach(b=>b.onclick=()=>{ f.cli=D.cliPorId.get(b.dataset.aqcli); f.novo=false; f.tipo=(f.vaga&&f.vaga.tipo)||"002"; f.nome=f.cli.nome; f.tel=(f.cli.telefone||"").replace(/\D/g,""); f.corrigir=false; f.etapa=2; f.msg=""; pintarFluxo(); });
-  document.querySelectorAll("[data-aqnovo]").forEach(b=>b.onclick=()=>{ f.cli=null; f.novo=true; f.tipo=(f.vaga&&f.vaga.tipo)||"001"; if(!f.nome) f.nome=f.busca.replace(/\d/g,"").trim(); f.etapa=2; f.msg=""; pintarFluxo(); });
+  document.querySelectorAll("[data-aqnovo]").forEach(b=>b.onclick=()=>{ f.nome=f.busca.replace(/\d/g,"").replace(/\s+/g," ").trim() || (f.cli ? "" : f.nome); f.cli=null; f.novo=true; f.tipo=(f.vaga&&f.vaga.tipo)||"001"; f.etapa=2; f.msg=""; pintarFluxo(); });
 }
 function pintarFluxo(){
   const f = fluxo; if(!f) return;
@@ -58122,7 +58181,7 @@ function pintarFluxo(){
         <label class="aq-campo">Telefone com DDD<input id="aq-tel" class="aq-inp" inputmode="tel" placeholder="(16) 99999-9999" value="${esc(fmtTelBR(f.tel))}"></label>
         <div id="aq-tel-de">${telJaCadastrado(f)}</div>
         <div class="aq-bts"><button class="btn-rap" data-aqvolta="1">Voltar</button><button class="btn-rap forte" id="aq-seg2">${clientesDoTelefone(f.tel).length?"É outra pessoa, continuar":"Continuar"}</button></div>`
-      : `<h3>${esc(f.cli.nome)} <span class="aq-tipo">002 · 30 minutos</span></h3>
+      : `<h3>${esc(f.cli.nome)} <span class="aq-tipo">002 · 30 minutos</span> <button class="btn-mini" id="aq-trocar" title="Agendar para outra pessoa">Trocar<span class="sr-only"> a pessoa a ser atendida</span></button></h3>
         <p class="meio-sub">Cliente do escritório. Confira o telefone antes de seguir.</p>
         ${f.corrigir||!f.tel ? `<label class="aq-campo">${f.tel?"Telefone com DDD":"Sem telefone no cadastro. Informe o telefone com DDD, que ele fica gravado no cliente"}<input id="aq-tel" class="aq-inp" inputmode="tel" placeholder="(16) 99999-9999" value="${esc(fmtTelBR(f.tel))}"></label>`
           : `<p class="aq-tel-atual">${esc(fmtTelBR(f.tel))}</p>`}
@@ -58205,6 +58264,8 @@ function ligarFluxo(){
       const seg = $("aq-seg2"); if(seg) seg.textContent = clientesDoTelefone(f.tel).length ? "É outra pessoa, continuar" : "Continuar"; } };
   ligarTelJa(f);
   on("aq-corrigir", ()=>{ f.corrigir=true; pintarFluxo(); });
+  // F477 · a agenda aberta pela conversa já traz o cliente dela; quem escreve pode pedir por outra pessoa
+  on("aq-trocar", ()=>{ f.cli=null; f.novo=false; f.nome=""; f.busca=""; f.corrigir=false; f.etapa=1; f.msg=""; pintarFluxo(); });
   on("aq-seg2", async ()=>{
     if(f.novo){ f.nome = ($("aq-nome").value||"").replace(/\s+/g," ").trim(); }
     if($("aq-tel")) f.tel = $("aq-tel").value.replace(/\D/g,"");

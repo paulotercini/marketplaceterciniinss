@@ -340,6 +340,17 @@ const lidParaFone = new Map((() => { try { return Object.entries(JSON.parse(fs.r
 let lidsGravados = lidParaFone.size;
 // o onWhatsApp do Baileys 7 não devolve mais o @lid: vem do que já se aprendeu
 const lidDoJid = jid => { for (const [lid, pn] of lidParaFone) if (pn === jid) return lid; return null; };
+// F478: os dois endereços da conversa no celular (@lid e número); o @lid vem do mapa aprendido
+// ou do lidMapping do Baileys 7, que pergunta ao WhatsApp quando não sabe
+async function jidsDoFone(s, fone) {
+  const [w] = await s.onWhatsApp(fone).catch(() => []);
+  const pn = (w && w.jid) || `${fone}@s.whatsapp.net`;
+  let lid = (w && w.lid) || lidDoJid(pn);
+  const lm = s.signalRepository && s.signalRepository.lidMapping;
+  if (!lid && lm && lm.getLIDForPN) lid = await Promise.resolve(lm.getLIDForPN(pn)).catch(() => null);
+  if (lid) lidParaFone.set(lid, pn);
+  return [...new Set([lid, pn].filter(Boolean))];
+}
 setInterval(() => {
   if (lidParaFone.size === lidsGravados) return;
   try { fs.writeFileSync(LIDS, JSON.stringify(Object.fromEntries(lidParaFone))); lidsGravados = lidParaFone.size; }
@@ -351,8 +362,12 @@ async function entrou(m, baixar) {
   if (reacao) return guardarReacao(m, reacao);
   const alt = N.alteracaoDe(m);
   if (alt) return guardarAlteracao(alt);
-  if (N.deveIgnorar(m)) return;
+  // F478: o número sai antes do descarte, para o @lid da mensagem que não abriu (sem conteúdo) ficar no mapa
   const fone = N.foneDaMensagem(m, lidParaFone);
+  if (N.deveIgnorar(m)) {
+    if (m && m.key && !m.message && m.messageStubType) log("mensagem que não abriu de", fone || m.key.remoteJid, "(stub", m.messageStubType + ")");
+    return;
+  }
   if (N.chaveFone(fone).length < 8) return;
   if (m.key.fromMe) {
     // o que o escritório responde pelo celular também entra na conversa. O que
@@ -396,12 +411,12 @@ async function guardarAlteracao(alt) {
 
 // Uma mensagem do WhatsApp vira uma linha de zap_mensagens, com a mídia no
 // Storage. Serve à mensagem que chega agora e ao histórico.
-async function gravar(m, baixar, conversa, direcao, status) {
+async function gravar(m, baixar, conversa, direcao, status, extra) {
   const tipo = N.tipoDaMensagem(m);
   const linha = {
     conversa_id: conversa, externo_id: m.key.id, direcao,
     tipo, texto: N.textoDaMensagem(m) || null, status,
-    quando_wa: N.quandoWa(m),
+    quando_wa: N.quandoWa(m), ...extra,
   };
 
   // já gravada? Não baixa a mídia de novo; só refaz a que tinha falhado
@@ -521,9 +536,7 @@ async function recuperarMidias(s = sock) {
       + "&select=externo_id,direcao,quando_wa&order=quando_wa.desc&limit=1");
     // o celular guarda a conversa pelo id de privacidade (@lid) ou pelo número:
     // pergunta pelos dois, e fica com o que ele responder
-    const fone = N.soDigitos(c.telefone);
-    const [w] = await s.onWhatsApp(fone).catch(() => []);
-    let jids = [...new Set([(w && w.lid) || lidDoJid((w && w.jid) || `${fone}@s.whatsapp.net`), (w && w.jid) || `${fone}@s.whatsapp.net`].filter(Boolean))];
+    let jids = await jidsDoFone(s, N.soDigitos(c.telefone));
     for (let volta = 0; ancora && volta < 40; volta++) {
       let msgs = null;
       for (const jid of jids) {
@@ -545,7 +558,9 @@ async function gravarDoCelular(m, conversa) {
   if (N.deveIgnorar(m) || N.reacaoDe(m)) return false;
   try {
     const l = await gravar(m, (...a) => require("@whiskeysockets/baileys").downloadMediaMessage(...a), conversa,
-      m.key.fromMe ? "saida" : "entrada", m.key.fromMe ? "enviada" : "entregue");
+      m.key.fromMe ? "saida" : "entrada", m.key.fromMe ? "enviada" : "entregue",
+      // F478: trazida do celular; passados 10 minutos, o banco a trata como histórico (sem robô, IA nem aviso)
+      { bot_ia: "celular" });
     return !l.repetida;
   } catch (e) { log("não gravei uma mensagem pedida ao celular:", e.message); return false; }
 }
@@ -554,6 +569,8 @@ async function gravarDoCelular(m, conversa) {
 // A conversa de cliente nasce com historico_pedido (o banco marca), e o ⋯ da
 // conversa pede de novo. A ponte pede ao celular, de 50 em 50, as mensagens
 // anteriores à mais antiga que o CRM tem, até o celular não ter mais.
+// o gatilho zap_historico_primeira (f474) relê este texto: não mude sem mudar lá
+const SEM_PARTIDA = "sem mensagem de partida: pede de novo na primeira mensagem";
 let buscandoHistorico = false;
 async function buscarHistoricosPedidos(s = sock) {
   if (!ligado || !s || buscandoHistorico || recuperando) return;
@@ -565,7 +582,8 @@ async function buscarHistoricosPedidos(s = sock) {
       let resultado;
       try {
         const n = await historicoDaConversa(s, c);
-        resultado = n ? `${n} mensagem(ns) antiga(s) trazida(s) do celular` : "o celular não tem mensagem mais antiga";
+        resultado = n < 0 ? SEM_PARTIDA
+          : n ? `${n} mensagem(ns) trazida(s) do celular` : "o celular não tem mensagem que falte no CRM";
       } catch (e) { resultado = "erro: " + String(e.message).slice(0, 80); }
       log(`histórico pedido: ${c.telefone} — ${resultado}`);
       await sb(`/rest/v1/zap_conversas?id=eq.${c.id}`, { method: "PATCH", headers: { Prefer: "return=minimal" },
@@ -576,11 +594,19 @@ async function buscarHistoricosPedidos(s = sock) {
 async function historicoDaConversa(s, c) {
   let [ancora] = await sb(`/rest/v1/zap_mensagens?conversa_id=eq.${c.id}&externo_id=not.is.null`
     + "&quando_wa=not.is.null&select=externo_id,direcao,quando_wa&order=quando_wa.asc&limit=1");
-  if (!ancora) return 0;
-  const fone = N.soDigitos(c.telefone);
-  const [w] = await s.onWhatsApp(fone).catch(() => []);
-  let jids = [...new Set([(w && w.lid) || lidDoJid((w && w.jid) || `${fone}@s.whatsapp.net`), (w && w.jid) || `${fone}@s.whatsapp.net`].filter(Boolean))];
+  // sem mensagem gravada (conversa aberta pela ficha): pede as anteriores a agora,
+  // sem id de partida; se o celular não responder, o banco pede de novo na primeira mensagem
+  const semPartida = !ancora;
+  if (semPartida) ancora = { externo_id: "", direcao: "entrada", quando_wa: agora() };
+  let jids = await jidsDoFone(s, N.soDigitos(c.telefone));
   let n = 0;
+  // F478: primeiro as mais novas, de cada endereço: a mensagem que a ponte não abriu é mais
+  // nova que todas do CRM, e o pedido abaixo só traz as anteriores à mais antiga
+  if (!semPartida) for (const jid of jids) {
+    const msgs = ((await pagina(s, { remoteJid: jid, id: "", fromMe: false }, Date.now())) || [])
+      .filter(m => String(m.key.remoteJid) === jid);
+    for (const m of msgs) if (await gravarDoCelular(m, c.id)) n++;
+  }
   for (let volta = 0; volta < 40; volta++) {
     let msgs = null;
     for (const jid of jids) {
@@ -594,7 +620,7 @@ async function historicoDaConversa(s, c) {
     if (!N.quandoWa(velha) || N.quandoWa(velha) >= ancora.quando_wa) break;
     ancora = { externo_id: velha.key.id, direcao: velha.key.fromMe ? "saida" : "entrada", quando_wa: N.quandoWa(velha) };
   }
-  return n;
+  return semPartida && !n ? -1 : n;
 }
 
 async function importarHistorico(chats, messages, baixar) {
@@ -638,11 +664,14 @@ async function importarHistorico(chats, messages, baixar) {
 // O tipo importa: foto tem de chegar como FOTO, não como arquivo para baixar.
 // Documento leva o nome original, senão o cliente recebe "arquivo.bin" e não
 // sabe que é a lista de documentos que ele pediu.
-// WebM -> OGG/Opus com o ffmpeg que vem no pacote ffmpeg-static (sem instalar nada no Windows)
+// WebM -> OGG/Opus com o ffmpeg que vem no pacote ffmpeg-static (sem instalar nada no Windows).
+// F475: mono, 48 kHz e tempo a partir de zero; o WhatsApp do iPhone recusa a voz em estéreo
+// ou com o carimbo negativo do WebM do Chrome ("Não foi possível baixar o áudio").
 function paraOgg(buf) {
   return new Promise((ok, falha) => {
     const p = require("child_process").spawn(require("ffmpeg-static"),
-      ["-loglevel", "error", "-i", "pipe:0", "-vn", "-c:a", "libopus", "-b:a", "32k", "-f", "ogg", "pipe:1"]);
+      ["-loglevel", "error", "-i", "pipe:0", "-vn", "-ac", "1", "-ar", "48000", "-c:a", "libopus", "-b:a", "48k",
+       "-avoid_negative_ts", "make_zero", "-f", "ogg", "pipe:1"]);
     const partes = [], erro = [];
     p.stdout.on("data", d => partes.push(d));
     p.stderr.on("data", d => erro.push(d));

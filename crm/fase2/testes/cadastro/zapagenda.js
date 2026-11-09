@@ -128,6 +128,22 @@ const conf = (pts, nome, v) => { ok.push([pts, nome, !!v]); console.log((v ? "PA
   await p.waitForSelector(".aq-fluxo", { timeout: 5000 });
   conf(8, "o agendamento abre na própria tela, já com a cliente da conversa (sem procurar o nome)",
     await p.evaluate(() => visao === "whatsapp" && !!document.querySelector(".zap-tela") && fluxo.etapa === 2 && fluxo.cli && fluxo.cli.nome === "Ana Fictícia Zap" && fluxo.eventoId === "P1"));
+  // F477 (09.11.2026): quem escreve pede por outra pessoa; o Trocar volta ao Quem sem o nome da conversa e mantém o telefone
+  const telConv = await p.evaluate(() => fluxo.tel);
+  await p.click("#aq-trocar");
+  await p.waitForSelector("#aq-busca");
+  conf(4, "Trocar volta ao passo Quem, com a busca vazia e sem a cliente da conversa",
+    await p.evaluate(() => fluxo.etapa === 1 && !fluxo.cli && document.getElementById("aq-busca").value === ""));
+  await p.fill("#aq-busca", "Maria Outra Pessoa");
+  await p.click('[data-aqnovo]');
+  await p.waitForSelector("#aq-nome");
+  conf(4, "a outra pessoa vira primeiro atendimento com o nome digitado e o telefone da conversa",
+    (await p.inputValue("#aq-nome")) === "Maria Outra Pessoa" && (await p.evaluate(() => fluxo.tel)) === telConv);
+  await p.click('[data-aqvolta]');
+  await p.waitForSelector("#aq-busca");
+  await p.fill("#aq-busca", "Ana Fictícia");
+  await p.click(`[data-aqcli="${ANA}"]`);
+  await p.waitForSelector("#aq-seg2");
   await p.click("#aq-seg2");
   await p.waitForSelector('[data-aqacomp="nao"]');
   await p.click('[data-aqacomp="nao"]'); await p.click("#aq-seg4");
