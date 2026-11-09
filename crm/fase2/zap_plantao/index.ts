@@ -350,8 +350,11 @@ export function contexto(x: Contexto) {
       `e pergunte se pode oferecer outro horário; não diga para ficar à vontade nem que ela pode responder depois. ` +
       `Se quiser outro horário, peça ao Agendador dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, ` +
       `um de manhã e outro à tarde, e que remarque esse atendimento. Se confirmar presença, agradeça e diga que o atendimento está mantido. Não cumprimente de novo.\n`
-    : x.remarcar ? `Remarcação: a pessoa disse, em resposta à confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"}, que não pode comparecer e precisa de outro horário. ` +
-      `Peça ao Agendador que ofereça dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, um de manhã e outro à tarde, ` +
+    : x.remarcar ? `Remarcação: a pessoa disse, em resposta à confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"}, que não pode comparecer. ` +
+      // F471 · "não vai dar, depois eu marco outro dia" não é pedido de horário agora (pedido do Paulo de 09.11.2026)
+      `Se ela ainda não pediu expressamente outro dia ou horário agora (disse apenas que não pode ir, ou que marca depois), pergunte primeiro, em uma frase, ` +
+      `se deseja já remarcar para outro dia, sem oferecer horários nem chamar o Agendador; se ela não quiser, peça ao Agendador que cancele esse atendimento ` +
+      `e diga que o escritório fica à disposição para agendar quando ela preferir. Quando ela quiser remarcar, peça ao Agendador que ofereça dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, um de manhã e outro à tarde, ` +
       `e que remarque esse atendimento quando ela escolher. Não cumprimente de novo e não peça o assunto.\n` : "") +
     (x.modo === "lead" ? `Você já está atendendo este caso novo (${x.respostas} respostas suas até aqui; agende depois de ${Math.max(1, 6 - x.respostas)} respostas).\n`
       : x.modo === "conversa" ? `Você já está conversando com esta pessoa (${x.respostas} respostas suas até aqui).\n` : "");
