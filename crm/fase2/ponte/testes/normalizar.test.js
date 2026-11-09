@@ -179,3 +179,14 @@ t.test("F332: apagada e editada no WhatsApp", () => {
   a.deepEqual(N.alteracaoDe({ message: { editedMessage: { message: { conversation: "corrigido" } } } }, "X5"), { id: "X5", texto: "corrigido" });
   a.equal(N.alteracaoDe({ message: { conversation: "oi" } }), null);
 });
+
+t.test("F491: a mensagem de cliente que não abriu pede o histórico; grupo, enviada e outro stub não", () => {
+  const { naoAbriu } = require("../normalizar");
+  const k = (j, fromMe = false) => ({ remoteJid: j, fromMe, id: "X" });
+  a.equal(naoAbriu({ key: k("5516996041533@s.whatsapp.net"), messageStubType: 2 }), true);
+  a.equal(naoAbriu({ key: k("123@lid"), messageStubType: 2 }), true);
+  a.equal(naoAbriu({ key: k("1203@g.us"), messageStubType: 2 }), false);
+  a.equal(naoAbriu({ key: k("5516996041533@s.whatsapp.net", true), messageStubType: 2 }), false);
+  a.equal(naoAbriu({ key: k("5516996041533@s.whatsapp.net"), messageStubType: 1 }), false);
+  a.equal(naoAbriu({ key: k("5516996041533@s.whatsapp.net"), messageStubType: 2, message: { conversation: "oi" } }), false);
+});
