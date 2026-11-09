@@ -107,6 +107,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     return { n: ls.length, semEstrela: ls.filter(l => !l.querySelector(".acoes .acao-card:not(.fogo)")).length, xEst: xs(".acoes .acao-card:not(.fogo)"), xAv: xs(".avatares .avatar.mini") }; });
   conf("toda linha tem a ⭐ (F464)", reta.n > 3 && reta.semEstrela === 0) || console.log(JSON.stringify(reta));
   conf("a inicial e a ⭐ em linha reta (F464)", reta.xEst.length === 1 && reta.xAv.length <= 1) || console.log(JSON.stringify(reta));
+    const oqueVis = await p.evaluate(() => [...document.querySelectorAll("#conteudo-meio .ag-linha .ag-oque")].filter(e => e.offsetParent).length);
+    conf("nenhum texto depois do nome no celular (F465)", oqueVis === 0) || console.log(oqueVis);
   conf("o filtro por pessoa está no ⋯ e saiu do alto (F463)", borda && borda.noMais && !borda.fora && borda.topoVazio) || console.log(JSON.stringify(borda));
   await p.evaluate(() => document.getElementById("topo-mais").setAttribute("open", "")); await p.waitForTimeout(200);
   const menu = await p.evaluate(() => { const m = document.querySelector("#topo-mais .tl-mais-menu").getBoundingClientRect(); const bs = [...document.querySelectorAll("#lista-opc .lo-pessoa [data-agcol]")].map(b => b.getBoundingClientRect());

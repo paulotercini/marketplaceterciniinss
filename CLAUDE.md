@@ -622,6 +622,8 @@ A **F463** (13.06, correção do Paulo de 09.11.2026 com a foto do iPhone): no c
 
 A **F464** (13.07, correção do Paulo de 09.11.2026 com a foto do iPhone): toda linha do Meu Dia, do Planejado e das listas tem a ⭐ (`estrelaDaLinha`): a do caso; na tarefa pessoal, `tarefas.importante` (`migracoes/f464_tarefa_importante.sql`, `data-estrela-t`); sem caso na linha, todos os casos abertos do cliente (`estrelaFicha`, `data-estrela-cli`); sem nada a marcar, a ⭐ apagada no mesmo lugar. Também o resumo de ontem, o atendimento da Agenda, as Sugeridas e a menção. No celular a inicial e a ⭐ ficam em colunas fixas (uma inicial só), em linha reta, e o cliente com mais de um item perde a barra à esquerda e o cabeçalho repetido. Teste: `f457.js` (10 itens).
 
+A **F465** (13.08, correção do Paulo de 09.11.2026 com a foto do iPhone): no celular a linha do Meu Dia e das listas não mostra o "do que é" da F427 (`.ag-oque`, "conferir no PJe…") depois do nome; ficam a data, o nome, a inicial e a ⭐. No computador, nada muda. Testes: `f457.js` (11 itens) e `f459.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
