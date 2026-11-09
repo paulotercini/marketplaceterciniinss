@@ -11806,7 +11806,7 @@ function dbDespacho(k, ands){
       ${dbAnteriores(k, Math.max(0, notas.filter(a=>!a.responde_a).length-1), "anotações", aberto, `dbVerAnt('${k.id}')`)}</div>
     ${corpo}${acoes}${aberto ? dbNumeros(k) : ""}</section>`;
 }
-// F490 · a data do andamento, e não a da importação: o PJe guarda a do movimento
+// F492 · a data do andamento, e não a da importação: o PJe guarda a do movimento
 // no origem_id (mov:<num>:2025-03-05T15:33) e o PAT a do portal (atualizacao:<prot>:20251014225036)
 function dataDoDb(a){
   const m = String((a&&a.origem_id)||"").match(/^atualizacao:[^:]*:(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/);
@@ -17148,6 +17148,7 @@ function pintarListaZap(){
              <button class="tl-mais-it zl-som" role="menuitem" onclick="alternarSomZap()" aria-pressed="${somZapLigado()}">${somZapLigado()?"🔔 Aviso sonoro ligado":"🔕 Aviso sonoro desligado"}</button>
              <button class="tl-mais-it zl-nav" role="menuitem" onclick="alternarNavZap()" aria-pressed="${navZapLigado() && window.Notification && Notification.permission==="granted"}" title="notificação do navegador quando chega mensagem, com o CRM aberto">${navZapLigado() && window.Notification && Notification.permission==="granted"?"🖥 Notificação no navegador ligada":"🖥 Notificar no navegador"}</button>
              <button class="tl-mais-it zl-push" role="menuitem" onclick="alternarPushZap()" aria-pressed="${pushZapLigado()}" title="notificação no celular ou no computador, também com o CRM fechado">${pushZapLigado()?"📱 Aviso neste aparelho ligado":"📱 Avisar neste aparelho"}</button>
+             <button class="tl-mais-it zl-hist" role="menuitem" onclick="historicoTodasZap()" title="pede ao celular as mensagens que faltam nas conversas dos últimos 3 dias">📥 Buscar histórico no celular</button>
              <button class="tl-mais-it zl-hora" role="menuitem" onclick="horarioAvisos()" title="das quantas às quantas o aviso chega no aparelho">🕘 Horário dos avisos: ${horaAvisosTxt()}</button>
              <button class="tl-mais-it zl-link ${zapFiltro==="fim"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="fim">Encerradas${zapFiltro==="fim"?` (${cs.length})`:""}</button>
              ${visiveis.some(c=>c.automatica)?`<button class="tl-mais-it zl-link ${zapFiltro==="auto"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="auto" title="robô de outra empresa (F272)">Automáticas${zapFiltro==="auto"?` (${cs.length})`:""}</button>`:""}
@@ -18336,6 +18337,21 @@ async function mudarConversa(campos){
 async function pedirHistoricoZap(){
   await mudarConversa({historico_pedido:new Date().toISOString(), historico_feito:null, historico_resultado:null});
   aviso("Pedido enviado ao celular. As mensagens antigas aparecem na conversa em até 1 minuto.");
+}
+// F490 · o mesmo pedido em todas as conversas com movimento nos últimos 3 dias; a ponte atende 3 a cada 30 s
+async function historicoTodasZap(){
+  zapMaisAberto = false;
+  const desde = new Date(Date.now()-3*864e5).toISOString(), agora = new Date().toISOString();
+  if(!confirm("Pedir ao celular as mensagens que faltam em todas as conversas dos últimos 3 dias?")) return;
+  let n = 0;
+  try{
+    const r = await api(`/rest/v1/zap_conversas?ultima_em=gte.${desde}&automatica=not.is.true&select=id`,{method:"PATCH",
+      headers:{Prefer:"return=representation"}, body:JSON.stringify({historico_pedido:agora, historico_feito:null, historico_resultado:null})});
+    n = (r||[]).length;
+  }catch(e){ return aviso(msgErro(e)); }
+  zapConvs.forEach(c=>{ if(c.ultima_em>=desde && !c.automatica) Object.assign(c,{historico_pedido:agora, historico_feito:null, historico_resultado:null}); });
+  pintarListaZap();
+  aviso(`Pedido enviado ao celular para ${n} conversa(s). As mensagens que faltam aparecem em cerca de ${Math.max(1,Math.ceil(n/6))} minuto(s).`);
 }
 async function assumirConversa(){
   if(!zapAberta) return;
