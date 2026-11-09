@@ -357,6 +357,23 @@ setInterval(() => {
   catch (e) { log("lids:", e.message); }
 }, 60000).unref();
 
+// F491 · a mensagem que não abriu está no celular: 3 minutos depois (o WhatsApp tenta reenviar antes),
+// a conversa entra na fila do histórico pedido, uma vez por número a cada 10 minutos
+const buscaMarcada = new Map();
+function buscarDepois(fone) {
+  const k = N.chaveFone(fone);
+  if (Date.now() - (buscaMarcada.get(k) || 0) < 600000) return;
+  buscaMarcada.set(k, Date.now());
+  setTimeout(async () => {
+    try {
+      const conversa = await rpc("zap_abrir", { p_telefone: fone, p_nome: null });
+      await sb(`/rest/v1/zap_conversas?id=eq.${conversa}`, { method: "PATCH", headers: { Prefer: "return=minimal" },
+        body: JSON.stringify({ historico_pedido: new Date().toISOString(), historico_feito: null, historico_resultado: null }) });
+      log("histórico pedido sozinho: mensagem que não abriu de", fone);
+    } catch (e) { log("✗ pedir histórico da mensagem que não abriu:", e.message); }
+  }, 180000);
+}
+
 async function entrou(m, baixar) {
   const reacao = N.reacaoDe(m);
   if (reacao) return guardarReacao(m, reacao);
@@ -366,6 +383,7 @@ async function entrou(m, baixar) {
   const fone = N.foneDaMensagem(m, lidParaFone);
   if (N.deveIgnorar(m)) {
     if (m && m.key && !m.message && m.messageStubType) log("mensagem que não abriu de", fone || m.key.remoteJid, "(stub", m.messageStubType + ")");
+    if (N.naoAbriu(m) && N.chaveFone(fone).length >= 8) buscarDepois(fone);
     return;
   }
   if (N.chaveFone(fone).length < 8) return;
