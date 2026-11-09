@@ -645,6 +645,8 @@ A **F489** (pedido do Paulo de 09.11.2026, a cliente que disse que não podia ir
 
 A **F490** (pedido do Paulo de 09.11.2026): o ⋯ da lista do WhatsApp tem **Buscar histórico no celular** (`historicoTodasZap`), que faz o pedido da F286 em todas as conversas com movimento nos últimos 3 dias, salvo as `automatica`; a ponte atende 3 conversas a cada 30 s. Em 09.11.2026, 114 mensagens do dia só entraram no CRM pelo pedido de histórico, porque a ponte não as abriu na chegada.
 
+A **F491** (o caso do Gilson, 09.11.2026): as mensagens de 16h37, 16h38 e 18h19 do cliente chegaram à ponte cifradas e não abriram (stub CIPHERTEXT), enquanto as de outros números do mesmo minuto entraram em 1 segundo; estavam no celular e só entraram pelo histórico pedido às 20h09. A ponte agora, 3 minutos depois da mensagem de cliente que não abriu (`naoAbriu` em `normalizar.js`), põe a conversa na fila do histórico pedido (`buscarDepois`, `zap_abrir` e `historico_pedido`), uma vez por número a cada 10 minutos. Vale depois do deploy da ponte. Teste: `ponte/testes/normalizar.test.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
