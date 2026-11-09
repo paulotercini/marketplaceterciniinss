@@ -620,6 +620,8 @@ A **F462** (13.05, correção do Paulo de 09.11.2026 com a foto do iPhone): a "a
 
 A **F463** (13.06, correção do Paulo de 09.11.2026 com a foto do iPhone): no celular a linha das listas e do Meu Dia vai até a borda direita, sem a reserva de 60 px da F457 (que fica só no título da seção, pelo Reagendar): data, nome, inicial do responsável e ⭐, e nada mais; ao rolar, a linha passa por baixo dos flutuantes, como o Paulo pediu. O **filtro por pessoa** (Todos, Amanda, Marcos…) saiu do alto e virou a linha "Pessoa" do ⋯ da lista (`filtroPessoaNoMais`, chamada no fim do `render`): no Meu Dia, no Planejado e no Dashboard é o `seg-colab` do topo, nas listas de fase, Minhas e Importante são os chips de inicial (`data-fcol`); os botões vão com os cliques já ligados, e o `#topo-extra` vazio some. Só no celular; o computador fica como estava. Testes: `f457.js` (8 itens), `f298.js`, `f459.js`, `f437.js`, `f455.js`, `f443.js`.
 
+A **F464** (13.07, correção do Paulo de 09.11.2026 com a foto do iPhone): toda linha do Meu Dia, do Planejado e das listas tem a ⭐ (`estrelaDaLinha`): a do caso; na tarefa pessoal, `tarefas.importante` (`migracoes/f464_tarefa_importante.sql`, `data-estrela-t`); sem caso na linha, todos os casos abertos do cliente (`estrelaFicha`, `data-estrela-cli`); sem nada a marcar, a ⭐ apagada no mesmo lugar. Também o resumo de ontem, o atendimento da Agenda, as Sugeridas e a menção. No celular a inicial e a ⭐ ficam em colunas fixas (uma inicial só), em linha reta, e o cliente com mais de um item perde a barra à esquerda e o cabeçalho repetido. Teste: `f457.js` (10 itens).
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
