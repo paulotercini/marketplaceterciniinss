@@ -101,6 +101,12 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     const seg = document.querySelector("#lista-opc .lo-pessoa .seg-colab[aria-label='Filtrar por pessoa'] [data-agcol]"), fora = document.querySelector("#topo-extra .seg-colab");
     return { gap: c.right - f.right, noMais: !!seg, fora: !!fora, topoVazio: !document.getElementById("topo-extra").offsetParent }; });
   conf("a estrela fica a menos de 24 px da borda da linha (F463)", borda && borda.gap < 24) || console.log(JSON.stringify(borda));
+  // F464 · toda linha tem a ⭐, e a inicial e a ⭐ ficam em linha reta (pedido do Paulo, 09.11.2026)
+  const reta = await p.evaluate(() => { const ls = [...document.querySelectorAll("#conteudo-meio .ag-linha")].filter(e => e.offsetParent);
+    const xs = sel => [...new Set(ls.map(l => { const e = l.querySelector(sel); return e && e.offsetParent ? Math.round(e.getBoundingClientRect().left) : null; }).filter(x => x !== null))];
+    return { n: ls.length, semEstrela: ls.filter(l => !l.querySelector(".acoes .acao-card:not(.fogo)")).length, xEst: xs(".acoes .acao-card:not(.fogo)"), xAv: xs(".avatares .avatar.mini") }; });
+  conf("toda linha tem a ⭐ (F464)", reta.n > 3 && reta.semEstrela === 0) || console.log(JSON.stringify(reta));
+  conf("a inicial e a ⭐ em linha reta (F464)", reta.xEst.length === 1 && reta.xAv.length <= 1) || console.log(JSON.stringify(reta));
   conf("o filtro por pessoa está no ⋯ e saiu do alto (F463)", borda && borda.noMais && !borda.fora && borda.topoVazio) || console.log(JSON.stringify(borda));
   await p.evaluate(() => document.getElementById("topo-mais").setAttribute("open", "")); await p.waitForTimeout(200);
   const menu = await p.evaluate(() => { const m = document.querySelector("#topo-mais .tl-mais-menu").getBoundingClientRect(); const bs = [...document.querySelectorAll("#lista-opc .lo-pessoa [data-agcol]")].map(b => b.getBoundingClientRect());
