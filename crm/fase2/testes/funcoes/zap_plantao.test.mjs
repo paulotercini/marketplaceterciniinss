@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_plantao.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO, promptCliente, ESQ_CLIENTE, promptCobranca, ESQ_COBRANCA, promptAndamento, ESQ_ANDAMENTO, mascararMenosDatas, ehGolpe } from "../../zap_plantao/index.ts";
+import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO, promptCliente, ESQ_CLIENTE, promptCobranca, ESQ_COBRANCA, promptAndamento, ESQ_ANDAMENTO, mascararMenosDatas, ehGolpe, primeiraPessoa } from "../../zap_plantao/index.ts";
 
 assert.equal(mascarar("CPF 123.456.789-09"), "CPF [número]");
 const msgs = [
@@ -513,4 +513,19 @@ console.log("formal: ok");
   assert.ok(!sem.includes("Dados de pagamento do escritório"), "sem configuração, nenhum dado");
   assert.ok(!ehGolpe({ acao: "responder", assunto: "pagamento", resposta: "" }, [{ direcao: "entrada", texto: "Por favor manda seu Pix pq não tenho mais" }]), "pagar não é golpe");
   console.log("ok F484 pagamento");
+}
+{ // F485 · a sugestão da conversa assumida sai na primeira pessoa de quem atende
+  const base = { contato: "Vadson", advogado: "Dr. Paulo", advogados: ["Dr. Paulo"], modo: "", respostas: 0, horario: true, agenda: true, agora: "09/11/2026 17:00", cliente: null,
+    mensagens: [{ direcao: "entrada", texto: "Obrigado pelo trabalho", momento: "2026-11-09T19:14:00Z" }] };
+  const com = promptPlantao({ ...base, atendente: { nome: "Paulo", cargo: "advogado" } });
+  assert.ok(com.includes("Conversa assumida por Paulo") && com.includes("primeira pessoa do singular") && com.includes('"agradeço"'), "assumida: primeira pessoa");
+  assert.ok(com.includes('Nunca "agradecemos"') && com.includes('"Dr. Paulo" inclusive'), "sem terceira pessoa");
+  assert.ok(!promptPlantao(base).includes("Conversa assumida por"), "sem atendente, a IA fala pelo escritório");
+  const cob = promptCobranca({ conversa_id: "x", msg_id: "y", dias: 3, contato: "Ana", mensagens: [], atendente: { nome: "Meissa", cargo: "recepcao" } });
+  assert.ok(cob.includes("como Meissa") && cob.includes("para que eu possa verificar"), "a cobrança também");
+  const and = promptAndamento({ conversa_id: "c", contato: "Roseli", casos: [], mensagens: [] });
+  assert.ok(and.includes("Sigo acompanhando") && and.includes("fico à disposição") && !and.includes("estamos à disposição."), "o modelo do andamento");
+  assert.ok(primeiraPessoa(null).includes("o colaborador que atende"));
+  assert.equal(emLinhas("Agradeço.\n\nQualquer dúvida, fico à disposição.", ["Qualquer dúvida, estamos à disposição."]), "Agradeço.", "o fecho uma vez só");
+  console.log("ok F485 primeira pessoa");
 }
