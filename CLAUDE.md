@@ -647,6 +647,8 @@ A **F490** (pedido do Paulo de 09.11.2026): o ⋯ da lista do WhatsApp tem **Bus
 
 A **F491** (o caso do Gilson, 09.11.2026): as mensagens de 16h37, 16h38 e 18h19 do cliente chegaram à ponte cifradas e não abriram (stub CIPHERTEXT), enquanto as de outros números do mesmo minuto entraram em 1 segundo; estavam no celular e só entraram pelo histórico pedido às 20h09. A ponte agora, 3 minutos depois da mensagem de cliente que não abriu (`naoAbriu` em `normalizar.js`), põe a conversa na fila do histórico pedido (`buscarDepois`, `zap_abrir` e `historico_pedido`), uma vez por número a cada 10 minutos. Vale depois do deploy da ponte. Teste: `ponte/testes/normalizar.test.js`.
 
+A **F492** (pedido do Paulo de 09.11.2026, as conversas da Jesuína e da Rosângela, que não se sabia se tinham chegado ao Marcos): a lista do WhatsApp diz com quem está a conversa de outra pessoa ("com Marcos") e, com mensagem do cliente sem resposta da equipe, se quem atende já a abriu depois dela ("· viu" ou, em vermelho, "· não viu"); o topo diz "Atendendo: Marcos · viu às 19:02" ou "· ainda não abriu a mensagem das 18:48" (`vistoZap`). O banco guarda `zap_conversas.ultima_entrada_em` e `ultima_resposta_em` (gatilho `zap_v_marcas_ins`, sem robô, IA, aviso automático, rascunho e agendada) e `atendente_viu_em`, gravado quando quem atende abre a conversa (`lerConversaZap`) e zerado na troca de atendente (`zap_atendente_visto`). No Transferir, quem já atende aparece desligado, "(já atende)". SQL em `crm/fase2/migracoes/f492_atendente_viu.sql`. Teste: `zapgestor.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
