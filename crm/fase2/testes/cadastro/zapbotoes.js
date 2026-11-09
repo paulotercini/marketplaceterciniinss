@@ -265,9 +265,9 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.fill("#zap-txt", "resposta de teste"); await p.tap("#zap-enviar"); await p.waitForTimeout(300);
     conf("Enviar grava a resposta ao cliente", escritas.some(e => /zap_mensagens/.test(e.u) && e.b && e.b.texto === "resposta de teste"));
     conf("com a conversa aberta, a pílula da agenda não cobre a conversa", !(await vis(".zag-pilula")));
-    await p.tap(".zt-mais summary"); await p.waitForTimeout(100);
-    await p.tap('.zt-mais button[onclick*="zagAlternar"]'); await p.waitForTimeout(200);
-    conf("o ⋯ abre a agenda de atendimentos", await vis(".zag-cx"));
+    // F471 · a agenda saiu do ⋯ da conversa; no celular abre pelo ⋯ dos atalhos (F423)
+    await p.tap("#fab-juntos"); await p.waitForTimeout(100); await p.tap(".zag-pilula"); await p.waitForTimeout(200);
+    conf("o ⋯ dos atalhos abre a agenda de atendimentos", await vis(".zag-cx"));
     await p.tap(".zt-voltar"); await p.waitForTimeout(200);
     conf("a seta volta à lista", await vis(".zap-conv"));
     // a agenda aberta fica sobre a lista no celular: fecha antes de abrir a conversa de novo
@@ -275,7 +275,7 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.tap(".zap-conv"); await p.waitForSelector("#zap-msgs .zap-b");
     await p.waitForSelector(".zt-mais summary", { state: "visible" });
     await p.tap(".zt-mais summary"); await p.waitForTimeout(100);
-    await p.tap('.zt-mais button[onclick="marcarNaoLida()"]'); await p.waitForSelector(".zap-conv.nova .bolha", { timeout: 3000 }).catch(() => {});
+    await p.tap('.zt-mais button[onclick="marcarNaoLida()"]:visible'); await p.waitForSelector(".zap-conv.nova .bolha", { timeout: 3000 }).catch(() => {});
     conf("Marcar como não lida grava e volta à lista com a bolinha", escritas.some(e => /zap_conversas/.test(e.u) && e.m === "PATCH" && e.b && e.b.nao_lidas === 1)
       && await vis(".zap-conv.nova .bolha"));
   } catch (e) { conf("FALHA " + e.message.split("\n")[0], false); }

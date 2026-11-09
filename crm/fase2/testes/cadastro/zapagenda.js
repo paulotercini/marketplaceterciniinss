@@ -215,7 +215,7 @@ const conf = (pts, nome, v) => { ok.push([pts, nome, !!v]); console.log((v ? "PA
   // agenda abre pelo ⋯
   conf(2, "no celular, com a conversa aberta, a pílula sai e a agenda abre pelo ⋯",
     await p.evaluate(() => getComputedStyle(document.querySelector("#zap-ag")).display === "none"));
-  await p.click(".zt-mais summary"); await p.click('.zt-mais button[onclick*="zagAlternar"]');
+  await p.click("#fab-juntos"); await p.click(".zag-pilula");   // F471 · a agenda abre pelo ⋯ dos atalhos
   const escr = await rect(".zap-escrever");
   conf(4, "no celular, a agenda aberta não cobre o campo de escrever", !!escr && !cruza(await caixaAg(), escr));
   await p.click('#zap-ag .zag-vaga').catch(() => {});   // a primeira vaga do dia aberto (P4 fica fechado quando hoje é quarta)
