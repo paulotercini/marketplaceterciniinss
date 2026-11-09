@@ -200,6 +200,12 @@ const pi = promptIntencao({ ...base, mensagens: [
   { direcao: "entrada", por_bot: false, tipo: "texto", texto: "Estarei ocupado nesse dia", momento: "2026-11-07T12:01:00Z" }] });
 assert.ok(pi.includes("<resposta>Estarei ocupado nesse dia</resposta>") && pi.includes("Podemos contar com a sua presença?"));
 assert.deepEqual(ESQ_INTENCAO.properties.intencao.enum, ["confirmar", "remarcar", "outro"]);
+// F422ab · os dois áudios ("Bom dia" e "Vou sim, tá marcado dia 11, né?") vão juntos ao classificador
+{ const p2 = promptIntencao({ ...base, mensagens: [
+    { direcao: "saida", por_bot: true, tipo: "texto", texto: "Podemos confirmar a sua presença?", momento: "2026-11-09T12:00:00Z" },
+    { direcao: "entrada", por_bot: false, tipo: "audio", texto: "Bom dia, tudo bem?", momento: "2026-11-09T12:02:17Z" },
+    { direcao: "entrada", por_bot: false, tipo: "audio", texto: "Vou sim, tá marcado com o dia 11, né?", momento: "2026-11-09T12:02:22Z" }] });
+  assert.ok(p2.includes("<resposta>Bom dia, tudo bem?\nVou sim, tá marcado com o dia 11, né?</resposta>") && p2.includes("pergunta retórica")); }
 { const antigo = "Agendador.\n\n6. Chame consultar_vagas (no CRM). Se o assunto é previdenciário, ofereça três horários numerados.\n7. Confirme.";
   const novo = paraAgendador(antigo); assert.ok(novo.includes(AG_HORARIOS) && !novo.includes("três horários numerados") && paraAgendador(novo) === novo); }
 console.log("zap_plantao: ok");

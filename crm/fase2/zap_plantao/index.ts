@@ -356,14 +356,19 @@ export const ESQ_INTENCAO = {
   properties: { intencao: { type: "string", enum: ["confirmar", "remarcar", "outro"] } },
 };
 export function promptIntencao(x: Contexto) {
-  const ult = [...(x.mensagens || [])].reverse();
-  const cli = ult.find((m) => m.direcao === "entrada");
-  const conf = ult.find((m) => m.direcao === "saida" && m.por_bot && m.momento <= (cli?.momento || "~"));
+  const msgs = x.mensagens || [];
+  // F422ab: lê todas as mensagens do cliente depois da confirmação (o "Bom dia" e o "Vou sim" chegam em áudios separados)
+  let i = msgs.length - 1;
+  while (i >= 0 && !(msgs[i].direcao === "saida" && msgs[i].por_bot)) i--;
+  const conf = i >= 0 ? msgs[i] : undefined;
+  const resp = msgs.slice(i + 1).filter((m) => m.direcao === "entrada")
+    .map((m) => m.texto?.trim() || `[${m.tipo || "mensagem"}]`).join("\n");
   return `O escritório enviou ao cliente a confirmação de um atendimento e o cliente respondeu. Classifique a resposta:\n` +
-    `- "confirmar": a pessoa diz que vai comparecer (sim, ok, estarei lá, pode confirmar, combinado, 👍) e não pergunta nem pede nada.\n` +
+    `- "confirmar": a pessoa diz que vai comparecer (sim, ok, vou sim, estarei lá, pode confirmar, combinado, 👍), ainda que repita a data ` +
+    `com uma pergunta retórica ("tá marcado dia 11, né?") ou cumprimente antes; não pede outra coisa.\n` +
     `- "remarcar": a pessoa não pode ou não quer ir nessa data, quer outro dia ou horário, ou quer cancelar.\n` +
-    `- "outro": pergunta, pedido, confirmação com pergunta junto, ou qualquer coisa que não seja clara. Na dúvida, "outro".\n\n` +
-    `<confirmacao>${mascarar(conf?.texto || "").slice(0, 600)}</confirmacao>\n<resposta>${mascarar(cli?.texto || `[${cli?.tipo || "mensagem"}]`).slice(0, 600)}</resposta>`;
+    `- "outro": pergunta ou pedido que a confirmação não responde, ou resposta que não diz se vai. Na dúvida, "outro".\n\n` +
+    `<confirmacao>${mascarar(conf?.texto || "").slice(0, 600)}</confirmacao>\n<resposta>${mascarar(resp || "[mensagem]").slice(0, 900)}</resposta>`;
 }
 const DE_CLASSE: Record<string, string> = { sim: "confirmar", nao: "remarcar", duvida: "outro" };
 
