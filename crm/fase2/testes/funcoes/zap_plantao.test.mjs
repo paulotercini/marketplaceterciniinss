@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_plantao.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO, promptCliente, ESQ_CLIENTE } from "../../zap_plantao/index.ts";
+import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO, promptCliente, ESQ_CLIENTE, promptCobranca, ESQ_COBRANCA, promptAndamento, ESQ_ANDAMENTO, mascararMenosDatas } from "../../zap_plantao/index.ts";
 
 assert.equal(mascarar("CPF 123.456.789-09"), "CPF [número]");
 const msgs = [
@@ -467,4 +467,29 @@ console.log("formal: ok");
   assert.ok(!novo.includes("- velho") && novo.includes("atendimento por vídeo, que existe"));
   assert.equal(paraTriagem(novo), novo);
   console.log("ok F422x fatos");
+}
+{ // F422aj · a cobrança sugerida
+  const c = { conversa_id: "x", msg_id: "y", dias: 11, contato: "João Carvalho", relacao: "filho", cliente: "Sueli Aparecida",
+    mensagens: [{ direcao: "saida", por_bot: false, tipo: "audio", texto: "Dona Sueli, peço que deixe o celular comigo na terça-feira.", momento: "2026-10-29T21:52:00Z" }] };
+  const p = promptCobranca(c, new Date("2026-11-09T13:00:00Z"));
+  assert.ok(p.includes("há 11 dias") && p.includes("filho de Sueli Aparecida") && p.includes("deixe o celular"));
+  assert.ok(p.includes("segunda-feira") && p.includes("10:00"), "data e hora de Brasília com o dia da semana");
+  assert.ok(p.includes("novamente") && p.includes("cobrar = false") && p.includes("nunca \"consulta\""));
+  assert.deepEqual(ESQ_COBRANCA.required, ["cobrar", "mensagem"]);
+  console.log("ok F422aj cobranca");
+}
+
+{ // F422ak · a sugestão do andamento sai da ficha
+  const p = promptAndamento({ conversa_id: "c", contato: "Roseli", cliente: "Roseli Teste", casos: [{ beneficio: "Aux. Incapacidade Temporária", fase: "judicial",
+    etapa: "ação distribuída", etapa_sugerida: "aguardando sentença", etapa_sugerida_desde: "2026-09-28",
+    andamentos: [{ em: "2026-11-03T19:06:13Z", origem: "pje", texto: "PJe (1º grau): Conclusos para julgamento — em 28.09.2026 14:23 — PJEC 5001864-28.2026.4.03.6314" }] }],
+    mensagens: [{ direcao: "entrada", por_bot: false, tipo: "texto", texto: "Gostaria de saber como está o andamento do processo", momento: "2026-11-09T12:00:00Z" }] },
+    new Date("2026-11-09T12:30:00Z"));
+  assert.ok(p.includes("Conclusos para julgamento") && p.includes("aguardando sentença"), "o andamento e a etapa dos portais vão ao modelo");
+  assert.ok(!p.includes("5001864"), "o número do processo vai mascarado");
+  assert.ok(p.includes("aproximadamente 6 meses") && p.includes("*28/09/2026*"), "as estimativas e o negrito do WhatsApp");
+  assert.ok(p.includes("em 28.09.2026 14:23"), "a data do fato não é mascarada");
+  assert.equal(mascararMenosDatas("em 28/09/2026 — 5001864-28.2026.4.03.6314"), "em 28/09/2026 — [número]");
+  assert.deepEqual(ESQ_ANDAMENTO.required, ["sugerir", "mensagem"]);
+  console.log("ok F422ak andamento");
 }
