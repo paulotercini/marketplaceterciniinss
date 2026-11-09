@@ -6851,7 +6851,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.10</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.11</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17897,7 +17897,7 @@ function bolhaZap(m, cli, seguida){
       + (m.texto?`<div>${m.tipo==="audio"?"🎤 ":""}${esc(m.texto)}</div>`:"")
     : m.texto ? textoZap(m.texto) : esc(`[${m.tipo}]`);
   // F332 · apagada no WhatsApp: a equipe continua vendo o que foi escrito, riscado
-  const apag = m.apagada_em ? `<div class="zap-apag">${zic("proibido",13)}${m.direcao==="entrada"?"O cliente apagou esta mensagem":m.alterar&&m.alterar.acao==="apagar"?"Apagada pelo escritório":"Apagada no celular"} em ${diaZap(m.apagada_em)}, ${horaSP(m.apagada_em)}</div>` : "";
+  const apag = m.apagada_em ? `<div class="zap-apag">${zic("proibido",13)}${m.direcao==="entrada"?"O cliente apagou esta mensagem":m.alterar&&m.alterar.acao==="apagar"?`Apagada por ${esc((D.colPorId.get(m.alterar.por)||{}).nome||"escritório")}`:"Apagada no celular"} em ${diaZap(m.apagada_em)}, ${horaSP(m.apagada_em)}</div>` : "";
   const lk = !m.apagada_em && !m.midia_url && m.texto ? (m.texto.match(RX_LINK_ZAP)||[])[0] : null;
   // a citada pode estar no CRM (responde_a) ou só ter o id do WhatsApp
   const citada = m.responde_a ? zapMsgs.find(x=>x.id===m.responde_a)
