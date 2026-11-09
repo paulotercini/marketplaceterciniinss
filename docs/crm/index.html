@@ -6859,7 +6859,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.13</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.14</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -47915,6 +47915,95 @@ async function balcaoPronto(cliId){
   const n = await avisarClienteNovo(cliId, `${c.nome} está na recepção, pronto para o atendimento: ${estado}; ${falta.length ? `falta no cadastro: ${falta.join(", ")}` : "cadastro completo"}.`);
   fecharCaixa(); aviso(n ? `${n} advogado${n===1?"":"s"} avisado${n===1?"":"s"}` : "Ninguém a avisar", false);
 }
+// F468 · Chegou para o atendimento (pedido do Paulo de 09.11.2026): a janela da agenda só testa a senha do Meu INSS de quem já
+// tem CPF e senha, ou pede o que falta (CPF, senha) e, sem ficha, cria o cliente; o dossiê fica no botão Dossiê da Identificação
+function chegouAtendimento(cliId, msg=""){
+  const c = D.cliPorId.get(cliId); if(!c || semCadastro()) return;
+  const cr = credInssDe(c), g = (c.campos||{}).gov;
+  if(c.cpf && cr) return caixa(`<h3 style="margin:0 0 6px">Chegou: ${esc(c.nome||"")}</h3>
+    <p class="meio-sub" style="margin:0 0 8px">Teste a senha do Meu INSS: o CPF vai copiado e o portal abre. ${g ? `<span class="bal-gov">${esc(govTxt(g))}</span>` : ""}</p>
+    <div class="form-linha" style="margin:0 0 8px"><span class="mono">${fmtCpf(digitosCpf(c.cpf))}</span>
+      <button class="btn-rap" onclick="copiar('${c.cpf}','CPF copiado')" title="Copiar o CPF">CPF</button>
+      <button class="btn-rap" onclick="copiarCred('${cr.id}')" title="Copiar a senha do Meu INSS">Senha</button>
+      <button class="btn-rap forte" onclick="entrarMeuInss('${c.id}')" title="Copiar o CPF e abrir o Meu INSS">Testar</button></div>
+    <div class="form-linha"><button class="btn-rap" onclick="chegouGov('${c.id}')" title="A senha entrou no Meu INSS">Entrou</button>
+      <button class="btn-rap" onclick="chegouErrada('${c.id}')" title="A senha não entrou">Errada</button></div>
+    <div id="bal-msg" class="meio-sub" style="margin-top:8px">${msg}</div>`);
+  caixa(`<h3 style="margin:0 0 6px">Chegou: ${esc(c.nome||"")}</h3>
+    <p class="meio-sub" style="margin:0 0 8px">Preencha o que falta para testar o Meu INSS.</p>
+    <div class="form-linha">${c.cpf ? `<span class="mono">${fmtCpf(digitosCpf(c.cpf))}</span>` : `<input id="bal-cpf" placeholder="CPF" maxlength="14" inputmode="numeric" style="width:160px">`}
+      ${cr ? "" : `<input id="bal-senha" placeholder="senha do Meu INSS" autocomplete="off" style="width:190px">`}
+      <button class="btn-rap forte" onclick="chegouSalvar('${c.id}')" title="Guardar o CPF e a senha">Salvar</button></div>
+    <div id="bal-msg" class="meio-sub" style="margin-top:8px">${msg}</div>`);
+}
+async function chegouSalvar(cliId){
+  const c = D.cliPorId.get(cliId), msg = document.getElementById("bal-msg");
+  const iCpf = document.getElementById("bal-cpf"), cpf = iCpf ? soDig(iCpf.value) : "";
+  const senha = ((document.getElementById("bal-senha")||{}).value||"").trim();
+  if(iCpf){
+    if(!cpfValido(cpf)) return msg.textContent = "CPF inválido: confira os números.";
+    let outro = D.clientes.find(x=>x.id!==cliId && digitosCpf(x.cpf)===cpf);
+    if(!outro){ const r = await api(`/rest/v1/clientes?select=*&cpf=eq.${cpf}`).catch(()=>[]); if(r && r[0]){ outro = r[0]; D.clientes.push(outro); D.cliPorId.set(outro.id, outro); reindexarCliente(outro); } }
+    if(outro){ msg.innerHTML = `Este CPF já é de <b>${esc(outro.nome)}</b>. <button class="btn-rap forte" onclick="chegouJuntar('${cliId}','${outro.id}')" title="Levar as notas desta ficha à de ${esc(outro.nome)} e testar a senha dele">Abrir</button>`; return; }
+    try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({cpf})}); }
+    catch(e){ return msg.textContent = "Não consegui guardar o CPF. Tente de novo."; }
+    c.cpf = cpf; reindexarCliente(c);
+  }
+  if(senha){
+    const velha = credInssDe(c);
+    try{
+      await api(`/rest/v1/credenciais`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({cliente_id:cliId, tipo:"meu_inss", valor:senha})});
+      if(velha) await api(`/rest/v1/credenciais?id=eq.${velha.id}`,{method:"DELETE"}).catch(()=>{});
+    }catch(e){ return msg.textContent = "Não consegui guardar a senha. Tente de novo."; }
+  }
+  await abrirFicha(cliId); chegouAtendimento(cliId);
+}
+async function chegouJuntar(preId, cliId){
+  const pre = D.cliPorId.get(preId), c = D.cliPorId.get(cliId), notas = ((pre.campos||{}).atendimento||[]);
+  try{
+    if(notas.length) await gravarCamposBalcao(c, x=>({...x, atendimento:[...(x.atendimento||[]), ...notas]}));
+    await gravarCamposBalcao(pre, x=>({...x, nao_cliente:true, fundido_em:new Date().toISOString(), fundido_para:cliId}));
+  }catch(e){ return aviso("Não consegui juntar as fichas. Tente de novo."); }
+  fecharCaixa(); await abrirFicha(cliId); chegouAtendimento(cliId);
+}
+async function chegouGov(cliId){
+  const c = D.cliPorId.get(cliId), gov = {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0]};
+  try{ await gravarCamposBalcao(c, x=>({...x, gov})); }catch(e){ return aviso("Não consegui registrar. Tente de novo."); }
+  fecharCaixa(); aviso("Senha conferida", false);
+}
+function chegouErrada(cliId){
+  document.getElementById("bal-msg").innerHTML = `Peça a senha atual ao cliente. Se ele não lembrar, recupere no gov.br, em <b>Esqueci minha senha</b>.
+    <div class="form-linha" style="margin-top:6px"><input id="bal-senha" placeholder="senha nova" autocomplete="off" style="width:190px">
+    <button class="btn-rap forte" onclick="chegouSalvar('${cliId}')" title="Guardar a senha nova">Salvar</button></div>`;
+}
+// sem ficha no CRM: nome do evento, CPF e senha criam o cliente
+function chegouNovo(ev){
+  caixa(`<h3 style="margin:0 0 6px">Chegou: cliente novo</h3>
+    <p class="meio-sub" style="margin:0 0 8px">Preencha CPF e senha do Meu INSS para criar o cliente.</p>
+    <div class="form-linha" style="flex-wrap:wrap"><input id="bal-nome" placeholder="nome completo" value="${esc(nomeDoEvento(ev))}" style="width:240px">
+      <input id="bal-cpf" placeholder="CPF" maxlength="14" inputmode="numeric" style="width:160px">
+      <input id="bal-senha" placeholder="senha do Meu INSS" autocomplete="off" style="width:190px">
+      <button class="btn-rap forte" id="bal-criar" title="Criar o cliente">Criar</button></div>
+    <div id="bal-msg" class="meio-sub" style="margin-top:8px"></div>`);
+  document.getElementById("bal-criar").onclick = async ()=>{
+    const msg = document.getElementById("bal-msg"), nome = document.getElementById("bal-nome").value.replace(/\s+/g," ").trim();
+    const cpf = soDig(document.getElementById("bal-cpf").value), senha = document.getElementById("bal-senha").value.trim();
+    if(nome.length<3) return msg.textContent = "Informe o nome.";
+    if(!cpfValido(cpf)) return msg.textContent = "CPF inválido: confira os números.";
+    let outro = D.clientes.find(x=>digitosCpf(x.cpf)===cpf);
+    if(!outro){ const r = await api(`/rest/v1/clientes?select=*&cpf=eq.${cpf}`).catch(()=>[]); if(r && r[0]){ outro = r[0]; D.clientes.push(outro); D.cliPorId.set(outro.id, outro); reindexarCliente(outro); } }
+    if(outro){ msg.innerHTML = `Este CPF já é de <b>${esc(outro.nome)}</b>. <button class="btn-rap forte" onclick="fecharCaixa();abrirFicha('${outro.id}').then(()=>chegouAtendimento('${outro.id}'))" title="Testar a senha de ${esc(outro.nome)}">Abrir</button>`; return; }
+    const tel = soDig(ev.telefone||"");
+    let cli;
+    try{ [cli] = await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({nome, cpf, telefone: tel.length>2 ? fmtTelBR(tel) : null, campos:{atendimento:[notaBalcao("Cliente cadastrado na recepção, na chegada ao atendimento.")]}})}); }
+    catch(e){ return msg.textContent = "Não consegui criar o cliente. Tente de novo."; }
+    D.clientes.push(cli); D.cliPorId.set(cli.id, cli); reindexarCliente(cli);
+    if(senha) await api(`/rest/v1/credenciais`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({cliente_id:cli.id, tipo:"meu_inss", valor:senha})})
+      .catch(()=>aviso("O cliente gravou, mas a senha não: cadastre de novo pela ficha"));
+    fecharCaixa(); await abrirFicha(cli.id); chegouAtendimento(cli.id);
+  };
+}
 function entrarMeuInss(cliId){
   const c = D.cliPorId.get(cliId); if(!c || !c.cpf) return aviso("Sem CPF no cadastro");
   copiar(c.cpf, "CPF copiado: cole no gov.br. A senha copia no 📋 ao lado");
@@ -57821,7 +57910,7 @@ function menuEventoAgenda(el, ev){
   m.innerHTML = (por ? `<div class="aq-menu-por">${esc(por)}</div>` : "") + op("editar","Editar") + (ev.confirmado ? "" : op("confirmar","Confirmar"))
     + (podeMexer ? op("remarcar","Remarcar") : "")
     + (podeMexer ? op("cancelar","Cancelar") : "")
-    + (podeCadastrar() ? op("chegou","Chegou") : "")
+    + (podeCadastrar() ? op("chegou","Chegou para o atendimento") : "")
     + op("abrir","Abrir cliente")
     + (ev.origemCrm ? op("whats","Copiar mensagem de WhatsApp") : "");
   document.body.appendChild(m);
@@ -57871,8 +57960,8 @@ async function acaoEventoAgenda(acao, ev){
     else if(acao==="editar"){ return editarEventoAgenda(ev); }
     else if(acao==="chegou"){   // F425 · o cliente chegou: a ficha e a janela do balcão (CPF, senha do gov.br, dossiê, aviso)
       const c = clienteDoEvento(ev);
-      if(!c){ _ncl = {etapa:1, id:null, nomeBusca:nomeDoEvento(ev)}; return irNovoCliente(); }
-      await abrirFicha(c.id); return dossieDoAtendimento(c.id, false);
+      if(!c) return chegouNovo(ev);
+      await abrirFicha(c.id); return chegouAtendimento(c.id);
     }
     else if(acao==="abrir"){ const c = clienteDoEvento(ev); return c ? abrirFicha(c.id) : aviso("Não achei este cliente no CRM pelo nome do evento."); }
     else if(acao==="whats"){ try{ await navigator.clipboard.writeText(msgAgendaWhats(ev.nome, ev.data, ev.inicio, ev.tipo, ev.profissional)); }catch(e){} aviso("Mensagem copiada", false); return; }
