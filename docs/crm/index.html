@@ -2466,6 +2466,9 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .app:not(.celular) .zap-topo .zt-fala-igual{display:none}
   .app:not(.celular) .zap-topo .zt-sub>.zt-fala-igual+span::before{content:none}
   .zt-acoes>.zt-btn:not(.zt-assumir):not(.zt-info){display:none}
+  /* F468 · no computador o Encerrar (ou Reabrir) fica à vista no topo da conversa, e não no ⋯ (pedido do Paulo de 09.11.2026) */
+  .app:not(.celular) .zt-acoes>.zt-btn.zt-fim{display:inline-flex}
+  .app:not(.celular) .zt-menu .zt-cel.zt-fim{display:none}
   .zl-faixa{display:flex;align-items:center;gap:8px;width:100%;box-sizing:border-box;margin:0 0 8px;padding:5px 12px;border:0;
     border-radius:8px;background:var(--prox-f,#fbf1e0);color:var(--prox,#8f5400);font:inherit;font-size:12px;font-weight:500;cursor:pointer;text-align:left}
   .zl-faixa i{flex:none;background:var(--prox,#8f5400)}
@@ -6856,7 +6859,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.12</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.13</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17434,14 +17437,14 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            ${pode&&!fim?`<button class="zt-btn" onclick="iaZap('rascunho')" title="a IA escreve uma resposta no campo; confira antes de enviar" aria-label="Rascunho">✨<span class="lbl">Rascunho</span></button>`:""}`:""}
            ${fim||!pode?"":`<button class="zt-btn" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
            ${fim||pode||!deOutro?"":`<button class="zt-btn" onclick="pedirTransferencia()" title="pedir a ${esc(at.nome)} e aos gestores que transfiram a conversa" aria-label="Pedir transferência">${zic("seta")}<span class="lbl">Pedir</span></button>`}
-           ${pode?`<button class="zt-btn pri" aria-label="${fim?"Reabrir":"Encerrar"}" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}<span class="lbl">Encerrar</span>`}</button>`:""}
+           ${pode?`<button class="zt-btn pri zt-fim" aria-label="${fim?"Reabrir":"Encerrar"}" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}<span class="lbl">Encerrar</span>`}</button>`:""}
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
              <div class="zt-menu">
                <button class="zt-cel" onclick="this.closest('details').open=false;abrirBuscaZap()">Buscar<span class="sr-only"> na conversa</span></button>
                ${fim||!pode?"":`<button class="zt-cel" onclick="this.closest('details').open=false;transferirConversa()">Transferir</button>`}
                ${fim||pode||!deOutro?"":`<button class="zt-cel" onclick="this.closest('details').open=false;pedirTransferencia()">Pedir<span class="sr-only"> transferência</span></button>`}
-               ${pode?`<button class="zt-cel" onclick="this.closest('details').open=false;${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":"Encerrar"}</button>`:""}
+               ${pode?`<button class="zt-cel zt-fim" onclick="this.closest('details').open=false;${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":"Encerrar"}</button>`:""}
                ${cli?`<button onclick="quemConversa()">Quem escreve…</button>`:`<button onclick="vincularConversa()" title="Vincular a um cliente">Vincular<span class="sr-only"> a um cliente</span></button>
                <button onclick="this.closest('details').open=false;nomearConversa()" title="Alterar o nome do contato"><span aria-hidden="true">Renomear</span><span class="sr-only">Alterar o nome do contato</span></button>`}
                <button onclick="this.closest('details').open=false;escolherSetor()">Setor</button>
