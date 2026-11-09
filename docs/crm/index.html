@@ -6867,7 +6867,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.17</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.18</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -58103,7 +58103,7 @@ function ligarTelJa(f){
 }
 function ligarSugAgenda(f){
   document.querySelectorAll("[data-aqcli]").forEach(b=>b.onclick=()=>{ f.cli=D.cliPorId.get(b.dataset.aqcli); f.novo=false; f.tipo=(f.vaga&&f.vaga.tipo)||"002"; f.nome=f.cli.nome; f.tel=(f.cli.telefone||"").replace(/\D/g,""); f.corrigir=false; f.etapa=2; f.msg=""; pintarFluxo(); });
-  document.querySelectorAll("[data-aqnovo]").forEach(b=>b.onclick=()=>{ f.cli=null; f.novo=true; f.tipo=(f.vaga&&f.vaga.tipo)||"001"; if(!f.nome) f.nome=f.busca.replace(/\d/g,"").trim(); f.etapa=2; f.msg=""; pintarFluxo(); });
+  document.querySelectorAll("[data-aqnovo]").forEach(b=>b.onclick=()=>{ f.nome=f.busca.replace(/\d/g,"").replace(/\s+/g," ").trim() || (f.cli ? "" : f.nome); f.cli=null; f.novo=true; f.tipo=(f.vaga&&f.vaga.tipo)||"001"; f.etapa=2; f.msg=""; pintarFluxo(); });
 }
 function pintarFluxo(){
   const f = fluxo; if(!f) return;
@@ -58122,7 +58122,7 @@ function pintarFluxo(){
         <label class="aq-campo">Telefone com DDD<input id="aq-tel" class="aq-inp" inputmode="tel" placeholder="(16) 99999-9999" value="${esc(fmtTelBR(f.tel))}"></label>
         <div id="aq-tel-de">${telJaCadastrado(f)}</div>
         <div class="aq-bts"><button class="btn-rap" data-aqvolta="1">Voltar</button><button class="btn-rap forte" id="aq-seg2">${clientesDoTelefone(f.tel).length?"É outra pessoa, continuar":"Continuar"}</button></div>`
-      : `<h3>${esc(f.cli.nome)} <span class="aq-tipo">002 · 30 minutos</span></h3>
+      : `<h3>${esc(f.cli.nome)} <span class="aq-tipo">002 · 30 minutos</span> <button class="btn-mini" id="aq-trocar" title="Agendar para outra pessoa">Trocar<span class="sr-only"> a pessoa a ser atendida</span></button></h3>
         <p class="meio-sub">Cliente do escritório. Confira o telefone antes de seguir.</p>
         ${f.corrigir||!f.tel ? `<label class="aq-campo">${f.tel?"Telefone com DDD":"Sem telefone no cadastro. Informe o telefone com DDD, que ele fica gravado no cliente"}<input id="aq-tel" class="aq-inp" inputmode="tel" placeholder="(16) 99999-9999" value="${esc(fmtTelBR(f.tel))}"></label>`
           : `<p class="aq-tel-atual">${esc(fmtTelBR(f.tel))}</p>`}
@@ -58205,6 +58205,8 @@ function ligarFluxo(){
       const seg = $("aq-seg2"); if(seg) seg.textContent = clientesDoTelefone(f.tel).length ? "É outra pessoa, continuar" : "Continuar"; } };
   ligarTelJa(f);
   on("aq-corrigir", ()=>{ f.corrigir=true; pintarFluxo(); });
+  // F477 · a agenda aberta pela conversa já traz o cliente dela; quem escreve pode pedir por outra pessoa
+  on("aq-trocar", ()=>{ f.cli=null; f.novo=false; f.nome=""; f.busca=""; f.corrigir=false; f.etapa=1; f.msg=""; pintarFluxo(); });
   on("aq-seg2", async ()=>{
     if(f.novo){ f.nome = ($("aq-nome").value||"").replace(/\s+/g," ").trim(); }
     if($("aq-tel")) f.tel = $("aq-tel").value.replace(/\D/g,"");
