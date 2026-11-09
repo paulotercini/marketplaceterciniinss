@@ -2469,6 +2469,12 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   /* F468 · no computador o Encerrar (ou Reabrir) fica à vista no topo da conversa, e não no ⋯ (pedido do Paulo de 09.11.2026) */
   .app:not(.celular) .zt-acoes>.zt-btn.zt-fim{display:inline-flex}
   .app:not(.celular) .zt-menu .zt-cel.zt-fim{display:none}
+  /* F471 · o Transferir (ou o Pedir) também fica à vista no topo, e não no ⋯ (pedido do Paulo de 09.11.2026) */
+  .app:not(.celular) .zt-acoes>.zt-btn.zt-trans{display:inline-flex}
+  .app:not(.celular) .zt-menu .zt-cel.zt-trans{display:none}
+  /* F471 · a lupa da busca na conversa também fica à vista, só o ícone (pedido do Paulo de 09.11.2026) */
+  .app:not(.celular) .zt-acoes>.zt-btn.zt-lupa{display:inline-flex}
+  .app:not(.celular) .zt-menu .zt-cel.zt-lupa{display:none}
   .zl-faixa{display:flex;align-items:center;gap:8px;width:100%;box-sizing:border-box;margin:0 0 8px;padding:5px 12px;border:0;
     border-radius:8px;background:var(--prox-f,#fbf1e0);color:var(--prox,#8f5400);font:inherit;font-size:12px;font-weight:500;cursor:pointer;text-align:left}
   .zl-faixa i{flex:none;background:var(--prox,#8f5400)}
@@ -6859,7 +6865,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.14</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.15</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17154,7 +17160,7 @@ function pintarListaZap(){
 // A foto de perfil do WhatsApp é o que faz a lista parecer gente, e não
 // planilha. Ela vive no balde privado, então a URL é assinada em LOTE — uma
 // chamada para a lista inteira, e não uma por linha.
-let zapFotos = new Map();
+let zapFotos = new Map(), zapFotosEm = new Map();   // F471 · quando cada foto foi assinada
 // F191 · a foto do perfil em tamanho grande, ao clicar
 function verFotoGrande(u){
   if(!u) return;
@@ -17186,13 +17192,14 @@ function avatarZap(c){
            : `<span class="zap-av vazio ${tom}">${esc(c.cliente_id||c.lead_id||c.nome_perfil?ini:"?")}</span>`;
 }
 async function assinarFotosZap(cs){
-  const faltam = [...new Set(cs.map(c=>c.foto_url).filter(u=>u && !zapFotos.has(u)))];
+  // F471 · o link assinado vale 1 hora: passados 50 minutos assina de novo, porque o CRM aberto o dia todo ficava sem fotos (400)
+  const faltam = [...new Set(cs.map(c=>c.foto_url).filter(u=>u && !(zapFotos.has(u) && Date.now()-(zapFotosEm.get(u)||0) < 50*60e3)))];
   if(!faltam.length) return;
   try{
     const d = await api(`/storage/v1/object/sign/${BUCKET}`,{method:"POST",
       body:JSON.stringify({expiresIn:3600, paths:faltam})});
     (d||[]).forEach(x=>{ if(x.signedURL)
-      zapFotos.set(x.path, CONFIG.SUPABASE_URL.replace(/\/$/,"")+"/storage/v1"+x.signedURL); });
+      { zapFotos.set(x.path, CONFIG.SUPABASE_URL.replace(/\/$/,"")+"/storage/v1"+x.signedURL); zapFotosEm.set(x.path, Date.now()); } });
   }catch(e){ /* sem foto a lista continua funcionando, com a inicial */ }
 }
 
@@ -17432,18 +17439,18 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
          <div class="zt-acoes">
            ${!at&&!fim?`<button class="zt-btn zt-assumir" onclick="assumirConversa()" title="Assumir a conversa">${zic("ok")}<span>Assumir</span><span class="sr-only"> a conversa</span></button>`:""}
            ${cli?`<button class="zt-btn ic zt-info" onclick="alternarFichaZap()" title="Ficha do cliente" aria-label="Ficha do cliente"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>`:""}
-           <button class="zt-btn ic ${zapBuscaConv?"on":""}" onclick="abrirBuscaZap()" title="buscar nesta conversa" aria-label="Buscar na conversa">${zic("busca")}</button>
+           <button class="zt-btn ic zt-lupa ${zapBuscaConv?"on":""}" onclick="abrirBuscaZap()" title="buscar nesta conversa" aria-label="Buscar na conversa">${zic("busca")}</button>
            ${cfgApp("zap_ia_equipe")==="sim"?`<button class="zt-btn" onclick="iaZap('resumo')" title="a IA resume a conversa para você (nada vai ao cliente)" aria-label="Resumo">✨<span class="lbl">Resumo</span></button>
            ${pode&&!fim?`<button class="zt-btn" onclick="iaZap('rascunho')" title="a IA escreve uma resposta no campo; confira antes de enviar" aria-label="Rascunho">✨<span class="lbl">Rascunho</span></button>`:""}`:""}
-           ${fim||!pode?"":`<button class="zt-btn" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
-           ${fim||pode||!deOutro?"":`<button class="zt-btn" onclick="pedirTransferencia()" title="pedir a ${esc(at.nome)} e aos gestores que transfiram a conversa" aria-label="Pedir transferência">${zic("seta")}<span class="lbl">Pedir</span></button>`}
+           ${fim||!pode?"":`<button class="zt-btn zt-trans" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
+           ${fim||pode||!deOutro?"":`<button class="zt-btn zt-trans" onclick="pedirTransferencia()" title="pedir a ${esc(at.nome)} e aos gestores que transfiram a conversa" aria-label="Pedir transferência">${zic("seta")}<span class="lbl">Pedir</span></button>`}
            ${pode?`<button class="zt-btn pri zt-fim" aria-label="${fim?"Reabrir":"Encerrar"}" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}<span class="lbl">Encerrar</span>`}</button>`:""}
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
              <div class="zt-menu">
-               <button class="zt-cel" onclick="this.closest('details').open=false;abrirBuscaZap()">Buscar<span class="sr-only"> na conversa</span></button>
-               ${fim||!pode?"":`<button class="zt-cel" onclick="this.closest('details').open=false;transferirConversa()">Transferir</button>`}
-               ${fim||pode||!deOutro?"":`<button class="zt-cel" onclick="this.closest('details').open=false;pedirTransferencia()">Pedir<span class="sr-only"> transferência</span></button>`}
+               <button class="zt-cel zt-lupa" onclick="this.closest('details').open=false;abrirBuscaZap()">Buscar<span class="sr-only"> na conversa</span></button>
+               ${fim||!pode?"":`<button class="zt-cel zt-trans" onclick="this.closest('details').open=false;transferirConversa()">Transferir</button>`}
+               ${fim||pode||!deOutro?"":`<button class="zt-cel zt-trans" onclick="this.closest('details').open=false;pedirTransferencia()">Pedir<span class="sr-only"> transferência</span></button>`}
                ${pode?`<button class="zt-cel zt-fim" onclick="this.closest('details').open=false;${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":"Encerrar"}</button>`:""}
                ${cli?`<button onclick="quemConversa()">Quem escreve…</button>`:`<button onclick="vincularConversa()" title="Vincular a um cliente">Vincular<span class="sr-only"> a um cliente</span></button>
                <button onclick="this.closest('details').open=false;nomearConversa()" title="Alterar o nome do contato"><span aria-hidden="true">Renomear</span><span class="sr-only">Alterar o nome do contato</span></button>`}

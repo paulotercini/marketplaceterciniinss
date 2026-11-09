@@ -144,7 +144,7 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   // F369 · quem não atende pede a transferência: menção a quem atende (e aos gestores) e nota interna
   await p.evaluate(id => abrirConversa(id), DA_AMANDA);
   await p.waitForSelector(".zap-topo");
-  await p.click('.zap-topo .zt-mais summary'); await p.click('.zt-menu .zt-cel[onclick*="pedirTransferencia"]');
+  await p.click('.zt-acoes>.zt-btn.zt-trans[onclick*="pedirTransferencia"]');   // F471 · o Pedir fica à vista no computador
   await p.fill("#zpp-motivo", "cliente meu");
   await p.click("#zpp-ok");
   await p.waitForTimeout(400);
