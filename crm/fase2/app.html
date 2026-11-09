@@ -3883,9 +3883,12 @@ html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:6;width:auto}
   html[data-tema="v10"] #conteudo-meio .ag-linha{display:flex;align-items:center;gap:8px;padding:0 12px 0 14px;min-height:44px}
   html[data-tema="v10"] #conteudo-meio .ag-linha > :is(.ag-selos,.avatares,.ag-slot,.ag-conf,.ag-c-lista,.ag-c-etapa){display:none}
   html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-data{order:0;flex:none;min-width:0;margin:0;text-align:left;align-self:center}
-  html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-txt{order:1;flex:1 1 auto;min-width:0;align-self:center;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px;line-height:20px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-txt{order:1;flex:1 1 auto;min-width:0;align-self:center;display:flex;align-items:baseline;white-space:nowrap;overflow:hidden;font-size:14px;line-height:20px}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt > b{flex:none;max-width:100%;overflow:hidden;text-overflow:ellipsis}
   html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt .ag-ben{display:none}
-  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt .ag-oque-cel{display:inline}   /* F460 */
+  /* F460 · a atribuição é o que se corta, com reticências, e o nome fica inteiro; o `.ag-txt` não passa da borda */
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt .ag-oque{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:pre}
+  html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt .ag-oque-cel{display:inline-block}   /* F460 */
   html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:2;flex:none;margin:0;align-self:center}
   html[data-tema="v10"] #conteudo-meio .ag-ext{padding:8px 14px 10px}
   .ag-ext .ae-topo{justify-content:flex-start}
@@ -11425,10 +11428,12 @@ function grupoClientes(casosSel){
 // F438 · pedido do Paulo de 08.11.2026: o clique da linha continua abrindo a ficha, e o mouse parado em cima mostra a
 // última anotação da equipe nos casos da linha. O texto não vem na carga inicial: busca-se no primeiro hover e guarda-se
 const _ultAnot = new Map();
-function ultAnotDe(ids){
-  if(!_ultAnot.has(ids)) _ultAnot.set(ids, api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${ids})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&limit=1`)
-    .then(r=>(r||[])[0]||null).catch(()=>{ _ultAnot.delete(ids); return null; }));
-  return _ultAnot.get(ids);
+function ultAnotDe(ids, soCrm){
+  // F460 · `soCrm` traz só a anotação escrita no CRM (origem app): a do Microsoft To Do não descreve a data (F429)
+  const ch = soCrm ? ids+"|app" : ids;
+  if(!_ultAnot.has(ch)) _ultAnot.set(ch, api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${ids})&origem=${soCrm?"eq.app":`not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})`}&excluir=not.is.true&order=criado_em.desc&limit=1`)
+    .then(r=>(r||[])[0]||null).catch(()=>{ _ultAnot.delete(ch); return null; }));
+  return _ultAnot.get(ch);
 }
 async function mostrarUltAnot(el){
   const a = await ultAnotDe(el.dataset.casos);
@@ -14666,10 +14671,10 @@ function renderAgendaV10(qual){
   buscarMotivosPz([...itens, ...deleg].filter(i=>i.k && (i.fatal || i.antes) && !i.tc && !i.motivo && i.k.prazo===(i.antes||i.data)).map(i=>i.k));   // F427
   preencherAtribCel();   // F460
 }
-// F460 · a atribuição da linha do celular que não tem motivo escrito é a última anotação da equipe no caso
+// F460 · a atribuição da linha do celular que não tem motivo escrito é a última anotação escrita no CRM (a do To Do não, F429)
 function preencherAtribCel(){
   if(!celular()) return;
-  document.querySelectorAll("#conteudo-meio .ag-oque-cel[data-ua]").forEach(el=>ultAnotDe(el.dataset.ua).then(a=>{
+  document.querySelectorAll("#conteudo-meio .ag-oque-cel[data-ua]").forEach(el=>ultAnotDe(el.dataset.ua, true).then(a=>{
     if(a && a.texto && el.isConnected) el.textContent = " · " + resumoAgenda(a.texto);
   }));
 }
