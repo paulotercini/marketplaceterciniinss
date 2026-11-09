@@ -474,7 +474,7 @@ console.log("formal: ok");
   const p = promptCobranca(c, new Date("2026-11-09T13:00:00Z"));
   assert.ok(p.includes("há 11 dias") && p.includes("filho de Sueli Aparecida") && p.includes("deixe o celular"));
   assert.ok(p.includes("segunda-feira") && p.includes("10:00"), "data e hora de Brasília com o dia da semana");
-  assert.ok(p.includes("novamente") && p.includes("cobrar = false"));
+  assert.ok(p.includes("novamente") && p.includes("cobrar = false") && p.includes("nunca \"consulta\""));
   assert.deepEqual(ESQ_COBRANCA.required, ["cobrar", "mensagem"]);
   console.log("ok F422aj cobranca");
 }
