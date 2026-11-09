@@ -647,6 +647,8 @@ A **F490** (pedido do Paulo de 09.11.2026): o ⋯ da lista do WhatsApp tem **Bus
 
 A **F491** (o caso do Gilson, 09.11.2026): as mensagens de 16h37, 16h38 e 18h19 do cliente chegaram à ponte cifradas e não abriram (stub CIPHERTEXT), enquanto as de outros números do mesmo minuto entraram em 1 segundo; estavam no celular e só entraram pelo histórico pedido às 20h09. A ponte agora, 3 minutos depois da mensagem de cliente que não abriu (`naoAbriu` em `normalizar.js`), põe a conversa na fila do histórico pedido (`buscarDepois`, `zap_abrir` e `historico_pedido`), uma vez por número a cada 10 minutos. Vale depois do deploy da ponte. Teste: `ponte/testes/normalizar.test.js`.
 
+A **F492** (13.25, pedido do Paulo de 09.11.2026): o cartão "Último andamento" do Dashboard do caso (PJe, e-SAJ, eproc e INSS) mostra e ordena pela data do andamento, e não pela da importação (`dataDoDb`: a do movimento no `origem_id` do PJe, `mov:<num>:2025-03-05T15:33`, e a do portal no do PAT, `atualizacao:<prot>:AAAAMMDDhhmmss`); o movimento antigo reimportado mostrava "há 29 dias" sendo de 2025. O e-Recursos já usava a data do evento. Teste: `f466.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
