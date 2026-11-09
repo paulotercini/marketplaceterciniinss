@@ -23,7 +23,7 @@ t.test("busca o histórico pedido, grava as antigas e marca o pedido feito", asy
     return ok(null);
   };
   const t0 = Date.parse("2026-10-20T12:00:00Z") / 1000;
-  const paginas = [[msg("A2", t0 + 60, true), msg("A1", t0)], []];
+  const paginas = [[], [msg("A2", t0 + 60, true), msg("A1", t0)], []];
   const pedidos = [];
   const zap = {
     onWhatsApp: async () => [{ exists: true, jid: "5516993460685@s.whatsapp.net" }],
@@ -31,7 +31,7 @@ t.test("busca o histórico pedido, grava as antigas e marca o pedido feito", asy
   };
   P._ligado(true);
   await P.buscarHistoricosPedidos(zap);
-  a.deepStrictEqual(pedidos, ["NOVA", "A1"]);            // pede antes da mais antiga, depois antes da anterior
+  a.deepStrictEqual(pedidos, ["", "NOVA", "A1"]);        // as mais novas, depois antes da mais antiga e antes da anterior
   a.deepStrictEqual(gravadas.map(g => [g.externo_id, g.direcao]), [["A2", "saida"], ["A1", "entrada"]]);
   a.ok(patches.at(-1).historico_feito);
   a.match(patches.at(-1).historico_resultado, /^2 mensagem/);
@@ -73,4 +73,34 @@ t.test("sem mensagem gravada e sem resposta, fica para a primeira mensagem", asy
   await P.buscarHistoricosPedidos(x.zap);
   a.strictEqual(x.gravadas.length, 0);
   a.match(x.patches.at(-1).historico_resultado, /^sem mensagem de partida/);
+});
+
+// F478: a mensagem que a ponte não abriu é mais nova que todas do CRM e mora no @lid do celular:
+// o pedido traz primeiro as mais novas de cada endereço, com o @lid do lidMapping do Baileys 7
+t.test("traz a mensagem mais nova que falta, pelo @lid, marcada como vinda do celular", async () => {
+  const gravadas = [], patches = [], pedidos = [];
+  global.fetch = async (url, opts = {}) => {
+    const u = String(url), m = opts.method || "GET";
+    const ok = c => ({ ok: true, status: 200, text: async () => JSON.stringify(c) });
+    if (m === "GET" && u.includes("zap_conversas?historico_pedido")) return ok([{ id: "c3", telefone: "5517997770516" }]);
+    if (m === "GET" && u.includes("order=quando_wa.asc")) return ok([{ externo_id: "VELHA", direcao: "entrada", quando_wa: "2026-01-12T12:48:36.000Z" }]);
+    if (m === "GET" && u.includes("externo_id=eq.")) return ok([]);
+    if (m === "POST" && u.includes("zap_mensagens")) { gravadas.push(JSON.parse(opts.body)); return ok(null); }
+    if (m === "PATCH") { patches.push(JSON.parse(opts.body)); return ok(null); }
+    return ok(null);
+  };
+  const hoje = Date.parse("2026-11-09T14:47:00Z") / 1000;
+  const doLid = { key: { id: "HOJE", remoteJid: "99887766554433@lid", fromMe: false }, messageTimestamp: hoje, message: { conversation: "Bom dia" } };
+  const paginas = { "99887766554433@lid": [[doLid]], "5517997770516@s.whatsapp.net": [[], []] };
+  const zap = {
+    onWhatsApp: async () => [{ exists: true, jid: "5517997770516@s.whatsapp.net" }],
+    signalRepository: { lidMapping: { getLIDForPN: async pn => pn.startsWith("5517997770516") ? "99887766554433@lid" : null } },
+    fetchMessageHistory: async (n, chave) => { pedidos.push([chave.remoteJid, chave.id]);
+      setTimeout(() => P._pagina((paginas[chave.remoteJid] || []).shift() || []), 5); },
+  };
+  P._ligado(true);
+  await P.buscarHistoricosPedidos(zap);
+  a.deepStrictEqual(pedidos[0], ["99887766554433@lid", ""]);
+  a.deepStrictEqual(gravadas.map(g => [g.externo_id, g.bot_ia]), [["HOJE", "celular"]]);
+  a.match(patches.at(-1).historico_resultado, /^1 mensagem/);
 });
