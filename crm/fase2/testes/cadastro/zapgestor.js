@@ -89,7 +89,7 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   conf("gestor: na conversa da Amanda aparece Assumir (tirar de Amanda)", (await p.textContent(".zap-topo")).includes("tirar de Amanda"));
   await p.evaluate(() => transferirConversa());
   await p.fill("#zt-motivo", "é financeiro");
-  conf("F492: quem já atende aparece desligado no Transferir", await p.$eval(`[data-zt="${AMANDA}"]`, b => b.disabled && b.textContent.includes("já atende")));
+  conf("F493: quem já atende aparece desligado no Transferir", await p.$eval(`[data-zt="${AMANDA}"]`, b => b.disabled && b.textContent.includes("já atende")));
   await p.click(`[data-zts="${S1}"]`);
   await p.waitForTimeout(300);
   const tr = escritas.find(e => /rpc\/zap_transferir/.test(e.u));
@@ -183,13 +183,13 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.evaluate(() => { localStorage.removeItem("crm_ver_como"); irPara("mencoes"); });
   await p.waitForTimeout(300);
   conf("Menções: o aviso de conversa tem o botão abrir conversa", (await p.textContent("#conteudo-meio")).includes("abrir conversa"));
-  // F492 · com quem está e se quem atende já abriu depois da última mensagem do cliente
+  // F493 · com quem está e se quem atende já abriu depois da última mensagem do cliente
   const vz = await p.evaluate(() => { const o = [...D.colPorId.values()].find(c => c.id !== eu.id);
     const c = { atendente_id: o.id, ultima_entrada_em: "2026-11-09T21:00:00Z", ultima_resposta_em: "2026-11-09T20:00:00Z" };
     const r1 = vistoZap(c), r2 = vistoZap({ ...c, atendente_viu_em: "2026-11-09T21:05:00Z" }),
           r3 = vistoZap({ ...c, ultima_resposta_em: "2026-11-09T21:10:00Z" });
     return [r1.viu === false, r2.viu === true, r3.resp === true, /não viu/.test(cartaoConversa({ ...c, id: "x", status: "aberta" }))]; });
-  conf("F492: não viu, viu, respondida e o cartão diz com quem está", vz.every(Boolean));
+  conf("F493: não viu, viu, respondida e o cartão diz com quem está", vz.every(Boolean));
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);

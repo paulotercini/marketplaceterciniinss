@@ -17352,7 +17352,7 @@ const _zapCache = new Map();
 let zapLerAoAbrir = null;
 function lerConversaZap(c){
   if(!c) return;
-  // F492 · quem atende, ao abrir, deixa marcado que viu (o gestor e quem transferiu sabem que chegou)
+  // F493 · quem atende, ao abrir, deixa marcado que viu (o gestor e quem transferiu sabem que chegou)
   const minha = eu && c.atendente_id===eu.id, corpo = {};
   if(c.nao_lidas) corpo.nao_lidas = 0;
   if(minha) corpo.atendente_viu_em = new Date().toISOString();
@@ -17361,7 +17361,7 @@ function lerConversaZap(c){
     headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}).catch(()=>{});
   Object.assign(c, corpo);
 }
-// F492 · a conversa de outra pessoa com mensagem do cliente sem resposta: quem atende já abriu depois dela?
+// F493 · a conversa de outra pessoa com mensagem do cliente sem resposta: quem atende já abriu depois dela?
 function vistoZap(c){
   const at = c.atendente_id && D.colPorId.get(c.atendente_id);
   if(!at || !c.ultima_entrada_em) return null;
