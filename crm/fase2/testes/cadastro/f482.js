@@ -66,14 +66,14 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     const m = document.getElementById("conteudo-meio");
     m.insertAdjacentHTML("afterbegin", `<div id="marca-f482"><textarea id="txt-f482"></textarea></div>`);
     const t = document.getElementById("txt-f482"); t.value = "texto em digitação"; t.focus(); });
-  const cargas0 = await p.evaluate(() => { window._cargas = 0; const c = carregar; carregar = (...a) => { window._cargas++; return c(...a); }; return 0; });
+  const cargas0 = await p.evaluate(() => { window._D0 = D; window._cargas = 0; const c = carregar; carregar = (...a) => { window._cargas++; return c(...a); }; return 0; });
   await p.evaluate(() => autoAplicarColetas());
   const t1 = deCaso();
   conf("a importação em segundo plano grava as duas coletas", t1.some(x => /Sentença tipo B/.test(x)) && t1.some(x => /Acórdão/.test(x))
     && T.coletas[0].aplicada_em && T.coletas[1].aplicada_em);
   const fica = await p.evaluate(() => { const t = document.getElementById("txt-f482"); return !!t && t.value === "texto em digitação" && document.activeElement === t; });
   conf("a tela não é repintada: o texto digitado e o foco continuam", fica);
-  conf("com a tela ocupada a rodada não recarrega o CRM", await p.evaluate(() => window._cargas === 0));
+  conf("com a tela ocupada a rodada não troca os dados em uso", await p.evaluate(() => D === window._D0));
   const avs = await p.evaluate(() => window._avisos);
   conf("durante a rodada só aparece o aviso Importando", avs.length > 0 && avs.every(a => /^Importando/.test(a)));
   conf("o modo silencioso termina com a rodada", await p.evaluate(() => coletaSilenciosa === false));
@@ -81,9 +81,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // 2 · tela livre: no fim recarrega e repinta uma vez
   T.coletas[0].aplicada_em = null; T.coletas[1].aplicada_em = null; T.andamentos.length = 0;
   T.config_app = (T.config_app||[]).filter(c => c.chave !== "coletas_auto_em");
-  await p.evaluate(() => { document.activeElement && document.activeElement.blur(); document.getElementById("marca-f482")?.remove(); visao = "meudia"; render(); window._cargas = 0; });
+  await p.evaluate(() => { document.activeElement && document.activeElement.blur(); document.getElementById("marca-f482")?.remove(); visao = "meudia"; render(); window._cargas = 0;
+    window._renders = 0; const r = render; render = (...a) => { window._renders++; return r(...a); }; });
   await p.evaluate(() => autoAplicarColetas());
-  conf("com a tela livre a rodada recarrega uma vez no fim", await p.evaluate(() => window._cargas === 1));
+  conf("F485 · nem no fim da rodada a tela é repintada", await p.evaluate(() => window._renders === 0));
+  conf("com a tela livre a rodada só atualiza os dados, uma vez e sem repintar", await p.evaluate(() => window._cargas === 1));
 
   // 3 · o Importar à mão continua repintando
   conf("fora da rodada automática o render do Importar segue normal", await p.evaluate(() => { visao = "patinss"; renderColeta(); return !!document.querySelector("#conteudo-meio"); }));
