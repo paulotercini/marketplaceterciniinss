@@ -6867,7 +6867,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.21</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.22</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -16130,7 +16130,7 @@ function renderMencoes(){
 }
 // F187 · o aviso de transferência (ou @ na nota) leva direto à conversa
 function abrirConversaDaMencao(conversaId, acao, msgId){
-  zapAberta = conversaId; zapPainelAberto = false;
+  zapAberta = conversaId; zapPainelAberto = false; zapLerAoAbrir = conversaId;
   // F396 · o botão do aviso: Responder põe o cursor no campo, Ouvir toca o áudio (sem o gesto, o navegador pode barrar: fica o balão em destaque)
   zapDoAviso = acao ? {conversa: conversaId, acao, msgId} : null;
   visao = "whatsapp"; render();
@@ -17165,11 +17165,11 @@ function pintarListaZap(){
     clearTimeout(zapBuscaT); zapBuscaT = setTimeout(buscarNasMensagens, 400); };
   document.querySelectorAll("[data-za]").forEach(el=>el.onclick=async()=>{
     const [cv, msg] = el.dataset.za.split("|");
-    await abrirConversa(cv); irParaMsg(msg);
+    await abrirConversa(cv, true); irParaMsg(msg);
   });
   // a lista repinta a cada 6 s: quem está digitando a busca não pode perder o cursor
   if(comFoco){ b2.focus(); b2.setSelectionRange(b2.value.length, b2.value.length); }
-  document.querySelectorAll("[data-zc]").forEach(el=>el.onclick=()=>abrirConversa(el.dataset.zc));
+  document.querySelectorAll("[data-zc]").forEach(el=>el.onclick=()=>abrirConversa(el.dataset.zc, true));
 }
 
 // A foto de perfil do WhatsApp é o que faz a lista parecer gente, e não
@@ -17330,13 +17330,21 @@ async function carregarReacoes(){
 }
 // F339 · a conversa já aberta nesta sessão reabre na hora com o que se viu; o banco atualiza em seguida
 const _zapCache = new Map();
-async function abrirConversa(id){
+// F483 · o clique no nome é ler; a mensagem que chega com a conversa já aberta fica nova até outro clique ou a resposta
+let zapLerAoAbrir = null;
+function lerConversaZap(c){
+  if(!c || !c.nao_lidas) return;
+  api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}).catch(()=>{});
+  c.nao_lidas = 0;
+}
+async function abrirConversa(id, ler){
   const mesma = zapAberta===id;   // reabrir a mesma (depois de enviar, na recarga) guarda o que está escrito e a rolagem
   if(zapAberta!==id){ zapResponder = null; zapNota = false; }
   zapPainelAberto = false;
   zapAberta = id;
   const c = zapConvs.find(x=>x.id===id); if(!c) return;
-  // F480 · abrir não é ler: a mensagem do cliente fica nova até a equipe responder (o banco zera na resposta)
+  if(ler || zapLerAoAbrir===id){ zapLerAoAbrir = null; lerConversaZap(c); }   // F483 · a recarga de 6 s não lê
   const cache = _zapCache.get(id), naTela = !!document.getElementById("zap-dir");
   if(cache && naTela){ ({msgs:zapMsgs, reacoes:zapReacoes, transf:zapTransf, hist:zapHist} = cache); mesma ? pintarConversaGuardando() : pintarConversa(); }
   if(naTela) pintarListaZap();
@@ -18829,7 +18837,7 @@ async function conferirContatoZap(){
     await recarregarZap(true).catch(()=>{});
     zapFiltro = "minhas";
     if(visao!=="whatsapp") irPara("whatsapp");
-    abrirConversa(conv);
+    abrirConversa(conv, true);
   };
   document.getElementById("znc-cli").onclick = ()=>{
     fecharCaixa();
@@ -19080,7 +19088,7 @@ function colarPrintLado(e, convId){
 // F387 · a conversa ao lado abre na tela do WhatsApp do CRM, pelo mesmo caminho da menção
 function zapNaTela(convId){
   fecharPainelPrazo();
-  zapAberta = convId; zapPainelAberto = false;
+  zapAberta = convId; zapPainelAberto = false; zapLerAoAbrir = convId;
   irPara("whatsapp");
 }
 function escolherArquivoLado(convId, inp){
@@ -19238,7 +19246,7 @@ async function verZapCliente(cliId){
   requestAnimationFrame(()=>{ el.classList.add("aberto"); document.body.classList.add("lado-aberto"); });
   const caixaMsgs = el.querySelector(".zap-msgs"); if(caixaMsgs) caixaMsgs.scrollTop = caixaMsgs.scrollHeight;
   carregarMinis(caixaMsgs);
-  // F480 · abrir não é ler: a conversa fica nova até a equipe responder
+  zs.forEach(lerConversaZap);   // F483 · abrir a conversa ao lado é ler
 }
 // os 8 últimos dígitos de cada telefone da ficha: a mesma chave do zap_conversas
 function chavesDoCliente(cliId){
@@ -51878,7 +51886,7 @@ async function zapDoNumero(numero){
   await recarregarZap(true).catch(()=>{});
   fecharPainelPrazo();
   if(visao!=="whatsapp") irPara("whatsapp");
-  abrirConversa(conv);
+  abrirConversa(conv, true);
 }
 function marcarZap(cliId, i){
   if(semCadastro()) return;   // F396
