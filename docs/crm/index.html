@@ -3769,24 +3769,68 @@ html[data-tema="v10"] .ag-txt b{font-weight:600}
 @media (hover:none){#ult-anot{display:none!important}}
 html[data-tema="v10"] #conteudo-meio .ag-ext{grid-column:1/-1;background:#FAFAF8;border-top:1px dashed var(--borda);padding:8px 16px 12px 16px;font-size:13px;color:var(--texto)}
 .cartao.ext-on{background:#F6F8F6!important}
-.ag-ext .ae-topo{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--cinza)}
-.ag-ext .ae-cop{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
-.ag-ext .ae-cop .cop{cursor:pointer;font-variant-numeric:tabular-nums}
-.ag-ext .ae-mini{font-size:12px;padding:2px 6px;min-height:24px;border:1px solid var(--borda);border-radius:4px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
-.ag-ext .ae-zap img,.ag-ext .ae-zap svg{width:16px;height:16px}
-.ag-ext .ae-txt{white-space:pre-line;margin:6px 0 8px;display:-webkit-box;-webkit-line-clamp:14;-webkit-box-orient:vertical;overflow:hidden}
-.ag-ext .ae-txt.todo{display:block;-webkit-line-clamp:unset;overflow:visible}
-.ag-ext .ae-mais{display:block;margin:-4px 0 8px;background:none;border:0;padding:0;color:var(--verde,#1f6f4a);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline}
-.ag-ext .ae-cab{display:block;font-size:12px;color:var(--cinza);margin-bottom:2px}
-.ag-ext .ae-acoes{display:flex;gap:6px;flex-wrap:wrap}
-.ag-ext [hidden]{display:none!important}
-.ag-ext .ae-nota{width:100%;box-sizing:border-box;font:inherit;padding:6px 8px;border:1px solid var(--borda);border-radius:4px}
-.ag-ext .ae-lin,.ag-ext .ae-dias{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
-.ag-ext .ae-fim{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:8px}
-.ag-ext .ae-canc{background:none;border:0;color:var(--cinza);text-decoration:underline;cursor:pointer;min-height:24px}
-.ag-ext .ae-aviso{margin:4px 0;color:var(--cinza)}
-.ag-ext .ae-resp+.ae-todo::before{content:" · "}
-@media (max-width:760px){.ag-ext .ae-acoes .btn-mini{flex:1 1 40%}.ag-ext .ae-resp{display:none}.ag-ext .ae-resp+.ae-todo::before{content:none}}
+:is(.ag-ext,.db) .ae-topo{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--cinza)}
+:is(.ag-ext,.db) .ae-cop{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+:is(.ag-ext,.db) .ae-cop .cop{cursor:pointer;font-variant-numeric:tabular-nums}
+:is(.ag-ext,.db) .ae-mini{font-size:12px;padding:2px 6px;min-height:24px;border:1px solid var(--borda);border-radius:4px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+:is(.ag-ext,.db) .ae-zap img,:is(.ag-ext,.db) .ae-zap svg{width:16px;height:16px}
+:is(.ag-ext,.db) .ae-txt{white-space:pre-line;margin:6px 0 8px;display:-webkit-box;-webkit-line-clamp:14;-webkit-box-orient:vertical;overflow:hidden}
+:is(.ag-ext,.db) .ae-txt.todo{display:block;-webkit-line-clamp:unset;overflow:visible}
+:is(.ag-ext,.db) .ae-mais{display:block;margin:-4px 0 8px;background:none;border:0;padding:0;color:var(--verde,#1f6f4a);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline}
+:is(.ag-ext,.db) .ae-cab{display:block;font-size:12px;color:var(--cinza);margin-bottom:2px}
+:is(.ag-ext,.db) .ae-acoes{display:flex;gap:6px;flex-wrap:wrap}
+:is(.ag-ext,.db) [hidden]{display:none!important}
+:is(.ag-ext,.db) .ae-nota{width:100%;box-sizing:border-box;font:inherit;padding:6px 8px;border:1px solid var(--borda);border-radius:4px}
+:is(.ag-ext,.db) .ae-lin,:is(.ag-ext,.db) .ae-dias{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
+:is(.ag-ext,.db) .ae-fim{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:8px}
+:is(.ag-ext,.db) .ae-canc{background:none;border:0;color:var(--cinza);text-decoration:underline;cursor:pointer;min-height:24px}
+:is(.ag-ext,.db) .ae-aviso{margin:4px 0;color:var(--cinza)}
+:is(.ag-ext,.db) .ae-resp+.ae-todo::before{content:" · "}
+@media (max-width:760px){:is(.ag-ext,.db) .ae-acoes .btn-mini{flex:1 1 40%}:is(.ag-ext,.db) .ae-resp{display:none}:is(.ag-ext,.db) .ae-resp+.ae-todo::before{content:none}}
+/* F466 · o Dashboard do caso (ditado pelo Paulo em 09.11.2026): Último despacho e Último andamento acima do campo de escrever */
+html[data-tema="v10"] .db{--db-acc:#0E5C58;--db-cinza:#6B7070;--db-borda:#E6E6E2;--db-inss:#4F78B0;--db-crps:#8A5A1E;--db-jud:#6B3FA0;background:#fff;border:1px solid var(--db-borda);border-radius:12px;padding:14px 16px;min-width:0;font-variant-numeric:tabular-nums;color:var(--texto)}
+html[data-tema="v10"] .db .db-txt,html[data-tema="v10"] .db .db-mov{text-wrap:pretty;overflow-wrap:anywhere}
+html[data-tema="v10"] .db :is(button,a):focus-visible{outline:2px solid var(--db-acc);outline-offset:2px}
+html[data-tema="v10"] .db .btn-mini,html[data-tema="v10"] .db .db-logo,html[data-tema="v10"] .db .db-ant,html[data-tema="v10"] .db .db-n{transition:transform 120ms ease,background-color 120ms ease}
+html[data-tema="v10"] .db .btn-mini:active,html[data-tema="v10"] .db .db-logo:active,html[data-tema="v10"] .db .db-n:active{transform:scale(.97)}
+@media (prefers-reduced-motion:reduce){html[data-tema="v10"] .db *{transition:none!important;transform:none!important}}
+html[data-tema="v10"] .db-cab{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+html[data-tema="v10"] .db-cab h3{margin:0;font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--db-cinza)}
+html[data-tema="v10"] .db-when{font-size:12px;color:var(--db-cinza)}
+html[data-tema="v10"] .db-ant{margin-left:auto;background:none;border:0;padding:4px 0;min-height:32px;font:inherit;font-size:13px;color:var(--db-acc);text-decoration:underline;cursor:pointer;white-space:nowrap}
+html[data-tema="v10"] .db-logo{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--db-borda);border-radius:8px;background:#fff;padding:0;cursor:pointer;flex:none;text-decoration:none;color:inherit}
+html[data-tema="v10"] .db-logo img,html[data-tema="v10"] .db-logo svg{width:20px;height:20px}
+html[data-tema="v10"] .db-logo .fonte-mono{font-size:11px}
+html[data-tema="v10"] span.db-logo{cursor:default}
+html[data-tema="v10"] .db-desp .db-corpo{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start}
+html[data-tema="v10"] .db-quem{width:22px;height:22px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;margin-top:2px}
+html[data-tema="v10"] .db-autor{font-size:12px;color:var(--db-cinza);margin-bottom:2px}
+html[data-tema="v10"] .db-txt{font-size:15px;line-height:1.5;white-space:pre-line;margin:0}
+html[data-tema="v10"] .db-resp{margin:8px 0 0 10px;padding-left:10px;border-left:2px solid var(--db-borda);font-size:13px;color:var(--db-cinza);white-space:pre-line}
+html[data-tema="v10"] .db-vazio{margin:0;font-size:14px;color:var(--db-cinza)}
+html[data-tema="v10"] .db .ae-acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--db-borda)}
+html[data-tema="v10"] .db .ae-acoes .btn-mini{padding:7px 14px;min-height:32px;font-size:13px}
+html[data-tema="v10"] .db .ae-acoes .btn-mini.pri{background:var(--db-acc);border-color:var(--db-acc);color:#fff}
+html[data-tema="v10"] .db .ae-painel{margin-top:12px;padding-top:12px;border-top:1px solid var(--db-borda)}
+html[data-tema="v10"] .db.db-and{border-left:4px solid var(--db-inss)}
+html[data-tema="v10"] .db.db-and.crps{border-left-color:var(--db-crps)}
+html[data-tema="v10"] .db.db-and.jud{border-left-color:var(--db-jud)}
+html[data-tema="v10"] .db-mov{font-size:14px;line-height:1.45;margin:0}
+html[data-tema="v10"] .db-sub{display:block;font-size:12px;color:var(--db-cinza);margin-top:4px}
+html[data-tema="v10"] .db-par{flex-basis:100%;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--db-jud)}
+html[data-tema="v10"] .db-doc{background:none;border:0;padding:4px 0;font:inherit;font-size:13px;color:var(--db-acc);text-decoration:underline;cursor:pointer;min-height:32px}
+html[data-tema="v10"] .db-lista{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:10px;padding-top:8px;border-top:1px dashed var(--db-borda);font-size:12px;color:var(--db-cinza)}
+html[data-tema="v10"] .db-n{font-family:var(--f-mono,ui-monospace,Consolas,monospace);font-size:12px;background:none;border:0;padding:4px 0;cursor:pointer;text-decoration:none;min-height:32px;color:var(--texto)}
+html[data-tema="v10"] .caso-dir.db-recolhido>.timeline,html[data-tema="v10"] .caso-dir.db-recolhido>.tl-banner-um,html[data-tema="v10"] .caso-dir.db-recolhido>.tl-banner{display:none}
+.app.celular .db{padding:12px 14px}
+.app.celular .db-txt{font-size:16px}
+.app.celular .db .ae-acoes .btn-mini{flex:1 1 30%;min-height:44px}
+.app.celular .db-logo{width:44px;height:44px}
+.app.celular .db-cab{display:grid;grid-template-columns:auto 1fr;gap:4px 10px}
+.app.celular .db-cab .db-logo{grid-row:1/3}
+.app.celular .db-cab .db-ant{grid-column:1/-1;margin-left:0;justify-self:end}
+.app.celular .db-ant{min-height:44px}
+.app.celular .db-n{padding:10px 4px;min-height:44px}
 html[data-tema="v10"] .ag-txt .ag-oque{font-weight:400;color:var(--cinza,#4A4944)}
 html[data-tema="v10"] .ag-res{color:var(--cinza)}
 html[data-tema="v10"] .ag-selos{flex:none;display:inline-flex;align-items:center;gap:4px}
@@ -6804,7 +6848,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.08</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.09</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11481,10 +11525,7 @@ function itemDaLinha(el){
   if(it && it.k) return it;
   // a linha das listas do escritório (cartaoCliente) não tem item: vale o caso da data
   const ks = (el.dataset.casos||"").split(",").map(id=>D.casoPorId.get(id)).filter(Boolean);
-  const k = ks.find(x=>x.prazo) || ks[0]; if(!k) return null;
-  const fatal = !!k.prazo && fatalAbertoDe(k)===k.prazo;
-  return {k, cli:D.cliPorId.get(k.cliente_id), data:k.prazo||"", fatal, quem:[],
-    selo: fatal ? "" : k.prazo && (k.ronda||{}).despacho?.prazo===k.prazo ? "Volta à fila" : "Retorno"};
+  return itemDoCaso(ks.find(x=>x.prazo) || ks[0]);
 }
 function fecharExt(){
   document.querySelectorAll(".ag-ext").forEach(x=>x.remove());
@@ -11657,6 +11698,115 @@ async function extConcluir(x){
   const chk = x._el.querySelector(".ag-slot .check");   // perícia, aviso, rotina: o concluir que a linha já tem
   if(chk){ fecharExt(); return chk.click(); }
   aviso("Esta linha se conclui no caso"); fecharExt(); abrirDaLinha(x._el);
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// F466 · O DASHBOARD DO CASO (ditado pelo Paulo em 09.11.2026). Abaixo das fases e acima do campo de escrever:
+// o Último despacho da equipe, com Anotar, Reagendar e Concluir (a mesma identidade da extensão da linha, F455),
+// e o Último andamento do portal da fase (INSS, CRPS ou Judicial; dois cartões com mandado de segurança em
+// paralelo). Protocolo, NB, DER, NUP e processo só aparecem ao abrir "Ver anotações anteriores".
+function itemDoCaso(k){
+  if(!k) return null;
+  const fatal = !!k.prazo && fatalAbertoDe(k)===k.prazo;
+  return {k, cli:D.cliPorId.get(k.cliente_id), data:k.prazo||"", fatal, quem:[],
+    selo: fatal ? "" : k.prazo && (k.ronda||{}).despacho?.prazo===k.prazo ? "Volta à fila" : "Retorno"};
+}
+// no navegador automatizado as provas antigas esperam a linha do tempo à vista; a nova liga com crm_dash_caso=1
+const dashLigado = () => temaV10() && (!navigator.webdriver || (()=>{ try{ return localStorage.getItem("crm_dash_caso")==="1"; }catch(e){ return false; } })());
+const _dbAnt = new Map();   // caso id → "Ver anotações anteriores" aberto
+function dbVerAnt(id){ _dbAnt.set(id, !_dbAnt.get(id)); repintarFicha(); }
+function dbClique(e, x, id){
+  const b = e.target.closest("[data-ae]"); if(!b) return;
+  e.stopPropagation();
+  const k = D.casoPorId.get(id); if(!k) return;
+  _ext = null;
+  if(!x._it){ x._it = itemDoCaso(k); x._el = x; x._atual = (D.atrDoCaso.get(k.id)||[])[0] || ""; }
+  const a = b.dataset.ae;
+  // sem retorno ou volta à fila para mover, Reagendar e Concluir são o Concluir por hoje (F291)
+  if((a==="concluir" || a==="reagendar") && (!k.prazo || !reagendavel(x._it))) return despachar(k.id);
+  return acaoExt(x, a, b);
+}
+const DB_LOGO_ADV = `<svg viewBox="0 0 24 24" fill="none" stroke="#0E5C58" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M2 19 9 7l4 7 2-3 7 8z"/></svg>`;
+function dbQuando(iso){
+  if(!iso) return "";
+  const d = dataSP(iso), n = diasEntreIso(d, hoje());
+  return `${fmtBarra(d)} ${horaSP(iso)} · ${n<=0 ? "hoje" : n===1 ? "ontem" : `há ${n} dias`}`;
+}
+function dbLead(txt){
+  const m = String(txt||"").match(/^(.{3,60}?[.:])\s+([\s\S]*)$/);
+  return m ? `<b>${esc(m[1])}</b> ${esc(m[2])}` : esc(txt||"");
+}
+function dbAnteriores(k, n, rot, aberto, verOnclick){
+  const t = `${aberto ? "Ocultar" : "Ver"} ${rot} anteriores${n>0 ? ` (${n})` : ""}`;
+  return `<button type="button" class="db-ant" aria-expanded="${aberto}" onclick="${verOnclick}">${t}</button>`;
+}
+function dbNumeros(k){
+  const nums = numerosDoCaso(k);
+  const rows = [["Protocolo", nums.prot, "prot"], ["NB", nums.nb, "nb"], ["DER", k.der ? [k.der] : [], "der"], ["NUP", nums.nup, "nup"], ["Processo", nums.proc, "proc"]];
+  const h = rows.flatMap(([r, ds, t]) => (ds||[]).map(d => { const f = t==="der" ? fmtBarra(d) : fmtNum(t, d);
+    return `<span class="db-num">${r} <button type="button" class="db-n" data-cop="${esc(f)}" data-cop-msg="${r} copiado" title="Copiar">${esc(f)}</button></span>`; }));
+  return h.length ? `<div class="db-lista">${h.join("")}</div>` : "";
+}
+function dbDespacho(k, ands){
+  const notas = (ands||[]).filter(a=>!a.excluir && !ehReacao(a) && !ehOficial(a) && !ORIGENS_ROBO.includes(a.origem))
+    .sort((a,b)=>(a.criado_em||"")<(b.criado_em||"")?1:-1);
+  const nota = notas.find(a=>!a.responde_a), resp = nota && notas.find(a=>a.responde_a===nota.id);
+  const au = nota && D.colPorId.get(nota.autor_id), aberto = !!_dbAnt.get(k.id);
+  const corpo = nota
+    ? `<div class="db-corpo"><span class="db-quem" style="background:${esc((au||{}).cor||"#6B7070")}" aria-hidden="true">${esc((au||{}).inicial||"?")}</span><div>
+        <div class="db-autor">${esc((au||{}).nome||"Equipe")}</div>
+        <p class="db-txt">${esc(String(nota.texto||"").slice(0,1000))}</p>
+        ${resp ? `<div class="db-resp">${esc(((D.colPorId.get(resp.autor_id)||{}).nome||"").split(" ")[0])}: ${esc(String(resp.texto||"").slice(0,400))}</div>` : ""}</div></div>`
+    : `<p class="db-vazio">Sem anotação da equipe neste caso.</p>`;
+  const acoes = podeGravarCaso() ? `<div class="ae-acoes db-acoes">
+      <button type="button" class="btn-mini" data-ae="anotar">Anotar</button>
+      <button type="button" class="btn-mini" data-ae="reagendar">Reagendar</button>
+      <button type="button" class="btn-mini pri" data-ae="concluir">Concluir</button></div><div class="ae-painel" hidden></div>` : "";
+  return `<section class="db db-desp" aria-label="Último despacho" onclick="dbClique(event,this,'${k.id}')">
+    <div class="db-cab"><span class="db-logo" aria-hidden="true">${DB_LOGO_ADV}</span><h3>Último despacho</h3><span class="db-when">${nota ? dbQuando(nota.criado_em) : ""}</span>
+      ${dbAnteriores(k, Math.max(0, notas.filter(a=>!a.responde_a).length-1), "anotações", aberto, `dbVerAnt('${k.id}')`)}</div>
+    ${corpo}${acoes}${aberto ? dbNumeros(k) : ""}</section>`;
+}
+function dbAndamento(k, ands, fase, par){
+  let it = null;
+  if(fase==="inss"){
+    const pats = (ands||[]).filter(a=>!a.excluir && a.origem==="pat").sort((a,b)=>(a.criado_em||"")<(b.criado_em||"")?1:-1);
+    const a = pats[0]; if(!a) return "";
+    const sit = pats.map(x=>String(x.origem_id||"")).find(o=>o.startsWith("situacao:"));
+    const prot = protocolosDe(k)[0];
+    it = {cls:"", nome:"Meu INSS", logo:iconeFonte("inss"), iso:a.criado_em, txt:dbLead(a.texto), sub:sit ? sit.split(":").slice(2).join(":") : especieDoCaso(k),
+      abrir: prot ? `abrirMeuInss('${escJs(prot)}')` : "", n:pats.length-1, aba:"inss", rot:"andamentos"};
+  } else if(fase==="conselho"){
+    const evs = crpsBlocos(k).flatMap(b=>(b.eventos||[]).map(e=>({e, nup:b.nup}))).sort((a,b)=>(isoCrps(a.e.data)||"")<(isoCrps(b.e.data)||"")?1:-1);
+    const x = evs[0]; if(!x) return "";
+    const doc = (x.e.arquivos||[]).find(a=>a.storage);
+    it = {cls:"crps", nome:"e-Recursos", logo:iconeFonte("crps"), iso:isoCrps(x.e.data)+"T12:00:00", soData:true,
+      txt: decideOCaso(x.e) ? `<b>${esc(x.e.resumo||x.e.bruto||"")}</b>` : esc(x.e.resumo||x.e.bruto||""), sub:"",
+      doc: doc ? `<button type="button" class="db-doc" onclick="abrirDecisao('${escJs(doc.storage)}')">${esc(doc.nome||"Documento")}</button>` : "",
+      abrir: x.nup ? `window.open('${escJs(linkERecursos(x.nup))}','_blank','noopener')` : "", n:evs.length-1, aba:"crps", rot:"andamentos"};
+  } else if(fase==="judicial"){
+    const pj = andamentosPje(ands), a = pj[0]; if(!a) return "";
+    const sis = sisCurtoDoMov(a), href = linkPjeDoAndamento(a, k) || linkPjeDoCaso(k);
+    it = {cls:"jud", nome:sis, logo:iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sis]||"pje"), iso:a.criado_em, txt:dbLead(a.texto), sub:"",
+      href, n:pj.length-1, aba:"cnj", rot:"andamentos"};
+  } else return "";
+  const logo = it.href ? `<a class="db-logo" href="${esc(it.href)}" target="_blank" rel="noopener" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</a>`
+    : it.abrir ? `<button type="button" class="db-logo" onclick="${it.abrir}" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</button>`
+    : `<span class="db-logo" aria-hidden="true">${it.logo}</span>`;
+  const quando = it.soData ? `${fmtBarra(dataSP(it.iso))} · ${(n=>n<=0?"hoje":n===1?"ontem":`há ${n} dias`)(diasEntreIso(dataSP(it.iso), hoje()))}` : dbQuando(it.iso);
+  return `<section class="db db-and ${it.cls}" aria-label="Último andamento · ${esc(it.nome)}">
+    <div class="db-cab">${logo}<h3>Último andamento<span class="sr-only"> · ${esc(it.nome)}</span></h3><span class="db-when">${quando}</span>${par ? `<span class="db-par">Em paralelo · mandado de segurança</span>` : ""}
+      ${dbAnteriores(k, Math.max(0, it.n), it.rot, false, `irSubAba('${it.aba}')`)}</div>
+    <p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>${it.doc||""}</section>`;
+}
+function dashboardDoCaso(k, ands){
+  const fase = faseEfetiva(k);
+  let and = dbAndamento(k, ands, fase, false);
+  if(!and){   // sem andamento na fase atual, o mais recente dos três portais
+    and = ["judicial","conselho","inss"].filter(f=>f!==fase).map(f=>dbAndamento(k, ands, f, false)).find(Boolean) || "";
+  }
+  const par = trilhaParalela(k) && fase!=="judicial" ? dbAndamento(k, ands, "judicial", true) : "";
+  return `<div class="db-dash">${dbDespacho(k, ands)}${and}${par}</div>`;
 }
 function ligarCartoes(){
   pintarCursor();                     // o cursor do teclado sobrevive ao render
@@ -21887,7 +22037,7 @@ function pintarFicha(){
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
         ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div>
+           <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardDoCaso(k, andsVis) : ""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div>
            <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? abaComProcessos(k, "cnj", ()=>painelCNJ(k, andsVis)) : aba==="crps" ? abaComProcessos(k, "crps", ()=>painelCRPS(k))
