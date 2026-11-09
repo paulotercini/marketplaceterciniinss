@@ -6867,7 +6867,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.16</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.17</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11741,8 +11741,6 @@ function dbClique(e, x, id){
   _ext = null;
   if(!x._it){ x._it = itemDoCaso(k); x._el = x; x._atual = (D.atrDoCaso.get(k.id)||[])[0] || ""; }
   const a = b.dataset.ae;
-  // sem retorno ou volta à fila para mover, Prorrogar é o Concluir por hoje (F291); o Concluir saiu (F467), o Anotar já grava a data
-  if(a==="reagendar" && (!k.prazo || !reagendavel(x._it))) return despachar(k.id);
   return acaoExt(x, a, b);
 }
 // o ícone do AdvPrev (o mesmo da tela de início), ao lado de docs/crm/index.html (F467, pedido do Paulo de 09.11.2026)
@@ -11778,9 +11776,11 @@ function dbDespacho(k, ands){
         <p class="db-txt">${esc(String(nota.texto||"").slice(0,1000))}</p>
         ${resp ? `<div class="db-resp">${esc(((D.colPorId.get(resp.autor_id)||{}).nome||"").split(" ")[0])}: ${esc(String(resp.texto||"").slice(0,400))}</div>` : ""}</div></div>`
     : `<p class="db-vazio">Sem anotação da equipe neste caso.</p>`;
+  // Prorrogar só com data a mover, o retorno ou a volta à fila (F473, pedido do Paulo de 09.11.2026); sem ela, só o Anotar
+  const prorroga = !!k.prazo && reagendavel(itemDoCaso(k));
   const acoes = podeGravarCaso() ? `<div class="ae-acoes db-acoes">
       <button type="button" class="btn-mini pri" data-ae="anotar">Anotar</button>
-      <button type="button" class="btn-mini" data-ae="reagendar" title="Mudar a data do retorno">Prorrogar</button></div><div class="ae-painel" hidden></div>` : "";
+      ${prorroga ? `<button type="button" class="btn-mini" data-ae="reagendar" title="Mudar a data do retorno">Prorrogar</button>` : ""}</div><div class="ae-painel" hidden></div>` : "";
   return `<section class="db db-desp" aria-label="Último despacho" onclick="dbClique(event,this,'${k.id}')">
     <div class="db-cab"><span class="db-logo" aria-hidden="true">${DB_LOGO_ADV}</span><h3>Último despacho</h3><span class="db-when">${nota ? dbQuando(nota.criado_em) : ""}</span>
       ${dbAnteriores(k, Math.max(0, notas.filter(a=>!a.responde_a).length-1), "anotações", aberto, `dbVerAnt('${k.id}')`)}</div>

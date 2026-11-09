@@ -134,8 +134,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   ({ p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cC, kC));
   conf("sem anotação, o Último despacho diz isso", /Sem anotação da equipe/.test(await p.locator(".db-desp .db-vazio").textContent()) && !/\(\d+\)/.test(await p.locator(".db-desp .db-ant").textContent()));
   conf("sem andamento de portal não há cartão de andamento", await p.locator(".db-and").count() === 0);
-  await p.locator('.db-desp [data-ae="reagendar"]').click(); await p.waitForTimeout(300);
-  conf("Prorrogar sem retorno abre o Concluir por hoje", await p.locator("#desp-nota").count() === 1);
+  conf("sem retorno a mover, o Prorrogar não existe e fica o Anotar (F473)", await p.locator('.db-desp [data-ae="reagendar"]').count() === 0 && await p.locator('.db-desp [data-ae="anotar"]').count() === 1);
   await ctx.close();
 
   // ── 4 · celular ──
