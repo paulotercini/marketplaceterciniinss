@@ -6784,7 +6784,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.03</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.04</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11428,10 +11428,9 @@ function grupoClientes(casosSel){
 // F438 · pedido do Paulo de 08.11.2026: o clique da linha continua abrindo a ficha, e o mouse parado em cima mostra a
 // última anotação da equipe nos casos da linha. O texto não vem na carga inicial: busca-se no primeiro hover e guarda-se
 const _ultAnot = new Map();
-function ultAnotDe(ids, soCrm){
-  // F460 · `soCrm` traz só a anotação escrita no CRM (origem app): a do Microsoft To Do não descreve a data (F429)
-  const ch = soCrm ? ids+"|app" : ids;
-  if(!_ultAnot.has(ch)) _ultAnot.set(ch, api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${ids})&origem=${soCrm?"eq.app":`not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})`}&excluir=not.is.true&order=criado_em.desc&limit=1`)
+function ultAnotDe(ids){
+  const ch = ids;
+  if(!_ultAnot.has(ch)) _ultAnot.set(ch, api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${ids})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&limit=1`)
     .then(r=>(r||[])[0]||null).catch(()=>{ _ultAnot.delete(ch); return null; }));
   return _ultAnot.get(ch);
 }
@@ -14673,8 +14672,9 @@ function renderAgendaV10(qual){
 }
 // F460 · a atribuição da linha do celular que não tem motivo escrito é a última anotação escrita no CRM (a do To Do não, F429)
 function preencherAtribCel(){
+  // F461 · a última anotação da equipe, inclusive a do Microsoft To Do: quase todo caso só tem anotação do To Do, e a linha ficava vazia (Paulo, 09.11.2026)
   if(!celular()) return;
-  document.querySelectorAll("#conteudo-meio .ag-oque-cel[data-ua]").forEach(el=>ultAnotDe(el.dataset.ua, true).then(a=>{
+  document.querySelectorAll("#conteudo-meio .ag-oque-cel[data-ua]").forEach(el=>ultAnotDe(el.dataset.ua).then(a=>{
     if(a && a.texto && el.isConnected) el.textContent = " · " + resumoAgenda(a.texto);
   }));
 }
