@@ -2475,6 +2475,8 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   /* F471 · a lupa da busca na conversa também fica à vista, só o ícone (pedido do Paulo de 09.11.2026) */
   .app:not(.celular) .zt-acoes>.zt-btn.zt-lupa{display:inline-flex}
   .app:not(.celular) .zt-menu .zt-cel.zt-lupa{display:none}
+  .app:not(.celular) .zt-acoes>.zt-btn.zt-desler{display:inline-flex}
+  .app:not(.celular) .zt-menu .zt-cel.zt-desler{display:none}
   .zl-faixa{display:flex;align-items:center;gap:8px;width:100%;box-sizing:border-box;margin:0 0 8px;padding:5px 12px;border:0;
     border-radius:8px;background:var(--prox-f,#fbf1e0);color:var(--prox,#8f5400);font:inherit;font-size:12px;font-weight:500;cursor:pointer;text-align:left}
   .zl-faixa i{flex:none;background:var(--prox,#8f5400)}
@@ -4741,7 +4743,7 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .app.celular ~ #zap-ag .zag-pilula .zag-t{display:none}
 .app.celular.detalhe-aberto ~ #zap-ag .zag-pilula{width:40px;height:40px;margin-right:4px}
 /* com a conversa aberta no celular, o botão cobria o áudio gravado, o Descartar e os balões: ali ele sai, e a agenda
-   abre pelo ⋯ ("Agenda de atendimentos") */
+   abre pelo ⋯ dos atalhos (F423) */
 .app.celular.zap-conv-aberta:not(.fabs-on) ~ #zap-ag:has(> .zag-pilula){display:none}
 .modal-fundo:has(.aq-fluxo){z-index:95}
 .zag-pilula{display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:22px;border:1px solid var(--borda);background:var(--branco,#fff);
@@ -6865,7 +6867,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.15</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.16</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17444,6 +17446,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            ${pode&&!fim?`<button class="zt-btn" onclick="iaZap('rascunho')" title="a IA escreve uma resposta no campo; confira antes de enviar" aria-label="Rascunho">✨<span class="lbl">Rascunho</span></button>`:""}`:""}
            ${fim||!pode?"":`<button class="zt-btn zt-trans" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
            ${fim||pode||!deOutro?"":`<button class="zt-btn zt-trans" onclick="pedirTransferencia()" title="pedir a ${esc(at.nome)} e aos gestores que transfiram a conversa" aria-label="Pedir transferência">${zic("seta")}<span class="lbl">Pedir</span></button>`}
+           <button class="zt-btn zt-desler" onclick="marcarNaoLida()" title="Marcar como não lida" aria-label="Marcar como não lida"><span class="lbl">Desler</span></button>
            ${pode?`<button class="zt-btn pri zt-fim" aria-label="${fim?"Reabrir":"Encerrar"}" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}<span class="lbl">Encerrar</span>`}</button>`:""}
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
@@ -17452,16 +17455,12 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
                ${fim||!pode?"":`<button class="zt-cel zt-trans" onclick="this.closest('details').open=false;transferirConversa()">Transferir</button>`}
                ${fim||pode||!deOutro?"":`<button class="zt-cel zt-trans" onclick="this.closest('details').open=false;pedirTransferencia()">Pedir<span class="sr-only"> transferência</span></button>`}
                ${pode?`<button class="zt-cel zt-fim" onclick="this.closest('details').open=false;${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":"Encerrar"}</button>`:""}
-               ${cli?`<button onclick="quemConversa()">Quem escreve…</button>`:`<button onclick="vincularConversa()" title="Vincular a um cliente">Vincular<span class="sr-only"> a um cliente</span></button>
+               ${cli?`<button onclick="quemConversa()" title="dizer se quem escreve é o próprio cliente ou outra pessoa por ele">Identificar quem escreve</button>`:`<button onclick="vincularConversa()" title="Vincular a um cliente">Vincular<span class="sr-only"> a um cliente</span></button>
                <button onclick="this.closest('details').open=false;nomearConversa()" title="Alterar o nome do contato"><span aria-hidden="true">Renomear</span><span class="sr-only">Alterar o nome do contato</span></button>`}
-               <button onclick="this.closest('details').open=false;escolherSetor()">Setor</button>
-               <button onclick="this.closest('details').open=false;editarEtiquetas()">Etiquetas</button>
-               <button onclick="this.closest('details').open=false;zagAlternar()">Agenda de atendimentos</button>
                <button onclick="this.closest('details').open=false;verFavoritasZap()">Mensagens favoritas${zapMsgs.some(m=>m.favorita_em)?` (${zapMsgs.filter(m=>m.favorita_em).length})`:""}</button>
-               <button onclick="marcarNaoLida()" title="Marcar como não lida"><span aria-hidden="true">Desler</span><span class="sr-only">Marcar como não lida</span></button>
+               <button class="zt-cel zt-desler" onclick="marcarNaoLida()" title="Marcar como não lida"><span aria-hidden="true">Desler</span><span class="sr-only">Marcar como não lida</span></button>
                <button onclick="silenciarZap()" title="sem aviso desta conversa por um tempo">${silenciadaZap(c.id)?`🔕 Silenciada até ${new Date(zapSilencio.get(c.id)).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})}`:"🔕 Silenciar"}</button>
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
-               ${tel?`<a href="https://wa.me/55${tel}" target="_blank" rel="noopener" aria-label="Abrir no WhatsApp do aparelho">${iconeFonte("zap")} Abrir no aparelho</a>`:""}
                ${pode?`<details class="zt-outras"><summary>Outras opções</summary>
                  ${(cfgApp("zap_bot_ligado")||"sim")==="sim"?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>
                  ${!fim&&(zapAux.passos||[]).length?`<button onclick="levarRobo()" title="Levar o robô a um passo…"><span aria-hidden="true">Robô…</span><span class="sr-only">Levar o robô a um passo…</span></button>`:""}`:""}
