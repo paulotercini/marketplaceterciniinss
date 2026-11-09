@@ -11768,7 +11768,7 @@ function dbDespacho(k, ands){
         <p class="db-txt">${esc(String(nota.texto||"").slice(0,1000))}</p>
         ${resp ? `<div class="db-resp">${esc(((D.colPorId.get(resp.autor_id)||{}).nome||"").split(" ")[0])}: ${esc(String(resp.texto||"").slice(0,400))}</div>` : ""}</div></div>`
     : `<p class="db-vazio">Sem anotação da equipe neste caso.</p>`;
-  // Prorrogar só com data a mover, o retorno ou a volta à fila (F469, pedido do Paulo de 09.11.2026); sem ela, só o Anotar
+  // Prorrogar só com data a mover, o retorno ou a volta à fila (F470, pedido do Paulo de 09.11.2026); sem ela, só o Anotar
   const prorroga = !!k.prazo && reagendavel(itemDoCaso(k));
   const acoes = podeGravarCaso() ? `<div class="ae-acoes db-acoes">
       <button type="button" class="btn-mini pri" data-ae="anotar">Anotar</button>
