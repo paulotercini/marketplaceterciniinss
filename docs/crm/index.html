@@ -6867,7 +6867,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.20</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.21</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7281,7 +7281,9 @@ function lerRascunho(casoId){
 function limparRascunho(casoId){
   try{ sessionStorage.removeItem("rasc:"+casoId); }catch(e){}
 }
-function aviso(msg, som=true){
+let coletaSilenciosa = false;   // F482 · ver autoAplicarColetas
+function aviso(msg, som=true, naColeta=false){
+  if(coletaSilenciosa && !naColeta) return;   // F482 · a importação em segundo plano mostra só o "Importando N de M"
   const el = document.getElementById("aviso");
   clearTimeout(_desfazerTimer); _desfazer = null;
   el.textContent = msg; el.classList.remove("com-bt"); el.classList.add("on");
@@ -10611,7 +10613,7 @@ async function aplicarTodasColetas(auto){
   aplicandoTodas = true;
   try{
     for(const [i, c] of lista.entries()){
-      aviso(`Importando ${i+1} de ${lista.length}…`, false);
+      aviso(`Importando ${i+1} de ${lista.length}…`, false, true);
       const [conferir, aplicar] = LOTE_FONTES[c.fonte].map(f => f && window[f]);
       try{
         if(conferir) await conferir(c.id);
@@ -10621,7 +10623,7 @@ async function aplicarTodasColetas(auto){
       }catch(e){ console.warn("aplicar todas:", c.id, e); }
     }
   }finally{ aplicandoTodas = false; }
-  await buscarColetas(); render();
+  await buscarColetas(); renderColeta();
   const resta = coletasPendentes.filter(c => lista.some(x => x.id===c.id)).length;
   if(auto && resta===lista.length) return;
   aviso(`✔ ${lista.length-resta} coleta(s) aplicada(s)${resta?`; ${resta} ficaram na fila para conferir uma a uma (sem caso no CRM ou com falha)`:""}`);
@@ -10633,10 +10635,14 @@ async function aplicarTodasColetas(auto){
 // A trava em config_app impede duas aberturas do CRM de aplicarem a mesma fila.
 // shortcut: trava por carimbo, sem transação; duas aberturas no mesmo segundo ainda podem coincidir
 const AUTO_COLETAS_MS = 60*1000, AUTO_TRAVA_MS = 10*60*1000;
+// F482 · pedido do Paulo (09.11.2026): a importação piscava a tela e tirava o que ele fazia (a conversa, o texto
+// digitado), porque cada coleta recarregava e repintava o CRM. Em segundo plano, nada se repinta durante a rodada; no
+// fim, a tela livre recarrega uma vez, e a ocupada (ficha, WhatsApp, campo com texto, janela) fica como está e a vigia
+// (E1) traz o que mudou quando ela se liberar.
+function renderColeta(){ if(!coletaSilenciosa) render(); }
+async function recarregarDaColeta(){ if(coletaSilenciosa) return; await carregar(); montarSidebar(); render(); }
 async function autoAplicarColetas(){
-  if(!souAdmin() || aplicandoTodas || document.hidden) return;
-  const ae = document.activeElement;   // não repinta por cima de quem digita ou tem uma janela aberta
-  if((ae && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) || document.querySelector(".modal-fundo")) return;
+  if(!souAdmin() || aplicandoTodas || document.hidden || coletaSilenciosa) return;
   await buscarColetas();
   const velhas = coletasPorFonte().velhas.filter(c => LOTE_FONTES[c.fonte] || c.fonte==="pat");
   const pat = coletasPorFonte().novas.find(c => c.fonte==="pat");
@@ -10644,6 +10650,7 @@ async function autoAplicarColetas(){
   const [t] = await api(`/rest/v1/config_app?select=valor&chave=eq.coletas_auto_em`).catch(()=>null) || [];
   if(t && Date.now() - Date.parse(t.valor) < AUTO_TRAVA_MS) return;
   await guardarCfgApp("coletas_auto_em", new Date().toISOString());
+  coletaSilenciosa = true;
   try{
     if(velhas.length) await api(`/rest/v1/coletas?id=in.(${velhas.map(c=>c.id).join(",")})`,{method:"PATCH",
       headers:{Prefer:"return=minimal"}, body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
@@ -10660,7 +10667,11 @@ async function autoAplicarColetas(){
         await aplicarPatDeVerdade();
       }
     }
-  }finally{ await guardarCfgApp("coletas_auto_em", new Date(0).toISOString()).catch(()=>{}); }
+  }finally{
+    coletaSilenciosa = false;
+    await guardarCfgApp("coletas_auto_em", new Date(0).toISOString()).catch(()=>{});
+  }
+  if(!telaOcupada()){ await carregar(); render(); }
   montarSidebar();
 }
 async function usarColeta(id){
@@ -10670,7 +10681,7 @@ async function usarColeta(id){
     arquivoPat = normalizarColeta(c.dados);
     planoPat = await montarPlanoPat(arquivoPat);
     planoPat.coleta_id = id;
-    render();
+    renderColeta();
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
 }
 
@@ -11141,7 +11152,7 @@ async function aplicarPatDeVerdade(){
       body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
   if(planoPat===plano) planoPat = null;
   await buscarColetas();
-  await carregar(); montarSidebar(); render();
+  await recarregarDaColeta();
   marcarEtapasVelhas(casosDoPlanoPat(plano)).catch(()=>{});   // F236 · só a marca para o portal
   if(!falhas.length) return aviso(`✔ ${feitos} gravação(ões)${docsPat?` · ${docsPat} anexo(s) do INSS com o texto`:""}`);
   aviso(recadoDeFalhas(feitos, falhas));
@@ -12399,7 +12410,7 @@ async function conferirPje(coletaId){
     }
     planoPjeAtual = plano;
     await anotarSemCaso(dados, plano.semCaso, porProcesso, fora).catch(()=>{});
-    render();
+    renderColeta();
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
 }
 // F288 · PROCESSO SEM CASO HÁ MAIS DE 7 DIAS. A extensão do e-SAJ (1.24) só
@@ -13022,7 +13033,7 @@ async function conferirPjeProc(coletaId){
     }
     }
     planoPjeProcAtual = plano;
-    render();
+    renderColeta();
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
 }
 async function aplicarPjeProc(coletaId){
@@ -13066,7 +13077,7 @@ async function aplicarPjeProc(coletaId){
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
   if(planoPjeProcAtual===plano) planoPjeProcAtual = null;
   await buscarColetas();
-  await carregar(); montarSidebar(); render();
+  await recarregarDaColeta();
   marcarEtapasVelhas([...(plano.andamentos||[]), ...(plano.fichas||[])].map(a=>a.caso_id)).catch(()=>{});   // F236
   if(falhas.length){
     console.warn("falhas do histórico PJe:", falhas);
@@ -13108,7 +13119,7 @@ async function aplicarPje(coletaId){
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
   if(planoPjeAtual===plano) planoPjeAtual = null;
   await buscarColetas();
-  await carregar(); montarSidebar(); render();
+  await recarregarDaColeta();
   marcarEtapasVelhas([...(plano.andamentos||[]), ...(plano.fichas||[])].map(a=>a.caso_id)).catch(()=>{});   // F236
   if(falhas.length){
     console.warn("falhas do PJe:", falhas);
@@ -13348,7 +13359,7 @@ async function aplicarCrps(coletaId){
     headers:{Prefer:"return=minimal"},
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
   planoCrpsAtual = null;
-  await buscarColetas(); await carregar(); montarSidebar(); render();
+  await buscarColetas(); await recarregarDaColeta();
   marcarEtapasVelhas([...p.blocos, ...p.andamentos].map(x=>x.caso_id)).catch(()=>{});   // F236 · só a marca para o portal
   const d = p.resumo.decisoes;
   // o número que importa é o de MOVIMENTOS: os blocos dos recursos são
@@ -13406,7 +13417,7 @@ async function aplicarPrazos(coletaId){
   }
   await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
-  await buscarColetas(); await carregar(); montarSidebar(); render();
+  await buscarColetas(); await recarregarDaColeta();
   aviso(falhas.length ? recadoDeFalhas(feitos, falhas)
     : `✔ ${(d.itens||[]).length} prazo(s) do ${ROT_PRAZO[d.sistema]||d.sistema}: ${novos} novo(s) em ${porCaso.size} caso(s)${semCaso?` · ${semCaso} sem caso no CRM`:""}${(d.faltou||[]).length?` · ⚠ o portal não abriu: ${d.faltou.join("; ")}`:""}`);
 }
