@@ -89,6 +89,7 @@ const T = {
   await p.waitForSelector(".zap-topo");
   const topo = await p.textContent(".zap-topo");
   conf("o cabeçalho tem setor, etiquetas, o retorno já marcado e encerrar, sem o protocolo", !topo.includes("Protocolo") && topo.includes("Jurídico") && topo.includes("URGENTE") && topo.includes("Retorno") && topo.includes("Encerrar"));
+  conf("no computador o Encerrar fica à vista no topo, fora do ⋯ (F468)", await p.evaluate(() => { const b = document.querySelector(".zt-acoes>.zt-btn.zt-fim"), m = document.querySelector(".zt-menu .zt-cel.zt-fim"); return !!b && b.offsetWidth > 0 && (!m || getComputedStyle(m).display === "none"); }));
   const painel = await p.textContent("#zap-painel");
   conf("o painel ao lado mostra o cliente vinculado e o caso", painel.includes("Ficha do cliente") && painel.includes("Caso"));
   conf("a resposta do cliente mostra a mensagem citada", (await p.textContent("#zb-m2 .zap-cit")).includes("Chegou carta do INSS"));
