@@ -101,7 +101,7 @@ const MSGS = [
   await p.fill("#pp-zap-txt", "teste do cursor ao lado"); await p.click("#pp-zap-env");
   await p.waitForFunction(() => document.activeElement && document.activeElement.id === "pp-zap-txt", null, {timeout: 3000}).catch(() => {});
   conf("F387 · depois de enviar ao lado, o cursor continua no campo", await p.evaluate(() => document.activeElement && document.activeElement.id === "pp-zap-txt"));
-  conf("F480 · abrir ao lado não zera as novas (somente a resposta da equipe)", !patches.some(x => /zap_conversas\?id=in\./.test(x.u) && x.b.nao_lidas === 0));
+  conf("F483 · abrir a conversa ao lado lê", patches.some(x => /zap_conversas\?id=eq\./.test(x.u) && x.b.nao_lidas === 0));
   await p.evaluate(() => fecharPainelPrazo());
 
   // a aba Mensagens também mostra a última e abre a mesma janela
