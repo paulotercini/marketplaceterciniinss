@@ -6867,7 +6867,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.19</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.20</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17325,11 +17325,7 @@ async function abrirConversa(id){
   zapPainelAberto = false;
   zapAberta = id;
   const c = zapConvs.find(x=>x.id===id); if(!c) return;
-  if(c.nao_lidas){        // abrir é ler (sem esperar o banco)
-    api(`/rest/v1/zap_conversas?id=eq.${id}`,{method:"PATCH",
-      headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}).catch(()=>{});
-    c.nao_lidas=0;
-  }
+  // F480 · abrir não é ler: a mensagem do cliente fica nova até a equipe responder (o banco zera na resposta)
   const cache = _zapCache.get(id), naTela = !!document.getElementById("zap-dir");
   if(cache && naTela){ ({msgs:zapMsgs, reacoes:zapReacoes, transf:zapTransf, hist:zapHist} = cache); mesma ? pintarConversaGuardando() : pintarConversa(); }
   if(naTela) pintarListaZap();
@@ -17342,6 +17338,8 @@ async function abrirConversa(id){
       `select=numero,aberto_em,observacao&conversa_id=eq.${id}&encerrado_em=not.is.null&order=aberto_em.desc&limit=5`).catch(()=>[])]);
   if(zapAberta!==id) return;   // outra conversa foi aberta enquanto esta carregava
   zapMsgs = ms; zapTransf = tr; zapHist = hi;
+  const ult = ms.filter(m=>m.direcao!=="interna").pop();   // F480 · acabou de responder: tira a bolinha sem esperar a lista
+  if(c.nao_lidas && ult && ult.direcao==="saida" && !ult.por_bot){ c.nao_lidas = 0; pintarListaZap(); }
   await carregarReacoes();
   if(zapAberta!==id) return;
   _zapCache.set(id, {msgs:zapMsgs, reacoes:zapReacoes, transf:zapTransf, hist:zapHist});
@@ -17448,7 +17446,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            ${pode&&!fim?`<button class="zt-btn" onclick="iaZap('rascunho')" title="a IA escreve uma resposta no campo; confira antes de enviar" aria-label="Rascunho">✨<span class="lbl">Rascunho</span></button>`:""}`:""}
            ${fim||!pode?"":`<button class="zt-btn zt-trans" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
            ${fim||pode||!deOutro?"":`<button class="zt-btn zt-trans" onclick="pedirTransferencia()" title="pedir a ${esc(at.nome)} e aos gestores que transfiram a conversa" aria-label="Pedir transferência">${zic("seta")}<span class="lbl">Pedir</span></button>`}
-           <button class="zt-btn zt-desler" onclick="marcarNaoLida()" title="Marcar como não lida" aria-label="Marcar como não lida"><span class="lbl">Desler</span></button>
+           <button class="zt-btn zt-desler" onclick="marcarNaoLida()" title="${c.nao_lidas?"Marcar como lida, sem responder":"Marcar como não lida"}" aria-label="${c.nao_lidas?"Marcar como lida":"Marcar como não lida"}"><span class="lbl">${c.nao_lidas?"Lida":"Desler"}</span></button>
            ${pode?`<button class="zt-btn pri zt-fim" aria-label="${fim?"Reabrir":"Encerrar"}" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}<span class="lbl">Encerrar</span>`}</button>`:""}
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
@@ -17460,7 +17458,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
                ${cli?`<button onclick="quemConversa()" title="dizer se quem escreve é o próprio cliente ou outra pessoa por ele">Identificar quem escreve</button>`:`<button onclick="vincularConversa()" title="Vincular a um cliente">Vincular<span class="sr-only"> a um cliente</span></button>
                <button onclick="this.closest('details').open=false;nomearConversa()" title="Alterar o nome do contato"><span aria-hidden="true">Renomear</span><span class="sr-only">Alterar o nome do contato</span></button>`}
                <button onclick="this.closest('details').open=false;verFavoritasZap()">Mensagens favoritas${zapMsgs.some(m=>m.favorita_em)?` (${zapMsgs.filter(m=>m.favorita_em).length})`:""}</button>
-               <button class="zt-cel zt-desler" onclick="marcarNaoLida()" title="Marcar como não lida"><span aria-hidden="true">Desler</span><span class="sr-only">Marcar como não lida</span></button>
+               <button class="zt-cel zt-desler" onclick="marcarNaoLida()" title="${c.nao_lidas?"Marcar como lida, sem responder":"Marcar como não lida"}"><span aria-hidden="true">${c.nao_lidas?"Lida":"Desler"}</span><span class="sr-only">${c.nao_lidas?"Marcar como lida":"Marcar como não lida"}</span></button>
                <button onclick="silenciarZap()" title="sem aviso desta conversa por um tempo">${silenciadaZap(c.id)?`🔕 Silenciada até ${new Date(zapSilencio.get(c.id)).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})}`:"🔕 Silenciar"}</button>
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
                ${pode?`<details class="zt-outras"><summary>Outras opções</summary>
@@ -17592,6 +17590,12 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
 // como no WhatsApp: a conversa fecha (abrir é ler) e volta à lista com a bolinha, para responder depois
 async function marcarNaoLida(){
   const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  if(c.nao_lidas){   // F480 · a conversa nova sai sem resposta apenas por este botão
+    try{ await api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}); }
+    catch(e){ return aviso(msgErro(e)); }
+    c.nao_lidas = 0; pintarListaZap(); pintarConversaGuardando(); return aviso("Marcada como lida");
+  }
   const n = Math.max(1, c.nao_lidas||0);
   try{ await api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",
     headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:n})}); }
@@ -19223,13 +19227,7 @@ async function verZapCliente(cliId){
   requestAnimationFrame(()=>{ el.classList.add("aberto"); document.body.classList.add("lado-aberto"); });
   const caixaMsgs = el.querySelector(".zap-msgs"); if(caixaMsgs) caixaMsgs.scrollTop = caixaMsgs.scrollHeight;
   carregarMinis(caixaMsgs);
-  // abrir é ler: zera o "novas" do botão
-  const lidas = zs.filter(z=>z.nao_lidas);
-  if(lidas.length){
-    await api(`/rest/v1/zap_conversas?id=in.(${lidas.map(z=>z.id).join(",")})`,{method:"PATCH",
-      headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}).catch(()=>{});
-    lidas.forEach(z=>z.nao_lidas=0);
-  }
+  // F480 · abrir não é ler: a conversa fica nova até a equipe responder
 }
 // os 8 últimos dígitos de cada telefone da ficha: a mesma chave do zap_conversas
 function chavesDoCliente(cliId){
