@@ -1,4 +1,5 @@
-// F457 · o Meu Dia no celular sem nada por cima (pedido do Paulo, 08.11.2026): os flutuantes não cobrem as linhas, o aviso
+// F457 · o Meu Dia no celular sem nada por cima (pedido do Paulo, 08.11.2026): os flutuantes não cobrem o Reagendar nem a data, o aviso
+// F463 · a linha vai até a borda e o filtro por pessoa fica no ⋯ (pedido do Paulo, 09.11.2026)
 // fica à esquerda da coluna e o ⋯ das listas na linha do título. Banco simulado e dados fictícios. Uso: node f457.js [fotos]
 const { chromium } = require("playwright");
 const http = require("http");
@@ -86,16 +87,36 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const cobertos = () => p.evaluate(F => {
     const fabs = F.map(s => document.querySelector(s)).filter(e => e && e.getBoundingClientRect().width && getComputedStyle(e).display !== "none").map(e => e.getBoundingClientRect());
     const x = (a, b) => a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
-    const alvos = [...document.querySelectorAll("#conteudo-meio :is(.acao-card,.avatar,.reag-bt,.ag-txt b,.ag-data)")].filter(e => e.offsetParent);
+    // F463 · a linha vai até a borda e passa por baixo dos flutuantes ao rolar (pedido do Paulo); o Reagendar e a data continuam livres
+    const alvos = [...document.querySelectorAll("#conteudo-meio :is(.reag-bt,.ag-txt b,.ag-data)")].filter(e => e.offsetParent);
     return alvos.filter(a => fabs.some(f => x(a.getBoundingClientRect(), f))).map(a => (a.className || a.tagName) + "|" + a.textContent.trim().slice(0, 20)); }, FAB);
   const rola = y => p.evaluate(async y => { window.scrollTo(0, y); document.querySelectorAll("*").forEach(e => { if (e.scrollHeight > e.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(e).overflowY)) e.scrollTop = y; }); await new Promise(r => setTimeout(r, 250)); }, y);
   let ruins = [];
   for (const y of [0, 150, 300, 450, 600, 900, 1e6]) { await rola(y); const c = await cobertos(); if (c.length) ruins.push([y, c]); }
-  conf("em nenhuma rolagem do Meu Dia um flutuante cobre data, nome, responsável, estrela ou Reagendar", !ruins.length) || console.log(JSON.stringify(ruins));
+  conf("em nenhuma rolagem do Meu Dia um flutuante cobre data, nome ou Reagendar", !ruins.length) || console.log(JSON.stringify(ruins));
+  await rola(0);
+  // F463 · a ⭐ encosta na borda direita da linha (sem a reserva de 60 px) e o filtro por pessoa mora no ⋯
+  const borda = await p.evaluate(() => { const l = [...document.querySelectorAll("#conteudo-meio .ag-linha")].find(e => e.querySelector(".acoes .acao-card[data-estrela]")); if (!l) return null;
+    const c = l.getBoundingClientRect(), f = l.querySelector(".acoes .acao-card[data-estrela]").getBoundingClientRect();
+    const seg = document.querySelector("#lista-opc .lo-pessoa .seg-colab[aria-label='Filtrar por pessoa'] [data-agcol]"), fora = document.querySelector("#topo-extra .seg-colab");
+    return { gap: c.right - f.right, noMais: !!seg, fora: !!fora, topoVazio: !document.getElementById("topo-extra").offsetParent }; });
+  conf("a estrela fica a menos de 24 px da borda da linha (F463)", borda && borda.gap < 24) || console.log(JSON.stringify(borda));
+  conf("o filtro por pessoa está no ⋯ e saiu do alto (F463)", borda && borda.noMais && !borda.fora && borda.topoVazio) || console.log(JSON.stringify(borda));
+  await p.evaluate(() => document.getElementById("topo-mais").setAttribute("open", "")); await p.waitForTimeout(200);
+  const menu = await p.evaluate(() => { const m = document.querySelector("#topo-mais .tl-mais-menu").getBoundingClientRect(); const bs = [...document.querySelectorAll("#lista-opc .lo-pessoa [data-agcol]")].map(b => b.getBoundingClientRect());
+    return { dentro: m.left >= 0 && m.right <= innerWidth, n: bs.length, vis: bs.every(b => b.width > 20 && b.left >= m.left && b.right <= m.right + 1) }; });
+  conf("aberto, o ⋯ cabe na tela e mostra os botões de pessoa (F463)", menu.dentro && menu.n >= 3 && menu.vis) || console.log(JSON.stringify(menu));
+  await p.screenshot({ path: OUT + "/meudia-mais.png" });
+  await p.evaluate(() => document.getElementById("topo-mais").removeAttribute("open"));
+  // F463 · nas listas de fase os chips de inicial também vão ao ⋯
+  await p.evaluate(() => irPara("fase:inss")); await p.waitForTimeout(800);
+  const fase = await p.evaluate(() => ({ noMais: document.querySelectorAll("#lista-opc .lo-pessoa [data-fcol]").length, fora: document.querySelectorAll("#conteudo-meio .filtros [data-fcol]").length }));
+  conf("na lista INSS, os chips de pessoa estão no ⋯ (F463)", fase.noMais >= 3 && !fase.fora) || console.log(JSON.stringify(fase));
+  await p.evaluate(() => irPara("meudia")); await p.waitForTimeout(800);
   await rola(400); await p.screenshot({ path: OUT + "/meudia-meio.png" });
   await rola(0);
   const topo = await p.evaluate(() => { const r = s => document.querySelector(s).getBoundingClientRect(); return { h1: r("#titulo-lista"), mais: r("#topo-mais"), seg: r("#topo-extra") }; });
-  conf("o ⋯ das listas fica na linha do título, à direita", Math.abs((topo.mais.top + topo.mais.bottom) / 2 - (topo.h1.top + topo.h1.bottom) / 2) < 12 && topo.mais.right > 340 && topo.seg.top >= topo.h1.bottom - 2);
+  conf("o ⋯ das listas fica na linha do título, à direita", Math.abs((topo.mais.top + topo.mais.bottom) / 2 - (topo.h1.top + topo.h1.bottom) / 2) < 12 && topo.mais.right > 340 && !topo.seg.height);
   await p.evaluate(() => aviso("Documentos: 1 de 16 (lendo o texto de cada um)…", false)); await p.waitForTimeout(400);
   const av = await p.evaluate(F => { const a = document.getElementById("aviso").getBoundingClientRect(); const b = document.querySelector(".barra-cel, nav.barra-cel, #barra-cel");
     const fabs = F.map(s => document.querySelector(s)).filter(e => e && e.getBoundingClientRect().width && getComputedStyle(e).display !== "none").map(e => e.getBoundingClientRect());

@@ -6303,7 +6303,13 @@ html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto) #and
 /* F457 · o Meu Dia no celular sem nada por cima (pedido do Paulo, 08.11.2026): a faixa da direita das linhas fica livre para
    a coluna dos flutuantes, o "?" da coluna sai (o título já tem o seu; no WhatsApp ele volta pelo ⋯ dos atalhos), o aviso
    fica à esquerda da coluna e o ⋯ das listas sobe para a linha do título */
-.app.celular #conteudo-meio :is(.cartao,h3.secao){padding-right:60px}
+.app.celular #conteudo-meio h3.secao{padding-right:60px}
+/* F463 · a linha do celular sem reserva à direita: data, nome, inicial e ⭐ até a borda; o filtro por pessoa mora no ⋯ (Paulo, 09.11.2026) */
+.app.celular .lista-opc{min-width:min(320px,88vw)}
+.app.celular .lo-ln.lo-pessoa{flex-direction:column;align-items:stretch;gap:4px}
+.app.celular .lo-ln.lo-pessoa .seg-colab{display:flex;width:100%;box-sizing:border-box}
+.app.celular .lo-ln.lo-pessoa .seg-colab button{flex:1 1 auto;min-width:0;padding:5px 3px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app.celular #conteudo-meio .filtros:empty{display:none}
 .app.celular:not(.fabs-on) ~ .fab-ajuda{display:none}
 .app.celular ~ .aviso{left:12px;right:72px;max-width:none;transform:translateY(8px)}
 .app.celular ~ .aviso.on{transform:none}
@@ -6789,7 +6795,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.05</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.06</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11701,7 +11707,22 @@ function ligarCartoes(){
 let vistaAnimada="";
 // F378 · as visões de data viram abas do Planejado (decisão do Paulo, 02.11.2026): a tela de cada aba é a de antes, com a
 // barra das abas no alto e o nome Planejado
-function render(){ renderBase(); if(!buscaTxt && ehAbaPlan(visao)) barraPlanejado(); armarVoltar(); }
+function render(){ renderBase(); if(!buscaTxt && ehAbaPlan(visao)) barraPlanejado(); filtroPessoaNoMais(); armarVoltar(); }
+// F463 · no celular o filtro por pessoa mora no ⋯ da lista (pedido do Paulo, 09.11.2026): o do Meu Dia, do Planejado e do
+// Dashboard (seg-colab do topo) e o das listas de fase, Minhas e Importante (os chips de inicial) saem do alto e viram a
+// linha "Pessoa" do menu; os botões vão com os cliques já ligados, por isso roda depois de tudo pintado
+function filtroPessoaNoMais(){
+  if(!celular()) return;
+  const el = document.getElementById("lista-opc"), mais = document.getElementById("topo-mais");
+  if(!el || !mais || !mais.offsetParent) return;
+  const seg = document.querySelector('#topo-extra .seg-colab[aria-label="Filtrar por pessoa"]');
+  const chips = [...document.querySelectorAll("#conteudo-meio .filtros [data-fcol]")];
+  if(!seg && !chips.length) return;
+  const ln = document.createElement("div"); ln.className = "lo-ln lo-pessoa"; ln.innerHTML = "<span>Pessoa</span>";
+  if(seg) ln.appendChild(seg);
+  else { const g = document.createElement("div"); g.className = "seg-colab"; g.setAttribute("role", "group"); g.setAttribute("aria-label", "Filtrar por pessoa"); chips.forEach(b=>g.appendChild(b)); ln.appendChild(g); }
+  el.prepend(ln);
+}
 function renderBase(){
   aplicarTema(); marcarBarraCel();
   if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = soIdentificacao() ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
