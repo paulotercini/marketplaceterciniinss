@@ -641,6 +641,8 @@ A **F487** (pedido do Paulo de 09.11.2026, o atendimento do Antônio sem respost
 
 A **F488** (pedido do Paulo de 09.11.2026): no golpe (F476), a conversa recebe a resposta da IA ao que a pessoa perguntou ou contou, seguida do alerta (este é o único WhatsApp do escritório, não pagar nem informar dados ou códigos a outro número, na dúvida o telefone fixo), e não mais o texto fixo; `zap_plantao_aplicar` envia `p_resposta` também na conversa assumida e usa `config_app.zap_golpe_texto` apenas quando a resposta vem vazia. A regra está no `FATOS`, que chega aos agentes do Console pelo `ligar`. SQL em `crm/fase2/migracoes/f488_golpe_resposta_ia.sql`.
 
+A **F489** (pedido do Paulo de 09.11.2026, a cliente que disse que não podia ir e não respondeu aos horários oferecidos): a conversa em `remarcando` cuja última mensagem é da IA há mais de 2 horas, sem mensagem da equipe depois de `remarcar_em` (`zap_conf_sem_retorno`), entra no reenvio das 9h da véspera com o texto próprio ("O seu atendimento de … continua agendado. Deseja remarcar para outro dia ou podemos cancelar?") e no aviso das 13h30 à recepção e ao advogado, que pede para ligar e, se for o caso, cancelar e liberar a vaga. O aviso das 13h30 passou a considerar apenas atendimentos de hoje e amanhã. SQL em `crm/fase2/migracoes/f489_remarcacao_sem_resposta.sql`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
