@@ -63,7 +63,8 @@ const gravados = [];
   await p.selectOption("[data-tab-etapa]", "perícia realizada");
   await p.waitForFunction(c => D.casoPorId.get(c).etapa === "perícia realizada", CASO1, { timeout: 3000 }).catch(() => {});
   conf("trocar a etapa na linha grava no caso", gravados.some(g => g.t === "casos" && g.m === "PATCH" && g.corpo.etapa === "perícia realizada"));
-  conf("a troca da etapa oferece desfazer", await p.$$eval("#aviso button, .aviso button", bs => bs.some(b => /Desfazer/i.test(b.textContent))));
+  // o aviso só aparece depois de a gravação terminar; a etapa já está na memória antes disso
+  conf("a troca da etapa oferece desfazer", await p.waitForFunction(() => [...document.querySelectorAll("#aviso button, .aviso button")].some(b => /Desfazer/i.test(b.textContent)), null, { timeout: 3000 }).then(() => true, () => false));
   await p.evaluate(c => gravarEtapa(c, "aguardando perícia"), CASO1);
   conf("a etapa escrita à mão aparece, mas não se oferece", await p.evaluate(c => { const k = D.casoPorId.get(c); k.etapa = "esperando o médico"; const h = celEtapa(k, true); k.etapa = "aguardando perícia";
     return /esperando o médico \(à mão\)/.test(h) && /disabled>esperando/.test(h); }, CASO1));
