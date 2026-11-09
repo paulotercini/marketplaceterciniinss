@@ -3828,9 +3828,16 @@ html[data-tema="v10"] .db .ae-acoes{display:flex;gap:8px;flex-wrap:wrap;margin-t
 html[data-tema="v10"] .db .ae-acoes .btn-mini{padding:7px 14px;min-height:32px;font-size:13px}
 html[data-tema="v10"] .db .ae-acoes .btn-mini.pri{background:var(--db-acc);border-color:var(--db-acc);color:#fff}
 html[data-tema="v10"] .db .ae-painel{margin-top:12px;padding-top:12px;border-top:1px solid var(--db-borda)}
-html[data-tema="v10"] .db.db-and{border-left:4px solid var(--db-inss)}
-html[data-tema="v10"] .db.db-and.crps{border-left-color:var(--db-crps)}
-html[data-tema="v10"] .db.db-and.jud{border-left-color:var(--db-jud)}
+html[data-tema="v10"] .db{--db-cor:var(--db-acc)}
+html[data-tema="v10"] .db.db-and{--db-cor:var(--db-inss)}
+html[data-tema="v10"] .db.db-and.crps{--db-cor:var(--db-crps)}
+html[data-tema="v10"] .db.db-and.jud{--db-cor:var(--db-jud)}
+html[data-tema="v10"] .db>.db-cab{row-gap:0;margin:-14px -16px 12px;padding:4px 16px;border-radius:11px 11px 0 0;background:color-mix(in srgb,var(--db-cor) 8%,#fff);border-bottom:2px solid var(--db-cor)}
+html[data-tema="v10"] .db>.db-cab :is(h3,.db-ant,.db-par){color:color-mix(in srgb,var(--db-cor) 80%,#000)}
+html[data-tema="v10"] .db>.db-cab h3{letter-spacing:.04em}
+html[data-tema="v10"] .db>.db-cab .db-when{color:#4A4E4E}
+html[data-tema="v10"] .db>.db-cab .db-logo{background:#fff;border-color:color-mix(in srgb,var(--db-cor) 35%,#fff)}
+.app.celular .db>.db-cab{margin:-12px -14px 10px;padding:8px 14px}
 html[data-tema="v10"] .db-mov{font-size:14px;line-height:1.45;margin:0}
 html[data-tema="v10"] .db-sub{display:block;font-size:12px;color:var(--db-cinza);margin-top:4px}
 html[data-tema="v10"] .db-par{flex-basis:100%;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--db-jud)}
@@ -6867,7 +6874,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.23</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.24</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11794,8 +11801,8 @@ function dbDespacho(k, ands){
   const acoes = podeGravarCaso() ? `<div class="ae-acoes db-acoes">
       <button type="button" class="btn-mini pri" data-ae="anotar">Anotar</button>
       ${prorroga ? `<button type="button" class="btn-mini" data-ae="reagendar" title="Mudar a data do retorno">Prorrogar</button>` : ""}</div><div class="ae-painel" hidden></div>` : "";
-  return `<section class="db db-desp" aria-label="Último despacho" onclick="dbClique(event,this,'${k.id}')">
-    <div class="db-cab"><span class="db-logo" aria-hidden="true">${DB_LOGO_ADV}</span><h3>Último despacho</h3><span class="db-when">${nota ? dbQuando(nota.criado_em) : ""}</span>
+  return `<section class="db db-desp" aria-label="Último andamento no Escritório" onclick="dbClique(event,this,'${k.id}')">
+    <div class="db-cab"><span class="db-logo" aria-hidden="true">${DB_LOGO_ADV}</span><h3>Último andamento no Escritório</h3><span class="db-when">${nota ? dbQuando(nota.criado_em) : ""}</span>
       ${dbAnteriores(k, Math.max(0, notas.filter(a=>!a.responde_a).length-1), "anotações", aberto, `dbVerAnt('${k.id}')`)}</div>
     ${corpo}${acoes}${aberto ? dbNumeros(k) : ""}</section>`;
 }
@@ -11806,28 +11813,28 @@ function dbAndamento(k, ands, fase, par){
     const a = pats[0]; if(!a) return "";
     const sit = pats.map(x=>String(x.origem_id||"")).find(o=>o.startsWith("situacao:"));
     const prot = protocolosDe(k)[0];
-    it = {cls:"", nome:"Meu INSS", logo:iconeFonte("inss"), iso:a.criado_em, txt:dbLead(a.texto), sub:sit ? sit.split(":").slice(2).join(":") : especieDoCaso(k),
+    it = {cls:"", nome:"Meu INSS", onde:"INSS", logo:iconeFonte("inss"), iso:a.criado_em, txt:dbLead(a.texto), sub:sit ? sit.split(":").slice(2).join(":") : especieDoCaso(k),
       abrir: prot ? `abrirMeuInss('${escJs(prot)}')` : "", n:pats.length-1, aba:"inss", rot:"andamentos"};
   } else if(fase==="conselho"){
     const evs = crpsBlocos(k).flatMap(b=>(b.eventos||[]).map(e=>({e, nup:b.nup}))).sort((a,b)=>(isoCrps(a.e.data)||"")<(isoCrps(b.e.data)||"")?1:-1);
     const x = evs[0]; if(!x) return "";
     const doc = (x.e.arquivos||[]).find(a=>a.storage);
-    it = {cls:"crps", nome:"e-Recursos", logo:iconeFonte("crps"), iso:isoCrps(x.e.data)+"T12:00:00", soData:true,
+    it = {cls:"crps", nome:"e-Recursos", onde:"Conselho de Recursos", logo:iconeFonte("crps"), iso:isoCrps(x.e.data)+"T12:00:00", soData:true,
       txt: decideOCaso(x.e) ? `<b>${esc(x.e.resumo||x.e.bruto||"")}</b>` : esc(x.e.resumo||x.e.bruto||""), sub:"",
       doc: doc ? `<button type="button" class="db-doc" onclick="abrirDecisao('${escJs(doc.storage)}')">${esc(doc.nome||"Documento")}</button>` : "",
       abrir: x.nup ? `window.open('${escJs(linkERecursos(x.nup))}','_blank','noopener')` : "", n:evs.length-1, aba:"crps", rot:"andamentos"};
   } else if(fase==="judicial"){
     const pj = andamentosPje(ands), a = pj[0]; if(!a) return "";
     const sis = sisCurtoDoMov(a), href = linkPjeDoAndamento(a, k) || linkPjeDoCaso(k);
-    it = {cls:"jud", nome:sis, logo:iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sis]||"pje"), iso:a.criado_em, txt:dbLead(a.texto), sub:"",
+    it = {cls:"jud", nome:sis, onde:sis, logo:iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sis]||"pje"), iso:a.criado_em, txt:dbLead(a.texto), sub:"",
       href, n:pj.length-1, aba:"cnj", rot:"andamentos"};
   } else return "";
   const logo = it.href ? `<a class="db-logo" href="${esc(it.href)}" target="_blank" rel="noopener" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</a>`
     : it.abrir ? `<button type="button" class="db-logo" onclick="${it.abrir}" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</button>`
     : `<span class="db-logo" aria-hidden="true">${it.logo}</span>`;
   const quando = it.soData ? `${fmtBarra(dataSP(it.iso))} · ${(n=>n<=0?"hoje":n===1?"ontem":`há ${n} dias`)(diasEntreIso(dataSP(it.iso), hoje()))}` : dbQuando(it.iso);
-  return `<section class="db db-and ${it.cls}" aria-label="Último andamento · ${esc(it.nome)}">
-    <div class="db-cab">${logo}<h3>Último andamento<span class="sr-only"> · ${esc(it.nome)}</span></h3><span class="db-when">${quando}</span>${par ? `<span class="db-par">Em paralelo · mandado de segurança</span>` : ""}
+  return `<section class="db db-and ${it.cls}" aria-label="Último andamento no ${esc(it.onde)}">
+    <div class="db-cab">${logo}<h3>Último andamento no ${esc(it.onde)}</h3><span class="db-when">${quando}</span>${par ? `<span class="db-par">Em paralelo · mandado de segurança</span>` : ""}
       ${dbAnteriores(k, Math.max(0, it.n), it.rot, false, `irSubAba('${it.aba}')`)}</div>
     <p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>${it.doc||""}</section>`;
 }
@@ -22140,7 +22147,7 @@ function pintarFicha(){
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
         ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardDoCaso(k, andsVis) : ""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}${v10 && aba==="escritorio" && dashLigado() ? dashboardPe(k, andsVis) : ""}</div>
+           <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${/* F486 · o cartão do Escritório fica abaixo do campo de escrever (pedido do Paulo, 09.11.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardDoCaso(k, andsVis) : ""}${painelDaAba()}${v10 && aba==="escritorio" && dashLigado() ? dashboardPe(k, andsVis) : ""}</div>
            <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? abaComProcessos(k, "cnj", ()=>painelCNJ(k, andsVis)) : aba==="crps" ? abaComProcessos(k, "crps", ()=>painelCRPS(k))
