@@ -32,6 +32,8 @@ const json = (o: unknown, status = 200) =>
 // shortcut: cópia do mascarar do zap_assistente, que não pode ser importado
 // (registra o próprio Deno.serve); se crescer, vira _shared/
 export const mascarar = (s: unknown) => String(s ?? "").replace(/\d[\d.\-/ ]{6,}\d/g, (m) => (m.replace(/\D/g, "").length >= 8 ? "[número]" : m));
+// F422af · o atendimento agendado ou remarcado para o mesmo dia já fica confirmado na agenda
+const hojeBR = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
 const hora = (iso: string) => new Date(iso).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "short", timeStyle: "short" });
 
 type Msg = { direcao: string; por_bot: boolean; tipo: string; texto: string | null; momento: string };
@@ -535,6 +537,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       });
       if (r.codigo === "HORARIO_INDISPONIVEL") return { erro: "este horário acabou de ser tomado: consulte de novo e ofereça outro" };
       if (!r.ok) return { erro: String(r.erro || r.codigo || "erro da agenda") };
+      if (v.data === hojeBR() && r.evento?.id) await chamar("confirmar", { eventId: r.evento.id }).catch(() => null);
       // F422q · a confirmação diz de quem é o atendimento quando quem escreve agenda para outra pessoa
       const para = v.tipo === "002" ? c.nome_ficha || c.nome_numero : c.cliente_numero ? i.nome : null;
       const conf = { p_conversa: conversa, p_rotulo: rotulo(v.data, v.inicio, COM[v.profissional]),
@@ -555,6 +558,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
         observacoes: "Remarcado pela assistente virtual do WhatsApp." });
       if (r.codigo === "HORARIO_INDISPONIVEL") return { erro: "este horário acabou de ser tomado: consulte de novo e ofereça outro" };
       if (!r.ok) return { erro: String(r.erro || r.codigo || "erro da agenda") };
+      if (v.data === hojeBR() && r.evento?.id) await chamar("confirmar", { eventId: r.evento.id }).catch(() => null);
       const de = rotulo(antigo.data, antigo.inicio, COM[antigo.profissional] || "a equipe"), para = rotulo(v.data, v.inicio, COM[v.profissional]);
       await banco("zap_nota_sistema", { p_conversa: conversa, p_autor: null, p_texto: `📅 A assistente virtual remarcou o atendimento de ${de} para ${para}.` });
       await banco("zap_conf_remarcado", { p_conversa: conversa, p_texto: `A assistente virtual remarcou o atendimento de ${de} para ${para}.` }).catch(() => null);
