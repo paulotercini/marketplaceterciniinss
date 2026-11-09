@@ -321,6 +321,14 @@ export function emLinhas(txt: string, antes: string[] = []) {
   if (t.includes("\n") || t.length <= 120) return t;
   return t.replace(/^(.+?(?<!\b(?:Sr|Sra|Srta|Dr|Dra|Prof|Profa))[.!?])\s+(?=\S)/, "$1\n\n");
 }
+// F476: o golpe (alguém se passando pelo escritório) recebe a resposta fixa mesmo na conversa assumida.
+const RX_GOLPE = /golpe|falso advogado|se passa(ndo|r)? (por|pelo)|em nome do (escrit|dr|doutor|advogado)|com o (seu |meu )?(nome|telefone|n[uú]mero)|outro n[uú]mero|n[uú]mero (diferente|estranho|desconhecido)|pix para liberar|liberar (o )?(valor|dinheiro)/i;
+export function ehGolpe(r: { acao?: string; assunto?: string; resposta?: string }, ms: Msg[]) {
+  if (r.acao !== "equipe") return false;
+  const cliente = (ms || []).filter((m) => m.direcao === "entrada" && m.texto).slice(-4).map((m) => m.texto).join(" ");
+  return RX_GOLPE.test(`${r.assunto || ""} ${r.resposta || ""} ${cliente}`);
+}
+
 const enviados = (ms: Msg[]) => (ms || []).filter((m) => m.direcao === "saida" && m.texto).map((m) => String(m.texto));
 
 // o nome da pessoa no máximo uma vez, como na conversa com a recepção (pedido do Paulo de 07.11.2026)
@@ -1093,8 +1101,8 @@ if (typeof Deno !== "undefined") {
       if (acao !== "equipe" && acao !== "nada" && !x.remarcar && x.conversa_id && await atendenteOffline(x.conversa_id).catch(() => false)) acao = "nada";
       await rpc("zap_plantao_aplicar", {
         p_msg: msg, p_acao: acao, p_resposta: emLinhas(r.resposta, enviados(x.mensagens)), p_advogado: String(r.advogado || ""),
-        p_urgente: r.urgente === true, p_assunto: String(r.assunto || ""), p_relato: String(r.relato || ""),
-        p_nome: String(r.nome || ""),
+        p_urgente: r.urgente === true, p_assunto: (ehGolpe({ ...r, acao }, x.mensagens) ? "golpe: " : "") + String(r.assunto || ""),
+        p_relato: String(r.relato || ""), p_nome: String(r.nome || ""),
       });
       return json({ acao });
     } catch (e) {
