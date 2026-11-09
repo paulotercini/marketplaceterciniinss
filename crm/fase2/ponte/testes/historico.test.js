@@ -36,3 +36,41 @@ t.test("busca o histórico pedido, grava as antigas e marca o pedido feito", asy
   a.ok(patches.at(-1).historico_feito);
   a.match(patches.at(-1).historico_resultado, /^2 mensagem/);
 });
+
+// F474: a conversa sem mensagem gravada pede o histórico a partir de agora, sem partida
+function semMensagem(paginas) {
+  const gravadas = [], patches = [], pedidos = [];
+  global.fetch = async (url, opts = {}) => {
+    const u = String(url), m = opts.method || "GET";
+    const ok = c => ({ ok: true, status: 200, text: async () => JSON.stringify(c) });
+    if (m === "GET" && u.includes("zap_conversas?historico_pedido")) return ok([{ id: "c2", telefone: "5516993460685" }]);
+    if (m === "GET" && u.includes("order=quando_wa.asc")) return ok([]);
+    if (m === "GET" && u.includes("externo_id=eq.")) return ok([]);
+    if (m === "POST" && u.includes("zap_mensagens")) { gravadas.push(JSON.parse(opts.body)); return ok(null); }
+    if (m === "PATCH") { patches.push(JSON.parse(opts.body)); return ok(null); }
+    return ok(null);
+  };
+  const zap = {
+    onWhatsApp: async () => [{ exists: true, jid: "5516993460685@s.whatsapp.net" }],
+    fetchMessageHistory: async (n, chave) => { pedidos.push(chave.id); setTimeout(() => P._pagina(paginas.shift() || []), 5); },
+  };
+  return { zap, gravadas, patches, pedidos };
+}
+
+t.test("sem mensagem gravada, pede sem partida e grava o que o celular devolver", async () => {
+  const t0 = Date.parse("2026-11-01T12:00:00Z") / 1000;
+  const x = semMensagem([[msg("B1", t0)], []]);
+  P._ligado(true);
+  await P.buscarHistoricosPedidos(x.zap);
+  a.strictEqual(x.pedidos[0], "");
+  a.deepStrictEqual(x.gravadas.map(g => g.externo_id), ["B1"]);
+  a.match(x.patches.at(-1).historico_resultado, /^1 mensagem/);
+});
+
+t.test("sem mensagem gravada e sem resposta, fica para a primeira mensagem", async () => {
+  const x = semMensagem([[]]);
+  P._ligado(true);
+  await P.buscarHistoricosPedidos(x.zap);
+  a.strictEqual(x.gravadas.length, 0);
+  a.match(x.patches.at(-1).historico_resultado, /^sem mensagem de partida/);
+});

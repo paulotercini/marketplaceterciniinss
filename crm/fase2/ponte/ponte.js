@@ -554,6 +554,8 @@ async function gravarDoCelular(m, conversa) {
 // A conversa de cliente nasce com historico_pedido (o banco marca), e o ⋯ da
 // conversa pede de novo. A ponte pede ao celular, de 50 em 50, as mensagens
 // anteriores à mais antiga que o CRM tem, até o celular não ter mais.
+// o gatilho zap_historico_primeira (f474) relê este texto: não mude sem mudar lá
+const SEM_PARTIDA = "sem mensagem de partida: pede de novo na primeira mensagem";
 let buscandoHistorico = false;
 async function buscarHistoricosPedidos(s = sock) {
   if (!ligado || !s || buscandoHistorico || recuperando) return;
@@ -565,7 +567,8 @@ async function buscarHistoricosPedidos(s = sock) {
       let resultado;
       try {
         const n = await historicoDaConversa(s, c);
-        resultado = n ? `${n} mensagem(ns) antiga(s) trazida(s) do celular` : "o celular não tem mensagem mais antiga";
+        resultado = n < 0 ? SEM_PARTIDA
+          : n ? `${n} mensagem(ns) antiga(s) trazida(s) do celular` : "o celular não tem mensagem mais antiga";
       } catch (e) { resultado = "erro: " + String(e.message).slice(0, 80); }
       log(`histórico pedido: ${c.telefone} — ${resultado}`);
       await sb(`/rest/v1/zap_conversas?id=eq.${c.id}`, { method: "PATCH", headers: { Prefer: "return=minimal" },
@@ -576,7 +579,10 @@ async function buscarHistoricosPedidos(s = sock) {
 async function historicoDaConversa(s, c) {
   let [ancora] = await sb(`/rest/v1/zap_mensagens?conversa_id=eq.${c.id}&externo_id=not.is.null`
     + "&quando_wa=not.is.null&select=externo_id,direcao,quando_wa&order=quando_wa.asc&limit=1");
-  if (!ancora) return 0;
+  // sem mensagem gravada (conversa aberta pela ficha): pede as anteriores a agora,
+  // sem id de partida; se o celular não responder, o banco pede de novo na primeira mensagem
+  const semPartida = !ancora;
+  if (semPartida) ancora = { externo_id: "", direcao: "entrada", quando_wa: agora() };
   const fone = N.soDigitos(c.telefone);
   const [w] = await s.onWhatsApp(fone).catch(() => []);
   let jids = [...new Set([(w && w.lid) || lidDoJid((w && w.jid) || `${fone}@s.whatsapp.net`), (w && w.jid) || `${fone}@s.whatsapp.net`].filter(Boolean))];
@@ -594,7 +600,7 @@ async function historicoDaConversa(s, c) {
     if (!N.quandoWa(velha) || N.quandoWa(velha) >= ancora.quando_wa) break;
     ancora = { externo_id: velha.key.id, direcao: velha.key.fromMe ? "saida" : "entrada", quando_wa: N.quandoWa(velha) };
   }
-  return n;
+  return semPartida && !n ? -1 : n;
 }
 
 async function importarHistorico(chats, messages, baixar) {
