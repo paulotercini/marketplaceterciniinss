@@ -417,13 +417,19 @@ export const ESQ_ANDAMENTO = {
 type AndCaso = { beneficio?: string | null; fase: string; etapa?: string | null; etapa_sugerida?: string | null; etapa_sugerida_desde?: string | null;
   andamentos: { em: string; origem: string; texto: string }[] };
 export type Andamento = { conversa_id: string; contato: string; relacao?: string | null; cliente?: string | null; casos: AndCaso[]; mensagens: Msg[] };
+// o mascarar tomaria "28.09.2026 14:23" por número; a data do andamento é o que a resposta precisa dizer
+export const mascararMenosDatas = (s: string) => {
+  const datas: string[] = [];
+  const m = mascarar(s.replace(/(?<![\d.])\d{1,2}[./]\d{1,2}[./](?:19|20)\d{2}(?![\d.])/g, (d) => `§${datas.push(d) - 1}§`));
+  return m.replace(/§(\d+)§/g, (_, i) => datas[+i]);
+};
 const ORIGEM_AND: Record<string, string> = { app: "anotação da equipe", todo: "anotação da equipe", mcp: "anotação da equipe", whatsapp: "anotação da equipe" };
 export function promptAndamento(a: Andamento, agora = new Date()) {
   const hoje = agora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "full", timeStyle: "short" });
   const quem = a.relacao ? `${a.contato} (${a.relacao} de ${a.cliente || "o cliente"})` : a.contato;
   const casos = (a.casos || []).map((k, i) => {
     const ands = (k.andamentos || []).map((x) =>
-      `  - registrado em ${hora(x.em)} (${ORIGEM_AND[x.origem] || "portal " + x.origem}): ${mascarar(x.texto).slice(0, 400)}`).join("\n");
+      `  - registrado em ${hora(x.em)} (${ORIGEM_AND[x.origem] || "portal " + x.origem}): ${mascararMenosDatas(x.texto).slice(0, 400)}`).join("\n");
     const sug = k.etapa_sugerida ? `; pelos fatos dos portais a etapa é "${k.etapa_sugerida}" desde ${k.etapa_sugerida_desde || "data não informada"}` : "";
     return `Caso ${i + 1}: ${k.beneficio || "benefício não informado"}, fase ${k.fase}, etapa declarada "${k.etapa || "sem etapa"}"${sug}.\n${ands || "  - sem andamentos"}`;
   }).join("\n\n");
