@@ -1,5 +1,5 @@
-// F466 · o Dashboard do caso (ditado pelo Paulo em 09.11.2026): abaixo das fases e acima do campo de escrever, o Último
-// despacho da equipe com Anotar e Prorrogar (F467: sem Concluir, Anotar verde) e, abaixo das anotações, o Último andamento do portal da fase; os números só aparecem em
+// F466 · o Dashboard do caso (ditado pelo Paulo em 09.11.2026): abaixo das fases e abaixo do campo de escrever (F486), o Último
+// andamento no Escritório da equipe com Anotar e Prorrogar (F467: sem Concluir, Anotar verde) e, abaixo das anotações, o Último andamento do portal da fase; os números só aparecem em
 // "Ver anotações anteriores", que também mostra a linha do tempo. Banco simulado e dados fictícios. Uso: node f466.js [fotos]
 const { chromium } = require("playwright");
 const http = require("http");
@@ -93,7 +93,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // ── 1 · computador, caso A ──
   let { p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cA, kA);
-  conf("o Dashboard fica acima do campo de escrever", await p.evaluate(() => { const d = document.querySelector(".caso-dir .db-dash"); let e = d && d.nextElementSibling; return !!e && !!e.querySelector("textarea, [contenteditable]"); }));
+  conf("o campo de escrever fica acima do cartão do Escritório (F486)", await p.evaluate(() => { const d = document.querySelector(".caso-dir .db-dash"); let e = d && d.previousElementSibling; return !!e && !!e.querySelector("textarea, [contenteditable]"); }));
+  conf("os cartões dizem o lugar do andamento (F486)", /^Último andamento no Escritório$/.test((await p.locator(".db-desp h3").textContent()).trim()) && /^Último andamento no INSS$/.test((await p.locator(".db-and h3").textContent()).trim()));
   conf("o Último despacho mostra a última anotação da equipe e a resposta", /Aguardar a perícia/.test(await p.locator(".db-desp .db-txt").textContent()) && /Marcos: Exames separados/.test(await p.locator(".db-desp .db-resp").textContent()));
   conf("o cabeçalho diz quando e quantas anteriores", /ontem|há 2 dias/.test(await p.locator(".db-desp .db-when").textContent()) && /Ver anotações anteriores \(1\)/.test(await p.locator(".db-desp .db-ant").textContent()));
   conf("Anotar (verde) e Prorrogar, sem Concluir (F467)", (await p.locator(".db-desp .db-acoes button").allTextContents()).join(",") === "Anotar,Prorrogar" && await p.evaluate(() => { const b = document.querySelector('.db-desp [data-ae="anotar"]'); const c = getComputedStyle(b); return c.color === "rgb(255, 255, 255)" && c.backgroundColor !== "rgb(255, 255, 255)"; }));
