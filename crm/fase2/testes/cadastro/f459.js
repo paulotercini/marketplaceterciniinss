@@ -74,14 +74,15 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const vis = await linha.evaluate(el => [...el.children].filter(x => x.getBoundingClientRect().width && getComputedStyle(x).display !== "none")
     .map(x => ({ c: x.className.split(" ")[0], t: x.getBoundingClientRect().top, b: x.getBoundingClientRect().bottom, l: x.getBoundingClientRect().left })));
   const classes = vis.map(x => x.c);
-  conf("na linha ficam só a data, o texto e a estrela", classes.join(",") === "ag-data,ag-txt,acoes") || console.log(classes);
+  conf("na linha ficam a data, o texto, a inicial do responsável e a estrela (F462)", classes.join(",") === "ag-data,ag-txt,avatares,acoes") || console.log(classes);
+  conf("a inicial do responsável está à esquerda da estrela", await linha.evaluate(el => { const a = el.querySelector(".avatares .avatar"), e = el.querySelector(".acoes"); return a && a.textContent === "P" && a.getBoundingClientRect().right <= e.getBoundingClientRect().left; }));
   if(!conf("tudo na mesma altura, a data no canto esquerdo", vis.every(x => Math.abs((x.t + x.b) / 2 - (vis[0].t + vis[0].b) / 2) < 10) && vis[0].l < 30)) console.log(JSON.stringify(vis));
   const txt = await linha.locator(".ag-txt").innerText();
   conf("o texto traz o nome e a atribuição, sem a espécie", /Marcia Fictícia Lyra/.test(txt) && /avisar a cliente/i.test(txt) && !/B31/.test(txt)) || console.log(txt);
   const l2 = p.locator(`.cartao.ag-linha[data-casos="${k2.id}"]`).first();
   await p.waitForTimeout(800);
   const txt2 = await l2.innerText().catch(() => "");
-  conf("o retorno do To Do traz a última anotação como atribuição (F460)", /Osvaldo/.test(txt2) && /aguardar a análise do INSS/i.test(txt2)) || console.log(txt2);
+  conf("o retorno do To Do mostra o nome e a inicial, sem a anotação do caso (F462)", /Osvaldo/.test(txt2) && !/aguardar a análise/i.test(txt2) && await l2.locator(".avatares .avatar").count() === 1) || console.log(txt2);
   const alt = await linha.evaluate(el => el.getBoundingClientRect().height);
   conf("a linha tem uma altura só (até 48 px)", alt <= 48) || console.log(alt);
   await p.screenshot({ path: OUT + "/linha.png" });
@@ -92,7 +93,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a senha do Meu INSS está à vista", /Senha#Ficticia1/.test(await ext.locator('[data-ae="senha"]').innerText()));
   conf("há o botão do WhatsApp", await ext.locator('[data-ae="zap"]').count() === 1);
   const cab = await ext.locator(".ae-cab").innerText();
-  conf("a anotação vem só com a data e o texto", /^\d{2}\/\d{2}\/\d{4}$/.test(cab.trim()) && /avisar a cliente/i.test(await ext.locator(".ae-txt").innerText())) || console.log(cab);
+  conf("a anotação vem com a data, quem escreveu e o texto (F462)", /^\d{2}\/\d{2}\/\d{4} · Paulo$/.test(cab.trim()) && /avisar a cliente/i.test(await ext.locator(".ae-txt").innerText())) || console.log(cab);
+  const cop = await ext.locator(".ae-cop").evaluate(el => { const r = [...el.children].map(x => x.getBoundingClientRect()); return { tops: r.map(x => Math.round(x.top)), right: Math.max(...r.map(x => x.right)), fs: getComputedStyle(el.querySelector(".cop")).fontSize }; });
+  conf("CPF, senha e WhatsApp numa linha só, o CPF menor (F462)", cop.tops.every(t => Math.abs(t - cop.tops[0]) < 6) && cop.right <= 390 && parseFloat(cop.fs) <= 12) || console.log(JSON.stringify(cop));
   conf("sem o rótulo 'Última anotação'", !/Última anotação/.test(await ext.innerText()));
   await p.screenshot({ path: OUT + "/extensao.png" });
   await ext.locator('[data-ae="zap"]').tap(); await p.waitForTimeout(1200);
