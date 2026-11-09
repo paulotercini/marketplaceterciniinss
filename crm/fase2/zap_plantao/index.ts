@@ -170,7 +170,7 @@ export const FATOS = `\n\nInformações do escritório (use quando a pessoa perg
   `- Atendimento de segunda a sexta-feira, das 7h às 17h. As ligações são feitas somente pelo telefone fixo (16) 3242-2908.\n` +
   `- Para entregar documentos não é necessário agendamento: a pessoa os deixa na recepção, no horário de atendimento, ou envia a fotografia legível por este WhatsApp; o advogado informa se precisar do original.\n` +
   `- No primeiro atendimento, a pessoa traz o documento de identificação com CPF e a senha atualizada da conta gov.br (Meu INSS). Não peça a senha nem o número do documento pela conversa.\n` +
-  `- O escritório nunca pede PIX, depósito ou transferência para liberar valores e não convoca ninguém para audiência por chamada de vídeo (golpe do falso advogado); isso não se confunde com o atendimento por vídeo, que existe e não se menciona junto. Diante de pedido de pagamento ou de chamada assim, oriente a pessoa a não pagar e use acao "equipe" com urgente.\n` +
+  `- O escritório nunca pede PIX, depósito ou transferência para liberar valores e não convoca ninguém para audiência por chamada de vídeo (golpe do falso advogado); isso não se confunde com o atendimento por vídeo, que existe e não se menciona junto. Diante de pedido de pagamento ou de chamada assim, ou de relato de ligação ou mensagem em nome do escritório por outro número, use acao "equipe" com urgente e, na resposta, responda primeiro ao que a pessoa perguntou ou contou e depois avise que este é o único WhatsApp do escritório, que não deve pagar nem informar dados ou códigos a outro número e que, na dúvida, ligue no telefone fixo (16) 3242-2908. Essa resposta é enviada à pessoa mesmo na conversa assumida.\n` +
   // F484 · o cliente que quer pagar o escritório não é golpe (pedido do Paulo de 09.11.2026)
   `- O cliente que pede o PIX ou a conta para pagar o escritório (atendimento, honorários, parcela) não é golpe: responda com os dados de pagamento do contexto, exatamente como estão, com acao "responder", sem urgente e sem falar em valor; peça o comprovante depois do pagamento. Sem dados de pagamento no contexto, diga que o advogado responsável vai enviá-los.\n` +
   `- Valor do atendimento: R$ 100,00, com qualquer advogado, sem cobrança para quem avalia o escritório no Google.\n- Honorários do processo, valores a receber, data de pagamento e andamento que o contexto não traz: diga que o advogado responsável vai responder, sem informar valor nem prazo; se a pessoa recebeu mensagem ou carta do INSS, peça a fotografia dela para o advogado conferir.\n` +
@@ -335,7 +335,7 @@ export function emLinhas(txt: string, antes: string[] = []) {
   if (t.includes("\n") || t.length <= 120) return t;
   return t.replace(/^(.+?(?<!\b(?:Sr|Sra|Srta|Dr|Dra|Prof|Profa))[.!?])\s+(?=\S)/, "$1\n\n");
 }
-// F476: o golpe (alguém se passando pelo escritório) recebe a resposta fixa mesmo na conversa assumida.
+// F476/F488: o golpe (alguém se passando pelo escritório) recebe a resposta da IA mesmo na conversa assumida.
 const RX_GOLPE = /golpe|falso advogado|se passa(ndo|r)? (por|pelo)|em nome do (escrit|dr|doutor|advogado)|com o (seu |meu )?(nome|telefone|n[uú]mero)|outro n[uú]mero|n[uú]mero (diferente|estranho|desconhecido)|pix para liberar|liberar (o )?(valor|dinheiro)/i;
 export function ehGolpe(r: { acao?: string; assunto?: string; resposta?: string }, ms: Msg[]) {
   if (r.acao !== "equipe") return false;

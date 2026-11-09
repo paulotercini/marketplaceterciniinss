@@ -639,6 +639,8 @@ A **F486** (13.24, pedidos do Paulo de 09.11.2026): no Dashboard do caso, o cart
 
 A **F487** (pedido do Paulo de 09.11.2026, o atendimento do Antônio sem resposta): a confirmação sem resposta é enviada de novo na rodada das 9h da véspera do atendimento (`zap_conf_relatorio`: estado aguardando, enviada há mais de 12 horas, uma vez só, `aviso_chave = confirmacao2:<evento>`), com "Ainda não recebemos a sua resposta." depois da saudação do texto original, e a menção à recepção e ao advogado ("Sem resposta à confirmação…") passou às 13h30 de Brasília da véspera, pelo pg_cron `zap-confirmacao-cobrar` (`zap_conf_cobrar`, só com `zap_conf_ligado = sim`). O atendimento de terça, cuja mensagem sai na segunda, não tem o segundo envio (menos de 12 horas). SQL em `crm/fase2/migracoes/f487_confirmacao_reenvio.sql`.
 
+A **F488** (pedido do Paulo de 09.11.2026): no golpe (F476), a conversa recebe a resposta da IA ao que a pessoa perguntou ou contou, seguida do alerta (este é o único WhatsApp do escritório, não pagar nem informar dados ou códigos a outro número, na dúvida o telefone fixo), e não mais o texto fixo; `zap_plantao_aplicar` envia `p_resposta` também na conversa assumida e usa `config_app.zap_golpe_texto` apenas quando a resposta vem vazia. A regra está no `FATOS`, que chega aos agentes do Console pelo `ligar`. SQL em `crm/fase2/migracoes/f488_golpe_resposta_ia.sql`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
