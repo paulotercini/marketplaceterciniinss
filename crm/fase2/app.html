@@ -10671,7 +10671,9 @@ async function autoAplicarColetas(){
     coletaSilenciosa = false;
     await guardarCfgApp("coletas_auto_em", new Date(0).toISOString()).catch(()=>{});
   }
-  if(!telaOcupada()){ await carregar(); render(); }
+  // F485 · pedido do Paulo (09.11.2026, "ainda continua piscando"): o fim da rodada também não repinta. Os dados entram em D
+  // calados (carga leve, sem trocar D com ficha ou campo em uso) e a tela os mostra no próximo clique; o menu atualiza os números.
+  await carregar({leve:true, livre:()=>!telaOcupada()}).catch(()=>{});
   montarSidebar();
 }
 async function usarColeta(id){

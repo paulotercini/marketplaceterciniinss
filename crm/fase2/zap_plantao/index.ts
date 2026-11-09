@@ -61,10 +61,22 @@ export const ESQUEMA = {
   },
 };
 
+export type Atendente = { nome: string; cargo?: string | null };
+// F485 · a sugestão da conversa assumida é enviada por quem atende: primeira pessoa dela (pedido do Paulo de 09.11.2026)
+export function primeiraPessoa(a?: Atendente | null) {
+  const quem = a?.nome ? `${a.nome}${a.cargo ? ` (${a.cargo})` : ""}` : "o colaborador que atende a conversa";
+  const nome = a?.nome || "esse colaborador";
+  return `Primeira pessoa: a mensagem não sai sozinha; ${quem} a confere e envia em nome próprio. Escreva na primeira pessoa do singular, ` +
+    `como ${nome}: "agradeço", "fico à disposição", "verifiquei", "vou conferir", "retorno assim que houver novidade". ` +
+    `Nunca "agradecemos", "estamos à disposição" nem o nome de ${nome} ("Dr. ${nome}" inclusive) em terceira pessoa; ` +
+    `se ${nome} é o advogado da conversa, não diga que o advogado vai responder: fale como ele.\n`;
+}
+
 type Caso = { beneficio: string | null; fase: string; etapa: string | null };
 export type Contexto = {
   conversa_id?: string; contato: string; relacao?: string | null; advogado: string | null; advogados: string[] | null; modo: string; respostas: number;
-  interativa?: boolean; horario: boolean; agenda: boolean; agora: string; mensagens: Msg[]; instrucoes?: string;
+  interativa?: boolean; horario: boolean; agenda: boolean; agora: string; mensagens: Msg[]; instrucoes?: string; pagamento?: string;
+  atendente?: Atendente | null;
   motor?: string; ma?: { agente: string | null; ambiente: string | null; versao: string | null };
   sessao?: { id: string; em: string; ate: string; v?: string } | null;
   cliente: { nome: string; mesmo_telefone: boolean; casos: Caso[] } | null;
@@ -101,13 +113,13 @@ export function regras(instrucoes = "") {
     `seis vezes no caso novo. Com a agenda ligada, agradeça em uma frase e não cite horário: o sistema manda os horários livres ` +
     `logo depois. Com a agenda desligada, diga que a equipe vai entrar em contato para marcar.\n` +
     `- "equipe": perícia ou audiência marcada para hoje ou amanhã, prazo correndo, benefício cortado, reclamação, ` +
-    `alguém pedindo PIX ou pagamento em nome do escritório (o escritório nunca pede PIX para liberar valores), ` +
+    `alguém (outro número, falso advogado) pedindo PIX ou pagamento em nome do escritório para liberar valores, ` +
     `ou pedido expresso de falar já com o advogado. Tranquilize, diga que o advogado foi avisado com prioridade, e marque urgente.\n\n` +
     `O advogado indicado está no contexto; troque só se o cliente pedir outro advogado pelo nome. Sem ficha de cliente, ou com ` +
     `telefone que não é o principal da ficha, não fale da situação de processo nenhum.\n\n` +
     `Proibido, sem exceção: dar opinião jurídica, dizer se a pessoa tem ou não direito, falar em chance de êxito, prazo de resultado, ` +
     `valor de benefício, de atrasados ou de honorários do processo (o valor do atendimento pode ser informado), prometer data de retorno, inventar andamento que não está no contexto, ` +
-    `passar dado de pagamento, pedir senha do gov.br ou número de documento, e se apresentar como advogado.` +
+    `passar dado de pagamento que não seja o do contexto, e passá-lo a quem não pediu para pagar o escritório, pedir senha do gov.br ou número de documento, e se apresentar como advogado.` +
     (instrucoes.trim() ? `\n\nInstruções do escritório (seguem as proibições acima):\n${instrucoes.trim().slice(0, 4000)}` : "");
 }
 
@@ -159,6 +171,8 @@ export const FATOS = `\n\nInformações do escritório (use quando a pessoa perg
   `- Para entregar documentos não é necessário agendamento: a pessoa os deixa na recepção, no horário de atendimento, ou envia a fotografia legível por este WhatsApp; o advogado informa se precisar do original.\n` +
   `- No primeiro atendimento, a pessoa traz o documento de identificação com CPF e a senha atualizada da conta gov.br (Meu INSS). Não peça a senha nem o número do documento pela conversa.\n` +
   `- O escritório nunca pede PIX, depósito ou transferência para liberar valores e não convoca ninguém para audiência por chamada de vídeo (golpe do falso advogado); isso não se confunde com o atendimento por vídeo, que existe e não se menciona junto. Diante de pedido de pagamento ou de chamada assim, oriente a pessoa a não pagar e use acao "equipe" com urgente.\n` +
+  // F484 · o cliente que quer pagar o escritório não é golpe (pedido do Paulo de 09.11.2026)
+  `- O cliente que pede o PIX ou a conta para pagar o escritório (atendimento, honorários, parcela) não é golpe: responda com os dados de pagamento do contexto, exatamente como estão, com acao "responder", sem urgente e sem falar em valor; peça o comprovante depois do pagamento. Sem dados de pagamento no contexto, diga que o advogado responsável vai enviá-los.\n` +
   `- Valor do atendimento: R$ 100,00, com qualquer advogado, sem cobrança para quem avalia o escritório no Google.\n- Honorários do processo, valores a receber, data de pagamento e andamento que o contexto não traz: diga que o advogado responsável vai responder, sem informar valor nem prazo; se a pessoa recebeu mensagem ou carta do INSS, peça a fotografia dela para o advogado conferir.\n` +
   `- Assunto que não é previdenciário (trabalhista, família, consumidor, contratos) é atendido pelo Dr. Marcos.`;
 // o registro da recepção, sem a informalidade que aparece no histórico (pedido do Paulo de 07.11.2026)
@@ -312,8 +326,8 @@ export function emLinhas(txt: string, antes: string[] = []) {
   // "Compreendi, Elisa." sai inteira: tirar só a palavra deixava "Elisa." solto (teste das 105 conversas)
   t = t.replace(/\bCompreendi(?:,\s*[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+(?:\s+[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+)?(?=[.!]))?[.,!]?\s*/g, (m) => (vez ? "" : ((vez = true), m)));
   // o fecho "Qualquer dúvida, estamos à disposição." também uma vez só (teste das 105 conversas, 08.11.2026)
-  const RX_FECHO = /\s*Qualquer d[uú]vida,? (?:estamos|ficamos|seguimos) à disposição[.!]?/gi;
-  let fechou = /Qualquer d[uú]vida,? (?:estamos|ficamos|seguimos) à disposição/i.test(ja);
+  const RX_FECHO = /\s*Qualquer d[uú]vida,? (?:estamos|ficamos|seguimos|fico|sigo) à disposição[.!]?/gi;
+  let fechou = /Qualquer d[uú]vida,? (?:estamos|ficamos|seguimos|fico|sigo) à disposição/i.test(ja);
   t = t.replace(RX_FECHO, (m) => (fechou ? "" : ((fechou = true), m))).trim();
   // maiúscula depois de ponto final, exclamação e interrogação ("Sr." e "Dra." não encerram a frase)
   t = t.replace(/((?<!\b(?:Sr|Sra|Srta|Dr|Dra|Prof|Profa|n|nº))[.!?]\s+)([a-záàéíóúâêôãõçü])/g, (_, a, l) => a + l.toUpperCase());
@@ -351,7 +365,9 @@ export function contexto(x: Contexto) {
     `Advogados: ${advs}. As estagiárias (Ingrid, Meissa) também respondem, mas quem é avisado é o advogado.\n` +
     `Advogado indicado para esta conversa: ${x.advogado || "a equipe"}.\n${ficha}\n` +
     `Agenda: ${x.agenda ? "ligada" : "desligada"}.\n` +
+    (x.pagamento?.trim() ? `Dados de pagamento do escritório (somente para o cliente que quer pagar o escritório):\n${x.pagamento.trim()}\n` : "") +
     NOME_UMA_VEZ +
+    (x.atendente ? `Conversa assumida por ${x.atendente.nome}: a sua resposta vira sugestão no campo de escrever dele(a).\n` + primeiraPessoa(x.atendente) : "") +
     (x.remarcar?.duvida ? `Confirmação: a pessoa recebeu a confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"} e respondeu com uma pergunta, um pedido ou algo que não deixa clara a presença. ` +
       `Leia somente as mensagens posteriores à última confirmação enviada. Responda o que ela perguntou ou disse. ` +
       `Se ela ainda não sabe se poderá ir, diga que o escritório precisa da confirmação para fechar a agenda e que, sem a certeza, é melhor marcar outro dia, ` +
@@ -398,7 +414,7 @@ export const ESQ_COBRANCA = {
     mensagem: { type: "string", description: "a mensagem de cobrança, vazia quando cobrar for false" },
   },
 };
-export type Cobranca = { conversa_id: string; msg_id: string; dias: number; contato: string; relacao?: string | null; cliente?: string | null; mensagens: Msg[] };
+export type Cobranca = { conversa_id: string; msg_id: string; dias: number; contato: string; relacao?: string | null; cliente?: string | null; mensagens: Msg[]; atendente?: Atendente | null };
 export function promptCobranca(c: Cobranca, agora = new Date()) {
   const hoje = agora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "full", timeStyle: "short" });
   const quem = c.relacao ? `${c.contato} (${c.relacao} de ${c.cliente || "o cliente"})` : c.contato;
@@ -411,9 +427,9 @@ export function promptCobranca(c: Cobranca, agora = new Date()) {
     `linha em branco, o pedido retomado com "novamente" e uma pergunta objetiva que peça a resposta. Retome apenas o que o escritório pediu, ` +
     `com as palavras da conversa; se a conversa marcou um dia que já passou, pergunte quando a pessoa consegue. Português formal, sem emoji, ` +
     `sem lista, sem assinatura, sem prometer prazo ou resultado, sem dado que não esteja na conversa. Escreva "atendimento", nunca "consulta", ` +
-    `e "agendar", nunca "marcar".\n\n` +
+    `e "agendar", nunca "marcar".\n` + primeiraPessoa(c.atendente) + `\n` +
     `Modelo:\nDona Sueli, bom dia! Tudo bem?\n\nGostaria de pedir novamente que a senhora leve o celular ao escritório na quarta-feira, ` +
-    `para que possamos verificar o aparelho. A senhora consegue trazê-lo nesse dia?\n\n` +
+    `para que eu possa verificar o aparelho. A senhora consegue trazê-lo nesse dia?\n\n` +
     `Agora: ${hoje}. Quem escreve neste número: ${quem}.\n\n<conversa>\n${transcricao(c.mensagens || [])}\n</conversa>`;
 }
 
@@ -427,7 +443,7 @@ export const ESQ_ANDAMENTO = {
 };
 type AndCaso = { beneficio?: string | null; fase: string; etapa?: string | null; etapa_sugerida?: string | null; etapa_sugerida_desde?: string | null;
   andamentos: { em: string; origem: string; texto: string }[] };
-export type Andamento = { conversa_id: string; contato: string; relacao?: string | null; cliente?: string | null; casos: AndCaso[]; mensagens: Msg[] };
+export type Andamento = { conversa_id: string; contato: string; relacao?: string | null; cliente?: string | null; casos: AndCaso[]; mensagens: Msg[]; atendente?: Atendente | null };
 // o mascarar tomaria "28.09.2026 14:23" por número; a data do andamento é o que a resposta precisa dizer
 export const mascararMenosDatas = (s: string) => {
   const datas: string[] = [];
@@ -457,11 +473,12 @@ export function promptAndamento(a: Andamento, agora = new Date()) {
     `Perícia, audiência ou prazo do escritório com data: diga a data. Sem andamento que permita dizer onde o processo está, escreva que ` +
     `o escritório vai conferir e retornar. Nunca prometa resultado nem prazo certo; nunca cite número de processo, NB ou protocolo.\n\n` +
     `Forma, como no modelo: o cumprimento do período do dia com o primeiro nome de quem escreve e "Tudo bem?", linha em branco, a situação, ` +
-    `linha em branco, o fecho. Português formal, sem emoji, sem lista, sem assinatura, "a senhora" ou "o senhor" só quando o nome deixar claro.\n\n` +
+    `linha em branco, o fecho. Português formal, sem emoji, sem lista, sem assinatura, "a senhora" ou "o senhor" só quando o nome deixar claro.\n` +
+    primeiraPessoa(a.atendente) + `\n` +
     `Modelo (processo concluso para julgamento):\nBom dia, Roseli! Tudo bem?\n\nConsultei o processo e ele está aguardando a decisão do juiz ` +
     `desde *28/09/2026*. Essas decisões costumam demorar aproximadamente 6 meses. Nossa previsão é que tenhamos uma resposta somente no ` +
-    `próximo ano. Infelizmente é bastante lento.\n\nContinuamos acompanhando e, assim que houver alguma novidade, entraremos em contato ou, ` +
-    `se a senhora tiver alguma dúvida, estamos à disposição.\n\n` +
+    `próximo ano. Infelizmente é bastante lento.\n\nSigo acompanhando e, assim que houver alguma novidade, entro em contato. ` +
+    `Se a senhora tiver alguma dúvida, fico à disposição.\n\n` +
     `Agora: ${hoje}. Quem escreve neste número: ${quem}. Cliente da ficha: ${a.cliente || "não informado"}.\n\n` +
     `<casos>\n${casos || "sem casos abertos"}\n</casos>\n\n<conversa>\n${transcricao(a.mensagens || [])}\n</conversa>`;
 }
@@ -481,14 +498,19 @@ async function rpc(nome: string, corpo: unknown) {
   return t ? JSON.parse(t) : null;
 }
 
-// F421 · com o atendente Offline (F397) a mensagem automática dele já respondeu: a IA entra só na urgência
-async function atendenteOffline(conversa: string) {
+// quem assumiu a conversa (nulo sem atendente)
+async function atendenteDe(conversa?: string | null): Promise<(Atendente & { offline: boolean }) | null> {
+  if (!conversa) return null;
   const h = { apikey: SERVICO, Authorization: `Bearer ${SERVICO}` };
   const c = await (await fetch(`${URL_SB}/rest/v1/zap_conversas?id=eq.${conversa}&select=atendente_id`, { headers: h })).json();
   const at = c?.[0]?.atendente_id;
-  if (!at) return false;
-  const k = await (await fetch(`${URL_SB}/rest/v1/colaboradores?id=eq.${at}&select=zap_offline_desde`, { headers: h })).json();
-  return !!k?.[0]?.zap_offline_desde;
+  if (!at) return null;
+  const k = (await (await fetch(`${URL_SB}/rest/v1/colaboradores?id=eq.${at}&select=nome,cargo,zap_offline_desde`, { headers: h })).json())?.[0];
+  return k ? { nome: k.nome, cargo: k.cargo, offline: !!k.zap_offline_desde } : null;
+}
+// F421 · com o atendente Offline (F397) a mensagem automática dele já respondeu: a IA entra só na urgência
+async function atendenteOffline(conversa: string) {
+  return !!(await atendenteDe(conversa))?.offline;
 }
 
 async function claude(texto: string, esquema: unknown = ESQUEMA) {
@@ -707,7 +729,7 @@ async function cfg(chave: string) {
 }
 
 type Cenario = { contato?: string; relacao?: string; advogado?: string; cliente?: Contexto["cliente"]; marcados?: unknown[];
-  remarcar?: Contexto["remarcar"]; horario?: boolean; interativa?: boolean; turnos: string[]; persona?: string; max?: number };
+  remarcar?: Contexto["remarcar"]; horario?: boolean; interativa?: boolean; turnos: string[]; persona?: string; max?: number; atendente?: string };
 // F422u · o cliente simulado responde ao que a IA disse (persona), em vez de falas fixas que se desencontram da conversa
 export const ESQ_CLIENTE = { type: "object", additionalProperties: false, required: ["fala", "fim"],
   properties: { fala: { type: "string" }, fim: { type: "boolean" } } };
@@ -726,7 +748,7 @@ async function simular(s: Cenario) {
     conversa_id: undefined, contato: s.contato || "Paulo", relacao: s.relacao || null, advogado: s.advogado || null, advogados,
     modo: "", respostas: 0, interativa: s.interativa !== false, horario: s.horario !== false, agenda: true,
     agora: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "short", timeStyle: "short" }),
-    mensagens: [], instrucoes: await cfg("zap_ia_txt_plantao"), cliente: s.cliente ? { mesmo_telefone: true, casos: [], ...s.cliente } : null, remarcar: s.remarcar || null,
+    mensagens: [], instrucoes: await cfg("zap_ia_txt_plantao"), pagamento: await cfg("zap_dados_pagamento"), atendente: s.atendente ? { nome: s.atendente } : null, cliente: s.cliente ? { mesmo_telefone: true, casos: [], ...s.cliente } : null, remarcar: s.remarcar || null,
     ma: { agente: await cfg("zap_ma_agente"), ambiente: await cfg("zap_ma_ambiente"), versao: await cfg("zap_ma_versao") },
   };
   const { agente, ambiente } = await agentePronto(x);
@@ -1043,7 +1065,7 @@ if (typeof Deno !== "undefined") {
         const lista: Cobranca[] = (await rpc("zap_cobranca_candidatas", { p_limite: 6 })) || [];
         const feitas = await Promise.all(lista.map(async (c) => {
           let texto = "";
-          try { const r = await claude(promptCobranca(c), ESQ_COBRANCA); if (r.cobrar === true) texto = String(r.mensagem || "").trim(); }
+          try { c.atendente = await atendenteDe(c.conversa_id).catch(() => null); const r = await claude(promptCobranca(c), ESQ_COBRANCA); if (r.cobrar === true) texto = String(r.mensagem || "").trim(); }
           catch (e) { console.error("zap_plantao cobranca:", String(e)); return false; }   // sem gravar: tenta na próxima hora
           return await rpc("zap_cobranca_gravar", { p_conversa: c.conversa_id, p_msg: c.msg_id, p_texto: texto });
         }));
@@ -1057,6 +1079,7 @@ if (typeof Deno !== "undefined") {
       try {
         const a: Andamento | null = await rpc("zap_andamento_pegar", { p_msg: corpo.andamento });
         if (!a) return json({ sugerida: false });
+        a.atendente = await atendenteDe(a.conversa_id).catch(() => null);
         const r = await claude(promptAndamento(a), ESQ_ANDAMENTO);
         const texto = r.sugerir === true ? String(r.mensagem || "").trim() : "";
         return json({ sugerida: texto ? await rpc("zap_andamento_gravar", { p_conversa: a.conversa_id, p_texto: texto }) : false });
@@ -1067,6 +1090,8 @@ if (typeof Deno !== "undefined") {
     try {
       const x = await rpc("zap_plantao_pegar", { p_msg: msg });
       if (!x) return json({ acao: null, aviso: "mensagem já lida ou vencida" });
+      x.pagamento = await cfg("zap_dados_pagamento");   // F484 · fica no banco, porque o repositório é público
+      x.atendente = await atendenteDe(x.conversa_id).catch(() => null);   // F485 · a sugestão sai na primeira pessoa de quem atende
       if (x.remarcar?.ler && x.conversa_id) {
         // a primeira resposta à confirmação: confirmar não passa pelo agente; o sistema manda a resposta do SIM
         let intencao = DE_CLASSE[x.remarcar.classe || ""] || "outro";
