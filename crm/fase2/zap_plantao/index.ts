@@ -406,6 +406,49 @@ export function promptCobranca(c: Cobranca, agora = new Date()) {
     `Agora: ${hoje}. Quem escreve neste número: ${quem}.\n\n<conversa>\n${transcricao(c.mensagens || [])}\n</conversa>`;
 }
 
+// F422ak · o cliente pergunta pelo andamento: a sugestão ao colaborador sai da ficha (fase, etapa e andamentos)
+export const ESQ_ANDAMENTO = {
+  type: "object", additionalProperties: false, required: ["sugerir", "mensagem"],
+  properties: {
+    sugerir: { type: "boolean", description: "true só quando a última mensagem do cliente pergunta como está o processo ou se há novidade" },
+    mensagem: { type: "string", description: "a resposta que a equipe enviará, vazia quando sugerir for false" },
+  },
+};
+type AndCaso = { beneficio?: string | null; fase: string; etapa?: string | null; etapa_sugerida?: string | null; etapa_sugerida_desde?: string | null;
+  andamentos: { em: string; origem: string; texto: string }[] };
+export type Andamento = { conversa_id: string; contato: string; relacao?: string | null; cliente?: string | null; casos: AndCaso[]; mensagens: Msg[] };
+const ORIGEM_AND: Record<string, string> = { app: "anotação da equipe", todo: "anotação da equipe", mcp: "anotação da equipe", whatsapp: "anotação da equipe" };
+export function promptAndamento(a: Andamento, agora = new Date()) {
+  const hoje = agora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "full", timeStyle: "short" });
+  const quem = a.relacao ? `${a.contato} (${a.relacao} de ${a.cliente || "o cliente"})` : a.contato;
+  const casos = (a.casos || []).map((k, i) => {
+    const ands = (k.andamentos || []).map((x) =>
+      `  - registrado em ${hora(x.em)} (${ORIGEM_AND[x.origem] || "portal " + x.origem}): ${mascarar(x.texto).slice(0, 400)}`).join("\n");
+    const sug = k.etapa_sugerida ? `; pelos fatos dos portais a etapa é "${k.etapa_sugerida}" desde ${k.etapa_sugerida_desde || "data não informada"}` : "";
+    return `Caso ${i + 1}: ${k.beneficio || "benefício não informado"}, fase ${k.fase}, etapa declarada "${k.etapa || "sem etapa"}"${sug}.\n${ands || "  - sem andamentos"}`;
+  }).join("\n\n");
+  return `Você ajuda a equipe de um escritório de advocacia previdenciária a responder no WhatsApp. O cliente perguntou pelo andamento ` +
+    `do processo. Escreva a resposta que o colaborador conferirá e enviará; ela não sai sozinha.\n\n` +
+    `Decida primeiro: sugerir = true só quando as últimas mensagens do cliente perguntam como está o processo, se houve novidade ou ` +
+    `resposta do INSS ou do juiz. Pedido de documento, de agendamento ou outro assunto: sugerir = false.\n\n` +
+    `Com sugerir = true, leia os casos abaixo. A data do fato é a que vem no texto do andamento do portal ("em 28.09.2026"), e não a data ` +
+    `do registro. Quando a etapa declarada e a dos portais divergem, vale o andamento mais recente do portal. Com mais de um caso, fale do ` +
+    `que a conversa indica ou de cada um em uma frase. Diga em palavras simples onde o processo está e desde quando, com a data no negrito ` +
+    `do WhatsApp (*28/09/2026*), quanto costuma demorar e a previsão. Use estas estimativas do escritório quando o andamento não disser ` +
+    `outra coisa: processo judicial aguardando sentença (concluso para julgamento), aproximadamente 6 meses; recurso no Conselho de Recursos ` +
+    `aguardando julgamento, aproximadamente 6 meses; pedido no INSS em análise, aproximadamente 3 meses; pagamento por RPV, aproximadamente 2 meses. ` +
+    `Perícia, audiência ou prazo do escritório com data: diga a data. Sem andamento que permita dizer onde o processo está, escreva que ` +
+    `o escritório vai conferir e retornar. Nunca prometa resultado nem prazo certo; nunca cite número de processo, NB ou protocolo.\n\n` +
+    `Forma, como no modelo: o cumprimento do período do dia com o primeiro nome de quem escreve e "Tudo bem?", linha em branco, a situação, ` +
+    `linha em branco, o fecho. Português formal, sem emoji, sem lista, sem assinatura, "a senhora" ou "o senhor" só quando o nome deixar claro.\n\n` +
+    `Modelo (processo concluso para julgamento):\nBom dia, Roseli! Tudo bem?\n\nConsultei o processo e ele está aguardando a decisão do juiz ` +
+    `desde *28/09/2026*. Essas decisões costumam demorar aproximadamente 6 meses. Nossa previsão é que tenhamos uma resposta somente no ` +
+    `próximo ano. Infelizmente é bastante lento.\n\nContinuamos acompanhando e, assim que houver alguma novidade, entraremos em contato ou, ` +
+    `se a senhora tiver alguma dúvida, estamos à disposição.\n\n` +
+    `Agora: ${hoje}. Quem escreve neste número: ${quem}. Cliente da ficha: ${a.cliente || "não informado"}.\n\n` +
+    `<casos>\n${casos || "sem casos abertos"}\n</casos>\n\n<conversa>\n${transcricao(a.mensagens || [])}\n</conversa>`;
+}
+
 export function promptPlantao(x: Contexto) {
   return `${regras(x.instrucoes)}\n\n<contexto>\n${contexto(x)}</contexto>\n\n<conversa>\n${transcricao(x.mensagens || [])}\n</conversa>`;
 }
@@ -988,6 +1031,18 @@ if (typeof Deno !== "undefined") {
           return await rpc("zap_cobranca_gravar", { p_conversa: c.conversa_id, p_msg: c.msg_id, p_texto: texto });
         }));
         return json({ lidas: lista.length, sugeridas: feitas.filter((x) => x === true).length });
+      } catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
+    }
+    if (typeof corpo.andamento === "string") {
+      // F422ak · o gatilho zap_t_andamento_ins; a sugestão vai ao campo de escrever, nunca ao cliente
+      if (!CHAVE_IA) return json({ erro: "sem ANTHROPIC_API_KEY" }, 503);
+      if (!/^[0-9a-f-]{36}$/i.test(corpo.andamento)) return json({ erro: "andamento inválido" }, 400);
+      try {
+        const a: Andamento | null = await rpc("zap_andamento_pegar", { p_msg: corpo.andamento });
+        if (!a) return json({ sugerida: false });
+        const r = await claude(promptAndamento(a), ESQ_ANDAMENTO);
+        const texto = r.sugerir === true ? String(r.mensagem || "").trim() : "";
+        return json({ sugerida: texto ? await rpc("zap_andamento_gravar", { p_conversa: a.conversa_id, p_texto: texto }) : false });
       } catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
     }
     if (!/^[0-9a-f-]{36}$/i.test(msg)) return json({ erro: "mensagem_id inválido" }, 400);
