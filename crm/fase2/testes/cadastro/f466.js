@@ -1,5 +1,5 @@
 // F466 · o Dashboard do caso (ditado pelo Paulo em 09.11.2026): abaixo das fases e acima do campo de escrever, o Último
-// despacho da equipe com Anotar, Reagendar e Concluir, e o Último andamento do portal da fase; os números só aparecem em
+// despacho da equipe com Anotar e Prorrogar (F467: sem Concluir, Anotar verde) e, abaixo das anotações, o Último andamento do portal da fase; os números só aparecem em
 // "Ver anotações anteriores", que também mostra a linha do tempo. Banco simulado e dados fictícios. Uso: node f466.js [fotos]
 const { chromium } = require("playwright");
 const http = require("http");
@@ -62,6 +62,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 (async () => {
   const s = http.createServer((q, r) => {
     const a = path.join(__dirname, q.url === "/" ? "app.html" : q.url.split("?")[0]);
+    if(!fs.existsSync(a)){ r.writeHead(404); return r.end(); }   // o ícone do AdvPrev só existe em docs/crm
     r.writeHead(200, { "Content-Type": "text/html; charset=utf-8" }); r.end(fs.readFileSync(a));
   }).listen(0, "127.0.0.1");
   await new Promise(r => s.on("listening", r));
@@ -95,7 +96,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o Dashboard fica acima do campo de escrever", await p.evaluate(() => { const d = document.querySelector(".caso-dir .db-dash"); let e = d && d.nextElementSibling; return !!e && !!e.querySelector("textarea, [contenteditable]"); }));
   conf("o Último despacho mostra a última anotação da equipe e a resposta", /Aguardar a perícia/.test(await p.locator(".db-desp .db-txt").textContent()) && /Marcos: Exames separados/.test(await p.locator(".db-desp .db-resp").textContent()));
   conf("o cabeçalho diz quando e quantas anteriores", /ontem|há 2 dias/.test(await p.locator(".db-desp .db-when").textContent()) && /Ver anotações anteriores \(1\)/.test(await p.locator(".db-desp .db-ant").textContent()));
-  conf("Anotar, Reagendar e Concluir, uma palavra cada", (await p.locator(".db-desp .db-acoes button").allTextContents()).join(",") === "Anotar,Reagendar,Concluir");
+  conf("Anotar (verde) e Prorrogar, sem Concluir (F467)", (await p.locator(".db-desp .db-acoes button").allTextContents()).join(",") === "Anotar,Prorrogar" && await p.evaluate(() => { const b = document.querySelector('.db-desp [data-ae="anotar"]'); const c = getComputedStyle(b); return c.color === "rgb(255, 255, 255)" && c.backgroundColor !== "rgb(255, 255, 255)"; }));
+  conf("o ícone do despacho é o do AdvPrev", await p.locator('.db-desp .db-logo img[src="icone-192.png"]').count() === 1);
+  conf("o Último andamento fica abaixo das anotações (F467)", await p.evaluate(() => { const a = document.querySelector(".caso-dir .db-dash.db-pe"), t = document.querySelector(".caso-dir .timeline"); return !!a && !!t && !!(t.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING); }));
   conf("os números não aparecem fechados", await p.locator(".db-n").count() === 0);
   conf("a linha do tempo fica escondida enquanto o Dashboard está fechado", !(await vis(p, ".caso-dir .timeline")));
   conf("o Último andamento é do Meu INSS, com a situação", await p.locator(".db-and").count() === 1 && /Perícia médica agendada/.test(await p.locator(".db-and .db-mov").textContent()) && /Em análise/.test(await p.locator(".db-and .db-sub").textContent()) && await p.locator(".db-and .db-logo[aria-label='Abrir no Meu INSS']").count() === 1);
@@ -114,7 +117,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.locator('.db-desp [data-ae="cancelar"]').click(); await p.waitForTimeout(200);
   conf("Cancelar devolve os botões", await vis(p, ".db-desp .db-acoes"));
   await p.locator('.db-desp [data-ae="reagendar"]').click(); await p.waitForTimeout(200);
-  conf("Reagendar do retorno oferece as datas", await p.locator(".db-desp .ae-dias .esp-it").count() === 4);
+  conf("Prorrogar do retorno oferece as datas", await p.locator(".db-desp .ae-dias .esp-it").count() === 4);
   await p.locator('.db-desp [data-ae="cancelar"]').click(); await p.waitForTimeout(200);
   await p.locator(".db-and .db-ant").click(); await p.waitForTimeout(400);
   conf("Ver andamentos anteriores abre a aba INSS", await p.evaluate(() => subAba === "inss") && await p.locator(".db-dash").count() === 0);
@@ -131,14 +134,14 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   ({ p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cC, kC));
   conf("sem anotação, o Último despacho diz isso", /Sem anotação da equipe/.test(await p.locator(".db-desp .db-vazio").textContent()) && !/\(\d+\)/.test(await p.locator(".db-desp .db-ant").textContent()));
   conf("sem andamento de portal não há cartão de andamento", await p.locator(".db-and").count() === 0);
-  await p.locator('.db-desp [data-ae="concluir"]').click(); await p.waitForTimeout(300);
-  conf("Concluir sem retorno abre o Concluir por hoje", await p.locator("#desp-nota").count() === 1);
+  await p.locator('.db-desp [data-ae="reagendar"]').click(); await p.waitForTimeout(300);
+  conf("Prorrogar sem retorno abre o Concluir por hoje", await p.locator("#desp-nota").count() === 1);
   await ctx.close();
 
   // ── 4 · celular ──
   ({ p, ctx } = await pagina({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }, cA, kA));
   const m = await p.evaluate(() => { const alvos = [...document.querySelectorAll(".db button, .db a")].map(b => { const r = b.getBoundingClientRect(); return Math.min(r.width, r.height); });
-    const d = document.querySelector(".db-dash"); return { alvo: Math.min(...alvos), larg: d.scrollWidth <= d.clientWidth + 1 && document.documentElement.scrollWidth <= innerWidth + 1 }; });
+    const d = document.querySelector(".caso-dir"); return { alvo: Math.min(...alvos), larg: d.scrollWidth <= d.clientWidth + 1 && document.documentElement.scrollWidth <= innerWidth + 1 }; });
   conf(`no celular todo alvo tem 44 px ou mais (${m.alvo})`, m.alvo >= 44);
   conf("no celular nada passa da tela", m.larg);
   await p.screenshot({ path: path.join(OUT, "celular.png") });
