@@ -11725,11 +11725,12 @@ function dbClique(e, x, id){
   _ext = null;
   if(!x._it){ x._it = itemDoCaso(k); x._el = x; x._atual = (D.atrDoCaso.get(k.id)||[])[0] || ""; }
   const a = b.dataset.ae;
-  // sem retorno ou volta à fila para mover, Reagendar e Concluir são o Concluir por hoje (F291)
-  if((a==="concluir" || a==="reagendar") && (!k.prazo || !reagendavel(x._it))) return despachar(k.id);
+  // sem retorno ou volta à fila para mover, Prorrogar é o Concluir por hoje (F291); o Concluir saiu (F467), o Anotar já grava a data
+  if(a==="reagendar" && (!k.prazo || !reagendavel(x._it))) return despachar(k.id);
   return acaoExt(x, a, b);
 }
-const DB_LOGO_ADV = `<svg viewBox="0 0 24 24" fill="none" stroke="#0E5C58" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M2 19 9 7l4 7 2-3 7 8z"/></svg>`;
+// o ícone do AdvPrev (o mesmo da tela de início), ao lado de docs/crm/index.html (F467, pedido do Paulo de 09.11.2026)
+const DB_LOGO_ADV = `<img src="icone-192.png" alt="">`;
 function dbQuando(iso){
   if(!iso) return "";
   const d = dataSP(iso), n = diasEntreIso(d, hoje());
@@ -11762,9 +11763,8 @@ function dbDespacho(k, ands){
         ${resp ? `<div class="db-resp">${esc(((D.colPorId.get(resp.autor_id)||{}).nome||"").split(" ")[0])}: ${esc(String(resp.texto||"").slice(0,400))}</div>` : ""}</div></div>`
     : `<p class="db-vazio">Sem anotação da equipe neste caso.</p>`;
   const acoes = podeGravarCaso() ? `<div class="ae-acoes db-acoes">
-      <button type="button" class="btn-mini" data-ae="anotar">Anotar</button>
-      <button type="button" class="btn-mini" data-ae="reagendar">Reagendar</button>
-      <button type="button" class="btn-mini pri" data-ae="concluir">Concluir</button></div><div class="ae-painel" hidden></div>` : "";
+      <button type="button" class="btn-mini pri" data-ae="anotar">Anotar</button>
+      <button type="button" class="btn-mini" data-ae="reagendar" title="Mudar a data do retorno">Prorrogar</button></div><div class="ae-painel" hidden></div>` : "";
   return `<section class="db db-desp" aria-label="Último despacho" onclick="dbClique(event,this,'${k.id}')">
     <div class="db-cab"><span class="db-logo" aria-hidden="true">${DB_LOGO_ADV}</span><h3>Último despacho</h3><span class="db-when">${nota ? dbQuando(nota.criado_em) : ""}</span>
       ${dbAnteriores(k, Math.max(0, notas.filter(a=>!a.responde_a).length-1), "anotações", aberto, `dbVerAnt('${k.id}')`)}</div>
@@ -11803,13 +11803,17 @@ function dbAndamento(k, ands, fase, par){
     <p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>${it.doc||""}</section>`;
 }
 function dashboardDoCaso(k, ands){
+  return `<div class="db-dash">${dbDespacho(k, ands)}</div>`;
+}
+// F467: o Último andamento do portal fica abaixo das anotações do escritório (pedido do Paulo de 09.11.2026)
+function dashboardPe(k, ands){
   const fase = faseEfetiva(k);
   let and = dbAndamento(k, ands, fase, false);
   if(!and){   // sem andamento na fase atual, o mais recente dos três portais
     and = ["judicial","conselho","inss"].filter(f=>f!==fase).map(f=>dbAndamento(k, ands, f, false)).find(Boolean) || "";
   }
   const par = trilhaParalela(k) && fase!=="judicial" ? dbAndamento(k, ands, "judicial", true) : "";
-  return `<div class="db-dash">${dbDespacho(k, ands)}${and}${par}</div>`;
+  return and || par ? `<div class="db-dash db-pe">${and}${par}</div>` : "";
 }
 function ligarCartoes(){
   pintarCursor();                     // o cursor do teclado sobrevive ao render
@@ -22040,7 +22044,7 @@ function pintarFicha(){
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
         ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardDoCaso(k, andsVis) : ""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}</div>
+           <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardDoCaso(k, andsVis) : ""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${painelDaAba()}${v10 && aba==="escritorio" && dashLigado() ? dashboardPe(k, andsVis) : ""}</div>
            <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? abaComProcessos(k, "cnj", ()=>painelCNJ(k, andsVis)) : aba==="crps" ? abaComProcessos(k, "crps", ()=>painelCRPS(k))
