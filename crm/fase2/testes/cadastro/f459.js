@@ -78,7 +78,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a inicial do responsável está à esquerda da estrela", await linha.evaluate(el => { const a = el.querySelector(".avatares .avatar"), e = el.querySelector(".acoes"); return a && a.textContent === "P" && a.getBoundingClientRect().right <= e.getBoundingClientRect().left; }));
   if(!conf("tudo na mesma altura, a data no canto esquerdo", vis.every(x => Math.abs((x.t + x.b) / 2 - (vis[0].t + vis[0].b) / 2) < 10) && vis[0].l < 30)) console.log(JSON.stringify(vis));
   const txt = await linha.locator(".ag-txt").innerText();
-  conf("o texto traz o nome e a atribuição, sem a espécie", /Marcia Fictícia Lyra/.test(txt) && /avisar a cliente/i.test(txt) && !/B31/.test(txt)) || console.log(txt);
+  conf("o texto traz só o nome, sem a anotação nem a espécie (F465)", /Marcia Fictícia Lyra/.test(txt) && !/avisar a cliente/i.test(txt) && !/B31/.test(txt)) || console.log(txt);
   const l2 = p.locator(`.cartao.ag-linha[data-casos="${k2.id}"]`).first();
   await p.waitForTimeout(800);
   const txt2 = await l2.innerText().catch(() => "");
