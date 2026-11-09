@@ -11,10 +11,13 @@ const { paraOgg } = require("../ponte");
 let ffmpeg = null; try { ffmpeg = require("ffmpeg-static"); } catch { /* sem o pacote */ }
 t.test("WebM gravado no navegador vira OGG/Opus para mensagem de voz", { skip: !ffmpeg && "sem o ffmpeg-static (npm install na pasta da ponte)" }, async () => {
   const webm = execFileSync(ffmpeg, ["-loglevel", "error", "-f", "lavfi",
-    "-i", "sine=frequency=440:duration=1", "-c:a", "libopus", "-f", "webm", "pipe:1"]);
+    "-i", "sine=frequency=440:duration=1", "-ac", "2", "-c:a", "libopus", "-f", "webm", "pipe:1"]);
   const ogg = await paraOgg(webm);
   a.equal(ogg.subarray(0, 4).toString(), "OggS");
   a.ok(ogg.length > 500, "tem áudio dentro");
+  // F475: o iPhone não baixa voz em estéreo; o Chrome pode gravar em dois canais
+  const r = require("node:child_process").spawnSync(ffmpeg, ["-hide_banner", "-i", "pipe:0", "-f", "null", "-"], { input: ogg });
+  a.match(r.stderr.toString(), /48000 Hz, mono/);
 });
 
 t.test("lixo no lugar de áudio falha com erro, não trava", async () => {
