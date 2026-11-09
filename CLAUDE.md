@@ -614,6 +614,8 @@ A **F459** (13.02, o Meu Dia no celular numa linha só, pedido do Paulo de 08.11
 
 A **F460** (13.03, pedido do Paulo de 09.11.2026, "faltou as atribuições do lado esquerdo do botão de importante"): no celular a linha do Meu Dia traz a atribuição também no retorno do To Do, na volta à fila e no lembrete, que a F427 só descrevia no computador pelo `title`: `linhaAgenda` põe `.ag-oque-cel` com o motivo do retorno (`casos.lembrar_motivo`) ou, sem ele, `preencherAtribCel` preenche depois de pintar com a última anotação da equipe no caso (`ultAnotDe(ids, true)`, só a anotação de origem `app`, porque a do Microsoft To Do não descreve a data, F429; uma busca por caso na sessão, `resumoAgenda`); a atribuição é o que se corta com reticências, e o nome fica inteiro. Só no celular; o computador fica como estava. Teste: `f459.js`.
 
+A **F461** (13.04, pedido do Paulo de 09.11.2026, "continua não aparecendo"): a atribuição do celular da F460 lia só a anotação de origem `app`, e quase todo caso tem apenas anotação do Microsoft To Do, por isso a linha ficava vazia; `preencherAtribCel` passou a usar a última anotação da equipe de qualquer origem (`ultAnotDe` sem filtro, o mesmo do hover da F438), e o `soCrm` saiu. A regra da F429 (o To Do não descreve prazo fatal) continua para o prazo; na linha do celular a anotação do To Do é a atribuição. Teste: `f427.js` ajustado, `f459.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

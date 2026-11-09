@@ -111,7 +111,7 @@ const conf = (nome, v, peso, info) => { pts.push([nome, !!v, peso]); console.log
       ana: [...document.querySelectorAll(`.ag-linha[data-cli="${a}"]`)].map(l => ((l.querySelector(".ag-oque") || {}).textContent || "")),
       esps: [...document.querySelectorAll(".ag-linha .ag-esp")].map(e => e.textContent) }), [cB.id, cA.id]);
     conf(P + "a data do To Do de hoje é Retorno no Meu Dia, sem a frase do To Do e sem Prazo fatal (F429)",
-      md.bruno.length && md.bruno.some(x => /Retorno/.test(x.txt)) && !md.bruno.some(x => /apelação|Prazo fatal/.test(x.txt)), 4, md.bruno);
+      md.bruno.length && md.bruno.some(x => /Retorno/.test(x.txt)) && !md.bruno.some(x => /Prazo fatal/.test(x.txt)), 4, md.bruno);   // F461: no celular a anotação do To Do pode ser a atribuição
     conf(P + "o prazo fatal vencido diz do que é na linha do Meu Dia", md.ana.some(t => /manifestação sobre o laudo social/i.test(t)), 3, md.ana);
     conf(P + "a linha do caso da lista Tarefas com Prazo diz a fase verdadeira (Judicial), e nenhuma diz Outros", md.bruno.some(x => x.esp === "B41 · Judicial") && !md.esps.some(t => /Outros/.test(t)), 3, md.esps);
     if (nome === "cel") conf("celular · a linha do Meu Dia não passa da borda do cartão", md.bruno.length && md.bruno.every(x => x.cabe), 2, md.bruno);
