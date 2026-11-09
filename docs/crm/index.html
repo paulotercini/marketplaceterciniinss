@@ -3884,6 +3884,15 @@ html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:6;width:auto}
   html[data-tema="v10"] #conteudo-meio .ag-linha > :is(.ag-selos,.ag-slot,.ag-conf,.ag-c-lista,.ag-c-etapa){display:none}
   /* F462 · a atribuição é a inicial do responsável, à esquerda da ⭐ (Paulo, 09.11.2026) */
   html[data-tema="v10"] #conteudo-meio .ag-linha > .avatares{order:2;flex:none;margin:0;align-self:center;display:flex}
+  /* F464 · a inicial e a ⭐ em colunas fixas, em linha reta em todas as linhas (Paulo, 09.11.2026) */
+  html[data-tema="v10"] #conteudo-meio .ag-linha > .avatares{width:30px;justify-content:center;overflow:hidden}
+  html[data-tema="v10"] #conteudo-meio .ag-linha > .avatares .avatar.mini + .avatar.mini{display:none}
+  html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{width:auto;min-width:32px;display:flex;justify-content:flex-end;align-items:center}
+  html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes .acao-card[disabled]{opacity:.35;cursor:default}
+  /* F464 · o cliente com mais de um item fica na mesma linha reta: sem a barra à esquerda e sem o cabeçalho repetido */
+  html[data-tema="v10"] #conteudo-meio .ag-grupo-cli{border-left:0;margin:0}
+  html[data-tema="v10"] #conteudo-meio .ag-grupo-cli > .ag-cli-cab{display:none}
+  html[data-tema="v10"] #conteudo-meio .ag-grupo-cli .ag-linha .ag-txt b{font-weight:600;color:inherit}
   html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-data{order:0;flex:none;min-width:0;margin:0;text-align:left;align-self:center}
   html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-txt{order:1;flex:1 1 auto;min-width:0;align-self:center;display:flex;align-items:baseline;white-space:nowrap;overflow:hidden;font-size:14px;line-height:20px}
   html[data-tema="v10"] #conteudo-meio .ag-linha .ag-txt > b{flex:none;max-width:100%;overflow:hidden;text-overflow:ellipsis}
@@ -6795,7 +6804,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.06</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.07</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11351,7 +11360,7 @@ function cartaoCliente(cli, casosMostrar){
     <span class="ag-slot">${(k0=>k0 && !ehPreCaso(k0) ? botaoDespacho(k0) : "")(ks.find(k=>k.importante)||kP||ks[0])}</span>
     <span class="acoes">${ks[0]?`
       <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0].id}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.6 3.2 4.5 5.4 4.5 10a4.5 4.5 0 0 1-9 0c0-2.3 1.2-3.7 2.2-4.8.4 1.6 1.2 2.6 2.3 2.8-.4-2.6-.6-5.4 0-8Z"/></svg></button>
-      <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0].id}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9Z"/></svg></button>`:""}</span>
+      <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0].id}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9Z"/></svg></button>`:estrelaDaLinha(null, null, cli)}</span>
   </div>`;
   }
   // O círculo de "concluir" saiu. No To Do ele conclui a tarefa; aqui não
@@ -11689,6 +11698,19 @@ function ligarCartoes(){
     b.classList.toggle("on", k.importante);
     montarSidebar();
     if(visao==="importante") render();
+  });
+  document.querySelectorAll("[data-estrela-t]").forEach(b=>b.onclick=async e=>{   // F464 · a tarefa pessoal
+    e.stopPropagation();
+    const t = (D.tarefas||[]).find(x=>x.id===b.dataset.estrelaT); if(!t) return;
+    const v = !t.importante;
+    try{ await api(`/rest/v1/tarefas?id=eq.${t.id}`,{method:"PATCH", headers:{Prefer:"return=minimal"}, body:JSON.stringify({importante:v})}); }
+    catch(_){ return aviso("Não gravou — tente de novo"); }
+    t.importante = v; b.classList.toggle("on", v);
+  });
+  document.querySelectorAll("[data-estrela-cli]").forEach(b=>b.onclick=async e=>{   // F464 · sem caso na linha
+    e.stopPropagation();
+    await estrelaFicha(b.dataset.estrelaCli);
+    b.classList.toggle("on", ativos().some(x=>x.cliente_id===b.dataset.estrelaCli && x.importante));
   });
   document.querySelectorAll("[data-fogo]").forEach(b=>b.onclick=async e=>{
     e.stopPropagation();
@@ -14565,8 +14587,18 @@ function linhaAgenda(it){
     <span class="ag-slot">${slot}</span>
     <span class="acoes">${k?`
       <button class="acao-card fogo ${k.urgente?"on":""}" title="Urgente" data-fogo="${k.id}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.6 3.2 4.5 5.4 4.5 10a4.5 4.5 0 0 1-9 0c0-2.3 1.2-3.7 2.2-4.8.4 1.6 1.2 2.6 2.3 2.8-.4-2.6-.6-5.4 0-8Z"/></svg></button>
-      <button class="acao-card ${k.importante?"on":""}" title="Importante" data-estrela="${k.id}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9Z"/></svg></button>`:""}</span>
+      `:""}${estrelaDaLinha(k, t, cli)}</span>
   </div>`;
+}
+// F464 · a ⭐ em todas as linhas (pedido do Paulo, 09.11.2026): o caso, a tarefa pessoal (tarefas.importante) ou,
+// sem caso na linha, todos os casos abertos do cliente; sem nada a marcar, a ⭐ fica apagada no mesmo lugar
+function estrelaDaLinha(k, t, cli){
+  const svg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9Z"/></svg>`;
+  if(k) return `<button class="acao-card ${k.importante?"on":""}" title="Importante" data-estrela="${k.id}">${svg}</button>`;
+  if(t && !t.virtual) return `<button class="acao-card ${t.importante?"on":""}" title="Importante" data-estrela-t="${t.id}">${svg}</button>`;
+  const ks = cli ? ativos().filter(x=>x.cliente_id===cli.id) : [];
+  if(ks.length) return `<button class="acao-card ${ks.some(x=>x.importante)?"on":""}" title="Importante: todos os casos deste cliente" data-estrela-cli="${cli.id}">${svg}</button>`;
+  return `<button class="acao-card" title="Importante: nada a marcar nesta linha" aria-disabled="true" disabled>${svg}</button>`;
 }
 let limAg = {};
 function renderAgendaV10(qual){
@@ -14924,7 +14956,7 @@ function blocoOntem(){
       <span class="ag-data">${d.prazo?`${d.prazo.slice(8,10)}/${d.prazo.slice(5,7)}`:""}</span>
       <div class="ag-txt"><b>${esc(c?c.nome:tituloCaso(k))}</b><span class="ag-res">, volta à fila${d.prazo?` em ${fmt(d.prazo)}`:""}${
         d.para && d.para!==eu.id ? ` com ${esc(((D.colPorId.get(d.para)||{}).nome||"").split(" ")[0])}` : ""}</span></div>
-      <span class="ag-selos"><span class="ag-tipo">${esc(k.especie||NOME_FASE[k.fase]||"")}</span></span></div>`; };
+      <span class="ag-selos"><span class="ag-tipo">${esc(k.especie||NOME_FASE[k.fase]||"")}</span></span><span class="acoes">${estrelaDaLinha(k, null, c)}</span></div>`; };
   return `<details class="pl-grupo pl-dobra md-ontem" data-tom="ontem"><summary><h3 class="secao">${rot} <span class="pl-n">${partes}</span></h3></summary>`
     + (r.desp.length ? r.desp.map(linha).join("") : `<p class="meio-sub">Nenhum cliente concluído por hoje nesse dia.</p>`) + `</details>`;
 }
@@ -14946,7 +14978,7 @@ function atendimentosHoje(quem){
 function linhaAtendimento(a){
   return `<div class="cartao ag-linha md-atend"${a.cli?` data-cli="${a.cli.id}"`:""}><span class="ag-slot"></span><span class="ag-data hoje">${esc(a.hora)}</span>
     <div class="ag-txt"><b>${esc(a.cli ? a.cli.nome : a.nome || "Atendimento")}</b><span class="ag-res"> · atendimento ${esc(a.tipo||"")}</span></div>
-    <span class="ag-selos"><span class="ag-tipo">Atendimento</span></span></div>`;
+    <span class="ag-selos"><span class="ag-tipo">Atendimento</span></span><span class="acoes">${estrelaDaLinha(null, null, a.cli)}</span></div>`;
 }
 const horaDoItem = it => it.atend ? it.hora : it.ev && it.ev.data_hora ? horaSP(it.ev.data_hora) : "";
 // "Manhã e tarde" ou "Sem divisão": a escolha fica no navegador (crm_periodos) e o menu ⋯ da lista a troca
@@ -15105,7 +15137,7 @@ function secaoSugeridas(){
   return `<section class="pl-grupo md-sug" data-tom="sug"><h3 class="secao dica-tit" title="O que o CRM encontrou nos seus casos e ninguém pôs no dia. Nada é gravado sem o seu clique.">Sugeridas para hoje <span class="pl-n">${ss.length}</span></h3>`
     + ss.slice(0, lim).map(s=>`<div class="cartao ag-linha md-sug-l" data-cli="${s.cli.id}"><span class="ag-slot"></span>
       <div class="ag-txt"><b>${esc(s.cli.nome)}</b><span class="ag-res"> · ${esc(s.txt)}</span></div>
-      <span class="acoes">${s.regra ? `<button class="btn-mini" data-sug-regra="${esc(s.regra)}" data-sug-caso="${s.k.id}" title="Criar a tarefa da regra desta etapa">Criar</button>` : `<button class="btn-mini" data-sug-add="${esc(s.ch)}" data-sug-caso="${s.k ? s.k.id : ""}" data-sug-cli="${s.cli.id}" title="${s.k ? "Pôr este caso no meu Meu Dia" : "Abrir a ficha"}">${s.k ? "Adicionar" : "Abrir"}</button>`}<button class="btn-mini md-sug-x" data-sug-fora="${esc(s.ch)}" aria-label="Dispensar a sugestão" title="Dispensar">✕</button></span></div>`).join("")
+      <span class="acoes">${s.regra ? `<button class="btn-mini" data-sug-regra="${esc(s.regra)}" data-sug-caso="${s.k.id}" title="Criar a tarefa da regra desta etapa">Criar</button>` : `<button class="btn-mini" data-sug-add="${esc(s.ch)}" data-sug-caso="${s.k ? s.k.id : ""}" data-sug-cli="${s.cli.id}" title="${s.k ? "Pôr este caso no meu Meu Dia" : "Abrir a ficha"}">${s.k ? "Adicionar" : "Abrir"}</button>`}<button class="btn-mini md-sug-x" data-sug-fora="${esc(s.ch)}" aria-label="Dispensar a sugestão" title="Dispensar">✕</button>${estrelaDaLinha(s.k, null, s.cli)}</span></div>`).join("")
     + (ss.length>lim ? `<button class="btn-rap mais-plan" data-mais="Sugeridas">Mostrar mais ${ss.length-lim}</button>` : "") + `</section>`;
 }
 // F295 · o aviso das 8h: uma vez por dia útil, a partir das 8h, o que vence hoje e o que está vencido no meu dia
@@ -15132,7 +15164,7 @@ function linhaMencaoDia(m){
     <span class="ag-slot"><button class="check" data-menc-lida="${m.id}" aria-label="marcar como lida" title="lida — sai daqui e das Menções"></button></span>
     <span class="ag-data${d===hj?" hoje":""}">${d===hj?"hoje":`${d.slice(8,10)}/${d.slice(5,7)}`}</span>
     <div class="ag-txt"><b>${esc(c?c.nome:"Menção")}</b><span class="ag-res"> · ${de?`${esc(de.nome.split(" ")[0])}: `:""}${esc(resumoAgenda(m.texto, eu)||m.texto||"")}</span></div>
-    <span class="acoes">${m.caso_id?botoesResposta(m):""}</span>
+    <span class="acoes">${m.caso_id?botoesResposta(m):""}${estrelaDaLinha(k, null, c)}</span>
   </div>`;
 }
 // F378 · O PLANEJADO JUNTA AS VISÕES DE DATA (decisão do Paulo, 02.11.2026): Calendário, Perícias & Audiências e Tarefas com
