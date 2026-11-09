@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_plantao.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO, promptCliente, ESQ_CLIENTE } from "../../zap_plantao/index.ts";
+import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO, promptCliente, ESQ_CLIENTE, promptCobranca, ESQ_COBRANCA } from "../../zap_plantao/index.ts";
 
 assert.equal(mascarar("CPF 123.456.789-09"), "CPF [número]");
 const msgs = [
@@ -467,4 +467,14 @@ console.log("formal: ok");
   assert.ok(!novo.includes("- velho") && novo.includes("atendimento por vídeo, que existe"));
   assert.equal(paraTriagem(novo), novo);
   console.log("ok F422x fatos");
+}
+{ // F422aj · a cobrança sugerida
+  const c = { conversa_id: "x", msg_id: "y", dias: 11, contato: "João Carvalho", relacao: "filho", cliente: "Sueli Aparecida",
+    mensagens: [{ direcao: "saida", por_bot: false, tipo: "audio", texto: "Dona Sueli, peço que deixe o celular comigo na terça-feira.", momento: "2026-10-29T21:52:00Z" }] };
+  const p = promptCobranca(c, new Date("2026-11-09T13:00:00Z"));
+  assert.ok(p.includes("há 11 dias") && p.includes("filho de Sueli Aparecida") && p.includes("deixe o celular"));
+  assert.ok(p.includes("segunda-feira") && p.includes("10:00"), "data e hora de Brasília com o dia da semana");
+  assert.ok(p.includes("novamente") && p.includes("cobrar = false"));
+  assert.deepEqual(ESQ_COBRANCA.required, ["cobrar", "mensagem"]);
+  console.log("ok F422aj cobranca");
 }

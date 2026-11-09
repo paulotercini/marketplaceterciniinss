@@ -379,6 +379,32 @@ export function promptIntencao(x: Contexto) {
 }
 const DE_CLASSE: Record<string, string> = { sim: "confirmar", nao: "remarcar", duvida: "outro" };
 
+// F422aj · a cobrança sugerida: a última mensagem é da equipe e o cliente não respondeu
+export const ESQ_COBRANCA = {
+  type: "object", additionalProperties: false, required: ["cobrar", "mensagem"],
+  properties: {
+    cobrar: { type: "boolean", description: "true só quando a mensagem do escritório espera providência ou resposta do cliente" },
+    mensagem: { type: "string", description: "a mensagem de cobrança, vazia quando cobrar for false" },
+  },
+};
+export type Cobranca = { conversa_id: string; msg_id: string; dias: number; contato: string; relacao?: string | null; cliente?: string | null; mensagens: Msg[] };
+export function promptCobranca(c: Cobranca, agora = new Date()) {
+  const hoje = agora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "full", timeStyle: "short" });
+  const quem = c.relacao ? `${c.contato} (${c.relacao} de ${c.cliente || "o cliente"})` : c.contato;
+  return `Você ajuda a equipe de um escritório de advocacia previdenciária a acompanhar o WhatsApp. A última mensagem da conversa é do ` +
+    `escritório e o cliente não responde há ${c.dias} dias.\n\n` +
+    `Decida se essa mensagem do escritório espera uma providência ou resposta do cliente: levar ou enviar documento ou aparelho, ` +
+    `responder pergunta, confirmar algo, comparecer, assinar. Agradecimento, despedida, informação ou aviso que não pede nada: cobrar = false. ` +
+    `Na dúvida, cobrar = false.\n\n` +
+    `Com cobrar = true, escreva a mensagem que a equipe enviará, como no modelo: o tratamento e o nome com o cumprimento do período do dia, ` +
+    `linha em branco, o pedido retomado com "novamente" e uma pergunta objetiva que peça a resposta. Retome apenas o que o escritório pediu, ` +
+    `com as palavras da conversa; se a conversa marcou um dia que já passou, pergunte quando a pessoa consegue. Português formal, sem emoji, ` +
+    `sem lista, sem assinatura, sem prometer prazo ou resultado, sem dado que não esteja na conversa.\n\n` +
+    `Modelo:\nDona Sueli, bom dia! Tudo bem?\n\nGostaria de pedir novamente que a senhora leve o celular ao escritório na quarta-feira, ` +
+    `para que possamos verificar o aparelho. A senhora consegue trazê-lo nesse dia?\n\n` +
+    `Agora: ${hoje}. Quem escreve neste número: ${quem}.\n\n<conversa>\n${transcricao(c.mensagens || [])}\n</conversa>`;
+}
+
 export function promptPlantao(x: Contexto) {
   return `${regras(x.instrucoes)}\n\n<contexto>\n${contexto(x)}</contexto>\n\n<conversa>\n${transcricao(x.mensagens || [])}\n</conversa>`;
 }
@@ -947,6 +973,20 @@ if (typeof Deno !== "undefined") {
           cliente: null, mensagens: [{ direcao: "entrada", por_bot: false, tipo: "texto", texto: "Boa tarde, queria saber como faço para marcar um atendimento.", momento: new Date().toISOString() }] };
         const decisao = await turno(sessao.id, textoDoTurno(exemplo, exemplo.mensagens, true));
         return json({ agente, ambiente, sessao: sessao.id, decisao });
+      } catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
+    }
+    if (corpo.cobranca === true) {
+      // F422aj · o relógio do banco (zap_cobranca_vez); as candidatas só saem com zap_cobranca_ligada = 'sim'
+      if (!CHAVE_IA) return json({ erro: "sem ANTHROPIC_API_KEY" }, 503);
+      try {
+        const lista: Cobranca[] = (await rpc("zap_cobranca_candidatas", { p_limite: 6 })) || [];
+        const feitas = await Promise.all(lista.map(async (c) => {
+          let texto = "";
+          try { const r = await claude(promptCobranca(c), ESQ_COBRANCA); if (r.cobrar === true) texto = String(r.mensagem || "").trim(); }
+          catch (e) { console.error("zap_plantao cobranca:", String(e)); return false; }   // sem gravar: tenta na próxima hora
+          return await rpc("zap_cobranca_gravar", { p_conversa: c.conversa_id, p_msg: c.msg_id, p_texto: texto });
+        }));
+        return json({ lidas: lista.length, sugeridas: feitas.filter((x) => x === true).length });
       } catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
     }
     if (!/^[0-9a-f-]{36}$/i.test(msg)) return json({ erro: "mensagem_id inválido" }, 400);
