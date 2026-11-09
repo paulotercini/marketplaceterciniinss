@@ -2240,6 +2240,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-conv .l3 > span{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
   .zap-conv .l3 > .zc-fim,.zap-conv .l3 > .bolha{flex:none;overflow:visible}
   .zap-conv .l3 .zc-adv{color:var(--texto);font-weight:500}
+  .zap-conv .l3 .zc-at{color:var(--texto)} .zap-conv .l3 .zc-at.nao,.zt-viu.nao{color:#b42318;font-weight:600}
   /* F428 · as não lidas na linha da prévia, como no WhatsApp; a linha das etiquetas some quando vazia */
   .zap-conv .l2{display:flex;align-items:center;gap:8px}
   .zap-conv .l2>span:first-child{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
@@ -17318,6 +17319,7 @@ function cartaoConversa(c){
         <span class="hora">${c.ultima_em?quandoFalou(c.ultima_em):""}</span></div>
       <div class="l2"><span>${esc(previaZap(c.ultimo_texto).slice(0,80))}</span>${c.nao_lidas?`<span class="bolha" aria-label="${c.nao_lidas} não lidas">${c.nao_lidas}</span>`:""}</div>
       <div class="l3">
+        ${at && at.id!==eu.id?(v=>`<span class="zc-at${v&&!v.resp&&!v.viu?" nao":""}" title="${v&&!v.resp?(v.viu?`${esc(at.nome)} abriu a conversa depois da última mensagem`:`${esc(at.nome)} ainda não abriu a conversa depois da última mensagem`):`atendida por ${esc(at.nome)}`}">com ${esc(at.nome.split(" ")[0])}${v&&!v.resp?(v.viu?" · viu":" · não viu"):""}</span>`)(vistoZap(c)):""}
         ${advDaConversa(c)?`<span class="zc-adv" title="advogado responsável: ${esc(advDaConversa(c))}">${esc(advDaConversa(c).split(" ")[0])}</span>`:""}
         ${s?`<span class="zc-setor"><i style="background:${esc(s.cor)}"></i>${esc(s.nome)}</span>`:""}
         ${etq.slice(0,2).map(e=>`<span class="zc-etq" style="color:color-mix(in srgb, ${esc(e.cor)} 85%, #000)">${esc(e.texto)}</span>`).join("")}
@@ -17349,10 +17351,22 @@ const _zapCache = new Map();
 // F483 · o clique no nome é ler; a mensagem que chega com a conversa já aberta fica nova até outro clique ou a resposta
 let zapLerAoAbrir = null;
 function lerConversaZap(c){
-  if(!c || !c.nao_lidas) return;
+  if(!c) return;
+  // F493 · quem atende, ao abrir, deixa marcado que viu (o gestor e quem transferiu sabem que chegou)
+  const minha = eu && c.atendente_id===eu.id, corpo = {};
+  if(c.nao_lidas) corpo.nao_lidas = 0;
+  if(minha) corpo.atendente_viu_em = new Date().toISOString();
+  if(!Object.keys(corpo).length) return;
   api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",
-    headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}).catch(()=>{});
-  c.nao_lidas = 0;
+    headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}).catch(()=>{});
+  Object.assign(c, corpo);
+}
+// F493 · a conversa de outra pessoa com mensagem do cliente sem resposta: quem atende já abriu depois dela?
+function vistoZap(c){
+  const at = c.atendente_id && D.colPorId.get(c.atendente_id);
+  if(!at || !c.ultima_entrada_em) return null;
+  if(c.ultima_resposta_em && c.ultima_resposta_em >= c.ultima_entrada_em) return {at, resp:true};
+  return {at, viu: !!c.atendente_viu_em && c.atendente_viu_em >= c.ultima_entrada_em};
 }
 async function abrirConversa(id, ler){
   const mesma = zapAberta===id;   // reabrir a mesma (depois de enviar, na recarga) guarda o que está escrito e a rolagem
@@ -17433,7 +17447,9 @@ function dadosDaConversaZap(c){
              <span class="mono">${esc(foneZap(c.telefone))}</span>
              ${advDaConversa(c)?`<span>Adv. <b>${esc(advDaConversa(c))}</b></span>`:""}
              ${c.bot_ativo&&c.bot_passo?`<span class="zt-robo" title="o passo do robô nesta conversa">Robô: <b>${esc(rotPasso(c.bot_passo))}</b>${c.bot_desde?` desde ${diaZap(c.bot_desde)} ${horaSP(c.bot_desde)}`:""}</span>`:""}
-             ${at?`<span>Atendendo: <b>${esc(at.nome)}</b></span>`
+             ${at?(v=>`<span>Atendendo: <b>${esc(at.nome)}</b>${at.id!==eu.id&&v&&!v.resp?(v.viu
+                   ?` <span class="zt-viu">· viu às ${horaSP(c.atendente_viu_em)}</span>`
+                   :` <span class="zt-viu nao">· ainda não abriu a mensagem das ${horaSP(c.ultima_entrada_em)}</span>`):""}</span>`)(vistoZap(c))
                  :`<span class="zt-ninguem">Atendendo: <b>ninguém</b></span>`}
              ${deOutro && zapGestor()?`<button class="zl-link" onclick="assumirConversa()">Assumir (tirar de ${esc(at.nome)})</button>`:""}
            `,
@@ -18717,8 +18733,8 @@ async function transferirConversa(){
     <p class="meio-sub">Para uma pessoa, ou para um setor (o CRM escolhe quem está livre nele). Quem recebe
        ganha um aviso em Menções, e fica uma nota na conversa dizendo de quem para quem e por quê.</p>
     <p class="zx-rot">Pessoa</p>
-    <div class="form-linha">${eqs.map(c=>
-      `<button class="btn-rap" data-zt="${c.id}">${esc(c.nome)}</button>`).join("")}</div>
+    <div class="form-linha">${eqs.map(c=>{ const ja = zapConvs.find(x=>x.id===zapAberta)?.atendente_id===c.id;
+      return `<button class="btn-rap" data-zt="${c.id}"${ja?` disabled title="${esc(c.nome)} já atende esta conversa"`:""}>${esc(c.nome)}${ja?" (já atende)":""}</button>`; }).join("")}</div>
     ${zapAux.setores.length?`<p class="zx-rot">Setor</p><div class="form-linha">${zapAux.setores.map(s=>
       `<button class="btn-rap" data-zts="${s.id}" style="border-color:${esc(s.cor)};color:${esc(s.cor)}">${esc(s.nome)}</button>`).join("")}</div>`:""}
     <input id="zt-motivo" placeholder="motivo (opcional): é caso judicial…" style="width:100%;margin-top:10px">`);
