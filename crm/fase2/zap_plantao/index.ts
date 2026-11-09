@@ -399,7 +399,8 @@ export function promptCobranca(c: Cobranca, agora = new Date()) {
     `Com cobrar = true, escreva a mensagem que a equipe enviará, como no modelo: o tratamento e o nome com o cumprimento do período do dia, ` +
     `linha em branco, o pedido retomado com "novamente" e uma pergunta objetiva que peça a resposta. Retome apenas o que o escritório pediu, ` +
     `com as palavras da conversa; se a conversa marcou um dia que já passou, pergunte quando a pessoa consegue. Português formal, sem emoji, ` +
-    `sem lista, sem assinatura, sem prometer prazo ou resultado, sem dado que não esteja na conversa.\n\n` +
+    `sem lista, sem assinatura, sem prometer prazo ou resultado, sem dado que não esteja na conversa. Escreva "atendimento", nunca "consulta", ` +
+    `e "agendar", nunca "marcar".\n\n` +
     `Modelo:\nDona Sueli, bom dia! Tudo bem?\n\nGostaria de pedir novamente que a senhora leve o celular ao escritório na quarta-feira, ` +
     `para que possamos verificar o aparelho. A senhora consegue trazê-lo nesse dia?\n\n` +
     `Agora: ${hoje}. Quem escreve neste número: ${quem}.\n\n<conversa>\n${transcricao(c.mensagens || [])}\n</conversa>`;
