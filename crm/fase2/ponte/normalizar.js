@@ -100,6 +100,13 @@ function deveIgnorar(m) {
   return tipoDaMensagem(m) === null;
 }
 
+// F491 · a mensagem de cliente que chegou cifrada e não abriu (stub CIPHERTEXT, 2): o celular a tem
+function naoAbriu(m) {
+  if (!m || !m.key || m.message || m.messageStubType !== 2 || m.key.fromMe) return false;
+  const jid = String(m.key.remoteJid || "");
+  return !!jid && !ehGrupo(jid) && !ehStatus(jid) && jid !== "status@broadcast";
+}
+
 // Nome de arquivo que não vira dor de cabeça no Storage nem no navegador
 function nomeSeguro(nome, tipo, mime) {
   // o Storage recusa acento no caminho ("Invalid key"): só ASCII
@@ -219,4 +226,4 @@ const variantesFone = t => {
 
 module.exports = { variantesFone, soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem, foneDaLigacao, agruparHistorico,
                    miolo, tipoDaMensagem, textoDaMensagem, deveIgnorar,
-                   nomeSeguro, quandoWa, citacaoDe, reacaoDe, alteracaoDe, chaveDaMensagem, recente };
+                   nomeSeguro, quandoWa, citacaoDe, reacaoDe, alteracaoDe, chaveDaMensagem, recente, naoAbriu };
