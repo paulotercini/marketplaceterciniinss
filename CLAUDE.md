@@ -643,6 +643,8 @@ A **F488** (pedido do Paulo de 09.11.2026): no golpe (F476), a conversa recebe a
 
 A **F489** (pedido do Paulo de 09.11.2026, a cliente que disse que não podia ir e não respondeu aos horários oferecidos): a conversa em `remarcando` cuja última mensagem é da IA há mais de 2 horas, sem mensagem da equipe depois de `remarcar_em` (`zap_conf_sem_retorno`), entra no reenvio das 9h da véspera com o texto próprio ("O seu atendimento de … continua agendado. Deseja remarcar para outro dia ou podemos cancelar?") e no aviso das 13h30 à recepção e ao advogado, que pede para ligar e, se for o caso, cancelar e liberar a vaga. O aviso das 13h30 passou a considerar apenas atendimentos de hoje e amanhã. SQL em `crm/fase2/migracoes/f489_remarcacao_sem_resposta.sql`.
 
+A **F490** (pedido do Paulo de 09.11.2026): o ⋯ da lista do WhatsApp tem **Buscar histórico no celular** (`historicoTodasZap`), que faz o pedido da F286 em todas as conversas com movimento nos últimos 3 dias, salvo as `automatica`; a ponte atende 3 conversas a cada 30 s. Em 09.11.2026, 114 mensagens do dia só entraram no CRM pelo pedido de histórico, porque a ponte não as abriu na chegada.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
