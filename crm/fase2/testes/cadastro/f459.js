@@ -40,7 +40,7 @@ T.clientes.push(c2);
 const k2 = { id: id("b"), cliente_id: c2.id, titulo: c2.nome, beneficio: "Aposentadoria", especie: "B42", fase: "inss", origem_lista: "🌻 INSS", prazo: iso(0), todo_prazo: iso(0),
   protocolos: [], processos: [], crps_nups: [], crps: [], nbs: [], arquivados: {}, marcadores: [], ronda: {}, prazos_tribunal: [], pje_links: {}, importante: false, urgente: false, criado_em: ts(-300) };
 T.casos.push(k2); T.atribuicoes.push({ caso_id: k2.id, colaborador_id: PAULO });
-T.andamentos.push({ id: id("e"), caso_id: k2.id, autor_id: PAULO, texto: "Aguardar a análise do INSS e conferir o PAT.", origem: "app", origem_id: null, criado_em: ts(-5), publico: false, excluir: false, importante: false, urgente: false, responde_a: null });
+T.andamentos.push({ id: id("e"), caso_id: k2.id, autor_id: PAULO, texto: "Aguardar a análise do INSS e conferir o PAT.", origem: "todo", origem_id: null, criado_em: ts(-5), publico: false, excluir: false, importante: false, urgente: false, responde_a: null });   // F461: a anotação do To Do é a atribuição no celular
 
 const ok = [];
 const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : "FALHOU  ") + nome); return v; };
