@@ -644,11 +644,14 @@ async function importarHistorico(chats, messages, baixar) {
 // O tipo importa: foto tem de chegar como FOTO, não como arquivo para baixar.
 // Documento leva o nome original, senão o cliente recebe "arquivo.bin" e não
 // sabe que é a lista de documentos que ele pediu.
-// WebM -> OGG/Opus com o ffmpeg que vem no pacote ffmpeg-static (sem instalar nada no Windows)
+// WebM -> OGG/Opus com o ffmpeg que vem no pacote ffmpeg-static (sem instalar nada no Windows).
+// F475: mono, 48 kHz e tempo a partir de zero; o WhatsApp do iPhone recusa a voz em estéreo
+// ou com o carimbo negativo do WebM do Chrome ("Não foi possível baixar o áudio").
 function paraOgg(buf) {
   return new Promise((ok, falha) => {
     const p = require("child_process").spawn(require("ffmpeg-static"),
-      ["-loglevel", "error", "-i", "pipe:0", "-vn", "-c:a", "libopus", "-b:a", "32k", "-f", "ogg", "pipe:1"]);
+      ["-loglevel", "error", "-i", "pipe:0", "-vn", "-ac", "1", "-ar", "48000", "-c:a", "libopus", "-b:a", "48k",
+       "-avoid_negative_ts", "make_zero", "-f", "ogg", "pipe:1"]);
     const partes = [], erro = [];
     p.stdout.on("data", d => partes.push(d));
     p.stderr.on("data", d => erro.push(d));
