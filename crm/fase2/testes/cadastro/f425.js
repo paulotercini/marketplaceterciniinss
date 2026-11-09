@@ -112,27 +112,25 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf(`A · o atendimento marcado oferece Chegou (${ops.join(", ")})`, ops.includes("chegou"));
   await p.click('.aq-menu [data-aqop="chegou"]');
   await p.waitForSelector("#bal-cpf", { timeout: 8000 });
-  conf("A · sem CPF, a janela abre no passo do CPF", /Chegada de Elza/.test(await caixaTxt()));
-  await p.fill("#bal-cpf", "111.444.777-00"); await botao("Guardar o CPF");
+  conf("A · F468 · sem CPF nem senha, a janela pede os dois", /Chegou: Elza/.test(await caixaTxt()) && !!(await p.$("#bal-senha")) && !/Emprega Brasil/.test(await caixaTxt()));
+  await p.fill("#bal-cpf", "111.444.777-00"); await p.fill("#bal-senha", "Nova@2026"); await botao("Guardar o CPF e a senha");
   conf("A · o CPF errado não é guardado e a janela diz", /CPF inválido/.test(await p.textContent("#bal-msg")) && !cli(ELZA).cpf);
-  await p.fill("#bal-cpf", "111.444.777-35"); await botao("Guardar o CPF");
-  await p.waitForSelector("#bal-senha", { timeout: 8000 });
+  await p.fill("#bal-cpf", "111.444.777-35"); await botao("Guardar o CPF e a senha");
+  await p.waitForSelector('#modal button[title="Copiar o CPF e abrir o Meu INSS"]', { timeout: 8000 });
   conf("A · o CPF certo vai à ficha", cli(ELZA).cpf === "11144477735");
-  const abertas = await p.evaluate(() => window._abertas.slice());
-  conf(`A · guardar o CPF abre o Meu INSS e o Emprega Brasil (${abertas.length})`, abertas.length === 2 && abertas.some(u => /meu\.inss|meuinss/i.test(u)) && abertas.some(u => /mte\.gov/.test(u)));
-  await foto("a1-senha");
-  await p.fill("#bal-senha", "Nova@2026"); await botao("Guardar a senha");
-  await p.waitForSelector('#modal button[title="Copiar a senha do Meu INSS"]', { timeout: 8000 });
   conf("A · a senha do gov.br vai às credenciais do cliente", T.credenciais.some(c => c.cliente_id === ELZA && c.tipo === "meu_inss" && c.valor === "Nova@2026"));
-  conf("A · depois da senha, a janela oferece Portais (sem abrir de novo)", !!(await p.$('#modal button[title="Abrir o Meu INSS e o Emprega Brasil"]')));
-  await botao("A senha entrou no gov.br"); await p.waitForTimeout(300);
+  await foto("a1-testar");
+  await botao("Copiar o CPF e abrir o Meu INSS");
+  const abertas = await p.evaluate(() => window._abertas.slice());
+  conf(`A · Testar abre o Meu INSS (${abertas.length})`, abertas.length === 1 && /meu\.inss/i.test(abertas[0]));
+  await botao("A senha entrou no Meu INSS"); await p.waitForTimeout(300);
   conf("A · Entrou grava quem conferiu a senha e quando", (cli(ELZA).campos || {}).gov && cli(ELZA).campos.gov.quem === "Ingrid" && !cli(ELZA).campos.gov.sem);
-  conf("A · a janela diz que a senha foi conferida", /Senha conferida/.test(await caixaTxt()));
   // a extensão roda: grava o resumo do Meu INSS com os dados cadastrais e o CNIS nos anexos (o mesmo formato do dossiê)
   Object.assign(T.clientes.find(c => c.id === ELZA), { dossie: { meuinss: { em: new Date().toISOString(), baixados: ["CNIS completo"], inexistentes: [], falhas: [],
     cadastro: { dn: "1970-03-15", nome_mae: "Maria Ficta", sexo: "F", logradouro: "RUA SETE DE SETEMBRO, 10", bairro: "Centro", cidade: "Monte Alto", uf: "SP", cep: "15910000" } } } });
   T.anexos.push({ id: "an-elza-1", cliente_id: ELZA, origem: "dossie", nome: "CNIS · CNIS completo", caminho: "dossie/11144477735/CNIS/CNIS completo.pdf",
     tipo: "application/pdf", texto: "", criado_em: new Date().toISOString() });
+  await p.evaluate(id => dossieDoAtendimento(id, false), ELZA);
   await p.click('#modal button[title="Atualizar a ficha com o dossiê"]');
   await p.waitForFunction(() => /Dossiê atualizado/.test((document.getElementById("aviso") || {}).textContent || ""), null, { timeout: 8000 }).catch(() => {});
   const e1 = cli(ELZA);
@@ -157,8 +155,12 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector(".aq-faixa"); await p.click(`[data-aqdia="${W}"]`);
   await p.click('[data-aqev="P3"]');
   await p.click('.aq-menu [data-aqop="chegou"]');
-  await p.waitForTimeout(500);
-  conf("B · sem ficha, o Chegou abre o Novo Cliente com o nome do evento", await p.evaluate(() => _ncl && _ncl.etapa === 1 && /Rafael/.test(_ncl.nomeBusca || "") && !!document.getElementById("ncl-cpf")));
+  await p.waitForSelector("#bal-nome", { timeout: 8000 });
+  conf("B · sem ficha, o Chegou pede CPF e senha com o nome do evento", /Rafael/.test(await p.inputValue("#bal-nome")));
+  await p.fill("#bal-cpf", "153.509.460-56"); await p.fill("#bal-senha", "Rafa@2026"); await botao("Criar o cliente");
+  await p.waitForSelector('#modal button[title="Copiar o CPF e abrir o Meu INSS"]', { timeout: 8000 });
+  const RAF = T.clientes.find(c => c.cpf === "15350946056") || {};
+  conf("B · Criar grava o cliente com CPF e senha e abre o teste", /Rafael/.test(RAF.nome || "") && T.credenciais.some(c => c.cliente_id === RAF.id && c.valor === "Rafa@2026"));
   await foto("b-novo-cliente");
 
   // C · o cliente sem gov.br
@@ -186,20 +188,18 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click('[data-aqev="P5"]');
   await p.click('.aq-menu [data-aqop="chegou"]');
   await p.waitForSelector('#modal button[title="Copiar a senha do Meu INSS"]', { timeout: 8000 });
-  conf("E · o cliente antigo abre direto no passo da senha, com a senha guardada", /Dossiê de Ana Fictícia Colab/.test(await caixaTxt()));
+  conf("E · o cliente antigo abre direto no teste da senha", /Chegou: Ana Fictícia Colab/.test(await caixaTxt()));
   await botao("Copiar a senha do Meu INSS"); await p.waitForTimeout(400);
   conf("E · copiar a senha deixa o registro de quem viu", T.credencial_vis.some(v => v.credencial_id === "cr-ana" || v.cliente_id === ANA));
   await botao("A senha não entrou"); await p.waitForSelector("#bal-senha");
   conf("E · Errada explica como recuperar no gov.br", /Esqueci minha senha/.test(await p.textContent("#bal-msg")));
   await p.fill("#bal-senha", "Atual@2026"); await botao("Guardar a senha nova");
-  // o botão Copiar já estava na janela: espera a troca da senha no banco
-  for (let i = 0; i < 40 && !T.credenciais.some(c => c.cliente_id === ANA && c.valor === "Atual@2026" ) ; i++) await p.waitForTimeout(100);
-  for (let i = 0; i < 40 && T.credenciais.filter(c => c.cliente_id === ANA).length > 1; i++) await p.waitForTimeout(100);
-  await p.waitForSelector('#modal button[title="Copiar a senha do Meu INSS"]', { timeout: 8000 });
+  for (let i = 0; i < 40 && (T.credenciais.filter(c => c.cliente_id === ANA).length !== 1 || !T.credenciais.some(c => c.cliente_id === ANA && c.valor === "Atual@2026")); i++) await p.waitForTimeout(100);
+  await p.waitForSelector('#modal button[title="A senha entrou no Meu INSS"]', { timeout: 8000 });
   const crAna = T.credenciais.filter(c => c.cliente_id === ANA);
   conf(`E · a senha nova substitui a velha (${crAna.map(c => c.valor).join(", ")})`, crAna.length === 1 && crAna[0].valor === "Atual@2026");
-  await botao("A senha entrou no gov.br"); await p.waitForTimeout(300);
-  await p.evaluate(() => { fecharCaixa(); repintarFicha(); });
+  await botao("A senha entrou no Meu INSS"); await p.waitForTimeout(300);
+  await p.evaluate(() => { repintarFicha(); });
   conf("E · a Identificação mostra a senha conferida ao lado da senha", /Senha conferida em .* por Ingrid/.test(await p.textContent("#detalhe")));
 
   // F · o pré-cadastro da agenda era de quem já é cliente
