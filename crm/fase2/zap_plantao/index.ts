@@ -64,7 +64,7 @@ export const ESQUEMA = {
 type Caso = { beneficio: string | null; fase: string; etapa: string | null };
 export type Contexto = {
   conversa_id?: string; contato: string; relacao?: string | null; advogado: string | null; advogados: string[] | null; modo: string; respostas: number;
-  interativa?: boolean; horario: boolean; agenda: boolean; agora: string; mensagens: Msg[]; instrucoes?: string;
+  interativa?: boolean; horario: boolean; agenda: boolean; agora: string; mensagens: Msg[]; instrucoes?: string; pagamento?: string;
   motor?: string; ma?: { agente: string | null; ambiente: string | null; versao: string | null };
   sessao?: { id: string; em: string; ate: string; v?: string } | null;
   cliente: { nome: string; mesmo_telefone: boolean; casos: Caso[] } | null;
@@ -101,13 +101,13 @@ export function regras(instrucoes = "") {
     `seis vezes no caso novo. Com a agenda ligada, agradeça em uma frase e não cite horário: o sistema manda os horários livres ` +
     `logo depois. Com a agenda desligada, diga que a equipe vai entrar em contato para marcar.\n` +
     `- "equipe": perícia ou audiência marcada para hoje ou amanhã, prazo correndo, benefício cortado, reclamação, ` +
-    `alguém pedindo PIX ou pagamento em nome do escritório (o escritório nunca pede PIX para liberar valores), ` +
+    `alguém (outro número, falso advogado) pedindo PIX ou pagamento em nome do escritório para liberar valores, ` +
     `ou pedido expresso de falar já com o advogado. Tranquilize, diga que o advogado foi avisado com prioridade, e marque urgente.\n\n` +
     `O advogado indicado está no contexto; troque só se o cliente pedir outro advogado pelo nome. Sem ficha de cliente, ou com ` +
     `telefone que não é o principal da ficha, não fale da situação de processo nenhum.\n\n` +
     `Proibido, sem exceção: dar opinião jurídica, dizer se a pessoa tem ou não direito, falar em chance de êxito, prazo de resultado, ` +
     `valor de benefício, de atrasados ou de honorários do processo (o valor do atendimento pode ser informado), prometer data de retorno, inventar andamento que não está no contexto, ` +
-    `passar dado de pagamento, pedir senha do gov.br ou número de documento, e se apresentar como advogado.` +
+    `passar dado de pagamento que não seja o do contexto, e passá-lo a quem não pediu para pagar o escritório, pedir senha do gov.br ou número de documento, e se apresentar como advogado.` +
     (instrucoes.trim() ? `\n\nInstruções do escritório (seguem as proibições acima):\n${instrucoes.trim().slice(0, 4000)}` : "");
 }
 
@@ -159,6 +159,8 @@ export const FATOS = `\n\nInformações do escritório (use quando a pessoa perg
   `- Para entregar documentos não é necessário agendamento: a pessoa os deixa na recepção, no horário de atendimento, ou envia a fotografia legível por este WhatsApp; o advogado informa se precisar do original.\n` +
   `- No primeiro atendimento, a pessoa traz o documento de identificação com CPF e a senha atualizada da conta gov.br (Meu INSS). Não peça a senha nem o número do documento pela conversa.\n` +
   `- O escritório nunca pede PIX, depósito ou transferência para liberar valores e não convoca ninguém para audiência por chamada de vídeo (golpe do falso advogado); isso não se confunde com o atendimento por vídeo, que existe e não se menciona junto. Diante de pedido de pagamento ou de chamada assim, oriente a pessoa a não pagar e use acao "equipe" com urgente.\n` +
+  // F484 · o cliente que quer pagar o escritório não é golpe (pedido do Paulo de 09.11.2026)
+  `- O cliente que pede o PIX ou a conta para pagar o escritório (atendimento, honorários, parcela) não é golpe: responda com os dados de pagamento do contexto, exatamente como estão, com acao "responder", sem urgente e sem falar em valor; peça o comprovante depois do pagamento. Sem dados de pagamento no contexto, diga que o advogado responsável vai enviá-los.\n` +
   `- Valor do atendimento: R$ 100,00, com qualquer advogado, sem cobrança para quem avalia o escritório no Google.\n- Honorários do processo, valores a receber, data de pagamento e andamento que o contexto não traz: diga que o advogado responsável vai responder, sem informar valor nem prazo; se a pessoa recebeu mensagem ou carta do INSS, peça a fotografia dela para o advogado conferir.\n` +
   `- Assunto que não é previdenciário (trabalhista, família, consumidor, contratos) é atendido pelo Dr. Marcos.`;
 // o registro da recepção, sem a informalidade que aparece no histórico (pedido do Paulo de 07.11.2026)
@@ -351,6 +353,7 @@ export function contexto(x: Contexto) {
     `Advogados: ${advs}. As estagiárias (Ingrid, Meissa) também respondem, mas quem é avisado é o advogado.\n` +
     `Advogado indicado para esta conversa: ${x.advogado || "a equipe"}.\n${ficha}\n` +
     `Agenda: ${x.agenda ? "ligada" : "desligada"}.\n` +
+    (x.pagamento?.trim() ? `Dados de pagamento do escritório (somente para o cliente que quer pagar o escritório):\n${x.pagamento.trim()}\n` : "") +
     NOME_UMA_VEZ +
     (x.remarcar?.duvida ? `Confirmação: a pessoa recebeu a confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"} e respondeu com uma pergunta, um pedido ou algo que não deixa clara a presença. ` +
       `Leia somente as mensagens posteriores à última confirmação enviada. Responda o que ela perguntou ou disse. ` +
@@ -726,7 +729,7 @@ async function simular(s: Cenario) {
     conversa_id: undefined, contato: s.contato || "Paulo", relacao: s.relacao || null, advogado: s.advogado || null, advogados,
     modo: "", respostas: 0, interativa: s.interativa !== false, horario: s.horario !== false, agenda: true,
     agora: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "short", timeStyle: "short" }),
-    mensagens: [], instrucoes: await cfg("zap_ia_txt_plantao"), cliente: s.cliente ? { mesmo_telefone: true, casos: [], ...s.cliente } : null, remarcar: s.remarcar || null,
+    mensagens: [], instrucoes: await cfg("zap_ia_txt_plantao"), pagamento: await cfg("zap_dados_pagamento"), cliente: s.cliente ? { mesmo_telefone: true, casos: [], ...s.cliente } : null, remarcar: s.remarcar || null,
     ma: { agente: await cfg("zap_ma_agente"), ambiente: await cfg("zap_ma_ambiente"), versao: await cfg("zap_ma_versao") },
   };
   const { agente, ambiente } = await agentePronto(x);
@@ -1067,6 +1070,7 @@ if (typeof Deno !== "undefined") {
     try {
       const x = await rpc("zap_plantao_pegar", { p_msg: msg });
       if (!x) return json({ acao: null, aviso: "mensagem já lida ou vencida" });
+      x.pagamento = await cfg("zap_dados_pagamento");   // F484 · fica no banco, porque o repositório é público
       if (x.remarcar?.ler && x.conversa_id) {
         // a primeira resposta à confirmação: confirmar não passa pelo agente; o sistema manda a resposta do SIM
         let intencao = DE_CLASSE[x.remarcar.classe || ""] || "outro";

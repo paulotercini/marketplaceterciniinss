@@ -504,3 +504,13 @@ console.log("formal: ok");
   assert.ok(!ehGolpe({ acao: "equipe", assunto: "benefício cortado", resposta: "" }, msg("posso pagar o atendimento por pix?")), "pix comum não é golpe");
   console.log("ok F476 golpe");
 }
+{ // F484 · o cliente que quer pagar o escritório recebe os dados do contexto; o golpe continua golpe
+  const base = { contato: "Maria", advogado: "Dr. Paulo", advogados: ["Dr. Paulo"], modo: "", respostas: 0, horario: true, agenda: true, agora: "09/11/2026 16:30", cliente: null };
+  const com = promptPlantao({ ...base, pagamento: "PIX: chave fictícia 000.000.000-00", mensagens: [{ direcao: "entrada", texto: "manda seu pix", momento: "2026-11-09T19:14:00Z" }] });
+  assert.ok(com.includes("Dados de pagamento do escritório") && com.includes("chave fictícia 000.000.000-00"), "os dados vão no contexto");
+  assert.ok(com.includes("não é golpe") && com.includes("para liberar valores"), "a regra separa pagar o escritório do golpe");
+  const sem = promptPlantao({ ...base, mensagens: [] });
+  assert.ok(!sem.includes("Dados de pagamento do escritório"), "sem configuração, nenhum dado");
+  assert.ok(!ehGolpe({ acao: "responder", assunto: "pagamento", resposta: "" }, [{ direcao: "entrada", texto: "Por favor manda seu Pix pq não tenho mais" }]), "pagar não é golpe");
+  console.log("ok F484 pagamento");
+}
