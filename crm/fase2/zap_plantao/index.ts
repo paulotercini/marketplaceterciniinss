@@ -141,7 +141,12 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `- Valor do atendimento, quando a pessoa perguntar: o atendimento custa R$ 100,00, com qualquer advogado, e não é cobrado de quem avalia o escritório no Google. ` +
   `Não fale de honorários do processo (porcentagem ou valor): o advogado explica no atendimento.\n` +
   `- Cancelar: antes de cancelar, pergunte uma vez se a pessoa deseja remarcar. Se ela não quiser, cancele e encerre com cordialidade, dizendo que o escritório fica à disposição. ` +
-  `Ao confirmar o agendamento, pergunte se alguém virá junto; quem vier para ser atendido também precisa de horário próprio.`;
+  `Ao confirmar o agendamento, pergunte se alguém virá junto; quem vier para ser atendido também precisa de horário próprio.\n` +
+  // F469 · a IA faz as perguntas do menu do SMBot, em frase (pedido do Paulo de 09.11.2026)
+  `- Quando a mensagem não disser o que a pessoa precisa (cumprimento, "preciso de ajuda", áudio ou arquivo sem explicação), pergunte em uma frase, ` +
+  `sem lista numerada, se ela deseja agendar um atendimento, saber o andamento do processo ou do benefício, enviar documentos, tratar do financeiro ` +
+  `ou tirar outra dúvida. Na dúvida, pergunte se o assunto é do INSS ou de outra área. Com a resposta, siga o caminho de cada assunto: agendamento ao Agendador; ` +
+  `andamento, financeiro e documentos à equipe (acao "equipe"), dizendo que um colaborador do escritório responde; o documento recebido fica registrado.`;
 
 // "agendar", e não "marcar": o escritório escreve em português técnico (Paulo, 07.11.2026)
 export const VOCABULARIO = `\n\nVocabulário: escreva "agendar", "agendamento" e "agendado"; nunca "marcar", "marcação" ou "marcado" para atendimento, ` +
