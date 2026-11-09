@@ -182,6 +182,13 @@ const T = {
   // F192 · quem conversa não é o cliente (a mãe fala pelo filho)
   await p.evaluate(id => abrirConversa(id), Z1);
   await p.waitForSelector(".zap-topo");
+  // F480 · abrir não lê: a conversa continua nova até a resposta; o botão Lida tira sem responder
+  conf("F480 · abrir a conversa não zera a não lida, e o topo oferece Lida", await p.evaluate(id => {
+    const c = zapConvs.find(x => x.id === id); const b = document.querySelector(".zt-acoes>.zt-desler");
+    return c.nao_lidas > 0 && !!b && b.textContent.trim() === "Lida"; }, Z1));
+  await p.evaluate(() => marcarNaoLida());
+  conf("F480 · Lida grava zero e o topo volta a Desler", await p.evaluate(id => zapConvs.find(x => x.id === id).nao_lidas === 0
+    && document.querySelector(".zt-acoes>.zt-desler").textContent.trim() === "Desler", Z1));
   conf("nome do WhatsApp diferente do cliente: o cabeçalho pergunta quem conversa", (await p.textContent(".zap-topo")).includes("Informar quem conversa"));
   await p.evaluate(() => quemConversa());
   await p.click('[name=zq][value=outro]');
