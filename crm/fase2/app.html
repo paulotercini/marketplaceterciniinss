@@ -2069,6 +2069,11 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .ze-ferr .zap-icone.gravando{background:#fde7e7;color:#b3261e}
   .zap-escrever .btn-rap.ze-enviar:disabled{opacity:.45;cursor:not-allowed}
   .zap-escrever .ze-linha:has(.zap-falta:not([hidden])){flex-wrap:wrap}
+  .ze-sug-ia{border:1px dashed #c9a227;background:#fff8e1;border-radius:8px;padding:8px 10px;font-size:13px;color:#3d3200}
+  .ze-sug-ia.urg{border-color:var(--venc,#b3261e);background:#fdecea}
+  .ze-sug-cab{font-weight:600;margin-bottom:4px}.ze-sug-cab span{font-weight:400;color:#7a6a2a}
+  .ze-sug-txt{white-space:pre-wrap;max-height:140px;overflow:auto}
+  .ze-sug-bts{display:flex;gap:6px;margin-top:6px}
   .zap-falta{order:-1;flex-basis:100%;font-size:12px;color:var(--venc,#b3261e);font-weight:600}
   .zap-escrever .btn-rap.ze-enviar{height:40px;padding:0 18px;border-radius:8px;background:var(--azul);border:1px solid var(--azul);color:#fff}
   .zap-escrever.modo-nota .btn-rap.ze-enviar{background:var(--prox,#8f5400);border-color:var(--prox,#8f5400)}
@@ -6851,7 +6856,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.11</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.12</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17496,6 +17501,11 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
           : `Para responder ao cliente, assuma a conversa.
              <button class="btn-rap zt-assumir" onclick="assumirConversa()" title="Assumir a conversa">Assumir<span class="sr-only"> a conversa</span></button>`}
           A nota interna continua livre.</p>`:""}
+       ${!zapNota&&c.sugestao_ia&&c.sugestao_ia.texto?`<div class="ze-sug-ia${c.sugestao_ia.urgente?" urg":""}" role="status">
+         <div class="ze-sug-cab">💡 Sugestão da assistente virtual${c.sugestao_ia.urgente?" · ⚠ urgente":""} <span>· não enviada</span></div>
+         <div class="ze-sug-txt">${esc(c.sugestao_ia.texto)}</div>
+         <div class="ze-sug-bts"><button class="btn-rap" onclick="usarSugestaoZap()" title="Levar a sugestão ao campo de escrever para conferir e alterar">Usar<span class="sr-only"> a sugestão no campo de escrever</span></button>
+           <button class="btn-mini" onclick="descartarSugestaoZap()" title="Descartar a sugestão">Descartar<span class="sr-only"> a sugestão</span></button></div></div>`:""}
        <div class="ze-modos" role="tablist" aria-label="Para quem é o texto">
          <button role="tab" aria-selected="${!zapNota}" class="${zapNota?"":"on"}" onclick="${zapNota?"alternarNota()":""}" title="Responder ao cliente">Responder<span class="sr-only"> ao cliente</span></button>
          <button role="tab" aria-selected="${zapNota}" class="${zapNota?"on nota":""}" id="zap-btn-nota"
@@ -18015,6 +18025,22 @@ async function verMidiaZap(id){
   catch(e){ if(guia) guia.close(); aviso("Não consegui abrir o arquivo"); }
 }
 
+// F422af · a sugestão da IA na conversa assumida fica acima do campo; Usar a leva ao campo, para alterar antes de enviar
+async function descartarSugestaoZap(fica){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c || !c.sugestao_ia) return;
+  const ant = c.sugestao_ia; c.sugestao_ia = null;
+  try{ await api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({sugestao_ia:null})}); }
+  catch(e){ c.sugestao_ia = ant; aviso(msgErro(e)); }
+  if(!fica) pintarConversaGuardando();
+}
+function usarSugestaoZap(){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c || !c.sugestao_ia) return;
+  const txt = c.sugestao_ia.texto;
+  descartarSugestaoZap(true);
+  document.querySelector(".ze-sug-ia")?.remove();
+  const t = document.getElementById("zap-txt"); if(!t) return;
+  t.value = txt; t.dispatchEvent(new Event("input")); t.focus();
+}
 async function enviarZap(){
   const t = document.getElementById("zap-txt"), txt = (t.value||"").trim();
   if(!txt || !zapAberta) return;
@@ -57343,7 +57369,7 @@ const siglaData = iso => `${SIGLA_DIA[new Date(iso+"T12:00:00").getDay()]} ${iso
 function msgAgendaWhats(nome, data, inicio, tipo, prof){
   const dur = tipo==="001" ? 45 : 30;
   return `Olá, ${String(nome||"").trim().split(" ")[0]}. Seu atendimento com ${tratamentoProf(prof||"paulo")} está agendado para ${diaExt(data)}, ${dataBR(data)}, às ${hmTxt(inicio)}, com duração prevista de ${dur} minutos.\n\n`
-    + `Pedimos que traga a senha do Meu INSS (conta gov.br) atualizada.\n\n`
+    + (prof==="marcos" ? "" : `Pedimos que traga a senha do Meu INSS (conta gov.br) atualizada.\n\n`)   // F422af · o atendimento do Dr. Marcos não pede a senha
     + `O horário é reservado exclusivamente para você. Se outra pessoa da família também precisar de atendimento, é necessário agendar um horário próprio para ela.\n\n`
     + `Em caso de imprevisto, pedimos que nos avise com antecedência.`;
 }
@@ -58142,6 +58168,8 @@ async function gravarFluxo(){
         data:f.data, inicio:f.inicio, eventoId:f.eventoId||"", observacoes:f.obs, orientacoesConfirmadas: orientou(f), foraDaVaga:!!f.livre, sobrepor:!!f.sobrepor});
     }
     const ev = r.evento; f.feito = ev; f.msg = "";
+    // F422af · agendado para o mesmo dia já fica confirmado na agenda (pedido do Paulo, 09.11.2026)
+    if(ev && ev.data===hoje() && !ev.confirmado){ const rc = await agendaApi("confirmar",{eventId:ev.id}).catch(()=>null); if(rc && rc.evento) f.feito = rc.evento; }
     if(f.remarcar) agq.liberada = {id:f.remarcar.id, data:f.remarcar.data};   // F456
     if(f.espera){ const o = ((agq.espera||[]).find(x=>x.id===f.espera)||{}).ofertas||[];
       if(o.length) o[o.length-1] = {...o[o.length-1], resposta:"aceitou", resp_em:new Date().toISOString()};
