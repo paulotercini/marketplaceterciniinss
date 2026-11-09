@@ -643,6 +643,8 @@ A **F488** (pedido do Paulo de 09.11.2026): no golpe (F476), a conversa recebe a
 
 A **F489** (pedido do Paulo de 09.11.2026, a cliente que disse que não podia ir e não respondeu aos horários oferecidos): a conversa em `remarcando` cuja última mensagem é da IA há mais de 2 horas, sem mensagem da equipe depois de `remarcar_em` (`zap_conf_sem_retorno`), entra no reenvio das 9h da véspera com o texto próprio ("O seu atendimento de … continua agendado. Deseja remarcar para outro dia ou podemos cancelar?") e no aviso das 13h30 à recepção e ao advogado, que pede para ligar e, se for o caso, cancelar e liberar a vaga. O aviso das 13h30 passou a considerar apenas atendimentos de hoje e amanhã. SQL em `crm/fase2/migracoes/f489_remarcacao_sem_resposta.sql`.
 
+A **F490** (13.25, pedido do Paulo de 09.11.2026): o cartão "Último andamento" do Dashboard do caso (PJe, e-SAJ, eproc e INSS) mostra e ordena pela data do andamento, e não pela da importação (`dataDoDb`: a do movimento no `origem_id` do PJe, `mov:<num>:2025-03-05T15:33`, e a do portal no do PAT, `atualizacao:<prot>:AAAAMMDDhhmmss`); o movimento antigo reimportado mostrava "há 29 dias" sendo de 2025. O e-Recursos já usava a data do evento. Teste: `f466.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

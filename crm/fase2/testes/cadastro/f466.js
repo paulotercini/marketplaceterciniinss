@@ -50,6 +50,8 @@ const kB = base(cB, { origem_lista: "🖥 Conselho de Recursos", beneficio: "Apo
   processos: [{ numero: "50000420420264036102", papel: "ms", classe: "Mandado de Segurança" }], pje_link: "https://pje1g.trf3.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompletoAdvogado.seam?id=1&ca=abc" });
 T.casos.push(kB); T.atribuicoes.push({ caso_id: kB.id, colaborador_id: PAULO });
 and(kB, -5, "Conclusos para decisão", { origem: "pje", origem_id: "pje:50000420420264036102:1", autor_id: null });
+// F490 · movimento antigo importado hoje: vale a data do movimento (origem_id), e não a da importação
+and(kB, 0, "PJe (1º grau): Remetidos os Autos — em 05.03.2025 15:33 — MS 5000042-04.2026.4.03.6102", { origem: "pje", origem_id: `mov:50000420420264036102:${iso(-400)}T15:33:abc`, autor_id: null });
 
 // C · sem nada: o estado vazio
 const cC = cli("Caso Fictício Vazio");
@@ -128,6 +130,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   ({ p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cB, kB));
   conf("no Conselho o Último andamento é do e-Recursos", await p.locator(".db-and.crps").count() === 1 && /Encaminhado à Junta/.test(await p.locator(".db-and.crps .db-mov").textContent()));
   conf("o mandado de segurança ganha o segundo cartão, Judicial", await p.locator(".db-and.jud").count() === 1 && /Em paralelo · mandado de segurança/.test(await p.locator(".db-and.jud .db-par").textContent()) && /Conclusos/.test(await p.locator(".db-and.jud .db-mov").textContent()));
+  conf("a data do cartão é a do movimento, não a da importação (F490)", /há 5 dias/.test(await p.locator(".db-and.jud .db-when").textContent()) && !/Remetidos/.test(await p.locator(".db-and.jud .db-mov").textContent()));
   conf("o cartão Judicial tem o link do portal", await p.locator(".db-and.jud a.db-logo[target='_blank']").count() === 1);
   await ctx.close();
 

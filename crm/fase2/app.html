@@ -6874,7 +6874,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.24</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.25</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11806,14 +11806,20 @@ function dbDespacho(k, ands){
       ${dbAnteriores(k, Math.max(0, notas.filter(a=>!a.responde_a).length-1), "anotações", aberto, `dbVerAnt('${k.id}')`)}</div>
     ${corpo}${acoes}${aberto ? dbNumeros(k) : ""}</section>`;
 }
+// F490 · a data do andamento, e não a da importação: o PJe guarda a do movimento
+// no origem_id (mov:<num>:2025-03-05T15:33) e o PAT a do portal (atualizacao:<prot>:20251014225036)
+function dataDoDb(a){
+  const m = String((a&&a.origem_id)||"").match(/^atualizacao:[^:]*:(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/);
+  return m ? `${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:00` : dataDoMovimento(a);
+}
 function dbAndamento(k, ands, fase, par){
   let it = null;
   if(fase==="inss"){
-    const pats = (ands||[]).filter(a=>!a.excluir && a.origem==="pat").sort((a,b)=>(a.criado_em||"")<(b.criado_em||"")?1:-1);
+    const pats = (ands||[]).filter(a=>!a.excluir && a.origem==="pat").sort((a,b)=>dataDoDb(a)<dataDoDb(b)?1:-1);
     const a = pats[0]; if(!a) return "";
     const sit = pats.map(x=>String(x.origem_id||"")).find(o=>o.startsWith("situacao:"));
     const prot = protocolosDe(k)[0];
-    it = {cls:"", nome:"Meu INSS", onde:"INSS", logo:iconeFonte("inss"), iso:a.criado_em, txt:dbLead(a.texto), sub:sit ? sit.split(":").slice(2).join(":") : especieDoCaso(k),
+    it = {cls:"", nome:"Meu INSS", onde:"INSS", logo:iconeFonte("inss"), iso:dataDoDb(a), txt:dbLead(a.texto), sub:sit ? sit.split(":").slice(2).join(":") : especieDoCaso(k),
       abrir: prot ? `abrirMeuInss('${escJs(prot)}')` : "", n:pats.length-1, aba:"inss", rot:"andamentos"};
   } else if(fase==="conselho"){
     const evs = crpsBlocos(k).flatMap(b=>(b.eventos||[]).map(e=>({e, nup:b.nup}))).sort((a,b)=>(isoCrps(a.e.data)||"")<(isoCrps(b.e.data)||"")?1:-1);
@@ -11824,9 +11830,9 @@ function dbAndamento(k, ands, fase, par){
       doc: doc ? `<button type="button" class="db-doc" onclick="abrirDecisao('${escJs(doc.storage)}')">${esc(doc.nome||"Documento")}</button>` : "",
       abrir: x.nup ? `window.open('${escJs(linkERecursos(x.nup))}','_blank','noopener')` : "", n:evs.length-1, aba:"crps", rot:"andamentos"};
   } else if(fase==="judicial"){
-    const pj = andamentosPje(ands), a = pj[0]; if(!a) return "";
+    const pj = andamentosPje(ands).sort((a,b)=>dataDoDb(a)<dataDoDb(b)?1:-1), a = pj[0]; if(!a) return "";
     const sis = sisCurtoDoMov(a), href = linkPjeDoAndamento(a, k) || linkPjeDoCaso(k);
-    it = {cls:"jud", nome:sis, onde:sis, logo:iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sis]||"pje"), iso:a.criado_em, txt:dbLead(a.texto), sub:"",
+    it = {cls:"jud", nome:sis, onde:sis, logo:iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sis]||"pje"), iso:dataDoDb(a), txt:dbLead(a.texto), sub:"",
       href, n:pj.length-1, aba:"cnj", rot:"andamentos"};
   } else return "";
   const logo = it.href ? `<a class="db-logo" href="${esc(it.href)}" target="_blank" rel="noopener" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</a>`
