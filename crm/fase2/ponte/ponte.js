@@ -302,7 +302,7 @@ async function conectar() {
 // espera crescente e, se ainda falhar, guarda a mensagem crua num arquivo do
 // servidor, que é reprocessado a cada 5 minutos (gravar() não duplica).
 const RECENTE_MS = 3 * 864e5;
-const FILA_LOCAL = path.join(__dirname, "pendentes.jsonl");
+const FILA_LOCAL = process.env.PONTE_FILA || path.join(__dirname, "pendentes.jsonl");   // PONTE_FILA: só nos testes, que rodam em paralelo
 // sem o baileys instalado (a integração contínua só roda os testes), a fila vai em JSON simples; na ponte ele sempre existe
 const bufferJson = () => { try { return require("@whiskeysockets/baileys").BufferJSON; } catch { return {}; } };
 async function guardarComInsistencia(m, baixar, esperas = [2000, 10000, 30000]) {
