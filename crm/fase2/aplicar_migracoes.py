@@ -111,7 +111,20 @@ def aplicar():
         consulta(sql + "\n;\ninsert into public._migracoes (nome, sha256) values ("
                  + literal(p.name) + ", " + literal(sha) + ");")
         print(f"aplicada: {p.name}")
+    if lista:
+        guarda_anon()
     return 0
+
+
+# F508 · a função SECURITY DEFINER criada por migração nascia aberta à chave anônima, apesar do
+# default privileges da F312; depois de cada rodada, fecha de novo (salvo as portas do SMBot).
+GUARDA_ANON = (PASTA / "f508_anon_sem_funcoes.sql").read_text(encoding="utf-8") if (PASTA / "f508_anon_sem_funcoes.sql").exists() else ""
+
+
+def guarda_anon():
+    if GUARDA_ANON:
+        consulta(GUARDA_ANON)
+        print("guarda: execução anônima fechada nas funções SECURITY DEFINER")
 
 
 if __name__ == "__main__":
