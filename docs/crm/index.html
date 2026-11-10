@@ -4262,6 +4262,9 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .aq-pq-lista button{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;width:100%;padding:8px 10px;border:1px solid var(--borda);border-radius:10px;background:#fff;font:inherit;text-align:left;cursor:pointer}
 .aq-pq-lista button:hover,.aq-pq-lista button:focus-visible{border-color:var(--azul)}
 .aq-pq-lista span{flex-basis:100%;font-size:12px;color:var(--cinza,#4A4944)}
+.aq-pq-lista .aq-pq-it{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;padding:8px 10px;border:1px solid var(--borda);border-radius:10px;background:#fff;font-size:inherit;color:inherit}
+.aq-pq-ant-bt{margin-top:10px}
+#aq-pq-ant h4{margin:10px 0 0;font-size:13px}
 .aq-ev.aq-achado{outline:3px solid var(--azul);outline-offset:1px;z-index:5}
 .aq-agendar{border:0;border-radius:8px;padding:8px 14px;background:var(--azul);color:#fff;font:inherit;font-weight:600;cursor:pointer}
 .aq-alerta{padding:10px 14px;border-radius:12px;background:#F8ECD8;color:#8A5300;border:1px solid #EEDCBC;font-size:14px}
@@ -6998,7 +7001,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.33</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.34</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -58050,8 +58053,26 @@ function achadosAgenda(q){
 function pesquisarAgenda(){
   caixa(`<div class="aq-fluxo aq-pesquisa"><h3>Pesquisar na agenda</h3>
     <label class="aq-campo">Nome ou telefone do cliente<input id="aq-pq" class="aq-inp" autocomplete="off" placeholder="Digite ao menos 2 letras"></label>
-    <div id="aq-pq-res" aria-live="polite"></div></div>`);
-  const inp = document.getElementById("aq-pq"), out = document.getElementById("aq-pq-res");
+    <div id="aq-pq-res" aria-live="polite"></div>
+    <button class="btn-mini aq-pq-ant-bt" title="Procurar nos atendimentos que já passaram"><span aria-hidden="true">Anteriores</span><span class="sr-only">Procurar nos atendimentos que já passaram</span></button>
+    <div id="aq-pq-ant" aria-live="polite"></div></div>`);
+  const inp = document.getElementById("aq-pq"), out = document.getElementById("aq-pq-res"), ant = document.getElementById("aq-pq-ant");
+  // F510 · o passado só vem a pedido, pelo Apps Script (até 5 anos), para não pesar a agenda nem a primeira tela
+  document.querySelector(".aq-pq-ant-bt").onclick = async () => {
+    const q = inp.value.trim();
+    if(q.replace(/\s/g,"").length<2){ ant.innerHTML = `<p class="aq-vazio">Digite ao menos 2 letras.</p>`; inp.focus(); return; }
+    ant.innerHTML = `<p class="meio-sub">Procurando nos atendimentos anteriores…</p>`;
+    try{
+      const r = (await agendaApi("historico", {q})).atendimentos || [];
+      if(inp.value.trim()!==q) return;
+      ant.innerHTML = `<h4>Atendimentos anteriores</h4>` + (r.length ? `<ul class="aq-pq-lista">${r.map(e=>`<li><span class="aq-pq-it"><i class="aq-bola p-${e.profissional||"paulo"}"></i>
+        <b>${esc(nomeDoEvento(e))}</b><span>${diaExt(e.data)}, ${dataBR(e.data)} às ${hmTxt(e.inicio)} · ${esc(nomeProf(e.profissional||"paulo"))} · ${esc(e.tipo||"")}</span></span></li>`).join("")}</ul>`
+        : `<p class="aq-vazio">Nenhum atendimento anterior encontrado.</p>`);
+    }catch(e){
+      if(inp.value.trim()!==q) return;
+      ant.innerHTML = `<p class="aq-vazio">${e.codigo==="ACAO_INVALIDA" ? "A agenda do Google ainda está na versão antiga: falta publicar a versão nova do Apps Script." : esc(e.message)}</p>`;
+    }
+  };
   const pintar = () => {
     const q = inp.value, falta = PROFS_AGENDA.filter(pr=>!agq.cache[pr]);
     const r = achadosAgenda(q);
@@ -58063,7 +58084,7 @@ function pesquisarAgenda(){
       : `<p class="aq-vazio">Nenhum atendimento encontrado.</p>`) + nota;
     out.querySelectorAll("[data-aqpq]").forEach(b=>b.onclick=()=>irAoAtendimento(r.find(e=>e.id===b.dataset.aqpq)));
   };
-  inp.oninput = pintar; inp.focus(); pintar();
+  inp.oninput = () => { ant.innerHTML = ""; pintar(); }; inp.focus(); pintar();
   // as agendas que ainda não vieram carregam agora, e a lista se refaz quando chegam
   PROFS_AGENDA.filter(pr=>!agq.cache[pr]).forEach(pr=>carregarAgenda(pr).then(()=>{ if(document.getElementById("aq-pq")===inp) pintar(); }).catch(()=>{}));
 }
