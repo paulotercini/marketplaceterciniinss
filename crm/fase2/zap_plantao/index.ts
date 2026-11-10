@@ -442,7 +442,8 @@ export const ESQ_ANDAMENTO = {
   },
 };
 type AndCaso = { beneficio?: string | null; fase: string; etapa?: string | null; etapa_sugerida?: string | null; etapa_sugerida_desde?: string | null;
-  andamentos: { em: string; origem: string; texto: string }[] };
+  andamentos: { em: string; origem: string; texto: string }[];
+  trf3?: { ordem?: number; total?: number; orgao?: string; consultado_em?: string; previsao?: string } | null };
 export type Andamento = { conversa_id: string; contato: string; relacao?: string | null; cliente?: string | null; casos: AndCaso[]; mensagens: Msg[]; atendente?: Atendente | null };
 // o mascarar tomaria "28.09.2026 14:23" por número; a data do andamento é o que a resposta precisa dizer
 export const mascararMenosDatas = (s: string) => {
@@ -451,6 +452,16 @@ export const mascararMenosDatas = (s: string) => {
   return m.replace(/§(\d+)§/g, (_, i) => datas[+i]);
 };
 const ORIGEM_AND: Record<string, string> = { app: "anotação da equipe", todo: "anotação da equipe", mcp: "anotação da equipe", whatsapp: "anotação da equipe" };
+// F494 · medianas dos processos do escritório (09.11.2026; o B31 documental informado pelo Paulo em 10.11.2026)
+export const TEMPOS_MEDIDOS = `INSS: auxílio por incapacidade por análise documental (Atestmed), de 2 a 3 semanas; aposentadoria, ` +
+  `aproximadamente 1 mês e meio do pedido à decisão; BPC, aproximadamente 1 mês; auxílio-acidente, aproximadamente 3 meses e meio; revisão, ` +
+  `aproximadamente 2 anos. Conselho de Recursos: do recurso à primeira decisão, aproximadamente 14 meses (o INSS leva cerca de 4 meses para ` +
+  `encaminhar e a distribuição espera cerca de 10 meses; distribuído, o relator decide em cerca de 2 meses e meio); recurso especial na Câmara, ` +
+  `aproximadamente 11 meses; cumprimento do acórdão pelo INSS, aproximadamente 10 meses. Juizado Especial Federal: da distribuição à sentença, ` +
+  `aproximadamente 9 meses; a perícia, cerca de 4 meses depois da distribuição; do laudo (ou da conclusão para julgamento) à sentença, ` +
+  `aproximadamente 1 mês e meio; Turma Recursal, aproximadamente 4 meses até o acórdão. Vara federal (rito comum): da distribuição à sentença, ` +
+  `aproximadamente 2 anos e meio. Apelação no TRF3 sem fila conhecida, aproximadamente 7 meses. Mandado de segurança, aproximadamente 3 meses. ` +
+  `Do trânsito em julgado ao pagamento da RPV, aproximadamente 7 meses. Justiça Estadual: sem medição, não estime.`;
 export function promptAndamento(a: Andamento, agora = new Date()) {
   const hoje = agora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "full", timeStyle: "short" });
   const quem = a.relacao ? `${a.contato} (${a.relacao} de ${a.cliente || "o cliente"})` : a.contato;
@@ -458,7 +469,10 @@ export function promptAndamento(a: Andamento, agora = new Date()) {
     const ands = (k.andamentos || []).map((x) =>
       `  - registrado em ${hora(x.em)} (${ORIGEM_AND[x.origem] || "portal " + x.origem}): ${mascararMenosDatas(x.texto).slice(0, 400)}`).join("\n");
     const sug = k.etapa_sugerida ? `; pelos fatos dos portais a etapa é "${k.etapa_sugerida}" desde ${k.etapa_sugerida_desde || "data não informada"}` : "";
-    return `Caso ${i + 1}: ${k.beneficio || "benefício não informado"}, fase ${k.fase}, etapa declarada "${k.etapa || "sem etapa"}"${sug}.\n${ands || "  - sem andamentos"}`;
+    const t = k.trf3;   // F494 · a fila do gabinete no TRF3 (casos.trf3, crm/trf3_ordem.py)
+    const fila = t && t.ordem ? `\n  - fila de julgamento no TRF3${t.orgao ? ` (${t.orgao})` : ""}: ${t.ordem}º${t.total ? ` de ${t.total}` : ""}` +
+      `${t.consultado_em ? `, consulta de ${t.consultado_em}` : ""}${t.previsao ? `; previsão estimada de julgamento: ${t.previsao.slice(0, 7)}` : ""}` : "";
+    return `Caso ${i + 1}: ${k.beneficio || "benefício não informado"}, fase ${k.fase}, etapa declarada "${k.etapa || "sem etapa"}"${sug}.${fila}\n${ands || "  - sem andamentos"}`;
   }).join("\n\n");
   return `Você ajuda a equipe de um escritório de advocacia previdenciária a responder no WhatsApp. O cliente perguntou pelo andamento ` +
     `do processo. Escreva a resposta que o colaborador conferirá e enviará; ela não sai sozinha.\n\n` +
@@ -467,17 +481,17 @@ export function promptAndamento(a: Andamento, agora = new Date()) {
     `Com sugerir = true, leia os casos abaixo. A data do fato é a que vem no texto do andamento do portal ("em 28.09.2026"), e não a data ` +
     `do registro. Quando a etapa declarada e a dos portais divergem, vale o andamento mais recente do portal. Com mais de um caso, fale do ` +
     `que a conversa indica ou de cada um em uma frase. Diga em palavras simples onde o processo está e desde quando, com a data no negrito ` +
-    `do WhatsApp (*28/09/2026*), quanto costuma demorar e a previsão. Use estas estimativas do escritório quando o andamento não disser ` +
-    `outra coisa: processo judicial aguardando sentença (concluso para julgamento), aproximadamente 6 meses; recurso no Conselho de Recursos ` +
-    `aguardando julgamento, aproximadamente 6 meses; pedido no INSS em análise, aproximadamente 3 meses; pagamento por RPV, aproximadamente 2 meses. ` +
+    `do WhatsApp (*28/09/2026*), quanto costuma demorar e a previsão. Processo no TRF3 com a fila de julgamento: a previsão é a da fila ` +
+    `(diga o mês e o ano e que é estimativa pela posição do processo no gabinete). Nos demais, use o tempo que os processos do escritório ` +
+    `levaram (medição de 09.11.2026), contado da data do fato: ` + TEMPOS_MEDIDOS + ` ` +
     `Perícia, audiência ou prazo do escritório com data: diga a data. Sem andamento que permita dizer onde o processo está, escreva que ` +
     `o escritório vai conferir e retornar. Nunca prometa resultado nem prazo certo; nunca cite número de processo, NB ou protocolo.\n\n` +
     `Forma, como no modelo: o cumprimento do período do dia com o primeiro nome de quem escreve e "Tudo bem?", linha em branco, a situação, ` +
     `linha em branco, o fecho. Português formal, sem emoji, sem lista, sem assinatura, "a senhora" ou "o senhor" só quando o nome deixar claro.\n` +
     primeiraPessoa(a.atendente) + `\n` +
     `Modelo (processo concluso para julgamento):\nBom dia, Roseli! Tudo bem?\n\nConsultei o processo e ele está aguardando a decisão do juiz ` +
-    `desde *28/09/2026*. Essas decisões costumam demorar aproximadamente 6 meses. Nossa previsão é que tenhamos uma resposta somente no ` +
-    `próximo ano. Infelizmente é bastante lento.\n\nSigo acompanhando e, assim que houver alguma novidade, entro em contato. ` +
+    `desde *28/09/2026*. Nos processos do escritório, a sentença tem saído em aproximadamente 1 mês e meio depois desse ponto. ` +
+    `Nossa previsão é que tenhamos uma resposta em novembro.\n\nSigo acompanhando e, assim que houver alguma novidade, entro em contato. ` +
     `Se a senhora tiver alguma dúvida, fico à disposição.\n\n` +
     `Agora: ${hoje}. Quem escreve neste número: ${quem}. Cliente da ficha: ${a.cliente || "não informado"}.\n\n` +
     `<casos>\n${casos || "sem casos abertos"}\n</casos>\n\n<conversa>\n${transcricao(a.mensagens || [])}\n</conversa>`;
