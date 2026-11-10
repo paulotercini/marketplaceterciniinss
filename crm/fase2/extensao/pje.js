@@ -253,7 +253,7 @@
     try { expedientes = await lerAbaExpedientes(cab.numero); } catch (e) { console.warn('expedientes:', e); }
     const OUT = { versao: 1, fonte: 'pje-processo', grau, host: location.host,
                   quando: new Date().toISOString(), numero: cab.numero,
-                  classe: cab.classe || null, orgao: cab.orgao || null,
+                  classe: cab.classe || null, orgao: cab.orgao || null, ...(cab.detalhes ? { detalhes: cab.detalhes } : {}),
                   link: location.href.split('#')[0], itens, ...(expedientes ? { expedientes } : {}) };
     // F187 · na rodada "completar processos" quem entrega (em lotes) é o
     // service worker: aqui só se devolve o processo lido
