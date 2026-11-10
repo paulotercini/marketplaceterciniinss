@@ -6896,7 +6896,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.28</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.29</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11892,7 +11892,7 @@ function dashboardPe(k, ands){
 // e os cartões dos processos ativos (INSS, CRPS, Judicial) à direita (opção A ajustada, aprovada pelo Paulo em 10.11.2026)
 function dashboardLado(k, ands, painel){
   const pe = dashboardPe(k, ands);
-  return `<div class="db-grade"><div class="db-grade-in${pe ? " com-lado" : ""}"><div class="db-col-esq">${composerCaso(k)}${dashboardDoCaso(k, ands)}${painel}</div>${pe ? `<div class="db-col-dir">${pe}</div>` : ""}</div></div>`;
+  return `<div class="db-grade"><div class="db-grade-in${pe ? " com-lado" : ""}"><div class="db-col-esq">${dashboardDoCaso(k, ands)}${composerCaso(k)}${painel}</div>${pe ? `<div class="db-col-dir">${pe}</div>` : ""}</div></div>`;
 }
 function ligarCartoes(){
   pintarCursor();                     // o cursor do teclado sobrevive ao render

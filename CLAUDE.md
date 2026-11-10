@@ -663,6 +663,8 @@ A **F498** (13.27, escolha do Paulo de 10.11.2026 entre os usos do ElevenLabs): 
 
 A **F499** (13.28, opção A aprovada pelo Paulo em 10.11.2026, https://claude.ai/artifact/5fqQzsL5XGBhKsjZqDLtLv): no Dashboard do caso, o computador põe o Último andamento no Escritório à esquerda, com o campo de escrever só acima dele, e os cartões do processo à direita (`dashboardLado`, `.db-grade` com container query a partir de 560 px; abaixo disso, um abaixo do outro). O cartão do processo só aparece com processo na fase do caso, e o mandado de segurança em paralelo dá o segundo cartão; no Pagamento vale o judicial que gerou a RPV (`dashboardPe` deixou de cair em outra fase). O cartão do Conselho diz "Último andamento no CRPS". "Ver anotações anteriores" abre a linha do tempo para baixo, na coluna do Escritório, com o dia em cima e a hora no cartão, e os cartões do processo continuam ao lado. Teste: `f466.js` (33 itens).
 
+A **F500** (13.29, pedido do Paulo de 10.11.2026): no Dashboard do caso, o campo de escrever (`composerCaso`) fica abaixo do cartão do Último andamento no Escritório, e não mais acima dele (`dashboardLado`). Teste: `f466.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
