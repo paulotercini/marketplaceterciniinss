@@ -1,4 +1,4 @@
-// F495 · os botões do processo (plano aprovado pelo Paulo em 09.11.2026): Ler, Tela, Expedientes e Detalhes nos cartões do
+// F497 · os botões do processo (plano aprovado pelo Paulo em 09.11.2026): Ler, Tela, Expedientes e Detalhes nos cartões do
 // INSS, do Conselho e do Judicial; a barra do pé da árvore (Baixar, Marcadas, MD, Imagens, Claude, Projeto) e o botão IA de
 // cada documento (Resumo, Prazo, Pontos e, no laudo, Laudo), na cor do quadro. Banco simulado e dados fictícios. Uso: node f495.js
 const { chromium } = require("playwright");

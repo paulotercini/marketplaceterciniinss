@@ -664,7 +664,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
       + (inicio + parte.length < t.length ? ` · continue com inicio=${inicio + parte.length}` : "") + `\n\n${parte}`);
   });
 
-  // F495 · o processo inteiro de uma vez: índice com as folhas e o texto de cada peça,
+  // F497 · o processo inteiro de uma vez: índice com as folhas e o texto de cada peça,
   // na ordem cronológica, para a IA ler sem pedir documento por documento
   server.registerTool("processo_inteiro", {
     title: "Ler o processo inteiro",

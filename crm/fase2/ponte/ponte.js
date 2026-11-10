@@ -351,6 +351,23 @@ async function jidsDoFone(s, fone) {
   if (lid) lidParaFone.set(lid, pn);
   return [...new Set([lid, pn].filter(Boolean))];
 }
+// F495 · para onde mandar: o onWhatsApp às vezes nega o número que tem conversa no celular
+// (Sidneia, 09.11.2026); tenta com e sem o nono dígito e, por fim, o @lid já conhecido do número
+async function enderecoDe(s, telefone) {
+  const fones = N.variantesFone(telefone);
+  for (const fone of fones) {
+    const [w] = await s.onWhatsApp(fone).catch(() => []);
+    if (w && w.exists) return { exists: true, jid: w.jid };
+  }
+  const lm = s.signalRepository && s.signalRepository.lidMapping;
+  for (const fone of fones) {
+    const pn = `${fone}@s.whatsapp.net`;
+    let lid = lidDoJid(pn);
+    if (!lid && lm && lm.getLIDForPN) lid = await Promise.resolve(lm.getLIDForPN(pn)).catch(() => null);
+    if (lid) { log("endereço pelo @lid:", fone); return { exists: true, jid: lid }; }
+  }
+  return null;
+}
 setInterval(() => {
   if (lidParaFone.size === lidsGravados) return;
   try { fs.writeFileSync(LIDS, JSON.stringify(Object.fromEntries(lidParaFone))); lidsGravados = lidParaFone.size; }
@@ -744,7 +761,7 @@ async function reagir(r, s = sock) {
     const [m] = await sb(`/rest/v1/zap_mensagens?id=eq.${r.mensagem_id}&select=externo_id,direcao,conversa_id`);
     const [c] = m ? await sb(`/rest/v1/zap_conversas?id=eq.${m.conversa_id}&select=telefone`) : [];
     if (!m || !m.externo_id || !c) throw new Error("mensagem sem id no WhatsApp");
-    const [achado] = await s.onWhatsApp(N.soDigitos(c.telefone));
+    const achado = await enderecoDe(s, c.telefone);
     if (!achado || !achado.exists) throw new Error("número não tem WhatsApp");
     lembrar(await s.sendMessage(achado.jid, { react: { text: r.emoji, key: N.chaveDaMensagem(achado.jid, m) } }));
     await sb(`/rest/v1/zap_reacoes?id=eq.${r.id}`, { method: "PATCH", headers: { Prefer: "return=minimal" },
@@ -766,7 +783,7 @@ async function alterarEnviada(msg, s = sock) {
   try {
     if (!msg.externo_id || msg.direcao !== "saida") throw new Error("mensagem sem id no WhatsApp");
     const [c] = await sb(`/rest/v1/zap_conversas?id=eq.${msg.conversa_id}&select=telefone`);
-    const [achado] = c ? await s.onWhatsApp(N.soDigitos(c.telefone)) : [];
+    const achado = c ? await enderecoDe(s, c.telefone) : null;
     if (!achado || !achado.exists) throw new Error("número não tem WhatsApp");
     const key = N.chaveDaMensagem(achado.jid, msg);
     const feita = { ...a, status: "feita", feita_em: agora() };
@@ -828,7 +845,7 @@ async function enviar(msg, s = sock) {
     if (!c) throw new Error("conversa sem telefone");
     // deixar o WhatsApp dizer qual é o endereço certo resolve o nono dígito:
     // 16 9 9999-0000 e 16 9999-0000 podem ser a mesma pessoa, e só ele sabe
-    const [achado] = await s.onWhatsApp(N.soDigitos(c.telefone));
+    const achado = await enderecoDe(s, c.telefone);
     if (!achado || !achado.exists) throw new Error("número não tem WhatsApp");
 
     await s.sendPresenceUpdate("composing", achado.jid);

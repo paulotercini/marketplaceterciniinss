@@ -489,6 +489,7 @@ console.log("formal: ok");
   assert.ok(p.includes("Conclusos para julgamento") && p.includes("aguardando sentença"), "o andamento e a etapa dos portais vão ao modelo");
   assert.ok(!p.includes("5001864"), "o número do processo vai mascarado");
   assert.ok(p.includes("de 2 a 3 semanas") && p.includes("aproximadamente 9 meses") && !p.includes("aproximadamente 6 meses") && p.includes("*28/09/2026*"), "os tempos medidos e o negrito do WhatsApp");
+  assert.ok(p.includes("ação acidentária (TJSP)") && p.includes("cerca de 8 meses") && !p.includes("Justiça Estadual: sem medição, não estime"), "F496 · o tempo medido da ação acidentária estadual");
   const f = promptAndamento({ conversa_id: "c", contato: "Ana", casos: [{ beneficio: "B42", fase: "judicial", andamentos: [],
     trf3: { ordem: 1098, total: 3173, orgao: "10ª Turma", consultado_em: "2026-10-30", previsao: "2027-03-15" } }], mensagens: [] });
   assert.ok(f.includes("1098º de 3173") && f.includes("previsão estimada de julgamento: 2027-03"), "F494 · a fila do TRF3 vai ao modelo");

@@ -461,7 +461,7 @@ export const TEMPOS_MEDIDOS = `INSS: auxílio por incapacidade por análise docu
   `aproximadamente 9 meses; a perícia, cerca de 4 meses depois da distribuição; do laudo (ou da conclusão para julgamento) à sentença, ` +
   `aproximadamente 1 mês e meio; Turma Recursal, aproximadamente 4 meses até o acórdão. Vara federal (rito comum): da distribuição à sentença, ` +
   `aproximadamente 2 anos e meio. Apelação no TRF3 sem fila conhecida, aproximadamente 7 meses. Mandado de segurança, aproximadamente 3 meses. ` +
-  `Do trânsito em julgado ao pagamento da RPV, aproximadamente 7 meses. Justiça Estadual: sem medição, não estime.`;
+  `Do trânsito em julgado ao pagamento da RPV, aproximadamente 7 meses. Justiça Estadual, ação acidentária (TJSP): do ajuizamento à sentença ou ao acordo homologado, cerca de 8 meses (de 3 a 18 meses; metade termina em acordo); no Núcleo 4.0 de Acidentes do Trabalho há processos com mais de 15 meses sem sentença. Apelação, pagamento e RPV na Justiça Estadual: sem medição suficiente, não estime. Outras ações estaduais: não estime.`;
 export function promptAndamento(a: Andamento, agora = new Date()) {
   const hoje = agora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "full", timeStyle: "short" });
   const quem = a.relacao ? `${a.contato} (${a.relacao} de ${a.cliente || "o cliente"})` : a.contato;

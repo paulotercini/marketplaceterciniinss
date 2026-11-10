@@ -11857,7 +11857,7 @@ function dbAndamento(k, ands, fase, par){
       ${dbAnteriores(k, Math.max(0, it.n), it.rot, false, `irSubAba('${it.aba}')`)}</div>
     <p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>${it.doc||""}${it.bts||""}</section>`;
 }
-// F495 · os botões do cartão Judicial (plano aprovado pelo Paulo em 10.11.2026): Ler o processo do andamento,
+// F497 · os botões do cartão Judicial (plano aprovado pelo Paulo em 10.11.2026): Ler o processo do andamento,
 // Expedientes só no PJe com a aba lida, e Detalhes, que abre a aba Judicial. Na cor do quadro (--db-cor).
 function dbBotoes(k, aba, dig, sis){
   const ps = processosDaFase(k, aba); if(!ps.length) return "";
@@ -38209,7 +38209,7 @@ const PEDIDOS_PROCESSO = [
   ["p_laudo",   "Confronto do laudo com os documentos médicos", "Confronte o laudo pericial com os documentos médicos dos autos: as divergências de diagnóstico, de data de início da incapacidade e de limitação, com as fls. de cada um."],
   ["p_minuta",  "Minuta da próxima peça",                      "Diga qual é a próxima peça do escritório neste processo e redija a minuta, com os fatos e as provas citados pelas fls."],
 ];
-// F495 · o botão IA de cada documento: pedidos curtos sobre um documento só (Laudo só no laudo)
+// F497 · o botão IA de cada documento: pedidos curtos sobre um documento só (Laudo só no laudo)
 const PEDIDOS_DOC1 = [
   ["d_resumo", "Resumo",  "Resuma este documento: o que decide ou pede, as datas e o próximo passo do escritório."],
   ["d_prazo",  "Prazo",   "Diga se este documento abre prazo: qual ato, a data da intimação ou ciência, o termo final contado e a providência cabível."],
@@ -38412,7 +38412,7 @@ function piZoomPara(z, guardar, foco){
   if(autos){ autos.scrollTop = py * autos.scrollHeight - fy; autos.scrollLeft = px * autos.scrollWidth - fx; }
   if(guardar) try{ localStorage.setItem("crm_pi_zoom", z); }catch(e){}
 }
-// F495 · a barra do pé da árvore: o processo sai do CRM para o Claude ou outra inteligência
+// F497 · a barra do pé da árvore: o processo sai do CRM para o Claude ou outra inteligência
 const COR_FASE_DB = {inss:"#4F78B0", crps:"#8A5A1E", cnj:"#6B3FA0"};
 function barraArvore(){
   const b = (fn, rot, frase, cls="") => `<button class="db-bt ${cls}" onclick="${fn}" title="${frase}"><span aria-hidden="true">${rot}</span><span class="sr-only">${frase}</span>${cls.includes("pi-claude")?'<span class="pi-claude-n"></span>':""}</button>`;
@@ -38476,7 +38476,7 @@ async function piImagens(){
     aviso(falhas ? `⬇ ${n} folhas; ${falhas} peça(s) não baixaram` : `⬇ ${n} folhas em JPG`);
   }catch(err){ aviso("Não consegui montar as imagens: " + err.message); }
 }
-// F495 · o botão IA de um documento: Resumo, Prazo, Pontos e, no laudo, Laudo
+// F497 · o botão IA de um documento: Resumo, Prazo, Pontos e, no laudo, Laudo
 function botaoIaDoc(casoId, chave, nome, cls){
   return `<button class="${cls||"db-bt"}" onclick="event.stopPropagation();menuClaudeDocs('${casoId}',[${esc(JSON.stringify(chave))}],'doc')" title="Pedir à IA sobre este documento"><span aria-hidden="true">IA</span><span class="sr-only">Pedir à IA sobre este documento</span></button>`;
 }
