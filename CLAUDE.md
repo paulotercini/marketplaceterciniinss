@@ -655,6 +655,8 @@ A **F494** (pedido do Paulo de 10.11.2026): a sugestão de resposta sobre o anda
 
 A **F495** (pedido do Paulo de 10.11.2026, as duas mensagens da Amanda à Sidneia que ficaram "não enviou"): a ponte desistia com "número não tem WhatsApp" quando o `onWhatsApp` negava o número, embora o celular tivesse a conversa (o histórico dela veio pelo `@lid`). O envio, a reação e a edição passam por `enderecoDe`: o número com e sem o nono dígito (`variantesFone`) e, por fim, o `@lid` conhecido do número (mapa aprendido ou `lidMapping.getLIDForPN`). Vale depois do deploy da ponte. Teste: `crm/fase2/ponte/testes/fila.test.js`.
 
+A **F496** (pedido do Paulo de 10.11.2026): a sugestão de andamento (F422ak, F494) passou a ter o tempo da ação acidentária na Justiça Estadual, medido em 10.11.2026 pelos movimentos públicos do DataJud (TJSP) de 26 processos do escritório: do ajuizamento à sentença ou ao acordo homologado, mediana de cerca de 8 meses em 8 processos (de 3 a 18 meses; 4 terminaram em acordo), com o aviso de que no Núcleo 4.0 de Acidentes do Trabalho há processos com mais de 15 meses sem sentença. Apelação, pagamento e RPV estaduais tiveram menos de 5 casos e seguem sem estimativa (`TEMPOS_MEDIDOS`). Teste: `testes/funcoes/zap_plantao.test.mjs`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
