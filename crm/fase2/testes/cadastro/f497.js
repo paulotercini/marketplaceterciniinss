@@ -89,15 +89,15 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // ── 1 · INSS ──
   let { p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cA, kA);
-  conf("o cartão do INSS tem Ler, Tela e Detalhes", await bts(p, ".db-and") === "Ler,Tela,Detalhes");
+  conf("o cartão do INSS tem Ler, Tela, Detalhes, Baixar e Claude (F509)", await bts(p, ".db-and") === "Ler,Tela,Detalhes,Baixar,Claude");
   conf("os botões do cartão seguem a cor do quadro do INSS", await p.evaluate(() => { const b = document.querySelector(".db-and .db-bts button:not(.pri)"); return getComputedStyle(b).color === getComputedStyle(b.closest(".db-and")).getPropertyValue("--db-cor").trim() || /rgb/.test(getComputedStyle(b).color); }));
   conf("cada botão diz a frase inteira ao leitor de tela", await p.evaluate(() => [...document.querySelectorAll(".db-and .db-bts button")].every(b => b.title && b.querySelector(".sr-only"))));
   await ctx.close();
 
   // ── 2 · Conselho e o mandado de segurança ──
   ({ p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cB, kB));
-  conf("o cartão do Conselho tem Ler, Tela e Detalhes", await bts(p, ".db-and.crps") === "Ler,Tela,Detalhes");
-  conf("o cartão Judicial do PJe tem Ler, Expedientes e Detalhes", await bts(p, ".db-and.jud") === "Ler,Expedientes,Detalhes");
+  conf("o cartão do Conselho tem Ler, Tela, Detalhes, Baixar e Claude (F509)", await bts(p, ".db-and.crps") === "Ler,Tela,Detalhes,Baixar,Claude");
+  conf("o cartão Judicial do PJe tem Ler, Expedientes, Detalhes, Baixar e Claude (F509)", await bts(p, ".db-and.jud") === "Ler,Expedientes,Detalhes,Baixar,Claude");
   await p.evaluate(kid => lerProcesso(kid, "cnj", 0), kB.id); await p.waitForSelector("#proc-inteiro", { timeout: 5000 });
   const pe = await p.evaluate(() => [...document.querySelectorAll("#proc-inteiro .pi-arv-pe button")].map(b => b.querySelector("[aria-hidden]").textContent.trim()).join(","));
   conf(`a barra do pé da árvore tem os seis botões (${pe})`, pe === "Baixar,Marcadas,MD,Imagens,Claude,Projeto");

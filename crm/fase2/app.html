@@ -11971,7 +11971,7 @@ function dbAndamento(k, ands, fase, par){
       ${dbAnteriores(k, Math.max(0, it.n), it.rot, false, `irSubAba('${it.aba}')`)}</div>
     ${it.lista || `<p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>`}${it.doc||""}${it.bts||""}</section>`;
 }
-// F508 · as três últimas datas do processo no cartão Judicial (pedido do Paulo de 10.11.2026), sem o
+// F509 · as três últimas datas do processo no cartão Judicial (pedido do Paulo de 10.11.2026), sem o
 // prefixo do sistema, a data e o número que o texto do andamento repete; no mesmo dia, um item por movimento
 function movLimpo(t){
   return String(t||"").replace(/^\W*(?:PJe|e-SAJ|eproc)\b[^:]{0,30}:\s*/, "")
@@ -11988,7 +11988,7 @@ function dbMovsPje(pj){
     return partes.length===1 ? `<li>${dia} ${esc(partes[0])}</li>` : `<li>${dia}<ul>${partes.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></li>`; });
   return {html: `<ul class="db-mov db-movs">${lis.join("")}</ul>`, usados};
 }
-// F497/F508 · os botões dos cartões do processo, na cor do quadro (--db-cor). No Judicial, Expedientes e
+// F497/F509 · os botões dos cartões do processo, na cor do quadro (--db-cor). No Judicial, Expedientes e
 // Detalhes abrem logo abaixo do cartão (pedido do Paulo de 10.11.2026), e Baixar e Claude saíram da aba.
 const _dbPainel = new Map();
 function dbPainel(id, q){ _dbPainel.set(id, _dbPainel.get(id)===q ? "" : q); repintarFicha(); }
@@ -13214,7 +13214,7 @@ async function conferirPjeProc(coletaId){
     // F418 · a aba Expedientes do processo (extensão 1.35), só para mostrar: grava no aplicar
     if(Array.isArray(dados.expedientes)) plano.exps.push({caso_id:k.id, chave:`${dig}|${dados.grau||""}`,
       valor:{em:dados.quando||new Date().toISOString(), grau:dados.grau||"", host:dados.host||"", itens:dados.expedientes}});
-    // F508 · o cabeçalho do processo (Mais detalhes e as partes do título, extensão 1.35.1) vai a casos.ronda.detalhes
+    // F509 · o cabeçalho do processo (Mais detalhes e as partes do título, extensão 1.35.1) vai a casos.ronda.detalhes
     if(dados.detalhes && typeof dados.detalhes==="object") plano.exps.push({caso_id:k.id, campo:"detalhes", chave:`${dig}|${dados.grau||""}`,
       valor:{em:dados.quando||new Date().toISOString(), grau:dados.grau||"", ...dados.detalhes}});
     for(const it of (dados.itens||[])){
