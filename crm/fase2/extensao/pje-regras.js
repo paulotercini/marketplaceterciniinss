@@ -120,8 +120,25 @@
       : (h.match(/<title>\s*(\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4})/) || [])[1] || null;
     if (!numero) return null;
     const org = h.match(/(?:Órgão|&Oacute;rg&atilde;o) julgador\s*<\/dt>\s*<dd>\s*([^<]+?)\s*</);
-    return { numero, classe: (topo && topo[1]) || null,
-             orgao: org ? desHtml(org[1]).replace(/\s+/g, ' ') : null };
+    const out = { numero, classe: (topo && topo[1]) || null,
+                  orgao: org ? desHtml(org[1]).replace(/\s+/g, ' ') : null };
+    // 1.35.1 · todo o "Mais detalhes" (dt/dd) e as partes da segunda linha do título, para a
+    // tela Detalhes do CRM (pedido do Paulo, 10.11.2026)
+    const limpo = s => desAcento(desHtml(String(s).replace(/<[^>]*>/g, ' '))).replace(/\s+/g, ' ').trim();
+    const det = {};
+    for (const m of h.matchAll(/<dt[^>]*>([\s\S]*?)<\/dt>\s*<dd[^>]*>([\s\S]*?)<\/dd>/g)) {
+      const k = limpo(m[1]), v = limpo(m[2]);
+      if (k && v && !(k in det)) det[k] = v;
+    }
+    const partes = h.match(/>\s*([^<>]{3,200}?\S)\s+X\s+(\S[^<>]{2,200}?)\s*</);
+    if (partes) { det['Polo ativo'] = limpo(partes[1]); det['Polo passivo'] = limpo(partes[2]); }
+    if (Object.keys(det).length) out.detalhes = det;
+    return out;
+  }
+  // &Oacute; &atilde; &ccedil;… viram a letra com o acento
+  function desAcento(s) {
+    const M = { acute: '\u0301', grave: '\u0300', tilde: '\u0303', circ: '\u0302', cedil: '\u0327', uml: '\u0308' };
+    return String(s).replace(/&([A-Za-z])(acute|grave|tilde|circ|cedil|uml);/g, (_, l, d) => l + M[d]).replace(/&nbsp;/g, ' ').replace(/&ordf;/g, 'ª').replace(/&ordm;/g, 'º').normalize('NFC');
   }
 
   // processo arquivado: na cronologia (a mais recente primeiro), o primeiro
