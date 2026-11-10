@@ -39,7 +39,7 @@ const and = (k, n, texto, o = {}) => { const a = { id: id("e"), caso_id: k.id, a
 
 // o último dia útil antes de hoje, como o CRM conta
 const dUtil = (() => { let n = -1; for (;;) { const d = new Date(iso(n) + "T12:00:00"); if (d.getDay() % 6) return n; n--; } })();
-const cA = cli("Luciana Aparecida Fictícia Mendes de Oliveira"); cA.telefone="17996186303"; cA.cpf = "52998224725";
+const cA = cli("Luciana Aparecida Fictícia Mendes de Oliveira"); cA.telefone="16900000001"; cA.cpf = "52998224725";
 cA.campos = { notas_todo: [{ tipo: "cnpj", texto: "12.345.678/0001-90" }, { tipo: "aposentadoria", texto: "Possível aposentadoria especial em 22/10/2027" }] };
 const kA = caso(cA, { beneficio: "Aux. Incapacidade Temporária", especie: "B31", fase: "inss", importante: true, urgente: true, prazo: iso(10),
   ronda: { despacho: { em: ts(dUtil, "15:00"), por: PAULO, prazo: iso(10) } } });
@@ -49,7 +49,7 @@ const kB = caso(cB, { beneficio: "Apos. por Idade", especie: "B41", fase: "inss"
 and(kB, dUtil, "Pedido de documento enviado.");
 const cC = cli("Carla Fictícia Estrela");
 caso(cC, { beneficio: "Pensão por Morte", especie: "B21", fase: "inss", importante: true });
-caso(cli("Roseli Maria Fictícia Custodio Schisatti"), { beneficio: "Aux. Incapacidade", especie: "B46", fase: "inss", prazo: iso(-90) });
+caso(cli("Roseli Maria Fictícia Carvalho Sampaio"), { beneficio: "Aux. Incapacidade", especie: "B46", fase: "inss", prazo: iso(-90) });
 
 
 cA.campos.atendimento = [{ em: ts(-6), quem: "Paulo", texto: `Benefício negado; ciência pelo AR em ${iso(-6).split("-").reverse().join("/")}. Quer recorrer.` }];

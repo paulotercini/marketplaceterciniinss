@@ -14,7 +14,7 @@ const DETALHE = {
   nomeUnidade: 'SETOR TÉCNICO-ADMINISTRATIVO',
   idServico: 1655, nomeServico: 'Benefício Assistencial à Pessoa com Deficiência',
   siglaServico: 'TBSBAPD', especieBeneficio: 'AMP_SOCIAL_PORT_DEFICIENCIA',
-  interessados: [{ nome: 'ALMIR TRONFINI', cpf: '08575979817', dataNascimento: '04/03/1958' }],
+  interessados: [{ nome: 'ALMIR TAVARES', cpf: '08500000090', dataNascimento: '06/05/1958' }],
   comentarios: [{ conteudo: 'segurado relatou dor lombar' }, { conteudo: 'x' }, { conteudo: 'y' }],
   anexos: [{ nomeArquivo: 'laudo_oncologia.pdf' }],
   agendamentosPericia: [
@@ -220,7 +220,7 @@ test('anexo é contagem; comentário vem inteiro, e nada de cliente atravessa', 
   // `requerente` (é o que cadastra quem não tem ficha). Fora dele, nada.
   const { requerente, ...resto } = r;
   const s = JSON.stringify(resto);
-  for (const vaza of ['laudo_oncologia', 'ALMIR', 'TRONFINI', '08575979817', '1958'])
+  for (const vaza of ['laudo_oncologia', 'ALMIR', 'TAVARES', '08500000090', '1958'])
     assert.ok(!s.includes(vaza), `o resumo levou "${vaza}" junto`);
   assert.ok(!JSON.stringify(requerente || {}).includes('laudo_oncologia'), 'o anexo não entra no requerente');
 });
@@ -248,13 +248,13 @@ test('cada comentário traz id, data e quem escreveu', () => {
 
 test('a lista vira linha comparável, com o link pronto', () => {
   const r = T.resumoDaLista({ protocolo: '1462069078', status: 'Pendente',
-    cpfRequerente: 8575979817, nomeServico: 'BPC', siglaServico: 'TBSBAPD',
+    cpfRequerente: 8500000090, nomeServico: 'BPC', siglaServico: 'TBSBAPD',
     nomeUnidade: 'APS FRANCA', dataCriacao: '2026-07-31T17:36:47',
     dataUltimaAtualizacao: '2026-08-04T16:00:39' });
   assert.equal(r.situacao, 'Em análise');
   // o CPF vem como NÚMERO e perde o zero à esquerda no caminho; sem repor,
   // o casamento com o cadastro do CRM falha justamente em quem começa com 0
-  assert.equal(r.cpf, '08575979817');
+  assert.equal(r.cpf, '08500000090');
   assert.equal(r.cpf.length, 11);
   assert.equal(r.atualizado_em, '2026-08-04T16:00:39');
   assert.match(r.link, /detalhar_tarefa\/1462069078$/);

@@ -17,4 +17,11 @@ const v = escolherVagas([
 ], "001");
 assert.deepEqual(v.map((x) => x.eventoId), ["a1", "m2"], "só vaga com evento, dia bloqueado fora, do tipo pedido, em ordem");
 assert.equal(v[0].profissional, "amanda");
+// F515 · o segredo do cabeçalho: exigência desligada passa; ligada, só o segredo igual
+{
+  const { conferirSegredo } = await import("../../zap_agenda/index.ts");
+  assert.equal(conferirSegredo(null, "abc", false).ok, true);
+  assert.equal(conferirSegredo("abc", "abc", true).ok, true);
+  assert.equal(conferirSegredo("abx", "abc", true).ok, false);
+}
 console.log("zap_agenda: ok");

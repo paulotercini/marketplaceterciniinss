@@ -6,17 +6,17 @@
 const soDigitos = t => String(t || "").replace(/\D/g, "");
 
 // os 8 últimos dígitos, a mesma régua do fone_chave() do banco: é o que faz
-// +55 (16) 99999-0000, 5516999990000 e 16999990000 serem a mesma pessoa
+// +55 (00) 90000-0001, 5500900000001 e 00900000001 serem a mesma pessoa
 const chaveFone = t => soDigitos(t).slice(-8);
 
 const ehGrupo = jid => String(jid || "").endsWith("@g.us");
 const ehStatus = jid => String(jid || "").startsWith("status@");
 
-// '5516999990000@s.whatsapp.net' -> '5516999990000'
+// '5500900000001@s.whatsapp.net' -> '5500900000001'
 const jidParaFone = jid => soDigitos(String(jid || "").split("@")[0].split(":")[0]);
 
 // O WhatsApp passou a esconder o número de parte dos contatos atrás de um id
-// de privacidade ('119928724144327@lid'). Esse id não é telefone: não acha o
+// de privacidade ('100000000000001@lid'). Esse id não é telefone: não acha o
 // cliente e não serve para responder. O número verdadeiro vem ao lado, em
 // key.remoteJidAlt (Baileys 7; no 6 era key.senderPn); sem ele, fica o id, que ao menos guarda a conversa.
 // No que SAI do escritório (fromMe), o senderPn do Baileys 6 é o nosso número: aí o número do
@@ -41,7 +41,9 @@ const recente = (m, ms, agora = Date.now()) => {
 // Mensagem que não é conversa: recibo de entrega, reação, apagamento, chave
 // de criptografia. Entra no fluxo do Baileys e não pode virar linha na tela.
 const TIPOS_MUDOS = ["protocolMessage", "reactionMessage", "senderKeyDistributionMessage",
-                     "messageContextInfo", "pollUpdateMessage"];
+                     "messageContextInfo", "pollUpdateMessage", "encReactionMessage", "keepInChatMessage",
+                     "pinInChatMessage", "encEventResponseMessage", "albumMessage", "placeholderMessage",
+                     "messageHistoryBundle", "stickerSyncRmrMessage"];
 
 function miolo(m) {
   // o conteúdo real pode vir embrulhado uma ou duas vezes
@@ -50,6 +52,7 @@ function miolo(m) {
     if (c.ephemeralMessage) { c = c.ephemeralMessage.message || {}; continue; }
     if (c.viewOnceMessage) { c = c.viewOnceMessage.message || {}; continue; }
     if (c.viewOnceMessageV2) { c = c.viewOnceMessageV2.message || {}; continue; }
+    if (c.viewOnceMessageV2Extension) { c = c.viewOnceMessageV2Extension.message || {}; continue; }
     if (c.documentWithCaptionMessage) { c = c.documentWithCaptionMessage.message || {}; continue; }
     break;
   }
@@ -63,12 +66,19 @@ const MAPA = [
   ["stickerMessage", "figurinha"], ["locationMessage", "local"],
   ["liveLocationMessage", "local"], ["contactMessage", "contato"],
   ["contactsArrayMessage", "contato"],
+  // F514: o vídeo em círculo e a resposta de botão ou de lista
+  ["ptvMessage", "video"], ["buttonsResponseMessage", "texto"],
+  ["listResponseMessage", "texto"], ["templateButtonReplyMessage", "texto"],
 ];
+// F514 · o tipo que a ponte não traduz (enquete, evento, pedido…) sumia sem rastro: agora vira uma linha
+// de texto que manda ver no celular. Devolve o nome do campo, ou undefined
+const semTraducao = c => Object.keys(c).find(k => c[k] && !TIPOS_MUDOS.includes(k) && !MAPA.some(([x]) => x === k));
+const tipoSemTraducao = m => { const c = miolo(m); return MAPA.some(([k]) => c[k]) ? undefined : semTraducao(c); };
 
 function tipoDaMensagem(m) {
   const c = miolo(m);
   for (const [chave, tipo] of MAPA) if (c[chave]) return tipo;
-  return null;                       // nada que a gente saiba mostrar
+  return semTraducao(c) ? "texto" : null;   // null: nada de conversa (só protocolo)
 }
 
 function textoDaMensagem(m) {
@@ -84,6 +94,10 @@ function textoDaMensagem(m) {
     return `📍 ${l.degreesLatitude}, ${l.degreesLongitude}`;
   }
   if (c.contactMessage) return `👤 ${c.contactMessage.displayName || ""}`.trim();
+  for (const [k, campo] of [["buttonsResponseMessage", "selectedDisplayText"], ["listResponseMessage", "title"],
+    ["templateButtonReplyMessage", "selectedDisplayText"]]) if (c[k]) return c[k][campo] || "";
+  const d = tipoSemTraducao(m);
+  if (d) return `[mensagem de tipo ${d.replace(/Message$/, "")}, veja no celular]`;
   return "";
 }
 
@@ -225,5 +239,5 @@ const variantesFone = t => {
 };
 
 module.exports = { variantesFone, soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem, foneDaLigacao, agruparHistorico,
-                   miolo, tipoDaMensagem, textoDaMensagem, deveIgnorar,
+                   miolo, tipoDaMensagem, tipoSemTraducao, textoDaMensagem, deveIgnorar,
                    nomeSeguro, quandoWa, citacaoDe, reacaoDe, alteracaoDe, chaveDaMensagem, recente, naoAbriu };

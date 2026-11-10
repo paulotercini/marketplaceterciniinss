@@ -117,7 +117,7 @@
 
   // ── o que é formato, e o que só PARECE formato ─────────────────────────
   // A regra antiga aqui era "só dígito e pontuação = data/hora, deixa passar".
-  // Ela vazou: 258.266.798-67 é só dígito e pontuação, e uma sondagem real da
+  // Ela vazou: 529.982.247-25 é só dígito e pontuação, e uma sondagem real da
   // ficha entregou CPF de duas partes por causa dela. Também escapavam por
   // aqui os números antigos de processo do e-SAJ (368.01.2005.004008), CNPJ,
   // NB, RG e telefone.

@@ -1,4 +1,4 @@
--- F493 · quem atende já viu a mensagem? (pedido do Paulo de 09.11.2026, casos da Jesuína e da Rosângela)
+-- F493 · quem atende já viu a mensagem? (pedido do Paulo de 09.11.2026)
 -- ultima_entrada_em: a última mensagem do cliente; ultima_resposta_em: a última resposta da equipe (CRM ou celular,
 -- sem robô, IA e aviso automático); atendente_viu_em: quando quem atende abriu a conversa no CRM. Troca de atendente zera.
 alter table public.zap_conversas

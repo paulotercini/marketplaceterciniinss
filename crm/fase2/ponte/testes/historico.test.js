@@ -7,7 +7,7 @@ const t = require("node:test");
 const a = require("node:assert");
 const P = require("../ponte");
 
-const msg = (id, seg, fromMe = false) => ({ key: { id, remoteJid: "5516993460685@s.whatsapp.net", fromMe },
+const msg = (id, seg, fromMe = false) => ({ key: { id, remoteJid: "5500900000002@s.whatsapp.net", fromMe },
   messageTimestamp: seg, message: { conversation: "texto " + id } });
 
 t.test("busca o histórico pedido, grava as antigas e marca o pedido feito", async () => {
@@ -15,7 +15,7 @@ t.test("busca o histórico pedido, grava as antigas e marca o pedido feito", asy
   global.fetch = async (url, opts = {}) => {
     const u = String(url), m = opts.method || "GET";
     const ok = c => ({ ok: true, status: 200, text: async () => JSON.stringify(c) });
-    if (m === "GET" && u.includes("zap_conversas?historico_pedido")) return ok([{ id: "c1", telefone: "5516993460685" }]);
+    if (m === "GET" && u.includes("zap_conversas?historico_pedido")) return ok([{ id: "c1", telefone: "5500900000002" }]);
     if (m === "GET" && u.includes("order=quando_wa.asc")) return ok([{ externo_id: "NOVA", direcao: "entrada", quando_wa: "2026-10-26T16:48:00.000Z" }]);
     if (m === "GET" && u.includes("externo_id=eq.")) return ok([]);
     if (m === "POST" && u.includes("zap_mensagens")) { gravadas.push(JSON.parse(opts.body)); return ok(null); }
@@ -26,7 +26,7 @@ t.test("busca o histórico pedido, grava as antigas e marca o pedido feito", asy
   const paginas = [[], [msg("A2", t0 + 60, true), msg("A1", t0)], []];
   const pedidos = [];
   const zap = {
-    onWhatsApp: async () => [{ exists: true, jid: "5516993460685@s.whatsapp.net" }],
+    onWhatsApp: async () => [{ exists: true, jid: "5500900000002@s.whatsapp.net" }],
     fetchMessageHistory: async (n, chave) => { pedidos.push(chave.id); setTimeout(() => P._pagina(paginas.shift() || []), 5); },
   };
   P._ligado(true);
@@ -43,7 +43,7 @@ function semMensagem(paginas) {
   global.fetch = async (url, opts = {}) => {
     const u = String(url), m = opts.method || "GET";
     const ok = c => ({ ok: true, status: 200, text: async () => JSON.stringify(c) });
-    if (m === "GET" && u.includes("zap_conversas?historico_pedido")) return ok([{ id: "c2", telefone: "5516993460685" }]);
+    if (m === "GET" && u.includes("zap_conversas?historico_pedido")) return ok([{ id: "c2", telefone: "5500900000002" }]);
     if (m === "GET" && u.includes("order=quando_wa.asc")) return ok([]);
     if (m === "GET" && u.includes("externo_id=eq.")) return ok([]);
     if (m === "POST" && u.includes("zap_mensagens")) { gravadas.push(JSON.parse(opts.body)); return ok(null); }
@@ -51,7 +51,7 @@ function semMensagem(paginas) {
     return ok(null);
   };
   const zap = {
-    onWhatsApp: async () => [{ exists: true, jid: "5516993460685@s.whatsapp.net" }],
+    onWhatsApp: async () => [{ exists: true, jid: "5500900000002@s.whatsapp.net" }],
     fetchMessageHistory: async (n, chave) => { pedidos.push(chave.id); setTimeout(() => P._pagina(paginas.shift() || []), 5); },
   };
   return { zap, gravadas, patches, pedidos };
@@ -82,7 +82,7 @@ t.test("traz a mensagem mais nova que falta, pelo @lid, marcada como vinda do ce
   global.fetch = async (url, opts = {}) => {
     const u = String(url), m = opts.method || "GET";
     const ok = c => ({ ok: true, status: 200, text: async () => JSON.stringify(c) });
-    if (m === "GET" && u.includes("zap_conversas?historico_pedido")) return ok([{ id: "c3", telefone: "5517997770516" }]);
+    if (m === "GET" && u.includes("zap_conversas?historico_pedido")) return ok([{ id: "c3", telefone: "5500900000003" }]);
     if (m === "GET" && u.includes("order=quando_wa.asc")) return ok([{ externo_id: "VELHA", direcao: "entrada", quando_wa: "2026-01-12T12:48:36.000Z" }]);
     if (m === "GET" && u.includes("externo_id=eq.")) return ok([]);
     if (m === "POST" && u.includes("zap_mensagens")) { gravadas.push(JSON.parse(opts.body)); return ok(null); }
@@ -91,10 +91,10 @@ t.test("traz a mensagem mais nova que falta, pelo @lid, marcada como vinda do ce
   };
   const hoje = Date.parse("2026-11-09T14:47:00Z") / 1000;
   const doLid = { key: { id: "HOJE", remoteJid: "99887766554433@lid", fromMe: false }, messageTimestamp: hoje, message: { conversation: "Bom dia" } };
-  const paginas = { "99887766554433@lid": [[doLid]], "5517997770516@s.whatsapp.net": [[], []] };
+  const paginas = { "99887766554433@lid": [[doLid]], "5500900000003@s.whatsapp.net": [[], []] };
   const zap = {
-    onWhatsApp: async () => [{ exists: true, jid: "5517997770516@s.whatsapp.net" }],
-    signalRepository: { lidMapping: { getLIDForPN: async pn => pn.startsWith("5517997770516") ? "99887766554433@lid" : null } },
+    onWhatsApp: async () => [{ exists: true, jid: "5500900000003@s.whatsapp.net" }],
+    signalRepository: { lidMapping: { getLIDForPN: async pn => pn.startsWith("5500900000003") ? "99887766554433@lid" : null } },
     fetchMessageHistory: async (n, chave) => { pedidos.push([chave.remoteJid, chave.id]);
       setTimeout(() => P._pagina((paginas[chave.remoteJid] || []).shift() || []), 5); },
   };

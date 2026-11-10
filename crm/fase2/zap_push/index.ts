@@ -25,7 +25,12 @@ const cors = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers
 const json = (o: unknown, status = 200) => new Response(JSON.stringify(o), { status, headers: { "Content-Type": "application/json", ...cors } });
 
 // shortcut: cópia do mascarar do zap_plantao (cada função registra o próprio Deno.serve); se crescer, vira _shared/
-export const mascarar = (s: unknown) => String(s ?? "").replace(/\d[\d.\-/ ]{6,}\d/g, (m) => (m.replace(/\D/g, "").length >= 8 ? "[número]" : m));
+// F515 · o que vem depois de "senha" (do gov.br, do Meu INSS) também não sai: com ":", "=", "é" ou "eh" some a palavra
+// seguinte; sem eles, só a que parece senha (dígito, símbolo ou maiúscula no meio), para "leve a senha do gov.br" ficar inteiro
+const RX_SENHA = /\b(senhas?|password)\b((?:[\s,]+(?:d[oae]|n[oa]|meu|minha|gov(?:\.br)?|govbr|inss|nova|atual|acesso|app|aplicativo))*)(\s*[:=]\s*|\s+(?:é|eh|era)\s+|\s+)(\S+)/gi;
+export const mascarar = (s: unknown) => String(s ?? "")
+  .replace(RX_SENHA, (m, p, meio, sep, tok) => (sep.trim() || /\d|[@#$%&*!_+]|\p{Ll}\p{Lu}/u.test(tok) ? `${p}${meio}${sep}[senha]` : m))
+  .replace(/\d[\d.\-/ ]{6,}\d/g, (m) => (m.replace(/\D/g, "").length >= 8 ? "[número]" : m));
 const TIPO: Record<string, string> = { audio: "🎤 Áudio", imagem: "📷 Foto", video: "🎥 Vídeo", documento: "📄 Documento", figurinha: "Figurinha", localizacao: "📍 Localização", contato: "👤 Contato" };
 
 type Msg = { id: string; conversa_id: string; tipo: string; texto: string | null; midia_url?: string | null };
@@ -107,6 +112,26 @@ async function quemPede(req: Request) {
   return c ? c.id as string : null;
 }
 
+// F515 · sem JWT, a prova de origem é o segredo de funcoes_segredo que o banco manda no cabeçalho (zap_fn_cabecalho).
+// A exigência nasce desligada (config_app.zap_fn_segredo = 'sim' liga): desligada, a chamada sem segredo passa e fica no log.
+export function conferirSegredo(recebido: string | null, segredo: string | null, exigir: boolean) {
+  const ok = !!segredo && !!recebido && recebido.length === segredo.length &&
+    [...recebido].reduce((d, ch, i) => d | (ch.charCodeAt(0) ^ segredo.charCodeAt(i)), 0) === 0;
+  return { ok: ok || !exigir, aviso: ok ? "" : exigir ? "recusada" : "aceita sem segredo" };
+}
+async function origemOk(req: Request) {
+  const ler = async (c: string) => {
+    try {
+      const r = await fetch(`${URL_SB}/rest/v1/${c}`, { headers: { apikey: SERVICO, Authorization: `Bearer ${SERVICO}` } });
+      return r.ok ? (await r.json())[0] : null;
+    } catch { return null; }
+  };
+  const [s, e] = await Promise.all([ler("funcoes_segredo?select=segredo&id=eq.1"), ler("config_app?select=valor&chave=eq.zap_fn_segredo")]);
+  const v = conferirSegredo(req.headers.get("x-crm-segredo"), s?.segredo ?? null, e?.valor === "sim");
+  if (v.aviso) console.log(`F515 · chamada ${v.aviso} (x-crm-segredo)`);
+  return v.ok;
+}
+
 if (typeof Deno !== "undefined") Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
   if (req.method !== "POST") return json({ erro: "use POST" }, 405);
@@ -121,6 +146,8 @@ if (typeof Deno !== "undefined") Deno.serve(async (req) => {
       const n = await enviar(r.ok ? await r.json() : [], { title: "WhatsApp · CRM", body: "Teste: o aviso chega neste aparelho.", tag: "crm-zap-teste", data: { crm: "zap" } });
       return json({ enviados: n });
     }
+    // F515 · preparar e teste vêm do navegador; daqui para baixo quem chama é o banco
+    if (!(await origemOk(req))) return json({ erro: "origem não conferida" }, 401);
     if (p.resumo) {
       // o banco escolhe e marca o que vai no resumo (push_resumo_preparar); aqui só se envia
       const rr = await sb("/rest/v1/rpc/push_resumo_preparar", { method: "POST", body: "{}" });

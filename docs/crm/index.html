@@ -6987,7 +6987,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.32</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.33</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17741,7 +17741,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
     e.preventDefault();
     if(!(await confirmar("Enviar o print colado? O texto escrito vai como legenda."))) return;
     const ext = (f.type.split("/")[1]||"png").replace("jpeg","jpg");
-    mandarArquivoZap(new File([f], `print-${Date.now()}.${ext}`, {type: f.type}));
+    mandarArquivoZap(new File([f], `print-${Date.now()}.${ext}`, {type: f.type}), c.id);
   };
   // F332 · o texto não enviado espera na conversa, como no aplicativo
   if(!t.value && rascZap()[c.id]) t.value = rascZap()[c.id];
@@ -18276,34 +18276,33 @@ function usarSugestaoZap(){
 }
 async function enviarZap(){
   const t = document.getElementById("zap-txt"), txt = (t.value||"").trim();
-  if(!txt || !zapAberta) return;
-  if(!zapNota && barraAssumir(zapConvs.find(x=>x.id===zapAberta))) return;
+  const conv = zapAberta;   // F517 · a conversa do início vale até o fim, mesmo que a tela mude durante a gravação
+  if(!txt || !conv) return;
+  if(!zapNota && barraAssumir(zapConvs.find(x=>x.id===conv))) return;
   if(!zapNota && /\{[a-z_]+\}/.test(txt)){ travaZap(); return aviso("Há dado do caso sem preencher na mensagem"); }
-  t.value=""; t.style.height="auto"; guardarRascZap(zapAberta, "");
+  t.value=""; t.style.height="auto"; guardarRascZap(conv, "");
   // nota interna nasce com direcao E status 'interna' — o banco recusa
   // qualquer nota que tente entrar na fila de envio
   try{
     await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify(zapNota
-        ? {conversa_id:zapAberta, direcao:"interna", autor_id:eu.id,
+        ? {conversa_id:conv, direcao:"interna", autor_id:eu.id,
            texto:txt, status:"interna"}
-        : {conversa_id:zapAberta, direcao:"saida", autor_id:eu.id,
+        : {conversa_id:conv, direcao:"saida", autor_id:eu.id,
            texto:txt, status:"fila", responde_a:zapResponder||null})});
-  }catch(e){ t.value = txt; return aviso(msgErro(e)); }
+  }catch(e){ t.value = txt; guardarRascZap(conv, txt); return aviso(msgErro(e)); }
   // F187 · @Fulano na nota chama a pessoa. F357 · toda nota é menção: sem @, vai a quem
   // atende a conversa e ao advogado responsável pelo cliente (decisão do Paulo, 01.11.2026)
   if(zapNota){
-    const c = zapConvs.find(x=>x.id===zapAberta), cli = clienteDaConversa(c);
+    const c = zapConvs.find(x=>x.id===conv), cli = clienteDaConversa(c);
     const quem = /@\p{L}/u.test(txt) ? [] : [c&&c.atendente_id, ...(cli?advogadoDoCliente(cli.id):[])].filter(Boolean);
-    await criarMencoes(`💬 Nota na conversa com ${c?nomeDaConversa(c):"cliente"}: ${txt}`, null, null, quem, zapAberta).catch(()=>{});
+    await criarMencoes(`💬 Nota na conversa com ${c?nomeDaConversa(c):"cliente"}: ${txt}`, null, null, quem, conv).catch(()=>{});
   }
-  zapResponder = null;
   if(!zapNota){
-    const c = zapConvs.find(x=>x.id===zapAberta);
+    const c = zapConvs.find(x=>x.id===conv);
     if(c){ c.bot_ativo=false; }
   }
-  await abrirConversa(zapAberta);
-  focarCampoZap();
+  if(zapAberta===conv){ zapResponder = null; await abrirConversa(conv); focarCampoZap(); }
   if(zapNota) aviso("Anotado — só a equipe vê 🕵", false);
   else if(estadoPonte().txt!=="ponte ligada")
     aviso("Guardado na fila — a ponte está fora do ar e envia quando voltar", false);
@@ -18318,28 +18317,39 @@ function tipoDoArquivo(f){
   if(m.startsWith("audio/")) return "audio";
   return "documento";
 }
-async function mandarArquivoZap(colado){
+// F517 · a conversa é a do início: quem troca de conversa durante o upload não leva o anexo e a legenda à outra
+async function mandarArquivoZap(colado, conv = zapAberta){
   const inp = document.getElementById("zap-arq");
   const arq = colado || (inp && inp.files && inp.files[0]);
-  if(!arq || !zapAberta) return;
+  if(!arq || !conv) return;
   if(inp) inp.value = "";                       // permite mandar o mesmo de novo
   // 60 MB é o teto do WhatsApp; barrar aqui evita o arquivo subir para nada
   if(arq.size > 60*1024*1024) return aviso("Arquivo grande demais para o WhatsApp (máx. 60 MB)");
-  if(barraAssumir(zapConvs.find(x=>x.id===zapAberta))) return;
+  if(barraAssumir(zapConvs.find(x=>x.id===conv))) return;
+  const campo = () => zapAberta===conv ? document.getElementById("zap-txt") : null;   // o campo só é desta conversa enquanto ela está aberta
   const nome = nomeSeguro(arq.name || "arquivo");
-  const caminho = `zap/${zapAberta}/enviados/${Date.now()}-${nome}`;
-  const legenda = (document.getElementById("zap-txt").value||"").trim();
+  const caminho = `zap/${conv}/enviados/${Date.now()}-${nome}`;
+  const legenda = ((campo() ? campo().value : rascZap()[conv]) || "").trim();
   aviso("Enviando "+nome+"…", false);
   try{ await subirArquivo(caminho, arq); }
   catch(e){ return aviso("Não consegui subir o arquivo: "+e.message); }
-  document.getElementById("zap-txt").value=""; guardarRascZap(zapAberta, "");
-  await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({conversa_id:zapAberta, direcao:"saida", autor_id:eu.id,
-      tipo:tipoDoArquivo(arq), texto:legenda||null, midia_url:caminho,
-      midia_nome:arq.name||nome, midia_mime:arq.type||null, status:"fila"})});
-  const c = zapConvs.find(x=>x.id===zapAberta);
+  if(campo()) campo().value = "";
+  guardarRascZap(conv, "");
+  try{
+    await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({conversa_id:conv, direcao:"saida", autor_id:eu.id,
+        tipo:tipoDoArquivo(arq), texto:legenda||null, midia_url:caminho,
+        midia_nome:arq.name||nome, midia_mime:arq.type||null, status:"fila"})});
+  }catch(e){
+    // a legenda volta ao campo, ou ao rascunho da conversa, para não se perder
+    if(campo()) campo().value = legenda;
+    guardarRascZap(conv, legenda);
+    return aviso("Não enviei o arquivo: "+msgErro(e));
+  }
+  const c = zapConvs.find(x=>x.id===conv);
   if(c){ c.bot_ativo=false; }
-  await abrirConversa(zapAberta);
+  if(zapAberta!==conv) return aviso("Arquivo enviado à conversa com "+(c?nomeDaConversa(c):"o cliente"), false);
+  await abrirConversa(conv);
   focarCampoZap();
 }
 // F387 · depois de enviar, o cursor volta ao campo de escrever (a repintura o tirava); no toque, não reabre o teclado
@@ -38836,7 +38846,7 @@ function salvarBlob(nome, blob){
 function rotuloDoCaso(k){
   const c = D.cliPorId.get(k.cliente_id) || {};
   // o título do caso costuma ser o próprio nome do cliente: não repete
-  // "Davi Valentim da Silva #B87" → "#B87"
+  // "Fulano de Tal #B87" → "#B87"
   let tit = String(k.titulo||"").trim();
   if(c.nome && dsa(tit).startsWith(dsa(c.nome))) tit = tit.slice(c.nome.length).replace(/^[\s—–\-:·]+/, "");
   tit = tit || k.especie || k.beneficio || "";
@@ -42303,7 +42313,7 @@ function lcCampo(k, token){
 // F121 · a posição na fila de julgamento, só o número, na linha do caso
 // [BUG 20.09.2026] RECURSO PARADO HÁ ANOS ficava aberto no Conselho sem dizer
 // nada. Quando o NUP órfão do e-Sisrec vira caso, ninguém confere a idade do
-// recurso: o da Maria Izilda Ferreira Pinto não tem movimento desde 14/02/2021
+// recurso: o de uma cliente não tem movimento desde 14/02/2021
 // e estava lá, ativo, na lista. O CRM não sabe se acabou, mas sabe dizer há
 // quanto tempo não anda — e isso basta para o caso ser revisto.
 const MESES_PARADO = 6;
@@ -48174,7 +48184,7 @@ async function marcarEntregue(cliId, i){
   aviso("✔ Entregue ao cliente", false);
   if(clienteAberto===cliId) repintarFicha();
 }
-// F293 · o parente que também é cliente fica à vista no alto da ficha (no To Do, "Filho da Rosmeire #CPF" nas etapas),
+// F293 · o parente que também é cliente fica à vista no alto da ficha (no To Do, "Filho da Fulana #CPF" nas etapas),
 // e avisa o que ele tem marcado nos próximos 7 dias, para aproveitar a mesma visita
 function chipsParentes(c){
   const hj = hoje(), ate = somaDias(hj, 7);
@@ -52134,7 +52144,7 @@ function telefonesDe(c){
   const lista = Array.isArray(c.telefones) ? c.telefones
               : Array.isArray((c.campos||{}).telefones) ? c.campos.telefones : [];
   if(!lista.length) return c.telefone ? [{numero:c.telefone, obs:"principal", zap:true}] : [];
-  // o mesmo número gravado em dois formatos ("16) 99368-1262" e "16993681262") é um telefone só
+  // o mesmo número gravado em dois formatos ("16) 99999-0001" e "16999990001") é um telefone só
   const vistos = new Map(), out = [];
   for(const t of lista){
     const k = String(t.numero||"").replace(/\D/g,"").replace(/^55(?=\d{10,11}$)/,"");

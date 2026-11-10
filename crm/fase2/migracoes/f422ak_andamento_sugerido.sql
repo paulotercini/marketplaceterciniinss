@@ -1,4 +1,4 @@
--- F422ak (pedido do Paulo de 09.11.2026, caso da Roseli): o cliente que pergunta pelo andamento do processo
+-- F422ak (pedido do Paulo de 09.11.2026): o cliente que pergunta pelo andamento do processo
 -- recebe, para o colaborador, a sugestão de resposta montada pelo CRM: a fase, a etapa e os últimos andamentos
 -- dos casos abertos da ficha. Vai a zap_conversas.sugestao_ia (F422af, Usar e Descartar acima do campo de
 -- escrever, menção a quem atende); nada sai ao cliente. Uma chamada por conversa a cada 30 minutos.
