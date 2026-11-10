@@ -57,6 +57,8 @@ const TEXTO = "Perícia médica judicial agendada para o dia 16/11/2026 às 13h2
   p.on("pageerror", e => erros.push("pageerror: " + e.message));
   p.on("console", m => { if (m.type() === "error" && !/ERR_FAILED/.test(m.text())) erros.push("console: " + m.text()); });
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
+  // a perícia de 16/11 é fixa: o relógio fica antes dos quesitos (09/11), que não se propõem no passado
+  await p.clock.setFixedTime(new Date("2026-11-03T12:00:00-03:00"));
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
