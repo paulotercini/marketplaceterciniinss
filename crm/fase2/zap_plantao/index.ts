@@ -376,10 +376,12 @@ export function contexto(x: Contexto) {
       `um de manhã e outro à tarde, e que remarque esse atendimento. Se confirmar presença, agradeça e diga que o atendimento está mantido. Não cumprimente de novo.\n`
     : x.remarcar ? `Remarcação: a pessoa disse, em resposta à confirmação do atendimento de ${x.remarcar.rotulo || "data marcada"}, que não pode comparecer. ` +
       // F471 · "não vai dar, depois eu marco outro dia" não é pedido de horário agora (pedido do Paulo de 09.11.2026)
-      `Se ela ainda não pediu expressamente outro dia ou horário agora (disse apenas que não pode ir, ou que marca depois), pergunte primeiro, em uma frase, ` +
-      `se deseja já remarcar para outro dia, sem oferecer horários nem chamar o Agendador; se ela não quiser, peça ao Agendador que cancele esse atendimento ` +
-      `e diga que o escritório fica à disposição para agendar quando ela preferir. Quando ela quiser remarcar, peça ao Agendador que ofereça dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, um de manhã e outro à tarde, ` +
-      `e que remarque esse atendimento quando ela escolher. Não cumprimente de novo e não peça o assunto.\n` : "") +
+      // F501 · quem disse que não vai tem o atendimento cancelado na hora, para liberar a vaga (pedido do Paulo de 10.11.2026)
+      `Se ela ainda não pediu expressamente outro dia ou horário agora (disse apenas que não pode ir, ou que marca depois), peça ao Agendador, já neste turno, ` +
+      `que cancele esse atendimento, para a vaga ficar livre; depois diga que o atendimento foi cancelado e pergunte, em uma frase, se deseja já agendar outro dia, ` +
+      `sem oferecer horários; se ela não quiser, diga que o escritório fica à disposição para agendar quando ela preferir. ` +
+      `Se ela pedir outro dia ou horário, peça ao Agendador que ofereça dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, um de manhã e outro à tarde, ` +
+      `e que remarque esse atendimento (ou agende um novo, se ele já foi cancelado) quando ela escolher. Não cumprimente de novo e não peça o assunto.\n` : "") +
     (x.modo === "lead" ? `Você já está atendendo este caso novo (${x.respostas} respostas suas até aqui; agende depois de ${Math.max(1, 6 - x.respostas)} respostas).\n`
       : x.modo === "conversa" ? `Você já está conversando com esta pessoa (${x.respostas} respostas suas até aqui).\n` : "");
 }
@@ -398,7 +400,8 @@ export function promptIntencao(x: Contexto) {
   const resp = msgs.slice(i + 1).filter((m) => m.direcao === "entrada")
     .map((m) => m.texto?.trim() || `[${m.tipo || "mensagem"}]`).join("\n");
   return `O escritório enviou ao cliente a confirmação de um atendimento e o cliente respondeu. Classifique a resposta:\n` +
-    `- "confirmar": a pessoa diz que vai comparecer (sim, ok, vou sim, estarei lá, pode confirmar, combinado, 👍), ainda que repita a data ` +
+    `- "confirmar": a pessoa diz que vai comparecer (sim, ok, vou sim, estarei lá, pode confirmar, combinado, 👍), também com erro de digitação ` +
+    `("Sin", "Simm", "Si", "Cim", "Ss"), ainda que repita a data ` +
     `com uma pergunta retórica ("tá marcado dia 11, né?") ou cumprimente antes; não pede outra coisa.\n` +
     `- "remarcar": a pessoa não pode ou não quer ir nessa data, quer outro dia ou horário, ou quer cancelar.\n` +
     `- "outro": pergunta ou pedido que a confirmação não responde, ou resposta que não diz se vai. Na dúvida, "outro".\n\n` +
@@ -1111,6 +1114,8 @@ if (typeof Deno !== "undefined") {
         let intencao = DE_CLASSE[x.remarcar.classe || ""] || "outro";
         try { intencao = (await claude(promptIntencao(x), ESQ_INTENCAO)).intencao || intencao; }
         catch (e) { console.error("zap_plantao intencao:", String(e)); }
+        // F502 · o SIM curto pelas palavras vale mais que o "outro" da IA ("Sin" ficou sem confirmar na agenda, 09.11.2026)
+        if (intencao === "outro" && x.remarcar.classe === "sim") intencao = "confirmar";
         await rpc("zap_conf_ia_intencao", { p_conversa: x.conversa_id, p_intencao: intencao, p_msg: msg });
         if (intencao === "confirmar") {
           await rpc("zap_plantao_aplicar", { p_msg: msg, p_acao: "nada", p_resposta: "", p_advogado: "", p_urgente: false,

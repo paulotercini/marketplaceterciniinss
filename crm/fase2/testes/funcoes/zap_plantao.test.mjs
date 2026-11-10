@@ -190,7 +190,7 @@ assert.ok(regras().includes("boas-vindas em nome da Advocacia Previdenciária"))
 const rem = promptPlantao({ ...base, remarcar: { rotulo: "quarta-feira, 11/11/2026, às 9h30", profissional: "Amanda" } });
 assert.ok(rem.includes("confirmação do atendimento de quarta-feira, 11/11/2026, às 9h30, que não pode comparecer"));
 assert.ok(rem.includes("mesmo advogado (Amanda), um de manhã e outro à tarde"));
-assert.ok(rem.includes("pergunte primeiro, em uma frase, se deseja já remarcar"), "F471: pergunta antes de oferecer horários");
+assert.ok(rem.includes("que cancele esse atendimento, para a vaga ficar livre") && rem.includes("se deseja já agendar outro dia"), "F498: cancela na hora e depois pergunta");
 assert.ok(!p1.includes("Remarcação:"), "sem remarcação, nada muda");
 assert.ok(p1.includes("pelo nome no máximo uma vez"), "o nome uma vez só");
 const duv = promptPlantao({ ...base, remarcar: { rotulo: "quarta-feira, 11/11/2026, às 9h30", profissional: "Amanda", duvida: true } });
@@ -207,6 +207,7 @@ assert.deepEqual(ESQ_INTENCAO.properties.intencao.enum, ["confirmar", "remarcar"
     { direcao: "entrada", por_bot: false, tipo: "audio", texto: "Bom dia, tudo bem?", momento: "2026-11-09T12:02:17Z" },
     { direcao: "entrada", por_bot: false, tipo: "audio", texto: "Vou sim, tá marcado com o dia 11, né?", momento: "2026-11-09T12:02:22Z" }] });
   assert.ok(p2.includes("<resposta>Bom dia, tudo bem?\nVou sim, tá marcado com o dia 11, né?</resposta>") && p2.includes("pergunta retórica")); }
+assert.ok(pi.includes('"Sin"'), "F502: erro de digitação do sim é confirmar");
 { const antigo = "Agendador.\n\n6. Chame consultar_vagas (no CRM). Se o assunto é previdenciário, ofereça três horários numerados.\n7. Confirme.";
   const novo = paraAgendador(antigo); assert.ok(novo.includes(AG_HORARIOS) && !novo.includes("três horários numerados") && paraAgendador(novo) === novo); }
 console.log("zap_plantao: ok");

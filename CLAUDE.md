@@ -665,6 +665,10 @@ A **F499** (13.28, opção A aprovada pelo Paulo em 10.11.2026, https://claude.a
 
 A **F500** (13.29, pedido do Paulo de 10.11.2026): no Dashboard do caso, o campo de escrever (`composerCaso`) fica abaixo do cartão do Último andamento no Escritório, e não mais acima dele (`dashboardLado`). Teste: `f466.js`.
 
+A **F501** (pedido do Paulo de 10.11.2026, a cliente que avisou que não poderia ir): na resposta à confirmação, quem diz apenas que não pode ir ou que marca depois tem o atendimento cancelado pelo Agendador no mesmo turno, para a vaga ficar livre, e só depois a IA pergunta, em uma frase, se deseja agendar outro dia (revoga a parte da F471 que perguntava antes de cancelar); quem já pede outro dia recebe os dois horários com o mesmo advogado. Teste: `testes/funcoes/zap_plantao.test.mjs`.
+
+A **F502** (pedido do Paulo de 10.11.2026, o "Sin" do Valdemir que não confirmou a agenda): o erro de digitação do sim ("Sin", "Simm", "Si", "Cim", "Ss") é confirmação, no classificador da IA (`promptIntencao`) e na classe por palavras (`zap_conf_classe`, `migracoes/f502_sim_com_erro.sql`), e a classe por palavras "sim" vence o "outro" da IA. Teste: `testes/funcoes/zap_plantao.test.mjs`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
