@@ -6887,7 +6887,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.26</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.27</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -22680,7 +22680,8 @@ function conversaAtendimento(c){
     <div class="atend-conv-corpo">
       ${/* F283b · o campo de escrever primeiro e maior; as anotações em cartões; os documentos em bloco próprio */""}
       <div class="atend-conv-nova"><textarea id="atend-nota" rows="6" placeholder="Anote o que deve ser feito. Arraste aqui uma pendência; @Amanda avisa a Amanda"></textarea>
-        <button type="button" class="adr-bt adr-primario" onclick="notaDoAtendimento('${c.id}')">Anotar</button></div>
+        <button type="button" class="adr-bt adr-primario" onclick="notaDoAtendimento('${c.id}')">Anotar</button>
+        ${botaoGravarAtend()}</div>
       <div class="atend-bloco"><h4>Anotações${ns.length?` (${ns.length})`:""}</h4>
       ${ns.length ? `<ol class="atend-notas">${ns.map(n=>`<li class="atend-nota"><div class="atend-nota-cab"><b>${esc(n.quem||"")}</b><span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span></div><div class="atend-nota-txt">${destacarMencoes(esc(String(n.texto||"")))}</div></li>`).join("")}</ol>`
         : `<p class="meio-sub">Nenhuma anotação ainda neste atendimento.</p>`}</div>
@@ -22811,6 +22812,59 @@ function quadroProblemasPA(c, ks){
       <span class="pp-quem ${p.quem==="Cliente" ? "cli" : "esc"}">${p.quem}</span>
       <span class="pp-corpo"><b>${esc(p.acao)}</b><small>${esc(p.q)} · ${esc(p.txt)}</small></span>
       <button type="button" class="btn-mini" onclick="probParaNota(this.closest('li').dataset.txt)">anotar</button></li>`).join("")}</ul></section>`;
+}
+// F498 · a conversa do atendimento gravada vai à função atendimento_transcricao (ElevenLabs, falantes separados) e o texto volta ao campo para conferir antes do Anotar
+let atendRec = null, atendGravado = null, atendEnviando = false;
+function botaoGravarAtend(){
+  const [rot, frase] = atendEnviando ? ["Transcrevendo", "transcrevendo a gravação"]
+    : atendRec ? ["Parar", "parar a gravação e transcrever"]
+    : atendGravado ? ["Repetir", "enviar de novo a última gravação"]
+    : ["Gravar", "gravar a conversa do atendimento e transcrever"];
+  return `<button type="button" id="atend-gravar" class="adr-bt${atendRec?" gravando":""}" title="${frase}" ${atendEnviando?"disabled":""} onclick="gravarAtendimento()"><span aria-hidden="true">${rot}</span><span class="sr-only">${frase}</span></button>`
+    + (atendGravado && !atendEnviando ? `<button type="button" id="atend-descartar" class="adr-bt" title="descartar a gravação" onclick="atendGravado=null;this.remove();pintarGravarAtend()">Descartar</button>` : "");
+}
+function pintarGravarAtend(){ document.getElementById("atend-descartar")?.remove(); const b = document.getElementById("atend-gravar"); if(b) b.outerHTML = botaoGravarAtend(); }
+async function gravarAtendimento(){
+  if(atendEnviando) return;
+  if(atendRec) return atendRec.stop();
+  if(atendGravado) return transcreverAtendimento();
+  if(!navigator.mediaDevices || !window.MediaRecorder) return aviso("Este navegador não grava áudio");
+  let stream;
+  try{ stream = await navigator.mediaDevices.getUserMedia({audio:true}); }
+  catch(e){ return aviso("Sem permissão para usar o microfone"); }
+  const tipo = MediaRecorder.isTypeSupported("audio/webm;codecs=opus") ? "audio/webm;codecs=opus" : "";
+  const rec = new MediaRecorder(stream, tipo ? {mimeType: tipo} : undefined), partes = [], inicio = Date.now();
+  rec.ondataavailable = e=>{ if(e.data.size) partes.push(e.data); };
+  rec.onstop = ()=>{
+    stream.getTracks().forEach(t=>t.stop());
+    atendRec = null;
+    const blob = new Blob(partes, {type: (rec.mimeType || "audio/webm").split(";")[0]});
+    if(blob.size < 2000){ pintarGravarAtend(); return aviso("Gravação curta demais"); }
+    atendGravado = {blob, inicio};
+    transcreverAtendimento();
+  };
+  rec.start(10000); atendRec = rec;   // partes de 10 s: a gravação longa não fica toda num pedaço só
+  pintarGravarAtend();
+  aviso("Gravando o atendimento. Toque em Parar ao terminar");
+}
+async function transcreverAtendimento(){
+  const g = atendGravado; if(!g || atendEnviando) return;
+  atendEnviando = true; pintarGravarAtend();
+  try{
+    const url = CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/functions/v1/atendimento_transcricao";
+    const enviar = ()=>fetch(url, {method:"POST", body:g.blob, headers:{apikey:CONFIG.ANON_KEY,
+      Authorization:"Bearer " + (sessao ? sessao.access_token : CONFIG.ANON_KEY), "Content-Type": g.blob.type || "audio/webm"}});
+    let r = await enviar();
+    if(r.status === 401 && sessao && await renovar()) r = await enviar();
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok || !d.texto) throw new Error(d.erro || `erro ${r.status}`);
+    const dia = new Date(g.inicio).toLocaleDateString("pt-BR");
+    probParaNota(`Transcrição do atendimento (${dia}, ${d.minutos||1} min, ${d.falantes||1} falante${d.falantes>1?"s":""}). Confira antes de anotar:\n${d.texto}`);
+    atendGravado = null;
+    aviso("Transcrição no campo da anotação. Confira e toque em Anotar");
+  }catch(e){
+    aviso("A transcrição falhou (" + String(e.message||e).slice(0,120) + "). Toque em Repetir");
+  }finally{ atendEnviando = false; pintarGravarAtend(); }
 }
 function probParaNota(txt){
   const ta = document.getElementById("atend-nota"); if(!ta || !txt) return;
