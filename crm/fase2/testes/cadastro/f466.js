@@ -101,7 +101,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o cabeçalho diz quando e quantas anteriores", /ontem|há 2 dias/.test(await p.locator(".db-desp .db-when").textContent()) && /Ver anotações anteriores \(1\)/.test(await p.locator(".db-desp .db-ant").textContent()));
   conf("Anotar (verde) e Prorrogar, sem Concluir (F467)", (await p.locator(".db-desp .db-acoes button").allTextContents()).join(",") === "Anotar,Prorrogar" && await p.evaluate(() => { const b = document.querySelector('.db-desp [data-ae="anotar"]'); const c = getComputedStyle(b); return c.color === "rgb(255, 255, 255)" && c.backgroundColor !== "rgb(255, 255, 255)"; }));
   conf("o ícone do despacho é o do AdvPrev", await p.locator('.db-desp .db-logo img[src="icone-192.png"]').count() === 1);
-  conf("o Último andamento fica abaixo das anotações (F467)", await p.evaluate(() => { const a = document.querySelector(".caso-dir .db-dash.db-pe"), t = document.querySelector(".caso-dir .timeline"); return !!a && !!t && !!(t.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING); }));
+  conf("o Último andamento fica ao lado do Escritório (F499)", await p.evaluate(() => { const a = document.querySelector(".db-col-dir .db-and"), d = document.querySelector(".db-col-esq .db-desp"); if(!a||!d) return false; const ra = a.getBoundingClientRect(), rd = d.getBoundingClientRect(); return ra.left >= rd.right && Math.abs(ra.top - rd.top) < 200; }));
+  conf("o campo de escrever fica só acima do Escritório (F499)", await p.evaluate(() => { const e = document.querySelector(".db-col-esq textarea, .db-col-esq [contenteditable]"); return !!e && !document.querySelector(".db-col-dir textarea"); }));
   conf("os números não aparecem fechados", await p.locator(".db-n").count() === 0);
   conf("a linha do tempo fica escondida enquanto o Dashboard está fechado", !(await vis(p, ".caso-dir .timeline")));
   conf("o Último andamento é do Meu INSS, com a situação", await p.locator(".db-and").count() === 1 && /Perícia médica agendada/.test(await p.locator(".db-and .db-mov").textContent()) && /Em análise/.test(await p.locator(".db-and .db-sub").textContent()) && await p.locator(".db-and .db-logo[aria-label='Abrir no Meu INSS']").count() === 1);
@@ -111,6 +112,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.screenshot({ path: path.join(OUT, "pc-fechado.png") });
   await p.locator(".db-desp .db-ant").click(); await p.waitForTimeout(400);
   conf("Ver anotações anteriores mostra a linha do tempo e os números", await vis(p, ".caso-dir .timeline") && await p.locator(".db-n").count() >= 3 && /Ocultar/.test(await p.locator(".db-desp .db-ant").textContent()));
+  conf("as anotações anteriores abrem para baixo e o cartão do portal continua ao lado (F499)", await p.evaluate(() => { const t = document.querySelector(".db-col-esq > .timeline"), a = document.querySelector(".db-col-dir .db-and"), d = document.querySelector(".db-desp"); return !!t && !!a && t.getBoundingClientRect().top > d.getBoundingClientRect().bottom - 1 && a.getBoundingClientRect().left > t.getBoundingClientRect().right - 1; }));
   conf("o número copia ao clique (data-cop)", await p.locator(".db-n[data-cop]").count() === await p.locator(".db-n").count() && /1700000801/.test(await p.locator(".db-n").first().getAttribute("data-cop")));
   await p.screenshot({ path: path.join(OUT, "pc-aberto.png") });
   await p.locator(".db-desp .db-ant").click(); await p.waitForTimeout(300);
@@ -128,6 +130,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // ── 2 · caso B: CRPS e o mandado de segurança em paralelo ──
   ({ p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cB, kB));
+  conf("o cartão do Conselho diz CRPS (F499)", /^Último andamento no CRPS$/.test((await p.locator(".db-and.crps h3").textContent()).trim()));
+  conf("dois cartões de processo ficam empilhados à direita", await p.locator(".db-col-dir .db-and").count() === 2);
   conf("no Conselho o Último andamento é do e-Recursos", await p.locator(".db-and.crps").count() === 1 && /Encaminhado à Junta/.test(await p.locator(".db-and.crps .db-mov").textContent()));
   conf("o mandado de segurança ganha o segundo cartão, Judicial", await p.locator(".db-and.jud").count() === 1 && /Em paralelo · mandado de segurança/.test(await p.locator(".db-and.jud .db-par").textContent()) && /Conclusos/.test(await p.locator(".db-and.jud .db-mov").textContent()));
   conf("a data do cartão é a do movimento, não a da importação (F492)", /há 5 dias/.test(await p.locator(".db-and.jud .db-when").textContent()) && !/Remetidos/.test(await p.locator(".db-and.jud .db-mov").textContent()));
@@ -138,6 +142,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   ({ p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cC, kC));
   conf("sem anotação, o Último despacho diz isso", /Sem anotação da equipe/.test(await p.locator(".db-desp .db-vazio").textContent()) && !/\(\d+\)/.test(await p.locator(".db-desp .db-ant").textContent()));
   conf("sem andamento de portal não há cartão de andamento", await p.locator(".db-and").count() === 0);
+  conf("sem processo ativo o Escritório ocupa a largura toda (F499)", await p.locator(".db-col-dir").count() === 0 && await p.locator(".db-grade-in.com-lado").count() === 0);
   conf("sem retorno a mover, o Prorrogar não existe e fica o Anotar (F473)", await p.locator('.db-desp [data-ae="reagendar"]').count() === 0 && await p.locator('.db-desp [data-ae="anotar"]').count() === 1);
   await ctx.close();
 
