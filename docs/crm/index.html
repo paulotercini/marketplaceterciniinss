@@ -3847,6 +3847,17 @@ html[data-tema="v10"] .db-mov{font-size:14px;line-height:1.45;margin:0}
 html[data-tema="v10"] .db-sub{display:block;font-size:12px;color:var(--db-cinza);margin-top:4px}
 html[data-tema="v10"] .db-par{flex-basis:100%;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--db-jud)}
 html[data-tema="v10"] .db-doc{background:none;border:0;padding:4px 0;font:inherit;font-size:13px;color:var(--db-acc);text-decoration:underline;cursor:pointer;min-height:32px}
+.db-movs{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px;font-size:14px;line-height:1.45}
+.db-movs ul{margin:2px 0 0;padding-left:18px;list-style:disc}
+.db-dia{font-variant-numeric:tabular-nums;margin-right:4px}
+.db-pn{container-type:inline-size;margin-top:12px;padding-top:10px;border-top:1px solid color-mix(in srgb,var(--db-cor,#4A4E4E) 18%,#fff)}
+.db-pn h4{margin:0 0 8px;font-size:14px}.db-pn h5{margin:8px 0 4px;font-size:13px}
+.db-pn-rol{overflow-x:auto}
+.db-det{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;margin:0;font-size:13px}
+.db-det dt{color:#5B6060}.db-det dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.db-det .db-n{white-space:nowrap}
+@container (max-width:360px){.db-det{grid-template-columns:1fr;gap:0}.db-det dd{margin-bottom:6px}}
+.db-bt.on{background:color-mix(in srgb,var(--db-cor,#4A4E4E) 14%,#fff)}
 .db-bts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid color-mix(in srgb,var(--db-cor,#4A4E4E) 18%,#fff)}
 .db-bt{font:inherit;font-size:13px;font-weight:600;min-height:32px;padding:4px 14px;border-radius:8px;cursor:pointer;background:#fff;border:1px solid color-mix(in srgb,var(--db-cor,#4A4E4E) 40%,#fff);color:color-mix(in srgb,var(--db-cor,#4A4E4E) 80%,#000);transition:transform 120ms ease-out}
 .db-bt.pri{background:var(--db-cor,#4A4E4E);border-color:var(--db-cor,#4A4E4E);color:#fff}
@@ -4251,6 +4262,9 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .aq-pq-lista button{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;width:100%;padding:8px 10px;border:1px solid var(--borda);border-radius:10px;background:#fff;font:inherit;text-align:left;cursor:pointer}
 .aq-pq-lista button:hover,.aq-pq-lista button:focus-visible{border-color:var(--azul)}
 .aq-pq-lista span{flex-basis:100%;font-size:12px;color:var(--cinza,#4A4944)}
+.aq-pq-lista .aq-pq-it{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;padding:8px 10px;border:1px solid var(--borda);border-radius:10px;background:#fff;font-size:inherit;color:inherit}
+.aq-pq-ant-bt{margin-top:10px}
+#aq-pq-ant h4{margin:10px 0 0;font-size:13px}
 .aq-ev.aq-achado{outline:3px solid var(--azul);outline-offset:1px;z-index:5}
 .aq-agendar{border:0;border-radius:8px;padding:8px 14px;background:var(--azul);color:#fff;font:inherit;font-weight:600;cursor:pointer}
 .aq-alerta{padding:10px 14px;border-radius:12px;background:#F8ECD8;color:#8A5300;border:1px solid #EEDCBC;font-size:14px}
@@ -6987,7 +7001,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.33</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.36</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11925,6 +11939,19 @@ function dataDoDb(a){
   const m = String((a&&a.origem_id)||"").match(/^atualizacao:[^:]*:(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/);
   return m ? `${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:00` : dataDoMovimento(a);
 }
+// F511 · "Ver andamentos anteriores" abre a lista logo abaixo do cartão, e não a aba (pedido do Paulo de 10.11.2026)
+const _dbAndAnt = new Map();   // "caso|aba" → aberto
+function dbVerAnd(id, aba){ const c = `${id}|${aba}`; _dbAndAnt.set(c, !_dbAndAnt.get(c)); repintarFicha(); }
+function dbListaDias(itens, max){
+  const dias = new Map();
+  for(const x of itens){ if(!dias.has(x.d)){ if(max && dias.size===max) break; dias.set(x.d, []); } dias.get(x.d).push(x); }
+  let usados = 0;
+  const lis = [...dias].map(([d, xs]) => { usados += xs.length;
+    const partes = [...new Set([...xs].reverse().flatMap(x=>x.partes).map(t=>String(t||"").trim()).filter(Boolean))];
+    const dia = `<b class="db-dia">${fmtBarra(d)}:</b>`;
+    return partes.length===1 ? `<li>${dia} ${esc(partes[0])}</li>` : `<li>${dia}<ul>${partes.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></li>`; });
+  return {html: `<ul class="db-mov db-movs">${lis.join("")}</ul>`, usados};
+}
 function dbAndamento(k, ands, fase, par){
   let it = null;
   if(fase==="inss"){
@@ -11933,7 +11960,8 @@ function dbAndamento(k, ands, fase, par){
     const sit = pats.map(x=>String(x.origem_id||"")).find(o=>o.startsWith("situacao:"));
     const prot = protocolosDe(k)[0];
     it = {cls:"", nome:"Meu INSS", onde:"INSS", logo:iconeFonte("inss"), iso:dataDoDb(a), txt:dbLead(a.texto), sub:sit ? sit.split(":").slice(2).join(":") : especieDoCaso(k),
-      abrir: prot ? `abrirMeuInss('${escJs(prot)}')` : "", n:pats.length-1, aba:"inss", rot:"andamentos", bts:dbBotoes(k, "inss", (String(a.origem_id||"").match(/:(\d{6,})/)||[])[1]||soDig(prot||""))};
+      abrir: prot ? `abrirMeuInss('${escJs(prot)}')` : "", n:pats.length-1, aba:"inss", rot:"andamentos",
+      ant:()=>dbListaDias(pats.slice(1).map(x=>({d:dataSP(dataDoDb(x)), partes:[x.texto]}))).html, bts:dbBotoes(k, "inss", (String(a.origem_id||"").match(/:(\d{6,})/)||[])[1]||soDig(prot||""))};
   } else if(fase==="conselho"){
     const evs = crpsBlocos(k).flatMap(b=>(b.eventos||[]).map(e=>({e, nup:b.nup}))).sort((a,b)=>(isoCrps(a.e.data)||"")<(isoCrps(b.e.data)||"")?1:-1);
     const x = evs[0]; if(!x) return "";
@@ -11941,31 +11969,71 @@ function dbAndamento(k, ands, fase, par){
     it = {cls:"crps", nome:"e-Recursos", onde:"CRPS", logo:iconeFonte("crps"), iso:isoCrps(x.e.data)+"T12:00:00", soData:true,
       txt: decideOCaso(x.e) ? `<b>${esc(x.e.resumo||x.e.bruto||"")}</b>` : esc(x.e.resumo||x.e.bruto||""), sub:"",
       doc: doc ? `<button type="button" class="db-doc" onclick="abrirDecisao('${escJs(doc.storage)}')">${esc(doc.nome||"Documento")}</button>` : "",
-      abrir: x.nup ? `window.open('${escJs(linkERecursos(x.nup))}','_blank','noopener')` : "", n:evs.length-1, aba:"crps", rot:"andamentos", bts:dbBotoes(k, "crps", soDig(x.nup||""))};
+      abrir: x.nup ? `window.open('${escJs(linkERecursos(x.nup))}','_blank','noopener')` : "", n:evs.length-1, aba:"crps", rot:"andamentos",
+      ant:()=>dbListaDias(evs.slice(1).map(y=>({d:isoCrps(y.e.data)||"", partes:[y.e.resumo||y.e.bruto||""]}))).html, bts:dbBotoes(k, "crps", soDig(x.nup||""))};
   } else if(fase==="judicial"){
-    const pj = andamentosPje(ands).sort((a,b)=>dataDoDb(a)<dataDoDb(b)?1:-1), a = pj[0]; if(!a) return "";
+    let pj = andamentosPje(ands).sort((a,b)=>dataDoDb(a)<dataDoDb(b)?1:-1); const a = pj[0]; if(!a) return "";
+    const num = numDoAndPje(a), dig = num ? soDig(num) : "";
+    if(dig) pj = pj.filter(x=>soDig(numDoAndPje(x)||"")===dig);
     const sis = sisCurtoDoMov(a), href = linkPjeDoAndamento(a, k) || linkPjeDoCaso(k);
-    it = {cls:"jud", nome:sis, onde:sis, logo:iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sis]||"pje"), iso:dataDoDb(a), txt:dbLead(a.texto), sub:"",
-      href, n:pj.length-1, aba:"cnj", rot:"andamentos", bts:dbBotoes(k, "cnj", (n=>n?soDig(n):"")(numDoAndPje(a)), sis)};
+    const {html, usados} = dbMovsPje(pj);
+    it = {cls:"jud", nome:sis, onde:sis, logo:iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sis]||"pje"), iso:dataDoDb(a), lista:html, sub:"",
+      href, n:pj.length-usados, aba:"cnj", rot:"andamentos", ant:()=>dbMovsPje(pj.slice(usados), 0).html, bts:dbBotoes(k, "cnj", dig, sis)};
   } else return "";
   const logo = it.href ? `<a class="db-logo" href="${esc(it.href)}" target="_blank" rel="noopener" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</a>`
     : it.abrir ? `<button type="button" class="db-logo" onclick="${it.abrir}" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</button>`
     : `<span class="db-logo" aria-hidden="true">${it.logo}</span>`;
+  const abre = it.n>0 && !!_dbAndAnt.get(`${k.id}|${it.aba}`);
   const quando = it.soData ? `${fmtBarra(dataSP(it.iso))} · ${(n=>n<=0?"hoje":n===1?"ontem":`há ${n} dias`)(diasEntreIso(dataSP(it.iso), hoje()))}` : dbQuando(it.iso);
   return `<section class="db db-and ${it.cls}" aria-label="Último andamento no ${esc(it.onde)}">
     <div class="db-cab">${logo}<h3>Último andamento no ${esc(it.onde)}</h3><span class="db-when">${quando}</span>${par ? `<span class="db-par">Em paralelo · mandado de segurança</span>` : ""}
-      ${dbAnteriores(k, Math.max(0, it.n), it.rot, false, `irSubAba('${it.aba}')`)}</div>
-    <p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>${it.doc||""}${it.bts||""}</section>`;
+      ${dbAnteriores(k, Math.max(0, it.n), it.rot, abre, it.n>0 ? `dbVerAnd('${k.id}','${it.aba}')` : `irSubAba('${it.aba}')`)}</div>
+    ${it.lista || `<p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>`}${it.doc||""}${it.bts||""}
+    ${abre ? `<div class="db-pn" role="region" aria-label="Andamentos anteriores no ${esc(it.onde)}"><h4>Andamentos anteriores</h4>${it.ant()}</div>` : ""}</section>`;
 }
-// F497 · os botões do cartão Judicial (plano aprovado pelo Paulo em 10.11.2026): Ler o processo do andamento,
-// Expedientes só no PJe com a aba lida, e Detalhes, que abre a aba Judicial. Na cor do quadro (--db-cor).
+// F509 · as três últimas datas do processo no cartão Judicial (pedido do Paulo de 10.11.2026), sem o
+// prefixo do sistema, a data e o número que o texto do andamento repete; no mesmo dia, um item por movimento
+function movLimpo(t){
+  return String(t||"").replace(/^\W*(?:PJe|e-SAJ|eproc)\b[^:]{0,30}:\s*/, "")
+    .replace(/\s+—\s+em\s+\d{2}[\/.]\d{2}[\/.]\d{4}[\s\S]*$/, "")
+    .replace(/\s+—\s+[^—]*\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}\s*$/, "").trim();
+}
+function dbMovsPje(pj, max=3){
+  return dbListaDias(pj.map(a=>({d:dataSP(dataDoDb(a)), partes:movLimpo(a.texto).split(" · ")})), max);
+}
+// F497/F509 · os botões dos cartões do processo, na cor do quadro (--db-cor). No Judicial, Expedientes e
+// Detalhes abrem logo abaixo do cartão (pedido do Paulo de 10.11.2026), e Baixar e Claude saíram da aba.
+const _dbPainel = new Map();
+function dbPainel(id, q){ _dbPainel.set(id, _dbPainel.get(id)===q ? "" : q); repintarFicha(); }
 function dbBotoes(k, aba, dig, sis){
   const ps = processosDaFase(k, aba); if(!ps.length) return "";
-  const i = Math.max(0, ps.findIndex(x=>x.d===dig));
-  const exp = sis==="PJe" && expedientesDe(k, ps[i].d).length;
-  const b = (f, rot, frase, cls) => `<button type="button" class="db-bt${cls?" "+cls:""}" onclick="${f}" title="${esc(frase)}"><span aria-hidden="true">${rot}</span><span class="sr-only">${esc(frase)}</span></button>`;
+  const i = Math.max(0, ps.findIndex(x=>x.d===dig)), x = ps[i];
+  const exp = sis==="PJe" && expedientesDe(k, x.d).length;
+  const ab = aba==="cnj" ? (_dbPainel.get(k.id)||"") : "";
+  const b = (f, rot, frase, cls, on) => `<button type="button" class="db-bt${cls?" "+cls:""}${on?" on":""}" onclick="${f}" title="${esc(frase)}"${on!==undefined?` aria-expanded="${!!on}"`:""}><span aria-hidden="true">${rot}</span><span class="sr-only">${esc(frase)}</span></button>`;
   const tela = aba==="inss" ? "Ver a tela do requerimento no PAT" : aba==="crps" ? "Ver a tela do recurso no e-SISREC" : "";
-  return `<div class="db-bts">${b(`lerProcesso('${k.id}','${aba}',${i})`, "Ler", "Ler o processo inteiro", "pri")}${tela ? b(`telaDoProcesso('${k.id}','${aba}',${i})`, "Tela", tela) : ""}${exp ? b(`telaExpedientes('${k.id}',${i})`, "Expedientes", "Ver os expedientes do PJe") : ""}${b(`irSubAba('${aba}')`, "Detalhes", `Abrir a aba ${ROT_FASE[aba]||"do processo"}`)}</div>`;
+  const det = aba==="cnj" ? b(`dbPainel('${k.id}','det')`, "Detalhes", "Ver os dados do cabeçalho do processo", "", ab==="det")
+    : b(`irSubAba('${aba}')`, "Detalhes", `Abrir a aba ${ROT_FASE[aba]||"do processo"}`);
+  const pn = ab==="exp" && exp ? dbExpedientes(k, x) : ab==="det" ? dbDetalhes(k, x) : "";
+  return `<div class="db-bts">${b(`lerProcesso('${k.id}','${aba}',${i})`, "Ler", "Ler o processo inteiro", "pri")}${tela ? b(`telaDoProcesso('${k.id}','${aba}',${i})`, "Tela", tela) : ""}${exp ? b(`dbPainel('${k.id}','exp')`, "Expedientes", "Ver os expedientes do PJe", "", ab==="exp") : ""}${det}${b(`baixarProcesso('${k.id}','${aba}',${i})`, "Baixar", "Baixar os documentos do processo (.zip)")}${b(`claudeDoProcesso('${k.id}','${aba}',${i})`, "Claude", "Pedir ao Claude sobre o processo")}</div>${pn}`;
+}
+function dbExpedientes(k, x){
+  const vs = expedientesDe(k, x.d);
+  return `<div class="db-pn" role="region" aria-label="Expedientes de ${esc(x.id)}"><h4>Expedientes</h4>${vs.map(v=>`${vs.length>1?`<h5>${esc(v.grau||"")}</h5>`:""}<div class="db-pn-rol">${tabelaExpedientes(v)}</div>`).join("")}</div>`;
+}
+const DB_DET = [["Competência", /^compet/i], ["Órgão julgador Atual", /^[óo]rg[ãa]o julgador/i], ["Jurisdição", /^jurisdi/i], ["Autuação", /^autua/i],
+  ["Valor da causa", /^valor da causa/i], ["Segredo de justiça?", /^segredo/i], ["Justiça gratuita?", /^justi[çc]a gratuita/i], ["Tutela/liminar?", /^tutela/i],
+  ["Prioridade?", /^prioridade/i], ["Polo ativo", /^polo ativo/i], ["Polo passivo", /^polo passivo/i]];
+function dbDetalhes(k, x){
+  const vs = Object.entries((k.ronda||{}).detalhes||{}).filter(([c])=>c.split("|")[0]===x.d).map(([, v])=>v);
+  const f = fmtNum("proc", x.d), linha = (r, v) => `<dt>${esc(r)}</dt><dd>${v}</dd>`;
+  const num = linha("Número do Processo", `<button type="button" class="db-n" data-cop="${esc(f)}" data-cop-msg="Número copiado" title="Copiar">${esc(f)}</button>`);
+  const corpo = vs.length ? vs.map(v=>{ const ks = Object.keys(v);
+      return `${vs.length>1 && v.grau ? `<h5>${esc(v.grau)}</h5>` : ""}<dl class="db-det">${num}${DB_DET.map(([r, rx])=>{ const c = ks.find(q=>rx.test(q)); return c && v[c] ? linha(r, esc(v[c])) : ""; }).join("")}</dl>
+        <p class="meio-sub">Lido do PJe em ${dtExp(String(v.em||"").slice(0,16))}</p>`; }).join("")
+    : `<dl class="db-det">${num}${x.principal && k.orgao_judicial ? linha("Órgão julgador Atual", esc(k.orgao_judicial)) : ""}</dl>
+       <p class="meio-sub">Os demais dados do cabeçalho chegam na próxima leitura do processo pela extensão.</p>`;
+  return `<div class="db-pn" role="region" aria-label="Detalhes de ${esc(x.id)}"><h4>Detalhes do processo</h4>${corpo}</div>`;
 }
 function dashboardDoCaso(k, ands){
   return `<div class="db-dash">${dbDespacho(k, ands)}</div>`;
@@ -13159,6 +13227,9 @@ async function conferirPjeProc(coletaId){
     // F418 · a aba Expedientes do processo (extensão 1.35), só para mostrar: grava no aplicar
     if(Array.isArray(dados.expedientes)) plano.exps.push({caso_id:k.id, chave:`${dig}|${dados.grau||""}`,
       valor:{em:dados.quando||new Date().toISOString(), grau:dados.grau||"", host:dados.host||"", itens:dados.expedientes}});
+    // F509 · o cabeçalho do processo (Mais detalhes e as partes do título, extensão 1.35.1) vai a casos.ronda.detalhes
+    if(dados.detalhes && typeof dados.detalhes==="object") plano.exps.push({caso_id:k.id, campo:"detalhes", chave:`${dig}|${dados.grau||""}`,
+      valor:{em:dados.quando||new Date().toISOString(), grau:dados.grau||"", ...dados.detalhes}});
     for(const it of (dados.itens||[])){
       const texto=[...(it.textos||[]), ...(it.docs||[]).map(d=>`📎 ${d.nome}`)].join(" · ");
       if(!texto) continue;
@@ -13195,7 +13266,7 @@ async function aplicarPjeProc(coletaId){
   // F418 · os expedientes vão a casos.ronda.expedientes, lidos do caso NA HORA (a ronda tem outros escritores)
   for(const ex of (plano.exps||[])){
     const k = D.casoPorId.get(ex.caso_id); if(!k) continue;
-    const ronda = {...(k.ronda||{}), expedientes:{...((k.ronda||{}).expedientes||{}), [ex.chave]:ex.valor}};
+    const c = ex.campo||"expedientes", ronda = {...(k.ronda||{}), [c]:{...((k.ronda||{})[c]||{}), [ex.chave]:ex.valor}};
     try{ await patchCaso(k.id, {ronda}); k.ronda = ronda; fichas++; }catch(e){}
   }
   for(const a of plano.andamentos){
@@ -58002,8 +58073,26 @@ function achadosAgenda(q){
 function pesquisarAgenda(){
   caixa(`<div class="aq-fluxo aq-pesquisa"><h3>Pesquisar na agenda</h3>
     <label class="aq-campo">Nome ou telefone do cliente<input id="aq-pq" class="aq-inp" autocomplete="off" placeholder="Digite ao menos 2 letras"></label>
-    <div id="aq-pq-res" aria-live="polite"></div></div>`);
-  const inp = document.getElementById("aq-pq"), out = document.getElementById("aq-pq-res");
+    <div id="aq-pq-res" aria-live="polite"></div>
+    <button class="btn-mini aq-pq-ant-bt" title="Procurar nos atendimentos que já passaram"><span aria-hidden="true">Anteriores</span><span class="sr-only">Procurar nos atendimentos que já passaram</span></button>
+    <div id="aq-pq-ant" aria-live="polite"></div></div>`);
+  const inp = document.getElementById("aq-pq"), out = document.getElementById("aq-pq-res"), ant = document.getElementById("aq-pq-ant");
+  // F510 · o passado só vem a pedido, pelo Apps Script (até 5 anos), para não pesar a agenda nem a primeira tela
+  document.querySelector(".aq-pq-ant-bt").onclick = async () => {
+    const q = inp.value.trim();
+    if(q.replace(/\s/g,"").length<2){ ant.innerHTML = `<p class="aq-vazio">Digite ao menos 2 letras.</p>`; inp.focus(); return; }
+    ant.innerHTML = `<p class="meio-sub">Procurando nos atendimentos anteriores…</p>`;
+    try{
+      const r = (await agendaApi("historico", {q})).atendimentos || [];
+      if(inp.value.trim()!==q) return;
+      ant.innerHTML = `<h4>Atendimentos anteriores</h4>` + (r.length ? `<ul class="aq-pq-lista">${r.map(e=>`<li><span class="aq-pq-it"><i class="aq-bola p-${e.profissional||"paulo"}"></i>
+        <b>${esc(nomeDoEvento(e))}</b><span>${diaExt(e.data)}, ${dataBR(e.data)} às ${hmTxt(e.inicio)} · ${esc(nomeProf(e.profissional||"paulo"))} · ${esc(e.tipo||"")}</span></span></li>`).join("")}</ul>`
+        : `<p class="aq-vazio">Nenhum atendimento anterior encontrado.</p>`);
+    }catch(e){
+      if(inp.value.trim()!==q) return;
+      ant.innerHTML = `<p class="aq-vazio">${e.codigo==="ACAO_INVALIDA" ? "A agenda do Google ainda está na versão antiga: falta publicar a versão nova do Apps Script." : esc(e.message)}</p>`;
+    }
+  };
   const pintar = () => {
     const q = inp.value, falta = PROFS_AGENDA.filter(pr=>!agq.cache[pr]);
     const r = achadosAgenda(q);
@@ -58015,7 +58104,7 @@ function pesquisarAgenda(){
       : `<p class="aq-vazio">Nenhum atendimento encontrado.</p>`) + nota;
     out.querySelectorAll("[data-aqpq]").forEach(b=>b.onclick=()=>irAoAtendimento(r.find(e=>e.id===b.dataset.aqpq)));
   };
-  inp.oninput = pintar; inp.focus(); pintar();
+  inp.oninput = () => { ant.innerHTML = ""; pintar(); }; inp.focus(); pintar();
   // as agendas que ainda não vieram carregam agora, e a lista se refaz quando chegam
   PROFS_AGENDA.filter(pr=>!agq.cache[pr]).forEach(pr=>carregarAgenda(pr).then(()=>{ if(document.getElementById("aq-pq")===inp) pintar(); }).catch(()=>{}));
 }
