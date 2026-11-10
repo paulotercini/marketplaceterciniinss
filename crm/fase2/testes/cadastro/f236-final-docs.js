@@ -165,14 +165,14 @@ const casoDe = id => T.casos.find(k => k.id === id);
     await p.evaluate(async ([cli, id, tema]) => {
       if (tema === "v10") document.documentElement.setAttribute("data-tema", "v10"); else document.documentElement.removeAttribute("data-tema");
       await abrirFicha(cli); const m = document.getElementById("modal"); if (m) m.style.display = "none";
-      casoSel = id; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); }, [x.cli, x.id, tema]);
+      casoSel = id; abaAtiva = 2; subAba = "escritorio"; lcAberto.set(id, 1); repintarFicha(); }, [x.cli, x.id, tema]);
     await p.waitForTimeout(400);
   };
   const docs = async x => { await abrir(x); await p.evaluate(() => { abaAtiva = 0; irSubCad("documentos"); }); await p.waitForTimeout(500); };
   const txt = sel => p.evaluate(s => ((document.querySelector(s) || {}).textContent || "").replace(/\s+/g, " ").trim(), sel);
   const placa = () => p.evaluate(() => {
     const t = s => ((document.querySelector(s) || {}).textContent || "").replace(/\s+/g, " ").trim();
-    return { etapa: t(".lc-placa .lc-etapa"), velha: t(".lc-placa .et-velha"), sug: t(".lc-placa .et-sug"), agora: t(".tr-agora") }; });
+    return { etapa: t(".linha-caso .lc-etapa"), velha: t(".linha-caso .et-velha"), sug: t(".linha-caso .et-sug"), agora: t(".tr-agora") }; });
   // a véspera útil de uma data (pelo calendário do app: fim de semana e feriado nacional)
   const vesperaUtil = iso => p.evaluate(d => { let e = somaDias(d, -1); while (e > hoje() && !ehDiaUtil(e)) e = somaDias(e, -1); return e < hoje() ? hoje() : e; }, iso);
 
@@ -347,7 +347,7 @@ const casoDe = id => T.casos.find(k => k.id === id);
   const q = await p.evaluate(() => lerQualificacao("MARIA FICTA DE TAL, viúva, auxiliar de limpeza, 64 anos, residente em Monte Alto/SP, vem propor ação"));
   conf("H7 a qualificação da inicial aceita a idade entre os campos: viúva, auxiliar de limpeza", q.estado_civil === "viuvo" && q.profissao === "auxiliar de limpeza");
   conf("H8 o caso na Justiça sem o CNIS no CRM avisa em 'Nas outras abas'", /o CNIS não está no CRM/.test(await p.evaluate(id => painelOutrasAbas(D.casoPorId.get(id)), C3.id)));
-  const placaH7 = await p.evaluate(id => linhaCaso(D.casoPorId.get(id)).replace(/<[^>]+>/g, " ").replace(/\s+/g, " "), H7.id);
+  const placaH7 = await p.evaluate(id => (lcAberto.set(id, 1), linhaCaso(D.casoPorId.get(id))).replace(/<[^>]+>/g, " ").replace(/\s+/g, " "), H7.id);
   conf("H9 o caso encerrado mostra na placa só o que tem valor (sem 'DER não informada', DII nem Verificação)",
     !/DER não informada/.test(placaH7) && !/Verificação/.test(placaH7) && !/DII a informar/.test(placaH7));
   await abrir(F1); await p.evaluate(() => { abaAtiva = 4; repintarFicha(); }); await p.waitForTimeout(300);
