@@ -4236,9 +4236,11 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 @container (max-width:900px){ html[data-tema="v10"] .sk-f-corpo{grid-template-columns:minmax(0,1fr)} }
 
 /* ══ F150 · aviso de versão nova e a pílula da sessão guardada ══ */
-#nova-versao{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:900;display:flex;align-items:center;gap:12px;
-  padding:10px 12px 10px 16px;background:#121212;color:#fff;border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.2);font-size:14px}
-#nova-versao button{border:0;border-radius:8px;padding:6px 12px;background:#fff;color:#121212;font:inherit;font-weight:600;cursor:pointer}
+/* F503 · no alto, no centro: embaixo cobria o campo de escrever do WhatsApp */
+#nova-versao{position:fixed;left:50%;top:calc(8px + env(safe-area-inset-top));transform:translateX(-50%);z-index:900;display:flex;align-items:center;gap:8px;
+  max-width:calc(100vw - 32px);padding:6px 6px 6px 14px;background:#121212;color:#fff;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.2);font-size:13px}
+#nova-versao button{border:0;border-radius:8px;padding:5px 10px;background:#fff;color:#121212;font:inherit;font-weight:600;cursor:pointer;min-height:28px}
+#nova-versao .nv-fechar{background:transparent;color:#fff;font-weight:400;padding:5px 8px}
 .app.dados-guardados .meio::before{content:"atualizando…";position:fixed;top:12px;right:16px;z-index:50;padding:3px 10px;border-radius:999px;
   background:var(--placa,#EFEEEB);color:var(--cinza,#4A4944);font-size:12px;border:1px solid var(--borda,#E7E6E1)}
 
@@ -6884,6 +6886,89 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem{grid-template-columns:96px repeat(
 html[data-tema="v10"] .esc-v12 .pzx .pzx-esp{grid-column:1/-1;height:0;display:block}
 html[data-tema="v10"] .esc-v12 .pzx .pzx-rv{grid-column:1}
 html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-self:start}
+/* F504 · os quadros Prazos e do caso, desenho aprovado pelo Paulo (Lovable "Quadro Jurídico Claro", 10.11.2026):
+   Prazos com o cabeçalho em tinta vermelha e a contagem, cada linha com o dia, a natureza, quanto falta e o Abrir;
+   o caso com o cabeçalho na cor da fase em que o benefício está e a grade das datas em duas colunas */
+html[data-tema="v10"] .faixa-prazos.fp5.fp5.fp5.fp5.fp5{display:block;padding:0;gap:0;overflow:hidden;background:#FFFFFF;border:1px solid var(--borda);border-radius:12px}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp-cab{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;margin:0;padding:10px 14px;min-height:44px;
+  background:color-mix(in srgb,#B3261E 8%,#FFFFFF);border-bottom:2px solid #B3261E}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp-tit{margin:0;font:600 14px/1.2 var(--f-ui);color:#8B1D16;letter-spacing:0}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-n{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;
+  border-radius:999px;background:#B3261E;color:#FFFFFF;font:600 12px/1 var(--f-ui);font-variant-numeric:tabular-nums}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp-cab .fp-menu{margin-left:0}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp-cab:not(:has(.fp5-n)) .fp-menu{margin-left:auto}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 > :is(.fp2-sem,.fp-sug,.fp3-out,.fp-resto,.fp-nv){margin:10px 14px}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-linhas{display:block}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .pz.fp5-lin{position:relative;display:grid;grid-template-columns:40px minmax(0,1fr) auto;grid-template-areas:"dia txt bt" "dia chip bt";
+  align-items:center;column-gap:10px;row-gap:3px;margin:0;padding:10px 14px 10px 16px;min-height:64px;border:0;border-bottom:1px solid var(--borda);border-radius:0;background:#FFFFFF;box-shadow:none}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .pz.fp5-lin::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:0 2px 2px 0;background:#9A9890}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .pz.fp5-lin:is(.pz-fatal,.pz-venceu,.pz-prorrog)::before{background:#B3261E}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-dia{grid-area:dia;display:flex;flex-direction:column;align-items:center;justify-content:center;width:40px;height:40px;
+  border:1px solid var(--borda);border-radius:8px;background:#FFFFFF;color:#1F1E1B;line-height:1}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-dia b{font:600 16px/1 var(--f-ui);font-variant-numeric:tabular-nums;color:#1F1E1B}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-dia small{margin-top:2px;font:500 10px/1 var(--f-ui);letter-spacing:.04em;text-transform:uppercase;color:#5E5D58}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-txt{grid-area:txt;min-width:0}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-txt .fp3-tit{display:block;font:500 14px/1.3 var(--f-ui);color:#1F1E1B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-chip{grid-area:chip;justify-self:start;display:inline-block;padding:1px 7px;border-radius:4px;background:#F0EFEC;color:#4A4944;
+  font:500 12px/18px var(--f-ui);font-variant-numeric:tabular-nums;white-space:nowrap}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-chip.verm{background:#FBEAE7;color:#8B1D16}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .pz-mais{grid-area:bt;all:unset;grid-area:bt;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;min-width:52px;height:32px;padding:0 12px;
+  border:1px solid var(--borda);border-radius:8px;background:#FFFFFF;color:#1F1E1B;font:500 13px/1 var(--f-ui);cursor:pointer;transition:transform 120ms cubic-bezier(.23,1,.32,1),background-color 120ms ease}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .pz-mais:active{transform:scale(.97)}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .pz-mais:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+@media (hover:hover) and (pointer:fine){html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .pz-mais:hover{background:#F7F6F3}}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-linhas + .fp3-barra{margin:12px 14px 0}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp3-barra{position:relative;height:4px;border-radius:2px;background:#EDECE8;overflow:visible}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp3-barra i{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:#B3261E}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp3-barra em{display:none}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp3-bl{display:flex;justify-content:space-between;gap:8px;margin:4px 14px 12px;font:400 12px/1.3 var(--f-ui);color:#5E5D58;font-variant-numeric:tabular-nums}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-linhas + .fp3-bl{margin-top:12px}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-linhas:has(+ :is(.fp3-barra,.fp3-bl)) > .pz:last-child{border-bottom:0}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp-resto .pz.fp5-lin{padding-left:16px}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp-resto summary{min-height:32px;display:flex;align-items:center;cursor:pointer;color:var(--azul);font-size:13px}
+.app.celular .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .pz-mais{min-height:44px;min-width:56px}
+/* o cartão do caso */
+html[data-tema="v10"] .linha-caso.lc5.lc5.lc5{overflow:hidden;padding:0;background:#FFFFFF;border:1px solid var(--borda);border-radius:12px}
+html .linha-caso.lc5.lc5.lc5 .lc-topo{padding:0;position:static}
+html .linha-caso.lc5.lc5.lc5 .lc5-cab{display:flex;align-items:center;gap:8px;min-height:46px;margin:0;padding:8px 8px 8px 14px;
+  background:color-mix(in srgb,var(--lc-cor) 8%,#FFFFFF);border-bottom:2px solid var(--lc-cor);color:color-mix(in srgb,var(--lc-cor) 80%,#000000)}
+html .linha-caso.lc5.lc5.lc5 .lc5-cab .lc-sobre-l{display:inline-flex;align-items:center;gap:0;flex:none;min-height:0;margin:0}
+html .linha-caso.lc5.lc5.lc5 .lc5-esp{display:inline-flex;align-items:center;height:20px;padding:0 7px;border-radius:999px;background:color-mix(in srgb,var(--lc-cor) 85%,#000000);
+  color:#FFFFFF;font:600 12px/1 var(--f-ui);font-variant-numeric:tabular-nums}
+html .linha-caso.lc5.lc5.lc5 .lc5-esp-vazia{background:#9A9890}
+html .linha-caso.lc5.lc5.lc5 .lc5-cab .lc-sobre-l .lapis{opacity:.55;color:inherit}
+html .linha-caso.lc5.lc5.lc5 .lc5-cab .lc-cab{flex:1 1 auto;min-width:0;margin:0;display:block}
+html .linha-caso.lc5.lc5.lc5 .lc5-cab .lc-ben{display:block;font:600 14px/1.3 var(--f-ui);color:inherit;white-space:normal;text-wrap:balance}
+html .linha-caso.lc5.lc5.lc5 .lc5-lugar{flex:none;font:600 12px/1 var(--f-ui);letter-spacing:.02em;color:inherit}
+html .linha-caso.lc5.lc5.lc5 .lc5-cab .lc-menu{flex:none;margin:0}
+html .linha-caso.lc5.lc5.lc5 .lc5-cab .lc-menu > summary{color:inherit}
+html .linha-caso.lc5.lc5.lc5 .lc5-chips{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px 0}
+html .linha-caso.lc5.lc5.lc5 .lc-placa.lc5-grade{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;margin:0;padding:14px;background:none;border:0}
+html .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:0;padding:0;font-size:15px}
+html .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f > .lc-k{width:auto;flex:none;font:500 11px/1.2 var(--f-ui);letter-spacing:.04em;text-transform:uppercase;color:#5E5D58}
+html .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f .lc-num{font-family:var(--f-ui);font-size:15px;font-weight:600;color:#1F1E1B;font-variant-numeric:tabular-nums;white-space:nowrap;text-decoration:none;border:0;cursor:copy}
+html .linha-caso.lc5.lc5.lc5 .lc5-grade > :is(.lc-nb,.lc-prot) .lc-num{font-family:var(--f-mono);font-weight:500}
+html .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f .lc-vazio{font-size:13px;color:#6B6A64}
+html .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f .lapis{position:absolute;opacity:0;margin-left:0}
+html .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f{position:relative}
+/* a Fila (F325) ocupa a linha inteira da grade, com o rótulo em cima e os valores em texto corrido */
+html[data-tema] .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f:has(.lc-fila){grid-column:1/-1;display:flex;flex-direction:row;flex-wrap:wrap;column-gap:6px;padding-left:0;line-height:1.45}
+html[data-tema] .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f:has(.lc-fila) > .lc-k{position:static;flex-basis:100%}
+html[data-tema] .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f:has(.lc-fila) > :not(.lc-k){white-space:nowrap;margin-right:0}
+html .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f .lapis{top:-4px;right:0;min-width:24px;min-height:24px}
+html .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f:is(:hover,:focus-within) .lapis{opacity:.6}
+.app.celular .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f .lapis{opacity:.45}
+html .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f:not(:has(.lc-k)),html .linha-caso.lc5.lc5.lc5 .lc5-grade > :is(.lc-fila,.lc-aviso,.lc-quadro-aviso),
+html .linha-caso.lc5.lc5.lc5 .lc5-grade > div{grid-column:1/-1}
+html .linha-caso.lc5.lc5.lc5 .lc-mais-pe.lc-dobra{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:space-between;width:100%;min-height:44px;
+  padding:0 14px;border-top:1px solid var(--borda);font:500 13px/1 var(--f-ui);color:#1F1E1B;transition:background-color 120ms ease}
+html .linha-caso.lc5.lc5.lc5 .lc-mais-pe.lc-dobra:focus-visible{outline:2px solid var(--azul);outline-offset:-2px}
+@media (hover:hover) and (pointer:fine){html .linha-caso.lc5.lc5.lc5 .lc-mais-pe.lc-dobra:hover{background:#F7F6F3}}
+html .linha-caso.lc5.lc5.lc5 > :is(.lc-numeros,.lc-gestao,.lc-linhas,div:not(.lc-topo)){padding-left:14px;padding-right:14px}
+html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link{display:inline;padding:0;border:0;background:none;font:inherit;font-size:13px;font-weight:500;color:var(--azul);text-decoration:none;cursor:pointer;white-space:normal;overflow-wrap:anywhere}
+html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link svg{vertical-align:-2px;opacity:.75}
+html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px solid var(--azul);outline-offset:2px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){html .faixa-prazos.fp5 .pz-mais,html .linha-caso.lc5 .lc-dobra{transition:none}html .faixa-prazos.fp5 .pz-mais:active{transform:none}}
 </style>
 </head>
 <body>
@@ -6896,7 +6981,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.29</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.31</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -40992,6 +41077,21 @@ function casoCurtoPz(k){
   const sig = (/\bB?(\d{2})\b/.exec(String(k.especie||""))||[])[1];
   return `${sig ? `B${sig}` : cortaFrase(tituloCaso(k), 18)} · ${NOME_FASE[faseEfetiva(k)] || k.fase || ""}`;
 }
+// F504 · o nome curto da linha: a natureza, e não o título (pedido do Paulo, 10.11.2026)
+function natRotPz(x){
+  if(ehRetornoPz(x)) return "Retorno";
+  const nat = natDaLinha(x);
+  if(nat==="fatal" || x.prorrogDe) return "Prazo fatal";
+  if(x.ico==="🩺" && !/prorroga/i.test(x.rotulo||"")){
+    const t = String(x.titulo||x.rotulo||x._titulo||"");
+    if(/audi[êe]ncia/i.test(t)) return "Audiência";
+    if(/avalia/i.test(t)) return "Avaliação social";
+    if(/per[íi]cia/i.test(t)) return "Perícia médica";
+    return "Compromisso";
+  }
+  if(nat==="compromisso") return (x.andId || x.tc || x.filha) ? "Tarefa" : "Compromisso";
+  return "Lembrete";
+}
 function faixaPrazos(k){
   const {soltas} = linhasDeDatas(k.cliente_id), hj = hoje();
   const minhas = [];
@@ -41021,7 +41121,7 @@ function faixaPrazos(k){
   const nForaV = soltas.filter(x=>x.casoId && x.casoId!==k.id && x.data<hj && !x.aConfirmar).length;
   const outros = fora ? `<div class="fp3-out"><span>Outros casos do cliente: ${fora} ${fora===1?"data":"datas"}${nForaV ? `, <b>${nForaV} ${nForaV===1?"vencida":"vencidas"}</b>` : ""}</span><button type="button" class="btn-mini fp-outros" onclick="abaAtiva=5;repintarFicha()" title="ver as datas de todos os casos do cliente">Todos</button></div>` : "";
   const sug = sugestaoPrazoEtapa(k, soltas);
-  const tit = `<div class="fp-cab"><h3 class="fp-tit">Prazos deste caso</h3>${conf ? `<details class="tl-mais fp-menu"><summary class="tl-bt tl-bt-ic" aria-label="Conferir o caso" title="conferir o caso: sem novidade ou movimentou">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${conf}</span></details>` : ""}</div>`;
+  const tit = `<div class="fp-cab"><h3 class="fp-tit">Prazos</h3>${minhas.length ? `<span class="fp5-n" aria-label="${minhas.length} ${minhas.length===1?"data":"datas"}">${minhas.length}</span>` : ""}${conf ? `<details class="tl-mais fp-menu"><summary class="tl-bt tl-bt-ic" aria-label="Conferir o caso" title="conferir o caso: sem novidade ou movimentou">${IC_SVG.mais}</summary><span class="tl-mais-menu" role="menu">${conf}</span></details>` : ""}</div>`;
   if(!minhas.length) return `<div class="faixa-prazos vazia" aria-label="Prazos e providências">${tit}
     ${sug || `<span class="meio-sub" title="Um andamento com data cria o lembrete; a anotação com ⏰ cria o prazo.">Sem prazos ou lembretes em aberto.</span>`}${outros}</div>`;
   // F236 · sem mexer na ordem (F145), o que não pode passar despercebido: o PRÓXIMO (a menor data de hoje em diante
@@ -41043,22 +41143,24 @@ function faixaPrazos(k){
   // F326 · o título e o quanto falta vêm das mesmas funções da aba Prazos e da janela (tituloDaLinha, faltaPz, prepPz)
   // F333 · A TELA DO CASO INTEGRADA COM A ABA PRAZOS (proposta aprovada pelo Paulo, 31.10.2026): o próximo prazo fatal
   // abre o quadro com o que é, quanto falta, a barra e o "Cumpri o prazo"; as demais linhas dizem o que são e quanto falta
+  // F504 · A LINHA DO LOVABLE (aprovada pelo Paulo, 10.11.2026): o dia em bloco, a natureza (Prazo fatal, Tarefa,
+  // Lembrete, Compromisso, Audiência, Perícia médica, Avaliação social, Retorno), quanto falta e o Abrir. O título
+  // inteiro fica no title e no texto para o leitor de tela; o detalhe mora na janela do prazo
   const linha = (x, destaque) => {
     const i = minhas.indexOf(x), nat = natDaLinha(x), tipo = tipoDaLinha(x);
     prepPz(x, i);
-    const titulo = x._titulo, f = x._f, cls = `pz fp2-lin pz-${nat}${pend(x)?" pz-venceu":""}${x.semMotivo?" pz-semmotivo":""}${x.aConfirmar?" pz-confirmar":""}`;
+    const titulo = x._titulo, f = x._f, rot = natRotPz(x), venc = pend(x);
+    const cls = `pz fp2-lin fp5-lin pz-${nat}${venc?" pz-venceu":""}${x.semMotivo?" pz-semmotivo":""}${x.aConfirmar?" pz-confirmar":""}${destaque?" fp2-fatal fp3-hero":""}`;
     const dados = `data-nat="${nat}" data-tipo="${esc(tipo)}" data-data="${x.data}" title="${esc(titulo)}"`;
-    if(destaque) return `<div class="${cls} fp2-fatal fp3-hero" ${dados}>
-      <span class="fp3-sobre"><span class="fp2-bola" aria-hidden="true"></span> ${pend(x) ? "Prazo fatal vencido" : "Próximo prazo fatal"}</span>
-      <div class="fp3-ht"><b class="fp3-tit">${esc(titulo)}</b><span class="fp3-n">${f.pre && f.pre!=="vence" ? `<small>${esc(f.pre)}</small>` : ""}<strong aria-hidden="true">${esc(String(f.n))}</strong><span aria-hidden="true">${esc(f.un)}</span><span class="fp2-sr">${esc(f.txt)}</span></span></div>
-      ${barraPz(inicioDaLinha(x), x, "fp3") || `<div class="fp3-bl"><span>Vence · ${esc(diaCurtoPz(x.data))}</span></div>`}
-      <div class="fp3-pe"><button type="button" class="fp3-pri fp2-mais pz-mais" onclick="abrirPainelPrazo(${i})" title="Abrir o prazo">Abrir</button>${x.cumprir ? `<button type="button" class="fp3-sec" onclick="${x.cumprir}" title="Registrar que o prazo foi cumprido">Cumprido</button>` : ""}</div>
-    </div>`;
+    const [, mm, dd] = x.data.split("-");
+    const chip = x.aConfirmar ? "a confirmar" : x.data===hj ? "hoje" : f.urg==="venc" ? f.txt : `${f.n} ${f.un}`;
+    const verm = nat==="fatal" || x.prorrogDe || venc;
+    const sobre = destaque ? (venc ? "Prazo fatal vencido" : "Próximo prazo fatal") : rot;
     return `<div class="${cls}" ${dados}>
-      <span class="fp2-bola" aria-hidden="true"></span>
-      <span class="fp2-data">${esc(diaCurtoPz(x.data))}</span>
-      <span class="fp3-t">${esc(titulo)}<small class="fp3-f${f.urg==="venc"?" venc":""}">${esc(f.txt)}</small></span>
-      <button class="fp2-mais pz-mais" onclick="abrirPainelPrazo(${i})" aria-label="abrir: ${esc(titulo)}">Abrir</button>
+      <span class="fp5-dia fp2-data" aria-hidden="true"><b>${+dd}</b><small>${MES_CURTO[+mm-1]}</small></span>
+      <span class="fp5-txt"><b class="fp3-tit" aria-hidden="true">${esc(rot)}</b><span class="sr-only">${esc(sobre)} ${esc(titulo)}, ${esc(f.txt)}, ${esc(diaCurtoPz(x.data))}</span></span>
+      <span class="fp5-chip fp3-n${verm?" verm":""}" aria-hidden="true">${esc(chip)}</span>
+      <button type="button" class="fp2-mais pz-mais${destaque?" fp3-pri":""}" onclick="abrirPainelPrazo(${i})" aria-label="Abrir: ${esc(titulo)}">Abrir</button>
     </div>`;
   };
   // F335 · o prazo fatal vencido sem registro vem antes do próximo: é o que pede ação primeiro
@@ -41069,7 +41171,9 @@ function faixaPrazos(k){
   // F335 · UM PRAZO DE CADA VEZ (pedido do Paulo, 01.11.2026, como no To Do): à vista fica só o próximo (o prazo
   // fatal em destaque ou, sem ele, a primeira data que pede ação); as demais ficam em "Ver as outras N datas", fechado
   const soUm = destaque ? null : (prox || minhas.filter(pend)[0] || minhas[0]);
-  const ja = new Set([destaque || soUm].filter(Boolean));
+  // F504 · como no Lovable, duas linhas à vista: o destaque (ou a primeira que pede ação) e a vencida, senão a seguinte
+  const um = destaque || soUm, dois = um && (minhas.filter(x=>x!==um && pend(x))[0] || ord(minhas.filter(x=>x!==um && natDaLinha(x)!=="lembrete"))[0] || ord(minhas.filter(x=>x!==um))[0]) || null;
+  const ja = new Set([um, dois].filter(Boolean));
   const grupos = GRUPOS.map(([rot, f, tom])=>{ const g = minhas.filter(x=>!ja.has(x) && f(x)); g.forEach(x=>ja.add(x)); return [rot, g, tom]; })
     .filter(([,g])=>g.length);
   const cab = (rot, n) => `<h4 class="fp2-g">${rot} <span class="pl-n">${n}</span></h4>`;
@@ -41081,7 +41185,8 @@ function faixaPrazos(k){
   if(painelPz && painelPz.casoId===k.id && painelPz.fonte!=="cli"){ const j = minhas.findIndex(x=>x.data===painelPz.data && (x.andId||"")===painelPz.andId);
     if(j>=0) setTimeout(()=>abrirPainelPrazo(j));
     else if(painelPz.andId){ const pz = painelPz; setTimeout(()=>abrirPainelTarefa(pz.casoId, pz.andId)); } }
-  return `<div class="faixa-prazos fp2" aria-label="Prazos e providências">${tit}${nv}${destaque ? linha(destaque, true) : (sug || sem) + (soUm ? linha(soUm) : "")}${blocos}${outros}</div>`;
+  const barra = destaque ? (barraPz(inicioDaLinha(destaque), destaque, "fp3") || `<div class="fp3-bl"><span>Vence · ${esc(diaCurtoPz(destaque.data))}</span></div>`) : "";
+  return `<div class="faixa-prazos fp2 fp5" aria-label="Prazos e providências">${tit}${nv}${destaque ? "" : (sug || sem)}<div class="fp5-linhas">${destaque ? linha(destaque, true) : (soUm ? linha(soUm) : "")}${dois ? linha(dois) : ""}</div>${barra}${blocos}${outros}</div>`;
 }
 // F333 · O PRAZO QUE NASCE DA ETAPA (decisão do Paulo, 31.10.2026, depois de comparar com Filevine, MyCase e Astrea):
 // a etapa declarada que abre prazo oferece o item do catálogo, contado da decisão quando ela está no caso. Só oferece:
@@ -41968,6 +42073,12 @@ function lcNumeros(k){
   const linha = (rot, itens, add, tit) => `<div class="lc-linha"><span class="lc-k">${rot}</span>${itens.join("")}
     <button class="lc-add" onclick="${add}" title="${esc(tit)}" aria-label="${esc(tit)}">+</button></div>`;
   const partes = [];
+  // F504 · a tramitação e o aviso da etapa saíram do quadro de detalhes e abrem aqui, no alto
+  const fe = faseEfetiva(k), tram = (TRAMITA[fe] || NOME_FASE[fe] || fe || "") + (k.fase==="outro" && fe!=="outro" ? " · prazo correndo" : "");
+  if(tram) partes.push(`<div class="lc-linha lc5-tram"><span class="lc-f"><span class="lc-k">Tramitação</span>${(a=>a
+    ? (rotA=>a.replace('class="lc-acesso"', 'class="lc-tram lc-tram-link"').replace(/^(<(a|button)\b[^>]*>)[\s\S]*$/, (_, ab, tg)=>`${ab}<span class="lc-tram-n">${esc(tram)}</span> · abrir no ${esc(rotA)}${IC_SVG.ir}</${tg}>`))(a.replace(/<[^>]*>/g, "").replace("↗", "").trim())
+    : `<span class="lc-tram">${esc(tram)}</span>`)(acessosDoCaso(k).atual[0])}</span></div>`);
+  (a=>a && partes.push(`<div class="lc-linha lc5-tram"><span class="lc-f lc-etapa-aviso" title="etapa do caso: ${esc(k.etapa||"a definir")}">${a}</span></div>`))(etapasDaFase(k).length ? avisoEtapa(k) : "");
   // F162 · o NB principal se troca ali mesmo (o + só acrescenta outro)
   if(nbs.length) partes.push(linha("NB", [
       `<span id="lcnb-nb-${k.id}">${k.nb?lcCop(fmtNb(k.nb),"NB"):""}<button class="lapis" title="trocar ou apagar o NB principal" onclick="editarFato('${k.id}','nb','lcnb')">✎</button></span>`,
@@ -42288,66 +42399,58 @@ function listaDoOutro(k){
   const l = listaDe(k), de = (k.ronda||{}).prazo_de;
   return l==="—" ? "Outros" : de && de!==l ? `${l} · veio de ${de}` : l;
 }
+// F504 · O QUADRO DO CASO (protótipo do Lovable aprovado pelo Paulo, 10.11.2026): o cabeçalho na cor de onde o
+// caso está agora (a mesma tinta dos cartões do Dashboard, F486) e, no canto direito, o nome do lugar
+const LC_FASE = {escritorio:["#0E5C58","Escritório"], inss:["#4F78B0","INSS"], conselho:["#8A5A1E","CRPS"],
+  judicial:["#6B3FA0","Judicial"], pagamento:["#6B3FA0","Pagamento"], encerrado:["#6B7070","Encerrado"]};
+function lcLugar(k){
+  if(k.fase==="encerrado") return LC_FASE.encerrado;
+  const fe = faseEfetiva(k), dica = k.fase==="outro" ? listaDoOutro(k) : "";
+  // o caso da fase "outro" diz o lugar verdadeiro (F236) e a lista do To Do fica no title
+  return LC_FASE[fe] ? [...LC_FASE[fe], dica] : [LC_FASE.escritorio[0], dica || NOME_FASE[fe] || fe || "Escritório", ""];
+}
 function linhaCaso(k){
   const n = lcNivel(k.id);
-  // F236 · a tramitação é a da fase verdadeira; no 🗓 Tarefas com Prazo o caso continua sendo o que é, com o prazo correndo
-  const fe = faseEfetiva(k), tram = (TRAMITA[fe] || NOME_FASE[fe] || fe || "") + (k.fase==="outro" && fe!=="outro" ? " · prazo correndo" : "");
-  return `<section class="linha-caso" data-n="${n}" aria-label="O caso">
+  const [cor, lugar, dica] = lcLugar(k);
+  const pr = /^(inss|conselho)$/.test(faseEfetiva(k)) ? (k.protocolos||[]).map(String).filter(Boolean)[0] : "";
+  const chips = [
+    k.natureza?`<span class="chip nat-chip" title="natureza do pedido">${esc(rotNatureza(k.natureza))}</span>`:"",
+    (s=>s?`<button type="button" class="chip lc-susp" onclick="suspenderCaso('${k.id}')" title="${esc(tituloSusp(s))}: clique para alterar ou retomar">⏸ Suspenso · ${esc(rotSusp(s))}</button>`:"")(suspensaoDe(k)),
+    (c=>c && !suspensaoDe(k) && k.fase!=="encerrado" ? `<span class="chip lc-susp lc-susp-conf" title="o movimento do ${esc(c.fonte)} fala em suspensão, mas não traz o número do tema">⏸ Suspensão sem tema · <button type="button" class="btn-mini" onclick="suspenderCaso('${k.id}')" title="Informar o tema da suspensão">Suspender<span class="sr-only"> informando o tema</span></button> <button type="button" class="btn-mini" onclick="suspConferirNao('${k.id}')" title="O caso não está suspenso por tema">Não<span class="sr-only"> está suspenso por tema</span></button></span>` : "")((k.ronda||{}).susp_conferir),
+    semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo: custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:"",
+  ].filter(Boolean).join("");
+  return `<section class="linha-caso lc5" data-n="${n}" aria-label="O caso" style="--lc-cor:${cor}">
     <div class="lc-topo">
-      ${/* F134 · a faixa do caso em duas partes (redesenho v11): no alto o nome
-           do pedido com os selos e o ➕; embaixo a PLACA, um quadro por dado
-           fixo, rótulo em cima e valor embaixo, em colunas alinhadas. */""}
-      ${/* F236 · na fase "outro" a linha diz a lista do To Do (e de onde veio o prazo), não "Outros" */""}
-      ${/* F287 · a canetinha da espécie ao lado do "B42 · INSS" e o ⋯ no canto, onde ficava o + (pedido do Paulo, 27.10.2026) */""}
-      <div class="lc-sobre-l"><span class="lc-sobre">${esc([k.especie, k.fase==="outro" ? listaDoOutro(k) : tram].filter(Boolean).join(" · "))}</span>
-      <button class="lapis" title="trocar a espécie ou o pedido deste caso" aria-label="trocar a espécie ou o pedido deste caso" onclick="escolherEspecie('${k.id}')">✎</button>
-      ${k.fase!=="encerrado" && !ehPreCaso(k) ? `<button class="desp-bt" onclick="despachar('${k.id}',event)" title="Concluir por hoje: escolher quando o cliente volta à fila e tirar do Meu Dia; se quiser, passar a outra pessoa" aria-label="Concluir por hoje">✔ Concluir</button>` : ""}
-      ${/* F274 · Claude e Fixar comentário no ⋯ do cartão do caso */""}
-      ${menuMais([
-        `<button class="tl-mais-it lc-claude" role="menuitem" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)"><span aria-hidden="true">✦ Claude</span><span class="sr-only">✦ Pedir ao Claude</span></button>`,
-        k.fase!=="encerrado" && !ehPreCaso(k) && !suspensaoDe(k) ? `<button class="tl-mais-it lc-suspender" role="menuitem" onclick="suspenderCaso('${k.id}')" title="marcar o caso como suspenso por tema do STF, do STJ, da TNU ou do TRF3">⏸ Suspender<span class="sr-only"> por tema</span></button>` : "",
-        `<button class="tl-mais-it lc-seguir" role="menuitem" onclick="seguirCaso('${k.id}')" title="${sigoCaso(k.id) ? "deixar de receber as anotações e os movimentos deste caso nas Menções" : "receber nas Menções cada anotação e cada movimento oficial deste caso, sem ser responsável"}">${sigoCaso(k.id) ? `Seguindo<span class="sr-only">: deixar de seguir</span>` : `Seguir<span class="sr-only"> o caso</span>`}</button>`,
-        `<button class="tl-mais-it lc-apagadas" role="menuitem" onclick="verApagadas('${k.id}')" title="ver as anotações e os prazos apagados deste caso, com quem apagou e quando">Apagadas<span class="sr-only"> anotações</span></button>`,
-        k.fixo && k.fixo.texto ? "" : `<button class="tl-mais-it fixar-caso" role="menuitem" onclick="lcEditarFixo('${k.id}')" title="fixar um comentário que aparece em destaque ao abrir o caso">${ICO_PIN} Fixar<span class="sr-only"> comentário</span></button>`,
-      ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo lc-menu"')}</div>
-      <div class="lc-cab">
-      ${/* F113 · só o nome do pedido e a canetinha; o código do INSS fica no title e na janela */""}
-      <b class="lc-ben ${(k.especie||k.beneficio||tituloProprio(k))?"":"lc-vazio"}" title="${esc(k.especie?`${k.especie} · `:"")}${esc((k.especie||k.beneficio) ? tituloCaso(k) : tituloProprio(k) || tituloCaso(k))}. Clique na canetinha para trocar">${
-        (k.especie||k.beneficio) ? esc(tituloCaso(k)) : tituloProprio(k) ? esc(tituloProprio(k)) : "definir o pedido"}</b>
-      ${k.natureza?`<span class="chip nat-chip" title="natureza do pedido">${esc(rotNatureza(k.natureza))}</span>`:""}
-      ${(s=>s?`<button type="button" class="chip lc-susp" onclick="suspenderCaso('${k.id}')" title="${esc(tituloSusp(s))}: clique para alterar ou retomar">⏸ Suspenso · ${esc(rotSusp(s))}</button>`:"")(suspensaoDe(k))}
-      ${(c=>c && !suspensaoDe(k) && k.fase!=="encerrado" ? `<span class="chip lc-susp lc-susp-conf" title="o movimento do ${esc(c.fonte)} fala em suspensão, mas não traz o número do tema">⏸ Suspensão sem tema · <button type="button" class="btn-mini" onclick="suspenderCaso('${k.id}')" title="Informar o tema da suspensão">Suspender<span class="sr-only"> informando o tema</span></button> <button type="button" class="btn-mini" onclick="suspConferirNao('${k.id}')" title="O caso não está suspenso por tema">Não<span class="sr-only"> está suspenso por tema</span></button></span>` : "")((k.ronda||{}).susp_conferir)}
-      ${semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo: custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:""}
+      <div class="lc5-cab">
+        <div class="lc-sobre-l">${k.especie ? `<span class="lc-sobre lc5-esp" title="espécie do INSS">${esc(k.especie)}</span>` : `<span class="lc-sobre lc5-esp lc5-esp-vazia" title="espécie não definida">?</span>`}
+        <button class="lapis" title="trocar a espécie ou o pedido deste caso" aria-label="trocar a espécie ou o pedido deste caso" onclick="escolherEspecie('${k.id}')">✎</button></div>
+        <div class="lc-cab"><b class="lc-ben ${(k.especie||k.beneficio||tituloProprio(k))?"":"lc-vazio"}" title="${esc(k.especie?`${k.especie} · `:"")}${esc((k.especie||k.beneficio) ? tituloCaso(k) : tituloProprio(k) || tituloCaso(k))}. Clique na canetinha para trocar">${
+          (k.especie||k.beneficio) ? esc(tituloCaso(k)) : tituloProprio(k) ? esc(tituloProprio(k)) : "definir o pedido"}</b></div>
+        <span class="lc5-lugar" title="${esc(dica ? `lista: ${dica}` : "onde o caso está agora")}">${esc(lugar)}</span>
+        ${menuMais([
+          `<button class="tl-mais-it lc-claude" role="menuitem" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)"><span aria-hidden="true">✦ Claude</span><span class="sr-only">✦ Pedir ao Claude</span></button>`,
+          k.fase!=="encerrado" && !ehPreCaso(k) ? `<button class="tl-mais-it desp-bt" role="menuitem" onclick="despachar('${k.id}',event)" title="Concluir por hoje: escolher quando o cliente volta à fila e tirar do Meu Dia; se quiser, passar a outra pessoa">✔ Concluir<span class="sr-only"> por hoje</span></button>` : "",
+          k.fase!=="encerrado" && !ehPreCaso(k) && !suspensaoDe(k) ? `<button class="tl-mais-it lc-suspender" role="menuitem" onclick="suspenderCaso('${k.id}')" title="marcar o caso como suspenso por tema do STF, do STJ, da TNU ou do TRF3">⏸ Suspender<span class="sr-only"> por tema</span></button>` : "",
+          `<button class="tl-mais-it lc-seguir" role="menuitem" onclick="seguirCaso('${k.id}')" title="${sigoCaso(k.id) ? "deixar de receber as anotações e os movimentos deste caso nas Menções" : "receber nas Menções cada anotação e cada movimento oficial deste caso, sem ser responsável"}">${sigoCaso(k.id) ? `Seguindo<span class="sr-only">: deixar de seguir</span>` : `Seguir<span class="sr-only"> o caso</span>`}</button>`,
+          `<button class="tl-mais-it lc-apagadas" role="menuitem" onclick="verApagadas('${k.id}')" title="ver as anotações e os prazos apagados deste caso, com quem apagou e quando">Apagadas<span class="sr-only"> anotações</span></button>`,
+          k.fixo && k.fixo.texto ? "" : `<button class="tl-mais-it fixar-caso" role="menuitem" onclick="lcEditarFixo('${k.id}')" title="fixar um comentário que aparece em destaque ao abrir o caso">${ICO_PIN} Fixar<span class="sr-only"> comentário</span></button>`,
+        ]).replace('class="tl-mais"', 'class="tl-mais mais-baixo lc-menu"')}
       </div>
-      <div class="lc-placa">
+      ${chips ? `<div class="lc5-chips">${chips}</div>` : ""}
+      ${/* F504 · a grade de detalhes: datas na fonte do CRM, NB e protocolo na fonte de código; o toque no número copia */""}
+      <div class="lc-placa lc5-grade">
       ${k.fase==="encerrado" && !k.der ? "" : `<span class="lc-f"><span class="lc-k">DER</span>${k.der
         ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar${esc(fonteQuadro(k,"der"))}">${fmtBarra(k.der)}</span>`
         : `<span class="lc-vazio">não informada</span>`}<button class="lapis" title="alterar a DER" onclick="editarFato('${k.id}','der')">✎</button></span>`}
-      ${/* F114 · o que decide ESTA espécie, e só isso; o resto em gestão do caso */""}
       ${camposEssenciais(k).map(c=>lcCampo(k,c)).join("")}
-      ${/* F287 · o acesso da fase (PAT, Meu INSS, e-SISREC, autos) é a própria tramitação, com o ícone de ir */""}
-      ${/* F320 · o protocolo do INSS à vista, com copiar, como nas imagens aprovadas (plano de interface limpa) */""}
-      ${(pr=>pr && /^(inss|conselho)$/.test(fe) ? `<span class="lc-f lc-prot"><span class="lc-k">Protocolo</span>${lcCop(pr,"Protocolo")}<button type="button" class="lc-copiar" onclick="copiar('${escJs(pr)}','Protocolo copiado')">copiar</button></span>` : "")((k.protocolos||[]).map(String).filter(Boolean)[0])}
-      <span class="lc-f"><span class="lc-k">Tramitação</span>${(a=>a
-        ? (rotA=>a.replace('class="lc-acesso"', 'class="lc-tram lc-tram-link"').replace(/^(<(a|button)\b[^>]*>)[\s\S]*$/, (_, ab, tg)=>`${ab}<span class="lc-tram-n">${esc(tram)}</span> · abrir no ${esc(rotA)}${IC_SVG.ir}</${tg}>`))(a.replace(/<[^>]*>/g, "").replace("↗", "").trim())
-        : `<span class="lc-tram">${esc(tram)}</span>`)(acessosDoCaso(k).atual[0])}</span>
-      ${/* F119 · a etapa, o passo dentro da fase. É ela que responde ao
-           cliente quando ele pergunta como está o processo. */""}
-      ${/* F121 · a POSIÇÃO NA FILA do TRF3 (pedido do Paulo, 19.09). O painel
-           público do tribunal já é lido todo dia pelo crm/trf3_ordem.py e o
-           número mora em casos.trf3. Na linha entra só a posição, que é o que
-           responde ao cliente em um segundo; o resto (órgão, turma, previsão,
-           mensagem pronta) continua no cartão do caso. */""}
+      ${k.nb && !camposEssenciais(k).some(c=>soCampo(c)==="nb") ? `<span class="lc-f lc-nb"><span class="lc-k">NB</span>${lcCop(fmtNb(k.nb),"NB")}</span>` : ""}
+      ${pr ? `<span class="lc-f lc-prot"><span class="lc-k">Protocolo</span>${lcCop(pr,"Protocolo")}</span>` : ""}
       ${filaTrf3(k)}
       ${recursoParado(k)}
-      ${/* F287 · a etapa mora na faixa das fases, no alto do caso; aqui fica só o aviso, quando há (etapa velha, sugestão) */""}
-      ${(a=>a?`<span class="lc-f lc-etapa-aviso" title="etapa do caso: ${esc(k.etapa||"a definir")}">${a}</span>`:"")(etapasDaFase(k).length ? avisoEtapa(k) : "")}
       ${avisoQuadro(k)}
-      ${lcVerificacao(k)}
       </div>
-      ${/* F287 · a flecha no meio da borda de baixo, como a alça das fases (F286) */""}
       <button type="button" class="lc-mais lc-mais-pe lc-dobra" onclick="lcAbrir('${k.id}',${n?0:1})" aria-expanded="${n?"true":"false"}"
-        title="${n?"fechar":"os números do caso: NB, e-Sisrec, processo judicial, e a gestão do caso"}">${setaAlca(!n)}<span>Números do caso e gestão</span></button>
+        title="${n?"fechar":"tramitação, etapa, números do caso (NB, e-Sisrec, processo judicial) e a gestão do caso"}"><span>Números do caso e gestão</span>${setaAlca(!n)}</button>
     </div>
     ${n>=1?lcNumeros(k):""}
     ${n>=2?lcGestao(k):""}
@@ -57638,13 +57741,34 @@ function aplicarMenu(){
   try{ if(localStorage.getItem("crm_sw")==="1") liga = true; }catch(e){}
   if(!liga) return;
   navigator.serviceWorker.register("sw.js").catch(()=>{});
-  navigator.serviceWorker.addEventListener("message", e=>{ if(e.data==="crm-nova-versao") avisoNovaVersao(); else cliqueNoAviso(e.data); });
+  navigator.serviceWorker.addEventListener("message", e=>{
+    if(e.data==="crm-nova-versao" || (e.data && e.data.crm==="nova-versao")) avisoNovaVersao(e.data); else cliqueNoAviso(e.data); });
 })();
-function avisoNovaVersao(){
+// F503 · o aviso só aparece quando o site tem versão MAIS NOVA que a desta página
+// (antes, a página já recarregada recebia o aviso de novo e ele não saía)
+function minhaVersao(){
+  const m = /versão (\d+)\.(\d+)/.exec((document.querySelector(".versao")||{}).textContent || "");
+  return m ? m[1] + "." + m[2] : "";
+}
+function meuPrograma(){
+  const sc = [...document.scripts].find(x => /app\.[0-9a-f]{12}\.js/.test(x.src||""));
+  return sc ? sc.src.match(/app\.[0-9a-f]{12}\.js/)[0] : "";
+}
+function versaoMaisNova(a, b){
+  const [x1, y1] = a.split(".").map(Number), [x2, y2] = b.split(".").map(Number);
+  return (x1 - x2 || y1 - y2) > 0;
+}
+function avisoNovaVersao(d0){
+  if(d0 && typeof d0 === "object"){
+    const mv = minhaVersao(), v = d0.versao || "";
+    if(v && mv && v !== mv){ if(!versaoMaisNova(v, mv)) return; }
+    else if((d0.prog || meuPrograma()) && d0.prog === meuPrograma()) return;   // é o programa que já está aberto
+  }
   if(document.getElementById("nova-versao")) return;
   const d = document.createElement("div");
   d.id = "nova-versao"; d.setAttribute("role","status");
-  d.innerHTML = `<span>Há uma versão nova do CRM.</span><button onclick="location.reload()">Recarregar</button>`;
+  d.innerHTML = `<span>Há uma versão nova do CRM.</span><button onclick="location.reload()">Recarregar</button>`
+    + `<button class="nv-fechar" aria-label="Fechar o aviso" title="Fechar" onclick="this.parentNode.remove()">✕</button>`;
   document.body.appendChild(d);
 }
 
