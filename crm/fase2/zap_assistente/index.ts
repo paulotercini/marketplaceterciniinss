@@ -26,7 +26,12 @@ const MODELO = env("ZAP_ASSISTENTE_MODELO") || "claude-opus-5-5";
 const cors = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "authorization, apikey, content-type", "Access-Control-Allow-Methods": "POST, OPTIONS" };
 const json = (o: unknown, status = 200) => new Response(JSON.stringify(o), { status, headers: { "Content-Type": "application/json", ...cors } });
 
-export const mascarar = (s: unknown) => String(s ?? "").replace(/\d[\d.\-/ ]{6,}\d/g, (m) => (m.replace(/\D/g, "").length >= 8 ? "[número]" : m));
+// F515 · o que vem depois de "senha" (do gov.br, do Meu INSS) também não sai: com ":", "=", "é" ou "eh" some a palavra
+// seguinte; sem eles, só a que parece senha (dígito, símbolo ou maiúscula no meio), para "leve a senha do gov.br" ficar inteiro
+const RX_SENHA = /\b(senhas?|password)\b((?:[\s,]+(?:d[oae]|n[oa]|meu|minha|gov(?:\.br)?|govbr|inss|nova|atual|acesso|app|aplicativo))*)(\s*[:=]\s*|\s+(?:é|eh|era)\s+|\s+)(\S+)/gi;
+export const mascarar = (s: unknown) => String(s ?? "")
+  .replace(RX_SENHA, (m, p, meio, sep, tok) => (sep.trim() || /\d|[@#$%&*!_+]|\p{Ll}\p{Lu}/u.test(tok) ? `${p}${meio}${sep}[senha]` : m))
+  .replace(/\d[\d.\-/ ]{6,}\d/g, (m) => (m.replace(/\D/g, "").length >= 8 ? "[número]" : m));
 export const primeiroNome = (s: unknown) => String(s ?? "").trim().split(/\s+/)[0] || "";
 
 type Msg = { direcao: string; por_bot: boolean; tipo: string; texto: string | null; criado_em: string };

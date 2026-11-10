@@ -18,4 +18,11 @@ const modelo = "Olá, {nome}. Seu atendimento está agendado para {dia}, {data},
 assert.equal(textoConfirmacao(modelo, "\n\nGov.", { nome: "joão souza", data: "2026-11-11", inicio: "09:30", tratamento: "o Dr. Paulo", profissional: "paulo" }),
   "Olá, João. Seu atendimento está agendado para quarta-feira, 11/11/2026, às 9h30, com o Dr. Paulo. Responda SIM.\n\nGov.");
 assert.ok(!textoConfirmacao(modelo, "\n\nGov.", { nome: "a b", data: "2026-11-11", inicio: "14:00", tratamento: "o Dr. Marcos", profissional: "marcos" }).includes("Gov."), "Marcos sem gov.br");
+// F515 · o segredo do cabeçalho: exigência desligada passa; ligada, só o segredo igual
+{
+  const { conferirSegredo } = await import("../../zap_confirmacao/index.ts");
+  assert.equal(conferirSegredo(null, "abc", false).ok, true);
+  assert.equal(conferirSegredo("abc", "abc", true).ok, true);
+  assert.equal(conferirSegredo("abx", "abc", true).ok, false);
+}
 console.log("zap_confirmacao: ok");

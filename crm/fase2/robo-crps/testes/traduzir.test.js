@@ -1,5 +1,5 @@
 // Tradutor testado contra os eventos REAIS que a sonda trouxe (fichas do
-// Alessandro, do Charles e do Paulo Roberto Kuner).
+// Alessandro, do Charles e de um terceiro).
 const { test } = require('node:test');
 const assert = require('node:assert');
 const T = require('../traduzir.js');
@@ -71,8 +71,8 @@ test('pauta: sessão de julgamento extrai a data e o horário', () => {
 });
 
 test('partes: recurso especial, embargos, contrarrazões e recurso ordinário', () => {
-  assert.match(traduz('Interposição de Recurso Especial - (Por: PAULO ROBERTO KUNER)'), /especial protocolado/i);
-  assert.match(traduz('Interposição de Incidente - (Por: CHARLES LUIZ DOS SANTOS)'), /Embargos protocolados/);
+  assert.match(traduz('Interposição de Recurso Especial - (Por: PEDRO FICTO KLEIN)'), /especial protocolado/i);
+  assert.match(traduz('Interposição de Incidente - (Por: CHARLES FICTO DOS SANTOS)'), /Embargos protocolados/);
   assert.match(traduz('Contrarrazões do recorrido'), /Contrarrazões/);
   assert.match(traduz('Requerimento protocolado - Tarefa de Recurso Ordinário - 997168119'), /ordinário protocolado/i);
 });
@@ -112,7 +112,7 @@ test('data DD/MM/AAAA HH:MM:SS vira ISO ordenável', () => {
 const AMOSTRA = {
   proc: '44234156897202017', numProc: '44234.156897/2020-17',
   orgaoAtual: 'SERVIÇO DE CENTRALIZAÇÃO DA ANÁLISE DE RECONHECIMENTO DE DIREITOS SRSEI',
-  recorrentes: [{ nome: 'ALESSANDRO FRANCISCO RODRIGUES' }, { nome: 'PAULO ROBERTO TERCINI FILHO' }],
+  recorrentes: [{ nome: 'ALESSANDRO FICTO RODRIGUES' }, { nome: 'PAULO ROBERTO TERCINI FILHO' }],
   eventos: [
     { status: 'Encaminhamento automático - 21150513 para 21150521', data: '20/03/2026 00:11:19', documentos: [] },
     { status: 'Conhecer do Embargo do Segurado e dar provimento por unanimidade - Acórdão: 25ª JR/3325/2026', data: '18/03/2026 08:44:54', documentos: [{ nome: 'x.pdf' }] },
@@ -122,7 +122,7 @@ const AMOSTRA = {
 
 test('processo: separa o cliente do procurador', () => {
   const p = T.traduzirProcesso(AMOSTRA);
-  assert.deepStrictEqual(p.recorrentes, ['ALESSANDRO FRANCISCO RODRIGUES']);
+  assert.deepStrictEqual(p.recorrentes, ['ALESSANDRO FICTO RODRIGUES']);
 });
 
 test('processo: o status atual pula o ruído e pega a decisão real', () => {
@@ -158,7 +158,7 @@ test('o evento guarda a lista de documentos, não só a contagem', () => {
 test('marca como "decide" só acórdão e decisão monocrática', () => {
   assert.equal(T.ehArquivoDeDecisao('ACÓRDÃO_3325/2026_2026-03-18.pdf'), true);
   assert.equal(T.ehArquivoDeDecisao('DECISÃO MONOCRÁTICA_23ª JR/0729/2026.pdf'), true);
-  assert.equal(T.ehArquivoDeDecisao('Remuneracoes_14432411805.pdf'), false);
+  assert.equal(T.ehArquivoDeDecisao('Remuneracoes_52998224725.pdf'), false);
   assert.equal(T.ehArquivoDeDecisao('Recibo de Protocolo.pdf'), false);
   assert.equal(T.ehArquivoDeDecisao(''), false);
 });
@@ -169,7 +169,7 @@ test('o acórdão do processo real vem marcado para cópia', () => {
       data:'18/03/2026 08:44:54',
       documentos:[{id:'73189593',nome:'ACÓRDÃO_3325/2026_2026-03-18-08-44-54.pdf',path:'/esisrec/x/73189593'}] },
     { status:'Juntada de informações previdenciárias - FULANO', data:'10/03/2026 14:52:20',
-      documentos:[{id:'72965226',nome:'Remuneracoes_14432411805.pdf',path:'/esisrec/x/72965226'}] },
+      documentos:[{id:'72965226',nome:'Remuneracoes_52998224725.pdf',path:'/esisrec/x/72965226'}] },
   ]});
   const decide = p.eventos.flatMap(e=>e.arquivos).filter(a=>a.decide);
   assert.equal(decide.length, 1);

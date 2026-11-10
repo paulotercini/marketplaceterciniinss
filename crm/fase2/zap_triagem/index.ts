@@ -56,8 +56,35 @@ export function lerEscolha(resposta: string, ops: { vai: string }[]) {
   return ops.find((o) => o.vai === t)?.vai ?? null;
 }
 
+// shortcut: cópia do mascarar do zap_plantao (cada função registra o próprio Deno.serve); se crescer, vira _shared/
+const RX_SENHA = /\b(senhas?|password)\b((?:[\s,]+(?:d[oae]|n[oa]|meu|minha|gov(?:\.br)?|govbr|inss|nova|atual|acesso|app|aplicativo))*)(\s*[:=]\s*|\s+(?:é|eh|era)\s+|\s+)(\S+)/gi;
+export const mascarar = (s: unknown) => String(s ?? "")
+  .replace(RX_SENHA, (m, p, meio, sep, tok) => (sep.trim() || /\d|[@#$%&*!_+]|\p{Ll}\p{Lu}/u.test(tok) ? `${p}${meio}${sep}[senha]` : m))
+  .replace(/\d[\d.\-/ ]{6,}\d/g, (m) => (m.replace(/\D/g, "").length >= 8 ? "[número]" : m));
+
+// F515 · sem JWT, a prova de origem é o segredo de funcoes_segredo que o banco manda no cabeçalho (zap_fn_cabecalho).
+// A exigência nasce desligada (config_app.zap_fn_segredo = 'sim' liga): desligada, a chamada sem segredo passa e fica no log.
+export function conferirSegredo(recebido: string | null, segredo: string | null, exigir: boolean) {
+  const ok = !!segredo && !!recebido && recebido.length === segredo.length &&
+    [...recebido].reduce((d, ch, i) => d | (ch.charCodeAt(0) ^ segredo.charCodeAt(i)), 0) === 0;
+  return { ok: ok || !exigir, aviso: ok ? "" : exigir ? "recusada" : "aceita sem segredo" };
+}
+async function origemOk(req: Request) {
+  const ler = async (c: string) => {
+    try {
+      const r = await fetch(`${URL_SB}/rest/v1/${c}`, { headers: { apikey: SERVICO, Authorization: `Bearer ${SERVICO}` } });
+      return r.ok ? (await r.json())[0] : null;
+    } catch { return null; }
+  };
+  const [s, e] = await Promise.all([ler("funcoes_segredo?select=segredo&id=eq.1"), ler("config_app?select=valor&chave=eq.zap_fn_segredo")]);
+  const v = conferirSegredo(req.headers.get("x-crm-segredo"), s?.segredo ?? null, e?.valor === "sim");
+  if (v.aviso) console.log(`F515 · chamada ${v.aviso} (x-crm-segredo)`);
+  return v.ok;
+}
+
 Deno.serve(async (req) => {
   if (req.method !== "POST") return json({ erro: "use POST" }, 405);
+  if (!(await origemOk(req))) return json({ erro: "origem não conferida" }, 401);
   let msg = "";
   try { msg = String((await req.json())?.mensagem_id || ""); } catch { /* corpo inválido */ }
   if (!/^[0-9a-f-]{36}$/i.test(msg)) return json({ erro: "mensagem_id inválido" }, 400);
@@ -71,7 +98,7 @@ Deno.serve(async (req) => {
       headers: { "x-api-key": CHAVE_IA, "anthropic-version": "2023-06-01", "content-type": "application/json" },
       body: JSON.stringify({
         model: MODELO, max_tokens: 20,
-        messages: [{ role: "user", content: promptDaTriagem(String(x.texto || "").slice(0, 1000), ops) }],
+        messages: [{ role: "user", content: promptDaTriagem(mascarar(x.texto).slice(0, 1000), ops) }],
       }),
     });
     if (!r.ok) throw new Error(`Claude: ${r.status} ${await r.text()}`);

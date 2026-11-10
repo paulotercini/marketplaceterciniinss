@@ -3,6 +3,24 @@ import assert from "node:assert/strict";
 import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO, promptCliente, ESQ_CLIENTE, promptCobranca, ESQ_COBRANCA, promptAndamento, ESQ_ANDAMENTO, mascararMenosDatas, ehGolpe, primeiraPessoa } from "../../zap_plantao/index.ts";
 
 assert.equal(mascarar("CPF 123.456.789-09"), "CPF [número]");
+// F515 · a senha não vai ao modelo; o lembrete do escritório ("leve a senha do gov.br") fica inteiro
+assert.equal(mascarar("minha senha é Abc@1234, ok?"), "minha senha é [senha] ok?");
+assert.equal(mascarar("senha do gov: abacaxi"), "senha do gov: [senha]");
+assert.equal(mascarar("Senha Gov.br Teste2024 e CPF 123.456.789-09"), "Senha Gov.br [senha] e CPF [número]");
+assert.equal(mascarar("password = segredo1"), "password = [senha]");
+assert.equal(mascarar("Leve a senha do GOV.BR no atendimento"), "Leve a senha do GOV.BR no atendimento");
+assert.equal(mascarar("qual a senha? esqueci a senha do aplicativo ontem"), "qual a senha? esqueci a senha do aplicativo ontem");
+assert.equal(transcricao([{ direcao: "entrada", tipo: "texto", texto: "a senha do meu inss eh teste123", momento: "2026-11-10T12:00:00Z" }]).includes("teste123"), false);
+{
+  const { conferirSegredo } = await import("../../zap_plantao/index.ts");
+  // F515 · o segredo do cabeçalho: desligada a exigência, passa e avisa; ligada, só o segredo igual
+  assert.deepEqual(conferirSegredo(null, "abc", false), { ok: true, aviso: "aceita sem segredo" });
+  assert.deepEqual(conferirSegredo("abc", "abc", true), { ok: true, aviso: "" });
+  assert.equal(conferirSegredo("abd", "abc", true).ok, false);
+  assert.equal(conferirSegredo("abcd", "abc", true).ok, false);
+  assert.equal(conferirSegredo(null, "abc", true).ok, false);
+  assert.equal(conferirSegredo("", null, true).ok, false, "sem segredo no banco, a exigência ligada recusa");
+}
 const msgs = [
   { direcao: "saida", por_bot: false, tipo: "texto", texto: "*Dr. Marcos:*\n\nBom dia! Até o momento nada", momento: "2026-10-24T12:00:00Z" },
   { direcao: "entrada", por_bot: false, tipo: "texto", texto: "e o meu processo, NB 1234567890?", momento: "2026-10-24T13:00:00Z" },
@@ -182,8 +200,8 @@ const dec2 = await turno("sesn_2", "quero marcar", falso([
 assert.equal(dec2.resposta, "Há vaga terça às 9h30.");
 const res1 = enviados[1].events[0];
 assert.equal(res1.custom_tool_use_id, "sevt_1"); assert.ok(JSON.parse(res1.content[0].text).vagas.amanda.length === 1);
-const pai = promptPlantao({ ...base, contato: "Paulo Tercini", relacao: "pai", cliente: { nome: "Pietra Tercini", mesmo_telefone: true, casos: [] } });
-assert.ok(pai.includes("Quem escreve é Paulo Tercini (pai de Pietra Tercini): chame pelo nome de quem escreve"));
+const pai = promptPlantao({ ...base, contato: "Paulo Tercini", relacao: "pai", cliente: { nome: "Cliente Teste", mesmo_telefone: true, casos: [] } });
+assert.ok(pai.includes("Quem escreve é Paulo Tercini (pai de Cliente Teste): chame pelo nome de quem escreve"));
 assert.ok(!p1.includes("Quem escreve"), "sem relação gravada, nada muda");
 assert.ok(regras().includes("boas-vindas em nome da Advocacia Previdenciária"));
 // F422c · o NÃO da confirmação leva a remarcação ao contexto
@@ -295,13 +313,13 @@ console.log("formal: ok");
 {
   // teste do Paulo de 07.11.2026: o menu já recebeu a pessoa, e a ficha é de outra pessoa
   const { contexto: cx, PADRAO: pd } = await import("../../zap_plantao/index.ts");
-  const c = cx({ ...base, contato: "Paulo Tercini", relacao: "pai", cliente: { nome: "Pietra Tercini", mesmo_telefone: true, casos: [] } });
-  assert.ok(c.includes("Refira-se a Pietra apenas pelo primeiro nome") && c.includes("o menu automático inclusive"));
+  const c = cx({ ...base, contato: "Paulo Tercini", relacao: "pai", cliente: { nome: "Cliente Teste", mesmo_telefone: true, casos: [] } });
+  assert.ok(c.includes("Refira-se a Cliente apenas pelo primeiro nome") && c.includes("o menu automático inclusive"));
   assert.ok(pd.includes("nunca para abrir uma pergunta"));
   console.log("menu e representado: ok");
 }
 
-// F422p · o pai escreve pelo número da Pietra: 002 para ela (com a ficha), 001 para ele
+// F422p · o pai escreve pelo número da Cliente: 002 para ela (com a ficha), 001 para ele
 {
   const ch = [];
   const ag2 = async (acao, corpo) => { ch.push([acao, corpo]);
@@ -309,14 +327,14 @@ console.log("formal: ok");
     if (acao === "agendamentosFuturos") return { ok: true, agendamentos: [] };
     return { ok: true }; };
   const bc = async (nome) => nome === "zap_plantao_agenda"
-    ? { telefone: "5516999998888", cliente_id: null, cliente_numero: "fd86", nome_ficha: null, nome_numero: "Pietra Tercini", ligada: true } : null;
+    ? { telefone: "5516999998888", cliente_id: null, cliente_numero: "fd86", nome_ficha: null, nome_numero: "Cliente Teste", ligada: true } : null;
   const f = ferramentasDaConversa("c2", ag2, bc);
   const a = await f.consultar_vagas({ profissionais: ["amanda"], tipo: "002" });
-  assert.equal(a.tipo, "002"); assert.equal(a.para, "Pietra Tercini"); assert.equal(a.vagas.amanda[0].eventoId, "v2");
+  assert.equal(a.tipo, "002"); assert.equal(a.para, "Cliente Teste"); assert.equal(a.vagas.amanda[0].eventoId, "v2");
   assert.equal((await f.consultar_vagas({ profissionais: ["amanda"] })).tipo, "001", "sem pedido, quem escreve é atendimento novo");
   await f.marcar_atendimento({ eventoId: "v2", profissional: "amanda", modalidade: "presencial", assunto: "aposentadoria" });
   const m = ch.find((c) => c[0] === "agendar")[1];
-  assert.deepEqual([m.tipo, m.clienteId, m.nome], ["002", "fd86", "Pietra Tercini"]);
+  assert.deepEqual([m.tipo, m.clienteId, m.nome], ["002", "fd86", "Cliente Teste"]);
   console.log("pessoa da ficha: ok");
 }
 // F422q · a confirmação diz de quem é; a vaga dos dois tipos agendada para a esposa fica 001, com o nome dela
@@ -327,24 +345,24 @@ console.log("formal: ok");
     if (acao === "agendamentosFuturos") return { ok: true, agendamentos: [] };
     return { ok: true }; };
   const bc = async (nome, corpo) => { bco.push([nome, corpo]); return nome === "zap_plantao_agenda"
-    ? { telefone: "5516999998888", cliente_id: null, cliente_numero: "fd86", nome_ficha: null, nome_numero: "Pietra Tercini", ligada: true } : null; };
+    ? { telefone: "5516999998888", cliente_id: null, cliente_numero: "fd86", nome_ficha: null, nome_numero: "Cliente Teste", ligada: true } : null; };
   const f = ferramentasDaConversa("c3", ag2, bc);
-  await f.marcar_atendimento({ eventoId: "v9", profissional: "paulo", nome: "Patrícia Castro", assunto: "aposentadoria" });
+  await f.marcar_atendimento({ eventoId: "v9", profissional: "paulo", nome: "Maria Souza", assunto: "aposentadoria" });
   const m = ch.find((c) => c[0] === "agendar")[1];
-  assert.deepEqual([m.tipo, m.clienteId, m.nome], ["001", undefined, "Patrícia Castro"]);
-  assert.equal(bco.find((b) => b[0] === "zap_plantao_marcado")[1].p_para, "Patrícia Castro");
+  assert.deepEqual([m.tipo, m.clienteId, m.nome], ["001", undefined, "Maria Souza"]);
+  assert.equal(bco.find((b) => b[0] === "zap_plantao_marcado")[1].p_para, "Maria Souza");
   ch.length = 0; bco.length = 0;
-  await f.marcar_atendimento({ eventoId: "v9", profissional: "paulo", nome: "Pietra", assunto: "aposentadoria" });
-  assert.deepEqual(ch.find((c) => c[0] === "agendar")[1].nome, "Pietra Tercini");
-  assert.equal(bco.find((b) => b[0] === "zap_plantao_marcado")[1].p_para, "Pietra Tercini");
+  await f.marcar_atendimento({ eventoId: "v9", profissional: "paulo", nome: "Cliente", assunto: "aposentadoria" });
+  assert.deepEqual(ch.find((c) => c[0] === "agendar")[1].nome, "Cliente Teste");
+  assert.equal(bco.find((b) => b[0] === "zap_plantao_marcado")[1].p_para, "Cliente Teste");
   console.log("confirmação de quem: ok");
 }
 
 // F422r · as proteções do teste de 72 conversas
 {
   const { emLinhas: el, paraTriagem: pt, paraAgendador: pa, CORRECOES, regras: rg } = await import("../../zap_plantao/index.ts");
-  assert.equal(el("Olá, dona Cida, bom dia!\n\nVou ajudar."), "Olá, Cida, bom dia!\n\nVou ajudar.");
-  assert.equal(el("Certo, senhor Valter.\n\nQual data?"), "Certo, Valter.\n\nQual data?");
+  assert.equal(el("Olá, dona Maria, bom dia!\n\nVou ajudar."), "Olá, Maria, bom dia!\n\nVou ajudar.");
+  assert.equal(el("Certo, senhor João.\n\nQual data?"), "Certo, João.\n\nQual data?");
   assert.ok(el("Pode acessar o seu Meu INSS.").includes("seu Meu INSS"));
   assert.ok(el("O senhor pode vir na quarta?").startsWith("O senhor pode"));
   assert.equal(el("Compreendi. Vou verificar.", ["Compreendi. Qual o assunto?"]), "Vou verificar.");
@@ -432,8 +450,8 @@ console.log("formal: ok");
   console.log("ok F422u");
 }
 {
-  const p = promptCliente("Neide, 61 anos, quer aposentadoria", [{ direcao: "entrada", texto: "Oi" }, { direcao: "saida", texto: "Qual o assunto?" }]);
-  assert.ok(p.includes("Neide, 61 anos") && p.includes("Você: Oi") && p.includes("Escritório: Qual o assunto?"));
+  const p = promptCliente("Maria, 61 anos, quer aposentadoria", [{ direcao: "entrada", texto: "Oi" }, { direcao: "saida", texto: "Qual o assunto?" }]);
+  assert.ok(p.includes("Maria, 61 anos") && p.includes("Você: Oi") && p.includes("Escritório: Qual o assunto?"));
   assert.deepEqual(ESQ_CLIENTE.required, ["fala", "fim"]);
   console.log("ok F422u persona");
 }
@@ -459,7 +477,7 @@ console.log("formal: ok");
 }
 {
   const ant = ["Compreendi. O assunto é aposentadoria?"];
-  assert.equal(emLinhas("Compreendi, Elisa. Como o benefício cessou, o advogado foi avisado.", ant), "Como o benefício cessou, o advogado foi avisado.");
+  assert.equal(emLinhas("Compreendi, Maria. Como o benefício cessou, o advogado foi avisado.", ant), "Como o benefício cessou, o advogado foi avisado.");
   assert.equal(emLinhas("Lamentamos.\n\nCompreendi, vou verificar.", ant), "Lamentamos.\n\nVou verificar.");
   console.log("ok F422w compreendi");
 }
@@ -471,10 +489,10 @@ console.log("formal: ok");
   console.log("ok F422x fatos");
 }
 { // F422aj · a cobrança sugerida
-  const c = { conversa_id: "x", msg_id: "y", dias: 11, contato: "João Carvalho", relacao: "filho", cliente: "Sueli Aparecida",
-    mensagens: [{ direcao: "saida", por_bot: false, tipo: "audio", texto: "Dona Sueli, peço que deixe o celular comigo na terça-feira.", momento: "2026-10-29T21:52:00Z" }] };
+  const c = { conversa_id: "x", msg_id: "y", dias: 11, contato: "João Teste", relacao: "filho", cliente: "Maria Teste",
+    mensagens: [{ direcao: "saida", por_bot: false, tipo: "audio", texto: "Dona Maria, peço que deixe o celular comigo na terça-feira.", momento: "2026-10-29T21:52:00Z" }] };
   const p = promptCobranca(c, new Date("2026-11-09T13:00:00Z"));
-  assert.ok(p.includes("há 11 dias") && p.includes("filho de Sueli Aparecida") && p.includes("deixe o celular"));
+  assert.ok(p.includes("há 11 dias") && p.includes("filho de Maria Teste") && p.includes("deixe o celular"));
   assert.ok(p.includes("segunda-feira") && p.includes("10:00"), "data e hora de Brasília com o dia da semana");
   assert.ok(p.includes("novamente") && p.includes("cobrar = false") && p.includes("nunca \"consulta\""));
   assert.deepEqual(ESQ_COBRANCA.required, ["cobrar", "mensagem"]);
@@ -482,7 +500,7 @@ console.log("formal: ok");
 }
 
 { // F422ak · a sugestão do andamento sai da ficha
-  const p = promptAndamento({ conversa_id: "c", contato: "Roseli", cliente: "Roseli Teste", casos: [{ beneficio: "Aux. Incapacidade Temporária", fase: "judicial",
+  const p = promptAndamento({ conversa_id: "c", contato: "Maria", cliente: "Maria Teste", casos: [{ beneficio: "Aux. Incapacidade Temporária", fase: "judicial",
     etapa: "ação distribuída", etapa_sugerida: "aguardando sentença", etapa_sugerida_desde: "2026-09-28",
     andamentos: [{ em: "2026-11-03T19:06:13Z", origem: "pje", texto: "PJe (1º grau): Conclusos para julgamento — em 28.09.2026 14:23 — PJEC 5001864-28.2026.4.03.6314" }] }],
     mensagens: [{ direcao: "entrada", por_bot: false, tipo: "texto", texto: "Gostaria de saber como está o andamento do processo", momento: "2026-11-09T12:00:00Z" }] },
@@ -520,7 +538,7 @@ console.log("formal: ok");
   console.log("ok F484 pagamento");
 }
 { // F485 · a sugestão da conversa assumida sai na primeira pessoa de quem atende
-  const base = { contato: "Vadson", advogado: "Dr. Paulo", advogados: ["Dr. Paulo"], modo: "", respostas: 0, horario: true, agenda: true, agora: "09/11/2026 17:00", cliente: null,
+  const base = { contato: "João", advogado: "Dr. Paulo", advogados: ["Dr. Paulo"], modo: "", respostas: 0, horario: true, agenda: true, agora: "09/11/2026 17:00", cliente: null,
     mensagens: [{ direcao: "entrada", texto: "Obrigado pelo trabalho", momento: "2026-11-09T19:14:00Z" }] };
   const com = promptPlantao({ ...base, atendente: { nome: "Paulo", cargo: "advogado" } });
   assert.ok(com.includes("Conversa assumida por Paulo") && com.includes("primeira pessoa do singular") && com.includes('"agradeço"'), "assumida: primeira pessoa");
@@ -528,7 +546,7 @@ console.log("formal: ok");
   assert.ok(!promptPlantao(base).includes("Conversa assumida por"), "sem atendente, a IA fala pelo escritório");
   const cob = promptCobranca({ conversa_id: "x", msg_id: "y", dias: 3, contato: "Ana", mensagens: [], atendente: { nome: "Meissa", cargo: "recepcao" } });
   assert.ok(cob.includes("como Meissa") && cob.includes("para que eu possa verificar"), "a cobrança também");
-  const and = promptAndamento({ conversa_id: "c", contato: "Roseli", casos: [], mensagens: [] });
+  const and = promptAndamento({ conversa_id: "c", contato: "Maria", casos: [], mensagens: [] });
   assert.ok(and.includes("Sigo acompanhando") && and.includes("fico à disposição") && !and.includes("estamos à disposição."), "o modelo do andamento");
   assert.ok(primeiraPessoa(null).includes("o colaborador que atende"));
   assert.equal(emLinhas("Agradeço.\n\nQualquer dúvida, fico à disposição.", ["Qualquer dúvida, estamos à disposição."]), "Agradeço.", "o fecho uma vez só");

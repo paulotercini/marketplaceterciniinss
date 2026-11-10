@@ -39,6 +39,9 @@ const agora = () => new Date().toISOString();
 const log = (...a) => console.log(new Date().toLocaleString("pt-BR",
   { timeZone: "America/Sao_Paulo" }), "·", ...a);
 const espera = ms => new Promise(r => setTimeout(r, ms));
+// F514 · o log fica no servidor e sai em diagnóstico: do telefone, só os 4 últimos dígitos, e nenhum texto de mensagem
+const fim4 = t => "…" + N.soDigitos(String(t || "").split("@")[0].split(":")[0]).slice(-4);
+const resumo = l => `[${l.tipo}${l.texto ? ", " + l.texto.length + " letras" : ""}]`;
 
 // ── Supabase por REST: sem SDK, sem dependência a mais ────────────────────
 async function sb(caminho, opts = {}) {
@@ -255,11 +258,11 @@ async function conectar() {
     for (const c of chamadas) {
       let fone = N.foneDaLigacao(c, lidParaFone);
       if (c.status === "offer" && !fone) { await espera(1000); fone = N.foneDaLigacao(c, lidParaFone); }
-      if (c.status === "offer" && !fone) { log("ligação de número escondido:", c.from); continue; }
+      if (c.status === "offer" && !fone) { log("ligação de número escondido:", fim4(c.from)); continue; }
       if (!fone || N.chaveFone(fone).length < 8) continue;
       const r = await rpc("zap_ligacao", { p_telefone: fone, p_nome: null, p_video: !!c.isVideo })
         .catch(e => "erro: " + e.message);
-      log("📞 ligação de", fone, "→", r);
+      log("📞 ligação de", fim4(fone), "→", r);
     }
   });
 
@@ -316,18 +319,24 @@ async function guardarComInsistencia(m, baixar, esperas = [2000, 10000, 30000]) 
     }
   }
 }
+let reprocessando = false;
 async function reprocessarPendentes(baixar) {
-  if (!fs.existsSync(FILA_LOCAL) || !ligado) return;
   const lote = FILA_LOCAL + ".lote";
-  fs.renameSync(FILA_LOCAL, lote);       // o que falhar de novo volta para FILA_LOCAL
-  const linhas = fs.readFileSync(lote, "utf8").split("\n").filter(Boolean);
-  let ok = 0;
-  for (const l of linhas) {
-    let m; try { m = JSON.parse(l, bufferJson().reviver); } catch { continue; }
-    if (await guardarComInsistencia(m, baixar, [])) ok++;
-  }
-  fs.unlinkSync(lote);
-  if (linhas.length) log(`fila do servidor: ${ok} de ${linhas.length} mensagem(ns) gravada(s)`);
+  if (!ligado || reprocessando || (!fs.existsSync(FILA_LOCAL) && !fs.existsSync(lote))) return;
+  reprocessando = true;
+  try {
+    // F514 · o lote que sobrou de uma queda no meio é retomado (o rename o cobria e as mensagens sumiam);
+    // repetir é seguro, porque gravar() não dobra a mensagem já gravada
+    if (fs.existsSync(FILA_LOCAL)) { fs.appendFileSync(lote, fs.readFileSync(FILA_LOCAL)); fs.unlinkSync(FILA_LOCAL); }
+    const linhas = fs.readFileSync(lote, "utf8").split("\n").filter(Boolean);
+    let ok = 0;
+    for (const l of linhas) {
+      let m; try { m = JSON.parse(l, bufferJson().reviver); } catch { log("fila do servidor: linha ilegível descartada"); continue; }
+      if (await guardarComInsistencia(m, baixar, [])) ok++;   // o que falhar de novo volta para FILA_LOCAL
+    }
+    fs.unlinkSync(lote);
+    if (linhas.length) log(`fila do servidor: ${ok} de ${linhas.length} mensagem(ns) gravada(s)`);
+  } finally { reprocessando = false; }
 }
 
 // ── chegou mensagem ───────────────────────────────────────────────────────
@@ -352,7 +361,7 @@ async function jidsDoFone(s, fone) {
   return [...new Set([lid, pn].filter(Boolean))];
 }
 // F495 · para onde mandar: o onWhatsApp às vezes nega o número que tem conversa no celular
-// (Sidneia, 09.11.2026); tenta com e sem o nono dígito e, por fim, o @lid já conhecido do número
+// (caso de 09.11.2026); tenta com e sem o nono dígito e, por fim, o @lid já conhecido do número
 async function enderecoDe(s, telefone) {
   const fones = N.variantesFone(telefone);
   for (const fone of fones) {
@@ -364,7 +373,7 @@ async function enderecoDe(s, telefone) {
     const pn = `${fone}@s.whatsapp.net`;
     let lid = lidDoJid(pn);
     if (!lid && lm && lm.getLIDForPN) lid = await Promise.resolve(lm.getLIDForPN(pn)).catch(() => null);
-    if (lid) { log("endereço pelo @lid:", fone); return { exists: true, jid: lid }; }
+    if (lid) { log("endereço pelo @lid:", fim4(fone)); return { exists: true, jid: lid }; }
   }
   return null;
 }
@@ -374,21 +383,31 @@ setInterval(() => {
   catch (e) { log("lids:", e.message); }
 }, 60000).unref();
 
-// F491 · a mensagem que não abriu está no celular: 3 minutos depois (o WhatsApp tenta reenviar antes),
-// a conversa entra na fila do histórico pedido, uma vez por número a cada 10 minutos
+// F491 · a mensagem que não abriu está no celular: a conversa entra na fila do histórico pedido,
+// uma vez por número a cada 10 minutos.
+// F514 · o pedido vai ao banco na hora, com a data 3 minutos adiante (o WhatsApp tenta reenviar antes):
+// na memória ele se perdia a cada reinício da ponte. Falhando o banco, quem chamou insiste.
 const buscaMarcada = new Map();
-function buscarDepois(fone) {
+async function buscarDepois(fone) {
   const k = N.chaveFone(fone);
   if (Date.now() - (buscaMarcada.get(k) || 0) < 600000) return;
+  const conversa = await rpc("zap_abrir", { p_telefone: fone, p_nome: null });
+  await sb(`/rest/v1/zap_conversas?id=eq.${conversa}`, { method: "PATCH", headers: { Prefer: "return=minimal" },
+    body: JSON.stringify({ historico_pedido: new Date(Date.now() + 180000).toISOString(), historico_feito: null, historico_resultado: null }) });
   buscaMarcada.set(k, Date.now());
-  setTimeout(async () => {
-    try {
-      const conversa = await rpc("zap_abrir", { p_telefone: fone, p_nome: null });
-      await sb(`/rest/v1/zap_conversas?id=eq.${conversa}`, { method: "PATCH", headers: { Prefer: "return=minimal" },
-        body: JSON.stringify({ historico_pedido: new Date().toISOString(), historico_feito: null, historico_resultado: null }) });
-      log("histórico pedido sozinho: mensagem que não abriu de", fone);
-    } catch (e) { log("✗ pedir histórico da mensagem que não abriu:", e.message); }
-  }, 180000);
+  log("histórico pedido sozinho: mensagem que não abriu de", fim4(fone));
+}
+// F514 · quantas mensagens não abriram hoje (config_app.zap_nao_abriu = "AAAA-MM-DD|N"), para medir o defeito
+let naoAbriram = null;
+async function contarNaoAbriu() {
+  const dia = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Sao_Paulo" });
+  if (!naoAbriram) {
+    const l = ((await sb("/rest/v1/config_app?chave=eq.zap_nao_abriu&select=valor").catch(() => null)) || [])[0];
+    const [d, n] = String((l && l.valor) || "").split("|");
+    naoAbriram = { dia: d, n: Number(n) || 0 };
+  }
+  naoAbriram = { dia, n: (naoAbriram.dia === dia ? naoAbriram.n : 0) + 1 };
+  await anotar("zap_nao_abriu", `${dia}|${naoAbriram.n}`);
 }
 
 async function entrou(m, baixar) {
@@ -399,20 +418,23 @@ async function entrou(m, baixar) {
   // F478: o número sai antes do descarte, para o @lid da mensagem que não abriu (sem conteúdo) ficar no mapa
   const fone = N.foneDaMensagem(m, lidParaFone);
   if (N.deveIgnorar(m)) {
-    if (m && m.key && !m.message && m.messageStubType) log("mensagem que não abriu de", fone || m.key.remoteJid, "(stub", m.messageStubType + ")");
-    if (N.naoAbriu(m) && N.chaveFone(fone).length >= 8) buscarDepois(fone);
-    // F505 · o @lid ainda fora do mapa (Cintia, 10.11.2026): o lidMapping do Baileys 7 dá o número
+    if (m && m.key && !m.message && m.messageStubType) log("mensagem que não abriu de", fim4(fone || m.key.remoteJid), "(stub", m.messageStubType + ")");
+    if (N.naoAbriu(m) && N.chaveFone(fone).length >= 8) await buscarDepois(fone);
+    // F505 · o @lid ainda fora do mapa (caso de 10.11.2026): o lidMapping do Baileys 7 dá o número
     else if (N.naoAbriu(m) && String(m.key.remoteJid).endsWith("@lid")) {
       const lm = sock && sock.signalRepository && sock.signalRepository.lidMapping;
       const pn = lm && lm.getPNForLID ? await Promise.resolve(lm.getPNForLID(m.key.remoteJid)).catch(() => null) : null;
       if (pn) { lidParaFone.set(m.key.remoteJid, String(pn).replace(/:\d+@/, "@")); }
       const f = pn ? N.chaveFone(String(pn).split("@")[0].split(":")[0]) : "";
-      if (f.length >= 8) buscarDepois(String(pn).split("@")[0].split(":")[0]);
-      else log("✗ mensagem que não abriu sem número conhecido:", m.key.remoteJid);
+      if (f.length >= 8) await buscarDepois(String(pn).split("@")[0].split(":")[0]);
+      else log("✗ mensagem que não abriu sem número conhecido:", fim4(m.key.remoteJid));
     }
+    if (N.naoAbriu(m)) await contarNaoAbriu();
     return;
   }
-  if (N.chaveFone(fone).length < 8) return;
+  if (N.chaveFone(fone).length < 8) { log("✗ mensagem sem número conhecido, não gravada:", fim4(m.key.remoteJid)); return; }
+  const semTraducao = N.tipoSemTraducao(m);
+  if (semTraducao) log("mensagem de tipo sem tradução, gravada como aviso:", semTraducao);
   if (m.key.fromMe) {
     // o que o escritório responde pelo celular também entra na conversa. O que
     // saiu pela fila do CRM já está gravado: a pausa deixa a fila gravar o
@@ -420,13 +442,13 @@ async function entrou(m, baixar) {
     await espera(4000);
     const conversa = await rpc("zap_abrir", { p_telefone: fone, p_nome: null });
     const linha = await gravar(m, baixar, conversa, "saida", "enviada");
-    if (!linha.repetida) log("→ (celular)", fone, (linha.texto || `[${linha.tipo}]`).slice(0, 60));
+    if (!linha.repetida) log("→ (celular)", fim4(fone), resumo(linha));
     return;
   }
   const conversa = await rpc("zap_abrir", { p_telefone: fone, p_nome: m.pushName || null });
   const linha = await gravar(m, baixar, conversa, "entrada", "entregue");
   guardarFoto(conversa, m.key.remoteJid);
-  log("←", fone, (linha.texto || `[${linha.tipo}]`).slice(0, 60));
+  log("←", fim4(fone), resumo(linha));
 }
 
 // Reação (do cliente ou dada pelo celular do escritório) a uma mensagem que o
@@ -587,13 +609,13 @@ async function recuperarMidias(s = sock) {
         msgs = await pagina(s, { remoteJid: jid, id: ancora.externo_id, fromMe: ancora.direcao === "saida" }, Date.parse(ancora.quando_wa));
         if (msgs && msgs.length) { jids = [jid]; break; }
       }
-      if (!msgs || !msgs.length) { if (volta === 0) log("recuperar mídia: o celular não respondeu pela conversa de", c.telefone); break; }
+      if (!msgs || !msgs.length) { if (volta === 0) log("recuperar mídia: o celular não respondeu pela conversa de", fim4(c.telefone)); break; }
       for (const m of msgs) await gravarDoCelular(m, conversa);
       const velha = msgs.reduce((a, b) => ((N.quandoWa(a) || "") < (N.quandoWa(b) || "") ? a : b));
       if (!N.quandoWa(velha) || N.quandoWa(velha) <= limite) break;
       ancora = { externo_id: velha.key.id, direcao: velha.key.fromMe ? "saida" : "entrada", quando_wa: N.quandoWa(velha) };
     }
-    log(`recuperar mídia: conversa de ${c.telefone} conferida (${recuperadas - antes} recuperada(s) até aqui)`);
+    log(`recuperar mídia: conversa de ${fim4(c.telefone)} conferida (${recuperadas - antes} recuperada(s) até aqui)`);
   }
   log(`recuperar mídia: fim — ${recuperadas - antes} mídia(s) recuperada(s)`);
 }
@@ -620,7 +642,8 @@ async function buscarHistoricosPedidos(s = sock) {
   if (!ligado || !s || buscandoHistorico || recuperando) return;
   buscandoHistorico = true;
   try {
-    const fila = await sb("/rest/v1/zap_conversas?historico_pedido=not.is.null&historico_feito=is.null"
+    // F514: só o pedido cuja hora chegou; o da mensagem que não abriu nasce 3 minutos adiante
+    const fila = await sb(`/rest/v1/zap_conversas?historico_pedido=lte.${agora()}&historico_feito=is.null`
       + "&select=id,telefone&order=historico_pedido&limit=3");
     for (const c of fila) {
       let resultado;
@@ -629,9 +652,10 @@ async function buscarHistoricosPedidos(s = sock) {
         resultado = n < 0 ? SEM_PARTIDA
           : n ? `${n} mensagem(ns) trazida(s) do celular` : "o celular não tem mensagem que falte no CRM";
       } catch (e) { resultado = "erro: " + String(e.message).slice(0, 80); }
-      log(`histórico pedido: ${c.telefone} — ${resultado}`);
+      log(`histórico pedido: ${fim4(c.telefone)} — ${resultado}`);
       await sb(`/rest/v1/zap_conversas?id=eq.${c.id}`, { method: "PATCH", headers: { Prefer: "return=minimal" },
-        body: JSON.stringify({ historico_feito: agora(), historico_resultado: resultado }) }).catch(() => {});
+        body: JSON.stringify({ historico_feito: agora(), historico_resultado: resultado }) })
+        .catch(e => log("✗ histórico pedido: não gravei o resultado, a conversa volta à fila:", e.message));
     }
   } finally { buscandoHistorico = false; }
 }
@@ -689,7 +713,7 @@ async function importarHistorico(chats, messages, baixar) {
       try {
         await gravar(m, baixar, conversa, m.key.fromMe ? "saida" : "entrada", m.key.fromMe ? "enviada" : "entregue");
         n++;
-      } catch (e) { log("histórico: não gravei uma mensagem de", fone, "-", e.message); }
+      } catch (e) { log("histórico: não gravei uma mensagem de", fim4(fone), "-", e.message); }
     }
     // histórico não é novidade: nada fica "não lido" e a prévia volta para a
     // mensagem mais recente (o lote antigo pode chegar depois de uma nova).
@@ -701,7 +725,7 @@ async function importarHistorico(chats, messages, baixar) {
       body: JSON.stringify({ nao_lidas: 0, ...(ult ? { ultima_em: ult.quando_wa || ult.criado_em,
         ultimo_texto: (ult.texto || `[${ult.tipo}]`).slice(0, 200) } : {}) }),
     });
-    log(`histórico: ${n} mensagem(ns) gravada(s) na conversa de ${fone}`);
+    log(`histórico: ${n} mensagem(ns) gravada(s) na conversa de ${fim4(fone)}`);
   }
 }
 
@@ -824,6 +848,13 @@ async function rodarFila() {
           ultimoRelogio = Date.now();
           const n = await rpc("zap_relogio", {}).catch(e => { log("relógio:", e.message); return 0; });
           if (n) log(`${n} mensagem(ns) agendada(s) liberada(s)`);
+          // F514 · só este laço envia, uma mensagem por vez: o que está "enviando" aqui ficou de uma queda
+          // no meio do envio. Vai a erro, à vista de quem atende, e não volta à fila (podia sair duas vezes)
+          const presas = await sb("/rest/v1/zap_mensagens?status=eq.enviando&select=id", {
+            method: "PATCH", headers: { Prefer: "return=representation" },
+            body: JSON.stringify({ status: "erro", erro: "a ponte parou no meio do envio: confira no celular antes de reenviar" }),
+          }).catch(e => { log("presas no envio:", e.message); return null; });
+          if (presas && presas.length) log(`${presas.length} mensagem(ns) presa(s) no envio marcada(s) com erro`);
         }
         const fila = await sb("/rest/v1/zap_mensagens?status=eq.fila"
           + "&select=id,conversa_id,texto,tipo,midia_url,midia_nome,midia_mime,tentativas,responde_a,autor_id,por_bot,aviso_chave"
@@ -840,6 +871,26 @@ async function rodarFila() {
   }
 }
 
+// F514 · depois que o WhatsApp aceitou a mensagem, nada a devolve à fila (sairia duas vezes): insiste em gravar
+// e, sem conseguir, deixa "enviando" para a varredura do rodarFila levar a erro
+async function confirmarEnvio(msg, r) {
+  lembrar(r);
+  const corpo = { status: "enviada", erro: null, enviada_em: agora(), externo_id: (r && r.key && r.key.id) || null };
+  for (let i = 0; i < 3; i++) {
+    try {
+      await sb(`/rest/v1/zap_mensagens?id=eq.${msg.id}`, { method: "PATCH", headers: { Prefer: "return=minimal" }, body: JSON.stringify(corpo) });
+      return true;
+    } catch (e) {
+      log(`✗ enviada, mas não gravei (tentativa ${i + 1}):`, e.message);
+      // o eco do próprio celular gravou antes com este id (ele é único): a linha do CRM fica sem ele
+      if (/23505/.test(e.message)) corpo.externo_id = null;
+      await espera(Number(process.env.PAUSA_REENVIO ?? 3000));
+    }
+  }
+  return false;
+}
+const TETO_ENVIO = Number(process.env.TETO_ENVIO || 90000);
+
 // `s` é o socket; vem por parâmetro para o teste poder entrar com um de mentira
 async function enviar(msg, s = sock) {
   // marca antes de mandar: se a ponte cair no meio, ninguém reenvia sozinho
@@ -849,11 +900,12 @@ async function enviar(msg, s = sock) {
   });
   if (!pego || !pego.length) return;              // outro processo pegou antes
 
+  let enviado, fone, jid;
   try {
     const [c] = await sb(`/rest/v1/zap_conversas?id=eq.${msg.conversa_id}&select=telefone`);
     if (!c) throw new Error("conversa sem telefone");
     // deixar o WhatsApp dizer qual é o endereço certo resolve o nono dígito:
-    // 16 9 9999-0000 e 16 9999-0000 podem ser a mesma pessoa, e só ele sabe
+    // o número com e sem o nono dígito podem ser a mesma pessoa, e só ele sabe
     const achado = await enderecoDe(s, c.telefone);
     if (!achado || !achado.exists) throw new Error("número não tem WhatsApp");
 
@@ -867,27 +919,33 @@ async function enviar(msg, s = sock) {
       if (orig && orig.externo_id)
         opcoes = { quoted: { key: N.chaveDaMensagem(achado.jid, orig), message: { conversation: orig.texto || "" } } };
     }
-    const r = await s.sendMessage(achado.jid, await conteudoDaMensagem(msg), opcoes);
-    lembrar(r);
-    await s.sendPresenceUpdate("paused", achado.jid);
-
-    await sb(`/rest/v1/zap_mensagens?id=eq.${msg.id}`, {
-      method: "PATCH", headers: { Prefer: "return=minimal" },
-      body: JSON.stringify({ status: "enviada", enviada_em: agora(),
-                             externo_id: (r && r.key && r.key.id) || null }),
-    });
-    log("→", c.telefone, (msg.texto || `[${msg.tipo}] ${msg.midia_nome || ""}`).slice(0, 60));
+    // F514 · sem retorno no teto, a mensagem pode ter saído: vai a erro (não à fila) e, se o retorno
+    // ainda vier, a linha é confirmada
+    const envio = s.sendMessage(achado.jid, await conteudoDaMensagem(msg), opcoes);
+    let teto;
+    try {
+      enviado = await Promise.race([envio, new Promise((_, nao) => { teto = setTimeout(() => nao(Object.assign(
+        new Error(`o WhatsApp não confirmou o envio em ${TETO_ENVIO / 1000} s: confira no celular antes de reenviar`), { semRetorno: true })), TETO_ENVIO); })]);
+    } catch (e) {
+      if (e.semRetorno) envio.then(r => confirmarEnvio(msg, r)).catch(() => {});
+      throw e;
+    } finally { clearTimeout(teto); }
+    fone = c.telefone; jid = achado.jid;
   } catch (e) {
-    const n = (msg.tentativas || 0) + 1;
+    const n = (msg.tentativas || 0) + 1, fim = e.semRetorno || n >= 3;
     await sb(`/rest/v1/zap_mensagens?id=eq.${msg.id}`, {
       method: "PATCH", headers: { Prefer: "return=minimal" },
       body: JSON.stringify({ tentativas: n, erro: String(e.message).slice(0, 300),
                              // três tentativas e para: mensagem que não vai
                              // tem de aparecer em vermelho para alguém resolver
-                             status: n >= 3 ? "erro" : "fila" }),
-    }).catch(() => {});
-    log("✗ falhou:", e.message, n >= 3 ? "(desisti)" : `(tentativa ${n})`);
+                             status: fim ? "erro" : "fila" }),
+    }).catch(e2 => log("✗ não gravei a falha do envio (a varredura a leva a erro):", e2.message));
+    log("✗ falhou:", e.message, fim ? "(desisti)" : `(tentativa ${n})`);
+    return;
   }
+  // daqui em diante a mensagem já saiu: falha de presença ou de banco não a devolve à fila
+  await Promise.resolve(s.sendPresenceUpdate("paused", jid)).catch(() => {});
+  if (await confirmarEnvio(msg, enviado)) log("→", fim4(fone), `[${msg.tipo || "texto"}]`);
 }
 
 // ── foto de perfil ────────────────────────────────────────────────────────
@@ -1040,5 +1098,5 @@ if (require.main === module) {
 }
 
 module.exports = { sb, rpc, enviar, alterarEnviada, mensagemParaReenvio, entrou, gravar, buscarHistoricosPedidos,
-                   _ligado: v => { ligado = v; }, _pagina: msgs => esperandoPagina && esperandoPagina(msgs), conteudoDaMensagem, paraOgg, assinar, guardarComInsistencia, FILA_LOCAL,
+                   _ligado: v => { ligado = v; }, _pagina: msgs => esperandoPagina && esperandoPagina(msgs), conteudoDaMensagem, paraOgg, assinar, guardarComInsistencia, reprocessarPendentes, rodarFila, fim4, FILA_LOCAL,
                    _usarSocket: s => { sock = s; }, seguirGravacao, esperarGravacoes };   // _usarSocket: só os testes

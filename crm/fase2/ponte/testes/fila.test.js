@@ -10,7 +10,7 @@ const { enviar, alterarEnviada } = require("../ponte");
 
 // ── Supabase de mentira ───────────────────────────────────────────────────
 let chamadas = [];
-function fingirBanco({ pegaAFila = true, conversa = { telefone: "5516999990000" } } = {}) {
+function fingirBanco({ pegaAFila = true, conversa = { telefone: "5500900000001" } } = {}) {
   chamadas = [];
   global.fetch = async (url, opts = {}) => {
     const u = String(url), m = opts.method || "GET";
@@ -29,7 +29,7 @@ const patchesFinais = () => chamadas.filter(c =>
 
 // ── WhatsApp de mentira ───────────────────────────────────────────────────
 const zapOk = {
-  onWhatsApp: async () => [{ exists: true, jid: "5516999990000@s.whatsapp.net" }],
+  onWhatsApp: async () => [{ exists: true, jid: "5500900000001@s.whatsapp.net" }],
   sendPresenceUpdate: async () => {},
   sendMessage: async () => ({ key: { id: "WA-NOVA" } }),
 };
@@ -90,9 +90,9 @@ t.test("F495: número negado com o nono dígito vai pelo número sem ele", async
   fingirBanco();
   let para;
   await enviar({ id: "m1", conversa_id: "c1", texto: "oi", tentativas: 0 },
-    { ...zapOk, onWhatsApp: async f => f === "551699990000" ? [{ exists: true, jid: "551699990000@s.whatsapp.net" }] : [{ exists: false }],
+    { ...zapOk, onWhatsApp: async f => f === "550000000001" ? [{ exists: true, jid: "550000000001@s.whatsapp.net" }] : [{ exists: false }],
       sendMessage: async jid => { para = jid; return { key: { id: "X" } }; } });
-  a.equal(para, "551699990000@s.whatsapp.net");
+  a.equal(para, "550000000001@s.whatsapp.net");
   a.equal(patchesFinais()[0].status, "enviada");
 });
 
@@ -101,7 +101,7 @@ t.test("F495: número negado pelo onWhatsApp vai pelo @lid conhecido", async () 
   let para;
   await enviar({ id: "m1", conversa_id: "c1", texto: "oi", tentativas: 0 },
     { ...zapOk, onWhatsApp: async () => [{ exists: false }],
-      signalRepository: { lidMapping: { getLIDForPN: async pn => pn === "5516999990000@s.whatsapp.net" ? "123@lid" : null } },
+      signalRepository: { lidMapping: { getLIDForPN: async pn => pn === "5500900000001@s.whatsapp.net" ? "123@lid" : null } },
       sendMessage: async jid => { para = jid; return { key: { id: "X" } }; } });
   a.equal(para, "123@lid");
   a.equal(patchesFinais()[0].status, "enviada");
@@ -118,7 +118,7 @@ t.test("resposta citando: sai com a chave da mensagem original (quoted)", async 
   let opcoes;
   await enviar({ id: "m1", conversa_id: "c1", texto: "Pode sim", responde_a: "orig" },
     { ...zapOk, sendMessage: async (jid, conteudo, op) => { opcoes = op; return { key: { id: "WA-NOVA" } }; } });
-  a.deepEqual(opcoes.quoted.key, { remoteJid: "5516999990000@s.whatsapp.net", id: "WA-ORIG", fromMe: false });
+  a.deepEqual(opcoes.quoted.key, { remoteJid: "5500900000001@s.whatsapp.net", id: "WA-ORIG", fromMe: false });
   a.equal(patchesFinais()[0].status, "enviada");
 });
 
@@ -136,7 +136,7 @@ t.test("banco fora do ar: a mensagem não se perde, vai para o arquivo do servid
   const antes = global.fetch;
   global.fetch = async () => { throw new Error("banco fora do ar"); };
   try { fs.unlinkSync(P.FILA_LOCAL); } catch {}
-  const m = { key: { id: "WA-PERDIDA", remoteJid: "5516999990000@s.whatsapp.net", fromMe: false },
+  const m = { key: { id: "WA-PERDIDA", remoteJid: "5500900000001@s.whatsapp.net", fromMe: false },
               message: { conversation: "oi" }, messageTimestamp: 1792500000 };
   const ok = await P.guardarComInsistencia(m, null, []);
   global.fetch = antes;
@@ -152,7 +152,7 @@ t.test("apagar: manda o delete com a chave da enviada e marca apagada", async ()
   let enviado;
   await alterarEnviada({ id: "m1", conversa_id: "c1", externo_id: "WA-1", direcao: "saida", texto: "oi",
     alterar: { acao: "apagar", status: "fila" } }, { ...zapOk, sendMessage: async (jid, c) => { enviado = c; return {}; } });
-  a.deepEqual(enviado.delete, { remoteJid: "5516999990000@s.whatsapp.net", id: "WA-1", fromMe: true });
+  a.deepEqual(enviado.delete, { remoteJid: "5500900000001@s.whatsapp.net", id: "WA-1", fromMe: true });
   const [fim] = patchesFinais();
   a.ok(fim.apagada_em);
   a.equal(fim.alterar.status, "feita");

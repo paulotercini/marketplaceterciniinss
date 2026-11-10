@@ -102,7 +102,7 @@ test("data e hora passam; corrida longa de dígito não", () => {
   assert.equal(seguro("07/09/2026 20:44:49"), true);
   assert.equal(seguro("15/09/2025"), true);
   assert.equal(seguro("2026"), true);
-  assert.equal(seguro("258.266.798-67"), false, "CPF não pode ser tratado como formato seguro");
+  assert.equal(seguro("529.982.247-25"), false, "CPF não pode ser tratado como formato seguro");
   assert.equal(seguro("12345678901"), false);
 });
 

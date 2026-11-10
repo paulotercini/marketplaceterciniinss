@@ -69,7 +69,7 @@
   // ── o que é formato, e o que só PARECE formato ─────────────────────────
   // Aqui mora o defeito que vazou CPF de duas partes numa sondagem real. A
   // regra antiga era "só dígito e pontuação = formato, deixa passar" — e
-  // 258.266.798-67 é só dígito e pontuação. Também são: CNPJ, NB, RG, número
+  // 529.982.247-25 é só dígito e pontuação. Também são: CNPJ, NB, RG, número
   // de controle, telefone. Deixar passar corrida longa de dígito é entregar
   // identidade achando que se está entregando forma.
   //

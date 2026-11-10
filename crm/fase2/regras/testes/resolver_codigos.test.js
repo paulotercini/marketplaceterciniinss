@@ -69,7 +69,7 @@ const { montarResumo, extrairPartes, decodificar } = ctx;
 // ── o lote de prova: tudo o que NÃO pode vazar, junto ──────────────────────
 const NOME = "MARIA APARECIDA DA CONCEIÇÃO";
 const ADVOGADO = "Paulo Roberto Tercini Filho";
-const CPF = "258.266.798-67";
+const CPF = "529.982.247-25";
 const NUM1 = "0001234-56.2019.8.26.0100";
 const NUM2 = "5001111-22.2021.4.03.6183";
 const ROTULO = "Fulano de Tal - Aposentadoria";
@@ -226,12 +226,12 @@ test("entidade HTML não fica colada no nome do advogado", () => {
 test("RepreLeg, Curador e Defensoria NÃO são advogados", () => {
   const p = extrairPartes(docFalso([
     ["Reqte", "MENOR X<br>Advogado: A<br>RepreLeg:&nbsp; Anita de Fatima Ferreira&nbsp;"],
-    ["Reqda", "IDOSA Y<br>Curador:&nbsp; Izilda Aparecida Quilles Menani&nbsp;"],
+    ["Reqda", "IDOSA Y<br>Curador:&nbsp; Izilda Aparecida Ficta Menezes&nbsp;"],
   ]));
   assert.deepEqual(p[0].advogados, ["A"], "representante legal entrou como advogado");
   assert.deepEqual(p[0].outros, [{ papel: "RepreLeg", nome: "Anita de Fatima Ferreira" }]);
   assert.deepEqual(p[1].advogados, [], "curador entrou como advogado");
-  assert.deepEqual(p[1].outros, [{ papel: "Curador", nome: "Izilda Aparecida Quilles Menani" }]);
+  assert.deepEqual(p[1].outros, [{ papel: "Curador", nome: "Izilda Aparecida Ficta Menezes" }]);
 });
 
 // ── 4. o encoding: o defeito que corrompeu 100% dos nomes acentuados ───────
