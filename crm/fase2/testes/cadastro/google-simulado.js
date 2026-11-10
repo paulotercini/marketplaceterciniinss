@@ -19,6 +19,7 @@ function formatDate(d, tz, f){
   throw new Error("formato não simulado: " + f);
 }
 const copia = o => JSON.parse(JSON.stringify(o));
+const sa = t => String(t).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
 function criarGoogle({ eventos = [], tokens = {}, outras = {} } = {}){
   let seq = 0; const conta = { list: 0 };   // outras: {id da agenda: [eventos de dia inteiro]} (férias, feriado)
@@ -32,6 +33,7 @@ function criarGoogle({ eventos = [], tokens = {}, outras = {} } = {}){
       let r = evs.filter(e => e.status !== "cancelled");
       if (q.timeMin) r = r.filter(e => !e.start.dateTime || new Date(e.end.dateTime) > new Date(q.timeMin));
       if (q.timeMax) r = r.filter(e => !e.start.dateTime || new Date(e.start.dateTime) < new Date(q.timeMax));
+      if (q.q){ const t = sa(q.q); r = r.filter(e => sa((e.summary || "") + " " + (e.description || "")).includes(t)); }   // o q do Google: texto livre, sem acento
       if (q.privateExtendedProperty){ const [k, v] = q.privateExtendedProperty.split("=");
         r = r.filter(e => ((e.extendedProperties || {}).private || {})[k] === v); }
       return { items: copia(r.sort((a, b) => ms(a) - ms(b))) };
