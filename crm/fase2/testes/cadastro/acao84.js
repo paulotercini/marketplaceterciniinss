@@ -67,7 +67,8 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
       semMotivo: c.classList.contains("pz-semmotivo"), txtTipo: c.textContent,
       fundo: getComputedStyle(c).backgroundColor, mais: !!c.querySelector(".pz-mais"),
       // F254 · a natureza está na bolinha (ou no círculo de cumprir) da linha
-      sombra: (b => b ? getComputedStyle(b).backgroundColor + " " + getComputedStyle(b).borderColor : "")(c.querySelector(".fp2-bola,.fp2-circ")) }));
+      // F504 · a natureza é a barra à esquerda da linha (::before)
+      sombra: (b => b ? getComputedStyle(b).backgroundColor + " " + getComputedStyle(b).borderColor : "")(c.querySelector(".fp2-bola,.fp2-circ")) + " " + getComputedStyle(c, "::before").backgroundColor }));
     // F145 · os prazos ficam na coluna do caso: acima do compositor ou à esquerda dele
     const e = document.querySelector(".escrever"), fr = faixa && faixa.getBoundingClientRect(), er = e && e.getBoundingClientRect();
     const acima = !!(fr && er && (fr.bottom <= er.top + 1 || fr.right <= er.left + 1 || fr.left >= er.right - 1));   // F278 · ou à direita, na terceira coluna
