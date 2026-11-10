@@ -653,6 +653,8 @@ A **F493** (pedido do Paulo de 09.11.2026, as conversas da Jesuína e da Rosâng
 
 A **F494** (pedido do Paulo de 10.11.2026): a sugestão de resposta sobre o andamento do processo (F422ak) deixou as estimativas fixas (6, 6, 3 e 2 meses) e usa o tempo que os processos do escritório levaram, medido em 09.11.2026 (`TEMPOS_MEDIDOS`: INSS, Conselho de Recursos, JEF, vara federal, TRF3, mandado de segurança e RPV; o B31 por análise documental, de 2 a 3 semanas, informado pelo Paulo; a Justiça Estadual sem estimativa). Com a fila de julgamento do TRF3 no caso (`casos.trf3`, só na fase judicial ou na lista de prazos), a previsão é a da fila, dita como estimativa pela posição no gabinete; `zap_andamento_pegar` passou a mandar a posição, o total, o órgão, a data da consulta e a previsão. SQL em `crm/fase2/migracoes/f494_andamento_fila_trf3.sql`. Teste: `testes/funcoes/zap_plantao.test.mjs`.
 
+A **F495** (pedido do Paulo de 10.11.2026, as duas mensagens da Amanda à Sidneia que ficaram "não enviou"): a ponte desistia com "número não tem WhatsApp" quando o `onWhatsApp` negava o número, embora o celular tivesse a conversa (o histórico dela veio pelo `@lid`). O envio, a reação e a edição passam por `enderecoDe`: o número com e sem o nono dígito (`variantesFone`) e, por fim, o `@lid` conhecido do número (mapa aprendido ou `lidMapping.getLIDForPN`). Vale depois do deploy da ponte. Teste: `crm/fase2/ponte/testes/fila.test.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
