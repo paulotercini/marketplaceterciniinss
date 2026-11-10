@@ -400,7 +400,8 @@ export function promptIntencao(x: Contexto) {
   const resp = msgs.slice(i + 1).filter((m) => m.direcao === "entrada")
     .map((m) => m.texto?.trim() || `[${m.tipo || "mensagem"}]`).join("\n");
   return `O escritório enviou ao cliente a confirmação de um atendimento e o cliente respondeu. Classifique a resposta:\n` +
-    `- "confirmar": a pessoa diz que vai comparecer (sim, ok, vou sim, estarei lá, pode confirmar, combinado, 👍), ainda que repita a data ` +
+    `- "confirmar": a pessoa diz que vai comparecer (sim, ok, vou sim, estarei lá, pode confirmar, combinado, 👍), também com erro de digitação ` +
+    `("Sin", "Simm", "Si", "Cim", "Ss"), ainda que repita a data ` +
     `com uma pergunta retórica ("tá marcado dia 11, né?") ou cumprimente antes; não pede outra coisa.\n` +
     `- "remarcar": a pessoa não pode ou não quer ir nessa data, quer outro dia ou horário, ou quer cancelar.\n` +
     `- "outro": pergunta ou pedido que a confirmação não responde, ou resposta que não diz se vai. Na dúvida, "outro".\n\n` +
@@ -1113,6 +1114,8 @@ if (typeof Deno !== "undefined") {
         let intencao = DE_CLASSE[x.remarcar.classe || ""] || "outro";
         try { intencao = (await claude(promptIntencao(x), ESQ_INTENCAO)).intencao || intencao; }
         catch (e) { console.error("zap_plantao intencao:", String(e)); }
+        // F502 · o SIM curto pelas palavras vale mais que o "outro" da IA ("Sin" ficou sem confirmar na agenda, 09.11.2026)
+        if (intencao === "outro" && x.remarcar.classe === "sim") intencao = "confirmar";
         await rpc("zap_conf_ia_intencao", { p_conversa: x.conversa_id, p_intencao: intencao, p_msg: msg });
         if (intencao === "confirmar") {
           await rpc("zap_plantao_aplicar", { p_msg: msg, p_acao: "nada", p_resposta: "", p_advogado: "", p_urgente: false,
