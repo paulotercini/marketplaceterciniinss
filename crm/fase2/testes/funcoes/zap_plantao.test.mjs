@@ -190,7 +190,7 @@ assert.ok(regras().includes("boas-vindas em nome da Advocacia Previdenciária"))
 const rem = promptPlantao({ ...base, remarcar: { rotulo: "quarta-feira, 11/11/2026, às 9h30", profissional: "Amanda" } });
 assert.ok(rem.includes("confirmação do atendimento de quarta-feira, 11/11/2026, às 9h30, que não pode comparecer"));
 assert.ok(rem.includes("mesmo advogado (Amanda), um de manhã e outro à tarde"));
-assert.ok(rem.includes("pergunte primeiro, em uma frase, se deseja já remarcar"), "F471: pergunta antes de oferecer horários");
+assert.ok(rem.includes("que cancele esse atendimento, para a vaga ficar livre") && rem.includes("se deseja já agendar outro dia"), "F498: cancela na hora e depois pergunta");
 assert.ok(!p1.includes("Remarcação:"), "sem remarcação, nada muda");
 assert.ok(p1.includes("pelo nome no máximo uma vez"), "o nome uma vez só");
 const duv = promptPlantao({ ...base, remarcar: { rotulo: "quarta-feira, 11/11/2026, às 9h30", profissional: "Amanda", duvida: true } });
