@@ -122,6 +122,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(500);
   conf("o caso aberto traz o botão ✔ Concluir", /Concluir/.test(await p.textContent(".desp-bt")));
   
+  await p.evaluate(() => { const m = document.querySelector(".linha-caso .lc-menu"); if (m) m.open = true; }); // F504: o Concluir mora no ⋯
   await p.click(".desp-bt");
   await p.waitForSelector(".desp-datas");
   await p.click('.desp-datas .btn-mini:has-text("Em 6 meses")');

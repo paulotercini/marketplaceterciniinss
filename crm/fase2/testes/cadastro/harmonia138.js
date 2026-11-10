@@ -150,19 +150,19 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
       primeira: abas[0] && abas[0].textContent.trim(), ultima: abas.at(-1) && abas.at(-1).textContent.trim(),
       esq: (e => e && !!e.querySelector(".lc-placa") && !!document.querySelector(".caso-pz .faixa-prazos") && document.querySelector(".caso-pz").getBoundingClientRect().right <= document.querySelector(".caso-dir").getBoundingClientRect().left + 1)(document.querySelector(".caso-esq")),   // F320 · duas colunas: placa e prazos à esquerda   // F278 · os prazos na coluna da direita
       dir: (e => !!(e && e.firstElementChild.classList.contains("caso-esq-alca") && !e.querySelector(".menu-andamentos") && e.querySelector(".caso-acoes ~ .fatos")))(document.querySelector(".caso-dir")),   // F405 · sem as abas: a seta de recolher, o campo de escrever e os andamentos
-      placa2: (e => e && getComputedStyle(e).flexDirection === "column" && [...e.children].every(f => getComputedStyle(f).flexDirection === "row"))(document.querySelector(".caso-esq .lc-placa")),   // F182 · rótulo e valor na mesma linha, como no canvas
+      placa2: (e => e && getComputedStyle(e).display === "grid" && [...e.querySelectorAll(":scope > .lc-f:has(.lc-k)")].every(f => getComputedStyle(f).flexDirection === "column"))(document.querySelector(".caso-esq .lc-placa")),   // F504 · grade de duas colunas, rótulo em cima do valor, como no Lovable
       pzDesc: (d => d.every((x, i) => !i || d[i-1] <= x))([...document.querySelectorAll(".caso-esq .pz:not(.fp2-fatal)")].map(b => b.dataset.data)),
       pzFina: [...document.querySelectorAll(".caso-esq .pz:not(.fp2-fatal)")].every(e => e.getBoundingClientRect().height <= 64),
-      verifNeutra: !!(verif && verif.querySelector(".lc-vazio") && !verif.querySelector(".lc-manual")),
+      verifNeutra: !document.querySelector(".caso-esq .lc-placa .lc-verif"),   // F504 · a Verificação saiu do quadro de detalhes
       peq: peq.length };
   });
   conf(`a ficha usa só a fonte do tema (${f.plex} em Plex, ${f.segoe} em Segoe UI)`, f.segoe === 0 && f.plex > 20);
   conf(`F405 · as fases vão de Escritório ao Tudo (Caso Completo) (${f.primeira} … ${f.ultima})`, /^Escritório/.test(f.primeira || "") && /^Tudo/.test(f.ultima || ""));
   conf("F145 · à esquerda, parada, a placa e os prazos", f.esq);
   conf("F405 · à direita, sem as abas: a seta, o campo de escrever e os andamentos", f.dir);
-  conf("F182 · a placa em linhas: rótulo à esquerda, valor à direita", f.placa2);
+  conf("F504 · a placa em grade: rótulo em cima, valor embaixo", f.placa2);
   conf("F254 · os prazos em linhas, em ordem crescente depois do prazo fatal", f.pzDesc && f.pzFina);
-  conf("Verificação a definir fica cinza como a Etapa, sem o vermelho", f.verifNeutra);
+  conf("F504 · a Verificação fica em Números do caso e gestão, fora do quadro", f.verifNeutra);
   conf(`os botões da linha do tempo e dos prazos têm ao menos 24px (${f.peq} menores)`, f.peq === 0);
 
   // F140 · peso até 500 fora do nome e do título, texto de leitura em 14px,
@@ -170,10 +170,10 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
   const g = await p.evaluate(() => {
     const vis = e => e.getBoundingClientRect().width > 0;
     const tx = [...document.querySelectorAll(".detalhe *")].filter(e => vis(e) && [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()));
-    const pesados = tx.filter(e => +getComputedStyle(e).fontWeight >= 600 && !e.closest(".det-topo h2,.lc-ben,.avatar"));
+    const pesados = tx.filter(e => +getComputedStyle(e).fontWeight >= 600 && !e.closest(".det-topo h2,.lc-ben,.avatar,.fp-cab,.lc5-cab,.fp5-dia"));
     const t = document.querySelector('.painel[data-p="2"] .timeline .texto');
     const av = document.querySelector(".det-topo .cli-casos .avatar");
-    return { pesados: pesados.length, ex: pesados.slice(0, 3).map(e => e.className || e.tagName),
+    return { pesados: pesados.length, ex: pesados.slice(0, 3).map(e => (e.className || e.tagName) + ":" + e.textContent.trim().slice(0,30) + "<" + (e.parentElement.className||"")),
       corpo: t && getComputedStyle(t).fontSize, av: av && getComputedStyle(av).getPropertyValue("--av").trim(), fundo: av && getComputedStyle(av).backgroundColor };
   });
   conf(`fora do nome e do título, nada passa do peso 500 (${g.pesados} ${g.ex.join(",")})`, g.pesados === 0);

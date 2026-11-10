@@ -111,13 +111,13 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     repintarFicha();
     const f = document.querySelector(".caso-esq .lc-placa .lc-fila"), linha = f && f.parentElement, rot = linha && linha.querySelector(".lc-k");
     const pecas = linha ? [...linha.querySelectorAll(".lc-fila,.lc-jan")] : [];
-    const r = { n: pecas.length, inteiras: pecas.every(e => e.getClientRects().length === 1), aDireita: pecas.every(e => e.getBoundingClientRect().left >= rot.getBoundingClientRect().right),
+    const r = { n: pecas.length, inteiras: pecas.every(e => e.getClientRects().length === 1), aDireita: pecas.every(e => e.getBoundingClientRect().left >= rot.getBoundingClientRect().right || e.getBoundingClientRect().top >= rot.getBoundingClientRect().bottom - 1), // F504 · na grade, o rótulo fica em cima
       dentro: pecas.every(e => e.getBoundingClientRect().right <= linha.getBoundingClientRect().right + 1), texto: linha.innerText.replace(/\s+/g, " ") };
     const t = document.querySelector(".caso-esq .lc-tram-link"); r.tram = !t || getComputedStyle(t).textOverflow !== "ellipsis";
     window._filaAntes = antes; return r; }, [kA.id, iso(-1)]);
   await p.locator(".caso-esq .linha-caso").first().screenshot({ path: OUT + "/fila.png" });
   await p.evaluate(kid => { Object.assign(D.casoPorId.get(kid), window._filaAntes); repintarFicha(); }, kA.id);
-  conf(`a Fila lê em texto corrido, cada valor inteiro e à direita do rótulo (${fila.texto})`, fila.n >= 3 && fila.inteiras && fila.aDireita && fila.dentro);
+  conf(`a Fila lê em texto corrido, cada valor inteiro, abaixo ou à direita do rótulo (${fila.texto})`, fila.n >= 3 && fila.inteiras && fila.aDireita && fila.dentro);
   conf("a tramitação não termina em reticências", fila.tram);
   conf("a inicial do autor do andamento é quadrada, como a da linha das listas", await p.evaluate(() => { const a = [...document.querySelectorAll(".timeline .avatar:not(img)")];
     return a.length > 0 && a.every(e => { const r = getComputedStyle(e).borderTopLeftRadius; return /%$/.test(r) ? parseFloat(r) < 40 : parseFloat(r) < e.offsetWidth / 2.5; }); }));

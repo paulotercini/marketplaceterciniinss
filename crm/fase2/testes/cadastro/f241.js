@@ -105,11 +105,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.screenshot({ path: path.join(OUT, "02-prazos.png") });
   const br = s => `${s.slice(8, 10)}/${s.slice(5, 7)}/${s.slice(0, 4)}`;
   const adiante = [90, 60, 40].map(d => br(iso(d)));
-  // F335 · um prazo de cada vez: à vista só o próximo; o vencido conta no "Ver as outras", em vermelho
-  conf(`à vista só o próximo, e não os de longe (${z.vis.join(", ")})`, z.vis.length === 1 && z.vis.includes(br(iso(3))) && !adiante.some(d => z.vis.includes(d)));
-  conf(`o resto em "Ver as outras N datas", recolhido, com a vencida (${z.bt})`, /\+\d+ datas/.test(z.bt) && /vencida/.test(z.bt));
+  // F504 · duas linhas à vista (Lovable): o próximo e a vencida; o resto em "+N datas"
+  conf(`à vista o próximo e a vencida, e não os de longe (${z.vis.join(", ")})`, z.vis.length === 2 && z.vis[0] === br(iso(3)) && !adiante.some(d => z.vis.includes(d)));
+  conf(`o resto em "+N datas", recolhido (${z.bt})`, /\+\d+ datas/.test(z.bt));
   const q = s => s.split("/").reverse().join("");
-  const resto = z.todos.slice(1);
+  const resto = z.todos.slice(2);
   conf("F254 · depois do prazo fatal, a ordem é crescente", resto.every((d, i) => !i || q(resto[i - 1]) <= q(d)) && adiante.every(d => z.todos.includes(d)));
   conf("os grupos dizem o vencido e o que vem", /Vencidas/.test(z.resumo) && /Mais tarde/.test(z.resumo));
   await p.click("details.fp-resto summary");
