@@ -55,7 +55,7 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
     && /1º grau/.test(ac.judicial.outros) && /e-SISREC/.test(ac.judicial.outros) && /PAT/.test(ac.judicial.outros));
   const semPat = await p.evaluate(id => { const k = {...D.casoPorId.get(id), processo_link: null, fase: "inss", protocolos: ["9876543210"]}; return acessosDoCaso(k).atual.join(""); }, CASO1);
   conf("sem tarefa no PAT, o botão é o do Meu INSS com o protocolo", /Meu INSS/.test(semPat) && /9876543210/.test(semPat));
-  await p.evaluate(() => repintarFicha());
+  await p.evaluate(id => { lcAberto.set(id, 1); repintarFicha(); }, CASO1); // F504 · a tramitação mora em "Números do caso e gestão"
   conf("a tramitação é o link do acesso da fase, e o Sem gratuidade aparece", await p.evaluate(() =>
     !!document.querySelector(".linha-caso .lc-tram-link[href]") && !!document.querySelector(".linha-caso .lc-sem-grat")));
   await p.evaluate(id => { D.casoPorId.get(id).gratuidade = "concedida"; repintarFicha(); }, CASO1);

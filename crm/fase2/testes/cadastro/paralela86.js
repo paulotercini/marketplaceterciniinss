@@ -62,7 +62,7 @@ FIX.andamentos = [
   await p.evaluate((id) => lcAbrir(id, 1), CASO1); await p.waitForTimeout(200);
   const rg = await p.evaluate(() => {
     const r = document.querySelector(".linha-caso");
-    return { tram: (r.querySelector(".lc-tram") || {}).textContent, nums: r.querySelector(".lc-numeros").innerText.replace(/\s+/g, " ").trim(),
+    return { tram: (r.querySelector(".lc-tram-n") || r.querySelector(".lc-tram") || {}).textContent, nums: r.querySelector(".lc-numeros").innerText.replace(/\s+/g, " ").trim(),
       papeis: [...r.querySelectorAll(".lc-papel")].map(e => e.textContent.trim()) };
   });
   conf("a tramitação segue no Conselho de Recursos (o MS não é a fase seguinte)", rg.tram === "Conselho de Recursos");
