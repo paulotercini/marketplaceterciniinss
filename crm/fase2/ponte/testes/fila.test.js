@@ -86,6 +86,27 @@ t.test("número sem WhatsApp vira erro, não some", async () => {
   a.match(fim.erro, /não tem WhatsApp/);
 });
 
+t.test("F495: número negado com o nono dígito vai pelo número sem ele", async () => {
+  fingirBanco();
+  let para;
+  await enviar({ id: "m1", conversa_id: "c1", texto: "oi", tentativas: 0 },
+    { ...zapOk, onWhatsApp: async f => f === "551699990000" ? [{ exists: true, jid: "551699990000@s.whatsapp.net" }] : [{ exists: false }],
+      sendMessage: async jid => { para = jid; return { key: { id: "X" } }; } });
+  a.equal(para, "551699990000@s.whatsapp.net");
+  a.equal(patchesFinais()[0].status, "enviada");
+});
+
+t.test("F495: número negado pelo onWhatsApp vai pelo @lid conhecido", async () => {
+  fingirBanco();
+  let para;
+  await enviar({ id: "m1", conversa_id: "c1", texto: "oi", tentativas: 0 },
+    { ...zapOk, onWhatsApp: async () => [{ exists: false }],
+      signalRepository: { lidMapping: { getLIDForPN: async pn => pn === "5516999990000@s.whatsapp.net" ? "123@lid" : null } },
+      sendMessage: async jid => { para = jid; return { key: { id: "X" } }; } });
+  a.equal(para, "123@lid");
+  a.equal(patchesFinais()[0].status, "enviada");
+});
+
 t.test("conversa sem telefone não derruba a ponte", async () => {
   fingirBanco({ conversa: null });
   await enviar({ id: "m1", conversa_id: "c1", texto: "oi", tentativas: 0 }, zapOk);
