@@ -22,7 +22,7 @@ const CONFIG = {
   // F250f · o Marcos e a Amanda deixam o horário livre como "LIVRE 10:30-11:00" ou "LIVRE 09h30-10h00", sem o código:
   // é vaga sem tipo; o tipo vem do cliente na hora de agendar (001 primeiro atendimento, 002 cliente do escritório)
   REGEX_VAGA_LIVRE: /^\s*livre\b(?:(?!\d{4}[\s.-]?\d{4}).)*$/i,
-  VERSAO: 'F406 · quem agendou, alterou e liberou cada horário',
+  VERSAO: 'F510 · atendimentos anteriores pela lupa',
   // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
   // quem ele é (colorId do Google: 9 = mirtilo/azul, 2 = sálvia/verde, o das vagas do Marcos,
   // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
@@ -75,6 +75,7 @@ function doPost(e) {
       case 'remarcar':            out = remarcar_(user, req); break;
       case 'editar':              out = editar_(user, req); break;
       case 'agendamentosFuturos': out = agendamentosFuturos_(user, req); break;
+      case 'historico':           out = historico_(user, req); break;
       case 'quemSouEu':           out = { ok: true, usuario: user.nome, papel: user.papel }; break;
       case 'definirDias':         out = definirDias_(user, req); break;
       case 'trocarDia':           out = trocarDia_(user, req); break;
@@ -546,6 +547,17 @@ function agendamentosFuturos_(user, r) {
   else throw erro_('PARAMETRO', 'Informe clienteId ou telefone.');
   const items = (Calendar.Events.list(CONFIG.CALENDAR_ID, params).items || []).filter(ev => ev.status !== 'cancelled');
   return { ok: true, agendamentos: items.map(resumo_) };
+}
+
+/** F510 · os atendimentos que já passaram (até 5 anos), pelo nome ou pelo telefone, do mais recente ao mais antigo. */
+function historico_(user, r) {
+  const q = String(r.q || '').trim();
+  if (q.replace(/\s/g, '').length < 2) throw erro_('PARAMETRO', 'Digite ao menos 2 letras.');
+  const agora = new Date(), desde = new Date(agora.getTime() - 5 * 365 * 86400000);
+  const items = (Calendar.Events.list(CONFIG.CALENDAR_ID, { q, timeMin: desde.toISOString(), timeMax: agora.toISOString(),
+    singleEvents: true, orderBy: 'startTime', maxResults: 250 }).items || [])
+    .filter(ev => ev.status !== 'cancelled' && ev.start && ev.start.dateTime && ehAtendimento_(ev));
+  return { ok: true, atendimentos: items.reverse().slice(0, 40).map(resumo_) };
 }
 
 /* ---------------------------- Dias de atendimento (só o Paulo) ---------------------------- */
