@@ -36,6 +36,7 @@ const T = banco.t;
 // o Google Agenda: a quarta do Paulo (vagas sem cor, como o escritório faz), um atendimento lançado à mão, o almoço,
 // e o Marcos (sálvia, um dos verdes) com um atendimento e uma vaga
 const W = proximo(3);
+const PASSADO = new Date(Date.now() - 60 * 86400e3).toISOString().slice(0, 10);
 const ev = (id, s, ini, fim, cor) => ({ id, summary: s, start: quando(W, ini), end: quando(W, fim), ...(cor ? { colorId: cor } : {}) });
 const LIVRE = t => `${t} - Livre (anote o telefone)`;
 const google = criarGoogle({ tokens: { "tok-ingrid": { nome: "Ingrid", papel: "equipe" } }, eventos: [
@@ -44,7 +45,9 @@ const google = criarGoogle({ tokens: { "tok-ingrid": { nome: "Ingrid", papel: "e
   ev("P4", LIVRE("001"), "13:30", "14:15"),
   ev("M1", "002 - Michelle Fictícia - Confirmado", "09:00", "09:30", "2"), ev("M2", "LIVRE 09:30-10:00", "09:30", "10:00", "2"),
   // a Amanda (banana) escreve o horário livre como "LIVRE 09h30-10h00", sem o código, como no Google do escritório
-  ev("A1", "LIVRE 10h00-10h30", "10:00", "10:30", "5")] });
+  ev("A1", "LIVRE 10h00-10h30", "10:00", "10:30", "5"),
+  // F510 · a Michelle já foi atendida pelo Paulo há 60 dias
+  { id: "H1", summary: "001 - Michelle Fictícia - Confirmado", start: quando(PASSADO, "09:00"), end: quando(PASSADO, "09:45") }] });
 const evG = id => google.eventos.find(e => e.id === id) || {};
 
 const ok = [];
@@ -278,7 +281,12 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click('[data-aqpq="M1"]'); await p.waitForTimeout(300);
   conf("F507 · o clique abre a agenda do Marcos no dia do atendimento, com ele em destaque",
     await p.evaluate(d => agq.prof === "marcos" && agq.sel === d && !!document.querySelector('[data-aqev="M1"].aq-achado') && !document.getElementById("aq-pq"), W));
-  await p.click(".aq-pesq"); await p.fill("#aq-pq", "zzzz"); await p.waitForTimeout(100);
+  await p.click(".aq-pesq"); await p.fill("#aq-pq", "michelle");
+  conf("F510 · o passado não aparece antes do clique", !(await p.$("#aq-pq-ant li")) && !(await p.$('[data-aqpq="H1"]')));
+  await p.click(".aq-pq-ant-bt"); await p.waitForSelector("#aq-pq-ant li");
+  const ant = await p.textContent("#aq-pq-ant");
+  conf(`F510 · Anteriores traz o atendimento passado da Michelle com o Paulo (${ant.trim().slice(0, 90)})`, /Atendimentos anteriores/.test(ant) && /Michelle/.test(ant) && /Paulo/.test(ant) && (await p.$$("#aq-pq-ant li")).length === 1);
+  await p.fill("#aq-pq", "zzzz"); await p.waitForTimeout(100);
   conf("F507 · sem achado, diz que não encontrou", /Nenhum atendimento encontrado/.test(await p.textContent("#aq-pq-res")));
   await p.evaluate(() => fecharCaixa());
 
