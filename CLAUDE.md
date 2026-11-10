@@ -681,6 +681,8 @@ A **F509** (13.33, pedido do Paulo de 10.11.2026): o cartão "Último andamento 
 
 A **F510** (13.34, pedido do Paulo de 10.11.2026, "não tem como eu saber se um cliente já foi atendido"): na janela da lupa da Agenda (F507), o botão **Anteriores** procura nos atendimentos que já passaram, até 5 anos, pelo nome ou pelo telefone, do mais recente ao mais antigo (até 40), com o dia, a hora, o profissional e o tipo; o passado só vem no clique e não aparece na primeira tela. O Apps Script ganhou a ação `historico` (`historico_`: `Calendar.Events.list` com `q`, `ehAtendimento_`), que exige publicar a versão nova do `Code.gs`; a antiga responde `ACAO_INVALIDA` e a janela diz que falta publicar. Teste: `f251.js`.
 
+A **F511** (pedido do Paulo de 10.11.2026, as mensagens do WhatsApp que não chegavam ao CRM): desde a F422ad (09.11.2026, 10h45), a variável `nome` da `zap_smb_bot` colidia com a coluna `zap_setores.nome` (erro 42702, "column reference nome is ambiguous"), e o erro do gatilho abortava a gravação da mensagem em `zap_mensagens`; a ponte as guardava em `pendentes.jsonl` e repetia a cada 5 minutos. A variável passou a `v_nome` e as buscas do setor usam o alias da tabela. Ao criar variável PL/pgSQL, não use o nome de uma coluna lida na mesma função. SQL em `crm/fase2/migracoes/f511_smb_bot_nome_ambiguo.sql` (aplicada em 10.11.2026).
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
