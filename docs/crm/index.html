@@ -1023,7 +1023,11 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   #proc-inteiro .pi-arvore{width:300px;flex:none;overflow:auto;background:var(--branco);border-right:1px solid var(--borda);padding:6px 0}
   #proc-inteiro .pi-it{display:flex;align-items:flex-start}
   #proc-inteiro .pi-it input{margin:9px 0 0 10px;flex:none}
-  #proc-inteiro .pi-peca h4 .pi-ler{float:right;font-weight:400}
+  #proc-inteiro .pi-peca h4 .pi-ler{float:right;font-weight:400;min-height:28px;padding:2px 10px}
+  #proc-inteiro .pi-arv-pe{position:sticky;bottom:-6px;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px 10px;margin-bottom:-6px;background:var(--branco);border-top:1px solid var(--borda)}
+  #proc-inteiro .pi-arv-pe .db-bt{justify-content:center}
+  .arv-doc .arv-ia{float:right;min-height:24px;padding:1px 8px;font-size:12px;margin-left:6px}
+  @media (pointer:coarse), (max-width:760px){#proc-inteiro .pi-arv-pe .db-bt,.arv-doc .arv-ia{min-height:44px}}
   body:has(#proc-inteiro) .modal-fundo{z-index:2100}
   /* a caixa aberta da janela do prazo (+ Etapa, Corrigir a data, Detalhes) vem por cima dela, e não atrás */
   body:has(#painel-prazo.aberto) .modal-fundo{z-index:950}
@@ -2240,6 +2244,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-conv .l3 > span{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
   .zap-conv .l3 > .zc-fim,.zap-conv .l3 > .bolha{flex:none;overflow:visible}
   .zap-conv .l3 .zc-adv{color:var(--texto);font-weight:500}
+  .zap-conv .l3 .zc-at{color:var(--texto)} .zap-conv .l3 .zc-at.nao,.zt-viu.nao{color:#b42318;font-weight:600}
   /* F428 · as não lidas na linha da prévia, como no WhatsApp; a linha das etiquetas some quando vazia */
   .zap-conv .l2{display:flex;align-items:center;gap:8px}
   .zap-conv .l2>span:first-child{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
@@ -3842,6 +3847,14 @@ html[data-tema="v10"] .db-mov{font-size:14px;line-height:1.45;margin:0}
 html[data-tema="v10"] .db-sub{display:block;font-size:12px;color:var(--db-cinza);margin-top:4px}
 html[data-tema="v10"] .db-par{flex-basis:100%;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--db-jud)}
 html[data-tema="v10"] .db-doc{background:none;border:0;padding:4px 0;font:inherit;font-size:13px;color:var(--db-acc);text-decoration:underline;cursor:pointer;min-height:32px}
+.db-bts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid color-mix(in srgb,var(--db-cor,#4A4E4E) 18%,#fff)}
+.db-bt{font:inherit;font-size:13px;font-weight:600;min-height:32px;padding:4px 14px;border-radius:8px;cursor:pointer;background:#fff;border:1px solid color-mix(in srgb,var(--db-cor,#4A4E4E) 40%,#fff);color:color-mix(in srgb,var(--db-cor,#4A4E4E) 80%,#000);transition:transform 120ms ease-out}
+.db-bt.pri{background:var(--db-cor,#4A4E4E);border-color:var(--db-cor,#4A4E4E);color:#fff}
+.db-bt:active{transform:scale(.97)}
+.db-bt:focus-visible{outline:2px solid var(--db-cor,#4A4E4E);outline-offset:2px}
+@media (hover:hover){.db-bt:not(.pri):hover{background:color-mix(in srgb,var(--db-cor,#4A4E4E) 8%,#fff)}}
+@media (prefers-reduced-motion:reduce){.db-bt{transition:none}}
+.app.celular .db-bt{flex:1 1 30%;min-height:44px}
 html[data-tema="v10"] .db-lista{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:10px;padding-top:8px;border-top:1px dashed var(--db-borda);font-size:12px;color:var(--db-cinza)}
 html[data-tema="v10"] .db-n{font-family:var(--f-mono,ui-monospace,Consolas,monospace);font-size:12px;background:none;border:0;padding:4px 0;cursor:pointer;text-decoration:none;min-height:32px;color:var(--texto)}
 html[data-tema="v10"] .caso-dir.db-recolhido>.timeline,html[data-tema="v10"] .caso-dir.db-recolhido>.tl-banner-um,html[data-tema="v10"] .caso-dir.db-recolhido>.tl-banner{display:none}
@@ -6874,7 +6887,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.25</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.26</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11820,7 +11833,7 @@ function dbAndamento(k, ands, fase, par){
     const sit = pats.map(x=>String(x.origem_id||"")).find(o=>o.startsWith("situacao:"));
     const prot = protocolosDe(k)[0];
     it = {cls:"", nome:"Meu INSS", onde:"INSS", logo:iconeFonte("inss"), iso:dataDoDb(a), txt:dbLead(a.texto), sub:sit ? sit.split(":").slice(2).join(":") : especieDoCaso(k),
-      abrir: prot ? `abrirMeuInss('${escJs(prot)}')` : "", n:pats.length-1, aba:"inss", rot:"andamentos"};
+      abrir: prot ? `abrirMeuInss('${escJs(prot)}')` : "", n:pats.length-1, aba:"inss", rot:"andamentos", bts:dbBotoes(k, "inss", (String(a.origem_id||"").match(/:(\d{6,})/)||[])[1]||soDig(prot||""))};
   } else if(fase==="conselho"){
     const evs = crpsBlocos(k).flatMap(b=>(b.eventos||[]).map(e=>({e, nup:b.nup}))).sort((a,b)=>(isoCrps(a.e.data)||"")<(isoCrps(b.e.data)||"")?1:-1);
     const x = evs[0]; if(!x) return "";
@@ -11828,12 +11841,12 @@ function dbAndamento(k, ands, fase, par){
     it = {cls:"crps", nome:"e-Recursos", onde:"Conselho de Recursos", logo:iconeFonte("crps"), iso:isoCrps(x.e.data)+"T12:00:00", soData:true,
       txt: decideOCaso(x.e) ? `<b>${esc(x.e.resumo||x.e.bruto||"")}</b>` : esc(x.e.resumo||x.e.bruto||""), sub:"",
       doc: doc ? `<button type="button" class="db-doc" onclick="abrirDecisao('${escJs(doc.storage)}')">${esc(doc.nome||"Documento")}</button>` : "",
-      abrir: x.nup ? `window.open('${escJs(linkERecursos(x.nup))}','_blank','noopener')` : "", n:evs.length-1, aba:"crps", rot:"andamentos"};
+      abrir: x.nup ? `window.open('${escJs(linkERecursos(x.nup))}','_blank','noopener')` : "", n:evs.length-1, aba:"crps", rot:"andamentos", bts:dbBotoes(k, "crps", soDig(x.nup||""))};
   } else if(fase==="judicial"){
     const pj = andamentosPje(ands).sort((a,b)=>dataDoDb(a)<dataDoDb(b)?1:-1), a = pj[0]; if(!a) return "";
     const sis = sisCurtoDoMov(a), href = linkPjeDoAndamento(a, k) || linkPjeDoCaso(k);
     it = {cls:"jud", nome:sis, onde:sis, logo:iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sis]||"pje"), iso:dataDoDb(a), txt:dbLead(a.texto), sub:"",
-      href, n:pj.length-1, aba:"cnj", rot:"andamentos"};
+      href, n:pj.length-1, aba:"cnj", rot:"andamentos", bts:dbBotoes(k, "cnj", (n=>n?soDig(n):"")(numDoAndPje(a)), sis)};
   } else return "";
   const logo = it.href ? `<a class="db-logo" href="${esc(it.href)}" target="_blank" rel="noopener" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</a>`
     : it.abrir ? `<button type="button" class="db-logo" onclick="${it.abrir}" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</button>`
@@ -11842,7 +11855,17 @@ function dbAndamento(k, ands, fase, par){
   return `<section class="db db-and ${it.cls}" aria-label="Último andamento no ${esc(it.onde)}">
     <div class="db-cab">${logo}<h3>Último andamento no ${esc(it.onde)}</h3><span class="db-when">${quando}</span>${par ? `<span class="db-par">Em paralelo · mandado de segurança</span>` : ""}
       ${dbAnteriores(k, Math.max(0, it.n), it.rot, false, `irSubAba('${it.aba}')`)}</div>
-    <p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>${it.doc||""}</section>`;
+    <p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>${it.doc||""}${it.bts||""}</section>`;
+}
+// F497 · os botões do cartão Judicial (plano aprovado pelo Paulo em 10.11.2026): Ler o processo do andamento,
+// Expedientes só no PJe com a aba lida, e Detalhes, que abre a aba Judicial. Na cor do quadro (--db-cor).
+function dbBotoes(k, aba, dig, sis){
+  const ps = processosDaFase(k, aba); if(!ps.length) return "";
+  const i = Math.max(0, ps.findIndex(x=>x.d===dig));
+  const exp = sis==="PJe" && expedientesDe(k, ps[i].d).length;
+  const b = (f, rot, frase, cls) => `<button type="button" class="db-bt${cls?" "+cls:""}" onclick="${f}" title="${esc(frase)}"><span aria-hidden="true">${rot}</span><span class="sr-only">${esc(frase)}</span></button>`;
+  const tela = aba==="inss" ? "Ver a tela do requerimento no PAT" : aba==="crps" ? "Ver a tela do recurso no e-SISREC" : "";
+  return `<div class="db-bts">${b(`lerProcesso('${k.id}','${aba}',${i})`, "Ler", "Ler o processo inteiro", "pri")}${tela ? b(`telaDoProcesso('${k.id}','${aba}',${i})`, "Tela", tela) : ""}${exp ? b(`telaExpedientes('${k.id}',${i})`, "Expedientes", "Ver os expedientes do PJe") : ""}${b(`irSubAba('${aba}')`, "Detalhes", `Abrir a aba ${ROT_FASE[aba]||"do processo"}`)}</div>`;
 }
 function dashboardDoCaso(k, ands){
   return `<div class="db-dash">${dbDespacho(k, ands)}</div>`;
@@ -17318,6 +17341,7 @@ function cartaoConversa(c){
         <span class="hora">${c.ultima_em?quandoFalou(c.ultima_em):""}</span></div>
       <div class="l2"><span>${esc(previaZap(c.ultimo_texto).slice(0,80))}</span>${c.nao_lidas?`<span class="bolha" aria-label="${c.nao_lidas} não lidas">${c.nao_lidas}</span>`:""}</div>
       <div class="l3">
+        ${at && at.id!==eu.id?(v=>`<span class="zc-at${v&&!v.resp&&!v.viu?" nao":""}" title="${v&&!v.resp?(v.viu?`${esc(at.nome)} abriu a conversa depois da última mensagem`:`${esc(at.nome)} ainda não abriu a conversa depois da última mensagem`):`atendida por ${esc(at.nome)}`}">com ${esc(at.nome.split(" ")[0])}${v&&!v.resp?(v.viu?" · viu":" · não viu"):""}</span>`)(vistoZap(c)):""}
         ${advDaConversa(c)?`<span class="zc-adv" title="advogado responsável: ${esc(advDaConversa(c))}">${esc(advDaConversa(c).split(" ")[0])}</span>`:""}
         ${s?`<span class="zc-setor"><i style="background:${esc(s.cor)}"></i>${esc(s.nome)}</span>`:""}
         ${etq.slice(0,2).map(e=>`<span class="zc-etq" style="color:color-mix(in srgb, ${esc(e.cor)} 85%, #000)">${esc(e.texto)}</span>`).join("")}
@@ -17349,10 +17373,22 @@ const _zapCache = new Map();
 // F483 · o clique no nome é ler; a mensagem que chega com a conversa já aberta fica nova até outro clique ou a resposta
 let zapLerAoAbrir = null;
 function lerConversaZap(c){
-  if(!c || !c.nao_lidas) return;
+  if(!c) return;
+  // F493 · quem atende, ao abrir, deixa marcado que viu (o gestor e quem transferiu sabem que chegou)
+  const minha = eu && c.atendente_id===eu.id, corpo = {};
+  if(c.nao_lidas) corpo.nao_lidas = 0;
+  if(minha) corpo.atendente_viu_em = new Date().toISOString();
+  if(!Object.keys(corpo).length) return;
   api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",
-    headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}).catch(()=>{});
-  c.nao_lidas = 0;
+    headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}).catch(()=>{});
+  Object.assign(c, corpo);
+}
+// F493 · a conversa de outra pessoa com mensagem do cliente sem resposta: quem atende já abriu depois dela?
+function vistoZap(c){
+  const at = c.atendente_id && D.colPorId.get(c.atendente_id);
+  if(!at || !c.ultima_entrada_em) return null;
+  if(c.ultima_resposta_em && c.ultima_resposta_em >= c.ultima_entrada_em) return {at, resp:true};
+  return {at, viu: !!c.atendente_viu_em && c.atendente_viu_em >= c.ultima_entrada_em};
 }
 async function abrirConversa(id, ler){
   const mesma = zapAberta===id;   // reabrir a mesma (depois de enviar, na recarga) guarda o que está escrito e a rolagem
@@ -17433,7 +17469,9 @@ function dadosDaConversaZap(c){
              <span class="mono">${esc(foneZap(c.telefone))}</span>
              ${advDaConversa(c)?`<span>Adv. <b>${esc(advDaConversa(c))}</b></span>`:""}
              ${c.bot_ativo&&c.bot_passo?`<span class="zt-robo" title="o passo do robô nesta conversa">Robô: <b>${esc(rotPasso(c.bot_passo))}</b>${c.bot_desde?` desde ${diaZap(c.bot_desde)} ${horaSP(c.bot_desde)}`:""}</span>`:""}
-             ${at?`<span>Atendendo: <b>${esc(at.nome)}</b></span>`
+             ${at?(v=>`<span>Atendendo: <b>${esc(at.nome)}</b>${at.id!==eu.id&&v&&!v.resp?(v.viu
+                   ?` <span class="zt-viu">· viu às ${horaSP(c.atendente_viu_em)}</span>`
+                   :` <span class="zt-viu nao">· ainda não abriu a mensagem das ${horaSP(c.ultima_entrada_em)}</span>`):""}</span>`)(vistoZap(c))
                  :`<span class="zt-ninguem">Atendendo: <b>ninguém</b></span>`}
              ${deOutro && zapGestor()?`<button class="zl-link" onclick="assumirConversa()">Assumir (tirar de ${esc(at.nome)})</button>`:""}
            `,
@@ -18717,8 +18755,8 @@ async function transferirConversa(){
     <p class="meio-sub">Para uma pessoa, ou para um setor (o CRM escolhe quem está livre nele). Quem recebe
        ganha um aviso em Menções, e fica uma nota na conversa dizendo de quem para quem e por quê.</p>
     <p class="zx-rot">Pessoa</p>
-    <div class="form-linha">${eqs.map(c=>
-      `<button class="btn-rap" data-zt="${c.id}">${esc(c.nome)}</button>`).join("")}</div>
+    <div class="form-linha">${eqs.map(c=>{ const ja = zapConvs.find(x=>x.id===zapAberta)?.atendente_id===c.id;
+      return `<button class="btn-rap" data-zt="${c.id}"${ja?` disabled title="${esc(c.nome)} já atende esta conversa"`:""}>${esc(c.nome)}${ja?" (já atende)":""}</button>`; }).join("")}</div>
     ${zapAux.setores.length?`<p class="zx-rot">Setor</p><div class="form-linha">${zapAux.setores.map(s=>
       `<button class="btn-rap" data-zts="${s.id}" style="border-color:${esc(s.cor)};color:${esc(s.cor)}">${esc(s.nome)}</button>`).join("")}</div>`:""}
     <input id="zt-motivo" placeholder="motivo (opcional): é caso judicial…" style="width:100%;margin-top:10px">`);
@@ -38171,13 +38209,22 @@ const PEDIDOS_PROCESSO = [
   ["p_laudo",   "Confronto do laudo com os documentos médicos", "Confronte o laudo pericial com os documentos médicos dos autos: as divergências de diagnóstico, de data de início da incapacidade e de limitação, com as fls. de cada um."],
   ["p_minuta",  "Minuta da próxima peça",                      "Diga qual é a próxima peça do escritório neste processo e redija a minuta, com os fatos e as provas citados pelas fls."],
 ];
+// F497 · o botão IA de cada documento: pedidos curtos sobre um documento só (Laudo só no laudo)
+const PEDIDOS_DOC1 = [
+  ["d_resumo", "Resumo",  "Resuma este documento: o que decide ou pede, as datas e o próximo passo do escritório."],
+  ["d_prazo",  "Prazo",   "Diga se este documento abre prazo: qual ato, a data da intimação ou ciência, o termo final contado e a providência cabível."],
+  ["d_pontos", "Pontos",  "Aponte os pontos deste documento favoráveis e desfavoráveis ao segurado, e como enfrentar os desfavoráveis com a prova dos autos."],
+  ["d_laudo",  "Laudo",   "Analise este laudo pericial: falhas técnicas, quesitos não respondidos, data de início da incapacidade e contradições com os documentos médicos do caso."],
+];
 let _docsClaude = null;
 function menuClaudeDocs(casoId, chaves, modo){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const todos = documentosDoCaso(k);
   const lista = (chaves && chaves.length) ? todos.filter(d=>chaves.includes(chaveDoc(d))) : todos;
   _docsClaude = {casoId, chaves: lista.map(chaveDoc), modo};
-  const pedidos = modo==="processo" ? PEDIDOS_PROCESSO : PEDIDOS_DOCS;
+  const pedidos = modo==="processo" ? PEDIDOS_PROCESSO
+    : modo==="doc" ? PEDIDOS_DOC1.filter(x=>x[0]!=="d_laudo" || /laudo/i.test((lista[0]||{}).nome||""))
+    : PEDIDOS_DOCS;
   const semTexto = lista.filter(d=>!d.texto && !["crps","escritorio"].includes(d.origem));
   const onde = ler("crm_claude_onde") || "web";
   caixa(`<h3 style="margin:0 0 4px">Pedir ao Claude</h3>
@@ -38214,7 +38261,7 @@ async function abrirClaudeDocs(pedido){
   const s = _docsClaude; if(!s) return;
   const k = D.casoPorId.get(s.casoId); if(!k) return;
   const instr = pedido==="livre" ? ((document.getElementById("cl-livre")||{}).value||"").trim()
-    : ([...PEDIDOS_DOCS, ...PEDIDOS_PROCESSO].find(x=>x[0]===pedido)||[])[2];
+    : ([...PEDIDOS_DOCS, ...PEDIDOS_PROCESSO, ...PEDIDOS_DOC1].find(x=>x[0]===pedido)||[])[2];
   if(!instr) return aviso("Escreva a pergunta");
   const onde = ler("crm_claude_onde") || "web";
   const url = (onde==="app" ? "claude://claude.ai/new?q=" : "https://claude.ai/new?q=") + encodeURIComponent(pedidoClaudeDocs(k, s.chaves, instr, s.modo));
@@ -38365,7 +38412,75 @@ function piZoomPara(z, guardar, foco){
   if(autos){ autos.scrollTop = py * autos.scrollHeight - fy; autos.scrollLeft = px * autos.scrollWidth - fx; }
   if(guardar) try{ localStorage.setItem("crm_pi_zoom", z); }catch(e){}
 }
-function abrirProcessoInteiro(casoId, lista, caminho, titulo){
+// F497 · a barra do pé da árvore: o processo sai do CRM para o Claude ou outra inteligência
+const COR_FASE_DB = {inss:"#4F78B0", crps:"#8A5A1E", cnj:"#6B3FA0"};
+function barraArvore(){
+  const b = (fn, rot, frase, cls="") => `<button class="db-bt ${cls}" onclick="${fn}" title="${frase}"><span aria-hidden="true">${rot}</span><span class="sr-only">${frase}</span>${cls.includes("pi-claude")?'<span class="pi-claude-n"></span>':""}</button>`;
+  return `<div class="pi-arv-pe" role="group" aria-label="levar o processo">${b("piBaixar(false)","Baixar","Baixar o processo inteiro em .zip")}${b("piBaixar(true)","Marcadas","Baixar as peças marcadas em .zip")}${b("piMd(false)","MD","Baixar o processo em um arquivo .md, para o Claude ou outra inteligência")}${b("piImagens()","Imagens","Baixar as folhas em imagens JPG")}${b("piClaude()","Claude","Pedir ao Claude pelo conector, sobre as peças marcadas ou todas","pri pi-claude")}${b("piMd(true)","Projeto","Baixar o .md e abrir os projetos do Claude")}</div>`;
+}
+// as peças marcadas na árvore; sem marca, todas (soMarcadas: só as marcadas)
+function piEscolha(soMarcadas){
+  const el = document.getElementById("proc-inteiro"); if(!el) return null;
+  const k = D.casoPorId.get(el.dataset.caso); if(!k) return null;
+  const pecas = el._pecas || pecasDoProcesso(k);
+  const marcadas = [...el.querySelectorAll(".pi-it input:checked")].map(x=>pecas[+x.dataset.i]).filter(Boolean);
+  return {k, pecas: marcadas.length || soMarcadas ? marcadas : pecas};
+}
+function piBaixar(soMarcadas){
+  const e = piEscolha(soMarcadas); if(!e) return;
+  if(!e.pecas.length) return aviso("Marque as peças na árvore");
+  baixarDocsZip(e.k.id, false, e.pecas);
+}
+// o .md é o pacote do Claude (F188) só com as peças do processo; o Projeto abre os projetos do claude.ai, onde o arquivo se anexa
+async function piMd(projeto){
+  const e = piEscolha(false); if(!e || !e.pecas.length) return;
+  const antes = new Set(docsSel); docsSel.clear(); e.pecas.forEach(d=>docsSel.add(chaveDoc(d)));
+  try{ await pacoteClaude(e.k.id, true); } finally { docsSel.clear(); antes.forEach(c=>docsSel.add(c)); }
+  if(projeto){ window.open("https://claude.ai/projects", "_blank", "noopener"); aviso("Crie ou abra o projeto e anexe o arquivo .md baixado"); }
+}
+// as folhas em JPG, num .zip: o PDF desenhado pelo pdf.js, a imagem como veio
+async function piImagens(){
+  const e = piEscolha(false); if(!e || !e.pecas.length) return;
+  const pecas = e.pecas.filter(d=>/pdf|jpe?g|png/.test(d.tipo||""));
+  if(!pecas.length) return aviso("Nenhuma peça em PDF ou imagem");
+  const total = pecas.reduce((s,d)=>s + (+d.paginas || 1), 0);
+  if(total > 100 && !confirm(`São cerca de ${total} folhas em imagem. Baixar assim mesmo?`)) return;
+  aviso("Desenhando as folhas…", false);
+  try{
+    if(!window.JSZip) await new Promise((ok, erro)=>{
+      const s = document.createElement("script");
+      s.src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js";
+      s.onload = ok; s.onerror = ()=>erro(new Error("não consegui carregar o compactador"));
+      document.head.appendChild(s);
+    });
+    const zip = new JSZip(); let falhas = 0, n = 0;
+    for(const [i, d] of pecas.entries()){
+      const base = `${String(i+1).padStart(3,"0")} ${nomeSeguro(rotPeca(d))}`;
+      try{
+        const r = await fetch(await linkArquivo(d.caminho, 300)); if(!r.ok) throw new Error(r.status);
+        if(!/pdf/.test(d.tipo||"")){ zip.file(`${base}.${/png/.test(d.tipo)?"png":"jpg"}`, await r.blob()); n++; continue; }
+        const lib = await carregarPdfJs();
+        const pdf = await lib.getDocument({data: new Uint8Array(await r.arrayBuffer())}).promise;
+        for(let p=1; p<=pdf.numPages; p++){
+          aviso(`Desenhando as folhas: peça ${i+1} de ${pecas.length}, folha ${p}…`, false);
+          const pg = await pdf.getPage(p), vp = pg.getViewport({scale: 2});
+          const cv = document.createElement("canvas"); cv.width = vp.width; cv.height = vp.height;
+          await pg.render({canvasContext: cv.getContext("2d"), viewport: vp}).promise;
+          zip.file(`${base} fl ${String(p).padStart(3,"0")}.jpg`, await new Promise(ok=>cv.toBlob(ok, "image/jpeg", 0.85)));
+          cv.width = cv.height = 0; n++;
+        }
+        pdf.destroy();
+      }catch(err){ falhas++; }
+    }
+    salvarBlob(`${rotuloDoCaso(e.k).arquivo}-folhas.zip`, await zip.generateAsync({type:"blob"}));
+    aviso(falhas ? `⬇ ${n} folhas; ${falhas} peça(s) não baixaram` : `⬇ ${n} folhas em JPG`);
+  }catch(err){ aviso("Não consegui montar as imagens: " + err.message); }
+}
+// F497 · o botão IA de um documento: Resumo, Prazo, Pontos e, no laudo, Laudo
+function botaoIaDoc(casoId, chave, nome, cls){
+  return `<button class="${cls||"db-bt"}" onclick="event.stopPropagation();menuClaudeDocs('${casoId}',[${esc(JSON.stringify(chave))}],'doc')" title="Pedir à IA sobre este documento"><span aria-hidden="true">IA</span><span class="sr-only">Pedir à IA sobre este documento</span></button>`;
+}
+function abrirProcessoInteiro(casoId, lista, caminho, titulo, aba){
   setTimeout(armarVoltar, 0);   // F458
   const k = D.casoPorId.get(casoId); if(!k) return;
   const pecas = lista || pecasDoProcesso(k); if(!pecas.length) return aviso(lista ? "Nenhum documento neste processo" : "Nenhuma peça judicial no CRM");
@@ -38373,18 +38488,17 @@ function abrirProcessoInteiro(casoId, lista, caminho, titulo){
   const c = D.cliPorId.get(k.cliente_id) || {};
   const fls = flsDasPecas(pecas), rot = rotPeca;
   const el = document.createElement("div");
-  el.id = "proc-inteiro"; el.dataset.caso = k.id; el.setAttribute("role","dialog"); el.setAttribute("aria-label","processo inteiro");
+  el.id = "proc-inteiro"; el.dataset.caso = k.id; el.style.setProperty("--db-cor", COR_FASE_DB[aba] || COR_FASE_DB.cnj); el.setAttribute("role","dialog"); el.setAttribute("aria-label","processo inteiro");
   el.innerHTML = `<div class="pi-cab">
       <button class="btn-mini pi-ver-arvore" onclick="this.closest('#proc-inteiro').classList.toggle('arvore-on')">Peças</button>
       <b>${esc(c.nome||"cliente")}${titulo?` · ${esc(titulo)}`:k.processo?` · ${esc(k.processo)}`:""} · ${pecas.length} peça${pecas.length>1?"s":""}</b>
-      <button class="tl-bt forte pi-claude" onclick="piClaude()" title="pedido pronto ao Claude sobre as peças marcadas na árvore, ou sobre todas">${IC_SVG.claude} <span aria-hidden="true">Claude</span><span class="sr-only">Pedir ao Claude</span><span class="pi-claude-n"></span></button>
       <span class="pi-zoom" role="group" aria-label="zoom das peças"><button class="btn-mini" onclick="piZoom(-1)" title="diminuir (tecla -)" aria-label="diminuir o zoom">−</button><output aria-live="polite">100 %</output><button class="btn-mini" onclick="piZoom(1)" title="aumentar (tecla +)" aria-label="aumentar o zoom">+</button><button class="btn-mini" onclick="piZoom(0)" title="voltar a 100 % (tecla 0)"><span aria-hidden="true">100%</span><span class="sr-only">voltar o zoom a 100 %</span></button></span>
       <button class="btn-mini" onclick="fecharProcessoInteiro()" title="fechar (Esc)">✕</button></div>
     <div class="pi-corpo">
       <nav class="pi-arvore" aria-label="peças do processo"><div class="pi-arv-cab"><button class="btn-mini pi-tudo" onclick="piTudo()" title="Selecionar tudo"><span aria-hidden="true">Tudo</span><span class="sr-only">Selecionar tudo</span></button><button class="btn-mini pi-fim" onclick="piFim()" title="Ir à última folha" aria-label="Ir à última folha">↓</button></div>${pecas.map((d,i)=>`<div class="pi-it"><input type="checkbox" data-i="${i}" onchange="piMarcou()" aria-label="marcar ${esc(rot(d))} para o Claude"><button data-i="${i}" onclick="piIr(${i})">
-        ${esc(rot(d))}<small>${d.data?fmt(String(d.data).slice(0,10)):""}${fls[i]?` · fls. ${fls[i]}`:""}${d.evento&&d.nome?` · ${esc(d.nome)}`:""}</small></button></div>`).join("")}</nav>
+        ${esc(rot(d))}<small>${d.data?fmt(String(d.data).slice(0,10)):""}${fls[i]?` · fls. ${fls[i]}`:""}${d.evento&&d.nome?` · ${esc(d.nome)}`:""}</small></button></div>`).join("")}${barraArvore()}</nav>
       <div class="pi-autos">${pecas.map((d,i)=>`<section class="pi-peca" id="pi-${i}" data-i="${i}">
-        <h4><button class="btn-mini pi-ler" onclick="piClaude(${i})" title="Ler esta peça com o Claude"><span aria-hidden="true">Claude</span><span class="sr-only">Ler esta peça com o Claude</span></button>${esc(rot(d))}${d.data?` · ${fmt(String(d.data).slice(0,10))}`:""}${fls[i]?` · fls. ${fls[i]}`:""}</h4>
+        <h4>${botaoIaDoc(k.id, chaveDoc(d), d.nome, "db-bt pi-ler")}${esc(rot(d))}${d.data?` · ${fmt(String(d.data).slice(0,10))}`:""}${fls[i]?` · fls. ${fls[i]}`:""}</h4>
         <div class="pi-folha"><p class="meio-sub">Carregando…</p></div></section>`).join("")}</div>
     </div><div class="pi-fls" aria-hidden="true"></div>`;
   el._pecas = pecas;
@@ -45343,7 +45457,7 @@ function arvoreUnica(k, aba, i, x, todos, sel){
     const nome = y.d.caminho
       ? `<button class="arv-nome" onclick="procVer('${k.id}','${aba}',${i},'${escJs(y.d.caminho)}')" title="ler este documento">${esc(y.rot)}</button>`
       : `<span class="arv-nome" title="a extensão ainda não baixou este documento">${esc(y.rot)} (não baixado)</span>`;
-    return `<li class="arv-doc${y.dec?" dec":""}${sel && y.d.caminho===sel?" sel":""}"${y.d.caminho?` data-cam="${esc(y.d.caminho)}"`:""}>${nome}${et}${y.mov?`<span class="arv-mov">${esc(y.mov)}</span>`:""}${y.txt?`<span class="arv-txt">${esc(y.txt)}</span>`:""}</li>`; };
+    return `<li class="arv-doc${y.dec?" dec":""}${sel && y.d.caminho===sel?" sel":""}"${y.d.caminho?` data-cam="${esc(y.d.caminho)}"`:""}>${y.d.caminho ? botaoIaDoc(k.id, chaveDoc(y.d), y.d.nome, "db-bt arv-ia") : ""}${nome}${et}${y.mov?`<span class="arv-mov">${esc(y.mov)}</span>`:""}${y.txt?`<span class="arv-txt">${esc(y.txt)}</span>`:""}</li>`; };
   const dia = ([d, l]) => { l.sort(ordemArvDia); const ver = l.length>5 ? l.slice(0,4) : l, resto = l.length>5 ? l.slice(4) : [];
     return `<li class="arv-dia"><span class="arv-data">${d ? dataPat(d) : "Sem data"}</span><ul>${ver.map(lin).join("")}${resto.length
       ? `<li><details><summary>Mais ${resto.length} deste dia</summary><ul>${resto.map(lin).join("")}</ul></details></li>` : ""}</ul></li>`; };
@@ -45355,7 +45469,7 @@ const docsLegiveis = (k, x) => docsDoProcesso(k, x).filter(d=>d.caminho).slice()
 function lerProcesso(casoId, aba, i, caminho){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const x = processosDaFase(k, aba)[i]; if(!x) return;
-  abrirProcessoInteiro(casoId, docsLegiveis(k, x), caminho, `${ROT_FASE[aba]} · ${x.id}`);
+  abrirProcessoInteiro(casoId, docsLegiveis(k, x), caminho, `${ROT_FASE[aba]} · ${x.id}`, aba);
 }
 function baixarProcesso(casoId, aba, i){
   const k = D.casoPorId.get(casoId); if(!k) return;
@@ -45424,7 +45538,7 @@ function leitorMiolo(k, aba, i, x, d){
   return `<div class="pl-cab">
       <b class="pl-tit">${esc(y.rot)}</b>${etiquetasArv(y, oriComum(itensDoProcesso(k, x)))}
       <span class="meio-sub">${[y.data?dataPat(y.data):"", fl?`fls. ${fl}`:"", j>=0?`${j+1} de ${l.length}`:""].filter(Boolean).join(" · ")}</span>
-      <span class="pl-bts"><span class="pi-zoom" role="group" aria-label="zoom do documento"><button class="btn-mini" onclick="piZoom(-1)" title="diminuir (Ctrl + roda)" aria-label="diminuir o zoom">−</button><output aria-live="polite">${Math.round(z0*100)} %</output><button class="btn-mini" onclick="piZoom(1)" title="aumentar (Ctrl + roda)" aria-label="aumentar o zoom">+</button></span>
+      <span class="pl-bts">${botaoIaDoc(k.id, chaveDoc(d), d.nome, "db-bt")}<span class="pi-zoom" role="group" aria-label="zoom do documento"><button class="btn-mini" onclick="piZoom(-1)" title="diminuir (Ctrl + roda)" aria-label="diminuir o zoom">−</button><output aria-live="polite">${Math.round(z0*100)} %</output><button class="btn-mini" onclick="piZoom(1)" title="aumentar (Ctrl + roda)" aria-label="aumentar o zoom">+</button></span>
       <button class="btn-mini" ${j>0?`onclick="${ir(l[j-1])}"`:"disabled"} title="documento anterior (mais recente)" aria-label="documento anterior">↑</button>
       <button class="btn-mini" ${prox?`onclick="${ir(prox)}"`:"disabled"} title="próximo documento (mais antigo)" aria-label="próximo documento">↓</button>
       <button class="btn-mini" onclick="${d.id?`abrirAnexo('${escJs(d.id)}')`:`abrirDecisao('${escJs(d.caminho)}')`}" title="abrir este documento em outra guia">Abrir</button></span></div>
@@ -45511,7 +45625,7 @@ function vistaProcessos(k, aba){
   return `<div class="proc-v">
     <div class="proc-barra">${escolha}${filtros}<span class="proc-bts">${btsHtml}</span></div>
     ${sit?`<div class="proc-situ">${sit}</div>`:""}
-    <div class="proc-grade${d?"":" so-arv"}">
+    <div class="proc-grade${d?"":" so-arv"}" style="--db-cor:${COR_FASE_DB[aba]||COR_FASE_DB.cnj}">
       <div class="proc-arv"><div class="proc-arv-cab"><b>Processo</b> <span class="meio-sub">${[nd?`${nd} documento${nd===1?"":"s"}`:"", na?`${na} andamento${na===1?"":"s"}`:"", oriComum(todos)].filter(Boolean).join(" · ")}</span></div>${arvoreUnica(k, aba, i, x, todos, d && d.caminho)}</div>
       ${d?`<div class="proc-leitor" data-caso="${k.id}" data-aba="${aba}" data-i="${i}" role="region" aria-label="documento escolhido">${leitorMiolo(k, aba, i, x, d)}</div>`:""}
     </div>
