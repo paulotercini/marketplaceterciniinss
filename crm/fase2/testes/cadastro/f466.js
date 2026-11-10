@@ -140,17 +140,17 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o mandado de segurança ganha o segundo cartão, Judicial", await p.locator(".db-and.jud").count() === 1 && /Em paralelo · mandado de segurança/.test(await p.locator(".db-and.jud .db-par").textContent()) && /Conclusos/.test(await p.locator(".db-and.jud .db-mov").textContent()));
   conf("a data do cartão é a do movimento, não a da importação (F492)", /há 5 dias/.test(await p.locator(".db-and.jud .db-when").textContent()));
   const lis = await p.locator(".db-and.jud .db-movs > li").allTextContents();
-  conf("o Judicial lista as datas, a mais recente no alto (F508)", lis.length === 2 && /Conclusos/.test(lis[0]) && /Remetidos os Autos/.test(lis[1]));
-  conf("o mesmo dia junta os movimentos em sublista, sem prefixo nem data repetida (F508)", await p.locator(".db-and.jud .db-movs > li").first().locator("ul > li").count() === 3
+  conf("o Judicial lista as datas, a mais recente no alto (F509)", lis.length === 2 && /Conclusos/.test(lis[0]) && /Remetidos os Autos/.test(lis[1]));
+  conf("o mesmo dia junta os movimentos em sublista, sem prefixo nem data repetida (F509)", await p.locator(".db-and.jud .db-movs > li").first().locator("ul > li").count() === 3
     && !/PJe \(1º grau\)|— em|5000042/.test(lis.join(" ")));
   await p.locator('.db-and.jud .db-bt:has-text("Expedientes")').click(); await p.waitForTimeout(300);
-  conf("Expedientes abre logo abaixo do cartão, sem janela (F508)", await p.locator(".db-and.jud .db-pn .exp-tab").count() === 1 && await p.locator(".modal-fundo").count() === 0);
+  conf("Expedientes abre logo abaixo do cartão, sem janela (F509)", await p.locator(".db-and.jud .db-pn .exp-tab").count() === 1 && await p.locator(".modal-fundo").count() === 0);
   await p.locator('.db-and.jud .db-bt:has-text("Detalhes")').click(); await p.waitForTimeout(300);
   const det = await p.locator(".db-and.jud .db-pn .db-det").textContent().catch(() => "");
-  conf("Detalhes troca o painel e mostra o cabeçalho do processo (F508)", await p.locator(".db-and.jud .exp-tab").count() === 0 && /Número do Processo/.test(det) && /JUIZADO ESPECIAL FEDERAL CÍVEL/.test(det) && /Órgão julgador Atual/.test(det) && /Polo passivo/.test(det));
+  conf("Detalhes troca o painel e mostra o cabeçalho do processo (F509)", await p.locator(".db-and.jud .exp-tab").count() === 0 && /Número do Processo/.test(det) && /JUIZADO ESPECIAL FEDERAL CÍVEL/.test(det) && /Órgão julgador Atual/.test(det) && /Polo passivo/.test(det));
   await p.locator('.db-and.jud .db-bt:has-text("Detalhes")').click(); await p.waitForTimeout(300);
-  conf("Detalhes de novo fecha o painel (F508)", await p.locator(".db-and.jud .db-pn").count() === 0);
-  conf("Baixar e Claude ficam no cartão (F508)", await p.locator('.db-and.jud .db-bt:has-text("Baixar")').count() === 1 && await p.locator('.db-and.jud .db-bt:has-text("Claude")').count() === 1);
+  conf("Detalhes de novo fecha o painel (F509)", await p.locator(".db-and.jud .db-pn").count() === 0);
+  conf("Baixar e Claude ficam no cartão (F509)", await p.locator('.db-and.jud .db-bt:has-text("Baixar")').count() === 1 && await p.locator('.db-and.jud .db-bt:has-text("Claude")').count() === 1);
   conf("o cartão Judicial tem o link do portal", await p.locator(".db-and.jud a.db-logo[target='_blank']").count() === 1);
   await ctx.close();
 
