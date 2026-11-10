@@ -192,6 +192,44 @@ def uid(*partes):
     return str(uuid.uuid5(NS, "|".join(str(p) for p in partes)))
 
 
+# Disk IO (auditoria de 10.11.2026): o upsert reescrevia todas as linhas a cada 10 minutos, iguais ou não, e
+# cada UPDATE do Postgres grava a linha nova e os índices. A memória do que foi enviado (SYNC_HASHES, arquivo que o
+# crm-sync.yml guarda no cache do Actions) deixa de fora a linha idêntica à da rodada anterior. Uma vez por dia, ou
+# com SYNC_TUDO=1, vai tudo, para o banco não ficar para sempre sem a linha que alguém apagou à mão.
+MEMO_VALIDADE_H = 24
+
+
+def assinatura(linha):
+    return hashlib.sha1(json.dumps(linha, sort_keys=True, ensure_ascii=False, default=str).encode()).hexdigest()
+
+
+def ler_memo(caminho, agora=None):
+    """Arquivo {"em": iso da última rodada completa, "h": {chave_mapa: {id: hash}}} -> (h, em).
+    Sem arquivo, vencido ou com SYNC_TUDO=1: ({}, agora), e a rodada manda tudo."""
+    agora = agora or datetime.datetime.now(datetime.timezone.utc)
+    if not caminho or os.environ.get("SYNC_TUDO") == "1":
+        return {}, agora
+    try:
+        m = json.loads(pathlib.Path(caminho).read_text(encoding="utf-8"))
+        em = datetime.datetime.fromisoformat(m["em"])
+        if (agora - em).total_seconds() < MEMO_VALIDADE_H * 3600:
+            return m.get("h") or {}, em
+    except Exception:                           # noqa: BLE001 — sem memória, vai tudo, como antes
+        pass
+    return {}, agora
+
+
+def so_mudadas(linhas, conflito, memo_tabela):
+    """As linhas cuja assinatura difere da última enviada, e as assinaturas de todas."""
+    novas, mudadas = {}, []
+    for l in linhas:
+        k = str(l.get(conflito))
+        h = novas[k] = assinatura(l)
+        if memo_tabela.get(k) != h:
+            mudadas.append(l)
+    return mudadas, novas
+
+
 def md5(s):
     return hashlib.md5((s or "").encode()).hexdigest()
 
@@ -1613,17 +1651,36 @@ def subir_rest(mapa):
 
     separar_prazo_vazio(mapa)
 
+    memo_arq = os.environ.get("SYNC_HASHES")
+    memo, memo_em = ler_memo(memo_arq)
+    memo_novo = {}
     for chave_mapa, tabela, res, conflito in ordem:
         linhas = resolver(mapa.get(chave_mapa, []))
+        iguais = 0
+        if res == "merge-duplicates" and "," not in conflito:
+            todas = len(linhas)
+            linhas, memo_novo[chave_mapa] = so_mudadas(linhas, conflito, memo.get(chave_mapa) or {})
+            iguais = todas - len(linhas)
         antes = len(recusadas)
         for i in range(0, len(linhas), 500):
             enviar(tabela, conflito, res, linhas[i:i + 500])
         caiu = len(recusadas) - antes
         if tabela in pulando:
+            memo_novo.pop(chave_mapa, None)
             print(f"  {chave_mapa}: 0 enviadas — {len(linhas)} esperando o schema")
         else:
+            if caiu:                            # a recusada vai de novo na rodada seguinte, com a tabela inteira
+                memo_novo.pop(chave_mapa, None)
             print(f"  {chave_mapa}: {len(linhas) - caiu} linhas enviadas"
-                  + (f", {caiu} recusada(s)" if caiu else ""))
+                  + (f", {caiu} recusada(s)" if caiu else "")
+                  + (f", {iguais} iguais à rodada anterior" if iguais else ""))
+    if memo_arq:
+        try:
+            pathlib.Path(memo_arq).write_text(json.dumps({
+                "em": memo_em.isoformat(),
+                "h": memo_novo}), encoding="utf-8")
+        except OSError as e:
+            print(f"  aviso: memória da sincronização não gravada ({e})")
 
     # F296 · as etapas do To Do que não têm campo vão à ficha como nota (clientes.campos.notas_todo, a chave inteira é
     # do To Do e se regrava). Lê o campos de quem tem nota, para o PATCH não apagar o resto do jsonb.
