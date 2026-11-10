@@ -3857,7 +3857,16 @@ html[data-tema="v10"] .db-doc{background:none;border:0;padding:4px 0;font:inheri
 .app.celular .db-bt{flex:1 1 30%;min-height:44px}
 html[data-tema="v10"] .db-lista{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:10px;padding-top:8px;border-top:1px dashed var(--db-borda);font-size:12px;color:var(--db-cinza)}
 html[data-tema="v10"] .db-n{font-family:var(--f-mono,ui-monospace,Consolas,monospace);font-size:12px;background:none;border:0;padding:4px 0;cursor:pointer;text-decoration:none;min-height:32px;color:var(--texto)}
-html[data-tema="v10"] .caso-dir.db-recolhido>.timeline,html[data-tema="v10"] .caso-dir.db-recolhido>.tl-banner-um,html[data-tema="v10"] .caso-dir.db-recolhido>.tl-banner{display:none}
+html[data-tema="v10"] .caso-dir.db-recolhido .db-col-esq>.timeline,html[data-tema="v10"] .caso-dir.db-recolhido .db-col-esq>.tl-banner-um,html[data-tema="v10"] .caso-dir.db-recolhido .db-col-esq>.tl-banner{display:none}
+html[data-tema="v10"] .db-grade{container-type:inline-size}
+html[data-tema="v10"] .db-col-esq,html[data-tema="v10"] .db-col-dir{min-width:0}
+html[data-tema="v10"] .db-col-dir>.db-dash{margin-top:0}
+@container (min-width:560px){html[data-tema="v10"] .db-grade-in.com-lado{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:start}}
+/* F499 · na coluna do Escritório ao lado do portal, o dia vai em cima e a hora volta ao cartão, como na coluna estreita */
+@container (min-width:560px){html[data-tema="v10"] .app:not(.celular) .db-grade-in.com-lado .db-col-esq .escrever.esc-v12:not(.esc-aberto) .tipo-fila>.esc-dica{display:none!important}
+html[data-tema="v10"] body .app .painel[data-p="2"] .db-grade-in.com-lado .db-col-esq .timeline li.dia-bloco{display:block}
+html[data-tema="v10"] body .app .painel[data-p="2"] .db-grade-in.com-lado .db-col-esq .timeline .dia-bloco>.tl-dia{padding:4px 2px 8px 42px;text-align:left}
+html[data-tema="v10"] body .app .painel[data-p="2"] .db-grade-in.com-lado .db-col-esq .timeline .dia-itens>li.tl-card>.texto>.tl-cab>.autor-nome+.tl-hora{position:static;width:auto;text-align:left}}
 .app.celular .db{padding:12px 14px}
 .app.celular .db-txt{font-size:16px}
 .app.celular .db .ae-acoes .btn-mini{flex:1 1 30%;min-height:44px}
@@ -6887,7 +6896,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.27</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.28</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11838,7 +11847,7 @@ function dbAndamento(k, ands, fase, par){
     const evs = crpsBlocos(k).flatMap(b=>(b.eventos||[]).map(e=>({e, nup:b.nup}))).sort((a,b)=>(isoCrps(a.e.data)||"")<(isoCrps(b.e.data)||"")?1:-1);
     const x = evs[0]; if(!x) return "";
     const doc = (x.e.arquivos||[]).find(a=>a.storage);
-    it = {cls:"crps", nome:"e-Recursos", onde:"Conselho de Recursos", logo:iconeFonte("crps"), iso:isoCrps(x.e.data)+"T12:00:00", soData:true,
+    it = {cls:"crps", nome:"e-Recursos", onde:"CRPS", logo:iconeFonte("crps"), iso:isoCrps(x.e.data)+"T12:00:00", soData:true,
       txt: decideOCaso(x.e) ? `<b>${esc(x.e.resumo||x.e.bruto||"")}</b>` : esc(x.e.resumo||x.e.bruto||""), sub:"",
       doc: doc ? `<button type="button" class="db-doc" onclick="abrirDecisao('${escJs(doc.storage)}')">${esc(doc.nome||"Documento")}</button>` : "",
       abrir: x.nup ? `window.open('${escJs(linkERecursos(x.nup))}','_blank','noopener')` : "", n:evs.length-1, aba:"crps", rot:"andamentos", bts:dbBotoes(k, "crps", soDig(x.nup||""))};
@@ -11874,11 +11883,16 @@ function dashboardDoCaso(k, ands){
 function dashboardPe(k, ands){
   const fase = faseEfetiva(k);
   let and = dbAndamento(k, ands, fase, false);
-  if(!and){   // sem andamento na fase atual, o mais recente dos três portais
-    and = ["judicial","conselho","inss"].filter(f=>f!==fase).map(f=>dbAndamento(k, ands, f, false)).find(Boolean) || "";
-  }
+  // F499 · só o processo ativo; no Pagamento, o judicial que gerou a RPV (pedido do Paulo, 10.11.2026)
+  if(!and && fase==="pagamento") and = dbAndamento(k, ands, "judicial", false);
   const par = trilhaParalela(k) && fase!=="judicial" ? dbAndamento(k, ands, "judicial", true) : "";
   return and || par ? `<div class="db-dash db-pe">${and}${par}</div>` : "";
+}
+// F499 · o Escritório à esquerda, com o campo de escrever acima e as anotações anteriores abrindo para baixo,
+// e os cartões dos processos ativos (INSS, CRPS, Judicial) à direita (opção A ajustada, aprovada pelo Paulo em 10.11.2026)
+function dashboardLado(k, ands, painel){
+  const pe = dashboardPe(k, ands);
+  return `<div class="db-grade"><div class="db-grade-in${pe ? " com-lado" : ""}"><div class="db-col-esq">${composerCaso(k)}${dashboardDoCaso(k, ands)}${painel}</div>${pe ? `<div class="db-col-dir">${pe}</div>` : ""}</div></div>`;
 }
 function ligarCartoes(){
   pintarCursor();                     // o cursor do teclado sobrevive ao render
@@ -22207,7 +22221,7 @@ function pintarFicha(){
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
         ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) ? "" : composerCaso(k)}${/* F486 · o cartão do Escritório fica abaixo do campo de escrever (pedido do Paulo, 09.11.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardDoCaso(k, andsVis) : ""}${painelDaAba()}${v10 && aba==="escritorio" && dashLigado() ? dashboardPe(k, andsVis) : ""}</div>
+           <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || (v10 && aba==="escritorio" && dashLigado()) ? "" : composerCaso(k)}${/* F486 · o cartão do Escritório fica abaixo do campo de escrever (pedido do Paulo, 09.11.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardLado(k, andsVis, painelDaAba()) : painelDaAba()}</div>
            <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? abaComProcessos(k, "cnj", ()=>painelCNJ(k, andsVis)) : aba==="crps" ? abaComProcessos(k, "crps", ()=>painelCRPS(k))
