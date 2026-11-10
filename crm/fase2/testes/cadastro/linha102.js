@@ -433,7 +433,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       && /Verificação/.test(lcGestao(k));
     k.fase = "judicial"; return ok; }, CASO1));
   // [BUG 20.09.2026] recurso do Conselho sem movimento há meses precisa dizer
-  // isso na linha: o da Maria Izilda Ferreira Pinto estava parado desde 2021 e
+  // isso na linha: o de uma cliente estava parado desde 2021 e
   // o caso seguia aberto na lista, sem nada avisando.
   conf("caso no Conselho com recurso parado há anos avisa na linha",
     await p.evaluate((id) => {

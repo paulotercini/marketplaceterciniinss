@@ -139,7 +139,7 @@ test("nome ao lado do número: número mascarado E nome apagado", () => {
 // arquivo, e a regra que eles trancam é a inversa: passa cru só o que se
 // consegue NOMEAR como data, hora ou número curto.
 test("CPF de parte não atravessa a máscara", () => {
-  const m = mascararTexto("258.266.798-67", el());
+  const m = mascararTexto("529.982.247-25", el());
   assert.equal(m, "999.999.999-99");
   assert.ok(!/258|266|798|67/.test(m), "CPF vazou: " + m);
 });

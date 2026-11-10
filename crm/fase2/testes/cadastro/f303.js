@@ -34,7 +34,7 @@ const and = (k, n, texto, o = {}) => { const a = { id: id("e"), caso_id: k.id, a
 
 // a ficha do print: dois casos, um deles na lista 🗓 Tarefas com Prazo e com processo judicial, etapa desatualizada,
 // sugestão de etapa, honorários a lançar, tarefas, prazos e documentos do PJe com nome comprido
-const cA = cli("Conceição de Souza Amaral Braga Fictícia", { cpf: "52998224725", telefone: "16999990001", dn: "14031962", sexo: "F" });
+const cA = cli("Conceição de Souza Almeida Barros Fictícia", { cpf: "52998224725", telefone: "16999990001", dn: "14031962", sexo: "F" });
 const PROC = "50323132920264036100";
 const kA = caso(cA, { beneficio: "Aposentadoria por idade", especie: "B41", fase: "outro", origem_lista: "🗓 Tarefas com Prazo",
   etapa: "aguardando citação", processos: [PROC], processo: PROC, protocolos: ["1234567890"], crps_nups: ["44233.123456/2025-11"],

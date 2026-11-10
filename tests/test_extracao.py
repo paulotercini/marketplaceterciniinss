@@ -31,8 +31,8 @@ def test_split_blocks_ignora_data_invalida():
 
 
 def test_cpf_do_titulo_e_do_checklist():
-    assert cpf_from_task("Fulano de Tal #30210871830", []) == "30210871830"
-    assert cpf_from_task("Fulano", [{"displayName": "302.108.718-30"}]) == "30210871830"
+    assert cpf_from_task("Fulano de Tal #52998224725", []) == "52998224725"
+    assert cpf_from_task("Fulano", [{"displayName": "529.982.247-25"}]) == "52998224725"
     assert cpf_from_task("Fulano #1234", []) is None
 
 

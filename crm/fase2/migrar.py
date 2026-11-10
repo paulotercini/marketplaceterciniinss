@@ -135,7 +135,7 @@ def classificar_item_checklist(txt, cpf_cliente=None):
         return ("nota", ("aposentadoria", t))
     m = RE_CPF_FMT.search(t)
     if m:
-        # "Filho da Rosmeire Soares Costa #CPF": o CPF é do parente, e não do cliente
+        # "Filho da Fulana de Tal #CPF": o CPF é do parente, e não do cliente
         resto = re.sub(r"\b(cpf|n[º°o]?)\b[:.\s]*", " ", (t[:m.start()] + t[m.end():]).replace("#", " "), flags=re.I).strip(" :-")
         mrel = RE_RELACAO.match(resto)
         nome = re.sub(r"^d[aoe]s?\s+", "", resto[mrel.end():].strip() if mrel else resto, flags=re.I).strip(" :-")
@@ -254,8 +254,8 @@ def _cliente_key(t):
 
 
 # F256 (22.10.2026) · A MESMA PESSOA EM DUAS FICHAS. A tarefa sem "#CPF" virava
-# cliente pelo nome, e o nome escrito de outro jeito ("Adejair Donizete Maran" no
-# 💵, "Adejair Donisete Maran #CPF" no 👪) fazia duas fichas: 38 pessoas assim.
+# cliente pelo nome, e o nome escrito de outro jeito (com "z" no
+# 💵, com "s" e "#CPF" no 👪) fazia duas fichas: 38 pessoas assim.
 # Agora a tarefa sem CPF vai à ficha COM CPF de nome igual ou quase igual (até
 # 2 letras de diferença, mesmo primeiro nome), e só quando há UMA candidata.
 def nome_chave(n):

@@ -144,9 +144,30 @@ async function confirmar(conversa: string, pedido: string) {
   return { confirmado: !!r.ok };
 }
 
+// F515 · sem JWT, a prova de origem é o segredo de funcoes_segredo que o banco manda no cabeçalho (zap_fn_cabecalho).
+// A exigência nasce desligada (config_app.zap_fn_segredo = 'sim' liga): desligada, a chamada sem segredo passa e fica no log.
+export function conferirSegredo(recebido: string | null, segredo: string | null, exigir: boolean) {
+  const ok = !!segredo && !!recebido && recebido.length === segredo.length &&
+    [...recebido].reduce((d, ch, i) => d | (ch.charCodeAt(0) ^ segredo.charCodeAt(i)), 0) === 0;
+  return { ok: ok || !exigir, aviso: ok ? "" : exigir ? "recusada" : "aceita sem segredo" };
+}
+async function origemOk(req: Request) {
+  const ler = async (c: string) => {
+    try {
+      const r = await fetch(`${URL_SB}/rest/v1/${c}`, { headers: { apikey: SERVICO, Authorization: `Bearer ${SERVICO}` } });
+      return r.ok ? (await r.json())[0] : null;
+    } catch { return null; }
+  };
+  const [s, e] = await Promise.all([ler("funcoes_segredo?select=segredo&id=eq.1"), ler("config_app?select=valor&chave=eq.zap_fn_segredo")]);
+  const v = conferirSegredo(req.headers.get("x-crm-segredo"), s?.segredo ?? null, e?.valor === "sim");
+  if (v.aviso) console.log(`F515 · chamada ${v.aviso} (x-crm-segredo)`);
+  return v.ok;
+}
+
 if (typeof Deno !== "undefined") {
   Deno.serve(async (req) => {
     if (req.method !== "POST") return json({ erro: "use POST" }, 405);
+    if (!(await origemOk(req))) return json({ erro: "origem não conferida" }, 401);
     let b: Record<string, unknown> = {};
     try { b = await req.json(); } catch { /* corpo inválido */ }
     const pedido = String(b.pedido || "");

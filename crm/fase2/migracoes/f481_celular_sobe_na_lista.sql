@@ -1,4 +1,4 @@
--- F481 (09.11.2026, a conversa da Adriana Giraldini): a mensagem trazida do celular pelo
+-- F481 (09.11.2026): a mensagem trazida do celular pelo
 -- "Buscar histórico" (bot_ia = 'celular') mais nova que a última da conversa entrava calada
 -- e a conversa continuava lá embaixo na lista, com a data antiga. Agora ela sobe a conversa
 -- (última data e prévia) e, sendo do cliente, conta como não lida. Robô, IA e status seguem

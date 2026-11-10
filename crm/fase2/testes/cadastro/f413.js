@@ -40,31 +40,31 @@ const SUPA = "https://ficticio.supabase.co", CONV = "11111111-2222-3333-4444-555
   await p.waitForSelector("#app.logado");
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(cli => { D.cliPorId.get(cli).telefones = [
-    { numero: "16) 99368-1262", obs: "principal", zap: false }, { numero: "16993681262", obs: "", zap: true },
+    { numero: "16) 99999-0001", obs: "principal", zap: false }, { numero: "16999990001", obs: "", zap: true },
     { numero: "(16) 3333-4444", obs: "recado" }]; }, CLI_CHEIO);
   await p.evaluate(x => abrirFicha(x).then(() => { abaAtiva = 0; subCad = "identificacao"; repintarFicha(); }), CLI_CHEIO);
   await p.waitForSelector(".idf .cad-tel");
   const linhas = await p.$$eval(".idf-card .cad-tel", ls => ls.map(l => l.querySelector(".cad-tel-n").textContent));
-  conf(`o mesmo número em dois formatos vira uma linha (${linhas})`, linhas.length === 2 && linhas[0] === "(16) 99368-1262" && linhas[1] === "(16) 3333-4444");
+  conf(`o mesmo número em dois formatos vira uma linha (${linhas})`, linhas.length === 2 && linhas[0] === "(16) 99999-0001" && linhas[1] === "(16) 3333-4444");
   conf("a linha junta a marca WhatsApp e a observação", await p.evaluate(() => { const t = document.querySelector(".idf-card .cad-tel");
     return /WhatsApp/.test(t.textContent) && /principal/.test(t.textContent); }));
   conf("nenhum link do WhatsApp Web no quadro Contato", !(await p.$('.idf-card a[href*="wa.me"]')));
 
   await p.click('.idf-card .cad-tel:nth-of-type(1) button[onclick^="editarTelefone"]').catch(() => p.click('.idf-card button[onclick^="editarTelefone"]'));
   await p.waitForSelector("#et-num");
-  conf("o editor abre com o número formatado", (await p.inputValue("#et-num")) === "(16) 99368-1262");
+  conf("o editor abre com o número formatado", (await p.inputValue("#et-num")) === "(16) 99999-0001");
   await p.fill("#et-num", "(16) 98888-7777"); await p.fill("#et-obs", "filha");
   await p.click("#et-ok"); await p.waitForTimeout(400);
   const patch = pedidos.find(([m, u, b]) => m === "PATCH" && /clientes\?id=eq/.test(u) && /telefones/.test(b));
   conf("editar grava a lista sem a duplicata", patch && (() => { const l = JSON.parse(patch[2]).telefones;
     return l.length === 2 && l[0].numero === "(16) 98888-7777" && l[0].obs === "filha" && l[0].zap === true; })());
 
-  await p.evaluate(cli => { D.cliPorId.get(cli).telefones = [{ numero: "(16) 99368-1262", obs: "", zap: true }]; abaAtiva = 0; repintarFicha(); }, CLI_CHEIO);
+  await p.evaluate(cli => { D.cliPorId.get(cli).telefones = [{ numero: "(16) 99999-0001", obs: "", zap: true }]; abaAtiva = 0; repintarFicha(); }, CLI_CHEIO);
   await p.waitForSelector('.idf-card button[onclick^="zapDoTelefone"]');
   await p.click('.idf-card button[onclick^="zapDoTelefone"]');
   await p.waitForFunction(() => visao === "whatsapp", null, { timeout: 5000 }).catch(() => {});
   const rpc = pedidos.find(([m, u]) => /rpc\/zap_abrir/.test(u));
-  conf("Conversa chama o zap_abrir com o número completo", rpc && JSON.parse(rpc[2]).p_telefone === "5516993681262");
+  conf("Conversa chama o zap_abrir com o número completo", rpc && JSON.parse(rpc[2]).p_telefone === "5516999990001");
   conf("e abre a tela do WhatsApp do CRM nessa conversa", await p.evaluate(c => visao === "whatsapp" && zapAberta === c, CONV));
   conf("sem erro na página", erros.length === 0);
 

@@ -59,3 +59,13 @@ test("F452 · o lembrete antes do compromisso mascara o número e abre o CRM", (
   assert.equal(a.data.crm, "lembrete");
   assert.equal(a.data.cliente, "c1");
 });
+
+test("F515 · a senha não aparece na tela do celular e o segredo do cabeçalho confere a origem", async () => {
+  const a = aviso({ id: "m", conversa_id: "c", tipo: "texto", texto: "minha senha do gov é Teste@123" },
+    { id: "c", atendente_id: null, automatica: false, nome_perfil: "Cliente Teste", telefone: "550000000001" }, null);
+  assert.equal(a.body, "minha senha do gov é [senha]");
+  const { conferirSegredo } = await import("../../zap_push/index.ts");
+  assert.equal(conferirSegredo(null, "abc", false).ok, true);
+  assert.equal(conferirSegredo("abc", "abc", true).ok, true);
+  assert.equal(conferirSegredo("abx", "abc", true).ok, false);
+});

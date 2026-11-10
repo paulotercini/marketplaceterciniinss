@@ -31,7 +31,12 @@ const json = (o: unknown, status = 200) =>
 
 // shortcut: cópia do mascarar do zap_assistente, que não pode ser importado
 // (registra o próprio Deno.serve); se crescer, vira _shared/
-export const mascarar = (s: unknown) => String(s ?? "").replace(/\d[\d.\-/ ]{6,}\d/g, (m) => (m.replace(/\D/g, "").length >= 8 ? "[número]" : m));
+// F515 · o que vem depois de "senha" (do gov.br, do Meu INSS) também não sai: com ":", "=", "é" ou "eh" some a palavra
+// seguinte; sem eles, só a que parece senha (dígito, símbolo ou maiúscula no meio), para "leve a senha do gov.br" ficar inteiro
+const RX_SENHA = /\b(senhas?|password)\b((?:[\s,]+(?:d[oae]|n[oa]|meu|minha|gov(?:\.br)?|govbr|inss|nova|atual|acesso|app|aplicativo))*)(\s*[:=]\s*|\s+(?:é|eh|era)\s+|\s+)(\S+)/gi;
+export const mascarar = (s: unknown) => String(s ?? "")
+  .replace(RX_SENHA, (m, p, meio, sep, tok) => (sep.trim() || /\d|[@#$%&*!_+]|\p{Ll}\p{Lu}/u.test(tok) ? `${p}${meio}${sep}[senha]` : m))
+  .replace(/\d[\d.\-/ ]{6,}\d/g, (m) => (m.replace(/\D/g, "").length >= 8 ? "[número]" : m));
 // F422af · o atendimento agendado ou remarcado para o mesmo dia já fica confirmado na agenda
 const hojeBR = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
 const hora = (iso: string) => new Date(iso).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "short", timeStyle: "short" });
@@ -316,14 +321,14 @@ export function paraAgendador(system: string) {
 export function emLinhas(txt: string, antes: string[] = []) {
   // o modelo ainda escrevia "o senhor ou a senhora" sem saber quem é (07.11.2026): o verbo segue na 3ª pessoa
   let t = String(txt || "").replace(/\s*,?\s*\ba?o\(a\) senhor\(a\)|\s+(?:a?o senhor ou [aà] senhora|[aà] senhora ou a?o senhor)\b/gi, "").trim();
-  // "dona Cida", "seu Valter", "senhor José": o nome vai sem o tratamento (sem a flag i, a maiúscula do nome importa)
+  // "dona Maria", "seu João", "senhor José": o nome vai sem o tratamento (sem a flag i, a maiúscula do nome importa)
   t = t.replace(/\b(?:[Dd]ona|[Ss]eu|[Ss]enhora|[Ss]enhor|Sra?\.)\s+(?=(?!Meu\b)[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç])/g, "");
   const ja = antes.join("\n");
   // a saudação só na primeira resposta: o primeiro parágrafo que cumprimenta sai
   if (antes.length && /\n\n/.test(t)) t = t.replace(/^(?:olá|oi|bom dia|boa tarde|boa noite)\b[^\n]*\n\n/i, "");
   // "Compreendi." no máximo uma vez na conversa
   let vez = /\bCompreendi\b/.test(ja);
-  // "Compreendi, Elisa." sai inteira: tirar só a palavra deixava "Elisa." solto (teste das 105 conversas)
+  // "Compreendi, Maria." sai inteira: tirar só a palavra deixava "Maria." solto (teste das 105 conversas)
   t = t.replace(/\bCompreendi(?:,\s*[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+(?:\s+[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+)?(?=[.!]))?[.,!]?\s*/g, (m) => (vez ? "" : ((vez = true), m)));
   // o fecho "Qualquer dúvida, estamos à disposição." também uma vez só (teste das 105 conversas, 08.11.2026)
   const RX_FECHO = /\s*Qualquer d[uú]vida,? (?:estamos|ficamos|seguimos|fico|sigo) à disposição[.!]?/gi;
@@ -431,7 +436,7 @@ export function promptCobranca(c: Cobranca, agora = new Date()) {
     `com as palavras da conversa; se a conversa marcou um dia que já passou, pergunte quando a pessoa consegue. Português formal, sem emoji, ` +
     `sem lista, sem assinatura, sem prometer prazo ou resultado, sem dado que não esteja na conversa. Escreva "atendimento", nunca "consulta", ` +
     `e "agendar", nunca "marcar".\n` + primeiraPessoa(c.atendente) + `\n` +
-    `Modelo:\nDona Sueli, bom dia! Tudo bem?\n\nGostaria de pedir novamente que a senhora leve o celular ao escritório na quarta-feira, ` +
+    `Modelo:\nDona Maria, bom dia! Tudo bem?\n\nGostaria de pedir novamente que a senhora leve o celular ao escritório na quarta-feira, ` +
     `para que eu possa verificar o aparelho. A senhora consegue trazê-lo nesse dia?\n\n` +
     `Agora: ${hoje}. Quem escreve neste número: ${quem}.\n\n<conversa>\n${transcricao(c.mensagens || [])}\n</conversa>`;
 }
@@ -492,7 +497,7 @@ export function promptAndamento(a: Andamento, agora = new Date()) {
     `Forma, como no modelo: o cumprimento do período do dia com o primeiro nome de quem escreve e "Tudo bem?", linha em branco, a situação, ` +
     `linha em branco, o fecho. Português formal, sem emoji, sem lista, sem assinatura, "a senhora" ou "o senhor" só quando o nome deixar claro.\n` +
     primeiraPessoa(a.atendente) + `\n` +
-    `Modelo (processo concluso para julgamento):\nBom dia, Roseli! Tudo bem?\n\nConsultei o processo e ele está aguardando a decisão do juiz ` +
+    `Modelo (processo concluso para julgamento):\nBom dia, Maria! Tudo bem?\n\nConsultei o processo e ele está aguardando a decisão do juiz ` +
     `desde *28/09/2026*. Nos processos do escritório, a sentença tem saído em aproximadamente 1 mês e meio depois desse ponto. ` +
     `Nossa previsão é que tenhamos uma resposta em novembro.\n\nSigo acompanhando e, assim que houver alguma novidade, entro em contato. ` +
     `Se a senhora tiver alguma dúvida, fico à disposição.\n\n` +
@@ -612,7 +617,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
   let consultou = false, cobrou = false;
   const disponiveis = (profs: string[], dias = 15) => Promise.all(profs.map((p) => chamar("disponibilidade", { profissional: p, dias })));
   // a vaga pelo eventoId, relida da agenda: o agente não manda data nem hora
-  // a vaga que vale para os dois tipos fica com o tipo pedido (F422q: a esposa saía com o nome da Pietra)
+  // a vaga que vale para os dois tipos fica com o tipo pedido (F422q: a esposa saía com o nome da filha)
   async function vaga(c: Record<string, any>, eventoId: string, profs: string[], pedido?: string) {
     const res = await disponiveis(profs);
     const ordem = tipos(c).includes(String(pedido)) ? [String(pedido), ...tipos(c).filter((t) => t !== pedido)] : tipos(c);
@@ -1002,9 +1007,30 @@ async function decidirPorAgente(x: Contexto) {
   return r;
 }
 
+// F515 · sem JWT, a prova de origem é o segredo de funcoes_segredo que o banco manda no cabeçalho (zap_fn_cabecalho).
+// A exigência nasce desligada (config_app.zap_fn_segredo = 'sim' liga): desligada, a chamada sem segredo passa e fica no log.
+export function conferirSegredo(recebido: string | null, segredo: string | null, exigir: boolean) {
+  const ok = !!segredo && !!recebido && recebido.length === segredo.length &&
+    [...recebido].reduce((d, ch, i) => d | (ch.charCodeAt(0) ^ segredo.charCodeAt(i)), 0) === 0;
+  return { ok: ok || !exigir, aviso: ok ? "" : exigir ? "recusada" : "aceita sem segredo" };
+}
+async function origemOk(req: Request) {
+  const ler = async (c: string) => {
+    try {
+      const r = await fetch(`${URL_SB}/rest/v1/${c}`, { headers: { apikey: SERVICO, Authorization: `Bearer ${SERVICO}` } });
+      return r.ok ? (await r.json())[0] : null;
+    } catch { return null; }
+  };
+  const [s, e] = await Promise.all([ler("funcoes_segredo?select=segredo&id=eq.1"), ler("config_app?select=valor&chave=eq.zap_fn_segredo")]);
+  const v = conferirSegredo(req.headers.get("x-crm-segredo"), s?.segredo ?? null, e?.valor === "sim");
+  if (v.aviso) console.log(`F515 · chamada ${v.aviso} (x-crm-segredo)`);
+  return v.ok;
+}
+
 if (typeof Deno !== "undefined") {
   Deno.serve(async (req) => {
     if (req.method !== "POST") return json({ erro: "use POST" }, 405);
+    if (!(await origemOk(req))) return json({ erro: "origem não conferida" }, 401);
     let msg = "", corpo: Record<string, unknown> = {};
     try { corpo = (await req.json()) || {}; msg = String(corpo.mensagem_id || ""); } catch { /* corpo inválido */ }
     if (corpo.agentes === true) {
