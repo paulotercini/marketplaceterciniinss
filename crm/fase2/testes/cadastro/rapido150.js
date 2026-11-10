@@ -66,7 +66,8 @@ const SUPA = "https://ficticio.supabase.co";
   atraso = { clientes: 2500 };
   await p.reload();
   await p.waitForSelector("#app.logado");
-  await p.waitForTimeout(600);
+  // espera a marca em vez de 600 ms fixos: na suíte paralela do deploy a tela demorava mais
+  await p.waitForFunction(() => document.getElementById("app").classList.contains("dados-guardados") && typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0, null, { timeout: 2000 }).catch(() => {});
   const guard = await p.evaluate(() => ({ d: typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0,
     classe: document.getElementById("app").classList.contains("dados-guardados"), cache: dadosDoCache }));
   conf("F150 · com o banco lento, a tela abre com a sessão guardada, marcada 'atualizando'", guard.d && guard.classe && guard.cache);
