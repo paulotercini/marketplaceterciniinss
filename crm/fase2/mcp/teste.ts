@@ -108,7 +108,7 @@ const ini = await rpc("initialize", { protocolVersion: "2025-06-18", capabilitie
 conf("initialize responde com o nome do servidor", ini.corpo?.result?.serverInfo?.name === "crm-tercini");
 const tl = await rpc("tools/list", {}, "tok-bom", 2);
 const nomes = (tl.corpo?.result?.tools || []).map((t: any) => t.name).sort();
-conf(`as vinte e três ferramentas (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "anotacoes_caso", "atualizar_caso", "buscar_clientes", "casos_com_decisao_sem_resultado", "casos_para_completar", "completar_cadastro", "concluir_tarefa", "conversas_whatsapp", "criar_tarefa", "documentos_caso", "equipe", "ficha_cliente", "ler_conversa_whatsapp", "ler_documento", "novidades", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "retorno_whatsapp", "tarefas_caso", "transferir_whatsapp", "whatsapp_para_anotacao"]));
+conf(`as vinte e quatro ferramentas (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "anotacoes_caso", "atualizar_caso", "buscar_clientes", "casos_com_decisao_sem_resultado", "casos_para_completar", "completar_cadastro", "concluir_tarefa", "conversas_whatsapp", "criar_tarefa", "documentos_caso", "equipe", "ficha_cliente", "ler_conversa_whatsapp", "ler_documento", "novidades", "processo_inteiro", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "retorno_whatsapp", "tarefas_caso", "transferir_whatsapp", "whatsapp_para_anotacao"]));
 const ESCREVE = ["atualizar_caso", "completar_cadastro", "concluir_tarefa", "criar_tarefa", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "retorno_whatsapp", "transferir_whatsapp", "whatsapp_para_anotacao"];
 conf("leitura marcada só leitura e escrita marcada não destrutiva", (tl.corpo?.result?.tools || []).every((t: any) =>
   ESCREVE.includes(t.name) ? t.annotations?.readOnlyHint === false && t.annotations?.destructiveHint === false : t.annotations?.readOnlyHint));
@@ -180,6 +180,9 @@ const lp = await call("ler_documento", { caso_id: CASO, documento: "crps:crps/fi
 conf("ler_documento extrai o texto do PDF", lp.includes("DAR PROVIMENTO") && lp.includes("1 página"));
 const li = await rpc("tools/call", { name: "ler_documento", arguments: { caso_id: CASO, documento: "anexo:e0000000-0000-0000-0000-000000000001" } }, "tok-bom", 5);
 conf("imagem volta como imagem", li.corpo?.result?.content?.[0]?.type === "image" && li.corpo.result.content[0].mimeType === "image/png");
+const pi = await call("processo_inteiro", { caso_id: CASO });
+conf("processo_inteiro traz o índice com as folhas e o texto", pi.includes("ÍNDICE") && pi.includes("fl. 1") && pi.includes("DAR PROVIMENTO"));
+conf("processo_inteiro filtra pelo número", (await call("processo_inteiro", { caso_id: CASO, processo: "99999999" })).includes("Nenhum PDF deste processo"));
 conf("documento de outro caso é recusado", (await call("ler_documento", { caso_id: "b0000000-0000-0000-0000-000000000002", documento: "crps:crps/ficticio/acordao.pdf" })).includes("não pertence"));
 
 // etapa 5 · comandos prontos
