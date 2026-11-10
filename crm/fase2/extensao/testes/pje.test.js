@@ -102,7 +102,26 @@ test('o cabeçalho do processo dá número, classe e órgão julgador', () => {
     <i class="fa fa-clipboard"></i></a><dl><dt>Órgão julgador</dt> <dd>21º Juiz Federal da 7ª TR SP</dd></dl>`;
   assert.deepStrictEqual(R.lerCabecalhoProcesso(CAB),
     { numero: '5000000-11.2020.4.03.9999', classe: 'RecInoCiv',
-      orgao: '21º Juiz Federal da 7ª TR SP' });
+      orgao: '21º Juiz Federal da 7ª TR SP', detalhes: { 'Órgão julgador': '21º Juiz Federal da 7ª TR SP' } });
+});
+
+test('1.35.1 · o cabeçalho traz todo o Mais detalhes e as partes do título', () => {
+  const CAB = `<a class="titulo-topo" title="Mais detalhes">PJEC 5000891-10.2025.4.03.6314</a>
+    <span class="text-muted">OTAVIO ROBERTO GARCIA X INSTITUTO NACIONAL DO SEGURO SOCIAL - INSS</span>
+    <dl><dt>Classe judicial</dt><dd>PROCEDIMENTO DO JUIZADO ESPECIAL C&Iacute;VEL (436)</dd>
+    <dt>Jurisdi&ccedil;&atilde;o</dt><dd>Subse&ccedil;&atilde;o Judici&aacute;ria de Catanduva (Juizado Especial Federal C&iacute;vel)</dd>
+    <dt>Autua&ccedil;&atilde;o</dt><dd> 28 abr. 2025 </dd><dt>Valor da causa</dt><dd>R$ 36.219,08</dd>
+    <dt>Segredo de justi&ccedil;a?</dt><dd>N&Atilde;O</dd><dt>Justi&ccedil;a gratuita?</dt><dd>SIM</dd>
+    <dt>&Oacute;rg&atilde;o julgador</dt><dd>1&ordf; Vara Gabinete JEF de Catanduva</dd>
+    <dt>Compet&ecirc;ncia</dt><dd>JUIZADO ESPECIAL FEDERAL C&Iacute;VEL</dd></dl>`;
+  const d = R.lerCabecalhoProcesso(CAB).detalhes;
+  assert.equal(d['Jurisdição'], 'Subseção Judiciária de Catanduva (Juizado Especial Federal Cível)');
+  assert.equal(d['Autuação'], '28 abr. 2025');
+  assert.equal(d['Valor da causa'], 'R$ 36.219,08');
+  assert.equal(d['Segredo de justiça?'], 'NÃO');
+  assert.equal(d['Competência'], 'JUIZADO ESPECIAL FEDERAL CÍVEL');
+  assert.equal(d['Polo ativo'], 'OTAVIO ROBERTO GARCIA');
+  assert.equal(d['Polo passivo'], 'INSTITUTO NACIONAL DO SEGURO SOCIAL - INSS');
 });
 
 test('página sem número CNJ não vira cabeçalho', () => {
