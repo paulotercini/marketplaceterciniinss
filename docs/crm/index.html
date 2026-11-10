@@ -4236,9 +4236,11 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 @container (max-width:900px){ html[data-tema="v10"] .sk-f-corpo{grid-template-columns:minmax(0,1fr)} }
 
 /* ══ F150 · aviso de versão nova e a pílula da sessão guardada ══ */
-#nova-versao{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:900;display:flex;align-items:center;gap:12px;
-  padding:10px 12px 10px 16px;background:#121212;color:#fff;border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.2);font-size:14px}
-#nova-versao button{border:0;border-radius:8px;padding:6px 12px;background:#fff;color:#121212;font:inherit;font-weight:600;cursor:pointer}
+/* F503 · no alto, no centro: embaixo cobria o campo de escrever do WhatsApp */
+#nova-versao{position:fixed;left:50%;top:calc(8px + env(safe-area-inset-top));transform:translateX(-50%);z-index:900;display:flex;align-items:center;gap:8px;
+  max-width:calc(100vw - 32px);padding:6px 6px 6px 14px;background:#121212;color:#fff;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.2);font-size:13px}
+#nova-versao button{border:0;border-radius:8px;padding:5px 10px;background:#fff;color:#121212;font:inherit;font-weight:600;cursor:pointer;min-height:28px}
+#nova-versao .nv-fechar{background:transparent;color:#fff;font-weight:400;padding:5px 8px}
 .app.dados-guardados .meio::before{content:"atualizando…";position:fixed;top:12px;right:16px;z-index:50;padding:3px 10px;border-radius:999px;
   background:var(--placa,#EFEEEB);color:var(--cinza,#4A4944);font-size:12px;border:1px solid var(--borda,#E7E6E1)}
 
@@ -6896,7 +6898,7 @@ html[data-tema="v10"] .esc-v12 .pzx .pzx-quem select{grid-column:2/-1;justify-se
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.29</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.30</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -57638,13 +57640,34 @@ function aplicarMenu(){
   try{ if(localStorage.getItem("crm_sw")==="1") liga = true; }catch(e){}
   if(!liga) return;
   navigator.serviceWorker.register("sw.js").catch(()=>{});
-  navigator.serviceWorker.addEventListener("message", e=>{ if(e.data==="crm-nova-versao") avisoNovaVersao(); else cliqueNoAviso(e.data); });
+  navigator.serviceWorker.addEventListener("message", e=>{
+    if(e.data==="crm-nova-versao" || (e.data && e.data.crm==="nova-versao")) avisoNovaVersao(e.data); else cliqueNoAviso(e.data); });
 })();
-function avisoNovaVersao(){
+// F503 · o aviso só aparece quando o site tem versão MAIS NOVA que a desta página
+// (antes, a página já recarregada recebia o aviso de novo e ele não saía)
+function minhaVersao(){
+  const m = /versão (\d+)\.(\d+)/.exec((document.querySelector(".versao")||{}).textContent || "");
+  return m ? m[1] + "." + m[2] : "";
+}
+function meuPrograma(){
+  const sc = [...document.scripts].find(x => /app\.[0-9a-f]{12}\.js/.test(x.src||""));
+  return sc ? sc.src.match(/app\.[0-9a-f]{12}\.js/)[0] : "";
+}
+function versaoMaisNova(a, b){
+  const [x1, y1] = a.split(".").map(Number), [x2, y2] = b.split(".").map(Number);
+  return (x1 - x2 || y1 - y2) > 0;
+}
+function avisoNovaVersao(d0){
+  if(d0 && typeof d0 === "object"){
+    const mv = minhaVersao(), v = d0.versao || "";
+    if(v && mv && v !== mv){ if(!versaoMaisNova(v, mv)) return; }
+    else if((d0.prog || meuPrograma()) && d0.prog === meuPrograma()) return;   // é o programa que já está aberto
+  }
   if(document.getElementById("nova-versao")) return;
   const d = document.createElement("div");
   d.id = "nova-versao"; d.setAttribute("role","status");
-  d.innerHTML = `<span>Há uma versão nova do CRM.</span><button onclick="location.reload()">Recarregar</button>`;
+  d.innerHTML = `<span>Há uma versão nova do CRM.</span><button onclick="location.reload()">Recarregar</button>`
+    + `<button class="nv-fechar" aria-label="Fechar o aviso" title="Fechar" onclick="this.parentNode.remove()">✕</button>`;
   document.body.appendChild(d);
 }
 

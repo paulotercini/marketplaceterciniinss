@@ -16,6 +16,13 @@ async function guardarPrograma(caixa, href) {
   }
   return r;
 }
+// F503 · o número da versão escrito na página ("versão 13.29"), para o aviso comparar
+function versaoDe(t) { const m = /versão (\d+)\.(\d+)/.exec(t || ""); return m ? m[1] + "." + m[2] : ""; }
+function compararVersao(a, b) {
+  if (!a || !b) return 0;
+  const [x1, y1] = a.split(".").map(Number), [x2, y2] = b.split(".").map(Number);
+  return x1 - x2 || y1 - y2;
+}
 self.addEventListener("fetch", e => {
   const req = e.request;
   if (req.method !== "GET") return;
@@ -48,10 +55,13 @@ self.addEventListener("fetch", e => {
           const j = await guardarPrograma(caixa, new URL(prog[0], url).href);
           if (!j.ok) return r;
         }
+        // F503 · a cópia vinda de um servidor ainda com a versão anterior não substitui a guardada
+        if (velha !== null && compararVersao(versaoDe(nova), versaoDe(velha)) < 0) return r;
         await caixa.put(chave, r.clone());
         if (velha !== null && velha !== nova) {
           const cls = await self.clients.matchAll({ type: "window" });
-          cls.forEach(c => c.postMessage("crm-nova-versao"));
+          const aviso = { crm: "nova-versao", versao: versaoDe(nova), prog: prog ? prog[0] : "" };
+          cls.forEach(c => c.postMessage(aviso));
         }
       }
       return r;
