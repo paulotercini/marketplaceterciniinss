@@ -7001,7 +7001,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.34</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.35</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11939,6 +11939,19 @@ function dataDoDb(a){
   const m = String((a&&a.origem_id)||"").match(/^atualizacao:[^:]*:(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/);
   return m ? `${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:00` : dataDoMovimento(a);
 }
+// F511 · "Ver andamentos anteriores" abre a lista logo abaixo do cartão, e não a aba (pedido do Paulo de 10.11.2026)
+const _dbAndAnt = new Map();   // "caso|aba" → aberto
+function dbVerAnd(id, aba){ const c = `${id}|${aba}`; _dbAndAnt.set(c, !_dbAndAnt.get(c)); repintarFicha(); }
+function dbListaDias(itens, max){
+  const dias = new Map();
+  for(const x of itens){ if(!dias.has(x.d)){ if(max && dias.size===max) break; dias.set(x.d, []); } dias.get(x.d).push(x); }
+  let usados = 0;
+  const lis = [...dias].map(([d, xs]) => { usados += xs.length;
+    const partes = [...new Set([...xs].reverse().flatMap(x=>x.partes).map(t=>String(t||"").trim()).filter(Boolean))];
+    const dia = `<b class="db-dia">${fmtBarra(d)}:</b>`;
+    return partes.length===1 ? `<li>${dia} ${esc(partes[0])}</li>` : `<li>${dia}<ul>${partes.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></li>`; });
+  return {html: `<ul class="db-mov db-movs">${lis.join("")}</ul>`, usados};
+}
 function dbAndamento(k, ands, fase, par){
   let it = null;
   if(fase==="inss"){
@@ -11947,7 +11960,8 @@ function dbAndamento(k, ands, fase, par){
     const sit = pats.map(x=>String(x.origem_id||"")).find(o=>o.startsWith("situacao:"));
     const prot = protocolosDe(k)[0];
     it = {cls:"", nome:"Meu INSS", onde:"INSS", logo:iconeFonte("inss"), iso:dataDoDb(a), txt:dbLead(a.texto), sub:sit ? sit.split(":").slice(2).join(":") : especieDoCaso(k),
-      abrir: prot ? `abrirMeuInss('${escJs(prot)}')` : "", n:pats.length-1, aba:"inss", rot:"andamentos", bts:dbBotoes(k, "inss", (String(a.origem_id||"").match(/:(\d{6,})/)||[])[1]||soDig(prot||""))};
+      abrir: prot ? `abrirMeuInss('${escJs(prot)}')` : "", n:pats.length-1, aba:"inss", rot:"andamentos",
+      ant:()=>dbListaDias(pats.slice(1).map(x=>({d:dataSP(dataDoDb(x)), partes:[x.texto]}))).html, bts:dbBotoes(k, "inss", (String(a.origem_id||"").match(/:(\d{6,})/)||[])[1]||soDig(prot||""))};
   } else if(fase==="conselho"){
     const evs = crpsBlocos(k).flatMap(b=>(b.eventos||[]).map(e=>({e, nup:b.nup}))).sort((a,b)=>(isoCrps(a.e.data)||"")<(isoCrps(b.e.data)||"")?1:-1);
     const x = evs[0]; if(!x) return "";
@@ -11955,7 +11969,8 @@ function dbAndamento(k, ands, fase, par){
     it = {cls:"crps", nome:"e-Recursos", onde:"CRPS", logo:iconeFonte("crps"), iso:isoCrps(x.e.data)+"T12:00:00", soData:true,
       txt: decideOCaso(x.e) ? `<b>${esc(x.e.resumo||x.e.bruto||"")}</b>` : esc(x.e.resumo||x.e.bruto||""), sub:"",
       doc: doc ? `<button type="button" class="db-doc" onclick="abrirDecisao('${escJs(doc.storage)}')">${esc(doc.nome||"Documento")}</button>` : "",
-      abrir: x.nup ? `window.open('${escJs(linkERecursos(x.nup))}','_blank','noopener')` : "", n:evs.length-1, aba:"crps", rot:"andamentos", bts:dbBotoes(k, "crps", soDig(x.nup||""))};
+      abrir: x.nup ? `window.open('${escJs(linkERecursos(x.nup))}','_blank','noopener')` : "", n:evs.length-1, aba:"crps", rot:"andamentos",
+      ant:()=>dbListaDias(evs.slice(1).map(y=>({d:isoCrps(y.e.data)||"", partes:[y.e.resumo||y.e.bruto||""]}))).html, bts:dbBotoes(k, "crps", soDig(x.nup||""))};
   } else if(fase==="judicial"){
     let pj = andamentosPje(ands).sort((a,b)=>dataDoDb(a)<dataDoDb(b)?1:-1); const a = pj[0]; if(!a) return "";
     const num = numDoAndPje(a), dig = num ? soDig(num) : "";
@@ -11963,16 +11978,18 @@ function dbAndamento(k, ands, fase, par){
     const sis = sisCurtoDoMov(a), href = linkPjeDoAndamento(a, k) || linkPjeDoCaso(k);
     const {html, usados} = dbMovsPje(pj);
     it = {cls:"jud", nome:sis, onde:sis, logo:iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sis]||"pje"), iso:dataDoDb(a), lista:html, sub:"",
-      href, n:pj.length-usados, aba:"cnj", rot:"andamentos", bts:dbBotoes(k, "cnj", dig, sis)};
+      href, n:pj.length-usados, aba:"cnj", rot:"andamentos", ant:()=>dbMovsPje(pj.slice(usados), 0).html, bts:dbBotoes(k, "cnj", dig, sis)};
   } else return "";
   const logo = it.href ? `<a class="db-logo" href="${esc(it.href)}" target="_blank" rel="noopener" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</a>`
     : it.abrir ? `<button type="button" class="db-logo" onclick="${it.abrir}" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</button>`
     : `<span class="db-logo" aria-hidden="true">${it.logo}</span>`;
+  const abre = it.n>0 && !!_dbAndAnt.get(`${k.id}|${it.aba}`);
   const quando = it.soData ? `${fmtBarra(dataSP(it.iso))} · ${(n=>n<=0?"hoje":n===1?"ontem":`há ${n} dias`)(diasEntreIso(dataSP(it.iso), hoje()))}` : dbQuando(it.iso);
   return `<section class="db db-and ${it.cls}" aria-label="Último andamento no ${esc(it.onde)}">
     <div class="db-cab">${logo}<h3>Último andamento no ${esc(it.onde)}</h3><span class="db-when">${quando}</span>${par ? `<span class="db-par">Em paralelo · mandado de segurança</span>` : ""}
-      ${dbAnteriores(k, Math.max(0, it.n), it.rot, false, `irSubAba('${it.aba}')`)}</div>
-    ${it.lista || `<p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>`}${it.doc||""}${it.bts||""}</section>`;
+      ${dbAnteriores(k, Math.max(0, it.n), it.rot, abre, it.n>0 ? `dbVerAnd('${k.id}','${it.aba}')` : `irSubAba('${it.aba}')`)}</div>
+    ${it.lista || `<p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>`}${it.doc||""}${it.bts||""}
+    ${abre ? `<div class="db-pn" role="region" aria-label="Andamentos anteriores no ${esc(it.onde)}"><h4>Andamentos anteriores</h4>${it.ant()}</div>` : ""}</section>`;
 }
 // F509 · as três últimas datas do processo no cartão Judicial (pedido do Paulo de 10.11.2026), sem o
 // prefixo do sistema, a data e o número que o texto do andamento repete; no mesmo dia, um item por movimento
@@ -11981,15 +11998,8 @@ function movLimpo(t){
     .replace(/\s+—\s+em\s+\d{2}[\/.]\d{2}[\/.]\d{4}[\s\S]*$/, "")
     .replace(/\s+—\s+[^—]*\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}\s*$/, "").trim();
 }
-function dbMovsPje(pj){
-  const dias = new Map();
-  for(const a of pj){ const d = dataSP(dataDoDb(a)); if(!dias.has(d)){ if(dias.size===3) break; dias.set(d, []); } dias.get(d).push(a); }
-  let usados = 0;
-  const lis = [...dias].map(([d, as]) => { usados += as.length;
-    const partes = [...new Set([...as].reverse().flatMap(a=>movLimpo(a.texto).split(" · ")).map(x=>x.trim()).filter(Boolean))];
-    const dia = `<b class="db-dia">${fmtBarra(d)}:</b>`;
-    return partes.length===1 ? `<li>${dia} ${esc(partes[0])}</li>` : `<li>${dia}<ul>${partes.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></li>`; });
-  return {html: `<ul class="db-mov db-movs">${lis.join("")}</ul>`, usados};
+function dbMovsPje(pj, max=3){
+  return dbListaDias(pj.map(a=>({d:dataSP(dataDoDb(a)), partes:movLimpo(a.texto).split(" · ")})), max);
 }
 // F497/F509 · os botões dos cartões do processo, na cor do quadro (--db-cor). No Judicial, Expedientes e
 // Detalhes abrem logo abaixo do cartão (pedido do Paulo de 10.11.2026), e Baixar e Claude saíram da aba.
