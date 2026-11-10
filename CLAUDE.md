@@ -681,6 +681,8 @@ A **F509** (13.33, pedido do Paulo de 10.11.2026): o cartão "Último andamento 
 
 A **F510** (13.34, pedido do Paulo de 10.11.2026, "não tem como eu saber se um cliente já foi atendido"): na janela da lupa da Agenda (F507), o botão **Anteriores** procura nos atendimentos que já passaram, até 5 anos, pelo nome ou pelo telefone, do mais recente ao mais antigo (até 40), com o dia, a hora, o profissional e o tipo; o passado só vem no clique e não aparece na primeira tela. O Apps Script ganhou a ação `historico` (`historico_`: `Calendar.Events.list` com `q`, `ehAtendimento_`), que exige publicar a versão nova do `Code.gs`; a antiga responde `ACAO_INVALIDA` e a janela diz que falta publicar. Teste: `f251.js`.
 
+A **F511** (13.35, pedido do Paulo de 10.11.2026): no Dashboard do caso, "Ver andamentos anteriores" dos cartões do INSS, do CRPS e do Judicial abre a lista dos anteriores logo abaixo do cartão (`dbVerAnd`, `_dbAndAnt` por caso e aba, `dbListaDias`, uma linha por dia, a mais recente no alto), em vez de levar à aba da fase; o segundo clique fecha. No Judicial a lista começa depois das três datas que o cartão já mostra (`dbMovsPje`). Sem anterior, o botão continua abrindo a aba. Teste: `f466.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
