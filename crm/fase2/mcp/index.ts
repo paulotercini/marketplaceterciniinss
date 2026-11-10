@@ -98,7 +98,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
   // reagenda e não troca o que a equipe escreveu.
   // Essas decisões ficam com quem é gente.
   const robo = eu.papel === "assistente_ia";
-  const server = new McpServer({ name: "crm-tercini", version: "0.8.1" });
+  const server = new McpServer({ name: "crm-tercini", version: "0.9.0" });
   const leitura = { readOnlyHint: true, openWorldHint: false };
   const escrita = { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false };
   let cols: Map<string, any> | null = null;
@@ -662,6 +662,42 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
     const parte = t.slice(inicio, inicio + 40000);
     return texto(`${d.nome} · ${totalPages} página(s) · caracteres ${inicio + 1} a ${inicio + parte.length} de ${t.length}`
       + (inicio + parte.length < t.length ? ` · continue com inicio=${inicio + parte.length}` : "") + `\n\n${parte}`);
+  });
+
+  // F495 · o processo inteiro de uma vez: índice com as folhas e o texto de cada peça,
+  // na ordem cronológica, para a IA ler sem pedir documento por documento
+  server.registerTool("processo_inteiro", {
+    title: "Ler o processo inteiro",
+    description: "Lê de uma vez os documentos de um caso (ou só os de um número de processo, protocolo ou NUP), do mais antigo ao mais novo: primeiro o índice com as folhas (fls.) de cada peça, depois o texto de cada PDF. Volta em partes de 40 mil caracteres; use 'inicio' para continuar. PDF digitalizado sem texto aparece no índice com o aviso.",
+    inputSchema: z.object({ caso_id: ID, processo: z.string().optional(), inicio: z.number().int().min(0).default(0) }),
+    annotations: leitura,
+  }, async ({ caso_id, processo, inicio }) => {
+    const r = await docsDoCaso(caso_id);
+    if (!r) return texto("Caso não encontrado.");
+    const num = soDig(processo || "");
+    const dataIso = (d: any) => { const m = String(d.data || d.enviado_em || "").match(/(\d{2})\/(\d{2})\/(\d{4})/); return m ? `${m[3]}${m[2]}${m[1]}` : String(d.data || ""); };
+    const lista = r.docs.filter((d) => /pdf/i.test(d.tipo || "") || /\.pdf$/i.test(d.nome || ""))
+      .filter((d) => !num || soDig(`${d.caminho} ${d.nup || ""}`).includes(num))
+      .sort((a, b) => dataIso(a).localeCompare(dataIso(b)));
+    if (!lista.length) return texto(num ? "Nenhum PDF deste processo guardado no CRM." : "Nenhum PDF guardado no CRM para este caso.");
+    if (lista.length > 120) return texto(`O processo tem ${lista.length} PDFs; informe o número em 'processo' para ler um por vez.`);
+    let fls = 1; const idx: string[] = []; const corpo: string[] = [];
+    for (const [i, d] of lista.entries()) {
+      let t = "", pg = 0;
+      try {
+        const { bytes } = await db.baixar(d.caminho);
+        if (bytes.length <= 15e6) { const x = await extractText(await getDocumentProxy(bytes), { mergePages: true }); t = String(x.text || "").trim(); pg = x.totalPages; }
+      } catch { /* a peça que não abre fica no índice com o aviso */ }
+      const f = pg ? (pg > 1 ? `fls. ${fls}-${fls + pg - 1}` : `fl. ${fls}`) : "folhas não lidas";
+      fls += pg;
+      const aviso = !pg ? " (não foi possível abrir)" : t.length < 50 ? " (digitalizado, sem texto)" : "";
+      idx.push(`${i + 1}. ${d.data || d.enviado_em || ""} · ${d.nome} · ${f}${aviso}`);
+      if (t.length >= 50) corpo.push(`\n\n=== ${i + 1}. ${d.nome} · ${f} ===\n${t}`);
+    }
+    const tudo = `${r.k.titulo}${num ? ` · processo ${processo}` : ""} · ${lista.length} peça(s) · ${fls - 1} folha(s)\n\nÍNDICE\n${idx.join("\n")}${corpo.join("")}`;
+    const parte = tudo.slice(inicio, inicio + 40000);
+    return texto(`caracteres ${inicio + 1} a ${inicio + parte.length} de ${tudo.length}`
+      + (inicio + parte.length < tudo.length ? ` · continue com inicio=${inicio + parte.length}` : "") + `\n\n${parte}`);
   });
 
   // ── etapa 6: WhatsApp (as conversas que a ponte grava em zap_*) ──────────
