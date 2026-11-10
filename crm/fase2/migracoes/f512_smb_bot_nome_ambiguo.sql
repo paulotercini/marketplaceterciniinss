@@ -1,4 +1,4 @@
--- F511 (10.11.2026): desde a F422ad, a variável "nome" da zap_smb_bot colidia com a coluna
+-- F512 (10.11.2026): desde a F422ad, a variável "nome" da zap_smb_bot colidia com a coluna
 -- zap_setores.nome ("column reference nome is ambiguous", 42702). O erro abortava o INSERT
 -- em zap_mensagens, e a ponte retinha as mensagens recebidas em pendentes.jsonl.
 -- A função é a mesma; a variável passa a se chamar v_nome.
