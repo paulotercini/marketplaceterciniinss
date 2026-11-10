@@ -401,6 +401,15 @@ async function entrou(m, baixar) {
   if (N.deveIgnorar(m)) {
     if (m && m.key && !m.message && m.messageStubType) log("mensagem que não abriu de", fone || m.key.remoteJid, "(stub", m.messageStubType + ")");
     if (N.naoAbriu(m) && N.chaveFone(fone).length >= 8) buscarDepois(fone);
+    // F505 · o @lid ainda fora do mapa (Cintia, 10.11.2026): o lidMapping do Baileys 7 dá o número
+    else if (N.naoAbriu(m) && String(m.key.remoteJid).endsWith("@lid")) {
+      const lm = sock && sock.signalRepository && sock.signalRepository.lidMapping;
+      const pn = lm && lm.getPNForLID ? await Promise.resolve(lm.getPNForLID(m.key.remoteJid)).catch(() => null) : null;
+      if (pn) { lidParaFone.set(m.key.remoteJid, String(pn).replace(/:\d+@/, "@")); }
+      const f = pn ? N.chaveFone(String(pn).split("@")[0].split(":")[0]) : "";
+      if (f.length >= 8) buscarDepois(String(pn).split("@")[0].split(":")[0]);
+      else log("✗ mensagem que não abriu sem número conhecido:", m.key.remoteJid);
+    }
     return;
   }
   if (N.chaveFone(fone).length < 8) return;
