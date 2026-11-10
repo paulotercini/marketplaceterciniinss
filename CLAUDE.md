@@ -673,6 +673,8 @@ A **F504** (13.31, o Quadro Jurídico Claro aprovado pelo Paulo em 10.11.2026, d
 
 A **F505** (pedido do Paulo de 10.11.2026, a mensagem da Cintia Poiani sobre o golpe que não entrou no CRM): a mensagem do cliente que não abriu na ponte (F491) e chega por um `@lid` ainda fora do mapa não tinha número, e a busca do histórico não era pedida. Agora a ponte pergunta o número ao `signalRepository.lidMapping.getPNForLID` do Baileys 7, guarda o par no mapa e pede o histórico da conversa 3 minutos depois (`buscarDepois`); sem número, registra no log. Vale depois do deploy da ponte.
 
+A **F506** (pedido do Paulo de 10.11.2026, a conversa da Cintia Poiani recuperada do celular que não aparecia como nova): a mensagem do cliente trazida pelo "Buscar histórico" (`bot_ia = 'celular'`) mais nova que a última da conversa passa a reabrir a conversa resolvida, além de subir na lista e contar como não lida (F481); robô e IA continuam sem responder. A migração reabre as conversas resolvidas cuja última mensagem é do cliente vinda do celular nas últimas 48 horas. SQL em `crm/fase2/migracoes/f506_celular_reabre.sql`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
