@@ -142,9 +142,20 @@ jobs:
         if: steps.seg.outputs.tem == 'true'
         run: python crm/sync_todo.py
 
+      # Disk IO (auditoria de 10.11.2026): a memória do que a rodada anterior enviou (só assinaturas,
+      # sem dado legível) deixa de fora a linha que não mudou; vence em 24 horas e então vai tudo.
+      - name: Memória da sincronização (restaura)
+        if: steps.seg.outputs.tem == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: crm_sync_hashes.json
+          key: crm-sync-hashes-${{ github.run_id }}
+          restore-keys: crm-sync-hashes-
+
       - name: Espelho -> banco (idempotente)
         if: steps.seg.outputs.tem == 'true'
         env:
+          SYNC_HASHES: crm_sync_hashes.json
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           # senha padrão do escritório (item "Padrão" no checklist do To Do) —
@@ -152,6 +163,13 @@ jobs:
           SENHA_PADRAO_MEUINSS: ${{ secrets.SENHA_PADRAO_MEUINSS }}
           LIMPAR_ETAPAS_DADO: ${{ inputs.limpar_etapas == 'sim' && '1' || '' }}
         run: python crm/fase2/migrar.py
+
+      - name: Memória da sincronização (guarda)
+        if: always() && steps.seg.outputs.tem == 'true' && hashFiles('crm_sync_hashes.json') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: crm_sync_hashes.json
+          key: crm-sync-hashes-${{ github.run_id }}
 
       # F189 · o rito de cada caso pelos dados (casos.conducao). Falha aqui não
       # pode derrubar a sincronização: o próximo ciclo tenta de novo.
