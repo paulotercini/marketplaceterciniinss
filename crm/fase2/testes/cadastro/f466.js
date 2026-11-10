@@ -57,6 +57,8 @@ and(kB, -5, "Conclusos para decisão", { origem: "pje", origem_id: "pje:50000420
 and(kB, -5, "PJe (1º grau): Expedição de Outros documentos · Disponibilizado no DJ Eletrônico — em "+iso(-5).split("-").reverse().join(".")+" 09:00 — MS 5000042-04.2026.4.03.6102", { origem: "pje", origem_id: "pje:50000420420264036102:2", autor_id: null, h: "09:00" });
 // F492 · movimento antigo importado hoje: vale a data do movimento (origem_id), e não a da importação
 and(kB, 0, "PJe (1º grau): Remetidos os Autos — em 05.03.2025 15:33 — MS 5000042-04.2026.4.03.6102", { origem: "pje", origem_id: `mov:50000420420264036102:${iso(-400)}T15:33:abc`, autor_id: null });
+and(kB, 0, "PJe (1º grau): Juntada de Petição", { origem: "pje", origem_id: `mov:50000420420264036102:${iso(-500)}T10:00:def`, autor_id: null });
+and(kB, 0, "PJe (1º grau): Distribuído por sorteio", { origem: "pje", origem_id: `mov:50000420420264036102:${iso(-600)}T10:00:ghi`, autor_id: null });
 
 // C · sem nada: o estado vazio
 const cC = cli("Caso Fictício Vazio");
@@ -129,7 +131,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("Prorrogar do retorno oferece as datas", await p.locator(".db-desp .ae-dias .esp-it").count() === 4);
   await p.locator('.db-desp [data-ae="cancelar"]').click(); await p.waitForTimeout(200);
   await p.locator(".db-and .db-ant").click(); await p.waitForTimeout(400);
-  conf("Ver andamentos anteriores abre a aba INSS", await p.evaluate(() => subAba === "inss") && await p.locator(".db-dash").count() === 0);
+  conf("Ver andamentos anteriores abre a lista logo abaixo do cartão (F511)", await vis(p, ".db-and .db-pn") && /Requerimento recebido/.test(await p.locator(".db-and .db-pn").textContent()) && await p.locator(".db-dash").count() > 0 && /Ocultar/.test(await p.locator(".db-and .db-ant").textContent()));
+  await p.locator(".db-and .db-ant").click(); await p.waitForTimeout(300);
+  conf("Ocultar fecha a lista", await p.locator(".db-and .db-pn").count() === 0);
   await ctx.close();
 
   // ── 2 · caso B: CRPS e o mandado de segurança em paralelo ──
@@ -140,7 +144,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o mandado de segurança ganha o segundo cartão, Judicial", await p.locator(".db-and.jud").count() === 1 && /Em paralelo · mandado de segurança/.test(await p.locator(".db-and.jud .db-par").textContent()) && /Conclusos/.test(await p.locator(".db-and.jud .db-mov").textContent()));
   conf("a data do cartão é a do movimento, não a da importação (F492)", /há 5 dias/.test(await p.locator(".db-and.jud .db-when").textContent()));
   const lis = await p.locator(".db-and.jud .db-movs > li").allTextContents();
-  conf("o Judicial lista as datas, a mais recente no alto (F509)", lis.length === 2 && /Conclusos/.test(lis[0]) && /Remetidos os Autos/.test(lis[1]));
+  conf("o Judicial lista as datas, a mais recente no alto (F509)", lis.length === 3 && /Conclusos/.test(lis[0]) && /Remetidos os Autos/.test(lis[1]));
+  await p.locator(".db-and.jud .db-ant").click(); await p.waitForTimeout(300);
+  conf("no Judicial, os anteriores abrem abaixo do cartão com a data mais antiga (F511)", /Ver|Ocultar/.test(await p.locator(".db-and.jud .db-ant").textContent()) && /Distribuído por sorteio/.test(await p.locator(".db-and.jud .db-pn").textContent()) && !/Conclusos/.test(await p.locator(".db-and.jud .db-pn").textContent()));
+  await p.locator(".db-and.jud .db-ant").click(); await p.waitForTimeout(300);
   conf("o mesmo dia junta os movimentos em sublista, sem prefixo nem data repetida (F509)", await p.locator(".db-and.jud .db-movs > li").first().locator("ul > li").count() === 3
     && !/PJe \(1º grau\)|— em|5000042/.test(lis.join(" ")));
   await p.locator('.db-and.jud .db-bt:has-text("Expedientes")').click(); await p.waitForTimeout(300);
