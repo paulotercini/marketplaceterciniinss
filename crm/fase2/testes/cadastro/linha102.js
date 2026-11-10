@@ -96,7 +96,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       nivel1: !!r.querySelector(".lc-numeros"), semRegua: !document.querySelector(".regua-caso"), semCartaoFora: !document.querySelector(".painel[data-p='2'] > .fatos-processo"),
       semPrazoFatalSolto: !/Prazo fatal do caso/.test(document.querySelector(".painel[data-p='2']").textContent) };
   });
-  conf("uma linha só: o nome do pedido (sem o código), DER em dd/mm/aaaa, tramitação e verificação", /^(B41 · INSS ✎ (✔ Concluir )?)?Aposentadoria por idade/.test(lc.txt) && /DER 12\/05\/2024/.test(lc.txt) && /TRAMITAÇÃO INSS/i.test(lc.txt) && /VERIFICAÇÃO Manual/i.test(lc.txt));
+  conf("uma linha só: o nome do pedido (sem o código) e DER em dd/mm/aaaa; tramitação em Números do caso e verificação na gestão (F504)", /Aposentadoria por idade/.test(lc.txt) && /DER 12\/05\/2024/.test(lc.txt) && await p.evaluate(() => { const k = D.casoPorId.get(casoSel); return /Tramitação/.test(lcNumeros(k)) && /INSS/.test(lcNumeros(k)) && /Verificação/.test(lcGestao(k)); }));
   // ── F113 · a espécie pela janela, com subespécies e pedido à mão ─────────
   conf("a canetinha ao lado do nome abre a janela das espécies", await p.evaluate(() => /escolherEspecie/.test((document.querySelector(".lc-topo .lc-sobre + .lapis") || { getAttribute: () => "" }).getAttribute("onclick") || "")));
   await p.evaluate((id) => escolherEspecie(id), CASO1); await p.waitForTimeout(150);
@@ -117,7 +117,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     && await p.evaluate(() => document.querySelector(".lc-topo .lc-ben").textContent.trim() === "Repetição de Indébito"));
   await p.evaluate((id) => gravarEspecie(id, "B41", "B41"), CASO1); await p.waitForTimeout(300);
   conf("voltar à espécie do INSS limpa a subespécie", (patches("subespecie").pop() || {}).subespecie === null && await p.evaluate(() => /^Aposentadoria por idade/.test(document.querySelector(".lc-topo .lc-ben").textContent.trim())));
-  conf("'Manual' em vermelho", lc.manual === "Manual" && lc.corManual === "rgb(179, 38, 30)");
+  conf("a gestão do caso marca 'Manual' (F504)", await p.evaluate(() => /chip-acomp on"[^>]*>Manual/.test(lcGestao(D.casoPorId.get(casoSel)))));
   conf("fechada, a linha não mostra os números; a régua e o cartão saíram da frente", !lc.nivel1 && lc.semRegua && lc.semCartaoFora);
   conf("o 'venceu … Prazo fatal do caso' sumiu de vez", lc.semPrazoFatalSolto);
 
@@ -142,7 +142,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     /PROTOCOLOS 1234567890/i.test(g.txt) && /verifiquei agora/.test(g.txt) && /COMENTÁRIO FIXO/i.test(g.txt) && g.acoes.some(t => /não é caso/.test(t)) && g.acoes.some(t => /Encerrar caso/.test(t)));
   conf("a ficha completa do caso continua ali, dobrada (nada sumiu)", g.ficha && g.fichaFechada);
   await p.evaluate((id) => checarAcomp(id), CASO1); await p.waitForTimeout(200);
-  conf("verificar registra quem e quando, e o ✓ acende na linha", patches("checado_em").length === 1 && await p.evaluate(() => document.querySelector(".lc-topo .lc-check").classList.contains("ok")));
+  conf("verificar registra quem e quando, e a gestão do caso mostra a última verificação (F504)", patches("checado_em").length === 1 && await p.evaluate(() => /última: .+ · \d{2}\/\d{2}\/\d{4}/.test(document.querySelector(".lc-gestao").innerText)));
   // comentário fixo
   const botaoAntes = await p.evaluate(() => !!document.querySelector(".caso-esq .fixar-caso"));
   await p.evaluate((id) => lcEditarFixo(id), CASO1);
@@ -328,7 +328,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   // ── F114 · o essencial da espécie na linha, o resto em gestão do caso ───
   conf("a aposentadoria por idade não enche a linha: sem DIB nem DCB, a DER basta", await p.evaluate(() =>
     camposEssenciais(D.casoPorId.get(casoSel)).every(t => t[0] === "?") &&
-    ![...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()).some(r => !["DER","Tramitação","Verificação","Etapa","Protocolo"].includes(r))));   // F320 · o protocolo do INSS com copiar
+    ![...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()).some(r => !["DER","Tramitação","Verificação","Etapa","Protocolo","NB"].includes(r))));   // F320 · o protocolo do INSS com copiar
   await p.evaluate((id) => gravarEspecie(id, "B31", "B31"), CASO1); await p.waitForTimeout(300);
   const rotsDa = () => p.evaluate(() => [...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()));
   const b31 = await rotsDa();
@@ -387,7 +387,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   await p.evaluate(() => gravarEtapa(casoSel, "")); await p.waitForTimeout(300);
   conf("F287 · a etapa saiu da placa e mora na faixa das fases", await p.evaluate(() => {
     const rots = [...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim());
-    return rots.includes("Tramitação") && !rots.includes("Etapa") && !D.casoPorId.get(casoSel).etapa && !!document.querySelector(".tr-agora b"); }));
+    return /Tramitação/.test(lcNumeros(D.casoPorId.get(casoSel))) && !rots.includes("Etapa") && !D.casoPorId.get(casoSel).etapa && !!document.querySelector(".tr-agora b"); }));
   await p.evaluate((id) => escolherEtapa(id), CASO1); await p.waitForTimeout(200);
   conf("a janela só oferece as etapas da fase em que o caso está", await p.evaluate(() => {
     const t = [...document.querySelectorAll("#modal .esp-it")].map(b => b.textContent.trim());
@@ -427,10 +427,10 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   conf("no Judicial a linha não fala de Verificação, que ali é automática sempre",
     await p.evaluate(() => !document.querySelector(".lc-topo .lc-verif")
       && !!document.querySelector(".lc-topo .lc-fila")));
-  conf("fora do Judicial a fila some e a Verificação volta", await p.evaluate(async (id) => {
+  conf("fora do Judicial a fila some e a Verificação fica na gestão (F504)", await p.evaluate(async (id) => {
     const k = D.casoPorId.get(id); k.fase = "inss"; repintarFicha();
     const ok = !document.querySelector(".lc-topo .lc-fila")
-      && !!document.querySelector(".lc-topo .lc-verif");
+      && /Verificação/.test(lcGestao(k));
     k.fase = "judicial"; return ok; }, CASO1));
   // [BUG 20.09.2026] recurso do Conselho sem movimento há meses precisa dizer
   // isso na linha: o da Maria Izilda Ferreira Pinto estava parado desde 2021 e

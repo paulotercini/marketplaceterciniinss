@@ -51,7 +51,7 @@ const SUPA = "https://ficticio.supabase.co";
 
   // ── computador ─────────────────────────────────────────────────────────
   { const { ctx, p } = await abrir({ viewport: { width: 1440, height: 900 } });
-    const r = await p.evaluate(() => {
+    const r = await p.evaluate((cli) => {
       const placa = document.querySelector(".lc-topo .lc-placa");
       const cab = document.querySelector(".lc-topo .lc-cab");
       return { placa: !!placa, cab: !!cab,
@@ -59,13 +59,14 @@ const SUPA = "https://ficticio.supabase.co";
         maisNoCab: !!(cab && cab.querySelector(".lc-mais")),
         maisDepois: !!(placa && placa.nextElementSibling && placa.nextElementSibling.classList.contains("lc-mais")),
         rotulos: placa ? [...placa.querySelectorAll(".lc-f > .lc-k")].map(x => x.textContent.trim()) : [],
+        tramNoCaso: (k => !!k && /Tramitação/.test(lcNumeros(k)))([...D.casoPorId.values()].find(k => k.cliente_id === cli && k.fase !== "encerrado")),   // F504 · a tramitação mora em "Números do caso e gestão"
         altura: placa ? Math.round(placa.getBoundingClientRect().height) : 0,
         colunas: placa ? (getComputedStyle(placa).flexDirection === "column" ? 2 : getComputedStyle(placa).gridTemplateColumns.split(" ").length) : 0,   // F182 · lista rótulo/valor conta como as duas colunas
         urgenteSemEmoji: !/🔥/.test((cab && cab.textContent) || "") };
-    });
+    }, CLI_CHEIO);
     conf("a faixa do caso tem o cabeçalho e a placa dentro da .lc-topo", r.placa && r.cab);
     conf("F287 · o nome do pedido no cabeçalho, a canetinha ao lado da espécie e a flecha logo abaixo da placa", r.benNoCab && !r.maisNoCab && r.maisDepois);
-    conf("a placa traz DER e Tramitação; a etapa mora na faixa das fases (F287)", ["DER", "Tramitação"].every(x => r.rotulos.includes(x)) && !r.rotulos.includes("Etapa"));
+    conf("a placa traz DER, a Tramitação fica em Números do caso (F504) e a etapa mora na faixa das fases (F287)", r.rotulos.includes("DER") && r.tramNoCaso && !r.rotulos.includes("Etapa"));
     conf(`F145 · a placa tem uma linha a cada par de quadros (${r.altura}px)`, r.altura > 18 * r.rotulos.length && r.altura < 70 * Math.ceil(r.rotulos.length / 2));
     conf(`F145 · a placa fica em pares, duas colunas (${r.colunas})`, r.colunas === 2);
     conf("o selo de urgente não usa emoji", r.urgenteSemEmoji);
