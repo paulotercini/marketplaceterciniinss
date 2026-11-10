@@ -268,6 +268,20 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf(`o cliente abre só no Cadastro, na Identificação (${abas.join(", ")})`, abas.join() === "Cadastro" && await p.evaluate(() => subCad) === "identificacao");
   await foto("05-cliente");
 
+  // F507 · a lupa da Agenda acha o atendimento pelo nome, em todas as agendas carregadas, e abre o dia dele
+  await p.evaluate(() => irPara("agendaq")); await p.waitForSelector(".aq-pesq");
+  await p.click('[data-aqprof="paulo"]'); await p.waitForTimeout(300);
+  await p.click(".aq-pesq"); await p.waitForSelector("#aq-pq");
+  await p.type("#aq-pq", "michelle ficticia", { delay: 10 });
+  const achou = await p.$$eval("[data-aqpq]", b => b.map(x => [x.dataset.aqpq, x.textContent]));
+  conf(`F507 · a pesquisa sem acento acha a Michelle na agenda do Marcos (${achou.map(a => a[0]).join(", ")})`, achou.length === 1 && achou[0][0] === "M1" && /Marcos/.test(achou[0][1]));
+  await p.click('[data-aqpq="M1"]'); await p.waitForTimeout(300);
+  conf("F507 · o clique abre a agenda do Marcos no dia do atendimento, com ele em destaque",
+    await p.evaluate(d => agq.prof === "marcos" && agq.sel === d && !!document.querySelector('[data-aqev="M1"].aq-achado') && !document.getElementById("aq-pq"), W));
+  await p.click(".aq-pesq"); await p.fill("#aq-pq", "zzzz"); await p.waitForTimeout(100);
+  conf("F507 · sem achado, diz que não encontrou", /Nenhum atendimento encontrado/.test(await p.textContent("#aq-pq-res")));
+  await p.evaluate(() => fecharCaixa());
+
   conf("sem erro de página", !erros.length);
   if (erros.length) console.log(erros);
   const ruins = ok.filter(x => !x[1]).length;

@@ -675,6 +675,8 @@ A **F505** (pedido do Paulo de 10.11.2026, a mensagem da Cintia Poiani sobre o g
 
 A **F506** (pedido do Paulo de 10.11.2026, a conversa da Cintia Poiani recuperada do celular que não aparecia como nova): a mensagem do cliente trazida pelo "Buscar histórico" (`bot_ia = 'celular'`) mais nova que a última da conversa passa a reabrir a conversa resolvida, além de subir na lista e contar como não lida (F481); robô e IA continuam sem responder. A migração reabre as conversas resolvidas cuja última mensagem é do cliente vinda do celular nas últimas 48 horas. SQL em `crm/fase2/migracoes/f506_celular_reabre.sql`.
 
+A **F507** (13.32, pedido do Paulo de 10.11.2026): a Agenda ganhou a lupa ao lado do "+ Agendar" (`pesquisarAgenda`, `achadosAgenda`): procura o atendimento pelo nome (sem acento) ou pelo telefone em todos os dias já carregados das agendas do Paulo, do Marcos e da Amanda (o Apps Script devolve os próximos dias de atendimento; a agenda que falta carrega na hora), e o clique (`irAoAtendimento`) abre a agenda do profissional no dia, com o atendimento em destaque (`.aq-achado`). Dia passado ou além dos carregados não entra. Teste: `f251.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
