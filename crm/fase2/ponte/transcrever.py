@@ -196,7 +196,7 @@ def principal():
                                                initial_prompt=VOCABULARIO, condition_on_previous_text=False)
                 texto = juntar(s.text for s in trechos)
                 banco.gravar(m["id"], texto)
-                log("🎤", texto[:70])
+                log("🎤", len(texto), "letras")
             except Exception as e:
                 n = falhas[m["id"]] = falhas.get(m["id"], 0) + 1
                 log(f"✗ áudio {m['id']}: {e} (tentativa {n})")

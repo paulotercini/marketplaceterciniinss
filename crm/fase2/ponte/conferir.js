@@ -84,8 +84,8 @@ function papelDaChave(k) {
   else ok("tabelas do WhatsApp no lugar");
 
   const f = await bater("/rest/v1/rpc/fone_chave",
-                        { method: "POST", body: JSON.stringify({ t: "+55 (16) 99999-0000" }) });
-  if (f.corpo.replace(/"/g, "") === "99990000") ok("funções do banco no lugar");
+                        { method: "POST", body: JSON.stringify({ t: "+55 (00) 90000-0001" }) });
+  if (f.corpo.replace(/"/g, "") === "00000001") ok("funções do banco no lugar");
   else nao("a função fone_chave não respondeu como devia",
            "rode o schema.sql de novo — ele é seguro de repetir");
 

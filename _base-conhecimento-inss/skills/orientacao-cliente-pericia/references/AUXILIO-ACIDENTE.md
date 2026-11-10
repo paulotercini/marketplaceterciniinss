@@ -128,4 +128,4 @@ Quando houver nexo técnico (NTEP por CNAE/CID), o B94 acidentário é possível
 
 ## Caso prático que orientou o desenvolvimento desta referência
 
-Caso Paulo Eduardo Correia (processo TJSP 1009325-32.2025.8.26.0381). Eletricista canhoto, amputação traumática parcial da falange distal do 4º dedo da mão esquerda, consolidada após quatro cirurgias. Benefícios por incapacidade recebidos. Perícia judicial agendada para 23/04/2026 com Dr. Marcelo Furtado Barsam em Ribeirão Preto. Orientação personalizada gerada com base nesta referência em 16/04/2026.
+Caso real do escritório (ação acidentária no TJSP). Eletricista canhoto, amputação traumática parcial da falange distal do 4º dedo da mão esquerda, consolidada após quatro cirurgias. Benefícios por incapacidade recebidos. Perícia judicial agendada para 23/04/2026 com Dr. Marcelo Furtado Barsam em Ribeirão Preto. Orientação personalizada gerada com base nesta referência em 16/04/2026.

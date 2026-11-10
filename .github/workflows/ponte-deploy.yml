@@ -1,7 +1,8 @@
 # Publica a ponte do WhatsApp no servidor Oracle quando crm/fase2/ponte muda na main:
 # roda os testes, guarda a versão anterior em ~/ponte_bkp/<data>, copia os arquivos,
-# instala as dependências se o package.json mudou e reinicia o pm2 "ponte-zap".
-# Se a ponte não ficar online, volta a versão anterior. Sessão (sessao/) e .env não são tocados.
+# instala as dependências pelo package-lock.json (npm ci) se o pacote mudou e reinicia o pm2 "ponte-zap".
+# Se a ponte não ficar online, ou estava ligada ao WhatsApp e não voltou a ligar, volta a versão anterior.
+# Sessão (sessao/) e .env não são tocados.
 name: Ponte do WhatsApp no servidor
 
 on:
@@ -10,6 +11,8 @@ on:
     paths:
       - "crm/fase2/ponte/*.js"
       - "crm/fase2/ponte/package.json"
+      - "crm/fase2/ponte/package-lock.json"
+      - "crm/fase2/ponte/transcrever.py"
       - ".github/workflows/ponte-deploy.yml"
   workflow_dispatch:
 
@@ -31,10 +34,11 @@ jobs:
         with:
           node-version: "22"
       - name: Testes da ponte
-        run: npm install --no-audit --no-fund && npm test
+        run: npm ci --no-audit --no-fund && npm test
       - name: Chave SSH
         env:
           PONTE_SSH_KEY: ${{ secrets.PONTE_SSH_KEY }}
+          PONTE_KNOWN_HOSTS: ${{ secrets.PONTE_KNOWN_HOSTS }}
         run: |
           if [ -z "$PONTE_SSH_KEY" ]; then
             echo "::error::Falta o segredo PONTE_SSH_KEY (Settings > Secrets and variables > Actions)."
@@ -42,37 +46,57 @@ jobs:
           fi
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           printf '%s\n' "$PONTE_SSH_KEY" > ~/.ssh/ponte && chmod 600 ~/.ssh/ponte
-          ssh-keyscan -T 20 "${HOST#*@}" >> ~/.ssh/known_hosts
+          # a chave do servidor fixada no segredo PONTE_KNOWN_HOSTS; sem ele, vale a que o servidor apresentar agora
+          if [ -n "$PONTE_KNOWN_HOSTS" ]; then
+            printf '%s\n' "$PONTE_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          else
+            echo "::warning::Sem o segredo PONTE_KNOWN_HOSTS a chave do servidor não é conferida (ssh-keyscan)."
+            ssh-keyscan -T 20 "${HOST#*@}" >> ~/.ssh/known_hosts
+          fi
       - name: Copiar e reiniciar
         run: |
-          SSH="ssh -i $HOME/.ssh/ponte -o BatchMode=yes -o ConnectTimeout=20"
+          SSH="ssh -i $HOME/.ssh/ponte -o BatchMode=yes -o ConnectTimeout=20 -o StrictHostKeyChecking=yes"
           $SSH "$HOST" 'rm -rf ~/ponte_novo && mkdir -p ~/ponte_novo'
-          scp -i ~/.ssh/ponte -o BatchMode=yes ponte.js normalizar.js conferir.js package.json "$HOST":ponte_novo/
+          scp -i ~/.ssh/ponte -o BatchMode=yes -o StrictHostKeyChecking=yes ponte.js normalizar.js conferir.js ecosystem.config.js transcrever.py package.json package-lock.json "$HOST":ponte_novo/
           $SSH "$HOST" 'bash -s' <<'REMOTO'
           set -e
           cd ~/ponte
           bkp=~/ponte_bkp/$(date +%Y%m%d-%H%M%S)
           mkdir -p "$bkp"
           cp -p ponte.js normalizar.js package.json "$bkp"/
-          cp -p conferir.js package-lock.json "$bkp"/ 2>/dev/null || true
+          cp -p conferir.js ecosystem.config.js transcrever.py package-lock.json "$bkp"/ 2>/dev/null || true
           echo "versão anterior em $bkp"
+          pm2ponte() { pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const a=JSON.parse(s).find(p=>p.name==="ponte-zap");console.log(a?a.pm2_env.status+" "+a.pm2_env.restart_time:"ausente")})'; }
+          # "sim" se o CRM vê a ponte ligada ao WhatsApp e viva há menos de 2 minutos; vazio se não deu para ler
+          ligada() { node -e 'require("./ponte").sb("/rest/v1/config_app?chave=in.(zap_status,zap_visto_em)&select=chave,valor").then(l=>{const v=Object.fromEntries(l.map(x=>[x.chave,x.valor]));console.log(v.zap_status==="ligado"&&Date.now()-Date.parse(v.zap_visto_em)<120000?"sim":"nao");process.exit(0)}).catch(()=>process.exit(0))' 2>/dev/null | tail -1; }
+          antes=$(ligada || true)
           mudou_pacote=0
-          cmp -s package.json ~/ponte_novo/package.json || mudou_pacote=1
-          cp -p ~/ponte_novo/* ~/ponte/
-          [ "$mudou_pacote" = 1 ] && npm install --omit=dev --no-audit --no-fund
-          pm2 restart ponte-zap --update-env
-          sleep 30
-          estado=$(pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const a=JSON.parse(s).find(p=>p.name==="ponte-zap");console.log(a?a.pm2_env.status+" "+a.pm2_env.restart_time:"ausente")})')
-          echo "ponte-zap: $estado"
-          sleep 30
-          depois=$(pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const a=JSON.parse(s).find(p=>p.name==="ponte-zap");console.log(a?a.pm2_env.status+" "+a.pm2_env.restart_time:"ausente")})')
-          echo "ponte-zap 30 s depois: $depois"
-          if [ "${depois%% *}" != online ] || [ "${estado#* }" != "${depois#* }" ]; then
-            echo "a ponte não ficou estável; voltando a versão anterior"
+          cmp -s package.json ~/ponte_novo/package.json && cmp -s package-lock.json ~/ponte_novo/package-lock.json || mudou_pacote=1
+          mudou_transcricao=0
+          cmp -s transcrever.py ~/ponte_novo/transcrever.py || mudou_transcricao=1
+          voltar() {
+            echo "$1; voltando a versão anterior"
             cp -p "$bkp"/* ~/ponte/
-            [ "$mudou_pacote" = 1 ] && npm install --omit=dev --no-audit --no-fund
+            [ -f "$bkp/package-lock.json" ] || rm -f ~/ponte/package-lock.json
+            if [ "$mudou_pacote" = 1 ]; then npm install --omit=dev --no-audit --no-fund || true; fi
             pm2 restart ponte-zap --update-env
             exit 1
-          fi
+          }
+          cp -p ~/ponte_novo/* ~/ponte/
+          if [ "$mudou_pacote" = 1 ]; then npm ci --omit=dev --no-audit --no-fund || voltar "o npm ci falhou"; fi
+          pm2 restart ponte-zap --update-env
+          sleep 30
+          estado=$(pm2ponte)
+          echo "ponte-zap: $estado"
+          sleep 30
+          depois=$(pm2ponte)
+          echo "ponte-zap 30 s depois: $depois"
+          if [ "${depois%% *}" != online ] || [ "${estado#* }" != "${depois#* }" ]; then voltar "a ponte não ficou estável"; fi
+          # a ponte que estava ligada ao WhatsApp tem de voltar a ligar; a que esperava o QR só é avisada
+          agora=$(ligada || true)
+          for i in 1 2 3 4 5 6; do [ "$agora" = sim ] && break; sleep 15; agora=$(ligada || true); done
+          echo "ligada ao WhatsApp antes: ${antes:-sem leitura} · depois: ${agora:-sem leitura}"
+          if [ "$antes" = sim ] && [ "$agora" = nao ]; then voltar "a ponte não voltou a ligar ao WhatsApp"; fi
+          if [ "$mudou_transcricao" = 1 ]; then pm2 restart transcricao-audios --update-env || echo "transcricao-audios não reiniciou (confira no servidor)"; fi
           pm2 save >/dev/null
           REMOTO

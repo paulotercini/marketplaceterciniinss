@@ -5,85 +5,85 @@ const a = require("node:assert");
 const N = require("../normalizar");
 
 t.test("variantes do celular: com e sem o 9; o fixo fica como está", () => {
-  a.deepEqual(N.variantesFone("(16) 9963-8450"), ["551699638450", "5516999638450"]);
-  a.deepEqual(N.variantesFone("16999638450"), ["5516999638450", "551699638450"]);
-  a.deepEqual(N.variantesFone("1632422908"), ["551632422908"]);
+  a.deepEqual(N.variantesFone("(00) 9000-0004"), ["550090000004", "5500990000004"]);
+  a.deepEqual(N.variantesFone("00990000004"), ["5500990000004", "550090000004"]);
+  a.deepEqual(N.variantesFone("0030000005"), ["550030000005"]);
 });
 
 t.test("ligação: número do jid, do mapa do @lid, e nada fora do toque inicial", () => {
-  a.equal(N.foneDaLigacao({ status: "offer", from: "5516999638450@s.whatsapp.net" }), "5516999638450");
-  a.equal(N.foneDaLigacao({ status: "offer", from: "5516999638450:12@s.whatsapp.net" }), "5516999638450");
-  const mapa = new Map([["1199@lid", "5516920008301@s.whatsapp.net"]]);
-  a.equal(N.foneDaLigacao({ status: "offer", from: "1199:3@lid" }, mapa), "5516920008301");
+  a.equal(N.foneDaLigacao({ status: "offer", from: "5500990000004@s.whatsapp.net" }), "5500990000004");
+  a.equal(N.foneDaLigacao({ status: "offer", from: "5500990000004:12@s.whatsapp.net" }), "5500990000004");
+  const mapa = new Map([["1199@lid", "5500900000006@s.whatsapp.net"]]);
+  a.equal(N.foneDaLigacao({ status: "offer", from: "1199:3@lid" }, mapa), "5500900000006");
   a.equal(N.foneDaLigacao({ status: "offer", from: "7777@lid" }, mapa), "");
-  a.equal(N.foneDaLigacao({ status: "ringing", from: "5516999638450@s.whatsapp.net" }), "");
-  a.equal(N.foneDaLigacao({ status: "offer", isGroup: true, from: "5516999638450@s.whatsapp.net" }), "");
+  a.equal(N.foneDaLigacao({ status: "ringing", from: "5500990000004@s.whatsapp.net" }), "");
+  a.equal(N.foneDaLigacao({ status: "offer", isGroup: true, from: "5500990000004@s.whatsapp.net" }), "");
 });
 
 const msg = (conteudo, extra = {}) => ({
-  key: { remoteJid: "5516999990000@s.whatsapp.net", id: "WA1", fromMe: false },
-  pushName: "Maria", messageTimestamp: 1785000000,
+  key: { remoteJid: "5500900000001@s.whatsapp.net", id: "WA1", fromMe: false },
+  pushName: "Cliente Teste", messageTimestamp: 1785000000,
   message: conteudo, ...extra,
 });
 
 t.test("telefone: formatos diferentes, mesma pessoa", () => {
-  a.equal(N.chaveFone("+55 (16) 99999-0000"), "99990000");
-  a.equal(N.chaveFone("5516999990000"), "99990000");
-  a.equal(N.chaveFone("16999990000"), "99990000");
-  a.equal(N.jidParaFone("5516999990000@s.whatsapp.net"), "5516999990000");
-  a.equal(N.jidParaFone("5516999990000:12@s.whatsapp.net"), "5516999990000");
+  a.equal(N.chaveFone("+55 (00) 90000-0001"), "00000001");
+  a.equal(N.chaveFone("5500900000001"), "00000001");
+  a.equal(N.chaveFone("00900000001"), "00000001");
+  a.equal(N.jidParaFone("5500900000001@s.whatsapp.net"), "5500900000001");
+  a.equal(N.jidParaFone("5500900000001:12@s.whatsapp.net"), "5500900000001");
 });
 
 t.test("contato com id de privacidade (@lid): vale o número de verdade", () => {
-  a.equal(N.foneDaMensagem(msg({ conversation: "oi" }, { key: { remoteJid: "119928724144327@lid", senderPn: "5516999990000@s.whatsapp.net", id: "WA2" } })), "5516999990000");
-  a.equal(N.foneDaMensagem(msg({ conversation: "oi" })), "5516999990000");
-  a.equal(N.foneDaMensagem(msg({ conversation: "oi" }, { key: { remoteJid: "119928724144327@lid", id: "WA3" } })), "119928724144327");
+  a.equal(N.foneDaMensagem(msg({ conversation: "oi" }, { key: { remoteJid: "100000000000001@lid", senderPn: "5500900000001@s.whatsapp.net", id: "WA2" } })), "5500900000001");
+  a.equal(N.foneDaMensagem(msg({ conversation: "oi" })), "5500900000001");
+  a.equal(N.foneDaMensagem(msg({ conversation: "oi" }, { key: { remoteJid: "100000000000001@lid", id: "WA3" } })), "100000000000001");
 });
 
 t.test("o que sai do escritório numa conversa @lid: o número vem do mapa aprendido", () => {
   const mapa = new Map();
-  const entra = msg({ conversation: "oi" }, { key: { remoteJid: "2222@lid", senderPn: "5516999990000@s.whatsapp.net", id: "E1" } });
-  const sai = msg({ conversation: "bom dia" }, { key: { remoteJid: "2222@lid", senderPn: "5516981409271@s.whatsapp.net", fromMe: true, id: "S1" } });
+  const entra = msg({ conversation: "oi" }, { key: { remoteJid: "2222@lid", senderPn: "5500900000001@s.whatsapp.net", id: "E1" } });
+  const sai = msg({ conversation: "bom dia" }, { key: { remoteJid: "2222@lid", senderPn: "5500900000007@s.whatsapp.net", fromMe: true, id: "S1" } });
   a.equal(N.foneDaMensagem(sai, mapa), "");                 // sem mapa: não se sabe de quem é
-  a.equal(N.foneDaMensagem(entra, mapa), "5516999990000");  // o cliente ensina o mapa
-  a.equal(N.foneDaMensagem(sai, mapa), "5516999990000");    // nunca o nosso próprio número
-  a.equal(N.foneDaMensagem(msg({ conversation: "x" }, { key: { remoteJid: "5516977776666@s.whatsapp.net", fromMe: true, id: "S2" } })), "5516977776666");
+  a.equal(N.foneDaMensagem(entra, mapa), "5500900000001");  // o cliente ensina o mapa
+  a.equal(N.foneDaMensagem(sai, mapa), "5500900000001");    // nunca o nosso próprio número
+  a.equal(N.foneDaMensagem(msg({ conversation: "x" }, { key: { remoteJid: "5500900000008@s.whatsapp.net", fromMe: true, id: "S2" } })), "5500900000008");
 });
 
 t.test("Baileys 7: o número vem em key.remoteJidAlt, também no que sai do escritório", () => {
   const mapa = new Map();
-  const sai = msg({ conversation: "bom dia" }, { key: { remoteJid: "3333@lid", remoteJidAlt: "5516955554444@s.whatsapp.net", fromMe: true, id: "S7" } });
-  a.equal(N.foneDaMensagem(sai, mapa), "5516955554444");
-  a.equal(mapa.get("3333@lid"), "5516955554444@s.whatsapp.net");
-  const h = { key: { remoteJid: "4444@lid", remoteJidAlt: "5516988887777@s.whatsapp.net", id: "H7", fromMe: true },
+  const sai = msg({ conversation: "bom dia" }, { key: { remoteJid: "3333@lid", remoteJidAlt: "5500900000009@s.whatsapp.net", fromMe: true, id: "S7" } });
+  a.equal(N.foneDaMensagem(sai, mapa), "5500900000009");
+  a.equal(mapa.get("3333@lid"), "5500900000009@s.whatsapp.net");
+  const h = { key: { remoteJid: "4444@lid", remoteJidAlt: "5500900000000@s.whatsapp.net", id: "H7", fromMe: true },
     messageTimestamp: 1785000000, message: { conversation: "x" } };
-  const g = N.agruparHistorico([], [h], new Set([N.chaveFone("5516988887777")]));
-  a.equal(g.get("5516988887777").length, 1);
+  const g = N.agruparHistorico([], [h], new Set([N.chaveFone("5500900000000")]));
+  a.equal(g.get("5500900000000").length, 1);
 });
 
 t.test("histórico: só cliente entra, @lid acha o número, ordem por data", () => {
   const h = (jid, ts, extra = {}) => ({ key: { remoteJid: jid, id: "H" + ts, fromMe: false, ...extra },
     messageTimestamp: ts, message: { conversation: "msg " + ts } });
-  const chats = [{ id: "2222@lid", pnJid: "5516988887777@s.whatsapp.net" }];
+  const chats = [{ id: "2222@lid", pnJid: "5500900000000@s.whatsapp.net" }];
   const msgs = [
-    h("5516999990000@s.whatsapp.net", 1785000300),
-    h("5516999990000@s.whatsapp.net", 1785000100, { fromMe: true }),
-    h("2222@lid", 1785000200, { fromMe: true, senderPn: "5516981409271@s.whatsapp.net" }),
-    h("5511912345678@s.whatsapp.net", 1785000400),
+    h("5500900000001@s.whatsapp.net", 1785000300),
+    h("5500900000001@s.whatsapp.net", 1785000100, { fromMe: true }),
+    h("2222@lid", 1785000200, { fromMe: true, senderPn: "5500900000007@s.whatsapp.net" }),
+    h("5500900000012@s.whatsapp.net", 1785000400),
     h("1203630@g.us", 1785000500),
     h("3333@lid", 1785000600),
   ];
-  const g = N.agruparHistorico(chats, msgs, new Set(["99990000", "88887777"]));
-  a.deepEqual([...g.keys()].sort(), ["5516988887777", "5516999990000"]);
-  a.deepEqual(g.get("5516999990000").map(m => m.messageTimestamp), [1785000100, 1785000300]);
-  a.equal(g.get("5516988887777").length, 1);
+  const g = N.agruparHistorico(chats, msgs, new Set(["00000001", "00000000"]));
+  a.deepEqual([...g.keys()].sort(), ["5500900000000", "5500900000001"]);
+  a.deepEqual(g.get("5500900000001").map(m => m.messageTimestamp), [1785000100, 1785000300]);
+  a.equal(g.get("5500900000000").length, 1);
 });
 
 t.test("citação e reação do cliente, e a chave para citar ou reagir", () => {
   const citando = msg({ extendedTextMessage: { text: "isso mesmo", contextInfo: { stanzaId: "ORIG1" } } });
   a.equal(N.citacaoDe(citando), "ORIG1");
   a.equal(N.citacaoDe(msg({ conversation: "oi" })), null);
-  const reage = { key: { remoteJid: "5516999990000@s.whatsapp.net", id: "R1" }, message: { reactionMessage: { key: { id: "ORIG1" }, text: "👍" } } };
+  const reage = { key: { remoteJid: "5500900000001@s.whatsapp.net", id: "R1" }, message: { reactionMessage: { key: { id: "ORIG1" }, text: "👍" } } };
   a.deepEqual(N.reacaoDe(reage), { id: "ORIG1", emoji: "👍" });
   a.deepEqual(N.reacaoDe({ key: {}, message: { reactionMessage: { key: { id: "ORIG1" }, text: "" } } }), { id: "ORIG1", emoji: "" });
   a.equal(N.reacaoDe(msg({ conversation: "oi" })), null);
@@ -135,7 +135,7 @@ t.test("o que NÃO pode virar linha na tela", () => {
           true, "grupo");
   a.equal(N.deveIgnorar({ key: { remoteJid: "status@broadcast" },
                           message: { conversation: "meu status" } }), true, "status");
-  a.equal(N.deveIgnorar({ key: { remoteJid: "5516999990000@s.whatsapp.net" } }), true, "vazia");
+  a.equal(N.deveIgnorar({ key: { remoteJid: "5500900000001@s.whatsapp.net" } }), true, "vazia");
 });
 
 t.test("mensagem de gente passa", () => {
@@ -168,7 +168,7 @@ t.test("recente: o lote da reconexão entra só com o que chegou nos últimos di
 });
 
 t.test("F332: apagada e editada no WhatsApp", () => {
-  const pm = p => ({ key: { remoteJid: "5516999990000@s.whatsapp.net" }, message: { protocolMessage: p } });
+  const pm = p => ({ key: { remoteJid: "5500900000001@s.whatsapp.net" }, message: { protocolMessage: p } });
   a.deepEqual(N.alteracaoDe(pm({ type: 0, key: { id: "X1" } })), { id: "X1", apagada: true });
   a.deepEqual(N.alteracaoDe(pm({ type: 14, key: { id: "X2" }, editedMessage: { conversation: "corrigido" } })), { id: "X2", texto: "corrigido" });
   a.deepEqual(N.alteracaoDe({ message: { editedMessage: { message: { protocolMessage: { type: 14, key: { id: "X3" },
@@ -183,10 +183,10 @@ t.test("F332: apagada e editada no WhatsApp", () => {
 t.test("F491: a mensagem de cliente que não abriu pede o histórico; grupo, enviada e outro stub não", () => {
   const { naoAbriu } = require("../normalizar");
   const k = (j, fromMe = false) => ({ remoteJid: j, fromMe, id: "X" });
-  a.equal(naoAbriu({ key: k("5516996041533@s.whatsapp.net"), messageStubType: 2 }), true);
+  a.equal(naoAbriu({ key: k("5500900000011@s.whatsapp.net"), messageStubType: 2 }), true);
   a.equal(naoAbriu({ key: k("123@lid"), messageStubType: 2 }), true);
   a.equal(naoAbriu({ key: k("1203@g.us"), messageStubType: 2 }), false);
-  a.equal(naoAbriu({ key: k("5516996041533@s.whatsapp.net", true), messageStubType: 2 }), false);
-  a.equal(naoAbriu({ key: k("5516996041533@s.whatsapp.net"), messageStubType: 1 }), false);
-  a.equal(naoAbriu({ key: k("5516996041533@s.whatsapp.net"), messageStubType: 2, message: { conversation: "oi" } }), false);
+  a.equal(naoAbriu({ key: k("5500900000011@s.whatsapp.net", true), messageStubType: 2 }), false);
+  a.equal(naoAbriu({ key: k("5500900000011@s.whatsapp.net"), messageStubType: 1 }), false);
+  a.equal(naoAbriu({ key: k("5500900000011@s.whatsapp.net"), messageStubType: 2, message: { conversation: "oi" } }), false);
 });

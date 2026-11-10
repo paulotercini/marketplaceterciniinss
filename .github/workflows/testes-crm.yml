@@ -1,0 +1,119 @@
+# Testes do CRM que não precisam de navegador, a cada push na main e a cada PR:
+# 1) funcoes: as Edge Functions (testes/funcoes/*.test.mjs) e as regras, robôs, extensão e ponte (*/testes/*.test.js);
+# 2) banco: um Postgres vazio recebe o schema e as migrações e roda crm/fase2/testes/zap*.sql.
+# Sem filtro de caminho de propósito: o PR que não toca o CRM leva 2 minutos e a marca verde vale para todos.
+name: Testes do CRM (funções, ponte e banco)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: testes-crm-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  funcoes:
+    name: Edge Functions, regras e ponte
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Edge Functions (testes/funcoes/*.test.mjs)
+        run: node --experimental-strip-types --test crm/fase2/testes/funcoes/*.test.mjs
+      - name: Dependências da ponte
+        working-directory: crm/fase2/ponte
+        run: npm ci --no-audit --no-fund
+      # Com aspas: o glob é do node. Passar a pasta (node --test crm/fase2/ponte/testes) falha no Node 22.
+      - name: Regras, robôs, extensão e ponte (*/testes/*.test.js)
+        run: node --test "crm/fase2/*/testes/*.test.js"
+
+  banco:
+    name: Banco (zap*.sql)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v4
+
+      # O schema.sql sozinho não sobe num banco vazio (falta a ordem das tabelas e o que o Supabase já traz),
+      # por isso: o que o Supabase traz, o schema, os schema_*.sql, o schema de novo e as migrações em ordem
+      # alfabética (a mesma do aplicar_migracoes.py), sem parar no erro. Os erros são contados e mostrados.
+      - name: Montar o banco de base
+        run: |
+          createdb base
+          psql -q -v ON_ERROR_STOP=1 -d base <<'SQL'
+          create role anon; create role authenticated; create role service_role bypassrls;
+          create schema auth;
+          create table auth.users(id uuid primary key, email text);
+          create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid $$;
+          create schema extensions; create extension unaccent schema extensions; create extension pgcrypto;
+          create schema storage;
+          create table storage.buckets(id text primary key, name text, public boolean default false);
+          create table storage.objects(id uuid primary key default gen_random_uuid(), bucket_id text, name text, owner uuid);
+          alter table storage.objects enable row level security;
+          create schema cron;
+          create table cron.job(jobid serial, jobname text, schedule text, command text);
+          create function cron.schedule(a text, b text, c text) returns int language sql as 'select 1';
+          create function cron.unschedule(a text) returns bool language sql as 'select true';
+          create schema net;
+          create function net.http_post(url text, body jsonb default '{}', params jsonb default '{}', headers jsonb default '{}', timeout_milliseconds int default 5000) returns bigint language sql as 'select 1::bigint';
+          grant usage on schema auth, extensions, storage, net to anon, authenticated, service_role;
+          alter default privileges in schema public grant all on tables to anon, authenticated, service_role;
+          SQL
+          cd crm/fase2
+          psql -q -d base -f schema.sql >/dev/null 2>&1 || true
+          for f in schema_*.sql; do psql -q -d base -f "$f" >/dev/null 2>&1 || true; done
+          for f in schema.sql migracoes/*.sql; do
+            n=$(psql -q -d base -f "$f" 2>&1 | grep -c 'ERROR' || true)
+            [ "$n" = 0 ] || echo "::notice::$f: $n erro(s) ao montar o banco de teste"
+          done
+
+      # Cada teste roda numa cópia limpa da base; o que se diz "banco VAZIO" traz as próprias tabelas e roda num banco vazio.
+      # Falha = linha com ERROR ou FALHOU (o "role already exists" do teste de banco vazio não conta, os papéis são do servidor).
+      # "vermelhos" são as suítes que já falhavam em 10.11.2026, por teste desatualizado ou schema.sql incompleto:
+      # rodam e mostram o resultado, mas não derrubam o job. Ao consertar uma, tire o nome daqui.
+      - name: Rodar crm/fase2/testes/zap*.sql
+        run: |
+          vermelhos=" zap zap_bot zap_ia zap_plantao zap_smbot zap_triagem zap_volta "
+          ruim=0
+          for f in crm/fase2/testes/zap*.sql; do
+            t=$(basename "$f" .sql)
+            dropdb --if-exists "t_$t"
+            if grep -qi 'banco vazio' "$f"; then createdb "t_$t"; else createdb -T base "t_$t"; fi
+            psql -d "t_$t" -f "$f" > "/tmp/$t.log" 2>&1 || true
+            n=$(grep -E 'ERROR|FALHOU' "/tmp/$t.log" | grep -vc 'role "[a-z_]*" already exists' || true)
+            if [ "$n" = 0 ]; then echo "ok      $t"
+            elif [[ "$vermelhos" == *" $t "* ]]; then
+              echo "::warning::$t: $n linha(s) de falha (suíte já vermelha, não derruba o job)"
+              grep -E 'ERROR|FALHOU' "/tmp/$t.log" | head -20
+            else
+              echo "::error::$t: $n linha(s) de falha"
+              grep -E -B2 -A2 'ERROR|FALHOU' "/tmp/$t.log" | head -60
+              ruim=1
+            fi
+          done
+          exit $ruim

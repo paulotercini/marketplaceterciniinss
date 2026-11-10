@@ -20,9 +20,9 @@ const SONDA = fs.readFileSync(path.join(RAIZ, 'sonda-no-navegador.js'), 'utf8');
 // dado inventado no lugar do real
 const LISTA = {
   tarefas: [{
-    protocolo: '1462069078', status: 'Pendente', cpfRequerente: 8575979817,
+    protocolo: '1462069078', status: 'Pendente', cpfRequerente: 8500000090,
     nomeServico: 'Aposentadoria por Tempo de Contribuição', siglaServico: 'TBSBAPD',
-    nomeRequerente: 'ALMIR TRONFINI', dataCriacao: '2026-07-31T17:36:47',
+    nomeRequerente: 'ALMIR TAVARES', dataCriacao: '2026-07-31T17:36:47',
     nomeUnidade: 'APS FRANCA', dataUltimaAtualizacao: '2026-08-04T16:00:39',
   }],
   quantidadeTotalTarefa: 184, imagemCaptcha: null,
@@ -30,7 +30,7 @@ const LISTA = {
 const DETALHE = {
   protocolo: '1462069078', situacao: 'CUMPRIMENTO_DE_EXIGENCIA',
   nomeServico: 'Aposentadoria por Tempo de Contribuição', nomeUnidade: 'APS FRANCA',
-  requerente: { nome: 'ALMIR TRONFINI', cpf: '085.759.798-17', dataNascimento: '1958-03-04' },
+  requerente: { nome: 'ALMIR TAVARES', cpf: '085.000.000-90', dataNascimento: '1958-05-06' },
   anexos: [{ nomeArquivo: 'laudo_oncologia.pdf', tamanho: 448122 }],
   agendamentos: [{ situacao: 'REMARCADO', data: '2026-09-15', unidade: 'APS FRANCA' }],
   comentarios: [{ texto: 'segurado relatou dor lombar', autor: 'ANALISTA' }],
@@ -104,8 +104,8 @@ test('o crachá vai pelo tipo e pelo tamanho — nunca pelo valor', pular, () =>
 
 test('nada que identifique alguém sai no arquivo', pular, () => {
   const s = JSON.stringify(baixado);
-  for (const vaza of ['ALMIR', 'TRONFINI', '085.759', '08575979817', '8575979817',
-                      '1958-03-04', 'laudo_oncologia', 'lombar', '1462069078'])
+  for (const vaza of ['ALMIR', 'TAVARES', '085.000', '08500000090', '8500000090',
+                      '1958-05-06', 'laudo_oncologia', 'lombar', '1462069078'])
     assert.ok(!s.includes(vaza), `VAZOU "${vaza}"`);
 });
 

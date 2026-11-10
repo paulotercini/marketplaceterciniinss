@@ -11,12 +11,12 @@ const texto = o => JSON.stringify(o);
 
 test('CPF, nome e nascimento não sobrevivem', () => {
   const fora = P.peneirar({
-    cpf: '085.759.798-17', cpfSemMascara: '08575979817',
-    nome: 'Almir Tronfini', nomeRequerente: 'ALMIR TRONFINI',
-    dataNascimento: '1958-03-04', nomeMae: 'Maria Tronfini',
+    cpf: '085.000.000-90', cpfSemMascara: '08500000090',
+    nome: 'Almir Tavares', nomeRequerente: 'ALMIR TAVARES',
+    dataNascimento: '1958-05-06', nomeMae: 'Maria Tavares',
   });
   const s = texto(fora);
-  for (const vaza of ['085', '08575979817', 'Almir', 'ALMIR', 'Tronfini', 'Maria'])
+  for (const vaza of ['085', '08500000090', 'Almir', 'ALMIR', 'Tavares', 'Maria'])
     assert.ok(!s.includes(vaza), `vazou "${vaza}" em ${s}`);
   // a data de nascimento é dado pessoal: some mesmo tendo cara de data
   assert.ok(!s.includes('1958'), `vazou a data de nascimento em ${s}`);
@@ -107,7 +107,7 @@ test('nome de SERVIÇO e de UNIDADE não são nome de gente', () => {
     nomeServico: 'Aposentadoria por Tempo de Contribuição da Pessoa com Deficiência',
     siglaServico: 'TBSBAPD',
     nomeUnidade: 'AGENCIA DA PREVIDENCIA SOCIAL FRANCA',
-    nomeRequerente: 'Almir Tronfini',
+    nomeRequerente: 'Almir Tavares',
   });
   assert.equal(fora.siglaServico, 'TBSBAPD');
   assert.match(fora.nomeUnidade, /FRANCA/);

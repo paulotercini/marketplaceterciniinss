@@ -18,8 +18,9 @@ assert.ok(promptRascunho("Maria", [], "x").includes("Não prometa resultado"));
 assert.ok(promptRascunho("Maria", [], "x", "Assine como equipe.").includes("Instruções do escritório (seguem as proibições acima):\nAssine como equipe."));
 assert.ok(!promptRascunho("Maria", [], "x", "  ").includes("Instruções do escritório"));
 // F479 · os números não passam pelo modelo e voltam iguais
-const g = guardarNumeros("o atendimento é dia 12/11 às 9h30, valor R$ 100,00, protocolo 1725551766871");
+const g = guardarNumeros("o atendimento é dia 12/11 às 9h30, valor R$ 100,00, protocolo 1700000000000");
 assert.ok(!/\d{3,}/.test(g.sem.replace(/⟦\d+⟧/g, "")), "nenhum número fica no texto que vai ao modelo");
-assert.equal(devolverNumeros(g.sem, g.nums), "o atendimento é dia 12/11 às 9h30, valor R$ 100,00, protocolo 1725551766871");
+assert.equal(devolverNumeros(g.sem, g.nums), "o atendimento é dia 12/11 às 9h30, valor R$ 100,00, protocolo 1700000000000");
 assert.ok(promptCorrigir("x", "Maria").includes("Não acrescente informação") && promptCorrigir("x", "", true).includes("nota interna"));
+assert.equal(mascarar("a senha é Abc@1234"), "a senha é [senha]", "F515 · a senha não vai ao modelo");
 console.log("zap_assistente: ok");

@@ -16,7 +16,7 @@ global.fetch = async (url, o = {}) => {
 };
 const ARQ = Buffer.from("%PDF-1.4 laudo");
 const msgDoc = (id, fileName) => ({
-  key: { id, remoteJid: "5516999990000@s.whatsapp.net", fromMe: false },
+  key: { id, remoteJid: "5500900000001@s.whatsapp.net", fromMe: false },
   messageTimestamp: 1761177600,
   message: { documentMessage: { fileName, mimetype: "application/pdf", caption: "segue o laudo" } },
 });
@@ -41,7 +41,7 @@ t.test("documento do cliente vai ao Storage e a linha guarda o caminho", async (
 });
 
 t.test("foto sem nome ganha nome pelo tipo e também é salva", async () => {
-  const m = { key: { id: "F1", remoteJid: "5516999990000@s.whatsapp.net" },
+  const m = { key: { id: "F1", remoteJid: "5500900000001@s.whatsapp.net" },
               message: { imageMessage: { mimetype: "image/jpeg" } } };
   await P.gravar(m, async () => Buffer.from("jpg"), "conv-1", "entrada", "entregue");
   a.match(subidas()[0].url, /zap\/conv-1\/F1-imagem\.jpeg$/);

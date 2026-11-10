@@ -162,7 +162,7 @@ provar o caminho de volta. Troque o número pelo do seu celular pessoal:
 insert into zap_mensagens (conversa_id, direcao, texto, status)
 select id, 'saida', 'Teste de resposta saindo do CRM 👋', 'fila'
   from zap_conversas
- where chave = fone_chave('16999990000');
+ where chave = fone_chave('00900000001');
 ```
 
 Em até dois segundos a mensagem chega no seu celular, e a linha vira

@@ -49,6 +49,7 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     localStorage.setItem("crm_tema", "v10");
   }, [SUPA, SESSAO]);
   const escritas = [];
+  let trava = null, falhaMsg = false;   // F517 · segura o upload e derruba o POST da mensagem, para as provas da troca de conversa
   await ctx.route(SUPA + "/**", rota => {
     const u = decodeURIComponent(rota.request().url()), m = rota.request().method();
     if (/\/auth\/v1\//.test(u)) return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(SESSAO) });
@@ -59,7 +60,9 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
       body: JSON.stringify({ titulo: "Meu INSS", descricao: "Serviços do INSS", imagem: "", site: "gov.br" }) });
     if (m !== "GET") {
       let corpo = null; try { corpo = rota.request().postData(); JSON.parse(corpo); } catch { corpo = null; }
+      if (falhaMsg && /zap_mensagens/.test(u)) return rota.fulfill({ status: 500, contentType: "application/json", body: '{"message":"falha simulada"}' });
       escritas.push({ u, m, b: corpo ? JSON.parse(corpo) : null });
+      if (trava && /storage\/v1\/object\/(?!sign)/.test(u)) return trava.then(() => rota.fulfill({ status: 200, contentType: "application/json", body: "{}" }));
       if (/rpc\/zap_painel/.test(u)) return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(PAINEL) });
       return rota.fulfill({ status: 204, body: "" });
     }
@@ -258,6 +261,28 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
       t.dispatchEvent(new ClipboardEvent("paste", {clipboardData: dt, bubbles: true, cancelable: true})); });
     await p.waitForTimeout(300);
     conf("F371 · colar um print envia a foto", escritas.some(e => /zap_mensagens/.test(e.u) && e.b && e.b.tipo === "imagem" && /^print-/.test(e.b.midia_nome)));
+    // F517 · trocar de conversa durante o upload: o anexo e a legenda ficam na conversa em que o envio começou
+    escritas.length = 0;
+    let solta; trava = new Promise(r => solta = r);
+    await p.fill("#zap-txt", "legenda de teste");
+    await p.setInputFiles("#zap-arq", { name: "laudo.pdf", mimeType: "application/pdf", buffer: Buffer.from("%PDF-1.4") });
+    await p.waitForTimeout(200);
+    await p.evaluate(() => { zapAberta = "d3000000-0000-0000-0000-00000000ffff"; });   // a tela passou a outra conversa
+    solta(); trava = null; await p.waitForTimeout(300);
+    const troca = escritas.find(e => /zap_mensagens/.test(e.u) && e.b && e.b.midia_nome === "laudo.pdf");
+    conf("F517 · o anexo vai à conversa do início, mesmo com outra aberta no fim do upload",
+      troca && troca.b.conversa_id === CONV && troca.b.midia_url.startsWith("zap/" + CONV + "/") && troca.b.texto === "legenda de teste");
+    await p.evaluate(c => { zapAberta = c; }, CONV);
+    await p.fill("#zap-txt", "");
+    falhaMsg = true;
+    await p.fill("#zap-txt", "legenda que volta");
+    await p.setInputFiles("#zap-arq", { name: "rg2.pdf", mimeType: "application/pdf", buffer: Buffer.from("%PDF-1.4") });
+    await p.waitForTimeout(400);
+    falhaMsg = false;
+    conf("F517 · a falha ao gravar o arquivo avisa e devolve a legenda", erros.length === 0
+      && await p.$eval("#zap-txt", t => t.value) === "legenda que volta"
+      && /Não enviei o arquivo/.test(await p.$eval("#aviso", e => e.textContent)));
+    await p.fill("#zap-txt", ""); await p.evaluate(c => guardarRascZap(c, ""), CONV);
     await p.tap(".ze-nota-cel"); await p.waitForTimeout(100);
     await p.fill("#zap-txt", "nota de teste"); await p.tap("#zap-enviar"); await p.waitForTimeout(300);
     conf("a nota interna é gravada", escritas.some(e => /zap_mensagens/.test(e.u) && e.b && e.b.texto === "nota de teste"));
