@@ -66,7 +66,8 @@ const SUPA = "https://ficticio.supabase.co";
   atraso = { clientes: 2500 };
   await p.reload();
   await p.waitForSelector("#app.logado");
-  await p.waitForTimeout(600);
+  // espera a marca em vez de 600 ms fixos: na suíte paralela do deploy a tela demorava mais
+  await p.waitForFunction(() => document.getElementById("app").classList.contains("dados-guardados") && typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0, null, { timeout: 2000 }).catch(() => {});
   const guard = await p.evaluate(() => ({ d: typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0,
     classe: document.getElementById("app").classList.contains("dados-guardados"), cache: dadosDoCache }));
   conf("F150 · com o banco lento, a tela abre com a sessão guardada, marcada 'atualizando'", guard.d && guard.classe && guard.cache);
@@ -96,6 +97,17 @@ const SUPA = "https://ficticio.supabase.co";
   conf("F150 · a abertura usa o programa guardado (a versão nova ainda não entrou)", !html.includes(marca));
   await p.waitForSelector("#nova-versao", { timeout: 5000 }).catch(() => {});
   conf("F150 · com versão nova no site, aparece o aviso de recarregar", await p.evaluate(() => !!document.getElementById("nova-versao")));
+  // F503 · o aviso fica no alto (embaixo cobria o campo de escrever) e sai depois de recarregar
+  conf("F503 · o aviso fica no alto da tela", await p.evaluate(() => document.getElementById("nova-versao").getBoundingClientRect().top < 60));
+  await p.click("#nova-versao button"); await p.waitForSelector("#app.logado"); await p.waitForTimeout(1500);
+  conf("F503 · depois de Recarregar o aviso não volta", await p.evaluate(() => !document.getElementById("nova-versao")));
+  conf("F503 · aviso de versão anterior à aberta não aparece", await p.evaluate(() => {
+    avisoNovaVersao({ crm: "nova-versao", versao: "1.0", prog: "" });
+    const nada = !document.getElementById("nova-versao");
+    const [a, b] = minhaVersao().split(".").map(Number);
+    avisoNovaVersao({ crm: "nova-versao", versao: a + "." + (b + 1), prog: "" });
+    return nada && !!document.getElementById("nova-versao");
+  }));
 
   // (5) o Sair apaga a sessão guardada
   conf("F150 · o Sair apaga a sessão guardada", await p.evaluate(async () => { await cacheApagar(); return (await cacheLer()) === null; }));
