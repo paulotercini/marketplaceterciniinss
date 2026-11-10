@@ -2951,6 +2951,7 @@ html[data-tema] .proc-mais[open] .tl-mais-menu{transform-origin:top right;transi
 @media (prefers-reduced-motion:reduce){html[data-tema] .proc-mais[open] .tl-mais-menu,.proc-v .btn-mini{transition:none}}
 .exp-tab{width:100%;border-collapse:collapse;font-size:13px}.exp-tab th,.exp-tab td{border-bottom:1px solid var(--linha,#e2e2e2);padding:6px 8px;text-align:left;vertical-align:top}
 .exp-tab th{font-weight:600;background:var(--fundo2,#f5f5f2)}.exp-tab td:nth-child(2){white-space:nowrap}.exp-tela{max-width:960px;width:100%}.exp-tela .exp-tab{display:block;overflow-x:auto}
+.zof-salvas{margin-top:10px;display:flex;flex-direction:column;gap:6px}.zof-it{display:flex;gap:6px}.zof-it button:first-child{flex:1;text-align:left;white-space:normal;line-height:1.35}
 </style>
 <script>
 /* F80 · interruptor do tema v10. ?tema=v10 liga e guarda; ?tema= (vazio)
@@ -7001,7 +7002,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.36</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.37</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18973,7 +18974,7 @@ async function gravarEstadoZap(off, msg){
   try{ await api(`/rest/v1/rpc/zap_meu_offline`,{method:"POST", body:JSON.stringify({p_offline:off, p_msg:msg||null})}); }
   catch(e){ return aviso("Não gravou: tente de novo"); }
   eu.zap_offline_desde = off ? (eu.zap_offline_desde || new Date().toISOString()) : null;
-  if(msg) eu.zap_offline_msg = msg;
+  if(msg){ eu.zap_offline_msg = msg; eu.zap_offline_salvas = [msg, ...(eu.zap_offline_salvas||[]).filter(x => x !== msg)].slice(0,20); }
   fecharCaixa(); pintarListaZap();
   aviso(off ? "Offline: a mensagem automática vai ao contato que você assumiu" : "Online");
 }
@@ -18982,6 +18983,8 @@ function estadoZap(){
   caixa(`<h3>${off?"Você está offline":"Ficar offline"}</h3>
     <p class="meio-sub">Offline, quem escrever numa conversa que você assumiu recebe esta mensagem, uma vez por conversa, até você voltar.</p>
     <textarea id="zof-msg" rows="4" style="width:100%" aria-label="Mensagem automática">${esc(eu.zap_offline_msg||offlinePadrao())}</textarea>
+    ${(eu.zap_offline_salvas||[]).length ? `<div class="zof-salvas"><b>Mensagens salvas</b>${eu.zap_offline_salvas.map((m,i) =>
+      `<div class="zof-it"><button class="btn-mini" data-zof-usar="${i}" title="Usar esta mensagem">${esc(m)}</button><button class="btn-mini" data-zof-tirar="${i}" title="Tirar da lista" aria-label="Tirar da lista">✕</button></div>`).join("")}</div>` : ""}
     <div class="form-linha" style="margin-top:10px">
       ${off?`<button class="btn-sal" id="zof-on" title="Voltar a ficar online">Online</button>
              <button class="btn-sec" id="zof-sal" title="Salvar a mensagem e continuar offline">Salvar</button>`
@@ -18992,6 +18995,14 @@ function estadoZap(){
   if(b("zof-on")) b("zof-on").onclick = () => gravarEstadoZap(false, txt());
   if(b("zof-sal")) b("zof-sal").onclick = () => gravarEstadoZap(true, txt());
   if(b("zof-off")) b("zof-off").onclick = () => gravarEstadoZap(true, txt());
+  // F519 · a mensagem salva volta ao campo no clique; o ✕ a tira da lista
+  document.querySelectorAll("[data-zof-usar]").forEach(x => x.onclick = () => { b("zof-msg").value = eu.zap_offline_salvas[+x.dataset.zofUsar]; });
+  document.querySelectorAll("[data-zof-tirar]").forEach(x => x.onclick = async () => {
+    const m = eu.zap_offline_salvas[+x.dataset.zofTirar];
+    try{ await api(`/rest/v1/rpc/zap_offline_esquecer`,{method:"POST", body:JSON.stringify({p_msg:m})}); }
+    catch(e){ return aviso("Não tirou: tente de novo"); }
+    eu.zap_offline_salvas = eu.zap_offline_salvas.filter(y => y !== m); const t = txt(); estadoZap(); b("zof-msg").value = t;
+  });
 }
 // F399 · o horário dos avisos no aparelho, de cada pessoa (colaboradores.push_de e push_ate; vazio = a qualquer hora)
 const hhmm = t => (t||"").slice(0,5);
