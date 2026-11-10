@@ -5,6 +5,7 @@ process.env.SUPABASE_SERVICE_KEY = "chave-de-teste";
 process.env.PAUSA_ENVIO = "0";
 process.env.PAUSA_REENVIO = "0";
 process.env.TETO_ENVIO = "50";
+process.env.PONTE_FILA = require("node:path").join(require("node:os").tmpdir(), "ponte-f514-" + process.pid + ".jsonl");
 
 const t = require("node:test");
 const a = require("node:assert");
