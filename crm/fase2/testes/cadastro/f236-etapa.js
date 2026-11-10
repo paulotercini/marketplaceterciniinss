@@ -119,15 +119,15 @@ const casoDe = id => T.casos.find(k => k.id === id);
   const abrir = async (x, tema = "v10") => {
     await p.evaluate(async ([cli, id, tema]) => {
       if (tema === "v10") document.documentElement.setAttribute("data-tema", "v10"); else document.documentElement.removeAttribute("data-tema");
-      await abrirFicha(cli); casoSel = id; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); }, [x.cli, x.id, tema]);
+      await abrirFicha(cli); casoSel = id; abaAtiva = 2; subAba = "escritorio"; lcAberto.set(id, 1); repintarFicha(); }, [x.cli, x.id, tema]);
     await p.waitForTimeout(350);
   };
   const tela = () => p.evaluate(() => {
     const t = s => ((document.querySelector(s) || {}).textContent || "").replace(/\s+/g, " ").trim();
     return { etapa: t(".tr-agora b"),   // F287 · a etapa saiu da placa e mora na faixa das fases
-      velha: t(".lc-placa .et-velha"), sug: t(".lc-placa .et-sug"), agora: t(".tr-agora b"),
+      velha: t(".linha-caso .et-velha"), sug: t(".linha-caso .et-sug"), agora: t(".tr-agora b"),
       atual: t(".jn-l .jn-a .jn-st"), jornada: [...document.querySelectorAll(".jn-l .jn-b")].map(b => `${b.querySelector(".jn-txt").textContent} ${b.querySelector(".jn-st").textContent}`.replace(/\s+/g, " ").trim()),
-      sobre: t(".lc-sobre"), ben: t(".lc-ben") };
+      sobre: [t(".lc-sobre"), t(".lc5-lugar"), document.querySelector(".lc5-lugar")?.title||""].join(" "), ben: t(".lc-ben") };
   });
   const escritasDe = (id, m, t = "casos") => banco.escritas.filter(e => e.m === m && e.t === t && (e.ids || e.linhas || []).includes(id));
 
@@ -149,7 +149,7 @@ const casoDe = id => T.casos.find(k => k.id === id);
   conf("A5 a faixa do caso no alto das outras abas diz que a etapa ficou para trás",
     await p.evaluate(id => /aguardando perícia \(desatualizada\)/.test(faixaDoCaso([D.casoPorId.get(id)])), A.id));
   banco.escritas.length = 0;
-  await p.evaluate(() => document.querySelector(".lc-placa .et-aceitar").click());
+  await p.evaluate(() => document.querySelector(".linha-caso .et-aceitar").click());
   await p.waitForTimeout(700);
   const patchesA = escritasDe(A.id, "PATCH").map(e => e.corpo);
   const andA = banco.escritas.find(e => e.m === "POST" && e.t === "andamentos");
@@ -197,7 +197,7 @@ const casoDe = id => T.casos.find(k => k.id === id);
     await p.evaluate(dt => { const b = [...document.querySelectorAll(".tr-l .tr-et")].find(x => /Ação distribuída/.test(x.textContent));
       return !!b && b.classList.contains("tr-sf") && b.textContent.includes(dt); }, barra(-380)));
   banco.escritas.length = 0;
-  await p.evaluate(() => document.querySelector(".lc-placa .et-aceitar").click());
+  await p.evaluate(() => document.querySelector(".linha-caso .et-aceitar").click());
   await p.waitForTimeout(900);
   const kC = casoDe(C.id);
   conf("C4 Aceitar move pelo andarEtapa: Pagamento, lista 💵 Pagamentos e etapa 'RPV expedida', com o andamento",

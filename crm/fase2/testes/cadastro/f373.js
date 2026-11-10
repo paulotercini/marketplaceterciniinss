@@ -115,7 +115,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // 5 · o Concluir por hoje não apaga a ⭐
   await p.evaluate(kid => { casoSel = kid; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); }, kB.id);
-  await p.waitForSelector(".desp-bt");
+  await p.waitForSelector(".desp-bt", { state: "attached" });
+  await p.evaluate(() => { const m = document.querySelector(".linha-caso .lc-menu"); if (m) m.open = true; }); // F504: o Concluir mora no ⋯
   await p.click(".desp-bt");
   await p.waitForSelector(".desp-datas");
   await p.click('.desp-datas .btn-mini:has-text("Amanhã")');

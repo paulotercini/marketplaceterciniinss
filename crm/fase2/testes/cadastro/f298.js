@@ -97,8 +97,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const vis = sel => p.$$eval(sel, a => a.some(e => e.offsetParent));
   await p.evaluate(() => celIr("caso")); await p.waitForTimeout(400);   // F320 · as etapas e a placa moram na aba Caso
   conf("a trilha das etapas nasce recolhida", !(await vis(".tr-rol")) && (await vis(".tr-recolhida .tr-alca")));
-  conf("a placa do caso nasce fechada", !(await vis(".linha-caso .lc-placa")));
-  conf("na ficha, nenhum alvo de toque abaixo de 24 px", !(await PEQ()).length);
+  conf("F504 · as datas do caso à vista e os números fechados", (await vis(".linha-caso .lc-placa")) && !(await vis(".linha-caso .lc-numeros")));
+  { const pq = await PEQ(); conf("na ficha, nenhum alvo de toque abaixo de 24 px", !pq.length) || console.log(JSON.stringify(pq)); }
   // F307 · os flutuantes numa coluna só: agenda, ✎ e ⚡ no mesmo eixo, 8 px entre eles, e o "?" na altura do ✎
   const FABS = () => p.evaluate(() => { const r = s => { const e = document.querySelector(s); if (!e || !e.offsetParent && getComputedStyle(e).position !== "fixed") return null;
       const b = (e.querySelector(".zag-pilula") || e).getBoundingClientRect(); return b.width ? { l: b.left, r: b.right, t: b.top, b: b.bottom, x: (b.left + b.right) / 2, y: (b.top + b.bottom) / 2 } : null; };
