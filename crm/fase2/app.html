@@ -4246,6 +4246,12 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 
 /* ══ F151 · agenda de quarta ══ */
 .aq{display:flex;flex-direction:column;gap:14px}
+.aq-pesq{display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px}
+.aq-pq-lista{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;max-height:60vh;overflow:auto}
+.aq-pq-lista button{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;width:100%;padding:8px 10px;border:1px solid var(--borda);border-radius:10px;background:#fff;font:inherit;text-align:left;cursor:pointer}
+.aq-pq-lista button:hover,.aq-pq-lista button:focus-visible{border-color:var(--azul)}
+.aq-pq-lista span{flex-basis:100%;font-size:12px;color:var(--cinza,#4A4944)}
+.aq-ev.aq-achado{outline:3px solid var(--azul);outline-offset:1px;z-index:5}
 .aq-agendar{border:0;border-radius:8px;padding:8px 14px;background:var(--azul);color:#fff;font:inherit;font-weight:600;cursor:pointer}
 .aq-alerta{padding:10px 14px;border-radius:12px;background:#F8ECD8;color:#8A5300;border:1px solid #EEDCBC;font-size:14px}
 .aq-faixa{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
@@ -6981,7 +6987,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.31</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.32</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -57960,6 +57966,7 @@ function pintarTopoAgenda(){
   document.getElementById("topo-extra").innerHTML = `<div class="aq-topo">
     <div class="seg-colab aq-profs" role="group" aria-label="Profissional">${[...lista, {id:"todos", nome:"Completa"}].map(x=>`<button data-aqprof="${x.id}" aria-pressed="${agq.prof===x.id}" class="${agq.prof===x.id?"on":""}"><i class="aq-bola p-${x.id}"></i>${esc(x.nome)}</button>`).join("")}</div>
     ${((agq.disp||agq.cache.paulo||{}).papel==="admin")?`<button class="btn-rap" onclick="abrirDiasAgenda()">Dias de atendimento</button>`:""}
+    <button class="btn-rap aq-pesq" onclick="pesquisarAgenda()" title="Pesquisar atendimento pelo nome ou telefone" aria-label="Pesquisar atendimento"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
     <button class="aq-agendar" onclick="abrirFluxoAgenda()">+ Agendar</button></div>`;
   document.querySelectorAll("[data-aqprof]").forEach(b=>b.onclick=async()=>{ agq.prof=b.dataset.aqprof;
     if(agq.prof==="todos" && PROFS_AGENDA.every(pr=>agq.cache[pr])) juntarCompleta();   // F250g · a Completa sai do que já está guardado
@@ -57967,6 +57974,51 @@ function pintarTopoAgenda(){
     if(!agq.disp){ document.getElementById("conteudo-meio").innerHTML = esqueletoLista(8); await carregarAgenda(); } else carregarAgenda().then(()=>visao==="agendaq"&&pintarAgenda());
     if(!agq.sel && agq.disp) agq.sel=(agq.disp.dias.find(d=>!d.bloqueado)||agq.disp.dias[0]||{}).data;
     if(visao==="agendaq") pintarAgenda(); });
+}
+// F507 · a lupa da Agenda: procura o atendimento pelo nome ou pelo telefone em todos os dias carregados das três agendas
+// (Paulo, Marcos e Amanda; o Apps Script devolve os próximos dias de atendimento de cada um), e o clique abre o dia
+function achadosAgenda(q){
+  const t = semAcento(q).toLowerCase().trim(), dig = q.replace(/\D/g,"");
+  if(t.length<2 && dig.length<4) return [];
+  const vistos = new Set(), res = [];
+  PROFS_AGENDA.forEach(pr=>((agq.cache[pr]||{}).dias||[]).forEach(d=>(d.eventos||[]).forEach(e=>{
+    if(!e.atendimento || vistos.has(e.id)) return;
+    const nome = nomeDoEvento(e), tel = String(e.telefone||"").replace(/\D/g,"");
+    const bate = (t.length>=2 && semAcento(nome+" "+e.titulo).toLowerCase().includes(t)) || (dig.length>=4 && tel.includes(dig));
+    if(bate){ vistos.add(e.id); res.push({...e, data:e.data||d.data, nome, profissional:e.profissional||pr}); }
+  })));
+  return res.sort((a,b)=>(a.data+a.inicio).localeCompare(b.data+b.inicio));
+}
+function pesquisarAgenda(){
+  caixa(`<div class="aq-fluxo aq-pesquisa"><h3>Pesquisar na agenda</h3>
+    <label class="aq-campo">Nome ou telefone do cliente<input id="aq-pq" class="aq-inp" autocomplete="off" placeholder="Digite ao menos 2 letras"></label>
+    <div id="aq-pq-res" aria-live="polite"></div></div>`);
+  const inp = document.getElementById("aq-pq"), out = document.getElementById("aq-pq-res");
+  const pintar = () => {
+    const q = inp.value, falta = PROFS_AGENDA.filter(pr=>!agq.cache[pr]);
+    const r = achadosAgenda(q);
+    const dias = PROFS_AGENDA.flatMap(pr=>((agq.cache[pr]||{}).dias||[]).map(d=>d.data)).sort();
+    const nota = dias.length ? `<p class="meio-sub">Procura nos dias carregados, de ${dataBR(dias[0])} a ${dataBR(dias[dias.length-1])}${falta.length?`; ainda carregando a agenda de ${falta.map(nomeProf).join(" e ")}`:""}.</p>` : "";
+    if(!q.trim()){ out.innerHTML = nota; return; }
+    out.innerHTML = (r.length ? `<ul class="aq-pq-lista">${r.map(e=>`<li><button data-aqpq="${esc(e.id)}"><i class="aq-bola p-${e.profissional}"></i>
+        <b>${esc(e.nome)}</b><span>${diaExt(e.data)}, ${dataBR(e.data)} às ${hmTxt(e.inicio)} · ${esc(nomeProf(e.profissional))} · ${esc(e.tipo||"")} · ${e.confirmado?"Confirmado":"Não confirmado"}</span></button></li>`).join("")}</ul>`
+      : `<p class="aq-vazio">Nenhum atendimento encontrado.</p>`) + nota;
+    out.querySelectorAll("[data-aqpq]").forEach(b=>b.onclick=()=>irAoAtendimento(r.find(e=>e.id===b.dataset.aqpq)));
+  };
+  inp.oninput = pintar; inp.focus(); pintar();
+  // as agendas que ainda não vieram carregam agora, e a lista se refaz quando chegam
+  PROFS_AGENDA.filter(pr=>!agq.cache[pr]).forEach(pr=>carregarAgenda(pr).then(()=>{ if(document.getElementById("aq-pq")===inp) pintar(); }).catch(()=>{}));
+}
+function irAoAtendimento(e){
+  if(!e) return;
+  fecharCaixa();
+  if(agq.prof!=="todos") agq.prof = e.profissional;
+  if(agq.prof==="todos") juntarCompleta();
+  agq.disp = agq.cache[agq.prof] || agq.disp; agq.sel = e.data;
+  if(visao!=="agendaq"){ irPara("agendaq"); return; }
+  pintarTopoAgenda(); pintarAgenda();
+  const b = document.querySelector(`[data-aqev="${CSS.escape(e.id)}"]`);
+  if(b){ b.scrollIntoView({block:"center"}); b.classList.add("aq-achado"); b.focus({preventScroll:true}); setTimeout(()=>b.classList.remove("aq-achado"), 2500); }
 }
 function pintarAgenda(){
   const alvo = document.getElementById("conteudo-meio");
