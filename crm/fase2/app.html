@@ -7005,7 +7005,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.38</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.39</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19843,6 +19843,8 @@ async function renderConfig(){
              ${cfgApp("zap_ia_equipe")==="sim"?"checked":""}> IA ajuda a equipe (resumo, rascunho e documento recebido)</label>
            <label class="cfg-ck" title="a IA oferece e marca horário pelas vagas do Google Agenda em todas as conversas e remarca quem responde NÃO à confirmação; desligada, nenhuma das duas acontece"><input type="checkbox" id="cf-robo-agenda"
              ${cfgApp("zap_robo_agenda")==="sim"?"checked":""}> Agenda da IA: marca em todas as conversas e remarca quem responde NÃO</label>
+           <label class="cfg-ck" title="a IA põe na lista de espera quem pede data mais cedo e oferece pelo WhatsApp a vaga liberada pelo cancelamento ou pela remarcação, uma pessoa por vez, no expediente"><input type="checkbox" id="cf-ia-espera"
+             ${cfgApp("zap_ia_espera")==="sim"?"checked":""}> IA usa a lista de espera</label>
            <label class="cfg-ck" title="fora do expediente, quem escolhe caso novo conta o caso por escrito ou por áudio, e o relato fica como nota da equipe"><input type="checkbox" id="cf-robo-noturno"
              ${cfgApp("zap_robo_noturno")==="sim"?"checked":""}> fora do expediente, robô colhe o relato do caso novo</label>
            <label class="cfg-ck" title="quem não está em conversa com a equipe conversa com a IA na hora (dúvidas, caso novo, agenda); com a equipe na conversa, a mensagem sem resposta no prazo abaixo vai à IA, que tranquiliza dizendo qual advogado vai responder; todo aviso vai a todos os advogados e à recepção no CRM; agradecimento e conversa entre colegas ficam sem resposta; nunca dá parecer, chance ou valor"><input type="checkbox" id="cf-ia-plantao"
@@ -20096,6 +20098,7 @@ function ligarConfig(){
   cfgSalva("cf-filtro-auto","zap_filtro_auto", el=>el.checked?"sim":"nao");
   cfgSalva("cf-ia-equipe","zap_ia_equipe", el=>el.checked?"sim":"nao");
   cfgSalva("cf-robo-agenda","zap_robo_agenda", el=>el.checked?"sim":"nao");
+  cfgSalva("cf-ia-espera","zap_ia_espera", el=>el.checked?"sim":"nao");
   cfgSalva("cf-robo-noturno","zap_robo_noturno", el=>el.checked?"sim":"nao");
   cfgSalva("cf-ia-plantao","zap_ia_plantao", el=>el.checked?"sim":"nao");
   cfgSalva("cf-plantao-min","zap_plantao_min", el=>String(Math.min(240, Math.max(1, Math.round(+el.value||20)))));
@@ -58225,6 +58228,12 @@ const ordemEspera = l => [...l].sort((a, b)=>(a.criado_em||"").slice(0,10).local
 const ultOferta = e => (e.ofertas||[]).slice(-1)[0] || null;
 const emOferta = () => new Set((agq.espera||[]).filter(e=>e.estado==="oferta").map(e=>(ultOferta(e)||{}).eventoId));
 function quemCabe(dia, s){ return ordemEspera(agq.espera||[]).filter(e=>e.estado==="aguardando" && esperaCabe(e, s, dia.data)); }
+// F527 · com a IA da lista de espera ligada, a vaga liberada vai ao banco e a assistente a oferece pelo WhatsApp
+const iaEspera = () => cfgApp("zap_ia_espera")==="sim";
+function registrarLiberada(ev){
+  if(!ev || !ev.id || !iaEspera()) return;
+  api(`/rest/v1/rpc/agenda_liberada_registrar`,{method:"POST", body:JSON.stringify({p_evento:ev.id, p_prof:ev.profissional, p_data:ev.data})}).catch(()=>{});
+}
 function faixaLiberada(){
   const L = agq.liberada; if(!L || !agq.disp) return "";
   const dia = agq.disp.dias.find(d=>d.data===L.data), s = dia && vagasDoDia(dia).find(x=>x.eventoId===L.id);
@@ -58232,7 +58241,8 @@ function faixaLiberada(){
   const l = quemCabe(dia, s);
   return `<div class="aq-lib" role="status"><span class="t"><b>Vaga liberada: ${siglaData(dia.data)} às ${hmTxt(s.inicio)}, ${esc(nomeProf(profDaVaga(s)))}${s.tipoFixo===false?"":`, ${s.tipo}`}.</b>
     ${l.length ? ` ${l.length===1?"Uma pessoa da lista cabe":`${l.length} pessoas da lista cabem`}; a primeira é ${esc(l[0].nome)}.` : " Ninguém da lista cabe neste horário."}</span>
-    ${l.length?`<button class="btn-rap forte" onclick="oferecerEspera('${l[0].id}','${esc(s.eventoId)}','${dia.data}')" title="oferecer este horário a ${esc(l[0].nome)}">Oferecer<span class="sr-only"> a ${esc(l[0].nome)}</span></button>`:""}
+    ${l.length && iaEspera() ? " A assistente virtual oferece este horário pelo WhatsApp, uma pessoa por vez." : ""}
+    ${l.length && !iaEspera()?`<button class="btn-rap forte" onclick="oferecerEspera('${l[0].id}','${esc(s.eventoId)}','${dia.data}')" title="oferecer este horário a ${esc(l[0].nome)}">Oferecer<span class="sr-only"> a ${esc(l[0].nome)}</span></button>`:""}
     <button class="btn-rap" onclick="agq.liberada=null;pintarAgenda()" title="deixar o horário livre na agenda">Livre<span class="sr-only"> na agenda</span></button></div>`;
 }
 function quadroEspera(dia){
@@ -58541,6 +58551,7 @@ async function acaoEventoAgenda(acao, ev){
       if(!await confirmar(`Cancelar o atendimento de ${ev.nome||ev.titulo} em ${dataBR(ev.data)} às ${hmTxt(ev.inicio)}?`)) return;
       await agendaApi("cancelar",{eventId:ev.id});
       agq.liberada = {id:ev.id, data:ev.data};   // F456 · a vaga volta e é oferecida à lista de espera
+      registrarLiberada(ev);
       const c = clienteDoEvento(ev);
       if(c) await registrarAgendaNoCliente(c, `Atendimento presencial com ${nomeProf(ev.profissional)} de ${dataBR(ev.data)} às ${hmTxt(ev.inicio)} (${ev.tipo}) cancelado, por ${(eu.nome||"").split(" ")[0]}.`, null);
       aviso("Atendimento cancelado", false);
@@ -58853,7 +58864,7 @@ async function gravarFluxo(){
     const ev = r.evento; f.feito = ev; f.msg = "";
     // F422af · agendado para o mesmo dia já fica confirmado na agenda (pedido do Paulo, 09.11.2026)
     if(ev && ev.data===hoje() && !ev.confirmado){ const rc = await agendaApi("confirmar",{eventId:ev.id}).catch(()=>null); if(rc && rc.evento) f.feito = rc.evento; }
-    if(f.remarcar) agq.liberada = {id:f.remarcar.id, data:f.remarcar.data};   // F456
+    if(f.remarcar){ agq.liberada = {id:f.remarcar.id, data:f.remarcar.data}; registrarLiberada(f.remarcar); }   // F456, F527
     if(f.espera){ const o = ((agq.espera||[]).find(x=>x.id===f.espera)||{}).ofertas||[];
       if(o.length) o[o.length-1] = {...o[o.length-1], resposta:"aceitou", resp_em:new Date().toISOString()};
       await mudarEspera(f.espera, {estado:"agendado", ofertas:o}).catch(()=>{}); }
