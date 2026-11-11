@@ -60,11 +60,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
       start() { this.state = "recording"; }
       stop() { this.state = "inactive"; this.ondataavailable({ data: new Blob([new Uint8Array(5000)]) }); this.onstop(); } };
   });
-  let falhar = true, pedidos = [];
+  let falhar = true, comResumo = false, pedidos = [];
   await ctx.route(/functions\/v1\/atendimento_transcricao/, async r => {
     pedidos.push({ tipo: r.request().headers()["content-type"], tam: (r.request().postDataBuffer() || []).length });
     if (falhar) return r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ erro: "ElevenLabs: 503" }) });
-    r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ texto: "[00:00] Falante 1: Bom dia.\n[00:04] Falante 2: Trabalhei na roça.", falantes: 2, minutos: 1 }) });
+    r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ texto: "[00:00] Falante 1: Bom dia.\n[00:04] Falante 2: Trabalhei na roça.", falantes: 2, minutos: 1, ...(comResumo ? { resumo: "Informou que trabalhou na roça.\nDefinir retorno." } : {}) }) });
   });
   const p = await ctx.newPage();
   const erros = [];
@@ -91,6 +91,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o Repetir reenvia e a transcrição vai ao campo, com os falantes", pedidos.length === 2 && /Transcrição do atendimento .*2 falantes/.test(txt) && /Falante 2: Trabalhei na roça/.test(txt));
   conf("nada é gravado na ficha sem o Anotar", !((T.clientes.find(x => x.id === A).campos || {}).atendimento || []).length);
   conf("o botão volta a Gravar, sem Descartar", await rot() === "Gravar" && await p.$("#atend-descartar") === null);
+  comResumo = true; const antes = await p.inputValue("#atend-nota"); await p.fill("#atend-nota", "");
+  await p.click("#atend-gravar"); await p.waitForTimeout(200); await p.click("#atend-gravar"); await p.waitForTimeout(500);
+  const txt2 = await p.inputValue("#atend-nota");
+  conf("com o resumo, ele vem primeiro e a transcrição completa abaixo", /^Informou que trabalhou na roça\.\nDefinir retorno\.\n\nTranscrição completa \(.*2 falantes\):\n\[00:00\] Falante 1/.test(txt2));
+  await p.fill("#atend-nota", antes);
   await p.click(".atend-conv-nova .adr-primario"); await p.waitForTimeout(500);
   conf("o Anotar grava a transcrição conferida", /Falante 1: Bom dia/.test((((T.clientes.find(x => x.id === A).campos || {}).atendimento || [])[0] || {}).texto || ""));
   conf("sem erro de página", !erros.length);
