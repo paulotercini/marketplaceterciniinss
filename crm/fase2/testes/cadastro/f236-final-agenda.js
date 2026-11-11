@@ -367,11 +367,11 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   await ficha(paulo, X2.c.id, X2.k.id);
   const lX2 = await linhas(paulo, X2.k);
   conf("o prazo do tribunal com a manifestação protocolada depois da ciência vira 'Respondido', fora dos pendentes",
-    lX.some(x => x.rotulo === "Respondido no PJe" && x.nat === "lembrete") && !lX.some(x => x.rotulo === "Prazo no PJe"), lX.map(x => x.rotulo));
-  conf("a pergunta ('apresentamos quesitos…?') não é resposta: o prazo continua", lX2.some(x => x.rotulo === "Prazo no PJe" && x.nat === "fatal"), lX2.map(x => x.rotulo));
+    lX.some(x => x.rotulo === "Respondido no PJe" && x.nat === "lembrete") && !lX.some(x => x.rotulo === "Aviso do PJe"), lX.map(x => x.rotulo));
+  conf("a pergunta ('apresentamos quesitos…?') não é resposta: o aviso continua, sem virar prazo fatal (F531)", lX2.some(x => x.rotulo === "Aviso do PJe" && x.nat === "lembrete"), lX2.map(x => x.rotulo));
   await paulo.evaluate(() => fecharFicha(false)); await paulo.evaluate(() => itensAgenda(null)); await espera(paulo, 600);
   const ia = await itens(paulo, null);
-  conf("na agenda, o respondido não cobra e o da pergunta cobra", !ia.some(i => i.cli === X.c.id && i.prazo) && ia.some(i => i.cli === X2.c.id && i.prazo && /^Prazo PJe/.test(i.selo)), ia.filter(i => [X.c.id, X2.c.id].includes(i.cli)));
+  conf("na agenda, o respondido não cobra e o da pergunta cobra", !ia.some(i => i.cli === X.c.id && /^Aviso PJe/.test(i.selo||"")) && ia.some(i => i.cli === X2.c.id && !i.prazo && /^Aviso PJe/.test(i.selo)), ia.filter(i => [X.c.id, X2.c.id].includes(i.cli)));
   conf("a mora com a tarefa de redigir o mandado de segurança não pede mais avaliação; sem ela, pede",
     !ia.some(i => i.cli === Y.c.id && i.selo === "Mora do INSS") && ia.some(i => i.cli === Y2.c.id && i.selo === "Mora do INSS"), ia.filter(i => [Y.c.id, Y2.c.id].includes(i.cli)));
   // 31.10.2026 · a mora já vista (o "Concluir em" marcado adiante) sai do Meu Dia até essa data
@@ -414,10 +414,9 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   conf("a linha da incapacidade/próximo passo não manda avaliar o MS já decidido", prY.some(t => /MS por mora já foi decidido/.test(t)), prY);
   await ficha(paulo, G.c.id, G.k.id);
   const lG = await linhas(paulo, G.k), rpv = lG.find(x => x.rotulo === "Pagamento da RPV");
-  conf("a RPV expedida e não paga ganha a data provável (60 dias, Lei 10.259, art. 17) e o sequestro (§ 2º), sem depender de lançar honorários",
-    rpv && rpv.data === dia(45) && /art\. 17/.test(rpv.rot) && /§ 2º/.test(rpv.rot), rpv);
+  conf("F531 · a previsão de pagamento da RPV, calculada pelo CRM, não aparece mais", !rpv, rpv);
   await ficha(paulo, H.c.id, H.k.id);
-  const lH = await linhas(paulo, H.k), lau = lH.find(x => x.rotulo === "Prazo no PJe");
+  const lH = await linhas(paulo, H.k), lau = lH.find(x => x.rotulo === "Aviso do PJe");
   conf("o prazo que manda manifestar sobre o laudo diz isso e traz a conclusão do laudo e o botão de abrir",
     lau && lau.curto === "Manifestar sobre o laudo" && /Laudo juntado em/.test(lau.rot) && /Não foi constatada incapacidade/.test(lau.rot) && /abrirAnexo/.test(lau.acao), lau);
   // o prazo do recurso contra a sentença que cita o laudo não é "manifestar sobre o laudo" (achado da reconferência)

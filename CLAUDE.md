@@ -688,6 +688,8 @@ A **F529** (13.40, aprovação do Paulo de 11.11.2026): a gravação do atendime
 
 A **F530** (13.41, decisão do Paulo de 11.11.2026): o Microsoft To Do é a única fonte de prazo. A data do caso (`casos.prazo`) é Retorno em todas as listas e só vira prazo fatal com o prazo registrado no CRM por quem o faz (o carimbo `[PRAZO dd.mm.aaaa]` ou a tarefa fatal, F429); o card das Aposentadorias futuras com o direito alcançado é lembrete, e não prazo. Os "⏳ Prazo:" do assistente deixaram de virar prazo: saíram a adoção ao abrir a ficha (`adotarPrazosAssistente`, F407) e o lançamento ao carregar (`lancarPrazosAssistente`, F429), com os testes `f407.js` e `f429.js`. No banco, em 11.11.2026, o carimbo saiu de 22 anotações do assistente e a data de 10 casos abertos que só a tinham pelo assistente (cópias em `_bkp_pz_ass_20261111` e `_bkp_casos_prazo_20261111`).
 
+A **F531** (13.42, decisão do Paulo de 11.11.2026, complemento da F530): o expediente do tribunal (`casos.prazos_tribunal`) é aviso, e não prazo fatal: na aba Prazos é a linha "Aviso do PJe" (natureza lembrete, sem o botão "é o prazo do caso") e no Meu Dia o selo "Aviso PJe", sem `prazo`; a previsão de pagamento da RPV calculada pelo CRM (60 dias da expedição) saiu. As tarefas abertas criadas pelo assistente (`andamento_tarefas` de anotação com `origem_id` `mcp:`) têm cópia em `_bkp_tf_ass_20261111`. Testes ajustados: `f236-final-agenda.js`, `f236-rotina.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
