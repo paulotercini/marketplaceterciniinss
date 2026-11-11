@@ -98,6 +98,15 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.fill("#atend-nota", antes);
   await p.click(".atend-conv-nova .adr-primario"); await p.waitForTimeout(500);
   conf("o Anotar grava a transcrição conferida", /Falante 1: Bom dia/.test((((T.clientes.find(x => x.id === A).campos || {}).atendimento || [])[0] || {}).texto || ""));
+  // F532: o Gravar ao lado da ⭐ da ficha; fora do atendimento a transcrição abre na ⚡ anotação rápida do cliente
+  await p.evaluate(a => { window.confirm = () => true; return sairModoAtendimento(a, true); }, A).catch(() => {}); await p.waitForTimeout(500);
+  await p.evaluate(a => abrirFicha(a), A); await p.waitForTimeout(600);
+  conf("a ficha tem o Gravar no canto, junto da ⭐", await p.evaluate(() => { const b = document.getElementById("ficha-gravar"); return !!b && !!(b.nextElementSibling && b.nextElementSibling.matches(".det-mais-col")) && b.offsetParent !== null; }));
+  await p.click("#ficha-gravar"); await p.waitForTimeout(200);
+  conf("gravando, o botão fica vermelho", await p.evaluate(() => document.getElementById("ficha-gravar").classList.contains("gravando")));
+  await p.click("#ficha-gravar"); await p.waitForTimeout(600);
+  const r3 = await p.evaluate(() => ({ t: (document.getElementById("ar-texto") || {}).value || "", cli: arCliSel }));
+  conf("a transcrição abre na anotação rápida, com o cliente da ficha", r3.cli === A && /^Informou que trabalhou na roça/.test(r3.t) && /Falante 2: Trabalhei/.test(r3.t));
   conf("sem erro de página", !erros.length);
   await nav.close(); s.close();
   const n = ok.filter(x => x[1]).length; console.log(`\nF498: ${n}/${ok.length}`);
