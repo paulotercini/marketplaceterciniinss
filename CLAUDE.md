@@ -694,6 +694,8 @@ A **F532** (13.43, pedido do Paulo de 11.11.2026): o Gravar da F498 também fica
 
 A **F533** (13.44, pedido do Paulo de 11.11.2026, "a informação de conclusos para despacho está incorreta em todos os casos"): o estado do cartão Judicial (`estadoJud`) vem do movimento mais novo do grau que não seja ruído de cartório (`RX_RUIDO_JUD`: certidão, juntada de certidão, expedição de outros documentos, confirmação de intimação, mandado, juntada de petição genérica), e não mais do primeiro movimento que casasse com `EST_JUD`, que pulava o "Decorrido prazo" mais novo e mostrava o concluso antigo; o movimento sem rótulo conhecido aparece pelo próprio texto, até 60 caracteres. `EST_JUD` ganhou "Prazo decorrido", "Ato ordinatório" e "Petição juntada". O órgão julgador perde a barra do começo (`orgaoJudCurto`; 115 casos abertos gravam `orgao_judicial` com "/"). Teste: `f466.js` (47 itens, caso E).
 
+A **F534** (pedido do Paulo de 11.11.2026, "siga estritamente o que eu faço"): a instrução do resumo do atendimento gravado (`PADRAO` da Edge Function `atendimento_transcricao`) passou a levar o padrão das anotações do Dr. Paulo por inteiro, e não mais em síntese: forma, a ordem das dez linhas, verbos, vocabulário da casa, números e datas, o que nunca se faz e os dois exemplos, com nomes genéricos porque o repositório é público; a data dita de forma relativa vira dd/mm contada do dia do atendimento. `limparResumo` mantém uma linha em branco quando ela separa uma lista, como o padrão permite. Teste: `testes/funcoes/atendimento_transcricao.test.mjs`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
