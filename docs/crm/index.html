@@ -7017,7 +7017,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.47</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.48</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -23259,14 +23259,32 @@ async function transcreverAtendimento(){
     const cab = `(${dia}, ${d.minutos||1} min, ${d.falantes||1} falante${d.falantes>1?"s":""})`;
     if(g.cli) atendCli = g.cli;
     // F529: o resumo no padrão das anotações vem primeiro, e a transcrição inteira fica abaixo dele
-    probParaNota(d.resumo ? `${d.resumo}\n\nTranscrição completa ${cab}:\n${d.texto}`
-      : `Transcrição do atendimento ${cab}. Confira antes de anotar:\n${d.texto}`);
+    const txt = d.resumo ? `${d.resumo}\n\nTranscrição completa ${cab}:\n${d.texto}` : `Transcrição do atendimento ${cab}:\n${d.texto}`;
     atendGravado = null; gravLimpar();
-    aviso(document.getElementById("atend-nota") ? "Transcrição no campo da anotação. Confira e toque em Anotar" : "Transcrição na anotação rápida. Confira e grave");
+    // F539: o resumo grava sozinho na anotação do cliente; sem cliente ou com falha, volta ao campo como antes
+    const gravou = await gravarTranscricao(atendCli || clienteAberto, txt);
+    if(!gravou){
+      probParaNota(txt);
+      aviso(document.getElementById("atend-nota") ? "Não gravei sozinho. A transcrição está no campo: toque em Anotar" : "Não gravei sozinho. A transcrição está na anotação rápida: grave");
+    }
   }catch(e){
     aviso("A transcrição falhou (" + String(e.message||e).slice(0,120) + "). Toque em Repetir");
     if(atendGravado) atendGravado.interrompida = false;
   }finally{ atendEnviando = false; pintarGravarAtend(); }
+}
+async function gravarTranscricao(cliId, txt){
+  const c = cliId && D.cliPorId.get(cliId); if(!c || !txt) return false;
+  const noAtend = !!document.getElementById("atend-nota"), pc = noAtend ? preCasoAberto(c) : null;
+  const nota = {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], autor_id:eu.id, texto:txt, gravacao:true,
+    ...(noAtend ? (pc ? {precaso_id:pc.id} : {}) : {origem:"rapida"})};   // fora do atendimento fica "para distribuir" (F404)
+  const campos = {...(c.campos||{}), atendimento:[...((c.campos||{}).atendimento||[]), nota]};
+  try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos})}); }
+  catch(e){ return false; }
+  c.campos = campos;
+  aviso(noAtend ? "Resumo do atendimento gravado nas anotações do atendimento"
+    : `Resumo do atendimento gravado nas anotações de ${(c.nome||"").split(" ")[0]}. Distribua ao caso pelo ícone das Anotações`, false);
+  if(clienteAberto === cliId) repintarFicha();
+  return true;
 }
 function probParaNota(txt){
   if(!txt) return;
