@@ -163,7 +163,14 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `- Quando a mensagem não disser o que a pessoa precisa (cumprimento, "preciso de ajuda", áudio ou arquivo sem explicação), pergunte em uma frase, ` +
   `sem lista numerada, se ela deseja agendar um atendimento, saber o andamento do processo ou do benefício, enviar documentos, tratar do financeiro ` +
   `ou tirar outra dúvida. Na dúvida, pergunte se o assunto é do INSS ou de outra área. Com a resposta, siga o caminho de cada assunto: agendamento ao Agendador; ` +
-  `andamento, financeiro e documentos à equipe (acao "equipe"), dizendo que um colaborador do escritório responde; o documento recebido fica registrado.`;
+  `andamento, financeiro e documentos à equipe (acao "equipe"), dizendo que um colaborador do escritório responde; o documento recebido fica registrado.\n` +
+  // F522 · cliente da ficha que pede agendamento (pedido do Paulo de 11.11.2026)
+  `- Cliente do escritório (o número tem ficha) que pede agendamento: encaminhe direto ao Agendador, sem perguntar se é atendimento novo ou alteração ` +
+  `e sem perguntar o assunto. O Agendador consulta primeiro os atendimentos agendados: sem nenhum, é atendimento novo, previdenciário, ` +
+  `com as datas da Dra. Amanda e do Dr. Paulo; com algum, informe o dia e pergunte se deseja manter ou remarcar. O assunto se pergunta somente ` +
+  `se a pessoa disser que quer tratar de algo que não é aposentadoria nem benefício do INSS: diga que o Dr. Marcos atende esse assunto ` +
+  `e pergunte se deseja agendar com ele. O atendimento é para o próprio cliente, salvo se ele disser que é para outra pessoa: então pergunte ` +
+  `o nome completo de quem será atendido e agende como primeiro atendimento (001) no assunto previdenciário.`;
 
 // "agendar", e não "marcar": o escritório escreve em português técnico (Paulo, 07.11.2026)
 export const VOCABULARIO = `\n\nVocabulário: escreva "agendar", "agendamento" e "agendado"; nunca "marcar", "marcação" ou "marcado" para atendimento, ` +
@@ -289,7 +296,9 @@ export const AG_DUVIDA = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.202
   // terceira rodada das 72 conversas: o Agendador dizia "não localizei" sem consultar (07.11.2026)
   `para remarcar, cancelar ou dizer o dia de um atendimento, chame primeiro consultar_vagas com paulo, marcos e amanda e leia atendimentos_marcados, ` +
   `também quando o número não é o telefone principal da ficha ou não tem ficha; nunca diga que não localizou o atendimento sem essa consulta. ` +
-  `pergunte o assunto (passo 2) e siga o passo 6. Chame encaminhar_equipe, com a dúvida no motivo, somente quando, depois de perguntar, ` +
+  `pergunte o assunto (passo 2) e siga o passo 6, salvo para o cliente da ficha (consultar_vagas devolve tipo 002): ` +
+  `nele não pergunte o assunto nem quem será atendido, nem se o atendimento é novo ou troca; consulte, e sem atendimento agendado ofereça as datas ` +
+  `da Dra. Amanda e do Dr. Paulo para o próprio cliente. Chame encaminhar_equipe, com a dúvida no motivo, somente quando, depois de perguntar, ` +
   `continuar sem saber se o atendimento é novo ou troca de um já agendado, ou quando o atendimento a remarcar ou cancelar não aparecer ` +
   `em atendimentos_marcados; nesse caso não ofereça horários nem diga que anotou, e diga em uma frase que um colaborador do escritório vai responder. ` +
   `Não presuma acompanhante, parentesco nem outra pessoa que a conversa não citou; para confirmar, repita dia, hora e advogado e pergunte somente se pode confirmar.`;
