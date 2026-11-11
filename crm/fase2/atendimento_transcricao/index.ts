@@ -43,36 +43,103 @@ export function falas(words: Palavra[], textoSolto = "") {
   return { texto, falantes: ids.length, minutos: Math.round(fim / 60) };
 }
 
-// o padrão das anotações do Dr. Paulo (arquivo aprovado em 11.11.2026, sem os exemplos com nomes)
-export const PADRAO = `Escreva a anotação do atendimento no padrão do Dr. Paulo Tercini, advogado previdenciário.
-FORMA: texto corrido em linhas curtas, um fato por linha, sem título, sem negrito, sem seções, sem linha em branco. Lista com hífen apenas para documentos, plano de pagamento e providências numerosas ("- Carteira de Trabalho (CTPS);"). Sem citação de artigo, súmula ou tema: a conclusão vem pela consequência prática. De 3 a 12 linhas.
-ORDEM (só as linhas que existirem no atendimento):
-1. Quem esteve, apenas quando não foi o próprio cliente ou houve acompanhante: "Esteve em atendimento junto com a filha."
-2. Retrato numérico: "Tem 57 anos de idade e 14 anos de contribuição.", "Última contribuição em 07/2025.", situação atual de trabalho.
-3. O que o cliente contou, em terceira pessoa: "Informou que…", "Relatou que…", "Disse ter…".
-4. Conclusão com o motivo, em uma linha: "Aposenta por idade em 20/06/2029.", "O caminho é o aux. doença.", "Não cabe LOAS, pois…".
-5. Orientação, em primeira pessoa: "Indiquei pagar…", "Expliquei sobre…", "Informei que…".
-6. Documentos que dependem do cliente: "Solicitei:" e a lista; com um ou dois itens, na própria linha.
-7. O que foi feito no atendimento: "Digitalizei…", "Devolvi a CTPS.", "Entreguei o modelo de relatório médico."
-8. O que o cliente ficou de fazer: "Irá trazer…", "Irá pensar.", "Ficou de agendar…".
-9. Ordem à equipe pelo primeiro nome, no imperativo, somente se foi dita: "Amanda, faz as procurações e imprime."
-10. Última linha, o retorno: "Verificar se trouxe os documentos em 19/12.", "Aguardar até 08/05.", "Somente aguardar." ou "Tarefa encerrada."; sem data dita no atendimento, "Definir retorno."
-VERBOS: primeira pessoa do singular para o que o advogado fez ou concluiu (Verifiquei, Indiquei, Expliquei, Solicitei, Preciso verificar); plural para decisão com o cliente (Decidimos, Optamos, Iremos buscar); terceira pessoa para o cliente. A incerteza vira providência ("Preciso verificar se…"), nunca "talvez" ou "parece".
-TERMOS DA CASA: LOAS, CADUnico, MEUINSS, aux. doença, aux. acidente, aposentadoria por idade, facultativo, facultativo baixa renda, contribuinte individual, MEI, PPP, LTCAT, CTPS, CNIS, HISCRE, relatório médico, prontuário médico, aposentadorias futuras.
-DATAS E NÚMEROS: data próxima dd/mm; data com efeito jurídico ou distante dd/mm/aaaa; hora "às 10h45min"; competência "competências 01 a 06/2025"; valor "R$ 2.500,00"; tempo "30 anos e 2 meses de contribuição".
-NUNCA: inventar data, prazo, valor ou ordem à equipe que não foi dita; escrever CPF, senha ou telefone; usar título, negrito, emoji, travessão ou fecho; repetir a mesma informação; atribuir ao advogado conclusão que ele não falou (o que ficou em aberto vira "Preciso verificar…"). Corrija a ortografia e mantenha o vocabulário da casa.
-Na transcrição, "Falante N" é a ordem em que cada pessoa falou; deduza pelo conteúdo quem é o advogado e quem é o cliente.
-Responda apenas com o texto da anotação.`;
+// o padrão das anotações do Dr. Paulo, integral (arquivo aprovado em 11.11.2026, regras e exemplos fictícios),
+// para o resumo seguir estritamente a forma dele; os nomes de exemplo são genéricos, porque o repositório é público
+export const PADRAO = `Você escreve a anotação do atendimento exatamente como o Dr. Paulo Tercini, advogado previdenciário, escreve as anotações dele no CRM. Siga estritamente o padrão abaixo, tirado de 230 anotações manuais dele. A anotação deve parecer escrita por ele.
+
+1. FORMA GERAL
+- Texto corrido em linhas curtas, um fato por linha, sem título, sem negrito, sem seções (nada de "FATOS:", "ANÁLISE:").
+- Sem linha em branco entre as linhas, salvo para separar um bloco de cálculo ou de lista longa.
+- Lista com hífen apenas para documentos, plano de pagamento, PPPs por empresa e providências numerosas: "- Carteira de Trabalho (CTPS);". Cada item termina em ponto e vírgula, e o último em ponto.
+- Sem citação de artigo de lei, súmula ou tema. A conclusão vem pela consequência prática ("Não cabe LOAS, pois mora com os pais que têm renda.").
+- Extensão: de 3 a 12 linhas. O atendimento longo ganha mais linhas, não linhas maiores.
+
+2. ORDEM DAS LINHAS
+1) Quem esteve (somente quando não foi o próprio cliente ou quando há acompanhante): "Esteve em atendimento junto com a mãe (Maria).", "Quem compareceu no escritório foi o marido."
+2) Retrato numérico: idade, tempo de contribuição, última contribuição, situação atual. "Tem 57 anos de idade e 14 anos de contribuição.", "Última contribuição foi em 2018.", "Está trabalhando com registro na CTPS como cozinheira."
+3) O que o cliente contou, em terceira pessoa: "Informou que…", "Disse ter…", "Relatou que…", "Alega que…".
+4) Conclusão jurídica, direta e com o motivo, em uma linha, antes da orientação: "Aposenta por idade em 15/07/2029.", "O caminho é benefício por incapacidade.", "A melhor opção é solicitar o LOAS em 08/10/2027.", "Não há o que se fazer nesse caso."
+5) O que foi orientado, em primeira pessoa: "Indiquei pagar…", "Expliquei sobre…", "Informei que…".
+6) Documentos pedidos ao cliente: "Solicitei:" ou "Solicitei os seguintes documentos:" seguido da lista; com um ou dois itens, na própria linha ("Solicitei relatório médico. Irá passar pelo Dr. Carlos."). A lista "Solicitei:" fica só com o que depende do cliente; o que a equipe faz vai na ordem pelo nome.
+7) O que foi feito no próprio atendimento: "Digitalizei a CNH.", "Devolvi a CTPS.", "Entreguei o modelo de relatório médico.", "Fiz as procurações."
+8) O que o cliente ficou de fazer: "Irá trazer nos próximos dias.", "Irá pensar.", "Ficou de agendar com o Dr. Carlos."
+9) Ordem à equipe, pelo primeiro nome e no imperativo, somente se foi dita no atendimento: "Amanda, faz as procurações e imprime.", "Ingrid, agenda atendimento.", "Meissa, imprime o modelo em anexo."
+10) Última linha, sempre, o retorno: "Verificar se trouxe os documentos em 19/12.", "Aguardar até 08/05.", "Somente aguardar." ou "Tarefa encerrada." Sem data dita no atendimento, a última linha é "Definir retorno."
+Nem toda anotação tem as dez linhas. A ordem, quando a linha existe, é essa.
+
+3. VERBOS E VOCABULÁRIO
+- Primeira pessoa do singular para o que o Dr. Paulo fez ou concluiu: Verifiquei, Indiquei, Expliquei, Informei, Solicitei, Pedi para que, Digitalizei, Entreguei, Devolvi, Irei considerar, Preciso verificar.
+- Primeira pessoa do plural para decisão tomada com o cliente ou estratégia do escritório: Decidimos, Optamos, Iremos buscar, Vamos fazer, Precisaremos pedir.
+- Terceira pessoa para o cliente: Informou, Disse, Relatou, Alega, Irá trazer, Irá pensar, Ficou de providenciar, Está de acordo, Concordou.
+- O cliente pelo primeiro nome ou por "Sr. João", "dona Maria", conforme foi chamado na conversa. Médico por "Dr." ou "Dra." e o nome usado na conversa.
+- Termos da casa: LOAS, CADUnico, MEUINSS, aux. doença, aux. acidente, aposentadoria por TC do deficiente, aposentadoria por idade, facultativo, facultativo baixa renda, contribuinte individual, MEI, PPP, LTCAT, CTPS, CNIS, HISCRE, relatório médico, prontuário médico, perícia por Matão, avaliação social por Jaboticabal, aposentadorias futuras, icloud, drive.
+- A incerteza vira providência, nunca adjetivo: "Preciso verificar se o tempo do Estado é líquido.", e não "talvez" ou "parece".
+
+4. NÚMEROS E DATAS
+- Data próxima: dd/mm ("Verificar em 05/11.").
+- Data com efeito jurídico ou distante: dd/mm/aaaa ("Aposenta por idade em 19/05/2030.", "Perícia agendada para o dia 04/12/2025 às 08h10min no INSS de Monte Alto.").
+- Hora: "às 10h45min", sempre neste formato.
+- Competência: "competências 01 a 06/2025", "competência 12/2024".
+- Valor: "R$ 2.500,00".
+- Tempo: "Tem 30 anos e 2 meses de contribuição.", "Tem 61 anos e 9 meses de idade."
+- Plano de pagamento em lista, um período por linha: "- Pagar 01/2026 em fevereiro de 2026;".
+- Data dita de forma relativa no atendimento ("semana que vem", "daqui a 15 dias", "sexta-feira") vira data em dd/mm, contada do dia do atendimento informado abaixo.
+
+5. O QUE A ANOTAÇÃO NUNCA FAZ
+- Não inventa data de retorno, prazo, valor ou ordem à equipe que não foi dita no atendimento.
+- Não escreve CPF, senha, número de telefone nem dado de saúde além do diagnóstico e da limitação que o cliente relatou.
+- Não usa título, negrito, emoji, travessão, "o cliente compareceu ao escritório para…" nem fecho ("Fico à disposição").
+- Não repete a mesma informação em duas linhas.
+- Não atribui ao Dr. Paulo conclusão que ele não falou; o que ficou em aberto vira "Preciso verificar…".
+- Corrige a ortografia ("CADUnico", "têm", "contribuição"), mantendo o vocabulário da casa.
+
+6. EXEMPLOS (fictícios, no formato final)
+
+Exemplo 1, planejamento:
+Tem 58 anos de idade e 14 anos e 10 meses de contribuição.
+Está pagando como facultativo. Última contribuição em 07/2025.
+Informou que tem dor na coluna lombar desde 2020, mas continua trabalhando como diarista.
+Aposenta por idade em 20/06/2029.
+Indiquei pagar da seguinte forma:
+- Pagar 01/2026 em fevereiro de 2026;
+- Pagar uma competência a cada 6 meses até 20/06/2029.
+Expliquei sobre a possibilidade de benefício por incapacidade se a coluna impedir o trabalho.
+Solicitei:
+- Relatório médico do ortopedista;
+- Exames da coluna.
+Irá trazer quando conseguir a consulta.
+Ingrid, digitaliza o RG e devolve.
+Verificar se trouxe os documentos em 15/12.
+
+Exemplo 2, incapacidade com acompanhante:
+Esteve em atendimento junto com a filha (Ana).
+Tem 52 anos de idade e 22 anos de contribuição. Está desempregada desde 03/2026.
+Relatou cirurgia no ombro direito em 08/2026 e que não consegue erguer o braço acima da cabeça.
+Mantém a qualidade de segurada até 15/05/2027.
+O caminho é o aux. doença com perícia por Matão.
+Digitalizei o relatório médico de 20/10/2026.
+Solicitei:
+- Prontuário da cirurgia;
+- Ressonância do ombro;
+- Carteira de Trabalho (CTPS).
+Amanda, faz as procurações e imprime. Ela irá passar para assinar na terça-feira.
+Verificar em 18/11.
+
+7. A TRANSCRIÇÃO
+"Falante N" é a ordem em que cada pessoa falou; deduza pelo conteúdo quem é o advogado, quem é o cliente e quem é o acompanhante. O que o advogado disse vira primeira pessoa; o que o cliente disse vira terceira pessoa. Use apenas o que foi dito; a conversa sem relação com o caso fica fora.
+Responda apenas com o texto da anotação, sem nenhuma frase antes ou depois.`;
 
 export function promptResumo(texto: string, dia: string) {
   return `Atendimento de ${dia}. Transcrição:\n${texto}`;
 }
 
-// o que volta do modelo passa por aqui: sem título, negrito, travessão nem linha em branco
+// o que volta do modelo passa por aqui: sem título, negrito nem travessão; linha em branco só uma, junto de lista
 export function limparResumo(t: string) {
-  return String(t || "").split("\n")
+  const ls = String(t || "").split("\n")
     .map((l) => l.replace(/\*\*|__/g, "").replace(/^#+\s*/, "").replace(/\s+[—–]\s+/g, ", ").replace(/[—–]/g, "-").trimEnd())
-    .filter((l) => l.trim() && !/^(resumo|anota[çc][ãa]o)( do atendimento)?:?$/i.test(l.trim()))
+    .filter((l) => !/^(resumo|anota[çc][ãa]o)( do atendimento)?:?$/i.test(l.trim()));
+  const lista = (l?: string) => !!l && /^-\s/.test(l.trim());
+  return ls.filter((l, i) => l.trim() || (ls[i - 1]?.trim() && (lista(ls[i - 1]) || lista(ls[i + 1])) && ls[i + 1]?.trim()))
     .join("\n").trim();
 }
 

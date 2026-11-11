@@ -20,4 +20,10 @@ assert.equal(limparResumo("Resumo do atendimento:\n\n**Tem 58 anos** — 14 de c
 assert.match(promptResumo("[00:00] Falante 1: Oi", "11/11/2026"), /11\/11\/2026[\s\S]*Falante 1/);
 assert.match(PADRAO, /Definir retorno\./);
 assert.doesNotMatch(PADRAO, /—/);
+// o padrão vai inteiro: ordem das dez linhas, termos da casa e os dois exemplos
+assert.match(PADRAO, /Exemplo 1, planejamento[\s\S]*Exemplo 2, incapacidade/);
+assert.match(PADRAO, /perícia por Matão/);
+assert.match(PADRAO, /contada do dia do atendimento/);
+// linha em branco só fica junto de lista, e uma só
+assert.equal(limparResumo("Tem 58 anos.\n\n\nSolicitei:\n- RG;\n- CTPS.\n\nVerificar em 15/12."), "Tem 58 anos.\nSolicitei:\n- RG;\n- CTPS.\n\nVerificar em 15/12.");
 console.log("atendimento_transcricao: 4 grupos ok");
