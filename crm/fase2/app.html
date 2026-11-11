@@ -5878,6 +5878,7 @@ html .tipo-mais.mais-baixo .tl-mais-menu{left:0;right:auto}
 .det-imp{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid var(--borda,#ddd);border-radius:8px;background:var(--fundo-card,#fff);color:var(--cinza,#888);cursor:pointer;padding:0}
 .det-imp.on{color:#d64570;border-color:#d64570;background:#fdeef3}
 .det-imp.on:not(.det-notas,.det-grav) svg path{fill:currentColor}
+.det-imp.det-grav.pendente{color:#8a5a00;border-color:#d99a00;background:#fff4d6}
 .det-imp.det-grav.gravando{color:#fff;border-color:#b3261e;background:#b3261e;animation:piscaRec 1s infinite}
 .det-mais-col{display:inline-flex;align-items:center;gap:6px}
 /* F403 · Anotações rápidas no lugar do ⋯; o ponto vermelho avisa a anotação que ninguém abriu */
@@ -7015,7 +7016,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.45</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.46</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7704,7 +7705,8 @@ async function iniciar(){
   if(!vigiaLigada){ vigiaLigada = true; setInterval(vigiarMudancas, VIGIA_MS);
     // como o To Do ao voltar para a frente: a aba que reaparece busca o que mudou na hora, sem esperar a volta do relógio
     document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) vigiarMudancas(); });
-    vigiarLembretes(); setInterval(vigiarLembretes, 30000); }
+    vigiarLembretes(); setInterval(vigiarLembretes, 30000);
+    setTimeout(()=>verGravacaoGuardada().catch(()=>{}), 1500); }   // F537: a gravação interrompida volta com Continuar
   // F187 · "online agora" no painel do gestor: um ponto por minuto
   if(!zapSomLigado){ zapSomLigado = true; vigiarZapSom(); setInterval(vigiarZapSom, 20000); }
   // F335 · o toque na notificação com o CRM fechado abre ?zap=<conversa>
@@ -23124,16 +23126,51 @@ function quadroProblemasPA(c, ks){
       <button type="button" class="btn-mini" onclick="probParaNota(this.closest('li').dataset.txt)">anotar</button></li>`).join("")}</ul></section>`;
 }
 // F498 · a conversa do atendimento gravada vai à função atendimento_transcricao (ElevenLabs, falantes separados) e o texto volta ao campo para conferir antes do Anotar
-let atendRec = null, atendGravado = null, atendEnviando = false;
+// F537 · no celular: a tela fica acesa enquanto grava (Wake Lock) e cada trecho de 5 s fica guardado no aparelho (IndexedDB);
+// a gravação interrompida (saiu do app, recarregou a página) volta com Continuar, e os trechos vão juntos a um resumo só
+let atendRec = null, atendGravado = null, atendEnviando = false, atendParou = false, atendTela = null;
+const GRAV_BANCO = "crm_gravacao";
+function gravBanco(){ return new Promise((ok, erro)=>{ const r = indexedDB.open(GRAV_BANCO, 1);
+  r.onupgradeneeded = ()=>{ r.result.createObjectStore("partes", {autoIncrement:true}); r.result.createObjectStore("meta"); };
+  r.onsuccess = ()=>ok(r.result); r.onerror = ()=>erro(r.error); }); }
+async function gravOp(loja, modo, fn){
+  try{ const db = await gravBanco(); return await new Promise((ok, erro)=>{ const tx = db.transaction(loja, modo), r = fn(tx.objectStore(loja));
+    tx.oncomplete = ()=>{ db.close(); ok(r && r.result); }; tx.onerror = ()=>erro(tx.error); }); }
+  catch(e){ return null; }   // sem IndexedDB (aba privada) a gravação segue só na memória, como antes
+}
+const gravLimpar = ()=>Promise.all([gravOp("partes", "readwrite", s=>s.clear()), gravOp("meta", "readwrite", s=>s.delete("atual"))]);
+async function verGravacaoGuardada(){
+  if(atendRec || atendGravado || atendEnviando) return;
+  const m = await gravOp("meta", "readonly", s=>s.get("atual")); if(!m) return;
+  const ps = await gravOp("partes", "readonly", s=>s.getAll()) || [], segs = [];
+  for(const p of ps) (segs[p.seg] ||= {tipo: p.tipo, dados: []}).dados.push(p.data);
+  const blobs = segs.filter(Boolean).map(s=>new Blob(s.dados, {type: s.tipo})).filter(b=>b.size >= 2000);
+  if(!blobs.length){ gravLimpar(); return; }
+  atendGravado = {segs: blobs, inicio: m.inicio, cli: m.cli, nseg: m.nseg || blobs.length, interrompida: true};
+  pintarGravarAtend();
+  aviso("Há uma gravação do atendimento interrompida. Toque em Continuar para seguir gravando, ou em Transcrever");
+}
+async function telaAcesa(){ try{ if(navigator.wakeLock) atendTela = await navigator.wakeLock.request("screen"); }catch(e){} }
+function telaSoltar(){ try{ atendTela && atendTela.release(); }catch(e){} atendTela = null; }
+document.addEventListener("visibilitychange", ()=>{
+  if(!atendRec) return;
+  if(document.hidden){ try{ atendRec.requestData(); }catch(e){} }   // guarda o que já foi gravado antes de o aparelho suspender a página
+  else telaAcesa();   // o celular solta a tela acesa ao sair do app
+});
 function botaoGravarAtend(){
+  const g = atendGravado, cont = g && g.interrompida;
   const [rot, frase] = atendEnviando ? ["Transcrevendo", "transcrevendo a gravação"]
     : atendRec ? ["Parar", "parar a gravação e transcrever"]
-    : atendGravado ? ["Repetir", "enviar de novo a última gravação"]
+    : cont ? ["Continuar", "continuar a gravação interrompida"]
+    : g ? ["Repetir", "enviar de novo a última gravação"]
     : ["Gravar", "gravar a conversa do atendimento e transcrever"];
   return `<button type="button" id="atend-gravar" class="adr-bt${atendRec?" gravando":""}" title="${frase}" ${atendEnviando?"disabled":""} onclick="gravarAtendimento()"><span aria-hidden="true">${rot}</span><span class="sr-only">${frase}</span></button>`
-    + (atendGravado && !atendEnviando ? `<button type="button" id="atend-descartar" class="adr-bt" title="descartar a gravação" onclick="atendGravado=null;this.remove();pintarGravarAtend()">Descartar</button>` : "");
+    + (cont && !atendEnviando && !atendRec ? `<button type="button" id="atend-transcrever" class="adr-bt" title="transcrever o que já foi gravado" onclick="transcreverAtendimento()">Transcrever</button>` : "")
+    + (g && !atendEnviando && !atendRec ? `<button type="button" id="atend-descartar" class="adr-bt" title="descartar a gravação" onclick="descartarGravacao()">Descartar</button>` : "");
 }
-function pintarGravarAtend(){ document.getElementById("atend-descartar")?.remove(); const b = document.getElementById("atend-gravar"); if(b) b.outerHTML = botaoGravarAtend();
+function descartarGravacao(){ atendGravado = null; gravLimpar(); pintarGravarAtend(); }
+function pintarGravarAtend(){ ["atend-descartar", "atend-transcrever"].forEach(i=>document.getElementById(i)?.remove());
+  const b = document.getElementById("atend-gravar"); if(b) b.outerHTML = botaoGravarAtend();
   const f = document.getElementById("ficha-gravar"); if(f) f.outerHTML = botaoGravarFicha(f.dataset.cli); }
 // F532 · o Gravar também no canto da ficha, ao lado da ⭐ (pedido do Paulo, 11.11.2026): fora do atendimento,
 // a transcrição abre na ⚡ anotação rápida já com o cliente da ficha, para conferir e gravar
@@ -23141,55 +23178,90 @@ const IC_MIC = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stro
 let atendCli = null;
 function botaoGravarFicha(cliId){
   if(!cliId || !podeGravarCaso()) return "";
+  const g = atendGravado;
   const [rot, frase] = atendEnviando ? ["Transcrevendo", "transcrevendo a gravação"]
     : atendRec ? ["Parar", "parar a gravação e transcrever"]
-    : atendGravado ? ["Repetir", "enviar de novo a última gravação"]
+    : g && g.interrompida ? ["Continuar", "continuar a gravação interrompida"]
+    : g ? ["Repetir", "enviar de novo a última gravação"]
     : ["Gravar", "gravar o atendimento e transcrever"];
-  return `<button type="button" id="ficha-gravar" data-cli="${cliId}" class="det-imp det-grav${atendRec?" gravando":""}" title="${rot}: ${frase}" aria-label="${frase}" ${atendEnviando?"disabled":""} onclick="atendCli='${cliId}';gravarAtendimento()">${IC_MIC}</button>`;
+  return `<button type="button" id="ficha-gravar" data-cli="${cliId}" class="det-imp det-grav${atendRec?" gravando":""}${g&&g.interrompida&&!atendRec?" pendente":""}" title="${rot}: ${frase}" aria-label="${frase}" ${atendEnviando?"disabled":""} onclick="atendCli='${cliId}';gravarAtendimento()">${IC_MIC}</button>`;
 }
 async function gravarAtendimento(){
   if(atendEnviando) return;
-  if(atendRec) return atendRec.stop();
-  if(atendGravado) return transcreverAtendimento();
+  if(atendRec){ atendParou = true; return atendRec.stop(); }
+  const ant = atendGravado && atendGravado.interrompida ? atendGravado : null;
+  if(atendGravado && !ant) return transcreverAtendimento();
   if(!navigator.mediaDevices || !window.MediaRecorder) return aviso("Este navegador não grava áudio");
   let stream;
   try{ stream = await navigator.mediaDevices.getUserMedia({audio:true}); }
   catch(e){ return aviso("Sem permissão para usar o microfone"); }
   const tipo = MediaRecorder.isTypeSupported("audio/webm;codecs=opus") ? "audio/webm;codecs=opus" : "";
-  const rec = new MediaRecorder(stream, tipo ? {mimeType: tipo} : undefined), partes = [], inicio = Date.now();
-  rec.ondataavailable = e=>{ if(e.data.size) partes.push(e.data); };
+  const rec = new MediaRecorder(stream, tipo ? {mimeType: tipo} : undefined), partes = [];
+  const inicio = ant ? ant.inicio : Date.now(), seg = ant ? ant.nseg : 0, antes = ant ? ant.segs : [], cli = ant ? (ant.cli || atendCli) : atendCli;
+  const tipoBlob = (rec.mimeType || "audio/webm").split(";")[0];
+  if(!ant) await gravLimpar();
+  gravOp("meta", "readwrite", s=>s.put({inicio, cli, nseg: seg + 1}, "atual"));
+  atendGravado = null; atendCli = cli;
+  rec.ondataavailable = e=>{ if(e.data.size){ partes.push(e.data); gravOp("partes", "readwrite", s=>s.add({seg, data: e.data, tipo: tipoBlob})); } };
+  const trilha = stream.getTracks()[0];
+  if(trilha) trilha.onended = ()=>{ if(rec.state !== "inactive") rec.stop(); };   // o iPhone encerra o microfone ao sair do app
+  rec.onerror = ()=>{ if(rec.state !== "inactive") rec.stop(); };
   rec.onstop = ()=>{
     stream.getTracks().forEach(t=>t.stop());
-    atendRec = null;
-    const blob = new Blob(partes, {type: (rec.mimeType || "audio/webm").split(";")[0]});
-    if(blob.size < 2000){ pintarGravarAtend(); return aviso("Gravação curta demais"); }
-    atendGravado = {blob, inicio};
-    transcreverAtendimento();
+    atendRec = null; telaSoltar();
+    const parou = atendParou; atendParou = false;
+    const segs = antes.concat(new Blob(partes, {type: tipoBlob})).filter(b=>b.size >= 2000);
+    if(!segs.length){ gravLimpar(); pintarGravarAtend(); return aviso("Gravação curta demais"); }
+    atendGravado = {segs, inicio, cli, nseg: seg + 1, interrompida: !parou};
+    if(parou) return transcreverAtendimento();
+    pintarGravarAtend();
+    aviso("A gravação parou ao sair da tela. O gravado está guardado: toque em Continuar");
   };
-  rec.start(10000); atendRec = rec;   // partes de 10 s: a gravação longa não fica toda num pedaço só
+  rec.start(5000); atendRec = rec;   // trechos de 5 s, cada um guardado no aparelho assim que sai
+  telaAcesa();
   pintarGravarAtend();
-  aviso("Gravando o atendimento. Toque em Parar ao terminar");
+  aviso(ant ? "Gravação retomada. Toque em Parar ao terminar" : "Gravando o atendimento. Toque em Parar ao terminar");
 }
 async function transcreverAtendimento(){
   const g = atendGravado; if(!g || atendEnviando) return;
   atendEnviando = true; pintarGravarAtend();
   try{
     const url = CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/functions/v1/atendimento_transcricao";
-    const enviar = ()=>fetch(url, {method:"POST", body:g.blob, headers:{apikey:CONFIG.ANON_KEY,
-      Authorization:"Bearer " + (sessao ? sessao.access_token : CONFIG.ANON_KEY), "Content-Type": g.blob.type || "audio/webm"}});
-    let r = await enviar();
-    if(r.status === 401 && sessao && await renovar()) r = await enviar();
-    const d = await r.json().catch(()=>({}));
-    if(!r.ok || !d.texto) throw new Error(d.erro || `erro ${r.status}`);
+    const post = async (q, body, tipo)=>{
+      const enviar = ()=>fetch(url + q, {method:"POST", body, headers:{apikey:CONFIG.ANON_KEY,
+        Authorization:"Bearer " + (sessao ? sessao.access_token : CONFIG.ANON_KEY), "Content-Type": tipo}});
+      let r = await enviar();
+      if(r.status === 401 && sessao && await renovar()) r = await enviar();
+      const d = await r.json().catch(()=>({}));
+      if(!r.ok) throw new Error(d.erro || `erro ${r.status}`);
+      return d;
+    };
+    let d;
+    if(g.segs.length === 1) d = await post("", g.segs[0], g.segs[0].type || "audio/webm");
+    else {   // F537: cada trecho da gravação interrompida se transcreve com o tempo contado do início, e o resumo sai do texto inteiro
+      const textos = []; let seg = 0, fal = 0;
+      for(const b of g.segs){
+        let x; try{ x = await post(`?resumo=nao&desde=${Math.round(seg)}`, b, b.type || "audio/webm"); }
+        catch(e){ if(/nenhuma fala|curta demais/.test(e.message)) continue; throw e; }
+        if(x.texto) textos.push(x.texto);
+        seg += x.segundos || (x.minutos || 0) * 60; fal = Math.max(fal, x.falantes || 1);
+      }
+      if(!textos.length) throw new Error("nenhuma fala reconhecida na gravação");
+      const texto = textos.join("\n"), r2 = await post("", JSON.stringify({texto}), "application/json").catch(()=>({}));
+      d = {texto, minutos: Math.max(1, Math.round(seg / 60)), falantes: fal, resumo: r2.resumo};
+    }
+    if(!d.texto) throw new Error(d.erro || "nenhuma fala reconhecida na gravação");
     const dia = new Date(g.inicio).toLocaleDateString("pt-BR");
     const cab = `(${dia}, ${d.minutos||1} min, ${d.falantes||1} falante${d.falantes>1?"s":""})`;
+    if(g.cli) atendCli = g.cli;
     // F529: o resumo no padrão das anotações vem primeiro, e a transcrição inteira fica abaixo dele
     probParaNota(d.resumo ? `${d.resumo}\n\nTranscrição completa ${cab}:\n${d.texto}`
       : `Transcrição do atendimento ${cab}. Confira antes de anotar:\n${d.texto}`);
-    atendGravado = null;
+    atendGravado = null; gravLimpar();
     aviso(document.getElementById("atend-nota") ? "Transcrição no campo da anotação. Confira e toque em Anotar" : "Transcrição na anotação rápida. Confira e grave");
   }catch(e){
     aviso("A transcrição falhou (" + String(e.message||e).slice(0,120) + "). Toque em Repetir");
+    if(atendGravado) atendGravado.interrompida = false;
   }finally{ atendEnviando = false; pintarGravarAtend(); }
 }
 function probParaNota(txt){

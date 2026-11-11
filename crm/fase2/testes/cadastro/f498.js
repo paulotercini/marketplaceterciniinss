@@ -54,17 +54,20 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await instalarBanco(ctx, { SUPA, SESSAO, banco });
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
   await ctx.addInitScript(() => {
-    navigator.mediaDevices.getUserMedia = async () => ({ getTracks: () => [{ stop() {} }] });
+    navigator.mediaDevices.getUserMedia = async () => { const t = window._trilha = { stop() {} }; return { getTracks: () => [t] }; };
+    Object.defineProperty(navigator, "wakeLock", { configurable: true, value: { request: async () => { window._acesa = (window._acesa || 0) + 1; return { release() { window._acesa--; } }; } } });
     window.MediaRecorder = class { constructor() { this.mimeType = "audio/webm;codecs=opus"; this.state = "inactive"; }
       static isTypeSupported() { return true; }
       start() { this.state = "recording"; }
+      requestData() {}
       stop() { this.state = "inactive"; this.ondataavailable({ data: new Blob([new Uint8Array(5000)]) }); this.onstop(); } };
   });
   let falhar = true, comResumo = false, pedidos = [];
   await ctx.route(/functions\/v1\/atendimento_transcricao/, async r => {
-    pedidos.push({ tipo: r.request().headers()["content-type"], tam: (r.request().postDataBuffer() || []).length });
+    pedidos.push({ tipo: r.request().headers()["content-type"], tam: (r.request().postDataBuffer() || []).length, url: r.request().url() });
+    if (/json/.test(r.request().headers()["content-type"])) return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ resumo: "Resumo dos dois trechos.\nDefinir retorno." }) });
     if (falhar) return r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ erro: "ElevenLabs: 503" }) });
-    r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ texto: "[00:00] Falante 1: Bom dia.\n[00:04] Falante 2: Trabalhei na roça.", falantes: 2, minutos: 1, ...(comResumo ? { resumo: "Informou que trabalhou na roça.\nDefinir retorno." } : {}) }) });
+    r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ texto: "[00:00] Falante 1: Bom dia.\n[00:04] Falante 2: Trabalhei na roça.", falantes: 2, minutos: 1, segundos: 300, ...(comResumo ? { resumo: "Informou que trabalhou na roça.\nDefinir retorno." } : {}) }) });
   });
   const p = await ctx.newPage();
   const erros = [];
@@ -107,6 +110,25 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click("#ficha-gravar"); await p.waitForTimeout(600);
   const r3 = await p.evaluate(() => ({ t: (document.getElementById("ar-texto") || {}).value || "", cli: arCliSel }));
   conf("a transcrição abre na anotação rápida, com o cliente da ficha", r3.cli === A && /^Informou que trabalhou na roça/.test(r3.t) && /Falante 2: Trabalhei/.test(r3.t));
+  // F537: a tela fica acesa enquanto grava; a gravação interrompida fica no aparelho e volta com Continuar, e os trechos viram um resumo só
+  await p.keyboard.press("Escape"); await p.waitForTimeout(300);
+  await p.click("#ficha-gravar"); await p.waitForTimeout(300);
+  const ac = await p.evaluate(() => [window._acesa, !!atendRec]); conf(`gravando, a tela fica acesa (Wake Lock) ${ac}`, ac[0] === 1);
+  await p.evaluate(() => window._trilha.onended()); await p.waitForTimeout(400);
+  conf("o microfone encerrado ao sair do app não transcreve: fica Continuar e a tela é solta", await p.evaluate(() => atendGravado && atendGravado.interrompida && window._acesa === 0 && document.getElementById("ficha-gravar").classList.contains("pendente")));
+  const nPed = pedidos.length;
+  await p.reload(); await p.waitForSelector("#app.logado", { timeout: 15000 }); await p.waitForTimeout(2500);
+  conf("depois de recarregar, a gravação volta do aparelho", await p.evaluate(() => !!(atendGravado && atendGravado.interrompida && atendGravado.segs.length === 1)));
+  await p.evaluate(a => abrirFicha(a), A); await p.waitForTimeout(600);
+  await p.click("#ficha-gravar"); await p.waitForTimeout(300);
+  conf("Continuar retoma a gravação", await p.evaluate(() => !!atendRec));
+  await p.click("#ficha-gravar"); await p.waitForTimeout(800);
+  const novos = pedidos.slice(nPed);
+  conf(`os dois trechos vão um a um, o segundo com o tempo do primeiro, e o resumo sai do texto junto (${novos.map(x => x.url.split("?")[1] || x.tipo).join(" | ")})`,
+    novos.length === 3 && /resumo=nao&desde=0$/.test(novos[0].url) && /resumo=nao&desde=300$/.test(novos[1].url) && /json/.test(novos[2].tipo));
+  const r4 = await p.evaluate(() => (document.getElementById("ar-texto") || {}).value || "");
+  conf("a anotação rápida recebe o resumo único e a transcrição dos dois trechos", /^Resumo dos dois trechos\./.test(r4) && /10 min/.test(r4) && (r4.match(/Falante 2: Trabalhei/g) || []).length === 2);
+  conf("transcrito, o aparelho não guarda mais a gravação", await p.evaluate(async () => { await new Promise(r => setTimeout(r, 300)); atendGravado = null; await verGravacaoGuardada(); return !atendGravado; }));
   conf("sem erro de página", !erros.length);
   await nav.close(); s.close();
   const n = ok.filter(x => x[1]).length; console.log(`\nF498: ${n}/${ok.length}`);
