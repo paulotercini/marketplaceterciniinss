@@ -7013,7 +7013,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.40</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.41</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7692,9 +7692,7 @@ async function iniciar(){
     // F420 · a aba que volta à frente (depois de rodar a extensão) aplica na hora, sem esperar o intervalo
     document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) autoAplicarColetas().catch(()=>{}); });
   }
-  // F429 · os prazos do assistente entram ao carregar, uma vez por carga, sem esperar a ficha (opção A do Paulo, 07.11.2026)
-  if(souAdmin() && !navigator.webdriver && !window._pzAssLancados){ window._pzAssLancados = true;
-    setTimeout(()=>lancarPrazosAssistente().catch(e=>console.warn("prazos do assistente:", e)), 3000); }
+  // F530 · os "⏳ Prazo:" do assistente deixaram de ser lançados (decisão do Paulo de 11.11.2026)
   document.getElementById("app").classList.remove("dados-guardados");
   if(!veioDoCache) primeiroFiltro();
   montarSidebar();
@@ -14950,7 +14948,7 @@ function itensAgendaTodos(){
     const donos = l.responsavel_id ? [l.responsavel_id] : advogadoDoCliente(l.cliente_id);
     const dd = ehCardApos(l) && dataDireitoDoCard(l);
     // 31.10.2026 · a data marcada para rever o card (o "Concluir em" do To Do ou o rever em) adia a cobrança do direito
-    if(dd && dd.data<=hj && !(proxDoCard(l) > hj)) por({data:dd.data, cli, cardDir:l, prazo:true, selo:"Aposentadoria",
+    if(dd && dd.data<=hj && !(proxDoCard(l) > hj)) por({data:dd.data, cli, cardDir:l, selo:"Aposentadoria",
       resumo:`${especieDoCard(l)||"aposentadoria"}: direito desde ${fmt(dd.data)}, protocolar já`}, donos);
     else por({data:ehCardApos(l) ? proxDoCard(l) : l.proximo_em, cli, l, resumo:l.titulo}, donos);
   }
@@ -22209,7 +22207,7 @@ async function abrirFicha(cliId){
     D._ficha = { cliId, creds, vincs };
     retraduzirCrps(ands);   // F236 · o movimento do e-Recursos gravado com a regra velha se lê pelo bloco relido   // o que a pintura usa além do D global
     pintarFicha();
-    adotarDcbDosAutos(cliId).then(()=>adotarQuadro(cliId)).then(()=>adotarPrazosAssistente(cliId)).then(()=>adotarSuspensao(cliId)).catch(e=>console.warn("DCB dos autos / quadro:", e));   // F236, F321, F406
+    adotarDcbDosAutos(cliId).then(()=>adotarQuadro(cliId)).then(()=>adotarSuspensao(cliId)).catch(e=>console.warn("DCB dos autos / quadro:", e));   // F236, F321, F406
     repararCardsDoCliente(cliId).catch(e=>console.warn("cards:", e));   // F236
     repararCasosDoAtendimento(cliId).catch(e=>console.warn("natureza:", e));   // F236
     // ondas 0 e 1 · em segundo plano, sem esperar: o texto do dossiê e,
@@ -39601,7 +39599,8 @@ const prazoCarimbado = k => { const c = `[PRAZO ${fmt(k.prazo)}]`;
 // sai do To Do sai do CRM pela mesma sincronização (casos.todo_prazo, 31.10.2026)
 const prazoDoTodo = k => !!(k && k.prazo && k.todo_prazo===k.prazo);
 // F429 · decisão do Paulo (07.11.2026): o prazo fatal nasceu no CRM e é a anotação de prazo fatal do CRM que o faz; o
-// "Concluir em" do To Do é retorno também no 🗓 Tarefas com Prazo, salvo com a tarefa fatal ou o carimbo da mesma data
+// "Concluir em" do To Do é retorno também no 🗓 Tarefas com Prazo, salvo com a tarefa fatal ou o carimbo da mesma data.
+// F530 (11.11.2026): o carimbo só vem de quem registra o prazo fatal no CRM; o do assistente deixou de existir
 const prazoEhRetorno = k => !!(k && k.prazo && (prazoDoTodo(k) || listaDe(k)!=="🗓 Tarefas com Prazo")
   && !(D.tarefasPorCaso.get(k.id)||[]).some(t=>t.natureza==="fatal" && !t.concluida_em && t.lembrar_em===k.prazo)
   && !prazoCarimbado(k));
@@ -40125,93 +40124,7 @@ function datasDosJulgados(k){
   for(const x of docs) for(const campo of ["der","dib"]) if(x.r[campo] && !out[campo] && x.r[campo] <= (x.d||"9999")) out[campo] = {v:x.r[campo], fonte:x.fonte};
   return out;
 }
-// F407 · o prazo que o assistente aponta ("⏳ Prazo: … até dd/mm/aaaa") vira prazo de verdade ao abrir a ficha: a anotação
-// ganha o carimbo [PRAZO], o caso sem prazo ganha a data, e a tarefa aberta que a anotação cita (pelo começo do id ou por um
-// número em comum, como a RPV) passa a ela, para ficar na mesma faixa. Uma vez por anotação; o desfazer não volta a adotar.
-const ACERTO_PZ_ASS = 10;   // a anotação de até 10 dias ainda adota o prazo que já venceu; a mais antiga, só o que vem
-function tarefasCitadas(a, p, k, ands = D._andsFicha||[], tarefas = D.tarefasFicha||[]){
-  const grande = s => (String(s||"").toUpperCase().match(/\b(?=[A-Z0-9]*\d)[A-Z0-9]{8,}\b/g)||[]);
-  const toks = new Set([...grande(p.linha), ...(p.linha.match(/\d[\d.\-\/]{13,}\d/g)||[]).map(x=>x.replace(/\D/g, ""))]);
-  return tarefas.filter(t=>{
-    if(t.caso_id!==k.id || t.concluida_em || t.papel==="revisa" || t.andamento_id===a.id) return false;
-    const og = ands.find(b=>b.id===t.andamento_id);
-    if(!og || og.criado_em > a.criado_em || RX_PRAZO_AND.test(og.texto||"")) return false;
-    if((a.texto||"").includes(String(t.id).slice(0, 8))) return true;
-    const ot = String(og.texto||"");
-    return [...toks].some(x=>x.length>=8 && (ot.toUpperCase().includes(x) || ot.replace(/\D/g, "").includes(x)));
-  });
-}
-function moverTarefaMem(id, andId){
-  for(const t of [...(D.tarefasFicha||[]), ...[...D.tarefasPorCaso.values()].flat()]) if(t.id===id) t.andamento_id = andId;
-}
-// a anotação do assistente que vira prazo: a linha com a data de fim, no caso aberto, ainda sem carimbo nem desfeita
-function pzAssAdotavel(a, hj = hoje()){
-  if(a.excluir || a.responde_a || !String(a.origem_id||"").startsWith("mcp:") || RX_PRAZO_AND.test(a.texto||"")) return null;
-  const k = D.casoPorId.get(a.caso_id);
-  if(!k || k.fase==="encerrado" || ehPreCaso(k) || ((k.ronda||{}).pz_ass_fora||[]).includes(a.id)) return null;
-  const p = pzDoAssistente(a.texto), criado = dataSP(a.criado_em);
-  return !p || p.data < criado || (p.data < hj && diasEntreIso(criado, hj) > ACERTO_PZ_ASS) ? null : {k, p};
-}
-// `ands` e `tarefas` são os do cliente (os da ficha aberta, ou os buscados pelo lançamento da carga); com `lote`, só junta
-async function adotarPrazosAssistente(cliId, ands = D._andsFicha||[], tarefas = D.tarefasFicha||[], lote = null){
-  const hj = hoje(), feitos = [];
-  for(const a of ands){
-    const ad = pzAssAdotavel(a, hj); if(!ad || ad.k.cliente_id!==cliId) continue;
-    const {k, p} = ad, carimbo = `[PRAZO ${fmt(p.data)}]`;
-    if(ands.some(b=>b.caso_id===k.id && !b.excluir && (b.texto||"").includes(carimbo))) continue;
-    const tfs = tarefasCitadas(a, p, k, ands, tarefas), x = {a, k, texto: a.texto, prazo: k.prazo===undefined ? null : k.prazo, tfs: tfs.map(t=>[t.id, t.andamento_id])};
-    try{
-      const texto = `⏰ ${carimbo} ${a.texto}`;
-      await api(`/rest/v1/andamentos?id=eq.${a.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify({texto})});
-      a.texto = texto; textoAnd30(a.id, texto);
-      if(!k.prazo){ await patchCaso(k.id, {prazo: p.data}); k.prazo = p.data; }
-      for(const t of tfs){ await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-        body:JSON.stringify({andamento_id: a.id})}); moverTarefaMem(t.id, a.id); t.andamento_id = a.id; }
-      feitos.push(x);
-    }catch(e){ console.warn("prazo do assistente não gravou:", e); }
-  }
-  if(!feitos.length) return 0;
-  if(lote){ lote.push(...feitos); return feitos.length; }
-  if(clienteAberto===cliId){
-    repintarFicha();
-    avisoDesfazer(msgPzAss(feitos), async ()=>{ await desfazerPzAss(feitos); aviso("Desfeito"); repintarFicha(); });
-  }
-  return feitos.length;
-}
-const msgPzAss = f => f.length===1 ? `Prazo do assistente lançado: ${tituloNotaPz(f[0].a)}, vence ${fmtBarra(pzDoAssistente(f[0].a.texto).data)}`
-  : `${f.length} prazos do assistente lançados`;
-// o carimbo novo vale já para o prazoCarimbado e para a agenda, que leem os andamentos dos últimos 30 dias da carga inicial
-const textoAnd30 = (id, texto) => { (D.and30||[]).forEach(b=>{ if(b.id===id) b.texto = texto; }); if(txtAnd.has(id)) txtAnd.set(id, texto); };
-// o desfeito vai a ronda.pz_ass_fora e não volta, nem pela ficha nem pela carga
-async function desfazerPzAss(feitos){
-  for(const x of feitos){
-    await api(`/rest/v1/andamentos?id=eq.${x.a.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify({texto: x.texto})}).catch(()=>{});
-    x.a.texto = x.texto; textoAnd30(x.a.id, x.texto);
-    for(const [id, og] of x.tfs){ await api(`/rest/v1/andamento_tarefas?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({andamento_id: og})}).catch(()=>{}); moverTarefaMem(id, og); }
-    const r = {...(x.k.ronda||{})}; r.pz_ass_fora = [...(r.pz_ass_fora||[]), x.a.id];
-    const corpo = {ronda: r, ...(x.k.prazo!==x.prazo ? {prazo: x.prazo} : {})};
-    await patchCaso(x.k.id, corpo).catch(()=>{}); Object.assign(x.k, corpo);
-  }
-}
-// F429 · decisão do Paulo (07.11.2026, opção A): o CRM do administrador lança ao carregar os prazos do assistente de todos
-// os clientes, pela mesma regra da ficha, sem esperar que ela se abra. Duas abas ao mesmo tempo gravam o mesmo texto
-async function lancarPrazosAssistente(){
-  const sel = "select=id,caso_id,origem,origem_id,texto,criado_em,responde_a,excluir";
-  const cands = await todas("andamentos", `${sel}&origem_id=like.mcp:*&texto=like.*${encodeURIComponent("⏳ Prazo:")}*&responde_a=is.null`);
-  const hj = hoje(), clis = new Set(), feitos = [];
-  for(const a of cands){ const ad = pzAssAdotavel(a, hj); if(ad && ad.k.cliente_id!==clienteAberto) clis.add(ad.k.cliente_id); }   // a ficha aberta lança os dela
-  for(const cliId of clis){
-    const ids = (D.casosDoCliente.get(cliId)||[]).map(k=>k.id).join(",");
-    const [ands, tfs] = await Promise.all([todas("andamentos", `${sel}&caso_id=in.(${ids})`), todas("andamento_tarefas", `select=*&caso_id=in.(${ids})`)]).catch(()=>[]);
-    if(ands) await adotarPrazosAssistente(cliId, ands, tfs, feitos).catch(e=>console.warn("prazo do assistente:", e));
-  }
-  if(!feitos.length) return 0;
-  const repinta = () => { if(!clienteAberto && !document.querySelector("#conteudo-meio :is(input,textarea,select):focus")) render(); };
-  repinta();
-  avisoDesfazer(msgPzAss(feitos), async ()=>{ await desfazerPzAss(feitos); aviso("Desfeito"); repinta(); }, 30000);
-  return feitos.length;
-}
+// F530 · os "⏳ Prazo:" do assistente deixaram de virar prazo (decisão do Paulo de 11.11.2026)
 async function adotarQuadro(cliId){
   const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado" && !ehPreCaso(k));
   if(!ks.length) return 0;
