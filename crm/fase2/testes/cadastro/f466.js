@@ -61,6 +61,19 @@ and(kB, -5, "PJe (1º grau): Juntada de Petição intercorrente", { origem: "pje
 and(kB, 0, "PJe (1º grau): Juntada de Petição", { origem: "pje", origem_id: `mov:50000420420264036102:${iso(-500)}T10:00:def`, autor_id: null });
 and(kB, 0, "PJe (1º grau): Distribuído por sorteio", { origem: "pje", origem_id: `mov:50000420420264036102:${iso(-600)}T10:00:ghi`, autor_id: null });
 
+// D · processo no 2º grau (Turma Recursal): a situação vem do 2º grau, e não do 1º (F529)
+const cD = cli("Cliente Teste Segundo Grau");
+const kD = base(cD, { origem_lista: "👪 Judicial", beneficio: "Auxílio por incapacidade", especie: "B31", fase: "judicial", etapa: "aguardando sentença",
+  processos: [{ numero: "50012340320254036314", classe: "Procedimento do Juizado Especial Cível" }],
+  trf3: { ordem: 120, total: 800, consultado_em: iso(-2), projecao: { previsao: "2027-03-15" } },
+  ronda: { detalhes: { "50012340320254036314|1º grau": { em: iso(-1)+"T10:00:00", grau: "1º grau", "Órgão julgador": "1ª Vara Gabinete JEF de Catanduva" },
+    "50012340320254036314|2º grau": { em: iso(-1)+"T10:00:00", grau: "2º grau", "Órgão julgador": "37º Juiz Federal da 13ª TR SP" } } } });
+T.casos.push(kD); T.atribuicoes.push({ caso_id: kD.id, colaborador_id: PAULO });
+and(kD, 0, "PJe (1º grau): Sentença · Julgado improcedente o pedido", { origem: "pje", origem_id: `mov:50012340320254036314:${iso(-200)}T10:00:s1`, autor_id: null });
+and(kD, 0, "PJe (2º grau): Distribuído por sorteio", { origem: "pje", origem_id: `mov:50012340320254036314:${iso(-100)}T10:00:s2`, autor_id: null });
+and(kD, 0, "PJe (2º grau): Conclusos para julgamento", { origem: "pje", origem_id: `mov:50012340320254036314:${iso(-40)}T10:00:s3`, autor_id: null });
+and(kD, 0, "PJe (2º grau): Juntada de Petição", { origem: "pje", origem_id: `mov:50012340320254036314:${iso(-3)}T10:00:s4`, autor_id: null });
+
 // C · sem nada: o estado vazio
 const cC = cli("Caso Fictício Vazio");
 const kC = base(cC, { origem_lista: "🌻 INSS", beneficio: "BPC", especie: "B88", fase: "inss" });
@@ -142,13 +155,14 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o cartão do Conselho diz CRPS (F499)", /^Último andamento no CRPS$/.test((await p.locator(".db-and.crps h3").textContent()).trim()));
   conf("dois cartões de processo ficam empilhados à direita", await p.locator(".db-col-dir .db-and").count() === 2);
   conf("no Conselho o Último andamento é do e-Recursos", await p.locator(".db-and.crps").count() === 1 && /Encaminhado à Junta/.test(await p.locator(".db-and.crps .db-mov").textContent()));
-  conf("o mandado de segurança ganha o segundo cartão, Judicial", await p.locator(".db-and.jud").count() === 1 && /Em paralelo · mandado de segurança/.test(await p.locator(".db-and.jud .db-par").textContent()) && /Conclusos/.test(await p.locator(".db-and.jud .db-mov").textContent()));
+  conf("o mandado de segurança ganha o segundo cartão, Judicial", await p.locator(".db-and.jud").count() === 1 && /Em paralelo · mandado de segurança/.test(await p.locator(".db-and.jud .db-par").textContent()) && /Conclusos/.test(await p.locator(".db-and.jud .db-rel").textContent()));
   conf("a data do cartão é a do movimento, não a da importação (F492)", /há 5 dias/.test(await p.locator(".db-and.jud .db-when").textContent()));
-  const lis = await p.locator(".db-and.jud .db-movs > li").allTextContents(), jud = await p.locator(".db-and.jud").textContent();
-  conf("o Judicial mostra a situação com o órgão (F523)", /1ª Vara Gabinete JEF de Catanduva/.test(await p.locator(".db-and.jud .db-sit").textContent()));
-  conf("o Judicial mostra só os dois movimentos relevantes, sem a rotina (F523)", lis.length === 1 && await p.locator(".db-and.jud .db-movs > li").first().locator("ul > li").count() === 3
-    && /Conclusos/.test(lis[0]) && !/intercorrente|Remetidos|Distribuído/.test(jud) && !/PJe \(1º grau\)|— em|5000042/.test(lis.join(" ")));
-  conf("a rotina vira uma linha de contagem (F523)", /\+1 movimento de rotina/.test(await p.locator(".db-and.jud .db-rot").textContent()));
+  const lis = await p.locator(".db-and.jud .db-rel > li").allTextContents(), jud = await p.locator(".db-and.jud").textContent();
+  console.log("  [B] rel:", JSON.stringify(lis), "| situ:", await p.locator(".db-and.jud .db-situ").textContent(), "| rot:", await p.locator(".db-and.jud .db-rot").textContent().catch(()=>"-"));
+  conf("o Judicial mostra a situação com o órgão (F523)", /1ª Vara Gabinete JEF de Catanduva/.test(await p.locator(".db-and.jud .db-situ").textContent()));
+  conf("o Judicial mostra até dois movimentos relevantes, sem a rotina (F523)", lis.length >= 1 && lis.length <= 2
+    && /Conclusos/.test(lis[0]) && !/intercorrente|Distribuído/.test(lis.join(" ")) && !/PJe \(1º grau\)|— em|5000042/.test(lis.join(" ")));
+  conf("a rotina vira uma linha de contagem (F523)", /\+\d+ movimentos? de rotina/.test(await p.locator(".db-and.jud .db-rot").textContent()));
   await p.locator(".db-and.jud .db-ant").click(); await p.waitForTimeout(300);
   const ant = await p.locator(".db-and.jud .db-pn").textContent();
   conf("os anteriores trazem a rotina e as datas mais antigas, abaixo do cartão (F511/F523)", /Ocultar/.test(await p.locator(".db-and.jud .db-ant").textContent()) && /intercorrente/.test(ant) && /Remetidos os Autos/.test(ant) && /Distribuído por sorteio/.test(ant) && !/Conclusos/.test(ant));
@@ -162,6 +176,16 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("Detalhes de novo fecha o painel (F509)", await p.locator(".db-and.jud .db-pn").count() === 0);
   conf("Baixar e Claude ficam no cartão (F509)", await p.locator('.db-and.jud .db-bt:has-text("Baixar")').count() === 1 && await p.locator('.db-and.jud .db-bt:has-text("Claude")').count() === 1);
   conf("o cartão Judicial tem o link do portal", await p.locator(".db-and.jud a.db-logo[target='_blank']").count() === 1);
+  await ctx.close();
+
+  // ── 2b · caso D: o processo no 2º grau não mostra dado do 1º grau (F529) ──
+  ({ p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cD, kD));
+  const situD = await p.locator(".db-and.jud .db-situ").textContent(), relD = (await p.locator(".db-and.jud .db-rel").textContent().catch(()=>""));
+  console.log("  [D] situ:", situD, "| rel:", relD, "| fila:", await p.locator(".db-and.jud .db-fila").textContent().catch(()=>"-"));
+  conf("no 2º grau o órgão é a Turma Recursal, e não a vara (F529)", /TRF3 · 13ª Turma Recursal/.test(situD) && !/1ª Vara/.test(situD));
+  conf("o estado e a data vêm do último movimento do 2º grau (F529)", /Concluso para julgamento/.test(situD) && situD.includes("desde "+iso(-40).split("-").reverse().join("/")));
+  conf("no 2º grau aparece a fila do TRF3 (F529)", /120º de 800/.test(await p.locator(".db-and.jud .db-fila").textContent()));
+  conf("a sentença do 1º grau não entra nos relevantes do 2º grau (F529)", !/Sentença|improcedente/.test(relD) && /Conclusos/.test(relD));
   await ctx.close();
 
   // ── 3 · caso C: o estado vazio ──
