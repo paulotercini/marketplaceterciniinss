@@ -236,7 +236,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const ia = await itens(amanda, AM);
   // 11.93 · a lista pessoal de um colaborador (☕ Amanda) entra no Meu Dia dele, e só dele (decisão do Paulo, 31.10.2026)
   conf("a lista ☕ de um colaborador entra no Meu Dia dele", ia.some(i => i.cli === "c14") && !ip.some(i => i.cli === "c14"));
-  conf("o prazo do PJe chega à atribuída, como Prazo, na data do fim", ia.some(i => i.cli === "c1" && i.prazo && /^Prazo PJe/.test(i.selo) && i.data === dia(3)));
+  conf("o expediente do PJe chega à atribuída como aviso, na data do fim (F531)", ia.some(i => i.cli === "c1" && !i.prazo && /^Aviso PJe/.test(i.selo) && i.data === dia(3)));
   conf("a tarefa solta do caso vai a quem responde pelo caso", ia.some(i => i.cli === "c1" && /Laudo novo/.test(i.resumo)));
   conf("o honorário vencido vai à advogada do caso, com o valor", ia.some(i => i.cli === "c9" && i.selo === "Honorários" && /R\$\s?1\.000,00/.test(i.resumo)));
   conf("a pauta do CRPS (ainda não lida) vai à atribuída", ia.some(i => i.cli === "c11" && i.selo === "Pauta" && new RegExp(dia(6).slice(8, 10) + "\\.").test(i.resumo)));
