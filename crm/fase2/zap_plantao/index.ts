@@ -128,6 +128,9 @@ export function regras(instrucoes = "") {
     (instrucoes.trim() ? `\n\nInstruções do escritório (seguem as proibições acima):\n${instrucoes.trim().slice(0, 4000)}` : "");
 }
 
+// F524 · desconto na aposentadoria e matéria não previdenciária vão ao Dr. Marcos (Paulo, 11.11.2026)
+export const MARCOS = `Desconto na aposentadoria ou no benefício (empréstimo consignado, cartão, associação, sindicato) não é matéria previdenciária e é com o Dr. Marcos, como as demais matérias (cível, família, consumidor, contratos, trabalhista, penal, multa de trânsito, tributário).`;
+
 // F422r · as correções do teste de 72 conversas (aprovadas pelo Paulo em 07.11.2026); prevalecem sobre o texto anterior
 export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem sobre o que estiver acima):\n` +
   `- Caso novo: faça no máximo uma pergunta sobre o caso e, em seguida, leve ao agendamento com as datas. Não colha idade, documentos, ` +
@@ -136,7 +139,7 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `- Ação "nada" somente para agradecimento, "ok", emoji, despedida ou conversa que não é de cliente. Pergunta, pedido ou relato ` +
   `(falecimento, doença, pedido para falar com advogado, insistência num advogado) sempre recebe resposta.\n` +
   `- Advogado: o assunto previdenciário (aposentadoria, benefício do INSS, BPC, pensão, revisão) é sempre com a Dra. Amanda e o Dr. Paulo, ` +
-  `mesmo que a pessoa peça o Dr. Marcos; explique em uma frase que o Dr. Marcos atende os demais assuntos. Quem pede a Dra. Amanda recebe as datas dela. ` +
+  `mesmo que a pessoa peça o Dr. Marcos; explique em uma frase que o Dr. Marcos atende os demais assuntos. ${MARCOS} Quem pede a Dra. Amanda recebe as datas dela. ` +
   `Dois assuntos de áreas diferentes (por exemplo, aposentadoria e inventário) são dois atendimentos, cada um com o advogado do assunto.\n` +
   `- Atendimento já agendado: para informar o horário, trocar, remarcar ou cancelar, consulte primeiro os atendimentos agendados do número ` +
   `(atendimentos_marcados) e resolva pela ferramenta, sem perguntar o que o sistema já sabe e sem passar à equipe antes dessa consulta. ` +
@@ -168,7 +171,7 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `- Cliente do escritório (o número tem ficha) que pede agendamento: encaminhe direto ao Agendador, sem perguntar se é atendimento novo ou alteração ` +
   `e sem perguntar o assunto. O Agendador consulta primeiro os atendimentos agendados: sem nenhum, é atendimento novo, previdenciário, ` +
   `com as datas da Dra. Amanda e do Dr. Paulo; com algum, informe o dia e pergunte se deseja manter ou remarcar. O assunto se pergunta somente ` +
-  `se a pessoa disser que quer tratar de algo que não é aposentadoria nem benefício do INSS: diga que o Dr. Marcos atende esse assunto ` +
+  `se a pessoa disser que quer tratar de algo que não é matéria previdenciária, inclusive desconto na aposentadoria ou no benefício: diga que o Dr. Marcos atende esse assunto ` +
   `e pergunte se deseja agendar com ele. O atendimento é para o próprio cliente, salvo se ele disser que é para outra pessoa: então pergunte ` +
   `o nome completo de quem será atendido e agende como primeiro atendimento (001) no assunto previdenciário.`;
 
@@ -186,7 +189,7 @@ export const FATOS = `\n\nInformações do escritório (use quando a pessoa perg
   // F484 · o cliente que quer pagar o escritório não é golpe (pedido do Paulo de 09.11.2026)
   `- O cliente que pede o PIX ou a conta para pagar o escritório (atendimento, honorários, parcela) não é golpe: responda com os dados de pagamento do contexto, exatamente como estão, com acao "responder", sem urgente e sem falar em valor; peça o comprovante depois do pagamento. Sem dados de pagamento no contexto, diga que o advogado responsável vai enviá-los.\n` +
   `- Valor do atendimento: R$ 100,00, com qualquer advogado, sem cobrança para quem avalia o escritório no Google.\n- Honorários do processo, valores a receber, data de pagamento e andamento que o contexto não traz: diga que o advogado responsável vai responder, sem informar valor nem prazo; se a pessoa recebeu mensagem ou carta do INSS, peça a fotografia dela para o advogado conferir.\n` +
-  `- Assunto que não é previdenciário (trabalhista, família, consumidor, contratos) é atendido pelo Dr. Marcos.`;
+  `- Assunto que não é previdenciário é atendido pelo Dr. Marcos. ${MARCOS}`;
 // o registro da recepção, sem a informalidade que aparece no histórico (pedido do Paulo de 07.11.2026)
 export const FORMAL = `\n\nRegistro: português formal e técnico, como numa carta do escritório. Trate por "o senhor" ou "a senhora" quando o nome deixar claro; na dúvida, escreva sem tratamento. ` +
   `Não use "tudo bem?", "certinho", "joia", "beleza", "tá", "pra", "vc", diminutivos, gíria, emoji nem exclamação repetida. ` +
@@ -276,14 +279,15 @@ export const AG_OUTRA = `4. Não pergunte agora sobre outra pessoa: a pergunta v
 export const AG_HORARIOS_F280 = `6. Chame consultar_vagas (no CRM) e ofereça dois horários, numerados, com dia da semana, data, hora e advogado: ` +
   `o mais próximo de manhã e o mais próximo à tarde (o campo periodo de cada vaga diz qual é). Na mesma mensagem, em outra linha, diga: ` +
   `"Se for necessário atender mais de uma pessoa, preciso verificar na agenda se há outro horário disponível na sequência."`;
+// F525 · no máximo duas datas, uma de cada advogado (Paulo, 11.11.2026)
 // F422i · previdenciário: primeiro as datas da Dra. Amanda e do Dr. Paulo; o horário só depois da escolha do advogado (Paulo, 07.11.2026)
 export const AG_HORARIOS = `6. Chame consultar_vagas (no CRM). Se o assunto é previdenciário (aposentadoria ou outro benefício do INSS), consulte amanda e paulo ` +
-  `e ofereça primeiro somente as datas, sem horário: até quatro datas com a Dra. Amanda e até quatro com o Dr. Paulo, as mais próximas, com o dia da semana, ` +
+  `e ofereça primeiro somente as datas, sem horário: no máximo duas datas, a mais próxima da Dra. Amanda e a mais próxima do Dr. Paulo, com o dia da semana; outras datas somente se a pessoa pedir; ` +
   `e pergunte com qual advogado e em qual data prefere. Depois da escolha, ofereça somente dois horários livres desse advogado nessa data, ` +
   `um de manhã e outro à tarde quando houver (o campo periodo de cada vaga diz qual é), numa frase de conversa, sem lista, sem números e sem opção "0", ` +
   `por exemplo "Os próximos horários livres são na segunda-feira, dia 09/11, às 10h30 e às 15h30. Qual seria o melhor horário?". ` +
   `Escreva as datas também em frase, sem lista. Se a pessoa pedir outro horário, ofereça outro que esteja livre ` +
-  `em consultar_vagas, sem inventar horário. Se for outro assunto, consulte somente marcos e ofereça as ` +
+  `em consultar_vagas, sem inventar horário. Se for outro assunto, inclusive desconto na aposentadoria ou no benefício, consulte somente marcos e ofereça as ` +
   `datas e os horários do Dr. Marcos da mesma forma. Junto dos horários, em outra linha, diga: ` +
   `"Se for necessário atender mais de uma pessoa, preciso verificar na agenda se há outro horário disponível na sequência." ` +
   `Se a pessoa insistir em passar com o Dr. Paulo quando ele não tiver data ou o assunto não for previdenciário, diga que vai encaminhar à equipe, ` +
@@ -291,7 +295,7 @@ export const AG_HORARIOS = `6. Chame consultar_vagas (no CRM). Se o assunto é p
 export const AG_ORIENTA = `8. Não dê orientações antes de marcar. Com a confirmação do passo 7, chame marcar_atendimento: o sistema envia a última mensagem, ` +
   `com a senha do GOV.BR (Meu INSS) quando o assunto é do INSS e o lembrete de que o atendimento é individual.`;
 // o passo 5 do Console dizia só a Dra. Amanda e contrariava o passo 6 (07.11.2026)
-export const AG_PREV = `   - Assunto previdenciário (INSS, aposentadoria, auxílio, BPC/LOAS, pensão, revisão, perícia): ofereça as datas da Dra. Amanda e as do Dr. Paulo, como no passo 6.`;
+export const AG_PREV = `   - Assunto previdenciário (INSS, aposentadoria, auxílio, BPC/LOAS, pensão, revisão, perícia): ofereça as datas da Dra. Amanda e as do Dr. Paulo, como no passo 6. ${MARCOS}`;
 export const AG_DUVIDA = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.2026, revisto): faltar o assunto ou o advogado não é dúvida; ` +
   // terceira rodada das 72 conversas: o Agendador dizia "não localizei" sem consultar (07.11.2026)
   `para remarcar, cancelar ou dizer o dia de um atendimento, chame primeiro consultar_vagas com paulo, marcos e amanda e leia atendimentos_marcados, ` +
