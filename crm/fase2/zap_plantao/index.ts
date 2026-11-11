@@ -135,7 +135,10 @@ export const MARCOS = `Desconto na aposentadoria ou no benefício (empréstimo c
 export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem sobre o que estiver acima):\n` +
   `- Caso novo: faça no máximo uma pergunta sobre o caso e, em seguida, leve ao agendamento com as datas. Não colha idade, documentos, ` +
   `trabalho ou o que o INSS respondeu antes de agendar. O nome completo se pede uma vez só, para concluir o agendamento, e é o da pessoa ` +
-  `que será atendida, e não o de quem escreve por ela. Se a pessoa já informou o nome, não peça de novo.\n` +
+  `que será atendida, e não o de quem escreve por ela. Se a pessoa já informou o nome, não peça de novo. ` +
+  // F526 · cliente da ficha não informa o nome (Paulo, 11.11.2026)
+  `Se o número tem ficha (cliente do escritório) e a conversa não disse que o atendimento é para outra pessoa, não peça o nome: ` +
+  `o agendamento usa o nome da ficha.\n` +
   `- Ação "nada" somente para agradecimento, "ok", emoji, despedida ou conversa que não é de cliente. Pergunta, pedido ou relato ` +
   `(falecimento, doença, pedido para falar com advogado, insistência num advogado) sempre recebe resposta.\n` +
   `- Advogado: o assunto previdenciário (aposentadoria, benefício do INSS, BPC, pensão, revisão) é sempre com a Dra. Amanda e o Dr. Paulo, ` +
@@ -302,7 +305,8 @@ export const AG_DUVIDA = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.202
   `também quando o número não é o telefone principal da ficha ou não tem ficha; nunca diga que não localizou o atendimento sem essa consulta. ` +
   `pergunte o assunto (passo 2) e siga o passo 6, salvo para o cliente da ficha (consultar_vagas devolve tipo 002): ` +
   `nele não pergunte o assunto nem quem será atendido, nem se o atendimento é novo ou troca; consulte, e sem atendimento agendado ofereça as datas ` +
-  `da Dra. Amanda e do Dr. Paulo para o próprio cliente. Chame encaminhar_equipe, com a dúvida no motivo, somente quando, depois de perguntar, ` +
+  `da Dra. Amanda e do Dr. Paulo para o próprio cliente; não peça o nome dele, nem para concluir: em marcar_atendimento use como nome ` +
+  `o campo para que consultar_vagas devolveu (F526). O nome completo se pede somente quando o atendimento é para outra pessoa ou o número não tem ficha. Chame encaminhar_equipe, com a dúvida no motivo, somente quando, depois de perguntar, ` +
   `continuar sem saber se o atendimento é novo ou troca de um já agendado, ou quando o atendimento a remarcar ou cancelar não aparecer ` +
   `em atendimentos_marcados; nesse caso não ofereça horários nem diga que anotou, e diga em uma frase que um colaborador do escritório vai responder. ` +
   `Não presuma acompanhante, parentesco nem outra pessoa que a conversa não citou; para confirmar, repita dia, hora e advogado e pergunte somente se pode confirmar.`;
