@@ -1,5 +1,5 @@
 // F498 · o Gravar das Anotações do atendimento: grava, manda à função atendimento_transcricao e põe o texto
-// no campo para conferir, sem gravar a anotação sozinho; a falha guarda a gravação para Repetir.
+// e grava o resumo sozinho na anotação do cliente (F539); a falha guarda a gravação para Repetir.
 // Microfone e MediaRecorder simulados, banco simulado. Uso: node f498.js
 const { chromium } = require("playwright");
 const http = require("http");
@@ -90,17 +90,18 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a falha guarda a gravação: Repetir e Descartar", await rot() === "Repetir" && await p.$("#atend-descartar") !== null);
   falhar = false;
   await p.click("#atend-gravar"); await p.waitForTimeout(500);
-  const txt = await p.inputValue("#atend-nota");
-  conf("o Repetir reenvia e a transcrição vai ao campo, com os falantes", pedidos.length === 2 && /Transcrição do atendimento .*2 falantes/.test(txt) && /Falante 2: Trabalhei na roça/.test(txt));
-  conf("nada é gravado na ficha sem o Anotar", !((T.clientes.find(x => x.id === A).campos || {}).atendimento || []).length);
+  const notas = () => (T.clientes.find(x => x.id === A).campos || {}).atendimento || [], ult = () => notas()[notas().length - 1] || {};
+  conf("o Repetir reenvia e a transcrição grava sozinha nas anotações do atendimento, com os falantes e o pré-caso (F539)", pedidos.length === 2 && notas().length === 1
+    && /Transcrição do atendimento .*2 falantes/.test(ult().texto) && /Falante 2: Trabalhei na roça/.test(ult().texto) && ult().precaso_id === "pc_r1" && !ult().origem);
+  conf("o campo de escrever fica livre", await p.inputValue("#atend-nota") === "");
   conf("o botão volta a Gravar, sem Descartar", await rot() === "Gravar" && await p.$("#atend-descartar") === null);
-  comResumo = true; const antes = await p.inputValue("#atend-nota"); await p.fill("#atend-nota", "");
+  comResumo = true;
   await p.click("#atend-gravar"); await p.waitForTimeout(200); await p.click("#atend-gravar"); await p.waitForTimeout(500);
-  const txt2 = await p.inputValue("#atend-nota");
-  conf("com o resumo, ele vem primeiro e a transcrição completa abaixo", /^Informou que trabalhou na roça\.\nDefinir retorno\.\n\nTranscrição completa \(.*2 falantes\):\n\[00:00\] Falante 1/.test(txt2));
-  await p.fill("#atend-nota", antes);
-  await p.click(".atend-conv-nova .adr-primario"); await p.waitForTimeout(500);
-  conf("o Anotar grava a transcrição conferida", /Falante 1: Bom dia/.test((((T.clientes.find(x => x.id === A).campos || {}).atendimento || [])[0] || {}).texto || ""));
+  conf("com o resumo, ele vem primeiro e a transcrição completa abaixo", notas().length === 2 && /^Informou que trabalhou na roça\.\nDefinir retorno\.\n\nTranscrição completa \(.*2 falantes\):\n\[00:00\] Falante 1/.test(ult().texto));
+  await p.route(/rest\/v1\/clientes\?id=eq/, r => r.request().method() === "PATCH" ? r.fulfill({ status: 500, body: "{}" }) : r.fallback());
+  await p.click("#atend-gravar"); await p.waitForTimeout(200); await p.click("#atend-gravar"); await p.waitForTimeout(500);
+  conf("se o banco recusa, a transcrição volta ao campo para o Anotar", /^Informou que trabalhou na roça/.test(await p.inputValue("#atend-nota")) && notas().length === 2);
+  await p.unroute(/rest\/v1\/clientes\?id=eq/); await p.fill("#atend-nota", "");
   // F532: o Gravar ao lado da ⭐ da ficha; fora do atendimento a transcrição abre na ⚡ anotação rápida do cliente
   await p.evaluate(a => { window.confirm = () => true; return sairModoAtendimento(a, true); }, A).catch(() => {}); await p.waitForTimeout(500);
   await p.evaluate(a => abrirFicha(a), A); await p.waitForTimeout(600);
@@ -108,10 +109,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click("#ficha-gravar"); await p.waitForTimeout(200);
   conf("gravando, o botão fica vermelho", await p.evaluate(() => document.getElementById("ficha-gravar").classList.contains("gravando")));
   await p.click("#ficha-gravar"); await p.waitForTimeout(600);
-  const r3 = await p.evaluate(() => ({ t: (document.getElementById("ar-texto") || {}).value || "", cli: arCliSel }));
-  conf("a transcrição abre na anotação rápida, com o cliente da ficha", r3.cli === A && /^Informou que trabalhou na roça/.test(r3.t) && /Falante 2: Trabalhei/.test(r3.t));
+  conf("fora do atendimento, o resumo grava sozinho na ficha como anotação a distribuir", notas().length === 3 && ult().origem === "rapida" && /^Informou que trabalhou na roça/.test(ult().texto)
+    && /Falante 2: Trabalhei/.test(ult().texto) && !(await p.$("#ar-texto")));
+  conf("o ícone das Anotações da ficha acende para distribuir", await p.evaluate(() => !!document.querySelector(".det-notas.on")));
   // F537: a tela fica acesa enquanto grava; a gravação interrompida fica no aparelho e volta com Continuar, e os trechos viram um resumo só
-  await p.keyboard.press("Escape"); await p.waitForTimeout(300);
   await p.click("#ficha-gravar"); await p.waitForTimeout(300);
   const ac = await p.evaluate(() => [window._acesa, !!atendRec]); conf(`gravando, a tela fica acesa (Wake Lock) ${ac}`, ac[0] === 1);
   await p.evaluate(() => window._trilha.onended()); await p.waitForTimeout(400);
@@ -126,8 +127,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const novos = pedidos.slice(nPed);
   conf(`os dois trechos vão um a um, o segundo com o tempo do primeiro, e o resumo sai do texto junto (${novos.map(x => x.url.split("?")[1] || x.tipo).join(" | ")})`,
     novos.length === 3 && /resumo=nao&desde=0$/.test(novos[0].url) && /resumo=nao&desde=300$/.test(novos[1].url) && /json/.test(novos[2].tipo));
-  const r4 = await p.evaluate(() => (document.getElementById("ar-texto") || {}).value || "");
-  conf("a anotação rápida recebe o resumo único e a transcrição dos dois trechos", /^Resumo dos dois trechos\./.test(r4) && /10 min/.test(r4) && (r4.match(/Falante 2: Trabalhei/g) || []).length === 2);
+  const r4 = ult().texto || "";
+  conf("a ficha recebe o resumo único e a transcrição dos dois trechos", /^Resumo dos dois trechos\./.test(r4) && /10 min/.test(r4) && (r4.match(/Falante 2: Trabalhei/g) || []).length === 2);
   conf("transcrito, o aparelho não guarda mais a gravação", await p.evaluate(async () => { await new Promise(r => setTimeout(r, 300)); atendGravado = null; await verGravacaoGuardada(); return !atendGravado; }));
   conf("sem erro de página", !erros.length);
   await nav.close(); s.close();
