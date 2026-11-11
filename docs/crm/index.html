@@ -5876,12 +5876,13 @@ html .tipo-mais.mais-baixo .tl-mais-menu{left:0;right:auto}
 /* F373 · a ⭐ do canto da ficha, abaixo do ⋯ e um pouco maior */
 .det-imp{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid var(--borda,#ddd);border-radius:8px;background:var(--fundo-card,#fff);color:var(--cinza,#888);cursor:pointer;padding:0}
 .det-imp.on{color:#d64570;border-color:#d64570;background:#fdeef3}
-.det-imp.on:not(.det-notas) svg path{fill:currentColor}
+.det-imp.on:not(.det-notas,.det-grav) svg path{fill:currentColor}
+.det-imp.det-grav.gravando{color:#fff;border-color:#b3261e;background:#b3261e;animation:piscaRec 1s infinite}
 .det-mais-col{display:inline-flex;align-items:center;gap:6px}
 /* F403 · Anotações rápidas no lugar do ⋯; o ponto vermelho avisa a anotação que ninguém abriu */
 /* no computador a ⭐ desce para baixo do ⋯, no espaço vazio à direita da segunda linha */
 .app:not(.celular) .det-mais-col{position:relative}
-.app:not(.celular) .det-mais-col > .det-imp:not(.det-notas){position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);z-index:2}
+.app:not(.celular) .det-mais-col > .det-imp:not(.det-notas,.det-grav){position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);z-index:2}
 html .det-topo .linha1 > .det-canto{margin-left:auto;display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 html .lc-cab .lc-menu{margin-left:auto}
 html .zl-mais .zl-link{text-decoration:none;color:inherit}
@@ -7013,7 +7014,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.42</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.43</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -22373,7 +22374,7 @@ function pintarFicha(){
       ${temaV10() && !celular() ? `<span class="linha2"><span class="resumo resumo-lado">${resumoIn}</span>${linhaAdvogado(c)}${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}</span>` : ""}
       ${temaV10() && celular() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
       ${/* F403 · o ⋯ do cabeçalho saiu: no lugar, as Anotações rápidas do cliente; Separar e Não é cliente foram ao Cadastro (pedido do Paulo, 05.11.2026) */""}
-      <span class="det-mais-col">${botaoRapidas(c)}${botaoEstrelaFicha(cliId)}</span>
+      ${botaoGravarFicha(cliId)}<span class="det-mais-col">${botaoRapidas(c)}${botaoEstrelaFicha(cliId)}</span>
       ${/* F274 · a situação do cliente e o ✕ andam juntos no canto direito, mesmo quando a linha quebra */""}
       <span class="det-canto">${temaV10() && !celular() ? "" : `${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}`}
       ${chipAgendaCliente(c)}
@@ -23100,7 +23101,20 @@ function botaoGravarAtend(){
   return `<button type="button" id="atend-gravar" class="adr-bt${atendRec?" gravando":""}" title="${frase}" ${atendEnviando?"disabled":""} onclick="gravarAtendimento()"><span aria-hidden="true">${rot}</span><span class="sr-only">${frase}</span></button>`
     + (atendGravado && !atendEnviando ? `<button type="button" id="atend-descartar" class="adr-bt" title="descartar a gravação" onclick="atendGravado=null;this.remove();pintarGravarAtend()">Descartar</button>` : "");
 }
-function pintarGravarAtend(){ document.getElementById("atend-descartar")?.remove(); const b = document.getElementById("atend-gravar"); if(b) b.outerHTML = botaoGravarAtend(); }
+function pintarGravarAtend(){ document.getElementById("atend-descartar")?.remove(); const b = document.getElementById("atend-gravar"); if(b) b.outerHTML = botaoGravarAtend();
+  const f = document.getElementById("ficha-gravar"); if(f) f.outerHTML = botaoGravarFicha(f.dataset.cli); }
+// F532 · o Gravar também no canto da ficha, ao lado da ⭐ (pedido do Paulo, 11.11.2026): fora do atendimento,
+// a transcrição abre na ⚡ anotação rápida já com o cliente da ficha, para conferir e gravar
+const IC_MIC = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>`;
+let atendCli = null;
+function botaoGravarFicha(cliId){
+  if(!cliId || !podeGravarCaso()) return "";
+  const [rot, frase] = atendEnviando ? ["Transcrevendo", "transcrevendo a gravação"]
+    : atendRec ? ["Parar", "parar a gravação e transcrever"]
+    : atendGravado ? ["Repetir", "enviar de novo a última gravação"]
+    : ["Gravar", "gravar o atendimento e transcrever"];
+  return `<button type="button" id="ficha-gravar" data-cli="${cliId}" class="det-imp det-grav${atendRec?" gravando":""}" title="${rot}: ${frase}" aria-label="${frase}" ${atendEnviando?"disabled":""} onclick="atendCli='${cliId}';gravarAtendimento()">${IC_MIC}</button>`;
+}
 async function gravarAtendimento(){
   if(atendEnviando) return;
   if(atendRec) return atendRec.stop();
@@ -23141,13 +23155,21 @@ async function transcreverAtendimento(){
     probParaNota(d.resumo ? `${d.resumo}\n\nTranscrição completa ${cab}:\n${d.texto}`
       : `Transcrição do atendimento ${cab}. Confira antes de anotar:\n${d.texto}`);
     atendGravado = null;
-    aviso("Transcrição no campo da anotação. Confira e toque em Anotar");
+    aviso(document.getElementById("atend-nota") ? "Transcrição no campo da anotação. Confira e toque em Anotar" : "Transcrição na anotação rápida. Confira e grave");
   }catch(e){
     aviso("A transcrição falhou (" + String(e.message||e).slice(0,120) + "). Toque em Repetir");
   }finally{ atendEnviando = false; pintarGravarAtend(); }
 }
 function probParaNota(txt){
-  const ta = document.getElementById("atend-nota"); if(!ta || !txt) return;
+  if(!txt) return;
+  const ta = document.getElementById("atend-nota");
+  if(!ta){   // F532: fora do atendimento, a transcrição vai à ⚡ anotação rápida do cliente que gravou
+    const cli = atendCli || clienteAberto;
+    anotacaoRapida(null, cli);
+    if(cli && D.cliPorId.get(cli)) arEscolher(cli);
+    const t = document.getElementById("ar-texto"); if(t){ t.value = txt; t.rows = 12; t.focus(); }
+    return;
+  }
   ta.value = (ta.value.trim() ? ta.value.trim() + "\n" : "") + txt; ta.focus();
 }
 function probSoltar(ev){ ev.preventDefault(); probParaNota(ev.dataTransfer.getData("text/plain")); }
