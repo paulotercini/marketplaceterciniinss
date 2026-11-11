@@ -138,7 +138,10 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `que será atendida, e não o de quem escreve por ela. Se a pessoa já informou o nome, não peça de novo. ` +
   // F526 · cliente da ficha não informa o nome (Paulo, 11.11.2026)
   `Se o número tem ficha (cliente do escritório) e a conversa não disse que o atendimento é para outra pessoa, não peça o nome: ` +
-  `o agendamento usa o nome da ficha.\n` +
+  `o agendamento usa o nome da ficha. ` +
+  // F528 · o nome de quem escreve pela ficha de outra pessoa já é conhecido (Paulo, 11.11.2026)
+  `Se o contexto diz quem escreve (o nome do contato) e o atendimento é para essa pessoa, o nome também já é conhecido: ` +
+  `não o peça, nem para concluir, e não diga ao Agendador que falta o nome.\n` +
   `- Ação "nada" somente para agradecimento, "ok", emoji, despedida ou conversa que não é de cliente. Pergunta, pedido ou relato ` +
   `(falecimento, doença, pedido para falar com advogado, insistência num advogado) sempre recebe resposta.\n` +
   `- Advogado: o assunto previdenciário (aposentadoria, benefício do INSS, BPC, pensão, revisão) é sempre com a Dra. Amanda e o Dr. Paulo, ` +
@@ -306,7 +309,7 @@ export const AG_DUVIDA = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.202
   `pergunte o assunto (passo 2) e siga o passo 6, salvo para o cliente da ficha (consultar_vagas devolve tipo 002): ` +
   `nele não pergunte o assunto nem quem será atendido, nem se o atendimento é novo ou troca; consulte, e sem atendimento agendado ofereça as datas ` +
   `da Dra. Amanda e do Dr. Paulo para o próprio cliente; não peça o nome dele, nem para concluir: em marcar_atendimento use como nome ` +
-  `o campo para que consultar_vagas devolveu (F526). O nome completo se pede somente quando o atendimento é para outra pessoa ou o número não tem ficha. Chame encaminhar_equipe, com a dúvida no motivo, somente quando, depois de perguntar, ` +
+  `o campo para que consultar_vagas devolveu (F526). Quando consultar_vagas devolve quem_escreve e o atendimento é para quem escreve, esse é o nome: não o peça e use-o em marcar_atendimento (F528). O nome completo se pede somente quando o atendimento é para outra pessoa ou o número não tem ficha. Chame encaminhar_equipe, com a dúvida no motivo, somente quando, depois de perguntar, ` +
   `continuar sem saber se o atendimento é novo ou troca de um já agendado, ou quando o atendimento a remarcar ou cancelar não aparecer ` +
   `em atendimentos_marcados; nesse caso não ofereça horários nem diga que anotou, e diga em uma frase que um colaborador do escritório vai responder. ` +
   `Não presuma acompanhante, parentesco nem outra pessoa que a conversa não citou; para confirmar, repita dia, hora e advogado e pergunte somente se pode confirmar.`;
@@ -645,7 +648,8 @@ const liberada = (banco: typeof rpc, a: Record<string, any>) =>
 
 // o tipo (001 sem ficha, 002 com) e o telefone saem da conversa, nunca do agente; remarcar e
 // cancelar valem só para atendimento desta pessoa
-export function ferramentasDaConversa(conversa: string, chamar = agenda, banco = rpc) {
+// quem: nome de quem escreve pela ficha de outra pessoa (contato_nome com contato_relacao), já conhecido (F528)
+export function ferramentasDaConversa(conversa: string, chamar = agenda, banco = rpc, quem?: string) {
   let dados: Record<string, any> | null = null;
   const conv = async () => (dados ||= await banco("zap_plantao_agenda", { p_conversa: conversa }) || {});
   // F422p · quem escreve por outra pessoa (contato_relacao) agenda 001 para si e 002 para a pessoa da ficha do número
@@ -691,8 +695,9 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
         vagas[profs[k]] = vagasDoDia(d.dias, tipo(c, i.tipo), COM[profs[k]]);
       });
       const t = tipo(c, i.tipo), para = t === "002" ? c.nome_ficha || c.nome_numero : null;
+      const escreve = t === "001" && c.cliente_numero && quem ? { quem_escreve: quem } : {};
       const espera = await banco("agenda_espera_ligada", {}).catch(() => null) === true;   // F527
-      return { tipo: t, ...(para ? { para } : {}), ...(espera ? { espera: true } : {}), ...(tipos(c).length > 1 ? { aviso: `tipo 002 é para ${c.nome_numero || "a pessoa da ficha"}; para quem escreve ou outra pessoa, consulte com tipo 001` } : {}),
+      return { tipo: t, ...(para ? { para } : {}), ...escreve, ...(espera ? { espera: true } : {}), ...(tipos(c).length > 1 ? { aviso: `tipo 002 é para ${c.nome_numero || "a pessoa da ficha"}; para quem escreve ou outra pessoa, consulte com tipo 001` } : {}),
         vagas, atendimentos_marcados: ja.map(doMarcado) };
     },
     async marcar_atendimento(i: Record<string, any>) {
@@ -702,10 +707,11 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       // outro nome que não o da ficha do número é atendimento novo (001)
       const primeiro = (n: unknown) => String(n || "").trim().split(/\s+/)[0].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
       const pedido = i.tipo || (c.cliente_numero && i.nome && primeiro(i.nome) !== primeiro(c.nome_numero) ? "001" : undefined);
+      const nomeDito = String(i.nome || "").trim() || (c.cliente_numero ? quem || "" : "");
       const v = await vaga(c, String(i.eventoId || ""), [i.profissional], pedido);
       if (!v) return { erro: "esta vaga não está mais livre: consulte de novo e ofereça outra" };
       const r = await chamar("agendar", {
-        profissional: v.profissional, tipo: v.tipo, nome: (v.tipo === "002" ? c.nome_ficha || c.nome_numero : null) || i.nome, telefone: foneAgenda(c.telefone),
+        profissional: v.profissional, tipo: v.tipo, nome: (v.tipo === "002" ? c.nome_ficha || c.nome_numero : null) || nomeDito, telefone: foneAgenda(c.telefone),
         data: v.data, inicio: v.inicio, eventoId: i.eventoId, clienteId: v.tipo === "002" ? c.cliente_id || c.cliente_numero || undefined : undefined, orientacoesConfirmadas: true,
         observacoes: `Marcado pela assistente virtual do WhatsApp. Modalidade: ${i.modalidade === "remoto" ? "remoto" : "presencial"}.` +
           `${i.acompanhante ? " Outra pessoa será atendida junto." : ""} Assunto: ${String(i.assunto || "").slice(0, 300)}`,
@@ -714,7 +720,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       if (!r.ok) return { erro: String(r.erro || r.codigo || "erro da agenda") };
       if (v.data === hojeBR() && r.evento?.id) await chamar("confirmar", { eventId: r.evento.id }).catch(() => null);
       // F422q · a confirmação diz de quem é o atendimento quando quem escreve agenda para outra pessoa
-      const para = v.tipo === "002" ? c.nome_ficha || c.nome_numero : c.cliente_numero ? i.nome : null;
+      const para = v.tipo === "002" ? c.nome_ficha || c.nome_numero : c.cliente_numero ? nomeDito : null;
       const conf = { p_conversa: conversa, p_rotulo: rotulo(v.data, v.inicio, COM[v.profissional]),
         p_modalidade: i.modalidade === "remoto" ? "remoto" : "presencial", p_assunto: String(i.assunto || "") };
       // shortcut: sem a migração f422q no banco, a versão de 4 argumentos confirma; sai quando ela for aplicada
@@ -759,7 +765,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       const c = await conv();
       if (await banco("agenda_espera_ligada", {}).catch(() => null) !== true) return { erro: "a lista de espera está desligada: não a ofereça" };
       const t = tipo(c, i.tipo);
-      const nome = (t === "002" ? c.nome_ficha || c.nome_numero : null) || String(i.nome || "").trim();
+      const nome = (t === "002" ? c.nome_ficha || c.nome_numero : null) || String(i.nome || "").trim() || (c.cliente_numero ? quem || "" : "");
       if (!nome) return { erro: "falta o nome de quem será atendido" };
       const datas = (await marcados(c)).map((a) => String(a.data || "")).filter(Boolean).sort();
       const r = await banco("agenda_espera_incluir_ia", { p_conversa: conversa, p_nome: nome, p_tipo: t,
@@ -796,7 +802,7 @@ export function ferramentasSimuladas(dados: Record<string, any>, chamar = agenda
   const falso = async (acao: string, corpo: Record<string, unknown>) =>
     ["agendar", "remarcar", "cancelar"].includes(acao) ? { ok: true, simulado: true }
       : acao === "agendamentosFuturos" ? { ok: true, agendamentos: (dados.marcados || []).map(doRoteiro) } : chamar(acao, corpo);
-  const fer = ferramentasDaConversa("simulada", falso, banco as typeof rpc);
+  const fer = ferramentasDaConversa("simulada", falso, banco as typeof rpc, dados.quem || undefined);
   const uso: { nome: string; entrada: unknown; saida: string }[] = [];
   for (const k of Object.keys(fer)) if (typeof fer[k] === "function") {
     const f = fer[k];
@@ -949,7 +955,7 @@ async function simular(s: Cenario) {
   const sessao = await ma("sessions", { agent: agente, environment_id: ambiente, title: "WhatsApp · simulação do CRM",
     budget: { type: "limit", max_list_cost: { amount: "100", currency: "USD" } } });
   // como o zap_plantao_agenda: quem escreve por outra pessoa (relacao) não é a ficha, mas o número é dela
-  const { fer, uso } = ferramentasSimuladas({ telefone: "5516900000000", cliente_id: s.cliente && !s.relacao ? "simulado" : null,
+  const { fer, uso } = ferramentasSimuladas({ telefone: "5516900000000", cliente_id: s.cliente && !s.relacao ? "simulado" : null, quem: s.relacao ? s.contato || "Paulo" : null,
     cliente_numero: s.cliente ? "simulado" : null, nome_ficha: s.cliente?.nome || null, nome_numero: s.cliente?.nome || null,
     ligada: true, marcados: s.marcados || [], espera: s.espera === true });
   const t0 = Date.now(), saida: Record<string, unknown>[] = [];
@@ -1158,7 +1164,7 @@ async function decidirPorAgente(x: Contexto) {
   // a sessão fica presa à versão do agente em que nasceu: versão nova recomeça a sessão
   const viva = s?.id && s.v === versao && Date.now() - Date.parse(s.em) < MA_SESSAO_DIAS * 864e5;
   let r: Record<string, any> | null = null, id = viva ? s!.id : "", em = viva ? s!.em : "";
-  const fer = TOKEN_AGENDA && x.conversa_id ? ferramentasDaConversa(x.conversa_id) : {};
+  const fer = TOKEN_AGENDA && x.conversa_id ? ferramentasDaConversa(x.conversa_id, agenda, rpc, x.relacao ? x.contato || undefined : undefined) : {};
   const guarda = guardaDoTexto([...msgs].reverse().find((m) => m.direcao === "entrada")?.texto, enviados(msgs).pop());
   if (viva) {
     try { r = await turno(id, textoDoTurno(x, msgs.filter((m) => m.momento > s!.ate), false), fetch, fer, guarda); }

@@ -561,6 +561,24 @@ console.log("formal: ok");
   console.log("ok F526 nome da ficha");
 }
 
+// F528 · quem escreve pela ficha de outra pessoa já tem o nome conhecido (Paulo, 11.11.2026)
+{
+  const { CORRECOES: c528, paraAgendador: pa528, ferramentasDaConversa: f528 } = await import("../../zap_plantao/index.ts");
+  assert.ok(c528.includes("o nome do contato") && pa528("Agendador.").includes("quem_escreve"), "as regras dão o nome de quem escreve por conhecido");
+  const ch = [];
+  const ag = async (acao, corpo) => { ch.push([acao, corpo]);
+    if (acao === "disponibilidade") return { ok: true, dias: [{ data: "2026-11-13", livres: { "001": [{ inicio: "09:30", eventoId: "ev-" + corpo.profissional }] } }] };
+    if (acao === "agendamentosFuturos") return { ok: true, agendamentos: [] };
+    return { ok: true }; };
+  const bc = async (nome) => nome === "zap_plantao_agenda" ? { telefone: "5500000000001", cliente_id: null, cliente_numero: "x", nome_ficha: "Cliente Teste", nome_numero: "Cliente Teste", ligada: true } : null;
+  const fq = f528("c9", ag, bc, "Contato Teste");
+  const cv = await fq.consultar_vagas({ profissionais: ["amanda"], tipo: "001" });
+  assert.equal(cv.quem_escreve, "Contato Teste", "consultar_vagas devolve o nome de quem escreve");
+  await fq.marcar_atendimento({ eventoId: "ev-amanda", profissional: "amanda", tipo: "001", modalidade: "presencial", assunto: "aposentadoria", acompanhante: false, orientacoes_dadas: true });
+  assert.equal(ch.find((c) => c[0] === "agendar")[1].nome, "Contato Teste", "agenda com o nome de quem escreve, sem pedi-lo");
+  console.log("ok F528 nome de quem escreve");
+}
+
 // F527 · a lista de espera pela IA (onda 2): incluir quem pede data mais cedo, oferecer a vaga liberada e ler a resposta
 {
   const m = await import("../../zap_plantao/index.ts");
