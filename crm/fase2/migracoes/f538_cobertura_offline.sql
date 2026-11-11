@@ -1,4 +1,4 @@
--- F537: cobertura da equipe durante o Offline (onda 1, decisão do Paulo de 11.11.2026).
+-- F538: cobertura da equipe durante o Offline (onda 1, decisão do Paulo de 11.11.2026).
 -- Com o atendente Offline, a segunda mensagem do cliente (sem ser agradecimento) depois
 -- da mensagem de ausência abre a cobertura: a conversa fica com o substituto
 -- (colaboradores.zap_cobre_id) em zap_conversas.cobertura, ele recebe a menção e
@@ -53,7 +53,7 @@ begin
   end if;
 
   if c.offline_aviso_em is not null and c.offline_aviso_em >= c.zap_offline_desde then
-    -- F537: a segunda mensagem do mesmo período abre a cobertura
+    -- F538: a segunda mensagem do mesmo período abre a cobertura
     if coalesce((select valor from config_app where chave = 'zap_cobertura'), 'nao') <> 'sim'
        or c.zap_cobre_id is null or zap_conf_agradece(new.tipo, new.texto)
        or coalesce((c.cobertura->>'desde')::timestamptz >= c.zap_offline_desde, false) then

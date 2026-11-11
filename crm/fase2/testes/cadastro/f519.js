@@ -64,7 +64,7 @@ const EXTRA = {
   await p.waitForFunction(() => !eu.zap_offline_desde);
   await p.waitForFunction(() => !document.querySelector(".ze-offline"));
   conf("o Online do aviso volta a ficar online e tira o aviso", escritas.some(e => /zap_meu_offline/.test(e.u) && e.b.p_offline === false));
-  // F537: a conversa coberta durante o Offline do titular fica com o substituto, que responde sem assumir
+  // F538: a conversa coberta durante o Offline do titular fica com o substituto, que responde sem assumir
   await p.evaluate(() => {
     const c = zapConvs[0]; c.atendente_id = "00000000-0000-0000-0000-0000000000aa";
     c.cobertura = { titular: c.atendente_id, cobre: eu.id, desde: "2026-11-11T12:00:00Z" };
