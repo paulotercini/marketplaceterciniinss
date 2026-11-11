@@ -640,15 +640,12 @@ console.log("formal: ok");
     assert.deepEqual([inc.p_tipo, inc.p_profs, inc.p_periodos, inc.p_ate, inc.p_marcado], ["001", ["amanda"], ["manha"], null, "2026-12-01"]);
     const [, b2] = banco({ zap_plantao_agenda: { ligada: true }, agenda_espera_ligada: false });
     assert.ok((await m.ferramentasDaConversa("cv", ag, b2).entrar_na_espera({ nome: "x", profissionais: ["paulo"] })).erro, "desligada, não inclui");
-<<<<<<< HEAD
     // teste de 30 conversas (11.11.2026): limite até amanhã não tem data mais cedo, não inclui
     const [feitos3, b3] = banco({ zap_plantao_agenda: { telefone: "5500000000002", ligada: true }, agenda_espera_ligada: true, agenda_espera_incluir_ia: { incluido: true } });
     const amanha = new Date(Date.now() + 86400e3).toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
     assert.ok((await m.ferramentasDaConversa("cv", ag, b3).entrar_na_espera({ nome: "Cliente Teste", profissionais: ["amanda"], ate: amanha })).erro);
     assert.ok(!feitos3.some((f) => f[0] === "agenda_espera_incluir_ia"), "não grava");
     assert.ok(m.paraAgendador("x\n\nLista de espera: velho.\n\nFim").includes("Não inclua sem o sim"), "troca o bloco antigo");
-=======
->>>>>>> origin/main
   }
   console.log("ok F527 lista de espera");
 }
