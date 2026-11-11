@@ -2073,6 +2073,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .ze-ferr .zap-icone.gravando{background:#fde7e7;color:#b3261e}
   .zap-escrever .btn-rap.ze-enviar:disabled{opacity:.45;cursor:not-allowed}
   .zap-escrever .ze-linha:has(.zap-falta:not([hidden])){flex-wrap:wrap}
+  .ze-offline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 6px;padding:6px 10px;border:1px solid var(--venc,#b3261e);border-radius:8px;background:#fdecea;color:#8c1d18;font-size:13px;font-weight:600}
   .ze-sug-ia{border:1px dashed #c9a227;background:#fff8e1;border-radius:8px;padding:8px 10px;font-size:13px;color:#3d3200}
   .ze-sug-ia.urg{border-color:var(--venc,#b3261e);background:#fdecea}
   .ze-sug-cab{font-weight:600;margin-bottom:4px}.ze-sug-cab span{font-weight:400;color:#7a6a2a}
@@ -7014,7 +7015,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.44</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.45</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17860,6 +17861,8 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
         <button class="btn-rap ze-enviar" onclick="enviarAudioZap()" title="Enviar áudio"><span aria-hidden="true">Enviar</span><span class="sr-only"> áudio</span></button></div>`:""}
      <div class="zap-escrever ${zapNota?"modo-nota":""} ${!zapNota&&precisaAssumir(c)?"ze-travado":""}">
        <div class="zap-sug" id="zap-sug" hidden></div>
+       ${!zapNota&&eu&&eu.zap_offline_desde?`<p class="ze-offline" role="status">Você está offline: os clientes que você assumiu recebem a mensagem automática. Enviar continua permitido.
+          <button class="btn-rap" onclick="gravarEstadoZap(false)" title="Voltar a ficar online">Online</button></p>`:""}
        ${precisaAssumir(c)?`<p class="ze-so-leitura ze-assumir-aviso">${at
           ? `Esta conversa está com ${esc(at.nome)}. Para responder, peça a transferência.
              <button class="btn-rap" onclick="pedirTransferencia()" title="Pedir a transferência da conversa">Pedir<span class="sr-only"> a transferência</span></button>`
@@ -19082,6 +19085,7 @@ async function gravarEstadoZap(off, msg){
   eu.zap_offline_desde = off ? (eu.zap_offline_desde || new Date().toISOString()) : null;
   if(msg){ eu.zap_offline_msg = msg; eu.zap_offline_salvas = [msg, ...(eu.zap_offline_salvas||[]).filter(x => x !== msg)].slice(0,20); }
   fecharCaixa(); pintarListaZap();
+  if(zapAberta && document.getElementById("zap-txt")) pintarConversaGuardando();   // F534: o aviso vermelho do campo de escrever acompanha
   aviso(off ? "Offline: a mensagem automática vai ao contato que você assumiu" : "Online");
 }
 function estadoZap(){

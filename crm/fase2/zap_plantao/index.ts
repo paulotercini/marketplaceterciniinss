@@ -396,6 +396,27 @@ export const NOME_UMA_VEZ = `Nome: chame a pessoa pelo nome no máximo uma vez n
   `não cumprimente nem dê boas-vindas: responda ao que ela disse, do ponto em que a conversa está.\n`;
 
 // o que muda a cada mensagem
+// mensagem depois de longo intervalo é conversa nova: responder ao que foi dito agora,
+// sem retomar o assunto anterior que a pessoa não citou (pedido do Paulo de 11.11.2026)
+export const PAUSA_RETOMADA_H = 6;
+// índice da mensagem que abre a retomada (a rajada atual do cliente depois da pausa), ou -1
+export function inicioRetomada(msgs: Msg[] = []) {
+  const i = msgs.map((m) => m.direcao).lastIndexOf("entrada");
+  let j = i;
+  while (j > 0 && msgs[j - 1].direcao === "entrada" && Date.parse(msgs[j].momento) - Date.parse(msgs[j - 1].momento) < 36e5) j--;
+  if (j <= 0) return -1;
+  return (Date.parse(msgs[j].momento) - Date.parse(msgs[j - 1].momento)) / 36e5 >= PAUSA_RETOMADA_H ? j : -1;
+}
+// as respostas já enviadas que contam para não repetir saudação e fórmulas: depois da retomada, só as novas
+export const enviadosAtuais = (msgs: Msg[] = []) => enviados(msgs.slice(Math.max(0, inicioRetomada(msgs))));
+export function retomada(msgs: Msg[] = []) {
+  const j = inicioRetomada(msgs);
+  if (j < 0) return "";
+  const h = (Date.parse(msgs[j].momento) - Date.parse(msgs[j - 1].momento)) / 36e5;
+  return `Retomada: a pessoa voltou a escrever ${Math.round(h)} horas depois da mensagem anterior. Trate como conversa nova: responda somente ao que ela disse agora. ` +
+      `Se for apenas um cumprimento, cumprimente e pergunte em que pode ajudar. Não retome o assunto anterior (agendamento, horários, pedidos) nem repita horários já oferecidos, salvo se ela o mencionar.\n`;
+}
+
 export function contexto(x: Contexto) {
   const advs = (x.advogados || []).join(", ") || "a equipe";
   const ficha = !x.cliente ? "O número não está ligado a nenhuma ficha de cliente do escritório."
@@ -408,6 +429,7 @@ export function contexto(x: Contexto) {
     `Advogados: ${advs}. As estagiárias (Ingrid, Meissa) também respondem, mas quem é avisado é o advogado.\n` +
     `Advogado indicado para esta conversa: ${x.advogado || "a equipe"}.\n${ficha}\n` +
     `Agenda: ${x.agenda ? "ligada" : "desligada"}.\n` +
+    retomada(x.mensagens) +
     (x.pagamento?.trim() ? `Dados de pagamento do escritório (somente para o cliente que quer pagar o escritório):\n${x.pagamento.trim()}\n` : "") +
     NOME_UMA_VEZ +
     (x.atendente ? `Conversa assumida por ${x.atendente.nome}: a sua resposta vira sugestão no campo de escrever dele(a).\n` + primeiraPessoa(x.atendente) : "") +
@@ -984,7 +1006,7 @@ async function simular(s: Cenario) {
     catch (e) { saida.push({ cliente: m.texto, erro: String(e).slice(0, 300) }); break; }
     const enc = fer.encaminhado as { motivo?: string };
     const acao = enc && "motivo" in enc ? "equipe" : r.acao;
-    const resposta = emLinhas(r.resposta, enviados(x.mensagens));
+    const resposta = emLinhas(r.resposta, enviadosAtuais(x.mensagens));
     saida.push({ cliente: m.texto, acao, resposta, assunto: r.assunto, ferramentas: uso.slice(antes) });
     if (resposta) x.mensagens.push({ direcao: "saida", por_bot: true, tipo: "texto", texto: resposta, momento: new Date(t0 + i * 120000 + 30000).toISOString() });
     if (acao === "equipe") break;
@@ -1369,7 +1391,7 @@ if (typeof Deno !== "undefined") {
       const ultima = String((x.mensagens || []).filter((m: Msg) => m.direcao === "entrada" && m.texto).slice(-1)[0]?.texto || "");
       if (acao !== "equipe" && /golpe|falso advogado|se passa(ndo|r)? (por|pelo)|pix para liberar/i.test(ultima)) { acao = "equipe"; r.urgente = true; r.assunto = r.assunto || "possível golpe"; }
       await rpc("zap_plantao_aplicar", {
-        p_msg: msg, p_acao: acao, p_resposta: emLinhas(r.resposta, enviados(x.mensagens)), p_advogado: String(r.advogado || ""),
+        p_msg: msg, p_acao: acao, p_resposta: emLinhas(r.resposta, enviadosAtuais(x.mensagens)), p_advogado: String(r.advogado || ""),
         p_urgente: r.urgente === true, p_assunto: (ehGolpe({ ...r, acao }, x.mensagens) ? "golpe: " : "") + String(r.assunto || ""),
         p_relato: String(r.relato || ""), p_nome: String(r.nome || ""),
       });
