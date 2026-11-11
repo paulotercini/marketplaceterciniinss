@@ -26,7 +26,8 @@ const mmss = (s: number) => { const t = Math.max(0, Math.floor(s || 0)); return 
 
 type Palavra = { text: string; type?: string; start?: number; end?: number; speaker_id?: string };
 // as palavras do Scribe viram falas: uma linha por troca de falante, "[mm:ss] Falante N: …", na ordem em que falam
-export function falas(words: Palavra[], textoSolto = "") {
+// desde: segundos já gravados antes deste trecho (F537), para o tempo das falas seguir a gravação inteira
+export function falas(words: Palavra[], textoSolto = "", desde = 0) {
   const ids: string[] = [], linhas: { quem: string; ini: number; txt: string }[] = [];
   for (const w of words || []) {
     if (w.type === "audio_event") continue;
@@ -35,12 +36,12 @@ export function falas(words: Palavra[], textoSolto = "") {
     const quem = `Falante ${ids.indexOf(id) + 1}`, u = linhas[linhas.length - 1];
     if (u && u.quem === quem) u.txt += w.text;
     else if (w.type === "spacing") continue; // espaço na troca de falante não abre fala
-    else linhas.push({ quem, ini: w.start || 0, txt: w.text });
+    else linhas.push({ quem, ini: (w.start || 0) + desde, txt: w.text });
   }
   const fim = (words || []).reduce((m, w) => Math.max(m, w.end || 0), 0);
   const texto = linhas.length ? linhas.map((l) => `[${mmss(l.ini)}] ${l.quem}: ${l.txt.replace(/\s+/g, " ").trim()}`).filter((l) => !/:\s*$/.test(l)).join("\n")
     : String(textoSolto || "").trim();
-  return { texto, falantes: ids.length, minutos: Math.round(fim / 60) };
+  return { texto, falantes: ids.length, minutos: Math.round(fim / 60), segundos: Math.round(fim) };
 }
 
 // o padrão das anotações do Dr. Paulo, integral (arquivo aprovado em 11.11.2026, regras e exemplos fictícios),
@@ -176,6 +177,14 @@ if (typeof Deno !== "undefined") {
     const eu = await (await fetch(`${URL_SB}/rest/v1/colaboradores?select=id,ativo&auth_id=eq.${user.id}`, { headers: auth })).json().catch(() => []);
     if (!eu[0] || eu[0].ativo === false) return json({ erro: "só colaborador ativo do escritório" }, 403);
     const tipo = (req.headers.get("content-type") || "audio/webm").split(";")[0];
+    const q = new URL(req.url).searchParams;
+    const dia = new Date().toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
+    if (tipo === "application/json") {   // F537: a gravação em trechos manda o texto juntado para um resumo só
+      const b = await req.json().catch(() => ({}));
+      const texto = String(b.texto || "").slice(0, 300000);
+      if (!texto.trim()) return json({ erro: "sem texto para resumir" }, 400);
+      return json({ resumo: await resumir(texto, dia) });
+    }
     if (!/^(audio|video)\//.test(tipo)) return json({ erro: "envie o áudio da gravação" }, 400);
     const audio = await req.arrayBuffer();
     if (audio.byteLength < 2000) return json({ erro: "gravação curta demais" }, 400);
@@ -190,9 +199,9 @@ if (typeof Deno !== "undefined") {
       const r = await fetch("https://api.elevenlabs.io/v1/speech-to-text", { method: "POST", headers: { "xi-api-key": CHAVE }, body: fd });
       if (!r.ok) return json({ erro: `ElevenLabs: ${r.status} ${(await r.text()).slice(0, 300)}` }, 502);
       const d = await r.json();
-      const out = falas(d.words || [], d.text);
+      const out = falas(d.words || [], d.text, Math.max(0, Number(q.get("desde")) || 0));
       if (!out.texto) return json({ erro: "nenhuma fala reconhecida na gravação" }, 422);
-      const dia = new Date().toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
+      if (q.get("resumo") === "nao") return json(out);
       const resumo = await resumir(out.texto, dia);
       return json(resumo ? { ...out, resumo } : out);
     } catch (e) {
