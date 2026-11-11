@@ -53,7 +53,7 @@ const EXTRA = {
   await p.waitForFunction(() => eu.zap_offline_desde);
   conf("gravar manda o texto ao zap_meu_offline", escritas.some(e => /zap_meu_offline/.test(e.u) && e.b.p_msg === "Texto C" && e.b.p_offline));
   conf("o texto gravado entra no alto da lista", (await p.evaluate(() => eu.zap_offline_salvas.join("|"))) === "Texto C|Texto B");
-  // F535: offline, o campo de escrever da conversa mostra o aviso vermelho e continua liberado
+  // F536: offline, o campo de escrever da conversa mostra o aviso vermelho e continua liberado
   await p.evaluate(() => irPara("whatsapp"));
   await p.waitForFunction(id => typeof zapConvs !== "undefined" && zapConvs.some(c => c.id === id), Z1);
   await p.evaluate(id => abrirConversa(id, true), Z1);
