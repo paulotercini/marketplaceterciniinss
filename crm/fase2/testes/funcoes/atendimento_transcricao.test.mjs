@@ -15,6 +15,9 @@ assert.equal(r.minutos, 2);
 // sem palavras, vale o texto solto; sem nada, vazio
 assert.equal(falas([], " Olá ").texto, "Olá");
 assert.equal(falas([]).texto, "");
+// F537: o trecho seguinte da gravação interrompida conta o tempo do início
+assert.equal(falas([w("Voltei.", "speaker_0", 5)], "", 600).texto, "[10:05] Falante 1: Voltei.");
+assert.equal(r.segundos, 131);
 // o resumo sai limpo: sem título, negrito, travessão nem linha em branco
 assert.equal(limparResumo("Resumo do atendimento:\n\n**Tem 58 anos** — 14 de contribuição.\n\nDefinir retorno."), "Tem 58 anos, 14 de contribuição.\nDefinir retorno.");
 assert.match(promptResumo("[00:00] Falante 1: Oi", "11/11/2026"), /11\/11\/2026[\s\S]*Falante 1/);
