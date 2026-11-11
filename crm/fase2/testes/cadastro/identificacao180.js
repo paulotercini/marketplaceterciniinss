@@ -58,8 +58,8 @@ const RETRATO = process.env.RETRATO_DIR;
   const cartoes = await p.$$eval(".idf-card", cs => cs.map(c => ({ h: c.querySelector("h3").textContent,
     rots: [...c.querySelectorAll(".cad-campo > label")].map(l => l.textContent.replace(/\s+/g, " ").trim()) })));
   // F277 · o quarto cartão é a Aposentadoria, ao lado de Contato
-  conf("cinco cartões na ordem: Documentos e acesso, Dados pessoais, Contato, Aposentadoria e Contribuições a pagar",
-    cartoes.length === 5 && cartoes[0].h === "Documentos e acesso" && cartoes[1].h === "Dados pessoais" && cartoes[2].h === "Contato" && /^Aposentadoria/.test(cartoes[3].h) && /^Contribuições a pagar/.test(cartoes[4].h));   // F282
+  conf("seis cartões na ordem: Documentos e acesso, Dados pessoais, Contato, Aposentadoria, Transcrições e Contribuições a pagar",
+    cartoes.length === 6 && /^Transcrições de Atendimentos/.test(cartoes[4].h) && cartoes[0].h === "Documentos e acesso" && cartoes[1].h === "Dados pessoais" && cartoes[2].h === "Contato" && /^Aposentadoria/.test(cartoes[3].h) && /^Contribuições a pagar/.test(cartoes[5].h));   // F282, F543
   const tem = (i, rx) => cartoes[i].rots.some(r => rx.test(r));
   conf("Documentos e acesso: CPF, Senha Meu INSS, PIS/NIT, CNIS, Pasta",
     [/^CPF/, /Senha Meu INSS/, /PIS \/ NIT/, /^CNIS/, /Pasta do cliente/].every(rx => tem(0, rx)));
