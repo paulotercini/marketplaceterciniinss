@@ -706,6 +706,8 @@ A **F539** (13.48, pedido do Paulo de 11.11.2026): o resumo e a transcrição do
 
 A **F540** (13.49, pedido do Paulo de 11.11.2026, a gravação sem som que não deixava gravar de novo): a gravação que a função devolve sem fala (422, "nenhuma fala reconhecida") é descartada e o botão volta a **Gravar**, em vez de ficar no Repetir, que reenviava o mesmo silêncio a cada toque; a falha de rede ou do serviço continua com Repetir. Enquanto grava, `ouvirMicrofone` mede o sinal do microfone (AnalyserNode) e, com 6 s sem som, avisa para conferir a entrada de áudio e tocar em Parar. Teste: `f498.js` (22 itens; o medidor do som não é exercitado, porque o microfone do teste é simulado).
 
+A **F541** (pedido do Paulo de 11.11.2026, "está sendo gerado o resumo nas anotações?"): o resumo do atendimento gravado saía vazio, e a anotação ficava só com a transcrição, porque o modelo usava quase todo o `max_tokens` de 1500 no raciocínio antes de escrever (`stop_reason = max_tokens`, 1.390 tokens de raciocínio numa gravação de 19 minutos). A chamada da `atendimento_transcricao` passou a `max_tokens: 8000` com `output_config: { effort: "low" }` (o resumo de 19 minutos sai em cerca de 6 s, sem raciocínio), e o resumo vazio, cortado ou sem a chave deixa registro no log da função (`resumo: parada …`, `resumo: sem ANTHROPIC_API_KEY`).
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

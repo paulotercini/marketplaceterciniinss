@@ -145,20 +145,23 @@ export function limparResumo(t: string) {
 }
 
 async function resumir(texto: string, dia: string) {
-  if (!CHAVE_IA) return "";
+  if (!CHAVE_IA) { console.log("resumo: sem ANTHROPIC_API_KEY"); return ""; }
   try {
     const r = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: { "x-api-key": CHAVE_IA, "anthropic-version": "2023-06-01", "anthropic-beta": "server-side-fallback-2026-07-01", "content-type": "application/json" },
       body: JSON.stringify({
-        model: MODELO_IA, max_tokens: 1500, fallbacks: "default", system: PADRAO,
+        // F541: com 1500 o raciocínio do modelo gastava quase todo o limite e o resumo saía vazio ou cortado
+        model: MODELO_IA, max_tokens: 8000, fallbacks: "default", output_config: { effort: "low" }, system: PADRAO,
         messages: [{ role: "user", content: [{ type: "text", text: promptResumo(texto, dia) }] }],
       }),
     });
     if (!r.ok) { console.log("resumo: Claude", r.status); return ""; }
     const d = await r.json();
+    const out = limparResumo((d.content || []).filter((c: { type: string }) => c.type === "text").map((c: { text: string }) => c.text).join(""));
+    if (d.stop_reason !== "end_turn" || !out) console.log("resumo: parada", d.stop_reason, "tamanho", out.length);
     if (d.stop_reason === "refusal") return "";
-    return limparResumo((d.content || []).filter((c: { type: string }) => c.type === "text").map((c: { text: string }) => c.text).join(""));
+    return out;
   } catch (e) {
     console.log("resumo:", String(e).slice(0, 200));
     return "";
