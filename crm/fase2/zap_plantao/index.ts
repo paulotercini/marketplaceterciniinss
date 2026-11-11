@@ -279,9 +279,10 @@ export const AG_OUTRA = `4. Não pergunte agora sobre outra pessoa: a pergunta v
 export const AG_HORARIOS_F280 = `6. Chame consultar_vagas (no CRM) e ofereça dois horários, numerados, com dia da semana, data, hora e advogado: ` +
   `o mais próximo de manhã e o mais próximo à tarde (o campo periodo de cada vaga diz qual é). Na mesma mensagem, em outra linha, diga: ` +
   `"Se for necessário atender mais de uma pessoa, preciso verificar na agenda se há outro horário disponível na sequência."`;
+// F524 · no máximo duas datas, uma de cada advogado (Paulo, 11.11.2026)
 // F422i · previdenciário: primeiro as datas da Dra. Amanda e do Dr. Paulo; o horário só depois da escolha do advogado (Paulo, 07.11.2026)
 export const AG_HORARIOS = `6. Chame consultar_vagas (no CRM). Se o assunto é previdenciário (aposentadoria ou outro benefício do INSS), consulte amanda e paulo ` +
-  `e ofereça primeiro somente as datas, sem horário: até quatro datas com a Dra. Amanda e até quatro com o Dr. Paulo, as mais próximas, com o dia da semana, ` +
+  `e ofereça primeiro somente as datas, sem horário: no máximo duas datas, a mais próxima da Dra. Amanda e a mais próxima do Dr. Paulo, com o dia da semana; outras datas somente se a pessoa pedir; ` +
   `e pergunte com qual advogado e em qual data prefere. Depois da escolha, ofereça somente dois horários livres desse advogado nessa data, ` +
   `um de manhã e outro à tarde quando houver (o campo periodo de cada vaga diz qual é), numa frase de conversa, sem lista, sem números e sem opção "0", ` +
   `por exemplo "Os próximos horários livres são na segunda-feira, dia 09/11, às 10h30 e às 15h30. Qual seria o melhor horário?". ` +
