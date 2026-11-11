@@ -62,10 +62,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
       requestData() {}
       stop() { this.state = "inactive"; this.ondataavailable({ data: new Blob([new Uint8Array(5000)]) }); this.onstop(); } };
   });
-  let falhar = true, comResumo = false, pedidos = [];
+  let falhar = true, mudo = false, comResumo = false, pedidos = [];
   await ctx.route(/functions\/v1\/atendimento_transcricao/, async r => {
     pedidos.push({ tipo: r.request().headers()["content-type"], tam: (r.request().postDataBuffer() || []).length, url: r.request().url() });
     if (/json/.test(r.request().headers()["content-type"])) return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ resumo: "Resumo dos dois trechos.\nDefinir retorno." }) });
+    if (mudo) return r.fulfill({ status: 422, contentType: "application/json", body: JSON.stringify({ erro: "nenhuma fala reconhecida na gravação" }) });
     if (falhar) return r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ erro: "ElevenLabs: 503" }) });
     r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ texto: "[00:00] Falante 1: Bom dia.\n[00:04] Falante 2: Trabalhei na roça.", falantes: 2, minutos: 1, segundos: 300, ...(comResumo ? { resumo: "Informou que trabalhou na roça.\nDefinir retorno." } : {}) }) });
   });
@@ -95,7 +96,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     && /Transcrição do atendimento .*2 falantes/.test(ult().texto) && /Falante 2: Trabalhei na roça/.test(ult().texto) && ult().precaso_id === "pc_r1" && !ult().origem);
   conf("o campo de escrever fica livre", await p.inputValue("#atend-nota") === "");
   conf("o botão volta a Gravar, sem Descartar", await rot() === "Gravar" && await p.$("#atend-descartar") === null);
-  comResumo = true;
+  mudo = true;   // F540: a gravação sem fala não fica presa no Repetir
+  await p.click("#atend-gravar"); await p.waitForTimeout(200); await p.click("#atend-gravar"); await p.waitForTimeout(500);
+  conf("sem fala captada, a gravação é descartada e o botão volta a Gravar (F540)", await rot() === "Gravar" && await p.$("#atend-descartar") === null && notas().length === 1);
+  mudo = false; comResumo = true;
   await p.click("#atend-gravar"); await p.waitForTimeout(200); await p.click("#atend-gravar"); await p.waitForTimeout(500);
   conf("com o resumo, ele vem primeiro e a transcrição completa abaixo", notas().length === 2 && /^Informou que trabalhou na roça\.\nDefinir retorno\.\n\nTranscrição completa \(.*2 falantes\):\n\[00:00\] Falante 1/.test(ult().texto));
   await p.route(/rest\/v1\/clientes\?id=eq/, r => r.request().method() === "PATCH" ? r.fulfill({ status: 500, body: "{}" }) : r.fallback());

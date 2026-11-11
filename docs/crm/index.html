@@ -7017,7 +7017,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.48</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.49</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -23222,9 +23222,21 @@ async function gravarAtendimento(){
     aviso("A gravação parou ao sair da tela. O gravado está guardado: toque em Continuar");
   };
   rec.start(5000); atendRec = rec;   // trechos de 5 s, cada um guardado no aparelho assim que sai
-  telaAcesa();
+  telaAcesa(); ouvirMicrofone(stream, rec);
   pintarGravarAtend();
   aviso(ant ? "Gravação retomada. Toque em Parar ao terminar" : "Gravando o atendimento. Toque em Parar ao terminar");
+}
+// F540: o microfone mudo (outra entrada escolhida, permissão sem som) avisa em 6 s, em vez de gravar silêncio até o Parar
+function ouvirMicrofone(stream, rec){
+  let ctx, an, buf;
+  try{ ctx = new (window.AudioContext || window.webkitAudioContext)(); an = ctx.createAnalyser(); buf = new Uint8Array(an.fftSize); ctx.createMediaStreamSource(stream).connect(an); }
+  catch(e){ try{ ctx && ctx.close(); }catch(_){} return; }
+  let pico = 0, n = 0;
+  const t = setInterval(()=>{
+    if(rec.state === "inactive"){ clearInterval(t); ctx.close().catch(()=>{}); return; }
+    an.getByteTimeDomainData(buf); for(const v of buf) pico = Math.max(pico, Math.abs(v - 128));
+    if(++n === 12 && pico < 3) aviso("O microfone não está captando som. Confira a entrada de áudio do aparelho e toque em Parar", false);
+  }, 500);
 }
 async function transcreverAtendimento(){
   const g = atendGravado; if(!g || atendEnviando) return;
@@ -23268,8 +23280,13 @@ async function transcreverAtendimento(){
       aviso(document.getElementById("atend-nota") ? "Não gravei sozinho. A transcrição está no campo: toque em Anotar" : "Não gravei sozinho. A transcrição está na anotação rápida: grave");
     }
   }catch(e){
-    aviso("A transcrição falhou (" + String(e.message||e).slice(0,120) + "). Toque em Repetir");
-    if(atendGravado) atendGravado.interrompida = false;
+    if(/nenhuma fala|curta demais/.test(String(e.message))){   // F540: silêncio não se repete; o botão volta a Gravar
+      atendGravado = null; gravLimpar();
+      aviso("Nenhuma fala foi captada na gravação. Confira o microfone e toque em Gravar de novo");
+    } else {
+      aviso("A transcrição falhou (" + String(e.message||e).slice(0,120) + "). Toque em Repetir");
+      if(atendGravado) atendGravado.interrompida = false;
+    }
   }finally{ atendEnviando = false; pintarGravarAtend(); }
 }
 async function gravarTranscricao(cliId, txt){

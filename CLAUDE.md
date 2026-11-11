@@ -704,6 +704,8 @@ A **F538** (13.47, onda 1 da cobertura da equipe durante a ausência, decisão d
 
 A **F539** (13.48, pedido do Paulo de 11.11.2026): o resumo e a transcrição do atendimento gravado (F498, F529, F537) gravam sozinhos na anotação do cliente assim que a transcrição termina, sem conferir no campo nem tocar em Anotar (`gravarTranscricao`, nota com `gravacao: true` em `clientes.campos.atendimento`). No modo atendimento, a nota vai às anotações do atendimento presa ao pré-caso aberto (`precaso_id`); fora dele, fica como anotação rápida "para distribuir" (`origem: "rapida"`, F404), e o ícone das Anotações da ficha acende para levá-la ao caso. Sem cliente ou com o banco recusando, o texto volta ao campo da anotação ou à ⚡ anotação rápida, como antes. Teste: `f498.js` (21 itens).
 
+A **F540** (13.49, pedido do Paulo de 11.11.2026, a gravação sem som que não deixava gravar de novo): a gravação que a função devolve sem fala (422, "nenhuma fala reconhecida") é descartada e o botão volta a **Gravar**, em vez de ficar no Repetir, que reenviava o mesmo silêncio a cada toque; a falha de rede ou do serviço continua com Repetir. Enquanto grava, `ouvirMicrofone` mede o sinal do microfone (AnalyserNode) e, com 6 s sem som, avisa para conferir a entrada de áudio e tocar em Parar. Teste: `f498.js` (22 itens; o medidor do som não é exercitado, porque o microfone do teste é simulado).
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
