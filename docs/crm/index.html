@@ -7013,7 +7013,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.41</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.42</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14878,7 +14878,7 @@ function itensAgendaTodos(){
       // F236 · o prazo respondido (a peça protocolada anotada depois da ciência) não cobra mais; o do mesmo dia do "Concluir
       // em" do To Do é o item do prazo fatal (acima, um item só)
       const d = dataDoPrazo(p); if(!d || respostaAoPrazo(k, p) || (p.fim && p.fim===k.prazo && igual!=="trib")) continue;
-      por({data:d, k, cli, prazo:true, fatal: igual==="trib" && p.fim===k.prazo, selo:`Prazo ${ROT_PRAZO[p.sistema]||p.sistema||""}`.trim(),
+      por({data:d, k, cli, selo:`Aviso ${ROT_PRAZO[p.sistema]||p.sistema||""}`.trim(),   // F531 · aviso, não prazo
         resumo: p.situacao==="findo" ? `venceu sem resposta: ${p.ato||"intimação"}` : `${p.ato||"intimação"}${p.dias?` (${p.dias} dias)`:""}${p.fim?"":", ciência tácita"}`}, donos);
     }
     if(rec) por({data:rec, k, cli, prazo:true, avisa:true, fatal: igual==="rec", selo:"Prazo do recurso",
@@ -40749,16 +40749,7 @@ function linhasDeDatas(cliId){
       resumo:"prazo dele, estimado",
       rot:`<b>O INSS contesta até ${fmt(ct.ate)} (estimado)</b>
            <small class="qd-de">${ct.n} dias úteis${ct.jef?", sem prazo em dobro no JEF (Lei 10.259/2001, art. 9º)":" em dobro (CPC, art. 183)"}, da ciência tácita da citação estimada em ${fmt(ct.tac)} (Lei 11.419/2006, art. 5º, § 3º). Prazo da outra parte: confira a contestação e a proposta de acordo no dia útil seguinte · ${tit}</small>`, edita:"", acao:""});
-    // F236 · a RPV expedida e ainda não paga: o tribunal paga em até 60 dias da entrega da requisição (Lei 10.259/2001, art.
-    // 17, caput); sem o depósito, o juiz determina o sequestro (§ 2º). O precatório segue o cronograma do tribunal
-    const ccR = (fe==="judicial" || fe==="pagamento") ? concessaoDoCaso(x) : null;
-    if(ccR && ccR.exped && !ccR.paga && !(ccR.reqs.length && ccR.reqs.every(r=>r.precatorio))){
-      const ateR = somaDias(ccR.exped, 60);
-      linhas.push({data:ateR, ico:"💵", natureza:"compromisso", casoId:x.id, cru:true, rotulo:"Pagamento da RPV", curto:"RPV: pagamento até",
-        resumo:`previsto · expedida em ${fmtBarra(ccR.exped).slice(0,5)}`,
-        rot:`<b>Pagamento da RPV previsto até ${fmt(ateR)}</b>
-             <small class="qd-de">O tribunal paga em até 60 dias da entrega da requisição (Lei 10.259/2001, art. 17), contados aqui da expedição em ${fmt(ccR.exped)}: confirme a data da transmissão. Sem o depósito no prazo, peça o sequestro do valor (art. 17, § 2º) · ${tit}</small>`, edita:"", acao:""});
-    }
+    // F531 · a previsão de pagamento da RPV, calculada pelo CRM, saiu (decisão do Paulo, 11.11.2026: só o To Do dá data)
     // F236 · o honorário saiu daqui: é compromisso do caso DELE, logo abaixo, também no encerrado e no visual clássico
     // F102 · o comentário fixo com data lembra na data
     if(x.fixo && x.fixo.texto && x.fixo.lembrar_em) linhas.push({data:x.fixo.lembrar_em, ico:"📌", natureza:"lembrete", casoId:x.id, cru:true,
@@ -40780,13 +40771,13 @@ function linhasDeDatas(cliId){
           resumo:fav.txt,
           rot:`<b>Ciência: ${esc(fav.txt)} — sem providência nossa</b>
                <small class="qd-de">Prazo do ${esc(sis)} · ${esc(p.ato||"intimação")}${p.dias?` · ${p.dias} dias`:""}${p.ciencia_em?` · ciência em ${fmt(p.ciencia_em)}`:""}${p.fim?` · vence ${fmt(p.fim)}`:""}. A decisão é favorável: quem pode recorrer é o INSS (fora do JEF, em dobro, CPC, art. 183); vigie o recurso dele · ${esc(p.numero)}</small>`, edita:"", acao:""}
-        : (lau => ({data:dt, ico:p.situacao==="findo"?"🚨":"⏰", ehPrazo:!!p.fim, natureza:p.fim?"fatal":"compromisso", casoId:x.id, cru:true,
-          rotulo:`Prazo no ${sis}`, curto: lau ? "Manifestar sobre o laudo" : `${sis}: ${p.ato||"intimação"}`, laudo: lau,
+        // F531 · decisão do Paulo (11.11.2026): o expediente do tribunal é aviso, nunca prazo fatal; o prazo vem do To Do
+        : (lau => ({data:dt, ico:"🔔", natureza:"lembrete", casoId:x.id, cru:true,
+          rotulo:`Aviso do ${sis}`, curto: lau ? "Manifestar sobre o laudo" : `${sis}: ${p.ato||"intimação"}`, laudo: lau,
           resumo:`${p.situacao==="findo"?"venceu sem resposta":p.fim?"":"ciência tácita"}${p.dias?`${p.situacao==="findo"||!p.fim?" · ":""}${p.dias} dias`:""}`,
           rot:`<b>${p.situacao==="findo"?"Venceu sem resposta — ":p.fim?"":"Ciência tácita — "}${esc(p.ato||"intimação")}${p.dias?` · ${p.dias} dias`:""}</b>
                <small class="qd-de">Prazo do ${esc(sis)} · ${esc(p.numero)}${p.texto?` · ${esc(p.texto.slice(0,120))}`:""} · lido em ${fmt(String(p.lido_em||"").slice(0,10))}${noControle?" · ✔ é o prazo do caso":""}</small>`,
-          edita:"", acao: p.fim && p.situacao!=="findo" && !noControle
-            ? `<button class="btn-mini" onclick="usarPrazoDoTribunal('${x.id}','${p.fim}')" title="grava esta data como prazo fatal do caso e o leva a 🗓 Tarefas com Prazo (a ficha continua mostrando a fase, a etapa e os prazos dele)">⏰ é o prazo do caso</button>` : "", ...rotuloDeQuesitos(p, x)}))(laudoDoPrazo(p, x));   // F236 · quesitos: de que é e quem cuida
+          edita:"", acao:"", ...rotuloDeQuesitos(p, x)}))(laudoDoPrazo(p, x));   // F236 · quesitos: de que é e quem cuida
       // F236 · o prazo de manifestar sobre o laudo diz do que é e traz o laudo: a data, a conclusão e o botão de abrir
       if(l.laudo){ const lau = l.laudo, cc = conclusaoDoLaudo(lau.texto);
         l.resumo = `${sis}${p.dias?` · ${p.dias} dias`:""}`;
