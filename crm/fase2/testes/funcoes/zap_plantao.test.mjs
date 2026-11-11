@@ -552,3 +552,11 @@ console.log("formal: ok");
   assert.equal(emLinhas("Agradeço.\n\nQualquer dúvida, fico à disposição.", ["Qualquer dúvida, estamos à disposição."]), "Agradeço.", "o fecho uma vez só");
   console.log("ok F485 primeira pessoa");
 }
+
+// F526 · cliente da ficha não informa o nome (Paulo, 11.11.2026)
+{
+  const { CORRECOES: c526, AG_DUVIDA: d526, paraAgendador: pa526 } = await import("../../zap_plantao/index.ts");
+  assert.ok(c526.includes("Se o número tem ficha") && c526.includes("não peça o nome"), "a triagem não pede o nome do cliente da ficha");
+  assert.ok(d526.includes("use como nome") && pa526("Agendador.").includes("o campo para que consultar_vagas devolveu"), "o Agendador agenda com o nome da ficha");
+  console.log("ok F526 nome da ficha");
+}
