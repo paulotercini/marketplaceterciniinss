@@ -53,6 +53,13 @@ def prepend_corpo(corpo_atual, bloco):
     return bloco + ("\n\n" + corpo_atual if corpo_atual else "")
 
 
+def trocar_bloco(corpo, velho, novo):
+    """Troca no corpo da tarefa o bloco da versão anterior pelo da editada (F544).
+    Devolve None quando o bloco antigo não está lá (o To Do já foi mexido à mão)."""
+    corpo = corpo or ""
+    return corpo.replace(velho, novo, 1) if velho in corpo else None
+
+
 def _rest(metodo, caminho, corpo=None, prefer=None):
     url = os.environ["SUPABASE_URL"].rstrip("/") + caminho
     chave = os.environ["SUPABASE_SERVICE_KEY"]
@@ -164,10 +171,15 @@ def main():
     # 1c) comentários apagados pelo autor no app -> tirar o bloco do To Do e sumir
     try:
         apagar = _rest("GET", "/rest/v1/andamentos?excluir=eq.true"
-                              "&select=id,texto,criado_em,"
+                              "&select=id,texto,todo_texto_antes,criado_em,"
                               "casos(todo_task_id,origem_lista),colaboradores(inicial)") or []
     except Exception:
-        apagar = []      # coluna ainda não criada (schema antigo): nada a fazer
+        try:      # coluna todo_texto_antes ainda não criada (F544)
+            apagar = _rest("GET", "/rest/v1/andamentos?excluir=eq.true"
+                                  "&select=id,texto,criado_em,"
+                                  "casos(todo_task_id,origem_lista),colaboradores(inicial)") or []
+        except Exception:
+            apagar = []      # coluna ainda não criada (schema antigo): nada a fazer
     removidos = 0
     for a in apagar:
         caso = a.get("casos") or {}
@@ -179,7 +191,7 @@ def main():
                 corpo = (atual.get("body") or {}).get("content") or ""
                 bloco = formatar_bloco(a["criado_em"],
                                        (a.get("colaboradores") or {}).get("inicial"),
-                                       a["texto"])
+                                       a.get("todo_texto_antes") or a["texto"])
                 novo = corpo.replace(bloco, "").replace("\n\n\n", "\n\n").strip("\n")
                 if novo != corpo:
                     graph_client.update_task_body(lista_id, task_id, novo)
@@ -189,6 +201,35 @@ def main():
             print(f"  erro ao apagar comentário no To Do: {e}")
     if removidos:
         print(f"comentários apagados (app -> To Do): {removidos}")
+
+    # 1d) F544 · comentários editados pelo autor no app -> trocar o bloco no To Do
+    try:
+        editar = _rest("GET", "/rest/v1/andamentos?todo_texto_antes=not.is.null&excluir=eq.false"
+                              "&select=id,texto,todo_texto_antes,criado_em,"
+                              "casos(todo_task_id,origem_lista),colaboradores(inicial)") or []
+    except Exception:
+        editar = []      # coluna ainda não criada: nada a fazer
+    trocados = 0
+    for a in editar:
+        caso = a.get("casos") or {}
+        task_id = caso.get("todo_task_id")
+        lista_id = listas_map.get(caso.get("origem_lista"))
+        ini = (a.get("colaboradores") or {}).get("inicial")
+        try:
+            if task_id and lista_id:
+                atual = graph_client.get_task(lista_id, task_id)
+                novo = trocar_bloco((atual.get("body") or {}).get("content"),
+                                    formatar_bloco(a["criado_em"], ini, a["todo_texto_antes"]),
+                                    formatar_bloco(a["criado_em"], ini, a["texto"]))
+                if novo is not None:
+                    graph_client.update_task_body(lista_id, task_id, novo)
+            _rest("PATCH", f"/rest/v1/andamentos?id=eq.{a['id']}",
+                  {"todo_texto_antes": None}, prefer="return=minimal")
+            trocados += 1
+        except Exception as e:      # não travar os demais
+            print(f"  erro ao editar comentário no To Do: {e}")
+    if trocados:
+        print(f"comentários editados (app -> To Do): {trocados}")
 
     # 2) andamentos escritos no app -> topo do corpo da tarefa
     fila = _rest("GET", "/rest/v1/andamentos"

@@ -1531,6 +1531,13 @@ def subir_rest(mapa):
     app_rows = _rest_todas(url, chave,
                            "/rest/v1/andamentos?origem=eq.app&select=caso_id,criado_em,texto")
     existentes = {(a["caso_id"], a["criado_em"][:10], md5(a["texto"])) for a in app_rows}
+    # F544 · a anotação editada no app: o To Do ainda tem o texto anterior até o escrever_todo.py trocar
+    try:
+        editadas = _rest_todas(url, chave, "/rest/v1/andamentos?origem=eq.app&todo_texto_antes=not.is.null"
+                                           "&select=caso_id,criado_em,todo_texto_antes")
+    except Exception:
+        editadas = []      # coluna ainda não criada
+    existentes |= {(a["caso_id"], a["criado_em"][:10], md5(a["todo_texto_antes"])) for a in editadas}
     mapa["andamentos"] = anti_eco(mapa["andamentos"], existentes)
     mapa["tarefas_docs"] = tarefas_docs_de(mapa["andamentos"])
 
