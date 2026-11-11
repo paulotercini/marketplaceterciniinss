@@ -74,6 +74,15 @@ and(kD, 0, "PJe (2º grau): Distribuído por sorteio", { origem: "pje", origem_i
 and(kD, 0, "PJe (2º grau): Conclusos para julgamento", { origem: "pje", origem_id: `mov:50012340320254036314:${iso(-40)}T10:00:s3`, autor_id: null });
 and(kD, 0, "PJe (2º grau): Juntada de Petição", { origem: "pje", origem_id: `mov:50012340320254036314:${iso(-3)}T10:00:s4`, autor_id: null });
 
+// E · 1º grau: o concluso antigo não vale depois do prazo decorrido; certidão é ruído; órgão sem a barra (F533)
+const cE = cli("Cliente Teste Prazo Decorrido");
+const kE = base(cE, { origem_lista: "👪 Judicial", beneficio: "Aposentadoria por idade", especie: "B41", fase: "judicial", orgao_judicial: "/1ª VARA GABINETE JEF DE CATANDUVA",
+  processos: [{ numero: "50099990320264036314", classe: "Procedimento do Juizado Especial Cível" }] });
+T.casos.push(kE); T.atribuicoes.push({ caso_id: kE.id, colaborador_id: PAULO });
+and(kE, 0, "PJe (1º grau): Conclusos para despacho", { origem: "pje", origem_id: `mov:50099990320264036314:${iso(-61)}T10:00:e1`, autor_id: null });
+and(kE, 0, "PJe (1º grau): Decorrido prazo de INSTITUTO NACIONAL DO SEGURO SOCIAL - INSS em 06/10/2026 23:59.", { origem: "pje", origem_id: `mov:50099990320264036314:${iso(-36)}T10:00:e2`, autor_id: null });
+and(kE, 0, "PJe (1º grau): Juntada de Certidão", { origem: "pje", origem_id: `mov:50099990320264036314:${iso(-30)}T10:00:e3`, autor_id: null });
+
 // C · sem nada: o estado vazio
 const cC = cli("Caso Fictício Vazio");
 const kC = base(cC, { origem_lista: "🌻 INSS", beneficio: "BPC", especie: "B88", fase: "inss" });
@@ -186,6 +195,14 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o estado e a data vêm do último movimento do 2º grau (F529)", /Concluso para julgamento/.test(situD) && situD.includes("desde "+iso(-40).split("-").reverse().join("/")));
   conf("no 2º grau aparece a fila do TRF3 (F529)", /120º de 800/.test(await p.locator(".db-and.jud .db-fila").textContent()));
   conf("a sentença do 1º grau não entra nos relevantes do 2º grau (F529)", !/Sentença|improcedente/.test(relD) && /Conclusos/.test(relD));
+  await ctx.close();
+
+  // ── 2c · caso E: o movimento mais novo decide (F533) ──
+  ({ p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cE, kE));
+  const situE = await p.locator(".db-and.jud .db-situ").textContent();
+  console.log("  [E] situ:", situE);
+  conf("o prazo decorrido depois do concluso decide o estado, e a certidão não (F533)", /Prazo decorrido/.test(situE) && !/Concluso/.test(situE) && situE.includes("desde "+iso(-36).split("-").reverse().join("/")));
+  conf("o órgão julgador aparece sem a barra do começo (F533)", /VARA GABINETE JEF DE CATANDUVA/i.test(situE) && !/\//.test(situE.replace(/\d{2}\/\d{2}\/\d{4}/g, "")));
   await ctx.close();
 
   // ── 3 · caso C: o estado vazio ──

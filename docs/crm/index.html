@@ -7014,7 +7014,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.43</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.44</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12021,25 +12021,53 @@ function movDeRotina(a){
 }
 // F529 · o estado do processo pelo último movimento do grau atual, desde a data dele (a etapa da trilha só
 // quando nenhum movimento diz o estado); o órgão é o do mesmo grau, lido do cabeçalho do PJe
+// F533 · decide o movimento MAIS NOVO que não seja ruído de cartório: o "Concluso para despacho" de setembro
+// não vale quando depois dele veio prazo decorrido, ato ordinatório ou sentença (pedido do Paulo, 11.11.2026)
 const EST_JUD = [
   [/conclusos?\s+(?:para|ao)\s+julgamento/i, "Concluso para julgamento"],
   [/conclusos?\s+com\s+embargos/i, "Concluso com embargos de declaração"],
   [/conclusos?\s+para\s+decis/i, "Concluso para decisão"],
   [/conclusos?\s+para\s+despacho/i, "Concluso para despacho"],
   [/conclusos?\s+para\s+senten/i, "Concluso para sentença"],
-  [/inclus[ãa]o\s+em\s+pauta|inclu[íi]do\s+em\s+pauta/i, "Incluído em pauta"],
-  [/deliberado\s+em\s+sess[ãa]o\s*-\s*julgado/i, "Julgado em sessão"],
+  [/inclus[ãa]o\s+em\s+pauta|inclu[íi]do\s+em\s+pauta|intima[çc][ãa]o\s+de\s+pauta/i, "Incluído em pauta"],
+  [/deliberado\s+em\s+sess[ãa]o\s*-\s*julgado|julgado\s+em\s+sess/i, "Julgado em sessão"],
   [/remetidos?\s+os\s+autos\s*\(por\s+julgamento\s+definitivo/i, "Remetido à origem"],
+  [/remetidos?\s+os\s+autos\s*\(em\s+grau\s+de\s+recurso\)\s+para\s+turmas?\s+recursa/i, "Remetido à Turma Recursal"],
+  [/remetidos?\s+os\s+autos.*(?:tribunal|col[ée]gio\s+recursal)/i, "Remetido ao tribunal"],
   [/tr[âa]nsit\w*\s+em\s+julgado/i, "Trânsito em julgado"],
   [/baixa\s+definitiva/i, "Baixa definitiva"],
+  [/arquivad\w*\s+definitiv|arquivo\s+geral/i, "Arquivado"],
+  [/arquivad\w*\s+provisori/i, "Arquivado provisoriamente"],
   [/\bsuspens[oa]\b|sobrestad|suspens[ãa]o\s+do\s+processo/i, "Suspenso"],
-  [/distribu[íi]do\s+por\s+sorteio/i, "Distribuído"],
+  [/requisi[çc][ãa]o\s+de\s+pagamento.*paga|rpv\s+paga|precat[óo]rio\s+pago/i, "Requisição de pagamento paga"],
+  [/(?:expedi\w*|requisi[çc][ãa]o)\s+.*(?:pequeno\s+valor|rpv|precat[óo]rio)/i, "Requisição de pagamento expedida"],
+  [/cumprimento\s+de\s+senten[çc]a\s+inicia|execu[çc][ãa]o.*inicia/i, "Cumprimento de sentença iniciado"],
+  [/ac[óo]rd[ãa]o/i, "Acórdão publicado"],
+  [/senten[çc]a|julgad[oa]\s+(?:im)?procedente|extint[oa]|homologad/i, "Sentença proferida"],
+  [/embargos\s+de\s+declara[çc][ãa]o/i, "Embargos de declaração"],
+  [/tutela|liminar|decis[ãa]o/i, "Decisão proferida"],
+  [/despacho/i, "Despacho proferido"],
+  [/ato\s+ordinat/i, "Ato ordinatório"],
+  [/decorrid\w*\s+(?:o\s+)?prazo/i, "Prazo decorrido"],
+  [/laudo/i, "Laudo pericial juntado"],
+  [/per[íi]cia\s+(?:agendada|designada|marcada)|designad\w*\s+per[íi]cia/i, "Perícia designada"],
+  [/audi[êe]ncia/i, "Audiência designada"],
+  [/contesta[çc][ãa]o/i, "Contestação apresentada"],
+  [/recurso\s+inominado|apela[çc][ãa]o|contrarraz/i, "Recurso apresentado"],
+  [/juntada\s+de\s+peti[çc][ãa]o/i, "Petição juntada"],
+  [/distribu[íi]d|redistribu/i, "Distribuído"],
   [/recebidos?\s+os\s+autos/i, "Autos recebidos"],
+  [/intima[çc][ãa]o|publicad/i, "Intimação publicada"],
 ];
+// ruído de cartório e petição genérica da parte: não mudam o estado do processo
+const RX_RUIDO_JUD = /^(?:juntada\s+de\s+peti[çc][ãa]o(?:\s+intercorrente)?\s*$|certid[ãa]o|juntada\s+de\s+certid|expedi[çc][ãa]o\s+de\s+(?:outros|informa)|expedid[ao]\/certificad|documento\s+juntado|confirmada\s+a\s+intima|mandado\s+(?:devolvido|expedido))/i;
 function estadoJud(pg){
   for(const a of pg){
-    const ps = movLimpo(a.texto).split(" · ");
-    for(const [rx, nome] of EST_JUD) if(ps.some(t=>rx.test(t))) return {n:nome, d:dataSP(dataDoDb(a))};
+    const ps = movLimpo(a.texto).split(" · ").map(t=>t.trim()).filter(Boolean);
+    const vivas = ps.filter(t=>!RX_RUIDO_JUD.test(t)); if(!vivas.length) continue;
+    for(const [rx, nome] of EST_JUD) if(vivas.some(t=>rx.test(t))) return {n:nome, d:dataSP(dataDoDb(a))};
+    const t = vivas[0].replace(/\s*-\s*ID de origem\s*\d+/i, "").replace(/\s+em\s+\d{2}\/\d{2}\/\d{4}.*$/, "").replace(/\s+—.*$/, "").trim();
+    return {n: t.length > 60 ? t.slice(0, 57) + "…" : t, d:dataSP(dataDoDb(a))};
   }
   return null;
 }
@@ -12059,7 +12087,7 @@ function dbSituacaoJud(k, dig, par, g, pg){
   const det = (g ? dets[`${dig}|${g}`] : Object.entries(dets).filter(([c])=>c.split("|")[0]===dig).map(([, v])=>v)[0]) || {};
   const seg = g && g!=="1º grau", fed = dig.length===20 && dig[13]==="4" && dig.slice(14,16)==="03";
   let orgao = orgaoJudCurto(det[Object.keys(det).find(c=>/^[óo]rg[ãa]o julgador/i.test(c))]);
-  if(!orgao) orgao = seg ? ((k.trf3||{}).orgao || (fed ? "" : "2º grau")) : (!par ? k.orgao_judicial || "" : "");
+  if(!orgao) orgao = orgaoJudCurto(seg ? ((k.trf3||{}).orgao || (fed ? "" : "2º grau")) : (!par ? k.orgao_judicial || "" : ""));
   const onde = seg && fed ? ["TRF3", orgao].filter(Boolean).join(" · ") : orgao;
   const t = e && e.d ? tempoNaEtapa(k, e.d, "judicial") : null, dias = e && e.d ? diasEntreIso(e.d, hoje()) : null;
   const sit = nome || onde ? `<div class="db-situ">${onde ? `<span class="db-onde">${esc(onde)}</span>` : ""}${nome ? `<b class="db-est">${esc(nome)}</b>` : ""}${e && e.d ? `<span class="db-tempo">desde ${fmtBarra(e.d)}${dias!=null && dias>=0 ? ` · <span class="${t && t.longo ? "tarde" : ""}"${t ? ` title="${esc(t.por)}"` : ""}>${dias} ${dias===1?"dia":"dias"}</span>` : ""}</span>` : ""}</div>` : "";

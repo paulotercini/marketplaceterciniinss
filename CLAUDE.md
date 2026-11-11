@@ -692,6 +692,8 @@ A **F531** (13.42, decisão do Paulo de 11.11.2026, complemento da F530): o expe
 
 A **F532** (13.43, pedido do Paulo de 11.11.2026): o Gravar da F498 também fica no cabeçalho da ficha, como ícone de microfone à esquerda das Anotações e da ⭐ (`botaoGravarFicha`, `#ficha-gravar`, `.det-grav`, vermelho enquanto grava), do nível 3 em diante. Fora do atendimento, sem o campo `#atend-nota`, o resumo e a transcrição abrem na ⚡ anotação rápida já com o cliente da ficha (`probParaNota`, `atendCli`), para conferir e gravar; nada é gravado sem o clique. Teste: `f498.js` (13 itens); `f373.js` passou a excluir `.det-grav` do seletor da ⭐.
 
+A **F533** (13.44, pedido do Paulo de 11.11.2026, "a informação de conclusos para despacho está incorreta em todos os casos"): o estado do cartão Judicial (`estadoJud`) vem do movimento mais novo do grau que não seja ruído de cartório (`RX_RUIDO_JUD`: certidão, juntada de certidão, expedição de outros documentos, confirmação de intimação, mandado, juntada de petição genérica), e não mais do primeiro movimento que casasse com `EST_JUD`, que pulava o "Decorrido prazo" mais novo e mostrava o concluso antigo; o movimento sem rótulo conhecido aparece pelo próprio texto, até 60 caracteres. `EST_JUD` ganhou "Prazo decorrido", "Ato ordinatório" e "Petição juntada". O órgão julgador perde a barra do começo (`orgaoJudCurto`; 115 casos abertos gravam `orgao_judicial` com "/"). Teste: `f466.js` (47 itens, caso E).
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
