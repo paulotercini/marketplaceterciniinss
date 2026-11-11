@@ -57,6 +57,7 @@ and(kB, -5, "Conclusos para decisão", { origem: "pje", origem_id: "pje:50000420
 and(kB, -5, "PJe (1º grau): Expedição de Outros documentos · Disponibilizado no DJ Eletrônico — em "+iso(-5).split("-").reverse().join(".")+" 09:00 — MS 5000042-04.2026.4.03.6102", { origem: "pje", origem_id: "pje:50000420420264036102:2", autor_id: null, h: "09:00" });
 // F492 · movimento antigo importado hoje: vale a data do movimento (origem_id), e não a da importação
 and(kB, 0, "PJe (1º grau): Remetidos os Autos — em 05.03.2025 15:33 — MS 5000042-04.2026.4.03.6102", { origem: "pje", origem_id: `mov:50000420420264036102:${iso(-400)}T15:33:abc`, autor_id: null });
+and(kB, -5, "PJe (1º grau): Juntada de Petição intercorrente", { origem: "pje", origem_id: "pje:50000420420264036102:3", autor_id: null, h: "10:00" });
 and(kB, 0, "PJe (1º grau): Juntada de Petição", { origem: "pje", origem_id: `mov:50000420420264036102:${iso(-500)}T10:00:def`, autor_id: null });
 and(kB, 0, "PJe (1º grau): Distribuído por sorteio", { origem: "pje", origem_id: `mov:50000420420264036102:${iso(-600)}T10:00:ghi`, autor_id: null });
 
@@ -143,13 +144,15 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("no Conselho o Último andamento é do e-Recursos", await p.locator(".db-and.crps").count() === 1 && /Encaminhado à Junta/.test(await p.locator(".db-and.crps .db-mov").textContent()));
   conf("o mandado de segurança ganha o segundo cartão, Judicial", await p.locator(".db-and.jud").count() === 1 && /Em paralelo · mandado de segurança/.test(await p.locator(".db-and.jud .db-par").textContent()) && /Conclusos/.test(await p.locator(".db-and.jud .db-mov").textContent()));
   conf("a data do cartão é a do movimento, não a da importação (F492)", /há 5 dias/.test(await p.locator(".db-and.jud .db-when").textContent()));
-  const lis = await p.locator(".db-and.jud .db-movs > li").allTextContents();
-  conf("o Judicial lista as datas, a mais recente no alto (F509)", lis.length === 3 && /Conclusos/.test(lis[0]) && /Remetidos os Autos/.test(lis[1]));
+  const lis = await p.locator(".db-and.jud .db-movs > li").allTextContents(), jud = await p.locator(".db-and.jud").textContent();
+  conf("o Judicial mostra a situação com o órgão (F523)", /1ª Vara Gabinete JEF de Catanduva/.test(await p.locator(".db-and.jud .db-sit").textContent()));
+  conf("o Judicial mostra só os dois movimentos relevantes, sem a rotina (F523)", lis.length === 1 && await p.locator(".db-and.jud .db-movs > li").first().locator("ul > li").count() === 3
+    && /Conclusos/.test(lis[0]) && !/intercorrente|Remetidos|Distribuído/.test(jud) && !/PJe \(1º grau\)|— em|5000042/.test(lis.join(" ")));
+  conf("a rotina vira uma linha de contagem (F523)", /\+1 movimento de rotina/.test(await p.locator(".db-and.jud .db-rot").textContent()));
   await p.locator(".db-and.jud .db-ant").click(); await p.waitForTimeout(300);
-  conf("no Judicial, os anteriores abrem abaixo do cartão com a data mais antiga (F511)", /Ver|Ocultar/.test(await p.locator(".db-and.jud .db-ant").textContent()) && /Distribuído por sorteio/.test(await p.locator(".db-and.jud .db-pn").textContent()) && !/Conclusos/.test(await p.locator(".db-and.jud .db-pn").textContent()));
+  const ant = await p.locator(".db-and.jud .db-pn").textContent();
+  conf("os anteriores trazem a rotina e as datas mais antigas, abaixo do cartão (F511/F523)", /Ocultar/.test(await p.locator(".db-and.jud .db-ant").textContent()) && /intercorrente/.test(ant) && /Remetidos os Autos/.test(ant) && /Distribuído por sorteio/.test(ant) && !/Conclusos/.test(ant));
   await p.locator(".db-and.jud .db-ant").click(); await p.waitForTimeout(300);
-  conf("o mesmo dia junta os movimentos em sublista, sem prefixo nem data repetida (F509)", await p.locator(".db-and.jud .db-movs > li").first().locator("ul > li").count() === 3
-    && !/PJe \(1º grau\)|— em|5000042/.test(lis.join(" ")));
   await p.locator('.db-and.jud .db-bt:has-text("Expedientes")').click(); await p.waitForTimeout(300);
   conf("Expedientes abre logo abaixo do cartão, sem janela (F509)", await p.locator(".db-and.jud .db-pn .exp-tab").count() === 1 && await p.locator(".modal-fundo").count() === 0);
   await p.locator('.db-and.jud .db-bt:has-text("Detalhes")').click(); await p.waitForTimeout(300);
