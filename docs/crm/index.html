@@ -3851,6 +3851,9 @@ html[data-tema="v10"] .db-doc{background:none;border:0;padding:4px 0;font:inheri
 .db-movs{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px;font-size:14px;line-height:1.45}
 .db-movs ul{margin:2px 0 0;padding-left:18px;list-style:disc}
 .db-dia{font-variant-numeric:tabular-nums;margin-right:4px}
+.db-sit{margin:0;font-size:14px;line-height:1.45}.db-ha{color:#5B6060}.db-ha.longo{color:#B42318;font-weight:600}
+.db-fila{margin:4px 0 0;font-size:13px;color:#4A4E4E;font-variant-numeric:tabular-nums}
+.db-rot{margin:6px 0 0;font-size:13px;color:#5B6060}
 .db-pn{container-type:inline-size;margin-top:12px;padding-top:10px;border-top:1px solid color-mix(in srgb,var(--db-cor,#4A4E4E) 18%,#fff)}
 .db-pn h4{margin:0 0 8px;font-size:14px}.db-pn h5{margin:8px 0 4px;font-size:13px}
 .db-pn-rol{overflow-x:auto}
@@ -7002,7 +7005,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.37</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.38</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11977,9 +11980,13 @@ function dbAndamento(k, ands, fase, par){
     const num = numDoAndPje(a), dig = num ? soDig(num) : "";
     if(dig) pj = pj.filter(x=>soDig(numDoAndPje(x)||"")===dig);
     const sis = sisCurtoDoMov(a), href = linkPjeDoAndamento(a, k) || linkPjeDoCaso(k);
-    const {html, usados} = dbMovsPje(pj);
-    it = {cls:"jud", nome:sis, onde:sis, logo:iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sis]||"pje"), iso:dataDoDb(a), lista:html, sub:"",
-      href, n:pj.length-usados, aba:"cnj", rot:"andamentos", ant:()=>dbMovsPje(pj.slice(usados), 0).html, bts:dbBotoes(k, "cnj", dig, sis)};
+    // F523 · proposta A (escolha do Paulo de 11.11.2026): a situação, a fila do TRF3 e só os dois movimentos relevantes
+    const rel = pj.filter(x=>!movDeRotina(x)).slice(0, 2), vistos = rel.length ? rel : pj.slice(0, 1);
+    const resto = pj.filter(x=>!vistos.includes(x)), desde = dataDoDb(vistos[vistos.length-1]);
+    const rot = pj.filter(x=>movDeRotina(x) && dataDoDb(x)>=desde).length;
+    it = {cls:"jud", nome:sis, onde:sis, logo:iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sis]||"pje"), iso:dataDoDb(a), sub:"",
+      lista: dbSituacaoJud(k, dig, par) + dbMovsPje(vistos, 0).html + (rot ? `<p class="db-rot">+${rot} ${rot===1?"movimento":"movimentos"} de rotina</p>` : ""),
+      href, n:resto.length, aba:"cnj", rot:"andamentos", ant:()=>dbMovsPje(resto, 0).html, bts:dbBotoes(k, "cnj", dig, sis)};
   } else return "";
   const logo = it.href ? `<a class="db-logo" href="${esc(it.href)}" target="_blank" rel="noopener" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</a>`
     : it.abrir ? `<button type="button" class="db-logo" onclick="${it.abrir}" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</button>`
@@ -11998,6 +12005,24 @@ function movLimpo(t){
   return String(t||"").replace(/^\W*(?:PJe|e-SAJ|eproc)\b[^:]{0,30}:\s*/, "")
     .replace(/\s+—\s+em\s+\d{2}[\/.]\d{2}[\/.]\d{4}[\s\S]*$/, "")
     .replace(/\s+—\s+[^—]*\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}\s*$/, "").trim();
+}
+// movimento de rotina: toda parte do texto é expediente, juntada, conclusão e afins (as mesmas regras de ehRotina)
+function movDeRotina(a){
+  return movLimpo(a.texto).split(" · ").every(t=>RX_ROTINA.test(t.trim()) && !RX_NAO_ROTINA.test(t));
+}
+// a etapa judicial (a atual, senão a última cumprida), o órgão e há quantos dias, e a posição na fila do TRF3
+function dbSituacaoJud(k, dig, par){
+  let at = null, ult = null;
+  try{ const r = ritoDe(k, "judicial"), ets = TRILHAS[r].e.map(lerEtapaTrilha), ms = marcasDaTrilha(k, "judicial", faseEfetiva(k), r, ets);
+    ms.forEach((m,i)=>{ if(m.s==="a") at = {n:ets[i].n, d:m.d}; if(m.s==="f" && (!ult || (m.d||"")>=(ult.d||""))) ult = {n:ets[i].n, d:m.d}; }); }catch(e){}
+  const e = at || ult, nome = (e && e.n) || (!par && k.etapa) || "";
+  const det = Object.entries((k.ronda||{}).detalhes||{}).filter(([c])=>c.split("|")[0]===dig).map(([, v])=>v)[0] || {};
+  const orgao = det[Object.keys(det).find(c=>/^[óo]rg[ãa]o julgador/i.test(c))] || (!par && k.orgao_judicial) || "";
+  const t = e && e.d ? tempoNaEtapa(k, e.d, "judicial") : null;
+  const sit = nome || orgao ? `<p class="db-sit">${nome ? `<b>${esc(nome)}</b>` : ""}${nome && orgao ? " · " : ""}${esc(orgao)}${e && e.d ? ` · desde ${fmtBarra(e.d)}${t ? ` <span class="db-ha${t.longo?" longo":""}" title="${esc(t.por)}">(há ${t.dias} ${t.dias===1?"dia":"dias"})</span>` : ""}` : ""}</p>` : "";
+  const f = !par && k.trf3 && k.trf3.ordem ? k.trf3 : null;
+  const fila = f ? `<p class="db-fila" title="posição na ordem de julgamento de ${esc(f.orgao||"o órgão julgador")}, painel público do TRF3; a previsão é estimativa do escritório">Fila do TRF3: <b>${Number(f.ordem).toLocaleString(IDIOMA)}º</b>${f.total ? ` de ${Number(f.total).toLocaleString(IDIOMA)}` : ""}${f.consultado_em ? ` · consulta de ${fmtBarra(f.consultado_em)}` : ""}${f.projecao && f.projecao.previsao ? ` · previsão ~${esc(mesAno(f.projecao.previsao))}` : ""}</p>` : "";
+  return sit + fila;
 }
 function dbMovsPje(pj, max=3){
   return dbListaDias(pj.map(a=>({d:dataSP(dataDoDb(a)), partes:movLimpo(a.texto).split(" · ")})), max);
