@@ -6,6 +6,12 @@ const fs = require("fs");
 const path = require("path");
 const { FIX, SESSAO } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
+const Z1 = "d1000000-0000-0000-0000-000000000001";
+const EXTRA = {
+  zap_conversas: [{ id: Z1, telefone: "5500000000001", chave: "00000001", nome_perfil: "Cliente Teste", cliente_id: null, atendente_id: null,
+    status: "aberta", nao_lidas: 0, ultima_em: "2026-11-11T11:00:00Z", ultimo_texto: "Bom dia", bot_ativo: false }],
+  zap_mensagens: [{ id: "m1", seq: 1, conversa_id: Z1, direcao: "entrada", tipo: "texto", texto: "Bom dia", externo_id: "WA1", status: "entregue", criado_em: "2026-11-11T11:00:00Z" }],
+};
 
 (async () => {
   const s = http.createServer((q, r) => {
@@ -27,7 +33,7 @@ const SUPA = "https://ficticio.supabase.co";
     if (/\/auth\/v1\//.test(u)) return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(SESSAO) });
     if (m !== "GET") { const c = rota.request().postData(); escritas.push({ u, b: c ? JSON.parse(c) : null }); return rota.fulfill({ status: 204, body: "" }); }
     const t = (u.match(/\/rest\/v1\/([a-z_]+)/) || [])[1];
-    return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(FIX[t] || []) });
+    return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(EXTRA[t] || FIX[t] || []) });
   });
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
   const p = await ctx.newPage();
@@ -47,6 +53,17 @@ const SUPA = "https://ficticio.supabase.co";
   await p.waitForFunction(() => eu.zap_offline_desde);
   conf("gravar manda o texto ao zap_meu_offline", escritas.some(e => /zap_meu_offline/.test(e.u) && e.b.p_msg === "Texto C" && e.b.p_offline));
   conf("o texto gravado entra no alto da lista", (await p.evaluate(() => eu.zap_offline_salvas.join("|"))) === "Texto C|Texto B");
+  // F535: offline, o campo de escrever da conversa mostra o aviso vermelho e continua liberado
+  await p.evaluate(() => irPara("whatsapp"));
+  await p.waitForFunction(id => typeof zapConvs !== "undefined" && zapConvs.some(c => c.id === id), Z1);
+  await p.evaluate(id => abrirConversa(id, true), Z1);
+  await p.waitForSelector("#zap-txt");
+  conf("offline, o campo de escrever traz o aviso vermelho", (await p.textContent(".ze-offline")).includes("Você está offline"));
+  conf("enviar continua liberado", await p.isEnabled("#zap-txt"));
+  await p.click(".ze-offline button");
+  await p.waitForFunction(() => !eu.zap_offline_desde);
+  await p.waitForFunction(() => !document.querySelector(".ze-offline"));
+  conf("o Online do aviso volta a ficar online e tira o aviso", escritas.some(e => /zap_meu_offline/.test(e.u) && e.b.p_offline === false));
   conf("sem erro na página", !erros.length);
   for (const [n, v] of ok) console.log((v ? "OK " : "FALHOU ") + n);
   await nav.close(); s.close();
