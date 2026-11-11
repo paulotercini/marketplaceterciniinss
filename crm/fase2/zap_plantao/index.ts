@@ -314,7 +314,8 @@ export const AG_DUVIDA = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.202
 export const AG_ESPERA = `\n\nLista de espera: ofereça somente quando consultar_vagas devolver espera: true e a pessoa pedir data mais cedo ` +
   `do que as livres ou disser que a data está longe. Primeiro ofereça agendar a data livre ou manter o atendimento já agendado: a lista não ` +
   `substitui o agendamento. Depois pergunte, em uma frase, se deseja entrar na lista de espera para ser avisada pelo WhatsApp se surgir horário ` +
-  `mais cedo; com o sim, chame entrar_na_espera com os profissionais e, se a pessoa disser, os períodos e a data limite. Nunca prometa vaga.`;
+  `mais cedo; com o sim, chame entrar_na_espera com os profissionais e, se a pessoa disser, os períodos e a data limite. Nunca prometa vaga. ` +
+  `Não inclua sem o sim da pessoa, nem quem acabou de agendar ou remarcar para a data livre mais próxima: diga que essa já é a data mais cedo.`;   // teste de 30 conversas, 11.11.2026
 export const FER_ESPERA = {
   type: "custom", name: "entrar_na_espera",
   description: "Inclui na lista de espera da agenda quem pediu data mais cedo; o atendimento já agendado continua. O telefone sai da conversa.",
@@ -342,7 +343,7 @@ export function paraAgendador(system: string) {
     t = i >= 0 ? t.slice(0, i) + AG_ABERTURA + t.slice(i) : t + AG_ABERTURA;
   }
   t = t.includes("\n\nNa dúvida, a equipe") ? t.replace(/\n\nNa dúvida, a equipe[^]*?(?=\n\n|$)/, () => AG_DUVIDA) : t + AG_DUVIDA;
-  if (!t.includes("\n\nLista de espera:")) t += AG_ESPERA;
+  t = t.includes("\n\nLista de espera:") ? t.replace(/\n\nLista de espera:[^]*?(?=\n\n|$)/, () => AG_ESPERA) : t + AG_ESPERA;
   if (!t.includes("\n\nVocabulário:")) t += VOCABULARIO;
   t = t.includes("\n\nRegistro: português formal") ? t.replace(/\n\nRegistro: português formal[^]*?(?=\n\n|$)/, () => FORMAL) : t + FORMAL;
   t = t.includes("\n\nO jeito do escritório") ? t.replace(/\n\nO jeito do escritório[^]*?(?=\n\n|$)/, () => PADRAO) : t + PADRAO;
@@ -762,11 +763,16 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       const nome = (t === "002" ? c.nome_ficha || c.nome_numero : null) || String(i.nome || "").trim();
       if (!nome) return { erro: "falta o nome de quem será atendido" };
       const datas = (await marcados(c)).map((a) => String(a.data || "")).filter(Boolean).sort();
+      // a vaga oferecida tem de ser antes do limite: limite até amanhã não tem data mais cedo a oferecer
+      const ateOk = /^\d{4}-\d{2}-\d{2}$/.test(String(i.ate || "")) ? String(i.ate) : "";
+      const limite = [ateOk, datas[0] || ""].filter(Boolean).sort()[0] || "";
+      const amanha = new Date(Date.now() + 86400e3).toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
+      if (limite && limite <= amanha) return { erro: "não há data mais cedo a oferecer: diga que o atendimento já está na data mais próxima e não inclua na lista" };
       const r = await banco("agenda_espera_incluir_ia", { p_conversa: conversa, p_nome: nome, p_tipo: t,
         p_cliente: t === "002" ? c.cliente_id || c.cliente_numero || null : null,
         p_profs: (i.profissionais || []).filter((x: string) => PROFS.includes(x)),
         p_periodos: (i.periodos || []).map((x: string) => (/manh/i.test(x) ? "manha" : /tard/i.test(x) ? "tarde" : "")).filter(Boolean),
-        p_ate: /^\d{4}-\d{2}-\d{2}$/.test(String(i.ate || "")) ? i.ate : null, p_marcado: datas[0] || null,
+        p_ate: ateOk || null, p_marcado: datas[0] || null,
         p_obs: String(i.observacao || "").slice(0, 300) });
       if (!r || r.erro) return { erro: String(r?.erro || "não foi possível incluir na lista de espera") };
       return { incluido: true, ...(r.ja_estava ? { ja_estava: true } : {}),
