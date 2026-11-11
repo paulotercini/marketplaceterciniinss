@@ -5881,6 +5881,14 @@ html .tipo-mais.mais-baixo .tl-mais-menu{left:0;right:auto}
 .det-imp.on:not(.det-notas,.det-grav) svg path{fill:currentColor}
 .det-imp.det-grav.pendente{color:#8a5a00;border-color:#d99a00;background:#fff4d6}
 .det-imp.det-grav.gravando{color:#fff;border-color:#b3261e;background:#b3261e;animation:piscaRec 1s infinite}
+.escrever{position:relative}
+.escrever:has(.esc-grav) #and-texto{padding-right:52px}
+.escrever .esc-grav{position:absolute;top:6px;right:8px;display:inline-flex;align-items:center;justify-content:center;color:var(--cinza)}
+.escrever .esc-grav.pendente{color:#8a5a00;border-color:#d99a00;background:#fff4d6}
+.escrever .esc-grav.gravando{color:#fff;border-color:#b3261e;background:#b3261e;animation:piscaRec 1s infinite}
+.app.celular .escrever .esc-grav{width:44px;height:44px}
+.transc-txt{white-space:pre-wrap;max-height:65vh;overflow:auto;font-size:14px;line-height:1.5;margin-top:8px}
+dialog.confirmar .grav-casos{flex-wrap:wrap}
 .det-mais-col{display:inline-flex;align-items:center;gap:6px}
 /* F403 · Anotações rápidas no lugar do ⋯; o ponto vermelho avisa a anotação que ninguém abriu */
 /* no computador a ⭐ desce para baixo do ⋯, no espaço vazio à direita da segunda linha */
@@ -7017,7 +7025,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.50</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.52</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7519,6 +7527,7 @@ async function linkArquivo(caminho, segundos=120, bucket=BUCKET){
 }
 async function abrirAnexo(id){
   const a=(D.anexos||[]).find(x=>x.id===id); if(!a) return;
+  if(a.origem==="transcricao" && a.texto) return verTranscricao(id);   // F543
   const guia=window.open("", "_blank");            // abrir agora: o navegador
   try{                                             // bloqueia janela tardia
     let url=await linkArquivo(a.caminho);
@@ -17823,6 +17832,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
                <button class="zt-cel zt-desler" onclick="marcarNaoLida()" title="${c.nao_lidas?"Marcar como lida, sem responder":"Marcar como não lida"}"><span aria-hidden="true">${c.nao_lidas?"Lida":"Desler"}</span><span class="sr-only">${c.nao_lidas?"Marcar como lida":"Marcar como não lida"}</span></button>
                <button onclick="silenciarZap()" title="sem aviso desta conversa por um tempo">${silenciadaZap(c.id)?`🔕 Silenciada até ${new Date(zapSilencio.get(c.id)).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})}`:"🔕 Silenciar"}</button>
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
+               ${cfgApp("zap_cobertura")==="sim"?`<button onclick="semCoberturaZap(${!c.sem_cobertura})" title="Durante o Offline, a substituta recebe ou não esta conversa">${c.sem_cobertura?"Encaminhar à substituta":"Não encaminhar à substituta"}</button>`:""}
                ${pode?`<details class="zt-outras"><summary>Outras opções</summary>
                  ${(cfgApp("zap_bot_ligado")||"sim")==="sim"?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>
                  ${!fim&&(zapAux.passos||[]).length?`<button onclick="levarRobo()" title="Levar o robô a um passo…"><span aria-hidden="true">Robô…</span><span class="sr-only">Levar o robô a um passo…</span></button>`:""}`:""}
@@ -18672,6 +18682,12 @@ async function mudarConversa(campos){
   }catch(e){ return aviso(msgErro(e)); }
   Object.assign(zapConvs.find(x=>x.id===zapAberta)||{}, campos);
   pintarConversa(); pintarListaZap();
+}
+// F542 · a conversa vai ou não à substituta durante o Offline; o banco encerra a cobertura aberta com nota interna
+async function semCoberturaZap(sem){
+  await mudarConversa({sem_cobertura:sem});
+  const c = zapConvs.find(x=>x.id===zapAberta);
+  if(sem && c && c.cobertura){ c.cobertura = null; pintarConversa(); pintarListaZap(); }
 }
 // F286 · a ponte pede ao celular as mensagens anteriores à mais antiga da conversa (até 1 minuto)
 async function pedirHistoricoZap(){
@@ -22999,7 +23015,7 @@ function conversaAtendimento(c){
         <button type="button" class="adr-bt adr-primario" onclick="notaDoAtendimento('${c.id}')">Anotar</button>
         ${botaoGravarAtend()}</div>
       <div class="atend-bloco"><h4>Anotações${ns.length?` (${ns.length})`:""}</h4>
-      ${ns.length ? `<ol class="atend-notas">${ns.map(n=>`<li class="atend-nota"><div class="atend-nota-cab"><b>${esc(n.quem||"")}</b><span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span></div><div class="atend-nota-txt">${destacarMencoes(esc(String(n.texto||"")))}</div></li>`).join("")}</ol>`
+      ${ns.length ? `<ol class="atend-notas">${ns.map(n=>`<li class="atend-nota"><div class="atend-nota-cab"><b>${esc(n.quem||"")}</b><span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span></div><div class="atend-nota-txt">${destacarMencoes(esc(String(n.texto||"")))}</div>${(n.anexos||[]).map(a=>`<button class="btn-mini" onclick="abrirAnexo('${a.id}')">📎 ${esc(a.nome||"anexo")}</button>`).join(" ")}</li>`).join("")}</ol>`
         : `<p class="meio-sub">Nenhuma anotação ainda neste atendimento.</p>`}</div>
       ${docsAnotadosHtml(c, pc)}
       ${atalhosDossie(c)}
@@ -23150,7 +23166,7 @@ async function verGravacaoGuardada(){
   for(const p of ps) (segs[p.seg] ||= {tipo: p.tipo, dados: []}).dados.push(p.data);
   const blobs = segs.filter(Boolean).map(s=>new Blob(s.dados, {type: s.tipo})).filter(b=>b.size >= 2000);
   if(!blobs.length){ gravLimpar(); return; }
-  atendGravado = {segs: blobs, inicio: m.inicio, cli: m.cli, nseg: m.nseg || blobs.length, interrompida: true};
+  atendGravado = {segs: blobs, inicio: m.inicio, cli: m.cli, caso: m.caso, nseg: m.nseg || blobs.length, interrompida: true};
   pintarGravarAtend();
   aviso("Há uma gravação do atendimento interrompida. Toque em Continuar para seguir gravando, ou em Transcrever");
 }
@@ -23168,18 +23184,19 @@ function botaoGravarAtend(){
     : cont ? ["Continuar", "continuar a gravação interrompida"]
     : g ? ["Repetir", "enviar de novo a última gravação"]
     : ["Gravar", "gravar a conversa do atendimento e transcrever"];
-  return `<button type="button" id="atend-gravar" class="adr-bt${atendRec?" gravando":""}" title="${frase}" ${atendEnviando?"disabled":""} onclick="gravarAtendimento()"><span aria-hidden="true">${rot}</span><span class="sr-only">${frase}</span></button>`
+  return `<button type="button" id="atend-gravar" class="adr-bt${atendRec?" gravando":""}" title="${frase}" ${atendEnviando?"disabled":""} onclick="if(!atendRec&&!atendGravado)atendCaso=null;gravarAtendimento()"><span aria-hidden="true">${rot}</span><span class="sr-only">${frase}</span></button>`
     + (cont && !atendEnviando && !atendRec ? `<button type="button" id="atend-transcrever" class="adr-bt" title="transcrever o que já foi gravado" onclick="transcreverAtendimento()">Transcrever</button>` : "")
     + (g && !atendEnviando && !atendRec ? `<button type="button" id="atend-descartar" class="adr-bt" title="descartar a gravação" onclick="descartarGravacao()">Descartar</button>` : "");
 }
 function descartarGravacao(){ atendGravado = null; gravLimpar(); pintarGravarAtend(); }
 function pintarGravarAtend(){ ["atend-descartar", "atend-transcrever"].forEach(i=>document.getElementById(i)?.remove());
   const b = document.getElementById("atend-gravar"); if(b) b.outerHTML = botaoGravarAtend();
-  const f = document.getElementById("ficha-gravar"); if(f) f.outerHTML = botaoGravarFicha(f.dataset.cli); }
+  const f = document.getElementById("ficha-gravar"); if(f) f.outerHTML = botaoGravarFicha(f.dataset.cli);
+  const k = document.getElementById("caso-gravar"); if(k) k.outerHTML = botaoGravarCaso(D.casoPorId.get(k.dataset.caso)); }
 // F532 · o Gravar também no canto da ficha, ao lado da ⭐ (pedido do Paulo, 11.11.2026): fora do atendimento,
 // a transcrição abre na ⚡ anotação rápida já com o cliente da ficha, para conferir e gravar
 const IC_MIC = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>`;
-let atendCli = null;
+let atendCli = null, atendCaso;   // atendCaso: id do caso; null = sem caso; undefined = gravação antiga (F539)
 function botaoGravarFicha(cliId){
   if(!cliId || !podeGravarCaso()) return "";
   const g = atendGravado;
@@ -23188,7 +23205,37 @@ function botaoGravarFicha(cliId){
     : g && g.interrompida ? ["Continuar", "continuar a gravação interrompida"]
     : g ? ["Repetir", "enviar de novo a última gravação"]
     : ["Gravar", "gravar o atendimento e transcrever"];
-  return `<button type="button" id="ficha-gravar" data-cli="${cliId}" class="det-imp det-grav${atendRec?" gravando":""}${g&&g.interrompida&&!atendRec?" pendente":""}" title="${rot}: ${frase}" aria-label="${frase}" ${atendEnviando?"disabled":""} onclick="atendCli='${cliId}';gravarAtendimento()">${IC_MIC}</button>`;
+  return `<button type="button" id="ficha-gravar" data-cli="${cliId}" class="det-imp det-grav${atendRec?" gravando":""}${g&&g.interrompida&&!atendRec?" pendente":""}" title="${rot}: ${frase}" aria-label="${frase}" ${atendEnviando?"disabled":""} onclick="gravarDaFicha('${cliId}')">${IC_MIC}</button>`;
+}
+// F543 · o microfone ao lado de Escrever no caso grava direto naquele caso (pedido do Paulo, 11.11.2026)
+function botaoGravarCaso(k){
+  if(!k || !podeGravarCaso()) return "";
+  const g = atendGravado, [rot, frase] = atendEnviando ? ["Transcrevendo", "transcrevendo a gravação"]
+    : atendRec ? ["Parar", "parar a gravação e transcrever"]
+    : g && g.interrompida ? ["Continuar", "continuar a gravação interrompida"]
+    : g ? ["Repetir", "enviar de novo a última gravação"]
+    : ["Gravar", "gravar o atendimento e salvar o resumo neste caso"];
+  return `<button type="button" id="caso-gravar" data-caso="${k.id}" class="esc-ic esc-grav${atendRec?" gravando":""}${g&&g.interrompida&&!atendRec?" pendente":""}" title="${rot}: ${frase}" aria-label="${frase}" ${atendEnviando?"disabled":""} onclick="if(!atendRec&&!atendGravado){atendCli='${k.cliente_id}';atendCaso='${k.id}'}gravarAtendimento()">${IC_MIC}</button>`;
+}
+// F543 · no topo da ficha a gravação pergunta antes em qual caso salvar (pedido do Paulo, 11.11.2026)
+async function gravarDaFicha(cliId){
+  if(!atendRec && !atendEnviando && !atendGravado){
+    const r = await escolherCasoGravacao(cliId); if(r === undefined) return;
+    atendCli = cliId; atendCaso = r;
+  }
+  gravarAtendimento();
+}
+function escolherCasoGravacao(cliId){
+  const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
+  if(!ks.length) return Promise.resolve(null);
+  return new Promise(res=>{
+    const d = document.createElement("dialog"); d.className = "confirmar";
+    d.innerHTML = `<p class="confirmar-txt">Em qual caso salvar o resumo do atendimento?</p><form method="dialog" class="confirmar-bts grav-casos">
+      ${ks.map(k=>`<button value="${k.id}" class="btn-rap">${esc(rotuloCasoEscolha(k))}</button>`).join("")}
+      <button value="sem" class="btn-rap">Sem caso</button><button value="" class="btn-rap">Voltar</button></form>`;
+    d.addEventListener("close", ()=>{ const v = d.returnValue; res(v === "sem" ? null : v || undefined); d.remove(); });
+    document.body.appendChild(d); d.showModal();
+  });
 }
 async function gravarAtendimento(){
   if(atendEnviando) return;
@@ -23202,10 +23249,11 @@ async function gravarAtendimento(){
   const tipo = MediaRecorder.isTypeSupported("audio/webm;codecs=opus") ? "audio/webm;codecs=opus" : "";
   const rec = new MediaRecorder(stream, tipo ? {mimeType: tipo} : undefined), partes = [];
   const inicio = ant ? ant.inicio : Date.now(), seg = ant ? ant.nseg : 0, antes = ant ? ant.segs : [], cli = ant ? (ant.cli || atendCli) : atendCli;
+  const caso = ant ? ant.caso : atendCaso;
   const tipoBlob = (rec.mimeType || "audio/webm").split(";")[0];
   if(!ant) await gravLimpar();
-  gravOp("meta", "readwrite", s=>s.put({inicio, cli, nseg: seg + 1}, "atual"));
-  atendGravado = null; atendCli = cli;
+  gravOp("meta", "readwrite", s=>s.put({inicio, cli, caso, nseg: seg + 1}, "atual"));
+  atendGravado = null; atendCli = cli; atendCaso = caso;
   rec.ondataavailable = e=>{ if(e.data.size){ partes.push(e.data); gravOp("partes", "readwrite", s=>s.add({seg, data: e.data, tipo: tipoBlob})); } };
   const trilha = stream.getTracks()[0];
   if(trilha) trilha.onended = ()=>{ if(rec.state !== "inactive") rec.stop(); };   // o iPhone encerra o microfone ao sair do app
@@ -23216,7 +23264,7 @@ async function gravarAtendimento(){
     const parou = atendParou; atendParou = false;
     const segs = antes.concat(new Blob(partes, {type: tipoBlob})).filter(b=>b.size >= 2000);
     if(!segs.length){ gravLimpar(); pintarGravarAtend(); return aviso("Gravação curta demais"); }
-    atendGravado = {segs, inicio, cli, nseg: seg + 1, interrompida: !parou};
+    atendGravado = {segs, inicio, cli, caso, nseg: seg + 1, interrompida: !parou};
     if(parou) return transcreverAtendimento();
     pintarGravarAtend();
     aviso("A gravação parou ao sair da tela. O gravado está guardado: toque em Continuar");
@@ -23273,8 +23321,8 @@ async function transcreverAtendimento(){
     // F529: o resumo no padrão das anotações vem primeiro, e a transcrição inteira fica abaixo dele
     const txt = d.resumo ? `${d.resumo}\n\nTranscrição completa ${cab}:\n${d.texto}` : `Transcrição do atendimento ${cab}:\n${d.texto}`;
     atendGravado = null; gravLimpar();
-    // F539: o resumo grava sozinho na anotação do cliente; sem cliente ou com falha, volta ao campo como antes
-    const gravou = await gravarTranscricao(atendCli || clienteAberto, txt);
+    // F539/F543: o resumo grava sozinho como anotação (do caso escolhido ou do cliente) e a transcrição vai a um anexo; com falha, volta ao campo
+    const gravou = await gravarTranscricao(atendCli || clienteAberto, g.caso, d.resumo, d.texto, cab, dia);
     if(!gravou){
       probParaNota(txt);
       aviso(document.getElementById("atend-nota") ? "Não gravei sozinho. A transcrição está no campo: toque em Anotar" : "Não gravei sozinho. A transcrição está na anotação rápida: grave");
@@ -23289,12 +23337,42 @@ async function transcreverAtendimento(){
     }
   }finally{ atendEnviando = false; pintarGravarAtend(); }
 }
-async function gravarTranscricao(cliId, txt){
-  const c = cliId && D.cliPorId.get(cliId); if(!c || !txt) return false;
+async function gravarTranscricao(cliId, casoId, resumo, texto, cab, dia){
+  const c = cliId && D.cliPorId.get(cliId); if(!c || !texto) return false;
+  const k = casoId && D.casoPorId.get(casoId);
+  const nota = resumo || `Transcrição do atendimento ${cab}.`, integral = `${nota}\n\nTranscrição completa ${cab}:\n${texto}`;
+  let and = null;
+  if(k){   // F543: com caso, o resumo é anotação do caso
+    try{ [and] = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:k.id, autor_id:eu.id, origem:"app", texto:nota})}) || []; }catch(e){}
+    if(!and) return false;
+    api(`/rest/v1/andamentos_lidos`,{method:"POST",headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
+      body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
+    if(Array.isArray(D._andsFicha) && clienteAberto===cliId) D._andsFicha.unshift(and);
+    _ultAnot.clear();
+  }
+  // F543: a transcrição inteira vai a um anexo do cliente (origem "transcricao"), preso à anotação; é o link abaixo do resumo
+  const corpo = `Transcrição do atendimento ${cab}\n\n${texto}`;
+  const caminho = `${cliId}/transcricao-${new Date().toISOString().replace(/[:.]/g,"-").toLowerCase()}.txt`, arq = new Blob([corpo], {type:"text/plain;charset=utf-8"});
+  let an = null;
+  try{ await subirArquivo(caminho, arq); }catch(e){}   // shortcut: sem o arquivo no bucket, o texto do anexo basta para ler
+  try{ [an] = await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({caso_id: k && !ehPreCaso(k) ? k.id : null, cliente_id:cliId, autor_id:eu.id, nome:`Transcrição do atendimento ${dia}`,
+      caminho, tipo:"text/plain", tamanho:arq.size, origem:"transcricao", texto:corpo, ...(and ? {andamento_id:and.id} : {})})}) || []; }catch(e){ an = null; }
+  if(an) (D.anexos = D.anexos||[]).unshift(an);
+  if(k){
+    if(!an){   // sem o anexo, a transcrição fica na própria anotação para não se perder
+      try{ await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({texto:integral})}); and.texto = integral; }catch(e){}
+    }
+    aviso(`Resumo do atendimento gravado em ${tituloCaso(k)}`, false);
+    if(clienteAberto === cliId) repintarFicha();
+    return true;
+  }
   const noAtend = !!document.getElementById("atend-nota"), pc = noAtend ? preCasoAberto(c) : null;
-  const nota = {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], autor_id:eu.id, texto:txt, gravacao:true,
+  const n = {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], autor_id:eu.id, texto: an ? nota : integral, gravacao:true,
+    ...(an ? {anexos:[{id:an.id, nome:an.nome}]} : {}),
     ...(noAtend ? (pc ? {precaso_id:pc.id} : {}) : {origem:"rapida"})};   // fora do atendimento fica "para distribuir" (F404)
-  const campos = {...(c.campos||{}), atendimento:[...((c.campos||{}).atendimento||[]), nota]};
+  const campos = {...(c.campos||{}), atendimento:[...((c.campos||{}).atendimento||[]), n]};
   try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos})}); }
   catch(e){ return false; }
   c.campos = campos;
@@ -23302,6 +23380,24 @@ async function gravarTranscricao(cliId, txt){
     : `Resumo do atendimento gravado nas anotações de ${(c.nome||"").split(" ")[0]}. Distribua ao caso pelo ícone das Anotações`, false);
   if(clienteAberto === cliId) repintarFicha();
   return true;
+}
+// F543 · a transcrição abre aqui mesmo, pelo texto guardado no anexo
+function verTranscricao(id){
+  const a = (D.anexos||[]).find(x=>x.id===id); if(!a) return;
+  const k = a.caso_id && D.casoPorId.get(a.caso_id), autor = (D.colPorId.get(a.autor_id)||{}).nome;
+  caixa(`<h3 class="adr-h">${esc(a.nome||"Transcrição do atendimento")}</h3>
+    <p class="meio-sub">${esc([k ? tituloCaso(k) : "", autor ? autor.split(" ")[0] : "", a.criado_em ? fmtTS(a.criado_em) : ""].filter(Boolean).join(" · "))}</p>
+    <div class="transc-txt">${esc(a.texto||"")}</div>`);
+}
+function caixaTranscricoes(c){
+  const ts = (D.anexos||[]).filter(a=>a.cliente_id===c.id && a.origem==="transcricao")
+    .sort((x,y)=>String(y.criado_em||"").localeCompare(String(x.criado_em||"")));
+  const casoDe = a => D.casoPorId.get(a.caso_id || ((D._andsFicha||[]).find(x=>x.id===a.andamento_id)||{}).caso_id);
+  return `<section class="idf-card idf-transc" aria-labelledby="idf-transc"><h3 class="adr-h" id="idf-transc">Transcrições de Atendimentos${ts.length?` (${ts.length})`:""}</h3>
+    ${ts.length ? `<ul class="ac-lista">${ts.map(a=>{ const k = casoDe(a), autor = (D.colPorId.get(a.autor_id)||{}).nome;
+      return `<li class="ac-it"><b>${esc(a.criado_em ? fmtTS(a.criado_em) : a.nome||"")}</b><small>${esc([k ? tituloCaso(k) : "Sem caso", autor ? autor.split(" ")[0] : ""].filter(Boolean).join(" · "))}</small>
+        <button class="btn-mini" onclick="verTranscricao('${a.id}')">Abrir</button></li>`; }).join("")}</ul>`
+      : `<p class="meio-sub">Nenhuma transcrição ainda. O microfone ao lado de Escrever no caso grava o atendimento.</p>`}</section>`;
 }
 function probParaNota(txt){
   if(!txt) return;
@@ -43799,7 +43895,7 @@ function composerCaso(k){
         <input type="date" class="tf-data" id="tf-data" style="display:none" onchange="tfDia(this.value,this)">`;
   const escrever = v10
     ? `<div class="escrever esc-v12">
-      ${area}
+      ${area}${encerrado ? "" : botaoGravarCaso(k)}
       <div class="esc-barra" id="tf-box">
         <div class="esc-linha esc-tgs">${chips}<span class="esc-sep" aria-hidden="true"></span>${tg("compromisso","Tarefa","trabalho marcado para alguém num dia")}${prazoTg}${tg("lembrete","Lembrete","só um aviso no dia, por padrão para você")}${ferr}<button class="esc-ic esc-mais-ic" aria-expanded="false" onclick="const l=this.parentNode;l.classList.toggle('ics');this.setAttribute('aria-expanded',l.classList.contains('ics'))" title="Mais: anexar, mencionar, documentos, importante">⋯<span class="sr-only"> mais</span></button></div>
         <div class="esc-pnl esc-pnl-tf" id="esc-pnl-tf"${tfNatureza?"":" hidden"}>
@@ -43817,7 +43913,7 @@ function composerCaso(k){
     </div>`
     : `<div class="escrever">
       <div class="tipo-fila" id="tipo-fila">${chips}${umClique}</div>
-      ${area}
+      ${area}${encerrado ? "" : botaoGravarCaso(k)}
       <div class="esc-barra" id="tf-box">
         <span class="rotulo-rap">TAREFA PARA</span>${atribuir}
         <span class="tf-sep"></span>
@@ -53086,6 +53182,7 @@ function fichaIdentificacao(c, creds){
       </section>
       ${caixaAposCadastro(c)}
       ${caixaNotasTodo(c)}
+      ${caixaTranscricoes(c)}
       ${caixaQualidade(c)}
       ${/* onda 0 · o dossiê também na Identificação, que está sempre à vista */""}
       <div class="idf-dossie">${caixaDossie(c)}
