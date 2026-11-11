@@ -690,6 +690,8 @@ A **F530** (13.41, decisão do Paulo de 11.11.2026): o Microsoft To Do é a úni
 
 A **F531** (13.42, decisão do Paulo de 11.11.2026, complemento da F530): o expediente do tribunal (`casos.prazos_tribunal`) é aviso, e não prazo fatal: na aba Prazos é a linha "Aviso do PJe" (natureza lembrete, sem o botão "é o prazo do caso") e no Meu Dia o selo "Aviso PJe", sem `prazo`; a previsão de pagamento da RPV calculada pelo CRM (60 dias da expedição) saiu. As tarefas abertas criadas pelo assistente (`andamento_tarefas` de anotação com `origem_id` `mcp:`) têm cópia em `_bkp_tf_ass_20261111`. Testes ajustados: `f236-final-agenda.js`, `f236-rotina.js`.
 
+A **F532** (13.43, pedido do Paulo de 11.11.2026): o Gravar da F498 também fica no cabeçalho da ficha, como ícone de microfone à esquerda das Anotações e da ⭐ (`botaoGravarFicha`, `#ficha-gravar`, `.det-grav`, vermelho enquanto grava), do nível 3 em diante. Fora do atendimento, sem o campo `#atend-nota`, o resumo e a transcrição abrem na ⚡ anotação rápida já com o cliente da ficha (`probParaNota`, `atendCli`), para conferir e gravar; nada é gravado sem o clique. Teste: `f498.js` (13 itens); `f373.js` passou a excluir `.det-grav` do seletor da ⭐.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
