@@ -2073,6 +2073,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .ze-ferr .zap-icone.gravando{background:#fde7e7;color:#b3261e}
   .zap-escrever .btn-rap.ze-enviar:disabled{opacity:.45;cursor:not-allowed}
   .zap-escrever .ze-linha:has(.zap-falta:not([hidden])){flex-wrap:wrap}
+  .ze-cobre{margin:0 0 6px;padding:6px 10px;border:1px solid #c9a227;border-radius:8px;background:#fff8e1;color:#5c4400;font-size:13px;font-weight:600}
   .ze-offline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 6px;padding:6px 10px;border:1px solid var(--venc,#b3261e);border-radius:8px;background:#fdecea;color:#8c1d18;font-size:13px;font-weight:600}
   .ze-sug-ia{border:1px dashed #c9a227;background:#fff8e1;border-radius:8px;padding:8px 10px;font-size:13px;color:#3d3200}
   .ze-sug-ia.urg{border-color:var(--venc,#b3261e);background:#fdecea}
@@ -7015,7 +7016,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.45</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.46</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17187,15 +17188,17 @@ async function carregarAuxZap(){
 // (zap_guarda_*), aqui é o que cada um enxerga.
 const zapGestor = () => !visaoColab() || !!(eu && eu.gestor_zap);   // F368 · o gestor do WhatsApp vê e transfere todas, sem ser administrador do CRM
 const meusSetoresZap = () => zapAux.colabSetores.filter(x=>x.colaborador_id===eu.id).map(x=>x.setor_id);
+// F537 · a conversa coberta durante o Offline do titular fica com o substituto (onda 1, 11.11.2026)
+const cobrindoZap = c => !!c && !!c.cobertura && c.cobertura.cobre===eu.id && c.status!=="resolvida";
 function zapVisivel(c){
-  if(zapGestor() || c.atendente_id===eu.id || zapAux.mencionado.has(c.id)) return true;
+  if(zapGestor() || c.atendente_id===eu.id || cobrindoZap(c) || zapAux.mencionado.has(c.id)) return true;
   if(c.atendente_id) return false;
   const meus = meusSetoresZap();
   return !c.setor_id || !meus.length || meus.includes(c.setor_id);
 }
 const podeAgirZap = c => !!c && (zapGestor() || !c.atendente_id || c.atendente_id===eu.id);
 // o colaborador assume a conversa antes de responder ao cliente; o gestor responde sem assumir (pedido do Paulo, 06.11.2026)
-const precisaAssumir = c => !!c && !zapGestor() && c.atendente_id !== eu.id;
+const precisaAssumir = c => !!c && !zapGestor() && c.atendente_id !== eu.id && !cobrindoZap(c);
 function barraAssumir(c){
   if(!precisaAssumir(c)) return false;
   const at = c.atendente_id && D.colPorId.get(c.atendente_id);
@@ -17396,7 +17399,7 @@ function achadoZap(m){
 let zapMaisAberto = false;   // F274 · o ⋯ da lista do WhatsApp continua aberto quando a lista se repinta
 function pintarListaZap(){
   if(!document.querySelector(".zap-lado")) return;   // a carga terminou depois de sair do WhatsApp
-  const meu = c => c.atendente_id===eu.id;
+  const meu = c => c.atendente_id===eu.id || cobrindoZap(c);
   const aberta = c => c.status!=="resolvida";
   const gestor = zapGestor();
   // 29.10.2026 · sem a fila Retornos, que o escritório não usa (pedido do Paulo)
@@ -17863,6 +17866,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
        <div class="zap-sug" id="zap-sug" hidden></div>
        ${!zapNota&&eu&&eu.zap_offline_desde?`<p class="ze-offline" role="status">Você está offline: os clientes que você assumiu recebem a mensagem automática. Enviar continua permitido.
           <button class="btn-rap" onclick="gravarEstadoZap(false)" title="Voltar a ficar online">Online</button></p>`:""}
+       ${cobrindoZap(c)&&!zapNota?`<p class="ze-cobre" role="status">Cobertura de ${esc((D.colaboradores||[]).find(k=>k.id===c.cobertura.titular)?.nome||"um colega")}, que está offline. Responda sem assumir; a conversa volta a ele quando ficar online.</p>`:""}
        ${precisaAssumir(c)?`<p class="ze-so-leitura ze-assumir-aviso">${at
           ? `Esta conversa está com ${esc(at.nome)}. Para responder, peça a transferência.
              <button class="btn-rap" onclick="pedirTransferencia()" title="Pedir a transferência da conversa">Pedir<span class="sr-only"> a transferência</span></button>`
