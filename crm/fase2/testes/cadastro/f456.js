@@ -93,6 +93,9 @@ FIX.agenda_espera = [
   const f2 = await p.evaluate(() => faixaLiberada());
   conf("recusou devolve a pessoa à lista com a resposta registrada", FIX.agenda_espera[0].estado === "aguardando" && FIX.agenda_espera[0].ofertas[0].resposta === "recusou");
   conf("o recusou devolve a vaga liberada à faixa", /Vaga liberada/.test(f2));
+  // F527 · com a IA da lista de espera ligada, a assistente oferece pelo WhatsApp e a faixa não tem Oferecer
+  const f3 = await p.evaluate(() => { (D.config ||= new Map()).set("zap_ia_espera", "sim"); const h = faixaLiberada(); D.config.set("zap_ia_espera", "nao"); return h; });
+  conf("com a IA da lista ligada, a faixa diz que a assistente oferece", /A assistente virtual oferece/.test(f3) && !/oferecerEspera\(/.test(f3));
 
   conf("nenhum erro na página", !erros.length);
   await nav.close(); s.close();
