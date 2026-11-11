@@ -708,6 +708,8 @@ A **F540** (13.49, pedido do Paulo de 11.11.2026, a gravação sem som que não 
 
 A **F541** (pedido do Paulo de 11.11.2026, "está sendo gerado o resumo nas anotações?"): o resumo do atendimento gravado saía vazio, e a anotação ficava só com a transcrição, porque o modelo usava quase todo o `max_tokens` de 1500 no raciocínio antes de escrever (`stop_reason = max_tokens`, 1.390 tokens de raciocínio numa gravação de 19 minutos). A chamada da `atendimento_transcricao` passou a `max_tokens: 8000` com `output_config: { effort: "low" }` (o resumo de 19 minutos sai em cerca de 6 s, sem raciocínio), e o resumo vazio, cortado ou sem a chave deixa registro no log da função (`resumo: parada …`, `resumo: sem ANTHROPIC_API_KEY`).
 
+A **F542** (13.50, pedido do Paulo de 11.11.2026): o ⋯ da conversa do WhatsApp tem **Não encaminhar à substituta** (ou Encaminhar, `semCoberturaZap`), quando a cobertura do Offline está ligada (`zap_cobertura`). A coluna `zap_conversas.sem_cobertura` impede a cobertura da F538 de abrir (`zap_offline_gatilho`), e marcá-la encerra a cobertura aberta com uma nota interna (gatilho `zap_sem_cobertura_upd`). A resposta do titular, pelo CRM ou pelo celular, não encerra a cobertura: ela vale até a volta a Online. SQL em `crm/fase2/migracoes/f542_cobertura_por_contato.sql`. Teste: `f519.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
