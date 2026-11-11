@@ -560,3 +560,86 @@ console.log("formal: ok");
   assert.ok(d526.includes("use como nome") && pa526("Agendador.").includes("o campo para que consultar_vagas devolveu"), "o Agendador agenda com o nome da ficha");
   console.log("ok F526 nome da ficha");
 }
+
+// F527 · a lista de espera pela IA (onda 2): incluir quem pede data mais cedo, oferecer a vaga liberada e ler a resposta
+{
+  const m = await import("../../zap_plantao/index.ts");
+  const agora = Date.parse("2026-11-11T12:00:00Z"); // 09:00 de Brasília
+  const e = { id: "e1", nome: "Cliente Teste da Silva", telefone: "5500000000001", tipo: "001", profs: ["amanda", "paulo"], criado_em: "2026-11-10T10:00:00Z" };
+  const v = { prof: "amanda", data: "2026-11-13", inicio: "10:30", tipo: "001", eventoId: "vg1" };
+  assert.ok(m.esperaCabe(e, v));
+  assert.ok(!m.esperaCabe({ ...e, profs: ["paulo"] }, v), "profissional fora da escolha");
+  assert.ok(!m.esperaCabe({ ...e, marcado: "2026-11-13" }, v), "a vaga não antecipa o já agendado");
+  assert.ok(!m.esperaCabe({ ...e, periodos: ["tarde"] }, v) && m.esperaCabe({ ...e, periodos: ["manha"] }, v));
+  assert.ok(!m.esperaCabe({ ...e, tipo: "002" }, v) && m.esperaCabe({ ...e, tipo: "002" }, { ...v, tipoFixo: false }));
+  const fila = [{ ...e, id: "b", criado_em: "2026-11-10T15:00:00Z", marcado: "2026-12-01" }, { ...e, id: "c", criado_em: "2026-11-10T16:00:00Z" }, { ...e, id: "a", criado_em: "2026-11-09T18:00:00Z" }];
+  assert.deepEqual(fila.sort(m.ordemEspera).map((x) => x.id), ["a", "c", "b"], "dia de entrada, e quem não tem horário antes de quem antecipa");
+  assert.ok(m.ofertavel(v, agora) && !m.ofertavel({ data: "2026-11-11", inicio: "10:30" }, agora), "menos de 2 horas não se oferece");
+  assert.equal(m.prazoOferta({ data: "2026-11-12" }, agora).getTime() - agora, 15 * 60e3, "amanhã: 15 minutos");
+  assert.equal(m.prazoOferta(v, agora).getTime() - agora, 30 * 60e3, "depois: 30 minutos");
+  const txt = m.msgOfertaEspera({ ...e, marcado: "2026-12-01" }, v, m.prazoOferta(v, agora));
+  assert.ok(txt.startsWith("Bom dia, Cliente.") && txt.includes("com a Dra. Amanda na sexta-feira, dia 13/11, às 10h30"), txt);
+  assert.ok(txt.includes("agendado para 01/12 fica liberado") && txt.includes("até as 09h30") && !/[—–]/.test(txt), "sem travessão");
+  assert.ok(!m.msgOfertaEspera(e, v, m.prazoOferta(v, agora)).includes("fica liberado"));
+  assert.equal(m.respostaPorPalavras("Sim, pode ser"), "aceitar");
+  assert.equal(m.respostaPorPalavras("Não, prefiro manter"), "recusar");
+  assert.equal(m.respostaPorPalavras("E à tarde, tem?"), "outro");
+  assert.ok(m.paraAgendador("Agendador.").includes("Lista de espera:"));
+  assert.equal(m.paraAgendador(m.paraAgendador("Agendador.")).split("Lista de espera:").length, 2, "uma vez só");
+
+  // agenda e banco falsos para oferecer e responder
+  const disp = (eventoId) => async (acao, p) => {
+    if (acao === "disponibilidade") return { ok: true, dias: p.profissional === "amanda" ? [{ data: "2026-11-13", livres: { "001": eventoId ? [{ inicio: "10:30", eventoId }] : [] } }] : [] };
+    if (acao === "agendamentosFuturos") return { ok: true, agendamentos: [{ id: "ant", atendimento: true, data: "2026-12-01", profissional: "paulo" }] };
+    return { ok: true, evento: { id: "novo" } };
+  };
+  const banco = (resp) => { const feitos = []; return [feitos, async (n, c) => { feitos.push([n, c]); return resp[n] ?? null; }]; };
+  const lib = { liberada: { profissional: "amanda", data: "2026-11-13", evento_id: "vg1" }, candidatos: [{ ...e, profs: ["paulo"] }, e] };
+  {
+    const [feitos, b] = banco({ agenda_espera_pegar: lib, agenda_espera_oferecer: true });
+    assert.deepEqual(await m.oferecerEspera("l1", disp("vg1"), b, agora), { oferecida: true, espera: "e1" });
+    const of = feitos.find((f) => f[0] === "agenda_espera_oferecer")[1];
+    assert.equal(of.p_oferta.eventoId, "vg1"); assert.ok(of.p_texto.includes("Podemos agendar"));
+  }
+  {
+    const [feitos, b] = banco({ agenda_espera_pegar: lib });
+    assert.equal((await m.oferecerEspera("l1", disp(null), b, agora)).oferecida, false);
+    assert.ok(feitos.some((f) => f[0] === "agenda_liberada_fechar"), "vaga tomada fecha a liberada");
+  }
+  const oferta = { eventoId: "vg1", data: "2026-11-13", inicio: "10:30", prof: "amanda", tipo: "001", rotulo: "sexta-feira, 13/11, às 10h30, com a Dra. Amanda" };
+  const resp = (esp, texto) => ({ espera: esp, oferta, conversa: "cv", mensagens: [{ tipo: "texto", texto }] });
+  {
+    const chamadas = [], ag = async (a, p) => { chamadas.push(a); return disp("vg1")(a, p); };
+    const [feitos, b] = banco({ agenda_espera_resposta_pegar: resp(e, "sim") });
+    assert.equal((await m.responderEspera("m1", ag, b, async () => ({ intencao: "aceitar" }))).resultado, "aceitou");
+    assert.ok(chamadas.includes("agendar") && !chamadas.includes("remarcar"), "sem atendimento anterior, agenda");
+    assert.ok(feitos.some((f) => f[0] === "zap_plantao_marcado"));
+  }
+  {
+    const chamadas = [], ag = async (a, p) => { chamadas.push([a, p]); return disp("vg1")(a, p); };
+    const [feitos, b] = banco({ agenda_espera_resposta_pegar: resp({ ...e, marcado: "2026-12-01", cliente_id: "cli1" }, "pode") });
+    assert.equal((await m.responderEspera("m1", ag, b, async () => ({ intencao: "aceitar" }))).resultado, "aceitou");
+    assert.equal(chamadas.find((c) => c[0] === "remarcar")[1].eventId, "ant", "o já agendado é remarcado para a vaga");
+    assert.ok(feitos.some((f) => f[0] === "agenda_liberada_registrar" && f[1].p_evento === "ant"), "a vaga antiga segue para a lista");
+  }
+  {
+    const [feitos, b] = banco({ agenda_espera_resposta_pegar: resp({ ...e, marcado: "2026-12-01" }, "não") });
+    assert.equal((await m.responderEspera("m1", disp("vg1"), b, async () => ({ intencao: "recusar" }))).resultado, "recusou");
+    assert.ok(feitos.at(-1)[1].p_texto.includes("01/12 continua agendado"));
+  }
+  {
+    const [, b] = banco({ agenda_espera_resposta_pegar: resp(e, "sim") });
+    assert.equal((await m.responderEspera("m1", disp(null), b, async () => ({ intencao: "aceitar" }))).resultado, "perdeu");
+  }
+  { // a ferramenta do Agendador
+    const [feitos, b] = banco({ zap_plantao_agenda: { telefone: "5500000000002", cliente_id: null, nome_ficha: null, ligada: true }, agenda_espera_ligada: true, agenda_espera_incluir_ia: { incluido: true } });
+    const ag = async (a, p) => a === "agendamentosFuturos" ? { ok: true, agendamentos: [{ id: "x", atendimento: true, data: "2026-12-01", inicio: "09:00", profissional: "paulo" }] } : { ok: true, dias: [] };
+    const r = await m.ferramentasDaConversa("cv", ag, b).entrar_na_espera({ nome: "Cliente Teste", profissionais: ["amanda", "hacker"], periodos: ["manhã"], ate: "31/12" });
+    assert.equal(r.incluido, true);
+    const inc = feitos.find((f) => f[0] === "agenda_espera_incluir_ia")[1];
+    assert.deepEqual([inc.p_tipo, inc.p_profs, inc.p_periodos, inc.p_ate, inc.p_marcado], ["001", ["amanda"], ["manha"], null, "2026-12-01"]);
+    const [, b2] = banco({ zap_plantao_agenda: { ligada: true }, agenda_espera_ligada: false });
+    assert.ok((await m.ferramentasDaConversa("cv", ag, b2).entrar_na_espera({ nome: "x", profissionais: ["paulo"] })).erro, "desligada, não inclui");
+  }
+  console.log("ok F527 lista de espera");
+}
