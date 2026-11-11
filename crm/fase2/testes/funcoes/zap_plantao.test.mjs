@@ -667,3 +667,19 @@ console.log("formal: ok");
   }
   console.log("ok F527 lista de espera");
 }
+{ // retomada depois de longa pausa (pedido do Paulo de 11.11.2026): o "Bom dia" da manhã não retoma a oferta da noite
+  const m = await import("../../zap_plantao/index.ts");
+  const msgs = [
+    { direcao: "entrada", texto: "Quero agendar com o Dr. Marcos", momento: "2026-11-11T02:10:00Z" },
+    { direcao: "saida", por_bot: true, texto: "Boa noite!\n\nHá horário no dia 12/11 às 16h ou 16h30.", momento: "2026-11-11T02:19:00Z" },
+    { direcao: "entrada", texto: "Bom dia", momento: "2026-11-11T11:49:00Z" },
+  ];
+  assert.ok(m.retomada(msgs).startsWith("Retomada: a pessoa voltou a escrever 10 horas"));
+  assert.ok(m.contexto({ mensagens: msgs, advogados: [] }).includes("Retomada:"), "vai ao contexto");
+  assert.deepEqual(m.enviadosAtuais(msgs), [], "a oferta antiga não conta para tirar a saudação");
+  assert.ok(m.emLinhas("Bom dia!\n\nEm que posso ajudar?", m.enviadosAtuais(msgs)).startsWith("Bom dia"));
+  const perto = [...msgs.slice(0, 2), { ...msgs[2], momento: "2026-11-11T02:49:00Z" }];
+  assert.equal(m.retomada(perto), "", "30 minutos não é retomada");
+  assert.equal(m.enviadosAtuais(perto).length, 1);
+  console.log("ok retomada");
+}
