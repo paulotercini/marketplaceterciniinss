@@ -521,19 +521,19 @@ async function rpc(nome: string, corpo: unknown) {
 }
 
 // quem assumiu a conversa (nulo sem atendente)
-async function atendenteDe(conversa?: string | null): Promise<(Atendente & { offline: boolean }) | null> {
+async function atendenteDe(conversa?: string | null): Promise<(Atendente & { offline: boolean; iaAgenda?: boolean }) | null> {
   if (!conversa) return null;
   const h = { apikey: SERVICO, Authorization: `Bearer ${SERVICO}` };
-  const c = await (await fetch(`${URL_SB}/rest/v1/zap_conversas?id=eq.${conversa}&select=atendente_id`, { headers: h })).json();
+  const c = await (await fetch(`${URL_SB}/rest/v1/zap_conversas?id=eq.${conversa}&select=atendente_id,plantao`, { headers: h })).json();
   const at = c?.[0]?.atendente_id;
   if (!at) return null;
   const k = (await (await fetch(`${URL_SB}/rest/v1/colaboradores?id=eq.${at}&select=nome,cargo,zap_offline_desde`, { headers: h })).json())?.[0];
-  return k ? { nome: k.nome, cargo: k.cargo, offline: !!k.zap_offline_desde } : null;
+  // F521 · a agenda pedida durante este Offline fica com a IA (plantao.offline_ia gravado pelo zap_offline_gatilho)
+  const ia = c?.[0]?.plantao?.offline_ia;
+  const iaAgenda = !!(k?.zap_offline_desde && ia && new Date(ia) >= new Date(k.zap_offline_desde));
+  return k ? { nome: k.nome, cargo: k.cargo, offline: !!k.zap_offline_desde, iaAgenda } : null;
 }
-// F421 · com o atendente Offline (F397) a mensagem automática dele já respondeu: a IA entra só na urgência
-async function atendenteOffline(conversa: string) {
-  return !!(await atendenteDe(conversa))?.offline;
-}
+// F421 · com o atendente Offline (F397) a mensagem automática dele já respondeu: a IA entra só na urgência e na agenda (F521)
 
 async function claude(texto: string, esquema: unknown = ESQUEMA) {
   const r = await fetch("https://api.anthropic.com/v1/messages", {
@@ -1135,6 +1135,9 @@ if (typeof Deno !== "undefined") {
       if (!x) return json({ acao: null, aviso: "mensagem já lida ou vencida" });
       x.pagamento = await cfg("zap_dados_pagamento");   // F484 · fica no banco, porque o repositório é público
       x.atendente = await atendenteDe(x.conversa_id).catch(() => null);   // F485 · a sugestão sai na primeira pessoa de quem atende
+      // F521 · Offline: a IA cala, salvo a agenda pedida neste Offline, que ela responde pelo escritório
+      const calado = !!x.atendente?.offline && !x.atendente?.iaAgenda;
+      if (x.atendente?.offline && x.atendente.iaAgenda) x.atendente = null;
       if (x.remarcar?.ler && x.conversa_id) {
         // a primeira resposta à confirmação: confirmar não passa pelo agente; o sistema manda a resposta do SIM
         let intencao = DE_CLASSE[x.remarcar.classe || ""] || "outro";
@@ -1168,7 +1171,10 @@ if (typeof Deno !== "undefined") {
       let acao = ACOES.includes(r.acao) ? r.acao : "responder";
       if (acao === "conversa" && !x.interativa) acao = "responder";   // com a equipe na conversa, a IA não conversa
       // a remarcação da confirmação (F422c) segue mesmo com o atendente Offline
-      if (acao !== "equipe" && acao !== "nada" && !x.remarcar && x.conversa_id && await atendenteOffline(x.conversa_id).catch(() => false)) acao = "nada";
+      if (acao !== "equipe" && acao !== "nada" && !x.remarcar && calado) acao = "nada";
+      // F521 · o golpe sempre recebe resposta, também na conversa assumida e com o atendente Offline
+      const ultima = String((x.mensagens || []).filter((m: Msg) => m.direcao === "entrada" && m.texto).slice(-1)[0]?.texto || "");
+      if (acao !== "equipe" && /golpe|falso advogado|se passa(ndo|r)? (por|pelo)|pix para liberar/i.test(ultima)) { acao = "equipe"; r.urgente = true; r.assunto = r.assunto || "possível golpe"; }
       await rpc("zap_plantao_aplicar", {
         p_msg: msg, p_acao: acao, p_resposta: emLinhas(r.resposta, enviados(x.mensagens)), p_advogado: String(r.advogado || ""),
         p_urgente: r.urgente === true, p_assunto: (ehGolpe({ ...r, acao }, x.mensagens) ? "golpe: " : "") + String(r.assunto || ""),
