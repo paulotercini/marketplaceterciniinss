@@ -1,6 +1,6 @@
 // node --experimental-strip-types crm/fase2/testes/funcoes/atendimento_transcricao.test.mjs
 import assert from "node:assert/strict";
-const { falas } = await import("../../atendimento_transcricao/index.ts");
+const { falas, limparResumo, promptResumo, PADRAO } = await import("../../atendimento_transcricao/index.ts");
 
 const w = (text, speaker_id, start, type = "word") => ({ text, speaker_id, start, end: start + 0.4, type });
 const r = falas([
@@ -15,4 +15,9 @@ assert.equal(r.minutos, 2);
 // sem palavras, vale o texto solto; sem nada, vazio
 assert.equal(falas([], " Olá ").texto, "Olá");
 assert.equal(falas([]).texto, "");
-console.log("atendimento_transcricao: 3 grupos ok");
+// o resumo sai limpo: sem título, negrito, travessão nem linha em branco
+assert.equal(limparResumo("Resumo do atendimento:\n\n**Tem 58 anos** — 14 de contribuição.\n\nDefinir retorno."), "Tem 58 anos, 14 de contribuição.\nDefinir retorno.");
+assert.match(promptResumo("[00:00] Falante 1: Oi", "11/11/2026"), /11\/11\/2026[\s\S]*Falante 1/);
+assert.match(PADRAO, /Definir retorno\./);
+assert.doesNotMatch(PADRAO, /—/);
+console.log("atendimento_transcricao: 4 grupos ok");

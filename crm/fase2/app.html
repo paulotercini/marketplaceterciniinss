@@ -23138,7 +23138,10 @@ async function transcreverAtendimento(){
     const d = await r.json().catch(()=>({}));
     if(!r.ok || !d.texto) throw new Error(d.erro || `erro ${r.status}`);
     const dia = new Date(g.inicio).toLocaleDateString("pt-BR");
-    probParaNota(`Transcrição do atendimento (${dia}, ${d.minutos||1} min, ${d.falantes||1} falante${d.falantes>1?"s":""}). Confira antes de anotar:\n${d.texto}`);
+    const cab = `(${dia}, ${d.minutos||1} min, ${d.falantes||1} falante${d.falantes>1?"s":""})`;
+    // F529: o resumo no padrão das anotações vem primeiro, e a transcrição inteira fica abaixo dele
+    probParaNota(d.resumo ? `${d.resumo}\n\nTranscrição completa ${cab}:\n${d.texto}`
+      : `Transcrição do atendimento ${cab}. Confira antes de anotar:\n${d.texto}`);
     atendGravado = null;
     aviso("Transcrição no campo da anotação. Confira e toque em Anotar");
   }catch(e){
