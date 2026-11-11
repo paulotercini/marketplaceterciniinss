@@ -23085,7 +23085,7 @@ async function transcreverAtendimento(){
     if(!r.ok || !d.texto) throw new Error(d.erro || `erro ${r.status}`);
     const dia = new Date(g.inicio).toLocaleDateString("pt-BR");
     const cab = `(${dia}, ${d.minutos||1} min, ${d.falantes||1} falante${d.falantes>1?"s":""})`;
-    // F528: o resumo no padrão das anotações vem primeiro, e a transcrição inteira fica abaixo dele
+    // F529: o resumo no padrão das anotações vem primeiro, e a transcrição inteira fica abaixo dele
     probParaNota(d.resumo ? `${d.resumo}\n\nTranscrição completa ${cab}:\n${d.texto}`
       : `Transcrição do atendimento ${cab}. Confira antes de anotar:\n${d.texto}`);
     atendGravado = null;

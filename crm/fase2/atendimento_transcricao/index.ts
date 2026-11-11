@@ -2,7 +2,7 @@
 //
 // O botão Gravar das Anotações do atendimento manda o áudio da conversa presencial; a função o envia ao
 // ElevenLabs (Scribe, com separação de falantes) e devolve o texto por falante, com o minuto de cada fala.
-// F528 (aprovação do Paulo de 11.11.2026): depois da transcrição, o Claude escreve o resumo no padrão das
+// F529 (aprovação do Paulo de 11.11.2026): depois da transcrição, o Claude escreve o resumo no padrão das
 // anotações do Dr. Paulo (`PADRAO`, tirado de 230 anotações manuais), que vai acima da transcrição completa.
 // Sem a chave da Anthropic ou com falha do modelo, volta só a transcrição.
 // Não grava nada: o texto vai ao campo da anotação para a pessoa conferir e só fica no Anotar. O áudio não é
