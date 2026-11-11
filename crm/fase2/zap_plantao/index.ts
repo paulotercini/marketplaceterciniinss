@@ -310,6 +310,22 @@ export const AG_DUVIDA = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.202
   `continuar sem saber se o atendimento é novo ou troca de um já agendado, ou quando o atendimento a remarcar ou cancelar não aparecer ` +
   `em atendimentos_marcados; nesse caso não ofereça horários nem diga que anotou, e diga em uma frase que um colaborador do escritório vai responder. ` +
   `Não presuma acompanhante, parentesco nem outra pessoa que a conversa não citou; para confirmar, repita dia, hora e advogado e pergunte somente se pode confirmar.`;
+// F527 · a lista de espera, oferecida somente a quem pede data mais cedo (aprovado pelo Paulo em 11.11.2026)
+export const AG_ESPERA = `\n\nLista de espera: ofereça somente quando consultar_vagas devolver espera: true e a pessoa pedir data mais cedo ` +
+  `do que as livres ou disser que a data está longe. Primeiro ofereça agendar a data livre ou manter o atendimento já agendado: a lista não ` +
+  `substitui o agendamento. Depois pergunte, em uma frase, se deseja entrar na lista de espera para ser avisada pelo WhatsApp se surgir horário ` +
+  `mais cedo; com o sim, chame entrar_na_espera com os profissionais e, se a pessoa disser, os períodos e a data limite. Nunca prometa vaga.`;
+export const FER_ESPERA = {
+  type: "custom", name: "entrar_na_espera",
+  description: "Inclui na lista de espera da agenda quem pediu data mais cedo; o atendimento já agendado continua. O telefone sai da conversa.",
+  input_schema: { type: "object", additionalProperties: false, required: ["profissionais"], properties: {
+    nome: { type: "string", description: "nome completo de quem será atendido; dispensado para o cliente da ficha (tipo 002)" },
+    tipo: { type: "string", enum: ["001", "002"] },
+    profissionais: { type: "array", items: { type: "string", enum: ["paulo", "marcos", "amanda"] } },
+    periodos: { type: "array", items: { type: "string", enum: ["manha", "tarde"] } },
+    ate: { type: "string", description: "data limite AAAA-MM-DD, se a pessoa disser" },
+    observacao: { type: "string" } } },
+};
 export function paraAgendador(system: string) {
   let t = String(system || "");
   t = t.replace(/^2\. Pergunte em poucas palavras do que se trata o caso\.$/m, AG_ASSUNTO)
@@ -326,6 +342,7 @@ export function paraAgendador(system: string) {
     t = i >= 0 ? t.slice(0, i) + AG_ABERTURA + t.slice(i) : t + AG_ABERTURA;
   }
   t = t.includes("\n\nNa dúvida, a equipe") ? t.replace(/\n\nNa dúvida, a equipe[^]*?(?=\n\n|$)/, () => AG_DUVIDA) : t + AG_DUVIDA;
+  if (!t.includes("\n\nLista de espera:")) t += AG_ESPERA;
   if (!t.includes("\n\nVocabulário:")) t += VOCABULARIO;
   t = t.includes("\n\nRegistro: português formal") ? t.replace(/\n\nRegistro: português formal[^]*?(?=\n\n|$)/, () => FORMAL) : t + FORMAL;
   t = t.includes("\n\nO jeito do escritório") ? t.replace(/\n\nO jeito do escritório[^]*?(?=\n\n|$)/, () => PADRAO) : t + PADRAO;
@@ -622,6 +639,10 @@ export function vagasDoDia(dias: any[], tipo: string, com: string, n = 12) {
 }
 export const foneAgenda = (t: string) => { const d = String(t || "").replace(/\D/g, ""); return (d.length === 12 || d.length === 13) && d.startsWith("55") ? d.slice(2) : d; };
 
+// F527 · a vaga que voltou a ser livre vai à lista de espera (o banco ignora com a chave desligada)
+const liberada = (banco: typeof rpc, a: Record<string, any>) =>
+  banco("agenda_liberada_registrar", { p_evento: a.id, p_prof: a.profissional, p_data: a.data }).catch(() => null);
+
 // o tipo (001 sem ficha, 002 com) e o telefone saem da conversa, nunca do agente; remarcar e
 // cancelar valem só para atendimento desta pessoa
 export function ferramentasDaConversa(conversa: string, chamar = agenda, banco = rpc) {
@@ -670,7 +691,8 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
         vagas[profs[k]] = vagasDoDia(d.dias, tipo(c, i.tipo), COM[profs[k]]);
       });
       const t = tipo(c, i.tipo), para = t === "002" ? c.nome_ficha || c.nome_numero : null;
-      return { tipo: t, ...(para ? { para } : {}), ...(tipos(c).length > 1 ? { aviso: `tipo 002 é para ${c.nome_numero || "a pessoa da ficha"}; para quem escreve ou outra pessoa, consulte com tipo 001` } : {}),
+      const espera = await banco("agenda_espera_ligada", {}).catch(() => null) === true;   // F527
+      return { tipo: t, ...(para ? { para } : {}), ...(espera ? { espera: true } : {}), ...(tipos(c).length > 1 ? { aviso: `tipo 002 é para ${c.nome_numero || "a pessoa da ficha"}; para quem escreve ou outra pessoa, consulte com tipo 001` } : {}),
         vagas, atendimentos_marcados: ja.map(doMarcado) };
     },
     async marcar_atendimento(i: Record<string, any>) {
@@ -712,6 +734,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       if (r.codigo === "HORARIO_INDISPONIVEL") return { erro: "este horário acabou de ser tomado: consulte de novo e ofereça outro" };
       if (!r.ok) return { erro: String(r.erro || r.codigo || "erro da agenda") };
       if (v.data === hojeBR() && r.evento?.id) await chamar("confirmar", { eventId: r.evento.id }).catch(() => null);
+      await liberada(banco, antigo);
       const de = rotulo(antigo.data, antigo.inicio, COM[antigo.profissional] || "a equipe"), para = rotulo(v.data, v.inicio, COM[v.profissional]);
       await banco("zap_nota_sistema", { p_conversa: conversa, p_autor: null, p_texto: `📅 A assistente virtual remarcou o atendimento de ${de} para ${para}.` });
       await banco("zap_conf_remarcado", { p_conversa: conversa, p_texto: `A assistente virtual remarcou o atendimento de ${de} para ${para}.` }).catch(() => null);
@@ -725,10 +748,29 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       if (!a) return { erro: "atendimento não encontrado para este número", atendimentos_marcados: ja.map(doMarcado) };
       const r = await chamar("cancelar", { eventId: a.id });
       if (!r.ok) return { erro: String(r.erro || r.codigo || "erro da agenda") };
+      await liberada(banco, a);
       await banco("zap_nota_sistema", { p_conversa: conversa, p_autor: null,
         p_texto: `📅 A assistente virtual cancelou o atendimento de ${doMarcado(a).rotulo}${i.motivo ? `. Motivo: ${String(i.motivo).slice(0, 200)}` : ""}.` });
       await banco("zap_conf_remarcado", { p_conversa: conversa, p_texto: `A assistente virtual cancelou o atendimento de ${doMarcado(a).rotulo}.` }).catch(() => null);
       return { cancelado: true };
+    },
+    // F527 · quem pede data mais cedo entra na lista de espera; o atendimento já agendado continua
+    async entrar_na_espera(i: Record<string, any>) {
+      const c = await conv();
+      if (await banco("agenda_espera_ligada", {}).catch(() => null) !== true) return { erro: "a lista de espera está desligada: não a ofereça" };
+      const t = tipo(c, i.tipo);
+      const nome = (t === "002" ? c.nome_ficha || c.nome_numero : null) || String(i.nome || "").trim();
+      if (!nome) return { erro: "falta o nome de quem será atendido" };
+      const datas = (await marcados(c)).map((a) => String(a.data || "")).filter(Boolean).sort();
+      const r = await banco("agenda_espera_incluir_ia", { p_conversa: conversa, p_nome: nome, p_tipo: t,
+        p_cliente: t === "002" ? c.cliente_id || c.cliente_numero || null : null,
+        p_profs: (i.profissionais || []).filter((x: string) => PROFS.includes(x)),
+        p_periodos: (i.periodos || []).map((x: string) => (/manh/i.test(x) ? "manha" : /tard/i.test(x) ? "tarde" : "")).filter(Boolean),
+        p_ate: /^\d{4}-\d{2}-\d{2}$/.test(String(i.ate || "")) ? i.ate : null, p_marcado: datas[0] || null,
+        p_obs: String(i.observacao || "").slice(0, 300) });
+      if (!r || r.erro) return { erro: String(r?.erro || "não foi possível incluir na lista de espera") };
+      return { incluido: true, ...(r.ja_estava ? { ja_estava: true } : {}),
+        aviso: "diga em uma frase que o nome está na lista de espera, que o atendimento agendado fica mantido e que o escritório avisa pelo WhatsApp se surgir horário mais cedo; não prometa vaga" };
     },
     // a decisão final do turno vira "equipe": o aviso sai pelo zap_plantao_aplicar
     async encaminhar_equipe(i: { motivo?: string; urgente?: boolean }) {
@@ -749,7 +791,8 @@ const doRoteiro = (a: Record<string, any>, k: number) => a.id ? a : { id: `sim${
 // simulador (07.11.2026): a agenda é lida de verdade, mas agendar, remarcar e cancelar não gravam
 // e nada é enviado ao cliente; serve para testar a conversa sem um número de verdade
 export function ferramentasSimuladas(dados: Record<string, any>, chamar = agenda) {
-  const banco = async (nome: string) => (nome === "zap_plantao_agenda" ? dados : null);
+  const banco = async (nome: string) => (nome === "zap_plantao_agenda" ? dados : nome === "agenda_espera_ligada" ? !!dados.espera
+    : nome === "agenda_espera_incluir_ia" && dados.espera ? { incluido: true, simulado: true } : null);
   const falso = async (acao: string, corpo: Record<string, unknown>) =>
     ["agendar", "remarcar", "cancelar"].includes(acao) ? { ok: true, simulado: true }
       : acao === "agendamentosFuturos" ? { ok: true, agendamentos: (dados.marcados || []).map(doRoteiro) } : chamar(acao, corpo);
@@ -762,13 +805,125 @@ export function ferramentasSimuladas(dados: Record<string, any>, chamar = agenda
   return { fer, uso };
 }
 
+// ── F527 · a lista de espera, onda 2 ────────────────────────────────────────────
+// a vaga liberada (agenda_liberadas) é oferecida pelo WhatsApp a uma pessoa da lista por vez, no
+// expediente; a resposta volta por zap_espera_resposta, antes do robô, do plantão e do Offline
+export type Espera = { id: string; nome: string; telefone?: string; cliente_id?: string | null; tipo: string; profs?: string[];
+  dias?: number[] | null; periodos?: string[] | null; ate?: string | null; marcado?: string | null; criado_em: string };
+export type VagaEspera = { prof: string; data: string; inicio: string; tipo: string; tipoFixo?: boolean; eventoId: string };
+const minutos = (hhmm: string) => { const [h, m] = hhmm.split(":").map(Number); return h * 60 + (m || 0); };
+// as mesmas regras da onda 1 (esperaCabe e ordemEspera do app.html)
+export function esperaCabe(e: Espera, v: VagaEspera) {
+  if ((e.ate && v.data > e.ate) || (e.marcado && v.data >= e.marcado)) return false;
+  if (!(e.profs || []).includes(v.prof)) return false;
+  if (v.tipoFixo !== false && v.tipo !== e.tipo) return false;
+  if (e.dias?.length && !e.dias.includes(new Date(v.data + "T12:00:00").getDay())) return false;
+  return !(e.periodos || []).length || e.periodos!.includes(minutos(v.inicio) < 750 ? "manha" : "tarde");
+}
+export const ordemEspera = (a: Espera, b: Espera) =>
+  a.criado_em.slice(0, 10).localeCompare(b.criado_em.slice(0, 10)) || (a.marcado ? 1 : 0) - (b.marcado ? 1 : 0) || a.criado_em.localeCompare(b.criado_em);
+const inicioDe = (v: { data: string; inicio: string }) => new Date(`${v.data}T${v.inicio}:00-03:00`).getTime();
+// não se oferece vaga que começa em menos de 2 horas; a resposta tem 15 minutos na vaga de hoje ou amanhã, 30 nas outras
+export const ofertavel = (v: { data: string; inicio: string }, agora = Date.now()) => inicioDe(v) - agora >= 2 * 3600e3;
+export function prazoOferta(v: { data: string }, agora = Date.now()) {
+  const amanha = new Date(agora + 86400e3).toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
+  return new Date(agora + (v.data <= amanha ? 15 : 30) * 60e3);
+}
+const ddmm = (d: string) => `${d.slice(8, 10)}/${d.slice(5, 7)}`;
+const hhmm = (h: string) => `${Number(h.slice(0, 2))}h${h.slice(3, 5)}`;
+export function msgOfertaEspera(e: Espera, v: VagaEspera, ate: Date) {
+  const h = Number(ate.toLocaleString("en-GB", { timeZone: "America/Sao_Paulo", hour: "2-digit", hour12: false }));
+  const ola = h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite";
+  const prazo = ate.toLocaleTimeString("pt-BR", { timeZone: "America/Sao_Paulo", hour: "2-digit", minute: "2-digit" }).replace(":", "h");
+  const [a, m, d] = v.data.split("-").map(Number);
+  const dia = SEMANA[new Date(Date.UTC(a, m - 1, d)).getUTCDay()];
+  return `${ola}, ${String(e.nome || "").trim().split(/\s+/)[0]}. Surgiu um horário com ${COM[v.prof] || "a equipe"} na ${dia}, dia ${ddmm(v.data)}, ` +
+    `às ${hhmm(v.inicio)}, no escritório.\n\nPodemos agendar o seu atendimento nesse horário?` +
+    (e.marcado ? ` Com a sua resposta positiva, o atendimento já agendado para ${ddmm(e.marcado)} fica liberado para outra pessoa.` : "") +
+    `\n\nAguardamos a sua resposta até as ${prazo}.`;
+}
+export const ESQ_ESPERA = { type: "object", additionalProperties: false, required: ["intencao"],
+  properties: { intencao: { type: "string", enum: ["aceitar", "recusar", "outro"] } } };
+export function respostaPorPalavras(t: string) {
+  const s = t.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  if (/^(nao|n\b|infelizmente|prefiro manter|vou manter|melhor nao)/.test(s)) return "recusar";
+  if (/^(sim|sin|s\b|pode|quero|aceito|ok|claro|com certeza|perfeito|otimo|isso|confirmo|👍)/u.test(s)) return "aceitar";
+  return "outro";
+}
+export function promptRespostaEspera(rotuloVaga: string, texto: string) {
+  return `O escritório ofereceu pelo WhatsApp um horário de atendimento (${rotuloVaga}) a uma pessoa da lista de espera e perguntou se ` +
+    `ela aceita. Classifique a resposta: aceitar (aceita o horário oferecido), recusar (não quer, não pode ou prefere manter o atendimento ` +
+    `já agendado) ou outro (pergunta, condição, pedido de outro horário ou não dá para saber).\n\nResposta:\n${mascarar(texto).slice(0, 1500)}`;
+}
+
+async function vagaLivre(chamar: typeof agenda, prof: string, data: string, eventoId: string): Promise<VagaEspera | null> {
+  const d = await chamar("disponibilidade", { profissional: prof, dias: 15 });
+  const dia = (d.dias || []).find((z: any) => z.data === data && !z.bloqueado);
+  for (const t of ["001", "002"]) for (const v of dia?.livres?.[t] || [])
+    if (v.eventoId === eventoId) return { prof, data, inicio: v.inicio, tipo: t, tipoFixo: v.tipoFixo, eventoId };
+  return null;
+}
+
+export async function oferecerEspera(id: string, chamar = agenda, banco = rpc, agora = Date.now()) {
+  const x = await banco("agenda_espera_pegar", { p_liberada: id });
+  if (!x?.liberada) return { oferecida: false, motivo: "liberada ausente" };
+  const l = x.liberada;
+  const fechar = (motivo: string) => banco("agenda_liberada_fechar", { p_liberada: id, p_estado: "fechada" }).then(() => ({ oferecida: false, motivo }));
+  const v = await vagaLivre(chamar, l.profissional, String(l.data), l.evento_id);
+  if (!v) return fechar("a vaga não está mais livre");
+  if (!ofertavel(v, agora)) return fechar("começa em menos de 2 horas");
+  const e = ((x.candidatos || []) as Espera[]).filter((c) => esperaCabe(c, v)).sort(ordemEspera)[0];
+  if (!e) return fechar("ninguém da lista cabe nesta vaga");
+  const ate = prazoOferta(v, agora);
+  const ok = await banco("agenda_espera_oferecer", { p_liberada: id, p_espera: e.id, p_texto: msgOfertaEspera(e, v, ate),
+    p_oferta: { eventoId: v.eventoId, data: v.data, inicio: v.inicio, prof: v.prof, tipo: e.tipo, rotulo: rotulo(v.data, v.inicio, COM[v.prof]), ate: ate.toISOString() } });
+  return { oferecida: ok === true, espera: e.id };
+}
+
+export async function responderEspera(msg: string, chamar = agenda, banco = rpc, classificar = (p: string) => claude(p, ESQ_ESPERA)) {
+  const x = await banco("agenda_espera_resposta_pegar", { p_msg: msg });
+  if (!x) return { resultado: null };
+  const e: Espera = x.espera, o = x.oferta;
+  const texto = (x.mensagens || []).map((m: { tipo: string; texto: string | null }) => m.texto || `[${m.tipo}]`).join("\n");
+  let intencao = respostaPorPalavras(texto);
+  try { intencao = (await classificar(promptRespostaEspera(o.rotulo, texto))).intencao || intencao; }
+  catch (err) { console.error("zap_plantao espera:", String(err)); }
+  const responder = (resultado: string, t = "") => banco("agenda_espera_responder", { p_espera: e.id, p_resultado: resultado, p_texto: t }).then(() => ({ resultado }));
+  const lista = "Mantemos o seu nome na lista de espera e avisamos se surgir outro horário.";
+  if (intencao === "recusar") return responder("recusou", e.marcado ? `Combinado. O seu atendimento de ${ddmm(e.marcado)} continua agendado.\n\n${lista}` : `Combinado.\n\n${lista}`);
+  if (intencao !== "aceitar") return responder("outro");
+  const v = await vagaLivre(chamar, o.prof, o.data, o.eventoId);
+  if (!v) return responder("perdeu", `Este horário acabou de ser preenchido.\n\n${lista}`);
+  let r: Record<string, any>;
+  if (e.marcado) {
+    // aceitar troca o atendimento já agendado pelo novo; a vaga antiga segue para o próximo da lista
+    const pedidos = [e.cliente_id ? { clienteId: e.cliente_id } : null, e.telefone ? { telefone: foneAgenda(e.telefone) } : null].filter(Boolean);
+    const antigos = (await Promise.all(pedidos.map((p) => chamar("agendamentosFuturos", p!)))).flatMap((z) => z.agendamentos || []);
+    const a = antigos.find((z: any) => z.atendimento && z.data === e.marcado);
+    if (!a) return responder("outro");
+    r = await chamar("remarcar", { eventId: a.id, profissional: v.prof, data: v.data, inicio: v.inicio, eventoId: v.eventoId,
+      observacoes: "Antecipado pela lista de espera, pela assistente virtual do WhatsApp." });
+    if (r.ok) await liberada(banco, a);
+  } else {
+    r = await chamar("agendar", { profissional: v.prof, tipo: o.tipo || e.tipo, nome: e.nome, telefone: foneAgenda(e.telefone || ""),
+      data: v.data, inicio: v.inicio, eventoId: v.eventoId, clienteId: e.cliente_id || undefined, orientacoesConfirmadas: true,
+      observacoes: "Agendado pela lista de espera, pela assistente virtual do WhatsApp." });
+  }
+  if (r.codigo === "HORARIO_INDISPONIVEL") return responder("perdeu", `Este horário acabou de ser preenchido.\n\n${lista}`);
+  if (!r.ok) return responder("outro");
+  if (v.data === hojeBR() && r.evento?.id) await chamar("confirmar", { eventId: r.evento.id }).catch(() => null);
+  await banco("zap_plantao_marcado", { p_conversa: x.conversa, p_rotulo: o.rotulo, p_modalidade: "presencial", p_assunto: "lista de espera", p_para: null })
+    .catch(() => banco("zap_plantao_marcado", { p_conversa: x.conversa, p_rotulo: o.rotulo, p_modalidade: "presencial", p_assunto: "lista de espera" }));
+  return responder("aceitou");
+}
+
 async function cfg(chave: string) {
   const r = await fetch(`${URL_SB}/rest/v1/config_app?chave=eq.${chave}&select=valor`, { headers: { apikey: SERVICO, Authorization: `Bearer ${SERVICO}` } });
   return String((await r.json().catch(() => []))?.[0]?.valor ?? "");
 }
 
 type Cenario = { contato?: string; relacao?: string; advogado?: string; cliente?: Contexto["cliente"]; marcados?: unknown[];
-  remarcar?: Contexto["remarcar"]; horario?: boolean; interativa?: boolean; turnos: string[]; persona?: string; max?: number; atendente?: string };
+  remarcar?: Contexto["remarcar"]; espera?: boolean; horario?: boolean; interativa?: boolean; turnos: string[]; persona?: string; max?: number; atendente?: string };
 // F422u · o cliente simulado responde ao que a IA disse (persona), em vez de falas fixas que se desencontram da conversa
 export const ESQ_CLIENTE = { type: "object", additionalProperties: false, required: ["fala", "fim"],
   properties: { fala: { type: "string" }, fim: { type: "boolean" } } };
@@ -796,7 +951,7 @@ async function simular(s: Cenario) {
   // como o zap_plantao_agenda: quem escreve por outra pessoa (relacao) não é a ficha, mas o número é dela
   const { fer, uso } = ferramentasSimuladas({ telefone: "5516900000000", cliente_id: s.cliente && !s.relacao ? "simulado" : null,
     cliente_numero: s.cliente ? "simulado" : null, nome_ficha: s.cliente?.nome || null, nome_numero: s.cliente?.nome || null,
-    ligada: true, marcados: s.marcados || [] });
+    ligada: true, marcados: s.marcados || [], espera: s.espera === true });
   const t0 = Date.now(), saida: Record<string, unknown>[] = [];
   const total = s.persona ? Math.min(10, Math.max(s.turnos.length, Number(s.max) || 7)) : s.turnos.length;
   let ultima = false;
@@ -1086,7 +1241,8 @@ if (typeof Deno !== "undefined") {
         if (ag.multiagent) return json({ erro: "o Agendador não pode coordenar outro agente" }, 400);
         // F280 · versão nova do Agendador antes da ligação, para a Assistente prender a versão nova
         const sysAg = paraAgendador(ag.system);
-        if (sysAg !== ag.system) ag = await ma(`agents/${ag.id}`, { version: ag.version, system: sysAg });
+        const ferAg = (ag.tools || []).some((f: { name?: string }) => f.name === FER_ESPERA.name) ? null : [...(ag.tools || []), FER_ESPERA];   // F527
+        if (sysAg !== ag.system || ferAg) ag = await ma(`agents/${ag.id}`, { version: ag.version, system: sysAg, ...(ferAg ? { tools: ferAg } : {}) });
         const novo = ligacaoTriagem(await maLer(`agents/${x.ma.agente}`), ag.id);
         const feito = await ma(`agents/${x.ma.agente}`, novo);
         return json({ versao: feito.version, ferramentas: (feito.tools || []).map((t: { name?: string; type: string }) => t.name || t.type),
@@ -1117,6 +1273,14 @@ if (typeof Deno !== "undefined") {
         const decisao = await turno(sessao.id, textoDoTurno(exemplo, exemplo.mensagens, true));
         return json({ agente, ambiente, sessao: sessao.id, decisao });
       } catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
+    }
+    if (typeof corpo.espera === "string" || typeof corpo.espera_resposta === "string") {
+      // F527 · o relógio (agenda_espera_vez) pede a oferta; zap_espera_resposta manda a resposta
+      const id = String(corpo.espera || corpo.espera_resposta);
+      if (!/^[0-9a-f-]{36}$/i.test(id)) return json({ erro: "id inválido" }, 400);
+      if (!TOKEN_AGENDA) return json({ erro: "sem AGENDA_TOKEN_ROBO" }, 503);
+      try { return json(corpo.espera ? await oferecerEspera(id) : await responderEspera(id)); }
+      catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
     }
     if (corpo.cobranca === true) {
       // F422aj · o relógio do banco (zap_cobranca_vez); as candidatas só saem com zap_cobranca_ligada = 'sim'
