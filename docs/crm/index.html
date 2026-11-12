@@ -17023,7 +17023,7 @@ function perDiaAtend(p){
 }
 const perQuandoAt = p => { const d = perDiaAtend(p); return d===p.dia ? "no próprio dia da "+(p.social?"avaliação social":"perícia")+", antes do horário dela" : "em "+perDiaExt(d)+", "+fmt(d); };
 let _perAvisos = null, _perSel = null, _perFiltro = "todas", _perTipo = null, _perProf = new Map(), _perLocal = new Map();
-// F564 · endereços oficiais (lista de APS do gov.br e páginas da JF), para o local da perícia ter rua, número e cidade
+// F565 · endereços oficiais (lista de APS do gov.br e páginas da JF), para o local da perícia ter rua, número e cidade
 const PER_LOCAIS = {
   araraquara:"Agência do INSS de Araraquara, Av. La Salle, 250, Araraquara",
   bebedouro:"Agência do INSS de Bebedouro, Rua Benjamin Constant, 359, Bebedouro",
@@ -17240,7 +17240,7 @@ async function renderPericiasAviso(){
   const abrir = id => { _perSel = id; renderPericiasAviso().then(()=>{ const q = document.getElementById("prev"); if(!q) return; q.classList.add("aberta"); if(document.querySelector(".per5").clientWidth <= 720) q.focus(); }); };
   const fechar = () => P.classList.remove("aberta");
   if(!renderPericiasAviso._esc){ renderPericiasAviso._esc = true; document.addEventListener("keydown", ev=>{ if(ev.key==="Escape" && visao==="periciasaviso"){ const q = document.getElementById("prev"); if(q) q.classList.remove("aberta"); } }); }
-  raiz.oninput = ev=>{   // F564 · o endereço digitado aparece na prévia na hora
+  raiz.oninput = ev=>{   // F565 · o endereço digitado aparece na prévia na hora
     if(ev.target.id!=="per-local" || !sel) return;
     _perLocal.set(sel.e.id, ev.target.value);
     const b = meio.querySelector("#prev .bolha"); if(b) b.innerHTML = perMensagem(sel);
