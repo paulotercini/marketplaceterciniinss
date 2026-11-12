@@ -4815,7 +4815,9 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 /* F281 · a agenda no canto de baixo à direita: os dias com vaga de cada profissional, na cor dele, e o agendamento
    ali mesmo. Recolhida, vira a pílula "Agenda · N vagas". F305 (30.10.2026): flutua em todas as telas, na mesma
    coluna do ⚡ e do ✎ Sugestões, logo acima deles. */
-#zap-ag{position:fixed;right:16px;bottom:120px;z-index:79;font-size:13px}   /* acima do ⚡, do ✎ e do enviar */
+#zap-ag{position:fixed;right:16px;bottom:120px;z-index:79;font-size:13px}
+:is(#fab-rapida,#fab-ajuda,#fab-sug,#fab-juntos,#zap-ag .zag-pilula,#zap-ag .zag-cab){touch-action:none}   /* F558: o dedo arrasta o botão, e não a página */
+.fab-arrastando{cursor:grabbing!important;opacity:.85;transition:none!important}   /* acima do ⚡, do ✎ e do enviar */
 .app:not(.logado) ~ #zap-ag,#zap-ag[hidden]{display:none}
 .app.celular ~ #zap-ag{bottom:calc(165px + env(safe-area-inset-bottom))}
 .app.celular.detalhe-aberto ~ #zap-ag{bottom:180px}
@@ -7043,7 +7045,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.64</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.65</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15740,6 +15742,56 @@ const natPlan = i => i.ev||i.evPassado||i.avisar||i.novEv||i.selo==="Pauta" ? "p
   : i.fatal||i.prazo ? "prazos" : i.tc||i.t||i.rotina ? "tarefas" : "lembretes";
 let filtroPlanNat = "";
 function alternarFabs(){ const a=document.getElementById("app"), on=a.classList.toggle("fabs-on"), b=document.getElementById("fab-juntos"); if(b){ b.textContent=on?"✕":"⋯"; b.setAttribute("aria-expanded", on); } if(!on && visao==="whatsapp" && zagAberta()) zagAlternar(); }
+// F558 · os flutuantes se arrastam (mouse e toque); clique simples continua abrindo. Posição por aparelho, uma para o celular e outra para o computador.
+const FAB_ARRASTA = ["fab-rapida","fab-ajuda","fab-sug","zap-ag","fab-juntos"];
+const fabChave = () => "crm_fab_pos" + (document.getElementById("app")?.classList.contains("celular") ? "_cel" : "");
+function fabLer(){ try{ return JSON.parse(localStorage.getItem(fabChave())||"{}")||{}; }catch(e){ return {}; } }
+function fabGravar(p){ try{ localStorage.setItem(fabChave(), JSON.stringify(p)); }catch(e){} }
+// aplica o deslocamento guardado sem deixar o botão sair da tela (translate não mexe nas regras de bottom/right de cada tela)
+function fabPor(el, dx, dy){
+  el.style.translate = "";
+  const r = el.getBoundingClientRect();
+  if(r.width){ dx = Math.min(Math.max(dx, 4 - r.left), innerWidth - 4 - r.right); dy = Math.min(Math.max(dy, 4 - r.top), innerHeight - 4 - r.bottom); }
+  if(dx || dy) el.style.translate = `${Math.round(dx)}px ${Math.round(dy)}px`;
+  return [dx, dy];
+}
+function fabArrumar(){ const p = fabLer(); FAB_ARRASTA.forEach(id=>{ const el = document.getElementById(id); if(el) fabPor(el, ...(p[id]||[0,0])); }); }
+let _fabArr = null;
+function ligarArrastoFabs(){
+  FAB_ARRASTA.forEach(id=>{
+    const el = document.getElementById(id); if(!el) return;
+    el.addEventListener("pointerdown", e=>{
+      if(e.button>0) return;
+      // na agenda aberta, só o cabeçalho e a pílula arrastam: o resto é para clicar e digitar
+      if(id==="zap-ag" && !e.target.closest(".zag-pilula,.zag-cab") || e.target.closest("input,select,textarea")) return;
+      const ini = fabLer()[id]||[0,0];
+      _fabArr = {el, id, x:e.clientX, y:e.clientY, ini, movido:false};
+    });
+  });
+  addEventListener("pointermove", e=>{
+    const a = _fabArr; if(!a) return;
+    const dx = e.clientX - a.x, dy = e.clientY - a.y;
+    if(!a.movido && Math.hypot(dx, dy) < 6) return;
+    if(!a.movido){ a.movido = true; a.el.classList.add("fab-arrastando"); try{ a.el.setPointerCapture(e.pointerId); }catch(_){} }
+    e.preventDefault();
+    a.pos = fabPor(a.el, a.ini[0] + dx, a.ini[1] + dy);
+  }, {passive:false});
+  const soltar = ()=>{
+    const a = _fabArr; _fabArr = null; if(!a || !a.movido) return;
+    a.el.classList.remove("fab-arrastando");
+    const p = fabLer(); p[a.id] = a.pos; fabGravar(p);
+    // o clique que vem do soltar não abre a função
+    const barra = ev=>{ ev.stopPropagation(); ev.preventDefault(); };
+    addEventListener("click", barra, {capture:true, once:true});
+    setTimeout(()=>removeEventListener("click", barra, {capture:true}), 300);
+  };
+  addEventListener("pointerup", soltar); addEventListener("pointercancel", soltar);
+  addEventListener("resize", ()=>requestAnimationFrame(fabArrumar));
+  const ag = document.getElementById("zap-ag"); if(ag) new MutationObserver(()=>requestAnimationFrame(fabArrumar)).observe(ag, {childList:true});
+  new MutationObserver(()=>requestAnimationFrame(fabArrumar)).observe(document.getElementById("app"), {attributes:true, attributeFilter:["class"]});
+  fabArrumar();
+}
+ligarArrastoFabs();
 function irPara(v){ visao=v; _sel.clear(); zag.fora=false; limparBusca(); fecharFicha(false); montarSidebar(); render(); pintarAgendaZap(); if(document.getElementById("app")?.classList.contains("fabs-on")) alternarFabs(); }
 
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
