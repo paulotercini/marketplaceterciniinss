@@ -503,6 +503,8 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .atr-fita{position:absolute;left:0;top:5px;bottom:5px;width:4px;border-radius:0 3px 3px 0;
     display:flex;flex-direction:column;overflow:hidden}
   .atr-fita i{flex:1}
+  .per-quadro{background:var(--branco);padding:9px 12px;margin-bottom:6px;border-radius:var(--raio);box-shadow:var(--sombra);max-width:100%;box-sizing:border-box}
+  .per-quadro textarea{box-sizing:border-box;max-width:100%}
   .cartao{position:relative;background:var(--branco);padding:9px 12px;cursor:pointer;
     min-height:50px;display:flex;align-items:center;gap:10px;margin-bottom:3px;
     border:1px solid transparent;border-radius:var(--raio);
@@ -16964,7 +16966,7 @@ async function renderPericiasAviso(){
     const mudou = a && a.ligado && a.data_aprovada && new Date(a.data_aprovada).getTime()!==new Date(e.data_hora).getTime();
     const est = !a || !a.ligado ? (a && a.estado==="data_mudou" ? "Data mudou" : "Desligado") : mudou ? "Data mudou" : (PER_ESTADO[a.estado] || "Ligado");
     const prof = (a && a.profissional) || "paulo", n = uteisEntre(hj, dia);
-    return `<div class="cartao per-c" data-ev="${e.id}" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+    return `<div class="per-quadro per-c" data-ev="${e.id}" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
       <div style="flex:1;min-width:200px"><b class="per-nome" data-cli="${esc(k.cliente_id||"")}" style="cursor:pointer">${esc(cli ? cli.nome : tituloCaso(k))}</b>
         <div class="meio-sub">${esc(e.tipo)} · ${fmt(dia)} às ${esc(horaSP(e.data_hora))}${e.local ? " · "+esc(e.local) : ""} · ${n===0 ? "hoje" : n+" dia"+(n>1?"s":"")+" úte"+(n>1?"is":"l")}</div></div>
       <span class="fchip${est==="Data mudou"||est==="Sem resposta"||est==="Sem telefone" ? " per-alerta" : ""}" style="display:inline-flex${est==="Data mudou"||est==="Sem resposta"||est==="Sem telefone" ? ";color:#b42318;border-color:#b42318" : ""}">${esc(est)}</span>
@@ -16973,7 +16975,7 @@ async function renderPericiasAviso(){
     </div>`;
   };
   const cfg = (c, p) => cfgApp(c) ?? p;
-  const painel = `<div class="cartao" style="margin-bottom:12px"><b>Notificações</b>
+  const painel = `<div class="per-quadro" style="margin-bottom:12px"><b>Notificações</b>
     <div class="meio-sub">Envio às 08:30 e às 16:00, nos dias úteis. Sem resposta, repete no dia útil seguinte; sem resposta à repetição, a recepção recebe a menção para telefonar.</div>
     <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:8px">
       <label><input type="checkbox" id="per-d7" ${cfg("pericia_aviso_d7","sim")==="sim"?"checked":""} ${adm?"":"disabled"}> D-7</label>
