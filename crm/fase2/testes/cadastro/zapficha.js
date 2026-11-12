@@ -37,7 +37,7 @@ const MSGS = [
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
     localStorage.setItem("crm_tema", "v10");
   }, [SUPA, SESSAO]);
-  const patches = [];
+  const patches = [], posts = [];
   await ctx.route(SUPA + "/**", rota => {
     const u = rota.request().url(), m = rota.request().method();
     if (/\/auth\/v1\//.test(u)) return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(SESSAO) });
@@ -49,7 +49,7 @@ const MSGS = [
       if (z && /zap_conversas/.test(u)) Object.assign(z, patches.at(-1).b);
       return rota.fulfill({ status: 204, body: "" });
     }
-    if (m !== "GET") return rota.fulfill({ status: 204, body: "" });
+    if (m !== "GET") { posts.push(u); return rota.fulfill({ status: 204, body: "" }); }
     const t = (u.match(/\/rest\/v1\/([a-z_]+)/) || [])[1];
     let corpo = t === "zap_conversas" ? ZAPS : t === "zap_mensagens" ? MSGS : (FIX[t] || []);
     const f = u.match(/cliente_id=eq\.([0-9a-f-]+)/);
@@ -101,6 +101,16 @@ const MSGS = [
   await p.fill("#pp-zap-txt", "teste do cursor ao lado"); await p.click("#pp-zap-env");
   await p.waitForFunction(() => document.activeElement && document.activeElement.id === "pp-zap-txt", null, {timeout: 3000}).catch(() => {});
   conf("F387 · depois de enviar ao lado, o cursor continua no campo", await p.evaluate(() => document.activeElement && document.activeElement.id === "pp-zap-txt"));
+  // F566 · a conversa de outro colega se responde ao lado da ficha sem assumir nem pedir transferência
+  ZAPS[0].atendente_id = "00000000-0000-0000-0000-0000000000aa";
+  await p.evaluate(() => localStorage.setItem("crm_ver_como", "colab"));
+  posts.length = 0;
+  await p.fill("#pp-zap-txt", "resposta de outro colega"); await p.click("#pp-zap-env");
+  await p.waitForFunction(() => document.getElementById("pp-zap-txt").value === "", null, {timeout: 3000}).catch(() => {});
+  conf("F566 · ao lado da ficha, envia na conversa de outro colega sem assumir",
+    posts.some(u => /\/rest\/v1\/zap_mensagens/.test(u)) && !posts.some(u => /zap_assumir/.test(u)) && ZAPS[0].atendente_id.endsWith("aa"));
+  await p.evaluate(() => localStorage.removeItem("crm_ver_como"));
+  ZAPS[0].atendente_id = null;
   conf("F483 · abrir a conversa ao lado lê", patches.some(x => /zap_conversas\?id=eq\./.test(x.u) && x.b.nao_lidas === 0));
   await p.evaluate(() => fecharPainelPrazo());
 
