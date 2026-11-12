@@ -7,6 +7,7 @@ const { FIX, SESSAO, EU, CLI_CHEIO, CASO1 } = require("./fixturas");
 const chamadas = [];
 const cfg = [];
 const soCh = [];
+const locCh = [];
 const SUPA = "https://ficticio.supabase.co";
 const dia = n => new Date(Date.now() + n * 864e5).toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 
@@ -61,6 +62,7 @@ const TUDO = {
           data_aprovada: TUDO.eventos[0].data_hora, estado: b.p_ligado ? "ligado" : "desligado" }]; }
       if (/rpc\/pericia_so_lembretes/.test(u)) { const b = JSON.parse(rota.request().postData()); soCh.push(b);
         TUDO.pericia_avisos = [{ evento_id: b.p_evento, ligado: false, so_lembretes: b.p_so, estado: "aguardando" }]; }
+      if (/rpc\/pericia_local/.test(u)) locCh.push(JSON.parse(rota.request().postData()));
       if (/config_app/.test(u)) cfg.push(rota.request().postData() || u);
       return rota.fulfill({ status: 201, contentType: "application/json", body: "[]" }); }
     const t = (u.match(/\/rest\/v1\/([a-z_]+)/) || [])[1];
@@ -101,7 +103,15 @@ const TUDO = {
   conf("Já orientado grava pericia_so_lembretes e a prévia vira o lembrete", soCh.length === 1 && soCh[0].p_so === true && /Lembramos que/.test(bol) && !/atendimento presencial/.test(bol));
   await p.click("#sw-so"); await p.waitForTimeout(500);
   conf("desligar Já orientado volta ao primeiro aviso", soCh.length === 2 && soCh[1].p_so === false);
+  conf("a prévia tem o campo do endereço com os endereços oficiais", await p.evaluate(() => !!document.querySelector("#per-local") && document.querySelectorAll("#per-locais option").length >= 8));
+  await p.click("#per-ligar"); await p.waitForTimeout(400);
+  conf("sem rua e número o Ligar não liga", chamadas.length === 0);
+  const END = "Agência do INSS de Monte Alto, Rua Rui Barbosa, 664, Monte Alto";
+  await p.fill("#per-local", END); await p.waitForTimeout(200);
+  conf("o endereço digitado aparece na mensagem", (await p.evaluate(() => document.querySelector(".per5 .bolha").innerText)).includes("Rua Rui Barbosa, 664"));
   await p.click("#per-ligar"); await p.waitForTimeout(600);
+  conf("o Ligar grava o endereço da perícia", locCh.length === 1 && locCh[0].p_local === END && locCh[0].p_evento === EV);
+  conf("com atendimento futuro agendado o Ligar dispensa a oferta", soCh.length === 3 && soCh[2].p_so === true);
   conf("o Ligar chama pericia_ligar com a Dra. Amanda", chamadas.length === 1 && chamadas[0].p_ligado === true && chamadas[0].p_profissional === "amanda");
   conf("depois do Ligar a chave da linha fica ligada", await p.evaluate(ev => document.querySelector(`[data-sw="${ev}"]`).getAttribute("aria-checked") === "true", EV));
   await p.evaluate(() => { const d = document.querySelector("#notif"); if (d) d.open = true; });
