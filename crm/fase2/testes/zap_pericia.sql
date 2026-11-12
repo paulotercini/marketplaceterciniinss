@@ -122,7 +122,7 @@ select pg_temp.ok('Já orientado: sem 1º aviso',
   and not exists (select 1 from zap_mensagens where aviso_chave like 'pericia:00000000-0000-0000-0000-0000000000b2:primeiro'));
 select pg_temp.ok('anon não executa a rodada', not has_function_privilege('anon', 'pericia_avisos_vez(text)', 'execute'));
 
--- 13. F564: sem endereço o Ligar recusa e nada sai; pericia_local grava o endereço
+-- 13. F565: sem endereço o Ligar recusa e nada sai; pericia_local grava o endereço
 insert into eventos (id, caso_id, tipo, data_hora, local, status)
 select '00000000-0000-0000-0000-0000000000b3', '00000000-0000-0000-0000-0000000000d1', 'Perícia',
        ((current_date + 50)::timestamp + time '14:00') at time zone 'America/Sao_Paulo', null, 'agendada';

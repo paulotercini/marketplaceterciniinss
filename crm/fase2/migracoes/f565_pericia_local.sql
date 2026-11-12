@@ -1,4 +1,4 @@
--- F564 (12.11.2026, pedido do Paulo): a mensagem da perícia exige o endereço (rua, número e cidade).
+-- F565 (12.11.2026, pedido do Paulo): a mensagem da perícia exige o endereço (rua, número e cidade).
 -- pericia_local grava o endereço da perícia em eventos.local; pericia_ligar recusa ligar sem endereço;
 -- pericia_avisos_vez não envia perícia sem endereço.
 
