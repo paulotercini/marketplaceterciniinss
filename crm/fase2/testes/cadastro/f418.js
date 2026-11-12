@@ -72,7 +72,19 @@ const SUPA = "https://ficticio.supabase.co";
     res.th = m ? [...m.querySelectorAll("th")].map(x => x.textContent.trim()) : [];
     res.linhas = m ? m.querySelectorAll("tbody tr").length : 0;
     res.txt = m ? m.textContent.replace(/\s+/g, " ") : "";
-    res.ver = m ? (m.querySelector("a.btn-mini") || {}).href : "";
+    res.link = m ? m.querySelectorAll("a[href*='pje']").length : -1;
+    const bver = m && m.querySelector("button.btn-mini[onclick*='verExpediente']");
+    res.verBt = !!bver;
+    // sem a peça no CRM: aviso com Ler, sem ir ao PJe
+    window.docsDoProcesso = () => [{ caminho: "pje/50000154120244036136/999", nome: "outra" }];
+    window.abrirProcessoInteiro = (...a) => { window._abriu = a; };
+    bver && bver.click();
+    res.semPeca = (document.querySelector(".modal-fundo") || {}).textContent || "";
+    fecharCaixa();
+    // com a peça: abre o leitor do CRM no documento do expediente
+    window.docsDoProcesso = () => [{ caminho: "pje/50000154120244036136/999" }, { caminho: "pje/50000154120244036136/615119049" }];
+    verExpediente("kexp", "50000154120244036136", "615119049");
+    res.abriu = window._abriu ? window._abriu[2] : "";
     return res;
   }, [CLI_CHEIO]);
   conf("o plano leva os expedientes do processo", r.exps === 1);
@@ -80,7 +92,9 @@ const SUPA = "https://ficticio.supabase.co";
   conf("botão Expedientes na aba Judicial", r.bt.includes("Expedientes"));
   conf("as quatro colunas do PJe", JSON.stringify(r.th) === JSON.stringify(["Ato de comunicação","Data limite prevista para ciência ou manifestação","Ações","Fechado"]));
   conf("duas linhas, com ciência, prazo e fechado", r.linhas === 2 && /ciência em 05.11.2026/.test(r.txt) && /Prazo: 15 dias/.test(r.txt) && /27.11.2026 23:59/.test(r.txt) && /SIM/.test(r.txt) && /2 resultados encontrados/.test(r.txt));
-  conf("Ver abre o ato no PJe", /^https:\/\/pje1g\.trf3\.jus\.br\/pje\/Painel/.test(r.ver || ""));
+  conf("Ver é botão do CRM, sem link ao PJe (F559)", r.verBt && r.link === 0);
+  conf("Ver abre a peça guardada no leitor do CRM (F559)", r.abriu === "pje/50000154120244036136/615119049");
+  conf("Ver sem a peça importada avisa e oferece Ler (F559)", /615119049 não está no CRM/.test(r.semPeca) && /Ler o processo/.test(r.semPeca));
 
   console.log("=== F418: expedientes do PJe ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
