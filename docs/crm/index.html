@@ -2087,7 +2087,8 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .ze-sug-ia.urg{border-color:var(--venc,#b3261e);background:#fdecea}
   .ze-sug-cab{font-weight:600;margin-bottom:4px}.ze-sug-cab span{font-weight:400;color:#7a6a2a}
   .ze-sug-txt{white-space:pre-wrap;max-height:140px;overflow:auto}
-  .ze-sug-bts{display:flex;gap:6px;margin-top:6px}
+  .ze-sug-bts{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+  .ze-sug-base{font-size:12px;color:var(--muted,#666);margin-top:4px}
   .zap-falta{order:-1;flex-basis:100%;font-size:12px;color:var(--venc,#b3261e);font-weight:600}
   .zap-escrever .btn-rap.ze-enviar{height:40px;padding:0 18px;border-radius:8px;background:var(--azul);border:1px solid var(--azul);color:#fff}
   .zap-escrever.modo-nota .btn-rap.ze-enviar{background:var(--prox,#8f5400);border-color:var(--prox,#8f5400)}
@@ -7045,7 +7046,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.67</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.68</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17693,6 +17694,8 @@ const ZIC = {
   proibido:'<circle cx="12" cy="12" r="8"/><path d="m6.5 6.5 11 11"/>',
   ditar:'<rect x="7" y="3" width="5" height="10" rx="2.5"/><path d="M4 10a5.5 5.5 0 0 0 11 0M9.5 16v3M16 8h5m-5 4h5m-3 4h3"/>',
   corrigir:'<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/>',
+  ideia:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+  lupa2:'<circle cx="10" cy="10" r="6"/><path d="m20 20-5.5-5.5M7.5 10h5M10 7.5v5"/>',
   emoji:'<circle cx="12" cy="12" r="8.5"/><path d="M8.5 14a4 4 0 0 0 7 0"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.4"/>',
 };
 const zic = (n, t=16) => `<svg class="zic" width="${t}" height="${t}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ZIC[n]}</svg>`;
@@ -18220,7 +18223,10 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
          <div class="ze-sug-cab">💡 Sugestão da assistente virtual${c.sugestao_ia.urgente?" · ⚠ urgente":""} <span>· não enviada</span></div>
          <div class="ze-sug-txt">${esc(c.sugestao_ia.texto)}</div>
          <div class="ze-sug-bts"><button class="btn-rap" onclick="usarSugestaoZap()" title="Levar a sugestão ao campo de escrever para conferir e alterar">Usar<span class="sr-only"> a sugestão no campo de escrever</span></button>
-           <button class="btn-mini" onclick="descartarSugestaoZap()" title="Descartar a sugestão">Descartar<span class="sr-only"> a sugestão</span></button></div></div>`:""}
+           <button class="btn-mini" onclick="descartarSugestaoZap()" title="Descartar a sugestão">Descartar<span class="sr-only"> a sugestão</span></button>
+           <button class="btn-mini" onclick="iaSugestaoZap('outra')" title="Pedir outra sugestão, em sentido diverso desta">Outra<span class="sr-only"> sugestão</span></button>
+           <button class="btn-mini" onclick="iaSugestaoZap('aprofundar')" title="Consulta completa: anotações, andamentos, prazos, perícias, agenda e mensagens">Aprofundar<span class="sr-only"> a sugestão</span></button></div>
+         ${(c.sugestao_ia.bases||[]).length?`<div class="ze-sug-base">Baseada em: ${c.sugestao_ia.bases.map(esc).join("; ")}</div>`:""}</div>`:""}
        <div class="ze-modos" role="tablist" aria-label="Para quem é o texto">
          <button role="tab" aria-selected="${!zapNota}" class="${zapNota?"":"on"}" onclick="${zapNota?"alternarNota()":""}" title="Responder ao cliente">Responder<span class="sr-only"> ao cliente</span></button>
          <button role="tab" aria-selected="${zapNota}" class="${zapNota?"on nota":""}" id="zap-btn-nota"
@@ -18247,7 +18253,9 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
              ${zapNota?"":`<button class="zap-icone" onclick="document.getElementById('zap-arq').click()"
                title="mandar foto, PDF ou áudio" aria-label="Anexar arquivo">${zic("clipe")}</button>
              <button class="zap-icone ze-so-pc" onclick="frasesZap()" title="mensagens prontas (ou digite / no campo)" aria-label="Mensagens prontas">${zic("frases")}</button>
-             <button class="zap-icone ze-so-pc" onclick="agendarZap()" title="agendar o envio para outro dia e hora" aria-label="Agendar envio">${zic("agenda")}</button>`}
+             <button class="zap-icone ze-so-pc" onclick="agendarZap()" title="agendar o envio para outro dia e hora" aria-label="Agendar envio">${zic("agenda")}</button>
+             ${c.sugestao_ia&&c.sugestao_ia.texto?"":`<button class="zap-icone" id="zap-sugerir" onclick="iaSugestaoZap('outra')" title="pedir uma sugestão de resposta à IA, sem enviar" aria-label="Pedir sugestão de resposta">${zic("ideia")}</button>
+             <button class="zap-icone" id="zap-aprofundar" onclick="iaSugestaoZap('aprofundar')" title="sugestão com consulta completa (anotações, andamentos, prazos, perícias, agenda e mensagens), sem enviar" aria-label="Pedir sugestão aprofundada">${zic("lupa2")}</button>`}`}
            </div>
          </div>
          <button class="ze-nota-cel so-cel-ze ${zapNota?"on":""}" aria-pressed="${zapNota}" onclick="alternarNota()"
@@ -18842,6 +18850,36 @@ async function descartarSugestaoZap(fica){
   try{ await api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({sugestao_ia:null})}); }
   catch(e){ c.sugestao_ia = ant; aviso(msgErro(e)); }
   if(!fica) pintarConversaGuardando();
+}
+// F563 · Outra (sugestão em sentido diverso) e Aprofundar (consulta completa, só no clique). Nada é enviado.
+function iaSugestaoZap(acao){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  const fundo = acao==="aprofundar";
+  caixa(`<strong>${fundo?"Aprofundar a sugestão":"Outra sugestão"}</strong>
+    <p class="meio-sub">${fundo?"A IA consulta as anotações, os andamentos do INSS, do CRPS e do Judicial, os prazos, as perícias, a agenda e as mensagens. Leva mais tempo.":"A IA escreve outra resposta, sem repetir a sugestão atual."} Nada é enviado ao cliente.</p>
+    <label style="display:block">Orientação (opcional)<textarea id="ia-orient" rows="2" style="width:100%" placeholder="Ex.: mais curta, explicar a perícia"></textarea></label>
+    <div class="form-linha" style="margin-top:8px"><button class="btn-rap" onclick="pedirSugestaoZap('${fundo?"aprofundar":"outra"}')">Pedir<span class="sr-only"> a sugestão</span></button></div>`);
+  setTimeout(()=>document.getElementById("ia-orient")?.focus(), 30);
+}
+async function pedirSugestaoZap(acao){
+  const conv = zapAberta, c = zapConvs.find(x=>x.id===conv); if(!c) return;
+  const orientacao = (document.getElementById("ia-orient")?.value || "").trim(); fecharCaixa();
+  const corpo = {acao, conversa_id: conv, anterior: c.sugestao_ia?.texto || "", orientacao};
+  const cli = clienteDaConversa(c);
+  if(acao==="aprofundar" && cli){
+    try{ const a = atendimentosDe({id: cli.id, nome: cli.nome});
+      if(a && !a.carregando) corpo.agenda = [...(a.fut||[]).map(e=>"agendado: "+linhaAtendTxt(e)), ...(a.ant||[]).slice(0,3).map(e=>"já veio: "+linhaAtendTxt(e))]; }catch(e){}
+    try{ corpo.prazos = prazosDoCliente(cli.id).lista.filter(x=>x.data>=hoje()).slice(0,8).map(x=>`${dataBR(x.data)}: ${tituloDaLinha(x)}`); }catch(e){}
+  }
+  aviso(acao==="aprofundar" ? "Consultando o caso para a sugestão…" : "Pedindo outra sugestão…", false);
+  let r; try{ r = await api("/functions/v1/zap_assistente",{method:"POST", body:JSON.stringify(corpo)}); }
+  catch(e){ r = {erro: msgErro(e)}; }
+  if(!r || !r.texto) return aviso("A IA não sugeriu: " + ((r&&r.erro) || "sem resposta"));
+  const sug = {texto: r.texto, em: new Date().toISOString(), urgente: false, modo: acao, bases: r.bases || []};
+  try{ await api(`/rest/v1/zap_conversas?id=eq.${conv}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({sugestao_ia:sug})}); }
+  catch(e){ return aviso(msgErro(e)); }
+  c.sugestao_ia = sug; aviso("Sugestão pronta acima do campo de escrever");
+  if(zapAberta===conv) pintarConversaGuardando();
 }
 function usarSugestaoZap(){
   const c = zapConvs.find(x=>x.id===zapAberta); if(!c || !c.sugestao_ia) return;
