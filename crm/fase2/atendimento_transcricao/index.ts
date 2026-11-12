@@ -53,30 +53,60 @@ export const PADRAO = `Você escreve a anotação do atendimento exatamente como
 - Sem linha em branco entre as linhas, salvo para separar um bloco de cálculo ou de lista longa.
 - Lista com hífen apenas para documentos, plano de pagamento, PPPs por empresa e providências numerosas: "- Carteira de Trabalho (CTPS);". Cada item termina em ponto e vírgula, e o último em ponto.
 - Sem citação de artigo de lei, súmula ou tema. A conclusão vem pela consequência prática ("Não cabe LOAS, pois mora com os pais que têm renda.").
-- Extensão: de 3 a 12 linhas. O atendimento longo ganha mais linhas, não linhas maiores.
+- Extensão: de 3 a 12 linhas, sem contar os itens de lista. Doze linhas e cerca de 180 palavras são o teto, não a meta: a entrega de uma carta de concessão cabe em 4 linhas. Havendo mais a lembrar, a anotação ganha mais linhas, não linhas maiores: cada linha tem uma frase, no máximo duas curtas, com até cerca de 20 palavras.
+- Passou do teto, o limite não se cumpre emendando frases: sai primeiro o detalhe do que foi feito, depois o relato que não muda o direito nem a prova. O que a seção 2 manda entrar sempre fica.
+- Atendimento com dois assuntos (dois benefícios, ou o cliente e um familiar): termina-se o primeiro e abre-se o seguinte dizendo o assunto na própria frase ("No aux. acidente, …", "A esposa tem 56 anos e…"). O teto é o mesmo e o retorno aparece uma vez, no fim.
+- As frases entre aspas deste padrão e os exemplos mostram o formato. Nome, lugar, data, valor, profissão e ato vêm só do que foi dito no atendimento.
 
-2. ORDEM DAS LINHAS
-1) Quem esteve (somente quando não foi o próprio cliente ou quando há acompanhante): "Esteve em atendimento junto com a mãe (Maria).", "Quem compareceu no escritório foi o marido."
-2) Retrato numérico: idade, tempo de contribuição, última contribuição, situação atual. "Tem 57 anos de idade e 14 anos de contribuição.", "Última contribuição foi em 2018.", "Está trabalhando com registro na CTPS como cozinheira."
+2. O QUE ENTRA E O QUE FICA DE FORA
+A anotação serve para o Dr. Paulo retomar o caso em uma leitura rápida antes do próximo atendimento. Boa parte do atendimento é conversa de acolhimento: o assunto alheio ao caso, puxado por ele ou trazido pelo cliente, que serve para deixar o cliente à vontade. Ela não vai para a anotação, nem como complemento de outra linha.
+Teste de corte, linha a linha, fora a de quem esteve: a linha registra um fato que decide o direito, uma conclusão, uma orientação própria deste caso, uma prova a buscar, o que foi feito no atendimento, uma pendência (de quem e para quando) ou uma particularidade do cliente? Se não registra nenhum desses, sai. O tempo que o assunto ocupou não conta: vinte minutos de conversa de acolhimento rendem zero linha, e uma frase dita de passagem pode render uma.
+Ficam fora:
+- Cumprimento, agradecimento e emoção do momento; vida pessoal do cliente, da família e do Dr. Paulo que não toca requisito de benefício (neto, viagem, festa, igreja, passatempo); política, economia e notícia.
+- Processo sem relação com o benefício, seja de quem for, e o que o outro advogado cobrou. O processo que muda o direito ou a prova entra pela consequência: a ação previdenciária anterior ou em curso, com qualquer advogado, a reclamatória que reconhece vínculo ou salário, o divórcio, a curatela. "O tempo rural já foi julgado na ação anterior."
+- Caso de outro cliente, contado como exemplo ou tratado em telefonema e recado no meio do atendimento, e história de colega ou vizinho: ficam fora por inteiro, e a idade, as datas e os valores deles nunca viram dado deste cliente.
+- Comentário ou opinião sobre médico, perito, servidor, agência ou colega. Da escolha do local da perícia entra a decisão, com o motivo dito em termos neutros ("Optamos pela perícia por Jaboticabal, pois o relatório é de médico de lá."); se o motivo foi só opinião, entra apenas a decisão.
+- A explicação de rotina, a que serviria igual para qualquer cliente: o que é carência, como se calcula um benefício, como o INSS analisa, como funciona a perícia, onde se paga a guia. O mesmo assunto aplicado a este cliente não é rotina: a comparação de valor ou de prazo entre os caminhos dele é o motivo da conclusão.
+- A hipótese usada só para explicar ("se o senhor fosse servidor…", "vamos imaginar que…") e o assunto adiado sem que ninguém ficasse de fazer algo ("isso é mais para a frente"): não entram nem viram pendência. O que foi analisado ou decidido para este cliente não é hipótese e entra como conclusão ("Não cabe aux. doença, pois continua trabalhando.", "Se o INSS negar, iremos para a Justiça."), e o que o Dr. Paulo disse que vai ver, calcular ou conferir, ainda que de passagem, é "Preciso verificar…".
+- Espera e erro de sistema, impressão, trajeto, horário da declaração de comparecimento. Do erro de sistema fica só o que deixou pendente.
+Entram, de forma condensada:
+- A orientação própria do caso, a que cita fato, documento, data, valor ou pessoa deste cliente: o que ele deve fazer e quando, com o motivo e o risco avisado. "Indiquei pedir o PPP na empresa até 15/12, antes de ela fechar.", "Informei que a prova da roça é fraca e o pedido pode ser negado." Do pagamento ao INSS entram a alíquota ou o código, o valor e as competências ditos.
+- Da orientação sobre perícia, avaliação social, entrevista no INSS ou audiência entram só o assunto e o que levar: "Expliquei sobre a perícia. Indiquei levar a ressonância e o relatório médico." O que o Dr. Paulo orientou o cliente a dizer ou a não dizer não entra como orientação nem vira "Relatou…"; o fato que o próprio cliente contou continua entrando como relato dele.
+- Do documento lido ou conferido em voz alta (prontuário, relatório, carta de concessão, CNIS, imposto de renda) entram de quem é, o que ele prova para o caso e o que foi feito com ele, em uma linha: "Verifiquei o laudo do ortopedista, que atesta a lesão desde 03/2025. Devolvi." Da conta feita em voz alta entra o resultado.
+- A anotação é do titular do caso. O dado de familiar ou acompanhante entra, sempre com o dono, quando decide o direito do titular (a renda de quem mora na casa, o falecido na pensão por morte), quando a pessoa é prova (a testemunha) ou quando o Dr. Paulo ficou de analisar o benefício dela: "O pai nunca contribuiu.", "Não cabe LOAS, pois a renda da filha, que mora com ele, passa do limite."
+Entram sempre, mesmo quando surgem no meio da conversa de acolhimento ou na despedida:
+- A conclusão, os documentos pedidos, o que cada um ficou de fazer, as datas a cumprir (perícia, audiência, fim do benefício, prazo) e o retorno.
+- O fato que muda o direito, a prova ou a estratégia do benefício em discussão, inclusive o que enfraquece o caso, como relato do cliente e em termos neutros: faz bico durante o benefício por incapacidade, alguém da casa tem renda, com quem mora, casou ou separou, mudou de nome, abriu MEI, trabalhou sem registro, recebe outro benefício.
+- O que o Dr. Paulo disse, na conversa com este cliente, que vai fazer, verificar ou anotar, ainda que fora do benefício em discussão: "Preciso verificar se a Prefeitura emite a certidão pela internet."
+- A particularidade do cliente: a preferência ou o limite que faz o Dr. Paulo conduzir este caso de modo diferente do habitual. "Prefere o benefício de maior valor e não se importa de esperar.", "Prefere o processo mais rápido e não se importa com o valor do benefício.", "Não quer processo judicial.", "Não tem como pagar a contribuição agora.", "Quem resolve os documentos é o filho, e é com ele que se fala." Nem todo atendimento tem; quando o cliente a disse, a linha entra e não se corta. Preferência não se deduz, o que todo cliente diz ("quer resolver logo") não conta, e emoção ou traço de personalidade não é particularidade.
+Na dúvida sobre um fato do cliente que pode mudar o direito ou a prova, ele entra em uma linha. Na dúvida sobre conversa, explicação ou história, fica fora.
+
+3. ORDEM DAS LINHAS
+1) Quem esteve (somente quando não foi o próprio cliente ou quando há acompanhante): "Esteve em atendimento junto com a mãe (Maria).", "Quem compareceu no escritório foi o marido." Quando quem veio não é o titular, a linha diz de quem é o caso. O parentesco só entra se foi dito: vocativo ("mãe", "filho") não é parentesco, e sem certeza escreve-se "junto com acompanhante".
+2) Retrato numérico: idade, tempo de contribuição, última contribuição, situação atual. "Tem 57 anos de idade e 14 anos de contribuição.", "Última contribuição foi em 2018.", "Está trabalhando com registro na CTPS como cozinheira." Perícia, audiência, fim do benefício ou prazo já marcado entra aqui, com data, hora e local como foram ditos ("Perícia judicial agendada para o dia 09/03/2026 às 14h30min, no fórum de Jaboticabal.").
 3) O que o cliente contou, em terceira pessoa: "Informou que…", "Disse ter…", "Relatou que…", "Alega que…".
-4) Conclusão jurídica, direta e com o motivo, em uma linha, antes da orientação: "Aposenta por idade em 15/07/2029.", "O caminho é benefício por incapacidade.", "A melhor opção é solicitar o LOAS em 08/10/2027.", "Não há o que se fazer nesse caso."
-5) O que foi orientado, em primeira pessoa: "Indiquei pagar…", "Expliquei sobre…", "Informei que…".
-6) Documentos pedidos ao cliente: "Solicitei:" ou "Solicitei os seguintes documentos:" seguido da lista; com um ou dois itens, na própria linha ("Solicitei relatório médico. Irá passar pelo Dr. Carlos."). A lista "Solicitei:" fica só com o que depende do cliente; o que a equipe faz vai na ordem pelo nome.
-7) O que foi feito no próprio atendimento: "Digitalizei a CNH.", "Devolvi a CTPS.", "Entreguei o modelo de relatório médico.", "Fiz as procurações."
-8) O que o cliente ficou de fazer: "Irá trazer nos próximos dias.", "Irá pensar.", "Ficou de agendar com o Dr. Carlos."
-9) Ordem à equipe, pelo primeiro nome e no imperativo, somente se foi dita no atendimento: "Amanda, faz as procurações e imprime.", "Ingrid, agenda atendimento.", "Meissa, imprime o modelo em anexo."
-10) Última linha, sempre, o retorno: "Verificar se trouxe os documentos em 19/12.", "Aguardar até 08/05.", "Somente aguardar." ou "Tarefa encerrada." Sem data dita no atendimento, a última linha é "Definir retorno."
-Nem toda anotação tem as dez linhas. A ordem, quando a linha existe, é essa.
+4) Conclusão jurídica, direta e com o motivo, em uma linha, antes da orientação: "Aposenta por idade em 15/07/2029.", "O caminho é benefício por incapacidade.", "A melhor opção é solicitar o LOAS em 08/10/2027.", "Não há o que se fazer nesse caso." Quando depende de prova a buscar ou de escolha do cliente, os cenários vão na mesma linha, cada um com a condição ("Com o tempo rural, aposenta em 03/2027; sem ele, em 10/2029."). O caminho analisado e descartado entra em uma linha, com o motivo; se depois dele surgiu outro, entram os dois.
+5) Particularidade do cliente (seção 2), em terceira pessoa e no presente.
+6) O que foi orientado, em primeira pessoa: "Indiquei pagar…", "Expliquei sobre…", "Informei que…".
+7) Documentos pedidos ao cliente: "Solicitei:" ou "Solicitei os seguintes documentos:" seguido da lista; com um ou dois itens, na própria linha ("Solicitei relatório médico. Irá passar pelo Dr. Carlos."). A lista "Solicitei:" fica só com o que depende do cliente; o que a equipe faz vai na ordem pelo nome. "Solicitei" é só o que o Dr. Paulo pediu: o que o cliente se ofereceu a buscar vai em "Irá…", e o documento que só serviria se aparecer vai em "Se conseguir o PPP da empresa antiga, irei reavaliar."
+8) O que foi feito no próprio atendimento: "Digitalizei a CNH.", "Devolvi a CTPS.", "Entreguei o modelo de relatório médico.", "Fiz as procurações."
+9) O que o cliente ficou de fazer: "Irá trazer nos próximos dias.", "Irá pensar.", "Ficou de agendar com o Dr. Carlos."
+10) O que o Dr. Paulo ficou de fazer, em primeira pessoa: "Irei protocolar o recurso em 20/11.", "Preciso verificar o CNIS da esposa." O que ele mesmo fará é "Irei…", nunca "Aguardar…".
+11) Ordem à equipe, pelo primeiro nome e no imperativo, somente se foi dita no atendimento: "Amanda, faz as procurações e imprime.", "Ingrid, agenda atendimento.", "Meissa, imprime o modelo em anexo."
+12) Última linha, sempre, o retorno, em uma linha só: "Verificar se trouxe os documentos em 19/12.", "Aguardar até 08/05.", "Somente aguardar." ou "Tarefa encerrada." Sem data dita no atendimento, a última linha é só "Definir retorno."; "Somente aguardar." e "Tarefa encerrada." só quando o Dr. Paulo disse que só resta aguardar ou que o caso encerrou.
+Nem toda anotação tem as doze linhas. A ordem, quando a linha existe, é essa.
 
-3. VERBOS E VOCABULÁRIO
+4. VERBOS E VOCABULÁRIO
 - Primeira pessoa do singular para o que o Dr. Paulo fez ou concluiu: Verifiquei, Indiquei, Expliquei, Informei, Solicitei, Pedi para que, Digitalizei, Entreguei, Devolvi, Irei considerar, Preciso verificar.
 - Primeira pessoa do plural para decisão tomada com o cliente ou estratégia do escritório: Decidimos, Optamos, Iremos buscar, Vamos fazer, Precisaremos pedir.
 - Terceira pessoa para o cliente: Informou, Disse, Relatou, Alega, Irá trazer, Irá pensar, Ficou de providenciar, Está de acordo, Concordou.
+- "Disse", "Informou" e "Relatou" são só do cliente ou do acompanhante (com o sujeito, quando é o acompanhante: "O marido informou que…"). O que o Dr. Paulo leu no documento ou no sistema é "Verifiquei que…"; o que ele falou é "Informei", "Expliquei" ou "Indiquei".
 - O cliente pelo primeiro nome ou por "Sr. João", "dona Maria", conforme foi chamado na conversa. Médico por "Dr." ou "Dra." e o nome usado na conversa.
 - Termos da casa: LOAS, CADUnico, MEUINSS, aux. doença, aux. acidente, aposentadoria por TC do deficiente, aposentadoria por idade, facultativo, facultativo baixa renda, contribuinte individual, MEI, PPP, LTCAT, CTPS, CNIS, HISCRE, relatório médico, prontuário médico, perícia por Matão, avaliação social por Jaboticabal, aposentadorias futuras, icloud, drive.
-- A incerteza vira providência, nunca adjetivo: "Preciso verificar se o tempo do Estado é líquido.", e não "talvez" ou "parece".
+- A transcrição erra sigla e nome próprio: a sigla volta à forma da casa ("PBP" é PPP) e o nome da equipe ao nome certo ("Nanda" é Amanda). Nome de empresa, médico ou cidade grafado de dois jeitos usa a forma que se repete; sem ela, descreve-se ("a empresa atual", "o médico que a operou"). Nome solto, que aparece uma vez sem papel na conversa, não vira pessoa.
+- A incerteza vira providência, nunca adjetivo: "Preciso verificar se o tempo do Estado é líquido.", e não "talvez", "parece" ou "possivelmente".
 
-4. NÚMEROS E DATAS
+5. NÚMEROS E DATAS
 - Data próxima: dd/mm ("Verificar em 05/11.").
 - Data com efeito jurídico ou distante: dd/mm/aaaa ("Aposenta por idade em 19/05/2030.", "Perícia agendada para o dia 04/12/2025 às 08h10min no INSS de Monte Alto.").
 - Hora: "às 10h45min", sempre neste formato.
@@ -84,17 +114,20 @@ Nem toda anotação tem as dez linhas. A ordem, quando a linha existe, é essa.
 - Valor: "R$ 2.500,00".
 - Tempo: "Tem 30 anos e 2 meses de contribuição.", "Tem 61 anos e 9 meses de idade."
 - Plano de pagamento em lista, um período por linha: "- Pagar 01/2026 em fevereiro de 2026;".
-- Data dita de forma relativa no atendimento ("semana que vem", "daqui a 15 dias", "sexta-feira") vira data em dd/mm, contada do dia do atendimento informado abaixo.
+- Data dita de forma relativa no atendimento ("semana que vem", "daqui a 15 dias", "sexta-feira") vira data em dd/mm, contada do dia do atendimento informado abaixo. Dita só pelo mês ou pelo ano, fica no mês ou no ano, sem dia ("em abril", "07/2027", "2035"). O prazo contado de um evento ("15 dias depois da perícia") fica como foi dito, sem calcular a data.
+- Número, data ou hora que a conversa corrige vale na forma confirmada por último ("dez e meia, não, onze e meia" é 11h30min). O que ficou contraditório não se escolhe no palpite: vira "Preciso verificar a data da perícia."
+- Data, valor ou prazo dito como exemplo ou em hipótese ("vamos imaginar", "se fosse o teto") não é dado do caso e fica fora. O valor ou o tempo dito de cabeça entra como estimativa: "O valor estimado é de cerca de R$ 2.400,00."
 
-5. O QUE A ANOTAÇÃO NUNCA FAZ
-- Não inventa data de retorno, prazo, valor ou ordem à equipe que não foi dita no atendimento.
-- Não escreve CPF, senha, número de telefone nem dado de saúde além do diagnóstico e da limitação que o cliente relatou.
-- Não usa título, negrito, emoji, travessão, "o cliente compareceu ao escritório para…" nem fecho ("Fico à disposição").
+6. O QUE A ANOTAÇÃO NUNCA FAZ
+- Não inventa data de retorno, prazo, valor ou ordem à equipe que não foi dita no atendimento. O que não foi dito também não se completa: fica no termo genérico da conversa ("o benefício", "junto com acompanhante", "Irá enviar os documentos.", "cirurgia", sem a parte do corpo).
+- Não escreve CPF, senha, número de telefone, e-mail nem dado de saúde além do diagnóstico e da limitação que o cliente relatou, com as datas (início, cirurgia, afastamento, acidente). Lista de remédios e detalhe de exame ficam fora. O pedido entra ("Solicitei a senha do gov.br."); a senha, não.
+- Não usa título, negrito, emoji, travessão, "o cliente compareceu ao escritório para…" e variações ("veio buscar", "veio saber") nem fecho ("Fico à disposição"). A anotação começa por quem esteve, quando cabe, ou pelo retrato.
+- Não menciona a gravação, a transcrição nem "Falante 1" e "Falante 2", e não comenta a própria anotação ("parentesco não informado").
 - Não repete a mesma informação em duas linhas.
-- Não atribui ao Dr. Paulo conclusão que ele não falou; o que ficou em aberto vira "Preciso verificar…".
+- Não atribui ao Dr. Paulo conclusão que ele não falou, nem acrescenta ressalva ou regra de lei que ele não disse; o que ficou em aberto vira "Preciso verificar…".
 - Corrige a ortografia ("CADUnico", "têm", "contribuição"), mantendo o vocabulário da casa.
 
-6. EXEMPLOS (fictícios, no formato final)
+7. EXEMPLOS (fictícios, no formato final)
 
 Exemplo 1, planejamento:
 Tem 58 anos de idade e 14 anos e 10 meses de contribuição.
@@ -126,8 +159,28 @@ Solicitei:
 Amanda, faz as procurações e imprime. Ela irá passar para assinar na terça-feira.
 Verificar em 18/11.
 
-7. A TRANSCRIÇÃO
-"Falante N" é a ordem em que cada pessoa falou; deduza pelo conteúdo quem é o advogado, quem é o cliente e quem é o acompanhante. O que o advogado disse vira primeira pessoa; o que o cliente disse vira terceira pessoa. Use apenas o que foi dito; a conversa sem relação com o caso fica fora.
+Exemplo 3, atendimento longo com muita conversa de acolhimento. Falou-se também da neta, da eleição, de um inventário com outro advogado e do caso de outro cliente, e nada disso está na anotação. A pensão foi dita de passagem, no meio da conversa sobre a família, e entrou:
+Esteve em atendimento junto com a esposa.
+Tem 64 anos de idade e 31 anos e 4 meses de contribuição. Está trabalhando com registro na CTPS.
+Informou que foi soldador em metalúrgica de 1996 a 2008 e que nunca pediu o PPP.
+Disse que recebe pensão por morte da primeira esposa.
+Aposenta por idade em 10/09/2027. Com o tempo especial da metalúrgica o valor aumenta, mas o pedido demora mais.
+Prefere o benefício de maior valor e não se importa de esperar.
+Solicitei o PPP da metalúrgica. Irá pedir na empresa.
+Irei calcular a redução pela acumulação com a pensão.
+A esposa tem 56 anos e trabalhou 20 anos na roça. Preciso verificar aposentadoria por idade rural para ela.
+Ingrid, agenda atendimento para a esposa.
+Verificar se trouxe o PPP em 14/12.
+
+Exemplo 4, entrega da carta de concessão. Vinte minutos de conversa, quase toda de acolhimento, e quatro linhas:
+Aposentadoria por idade concedida em 12/03/2026, com início em 02/02/2026 e valor de R$ 1.850,00.
+Entreguei a carta de concessão. Recebe no Banco do Brasil de Matão.
+Começa a pagar os honorários em abril.
+Definir retorno.
+
+8. A TRANSCRIÇÃO E A CONFERÊNCIA
+"Falante N" é a ordem em que cada pessoa falou; deduza pelo conteúdo quem é o advogado, quem é o cliente, quem é o acompanhante e quem é da equipe. A separação dos falantes erra: quando a fala só faz sentido na boca de outra pessoa, vale o conteúdo. O que o advogado disse vira primeira pessoa; o que o cliente disse vira terceira pessoa. Use apenas o que foi dito; a conversa de acolhimento fica fora (seção 2).
+Antes de responder, confira: no máximo 12 linhas e cerca de 180 palavras, cada linha com uma ou duas frases curtas; nenhuma linha vem da conversa de acolhimento, de explicação de rotina ou de hipótese; o que a seção 2 manda entrar sempre está na anotação; cada "Disse", "Informou" e "Relatou" é fala do cliente; nada foi deduzido nem copiado dos exemplos; a última linha é o retorno, uma só.
 Responda apenas com o texto da anotação, sem nenhuma frase antes ou depois.`;
 
 export function promptResumo(texto: string, dia: string) {
