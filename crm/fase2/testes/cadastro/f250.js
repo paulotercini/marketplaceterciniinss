@@ -110,6 +110,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a faixa do dia conta as vagas", /2 vagas/.test(await p.textContent(".aq-dia")));
   conf("na linha do tempo a vaga é 'Livre · agendar' e o atendimento marcado continua", (await p.$$(".aq-ev-vaga")).length === 2 && /Fulano/.test(await p.textContent(".aq-evs")));
   await p.screenshot({ path: path.join(OUT, "01-vagas.png"), fullPage: true });
+  conf("F557: a vaga de hoje cujo horário passou não é oferecida", await p.evaluate(() => {
+    const d = { data: hoje(), bloqueado: false, livres: { "001": [], "002": [{ inicio: "00:00", fim: "00:30", vaga: true, eventoId: "P1" }, { inicio: "23:59", fim: "23:59", vaga: true, eventoId: "F1" }] } };
+    const v = vagasDoDia(d); return v.length === 1 && v[0].eventoId === "F1" && vagaPassou(somaDias(hoje(), -1), "23:00") && !vagaPassou(somaDias(hoje(), 1), "00:00"); }));
   conf("a vaga 001 e a 002 do Paulo têm tons de azul diferentes", await p.evaluate(() => {
     const c = sel => getComputedStyle(document.querySelector(sel)).borderTopColor;
     return c('.aq-vaga[data-aqvaga="V1"]') !== c('.aq-vaga[data-aqvaga="V2"]') && document.querySelector('.aq-vaga[data-aqvaga="V1"]').classList.contains("p-paulo"); }));
