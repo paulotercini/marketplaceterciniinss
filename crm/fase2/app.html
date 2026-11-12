@@ -7034,6 +7034,30 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link{display:inline;padding:0;bo
 html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link svg{vertical-align:-2px;opacity:.75}
 html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px solid var(--azul);outline-offset:2px;border-radius:3px}
 @media (prefers-reduced-motion:reduce){html .faixa-prazos.fp5 .pz-mais,html .linha-caso.lc5 .lc-dobra{transition:none}html .faixa-prazos.fp5 .pz-mais:active{transform:none}}
+/* F567 · Resumo do Caso (variação 4, linha do tempo, escolhida pelo Paulo em 12.11.2026) */
+.rs5{--rs-rural:#4E7A3A;--rs-especial:#B4532A;--rs-comum:#3D6FA8;--rs-deficiencia:#7A4E9C;--rs-incapacidade:#A23B5A;--rs-outro:#7B7B7B;margin-top:10px;border:1px solid var(--borda,#ddd);border-radius:8px;padding:10px 12px;background:#FFFFFF;font-family:"IBM Plex Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:13px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rs5{--rs-rural:#8DBA75;--rs-especial:#E08A62;--rs-comum:#7FA8DB;--rs-deficiencia:#B596D1;--rs-incapacidade:#D97B97;--rs-outro:#AAAAAA}}
+.rs5-cab{display:flex;align-items:center;justify-content:space-between;gap:8px;text-transform:uppercase;font-size:12px;letter-spacing:.04em;color:var(--mut,#666)}
+.rs5-cab button,.rs5-acoes button{font-size:12px;padding:4px 8px;min-height:28px}
+.rs5-ped{margin:6px 0 8px;font-weight:600}
+.rs5-barra{position:relative;height:12px;border-radius:3px;background:#EEEEEE;overflow:hidden}
+.rs5-seg{position:absolute;top:0;bottom:0;min-width:2px}
+.rs5-eixo{display:flex;justify-content:space-between;font-size:11px;color:var(--mut,#666);margin-top:3px}
+.rs5-leg{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;margin-top:6px}
+.rs5-leg span,.rs5-lin{display:inline-flex;align-items:center;gap:6px}
+.rs5-pt{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none}
+.rs5-lins{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.rs5-lins li{display:grid;grid-template-columns:8px 1fr auto;column-gap:8px;align-items:center}
+.rs5-dur{font-size:12px;color:var(--mut,#666);white-space:nowrap}
+.rs5-sub{grid-column:2/4;font-size:12px;color:var(--mut,#666)}
+.rs5-frase{margin:10px 0 0;line-height:1.45}
+.rs5-falta{margin:6px 0 0;font-size:12px;color:var(--mut,#666)}
+.rs5-aviso{margin:6px 0 0;font-size:12px;color:#9A5B00}
+.rs5-fonte{margin-top:8px;padding-top:6px;border-top:1px solid var(--borda,#ddd);font-size:11px;color:var(--mut,#666)}
+.rs5-fonte button{font-size:11px;padding:0;background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;min-height:0}
+.rs5-acoes{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.rs5-prop{margin-top:8px;padding:8px;border-radius:6px;background:#F6F3E8;font-size:12px}
+.rs5 textarea{width:100%;min-height:90px;font:inherit;box-sizing:border-box}
 </style>
 </head>
 <body>
@@ -7046,7 +7070,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.70</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.71</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -23006,7 +23030,7 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
+        ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${quadroResumo(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
            <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || (v10 && aba==="escritorio" && dashLigado()) ? "" : composerCaso(k)}${/* F486 · o cartão do Escritório fica abaixo do campo de escrever (pedido do Paulo, 09.11.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardLado(k, andsVis, painelDaAba()) : painelDaAba()}</div>
            <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
@@ -39199,6 +39223,117 @@ function dataDoMovimento(and){
   if(!and) return "";
   const m = String(and.origem_id||"").match(/:(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/);
   return m ? `${m[1]}T${m[2]}:00` : (and.criado_em || "");
+}
+// F567 · Resumo do Caso (planejamento de 11.11.2026, variação 4 de 12.11.2026): o que o caso pede, com cada período, lido da peça
+// do escritório. Aparece só fora do pré-caso e nas fases Conselho (recurso), Judicial e Pagamento (petição inicial); INSS fica sem.
+const RS_ANCORA = /DOS\s+PEDIDOS|DO\s+PEDIDO|Ante\s+o\s+exposto|Diante\s+do\s+exposto/gi;
+const RS_FASES = ["conselho", "judicial", "pagamento"];
+const rsLigado = k => !!k && !k.pre_caso && RS_FASES.includes(faseEfetiva(k));
+const rsAssinada = d => d && typeof d.texto==="string" && d.texto.length>400 && /331[.\s]?110/.test(d.texto) && (RS_ANCORA.lastIndex=0, RS_ANCORA.test(d.texto))
+  && !/processo administrativo integral|outros documentos/i.test(d.nome||"");
+function fonteDoResumo(k){
+  if(!rsLigado(k)) return null;
+  const docs = documentosDoCaso(k).filter(rsAssinada), topo = d => d.texto.slice(0, 4000);
+  if(faseEfetiva(k)==="conselho"){
+    const d = docs.find(d=>/RECURSO ESPECIAL|C[âa]mara de Julgamento/i.test(topo(d))) || docs.find(d=>/RECURSO ORDIN[ÁA]RIO|Junta de Recursos/i.test(topo(d)));
+    return d ? {docs:[d], id:d.id, nome:d.nome, data:d.data, rot:/RECURSO ESPECIAL|C[âa]mara/i.test(topo(d)) ? "Recurso especial" : "Recurso ordinário"} : null;
+  }
+  const naoInicial = /contrarraz|recurso|embargos|manifesta|r[ée]plica|impugna/i;
+  const ini = docs.find(d=>d.inicial) || [...docs].reverse().find(d=>/EXCELENT/i.test(topo(d)) && !naoInicial.test(d.nome||"") && !naoInicial.test(d.texto.slice(0, 1500)));
+  if(!ini) return null;
+  const emendas = docs.filter(d=>d!==ini && (/emenda/i.test(d.nome||"") || /emenda/i.test(d.texto.slice(0, 1500))));
+  return {docs:[ini, ...emendas], id:ini.id, nome:ini.nome, data:ini.data, rot:"Petição inicial" + (emendas.length ? " e emenda" : "")};
+}
+function recorteDoPedido(t){
+  t = String(t||"");
+  const ms = [...t.matchAll(RS_ANCORA)]; if(!ms.length) return "";
+  let ini = ms[ms.length-1].index;
+  const antes = t.slice(Math.max(0, ini-3000), ini), cab = [...antes.matchAll(/DOS\s+PEDIDOS/g)].pop();
+  if(cab) ini = ini - antes.length + cab.index;
+  const resto = t.slice(ini), fecho = resto.search(/Pede\s+deferimento|Nestes\s+termos|Termos\s+em\s+que/i);
+  let fim = resto.length;
+  if(fecho>=0){ const ass = resto.slice(fecho).search(/331[.\s]?110/); fim = ass>=0 ? fecho + ass + 7 : fecho + 200; }
+  return t.slice(0, 500) + "\n[…]\n" + resto.slice(0, Math.min(fim, 6000));
+}
+let _rsAberto = (()=>{ try{ return localStorage.getItem("crm_resumo_aberto")==="1"; }catch(e){ return false; } })();
+const _rsGerando = new Set();
+function rsAlternar(){ _rsAberto = !_rsAberto; try{ localStorage.setItem("crm_resumo_aberto", _rsAberto ? "1" : "0"); }catch(e){} repintarFicha(); }
+const rsCor = n => `var(--rs-${["rural","especial","comum","deficiencia","incapacidade"].includes(n) ? n : "outro"})`;
+const rsMes = s => { const [a, m] = String(s||"").split("-"); return a ? `${m}/${a}` : ""; };
+function rsBarra(ps){
+  if(!ps.length) return "";
+  const t = s => Date.parse(s+"T00:00:00Z"), a = Math.min(...ps.map(p=>t(p.ini))), b = Math.max(...ps.map(p=>t(p.fim_iso))), tot = Math.max(b-a, 1);
+  const segs = ps.map(p=>`<span class="rs5-seg" style="left:${((t(p.ini)-a)/tot*100).toFixed(2)}%;width:${((t(p.fim_iso)-t(p.ini))/tot*100).toFixed(2)}%;background:${rsCor(p.natureza)}" title="${esc(`${rsMes(p.ini)} a ${rsMes(p.fim_iso)} · ${p.dur} ${p.natureza}`)}"></span>`).join("");
+  const y1 = new Date(a).getUTCFullYear(), y2 = new Date(b).getUTCFullYear(), meio = y2-y1>=8 ? `<span>${Math.round((y1+y2)/2)}</span>` : "";
+  const nats = [...new Set(ps.map(p=>p.natureza))];
+  return `<div class="rs5-barra" role="img" aria-label="${esc(ps.map(p=>`${p.dur} ${p.natureza}`).join("; "))}">${segs}</div>
+    <div class="rs5-eixo" aria-hidden="true"><span>${y1}</span>${meio}<span>${y2}</span></div>
+    <div class="rs5-leg">${nats.map(n=>`<span><i class="rs5-pt" style="background:${rsCor(n)}"></i>${esc(n)}</span>`).join("")}</div>`;
+}
+function quadroResumo(k){
+  if(!rsLigado(k)) return "";
+  const r = k.resumo, f = fonteDoResumo(k), gera = podeGravarCaso(), id = k.id;
+  const cab = `<div class="rs5-cab"><span>Resumo do caso</span>${r && r.texto ? `<button type="button" class="btn-mini" aria-expanded="${_rsAberto}" onclick="rsAlternar()">${_rsAberto ? "Recolher" : "Abrir"}</button>` : ""}</div>`;
+  if(_rsGerando.has(id)) return `<section class="rs5" aria-label="Resumo do caso">${cab}<p class="rs5-falta">Lendo o pedido da peça…</p></section>`;
+  if(!r || !r.texto){
+    const corpo = f ? (gera ? `<div class="rs5-acoes"><button type="button" class="btn-mini" onclick="gerarResumo('${id}')">Gerar</button></div><p class="rs5-falta">Pelo pedido: ${esc(f.rot)}.</p>` : `<p class="rs5-falta">Ainda não gerado.</p>`)
+      : `<p class="rs5-falta">Sem documento do pedido no CRM.</p>`;
+    return `<section class="rs5" aria-label="Resumo do caso">${cab}${corpo}</section>`;
+  }
+  const ps = (r.periodos||[]).filter(p=>p.ini && p.fim_iso).sort((a,b)=>a.ini.localeCompare(b.ini));
+  const ped = [r.beneficio, r.der ? `DER ${r.der}` : ""].filter(Boolean).join(" · ");
+  const novo = f && r.fonte && f.id!==r.fonte.id && !(r.recusou||[]).includes(f.id) && !r.proposta;
+  let aberto = "";
+  if(_rsAberto){
+    aberto = `${ps.length ? `<ul class="rs5-lins">${ps.map(p=>`<li><i class="rs5-pt" style="background:${rsCor(p.natureza)}"></i><span>${rsMes(p.ini)} a ${rsMes(p.fim_iso)}</span><span class="rs5-dur">${esc(p.dur)} ${esc(p.natureza)}</span>${p.local||p.motivo ? `<span class="rs5-sub">${esc([p.local, p.motivo].filter(Boolean).join(" · "))}</span>` : ""}</li>`).join("")}</ul>` : ""}
+      <p class="rs5-frase" id="rs5-frase-${id}">${esc(r.texto)}</p>
+      ${(r.faltas||[]).length ? `<p class="rs5-falta">Não localizado: ${esc(r.faltas.join("; "))}.</p>` : ""}
+      ${(r.avisos||[]).map(a=>`<p class="rs5-aviso">${esc(a)}</p>`).join("")}
+      <div class="rs5-acoes"><button type="button" class="btn-mini" onclick="copiarResumo('${id}')">Copiar</button>${podeAtender() ? `<button type="button" class="btn-mini" onclick="editarResumo('${id}')">Editar</button>` : ""}${novo && gera ? `<button type="button" class="btn-mini" title="Há peça mais nova: gerar uma proposta" onclick="gerarResumo('${id}', true)">Atualizar</button>` : ""}</div>
+      ${r.fonte ? `<div class="rs5-fonte">Lido de: <button type="button" onclick="abrirAnexo('${esc(r.fonte.id)}')">${esc(r.fonte.rot)}${r.fonte.data ? ` de ${esc(dataBR(String(r.fonte.data).slice(0,10)))}` : ""}</button>${r.travado ? ` · editado por ${esc(r.autor||"")}` : ""}</div>` : ""}`;
+  }
+  const prop = r.proposta ? `<div class="rs5-prop"><b>Proposta pela peça nova:</b> ${esc(r.proposta.texto)}<div class="rs5-acoes"><button type="button" class="btn-mini" onclick="aceitarResumo('${id}')">Aceitar</button><button type="button" class="btn-mini" onclick="manterResumo('${id}')">Manter</button></div></div>` : "";
+  return `<section class="rs5" aria-label="Resumo do caso">${cab}<p class="rs5-ped">${esc(ped || "Pedido não localizado")}</p>${rsBarra(ps)}${aberto}${prop}</section>`;
+}
+async function rsGravar(k, resumo){ k.resumo = resumo; try{ await patchCaso(k.id, {resumo}); }catch(e){ aviso("Não gravei o resumo: " + msgErro(e), true); } repintarFicha(); }
+async function gerarResumo(casoId, comoProposta){
+  const k = D.casoPorId.get(casoId); if(!k || !podeGravarCaso()) return;
+  const f = fonteDoResumo(k); if(!f) return aviso("Sem documento do pedido no CRM.", true);
+  const recorte = f.docs.map(d=>recorteDoPedido(d.texto)).filter(Boolean).join("\n\n=== emenda ===\n\n");
+  _rsGerando.add(casoId); repintarFicha();
+  let r; try{ r = await api("/functions/v1/caso_resumo", {method:"POST", body:JSON.stringify({recorte, hoje:hoje(), fase:faseEfetiva(k), der_caso:k.der||"", beneficio_caso:k.beneficio||""})}); }
+  catch(e){ r = {erro: msgErro(e)}; }
+  _rsGerando.delete(casoId);
+  if(!r || r.erro){ repintarFicha(); return aviso("Não gerei o resumo: " + ((r && r.erro) || "sem resposta"), true); }
+  const fonte = {id:f.id, nome:f.nome, data:f.data, rot:f.rot}, base = {texto:r.texto, periodos:r.periodos||[], beneficio:r.beneficio, der:r.der, tipo:r.tipo, faltas:r.faltas||[], avisos:r.avisos||[], fonte};
+  const atual = k.resumo;
+  if(atual && atual.texto && (comoProposta || atual.travado)) return rsGravar(k, {...atual, proposta:{...base, em:new Date().toISOString()}});
+  rsGravar(k, {...base, autor:eu && eu.nome, em:new Date().toISOString(), travado:false, versoes:(atual && atual.versoes)||[], recusou:(atual && atual.recusou)||[]});
+}
+function aceitarResumo(casoId){
+  const k = D.casoPorId.get(casoId), r = k && k.resumo; if(!r || !r.proposta) return;
+  const antes = JSON.parse(JSON.stringify(r)), {em, ...p} = r.proposta;
+  rsGravar(k, {...r, ...p, proposta:null, travado:false, autor:eu && eu.nome, em:new Date().toISOString(), versoes:[...(r.versoes||[]), {texto:r.texto, em:r.em, autor:r.autor}].slice(-10)});
+  avisoDesfazer("Resumo atualizado pela peça nova.", ()=>rsGravar(k, antes));
+}
+function manterResumo(casoId){
+  const k = D.casoPorId.get(casoId), r = k && k.resumo; if(!r || !r.proposta) return;
+  rsGravar(k, {...r, proposta:null, recusou:[...new Set([...(r.recusou||[]), r.proposta.fonte && r.proposta.fonte.id].filter(Boolean))]});
+}
+function copiarResumo(casoId){
+  const r = (D.casoPorId.get(casoId)||{}).resumo; if(!r) return;
+  navigator.clipboard.writeText(r.texto).then(()=>aviso("Texto copiado"), ()=>aviso("Não foi possível copiar", true));
+}
+function editarResumo(casoId){
+  const k = D.casoPorId.get(casoId), r = k && k.resumo; if(!r || !podeAtender()) return;
+  const el = document.getElementById("rs5-frase-"+casoId); if(!el) return;
+  el.outerHTML = `<div class="rs5-frase"><textarea id="rs5-ed-${casoId}" aria-label="Texto do resumo">${esc(r.texto)}</textarea><div class="rs5-acoes"><button type="button" class="btn-mini" onclick="salvarResumo('${casoId}')">Salvar</button><button type="button" class="btn-mini" onclick="repintarFicha()">Cancelar</button></div></div>`;
+  document.getElementById("rs5-ed-"+casoId).focus();
+}
+function salvarResumo(casoId){
+  const k = D.casoPorId.get(casoId), r = k && k.resumo, t = (document.getElementById("rs5-ed-"+casoId)||{}).value;
+  if(!r || !t || !t.trim() || t.trim()===r.texto) return repintarFicha();
+  rsGravar(k, {...r, texto:t.trim(), travado:true, autor:eu && eu.nome, em:new Date().toISOString(), versoes:[...(r.versoes||[]), {texto:r.texto, em:r.em, autor:r.autor}].slice(-10)});
 }
 function documentosDoCaso(k){
   const andPorId = new Map((D._andsFicha||[]).map(a=>[a.id, a]));
