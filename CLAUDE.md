@@ -722,6 +722,8 @@ A **F549** (13.58, decisões do Paulo de 12.11.2026, plano no Claude Doc "Períc
 
 A **F551** (13.59, pedido do Paulo de 12.11.2026): durante a cobertura do Offline (F538), a conversa diz a todos que também está com quem cobre: a lista mostra "plantão <nome>" ao lado de "com <titular>", o topo traz "Plantão: <nome>" (`plantaoZap`, `.zt-plantao`) e a faixa acima do campo de escrever do substituto abre por "Plantão:". O item do ⋯ da F542 passou a "Não encaminhar ao plantão" (ou "Encaminhar ao plantão"). Sem mudança no banco. Teste: `f519.js`.
 
+A **F555** (13.62, pedido do Paulo de 12.11.2026): o contato que o cliente envia pelo WhatsApp mostrava apenas o nome. A ponte grava, para cada contato do vCard (um ou vários), a linha "👤 Nome · número" (`numerosDoVcard`: o `waid` ou os dígitos de cada TEL, sem repetir; `linhaContato`), e o balão do tipo `contato` vira o cartão (`contatoZap`, `.zap-ct`) com o número formatado, a ficha que já o tem e os botões **Conversar** (`zapDoNumero`), **Salvar** (sem ficha, abre o ＋ conversa já conferido, `conferirContatoZap`; com uma ficha, vira **Ficha**), **Copiar** e **Ligar** (`tel:`), por `contatoAcao`. O contato gravado antes desta versão não tem o número e diz "Número não veio; veja no celular.". Vale depois do deploy da ponte. Testes: `ponte/testes/normalizar.test.js` e `testes/cadastro/f555.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
