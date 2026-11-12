@@ -1913,6 +1913,10 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-b .virar{border:0;background:none;color:var(--azul);font-size:10px;font-weight:700;
                 cursor:pointer;padding:0;opacity:0}
   @media (hover:hover) and (pointer:fine){.zap-b:hover .virar{opacity:1}}
+  .zap-ct{display:flex;flex-direction:column;gap:4px;padding:6px 0;min-width:200px}
+  .zap-ct+.zap-ct{border-top:1px solid var(--borda)}
+  .zap-ct-bts{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+  .zap-ct-bts .btn-mini{text-decoration:none}
   .zap-anexo{border:1px solid var(--borda);background:var(--fundo);border-radius:6px;
              padding:4px 8px;font-size:12px;font-weight:600;color:var(--azul);cursor:pointer}
   .zap-escrever{display:flex;flex-direction:column;gap:8px;padding:10px 12px 12px;
@@ -18614,6 +18618,7 @@ function bolhaZap(m, cli, seguida){
     : m.midia_url
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${m.tipo==="audio"?"🎤 ":""}${esc(m.texto)}</div>`:"")
+    : m.tipo==="contato" ? contatoZap(m.texto)
     : m.texto ? textoZap(m.texto) : esc(`[${m.tipo}]`);
   // F332 · apagada no WhatsApp: a equipe continua vendo o que foi escrito, riscado
   const apag = m.apagada_em ? `<div class="zap-apag">${zic("proibido",13)}${m.direcao==="entrada"?"O cliente apagou esta mensagem":m.alterar&&m.alterar.acao==="apagar"?`Apagada por ${esc((D.colPorId.get(m.alterar.por)||{}).nome||"escritório")}`:"Apagada no celular"} em ${diaZap(m.apagada_em)}, ${horaSP(m.apagada_em)}</div>` : "";
@@ -18656,6 +18661,36 @@ function bolhaZap(m, cli, seguida){
          title="a IA diz que documento é e a qual caso vai; você confere e junta"><span aria-hidden="true">✨ Juntar</span><span class="sr-only">✨ juntar ao caso</span></button>`:""}
     </div></div>`
     + (reac.length?`<span class="zap-reac ${m.direcao==="saida"?"saida":""}" title="${esc(reac.map(r=>(r.de==="cliente"?"cliente":"escritório")+" "+r.emoji).join(" · "))}">${reac.map(r=>esc(r.emoji)).join("")}</span>`:"");
+}
+// F555 · cartão de contato recebido: a ponte grava "👤 Nome · 5516…" (uma linha por contato); daqui se conversa, salva, copia e liga
+function contatoZap(txt){
+  const linhas = String(txt||"").split("\n").filter(l=>l.trim());
+  if(!linhas.length) return esc("[contato]");
+  return linhas.map(l=>{
+    const [nome, ...nums] = l.replace(/^👤\s*/,"").split(" · ");
+    const num = (nums[0]||"").replace(/\D/g,"");
+    if(!num) return `<div class="zap-ct"><b>👤 ${esc(nome||"Contato")}</b><span class="meio-sub">Número não veio; veja no celular.</span></div>`;
+    const ficha = clientesDoTelefone(num)[0];
+    return `<div class="zap-ct" data-ct-num="${num}" data-ct-nome="${esc(nome||"")}">
+      <b>👤 ${esc(nome||"Contato")}</b><span>${esc(foneZap(num))}${ficha?` · ficha de ${esc(ficha.nome)}`:""}</span>
+      <span class="zap-ct-bts">
+        <button class="btn-mini" onclick="contatoAcao(this,'conv')" title="Conversar com este número no WhatsApp do CRM">Conversar</button>
+        <button class="btn-mini" onclick="contatoAcao(this,'salvar')" title="${ficha?"Abrir a ficha deste número":"Salvar: cadastrar como cliente ou abrir conversa"}">${ficha?"Ficha":"Salvar"}</button>
+        <button class="btn-mini" onclick="contatoAcao(this,'copiar')" title="Copiar o número">Copiar</button>
+        <a class="btn-mini" href="tel:+${num}" title="Ligar para este número">Ligar</a>
+      </span></div>`;
+  }).join("");
+}
+function contatoAcao(bt, acao){
+  const ct = bt.closest(".zap-ct"), num = ct.dataset.ctNum, nome = ct.dataset.ctNome;
+  if(acao==="conv") return zapDoNumero(num);
+  if(acao==="copiar") return navigator.clipboard.writeText(foneZap(num)).then(()=>aviso("Número copiado"), ()=>aviso("Não foi possível copiar", true));
+  const ficha = clientesDoTelefone(num);
+  if(ficha.length===1) return fichaComZap(ficha[0].id);
+  novoContatoZap();   // reaproveita a conferência do ＋: ficha existente, Conversar ou Cliente
+  document.getElementById("znc-tel").value = "+"+num;   // com o 55 inteiro: o número formatado perde o DDI na conferência
+  document.getElementById("znc-nome").value = nome;
+  conferirContatoZap();
 }
 // F332 · rascunho por conversa, só neste navegador (localStorage pode faltar: segue sem)
 function rascZap(){ try{ return JSON.parse(localStorage.getItem("crm_zap_rasc")||"{}"); }catch(e){ return {}; } }

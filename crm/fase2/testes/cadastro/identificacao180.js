@@ -62,6 +62,8 @@ const RETRATO = process.env.RETRATO_DIR;
     cartoes.length === 5 && cartoes[0].h === "Documentos e acesso" && cartoes[1].h === "Dados pessoais" && cartoes[2].h === "Contato" && /^Aposentadoria/.test(cartoes[3].h) && /^Contribuições a pagar/.test(cartoes[4].h));   // F282
   // F543 · o quadro Transcrições de Atendimentos fica fora da contagem e aparece à parte
   conf("quadro Transcrições de Atendimentos presente", !!(await p.$(".idf-transc")));
+  // F554 · o quadro Atendimentos presenciais também fica fora da contagem
+  conf("quadro Atendimentos presenciais presente", !!(await p.$(".idf-atend")));
   const tem = (i, rx) => cartoes[i].rots.some(r => rx.test(r));
   conf("Documentos e acesso: CPF, Senha Meu INSS, PIS/NIT, CNIS, Pasta",
     [/^CPF/, /Senha Meu INSS/, /PIS \/ NIT/, /^CNIS/, /Pasta do cliente/].every(rx => tem(0, rx)));
