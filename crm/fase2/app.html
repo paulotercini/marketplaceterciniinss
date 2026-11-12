@@ -720,6 +720,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
     border-top:1px dashed var(--azul);opacity:.5}
   .timeline .autor-nome{font-weight:650;font-size:12px;margin-right:6px}
   .timeline .tl-hora{font-size:11px;color:var(--cinza)}
+  .timeline .tl-editada{background:none;border:0;padding:0 2px;cursor:pointer;font:inherit;text-decoration:underline dotted}
   .timeline .mencao-in{font-weight:700;color:var(--azul)}
   .timeline .tl-acoes{display:inline-flex;gap:2px;align-items:center;opacity:0;transition:opacity .15s}
   .timeline li:hover .tl-acoes,.timeline li:focus-within .tl-acoes{opacity:1}
@@ -6505,7 +6506,6 @@ html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b::after{display:none}
 html[data-tema="v10"] .tr-resumo{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;padding:4px 16px 14px;font-size:13px;color:var(--cinza)}
 /* F383 (12.41) · o resumo fica no alto também com o histórico aberto, e o histórico é vertical, a etapa mais nova no alto */
 html[data-tema="v10"] .tr-resumo{margin:0 16px 10px;padding:10px 12px;border-radius:6px;background:color-mix(in srgb,var(--tc) 7%,#FFFFFF);border-left:3px solid var(--tc)}
-html[data-tema="v10"] .tr-resumo.tr-resumo-longo{background:#FBECEC;border-left-color:var(--venc)}
 html[data-tema="v10"] .tr-par{all:unset;cursor:pointer;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;margin:-4px 16px 12px;padding:8px 12px;border-radius:6px;font-size:13px;color:var(--texto);background:color-mix(in srgb,var(--tc) 8%,#FFFFFF);border-left:3px solid var(--tc)}
 html[data-tema="v10"] .tr-par small{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--tt)}
 html[data-tema="v10"] .tr-par:focus-visible{outline:2px solid #121212;outline-offset:1px}
@@ -7025,7 +7025,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.52</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.56</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -42824,15 +42824,15 @@ function linhaCaso(k){
 // a etapa ATUAL também grava casos.etapa com a palavra antiga equivalente
 // (PUB_TRILHA), que é a que o portal e o resto do CRM já entendem.
 // Etapa: "Grupo|Nome" abre grupo; "*" na frente = só se houver; "#" = execução.
-// F184 · as quatro fases são UMA escala que escurece e esfria rumo ao verde-petróleo
-// da casa: o caso "amadurece" do Escritório ao Judicial. Nenhuma fase usa vermelho
+// F545 · as fases seguem as cores dos quadros do caso (LC_FASE): Escritório verde, INSS azul, Conselho marrom, Judicial e Pagamento roxo
+// (F504). Nenhuma fase usa vermelho
 // nem âmbar, que no CRM querem dizer prazo fatal e prazo perto.
 const COR_FASE = {
-  escritorio:{n:"Escritório", c:"#7C8DA6", f:"#EEF1F6", t:"#3E4F68"},
+  escritorio:{n:"Escritório", c:"#0E5C58", f:"#E6F0EF", t:"#0B4744"},
   inss:      {n:"INSS",       c:"#4F78B0", f:"#E9F0F8", t:"#2B4C7A"},
-  conselho:  {n:"Conselho",   c:"#2C7A93", f:"#E4F1F4", t:"#1C5568"},
-  judicial:  {n:"Judicial",   c:"#0E5C58", f:"#E6F0EF", t:"#0B4744"}};
-const COR_EXEC = {c:"#A5187F", f:"#FDF2F9", t:"#7E1260"};
+  conselho:  {n:"Conselho",   c:"#8A5A1E", f:"#F5EEE4", t:"#6B4517"},
+  judicial:  {n:"Judicial",   c:"#6B3FA0", f:"#F0EAF7", t:"#4E2D78"}};
+const COR_EXEC = {c:"#6B3FA0", f:"#F0EAF7", t:"#4E2D78"};
 const DOCS_AGUARDO = ["relatório médico","PPP e LTCAT da empresa","prontuário médico","documento do RH ou empregador",
   "cópia do processo administrativo","CTPS e carnês","documentos pessoais","acesso gov.br"];
 const EXEC_TRILHA = ["#Execução|Trânsito em julgado","#Implantação do benefício","#Cálculos (contadoria ou INSS)",
@@ -45470,11 +45470,12 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
           `<button class="tl-mais-it" role="menuitem" onclick="copiar(${esc(JSON.stringify(corpo))},'Texto copiado')" title="Copiar o texto">Copiar<span class="sr-only"> o texto</span></button>`,
           itemLevarAndamento(a),
           pzE && pzE.resp ? `<button class="tl-mais-it" role="menuitem" onclick="desfazerCumprimento('${pzE.resp.id}')" title="Desfazer o registro do prazo">Desfazer<span class="sr-only"> o registro do prazo</span></button>` : "",
+          a.autor_id===eu.id&&a.origem==="app"&&!rp ? `<button class="tl-mais-it" role="menuitem" onclick="editarAndamento('${a.id}')" title="Editar este comentário; a versão anterior fica no histórico">Editar<span class="sr-only"> este comentário</span></button>` : "",
           a.autor_id===eu.id&&a.origem==="app" ? `<button class="tl-mais-it perigo" role="menuitem" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})" title="Apagar este comentário">Apagar<span class="sr-only"> este comentário</span></button>` : "",
         ])}</span>
     </span>` : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
-    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${(h=>`<span class="tl-dt">${fmtTS(a.criado_em).slice(0,5)}${h?" · ":""}</span>${h}`)(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz && !pzE?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}${rp?rp.chip:""}<span class="tl-cab-fim">${barra}${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo${pzE && pzE.est==="vivo" && limpaRepPz(tp?tp.resto:corpo)===limpaRepPz(tituloNotaPz(a)) ? " tl-corpo-rep" : ""}">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${rp?rp.anexos:""}${pzE?faixaPrazoNota(a, pzE):""}${pzE && pzE.est==="vivo" && _cumprindo!==a.id ? "" : tarefasCartao(a)}${chipsReacao}${resposta||""}${raiz?caixaRespInline(a):""}</span>`;   // F244 · as ações na linha do autor
+    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${(h=>`<span class="tl-dt">${fmtTS(a.criado_em).slice(0,5)}${h?" · ":""}</span>${h}`)(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${a.editado_em?`<button class="tl-hora tl-editada" onclick="verEdicoes('${a.id}')" title="editada em ${esc(fmtTS(a.editado_em))}; ver as versões anteriores">· editada</button>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz && !pzE?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}${rp?rp.chip:""}<span class="tl-cab-fim">${barra}${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo${pzE && pzE.est==="vivo" && limpaRepPz(tp?tp.resto:corpo)===limpaRepPz(tituloNotaPz(a)) ? " tl-corpo-rep" : ""}">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${rp?rp.anexos:""}${pzE?faixaPrazoNota(a, pzE):""}${pzE && pzE.est==="vivo" && _cumprindo!==a.id ? "" : tarefasCartao(a)}${chipsReacao}${resposta||""}${raiz?caixaRespInline(a):""}</span>`;   // F244 · as ações na linha do autor
 }
 // F41 · RESPONDER de qualquer comentário: arma o responde_a e o próximo
 // Registrar entra aninhado no comentário original (como a conclusão de
@@ -50269,6 +50270,42 @@ async function apagarAndamento(id, jaNoTodo){
   }
   abrirFicha(clienteAberto);
 }
+// F544 · quem escreveu edita a anotação; o gatilho andamento_editado guarda a versão anterior
+// (andamentos_editados) e, se ela já foi ao To Do, o texto antigo para a sincronização trocar o bloco lá
+function editarAndamento(id){
+  const a = (D._andsFicha||[]).find(x=>x.id===id) || (D.and30||[]).find(x=>x.id===id); if(!a) return;
+  const pz = RX_PRAZO_AND.exec(a.texto||"");
+  caixa(`<h3 style="margin:0 0 4px">Editar anotação</h3>
+    <p class="meio-sub" style="margin:0 0 8px">A versão anterior fica no histórico do caso (⋯ do caso, Apagadas).${pz?" O carimbo do prazo não muda.":""}</p>
+    <textarea id="ed-and" rows="6" aria-label="texto da anotação" style="width:100%;box-sizing:border-box">${esc(pz ? a.texto.slice(pz[0].length) : (a.texto||""))}</textarea>
+    <div style="display:flex;gap:6px;justify-content:flex-end;margin-top:8px">
+      <button class="btn-mini" onclick="fecharCaixa()">Cancelar</button>
+      <button class="btn-mini pri" id="ed-and-ok" onclick="gravarEdicaoAndamento('${id}')">Salvar</button></div>`);
+  setTimeout(()=>{ const t=document.getElementById("ed-and"); if(t){ t.focus(); t.setSelectionRange(t.value.length, t.value.length); } }, 0);
+}
+async function gravarEdicaoAndamento(id){
+  const a = (D._andsFicha||[]).find(x=>x.id===id) || (D.and30||[]).find(x=>x.id===id); if(!a) return;
+  const pz = RX_PRAZO_AND.exec(a.texto||""), corpo = ((document.getElementById("ed-and")||{}).value||"").trim();
+  if(!corpo) return aviso("Escreva o texto ou use Apagar");
+  const texto = (pz ? pz[0] : "") + corpo;
+  if(texto===a.texto){ fecharCaixa(); return; }
+  try{ await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({texto})}); }
+  catch(e){ return aviso("Não editou: tente de novo"); }
+  const em = new Date().toISOString();
+  for(const l of [D._andsFicha, D.and30]) for(const b of (l||[])) if(b.id===id){ b.texto = texto; b.editado_em = em; }
+  fecharCaixa();
+  aviso("Anotação editada: a versão anterior fica no histórico do caso");
+  abrirFicha(clienteAberto);
+}
+async function verEdicoes(id){
+  let ls;
+  try{ ls = await api(`/rest/v1/andamentos_editados?andamento_id=eq.${id}&select=*&order=editado_em.desc`); }
+  catch(e){ return aviso("O histórico das edições ainda não está disponível"); }
+  const nome = c => ((D.colPorId.get(c)||{}).nome||"").split(" ")[0] || "alguém";
+  caixa(`<h3 style="margin:0 0 8px">Versões anteriores</h3>${(ls||[]).length ? `<ul class="apagadas">${ls.map(x=>`<li class="apagada">
+    <div class="meio-sub">Substituída por <b>${esc(nome(x.editado_por))}</b> em ${esc(fmtTS(x.editado_em))}</div>
+    <div class="apagada-txt">${esc(x.texto_antes||"")}</div></li>`).join("")}</ul>` : `<p class="meio-sub">Nenhuma versão anterior registrada.</p>`}`);
+}
 // F433 · o histórico do caso: as anotações e os prazos apagados, do mais recente ao mais antigo
 async function verApagadas(casoId){
   const k = D.casoPorId.get(casoId); if(!k) return;
@@ -50279,6 +50316,7 @@ async function verApagadas(casoId){
   const marcadas = (await api(`/rest/v1/andamentos?caso_id=eq.${casoId}&excluir=eq.true&select=id,autor_id,texto,criado_em&order=criado_em.desc`).catch(()=>[])||[])
     .map(x=>({...x, apagado_por:x.autor_id, apagado_em:null}));
   ls = [...marcadas, ...(ls||[])];
+  const eds = (await api(`/rest/v1/andamentos_editados?caso_id=eq.${casoId}&select=*&order=editado_em.desc&limit=200`).catch(()=>[])) || [];
   const nome = id => ((D.colPorId.get(id)||{}).nome||"").split(" ")[0] || "alguém";
   const tfs = x => (x.tarefas||[]).map(t=>`${t.natureza==="fatal"?"prazo fatal":t.papel==="revisa"?"revisão":"tarefa"} de ${esc(nome(t.colaborador_id))}${t.lembrar_em?` para ${esc(fmt(t.lembrar_em))}`:""}${t.concluida_em?" (concluída)":""}`).join("; ");
   caixa(`<h3 style="margin:0 0 4px">Anotações apagadas <small class="meio-sub">· ${esc(tituloCaso(k))}</small></h3>
@@ -50286,7 +50324,10 @@ async function verApagadas(casoId){
     ${(ls||[]).length ? `<ul class="apagadas">${ls.map(x=>`<li class="apagada">
       <div class="meio-sub">Escrita por <b>${esc(nome(x.autor_id))}</b> em ${esc(fmtTS(x.criado_em))} · apagada${x.apagado_por?` por <b>${esc(nome(x.apagado_por))}</b>`:""}${x.apagado_em ? ` em ${esc(fmtTS(x.apagado_em))} às ${esc(new Date(x.apagado_em).toLocaleTimeString("pt-BR",{timeZone:"America/Sao_Paulo",hour:"2-digit",minute:"2-digit"}))}` : "; o texto ainda consta no Microsoft To Do"}</div>
       <div class="apagada-txt">${esc(x.texto||"")}</div>${tfs(x)?`<div class="meio-sub">Tinha: ${tfs(x)}</div>`:""}</li>`).join("")}</ul>`
-      : `<p class="meio-sub">Nenhuma anotação apagada neste caso.</p>`}`);
+      : `<p class="meio-sub">Nenhuma anotação apagada neste caso.</p>`}
+    ${eds.length ? `<h3 style="margin:12px 0 4px">Anotações editadas</h3><ul class="apagadas">${eds.map(x=>`<li class="apagada">
+      <div class="meio-sub">Versão anterior, substituída por <b>${esc(nome(x.editado_por))}</b> em ${esc(fmtTS(x.editado_em))}</div>
+      <div class="apagada-txt">${esc(x.texto_antes||"")}</div></li>`).join("")}</ul>` : ""}`);
 }
 
 // Lembrar em = quando agir + POR QUÊ (padrão dos bons sistemas: data com motivo)
