@@ -55,7 +55,7 @@ const RETRATO = process.env.RETRATO_DIR;
   conf(`cliente sem endereço: 50% completo, 5 lacunas e um chip (${JSON.stringify(falta)})`,
     /Cadastro 50% completo · 5 lacunas nas peças/.test(comp) && falta.length === 5 && chips.length === 1 && chips[0].t === "endereço" && chips[0].tag === "BUTTON");
   conf("a barra diz 50", (await p.getAttribute('.idf-comp [role="progressbar"]', "aria-valuenow")) === "50");
-  const cartoes = await p.$$eval(".idf-card:not(.idf-transc)", cs => cs.map(c => ({ h: c.querySelector("h3").textContent,
+  const cartoes = await p.$$eval(".idf-card:not(.idf-transc):not(.idf-atend)", cs => cs.map(c => ({ h: c.querySelector("h3").textContent,
     rots: [...c.querySelectorAll(".cad-campo > label")].map(l => l.textContent.replace(/\s+/g, " ").trim()) })));
   // F277 · o quarto cartão é a Aposentadoria, ao lado de Contato
   conf("cinco cartões na ordem: Documentos e acesso, Dados pessoais, Contato, Aposentadoria e Contribuições a pagar",
