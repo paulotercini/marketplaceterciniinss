@@ -715,6 +715,8 @@ A **F544** (13.52, pedido do Paulo de 11.11.2026): quem escreveu a anotação a 
 
 A **F546** (13.54, pedidos do Paulo de 12.11.2026): no Dashboard do caso, "Ver anotações anteriores" e "Ver andamentos anteriores" saíram do cabeçalho dos cartões e ficam no fim da linha de botões, à direita (`dbAnteriores` vai ao fim de `.ae-acoes.db-acoes` no Escritório e, por `dbBotoes(k, aba, dig, sis, fim)`, ao fim de `.db-bts` no INSS, no CRPS e no Judicial); na coluna estreita e no celular descem a uma linha própria, alinhados à direita. O cartão do INSS mostra o último comentário do PAT (o andamento `origem = pat` cujo `origem_id` não começa por `situacao:`, `importado:`, `evento:` ou `atualizacao:`), escrito "Comentário do INSS:" ou "Comentário do escritório:", e "Ver comentários anteriores (N)" abre os comentários anteriores logo abaixo do cartão; sem comentário, vale o último andamento do PAT, como antes. Teste: `f466.js` (49 itens).
 
+A **F547** (13.55, pedido do Paulo de 12.11.2026): o cartão "Último andamento no CRPS" do Dashboard do caso lista os três últimos andamentos do e-SISREC com o status como está na tela do portal (`e.bruto`), do mais novo ao mais antigo e agrupados por dia (`dbListaDias(itens, max, desc)`, como o cartão do PJe), com o documento mais recente dos três; "Ver andamentos anteriores" abre os demais com o mesmo texto. Teste: `f466.js` (51 itens).
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

@@ -49,7 +49,9 @@ and(kA, -3, "Escritório · Laudo anexado em resposta à exigência.", { origem:
 const cB = cli("Jorge Fictício Paralelo");
 const kB = base(cB, { origem_lista: "🖥 Conselho de Recursos", beneficio: "Aposentadoria por idade", especie: "B41", fase: "conselho", crps_nups: ["35014000001202699"],
   crps: [{ nup: "35014000001202699", eventos: [{ data: iso(-30), tipo: "tramitacao", resumo: "Recurso protocolado", bruto: "Requerimento protocolado - Tarefa" },
-    { data: iso(-6), tipo: "tramitacao", resumo: "Encaminhado à Junta de Recursos", bruto: "Encaminhado" }] }],
+    { data: iso(-8)+" 10:00:00", tipo: "tramitacao", resumo: "Distribuído", bruto: "Distribuição automática - 26ª JR" },
+    { data: iso(-6)+" 09:00:00", tipo: "tramitacao", resumo: "Encaminhado", bruto: "Encaminhamento automático - 26ª JR para Composição" },
+    { data: iso(-6)+" 11:30:00", tipo: "tramitacao", resumo: "Encaminhado à Junta de Recursos", bruto: "Criação de subtarefa - Número do protocolo GET: 000000000" }] }],
   processos: [{ numero: "50000420420264036102", papel: "ms", classe: "Mandado de Segurança" }],
   ronda: { expedientes: { "50000420420264036102|1º grau": { em: iso(-1)+"T10:00:00", grau: "1º grau", host: "pje1g.trf3.jus.br", itens: [{ ato: "Intimação", destinatario: "JORGE FICTICIO", limite: iso(10), fechado: false }] } },
     detalhes: { "50000420420264036102|1º grau": { em: iso(-1)+"T10:00:00", grau: "1º grau", "Competência": "JUIZADO ESPECIAL FEDERAL CÍVEL", "Órgão julgador": "1ª Vara Gabinete JEF de Catanduva",
@@ -170,7 +172,13 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   ({ p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cB, kB));
   conf("o cartão do Conselho diz CRPS (F499)", /^Último andamento no CRPS$/.test((await p.locator(".db-and.crps h3").textContent()).trim()));
   conf("dois cartões de processo ficam empilhados à direita", await p.locator(".db-col-dir .db-and").count() === 2);
-  conf("no Conselho o Último andamento é do e-Recursos", await p.locator(".db-and.crps").count() === 1 && /Encaminhado à Junta/.test(await p.locator(".db-and.crps .db-mov").textContent()));
+  conf("no Conselho o Último andamento é do e-Recursos", await p.locator(".db-and.crps").count() === 1);
+  const crpsLis = await p.locator(".db-and.crps .db-movs li").allTextContents();
+  console.log("  [B] crps:", JSON.stringify(crpsLis));
+  conf("o CRPS lista os três últimos andamentos com o status cru do e-SISREC, o mais novo no alto (F547)",
+    /Criação de subtarefa/.test(crpsLis[0]) && /Criação de subtarefa[\s\S]*Encaminhamento automático - 26ª JR para Composição/.test(crpsLis[0])
+    && crpsLis.some(t=>/Distribuição automática - 26ª JR/.test(t)) && !crpsLis.join(" ").includes("Requerimento protocolado"));
+  conf("o quarto andamento fica em Ver andamentos anteriores (1) (F547)", /\(1\)/.test(await p.locator(".db-and.crps .db-ant").textContent()));
   conf("o mandado de segurança ganha o segundo cartão, Judicial", await p.locator(".db-and.jud").count() === 1 && /Em paralelo · mandado de segurança/.test(await p.locator(".db-and.jud .db-par").textContent()) && /Conclusos/.test(await p.locator(".db-and.jud .db-rel").textContent()));
   conf("a data do cartão é a do movimento, não a da importação (F492)", /há 5 dias/.test(await p.locator(".db-and.jud .db-when").textContent()));
   const lis = await p.locator(".db-and.jud .db-rel > li").allTextContents(), jud = await p.locator(".db-and.jud").textContent();
