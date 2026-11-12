@@ -40,7 +40,10 @@ and(kA, -20, "Anotação antiga: pedido protocolado.");
 const nA = and(kA, -2, "Aguardar a perícia. Cliente avisada da data; levar os exames do ortopedista.");
 and(kA, -1, "Exames separados na recepção.", { responde_a: nA.id, autor_id: MARCOS, h: "15:00" });
 and(kA, -10, "Requerimento recebido. Em análise", { origem: "pat", origem_id: "situacao:1700000801:Em análise", autor_id: null });
-and(kA, -4, "Perícia médica agendada. Agendado para 20/11/2026", { origem: "pat", origem_id: "pat:1700000801:ag1", autor_id: null });
+and(kA, -4, "Perícia médica agendada. Agendado para 20/11/2026", { origem: "pat", origem_id: "evento:1700000801:pericia:2026-11-20", autor_id: null });
+// F546 · os comentários do PAT: o mais recente no cartão, os anteriores no botão
+and(kA, -6, "INSS · Apresentar o laudo do ortopedista.", { origem: "pat", origem_id: "880001", autor_id: null });
+and(kA, -3, "Escritório · Laudo anexado em resposta à exigência.", { origem: "pat", origem_id: "880002", autor_id: null });
 
 // B · Conselho com mandado de segurança em paralelo
 const cB = cli("Jorge Fictício Paralelo");
@@ -128,14 +131,18 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("os cartões dizem o lugar do andamento (F486)", /^Último andamento no Escritório$/.test((await p.locator(".db-desp h3").textContent()).trim()) && /^Último andamento no INSS$/.test((await p.locator(".db-and h3").textContent()).trim()));
   conf("o Último despacho mostra a última anotação da equipe e a resposta", /Aguardar a perícia/.test(await p.locator(".db-desp .db-txt").textContent()) && /Marcos: Exames separados/.test(await p.locator(".db-desp .db-resp").textContent()));
   conf("o cabeçalho diz quando e quantas anteriores", /ontem|há 2 dias/.test(await p.locator(".db-desp .db-when").textContent()) && /Ver anotações anteriores \(1\)/.test(await p.locator(".db-desp .db-ant").textContent()));
-  conf("Anotar (verde) e Prorrogar, sem Concluir (F467)", (await p.locator(".db-desp .db-acoes button").allTextContents()).join(",") === "Anotar,Prorrogar" && await p.evaluate(() => { const b = document.querySelector('.db-desp [data-ae="anotar"]'); const c = getComputedStyle(b); return c.color === "rgb(255, 255, 255)" && c.backgroundColor !== "rgb(255, 255, 255)"; }));
+  conf("Anotar (verde) e Prorrogar, sem Concluir (F467)", (await p.locator(".db-desp .db-acoes .btn-mini").allTextContents()).join(",") === "Anotar,Prorrogar" && await p.evaluate(() => { const b = document.querySelector('.db-desp [data-ae="anotar"]'); const c = getComputedStyle(b); return c.color === "rgb(255, 255, 255)" && c.backgroundColor !== "rgb(255, 255, 255)"; }));
   conf("o ícone do despacho é o do AdvPrev", await p.locator('.db-desp .db-logo img[src="icone-192.png"]').count() === 1);
   conf("o Último andamento fica ao lado do Escritório (F499)", await p.evaluate(() => { const a = document.querySelector(".db-col-dir .db-and"), d = document.querySelector(".db-col-esq .db-desp"); if(!a||!d) return false; const ra = a.getBoundingClientRect(), rd = d.getBoundingClientRect(); return ra.left >= rd.right && Math.abs(ra.top - rd.top) < 200; }));
   conf("o campo de escrever fica abaixo do Escritório e só na coluna dele (F500)", await p.evaluate(() => { const e = document.querySelector(".db-col-esq textarea, .db-col-esq [contenteditable]"), d = document.querySelector(".db-col-esq .db-desp"); return !!e && !!d && e.getBoundingClientRect().top >= d.getBoundingClientRect().bottom - 1 && !document.querySelector(".db-col-dir textarea"); }));
   conf("os números não aparecem fechados", await p.locator(".db-n").count() === 0);
   conf("a linha do tempo fica escondida enquanto o Dashboard está fechado", !(await vis(p, ".caso-dir .timeline")));
-  conf("o Último andamento é do Meu INSS, com a situação", await p.locator(".db-and").count() === 1 && /Perícia médica agendada/.test(await p.locator(".db-and .db-mov").textContent()) && /Em análise/.test(await p.locator(".db-and .db-sub").textContent()) && await p.locator(".db-and .db-logo[aria-label='Abrir no Meu INSS']").count() === 1);
-  conf("o Último andamento conta os anteriores", /Ver andamentos anteriores \(1\)/.test(await p.locator(".db-and .db-ant").textContent()));
+  conf("o cartão do INSS mostra o último comentário, com a situação (F546)", await p.locator(".db-and").count() === 1 && /Comentário do escritório: Laudo anexado/.test(await p.locator(".db-and .db-mov").textContent()) && !/Perícia médica/.test(await p.locator(".db-and .db-mov").textContent()) && /Em análise/.test(await p.locator(".db-and .db-sub").textContent()) && await p.locator(".db-and .db-logo[aria-label='Abrir no Meu INSS']").count() === 1);
+  conf("o cartão do INSS conta os comentários anteriores (F546)", /Ver comentários anteriores \(1\)/.test(await p.locator(".db-and .db-ant").textContent()));
+  conf("os anteriores ficam no canto direito da linha de botões, em todos os quadros (F546)", await p.evaluate(() => [[".db-desp .db-acoes", ".btn-mini"], [".db-and .db-bts", ".db-bt"]].every(([l, b]) => {
+    const a = document.querySelector(l + " > .db-ant"), u = [...document.querySelectorAll(l + " " + b)].pop(); if(!a) return false;
+    const ra = a.getBoundingClientRect(), rl = document.querySelector(l).getBoundingClientRect(), ru = u ? u.getBoundingClientRect() : null;
+    return (!ru || ra.left > ru.right || ra.top >= ru.bottom - 1) && rl.right - ra.right < 4; })) && await p.locator(".db-cab .db-ant").count() === 0);
   const alvos = await p.evaluate(() => [...document.querySelectorAll(".db button, .db a")].map(b => { const r = b.getBoundingClientRect(); return Math.min(r.width, r.height); }));
   conf(`no computador todo alvo tem 32 px ou mais (${Math.min(...alvos)})`, alvos.length && Math.min(...alvos) >= 32);
   await p.screenshot({ path: path.join(OUT, "pc-fechado.png") });
@@ -154,7 +161,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("Prorrogar do retorno oferece as datas", await p.locator(".db-desp .ae-dias .esp-it").count() === 4);
   await p.locator('.db-desp [data-ae="cancelar"]').click(); await p.waitForTimeout(200);
   await p.locator(".db-and .db-ant").click(); await p.waitForTimeout(400);
-  conf("Ver andamentos anteriores abre a lista logo abaixo do cartão (F511)", await vis(p, ".db-and .db-pn") && /Requerimento recebido/.test(await p.locator(".db-and .db-pn").textContent()) && await p.locator(".db-dash").count() > 0 && /Ocultar/.test(await p.locator(".db-and .db-ant").textContent()));
+  conf("Ver andamentos anteriores abre a lista logo abaixo do cartão (F511)", await vis(p, ".db-and .db-pn") && /Apresentar o laudo/.test(await p.locator(".db-and .db-pn").textContent()) && !/Requerimento recebido/.test(await p.locator(".db-and .db-pn").textContent()) && await p.locator(".db-dash").count() > 0 && /Ocultar/.test(await p.locator(".db-and .db-ant").textContent()));
   await p.locator(".db-and .db-ant").click(); await p.waitForTimeout(300);
   conf("Ocultar fecha a lista", await p.locator(".db-and .db-pn").count() === 0);
   await ctx.close();
@@ -219,6 +226,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     const d = document.querySelector(".caso-dir"); return { alvo: Math.min(...alvos), larg: d.scrollWidth <= d.clientWidth + 1 && document.documentElement.scrollWidth <= innerWidth + 1 }; });
   conf(`no celular todo alvo tem 44 px ou mais (${m.alvo})`, m.alvo >= 44);
   conf("no celular nada passa da tela", m.larg);
+  conf("no celular os anteriores ficam numa linha própria, à direita, no fim dos botões (F546)", await p.evaluate(() => [".db-desp .db-acoes", ".db-and .db-bts"].every(l => {
+    const a = document.querySelector(l + " > .db-ant"); if(!a) return false; const ra = a.getBoundingClientRect(), rl = document.querySelector(l).getBoundingClientRect();
+    return rl.bottom - ra.bottom < 4 && getComputedStyle(a).textAlign === "right"; })));
   await p.screenshot({ path: path.join(OUT, "celular.png") });
   await ctx.close();
 

@@ -3899,7 +3899,8 @@ html[data-tema="v10"] body .app .painel[data-p="2"] .db-grade-in.com-lado .db-co
 .app.celular .db-logo{width:44px;height:44px}
 .app.celular .db-cab{display:grid;grid-template-columns:auto 1fr;gap:4px 10px}
 .app.celular .db-cab .db-logo{grid-row:1/3}
-.app.celular .db-cab .db-ant{grid-column:1/-1;margin-left:0;justify-self:end}
+.db-bts .db-ant,.db-acoes .db-ant{color:color-mix(in srgb,var(--db-cor,var(--db-acc)) 80%,#000);align-self:center}
+.app.celular :is(.db-bts,.db-acoes) .db-ant{flex:1 1 100%;text-align:right}
 .app.celular .db-ant{min-height:44px}
 .app.celular .db-n{padding:10px 4px;min-height:44px}
 html[data-tema="v10"] .ag-txt .ag-oque{font-weight:400;color:var(--cinza,#4A4944)}
@@ -7025,7 +7026,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.53</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.54</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11949,12 +11950,14 @@ function dbDespacho(k, ands){
     : `<p class="db-vazio">Sem anotação da equipe neste caso.</p>`;
   // Prorrogar só com data a mover, o retorno ou a volta à fila (F473, pedido do Paulo de 09.11.2026); sem ela, só o Anotar
   const prorroga = !!k.prazo && reagendavel(itemDoCaso(k));
+  // F546 · "Ver anotações anteriores" no canto direito da linha do Anotar (pedido do Paulo de 12.11.2026)
+  const ant = dbAnteriores(k, Math.max(0, notas.filter(a=>!a.responde_a).length-1), "anotações", aberto, `dbVerAnt('${k.id}')`);
   const acoes = podeGravarCaso() ? `<div class="ae-acoes db-acoes">
       <button type="button" class="btn-mini pri" data-ae="anotar">Anotar</button>
-      ${prorroga ? `<button type="button" class="btn-mini" data-ae="reagendar" title="Mudar a data do retorno">Prorrogar</button>` : ""}</div><div class="ae-painel" hidden></div>` : "";
+      ${prorroga ? `<button type="button" class="btn-mini" data-ae="reagendar" title="Mudar a data do retorno">Prorrogar</button>` : ""}${ant}</div><div class="ae-painel" hidden></div>`
+    : `<div class="ae-acoes db-acoes">${ant}</div>`;
   return `<section class="db db-desp" aria-label="Último andamento no Escritório" onclick="dbClique(event,this,'${k.id}')">
-    <div class="db-cab"><span class="db-logo" aria-hidden="true">${DB_LOGO_ADV}</span><h3>Último andamento no Escritório</h3><span class="db-when">${nota ? dbQuando(nota.criado_em) : ""}</span>
-      ${dbAnteriores(k, Math.max(0, notas.filter(a=>!a.responde_a).length-1), "anotações", aberto, `dbVerAnt('${k.id}')`)}</div>
+    <div class="db-cab"><span class="db-logo" aria-hidden="true">${DB_LOGO_ADV}</span><h3>Último andamento no Escritório</h3><span class="db-when">${nota ? dbQuando(nota.criado_em) : ""}</span></div>
     ${corpo}${acoes}${aberto ? dbNumeros(k) : ""}</section>`;
 }
 // F492 · a data do andamento, e não a da importação: o PJe guarda a do movimento
@@ -11983,9 +11986,16 @@ function dbAndamento(k, ands, fase, par){
     const a = pats[0]; if(!a) return "";
     const sit = pats.map(x=>String(x.origem_id||"")).find(o=>o.startsWith("situacao:"));
     const prot = protocolosDe(k)[0];
-    it = {cls:"", nome:"Meu INSS", onde:"INSS", logo:iconeFonte("inss"), iso:dataDoDb(a), txt:dbLead(a.texto), sub:sit ? sit.split(":").slice(2).join(":") : especieDoCaso(k),
-      abrir: prot ? `abrirMeuInss('${escJs(prot)}')` : "", n:pats.length-1, aba:"inss", rot:"andamentos",
-      ant:()=>dbListaDias(pats.slice(1).map(x=>({d:dataSP(dataDoDb(x)), partes:[x.texto]}))).html, bts:dbBotoes(k, "inss", (String(a.origem_id||"").match(/:(\d{6,})/)||[])[1]||soDig(prot||""))};
+    // F546 · os comentários do PAT (INSS e escritório), o mais recente à vista e os anteriores no botão
+    // (pedido do Paulo de 12.11.2026); sem comentário, o último registro do PAT, como antes
+    const coms = pats.filter(x=>!/^(?:situacao|importado|evento|atualizacao):/.test(String(x.origem_id||"")));
+    const vs = coms.length ? coms : pats, c = vs[0];
+    const m = /^(INSS|Escrit[óo]rio)\s*·\s*([\s\S]*)$/.exec(String(c.texto||""));
+    it = {cls:"", nome:"Meu INSS", onde:"INSS", logo:iconeFonte("inss"), iso:dataDoDb(c),
+      txt: m ? `<b>${m[1]==="INSS" ? "Comentário do INSS" : "Comentário do escritório"}:</b> ${esc(m[2].slice(0,1000))}` : dbLead(c.texto),
+      sub:sit ? sit.split(":").slice(2).join(":") : especieDoCaso(k),
+      abrir: prot ? `abrirMeuInss('${escJs(prot)}')` : "", n:vs.length-1, aba:"inss", rot:coms.length ? "comentários" : "andamentos",
+      ant:()=>dbListaDias(vs.slice(1).map(x=>({d:dataSP(dataDoDb(x)), partes:[x.texto]}))).html, bts:f=>dbBotoes(k, "inss", (String(a.origem_id||"").match(/:(\d{6,})/)||[])[1]||soDig(prot||""), "", f)};
   } else if(fase==="conselho"){
     const evs = crpsBlocos(k).flatMap(b=>(b.eventos||[]).map(e=>({e, nup:b.nup}))).sort((a,b)=>(isoCrps(a.e.data)||"")<(isoCrps(b.e.data)||"")?1:-1);
     const x = evs[0]; if(!x) return "";
@@ -11994,7 +12004,7 @@ function dbAndamento(k, ands, fase, par){
       txt: decideOCaso(x.e) ? `<b>${esc(x.e.resumo||x.e.bruto||"")}</b>` : esc(x.e.resumo||x.e.bruto||""), sub:"",
       doc: doc ? `<button type="button" class="db-doc" onclick="abrirDecisao('${escJs(doc.storage)}')">${esc(doc.nome||"Documento")}</button>` : "",
       abrir: x.nup ? `window.open('${escJs(linkERecursos(x.nup))}','_blank','noopener')` : "", n:evs.length-1, aba:"crps", rot:"andamentos",
-      ant:()=>dbListaDias(evs.slice(1).map(y=>({d:isoCrps(y.e.data)||"", partes:[y.e.resumo||y.e.bruto||""]}))).html, bts:dbBotoes(k, "crps", soDig(x.nup||""))};
+      ant:()=>dbListaDias(evs.slice(1).map(y=>({d:isoCrps(y.e.data)||"", partes:[y.e.resumo||y.e.bruto||""]}))).html, bts:f=>dbBotoes(k, "crps", soDig(x.nup||""), "", f)};
   } else if(fase==="judicial"){
     let pj = andamentosPje(ands).sort((a,b)=>dataDoDb(a)<dataDoDb(b)?1:-1); const a = pj[0]; if(!a) return "";
     const num = numDoAndPje(a), dig = num ? soDig(num) : "";
@@ -12008,7 +12018,7 @@ function dbAndamento(k, ands, fase, par){
     const rot = pg.filter(x=>movDeRotina(x) && dataDoDb(x)>=desde).length;
     it = {cls:"jud", nome:sis, onde:sis, logo:iconeFonte({"PJe":"pje","e-SAJ":"esaj","eproc":"eproc"}[sis]||"pje"), iso:dataDoDb(a), sub:"",
       lista: dbSituacaoJud(k, dig, par, g, pg) + dbRelevantes(vistos) + (rot ? `<p class="db-rot">+${rot} ${rot===1?"movimento":"movimentos"} de rotina</p>` : ""),
-      href, n:resto.length, aba:"cnj", rot:"andamentos", ant:()=>dbMovsPje(resto, 0).html, bts:dbBotoes(k, "cnj", dig, sis)};
+      href, n:resto.length, aba:"cnj", rot:"andamentos", ant:()=>dbMovsPje(resto, 0).html, bts:f=>dbBotoes(k, "cnj", dig, sis, f)};
   } else return "";
   const logo = it.href ? `<a class="db-logo" href="${esc(it.href)}" target="_blank" rel="noopener" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</a>`
     : it.abrir ? `<button type="button" class="db-logo" onclick="${it.abrir}" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</button>`
@@ -12016,10 +12026,9 @@ function dbAndamento(k, ands, fase, par){
   const abre = it.n>0 && !!_dbAndAnt.get(`${k.id}|${it.aba}`);
   const quando = it.soData ? `${fmtBarra(dataSP(it.iso))} · ${(n=>n<=0?"hoje":n===1?"ontem":`há ${n} dias`)(diasEntreIso(dataSP(it.iso), hoje()))}` : dbQuando(it.iso);
   return `<section class="db db-and ${it.cls}" aria-label="Último andamento no ${esc(it.onde)}">
-    <div class="db-cab">${logo}<h3>Último andamento no ${esc(it.onde)}</h3><span class="db-when">${quando}</span>${par ? `<span class="db-par">Em paralelo · mandado de segurança</span>` : ""}
-      ${dbAnteriores(k, Math.max(0, it.n), it.rot, abre, it.n>0 ? `dbVerAnd('${k.id}','${it.aba}')` : `irSubAba('${it.aba}')`)}</div>
-    ${it.lista || `<p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>`}${it.doc||""}${it.bts||""}
-    ${abre ? `<div class="db-pn" role="region" aria-label="Andamentos anteriores no ${esc(it.onde)}"><h4>Andamentos anteriores</h4>${it.ant()}</div>` : ""}</section>`;
+    <div class="db-cab">${logo}<h3>Último andamento no ${esc(it.onde)}</h3><span class="db-when">${quando}</span>${par ? `<span class="db-par">Em paralelo · mandado de segurança</span>` : ""}</div>
+    ${it.lista || `<p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>`}${it.doc||""}${it.bts(dbAnteriores(k, Math.max(0, it.n), it.rot, abre, it.n>0 ? `dbVerAnd('${k.id}','${it.aba}')` : `irSubAba('${it.aba}')`))}
+    ${abre ? `<div class="db-pn" role="region" aria-label="${it.rot==="comentários" ? "Comentários" : "Andamentos"} anteriores no ${esc(it.onde)}"><h4>${it.rot==="comentários" ? "Comentários" : "Andamentos"} anteriores</h4>${it.ant()}</div>` : ""}</section>`;
 }
 // F509 · as três últimas datas do processo no cartão Judicial (pedido do Paulo de 10.11.2026), sem o
 // prefixo do sistema, a data e o número que o texto do andamento repete; no mesmo dia, um item por movimento
@@ -12125,8 +12134,8 @@ function dbMovsPje(pj, max=3){
 // Detalhes abrem logo abaixo do cartão (pedido do Paulo de 10.11.2026), e Baixar e Claude saíram da aba.
 const _dbPainel = new Map();
 function dbPainel(id, q){ _dbPainel.set(id, _dbPainel.get(id)===q ? "" : q); repintarFicha(); }
-function dbBotoes(k, aba, dig, sis){
-  const ps = processosDaFase(k, aba); if(!ps.length) return "";
+function dbBotoes(k, aba, dig, sis, fim=""){
+  const ps = processosDaFase(k, aba); if(!ps.length) return fim ? `<div class="db-bts">${fim}</div>` : "";
   const i = Math.max(0, ps.findIndex(x=>x.d===dig)), x = ps[i];
   const exp = sis==="PJe" && expedientesDe(k, x.d).length;
   const ab = aba==="cnj" ? (_dbPainel.get(k.id)||"") : "";
@@ -12135,7 +12144,7 @@ function dbBotoes(k, aba, dig, sis){
   const det = aba==="cnj" ? b(`dbPainel('${k.id}','det')`, "Detalhes", "Ver os dados do cabeçalho do processo", "", ab==="det")
     : b(`irSubAba('${aba}')`, "Detalhes", `Abrir a aba ${ROT_FASE[aba]||"do processo"}`);
   const pn = ab==="exp" && exp ? dbExpedientes(k, x) : ab==="det" ? dbDetalhes(k, x) : "";
-  return `<div class="db-bts">${b(`lerProcesso('${k.id}','${aba}',${i})`, "Ler", "Ler o processo inteiro", "pri")}${tela ? b(`telaDoProcesso('${k.id}','${aba}',${i})`, "Tela", tela) : ""}${exp ? b(`dbPainel('${k.id}','exp')`, "Expedientes", "Ver os expedientes do PJe", "", ab==="exp") : ""}${det}${b(`baixarProcesso('${k.id}','${aba}',${i})`, "Baixar", "Baixar os documentos do processo (.zip)")}${b(`claudeDoProcesso('${k.id}','${aba}',${i})`, "Claude", "Pedir ao Claude sobre o processo")}</div>${pn}`;
+  return `<div class="db-bts">${b(`lerProcesso('${k.id}','${aba}',${i})`, "Ler", "Ler o processo inteiro", "pri")}${tela ? b(`telaDoProcesso('${k.id}','${aba}',${i})`, "Tela", tela) : ""}${exp ? b(`dbPainel('${k.id}','exp')`, "Expedientes", "Ver os expedientes do PJe", "", ab==="exp") : ""}${det}${b(`baixarProcesso('${k.id}','${aba}',${i})`, "Baixar", "Baixar os documentos do processo (.zip)")}${b(`claudeDoProcesso('${k.id}','${aba}',${i})`, "Claude", "Pedir ao Claude sobre o processo")}${fim}</div>${pn}`;
 }
 function dbExpedientes(k, x){
   const vs = expedientesDe(k, x.d);
