@@ -86,6 +86,7 @@ export type Contexto = {
   sessao?: { id: string; em: string; ate: string; v?: string } | null;
   cliente: { nome: string; mesmo_telefone: boolean; casos: Caso[] } | null;
   remarcar?: { rotulo: string | null; profissional: string | null; duvida?: boolean; ler?: boolean; classe?: string } | null;
+  pericia?: { tipo: string; data: string; hora: string; local: string | null; profissional: string; ate_hora: string; limite_presenca: string; telefone_em: string } | null;
 };
 
 // as regras fixas: no Managed Agents são o system do agente, e cada mudança das
@@ -447,6 +448,13 @@ export function contexto(x: Contexto) {
       `sem oferecer horários; se ela não quiser, diga que o escritório fica à disposição para agendar quando ela preferir. ` +
       `Se ela pedir outro dia ou horário, peça ao Agendador que ofereça dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, um de manhã e outro à tarde, ` +
       `e que remarque esse atendimento (ou agende um novo, se ele já foi cancelado) quando ela escolher. Não cumprimente de novo e não peça o assunto.\n` : "") +
+    // F549 · a perícia aprovada pelo Ligar: a IA oferece o atendimento presencial de preparação
+    (x.pericia ? `Perícia: a pessoa tem ${x.pericia.tipo} em ${x.pericia.data} às ${x.pericia.hora}${x.pericia.local ? `, em ${x.pericia.local}` : ""}, e o escritório avisou por esta conversa. ` +
+      `Ofereça um atendimento presencial (tipo 002) de preparação com ${x.pericia.profissional === "amanda" ? "a Dra. Amanda" : "o Dr. Paulo"}: ` +
+      `peça ao Agendador vagas desse advogado, de preferência no próprio dia da perícia, terminando até as ${x.pericia.ate_hora}, e, sem vaga, nos dias úteis anteriores. ` +
+      `Ofereça dois horários em frase, sem lista. Se a pessoa não puder vir ao escritório até ${x.pericia.limite_presenca}, ou não quiser vir, ` +
+      `ofereça um telefonema do advogado às 16h de ${x.pericia.telefone_em}; se recusar também, use encaminhar_equipe. ` +
+      `Responda à dúvida sobre a perícia em linguagem simples, sem prometer resultado.\n` : "") +
     (x.modo === "lead" ? `Você já está atendendo este caso novo (${x.respostas} respostas suas até aqui; agende depois de ${Math.max(1, 6 - x.respostas)} respostas).\n`
       : x.modo === "conversa" ? `Você já está conversando com esta pessoa (${x.respostas} respostas suas até aqui).\n` : "");
 }
@@ -748,6 +756,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
         p_modalidade: i.modalidade === "remoto" ? "remoto" : "presencial", p_assunto: String(i.assunto || "") };
       // shortcut: sem a migração f422q no banco, a versão de 4 argumentos confirma; sai quando ela for aplicada
       await banco("zap_plantao_marcado", { ...conf, p_para: para || null }).catch(() => banco("zap_plantao_marcado", conf));
+      await banco("pericia_atendimento_marcado", { p_conversa: conversa, p_data: v.data, p_inicio: v.inicio }).catch(() => null);   // F549
       return { marcado: true, aviso: "o sistema já enviou ao cliente a confirmação com dia, hora e orientações: não repita; se for presencial, informe somente o endereço" };
     },
     async remarcar_atendimento(i: { atendimentoId?: string; novoEventoId?: string }) {
@@ -1350,6 +1359,7 @@ if (typeof Deno !== "undefined") {
       if (!x) return json({ acao: null, aviso: "mensagem já lida ou vencida" });
       x.pagamento = await cfg("zap_dados_pagamento");   // F484 · fica no banco, porque o repositório é público
       x.atendente = await atendenteDe(x.conversa_id).catch(() => null);   // F485 · a sugestão sai na primeira pessoa de quem atende
+      if (x.conversa_id) x.pericia = await rpc("pericia_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F549
       // F521 · Offline: a IA cala, salvo a agenda pedida neste Offline, que ela responde pelo escritório
       const calado = !!x.atendente?.offline && !x.atendente?.iaAgenda;
       if (x.atendente?.offline && x.atendente.iaAgenda) x.atendente = null;
