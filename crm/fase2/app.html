@@ -2955,6 +2955,15 @@ html[data-tema] .proc-mais[open] .tl-mais-menu{transform-origin:top right;transi
 .exp-tab{width:100%;border-collapse:collapse;font-size:13px}.exp-tab th,.exp-tab td{border-bottom:1px solid var(--linha,#e2e2e2);padding:6px 8px;text-align:left;vertical-align:top}
 .exp-tab th{font-weight:600;background:var(--fundo2,#f5f5f2)}.exp-tab td:nth-child(2){white-space:nowrap}.exp-tela{max-width:960px;width:100%}.exp-tela .exp-tab{display:block;overflow-x:auto}
 .zof-salvas{margin-top:10px;display:flex;flex-direction:column;gap:6px}.zof-it{display:flex;gap:6px}.zof-it button:first-child{flex:1;text-align:left;white-space:normal;line-height:1.35}
+/* F549 · 🩺 Perícias */
+.per-grade{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start}
+.per-not{position:sticky;top:8px;border:1px solid var(--borda,#e3e1da);border-radius:10px;padding:12px;background:var(--card,#fff)}
+.per-bts{display:flex;gap:8px;margin:8px 0}
+.per-bts .btn-mini.on{background:#5c2e91;color:#fff;border-color:#5c2e91}
+.per-outra{display:flex;align-items:center;gap:6px;font-size:13px}
+.per-outra input{width:56px}
+.per-lem{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-top:4px;font-size:12px}
+@media (max-width:900px){.per-grade{grid-template-columns:1fr}.per-not{position:static;order:-1}}
 </style>
 <script>
 /* F80 · interruptor do tema v10. ?tema=v10 liga e guarda; ?tema= (vazio)
@@ -8574,6 +8583,7 @@ const TEMA = {
   "marketing":         ["#d64570", "#fdeef3"],
   "recebimentos":      ["#1e6f50", "#e9f5ef"],
   "agenda":            ["#5c2e91", "#f1eafa"],
+  "pericias":          ["#5c2e91", "#f1eafa"],
   "dashboard":         ["#1e4fa3", "#f3f6fb"],
   "novocliente":       ["#1e4fa3", "#f3f6fb"],
 };
@@ -9505,7 +9515,8 @@ function montarSidebar(){
     // entra nas listas, porque é onde o atendente trabalha
     document.getElementById("grupo-dinamicas").innerHTML = [...din, ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
         ["direito","⚖️ Análise de Direito", direitoAlcancado().length||null],
-        ["clientes","👥 Clientes", (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length]]   // F250 · a lista de todos os clientes (nível 0)
+        ["clientes","👥 Clientes", (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length],
+        ["pericias","🩺 Perícias", periciasFuturas().length||null]]   // F250 · a lista de todos os clientes (nível 0)
       .filter(([id])=>pode.includes(id) && !["particulares","rotinas"].includes(id))
       .map(([id,rot,n])=>`<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
         (id==="meudia"&&nVenc)?`<span class="cont venc" title="${nVenc} vencida${nVenc>1?"s":""} · ${n||0} hoje">${n?`${nVenc} · ${n}`:nVenc}</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("");   // F236 · vencidas · hoje, como a tela
@@ -9533,6 +9544,7 @@ function montarSidebar(){
     ["direito","⚖️ Análise de Direito", direitoAlcancado().length||null],
     // a lista de todos os clientes (F250) também na visão do titular, e não só na do colaborador
     ["clientes","👥 Clientes", (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length],
+    ["pericias","🩺 Perícias", periciasFuturas().length||null],   // F549
     ["claude","🤖 Claude", D.sugestoes.length],
     ["docmodelos","📄 Modelos", D.docModelos.length],
     ["quadro","📌 Quadro", null],
@@ -9577,11 +9589,12 @@ function montarSidebar(){
     const vis = document.getElementById("grupo-visoes");
     const tmp = document.createElement("div"); tmp.innerHTML = vis.innerHTML;
     const tira = id => { const el=tmp.querySelector(`[data-v="${id}"]`); if(el) el.remove(); return el; };
-    tira("clientes"); tira("direito"); tira("agenda");
+    tira("clientes"); tira("direito"); tira("agenda"); tira("pericias");
     const nDir = direitoAlcancado().length;
     // F236 · o Importar fica à vista de quem aplica, com o número de coletas esperando
     vis.innerHTML = item("clientes","👥 Clientes",(D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length)   // à vista do titular, e não no "Mais"
       + item("direito","⚖️ Análise de Direito",nDir)
+      + item("pericias","🩺 Perícias",periciasFuturas().length||null)   // F549
       ;   // F420 · o Importar saiu da vista e perdeu o contador: as coletas entram sozinhas e o que pede escolha vai às Novidades
     const mais = ["importante","particulares","rotinas","acervo"].map(id=>{ const x=dd[id];
         return item(id,x[1],x[2]==="🔒"?null:x[2], x[2]==="🔒"?`<span class="priv">🔒 só você</span>`:""); }).join("")
@@ -12304,6 +12317,7 @@ function renderBase(){
   if(visao==="dashboard") return renderDash();
   if(visao==="fase:aposentadoria_futura") return renderCardsApos();   // F218 · os cards, não os casos da fase
   if(visao==="agenda") return renderAgenda();
+  if(visao==="pericias") return renderPericias();
   if(visao==="clientes") return renderClientesTodos();   // F250
   if(visao==="calendario") return renderCalendario();
   if(visao==="particulares") return renderParticulares();
@@ -14209,8 +14223,8 @@ const LISTAS_COLAB = ["meudia","mencoes","whatsapp","calendario","planejado","pe
 // futuras, a Análise de Direito e as perícias; a recepção vê o que atende
 // (cadastro, Escritório, agenda, perícias), sem as listas de processo
 const LISTAS_POR_CARGO = {
-  advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "direito", "agenda"],
-  recepcao: ["meudia","mencoes","whatsapp","planejado","calendario","pessoas","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente"],
+  advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "direito", "agenda", "pericias"],
+  recepcao: ["meudia","mencoes","whatsapp","planejado","calendario","pessoas","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","pericias","novocliente"],
 };
 const listasDoColab = () => soIdentificacao() ? ["agendaq", "clientes", "mencoes", ...(meuNivel()>=1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), ...(podeCadastrar()?["novocliente"]:[])]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
@@ -20438,6 +20452,58 @@ function renderAgenda(){
     +(conf.length?`<h3 class="secao">Aconteceu? Confirme (${conf.length})</h3>`+conf.map(bloco).join(""):"")
     +`<h3 class="secao">Passadas recentes</h3>`+pas.map(bloco).join("");
   document.querySelectorAll(".evento[data-cli]").forEach(el=>el.onclick=()=>{ if(el.dataset.cli) abrirFicha(el.dataset.cli); });
+}
+
+// F549 · 🩺 Perícias: as perícias e avaliações sociais agendadas e o lembrete do cliente pelo WhatsApp em
+// D-7, D-1 e outra data, contados em dias úteis (sem sábado, domingo e feriado nacional, como o
+// pericia_dia_util_antes do banco); quem envia é o zap_avisos_pericia, a cada hora do expediente
+const ehPericiaOuSocial = e => /^(per[íi]cia|avalia)/i.test(e.tipo||"");
+function periciasFuturas(){ const hj = hoje();
+  return (D.eventos||[]).filter(e=>e.status==="agendada" && ehPericiaOuSocial(e) && dataSP(e.data_hora)>=hj
+    && (k=>!!k && k.fase!=="encerrado")(D.casoPorId.get(e.caso_id))).sort((a,b)=>a.data_hora<b.data_hora?-1:1); }
+function uteisAntes(iso, n){ let d = iso, k = 0;
+  while(k < n){ d = somaDias(d, -1); const w = new Date(d+"T12:00:00").getDay();
+    if(w!==0 && w!==6 && !feriadosNacionais(+d.slice(0,4)).has(d)) k++; }
+  return d; }
+function lembretesPericia(){ const out = [];
+  if(cfgApp("pericia_aviso_d7")==="sim") out.push({rot:"D-7", n:7});
+  if(cfgApp("pericia_aviso_d1")==="sim") out.push({rot:"D-1", n:1});
+  const o = +cfgApp("pericia_aviso_outra_dias")||0;
+  if(cfgApp("pericia_aviso_outra")==="sim" && o>=1) out.push({rot:`D-${o}`, n:o});
+  return out; }
+function renderPericias(){
+  tituloLista("🩺 Perícias");
+  document.getElementById("sub-lista").textContent = "Perícias e avaliações sociais agendadas, com o lembrete do cliente pelo WhatsApp.";
+  const evs = periciasFuturas(), lem = lembretesPericia(), hj = hoje();
+  const linha = e => { const k = D.casoPorId.get(e.caso_id), c = k && D.cliPorId.get(k.cliente_id), dia = dataSP(e.data_hora), n = diasAte(dia);
+    const datas = lem.map(l=>{ const d = uteisAntes(dia, l.n);
+      return `<span class="chip ${d<hj?"neutro":"per"}" title="${d<hj?"a data do lembrete já passou":"o lembrete sai nesta data"}">${l.rot} · ${fmt(d).slice(0,5)}</span>`; }).join(" ");
+    return `<div class="evento futuro" data-cli="${c?c.id:""}" style="cursor:pointer">
+      <div class="data-box">${fmtTS(e.data_hora).slice(0,5)}<small>${dia.slice(0,4)}</small><small>${horaSP(e.data_hora)}</small></div>
+      <div class="oque"><strong>${esc(e.tipo)}: ${esc(c?c.nome:"?")}</strong>
+        <span>${esc([e.local, n===0?"hoje":n===1?"amanhã":`faltam ${n} dias`].filter(Boolean).join(" · "))}${c && !c.telefone ? " · sem telefone, sem lembrete" : ""}</span>
+        ${c && c.telefone && datas ? `<span class="per-lem">Lembretes: ${datas}</span>` : ""}</div>
+    </div>`; };
+  const bt = (ch, rot, tit) => { const on = cfgApp(ch)==="sim";
+    return `<button class="btn-mini${on?" on":""}" data-pa="${ch}" aria-pressed="${on}" title="${tit}">${rot}</button>`; };
+  document.getElementById("conteudo-meio").innerHTML = `<div class="per-grade">
+    <div class="per-lista">${evs.length ? evs.map(linha).join("") : "<p class='meio-sub'>Nenhuma perícia ou avaliação social agendada.</p>"}</div>
+    <aside class="per-not" aria-label="Notificações">
+      <h3 class="secao">Notificações</h3>
+      <p class="meio-sub">Mensagem ao cliente pelo WhatsApp, contada em dias úteis antes da data.</p>
+      <div class="per-bts">${bt("pericia_aviso_d7","D-7","7 dias úteis antes")}${bt("pericia_aviso_d1","D-1","1 dia útil antes")}${bt("pericia_aviso_outra","Outra","outra quantidade de dias úteis")}</div>
+      <label class="per-outra">Outra: <input type="number" id="per-outra-n" min="1" max="30" value="${esc(cfgApp("pericia_aviso_outra_dias")||"3")}"> dias úteis antes</label>
+      <p class="meio-sub">Ligado, o lembrete sai uma vez por perícia, no horário do expediente. Sem sábado, domingo e feriado nacional.</p>
+    </aside></div>`;
+  document.querySelectorAll(".per-lista .evento[data-cli]").forEach(el=>el.onclick=()=>{ if(el.dataset.cli) abrirFicha(el.dataset.cli); });
+  document.querySelectorAll("[data-pa]").forEach(b=>b.onclick=async()=>{
+    const ch = b.dataset.pa, novo = cfgApp(ch)==="sim" ? "nao" : "sim";
+    try{ await guardarCfgApp(ch, novo); aviso(`${b.textContent} ${novo==="sim"?"ligado":"desligado"}.`, false); renderPericias(); }
+    catch(e){ aviso("Não gravei a escolha: "+(e.message||e)); } });
+  const inp = document.getElementById("per-outra-n");
+  inp.onchange = async()=>{ const v = Math.max(1, Math.min(30, parseInt(inp.value,10)||0));
+    if(!v) return; try{ await guardarCfgApp("pericia_aviso_outra_dias", String(v)); renderPericias(); }
+    catch(e){ aviso("Não gravei a escolha: "+(e.message||e)); } };
 }
 
 // ── 📅 Calendário (o mês inteiro numa tela, como a agenda do Google) ──────

@@ -9,6 +9,8 @@ delete from zap_mensagens; delete from zap_transferencias; delete from zap_conve
 delete from mencoes; delete from atribuicoes; delete from andamentos;
 delete from eventos; delete from casos; delete from clientes; delete from leads;
 update config_app set valor='nao' where chave='zap_bot_ligado';   -- o robô tem suíte própria
+-- a F549 desliga os lembretes antigos da perícia em produção; aqui eles exercitam o motor genérico
+update zap_avisos set ativo=true where chave in ('pericia_1d','pericia_3d','social_3d');
 create temp table r(k text, v boolean);
 
 -- hoje é quinta, 06.08.2026 — dia útil, para o gerador não recusar por horário
