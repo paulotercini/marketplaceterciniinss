@@ -6506,7 +6506,6 @@ html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b::after{display:none}
 html[data-tema="v10"] .tr-resumo{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;padding:4px 16px 14px;font-size:13px;color:var(--cinza)}
 /* F383 (12.41) · o resumo fica no alto também com o histórico aberto, e o histórico é vertical, a etapa mais nova no alto */
 html[data-tema="v10"] .tr-resumo{margin:0 16px 10px;padding:10px 12px;border-radius:6px;background:color-mix(in srgb,var(--tc) 7%,#FFFFFF);border-left:3px solid var(--tc)}
-html[data-tema="v10"] .tr-resumo.tr-resumo-longo{background:#FBECEC;border-left-color:var(--venc)}
 html[data-tema="v10"] .tr-par{all:unset;cursor:pointer;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;margin:-4px 16px 12px;padding:8px 12px;border-radius:6px;font-size:13px;color:var(--texto);background:color-mix(in srgb,var(--tc) 8%,#FFFFFF);border-left:3px solid var(--tc)}
 html[data-tema="v10"] .tr-par small{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--tt)}
 html[data-tema="v10"] .tr-par:focus-visible{outline:2px solid #121212;outline-offset:1px}
@@ -7026,7 +7025,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.52</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.53</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -42818,15 +42817,15 @@ function linhaCaso(k){
 // a etapa ATUAL também grava casos.etapa com a palavra antiga equivalente
 // (PUB_TRILHA), que é a que o portal e o resto do CRM já entendem.
 // Etapa: "Grupo|Nome" abre grupo; "*" na frente = só se houver; "#" = execução.
-// F184 · as quatro fases são UMA escala que escurece e esfria rumo ao verde-petróleo
-// da casa: o caso "amadurece" do Escritório ao Judicial. Nenhuma fase usa vermelho
+// F545 · as fases seguem as cores dos quadros do caso (LC_FASE): Escritório verde, INSS azul, Conselho marrom, Judicial e Pagamento roxo
+// (F504). Nenhuma fase usa vermelho
 // nem âmbar, que no CRM querem dizer prazo fatal e prazo perto.
 const COR_FASE = {
-  escritorio:{n:"Escritório", c:"#7C8DA6", f:"#EEF1F6", t:"#3E4F68"},
+  escritorio:{n:"Escritório", c:"#0E5C58", f:"#E6F0EF", t:"#0B4744"},
   inss:      {n:"INSS",       c:"#4F78B0", f:"#E9F0F8", t:"#2B4C7A"},
-  conselho:  {n:"Conselho",   c:"#2C7A93", f:"#E4F1F4", t:"#1C5568"},
-  judicial:  {n:"Judicial",   c:"#0E5C58", f:"#E6F0EF", t:"#0B4744"}};
-const COR_EXEC = {c:"#A5187F", f:"#FDF2F9", t:"#7E1260"};
+  conselho:  {n:"Conselho",   c:"#8A5A1E", f:"#F5EEE4", t:"#6B4517"},
+  judicial:  {n:"Judicial",   c:"#6B3FA0", f:"#F0EAF7", t:"#4E2D78"}};
+const COR_EXEC = {c:"#6B3FA0", f:"#F0EAF7", t:"#4E2D78"};
 const DOCS_AGUARDO = ["relatório médico","PPP e LTCAT da empresa","prontuário médico","documento do RH ou empregador",
   "cópia do processo administrativo","CTPS e carnês","documentos pessoais","acesso gov.br"];
 const EXEC_TRILHA = ["#Execução|Trânsito em julgado","#Implantação do benefício","#Cálculos (contadoria ou INSS)",
