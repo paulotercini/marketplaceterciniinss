@@ -52,6 +52,7 @@ const TUDO = FIX;
   await p.fill("#su-tema", "1124"); await p.selectOption("#su-trib", "STJ"); await p.fill("#su-assunto", "termo inicial dos efeitos");
   await p.click('button:has-text("Gravar a suspensão")');
   await p.waitForSelector(".chip.lc-susp");
+  await p.waitForFunction(c => ((D.casoPorId.get(c).ronda || {}).suspensao || {}).tema === "1124", CASO1, { timeout: 5000 }).catch(() => {});   // a carga da ficha em segundo plano pode chegar depois do chip
   const r = await p.evaluate(([c, cliId]) => {
     const k = D.casoPorId.get(c), cli = D.cliPorId.get(cliId);
     return { ronda: k.ronda.suspensao, chip: document.querySelector(".chip.lc-susp").textContent,

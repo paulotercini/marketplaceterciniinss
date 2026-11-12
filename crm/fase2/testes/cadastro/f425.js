@@ -18,7 +18,8 @@ fs.mkdirSync(OUT, { recursive: true });
 const INGRID = "33333333-3333-3333-3333-333333333333", AUTH_I = "cccccccc-cccc-cccc-cccc-cccccccccccc";
 const SESSAO_I = { ...SESSAO, user: { id: AUTH_I, email: "ingrid@exemplo.invalido" } };
 const ANA = "c0000000-0000-4000-8000-000000000001", CARLA = "c0000000-0000-4000-8000-000000000002",
-  DANIEL = "c0000000-0000-4000-8000-000000000003", PRE_ANA = "c0000000-0000-4000-8000-000000000004";
+  DANIEL = "c0000000-0000-4000-8000-000000000003", PRE_ANA = "c0000000-0000-4000-8000-000000000004",
+  PRE_DAN = "c0000000-0000-4000-8000-000000000005";
 const PAULO = (FIX.colaboradores.find(c => /^Paulo/.test(c.nome)) || {}).id;
 const dados = {};
 for (const t of ["tarefas", "eventos", "pagamentos", "meu_dia", "andamentos", "sugestoes", "mencoes", "leads", "checklist_modelo", "frases_prontas",
@@ -31,8 +32,11 @@ Object.assign(dados, { colaboradores: [...FIX.colaboradores, { id: INGRID, auth_
     { id: CARLA, nome: "Carla Fictícia Semcpf", cpf: null, telefone: "(16) 99999-0002", campos: { primeiro_atendimento: "agendado" }, telefones: [], criado_em: "2026-01-01T12:00:00Z" },
     { id: DANIEL, nome: "Daniel Fictício Semgov", cpf: "39053344705", telefone: "(16) 99999-0003", campos: {}, telefones: [], criado_em: "2026-01-01T12:00:00Z" },
     { id: PRE_ANA, nome: "Ana Colab", cpf: null, telefone: "(16) 99999-0001",
-      campos: { primeiro_atendimento: "agendado", atendimento: [{ em: "2026-11-05T12:00:00Z", quem: "Ingrid", texto: "Ligou para marcar: auxílio negado." }] }, telefones: [], criado_em: "2026-11-05T12:00:00Z" }],
+      campos: { primeiro_atendimento: "agendado", atendimento: [{ em: "2026-11-05T12:00:00Z", quem: "Ingrid", texto: "Ligou para marcar: auxílio negado." }] }, telefones: [], criado_em: "2026-11-05T12:00:00Z" },
+    { id: PRE_DAN, nome: "Daniel Fictício Semgov", cpf: null, telefone: "(16) 99999-0009",
+      campos: { primeiro_atendimento: "agendado", atendimento: [{ em: "2026-11-06T12:00:00Z", quem: "Ingrid", texto: "Pediu retorno sobre a perícia." }] }, telefones: [], criado_em: "2026-11-06T12:00:00Z" }],
   credenciais: [{ id: "cr-ana", cliente_id: ANA, tipo: "meu_inss", valor: "Velha@2025", criado_em: "2026-01-01T12:00:00Z" }],
+  zap_conversas: [{ id: "zc-pre", cliente_id: PRE_DAN, telefone: "5500000000009" }],
   casos: [], atribuicoes: [], documentos_beneficio: FIX.documentos_beneficio || [], modelos_documento: FIX.modelos_documento,
   config_app: [...(FIX.config_app || []), { chave: "crm_transicao", valor: NIVEIS(2) }] });
 const banco = new Banco(dados);
@@ -211,6 +215,20 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("F · Abrir leva a anotação à ficha de verdade e tira o pré-cadastro da lista",
     ((cli(ANA).campos || {}).atendimento || []).some(n => /auxílio negado/.test(n.texto)) && cli(PRE_ANA).campos.nao_cliente && cli(PRE_ANA).campos.fundido_para === ANA);
   conf("F · e abre a janela na ficha de verdade", await p.evaluate(a => clienteAberto === a, ANA) && /Dossiê de Ana Fictícia Colab/.test(await caixaTxt()));
+
+  // H · F548: informar na Identificação o CPF de outra ficha junta as duas, sem apagar nada
+  await p.evaluate(async id => { fecharCaixa(); await abrirFicha(id); editarCampo("cpf", id); }, PRE_DAN);
+  await p.fill("#ed-campo", "39053344705");
+  await p.evaluate(id => salvarCampo("cpf", id), PRE_DAN);
+  for (let i = 0; i < 40 && !(cli(PRE_DAN).campos || {}).fundido_para; i++) await p.waitForTimeout(100);
+  await p.waitForTimeout(300);
+  const dan = cli(DANIEL), pre = cli(PRE_DAN);
+  conf("H · o CPF de outra ficha junta as fichas: a anotação e o telefone vão à ficha com CPF",
+    ((dan.campos || {}).atendimento || []).some(n => /retorno sobre a perícia/.test(n.texto)) && (dan.telefones || []).some(t => /99999-0009/.test(t.numero)));
+  conf("H · a conversa do WhatsApp passa à ficha com CPF e a outra fica marcada, sem CPF",
+    T.zap_conversas.find(z => z.id === "zc-pre").cliente_id === DANIEL && pre.campos.nao_cliente && pre.campos.fundido_para === DANIEL && !pre.cpf && T.clientes.some(c => c.id === PRE_DAN));
+  const achados = await p.evaluate(() => pesquisar("Daniel Semgov").map(c => c.id));
+  conf("H · a pesquisa deixa de mostrar a ficha juntada", achados.length === 1 && achados[0] === DANIEL);
 
   // G · o nível 1 (WhatsApp) não chega ao balcão nem edita o cadastro
   await p.evaluate(v => { fecharCaixa(); D.config.set("crm_transicao", v); aplicarNivel(); }, NIVEIS(1));
