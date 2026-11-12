@@ -190,3 +190,15 @@ t.test("F491: a mensagem de cliente que não abriu pede o histórico; grupo, env
   a.equal(naoAbriu({ key: k("5500900000011@s.whatsapp.net"), messageStubType: 1 }), false);
   a.equal(naoAbriu({ key: k("5500900000011@s.whatsapp.net"), messageStubType: 2, message: { conversation: "oi" } }), false);
 });
+
+t.test("F555: o cartão de contato guarda o nome e o número", () => {
+  const vc = (nome, tels) => `BEGIN:VCARD\nVERSION:3.0\nFN:${nome}\n${tels.join("\n")}\nEND:VCARD`;
+  const um = vc("Cliente Teste", ["TEL;type=CELL;waid=5500000000011:+55 00 00000-0011"]);
+  a.equal(N.textoDaMensagem({ message: { contactMessage: { displayName: "Cliente Teste", vcard: um } } }), "👤 Cliente Teste · 5500000000011");
+  const sem = vc("Outro Teste", ["TEL;type=CELL:+55 (00) 0000-0012"]);
+  a.deepEqual(N.numerosDoVcard(sem), ["550000000012"]);
+  a.equal(N.textoDaMensagem({ message: { contactsArrayMessage: { contacts: [
+    { displayName: "Cliente Teste", vcard: um }, { displayName: "Outro Teste", vcard: sem }] } } }),
+    "👤 Cliente Teste · 5500000000011\n👤 Outro Teste · 550000000012");
+  a.equal(N.textoDaMensagem({ message: { contactMessage: { displayName: "Sem Número", vcard: vc("Sem Número", []) } } }), "👤 Sem Número");
+});
