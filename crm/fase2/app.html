@@ -7029,7 +7029,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.60</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.61</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -16939,21 +16939,161 @@ function pintarTabela(){
       async()=>{ if(await passarCaso(id, para, de)) pintarTabela(); });
   });
 }
-// F549 · Perícias (Visões): o aviso ao cliente só sai depois do Ligar desta perícia, que aprova a data registrada;
-// os envios, as repetições e os lembretes moram no banco (pericia_avisos_vez), às 08:30 e às 16:00 dos dias úteis
-const PER_ESTADO = {ligado:"Ligado", aguardando:"Aviso enviado", conversa:"Em conversa", sem_resposta:"Sem resposta",
-  agendado:"Atendimento agendado", data_mudou:"Data mudou", sem_telefone:"Sem telefone"};
-let _perAvisos = null;
-function uteisEntre(de, ate){ let d = de, c = 0; while(d < ate){ d = somaDias(d, 1); if(ehDiaUtil(d)) c++; } return c; }
+// F554 · Perícias (Visões), como o protótipo aprovado em 12.11.2026 (/mnt/project-files/pericias/prototipo-tela-pericias.html):
+// lista à esquerda, prévia da mensagem e Notificações à direita. O aviso ao cliente só sai depois do Ligar desta perícia,
+// que aprova a data registrada; os envios, as repetições e os lembretes moram no banco (pericia_avisos_vez), às 08:30 e às 16:00
+const PER_CSS = ".per5{ --bg:#F3F5F2; --surface:#FFFFFF; --surface-2:#F8FAF7; --ink:#18211C; --muted:#56635C; --faint:#65716A; --line:#DCE2DD; --line-2:#C9D1CB; --esc:#1E7A4C; --esc-ink:#FFFFFF; --esc-soft:#E2F1E7; --esc-txt:#165C39; --paulo:#2459B8; --paulo-soft:#E5EDFA; --paulo-txt:#1D4A99; --amanda:#E3B21A; --amanda-soft:#FBF1CC; --amanda-txt:#7A5900; --inss:#2459B8; --inss-soft:#E5EDFA; --inss-txt:#1D4A99; --jud:#6A3E9F; --jud-soft:#EFE8F8; --jud-txt:#57307F; --warn:#B4530A; --warn-soft:#FCEBDC; --warn-txt:#8F4108; --bad:#B42318; --bad-soft:#FBE7E5; --bad-txt:#93190F; --wa-bg:#EFE7DC; --wa-out:#D9FDD3; --wa-ink:#111B21; --wa-meta:#667781; --focus:#1E7A4C; --shadow:0 1px 2px rgba(24,33,28,.06),0 4px 16px rgba(24,33,28,.06); --ease:cubic-bezier(.23,1,.32,1); --r:10px; }\n.per5{container:per5/inline-size;background:var(--bg);color:var(--ink);font-family:\"IBM Plex Sans\",system-ui,sans-serif;font-size:14px;line-height:1.45;padding:18px 20px 32px;display:flex;flex-direction:column;gap:14px;min-height:100%}\n.per5 button,.per5 input{font:inherit;color:inherit}.per5 button{cursor:pointer;touch-action:manipulation}\n.per5 :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}\n.per5 .num{font-variant-numeric:tabular-nums}\n.per5 .num{font-size:inherit;font-weight:inherit;color:inherit}\n.per5 .mono{font-family:\"IBM Plex Mono\",ui-monospace,Menlo,monospace;font-size:12px;white-space:nowrap}\n.per5 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}\n.per5 .top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 16px}\n.per5 .top h1{margin:0;font:600 28px/1.1 \"Zilla Slab\",Georgia,serif;letter-spacing:-.01em;display:flex;align-items:baseline;gap:10px}\n.per5 .top h1 .cnt{font:500 14px/1 \"IBM Plex Sans\",sans-serif;color:var(--muted);font-variant-numeric:tabular-nums}\n.per5 .agora{font-size:12px;color:var(--muted)}\n.per5 .agora b{color:var(--ink);font-weight:500}\n.per5 .filtros{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}\n.per5 .chips{display:flex;flex-wrap:wrap;gap:6px}\n.per5 .chip-f{border:1px solid var(--line-2);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:500;color:var(--muted);min-height:32px;display:inline-flex;gap:6px;align-items:center;transition:transform .12s var(--ease),background .15s}\n.per5 .chip-f .num{color:var(--faint);font-size:12px}\n.per5 .chip-f[aria-pressed=\"true\"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}\n.per5 .chip-f[aria-pressed=\"true\"] .num{color:var(--bg);opacity:.75}\n.per5 .chip-f:active{transform:scale(.97)}\n.per5 .grade{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:16px;align-items:start}\n.per5 .lista{display:flex;flex-direction:column;gap:8px;min-width:0}\n.per5 .linha{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:grid;grid-template-columns:112px minmax(0,1fr) auto;gap:6px 16px;cursor:pointer;transition:border-color .15s,box-shadow .15s}\n.per5 .linha[aria-current=\"true\"]{border-color:var(--esc);box-shadow:0 0 0 1px var(--esc)}\n@media (hover:hover) and (pointer:fine){.per5 .linha:hover{border-color:var(--line-2)}}\n.per5 .quando{display:flex;flex-direction:column;gap:1px}\n.per5 .quando .dia{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1.1}\n.per5 .quando .sem{font-size:12px;color:var(--muted)}\n.per5 .quando .sem b{color:var(--ink);font-weight:600;font-size:14px}\n.per5 .quando .falta{font-size:12px;color:var(--faint);font-variant-numeric:tabular-nums}\n.per5 .quando .falta.perto{color:var(--bad-txt);font-weight:500}\n.per5 .meio{min-width:0;display:flex;flex-direction:column;gap:4px}\n.per5 .l1{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}\n.per5 .cli{font-weight:600;font-size:15px}\n.per5 .tipo{font-size:12px;color:var(--muted)}\n.per5 .l2{display:flex;flex-wrap:wrap;gap:2px 10px;font-size:12px;color:var(--muted);min-width:0}\n.per5 .l2 span{min-width:0}\n.per5 .ori{display:inline-flex;align-items:center;gap:6px}\n.per5 .fase{font-size:11px;font-weight:600;padding:1px 6px;border-radius:4px;letter-spacing:.02em}\n.per5 .fase.inss{background:var(--inss-soft);color:var(--inss-txt)}\n.per5 .fase.jud{background:var(--jud-soft);color:var(--jud-txt)}\n.per5 .estado{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:2px 8px;border-radius:999px;border:1px solid transparent;max-width:100%}\n.per5 .estado::before{content:\"\";width:6px;height:6px;border-radius:2px;background:currentColor;flex:none}\n.per5 .e-aguardando{background:var(--surface-2);border-color:var(--line-2);color:var(--muted)}\n.per5 .e-ligado,.per5 .e-agendado{background:var(--esc-soft);color:var(--esc-txt)}\n.per5 .e-resposta,.per5 .e-telefone{background:var(--paulo-soft);color:var(--paulo-txt)}\n.per5 .e-mudou{background:var(--warn-soft);color:var(--warn-txt)}\n.per5 .e-equipe{background:var(--bad-soft);color:var(--bad-txt)}\n.per5 .l3{font-size:12px;color:var(--muted)}\n.per5 .l3 b{color:var(--ink);font-weight:500}\n.per5 .ctrl{display:flex;flex-direction:column;align-items:flex-end;gap:8px}\n.per5 .adv{display:inline-flex;border:1px solid var(--line-2);border-radius:8px;padding:2px;gap:2px;background:var(--surface)}\n.per5 .adv button{border:0;background:transparent;border-radius:6px;padding:4px 8px 4px 4px;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--muted);min-height:28px;transition:background .15s,transform .12s var(--ease)}\n.per5 .adv button:active{transform:scale(.97)}\n.per5 .ini{width:20px;height:20px;border-radius:4px;display:inline-grid;place-items:center;font-size:11px;font-weight:600;flex:none}\n.per5 .ini.p{background:var(--paulo);color:#fff}\n.per5 .ini.a{background:var(--amanda);color:#3D2D00}\n.per5 .adv button[aria-pressed=\"true\"].p{background:var(--paulo-soft);color:var(--paulo-txt)}\n.per5 .adv button[aria-pressed=\"true\"].a{background:var(--amanda-soft);color:var(--amanda-txt)}\n.per5 .adv button[aria-pressed=\"false\"] .ini{opacity:.55}\n.per5 .sw{display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;padding:2px 0;font-size:12px;font-weight:600;color:var(--muted);min-height:28px}\n.per5 .sw .trk{width:36px;height:20px;border-radius:999px;background:var(--faint);position:relative;transition:background .18s var(--ease);flex:none}\n.per5 .sw .trk::after{content:\"\";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .18s var(--ease)}\n.per5 .sw[aria-checked=\"true\"]{color:var(--esc-txt)}\n.per5 .sw[aria-checked=\"true\"] .trk{background:var(--esc)}\n.per5 .sw[aria-checked=\"true\"] .trk::after{transform:translateX(16px)}\n.per5 .sw:active .trk::after{width:19px}\n.per5 .btn{border:1px solid var(--line-2);background:var(--surface);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:500;min-height:32px;transition:transform .12s var(--ease),background .15s}\n.per5 .btn:active{transform:scale(.97)}\n.per5 .btn.pri{background:var(--esc);border-color:var(--esc);color:var(--esc-ink);font-weight:600}\n.per5 .btn.pequeno{padding:3px 10px;min-height:28px;font-size:12px}\n@media (hover:hover) and (pointer:fine){.per5 .btn:hover{background:var(--surface-2)}.per5 .btn.pri:hover{filter:brightness(1.06);background:var(--esc)}}\n.per5 .vazio{padding:28px 16px;text-align:center;color:var(--muted);background:var(--surface);border:1px dashed var(--line-2);border-radius:var(--r)}\n.per5 .lado{display:flex;flex-direction:column;gap:12px;position:sticky;top:12px;min-width:0}\n.per5 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);min-width:0}\n.per5 .card-cab{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px 10px;border-bottom:1px solid var(--line)}\n.per5 .card-cab h2{margin:0;font-size:14px;font-weight:600}\n.per5 .card-cab .sub{font-size:12px;color:var(--muted)}\n.per5 .voltar{display:none}\n.per5 .prev-corpo{padding:12px 14px;display:flex;flex-direction:column;gap:12px}\n.per5 .wa{background:var(--wa-bg);border-radius:10px;padding:12px 10px;display:flex;flex-direction:column;gap:6px}\n.per5 .wa-quem{font-size:11px;color:var(--wa-meta);text-align:center}\n.per5 .bolha{align-self:flex-end;max-width:94%;background:var(--wa-out);color:var(--wa-ink);border-radius:8px 8px 2px 8px;padding:7px 9px 4px;font-size:13px;line-height:1.42;box-shadow:0 1px .5px rgba(0,0,0,.13)}\n.per5 .bolha p{margin:0 0 6px}\n.per5 .bolha .assin{font-weight:600}\n.per5 .bolha .pe{font-size:11px;color:var(--wa-meta);text-align:right;font-variant-numeric:tabular-nums}\n.per5 .horas{display:inline;font-weight:600}\n.per5 .fatos{background:none;border:0;border-radius:0;padding:0;box-shadow:none;overflow:visible;margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;font-size:12px;margin:0}\n.per5 .fatos dt{color:var(--muted)}\n.per5 .fatos dd{margin:0;font-variant-numeric:tabular-nums}\n.per5 .aviso{font-size:12px;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:8px 10px}\n.per5 .aviso.forte{background:var(--warn-soft);border-color:transparent;color:var(--warn-txt)}\n.per5 .acoes{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}\n.per5 .fluxo{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}\n.per5 .fluxo li{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:2px 10px;font-size:12px;padding:3px 0;position:relative}\n.per5 .fluxo li::before{content:\"\";width:10px;height:10px;border-radius:3px;margin-top:3px;border:2px solid var(--line-2);background:var(--surface);grid-row:1}\n.per5 .fluxo li:not(:last-child)::after{content:\"\";position:absolute;left:6px;top:17px;bottom:-4px;width:2px;background:var(--line)}\n.per5 .fluxo li.feito::before{background:var(--esc);border-color:var(--esc)}\n.per5 .fluxo li.feito:not(:last-child)::after{background:var(--esc)}\n.per5 .fluxo li.agora::before{border-color:var(--esc);background:var(--esc-soft)}\n.per5 .fluxo li.agora .t{font-weight:600}\n.per5 .fluxo li.pulado .t{color:var(--faint);text-decoration:line-through}\n.per5 .fluxo .t{color:var(--ink)}\n.per5 .fluxo .d{color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}\n.per5 .fluxo li.fut .t{color:var(--muted)}\n.per5 .tit-sec{margin:0;font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}\n.per5 details.notif summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px}\n.per5 details.notif summary::-webkit-details-marker{display:none}\n.per5 details.notif summary h2{margin:0;font-size:14px;font-weight:600}\n.per5 details.notif summary .seta{transition:transform .18s var(--ease);color:var(--muted)}\n.per5 details.notif[open] summary{border-bottom:1px solid var(--line)}\n.per5 details.notif[open] summary .seta{transform:rotate(180deg)}\n.per5 .notif-corpo{padding:10px 14px 14px;display:flex;flex-direction:column;gap:12px}\n.per5 .janelas{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted)}\n.per5 .hora{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-size:13px}\n.per5 .lemb{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}\n.per5 .lemb:first-of-type{border-top:0}\n.per5 .lemb .nome{font-weight:500;font-size:13px}\n.per5 .lemb .quando2{grid-column:1;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}\n.per5 .lemb .sw{grid-row:1/span 2;grid-column:2}\n.per5 .outra{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}\n.per5 .outra input{width:56px;font-size:16px;padding:2px 6px;border:1px solid var(--line-2);border-radius:6px;background:var(--surface);font-variant-numeric:tabular-nums}\n.per5 .regra{font-size:12px;color:var(--muted);margin:0}\n@container per5 (max-width:720px){.per5 .card-cab{flex-wrap:wrap}.per5 .adv-cel{display:block;margin-top:4px}.per5 .top h1{font-size:24px}.per5 .filtros{gap:8px}.per5 .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-12px;padding-inline:12px}.per5 .chips::-webkit-scrollbar{display:none}.per5 .chip-f{flex:none;min-height:36px}.per5 .grade{grid-template-columns:minmax(0,1fr)}.per5 .linha{grid-template-columns:minmax(0,1fr) auto;padding:12px}.per5 .quando{grid-column:1;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:2px 8px}.per5 .quando .dia{font-size:17px}.per5 .meio{grid-column:1/-1}.per5 .ctrl{grid-column:2;grid-row:1;align-items:flex-end}.per5 .ctrl .adv{display:none}.per5 .lado{position:static}.per5 .card.prev{position:fixed;inset:0;z-index:30;border-radius:0;border:0;overflow:auto;transform:translateX(100%);visibility:hidden;transition:transform .28s var(--ease),visibility 0s .28s;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);overscroll-behavior:contain}.per5 .card.prev.aberta{transform:none;visibility:visible;transition:transform .28s var(--ease)}.per5 .voltar{display:inline-flex}.per5 .sw,.per5 .adv button{min-height:44px}.per5 .btn{min-height:44px}}\n.per5 .adv-cel{display:none}@container per5 (max-width:720px){.per5 .adv-cel{display:block;margin-top:4px}}\n@media (prefers-reduced-motion:reduce){.per5 *{transition-duration:.01ms!important}}";
+const PER_EST = {aguardando:"Aguardando", resposta:"Aguardando resposta", agendado:"Atendimento agendado",
+  telefone:"Telefone 16h oferecido", mudou:"Data mudou · aprovar de novo", equipe:"Encaminhado à equipe"};
+const PER_ADV = {paulo:{nome:"Dr. Paulo", ini:"P", c:"p", o:"o Dr. Paulo", curto:"Paulo"}, amanda:{nome:"Dra. Amanda", ini:"A", c:"a", o:"a Dra. Amanda", curto:"Amanda"}};
+const PER_TEXTO = "{saudacao}, {nome}. Aqui é do escritório do Dr. Paulo Tercini.\n\nO INSS agendou a sua {tipo} para {dia}, {data}, às {hora}, em {local}.\n\nPara a sua preparação, oferecemos um atendimento presencial com {advogado} antes da {tipo}. Podemos agendar?";
+let _perAvisos = null, _perSel = null, _perFiltro = "todas", _perTipo = null, _perProf = new Map();
 function periciasDoAviso(){
   const hj = hoje();
   return (D.eventos||[]).filter(e=>["Perícia","Avaliação social"].includes(e.tipo) && e.status==="agendada" && dataSP(e.data_hora)>=hj)
     .map(e=>({e, k:D.casoPorId.get(e.caso_id)})).filter(x=>x.k && !x.k.encerrado_em)
     .sort((a,b)=>String(a.e.data_hora).localeCompare(String(b.e.data_hora)));
 }
+function uteisAntesPer(d, n){ let x = d, k = 0; while(k < n){ x = somaDias(x, -1); if(ehDiaUtil(x)) k++; } return x; }
+const perDm = iso => fmt(iso).slice(0,5);
+const perSem = iso => SIGLA_DIA[new Date(iso+"T12:00:00").getDay()];
+const perDiaExt = iso => DIA_EXT[new Date(iso+"T12:00:00").getDay()];
+// o próximo horário de envio: 08:30 ou 16:00 de um dia útil
+function perProximoEnvio(){
+  const hj = hoje(), h = horaSP(new Date().toISOString());
+  if(ehDiaUtil(hj) && h < "08:30") return {dia:hj, hora:"08:30"};
+  if(ehDiaUtil(hj) && h < "16:00") return {dia:hj, hora:"16:00"};
+  let d = somaDias(hj, 1); while(!ehDiaUtil(d)) d = somaDias(d, 1);
+  return {dia:d, hora:"08:30"};
+}
+const perEnvioTxt = p => (p.dia===hoje() ? "hoje" : perDm(p.dia)+" ("+perSem(p.dia)+")")+", "+p.hora;
+function perDados({e, k}){
+  const a = _perAvisos.get(e.id), cli = D.cliPorId.get(k.cliente_id), dia = dataSP(e.data_hora);
+  const mudou = !!(a && ((a.ligado && a.data_aprovada && new Date(a.data_aprovada).getTime()!==new Date(e.data_hora).getTime()) || a.estado==="data_mudou"));
+  const ligado = !!(a && a.ligado && !mudou);
+  const est = mudou ? "mudou" : !ligado ? "aguardando" : ({aguardando:"resposta", conversa:"resposta", agendado:"agendado", sem_resposta:"equipe", sem_telefone:"equipe"})[a.estado] || "ligado";
+  const nums = numerosDoCaso(k), fx = faseEfetiva(k), jud = !["inss","conselho"].includes(fx);
+  const num = jud ? (nums.proc[0] ? fmtProc(nums.proc[0]) : "") : (nums.nb[0] ? fmtNb(nums.nb[0]) : (nums.prot[0]||""));
+  return {e, k, a, cli, dia, hora:horaSP(e.data_hora), mudou, ligado, est, jud, num,
+    nome: cli ? cli.nome : tituloCaso(k), social: e.tipo==="Avaliação social",
+    prof: _perProf.get(e.id) || (a && a.profissional) || "paulo"};
+}
+function perDetalhe(p){
+  const adv = PER_ADV[p.prof], a = p.a || {};
+  switch(p.est){
+    case "aguardando": return "Designada em "+(p.e.created_at ? perDm(dataSP(p.e.created_at)) : "data não registrada")+". Ligue para ver a prévia e aprovar a data.";
+    case "ligado": return "Data aprovada. Oferece <b>atendimento presencial com "+adv.o+"</b> antes da "+(p.social?"avaliação":"perícia")+".";
+    case "resposta": return a.estado==="conversa" ? "Cliente respondeu; a conversa segue com a IA."
+      : a.repetido_em ? "Reiteração enviada em "+perDm(dataSP(a.repetido_em))+"."
+      : "Sem resposta sobre o atendimento. <b>Reiteração "+perDm(perProxUtil(dataSP(a.primeiro_em)||hoje()))+" às 08:30.</b>";
+    case "agendado": { const at = a.atendimento_em ? dataSP(a.atendimento_em) : ""; return at
+      ? "<b>Presencial com "+adv.o+" em "+perDm(at)+" às "+esc(horaSP(a.atendimento_em))+".</b> Tarefa “Preparar o estudo sobre a perícia” para o Dr. Paulo em "+perDm(uteisAntesPer(at,1))+"."
+      : "<b>Atendimento presencial agendado com "+adv.o+".</b>"; }
+    case "mudou": return a.data_aprovada ? "Era "+perDm(dataSP(a.data_aprovada))+", agora "+perDm(p.dia)+". O aviso parou até a nova aprovação." : "A data mudou. O aviso parou até a nova aprovação.";
+    case "equipe": return a.estado==="sem_telefone" ? "Ficha sem telefone com WhatsApp. <b>Menção à recepção.</b>" : "Sem resposta à reiteração. <b>Menção à recepção para telefonar.</b>";
+  }
+  return "";
+}
+function perProxUtil(d){ let x = somaDias(d, 1); while(!ehDiaUtil(x)) x = somaDias(x, 1); return x; }
+function perAdvSel(p, extra){
+  return `<span class="adv${extra||""}" role="group" aria-label="Advogado do atendimento">`+["paulo","amanda"].map(k=>{
+    const v = PER_ADV[k];
+    return `<button type="button" class="${v.c}" data-adv="${k}" data-id="${p.e.id}" aria-pressed="${p.prof===k}" title="Atendimento com ${v.nome}" aria-label="Atendimento com ${v.nome}"${souAdmin()?"":" disabled"}><span class="ini ${v.c}" aria-hidden="true">${v.ini}</span>${v.curto}</button>`;
+  }).join("")+`</span>`;
+}
+function perSw(on, attrs, label, tit){
+  return `<button type="button" class="sw" role="switch" aria-checked="${on}" ${attrs} aria-label="${esc(label)}" title="${tit || (on?"Desligar os avisos":"Ligar: abre a prévia antes")}"${souAdmin()?"":" disabled"}><span class="trk"></span><span class="txt">${on?"Ligado":"Desligado"}</span></button>`;
+}
+function perVisivel(p){
+  if(_perTipo && (p.social ? "social" : "medica")!==_perTipo) return false;
+  if(_perFiltro==="aguardando") return p.est==="aguardando";
+  if(_perFiltro==="ligadas") return p.ligado;
+  if(_perFiltro==="mudou") return p.mudou;
+  return true;
+}
+function perLinha(p){
+  const f = Math.max(0, uteisEntre(hoje(), p.dia)), est = p.est==="ligado" ? "Ligado · aviso sai às "+perProximoEnvio().hora : PER_EST[p.est];
+  return `<article class="linha" data-id="${p.e.id}" aria-current="${_perSel===p.e.id}">
+    <div class="quando"><span class="dia">${perDm(p.dia)}</span><span class="sem"><b class="num">${esc(p.hora)}</b> · ${perDiaExt(p.dia)}</span><span class="falta${f<=5?" perto":""}">${f===0?"hoje":"faltam "+f+" dia"+(f>1?"s úteis":" útil")}</span></div>
+    <div class="meio"><div class="l1"><span class="cli" data-cli="${esc(p.k.cliente_id||"")}">${esc(p.nome)}</span><span class="tipo">${p.social?"Avaliação social":"Perícia médica"}</span><span class="estado e-${p.est}">${esc(est)}</span></div>
+      <div class="l2"><span class="ori"><span class="fase ${p.jud?"jud":"inss"}">${p.jud?"Judicial":"INSS"}</span>${p.num?`<span class="mono">${esc(p.num)}</span>`:""}</span><span>${esc(p.e.local||"local a informar")}</span></div>
+      <div class="l3">${perDetalhe(p)}</div><div class="adv-cel">${perAdvSel(p)}</div></div>
+    <div class="ctrl">${perSw(p.ligado, `data-sw="${p.e.id}"`, "Avisos da perícia de "+p.nome)}${perAdvSel(p)}
+      <button type="button" class="btn pequeno" data-prev="${p.e.id}" title="Ver a prévia da mensagem de ${esc(p.nome)}">Prévia</button></div>
+  </article>`;
+}
+function perLembretes(){
+  const out = +(cfgApp("pericia_aviso_outra") ?? "0") || 0;
+  return {d7:(cfgApp("pericia_aviso_d7") ?? "sim")==="sim", d1:(cfgApp("pericia_aviso_d1") ?? "sim")==="sim", out:out>0, n:out>0 ? out : 3};
+}
+function perMensagem(p){
+  const env = perProximoEnvio(), adv = PER_ADV[p.prof];
+  const t = (cfgApp("pericia_aviso_texto") || PER_TEXTO)
+    .replace(/\{saudacao\}/g, env.hora==="08:30" ? "Bom dia" : "Boa tarde")
+    .replace(/\{nome\}/g, String(p.nome).split(" ")[0])
+    .replace(/\{tipo\}/g, p.social ? "avaliação social" : "perícia médica")
+    .replace(/\{dia\}/g, perDiaExt(p.dia)).replace(/\{data\}/g, fmt(p.dia)).replace(/\{hora\}/g, p.hora)
+    .replace(/\{local\}/g, p.e.local || "local informado pelo INSS")
+    .replace(/\{advogado\}/g, adv.o);
+  return t.split(/\n\s*\n/).map(s=>`<p>${esc(s).replace(/\n/g,"<br>")}</p>`).join("")+`<div class="pe">${env.hora} ✓</div>`;
+}
+function perPrevia(p){
+  if(!p) return "";
+  const L = perLembretes(), d7 = uteisAntesPer(p.dia,7), d1 = uteisAntesPer(p.dia,1), outra = uteisAntesPer(p.dia,L.n);
+  const telOk = new Date(d1+"T12:00:00").getDay()!==3, a = p.a || {}, env = perProximoEnvio(), adv = PER_ADV[p.prof];
+  const enviado = !!a.primeiro_em, at = a.atendimento_em ? dataSP(a.atendimento_em) : "";
+  const tipoRot = p.social ? "Avaliação social" : "Perícia médica";
+  const passos = [
+    ["Designada", p.e.created_at ? perDm(dataSP(p.e.created_at)) : "", "feito"],
+    ["Ligada", p.ligado ? "aprovada" : (p.mudou ? "aprovação caiu" : "falta aprovar"), p.ligado ? "feito" : "agora"],
+    ["Aviso enviado", enviado ? perDm(dataSP(a.primeiro_em))+" "+horaSP(a.primeiro_em) : (p.ligado ? perEnvioTxt(env) : ""), enviado ? "feito" : (p.ligado ? "agora" : "fut")],
+    ["Reiteração", a.repetido_em ? perDm(dataSP(a.repetido_em)) : "", a.repetido_em ? "feito" : (p.est==="resposta" ? "agora" : "fut")],
+    ["Atendimento agendado", at ? perDm(at)+" "+horaSP(a.atendimento_em) : "", at ? "feito" : (p.est==="equipe" ? "agora" : "fut")],
+    ["Tarefa do estudo", at ? perDm(uteisAntesPer(at,1)) : "", p.est==="agendado" ? "feito" : "fut"],
+    ["Lembretes", [L.d7?perDm(d7):null, L.d1?perDm(d1):null, L.out?perDm(outra):null].filter(Boolean).join(" · ")||"nenhum", "fut"],
+    [tipoRot, perDm(p.dia)+" "+p.hora, "fut"],
+  ];
+  const aprov = p.ligado
+    ? `<div class="aviso">Data aprovada. Se o ${p.jud?"processo":"INSS"} mudar a data, a aprovação cai e a linha mostra <b>Data mudou</b>.</div>`
+    : (p.mudou ? `<div class="aviso forte">A data mudou${a.data_aprovada ? " de "+perDm(dataSP(a.data_aprovada)) : ""} para ${perDm(p.dia)}. Confira a mensagem e ligue de novo para aprovar a nova data.</div>`
+      : `<div class="aviso">Ao ligar, você aprova a data de <b class="num">${fmt(p.dia)} às ${esc(p.hora)}</b>. A primeira mensagem sai às <b>${env.hora}</b> ${env.dia===hoje()?"de hoje":"de "+perDm(env.dia)}.</div>`);
+  return `<div class="card-cab"><button type="button" class="btn pequeno voltar" id="per-voltar" aria-label="Voltar às perícias">‹ Perícias</button><div><h2 id="prev-tit">Prévia · ${esc(p.nome)}</h2><div class="sub">Primeira mensagem pelo WhatsApp</div></div>${perAdvSel(p," adv-prev")}</div>
+    <div class="prev-corpo">
+      <div class="wa" aria-label="Mensagem que será enviada"><div class="wa-quem">Escritório Paulo Tercini · WhatsApp</div><div class="bolha">${perMensagem(p)}</div></div>
+      <dl class="fatos"><dt>Atendimento</dt><dd>presencial, tipo 002, ${adv.nome}</dd>
+        <dt>Dia oferecido</dt><dd>o mais próximo com vaga antes da ${p.social?"avaliação":"perícia"}; de preferência no próprio dia, 3h ou mais antes</dd>
+        <dt>Lembretes</dt><dd>${L.d7?"7 dias úteis: "+perDm(d7)+" ("+perSem(d7)+")":"7 dias úteis desligado"}<br>${L.d1?"1 dia útil: "+perDm(d1)+" ("+perSem(d1)+")":"1 dia útil desligado"}${L.out?"<br>"+L.n+" dias úteis: "+perDm(outra)+" ("+perSem(outra)+")":""}</dd>
+        <dt>Se não puder vir</dt><dd>${telOk?"telefone em "+perDm(d1)+" ("+perSem(d1)+") às 16h":"telefone indisponível: véspera útil é quarta-feira"}; persistindo, vai à equipe</dd></dl>
+      ${aprov}
+      ${p.ligado ? "" : `<div class="acoes"><button type="button" class="btn" id="per-cancelar" title="Fechar a prévia sem ligar">Cancelar</button><button type="button" class="btn pri" id="per-ligar" title="Ligar e aprovar a data desta perícia"${souAdmin()?"":" disabled"}>Ligar</button></div>`}
+      <h3 class="tit-sec">Caminho desta perícia</h3><ol class="fluxo">${passos.map(s=>`<li class="${s[2]}"><span class="t">${esc(s[0])}</span><span class="d">${esc(s[1])}</span></li>`).join("")}</ol>
+    </div>`;
+}
+function perNotif(p){
+  const L = perLembretes(), w = d => perDm(d)+" ("+perSem(d)+")", pre = p ? (p.social?"Avaliação":"Perícia")+" de "+perDm(p.dia)+": " : "";
+  return `<summary><h2>Notificações</h2><span class="seta" aria-hidden="true">&#9662;</span></summary>
+    <div class="notif-corpo">
+      <div class="janelas" aria-label="Horários de envio">Envio só em dois horários: <span class="hora">08:30</span><span class="hora">16:00</span></div>
+      <p class="regra">Sem resposta sobre o atendimento, a mensagem é reiterada no dia útil seguinte, no primeiro horário.</p>
+      <div><h3 class="tit-sec" style="margin-bottom:4px">Lembretes ao cliente</h3>
+        <div class="lemb"><span class="nome">7 dias úteis antes</span><span class="quando2" id="q-d7">${p?pre+w(uteisAntesPer(p.dia,7)):""}</span>${perSw(L.d7,'id="sw-d7"',"Lembrete 7 dias úteis antes", L.d7?"Desligar o lembrete":"Ligar o lembrete")}</div>
+        <div class="lemb"><span class="nome">1 dia útil antes</span><span class="quando2" id="q-d1">${p?pre+w(uteisAntesPer(p.dia,1)):""}</span>${perSw(L.d1,'id="sw-d1"',"Lembrete 1 dia útil antes", L.d1?"Desligar o lembrete":"Ligar o lembrete")}</div>
+        <div class="lemb"><span class="nome outra"><label for="n-outra">Outra data:</label><input id="n-outra" type="number" inputmode="numeric" min="2" max="30" value="${L.n}"${souAdmin()?"":" disabled"}> dias úteis antes</span><span class="quando2" id="q-out">${p?pre+w(uteisAntesPer(p.dia,L.n)):""}</span>${perSw(L.out,'id="sw-out"',"Lembrete em outra data", L.out?"Desligar o lembrete":"Ligar o lembrete")}</div>
+      </div>
+      <p class="regra">Valem só para as perícias ligadas. Contam dias úteis: sem sábado, domingo e feriado nacional.</p>
+      <p class="regra">Na conversa já assumida por alguém da equipe, a resposta da IA aparece como sugestão acima do campo de escrever e não é enviada.</p>
+    </div>`;
+}
+async function perLigar(evId, ligar, prof){
+  try{
+    await api(`/rest/v1/rpc/pericia_ligar`,{method:"POST", body:JSON.stringify({p_evento:evId, p_ligado:ligar, p_profissional:prof})});
+    return true;
+  }catch(err){ aviso("Não foi possível: "+(err && err.message || err)); return false; }
+}
+async function perRecarregar(){ _perAvisos = null; await renderPericiasAviso(); }
 async function renderPericiasAviso(){
   tituloLista("🩺 Perícias");
-  document.getElementById("sub-lista").innerHTML = `<span class="meio-sub">Nada é enviado ao cliente sem o Ligar da perícia. O Ligar aprova a data registrada; se ela mudar depois, a aprovação cai.</span>`;
+  if(!document.getElementById("per5-css")){ const st = document.createElement("style"); st.id = "per5-css"; st.textContent = PER_CSS; document.head.appendChild(st); }
   const meio = document.getElementById("conteudo-meio");
   if(!_perAvisos){
     meio.innerHTML = `<p class="meio-sub">Carregando…</p>`;
@@ -16961,54 +17101,69 @@ async function renderPericiasAviso(){
     catch(_){ _perAvisos = new Map(); }
     if(visao!=="periciasaviso") return;
   }
-  const hj = hoje(), adm = souAdmin(), lista = periciasDoAviso();
-  const cartao = ({e, k}) => {
-    const a = _perAvisos.get(e.id), cli = D.cliPorId.get(k.cliente_id), dia = dataSP(e.data_hora);
-    const mudou = a && a.ligado && a.data_aprovada && new Date(a.data_aprovada).getTime()!==new Date(e.data_hora).getTime();
-    const est = !a || !a.ligado ? (a && a.estado==="data_mudou" ? "Data mudou" : "Desligado") : mudou ? "Data mudou" : (PER_ESTADO[a.estado] || "Ligado");
-    const prof = (a && a.profissional) || "paulo", n = uteisEntre(hj, dia);
-    return `<div class="per-quadro per-c" data-ev="${e.id}" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-      <div style="flex:1;min-width:200px"><b class="per-nome" data-cli="${esc(k.cliente_id||"")}" style="cursor:pointer">${esc(cli ? cli.nome : tituloCaso(k))}</b>
-        <div class="meio-sub">${esc(e.tipo)} · ${fmt(dia)} às ${esc(horaSP(e.data_hora))}${e.local ? " · "+esc(e.local) : ""} · ${n===0 ? "hoje" : n+" dia"+(n>1?"s":"")+" úte"+(n>1?"is":"l")}</div></div>
-      <span class="fchip${est==="Data mudou"||est==="Sem resposta"||est==="Sem telefone" ? " per-alerta" : ""}" style="display:inline-flex${est==="Data mudou"||est==="Sem resposta"||est==="Sem telefone" ? ";color:#b42318;border-color:#b42318" : ""}">${esc(est)}</span>
-      <select class="per-prof" aria-label="advogado do atendimento" ${adm?"":"disabled"}><option value="paulo"${prof==="paulo"?" selected":""}>Dr. Paulo</option><option value="amanda"${prof==="amanda"?" selected":""}>Dra. Amanda</option></select>
-      ${adm ? `<button class="btn-mini per-ligar${a && a.ligado && !mudou ? "" : " pri"}" title="${a && a.ligado && !mudou ? "Desligar o aviso desta perícia" : "Aprovar a data e enviar o aviso no próximo horário"}">${a && a.ligado && !mudou ? "Desligar" : "Ligar"}</button>` : ""}
-    </div>`;
-  };
-  const cfg = (c, p) => cfgApp(c) ?? p;
-  const painel = `<div class="per-quadro" style="margin-bottom:12px"><b>Notificações</b>
-    <div class="meio-sub">Envio às 08:30 e às 16:00, nos dias úteis. Sem resposta, repete no dia útil seguinte; sem resposta à repetição, a recepção recebe a menção para telefonar.</div>
-    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:8px">
-      <label><input type="checkbox" id="per-d7" ${cfg("pericia_aviso_d7","sim")==="sim"?"checked":""} ${adm?"":"disabled"}> D-7</label>
-      <label><input type="checkbox" id="per-d1" ${cfg("pericia_aviso_d1","sim")==="sim"?"checked":""} ${adm?"":"disabled"}> D-1 com os documentos</label>
-      <label>Outra: <input type="number" id="per-outra" min="0" max="30" style="width:60px" value="${esc(cfg("pericia_aviso_outra","0"))}" ${adm?"":"disabled"}> dias úteis antes (0 desliga)</label></div>
-    <label style="display:block;margin-top:8px">Documentos do D-1<textarea id="per-docs" rows="2" style="width:100%" ${adm?"":"disabled"}>${esc(cfg("pericia_aviso_docs",""))}</textarea></label>
-    ${adm ? `<button class="btn-mini" id="per-salvar">Salvar</button>` : ""}</div>`;
-  meio.innerHTML = painel + (lista.length ? lista.map(cartao).join("") : `<p class="meio-sub">Nenhuma perícia ou avaliação social agendada.</p>`);
-  meio.querySelectorAll(".per-nome").forEach(b=>b.onclick=()=>b.dataset.cli && abrirFicha(b.dataset.cli));
-  meio.querySelectorAll(".per-c").forEach(c=>{
-    const bt = c.querySelector(".per-ligar"); if(!bt) return;
-    bt.onclick = async ()=>{
-      const ligar = bt.textContent==="Ligar"; bt.disabled = true;
+  const todas = periciasDoAviso().map(perDados), vs = todas.filter(perVisivel);
+  if(!todas.some(p=>p.e.id===_perSel)) _perSel = todas[0] ? todas[0].e.id : null;
+  const sel = todas.find(p=>p.e.id===_perSel), aberta = !!meio.querySelector("#prev.aberta");
+  const c = {todas:todas.length, aguardando:todas.filter(p=>p.est==="aguardando").length, ligadas:todas.filter(p=>p.ligado).length,
+    mudou:todas.filter(p=>p.mudou).length, medica:todas.filter(p=>!p.social).length, social:todas.filter(p=>p.social).length};
+  document.getElementById("sub-lista").innerHTML = `<span class="meio-sub">${vs.length===todas.length ? todas.length+" marcada"+(todas.length===1?"":"s") : vs.length+" de "+todas.length}</span>`;
+  const chip = (attr, v, rot, on) => `<button type="button" class="chip-f" ${attr}="${v}" aria-pressed="${on}">${rot} <span class="num">${c[v==="todas"?"todas":v]}</span></button>`;
+  const notifAberta = meio.querySelector("#notif") ? meio.querySelector("#notif").open : null;
+  meio.innerHTML = `<div class="per5">
+    <div class="agora">Avisos saem às <b>08:30</b> e às <b>16:00</b>. Próximo envio: <b class="num">${perEnvioTxt(perProximoEnvio())}</b></div>
+    <div class="filtros">
+      <div class="chips" role="group" aria-label="Filtrar por situação">${chip("data-f","todas","Todas",_perFiltro==="todas")}${chip("data-f","aguardando","Aguardando",_perFiltro==="aguardando")}${chip("data-f","ligadas","Ligadas",_perFiltro==="ligadas")}${chip("data-f","mudou","Data mudou",_perFiltro==="mudou")}</div>
+      <div class="chips" role="group" aria-label="Filtrar por tipo">${chip("data-t","medica","Perícia médica",_perTipo==="medica")}${chip("data-t","social","Avaliação social",_perTipo==="social")}</div>
+    </div>
+    <div class="grade">
+      <section class="lista" id="lista" aria-label="Perícias, da mais próxima à mais distante">${vs.length ? vs.map(perLinha).join("") : todas.length ? `<div class="vazio">Nenhuma perícia nesta situação. Escolha <b>Todas</b> para ver a lista inteira.</div>` : `<div class="vazio">Nenhuma perícia ou avaliação social agendada.</div>`}</section>
+      <aside class="lado">
+        <section class="card prev${aberta?" aberta":""}" id="prev" aria-labelledby="prev-tit" tabindex="-1">${perPrevia(sel)}</section>
+        <details class="card notif" id="notif">${perNotif(sel)}</details>
+      </aside>
+    </div></div>`;
+  const P = meio.querySelector("#prev"), raiz = meio.querySelector(".per5");
+  meio.querySelector("#notif").open = notifAberta ?? raiz.clientWidth > 720;
+  const abrir = id => { _perSel = id; renderPericiasAviso().then(()=>{ const q = document.getElementById("prev"); if(!q) return; q.classList.add("aberta"); if(document.querySelector(".per5").clientWidth <= 720) q.focus(); }); };
+  const fechar = () => P.classList.remove("aberta");
+  if(!renderPericiasAviso._esc){ renderPericiasAviso._esc = true; document.addEventListener("keydown", ev=>{ if(ev.key==="Escape" && visao==="periciasaviso"){ const q = document.getElementById("prev"); if(q) q.classList.remove("aberta"); } }); }
+  raiz.onclick = async ev=>{
+    const t = ev.target, adm = souAdmin();
+    const cli = t.closest(".cli[data-cli]"); if(cli && cli.dataset.cli){ abrirFicha(cli.dataset.cli); return; }
+    const advB = t.closest("[data-adv]");
+    if(advB){ if(!adm) return; const p = todas.find(x=>x.e.id===advB.dataset.id); if(!p) return;
+      const prof = advB.dataset.adv; _perSel = p.e.id;
+      if(p.ligado){ if(!await perLigar(p.e.id, true, prof)) return; _perProf.delete(p.e.id); await perRecarregar(); }
+      else { _perProf.set(p.e.id, prof); await renderPericiasAviso(); }
+      aviso("Atendimento oferecido com "+PER_ADV[prof].nome+"."); return; }
+    const s = t.closest("[data-sw]");
+    if(s){ const p = todas.find(x=>x.e.id===s.dataset.sw); if(!p || !adm) return;
+      if(p.ligado){ if(!await perLigar(p.e.id, false, p.prof)) return; await perRecarregar();
+        avisoDesfazer("Avisos de "+p.nome+" desligados.", async()=>{ if(await perLigar(p.e.id, true, p.prof)) await perRecarregar(); }); }
+      else abrir(p.e.id);
+      return; }
+    const pv = t.closest("[data-prev]"); if(pv){ abrir(pv.dataset.prev); return; }
+    if(t.closest("#per-ligar")){ const p = sel; if(!p || !adm) return;
+      if(!await perLigar(p.e.id, true, p.prof)) return; _perProf.delete(p.e.id); await perRecarregar();
+      const q = document.getElementById("prev"); if(q) q.classList.remove("aberta");
+      avisoDesfazer("Ligado. Data de "+perDm(p.dia)+" aprovada; o aviso sai às "+perProximoEnvio().hora+".", async()=>{ if(await perLigar(p.e.id, false, p.prof)) await perRecarregar(); });
+      return; }
+    if(t.closest("#per-cancelar,#per-voltar")){ fechar(); return; }
+    const fb = t.closest("[data-f]"); if(fb){ _perFiltro = fb.dataset.f; renderPericiasAviso(); return; }
+    const tb = t.closest("[data-t]"); if(tb){ _perTipo = _perTipo===tb.dataset.t ? null : tb.dataset.t; renderPericiasAviso(); return; }
+    const ls = t.closest("#sw-d7,#sw-d1,#sw-out");
+    if(ls){ if(!adm) return; const L = perLembretes(), k = ls.id.slice(3);
       try{
-        await api(`/rest/v1/rpc/pericia_ligar`,{method:"POST", body:JSON.stringify({p_evento:c.dataset.ev, p_ligado:ligar, p_profissional:c.querySelector(".per-prof").value})});
-        _perAvisos = null; aviso(ligar ? "Aviso ligado: sai no próximo horário de envio." : "Aviso desligado.");
-      }catch(err){ aviso("Não foi possível: "+(err && err.message || err)); }
-      renderPericiasAviso();
-    };
-  });
-  const sv = document.getElementById("per-salvar");
-  if(sv) sv.onclick = async ()=>{
-    sv.disabled = true;
-    try{
-      await guardarCfgApp("pericia_aviso_d7", document.getElementById("per-d7").checked ? "sim" : "nao");
-      await guardarCfgApp("pericia_aviso_d1", document.getElementById("per-d1").checked ? "sim" : "nao");
-      await guardarCfgApp("pericia_aviso_outra", String(Math.max(0, +document.getElementById("per-outra").value||0)));
-      await guardarCfgApp("pericia_aviso_docs", document.getElementById("per-docs").value.trim());
-      aviso("Notificações salvas.");
-    }catch(err){ aviso("Não foi possível salvar: "+(err && err.message || err)); }
-    sv.disabled = false;
+        if(k==="out") await guardarCfgApp("pericia_aviso_outra", L.out ? "0" : String(Math.min(30, Math.max(2, +meio.querySelector("#n-outra").value||3))));
+        else await guardarCfgApp("pericia_aviso_"+k, L[k] ? "nao" : "sim");
+      }catch(err){ aviso("Não foi possível salvar: "+(err && err.message || err)); }
+      renderPericiasAviso(); return; }
+    const ln = t.closest(".linha"); if(ln && !t.closest("button")){ abrir(ln.dataset.id); return; }
   };
+  const no = meio.querySelector("#n-outra");
+  if(no) no.onchange = async ()=>{ const v = parseInt(no.value,10); if(!(v>=2 && v<=30) || !perLembretes().out) return renderPericiasAviso();
+    try{ await guardarCfgApp("pericia_aviso_outra", String(v)); }catch(err){ aviso("Não foi possível salvar: "+(err && err.message || err)); }
+    renderPericiasAviso(); };
 }
 function renderTabela(){
   tituloLista("▦ Tabela");
