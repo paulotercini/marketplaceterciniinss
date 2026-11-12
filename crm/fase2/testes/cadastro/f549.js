@@ -64,10 +64,10 @@ const conf = (nome, v) => { ok.push(!!v); console.log((v ? "PASSOU  " : "FALHOU 
     return ["D-7", "D-1"].map((r, i) => r + " · " + fmt(uteisAntes(d, [7, 1][i])).slice(0, 5)); });
   conf("a perícia mostra as datas dos lembretes", ch.length === 2 && esp.every(x => ch[1].includes(x))) || console.log(ch, esp);
   await p.click('[data-pa="pericia_aviso_d7"]'); await p.waitForTimeout(400);
-  conf("desligar volta a nao", T.config_app.find(r => r.chave === "pericia_aviso_d7").valor === "nao");
+  conf("desligar volta a nao", T.config_app.findLast(r => r.chave === "pericia_aviso_d7").valor === "nao");
   await p.fill("#per-outra-n", "4"); await p.dispatchEvent("#per-outra-n", "change"); await p.waitForTimeout(400);
   await p.click('[data-pa="pericia_aviso_outra"]'); await p.waitForTimeout(400);
-  conf("Outra grava a quantidade de dias", T.config_app.find(r => r.chave === "pericia_aviso_outra_dias").valor === "4"
+  conf("Outra grava a quantidade de dias", T.config_app.findLast(r => r.chave === "pericia_aviso_outra_dias").valor === "4"
     && await p.evaluate(() => /D-4/.test(document.querySelector(".per-lem").textContent)));
   conf("sem erro de página", !erros.length) || console.log(erros.slice(0, 3));
   console.log(`${ok.filter(Boolean).length}/${ok.length} passaram`);
