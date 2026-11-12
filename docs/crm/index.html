@@ -4283,6 +4283,16 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .aq-pq-lista span{flex-basis:100%;font-size:12px;color:var(--cinza,#4A4944)}
 .aq-pq-lista .aq-pq-it{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;padding:8px 10px;border:1px solid var(--borda);border-radius:10px;background:#fff;font-size:inherit;color:inherit}
 .aq-pq-ant-bt{margin-top:10px}
+/* F554 · os atendimentos presenciais da pessoa */
+.zap-topo .zt-agend{color:#1F5F8B;font-weight:500}.zap-topo .zt-agend.vazio{display:none}
+.aq-msg.aq-ja{background:#EAF2F8;color:#1F4E6E;border:1px solid #CFE0EC}
+.aq-msg.aq-ja .btn-mini{margin-left:6px}
+html .idf-atend .ac-lista{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+html .idf-atend .ac-it{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:baseline;gap:4px 10px;padding:8px 0;border-bottom:1px solid var(--borda)}
+html .idf-atend .ac-it b{font-weight:500;font-size:13px;font-variant-numeric:tabular-nums}
+html .idf-atend .ac-it .ac-data{font-size:13px}
+html .idf-atend .ac-it small{grid-column:1 / -1;color:var(--cinza);font-size:12px}
+html .idf-atend h4{margin:10px 0 2px;font-size:13px}
 #aq-pq-ant h4{margin:10px 0 0;font-size:13px}
 .aq-ev.aq-achado{outline:3px solid var(--azul);outline-offset:1px;z-index:5}
 .aq-agendar{border:0;border-radius:8px;padding:8px 14px;background:var(--azul);color:#fff;font:inherit;font-weight:600;cursor:pointer}
@@ -7029,7 +7039,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.61</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.62</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -16939,7 +16949,7 @@ function pintarTabela(){
       async()=>{ if(await passarCaso(id, para, de)) pintarTabela(); });
   });
 }
-// F554 · Perícias (Visões), como o protótipo aprovado em 12.11.2026 (/mnt/project-files/pericias/prototipo-tela-pericias.html):
+// F555 · Perícias (Visões), como o protótipo aprovado em 12.11.2026 (/mnt/project-files/pericias/prototipo-tela-pericias.html):
 // lista à esquerda, prévia da mensagem e Notificações à direita. O aviso ao cliente só sai depois do Ligar desta perícia,
 // que aprova a data registrada; os envios, as repetições e os lembretes moram no banco (pericia_avisos_vez), às 08:30 e às 16:00
 const PER_CSS = ".per5{ --bg:#F3F5F2; --surface:#FFFFFF; --surface-2:#F8FAF7; --ink:#18211C; --muted:#56635C; --faint:#65716A; --line:#DCE2DD; --line-2:#C9D1CB; --esc:#1E7A4C; --esc-ink:#FFFFFF; --esc-soft:#E2F1E7; --esc-txt:#165C39; --paulo:#2459B8; --paulo-soft:#E5EDFA; --paulo-txt:#1D4A99; --amanda:#E3B21A; --amanda-soft:#FBF1CC; --amanda-txt:#7A5900; --inss:#2459B8; --inss-soft:#E5EDFA; --inss-txt:#1D4A99; --jud:#6A3E9F; --jud-soft:#EFE8F8; --jud-txt:#57307F; --warn:#B4530A; --warn-soft:#FCEBDC; --warn-txt:#8F4108; --bad:#B42318; --bad-soft:#FBE7E5; --bad-txt:#93190F; --wa-bg:#EFE7DC; --wa-out:#D9FDD3; --wa-ink:#111B21; --wa-meta:#667781; --focus:#1E7A4C; --shadow:0 1px 2px rgba(24,33,28,.06),0 4px 16px rgba(24,33,28,.06); --ease:cubic-bezier(.23,1,.32,1); --r:10px; }\n.per5{container:per5/inline-size;background:var(--bg);color:var(--ink);font-family:\"IBM Plex Sans\",system-ui,sans-serif;font-size:14px;line-height:1.45;padding:18px 20px 32px;display:flex;flex-direction:column;gap:14px;min-height:100%}\n.per5 button,.per5 input{font:inherit;color:inherit}.per5 button{cursor:pointer;touch-action:manipulation}\n.per5 :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}\n.per5 .num{font-variant-numeric:tabular-nums}\n.per5 .num{font-size:inherit;font-weight:inherit;color:inherit}\n.per5 .mono{font-family:\"IBM Plex Mono\",ui-monospace,Menlo,monospace;font-size:12px;white-space:nowrap}\n.per5 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}\n.per5 .top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 16px}\n.per5 .top h1{margin:0;font:600 28px/1.1 \"Zilla Slab\",Georgia,serif;letter-spacing:-.01em;display:flex;align-items:baseline;gap:10px}\n.per5 .top h1 .cnt{font:500 14px/1 \"IBM Plex Sans\",sans-serif;color:var(--muted);font-variant-numeric:tabular-nums}\n.per5 .agora{font-size:12px;color:var(--muted)}\n.per5 .agora b{color:var(--ink);font-weight:500}\n.per5 .filtros{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}\n.per5 .chips{display:flex;flex-wrap:wrap;gap:6px}\n.per5 .chip-f{border:1px solid var(--line-2);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:500;color:var(--muted);min-height:32px;display:inline-flex;gap:6px;align-items:center;transition:transform .12s var(--ease),background .15s}\n.per5 .chip-f .num{color:var(--faint);font-size:12px}\n.per5 .chip-f[aria-pressed=\"true\"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}\n.per5 .chip-f[aria-pressed=\"true\"] .num{color:var(--bg);opacity:.75}\n.per5 .chip-f:active{transform:scale(.97)}\n.per5 .grade{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:16px;align-items:start}\n.per5 .lista{display:flex;flex-direction:column;gap:8px;min-width:0}\n.per5 .linha{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:grid;grid-template-columns:112px minmax(0,1fr) auto;gap:6px 16px;cursor:pointer;transition:border-color .15s,box-shadow .15s}\n.per5 .linha[aria-current=\"true\"]{border-color:var(--esc);box-shadow:0 0 0 1px var(--esc)}\n@media (hover:hover) and (pointer:fine){.per5 .linha:hover{border-color:var(--line-2)}}\n.per5 .quando{display:flex;flex-direction:column;gap:1px}\n.per5 .quando .dia{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1.1}\n.per5 .quando .sem{font-size:12px;color:var(--muted)}\n.per5 .quando .sem b{color:var(--ink);font-weight:600;font-size:14px}\n.per5 .quando .falta{font-size:12px;color:var(--faint);font-variant-numeric:tabular-nums}\n.per5 .quando .falta.perto{color:var(--bad-txt);font-weight:500}\n.per5 .meio{min-width:0;display:flex;flex-direction:column;gap:4px}\n.per5 .l1{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}\n.per5 .cli{font-weight:600;font-size:15px}\n.per5 .tipo{font-size:12px;color:var(--muted)}\n.per5 .l2{display:flex;flex-wrap:wrap;gap:2px 10px;font-size:12px;color:var(--muted);min-width:0}\n.per5 .l2 span{min-width:0}\n.per5 .ori{display:inline-flex;align-items:center;gap:6px}\n.per5 .fase{font-size:11px;font-weight:600;padding:1px 6px;border-radius:4px;letter-spacing:.02em}\n.per5 .fase.inss{background:var(--inss-soft);color:var(--inss-txt)}\n.per5 .fase.jud{background:var(--jud-soft);color:var(--jud-txt)}\n.per5 .estado{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:2px 8px;border-radius:999px;border:1px solid transparent;max-width:100%}\n.per5 .estado::before{content:\"\";width:6px;height:6px;border-radius:2px;background:currentColor;flex:none}\n.per5 .e-aguardando{background:var(--surface-2);border-color:var(--line-2);color:var(--muted)}\n.per5 .e-ligado,.per5 .e-agendado{background:var(--esc-soft);color:var(--esc-txt)}\n.per5 .e-resposta,.per5 .e-telefone{background:var(--paulo-soft);color:var(--paulo-txt)}\n.per5 .e-mudou{background:var(--warn-soft);color:var(--warn-txt)}\n.per5 .e-equipe{background:var(--bad-soft);color:var(--bad-txt)}\n.per5 .l3{font-size:12px;color:var(--muted)}\n.per5 .l3 b{color:var(--ink);font-weight:500}\n.per5 .ctrl{display:flex;flex-direction:column;align-items:flex-end;gap:8px}\n.per5 .adv{display:inline-flex;border:1px solid var(--line-2);border-radius:8px;padding:2px;gap:2px;background:var(--surface)}\n.per5 .adv button{border:0;background:transparent;border-radius:6px;padding:4px 8px 4px 4px;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--muted);min-height:28px;transition:background .15s,transform .12s var(--ease)}\n.per5 .adv button:active{transform:scale(.97)}\n.per5 .ini{width:20px;height:20px;border-radius:4px;display:inline-grid;place-items:center;font-size:11px;font-weight:600;flex:none}\n.per5 .ini.p{background:var(--paulo);color:#fff}\n.per5 .ini.a{background:var(--amanda);color:#3D2D00}\n.per5 .adv button[aria-pressed=\"true\"].p{background:var(--paulo-soft);color:var(--paulo-txt)}\n.per5 .adv button[aria-pressed=\"true\"].a{background:var(--amanda-soft);color:var(--amanda-txt)}\n.per5 .adv button[aria-pressed=\"false\"] .ini{opacity:.55}\n.per5 .sw{display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;padding:2px 0;font-size:12px;font-weight:600;color:var(--muted);min-height:28px}\n.per5 .sw .trk{width:36px;height:20px;border-radius:999px;background:var(--faint);position:relative;transition:background .18s var(--ease);flex:none}\n.per5 .sw .trk::after{content:\"\";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .18s var(--ease)}\n.per5 .sw[aria-checked=\"true\"]{color:var(--esc-txt)}\n.per5 .sw[aria-checked=\"true\"] .trk{background:var(--esc)}\n.per5 .sw[aria-checked=\"true\"] .trk::after{transform:translateX(16px)}\n.per5 .sw:active .trk::after{width:19px}\n.per5 .btn{border:1px solid var(--line-2);background:var(--surface);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:500;min-height:32px;transition:transform .12s var(--ease),background .15s}\n.per5 .btn:active{transform:scale(.97)}\n.per5 .btn.pri{background:var(--esc);border-color:var(--esc);color:var(--esc-ink);font-weight:600}\n.per5 .btn.pequeno{padding:3px 10px;min-height:28px;font-size:12px}\n@media (hover:hover) and (pointer:fine){.per5 .btn:hover{background:var(--surface-2)}.per5 .btn.pri:hover{filter:brightness(1.06);background:var(--esc)}}\n.per5 .vazio{padding:28px 16px;text-align:center;color:var(--muted);background:var(--surface);border:1px dashed var(--line-2);border-radius:var(--r)}\n.per5 .lado{display:flex;flex-direction:column;gap:12px;position:sticky;top:12px;min-width:0}\n.per5 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);min-width:0}\n.per5 .card-cab{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px 10px;border-bottom:1px solid var(--line)}\n.per5 .card-cab h2{margin:0;font-size:14px;font-weight:600}\n.per5 .card-cab .sub{font-size:12px;color:var(--muted)}\n.per5 .voltar{display:none}\n.per5 .prev-corpo{padding:12px 14px;display:flex;flex-direction:column;gap:12px}\n.per5 .wa{background:var(--wa-bg);border-radius:10px;padding:12px 10px;display:flex;flex-direction:column;gap:6px}\n.per5 .wa-quem{font-size:11px;color:var(--wa-meta);text-align:center}\n.per5 .bolha{align-self:flex-end;max-width:94%;background:var(--wa-out);color:var(--wa-ink);border-radius:8px 8px 2px 8px;padding:7px 9px 4px;font-size:13px;line-height:1.42;box-shadow:0 1px .5px rgba(0,0,0,.13)}\n.per5 .bolha p{margin:0 0 6px}\n.per5 .bolha .assin{font-weight:600}\n.per5 .bolha .pe{font-size:11px;color:var(--wa-meta);text-align:right;font-variant-numeric:tabular-nums}\n.per5 .horas{display:inline;font-weight:600}\n.per5 .fatos{background:none;border:0;border-radius:0;padding:0;box-shadow:none;overflow:visible;margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;font-size:12px;margin:0}\n.per5 .fatos dt{color:var(--muted)}\n.per5 .fatos dd{margin:0;font-variant-numeric:tabular-nums}\n.per5 .aviso{font-size:12px;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:8px 10px}\n.per5 .aviso.forte{background:var(--warn-soft);border-color:transparent;color:var(--warn-txt)}\n.per5 .acoes{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}\n.per5 .fluxo{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}\n.per5 .fluxo li{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:2px 10px;font-size:12px;padding:3px 0;position:relative}\n.per5 .fluxo li::before{content:\"\";width:10px;height:10px;border-radius:3px;margin-top:3px;border:2px solid var(--line-2);background:var(--surface);grid-row:1}\n.per5 .fluxo li:not(:last-child)::after{content:\"\";position:absolute;left:6px;top:17px;bottom:-4px;width:2px;background:var(--line)}\n.per5 .fluxo li.feito::before{background:var(--esc);border-color:var(--esc)}\n.per5 .fluxo li.feito:not(:last-child)::after{background:var(--esc)}\n.per5 .fluxo li.agora::before{border-color:var(--esc);background:var(--esc-soft)}\n.per5 .fluxo li.agora .t{font-weight:600}\n.per5 .fluxo li.pulado .t{color:var(--faint);text-decoration:line-through}\n.per5 .fluxo .t{color:var(--ink)}\n.per5 .fluxo .d{color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}\n.per5 .fluxo li.fut .t{color:var(--muted)}\n.per5 .tit-sec{margin:0;font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}\n.per5 details.notif summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px}\n.per5 details.notif summary::-webkit-details-marker{display:none}\n.per5 details.notif summary h2{margin:0;font-size:14px;font-weight:600}\n.per5 details.notif summary .seta{transition:transform .18s var(--ease);color:var(--muted)}\n.per5 details.notif[open] summary{border-bottom:1px solid var(--line)}\n.per5 details.notif[open] summary .seta{transform:rotate(180deg)}\n.per5 .notif-corpo{padding:10px 14px 14px;display:flex;flex-direction:column;gap:12px}\n.per5 .janelas{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted)}\n.per5 .hora{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-size:13px}\n.per5 .lemb{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}\n.per5 .lemb:first-of-type{border-top:0}\n.per5 .lemb .nome{font-weight:500;font-size:13px}\n.per5 .lemb .quando2{grid-column:1;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}\n.per5 .lemb .sw{grid-row:1/span 2;grid-column:2}\n.per5 .outra{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}\n.per5 .outra input{width:56px;font-size:16px;padding:2px 6px;border:1px solid var(--line-2);border-radius:6px;background:var(--surface);font-variant-numeric:tabular-nums}\n.per5 .regra{font-size:12px;color:var(--muted);margin:0}\n@container per5 (max-width:720px){.per5 .card-cab{flex-wrap:wrap}.per5 .adv-cel{display:block;margin-top:4px}.per5 .top h1{font-size:24px}.per5 .filtros{gap:8px}.per5 .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-12px;padding-inline:12px}.per5 .chips::-webkit-scrollbar{display:none}.per5 .chip-f{flex:none;min-height:36px}.per5 .grade{grid-template-columns:minmax(0,1fr)}.per5 .linha{grid-template-columns:minmax(0,1fr) auto;padding:12px}.per5 .quando{grid-column:1;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:2px 8px}.per5 .quando .dia{font-size:17px}.per5 .meio{grid-column:1/-1}.per5 .ctrl{grid-column:2;grid-row:1;align-items:flex-end}.per5 .ctrl .adv{display:none}.per5 .lado{position:static}.per5 .card.prev{position:fixed;inset:0;z-index:30;border-radius:0;border:0;overflow:auto;transform:translateX(100%);visibility:hidden;transition:transform .28s var(--ease),visibility 0s .28s;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);overscroll-behavior:contain}.per5 .card.prev.aberta{transform:none;visibility:visible;transition:transform .28s var(--ease)}.per5 .voltar{display:inline-flex}.per5 .sw,.per5 .adv button{min-height:44px}.per5 .btn{min-height:44px}}\n.per5 .adv-cel{display:none}@container per5 (max-width:720px){.per5 .adv-cel{display:block;margin-top:4px}}\n@media (prefers-reduced-motion:reduce){.per5 *{transition-duration:.01ms!important}}";
@@ -18010,6 +18020,7 @@ function dadosDaConversaZap(c){
   const igual = !!cli && !c.contato_nome && nomeDaConversa(c)===cli.nome && !representadosDe(cli, String(c.telefone||"").replace(/\D/g,"").slice(-8)).length;
   return { sub: `             <span class="zt-fala${igual?" zt-fala-igual":""}">${clienteDaLinha(c)}</span>
              <span class="mono">${esc(foneZap(c.telefone))}</span>
+             ${zapAgendHtml(c)}
              ${advDaConversa(c)?`<span>Adv. <b>${esc(advDaConversa(c))}</b></span>`:""}
              ${c.bot_ativo&&c.bot_passo?`<span class="zt-robo" title="o passo do robô nesta conversa">Robô: <b>${esc(rotPasso(c.bot_passo))}</b>${c.bot_desde?` desde ${diaZap(c.bot_desde)} ${horaSP(c.bot_desde)}`:""}</span>`:""}
              ${at?(v=>`<span>Atendendo: <b>${esc(at.nome)}</b>${at.id!==eu.id&&v&&!v.resp?(v.viu
@@ -53489,6 +53500,7 @@ function fichaIdentificacao(c, creds){
         ${cadCampoEndereco(c)}
       </section>
       ${caixaAposCadastro(c)}
+      ${caixaAtendimentos(c)}
       ${caixaNotasTodo(c)}
       ${caixaTranscricoes(c)}
       ${caixaQualidade(c)}
@@ -58688,8 +58700,11 @@ function pesquisarAgenda(){
     try{
       const r = (await agendaApi("historico", {q})).atendimentos || [];
       if(inp.value.trim()!==q) return;
-      ant.innerHTML = `<h4>Atendimentos anteriores</h4>` + (r.length ? `<ul class="aq-pq-lista">${r.map(e=>`<li><span class="aq-pq-it"><i class="aq-bola p-${e.profissional||"paulo"}"></i>
-        <b>${esc(nomeDoEvento(e))}</b><span>${diaExt(e.data)}, ${dataBR(e.data)} às ${hmTxt(e.inicio)} · ${esc(nomeProf(e.profissional||"paulo"))} · ${esc(e.tipo||"")}</span></span></li>`).join("")}</ul>`
+      // F554 · o atendimento de quem tem ficha abre a ficha
+      ant.innerHTML = `<h4>Atendimentos anteriores</h4>` + (r.length ? `<ul class="aq-pq-lista">${r.map(e=>{ const cli = cliDoEvento(e);
+        const miolo = `<i class="aq-bola p-${e.profissional||"paulo"}"></i>
+        <b>${esc(nomeDoEvento(e))}</b><span>${diaExt(e.data)}, ${dataBR(e.data)} às ${hmTxt(e.inicio)} · ${esc(nomeProf(e.profissional||"paulo"))} · ${esc(e.tipo||"")}${cli?" · abrir a ficha":""}</span>`;
+        return `<li>${cli ? `<button class="aq-pq-ficha" onclick="fecharCaixa();abrirFicha('${cli.id}')" title="Abrir a ficha de ${esc(cli.nome)}">${miolo}</button>` : `<span class="aq-pq-it">${miolo}</span>`}</li>`; }).join("")}</ul>`
         : `<p class="aq-vazio">Nenhum atendimento anterior encontrado.</p>`);
     }catch(e){
       if(inp.value.trim()!==q) return;
@@ -58721,6 +58736,87 @@ function irAoAtendimento(e){
   pintarTopoAgenda(); pintarAgenda();
   const b = document.querySelector(`[data-aqev="${CSS.escape(e.id)}"]`);
   if(b){ b.scrollIntoView({block:"center"}); b.classList.add("aq-achado"); b.focus({preventScroll:true}); setTimeout(()=>b.classList.remove("aq-achado"), 2500); }
+}
+// F554 · os atendimentos presenciais da pessoa: os próximos (agendamentosFuturos e a agenda já carregada) e os
+// anteriores (historico do Apps Script, 5 anos); um pedido por pessoa a cada 10 minutos, guardado na sessão.
+// o = {id, nome, tel}: com ficha vale o clienteId do evento ou o nome; sem ficha, o telefone (os próximos) e o nome.
+const _atendCli = new Map();
+const chaveAtend = o => o.id ? "c:"+o.id : o.tel ? "t:"+String(o.tel).replace(/\D/g,"").slice(-8) : "n:"+semAcento(o.nome||"").toLowerCase().trim();
+const palavrasNome = n => semAcento(n||"").toLowerCase().split(/\s+/).filter(p=>p.length>2 && !["das","dos"].includes(p));
+function eventoDaPessoa(e, o){
+  if(o.id && e.clienteId) return e.clienteId===o.id;
+  const t8 = String(o.tel||"").replace(/\D/g,"").slice(-8);
+  if(!o.id && t8.length===8 && String(e.telefone||"").replace(/\D/g,"").endsWith(t8)) return true;
+  const pal = palavrasNome(o.nome); if(pal.length<2) return false;
+  const n = semAcento(nomeDoEvento(e)).toLowerCase();
+  return n.includes(pal[0]) && n.includes(pal[pal.length-1]);
+}
+function atendimentosDe(o){
+  const k = chaveAtend(o), m = _atendCli.get(k);
+  if(m && (m.carregando || Date.now()-m.em < 600000)) return m;
+  const novo = {o, k, carregando:true, em:Date.now(), fut:[], ant:[], erro:null};
+  _atendCli.set(k, novo);
+  let tel = String(o.tel||"").replace(/\D/g,""); if(tel.length>11 && tel.startsWith("55")) tel = tel.slice(2);
+  const pal = palavrasNome(o.nome), q = pal.length>=2 ? pal[0]+" "+pal[pal.length-1] : "";
+  const pFut = (o.id || tel.length>=10) ? agendaApi("agendamentosFuturos", o.id ? {clienteId:o.id} : {telefone:tel}).then(r=>r.agendamentos||[]).catch(()=>[]) : Promise.resolve([]);
+  const pAnt = q ? agendaApi("historico", {q}).then(r=>r.atendimentos||[]).catch(e=>{ novo.erro = e.codigo==="ACAO_INVALIDA" ? "antiga" : "falha"; return []; }) : Promise.resolve([]);
+  Promise.all([pFut, pAnt]).then(([fut, ant])=>{
+    const h = hoje(), vistos = new Set(), unico = e => !vistos.has(e.id) && vistos.add(e.id);
+    const daAgenda = PROFS_AGENDA.flatMap(pr=>((agq.cache[pr]||{}).dias||[]).flatMap(d=>(d.eventos||[])
+      .filter(e=>e.atendimento).map(e=>({...e, data:e.data||d.data, profissional:e.profissional||pr}))));
+    novo.fut = fut.filter(e=>e.atendimento!==false && e.data>=h).concat(daAgenda.filter(e=>e.data>=h && eventoDaPessoa(e, o)))
+      .filter(unico).sort((a,b)=>(a.data+a.inicio).localeCompare(b.data+b.inicio));
+    novo.ant = ant.filter(e=>e.data<=h && eventoDaPessoa(e, o)).filter(unico).sort((a,b)=>(b.data+b.inicio).localeCompare(a.data+a.inicio));
+    novo.carregando = false; novo.em = Date.now();
+    document.querySelectorAll("[data-atend]").forEach(el=>{ if(el.dataset.atend===k) el.outerHTML = htmlAtend(novo, el.dataset.modo); });
+  });
+  return novo;
+}
+// a ficha do atendimento: o clienteId do evento ou, sem ele, o cliente de nome igual ao do evento
+const cliDoEvento = e => (e.clienteId && D.cliPorId.get(e.clienteId)) || (D.clientes||[]).find(c=>c.nome && ehClienteDaLista(c) && semAcento(c.nome).toLowerCase()===semAcento(nomeDoEvento(e)).toLowerCase().trim());
+const linhaAtendTxt = e => `${diaExt(e.data)}, ${dataBR(e.data)} às ${hmTxt(e.inicio)} · ${nomeProf(e.profissional||"paulo")}${e.tipo?` · ${e.tipo}`:""}`;
+function htmlAtend(m, modo){
+  const k = esc(m.k), fut = m.fut, ant = m.ant;
+  if(modo==="zap"){
+    const e = fut[0];
+    return `<span class="zt-agend${e?"":" vazio"}" data-atend="${k}" data-modo="zap"${e?` title="${esc(linhaAtendTxt(e))}${e.confirmado?" · confirmado":""}${fut.length>1?` · e mais ${fut.length-1}`:""}"`:""}>${e
+      ? `Agendado: <b>${dataBR(e.data).slice(0,5)} às ${hmTxt(e.inicio)}</b> · ${esc(nomeProf(e.profissional||"paulo"))}${fut.length>1?` (+${fut.length-1})`:""}` : ""}</span>`;
+  }
+  if(modo==="aq"){   // o agendamento do primeiro atendimento (001) de quem já veio antes
+    const e = ant[0]; if(!e) return `<div data-atend="${k}" data-modo="aq"></div>`;
+    const cli = cliDoEvento(e);
+    return `<div class="aq-msg aq-ja" role="status" data-atend="${k}" data-modo="aq">Já atendido em ${dataBR(e.data)} com ${esc(nomeProf(e.profissional||"paulo"))}${ant.length>1?` (${ant.length} atendimentos)`:""}.
+      ${cli ? `Se for ${esc(cli.nome)}, o atendimento é de cliente (002). <button class="btn-mini" onclick="aqEhCliente('${cli.id}')" title="Agendar como cliente do escritório (002)"><span aria-hidden="true">Cliente</span><span class="sr-only">Agendar como cliente do escritório (002)</span></button>`
+        : `Se for a mesma pessoa, cadastre a ficha para agendar como cliente (002).`}</div>`;
+  }
+  if(modo==="aqcli"){
+    const e = ant[0];
+    return `<p class="meio-sub" data-atend="${k}" data-modo="aqcli">${e ? `Último atendimento: ${esc(linhaAtendTxt(e))}.` : ""}</p>`;
+  }
+  const li = (e, fut) => `<li class="ac-it"><b>${dataBR(e.data)} às ${hmTxt(e.inicio)}</b><span class="ac-data">${esc(nomeProf(e.profissional||"paulo"))}</span>
+      ${fut ? `<button class="btn-mini" onclick='verAtendAgenda(${esc(JSON.stringify({id:e.id, data:e.data, profissional:e.profissional||"paulo"}))})' title="Abrir o dia na Agenda"><span aria-hidden="true">Agenda</span><span class="sr-only">Abrir o dia na Agenda</span></button>` : "<span></span>"}
+      <small>${diaExt(e.data)}${e.tipo?` · ${e.tipo==="001"?"primeiro atendimento":"cliente"} (${e.tipo})`:""}${fut ? ` · ${e.confirmado?"confirmado":"não confirmado"}` : ""}</small></li>`;
+  return `<section class="idf-card idf-atend" aria-labelledby="idf-atend" data-atend="${k}" data-modo="idf"><h3 class="adr-h" id="idf-atend">Atendimentos presenciais${!m.carregando?` (${fut.length+ant.length})`:""}</h3>
+    ${m.carregando ? `<p class="meio-sub">Consultando a agenda…</p>` : `
+    <h4>Próximos</h4>${fut.length ? `<ul class="ac-lista">${fut.map(e=>li(e, true)).join("")}</ul>` : `<p class="meio-sub">Nenhum atendimento agendado.</p>`}
+    <h4>Anteriores</h4>${ant.length ? `<ul class="ac-lista">${ant.slice(0,12).map(e=>li(e, false)).join("")}</ul>${ant.length>12?`<p class="meio-sub">e mais ${ant.length-12}.</p>`:""}`
+      : `<p class="meio-sub">${m.erro==="antiga" ? "A agenda do Google ainda está na versão antiga: falta publicar a versão nova do Apps Script." : m.erro ? "Não consegui ler os atendimentos anteriores." : "Nenhum atendimento anterior nos últimos 5 anos."}</p>`}`}
+  </section>`;
+}
+const caixaAtendimentos = c => htmlAtend(atendimentosDe({id:c.id, nome:c.nome}), "idf");
+function zapAgendHtml(c){
+  const cli = clienteDaConversa(c);
+  if(!cli && !c.telefone) return "";
+  return htmlAtend(atendimentosDe(cli ? {id:cli.id, nome:cli.nome} : {tel:c.telefone, nome:c.contato_nome||""}), "zap");
+}
+function aqEhCliente(id){
+  const f = fluxo, c = D.cliPorId.get(id); if(!f || !c) return;
+  f.cli=c; f.novo=false; f.tipo=(f.vaga&&f.vaga.tipo)||"002"; f.nome=c.nome; f.tel=(c.telefone||"").replace(/\D/g,"") || f.tel; f.corrigir=false; f.msg=""; pintarFluxo();
+}
+async function verAtendAgenda(e){
+  if(clienteAberto) fecharFicha();
+  if(!agq.cache[e.profissional]) await carregarAgenda(e.profissional).catch(()=>{});
+  irAoAtendimento(e);
 }
 function pintarAgenda(){
   const alvo = document.getElementById("conteudo-meio");
@@ -59279,9 +59375,11 @@ function pintarFluxo(){
         <label class="aq-campo">Nome completo<input id="aq-nome" class="aq-inp" value="${esc(f.nome)}"></label>
         <label class="aq-campo">Telefone com DDD<input id="aq-tel" class="aq-inp" inputmode="tel" placeholder="(16) 99999-9999" value="${esc(fmtTelBR(f.tel))}"></label>
         <div id="aq-tel-de">${telJaCadastrado(f)}</div>
+        <div id="aq-ja">${htmlAtend(atendimentosDe({nome:f.nome}), "aq")}</div>
         <div class="aq-bts"><button class="btn-rap" data-aqvolta="1">Voltar</button><button class="btn-rap forte" id="aq-seg2">${clientesDoTelefone(f.tel).length?"É outra pessoa, continuar":"Continuar"}</button></div>`
       : `<h3>${esc(f.cli.nome)} <span class="aq-tipo">002 · 30 minutos</span> <button class="btn-mini" id="aq-trocar" title="Agendar para outra pessoa">Trocar<span class="sr-only"> a pessoa a ser atendida</span></button></h3>
         <p class="meio-sub">Cliente do escritório. Confira o telefone antes de seguir.</p>
+        ${htmlAtend(atendimentosDe({id:f.cli.id, nome:f.cli.nome}), "aqcli")}
         ${f.corrigir||!f.tel ? `<label class="aq-campo">${f.tel?"Telefone com DDD":"Sem telefone no cadastro. Informe o telefone com DDD, que ele fica gravado no cliente"}<input id="aq-tel" class="aq-inp" inputmode="tel" placeholder="(16) 99999-9999" value="${esc(fmtTelBR(f.tel))}"></label>`
           : `<p class="aq-tel-atual">${esc(fmtTelBR(f.tel))}</p>`}
         <div class="aq-bts"><button class="btn-rap" data-aqvolta="1">Voltar</button>
@@ -59362,6 +59460,9 @@ function ligarFluxo(){
     if(f.novo){ f.tel = tel.value.replace(/\D/g,""); const box = $("aq-tel-de"); if(box){ box.innerHTML = telJaCadastrado(f); ligarTelJa(f); }
       const seg = $("aq-seg2"); if(seg) seg.textContent = clientesDoTelefone(f.tel).length ? "É outra pessoa, continuar" : "Continuar"; } };
   ligarTelJa(f);
+  // F554 · quem já veio antes: o aviso segue o nome digitado
+  const nomeAq = $("aq-nome"); if(nomeAq) nomeAq.onchange = () => { f.nome = nomeAq.value.replace(/\s+/g," ").trim();
+    const box = $("aq-ja"); if(box) box.innerHTML = htmlAtend(atendimentosDe({nome:f.nome}), "aq"); };
   on("aq-corrigir", ()=>{ f.corrigir=true; pintarFluxo(); });
   // F477 · a agenda aberta pela conversa já traz o cliente dela; quem escreve pode pedir por outra pessoa
   on("aq-trocar", ()=>{ f.cli=null; f.novo=false; f.nome=""; f.busca=""; f.corrigir=false; f.etapa=1; f.msg=""; pintarFluxo(); });
