@@ -7026,7 +7026,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.55</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.57</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7298,9 +7298,9 @@ function pesquisar(txt){
   const termos = termosBusca(txt);
   if(!termos.length) return [];
   // F222 · o cliente gravado agora (etapa 1 do Novo Cliente, CPF achado no banco) entra sem índice e derrubava a pesquisa
-  let achados = D.clientes.filter(c=>{ if(c._ix==null) reindexarCliente(c); return termos.every(t=>c._ix.includes(t)); });
+  let achados = D.clientes.filter(c=>{ if(fichaJuntada(c)) return false; if(c._ix==null) reindexarCliente(c); return termos.every(t=>c._ix.includes(t)); });
   // F447 · o telefone copiado do WhatsApp (+55) ou sem o nono dígito: vale pelos 8 últimos dígitos
-  if(!achados.length && termos.length===1 && /^\d{8,13}$/.test(termos[0])) achados = clientesDoTelefone(termos[0]);
+  if(!achados.length && termos.length===1 && /^\d{8,13}$/.test(termos[0])) achados = clientesDoTelefone(termos[0]).filter(c=>!fichaJuntada(c));
   // quem casa pelo NOME aparece primeiro; depois, nome mais curto (mais exato)
   const noNome = c => termos.every(t=>(c._nome_ix||"").includes(t));
   return achados.sort((a,b)=>{
@@ -38622,8 +38622,15 @@ async function salvarCampo(campo, cliId){
     v=digitosCpf(v);
     if(v && v.length!==11) return aviso("O CPF tem 11 dígitos");
     // dois cadastros com o mesmo CPF é o que a janela de duplicado evita
-    const outro=D.clientes.find(x=>x.id!==cliId && digitosCpf(x.cpf)===v);
-    if(v && outro) return aviso(`Esse CPF já é de ${outro.nome}`);
+    let outro=v && D.clientes.find(x=>x.id!==cliId && digitosCpf(x.cpf)===v);
+    if(v && !outro){ const r = await api(`/rest/v1/clientes?select=*&cpf=eq.${v}`).catch(()=>[]);
+      if(r && r[0]){ outro = r[0]; D.clientes.push(outro); D.cliPorId.set(outro.id, outro); reindexarCliente(outro); } }
+    // F542 · o CPF de outra ficha é a mesma pessoa em dois cadastros: junta esta na que tem o CPF
+    if(outro){
+      if(!confirm(`Esse CPF já é de ${outro.nome}. Juntar esta ficha à dela? As anotações, os telefones e o que estiver preso a esta ficha passam para lá, e nada é apagado.`)) return;
+      if(await juntarFichas(cliId, outro.id)){ montarSidebar(); abrirFicha(outro.id); }
+      return;
+    }
   }
   if(campo==="dn"){
     if(v && !/^\d{4}-\d{2}-\d{2}$/.test(v)) return aviso("Data inválida");
@@ -48612,14 +48619,44 @@ async function balcaoCpf(cliId){
 }
 // o pré-cadastro da agenda era de quem já é cliente: as notas vão à ficha de verdade e o pré-cadastro sai da lista (F254, F256)
 async function balcaoJuntar(preId, cliId){
-  const pre = D.cliPorId.get(preId), c = D.cliPorId.get(cliId);
-  const notas = ((pre.campos||{}).atendimento||[]);
-  try{
-    if(notas.length) await gravarCamposBalcao(c, x=>({...x, atendimento:[...(x.atendimento||[]), ...notas]}));
-    await gravarCamposBalcao(pre, x=>({...x, nao_cliente:true, fundido_em:new Date().toISOString(), fundido_para:cliId}));
-  }catch(e){ return aviso("Não consegui juntar as fichas. Tente de novo."); }
+  if(!await juntarFichas(preId, cliId)) return;
   fecharCaixa(); await abrirFicha(cliId); dossieDoAtendimento(cliId, false);
 }
+// F542 · duas fichas da mesma pessoa viram uma: as anotações, os telefones, os campos que faltam e as linhas
+// presas ao cliente (casos, documentos, conversas, senhas, tarefas) passam à ficha com CPF; a outra fica
+// marcada (nao_cliente, fundido_para) e sai da pesquisa. Nada é apagado.
+const TAB_DO_CLIENTE = ["casos","anexos","credenciais","zap_conversas","aposentadorias","lembretes","tarefas","pagamentos",
+  "analises_direito","qualidade_planos","agenda_espera","mencoes","conversas","leads","zap_pedidos_foto"];
+async function juntarFichas(preId, cliId){
+  const pre = D.cliPorId.get(preId), c = D.cliPorId.get(cliId);
+  if(!pre || !c || preId===cliId) return false;
+  const pc = pre.campos||{}, notas = pc.atendimento||[];
+  const ids = new Set(((c.campos||{}).atendimento||[]).map(n=>n.id||n.em+"|"+n.texto));
+  const vem = notas.filter(n=>!ids.has(n.id||n.em+"|"+n.texto));
+  const {nao_cliente, fundido_em, fundido_para, atendimento, ...resto} = pc;
+  try{
+    await gravarCamposBalcao(c, x=>({...resto, ...x, atendimento:[...(x.atendimento||[]), ...vem]}));
+    const dig = t => String(t||"").replace(/\D/g,"").slice(-8);
+    const tels = telefonesDe(c), novos = telefonesDe(pre).filter(t=>dig(t.numero) && !tels.some(u=>dig(u.numero)===dig(t.numero)));
+    if(novos.length){
+      const lista = tels.concat(novos.map(t=>({numero:t.numero, obs:t.obs==="principal"?"":(t.obs||""), zap:!tels.length && !!t.zap})));
+      await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({telefones:lista})})
+        .then(()=>{ c.telefones = lista; }).catch(()=>{});
+      if(!c.telefone && lista[0]) await salvarCliCampo(cliId, "telefone", lista[0].numero);
+    }
+    await gravarCamposBalcao(pre, x=>({...x, nao_cliente:true, fundido_em:new Date().toISOString(), fundido_para:cliId}));
+  }catch(e){ aviso("Não consegui juntar as fichas. Tente de novo."); return false; }
+  // a tabela que não tem a linha, ou que a RLS barra, não impede o resto
+  for(const t of TAB_DO_CLIENTE)
+    await api(`/rest/v1/${t}?cliente_id=eq.${preId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({cliente_id:cliId})}).catch(()=>{});
+  const ks = D.casosDoCliente.get(preId)||[];
+  if(ks.length){ ks.forEach(k=>{ k.cliente_id = cliId; }); D.casosDoCliente.set(cliId, (D.casosDoCliente.get(cliId)||[]).concat(ks)); D.casosDoCliente.delete(preId); }
+  reindexarCliente(c); reindexarCliente(pre);
+  aviso(`Fichas juntadas na de ${c.nome}`, false);
+  return true;
+}
+// ficha juntada a outra (F256, F542) não aparece na pesquisa
+const fichaJuntada = c => { const x = c.campos||{}; return !!(x.nao_cliente && (x.fundido_para || x.fundido_em)); };
 async function balcaoSemCpf(cliId){
   const c = D.cliPorId.get(cliId);
   try{ await gravarCamposBalcao(c, x=>({...x, atendimento:[...(x.atendimento||[]), notaBalcao("Chegou sem saber o CPF e sem documento com ele. O dossiê fica para o retorno.")]})); }
@@ -48702,11 +48739,7 @@ async function chegouSalvar(cliId){
   await abrirFicha(cliId); chegouAtendimento(cliId);
 }
 async function chegouJuntar(preId, cliId){
-  const pre = D.cliPorId.get(preId), c = D.cliPorId.get(cliId), notas = ((pre.campos||{}).atendimento||[]);
-  try{
-    if(notas.length) await gravarCamposBalcao(c, x=>({...x, atendimento:[...(x.atendimento||[]), ...notas]}));
-    await gravarCamposBalcao(pre, x=>({...x, nao_cliente:true, fundido_em:new Date().toISOString(), fundido_para:cliId}));
-  }catch(e){ return aviso("Não consegui juntar as fichas. Tente de novo."); }
+  if(!await juntarFichas(preId, cliId)) return;
   fecharCaixa(); await abrirFicha(cliId); chegouAtendimento(cliId);
 }
 async function chegouGov(cliId){
