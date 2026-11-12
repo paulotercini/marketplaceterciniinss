@@ -186,7 +186,26 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `com as datas da Dra. Amanda e do Dr. Paulo; com algum, informe o dia e pergunte se deseja manter ou remarcar. O assunto se pergunta somente ` +
   `se a pessoa disser que quer tratar de algo que não é matéria previdenciária, inclusive desconto na aposentadoria ou no benefício: diga que o Dr. Marcos atende esse assunto ` +
   `e pergunte se deseja agendar com ele. O atendimento é para o próprio cliente, salvo se ele disser que é para outra pessoa: então pergunte ` +
-  `o nome completo de quem será atendido e agende como primeiro atendimento (001) no assunto previdenciário.`;
+  `o nome completo de quem será atendido e agende como primeiro atendimento (001) no assunto previdenciário.\n` +
+  // F564 · onda 1: a IA abre a conversa no lugar do menu (decisões do Paulo de 12.11.2026)
+  `- Abertura: você recebe a primeira mensagem de quem escreve, no lugar do menu automático. Não peça o nome antes de saber o assunto e não ofereça lista numerada. ` +
+  `O aviso do golpe do falso advogado o sistema acrescenta sozinho ao fim da sua primeira resposta: não o escreva você, salvo na conversa sobre golpe. ` +
+  `Fora do horário de atendimento, conduza a conversa do mesmo modo, sem dizer que não há atendentes.\n` +
+  `- Andamento pedido por número sem ficha (o contexto não traz cliente da ficha): não peça documento nem tente localizar o processo; use acao "equipe", sem urgente, ` +
+  `assunto "andamento: número sem ficha", e diga que a equipe jurídica vai verificar e responder.\n` +
+  `- Financeiro: quando a pessoa envia o comprovante de pagamento (a mensagem diz que é o comprovante, ou chega imagem ou documento logo depois de falar em pagar), ` +
+  `responda com acao "responder", sem urgente, que recebeu o comprovante e agradeça, sem confirmar valor nem compensação. Pergunta sobre os outros pagamentos, ` +
+  `parcelas, saldo ou como serão os próximos pagamentos vai à equipe (acao "equipe", sem urgente), dizendo que um colaborador do escritório responde.`;
+
+// F564 · o aviso do golpe que o menu dava vai ao fim da primeira resposta da IA (decisão do Paulo de 12.11.2026)
+export const AVISO_GOLPE = "Atenção ao golpe do falso advogado: o escritório não solicita PIX ou transferência para liberar valores e não agenda audiência por vídeo ou telefone. " +
+  "Este é o único WhatsApp do escritório, exclusivo para mensagens; as ligações são feitas somente pelo telefone fixo (16) 3242-2908.";
+// só quando a IA envia (sem atendente), quando nada já enviado no contexto atual falou do golpe e a resposta também não fala
+export function comAvisoGolpe(resposta: string, antes: string[] = [], enviaIA = true) {
+  const t = String(resposta || "").trim();
+  if (!t || !enviaIA || /golpe|falso advogado/i.test(t + "\n" + antes.join("\n"))) return t;
+  return `${t}\n\n${AVISO_GOLPE}`;
+}
 
 // "agendar", e não "marcar": o escritório escreve em português técnico (Paulo, 07.11.2026)
 export const VOCABULARIO = `\n\nVocabulário: escreva "agendar", "agendamento" e "agendado"; nunca "marcar", "marcação" ou "marcado" para atendimento, ` +
@@ -1044,7 +1063,7 @@ async function simular(s: Cenario) {
     catch (e) { saida.push({ cliente: m.texto, erro: String(e).slice(0, 300) }); break; }
     const enc = fer.encaminhado as { motivo?: string };
     const acao = enc && "motivo" in enc ? "equipe" : r.acao;
-    const resposta = emLinhas(r.resposta, enviadosAtuais(x.mensagens));
+    const resposta = comAvisoGolpe(emLinhas(r.resposta, enviadosAtuais(x.mensagens)), enviadosAtuais(x.mensagens), acao !== "nada");
     saida.push({ cliente: m.texto, acao, resposta, assunto: r.assunto, ferramentas: uso.slice(antes) });
     if (resposta) x.mensagens.push({ direcao: "saida", por_bot: true, tipo: "texto", texto: resposta, momento: new Date(t0 + i * 120000 + 30000).toISOString() });
     if (acao === "equipe") break;
@@ -1426,8 +1445,11 @@ if (typeof Deno !== "undefined") {
       // F521 · o golpe sempre recebe resposta, também na conversa assumida e com o atendente Offline
       const ultima = String((x.mensagens || []).filter((m: Msg) => m.direcao === "entrada" && m.texto).slice(-1)[0]?.texto || "");
       if (acao !== "equipe" && /golpe|falso advogado|se passa(ndo|r)? (por|pelo)|pix para liberar/i.test(ultima)) { acao = "equipe"; r.urgente = true; r.assunto = r.assunto || "possível golpe"; }
+      const antes = enviadosAtuais(x.mensagens);
+      // F564 · na conversa assumida a resposta é sugestão; na confirmação e no aviso da perícia o escritório já abriu a conversa
+      const resposta = comAvisoGolpe(emLinhas(r.resposta, antes), antes, acao !== "nada" && !x.atendente && !x.remarcar && !x.pericia);
       await rpc("zap_plantao_aplicar", {
-        p_msg: msg, p_acao: acao, p_resposta: emLinhas(r.resposta, enviadosAtuais(x.mensagens)), p_advogado: String(r.advogado || ""),
+        p_msg: msg, p_acao: acao, p_resposta: resposta, p_advogado: String(r.advogado || ""),
         p_urgente: r.urgente === true, p_assunto: (ehGolpe({ ...r, acao }, x.mensagens) ? "golpe: " : "") + String(r.assunto || ""),
         p_relato: String(r.relato || ""), p_nome: String(r.nome || ""),
       });
