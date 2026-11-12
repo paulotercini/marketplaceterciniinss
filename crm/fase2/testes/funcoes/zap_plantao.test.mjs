@@ -693,3 +693,15 @@ console.log("formal: ok");
   assert.ok(!m.contexto({ mensagens: [], advogados: [] }).includes("Perícia:"), "sem perícia, sem bloco");
   console.log("ok F549 perícia");
 }
+{ // F552 · número sem ficha: o atendimento se procura pelo nome que a pessoa diz
+  const m = await import("../../zap_plantao/index.ts");
+  assert.ok(m.mesmoNome("Maria Aparecida Teste", "Maria Teste"), "primeiro e último nome bastam");
+  assert.ok(m.mesmoNome("joao da silva teste", "João Teste - 001"), "sem acento e sem caixa");
+  assert.ok(!m.mesmoNome("Maria", "Maria Teste"), "um nome só não basta");
+  assert.ok(!m.mesmoNome("estou indo agora", "Maria Teste"));
+  const fer = [{ name: "consultar_vagas", input_schema: { type: "object", properties: { tipo: { type: "string" } } } }, { name: "x" }];
+  const novas = m.comNomeNaConsulta(null, fer);
+  assert.ok(novas[0].input_schema.properties.nome && novas[0].input_schema.properties.tipo, "acrescenta o nome à consulta");
+  assert.equal(m.comNomeNaConsulta(null, novas), null, "já tem: não gera versão nova");
+  console.log("ok F552 nome");
+}

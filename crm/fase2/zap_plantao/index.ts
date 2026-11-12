@@ -169,6 +169,12 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `Não fale de honorários do processo (porcentagem ou valor): o advogado explica no atendimento.\n` +
   `- Cancelar: antes de cancelar, pergunte uma vez se a pessoa deseja remarcar. Se ela não quiser, cancele e encerre com cordialidade, dizendo que o escritório fica à disposição. ` +
   `Ao confirmar o agendamento, pergunte se alguém virá junto; quem vier para ser atendido também precisa de horário próprio.\n` +
+  // F552 · leitura das conversas de 08 a 12.11.2026, aprovada pelo Paulo em 12.11.2026
+  `- Segunda negativa: se a pessoa já disse que não poderá comparecer, foi perguntada uma vez se deseja remarcar e responde de novo que não pode ` +
+  `ou que agenda outro dia, o Agendador cancela o atendimento (cancelar_atendimento), o que libera o horário para a lista de espera, e a resposta diz ` +
+  `que o atendimento foi cancelado e que a pessoa pode pedir nova data quando quiser. Não pergunte pela terceira vez nem deixe o horário ocupado.\n` +
+  `- Número sem ficha que diz ter atendimento agendado e não aparece em atendimentos_marcados: peça uma vez o nome completo da pessoa atendida ` +
+  `e chame consultar_vagas com o campo nome; o sistema procura o atendimento por esse nome. Frase que não é nome ("estou indo agora") não é nome.\n` +
   // F469 · a IA faz as perguntas do menu do SMBot, em frase (pedido do Paulo de 09.11.2026)
   `- Quando a mensagem não disser o que a pessoa precisa (cumprimento, "preciso de ajuda", áudio ou arquivo sem explicação), pergunte em uma frase, ` +
   `sem lista numerada, se ela deseja agendar um atendimento, saber o andamento do processo ou do benefício, enviar documentos, tratar do financeiro ` +
@@ -331,6 +337,14 @@ export const FER_ESPERA = {
     ate: { type: "string", description: "data limite AAAA-MM-DD, se a pessoa disser" },
     observacao: { type: "string" } } },
 };
+// F552 · consultar_vagas ganha o campo nome (procura do atendimento do número sem ficha); null quando nada muda
+export function comNomeNaConsulta(novas: Record<string, any>[] | null, atuais: Record<string, any>[]) {
+  const base = novas || atuais;
+  const cv = base.find((f) => f.name === "consultar_vagas");
+  if (!cv || cv.input_schema?.properties?.nome) return novas;
+  return base.map((f) => f !== cv ? f : { ...f, input_schema: { ...f.input_schema, properties: { ...(f.input_schema?.properties || {}),
+    nome: { type: "string", description: "nome completo da pessoa atendida, quando o número não tem ficha e ela diz ter atendimento agendado" } } } });
+}
 export function paraAgendador(system: string) {
   let t = String(system || "");
   t = t.replace(/^2\. Pergunte em poucas palavras do que se trata o caso\.$/m, AG_ASSUNTO)
@@ -680,6 +694,13 @@ const liberada = (banco: typeof rpc, a: Record<string, any>) =>
 // o tipo (001 sem ficha, 002 com) e o telefone saem da conversa, nunca do agente; remarcar e
 // cancelar valem só para atendimento desta pessoa
 // quem: nome de quem escreve pela ficha de outra pessoa (contato_nome com contato_relacao), já conhecido (F528)
+// F552 · o nome dito casa com o do evento quando o primeiro e o último nome dele aparecem no evento
+export function mesmoNome(dito: unknown, doEvento: unknown) {
+  const pal = (x: unknown) => String(x || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+    .split(/[^a-z]+/).filter((w) => w.length > 2 && !["das", "dos"].includes(w));
+  const d = pal(dito), e = new Set(pal(doEvento));
+  return d.length >= 2 && e.has(d[0]) && e.has(d[d.length - 1]);
+}
 export function ferramentasDaConversa(conversa: string, chamar = agenda, banco = rpc, quem?: string) {
   let dados: Record<string, any> | null = null;
   const conv = async () => (dados ||= await banco("zap_plantao_agenda", { p_conversa: conversa }) || {});
@@ -688,6 +709,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
   const tipo = (c: Record<string, any>, pedido?: unknown) => (tipos(c).includes(String(pedido)) ? String(pedido) : tipos(c).at(-1)!);
   const encaminhado: { motivo?: string; urgente?: boolean } = {};
   let consultou = false, cobrou = false;
+  let porNome = "";   // F552 · nome dito pelo número sem ficha, para achar o atendimento agendado
   const disponiveis = (profs: string[], dias = 15) => Promise.all(profs.map((p) => chamar("disponibilidade", { profissional: p, dias })));
   // a vaga pelo eventoId, relida da agenda: o agente não manda data nem hora
   // a vaga que vale para os dois tipos fica com o tipo pedido (F422q: a esposa saía com o nome da filha)
@@ -708,13 +730,20 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
     const vistos = new Map<string, Record<string, any>>();
     for (const r of await Promise.all(pedidos.map((p) => chamar("agendamentosFuturos", p!))))
       for (const a of r.agendamentos || []) if (a.atendimento) vistos.set(a.id, a);
+    // F552 · número sem ficha: o atendimento agendado em outro telefone se acha pelo nome dito, nos próximos 15 dias
+    if (!vistos.size && !ficha && porNome) {
+      const res = await disponiveis(PROFS);
+      res.forEach((d, k) => { for (const dia of d.dias || []) for (const ev of dia.eventos || [])
+        if (ev.atendimento && ev.profissional === PROFS[k] && mesmoNome(porNome, ev.nome || ev.titulo)) vistos.set(ev.id, ev); });
+    }
     return [...vistos.values()];
   }
   const doMarcado = (a: Record<string, any>) => ({ atendimentoId: a.id, rotulo: rotulo(a.data, a.inicio, COM[a.profissional] || "a equipe"), ...(a.nome ? { nome: a.nome } : {}) });
   return {
     encaminhado,
-    async consultar_vagas(i: { profissionais?: string[]; dias?: number; tipo?: string }) {
+    async consultar_vagas(i: { profissionais?: string[]; dias?: number; tipo?: string; nome?: string }) {
       const c = await conv();
+      if (i.nome) porNome = String(i.nome).slice(0, 120);
       if (!c.ligada) return { erro: "a agenda está desligada: diga que a equipe vai entrar em contato para marcar" };
       const profs = (i.profissionais || []).filter((p) => PROFS.includes(p));
       if (!profs.length) return { erro: "indique paulo, marcos ou amanda" };
@@ -1284,7 +1313,7 @@ if (typeof Deno !== "undefined") {
         if (ag.multiagent) return json({ erro: "o Agendador não pode coordenar outro agente" }, 400);
         // F280 · versão nova do Agendador antes da ligação, para a Assistente prender a versão nova
         const sysAg = paraAgendador(ag.system);
-        const ferAg = (ag.tools || []).some((f: { name?: string }) => f.name === FER_ESPERA.name) ? null : [...(ag.tools || []), FER_ESPERA];   // F527
+        const ferAg = comNomeNaConsulta((ag.tools || []).some((f: { name?: string }) => f.name === FER_ESPERA.name) ? null : [...(ag.tools || []), FER_ESPERA], ag.tools || []);   // F527, F552
         if (sysAg !== ag.system || ferAg) ag = await ma(`agents/${ag.id}`, { version: ag.version, system: sysAg, ...(ferAg ? { tools: ferAg } : {}) });
         const novo = ligacaoTriagem(await maLer(`agents/${x.ma.agente}`), ag.id);
         const feito = await ma(`agents/${x.ma.agente}`, novo);
