@@ -705,3 +705,16 @@ console.log("formal: ok");
   assert.equal(m.comNomeNaConsulta(null, novas), null, "já tem: não gera versão nova");
   console.log("ok F552 nome");
 }
+
+{
+  const { comAvisoGolpe, AVISO_GOLPE, CORRECOES } = await import("../../zap_plantao/index.ts");
+  const r = comAvisoGolpe("Bom dia! Em que posso ajudar?");
+  assert.ok(r.endsWith(AVISO_GOLPE) && r.startsWith("Bom dia!"));
+  assert.equal(comAvisoGolpe("Bom dia!", [], false), "Bom dia!");
+  assert.equal(comAvisoGolpe("Isso é golpe, não pague.", []), "Isso é golpe, não pague.");
+  assert.equal(comAvisoGolpe("Recebi o comprovante.", ["Atenção ao golpe do falso advogado: ..."]), "Recebi o comprovante.");
+  assert.equal(comAvisoGolpe(""), "");
+  assert.ok(!/—/.test(AVISO_GOLPE) && AVISO_GOLPE.includes("(16) 3242-2908"));
+  assert.ok(CORRECOES.includes("Abertura") && CORRECOES.includes("sem ficha") && CORRECOES.includes("comprovante"));
+  console.log("abertura pela IA: ok");
+}
