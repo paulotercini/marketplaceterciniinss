@@ -132,22 +132,22 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   await p.waitForTimeout(400);
   conf("F479 · parar o ditado leva o texto à correção", escritas.filter(e => /zap_assistente/.test(e.u) && e.b.acao === "corrigir").length === 2
     && (await p.inputValue("#zap-txt")) === "Bom dia. O atendimento está agendado para o dia 12/11.");
-  // F562 · Outra e Aprofundar: sem sugestão aberta pelo ícone; a nova sugestão fica acima do campo, com as bases
+  // F563 · Outra e Aprofundar: sem sugestão aberta pelo ícone; a nova sugestão fica acima do campo, com as bases
   await p.fill("#zap-txt", "");
   await p.click("#zap-sugerir");
   await p.fill("#ia-orient", "mais curta");
   await p.click('button:has-text("Pedir")');
   await p.waitForTimeout(400);
   const ou = escritas.find(e => /zap_assistente/.test(e.u) && e.b.acao === "outra");
-  conf("F562 · Outra chama a função com a orientação", ou && ou.b.orientacao === "mais curta" && ou.b.conversa_id === CONV);
-  conf("F562 · a sugestão fica acima do campo, com Outra e Aprofundar", (await p.textContent(".ze-sug-ia").catch(() => "")).includes("Conferimos e retornamos")
+  conf("F563 · Outra chama a função com a orientação", ou && ou.b.orientacao === "mais curta" && ou.b.conversa_id === CONV);
+  conf("F563 · a sugestão fica acima do campo, com Outra e Aprofundar", (await p.textContent(".ze-sug-ia").catch(() => "")).includes("Conferimos e retornamos")
     && !!(await p.$('.ze-sug-bts button:has-text("Aprofundar")')));
   await p.click('.ze-sug-bts button:has-text("Aprofundar")');
   await p.click('button:has-text("Pedir")');
   await p.waitForTimeout(400);
   const ap = escritas.find(e => /zap_assistente/.test(e.u) && e.b.acao === "aprofundar");
-  conf("F562 · Aprofundar leva a sugestão anterior", ap && ap.b.anterior === "Bom dia. Conferimos e retornamos ainda hoje.");
-  conf("F562 · e mostra em que se baseou", (await p.textContent(".ze-sug-base").catch(() => "")).includes("andamento do PAT de 05/11/2026"));
+  conf("F563 · Aprofundar leva a sugestão anterior", ap && ap.b.anterior === "Bom dia. Conferimos e retornamos ainda hoje.");
+  conf("F563 · e mostra em que se baseou", (await p.textContent(".ze-sug-base").catch(() => "")).includes("andamento do PAT de 05/11/2026"));
   await p.evaluate(() => descartarSugestaoZap());
   conf("F479 · nada foi enviado ao cliente", !escritas.some(e => e.m === "POST" && /rest\/v1\/zap_mensagens/.test(e.u)));
 

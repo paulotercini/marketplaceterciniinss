@@ -6,6 +6,7 @@ const path = require("path");
 const { FIX, SESSAO, EU, CLI_CHEIO, CASO1 } = require("./fixturas");
 const chamadas = [];
 const cfg = [];
+const soCh = [];
 const SUPA = "https://ficticio.supabase.co";
 const dia = n => new Date(Date.now() + n * 864e5).toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 
@@ -42,7 +43,14 @@ const TUDO = {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
     localStorage.setItem("crm_tema", "v10");
+    localStorage.setItem("crm_agenda_token", "token-ficticio");
   }, [SUPA, SESSAO]);
+  await ctx.route(/script\.google\.com/, r => {
+    const b = JSON.parse(r.request().postData() || "{}");
+    const resp = b.acao === "agendamentosFuturos"
+      ? { ok: true, agendamentos: [{ id: "ag1", data: dia(18), inicio: "09:00", fim: "09:30", tipo: "002", profissional: "paulo", atendimento: true, confirmado: true }] }
+      : b.acao === "historico" ? { ok: true, eventos: [] } : { ok: true };
+    r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(resp) }); });
   await ctx.route(SUPA + "/**", rota => {
     const u = rota.request().url();
     if (/\/auth\/v1\//.test(u))
@@ -51,6 +59,8 @@ const TUDO = {
       if (/rpc\/pericia_ligar/.test(u)) { const b = JSON.parse(rota.request().postData()); chamadas.push(b);
         TUDO.pericia_avisos = [{ evento_id: b.p_evento, ligado: b.p_ligado, profissional: b.p_profissional,
           data_aprovada: TUDO.eventos[0].data_hora, estado: b.p_ligado ? "ligado" : "desligado" }]; }
+      if (/rpc\/pericia_so_lembretes/.test(u)) { const b = JSON.parse(rota.request().postData()); soCh.push(b);
+        TUDO.pericia_avisos = [{ evento_id: b.p_evento, ligado: false, so_lembretes: b.p_so, estado: "aguardando" }]; }
       if (/config_app/.test(u)) cfg.push(rota.request().postData() || u);
       return rota.fulfill({ status: 201, contentType: "application/json", body: "[]" }); }
     const t = (u.match(/\/rest\/v1\/([a-z_]+)/) || [])[1];
@@ -80,6 +90,17 @@ const TUDO = {
   conf("escolher a Dra. Amanda marca o botão", await p.evaluate(() => [...document.querySelectorAll('[data-adv="amanda"]')].some(b => b.offsetParent && b.getAttribute("aria-pressed") === "true")));
   await p.click(`[data-sw="${EV}"]`); await p.waitForTimeout(200);
   conf("a chave da linha abre a prévia com Ligar", await p.evaluate(() => !!document.querySelector("#per-ligar")));
+  await p.waitForTimeout(400);
+  conf("a linha avisa o atendimento presencial já agendado", /Atendimento presencial já agendado/.test(await txt()));
+  conf("a prévia avisa o atendimento já agendado e sugere Já orientado", /já tem atendimento presencial agendado/.test(await p.evaluate(() => document.querySelector(".per5 aside.lado").innerText)));
+  let bol = await p.evaluate(() => (document.querySelector(".per5 .bolha") || {}).innerText || "");
+  conf("a primeira mensagem diz dia, horário e local, sem dizer quem agendou nem se apresentar", /APS Teste/.test(bol) && !/INSS agendou/.test(bol) && !/Aqui é do escritório/.test(bol));
+  conf("a mensagem propõe o dia do atendimento presencial e pergunta o horário", /vamos agendar o seu atendimento presencial/.test(bol) && /Qual horário fica melhor\?/.test(bol));
+  await p.click("#sw-so"); await p.waitForTimeout(500);
+  bol = await p.evaluate(() => (document.querySelector(".per5 .bolha") || {}).innerText || "");
+  conf("Já orientado grava pericia_so_lembretes e a prévia vira o lembrete", soCh.length === 1 && soCh[0].p_so === true && /Lembramos que/.test(bol) && !/atendimento presencial/.test(bol));
+  await p.click("#sw-so"); await p.waitForTimeout(500);
+  conf("desligar Já orientado volta ao primeiro aviso", soCh.length === 2 && soCh[1].p_so === false);
   await p.click("#per-ligar"); await p.waitForTimeout(600);
   conf("o Ligar chama pericia_ligar com a Dra. Amanda", chamadas.length === 1 && chamadas[0].p_ligado === true && chamadas[0].p_profissional === "amanda");
   conf("depois do Ligar a chave da linha fica ligada", await p.evaluate(ev => document.querySelector(`[data-sw="${ev}"]`).getAttribute("aria-checked") === "true", EV));
