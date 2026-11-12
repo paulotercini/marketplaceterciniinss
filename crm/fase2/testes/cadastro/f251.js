@@ -290,6 +290,34 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("F507 · sem achado, diz que não encontrou", /Nenhum atendimento encontrado/.test(await p.textContent("#aq-pq-res")));
   await p.evaluate(() => fecharCaixa());
 
+  // F554 · os atendimentos presenciais da pessoa: a Michelle ganha ficha (depois das contagens da lista Clientes)
+  const MI = "c0000000-0000-4000-8000-000000000006";
+  const mi = { id: MI, nome: "Michelle Fictícia", cpf: null, telefone: "(16) 99999-0006", campos: {}, telefones: [], criado_em: "2026-01-01T12:00:00Z" };
+  T.clientes.push(JSON.parse(JSON.stringify(mi)));
+  await p.evaluate(c => { D.clientes.push(c); D.cliPorId.set(c.id, c); }, mi);
+  await p.click(".aq-pesq"); await p.fill("#aq-pq", "michelle");
+  await p.click(".aq-pq-ant-bt"); await p.waitForSelector("#aq-pq-ant .aq-pq-ficha");
+  await p.click("#aq-pq-ant .aq-pq-ficha"); await p.waitForTimeout(800);
+  conf("F554 · o atendimento anterior de quem tem ficha abre a ficha", await p.evaluate(id => clienteAberto === id, MI));
+  await p.waitForSelector(".idf-atend h4");
+  const quadro = await p.textContent(".idf-atend");
+  const br = d => d.split("-").reverse().join("/");
+  conf(`F554 · a Identificação mostra os próximos e os anteriores (${quadro.replace(/\s+/g, " ").trim().slice(0, 120)})`,
+    /Atendimentos presenciais \(2\)/.test(quadro) && /Próximos/.test(quadro) && quadro.includes(br(W)) && /Marcos/.test(quadro)
+    && /Anteriores/.test(quadro) && quadro.includes(br(PASSADO)) && /Paulo/.test(quadro));
+  const zap = await p.evaluate(async id => { zapAgendHtml({ cliente_id: id, telefone: "5516999990006" });
+    for (let i = 0; i < 30 && atendimentosDe({ id, nome: "Michelle Fictícia" }).carregando; i++) await new Promise(r => setTimeout(r, 100));
+    return zapAgendHtml({ cliente_id: id, telefone: "5516999990006" }); }, MI);
+  conf(`F554 · a conversa do WhatsApp diz que há atendimento agendado (${zap.replace(/<[^>]+>/g, "").trim()})`, /Agendado:/.test(zap) && zap.includes(br(W).slice(0, 5)) && /Marcos/.test(zap));
+  await p.evaluate(() => { fecharFicha(); irPara("agendaq"); abrirFluxoAgenda({ busca: "Michelle Fictícia" }); });
+  await p.waitForSelector("[data-aqnovo]"); await p.click("[data-aqnovo]");
+  await p.waitForSelector("#aq-ja .aq-ja");
+  const ja = await p.textContent("#aq-ja");
+  conf(`F554 · o primeiro atendimento de quem já veio avisa e propõe o 002 (${ja.replace(/\s+/g, " ").trim().slice(0, 90)})`, /Já atendido em/.test(ja) && ja.includes(br(PASSADO)) && !!(await p.$("#aq-ja button")));
+  await p.click("#aq-ja button"); await p.waitForTimeout(200);
+  conf("F554 · Cliente leva ao agendamento da ficha, como 002", await p.evaluate(id => fluxo && fluxo.cli && fluxo.cli.id === id && fluxo.tipo === "002", MI));
+  await p.evaluate(() => fecharCaixa());
+
   conf("sem erro de página", !erros.length);
   if (erros.length) console.log(erros);
   const ruins = ok.filter(x => !x[1]).length;

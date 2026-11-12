@@ -1913,6 +1913,10 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-b .virar{border:0;background:none;color:var(--azul);font-size:10px;font-weight:700;
                 cursor:pointer;padding:0;opacity:0}
   @media (hover:hover) and (pointer:fine){.zap-b:hover .virar{opacity:1}}
+  .zap-ct{display:flex;flex-direction:column;gap:4px;padding:6px 0;min-width:200px}
+  .zap-ct+.zap-ct{border-top:1px solid var(--borda)}
+  .zap-ct-bts{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+  .zap-ct-bts .btn-mini{text-decoration:none}
   .zap-anexo{border:1px solid var(--borda);background:var(--fundo);border-radius:6px;
              padding:4px 8px;font-size:12px;font-weight:600;color:var(--azul);cursor:pointer}
   .zap-escrever{display:flex;flex-direction:column;gap:8px;padding:10px 12px 12px;
@@ -2076,13 +2080,15 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .ze-ferr .zap-icone.gravando{background:#fde7e7;color:#b3261e}
   .zap-escrever .btn-rap.ze-enviar:disabled{opacity:.45;cursor:not-allowed}
   .zap-escrever .ze-linha:has(.zap-falta:not([hidden])){flex-wrap:wrap}
+  .ze-desf{margin:0 0 6px;padding:4px 6px 4px 10px;border:1px solid var(--borda,#ddd);border-radius:8px;background:var(--fundo2,#f6f7f5);font-size:13px;display:flex;align-items:center;justify-content:space-between;gap:8px}
   .ze-cobre{margin:0 0 6px;padding:6px 10px;border:1px solid #c9a227;border-radius:8px;background:#fff8e1;color:#5c4400;font-size:13px;font-weight:600}
   .ze-offline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 6px;padding:6px 10px;border:1px solid var(--venc,#b3261e);border-radius:8px;background:#fdecea;color:#8c1d18;font-size:13px;font-weight:600}
   .ze-sug-ia{border:1px dashed #c9a227;background:#fff8e1;border-radius:8px;padding:8px 10px;font-size:13px;color:#3d3200}
   .ze-sug-ia.urg{border-color:var(--venc,#b3261e);background:#fdecea}
   .ze-sug-cab{font-weight:600;margin-bottom:4px}.ze-sug-cab span{font-weight:400;color:#7a6a2a}
   .ze-sug-txt{white-space:pre-wrap;max-height:140px;overflow:auto}
-  .ze-sug-bts{display:flex;gap:6px;margin-top:6px}
+  .ze-sug-bts{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+  .ze-sug-base{font-size:12px;color:var(--muted,#666);margin-top:4px}
   .zap-falta{order:-1;flex-basis:100%;font-size:12px;color:var(--venc,#b3261e);font-weight:600}
   .zap-escrever .btn-rap.ze-enviar{height:40px;padding:0 18px;border-radius:8px;background:var(--azul);border:1px solid var(--azul);color:#fff}
   .zap-escrever.modo-nota .btn-rap.ze-enviar{background:var(--prox,#8f5400);border-color:var(--prox,#8f5400)}
@@ -4282,6 +4288,16 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
 .aq-pq-lista span{flex-basis:100%;font-size:12px;color:var(--cinza,#4A4944)}
 .aq-pq-lista .aq-pq-it{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;padding:8px 10px;border:1px solid var(--borda);border-radius:10px;background:#fff;font-size:inherit;color:inherit}
 .aq-pq-ant-bt{margin-top:10px}
+/* F554 · os atendimentos presenciais da pessoa */
+.zap-topo .zt-agend{color:#1F5F8B;font-weight:500}.zap-topo .zt-agend.vazio{display:none}
+.aq-msg.aq-ja{background:#EAF2F8;color:#1F4E6E;border:1px solid #CFE0EC}
+.aq-msg.aq-ja .btn-mini{margin-left:6px}
+html .idf-atend .ac-lista{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+html .idf-atend .ac-it{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:baseline;gap:4px 10px;padding:8px 0;border-bottom:1px solid var(--borda)}
+html .idf-atend .ac-it b{font-weight:500;font-size:13px;font-variant-numeric:tabular-nums}
+html .idf-atend .ac-it .ac-data{font-size:13px}
+html .idf-atend .ac-it small{grid-column:1 / -1;color:var(--cinza);font-size:12px}
+html .idf-atend h4{margin:10px 0 2px;font-size:13px}
 #aq-pq-ant h4{margin:10px 0 0;font-size:13px}
 .aq-ev.aq-achado{outline:3px solid var(--azul);outline-offset:1px;z-index:5}
 .aq-agendar{border:0;border-radius:8px;padding:8px 14px;background:var(--azul);color:#fff;font:inherit;font-weight:600;cursor:pointer}
@@ -4800,7 +4816,9 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 /* F281 · a agenda no canto de baixo à direita: os dias com vaga de cada profissional, na cor dele, e o agendamento
    ali mesmo. Recolhida, vira a pílula "Agenda · N vagas". F305 (30.10.2026): flutua em todas as telas, na mesma
    coluna do ⚡ e do ✎ Sugestões, logo acima deles. */
-#zap-ag{position:fixed;right:16px;bottom:120px;z-index:79;font-size:13px}   /* acima do ⚡, do ✎ e do enviar */
+#zap-ag{position:fixed;right:16px;bottom:120px;z-index:79;font-size:13px}
+:is(#fab-rapida,#fab-ajuda,#fab-sug,#fab-juntos,#zap-ag .zag-pilula,#zap-ag .zag-cab){touch-action:none}   /* F558: o dedo arrasta o botão, e não a página */
+.fab-arrastando{cursor:grabbing!important;opacity:.85;transition:none!important}   /* acima do ⚡, do ✎ e do enviar */
 .app:not(.logado) ~ #zap-ag,#zap-ag[hidden]{display:none}
 .app.celular ~ #zap-ag{bottom:calc(165px + env(safe-area-inset-bottom))}
 .app.celular.detalhe-aberto ~ #zap-ag{bottom:180px}
@@ -7028,7 +7046,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.59</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.68</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12156,7 +12174,7 @@ function dbBotoes(k, aba, dig, sis, fim=""){
 }
 function dbExpedientes(k, x){
   const vs = expedientesDe(k, x.d);
-  return `<div class="db-pn" role="region" aria-label="Expedientes de ${esc(x.id)}"><h4>Expedientes</h4>${vs.map(v=>`${vs.length>1?`<h5>${esc(v.grau||"")}</h5>`:""}<div class="db-pn-rol">${tabelaExpedientes(v)}</div>`).join("")}</div>`;
+  return `<div class="db-pn" role="region" aria-label="Expedientes de ${esc(x.id)}"><h4>Expedientes</h4>${vs.map(v=>`${vs.length>1?`<h5>${esc(v.grau||"")}</h5>`:""}<div class="db-pn-rol">${tabelaExpedientes(v, k, x.d)}</div>`).join("")}</div>`;
 }
 const DB_DET = [["Competência", /^compet/i], ["Órgão julgador Atual", /^[óo]rg[ãa]o julgador/i], ["Jurisdição", /^jurisdi/i], ["Autuação", /^autua/i],
   ["Valor da causa", /^valor da causa/i], ["Segredo de justiça?", /^segredo/i], ["Justiça gratuita?", /^justi[çc]a gratuita/i], ["Tutela/liminar?", /^tutela/i],
@@ -15725,6 +15743,56 @@ const natPlan = i => i.ev||i.evPassado||i.avisar||i.novEv||i.selo==="Pauta" ? "p
   : i.fatal||i.prazo ? "prazos" : i.tc||i.t||i.rotina ? "tarefas" : "lembretes";
 let filtroPlanNat = "";
 function alternarFabs(){ const a=document.getElementById("app"), on=a.classList.toggle("fabs-on"), b=document.getElementById("fab-juntos"); if(b){ b.textContent=on?"✕":"⋯"; b.setAttribute("aria-expanded", on); } if(!on && visao==="whatsapp" && zagAberta()) zagAlternar(); }
+// F558 · os flutuantes se arrastam (mouse e toque); clique simples continua abrindo. Posição por aparelho, uma para o celular e outra para o computador.
+const FAB_ARRASTA = ["fab-rapida","fab-ajuda","fab-sug","zap-ag","fab-juntos"];
+const fabChave = () => "crm_fab_pos" + (document.getElementById("app")?.classList.contains("celular") ? "_cel" : "");
+function fabLer(){ try{ return JSON.parse(localStorage.getItem(fabChave())||"{}")||{}; }catch(e){ return {}; } }
+function fabGravar(p){ try{ localStorage.setItem(fabChave(), JSON.stringify(p)); }catch(e){} }
+// aplica o deslocamento guardado sem deixar o botão sair da tela (translate não mexe nas regras de bottom/right de cada tela)
+function fabPor(el, dx, dy){
+  el.style.translate = "";
+  const r = el.getBoundingClientRect();
+  if(r.width){ dx = Math.min(Math.max(dx, 4 - r.left), innerWidth - 4 - r.right); dy = Math.min(Math.max(dy, 4 - r.top), innerHeight - 4 - r.bottom); }
+  if(dx || dy) el.style.translate = `${Math.round(dx)}px ${Math.round(dy)}px`;
+  return [dx, dy];
+}
+function fabArrumar(){ const p = fabLer(); FAB_ARRASTA.forEach(id=>{ const el = document.getElementById(id); if(el) fabPor(el, ...(p[id]||[0,0])); }); }
+let _fabArr = null;
+function ligarArrastoFabs(){
+  FAB_ARRASTA.forEach(id=>{
+    const el = document.getElementById(id); if(!el) return;
+    el.addEventListener("pointerdown", e=>{
+      if(e.button>0) return;
+      // na agenda aberta, só o cabeçalho e a pílula arrastam: o resto é para clicar e digitar
+      if(id==="zap-ag" && !e.target.closest(".zag-pilula,.zag-cab") || e.target.closest("input,select,textarea")) return;
+      const ini = fabLer()[id]||[0,0];
+      _fabArr = {el, id, x:e.clientX, y:e.clientY, ini, movido:false};
+    });
+  });
+  addEventListener("pointermove", e=>{
+    const a = _fabArr; if(!a) return;
+    const dx = e.clientX - a.x, dy = e.clientY - a.y;
+    if(!a.movido && Math.hypot(dx, dy) < 6) return;
+    if(!a.movido){ a.movido = true; a.el.classList.add("fab-arrastando"); try{ a.el.setPointerCapture(e.pointerId); }catch(_){} }
+    e.preventDefault();
+    a.pos = fabPor(a.el, a.ini[0] + dx, a.ini[1] + dy);
+  }, {passive:false});
+  const soltar = ()=>{
+    const a = _fabArr; _fabArr = null; if(!a || !a.movido) return;
+    a.el.classList.remove("fab-arrastando");
+    const p = fabLer(); p[a.id] = a.pos; fabGravar(p);
+    // o clique que vem do soltar não abre a função
+    const barra = ev=>{ ev.stopPropagation(); ev.preventDefault(); };
+    addEventListener("click", barra, {capture:true, once:true});
+    setTimeout(()=>removeEventListener("click", barra, {capture:true}), 300);
+  };
+  addEventListener("pointerup", soltar); addEventListener("pointercancel", soltar);
+  addEventListener("resize", ()=>requestAnimationFrame(fabArrumar));
+  const ag = document.getElementById("zap-ag"); if(ag) new MutationObserver(()=>requestAnimationFrame(fabArrumar)).observe(ag, {childList:true});
+  new MutationObserver(()=>requestAnimationFrame(fabArrumar)).observe(document.getElementById("app"), {attributes:true, attributeFilter:["class"]});
+  fabArrumar();
+}
+ligarArrastoFabs();
 function irPara(v){ visao=v; _sel.clear(); zag.fora=false; limparBusca(); fecharFicha(false); montarSidebar(); render(); pintarAgendaZap(); if(document.getElementById("app")?.classList.contains("fabs-on")) alternarFabs(); }
 
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
@@ -16938,21 +17006,174 @@ function pintarTabela(){
       async()=>{ if(await passarCaso(id, para, de)) pintarTabela(); });
   });
 }
-// F549 · Perícias (Visões): o aviso ao cliente só sai depois do Ligar desta perícia, que aprova a data registrada;
-// os envios, as repetições e os lembretes moram no banco (pericia_avisos_vez), às 08:30 e às 16:00 dos dias úteis
-const PER_ESTADO = {ligado:"Ligado", aguardando:"Aviso enviado", conversa:"Em conversa", sem_resposta:"Sem resposta",
-  agendado:"Atendimento agendado", data_mudou:"Data mudou", sem_telefone:"Sem telefone"};
-let _perAvisos = null;
-function uteisEntre(de, ate){ let d = de, c = 0; while(d < ate){ d = somaDias(d, 1); if(ehDiaUtil(d)) c++; } return c; }
+// F556 · Perícias (Visões), como o protótipo aprovado em 12.11.2026 (/mnt/project-files/pericias/prototipo-tela-pericias.html):
+// lista à esquerda, prévia da mensagem e Notificações à direita. O aviso ao cliente só sai depois do Ligar desta perícia,
+// que aprova a data registrada; os envios, as repetições e os lembretes moram no banco (pericia_avisos_vez), às 08:30 e às 16:00
+const PER_CSS = ".per5{ --bg:#F3F5F2; --surface:#FFFFFF; --surface-2:#F8FAF7; --ink:#18211C; --muted:#56635C; --faint:#65716A; --line:#DCE2DD; --line-2:#C9D1CB; --esc:#1E7A4C; --esc-ink:#FFFFFF; --esc-soft:#E2F1E7; --esc-txt:#165C39; --paulo:#2459B8; --paulo-soft:#E5EDFA; --paulo-txt:#1D4A99; --amanda:#E3B21A; --amanda-soft:#FBF1CC; --amanda-txt:#7A5900; --inss:#2459B8; --inss-soft:#E5EDFA; --inss-txt:#1D4A99; --jud:#6A3E9F; --jud-soft:#EFE8F8; --jud-txt:#57307F; --warn:#B4530A; --warn-soft:#FCEBDC; --warn-txt:#8F4108; --bad:#B42318; --bad-soft:#FBE7E5; --bad-txt:#93190F; --wa-bg:#EFE7DC; --wa-out:#D9FDD3; --wa-ink:#111B21; --wa-meta:#667781; --focus:#1E7A4C; --shadow:0 1px 2px rgba(24,33,28,.06),0 4px 16px rgba(24,33,28,.06); --ease:cubic-bezier(.23,1,.32,1); --r:10px; }\n.per5{container:per5/inline-size;background:var(--bg);color:var(--ink);font-family:\"IBM Plex Sans\",system-ui,sans-serif;font-size:14px;line-height:1.45;padding:18px 20px 32px;display:flex;flex-direction:column;gap:14px;min-height:100%}\n.per5 button,.per5 input{font:inherit;color:inherit}.per5 button{cursor:pointer;touch-action:manipulation}\n.per5 :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}\n.per5 .num{font-variant-numeric:tabular-nums}\n.per5 .num{font-size:inherit;font-weight:inherit;color:inherit}\n.per5 .mono{font-family:\"IBM Plex Mono\",ui-monospace,Menlo,monospace;font-size:12px;white-space:nowrap}\n.per5 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}\n.per5 .top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 16px}\n.per5 .top h1{margin:0;font:600 28px/1.1 \"Zilla Slab\",Georgia,serif;letter-spacing:-.01em;display:flex;align-items:baseline;gap:10px}\n.per5 .top h1 .cnt{font:500 14px/1 \"IBM Plex Sans\",sans-serif;color:var(--muted);font-variant-numeric:tabular-nums}\n.per5 .agora{font-size:12px;color:var(--muted)}\n.per5 .agora b{color:var(--ink);font-weight:500}\n.per5 .filtros{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}\n.per5 .chips{display:flex;flex-wrap:wrap;gap:6px}\n.per5 .chip-f{border:1px solid var(--line-2);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:500;color:var(--muted);min-height:32px;display:inline-flex;gap:6px;align-items:center;transition:transform .12s var(--ease),background .15s}\n.per5 .chip-f .num{color:var(--faint);font-size:12px}\n.per5 .chip-f[aria-pressed=\"true\"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}\n.per5 .chip-f[aria-pressed=\"true\"] .num{color:var(--bg);opacity:.75}\n.per5 .chip-f:active{transform:scale(.97)}\n.per5 .grade{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:16px;align-items:start}\n.per5 .lista{display:flex;flex-direction:column;gap:8px;min-width:0}\n.per5 .linha{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:grid;grid-template-columns:112px minmax(0,1fr) auto;gap:6px 16px;cursor:pointer;transition:border-color .15s,box-shadow .15s}\n.per5 .linha[aria-current=\"true\"]{border-color:var(--esc);box-shadow:0 0 0 1px var(--esc)}\n@media (hover:hover) and (pointer:fine){.per5 .linha:hover{border-color:var(--line-2)}}\n.per5 .quando{display:flex;flex-direction:column;gap:1px}\n.per5 .quando .dia{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1.1}\n.per5 .quando .sem{font-size:12px;color:var(--muted)}\n.per5 .quando .sem b{color:var(--ink);font-weight:600;font-size:14px}\n.per5 .quando .falta{font-size:12px;color:var(--faint);font-variant-numeric:tabular-nums}\n.per5 .quando .falta.perto{color:var(--bad-txt);font-weight:500}\n.per5 .meio{min-width:0;display:flex;flex-direction:column;gap:4px}\n.per5 .l1{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}\n.per5 .cli{font-weight:600;font-size:15px}\n.per5 .tipo{font-size:12px;color:var(--muted)}\n.per5 .l2{display:flex;flex-wrap:wrap;gap:2px 10px;font-size:12px;color:var(--muted);min-width:0}\n.per5 .l2 span{min-width:0}\n.per5 .ori{display:inline-flex;align-items:center;gap:6px}\n.per5 .fase{font-size:11px;font-weight:600;padding:1px 6px;border-radius:4px;letter-spacing:.02em}\n.per5 .fase.inss{background:var(--inss-soft);color:var(--inss-txt)}\n.per5 .fase.jud{background:var(--jud-soft);color:var(--jud-txt)}\n.per5 .estado{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:2px 8px;border-radius:999px;border:1px solid transparent;max-width:100%}\n.per5 .estado::before{content:\"\";width:6px;height:6px;border-radius:2px;background:currentColor;flex:none}\n.per5 .e-aguardando{background:var(--surface-2);border-color:var(--line-2);color:var(--muted)}\n.per5 .e-ligado,.per5 .e-agendado{background:var(--esc-soft);color:var(--esc-txt)}\n.per5 .e-resposta,.per5 .e-telefone{background:var(--paulo-soft);color:var(--paulo-txt)}\n.per5 .e-mudou{background:var(--warn-soft);color:var(--warn-txt)}\n.per5 .e-equipe{background:var(--bad-soft);color:var(--bad-txt)}\n.per5 .l3{font-size:12px;color:var(--muted)}\n.per5 .l3 b{color:var(--ink);font-weight:500}\n.per5 .ctrl{display:flex;flex-direction:column;align-items:flex-end;gap:8px}\n.per5 .adv{display:inline-flex;border:1px solid var(--line-2);border-radius:8px;padding:2px;gap:2px;background:var(--surface)}\n.per5 .adv button{border:0;background:transparent;border-radius:6px;padding:4px 8px 4px 4px;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--muted);min-height:28px;transition:background .15s,transform .12s var(--ease)}\n.per5 .adv button:active{transform:scale(.97)}\n.per5 .ini{width:20px;height:20px;border-radius:4px;display:inline-grid;place-items:center;font-size:11px;font-weight:600;flex:none}\n.per5 .ini.p{background:var(--paulo);color:#fff}\n.per5 .ini.a{background:var(--amanda);color:#3D2D00}\n.per5 .adv button[aria-pressed=\"true\"].p{background:var(--paulo-soft);color:var(--paulo-txt)}\n.per5 .adv button[aria-pressed=\"true\"].a{background:var(--amanda-soft);color:var(--amanda-txt)}\n.per5 .adv button[aria-pressed=\"false\"] .ini{opacity:.55}\n.per5 .sw{display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;padding:2px 0;font-size:12px;font-weight:600;color:var(--muted);min-height:28px}\n.per5 .sw .trk{width:36px;height:20px;border-radius:999px;background:var(--faint);position:relative;transition:background .18s var(--ease);flex:none}\n.per5 .sw .trk::after{content:\"\";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .18s var(--ease)}\n.per5 .sw[aria-checked=\"true\"]{color:var(--esc-txt)}\n.per5 .sw[aria-checked=\"true\"] .trk{background:var(--esc)}\n.per5 .sw[aria-checked=\"true\"] .trk::after{transform:translateX(16px)}\n.per5 .sw:active .trk::after{width:19px}\n.per5 .btn{border:1px solid var(--line-2);background:var(--surface);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:500;min-height:32px;transition:transform .12s var(--ease),background .15s}\n.per5 .btn:active{transform:scale(.97)}\n.per5 .btn.pri{background:var(--esc);border-color:var(--esc);color:var(--esc-ink);font-weight:600}\n.per5 .btn.pequeno{padding:3px 10px;min-height:28px;font-size:12px}\n@media (hover:hover) and (pointer:fine){.per5 .btn:hover{background:var(--surface-2)}.per5 .btn.pri:hover{filter:brightness(1.06);background:var(--esc)}}\n.per5 .vazio{padding:28px 16px;text-align:center;color:var(--muted);background:var(--surface);border:1px dashed var(--line-2);border-radius:var(--r)}\n.per5 .lado{display:flex;flex-direction:column;gap:12px;position:sticky;top:12px;min-width:0}\n.per5 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);min-width:0}\n.per5 .card-cab{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px 10px;border-bottom:1px solid var(--line)}\n.per5 .card-cab h2{margin:0;font-size:14px;font-weight:600}\n.per5 .card-cab .sub{font-size:12px;color:var(--muted)}\n.per5 .voltar{display:none}\n.per5 .prev-corpo{padding:12px 14px;display:flex;flex-direction:column;gap:12px}\n.per5 .wa{background:var(--wa-bg);border-radius:10px;padding:12px 10px;display:flex;flex-direction:column;gap:6px}\n.per5 .wa-quem{font-size:11px;color:var(--wa-meta);text-align:center}\n.per5 .bolha{align-self:flex-end;max-width:94%;background:var(--wa-out);color:var(--wa-ink);border-radius:8px 8px 2px 8px;padding:7px 9px 4px;font-size:13px;line-height:1.42;box-shadow:0 1px .5px rgba(0,0,0,.13)}\n.per5 .bolha p{margin:0 0 6px}\n.per5 .bolha .assin{font-weight:600}\n.per5 .bolha .pe{font-size:11px;color:var(--wa-meta);text-align:right;font-variant-numeric:tabular-nums}\n.per5 .horas{display:inline;font-weight:600}\n.per5 .fatos{background:none;border:0;border-radius:0;padding:0;box-shadow:none;overflow:visible;margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;font-size:12px;margin:0}\n.per5 .fatos dt{color:var(--muted)}\n.per5 .fatos dd{margin:0;font-variant-numeric:tabular-nums}\n.per5 .aviso{font-size:12px;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:8px 10px}\n.per5 .aviso.forte{background:var(--warn-soft);border-color:transparent;color:var(--warn-txt)}\n.per5 .acoes{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}\n.per5 .fluxo{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}\n.per5 .fluxo li{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:2px 10px;font-size:12px;padding:3px 0;position:relative}\n.per5 .fluxo li::before{content:\"\";width:10px;height:10px;border-radius:3px;margin-top:3px;border:2px solid var(--line-2);background:var(--surface);grid-row:1}\n.per5 .fluxo li:not(:last-child)::after{content:\"\";position:absolute;left:6px;top:17px;bottom:-4px;width:2px;background:var(--line)}\n.per5 .fluxo li.feito::before{background:var(--esc);border-color:var(--esc)}\n.per5 .fluxo li.feito:not(:last-child)::after{background:var(--esc)}\n.per5 .fluxo li.agora::before{border-color:var(--esc);background:var(--esc-soft)}\n.per5 .fluxo li.agora .t{font-weight:600}\n.per5 .fluxo li.pulado .t{color:var(--faint);text-decoration:line-through}\n.per5 .fluxo .t{color:var(--ink)}\n.per5 .fluxo .d{color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}\n.per5 .fluxo li.fut .t{color:var(--muted)}\n.per5 .tit-sec{margin:0;font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}\n.per5 details.notif summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px}\n.per5 details.notif summary::-webkit-details-marker{display:none}\n.per5 details.notif summary h2{margin:0;font-size:14px;font-weight:600}\n.per5 details.notif summary .seta{transition:transform .18s var(--ease);color:var(--muted)}\n.per5 details.notif[open] summary{border-bottom:1px solid var(--line)}\n.per5 details.notif[open] summary .seta{transform:rotate(180deg)}\n.per5 .notif-corpo{padding:10px 14px 14px;display:flex;flex-direction:column;gap:12px}\n.per5 .janelas{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted)}\n.per5 .hora{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-size:13px}\n.per5 .lemb{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}\n.per5 .lemb:first-of-type{border-top:0}\n.per5 .lemb .nome{font-weight:500;font-size:13px}\n.per5 .lemb .quando2{grid-column:1;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}\n.per5 .lemb .sw{grid-row:1/span 2;grid-column:2}\n.per5 .outra{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}\n.per5 .outra input{width:56px;font-size:16px;padding:2px 6px;border:1px solid var(--line-2);border-radius:6px;background:var(--surface);font-variant-numeric:tabular-nums}\n.per5 .regra{font-size:12px;color:var(--muted);margin:0}\n.per5 .ja-at{font-size:12px;color:var(--ink,inherit);background:#fff7e0;border:1px solid #e8c766;border-radius:8px;padding:6px 10px;margin-top:6px}\n.per5 .so-lemb{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:8px 10px}\n@container per5 (max-width:720px){.per5 .card-cab{flex-wrap:wrap}.per5 .adv-cel{display:block;margin-top:4px}.per5 .top h1{font-size:24px}.per5 .filtros{gap:8px}.per5 .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-12px;padding-inline:12px}.per5 .chips::-webkit-scrollbar{display:none}.per5 .chip-f{flex:none;min-height:36px}.per5 .grade{grid-template-columns:minmax(0,1fr)}.per5 .linha{grid-template-columns:minmax(0,1fr) auto;padding:12px}.per5 .quando{grid-column:1;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:2px 8px}.per5 .quando .dia{font-size:17px}.per5 .meio{grid-column:1/-1}.per5 .ctrl{grid-column:2;grid-row:1;align-items:flex-end}.per5 .ctrl .adv{display:none}.per5 .lado{position:static}.per5 .card.prev{position:fixed;inset:0;z-index:30;border-radius:0;border:0;overflow:auto;transform:translateX(100%);visibility:hidden;transition:transform .28s var(--ease),visibility 0s .28s;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);overscroll-behavior:contain}.per5 .card.prev.aberta{transform:none;visibility:visible;transition:transform .28s var(--ease)}.per5 .voltar{display:inline-flex}.per5 .sw,.per5 .adv button{min-height:44px}.per5 .btn{min-height:44px}}\n.per5 .adv-cel{display:none}@container per5 (max-width:720px){.per5 .adv-cel{display:block;margin-top:4px}}\n@media (prefers-reduced-motion:reduce){.per5 *{transition-duration:.01ms!important}}";
+const PER_EST = {aguardando:"Aguardando", resposta:"Aguardando resposta", agendado:"Atendimento agendado",
+  telefone:"Telefone 16h oferecido", mudou:"Data mudou · aprovar de novo", equipe:"Encaminhado à equipe"};
+const PER_ADV = {paulo:{nome:"Dr. Paulo", ini:"P", c:"p", o:"o Dr. Paulo", curto:"Paulo"}, amanda:{nome:"Dra. Amanda", ini:"A", c:"a", o:"a Dra. Amanda", curto:"Amanda"}};
+const PER_TEXTO = "{saudacao}, {nome}. A sua {tipo} está agendada para {dia}, {data}, às {hora}, em {local}.\n\nPara a sua preparação, vamos agendar o seu atendimento presencial com {advogado} {quando_atendimento}. Qual horário fica melhor?";
+const PER_LEMBRETE = "{saudacao}, {nome}. Lembramos que a sua {tipo} está agendada para {dia}, {data}, às {hora}, em {local}.";
+// F562: o dia proposto, como pericia_dia_atendimento no banco: o da perícia (útil, às 11:00 ou depois), senão o dia útil anterior; nunca hoje
+function perDiaAtend(p){
+  let d = ehDiaUtil(p.dia) && p.hora >= "11:00" ? p.dia : uteisAntesPer(p.dia, 1);
+  if(d <= hoje()){ d = somaDias(hoje(), 1); while(!ehDiaUtil(d) && d < p.dia) d = somaDias(d, 1); if(d > p.dia) d = p.dia; }
+  return d;
+}
+const perQuandoAt = p => { const d = perDiaAtend(p); return d===p.dia ? "no próprio dia da "+(p.social?"avaliação social":"perícia")+", antes do horário dela" : "em "+perDiaExt(d)+", "+fmt(d); };
+let _perAvisos = null, _perSel = null, _perFiltro = "todas", _perTipo = null, _perProf = new Map();
 function periciasDoAviso(){
   const hj = hoje();
   return (D.eventos||[]).filter(e=>["Perícia","Avaliação social"].includes(e.tipo) && e.status==="agendada" && dataSP(e.data_hora)>=hj)
     .map(e=>({e, k:D.casoPorId.get(e.caso_id)})).filter(x=>x.k && !x.k.encerrado_em)
     .sort((a,b)=>String(a.e.data_hora).localeCompare(String(b.e.data_hora)));
 }
+function uteisAntesPer(d, n){ let x = d, k = 0; while(k < n){ x = somaDias(x, -1); if(ehDiaUtil(x)) k++; } return x; }
+const perDm = iso => fmt(iso).slice(0,5);
+const perSem = iso => SIGLA_DIA[new Date(iso+"T12:00:00").getDay()];
+const perDiaExt = iso => DIA_EXT[new Date(iso+"T12:00:00").getDay()];
+// o próximo horário de envio: 08:30 ou 16:00 de um dia útil
+function perProximoEnvio(){
+  const hj = hoje(), h = horaSP(new Date().toISOString());
+  if(ehDiaUtil(hj) && h < "08:30") return {dia:hj, hora:"08:30"};
+  if(ehDiaUtil(hj) && h < "16:00") return {dia:hj, hora:"16:00"};
+  let d = somaDias(hj, 1); while(!ehDiaUtil(d)) d = somaDias(d, 1);
+  return {dia:d, hora:"08:30"};
+}
+const perEnvioTxt = p => (p.dia===hoje() ? "hoje" : perDm(p.dia)+" ("+perSem(p.dia)+")")+", "+p.hora;
+function perDados({e, k}){
+  const a = _perAvisos.get(e.id), cli = D.cliPorId.get(k.cliente_id), dia = dataSP(e.data_hora);
+  const mudou = !!(a && ((a.ligado && a.data_aprovada && new Date(a.data_aprovada).getTime()!==new Date(e.data_hora).getTime()) || a.estado==="data_mudou"));
+  const ligado = !!(a && a.ligado && !mudou);
+  const est = mudou ? "mudou" : !ligado ? "aguardando" : ({aguardando:"resposta", conversa:"resposta", agendado:"agendado", sem_resposta:"equipe", sem_telefone:"equipe"})[a.estado] || "ligado";
+  const nums = numerosDoCaso(k), fx = faseEfetiva(k), jud = !["inss","conselho"].includes(fx);
+  const num = jud ? (nums.proc[0] ? fmtProc(nums.proc[0]) : "") : (nums.nb[0] ? fmtNb(nums.nb[0]) : (nums.prot[0]||""));
+  return {e, k, a, cli, dia, hora:horaSP(e.data_hora), mudou, ligado, est, jud, num,
+    nome: cli ? cli.nome : tituloCaso(k), social: e.tipo==="Avaliação social",
+    prof: _perProf.get(e.id) || (a && a.profissional) || "paulo", so: !!(a && a.so_lembretes)};
+}
+function perDetalhe(p){
+  const adv = PER_ADV[p.prof], a = p.a || {};
+  switch(p.est){
+    case "aguardando": return "Designada em "+(p.e.created_at ? perDm(dataSP(p.e.created_at)) : "data não registrada")+"."+(p.so?" Cliente já orientado: apenas os lembretes.":"")+" Ligue para ver a prévia e aprovar a data.";
+    case "ligado": return p.so ? "Data aprovada. Cliente já orientado: <b>apenas os lembretes</b>." : "Data aprovada. Propõe <b>atendimento presencial com "+adv.o+" "+perQuandoAt(p)+"</b>.";
+    case "resposta": return a.estado==="conversa" ? "Cliente respondeu; a conversa segue com a IA."
+      : a.repetido_em ? "Reiteração enviada em "+perDm(dataSP(a.repetido_em))+"."
+      : "Sem resposta sobre o atendimento. <b>Reiteração "+perDm(perProxUtil(dataSP(a.primeiro_em)||hoje()))+" às 08:30.</b>";
+    case "agendado": { const at = a.atendimento_em ? dataSP(a.atendimento_em) : ""; return at
+      ? "<b>Presencial com "+adv.o+" em "+perDm(at)+" às "+esc(horaSP(a.atendimento_em))+".</b> Tarefa “Preparar o estudo sobre a perícia” para o Dr. Paulo em "+perDm(uteisAntesPer(at,1))+"."
+      : "<b>Atendimento presencial agendado com "+adv.o+".</b>"; }
+    case "mudou": return a.data_aprovada ? "Era "+perDm(dataSP(a.data_aprovada))+", agora "+perDm(p.dia)+". O aviso parou até a nova aprovação." : "A data mudou. O aviso parou até a nova aprovação.";
+    case "equipe": return a.estado==="sem_telefone" ? "Ficha sem telefone com WhatsApp. <b>Menção à recepção.</b>" : "Sem resposta à reiteração. <b>Menção à recepção para telefonar.</b>";
+  }
+  return "";
+}
+// F562 · o atendimento presencial futuro do cliente (agendamentosFuturos e a agenda carregada, F554)
+const perAtend = (p, modo) => p.cli ? htmlAtend(atendimentosDe({id:p.cli.id, nome:p.cli.nome}), modo) : "";
+function perProxUtil(d){ let x = somaDias(d, 1); while(!ehDiaUtil(x)) x = somaDias(x, 1); return x; }
+function perAdvSel(p, extra){
+  return `<span class="adv${extra||""}" role="group" aria-label="Advogado do atendimento">`+["paulo","amanda"].map(k=>{
+    const v = PER_ADV[k];
+    return `<button type="button" class="${v.c}" data-adv="${k}" data-id="${p.e.id}" aria-pressed="${p.prof===k}" title="Atendimento com ${v.nome}" aria-label="Atendimento com ${v.nome}"${souAdmin()?"":" disabled"}><span class="ini ${v.c}" aria-hidden="true">${v.ini}</span>${v.curto}</button>`;
+  }).join("")+`</span>`;
+}
+function perSw(on, attrs, label, tit){
+  return `<button type="button" class="sw" role="switch" aria-checked="${on}" ${attrs} aria-label="${esc(label)}" title="${tit || (on?"Desligar os avisos":"Ligar: abre a prévia antes")}"${souAdmin()?"":" disabled"}><span class="trk"></span><span class="txt">${on?"Ligado":"Desligado"}</span></button>`;
+}
+function perVisivel(p){
+  if(_perTipo && (p.social ? "social" : "medica")!==_perTipo) return false;
+  if(_perFiltro==="aguardando") return p.est==="aguardando";
+  if(_perFiltro==="ligadas") return p.ligado;
+  if(_perFiltro==="mudou") return p.mudou;
+  return true;
+}
+function perLinha(p){
+  const f = Math.max(0, uteisEntre(hoje(), p.dia)), est = p.est==="ligado" ? (p.so ? "Ligado · apenas lembretes" : "Ligado · aviso sai às "+perProximoEnvio().hora) : PER_EST[p.est];
+  return `<article class="linha" data-id="${p.e.id}" aria-current="${_perSel===p.e.id}">
+    <div class="quando"><span class="dia">${perDm(p.dia)}</span><span class="sem"><b class="num">${esc(p.hora)}</b> · ${perDiaExt(p.dia)}</span><span class="falta${f<=5?" perto":""}">${f===0?"hoje":"faltam "+f+" dia"+(f>1?"s úteis":" útil")}</span></div>
+    <div class="meio"><div class="l1"><span class="cli" data-cli="${esc(p.k.cliente_id||"")}">${esc(p.nome)}</span><span class="tipo">${p.social?"Avaliação social":"Perícia médica"}</span><span class="estado e-${p.est}">${esc(est)}</span></div>
+      <div class="l2"><span class="ori"><span class="fase ${p.jud?"jud":"inss"}">${p.jud?"Judicial":"INSS"}</span>${p.num?`<span class="mono">${esc(p.num)}</span>`:""}</span><span>${esc(p.e.local||"local a informar")}</span></div>
+      <div class="l3">${perDetalhe(p)}</div>${perAtend(p, "per")}<div class="adv-cel">${perAdvSel(p)}</div></div>
+    <div class="ctrl">${perSw(p.ligado, `data-sw="${p.e.id}"`, "Avisos da perícia de "+p.nome)}${perAdvSel(p)}
+      <button type="button" class="btn pequeno" data-prev="${p.e.id}" title="Ver a prévia da mensagem de ${esc(p.nome)}">Prévia</button></div>
+  </article>`;
+}
+function perLembretes(){
+  const out = +(cfgApp("pericia_aviso_outra") ?? "0") || 0;
+  return {d7:(cfgApp("pericia_aviso_d7") ?? "sim")==="sim", d1:(cfgApp("pericia_aviso_d1") ?? "sim")==="sim", out:out>0, n:out>0 ? out : 3};
+}
+function perMensagem(p){
+  const env = perProximoEnvio(), adv = PER_ADV[p.prof];
+  const t = (p.so ? PER_LEMBRETE : (cfgApp("pericia_aviso_texto") || PER_TEXTO))
+    .replace(/\{saudacao\}/g, env.hora==="08:30" ? "Bom dia" : "Boa tarde")
+    .replace(/\{nome\}/g, String(p.nome).split(" ")[0])
+    .replace(/\{tipo\}/g, p.social ? "avaliação social" : "perícia médica")
+    .replace(/\{dia\}/g, perDiaExt(p.dia)).replace(/\{data\}/g, fmt(p.dia)).replace(/\{hora\}/g, p.hora)
+    .replace(/\{local\}/g, p.e.local || "local a confirmar com o escritório")
+    .replace(/\{advogado\}/g, adv.o).replace(/\{quando_atendimento\}/g, perQuandoAt(p));
+  return t.split(/\n\s*\n/).map(s=>`<p>${esc(s).replace(/\n/g,"<br>")}</p>`).join("")+`<div class="pe">${env.hora} ✓</div>`;
+}
+function perPrevia(p){
+  if(!p) return "";
+  const L = perLembretes(), d7 = uteisAntesPer(p.dia,7), d1 = uteisAntesPer(p.dia,1), outra = uteisAntesPer(p.dia,L.n);
+  const telOk = new Date(d1+"T12:00:00").getDay()!==3, a = p.a || {}, env = perProximoEnvio(), adv = PER_ADV[p.prof];
+  const enviado = !!a.primeiro_em, at = a.atendimento_em ? dataSP(a.atendimento_em) : "";
+  const tipoRot = p.social ? "Avaliação social" : "Perícia médica";
+  const passos = [
+    ["Designada", p.e.created_at ? perDm(dataSP(p.e.created_at)) : "", "feito"],
+    ["Ligada", p.ligado ? "aprovada" : (p.mudou ? "aprovação caiu" : "falta aprovar"), p.ligado ? "feito" : "agora"],
+    ...(p.so && !enviado ? [["Primeiro aviso", "dispensado: já orientado", "feito"]] : [
+    ["Aviso enviado", enviado ? perDm(dataSP(a.primeiro_em))+" "+horaSP(a.primeiro_em) : (p.ligado ? perEnvioTxt(env) : ""), enviado ? "feito" : (p.ligado ? "agora" : "fut")],
+    ["Reiteração", a.repetido_em ? perDm(dataSP(a.repetido_em)) : "", a.repetido_em ? "feito" : (p.est==="resposta" ? "agora" : "fut")],
+    ["Atendimento agendado", at ? perDm(at)+" "+horaSP(a.atendimento_em) : "", at ? "feito" : (p.est==="equipe" ? "agora" : "fut")],
+    ["Tarefa do estudo", at ? perDm(uteisAntesPer(at,1)) : "", p.est==="agendado" ? "feito" : "fut"]]),
+    ["Lembretes", [L.d7?perDm(d7):null, L.d1?perDm(d1):null, L.out?perDm(outra):null].filter(Boolean).join(" · ")||"nenhum", "fut"],
+    [tipoRot, perDm(p.dia)+" "+p.hora, "fut"],
+  ];
+  const aprov = p.ligado
+    ? `<div class="aviso">Data aprovada. Se o ${p.jud?"processo":"INSS"} mudar a data, a aprovação cai e a linha mostra <b>Data mudou</b>.</div>`
+    : (p.mudou ? `<div class="aviso forte">A data mudou${a.data_aprovada ? " de "+perDm(dataSP(a.data_aprovada)) : ""} para ${perDm(p.dia)}. Confira a mensagem e ligue de novo para aprovar a nova data.</div>`
+      : `<div class="aviso">Ao ligar, você aprova a data de <b class="num">${fmt(p.dia)} às ${esc(p.hora)}</b>. ${p.so ? "Saem apenas os lembretes, às 08:30 de cada dia marcado." : `A primeira mensagem sai às <b>${env.hora}</b> ${env.dia===hoje()?"de hoje":"de "+perDm(env.dia)}.`}</div>`);
+  return `<div class="card-cab"><button type="button" class="btn pequeno voltar" id="per-voltar" aria-label="Voltar às perícias">‹ Perícias</button><div><h2 id="prev-tit">Prévia · ${esc(p.nome)}</h2><div class="sub">${p.so?"Lembrete pelo WhatsApp":"Primeira mensagem pelo WhatsApp"}</div></div>${perAdvSel(p," adv-prev")}</div>
+    <div class="prev-corpo">
+      <div class="wa" aria-label="Mensagem que será enviada"><div class="wa-quem">Escritório Paulo Tercini · WhatsApp</div><div class="bolha">${perMensagem(p)}</div></div>
+      ${perAtend(p, "perprev")}
+      <div class="so-lemb"><span><b>Já orientado</b>: enviar apenas os lembretes, sem o primeiro aviso.</span>${perSw(p.so, 'id="sw-so"', "Cliente já orientado: apenas os lembretes", p.so?"Voltar a enviar o primeiro aviso":"Enviar apenas os lembretes")}</div>
+      <dl class="fatos">${p.so ? "" : `<dt>Atendimento</dt><dd>presencial, tipo 002, ${adv.nome}</dd>
+        <dt>Dia proposto</dt><dd>${esc(perDm(perDiaAtend(p))+" ("+perSem(perDiaAtend(p))+")")}; sem vaga, os dias úteis anteriores, sempre 3h ou mais antes</dd>`}
+        <dt>Lembretes</dt><dd>${L.d7?"7 dias úteis: "+perDm(d7)+" ("+perSem(d7)+")":"7 dias úteis desligado"}<br>${L.d1?"1 dia útil: "+perDm(d1)+" ("+perSem(d1)+")":"1 dia útil desligado"}${L.out?"<br>"+L.n+" dias úteis: "+perDm(outra)+" ("+perSem(outra)+")":""}</dd>
+        ${p.so ? "" : `<dt>Se não puder vir</dt><dd>${telOk?"telefone em "+perDm(d1)+" ("+perSem(d1)+") às 16h":"telefone indisponível: véspera útil é quarta-feira"}; persistindo, vai à equipe</dd>`}</dl>
+      ${aprov}
+      ${p.ligado ? "" : `<div class="acoes"><button type="button" class="btn" id="per-cancelar" title="Fechar a prévia sem ligar">Cancelar</button><button type="button" class="btn pri" id="per-ligar" title="Ligar e aprovar a data desta perícia"${souAdmin()?"":" disabled"}>Ligar</button></div>`}
+      <h3 class="tit-sec">Caminho desta perícia</h3><ol class="fluxo">${passos.map(s=>`<li class="${s[2]}"><span class="t">${esc(s[0])}</span><span class="d">${esc(s[1])}</span></li>`).join("")}</ol>
+    </div>`;
+}
+function perNotif(p){
+  const L = perLembretes(), w = d => perDm(d)+" ("+perSem(d)+")", pre = p ? (p.social?"Avaliação":"Perícia")+" de "+perDm(p.dia)+": " : "";
+  return `<summary><h2>Notificações</h2><span class="seta" aria-hidden="true">&#9662;</span></summary>
+    <div class="notif-corpo">
+      <div class="janelas" aria-label="Horários de envio">Envio só em dois horários: <span class="hora">08:30</span><span class="hora">16:00</span></div>
+      <p class="regra">Sem resposta sobre o atendimento, a mensagem é reiterada no dia útil seguinte, no primeiro horário.</p>
+      <div><h3 class="tit-sec" style="margin-bottom:4px">Lembretes ao cliente</h3>
+        <div class="lemb"><span class="nome">7 dias úteis antes</span><span class="quando2" id="q-d7">${p?pre+w(uteisAntesPer(p.dia,7)):""}</span>${perSw(L.d7,'id="sw-d7"',"Lembrete 7 dias úteis antes", L.d7?"Desligar o lembrete":"Ligar o lembrete")}</div>
+        <div class="lemb"><span class="nome">1 dia útil antes</span><span class="quando2" id="q-d1">${p?pre+w(uteisAntesPer(p.dia,1)):""}</span>${perSw(L.d1,'id="sw-d1"',"Lembrete 1 dia útil antes", L.d1?"Desligar o lembrete":"Ligar o lembrete")}</div>
+        <div class="lemb"><span class="nome outra"><label for="n-outra">Outra data:</label><input id="n-outra" type="number" inputmode="numeric" min="2" max="30" value="${L.n}"${souAdmin()?"":" disabled"}> dias úteis antes</span><span class="quando2" id="q-out">${p?pre+w(uteisAntesPer(p.dia,L.n)):""}</span>${perSw(L.out,'id="sw-out"',"Lembrete em outra data", L.out?"Desligar o lembrete":"Ligar o lembrete")}</div>
+      </div>
+      <p class="regra">Valem só para as perícias ligadas. Contam dias úteis: sem sábado, domingo e feriado nacional.</p>
+      <p class="regra">Na conversa já assumida por alguém da equipe, a resposta da IA aparece como sugestão acima do campo de escrever e não é enviada.</p>
+    </div>`;
+}
+async function perLigar(evId, ligar, prof){
+  try{
+    await api(`/rest/v1/rpc/pericia_ligar`,{method:"POST", body:JSON.stringify({p_evento:evId, p_ligado:ligar, p_profissional:prof})});
+    return true;
+  }catch(err){ aviso("Não foi possível: "+(err && err.message || err)); return false; }
+}
+async function perRecarregar(){ _perAvisos = null; await renderPericiasAviso(); }
 async function renderPericiasAviso(){
   tituloLista("🩺 Perícias");
-  document.getElementById("sub-lista").innerHTML = `<span class="meio-sub">Nada é enviado ao cliente sem o Ligar da perícia. O Ligar aprova a data registrada; se ela mudar depois, a aprovação cai.</span>`;
+  if(!document.getElementById("per5-css")){ const st = document.createElement("style"); st.id = "per5-css"; st.textContent = PER_CSS; document.head.appendChild(st); }
   const meio = document.getElementById("conteudo-meio");
   if(!_perAvisos){
     meio.innerHTML = `<p class="meio-sub">Carregando…</p>`;
@@ -16960,54 +17181,74 @@ async function renderPericiasAviso(){
     catch(_){ _perAvisos = new Map(); }
     if(visao!=="periciasaviso") return;
   }
-  const hj = hoje(), adm = souAdmin(), lista = periciasDoAviso();
-  const cartao = ({e, k}) => {
-    const a = _perAvisos.get(e.id), cli = D.cliPorId.get(k.cliente_id), dia = dataSP(e.data_hora);
-    const mudou = a && a.ligado && a.data_aprovada && new Date(a.data_aprovada).getTime()!==new Date(e.data_hora).getTime();
-    const est = !a || !a.ligado ? (a && a.estado==="data_mudou" ? "Data mudou" : "Desligado") : mudou ? "Data mudou" : (PER_ESTADO[a.estado] || "Ligado");
-    const prof = (a && a.profissional) || "paulo", n = uteisEntre(hj, dia);
-    return `<div class="per-quadro per-c" data-ev="${e.id}" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-      <div style="flex:1;min-width:200px"><b class="per-nome" data-cli="${esc(k.cliente_id||"")}" style="cursor:pointer">${esc(cli ? cli.nome : tituloCaso(k))}</b>
-        <div class="meio-sub">${esc(e.tipo)} · ${fmt(dia)} às ${esc(horaSP(e.data_hora))}${e.local ? " · "+esc(e.local) : ""} · ${n===0 ? "hoje" : n+" dia"+(n>1?"s":"")+" úte"+(n>1?"is":"l")}</div></div>
-      <span class="fchip${est==="Data mudou"||est==="Sem resposta"||est==="Sem telefone" ? " per-alerta" : ""}" style="display:inline-flex${est==="Data mudou"||est==="Sem resposta"||est==="Sem telefone" ? ";color:#b42318;border-color:#b42318" : ""}">${esc(est)}</span>
-      <select class="per-prof" aria-label="advogado do atendimento" ${adm?"":"disabled"}><option value="paulo"${prof==="paulo"?" selected":""}>Dr. Paulo</option><option value="amanda"${prof==="amanda"?" selected":""}>Dra. Amanda</option></select>
-      ${adm ? `<button class="btn-mini per-ligar${a && a.ligado && !mudou ? "" : " pri"}" title="${a && a.ligado && !mudou ? "Desligar o aviso desta perícia" : "Aprovar a data e enviar o aviso no próximo horário"}">${a && a.ligado && !mudou ? "Desligar" : "Ligar"}</button>` : ""}
-    </div>`;
-  };
-  const cfg = (c, p) => cfgApp(c) ?? p;
-  const painel = `<div class="per-quadro" style="margin-bottom:12px"><b>Notificações</b>
-    <div class="meio-sub">Envio às 08:30 e às 16:00, nos dias úteis. Sem resposta, repete no dia útil seguinte; sem resposta à repetição, a recepção recebe a menção para telefonar.</div>
-    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:8px">
-      <label><input type="checkbox" id="per-d7" ${cfg("pericia_aviso_d7","sim")==="sim"?"checked":""} ${adm?"":"disabled"}> D-7</label>
-      <label><input type="checkbox" id="per-d1" ${cfg("pericia_aviso_d1","sim")==="sim"?"checked":""} ${adm?"":"disabled"}> D-1 com os documentos</label>
-      <label>Outra: <input type="number" id="per-outra" min="0" max="30" style="width:60px" value="${esc(cfg("pericia_aviso_outra","0"))}" ${adm?"":"disabled"}> dias úteis antes (0 desliga)</label></div>
-    <label style="display:block;margin-top:8px">Documentos do D-1<textarea id="per-docs" rows="2" style="width:100%" ${adm?"":"disabled"}>${esc(cfg("pericia_aviso_docs",""))}</textarea></label>
-    ${adm ? `<button class="btn-mini" id="per-salvar">Salvar</button>` : ""}</div>`;
-  meio.innerHTML = painel + (lista.length ? lista.map(cartao).join("") : `<p class="meio-sub">Nenhuma perícia ou avaliação social agendada.</p>`);
-  meio.querySelectorAll(".per-nome").forEach(b=>b.onclick=()=>b.dataset.cli && abrirFicha(b.dataset.cli));
-  meio.querySelectorAll(".per-c").forEach(c=>{
-    const bt = c.querySelector(".per-ligar"); if(!bt) return;
-    bt.onclick = async ()=>{
-      const ligar = bt.textContent==="Ligar"; bt.disabled = true;
+  const todas = periciasDoAviso().map(perDados), vs = todas.filter(perVisivel);
+  if(!todas.some(p=>p.e.id===_perSel)) _perSel = todas[0] ? todas[0].e.id : null;
+  const sel = todas.find(p=>p.e.id===_perSel), aberta = !!meio.querySelector("#prev.aberta");
+  const c = {todas:todas.length, aguardando:todas.filter(p=>p.est==="aguardando").length, ligadas:todas.filter(p=>p.ligado).length,
+    mudou:todas.filter(p=>p.mudou).length, medica:todas.filter(p=>!p.social).length, social:todas.filter(p=>p.social).length};
+  document.getElementById("sub-lista").innerHTML = `<span class="meio-sub">${vs.length===todas.length ? todas.length+" marcada"+(todas.length===1?"":"s") : vs.length+" de "+todas.length}</span>`;
+  const chip = (attr, v, rot, on) => `<button type="button" class="chip-f" ${attr}="${v}" aria-pressed="${on}">${rot} <span class="num">${c[v==="todas"?"todas":v]}</span></button>`;
+  const notifAberta = meio.querySelector("#notif") ? meio.querySelector("#notif").open : null;
+  meio.innerHTML = `<div class="per5">
+    <div class="agora">Avisos saem às <b>08:30</b> e às <b>16:00</b>. Próximo envio: <b class="num">${perEnvioTxt(perProximoEnvio())}</b></div>
+    <div class="filtros">
+      <div class="chips" role="group" aria-label="Filtrar por situação">${chip("data-f","todas","Todas",_perFiltro==="todas")}${chip("data-f","aguardando","Aguardando",_perFiltro==="aguardando")}${chip("data-f","ligadas","Ligadas",_perFiltro==="ligadas")}${chip("data-f","mudou","Data mudou",_perFiltro==="mudou")}</div>
+      <div class="chips" role="group" aria-label="Filtrar por tipo">${chip("data-t","medica","Perícia médica",_perTipo==="medica")}${chip("data-t","social","Avaliação social",_perTipo==="social")}</div>
+    </div>
+    <div class="grade">
+      <section class="lista" id="lista" aria-label="Perícias, da mais próxima à mais distante">${vs.length ? vs.map(perLinha).join("") : todas.length ? `<div class="vazio">Nenhuma perícia nesta situação. Escolha <b>Todas</b> para ver a lista inteira.</div>` : `<div class="vazio">Nenhuma perícia ou avaliação social agendada.</div>`}</section>
+      <aside class="lado">
+        <section class="card prev${aberta?" aberta":""}" id="prev" aria-labelledby="prev-tit" tabindex="-1">${perPrevia(sel)}</section>
+        <details class="card notif" id="notif">${perNotif(sel)}</details>
+      </aside>
+    </div></div>`;
+  const P = meio.querySelector("#prev"), raiz = meio.querySelector(".per5");
+  meio.querySelector("#notif").open = notifAberta ?? raiz.clientWidth > 720;
+  const abrir = id => { _perSel = id; renderPericiasAviso().then(()=>{ const q = document.getElementById("prev"); if(!q) return; q.classList.add("aberta"); if(document.querySelector(".per5").clientWidth <= 720) q.focus(); }); };
+  const fechar = () => P.classList.remove("aberta");
+  if(!renderPericiasAviso._esc){ renderPericiasAviso._esc = true; document.addEventListener("keydown", ev=>{ if(ev.key==="Escape" && visao==="periciasaviso"){ const q = document.getElementById("prev"); if(q) q.classList.remove("aberta"); } }); }
+  raiz.onclick = async ev=>{
+    const t = ev.target, adm = souAdmin();
+    const cli = t.closest(".cli[data-cli]"); if(cli && cli.dataset.cli){ abrirFicha(cli.dataset.cli); return; }
+    const advB = t.closest("[data-adv]");
+    if(advB){ if(!adm) return; const p = todas.find(x=>x.e.id===advB.dataset.id); if(!p) return;
+      const prof = advB.dataset.adv; _perSel = p.e.id;
+      if(p.ligado){ if(!await perLigar(p.e.id, true, prof)) return; _perProf.delete(p.e.id); await perRecarregar(); }
+      else { _perProf.set(p.e.id, prof); await renderPericiasAviso(); }
+      aviso("Atendimento oferecido com "+PER_ADV[prof].nome+"."); return; }
+    const s = t.closest("[data-sw]");
+    if(s){ const p = todas.find(x=>x.e.id===s.dataset.sw); if(!p || !adm) return;
+      if(p.ligado){ if(!await perLigar(p.e.id, false, p.prof)) return; await perRecarregar();
+        avisoDesfazer("Avisos de "+p.nome+" desligados.", async()=>{ if(await perLigar(p.e.id, true, p.prof)) await perRecarregar(); }); }
+      else abrir(p.e.id);
+      return; }
+    const pv = t.closest("[data-prev]"); if(pv){ abrir(pv.dataset.prev); return; }
+    if(t.closest("#per-ligar")){ const p = sel; if(!p || !adm) return;
+      if(!await perLigar(p.e.id, true, p.prof)) return; _perProf.delete(p.e.id); await perRecarregar();
+      const q = document.getElementById("prev"); if(q) q.classList.remove("aberta");
+      avisoDesfazer("Ligado. Data de "+perDm(p.dia)+" aprovada; "+(p.so ? "saem apenas os lembretes." : "o aviso sai às "+perProximoEnvio().hora+"."), async()=>{ if(await perLigar(p.e.id, false, p.prof)) await perRecarregar(); });
+      return; }
+    if(t.closest("#sw-so")){ const p = sel; if(!p || !adm) return;
+      try{ await api(`/rest/v1/rpc/pericia_so_lembretes`,{method:"POST", body:JSON.stringify({p_evento:p.e.id, p_so:!p.so})}); }
+      catch(err){ aviso("Não foi possível: "+(err && err.message || err)); return; }
+      await perRecarregar(); const q = document.getElementById("prev"); if(q) q.classList.add("aberta");
+      aviso(p.so ? "Volta a sair o primeiro aviso." : "Apenas os lembretes para "+p.nome+"."); return; }
+    if(t.closest("#per-cancelar,#per-voltar")){ fechar(); return; }
+    const fb = t.closest("[data-f]"); if(fb){ _perFiltro = fb.dataset.f; renderPericiasAviso(); return; }
+    const tb = t.closest("[data-t]"); if(tb){ _perTipo = _perTipo===tb.dataset.t ? null : tb.dataset.t; renderPericiasAviso(); return; }
+    const ls = t.closest("#sw-d7,#sw-d1,#sw-out");
+    if(ls){ if(!adm) return; const L = perLembretes(), k = ls.id.slice(3);
       try{
-        await api(`/rest/v1/rpc/pericia_ligar`,{method:"POST", body:JSON.stringify({p_evento:c.dataset.ev, p_ligado:ligar, p_profissional:c.querySelector(".per-prof").value})});
-        _perAvisos = null; aviso(ligar ? "Aviso ligado: sai no próximo horário de envio." : "Aviso desligado.");
-      }catch(err){ aviso("Não foi possível: "+(err && err.message || err)); }
-      renderPericiasAviso();
-    };
-  });
-  const sv = document.getElementById("per-salvar");
-  if(sv) sv.onclick = async ()=>{
-    sv.disabled = true;
-    try{
-      await guardarCfgApp("pericia_aviso_d7", document.getElementById("per-d7").checked ? "sim" : "nao");
-      await guardarCfgApp("pericia_aviso_d1", document.getElementById("per-d1").checked ? "sim" : "nao");
-      await guardarCfgApp("pericia_aviso_outra", String(Math.max(0, +document.getElementById("per-outra").value||0)));
-      await guardarCfgApp("pericia_aviso_docs", document.getElementById("per-docs").value.trim());
-      aviso("Notificações salvas.");
-    }catch(err){ aviso("Não foi possível salvar: "+(err && err.message || err)); }
-    sv.disabled = false;
+        if(k==="out") await guardarCfgApp("pericia_aviso_outra", L.out ? "0" : String(Math.min(30, Math.max(2, +meio.querySelector("#n-outra").value||3))));
+        else await guardarCfgApp("pericia_aviso_"+k, L[k] ? "nao" : "sim");
+      }catch(err){ aviso("Não foi possível salvar: "+(err && err.message || err)); }
+      renderPericiasAviso(); return; }
+    const ln = t.closest(".linha"); if(ln && !t.closest("button")){ abrir(ln.dataset.id); return; }
   };
+  const no = meio.querySelector("#n-outra");
+  if(no) no.onchange = async ()=>{ const v = parseInt(no.value,10); if(!(v>=2 && v<=30) || !perLembretes().out) return renderPericiasAviso();
+    try{ await guardarCfgApp("pericia_aviso_outra", String(v)); }catch(err){ aviso("Não foi possível salvar: "+(err && err.message || err)); }
+    renderPericiasAviso(); };
 }
 function renderTabela(){
   tituloLista("▦ Tabela");
@@ -17453,6 +17694,8 @@ const ZIC = {
   proibido:'<circle cx="12" cy="12" r="8"/><path d="m6.5 6.5 11 11"/>',
   ditar:'<rect x="7" y="3" width="5" height="10" rx="2.5"/><path d="M4 10a5.5 5.5 0 0 0 11 0M9.5 16v3M16 8h5m-5 4h5m-3 4h3"/>',
   corrigir:'<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/>',
+  ideia:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+  lupa2:'<circle cx="10" cy="10" r="6"/><path d="m20 20-5.5-5.5M7.5 10h5M10 7.5v5"/>',
   emoji:'<circle cx="12" cy="12" r="8.5"/><path d="M8.5 14a4 4 0 0 0 7 0"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.4"/>',
 };
 const zic = (n, t=16) => `<svg class="zic" width="${t}" height="${t}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ZIC[n]}</svg>`;
@@ -17854,6 +18097,7 @@ function dadosDaConversaZap(c){
   const igual = !!cli && !c.contato_nome && nomeDaConversa(c)===cli.nome && !representadosDe(cli, String(c.telefone||"").replace(/\D/g,"").slice(-8)).length;
   return { sub: `             <span class="zt-fala${igual?" zt-fala-igual":""}">${clienteDaLinha(c)}</span>
              <span class="mono">${esc(foneZap(c.telefone))}</span>
+             ${zapAgendHtml(c)}
              ${advDaConversa(c)?`<span>Adv. <b>${esc(advDaConversa(c))}</b></span>`:""}
              ${c.bot_ativo&&c.bot_passo?`<span class="zt-robo" title="o passo do robô nesta conversa">Robô: <b>${esc(rotPasso(c.bot_passo))}</b>${c.bot_desde?` desde ${diaZap(c.bot_desde)} ${horaSP(c.bot_desde)}`:""}</span>`:""}
              ${at?(v=>`<span>Atendendo: <b>${esc(at.nome)}</b>${at.id!==eu.id&&v&&!v.resp?(v.viu
@@ -17979,12 +18223,16 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
          <div class="ze-sug-cab">💡 Sugestão da assistente virtual${c.sugestao_ia.urgente?" · ⚠ urgente":""} <span>· não enviada</span></div>
          <div class="ze-sug-txt">${esc(c.sugestao_ia.texto)}</div>
          <div class="ze-sug-bts"><button class="btn-rap" onclick="usarSugestaoZap()" title="Levar a sugestão ao campo de escrever para conferir e alterar">Usar<span class="sr-only"> a sugestão no campo de escrever</span></button>
-           <button class="btn-mini" onclick="descartarSugestaoZap()" title="Descartar a sugestão">Descartar<span class="sr-only"> a sugestão</span></button></div></div>`:""}
+           <button class="btn-mini" onclick="descartarSugestaoZap()" title="Descartar a sugestão">Descartar<span class="sr-only"> a sugestão</span></button>
+           <button class="btn-mini" onclick="iaSugestaoZap('outra')" title="Pedir outra sugestão, em sentido diverso desta">Outra<span class="sr-only"> sugestão</span></button>
+           <button class="btn-mini" onclick="iaSugestaoZap('aprofundar')" title="Consulta completa: anotações, andamentos, prazos, perícias, agenda e mensagens">Aprofundar<span class="sr-only"> a sugestão</span></button></div>
+         ${(c.sugestao_ia.bases||[]).length?`<div class="ze-sug-base">Baseada em: ${c.sugestao_ia.bases.map(esc).join("; ")}</div>`:""}</div>`:""}
        <div class="ze-modos" role="tablist" aria-label="Para quem é o texto">
          <button role="tab" aria-selected="${!zapNota}" class="${zapNota?"":"on"}" onclick="${zapNota?"alternarNota()":""}" title="Responder ao cliente">Responder<span class="sr-only"> ao cliente</span></button>
          <button role="tab" aria-selected="${zapNota}" class="${zapNota?"on nota":""}" id="zap-btn-nota"
            onclick="${zapNota?"":"alternarNota()"}" title="fica na conversa, o cliente não vê">Nota interna</button>
        </div>
+       ${desfazerZapHtml()}
        <div class="ze-linha">
          ${zapNota?"":`<details class="ze-mais so-cel-ze">
            <summary aria-label="Mais opções">+</summary>
@@ -18005,7 +18253,9 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
              ${zapNota?"":`<button class="zap-icone" onclick="document.getElementById('zap-arq').click()"
                title="mandar foto, PDF ou áudio" aria-label="Anexar arquivo">${zic("clipe")}</button>
              <button class="zap-icone ze-so-pc" onclick="frasesZap()" title="mensagens prontas (ou digite / no campo)" aria-label="Mensagens prontas">${zic("frases")}</button>
-             <button class="zap-icone ze-so-pc" onclick="agendarZap()" title="agendar o envio para outro dia e hora" aria-label="Agendar envio">${zic("agenda")}</button>`}
+             <button class="zap-icone ze-so-pc" onclick="agendarZap()" title="agendar o envio para outro dia e hora" aria-label="Agendar envio">${zic("agenda")}</button>
+             ${c.sugestao_ia&&c.sugestao_ia.texto?"":`<button class="zap-icone" id="zap-sugerir" onclick="iaSugestaoZap('outra')" title="pedir uma sugestão de resposta à IA, sem enviar" aria-label="Pedir sugestão de resposta">${zic("ideia")}</button>
+             <button class="zap-icone" id="zap-aprofundar" onclick="iaSugestaoZap('aprofundar')" title="sugestão com consulta completa (anotações, andamentos, prazos, perícias, agenda e mensagens), sem enviar" aria-label="Pedir sugestão aprofundada">${zic("lupa2")}</button>`}`}
            </div>
          </div>
          <button class="ze-nota-cel so-cel-ze ${zapNota?"on":""}" aria-pressed="${zapNota}" onclick="alternarNota()"
@@ -18398,8 +18648,25 @@ async function corrigirZap(){
   if(!c || zapAberta!==conv) return;
   if(c.value !== antes) return aviso("O texto mudou enquanto a IA corrigia; nada foi trocado");
   c.value = r.texto; c.dispatchEvent(new Event("input")); focarCampoZap();
-  avisoDesfazer("Texto corrigido no campo. Confira antes de enviar", () => {
-    const d = document.getElementById("zap-txt"); if(d && zapAberta===conv){ d.value = antes; d.dispatchEvent(new Event("input")); } }, 15000);
+  // F553 · o Desfazer fica acima do campo de escrever, e não no aviso que cobria o texto
+  clearTimeout(_zapDesf?.timer);
+  _zapDesf = {conv, antes, timer: setTimeout(() => { _zapDesf = null; document.querySelector(".ze-desf")?.remove(); }, 15000)};
+  pintarDesfazerZap();
+}
+let _zapDesf = null;
+function desfazerZapHtml(){
+  return _zapDesf && _zapDesf.conv===zapAberta && !zapNota ? `<p class="ze-desf" role="status">Texto corrigido pela IA. Confira antes de enviar.
+    <button class="btn-mini" onclick="desfazerCorrecaoZap()" title="Voltar ao texto de antes da correção">Desfazer<span class="sr-only"> a correção</span></button></p>` : "";
+}
+function pintarDesfazerZap(){
+  document.querySelector(".ze-desf")?.remove();
+  const l = document.getElementById("zap-txt")?.closest(".ze-linha"), h = desfazerZapHtml();
+  if(l && h) l.insertAdjacentHTML("beforebegin", h);
+}
+function desfazerCorrecaoZap(){
+  const f = _zapDesf; if(!f) return;
+  clearTimeout(f.timer); _zapDesf = null; document.querySelector(".ze-desf")?.remove();
+  const d = document.getElementById("zap-txt"); if(d && zapAberta===f.conv){ d.value = f.antes; d.dispatchEvent(new Event("input")); focarCampoZap(); }
 }
 function emojiZap(e, campo){
   const t = document.getElementById(campo||"zap-txt"); if(!t) return;
@@ -18429,6 +18696,7 @@ function bolhaZap(m, cli, seguida){
     : m.midia_url
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${m.tipo==="audio"?"🎤 ":""}${esc(m.texto)}</div>`:"")
+    : m.tipo==="contato" ? contatoZap(m.texto)
     : m.texto ? textoZap(m.texto) : esc(`[${m.tipo}]`);
   // F332 · apagada no WhatsApp: a equipe continua vendo o que foi escrito, riscado
   const apag = m.apagada_em ? `<div class="zap-apag">${zic("proibido",13)}${m.direcao==="entrada"?"O cliente apagou esta mensagem":m.alterar&&m.alterar.acao==="apagar"?`Apagada por ${esc((D.colPorId.get(m.alterar.por)||{}).nome||"escritório")}`:"Apagada no celular"} em ${diaZap(m.apagada_em)}, ${horaSP(m.apagada_em)}</div>` : "";
@@ -18471,6 +18739,36 @@ function bolhaZap(m, cli, seguida){
          title="a IA diz que documento é e a qual caso vai; você confere e junta"><span aria-hidden="true">✨ Juntar</span><span class="sr-only">✨ juntar ao caso</span></button>`:""}
     </div></div>`
     + (reac.length?`<span class="zap-reac ${m.direcao==="saida"?"saida":""}" title="${esc(reac.map(r=>(r.de==="cliente"?"cliente":"escritório")+" "+r.emoji).join(" · "))}">${reac.map(r=>esc(r.emoji)).join("")}</span>`:"");
+}
+// F555 · cartão de contato recebido: a ponte grava "👤 Nome · 5516…" (uma linha por contato); daqui se conversa, salva, copia e liga
+function contatoZap(txt){
+  const linhas = String(txt||"").split("\n").filter(l=>l.trim());
+  if(!linhas.length) return esc("[contato]");
+  return linhas.map(l=>{
+    const [nome, ...nums] = l.replace(/^👤\s*/,"").split(" · ");
+    const num = (nums[0]||"").replace(/\D/g,"");
+    if(!num) return `<div class="zap-ct"><b>👤 ${esc(nome||"Contato")}</b><span class="meio-sub">Número não veio; veja no celular.</span></div>`;
+    const ficha = clientesDoTelefone(num)[0];
+    return `<div class="zap-ct" data-ct-num="${num}" data-ct-nome="${esc(nome||"")}">
+      <b>👤 ${esc(nome||"Contato")}</b><span>${esc(foneZap(num))}${ficha?` · ficha de ${esc(ficha.nome)}`:""}</span>
+      <span class="zap-ct-bts">
+        <button class="btn-mini" onclick="contatoAcao(this,'conv')" title="Conversar com este número no WhatsApp do CRM">Conversar</button>
+        <button class="btn-mini" onclick="contatoAcao(this,'salvar')" title="${ficha?"Abrir a ficha deste número":"Salvar: cadastrar como cliente ou abrir conversa"}">${ficha?"Ficha":"Salvar"}</button>
+        <button class="btn-mini" onclick="contatoAcao(this,'copiar')" title="Copiar o número">Copiar</button>
+        <a class="btn-mini" href="tel:+${num}" title="Ligar para este número">Ligar</a>
+      </span></div>`;
+  }).join("");
+}
+function contatoAcao(bt, acao){
+  const ct = bt.closest(".zap-ct"), num = ct.dataset.ctNum, nome = ct.dataset.ctNome;
+  if(acao==="conv") return zapDoNumero(num);
+  if(acao==="copiar") return navigator.clipboard.writeText(foneZap(num)).then(()=>aviso("Número copiado"), ()=>aviso("Não foi possível copiar", true));
+  const ficha = clientesDoTelefone(num);
+  if(ficha.length===1) return fichaComZap(ficha[0].id);
+  novoContatoZap();   // reaproveita a conferência do ＋: ficha existente, Conversar ou Cliente
+  document.getElementById("znc-tel").value = "+"+num;   // com o 55 inteiro: o número formatado perde o DDI na conferência
+  document.getElementById("znc-nome").value = nome;
+  conferirContatoZap();
 }
 // F332 · rascunho por conversa, só neste navegador (localStorage pode faltar: segue sem)
 function rascZap(){ try{ return JSON.parse(localStorage.getItem("crm_zap_rasc")||"{}"); }catch(e){ return {}; } }
@@ -18553,6 +18851,36 @@ async function descartarSugestaoZap(fica){
   catch(e){ c.sugestao_ia = ant; aviso(msgErro(e)); }
   if(!fica) pintarConversaGuardando();
 }
+// F563 · Outra (sugestão em sentido diverso) e Aprofundar (consulta completa, só no clique). Nada é enviado.
+function iaSugestaoZap(acao){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  const fundo = acao==="aprofundar";
+  caixa(`<strong>${fundo?"Aprofundar a sugestão":"Outra sugestão"}</strong>
+    <p class="meio-sub">${fundo?"A IA consulta as anotações, os andamentos do INSS, do CRPS e do Judicial, os prazos, as perícias, a agenda e as mensagens. Leva mais tempo.":"A IA escreve outra resposta, sem repetir a sugestão atual."} Nada é enviado ao cliente.</p>
+    <label style="display:block">Orientação (opcional)<textarea id="ia-orient" rows="2" style="width:100%" placeholder="Ex.: mais curta, explicar a perícia"></textarea></label>
+    <div class="form-linha" style="margin-top:8px"><button class="btn-rap" onclick="pedirSugestaoZap('${fundo?"aprofundar":"outra"}')">Pedir<span class="sr-only"> a sugestão</span></button></div>`);
+  setTimeout(()=>document.getElementById("ia-orient")?.focus(), 30);
+}
+async function pedirSugestaoZap(acao){
+  const conv = zapAberta, c = zapConvs.find(x=>x.id===conv); if(!c) return;
+  const orientacao = (document.getElementById("ia-orient")?.value || "").trim(); fecharCaixa();
+  const corpo = {acao, conversa_id: conv, anterior: c.sugestao_ia?.texto || "", orientacao};
+  const cli = clienteDaConversa(c);
+  if(acao==="aprofundar" && cli){
+    try{ const a = atendimentosDe({id: cli.id, nome: cli.nome});
+      if(a && !a.carregando) corpo.agenda = [...(a.fut||[]).map(e=>"agendado: "+linhaAtendTxt(e)), ...(a.ant||[]).slice(0,3).map(e=>"já veio: "+linhaAtendTxt(e))]; }catch(e){}
+    try{ corpo.prazos = prazosDoCliente(cli.id).lista.filter(x=>x.data>=hoje()).slice(0,8).map(x=>`${dataBR(x.data)}: ${tituloDaLinha(x)}`); }catch(e){}
+  }
+  aviso(acao==="aprofundar" ? "Consultando o caso para a sugestão…" : "Pedindo outra sugestão…", false);
+  let r; try{ r = await api("/functions/v1/zap_assistente",{method:"POST", body:JSON.stringify(corpo)}); }
+  catch(e){ r = {erro: msgErro(e)}; }
+  if(!r || !r.texto) return aviso("A IA não sugeriu: " + ((r&&r.erro) || "sem resposta"));
+  const sug = {texto: r.texto, em: new Date().toISOString(), urgente: false, modo: acao, bases: r.bases || []};
+  try{ await api(`/rest/v1/zap_conversas?id=eq.${conv}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({sugestao_ia:sug})}); }
+  catch(e){ return aviso(msgErro(e)); }
+  c.sugestao_ia = sug; aviso("Sugestão pronta acima do campo de escrever");
+  if(zapAberta===conv) pintarConversaGuardando();
+}
 function usarSugestaoZap(){
   const c = zapConvs.find(x=>x.id===zapAberta); if(!c || !c.sugestao_ia) return;
   const txt = c.sugestao_ia.texto;
@@ -18566,6 +18894,7 @@ async function enviarZap(){
   const conv = zapAberta;   // F517 · a conversa do início vale até o fim, mesmo que a tela mude durante a gravação
   if(!txt || !conv) return;
   if(!zapNota && barraAssumir(zapConvs.find(x=>x.id===conv))) return;
+  if(_zapDesf){ clearTimeout(_zapDesf.timer); _zapDesf = null; document.querySelector(".ze-desf")?.remove(); }
   if(!zapNota && /\{[a-z_]+\}/.test(txt)){ travaZap(); return aviso("Há dado do caso sem preencher na mensagem"); }
   t.value=""; t.style.height="auto"; guardarRascZap(conv, "");
   // nota interna nasce com direcao E status 'interna' — o banco recusa
@@ -46108,7 +46437,7 @@ function expedientesDe(k, dig){
     .map(([, v])=>v).sort((a,b)=>String(a.grau).localeCompare(String(b.grau)));
 }
 const dtExp = s => s ? `${fmt(String(s).slice(0,10))}${String(s).length>10?" "+String(s).slice(11,16):""}` : "";
-function tabelaExpedientes(v){
+function tabelaExpedientes(v, k, dig){
   const lin = e => `<tr${e.fechado?"":` class="exp-aberto"`}>
     <td><b>${esc(e.ato||"")}</b>${e.expediente_id?` <span class="meio-sub">(${esc(e.expediente_id)})</span>`:""}${e.prioridade?` <span class="meio-sub">· Prioridade: ${esc(e.prioridade)}</span>`:""}
       ${e.destinatario?`<div>${esc(e.destinatario)}</div>`:""}
@@ -46116,18 +46445,31 @@ function tabelaExpedientes(v){
       ${e.ciencia_em?`<div class="meio-sub">O sistema registrou ciência em ${dtExp(e.ciencia_em)}</div>`:""}
       ${e.prazo_dias?`<div class="meio-sub">Prazo: ${e.prazo_dias} dias</div>`:""}</td>
     <td>${e.limite?`${dtExp(e.limite)}${e.limite_para?`<div class="meio-sub">(${esc(e.limite_para)})</div>`:""}`:esc(e.limite_txt||"")}</td>
-    <td>${e.ver&&v.host?`<a class="btn-mini" href="${urlOk(/^https?:/.test(e.ver) ? e.ver : `https://${v.host}${e.ver}`)}" target="_blank" rel="noopener" title="visualizar o ato no PJe (pede o login)">Ver</a>`:""}</td>
+    <td>${e.documento_id&&k?`<button type="button" class="btn-mini" onclick="verExpediente('${k.id}','${esc(dig)}','${esc(String(e.documento_id).replace(/\D/g,""))}')" title="Abrir a peça ${esc(e.documento_id)} no CRM"><span aria-hidden="true">Ver</span><span class="sr-only">Abrir a peça ${esc(e.documento_id)} no CRM</span></button>`:""}</td>
     <td>${e.fechado?"SIM":"<b>NÃO</b>"}</td></tr>`;
   return `<table class="exp-tab"><thead><tr><th>Ato de comunicação</th><th>Data limite prevista para ciência ou manifestação</th><th>Ações</th><th>Fechado</th></tr></thead>
     <tbody>${(v.itens||[]).map(lin).join("")||`<tr><td colspan="4" class="meio-sub">Nenhum expediente.</td></tr>`}</tbody></table>
     <p class="meio-sub">${(v.itens||[]).length} resultado${(v.itens||[]).length===1?"":"s"} encontrado${(v.itens||[]).length===1?"":"s"} · lido em ${dtExp(String(v.em||"").slice(0,16))}</p>`;
+}
+// F559 · o Ver do expediente abre a peça já guardada no CRM (pje/<processo>/<ID do documento>),
+// no leitor do processo inteiro, e não o PJe (pedido do Paulo, 12.11.2026)
+function verExpediente(casoId, dig, docId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const i = processosDaFase(k, "cnj").findIndex(x=>x.d===dig), x = processosDaFase(k, "cnj")[i];
+  const docs = x ? docsLegiveis(k, x) : [];
+  const alvo = docs.find(d=>String(d.caminho||"").split("/").pop()===docId);
+  fecharCaixa();
+  if(alvo) return abrirProcessoInteiro(casoId, docs, alvo.caminho, `${ROT_FASE.cnj} · ${x.id}`, "cnj");
+  caixa(`<div class="adr-modal" role="dialog" aria-label="Peça não importada"><h3>Peça ${esc(docId)} não está no CRM</h3>
+    <p>O documento deste expediente ainda não foi importado. A próxima leitura do processo pela extensão o traz.</p>
+    <div class="adr-modal-bts">${docs.length?`<button type="button" class="adr-bt pri" onclick="fecharCaixa();lerProcesso('${k.id}','cnj',${i})" title="Ler o processo inteiro"><span aria-hidden="true">Ler</span><span class="sr-only">Ler o processo inteiro</span></button>`:""}<button type="button" class="adr-bt" onclick="fecharCaixa()">Fechar</button></div></div>`);
 }
 function telaExpedientes(casoId, i){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const x = processosDaFase(k, "cnj")[i]; if(!x) return;
   const vs = expedientesDe(k, x.d);
   caixa(`<div class="adr-modal proc-tela exp-tela" role="dialog" aria-label="Expedientes de ${esc(x.id)}">
-    <h3>Expedientes · ${esc(x.id)}</h3>${vs.map(v=>`${vs.length>1?`<h4>${esc(v.grau||"")}</h4>`:""}${tabelaExpedientes(v)}`).join("")}
+    <h3>Expedientes · ${esc(x.id)}</h3>${vs.map(v=>`${vs.length>1?`<h4>${esc(v.grau||"")}</h4>`:""}${tabelaExpedientes(v, k, x.d)}`).join("")}
     <div class="adr-modal-bts"><button type="button" class="adr-bt" onclick="fecharCaixa()">Fechar</button></div></div>`);
 }
 function claudeDoProcesso(casoId, aba, i){
@@ -53314,6 +53656,7 @@ function fichaIdentificacao(c, creds){
         ${cadCampoEndereco(c)}
       </section>
       ${caixaAposCadastro(c)}
+      ${caixaAtendimentos(c)}
       ${caixaNotasTodo(c)}
       ${caixaTranscricoes(c)}
       ${caixaQualidade(c)}
@@ -58513,8 +58856,11 @@ function pesquisarAgenda(){
     try{
       const r = (await agendaApi("historico", {q})).atendimentos || [];
       if(inp.value.trim()!==q) return;
-      ant.innerHTML = `<h4>Atendimentos anteriores</h4>` + (r.length ? `<ul class="aq-pq-lista">${r.map(e=>`<li><span class="aq-pq-it"><i class="aq-bola p-${e.profissional||"paulo"}"></i>
-        <b>${esc(nomeDoEvento(e))}</b><span>${diaExt(e.data)}, ${dataBR(e.data)} às ${hmTxt(e.inicio)} · ${esc(nomeProf(e.profissional||"paulo"))} · ${esc(e.tipo||"")}</span></span></li>`).join("")}</ul>`
+      // F554 · o atendimento de quem tem ficha abre a ficha
+      ant.innerHTML = `<h4>Atendimentos anteriores</h4>` + (r.length ? `<ul class="aq-pq-lista">${r.map(e=>{ const cli = cliDoEvento(e);
+        const miolo = `<i class="aq-bola p-${e.profissional||"paulo"}"></i>
+        <b>${esc(nomeDoEvento(e))}</b><span>${diaExt(e.data)}, ${dataBR(e.data)} às ${hmTxt(e.inicio)} · ${esc(nomeProf(e.profissional||"paulo"))} · ${esc(e.tipo||"")}${cli?" · abrir a ficha":""}</span>`;
+        return `<li>${cli ? `<button class="aq-pq-ficha" onclick="fecharCaixa();abrirFicha('${cli.id}')" title="Abrir a ficha de ${esc(cli.nome)}">${miolo}</button>` : `<span class="aq-pq-it">${miolo}</span>`}</li>`; }).join("")}</ul>`
         : `<p class="aq-vazio">Nenhum atendimento anterior encontrado.</p>`);
     }catch(e){
       if(inp.value.trim()!==q) return;
@@ -58547,6 +58893,95 @@ function irAoAtendimento(e){
   const b = document.querySelector(`[data-aqev="${CSS.escape(e.id)}"]`);
   if(b){ b.scrollIntoView({block:"center"}); b.classList.add("aq-achado"); b.focus({preventScroll:true}); setTimeout(()=>b.classList.remove("aq-achado"), 2500); }
 }
+// F554 · os atendimentos presenciais da pessoa: os próximos (agendamentosFuturos e a agenda já carregada) e os
+// anteriores (historico do Apps Script, 5 anos); um pedido por pessoa a cada 10 minutos, guardado na sessão.
+// o = {id, nome, tel}: com ficha vale o clienteId do evento ou o nome; sem ficha, o telefone (os próximos) e o nome.
+const _atendCli = new Map();
+const chaveAtend = o => o.id ? "c:"+o.id : o.tel ? "t:"+String(o.tel).replace(/\D/g,"").slice(-8) : "n:"+semAcento(o.nome||"").toLowerCase().trim();
+const palavrasNome = n => semAcento(n||"").toLowerCase().split(/\s+/).filter(p=>p.length>2 && !["das","dos"].includes(p));
+function eventoDaPessoa(e, o){
+  if(o.id && e.clienteId) return e.clienteId===o.id;
+  const t8 = String(o.tel||"").replace(/\D/g,"").slice(-8);
+  if(!o.id && t8.length===8 && String(e.telefone||"").replace(/\D/g,"").endsWith(t8)) return true;
+  const pal = palavrasNome(o.nome); if(pal.length<2) return false;
+  const n = semAcento(nomeDoEvento(e)).toLowerCase();
+  return n.includes(pal[0]) && n.includes(pal[pal.length-1]);
+}
+function atendimentosDe(o){
+  const k = chaveAtend(o), m = _atendCli.get(k);
+  if(m && (m.carregando || Date.now()-m.em < 600000)) return m;
+  const novo = {o, k, carregando:true, em:Date.now(), fut:[], ant:[], erro:null};
+  _atendCli.set(k, novo);
+  let tel = String(o.tel||"").replace(/\D/g,""); if(tel.length>11 && tel.startsWith("55")) tel = tel.slice(2);
+  const pal = palavrasNome(o.nome), q = pal.length>=2 ? pal[0]+" "+pal[pal.length-1] : "";
+  const pFut = (o.id || tel.length>=10) ? agendaApi("agendamentosFuturos", o.id ? {clienteId:o.id} : {telefone:tel}).then(r=>r.agendamentos||[]).catch(()=>[]) : Promise.resolve([]);
+  const pAnt = q ? agendaApi("historico", {q}).then(r=>r.atendimentos||[]).catch(e=>{ novo.erro = e.codigo==="ACAO_INVALIDA" ? "antiga" : "falha"; return []; }) : Promise.resolve([]);
+  Promise.all([pFut, pAnt]).then(([fut, ant])=>{
+    const h = hoje(), vistos = new Set(), unico = e => !vistos.has(e.id) && vistos.add(e.id);
+    const daAgenda = PROFS_AGENDA.flatMap(pr=>((agq.cache[pr]||{}).dias||[]).flatMap(d=>(d.eventos||[])
+      .filter(e=>e.atendimento).map(e=>({...e, data:e.data||d.data, profissional:e.profissional||pr}))));
+    novo.fut = fut.filter(e=>e.atendimento!==false && e.data>=h).concat(daAgenda.filter(e=>e.data>=h && eventoDaPessoa(e, o)))
+      .filter(unico).sort((a,b)=>(a.data+a.inicio).localeCompare(b.data+b.inicio));
+    novo.ant = ant.filter(e=>e.data<=h && eventoDaPessoa(e, o)).filter(unico).sort((a,b)=>(b.data+b.inicio).localeCompare(a.data+a.inicio));
+    novo.carregando = false; novo.em = Date.now();
+    document.querySelectorAll("[data-atend]").forEach(el=>{ if(el.dataset.atend===k) el.outerHTML = htmlAtend(novo, el.dataset.modo); });
+  });
+  return novo;
+}
+// a ficha do atendimento: o clienteId do evento ou, sem ele, o cliente de nome igual ao do evento
+const cliDoEvento = e => (e.clienteId && D.cliPorId.get(e.clienteId)) || (D.clientes||[]).find(c=>c.nome && ehClienteDaLista(c) && semAcento(c.nome).toLowerCase()===semAcento(nomeDoEvento(e)).toLowerCase().trim());
+const linhaAtendTxt = e => `${diaExt(e.data)}, ${dataBR(e.data)} às ${hmTxt(e.inicio)} · ${nomeProf(e.profissional||"paulo")}${e.tipo?` · ${e.tipo}`:""}`;
+function htmlAtend(m, modo){
+  const k = esc(m.k), fut = m.fut, ant = m.ant;
+  if(modo==="zap"){
+    const e = fut[0];
+    return `<span class="zt-agend${e?"":" vazio"}" data-atend="${k}" data-modo="zap"${e?` title="${esc(linhaAtendTxt(e))}${e.confirmado?" · confirmado":""}${fut.length>1?` · e mais ${fut.length-1}`:""}"`:""}>${e
+      ? `Agendado: <b>${dataBR(e.data).slice(0,5)} às ${hmTxt(e.inicio)}</b> · ${esc(nomeProf(e.profissional||"paulo"))}${fut.length>1?` (+${fut.length-1})`:""}` : ""}</span>`;
+  }
+  if(modo==="aq"){   // o agendamento do primeiro atendimento (001) de quem já veio antes
+    const e = ant[0]; if(!e) return `<div data-atend="${k}" data-modo="aq"></div>`;
+    const cli = cliDoEvento(e);
+    return `<div class="aq-msg aq-ja" role="status" data-atend="${k}" data-modo="aq">Já atendido em ${dataBR(e.data)} com ${esc(nomeProf(e.profissional||"paulo"))}${ant.length>1?` (${ant.length} atendimentos)`:""}.
+      ${cli ? `Se for ${esc(cli.nome)}, o atendimento é de cliente (002). <button class="btn-mini" onclick="aqEhCliente('${cli.id}')" title="Agendar como cliente do escritório (002)"><span aria-hidden="true">Cliente</span><span class="sr-only">Agendar como cliente do escritório (002)</span></button>`
+        : `Se for a mesma pessoa, cadastre a ficha para agendar como cliente (002).`}</div>`;
+  }
+  if(modo==="per" || modo==="perprev"){   // F562 · a tela Perícias: o atendimento presencial já agendado do cliente
+    const e = fut[0];
+    if(!e) return `<div class="${modo==="per"?"l4":"aviso"}" data-atend="${k}" data-modo="${modo}" hidden></div>`;
+    const txt = `${dataBR(e.data)} às ${hmTxt(e.inicio)} com ${esc(nomeProf(e.profissional||"paulo"))}${e.confirmado?", confirmado":""}${fut.length>1?` (e mais ${fut.length-1})`:""}`;
+    return modo==="per"
+      ? `<div class="l4 ja-at" data-atend="${k}" data-modo="per" title="${esc(linhaAtendTxt(e))}">Atendimento presencial já agendado: <b>${txt}</b>.</div>`
+      : `<div class="aviso forte ja-at" data-atend="${k}" data-modo="perprev">O cliente já tem atendimento presencial agendado: <b>${txt}</b>. Se ele já está orientado, ligue <b>Já orientado</b> para enviar apenas os lembretes.</div>`;
+  }
+  if(modo==="aqcli"){
+    const e = ant[0];
+    return `<p class="meio-sub" data-atend="${k}" data-modo="aqcli">${e ? `Último atendimento: ${esc(linhaAtendTxt(e))}.` : ""}</p>`;
+  }
+  const li = (e, fut) => `<li class="ac-it"><b>${dataBR(e.data)} às ${hmTxt(e.inicio)}</b><span class="ac-data">${esc(nomeProf(e.profissional||"paulo"))}</span>
+      ${fut ? `<button class="btn-mini" onclick='verAtendAgenda(${esc(JSON.stringify({id:e.id, data:e.data, profissional:e.profissional||"paulo"}))})' title="Abrir o dia na Agenda"><span aria-hidden="true">Agenda</span><span class="sr-only">Abrir o dia na Agenda</span></button>` : "<span></span>"}
+      <small>${diaExt(e.data)}${e.tipo?` · ${e.tipo==="001"?"primeiro atendimento":"cliente"} (${e.tipo})`:""}${fut ? ` · ${e.confirmado?"confirmado":"não confirmado"}` : ""}</small></li>`;
+  return `<section class="idf-card idf-atend" aria-labelledby="idf-atend" data-atend="${k}" data-modo="idf"><h3 class="adr-h" id="idf-atend">Atendimentos presenciais${!m.carregando?` (${fut.length+ant.length})`:""}</h3>
+    ${m.carregando ? `<p class="meio-sub">Consultando a agenda…</p>` : `
+    <h4>Próximos</h4>${fut.length ? `<ul class="ac-lista">${fut.map(e=>li(e, true)).join("")}</ul>` : `<p class="meio-sub">Nenhum atendimento agendado.</p>`}
+    <h4>Anteriores</h4>${ant.length ? `<ul class="ac-lista">${ant.slice(0,12).map(e=>li(e, false)).join("")}</ul>${ant.length>12?`<p class="meio-sub">e mais ${ant.length-12}.</p>`:""}`
+      : `<p class="meio-sub">${m.erro==="antiga" ? "A agenda do Google ainda está na versão antiga: falta publicar a versão nova do Apps Script." : m.erro ? "Não consegui ler os atendimentos anteriores." : "Nenhum atendimento anterior nos últimos 5 anos."}</p>`}`}
+  </section>`;
+}
+const caixaAtendimentos = c => htmlAtend(atendimentosDe({id:c.id, nome:c.nome}), "idf");
+function zapAgendHtml(c){
+  const cli = clienteDaConversa(c);
+  if(!cli && !c.telefone) return "";
+  return htmlAtend(atendimentosDe(cli ? {id:cli.id, nome:cli.nome} : {tel:c.telefone, nome:c.contato_nome||""}), "zap");
+}
+function aqEhCliente(id){
+  const f = fluxo, c = D.cliPorId.get(id); if(!f || !c) return;
+  f.cli=c; f.novo=false; f.tipo=(f.vaga&&f.vaga.tipo)||"002"; f.nome=c.nome; f.tel=(c.telefone||"").replace(/\D/g,"") || f.tel; f.corrigir=false; f.msg=""; pintarFluxo();
+}
+async function verAtendAgenda(e){
+  if(clienteAberto) fecharFicha();
+  if(!agq.cache[e.profissional]) await carregarAgenda(e.profissional).catch(()=>{});
+  irAoAtendimento(e);
+}
 function pintarAgenda(){
   const alvo = document.getElementById("conteudo-meio");
   if(agq.erro && !agq.disp){
@@ -58577,7 +59012,9 @@ function pintarAgenda(){
 // F250 · A VAGA DO GOOGLE AGENDA. O escritório deixa no Google Agenda os horários disponíveis com o título do tipo
 // ("001", 45 minutos, ou "002", 30 minutos) e quem agenda troca esse título pelo nome do cliente. O Apps Script
 // devolve essas vagas em livres[tipo] com vaga:true e o eventoId; agendar nelas troca o título do mesmo evento.
-const vagasDoDia = d => d && !d.bloqueado ? ["001", "002"].flatMap(t=>(d.livres[t]||[]).filter(s=>s.vaga).map(s=>({...s, tipo:s.tipo||t})))
+// F557: a vaga cujo horário já passou não é livre (a agenda carregada de manhã seguia oferecendo as das 9h às 10h43)
+const vagaPassou = (data, inicio) => data < hoje() || (data===hoje() && hmMin(inicio) <= new Date().getHours()*60 + new Date().getMinutes());
+const vagasDoDia = d => d && !d.bloqueado ? ["001", "002"].flatMap(t=>(d.livres[t]||[]).filter(s=>s.vaga && !vagaPassou(d.data, s.inicio)).map(s=>({...s, tipo:s.tipo||t})))
   .sort((a, b)=>hmMin(a.inicio)-hmMin(b.inicio)) : [];
 // com vagas no dia, valem elas (dos dois tipos); sem vagas, os horários calculados do tipo escolhido, como antes
 const livresDoDia = (d, tipo) => { const v = vagasDoDia(d); return v.length ? v : (d && d.livres[tipo]) || []; };
@@ -58850,6 +59287,7 @@ function linhaDoTempoAgenda(dia, r){
   const bloco = e => {
     const por = autoriaAgenda(e);
     const top = Math.max(0,y(e.inicio)), h = Math.max(AQ_PX-2, y(e.fim)-Math.max(0,y(e.inicio))-2);
+    if(e.vaga && vagaPassou(dia.data, e.inicio)) return `<div class="aq-ev outro" style="top:${top}px;height:${h}px;left:calc(${e._raia}*100%/${nR});width:calc(100%/${nR} - 4px)" title="vaga não usada · ${e.inicio} às ${e.fim} · o horário já passou"><span class="aq-ev-h">${e.inicio}–${e.fim}</span><b>Horário passado</b></div>`;
     if(e.vaga) return `<button class="aq-ev aq-ev-vaga p-${e.profissional||(agq.prof==="todos"?"paulo":agq.prof)} t${e.tipo}" data-aqvaga="${esc(e.id)}" style="top:${top}px;height:${h}px;left:calc(${e._raia}*100%/${nR});width:calc(100%/${nR} - 4px)"
       title="vaga livre ${esc(e.tipoFixo===false?"":e.tipo||"")} · ${e.inicio} às ${e.fim} · clique para agendar${por.longa?" · "+esc(por.longa):""}"><span class="aq-ev-h">${e.inicio}–${e.fim}${e.tipoFixo===false?"":` · ${esc(e.tipo||"")}`}</span><b>Livre · agendar</b>${por.curta?`<span class="aq-ev-por">${esc(por.curta)}</span>`:""}</button>`;
     // a cor é do profissional; compromisso que não é atendimento fica cinza
@@ -59104,9 +59542,11 @@ function pintarFluxo(){
         <label class="aq-campo">Nome completo<input id="aq-nome" class="aq-inp" value="${esc(f.nome)}"></label>
         <label class="aq-campo">Telefone com DDD<input id="aq-tel" class="aq-inp" inputmode="tel" placeholder="(16) 99999-9999" value="${esc(fmtTelBR(f.tel))}"></label>
         <div id="aq-tel-de">${telJaCadastrado(f)}</div>
+        <div id="aq-ja">${htmlAtend(atendimentosDe({nome:f.nome}), "aq")}</div>
         <div class="aq-bts"><button class="btn-rap" data-aqvolta="1">Voltar</button><button class="btn-rap forte" id="aq-seg2">${clientesDoTelefone(f.tel).length?"É outra pessoa, continuar":"Continuar"}</button></div>`
       : `<h3>${esc(f.cli.nome)} <span class="aq-tipo">002 · 30 minutos</span> <button class="btn-mini" id="aq-trocar" title="Agendar para outra pessoa">Trocar<span class="sr-only"> a pessoa a ser atendida</span></button></h3>
         <p class="meio-sub">Cliente do escritório. Confira o telefone antes de seguir.</p>
+        ${htmlAtend(atendimentosDe({id:f.cli.id, nome:f.cli.nome}), "aqcli")}
         ${f.corrigir||!f.tel ? `<label class="aq-campo">${f.tel?"Telefone com DDD":"Sem telefone no cadastro. Informe o telefone com DDD, que ele fica gravado no cliente"}<input id="aq-tel" class="aq-inp" inputmode="tel" placeholder="(16) 99999-9999" value="${esc(fmtTelBR(f.tel))}"></label>`
           : `<p class="aq-tel-atual">${esc(fmtTelBR(f.tel))}</p>`}
         <div class="aq-bts"><button class="btn-rap" data-aqvolta="1">Voltar</button>
@@ -59187,6 +59627,9 @@ function ligarFluxo(){
     if(f.novo){ f.tel = tel.value.replace(/\D/g,""); const box = $("aq-tel-de"); if(box){ box.innerHTML = telJaCadastrado(f); ligarTelJa(f); }
       const seg = $("aq-seg2"); if(seg) seg.textContent = clientesDoTelefone(f.tel).length ? "É outra pessoa, continuar" : "Continuar"; } };
   ligarTelJa(f);
+  // F554 · quem já veio antes: o aviso segue o nome digitado
+  const nomeAq = $("aq-nome"); if(nomeAq) nomeAq.onchange = () => { f.nome = nomeAq.value.replace(/\s+/g," ").trim();
+    const box = $("aq-ja"); if(box) box.innerHTML = htmlAtend(atendimentosDe({nome:f.nome}), "aq"); };
   on("aq-corrigir", ()=>{ f.corrigir=true; pintarFluxo(); });
   // F477 · a agenda aberta pela conversa já traz o cliente dela; quem escreve pode pedir por outra pessoa
   on("aq-trocar", ()=>{ f.cli=null; f.novo=false; f.nome=""; f.busca=""; f.corrigir=false; f.etapa=1; f.msg=""; pintarFluxo(); });
