@@ -46,6 +46,7 @@ do $$ begin
   perform pg_temp.ok('1º aviso sai uma vez', pg_temp.msgs(':primeiro') = 1);
   perform pg_temp.ok('1º aviso cita a Dra. Amanda e o local',
     (select texto like '%a Dra. Amanda%' and texto like '%APS Teste%' and texto like 'Boa tarde, Cliente.%'
+       and texto not like '%INSS agendou%' and texto not like '%Aqui é do escritório%' and texto like '%Qual horário fica melhor?%'
        from zap_mensagens where aviso_chave like '%:primeiro'));
   perform pg_temp.ok('conversa marcada aguardando',
     (select pericia->>'estado' from zap_conversas where id = '00000000-0000-0000-0000-0000000000e1') = 'aguardando');
@@ -109,6 +110,16 @@ end $$;
 select pericia_ligar('00000000-0000-0000-0000-0000000000b1', false);
 select pg_temp.ok('Desligar limpa a conversa',
   (select pericia from zap_conversas where id = '00000000-0000-0000-0000-0000000000e1') is null);
+-- 12. F559: cliente já orientado recebe apenas os lembretes, sem o 1º aviso
+insert into eventos (id, caso_id, tipo, data_hora, local, status)
+select '00000000-0000-0000-0000-0000000000b2', '00000000-0000-0000-0000-0000000000d1', 'Perícia',
+       ((current_date + 40)::timestamp + time '14:00') at time zone 'America/Sao_Paulo', 'Fórum Teste', 'agendada';
+select pericia_so_lembretes('00000000-0000-0000-0000-0000000000b2', true);
+select pericia_ligar('00000000-0000-0000-0000-0000000000b2', true, 'paulo');
+select pericia_avisos_vez('tarde');
+select pg_temp.ok('Já orientado: sem 1º aviso',
+  (select so_lembretes from pericia_avisos where evento_id = '00000000-0000-0000-0000-0000000000b2')
+  and not exists (select 1 from zap_mensagens where aviso_chave like 'pericia:00000000-0000-0000-0000-0000000000b2:primeiro'));
 select pg_temp.ok('anon não executa a rodada', not has_function_privilege('anon', 'pericia_avisos_vez(text)', 'execute'));
 
 \set QUIET off
