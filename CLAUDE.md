@@ -726,6 +726,8 @@ A **F555** (13.62, pedido do Paulo de 12.11.2026): o contato que o cliente envia
 
 A **F559** (13.66, pedido do Paulo de 12.11.2026): o **Ver** da tabela Expedientes (no cartão do PJe do Dashboard do caso e em `telaExpedientes`) deixou de abrir o PJe e abre a peça já guardada no CRM pelo ID do documento (`verExpediente`: o documento do processo cujo caminho termina no `documento_id`, `pje/<processo>/<id>`, no leitor do processo inteiro da F289). Sem a peça importada, a janela diz que ela não está no CRM e oferece **Ler** o processo; nada vai ao PJe. Teste: `f418.js`.
 
+A **F560** (pedido do Paulo de 12.11.2026, um atendimento de urgência agendado fora do dia de atendimento): o `disponibilidade` do `Code.gs` devolvia apenas os dias programados (`proximosDias_`), e o atendimento agendado em outro dia (pelo "outro horário" da F309 ou direto no Google) não aparecia na agenda de ninguém. Agora `disponibilidade_` lê todos os dias do período até o último dia programado e inclui também o dia com atendimento do profissional (`ehAtendimento_`, `contaPara_`), marcado `foraDoPrograma`, sem vagas livres; vale para todos os profissionais e para toda a equipe. Publicado pelo `agenda-deploy.yml`, sem mudança no CRM. Teste: `f309.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
