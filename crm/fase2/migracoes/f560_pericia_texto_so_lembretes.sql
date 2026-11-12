@@ -1,4 +1,4 @@
--- F559 · a primeira mensagem da perícia e o "apenas lembretes" (pedidos do Paulo de 12.11.2026)
+-- F560 · a primeira mensagem da perícia e o "apenas lembretes" (pedidos do Paulo de 12.11.2026)
 -- 1) A primeira mensagem diz só dia, hora e local (a perícia pode ser judicial: nada de "o INSS agendou"),
 --    sem "Aqui é do escritório", e já propõe o dia do atendimento presencial, em vez de perguntar se quer.
 -- 2) O cliente já orientado recebe apenas os lembretes (D-7, D-1, Outra): sem 1º aviso e sem repetição.
