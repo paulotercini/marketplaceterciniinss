@@ -110,7 +110,7 @@ end $$;
 select pericia_ligar('00000000-0000-0000-0000-0000000000b1', false);
 select pg_temp.ok('Desligar limpa a conversa',
   (select pericia from zap_conversas where id = '00000000-0000-0000-0000-0000000000e1') is null);
--- 12. F559: cliente já orientado recebe apenas os lembretes, sem o 1º aviso
+-- 12. F560: cliente já orientado recebe apenas os lembretes, sem o 1º aviso
 insert into eventos (id, caso_id, tipo, data_hora, local, status)
 select '00000000-0000-0000-0000-0000000000b2', '00000000-0000-0000-0000-0000000000d1', 'Perícia',
        ((current_date + 40)::timestamp + time '14:00') at time zone 'America/Sao_Paulo', 'Fórum Teste', 'agendada';
