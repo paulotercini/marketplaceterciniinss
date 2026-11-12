@@ -2076,6 +2076,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .ze-ferr .zap-icone.gravando{background:#fde7e7;color:#b3261e}
   .zap-escrever .btn-rap.ze-enviar:disabled{opacity:.45;cursor:not-allowed}
   .zap-escrever .ze-linha:has(.zap-falta:not([hidden])){flex-wrap:wrap}
+  .ze-desf{margin:0 0 6px;padding:4px 6px 4px 10px;border:1px solid var(--borda,#ddd);border-radius:8px;background:var(--fundo2,#f6f7f5);font-size:13px;display:flex;align-items:center;justify-content:space-between;gap:8px}
   .ze-cobre{margin:0 0 6px;padding:6px 10px;border:1px solid #c9a227;border-radius:8px;background:#fff8e1;color:#5c4400;font-size:13px;font-weight:600}
   .ze-offline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 6px;padding:6px 10px;border:1px solid var(--venc,#b3261e);border-radius:8px;background:#fdecea;color:#8c1d18;font-size:13px;font-weight:600}
   .ze-sug-ia{border:1px dashed #c9a227;background:#fff8e1;border-radius:8px;padding:8px 10px;font-size:13px;color:#3d3200}
@@ -7028,7 +7029,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.59</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.60</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17985,6 +17986,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
          <button role="tab" aria-selected="${zapNota}" class="${zapNota?"on nota":""}" id="zap-btn-nota"
            onclick="${zapNota?"":"alternarNota()"}" title="fica na conversa, o cliente não vê">Nota interna</button>
        </div>
+       ${desfazerZapHtml()}
        <div class="ze-linha">
          ${zapNota?"":`<details class="ze-mais so-cel-ze">
            <summary aria-label="Mais opções">+</summary>
@@ -18398,8 +18400,25 @@ async function corrigirZap(){
   if(!c || zapAberta!==conv) return;
   if(c.value !== antes) return aviso("O texto mudou enquanto a IA corrigia; nada foi trocado");
   c.value = r.texto; c.dispatchEvent(new Event("input")); focarCampoZap();
-  avisoDesfazer("Texto corrigido no campo. Confira antes de enviar", () => {
-    const d = document.getElementById("zap-txt"); if(d && zapAberta===conv){ d.value = antes; d.dispatchEvent(new Event("input")); } }, 15000);
+  // F553 · o Desfazer fica acima do campo de escrever, e não no aviso que cobria o texto
+  clearTimeout(_zapDesf?.timer);
+  _zapDesf = {conv, antes, timer: setTimeout(() => { _zapDesf = null; document.querySelector(".ze-desf")?.remove(); }, 15000)};
+  pintarDesfazerZap();
+}
+let _zapDesf = null;
+function desfazerZapHtml(){
+  return _zapDesf && _zapDesf.conv===zapAberta && !zapNota ? `<p class="ze-desf" role="status">Texto corrigido pela IA. Confira antes de enviar.
+    <button class="btn-mini" onclick="desfazerCorrecaoZap()" title="Voltar ao texto de antes da correção">Desfazer<span class="sr-only"> a correção</span></button></p>` : "";
+}
+function pintarDesfazerZap(){
+  document.querySelector(".ze-desf")?.remove();
+  const l = document.getElementById("zap-txt")?.closest(".ze-linha"), h = desfazerZapHtml();
+  if(l && h) l.insertAdjacentHTML("beforebegin", h);
+}
+function desfazerCorrecaoZap(){
+  const f = _zapDesf; if(!f) return;
+  clearTimeout(f.timer); _zapDesf = null; document.querySelector(".ze-desf")?.remove();
+  const d = document.getElementById("zap-txt"); if(d && zapAberta===f.conv){ d.value = f.antes; d.dispatchEvent(new Event("input")); focarCampoZap(); }
 }
 function emojiZap(e, campo){
   const t = document.getElementById(campo||"zap-txt"); if(!t) return;
@@ -18566,6 +18585,7 @@ async function enviarZap(){
   const conv = zapAberta;   // F517 · a conversa do início vale até o fim, mesmo que a tela mude durante a gravação
   if(!txt || !conv) return;
   if(!zapNota && barraAssumir(zapConvs.find(x=>x.id===conv))) return;
+  if(_zapDesf){ clearTimeout(_zapDesf.timer); _zapDesf = null; document.querySelector(".ze-desf")?.remove(); }
   if(!zapNota && /\{[a-z_]+\}/.test(txt)){ travaZap(); return aviso("Há dado do caso sem preencher na mensagem"); }
   t.value=""; t.style.height="auto"; guardarRascZap(conv, "");
   // nota interna nasce com direcao E status 'interna' — o banco recusa
