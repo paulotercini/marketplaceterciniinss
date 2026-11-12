@@ -38,6 +38,13 @@ const pedido = (token, extra) => google.post({ acao: "agendar", token, profissio
   conf(`o horário que bate com outro atendimento pede confirmação (${bate.codigo})`, !bate.ok && bate.codigo === "SOBREPOSICAO" && /10:00/.test(bate.erro || ""));
   const junto = pedido("tok-paulo", { inicio: "10:15", nome: "Beltrano Ficticio Junto", telefone: "16999990011", sobrepor: true });
   conf(`confirmado, o administrador agenda junto (${junto.ok})`, junto.ok);
+  // F560 · o dia fora do programa com atendimento aparece para toda a equipe, sem vaga livre
+  for (const tok of ["tok-paulo", "tok-ingrid"]) {
+    const disp = google.post({ acao: "disponibilidade", token: tok, profissional: "paulo" });
+    const dq = (disp.dias || []).find(d => d.data === QUI);
+    conf(`F560 · ${tok}: a quinta fora do programa aparece com o atendimento`,
+      dq && dq.foraDoPrograma && (dq.eventos || []).some(e => /Beltrano/.test(e.titulo || e.summary || e.nome || "")) && !(dq.livres?.["001"] || []).length);
+  }
 
   // 2 · a tela do Paulo
   const s = http.createServer((q, r) => {
