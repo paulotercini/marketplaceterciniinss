@@ -114,7 +114,10 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   const co = escritas.find(e => /zap_assistente/.test(e.u) && e.b.acao === "corrigir");
   conf("F479 · Corrigir manda o texto escrito à função", co && co.b.texto === "bom dia o atendimento ta marcado pro dia 12/11" && co.b.conversa_id === CONV);
   conf("F479 · e o texto corrigido volta ao campo", (await p.inputValue("#zap-txt")) === "Bom dia. O atendimento está agendado para o dia 12/11.");
-  await p.evaluate(() => desfazerAgora());
+  const pos = await p.evaluate(() => { const d = document.querySelector(".ze-desf"), t = document.getElementById("zap-txt");
+    return d && t ? {d: d.getBoundingClientRect().bottom, t: t.getBoundingClientRect().top, aviso: /desfazer/i.test(document.getElementById("aviso")?.textContent||"")} : null; });
+  conf("F553 · o Desfazer fica acima do campo, fora do aviso", pos && pos.d <= pos.t + 1 && !pos.aviso);
+  await p.click('.ze-desf button:has-text("Desfazer")');
   conf("F479 · o desfazer devolve o texto de antes", (await p.inputValue("#zap-txt")) === "bom dia o atendimento ta marcado pro dia 12/11");
   await p.evaluate(() => {
     window.SpeechRecognition = class { start(){ setTimeout(() => this.onresult({ results: [Object.assign([{ transcript: "agendado pro dia 12/11" }], { isFinal: true })] }), 20); }
