@@ -683,3 +683,13 @@ console.log("formal: ok");
   assert.equal(m.enviadosAtuais(perto).length, 1);
   console.log("ok retomada");
 }
+{ // F549 · perícia aprovada pelo Ligar: a IA oferece o atendimento de preparação
+  const m = await import("../../zap_plantao/index.ts");
+  const pericia = { tipo: "perícia médica", data: "14/12/2026", hora: "14:00", local: "APS Teste", profissional: "amanda",
+    ate_hora: "11:00", limite_presenca: "04/12/2026", telefone_em: "11/12/2026" };
+  const t = m.contexto({ mensagens: [], advogados: [], pericia });
+  assert.ok(t.includes("Perícia: a pessoa tem perícia médica em 14/12/2026 às 14:00, em APS Teste"));
+  assert.ok(t.includes("a Dra. Amanda") && t.includes("até as 11:00") && t.includes("às 16h de 11/12/2026"));
+  assert.ok(!m.contexto({ mensagens: [], advogados: [] }).includes("Perícia:"), "sem perícia, sem bloco");
+  console.log("ok F549 perícia");
+}
