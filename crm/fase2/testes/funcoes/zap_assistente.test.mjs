@@ -23,7 +23,7 @@ assert.ok(!/\d{3,}/.test(g.sem.replace(/⟦\d+⟧/g, "")), "nenhum número fica 
 assert.equal(devolverNumeros(g.sem, g.nums), "o atendimento é dia 12/11 às 9h30, valor R$ 100,00, protocolo 1700000000000");
 assert.ok(promptCorrigir("x", "Maria").includes("Não acrescente informação") && promptCorrigir("x", "", true).includes("nota interna"));
 assert.equal(mascarar("a senha é Abc@1234"), "a senha é [senha]", "F515 · a senha não vai ao modelo");
-// F562 · Outra e Aprofundar
+// F563 · Outra e Aprofundar
 const q = quemEscreve("Amanda", "advogado");
 assert.ok(q.includes("Amanda") && q.includes("primeira pessoa do singular"));
 const o = promptOutra("Maria", [], "x", q, "Seu processo está em análise.", "mais curta");

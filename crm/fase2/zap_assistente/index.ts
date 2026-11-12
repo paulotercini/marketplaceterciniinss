@@ -11,8 +11,8 @@
 //             volta ao campo de escrever, nunca vai ao cliente sem o Enviar
 //   documento (onda 4) a foto ou o PDF recebido: que documento é e a qual caso
 //             aberto vai; a juntada é do CRM, no clique de quem confere
-//   outra     (F562) outra sugestão de resposta, em sentido diverso da anterior, com a orientação opcional
-//   aprofundar (F562) a consulta completa, só no clique: conversa, casos, anotações do escritório, últimos
+//   outra     (F563) outra sugestão de resposta, em sentido diverso da anterior, com a orientação opcional
+//   aprofundar (F563) a consulta completa, só no clique: conversa, casos, anotações do escritório, últimos
 //             andamentos do PAT, do e-SISREC e do PJe, perícias e audiências, agenda e prazos (do CRM);
 //             esforço alto, devolve { texto, bases } e cada uso fica em zap_ia_aprofundar
 // Liga com config_app.zap_ia_equipe = 'sim' (caixa das Configurações do WhatsApp); corrigir, outra e aprofundar valem sempre.
@@ -97,7 +97,7 @@ export function promptCorrigir(texto: string, nome: string, nota = false) {
     `Responda apenas com o texto corrigido.`;
 }
 
-// F562 · a sugestão vai ao campo de quem pediu e sai em nome dele: primeira pessoa do singular, sem assinatura
+// F563 · a sugestão vai ao campo de quem pediu e sai em nome dele: primeira pessoa do singular, sem assinatura
 export const quemEscreve = (nome: string, cargo: string) =>
   `Quem vai enviar é ${nome || "um colaborador"}${cargo ? ` (${cargo})` : ""}: escreva na primeira pessoa do singular dessa pessoa ` +
   `("verifiquei", "fico à disposição"), sem "nós", sem citar o nome dela em terceira pessoa e sem assinatura.`;
@@ -187,7 +187,7 @@ if (typeof Deno !== "undefined") {
     if (!eu || eu.ativo === false) return json({ erro: "só colaborador ativo do escritório" }, 403);
     const m = await req.json().catch(() => ({}));
     // F479 · a correção do texto da própria equipe vale sem a chave (pedido do Paulo de 09.11.2026)
-    // F562 · outra e aprofundar, pedidos no clique, também valem sem a chave
+    // F563 · outra e aprofundar, pedidos no clique, também valem sem a chave
     const [lig] = ["corrigir", "outra", "aprofundar"].includes(m.acao) ? [{ valor: "sim" }] : await ler(`config_app?select=valor&chave=eq.zap_ia_equipe`);
     if (!lig || lig.valor !== "sim") return json({ erro: "a IA da equipe está desligada nas Configurações do WhatsApp" }, 403);
     const uuid = (s: unknown) => /^[0-9a-f-]{36}$/i.test(String(s || ""));

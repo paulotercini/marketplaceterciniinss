@@ -1,4 +1,4 @@
--- F562 · registro de cada Aprofundar da IA no WhatsApp (pedido do Paulo de 12.11.2026):
+-- F563 · registro de cada Aprofundar da IA no WhatsApp (pedido do Paulo de 12.11.2026):
 -- quem pediu, em qual conversa e quando. A Edge Function zap_assistente grava com o token de quem pediu.
 create table if not exists public.zap_ia_aprofundar (
   id bigint generated always as identity primary key,
