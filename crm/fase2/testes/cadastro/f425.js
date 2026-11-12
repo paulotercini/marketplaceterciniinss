@@ -216,7 +216,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     ((cli(ANA).campos || {}).atendimento || []).some(n => /auxílio negado/.test(n.texto)) && cli(PRE_ANA).campos.nao_cliente && cli(PRE_ANA).campos.fundido_para === ANA);
   conf("F · e abre a janela na ficha de verdade", await p.evaluate(a => clienteAberto === a, ANA) && /Dossiê de Ana Fictícia Colab/.test(await caixaTxt()));
 
-  // H · F542: informar na Identificação o CPF de outra ficha junta as duas, sem apagar nada
+  // H · F548: informar na Identificação o CPF de outra ficha junta as duas, sem apagar nada
   await p.evaluate(async id => { fecharCaixa(); await abrirFicha(id); editarCampo("cpf", id); }, PRE_DAN);
   await p.fill("#ed-campo", "39053344705");
   await p.evaluate(id => salvarCampo("cpf", id), PRE_DAN);

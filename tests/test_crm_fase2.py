@@ -116,6 +116,14 @@ def test_prepend_preserva_corpo_existente():
     assert escrever_todo.prepend_corpo("", "02.08.2026 (A): X.") == "02.08.2026 (A): X."
 
 
+def test_trocar_bloco_da_anotacao_editada():
+    corpo = "02.08.2026 (A): Velho.\n\n01.08.2026 (P): Antigo."
+    assert escrever_todo.trocar_bloco(corpo, "02.08.2026 (A): Velho.", "02.08.2026 (A): Novo.") == \
+        "02.08.2026 (A): Novo.\n\n01.08.2026 (P): Antigo."
+    assert escrever_todo.trocar_bloco(corpo, "02.08.2026 (A): Outro.", "x") is None
+    assert escrever_todo.trocar_bloco(None, "a", "b") is None
+
+
 def test_protocolo_dos_andamentos_vai_para_o_caso():
     m = migrar.mapear(crm_json([
         t("🌻 INSS", "Fulana #00000000191", cpf="00000000191",
