@@ -42,6 +42,8 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   const escritas = [];
   const RESP = { resumo: { texto: "O cliente pergunta se a aposentadoria saiu." }, rascunho: { texto: "Bom dia! Vamos conferir e retornamos hoje." },
     corrigir: { texto: "Bom dia. O atendimento está agendado para o dia 12/11." },
+    outra: { texto: "Bom dia. Conferimos e retornamos ainda hoje." },
+    aprofundar: { texto: "Bom dia. A perícia do INSS está agendada para 20/11.", bases: ["andamento do PAT de 05/11/2026"] },
     documento: { tipo: "laudo médico", nome: "Laudo do ortopedista", caso_id: CASO, motivo: "o caso pede laudo" } };
   await ctx.route(SUPA + "/**", rota => {
     const u = decodeURIComponent(rota.request().url()), m = rota.request().method();
@@ -114,7 +116,10 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   const co = escritas.find(e => /zap_assistente/.test(e.u) && e.b.acao === "corrigir");
   conf("F479 · Corrigir manda o texto escrito à função", co && co.b.texto === "bom dia o atendimento ta marcado pro dia 12/11" && co.b.conversa_id === CONV);
   conf("F479 · e o texto corrigido volta ao campo", (await p.inputValue("#zap-txt")) === "Bom dia. O atendimento está agendado para o dia 12/11.");
-  await p.evaluate(() => desfazerAgora());
+  const pos = await p.evaluate(() => { const d = document.querySelector(".ze-desf"), t = document.getElementById("zap-txt");
+    return d && t ? {d: d.getBoundingClientRect().bottom, t: t.getBoundingClientRect().top, aviso: /desfazer/i.test(document.getElementById("aviso")?.textContent||"")} : null; });
+  conf("F553 · o Desfazer fica acima do campo, fora do aviso", pos && pos.d <= pos.t + 1 && !pos.aviso);
+  await p.click('.ze-desf button:has-text("Desfazer")');
   conf("F479 · o desfazer devolve o texto de antes", (await p.inputValue("#zap-txt")) === "bom dia o atendimento ta marcado pro dia 12/11");
   await p.evaluate(() => {
     window.SpeechRecognition = class { start(){ setTimeout(() => this.onresult({ results: [Object.assign([{ transcript: "agendado pro dia 12/11" }], { isFinal: true })] }), 20); }
@@ -127,6 +132,23 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   await p.waitForTimeout(400);
   conf("F479 · parar o ditado leva o texto à correção", escritas.filter(e => /zap_assistente/.test(e.u) && e.b.acao === "corrigir").length === 2
     && (await p.inputValue("#zap-txt")) === "Bom dia. O atendimento está agendado para o dia 12/11.");
+  // F563 · Outra e Aprofundar: sem sugestão aberta pelo ícone; a nova sugestão fica acima do campo, com as bases
+  await p.fill("#zap-txt", "");
+  await p.click("#zap-sugerir");
+  await p.fill("#ia-orient", "mais curta");
+  await p.click('button:has-text("Pedir")');
+  await p.waitForTimeout(400);
+  const ou = escritas.find(e => /zap_assistente/.test(e.u) && e.b.acao === "outra");
+  conf("F563 · Outra chama a função com a orientação", ou && ou.b.orientacao === "mais curta" && ou.b.conversa_id === CONV);
+  conf("F563 · a sugestão fica acima do campo, com Outra e Aprofundar", (await p.textContent(".ze-sug-ia").catch(() => "")).includes("Conferimos e retornamos")
+    && !!(await p.$('.ze-sug-bts button:has-text("Aprofundar")')));
+  await p.click('.ze-sug-bts button:has-text("Aprofundar")');
+  await p.click('button:has-text("Pedir")');
+  await p.waitForTimeout(400);
+  const ap = escritas.find(e => /zap_assistente/.test(e.u) && e.b.acao === "aprofundar");
+  conf("F563 · Aprofundar leva a sugestão anterior", ap && ap.b.anterior === "Bom dia. Conferimos e retornamos ainda hoje.");
+  conf("F563 · e mostra em que se baseou", (await p.textContent(".ze-sug-base").catch(() => "")).includes("andamento do PAT de 05/11/2026"));
+  await p.evaluate(() => descartarSugestaoZap());
   conf("F479 · nada foi enviado ao cliente", !escritas.some(e => e.m === "POST" && /rest\/v1\/zap_mensagens/.test(e.u)));
 
   conf("a foto do cliente tem o ✨ juntar ao caso", await p.$(`#zb-m2 button[onclick*="identificarDocZap"]`));

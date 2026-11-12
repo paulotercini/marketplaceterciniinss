@@ -93,12 +93,29 @@ function textoDaMensagem(m) {
     const l = c.locationMessage;
     return `📍 ${l.degreesLatitude}, ${l.degreesLongitude}`;
   }
-  if (c.contactMessage) return `👤 ${c.contactMessage.displayName || ""}`.trim();
+  // F555 · o cartão de contato guarda o nome e o número de cada contato, uma linha por contato ("👤 Nome · 5516…"),
+  // que o CRM lê para Conversar, Copiar, Ligar e Cliente; antes só ia o nome e o número se perdia
+  if (c.contactMessage) return linhaContato(c.contactMessage);
+  if (c.contactsArrayMessage) return (c.contactsArrayMessage.contacts || []).map(linhaContato).join("\n");
   for (const [k, campo] of [["buttonsResponseMessage", "selectedDisplayText"], ["listResponseMessage", "title"],
     ["templateButtonReplyMessage", "selectedDisplayText"]]) if (c[k]) return c[k][campo] || "";
   const d = tipoSemTraducao(m);
   if (d) return `[mensagem de tipo ${d.replace(/Message$/, "")}, veja no celular]`;
   return "";
+}
+
+// F555 · o número do vCard: o waid (número no WhatsApp) vale mais que o TEL escrito; sem nenhum, só o nome
+function numerosDoVcard(vcard) {
+  const tels = String(vcard || "").split(/\r?\n/).filter(l => /^(item\d+\.)?TEL/i.test(l));
+  const nums = tels.map(l => { const w = l.match(/waid=(\d+)/i); return w ? w[1] : soDigitos(l.split(":").pop()); })
+    .filter(n => n && n.length >= 8);
+  return [...new Set(nums)];
+}
+function linhaContato(ct) {
+  const nome = String((ct && ct.displayName) || "").replace(/\s+/g, " ").trim()
+    || (String((ct && ct.vcard) || "").match(/^FN:(.*)$/mi) || [])[1] || "";
+  const nums = numerosDoVcard(ct && ct.vcard);
+  return `👤 ${nome}${nums.length ? " · " + nums.join(" · ") : ""}`.trim();
 }
 
 // Só o que a gente sabe guardar, de gente de verdade, uma a uma.
@@ -240,4 +257,4 @@ const variantesFone = t => {
 
 module.exports = { variantesFone, soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem, foneDaLigacao, agruparHistorico,
                    miolo, tipoDaMensagem, tipoSemTraducao, textoDaMensagem, deveIgnorar,
-                   nomeSeguro, quandoWa, citacaoDe, reacaoDe, alteracaoDe, chaveDaMensagem, recente, naoAbriu };
+                   nomeSeguro, quandoWa, numerosDoVcard, linhaContato, citacaoDe, reacaoDe, alteracaoDe, chaveDaMensagem, recente, naoAbriu };

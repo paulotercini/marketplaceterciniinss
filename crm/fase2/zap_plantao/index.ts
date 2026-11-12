@@ -1389,8 +1389,7 @@ if (typeof Deno !== "undefined") {
       x.pagamento = await cfg("zap_dados_pagamento");   // F484 · fica no banco, porque o repositório é público
       x.atendente = await atendenteDe(x.conversa_id).catch(() => null);   // F485 · a sugestão sai na primeira pessoa de quem atende
       if (x.conversa_id) x.pericia = await rpc("pericia_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F549
-      // F521 · Offline: a IA cala, salvo a agenda pedida neste Offline, que ela responde pelo escritório
-      const calado = !!x.atendente?.offline && !x.atendente?.iaAgenda;
+      // F521 · a agenda pedida neste Offline a IA responde pelo escritório; F561 · fora dela, o Offline vira sugestão (zap_plantao_aplicar)
       if (x.atendente?.offline && x.atendente.iaAgenda) x.atendente = null;
       if (x.remarcar?.ler && x.conversa_id) {
         // a primeira resposta à confirmação: confirmar não passa pelo agente; o sistema manda a resposta do SIM
@@ -1424,8 +1423,6 @@ if (typeof Deno !== "undefined") {
       } else r = await claude(promptPlantao(x));
       let acao = ACOES.includes(r.acao) ? r.acao : "responder";
       if (acao === "conversa" && !x.interativa) acao = "responder";   // com a equipe na conversa, a IA não conversa
-      // a remarcação da confirmação (F422c) segue mesmo com o atendente Offline
-      if (acao !== "equipe" && acao !== "nada" && !x.remarcar && calado) acao = "nada";
       // F521 · o golpe sempre recebe resposta, também na conversa assumida e com o atendente Offline
       const ultima = String((x.mensagens || []).filter((m: Msg) => m.direcao === "entrada" && m.texto).slice(-1)[0]?.texto || "");
       if (acao !== "equipe" && /golpe|falso advogado|se passa(ndo|r)? (por|pelo)|pix para liberar/i.test(ultima)) { acao = "equipe"; r.urgente = true; r.assunto = r.assunto || "possível golpe"; }

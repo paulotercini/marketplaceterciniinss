@@ -340,10 +340,20 @@ function disponibilidade_(user, r) {
   const prof = prof_(r.profissional);
   const n = Math.min(Number(r.dias) || prof.exibir, 30);
   const agora = new Date();
-  const datas = proximosDias_(prof, n, String(r.desde || '')), doPeriodo = eventosDoPeriodo_(datas), bloq = bloqueadosDoPeriodo_(prof, datas);
+  const programadas = proximosDias_(prof, n, String(r.desde || ''));
+  // F560 · o atendimento agendado fora dos dias de atendimento (urgência, ou lançado direto no Google) também aparece,
+  // para toda a equipe: lê todos os dias do período e mantém os programados e os que têm atendimento do profissional
+  // shortcut: o dia fora do programa só entra se cair antes do último dia programado do período
+  const todas = [];
+  const desde = String(r.desde || ''), inicio = /^\d{4}-\d{2}-\d{2}$/.test(desde) && desde > ymd_(agora) ? desde : ymd_(agora);
+  if (programadas.length) for (let d = dt_(inicio, '12:00'); ymd_(d) <= programadas[programadas.length - 1]; d = new Date(d.getTime() + 86400000)) todas.push(ymd_(d));
+  const doPeriodo = eventosDoPeriodo_(todas);
+  const datas = todas.filter(d => programadas.indexOf(d) >= 0 ||
+    eventosDoProfissional_(doPeriodo[d] || [], prof).some(ev => ehAtendimento_(ev) && contaPara_(ev, prof)));
+  const bloq = bloqueadosDoPeriodo_(prof, datas);
   const dias = datas.map(data => {
-    const base = { data, diaSemana: diaSemana_(data), limite: prof.limite };
-    if (bloq[data]) {
+    const base = { data, diaSemana: diaSemana_(data), limite: prof.limite, foraDoPrograma: programadas.indexOf(data) < 0 };
+    if (bloq[data] && !base.foraDoPrograma) {
       return Object.assign(base, { bloqueado: true, atendimentos: 0, lotado: true, eventos: [], livres: { '001': [], '002': [] } });
     }
     const evs = eventosDoProfissional_(doPeriodo[data] || [], prof);
@@ -357,7 +367,7 @@ function disponibilidade_(user, r) {
     const livres = {};
     Object.keys(CONFIG.DURACAO).forEach(tipo => {
       // com vagas no dia, só elas valem; sem nenhuma, o horário livre é calculado como antes
-      livres[tipo] = (lotado && user.papel !== 'admin') ? []
+      livres[tipo] = ((lotado && user.papel !== 'admin') || base.foraDoPrograma) ? []
         : (prof.soVagas || vagas.length) ? vagasLivres_(vagas, tipo, agora)
         : horariosLivres_(data, tipo, ocupados, user, agora, prof);
     });
