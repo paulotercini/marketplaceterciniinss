@@ -7046,7 +7046,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.69</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.70</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19844,8 +19844,8 @@ async function responderZapLado(convId, cliId){
   if(zapLadoRec) return aviso("Pare a gravação antes de enviar", false);
   if(!zapGestor()){
     const cv = (await todas("zap_conversas",`select=atendente_id&id=eq.${convId}`).catch(()=>[]))[0];
-    if(cv && cv.atendente_id !== eu.id){
-      if(cv.atendente_id) return aviso(`A conversa está com ${(D.colPorId.get(cv.atendente_id)||{}).nome||"outra pessoa"}. Peça a transferência para responder.`);
+    // F566 · ao lado da ficha, a conversa de outro colega se responde sem assumir: o responsável continua e a mensagem leva o autor_id de quem enviou
+    if(cv && !cv.atendente_id){
       if(!await confirmar("Para responder, a conversa passa a ser sua. Assumir?")) return;
       try{ await api(`/rest/v1/rpc/zap_assumir`,{method:"POST", body:JSON.stringify({p_conversa:convId})}); }
       catch(e){ return aviso(msgErro(e)); }
