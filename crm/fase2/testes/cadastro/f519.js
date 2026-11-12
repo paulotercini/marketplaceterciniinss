@@ -73,9 +73,12 @@ const EXTRA = {
   await p.waitForSelector(".ze-cobre");
   conf("a conversa coberta entra nas Minhas do substituto", await p.evaluate(id => !!document.querySelector(`[data-zc="${id}"]`), Z1));
   conf("o substituto responde sem assumir", await p.evaluate(() => !precisaAssumir(zapConvs[0]) && !document.querySelector(".ze-assumir-aviso")));
-  // F542: o ⋯ da conversa escolhe se ela vai ou não à substituta
+  // F551: a lista e o topo dizem quem está de plantão
+  conf("o topo diz Plantão com o nome de quem cobre", await p.evaluate(() => (document.querySelector(".zt-plantao")||{}).textContent?.includes("Plantão:")));
+  conf("a lista diz plantão na conversa coberta", await p.evaluate(id => (document.querySelector(`[data-zc="${id}"]`)||{}).textContent?.includes("plantão"), Z1));
+  // F542: o ⋯ da conversa escolhe se ela vai ou não ao plantão
   await p.evaluate(() => { D.config = D.config || new Map(); D.config.set("zap_cobertura", "sim"); pintarConversaGuardando(); });
-  conf("o ⋯ oferece Não encaminhar à substituta", await p.evaluate(() => [...document.querySelectorAll(".zt-menu button")].some(b => b.textContent.includes("Não encaminhar à substituta"))));
+  conf("o ⋯ oferece Não encaminhar ao plantão", await p.evaluate(() => [...document.querySelectorAll(".zt-menu button")].some(b => b.textContent.includes("Não encaminhar ao plantão"))));
   await p.evaluate(() => semCoberturaZap(true));
   await p.waitForFunction(() => !document.querySelector(".ze-cobre"));
   conf("marcar grava sem_cobertura e tira a cobertura da tela", escritas.some(e => /zap_conversas/.test(e.u) && e.b && e.b.sem_cobertura === true) && await p.evaluate(() => !zapConvs[0].cobertura));
