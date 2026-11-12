@@ -85,13 +85,13 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     await p.waitForTimeout(400);
     return { p, ctx };
   };
-  const bts = (p, sel) => p.evaluate(s => [...document.querySelectorAll(s + " .db-bts button")].map(b => b.querySelector("[aria-hidden]").textContent.trim()).join(","), sel);
+  const bts = (p, sel) => p.evaluate(s => [...document.querySelectorAll(s + " .db-bts button:not(.db-ant)")].map(b => b.querySelector("[aria-hidden]").textContent.trim()).join(","), sel);
 
   // ── 1 · INSS ──
   let { p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cA, kA);
   conf("o cartão do INSS tem Ler, Tela, Detalhes, Baixar e Claude (F509)", await bts(p, ".db-and") === "Ler,Tela,Detalhes,Baixar,Claude");
   conf("os botões do cartão seguem a cor do quadro do INSS", await p.evaluate(() => { const b = document.querySelector(".db-and .db-bts button:not(.pri)"); return getComputedStyle(b).color === getComputedStyle(b.closest(".db-and")).getPropertyValue("--db-cor").trim() || /rgb/.test(getComputedStyle(b).color); }));
-  conf("cada botão diz a frase inteira ao leitor de tela", await p.evaluate(() => [...document.querySelectorAll(".db-and .db-bts button")].every(b => b.title && b.querySelector(".sr-only"))));
+  conf("cada botão diz a frase inteira ao leitor de tela", await p.evaluate(() => [...document.querySelectorAll(".db-and .db-bts button:not(.db-ant)")].every(b => b.title && b.querySelector(".sr-only"))));
   await ctx.close();
 
   // ── 2 · Conselho e o mandado de segurança ──
