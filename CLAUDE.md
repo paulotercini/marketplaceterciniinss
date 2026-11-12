@@ -724,6 +724,8 @@ A **F551** (13.59, pedido do Paulo de 12.11.2026): durante a cobertura do Offlin
 
 A **F555** (13.62, pedido do Paulo de 12.11.2026): o contato que o cliente envia pelo WhatsApp mostrava apenas o nome. A ponte grava, para cada contato do vCard (um ou vários), a linha "👤 Nome · número" (`numerosDoVcard`: o `waid` ou os dígitos de cada TEL, sem repetir; `linhaContato`), e o balão do tipo `contato` vira o cartão (`contatoZap`, `.zap-ct`) com o número formatado, a ficha que já o tem e os botões **Conversar** (`zapDoNumero`), **Salvar** (sem ficha, abre o ＋ conversa já conferido, `conferirContatoZap`; com uma ficha, vira **Ficha**), **Copiar** e **Ligar** (`tel:`), por `contatoAcao`. O contato gravado antes desta versão não tem o número e diz "Número não veio; veja no celular.". Vale depois do deploy da ponte. Testes: `ponte/testes/normalizar.test.js` e `testes/cadastro/f555.js`.
 
+A **F559** (13.66, pedido do Paulo de 12.11.2026): o **Ver** da tabela Expedientes (no cartão do PJe do Dashboard do caso e em `telaExpedientes`) deixou de abrir o PJe e abre a peça já guardada no CRM pelo ID do documento (`verExpediente`: o documento do processo cujo caminho termina no `documento_id`, `pje/<processo>/<id>`, no leitor do processo inteiro da F289). Sem a peça importada, a janela diz que ela não está no CRM e oferece **Ler** o processo; nada vai ao PJe. Teste: `f418.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 

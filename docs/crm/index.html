@@ -12173,7 +12173,7 @@ function dbBotoes(k, aba, dig, sis, fim=""){
 }
 function dbExpedientes(k, x){
   const vs = expedientesDe(k, x.d);
-  return `<div class="db-pn" role="region" aria-label="Expedientes de ${esc(x.id)}"><h4>Expedientes</h4>${vs.map(v=>`${vs.length>1?`<h5>${esc(v.grau||"")}</h5>`:""}<div class="db-pn-rol">${tabelaExpedientes(v)}</div>`).join("")}</div>`;
+  return `<div class="db-pn" role="region" aria-label="Expedientes de ${esc(x.id)}"><h4>Expedientes</h4>${vs.map(v=>`${vs.length>1?`<h5>${esc(v.grau||"")}</h5>`:""}<div class="db-pn-rol">${tabelaExpedientes(v, k, x.d)}</div>`).join("")}</div>`;
 }
 const DB_DET = [["Competência", /^compet/i], ["Órgão julgador Atual", /^[óo]rg[ãa]o julgador/i], ["Jurisdição", /^jurisdi/i], ["Autuação", /^autua/i],
   ["Valor da causa", /^valor da causa/i], ["Segredo de justiça?", /^segredo/i], ["Justiça gratuita?", /^justi[çc]a gratuita/i], ["Tutela/liminar?", /^tutela/i],
@@ -46399,7 +46399,7 @@ function expedientesDe(k, dig){
     .map(([, v])=>v).sort((a,b)=>String(a.grau).localeCompare(String(b.grau)));
 }
 const dtExp = s => s ? `${fmt(String(s).slice(0,10))}${String(s).length>10?" "+String(s).slice(11,16):""}` : "";
-function tabelaExpedientes(v){
+function tabelaExpedientes(v, k, dig){
   const lin = e => `<tr${e.fechado?"":` class="exp-aberto"`}>
     <td><b>${esc(e.ato||"")}</b>${e.expediente_id?` <span class="meio-sub">(${esc(e.expediente_id)})</span>`:""}${e.prioridade?` <span class="meio-sub">· Prioridade: ${esc(e.prioridade)}</span>`:""}
       ${e.destinatario?`<div>${esc(e.destinatario)}</div>`:""}
@@ -46407,18 +46407,31 @@ function tabelaExpedientes(v){
       ${e.ciencia_em?`<div class="meio-sub">O sistema registrou ciência em ${dtExp(e.ciencia_em)}</div>`:""}
       ${e.prazo_dias?`<div class="meio-sub">Prazo: ${e.prazo_dias} dias</div>`:""}</td>
     <td>${e.limite?`${dtExp(e.limite)}${e.limite_para?`<div class="meio-sub">(${esc(e.limite_para)})</div>`:""}`:esc(e.limite_txt||"")}</td>
-    <td>${e.ver&&v.host?`<a class="btn-mini" href="${urlOk(/^https?:/.test(e.ver) ? e.ver : `https://${v.host}${e.ver}`)}" target="_blank" rel="noopener" title="visualizar o ato no PJe (pede o login)">Ver</a>`:""}</td>
+    <td>${e.documento_id&&k?`<button type="button" class="btn-mini" onclick="verExpediente('${k.id}','${esc(dig)}','${esc(String(e.documento_id).replace(/\D/g,""))}')" title="Abrir a peça ${esc(e.documento_id)} no CRM"><span aria-hidden="true">Ver</span><span class="sr-only">Abrir a peça ${esc(e.documento_id)} no CRM</span></button>`:""}</td>
     <td>${e.fechado?"SIM":"<b>NÃO</b>"}</td></tr>`;
   return `<table class="exp-tab"><thead><tr><th>Ato de comunicação</th><th>Data limite prevista para ciência ou manifestação</th><th>Ações</th><th>Fechado</th></tr></thead>
     <tbody>${(v.itens||[]).map(lin).join("")||`<tr><td colspan="4" class="meio-sub">Nenhum expediente.</td></tr>`}</tbody></table>
     <p class="meio-sub">${(v.itens||[]).length} resultado${(v.itens||[]).length===1?"":"s"} encontrado${(v.itens||[]).length===1?"":"s"} · lido em ${dtExp(String(v.em||"").slice(0,16))}</p>`;
+}
+// F559 · o Ver do expediente abre a peça já guardada no CRM (pje/<processo>/<ID do documento>),
+// no leitor do processo inteiro, e não o PJe (pedido do Paulo, 12.11.2026)
+function verExpediente(casoId, dig, docId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const i = processosDaFase(k, "cnj").findIndex(x=>x.d===dig), x = processosDaFase(k, "cnj")[i];
+  const docs = x ? docsLegiveis(k, x) : [];
+  const alvo = docs.find(d=>String(d.caminho||"").split("/").pop()===docId);
+  fecharCaixa();
+  if(alvo) return abrirProcessoInteiro(casoId, docs, alvo.caminho, `${ROT_FASE.cnj} · ${x.id}`, "cnj");
+  caixa(`<div class="adr-modal" role="dialog" aria-label="Peça não importada"><h3>Peça ${esc(docId)} não está no CRM</h3>
+    <p>O documento deste expediente ainda não foi importado. A próxima leitura do processo pela extensão o traz.</p>
+    <div class="adr-modal-bts">${docs.length?`<button type="button" class="adr-bt pri" onclick="fecharCaixa();lerProcesso('${k.id}','cnj',${i})" title="Ler o processo inteiro"><span aria-hidden="true">Ler</span><span class="sr-only">Ler o processo inteiro</span></button>`:""}<button type="button" class="adr-bt" onclick="fecharCaixa()">Fechar</button></div></div>`);
 }
 function telaExpedientes(casoId, i){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const x = processosDaFase(k, "cnj")[i]; if(!x) return;
   const vs = expedientesDe(k, x.d);
   caixa(`<div class="adr-modal proc-tela exp-tela" role="dialog" aria-label="Expedientes de ${esc(x.id)}">
-    <h3>Expedientes · ${esc(x.id)}</h3>${vs.map(v=>`${vs.length>1?`<h4>${esc(v.grau||"")}</h4>`:""}${tabelaExpedientes(v)}`).join("")}
+    <h3>Expedientes · ${esc(x.id)}</h3>${vs.map(v=>`${vs.length>1?`<h4>${esc(v.grau||"")}</h4>`:""}${tabelaExpedientes(v, k, x.d)}`).join("")}
     <div class="adr-modal-bts"><button type="button" class="adr-bt" onclick="fecharCaixa()">Fechar</button></div></div>`);
 }
 function claudeDoProcesso(casoId, aba, i){
