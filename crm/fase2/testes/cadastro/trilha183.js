@@ -142,7 +142,7 @@ const DADOS = {
   const esc = await p.evaluate(() => ({ tit: (trAjuda || (trAjuda = true, trRepintar()), document.querySelector(".tr-cab h3")).textContent, x: (document.querySelector(".tr-l .tr-x") || {}).textContent,
     cor: getComputedStyle(document.querySelector(".jn-ver")).getPropertyValue("--fc").trim(), sel: !!document.querySelector(".tr-doc select") }));
   if (FOTO) await p.screenshot({ path: FOTO + "-2.png" });
-  conf("a jornada abre a trilha do Escritório, em vermelho, com o documento aguardado", esc.tit === "Atendimento" && esc.x === "relatório médico" && esc.cor === "#7C8DA6" && esc.sel);
+  conf("a jornada abre a trilha do Escritório, em vermelho, com o documento aguardado", esc.tit === "Atendimento" && esc.x === "relatório médico" && esc.cor === "#0E5C58" && esc.sel);
   conf("a trilha do INSS de auxílio-acidente existe", await p.evaluate(() => ritoPadrao({ especie: "B94" }, "inss") === "inss_b94" && ritoPadrao({ especie: "B31", processo: "5000850-63.2023.4.03.6314" }, "judicial") === "jef_inc" && ritoPadrao({ especie: "B42", processo: "5000850-63.2023.4.03.6136" }, "judicial") === "vara"));
 
   // F383 · o histórico vertical: o resumo fica no alto, a etapa mais nova acima, a fonte de cada etapa e as seguintes escondidas
