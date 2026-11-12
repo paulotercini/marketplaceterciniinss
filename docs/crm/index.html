@@ -7043,7 +7043,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.63</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.64</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -58883,7 +58883,9 @@ function pintarAgenda(){
 // F250 · A VAGA DO GOOGLE AGENDA. O escritório deixa no Google Agenda os horários disponíveis com o título do tipo
 // ("001", 45 minutos, ou "002", 30 minutos) e quem agenda troca esse título pelo nome do cliente. O Apps Script
 // devolve essas vagas em livres[tipo] com vaga:true e o eventoId; agendar nelas troca o título do mesmo evento.
-const vagasDoDia = d => d && !d.bloqueado ? ["001", "002"].flatMap(t=>(d.livres[t]||[]).filter(s=>s.vaga).map(s=>({...s, tipo:s.tipo||t})))
+// F557: a vaga cujo horário já passou não é livre (a agenda carregada de manhã seguia oferecendo as das 9h às 10h43)
+const vagaPassou = (data, inicio) => data < hoje() || (data===hoje() && hmMin(inicio) <= new Date().getHours()*60 + new Date().getMinutes());
+const vagasDoDia = d => d && !d.bloqueado ? ["001", "002"].flatMap(t=>(d.livres[t]||[]).filter(s=>s.vaga && !vagaPassou(d.data, s.inicio)).map(s=>({...s, tipo:s.tipo||t})))
   .sort((a, b)=>hmMin(a.inicio)-hmMin(b.inicio)) : [];
 // com vagas no dia, valem elas (dos dois tipos); sem vagas, os horários calculados do tipo escolhido, como antes
 const livresDoDia = (d, tipo) => { const v = vagasDoDia(d); return v.length ? v : (d && d.livres[tipo]) || []; };
@@ -59156,6 +59158,7 @@ function linhaDoTempoAgenda(dia, r){
   const bloco = e => {
     const por = autoriaAgenda(e);
     const top = Math.max(0,y(e.inicio)), h = Math.max(AQ_PX-2, y(e.fim)-Math.max(0,y(e.inicio))-2);
+    if(e.vaga && vagaPassou(dia.data, e.inicio)) return `<div class="aq-ev outro" style="top:${top}px;height:${h}px;left:calc(${e._raia}*100%/${nR});width:calc(100%/${nR} - 4px)" title="vaga não usada · ${e.inicio} às ${e.fim} · o horário já passou"><span class="aq-ev-h">${e.inicio}–${e.fim}</span><b>Horário passado</b></div>`;
     if(e.vaga) return `<button class="aq-ev aq-ev-vaga p-${e.profissional||(agq.prof==="todos"?"paulo":agq.prof)} t${e.tipo}" data-aqvaga="${esc(e.id)}" style="top:${top}px;height:${h}px;left:calc(${e._raia}*100%/${nR});width:calc(100%/${nR} - 4px)"
       title="vaga livre ${esc(e.tipoFixo===false?"":e.tipo||"")} · ${e.inicio} às ${e.fim} · clique para agendar${por.longa?" · "+esc(por.longa):""}"><span class="aq-ev-h">${e.inicio}–${e.fim}${e.tipoFixo===false?"":` · ${esc(e.tipo||"")}`}</span><b>Livre · agendar</b>${por.curta?`<span class="aq-ev-por">${esc(por.curta)}</span>`:""}</button>`;
     // a cor é do profissional; compromisso que não é atendimento fica cinza
