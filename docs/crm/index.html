@@ -17014,7 +17014,7 @@ const PER_EST = {aguardando:"Aguardando", resposta:"Aguardando resposta", agenda
 const PER_ADV = {paulo:{nome:"Dr. Paulo", ini:"P", c:"p", o:"o Dr. Paulo", curto:"Paulo"}, amanda:{nome:"Dra. Amanda", ini:"A", c:"a", o:"a Dra. Amanda", curto:"Amanda"}};
 const PER_TEXTO = "{saudacao}, {nome}. A sua {tipo} está agendada para {dia}, {data}, às {hora}, em {local}.\n\nPara a sua preparação, vamos agendar o seu atendimento presencial com {advogado} {quando_atendimento}. Qual horário fica melhor?";
 const PER_LEMBRETE = "{saudacao}, {nome}. Lembramos que a sua {tipo} está agendada para {dia}, {data}, às {hora}, em {local}.";
-// F560: o dia proposto, como pericia_dia_atendimento no banco: o da perícia (útil, às 11:00 ou depois), senão o dia útil anterior; nunca hoje
+// F562: o dia proposto, como pericia_dia_atendimento no banco: o da perícia (útil, às 11:00 ou depois), senão o dia útil anterior; nunca hoje
 function perDiaAtend(p){
   let d = ehDiaUtil(p.dia) && p.hora >= "11:00" ? p.dia : uteisAntesPer(p.dia, 1);
   if(d <= hoje()){ d = somaDias(hoje(), 1); while(!ehDiaUtil(d) && d < p.dia) d = somaDias(d, 1); if(d > p.dia) d = p.dia; }
@@ -17068,7 +17068,7 @@ function perDetalhe(p){
   }
   return "";
 }
-// F560 · o atendimento presencial futuro do cliente (agendamentosFuturos e a agenda carregada, F554)
+// F562 · o atendimento presencial futuro do cliente (agendamentosFuturos e a agenda carregada, F554)
 const perAtend = (p, modo) => p.cli ? htmlAtend(atendimentosDe({id:p.cli.id, nome:p.cli.nome}), modo) : "";
 function perProxUtil(d){ let x = somaDias(d, 1); while(!ehDiaUtil(x)) x = somaDias(x, 1); return x; }
 function perAdvSel(p, extra){
@@ -58907,7 +58907,7 @@ function htmlAtend(m, modo){
       ${cli ? `Se for ${esc(cli.nome)}, o atendimento é de cliente (002). <button class="btn-mini" onclick="aqEhCliente('${cli.id}')" title="Agendar como cliente do escritório (002)"><span aria-hidden="true">Cliente</span><span class="sr-only">Agendar como cliente do escritório (002)</span></button>`
         : `Se for a mesma pessoa, cadastre a ficha para agendar como cliente (002).`}</div>`;
   }
-  if(modo==="per" || modo==="perprev"){   // F560 · a tela Perícias: o atendimento presencial já agendado do cliente
+  if(modo==="per" || modo==="perprev"){   // F562 · a tela Perícias: o atendimento presencial já agendado do cliente
     const e = fut[0];
     if(!e) return `<div class="${modo==="per"?"l4":"aviso"}" data-atend="${k}" data-modo="${modo}" hidden></div>`;
     const txt = `${dataBR(e.data)} às ${hmTxt(e.inicio)} com ${esc(nomeProf(e.profissional||"paulo"))}${e.confirmado?", confirmado":""}${fut.length>1?` (e mais ${fut.length-1})`:""}`;
