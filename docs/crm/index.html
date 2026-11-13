@@ -2964,6 +2964,7 @@ html[data-tema] .proc-mais[open] .tl-mais-menu{transform-origin:top right;transi
 .exp-tab{width:100%;border-collapse:collapse;font-size:13px}.exp-tab th,.exp-tab td{border-bottom:1px solid var(--linha,#e2e2e2);padding:6px 8px;text-align:left;vertical-align:top}
 .exp-tab th{font-weight:600;background:var(--fundo2,#f5f5f2)}.exp-tab td:nth-child(2){white-space:nowrap}.exp-tela{max-width:960px;width:100%}.exp-tela .exp-tab{display:block;overflow-x:auto}
 .zof-salvas{margin-top:10px;display:flex;flex-direction:column;gap:6px}.zof-it{display:flex;gap:6px}.zof-it button:first-child{flex:1;text-align:left;white-space:normal;line-height:1.35}
+.sug-anot:empty{display:none}.sug-anot .sug-anot-it{margin:0 0 8px}
 </style>
 <script>
 /* F80 · interruptor do tema v10. ?tema=v10 liga e guarda; ?tema= (vazio)
@@ -7078,7 +7079,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.77</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.78</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8499,7 +8500,7 @@ async function carregarJa(op){
 const VIGIA_MS = 180000;
 let vigiaLigada = false, vigiando = false;
 const VISTAS_VIGIADAS = ["meudia","planejado","minhas","importante","recebimentos","checagem",
-  "particulares","mencoes","novidades","calendario","quadro","tabela","periciasaviso","pessoas","quadro1","quadro2","quadro3","dashboard",
+  "particulares","mencoes","novidades","calendario","quadro","tabela","periciasaviso","sugestoesdia","pessoas","quadro1","quadro2","quadro3","dashboard",
   "auditoria"];
 function telaOcupada(){
   if(clienteAberto || buscaTxt) return true;
@@ -8621,6 +8622,7 @@ const TEMA = {
   "quadro":            ["#1e4fa3", "#f3f6fb"],
   "tabela":            ["#1e4fa3", "#f3f6fb"],
   "periciasaviso":     ["#7a4dd8", "#f2ecfc"],
+  "sugestoesdia":      ["#1e6f50", "#e9f5ef"],
   "vendas":            ["#1e6f50", "#e9f5ef"],
   "parcerias":         ["#6d4c41", "#f4eeeb"],
   "marketing":         ["#d64570", "#fdeef3"],
@@ -9590,6 +9592,7 @@ function montarSidebar(){
     ["quadro","📌 Quadro", null],
     ["tabela","▦ Tabela", null],
     ["periciasaviso","🩺 Perícias", periciasDoAviso().length||null],   // F549
+    ["sugestoesdia","💡 Sugestões do dia", null],   // F574
     // F132 · os Quadros 1, 2 e 3 saíram do menu: o "Agrupar por" do 📌 Quadro faz o mesmo numa tela só (F255)
     ["vendas","💼 Vendas", D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length],
     // o número que aparece é o que exige ação: não lida ou sem dono
@@ -12392,6 +12395,7 @@ function renderBase(){
   if(visao==="quadro") return renderQuadro();
   if(visao==="tabela") return renderTabela();
   if(visao==="periciasaviso") return renderPericiasAviso();   // F549
+  if(visao==="sugestoesdia") return renderSugestoesDia();   // F574
   if(visao==="pessoas") return renderPessoas();
   if(/^quadro[123]$/.test(visao)) return renderQuadroN(+visao.slice(-1));
   if(visao==="vendas") return renderVendas();
@@ -18951,7 +18955,104 @@ async function descartarSugestaoZap(fica){
   const ant = c.sugestao_ia; c.sugestao_ia = null;
   try{ await api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({sugestao_ia:null})}); }
   catch(e){ c.sugestao_ia = ant; aviso(msgErro(e)); }
+  // F574 · o Descartar da mensagem de iniciativa fica registrado, para a rotina das 05:00 aprender; o Usar vira "enviada" no envio
+  if(!fica && ant.sugestao_id) api(`/rest/v1/sugestoes_rotina?id=eq.${ant.sugestao_id}&estado=eq.aberta`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({estado:"descartada", decidido_em:new Date().toISOString(), decidido_por:eu.id})}).catch(()=>{});
   if(!fica) pintarConversaGuardando();
+}
+
+// F574 · a anotação sugerida (rotina das 05:00 ou mensagem da equipe no WhatsApp) fica acima do campo de escrever, fora do histórico.
+// Nada grava no caso sem o clique: Usar leva o texto ao campo, Agendar cria o evento, Descartar fecha.
+const _sugAnot = new Map();   // caso_id → {em, itens}
+function sugAnotBox(k){ setTimeout(()=>pintarSugAnot(k.id), 0); return `<div class="sug-anot" id="sug-anot" data-caso="${k.id}"></div>`; }
+async function pintarSugAnot(casoId, forcar){
+  let g = _sugAnot.get(casoId);
+  if(forcar || !g || Date.now()-g.em > 60e3){
+    try{ g = {em: Date.now(), itens: await api(`/rest/v1/sugestoes_rotina?select=id,texto,motivo,evento,origem,criado_em&caso_id=eq.${casoId}&tipo=eq.anotacao&estado=eq.aberta&order=criado_em.desc&limit=3`)}; }
+    catch(_){ g = {em: Date.now(), itens: []}; }
+    _sugAnot.set(casoId, g);
+  }
+  const el = document.getElementById("sug-anot"); if(!el || el.dataset.caso!==casoId) return;
+  el.innerHTML = (g.itens||[]).map(s=>{
+    const ev = s.evento && s.evento.data ? s.evento : null;
+    return `<div class="ze-sug-ia sug-anot-it" data-sug="${s.id}">
+      <div class="ze-sug-cab">💡 Anotação sugerida${s.origem==="whatsapp" ? " · da mensagem enviada ao cliente" : " · rotina das 05:00"}${s.motivo ? ` · <span class="meio-sub">${esc(s.motivo)}</span>` : ""}</div>
+      <div class="ze-sug-txt" style="white-space:pre-wrap">${esc(s.texto)}</div>
+      <div class="ze-sug-bts"><button type="button" class="btn-mini" onclick="usarSugAnot('${casoId}','${s.id}')">Usar</button>${ev ? `<button type="button" class="btn-mini" title="${esc((ev.tipo||"Evento")+" em "+fmt(ev.data)+(ev.hora?" às "+ev.hora:""))}" onclick="agendarSugAnot('${casoId}','${s.id}')">Agendar</button>` : ""}<button type="button" class="btn-mini" onclick="decidirSugAnot('${casoId}','${s.id}','descartada')">Descartar</button></div></div>`;
+  }).join("");
+}
+async function decidirSugAnot(casoId, id, estado){
+  const g = _sugAnot.get(casoId); if(g) g.itens = g.itens.filter(s=>s.id!==id);
+  try{ await api(`/rest/v1/sugestoes_rotina?id=eq.${id}&estado=eq.aberta`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({estado, decidido_em:new Date().toISOString(), decidido_por:eu.id})}); }
+  catch(e){ aviso(msgErro(e)); }
+  pintarSugAnot(casoId);
+}
+function usarSugAnot(casoId, id){
+  const s = ((_sugAnot.get(casoId)||{}).itens||[]).find(x=>x.id===id); if(!s) return;
+  const t = document.getElementById("and-texto");
+  if(t){ t.value = t.value.trim() ? t.value.trimEnd()+"\n"+s.texto : s.texto; t.dispatchEvent(new Event("input",{bubbles:true})); t.focus(); }
+  decidirSugAnot(casoId, id, "usada");
+}
+async function agendarSugAnot(casoId, id){
+  const s = ((_sugAnot.get(casoId)||{}).itens||[]).find(x=>x.id===id); const ev = s && s.evento; if(!ev || !ev.data) return;
+  try{
+    const [evn] = await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:casoId, tipo:ev.tipo||"Perícia", status:"agendada", data_hora:`${ev.data}T${ev.hora||"09:00"}:00-03:00`, local:ev.local||null, obs:String(s.texto||"").slice(0,160)})})||[];
+    if(evn) D.eventos.push(evn);
+    aviso(`${ev.tipo||"Evento"} agendado em ${fmt(ev.data)}`);
+    montarSidebar();
+  }catch(e){ return aviso("Não agendei: "+msgErro(e)); }
+}
+
+// F574 · Sugestões do dia: as mensagens de iniciativa que a rotina das 05:00 escreveu. Enviar põe na fila da ponte; nada sai sem o clique.
+async function renderSugestoesDia(){
+  tituloLista("💡 Sugestões do dia");
+  const meio = document.getElementById("conteudo-meio");
+  meio.innerHTML = `<p class="meio-sub">Carregando…</p>`;
+  let itens = [];
+  try{ itens = await api(`/rest/v1/sugestoes_rotina?select=id,texto,motivo,conversa_id,cliente_id,caso_id,criado_em&tipo=eq.mensagem&estado=eq.aberta&order=criado_em.asc&limit=100`); }
+  catch(e){ meio.innerHTML = `<p class="meio-sub">Não carreguei: ${esc(msgErro(e))}</p>`; return; }
+  if(visao!=="sugestoesdia") return;
+  const pode = souAdmin() || zapGestor();
+  document.getElementById("sub-lista").innerHTML = `<span class="meio-sub">${itens.length} para conferir</span>`;
+  const chave = (k, rot) => `<label class="meio-sub" style="margin-right:12px"><input type="checkbox" data-cfg="${k}" ${cfgApp(k)==="sim"?"checked":""}> ${rot}</label>`;
+  meio.innerHTML = `${souAdmin() ? `<div style="margin:0 0 12px">${chave("zap_iniciativa_ligada","Rotina das 05:00 sugere mensagens")}${chave("zap_anotacao_ligada","Sugerir anotação após mensagem da equipe")}</div>` : ""}
+    ${itens.length && pode ? `<button type="button" class="btn-mini proc-pri" id="sug-todas">Enviar todas</button>` : ""}
+    ${itens.length ? itens.map(s=>{ const c = D.cliPorId ? D.cliPorId.get(s.cliente_id) : (D.clientes||[]).find(x=>x.id===s.cliente_id);
+      return `<div class="cartao sug-dia" data-sug="${s.id}" style="display:block;padding:10px;margin:8px 0">
+        <div><strong>${esc(c ? c.nome : "Cliente")}</strong>${s.motivo ? ` · <span class="meio-sub">${esc(s.motivo)}</span>` : ""}</div>
+        <textarea class="sug-dia-txt" rows="4" style="width:100%;margin:6px 0" ${s.conversa_id?"":"disabled"}>${esc(s.texto)}</textarea>
+        <div>${s.conversa_id ? `<button type="button" class="btn-mini" data-ac="enviar">Enviar</button>` : `<span class="meio-sub">Sem conversa do WhatsApp</span>`}
+          <button type="button" class="btn-mini" data-ac="descartar">Descartar</button>${c ? ` <button type="button" class="btn-mini" data-ac="ficha">Ficha</button>` : ""}</div></div>`; }).join("")
+      : `<p class="meio-sub">Nenhuma mensagem sugerida em aberto.</p>`}`;
+  meio.onchange = async ev=>{ const k = ev.target.dataset && ev.target.dataset.cfg; if(!k) return;
+    try{ await guardarCfgApp(k, ev.target.checked ? "sim" : "nao"); aviso("Gravado"); }catch(e){ ev.target.checked = !ev.target.checked; aviso(msgErro(e)); } };
+  const enviar = async (s, txt) => {
+    await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({conversa_id:s.conversa_id, direcao:"saida", autor_id:eu.id, texto:txt, status:"fila"})});
+    // o gatilho do envio já marca "enviada" com o texto final; o PATCH cobre a conversa que mudou de sugestão
+    await api(`/rest/v1/sugestoes_rotina?id=eq.${s.id}&estado=eq.aberta`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({estado:"enviada", texto_final:txt, decidido_em:new Date().toISOString(), decidido_por:eu.id})});
+  };
+  meio.onclick = async ev=>{
+    const b = ev.target.closest("button"); if(!b) return;
+    if(b.id==="sug-todas"){
+      const cards = [...meio.querySelectorAll(".sug-dia")].filter(x=>!x.querySelector(".sug-dia-txt").disabled);
+      if(!confirm(`Enviar ${cards.length} mensagem(ns) aos clientes?`)) return;
+      let n = 0; for(const el of cards){ const s = itens.find(x=>x.id===el.dataset.sug); const t = el.querySelector(".sug-dia-txt").value.trim(); if(!t) continue;
+        try{ await enviar(s, t); n++; }catch(e){ aviso(msgErro(e)); } }
+      aviso(`${n} enviada(s)`); return renderSugestoesDia();
+    }
+    const el = b.closest(".sug-dia"); if(!el) return; const s = itens.find(x=>x.id===el.dataset.sug);
+    if(b.dataset.ac==="ficha") return abrirFicha(s.cliente_id);
+    try{
+      if(b.dataset.ac==="enviar"){ const t = el.querySelector(".sug-dia-txt").value.trim(); if(!t) return; await enviar(s, t); aviso("Enviada"); }
+      if(b.dataset.ac==="descartar") await api(`/rest/v1/sugestoes_rotina?id=eq.${s.id}&estado=eq.aberta`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({estado:"descartada", decidido_em:new Date().toISOString(), decidido_por:eu.id})});
+    }catch(e){ return aviso(msgErro(e)); }
+    el.remove();
+  };
 }
 // F563 · Outra (sugestão em sentido diverso) e Aprofundar (consulta completa, só no clique). Nada é enviado.
 function iaSugestaoZap(acao){
@@ -44552,7 +44653,7 @@ function composerCaso(k){
         + `<button class="esc-pill btn-rap tf-dt" id="tf-escolher" onclick="tfEscolherData(this)" title="escolher a data no calendário">Escolher</button>
         <input type="date" class="tf-data" id="tf-data" style="display:none" onchange="tfDia(this.value,this)">`;
   const escrever = v10
-    ? `<div class="escrever esc-v12">
+    ? `${encerrado ? "" : sugAnotBox(k)}<div class="escrever esc-v12">
       ${area}${encerrado ? "" : botaoGravarCaso(k)}
       <div class="esc-barra" id="tf-box">
         <div class="esc-linha esc-tgs">${chips}<span class="esc-sep" aria-hidden="true"></span>${tg("compromisso","Tarefa","trabalho marcado para alguém num dia")}${prazoTg}${tg("lembrete","Lembrete","só um aviso no dia, por padrão para você")}${ferr}<button class="esc-ic esc-mais-ic" aria-expanded="false" onclick="const l=this.parentNode;l.classList.toggle('ics');this.setAttribute('aria-expanded',l.classList.contains('ics'))" title="Mais: anexar, mencionar, documentos, importante">⋯<span class="sr-only"> mais</span></button></div>
@@ -44569,7 +44670,7 @@ function composerCaso(k){
       <div id="and-prazo-chip"></div>
       ${caixas}
     </div>`
-    : `<div class="escrever">
+    : `${encerrado ? "" : sugAnotBox(k)}<div class="escrever">
       <div class="tipo-fila" id="tipo-fila">${chips}${umClique}</div>
       ${area}${encerrado ? "" : botaoGravarCaso(k)}
       <div class="esc-barra" id="tf-box">
