@@ -45,9 +45,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
 
   conf("o ? do título aparece no Meu Dia", await p.locator(".ajuda-tit").isVisible());
-  conf("o ? fixo aparece", await p.locator("#fab-ajuda").isVisible());
-  const [fa, fs2] = await p.evaluate(() => ["fab-ajuda","fab-sug"].map(i => document.getElementById(i).getBoundingClientRect()).map(r => ({ l: r.left, r: r.right, t: r.top, b: r.bottom })));
-  conf("o ? fixo não cobre o Sugestões", fa.r <= fs2.l || fa.b <= fs2.t);
+  conf("F568 · sem o ? fixo entre os flutuantes", await p.locator("#fab-ajuda").count() === 0);
   await p.click(".ajuda-tit");
   conf("o ? do Meu Dia abre a ajuda do Meu Dia", /Ajuda: Meu Dia/.test(await p.locator("#modal").innerText()));
   conf("todo assunto da lista tem texto", await p.evaluate(() => AJUDA_GRUPOS.every(([, ks]) => ks.every(k => AJUDA[k]))));
@@ -71,12 +69,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.locator(".menu-topo .ajuda-bt").first().click();
   conf("o ? da barra abre a ajuda da ficha", /Ajuda: Ficha do cliente/.test(await p.locator("#modal").innerText()));
   await p.evaluate(() => fecharCaixa());
-  await p.click("#fab-ajuda");
-  conf("o ? fixo na ficha abre a ajuda do caso", /Ajuda: Caso/.test(await p.locator("#modal").innerText()));
-  await p.evaluate(() => fecharCaixa());
   await p.evaluate(() => { document.documentElement.setAttribute("data-nivel", "1"); });
   conf("no nível 1 o ? da ficha continua", await p.locator(".menu-topo .ajuda-bt").first().isVisible());
-  conf("no nível 1 o ? fixo continua", await p.locator("#fab-ajuda").isVisible());
   conf("sem erro de página", !p._erros.length);
   if (p._erros.length) console.log(p._erros);
 

@@ -7070,7 +7070,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.71</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.72</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7191,11 +7191,10 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
 <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
 <button class="fab-rapida" id="fab-rapida" onclick="anotacaoRapida()"
   title="anotação rápida (ligação ou balcão) — o registro nasce urgente">⚡</button>
-<button class="fab-ajuda" id="fab-ajuda" type="button" onclick="ajuda(null,event)" title="como usar esta tela" aria-label="Ajuda">?</button>
 <button class="fab-sug" id="fab-sug" onclick="abrirSugestao()"
   title="anotar um erro, uma correção ou uma melhoria do CRM; somente o Paulo lê" aria-label="Sugestões">✎<span class="fab-sug-t"> Sugestões</span></button>
 <div class="zap-ag" id="zap-ag"></div>
-<button class="fab-juntos" id="fab-juntos" type="button" onclick="alternarFabs()" aria-expanded="false" aria-label="Atalhos" title="agenda, sugestões, ajuda e anotação rápida">⋯</button>
+<button class="fab-juntos" id="fab-juntos" type="button" onclick="alternarFabs()" aria-expanded="false" aria-label="Atalhos" title="agenda, sugestões e anotação rápida">⋯</button>
 <div id="modal" style="display:none"></div>
 
 <script>
@@ -15768,7 +15767,7 @@ const natPlan = i => i.ev||i.evPassado||i.avisar||i.novEv||i.selo==="Pauta" ? "p
 let filtroPlanNat = "";
 function alternarFabs(){ const a=document.getElementById("app"), on=a.classList.toggle("fabs-on"), b=document.getElementById("fab-juntos"); if(b){ b.textContent=on?"✕":"⋯"; b.setAttribute("aria-expanded", on); } if(!on && visao==="whatsapp" && zagAberta()) zagAlternar(); }
 // F558 · os flutuantes se arrastam (mouse e toque); clique simples continua abrindo. Posição por aparelho, uma para o celular e outra para o computador.
-const FAB_ARRASTA = ["fab-rapida","fab-ajuda","fab-sug","zap-ag","fab-juntos"];
+const FAB_ARRASTA = ["fab-rapida","fab-sug","zap-ag","fab-juntos"];
 const fabChave = () => "crm_fab_pos" + (document.getElementById("app")?.classList.contains("celular") ? "_cel" : "");
 function fabLer(){ try{ return JSON.parse(localStorage.getItem(fabChave())||"{}")||{}; }catch(e){ return {}; } }
 function fabGravar(p){ try{ localStorage.setItem(fabChave(), JSON.stringify(p)); }catch(e){} }

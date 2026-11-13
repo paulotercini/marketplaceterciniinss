@@ -728,6 +728,8 @@ A **F559** (13.66, pedido do Paulo de 12.11.2026): o **Ver** da tabela Expedient
 
 A **F560** (pedido do Paulo de 12.11.2026, um atendimento de urgência agendado fora do dia de atendimento): o `disponibilidade` do `Code.gs` devolvia apenas os dias programados (`proximosDias_`), e o atendimento agendado em outro dia (pelo "outro horário" da F309 ou direto no Google) não aparecia na agenda de ninguém. Agora `disponibilidade_` lê todos os dias do período até o último dia programado e inclui também o dia com atendimento do profissional (`ehAtendimento_`, `contaPara_`), marcado `foraDoPrograma`, sem vagas livres; vale para todos os profissionais e para toda a equipe. Publicado pelo `agenda-deploy.yml`, sem mudança no CRM. Teste: `f309.js`.
 
+A **F568** (13.72, pedido do Paulo de 13.11.2026, "só atrapalha"): o "?" fixo da coluna dos flutuantes (`#fab-ajuda`, F313) saiu, e com ele o seu arrasto da F558 (`FAB_ARRASTA`); a ajuda continua pelo "?" ao lado do título de cada lista e pelos "?" pequenos da ficha, do atendimento e dos prazos (`pintarAjudas`). O ⋯ dos atalhos do celular reúne agenda, sugestões e anotação rápida. Testes ajustados: `f313.js` e `zapcel.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
