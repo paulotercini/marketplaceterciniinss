@@ -718,3 +718,9 @@ console.log("formal: ok");
   assert.ok(CORRECOES.includes("Abertura") && CORRECOES.includes("sem ficha") && CORRECOES.includes("comprovante"));
   console.log("abertura pela IA: ok");
 }
+
+// F580: mensagem encaminhada pelo cliente vem marcada para a IA
+assert.match(transcricao([{ direcao: "entrada", por_bot: false, tipo: "texto", texto: "Seu benefício foi liberado", encaminhada: 1, momento: "2026-11-13T12:00:00Z" }]), /Cliente: \[encaminhada\] Seu benefício/);
+assert.match(transcricao([{ direcao: "entrada", por_bot: false, tipo: "texto", texto: "corrente", encaminhada: 5, momento: "2026-11-13T12:00:00Z" }]), /\[encaminhada com frequência\] corrente/);
+assert.equal(transcricao([{ direcao: "entrada", por_bot: false, tipo: "texto", texto: "oi", momento: "2026-11-13T12:00:00Z" }]).includes("encaminhada"), false);
+console.log("F580 plantão ok");
