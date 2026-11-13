@@ -738,6 +738,8 @@ A **F571** (13.75, aprovação do Paulo de 13.11.2026): as análises feitas nos 
 
 A **F572** (13.76, pedido do Paulo de 13.11.2026, a aba do Chrome que caía com STATUS_BREAKPOINT logo depois de enviar a mensagem no WhatsApp): no computador, o campo de escrever da conversa (`#zap-txt`) deixou o `field-sizing` (F422), porque a troca entre `content` e `fixed` pelo `:placeholder-shown` no campo esvaziado com o foco era a causa provável da queda; a altura vem só do `oninput` (até 140 px), o campo vazio fica em 22 px e `enviarZap` limpa a altura em linha. A queda não se reproduziu em navegador automatizado. Teste: `testes/cadastro/f572.js` (três envios seguidos sem queda da página).
 
+A **F573** (13.77, pedido do Paulo de 13.11.2026, a aba que ainda caía depois de enviar, com a F572 publicada): o campo de escrever do WhatsApp deixou de depender de `:has(#zap-txt:placeholder-shown)` e de `#zap-txt:placeholder-shown`, que trocavam o Enviar (com o foco) pelo microfone e a altura do campo no mesmo instante em que `enviarZap` o esvazia. A `.ze-linha` leva a classe `ze-vazio`, posta por `travaZap` (no `oninput`, na pintura e onde o texto é posto por código: rascunho, ditado, documentos, repintura e falha do envio); o envio não a troca, e quem a acerta é a repintura da conversa. Texto posto por código no `#zap-txt` chama `travaZap()` ou dispara `input`. Teste: `f572.js` (11 itens).
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
