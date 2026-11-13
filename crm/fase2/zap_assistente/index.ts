@@ -107,6 +107,16 @@ const PROIBE = `Não prometa resultado, prazo ou valor, não dê parecer jurídi
 const DIVERSO = (anterior: string, orientacao: string) =>
   (anterior.trim() ? `\n\nSugestão anterior, que a equipe não quis usar (não a repita nem a parafraseie; siga outro caminho):\n<anterior>\n${mascarar(anterior).slice(0, 1500)}\n</anterior>` : "") +
   (orientacao.trim() ? `\n\nOrientação de quem pede (vale acima do tom da sugestão anterior; as proibições continuam): ${mascarar(orientacao).slice(0, 500)}` : "");
+// F581 · o que a equipe descartou ou reescreveu nos últimos 30 dias ensina o tom e o conteúdo; os números saem mascarados
+export type Retorno = { modo?: string; sugestao?: string; enviado?: string | null; acao?: string };
+export function preferencias(rs: Retorno[]) {
+  const l = (Array.isArray(rs) ? rs : []).filter((r) => r && r.sugestao && (r.acao === "descartada" || (r.acao === "editada" && r.enviado))).slice(0, 8)
+    .map((r) => r.acao === "editada"
+      ? `- A IA sugeriu: "${mascarar(String(r.sugestao)).slice(0, 300)}"\n  A equipe enviou: "${mascarar(String(r.enviado)).slice(0, 300)}"`
+      : `- Descartada: "${mascarar(String(r.sugestao)).slice(0, 300)}"`);
+  return l.length ? `\n\nPreferências da equipe, tiradas das últimas sugestões descartadas ou reescritas (siga o padrão do texto enviado, ` +
+    `evite o das descartadas; são exemplos de estilo, e não fatos deste cliente):\n<preferencias_da_equipe>\n${l.join("\n")}\n</preferencias_da_equipe>` : "";
+}
 export function promptOutra(nome: string, casos: string[], conversa: string, quem: string, anterior = "", orientacao = "") {
   return `${REGRAS}\n\nCliente: ${nome || "não identificado"}. Casos abertos: ${casos.join("; ") || "nenhum"}.\n\n` +
     `<conversa>\n${conversa}\n</conversa>\n\nEscreva a próxima mensagem do escritório ao cliente, cordial e curta (até 4 frases), ` +
@@ -251,13 +261,15 @@ if (typeof Deno !== "undefined") {
         return json({ texto: devolverNumeros(r, nums) });
       }
 
+      const retornos = () => ler(`zap_sugestao_retorno?select=modo,sugestao,enviado,acao&acao=in.(editada,descartada)&em=gte.${new Date(Date.now() - 30 * 864e5).toISOString()}&order=em.desc&limit=8`)
+        .then(preferencias).catch(() => "");
       if (m.acao === "resumo" || m.acao === "rascunho") {
         const msgs: Msg[] = (await ler(`zap_mensagens?select=direcao,por_bot,tipo,texto,criado_em&conversa_id=eq.${convId}&order=seq.desc&limit=40`)).reverse();
         const conversa = transcricao(msgs);
         if (!conversa) return json({ erro: "conversa sem mensagens" }, 400);
         const [txt] = m.acao === "rascunho" ? await ler(`config_app?select=valor&chave=eq.zap_ia_txt_rascunho`) : [];
         const p = m.acao === "resumo" ? promptResumo(primeiroNome(cli?.nome), casos.map(linhaDoCaso), conversa)
-          : promptRascunho(primeiroNome(cli?.nome), casos.map(linhaDoCaso), conversa, String(txt?.valor || ""));
+          : promptRascunho(primeiroNome(cli?.nome), casos.map(linhaDoCaso), conversa, String(txt?.valor || "")) + await retornos();
         return json({ texto: await claude([{ type: "text", text: p }]) });
       }
 
@@ -268,7 +280,7 @@ if (typeof Deno !== "undefined") {
         if (!conversa) return json({ erro: "conversa sem mensagens" }, 400);
         const quem = quemEscreve(primeiroNome(eu.nome), String(eu.cargo || ""));
         const anterior = String(m.anterior || ""), orientacao = String(m.orientacao || "");
-        if (!fundo) return json({ texto: await claude([{ type: "text", text: promptOutra(primeiroNome(cli?.nome), casos.map(linhaDoCaso), conversa, quem, anterior, orientacao) }]) });
+        if (!fundo) return json({ texto: await claude([{ type: "text", text: promptOutra(primeiroNome(cli?.nome), casos.map(linhaDoCaso), conversa, quem, anterior, orientacao) + await retornos() }]) });
         const ids = casos.map((k) => k.id).join(",");
         const chave = `${convId}|${ids}`, guardado = CACHE_DOSSIE.get(chave);
         const [det, notas, portais, evs, docs] = guardado && Date.now() - guardado.em < TTL_DOSSIE ? guardado.v : ids ? await Promise.all([
@@ -290,7 +302,7 @@ if (typeof Deno !== "undefined") {
           agenda: lista(m.agenda), prazos: lista(m.prazos),
           documentos: (Array.isArray(docs) ? docs : []).filter((a: Record<string, any>) => RX_DOC_DECISIVO.test(a.nome || "") && String(a.texto || "").trim()).map(linhaDoc),
         };
-        const t = await claude([{ type: "text", text: promptAprofundar(primeiroNome(cli?.nome), d, conversa, quem, anterior, orientacao) }],
+        const t = await claude([{ type: "text", text: promptAprofundar(primeiroNome(cli?.nome), d, conversa, quem, anterior, orientacao) + await retornos() }],
           { type: "json_schema", schema: ESQUEMA_APROF }, "high");
         const r = JSON.parse(t);
         // registro de quem pediu (RLS: o próprio colaborador); a falha do registro não perde a resposta

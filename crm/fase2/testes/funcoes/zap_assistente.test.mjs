@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_assistente.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, pedidosAbertos, promptRascunho, primeiroNome, guardarNumeros, devolverNumeros, promptCorrigir, promptOutra, promptAprofundar, quemEscreve, linhaAnd, ESQUEMA_APROF, RX_DOC_DECISIVO, linhaDoc, providenciaDe } from "../../zap_assistente/index.ts";
+import { mascarar, transcricao, pedidosAbertos, promptRascunho, primeiroNome, guardarNumeros, devolverNumeros, promptCorrigir, promptOutra, promptAprofundar, quemEscreve, linhaAnd, ESQUEMA_APROF, RX_DOC_DECISIVO, linhaDoc, providenciaDe, preferencias } from "../../zap_assistente/index.ts";
 
 assert.equal(mascarar("meu CPF 123.456.789-09 e NB 1234567890"), "meu CPF [número] e NB [número]");
 assert.equal(mascarar("dia 12/03 às 9h, 3 filhos"), "dia 12/03 às 9h, 3 filhos", "data curta e número pequeno ficam");
@@ -53,4 +53,10 @@ assert.ok(RX_DOC_DECISIVO.test("Comunicação de decisão") && RX_DOC_DECISIVO.t
 assert.equal(linhaDoc({ nome: "Laudo pericial", criado_em: "2026-11-05T10:00:00Z", texto: "Conclusão: incapaz." }), "Laudo pericial, de 05/11/2026:\nConclusão: incapaz.");
 const a2 = promptAprofundar("Maria", { casos: [], anotacoes: [], andamentos: [], eventos: [], agenda: [], prazos: [], documentos: ["Laudo pericial, de 05/11/2026:\nCPF 123.456.789-09 incapaz"] }, "x", q);
 assert.ok(a2.includes("<documentos_decisivos>") && !a2.includes("123.456") && a2.includes("pendencias"));
+// F581 · preferências da equipe: editada mostra o par, descartada só a sugestão, usada fica de fora, números mascarados
+assert.equal(preferencias([]), "");
+assert.equal(preferencias({ message: "erro" }), "");
+const pf = preferencias([{ acao: "editada", sugestao: "Olá, tudo bem? Vou verificar.", enviado: "Bom dia. Vou verificar o protocolo 123456789." },
+  { acao: "descartada", sugestao: "Prezado cliente, aguarde." }, { acao: "usada", sugestao: "Não entra" }]);
+assert.ok(pf.includes("<preferencias_da_equipe>") && pf.includes("A equipe enviou") && pf.includes("Descartada") && !pf.includes("Não entra") && !pf.includes("123456789"));
 console.log("zap_assistente: ok");
