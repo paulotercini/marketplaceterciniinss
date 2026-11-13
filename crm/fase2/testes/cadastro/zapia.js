@@ -43,7 +43,7 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   const RESP = { resumo: { texto: "O cliente pergunta se a aposentadoria saiu." }, rascunho: { texto: "Bom dia! Vamos conferir e retornamos hoje." },
     corrigir: { texto: "Bom dia. O atendimento está agendado para o dia 12/11." },
     outra: { texto: "Bom dia. Conferimos e retornamos ainda hoje." },
-    aprofundar: { texto: "Bom dia. A perícia do INSS está agendada para 20/11.", bases: ["andamento do PAT de 05/11/2026"] },
+    aprofundar: { texto: "Bom dia. A perícia do INSS está agendada para 20/11.", bases: ["andamento do PAT de 05/11/2026"], providencia: { tipo: "prazo", rotulo: "Apresentar os quesitos da perícia", data: "2026-12-05", caso_id: CASO } },
     documento: { tipo: "laudo médico", nome: "Laudo do ortopedista", caso_id: CASO, motivo: "o caso pede laudo" } };
   await ctx.route(SUPA + "/**", rota => {
     const u = decodeURIComponent(rota.request().url()), m = rota.request().method();
@@ -148,6 +148,7 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   const ap = escritas.find(e => /zap_assistente/.test(e.u) && e.b.acao === "aprofundar");
   conf("F563 · Aprofundar leva a sugestão anterior", ap && ap.b.anterior === "Bom dia. Conferimos e retornamos ainda hoje.");
   conf("F563 · e mostra em que se baseou", (await p.textContent(".ze-sug-base").catch(() => "")).includes("andamento do PAT de 05/11/2026"));
+  conf("F580 · a próxima providência vira o botão Prazo 05/12", !!(await p.$('.ze-sug-bts button[onclick="providenciaZap()"]:has-text("Prazo 05/12")')));
   await p.evaluate(() => descartarSugestaoZap());
   conf("F479 · nada foi enviado ao cliente", !escritas.some(e => e.m === "POST" && /rest\/v1\/zap_mensagens/.test(e.u)));
 
