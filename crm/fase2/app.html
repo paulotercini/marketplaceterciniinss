@@ -7079,7 +7079,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.79</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.80</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18342,7 +18342,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            <button class="btn-mini" onclick="descartarSugestaoZap()" title="Descartar a sugestão">Descartar<span class="sr-only"> a sugestão</span></button>
            <button class="btn-mini" onclick="iaSugestaoZap('outra')" title="Pedir outra sugestão, em sentido diverso desta">Outra<span class="sr-only"> sugestão</span></button>
            <button class="btn-mini" onclick="iaSugestaoZap('aprofundar')" title="Consulta completa: anotações, andamentos, prazos, perícias, agenda e mensagens">Aprofundar<span class="sr-only"> a sugestão</span></button></div>
-         ${(c.sugestao_ia.bases||[]).length?`<div class="ze-sug-base">Baseada em: ${c.sugestao_ia.bases.map(esc).join("; ")}</div>`:""}</div>`:""}
+         ${(c.sugestao_ia.bases||[]).length?`<div class="ze-sug-base">Baseada em:<ul style="margin:2px 0 0 16px;padding:0">${c.sugestao_ia.bases.map(b=>`<li>${esc(b)}</li>`).join("")}</ul></div>`:""}</div>`:""}
        <div class="ze-modos" role="tablist" aria-label="Para quem é o texto">
          <button role="tab" aria-selected="${!zapNota}" class="${zapNota?"":"on"}" onclick="${zapNota?"alternarNota()":""}" title="Responder ao cliente">Responder<span class="sr-only"> ao cliente</span></button>
          <button role="tab" aria-selected="${zapNota}" class="${zapNota?"on nota":""}" id="zap-btn-nota"
@@ -19065,11 +19065,16 @@ async function renderSugestoesDia(){
   };
 }
 // F563 · Outra (sugestão em sentido diverso) e Aprofundar (consulta completa, só no clique). Nada é enviado.
+// F578 · atalhos de direção: um clique pede a sugestão já com a orientação
+const IA_ATALHOS = [["Curta","Mais curta, em até duas frases."],["Formal","Mais formal, no registro de carta do escritório."],
+  ["Documento","Peça ao cliente o documento que falta, dizendo qual e como enviar."],["Prazo","Explique o prazo ou o tempo de espera em linguagem simples."],
+  ["Encerrar","Encerre o assunto com cordialidade, sem abrir pergunta nova."]];
 function iaSugestaoZap(acao){
   const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
   const fundo = acao==="aprofundar";
   caixa(`<strong>${fundo?"Aprofundar a sugestão":"Outra sugestão"}</strong>
     <p class="meio-sub">${fundo?"A IA consulta as anotações, os andamentos do INSS, do CRPS e do Judicial, os prazos, as perícias, a agenda e as mensagens. Leva mais tempo.":"A IA escreve outra resposta, sem repetir a sugestão atual."} Nada é enviado ao cliente.</p>
+    <div class="ia-atalhos" style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0">${IA_ATALHOS.map(([r,o])=>`<button class="btn-mini" title="${esc(o)}" onclick="document.getElementById('ia-orient').value=${esc(JSON.stringify(o))};pedirSugestaoZap('${fundo?"aprofundar":"outra"}')">${r}</button>`).join("")}</div>
     <label style="display:block">Orientação (opcional)<textarea id="ia-orient" rows="2" style="width:100%" placeholder="Ex.: mais curta, explicar a perícia"></textarea></label>
     <div class="form-linha" style="margin-top:8px"><button class="btn-rap" onclick="pedirSugestaoZap('${fundo?"aprofundar":"outra"}')">Pedir<span class="sr-only"> a sugestão</span></button></div>`);
   setTimeout(()=>document.getElementById("ia-orient")?.focus(), 30);
