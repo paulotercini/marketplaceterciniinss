@@ -7096,7 +7096,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.86</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.87</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18346,6 +18346,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
                ${cli?`<button onclick="quemConversa()" title="dizer se quem escreve é o próprio cliente ou outra pessoa por ele">Identificar quem escreve</button>`:`<button onclick="vincularConversa()" title="Vincular a um cliente">Vincular<span class="sr-only"> a um cliente</span></button>
                <button onclick="this.closest('details').open=false;nomearConversa()" title="Alterar o nome do contato"><span aria-hidden="true">Renomear</span><span class="sr-only">Alterar o nome do contato</span></button>`}
                <button onclick="this.closest('details').open=false;verFavoritasZap()">Mensagens favoritas${zapMsgs.some(m=>m.favorita_em)?` (${zapMsgs.filter(m=>m.favorita_em).length})`:""}</button>
+               <button onclick="this.closest('details').open=false;baixarConversaZap()" title="baixar a conversa em MD ou PDF, inteira ou desde uma data">Baixar<span class="sr-only"> a conversa</span></button>
                <button class="zt-cel zt-desler" onclick="marcarNaoLida()" title="${c.nao_lidas?"Marcar como lida, sem responder":"Marcar como não lida"}"><span aria-hidden="true">${c.nao_lidas?"Lida":"Desler"}</span><span class="sr-only">${c.nao_lidas?"Marcar como lida":"Marcar como não lida"}</span></button>
                <button onclick="silenciarZap()" title="sem aviso desta conversa por um tempo">${silenciadaZap(c.id)?`🔕 Silenciada até ${new Date(zapSilencio.get(c.id)).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})}`:"🔕 Silenciar"}</button>
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
@@ -18980,6 +18981,60 @@ function verFavoritasZap(){
       <span class="meio-sub">${m.direcao==="entrada"?"Cliente":"Escritório"} · ${diaZap(m.quando_wa||m.criado_em)}, ${horaSP(m.quando_wa||m.criado_em)}</span>
       <span>${esc(textoCurto(m))}</span></button>`).join("")}</div>`
     : `<p class="meio-sub">Nenhuma mensagem favorita nesta conversa. Segure o balão (ou passe o mouse) e toque em ★ para guardar uma.</p>`}`);
+}
+// F585 · baixar a conversa inteira, ou desde uma data, em MD ou PDF (o PDF sai pela impressão do navegador)
+function baixarConversaZap(){
+  caixa(`<h3>Baixar a conversa</h3>
+    <p class="meio-sub">Sem data, sai a conversa inteira. Áudio, foto e documento aparecem pelo nome, com a transcrição ou a legenda.</p>
+    <label class="meio-sub">Desde <input type="date" id="zbx-desde"></label>
+    <label class="meio-sub" style="display:block;margin:8px 0"><input type="checkbox" id="zbx-notas"> Incluir as notas internas</label>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn-mini pri" onclick="baixarZapComo('md')" title="Baixar em Markdown (.md)">MD</button>
+      <button class="btn-mini" onclick="baixarZapComo('pdf')" title="Abrir para salvar em PDF">PDF</button>
+    </div>`);
+}
+const dataBrZap = ts => dataSP(ts).split("-").reverse().join("/");
+function linhasConversaZap(c, desde, notas){
+  const ini = desde ? new Date(desde+"T00:00:00-03:00") : null;
+  return zapMsgs.filter(m => !["rascunho","agendada"].includes(m.status)
+      && (notas || m.direcao!=="interna")
+      && (!ini || new Date(m.quando_wa||m.criado_em) >= ini))
+    .map(m => {
+      const d = m.quando_wa||m.criado_em;
+      const quem = m.direcao==="entrada" ? nomeDaConversa(c)
+        : m.direcao==="interna" ? `Nota interna · ${(D.colPorId.get(m.autor_id)||{}).nome||"escritório"}`
+        : m.por_bot ? "Robô" : m.aviso_chave ? "Aviso automático"
+        : (D.colPorId.get(m.autor_id)||{}).nome || "Escritório";
+      const tipo = {audio:"Áudio", imagem:"Foto", video:"Vídeo", documento:"Documento", figurinha:"Figurinha", localizacao:"Localização"}[m.tipo];
+      const anexo = tipo ? `[${tipo}${m.midia_nome?": "+m.midia_nome:""}]` : "";
+      const obs = [m.encaminhada||m.encaminhada_de ? "↪ Encaminhada" : "", m.editada_em ? "editada" : "",
+                   m.apagada_em ? `apagada em ${dataBrZap(m.apagada_em)}` : "", m.status==="erro" ? "não enviada" : ""].filter(Boolean);
+      return {quando:`${dataBrZap(d)} ${horaSP(d)}`, quem, texto:[anexo, m.texto||""].filter(Boolean).join(" "), obs};
+    });
+}
+function baixarZapComo(fmt){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  const desde = document.getElementById("zbx-desde").value, notas = document.getElementById("zbx-notas").checked;
+  const ls = linhasConversaZap(c, desde, notas);
+  if(!ls.length){ aviso("Nenhuma mensagem nesse período"); return; }
+  const nome = nomeDaConversa(c), tit = `Conversa no WhatsApp com ${nome}${c.telefone?` (${foneZap(c.telefone)})`:""}`;
+  const sub = `${desde ? `Desde ${desde.split("-").reverse().join("/")}` : "Conversa inteira"} · ${ls.length} mensagens · baixada em ${dataBrZap(new Date().toISOString())} ${horaSP(new Date().toISOString())}`;
+  if(fmt==="md"){
+    const md = `# ${tit}\n\n${sub}\n\n` + ls.map(l => `**${l.quando} · ${l.quem}**${l.obs.length?` _(${l.obs.join(", ")})_`:""}\n\n${l.texto.replace(/\n/g,"  \n")||"(sem texto)"}\n`).join("\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([md], {type:"text/markdown;charset=utf-8"}));
+    a.download = `conversa-${nome.normalize("NFD").replace(/[^\w]+/g,"-").replace(/^-|-$/g,"").toLowerCase()}-${new Date().toISOString().slice(0,10)}.md`;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
+    fecharCaixa(); return;
+  }
+  const guia = window.open("", "_blank"); if(!guia){ aviso("O navegador bloqueou a janela; permita pop-ups"); return; }
+  guia.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${esc(tit)}</title><style>
+    body{font:11pt/1.45 Arial,sans-serif;margin:24px;color:#111} h1{font-size:15pt;margin:0 0 4px} .sub{color:#555;margin:0 0 16px}
+    .m{margin:0 0 10px;page-break-inside:avoid} .q{font-weight:bold} .o{color:#666;font-style:italic} .t{white-space:pre-wrap}
+    @page{size:A4;margin:16mm}</style></head><body><h1>${esc(tit)}</h1><p class="sub">${esc(sub)}</p>
+    ${ls.map(l=>`<div class="m"><div><span class="q">${esc(l.quando)} · ${esc(l.quem)}</span>${l.obs.length?` <span class="o">(${esc(l.obs.join(", "))})</span>`:""}</div><div class="t">${esc(l.texto)||"(sem texto)"}</div></div>`).join("")}
+    <script>window.print()<\/script></body></html>`);
+  guia.document.close(); fecharCaixa();
 }
 const textoCurto = m => !m ? "" : ((m.tipo&&m.tipo!=="texto"?"["+m.tipo+"] ":"") + (m.texto||"")).replace(/\s+/g," ").slice(0,90);
 function irParaMsg(id){ let el=document.getElementById("zb-"+id);
