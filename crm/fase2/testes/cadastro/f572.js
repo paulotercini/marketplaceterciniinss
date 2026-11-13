@@ -1,4 +1,4 @@
-// F572 · o erro de página depois de enviar no WhatsApp (pedido do Paulo de 13.11.2026): o campo de escrever do computador
+// F572/F573 · o erro de página depois de enviar no WhatsApp (pedido do Paulo de 13.11.2026): o campo de escrever do computador
 // trocava field-sizing content/fixed quando esvaziava com foco, e o Chrome derrubava a aba (STATUS_BREAKPOINT). Envia
 // três vezes (Enter, Enter e botão) num computador de 1440 px e confere que a aba segue viva, que cada envio grava, que o
 // campo volta vazio, baixo e com foco, que cresce com várias linhas e que não usa field-sizing. Dados fictícios.
@@ -87,7 +87,17 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.waitForSelector(".zap-conv"); await p.click(".zap-conv");
     await p.waitForSelector("#zap-msgs .zap-b");
     conf("o campo não usa field-sizing:content", (await campo()).fs !== "content");
+    const vis = () => p.evaluate(() => ({ vazio: document.querySelector(".ze-linha").classList.contains("ze-vazio"),
+      env: getComputedStyle(document.getElementById("zap-enviar")).display !== "none",
+      mic: getComputedStyle(document.getElementById("zap-rec")).display !== "none" }));
+    const css = await p.evaluate(() => [...document.styleSheets].flatMap(f => { try { return [...f.cssRules].map(r => r.cssText); } catch { return []; } })
+      .filter(t => /zap-txt/.test(t) && /placeholder-shown/.test(t)).length);
+    conf("F573: nenhuma regra do campo depende de :placeholder-shown", css === 0);
+    let v = await vis();
+    conf("F573: campo vazio mostra o microfone e esconde o Enviar", v.vazio && !v.env && v.mic);
     await p.fill("#zap-txt", "linha 1\nlinha 2\nlinha 3");
+    v = await vis();
+    conf("F573: com texto mostra o Enviar e esconde o microfone", !v.vazio && v.env && !v.mic);
     conf("o campo cresce com três linhas", (await campo()).h >= 60);
     const envios = [["primeiro envio", "Enter"], ["segundo envio", "Enter"], ["terceiro envio", "botão"]];
     for (const [txt, como] of envios) {
@@ -98,6 +108,8 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
       const c = await campo();
       conf(`${txt} (${como}): grava, a aba segue viva e o campo volta vazio, baixo e com foco`,
         !caiu && enviadas.includes(txt) && c.v === "" && c.h <= 30 && c.foco && c.fs !== "content");
+      v = await vis();
+      conf(`${txt}: depois do envio o campo vazio volta ao microfone`, v.vazio && !v.env && v.mic);
     }
   } catch (e) { conf("FALHA " + e.message.split("\n")[0], false); }
   console.log(erros.length ? "erros de console:\n" + erros.join("\n") : "erros de console: nenhum");
