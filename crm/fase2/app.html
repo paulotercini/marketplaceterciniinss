@@ -2176,8 +2176,8 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .app.celular .zt-l1,.app.celular .zt-acoes{flex-wrap:wrap}
   /* 29.10.2026 · topo da conversa estreita: cada dado numa peça só (o telefone quebrava em três linhas) e os botões só com o ícone */
   .zt-sub>*{white-space:nowrap}
-  .zap-dir{container-type:inline-size}
-  @container (max-width:440px){.zt-acoes .zt-btn .lbl{display:none}.zt-acoes .zt-btn{padding:0 9px}}
+  /* F575 · sem container query na conversa (suspeita da queda do Chrome ao repintar) */
+  @media (max-width:760px){.zt-acoes .zt-btn .lbl{display:none}.zt-acoes .zt-btn{padding:0 9px}}
   .zap-dia{align-self:center;font-size:12px;color:var(--cinza-claro,var(--cinza));background:var(--branco);
            border:1px solid var(--borda);border-radius:10px;padding:2px 10px;margin:4px 0}
   .zap-b .autor{font-size:11px;font-weight:600;color:var(--cinza);text-transform:none;margin-bottom:2px}
@@ -7079,7 +7079,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.78</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.79</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18221,7 +18221,17 @@ function dadosDaConversaZap(c){
 `, igual };
 }
 
+// F575 · a queda do Chrome (STATUS_BREAKPOINT) vinha com toda repintura da conversa (enviar, Reabrir):
+// o botão clicado em foco é destruído no próprio clique e cada vídeo era recriado a cada 6 s.
+// Agora o foco sai antes, e o vídeo já carregado volta ao lugar, como o áudio que toca.
 function pintarConversa(){
+  const dir = document.getElementById("zap-dir"), ae = document.activeElement;
+  if(dir && ae && dir.contains(ae) && ae.id!=="zap-txt" && ae.id!=="zap-bq") ae.blur();
+  const vids = new Map([...(dir?dir.querySelectorAll("video[data-mini]"):[])].map(v=>[v.dataset.mini,v]));
+  pintarConversaJa();
+  for(const v of (dir?dir.querySelectorAll("video[data-mini]"):[])){ const a = vids.get(v.dataset.mini); if(a && a!==v) v.replaceWith(a); }
+}
+function pintarConversaJa(){
   const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
   const cli = c.cliente_id && D.cliPorId.get(c.cliente_id);
   const at = c.atendente_id && D.colPorId.get(c.atendente_id);
@@ -18931,7 +18941,7 @@ const _miniUrl = new Map();
 // F363 · a figurinha aparece no balão, menor e sem corte, como no WhatsApp
 const miniZap = (caminho, abrir, fig) => `<img class="zap-mini${fig?" zap-fig":""}" data-mini="${esc(caminho)}" alt="${fig?"figurinha":"foto"}" onclick="${abrir}">`;
 // F366 · o vídeo toca no próprio balão, com o mesmo link assinado da foto
-const vidZap = caminho => `<video class="zap-mini zap-vid" data-mini="${esc(caminho)}" controls preload="metadata" playsinline></video>`;
+const vidZap = caminho => `<video class="zap-mini zap-vid" data-mini="${esc(caminho)}" controls preload="none" playsinline></video>`;
 async function carregarMinis(raiz){
   for(const im of (raiz||document).querySelectorAll(".zap-mini[data-mini]:not([src])")){
     const k = im.dataset.mini, g = _miniUrl.get(k);
@@ -19304,7 +19314,8 @@ async function mudarConversa(campos){
       headers:{Prefer:"return=minimal"}, body:JSON.stringify(campos)});
   }catch(e){ return aviso(msgErro(e)); }
   Object.assign(zapConvs.find(x=>x.id===zapAberta)||{}, campos);
-  pintarConversa(); pintarListaZap();
+  // F575 · repinta depois do clique, e não dentro dele
+  requestAnimationFrame(()=>{ pintarConversa(); pintarListaZap(); });
 }
 // F551 · quem cobre a conversa no Offline (plantão), à vista de todos na lista e no topo
 function plantaoZap(c){ if(!c||!c.cobertura||!c.cobertura.cobre||c.status==="resolvida") return null; return (D.colaboradores||[]).find(k=>k.id===c.cobertura.cobre)||null; }
