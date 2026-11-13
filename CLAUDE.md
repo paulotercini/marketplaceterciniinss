@@ -730,6 +730,8 @@ A **F560** (pedido do Paulo de 12.11.2026, um atendimento de urgência agendado 
 
 A **F568** (13.72, pedido do Paulo de 13.11.2026, "só atrapalha"): o "?" fixo da coluna dos flutuantes (`#fab-ajuda`, F313) saiu, e com ele o seu arrasto da F558 (`FAB_ARRASTA`); a ajuda continua pelo "?" ao lado do título de cada lista e pelos "?" pequenos da ficha, do atendimento e dos prazos (`pintarAjudas`). O ⋯ dos atalhos do celular reúne agenda, sugestões e anotação rápida. Testes ajustados: `f313.js` e `zapcel.js`.
 
+A **F569** (13.73, a petição com uma só âncora do pedido): o `test()` de `rsAssinada` sobre a regex global `RS_ANCORA` deixava o `lastIndex` depois da âncora, e o `matchAll` de `recorteDoPedido` copia esse `lastIndex`; na peça com uma só âncora ("DOS PEDIDOS" sem "Ante o exposto") o recorte saía vazio e a função `caso_resumo` respondia 400 "a peça não tem texto legível". `recorteDoPedido` zera o `lastIndex` antes. Teste: `f567.js` (o exemplo passou a ter uma só âncora).
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
