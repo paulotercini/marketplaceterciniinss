@@ -53,10 +53,14 @@ assert.ok(RX_DOC_DECISIVO.test("Comunicação de decisão") && RX_DOC_DECISIVO.t
 assert.equal(linhaDoc({ nome: "Laudo pericial", criado_em: "2026-11-05T10:00:00Z", texto: "Conclusão: incapaz." }), "Laudo pericial, de 05/11/2026:\nConclusão: incapaz.");
 const a2 = promptAprofundar("Maria", { casos: [], anotacoes: [], andamentos: [], eventos: [], agenda: [], prazos: [], documentos: ["Laudo pericial, de 05/11/2026:\nCPF 123.456.789-09 incapaz"] }, "x", q);
 assert.ok(a2.includes("<documentos_decisivos>") && !a2.includes("123.456") && a2.includes("pendencias"));
-// F581 · preferências da equipe: editada mostra o par, descartada só a sugestão, usada fica de fora, números mascarados
+// F582 · preferências da equipe: editada mostra o par, descartada só a sugestão, usada fica de fora, números mascarados
 assert.equal(preferencias([]), "");
 assert.equal(preferencias({ message: "erro" }), "");
 const pf = preferencias([{ acao: "editada", sugestao: "Olá, tudo bem? Vou verificar.", enviado: "Bom dia. Vou verificar o protocolo 123456789." },
   { acao: "descartada", sugestao: "Prezado cliente, aguarde." }, { acao: "usada", sugestao: "Não entra" }]);
 assert.ok(pf.includes("<preferencias_da_equipe>") && pf.includes("A equipe enviou") && pf.includes("Descartada") && !pf.includes("Não entra") && !pf.includes("123456789"));
 console.log("zap_assistente: ok");
+
+// F581: mensagem encaminhada pelo cliente vem marcada para a IA
+assert.match(transcricao([{ direcao: "entrada", por_bot: false, tipo: "texto", texto: "Seu benefício foi liberado", encaminhada: 2, criado_em: "2026-11-13T12:00:00Z" }]), /Cliente: \[encaminhada\] Seu benefício/);
+console.log("F582 assistente ok");

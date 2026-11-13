@@ -1,4 +1,4 @@
--- F581 · o que a equipe fez com a sugestão da IA no WhatsApp (etapa 4 das melhorias do Outra e do Aprofundar,
+-- F582 · o que a equipe fez com a sugestão da IA no WhatsApp (etapa 4 das melhorias do Outra e do Aprofundar,
 -- aprovadas pelo Paulo em 13.11.2026): usada como veio, editada antes de enviar ou descartada.
 -- A zap_assistente lê as editadas e as descartadas dos últimos 30 dias e as põe no pedido como preferências da equipe.
 create table if not exists public.zap_sugestao_retorno (
