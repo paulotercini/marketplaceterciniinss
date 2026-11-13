@@ -2301,8 +2301,8 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zp-tempo{flex:none;font-size:11px;color:#667781;min-width:30px;font-variant-numeric:tabular-nums}
   .zp-vel{flex:none;border:0;border-radius:10px;background:rgba(0,0,0,.08);font-size:11px;font-weight:600;padding:2px 6px;cursor:pointer;color:#54656f}
   .zap-b{transition:transform .15s}
-  .zap-escrever:not(.modo-nota) .ze-linha:has(#zap-txt:placeholder-shown) #zap-enviar{display:none}
-  .ze-linha:not(:has(#zap-txt:placeholder-shown)) #zap-rec:not(.gravando){display:none}
+  .zap-escrever:not(.modo-nota) .ze-linha.ze-vazio #zap-enviar{display:none}
+  .ze-linha:not(.ze-vazio) #zap-rec:not(.gravando){display:none}
   .ze-travado .ze-linha>:not(.ze-nota-cel){display:none}
   .ze-assumir-aviso .btn-rap{margin-left:6px}
   .ze-mic{align-self:flex-end;flex:none;width:44px;height:44px;border-radius:50%;justify-content:center}
@@ -2505,7 +2505,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .app:not(.celular) .zap-escrever textarea#zap-txt{align-self:center;min-height:24px;max-height:160px;line-height:22px;resize:none}
   /* F572 · sem field-sizing: a troca content/fixed no campo esvaziado com foco derrubava a aba do Chrome (STATUS_BREAKPOINT) depois do envio; a altura vem do oninput */
   .app:not(.celular) .zap-escrever .ze-ferr{flex:none;min-height:0;align-items:center}
-  .app:not(.celular) .zap-escrever textarea#zap-txt:placeholder-shown{height:22px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .app:not(.celular) .zap-escrever .ze-vazio textarea#zap-txt{height:22px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   /* F424 · topo igual ao protótipo: uma linha "telefone | Adv. …", sem o "ninguém" ao lado do Assumir e sem chips vazios */
   .app:not(.celular) .zap-topo .zt-sub{flex-wrap:nowrap;overflow:hidden;column-gap:8px}
   .app:not(.celular) .zap-topo .zt-sub>*{overflow:hidden;text-overflow:ellipsis}
@@ -7078,7 +7078,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.76</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.77</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18186,7 +18186,7 @@ function pintarConversaGuardando(){
   }
   const cx2 = document.getElementById("zap-msgs"); if(cx2 && !noFim) cx2.scrollTop = y;
   const t2 = document.getElementById("zap-txt");
-  if(t2 && txt){ t2.value = txt; if(foco) t2.focus(); }
+  if(t2 && txt){ t2.value = txt; travaZap(); if(foco) t2.focus(); }
 }
 const SELO = {rascunho:"rascunho", agendada:"agendada", fila:"na fila", enviando:"enviando", enviada:"enviada", entregue:"entregue", lida:"lida", erro:"não enviou"};
 const seloZap = m => m.direcao==="saida" ? (SELO[m.status]||"") : "";
@@ -18335,7 +18335,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            onclick="${zapNota?"":"alternarNota()"}" title="fica na conversa, o cliente não vê">Nota interna</button>
        </div>
        ${desfazerZapHtml()}
-       <div class="ze-linha">
+       <div class="ze-linha ze-vazio">
          ${zapNota?"":`<details class="ze-mais so-cel-ze">
            <summary aria-label="Mais opções">+</summary>
            <div class="zt-menu">
@@ -18383,7 +18383,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
     mandarArquivoZap(new File([f], `print-${Date.now()}.${ext}`, {type: f.type}), c.id);
   };
   // F332 · o texto não enviado espera na conversa, como no aplicativo
-  if(!t.value && rascZap()[c.id]) t.value = rascZap()[c.id];
+  if(!t.value && rascZap()[c.id]){ t.value = rascZap()[c.id]; travaZap(); }
   // Enter manda, Shift+Enter pula linha — é o que a mão da equipe já espera.
   // Com as sugestões do "/" abertas, Enter escolhe a primeira
   t.onkeydown = e=>{
@@ -18728,7 +18728,7 @@ function ditarZap(){
   r.onresult = e => { let fim = "", parcial = "";
     for(const x of e.results) (x.isFinal ? (fim += x[0].transcript + " ") : (parcial += x[0].transcript));
     dito = fim.trim(); const campo = document.getElementById("zap-txt");
-    if(campo && zapAberta===conv) campo.value = [antes, (fim + parcial).trim()].filter(Boolean).join(" "); };
+    if(campo && zapAberta===conv){ campo.value = [antes, (fim + parcial).trim()].filter(Boolean).join(" "); travaZap(); } };
   r.onerror = e => { if(e.error==="not-allowed") aviso("O navegador não liberou o microfone para o ditado"); };
   r.onend = () => { _ditado = null; const b = document.getElementById("zap-ditar"); if(b) b.classList.remove("gravando");
     if(dito && zapAberta===conv) corrigirZap(); };
@@ -18918,7 +18918,7 @@ function alternarNota(){
   const t = document.getElementById("zap-txt"), guarda = t ? t.value : "";
   pintarConversa();
   const t2 = document.getElementById("zap-txt");
-  if(t2){ t2.value = guarda; t2.focus(); }
+  if(t2){ t2.value = guarda; travaZap(); t2.focus(); }
 }
 
 // F269 · a foto aparece em miniatura no balão, como no WhatsApp; o clique abre o original.
@@ -19008,7 +19008,7 @@ async function enviarZap(){
            texto:txt, status:"interna"}
         : {conversa_id:conv, direcao:"saida", autor_id:eu.id,
            texto:txt, status:"fila", responde_a:zapResponder||null})});
-  }catch(e){ t.value = txt; guardarRascZap(conv, txt); return aviso(msgErro(e)); }
+  }catch(e){ t.value = txt; travaZap(); guardarRascZap(conv, txt); return aviso(msgErro(e)); }
   // F187 · @Fulano na nota chama a pessoa. F357 · toda nota é menção: sem @, vai a quem
   // atende a conversa e ao advogado responsável pelo cliente (decisão do Paulo, 01.11.2026)
   if(zapNota){
@@ -19144,6 +19144,7 @@ function usarModeloZap(m){
 function travaZap(){
   const t = document.getElementById("zap-txt"), b = document.getElementById("zap-enviar"), av = document.getElementById("zap-falta");
   if(!t || !b) return;
+  t.closest(".ze-linha")?.classList.toggle("ze-vazio", !t.value);   // F573: no lugar do :has(:placeholder-shown)
   const faltam = zapNota ? [] : [...new Set((t.value||"").match(RX_CAMPO_ZAP)||[])];
   b.disabled = !!faltam.length;
   if(av){ av.hidden = !faltam.length; av.textContent = faltam.length ? `Preencha ou apague antes de enviar: ${faltam.join(", ")}` : ""; }
@@ -19178,7 +19179,7 @@ function frasesZap(){
   const sel = document.getElementById("zap-doc");
   if(sel) sel.onchange = ()=>{
     const d = docs[+sel.value]; if(!d) return;
-    document.getElementById("zap-txt").value = msgDocumentos(d);
+    document.getElementById("zap-txt").value = msgDocumentos(d); travaZap();
     fecharCaixa(); document.getElementById("zap-txt").focus();
   };
 }
