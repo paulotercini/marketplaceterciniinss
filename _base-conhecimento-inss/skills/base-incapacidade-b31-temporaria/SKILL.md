@@ -31,7 +31,7 @@ Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, 
 
 ## Requisitos cumulativos
 
-Primeiro, qualidade de segurado na DII (data do início da incapacidade). Acionar `periodo-graca-qualidade-segurado`.
+Primeiro, qualidade de segurado na DII (data do início da incapacidade). Acionar `periodo-graca-qualidade-segurado`. Mais de 120 contribuições sem perda da qualidade, ainda que em filiação anterior, dão 24 meses de graça em todo reingresso (Tema 1.352/STJ, julgado em 11/11/2026).
 
 Segundo, carência de 12 contribuições mensais, salvo isenção pelo art. 26, II.
 
