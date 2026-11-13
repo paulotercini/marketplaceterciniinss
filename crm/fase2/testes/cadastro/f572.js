@@ -1,3 +1,5 @@
+// F575 · a mesma queda ao clicar em Reabrir: encerra e reabre quatro vezes pelo botão, confere que o vídeo não é
+// recriado na repintura, que nasce sem pré-carga e que nenhum botão destruído fica com o foco.
 // F572/F573 · o erro de página depois de enviar no WhatsApp (pedido do Paulo de 13.11.2026): o campo de escrever do computador
 // trocava field-sizing content/fixed quando esvaziava com foco, e o Chrome derrubava a aba (STATUS_BREAKPOINT). Envia
 // três vezes (Enter, Enter e botão) num computador de 1440 px e confere que a aba segue viva, que cada envio grava, que o
@@ -27,6 +29,7 @@ const T = {
     { id: "m6", seq: 6, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Esqueci o que disse", status: "entregue", criado_em: agora, apagada_em: agora },
     { id: "m7", seq: 7, conversa_id: CONV, direcao: "entrada", tipo: "texto", texto: "Chego às 10h", texto_antes: "Chego às 9h", editada_em: agora, status: "entregue", criado_em: agora },
     { id: "m8", seq: 8, conversa_id: CONV, direcao: "saida", tipo: "texto", texto: "Amanha as 9h", externo_id: "WA8", status: "enviada", enviada_em: agora, criado_em: agora },
+    { id: "m9", seq: 9, conversa_id: CONV, direcao: "entrada", tipo: "video", texto: null, midia_url: "zap/x/v.mp4", midia_nome: "v.mp4", status: "entregue", criado_em: agora },
     { id: "m2", seq: 2, conversa_id: CONV, direcao: "saida", tipo: "documento", texto: null, midia_url: "zap/x/contrato.pdf", midia_nome: "contrato.pdf", status: "enviada", criado_em: agora }],
 };
 T.zap_setores = [{ id: "s1", nome: "Jurídico", cor: "#2a6", ativo: true, ordem: 1 }];
@@ -110,6 +113,18 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
         !caiu && enviadas.includes(txt) && c.v === "" && c.h <= 30 && c.foco && c.fs !== "content");
       v = await vis();
       conf(`${txt}: depois do envio o campo vazio volta ao microfone`, v.vazio && !v.env && v.mic);
+    }
+    // F575 · Reabrir
+    conf("F575: o vídeo nasce sem pré-carga", await p.$eval("video.zap-vid", v => v.getAttribute("preload") === "none"));
+    await p.evaluate(() => { document.querySelector("video.zap-vid")._marca = 1; pintarConversaGuardando(); });
+    conf("F575: a repintura mantém o mesmo vídeo", await p.$eval("video.zap-vid", v => v._marca === 1));
+    for (let i = 1; i <= 4; i++) {
+      await p.evaluate(() => { zapConvs.find(x => x.id === zapAberta).status = "resolvida"; pintarConversa(); });
+      await p.click("button.zt-btn.zt-fim");
+      await p.waitForFunction(() => zapConvs.find(x => x.id === zapAberta).status === "aberta" && !document.querySelector(".zt-btn.zt-fim[aria-label=Reabrir]"));
+      await p.waitForTimeout(150);
+      const fo = await p.evaluate(() => document.activeElement === document.body || document.activeElement?.isConnected);
+      conf(`F575: Reabrir ${i}: a aba segue viva e o foco não fica em botão destruído`, !caiu && fo);
     }
   } catch (e) { conf("FALHA " + e.message.split("\n")[0], false); }
   console.log(erros.length ? "erros de console:\n" + erros.join("\n") : "erros de console: nenhum");
