@@ -752,6 +752,8 @@ A **F578** (13.80, pedidos do Paulo de 13.11.2026): a mensagem automática do Of
 
 A **F583** (13.85, pedido do Paulo de 13.11.2026, a aba que caía ao abrir uma conversa muito longa do WhatsApp): `pintarConversa` desenhava todas as mensagens da conversa a cada repintura. Agora desenha apenas as 150 mais recentes (`ZAP_JAN`, `zapIni`, o início da janela guardado pelo id da mensagem em `_zapJan`), e o botão **Mostrar N anteriores** (`zapAnteriores`, `.zap-ant`) acrescenta 150 de cada vez, mantendo a posição da leitura; a mensagem nova não desloca o começo da janela. `irParaMsg` e a busca na conversa ampliam a janela até a mensagem antiga (`zapMostrarDesde`, `zapPrimeiroAchado`). A leitura do banco não mudou. Teste: `testes/cadastro/f583.js` (conversa de 3.000 mensagens).
 
+A **F584** (13.86, pedido do Paulo de 13.11.2026): o Reagendar e o Prorrogar abrem logo abaixo dos atalhos uma mini agenda do mês (`miniCal`, `mcalMiolo`, `ligarMiniCal`, `.mcal`), e um clique no dia grava a data, sem campo de data; as setas trocam o mês sem fechar o painel, o dia passado fica desligado, hoje tem contorno verde, o dia sem expediente fica em cinza e o dia já marcado fica preenchido. Vale também para o Reagendar dos Vencidos (`reagendarVencidas`) e o Adiar da tarefa (`adiarTarefa`); no celular a agenda ocupa a largura e o dia tem 40 px. O Concluir por hoje e a data do painel Anotar continuam como estavam. Teste: `testes/cadastro/f584.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
