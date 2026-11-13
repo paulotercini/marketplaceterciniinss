@@ -57,11 +57,15 @@ export const ESQUEMA = {
 
 export function prompt(recorte: string) {
   return `Você lê os pedidos de uma peça de advocacia previdenciária e devolve apenas o que se pede, sem inventar.
+O recorte pode ter duas partes: "[fundamentação]", com os trechos do corpo da peça que citam as datas do pedido, e "[pedido]".
 Regras:
 - Cada campo vem com o trecho COPIADO LITERALMENTE do recorte. Campo sem trecho fica vazio.
-- Datas exatamente como estão no trecho (dd/mm/aaaa, mm/aaaa ou aaaa). Não complete dia nem mês que o texto não traz.
-- Um objeto por período (rural, especial, comum), por condição (deficiência ou incapacidade, com o início) ou por revisão.
-- Não repita o mesmo período. Não inclua pedidos processuais (gratuidade, honorários, citação, prioridade, tutela).
+- Datas exatamente como estão no trecho (dd/mm/aaaa, dd.mm.aaaa, mm/aaaa ou aaaa). Não complete dia nem mês que o texto não traz.
+- Um objeto por período que o pedido manda reconhecer (rural, especial, comum), com as datas do pedido. A empresa ou o lugar (local) e o agente nocivo ou a função (motivo) você tira da fundamentação, no trecho que cita a mesma data; o trecho do objeto é o da fundamentação quando ele traz as datas e a empresa, senão o do pedido.
+- Não liste o período que a peça diz já reconhecido pelo INSS ou na via administrativa.
+- Um objeto por condição (deficiência ou incapacidade, com o início).
+- Quando a peça pede a revisão de um benefício já concedido, tipo "revisao" e beneficio é o benefício que se revisa (ex.: aposentadoria por tempo de contribuição). Cada resultado pedido vira um objeto "revisao" com motivo curto, começando por artigo (ex.: "a conversão em aposentadoria especial", "a conversão do tempo especial em comum pelo fator 1,4"), e inicio com a data desde quando se pede, se houver; o pedido subsidiário é outro objeto "revisao", depois do principal.
+- Não repita o mesmo período. Não inclua pedidos processuais (gratuidade, honorários, citação, prioridade, tutela, correção, juros).
 
 Recorte:
 ${recorte}`;
@@ -72,7 +76,7 @@ async function claude(p: string) {
     method: "POST",
     headers: { "x-api-key": CHAVE_IA, "anthropic-version": "2023-06-01", "anthropic-beta": "server-side-fallback-2026-07-01", "content-type": "application/json" },
     body: JSON.stringify({
-      model: MODELO, max_tokens: 2500, fallbacks: "default",
+      model: MODELO, max_tokens: 4000, fallbacks: "default",
       output_config: { format: { type: "json_schema", schema: ESQUEMA } },
       messages: [{ role: "user", content: [{ type: "text", text: p }] }],
     }),
@@ -139,34 +143,50 @@ function rotDatas(inicio: string, fim: string) {
   return [inicio, fim];
 }
 
+const PERIODO = ["rural", "especial", "comum"];
+function itemPeriodo(o: any) {
+  const [i, f] = rotDatas(o.inicio, o.fim);
+  const per = i && f ? `de ${i} a ${f}` : i ? `desde ${i}` : "";
+  const loc = o.local ? `${o.natureza === "rural" ? " em" : " na"} ${o.local}` : "";
+  return `${per}${loc}${o.motivo ? `, por ${o.motivo}` : ""}`.trim();
+}
 function fraseObjeto(o: any) {
   const [i, f] = rotDatas(o.inicio, o.fim);
   const per = i && f ? `de ${i} a ${f}` : i ? `desde ${i}` : "";
-  const loc = o.local ? ` na ${o.local}` : "";
-  const mot = o.motivo ? ` por ${o.motivo}` : "";
   switch (o.natureza) {
     case "deficiencia": return `deficiência${o.motivo ? ` por ${o.motivo}` : ""}${per ? ` ${per}` : ""}`;
     case "incapacidade": return `incapacidade${o.motivo ? ` por ${o.motivo}` : ""}${per ? ` ${per}` : ""}`;
-    case "rural": return `período rural${per ? ` ${per}` : ""}${o.local ? ` em ${o.local}` : ""}`;
-    case "especial": return `especial${per ? ` ${per}` : ""}${loc}${mot}`;
-    case "comum": return `tempo comum${per ? ` ${per}` : ""}${loc}`;
-    case "revisao": return `revisão${o.motivo ? ` ${o.motivo}` : ""}${per ? ` ${per}` : ""}`;
+    case "revisao": return `${o.motivo || "a revisão"}${i ? ` desde ${i}` : ""}`;
     default: return `${o.motivo || "outro pedido"}${per ? ` ${per}` : ""}`;
   }
 }
+const ROT_GRUPO: Record<string, [string, string]> = { especial: ["do período especial", "dos períodos especiais"], rural: ["do período rural", "dos períodos rurais"], comum: ["do tempo comum", "dos períodos comuns"] };
+const juntar = (xs: string[], e = " e ") => (xs.length > 1 ? xs.slice(0, -1).join(", ") + e + xs.at(-1) : xs[0] || "");
 
-export function montarFrase(tipo: string, beneficio: string, der: string, objetos: any[]) {
+// "o reconhecimento dos períodos especiais de A a B na X, por Y, e de C a D …, com a conversão …"
+export function montarFrase(tipo: string, beneficio: string, der: string, objetos: any[], teto = 60) {
   const cab = `${tipo}${beneficio ? ` de ${beneficio}` : ""}${der ? ` (DER ${der})` : ""}`;
-  const partesF = objetos.map(fraseObjeto), palavras = (s: string) => s.split(/\s+/).filter(Boolean).length;
-  const usadas: string[] = [];
-  for (const p of partesF) {
-    const prova = [...usadas, p];
-    if (usadas.length && palavras(cab + " em que buscamos " + prova.join(", ")) > 60) break;
-    usadas.push(p);
-  }
-  const resto = partesF.length - usadas.length;
-  const lista = usadas.length > 1 ? usadas.slice(0, -1).join(", ") + (resto ? ", " : " e ") + usadas.at(-1) : usadas[0] || "";
-  return (lista ? `${cab} em que buscamos ${lista}${resto ? ` e mais ${resto}` : ""}` : cab) + ".";
+  const palavras = (s: string) => s.split(/\s+/).filter(Boolean).length;
+  const revs = objetos.filter((o) => o.natureza === "revisao").map(fraseObjeto);
+  const montar = (lim: number) => {
+    let n = 0, cortados = 0;
+    const grupos: string[] = [], outros: string[] = [];
+    const nats = [...new Set(objetos.filter((o) => PERIODO.includes(o.natureza)).map((o) => o.natureza))];
+    for (const nat of nats) {
+      const its = objetos.filter((o) => o.natureza === nat).map(itemPeriodo);
+      const vai = its.filter(() => (n++ < lim) || (cortados++, false));
+      const lista = vai.length < its.length ? vai.join(", ") : juntar(vai, vai.some((v) => v.includes(",")) ? ", e " : " e ");
+      if (vai.length) grupos.push(`${ROT_GRUPO[nat][vai.length > 1 ? 1 : 0]} ${lista}`);
+    }
+    for (const o of objetos.filter((o) => !PERIODO.includes(o.natureza) && o.natureza !== "revisao")) outros.push(fraseObjeto(o));
+    const corpo = [grupos.length ? `o reconhecimento ${juntar(grupos, "; e ")}` : "", ...outros].filter(Boolean);
+    let t = corpo.length ? `${cab} em que buscamos ${juntar(corpo)}${cortados ? ` e mais ${cortados} ${cortados > 1 ? "períodos" : "período"}` : ""}` : cab;
+    if (revs.length) t += `${corpo.length ? ", com" : " em que buscamos"} ${revs.join(" ou, subsidiariamente, ")}`;
+    return t + ".";
+  };
+  const total = objetos.filter((o) => PERIODO.includes(o.natureza)).length;
+  for (let lim = total; lim > 1; lim--) { const t = montar(lim); if (palavras(t) <= teto) return t; }
+  return montar(Math.min(total, 1));
 }
 
 // o que volta do modelo é conferido aqui; o que não confere vai a faltas
@@ -175,6 +195,8 @@ export function conferirResposta(r: any, x: { recorte: string; hoje: string; fas
   let tipo = TIPO_ROT[r?.tipo] || "Ação de concessão";
   if (x.fase === "conselho" && !/^Recurso/.test(tipo)) tipo = "Recurso ordinário";
   if (x.fase !== "conselho" && /^Recurso/.test(tipo)) tipo = "Ação de concessão";
+  const temRevisao = (Array.isArray(r?.objetos) ? r.objetos : []).some((o: any) => o?.natureza === "revisao");
+  if (x.fase !== "conselho" && temRevisao) tipo = "Ação de revisão";
 
   let beneficio = r?.beneficio && trechoOk(r.beneficio_trecho, x.recorte) ? String(r.beneficio).trim() : "";
   if (!beneficio) { beneficio = String(x.beneficio_caso || "").trim(); if (!beneficio) faltas.push("benefício"); }
@@ -193,16 +215,17 @@ export function conferirResposta(r: any, x: { recorte: string; hoje: string; fas
     const ini = o.inicio && partes(o.inicio) && dataNoTrecho(o.inicio, o.trecho) ? o.inicio.replace(/[.\-]/g, "/") : "";
     const fim = o.fim && partes(o.fim) && dataNoTrecho(o.fim, o.trecho) ? o.fim.replace(/[.\-]/g, "/") : "";
     if ((o.inicio && !ini) || (o.fim && !fim)) { faltas.push(`${ROT_NAT[nat]} (data não confirmada no texto)`); continue; }
-    if (!ini && ["rural", "especial", "comum", "deficiencia", "incapacidade"].includes(nat)) faltas.push(`início do período ${ROT_NAT[nat]}`);
+    if (!ini && [...PERIODO, "deficiencia", "incapacidade"].includes(nat)) faltas.push(`início do período ${ROT_NAT[nat]}`);
     objetos.push({ natureza: nat, inicio: ini, fim, local: String(o.local || "").trim().slice(0, 80), motivo: String(o.motivo || "").trim().slice(0, 100) });
   }
 
   const ate = der ? iso(der) : x.hoje;
-  const periodos = objetos.filter((o) => o.inicio).map((o) => {
+  // a revisão e o outro pedido não são período: ficam na frase, fora da linha do tempo
+  const periodos = objetos.filter((o) => o.inicio && o.natureza !== "revisao" && o.natureza !== "outro").map((o) => {
     const ini = iso(o.inicio), fimIso = o.fim ? iso(o.fim, true) : ate;
     return { ...o, ini, fim_iso: fimIso, dur: duracao(ini, fimIso) };
   });
-  return { texto: montarFrase(tipo, beneficio, der, objetos), tipo, beneficio, der, periodos, objetos, faltas, avisos };
+  return { texto: montarFrase(tipo, beneficio, der, objetos, 110), tipo, beneficio, der, periodos, objetos, faltas, avisos };
 }
 
 if (typeof Deno !== "undefined") {
@@ -217,7 +240,7 @@ if (typeof Deno !== "undefined") {
     const eu = await (await fetch(`${URL_SB}/rest/v1/colaboradores?select=id,ativo&auth_id=eq.${user.id}`, { headers: auth })).json().catch(() => []);
     if (!eu[0] || eu[0].ativo === false) return json({ erro: "só colaborador ativo do escritório" }, 403);
     const m = await req.json().catch(() => ({}));
-    const recorte = mascarar(m.recorte).trim().slice(0, 7000);
+    const recorte = mascarar(m.recorte).trim().slice(0, 16000);
     if (recorte.length < 40) return json({ erro: "a peça não tem texto legível" }, 400);
     const hoje = /^\d{4}-\d{2}-\d{2}$/.test(m.hoje || "") ? m.hoje : new Date().toISOString().slice(0, 10);
     const x = { recorte, hoje, fase: String(m.fase || ""), der_caso: /^\d{4}-\d{2}-\d{2}/.test(m.der_caso || "") ? m.der_caso : "", beneficio_caso: String(m.beneficio_caso || "").slice(0, 80) };

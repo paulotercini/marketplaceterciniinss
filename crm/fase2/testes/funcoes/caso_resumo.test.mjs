@@ -59,6 +59,32 @@ test("sem benefício nem DER, vão às faltas", () => {
 test("montarFrase corta acima de 60 palavras", () => {
   const ob = Array.from({ length: 30 }, (_, i) => ({ natureza: "comum", inicio: `01/01/${1980 + i}`, fim: `31/12/${1980 + i}`, local: "Empresa Teste Ltda", motivo: "" }));
   const f = m.montarFrase("Ação de concessão", "Aposentadoria", "01/01/2024", ob);
-  assert.match(f, /e mais \d+\.$/);
+  assert.match(f, /e mais \d+ períodos\.$/);
   assert.ok(f.split(/\s+/).length <= 70);
+});
+
+// F570 · a revisão: os períodos vêm da fundamentação, a tese vira o fim da frase e fica fora da linha do tempo
+const REV = `[fundamentação] …laborou na Empresa Teste S/A de 12.01.1981 a 14.03.1991, exposto a ruído e hidrocarbonetos…
+…e de 21.04.1999 a 31.08.2004 na mesma Empresa Teste S/A, exposto a ruído…
+[pedido]
+REQUERIMENTOS. Requer o reconhecimento da especialidade dos períodos de 12.01.1981 a 14.03.1991 e de 21.04.1999 a 31.08.2004, e a revisão da aposentadoria por tempo de contribuição, com a conversão em aposentadoria especial desde 17.05.2018 ou, subsidiariamente, a conversão do tempo especial em comum pelo fator 1,4. Pede deferimento.`;
+const respRev = {
+  tipo: "revisao", beneficio: "aposentadoria por tempo de contribuição", beneficio_trecho: "revisão da aposentadoria por tempo de contribuição",
+  der: "", der_trecho: "",
+  objetos: [
+    { natureza: "especial", inicio: "12.01.1981", fim: "14.03.1991", local: "Empresa Teste S/A", motivo: "ruído e hidrocarbonetos", trecho: "laborou na Empresa Teste S/A de 12.01.1981 a 14.03.1991, exposto a ruído e hidrocarbonetos" },
+    { natureza: "especial", inicio: "21.04.1999", fim: "31.08.2004", local: "Empresa Teste S/A", motivo: "ruído", trecho: "e de 21.04.1999 a 31.08.2004 na mesma Empresa Teste S/A, exposto a ruído" },
+    { natureza: "revisao", inicio: "17.05.2018", fim: "", local: "", motivo: "a conversão em aposentadoria especial", trecho: "com a conversão em aposentadoria especial desde 17.05.2018" },
+    { natureza: "revisao", inicio: "", fim: "", local: "", motivo: "a conversão do tempo especial em comum pelo fator 1,4", trecho: "a conversão do tempo especial em comum pelo fator 1,4" },
+  ],
+};
+
+test("revisão: tipo, períodos com empresa e agente, tese fora da linha do tempo", () => {
+  const r = m.conferirResposta(respRev, { recorte: REV, hoje: "2026-11-13", fase: "judicial", der_caso: "2018-05-17" });
+  assert.equal(r.tipo, "Ação de revisão");
+  assert.equal(r.periodos.length, 2);
+  assert.equal(r.periodos[0].dur, "10a 2m");
+  assert.equal(r.periodos[0].motivo, "ruído e hidrocarbonetos");
+  assert.match(r.texto, /^Ação de revisão de aposentadoria por tempo de contribuição \(DER 17\/05\/2018\) em que buscamos o reconhecimento dos períodos especiais de 12\/01\/1981 a 14\/03\/1991 na Empresa Teste S\/A, por ruído e hidrocarbonetos, e de 21\/04\/1999/);
+  assert.match(r.texto, /, com a conversão em aposentadoria especial desde 17\/05\/2018 ou, subsidiariamente, a conversão do tempo especial em comum pelo fator 1,4\.$/);
 });

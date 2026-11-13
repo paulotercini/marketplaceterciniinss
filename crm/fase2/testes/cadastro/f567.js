@@ -34,6 +34,25 @@ const cA = cli("Cliente Teste Resumo");
 const kA = caso(cA, { beneficio: "Apos. por Tempo de Contribuição", especie: "B42", fase: "judicial", origem_lista: "👪 Judicial", processo: PROC, der: "2025-03-10" });
 T.anexos.push({ id: id("a"), caso_id: kA.id, cliente_id: cA.id, andamento_id: null, nome: "Petição", caminho: `pje/${PROC}/1001`, origem: "pje", texto: INICIAL,
   tipo: "application/pdf", criado_em: "2025-04-01T10:00:00-03:00" });
+// F570 · revisão: o pedido sob "REQUERIMENTOS", "do pedido de revisão" no corpo (não é âncora), o rodapé do e-SAJ e a empresa só na fundamentação
+const RODAPE = " Este documento é cópia do original, assinado digitalmente por Advogado, protocolado em 01/04/2025 às 10:00, sob o número 0000000. Para conferir o original, acesse o site, informe o processo e código ABC123. fls. 7 ";
+const INICIAL_REV = "EXCELENTÍSSIMO SENHOR JUIZ FEDERAL DA VARA FEDERAL DE CATANDUVA. Cliente Teste, já qualificado, propõe ação de revisão. "
+  + "1. DOS FATOS. O autor formulou o requerimento do pedido de revisão em 17/05/2018, que o INSS negou. " + "O autor trabalhou exposto a agentes nocivos. ".repeat(6)
+  + "2. DO DIREITO. De 12/01/1981 a 14/03/1991 o autor trabalhou na Empresa Teste S/A, exposto a ruído de 92 dB e a hidrocarbonetos, conforme o PPP." + RODAPE
+  + "De 02/05/1993 a 05/03/1997 trabalhou na Metalúrgica Teste Ltda, exposto a ruído de 95 dB. " + "Fundamentação longa. ".repeat(30)
+  + "3. REQUERIMENTOS. Diante do exposto, requer: a) o reconhecimento da especialidade dos períodos de 12/01/1981 a 14/03/1991 e de 02/05/1993 a 05/03/1997; "
+  + "b) a conversão da aposentadoria por tempo de contribuição em aposentadoria especial desde 17/05/2018; c) subsidiariamente, a conversão do tempo especial em comum pelo fator 1,4. "
+  + "Pede deferimento. Monte Alto, 01/04/2025. Advogado OAB/SP 331.110.";
+const cD = cli("Cliente Teste Revisao");
+const kD = caso(cD, { beneficio: "Apos. por Tempo de Contribuição", especie: "B42", fase: "judicial", origem_lista: "👪 Judicial", processo: "50000000000000000068" });
+T.anexos.push({ id: id("a"), caso_id: kD.id, cliente_id: cD.id, andamento_id: null, nome: "Petição", caminho: "pje/50000000000000000068/1001", origem: "pje", texto: INICIAL_REV,
+  tipo: "application/pdf", criado_em: "2025-04-01T10:00:00-03:00" });
+const RESP_REV = { texto: "Ação de revisão da aposentadoria por tempo de contribuição, em que buscamos o reconhecimento dos períodos especiais…",
+  tipo: "Ação de revisão", beneficio: "aposentadoria por tempo de contribuição", der: "",
+  periodos: [{ natureza: "especial", ini: "1981-01-12", fim_iso: "1991-03-14", dur: "10a 2m", local: "Empresa Teste S/A", motivo: "ruído e hidrocarbonetos" },
+    { natureza: "especial", ini: "1993-05-02", fim_iso: "1997-03-05", dur: "3a 10m", local: "Metalúrgica Teste Ltda", motivo: "ruído" }],
+  objetos: [{ natureza: "revisao", inicio: "17/05/2018", motivo: "a conversão em aposentadoria especial" }, { natureza: "revisao", inicio: "", motivo: "a conversão do tempo especial em comum pelo fator 1,4" }],
+  faltas: [], avisos: [] };
 const cB = cli("Cliente Teste Inss");
 const kB = caso(cB, { beneficio: "Auxílio por incapacidade", especie: "B31", fase: "inss", protocolos: ["1700000701"] });
 const cC = cli("Cliente Teste Pre");
@@ -64,7 +83,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const p = await ctx.newPage();
   let pedido = null;
   await p.route(`${SUPA}/functions/v1/caso_resumo`, async r => { pedido = JSON.parse(r.request().postData() || "{}");
-    await r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(RESPOSTA) }); });
+    const rev = /REQUERIMENTOS/.test(pedido.recorte || "");
+    await r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(rev ? RESP_REV : RESPOSTA) }); });
   const erros = [];
   p.on("pageerror", e => erros.push(e.message));
   p.on("dialog", d => d.accept());
@@ -76,7 +96,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   await abrir(cA.id, kA.id); await p.waitForTimeout(400);
   const q0 = await p.evaluate(() => { const q = document.querySelector("section.rs5"); return q && { txt: q.textContent, gerar: !!q.querySelector("button[onclick^='gerarResumo']") }; });
-  conf(`no Judicial o quadro aparece com Gerar e a fonte (${q0 && q0.txt.replace(/\s+/g, " ").slice(0, 80)})`, q0 && q0.gerar && /Petição inicial/.test(q0.txt));
+  conf(`no Judicial o quadro aparece com Gerar e a fonte (${q0 && q0.txt.replace(/\s+/g, " ").slice(0, 80)})`, q0 && q0.gerar && /petição inicial/i.test(q0.txt));
   conf("o quadro fica logo abaixo do cartão do caso", await p.evaluate(() => { const c = document.querySelector(".linha-caso"), q = document.querySelector("section.rs5");
     return !!c && !!q && !!(c.compareDocumentPosition(q) & Node.DOCUMENT_POSITION_FOLLOWING); }));
   await p.click("section.rs5 button[onclick^='gerarResumo']");
@@ -88,9 +108,29 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector("section.rs5 .rs5-lins", { timeout: 3000 });
   const durs = await p.evaluate(() => [...document.querySelectorAll("section.rs5 .rs5-dur")].map(e => e.textContent));
   conf(`aberto, cada período diz a duração e a natureza (${durs.join("; ")})`, durs.join("; ") === "7a 10m rural; 2a 6m especial");
-  conf("aberto, a frase fica à vista", await p.evaluate(id => (document.getElementById("rs5-frase-" + id) || {}).textContent || "", kA.id).then(t => /rural de 02\/12\/1978/.test(t)));
+  const v4 = await p.evaluate(() => { const q = document.querySelector("section.rs5"), lk = q.querySelector(".rs5-cab .rs5-lk");
+    return { leg: !!q.querySelector(".rs5-leg"), fonte: (q.querySelector(".rs5-fonte") || {}).textContent || "", cor: lk && getComputedStyle(lk).color, borda: lk && getComputedStyle(lk).borderTopWidth, frase: !!q.querySelector(".rs5-frase") }; });
+  conf(`aberto, como na variação 4: sem legenda e sem a frase, a fonte com Copiar texto e o link na cor da fase (${v4.fonte.replace(/\s+/g, " ")}; ${v4.cor})`,
+    !v4.leg && !v4.frase && /Lido da petição inicial/.test(v4.fonte) && /Copiar texto/.test(v4.fonte) && v4.cor === "rgb(107, 63, 160)" && v4.borda === "0px");
   const gravado = banco.t.casos.find(k => k.id === kA.id).resumo;
   conf(`o resumo foi gravado no caso com a fonte (${gravado && gravado.fonte && gravado.fonte.rot})`, gravado && gravado.texto === RESPOSTA.texto && gravado.fonte && gravado.periodos.length === 2);
+
+  await p.evaluate(() => { _rsAberto = false; });
+  await abrir(cD.id, kD.id); await p.waitForTimeout(300);
+  await p.click("section.rs5 button[onclick^='gerarResumo']");
+  await p.waitForSelector("section.rs5 .rs5-barra", { timeout: 5000 });
+  const rc = pedido.recorte;
+  conf("revisão: o recorte leva o pedido de REQUERIMENTOS, a empresa da fundamentação e não leva o rodapé",
+    /3\. REQUERIMENTOS/.test(rc) && /Empresa Teste S\/A/.test(rc) && /Metalúrgica Teste/.test(rc) && /subsidiariamente/.test(rc) && !/código ABC123/.test(rc));
+  const q2 = await p.evaluate(() => { const q = document.querySelector("section.rs5"); return { ped: q.querySelector(".rs5-ped").textContent, eixo: q.querySelectorAll(".rs5-eixo span").length, leg: q.querySelector(".rs5-leg").textContent }; });
+  conf(`revisão, fechado: "${q2.ped}", eixo com três anos e a legenda (${q2.leg})`, /^Revisão · Aposentadoria por tempo/.test(q2.ped) && q2.eixo === 3 && q2.leg === "Especial");
+  await p.click("section.rs5 .rs5-cab button");
+  await p.waitForSelector("section.rs5 .rs5-lins", { timeout: 3000 });
+  const lins = await p.evaluate(() => [...document.querySelectorAll("section.rs5 .rs5-lins li")].map(l => l.textContent.replace(/\s+/g, " ").trim()));
+  conf(`revisão, aberto: os períodos a converter com a empresa e o agente e os pedidos (${lins.join(" | ")})`, lins.length === 4
+    && /01\/1981 a 03\/1991.*10a 2m especial.*Empresa Teste S\/A · ruído e hidrocarbonetos/.test(lins[0]) && /A conversão em aposentadoria especial.*pedido.*desde 17\/05\/2018/.test(lins[2]) && /subsidiário/.test(lins[3]));
+  await p.click("section.rs5 .rs5-fonte button[onclick^='editarResumo']");
+  conf("Editar abre o texto copiado para a peça", await p.evaluate(id => (document.getElementById("rs5-ed-" + id) || {}).value || "", kD.id).then(t => /^Ação de revisão/.test(t)));
 
   await abrir(cB.id, kB.id); await p.waitForTimeout(300);
   conf("no INSS não há quadro", !(await p.$("section.rs5")));
