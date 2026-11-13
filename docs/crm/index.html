@@ -7079,7 +7079,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.80</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.81</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18342,7 +18342,8 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            <button class="btn-mini" onclick="descartarSugestaoZap()" title="Descartar a sugestão">Descartar<span class="sr-only"> a sugestão</span></button>
            <button class="btn-mini" onclick="iaSugestaoZap('outra')" title="Pedir outra sugestão, em sentido diverso desta">Outra<span class="sr-only"> sugestão</span></button>
            <button class="btn-mini" onclick="iaSugestaoZap('aprofundar')" title="Consulta completa: anotações, andamentos, prazos, perícias, agenda e mensagens">Aprofundar<span class="sr-only"> a sugestão</span></button></div>
-         ${(c.sugestao_ia.bases||[]).length?`<div class="ze-sug-base">Baseada em:<ul style="margin:2px 0 0 16px;padding:0">${c.sugestao_ia.bases.map(b=>`<li>${esc(b)}</li>`).join("")}</ul></div>`:""}</div>`:""}
+         ${(c.sugestao_ia.bases||[]).length?`<div class="ze-sug-base">Baseada em:<ul style="margin:2px 0 0 16px;padding:0">${c.sugestao_ia.bases.map(b=>`<li>${esc(b)}</li>`).join("")}</ul></div>`:""}
+         ${(c.sugestao_ia.pendencias||[]).length?`<div class="ze-sug-base ze-sug-pend">Falta verificar:<ul style="margin:2px 0 0 16px;padding:0">${c.sugestao_ia.pendencias.map(b=>`<li>${esc(b)}</li>`).join("")}</ul></div>`:""}</div>`:""}
        <div class="ze-modos" role="tablist" aria-label="Para quem é o texto">
          <button role="tab" aria-selected="${!zapNota}" class="${zapNota?"":"on"}" onclick="${zapNota?"alternarNota()":""}" title="Responder ao cliente">Responder<span class="sr-only"> ao cliente</span></button>
          <button role="tab" aria-selected="${zapNota}" class="${zapNota?"on nota":""}" id="zap-btn-nota"
@@ -19093,7 +19094,7 @@ async function pedirSugestaoZap(acao){
   let r; try{ r = await api("/functions/v1/zap_assistente",{method:"POST", body:JSON.stringify(corpo)}); }
   catch(e){ r = {erro: msgErro(e)}; }
   if(!r || !r.texto) return aviso("A IA não sugeriu: " + ((r&&r.erro) || "sem resposta"));
-  const sug = {texto: r.texto, em: new Date().toISOString(), urgente: false, modo: acao, bases: r.bases || []};
+  const sug = {texto: r.texto, em: new Date().toISOString(), urgente: false, modo: acao, bases: r.bases || [], pendencias: r.pendencias || []};
   try{ await api(`/rest/v1/zap_conversas?id=eq.${conv}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({sugestao_ia:sug})}); }
   catch(e){ return aviso(msgErro(e)); }
   c.sugestao_ia = sug; aviso("Sugestão pronta acima do campo de escrever");
