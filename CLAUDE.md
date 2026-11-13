@@ -754,6 +754,8 @@ A **F583** (13.85, pedido do Paulo de 13.11.2026, a aba que caía ao abrir uma c
 
 A **F584** (13.86, pedido do Paulo de 13.11.2026): o Reagendar e o Prorrogar abrem logo abaixo dos atalhos uma mini agenda do mês (`miniCal`, `mcalMiolo`, `ligarMiniCal`, `.mcal`), e um clique no dia grava a data, sem campo de data; as setas trocam o mês sem fechar o painel, o dia passado fica desligado, hoje tem contorno verde, o dia sem expediente fica em cinza e o dia já marcado fica preenchido. Vale também para o Reagendar dos Vencidos (`reagendarVencidas`) e o Adiar da tarefa (`adiarTarefa`); no celular a agenda ocupa a largura e o dia tem 40 px. O Concluir por hoje e a data do painel Anotar continuam como estavam. Teste: `testes/cadastro/f584.js`.
 
+A **F585** (13.87, pedido do Paulo de 13.11.2026): o ⋯ da conversa do WhatsApp tem **Baixar** (`baixarConversaZap`, `linhasConversaZap`, `baixarZapComo`): a janela pede "Desde" (vazio, a conversa inteira) e "Incluir as notas internas" (desmarcado) e baixa em **MD** (arquivo `conversa-<nome>-<data>.md`) ou **PDF** (página de impressão do navegador, A4). Cada mensagem traz data dd/mm/aaaa, hora e quem escreveu (o contato, o colaborador, Robô, Aviso automático ou Nota interna), o anexo e o áudio pelo nome ("[Áudio: …]", "[Documento: …]") e as marcas encaminhada, editada, apagada e não enviada; rascunho e mensagem agendada ficam fora. Exporta as mensagens carregadas da conversa aberta. Teste: `testes/cadastro/f585.js`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
