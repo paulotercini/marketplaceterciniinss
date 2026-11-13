@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_assistente.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, pedidosAbertos, promptRascunho, primeiroNome, guardarNumeros, devolverNumeros, promptCorrigir, promptOutra, promptAprofundar, quemEscreve, linhaAnd, ESQUEMA_APROF } from "../../zap_assistente/index.ts";
+import { mascarar, transcricao, pedidosAbertos, promptRascunho, primeiroNome, guardarNumeros, devolverNumeros, promptCorrigir, promptOutra, promptAprofundar, quemEscreve, linhaAnd, ESQUEMA_APROF, RX_DOC_DECISIVO, linhaDoc } from "../../zap_assistente/index.ts";
 
 assert.equal(mascarar("meu CPF 123.456.789-09 e NB 1234567890"), "meu CPF [número] e NB [número]");
 assert.equal(mascarar("dia 12/03 às 9h, 3 filhos"), "dia 12/03 às 9h, 3 filhos", "data curta e número pequeno ficam");
@@ -33,7 +33,12 @@ const a = promptAprofundar("Maria", { casos: ["B31 · fase inss"], anotacoes: []
 assert.ok(a.includes("<andamentos_dos_portais>") && a.includes("[número]") && !a.includes("123.456"), "o CPF dos dados sai mascarado");
 assert.ok(a.includes("<anotacoes_do_escritorio>\nnada registrado") && a.includes("13/11 9h · Paulo") && a.includes('"bases"'));
 assert.equal(linhaAnd({ origem: "pat", criado_em: "2026-11-05T10:00:00Z", texto: "Em  análise\n" }), "andamento do PAT de 05/11/2026: Em análise");
-assert.deepEqual(ESQUEMA_APROF.required, ["texto", "bases"]);
+assert.deepEqual(ESQUEMA_APROF.required, ["texto", "bases", "pendencias"]);
 // F578 · continuidade e fontes datadas
 assert.ok(o.includes("Continue a conversa") && a.includes("dd/mm/aaaa"));
+// F579 · documento decisivo lido pelo texto e o que falta declarado
+assert.ok(RX_DOC_DECISIVO.test("Comunicação de decisão") && RX_DOC_DECISIVO.test("Laudo pericial") && !RX_DOC_DECISIVO.test("RG"));
+assert.equal(linhaDoc({ nome: "Laudo pericial", criado_em: "2026-11-05T10:00:00Z", texto: "Conclusão: incapaz." }), "Laudo pericial, de 05/11/2026:\nConclusão: incapaz.");
+const a2 = promptAprofundar("Maria", { casos: [], anotacoes: [], andamentos: [], eventos: [], agenda: [], prazos: [], documentos: ["Laudo pericial, de 05/11/2026:\nCPF 123.456.789-09 incapaz"] }, "x", q);
+assert.ok(a2.includes("<documentos_decisivos>") && !a2.includes("123.456") && a2.includes("pendencias"));
 console.log("zap_assistente: ok");
