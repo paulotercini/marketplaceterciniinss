@@ -102,7 +102,8 @@ export const quemEscreve = (nome: string, cargo: string) =>
   `Quem vai enviar é ${nome || "um colaborador"}${cargo ? ` (${cargo})` : ""}: escreva na primeira pessoa do singular dessa pessoa ` +
   `("verifiquei", "fico à disposição"), sem "nós", sem citar o nome dela em terceira pessoa e sem assinatura.`;
 const PROIBE = `Não prometa resultado, prazo ou valor, não dê parecer jurídico e não afirme andamento que os dados não mostram; ` +
-  `se faltar informação, diga que vai conferir e retorna. Escreva "agendar" e "atendimento", e não "marcar" ou "consulta".`;
+  `se faltar informação, diga que vai conferir e retorna. Escreva "agendar" e "atendimento", e não "marcar" ou "consulta". ` +
+  `Continue a conversa a partir da última mensagem, como quem já está nela: sem apresentação nem cumprimento repetido se a conversa já começou.`;
 const DIVERSO = (anterior: string, orientacao: string) =>
   (anterior.trim() ? `\n\nSugestão anterior, que a equipe não quis usar (não a repita nem a parafraseie; siga outro caminho):\n<anterior>\n${mascarar(anterior).slice(0, 1500)}\n</anterior>` : "") +
   (orientacao.trim() ? `\n\nOrientação de quem pede (vale acima do tom da sugestão anterior; as proibições continuam): ${mascarar(orientacao).slice(0, 500)}` : "");
@@ -122,8 +123,9 @@ export function promptAprofundar(nome: string, d: Dossie, conversa: string, quem
     `respondendo ao que ele perguntou por último com o que os dados mostram de fato, em linguagem simples e com a data do fato ` +
     `quando ajudar. Prefira o andamento e a anotação mais recentes; não cite número de processo, protocolo ou CPF. ${PROIBE} ${quem}` +
     DIVERSO(anterior, orientacao) +
-    `\n\nEm "bases", liste de 1 a 5 fontes curtas que sustentam a resposta, cada uma com a origem e a data, como ` +
-    `"andamento do PAT de 05/11" ou "anotação do escritório de 03/11"; se nada dos dados sustentar, diga "apenas a conversa".`;
+    `\n\nEm "bases", liste de 1 a 5 fatos que sustentam a resposta, cada um no formato "origem de dd/mm/aaaa: o fato em poucas palavras", ` +
+    `como "andamento do PAT de 05/11/2026: exigência de documento médico"; a data é a do registro nos dados, nunca inventada. ` +
+    `Se nada dos dados sustentar, escreva apenas "apenas a conversa".`;
 }
 export const ESQUEMA_APROF = {
   type: "object", additionalProperties: false, required: ["texto", "bases"],
