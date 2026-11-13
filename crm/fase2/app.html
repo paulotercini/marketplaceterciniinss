@@ -7079,7 +7079,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.81</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.82</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18341,7 +18341,8 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
          <div class="ze-sug-bts"><button class="btn-rap" onclick="usarSugestaoZap()" title="Levar a sugestão ao campo de escrever para conferir e alterar">Usar<span class="sr-only"> a sugestão no campo de escrever</span></button>
            <button class="btn-mini" onclick="descartarSugestaoZap()" title="Descartar a sugestão">Descartar<span class="sr-only"> a sugestão</span></button>
            <button class="btn-mini" onclick="iaSugestaoZap('outra')" title="Pedir outra sugestão, em sentido diverso desta">Outra<span class="sr-only"> sugestão</span></button>
-           <button class="btn-mini" onclick="iaSugestaoZap('aprofundar')" title="Consulta completa: anotações, andamentos, prazos, perícias, agenda e mensagens">Aprofundar<span class="sr-only"> a sugestão</span></button></div>
+           <button class="btn-mini" onclick="iaSugestaoZap('aprofundar')" title="Consulta completa: anotações, andamentos, prazos, perícias, agenda e mensagens">Aprofundar<span class="sr-only"> a sugestão</span></button>
+           ${botaoProvidencia(c.sugestao_ia.providencia)}</div>
          ${(c.sugestao_ia.bases||[]).length?`<div class="ze-sug-base">Baseada em:<ul style="margin:2px 0 0 16px;padding:0">${c.sugestao_ia.bases.map(b=>`<li>${esc(b)}</li>`).join("")}</ul></div>`:""}
          ${(c.sugestao_ia.pendencias||[]).length?`<div class="ze-sug-base ze-sug-pend">Falta verificar:<ul style="margin:2px 0 0 16px;padding:0">${c.sugestao_ia.pendencias.map(b=>`<li>${esc(b)}</li>`).join("")}</ul></div>`:""}</div>`:""}
        <div class="ze-modos" role="tablist" aria-label="Para quem é o texto">
@@ -19094,11 +19095,39 @@ async function pedirSugestaoZap(acao){
   let r; try{ r = await api("/functions/v1/zap_assistente",{method:"POST", body:JSON.stringify(corpo)}); }
   catch(e){ r = {erro: msgErro(e)}; }
   if(!r || !r.texto) return aviso("A IA não sugeriu: " + ((r&&r.erro) || "sem resposta"));
-  const sug = {texto: r.texto, em: new Date().toISOString(), urgente: false, modo: acao, bases: r.bases || [], pendencias: r.pendencias || []};
+  const sug = {texto: r.texto, em: new Date().toISOString(), urgente: false, modo: acao, bases: r.bases || [], pendencias: r.pendencias || [], providencia: r.providencia || null};
   try{ await api(`/rest/v1/zap_conversas?id=eq.${conv}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({sugestao_ia:sug})}); }
   catch(e){ return aviso(msgErro(e)); }
   c.sugestao_ia = sug; aviso("Sugestão pronta acima do campo de escrever");
   if(zapAberta===conv) pintarConversaGuardando();
+}
+// F580 · a próxima providência do Aprofundar abre o campo de escrever do caso já preenchido; nada se grava sem o Registrar
+const PROV_ROT = {prazo: "Prazo", lembrete: "Lembrete", tarefa: "Tarefa"};
+function botaoProvidencia(p){
+  if(!p || !PROV_ROT[p.tipo] || !D.casoPorId.get(p.caso_id)) return "";
+  const frase = `${p.tipo==="prazo"?"Criar prazo":p.tipo==="lembrete"?"Criar lembrete":"Criar tarefa"} até ${dataBR(p.data)}: ${p.rotulo}`;
+  return `<button class="btn-rap" onclick="providenciaZap()" title="${esc(frase)}. Abre o caso com o campo de escrever preenchido para conferir e registrar."><span aria-hidden="true">${PROV_ROT[p.tipo]} ${esc(dataBR(p.data).slice(0,5))}</span><span class="sr-only">${esc(frase)}</span></button>`;
+}
+async function providenciaZap(){
+  const c = zapConvs.find(x=>x.id===zapAberta), p = c?.sugestao_ia?.providencia, cli = c && clienteDaConversa(c);
+  if(!p || !cli) return;
+  await casoComZap(cli.id, p.caso_id);
+  if(casoSel!==p.caso_id) return;
+  setTimeout(()=>{
+    const tx = document.getElementById("and-texto"); if(!tx) return aviso("Abra o caso no Escritório para registrar");
+    tx.closest(".escrever")?.classList.add("esc-aberto");
+    if(p.tipo==="prazo"){
+      const ck = document.getElementById("and-prazo-ck"); if(!ck) return;
+      ck.checked = true; pzToggle(ck);
+      const d = document.getElementById("and-prazo-data"); if(d){ d.value = p.data; pzxPintar(); }
+    }else{
+      const nat = p.tipo==="lembrete" ? "lembrete" : "compromisso", bt = document.querySelector(`.esc-tg.tf-nt[data-nat="${nat}"]`);
+      if(bt && tfNatureza!==nat) tfNat(nat, bt);
+      tfDia(p.data);
+    }
+    if(!tx.value.trim()) tx.value = `${p.rotulo}.`;
+    tx.focus(); tx.scrollIntoView({block:"center"});
+  });
 }
 function usarSugestaoZap(){
   const c = zapConvs.find(x=>x.id===zapAberta); if(!c || !c.sugestao_ia) return;
