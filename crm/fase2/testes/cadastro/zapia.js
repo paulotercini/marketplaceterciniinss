@@ -169,7 +169,7 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   await p.evaluate(() => { irPara("config"); });
   await p.waitForTimeout(400);
   conf("as Configurações têm as quatro caixas", await p.$("#cf-filtro-auto") && await p.$("#cf-ia-equipe") && await p.$("#cf-robo-agenda") && await p.$("#cf-robo-noturno"));
-  conf("o prazo de volta ao robô aparece com 60 min", await p.$eval("#cf-volta-min", e => e.value).catch(() => "") === "60");
+  conf("o prazo de volta ao robô aparece com 30 min", await p.$eval("#cf-volta-min", e => e.value).catch(() => "") === "30");
   conf("o plantão da IA nasce desligado, com 20 min e o caso novo para os três advogados", await p.$eval("#cf-ia-plantao", e => !e.checked).catch(() => false)
     && await p.$eval("#cf-plantao-min", e => e.value).catch(() => "") === "20" && await p.$eval("#cf-plantao-lead", e => e.value).catch(() => "") === "todos");
   conf("F275 · conversa na hora desligada (0 dias), chamada direta e as duas instruções editáveis",
