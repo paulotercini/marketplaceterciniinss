@@ -57,7 +57,7 @@ FIX.colaboradores.push({ ...FIX.colaboradores[0], id: MEISSA, nome: "Meissa Fict
     const c = (t, l) => capturaDoTexto(t, l);
     return {
       sex: c("Cliente traz o RG sex", true).data, sexIso: prox(5),
-      amanha: c("Ligar amanhã", true).data, amanhaIso: maisDias(1),
+      amanha: c("Ligar amanhã", true).data, amanhaIso: somaDias(hoje(), 1),
       dias: c("Retorno em 10 dias", true).data, diasIso: somaDias(hoje(), 10),
       dez: c("Trazer o laudo 15/12", true).data,
       ter: c("Verificar se vai ter o documento", false).data,
