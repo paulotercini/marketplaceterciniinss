@@ -7035,6 +7035,9 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link svg{vertical-align:-2px;opa
 html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px solid var(--azul);outline-offset:2px;border-radius:3px}
 @media (prefers-reduced-motion:reduce){html .faixa-prazos.fp5 .pz-mais,html .linha-caso.lc5 .lc-dobra{transition:none}html .faixa-prazos.fp5 .pz-mais:active{transform:none}}
 /* F567 · Resumo do Caso (variação 4, linha do tempo, escolhida pelo Paulo em 12.11.2026) */
+.an5{margin-top:10px;border:1px solid #E3E1DA;border-radius:8px;padding:10px 12px;background:#FFFFFF;color:#1F1E1B;font:13px/1.45 "IBM Plex Sans",system-ui,sans-serif}.an5-cab{display:flex;justify-content:space-between;margin-bottom:6px}.an5-sub{color:#6B6862;font-size:12px}.an5-it{border-top:1px solid #E3E1DA;padding-top:6px;margin-top:6px}.an5-it:first-of-type{border-top:0;margin-top:0}.an5-txt{white-space:pre-wrap;margin:6px 0 0;max-height:420px;overflow:auto}.an5-aviso{color:#A23B2A;font-size:12px;margin:4px 0 0}.an5 summary{cursor:pointer}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .an5{background:#232226;color:#ECEAE4;border-color:#38363C}:root:not([data-theme="light"]) .an5-sub{color:#A29E97}}
+:root[data-theme="dark"] .an5{background:#232226;color:#ECEAE4;border-color:#38363C}
 .rs5{--rs-rural:#4E7A3A;--rs-especial:#B4532A;--rs-comum:#3D6FA8;--rs-deficiencia:#7A4E9C;--rs-incapacidade:#A23B5A;--rs-outro:#7B7B7B;--rs-bd:#E3E1DA;--rs-mut:#6B6862;margin-top:10px;border:1px solid var(--rs-bd);border-radius:8px;padding:10px 12px;background:#FFFFFF;color:#1F1E1B;font:13px/1.45 "IBM Plex Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rs5{--rs-rural:#8DBA75;--rs-especial:#E08A62;--rs-comum:#7FA8DB;--rs-deficiencia:#B596D1;--rs-incapacidade:#D97B97;--rs-outro:#AAAAAA;--rs-bd:#38363C;--rs-mut:#A29E97;background:#232226;color:#ECEAE4}}
 :root[data-theme="dark"] .rs5{--rs-rural:#8DBA75;--rs-especial:#E08A62;--rs-comum:#7FA8DB;--rs-deficiencia:#B596D1;--rs-incapacidade:#D97B97;--rs-outro:#AAAAAA;--rs-bd:#38363C;--rs-mut:#A29E97;background:#232226;color:#ECEAE4}
@@ -7074,7 +7077,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.74</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.75</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12233,7 +12236,31 @@ function dashboardPe(k, ands){
 // e os cartões dos processos ativos (INSS, CRPS, Judicial) à direita (opção A ajustada, aprovada pelo Paulo em 10.11.2026)
 function dashboardLado(k, ands, painel){
   const pe = dashboardPe(k, ands);
-  return `<div class="db-grade"><div class="db-grade-in${pe ? " com-lado" : ""}"><div class="db-col-esq">${dashboardDoCaso(k, ands)}${composerCaso(k)}${painel}</div>${pe ? `<div class="db-col-dir">${pe}</div>` : ""}</div></div>`;
+  return `<div class="db-grade"><div class="db-grade-in${pe ? " com-lado" : ""}"><div class="db-col-esq">${dashboardDoCaso(k, ands)}${composerCaso(k)}${quadroAnalises(k, ands)}${painel}</div>${pe ? `<div class="db-col-dir">${pe}</div>` : ""}</div></div>`;
+}
+// F571 · Análises da IA: as análises feitas nos Projetos do claude.ai chegam pelo conector (registrar_analise)
+// e ficam abaixo dos andamentos do escritório; a do caso e as da ficha sem caso, a mais recente aberta.
+const _anIa = new Map();
+function analisesDoCliente(cliId){
+  const m = _anIa.get(cliId); if(m && (m.carregando || Date.now()-m.em < 300000)) return m;
+  const novo = {carregando:true, em:Date.now(), itens:[]}; _anIa.set(cliId, novo);
+  api(`/rest/v1/analises_ia?select=id,caso_id,titulo,texto,projeto,feita_em,autor_id,criado_em&cliente_id=eq.${cliId}&order=feita_em.desc,criado_em.desc&limit=30`)
+    .then(r=>{ novo.itens = r||[]; }).catch(()=>{ novo.itens = []; })
+    .finally(()=>{ novo.carregando = false; novo.em = Date.now(); if(novo.itens.length) repintarFicha(); });
+  return novo;
+}
+function quadroAnalises(k, ands){
+  const m = analisesDoCliente(k.cliente_id);
+  const its = m.itens.filter(a=>!a.caso_id || a.caso_id===k.id); if(!its.length) return "";
+  const notaNova = (ands||[]).filter(a=>!ehOficial(a) && !ORIGENS_ROBO.includes(a.origem) && !a.excluir).map(a=>String(a.criado_em||"").slice(0,10)).sort().pop()||"";
+  const um = (a, i) => {
+    const au = (D.colPorId.get(a.autor_id)||{}).nome||"";
+    const sub = [dataBR(a.feita_em), a.projeto, au ? `gravada por ${au.split(" ")[0]}` : ""].filter(Boolean).map(esc).join(" · ");
+    const corpo = `<p class="an5-txt">${esc(a.texto)}</p>`;
+    return i ? `<details class="an5-it"><summary><b>${esc(a.titulo)}</b> <span class="an5-sub">${sub}</span></summary>${corpo}</details>`
+             : `<div class="an5-it"><b>${esc(a.titulo)}</b> <span class="an5-sub">${sub}</span>${notaNova > a.feita_em ? `<p class="an5-aviso">Há anotação do escritório posterior a esta análise.</p>` : ""}${corpo}</div>`;
+  };
+  return `<section class="an5" aria-label="Análises da IA"><div class="an5-cab"><b>Análises da IA</b><span class="an5-sub">${its.length}</span></div>${its.map(um).join("")}</section>`;
 }
 function ligarCartoes(){
   pintarCursor();                     // o cursor do teclado sobrevive ao render

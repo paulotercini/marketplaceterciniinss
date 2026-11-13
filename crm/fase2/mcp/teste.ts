@@ -23,6 +23,7 @@ const T: Record<string, any[]> = {
     { id: "a3", caso_id: "b0000000-0000-0000-0000-000000000002", autor_id: null, origem: "pat", excluir: false, criado_em: "2026-09-15T12:00:00Z", texto: "INSS: benefício deferido em 12/09/2026." }],
   andamento_tarefas: [{ id: "f0000000-0000-0000-0000-000000000001", caso_id: CASO, andamento_id: "a1", colaborador_id: EU, lembrar_em: hj, natureza: "compromisso", papel: "executa", concluida_em: null }],
   eventos: [],
+  analises_ia: [],
   zap_conversas: [{ id: ZAP, telefone: "5516999990001", chave: "99990001", nome_perfil: "Aurélia", cliente_id: CLI, lead_id: null,
     atendente_id: null, status: "aberta", nao_lidas: 1, ultima_em: "2026-10-01T13:00:00Z", ultimo_texto: "Chegou carta do INSS", bot_ativo: true }],
   zap_mensagens: [{ id: ZM, conversa_id: ZAP, direcao: "entrada", autor_id: null, por_bot: false, tipo: "texto", texto: "Chegou carta do INSS", status: "enviada", criado_em: "2026-10-01T13:00:00Z" },
@@ -108,8 +109,8 @@ const ini = await rpc("initialize", { protocolVersion: "2025-06-18", capabilitie
 conf("initialize responde com o nome do servidor", ini.corpo?.result?.serverInfo?.name === "crm-tercini");
 const tl = await rpc("tools/list", {}, "tok-bom", 2);
 const nomes = (tl.corpo?.result?.tools || []).map((t: any) => t.name).sort();
-conf(`as vinte e quatro ferramentas (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "anotacoes_caso", "atualizar_caso", "buscar_clientes", "casos_com_decisao_sem_resultado", "casos_para_completar", "completar_cadastro", "concluir_tarefa", "conversas_whatsapp", "criar_tarefa", "documentos_caso", "equipe", "ficha_cliente", "ler_conversa_whatsapp", "ler_documento", "novidades", "processo_inteiro", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "retorno_whatsapp", "tarefas_caso", "transferir_whatsapp", "whatsapp_para_anotacao"]));
-const ESCREVE = ["atualizar_caso", "completar_cadastro", "concluir_tarefa", "criar_tarefa", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "retorno_whatsapp", "transferir_whatsapp", "whatsapp_para_anotacao"];
+conf(`as vinte e seis ferramentas (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "analises_caso", "anotacoes_caso", "atualizar_caso", "buscar_clientes", "casos_com_decisao_sem_resultado", "casos_para_completar", "completar_cadastro", "concluir_tarefa", "conversas_whatsapp", "criar_tarefa", "documentos_caso", "equipe", "ficha_cliente", "ler_conversa_whatsapp", "ler_documento", "novidades", "processo_inteiro", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_analise", "registrar_anotacao", "retorno_whatsapp", "tarefas_caso", "transferir_whatsapp", "whatsapp_para_anotacao"]));
+const ESCREVE = ["atualizar_caso", "completar_cadastro", "concluir_tarefa", "criar_tarefa", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_analise", "registrar_anotacao", "retorno_whatsapp", "transferir_whatsapp", "whatsapp_para_anotacao"];
 conf("leitura marcada só leitura e escrita marcada não destrutiva", (tl.corpo?.result?.tools || []).every((t: any) =>
   ESCREVE.includes(t.name) ? t.annotations?.readOnlyHint === false && t.annotations?.destructiveHint === false : t.annotations?.readOnlyHint));
 
@@ -244,7 +245,7 @@ conf("a escrita só toca andamentos, tarefas, casos, cadastro e rascunho do What
 T.colaboradores[0].papel = "assistente_ia";
 const tlr = await rpc("tools/list", {}, "tok-bom", 8);
 const nr = (tlr.corpo?.result?.tools || []).map((t: any) => t.name);
-conf("a conta do assistente fica sem concluir e reagendar, e mantém anotar, criar tarefa, atualizar e completar", nr.length === 21
+conf("a conta do assistente fica sem concluir e reagendar, e mantém anotar, criar tarefa, atualizar e completar", nr.length === 24
   && !nr.includes("concluir_tarefa") && !nr.includes("reagendar_tarefa") && nr.includes("atualizar_caso") && nr.includes("completar_cadastro")
   && nr.includes("registrar_anotacao") && nr.includes("criar_tarefa"));
 const casoR = T.casos[0], nbAntes = casoR.nb;
@@ -290,6 +291,20 @@ const nAg = pedidos.length;
 await call("agenda", { quem: "todos", dias: 0, desde: "05/01/2026" });
 conf("a agenda aceita desde para as vencidas", pedidos.slice(nAg).some((p) => p.includes("lembrar_em=gte.2026-01-05"))
   && (await call("agenda", { desde: "ontem" })).includes("inválida"));
+
+// F571 · análises da IA
+const TXT_AN = "Análise da viabilidade: a cliente cumpre a carência rural com as notas de 2019 a 2025.";
+const an1 = await call("registrar_analise", { caso_id: CASO, titulo: "Viabilidade", texto: TXT_AN, projeto: "Projeto Cliente Teste", feita_em: "05/10/2026" });
+conf("registrar_analise grava no caso com autor, data e hash", an1.includes("gravada no caso") && T.analises_ia.length === 1
+  && T.analises_ia[0].cliente_id === CLI && T.analises_ia[0].autor_id === EU && T.analises_ia[0].feita_em === "2026-10-05" && T.analises_ia[0].hash.length === 64);
+conf("o mesmo texto não duplica", (await call("registrar_analise", { caso_id: CASO, titulo: "Outra", texto: TXT_AN })).includes("já estava") && T.analises_ia.length === 1);
+conf("sem caso nem cliente, data futura e caso de outro cliente não gravam",
+  (await call("registrar_analise", { titulo: "x x", texto: TXT_AN + " b" })).includes("Informe")
+  && (await call("registrar_analise", { cliente_id: CLI, titulo: "x x", texto: TXT_AN + " c", feita_em: "01/01/2099" })).includes("futura")
+  && (await call("registrar_analise", { caso_id: CASO, cliente_id: "c0000000-0000-0000-0000-000000000002", titulo: "x x", texto: TXT_AN + " d" })).includes("não é desse")
+  && T.analises_ia.length === 1);
+const an2 = await call("analises_caso", { caso_id: CASO });
+conf("analises_caso devolve o texto inteiro, o projeto e quem gravou", an2.includes("carência rural") && an2.includes("Projeto Cliente Teste") && an2.includes("Paulo Tercini") && an2.includes("05/10/2026"));
 
 // colaborador inativo não passa
 T.colaboradores[0].ativo = false;
