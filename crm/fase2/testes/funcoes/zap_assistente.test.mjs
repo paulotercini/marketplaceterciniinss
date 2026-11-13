@@ -34,4 +34,6 @@ assert.ok(a.includes("<andamentos_dos_portais>") && a.includes("[número]") && !
 assert.ok(a.includes("<anotacoes_do_escritorio>\nnada registrado") && a.includes("13/11 9h · Paulo") && a.includes('"bases"'));
 assert.equal(linhaAnd({ origem: "pat", criado_em: "2026-11-05T10:00:00Z", texto: "Em  análise\n" }), "andamento do PAT de 05/11/2026: Em análise");
 assert.deepEqual(ESQUEMA_APROF.required, ["texto", "bases"]);
+// F577 · continuidade e fontes datadas
+assert.ok(o.includes("Continue a conversa") && a.includes("dd/mm/aaaa"));
 console.log("zap_assistente: ok");
