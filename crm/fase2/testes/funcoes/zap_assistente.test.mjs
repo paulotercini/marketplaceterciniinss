@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_assistente.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, pedidosAbertos, promptRascunho, primeiroNome, guardarNumeros, devolverNumeros, promptCorrigir, promptOutra, promptAprofundar, quemEscreve, linhaAnd, ESQUEMA_APROF, RX_DOC_DECISIVO, linhaDoc } from "../../zap_assistente/index.ts";
+import { mascarar, transcricao, pedidosAbertos, promptRascunho, primeiroNome, guardarNumeros, devolverNumeros, promptCorrigir, promptOutra, promptAprofundar, quemEscreve, linhaAnd, ESQUEMA_APROF, RX_DOC_DECISIVO, linhaDoc, providenciaDe } from "../../zap_assistente/index.ts";
 
 assert.equal(mascarar("meu CPF 123.456.789-09 e NB 1234567890"), "meu CPF [número] e NB [número]");
 assert.equal(mascarar("dia 12/03 às 9h, 3 filhos"), "dia 12/03 às 9h, 3 filhos", "data curta e número pequeno ficam");
@@ -33,7 +33,19 @@ const a = promptAprofundar("Maria", { casos: ["B31 · fase inss"], anotacoes: []
 assert.ok(a.includes("<andamentos_dos_portais>") && a.includes("[número]") && !a.includes("123.456"), "o CPF dos dados sai mascarado");
 assert.ok(a.includes("<anotacoes_do_escritorio>\nnada registrado") && a.includes("13/11 9h · Paulo") && a.includes('"bases"'));
 assert.equal(linhaAnd({ origem: "pat", criado_em: "2026-11-05T10:00:00Z", texto: "Em  análise\n" }), "andamento do PAT de 05/11/2026: Em análise");
-assert.deepEqual(ESQUEMA_APROF.required, ["texto", "bases", "pendencias"]);
+assert.deepEqual(ESQUEMA_APROF.required, ["texto", "bases", "pendencias", "providencia"]);
+// F580 · a providência sugerida
+{
+  const h = new Date("2026-11-13T12:00:00Z"), ids = ["c1", "c2"];
+  assert.deepEqual(providenciaDe({ tipo: "prazo", rotulo: " Recurso  ao CRPS ", data: "05/12/2026", caso: 2 }, ids, h),
+    { tipo: "prazo", rotulo: "Recurso ao CRPS", data: "2026-12-05", caso_id: "c2" });
+  assert.equal(providenciaDe({ tipo: "nenhuma", rotulo: "", data: "", caso: 1 }, ids, h), null);
+  assert.equal(providenciaDe({ tipo: "prazo", rotulo: "x", data: "01/11/2026", caso: 1 }, ids, h), null, "data passada");
+  assert.equal(providenciaDe({ tipo: "prazo", rotulo: "x", data: "31/02/2027", caso: 1 }, ids, h), null, "data inexistente");
+  assert.equal(providenciaDe({ tipo: "lembrete", rotulo: "x", data: "05/12/2026", caso: 3 }, ids, h), null, "caso fora da lista");
+  assert.equal(providenciaDe({ tipo: "tarefa", rotulo: "x", data: "05/12/2029", caso: 1 }, ids, h), null, "mais de 2 anos");
+  assert.match(promptAprofundar("Ana", { casos: ["caso 1: B31"], anotacoes: [], andamentos: [], eventos: [], agenda: [], prazos: [] }, "c", "q"), /providencia/);
+}
 // F578 · continuidade e fontes datadas
 assert.ok(o.includes("Continue a conversa") && a.includes("dd/mm/aaaa"));
 // F579 · documento decisivo lido pelo texto e o que falta declarado
