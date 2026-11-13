@@ -58,6 +58,27 @@ insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'b
 insert into r select 'a2 sem a equipe: a mensagem do Offline sai',
   exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v) and texto like '%Estou fora.%');
 
+-- A 15 min) equipe escreveu há 20 minutos, já no Offline: a mensagem sai (F578)
+delete from zap_mensagens where conversa_id = (select id from v);
+update zap_conversas set offline_aviso_em = null where id = (select id from v);
+update colaboradores set zap_offline_desde = now() - interval '2 hours' where inicial = 'X';
+insert into zap_mensagens (conversa_id, direcao, texto, autor_id, criado_em)
+  select id, 'saida', 'Já verifico.', '33333333-3333-3333-3333-333333333333', now() - interval '20 minutes' from v;
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'e então?' from v;
+insert into r select 'a3 equipe calada há 20 minutos: a mensagem do Offline sai',
+  exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v) and texto like '%Estou fora.%');
+
+-- A configurável) com zap_offline_min = 60, a equipe de 20 minutos atrás segura a mensagem
+delete from zap_mensagens where conversa_id = (select id from v);
+update zap_conversas set offline_aviso_em = null where id = (select id from v);
+insert into config_app(chave, valor) values ('zap_offline_min', '60') on conflict (chave) do update set valor = '60';
+insert into zap_mensagens (conversa_id, direcao, texto, autor_id, criado_em)
+  select id, 'saida', 'Já verifico.', '33333333-3333-3333-3333-333333333333', now() - interval '20 minutes' from v;
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'e então?' from v;
+insert into r select 'a4 zap_offline_min = 60: sem mensagem do Offline',
+  not exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v));
+update config_app set valor = '15' where chave = 'zap_offline_min';
+
 -- D) a nota do fim da cobertura no singular
 update zap_conversas set cobertura = jsonb_build_object('titular', '33333333-3333-3333-3333-333333333333',
   'cobre', '33333333-3333-3333-3333-333333333333', 'desde', now() - interval '5 minutes') where id = (select id from v);
