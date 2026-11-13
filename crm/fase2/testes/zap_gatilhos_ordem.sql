@@ -11,15 +11,16 @@ with esperado(n, gatilho, funcao) as (values
   (1,  'zap_avisa_resposta',     'zap_avisa_resposta_compartilhada'),
   (2,  'zap_historico_primeira', 'zap_historico_primeira'),
   (3,  'zap_humano_ins',         'zap_humano_assumiu'),
-  (4,  'zap_t_andamento_ins',    'zap_andamento_gatilho'),
-  (5,  'zap_toque_ins',          'zap_toque'),
-  (6,  'zap_u_sugestao_ins',     'zap_sugestao_limpa'),
-  (7,  'zap_v_filtro_ins',       'zap_filtro'),
-  (8,  'zap_v_marcas_ins',       'zap_marcas_conversa'),
-  (9,  'zap_w_plantao_ins',      'zap_plantao_gatilho'),
-  (10, 'zap_x_push_ins',         'zap_push_gatilho'),
-  (11, 'zap_y_offline_ins',      'zap_offline_gatilho'),
-  (12, 'zap_zbot_ins',           'zap_bot')
+  (4,  'zap_s_anotacao_ins',     'zap_anotacao_gatilho'),
+  (5,  'zap_t_andamento_ins',    'zap_andamento_gatilho'),
+  (6,  'zap_toque_ins',          'zap_toque'),
+  (7,  'zap_u_sugestao_ins',     'zap_sugestao_limpa'),
+  (8,  'zap_v_filtro_ins',       'zap_filtro'),
+  (9,  'zap_v_marcas_ins',       'zap_marcas_conversa'),
+  (10, 'zap_w_plantao_ins',      'zap_plantao_gatilho'),
+  (11, 'zap_x_push_ins',         'zap_push_gatilho'),
+  (12, 'zap_y_offline_ins',      'zap_offline_gatilho'),
+  (13, 'zap_zbot_ins',           'zap_bot')
 ), atual as (
   select row_number() over (order by t.tgname collate "C") as n, t.tgname::text as gatilho, p.proname::text as funcao
     from pg_trigger t join pg_proc p on p.oid = t.tgfoid
