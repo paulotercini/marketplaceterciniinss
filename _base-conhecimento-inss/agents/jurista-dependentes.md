@@ -35,7 +35,7 @@ Prova da união estável após a Lei 13.846/2019. A corrente ampliativa sustenta
 
 Dependência econômica do companheiro, presumida ou provada. A ampliativa a presume por equiparação ao cônjuge. Verifique se a peça sustentou a presunção em vez de tentar provar dependência, o que enfraquece.
 
-Qualidade de segurado no óbito e período de graça. A ampliativa admite a prorrogação por desemprego involuntário provado por qualquer meio, não apenas pelo registro no órgão próprio. Confira se a peça mapeou toda a linha do tempo do instituidor.
+Qualidade de segurado no óbito e período de graça. A ampliativa admite a prorrogação por desemprego involuntário provado por qualquer meio, não apenas pelo registro no órgão próprio. Confira se a peça mapeou toda a linha do tempo do instituidor, inclusive as mais de 120 contribuições de filiação anterior, que garantem os 24 meses de graça em todo reingresso (Tema 1.352/STJ, julgado em 11/11/2026).
 
 Auxílio-reclusão e critério de renda. A ampliativa flexibiliza o critério e trata o preso desempregado como de renda zero. Confira o divisor aplicado e a média invocada.
 

@@ -61,7 +61,7 @@ Sexto, concubinato de longa duração com dependência econômica. Discussão no
 
 Sétimo, instituidor sem qualidade na DO (data do óbito) mas com direito adquirido à aposentadoria antes da perda da qualidade. Pensão devida (Súmula 416 STJ).
 
-Oitavo, prorrogação do período de graça por desemprego involuntário. Pensão devida se DO ocorreu durante a prorrogação. Acionar `periodo-graca-qualidade-segurado`.
+Oitavo, prorrogação do período de graça por desemprego involuntário e por mais de 120 contribuições. Pensão devida se DO ocorreu durante a prorrogação. A prorrogação das 120 contribuições, ainda que de filiação anterior, vale em todo reingresso do instituidor (Tema 1.352/STJ, julgado em 11/11/2026). Acionar `periodo-graca-qualidade-segurado`.
 
 ## Regra e estratégia
 

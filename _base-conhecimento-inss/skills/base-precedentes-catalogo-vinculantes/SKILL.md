@@ -177,6 +177,7 @@ A reference `ATUALIZACAO-STATUS-2026-06.md` consolida a verificação feita via 
 - **Tema 1157/STJ** - JULGADO em 07/05/2026. Acórdão publicado em 06/07/2026. Tese contra segurado.
 - **Tema 1162/STJ** - JULGADO em 12/11/2025. Acórdão publicado em 19/11/2025. Flexibilização do critério econômico do auxílio-reclusão só pré-MP 871/2019, com modulação.
 - **Tema 1291/STJ** - JULGADO em 10/09/2025. Acórdão publicado em 18/09/2025 (RE pendente). Tese pró-segurado (contribuinte individual não cooperado).
+- **Tema 1352/STJ** - JULGADO em 11/11/2026 (Primeira Seção, unanimidade). Acórdão não publicado; página oficial conferida em 13/11/2026 (Onda 186). Tese pró-segurado: a prorrogação do período de graça por mais de 120 contribuições se incorpora ao patrimônio jurídico e vale em todo reingresso, sem novo período contributivo. Tese literal [NÃO CONFIRMADO] até a publicação.
 - **Tema 1307/STJ** - JULGADO em 07/05/2026. Acórdão publicado em 20/05/2026. Tese pró-segurado (motoristas de ônibus/caminhão por penosidade).
 
 ### Temas STJ que CONTINUAM suspensos/afetados (conferido em 11/07/2026)

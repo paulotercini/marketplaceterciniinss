@@ -63,7 +63,11 @@ O segurado que comprova mais de 120 contribuições mensais sem interrupção qu
 
 **TRF4, AC 5015395-67.2021.4.04.7208/SC** (9ª Turma, Rel. Des. Paulo Afonso Brum Vaz, j. 16/05/2023) — confirmou a tese de incorporação ao patrimônio jurídico em caso de pensão por morte, negando apelação do INSS por unanimidade. A prorrogação é exercível a qualquer tempo, sendo irrelevante a posterior perda e readquisição da qualidade.
 
-**ALERTA — Tema 1352/STJ [PENDENTE]** (Rel. Min. Paulo Sérgio Domingues, REsp 2.188.858/SP e outros, afetação em junho/2025). O STJ definirá se a prorrogação por 120 contribuições se incorpora ao patrimônio jurídico para uso ilimitado ou se é de exercício único. A 2ª Turma do STJ (REsp 1.517.010/SP) sinalizou interpretação restritiva. A suspensão alcança apenas os recursos especiais e os agravos em recurso especial (auditoria 03/10/2026). A TNU abriu Tema 338 para revisão do Tema 255 à luz dessa jurisprudência superveniente. RISCO RELEVANTE de reversão.
+**Tema 1.352/STJ, JULGADO em 11/11/2026 (Onda 186, 13/11/2026).** Primeira Seção, Rel. Min. Paulo Sérgio Domingues, REsp 2.188.858/SP, 2.189.004/SP, 2.171.338/SP e 2.188.859/SP, todos vindos do TRF3. A Seção negou provimento ao recurso do INSS por unanimidade. A página oficial de repetitivos do STJ, conferida em 13/11/2026, registra "Mérito Julgado" e a tese "aguardando a publicação do acórdão" [CONFERIDO]. A tese proclamada na sessão, conhecida até agora apenas por fonte secundária, é esta [NÃO CONFIRMADO na fonte oficial até a publicação do acórdão]: "A prorrogação do período de graça pelo prazo de 24 (vinte e quatro) meses, prevista no artigo 15, 'caput', II e §1º da Lei 8.213/1991, se incorpora ao patrimônio jurídico previdenciário do segurado do RGPS uma vez efetuado o pagamento de mais de 120 (cento e vinte) contribuições mensais sem interrupção que acarrete a perda da qualidade de segurado, admitindo-se sua utilização de forma permanente, sem limitação de reingressos no RGPS e independente de novo período contributivo."
+
+**Efeito do julgamento.** O precedente é vinculante (art. 927, III, do CPC). Até a publicação do acórdão, a peça cita o julgamento de 11/11/2026 e a questão decidida, e transcreve a tese apenas depois de conferi-la no acórdão publicado. Publicado o acórdão, os recursos especiais e os agravos sobrestados seguem o art. 1.040 do CPC. A leitura restritiva da 2ª Turma (REsp 1.517.010/SP) ficou superada. O Tema 338/TNU, aberto para revisar o Tema 255, deve agora seguir a tese do STJ.
+
+**Alcance da tese.** A tese incorpora o direito à prorrogação. A qualidade de segurado continua a se perder ao fim de cada período de graça. Em cada novo afastamento, o segurado que já pagou mais de 120 contribuições sem perda da qualidade tem 24 meses de graça, ou 36 com o desemprego do § 2º, sem precisar de novas 120 contribuições. Os demais requisitos do benefício continuam exigidos: o evento dentro do prazo, a carência, inclusive a do reingresso (art. 27-A), e a contagem das 120 contribuições sem benefício por incapacidade intercalado (Tema 365/TNU).
 
 ### 2.2 Prorrogação por desemprego involuntário (§2º)
 
@@ -197,7 +201,7 @@ Acionar `documentos-comprobatorios-in128` para documentos gerais. Acionar `inss-
 
 Três controvérsias abertas impactam diretamente o período de graça.
 
-**Tema 1352/STJ** — incorporação das 120 contribuições (uso único vs. permanente). Se reversão, impacta Tema 255/TNU e toda a jurisprudência do TRF4.
+**Tema 1.352/STJ** (julgado em 11/11/2026, acórdão não publicado até 13/11/2026). A prorrogação por mais de 120 contribuições se incorpora ao patrimônio jurídico e vale em todo reingresso, sem novo período contributivo. Confirma o Tema 255/TNU e a jurisprudência do TRF4. Acompanhar a publicação do acórdão, a tese literal e eventual recurso extraordinário.
 
 **RE sobre Tema 349/TNU → STF** — contribuições abaixo do mínimo e qualidade de segurado. Se reversão, impacta milhões de segurados com contribuições fracionadas.
 
@@ -209,7 +213,7 @@ Ao analisar caso que envolva qualidade de segurado, verificar sequencialmente.
 
 **7.1** Data do último vínculo ou contribuição efetiva. Se contribuição abaixo do mínimo, aplicar Tema 349 e tese do não agravamento (seção 3.2).
 
-**7.2** Quantidade de contribuições sem interrupção. Excluir períodos de benefício intercalado (Tema 365). Se 120+, aplicar §1º e invocar Tema 255/TNU (alerta Tema 1352/STJ pendente).
+**7.2** Quantidade de contribuições sem interrupção. Excluir períodos de benefício intercalado (Tema 365). Se 120+ em qualquer filiação anterior, aplicar o §1º também no reingresso e invocar o Tema 1.352/STJ (vinculante, art. 927, III, do CPC) com o Tema 255/TNU. Não exigir novas 120 contribuições.
 
 **7.3** Comprovação de desemprego involuntário. Instruir com pelo menos um elemento além da CTPS/CNIS em branco (Tema 1360/STJ). Prova testemunhal isolada é suficiente (Súmula 27, PEDILEF 0015774-47). Contribuinte individual pode invocar prorrogação (Tema 239). Segurado especial tem direito à prorrogação por inatividade involuntária (Tema 348/TNU, transitado 17/06/2025).
 

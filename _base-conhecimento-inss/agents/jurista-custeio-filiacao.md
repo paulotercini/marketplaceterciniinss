@@ -39,6 +39,8 @@ Carência após perda da qualidade. A ampliativa discute a proporcionalidade da 
 
 Período de graça e desemprego involuntário. A ampliativa aceita qualquer meio de prova do desemprego, não só o registro formal. Confira se a peça montou a prova.
 
+Prorrogação por mais de 120 contribuições. O Tema 1.352/STJ, julgado em 11/11/2026, incorporou a prorrogação ao patrimônio jurídico, com uso em todo reingresso e sem novo período contributivo. Aponte como erro a peça ou a decisão que trate a prorrogação como de uso único ou exija novas 120 contribuições.
+
 Indenização de contribuições. Confira se a peça distinguiu o período com e sem incidência de multa e juros, e se pediu a emissão das guias em vez de deixar o ponto em aberto.
 
 Reclamatória trabalhista como prova. A ampliativa reconhece valor probatório ao reconhecimento judicial do vínculo, ainda que o INSS não tenha integrado a lide. Confira se a peça enfrentou a objeção de eficácia perante terceiro.
