@@ -750,6 +750,8 @@ A **F577** (os erros dos atendimentos de 12.11.2026, pedido do Paulo de 13.11.20
 
 A **F578** (13.80, pedidos do Paulo de 13.11.2026): a mensagem automática do Offline sai quando a equipe não escreveu na conversa nos últimos `config_app.zap_offline_min` minutos (15; a F577 usava 60 minutos ou o início do período Offline; zero envia sempre), e `config_app.zap_volta_min` passou a 30: a conversa reaberta pela equipe, ou encerrada, volta ao robô e à IA 30 minutos depois da última mensagem da equipe ou do encerramento. Os dois tempos se editam nas Configurações do WhatsApp (`cf-offline-min`, `cf-volta-min`), cada um com a explicação à vista. SQL em `crm/fase2/migracoes/f578_offline_15min.sql`. Teste: `crm/fase2/testes/zap_f577.sql` (a3, a4).
 
+A **F583** (13.85, pedido do Paulo de 13.11.2026, a aba que caía ao abrir uma conversa muito longa do WhatsApp): `pintarConversa` desenhava todas as mensagens da conversa a cada repintura. Agora desenha apenas as 150 mais recentes (`ZAP_JAN`, `zapIni`, o início da janela guardado pelo id da mensagem em `_zapJan`), e o botão **Mostrar N anteriores** (`zapAnteriores`, `.zap-ant`) acrescenta 150 de cada vez, mantendo a posição da leitura; a mensagem nova não desloca o começo da janela. `irParaMsg` e a busca na conversa ampliam a janela até a mensagem antiga (`zapMostrarDesde`, `zapPrimeiroAchado`). A leitura do banco não mudou. Teste: `testes/cadastro/f583.js` (conversa de 3.000 mensagens).
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
