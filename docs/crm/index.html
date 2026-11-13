@@ -7079,7 +7079,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.79</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.80</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -20619,9 +20619,15 @@ async function renderConfig(){
            <label class="cfg-ck">silêncio do robô entre falas:
              <input type="number" id="cf-pausa" min="0" max="300" style="width:70px"
                value="${esc(cfgApp("zap_pausa_bot")||"15")}"> s</label>
-           <label class="cfg-ck" title="quem escreve dentro desse prazo depois do encerramento continua com o atendente; depois dele, a conversa volta ao robô. Zero volta ao robô na hora (útil para testar)">conversa encerrada volta ao robô depois de
+           ${/* F578 · os dois tempos do WhatsApp, com a explicação à vista */""}
+           <label class="cfg-ck" style="flex-basis:100%;flex-wrap:wrap">⏱ mensagem do Offline depois de
+             <input type="number" id="cf-offline-min" min="0" max="1440" style="width:70px"
+               value="${esc(cfgApp("zap_offline_min")||"15")}"> min sem a equipe
+             <small style="flex-basis:100%;color:var(--muted,#666)">Com o atendente Offline, a mensagem automática de ausência só sai se ninguém da equipe escreveu na conversa nesse prazo. Zero envia sempre.</small></label>
+           <label class="cfg-ck" style="flex-basis:100%;flex-wrap:wrap">🔁 conversa volta ao robô e à IA depois de
              <input type="number" id="cf-volta-min" min="0" max="1440" style="width:70px"
-               value="${esc(cfgApp("zap_volta_min")||"60")}"> min</label>
+               value="${esc(cfgApp("zap_volta_min")||"30")}"> min
+             <small style="flex-basis:100%;color:var(--muted,#666)">Contados da última mensagem da equipe ou do encerramento. Antes disso, quem escreve continua com o atendente; depois, a conversa volta ao robô e à IA. Zero devolve na hora.</small></label>
            ${/* F92 · os feriados que o catálogo de prazos não conhece: os da
                 comarca e os forenses. Os nacionais (fixos e móveis) já estão
                 no programa. */""}
@@ -20833,6 +20839,7 @@ function ligarConfig(){
   cfgSalva("cf-fim","zap_hora_fim",    el=>el.value||"18:00");
   cfgSalva("cf-pausa","zap_pausa_bot", el=>String(Math.max(0, +el.value||0)));
   cfgSalva("cf-volta-min","zap_volta_min", el=>String(Math.max(0, Math.round(+el.value||0))));
+  cfgSalva("cf-offline-min","zap_offline_min", el=>String(Math.max(0, Math.round(+el.value||0))));
   cfgSalva("cf-bot","zap_bot_ligado",  el=>el.checked?"sim":"nao");
   cfgSalva("cf-robo-smbot","zap_robo_modelo", el=>el.checked?"smbot":"crm");
   cfgSalva("cf-avisos","zap_avisos_ligado", el=>el.checked?"sim":"nao");

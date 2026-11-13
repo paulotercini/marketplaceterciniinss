@@ -1,5 +1,6 @@
 -- F578 (pedido do Paulo de 13.11.2026): a mensagem automática do Offline sai quando a equipe não escreveu
--- na conversa nos últimos 15 minutos (a F577 usava 60 minutos ou o início do período Offline).
+-- na conversa nos últimos config_app.zap_offline_min minutos (15; a F577 usava 60 minutos ou o início do período Offline).
+-- Os dois tempos se editam nas Configurações do WhatsApp do CRM, com a explicação de cada um.
 -- A conversa reaberta pela equipe volta ao robô e à IA 30 minutos depois da última mensagem da equipe ou do encerramento (zap_volta_min).
 
 
@@ -18,7 +19,7 @@ begin
    where z.id = new.conversa_id and z.status <> 'resolvida';
   if c.id is null or c.zap_offline_desde is null or coalesce(c.automatica, false) then return new; end if;
   -- F577: a equipe escreveu depois do Offline ou na última hora: a conversa está em curso
-  if zap_equipe_escreveu(c.id, now() - interval '15 minutes') is not null then
+  if zap_equipe_escreveu(c.id, now() - make_interval(mins => coalesce(nullif((select valor from config_app where chave = 'zap_offline_min'), '')::int, 15))) is not null then
     return new;
   end if;
 
@@ -76,4 +77,7 @@ begin
   return new;
 end $function$;
 
-update config_app set valor = '30' where chave = 'zap_volta_min';
+insert into config_app(chave, valor) values ('zap_volta_min', '30')
+  on conflict (chave) do update set valor = excluded.valor;
+insert into config_app(chave, valor) values ('zap_offline_min', '15')
+  on conflict (chave) do update set valor = excluded.valor;
